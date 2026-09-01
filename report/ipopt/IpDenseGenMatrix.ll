@@ -204,16 +204,16 @@ bb.a:
 
 .preheader34:                                     ; preds = %.preheader34.lr.ph, %.loopexit
   %indvars.iv = phi i64 [ 0, %.preheader34.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 6 uses
-  %2 = sub nsw i64 %i.m, %indvars.iv              ; 3 uses
-  %3 = mul nuw nsw i64 %indvars.iv, %i.m          ; 6 uses
-  %min.iters.check = icmp ult i64 %2, 4
+  %2 = mul nuw nsw i64 %indvars.iv, %i.m          ; 6 uses
+  %3 = sub nsw i64 %i.m, %indvars.iv              ; 3 uses
+  %min.iters.check = icmp ult i64 %3, 4
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader34
-  %n.vec = and i64 %2, -4                         ; 3 uses
+  %n.vec = and i64 %3, -4                         ; 3 uses
   %i.o = add i64 %indvars.iv, %n.vec
-  %invariant.op = add nuw i64 %indvars.iv, %3
+  %invariant.op = add nuw i64 %indvars.iv, %2
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -232,7 +232,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.t, label %middle.block, label %vector.body, !llvm.loop !108
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %2, %n.vec
+  %cmp.n = icmp eq i64 %3, %n.vec
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.preheader34, %middle.block
@@ -245,7 +245,7 @@ scalar.ph.preheader:                              ; preds = %.preheader34, %midd
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
   %indvars.iv41.prol = phi i64 [ %indvars.iv.next42.prol, %scalar.ph.prol ], [ %indvars.iv41.ph, %scalar.ph.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %scalar.ph.prol ], [ 0, %scalar.ph.preheader ]
-  %i.v = add nuw nsw i64 %indvars.iv41.prol, %3   ; 2 uses
+  %i.v = add nuw nsw i64 %indvars.iv41.prol, %2   ; 2 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.v
   %i.x = load double, ptr %i.w, align 8, !tbaa !52
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.v
@@ -262,9 +262,9 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.aa, label %.loopexit, label %scalar.ph.preheader.new
 
 scalar.ph.preheader.new:                          ; preds = %scalar.ph.prol.loopexit
-  %invariant.op58 = add nuw nsw i64 1, %3
-  %invariant.op60 = add nuw nsw i64 2, %3
-  %invariant.op62 = add nuw nsw i64 3, %3
+  %invariant.op58 = add nuw nsw i64 1, %2
+  %invariant.op60 = add nuw nsw i64 2, %2
+  %invariant.op62 = add nuw nsw i64 3, %2
   br label %scalar.ph
 
 ._crit_edge:                                      ; preds = %.loopexit, %bb.a
@@ -301,7 +301,7 @@ scalar.ph.preheader.new:                          ; preds = %scalar.ph.prol.loop
 
 scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.preheader.new
   %indvars.iv41 = phi i64 [ %indvars.iv41.unr, %scalar.ph.preheader.new ], [ %indvars.iv.next42.3, %scalar.ph ] ; 5 uses
-  %i.ak = add nuw nsw i64 %indvars.iv41, %3       ; 2 uses
+  %i.ak = add nuw nsw i64 %indvars.iv41, %2       ; 2 uses
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.ak
   %i.am = load double, ptr %i.al, align 8, !tbaa !52
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.ak
@@ -421,16 +421,16 @@ bb.a:
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.loopexit
   %indvars.iv = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 6 uses
-  %3 = sub nsw i64 %i.m, %indvars.iv              ; 3 uses
-  %4 = mul nuw nsw i64 %indvars.iv, %i.m          ; 6 uses
-  %min.iters.check = icmp ult i64 %3, 4
+  %3 = mul nuw nsw i64 %indvars.iv, %i.m          ; 6 uses
+  %4 = sub nsw i64 %i.m, %indvars.iv              ; 3 uses
+  %min.iters.check = icmp ult i64 %4, 4
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader
-  %n.vec = and i64 %3, -4                         ; 3 uses
+  %n.vec = and i64 %4, -4                         ; 3 uses
   %i.o = add i64 %indvars.iv, %n.vec
-  %invariant.op = add nuw i64 %indvars.iv, %4
+  %invariant.op = add nuw i64 %indvars.iv, %3
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -449,7 +449,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.t, label %middle.block, label %vector.body, !llvm.loop !116
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %4, %n.vec
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.preheader, %middle.block
@@ -462,7 +462,7 @@ scalar.ph.preheader:                              ; preds = %.preheader, %middle
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
   %indvars.iv26.prol = phi i64 [ %indvars.iv.next27.prol, %scalar.ph.prol ], [ %indvars.iv26.ph, %scalar.ph.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %scalar.ph.prol ], [ 0, %scalar.ph.preheader ]
-  %i.v = add nuw nsw i64 %indvars.iv26.prol, %4   ; 2 uses
+  %i.v = add nuw nsw i64 %indvars.iv26.prol, %3   ; 2 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.v
   %i.x = load double, ptr %i.w, align 8, !tbaa !52
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.v
@@ -479,9 +479,9 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.aa, label %.loopexit, label %scalar.ph.preheader.new
 
 scalar.ph.preheader.new:                          ; preds = %scalar.ph.prol.loopexit
-  %invariant.op36 = add nuw nsw i64 1, %4
-  %invariant.op38 = add nuw nsw i64 2, %4
-  %invariant.op40 = add nuw nsw i64 3, %4
+  %invariant.op36 = add nuw nsw i64 1, %3
+  %invariant.op38 = add nuw nsw i64 2, %3
+  %invariant.op40 = add nuw nsw i64 3, %3
   br label %scalar.ph
 
 ._crit_edge:                                      ; preds = %.loopexit, %bb.a
@@ -550,7 +550,7 @@ _ZN5Ipopt11DenseVector6ValuesEv.exit:             ; preds = %bb.c, %_ZNK5Ipopt16
 
 scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.preheader.new
   %indvars.iv26 = phi i64 [ %indvars.iv26.unr, %scalar.ph.preheader.new ], [ %indvars.iv.next27.3, %scalar.ph ] ; 5 uses
-  %i.bb = add nuw nsw i64 %indvars.iv26, %4       ; 2 uses
+  %i.bb = add nuw nsw i64 %indvars.iv26, %3       ; 2 uses
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.bb
   %i.bd = load double, ptr %i.bc, align 8, !tbaa !52
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.bb
