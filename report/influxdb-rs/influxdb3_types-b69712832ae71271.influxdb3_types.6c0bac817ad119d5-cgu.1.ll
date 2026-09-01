@@ -204,16 +204,15 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !118)
   %i.f = load i8, ptr %0, align 1, !alias.scope !115, !noalias !118, !noundef !9 ; 2 uses
   %i.g = add nsw i64 %1, -1                       ; 2 uses
-  %i.h = tail call i64 @llvm.usub.sat.i64(i64 range(i64 3, 10) %1, i64 4) ; 2 uses
-  %4 = icmp samesign ult i64 %i.h, %1
-  br i1 %4, label %.lr.ph, label %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit
+  %i.h = tail call i64 @llvm.usub.sat.i64(i64 range(i64 3, 10) %1, i64 4)
+  br label %.lr.ph
 
 bb.d:                                             ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs9h7Hq22ZyhR_15influxdb3_types.exit.i.i
   %i.i = icmp ult i64 %i.h, %i.k
   br i1 %i.i, label %.lr.ph, label %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit
 
 .lr.ph:                                           ; preds = %bb.c, %bb.d
-  %i.j = phi i64 [ %i.k, %bb.d ], [ %1, %bb.c ]
+  %i.j = phi i64 [ %1, %bb.c ], [ %i.k, %bb.d ]
   %i.k = add nsw i64 %i.j, -1                     ; 11 uses
   %i.l = icmp ult i64 %i.k, %1
   br i1 %i.l, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs9h7Hq22ZyhR_15influxdb3_types.exit.i.i, label %bb.e
@@ -427,7 +426,7 @@ bb.p:                                             ; preds = %._crit_edge.i
   %i.dd = or i8 %.sroa.014.3.lcssa.i, %i.dc
   br label %bb.o
 
-_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit: ; preds = %bb.d, %bb.c
+_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit: ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvMsu_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !143)

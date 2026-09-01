@@ -204,16 +204,15 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.h, label %.thread.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 21) %1, i64 4) ; 2 uses
-  %4 = icmp samesign ult i64 %i.i, %1
-  br i1 %4, label %.lr.ph, label %_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit
+  %i.i = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 21) %1, i64 4)
+  br label %.lr.ph
 
 bb.e:                                             ; preds = %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i"
   %i.j = icmp ult i64 %i.i, %i.l
   br i1 %i.j, label %.lr.ph, label %_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit
 
 .lr.ph:                                           ; preds = %bb.d, %bb.e
-  %i.k = phi i64 [ %i.l, %bb.e ], [ %1, %bb.d ]
+  %i.k = phi i64 [ %1, %bb.d ], [ %i.l, %bb.e ]
   %i.l = add nsw i64 %i.k, -1                     ; 6 uses
   %i.m = icmp ult i64 %i.l, %1
   br i1 %i.m, label %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i", label %bb.f
@@ -445,7 +444,7 @@ bb.r:                                             ; preds = %._crit_edge.i
   %i.de = or i8 %.sroa.015.3.lcssa.i, %i.dd
   br label %bb.q
 
-_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit: ; preds = %bb.e, %bb.d
+_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit: ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @_ZN4core3str7pattern11StrSearcher3new17h06c723456276c09fE(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(address) dereferenceable(104) %i.c, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %2, i64 noundef %3, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %0, i64 noundef %1)
   call void @llvm.experimental.noalias.scope.decl(metadata !10338)

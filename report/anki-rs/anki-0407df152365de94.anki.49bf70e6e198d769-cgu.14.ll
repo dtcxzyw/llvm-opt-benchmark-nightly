@@ -205,7 +205,7 @@ bb.dr:                                            ; preds = %bb.dp
   %i.hq = load ptr, ptr %i.fu, align 8, !noalias !13550, !nonnull !3, !align !6, !noundef !3 ; 2 uses
   %i.hr = load ptr, ptr %i.hq, align 8, !noalias !13547, !nonnull !3, !align !5, !noundef !3 ; 9 uses
   %i.hs = getelementptr inbounds nuw i8, ptr %i.hq, i64 8
-  %i.ht = load i64, ptr %i.hs, align 8, !noalias !13547, !noundef !3 ; 19 uses
+  %i.ht = load i64, ptr %i.hs, align 8, !noalias !13547, !noundef !3 ; 18 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !13685)
   call void @llvm.experimental.noalias.scope.decl(metadata !13688)
   call void @llvm.experimental.noalias.scope.decl(metadata !13690)
@@ -256,7 +256,7 @@ bb.dy:                                            ; preds = %.lr.ph.i.i.i.i
   %exitcond.not.i.i.i.i = icmp eq i64 %i.ih, %i.gl
   br i1 %exitcond.not.i.i.i.i, label %.loopexit.i, label %.lr.ph.i.i.i.i
 
-_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit.i.i.i: ; preds = %bb.eb, %bb.ea, %bb.dv
+_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit.i.i.i: ; preds = %bb.eb, %bb.dv
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !13701
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !13701
   invoke void @_ZN4core3str7pattern11StrSearcher3new17h06c723456276c09fE(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(address) dereferenceable(104) %i.b, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.gk, i64 noundef %i.gl, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.hr, i64 noundef %i.ht)
@@ -282,16 +282,15 @@ bb.dz:                                            ; preds = %bb.dv
   br i1 %i.im, label %.thread.i.i.i.i, label %bb.ea
 
 bb.ea:                                            ; preds = %bb.dz
-  %i.in = call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.ht, i64 4) ; 2 uses
-  %3 = icmp ult i64 %i.in, %i.ht
-  br i1 %3, label %.lr.ph, label %_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit.i.i.i
+  %i.in = call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.ht, i64 4)
+  br label %.lr.ph
 
 bb.eb:                                            ; preds = %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i.i.i"
   %i.io = icmp ult i64 %i.in, %i.iq
   br i1 %i.io, label %.lr.ph, label %_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit.i.i.i
 
 .lr.ph:                                           ; preds = %bb.ea, %bb.eb
-  %i.ip = phi i64 [ %i.iq, %bb.eb ], [ %i.ht, %bb.ea ]
+  %i.ip = phi i64 [ %i.ht, %bb.ea ], [ %i.iq, %bb.eb ]
   %i.iq = add nsw i64 %i.ip, -1                   ; 6 uses
   %i.ir = icmp ult i64 %i.iq, %i.ht
   br i1 %i.ir, label %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i.i.i", label %bb.ec

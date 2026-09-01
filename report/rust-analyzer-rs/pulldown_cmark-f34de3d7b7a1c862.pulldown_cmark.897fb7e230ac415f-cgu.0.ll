@@ -204,7 +204,7 @@ bb.ch:                                            ; preds = %bb.cg
   br i1 %.not92.i.i, label %bb.eu, label %bb.ci
 
 bb.ci:                                            ; preds = %.noexc59.i
-  %i.rd = extractvalue { ptr, i64 } %i.rb, 1      ; 20 uses
+  %i.rd = extractvalue { ptr, i64 } %i.rb, 1      ; 19 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !251)
   call void @llvm.experimental.noalias.scope.decl(metadata !254)
   %i.re = load ptr, ptr %i.by, align 8, !alias.scope !256, !noalias !257, !nonnull !5, !noundef !5 ; 4 uses
@@ -218,14 +218,13 @@ bb.ci:                                            ; preds = %.noexc59.i
   %i.rj = icmp ult i64 %i.rd, 33
   %i.rk = add nsw i64 %i.rd, -1
   %i.rl = icmp eq i64 %i.rd, 2
-  %i.rm = call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.rd, i64 4) ; 2 uses
+  %i.rm = call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.rd, i64 4)
   %i.rn = add nuw nsw i64 %i.rd, 15               ; 3 uses
   %.phi.trans.insert.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.rc, i64 1 ; 2 uses
   %i.ro = add nuw nsw i64 %i.rd, 63               ; 2 uses
   br i1 %i.rh, label %.lr.ph.split.us.i.i.i, label %.lr.ph.split.i.i.i.preheader
 
 .lr.ph.split.i.i.i.preheader:                     ; preds = %.lr.ph.i105.i.i
-  %4 = icmp ult i64 %i.rm, %i.rd
   %invariant.op2113 = sub i64 -15, %i.rd
   br label %.lr.ph.split.i.i.i
 
@@ -420,7 +419,7 @@ bb.da:                                            ; preds = %.lr.ph.i.i.i.i.i
   %exitcond.not.i.i.i.i.i = icmp eq i64 %i.uc, %i.sp
   br i1 %exitcond.not.i.i.i.i.i, label %_RNvXst_NtNtCshzWfHUSfYae_4core3str7patternReNtB5_7Pattern15is_contained_in.exit.thread20.i.i.i, label %.lr.ph.i.i.i.i.i
 
-_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.i.i.i.i: ; preds = %.preheader.i.i.i, %.preheader.i.i.i.preheader, %bb.cx
+_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.i.i.i.i: ; preds = %.preheader.i.i.i, %bb.cx
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah), !noalias !273
   invoke void @_RNvMsu_NtNtCshzWfHUSfYae_4core3str7patternNtB5_11StrSearcher3new(ptr noalias nofree noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.ah, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.tq, i64 noundef %i.sp, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.rc, i64 noundef %i.rd)
           to label %.noexc70.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i, !noalias !202
@@ -823,17 +822,14 @@ bb.ef:                                            ; preds = %bb.cx
   call void @llvm.experimental.noalias.scope.decl(metadata !319)
   call void @llvm.experimental.noalias.scope.decl(metadata !322)
   %i.aaq = load i8, ptr %i.rc, align 1, !alias.scope !324, !noalias !325, !noundef !5 ; 3 uses
-  br i1 %i.rl, label %.thread.i.i.i.i.i, label %.preheader.i.i.i.preheader
-
-.preheader.i.i.i.preheader:                       ; preds = %bb.ef
-  br i1 %4, label %.lr.ph, label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.i.i.i.i
+  br i1 %i.rl, label %.thread.i.i.i.i.i, label %.lr.ph
 
 .preheader.i.i.i:                                 ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsbNU0JlWw3cF_14pulldown_cmark.exit.i.i.i.i.i.i
   %i.aar = icmp ult i64 %i.rm, %i.aat
   br i1 %i.aar, label %.lr.ph, label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_contains.exit.i.i.i.i
 
-.lr.ph:                                           ; preds = %.preheader.i.i.i.preheader, %.preheader.i.i.i
-  %i.aas = phi i64 [ %i.aat, %.preheader.i.i.i ], [ %i.rd, %.preheader.i.i.i.preheader ]
+.lr.ph:                                           ; preds = %bb.ef, %.preheader.i.i.i
+  %i.aas = phi i64 [ %i.aat, %.preheader.i.i.i ], [ %i.rd, %bb.ef ]
   %i.aat = add nsw i64 %i.aas, -1                 ; 6 uses
   %i.aau = icmp ult i64 %i.aat, %i.rd
   br i1 %i.aau, label %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsbNU0JlWw3cF_14pulldown_cmark.exit.i.i.i.i.i.i, label %.invoke2774.i

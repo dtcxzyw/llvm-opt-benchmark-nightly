@@ -204,7 +204,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %.val, i64 8, !dbg !18296
   %i.m = load ptr, ptr %i.l, align 8, !dbg !18296, !nonnull !49, !noundef !49 ; 9 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.val, i64 16, !dbg !18307
-  %i.o = load i64, ptr %i.n, align 8, !dbg !18307, !noundef !49 ; 19 uses
+  %i.o = load i64, ptr %i.n, align 8, !dbg !18307, !noundef !49 ; 18 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !18308), !dbg !18311
   tail call void @llvm.experimental.noalias.scope.decl(metadata !18312), !dbg !18311
     #dbg_value(ptr %i.m, !18314, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !18321)
@@ -305,7 +305,7 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i.i
   %exitcond.not.i.i.i.i = icmp eq i64 %i.ad, %i.k, !dbg !18486
   br i1 %exitcond.not.i.i.i.i, label %.loopexit.i, label %.lr.ph.i.i.i.i, !dbg !18486
 
-_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit.i.i: ; preds = %bb.ao, %bb.an, %bb.e
+_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit.i.i: ; preds = %bb.ao, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !18487, !noalias !18488
   invoke void @_RNvMsu_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcher3new(ptr noalias nofree noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.i, i64 noundef %i.k, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.m, i64 noundef %i.o)
           to label %.noexc7.i unwind label %.loopexit.split-lp.loopexit.split-lp.i, !dbg !18489
@@ -708,7 +708,7 @@ bb.am:                                            ; preds = %bb.e
   br i1 %i.hf, label %.thread.i.i.i, label %bb.an, !dbg !19638
 
 bb.an:                                            ; preds = %bb.am
-  %i.hg = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.o, i64 4), !dbg !19639 ; 2 uses
+  %i.hg = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.o, i64 4), !dbg !19639
     #dbg_value(ptr undef, !19558, !DIExpression(), !19566)
     #dbg_value(ptr %i.m, !19559, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19566)
     #dbg_value(i64 %i.o, !19559, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19566)
@@ -723,19 +723,18 @@ bb.an:                                            ; preds = %bb.am
     #dbg_value(ptr undef, !19488, !DIExpression(), !19563)
     #dbg_value(ptr undef, !19480, !DIExpression(), !19484)
     #dbg_value(ptr undef, !19483, !DIExpression(), !19484)
-  %2 = icmp ult i64 %i.hg, %i.o, !dbg !19642
-  br i1 %2, label %.lr.ph, label %_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit.i.i, !dbg !19643
+  br label %.lr.ph, !dbg !19642
 
 bb.ao:                                            ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsjfnSKV9Rz3v_3h3i.exit.i.i.i.i
     #dbg_value(ptr undef, !19492, !DIExpression(), !19564)
     #dbg_value(ptr undef, !19488, !DIExpression(), !19563)
     #dbg_value(ptr undef, !19480, !DIExpression(), !19484)
     #dbg_value(ptr undef, !19483, !DIExpression(), !19484)
-  %i.hh = icmp ult i64 %i.hg, %i.hj, !dbg !19642
-  br i1 %i.hh, label %.lr.ph, label %_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit.i.i, !dbg !19643
+  %i.hh = icmp ult i64 %i.hg, %i.hj, !dbg !19643
+  br i1 %i.hh, label %.lr.ph, label %_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit.i.i, !dbg !19642
 
 .lr.ph:                                           ; preds = %bb.an, %bb.ao
-  %i.hi = phi i64 [ %i.hj, %bb.ao ], [ %i.o, %bb.an ]
+  %i.hi = phi i64 [ %i.o, %bb.an ], [ %i.hj, %bb.ao ]
     #dbg_value(i64 %i.hi, !19644, !DIExpression(), !19648)
     #dbg_value(i64 %i.hi, !19650, !DIExpression(), !19654)
     #dbg_value(i64 1, !19647, !DIExpression(), !19648)
@@ -1138,8 +1137,8 @@ begin_hunk_2_@llvm.umax.i64
 !19639 = !DILocation(line: 2570, column: 13, scope: !19595, inlinedAt: !19599)
 !19640 = !DILocation(line: 282, column: 38, scope: !19497, inlinedAt: !19553)
 !19641 = !DILocation(line: 288, column: 13, scope: !19496, inlinedAt: !19553)
-!19642 = !DILocation(line: 2192, column: 50, scope: !19481, inlinedAt: !19485)
-!19643 = !DILocation(line: 1142, column: 12, scope: !19486, inlinedAt: !19489)
+!19642 = !DILocation(line: 1142, column: 12, scope: !19486, inlinedAt: !19489)
+!19643 = !DILocation(line: 2192, column: 50, scope: !19481, inlinedAt: !19485)
 !19644 = !DILocalVariable(name: "start", arg: 1, scope: !19645, file: !18965, line: 269, type: !9)
 !19645 = distinct !DISubprogram(name: "backward_unchecked", linkageName: "_RNvXsL_NtNtCskKLDkoKarTP_4core4iter5rangejNtB5_4Step18backward_unchecked", scope: !19136, file: !18965, line: 269, type: !5881, scopeLine: 269, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !805, templateParams: !49, retainedNodes: !19646)
 !19646 = !{!19644, !19647}

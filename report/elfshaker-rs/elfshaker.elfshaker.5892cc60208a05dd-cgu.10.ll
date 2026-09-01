@@ -205,7 +205,7 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   %i.r = load ptr, ptr %i.q, align 8, !noalias !363, !nonnull !16, !noundef !16 ; 9 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 16
-  %i.t = load i64, ptr %i.s, align 8, !noalias !363, !noundef !16 ; 19 uses
+  %i.t = load i64, ptr %i.s, align 8, !noalias !363, !noundef !16 ; 18 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !364)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !367)
   %i.u = icmp eq i64 %i.t, 0
@@ -260,7 +260,7 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i.i
   %exitcond.not.i.i.i.i = icmp eq i64 %i.ai, %i.o
   br i1 %exitcond.not.i.i.i.i, label %.thread3.i, label %.lr.ph.i.i.i.i
 
-_RNvNtNtCs3oUPovFnLWP_4core3str7pattern13simd_contains.exit.i.i: ; preds = %bb.ao, %bb.an, %bb.e
+_RNvNtNtCs3oUPovFnLWP_4core3str7pattern13simd_contains.exit.i.i: ; preds = %bb.ao, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !376
   invoke void @_RNvMsu_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcher3new(ptr noalias nofree noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.h, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.m, i64 noundef %i.o, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.r, i64 noundef %i.t)
           to label %.noexc2.i unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !363
@@ -663,16 +663,15 @@ bb.am:                                            ; preds = %bb.e
   br i1 %i.hk, label %.thread.i.i.i, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %i.hl = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.t, i64 4) ; 2 uses
-  %3 = icmp ult i64 %i.hl, %i.t
-  br i1 %3, label %.lr.ph, label %_RNvNtNtCs3oUPovFnLWP_4core3str7pattern13simd_contains.exit.i.i
+  %i.hl = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.t, i64 4)
+  br label %.lr.ph
 
 bb.ao:                                            ; preds = %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs7BtpbLEd5q3_9elfshaker.exit.i.i.i.i
   %i.hm = icmp ult i64 %i.hl, %i.ho
   br i1 %i.hm, label %.lr.ph, label %_RNvNtNtCs3oUPovFnLWP_4core3str7pattern13simd_contains.exit.i.i
 
 .lr.ph:                                           ; preds = %bb.an, %bb.ao
-  %i.hn = phi i64 [ %i.ho, %bb.ao ], [ %i.t, %bb.an ]
+  %i.hn = phi i64 [ %i.t, %bb.an ], [ %i.ho, %bb.ao ]
   %i.ho = add nsw i64 %i.hn, -1                   ; 6 uses
   %i.hp = icmp ult i64 %i.ho, %i.t
   br i1 %i.hp, label %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs7BtpbLEd5q3_9elfshaker.exit.i.i.i.i, label %.invoke.i
