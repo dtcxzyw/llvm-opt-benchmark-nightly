@@ -33,7 +33,7 @@ bb.a:
   %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64
   %i.c = sub i64 %i.a, %i.b
-  %i.d = lshr exact i64 %i.c, 2
+  %i.d = lshr i64 %i.c, 2
   %i.e = trunc i64 %i.d to i32                    ; 2 uses
   %i.f = shl nuw i32 1, %i.e                      ; 6 uses
   store i32 %i.f, ptr %0, align 4, !tbaa !9

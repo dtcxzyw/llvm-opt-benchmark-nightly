@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.preheader153
   store ptr %.pn162, ptr %.0121163, align 8, !tbaa !16
   %i.fn = getelementptr inbounds nuw i8, ptr %.0121163, i64 8
   store i32 %i.fi, ptr %i.fn, align 8, !tbaa !22
-  %i.fo = zext nneg i32 %i.fm to i64              ; 2 uses
+  %i.fo = zext i32 %i.fm to i64                   ; 2 uses
   %i.fp = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.fo ; 2 uses
   %i.fq = load ptr, ptr %i.fp, align 8, !tbaa !23
   %i.fr = getelementptr inbounds nuw i8, ptr %.0121163, i64 16

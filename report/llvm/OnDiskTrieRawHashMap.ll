@@ -204,8 +204,8 @@ _ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i.i.i.i: ; preds = %b
   store i32 0, ptr %i.kv, align 4, !tbaa !201, !noalias !199
   %i.kw = getelementptr i8, ptr %i.kl, i64 8      ; 3 uses
   %.mask.i = and i64 %.sroa.speculated.i, 255
-  %.idx.i131 = shl nuw i64 8, %.mask.i
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.kw, i8 0, i64 %.idx.i131, i1 false), !tbaa !202, !noalias !199
+  %.idx.i131 = shl i64 8, %.mask.i
+  call void @llvm.memset.p0.i64(ptr align 8 %i.kw, i8 0, i64 %.idx.i131, i1 false), !tbaa !202, !noalias !199
   %.not16.i = icmp eq ptr %.sroa.28.1, null
   br i1 %.not16.i, label %_ZN4llvm5ErrorD2Ev.exit22.i, label %bb.aq
 
@@ -608,8 +608,8 @@ _ZNKSt14default_deleteIN4llvm13ErrorInfoBaseEEclEPS1_.exit.i.i.i: ; preds = %bb.
   %.mask = and i32 %3, 255
   %i.u = zext nneg i32 %.mask to i64              ; 2 uses
   %i.v = shl nuw i64 1, %i.u
-  %.idx = shl nuw i64 8, %i.u
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.t, i8 0, i64 %.idx, i1 false), !tbaa !202
+  %.idx = shl i64 8, %i.u
+  call void @llvm.memset.p0.i64(ptr align 8 %i.t, i8 0, i64 %.idx, i1 false), !tbaa !202
   %.not16 = icmp eq ptr %4, null
   br i1 %.not16, label %bb.d, label %bb.c
 
@@ -1012,7 +1012,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   br i1 %.6, label %.thread122, label %.loopexit
 
 .thread122:                                       ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, %bb.g
-  %i.cc = add i64 %.034130, 1                     ; 2 uses
+  %i.cc = add nuw i64 %.034130, 1                 ; 2 uses
   %.not41 = icmp eq i64 %i.cc, %i.r
   br i1 %.not41, label %.critedge51, label %bb.g, !llvm.loop !511
 

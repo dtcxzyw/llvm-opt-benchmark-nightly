@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %_ZN4pbrt5ErrorIJRKi
   %.lhs.trunc.i = lshr i32 %i.at, 1
   %.zext.i = xor i32 %.lhs.trunc.i, 15
   %i.au = sub nsw i32 8, %.zext.i                 ; 2 uses
-  %i.av = shl nuw nsw i32 1, %i.au                ; 2 uses
+  %i.av = shl nuw i32 1, %i.au                    ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   store i32 %i.av, ptr %i.aw, align 8, !tbaa !198
   %i.ax = shl i32 %i.av, %i.au

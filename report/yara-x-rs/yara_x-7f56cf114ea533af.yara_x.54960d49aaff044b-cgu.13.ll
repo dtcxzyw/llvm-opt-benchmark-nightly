@@ -205,7 +205,7 @@ _RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   br i1 %i.mx, label %.backedge464.i, label %bb.cu
 
 bb.cu:                                            ; preds = %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit.us.i.i
-  %i.my = add nuw i64 %.sroa.8.026.us.i.i, 1
+  %i.my = add i64 %.sroa.8.026.us.i.i, 1
   %i.mz = getelementptr inbounds nuw i8, ptr %.sroa.0.027.us.i.i, i64 1 ; 2 uses
   %i.na = add i64 %i.mv, %.sroa.8.026.us.i.i
   call fastcc void @_RNvMNtNtCs7gfv9tzbXmh_6yara_x2re9bitmapsetINtB2_9BitmapSetuE6insertB6_(ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %i.bj, i64 noundef %i.na) #41
@@ -216,7 +216,7 @@ _RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %.sroa.0.027.i.i = phi ptr [ %i.nc, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit.i.i ], [ %i.ml, %_RINvNtNtNtCslssDYltVX0B_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr6memchr0ECs7gfv9tzbXmh_6yara_x.exit.thread40.i.i ]
   %.sroa.8.026.i.i = phi i64 [ %i.nd, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit.i.i ], [ 0, %_RINvNtNtNtCslssDYltVX0B_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr6memchr0ECs7gfv9tzbXmh_6yara_x.exit.thread40.i.i ] ; 2 uses
   %i.nc = getelementptr inbounds nuw i8, ptr %.sroa.0.027.i.i, i64 1 ; 2 uses
-  %i.nd = add nuw i64 %.sroa.8.026.i.i, 1
+  %i.nd = add i64 %.sroa.8.026.i.i, 1
   %i.ne = add i64 %i.mt, %.sroa.8.026.i.i
   call fastcc void @_RNvMNtNtCs7gfv9tzbXmh_6yara_x2re9bitmapsetINtB2_9BitmapSetuE6insertB6_(ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %i.bj, i64 noundef %i.ne) #41
   %i.nf = icmp eq ptr %i.nc, %i.ms
@@ -619,7 +619,7 @@ _RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   br i1 %i.w, label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit.us
-  %i.x = add nuw i64 %.sroa.8.026.us, 1
+  %i.x = add i64 %.sroa.8.026.us, 1
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.027.us, i64 1 ; 2 uses
   %i.z = add i64 %i.u, %.sroa.8.026.us
   tail call fastcc void @_RNvMNtNtCs7gfv9tzbXmh_6yara_x2re9bitmapsetINtB2_9BitmapSetuE6insertB6_(ptr noalias nofree noundef align 8 dereferenceable(104) %6, i64 noundef %i.z) #41
@@ -706,7 +706,7 @@ _RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %.sroa.0.027 = phi ptr [ %i.br, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit ], [ %i.h, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit.lr.ph.thread ]
   %.sroa.8.026 = phi i64 [ %i.bs, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit ], [ 0, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit.lr.ph.thread ] ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %.sroa.0.027, i64 1 ; 2 uses
-  %i.bs = add nuw i64 %.sroa.8.026, 1
+  %i.bs = add i64 %.sroa.8.026, 1
   %i.bt = add i64 %i.t, %.sroa.8.026
   tail call fastcc void @_RNvMNtNtCs7gfv9tzbXmh_6yara_x2re9bitmapsetINtB2_9BitmapSetuE6insertB6_(ptr noalias nofree noundef align 8 dereferenceable(104) %6, i64 noundef %i.bt) #41
   %i.bu = icmp eq ptr %i.br, %i.r

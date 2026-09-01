@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.e
-  %i.p = shl nuw nsw i32 1, %i.o
+  %i.p = shl nuw i32 1, %i.o
   %i.q = freeze i32 %i.p                          ; 3 uses
   %i.r = add i32 %i.q, -1
   %xtraiter = and i32 %i.q, 7                     ; 3 uses
@@ -324,7 +324,7 @@ bb.f:                                             ; preds = %bb.c
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.f
-  %i.q = shl nuw nsw i32 1, %i.p
+  %i.q = shl nuw i32 1, %i.p
   %i.r = freeze i32 %i.q                          ; 3 uses
   %i.s = add i32 %i.r, -1
   %xtraiter = and i32 %i.r, 7                     ; 3 uses

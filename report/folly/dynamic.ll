@@ -205,39 +205,39 @@ bb.h:                                             ; preds = %_ZNK5folly3f146deta
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i, %.new
   %.08.i.i.i.i = phi i64 [ 0, %.new ], [ %i.at, %.lr.ph.i.i.i.i ] ; 9 uses
   %niter = phi i64 [ 0, %.new ], [ %niter.next.7, %.lr.ph.i.i.i.i ]
-  %i.w = shl nsw i64 %.08.i.i.i.i, 7
-  %i.x = getelementptr inbounds i8, ptr %i.u, i64 %i.w
+  %i.w = shl nuw nsw i64 %.08.i.i.i.i, 7
+  %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.w
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.x, i8 0, i64 16, i1 false)
   %i.y = shl i64 %.08.i.i.i.i, 7
-  %i.z = getelementptr i8, ptr %i.u, i64 %i.y
-  %i.aa = getelementptr i8, ptr %i.z, i64 128
+  %i.z = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.y
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 128
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.aa, i8 0, i64 16, i1 false)
   %i.ab = shl i64 %.08.i.i.i.i, 7
-  %i.ac = getelementptr i8, ptr %i.u, i64 %i.ab
-  %i.ad = getelementptr i8, ptr %i.ac, i64 256
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.ab
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 256
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ad, i8 0, i64 16, i1 false)
   %i.ae = shl i64 %.08.i.i.i.i, 7
-  %i.af = getelementptr i8, ptr %i.u, i64 %i.ae
-  %i.ag = getelementptr i8, ptr %i.af, i64 384
+  %i.af = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.ae
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 384
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ag, i8 0, i64 16, i1 false)
   %i.ah = shl i64 %.08.i.i.i.i, 7
-  %i.ai = getelementptr i8, ptr %i.u, i64 %i.ah
-  %i.aj = getelementptr i8, ptr %i.ai, i64 512
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.ah
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 512
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.aj, i8 0, i64 16, i1 false)
   %i.ak = shl i64 %.08.i.i.i.i, 7
-  %i.al = getelementptr i8, ptr %i.u, i64 %i.ak
-  %i.am = getelementptr i8, ptr %i.al, i64 640
+  %i.al = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.ak
+  %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 640
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.am, i8 0, i64 16, i1 false)
   %i.an = shl i64 %.08.i.i.i.i, 7
-  %i.ao = getelementptr i8, ptr %i.u, i64 %i.an
-  %i.ap = getelementptr i8, ptr %i.ao, i64 768
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.an
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 768
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ap, i8 0, i64 16, i1 false)
   %i.aq = shl i64 %.08.i.i.i.i, 7
-  %i.ar = getelementptr i8, ptr %i.u, i64 %i.aq
-  %i.as = getelementptr i8, ptr %i.ar, i64 896
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.aq
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 896
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.as, i8 0, i64 16, i1 false)
-  %i.at = add nuw i64 %.08.i.i.i.i, 8             ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
+  %i.at = add nuw nsw i64 %.08.i.i.i.i, 8         ; 2 uses
+  %niter.next.7 = add nuw nsw i64 %niter, 8       ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN5folly3f146detail8F14TableINS1_19NodeContainerPolicyINS_7dynamicES4_NS_6detail13DynamicHasherENS5_15DynamicKeyEqualEvEEE16initializeChunksEPhmm.exit.i.i.i.unr-lcssa, label %.lr.ph.i.i.i.i, !llvm.loop !245
 
@@ -254,10 +254,10 @@ _ZN5folly3f146detail8F14TableINS1_19NodeContainerPolicyINS_7dynamicES4_NS_6detai
 .lr.ph.i.i.i.i.epil:                              ; preds = %.lr.ph.i.i.i.i.epil, %.lr.ph.i.i.i.i.epil.preheader
   %.08.i.i.i.i.epil = phi i64 [ %i.aw, %.lr.ph.i.i.i.i.epil ], [ %.08.i.i.i.i.epil.init, %.lr.ph.i.i.i.i.epil.preheader ] ; 2 uses
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.i.i.i.i.epil ], [ 0, %.lr.ph.i.i.i.i.epil.preheader ]
-  %i.au = shl nsw i64 %.08.i.i.i.i.epil, 7
-  %i.av = getelementptr inbounds i8, ptr %i.u, i64 %i.au
+  %i.au = shl nuw nsw i64 %.08.i.i.i.i.epil, 7
+  %i.av = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.au
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.av, i8 0, i64 16, i1 false)
-  %i.aw = add nuw i64 %.08.i.i.i.i.epil, 1
+  %i.aw = add nuw nsw i64 %.08.i.i.i.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZN5folly3f146detail8F14TableINS1_19NodeContainerPolicyINS_7dynamicES4_NS_6detail13DynamicHasherENS5_15DynamicKeyEqualEvEEE16initializeChunksEPhmm.exit.i.i.i, label %.lr.ph.i.i.i.i.epil, !llvm.loop !410

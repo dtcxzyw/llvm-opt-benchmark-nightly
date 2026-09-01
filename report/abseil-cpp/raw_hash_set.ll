@@ -202,7 +202,7 @@ bb.q:                                             ; preds = %"_ZZN4absl12lts_202
   %i.fi = ptrtoint ptr %.02158.i.i to i64
   %i.fj = add i64 %i.fi, %i.h
   %i.fk = inttoptr i64 %i.fj to ptr
-  %i.fl = add nuw nsw i64 %.060.i.i, 1            ; 2 uses
+  %i.fl = add nuw i64 %.060.i.i, 1                ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.fl, %i.b
   br i1 %exitcond.not.i.i, label %_ZN4absl12lts_2026052618container_internal12_GLOBAL__N_132FindNewPositionsAndTransferSlotsERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEPNS1_6ctrl_tEPvm.exit.i, label %bb.m, !llvm.loop !92
 
@@ -605,7 +605,7 @@ _ZN4absl12lts_2026052618container_internal12_GLOBAL__N_119find_first_non_fullERK
 
 bb.e:                                             ; preds = %bb.b, %_ZN4absl12lts_2026052618container_internal12_GLOBAL__N_119find_first_non_fullERKNS1_12CommonFieldsEm.exit
   %.1 = phi i64 [ %.040, %bb.b ], [ %i.ba, %_ZN4absl12lts_2026052618container_internal12_GLOBAL__N_119find_first_non_fullERKNS1_12CommonFieldsEm.exit ] ; 2 uses
-  %i.bn = add nsw i64 %.03539, 1                  ; 2 uses
+  %i.bn = add nuw nsw i64 %.03539, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.bn, %i.d
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !215
 }

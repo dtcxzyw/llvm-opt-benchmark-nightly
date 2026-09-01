@@ -204,7 +204,7 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 4, !tbaa !42   ; 12 uses
   %i.e = add i32 %i.d, %i.b                       ; 4 uses
   %i.f = load i8, ptr %1, align 8, !tbaa !67
-  %i.g = zext nneg i8 %i.f to i32                 ; 4 uses
+  %i.g = zext i8 %i.f to i32                      ; 4 uses
   %i.h = shl nuw i32 1, %i.g
   %i.i = icmp sgt i32 %i.e, %i.h                  ; 3 uses
   %i.j = icmp slt i32 %i.b, 0                     ; 3 uses
@@ -215,7 +215,7 @@ bb.a:
   %i.o = add i32 %i.n, %i.l                       ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 3 uses
   %i.q = load i8, ptr %i.p, align 1, !tbaa !68
-  %i.r = zext nneg i8 %i.q to i32                 ; 2 uses
+  %i.r = zext i8 %i.q to i32                      ; 2 uses
   %i.s = shl nuw i32 1, %i.r
   %i.t = icmp sgt i32 %i.o, %i.s                  ; 5 uses
   %i.u = icmp slt i32 %i.l, 0                     ; 5 uses

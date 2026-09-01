@@ -205,7 +205,7 @@ _RINvYINtNtNtCshzWfHUSfYae_4core5slice4iter4IterlENtNtNtNtBa_4iter6traits12doubl
 
 .lr.ph.i75:                                       ; preds = %_RINvYINtNtNtCshzWfHUSfYae_4core5slice4iter4IterlENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator5rfoldmNCINvNvXs_NtNtBR_8adapters9enumerateINtB1Y_9EnumeratepENtNtBP_8iterator8Iterator4fold9enumerateRlmNCNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB3w_12HuffmanOxide21enforce_max_code_size0E0EB3A_.exit.i, %.loopexit.i76
   %.sroa.0.026.i = phi i32 [ %i.ip, %.loopexit.i76 ], [ %i.in, %_RINvYINtNtNtCshzWfHUSfYae_4core5slice4iter4IterlENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator5rfoldmNCINvNvXs_NtNtBR_8adapters9enumerateINtB1Y_9EnumeratepENtNtBP_8iterator8Iterator4fold9enumerateRlmNCNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB3w_12HuffmanOxide21enforce_max_code_size0E0EB3A_.exit.i ]
-  %i.ip = add i32 %.sroa.0.026.i, 1               ; 2 uses
+  %i.ip = add nuw i32 %.sroa.0.026.i, 1           ; 2 uses
   %i.iq = load i32, ptr %i.gv, align 4, !alias.scope !56, !noundef !4
   %i.ir = add i32 %i.iq, -1
   store i32 %i.ir, ptr %i.gv, align 4, !alias.scope !56
@@ -216,8 +216,8 @@ bb.ah:                                            ; preds = %bb.ai
   br i1 %i.is, label %bb.ai, label %.loopexit.i76
 
 .loopexit.i76:                                    ; preds = %bb.ah, %bb.aj
-  %exitcond.not.i77 = icmp eq i32 %i.ip, %.lcssa324
-  br i1 %exitcond.not.i77, label %_RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide21enforce_max_code_size.exit, label %.lr.ph.i75
+  %5 = icmp ult i32 %i.ip, %.lcssa324
+  br i1 %5, label %.lr.ph.i75, label %_RNvMsb_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_12HuffmanOxide21enforce_max_code_size.exit
 
 bb.ai:                                            ; preds = %.lr.ph.i75, %bb.ah
   %.sroa.03.0.i308 = phi i64 [ %3, %.lr.ph.i75 ], [ %i.it, %bb.ah ] ; 2 uses
