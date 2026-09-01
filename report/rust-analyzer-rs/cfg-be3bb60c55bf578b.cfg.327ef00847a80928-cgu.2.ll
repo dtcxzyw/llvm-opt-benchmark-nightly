@@ -202,47 +202,48 @@ bb.j:                                             ; preds = %_RINvNtCsbSS6DM8SDE
 .lr.ph.i:                                         ; preds = %.lr.ph.split
   %i.ab = load i64, ptr %i.f, align 8, !alias.scope !53, !noalias !56, !noundef !7 ; 2 uses
   %i.ac = icmp ult i64 %i.x, %i.ab
-  %3 = load ptr, ptr %i.d, align 8, !alias.scope !53, !noalias !56, !nonnull !7
-  %4 = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %i.x ; 2 uses
-  %5 = getelementptr i8, ptr %4, i64 8
   br i1 %i.ac, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i
+  %3 = load ptr, ptr %i.d, align 8, !alias.scope !53, !noalias !56, !nonnull !7
+  %4 = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %i.x ; 2 uses
+  %5 = getelementptr i8, ptr %4, i64 8
   %.val3.i.us.i = load ptr, ptr %4, align 8, !noalias !59, !noundef !7 ; 3 uses
-  %6 = icmp eq ptr %.val3.i.us.i, null            ; 3 uses
-  %not..i.i.us.i = xor i1 %6, true
+  %.val4.i.us.i = load ptr, ptr %5, align 8, !noalias !59 ; 3 uses
+  %6 = icmp eq ptr %.val3.i.us.i, null            ; 2 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %_RNCNvMs5_Cs4kMRW8zVVbM_3cfgNtB7_7CfgDiff3new0B7_.exit.thread.us.i, %.lr.ph.split.us.i
   %.sroa.02.015.us.i = phi i64 [ 0, %.lr.ph.split.us.i ], [ %i.aj, %_RNCNvMs5_Cs4kMRW8zVVbM_3cfgNtB7_7CfgDiff3new0B7_.exit.thread.us.i ] ; 3 uses
-  %i.ad = phi ptr [ %i.y, %.lr.ph.split.us.i ], [ %i.ae, %_RNCNvMs5_Cs4kMRW8zVVbM_3cfgNtB7_7CfgDiff3new0B7_.exit.thread.us.i ] ; 3 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 2 uses
-  %.val7.us.i.a = load ptr, ptr %i.ad, align 8, !noalias !59 ; 2 uses
-  %i.af = icmp ne ptr %.val7.us.i.a, null         ; 2 uses
+  %i.ad = phi ptr [ %i.y, %.lr.ph.split.us.i ], [ %7, %_RNCNvMs5_Cs4kMRW8zVVbM_3cfgNtB7_7CfgDiff3new0B7_.exit.thread.us.i ] ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 2 uses
+  %.val7.us.i = load ptr, ptr %i.ad, align 8, !noalias !59 ; 2 uses
+  %i.ae = getelementptr i8, ptr %i.ad, i64 8
+  %.val7.us.i.a = load ptr, ptr %i.ae, align 8, !noalias !59 ; 3 uses
+  %i.af = icmp ne ptr %.val7.us.i, null           ; 2 uses
   %i.ag = xor i1 %6, %i.af
-  br i1 %i.ag, label %bb.l, label %_RNCNvMs5_Cs4kMRW8zVVbM_3cfgNtB7_7CfgDiff3new0B7_.exit.thread.us.i
+  br i1 %i.ag, label %8, label %_RNCNvMs5_Cs4kMRW8zVVbM_3cfgNtB7_7CfgDiff3new0B7_.exit.thread.us.i
 
-bb.l:                                             ; preds = %bb.k
-  %7 = getelementptr i8, ptr %i.ad, i64 8
-  %.val8.us.i = load ptr, ptr %7, align 8, !noalias !59
-  %.val4.i.us.i = load ptr, ptr %5, align 8, !noalias !59
-  %i.ah = icmp eq ptr %.val8.us.i, %.val4.i.us.i  ; 2 uses
-  br i1 %i.af, label %.split.us.i, label %_RNCNvMs5_Cs4kMRW8zVVbM_3cfgNtB7_7CfgDiff3new0B7_.exit.us.i
+8:                                                ; preds = %bb.k
+  br i1 %i.af, label %.split.us.i, label %bb.l
 
-_RNCNvMs5_Cs4kMRW8zVVbM_3cfgNtB7_7CfgDiff3new0B7_.exit.us.i: ; preds = %bb.l
+bb.l:                                             ; preds = %8
   call void @llvm.assume(i1 %6)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val7.us.i.a) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4.i.us.i) ]
+  %i.ah = icmp eq ptr %.val7.us.i.a, %.val4.i.us.i
   br i1 %i.ah, label %bb.m, label %_RNCNvMs5_Cs4kMRW8zVVbM_3cfgNtB7_7CfgDiff3new0B7_.exit.thread.us.i
 
-.split.us.i:                                      ; preds = %bb.l
-  call void @llvm.assume(i1 %not..i.i.us.i)
+.split.us.i:                                      ; preds = %8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i.us.i) ]
-  %i.ai = icmp eq ptr %.val7.us.i.a, %.val3.i.us.i
-  %spec.select.i.i.us.i = select i1 %i.ai, i1 %i.ah, i1 false
+  %9 = icmp eq ptr %.val7.us.i, %.val3.i.us.i
+  %i.ai = icmp eq ptr %.val7.us.i.a, %.val4.i.us.i
+  %spec.select.i.i.us.i = select i1 %9, i1 %i.ai, i1 false
   br i1 %spec.select.i.i.us.i, label %bb.m, label %_RNCNvMs5_Cs4kMRW8zVVbM_3cfgNtB7_7CfgDiff3new0B7_.exit.thread.us.i
 
-_RNCNvMs5_Cs4kMRW8zVVbM_3cfgNtB7_7CfgDiff3new0B7_.exit.thread.us.i: ; preds = %.split.us.i, %_RNCNvMs5_Cs4kMRW8zVVbM_3cfgNtB7_7CfgDiff3new0B7_.exit.us.i, %bb.k
+_RNCNvMs5_Cs4kMRW8zVVbM_3cfgNtB7_7CfgDiff3new0B7_.exit.thread.us.i: ; preds = %.split.us.i, %bb.l, %bb.k
   %i.aj = add nuw nsw i64 %.sroa.02.015.us.i, 1
-  %i.ak = icmp eq ptr %i.ae, %i.z
+  %i.ak = icmp eq ptr %7, %i.z
   br i1 %i.ak, label %.loopexit, label %bb.k
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i
@@ -252,7 +253,7 @@ _RNCNvMs5_Cs4kMRW8zVVbM_3cfgNtB7_7CfgDiff3new0B7_.exit.thread.us.i: ; preds = %.
 .noexc16:                                         ; preds = %.lr.ph.split.i
   unreachable
 
-bb.m:                                             ; preds = %.split.us.i, %_RNCNvMs5_Cs4kMRW8zVVbM_3cfgNtB7_7CfgDiff3new0B7_.exit.us.i
+bb.m:                                             ; preds = %.split.us.i, %bb.l
   %i.al = icmp ult i64 %.sroa.02.015.us.i, %i.w
   call void @llvm.assume(i1 %i.al)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
