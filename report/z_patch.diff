@@ -1,0 +1,80 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 2fd8b9a2eb4fd..57f15cae68e72 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -11249,21 +11249,12 @@ bool ScalarEvolution::isKnownMultipleOf(
+   if (M == 1)
+     return true;
+ 
+-  // Recursively check AddRec operands. An AddRecExpr S is a multiple of M if S
+-  // starts with a multiple of M and at every iteration step S only adds
+-  // multiples of M.
+-  if (auto *AddRec = dyn_cast<SCEVAddRecExpr>(S))
+-    return isKnownMultipleOf(AddRec->getStart(), M, Predicates) &&
+-           isKnownMultipleOf(AddRec->getStepRecurrence(*this), M, Predicates);
+-
+   // For a constant, check that "S % M == 0".
+   if (auto *Cst = dyn_cast<SCEVConstant>(S)) {
+     APInt C = Cst->getAPInt();
+     return C.urem(M) == 0;
+   }
+ 
+-  // TODO: Also check other SCEV expressions, i.e., SCEVAddRecExpr, etc.
+-
+   // Basic tests have failed.
+   // Check "S % M == 0" at compile time and record runtime Assumptions.
+   auto *STy = dyn_cast<IntegerType>(S->getType());
+@@ -11282,6 +11273,22 @@ bool ScalarEvolution::isKnownMultipleOf(
+   if (!Predicates)
+     return false;
+ 
++  // Look through AddRec expressions to improve the precision of added
++  // predicates. An AddRecExpr S is a multiple of M if S starts with a multiple
++  // of M and at every iteration step S only adds multiples of M.
++  if (auto *AR = dyn_cast<SCEVAddRecExpr>(S))
++    if (isKnownMultipleOf(AR->getStart(), M, Predicates) &&
++        isKnownMultipleOf(AR->getStepRecurrence(*this), M, Predicates))
++      return true;
++
++  // Similarly, look through commutative expressions to improve the precision of
++  // added predicates.
++  if (isa<SCEVCommutativeExpr>(S))
++    if (all_of(S->operands(), [&](SCEVUse Op) {
++          return isKnownMultipleOf(Op, M, Predicates);
++        }))
++      return true;
++
+   const SCEVPredicate *P = getComparePredicate(ICmpInst::ICMP_EQ, SmodM, Zero);
+ 
+   // Detect redundant predicates.
+diff --git a/llvm/test/Analysis/DependenceAnalysis/DifferentOffsets.ll b/llvm/test/Analysis/DependenceAnalysis/DifferentOffsets.ll
+index 077d5bde44eac..1a53da55abad8 100644
+--- a/llvm/test/Analysis/DependenceAnalysis/DifferentOffsets.ll
++++ b/llvm/test/Analysis/DependenceAnalysis/DifferentOffsets.ll
+@@ -49,11 +49,13 @@ define i32 @alias_with_parametric_expr(ptr nocapture %A, i64 %n, i64 %m) {
+ ; CHECK-NEXT:  Src: store i32 2, ptr %arrayidx, align 1 --> Dst: store i32 2, ptr %arrayidx, align 1
+ ; CHECK-NEXT:    da analyze - output []!
+ ; CHECK-NEXT:    Runtime Assumptions:
+-; CHECK-NEXT:    Equal predicate: (zext i2 ((trunc i64 %m to i2) + (-2 * (trunc i64 %n to i2))) to i64) == 0
++; CHECK-NEXT:    Equal predicate: (2 * (zext i1 (trunc i64 %n to i1) to i64))<nuw><nsw> == 0
++; CHECK-NEXT:    Equal predicate: (zext i2 (trunc i64 %m to i2) to i64) == 0
+ ; CHECK-NEXT:  Src: store i32 2, ptr %arrayidx, align 1 --> Dst: %0 = load i32, ptr %arrayidx1, align 1
+ ; CHECK-NEXT:    da analyze - flow [|<]!
+ ; CHECK-NEXT:    Runtime Assumptions:
+-; CHECK-NEXT:    Equal predicate: (zext i2 ((trunc i64 %m to i2) + (-2 * (trunc i64 %n to i2))) to i64) == 0
++; CHECK-NEXT:    Equal predicate: (2 * (zext i1 (trunc i64 %n to i1) to i64))<nuw><nsw> == 0
++; CHECK-NEXT:    Equal predicate: (zext i2 (trunc i64 %m to i2) to i64) == 0
+ ; CHECK-NEXT:    Equal predicate: (zext i2 (-2 + (trunc i64 %m to i2)) to i64) == 0
+ ; CHECK-NEXT:  Src: %0 = load i32, ptr %arrayidx1, align 1 --> Dst: %0 = load i32, ptr %arrayidx1, align 1
+ ; CHECK-NEXT:    da analyze - input []!
+@@ -211,7 +213,9 @@ end:
+ define void @multidim_accesses2(ptr %A) {
+ ; CHECK-LABEL: 'multidim_accesses2'
+ ; CHECK-NEXT:  Src: store i64 1, ptr %idx, align 4 --> Dst: store i64 1, ptr %idx, align 4
+-; CHECK-NEXT:    da analyze - confused!
++; CHECK-NEXT:    da analyze - output [* * *]!
++; CHECK-NEXT:    Runtime Assumptions:
++; CHECK-NEXT:    Equal predicate: (zext i3 {0,+,-4}<%for.k> to i64) == 0
+ ;
+ entry:
+   br label %for.i
