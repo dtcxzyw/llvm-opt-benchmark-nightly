@@ -204,7 +204,7 @@ bb.ag:                                            ; preds = %.body34
 define hidden void @_RNvNtCslLuZgPVt6hg_3ide20goto_type_definition20goto_type_definition(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noundef nonnull align 8 %1, i32 noundef %2, i32 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.0.i.i.i = alloca i64, align 8            ; 4 uses
+  %.sroa.0.i.i.i = alloca ptr, align 8            ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 7 uses
   %i.d = alloca [24 x i8], align 8                ; 7 uses
@@ -221,7 +221,7 @@ bb.a:
   %i.o = alloca [24 x i8], align 8                ; 4 uses
   %i.p = alloca [32 x i8], align 8                ; 4 uses
   %i.q = alloca [48 x i8], align 8                ; 9 uses
-  %.sroa.069 = alloca i64, align 8                ; 4 uses
+  %.sroa.069 = alloca ptr, align 8                ; 4 uses
   %i.r = alloca [24 x i8], align 8                ; 8 uses
   %i.s = alloca [80 x i8], align 8                ; 7 uses
   %i.t = alloca [16 x i8], align 8                ; 7 uses
@@ -622,9 +622,9 @@ bb.ap:                                            ; preds = %bb.af, %bb.ah, %bb.
   br i1 %.not12, label %bb.au, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  %.sroa.072.0.copyload = load i64, ptr %i.r, align 8
+  %.sroa.072.0.copyload = load ptr, ptr %i.r, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.069)
-  store i64 %.sroa.072.0.copyload, ptr %.sroa.069, align 8
+  store ptr %.sroa.072.0.copyload, ptr %.sroa.069, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !2506
   br label %bb.ar
 
@@ -1027,7 +1027,8 @@ bb.cg:                                            ; preds = %bb.ce
 .noexc3.i:                                        ; preds = %bb.cg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !2524
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
-  store i64 %.sroa.0.0.ph.i.i.i.i, ptr %.sroa.0.i.i.i, align 8, !noalias !2587
+  %4 = inttoptr i64 %.sroa.0.0.ph.i.i.i.i to ptr
+  store ptr %4, ptr %.sroa.0.i.i.i, align 8, !noalias !2587
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2590
   br label %bb.ch
 
