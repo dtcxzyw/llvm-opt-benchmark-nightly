@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.a
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i27
   %i.cn = icmp eq i32 %i.bw, 2
-  %..i = select i1 %i.cn, float 7.500000e-01, float f0x3FAAAAAB ; 4 uses
+  %..i = select i1 %i.cn, float 7.500000e-01, float f0x3FAAAAAB ; 3 uses
   %i.co = udiv i32 %i.cf, %i.cb                   ; 5 uses
   %i.cp = udiv i32 %i.cj, %i.cb                   ; 5 uses
   %i.cq = uitofp i32 %i.cb to double              ; 2 uses
@@ -219,12 +219,17 @@ bb.j:                                             ; preds = %bb.a
   %i.cy = icmp eq i32 %i.cx, 0
   %i.cz = icmp ugt i32 %i.ct, 1
   %i.da = select i1 %i.cy, i1 %i.cz, i1 false
-  br i1 %i.da, label %.lr.ph141.i, label %._crit_edge142.thread.i
+  br i1 %i.da, label %.lr.ph141.i.preheader, label %._crit_edge142.thread.i
 
-.lr.ph141.i:                                      ; preds = %._crit_edge.i, %bb.q
-  %.093138.i = phi float [ %.295.ph.i, %bb.q ], [ 0.000000e+00, %._crit_edge.i ] ; 6 uses
-  %.0100137.i = phi i32 [ %i.dl, %bb.q ], [ %i.ct, %._crit_edge.i ] ; 6 uses
-  %.0101136.i = phi i32 [ %.2103.ph.i, %bb.q ], [ 0, %._crit_edge.i ] ; 3 uses
+.lr.ph141.i.preheader:                            ; preds = %._crit_edge.i
+  %7 = insertelement <2 x float> poison, float %..i, i64 0
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
+  br label %.lr.ph141.i
+
+.lr.ph141.i:                                      ; preds = %.lr.ph141.i.preheader, %bb.q
+  %.093138.i = phi float [ %.295.ph.i, %bb.q ], [ 0.000000e+00, %.lr.ph141.i.preheader ] ; 6 uses
+  %.0100137.i = phi i32 [ %i.dl, %bb.q ], [ %i.ct, %.lr.ph141.i.preheader ] ; 6 uses
+  %.0101136.i = phi i32 [ %.2103.ph.i, %bb.q ], [ 0, %.lr.ph141.i.preheader ] ; 3 uses
   %i.db = udiv i32 %i.cb, %.0100137.i             ; 5 uses
   %i.dc = icmp samesign ugt i32 %i.db, 1
   %i.dd = mul nuw i32 %i.db, %.0100137.i
@@ -235,34 +240,35 @@ bb.j:                                             ; preds = %bb.a
 bb.k:                                             ; preds = %.lr.ph141.i
   %i.de = mul i32 %i.db, %i.co
   %i.df = mul i32 %.0100137.i, %i.cp
-  %7 = uitofp i32 %i.de to float
-  %i.dg = uitofp i32 %i.df to float
-  %8 = fdiv float %7, %i.dg
-  %9 = fdiv float %8, %..i                        ; 3 uses
-  %10 = fcmp ogt float %9, 1.000000e+00
-  %11 = fdiv float 1.000000e+00, %9
-  %.0.i.i = select i1 %10, float %11, float %9    ; 3 uses
-  %12 = mul i32 %.0100137.i, %i.co
-  %13 = mul i32 %i.db, %i.cp
-  %14 = uitofp i32 %12 to float
-  %15 = uitofp i32 %13 to float
-  %16 = fdiv float %14, %15
-  %17 = fdiv float %16, %..i                      ; 3 uses
-  %18 = fcmp ogt float %17, 1.000000e+00
-  %19 = fdiv float 1.000000e+00, %17
-  %.0.i115.i = select i1 %18, float %19, float %17 ; 3 uses
-  %i.dh = fcmp ogt float %.0.i.i, %.0.i115.i
+  %9 = mul i32 %.0100137.i, %i.co
+  %10 = mul i32 %i.db, %i.cp
+  %i.dg = uitofp i32 %9 to float
+  %11 = uitofp i32 %i.de to float
+  %12 = uitofp i32 %10 to float
+  %13 = uitofp i32 %i.df to float
+  %14 = insertelement <2 x float> poison, float %i.dg, i64 0
+  %15 = insertelement <2 x float> %14, float %11, i64 1
+  %16 = insertelement <2 x float> poison, float %12, i64 0
+  %17 = insertelement <2 x float> %16, float %13, i64 1
+  %18 = fdiv <2 x float> %15, %17
+  %19 = fdiv <2 x float> %18, %8                  ; 3 uses
+  %20 = fcmp ogt <2 x float> %19, splat (float 1.000000e+00)
+  %21 = fdiv <2 x float> splat (float 1.000000e+00), %19
+  %22 = select <2 x i1> %20, <2 x float> %21, <2 x float> %19 ; 2 uses
+  %23 = extractelement <2 x float> %22, i64 0     ; 3 uses
+  %24 = extractelement <2 x float> %22, i64 1     ; 3 uses
+  %i.dh = fcmp ogt float %24, %23
   br i1 %i.dh, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
-  %i.di = fcmp ogt float %.0.i.i, %.093138.i
+  %i.di = fcmp ogt float %24, %.093138.i
   br i1 %i.di, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %bb.l
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.k
-  %i.dj = fcmp ogt float %.0.i115.i, %.093138.i
+  %i.dj = fcmp ogt float %23, %.093138.i
   br i1 %i.dj, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
@@ -270,7 +276,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m, %bb.l
   %.1102.i = phi i32 [ %i.db, %bb.m ], [ %.0101136.i, %bb.l ], [ %.0100137.i, %bb.o ], [ %.0101136.i, %bb.n ] ; 2 uses
-  %.194.i = phi float [ %.0.i.i, %bb.m ], [ %.093138.i, %bb.l ], [ %.0.i115.i, %bb.o ], [ %.093138.i, %bb.n ] ; 2 uses
+  %.194.i = phi float [ %24, %bb.m ], [ %.093138.i, %bb.l ], [ %23, %bb.o ], [ %.093138.i, %bb.n ] ; 2 uses
   %i.dk = fcmp oeq float %.093138.i, %.194.i
   br i1 %i.dk, label %find_children_rectangle.exit, label %bb.q
 

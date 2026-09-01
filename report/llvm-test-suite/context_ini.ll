@@ -204,9 +204,10 @@ begin_hunk_0_@GetCtxModelNumber:bb.a
   %i.rs = load i32, ptr %i.b, align 4, !tbaa !43
   %i.rt = icmp eq i32 %i.rs, 2
   %i.ru = getelementptr inbounds nuw [160 x i8], ptr @INIT_MV_RES_P, i64 %indvars.iv654
-  %i.rv = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @entropy, i64 504), align 8 ; 2 uses
+  %3 = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @entropy, i64 512), align 16
+  %i.rv = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @entropy, i64 504), align 8
   %i.rw = shufflevector <2 x double> %i.rv, <2 x double> poison, <10 x i32> zeroinitializer
-  %3 = shufflevector <2 x double> %i.rv, <2 x double> poison, <10 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <10 x i32> zeroinitializer
   br label %.preheader372
 
 .preheader373:                                    ; preds = %.split.us.2, %.split399.us
@@ -514,9 +515,10 @@ bb.b:                                             ; preds = %.preheader373.split
   %i.abw = load i32, ptr %i.b, align 4, !tbaa !43
   %i.abx = icmp eq i32 %i.abw, 2
   %i.aby = getelementptr inbounds nuw [96 x i8], ptr @INIT_REF_NO_P, i64 %indvars.iv654
-  %i.abz = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @entropy, i64 504), align 8 ; 2 uses
+  %5 = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @entropy, i64 512), align 16
+  %i.abz = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @entropy, i64 504), align 8
   %i.aca = shufflevector <2 x double> %i.abz, <2 x double> poison, <6 x i32> zeroinitializer
-  %4 = shufflevector <2 x double> %i.abz, <2 x double> poison, <6 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <6 x i32> zeroinitializer
   br label %.preheader371
 
 .preheader372:                                    ; preds = %.preheader389, %.split406.us
@@ -737,7 +739,7 @@ bb.b:                                             ; preds = %.preheader373.split
   %i.ajs = insertelement <10 x double> %i.ajr, double %i.aim, i64 9
   %i.ajt = fneg <10 x double> %i.ajs
   %i.aju = fmul <10 x double> %i.aji, %i.ajt
-  %i.ajv = tail call <10 x double> @llvm.fmuladd.v10f64(<10 x double> %i.aju, <10 x double> %3, <10 x double> zeroinitializer)
+  %i.ajv = tail call <10 x double> @llvm.fmuladd.v10f64(<10 x double> %i.aju, <10 x double> %4, <10 x double> zeroinitializer)
   %i.ajw = insertelement <10 x double> poison, double %i.act, i64 0
   %i.ajx = insertelement <10 x double> %i.ajw, double %i.adk, i64 1
   %i.ajy = insertelement <10 x double> %i.ajx, double %i.aeb, i64 2
@@ -976,7 +978,7 @@ bb.c:                                             ; preds = %.preheader372.split
   %i.arg = insertelement <6 x double> %i.arf, double %i.aqi, i64 5
   %i.arh = fneg <6 x double> %i.arg
   %i.ari = fmul <6 x double> %i.ara, %i.arh
-  %i.arj = tail call <6 x double> @llvm.fmuladd.v6f64(<6 x double> %i.ari, <6 x double> %4, <6 x double> zeroinitializer)
+  %i.arj = tail call <6 x double> @llvm.fmuladd.v6f64(<6 x double> %i.ari, <6 x double> %6, <6 x double> zeroinitializer)
   %i.ark = insertelement <6 x double> poison, double %i.anf, i64 0
   %i.arl = insertelement <6 x double> %i.ark, double %i.anw, i64 1
   %i.arm = insertelement <6 x double> %i.arl, double %i.aon, i64 2

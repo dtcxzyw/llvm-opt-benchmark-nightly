@@ -205,15 +205,17 @@ hnsw_distance.exit:                               ; preds = %._crit_edge.i, %bb.
 .preheader379.lr.ph:                              ; preds = %._crit_edge406
   %i.ip = zext i32 %3 to i64                      ; 3 uses
   %i.iq = icmp sgt i32 %2, 2
-  %4 = insertelement <2 x i32> poison, i32 %2, i64 0
-  %5 = shufflevector <2 x i32> %4, <2 x i32> poison, <2 x i32> zeroinitializer
-  %6 = add nsw <2 x i32> %5, <i32 -1, i32 -2>
-  %7 = uitofp <2 x i32> %6 to <2 x float>         ; 2 uses
+  %4 = add nsw i32 %2, -1
+  %5 = uitofp nneg i32 %4 to float
+  %6 = add nsw i32 %2, -2
+  %7 = uitofp nneg i32 %6 to float
   br i1 %i.iq, label %.preheader379.us.preheader, label %.preheader379
 
 .preheader379.us.preheader:                       ; preds = %.preheader379.lr.ph
-  %i.ir = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
-  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %8 = insertelement <2 x float> poison, float %5, i64 0
+  %i.ir = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %9 = insertelement <2 x float> poison, float %7, i64 0
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
   br label %.preheader379.us
 
 .preheader379.us:                                 ; preds = %.preheader379.us.preheader, %._crit_edge413.split.us.us
@@ -256,7 +258,7 @@ bb.aa:                                            ; preds = %.lr.ph409.us.us, %b
   %i.jk = insertelement <2 x float> poison, float %i.jf, i64 0
   %i.jl = shufflevector <2 x float> %i.jk, <2 x float> poison, <2 x i32> zeroinitializer
   %i.jm = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.jj, <2 x float> %i.ir, <2 x float> %i.jl)
-  %i.jn = fdiv <2 x float> %i.jm, %8              ; 2 uses
+  %i.jn = fdiv <2 x float> %i.jm, %10             ; 2 uses
   %shift617 = shufflevector <2 x float> %i.jn, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop618 = fadd <2 x float> %i.jn, %shift617
   %i.jo = extractelement <2 x float> %foldExtExtBinop618, i64 0

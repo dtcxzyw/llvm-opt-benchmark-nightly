@@ -204,8 +204,10 @@ declare ptr @ARKStepCreate(ptr noundef, ptr noundef, double noundef, ptr noundef
 define internal range(i32 0, 2) i32 @f(double %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3) #0 {
 bb.a:
   %i.a = load i64, ptr %3, align 8, !tbaa !13     ; 7 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %5 = load double, ptr %4, align 8, !tbaa !18
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %4 = load <2 x double>, ptr %i.b, align 8, !tbaa !17 ; 3 uses
+  %6 = load double, ptr %i.b, align 8, !tbaa !21  ; 4 uses
   %i.c = tail call ptr @N_VGetArrayPointer(ptr noundef %1) #9 ; 11 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %check_flag.exit, label %bb.b
@@ -227,15 +229,16 @@ check_flag.exit40:                                ; preds = %bb.b
 
 bb.c:                                             ; preds = %bb.b
   tail call void @N_VConst(double noundef 0.000000e+00, ptr noundef %2) #9
-  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.k = fmul <2 x double> %5, <double -2.000000e+00, double 1.000000e+00>
-  %6 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
-  %7 = fdiv <2 x double> %i.k, %6                 ; 2 uses
-  %8 = extractelement <2 x double> %7, i64 1
-  %i.l = extractelement <2 x double> %4, i64 0    ; 3 uses
-  %i.m = fdiv double %8, %i.l                     ; 7 uses
-  %i.n = extractelement <2 x double> %7, i64 0
-  %i.o = fdiv double %i.n, %i.l                   ; 4 uses
+  %7 = insertelement <2 x double> poison, double %5, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.k = fmul <2 x double> %8, <double 1.000000e+00, double -2.000000e+00>
+  %9 = insertelement <2 x double> poison, double %6, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = fdiv <2 x double> %i.k, %10               ; 2 uses
+  %i.l = extractelement <2 x double> %11, i64 0
+  %i.m = fdiv double %i.l, %6                     ; 7 uses
+  %i.n = extractelement <2 x double> %11, i64 1
+  %i.o = fdiv double %i.n, %6                     ; 4 uses
   %i.p = sdiv i64 %i.a, 2
   store double 0.000000e+00, ptr %i.g, align 8, !tbaa !17
   %i.q = add i64 %i.a, -1                         ; 2 uses
@@ -360,7 +363,7 @@ middle.block:                                     ; preds = %vector.body
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %bb.c
   %i.bw = getelementptr inbounds [8 x i8], ptr %i.g, i64 %i.q
   store double 0.000000e+00, ptr %i.bw, align 8, !tbaa !17
-  %i.bx = fdiv double 1.000000e-02, %i.l
+  %i.bx = fdiv double 1.000000e-02, %6
   %i.by = getelementptr inbounds [8 x i8], ptr %i.g, i64 %i.p ; 2 uses
   %i.bz = load double, ptr %i.by, align 8, !tbaa !17
   %i.ca = fadd double %i.bx, %i.bz
@@ -390,8 +393,10 @@ declare i32 @ARKodeSetJacTimes(ptr noundef, ptr noundef, ptr noundef) local_unna
 define internal range(i32 0, 2) i32 @Jac(ptr noundef %0, ptr noundef %1, double %2, ptr nofree readnone captures(none) %3, ptr nofree readnone captures(none) %4, ptr nofree noundef readonly captures(none) %5, ptr nofree readnone captures(none) %6) #0 {
 bb.a:
   %i.a = load i64, ptr %5, align 8, !tbaa !13     ; 6 uses
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %8 = load double, ptr %7, align 8, !tbaa !18
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %7 = load <2 x double>, ptr %i.b, align 8, !tbaa !17 ; 3 uses
+  %9 = load double, ptr %i.b, align 8, !tbaa !21  ; 3 uses
   %i.c = tail call ptr @N_VGetArrayPointer(ptr noundef %0) #9 ; 11 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %check_flag.exit, label %bb.b
@@ -413,15 +418,16 @@ check_flag.exit36:                                ; preds = %bb.b
 
 bb.c:                                             ; preds = %bb.b
   tail call void @N_VConst(double noundef 0.000000e+00, ptr noundef %1) #9
-  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.k = fmul <2 x double> %8, <double -2.000000e+00, double 1.000000e+00>
-  %9 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
-  %10 = fdiv <2 x double> %i.k, %9                ; 2 uses
-  %11 = extractelement <2 x double> %10, i64 1
-  %i.l = extractelement <2 x double> %7, i64 0    ; 2 uses
-  %i.m = fdiv double %11, %i.l                    ; 7 uses
-  %i.n = extractelement <2 x double> %10, i64 0
-  %i.o = fdiv double %i.n, %i.l                   ; 4 uses
+  %10 = insertelement <2 x double> poison, double %8, i64 0
+  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.k = fmul <2 x double> %11, <double 1.000000e+00, double -2.000000e+00>
+  %12 = insertelement <2 x double> poison, double %9, i64 0
+  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
+  %14 = fdiv <2 x double> %i.k, %13               ; 2 uses
+  %i.l = extractelement <2 x double> %14, i64 0
+  %i.m = fdiv double %i.l, %9                     ; 7 uses
+  %i.n = extractelement <2 x double> %14, i64 1
+  %i.o = fdiv double %i.n, %9                     ; 4 uses
   store double 0.000000e+00, ptr %i.g, align 8, !tbaa !17
   %i.p = add i64 %i.a, -1                         ; 2 uses
   %i.q = icmp sgt i64 %i.a, 2

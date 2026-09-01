@@ -205,9 +205,12 @@ declare double @llvm.fabs.f64(double) #7
 define hidden noundef zeroext i1 @_ZN2cv23LineSegmentDetectorImpl20reduce_region_radiusERSt6vectorINS0_11RegionPointESaIS2_EEdddRNS0_4rectEdRKd(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(1160) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %1, double noundef %2, double noundef %3, double noundef %4, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(96) %5, double noundef %6, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %7) local_unnamed_addr #0 align 2 {
 bb.a:
   %8 = alloca %"struct.cv::LineSegmentDetectorImpl::RegionPoint", align 8 ; 4 uses
-  %i.a = load ptr, ptr %1, align 8, !tbaa !114    ; 2 uses
-  %9 = load <2 x i32>, ptr %i.a, align 8, !tbaa !81
-  %10 = sitofp <2 x i32> %9 to <2 x double>       ; 4 uses
+  %i.a = load ptr, ptr %1, align 8, !tbaa !114    ; 3 uses
+  %9 = load i32, ptr %i.a, align 8, !tbaa !152
+  %10 = sitofp i32 %9 to double                   ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %12 = load i32, ptr %11, align 4, !tbaa !154
+  %13 = sitofp i32 %12 to double                  ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 24
@@ -218,11 +221,13 @@ bb.a:
 .lr.ph57:                                         ; preds = %bb.a
   %i.g = load <4 x double>, ptr %5, align 8, !tbaa !99 ; 2 uses
   %i.h = shufflevector <4 x double> %i.g, <4 x double> poison, <2 x i32> <i32 0, i32 2>
-  %i.i = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %14 = insertelement <2 x double> poison, double %10, i64 0
+  %i.i = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
   %i.j = fsub <2 x double> %i.h, %i.i             ; 2 uses
   %i.k = shufflevector <4 x double> %i.g, <4 x double> poison, <2 x i32> <i32 1, i32 3>
-  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.l = fsub <2 x double> %i.k, %11              ; 2 uses
+  %15 = insertelement <2 x double> poison, double %13, i64 0
+  %16 = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.l = fsub <2 x double> %i.k, %16              ; 2 uses
   %i.m = fmul <2 x double> %i.l, %i.l
   %i.n = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.j, <2 x double> %i.j, <2 x double> %i.m) ; 2 uses
   %i.o = extractelement <2 x double> %i.n, i64 0  ; 2 uses
@@ -253,12 +258,12 @@ bb.b:                                             ; preds = %.lr.ph57, %bb.e
   %i.aa = getelementptr inbounds nuw [32 x i8], ptr %i.y, i64 %.053 ; 2 uses
   %i.ab = load <2 x i32>, ptr %i.aa, align 8, !tbaa !81
   %i.ac = sitofp <2 x i32> %i.ab to <2 x double>  ; 2 uses
-  %foldExtExtBinop = fsub <2 x double> %i.ac, %10
-  %12 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 2 uses
-  %foldExtExtBinop68 = fsub <2 x double> %i.ac, %10 ; 2 uses
-  %foldExtExtBinop70 = fmul <2 x double> %foldExtExtBinop68, %foldExtExtBinop68
-  %13 = extractelement <2 x double> %foldExtExtBinop70, i64 1
-  %i.ad = tail call noundef double @llvm.fmuladd.f64(double %12, double %12, double %13)
+  %17 = extractelement <2 x double> %i.ac, i64 0
+  %18 = fsub double %17, %10                      ; 2 uses
+  %19 = extractelement <2 x double> %i.ac, i64 1
+  %20 = fsub double %19, %13                      ; 2 uses
+  %21 = fmul double %20, %20
+  %i.ad = tail call noundef double @llvm.fmuladd.f64(double %18, double %18, double %21)
   %i.ae = fcmp ogt double %i.ad, %i.w
   br i1 %i.ae, label %bb.c, label %bb.d
 

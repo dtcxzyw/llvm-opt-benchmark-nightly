@@ -204,7 +204,7 @@ bb.a:
   %9 = alloca %"class.core::rect", align 4        ; 8 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %11 = alloca %"class.core::rect", align 4       ; 7 uses
-  %12 = alloca %"class.core::rect", align 16      ; 10 uses
+  %12 = alloca %"class.core::rect", align 8       ; 10 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %14 = alloca %"class.core::rect", align 8       ; 10 uses
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -433,10 +433,10 @@ _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit98: ; preds = %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #22
   %i.eg = fmul nsz float %i.d, 1.000000e+02
   %i.eh = fptosi float %i.eg to i32               ; 2 uses
-  store i32 0, ptr %12, align 16, !tbaa !63
+  store i32 0, ptr %12, align 8, !tbaa !63
   %i.ei = getelementptr inbounds nuw i8, ptr %12, i64 4
   store i32 0, ptr %i.ei, align 4, !tbaa !64
-  %i.ej = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %i.ej = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 3 uses
   store i32 %i.eh, ptr %i.ej, align 8, !tbaa !63
   %i.ek = getelementptr inbounds nuw i8, ptr %12, i64 12
   store i32 %i.as, ptr %i.ek, align 4, !tbaa !64
@@ -446,21 +446,33 @@ _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit98: ; preds = %bb.
   %i.eo = shufflevector <2 x float> %i.en, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ep = insertelement <2 x float> poison, float %i.dd, i64 0
   %i.eq = insertelement <2 x float> %i.ep, float %i.em, i64 1
-  %i.er = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.eo, <2 x float> <float 5.000000e+01, float 5.600000e+01>, <2 x float> %i.eq)
-  %18 = fptosi <2 x float> %i.er to <2 x i32>     ; 3 uses
-  %19 = load <2 x i64>, ptr %12, align 16         ; 2 uses
-  %20 = trunc <2 x i64> %19 to <2 x i32>
-  %21 = shufflevector <2 x i32> %18, <2 x i32> poison, <2 x i32> <i32 1, i32 1>
-  %22 = add nsw <2 x i32> %21, %20
-  %23 = lshr <2 x i64> %19, splat (i64 32)
-  %24 = trunc nuw <2 x i64> %23 to <2 x i32>
-  %25 = shufflevector <2 x i32> %18, <2 x i32> poison, <2 x i32> zeroinitializer
-  %26 = add nsw <2 x i32> %25, %24
-  %27 = zext <2 x i32> %26 to <2 x i64>
-  %28 = shl nuw <2 x i64> %27, splat (i64 32)
-  %29 = zext <2 x i32> %22 to <2 x i64>
-  %30 = or disjoint <2 x i64> %28, %29
-  store <2 x i64> %30, ptr %12, align 16
+  %i.er = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.eo, <2 x float> <float 5.000000e+01, float 5.600000e+01>, <2 x float> %i.eq) ; 2 uses
+  %18 = extractelement <2 x float> %i.er, i64 0
+  %19 = fptosi float %18 to i32                   ; 5 uses
+  %20 = extractelement <2 x float> %i.er, i64 1
+  %21 = fptosi float %20 to i32                   ; 2 uses
+  %.sroa.0.0.copyload2.i = load i64, ptr %12, align 8 ; 2 uses
+  %.sroa.0.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.0.0.copyload2.i to i32
+  %.sroa.0.sroa.6.0.extract.shift.i = lshr i64 %.sroa.0.0.copyload2.i, 32
+  %.sroa.0.sroa.6.0.extract.trunc.i = trunc nuw i64 %.sroa.0.sroa.6.0.extract.shift.i to i32
+  %.sroa.8.0.copyload.i = load i64, ptr %i.ej, align 8 ; 2 uses
+  %22 = add nsw i32 %.sroa.0.sroa.0.0.extract.trunc.i, %21
+  %23 = add nsw i32 %.sroa.0.sroa.6.0.extract.trunc.i, %19
+  %.sroa.8.8.extract.trunc.i = trunc i64 %.sroa.8.0.copyload.i to i32
+  %24 = add nsw i32 %.sroa.8.8.extract.trunc.i, %21
+  %.sroa.8.8.insert.ext.i = zext i32 %24 to i64
+  %.sroa.8.12.extract.shift.i = lshr i64 %.sroa.8.0.copyload.i, 32
+  %.sroa.8.12.extract.trunc.i = trunc nuw i64 %.sroa.8.12.extract.shift.i to i32
+  %25 = add nsw i32 %.sroa.8.12.extract.trunc.i, %19
+  %.sroa.8.12.insert.ext.i = zext i32 %25 to i64
+  %.sroa.8.12.insert.shift.i = shl nuw i64 %.sroa.8.12.insert.ext.i, 32
+  %.sroa.8.12.insert.insert.i = or disjoint i64 %.sroa.8.12.insert.shift.i, %.sroa.8.8.insert.ext.i
+  %.sroa.0.sroa.6.0.insert.ext.i = zext i32 %23 to i64
+  %.sroa.0.sroa.6.0.insert.shift.i = shl nuw i64 %.sroa.0.sroa.6.0.insert.ext.i, 32
+  %.sroa.0.sroa.0.0.insert.ext.i = zext i32 %22 to i64
+  %.sroa.0.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.0.sroa.6.0.insert.shift.i, %.sroa.0.sroa.0.0.insert.ext.i
+  store i64 %.sroa.0.sroa.0.0.insert.insert.i, ptr %12, align 8
+  store i64 %.sroa.8.12.insert.insert.i, ptr %i.ej, align 8
   %i.es = load ptr, ptr %i.ad, align 8, !tbaa !65
   %i.et = getelementptr inbounds nuw i8, ptr %0, i64 512 ; 2 uses
   %i.eu = load ptr, ptr %i.et, align 8, !tbaa !54
@@ -502,14 +514,13 @@ _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit107: ; preds = %bb
   %.sroa.0.sroa.6.0.extract.trunc.i111 = trunc nuw i64 %.sroa.0.sroa.6.0.extract.shift.i110 to i32
   %.sroa.8.0.copyload.i113 = load i64, ptr %i.fe, align 8 ; 2 uses
   %i.fi = add nsw i32 %.sroa.0.sroa.0.0.extract.trunc.i109, %i.fh
-  %31 = extractelement <2 x i32> %18, i64 0       ; 3 uses
-  %i.fj = add nsw i32 %31, %.sroa.0.sroa.6.0.extract.trunc.i111
+  %i.fj = add nsw i32 %.sroa.0.sroa.6.0.extract.trunc.i111, %19
   %.sroa.8.8.extract.trunc.i114 = trunc i64 %.sroa.8.0.copyload.i113 to i32
   %i.fk = add nsw i32 %.sroa.8.8.extract.trunc.i114, %i.fh
   %.sroa.8.8.insert.ext.i115 = zext i32 %i.fk to i64
   %.sroa.8.12.extract.shift.i116 = lshr i64 %.sroa.8.0.copyload.i113, 32
   %.sroa.8.12.extract.trunc.i117 = trunc nuw i64 %.sroa.8.12.extract.shift.i116 to i32
-  %i.fl = add nsw i32 %31, %.sroa.8.12.extract.trunc.i117
+  %i.fl = add nsw i32 %.sroa.8.12.extract.trunc.i117, %19
   %.sroa.8.12.insert.ext.i118 = zext i32 %i.fl to i64
   %.sroa.8.12.insert.shift.i119 = shl nuw i64 %.sroa.8.12.insert.ext.i118, 32
   %.sroa.8.12.insert.insert.i120 = or disjoint i64 %.sroa.8.12.insert.shift.i119, %.sroa.8.8.insert.ext.i115
@@ -543,7 +554,7 @@ _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i12
 _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit129: ; preds = %bb.f, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i127
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #22
-  %i.fw = sitofp nsz i32 %31 to float
+  %i.fw = sitofp nsz i32 %19 to float
   %i.fx = call nsz float @llvm.fmuladd.f32(float %i.d, float 5.000000e+01, float %i.fw)
   %i.fy = fptosi float %i.fx to i32               ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #22

@@ -205,13 +205,17 @@ vector.body85:                                    ; preds = %vector.body85, %vec
   br label %.lr.ph.i17
 
 .lr.ph.i17:                                       ; preds = %.lr.ph.i17.preheader105, %.lr.ph.i17
-  %.022.i = phi ptr [ %i.ev, %.lr.ph.i17 ], [ %.022.i.ph, %.lr.ph.i17.preheader105 ] ; 3 uses
-  %5 = load <2 x float>, ptr %.022.i, align 4, !tbaa !546 ; 2 uses
+  %.022.i = phi ptr [ %i.ev, %.lr.ph.i17 ], [ %.022.i.ph, %.lr.ph.i17.preheader105 ] ; 4 uses
+  %5 = load float, ptr %.022.i, align 4, !tbaa !561
+  %6 = getelementptr inbounds nuw i8, ptr %.022.i, i64 4
+  %7 = load float, ptr %6, align 4, !tbaa !563
   %i.eq = load <2 x float>, ptr %3, align 4, !tbaa !546
   %i.er = load <2 x float>, ptr %i.cl, align 4, !tbaa !546
-  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.es = fmul <2 x float> %6, %i.er
-  %i.et = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %8 = insertelement <2 x float> poison, float %7, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.es = fmul <2 x float> %9, %i.er
+  %10 = insertelement <2 x float> poison, float %5, i64 0
+  %i.et = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
   %i.eu = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.et, <2 x float> %i.eq, <2 x float> %i.es)
   store <2 x float> %i.eu, ptr %.022.i, align 4, !tbaa !546
   %i.ev = getelementptr inbounds nuw i8, ptr %.022.i, i64 12 ; 2 uses
@@ -329,13 +333,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br label %.lr.ph.i24
 
 .lr.ph.i24:                                       ; preds = %.lr.ph.i24.preheader111, %.lr.ph.i24
-  %.022.i25 = phi ptr [ %i.hh, %.lr.ph.i24 ], [ %.022.i25.ph, %.lr.ph.i24.preheader111 ] ; 3 uses
-  %7 = load <2 x float>, ptr %.022.i25, align 4, !tbaa !546 ; 2 uses
+  %.022.i25 = phi ptr [ %i.hh, %.lr.ph.i24 ], [ %.022.i25.ph, %.lr.ph.i24.preheader111 ] ; 4 uses
+  %11 = load float, ptr %.022.i25, align 4, !tbaa !561
+  %12 = getelementptr inbounds nuw i8, ptr %.022.i25, i64 4
+  %13 = load float, ptr %12, align 4, !tbaa !563
   %i.hc = load <2 x float>, ptr %3, align 4, !tbaa !546
   %i.hd = load <2 x float>, ptr %i.ex, align 4, !tbaa !546
-  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.he = fmul <2 x float> %8, %i.hd
-  %i.hf = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
+  %14 = insertelement <2 x float> poison, float %13, i64 0
+  %15 = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.he = fmul <2 x float> %15, %i.hd
+  %16 = insertelement <2 x float> poison, float %11, i64 0
+  %i.hf = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
   %i.hg = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.hf, <2 x float> %i.hc, <2 x float> %i.he)
   store <2 x float> %i.hg, ptr %.022.i25, align 4, !tbaa !546
   %i.hh = getelementptr inbounds nuw i8, ptr %.022.i25, i64 12 ; 2 uses

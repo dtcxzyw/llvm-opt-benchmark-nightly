@@ -205,18 +205,22 @@ bb.g:                                             ; preds = %.loopexit
 bb.h:                                             ; preds = %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i, %bb.g
   %.036.i = phi ptr [ %2, %bb.g ], [ %i.eh, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i ] ; 6 uses
   %.035.i = phi i64 [ %i.ca, %bb.g ], [ %i.ei, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i ]
-  %.034.i = phi ptr [ %i.cd, %bb.g ], [ %i.dn, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i ] ; 2 uses
-  %.0.i = phi ptr [ %i.cd, %bb.g ], [ %i.do, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i ] ; 2 uses
+  %.034.i = phi ptr [ %i.cd, %bb.g ], [ %i.dn, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i ] ; 3 uses
+  %.0.i = phi ptr [ %i.cd, %bb.g ], [ %i.do, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i ] ; 3 uses
   %i.ci = getelementptr inbounds nuw [8 x i8], ptr %.036.i, i64 %i.ca ; 6 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.036.i, i64 %.idx38.i ; 2 uses
   %i.ck = load <2 x float>, ptr %i.ci, align 4, !tbaa !96 ; 4 uses
+  %6 = load float, ptr %.034.i, align 4           ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.034.i, i64 4
+  %8 = load float, ptr %7, align 4                ; 2 uses
   %.sroa.0.0.vec.extract.i.i.i47 = extractelement <2 x float> %i.ck, i64 0
   %.sroa.0.4.vec.extract.i.i.i48 = extractelement <2 x float> %i.ck, i64 1
-  %6 = load <2 x float>, ptr %.034.i, align 4     ; 4 uses
+  %9 = insertelement <2 x float> poison, float %8, i64 0
   %i.cl = shufflevector <2 x float> %i.ck, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.cm = fmul <2 x float> %i.cl, %7              ; 2 uses
-  %i.cn = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.cm = fmul <2 x float> %i.cl, %10             ; 2 uses
+  %11 = insertelement <2 x float> poison, float %6, i64 0
+  %i.cn = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
   %i.co = fmul <2 x float> %i.cn, %i.ck           ; 2 uses
   %i.cp = fsub <2 x float> %i.co, %i.cm           ; 2 uses
   %i.cq = fadd <2 x float> %i.co, %i.cm           ; 2 uses
@@ -231,21 +235,23 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.cv, label %bb.j, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit.i, !prof !1086
 
 bb.j:                                             ; preds = %bb.i
-  %8 = extractelement <2 x float> %6, i64 0
-  %9 = extractelement <2 x float> %6, i64 1
-  %i.cw = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i.i47, float noundef %.sroa.0.4.vec.extract.i.i.i48, float noundef %8, float noundef %9) #32
+  %i.cw = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i.i47, float noundef %.sroa.0.4.vec.extract.i.i.i48, float noundef %6, float noundef %8) #32
   br label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit.i
 
 _ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit.i: ; preds = %bb.j, %bb.i, %bb.h
   %i.cx = phi <2 x float> [ %i.cr, %bb.h ], [ %i.cr, %bb.i ], [ %i.cw, %bb.j ] ; 2 uses
   %i.cy = load <2 x float>, ptr %i.cj, align 4, !tbaa !96 ; 4 uses
+  %12 = load float, ptr %.0.i, align 4            ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %.0.i, i64 4
+  %14 = load float, ptr %13, align 4              ; 2 uses
   %.sroa.0.0.vec.extract.i.i40.i = extractelement <2 x float> %i.cy, i64 0
   %.sroa.0.4.vec.extract.i.i41.i = extractelement <2 x float> %i.cy, i64 1
-  %10 = load <2 x float>, ptr %.0.i, align 4      ; 4 uses
+  %15 = insertelement <2 x float> poison, float %14, i64 0
   %i.cz = shufflevector <2 x float> %i.cy, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %11 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.da = fmul <2 x float> %i.cz, %11             ; 2 uses
-  %i.db = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
+  %16 = shufflevector <2 x float> %15, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.da = fmul <2 x float> %i.cz, %16             ; 2 uses
+  %17 = insertelement <2 x float> poison, float %12, i64 0
+  %i.db = shufflevector <2 x float> %17, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dc = fmul <2 x float> %i.db, %i.cy           ; 2 uses
   %i.dd = fsub <2 x float> %i.dc, %i.da           ; 2 uses
   %i.de = fadd <2 x float> %i.dc, %i.da           ; 2 uses
@@ -260,9 +266,7 @@ bb.k:                                             ; preds = %_ZN7kissfftIfN13kis
   br i1 %i.dj, label %bb.l, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i, !prof !1086
 
 bb.l:                                             ; preds = %bb.k
-  %12 = extractelement <2 x float> %10, i64 0
-  %13 = extractelement <2 x float> %10, i64 1
-  %i.dk = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i40.i, float noundef %.sroa.0.4.vec.extract.i.i41.i, float noundef %12, float noundef %13) #32
+  %i.dk = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i40.i, float noundef %.sroa.0.4.vec.extract.i.i41.i, float noundef %12, float noundef %14) #32
   br label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i
 
 _ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit46.i: ; preds = %bb.l, %bb.k, %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit.i
@@ -665,15 +669,19 @@ bb.e:                                             ; preds = %_ZN7kissfftIfN13kis
   %i.bg = load ptr, ptr %i.d, align 8, !tbaa !1041
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %indvars.iv111
   %i.bi = sext i32 %spec.select.us.us.us to i64
-  %i.bj = getelementptr inbounds [8 x i8], ptr %i.b, i64 %i.bi
+  %i.bj = getelementptr inbounds [8 x i8], ptr %i.b, i64 %i.bi ; 2 uses
   %i.bk = load <2 x float>, ptr %i.bh, align 4, !tbaa !96 ; 4 uses
+  %5 = load float, ptr %i.bj, align 4             ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.bj, i64 4
+  %7 = load float, ptr %6, align 4                ; 2 uses
   %.sroa.0.0.vec.extract.i.i.us.us.us = extractelement <2 x float> %i.bk, i64 0
   %.sroa.0.4.vec.extract.i.i.us.us.us = extractelement <2 x float> %i.bk, i64 1
-  %5 = load <2 x float>, ptr %i.bj, align 4       ; 4 uses
+  %8 = insertelement <2 x float> poison, float %7, i64 0
   %i.bl = shufflevector <2 x float> %i.bk, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.bm = fmul <2 x float> %i.bl, %6              ; 2 uses
-  %i.bn = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.bm = fmul <2 x float> %i.bl, %9              ; 2 uses
+  %10 = insertelement <2 x float> poison, float %5, i64 0
+  %i.bn = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bo = fmul <2 x float> %i.bn, %i.bk           ; 2 uses
   %i.bp = fsub <2 x float> %i.bo, %i.bm           ; 2 uses
   %i.bq = fadd <2 x float> %i.bo, %i.bm           ; 2 uses
@@ -688,9 +696,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.bv, label %bb.g, label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit.us.us.us, !prof !1086
 
 bb.g:                                             ; preds = %bb.f
-  %7 = extractelement <2 x float> %5, i64 0
-  %8 = extractelement <2 x float> %5, i64 1
-  %i.bw = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i.us.us.us, float noundef %.sroa.0.4.vec.extract.i.i.us.us.us, float noundef %7, float noundef %8) #32
+  %i.bw = tail call noundef <2 x float> @__mulsc3(float noundef %.sroa.0.0.vec.extract.i.i.us.us.us, float noundef %.sroa.0.4.vec.extract.i.i.us.us.us, float noundef %5, float noundef %7) #32
   %i.bx = load <2 x float>, ptr %i.au, align 4
   br label %_ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit.us.us.us
 

@@ -205,30 +205,32 @@ define void @_RNvXs_NtNtCs7tN9tvpkfrg_12typst_layout6inline4decoNtB4_14BezPathBu
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.c = insertelement <2 x float> poison, float %1, i64 0
-  %i.d = insertelement <2 x float> %i.c, float %2, i64 1
+  %3 = load <2 x double>, ptr %i.b, align 8
+  %i.c = insertelement <2 x float> poison, float %2, i64 0
+  %i.d = insertelement <2 x float> %i.c, float %1, i64 1
   %i.e = fpext <2 x float> %i.d to <2 x double>
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %3 = load double, ptr %i.f, align 8, !alias.scope !51207, !noundef !10
-  %4 = load <2 x double>, ptr %i.b, align 8, !alias.scope !51207 ; 2 uses
-  %i.g = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %4 = load <2 x double>, ptr %i.f, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %6 = load double, ptr %5, align 8, !alias.scope !51207, !noundef !10
+  %i.g = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
   %i.h = fdiv <2 x double> %i.e, %i.g             ; 2 uses
   %i.i = fcmp ord <2 x double> %i.h, zeroinitializer
   %i.j = select <2 x i1> %i.i, <2 x double> %i.h, <2 x double> zeroinitializer
-  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.k = fmul <2 x double> %5, %i.j               ; 3 uses
+  %7 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.k = fmul <2 x double> %7, %i.j               ; 3 uses
   %i.l = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.k)
   %i.m = fcmp one <2 x double> %i.l, splat (double +inf)
   %i.n = fneg <2 x double> %i.k
-  %i.o = shufflevector <2 x double> %i.k, <2 x double> %i.n, <2 x i32> <i32 0, i32 3>
-  %i.p = select <2 x i1> %i.m, <2 x double> %i.o, <2 x double> <double 0.000000e+00, double -0.000000e+00> ; 2 uses
-  %i.q = extractelement <2 x double> %i.p, i64 0
-  %i.r = fadd double %3, %i.q
+  %i.o = shufflevector <2 x double> %i.n, <2 x double> %i.k, <2 x i32> <i32 0, i32 3>
+  %i.p = select <2 x i1> %i.m, <2 x double> %i.o, <2 x double> <double -0.000000e+00, double 0.000000e+00> ; 2 uses
+  %i.q = extractelement <2 x double> %i.p, i64 1
+  %i.r = fadd double %6, %i.q
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store double %i.r, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.u = extractelement <2 x double> %i.p, i64 1
+  %i.u = extractelement <2 x double> %i.p, i64 0
   store double %i.u, ptr %i.t, align 8
   store i64 1, ptr %i.a, align 8
   call void @_RNvMNtCsdqxqgV7ixUt_5kurbo7bezpathNtB2_7BezPath4push(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(56) %i.a)
@@ -241,30 +243,32 @@ define void @_RNvXs_NtNtCs7tN9tvpkfrg_12typst_layout6inline4decoNtB4_14BezPathBu
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.c = insertelement <2 x float> poison, float %1, i64 0
-  %i.d = insertelement <2 x float> %i.c, float %2, i64 1
+  %3 = load <2 x double>, ptr %i.b, align 8
+  %i.c = insertelement <2 x float> poison, float %2, i64 0
+  %i.d = insertelement <2 x float> %i.c, float %1, i64 1
   %i.e = fpext <2 x float> %i.d to <2 x double>
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %3 = load double, ptr %i.f, align 8, !alias.scope !51210, !noundef !10
-  %4 = load <2 x double>, ptr %i.b, align 8, !alias.scope !51210 ; 2 uses
-  %i.g = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %4 = load <2 x double>, ptr %i.f, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %6 = load double, ptr %5, align 8, !alias.scope !51210, !noundef !10
+  %i.g = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
   %i.h = fdiv <2 x double> %i.e, %i.g             ; 2 uses
   %i.i = fcmp ord <2 x double> %i.h, zeroinitializer
   %i.j = select <2 x i1> %i.i, <2 x double> %i.h, <2 x double> zeroinitializer
-  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.k = fmul <2 x double> %5, %i.j               ; 3 uses
+  %7 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.k = fmul <2 x double> %7, %i.j               ; 3 uses
   %i.l = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.k)
   %i.m = fcmp one <2 x double> %i.l, splat (double +inf)
   %i.n = fneg <2 x double> %i.k
-  %i.o = shufflevector <2 x double> %i.k, <2 x double> %i.n, <2 x i32> <i32 0, i32 3>
-  %i.p = select <2 x i1> %i.m, <2 x double> %i.o, <2 x double> <double 0.000000e+00, double -0.000000e+00> ; 2 uses
-  %i.q = extractelement <2 x double> %i.p, i64 0
-  %i.r = fadd double %3, %i.q
+  %i.o = shufflevector <2 x double> %i.n, <2 x double> %i.k, <2 x i32> <i32 0, i32 3>
+  %i.p = select <2 x i1> %i.m, <2 x double> %i.o, <2 x double> <double -0.000000e+00, double 0.000000e+00> ; 2 uses
+  %i.q = extractelement <2 x double> %i.p, i64 1
+  %i.r = fadd double %6, %i.q
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store double %i.r, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.u = extractelement <2 x double> %i.p, i64 1
+  %i.u = extractelement <2 x double> %i.p, i64 0
   store double %i.u, ptr %i.t, align 8
   store i64 0, ptr %i.a, align 8
   call void @_RNvMNtCsdqxqgV7ixUt_5kurbo7bezpathNtB2_7BezPath4push(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(56) %i.a)
@@ -277,20 +281,22 @@ define void @_RNvXs_NtNtCs7tN9tvpkfrg_12typst_layout6inline4decoNtB4_14BezPathBu
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %5 = load <2 x double>, ptr %i.b, align 8
   %i.c = insertelement <4 x float> poison, float %4, i64 0
   %i.d = insertelement <4 x float> %i.c, float %3, i64 1
   %i.e = insertelement <4 x float> %i.d, float %2, i64 2
   %i.f = insertelement <4 x float> %i.e, float %1, i64 3
   %i.g = fpext <4 x float> %i.f to <4 x double>
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %5 = load double, ptr %i.h, align 8, !alias.scope !51213, !noundef !10
-  %6 = load <2 x double>, ptr %i.b, align 8, !alias.scope !51213 ; 2 uses
-  %i.i = shufflevector <2 x double> %6, <2 x double> poison, <4 x i32> zeroinitializer
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %6 = load <2 x double>, ptr %i.h, align 8
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %8 = load double, ptr %7, align 8, !alias.scope !51213, !noundef !10
+  %i.i = shufflevector <2 x double> %5, <2 x double> poison, <4 x i32> zeroinitializer
   %i.j = fdiv <4 x double> %i.g, %i.i             ; 2 uses
   %i.k = fcmp ord <4 x double> %i.j, zeroinitializer
   %i.l = select <4 x i1> %i.k, <4 x double> %i.j, <4 x double> zeroinitializer
-  %7 = shufflevector <2 x double> %6, <2 x double> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.m = fmul <4 x double> %7, %i.l               ; 4 uses
+  %9 = shufflevector <2 x double> %6, <2 x double> poison, <4 x i32> zeroinitializer
+  %i.m = fmul <4 x double> %9, %i.l               ; 4 uses
   %i.n = tail call <4 x double> @llvm.fabs.v4f64(<4 x double> %i.m)
   %i.o = fcmp one <4 x double> %i.n, splat (double +inf) ; 3 uses
   %i.p = extractelement <4 x double> %i.m, i64 2
@@ -300,7 +306,7 @@ bb.a:
   %i.s = shufflevector <4 x i1> %i.o, <4 x i1> poison, <2 x i32> <i32 3, i32 1>
   %i.t = shufflevector <4 x double> %i.m, <4 x double> poison, <2 x i32> <i32 3, i32 1>
   %i.u = select <2 x i1> %i.s, <2 x double> %i.t, <2 x double> zeroinitializer
-  %i.v = insertelement <2 x double> poison, double %5, i64 0
+  %i.v = insertelement <2 x double> poison, double %8, i64 0
   %i.w = shufflevector <2 x double> %i.v, <2 x double> poison, <2 x i32> zeroinitializer
   %i.x = fadd <2 x double> %i.w, %i.u             ; 2 uses
   %i.y = extractelement <4 x double> %i.m, i64 0
