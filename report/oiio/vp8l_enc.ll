@@ -205,20 +205,21 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader472, %.lr.ph.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ %indvars.iv.i.ph, %.lr.ph.i.preheader472 ] ; 4 uses
-  %i.fv = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %indvars.iv.i
+  %i.fv = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %indvars.iv.i ; 2 uses
+  %7 = load i32, ptr %i.fv, align 4, !tbaa !3     ; 2 uses
   %i.fw = getelementptr i8, ptr %i.fv, i64 -4
-  %7 = load <2 x i32>, ptr %i.fw, align 4, !tbaa !3 ; 2 uses
-  %8 = shufflevector <2 x i32> %7, <2 x i32> poison, <2 x i32> <i32 1, i32 1>
-  %9 = or <2 x i32> %8, <i32 65280, i32 16711680>
-  %10 = shufflevector <2 x i32> %7, <2 x i32> poison, <2 x i32> zeroinitializer
-  %11 = and <2 x i32> %10, <i32 16711935, i32 -16711936>
-  %12 = sub <2 x i32> %9, %11
-  %13 = and <2 x i32> %12, <i32 16711935, i32 -16711936> ; 2 uses
-  %shift = shufflevector <2 x i32> %13, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or disjoint <2 x i32> %shift, %13
-  %14 = extractelement <2 x i32> %foldExtExtBinop, i64 0
+  %8 = load i32, ptr %i.fw, align 4, !tbaa !3     ; 2 uses
+  %9 = or i32 %7, 16711680
+  %10 = and i32 %8, -16711936
+  %11 = sub i32 %9, %10
+  %12 = or i32 %7, 65280
+  %13 = and i32 %8, 16711935
+  %14 = sub i32 %12, %13
+  %15 = and i32 %11, -16711936
+  %16 = and i32 %14, 16711935
+  %17 = or disjoint i32 %15, %16
   %i.fx = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i
-  store i32 %14, ptr %i.fx, align 4, !tbaa !3
+  store i32 %17, ptr %i.fx, align 4, !tbaa !3
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
   %i.fy = icmp samesign ugt i64 %indvars.iv.i, 1
   br i1 %i.fy, label %.lr.ph.i, label %EncodePalette.exit, !llvm.loop !96

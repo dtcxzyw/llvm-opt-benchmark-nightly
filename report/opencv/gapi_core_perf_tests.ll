@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.au = fptosi <2 x float> %i.at to <2 x i32>   ; 3 uses
   %i.av = fmul <2 x float> %i.aq, %i.as
   %i.aw = fptosi <2 x float> %i.av to <2 x i32>
-  %i.ax = sub nsw <2 x i32> %i.aw, %i.au          ; 2 uses
+  %i.ax = sub nsw <2 x i32> %i.aw, %i.au          ; 3 uses
   %i.ay = fcmp olt float %i.am, 0.000000e+00
   br i1 %i.ay, label %._crit_edge, label %bb.n
 
@@ -221,42 +221,41 @@ bb.o:                                             ; preds = %bb.n
   br i1 %4, label %bb.p, label %_ZN11opencv_test13ParserSSDTest17adjustBoundingBoxERN2cv5Rect_IiEE.exit
 
 bb.p:                                             ; preds = %bb.o
-  %11 = shufflevector <2 x i32> %i.ax, <2 x i32> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
-  %i.be = sitofp <2 x i32> %11 to <2 x double>    ; 3 uses
-  %i.bf = extractelement <2 x double> %i.be, i64 1
+  %i.be = sitofp <2 x i32> %i.ax to <2 x double>  ; 3 uses
+  %i.bf = extractelement <2 x double> %i.be, i64 0
   %i.bg = fmul nnan double %i.bf, 6.700000e-02
   %i.bh = fptosi double %i.bg to i32
   %i.bi = sub nsw i32 %i.bc, %i.bh                ; 2 uses
-  %i.bj = extractelement <2 x double> %i.be, i64 0
+  %i.bj = extractelement <2 x double> %i.be, i64 1
   %i.bk = fmul nnan double %i.bj, 2.800000e-02
   %i.bl = fptosi double %i.bk to i32
   %i.bm = sub nsw i32 %i.bd, %i.bl                ; 2 uses
-  %i.bn = fmul nnan <2 x double> %i.be, <double 1.300000e-01, double 1.500000e-01>
+  %i.bn = fmul nnan <2 x double> %i.be, <double 1.500000e-01, double 1.300000e-01>
   %i.bo = fptosi <2 x double> %i.bn to <2 x i32>
-  %i.bp = add nsw <2 x i32> %11, %i.bo            ; 4 uses
+  %i.bp = add nsw <2 x i32> %i.ax, %i.bo          ; 4 uses
   %i.bq = extractelement <2 x i32> %i.bp, i64 0   ; 3 uses
   %i.br = extractelement <2 x i32> %i.bp, i64 1   ; 3 uses
-  %i.bs = icmp slt i32 %i.br, %i.bq
+  %i.bs = icmp slt i32 %i.bq, %i.br
   br i1 %i.bs, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  %i.bt = sub nsw i32 %i.bq, %i.br
+  %i.bt = sub nsw i32 %i.br, %i.bq
   %i.bu = lshr i32 %i.bt, 1
   %i.bv = sub nsw i32 %i.bi, %i.bu
-  %12 = shufflevector <2 x i32> %i.bp, <2 x i32> poison, <2 x i32> zeroinitializer
+  %11 = shufflevector <2 x i32> %i.bp, <2 x i32> poison, <2 x i32> <i32 1, i32 1>
   br label %_ZN11opencv_test13ParserSSDTest17adjustBoundingBoxERN2cv5Rect_IiEE.exit
 
 bb.r:                                             ; preds = %bb.p
-  %i.bw = sub nsw i32 %i.br, %i.bq
+  %i.bw = sub nsw i32 %i.bq, %i.br
   %i.bx = lshr i32 %i.bw, 1
   %i.by = sub nsw i32 %i.bm, %i.bx
-  %13 = shufflevector <2 x i32> %i.bp, <2 x i32> poison, <2 x i32> <i32 1, i32 1>
+  %12 = shufflevector <2 x i32> %i.bp, <2 x i32> poison, <2 x i32> zeroinitializer
   br label %_ZN11opencv_test13ParserSSDTest17adjustBoundingBoxERN2cv5Rect_IiEE.exit
 
 _ZN11opencv_test13ParserSSDTest17adjustBoundingBoxERN2cv5Rect_IiEE.exit: ; preds = %bb.r, %bb.q, %bb.o
   %.sroa.0.0 = phi i32 [ %i.bc, %bb.o ], [ %i.bv, %bb.q ], [ %i.bi, %bb.r ] ; 3 uses
   %.sroa.8.0 = phi i32 [ %i.bd, %bb.o ], [ %i.bm, %bb.q ], [ %i.by, %bb.r ] ; 3 uses
-  %i.bz = phi <2 x i32> [ %i.ax, %bb.o ], [ %12, %bb.q ], [ %13, %bb.r ] ; 5 uses
+  %i.bz = phi <2 x i32> [ %i.ax, %bb.o ], [ %11, %bb.q ], [ %12, %bb.r ] ; 5 uses
   %i.ca = icmp slt <2 x i32> %i.bz, splat (i32 1) ; 2 uses
   %i.cb = extractelement <2 x i1> %i.ca, i64 0
   %i.cc = extractelement <2 x i1> %i.ca, i64 1

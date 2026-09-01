@@ -205,7 +205,7 @@ bb.bs:                                            ; preds = %.thread407, %.threa
   store i64 1, ptr %i.ab, align 8, !alias.scope !2017, !noalias !2020
   %.sroa.0356.0.copyload = load i32, ptr %.sroa.56.0..sroa_idx.i253, align 8, !alias.scope !2021 ; 2 uses
   %.sroa.6360.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ab, i64 40
-  %3 = load <2 x double>, ptr %.sroa.6360.0..sroa_idx, align 8
+  %.sroa.6360.0.copyload = load double, ptr %.sroa.6360.0..sroa_idx, align 8, !alias.scope !2021
   %.not228 = icmp eq i32 %.sroa.0356.0.copyload, 2
   br i1 %.not228, label %bb.bt, label %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library9visualize5color13WeightedColorKj2_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs8jFhWeO2DFb_9typst_pdf.exit262, !prof !24
 
@@ -470,11 +470,9 @@ bb.ct:                                            ; preds = %bb.cs
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library9visualize5color5ColorECs8jFhWeO2DFb_9typst_pdf.exit272: ; preds = %bb.cs, %bb.cr, %bb.ct
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u)
-  %4 = insertelement <2 x double> %3, double %.sroa.6365.0.copyload, i64 1
-  %5 = fptrunc <2 x double> %4 to <2 x float>     ; 6 uses
-  %6 = extractelement <2 x float> %5, i64 0       ; 2 uses
-  %7 = extractelement <2 x float> %5, i64 1       ; 2 uses
-  %i.in = fadd float %6, %7                       ; 3 uses
+  %3 = fptrunc double %.sroa.6360.0.copyload to float ; 3 uses
+  %4 = fptrunc double %.sroa.6365.0.copyload to float ; 3 uses
+  %i.in = fadd float %3, %4                       ; 3 uses
   %i.io = fcmp ugt float %i.in, 0.000000e+00
   br i1 %i.io, label %.preheader.preheader, label %bb.cu
 
@@ -487,14 +485,17 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library9visu
   %i.iu = shufflevector <4 x float> %i.it, <4 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.iv = load float, ptr %.sroa.5.0.i274.ph.sroa.gep640, align 8, !noundef !21 ; 2 uses
   %i.iw = load float, ptr %.sroa.5.0.i274.ph.sroa.gep643, align 8, !noundef !21 ; 2 uses
-  %i.ix = insertelement <2 x float> poison, float %i.iv, i64 0
-  %i.iy = insertelement <2 x float> %i.ix, float %i.iq, i64 1
-  %i.iz = fmul <2 x float> %i.iy, %5
-  %8 = shufflevector <2 x float> %i.iz, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %i.ja = insertelement <2 x float> poison, float %i.ip, i64 0
-  %i.jb = insertelement <2 x float> %i.ja, float %i.iw, i64 1
-  %i.jc = fmul <2 x float> %i.jb, %5
-  %i.jd = fadd <2 x float> %8, %i.jc
+  %5 = insertelement <2 x float> poison, float %i.ip, i64 0
+  %i.ix = insertelement <2 x float> %5, float %i.iv, i64 1
+  %i.iy = insertelement <2 x float> poison, float %3, i64 0
+  %6 = shufflevector <2 x float> %i.iy, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.iz = fmul <2 x float> %i.ix, %6
+  %7 = insertelement <2 x float> poison, float %i.iq, i64 0
+  %i.ja = insertelement <2 x float> %7, float %i.iw, i64 1
+  %i.jb = insertelement <2 x float> poison, float %4, i64 0
+  %8 = shufflevector <2 x float> %i.jb, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.jc = fmul <2 x float> %i.ja, %8
+  %i.jd = fadd <2 x float> %i.iz, %i.jc
   %i.je = insertelement <2 x float> poison, float %i.in, i64 0
   %i.jf = shufflevector <2 x float> %i.je, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.jg = fdiv <2 x float> %i.jd, %i.jf           ; 2 uses
@@ -509,11 +510,9 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library9visu
   %i.jl = getelementptr inbounds nuw i8, ptr %i.v, i64 12
   %i.jm = load float, ptr %i.jl, align 4, !noundef !21
   %i.jn = insertelement <2 x float> %i.is, float %i.jk, i64 1
-  %9 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.jo = fmul <2 x float> %i.jn, %9
+  %i.jo = fmul <2 x float> %i.jn, %6
   %i.jp = insertelement <2 x float> %i.iu, float %i.jm, i64 1
-  %10 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.jq = fmul <2 x float> %i.jp, %10
+  %i.jq = fmul <2 x float> %i.jp, %8
   %i.jr = fadd <2 x float> %i.jo, %i.jq
   %i.js = fdiv <2 x float> %i.jr, %i.jf
   %.val = load i64, ptr %i.ad, align 8, !range !1922, !noundef !21
@@ -555,8 +554,8 @@ bb.cy:                                            ; preds = %bb.cx
   %i.ka = fadd float %i.jt, 3.600000e+02
   %.sroa.038.0 = select i1 %i.jy, float %i.jz, float %i.ju
   %.sroa.034.0 = select i1 %i.jy, float %i.jt, float %i.ka
-  %i.kb = fmul float %.sroa.038.0, %6
-  %i.kc = fmul float %.sroa.034.0, %7
+  %i.kb = fmul float %.sroa.038.0, %3
+  %i.kc = fmul float %.sroa.034.0, %4
   %i.kd = fadd float %i.kb, %i.kc
   %i.ke = fdiv float %i.kd, %i.in
   store float %i.ke, ptr %.sroa.5.0.i274.ph.sroa.phi, align 4

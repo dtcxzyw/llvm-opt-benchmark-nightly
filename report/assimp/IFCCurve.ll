@@ -202,40 +202,41 @@ bb.a:
   %i.f = fmul double %2, %i.e                     ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 120
-  %i.i = load ptr, ptr %i.h, align 8, !nonnull !11, !align !12
+  %i.i = load ptr, ptr %i.h, align 8, !nonnull !11, !align !12 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 96
+  %3 = load double, ptr %i.j, align 8
   %i.k = tail call double @cos(double noundef %i.f) #30
+  %4 = fmul double %3, %i.k                       ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.n = load double, ptr %i.m, align 8, !noalias !133
+  %5 = fmul double %4, %i.n
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.p = load double, ptr %i.o, align 8, !noalias !136
+  %6 = load double, ptr %i.o, align 8, !noalias !136
+  %7 = fadd double %5, %6
+  %8 = getelementptr inbounds nuw i8, ptr %i.i, i64 104
+  %i.p = load double, ptr %8, align 8
   %i.q = tail call double @sin(double noundef %i.f) #30
+  %9 = fmul double %i.p, %i.q                     ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.t = load double, ptr %i.s, align 8, !noalias !139
-  %3 = load <2 x double>, ptr %i.l, align 8, !noalias !133
-  %4 = load <2 x double>, ptr %i.j, align 8
-  %5 = insertelement <2 x double> poison, double %i.k, i64 0
-  %i.u = insertelement <2 x double> %5, double %i.q, i64 1
-  %6 = fmul <2 x double> %4, %i.u                 ; 4 uses
-  %i.v = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.w = fmul <2 x double> %i.v, %3
-  %7 = extractelement <2 x double> %6, i64 0
-  %8 = fmul double %7, %i.n
+  %10 = fmul double %9, %i.t
+  %11 = fadd double %7, %10
+  %12 = load <2 x double>, ptr %i.l, align 8, !noalias !133
+  %i.u = insertelement <2 x double> poison, double %4, i64 0
+  %i.v = shufflevector <2 x double> %i.u, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.w = fmul <2 x double> %i.v, %12
   %i.x = load <2 x double>, ptr %i.g, align 8, !noalias !136
   %i.y = fadd <2 x double> %i.w, %i.x
-  %9 = fadd double %8, %i.p
   %i.z = load <2 x double>, ptr %i.r, align 8, !noalias !139
-  %10 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %11 = fmul <2 x double> %10, %i.z
-  %12 = extractelement <2 x double> %6, i64 1
-  %13 = fmul double %12, %i.t
-  %i.aa = fadd <2 x double> %i.y, %11
-  %14 = fadd double %9, %13
+  %13 = insertelement <2 x double> poison, double %9, i64 0
+  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
+  %15 = fmul <2 x double> %14, %i.z
+  %i.aa = fadd <2 x double> %i.y, %15
   store <2 x double> %i.aa, ptr %0, align 8, !alias.scope !142
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store double %14, ptr %i.ab, align 8, !alias.scope !142
+  store double %11, ptr %i.ab, align 8, !alias.scope !142
   ret void
 }
 

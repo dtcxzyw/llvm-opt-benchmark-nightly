@@ -205,9 +205,13 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %3 = load <2 x float>, ptr %i.k, align 8, !tbaa !37 ; 2 uses
-  %4 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.l = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
+  %3 = load float, ptr %i.k, align 8, !tbaa !173
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 52
+  %5 = load float, ptr %4, align 4, !tbaa !172
+  %6 = insertelement <2 x float> poison, float %5, i64 0
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %8 = insertelement <2 x float> poison, float %3, i64 0
+  %i.l = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i
@@ -217,14 +221,14 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i
   %i.n = load i8, ptr %i.m, align 1, !tbaa !28
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 %.010.i
   %i.p = load i8, ptr %i.o, align 1, !tbaa !28
-  %i.q = insertelement <2 x i8> poison, i8 %i.p, i64 0
-  %i.r = insertelement <2 x i8> %i.q, i8 %i.n, i64 1
+  %i.q = insertelement <2 x i8> poison, i8 %i.n, i64 0
+  %i.r = insertelement <2 x i8> %i.q, i8 %i.p, i64 1
   %i.s = uitofp <2 x i8> %i.r to <2 x float>
   %i.t = fadd <2 x float> %i.s, splat (float 5.000000e-01)
   %i.u = fdiv <2 x float> %i.t, splat (float 2.550000e+02)
-  %i.v = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.u, <2 x float> %4, <2 x float> %i.l) ; 2 uses
+  %i.v = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.u, <2 x float> %7, <2 x float> %i.l) ; 2 uses
   %shift = shufflevector <2 x float> %i.v, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fsub <2 x float> %shift, %i.v
+  %foldExtExtBinop = fsub <2 x float> %i.v, %shift
   %i.w = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 2 uses
   %i.x = tail call float @llvm.fmuladd.f32(float %i.w, float %i.w, float %.sroa.6.09.i) ; 2 uses
   %i.y = add nuw i64 %.010.i, 1                   ; 2 uses

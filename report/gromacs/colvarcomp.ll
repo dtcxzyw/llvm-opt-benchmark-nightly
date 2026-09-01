@@ -204,7 +204,7 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 7 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
-  %11 = alloca %"class.colvarmodule::rvector", align 8 ; 9 uses
+  %11 = alloca %"class.colvarmodule::rvector", align 8 ; 8 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
@@ -390,8 +390,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d,
   %i.bf = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 4 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 7 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %i.bi = getelementptr inbounds nuw i8, ptr %11, i64 8
-  %i.bj = getelementptr inbounds nuw i8, ptr %11, i64 16
+  %i.bi = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 8 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 3 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 9 uses
@@ -794,21 +794,23 @@ bb.bh:                                            ; preds = %_ZNKSt7__cxx1112bas
 
 bb.bi:                                            ; preds = %bb.bh
   call void @llvm.experimental.noalias.scope.decl(metadata !302)
-  %71 = load <3 x double>, ptr %11, align 8, !tbaa !24, !noalias !302 ; 5 uses
-  %i.xo = load double, ptr %11, align 8, !tbaa !290, !noalias !302
-  %72 = shufflevector <3 x double> %71, <3 x double> poison, <2 x i32> <i32 1, i32 1>
-  %73 = fmul <2 x double> %i.tx, %72
-  %74 = shufflevector <3 x double> %71, <3 x double> poison, <2 x i32> zeroinitializer
-  %75 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ty, <2 x double> %74, <2 x double> %73)
-  %76 = shufflevector <3 x double> %71, <3 x double> poison, <2 x i32> <i32 2, i32 2>
-  %77 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.rp, <2 x double> %76, <2 x double> %75)
-  %78 = extractelement <3 x double> %71, i64 1
-  %79 = fmul double %i.tz, %78
-  %80 = call double @llvm.fmuladd.f64(double %i.ua, double %i.xo, double %79)
-  %81 = extractelement <3 x double> %71, i64 2
-  %82 = call double @llvm.fmuladd.f64(double %i.re, double %81, double %80)
-  store <2 x double> %77, ptr %19, align 16, !tbaa !24, !alias.scope !302
-  store double %82, ptr %i.bu, align 16, !tbaa !292, !alias.scope !302
+  %71 = load double, ptr %11, align 8, !tbaa !290, !noalias !302 ; 2 uses
+  %72 = load double, ptr %i.bi, align 8, !tbaa !291, !noalias !302 ; 2 uses
+  %i.xo = load double, ptr %i.bj, align 8, !tbaa !292, !noalias !302 ; 2 uses
+  %73 = fmul double %i.tz, %72
+  %74 = call double @llvm.fmuladd.f64(double %i.ua, double %71, double %73)
+  %75 = call double @llvm.fmuladd.f64(double %i.re, double %i.xo, double %74)
+  %76 = insertelement <2 x double> poison, double %72, i64 0
+  %77 = shufflevector <2 x double> %76, <2 x double> poison, <2 x i32> zeroinitializer
+  %78 = fmul <2 x double> %i.tx, %77
+  %79 = insertelement <2 x double> poison, double %71, i64 0
+  %80 = shufflevector <2 x double> %79, <2 x double> poison, <2 x i32> zeroinitializer
+  %81 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ty, <2 x double> %80, <2 x double> %78)
+  %82 = insertelement <2 x double> poison, double %i.xo, i64 0
+  %83 = shufflevector <2 x double> %82, <2 x double> poison, <2 x i32> zeroinitializer
+  %84 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.rp, <2 x double> %83, <2 x double> %81)
+  store <2 x double> %84, ptr %19, align 16, !tbaa !24, !alias.scope !302
+  store double %75, ptr %i.bu, align 16, !tbaa !292, !alias.scope !302
   br label %.invoke
 
 .invoke:                                          ; preds = %bb.bh, %bb.bi

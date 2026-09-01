@@ -202,9 +202,9 @@ bb.eo:                                            ; preds = %bb.em
 
 bb.ep:                                            ; preds = %_ZNK2cv3Mat2atIdEERKT_i.exit308
   %i.vj = load ptr, ptr %i.pg, align 8, !tbaa !133 ; 3 uses
-  %81 = load double, ptr %i.vj, align 8, !tbaa !70
-  %82 = getelementptr inbounds nuw i8, ptr %i.vj, i64 8
-  %i.vk = load double, ptr %82, align 8, !tbaa !70
+  %81 = getelementptr inbounds nuw i8, ptr %i.vj, i64 8
+  %82 = load double, ptr %81, align 8, !tbaa !70
+  %i.vk = load double, ptr %i.vj, align 8, !tbaa !70
   %i.vl = getelementptr inbounds nuw i8, ptr %i.vj, i64 16
   br label %_ZNK2cv3Mat2atIdEERKT_i.exit317
 
@@ -240,8 +240,8 @@ bb.et:                                            ; preds = %bb.er
   br label %_ZNK2cv3Mat2atIdEERKT_i.exit317
 
 _ZNK2cv3Mat2atIdEERKT_i.exit317:                  ; preds = %bb.ep, %bb.eq, %bb.es, %bb.et
-  %i.wd = phi double [ %i.vk, %bb.ep ], [ %i.vn, %bb.eq ], [ %i.vp, %bb.es ], [ %i.vp, %bb.et ] ; 2 uses
-  %i.we = phi double [ %81, %bb.ep ], [ %i.ut, %bb.eq ], [ %i.ut, %bb.es ], [ %i.ut, %bb.et ] ; 2 uses
+  %i.wd = phi double [ %82, %bb.ep ], [ %i.vn, %bb.eq ], [ %i.vp, %bb.es ], [ %i.vp, %bb.et ] ; 2 uses
+  %i.we = phi double [ %i.vk, %bb.ep ], [ %i.ut, %bb.eq ], [ %i.ut, %bb.es ], [ %i.ut, %bb.et ] ; 2 uses
   %.0.i316 = phi ptr [ %i.vl, %bb.ep ], [ %i.vo, %bb.eq ], [ %i.vu, %bb.es ], [ %i.wc, %bb.et ]
   %i.wf = load double, ptr %.0.i316, align 8, !tbaa !70
   %i.wg = insertelement <2 x double> poison, double %i.ui, i64 0
@@ -252,12 +252,12 @@ _ZNK2cv3Mat2atIdEERKT_i.exit317:                  ; preds = %bb.ep, %bb.eq, %bb.
   %i.wl = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.wk, <2 x double> %i.wk, <2 x double> %i.wi) ; 3 uses
   %i.wm = extractelement <2 x double> %i.wl, i64 0
   %sqrt = call double @llvm.sqrt.f64(double %i.wm) ; 4 uses
-  %83 = extractelement <2 x double> %i.wl, i64 1  ; 2 uses
-  %84 = fdiv double %i.we, %83
-  %i.wn = insertelement <2 x double> poison, double %i.wf, i64 0
-  %85 = insertelement <2 x double> %i.wn, double %i.wd, i64 1
-  %86 = shufflevector <2 x double> %i.wl, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %87 = fdiv <2 x double> %85, %86                ; 3 uses
+  %83 = shufflevector <2 x double> %i.wl, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %84 = insertelement <2 x double> poison, double %i.we, i64 0
+  %i.wn = insertelement <2 x double> %84, double %i.wd, i64 1
+  %85 = fdiv <2 x double> %i.wn, %83              ; 2 uses
+  %86 = extractelement <2 x double> %i.wl, i64 1  ; 2 uses
+  %87 = fdiv double %i.wf, %86                    ; 2 uses
   %i.wo = add nsw i32 %.0143507, 1
   %i.wp = icmp slt i32 %.0143507, 300
   br i1 %i.wp, label %bb.eu, label %bb.fj
@@ -300,11 +300,12 @@ bb.ev:                                            ; preds = %bb.eu
   store ptr %15, ptr %i.pl, align 8, !tbaa !29
   %i.xf = load i32, ptr %i.pn, align 4, !tbaa !121
   %i.xg = sitofp i32 %i.xf to double              ; 2 uses
-  %i.xh = extractelement <2 x double> %87, i64 0
-  %i.xi = call double @llvm.fmuladd.f64(double %84, double %i.xg, double %i.xh)
-  %i.xj = insertelement <2 x double> %87, double %i.xi, i64 1
+  %i.xh = extractelement <2 x double> %85, i64 0
+  %i.xi = call double @llvm.fmuladd.f64(double %i.xh, double %i.xg, double %87)
+  %88 = insertelement <2 x double> poison, double %87, i64 0
+  %i.xj = insertelement <2 x double> %88, double %i.xi, i64 1
   %i.xk = fneg <2 x double> %i.xj
-  %i.xl = shufflevector <2 x double> %87, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.xl = shufflevector <2 x double> %85, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.xm = fdiv <2 x double> %i.xk, %i.xl          ; 2 uses
   %i.xn = call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %i.xm)
   %.sroa.2.0.insert.ext.i322 = zext i32 %i.xn to i64
@@ -451,7 +452,7 @@ bb.fm:                                            ; preds = %bb.fl
 
 bb.fn:                                            ; preds = %bb.fm
   %i.ym = call double @llvm.fabs.f64(double %i.yl)
-  %i.yn = fdiv double %i.ym, %83
+  %i.yn = fdiv double %i.ym, %86
   call void @llvm.lifetime.start.p0(ptr nonnull %69) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18, !noalias !159
   store i64 9223372034707292160, ptr %2, align 8, !noalias !159

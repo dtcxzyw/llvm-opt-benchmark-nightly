@@ -74,11 +74,6 @@ bb.a:
   %i.aq = fcmp oge double %i.af, %i.ap
   %i.ar = select i1 %i.aq, double %i.af, double %i.ap ; 2 uses
   %i.as = fcmp oge double %i.ar, %i.s
-  %11 = shl i32 %i.p, 1
-  %12 = sext i32 %11 to i64
-  %13 = getelementptr [8 x i8], ptr %i.r, i64 %12 ; 2 uses
-  %14 = getelementptr i8, ptr %13, i64 8          ; 12 uses
-  %15 = getelementptr i8, ptr %13, i64 16         ; 4 uses
   %i.at = select i1 %i.as, double %i.ar, double %i.s ; 4 uses
   %i.au = fdiv double 1.000000e+00, %i.at         ; 4 uses
   %i.av = fmul double %i.u, %i.au
@@ -96,6 +91,11 @@ bb.a:
   %i.bd = fcmp oge double %i.bc, 0.000000e+00
   %i.be = fneg double %i.bc
   %i.bf = select i1 %i.bd, double %i.bc, double %i.be ; 2 uses
+  %11 = shl i32 %i.p, 1
+  %12 = sext i32 %11 to i64
+  %13 = getelementptr [8 x i8], ptr %i.r, i64 %12 ; 2 uses
+  %14 = getelementptr i8, ptr %13, i64 8          ; 12 uses
+  %15 = getelementptr i8, ptr %13, i64 16         ; 4 uses
   %i.bg = load <2 x double>, ptr %14, align 8, !tbaa !9 ; 3 uses
   %i.bh = fcmp oge <2 x double> %i.bg, zeroinitializer
   %i.bi = fneg <2 x double> %i.bg
