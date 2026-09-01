@@ -202,8 +202,8 @@ bb.a:
   %.sroa.14.i.sroa.4.i.i.i.i = alloca [24 x i8], align 8 ; 6 uses
   %.sroa.8.i.i.i = alloca [24 x i8], align 8      ; 2 uses
   %i.k = alloca [48 x i8], align 8                ; 10 uses
-  %.sroa.4.i.i.i = alloca i64, align 8            ; 6 uses
-  %.sroa.7.i.i.i = alloca i64, align 8            ; 5 uses
+  %.sroa.4.i.i.i = alloca ptr, align 8            ; 6 uses
+  %.sroa.7.i.i.i = alloca ptr, align 8            ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !280)
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.m = load ptr, ptr %1, align 8, !alias.scope !280, !noalias !283, !nonnull !4, !align !90, !noundef !4 ; 4 uses
@@ -606,8 +606,7 @@ bb.bu:                                            ; preds = %bb.br
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.14.i.sroa.4.i.i.i.i, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.14.i.sroa.4.i.i.i.i)
   call void @llvm.experimental.noalias.scope.decl(metadata !517)
-  %2 = ptrtoint ptr %.sroa.05.0.copyload.i.i.i.i.i.i.i to i64
-  store i64 %2, ptr %.sroa.4.i.i.i, align 8, !alias.scope !518, !noalias !519
+  store ptr %.sroa.05.0.copyload.i.i.i.i.i.i.i, ptr %.sroa.4.i.i.i, align 8, !alias.scope !518, !noalias !519
   br label %_RINvXNtNtCscI6d9CVNmLh_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_10filter_map9FilterMapNtNtCsgczF5crJ4sT_3std2fs7ReadDirNCNvCsa9b9a3U8I3h_20migrations_internals22migrations_directories0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtNtNtB1w_2io5error5ErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4h_12try_for_each4callNtB1u_8DirEntryINtNtNtB7_3ops12control_flow11ControlFlowB5t_ENcNtB5I_5Break0E0B5I_ECsd1XE8irAZDx_17migrations_macros.exit
 
 bb.bv:                                            ; preds = %bb.bt
@@ -637,20 +636,20 @@ _RINvXNtNtCscI6d9CVNmLh_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_10filter_
   %.sink.i.sroa.phi.i.i.i = phi ptr [ %.sroa.7.i.i.i, %bb.bu ], [ %.sroa.4.i.i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtNtNtCsgczF5crJ4sT_3std2io5error5ErrorEEECsd1XE8irAZDx_17migrations_macros.exit.i.i.i.i.i ]
   %.sroa.14.i.sroa.0.0.copyload.sink.i.i.i.i = phi ptr [ %.sroa.14.i.sroa.0.0.copyload.i.i.i.i, %bb.bu ], [ null, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtNtNtCsgczF5crJ4sT_3std2io5error5ErrorEEECsd1XE8irAZDx_17migrations_macros.exit.i.i.i.i.i ]
   store ptr %.sroa.14.i.sroa.0.0.copyload.sink.i.i.i.i, ptr %.sink.i.sroa.phi.i.i.i, align 8, !alias.scope !518, !noalias !519
-  %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8.copyload.i.i.i = load i64, ptr %.sroa.4.i.i.i, align 8, !alias.scope !520, !noalias !294 ; 2 uses
-  %.sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.0..sroa.7.i.i.0..sroa.7.i.0..sroa.7.i.0..sroa.7.0..sroa.7.0..sroa.7.8.copyload.i.i.i = load i64, ptr %.sroa.7.i.i.i, align 8, !alias.scope !520, !noalias !294
+  %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8.copyload.i.i.i = load ptr, ptr %.sroa.4.i.i.i, align 8, !alias.scope !520, !noalias !294 ; 2 uses
+  %.sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.0..sroa.7.i.i.0..sroa.7.i.0..sroa.7.i.0..sroa.7.0..sroa.7.0..sroa.7.8.copyload.i.i.i = load ptr, ptr %.sroa.7.i.i.i, align 8, !alias.scope !520, !noalias !294
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !288
-  %.not = icmp eq i64 %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8.copyload.i.i.i, 0
+  %.not = icmp eq ptr %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8.copyload.i.i.i, null
   br i1 %.not, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtCsgczF5crJ4sT_3std2fs8DirEntryEECsd1XE8irAZDx_17migrations_macros.exit, label %bb.bx
 
 bb.bx:                                            ; preds = %_RINvXNtNtCscI6d9CVNmLh_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_10filter_map9FilterMapNtNtCsgczF5crJ4sT_3std2fs7ReadDirNCNvCsa9b9a3U8I3h_20migrations_internals22migrations_directories0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtNtNtB1w_2io5error5ErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4h_12try_for_each4callNtB1u_8DirEntryINtNtNtB7_3ops12control_flow11ControlFlowB5t_ENcNtB5I_5Break0E0B5I_ECsd1XE8irAZDx_17migrations_macros.exit
   %.sroa.551.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.551.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8.i.i.i, i64 24, i1 false)
-  store i64 %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8.copyload.i.i.i, ptr %0, align 8
+  store ptr %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8.copyload.i.i.i, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.0..sroa.7.i.i.0..sroa.7.i.0..sroa.7.i.0..sroa.7.0..sroa.7.0..sroa.7.8.copyload.i.i.i, ptr %.sroa.4.0..sroa_idx, align 8
+  store ptr %.sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.0..sroa.7.i.i.0..sroa.7.i.0..sroa.7.i.0..sroa.7.0..sroa.7.0..sroa.7.8.copyload.i.i.i, ptr %.sroa.4.0..sroa_idx, align 8
   br label %bb.by
 
 bb.by:                                            ; preds = %bb.bx, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtCsgczF5crJ4sT_3std2fs8DirEntryEECsd1XE8irAZDx_17migrations_macros.exit

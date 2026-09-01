@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.0.i = alloca i64, align 8                ; 5 uses
+  %.sroa.0.i = alloca ptr, align 8                ; 5 uses
   %i.d = alloca [32 x i8], align 8                ; 5 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   %i.f = alloca [24 x i8], align 8                ; 6 uses
@@ -263,8 +263,7 @@ _RINvNtCskKLDkoKarTP_4core10intrinsics25typed_swap_nonoverlappingINtNtCsexYYUdYS
   %i.x = load ptr, ptr %i.e, align 8, !noalias !5379, !noundef !4
   %i.y = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.z = load i64, ptr %i.y, align 8, !noalias !5379, !noundef !4 ; 4 uses
-  %6 = ptrtoint ptr %i.x to i64
-  store i64 %6, ptr %.sroa.0.i, align 8, !noalias !5379
+  store ptr %i.x, ptr %.sroa.0.i, align 8, !noalias !5379
   %i.aa = icmp eq i64 %i.z, 0
   br i1 %i.aa, label %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecReE7reserveCs607s0NAIaWN_7segment.exit.i, label %.lr.ph.i.i.preheader
 
@@ -466,7 +465,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.0.i = alloca i64, align 8                ; 5 uses
+  %.sroa.0.i = alloca ptr, align 8                ; 5 uses
   %i.d = alloca [32 x i8], align 8                ; 5 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   %i.f = alloca [24 x i8], align 8                ; 6 uses
@@ -524,8 +523,7 @@ _RINvNtCskKLDkoKarTP_4core10intrinsics25typed_swap_nonoverlappingINtNtCsexYYUdYS
   %i.x = load ptr, ptr %i.e, align 8, !noalias !5399, !noundef !4
   %i.y = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.z = load i64, ptr %i.y, align 8, !noalias !5399, !noundef !4 ; 4 uses
-  %6 = ptrtoint ptr %i.x to i64
-  store i64 %6, ptr %.sroa.0.i, align 8, !noalias !5399
+  store ptr %i.x, ptr %.sroa.0.i, align 8, !noalias !5399
   %i.aa = icmp eq i64 %i.z, 0
   br i1 %i.aa, label %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecRoE7reserveCs607s0NAIaWN_7segment.exit.i, label %.lr.ph.i.i.preheader
 
@@ -727,7 +725,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.0.i = alloca i64, align 8                ; 5 uses
+  %.sroa.0.i = alloca ptr, align 8                ; 5 uses
   %i.d = alloca [32 x i8], align 8                ; 5 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   %i.f = alloca [24 x i8], align 8                ; 6 uses
@@ -785,8 +783,7 @@ _RINvNtCskKLDkoKarTP_4core10intrinsics25typed_swap_nonoverlappingINtNtCsexYYUdYS
   %i.x = load ptr, ptr %i.e, align 8, !noalias !5418, !noundef !4
   %i.y = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.z = load i64, ptr %i.y, align 8, !noalias !5418, !noundef !4 ; 4 uses
-  %6 = ptrtoint ptr %i.x to i64
-  store i64 %6, ptr %.sroa.0.i, align 8, !noalias !5418
+  store ptr %i.x, ptr %.sroa.0.i, align 8, !noalias !5418
   %i.aa = icmp eq i64 %i.z, 0
   br i1 %i.aa, label %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecRxE7reserveCs607s0NAIaWN_7segment.exit.i, label %.lr.ph.i.i.preheader
 
@@ -1151,7 +1148,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.0 = alloca i64, align 8                  ; 3 uses
+  %.sroa.0 = alloca ptr, align 8                  ; 3 uses
   %i.d = alloca [64 x i8], align 8                ; 4 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
@@ -1162,8 +1159,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8, !noundef !4
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.h = load i64, ptr %i.g, align 8, !noundef !4 ; 4 uses
-  %2 = ptrtoint ptr %i.f to i64
-  store i64 %2, ptr %.sroa.0, align 8
+  store ptr %i.f, ptr %.sroa.0, align 8
   %i.i = icmp eq i64 %i.h, 0
   br i1 %i.i, label %_RINvYINtNtNtCsexYYUdYSQU6_5alloc11collections11linked_list4IterINtNtBa_3vec3VecReEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4foldjNCINvNtNtB1p_8adapters3map8map_foldRBZ_jjNvMs_B12_BZ_3lenNCINvXsK_NtB1n_5accumjNtB3o_3Sum3sumINtB2p_3MapB3_B2Z_EE0E0ECs607s0NAIaWN_7segment.exit.thread, label %.lr.ph.i.preheader
 
@@ -1369,7 +1365,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.0 = alloca i64, align 8                  ; 3 uses
+  %.sroa.0 = alloca ptr, align 8                  ; 3 uses
   %i.d = alloca [64 x i8], align 8                ; 4 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
@@ -1380,8 +1376,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8, !noundef !4
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.h = load i64, ptr %i.g, align 8, !noundef !4 ; 4 uses
-  %2 = ptrtoint ptr %i.f to i64
-  store i64 %2, ptr %.sroa.0, align 8
+  store ptr %i.f, ptr %.sroa.0, align 8
   %i.i = icmp eq i64 %i.h, 0
   br i1 %i.i, label %_RINvYINtNtNtCsexYYUdYSQU6_5alloc11collections11linked_list4IterINtNtBa_3vec3VecRoEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4foldjNCINvNtNtB1p_8adapters3map8map_foldRBZ_jjNvMs_B12_BZ_3lenNCINvXsK_NtB1n_5accumjNtB3o_3Sum3sumINtB2p_3MapB3_B2Z_EE0E0ECs607s0NAIaWN_7segment.exit.thread, label %.lr.ph.i.preheader
 
@@ -1587,7 +1582,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.0 = alloca i64, align 8                  ; 3 uses
+  %.sroa.0 = alloca ptr, align 8                  ; 3 uses
   %i.d = alloca [64 x i8], align 8                ; 4 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
@@ -1598,8 +1593,7 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8, !noundef !4
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.h = load i64, ptr %i.g, align 8, !noundef !4 ; 4 uses
-  %2 = ptrtoint ptr %i.f to i64
-  store i64 %2, ptr %.sroa.0, align 8
+  store ptr %i.f, ptr %.sroa.0, align 8
   %i.i = icmp eq i64 %i.h, 0
   br i1 %i.i, label %_RINvYINtNtNtCsexYYUdYSQU6_5alloc11collections11linked_list4IterINtNtBa_3vec3VecRxEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4foldjNCINvNtNtB1p_8adapters3map8map_foldRBZ_jjNvMs_B12_BZ_3lenNCINvXsK_NtB1n_5accumjNtB3o_3Sum3sumINtB2p_3MapB3_B2Z_EE0E0ECs607s0NAIaWN_7segment.exit.thread, label %.lr.ph.i.preheader
 
@@ -1805,7 +1799,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.0 = alloca i64, align 8                  ; 3 uses
+  %.sroa.0 = alloca ptr, align 8                  ; 3 uses
   %i.d = alloca [40 x i8], align 8                ; 4 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   %i.f = alloca [40 x i8], align 8                ; 4 uses
@@ -1830,8 +1824,7 @@ bb.c:                                             ; preds = %bb.a
   %i.k = load ptr, ptr %i.e, align 8, !noundef !4
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.m = load i64, ptr %i.l, align 8, !noundef !4 ; 4 uses
-  %2 = ptrtoint ptr %i.k to i64
-  store i64 %2, ptr %.sroa.0, align 8
+  store ptr %i.k, ptr %.sroa.0, align 8
   %i.n = icmp eq i64 %i.m, 0
   br i1 %i.n, label %_RINvYINtNtNtCsexYYUdYSQU6_5alloc11collections11linked_list4IterINtNtBa_3vec3VecjEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4foldjNCINvNtNtB1o_8adapters3map8map_foldRBZ_jjNvMs_B12_BZ_3lenNCINvXsK_NtB1m_5accumjNtB3n_3Sum3sumINtB2o_3MapB3_B2Y_EE0E0ECs607s0NAIaWN_7segment.exit.thread, label %.lr.ph.i.preheader
 
@@ -2041,7 +2034,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.0 = alloca i64, align 8                  ; 3 uses
+  %.sroa.0 = alloca ptr, align 8                  ; 3 uses
   %i.d = alloca [40 x i8], align 8                ; 4 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   %i.f = alloca [40 x i8], align 8                ; 4 uses
@@ -2066,8 +2059,7 @@ bb.c:                                             ; preds = %bb.a
   %i.k = load ptr, ptr %i.e, align 8, !noundef !4
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.m = load i64, ptr %i.l, align 8, !noundef !4 ; 4 uses
-  %2 = ptrtoint ptr %i.k to i64
-  store i64 %2, ptr %.sroa.0, align 8
+  store ptr %i.k, ptr %.sroa.0, align 8
   %i.n = icmp eq i64 %i.m, 0
   br i1 %i.n, label %_RINvYINtNtNtCsexYYUdYSQU6_5alloc11collections11linked_list4IterINtNtBa_3vec3VecjEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4foldjNCINvNtNtB1o_8adapters3map8map_foldRBZ_jjNvMs_B12_BZ_3lenNCINvXsK_NtB1m_5accumjNtB3n_3Sum3sumINtB2o_3MapB3_B2Y_EE0E0ECs607s0NAIaWN_7segment.exit.thread, label %.lr.ph.i.preheader
 
@@ -2277,7 +2269,7 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.0 = alloca i64, align 8                  ; 3 uses
+  %.sroa.0 = alloca ptr, align 8                  ; 3 uses
   %i.d = alloca [40 x i8], align 8                ; 4 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   %i.f = alloca [40 x i8], align 8                ; 4 uses
@@ -2302,8 +2294,7 @@ bb.c:                                             ; preds = %bb.a
   %i.k = load ptr, ptr %i.e, align 8, !noundef !4
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.m = load i64, ptr %i.l, align 8, !noundef !4 ; 4 uses
-  %2 = ptrtoint ptr %i.k to i64
-  store i64 %2, ptr %.sroa.0, align 8
+  store ptr %i.k, ptr %.sroa.0, align 8
   %i.n = icmp eq i64 %i.m, 0
   br i1 %i.n, label %_RINvYINtNtNtCsexYYUdYSQU6_5alloc11collections11linked_list4IterINtNtBa_3vec3VecjEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4foldjNCINvNtNtB1o_8adapters3map8map_foldRBZ_jjNvMs_B12_BZ_3lenNCINvXsK_NtB1m_5accumjNtB3n_3Sum3sumINtB2o_3MapB3_B2Y_EE0E0ECs607s0NAIaWN_7segment.exit.thread, label %.lr.ph.i.preheader
 

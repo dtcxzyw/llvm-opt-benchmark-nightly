@@ -204,7 +204,7 @@ wtap_block_add_custom_binary_option_common.exit.thread: ; preds = %bb.c, %bb.a, 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define range(i32 -6, 1) i32 @wtap_block_add_if_filter_option(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.516 = alloca i64, align 8                ; 6 uses
+  %.sroa.516 = alloca ptr, align 8                ; 6 uses
   %.sroa.9 = alloca ptr, align 8                  ; 5 uses
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %wtap_block_add_option_common.exit.thread, label %bb.b
@@ -275,7 +275,7 @@ wtap_block_get_option.exit.i:                     ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.516)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13)
-  store i64 0, ptr %.sroa.516, align 8
+  store ptr null, ptr %.sroa.516, align 8
   store ptr null, ptr %.sroa.9, align 8
   %i.ae = load i32, ptr %2, align 8, !noalias !13 ; 2 uses
   switch i32 %i.ae, label %if_filter_dup.exit [
@@ -304,18 +304,18 @@ bb.i:                                             ; preds = %.loopexit
   %.sink7.i.sroa.phi = phi ptr [ %.sroa.9, %bb.i ], [ %.sroa.516, %bb.h ]
   %.sink.i = phi ptr [ %i.ao, %bb.i ], [ %i.ah, %bb.h ]
   store ptr %.sink.i, ptr %.sink7.i.sroa.phi, align 8, !alias.scope !13
-  %.sroa.516.0..sroa.516.0..sroa.516.0.copyload.pre = load i64, ptr %.sroa.516, align 8
+  %.sroa.516.0..sroa.516.0..sroa.516.0.copyload.pre = load ptr, ptr %.sroa.516, align 8
   %.sroa.9.0..sroa.9.0..sroa.9.0.copyload.pre = load ptr, ptr %.sroa.9, align 8
   br label %if_filter_dup.exit
 
 if_filter_dup.exit:                               ; preds = %.loopexit, %.sink.split.i
   %.sroa.9.0..sroa.9.0.copyload = phi ptr [ null, %.loopexit ], [ %.sroa.9.0..sroa.9.0..sroa.9.0.copyload.pre, %.sink.split.i ]
-  %.sroa.516.0..sroa.516.0.copyload = phi i64 [ 0, %.loopexit ], [ %.sroa.516.0..sroa.516.0..sroa.516.0.copyload.pre, %.sink.split.i ]
+  %.sroa.516.0..sroa.516.0.copyload = phi ptr [ null, %.loopexit ], [ %.sroa.516.0..sroa.516.0..sroa.516.0.copyload.pre, %.sink.split.i ]
   store i32 %i.ae, ptr %i.ad, align 8
   %.sroa.5.0..sroa_idx = getelementptr i8, ptr %i.ac, i64 12
   store i32 0, ptr %.sroa.5.0..sroa_idx, align 4
   %.sroa.516.0..sroa_idx = getelementptr i8, ptr %i.ac, i64 16
-  store i64 %.sroa.516.0..sroa.516.0.copyload, ptr %.sroa.516.0..sroa_idx, align 8
+  store ptr %.sroa.516.0..sroa.516.0.copyload, ptr %.sroa.516.0..sroa_idx, align 8
   %.sroa.9.0..sroa_idx = getelementptr i8, ptr %i.ac, i64 24
   store ptr %.sroa.9.0..sroa.9.0.copyload, ptr %.sroa.9.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.516)
@@ -718,7 +718,7 @@ wtap_block_get_nth_custom_option_with_pen_common.exit.thread: ; preds = %custom_
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define range(i32 -6, 1) i32 @wtap_block_set_if_filter_option_value(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.523 = alloca i64, align 8                ; 6 uses
+  %.sroa.523 = alloca ptr, align 8                ; 6 uses
   %.sroa.9 = alloca ptr, align 8                  ; 5 uses
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %if_filter_free.exit, label %bb.b
@@ -779,13 +779,13 @@ wtap_block_get_option.exit.i:                     ; preds = %bb.g
 wtap_block_get_option_common.exit:                ; preds = %wtap_block_get_option.exit.i
   %.sroa.0.0.copyload = load i32, ptr %i.v, align 8
   %.sroa.413.0..sroa_idx = getelementptr i8, ptr %i.s, i64 16
-  %.sroa.413.0.copyload = load i64, ptr %.sroa.413.0..sroa_idx, align 8
+  %.sroa.413.0.copyload = load ptr, ptr %.sroa.413.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr i8, ptr %i.s, i64 24
   %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.523)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !24)
-  store i64 0, ptr %.sroa.523, align 8
+  store ptr null, ptr %.sroa.523, align 8
   store ptr null, ptr %.sroa.9, align 8
   %i.x = load i32, ptr %2, align 8, !noalias !24  ; 2 uses
   switch i32 %i.x, label %if_filter_dup.exit [
@@ -814,23 +814,22 @@ bb.i:                                             ; preds = %wtap_block_get_opti
   %.sink7.i.sroa.phi = phi ptr [ %.sroa.9, %bb.i ], [ %.sroa.523, %bb.h ]
   %.sink.i = phi ptr [ %i.ah, %bb.i ], [ %i.aa, %bb.h ]
   store ptr %.sink.i, ptr %.sink7.i.sroa.phi, align 8, !alias.scope !24
-  %.sroa.523.0..sroa.523.0..sroa.523.0.copyload.pre = load i64, ptr %.sroa.523, align 8
+  %.sroa.523.0..sroa.523.0..sroa.523.0.copyload.pre = load ptr, ptr %.sroa.523, align 8
   %.sroa.9.0..sroa.9.0..sroa.9.0.copyload.pre = load ptr, ptr %.sroa.9, align 8
   br label %if_filter_dup.exit
 
 if_filter_dup.exit:                               ; preds = %wtap_block_get_option_common.exit, %.sink.split.i
   %.sroa.9.0..sroa.9.0.copyload = phi ptr [ null, %wtap_block_get_option_common.exit ], [ %.sroa.9.0..sroa.9.0..sroa.9.0.copyload.pre, %.sink.split.i ]
-  %.sroa.523.0..sroa.523.0.copyload = phi i64 [ 0, %wtap_block_get_option_common.exit ], [ %.sroa.523.0..sroa.523.0..sroa.523.0.copyload.pre, %.sink.split.i ]
+  %.sroa.523.0..sroa.523.0.copyload = phi ptr [ null, %wtap_block_get_option_common.exit ], [ %.sroa.523.0..sroa.523.0..sroa.523.0.copyload.pre, %.sink.split.i ]
   store i32 %i.x, ptr %i.v, align 8
   %.sroa.5.0..sroa_idx21 = getelementptr i8, ptr %i.s, i64 12
   store i32 0, ptr %.sroa.5.0..sroa_idx21, align 4
   %.sroa.523.0..sroa_idx = getelementptr i8, ptr %i.s, i64 16
-  store i64 %.sroa.523.0..sroa.523.0.copyload, ptr %.sroa.523.0..sroa_idx, align 8
+  store ptr %.sroa.523.0..sroa.523.0.copyload, ptr %.sroa.523.0..sroa_idx, align 8
   %.sroa.9.0..sroa_idx = getelementptr i8, ptr %i.s, i64 24
   store ptr %.sroa.9.0..sroa.9.0.copyload, ptr %.sroa.9.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.523)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9)
-  %3 = inttoptr i64 %.sroa.413.0.copyload to ptr
   switch i32 %.sroa.0.0.copyload, label %if_filter_free.exit [
     i32 0, label %.sink.split.i7
     i32 1, label %bb.j
@@ -840,7 +839,7 @@ bb.j:                                             ; preds = %if_filter_dup.exit
   br label %.sink.split.i7
 
 .sink.split.i7:                                   ; preds = %bb.j, %if_filter_dup.exit
-  %.sink.i8.sroa.phi.sroa.speculated = phi ptr [ %.sroa.5.0.copyload, %bb.j ], [ %3, %if_filter_dup.exit ]
+  %.sink.i8.sroa.phi.sroa.speculated = phi ptr [ %.sroa.5.0.copyload, %bb.j ], [ %.sroa.413.0.copyload, %if_filter_dup.exit ]
   tail call void @g_free(ptr noundef %.sink.i8.sroa.phi.sroa.speculated)
   br label %if_filter_free.exit
 

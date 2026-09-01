@@ -50,9 +50,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"class.llvm::SmallVectorTemplateCommon.308" = type { %"class.llvm::SmallVectorBase" }
 %"class.llvm::SmallVectorBase" = type { ptr, i32, i32 }
 %"struct.llvm::SmallVectorStorage.309" = type { [24 x i8] }
-%"struct.std::_Optional_payload.192" = type { %"struct.std::_Optional_payload_base.base.194", [3 x i8] }
-%"struct.std::_Optional_payload_base.base.194" = type <{ %"union.std::_Optional_payload_base<unsigned int>::_Storage", i8 }>
-%"union.std::_Optional_payload_base<unsigned int>::_Storage" = type { i32 }
 %"struct.llvm::codeview::BinaryAnnotationIterator" = type { %"class.std::optional.208", %"class.llvm::ArrayRef.188", %"class.llvm::ArrayRef.188" }
 %"class.std::optional.208" = type { %"struct.std::_Optional_base.209" }
 %"struct.std::_Optional_base.209" = type { %"struct.std::_Optional_payload.211" }
@@ -455,8 +452,8 @@ _ZN4llvm8codeview16TypeDeserializer11MappingInfoD2Ev.exit: ; preds = %_ZN4llvm8c
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZNK4llvm3pdb22NativeInlineSiteSymbol13getLineOffsetEjRjS2_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(80) %0, i32 noundef %1, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) initializes((0, 4)) %2, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(4) initializes((0, 4)) %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %.sroa.0133 = alloca %"struct.std::_Optional_payload.192", align 8 ; 18 uses
-  %.sroa.0113 = alloca %"struct.std::_Optional_payload.192", align 8 ; 13 uses
+  %.sroa.0133 = alloca i64, align 8               ; 18 uses
+  %.sroa.0113 = alloca i64, align 8               ; 13 uses
   %4 = alloca %"struct.llvm::codeview::BinaryAnnotationIterator", align 8 ; 12 uses
   store i32 0, ptr %2, align 4, !tbaa !105
   store i32 0, ptr %3, align 4, !tbaa !105

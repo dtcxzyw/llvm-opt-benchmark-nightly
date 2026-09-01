@@ -204,8 +204,8 @@ define hidden void @_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3mapINtB6_3M
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 7 uses
-  %.sroa.4.i = alloca i64, align 8                ; 5 uses
-  %.sroa.73.i = alloca i64, align 8               ; 4 uses
+  %.sroa.4.i = alloca ptr, align 8                ; 5 uses
+  %.sroa.73.i = alloca ptr, align 8               ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2102)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2105)
   %i.c = load ptr, ptr %1, align 8, !alias.scope !2107, !noalias !2102, !nonnull !12, !noundef !12 ; 3 uses
@@ -338,8 +338,7 @@ bb.o:                                             ; preds = %bb.k
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_buffer5ErrorEEEB1Q_.exit.i.i.i unwind label %bb.q, !noalias !2125
 
 bb.p:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_buffer5ErrorEBH_.exit.i.i.i
-  %4 = ptrtoint ptr %i.aa to i64
-  store i64 %4, ptr %.sroa.4.i, align 8, !alias.scope !2127, !noalias !2128
+  store ptr %i.aa, ptr %.sroa.4.i, align 8, !alias.scope !2127, !noalias !2128
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.o, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs92BnbMq7p8c_15influxdb3_write.exit.i.i.i.i.i.i
@@ -372,16 +371,14 @@ bb.r:                                             ; preds = %_RINvNtCs4NRVxsYgnA
   %.sink32.i.i.sroa.phi.i = phi ptr [ %.sroa.4.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_buffer5ErrorEEEB1Q_.exit.i.i.i ], [ %.sroa.73.i, %bb.p ]
   %.sink.i.i.i = phi ptr [ null, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_buffer5ErrorEEEB1Q_.exit.i.i.i ], [ %i.ac, %bb.p ]
   store ptr %.sink.i.i.i, ptr %.sink32.i.i.sroa.phi.i, align 8, !alias.scope !2127, !noalias !2128
-  %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i = load i64, ptr %.sroa.4.i, align 8, !alias.scope !2129, !noalias !2132, !noundef !12
-  %5 = inttoptr i64 %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i to ptr
-  %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i = load i64, ptr %.sroa.73.i, align 8, !alias.scope !2129, !noalias !2132
-  %6 = inttoptr i64 %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i to ptr
+  %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i = load ptr, ptr %.sroa.4.i, align 8, !alias.scope !2129, !noalias !2132, !noundef !12
+  %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i = load ptr, ptr %.sroa.73.i, align 8, !alias.scope !2129, !noalias !2132
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.73.i)
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %5, ptr %i.al, align 8, !alias.scope !2134, !noalias !2105
+  store ptr %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i, ptr %i.al, align 8, !alias.scope !2134, !noalias !2105
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %6, ptr %i.am, align 8, !alias.scope !2134, !noalias !2105
+  store ptr %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i, ptr %i.am, align 8, !alias.scope !2134, !noalias !2105
   br label %_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtCsj9JzdWj4GcM_12arrow_schema5field5FieldEENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB26_8adapters3map12map_try_foldRBJ_INtNtBa_6result6ResultIBK_DNtNtCs6ePPILGZvJ2_11arrow_array5array5ArrayEL_ENtNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_buffer5ErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB5V_B3T_EENCNvMB4L_NtB4L_11TableBuffer26partitioned_record_batchess_0NCINvXB2W_INtB2W_12GenericShuntINtB2U_3MapB3_B6K_EIB3y_NtNtBa_7convert10InfallibleB4J_EEB20_8try_folduNCINvNvB20_12try_for_each4callB3T_B6z_NcNtB6z_5Break0E0B6z_E0E0B5U_EB4P_.exit
 
 _RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterINtNtCscdodAO9FK5_5alloc4sync3ArcNtNtCsj9JzdWj4GcM_12arrow_schema5field5FieldEENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB26_8adapters3map12map_try_foldRBJ_INtNtBa_6result6ResultIBK_DNtNtCs6ePPILGZvJ2_11arrow_array5array5ArrayEL_ENtNtNtCs92BnbMq7p8c_15influxdb3_write12write_buffer12table_buffer5ErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB5V_B3T_EENCNvMB4L_NtB4L_11TableBuffer26partitioned_record_batchess_0NCINvXB2W_INtB2W_12GenericShuntINtB2U_3MapB3_B6K_EIB3y_NtNtBa_7convert10InfallibleB4J_EEB20_8try_folduNCINvNvB20_12try_for_each4callB3T_B6z_NcNtB6z_5Break0E0B6z_E0E0B5U_EB4P_.exit: ; preds = %bb.a, %bb.r

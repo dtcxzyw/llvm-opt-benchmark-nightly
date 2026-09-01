@@ -205,13 +205,13 @@ bb.al:                                            ; preds = %.loopexit23.i
   br i1 %i.d, label %bb.at, label %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit
 
 bb.am:                                            ; preds = %.loopexit23.i, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit
-  %.us-phi733 = phi i64 [ undef, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.us-phi732, %.loopexit23.i ] ; 5 uses
-  %.us-phi719730 = phi i64 [ undef, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.us-phi719729, %.loopexit23.i ] ; 5 uses
-  %.sroa.41.1 = phi i8 [ 0, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.sroa.41.2, %.loopexit23.i ] ; 5 uses
-  %.sroa.32.1 = phi i32 [ undef, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.sroa.32.2, %.loopexit23.i ] ; 5 uses
-  %.sroa.23289.1 = phi i32 [ undef, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.sroa.23289.2, %.loopexit23.i ] ; 5 uses
+  %.sroa.43.1 = phi i8 [ 0, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.sroa.43.2, %.loopexit23.i ] ; 5 uses
+  %.sroa.34.1 = phi i32 [ undef, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.sroa.34.2, %.loopexit23.i ] ; 5 uses
+  %.sroa.25.1 = phi i32 [ undef, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.sroa.25.2, %.loopexit23.i ] ; 5 uses
+  %.sroa.16.1 = phi i64 [ undef, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.sroa.16.2, %.loopexit23.i ] ; 5 uses
+  %.sroa.0298.1 = phi float [ undef, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.sroa.0298.2, %.loopexit23.i ] ; 5 uses
   %.sroa.0286.1 = phi float [ undef, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.sroa.0286.2, %.loopexit23.i ] ; 5 uses
-  %.sroa.0233.1 = phi float [ undef, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.sroa.0233.2, %.loopexit23.i ] ; 5 uses
+  %.sroa.6.1 = phi i64 [ undef, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.sroa.6.2, %.loopexit23.i ] ; 5 uses
   %.sroa.9.1 = phi i32 [ undef, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.sroa.9.2, %.loopexit23.i ] ; 5 uses
   %.sroa.12.1 = phi i32 [ undef, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.sroa.12.2, %.loopexit23.i ] ; 5 uses
   %.sroa.15.1 = phi i8 [ 0, %_ZL27getWholeMoleculeCoordinatesPK13gmx_moltype_tPK14gmx_ffparams_t7PbcTypeP7t_graphPA3_KfN3gmx8ArrayRefIKNSB_11BasicVectorIfEEEENSC_ISE_EE.exit ], [ %.sroa.15.2, %.loopexit23.i ] ; 5 uses
@@ -257,11 +257,11 @@ bb.an:                                            ; preds = %.noexc97
   br label %.preheader.us.i
 
 .preheader.us.i.us:                               ; preds = %.preheader.us.preheader.i, %._crit_edge.us.i.split.us.us
-  %.us-phi707718.us = phi i64 [ %.sroa.04.0.insert.insert.i689.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.us-phi733, %.preheader.us.preheader.i ] ; 2 uses
-  %.sroa.41.7.us = phi i8 [ %.sroa.41.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.41.1, %.preheader.us.preheader.i ] ; 2 uses
-  %.sroa.32.7.us = phi i32 [ %.sroa.32.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.32.1, %.preheader.us.preheader.i ] ; 2 uses
-  %.sroa.23289.7.us = phi i32 [ %.sroa.23289.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.23289.1, %.preheader.us.preheader.i ] ; 2 uses
-  %.sroa.0286.7.us = phi float [ %.sroa.0286.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.0286.1, %.preheader.us.preheader.i ] ; 3 uses
+  %.sroa.43.7.us = phi i8 [ %.sroa.43.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.43.1, %.preheader.us.preheader.i ] ; 2 uses
+  %.sroa.34.7.us = phi i32 [ %.sroa.34.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.34.1, %.preheader.us.preheader.i ] ; 2 uses
+  %.sroa.32.7.us = phi i32 [ %.sroa.32.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.25.1, %.preheader.us.preheader.i ] ; 2 uses
+  %.sroa.16.7.us = phi i64 [ %.sroa.16.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.16.1, %.preheader.us.preheader.i ] ; 2 uses
+  %.sroa.0286.7.us = phi float [ %.sroa.0286.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.0298.1, %.preheader.us.preheader.i ] ; 3 uses
   %indvars.iv43.i.us = phi i64 [ %indvars.iv.next44.i.us, %._crit_edge.us.i.split.us.us ], [ 0, %.preheader.us.preheader.i ] ; 2 uses
   %i.hy = getelementptr inbounds nuw [4 x i8], ptr %i.hm, i64 %indvars.iv43.i.us ; 2 uses
   %invariant.gep699.us = getelementptr inbounds nuw i8, ptr %i.hy, i64 4
@@ -290,7 +290,7 @@ bb.ao:                                            ; preds = %.preheader.us.i.us
   %i.io = fsub float %i.im, %i.in                 ; 2 uses
   %i.ip = fmul float %i.io, %i.io
   %i.iq = fadd float %i.ik, %i.ip                 ; 3 uses
-  %i.ir = trunc nuw i8 %.sroa.41.7.us to i1
+  %i.ir = trunc nuw i8 %.sroa.43.7.us to i1
   br i1 %i.ir, label %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.us.us.us.prol, label %._crit_edge.us.i.split.us.us
 
 _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.us.us.us.prol: ; preds = %bb.ao
@@ -301,10 +301,10 @@ _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.us.us.us.prol: ; preds 
   br label %._crit_edge.us.i.split.us.us
 
 ._crit_edge.us.i.split.us.us:                     ; preds = %.thread.i.us.i.us.us.us.prol, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.us.us.us.prol, %bb.ao, %.preheader.us.i.us
-  %.sroa.04.0.insert.insert.i689.us.us.us.prol = phi i64 [ %.us-phi707718.us, %.preheader.us.i.us ], [ %.sroa.04.0.insert.insert.i, %.thread.i.us.i.us.us.us.prol ], [ %.us-phi707718.us, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.us.us.us.prol ], [ %.sroa.04.0.insert.insert.i, %bb.ao ] ; 2 uses
-  %.sroa.41.11.us.us.us.prol = phi i8 [ %.sroa.41.7.us, %.preheader.us.i.us ], [ 1, %.thread.i.us.i.us.us.us.prol ], [ 1, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.us.us.us.prol ], [ 1, %bb.ao ] ; 2 uses
-  %.sroa.32.11.us.us.us.prol = phi i32 [ %.sroa.32.7.us, %.preheader.us.i.us ], [ %i.id, %.thread.i.us.i.us.us.us.prol ], [ %.sroa.32.7.us, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.us.us.us.prol ], [ %i.id, %bb.ao ] ; 2 uses
-  %.sroa.23289.11.us.us.us.prol = phi i32 [ %.sroa.23289.7.us, %.preheader.us.i.us ], [ %i.hz, %.thread.i.us.i.us.us.us.prol ], [ %.sroa.23289.7.us, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.us.us.us.prol ], [ %i.hz, %bb.ao ] ; 2 uses
+  %.sroa.43.11.us.us.us.prol = phi i8 [ %.sroa.43.7.us, %.preheader.us.i.us ], [ 1, %.thread.i.us.i.us.us.us.prol ], [ 1, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.us.us.us.prol ], [ 1, %bb.ao ] ; 2 uses
+  %.sroa.34.11.us.us.us.prol = phi i32 [ %.sroa.34.7.us, %.preheader.us.i.us ], [ %i.id, %.thread.i.us.i.us.us.us.prol ], [ %.sroa.34.7.us, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.us.us.us.prol ], [ %i.id, %bb.ao ] ; 2 uses
+  %.sroa.32.11.us.us.us.prol = phi i32 [ %.sroa.32.7.us, %.preheader.us.i.us ], [ %i.hz, %.thread.i.us.i.us.us.us.prol ], [ %.sroa.32.7.us, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.us.us.us.prol ], [ %i.hz, %bb.ao ] ; 2 uses
+  %.sroa.16.11.us.us.us.prol = phi i64 [ %.sroa.16.7.us, %.preheader.us.i.us ], [ %.sroa.04.0.insert.insert.i, %.thread.i.us.i.us.us.us.prol ], [ %.sroa.16.7.us, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.us.us.us.prol ], [ %.sroa.04.0.insert.insert.i, %bb.ao ] ; 2 uses
   %.sroa.0286.11.us.us.us.prol = phi float [ %.sroa.0286.7.us, %.preheader.us.i.us ], [ %i.iq, %.thread.i.us.i.us.us.us.prol ], [ %.sroa.0286.7.us, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.us.us.us.prol ], [ %i.iq, %bb.ao ] ; 2 uses
   %indvars.iv.next44.i.us = add nuw nsw i64 %indvars.iv43.i.us, %i.hw ; 2 uses
   %i.it = trunc nuw i64 %indvars.iv.next44.i.us to i32
@@ -312,8 +312,8 @@ _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.us.us.us.prol: ; preds 
   br i1 %i.iu, label %.preheader.us.i.us, label %.loopexit23.i, !llvm.loop !223
 
 .preheader.us.i:                                  ; preds = %.preheader.us.i.preheader, %._crit_edge.us.i.split
-  %.us-phi708717 = phi i64 [ %.us-phi690702, %._crit_edge.us.i.split ], [ %.us-phi719730, %.preheader.us.i.preheader ]
-  %.sroa.0233.3 = phi float [ %.sroa.0233.5, %._crit_edge.us.i.split ], [ %.sroa.0233.1, %.preheader.us.i.preheader ]
+  %.sroa.0233.3 = phi float [ %.sroa.0233.5, %._crit_edge.us.i.split ], [ %.sroa.0286.1, %.preheader.us.i.preheader ]
+  %.sroa.6.3 = phi i64 [ %.sroa.6.5, %._crit_edge.us.i.split ], [ %.sroa.6.1, %.preheader.us.i.preheader ]
   %.sroa.9.3 = phi i32 [ %.sroa.9.5, %._crit_edge.us.i.split ], [ %.sroa.9.1, %.preheader.us.i.preheader ]
   %.sroa.12.3 = phi i32 [ %.sroa.12.5, %._crit_edge.us.i.split ], [ %.sroa.12.1, %.preheader.us.i.preheader ]
   %.sroa.15.3 = phi i8 [ %.sroa.15.5, %._crit_edge.us.i.split ], [ %.sroa.15.1, %.preheader.us.i.preheader ]
@@ -323,8 +323,8 @@ _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.us.us.us.prol: ; preds 
   br label %bb.ap
 
 bb.ap:                                            ; preds = %.loopexit21.us.i, %.preheader.us.i
-  %.us-phi690703 = phi i64 [ %.us-phi708717, %.preheader.us.i ], [ %.us-phi690702, %.loopexit21.us.i ] ; 4 uses
   %.sroa.0233.4 = phi float [ %.sroa.0233.3, %.preheader.us.i ], [ %.sroa.0233.5, %.loopexit21.us.i ] ; 5 uses
+  %.sroa.6.4 = phi i64 [ %.sroa.6.3, %.preheader.us.i ], [ %.sroa.6.5, %.loopexit21.us.i ] ; 4 uses
   %.sroa.9.4 = phi i32 [ %.sroa.9.3, %.preheader.us.i ], [ %.sroa.9.5, %.loopexit21.us.i ] ; 4 uses
   %.sroa.12.4 = phi i32 [ %.sroa.12.3, %.preheader.us.i ], [ %.sroa.12.5, %.loopexit21.us.i ] ; 4 uses
   %.sroa.15.4 = phi i8 [ %.sroa.15.3, %.preheader.us.i ], [ %.sroa.15.5, %.loopexit21.us.i ] ; 4 uses
@@ -337,8 +337,8 @@ bb.ap:                                            ; preds = %.loopexit21.us.i, %
   br i1 %i.ix, label %.lr.ph.us.i, label %.loopexit21.us.i
 
 .lr.ph.us.i.new:                                  ; preds = %.prol.loopexit, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1
-  %.sroa.04.0.insert.insert.i686 = phi i64 [ %.sroa.04.0.insert.insert.i687.1, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1 ], [ %.sroa.04.0.insert.insert.i686.unr, %.prol.loopexit ] ; 2 uses
   %.sroa.0233.6 = phi float [ %.sroa.0233.7.1, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1 ], [ %.sroa.0233.6.unr, %.prol.loopexit ] ; 3 uses
+  %.sroa.6.6 = phi i64 [ %.sroa.6.7.1, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1 ], [ %.sroa.6.6.unr, %.prol.loopexit ] ; 2 uses
   %.sroa.9.6 = phi i32 [ %.sroa.9.7.1, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1 ], [ %.sroa.9.6.unr, %.prol.loopexit ] ; 2 uses
   %.sroa.12.6 = phi i32 [ %.sroa.12.7.1, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1 ], [ %.sroa.12.6.unr, %.prol.loopexit ] ; 2 uses
   %.sroa.15.6 = phi i8 [ %.sroa.15.7.1, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1 ], [ %.sroa.15.6.unr, %.prol.loopexit ] ; 2 uses
@@ -375,8 +375,8 @@ _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i: ; preds = %bb.aq
   br label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i
 
 _ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i: ; preds = %bb.aq, %.thread.i.us.i, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i, %.lr.ph.us.i.new
-  %.sroa.04.0.insert.insert.i687 = phi i64 [ %.sroa.04.0.insert.insert.i686, %.lr.ph.us.i.new ], [ %.sroa.04.0.insert.insert.i, %.thread.i.us.i ], [ %.sroa.04.0.insert.insert.i686, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i ], [ %.sroa.04.0.insert.insert.i, %bb.aq ] ; 2 uses
   %.sroa.0233.7 = phi float [ %.sroa.0233.6, %.lr.ph.us.i.new ], [ %i.jl, %.thread.i.us.i ], [ %.sroa.0233.6, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i ], [ %i.jl, %bb.aq ] ; 3 uses
+  %.sroa.6.7 = phi i64 [ %.sroa.6.6, %.lr.ph.us.i.new ], [ %.sroa.04.0.insert.insert.i, %.thread.i.us.i ], [ %.sroa.6.6, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i ], [ %.sroa.04.0.insert.insert.i, %bb.aq ] ; 2 uses
   %.sroa.9.7 = phi i32 [ %.sroa.9.6, %.lr.ph.us.i.new ], [ %i.iw, %.thread.i.us.i ], [ %.sroa.9.6, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i ], [ %i.iw, %bb.aq ] ; 2 uses
   %.sroa.12.7 = phi i32 [ %.sroa.12.6, %.lr.ph.us.i.new ], [ %i.iy, %.thread.i.us.i ], [ %.sroa.12.6, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i ], [ %i.iy, %bb.aq ] ; 2 uses
   %.sroa.15.7 = phi i8 [ %.sroa.15.6, %.lr.ph.us.i.new ], [ 1, %.thread.i.us.i ], [ 1, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i ], [ 1, %bb.aq ] ; 2 uses
@@ -413,8 +413,8 @@ _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.1: ; preds = %bb.ar
   br label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1
 
 _ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1: ; preds = %.thread.i.us.i.1, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.1, %bb.ar, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i
-  %.sroa.04.0.insert.insert.i687.1 = phi i64 [ %.sroa.04.0.insert.insert.i687, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i ], [ %.sroa.04.0.insert.insert.i, %.thread.i.us.i.1 ], [ %.sroa.04.0.insert.insert.i687, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.1 ], [ %.sroa.04.0.insert.insert.i, %bb.ar ] ; 2 uses
   %.sroa.0233.7.1 = phi float [ %.sroa.0233.7, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i ], [ %i.kc, %.thread.i.us.i.1 ], [ %.sroa.0233.7, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.1 ], [ %i.kc, %bb.ar ] ; 2 uses
+  %.sroa.6.7.1 = phi i64 [ %.sroa.6.7, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i ], [ %.sroa.04.0.insert.insert.i, %.thread.i.us.i.1 ], [ %.sroa.6.7, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.1 ], [ %.sroa.04.0.insert.insert.i, %bb.ar ] ; 2 uses
   %.sroa.9.7.1 = phi i32 [ %.sroa.9.7, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i ], [ %i.iw, %.thread.i.us.i.1 ], [ %.sroa.9.7, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.1 ], [ %i.iw, %bb.ar ] ; 2 uses
   %.sroa.12.7.1 = phi i32 [ %.sroa.12.7, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i ], [ %i.jp, %.thread.i.us.i.1 ], [ %.sroa.12.7, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.1 ], [ %i.jp, %bb.ar ] ; 2 uses
   %.sroa.15.7.1 = phi i8 [ %.sroa.15.7, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i ], [ 1, %.thread.i.us.i.1 ], [ 1, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.1 ], [ 1, %bb.ar ] ; 2 uses
@@ -423,8 +423,8 @@ _ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded
   br i1 %exitcond.not.i96.1, label %.loopexit21.us.i, label %.lr.ph.us.i.new, !llvm.loop !224
 
 .loopexit21.us.i:                                 ; preds = %.prol.loopexit, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1, %bb.ap
-  %.us-phi690702 = phi i64 [ %.us-phi690703, %bb.ap ], [ %.sroa.04.0.insert.insert.i687.lcssa.unr, %.prol.loopexit ], [ %.sroa.04.0.insert.insert.i687.1, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1 ] ; 3 uses
   %.sroa.0233.5 = phi float [ %.sroa.0233.4, %bb.ap ], [ %.sroa.0233.7.lcssa.unr, %.prol.loopexit ], [ %.sroa.0233.7.1, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1 ] ; 3 uses
+  %.sroa.6.5 = phi i64 [ %.sroa.6.4, %bb.ap ], [ %.sroa.6.7.lcssa.unr, %.prol.loopexit ], [ %.sroa.6.7.1, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1 ] ; 3 uses
   %.sroa.9.5 = phi i32 [ %.sroa.9.4, %bb.ap ], [ %.sroa.9.7.lcssa.unr, %.prol.loopexit ], [ %.sroa.9.7.1, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1 ] ; 3 uses
   %.sroa.12.5 = phi i32 [ %.sroa.12.4, %bb.ap ], [ %.sroa.12.7.lcssa.unr, %.prol.loopexit ], [ %.sroa.12.7.1, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1 ] ; 3 uses
   %.sroa.15.5 = phi i8 [ %.sroa.15.4, %bb.ap ], [ %.sroa.15.7.lcssa.unr, %.prol.loopexit ], [ %.sroa.15.7.1, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.1 ] ; 3 uses
@@ -474,8 +474,8 @@ _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.prol: ; preds = %bb.as
   br label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.prol
 
 _ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.prol: ; preds = %.thread.i.us.i.prol, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.prol, %bb.as, %.prol.preheader
-  %.sroa.04.0.insert.insert.i687.prol = phi i64 [ %.us-phi690703, %.prol.preheader ], [ %.sroa.04.0.insert.insert.i, %.thread.i.us.i.prol ], [ %.us-phi690703, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.prol ], [ %.sroa.04.0.insert.insert.i, %bb.as ] ; 2 uses
   %.sroa.0233.7.prol = phi float [ %.sroa.0233.4, %.prol.preheader ], [ %i.kx, %.thread.i.us.i.prol ], [ %.sroa.0233.4, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.prol ], [ %i.kx, %bb.as ] ; 2 uses
+  %.sroa.6.7.prol = phi i64 [ %.sroa.6.4, %.prol.preheader ], [ %.sroa.04.0.insert.insert.i, %.thread.i.us.i.prol ], [ %.sroa.6.4, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.prol ], [ %.sroa.04.0.insert.insert.i, %bb.as ] ; 2 uses
   %.sroa.9.7.prol = phi i32 [ %.sroa.9.4, %.prol.preheader ], [ %i.iw, %.thread.i.us.i.prol ], [ %.sroa.9.4, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.prol ], [ %i.iw, %bb.as ] ; 2 uses
   %.sroa.12.7.prol = phi i32 [ %.sroa.12.4, %.prol.preheader ], [ %i.kk, %.thread.i.us.i.prol ], [ %.sroa.12.4, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.prol ], [ %i.kk, %bb.as ] ; 2 uses
   %.sroa.15.7.prol = phi i8 [ %.sroa.15.4, %.prol.preheader ], [ 1, %.thread.i.us.i.prol ], [ 1, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i.prol ], [ 1, %bb.as ] ; 2 uses
@@ -483,13 +483,13 @@ _ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.prol, %.lr.ph.us.i
-  %.sroa.04.0.insert.insert.i687.lcssa.unr = phi i64 [ poison, %.lr.ph.us.i ], [ %.sroa.04.0.insert.insert.i687.prol, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.prol ]
   %.sroa.0233.7.lcssa.unr = phi float [ poison, %.lr.ph.us.i ], [ %.sroa.0233.7.prol, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.prol ]
+  %.sroa.6.7.lcssa.unr = phi i64 [ poison, %.lr.ph.us.i ], [ %.sroa.6.7.prol, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.prol ]
   %.sroa.9.7.lcssa.unr = phi i32 [ poison, %.lr.ph.us.i ], [ %.sroa.9.7.prol, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.prol ]
   %.sroa.12.7.lcssa.unr = phi i32 [ poison, %.lr.ph.us.i ], [ %.sroa.12.7.prol, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.prol ]
   %.sroa.15.7.lcssa.unr = phi i8 [ poison, %.lr.ph.us.i ], [ %.sroa.15.7.prol, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.prol ]
-  %.sroa.04.0.insert.insert.i686.unr = phi i64 [ %.us-phi690703, %.lr.ph.us.i ], [ %.sroa.04.0.insert.insert.i687.prol, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.prol ]
   %.sroa.0233.6.unr = phi float [ %.sroa.0233.4, %.lr.ph.us.i ], [ %.sroa.0233.7.prol, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.prol ]
+  %.sroa.6.6.unr = phi i64 [ %.sroa.6.4, %.lr.ph.us.i ], [ %.sroa.6.7.prol, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.prol ]
   %.sroa.9.6.unr = phi i32 [ %.sroa.9.4, %.lr.ph.us.i ], [ %.sroa.9.7.prol, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.prol ]
   %.sroa.12.6.unr = phi i32 [ %.sroa.12.4, %.lr.ph.us.i ], [ %.sroa.12.7.prol, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.prol ]
   %.sroa.15.6.unr = phi i8 [ %.sroa.15.4, %.lr.ph.us.i ], [ %.sroa.15.7.prol, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i.prol ]
@@ -504,13 +504,13 @@ _ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded
   br i1 %i.lc, label %.preheader.us.i, label %.loopexit23.i, !llvm.loop !223
 
 .loopexit23.i:                                    ; preds = %._crit_edge.us.i.split, %._crit_edge.us.i.split.us.us, %.preheader22.i, %bb.an, %.noexc97
-  %.us-phi732 = phi i64 [ %.us-phi733, %.noexc97 ], [ %.us-phi733, %.preheader22.i ], [ %.us-phi733, %bb.an ], [ %.sroa.04.0.insert.insert.i689.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.us-phi733, %._crit_edge.us.i.split ] ; 4 uses
-  %.us-phi719729 = phi i64 [ %.us-phi719730, %.noexc97 ], [ %.us-phi719730, %.preheader22.i ], [ %.us-phi719730, %bb.an ], [ %.us-phi719730, %._crit_edge.us.i.split.us.us ], [ %.us-phi690702, %._crit_edge.us.i.split ] ; 2 uses
-  %.sroa.41.2 = phi i8 [ %.sroa.41.1, %.noexc97 ], [ %.sroa.41.1, %.preheader22.i ], [ %.sroa.41.1, %bb.an ], [ %.sroa.41.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.41.1, %._crit_edge.us.i.split ] ; 4 uses
-  %.sroa.32.2 = phi i32 [ %.sroa.32.1, %.noexc97 ], [ %.sroa.32.1, %.preheader22.i ], [ %.sroa.32.1, %bb.an ], [ %.sroa.32.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.32.1, %._crit_edge.us.i.split ] ; 4 uses
-  %.sroa.23289.2 = phi i32 [ %.sroa.23289.1, %.noexc97 ], [ %.sroa.23289.1, %.preheader22.i ], [ %.sroa.23289.1, %bb.an ], [ %.sroa.23289.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.23289.1, %._crit_edge.us.i.split ] ; 4 uses
-  %.sroa.0286.2 = phi float [ %.sroa.0286.1, %.noexc97 ], [ %.sroa.0286.1, %.preheader22.i ], [ %.sroa.0286.1, %bb.an ], [ %.sroa.0286.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.0286.1, %._crit_edge.us.i.split ] ; 4 uses
-  %.sroa.0233.2 = phi float [ %.sroa.0233.1, %.noexc97 ], [ %.sroa.0233.1, %.preheader22.i ], [ %.sroa.0233.1, %bb.an ], [ %.sroa.0233.1, %._crit_edge.us.i.split.us.us ], [ %.sroa.0233.5, %._crit_edge.us.i.split ] ; 2 uses
+  %.sroa.43.2 = phi i8 [ %.sroa.43.1, %.noexc97 ], [ %.sroa.43.1, %.preheader22.i ], [ %.sroa.43.1, %bb.an ], [ %.sroa.43.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.43.1, %._crit_edge.us.i.split ] ; 4 uses
+  %.sroa.34.2 = phi i32 [ %.sroa.34.1, %.noexc97 ], [ %.sroa.34.1, %.preheader22.i ], [ %.sroa.34.1, %bb.an ], [ %.sroa.34.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.34.1, %._crit_edge.us.i.split ] ; 4 uses
+  %.sroa.25.2 = phi i32 [ %.sroa.25.1, %.noexc97 ], [ %.sroa.25.1, %.preheader22.i ], [ %.sroa.25.1, %bb.an ], [ %.sroa.32.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.25.1, %._crit_edge.us.i.split ] ; 4 uses
+  %.sroa.16.2 = phi i64 [ %.sroa.16.1, %.noexc97 ], [ %.sroa.16.1, %.preheader22.i ], [ %.sroa.16.1, %bb.an ], [ %.sroa.16.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.16.1, %._crit_edge.us.i.split ] ; 4 uses
+  %.sroa.0298.2 = phi float [ %.sroa.0298.1, %.noexc97 ], [ %.sroa.0298.1, %.preheader22.i ], [ %.sroa.0298.1, %bb.an ], [ %.sroa.0286.11.us.us.us.prol, %._crit_edge.us.i.split.us.us ], [ %.sroa.0298.1, %._crit_edge.us.i.split ] ; 4 uses
+  %.sroa.0286.2 = phi float [ %.sroa.0286.1, %.noexc97 ], [ %.sroa.0286.1, %.preheader22.i ], [ %.sroa.0286.1, %bb.an ], [ %.sroa.0286.1, %._crit_edge.us.i.split.us.us ], [ %.sroa.0233.5, %._crit_edge.us.i.split ] ; 2 uses
+  %.sroa.6.2 = phi i64 [ %.sroa.6.1, %.noexc97 ], [ %.sroa.6.1, %.preheader22.i ], [ %.sroa.6.1, %bb.an ], [ %.sroa.6.1, %._crit_edge.us.i.split.us.us ], [ %.sroa.6.5, %._crit_edge.us.i.split ] ; 2 uses
   %.sroa.9.2 = phi i32 [ %.sroa.9.1, %.noexc97 ], [ %.sroa.9.1, %.preheader22.i ], [ %.sroa.9.1, %bb.an ], [ %.sroa.9.1, %._crit_edge.us.i.split.us.us ], [ %.sroa.9.5, %._crit_edge.us.i.split ] ; 2 uses
   %.sroa.12.2 = phi i32 [ %.sroa.12.1, %.noexc97 ], [ %.sroa.12.1, %.preheader22.i ], [ %.sroa.12.1, %bb.an ], [ %.sroa.12.1, %._crit_edge.us.i.split.us.us ], [ %.sroa.12.5, %._crit_edge.us.i.split ] ; 2 uses
   %.sroa.15.2 = phi i8 [ %.sroa.15.1, %.noexc97 ], [ %.sroa.15.1, %.preheader22.i ], [ %.sroa.15.1, %bb.an ], [ %.sroa.15.1, %._crit_edge.us.i.split.us.us ], [ %.sroa.15.5, %._crit_edge.us.i.split ] ; 2 uses
@@ -534,11 +534,11 @@ bb.at:                                            ; preds = %bb.al
   br label %bb.au
 
 bb.au:                                            ; preds = %._crit_edge.i, %.lr.ph33.i
-  %.lcssa734737 = phi i64 [ %.us-phi732, %.lr.ph33.i ], [ %.lcssa734736, %._crit_edge.i ] ; 2 uses
-  %.sroa.41.3 = phi i8 [ %.sroa.41.2, %.lr.ph33.i ], [ %.sroa.41.6, %._crit_edge.i ] ; 2 uses
-  %.sroa.32.3 = phi i32 [ %.sroa.32.2, %.lr.ph33.i ], [ %.sroa.32.6, %._crit_edge.i ] ; 2 uses
-  %.sroa.23289.3 = phi i32 [ %.sroa.23289.2, %.lr.ph33.i ], [ %.sroa.23289.6, %._crit_edge.i ] ; 2 uses
-  %.sroa.0286.3 = phi float [ %.sroa.0286.2, %.lr.ph33.i ], [ %.sroa.0286.6, %._crit_edge.i ] ; 2 uses
+  %.sroa.43.3 = phi i8 [ %.sroa.43.2, %.lr.ph33.i ], [ %.sroa.43.6, %._crit_edge.i ] ; 2 uses
+  %.sroa.34.3 = phi i32 [ %.sroa.34.2, %.lr.ph33.i ], [ %.sroa.34.6, %._crit_edge.i ] ; 2 uses
+  %.sroa.32.3 = phi i32 [ %.sroa.25.2, %.lr.ph33.i ], [ %.sroa.32.6, %._crit_edge.i ] ; 2 uses
+  %.sroa.16.3 = phi i64 [ %.sroa.16.2, %.lr.ph33.i ], [ %.sroa.16.6, %._crit_edge.i ] ; 2 uses
+  %.sroa.0286.3 = phi float [ %.sroa.0298.2, %.lr.ph33.i ], [ %.sroa.0286.6, %._crit_edge.i ] ; 2 uses
   %.031.i = phi i64 [ 0, %.lr.ph33.i ], [ %i.lx, %._crit_edge.i ] ; 6 uses
   %i.lm = getelementptr [4 x i8], ptr %i.le, i64 %.031.i ; 2 uses
   %i.ln = load i32, ptr %i.lm, align 4, !tbaa !184 ; 2 uses
@@ -558,20 +558,20 @@ bb.au:                                            ; preds = %._crit_edge.i, %.lr
   br label %bb.av
 
 ._crit_edge.i:                                    ; preds = %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i, %bb.au
-  %.lcssa734736 = phi i64 [ %.lcssa734737, %bb.au ], [ %20, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
-  %.sroa.41.6 = phi i8 [ %.sroa.41.3, %bb.au ], [ %.sroa.41.5, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
+  %.sroa.43.6 = phi i8 [ %.sroa.43.3, %bb.au ], [ %.sroa.43.5, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
+  %.sroa.34.6 = phi i32 [ %.sroa.34.3, %bb.au ], [ %.sroa.34.5, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
   %.sroa.32.6 = phi i32 [ %.sroa.32.3, %bb.au ], [ %.sroa.32.5, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
-  %.sroa.23289.6 = phi i32 [ %.sroa.23289.3, %bb.au ], [ %.sroa.23289.5, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
+  %.sroa.16.6 = phi i64 [ %.sroa.16.3, %bb.au ], [ %.sroa.16.5, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
   %.sroa.0286.6 = phi float [ %.sroa.0286.3, %bb.au ], [ %.sroa.0286.5, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
   %i.lx = add nuw nsw i64 %.031.i, 1
   %exitcond.not = icmp eq i64 %.031.i, %i.ll
   br i1 %exitcond.not, label %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit, label %bb.au, !llvm.loop !226
 
 bb.av:                                            ; preds = %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i, %.lr.ph.i92
-  %19 = phi i64 [ %.lcssa734737, %.lr.ph.i92 ], [ %20, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
-  %.sroa.41.4 = phi i8 [ %.sroa.41.3, %.lr.ph.i92 ], [ %.sroa.41.5, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
+  %.sroa.43.4 = phi i8 [ %.sroa.43.3, %.lr.ph.i92 ], [ %.sroa.43.5, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
+  %.sroa.34.4 = phi i32 [ %.sroa.34.3, %.lr.ph.i92 ], [ %.sroa.34.5, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
   %.sroa.32.4 = phi i32 [ %.sroa.32.3, %.lr.ph.i92 ], [ %.sroa.32.5, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
-  %.sroa.23289.4 = phi i32 [ %.sroa.23289.3, %.lr.ph.i92 ], [ %.sroa.23289.5, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
+  %.sroa.16.4 = phi i64 [ %.sroa.16.3, %.lr.ph.i92 ], [ %.sroa.16.5, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
   %.sroa.0286.4 = phi float [ %.sroa.0286.3, %.lr.ph.i92 ], [ %.sroa.0286.5, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 3 uses
   %.sroa.01.030.i = phi ptr [ %i.lt, %.lr.ph.i92 ], [ %i.mo, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i ] ; 2 uses
   %i.ly = load i32, ptr %.sroa.01.030.i, align 4, !tbaa !184 ; 3 uses
@@ -594,7 +594,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.mj = fsub float %i.mh, %i.mi                 ; 2 uses
   %i.mk = fmul float %i.mj, %i.mj
   %i.ml = fadd float %i.mf, %i.mk                 ; 3 uses
-  %i.mm = trunc nuw i8 %.sroa.41.4 to i1
+  %i.mm = trunc nuw i8 %.sroa.43.4 to i1
   br i1 %i.mm, label %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i, label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i
 
 _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i: ; preds = %bb.aw
@@ -605,21 +605,21 @@ _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i: ; preds = %bb.aw
   br label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i
 
 _ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i: ; preds = %bb.aw, %.thread.i68.i, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i, %bb.av
-  %20 = phi i64 [ %19, %bb.av ], [ 0, %.thread.i68.i ], [ %19, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i ], [ 0, %bb.aw ] ; 2 uses
-  %.sroa.41.5 = phi i8 [ %.sroa.41.4, %bb.av ], [ 1, %.thread.i68.i ], [ 1, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i ], [ 1, %bb.aw ] ; 2 uses
-  %.sroa.32.5 = phi i32 [ %.sroa.32.4, %bb.av ], [ %i.ly, %.thread.i68.i ], [ %.sroa.32.4, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i ], [ %i.ly, %bb.aw ] ; 2 uses
-  %.sroa.23289.5 = phi i32 [ %.sroa.23289.4, %bb.av ], [ %i.lw, %.thread.i68.i ], [ %.sroa.23289.4, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i ], [ %i.lw, %bb.aw ] ; 2 uses
+  %.sroa.43.5 = phi i8 [ %.sroa.43.4, %bb.av ], [ 1, %.thread.i68.i ], [ 1, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i ], [ 1, %bb.aw ] ; 2 uses
+  %.sroa.34.5 = phi i32 [ %.sroa.34.4, %bb.av ], [ %i.ly, %.thread.i68.i ], [ %.sroa.34.4, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i ], [ %i.ly, %bb.aw ] ; 2 uses
+  %.sroa.32.5 = phi i32 [ %.sroa.32.4, %bb.av ], [ %i.lw, %.thread.i68.i ], [ %.sroa.32.4, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i ], [ %i.lw, %bb.aw ] ; 2 uses
+  %.sroa.16.5 = phi i64 [ %.sroa.16.4, %bb.av ], [ 0, %.thread.i68.i ], [ %.sroa.16.4, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i ], [ 0, %bb.aw ] ; 2 uses
   %.sroa.0286.5 = phi float [ %.sroa.0286.4, %bb.av ], [ %i.ml, %.thread.i68.i ], [ %.sroa.0286.4, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i ], [ %i.ml, %bb.aw ] ; 2 uses
   %i.mo = getelementptr inbounds nuw i8, ptr %.sroa.01.030.i, i64 4 ; 2 uses
   %.not20.i = icmp eq ptr %i.mo, %i.lr
   br i1 %.not20.i, label %._crit_edge.i, label %bb.av
 
 _ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit: ; preds = %._crit_edge.i, %bb.al, %bb.at
-  %.sroa.16.sroa.0.0 = phi i64 [ %.us-phi732, %bb.al ], [ %.us-phi732, %bb.at ], [ %.lcssa734736, %._crit_edge.i ]
-  %.sroa.41.12 = phi i8 [ %.sroa.41.2, %bb.al ], [ %.sroa.41.2, %bb.at ], [ %.sroa.41.6, %._crit_edge.i ]
-  %.sroa.32.12 = phi i32 [ %.sroa.32.2, %bb.al ], [ %.sroa.32.2, %bb.at ], [ %.sroa.32.6, %._crit_edge.i ]
-  %.sroa.23289.12 = phi i32 [ %.sroa.23289.2, %bb.al ], [ %.sroa.23289.2, %bb.at ], [ %.sroa.23289.6, %._crit_edge.i ]
-  %.sroa.0286.12 = phi float [ %.sroa.0286.2, %bb.al ], [ %.sroa.0286.2, %bb.at ], [ %.sroa.0286.6, %._crit_edge.i ]
+  %.sroa.43.12 = phi i8 [ %.sroa.43.2, %bb.al ], [ %.sroa.43.2, %bb.at ], [ %.sroa.43.6, %._crit_edge.i ]
+  %.sroa.34.12 = phi i32 [ %.sroa.34.2, %bb.al ], [ %.sroa.34.2, %bb.at ], [ %.sroa.34.6, %._crit_edge.i ]
+  %.sroa.32.12 = phi i32 [ %.sroa.25.2, %bb.al ], [ %.sroa.25.2, %bb.at ], [ %.sroa.32.6, %._crit_edge.i ]
+  %.sroa.16.12 = phi i64 [ %.sroa.16.2, %bb.al ], [ %.sroa.16.2, %bb.at ], [ %.sroa.16.6, %._crit_edge.i ]
+  %.sroa.0286.12 = phi float [ %.sroa.0298.2, %bb.al ], [ %.sroa.0298.2, %bb.at ], [ %.sroa.0286.6, %._crit_edge.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #14
   br label %bb.bk
 
@@ -648,8 +648,8 @@ _ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t
           cleanup
   br label %.loopexit.split-lp
 
-.loopexit.split-lp:                               ; preds = %.loopexit.split, %.loopexit.split.us.split.us.split.us, %.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit.split-lp543, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %lpad.loopexit537, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit540, %.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %lpad.loopexit542, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %lpad.loopexit, %.loopexit.split ], [ %lpad.loopexit.us.us.us, %.loopexit.split.us.split.us.split.us ] ; 2 uses
+.loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit, %.loopexit.split, %.loopexit.split.us.split.us.split.us
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit.us.us.us, %.loopexit.split.us.split.us.split.us ], [ %lpad.loopexit, %.loopexit.split ], [ %lpad.loopexit537, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit540, %.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %lpad.loopexit542, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp543, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
   %.not.i.i.i151 = icmp eq ptr %i.dw, null
   br i1 %.not.i.i.i151, label %_ZNSt6vectorIN3gmx11BasicVectorIfEESaIS2_EED2Ev.exit152, label %bb.bp
 
@@ -664,13 +664,13 @@ bb.ay:                                            ; preds = %.loopexit95.i
   br i1 %i.d, label %bb.bh, label %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit
 
 bb.az:                                            ; preds = %.loopexit95.i, %bb.ax
-  %.us-phi787813 = phi i64 [ undef, %bb.ax ], [ %.us-phi787812, %.loopexit95.i ] ; 5 uses
-  %.us-phi788808 = phi i64 [ undef, %bb.ax ], [ %.us-phi788807, %.loopexit95.i ] ; 5 uses
-  %.sroa.41.13 = phi i8 [ 0, %bb.ax ], [ %.sroa.41.14, %.loopexit95.i ] ; 5 uses
-  %.sroa.32.13 = phi i32 [ undef, %bb.ax ], [ %.sroa.32.14, %.loopexit95.i ] ; 5 uses
-  %.sroa.23289.13 = phi i32 [ undef, %bb.ax ], [ %.sroa.23289.14, %.loopexit95.i ] ; 5 uses
+  %.sroa.43.13 = phi i8 [ 0, %bb.ax ], [ %.sroa.43.14, %.loopexit95.i ] ; 5 uses
+  %.sroa.34.13 = phi i32 [ undef, %bb.ax ], [ %.sroa.34.14, %.loopexit95.i ] ; 5 uses
+  %.sroa.25.13 = phi i32 [ undef, %bb.ax ], [ %.sroa.25.14, %.loopexit95.i ] ; 5 uses
+  %.sroa.16.13 = phi i64 [ undef, %bb.ax ], [ %.sroa.16.14, %.loopexit95.i ] ; 5 uses
+  %.sroa.0298.13 = phi float [ undef, %bb.ax ], [ %.sroa.0298.14, %.loopexit95.i ] ; 5 uses
   %.sroa.0286.13 = phi float [ undef, %bb.ax ], [ %.sroa.0286.14, %.loopexit95.i ] ; 5 uses
-  %.sroa.0233.8 = phi float [ undef, %bb.ax ], [ %.sroa.0233.9, %.loopexit95.i ] ; 5 uses
+  %.sroa.6.8 = phi i64 [ undef, %bb.ax ], [ %.sroa.6.9, %.loopexit95.i ] ; 5 uses
   %.sroa.9.8 = phi i32 [ undef, %bb.ax ], [ %.sroa.9.9, %.loopexit95.i ] ; 5 uses
   %.sroa.12.8 = phi i32 [ undef, %bb.ax ], [ %.sroa.12.9, %.loopexit95.i ] ; 5 uses
   %.sroa.15.8 = phi i8 [ 0, %bb.ax ], [ %.sroa.15.9, %.loopexit95.i ] ; 5 uses
@@ -712,20 +712,20 @@ bb.ba:                                            ; preds = %.noexc124
   br i1 %i.nf, label %.preheader.us.i114.us, label %.preheader.us.i114
 
 .preheader.us.i114.us:                            ; preds = %.preheader.us.preheader.i110, %._crit_edge.us.i117.split.us.us
-  %.us-phi766785.us = phi i64 [ %.us-phi747763.us.us, %._crit_edge.us.i117.split.us.us ], [ %.us-phi787813, %.preheader.us.preheader.i110 ]
-  %.sroa.41.19.us = phi i8 [ %.sroa.41.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.41.13, %.preheader.us.preheader.i110 ]
-  %.sroa.32.19.us = phi i32 [ %.sroa.32.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.32.13, %.preheader.us.preheader.i110 ]
-  %.sroa.23289.19.us = phi i32 [ %.sroa.23289.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.23289.13, %.preheader.us.preheader.i110 ]
-  %.sroa.0286.19.us = phi float [ %.sroa.0286.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.0286.13, %.preheader.us.preheader.i110 ]
+  %.sroa.43.19.us = phi i8 [ %.sroa.43.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.43.13, %.preheader.us.preheader.i110 ]
+  %.sroa.34.19.us = phi i32 [ %.sroa.34.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.34.13, %.preheader.us.preheader.i110 ]
+  %.sroa.32.19.us = phi i32 [ %.sroa.32.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.25.13, %.preheader.us.preheader.i110 ]
+  %.sroa.16.19.us = phi i64 [ %.sroa.16.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.16.13, %.preheader.us.preheader.i110 ]
+  %.sroa.0286.19.us = phi float [ %.sroa.0286.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.0298.13, %.preheader.us.preheader.i110 ]
   %indvars.iv115.i.us = phi i64 [ %indvars.iv.next116.i.us, %._crit_edge.us.i117.split.us.us ], [ 0, %.preheader.us.preheader.i110 ] ; 2 uses
   %i.nj = add nuw nsw i64 %indvars.iv115.i.us, 1  ; 2 uses
   br label %bb.bb
 
 bb.bb:                                            ; preds = %.loopexit93.us.i.us.us, %.preheader.us.i114.us
-  %.us-phi747764.us.us = phi i64 [ %.us-phi766785.us, %.preheader.us.i114.us ], [ %.us-phi747763.us.us, %.loopexit93.us.i.us.us ] ; 2 uses
-  %.sroa.41.20.us.us = phi i8 [ %.sroa.41.19.us, %.preheader.us.i114.us ], [ %.sroa.41.21.us.us, %.loopexit93.us.i.us.us ] ; 2 uses
+  %.sroa.43.20.us.us = phi i8 [ %.sroa.43.19.us, %.preheader.us.i114.us ], [ %.sroa.43.21.us.us, %.loopexit93.us.i.us.us ] ; 2 uses
+  %.sroa.34.20.us.us = phi i32 [ %.sroa.34.19.us, %.preheader.us.i114.us ], [ %.sroa.34.21.us.us, %.loopexit93.us.i.us.us ] ; 2 uses
   %.sroa.32.20.us.us = phi i32 [ %.sroa.32.19.us, %.preheader.us.i114.us ], [ %.sroa.32.21.us.us, %.loopexit93.us.i.us.us ] ; 2 uses
-  %.sroa.23289.20.us.us = phi i32 [ %.sroa.23289.19.us, %.preheader.us.i114.us ], [ %.sroa.23289.21.us.us, %.loopexit93.us.i.us.us ] ; 2 uses
+  %.sroa.16.20.us.us = phi i64 [ %.sroa.16.19.us, %.preheader.us.i114.us ], [ %.sroa.16.21.us.us, %.loopexit93.us.i.us.us ] ; 2 uses
   %.sroa.0286.20.us.us = phi float [ %.sroa.0286.19.us, %.preheader.us.i114.us ], [ %.sroa.0286.21.us.us, %.loopexit93.us.i.us.us ] ; 2 uses
   %indvars.iv110.i.us.us = phi i64 [ 0, %.preheader.us.i114.us ], [ %indvars.iv.next111.i.us.us, %.loopexit93.us.i.us.us ] ; 2 uses
   %indvars.iv.i115.us.us = phi i64 [ 1, %.preheader.us.i114.us ], [ %indvars.iv.next.i116.us.us, %.loopexit93.us.i.us.us ] ; 2 uses
@@ -743,20 +743,20 @@ bb.bb:                                            ; preds = %.loopexit93.us.i.us
   br label %bb.bc
 
 .loopexit93.us.i.us.us:                           ; preds = %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us, %bb.bb
-  %.us-phi747763.us.us = phi i64 [ %.us-phi747764.us.us, %bb.bb ], [ %.sroa.076.0.insert.insert.i740.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 3 uses
-  %.sroa.41.21.us.us = phi i8 [ %.sroa.41.20.us.us, %bb.bb ], [ %.sroa.41.23.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 3 uses
+  %.sroa.43.21.us.us = phi i8 [ %.sroa.43.20.us.us, %bb.bb ], [ %.sroa.43.23.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 3 uses
+  %.sroa.34.21.us.us = phi i32 [ %.sroa.34.20.us.us, %bb.bb ], [ %.sroa.34.23.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 3 uses
   %.sroa.32.21.us.us = phi i32 [ %.sroa.32.20.us.us, %bb.bb ], [ %.sroa.32.23.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 3 uses
-  %.sroa.23289.21.us.us = phi i32 [ %.sroa.23289.20.us.us, %bb.bb ], [ %.sroa.23289.23.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 3 uses
+  %.sroa.16.21.us.us = phi i64 [ %.sroa.16.20.us.us, %bb.bb ], [ %.sroa.16.23.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 3 uses
   %.sroa.0286.21.us.us = phi float [ %.sroa.0286.20.us.us, %bb.bb ], [ %.sroa.0286.23.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 3 uses
   %indvars.iv.next.i116.us.us = add nuw nsw i64 %indvars.iv.i115.us.us, 1
   %exitcond114.not.i.us.us = icmp eq i64 %indvars.iv.next111.i.us.us, %i.nh
   br i1 %exitcond114.not.i.us.us, label %._crit_edge.us.i117.split.us.us, label %bb.bb, !llvm.loop !227
 
 bb.bc:                                            ; preds = %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us, %.lr.ph.us.i118.us.us
-  %.sroa.076.0.insert.insert.i741.us.us.us = phi i64 [ %.us-phi747764.us.us, %.lr.ph.us.i118.us.us ], [ %.sroa.076.0.insert.insert.i740.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 2 uses
-  %.sroa.41.22.us.us.us = phi i8 [ %.sroa.41.20.us.us, %.lr.ph.us.i118.us.us ], [ %.sroa.41.23.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 2 uses
+  %.sroa.43.22.us.us.us = phi i8 [ %.sroa.43.20.us.us, %.lr.ph.us.i118.us.us ], [ %.sroa.43.23.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 2 uses
+  %.sroa.34.22.us.us.us = phi i32 [ %.sroa.34.20.us.us, %.lr.ph.us.i118.us.us ], [ %.sroa.34.23.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 2 uses
   %.sroa.32.22.us.us.us = phi i32 [ %.sroa.32.20.us.us, %.lr.ph.us.i118.us.us ], [ %.sroa.32.23.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 2 uses
-  %.sroa.23289.22.us.us.us = phi i32 [ %.sroa.23289.20.us.us, %.lr.ph.us.i118.us.us ], [ %.sroa.23289.23.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 2 uses
+  %.sroa.16.22.us.us.us = phi i64 [ %.sroa.16.20.us.us, %.lr.ph.us.i118.us.us ], [ %.sroa.16.23.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 2 uses
   %.sroa.0286.22.us.us.us = phi float [ %.sroa.0286.20.us.us, %.lr.ph.us.i118.us.us ], [ %.sroa.0286.23.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 3 uses
   %indvars.iv107.i.us.us.us = phi i64 [ %indvars.iv.i115.us.us, %.lr.ph.us.i118.us.us ], [ %indvars.iv.next108.i.us.us.us, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us ] ; 2 uses
   %i.nr = load ptr, ptr %i.mr, align 8, !tbaa !182
@@ -781,7 +781,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.ob = load float, ptr %i.as, align 4, !tbaa !206 ; 2 uses
   %i.oc = call noundef float @llvm.fmuladd.f32(float %i.ob, float %i.ob, float %i.oa) ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #14
-  %i.od = trunc nuw i8 %.sroa.41.22.us.us.us to i1
+  %i.od = trunc nuw i8 %.sroa.43.22.us.us.us to i1
   br i1 %i.od, label %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122.us.us.us, label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us
 
 _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122.us.us.us: ; preds = %.noexc125.us.us.us
@@ -792,10 +792,10 @@ _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122.us.us.us: ; preds = 
   br label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us
 
 _ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120.us.us.us: ; preds = %.noexc125.us.us.us, %.thread.i.us.i123.us.us.us, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122.us.us.us, %bb.bc
-  %.sroa.076.0.insert.insert.i740.us.us.us = phi i64 [ %.sroa.076.0.insert.insert.i741.us.us.us, %bb.bc ], [ %.sroa.076.0.insert.insert.i, %.thread.i.us.i123.us.us.us ], [ %.sroa.076.0.insert.insert.i741.us.us.us, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122.us.us.us ], [ %.sroa.076.0.insert.insert.i, %.noexc125.us.us.us ] ; 2 uses
-  %.sroa.41.23.us.us.us = phi i8 [ %.sroa.41.22.us.us.us, %bb.bc ], [ 1, %.thread.i.us.i123.us.us.us ], [ 1, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122.us.us.us ], [ 1, %.noexc125.us.us.us ] ; 2 uses
-  %.sroa.32.23.us.us.us = phi i32 [ %.sroa.32.22.us.us.us, %bb.bc ], [ %i.nu, %.thread.i.us.i123.us.us.us ], [ %.sroa.32.22.us.us.us, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122.us.us.us ], [ %i.nu, %.noexc125.us.us.us ] ; 2 uses
-  %.sroa.23289.23.us.us.us = phi i32 [ %.sroa.23289.22.us.us.us, %bb.bc ], [ %i.nn, %.thread.i.us.i123.us.us.us ], [ %.sroa.23289.22.us.us.us, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122.us.us.us ], [ %i.nn, %.noexc125.us.us.us ] ; 2 uses
+  %.sroa.43.23.us.us.us = phi i8 [ %.sroa.43.22.us.us.us, %bb.bc ], [ 1, %.thread.i.us.i123.us.us.us ], [ 1, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122.us.us.us ], [ 1, %.noexc125.us.us.us ] ; 2 uses
+  %.sroa.34.23.us.us.us = phi i32 [ %.sroa.34.22.us.us.us, %bb.bc ], [ %i.nu, %.thread.i.us.i123.us.us.us ], [ %.sroa.34.22.us.us.us, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122.us.us.us ], [ %i.nu, %.noexc125.us.us.us ] ; 2 uses
+  %.sroa.32.23.us.us.us = phi i32 [ %.sroa.32.22.us.us.us, %bb.bc ], [ %i.nn, %.thread.i.us.i123.us.us.us ], [ %.sroa.32.22.us.us.us, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122.us.us.us ], [ %i.nn, %.noexc125.us.us.us ] ; 2 uses
+  %.sroa.16.23.us.us.us = phi i64 [ %.sroa.16.22.us.us.us, %bb.bc ], [ %.sroa.076.0.insert.insert.i, %.thread.i.us.i123.us.us.us ], [ %.sroa.16.22.us.us.us, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122.us.us.us ], [ %.sroa.076.0.insert.insert.i, %.noexc125.us.us.us ] ; 2 uses
   %.sroa.0286.23.us.us.us = phi float [ %.sroa.0286.22.us.us.us, %bb.bc ], [ %i.oc, %.thread.i.us.i123.us.us.us ], [ %.sroa.0286.22.us.us.us, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122.us.us.us ], [ %i.oc, %.noexc125.us.us.us ] ; 2 uses
   %indvars.iv.next108.i.us.us.us = add nuw nsw i64 %indvars.iv107.i.us.us.us, 1 ; 2 uses
   %exitcond.not.i121.us.us.us = icmp eq i64 %indvars.iv.next108.i.us.us.us, %i.nh
@@ -820,8 +820,8 @@ _ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded
   br label %.loopexit.split-lp
 
 .preheader.us.i114:                               ; preds = %.preheader.us.preheader.i110, %._crit_edge.us.i117.split
-  %.us-phi767783 = phi i64 [ %.us-phi748759, %._crit_edge.us.i117.split ], [ %.us-phi788808, %.preheader.us.preheader.i110 ]
-  %.sroa.0233.10 = phi float [ %.sroa.0233.12, %._crit_edge.us.i117.split ], [ %.sroa.0233.8, %.preheader.us.preheader.i110 ]
+  %.sroa.0233.10 = phi float [ %.sroa.0233.12, %._crit_edge.us.i117.split ], [ %.sroa.0286.13, %.preheader.us.preheader.i110 ]
+  %.sroa.6.10 = phi i64 [ %.sroa.6.12, %._crit_edge.us.i117.split ], [ %.sroa.6.8, %.preheader.us.preheader.i110 ]
   %.sroa.9.10 = phi i32 [ %.sroa.9.12, %._crit_edge.us.i117.split ], [ %.sroa.9.8, %.preheader.us.preheader.i110 ]
   %.sroa.12.10 = phi i32 [ %.sroa.12.12, %._crit_edge.us.i117.split ], [ %.sroa.12.8, %.preheader.us.preheader.i110 ]
   %.sroa.15.10 = phi i8 [ %.sroa.15.12, %._crit_edge.us.i117.split ], [ %.sroa.15.8, %.preheader.us.preheader.i110 ]
@@ -830,8 +830,8 @@ _ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded
   br label %bb.be
 
 bb.be:                                            ; preds = %.loopexit93.us.i, %.preheader.us.i114
-  %.us-phi748760 = phi i64 [ %.us-phi767783, %.preheader.us.i114 ], [ %.us-phi748759, %.loopexit93.us.i ] ; 2 uses
   %.sroa.0233.11 = phi float [ %.sroa.0233.10, %.preheader.us.i114 ], [ %.sroa.0233.12, %.loopexit93.us.i ] ; 2 uses
+  %.sroa.6.11 = phi i64 [ %.sroa.6.10, %.preheader.us.i114 ], [ %.sroa.6.12, %.loopexit93.us.i ] ; 2 uses
   %.sroa.9.11 = phi i32 [ %.sroa.9.10, %.preheader.us.i114 ], [ %.sroa.9.12, %.loopexit93.us.i ] ; 2 uses
   %.sroa.12.11 = phi i32 [ %.sroa.12.10, %.preheader.us.i114 ], [ %.sroa.12.12, %.loopexit93.us.i ] ; 2 uses
   %.sroa.15.11 = phi i8 [ %.sroa.15.10, %.preheader.us.i114 ], [ %.sroa.15.12, %.loopexit93.us.i ] ; 2 uses
@@ -846,8 +846,8 @@ bb.be:                                            ; preds = %.loopexit93.us.i, %
   br i1 %i.ot, label %.lr.ph.us.i118, label %.loopexit93.us.i
 
 bb.bf:                                            ; preds = %.lr.ph.us.i118, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120
-  %.sroa.076.0.insert.insert.i739 = phi i64 [ %.us-phi748760, %.lr.ph.us.i118 ], [ %.sroa.076.0.insert.insert.i738, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120 ] ; 2 uses
   %.sroa.0233.13 = phi float [ %.sroa.0233.11, %.lr.ph.us.i118 ], [ %.sroa.0233.14, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120 ] ; 3 uses
+  %.sroa.6.13 = phi i64 [ %.sroa.6.11, %.lr.ph.us.i118 ], [ %.sroa.6.14, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120 ] ; 2 uses
   %.sroa.9.13 = phi i32 [ %.sroa.9.11, %.lr.ph.us.i118 ], [ %.sroa.9.14, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120 ] ; 2 uses
   %.sroa.12.13 = phi i32 [ %.sroa.12.11, %.lr.ph.us.i118 ], [ %.sroa.12.14, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120 ] ; 2 uses
   %.sroa.15.13 = phi i8 [ %.sroa.15.11, %.lr.ph.us.i118 ], [ %.sroa.15.14, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120 ] ; 2 uses
@@ -885,8 +885,8 @@ _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122: ; preds = %.noexc12
   br label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120
 
 _ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120: ; preds = %.noexc125, %.thread.i.us.i123, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122, %bb.bf
-  %.sroa.076.0.insert.insert.i738 = phi i64 [ %.sroa.076.0.insert.insert.i739, %bb.bf ], [ %.sroa.076.0.insert.insert.i, %.thread.i.us.i123 ], [ %.sroa.076.0.insert.insert.i739, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122 ], [ %.sroa.076.0.insert.insert.i, %.noexc125 ] ; 2 uses
   %.sroa.0233.14 = phi float [ %.sroa.0233.13, %bb.bf ], [ %i.pf, %.thread.i.us.i123 ], [ %.sroa.0233.13, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122 ], [ %i.pf, %.noexc125 ] ; 2 uses
+  %.sroa.6.14 = phi i64 [ %.sroa.6.13, %bb.bf ], [ %.sroa.076.0.insert.insert.i, %.thread.i.us.i123 ], [ %.sroa.6.13, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122 ], [ %.sroa.076.0.insert.insert.i, %.noexc125 ] ; 2 uses
   %.sroa.9.14 = phi i32 [ %.sroa.9.13, %bb.bf ], [ %i.os, %.thread.i.us.i123 ], [ %.sroa.9.13, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122 ], [ %i.os, %.noexc125 ] ; 2 uses
   %.sroa.12.14 = phi i32 [ %.sroa.12.13, %bb.bf ], [ %i.ox, %.thread.i.us.i123 ], [ %.sroa.12.13, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122 ], [ %i.ox, %.noexc125 ] ; 2 uses
   %.sroa.15.14 = phi i8 [ %.sroa.15.13, %bb.bf ], [ 1, %.thread.i.us.i123 ], [ 1, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i.us.i122 ], [ 1, %.noexc125 ] ; 2 uses
@@ -895,8 +895,8 @@ _ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded
   br i1 %exitcond.not.i121, label %.loopexit93.us.i, label %bb.bf, !llvm.loop !228
 
 .loopexit93.us.i:                                 ; preds = %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120, %bb.be
-  %.us-phi748759 = phi i64 [ %.us-phi748760, %bb.be ], [ %.sroa.076.0.insert.insert.i738, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120 ] ; 3 uses
   %.sroa.0233.12 = phi float [ %.sroa.0233.11, %bb.be ], [ %.sroa.0233.14, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120 ] ; 3 uses
+  %.sroa.6.12 = phi i64 [ %.sroa.6.11, %bb.be ], [ %.sroa.6.14, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120 ] ; 3 uses
   %.sroa.9.12 = phi i32 [ %.sroa.9.11, %bb.be ], [ %.sroa.9.14, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120 ] ; 3 uses
   %.sroa.12.12 = phi i32 [ %.sroa.12.11, %bb.be ], [ %.sroa.12.14, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120 ] ; 3 uses
   %.sroa.15.12 = phi i8 [ %.sroa.15.11, %bb.be ], [ %.sroa.15.14, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit.us.i120 ] ; 3 uses
@@ -923,13 +923,13 @@ _ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded
   br i1 %i.ps, label %.preheader.us.i114, label %.loopexit95.i, !llvm.loop !229
 
 .loopexit95.i:                                    ; preds = %._crit_edge.us.i117.split, %._crit_edge.us.i117.split.us.us, %.preheader94.i, %bb.ba, %.noexc124
-  %.us-phi787812 = phi i64 [ %.us-phi787813, %.noexc124 ], [ %.us-phi787813, %.preheader94.i ], [ %.us-phi787813, %bb.ba ], [ %.us-phi747763.us.us, %._crit_edge.us.i117.split.us.us ], [ %.us-phi787813, %._crit_edge.us.i117.split ] ; 5 uses
-  %.us-phi788807 = phi i64 [ %.us-phi788808, %.noexc124 ], [ %.us-phi788808, %.preheader94.i ], [ %.us-phi788808, %bb.ba ], [ %.us-phi788808, %._crit_edge.us.i117.split.us.us ], [ %.us-phi748759, %._crit_edge.us.i117.split ] ; 2 uses
-  %.sroa.41.14 = phi i8 [ %.sroa.41.13, %.noexc124 ], [ %.sroa.41.13, %.preheader94.i ], [ %.sroa.41.13, %bb.ba ], [ %.sroa.41.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.41.13, %._crit_edge.us.i117.split ] ; 4 uses
-  %.sroa.32.14 = phi i32 [ %.sroa.32.13, %.noexc124 ], [ %.sroa.32.13, %.preheader94.i ], [ %.sroa.32.13, %bb.ba ], [ %.sroa.32.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.32.13, %._crit_edge.us.i117.split ] ; 4 uses
-  %.sroa.23289.14 = phi i32 [ %.sroa.23289.13, %.noexc124 ], [ %.sroa.23289.13, %.preheader94.i ], [ %.sroa.23289.13, %bb.ba ], [ %.sroa.23289.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.23289.13, %._crit_edge.us.i117.split ] ; 4 uses
-  %.sroa.0286.14 = phi float [ %.sroa.0286.13, %.noexc124 ], [ %.sroa.0286.13, %.preheader94.i ], [ %.sroa.0286.13, %bb.ba ], [ %.sroa.0286.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.0286.13, %._crit_edge.us.i117.split ] ; 4 uses
-  %.sroa.0233.9 = phi float [ %.sroa.0233.8, %.noexc124 ], [ %.sroa.0233.8, %.preheader94.i ], [ %.sroa.0233.8, %bb.ba ], [ %.sroa.0233.8, %._crit_edge.us.i117.split.us.us ], [ %.sroa.0233.12, %._crit_edge.us.i117.split ] ; 2 uses
+  %.sroa.43.14 = phi i8 [ %.sroa.43.13, %.noexc124 ], [ %.sroa.43.13, %.preheader94.i ], [ %.sroa.43.13, %bb.ba ], [ %.sroa.43.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.43.13, %._crit_edge.us.i117.split ] ; 4 uses
+  %.sroa.34.14 = phi i32 [ %.sroa.34.13, %.noexc124 ], [ %.sroa.34.13, %.preheader94.i ], [ %.sroa.34.13, %bb.ba ], [ %.sroa.34.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.34.13, %._crit_edge.us.i117.split ] ; 4 uses
+  %.sroa.25.14 = phi i32 [ %.sroa.25.13, %.noexc124 ], [ %.sroa.25.13, %.preheader94.i ], [ %.sroa.25.13, %bb.ba ], [ %.sroa.32.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.25.13, %._crit_edge.us.i117.split ] ; 4 uses
+  %.sroa.16.14 = phi i64 [ %.sroa.16.13, %.noexc124 ], [ %.sroa.16.13, %.preheader94.i ], [ %.sroa.16.13, %bb.ba ], [ %.sroa.16.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.16.13, %._crit_edge.us.i117.split ] ; 4 uses
+  %.sroa.0298.14 = phi float [ %.sroa.0298.13, %.noexc124 ], [ %.sroa.0298.13, %.preheader94.i ], [ %.sroa.0298.13, %bb.ba ], [ %.sroa.0286.21.us.us, %._crit_edge.us.i117.split.us.us ], [ %.sroa.0298.13, %._crit_edge.us.i117.split ] ; 4 uses
+  %.sroa.0286.14 = phi float [ %.sroa.0286.13, %.noexc124 ], [ %.sroa.0286.13, %.preheader94.i ], [ %.sroa.0286.13, %bb.ba ], [ %.sroa.0286.13, %._crit_edge.us.i117.split.us.us ], [ %.sroa.0233.12, %._crit_edge.us.i117.split ] ; 2 uses
+  %.sroa.6.9 = phi i64 [ %.sroa.6.8, %.noexc124 ], [ %.sroa.6.8, %.preheader94.i ], [ %.sroa.6.8, %bb.ba ], [ %.sroa.6.8, %._crit_edge.us.i117.split.us.us ], [ %.sroa.6.12, %._crit_edge.us.i117.split ] ; 2 uses
   %.sroa.9.9 = phi i32 [ %.sroa.9.8, %.noexc124 ], [ %.sroa.9.8, %.preheader94.i ], [ %.sroa.9.8, %bb.ba ], [ %.sroa.9.8, %._crit_edge.us.i117.split.us.us ], [ %.sroa.9.12, %._crit_edge.us.i117.split ] ; 2 uses
   %.sroa.12.9 = phi i32 [ %.sroa.12.8, %.noexc124 ], [ %.sroa.12.8, %.preheader94.i ], [ %.sroa.12.8, %bb.ba ], [ %.sroa.12.8, %._crit_edge.us.i117.split.us.us ], [ %.sroa.12.12, %._crit_edge.us.i117.split ] ; 2 uses
   %.sroa.15.9 = phi i8 [ %.sroa.15.8, %.noexc124 ], [ %.sroa.15.8, %.preheader94.i ], [ %.sroa.15.8, %bb.ba ], [ %.sroa.15.8, %._crit_edge.us.i117.split.us.us ], [ %.sroa.15.12, %._crit_edge.us.i117.split ] ; 2 uses
@@ -947,12 +947,11 @@ bb.bh:                                            ; preds = %bb.ay
   br i1 %i.py, label %.lr.ph105.i, label %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit
 
 .lr.ph105.i:                                      ; preds = %bb.bh, %._crit_edge.i107
-  %.sroa.16.sroa.0.1 = phi i64 [ %.sroa.16.sroa.0.2, %._crit_edge.i107 ], [ %.us-phi787812, %bb.bh ]
-  %.lcssa817820 = phi i64 [ %.lcssa817819, %._crit_edge.i107 ], [ %.us-phi787812, %bb.bh ] ; 2 uses
-  %.sroa.41.15 = phi i8 [ %.sroa.41.18, %._crit_edge.i107 ], [ %.sroa.41.14, %bb.bh ] ; 2 uses
-  %.sroa.32.15 = phi i32 [ %.sroa.32.18, %._crit_edge.i107 ], [ %.sroa.32.14, %bb.bh ] ; 2 uses
-  %.sroa.23289.15 = phi i32 [ %.sroa.23289.18, %._crit_edge.i107 ], [ %.sroa.23289.14, %bb.bh ] ; 2 uses
-  %.sroa.0286.15 = phi float [ %.sroa.0286.18, %._crit_edge.i107 ], [ %.sroa.0286.14, %bb.bh ] ; 2 uses
+  %.sroa.43.15 = phi i8 [ %.sroa.43.18, %._crit_edge.i107 ], [ %.sroa.43.14, %bb.bh ] ; 2 uses
+  %.sroa.34.15 = phi i32 [ %.sroa.34.18, %._crit_edge.i107 ], [ %.sroa.34.14, %bb.bh ] ; 2 uses
+  %.sroa.32.15 = phi i32 [ %.sroa.32.18, %._crit_edge.i107 ], [ %.sroa.25.14, %bb.bh ] ; 2 uses
+  %.sroa.16.15 = phi i64 [ %.sroa.16.18, %._crit_edge.i107 ], [ %.sroa.16.14, %bb.bh ] ; 2 uses
+  %.sroa.0286.15 = phi float [ %.sroa.0286.18, %._crit_edge.i107 ], [ %.sroa.0298.14, %bb.bh ] ; 2 uses
   %i.pz = phi ptr [ %i.qm, %._crit_edge.i107 ], [ %i.pu, %bb.bh ] ; 2 uses
   %i.qa = phi ptr [ %i.qn, %._crit_edge.i107 ], [ %i.pt, %bb.bh ]
   %.0103.i = phi i64 [ %i.qo, %._crit_edge.i107 ], [ 0, %bb.bh ] ; 5 uses
@@ -979,11 +978,10 @@ bb.bh:                                            ; preds = %bb.ay
   br label %._crit_edge.i107
 
 ._crit_edge.i107:                                 ; preds = %._crit_edge.loopexit.i105, %.lr.ph105.i
-  %.sroa.16.sroa.0.2 = phi i64 [ %.sroa.16.sroa.0.1, %.lr.ph105.i ], [ %22, %._crit_edge.loopexit.i105 ] ; 2 uses
-  %.lcssa817819 = phi i64 [ %.lcssa817820, %.lr.ph105.i ], [ %22, %._crit_edge.loopexit.i105 ]
-  %.sroa.41.18 = phi i8 [ %.sroa.41.15, %.lr.ph105.i ], [ %.sroa.41.17, %._crit_edge.loopexit.i105 ] ; 2 uses
+  %.sroa.43.18 = phi i8 [ %.sroa.43.15, %.lr.ph105.i ], [ %.sroa.43.17, %._crit_edge.loopexit.i105 ] ; 2 uses
+  %.sroa.34.18 = phi i32 [ %.sroa.34.15, %.lr.ph105.i ], [ %.sroa.34.17, %._crit_edge.loopexit.i105 ] ; 2 uses
   %.sroa.32.18 = phi i32 [ %.sroa.32.15, %.lr.ph105.i ], [ %.sroa.32.17, %._crit_edge.loopexit.i105 ] ; 2 uses
-  %.sroa.23289.18 = phi i32 [ %.sroa.23289.15, %.lr.ph105.i ], [ %.sroa.23289.17, %._crit_edge.loopexit.i105 ] ; 2 uses
+  %.sroa.16.18 = phi i64 [ %.sroa.16.15, %.lr.ph105.i ], [ %.sroa.16.17, %._crit_edge.loopexit.i105 ] ; 2 uses
   %.sroa.0286.18 = phi float [ %.sroa.0286.15, %.lr.ph105.i ], [ %.sroa.0286.17, %._crit_edge.loopexit.i105 ] ; 2 uses
   %i.qm = phi ptr [ %i.pz, %.lr.ph105.i ], [ %.pre121.i, %._crit_edge.loopexit.i105 ] ; 2 uses
   %i.qn = phi ptr [ %i.qa, %.lr.ph105.i ], [ %.pre.i106, %._crit_edge.loopexit.i105 ] ; 2 uses
@@ -997,10 +995,10 @@ bb.bh:                                            ; preds = %bb.ay
   br i1 %i.qu, label %.lr.ph105.i, label %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit, !llvm.loop !230
 
 bb.bi:                                            ; preds = %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i104, %.lr.ph.i102
-  %21 = phi i64 [ %.lcssa817820, %.lr.ph.i102 ], [ %22, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i104 ] ; 2 uses
-  %.sroa.41.16 = phi i8 [ %.sroa.41.15, %.lr.ph.i102 ], [ %.sroa.41.17, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i104 ] ; 2 uses
+  %.sroa.43.16 = phi i8 [ %.sroa.43.15, %.lr.ph.i102 ], [ %.sroa.43.17, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i104 ] ; 2 uses
+  %.sroa.34.16 = phi i32 [ %.sroa.34.15, %.lr.ph.i102 ], [ %.sroa.34.17, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i104 ] ; 2 uses
   %.sroa.32.16 = phi i32 [ %.sroa.32.15, %.lr.ph.i102 ], [ %.sroa.32.17, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i104 ] ; 2 uses
-  %.sroa.23289.16 = phi i32 [ %.sroa.23289.15, %.lr.ph.i102 ], [ %.sroa.23289.17, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i104 ] ; 2 uses
+  %.sroa.16.16 = phi i64 [ %.sroa.16.15, %.lr.ph.i102 ], [ %.sroa.16.17, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i104 ] ; 2 uses
   %.sroa.0286.16 = phi float [ %.sroa.0286.15, %.lr.ph.i102 ], [ %.sroa.0286.17, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i104 ] ; 3 uses
   %.sroa.073.0102.i = phi ptr [ %i.qj, %.lr.ph.i102 ], [ %i.rg, %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i104 ] ; 2 uses
   %i.qv = load i32, ptr %.sroa.073.0102.i, align 4, !tbaa !184 ; 3 uses
@@ -1022,7 +1020,7 @@ bb.bj:                                            ; preds = %bb.bi
   %i.rc = load float, ptr %i.au, align 4, !tbaa !206 ; 2 uses
   %i.rd = call noundef float @llvm.fmuladd.f32(float %i.rc, float %i.rc, float %i.rb) ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
-  %i.re = trunc nuw i8 %.sroa.41.16 to i1
+  %i.re = trunc nuw i8 %.sroa.43.16 to i1
   br i1 %i.re, label %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i108, label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i104
 
 _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i108: ; preds = %.noexc126
@@ -1033,41 +1031,41 @@ _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i108: ; preds = %.noexc126
   br label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i104
 
 _ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit72.i104: ; preds = %.noexc126, %.thread.i68.i109, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i108, %bb.bi
-  %22 = phi i64 [ %21, %bb.bi ], [ 0, %.thread.i68.i109 ], [ %21, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i108 ], [ 0, %.noexc126 ] ; 3 uses
-  %.sroa.41.17 = phi i8 [ %.sroa.41.16, %bb.bi ], [ 1, %.thread.i68.i109 ], [ 1, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i108 ], [ 1, %.noexc126 ] ; 2 uses
-  %.sroa.32.17 = phi i32 [ %.sroa.32.16, %bb.bi ], [ %i.qv, %.thread.i68.i109 ], [ %.sroa.32.16, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i108 ], [ %i.qv, %.noexc126 ] ; 2 uses
-  %.sroa.23289.17 = phi i32 [ %.sroa.23289.16, %bb.bi ], [ %i.ql, %.thread.i68.i109 ], [ %.sroa.23289.16, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i108 ], [ %i.ql, %.noexc126 ] ; 2 uses
+  %.sroa.43.17 = phi i8 [ %.sroa.43.16, %bb.bi ], [ 1, %.thread.i68.i109 ], [ 1, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i108 ], [ 1, %.noexc126 ] ; 2 uses
+  %.sroa.34.17 = phi i32 [ %.sroa.34.16, %bb.bi ], [ %i.qv, %.thread.i68.i109 ], [ %.sroa.34.16, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i108 ], [ %i.qv, %.noexc126 ] ; 2 uses
+  %.sroa.32.17 = phi i32 [ %.sroa.32.16, %bb.bi ], [ %i.ql, %.thread.i68.i109 ], [ %.sroa.32.16, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i108 ], [ %i.ql, %.noexc126 ] ; 2 uses
+  %.sroa.16.17 = phi i64 [ %.sroa.16.16, %bb.bi ], [ 0, %.thread.i68.i109 ], [ %.sroa.16.16, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i108 ], [ 0, %.noexc126 ] ; 2 uses
   %.sroa.0286.17 = phi float [ %.sroa.0286.16, %bb.bi ], [ %i.rd, %.thread.i68.i109 ], [ %.sroa.0286.16, %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i67.i108 ], [ %i.rd, %.noexc126 ] ; 2 uses
   %i.rg = getelementptr inbounds nuw i8, ptr %.sroa.073.0102.i, i64 4 ; 2 uses
   %.not92.i = icmp eq ptr %i.rg, %i.qh
   br i1 %.not92.i, label %._crit_edge.loopexit.i105, label %bb.bi
 
 _ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit: ; preds = %._crit_edge.i107, %bb.ay, %bb.bh
-  %.sroa.16.sroa.0.3 = phi i64 [ %.us-phi787812, %bb.ay ], [ %.us-phi787812, %bb.bh ], [ %.sroa.16.sroa.0.2, %._crit_edge.i107 ]
-  %.sroa.41.24 = phi i8 [ %.sroa.41.14, %bb.ay ], [ %.sroa.41.14, %bb.bh ], [ %.sroa.41.18, %._crit_edge.i107 ]
-  %.sroa.32.24 = phi i32 [ %.sroa.32.14, %bb.ay ], [ %.sroa.32.14, %bb.bh ], [ %.sroa.32.18, %._crit_edge.i107 ]
-  %.sroa.23289.24 = phi i32 [ %.sroa.23289.14, %bb.ay ], [ %.sroa.23289.14, %bb.bh ], [ %.sroa.23289.18, %._crit_edge.i107 ]
-  %.sroa.0286.24 = phi float [ %.sroa.0286.14, %bb.ay ], [ %.sroa.0286.14, %bb.bh ], [ %.sroa.0286.18, %._crit_edge.i107 ]
+  %.sroa.43.24 = phi i8 [ %.sroa.43.14, %bb.ay ], [ %.sroa.43.14, %bb.bh ], [ %.sroa.43.18, %._crit_edge.i107 ]
+  %.sroa.34.24 = phi i32 [ %.sroa.34.14, %bb.ay ], [ %.sroa.34.14, %bb.bh ], [ %.sroa.34.18, %._crit_edge.i107 ]
+  %.sroa.32.24 = phi i32 [ %.sroa.25.14, %bb.ay ], [ %.sroa.25.14, %bb.bh ], [ %.sroa.32.18, %._crit_edge.i107 ]
+  %.sroa.16.24 = phi i64 [ %.sroa.16.14, %bb.ay ], [ %.sroa.16.14, %bb.bh ], [ %.sroa.16.18, %._crit_edge.i107 ]
+  %.sroa.0286.24 = phi float [ %.sroa.0298.14, %bb.ay ], [ %.sroa.0298.14, %bb.bh ], [ %.sroa.0286.18, %._crit_edge.i107 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #14
   br label %bb.bk
 
 bb.bk:                                            ; preds = %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit
-  %.sroa.16.sroa.0.4 = phi i64 [ %.sroa.16.sroa.0.3, %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ], [ %.sroa.16.sroa.0.0, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ] ; 4 uses
-  %.sroa.6.sroa.0.0 = phi i64 [ %.us-phi788807, %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ], [ %.us-phi719729, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ] ; 4 uses
-  %.sroa.41.0 = phi i8 [ %.sroa.41.24, %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ], [ %.sroa.41.12, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ]
+  %.sroa.43.0 = phi i8 [ %.sroa.43.24, %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ], [ %.sroa.43.12, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ]
+  %.sroa.34.0 = phi i32 [ %.sroa.34.24, %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ], [ %.sroa.34.12, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ]
   %.sroa.32.0 = phi i32 [ %.sroa.32.24, %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ], [ %.sroa.32.12, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ]
-  %.sroa.23289.0 = phi i32 [ %.sroa.23289.24, %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ], [ %.sroa.23289.12, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ]
+  %.sroa.16.0 = phi i64 [ %.sroa.16.24, %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ], [ %.sroa.16.12, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ] ; 4 uses
   %.sroa.0286.0 = phi float [ %.sroa.0286.24, %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ], [ %.sroa.0286.12, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ] ; 3 uses
-  %.sroa.0233.0 = phi float [ %.sroa.0233.9, %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ], [ %.sroa.0233.2, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ] ; 3 uses
+  %.sroa.0233.0 = phi float [ %.sroa.0286.14, %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ], [ %.sroa.0286.2, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ] ; 3 uses
+  %.sroa.6.0 = phi i64 [ %.sroa.6.9, %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ], [ %.sroa.6.2, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ] ; 4 uses
   %.sroa.9.0 = phi i32 [ %.sroa.9.9, %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ], [ %.sroa.9.2, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ]
   %.sroa.12.0 = phi i32 [ %.sroa.12.9, %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ], [ %.sroa.12.2, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ]
   %.sroa.15.0 = phi i8 [ %.sroa.15.9, %_ZL22bonded_cg_distance_molILb1EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ], [ %.sroa.15.2, %_ZL22bonded_cg_distance_molILb0EEvPK13gmx_moltype_tN3gmx16DDBondedCheckingEbPK5t_pbcNS3_8ArrayRefIKNS3_11BasicVectorIfEEEEPSt8optionalI17bonded_distance_tESG_.exit ]
-  %i.rh = trunc nuw i8 %.sroa.41.0 to i1
+  %i.rh = trunc nuw i8 %.sroa.43.0 to i1
   br i1 %i.rh, label %bb.bl, label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit
 
 bb.bl:                                            ; preds = %bb.bk
-  %i.ri = add nsw i32 %.sroa.23289.0, %.1830      ; 2 uses
-  %i.rj = add nsw i32 %.sroa.32.0, %.1830         ; 2 uses
+  %i.ri = add nsw i32 %.sroa.32.0, %.1830         ; 2 uses
+  %i.rj = add nsw i32 %.sroa.34.0, %.1830         ; 2 uses
   %i.rk = trunc nuw i8 %.sroa.26.1828 to i1
   br i1 %i.rk, label %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i, label %bb.bm
 
@@ -1076,14 +1074,14 @@ _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i: ; preds = %bb.bl
   br i1 %i.rl, label %.thread.i, label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit
 
 .thread.i:                                        ; preds = %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i
-  %.sroa.10.sroa.0.0.extract.trunc970 = trunc i64 %.sroa.16.sroa.0.4 to i32
-  %.sroa.10.sroa.8.0.extract.shift972 = lshr i64 %.sroa.16.sroa.0.4, 32
+  %.sroa.10.sroa.0.0.extract.trunc970 = trunc i64 %.sroa.16.0 to i32
+  %.sroa.10.sroa.8.0.extract.shift972 = lshr i64 %.sroa.16.0, 32
   %.sroa.10.sroa.8.0.extract.trunc973 = trunc i64 %.sroa.10.sroa.8.0.extract.shift972 to i8
   br label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit
 
 bb.bm:                                            ; preds = %bb.bl
-  %.sroa.10.sroa.0.0.extract.trunc = trunc i64 %.sroa.16.sroa.0.4 to i32
-  %.sroa.10.sroa.8.0.extract.shift = lshr i64 %.sroa.16.sroa.0.4, 32
+  %.sroa.10.sroa.0.0.extract.trunc = trunc i64 %.sroa.16.0 to i32
+  %.sroa.10.sroa.8.0.extract.shift = lshr i64 %.sroa.16.0, 32
   %.sroa.10.sroa.8.0.extract.trunc = trunc i64 %.sroa.10.sroa.8.0.extract.shift to i8
   br label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit
 
@@ -1108,14 +1106,14 @@ _ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i145: ; preds = %bb.bn
   br i1 %i.rq, label %.thread.i146, label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit150
 
 .thread.i146:                                     ; preds = %_ZNRSt8optionalI17bonded_distance_tE5valueEv.exit.i145
-  %.sroa.8.sroa.0.0.extract.trunc960 = trunc i64 %.sroa.6.sroa.0.0 to i32
-  %.sroa.8.sroa.8.0.extract.shift962 = lshr i64 %.sroa.6.sroa.0.0, 32
+  %.sroa.8.sroa.0.0.extract.trunc960 = trunc i64 %.sroa.6.0 to i32
+  %.sroa.8.sroa.8.0.extract.shift962 = lshr i64 %.sroa.6.0, 32
   %.sroa.8.sroa.8.0.extract.trunc963 = trunc i64 %.sroa.8.sroa.8.0.extract.shift962 to i8
   br label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit150
 
 bb.bo:                                            ; preds = %bb.bn
-  %.sroa.8.sroa.0.0.extract.trunc = trunc i64 %.sroa.6.sroa.0.0 to i32
-  %.sroa.8.sroa.8.0.extract.shift = lshr i64 %.sroa.6.sroa.0.0, 32
+  %.sroa.8.sroa.0.0.extract.trunc = trunc i64 %.sroa.6.0 to i32
+  %.sroa.8.sroa.8.0.extract.shift = lshr i64 %.sroa.6.0, 32
   %.sroa.8.sroa.8.0.extract.trunc = trunc i64 %.sroa.8.sroa.8.0.extract.shift to i8
   br label %_ZL26update_max_bonded_distancefSt8optionalI19InteractionFunctionEiiPS_I17bonded_distance_tE.exit150
 

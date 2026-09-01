@@ -205,15 +205,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   %i.h = phi i64 [ %i.g, %.lr.ph.i ], [ %i.l, %bb.d ]
-  %.sroa.59.0.copyload.i = load i64, ptr %.sroa.59.0..sroa_idx.i, align 8, !noalias !2615
-  %.sroa.610.0.copyload.i = load i64, ptr %.sroa.610.0..sroa_idx.i, align 8, !noalias !2615
-  %.sroa.711.0.copyload.i = load i64, ptr %.sroa.711.0..sroa_idx.i, align 8, !noalias !2615
-  %.sroa.8.0.copyload.i = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !2615
+  %.sroa.59.0.copyload.i = load ptr, ptr %.sroa.59.0..sroa_idx.i, align 8, !noalias !2615
+  %.sroa.610.0.copyload.i = load ptr, ptr %.sroa.610.0..sroa_idx.i, align 8, !noalias !2615
+  %.sroa.711.0.copyload.i = load ptr, ptr %.sroa.711.0..sroa_idx.i, align 8, !noalias !2615
+  %.sroa.8.0.copyload.i = load ptr, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !2615
   %i.i = icmp eq i64 %i.h, 0                      ; 2 uses
-  %.sroa.0.0.i.sroa.speculated.v.i.i = select i1 %i.i, i64 %.sroa.711.0.copyload.i, i64 %.sroa.59.0.copyload.i
-  %.sroa.0.0.i.sroa.speculated.i.i = inttoptr i64 %.sroa.0.0.i.sroa.speculated.v.i.i to ptr
-  %.sroa.01.0.i.sroa.speculated.v.i.i = select i1 %i.i, i64 %.sroa.8.0.copyload.i, i64 %.sroa.610.0.copyload.i
-  %.sroa.01.0.i.sroa.speculated.i.i = inttoptr i64 %.sroa.01.0.i.sroa.speculated.v.i.i to ptr
+  %.sroa.0.0.i.sroa.speculated.i.i = select i1 %i.i, ptr %.sroa.711.0.copyload.i, ptr %.sroa.59.0.copyload.i
+  %.sroa.01.0.i.sroa.speculated.i.i = select i1 %i.i, ptr %.sroa.8.0.copyload.i, ptr %.sroa.610.0.copyload.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2619
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %.sroa.43.0..sroa_idx.i.i, ptr noundef nonnull align 1 dereferenceable(16) %.sroa.0.0.i.sroa.speculated.i.i, i64 16, i1 false), !noalias !2628
   %i.j = load i32, ptr %.sroa.01.0.i.sroa.speculated.i.i, align 4, !noalias !2629, !noundef !5
@@ -284,17 +282,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   %i.h = phi i64 [ %i.g, %.lr.ph.i ], [ %i.m, %bb.d ]
-  %.sroa.57.0.copyload.i = load i64, ptr %.sroa.57.0..sroa_idx.i, align 8, !noalias !2646
-  %.sroa.68.0.copyload.i = load i64, ptr %.sroa.68.0..sroa_idx.i, align 8, !noalias !2646
-  %.sroa.79.0.copyload.i = load i64, ptr %.sroa.79.0..sroa_idx.i, align 8, !noalias !2646
-  %.sroa.8.0.copyload.i = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !2646
+  %.sroa.57.0.copyload.i = load ptr, ptr %.sroa.57.0..sroa_idx.i, align 8, !noalias !2646
+  %.sroa.68.0.copyload.i = load ptr, ptr %.sroa.68.0..sroa_idx.i, align 8, !noalias !2646
+  %.sroa.79.0.copyload.i = load ptr, ptr %.sroa.79.0..sroa_idx.i, align 8, !noalias !2646
+  %.sroa.8.0.copyload.i = load ptr, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !2646
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2646
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2650
   %i.i = icmp eq i64 %i.h, 0                      ; 2 uses
-  %.sroa.0.0.i.sroa.speculated.v.i.i = select i1 %i.i, i64 %.sroa.79.0.copyload.i, i64 %.sroa.57.0.copyload.i
-  %.sroa.0.0.i.sroa.speculated.i.i = inttoptr i64 %.sroa.0.0.i.sroa.speculated.v.i.i to ptr
-  %.sroa.01.0.i.sroa.speculated.v.i.i = select i1 %i.i, i64 %.sroa.8.0.copyload.i, i64 %.sroa.68.0.copyload.i
-  %.sroa.01.0.i.sroa.speculated.i.i = inttoptr i64 %.sroa.01.0.i.sroa.speculated.v.i.i to ptr
+  %.sroa.0.0.i.sroa.speculated.i.i = select i1 %i.i, ptr %.sroa.79.0.copyload.i, ptr %.sroa.57.0.copyload.i
+  %.sroa.01.0.i.sroa.speculated.i.i = select i1 %i.i, ptr %.sroa.8.0.copyload.i, ptr %.sroa.68.0.copyload.i
   %i.j = load i64, ptr %.sroa.0.0.i.sroa.speculated.i.i, align 8, !noalias !2655, !noundef !5
   %i.k = load i32, ptr %.sroa.01.0.i.sroa.speculated.i.i, align 4, !noalias !2655, !noundef !5
   store i8 0, ptr %i.a, align 8, !noalias !2650
@@ -697,8 +693,8 @@ bb.a:
   %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [96 x i8], align 8                ; 4 uses
-  %.sroa.4.i = alloca i64, align 8                ; 5 uses
-  %.sroa.73.i = alloca i64, align 8               ; 4 uses
+  %.sroa.4.i = alloca ptr, align 8                ; 5 uses
+  %.sroa.73.i = alloca ptr, align 8               ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8516)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8519)
   %i.f = load ptr, ptr %1, align 8, !alias.scope !8521, !noalias !8516, !nonnull !5, !noundef !5 ; 3 uses
@@ -878,8 +874,7 @@ bb.n:                                             ; preds = %.loopexit.i.i
 
 bb.o:                                             ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtB7_4sync3ArcINtCs5LEDvFxVFYt_14atomic_refcell13AtomicRefCellNtNtNtCs607s0NAIaWN_7segment5index17vector_index_base15VectorIndexEnumEEE8push_mutB1O_.exit.i.i.i
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bk, i64 24
-  %4 = ptrtoint ptr %i.bu to i64
-  store i64 %4, ptr %.sroa.4.i, align 8, !alias.scope !8574, !noalias !8575
+  store ptr %i.bu, ptr %.sroa.4.i, align 8, !alias.scope !8574, !noalias !8575
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.n
@@ -909,16 +904,14 @@ bb.q:                                             ; preds = %_RINvNtCskKLDkoKarT
   %.sink.i.i = phi ptr [ %i.bl, %bb.o ], [ null, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultzNtNtNtCs607s0NAIaWN_7segment6common15operation_error14OperationErrorEEEB1q_.exit.i.i.i ]
   store ptr %.sink.i.i, ptr %.sink15.i.sroa.phi.i, align 8, !alias.scope !8574, !noalias !8575
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !8524
-  %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i = load i64, ptr %.sroa.4.i, align 8, !alias.scope !8576, !noalias !8579, !noundef !5
-  %5 = inttoptr i64 %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i to ptr
-  %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i = load i64, ptr %.sroa.73.i, align 8, !alias.scope !8576, !noalias !8579
-  %6 = inttoptr i64 %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i to ptr
+  %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i = load ptr, ptr %.sroa.4.i, align 8, !alias.scope !8576, !noalias !8579, !noundef !5
+  %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i = load ptr, ptr %.sroa.73.i, align 8, !alias.scope !8576, !noalias !8579
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.73.i)
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %5, ptr %i.by, align 8, !alias.scope !8581, !noalias !8519
+  store ptr %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i, ptr %i.by, align 8, !alias.scope !8581, !noalias !8519
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %6, ptr %i.bz, align 8, !alias.scope !8581, !noalias !8519
+  store ptr %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i, ptr %i.bz, align 8, !alias.scope !8581, !noalias !8519
   br label %_RINvYINtNtNtCskKLDkoKarTP_4core5slice4iter4IterRINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCs607s0NAIaWN_7segment7segment10VectorDataEENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB38_8adapters3map12map_try_foldRBJ_INtNtBa_6result6ResultINtCs5LEDvFxVFYt_14atomic_refcell9AtomicRefNtNtNtB2k_14vector_storage19vector_storage_base17VectorStorageEnumENtNtNtB2k_6common15operation_error14OperationErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB7y_B4V_EENCNvMNtNtB2k_19segment_constructor15segment_builderNtB8s_14SegmentBuilder6updates7_0NCINvXB3Y_INtB3Y_12GenericShuntINtB3W_3MapB3_B8n_EIB4A_zB6H_EEB32_8try_folduNCINvNvB32_12try_for_each4callB4V_B8c_NcNtB8c_5Break0E0B8c_E0E0B7x_EB2k_.exit
 
 _RINvYINtNtNtCskKLDkoKarTP_4core5slice4iter4IterRINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCs607s0NAIaWN_7segment7segment10VectorDataEENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB38_8adapters3map12map_try_foldRBJ_INtNtBa_6result6ResultINtCs5LEDvFxVFYt_14atomic_refcell9AtomicRefNtNtNtB2k_14vector_storage19vector_storage_base17VectorStorageEnumENtNtNtB2k_6common15operation_error14OperationErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB7y_B4V_EENCNvMNtNtB2k_19segment_constructor15segment_builderNtB8s_14SegmentBuilder6updates7_0NCINvXB3Y_INtB3Y_12GenericShuntINtB3W_3MapB3_B8n_EIB4A_zB6H_EEB32_8try_folduNCINvNvB32_12try_for_each4callB4V_B8c_NcNtB8c_5Break0E0B8c_E0E0B7x_EB2k_.exit: ; preds = %bb.a, %bb.q

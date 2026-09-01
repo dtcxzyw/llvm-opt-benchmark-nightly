@@ -204,9 +204,8 @@ bb.a:
   %i.bb = alloca [16 x i8], align 8               ; 4 uses
   %i.bc = alloca [16 x i8], align 8               ; 4 uses
   %i.bd = alloca [16 x i8], align 8               ; 4 uses
-  %i.be = alloca [128 x i8], align 8              ; 8 uses
-  %i.bf = alloca [128 x i8], align 8              ; 9 uses
-  %.sroa.026.i.i.sroa.0 = alloca [16 x i8], align 8 ; 7 uses
+  %i.be = alloca [128 x i8], align 16             ; 8 uses
+  %i.bf = alloca [128 x i8], align 16             ; 9 uses
   %.sroa.026.i.i.sroa.7 = alloca [104 x i8], align 8 ; 5 uses
   %i.bg = alloca [24 x i8], align 8               ; 6 uses
   %i.bh = alloca [16 x i8], align 8               ; 6 uses
@@ -216,9 +215,8 @@ bb.a:
   %i.bl = alloca [4 x i8], align 4                ; 5 uses
   %i.bm = alloca [4 x i8], align 4                ; 5 uses
   %i.bn = alloca [2 x i8], align 2                ; 5 uses
-  %i.bo = alloca [128 x i8], align 8              ; 8 uses
-  %i.bp = alloca [128 x i8], align 8              ; 9 uses
-  %.sroa.09.i.i.sroa.0 = alloca [16 x i8], align 8 ; 7 uses
+  %i.bo = alloca [128 x i8], align 16             ; 8 uses
+  %i.bp = alloca [128 x i8], align 16             ; 9 uses
   %.sroa.09.i.i.sroa.7 = alloca [104 x i8], align 8 ; 5 uses
   %i.bq = alloca [24 x i8], align 8               ; 6 uses
   %i.br = alloca [16 x i8], align 8               ; 6 uses
@@ -621,7 +619,6 @@ _RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4From
 bb.nl:                                            ; preds = %.noexc108.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bh), !noalias !3204
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bg), !noalias !3204
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.026.i.i.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.026.i.i.sroa.7)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bf), !noalias !3204
   %i.aek = load i32, ptr %i.bi, align 4, !noalias !3204, !noundef !6
@@ -634,17 +631,17 @@ bb.nl:                                            ; preds = %.noexc108.i
   br i1 %i.aem, label %bb.nm, label %bb.nn
 
 bb.nm:                                            ; preds = %.noexc110.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.026.i.i.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %i.bf, i64 16, i1 false), !noalias !3204
+  %.sroa.026.i.i.sroa.0.0.copyload1078 = load <2 x i64>, ptr %i.bf, align 16, !noalias !3204
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bf), !noalias !3204
   br label %.loopexit573
 
 bb.nn:                                            ; preds = %.noexc110.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.026.i.i.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %i.bf, i64 16, i1 false), !noalias !3204
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %.sroa.026.i.i.sroa.7, ptr noundef nonnull align 8 dereferenceable(104) %.sroa.026.i.i.sroa.7.0..sroa_idx, i64 104, i1 false), !noalias !3204
+  %.sroa.026.i.i.sroa.0.0.copyload = load <2 x i64>, ptr %i.bf, align 16, !noalias !3204
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %.sroa.026.i.i.sroa.7, ptr noundef nonnull align 16 dereferenceable(104) %.sroa.026.i.i.sroa.7.0..sroa_idx, i64 104, i1 false), !noalias !3204
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.830.0..sroa_idx31.i.i, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.576.0..sroa_idx.i.i, i64 7, i1 false), !noalias !3204
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bf), !noalias !3204
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.be, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.026.i.i.sroa.0, i64 16, i1 false), !noalias !3204
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %.sroa.026.i.i.sroa.7.0..sroa_idx1074, ptr noundef nonnull align 8 dereferenceable(104) %.sroa.026.i.i.sroa.7, i64 104, i1 false), !noalias !3204
+  store <2 x i64> %.sroa.026.i.i.sroa.0.0.copyload, ptr %i.be, align 16, !noalias !3204
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(104) %.sroa.026.i.i.sroa.7.0..sroa_idx1074, ptr noundef nonnull align 8 dereferenceable(104) %.sroa.026.i.i.sroa.7, i64 104, i1 false), !noalias !3204
   store i8 %i.ael, ptr %.sroa.727.0..sroa_idx28.i.i, align 8, !noalias !3204
   invoke fastcc void @_RINvCs4phXRVW1pDQ_9dwarfdump17dump_dwp_sectionsINtNtNtCsi68uqYEhoRA_5gimli4read8relocate14RelocateReaderINtNtBO_12endian_slice11EndianSliceNtNtBQ_9endianity13RunTimeEndianERNtB2_13RelocationMapEINtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufwriter9BufWriterNtNtNtCsG258MDvU3F_3std2io5stdio6StdoutEEB2_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.bg, ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.dl, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1168) %i.dh, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(936) %i.dx, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(48) %.not57.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(672) %i.adb, ptr noalias nofree noundef readonly align 8 captures(address) dereferenceable(128) %i.be)
           to label %.noexc111.i unwind label %.loopexit.i121, !noalias !3037
@@ -652,28 +649,29 @@ bb.nn:                                            ; preds = %.noexc110.i
 .noexc111.i:                                      ; preds = %bb.nn
   %i.aen = load i64, ptr %i.bg, align 8, !range !17, !noalias !3204, !noundef !6 ; 2 uses
   %.not81.i.i = icmp eq i64 %i.aen, -1
-  br i1 %.not81.i.i, label %bb.no, label %.loopexit573
+  br i1 %.not81.i.i, label %bb.no, label %.loopexit573.loopexit
 
 bb.no:                                            ; preds = %.noexc111.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bg), !noalias !3204
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.026.i.i.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.026.i.i.sroa.7)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bi), !noalias !3204
   %exitcond135.not.i.i = icmp eq i32 %.sroa.093.0126.i.i, %i.adt
   br i1 %exitcond135.not.i.i, label %.loopexit149.i, label %.lr.ph127.i.i
 
-.loopexit573:                                     ; preds = %.noexc111.i, %bb.nm
-  %.sroa.14.0..sroa_idx122.sink.i = phi ptr [ %.sroa.026.i.i.sroa.0, %bb.nm ], [ %.sroa.14.0..sroa_idx122.i, %.noexc111.i ]
-  %.sroa.0.3.i = phi i64 [ 0, %bb.nm ], [ %i.aen, %.noexc111.i ]
-  %0 = load <2 x i64>, ptr %.sroa.14.0..sroa_idx122.sink.i, align 8, !noalias !3034
+.loopexit573.loopexit:                            ; preds = %.noexc111.i
+  %.sroa.14.0..sroa_idx122.sink.i.sroa.speculate.load..loopexit573.loopexit = load <2 x i64>, ptr %.sroa.14.0..sroa_idx122.i, align 8, !noalias !3034
+  br label %.loopexit573
+
+.loopexit573:                                     ; preds = %.loopexit573.loopexit, %bb.nm
+  %.sroa.14.0..sroa_idx122.sink.i.sroa.speculated = phi <2 x i64> [ %.sroa.026.i.i.sroa.0.0.copyload1078, %bb.nm ], [ %.sroa.14.0..sroa_idx122.sink.i.sroa.speculate.load..loopexit573.loopexit, %.loopexit573.loopexit ]
+  %.sroa.0.3.i = phi i64 [ 0, %bb.nm ], [ %i.aen, %.loopexit573.loopexit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bg), !noalias !3204
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.026.i.i.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.026.i.i.sroa.7)
   br label %bb.np
 
 bb.np:                                            ; preds = %.loopexit573, %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit89.i.i
   %.sroa.0.2.i = phi i64 [ %.sroa.0.3.i, %.loopexit573 ], [ 2, %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit89.i.i ]
-  %i.aeo = phi <2 x i64> [ %0, %.loopexit573 ], [ undef, %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit89.i.i ]
+  %i.aeo = phi <2 x i64> [ %.sroa.14.0..sroa_idx122.sink.i.sroa.speculated, %.loopexit573 ], [ undef, %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit89.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bi), !noalias !3204
   br label %bb.oa
 
@@ -712,7 +710,6 @@ _RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4From
 bb.nt:                                            ; preds = %.noexc105.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.br), !noalias !3204
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bq), !noalias !3204
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.09.i.i.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.09.i.i.sroa.7)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bp), !noalias !3204
   %i.aev = load i32, ptr %i.bs, align 4, !noalias !3204, !noundef !6
@@ -725,17 +722,17 @@ bb.nt:                                            ; preds = %.noexc105.i
   br i1 %i.aex, label %bb.nu, label %bb.nv
 
 bb.nu:                                            ; preds = %.noexc113.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.09.i.i.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %i.bp, i64 16, i1 false), !noalias !3204
+  %.sroa.09.i.i.sroa.0.0.copyload1074 = load <2 x i64>, ptr %i.bp, align 16, !noalias !3204
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bp), !noalias !3204
   br label %.loopexit574
 
 bb.nv:                                            ; preds = %.noexc113.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.09.i.i.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %i.bp, i64 16, i1 false), !noalias !3204
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %.sroa.09.i.i.sroa.7, ptr noundef nonnull align 8 dereferenceable(104) %.sroa.09.i.i.sroa.7.0..sroa_idx, i64 104, i1 false), !noalias !3204
+  %.sroa.09.i.i.sroa.0.0.copyload = load <2 x i64>, ptr %i.bp, align 16, !noalias !3204
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %.sroa.09.i.i.sroa.7, ptr noundef nonnull align 16 dereferenceable(104) %.sroa.09.i.i.sroa.7.0..sroa_idx, i64 104, i1 false), !noalias !3204
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.8.0..sroa_idx12.i.i, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.5.0..sroa_idx.i.i, i64 7, i1 false), !noalias !3204
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bp), !noalias !3204
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bo, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.09.i.i.sroa.0, i64 16, i1 false), !noalias !3204
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %.sroa.09.i.i.sroa.7.0..sroa_idx1073, ptr noundef nonnull align 8 dereferenceable(104) %.sroa.09.i.i.sroa.7, i64 104, i1 false), !noalias !3204
+  store <2 x i64> %.sroa.09.i.i.sroa.0.0.copyload, ptr %i.bo, align 16, !noalias !3204
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(104) %.sroa.09.i.i.sroa.7.0..sroa_idx1073, ptr noundef nonnull align 8 dereferenceable(104) %.sroa.09.i.i.sroa.7, i64 104, i1 false), !noalias !3204
   store i8 %i.aew, ptr %.sroa.7.0..sroa_idx10.i.i, align 8, !noalias !3204
   invoke fastcc void @_RINvCs4phXRVW1pDQ_9dwarfdump17dump_dwp_sectionsINtNtNtCsi68uqYEhoRA_5gimli4read8relocate14RelocateReaderINtNtBO_12endian_slice11EndianSliceNtNtBQ_9endianity13RunTimeEndianERNtB2_13RelocationMapEINtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufwriter9BufWriterNtNtNtCsG258MDvU3F_3std2io5stdio6StdoutEEB2_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.bq, ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.dl, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1168) %i.dh, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(936) %i.dx, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(48) %.not57.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(672) %i.adb, ptr noalias nofree noundef readonly align 8 captures(address) dereferenceable(128) %i.bo)
           to label %.noexc114.i unwind label %.loopexit.split-lp.loopexit.i, !noalias !3037
@@ -743,28 +740,29 @@ bb.nv:                                            ; preds = %.noexc113.i
 .noexc114.i:                                      ; preds = %bb.nv
   %i.aey = load i64, ptr %i.bq, align 8, !range !17, !noalias !3204, !noundef !6 ; 2 uses
   %.not78.i.i = icmp eq i64 %i.aey, -1
-  br i1 %.not78.i.i, label %bb.nw, label %.loopexit574
+  br i1 %.not78.i.i, label %bb.nw, label %.loopexit574.loopexit
 
 bb.nw:                                            ; preds = %.noexc114.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bq), !noalias !3204
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.09.i.i.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.09.i.i.sroa.7)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bs), !noalias !3204
   %exitcond.not.i.i = icmp eq i32 %.sroa.0.0124.i.i, %i.adf
   br i1 %exitcond.not.i.i, label %.loopexit117.i.i, label %.lr.ph.i.i
 
-.loopexit574:                                     ; preds = %.noexc114.i, %bb.nu
-  %.sroa.14.0..sroa_idx121.sink.i = phi ptr [ %.sroa.09.i.i.sroa.0, %bb.nu ], [ %.sroa.14.0..sroa_idx121.i, %.noexc114.i ]
-  %.sroa.0.1.i = phi i64 [ 0, %bb.nu ], [ %i.aey, %.noexc114.i ]
-  %1 = load <2 x i64>, ptr %.sroa.14.0..sroa_idx121.sink.i, align 8, !noalias !3034
+.loopexit574.loopexit:                            ; preds = %.noexc114.i
+  %.sroa.14.0..sroa_idx121.sink.i.sroa.speculate.load..loopexit574.loopexit = load <2 x i64>, ptr %.sroa.14.0..sroa_idx121.i, align 8, !noalias !3034
+  br label %.loopexit574
+
+.loopexit574:                                     ; preds = %.loopexit574.loopexit, %bb.nu
+  %.sroa.14.0..sroa_idx121.sink.i.sroa.speculated = phi <2 x i64> [ %.sroa.09.i.i.sroa.0.0.copyload1074, %bb.nu ], [ %.sroa.14.0..sroa_idx121.sink.i.sroa.speculate.load..loopexit574.loopexit, %.loopexit574.loopexit ]
+  %.sroa.0.1.i = phi i64 [ 0, %bb.nu ], [ %i.aey, %.loopexit574.loopexit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bq), !noalias !3204
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.09.i.i.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.09.i.i.sroa.7)
   br label %bb.nx
 
 bb.nx:                                            ; preds = %.loopexit574, %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit91.i.i
   %.sroa.0.0.i120 = phi i64 [ %.sroa.0.1.i, %.loopexit574 ], [ 2, %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit91.i.i ]
-  %i.aez = phi <2 x i64> [ %1, %.loopexit574 ], [ undef, %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit91.i.i ]
+  %i.aez = phi <2 x i64> [ %.sroa.14.0..sroa_idx121.sink.i.sroa.speculated, %.loopexit574 ], [ undef, %_RNvXs0_Cs4phXRVW1pDQ_9dwarfdumpNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtNtBJ_2io5error5ErrorE4from.exit91.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bs), !noalias !3204
   br label %bb.oa
 

@@ -202,9 +202,9 @@ bb.a:
   %i.j = alloca [112 x i8], align 8               ; 5 uses
   %i.k = alloca [80 x i8], align 8                ; 4 uses
   %i.l = alloca [32 x i8], align 8                ; 8 uses
-  %i.m = alloca [80 x i8], align 8                ; 14 uses
-  %.sroa.3 = alloca i64, align 8                  ; 6 uses
-  %.sroa.7 = alloca i64, align 8                  ; 3 uses
+  %i.m = alloca [80 x i8], align 8                ; 15 uses
+  %.sroa.3 = alloca ptr, align 8                  ; 6 uses
+  %.sroa.7 = alloca ptr, align 8                  ; 3 uses
   %i.n = alloca [32 x i8], align 8                ; 5 uses
   %i.o = alloca [32 x i8], align 8                ; 7 uses
   %i.p = alloca [64 x i8], align 8                ; 6 uses
@@ -390,24 +390,23 @@ bb.p:                                             ; preds = %.noexc53
   %i.bh = load i64, ptr %i.bc, align 8, !alias.scope !52, !noalias !49, !noundef !9
   %i.bi = add i64 %i.bh, %i.av
   store i64 %i.bi, ptr %i.bc, align 8, !alias.scope !52, !noalias !49
-  %3 = ptrtoint ptr %i.bf to i64
-  store i64 %3, ptr %.sroa.3, align 8, !alias.scope !49, !noalias !52
+  store ptr %i.bf, ptr %.sroa.3, align 8, !alias.scope !49, !noalias !52
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %.noexc53, %.noexc
   %.sink9.i.sroa.phi = phi ptr [ %.sroa.7, %bb.p ], [ %.sroa.3, %.noexc ], [ %.sroa.3, %.noexc53 ]
   %.sink.i = phi ptr [ %i.bg, %bb.p ], [ null, %.noexc ], [ null, %.noexc53 ]
   store ptr %.sink.i, ptr %.sink9.i.sroa.phi, align 8, !alias.scope !49, !noalias !52
-  %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8. = load i64, ptr %.sroa.3, align 8, !noundef !9 ; 2 uses
-  %.not46 = icmp eq i64 %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8., 0
+  %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8. = load ptr, ptr %.sroa.3, align 8, !noundef !9 ; 2 uses
+  %.not46 = icmp eq ptr %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8., null
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   call void @llvm.experimental.noalias.scope.decl(metadata !54)
   br i1 %.not46, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %4 = inttoptr i64 %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8. to ptr
-  br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEs_0ECsabk8e3lPnsy_20file_sharing_example.exit
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
+  br label %bb.u
 
 bb.s:                                             ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !57)
@@ -442,21 +441,18 @@ _RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeer
   %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   store i64 %.sink.i.i, ptr %i.bn, align 8, !noalias !60
   %i.bo = invoke { ptr, ptr } @_RNvXsm_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB19_5query5peers7closest4PeerENtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator9next_backCsabk8e3lPnsy_20file_sharing_example(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.a)
-          to label %.noexc56 unwind label %bb.am
+          to label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEs_0ECsabk8e3lPnsy_20file_sharing_example.exit unwind label %bb.am
 
-.noexc56:                                         ; preds = %_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i
+_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEs_0ECsabk8e3lPnsy_20file_sharing_example.exit: ; preds = %_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !60
-  %5 = extractvalue { ptr, ptr } %i.bo, 0
-  br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEs_0ECsabk8e3lPnsy_20file_sharing_example.exit
-
-_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEs_0ECsabk8e3lPnsy_20file_sharing_example.exit: ; preds = %.noexc56, %bb.r
-  %.merged.i = phi ptr [ %4, %bb.r ], [ %5, %.noexc56 ] ; 2 uses
+  %3 = extractvalue { ptr, ptr } %i.bo, 0         ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
-  %.not47 = icmp eq ptr %.merged.i, null
+  %.not47 = icmp eq ptr %3, null
   br i1 %.not47, label %bb.v, label %bb.u
 
-bb.u:                                             ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEs_0ECsabk8e3lPnsy_20file_sharing_example.exit
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.n, ptr noundef nonnull align 8 dereferenceable(32) %.merged.i, i64 32, i1 false)
+bb.u:                                             ; preds = %bb.r, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEs_0ECsabk8e3lPnsy_20file_sharing_example.exit
+  %.merged.i85 = phi ptr [ %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8., %bb.r ], [ %3, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEs_0ECsabk8e3lPnsy_20file_sharing_example.exit ]
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.n, ptr noundef nonnull align 8 dereferenceable(32) %.merged.i85, i64 32, i1 false)
   br label %bb.v
 
 bb.v:                                             ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEs_0ECsabk8e3lPnsy_20file_sharing_example.exit, %bb.u
@@ -624,8 +620,8 @@ bb.a:
   %i.b = alloca [32 x i8], align 8                ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 5 uses
   %i.d = alloca [80 x i8], align 8                ; 14 uses
-  %.sroa.3 = alloca i64, align 8                  ; 6 uses
-  %.sroa.7 = alloca i64, align 8                  ; 3 uses
+  %.sroa.3 = alloca ptr, align 8                  ; 6 uses
+  %.sroa.7 = alloca ptr, align 8                  ; 3 uses
   %i.e = alloca [32 x i8], align 8                ; 7 uses
   %i.f = alloca [64 x i8], align 8                ; 6 uses
   %i.g = alloca [112 x i8], align 8               ; 4 uses
@@ -758,16 +754,15 @@ bb.i:                                             ; preds = %_RNvYINtNtNtNtCsexY
   %i.au = load i64, ptr %i.ap, align 8, !alias.scope !74, !noalias !71, !noundef !9
   %i.av = add i64 %i.au, %i.ai
   store i64 %i.av, ptr %i.ap, align 8, !alias.scope !74, !noalias !71
-  %2 = ptrtoint ptr %i.as to i64
-  store i64 %2, ptr %.sroa.3, align 8, !alias.scope !71, !noalias !74
+  store ptr %i.as, ptr %.sroa.3, align 8, !alias.scope !71, !noalias !74
   br label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB28_5query5peers7closest4PeerEENtNtNtB8_6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit
 
 _RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB28_5query5peers7closest4PeerEENtNtNtB8_6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit: ; preds = %bb.h, %_RNvYINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB13_5query5peers7closest4PeerENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit.i, %bb.i
   %.sink9.i.sroa.phi = phi ptr [ %.sroa.7, %bb.i ], [ %.sroa.3, %bb.h ], [ %.sroa.3, %_RNvYINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB13_5query5peers7closest4PeerENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit.i ]
   %.sink.i = phi ptr [ %i.at, %bb.i ], [ null, %bb.h ], [ null, %_RNvYINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB13_5query5peers7closest4PeerENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit.i ]
   store ptr %.sink.i, ptr %.sink9.i.sroa.phi, align 8, !alias.scope !71, !noalias !74
-  %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8. = load i64, ptr %.sroa.3, align 8, !noundef !9
-  %.not44 = icmp eq i64 %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8., 0
+  %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8. = load ptr, ptr %.sroa.3, align 8, !noundef !9
+  %.not44 = icmp eq ptr %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8., null
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   call void @llvm.experimental.noalias.scope.decl(metadata !76)
@@ -865,9 +860,9 @@ bb.a:
   %i.i = alloca [32 x i8], align 8                ; 5 uses
   %i.j = alloca [112 x i8], align 8               ; 5 uses
   %.sroa.560 = alloca [80 x i8], align 8          ; 2 uses
-  %i.k = alloca [80 x i8], align 8                ; 14 uses
-  %.sroa.3 = alloca i64, align 8                  ; 6 uses
-  %.sroa.7 = alloca i64, align 8                  ; 3 uses
+  %i.k = alloca [80 x i8], align 8                ; 15 uses
+  %.sroa.3 = alloca ptr, align 8                  ; 6 uses
+  %.sroa.7 = alloca ptr, align 8                  ; 3 uses
   %i.l = alloca [32 x i8], align 8                ; 5 uses
   %i.m = alloca [32 x i8], align 8                ; 7 uses
   %i.n = alloca [64 x i8], align 8                ; 6 uses
@@ -1006,23 +1001,22 @@ bb.i:                                             ; preds = %_RNvYINtNtNtNtCsexY
   %i.bd = load i64, ptr %i.ay, align 8, !alias.scope !89, !noalias !86, !noundef !9
   %i.be = add i64 %i.bd, %i.ar
   store i64 %i.be, ptr %i.ay, align 8, !alias.scope !89, !noalias !86
-  %3 = ptrtoint ptr %i.bb to i64
-  store i64 %3, ptr %.sroa.3, align 8, !alias.scope !86, !noalias !89
+  store ptr %i.bb, ptr %.sroa.3, align 8, !alias.scope !86, !noalias !89
   br label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB28_5query5peers7closest4PeerEENtNtNtB8_6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit
 
 _RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB28_5query5peers7closest4PeerEENtNtNtB8_6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit: ; preds = %bb.h, %_RNvYINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB13_5query5peers7closest4PeerENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit.i, %bb.i
   %.sink9.i.sroa.phi = phi ptr [ %.sroa.7, %bb.i ], [ %.sroa.3, %bb.h ], [ %.sroa.3, %_RNvYINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB13_5query5peers7closest4PeerENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit.i ]
   %.sink.i = phi ptr [ %i.bc, %bb.i ], [ null, %bb.h ], [ null, %_RNvYINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB13_5query5peers7closest4PeerENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit.i ]
   store ptr %.sink.i, ptr %.sink9.i.sroa.phi, align 8, !alias.scope !86, !noalias !89
-  %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8. = load i64, ptr %.sroa.3, align 8, !noundef !9 ; 2 uses
-  %.not44 = icmp eq i64 %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8., 0
+  %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8. = load ptr, ptr %.sroa.3, align 8, !noundef !9 ; 2 uses
+  %.not44 = icmp eq ptr %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8., null
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   call void @llvm.experimental.noalias.scope.decl(metadata !91)
   br i1 %.not44, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB28_5query5peers7closest4PeerEENtNtNtB8_6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit
-  %4 = inttoptr i64 %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8. to ptr
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtNtNtB5_4iter8adapters3map3MapINtNtB3d_6filter6FilterINtNtB3d_5chain5ChainINtNtNtB5_5slice4iter4IterNtNtBQ_8protocol7KadPeerEB4o_ENCINvMs0_NtBQ_9behaviourINtB5r_9BehaviourNtNtNtNtBQ_6record5store6memory11MemoryStoreE10discoveredB43_E0ENCB5k_s_0EEs_0ECsabk8e3lPnsy_20file_sharing_example.exit
 
 bb.k:                                             ; preds = %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB28_5query5peers7closest4PeerEENtNtNtB8_6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit
@@ -1049,7 +1043,7 @@ bb.l:                                             ; preds = %bb.k
   store i64 %i.bg, ptr %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !97
   br label %_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB1B_6filter6FilterINtNtB1B_5chain5ChainINtNtNtB1F_5slice4iter4IterNtNtBd_8protocol7KadPeerEB32_ENCINvMs0_NtBd_9behaviourINtB46_9BehaviourNtNtNtNtBd_6record5store6memory11MemoryStoreE10discoveredB2H_E0ENCB3Z_s_0EEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i
 
-_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB1B_6filter6FilterINtNtB1B_5chain5ChainINtNtNtB1F_5slice4iter4IterNtNtBd_8protocol7KadPeerEB32_ENCINvMs0_NtBd_9behaviourINtB46_9BehaviourNtNtNtNtBd_6record5store6memory11MemoryStoreE10discoveredB2H_E0ENCB3Z_s_0EEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i: ; preds = %bb.l, %bb.k
+_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB1B_6filter6FilterINtNtB1B_5chain5ChainINtNtNtB1F_5slice4iter4IterNtNtBd_8protocol7KadPeerEB32_ENCINvMs0_NtBd_9behaviourINtB46_9BehaviourNtNtNtNtBd_6record5store6memory11MemoryStoreE10discoveredB2H_E0ENCB3Z_s_0EEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i: ; preds = %bb.k, %bb.l
   %.sink19.i.i = phi i64 [ 1, %bb.l ], [ 0, %bb.k ] ; 2 uses
   %.sink.i.i = phi i64 [ %i.bh, %bb.l ], [ 0, %bb.k ]
   store i64 %.sink19.i.i, ptr %i.a, align 8, !noalias !97
@@ -1059,20 +1053,17 @@ _RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeer
   store i64 %.sink.i.i, ptr %i.bj, align 8, !noalias !97
   %i.bk = call { ptr, ptr } @_RNvXsm_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB19_5query5peers7closest4PeerENtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator9next_backCsabk8e3lPnsy_20file_sharing_example(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.a), !noalias !97
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !97
-  %i.bl = extractvalue { ptr, ptr } %i.bk, 0
-  br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtNtNtB5_4iter8adapters3map3MapINtNtB3d_6filter6FilterINtNtB3d_5chain5ChainINtNtNtB5_5slice4iter4IterNtNtBQ_8protocol7KadPeerEB4o_ENCINvMs0_NtBQ_9behaviourINtB5r_9BehaviourNtNtNtNtBQ_6record5store6memory11MemoryStoreE10discoveredB43_E0ENCB5k_s_0EEs_0ECsabk8e3lPnsy_20file_sharing_example.exit
+  %i.bl = extractvalue { ptr, ptr } %i.bk, 0      ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
+  %.not45 = icmp eq ptr %i.bl, null
+  br i1 %.not45, label %bb.m, label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtNtNtB5_4iter8adapters3map3MapINtNtB3d_6filter6FilterINtNtB3d_5chain5ChainINtNtNtB5_5slice4iter4IterNtNtBQ_8protocol7KadPeerEB4o_ENCINvMs0_NtBQ_9behaviourINtB5r_9BehaviourNtNtNtNtBQ_6record5store6memory11MemoryStoreE10discoveredB43_E0ENCB5k_s_0EEs_0ECsabk8e3lPnsy_20file_sharing_example.exit
 
 _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtNtNtB5_4iter8adapters3map3MapINtNtB3d_6filter6FilterINtNtB3d_5chain5ChainINtNtNtB5_5slice4iter4IterNtNtBQ_8protocol7KadPeerEB4o_ENCINvMs0_NtBQ_9behaviourINtB5r_9BehaviourNtNtNtNtBQ_6record5store6memory11MemoryStoreE10discoveredB43_E0ENCB5k_s_0EEs_0ECsabk8e3lPnsy_20file_sharing_example.exit: ; preds = %bb.j, %_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB1B_6filter6FilterINtNtB1B_5chain5ChainINtNtNtB1F_5slice4iter4IterNtNtBd_8protocol7KadPeerEB32_ENCINvMs0_NtBd_9behaviourINtB46_9BehaviourNtNtNtNtBd_6record5store6memory11MemoryStoreE10discoveredB2H_E0ENCB3Z_s_0EEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i
-  %.merged.i = phi ptr [ %4, %bb.j ], [ %i.bl, %_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB1B_6filter6FilterINtNtB1B_5chain5ChainINtNtNtB1F_5slice4iter4IterNtNtBd_8protocol7KadPeerEB32_ENCINvMs0_NtBd_9behaviourINtB46_9BehaviourNtNtNtNtBd_6record5store6memory11MemoryStoreE10discoveredB2H_E0ENCB3Z_s_0EEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
-  %.not45 = icmp eq ptr %.merged.i, null
-  br i1 %.not45, label %bb.m, label %5
-
-5:                                                ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtNtNtB5_4iter8adapters3map3MapINtNtB3d_6filter6FilterINtNtB3d_5chain5ChainINtNtNtB5_5slice4iter4IterNtNtBQ_8protocol7KadPeerEB4o_ENCINvMs0_NtBQ_9behaviourINtB5r_9BehaviourNtNtNtNtBQ_6record5store6memory11MemoryStoreE10discoveredB43_E0ENCB5k_s_0EEs_0ECsabk8e3lPnsy_20file_sharing_example.exit
+  %.merged.i = phi ptr [ %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8., %bb.j ], [ %i.bl, %_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB1B_6filter6FilterINtNtB1B_5chain5ChainINtNtNtB1F_5slice4iter4IterNtNtBd_8protocol7KadPeerEB32_ENCINvMs0_NtBd_9behaviourINtB46_9BehaviourNtNtNtNtBd_6record5store6memory11MemoryStoreE10discoveredB2H_E0ENCB3Z_s_0EEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.l, ptr noundef nonnull align 8 dereferenceable(32) %.merged.i, i64 32, i1 false)
   br label %bb.m
 
-bb.m:                                             ; preds = %5, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtNtNtB5_4iter8adapters3map3MapINtNtB3d_6filter6FilterINtNtB3d_5chain5ChainINtNtNtB5_5slice4iter4IterNtNtBQ_8protocol7KadPeerEB4o_ENCINvMs0_NtBQ_9behaviourINtB5r_9BehaviourNtNtNtNtBQ_6record5store6memory11MemoryStoreE10discoveredB43_E0ENCB5k_s_0EEs_0ECsabk8e3lPnsy_20file_sharing_example.exit
+bb.m:                                             ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtNtNtB5_4iter8adapters3map3MapINtNtB3d_6filter6FilterINtNtB3d_5chain5ChainINtNtNtB5_5slice4iter4IterNtNtBQ_8protocol7KadPeerEB4o_ENCINvMs0_NtBQ_9behaviourINtB5r_9BehaviourNtNtNtNtBQ_6record5store6memory11MemoryStoreE10discoveredB43_E0ENCB5k_s_0EEs_0ECsabk8e3lPnsy_20file_sharing_example.exit, %_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB1B_6filter6FilterINtNtB1B_5chain5ChainINtNtNtB1F_5slice4iter4IterNtNtBd_8protocol7KadPeerEB32_ENCINvMs0_NtBd_9behaviourINtB46_9BehaviourNtNtNtNtBd_6record5store6memory11MemoryStoreE10discoveredB2H_E0ENCB3Z_s_0EEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i
   %i.bm = load i64, ptr %i.aw, align 8, !noundef !9
   %i.bn = load i64, ptr %i.aq, align 8, !range !48, !noundef !9
   %i.bo = icmp ult i64 %i.bm, %i.bn
@@ -1235,9 +1226,9 @@ bb.a:
   %i.i = alloca [32 x i8], align 8                ; 5 uses
   %i.j = alloca [112 x i8], align 8               ; 5 uses
   %i.k = alloca [80 x i8], align 8                ; 4 uses
-  %i.l = alloca [80 x i8], align 8                ; 14 uses
-  %.sroa.3 = alloca i64, align 8                  ; 6 uses
-  %.sroa.7 = alloca i64, align 8                  ; 3 uses
+  %i.l = alloca [80 x i8], align 8                ; 15 uses
+  %.sroa.3 = alloca ptr, align 8                  ; 6 uses
+  %.sroa.7 = alloca ptr, align 8                  ; 3 uses
   %i.m = alloca [32 x i8], align 8                ; 5 uses
   %i.n = alloca [32 x i8], align 8                ; 7 uses
   %i.o = alloca [64 x i8], align 8                ; 6 uses
@@ -1371,23 +1362,22 @@ bb.i:                                             ; preds = %_RNvYINtNtNtNtCsexY
   %i.bd = load i64, ptr %i.ay, align 8, !alias.scope !133, !noalias !130, !noundef !9
   %i.be = add i64 %i.bd, %i.ar
   store i64 %i.be, ptr %i.ay, align 8, !alias.scope !133, !noalias !130
-  %3 = ptrtoint ptr %i.bb to i64
-  store i64 %3, ptr %.sroa.3, align 8, !alias.scope !130, !noalias !133
+  store ptr %i.bb, ptr %.sroa.3, align 8, !alias.scope !130, !noalias !133
   br label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB28_5query5peers7closest4PeerEENtNtNtB8_6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit
 
 _RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB28_5query5peers7closest4PeerEENtNtNtB8_6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit: ; preds = %bb.h, %_RNvYINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB13_5query5peers7closest4PeerENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit.i, %bb.i
   %.sink9.i.sroa.phi = phi ptr [ %.sroa.7, %bb.i ], [ %.sroa.3, %bb.h ], [ %.sroa.3, %_RNvYINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB13_5query5peers7closest4PeerENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit.i ]
   %.sink.i = phi ptr [ %i.bc, %bb.i ], [ null, %bb.h ], [ null, %_RNvYINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB13_5query5peers7closest4PeerENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit.i ]
   store ptr %.sink.i, ptr %.sink9.i.sroa.phi, align 8, !alias.scope !130, !noalias !133
-  %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8. = load i64, ptr %.sroa.3, align 8, !noundef !9 ; 2 uses
-  %.not44 = icmp eq i64 %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8., 0
+  %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8. = load ptr, ptr %.sroa.3, align 8, !noundef !9 ; 2 uses
+  %.not44 = icmp eq ptr %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8., null
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   call void @llvm.experimental.noalias.scope.decl(metadata !135)
   br i1 %.not44, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB28_5query5peers7closest4PeerEENtNtNtB8_6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit
-  %4 = inttoptr i64 %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8. to ptr
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtNtNtB5_4iter8adapters3map3MapINtNtB3d_6filter6FilterINtNtNtB5_5slice4iter4IterNtNtBQ_8protocol7KadPeerENCINvMs0_NtBQ_9behaviourINtB51_9BehaviourNtNtNtNtBQ_6record5store6memory11MemoryStoreE10discoveredB43_E0ENCB4U_s_0EEs_0ECsabk8e3lPnsy_20file_sharing_example.exit
 
 bb.k:                                             ; preds = %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB28_5query5peers7closest4PeerEENtNtNtB8_6traits8iterator8Iterator3nthCsabk8e3lPnsy_20file_sharing_example.exit
@@ -1414,7 +1404,7 @@ bb.l:                                             ; preds = %bb.k
   store i64 %i.bg, ptr %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !141
   br label %_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB1B_6filter6FilterINtNtNtB1F_5slice4iter4IterNtNtBd_8protocol7KadPeerENCINvMs0_NtBd_9behaviourINtB3G_9BehaviourNtNtNtNtBd_6record5store6memory11MemoryStoreE10discoveredB2H_E0ENCB3z_s_0EEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i
 
-_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB1B_6filter6FilterINtNtNtB1F_5slice4iter4IterNtNtBd_8protocol7KadPeerENCINvMs0_NtBd_9behaviourINtB3G_9BehaviourNtNtNtNtBd_6record5store6memory11MemoryStoreE10discoveredB2H_E0ENCB3z_s_0EEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i: ; preds = %bb.l, %bb.k
+_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB1B_6filter6FilterINtNtNtB1F_5slice4iter4IterNtNtBd_8protocol7KadPeerENCINvMs0_NtBd_9behaviourINtB3G_9BehaviourNtNtNtNtBd_6record5store6memory11MemoryStoreE10discoveredB2H_E0ENCB3z_s_0EEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i: ; preds = %bb.k, %bb.l
   %.sink19.i.i = phi i64 [ 1, %bb.l ], [ 0, %bb.k ] ; 2 uses
   %.sink.i.i = phi i64 [ %i.bh, %bb.l ], [ 0, %bb.k ]
   store i64 %.sink19.i.i, ptr %i.a, align 8, !noalias !141
@@ -1424,20 +1414,17 @@ _RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeer
   store i64 %.sink.i.i, ptr %i.bj, align 8, !noalias !141
   %i.bk = call { ptr, ptr } @_RNvXsm_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB19_5query5peers7closest4PeerENtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator9next_backCsabk8e3lPnsy_20file_sharing_example(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.a), !noalias !141
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !141
-  %i.bl = extractvalue { ptr, ptr } %i.bk, 0
-  br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtNtNtB5_4iter8adapters3map3MapINtNtB3d_6filter6FilterINtNtNtB5_5slice4iter4IterNtNtBQ_8protocol7KadPeerENCINvMs0_NtBQ_9behaviourINtB51_9BehaviourNtNtNtNtBQ_6record5store6memory11MemoryStoreE10discoveredB43_E0ENCB4U_s_0EEs_0ECsabk8e3lPnsy_20file_sharing_example.exit
+  %i.bl = extractvalue { ptr, ptr } %i.bk, 0      ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
+  %.not45 = icmp eq ptr %i.bl, null
+  br i1 %.not45, label %bb.m, label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtNtNtB5_4iter8adapters3map3MapINtNtB3d_6filter6FilterINtNtNtB5_5slice4iter4IterNtNtBQ_8protocol7KadPeerENCINvMs0_NtBQ_9behaviourINtB51_9BehaviourNtNtNtNtBQ_6record5store6memory11MemoryStoreE10discoveredB43_E0ENCB4U_s_0EEs_0ECsabk8e3lPnsy_20file_sharing_example.exit
 
 _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtNtNtB5_4iter8adapters3map3MapINtNtB3d_6filter6FilterINtNtNtB5_5slice4iter4IterNtNtBQ_8protocol7KadPeerENCINvMs0_NtBQ_9behaviourINtB51_9BehaviourNtNtNtNtBQ_6record5store6memory11MemoryStoreE10discoveredB43_E0ENCB4U_s_0EEs_0ECsabk8e3lPnsy_20file_sharing_example.exit: ; preds = %bb.j, %_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB1B_6filter6FilterINtNtNtB1F_5slice4iter4IterNtNtBd_8protocol7KadPeerENCINvMs0_NtBd_9behaviourINtB3G_9BehaviourNtNtNtNtBd_6record5store6memory11MemoryStoreE10discoveredB2H_E0ENCB3z_s_0EEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i
-  %.merged.i = phi ptr [ %4, %bb.j ], [ %i.bl, %_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB1B_6filter6FilterINtNtNtB1F_5slice4iter4IterNtNtBd_8protocol7KadPeerENCINvMs0_NtBd_9behaviourINtB3G_9BehaviourNtNtNtNtBd_6record5store6memory11MemoryStoreE10discoveredB2H_E0ENCB3z_s_0EEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
-  %.not45 = icmp eq ptr %.merged.i, null
-  br i1 %.not45, label %bb.m, label %5
-
-5:                                                ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtNtNtB5_4iter8adapters3map3MapINtNtB3d_6filter6FilterINtNtNtB5_5slice4iter4IterNtNtBQ_8protocol7KadPeerENCINvMs0_NtBQ_9behaviourINtB51_9BehaviourNtNtNtNtBQ_6record5store6memory11MemoryStoreE10discoveredB43_E0ENCB4U_s_0EEs_0ECsabk8e3lPnsy_20file_sharing_example.exit
+  %.merged.i = phi ptr [ %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8., %bb.j ], [ %i.bl, %_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB1B_6filter6FilterINtNtNtB1F_5slice4iter4IterNtNtBd_8protocol7KadPeerENCINvMs0_NtBd_9behaviourINtB3G_9BehaviourNtNtNtNtBd_6record5store6memory11MemoryStoreE10discoveredB2H_E0ENCB3z_s_0EEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.m, ptr noundef nonnull align 8 dereferenceable(32) %.merged.i, i64 32, i1 false)
   br label %bb.m
 
-bb.m:                                             ; preds = %5, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtNtNtB5_4iter8adapters3map3MapINtNtB3d_6filter6FilterINtNtNtB5_5slice4iter4IterNtNtBQ_8protocol7KadPeerENCINvMs0_NtBQ_9behaviourINtB51_9BehaviourNtNtNtNtBQ_6record5store6memory11MemoryStoreE10discoveredB43_E0ENCB4U_s_0EEs_0ECsabk8e3lPnsy_20file_sharing_example.exit
+bb.m:                                             ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionTRNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceRNtNtNtNtBQ_5query5peers7closest4PeerEE7or_elseNCINvMs_B1E_NtB1E_16ClosestPeersIter10on_successINtNtNtNtB5_4iter8adapters3map3MapINtNtB3d_6filter6FilterINtNtNtB5_5slice4iter4IterNtNtBQ_8protocol7KadPeerENCINvMs0_NtBQ_9behaviourINtB51_9BehaviourNtNtNtNtBQ_6record5store6memory11MemoryStoreE10discoveredB43_E0ENCB4U_s_0EEs_0ECsabk8e3lPnsy_20file_sharing_example.exit, %_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB1B_6filter6FilterINtNtNtB1F_5slice4iter4IterNtNtBd_8protocol7KadPeerENCINvMs0_NtBd_9behaviourINtB3G_9BehaviourNtNtNtNtBd_6record5store6memory11MemoryStoreE10discoveredB2H_E0ENCB3z_s_0EEs_0Csabk8e3lPnsy_20file_sharing_example.exit.i
   %i.bm = load i64, ptr %i.aw, align 8, !noundef !9
   %i.bn = load i64, ptr %i.aq, align 8, !range !48, !noundef !9
   %i.bo = icmp ult i64 %i.bm, %i.bn

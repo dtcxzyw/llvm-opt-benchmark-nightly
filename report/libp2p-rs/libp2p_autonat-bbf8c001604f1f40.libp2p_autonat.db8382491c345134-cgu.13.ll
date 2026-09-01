@@ -205,8 +205,8 @@ bb.a:
   %i.g = alloca [24 x i8], align 8                ; 6 uses
   %i.h = alloca [24 x i8], align 8                ; 9 uses
   %.sroa.8 = alloca [16 x i8], align 8            ; 2 uses
-  %.sroa.4 = alloca i64, align 8                  ; 5 uses
-  %.sroa.7 = alloca i64, align 8                  ; 4 uses
+  %.sroa.4 = alloca ptr, align 8                  ; 5 uses
+  %.sroa.7 = alloca ptr, align 8                  ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.j = load ptr, ptr %i.i, align 8, !nonnull !6, !noundef !6
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -391,8 +391,7 @@ bb.t:                                             ; preds = %_RNCNvXs4_NtNtCsiQs
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !203
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !200
   call void @llvm.experimental.noalias.scope.decl(metadata !222)
-  %3 = ptrtoint ptr %i.ae to i64
-  store i64 %3, ptr %.sroa.4, align 8, !alias.scope !223, !noalias !224
+  store ptr %i.ae, ptr %.sroa.4, align 8, !alias.scope !223, !noalias !224
   br label %bb.w
 
 bb.u:                                             ; preds = %bb.s
@@ -414,14 +413,14 @@ bb.w:                                             ; preds = %_RINvNtCskKLDkoKarT
   %.sink.i.i.sroa.phi = phi ptr [ %.sroa.7, %bb.t ], [ %.sroa.4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultzNtNtNtB4_2io5error5ErrorEEECsiQsUuLk7hWW_14libp2p_autonat.exit.i.i.i ]
   %.sroa.52.0.copyload.sink.i.i = phi ptr [ %.sroa.52.0.copyload.i.i, %bb.t ], [ null, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultzNtNtNtB4_2io5error5ErrorEEECsiQsUuLk7hWW_14libp2p_autonat.exit.i.i.i ]
   store ptr %.sroa.52.0.copyload.sink.i.i, ptr %.sink.i.i.sroa.phi, align 8, !alias.scope !223, !noalias !224
-  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8.copyload = load i64, ptr %.sroa.4, align 8, !alias.scope !225
-  %.sroa.7.0..sroa.7.0..sroa.7.0..sroa.7.8.copyload = load i64, ptr %.sroa.7, align 8, !alias.scope !225
+  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8.copyload = load ptr, ptr %.sroa.4, align 8, !alias.scope !225
+  %.sroa.7.0..sroa.7.0..sroa.7.0..sroa.7.8.copyload = load ptr, ptr %.sroa.7, align 8, !alias.scope !225
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8.copyload, ptr %i.at, align 8, !alias.scope !229
+  store ptr %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8.copyload, ptr %i.at, align 8, !alias.scope !229
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.7.0..sroa.7.0..sroa.7.0..sroa.7.8.copyload, ptr %.sroa.44.0..sroa_idx, align 8, !alias.scope !229
+  store ptr %.sroa.7.0..sroa.7.0..sroa.7.0..sroa.7.8.copyload, ptr %.sroa.44.0..sroa_idx, align 8, !alias.scope !229
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.8, i64 16, i1 false)
   br label %bb.v

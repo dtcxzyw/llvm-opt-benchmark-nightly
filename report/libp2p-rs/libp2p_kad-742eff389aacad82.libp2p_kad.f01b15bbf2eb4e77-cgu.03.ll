@@ -99,8 +99,8 @@ bb.a:
   %i.b = alloca [32 x i8], align 8                ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 5 uses
   %i.d = alloca [80 x i8], align 8                ; 14 uses
-  %.sroa.3 = alloca i64, align 8                  ; 6 uses
-  %.sroa.7 = alloca i64, align 8                  ; 3 uses
+  %.sroa.3 = alloca ptr, align 8                  ; 6 uses
+  %.sroa.7 = alloca ptr, align 8                  ; 3 uses
   %i.e = alloca [32 x i8], align 8                ; 7 uses
   %i.f = alloca [64 x i8], align 8                ; 6 uses
   %i.g = alloca [112 x i8], align 8               ; 4 uses
@@ -233,16 +233,15 @@ bb.i:                                             ; preds = %_RNvYINtNtNtNtCsexY
   %i.au = load i64, ptr %i.ap, align 8, !alias.scope !12, !noalias !9, !noundef !6
   %i.av = add i64 %i.au, %i.ai
   store i64 %i.av, ptr %i.ap, align 8, !alias.scope !12, !noalias !9
-  %2 = ptrtoint ptr %i.as to i64
-  store i64 %2, ptr %.sroa.3, align 8, !alias.scope !9, !noalias !12
+  store ptr %i.as, ptr %.sroa.3, align 8, !alias.scope !9, !noalias !12
   br label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB28_5query5peers7closest4PeerEENtNtNtB8_6traits8iterator8Iterator3nthB28_.exit
 
 _RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB28_5query5peers7closest4PeerEENtNtNtB8_6traits8iterator8Iterator3nthB28_.exit: ; preds = %bb.h, %_RNvYINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB13_5query5peers7closest4PeerENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3nthB13_.exit.i, %bb.i
   %.sink9.i.sroa.phi = phi ptr [ %.sroa.7, %bb.i ], [ %.sroa.3, %bb.h ], [ %.sroa.3, %_RNvYINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB13_5query5peers7closest4PeerENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3nthB13_.exit.i ]
   %.sink.i = phi ptr [ %i.at, %bb.i ], [ null, %bb.h ], [ null, %_RNvYINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB13_5query5peers7closest4PeerENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3nthB13_.exit.i ]
   store ptr %.sink.i, ptr %.sink9.i.sroa.phi, align 8, !alias.scope !9, !noalias !12
-  %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8. = load i64, ptr %.sroa.3, align 8, !noundef !6
-  %.not44 = icmp eq i64 %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8., 0
+  %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8. = load ptr, ptr %.sroa.3, align 8, !noundef !6
+  %.not44 = icmp eq ptr %.sroa.3.0..sroa.3.0..sroa.3.0..sroa.3.8., null
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   call void @llvm.experimental.noalias.scope.decl(metadata !14)

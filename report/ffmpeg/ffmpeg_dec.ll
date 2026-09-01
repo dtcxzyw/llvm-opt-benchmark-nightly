@@ -8,7 +8,6 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-%struct.ViewSpecifier = type { i32, i32 }
 %struct.AVSubtitle = type { i16, i32, i32, i32, ptr, i64 }
 %struct.DecoderOpts = type { i32, ptr, ptr, ptr, ptr, i32, i32, ptr, i32, %struct.AVRational, %struct.AVRational }
 %struct.AVRational = type { i32, i32 }
@@ -152,7 +151,7 @@ declare void @av_freep(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define range(i32 -2147483648, 1) i32 @dec_request_view(ptr noundef %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = alloca %struct.ViewSpecifier, align 4      ; 3 uses
+  %.sroa.0 = alloca i64, align 8                  ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.b = load i32, ptr %i.a, align 8, !tbaa !12
   %.not = icmp eq i32 %i.b, 0
@@ -190,14 +189,14 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not67, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  store i32 1, ptr %3, align 4, !tbaa !26
-  %.4..4..4.gep.sroa_idx110 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  store i32 1, ptr %.sroa.0, align 8, !tbaa !26
+  %.4..4..4.gep.sroa_idx110 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   store i32 0, ptr %.4..4..4.gep.sroa_idx110, align 4, !tbaa !30
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h
   %i.h = phi i32 [ 1, %bb.h ], [ %i.g, %bb.g ]
-  %i.i = phi ptr [ %3, %bb.h ], [ %1, %bb.g ]     ; 2 uses
+  %i.i = phi ptr [ %.sroa.0, %bb.h ], [ %1, %bb.g ] ; 2 uses
   %.sroa.phi = getelementptr inbounds nuw i8, ptr %i.i, i64 4
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 5 uses
   %i.k = load i32, ptr %i.j, align 8, !tbaa !31   ; 4 uses

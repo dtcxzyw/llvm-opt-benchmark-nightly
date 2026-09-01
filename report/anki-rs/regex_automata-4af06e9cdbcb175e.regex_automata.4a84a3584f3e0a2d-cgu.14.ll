@@ -205,8 +205,8 @@ bb.a:
   %.sroa.736.i = alloca [48 x i8], align 8        ; 7 uses
   %.sroa.630.i = alloca [48 x i8], align 8        ; 7 uses
   %i.m = alloca [48 x i8], align 8                ; 7 uses
-  %.sroa.6154.i = alloca i64, align 8             ; 8 uses
-  %.sroa.10.i = alloca i64, align 8               ; 6 uses
+  %.sroa.6154.i = alloca ptr, align 8             ; 8 uses
+  %.sroa.10.i = alloca ptr, align 8               ; 6 uses
   %i.n = alloca [64 x i8], align 8                ; 8 uses
   %i.o = alloca [32 x i8], align 8                ; 4 uses
   %i.p = alloca [200 x i8], align 8               ; 24 uses
@@ -355,8 +355,7 @@ bb.h:                                             ; preds = %.noexc.i
 bb.i:                                             ; preds = %bb.h
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
   store ptr %i.bg, ptr %.sroa.2.0..sroa_idx148.i, align 8, !alias.scope !237, !noalias !240
-  %4 = ptrtoint ptr %i.bc to i64
-  store i64 %4, ptr %.sroa.6154.i, align 8, !alias.scope !232, !noalias !241
+  store ptr %i.bc, ptr %.sroa.6154.i, align 8, !alias.scope !232, !noalias !241
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %.noexc.i
@@ -364,8 +363,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %.noex
   %.sink20.i.sroa.phi.i = phi ptr [ %.sroa.6154.i, %.noexc.i ], [ %.sroa.6154.i, %bb.h ], [ %.sroa.10.i, %bb.i ]
   %.sink.i.i = phi ptr [ null, %.noexc.i ], [ null, %bb.h ], [ %i.bd, %bb.i ]
   store ptr %.sink.i.i, ptr %.sink20.i.sroa.phi.i, align 8, !alias.scope !232, !noalias !241
-  %.sroa.6154.i.0..sroa.6154.i.0..sroa.6154.i.0..sroa.6154.0..sroa.6154.0..sroa.6154.8..i = load i64, ptr %.sroa.6154.i, align 8, !noalias !228, !noundef !3 ; 2 uses
-  %.not113.i = icmp eq i64 %.sroa.6154.i.0..sroa.6154.i.0..sroa.6154.i.0..sroa.6154.0..sroa.6154.0..sroa.6154.8..i, 0
+  %.sroa.6154.i.0..sroa.6154.i.0..sroa.6154.i.0..sroa.6154.0..sroa.6154.0..sroa.6154.8..i = load ptr, ptr %.sroa.6154.i, align 8, !noalias !228, !noundef !3 ; 3 uses
+  %.not113.i = icmp eq ptr %.sroa.6154.i.0..sroa.6154.i.0..sroa.6154.i.0..sroa.6154.0..sroa.6154.0..sroa.6154.8..i, null
   br i1 %.not113.i, label %bb.k, label %bb.be
 
 bb.k:                                             ; preds = %bb.j
@@ -768,9 +767,7 @@ bb.bd:                                            ; preds = %bb.be
           to label %.body.i unwind label %bb.bs, !noalias !230
 
 bb.be:                                            ; preds = %bb.j
-  %5 = inttoptr i64 %.sroa.6154.i.0..sroa.6154.i.0..sroa.6154.i.0..sroa.6154.0..sroa.6154.0..sroa.6154.8..i to ptr ; 2 uses
-  %.sroa.10.i.0..sroa.10.i.0..sroa.10.i.0..sroa.10.0..sroa.10.0..sroa.10.16..i = load i64, ptr %.sroa.10.i, align 8, !range !137, !noalias !228, !noundef !3
-  %6 = inttoptr i64 %.sroa.10.i.0..sroa.10.i.0..sroa.10.i.0..sroa.10.0..sroa.10.0..sroa.10.16..i to ptr
+  %.sroa.10.i.0..sroa.10.i.0..sroa.10.i.0..sroa.10.0..sroa.10.0..sroa.10.16..i = load ptr, ptr %.sroa.10.i, align 8, !noalias !228, !nonnull !3, !align !4, !noundef !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !228
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.630.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.736.i)
@@ -782,10 +779,10 @@ bb.be:                                            ; preds = %bb.j
   store i64 0, ptr %.sroa.481.sroa.5.0..sroa.481.0..sroa_idx.sroa_idx.i, align 8, !noalias !228
   store i8 %i.at, ptr %i.ax, align 1, !noalias !228
   store i8 %i.av, ptr %i.ay, align 2, !noalias !228
-  %.val120.i = load ptr, ptr %5, align 8, !noalias !230, !nonnull !3, !align !304, !noundef !3
-  %i.ge = getelementptr i8, ptr %5, i64 8
+  %.val120.i = load ptr, ptr %.sroa.6154.i.0..sroa.6154.i.0..sroa.6154.i.0..sroa.6154.0..sroa.6154.0..sroa.6154.8..i, align 8, !noalias !230, !nonnull !3, !align !304, !noundef !3
+  %i.ge = getelementptr i8, ptr %.sroa.6154.i.0..sroa.6154.i.0..sroa.6154.i.0..sroa.6154.0..sroa.6154.0..sroa.6154.8..i, i64 8
   %.val121.i = load i64, ptr %i.ge, align 8, !noalias !230, !noundef !3
-  invoke void @_ZN12regex_syntax3hir9translate10Translator9translate17h3c2849864e624556E(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(address) dereferenceable(80) %i.l, ptr noalias noundef nonnull align 8 dereferenceable(40) %i.k, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val120.i, i64 noundef %.val121.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %6)
+  invoke void @_ZN12regex_syntax3hir9translate10Translator9translate17h3c2849864e624556E(ptr noalias noundef nonnull sret([80 x i8]) align 8 captures(address) dereferenceable(80) %i.l, ptr noalias noundef nonnull align 8 dereferenceable(40) %i.k, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %.val120.i, i64 noundef %.val121.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %.sroa.10.i.0..sroa.10.i.0..sroa.10.i.0..sroa.10.0..sroa.10.0..sroa.10.16..i)
           to label %bb.bf unwind label %bb.bd, !noalias !230
 
 bb.bf:                                            ; preds = %bb.be

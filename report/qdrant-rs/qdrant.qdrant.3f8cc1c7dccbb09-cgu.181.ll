@@ -205,8 +205,8 @@ bb.a:
   %i.d = alloca [32 x i8], align 8                ; 10 uses
   %i.e = alloca [24 x i8], align 8                ; 6 uses
   %i.f = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.5 = alloca i64, align 8                  ; 5 uses
-  %.sroa.11 = alloca i64, align 8                 ; 4 uses
+  %.sroa.5 = alloca ptr, align 8                  ; 5 uses
+  %.sroa.11 = alloca ptr, align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.11)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2750)
@@ -343,8 +343,7 @@ _RNvMs_NtCs14kzo5Se9zC_5bytes9bytes_mutNtB4_8BytesMut6freeze.exit.i: ; preds = %
   %.sroa.6.0.i = phi i64 [ %i.h, %bb.f ], [ %i.ar, %bb.h ]
   %.sroa.5.0.i = phi ptr [ %.sroa.015.0.copyload.i, %bb.f ], [ %i.au, %bb.h ]
   %.sroa.0.0.i = phi ptr [ @_RNvNtCs14kzo5Se9zC_5bytes9bytes_mut13SHARED_VTABLE, %bb.f ], [ %.sroa.0.0.copyload1.i, %bb.h ]
-  %3 = ptrtoint ptr %.sroa.0.0.i to i64
-  store i64 %3, ptr %.sroa.5, align 8, !alias.scope !2750, !noalias !2753
+  store ptr %.sroa.0.0.i, ptr %.sroa.5, align 8, !alias.scope !2750, !noalias !2753
   br label %bb.j
 
 bb.j:                                             ; preds = %_RNvMs_NtCs14kzo5Se9zC_5bytes9bytes_mutNtB4_8BytesMut6freeze.exit.i, %bb.a
@@ -353,21 +352,20 @@ bb.j:                                             ; preds = %_RNvMs_NtCs14kzo5Se
   %.sink27.i.sroa.phi = phi ptr [ %.sroa.5, %bb.a ], [ %.sroa.11, %_RNvMs_NtCs14kzo5Se9zC_5bytes9bytes_mutNtB4_8BytesMut6freeze.exit.i ]
   %.sink.i = phi ptr [ null, %bb.a ], [ %.sroa.7.0.i, %_RNvMs_NtCs14kzo5Se9zC_5bytes9bytes_mutNtB4_8BytesMut6freeze.exit.i ]
   store ptr %.sink.i, ptr %.sink27.i.sroa.phi, align 8, !alias.scope !2750, !noalias !2753
-  %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..sroa.0.0.copyload = load i64, ptr %.sroa.5, align 8 ; 2 uses
-  %.not = icmp eq i64 %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..sroa.0.0.copyload, 0
+  %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..sroa.0.0.copyload = load ptr, ptr %.sroa.5, align 8 ; 2 uses
+  %.not = icmp eq ptr %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..sroa.0.0.copyload, null
   br i1 %.not, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %4 = inttoptr i64 %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..sroa.0.0.copyload to ptr
-  %.sroa.11.0..sroa.11.0..sroa.11.0..sroa.11.16.copyload = load i64, ptr %.sroa.11, align 8
+  %.sroa.11.0..sroa.11.0..sroa.11.0..sroa.11.16.copyload = load ptr, ptr %.sroa.11, align 8
   %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %4, ptr %.sroa.45.0..sroa_idx, align 8
+  store ptr %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..sroa.0.0.copyload, ptr %.sroa.45.0..sroa_idx, align 8
   %.sroa.45.sroa.4.0..sroa.45.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %.sroa.8.0, ptr %.sroa.45.sroa.4.0..sroa.45.0..sroa_idx.sroa_idx, align 8
   %.sroa.45.sroa.4.sroa.4.0..sroa.45.sroa.4.0..sroa.45.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %.sroa.10.0, ptr %.sroa.45.sroa.4.sroa.4.0..sroa.45.sroa.4.0..sroa.45.0..sroa_idx.sroa_idx.sroa_idx, align 8
   %.sroa.45.sroa.4.sroa.5.0..sroa.45.sroa.4.0..sroa.45.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i64 %.sroa.11.0..sroa.11.0..sroa.11.0..sroa.11.16.copyload, ptr %.sroa.45.sroa.4.sroa.5.0..sroa.45.sroa.4.0..sroa.45.0..sroa_idx.sroa_idx.sroa_idx, align 8
+  store ptr %.sroa.11.0..sroa.11.0..sroa.11.0..sroa.11.16.copyload, ptr %.sroa.45.sroa.4.sroa.5.0..sroa.45.sroa.4.0..sroa.45.0..sroa_idx.sroa_idx.sroa_idx, align 8
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.j, %bb.k

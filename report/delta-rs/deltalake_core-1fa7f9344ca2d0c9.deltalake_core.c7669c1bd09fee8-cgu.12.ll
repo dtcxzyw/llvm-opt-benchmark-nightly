@@ -205,8 +205,8 @@ define hidden void @_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIt
 bb.a:
   %i.a = alloca [64 x i8], align 16               ; 6 uses
   %i.b = alloca [40 x i8], align 8                ; 7 uses
-  %.sroa.4 = alloca i64, align 8                  ; 5 uses
-  %.sroa.74 = alloca i64, align 8                 ; 4 uses
+  %.sroa.4 = alloca ptr, align 8                  ; 5 uses
+  %.sroa.74 = alloca ptr, align 8                 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.d = load ptr, ptr %i.c, align 8, !nonnull !10, !noundef !10
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -268,8 +268,7 @@ bb.f:                                             ; preds = %bb.e
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEEECs14kWLkQVSKO_14deltalake_core.exit.i.i unwind label %bb.h, !noalias !15691
 
 bb.g:                                             ; preds = %_RNCINvMs3_NtCsjhHCjzi9uUI_17datafusion_common6scalarNtB8_11ScalarValue13iter_to_arrayINtNtCs6Po7BT7Nknu_5alloc3vec3VecBO_EE0Cs14kWLkQVSKO_14deltalake_core.exit.i
-  %3 = ptrtoint ptr %.sroa.4.0.copyload.i to i64
-  store i64 %3, ptr %.sroa.4, align 8, !alias.scope !15693, !noalias !15694
+  store ptr %.sroa.4.0.copyload.i, ptr %.sroa.4, align 8, !alias.scope !15693, !noalias !15694
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.f
@@ -304,16 +303,14 @@ bb.j:                                             ; preds = %_RINvNtCsbvkFyIu7lg
   %.sink.i.i = phi ptr [ %.sroa.5.0.copyload.i, %bb.g ], [ null, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEEECs14kWLkQVSKO_14deltalake_core.exit.i.i ]
   store ptr %.sink.i.i, ptr %.sink23.i.i.sroa.phi, align 8, !alias.scope !15693, !noalias !15694
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. = load i64, ptr %.sroa.4, align 8, !alias.scope !15695, !noalias !15698, !noundef !10
-  %4 = inttoptr i64 %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. to ptr
-  %.sroa.74.0..sroa.74.0..sroa.74.0..sroa.74.16. = load i64, ptr %.sroa.74, align 8, !alias.scope !15695, !noalias !15698
-  %5 = inttoptr i64 %.sroa.74.0..sroa.74.0..sroa.74.0..sroa.74.16. to ptr
+  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. = load ptr, ptr %.sroa.4, align 8, !alias.scope !15695, !noalias !15698, !noundef !10
+  %.sroa.74.0..sroa.74.0..sroa.74.0..sroa.74.16. = load ptr, ptr %.sroa.74, align 8, !alias.scope !15695, !noalias !15698
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.74)
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %4, ptr %i.n, align 8, !alias.scope !15700
+  store ptr %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8., ptr %i.n, align 8, !alias.scope !15700
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %5, ptr %i.o, align 8, !alias.scope !15700
+  store ptr %.sroa.74.0..sroa.74.0..sroa.74.0..sroa.74.16., ptr %i.o, align 8, !alias.scope !15700
   br label %bb.i
 }
 
@@ -322,8 +319,8 @@ define hidden void @_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIt
 bb.a:
   %i.a = alloca [64 x i8], align 16               ; 6 uses
   %i.b = alloca [40 x i8], align 8                ; 7 uses
-  %.sroa.4 = alloca i64, align 8                  ; 5 uses
-  %.sroa.74 = alloca i64, align 8                 ; 4 uses
+  %.sroa.4 = alloca ptr, align 8                  ; 5 uses
+  %.sroa.74 = alloca ptr, align 8                 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.d = load ptr, ptr %i.c, align 8, !nonnull !10, !noundef !10
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -385,8 +382,7 @@ bb.f:                                             ; preds = %bb.e
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEEECs14kWLkQVSKO_14deltalake_core.exit.i.i unwind label %bb.h, !noalias !15717
 
 bb.g:                                             ; preds = %_RNCINvMs3_NtCsjhHCjzi9uUI_17datafusion_common6scalarNtB8_11ScalarValue13iter_to_arrayINtNtCs6Po7BT7Nknu_5alloc3vec3VecBO_EEs2_0Cs14kWLkQVSKO_14deltalake_core.exit.i
-  %3 = ptrtoint ptr %.sroa.4.0.copyload.i to i64
-  store i64 %3, ptr %.sroa.4, align 8, !alias.scope !15719, !noalias !15720
+  store ptr %.sroa.4.0.copyload.i, ptr %.sroa.4, align 8, !alias.scope !15719, !noalias !15720
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.f
@@ -421,16 +417,14 @@ bb.j:                                             ; preds = %_RINvNtCsbvkFyIu7lg
   %.sink.i.i = phi ptr [ %.sroa.5.0.copyload.i, %bb.g ], [ null, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEEECs14kWLkQVSKO_14deltalake_core.exit.i.i ]
   store ptr %.sink.i.i, ptr %.sink23.i.i.sroa.phi, align 8, !alias.scope !15719, !noalias !15720
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. = load i64, ptr %.sroa.4, align 8, !alias.scope !15721, !noalias !15724, !noundef !10
-  %4 = inttoptr i64 %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. to ptr
-  %.sroa.74.0..sroa.74.0..sroa.74.0..sroa.74.16. = load i64, ptr %.sroa.74, align 8, !alias.scope !15721, !noalias !15724
-  %5 = inttoptr i64 %.sroa.74.0..sroa.74.0..sroa.74.0..sroa.74.16. to ptr
+  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. = load ptr, ptr %.sroa.4, align 8, !alias.scope !15721, !noalias !15724, !noundef !10
+  %.sroa.74.0..sroa.74.0..sroa.74.0..sroa.74.16. = load ptr, ptr %.sroa.74, align 8, !alias.scope !15721, !noalias !15724
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.74)
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %4, ptr %i.n, align 8, !alias.scope !15726
+  store ptr %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8., ptr %i.n, align 8, !alias.scope !15726
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %5, ptr %i.o, align 8, !alias.scope !15726
+  store ptr %.sroa.74.0..sroa.74.0..sroa.74.0..sroa.74.16., ptr %i.o, align 8, !alias.scope !15726
   br label %bb.i
 }
 

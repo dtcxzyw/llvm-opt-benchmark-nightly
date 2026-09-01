@@ -205,8 +205,8 @@ define internal fastcc void @_RNCINvNtCsf1gSX8u3EQ2_10rayon_core4join12join_cont
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
   %i.b = alloca [24 x i8], align 16               ; 5 uses
-  %.sroa.0 = alloca i64, align 8                  ; 4 uses
-  %.sroa.4 = alloca i64, align 8                  ; 3 uses
+  %.sroa.0 = alloca ptr, align 8                  ; 4 uses
+  %.sroa.4 = alloca ptr, align 8                  ; 3 uses
   %.sroa.5 = alloca i64, align 8                  ; 4 uses
   %i.c = alloca [136 x i8], align 8               ; 10 uses
   %i.d = alloca [24 x i8], align 8                ; 4 uses
@@ -383,8 +383,8 @@ bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  %.sroa.0.0.copyload = load i64, ptr %i.e, align 16
-  store i64 %.sroa.0.0.copyload, ptr %.sroa.0, align 8
+  %.sroa.0.0.copyload = load ptr, ptr %i.e, align 16
+  store ptr %.sroa.0.0.copyload, ptr %.sroa.0, align 8
   %.sroa.5.0.copyload = load i64, ptr %.sink.sroa.gep148, align 16
   store i64 %.sroa.5.0.copyload, ptr %.sroa.5, align 8
   %.sroa.065.0.copyload = load i64, ptr %i.f, align 8
@@ -644,8 +644,8 @@ define internal fastcc void @_RNCINvNtCsf1gSX8u3EQ2_10rayon_core4join12join_cont
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [24 x i8], align 16               ; 5 uses
-  %.sroa.0 = alloca i64, align 8                  ; 4 uses
-  %.sroa.4 = alloca i64, align 8                  ; 3 uses
+  %.sroa.0 = alloca ptr, align 8                  ; 4 uses
+  %.sroa.4 = alloca ptr, align 8                  ; 3 uses
   %.sroa.5 = alloca i64, align 8                  ; 4 uses
   %i.c = alloca [128 x i8], align 8               ; 10 uses
   %i.d = alloca [24 x i8], align 8                ; 4 uses
@@ -822,8 +822,8 @@ bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  %.sroa.0.0.copyload = load i64, ptr %i.e, align 16
-  store i64 %.sroa.0.0.copyload, ptr %.sroa.0, align 8
+  %.sroa.0.0.copyload = load ptr, ptr %i.e, align 16
+  store ptr %.sroa.0.0.copyload, ptr %.sroa.0, align 8
   %.sroa.5.0.copyload = load i64, ptr %.sink.sroa.gep148, align 16
   store i64 %.sroa.5.0.copyload, ptr %.sroa.5, align 8
   %.sroa.3.0.copyload = load i64, ptr %i.k, align 8
@@ -1226,7 +1226,7 @@ bb.a:
   %i.bq = alloca [24 x i8], align 8               ; 6 uses
   %.sroa.7.i.i.i.i.i.i.i.i = alloca [16 x i8], align 8 ; 7 uses
   %i.br = alloca [24 x i8], align 8               ; 8 uses
-  %.sroa.0.i.i.i.i.i.i.i.i = alloca i64, align 8  ; 5 uses
+  %.sroa.0.i.i.i.i.i.i.i.i = alloca ptr, align 8  ; 5 uses
   %i.bs = alloca [24 x i8], align 8               ; 7 uses
   %i.bt = alloca [24 x i8], align 8               ; 10 uses
   %i.bu = alloca [24 x i8], align 8               ; 5 uses
@@ -1629,8 +1629,7 @@ bb.dt:                                            ; preds = %.noexc.i.i.i
   %i.no = load ptr, ptr %i.bs, align 8, !noalias !35556, !noundef !8
   %i.np = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
   %i.nq = load i64, ptr %i.np, align 8, !noalias !35556, !noundef !8 ; 4 uses
-  %2 = ptrtoint ptr %i.no to i64
-  store i64 %2, ptr %.sroa.0.i.i.i.i.i.i.i.i, align 8, !noalias !35556
+  store ptr %i.no, ptr %.sroa.0.i.i.i.i.i.i.i.i, align 8, !noalias !35556
   %i.nr = icmp eq i64 %i.nq, 0
   br i1 %i.nr, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCs9fPPV5zPXBl_5typst4args6OutputE7reserveBI_.exit.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader
 
@@ -2033,7 +2032,7 @@ bb.a:
   %i.f = alloca [24 x i8], align 8                ; 6 uses
   %.sroa.7.i.i.i.i = alloca [16 x i8], align 8    ; 7 uses
   %i.g = alloca [24 x i8], align 8                ; 8 uses
-  %.sroa.0.i.i.i.i = alloca i64, align 8          ; 5 uses
+  %.sroa.0.i.i.i.i = alloca ptr, align 8          ; 5 uses
   %i.h = alloca [24 x i8], align 8                ; 7 uses
   %i.i = alloca [24 x i8], align 8                ; 10 uses
   %i.j = alloca [24 x i8], align 8                ; 5 uses
@@ -2310,8 +2309,7 @@ bb.l:                                             ; preds = %bb.k, %_RNvXNtNtCs1
   %i.cf = load ptr, ptr %i.h, align 8, !noalias !36566, !noundef !8
   %i.cg = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.ch = load i64, ptr %i.cg, align 8, !noalias !36566, !noundef !8 ; 4 uses
-  %4 = ptrtoint ptr %i.cf to i64
-  store i64 %4, ptr %.sroa.0.i.i.i.i, align 8, !noalias !36566
+  store ptr %i.cf, ptr %.sroa.0.i.i.i.i, align 8, !noalias !36566
   %i.ci = icmp eq i64 %i.ch, 0
   br i1 %i.ci, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCs9fPPV5zPXBl_5typst4args6OutputE7reserveBI_.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i38.preheader
 
@@ -2714,7 +2712,7 @@ begin_hunk_4_@llvm.vector.reduce.add.v2i64
 !37086 = !{!37087}
 !37087 = distinct !{!37087, !37088, !"_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecTNtNtCscf0te1RqI9v_18codespan_reporting10diagnostic10LabelStyleINtNtNtCs3oUPovFnLWP_4core3ops5range5RangejEReEE10insert_mutCs9fPPV5zPXBl_5typst: argument 0"}
 !37088 = distinct !{!37088, !"_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecTNtNtCscf0te1RqI9v_18codespan_reporting10diagnostic10LabelStyleINtNtNtCs3oUPovFnLWP_4core3ops5range5RangejEReEE10insert_mutCs9fPPV5zPXBl_5typst"}
-!37089 = !{!"branch_weights", !"expected", i32 1609806, i32 2145873842}
+!37089 = !{!"branch_weights", !"expected", i32 1609807, i32 2145873841}
 !37090 = !{!37091, !36997, !36987, !36992, !36663, !36667}
 !37091 = distinct !{!37091, !37088, !"_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecTNtNtCscf0te1RqI9v_18codespan_reporting10diagnostic10LabelStyleINtNtNtCs3oUPovFnLWP_4core3ops5range5RangejEReEE10insert_mutCs9fPPV5zPXBl_5typst: argument 1"}
 !37092 = !{!37087, !37091, !36997, !36987, !36992, !36663, !36667}

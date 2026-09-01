@@ -205,12 +205,10 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionjE7or_elseNCNvNtCs8frGy5WneL6_4fi
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc noundef i64 @_RNvNtCs8frGy5WneL6_4fish6screen18line_shared_prefix(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.0 = alloca i64, align 8                  ; 2 uses
-  %.sroa.026 = alloca i64, align 8                ; 2 uses
-  %2 = ptrtoint ptr %0 to i64
-  store i64 %2, ptr %.sroa.026, align 8
-  %3 = ptrtoint ptr %1 to i64
-  store i64 %3, ptr %.sroa.0, align 8
+  %.sroa.0 = alloca ptr, align 8                  ; 2 uses
+  %.sroa.026 = alloca ptr, align 8                ; 2 uses
+  store ptr %0, ptr %.sroa.026, align 8
+  store ptr %1, ptr %.sroa.0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i64, ptr %i.a, align 8, !noundef !13 ; 2 uses
   %i.c = icmp ult i64 %i.b, 384307168202282326

@@ -204,13 +204,13 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.44.sroa.0.0.extract.trunc = trunc i64 %.sroa.44.0.copyload to i32
   %.sroa.6.0.copyload = load ptr, ptr %.sroa.434.0..sroa_idx.i, align 8, !noalias !1162 ; 2 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 24
-  %.sroa.8.0.copyload = load i64, ptr %.sroa.8.0..sroa_idx, align 8, !noalias !1162
+  %.sroa.8.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8, !noalias !1162
   %.sroa.96.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 88
   %.sroa.96.0.copyload = load i64, ptr %.sroa.96.0..sroa_idx, align 8, !noalias !1162 ; 2 uses
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 96
   %.sroa.11.0.copyload = load i32, ptr %.sroa.11.0..sroa_idx, align 8, !noalias !1162 ; 2 uses
   %.sroa.138.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 104
-  %.sroa.138.0.copyload = load i64, ptr %.sroa.138.0..sroa_idx, align 8, !noalias !1162 ; 2 uses
+  %.sroa.138.0.copyload = load ptr, ptr %.sroa.138.0..sroa_idx, align 8, !noalias !1162 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !1162
   invoke void @_RNvMCsdovh4xi6v3I_4spanNtB2_4Span5cover(ptr noalias nofree noundef nonnull sret([20 x i8]) align 4 captures(none) dereferenceable(20) %i.g, ptr noalias nofree noundef nonnull readonly align 4 captures(none) dereferenceable(20) %i.aa, ptr noalias nofree noundef nonnull readonly align 4 captures(none) dereferenceable(20) %i.ab)
           to label %bb.g unwind label %bb.f, !noalias !1164
@@ -243,8 +243,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECs33
   br i1 %i.af, label %.lr.ph.split.i.i.i.i.i.i.i, label %.body.i
 
 .lr.ph.split.i.i.i.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.i.i.i
-  %2 = inttoptr i64 %.sroa.138.0.copyload to ptr
-  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt4LeafECs33K2ylI4knu_10hir_expand(i32 %.sroa.11.0.copyload, ptr %2)
+  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt4LeafECs33K2ylI4knu_10hir_expand(i32 %.sroa.11.0.copyload, ptr %.sroa.138.0.copyload)
           to label %.body.i unwind label %bb.i, !noalias !1167
 
 bb.i:                                             ; preds = %.lr.ph.split.i.i.i.i.i.i.i
@@ -261,8 +260,7 @@ bb.j:                                             ; preds = %bb.g
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueANtNtCs4dcH4YgJDq_2tt4iter9TtElementj2_ECs33K2ylI4knu_10hir_expand.exit.sink.split.i.i.i.i.i: ; preds = %bb.j, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECs33K2ylI4knu_10hir_expand.exit.i.i.i.i.i.i.i
   %.sink2.i.i.i.i.sroa.phi.i.sroa.speculated = phi i32 [ %.sroa.11.0.copyload, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECs33K2ylI4knu_10hir_expand.exit.i.i.i.i.i.i.i ], [ %.sroa.6.0.extract.trunc, %bb.j ]
-  %.sink1.i.i.i.i.sroa.phi.i.sroa.speculated.in = phi i64 [ %.sroa.138.0.copyload, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECs33K2ylI4knu_10hir_expand.exit.i.i.i.i.i.i.i ], [ %.sroa.8.0.copyload, %bb.j ]
-  %.sink1.i.i.i.i.sroa.phi.i.sroa.speculated = inttoptr i64 %.sink1.i.i.i.i.sroa.phi.i.sroa.speculated.in to ptr
+  %.sink1.i.i.i.i.sroa.phi.i.sroa.speculated = phi ptr [ %.sroa.138.0.copyload, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECs33K2ylI4knu_10hir_expand.exit.i.i.i.i.i.i.i ], [ %.sroa.8.0.copyload, %bb.j ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt4LeafECs33K2ylI4knu_10hir_expand(i32 %.sink2.i.i.i.i.sroa.phi.i.sroa.speculated, ptr %.sink1.i.i.i.i.sroa.phi.i.sroa.speculated)
           to label %_RNCNCNvNtNtCs33K2ylI4knu_10hir_expand7builtin8fn_macro12parse_string00B9_.exit.i unwind label %.loopexit.split-lp.i, !noalias !1160
 
