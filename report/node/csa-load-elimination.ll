@@ -202,11 +202,11 @@ _ZN2v88internal18ElementSizeInBytesENS0_21MachineRepresentationE.exit: ; preds =
   br i1 %i.e, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %_ZN2v88internal18ElementSizeInBytesENS0_21MachineRepresentationE.exit
-  %4 = tail call i32 @llvm.usub.sat.i32(i32 %2, i32 15) ; 2 uses
-  %5 = icmp ult i32 %4, %2
-  br i1 %5, label %.lr.ph, label %._crit_edge
+  %.not = icmp eq i32 %2, 0
+  br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c
+  %4 = tail call i32 @llvm.usub.sat.i32(i32 %2, i32 15)
   %i.f = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.g = xor i64 %i.f, -1
   %i.h = shl i64 %i.f, 21
@@ -474,9 +474,9 @@ bb.v:                                             ; preds = %_ZN2v88internal18El
   br label %bb.w
 
 bb.w:                                             ; preds = %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_18CsaLoadElimination9FieldInfoENS_4base4hashIS4_EEE3GetERKS4_.exit, %bb.v, %_ZN2v88internal18ElementSizeInBytesENS0_21MachineRepresentationE.exit39
-  %i.cs = add nuw i32 %storemerge50, 1            ; 2 uses
-  %exitcond.not = icmp eq i32 %i.cs, %2
-  br i1 %exitcond.not, label %._crit_edge, label %bb.e, !llvm.loop !77
+  %i.cs = add i32 %storemerge50, 1                ; 2 uses
+  %5 = icmp ult i32 %i.cs, %2
+  br i1 %5, label %bb.e, label %._crit_edge, !llvm.loop !77
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -525,11 +525,11 @@ _ZN2v88internal18ElementSizeInBytesENS0_21MachineRepresentationE.exit: ; preds =
   br i1 %i.d, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %_ZN2v88internal18ElementSizeInBytesENS0_21MachineRepresentationE.exit
-  %9 = call i32 @llvm.usub.sat.i32(i32 %1, i32 15) ; 2 uses
-  %10 = icmp ult i32 %9, %1
-  br i1 %10, label %.lr.ph, label %._crit_edge
+  %.not82 = icmp eq i32 %1, 0
+  br i1 %.not82, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c
+  %9 = call i32 @llvm.usub.sat.i32(i32 %1, i32 15)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 4 uses
@@ -761,9 +761,9 @@ _ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_18CsaLoadElimination9Fie
   call void @_ZN2v88internal8compiler13PersistentMapIjNS2_IPNS1_4NodeENS1_18CsaLoadElimination9FieldInfoENS_4base4hashIS4_EEEENS8_IjEEE6ModifyIZNSC_3SetEjSA_EUlPSA_E_EEvjT_(ptr noundef nonnull align 8 dereferenceable(48) %0, i32 noundef %storemerge81, ptr nonnull align 8 %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #14
-  %i.ch = add nuw i32 %storemerge81, 1            ; 2 uses
-  %exitcond.not = icmp eq i32 %i.ch, %1
-  br i1 %exitcond.not, label %._crit_edge, label %bb.e, !llvm.loop !79
+  %i.ch = add i32 %storemerge81, 1                ; 2 uses
+  %10 = icmp ult i32 %i.ch, %1
+  br i1 %10, label %bb.e, label %._crit_edge, !llvm.loop !79
 
 _ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_18CsaLoadElimination9FieldInfoENS_4base4hashIS4_EEE8iteratordeEv.exit.loopexit: ; preds = %bb.z, %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_18CsaLoadElimination9FieldInfoENS_4base4hashIS4_EEE8iteratordeEv.exit.i
   %.ph = phi ptr [ %i.cq, %bb.z ], [ %.0.lcssa.i.i, %_ZNK2v88internal8compiler13PersistentMapIPNS1_4NodeENS1_18CsaLoadElimination9FieldInfoENS_4base4hashIS4_EEE8iteratordeEv.exit.i ]

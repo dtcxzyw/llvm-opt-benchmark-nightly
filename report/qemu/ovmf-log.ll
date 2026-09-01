@@ -100,12 +100,12 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
   %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 992
   %i.p = load i64, ptr %i.o, align 16             ; 3 uses
-  %7 = call i64 @llvm.usub.sat.i64(i64 %i.p, i64 134217728) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
-  %8 = icmp ult i64 %7, %i.p
-  br i1 %8, label %.lr.ph.preheader.i.i, label %find_ovmf_log_range.exit28.i
+  %.not38.i = icmp eq i64 %i.p, 0
+  br i1 %.not38.i, label %find_ovmf_log_range.exit28.i, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.f
+  %7 = call i64 @llvm.usub.sat.i64(i64 %i.p, i64 134217728)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false), !annotation !7
   br label %.lr.ph.i24.i
 

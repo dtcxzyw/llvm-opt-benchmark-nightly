@@ -205,19 +205,19 @@ bb.k:                                             ; preds = %.loopexit.i, %.lr.p
   %i.as = phi ptr [ %i.aq, %.lr.ph33.i ], [ %.pr, %.loopexit.i ] ; 4 uses
   %i.at = phi ptr [ %i.ap, %.lr.ph33.i ], [ %i.bj, %.loopexit.i ] ; 2 uses
   %storemerge32.i = phi i64 [ 0, %.lr.ph33.i ], [ %i.bk, %.loopexit.i ] ; 5 uses
-  %3 = call i64 @llvm.usub.sat.i64(i64 %storemerge32.i, i64 5) ; 2 uses
-  %4 = icmp ult i64 %3, %storemerge32.i
-  br i1 %4, label %.lr.ph.i, label %.loopexit.i
+  %.not34.i = icmp eq i64 %storemerge32.i, 0
+  br i1 %.not34.i, label %.loopexit.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.k
+  %3 = call i64 @llvm.usub.sat.i64(i64 %storemerge32.i, i64 5)
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %storemerge32.i
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !343 ; 2 uses
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.m
-  %i.aw = add i64 %.031.i, 1                      ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.aw, %storemerge32.i
-  br i1 %exitcond.not.i, label %.loopexit.i, label %bb.m, !llvm.loop !851
+  %i.aw = add nuw i64 %.031.i, 1                  ; 2 uses
+  %4 = icmp ult i64 %i.aw, %storemerge32.i
+  br i1 %4, label %bb.m, label %.loopexit.i, !llvm.loop !851
 
 bb.m:                                             ; preds = %bb.l, %.lr.ph.i
   %.031.i = phi i64 [ %3, %.lr.ph.i ], [ %i.aw, %bb.l ] ; 2 uses
@@ -433,19 +433,19 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %.loopexit.i, %.lr.ph33.i
   %storemerge32.i = phi i64 [ 0, %.lr.ph33.i ], [ %i.bj, %.loopexit.i ] ; 5 uses
-  %2 = tail call i64 @llvm.usub.sat.i64(i64 %storemerge32.i, i64 5) ; 2 uses
-  %3 = icmp ult i64 %2, %storemerge32.i
-  br i1 %3, label %.lr.ph.i, label %.loopexit.i
+  %.not34.i = icmp eq i64 %storemerge32.i, 0
+  br i1 %.not34.i, label %.loopexit.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.k
+  %2 = tail call i64 @llvm.usub.sat.i64(i64 %storemerge32.i, i64 5)
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.5, i64 %storemerge32.i
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !343 ; 2 uses
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.m
-  %i.av = add i64 %.031.i, 1                      ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.av, %storemerge32.i
-  br i1 %exitcond.not.i, label %.loopexit.i, label %bb.m, !llvm.loop !851
+  %i.av = add nuw i64 %.031.i, 1                  ; 2 uses
+  %3 = icmp ult i64 %i.av, %storemerge32.i
+  br i1 %3, label %bb.m, label %.loopexit.i, !llvm.loop !851
 
 bb.m:                                             ; preds = %bb.l, %.lr.ph.i
   %.031.i = phi i64 [ %2, %.lr.ph.i ], [ %i.av, %bb.l ] ; 2 uses
@@ -655,19 +655,19 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %.loopexit.i, %.lr.ph33.i
   %storemerge32.i = phi i64 [ 0, %.lr.ph33.i ], [ %i.bj, %.loopexit.i ] ; 5 uses
-  %2 = tail call i64 @llvm.usub.sat.i64(i64 %storemerge32.i, i64 5) ; 2 uses
-  %3 = icmp ult i64 %2, %storemerge32.i
-  br i1 %3, label %.lr.ph.i, label %.loopexit.i
+  %.not34.i = icmp eq i64 %storemerge32.i, 0
+  br i1 %.not34.i, label %.loopexit.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.l
+  %2 = tail call i64 @llvm.usub.sat.i64(i64 %storemerge32.i, i64 5)
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.5, i64 %storemerge32.i
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !343 ; 2 uses
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.n
-  %i.av = add i64 %.031.i, 1                      ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.av, %storemerge32.i
-  br i1 %exitcond.not.i, label %.loopexit.i, label %bb.n, !llvm.loop !851
+  %i.av = add nuw i64 %.031.i, 1                  ; 2 uses
+  %3 = icmp ult i64 %i.av, %storemerge32.i
+  br i1 %3, label %bb.n, label %.loopexit.i, !llvm.loop !851
 
 bb.n:                                             ; preds = %bb.m, %.lr.ph.i
   %.031.i = phi i64 [ %2, %.lr.ph.i ], [ %i.av, %bb.m ] ; 2 uses
