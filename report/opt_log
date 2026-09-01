@@ -1,0 +1,60 @@
+pola-rs/polars_stream-fcae4413b3f98c0a.polars_stream.1a4d324d1ee8f0d2-cgu.13.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_stream-fcae4413b3f98c0a.polars_stream.1a4d324d1ee8f0d2-cgu.13.bc?download=true
+pola-rs/polars_time-20ff54dc47e9578d.polars_time.1e16ca0b22b7c575-cgu.10.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_time-20ff54dc47e9578d.polars_time.1e16ca0b22b7c575-cgu.10.bc?download=true
+anki-rs/anki-0407df152365de94.anki.49bf70e6e198d769-cgu.11.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/anki-rs/original/anki-0407df152365de94.anki.49bf70e6e198d769-cgu.11.bc?download=true
+pbrt-v4/integrators.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/integrators.bc?download=true
+pbrt-v4/surfscatter.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/surfscatter.bc?download=true
+pbrt-v4/imgtool.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/imgtool.bc?download=true
+pbrt-v4/shapes.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/shapes.bc?download=true
+fish-rs/fish-3db1312fccef457a.fish.60153328cb65e96a-cgu.07.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fish-rs/original/fish-3db1312fccef457a.fish.60153328cb65e96a-cgu.07.bc?download=true
+pbrt-v4/integrator.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/integrator.bc?download=true
+quiche-rs/quiche_client.quiche_client.fa529efd9b26878d-cgu.09.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quiche-rs/original/quiche_client.quiche_client.fa529efd9b26878d-cgu.09.bc?download=true
+libp2p-rs/libp2p_webrtc-46423433e7cd39fc.libp2p_webrtc.37636298509d9d5c-cgu.15.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libp2p-rs/original/libp2p_webrtc-46423433e7cd39fc.libp2p_webrtc.37636298509d9d5c-cgu.15.bc?download=true
+quiche-rs/quiche.quiche.25c52dd429969cee-cgu.07.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quiche-rs/original/quiche.quiche.25c52dd429969cee-cgu.07.bc?download=true
+pbrt-v4/media.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/media.bc?download=true
+quinn-rs/quinn-31ebff4d4295effa.quinn.6fa459a4e975936-cgu.07.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quinn-rs/original/quinn-31ebff4d4295effa.quinn.6fa459a4e975936-cgu.07.bc?download=true
+pbrt-v4/lightsamplers_test.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/lightsamplers_test.bc?download=true
+quiche-rs/quiche_server.quiche_server.73e48873ebe39462-cgu.14.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quiche-rs/original/quiche_server.quiche_server.73e48873ebe39462-cgu.14.bc?download=true
+qdrant-rs/qdrant.qdrant.3f8cc1c7dccbb09-cgu.224.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/qdrant.qdrant.3f8cc1c7dccbb09-cgu.224.bc?download=true
+pbrt-v4/subsurface.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/subsurface.bc?download=true
+darktable/dcb_demosaic.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/dcb_demosaic.bc?download=true
+pbrt-v4/lightsamplers.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/lightsamplers.bc?download=true
+pbrt-v4/loopsubdiv.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/loopsubdiv.bc?download=true
+gromacs/angle.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/angle.bc?download=true
+darktable/introspection_demosaic.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/introspection_demosaic.bc?download=true
+pbrt-v4/render.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/render.bc?download=true
+darktable/introspection_filmicrgb.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/introspection_filmicrgb.bc?download=true
+rust-analyzer-rs/syntax-43d35de622208d94.syntax.e5f0618c8c3ca174-cgu.09.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/syntax-43d35de622208d94.syntax.e5f0618c8c3ca174-cgu.09.bc?download=true
+bullet3/btGImpactCollisionAlgorithm.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/btGImpactCollisionAlgorithm.bc?download=true
+llvm-test-suite/btGImpactCollisionAlgorithm.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/btGImpactCollisionAlgorithm.bc?download=true
+bullet3/btRigidBody.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/btRigidBody.bc?download=true
+rust-analyzer-rs/crossbeam_channel-f577dbc8a62b13af.crossbeam_channel.9088afb8a5d1370-cgu.0.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/crossbeam_channel-f577dbc8a62b13af.crossbeam_channel.9088afb8a5d1370-cgu.0.bc?download=true
