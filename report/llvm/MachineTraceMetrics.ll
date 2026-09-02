@@ -205,7 +205,7 @@ _ZNK4llvm14MachineOperand8readsRegEv.exit.thread.i: ; preds = %_ZN4llvm23SmallVe
   %i.ch = getelementptr inbounds nuw [2 x i8], ptr %i.bz, i64 %i.cg
   %i.ci = and i32 %i.ce, 4095
   %i.cj = load ptr, ptr %i.aj, align 8, !tbaa !58
-  %i.ck = load i32, ptr %i.ak, align 8, !tbaa !25 ; 3 uses
+  %i.ck = load i32, ptr %i.ak, align 8, !tbaa !25 ; 2 uses
   %.pre.i.i.i = load ptr, ptr %3, align 8, !tbaa !23
   br label %bb.s
 
@@ -225,18 +225,14 @@ bb.t:                                             ; preds = %.lr.ph.i.i.i
   br i1 %.not15.i.i.i, label %.lr.ph.i.i.i, label %.critedge68.i, !llvm.loop !453
 
 .lr.ph.i.i.i:                                     ; preds = %bb.s, %bb.t
-  %.01220.i.i.i = phi i32 [ %i.cp, %bb.t ], [ %i.co, %bb.s ] ; 3 uses
+  %.01220.i.i.i = phi i32 [ %i.cp, %bb.t ], [ %i.co, %bb.s ] ; 2 uses
   %i.cq = zext i32 %.01220.i.i.i to i64
   %i.cr = getelementptr inbounds nuw [24 x i8], ptr %.pre.i.i.i, i64 %i.cq ; 3 uses
   %i.cs = load i32, ptr %i.cr, align 8, !tbaa !454
   %.not.i.i72.i = icmp eq i32 %.sroa.9131.0161.i, %i.cs
-  br i1 %.not.i.i72.i, label %_ZN4llvm9SparseSetINS_11LiveRegUnitENS_9MCRegUnitENS_16MCRegUnitToIndexEhE4findERKS2_.exit.i, label %bb.t
+  br i1 %.not.i.i72.i, label %bb.u, label %bb.t
 
-_ZN4llvm9SparseSetINS_11LiveRegUnitENS_9MCRegUnitENS_16MCRegUnitToIndexEhE4findERKS2_.exit.i: ; preds = %.lr.ph.i.i.i
-  %8 = icmp eq i32 %.01220.i.i.i, %i.ck
-  br i1 %8, label %.critedge68.i, label %bb.u
-
-bb.u:                                             ; preds = %_ZN4llvm9SparseSetINS_11LiveRegUnitENS_9MCRegUnitENS_16MCRegUnitToIndexEhE4findERKS2_.exit.i
+bb.u:                                             ; preds = %.lr.ph.i.i.i
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !457 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cr, i64 16
@@ -267,7 +263,7 @@ bb.w:                                             ; preds = %bb.u
   store i32 %i.dd, ptr %i.c, align 8, !tbaa !25
   br label %.critedge.i
 
-.critedge68.i:                                    ; preds = %bb.t, %_ZN4llvm9SparseSetINS_11LiveRegUnitENS_9MCRegUnitENS_16MCRegUnitToIndexEhE4findERKS2_.exit.i, %bb.s
+.critedge68.i:                                    ; preds = %bb.t, %bb.s
   %i.de = getelementptr inbounds nuw i8, ptr %.sroa.5129.0162.i, i64 2
   %i.df = load i16, ptr %.sroa.5129.0162.i, align 2, !tbaa !459 ; 2 uses
   %i.dg = sext i16 %i.df to i32

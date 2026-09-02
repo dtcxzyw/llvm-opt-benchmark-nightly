@@ -202,33 +202,34 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define hidden void @_Z29get_RGB_to_YCbCr_coefficientstt(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.RGB_to_YCbCr_coefficients) align 4 captures(none) initializes((0, 1), (4, 40)) %0, i16 noundef zeroext %1, i16 noundef zeroext %2) local_unnamed_addr #5 {
 bb.a:
-  %i.a = tail call <2 x float> @_Z9get_Kr_Kbtt(i16 noundef zeroext %1, i16 noundef zeroext %2) ; 5 uses
+  %i.a = tail call <2 x float> @_Z9get_Kr_Kbtt(i16 noundef zeroext %1, i16 noundef zeroext %2) ; 4 uses
   %.sroa.0.4.vec.extract = extractelement <2 x float> %i.a, i64 1 ; 3 uses
   %i.b = fcmp une float %.sroa.0.4.vec.extract, 0.000000e+00
-  %.sroa.0.0.vec.extract16 = extractelement <2 x float> %i.a, i64 0 ; 3 uses
+  %.sroa.0.0.vec.extract16 = extractelement <2 x float> %i.a, i64 0 ; 4 uses
   %i.c = fcmp une float %.sroa.0.0.vec.extract16, 0.000000e+00
   %or.cond = select i1 %i.b, i1 true, i1 %i.c
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.d = fsub float 1.000000e+00, %.sroa.0.0.vec.extract16 ; 2 uses
+  %3 = fneg float %.sroa.0.0.vec.extract16
   %i.e = fsub float 1.000000e+00, %.sroa.0.4.vec.extract
-  %i.f = fsub float %i.d, %.sroa.0.4.vec.extract  ; 3 uses
-  %i.g = insertelement <2 x float> %i.a, float %i.f, i64 1
-  %i.h = fneg <2 x float> %i.g
-  %3 = insertelement <2 x float> poison, float %i.e, i64 0
-  %4 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
-  %5 = fdiv <2 x float> %i.h, %4
-  %6 = fmul <2 x float> %5, splat (float 5.000000e-01)
-  %7 = insertelement <2 x float> %i.a, float %i.f, i64 0
-  %8 = fneg <2 x float> %7
+  %i.f = fsub float %i.d, %.sroa.0.4.vec.extract  ; 2 uses
+  %i.g = insertelement <2 x float> %i.a, float %i.f, i64 0
+  %i.h = fneg <2 x float> %i.g                    ; 2 uses
+  %4 = shufflevector <2 x float> %i.h, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %5 = insertelement <2 x float> %4, float %3, i64 0
+  %6 = insertelement <2 x float> poison, float %i.e, i64 0
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %8 = fdiv <2 x float> %5, %7
+  %9 = fmul <2 x float> %8, splat (float 5.000000e-01)
   %i.i = insertelement <2 x float> poison, float %i.d, i64 0
   %i.j = shufflevector <2 x float> %i.i, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.k = fdiv <2 x float> %8, %i.j
+  %i.k = fdiv <2 x float> %i.h, %i.j
   %i.l = fmul <2 x float> %i.k, splat (float 5.000000e-01)
   %i.m = shufflevector <2 x float> %i.a, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
   %i.n = insertelement <4 x float> %i.m, float %i.f, i64 0
-  %i.o = shufflevector <2 x float> %6, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.o = shufflevector <2 x float> %9, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.p = shufflevector <4 x float> %i.n, <4 x float> %i.o, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   br label %bb.c
 

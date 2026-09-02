@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
 .lr.ph62.i.us:                                    ; preds = %bb.o, %.noexc106.us
   %indvars.iv.i.us = phi i64 [ %indvars.iv.next.i.us, %.noexc106.us ], [ %i.aw, %bb.o ] ; 4 uses
   %.060.i.us = phi i64 [ %24, %.noexc106.us ], [ 0, %bb.o ] ; 10 uses
-  %i.bg = sub nuw nsw i64 %i.aw, %.060.i.us       ; 8 uses
+  %i.bg = sub nuw nsw i64 %i.aw, %.060.i.us       ; 7 uses
   %.sroa.speculated.i.us = call i64 @llvm.smin.i64(i64 %i.bg, i64 4) ; 4 uses
   %i.bh = mul nsw i64 %.060.i.us, %i.ar           ; 2 uses
   %i.bi = getelementptr inbounds [8 x i8], ptr %i.be, i64 %i.bh ; 2 uses
@@ -216,14 +216,10 @@ bb.o:                                             ; preds = %bb.n
   %i.bj = getelementptr inbounds [8 x i8], ptr %i.t, i64 %i.bh
   %i.bk = load double, ptr %9, align 8, !tbaa !52
   invoke void @_ZN5Eigen8internal11gebp_kernelIddlNS0_16blas_data_mapperIdlLi0ELi0ELi1EEELi4ELi4ELb0ELb0EEclERKS3_PKdS8_llldllll(ptr noundef nonnull align 1 dereferenceable(1) %12, ptr noundef nonnull align 8 dereferenceable(16) %14, ptr noundef nonnull %i.bj, ptr noundef nonnull %i.bi, i64 noundef %.sroa.speculated.i.us, i64 noundef %i.ar, i64 noundef %.sroa.speculated.i.us, double noundef %i.bk, i64 noundef -1, i64 noundef -1, i64 noundef 0, i64 noundef 0)
-          to label %.noexc105.us unwind label %.split179.us
+          to label %.lr.ph.i.us unwind label %.split179.us
 
-.noexc105.us:                                     ; preds = %.lr.ph62.i.us
+.lr.ph.i.us:                                      ; preds = %.lr.ph62.i.us
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #20
-  %22 = icmp sgt i64 %i.bg, 0
-  br i1 %22, label %.lr.ph.i.us, label %._crit_edge.i.us
-
-.lr.ph.i.us:                                      ; preds = %.noexc105.us
   %i.bl = getelementptr [8 x i8], ptr %i.bc, i64 %.060.i.us ; 4 uses
   %i.bm = mul nsw i64 %.060.i.us, %8
   %i.bn = getelementptr [8 x i8], ptr %i.bl, i64 %i.bm ; 5 uses
@@ -231,8 +227,8 @@ bb.o:                                             ; preds = %bb.n
   %i.bp = load double, ptr %i.bn, align 8, !tbaa !52
   %i.bq = fadd double %i.bo, %i.bp
   store double %i.bq, ptr %i.bn, align 8, !tbaa !52
-  %.not201 = icmp eq i64 %i.bg, 1
-  br i1 %.not201, label %bb.s, label %bb.p
+  %22 = icmp sgt i64 %i.bg, 1
+  br i1 %22, label %bb.p, label %bb.s
 
 bb.p:                                             ; preds = %.lr.ph.i.us
   %i.br = load double, ptr %gep.i.us.1, align 8, !tbaa !52
@@ -240,8 +236,8 @@ bb.p:                                             ; preds = %.lr.ph.i.us
   %i.bt = load double, ptr %i.bs, align 8, !tbaa !52
   %i.bu = fadd double %i.br, %i.bt
   store double %i.bu, ptr %i.bs, align 8, !tbaa !52
-  %23 = icmp sgt i64 %i.bg, 2
-  br i1 %23, label %bb.q, label %bb.s
+  %.not201 = icmp eq i64 %i.bg, 2
+  br i1 %.not201, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.bv = load double, ptr %gep.i.us.2, align 16, !tbaa !52
@@ -249,8 +245,8 @@ bb.q:                                             ; preds = %bb.p
   %i.bx = load double, ptr %i.bw, align 8, !tbaa !52
   %i.by = fadd double %i.bv, %i.bx
   store double %i.by, ptr %i.bw, align 8, !tbaa !52
-  %.not202 = icmp eq i64 %i.bg, 3
-  br i1 %.not202, label %bb.s, label %bb.r
+  %23 = icmp sgt i64 %i.bg, 3
+  br i1 %23, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
   %i.bz = load double, ptr %gep.i.us.3, align 8, !tbaa !52
@@ -332,21 +328,6 @@ bb.aa:                                            ; preds = %bb.z
   store double %i.dl, ptr %i.dj, align 8, !tbaa !52
   br label %._crit_edge.i.us
 
-._crit_edge.i.us:                                 ; preds = %bb.s, %bb.w, %bb.z, %bb.aa, %.noexc105.us
-  %i.dm = add nuw nsw i64 %.sroa.speculated.i.us, %.060.i.us ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %15) #20
-  %i.dn = mul nsw i64 %.060.i.us, %8
-  %i.do = getelementptr [8 x i8], ptr %i.bc, i64 %i.dm
-  %i.dp = getelementptr [8 x i8], ptr %i.do, i64 %i.dn
-  store ptr %i.dp, ptr %15, align 8
-  store i64 %8, ptr %i.ap, align 8
-  %i.dq = mul nsw i64 %i.dm, %i.ar
-  %i.dr = getelementptr inbounds [8 x i8], ptr %i.t, i64 %i.dq
-  %i.ds = sub nsw i64 %i.aw, %i.dm
-  %i.dt = load double, ptr %9, align 8, !tbaa !52
-  invoke void @_ZN5Eigen8internal11gebp_kernelIddlNS0_16blas_data_mapperIdlLi0ELi0ELi1EEELi4ELi4ELb0ELb0EEclERKS3_PKdS8_llldllll(ptr noundef nonnull align 1 dereferenceable(1) %11, ptr noundef nonnull align 8 dereferenceable(16) %15, ptr noundef nonnull %i.dr, ptr noundef nonnull %i.bi, i64 noundef %i.ds, i64 noundef %i.ar, i64 noundef %.sroa.speculated.i.us, double noundef %i.dt, i64 noundef -1, i64 noundef -1, i64 noundef 0, i64 noundef 0)
-          to label %.noexc106.us unwind label %.split179.us
-
 .noexc106.us:                                     ; preds = %._crit_edge.i.us
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #20
   %24 = add nuw nsw i64 %.060.i.us, 4             ; 2 uses
@@ -360,6 +341,21 @@ bb.aa:                                            ; preds = %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #20
   %26 = icmp slt i64 %i.av, %0
   br i1 %26, label %bb.m, label %..loopexit168_crit_edge.us, !llvm.loop !442
+
+._crit_edge.i.us:                                 ; preds = %bb.aa, %bb.z, %bb.w, %bb.s
+  %i.dm = add nuw nsw i64 %.sroa.speculated.i.us, %.060.i.us ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %15) #20
+  %i.dn = mul nsw i64 %.060.i.us, %8
+  %i.do = getelementptr [8 x i8], ptr %i.bc, i64 %i.dm
+  %i.dp = getelementptr [8 x i8], ptr %i.do, i64 %i.dn
+  store ptr %i.dp, ptr %15, align 8
+  store i64 %8, ptr %i.ap, align 8
+  %i.dq = mul nsw i64 %i.dm, %i.ar
+  %i.dr = getelementptr inbounds [8 x i8], ptr %i.t, i64 %i.dq
+  %i.ds = sub nsw i64 %i.aw, %i.dm
+  %i.dt = load double, ptr %9, align 8, !tbaa !52
+  invoke void @_ZN5Eigen8internal11gebp_kernelIddlNS0_16blas_data_mapperIdlLi0ELi0ELi1EEELi4ELi4ELb0ELb0EEclERKS3_PKdS8_llldllll(ptr noundef nonnull align 1 dereferenceable(1) %11, ptr noundef nonnull align 8 dereferenceable(16) %15, ptr noundef nonnull %i.dr, ptr noundef nonnull %i.bi, i64 noundef %i.ds, i64 noundef %i.ar, i64 noundef %.sroa.speculated.i.us, double noundef %i.dt, i64 noundef -1, i64 noundef -1, i64 noundef 0, i64 noundef 0)
+          to label %.noexc106.us unwind label %.split179.us
 
 ..loopexit168_crit_edge.us:                       ; preds = %.loopexit.us
   %i.du = icmp slt i64 %i.aq, %1

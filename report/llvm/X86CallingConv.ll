@@ -204,7 +204,7 @@ _ZN4llvm7CCState6addLocERKNS_11CCValAssignE.exit22.i: ; preds = %bb.bd, %bb.bc
   call void @llvm.lifetime.end.p0(ptr nonnull %73) #8
   br label %_ZL13CC_X86_64_GHCjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateE.exit
 
-.thread282:                                       ; preds = %bb.b, %.thread170.i, %.critedge6.i, %.thread132.i, %bb.l, %bb.am, %bb.aq
+.thread282:                                       ; preds = %bb.b, %.thread170.i, %.critedge6.i, %bb.l, %.thread132.i, %bb.am, %bb.aq
   %i.il = icmp ne i32 %i.c, 13
   tail call void @llvm.assume(i1 %i.il)
   br label %bb.hb
@@ -607,8 +607,8 @@ bb.cl:                                            ; preds = %bb.ck
   br label %.thread174.i
 
 .thread181.thread.i:                              ; preds = %bb.bs, %bb.bf, %bb.as
-  %.3.ph.i = phi i32 [ %.2131250.i, %bb.bf ], [ %.2132157.i, %bb.bs ], [ %.2233.i, %bb.as ]
-  %.sroa.0.0.copyload106.ph.i = phi i16 [ 6, %bb.bf ], [ 7, %bb.bs ], [ 5, %bb.as ]
+  %.3.ph.i = phi i32 [ %.2132157.i, %bb.bs ], [ %.2131250.i, %bb.bf ], [ %.2233.i, %bb.as ]
+  %.sroa.0.0.copyload106.ph.i = phi i16 [ 7, %bb.bs ], [ 6, %bb.bf ], [ 5, %bb.as ]
   %i.kz = load ptr, ptr %i.dn, align 8, !tbaa !39, !nonnull !299, !align !321
   %i.la = getelementptr inbounds nuw i8, ptr %i.kz, i64 16
   %i.lb = load ptr, ptr %i.la, align 8, !tbaa !40, !nonnull !299, !align !321
@@ -1011,7 +1011,7 @@ _ZL23RetCC_X86_Win64_RegCalljN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10Arg
   call void @llvm.lifetime.end.p0(ptr nonnull %17)
   br label %bb.qo
 
-bb.ky:                                            ; preds = %bb.kw, %.critedge8.i197, %.thread222.i201, %.thread210.i221, %bb.jj, %bb.iq, %.thread181.i192, %bb.gr, %bb.hf, %bb.gd, %.critedge2.i241, %bb.io, %bb.fn
+bb.ky:                                            ; preds = %bb.kw, %.critedge8.i197, %.thread222.i201, %.thread210.i221, %bb.jj, %bb.iq, %.thread181.i192, %bb.hf, %bb.gr, %bb.gd, %.critedge2.i241, %bb.io, %bb.fn
   call void @llvm.lifetime.end.p0(ptr nonnull %17)
   %.pr20.pre = load i32, ptr %5, align 8, !tbaa !8
   %i.akh = icmp eq i32 %.pr20.pre, 92
@@ -1414,8 +1414,8 @@ bb.ng:                                            ; preds = %bb.nf
   br label %.thread174.i355
 
 .thread181.thread.i476:                           ; preds = %bb.mn, %bb.ma, %bb.ln
-  %.3.ph.i477 = phi i32 [ %.2131250.i483, %bb.ma ], [ %.2132157.i464, %bb.mn ], [ %.2233.i499, %bb.ln ]
-  %.sroa.0.0.copyload106.ph.i478 = phi i16 [ 6, %bb.ma ], [ 7, %bb.mn ], [ 5, %bb.ln ]
+  %.3.ph.i477 = phi i32 [ %.2132157.i464, %bb.mn ], [ %.2131250.i483, %bb.ma ], [ %.2233.i499, %bb.ln ]
+  %.sroa.0.0.copyload106.ph.i478 = phi i16 [ 7, %bb.mn ], [ 6, %bb.ma ], [ 5, %bb.ln ]
   %i.arf = load ptr, ptr %i.dn, align 8, !tbaa !39, !nonnull !299, !align !321
   %i.arg = getelementptr inbounds nuw i8, ptr %i.arf, i64 16
   %i.arh = load ptr, ptr %i.arg, align 8, !tbaa !40, !nonnull !299, !align !321
@@ -1818,7 +1818,7 @@ bb.ai:                                            ; preds = %bb.ah
   %.not.i.i184.5 = icmp eq i32 %i.gu, 0
   br i1 %.not.i.i184.5, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %.thread440
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.ad, %bb.ae, %bb.af, %bb.ag, %bb.ah, %bb.ai
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad
   %.0613.i.i.lcssa.wide = phi i64 [ 0, %bb.ad ], [ 1, %bb.ae ], [ 2, %bb.af ], [ 3, %bb.ag ], [ 4, %bb.ah ], [ 5, %bb.ai ]
   %i.gv = getelementptr inbounds nuw [2 x i8], ptr @_ZZL11CC_X86_64_CjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %.0613.i.i.lcssa.wide
   %i.gw = load i16, ptr %i.gv, align 2, !tbaa !302 ; 2 uses
@@ -2221,7 +2221,7 @@ bb.br:                                            ; preds = %bb.bq
   %.not.i.i190.5 = icmp eq i32 %i.oq, 0
   br i1 %.not.i.i190.5, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit193, label %.thread440
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit193: ; preds = %bb.bm, %bb.bn, %bb.bo, %bb.bp, %bb.bq, %bb.br
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit193: ; preds = %bb.br, %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.bm
   %.0613.i.i189.lcssa.wide = phi i64 [ 0, %bb.bm ], [ 1, %bb.bn ], [ 2, %bb.bo ], [ 3, %bb.bp ], [ 4, %bb.bq ], [ 5, %bb.br ]
   %i.or = getelementptr inbounds nuw [2 x i8], ptr @_ZZL14CC_X86_64_I128RjRN4llvm3MVTES2_RNS0_11CCValAssign7LocInfoERNS0_3ISD10ArgFlagsTyERNS0_7CCStateEE4Regs, i64 %.0613.i.i189.lcssa.wide
   %i.os = load i16, ptr %i.or, align 2, !tbaa !302 ; 2 uses
@@ -2624,7 +2624,7 @@ bb.ag:                                            ; preds = %bb.af
   %.not.i.i41.2 = icmp eq i32 %i.fq, 0
   br i1 %.not.i.i41.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %.thread
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.ae, %bb.af, %bb.ag
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.ag, %bb.af, %bb.ae
   %.0613.i.i.lcssa.wide = phi i64 [ 0, %bb.ae ], [ 1, %bb.af ], [ 2, %bb.ag ]
   %i.fr = getelementptr inbounds nuw [2 x i8], ptr @_ZZL14RetCC_X86_32_CjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList3, i64 %.0613.i.i.lcssa.wide
   %i.fs = load i16, ptr %i.fr, align 2, !tbaa !302 ; 2 uses
@@ -2860,7 +2860,7 @@ bb.h:                                             ; preds = %bb.g
   %.not.i.i.2 = icmp eq i32 %i.v, 0
   br i1 %.not.i.i.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %.thread
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.f, %bb.g, %bb.h
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.h, %bb.g, %bb.f
   %.0613.i.i.lcssa.wide = phi i64 [ 0, %bb.f ], [ 1, %bb.g ], [ 2, %bb.h ]
   %i.w = getelementptr inbounds nuw [2 x i8], ptr @_ZZL14RetCC_X86_32_CjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList4, i64 %.0613.i.i.lcssa.wide
   %i.x = load i16, ptr %i.w, align 2, !tbaa !302  ; 2 uses
@@ -2920,7 +2920,7 @@ bb.l:                                             ; preds = %bb.k
   %.not.i.i123.2 = icmp eq i32 %i.ar, 0
   br i1 %.not.i.i123.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit126, label %.thread96.thread
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit126: ; preds = %bb.j, %bb.k, %bb.l
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit126: ; preds = %bb.l, %bb.k, %bb.j
   %.0613.i.i122.lcssa.wide = phi i64 [ 0, %bb.j ], [ 1, %bb.k ], [ 2, %bb.l ]
   %i.as = getelementptr inbounds nuw [2 x i8], ptr @_ZZL14RetCC_X86_32_CjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList4, i64 %.0613.i.i122.lcssa.wide
   %i.at = load i16, ptr %i.as, align 2, !tbaa !302 ; 2 uses
@@ -3323,7 +3323,7 @@ bb.d:                                             ; preds = %bb.c
   %.not.i.i.2 = icmp eq i32 %i.j, 0
   br i1 %.not.i.i.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %bb.h
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %.critedge, %bb.c, %bb.d
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.d, %bb.c, %.critedge
   %.0613.i.i.lcssa.wide = phi i64 [ 0, %.critedge ], [ 1, %bb.c ], [ 2, %bb.d ]
   %i.k = getelementptr inbounds nuw [2 x i8], ptr @_ZZL14RetCC_X86_32_CjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList4, i64 %.0613.i.i.lcssa.wide
   %i.l = load i16, ptr %i.k, align 2, !tbaa !302  ; 2 uses
@@ -3424,7 +3424,7 @@ bb.k:                                             ; preds = %bb.j
   %.not.i.i63.2 = icmp eq i32 %i.ax, 0
   br i1 %.not.i.i63.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit66, label %bb.o
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit66: ; preds = %bb.i, %bb.j, %bb.k
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit66: ; preds = %bb.k, %bb.j, %bb.i
   %.0613.i.i62.lcssa.wide = phi i64 [ 0, %bb.i ], [ 1, %bb.j ], [ 2, %bb.k ]
   %i.ay = getelementptr inbounds nuw [2 x i8], ptr @_ZZL25CC_X86_32_Vector_StandardjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList2, i64 %.0613.i.i62.lcssa.wide
   %i.az = load i16, ptr %i.ay, align 2, !tbaa !302 ; 2 uses
@@ -3506,7 +3506,7 @@ bb.q:                                             ; preds = %bb.p
   %.not.i.i70.2 = icmp eq i32 %i.cd, 0
   br i1 %.not.i.i70.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit73, label %_ZL19CC_X86_Win32_VectorjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateE.exit
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit73: ; preds = %.critedge4, %bb.p, %bb.q
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit73: ; preds = %bb.q, %bb.p, %.critedge4
   %.0613.i.i69.lcssa.wide = phi i64 [ 0, %.critedge4 ], [ 1, %bb.p ], [ 2, %bb.q ]
   %i.ce = getelementptr inbounds nuw [2 x i8], ptr @_ZZL25CC_X86_32_Vector_StandardjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList3, i64 %.0613.i.i69.lcssa.wide
   %i.cf = load i16, ptr %i.ce, align 2, !tbaa !302 ; 2 uses
@@ -3909,7 +3909,7 @@ bb.r:                                             ; preds = %bb.q
   %.not.i.i63.2 = icmp eq i32 %i.ca, 0
   br i1 %.not.i.i63.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit66, label %.thread53
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit66: ; preds = %bb.p, %bb.q, %bb.r
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit66: ; preds = %bb.r, %bb.q, %bb.p
   %.0613.i.i62.lcssa.wide = phi i64 [ 0, %bb.p ], [ 1, %bb.q ], [ 2, %bb.r ]
   %i.cb = getelementptr inbounds nuw [2 x i8], ptr @_ZZL14RetCC_X86_32_CjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList4, i64 %.0613.i.i62.lcssa.wide
   %i.cc = load i16, ptr %i.cb, align 2, !tbaa !302 ; 2 uses
@@ -4312,7 +4312,7 @@ bb.k:                                             ; preds = %bb.j
   %.not.i.i.4 = icmp eq i32 %i.w, 0
   br i1 %.not.i.i.4, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %.thread208.thread
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %.thread182, %bb.h, %bb.i, %bb.j, %bb.k
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.k, %bb.j, %bb.i, %bb.h, %.thread182
   %.0613.i.i.lcssa.wide = phi i64 [ 0, %.thread182 ], [ 1, %bb.h ], [ 2, %bb.i ], [ 3, %bb.j ], [ 4, %bb.k ]
   %i.x = getelementptr inbounds nuw [2 x i8], ptr @_ZZL20RetCC_X86_32_RegCalljN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList3, i64 %.0613.i.i.lcssa.wide
   %i.y = load i16, ptr %i.x, align 2, !tbaa !302  ; 2 uses
@@ -4715,7 +4715,7 @@ bb.g:                                             ; preds = %bb.f
   %.not.i.i.2 = icmp eq i32 %i.j, 0
   br i1 %.not.i.i.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %.thread274
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %.thread140, %bb.f, %bb.g
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.g, %bb.f, %.thread140
   %.0613.i.i.lcssa.wide = phi i64 [ 0, %.thread140 ], [ 1, %bb.f ], [ 2, %bb.g ]
   %i.k = getelementptr inbounds nuw [2 x i8], ptr @_ZZL17RetCC_X86_32_FastjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList3, i64 %.0613.i.i.lcssa.wide
   %i.l = load i16, ptr %i.k, align 2, !tbaa !302  ; 2 uses
@@ -4784,7 +4784,7 @@ bb.m:                                             ; preds = %bb.l
   %.not.i.i109.2 = icmp eq i32 %i.ao, 0
   br i1 %.not.i.i109.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit112, label %.thread274
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit112: ; preds = %bb.k, %bb.l, %bb.m
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit112: ; preds = %bb.m, %bb.l, %bb.k
   %.0613.i.i108.lcssa.wide = phi i64 [ 0, %bb.k ], [ 1, %bb.l ], [ 2, %bb.m ]
   %i.ap = getelementptr inbounds nuw [2 x i8], ptr @_ZZL17RetCC_X86_32_FastjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList4, i64 %.0613.i.i108.lcssa.wide
   %i.aq = load i16, ptr %i.ap, align 2, !tbaa !302 ; 2 uses
@@ -4853,7 +4853,7 @@ bb.s:                                             ; preds = %bb.r
   %.not.i.i116.2 = icmp eq i32 %i.bq, 0
   br i1 %.not.i.i116.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit119, label %.thread274
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit119: ; preds = %bb.q, %bb.r, %bb.s
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit119: ; preds = %bb.s, %bb.r, %bb.q
   %.0613.i.i115.lcssa.wide = phi i64 [ 0, %bb.q ], [ 1, %bb.r ], [ 2, %bb.s ]
   %i.br = getelementptr inbounds nuw [2 x i8], ptr @_ZZL14RetCC_X86_32_CjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList3, i64 %.0613.i.i115.lcssa.wide
   %i.bs = load i16, ptr %i.br, align 2, !tbaa !302 ; 2 uses
@@ -4923,7 +4923,7 @@ bb.y:                                             ; preds = %bb.x
   %.not.i.i123.2 = icmp eq i32 %i.cu, 0
   br i1 %.not.i.i123.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit126, label %.thread274
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit126: ; preds = %bb.w, %bb.x, %bb.y
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit126: ; preds = %bb.y, %bb.x, %bb.w
   %.0613.i.i122.lcssa.wide = phi i64 [ 0, %bb.w ], [ 1, %bb.x ], [ 2, %bb.y ]
   %i.cv = getelementptr inbounds nuw [2 x i8], ptr @_ZZL15RetCC_X86CommonjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList4, i64 %.0613.i.i122.lcssa.wide
   %i.cw = load i16, ptr %i.cv, align 2, !tbaa !302 ; 2 uses
@@ -5326,7 +5326,7 @@ bb.e:                                             ; preds = %bb.d
   %.not.i.i.2 = icmp eq i32 %i.n, 0
   br i1 %.not.i.i.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %.thread61
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.c, %bb.d, %bb.e
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.e, %bb.d, %bb.c
   %.0613.i.i.lcssa.wide = phi i64 [ 0, %bb.c ], [ 1, %bb.d ], [ 2, %bb.e ]
   %i.o = getelementptr inbounds nuw [2 x i8], ptr @_ZZL14RetCC_X86_32_CjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList4, i64 %.0613.i.i.lcssa.wide
   %i.p = load i16, ptr %i.o, align 2, !tbaa !302  ; 2 uses
@@ -5406,7 +5406,7 @@ bb.k:                                             ; preds = %bb.j
   %.not.i.i67.2 = icmp eq i32 %i.au, 0
   br i1 %.not.i.i67.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit70, label %.thread61
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit70: ; preds = %bb.i, %bb.j, %bb.k
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit70: ; preds = %bb.k, %bb.j, %bb.i
   %.0613.i.i66.lcssa.wide = phi i64 [ 0, %bb.i ], [ 1, %bb.j ], [ 2, %bb.k ]
   %i.av = getelementptr inbounds nuw [2 x i8], ptr @_ZZL14RetCC_X86_32_CjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList4, i64 %.0613.i.i66.lcssa.wide
   %i.aw = load i16, ptr %i.av, align 2, !tbaa !302 ; 2 uses
@@ -5475,7 +5475,7 @@ bb.q:                                             ; preds = %bb.p
   %.not.i.i74.2 = icmp eq i32 %i.bx, 0
   br i1 %.not.i.i74.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit77, label %.thread61
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit77: ; preds = %bb.o, %bb.p, %bb.q
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit77: ; preds = %bb.q, %bb.p, %bb.o
   %.0613.i.i73.lcssa.wide = phi i64 [ 0, %bb.o ], [ 1, %bb.p ], [ 2, %bb.q ]
   %i.by = getelementptr inbounds nuw [2 x i8], ptr @_ZZL17RetCC_X86_32_FastjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList3, i64 %.0613.i.i73.lcssa.wide
   %i.bz = load i16, ptr %i.by, align 2, !tbaa !302 ; 2 uses
@@ -5544,7 +5544,7 @@ bb.w:                                             ; preds = %bb.v
   %.not.i.i81.2 = icmp eq i32 %i.da, 0
   br i1 %.not.i.i81.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit84, label %.thread61
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit84: ; preds = %bb.u, %bb.v, %bb.w
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit84: ; preds = %bb.w, %bb.v, %bb.u
   %.0613.i.i80.lcssa.wide = phi i64 [ 0, %bb.u ], [ 1, %bb.v ], [ 2, %bb.w ]
   %i.db = getelementptr inbounds nuw [2 x i8], ptr @_ZZL17RetCC_X86_32_FastjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList4, i64 %.0613.i.i80.lcssa.wide
   %i.dc = load i16, ptr %i.db, align 2, !tbaa !302 ; 2 uses
@@ -5613,7 +5613,7 @@ bb.ac:                                            ; preds = %bb.ab
   %.not.i.i88.2 = icmp eq i32 %i.ed, 0
   br i1 %.not.i.i88.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit91, label %.thread61
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit91: ; preds = %bb.aa, %bb.ab, %bb.ac
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit91: ; preds = %bb.ac, %bb.ab, %bb.aa
   %.0613.i.i87.lcssa.wide = phi i64 [ 0, %bb.aa ], [ 1, %bb.ab ], [ 2, %bb.ac ]
   %i.ee = getelementptr inbounds nuw [2 x i8], ptr @_ZZL14RetCC_X86_32_CjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList3, i64 %.0613.i.i87.lcssa.wide
   %i.ef = load i16, ptr %i.ee, align 2, !tbaa !302 ; 2 uses

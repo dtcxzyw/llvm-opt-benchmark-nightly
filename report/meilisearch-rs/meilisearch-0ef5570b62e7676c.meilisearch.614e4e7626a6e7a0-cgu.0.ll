@@ -205,8 +205,8 @@ bb.al:                                            ; preds = %._crit_edge.i.i.i42
   %.sroa.018.0577.i.i = phi i64 [ %.sroa.018.1.lcssa.i.i, %._crit_edge568.i.i ], [ 0, %bb.dn ] ; 4 uses
   %.sroa.023.0576.i.i = phi i64 [ %.sroa.023.1.i.i, %._crit_edge568.i.i ], [ %i.hr, %bb.dn ] ; 7 uses
   %.sroa.029.0575.i.i = phi i64 [ %i.un, %._crit_edge568.i.i ], [ 0, %bb.dn ] ; 2 uses
-  %.sroa.043.0574.i.i = phi i64 [ %.sroa.043.3.lcssa.i.i, %._crit_edge568.i.i ], [ 0, %bb.dn ] ; 2 uses
-  %.sroa.047.1573.i.i = phi i64 [ %i.uo, %._crit_edge568.i.i ], [ 0, %bb.dn ] ; 5 uses
+  %.sroa.043.0574.i.i = phi i64 [ %.sroa.043.4.lcssa.i.i, %._crit_edge568.i.i ], [ 0, %bb.dn ]
+  %.sroa.047.1573.i.i = phi i64 [ %i.uo, %._crit_edge568.i.i ], [ 0, %bb.dn ] ; 4 uses
   %.sroa.016.3572.i.i = phi ptr [ %.sroa.016.7.i.i, %._crit_edge568.i.i ], [ %.sroa.10.0.i.i.i.i.i, %bb.dn ] ; 9 uses
   %.sroa.14.3571.i.i = phi i64 [ %.sroa.14.7.i.i, %._crit_edge568.i.i ], [ %i.hr, %bb.dn ] ; 9 uses
   %.sroa.026.2570.i.i = phi ptr [ %.sroa.026.5.i.i, %._crit_edge568.i.i ], [ %i.it, %bb.dn ] ; 11 uses
@@ -215,8 +215,7 @@ bb.al:                                            ; preds = %._crit_edge.i.i.i42
   %umax836.i.i = tail call i64 @llvm.umin.i64(i64 %i.jo, i64 64)
   %i.jp = sub nuw i64 %.sroa.0.0.i.i, %.sroa.047.1573.i.i
   %.sroa.0.0.i447.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.jp, i64 64) ; 3 uses
-  %.not910.i.i = icmp eq i64 %.sroa.0.0.i.i, %.sroa.047.1573.i.i ; 2 uses
-  br i1 %.not910.i.i, label %._crit_edge558.i.i, label %.lr.ph557.i.i
+  br label %.lr.ph557.i.i
 
 .thread163.loopexit.i.i:                          ; preds = %._crit_edge.i.i
   %lpad.loopexit255.i.i = landingpad { ptr, i32 }
@@ -619,8 +618,7 @@ bb.cf:                                            ; preds = %.lr.ph594.i.i
   tail call void @mi_free(ptr noundef nonnull %i.lf) #38, !noalias !34365
   br label %.thread130.i.i
 
-._crit_edge558.i.i:                               ; preds = %bb.di, %.split.i.i
-  %.sroa.043.3.lcssa.i.i = phi i64 [ %.sroa.043.0574.i.i, %.split.i.i ], [ %.sroa.043.4.lcssa.i.i, %bb.di ]
+._crit_edge558.i.i:                               ; preds = %bb.di
   %i.sv = invoke fastcc noundef i64 @_ZN6brotli3enc7cluster22BrotliHistogramCombine17h927b250c66d009c4E(ptr noalias noundef nonnull align 8 %.sroa.10.0.i.i.i427915.i.i, i64 noundef %.sroa.0.0.i422.i.i, ptr noalias noundef nonnull align 4 %i.ao, i64 noundef 64, ptr noalias noundef nonnull align 4 %i.am, i64 noundef 64, ptr noalias noundef nonnull align 4 %i.an, i64 noundef 64, ptr noalias noundef nonnull align 4 %i.jk, i64 noundef 2049, i64 noundef %.sroa.0.0.i447.i.i, i64 noundef %.sroa.0.0.i447.i.i, i64 noundef 64, i64 noundef 2048)
           to label %bb.cg unwind label %.thread163.loopexit.split-lp.loopexit.i.i, !noalias !34365 ; 5 uses
 
@@ -860,22 +858,19 @@ bb.cw:                                            ; preds = %bb.cu
 .preheader253.i.i:                                ; preds = %bb.dg, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hd73f7e4c840310d1E.exit546.i.i"
   %.sroa.018.1.lcssa.i.i = phi i64 [ %.sroa.018.0577.i.i, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hd73f7e4c840310d1E.exit546.i.i" ], [ %i.vr, %bb.dg ]
   %.sroa.0.1.lcssa.i.i = phi i64 [ %.sroa.0.0579.i.i, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hd73f7e4c840310d1E.exit546.i.i" ], [ %i.vk, %bb.dg ]
-  br i1 %.not910.i.i, label %._crit_edge568.i.i, label %.lr.ph567.i.i
-
-.lr.ph567.i.i:                                    ; preds = %.preheader253.i.i
   %10 = trunc i64 %.sroa.029.0575.i.i to i32
   br label %bb.cx
 
-._crit_edge568.i.i:                               ; preds = %bb.cz, %.preheader253.i.i
+._crit_edge568.i.i:                               ; preds = %bb.cz
   %i.un = add i64 %i.sv, %.sroa.029.0575.i.i      ; 23 uses
   %i.uo = add i64 %.sroa.047.1573.i.i, 64         ; 2 uses
   %i.up = icmp ult i64 %i.uo, %.sroa.0.0.i.i
   %indvars.iv.next.i.i = add i64 %indvars.iv.i.i, -64
   br i1 %i.up, label %.split.i.i, label %bb.an
 
-bb.cx:                                            ; preds = %bb.cz, %.lr.ph567.i.i
-  %i.uq = phi i64 [ 1, %.lr.ph567.i.i ], [ %i.vb, %bb.cz ] ; 3 uses
-  %.sroa.0133.0566.i.i = phi i64 [ 0, %.lr.ph567.i.i ], [ %i.uq, %bb.cz ] ; 2 uses
+bb.cx:                                            ; preds = %bb.cz, %.preheader253.i.i
+  %i.uq = phi i64 [ 1, %.preheader253.i.i ], [ %i.vb, %bb.cz ] ; 3 uses
+  %.sroa.0133.0566.i.i = phi i64 [ 0, %.preheader253.i.i ], [ %i.uq, %bb.cz ] ; 2 uses
   %i.ur = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %.sroa.0133.0566.i.i
   %i.us = load i32, ptr %i.ur, align 4, !noalias !34365, !noundef !27 ; 2 uses
   %i.ut = zext i32 %i.us to i64                   ; 2 uses
@@ -976,7 +971,7 @@ bb.dg:                                            ; preds = %bb.df
   tail call void @mi_free(ptr noundef nonnull %.sroa.10.0.i.i.i520.i.i) #38, !noalias !34365
   br label %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$10deallocate17h1e0b43146c957e5eE.exit.i.i.i502.i.i"
 
-.lr.ph557.i.i:                                    ; preds = %.split.i.i, %bb.di
+.lr.ph557.i.i:                                    ; preds = %bb.di, %.split.i.i
   %.sroa.0127.1556.i.i = phi i64 [ %.sroa.0127.1.i.i, %bb.di ], [ 1, %.split.i.i ] ; 3 uses
   %.sroa.043.3555.i.i = phi i64 [ %.sroa.043.4.lcssa.i.i, %bb.di ], [ %.sroa.043.0574.i.i, %.split.i.i ] ; 3 uses
   %.sroa.0127.0554.i.i = phi i64 [ %.sroa.0127.1556.i.i, %bb.di ], [ 0, %.split.i.i ] ; 6 uses
@@ -1379,7 +1374,7 @@ bb.gc:                                            ; preds = %.preheader.i.i
   br i1 %exitcond488.not.i.i, label %.loopexit.i, label %.preheader.i.i, !llvm.loop !34604
 
 .loopexit.i:                                      ; preds = %bb.dx, %bb.gc, %bb.dq
-  %.sroa.0.0.i.i = phi i64 [ 0, %bb.dq ], [ 1, %bb.gc ], [ %.sroa.03.1.i.i, %bb.dx ] ; 32 uses
+  %.sroa.0.0.i.i = phi i64 [ 0, %bb.dq ], [ 1, %bb.gc ], [ %.sroa.03.1.i.i, %bb.dx ] ; 31 uses
   %i.ans = invoke noundef i64 @_ZN6brotli3enc14block_splitter13RemapBlockIds17h8fd1281eacf3913bE(ptr noalias noundef nonnull align 1 %i.fp, i64 noundef %i.aq, i64 noundef %i.aq, ptr noalias noundef nonnull align 2 %i.gn, i64 noundef %spec.store.select.i, i64 noundef %.sroa.0.0423.i)
           to label %bb.gd unwind label %"_ZN4core3ptr65drop_in_place$LT$alloc_stdlib..heap_alloc..WrapBox$LT$u16$GT$$GT$17ha73f3911df9ebe4dE.exit.loopexit.split-lp.loopexit.i", !noalias !34245 ; 5 uses
 
@@ -1782,8 +1777,8 @@ bb.ib:                                            ; preds = %._crit_edge.i.i.i42
   %.sroa.018.0591.i.i = phi i64 [ %.sroa.018.1.lcssa.i.i291, %._crit_edge582.i.i ], [ 0, %bb.lf ] ; 4 uses
   %.sroa.023.0590.i.i = phi i64 [ %.sroa.023.1.i.i289, %._crit_edge582.i.i ], [ %i.bab, %bb.lf ] ; 7 uses
   %.sroa.029.0589.i.i = phi i64 [ %i.bne, %._crit_edge582.i.i ], [ 0, %bb.lf ] ; 2 uses
-  %.sroa.043.0588.i.i = phi i64 [ %.sroa.043.3.lcssa.i.i281, %._crit_edge582.i.i ], [ 0, %bb.lf ] ; 2 uses
-  %.sroa.047.1587.i.i = phi i64 [ %i.bnf, %._crit_edge582.i.i ], [ 0, %bb.lf ] ; 5 uses
+  %.sroa.043.0588.i.i = phi i64 [ %.sroa.043.4.lcssa.i.i277, %._crit_edge582.i.i ], [ 0, %bb.lf ]
+  %.sroa.047.1587.i.i = phi i64 [ %i.bnf, %._crit_edge582.i.i ], [ 0, %bb.lf ] ; 4 uses
   %.sroa.016.3586.i.i = phi ptr [ %.sroa.016.7.i.i285, %._crit_edge582.i.i ], [ %.sroa.10.0.i.i.i.i.i210, %bb.lf ] ; 9 uses
   %.sroa.14.3585.i.i = phi i64 [ %.sroa.14.7.i.i284, %._crit_edge582.i.i ], [ %i.bab, %bb.lf ] ; 9 uses
   %.sroa.026.2584.i.i = phi ptr [ %.sroa.026.5.i.i288, %._crit_edge582.i.i ], [ %i.bbd, %bb.lf ] ; 11 uses
@@ -1792,8 +1787,7 @@ bb.ib:                                            ; preds = %._crit_edge.i.i.i42
   %umax856.i.i = tail call i64 @llvm.umin.i64(i64 %i.bby, i64 64)
   %i.bbz = sub nuw i64 %.sroa.0.0.i.i204, %.sroa.047.1587.i.i
   %.sroa.0.0.i447.i.i272 = tail call noundef i64 @llvm.umin.i64(i64 %i.bbz, i64 64) ; 3 uses
-  %.not928.i.i = icmp eq i64 %.sroa.0.0.i.i204, %.sroa.047.1587.i.i ; 2 uses
-  br i1 %.not928.i.i, label %._crit_edge572.i.i, label %.lr.ph571.i.i
+  br label %.lr.ph571.i.i
 
 .thread163.loopexit.i.i278:                       ; preds = %._crit_edge.i.i276
   %lpad.loopexit255.i.i279 = landingpad { ptr, i32 }
@@ -2196,8 +2190,7 @@ bb.jw:                                            ; preds = %bb.jv
   tail call void @mi_free(ptr noundef nonnull %i.bdp) #38, !noalias !34805
   br label %.thread130.i.i306
 
-._crit_edge572.i.i:                               ; preds = %bb.kz, %.split.i.i270
-  %.sroa.043.3.lcssa.i.i281 = phi i64 [ %.sroa.043.0588.i.i, %.split.i.i270 ], [ %.sroa.043.4.lcssa.i.i277, %bb.kz ]
+._crit_edge572.i.i:                               ; preds = %bb.kz
   %i.blm = invoke fastcc noundef i64 @_ZN6brotli3enc7cluster22BrotliHistogramCombine17h357bcc83faeb8dfbE(ptr noalias noundef nonnull align 8 %.sroa.10.0.i.i.i427933.i.i, i64 noundef %.sroa.0.0.i422.i.i219, ptr noalias noundef nonnull align 4 %i.aa, i64 noundef 64, ptr noalias noundef nonnull align 4 %i.y, i64 noundef 64, ptr noalias noundef nonnull align 4 %i.z, i64 noundef 64, ptr noalias noundef nonnull align 4 %i.bbu, i64 noundef 2049, i64 noundef %.sroa.0.0.i447.i.i272, i64 noundef %.sroa.0.0.i447.i.i272, i64 noundef 64, i64 noundef 2048)
           to label %bb.jx unwind label %.thread163.loopexit.split-lp.loopexit.i.i282, !noalias !34805 ; 5 uses
 
@@ -2437,22 +2430,19 @@ bb.kn:                                            ; preds = %bb.kl
 .preheader253.i.i290:                             ; preds = %bb.kx, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hd73f7e4c840310d1E.exit547.i.i"
   %.sroa.018.1.lcssa.i.i291 = phi i64 [ %.sroa.018.0591.i.i, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hd73f7e4c840310d1E.exit547.i.i" ], [ %i.boi, %bb.kx ]
   %.sroa.0.1.lcssa.i.i292 = phi i64 [ %.sroa.0.0593.i.i, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hd73f7e4c840310d1E.exit547.i.i" ], [ %i.bob, %bb.kx ]
-  br i1 %.not928.i.i, label %._crit_edge582.i.i, label %.lr.ph581.i.i
-
-.lr.ph581.i.i:                                    ; preds = %.preheader253.i.i290
   %11 = trunc i64 %.sroa.029.0589.i.i to i32
   br label %bb.ko
 
-._crit_edge582.i.i:                               ; preds = %bb.kq, %.preheader253.i.i290
+._crit_edge582.i.i:                               ; preds = %bb.kq
   %i.bne = add i64 %i.blm, %.sroa.029.0589.i.i    ; 23 uses
   %i.bnf = add i64 %.sroa.047.1587.i.i, 64        ; 2 uses
   %i.bng = icmp ult i64 %i.bnf, %.sroa.0.0.i.i204
   %indvars.iv.next.i.i293 = add i64 %indvars.iv.i.i271, -64
   br i1 %i.bng, label %.split.i.i270, label %bb.id
 
-bb.ko:                                            ; preds = %bb.kq, %.lr.ph581.i.i
-  %i.bnh = phi i64 [ 1, %.lr.ph581.i.i ], [ %i.bns, %bb.kq ] ; 3 uses
-  %.sroa.0133.0580.i.i = phi i64 [ 0, %.lr.ph581.i.i ], [ %i.bnh, %bb.kq ] ; 2 uses
+bb.ko:                                            ; preds = %bb.kq, %.preheader253.i.i290
+  %i.bnh = phi i64 [ 1, %.preheader253.i.i290 ], [ %i.bns, %bb.kq ] ; 3 uses
+  %.sroa.0133.0580.i.i = phi i64 [ 0, %.preheader253.i.i290 ], [ %i.bnh, %bb.kq ] ; 2 uses
   %i.bni = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %.sroa.0133.0580.i.i
   %i.bnj = load i32, ptr %i.bni, align 4, !noalias !34805, !noundef !27 ; 2 uses
   %i.bnk = zext i32 %i.bnj to i64                 ; 2 uses
@@ -2553,7 +2543,7 @@ bb.kx:                                            ; preds = %bb.kw
   tail call void @mi_free(ptr noundef nonnull %.sroa.10.0.i.i.i521.i.i) #38, !noalias !34805
   br label %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$10deallocate17h1e0b43146c957e5eE.exit.i.i.i502.i.i239"
 
-.lr.ph571.i.i:                                    ; preds = %.split.i.i270, %bb.kz
+.lr.ph571.i.i:                                    ; preds = %bb.kz, %.split.i.i270
   %.sroa.0127.1570.i.i = phi i64 [ %.sroa.0127.1.i.i280, %bb.kz ], [ 1, %.split.i.i270 ] ; 3 uses
   %.sroa.043.3569.i.i = phi i64 [ %.sroa.043.4.lcssa.i.i277, %bb.kz ], [ %.sroa.043.0588.i.i, %.split.i.i270 ] ; 3 uses
   %.sroa.0127.0568.i.i = phi i64 [ %.sroa.0127.1570.i.i, %bb.kz ], [ 0, %.split.i.i270 ] ; 6 uses
@@ -2956,7 +2946,7 @@ bb.nv:                                            ; preds = %.preheader.i.i413
   br i1 %exitcond489.not.i.i, label %.loopexit.i203, label %.preheader.i.i413, !llvm.loop !35053
 
 .loopexit.i203:                                   ; preds = %bb.lq, %bb.nv, %bb.li
-  %.sroa.0.0.i.i204 = phi i64 [ 0, %bb.li ], [ 1, %bb.nv ], [ %.sroa.03.1.i.i201, %bb.lq ] ; 32 uses
+  %.sroa.0.0.i.i204 = phi i64 [ 0, %bb.li ], [ 1, %bb.nv ], [ %.sroa.03.1.i.i201, %bb.lq ] ; 31 uses
   %i.cgk = invoke noundef i64 @_ZN6brotli3enc14block_splitter13RemapBlockIds17h8fd1281eacf3913bE(ptr noalias noundef nonnull align 1 %i.axz, i64 noundef %2, i64 noundef %2, ptr noalias noundef nonnull align 2 %i.ayx, i64 noundef %spec.store.select.i44, i64 noundef %.sroa.0.0441.i)
           to label %bb.nw unwind label %"_ZN4core3ptr65drop_in_place$LT$alloc_stdlib..heap_alloc..WrapBox$LT$u16$GT$$GT$17ha73f3911df9ebe4dE.exit.loopexit.split-lp.loopexit.i205", !noalias !34682 ; 5 uses
 
@@ -3359,8 +3349,8 @@ bb.py:                                            ; preds = %._crit_edge.i.i.i42
   %.sroa.018.0591.i.i722 = phi i64 [ %.sroa.018.1.lcssa.i.i775, %._crit_edge582.i.i780 ], [ 0, %bb.tc ] ; 4 uses
   %.sroa.023.0590.i.i723 = phi i64 [ %.sroa.023.1.i.i761, %._crit_edge582.i.i780 ], [ %i.cra, %bb.tc ] ; 7 uses
   %.sroa.029.0589.i.i724 = phi i64 [ %i.ded, %._crit_edge582.i.i780 ], [ 0, %bb.tc ] ; 2 uses
-  %.sroa.043.0588.i.i725 = phi i64 [ %.sroa.043.3.lcssa.i.i752, %._crit_edge582.i.i780 ], [ 0, %bb.tc ] ; 2 uses
-  %.sroa.047.1587.i.i726 = phi i64 [ %i.dee, %._crit_edge582.i.i780 ], [ 0, %bb.tc ] ; 5 uses
+  %.sroa.043.0588.i.i725 = phi i64 [ %.sroa.043.4.lcssa.i.i747, %._crit_edge582.i.i780 ], [ 0, %bb.tc ]
+  %.sroa.047.1587.i.i726 = phi i64 [ %i.dee, %._crit_edge582.i.i780 ], [ 0, %bb.tc ] ; 4 uses
   %.sroa.016.3586.i.i727 = phi ptr [ %.sroa.016.7.i.i756, %._crit_edge582.i.i780 ], [ %.sroa.10.0.i.i.i.i.i652, %bb.tc ] ; 9 uses
   %.sroa.14.3585.i.i728 = phi i64 [ %.sroa.14.7.i.i755, %._crit_edge582.i.i780 ], [ %i.cra, %bb.tc ] ; 9 uses
   %.sroa.026.2584.i.i729 = phi ptr [ %.sroa.026.5.i.i760, %._crit_edge582.i.i780 ], [ %i.csc, %bb.tc ] ; 11 uses
@@ -3369,8 +3359,7 @@ bb.py:                                            ; preds = %._crit_edge.i.i.i42
   %umax856.i.i731 = tail call i64 @llvm.umin.i64(i64 %i.csx, i64 64)
   %i.csy = sub nuw i64 %.sroa.0.0.i.i634, %.sroa.047.1587.i.i726
   %.sroa.0.0.i447.i.i732 = tail call noundef i64 @llvm.umin.i64(i64 %i.csy, i64 64) ; 3 uses
-  %.not928.i.i733 = icmp eq i64 %.sroa.0.0.i.i634, %.sroa.047.1587.i.i726 ; 2 uses
-  br i1 %.not928.i.i733, label %._crit_edge572.i.i751, label %.lr.ph571.i.i734
+  br label %.lr.ph571.i.i734
 
 .thread163.loopexit.i.i748:                       ; preds = %._crit_edge.i.i746
   %lpad.loopexit255.i.i749 = landingpad { ptr, i32 }
@@ -3773,8 +3762,7 @@ bb.rt:                                            ; preds = %bb.rs
   tail call void @mi_free(ptr noundef nonnull %i.cuo) #38, !noalias !35247
   br label %.thread130.i.i798
 
-._crit_edge572.i.i751:                            ; preds = %bb.sw, %.split.i.i718
-  %.sroa.043.3.lcssa.i.i752 = phi i64 [ %.sroa.043.0588.i.i725, %.split.i.i718 ], [ %.sroa.043.4.lcssa.i.i747, %bb.sw ]
+._crit_edge572.i.i751:                            ; preds = %bb.sw
   %i.dcl = invoke fastcc noundef i64 @_ZN6brotli3enc7cluster22BrotliHistogramCombine17h74b2081842603b54E(ptr noalias noundef nonnull align 8 %.sroa.10.0.i.i.i427933.i.i669, i64 noundef %.sroa.0.0.i422.i.i660, ptr noalias noundef nonnull align 4 %i.m, i64 noundef 64, ptr noalias noundef nonnull align 4 %i.k, i64 noundef 64, ptr noalias noundef nonnull align 4 %i.l, i64 noundef 64, ptr noalias noundef nonnull align 4 %i.cst, i64 noundef 2049, i64 noundef %.sroa.0.0.i447.i.i732, i64 noundef %.sroa.0.0.i447.i.i732, i64 noundef 64, i64 noundef 2048)
           to label %bb.ru unwind label %.thread163.loopexit.split-lp.loopexit.i.i753, !noalias !35247 ; 5 uses
 
@@ -4014,22 +4002,19 @@ bb.sk:                                            ; preds = %bb.si
 .preheader253.i.i774:                             ; preds = %bb.su, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hd73f7e4c840310d1E.exit547.i.i758"
   %.sroa.018.1.lcssa.i.i775 = phi i64 [ %.sroa.018.0591.i.i722, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hd73f7e4c840310d1E.exit547.i.i758" ], [ %i.dfh, %bb.su ]
   %.sroa.0.1.lcssa.i.i776 = phi i64 [ %.sroa.0.0593.i.i720, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hd73f7e4c840310d1E.exit547.i.i758" ], [ %i.dfa, %bb.su ]
-  br i1 %.not928.i.i733, label %._crit_edge582.i.i780, label %.lr.ph581.i.i777
-
-.lr.ph581.i.i777:                                 ; preds = %.preheader253.i.i774
   %12 = trunc i64 %.sroa.029.0589.i.i724 to i32
   br label %bb.sl
 
-._crit_edge582.i.i780:                            ; preds = %bb.sn, %.preheader253.i.i774
+._crit_edge582.i.i780:                            ; preds = %bb.sn
   %i.ded = add i64 %i.dcl, %.sroa.029.0589.i.i724 ; 23 uses
   %i.dee = add i64 %.sroa.047.1587.i.i726, 64     ; 2 uses
   %i.def = icmp ult i64 %i.dee, %.sroa.0.0.i.i634
   %indvars.iv.next.i.i781 = add i64 %indvars.iv.i.i719, -64
   br i1 %i.def, label %.split.i.i718, label %bb.qa
 
-bb.sl:                                            ; preds = %bb.sn, %.lr.ph581.i.i777
-  %i.deg = phi i64 [ 1, %.lr.ph581.i.i777 ], [ %i.der, %bb.sn ] ; 3 uses
-  %.sroa.0133.0580.i.i778 = phi i64 [ 0, %.lr.ph581.i.i777 ], [ %i.deg, %bb.sn ] ; 2 uses
+bb.sl:                                            ; preds = %bb.sn, %.preheader253.i.i774
+  %i.deg = phi i64 [ 1, %.preheader253.i.i774 ], [ %i.der, %bb.sn ] ; 3 uses
+  %.sroa.0133.0580.i.i778 = phi i64 [ 0, %.preheader253.i.i774 ], [ %i.deg, %bb.sn ] ; 2 uses
   %i.deh = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %.sroa.0133.0580.i.i778
   %i.dei = load i32, ptr %i.deh, align 4, !noalias !35247, !noundef !27 ; 2 uses
   %i.dej = zext i32 %i.dei to i64                 ; 2 uses
@@ -4130,7 +4115,7 @@ bb.su:                                            ; preds = %bb.st
   tail call void @mi_free(ptr noundef nonnull %.sroa.10.0.i.i.i521.i.i948) #38, !noalias !35247
   br label %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$10deallocate17h1e0b43146c957e5eE.exit.i.i.i502.i.i682"
 
-.lr.ph571.i.i734:                                 ; preds = %.split.i.i718, %bb.sw
+.lr.ph571.i.i734:                                 ; preds = %bb.sw, %.split.i.i718
   %.sroa.0127.1570.i.i735 = phi i64 [ %.sroa.0127.1.i.i750, %bb.sw ], [ 1, %.split.i.i718 ] ; 3 uses
   %.sroa.043.3569.i.i736 = phi i64 [ %.sroa.043.4.lcssa.i.i747, %bb.sw ], [ %.sroa.043.0588.i.i725, %.split.i.i718 ] ; 3 uses
   %.sroa.0127.0568.i.i737 = phi i64 [ %.sroa.0127.1570.i.i735, %bb.sw ], [ 0, %.split.i.i718 ] ; 6 uses
@@ -4533,7 +4518,7 @@ bb.vt:                                            ; preds = %.preheader.i.i985
   br i1 %exitcond489.not.i.i988, label %.loopexit.i633, label %.preheader.i.i985, !llvm.loop !35495
 
 .loopexit.i633:                                   ; preds = %bb.to, %bb.vt, %bb.tg
-  %.sroa.0.0.i.i634 = phi i64 [ 0, %bb.tg ], [ 1, %bb.vt ], [ %.sroa.03.1.i.i631, %bb.to ] ; 32 uses
+  %.sroa.0.0.i.i634 = phi i64 [ 0, %bb.tg ], [ 1, %bb.vt ], [ %.sroa.03.1.i.i631, %bb.to ] ; 31 uses
   %i.dxn = invoke noundef i64 @_ZN6brotli3enc14block_splitter13RemapBlockIds17h8fd1281eacf3913bE(ptr noalias noundef nonnull align 1 %i.coy, i64 noundef %.sroa.01.1, i64 noundef %.sroa.01.1, ptr noalias noundef nonnull align 2 %i.cpw, i64 noundef %spec.store.select.i447, i64 noundef %.sroa.0.0441.i499)
           to label %bb.vu unwind label %"_ZN4core3ptr65drop_in_place$LT$alloc_stdlib..heap_alloc..WrapBox$LT$u16$GT$$GT$17ha73f3911df9ebe4dE.exit.loopexit.split-lp.loopexit.i635", !noalias !35124 ; 5 uses
 
