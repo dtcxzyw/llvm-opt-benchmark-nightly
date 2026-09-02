@@ -205,7 +205,7 @@ bb.al:                                            ; preds = %bb.aj
   store ptr %.sroa.0.0.i.i.i105.pn, ptr %i.d, align 8
   %i.dj = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   store ptr %i.di, ptr %i.dj, align 8
-  %8 = call i64 @llvm.usub.sat.i64(i64 %7, i64 1)
+  %8 = add i64 %7, -1
   %i.dk = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   br label %.lr.ph.preheader.i124
 
@@ -608,7 +608,7 @@ bb.al:                                            ; preds = %bb.aj
   store ptr %.sroa.0.0.i.i.i105.pn, ptr %i.d, align 8
   %i.dj = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   store ptr %i.di, ptr %i.dj, align 8
-  %8 = call i64 @llvm.usub.sat.i64(i64 %7, i64 1)
+  %8 = add i64 %7, -1
   %i.dk = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   br label %.lr.ph.preheader.i124
 
@@ -1010,9 +1010,6 @@ declare hidden noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_wi
 
 ; Function Attrs: cold minsize noreturn nonlazybind optsize uwtable
 declare void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef range(i64 0, -9223372036854775807), i64) unnamed_addr #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #9
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2isvxI5XMib_9quick_xml(ptr noalias noundef align 8 dereferenceable(24)) unnamed_addr #0

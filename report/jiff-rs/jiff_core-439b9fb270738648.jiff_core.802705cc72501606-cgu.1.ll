@@ -204,9 +204,9 @@ bb.a:
   %.sroa.524.i = alloca [3 x i8], align 2         ; 5 uses
   %.sroa.5.i = alloca [3 x i8], align 2           ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 25 uses
-  %i.d = load i64, ptr %i.c, align 8, !noundef !5 ; 14 uses
+  %i.d = load i64, ptr %i.c, align 8, !noundef !5 ; 13 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.f = load i64, ptr %i.e, align 8, !noundef !5 ; 19 uses
+  %i.f = load i64, ptr %i.e, align 8, !noundef !5 ; 13 uses
   %i.g = icmp ult i64 %i.d, %i.f
   br i1 %i.g, label %bb.b, label %bb.c
 
@@ -229,43 +229,33 @@ bb.d:                                             ; preds = %bb.b
   br i1 %or.cond.i, label %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i78.i, label %bb.x
 
 _RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i: ; preds = %bb.b
-  %i.l = add nuw i64 %i.d, 1                      ; 4 uses
+  %i.l = add nuw i64 %i.d, 1                      ; 3 uses
   store i64 %i.l, ptr %i.c, align 8
   %.not97.i = icmp eq i64 %i.l, %i.f
   br i1 %.not97.i, label %bb.x, label %bb.e
 
 _RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit71.i: ; preds = %bb.b
-  %i.m = add nuw i64 %i.d, 1                      ; 4 uses
+  %i.m = add nuw i64 %i.d, 1                      ; 3 uses
   store i64 %i.m, ptr %i.c, align 8
   %.not.i = icmp eq i64 %i.m, %i.f
   br i1 %.not.i, label %bb.x, label %bb.i
 
 bb.e:                                             ; preds = %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.i)
-  %1 = tail call i64 @llvm.usub.sat.i64(i64 %i.f, i64 %i.l) ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.l
   %i.o = load i8, ptr %i.n, align 1, !noundef !5
   %i.p = add i8 %i.o, -48                         ; 2 uses
   %or.cond.i.i.i = icmp ult i8 %i.p, 10
   br i1 %or.cond.i.i.i, label %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i.i, label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser30parse_posix_julian_day_no_leap.exit.thread.i
 
-2:                                                ; preds = %4, %3
-  %.lcssa36.i.i = phi i64 [ %i.z, %4 ], [ %i.r, %3 ]
-  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %.lcssa36.i.i, i64 noundef %i.f, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #18
-  unreachable
-
 _RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i.i: ; preds = %bb.e
   %i.q = zext nneg i8 %i.p to i32                 ; 3 uses
-  %i.r = add nuw i64 %i.d, 2                      ; 4 uses
+  %i.r = add nuw i64 %i.d, 2                      ; 3 uses
   store i64 %i.r, ptr %i.c, align 8
   %i.s = icmp eq i64 %i.r, %i.f
-  br i1 %i.s, label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser30parse_posix_julian_day_no_leap.exit.i, label %3
+  br i1 %i.s, label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser30parse_posix_julian_day_no_leap.exit.i, label %bb.f
 
-3:                                                ; preds = %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i.i
-  %exitcond.not.i.1.i.i = icmp eq i64 %1, 1
-  br i1 %exitcond.not.i.1.i.i, label %2, label %bb.f
-
-bb.f:                                             ; preds = %3
+bb.f:                                             ; preds = %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i.i
   %i.t = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.r
   %i.u = load i8, ptr %i.t, align 1, !noundef !5
   %i.v = add i8 %i.u, -48                         ; 2 uses
@@ -276,16 +266,12 @@ _RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.1.i.i: ; p
   %i.w = mul nuw nsw i32 %i.q, 10
   %i.x = zext nneg i8 %i.v to i32
   %i.y = add nuw nsw i32 %i.w, %i.x               ; 3 uses
-  %i.z = add nuw i64 %i.d, 3                      ; 4 uses
+  %i.z = add nuw i64 %i.d, 3                      ; 3 uses
   store i64 %i.z, ptr %i.c, align 8
   %i.aa = icmp eq i64 %i.z, %i.f
-  br i1 %i.aa, label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser30parse_posix_julian_day_no_leap.exit.i, label %4
+  br i1 %i.aa, label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser30parse_posix_julian_day_no_leap.exit.i, label %bb.g
 
-4:                                                ; preds = %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.1.i.i
-  %exitcond.not.i.2.i.i = icmp eq i64 %1, 2
-  br i1 %exitcond.not.i.2.i.i, label %2, label %bb.g
-
-bb.g:                                             ; preds = %4
+bb.g:                                             ; preds = %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.1.i.i
   %i.ab = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.z
   %i.ac = load i8, ptr %i.ab, align 1, !noundef !5
   %i.ad = add i8 %i.ac, -48                       ; 2 uses
@@ -329,28 +315,19 @@ bb.h:                                             ; preds = %_RNvMs5_NtNtCsb09rM
   br label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser16parse_posix_date.exit
 
 bb.i:                                             ; preds = %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit71.i
-  %5 = tail call i64 @llvm.usub.sat.i64(i64 %i.f, i64 %i.m)
   %i.ao = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.m
   %i.ap = load i8, ptr %i.ao, align 1, !noundef !5
   %i.aq = add i8 %i.ap, -48                       ; 4 uses
   %or.cond.i.i.i.i = icmp ult i8 %i.aq, 10
   br i1 %or.cond.i.i.i.i, label %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i.i.i, label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser22parse_weekday_of_month.exit.thread.i
 
-6:                                                ; preds = %7
-  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.ar, i64 noundef %i.f, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #18
-  unreachable
-
 _RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i.i.i: ; preds = %bb.i
-  %i.ar = add nuw i64 %i.d, 2                     ; 5 uses
+  %i.ar = add nuw i64 %i.d, 2                     ; 4 uses
   store i64 %i.ar, ptr %i.c, align 8
   %i.as = icmp eq i64 %i.ar, %i.f
-  br i1 %i.as, label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser11parse_month.exit.i.i, label %7
+  br i1 %i.as, label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser11parse_month.exit.i.i, label %bb.j
 
-7:                                                ; preds = %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i.i.i
-  %exitcond.not.i.1.i.i.i = icmp eq i64 %5, 1
-  br i1 %exitcond.not.i.1.i.i.i, label %6, label %bb.j
-
-bb.j:                                             ; preds = %7
+bb.j:                                             ; preds = %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i.i.i
   %i.at = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ar
   %i.au = load i8, ptr %i.at, align 1, !noundef !5
   %i.av = add i8 %i.au, -48                       ; 2 uses
@@ -454,23 +431,13 @@ bb.t:                                             ; preds = %_RNvMs5_NtNtCsb09rM
 
 _RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i78.i: ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.524.i)
-  %8 = tail call i64 @llvm.usub.sat.i64(i64 %i.f, i64 %i.d) ; 2 uses
   %i.bz = zext nneg i8 %i.k to i32                ; 3 uses
-  %i.ca = add nuw i64 %i.d, 1                     ; 4 uses
+  %i.ca = add nuw i64 %i.d, 1                     ; 3 uses
   store i64 %i.ca, ptr %i.c, align 8
   %i.cb = icmp eq i64 %i.ca, %i.f
-  br i1 %i.cb, label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser32parse_posix_julian_day_with_leap.exit.i, label %10
+  br i1 %i.cb, label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser32parse_posix_julian_day_with_leap.exit.i, label %bb.u
 
-9:                                                ; preds = %11, %10
-  %.lcssa35.i.i = phi i64 [ %i.ci, %11 ], [ %i.ca, %10 ]
-  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %.lcssa35.i.i, i64 noundef %i.f, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #18
-  unreachable
-
-10:                                               ; preds = %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i78.i
-  %exitcond.not.i.1.i79.i = icmp eq i64 %8, 1
-  br i1 %exitcond.not.i.1.i79.i, label %9, label %bb.u
-
-bb.u:                                             ; preds = %10
+bb.u:                                             ; preds = %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i78.i
   %i.cc = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ca
   %i.cd = load i8, ptr %i.cc, align 1, !noundef !5
   %i.ce = add i8 %i.cd, -48                       ; 2 uses
@@ -481,16 +448,12 @@ _RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.1.i85.i: ;
   %i.cf = mul nuw nsw i32 %i.bz, 10
   %i.cg = zext nneg i8 %i.ce to i32
   %i.ch = add nuw nsw i32 %i.cf, %i.cg            ; 3 uses
-  %i.ci = add nuw i64 %i.d, 2                     ; 4 uses
+  %i.ci = add nuw i64 %i.d, 2                     ; 3 uses
   store i64 %i.ci, ptr %i.c, align 8
   %i.cj = icmp eq i64 %i.ci, %i.f
-  br i1 %i.cj, label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser32parse_posix_julian_day_with_leap.exit.i, label %11
+  br i1 %i.cj, label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser32parse_posix_julian_day_with_leap.exit.i, label %bb.v
 
-11:                                               ; preds = %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.1.i85.i
-  %exitcond.not.i.2.i86.i = icmp eq i64 %8, 2
-  br i1 %exitcond.not.i.2.i86.i, label %9, label %bb.v
-
-bb.v:                                             ; preds = %11
+bb.v:                                             ; preds = %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.1.i85.i
   %i.ck = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ci
   %i.cl = load i8, ptr %i.ck, align 1, !noundef !5
   %i.cm = add i8 %i.cl, -48                       ; 2 uses
@@ -543,7 +506,7 @@ _RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser16parse_posix_date.exit
   %.sroa.16.0.insert.shift.i = shl nuw nsw i32 %.sroa.16.0.i, 16
   %.sroa.10.0.insert.insert.i = or disjoint i32 %.sroa.16.0.insert.shift.i, %.sroa.10.0.insert.ext.i
   %tr.sh.diff = trunc nuw i32 %.sroa.10.0.insert.insert.i to i24 ; 3 uses
-  %i.cv = load i64, ptr %i.e, align 8, !noundef !5 ; 25 uses
+  %i.cv = load i64, ptr %i.e, align 8, !noundef !5 ; 23 uses
   %i.cw = load i64, ptr %i.c, align 8, !noundef !5 ; 7 uses
   %i.cx = icmp ult i64 %i.cw, %i.cv
   br i1 %i.cx, label %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser10maybe_byte.exit, label %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser10maybe_byte.exit.thread
@@ -745,7 +708,7 @@ bb.ar:                                            ; preds = %bb.ah
   br i1 %i.fc, label %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i75, label %bb.as
 
 _RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i75: ; preds = %bb.ar
-  %i.fd = add nuw i64 %i.dy, 1                    ; 4 uses
+  %i.fd = add nuw i64 %i.dy, 1                    ; 3 uses
   store i64 %i.fd, ptr %i.c, align 8
   %.not.i76 = icmp eq i64 %i.fd, %i.cv
   br i1 %.not.i76, label %bb.bd, label %bb.at
@@ -766,15 +729,10 @@ bb.as:                                            ; preds = %bb.bb, %bb.ay, %bb.
   br i1 %or.cond.i74, label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser16parse_posix_time.exit, label %bb.bc, !prof !7
 
 bb.at:                                            ; preds = %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i75
-  %12 = tail call i64 @llvm.usub.sat.i64(i64 %i.cv, i64 %i.fd)
   %i.fl = getelementptr inbounds nuw i8, ptr %i.cy, i64 %i.fd
   %i.fm = load i8, ptr %i.fl, align 1, !noundef !5 ; 2 uses
   %i.fn = icmp ult i8 %i.fm, 48
   br i1 %i.fn, label %bb.bd, label %bb.au
-
-13:                                               ; preds = %14
-  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.fq, i64 noundef %i.cv, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @27) #18
-  unreachable
 
 bb.au:                                            ; preds = %bb.at
   %i.fo = add i8 %i.fm, -48                       ; 2 uses
@@ -782,16 +740,12 @@ bb.au:                                            ; preds = %bb.at
   br i1 %i.fp, label %bb.bd, label %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i68.i
 
 _RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i68.i: ; preds = %bb.au
-  %i.fq = add nuw i64 %i.dy, 2                    ; 4 uses
+  %i.fq = add nuw i64 %i.dy, 2                    ; 3 uses
   store i64 %i.fq, ptr %i.c, align 8
   %i.fr = icmp eq i64 %i.fq, %i.cv
-  br i1 %i.fr, label %bb.bd, label %14
+  br i1 %i.fr, label %bb.bd, label %bb.av
 
-14:                                               ; preds = %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i68.i
-  %exitcond.not.i.1.i69.i = icmp eq i64 %12, 1
-  br i1 %exitcond.not.i.1.i69.i, label %13, label %bb.av
-
-bb.av:                                            ; preds = %14
+bb.av:                                            ; preds = %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i68.i
   %i.fs = getelementptr inbounds nuw i8, ptr %i.cy, i64 %i.fq
   %i.ft = load i8, ptr %i.fs, align 1, !noundef !5 ; 2 uses
   %i.fu = icmp ult i8 %i.ft, 48

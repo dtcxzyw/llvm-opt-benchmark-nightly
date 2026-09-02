@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.d
   %.not.i.i = icmp ult i64 %i.x, %i.q
   tail call void @llvm.assume(i1 %.not.i.i)
   %i.y = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.x
-  %storemerge.i.i = tail call i64 @llvm.usub.sat.i64(i64 %i.q, i64 %i.x)
-  %i.z = add i64 %storemerge.i.i, -1
+  %2 = xor i64 %i.x, -1
+  %i.z = add i64 %i.q, %2
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 1
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.o, ptr %i.ab, align 8
@@ -606,8 +606,8 @@ bb.e:                                             ; preds = %bb.d
   %.not.i.i = icmp ult i64 %i.x, %i.q
   tail call void @llvm.assume(i1 %.not.i.i)
   %i.y = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.x
-  %storemerge.i.i = tail call i64 @llvm.usub.sat.i64(i64 %i.q, i64 %i.x)
-  %i.z = add i64 %storemerge.i.i, -1
+  %2 = xor i64 %i.x, -1
+  %i.z = add i64 %i.q, %2
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 1
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.o, ptr %i.ab, align 8
@@ -1009,9 +1009,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #7
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

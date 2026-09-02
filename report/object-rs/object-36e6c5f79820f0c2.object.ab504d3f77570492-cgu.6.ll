@@ -35,7 +35,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #10
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #9
   unreachable
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVechEECseHTIzroA4w0_6object.exit.i: ; preds = %bb.b
@@ -218,7 +218,7 @@ _RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map8map_foldINtNtBa_6result6Resul
 
 bb.j:                                             ; preds = %.loopexit.split-lp, %.loopexit
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECseHTIzroA4w0_6object(ptr noalias nofree noundef align 8 dereferenceable(24) %i.b) #11
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECseHTIzroA4w0_6object(ptr noalias nofree noundef align 8 dereferenceable(24) %i.b) #10
           to label %bb.l unwind label %bb.k
 
 .loopexit7:                                       ; preds = %.noexc6, %.noexc3
@@ -230,7 +230,7 @@ bb.j:                                             ; preds = %.loopexit.split-lp,
 bb.k:                                             ; preds = %bb.j
   %i.az = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #10
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #9
   unreachable
 
 bb.l:                                             ; preds = %bb.j
@@ -633,8 +633,8 @@ bb.p:                                             ; preds = %bb.f
   %.not.i.i.i = icmp ult i64 %i.an, %i.e
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.ao = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.an
-  %storemerge.i.i.i = tail call i64 @llvm.usub.sat.i64(i64 %i.e, i64 %i.an)
-  %i.ap = add i64 %storemerge.i.i.i, -1
+  %2 = xor i64 %i.an, -1
+  %i.ap = add i64 %i.e, %2
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 1
   store ptr %i.aq, ptr %1, align 8, !alias.scope !93, !noalias !87
   store i64 %i.ap, ptr %i.a, align 8, !alias.scope !93, !noalias !87
@@ -1037,11 +1037,8 @@ declare { i64, i64 } @_RNvMs_NtNtCseHTIzroA4w0_6object4read4utilNtB4_5Bytes12rea
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #7
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #8
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -1051,10 +1048,9 @@ attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessib
 attributes #5 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #6 = { cold minsize noinline noreturn nounwind nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #7 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #10 = { cold noreturn nounwind }
-attributes #11 = { cold }
+attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #9 = { cold noreturn nounwind }
+attributes #10 = { cold }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

@@ -204,13 +204,13 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
   %i.y = lshr i64 %i.g, 1                         ; 2 uses
-  %2 = tail call i64 @llvm.usub.sat.i64(i64 %i.g, i64 %i.y)
-  %3 = sub nuw i64 %i.d, %2
+  %.neg = sub i64 %i.y, %i.g
+  %2 = add i64 %.neg, %i.d
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.i, %bb.k, %bb.j
   %.sroa.06.0 = phi i64 [ 0, %bb.j ], [ %i.y, %bb.k ], [ %i.g, %bb.i ]
-  %.sroa.01.0 = phi i64 [ %i.x, %bb.j ], [ %3, %bb.k ], [ %i.d, %bb.i ]
+  %.sroa.01.0 = phi i64 [ %i.x, %bb.j ], [ %2, %bb.k ], [ %i.d, %bb.i ]
   %i.z = tail call noundef zeroext i1 @_RNvNtCs1UvybGPDVxf_9indicatif5style16write_ansi_range(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.a, i64 noundef %i.c, i64 noundef %.sroa.06.0, i64 noundef %.sroa.01.0)
   br label %.loopexit
 }

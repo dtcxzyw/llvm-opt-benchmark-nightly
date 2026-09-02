@@ -205,7 +205,7 @@ bb.dk:                                            ; preds = %bb.dv, %_RINvNtCs3o
   %i.uo = shl i64 %.val87, 1
   %i.up = add i64 %i.uo, -1
   %.sroa.0.0.i.i = select i1 %i.un, i64 %i.up, i64 %.val87
-  %8 = call noundef range(i64 0, 2305843009213693952) i64 @llvm.usub.sat.i64(i64 %i.af, i64 range(i64 0, 1152921504606846975) %.sroa.056.0609)
+  %8 = sub nuw nsw i64 %i.af, %.sroa.056.0609
   %..i.i.i.i.i.i.i = call noundef i64 @llvm.umin.i64(i64 %8, i64 %.sroa.0.0.i.i) ; 4 uses
   %invariant.gep.i.i.i.i.i.i = getelementptr [8 x i8], ptr %i.cn, i64 %.sroa.056.0609 ; 9 uses
   %.not.i.i.i.i.i.i116 = icmp eq i64 %..i.i.i.i.i.i.i, 0
@@ -608,7 +608,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj
   %..i.i.i = select i1 %.not48.i.i.i, i8 11, i8 19 ; 3 uses
-  %7 = call i64 @llvm.usub.sat.i64(i64 %i.ef, i64 %i.fl) ; 2 uses
+  %7 = sub nuw i64 %i.ef, %i.fl                   ; 2 uses
   store i8 %..i.i.i, ptr %i.fn, align 1, !noalias !47386
   %i.fs = add nuw i64 %i.fl, 1                    ; 2 uses
   %exitcond.1.not.i.i.i = icmp eq i64 %7, 1
@@ -1011,14 +1011,19 @@ _RNvXs3_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11CharIndicesNtNtNtNtB9_4iter6trait
   br i1 %i.lc, label %._crit_edge, label %bb.bp
 
 ._crit_edge:                                      ; preds = %_RNvXs3_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11CharIndicesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit209, %bb.f
-  %1 = tail call i64 @llvm.usub.sat.i64(i64 %i.f, i64 1) ; 5 uses
+  %1 = add i64 %i.f, -1                           ; 6 uses
   %i.ld = shl nuw i64 %1, 3                       ; 2 uses
   %.not.i.i.i.i = icmp samesign ugt i64 %1, 1152921504606846975
   br i1 %.not.i.i.i.i, label %bb.bv, label %bb.bu, !prof !61
 
 bb.bu:                                            ; preds = %._crit_edge
   %.not.i.i.not = icmp eq i64 %i.f, 1
-  br i1 %.not.i.i.not, label %_RNvXNtNtCs1xwejQucwHj_5alloc3vec14spec_from_iterINtB4_3VecjEINtB2_12SpecFromIterjINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB1m_4skip4SkipINtNtNtB1q_5slice4iter4IterjEENCNvXs4_NtCselBS6QMlFOX_13icu_segmenter4lineINtB30_17LineBreakIteratorNtNtB32_14rule_segmenter4Utf8ENtNtNtB1o_6traits8iterator8Iterator4next0EE9from_iterCs7tN9tvpkfrg_12typst_layout.exit, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i
+  br i1 %.not.i.i.not, label %.thread, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i
+
+.thread:                                          ; preds = %bb.bu
+  %2 = icmp eq i64 %1, 0
+  tail call void @llvm.assume(i1 %2)
+  br label %_RNvXNtNtCs1xwejQucwHj_5alloc3vec14spec_from_iterINtB4_3VecjEINtB2_12SpecFromIterjINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB1m_4skip4SkipINtNtNtB1q_5slice4iter4IterjEENCNvXs4_NtCselBS6QMlFOX_13icu_segmenter4lineINtB30_17LineBreakIteratorNtNtB32_14rule_segmenter4Utf8ENtNtNtB1o_6traits8iterator8Iterator4next0EE9from_iterCs7tN9tvpkfrg_12typst_layout.exit
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i: ; preds = %bb.bu
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #56, !noalias !49965
@@ -1035,7 +1040,7 @@ bb.bv:                                            ; preds = %_RNvXs1_NtCs1xwejQu
 
 bb.bw:                                            ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i
   %i.lh = getelementptr inbounds nuw i8, ptr %i.bj, i64 8 ; 6 uses
-  %i.li = add i64 %i.f, 2305843009213693951       ; 3 uses
+  %i.li = add nuw nsw i64 %i.f, 2305843009213693951 ; 3 uses
   %i.lj = and i64 %i.li, 2305843009213693951      ; 7 uses
   %min.iters.check = icmp samesign ult i64 %i.lj, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -1126,10 +1131,10 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.mr = icmp eq i64 %i.mq, %i.lj
   br i1 %i.mr, label %_RNvXNtNtCs1xwejQucwHj_5alloc3vec14spec_from_iterINtB4_3VecjEINtB2_12SpecFromIterjINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB1m_4skip4SkipINtNtNtB1q_5slice4iter4IterjEENCNvXs4_NtCselBS6QMlFOX_13icu_segmenter4lineINtB30_17LineBreakIteratorNtNtB32_14rule_segmenter4Utf8ENtNtNtB1o_6traits8iterator8Iterator4next0EE9from_iterCs7tN9tvpkfrg_12typst_layout.exit, label %scalar.ph, !llvm.loop !49932
 
-_RNvXNtNtCs1xwejQucwHj_5alloc3vec14spec_from_iterINtB4_3VecjEINtB2_12SpecFromIterjINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB1m_4skip4SkipINtNtNtB1q_5slice4iter4IterjEENCNvXs4_NtCselBS6QMlFOX_13icu_segmenter4lineINtB30_17LineBreakIteratorNtNtB32_14rule_segmenter4Utf8ENtNtNtB1o_6traits8iterator8Iterator4next0EE9from_iterCs7tN9tvpkfrg_12typst_layout.exit: ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %bb.bu
-  %.sroa.4.0.i.i.i402 = phi i64 [ 0, %bb.bu ], [ %1, %middle.block ], [ %1, %scalar.ph ], [ %1, %scalar.ph.prol.loopexit ]
-  %.sroa.10.0.i.i.i401 = phi ptr [ inttoptr (i64 8 to ptr), %bb.bu ], [ %i.le, %middle.block ], [ %i.le, %scalar.ph ], [ %i.le, %scalar.ph.prol.loopexit ]
-  %.sroa.5.0.copyload.sink.i.i.i.i.i.i = phi i64 [ 0, %bb.bu ], [ %i.lj, %middle.block ], [ %i.lj, %scalar.ph ], [ %i.lj, %scalar.ph.prol.loopexit ]
+_RNvXNtNtCs1xwejQucwHj_5alloc3vec14spec_from_iterINtB4_3VecjEINtB2_12SpecFromIterjINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB1m_4skip4SkipINtNtNtB1q_5slice4iter4IterjEENCNvXs4_NtCselBS6QMlFOX_13icu_segmenter4lineINtB30_17LineBreakIteratorNtNtB32_14rule_segmenter4Utf8ENtNtNtB1o_6traits8iterator8Iterator4next0EE9from_iterCs7tN9tvpkfrg_12typst_layout.exit: ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %.thread
+  %.sroa.4.0.i.i.i402 = phi i64 [ 0, %.thread ], [ %1, %middle.block ], [ %1, %scalar.ph ], [ %1, %scalar.ph.prol.loopexit ]
+  %.sroa.10.0.i.i.i401 = phi ptr [ inttoptr (i64 8 to ptr), %.thread ], [ %i.le, %middle.block ], [ %i.le, %scalar.ph ], [ %i.le, %scalar.ph.prol.loopexit ]
+  %.sroa.5.0.copyload.sink.i.i.i.i.i.i = phi i64 [ 0, %.thread ], [ %i.lj, %middle.block ], [ %i.lj, %scalar.ph ], [ %i.lj, %scalar.ph.prol.loopexit ]
   %.val = load i64, ptr %i.d, align 8             ; 2 uses
   %i.ms = icmp eq i64 %.val, 0
   br i1 %i.ms, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecjEECs7tN9tvpkfrg_12typst_layout.exit, label %bb.bx

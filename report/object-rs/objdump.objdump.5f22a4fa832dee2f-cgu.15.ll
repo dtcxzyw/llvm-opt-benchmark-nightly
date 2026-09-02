@@ -115,10 +115,11 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.assume(i1 %i.x)
   %.not.i.i.i = icmp ult i64 %i.w, %i.n
   call void @llvm.assume(i1 %.not.i.i.i)
-  %i.y = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.w ; 2 uses
-  %storemerge.i.i.i = call i64 @llvm.usub.sat.i64(i64 %i.n, i64 %i.w) ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 4 uses
-  %i.aa = getelementptr i8, ptr %i.y, i64 %storemerge.i.i.i
+  %i.y = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.w
+  %3 = xor i64 %i.w, -1
+  %4 = add i64 %i.n, %3                           ; 3 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 5 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %4
   %i.ab = load atomic ptr, ptr @_RNvNvNtNtNtCs906JEEYSgkH_6memchr4arch6x86_646memchr10memchr_raw2FN monotonic, align 8, !noalias !39, !nonnull !6, !noundef !6
   %i.ac = call { i64, ptr } %i.ab(i8 noundef 0, ptr noundef nonnull readonly %i.z, ptr noundef nonnull readonly %i.aa), !noalias !40, !inline_history !22 ; 2 uses
   %i.ad = extractvalue { i64, ptr } %i.ac, 0
@@ -126,25 +127,24 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ae, label %bb.h, label %bb.u
 
 bb.h:                                             ; preds = %bb.g
-  %3 = add i64 %storemerge.i.i.i, -1              ; 2 uses
   %i.af = extractvalue { i64, ptr } %i.ac, 1
   %i.ag = ptrtoint ptr %i.af to i64
   %i.ah = ptrtoint ptr %i.z to i64
   %i.ai = sub i64 %i.ag, %i.ah                    ; 5 uses
   %i.aj = icmp sgt i64 %i.ai, -1
   call void @llvm.assume(i1 %i.aj)
-  %.not.i.i72.i = icmp ult i64 %i.ai, %3
+  %.not.i.i72.i = icmp ult i64 %i.ai, %4
   call void @llvm.assume(i1 %.not.i.i72.i)
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.ai ; 2 uses
-  %storemerge.i.i73.i = call i64 @llvm.usub.sat.i64(i64 %3, i64 %i.ai) ; 2 uses
-  %i.al = add i64 %storemerge.i.i73.i, -1
-  %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 1 ; 3 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.ai
+  %5 = xor i64 %i.ai, -1
+  %i.al = add i64 %4, %5                          ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 1 ; 4 uses
   %i.an = and i16 %.val29, 28
   %i.ao = icmp eq i16 %i.an, 16
   br i1 %i.ao, label %bb.i, label %_RINvMs_NtNtNtCseHTIzroA4w0_6object4read4coff6importNtNtBb_2pe18ImportObjectHeader10parse_dataRShECs8aoZCP6pRcV_7objdump.exit
 
 bb.i:                                             ; preds = %bb.h
-  %i.ap = getelementptr i8, ptr %i.ak, i64 %storemerge.i.i73.i
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.al
   %i.aq = load atomic ptr, ptr @_RNvNvNtNtNtCs906JEEYSgkH_6memchr4arch6x86_646memchr10memchr_raw2FN monotonic, align 8, !noalias !41, !nonnull !6, !noundef !6
   %i.ar = call { i64, ptr } %i.aq(i8 noundef 0, ptr noundef nonnull readonly %i.am, ptr noundef nonnull readonly %i.ap), !noalias !42, !inline_history !22 ; 2 uses
   %i.as = extractvalue { i64, ptr } %i.ar, 0
@@ -546,9 +546,6 @@ declare i16 @llvm.bswap.i16(i16) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #12

@@ -135,7 +135,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a, %.critedge
   %.0.idx45 = phi i64 [ 0, %bb.a ], [ %.0.add, %.critedge ] ; 2 uses
   %.0.ptr46 = getelementptr inbounds nuw i8, ptr @_ZN12_GLOBAL__N_19kPatternsE, i64 %.0.idx45 ; 4 uses
-  %.sroa.01.0.copyload = load i64, ptr %.0.ptr46, align 16, !tbaa !16 ; 19 uses
+  %.sroa.01.0.copyload = load i64, ptr %.0.ptr46, align 16, !tbaa !16 ; 18 uses
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.0.ptr46, i64 8
   %.sroa.22.0.copyload = load ptr, ptr %.sroa.22.0..sroa_idx, align 8, !tbaa !19 ; 8 uses
   %i.a = ptrtoint ptr %.sroa.22.0.copyload to i64
@@ -346,7 +346,7 @@ bb.i:                                             ; preds = %_ZNSt11char_traitsI
   %i.db = phi i64 [ 1, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i54.i.i ], [ 4, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i50.i.i ] ; 2 uses
   %cond.jt3.i = phi i1 [ true, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i54.i.i ], [ false, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i50.i.i ]
   %.0.i.ph.jt3.i = phi i32 [ 3, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i54.i.i ], [ 2, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i50.i.i ]
-  %i.dc = add nuw i64 %i.r, 1                     ; 6 uses
+  %i.dc = add nuw i64 %i.r, 1                     ; 5 uses
   %i.dd = icmp ult i64 %i.dc, %.sroa.01.0.copyload
   br i1 %i.dd, label %.lr.ph275.preheader.i, label %.critedge3.jt3.i
 
@@ -410,8 +410,6 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt0.i: ; preds 
   br i1 %.not123.jt0.i, label %bb.w, label %.critedge
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i: ; preds = %.critedge3.jt3.i
-  %2 = tail call i64 @llvm.usub.sat.i64(i64 %i.dc, i64 %.sroa.01.0.copyload)
-  %.sroa.speculated.i134.jt3.i = sub i64 0, %2
   %i.do = getelementptr inbounds nuw i8, ptr %.sroa.22.0.copyload, i64 %i.dc
   br label %.thread197.jt3.i
 
@@ -421,7 +419,7 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i: ; preds 
 .thread197.jt3.i:                                 ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i, %.thread197.i
   %i.dp = phi i1 [ %i.dm, %.thread197.i ], [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i ]
   %i.dq = phi ptr [ %i.dl, %.thread197.i ], [ %i.do, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i ]
-  %.sroa.speculated.i134341.i = phi i64 [ %.sroa.speculated.i134.i, %.thread197.i ], [ %.sroa.speculated.i134.jt3.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i ] ; 3 uses
+  %.sroa.speculated.i134341.i = phi i64 [ %.sroa.speculated.i134.i, %.thread197.i ], [ 0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i ] ; 3 uses
   %.0116.lcssa337.i = phi i64 [ %.0116.lcssa.ph.i, %.thread197.i ], [ %i.dc, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i ] ; 2 uses
   %i.dr = phi i64 [ %i.df, %.thread197.i ], [ %i.db, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i ] ; 3 uses
   %i.ds = sub i64 %0, %.094.i38
@@ -703,9 +701,6 @@ declare i64 @llvm.umin.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #4
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

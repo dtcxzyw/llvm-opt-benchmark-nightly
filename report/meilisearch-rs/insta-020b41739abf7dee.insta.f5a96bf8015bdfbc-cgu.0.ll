@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.o
   br i1 %i.bm, label %bb.u, label %bb.v
 
 bb.s:                                             ; preds = %bb.o
-  %spec.select.i.i34 = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.as, i64 %i.s)
+  %spec.select.i.i3487 = sub nuw i64 %i.as, %i.s
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.bp = load i64, ptr %i.bo, align 8, !alias.scope !21249, !noalias !21250, !noundef !17 ; 3 uses
@@ -227,7 +227,7 @@ bb.t:                                             ; preds = %bb.s
   %.sroa.577.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
   store i64 %i.s, ptr %.sroa.577.0..sroa_idx, align 8
   %.sroa.678.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bu, i64 24
-  store i64 %spec.select.i.i34, ptr %.sroa.678.0..sroa_idx, align 8
+  store i64 %spec.select.i.i3487, ptr %.sroa.678.0..sroa_idx, align 8
   %i.bv = add i64 %i.bp, 1
   store i64 %i.bv, ptr %i.bo, align 8, !alias.scope !21249, !noalias !21250
   br label %bb.n
@@ -334,10 +334,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %i.b = add i64 %i.a, %2                         ; 14 uses
-  %i.c = add i64 %i.a, %5                         ; 16 uses
+  %i.c = add i64 %i.a, %5                         ; 14 uses
   %i.d = tail call fastcc noundef i64 @_ZN7similar10algorithms5utils17common_suffix_len17hd4a850fbcba52b1fE(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.b, i64 noundef %3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.c, i64 noundef %6) ; 4 uses
   %i.e = sub i64 %3, %i.d                         ; 10 uses
-  %i.f = sub i64 %6, %i.d                         ; 8 uses
+  %i.f = sub i64 %6, %i.d                         ; 10 uses
   %.not2 = icmp ult i64 %i.b, %i.e                ; 2 uses
   %.not3 = icmp ult i64 %i.c, %i.f                ; 2 uses
   %or.cond = or i1 %.not2, %.not3
@@ -406,8 +406,8 @@ bb.j:                                             ; preds = %bb.f
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21288)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21289)
   %spec.select.i.i.i = sub nuw i64 %i.e, %i.b     ; 12 uses
-  %spec.select.i.i56.i = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.f, i64 %i.c) ; 7 uses
-  %i.m = sub i64 %spec.select.i.i.i, %spec.select.i.i56.i ; 5 uses
+  %spec.select.i.i56.i83 = sub i64 %i.f, %i.c     ; 7 uses
+  %i.m = sub i64 %spec.select.i.i.i, %spec.select.i.i56.i83 ; 5 uses
   %i.n = and i64 %i.m, 1
   %.not.i = icmp eq i64 %i.n, 0                   ; 4 uses
   %i.o = tail call noundef align 8 dereferenceable(8) ptr @"_ZN89_$LT$similar..algorithms..myers..V$u20$as$u20$core..ops..index..IndexMut$LT$isize$GT$$GT$9index_mut17h6ee0b321fca39e74E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %7, i64 noundef 1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @808), !noalias !21290
@@ -415,7 +415,7 @@ bb.j:                                             ; preds = %bb.f
   %i.p = tail call noundef align 8 dereferenceable(8) ptr @"_ZN89_$LT$similar..algorithms..myers..V$u20$as$u20$core..ops..index..IndexMut$LT$isize$GT$$GT$9index_mut17h6ee0b321fca39e74E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %8, i64 noundef 1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @809), !noalias !21291
   store i64 0, ptr %i.p, align 8, !noalias !21291
   %i.q = add i64 %spec.select.i.i.i, 1
-  %i.r = add i64 %i.q, %spec.select.i.i56.i
+  %i.r = add i64 %i.q, %spec.select.i.i56.i83
   %i.s = lshr i64 %i.r, 1                         ; 3 uses
   %i.t = add nuw i64 %i.s, 1
   %i.u = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -435,19 +435,15 @@ bb.l:                                             ; preds = %bb.j
   %i.z = icmp ult i64 %i.y, 1152921504606846976
   tail call void @llvm.assume(i1 %i.z)
   %.not42.not.i = icmp samesign ugt i64 %i.y, %i.s
-  br i1 %.not42.not.i, label %.lr.ph125.i, label %bb.m, !prof !23
-
-.lr.ph125.i:                                      ; preds = %bb.l
-  %11 = add i64 %spec.select.i.i56.i, %i.c        ; 3 uses
-  br label %bb.n
+  br i1 %.not42.not.i, label %bb.n, label %bb.m, !prof !23
 
 bb.m:                                             ; preds = %bb.l
   tail call void @_ZN4core9panicking5panic17ha264d2bb233f2b69E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @812, i64 noundef 35, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @813) #54, !noalias !21291
   unreachable
 
-bb.n:                                             ; preds = %._crit_edge120.i, %.lr.ph125.i
-  %.sroa.029.1124.i = phi i64 [ 1, %.lr.ph125.i ], [ %.sroa.029.1.i, %._crit_edge120.i ] ; 3 uses
-  %.sroa.029.0123.i = phi i64 [ 0, %.lr.ph125.i ], [ %.sroa.029.1124.i, %._crit_edge120.i ] ; 23 uses
+bb.n:                                             ; preds = %bb.l, %._crit_edge120.i
+  %.sroa.029.1124.i = phi i64 [ %.sroa.029.1.i, %._crit_edge120.i ], [ 1, %bb.l ] ; 3 uses
+  %.sroa.029.0123.i = phi i64 [ %.sroa.029.1124.i, %._crit_edge120.i ], [ 0, %bb.l ] ; 23 uses
   %i.aa = tail call noundef zeroext i1 @_ZN7similar16deadline_support17deadline_exceeded17hbf8d8876b55ae769E(i64 %9, i32 noundef range(i32 0, 1000000001) %10), !noalias !21291
   br i1 %i.aa, label %_ZN7similar10algorithms5myers17find_middle_snake17h2bb39926573160f1E.exit, label %bb.o
 
@@ -486,7 +482,7 @@ bb.r:                                             ; preds = %._crit_edge147.i, %
   %.sroa.06.0.peel.i = phi i64 [ %i.aj, %._crit_edge147.i ], [ %i.ah, %._crit_edge145.i ] ; 6 uses
   %i.ak = sub i64 %.sroa.06.0.peel.i, %.sroa.029.0123.i ; 3 uses
   %i.al = icmp ult i64 %.sroa.06.0.peel.i, %spec.select.i.i.i
-  %i.am = icmp ult i64 %i.ak, %spec.select.i.i56.i
+  %i.am = icmp ult i64 %i.ak, %spec.select.i.i56.i83
   %or.cond107.peel.i = and i1 %i.al, %i.am
   br i1 %or.cond107.peel.i, label %bb.s, label %bb.t
 
@@ -579,13 +575,13 @@ bb.ab:                                            ; preds = %._crit_edge150.i, %
   %.sroa.016.0.peel.i = phi i64 [ %i.bi, %._crit_edge150.i ], [ %i.bg, %._crit_edge148.i ] ; 5 uses
   %i.bj = sub i64 %.sroa.016.0.peel.i, %.sroa.029.0123.i ; 4 uses
   %i.bk = icmp ult i64 %.sroa.016.0.peel.i, %spec.select.i.i.i
-  %i.bl = icmp ult i64 %i.bj, %spec.select.i.i56.i
+  %i.bl = icmp ult i64 %i.bj, %spec.select.i.i56.i83
   %or.cond.peel.i = and i1 %i.bk, %i.bl
   br i1 %or.cond.peel.i, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
   %i.bm = sub nuw i64 %i.e, %.sroa.016.0.peel.i
-  %i.bn = sub i64 %11, %i.bj
+  %i.bn = sub i64 %i.f, %i.bj
   %i.bo = tail call fastcc noundef i64 @_ZN7similar10algorithms5utils17common_suffix_len17hd4a850fbcba52b1fE(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.b, i64 noundef %i.bm, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.c, i64 noundef %i.bn), !noalias !21293 ; 2 uses
   %i.bp = add i64 %i.bo, %.sroa.016.0.peel.i
   %i.bq = add i64 %i.bo, %i.bj
@@ -676,7 +672,7 @@ bb.am:                                            ; preds = %._crit_edge149.i, %
   %.sroa.016.0.i = phi i64 [ %i.cg, %bb.ak ], [ %i.cj, %._crit_edge149.i ] ; 5 uses
   %i.cp = sub i64 %.sroa.016.0.i, %i.bz           ; 4 uses
   %i.cq = icmp ult i64 %.sroa.016.0.i, %spec.select.i.i.i
-  %i.cr = icmp ult i64 %i.cp, %spec.select.i.i56.i
+  %i.cr = icmp ult i64 %i.cp, %spec.select.i.i56.i83
   %or.cond.i = and i1 %i.cq, %i.cr
   br i1 %or.cond.i, label %bb.ao, label %bb.an
 
@@ -689,7 +685,7 @@ bb.an:                                            ; preds = %bb.ao, %bb.am
 
 bb.ao:                                            ; preds = %bb.am
   %i.ct = sub nuw i64 %i.e, %.sroa.016.0.i
-  %i.cu = sub i64 %11, %i.cp
+  %i.cu = sub i64 %i.f, %i.cp
   %i.cv = tail call fastcc noundef i64 @_ZN7similar10algorithms5utils17common_suffix_len17hd4a850fbcba52b1fE(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.b, i64 noundef %i.ct, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.c, i64 noundef %i.cu), !noalias !21293 ; 2 uses
   %i.cw = add i64 %i.cv, %.sroa.016.0.i
   %i.cx = add i64 %i.cv, %i.cp
@@ -720,7 +716,7 @@ bb.ar:                                            ; preds = %bb.ap
   %.sroa.022.0.lcssa.i = phi i64 [ %.sroa.022.0.i, %bb.ar ], [ %.sroa.022.0.peel.i, %bb.af ]
   %.sroa.016.1.lcssa.i = phi i64 [ %.sroa.016.1.i, %bb.ar ], [ %.sroa.016.1.peel.i, %bb.af ]
   %i.df = sub i64 %i.e, %.sroa.016.1.lcssa.i
-  %i.dg = sub i64 %11, %.sroa.022.0.lcssa.i
+  %i.dg = sub i64 %i.f, %.sroa.022.0.lcssa.i
   br label %bb.bc
 
 bb.as:                                            ; preds = %bb.y
@@ -751,7 +747,7 @@ bb.av:                                            ; preds = %._crit_edge146.i, %
   %.sroa.06.0.i = phi i64 [ %i.di, %bb.at ], [ %i.dl, %._crit_edge146.i ] ; 6 uses
   %i.dr = sub i64 %.sroa.06.0.i, %i.az            ; 3 uses
   %i.ds = icmp ult i64 %.sroa.06.0.i, %spec.select.i.i.i
-  %i.dt = icmp ult i64 %i.dr, %spec.select.i.i56.i
+  %i.dt = icmp ult i64 %i.dr, %spec.select.i.i56.i83
   %or.cond107.i = and i1 %i.ds, %i.dt
   br i1 %or.cond107.i, label %bb.ax, label %bb.aw
 
@@ -797,7 +793,7 @@ bb.ba:                                            ; preds = %bb.az
   br label %bb.bc
 
 bb.bb:                                            ; preds = %bb.f
-  %spec.select.i.i24 = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.f, i64 %i.c)
+  %spec.select.i.i2484 = sub nuw i64 %i.f, %i.c
   tail call fastcc void @"_ZN7similar10algorithms7replace16Replace$LT$D$GT$8flush_eq17h41efa12117bb65cfE"(ptr noalias noundef nonnull align 8 dereferenceable(216) %0)
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %.sroa.01.0.copyload.i25 = load i64, ptr %i.ei, align 8, !alias.scope !21294
@@ -811,7 +807,7 @@ bb.bb:                                            ; preds = %bb.f
   %.sroa.5.sroa.0.0.i32 = select i1 %i.ej, i64 %.sroa.4.0.copyload.i27, i64 %i.b
   %.sroa.5.sroa.5.0.i33 = select i1 %i.ej, i64 %.sroa.52.0.copyload.i29, i64 %i.c
   %i.ek = select i1 %i.ej, i64 %.sroa.6.0.copyload.i31, i64 0
-  %.sroa.5.sroa.6.0.i34 = add i64 %i.ek, %spec.select.i.i24
+  %.sroa.5.sroa.6.0.i34 = add i64 %i.ek, %spec.select.i.i2484
   store i64 1, ptr %i.ei, align 8, !alias.scope !21294
   store i64 %.sroa.5.sroa.0.0.i32, ptr %.sroa.4.0..sroa_idx.i26, align 8, !alias.scope !21294
   store i64 %.sroa.5.sroa.5.0.i33, ptr %.sroa.52.0..sroa_idx.i28, align 8, !alias.scope !21294
@@ -848,7 +844,6 @@ bb.be:                                            ; preds = %_ZN7similar10algori
   %.sink.i39 = phi i64 [ %i.em, %bb.bd ], [ %spec.select.i.i.i, %bb.be ]
   store i64 1, ptr %0, align 8, !alias.scope !21295
   store i64 %.sink.i39, ptr %.sroa.5.0..sroa_idx.i36, align 8, !alias.scope !21295
-  %12 = sub i64 %i.f, %i.c
   tail call fastcc void @"_ZN7similar10algorithms7replace16Replace$LT$D$GT$8flush_eq17h41efa12117bb65cfE"(ptr noalias noundef nonnull align 8 dereferenceable(216) %0)
   %i.en = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %.sroa.01.0.copyload.i42 = load i64, ptr %i.en, align 8, !alias.scope !21296
@@ -862,7 +857,7 @@ bb.be:                                            ; preds = %_ZN7similar10algori
   %.sroa.5.sroa.0.0.i49 = select i1 %i.eo, i64 %.sroa.4.0.copyload.i44, i64 %i.b
   %.sroa.5.sroa.5.0.i50 = select i1 %i.eo, i64 %.sroa.52.0.copyload.i46, i64 %i.c
   %i.ep = select i1 %i.eo, i64 %.sroa.6.0.copyload.i48, i64 0
-  %.sroa.5.sroa.6.0.i51 = add i64 %12, %i.ep
+  %.sroa.5.sroa.6.0.i51 = add i64 %spec.select.i.i56.i83, %i.ep
   store i64 1, ptr %i.en, align 8, !alias.scope !21296
   store i64 %.sroa.5.sroa.0.0.i49, ptr %.sroa.4.0..sroa_idx.i43, align 8, !alias.scope !21296
   store i64 %.sroa.5.sroa.5.0.i50, ptr %.sroa.52.0..sroa_idx.i45, align 8, !alias.scope !21296
@@ -1120,7 +1115,7 @@ bb.q:                                             ; preds = %bb.n
   br i1 %i.ba, label %bb.t, label %bb.u
 
 bb.r:                                             ; preds = %bb.n
-  %spec.select.i.i35 = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.ac, i64 %i.k)
+  %spec.select.i.i3588 = sub nuw i64 %i.ac, %i.k
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21417)
   %i.bb = load ptr, ptr %0, align 8, !alias.scope !21417, !nonnull !17, !align !29, !noundef !17
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21418)
@@ -1146,7 +1141,7 @@ bb.s:                                             ; preds = %bb.r
   %.sroa.578.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 16
   store i64 %i.k, ptr %.sroa.578.0..sroa_idx, align 8, !noalias !21422
   %.sroa.679.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 24
-  store i64 %spec.select.i.i35, ptr %.sroa.679.0..sroa_idx, align 8, !noalias !21422
+  store i64 %spec.select.i.i3588, ptr %.sroa.679.0..sroa_idx, align 8, !noalias !21422
   %i.bl = add i64 %i.bf, 1
   store i64 %i.bl, ptr %i.be, align 8, !alias.scope !21419, !noalias !21420
   br label %bb.m
@@ -1267,10 +1262,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %i.b = add i64 %i.a, %2                         ; 14 uses
-  %i.c = add i64 %i.a, %5                         ; 16 uses
+  %i.c = add i64 %i.a, %5                         ; 14 uses
   %i.d = tail call fastcc noundef i64 @_ZN7similar10algorithms5utils17common_suffix_len17hbe1d6208897bcdf3E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.b, i64 noundef %3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.c, i64 noundef %6) ; 4 uses
   %i.e = sub i64 %3, %i.d                         ; 10 uses
-  %i.f = sub i64 %6, %i.d                         ; 8 uses
+  %i.f = sub i64 %6, %i.d                         ; 10 uses
   %.not2 = icmp ult i64 %i.b, %i.e                ; 2 uses
   %.not3 = icmp ult i64 %i.c, %i.f                ; 2 uses
   %or.cond = or i1 %.not2, %.not3
@@ -1339,8 +1334,8 @@ bb.j:                                             ; preds = %bb.f
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21468)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21469)
   %spec.select.i.i.i = sub nuw i64 %i.e, %i.b     ; 12 uses
-  %spec.select.i.i56.i = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.f, i64 %i.c) ; 7 uses
-  %i.m = sub i64 %spec.select.i.i.i, %spec.select.i.i56.i ; 5 uses
+  %spec.select.i.i56.i83 = sub i64 %i.f, %i.c     ; 7 uses
+  %i.m = sub i64 %spec.select.i.i.i, %spec.select.i.i56.i83 ; 5 uses
   %i.n = and i64 %i.m, 1
   %.not.i = icmp eq i64 %i.n, 0                   ; 4 uses
   %i.o = tail call noundef align 8 dereferenceable(8) ptr @"_ZN89_$LT$similar..algorithms..myers..V$u20$as$u20$core..ops..index..IndexMut$LT$isize$GT$$GT$9index_mut17h6ee0b321fca39e74E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %7, i64 noundef 1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @808), !noalias !21470
@@ -1348,7 +1343,7 @@ bb.j:                                             ; preds = %bb.f
   %i.p = tail call noundef align 8 dereferenceable(8) ptr @"_ZN89_$LT$similar..algorithms..myers..V$u20$as$u20$core..ops..index..IndexMut$LT$isize$GT$$GT$9index_mut17h6ee0b321fca39e74E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %8, i64 noundef 1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @809), !noalias !21471
   store i64 0, ptr %i.p, align 8, !noalias !21471
   %i.q = add i64 %spec.select.i.i.i, 1
-  %i.r = add i64 %i.q, %spec.select.i.i56.i
+  %i.r = add i64 %i.q, %spec.select.i.i56.i83
   %i.s = lshr i64 %i.r, 1                         ; 3 uses
   %i.t = add nuw i64 %i.s, 1
   %i.u = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -1368,19 +1363,15 @@ bb.l:                                             ; preds = %bb.j
   %i.z = icmp ult i64 %i.y, 1152921504606846976
   tail call void @llvm.assume(i1 %i.z)
   %.not42.not.i = icmp samesign ugt i64 %i.y, %i.s
-  br i1 %.not42.not.i, label %.lr.ph125.i, label %bb.m, !prof !23
-
-.lr.ph125.i:                                      ; preds = %bb.l
-  %11 = add i64 %spec.select.i.i56.i, %i.c        ; 3 uses
-  br label %bb.n
+  br i1 %.not42.not.i, label %bb.n, label %bb.m, !prof !23
 
 bb.m:                                             ; preds = %bb.l
   tail call void @_ZN4core9panicking5panic17ha264d2bb233f2b69E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @812, i64 noundef 35, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @813) #54, !noalias !21471
   unreachable
 
-bb.n:                                             ; preds = %._crit_edge120.i, %.lr.ph125.i
-  %.sroa.029.1124.i = phi i64 [ 1, %.lr.ph125.i ], [ %.sroa.029.1.i, %._crit_edge120.i ] ; 3 uses
-  %.sroa.029.0123.i = phi i64 [ 0, %.lr.ph125.i ], [ %.sroa.029.1124.i, %._crit_edge120.i ] ; 23 uses
+bb.n:                                             ; preds = %bb.l, %._crit_edge120.i
+  %.sroa.029.1124.i = phi i64 [ %.sroa.029.1.i, %._crit_edge120.i ], [ 1, %bb.l ] ; 3 uses
+  %.sroa.029.0123.i = phi i64 [ %.sroa.029.1124.i, %._crit_edge120.i ], [ 0, %bb.l ] ; 23 uses
   %i.aa = tail call noundef zeroext i1 @_ZN7similar16deadline_support17deadline_exceeded17hbf8d8876b55ae769E(i64 %9, i32 noundef range(i32 0, 1000000001) %10), !noalias !21471
   br i1 %i.aa, label %_ZN7similar10algorithms5myers17find_middle_snake17h2f141d3ad4b372e7E.exit, label %bb.o
 
@@ -1419,7 +1410,7 @@ bb.r:                                             ; preds = %._crit_edge147.i, %
   %.sroa.06.0.peel.i = phi i64 [ %i.aj, %._crit_edge147.i ], [ %i.ah, %._crit_edge145.i ] ; 6 uses
   %i.ak = sub i64 %.sroa.06.0.peel.i, %.sroa.029.0123.i ; 3 uses
   %i.al = icmp ult i64 %.sroa.06.0.peel.i, %spec.select.i.i.i
-  %i.am = icmp ult i64 %i.ak, %spec.select.i.i56.i
+  %i.am = icmp ult i64 %i.ak, %spec.select.i.i56.i83
   %or.cond107.peel.i = and i1 %i.al, %i.am
   br i1 %or.cond107.peel.i, label %bb.s, label %bb.t
 
@@ -1512,13 +1503,13 @@ bb.ab:                                            ; preds = %._crit_edge150.i, %
   %.sroa.016.0.peel.i = phi i64 [ %i.bi, %._crit_edge150.i ], [ %i.bg, %._crit_edge148.i ] ; 5 uses
   %i.bj = sub i64 %.sroa.016.0.peel.i, %.sroa.029.0123.i ; 4 uses
   %i.bk = icmp ult i64 %.sroa.016.0.peel.i, %spec.select.i.i.i
-  %i.bl = icmp ult i64 %i.bj, %spec.select.i.i56.i
+  %i.bl = icmp ult i64 %i.bj, %spec.select.i.i56.i83
   %or.cond.peel.i = and i1 %i.bk, %i.bl
   br i1 %or.cond.peel.i, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
   %i.bm = sub nuw i64 %i.e, %.sroa.016.0.peel.i
-  %i.bn = sub i64 %11, %i.bj
+  %i.bn = sub i64 %i.f, %i.bj
   %i.bo = tail call fastcc noundef i64 @_ZN7similar10algorithms5utils17common_suffix_len17hbe1d6208897bcdf3E(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.b, i64 noundef %i.bm, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.c, i64 noundef %i.bn), !noalias !21473 ; 2 uses
   %i.bp = add i64 %i.bo, %.sroa.016.0.peel.i
   %i.bq = add i64 %i.bo, %i.bj
@@ -1609,7 +1600,7 @@ bb.am:                                            ; preds = %._crit_edge149.i, %
   %.sroa.016.0.i = phi i64 [ %i.cg, %bb.ak ], [ %i.cj, %._crit_edge149.i ] ; 5 uses
   %i.cp = sub i64 %.sroa.016.0.i, %i.bz           ; 4 uses
   %i.cq = icmp ult i64 %.sroa.016.0.i, %spec.select.i.i.i
-  %i.cr = icmp ult i64 %i.cp, %spec.select.i.i56.i
+  %i.cr = icmp ult i64 %i.cp, %spec.select.i.i56.i83
   %or.cond.i = and i1 %i.cq, %i.cr
   br i1 %or.cond.i, label %bb.ao, label %bb.an
 
@@ -1622,7 +1613,7 @@ bb.an:                                            ; preds = %bb.ao, %bb.am
 
 bb.ao:                                            ; preds = %bb.am
   %i.ct = sub nuw i64 %i.e, %.sroa.016.0.i
-  %i.cu = sub i64 %11, %i.cp
+  %i.cu = sub i64 %i.f, %i.cp
   %i.cv = tail call fastcc noundef i64 @_ZN7similar10algorithms5utils17common_suffix_len17hbe1d6208897bcdf3E(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.b, i64 noundef %i.ct, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.c, i64 noundef %i.cu), !noalias !21473 ; 2 uses
   %i.cw = add i64 %i.cv, %.sroa.016.0.i
   %i.cx = add i64 %i.cv, %i.cp
@@ -1653,7 +1644,7 @@ bb.ar:                                            ; preds = %bb.ap
   %.sroa.022.0.lcssa.i = phi i64 [ %.sroa.022.0.i, %bb.ar ], [ %.sroa.022.0.peel.i, %bb.af ]
   %.sroa.016.1.lcssa.i = phi i64 [ %.sroa.016.1.i, %bb.ar ], [ %.sroa.016.1.peel.i, %bb.af ]
   %i.df = sub i64 %i.e, %.sroa.016.1.lcssa.i
-  %i.dg = sub i64 %11, %.sroa.022.0.lcssa.i
+  %i.dg = sub i64 %i.f, %.sroa.022.0.lcssa.i
   br label %bb.bc
 
 bb.as:                                            ; preds = %bb.y
@@ -1684,7 +1675,7 @@ bb.av:                                            ; preds = %._crit_edge146.i, %
   %.sroa.06.0.i = phi i64 [ %i.di, %bb.at ], [ %i.dl, %._crit_edge146.i ] ; 6 uses
   %i.dr = sub i64 %.sroa.06.0.i, %i.az            ; 3 uses
   %i.ds = icmp ult i64 %.sroa.06.0.i, %spec.select.i.i.i
-  %i.dt = icmp ult i64 %i.dr, %spec.select.i.i56.i
+  %i.dt = icmp ult i64 %i.dr, %spec.select.i.i56.i83
   %or.cond107.i = and i1 %i.ds, %i.dt
   br i1 %or.cond107.i, label %bb.ax, label %bb.aw
 
@@ -1730,7 +1721,7 @@ bb.ba:                                            ; preds = %bb.az
   br label %bb.bc
 
 bb.bb:                                            ; preds = %bb.f
-  %spec.select.i.i24 = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.f, i64 %i.c)
+  %spec.select.i.i2484 = sub nuw i64 %i.f, %i.c
   tail call fastcc void @"_ZN7similar10algorithms7replace16Replace$LT$D$GT$8flush_eq17hc78c0996199f778aE"(ptr noalias noundef nonnull align 8 dereferenceable(200) %0)
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %.sroa.01.0.copyload.i25 = load i64, ptr %i.ei, align 8, !alias.scope !21474
@@ -1744,7 +1735,7 @@ bb.bb:                                            ; preds = %bb.f
   %.sroa.5.sroa.0.0.i32 = select i1 %i.ej, i64 %.sroa.4.0.copyload.i27, i64 %i.b
   %.sroa.5.sroa.5.0.i33 = select i1 %i.ej, i64 %.sroa.52.0.copyload.i29, i64 %i.c
   %i.ek = select i1 %i.ej, i64 %.sroa.6.0.copyload.i31, i64 0
-  %.sroa.5.sroa.6.0.i34 = add i64 %i.ek, %spec.select.i.i24
+  %.sroa.5.sroa.6.0.i34 = add i64 %i.ek, %spec.select.i.i2484
   store i64 1, ptr %i.ei, align 8, !alias.scope !21474
   store i64 %.sroa.5.sroa.0.0.i32, ptr %.sroa.4.0..sroa_idx.i26, align 8, !alias.scope !21474
   store i64 %.sroa.5.sroa.5.0.i33, ptr %.sroa.52.0..sroa_idx.i28, align 8, !alias.scope !21474
@@ -1781,7 +1772,6 @@ bb.be:                                            ; preds = %_ZN7similar10algori
   %.sink.i39 = phi i64 [ %i.em, %bb.bd ], [ %spec.select.i.i.i, %bb.be ]
   store i64 1, ptr %0, align 8, !alias.scope !21475
   store i64 %.sink.i39, ptr %.sroa.5.0..sroa_idx.i36, align 8, !alias.scope !21475
-  %12 = sub i64 %i.f, %i.c
   tail call fastcc void @"_ZN7similar10algorithms7replace16Replace$LT$D$GT$8flush_eq17hc78c0996199f778aE"(ptr noalias noundef nonnull align 8 dereferenceable(200) %0)
   %i.en = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %.sroa.01.0.copyload.i42 = load i64, ptr %i.en, align 8, !alias.scope !21476
@@ -1795,7 +1785,7 @@ bb.be:                                            ; preds = %_ZN7similar10algori
   %.sroa.5.sroa.0.0.i49 = select i1 %i.eo, i64 %.sroa.4.0.copyload.i44, i64 %i.b
   %.sroa.5.sroa.5.0.i50 = select i1 %i.eo, i64 %.sroa.52.0.copyload.i46, i64 %i.c
   %i.ep = select i1 %i.eo, i64 %.sroa.6.0.copyload.i48, i64 0
-  %.sroa.5.sroa.6.0.i51 = add i64 %12, %i.ep
+  %.sroa.5.sroa.6.0.i51 = add i64 %spec.select.i.i56.i83, %i.ep
   store i64 1, ptr %i.en, align 8, !alias.scope !21476
   store i64 %.sroa.5.sroa.0.0.i49, ptr %.sroa.4.0..sroa_idx.i43, align 8, !alias.scope !21476
   store i64 %.sroa.5.sroa.5.0.i50, ptr %.sroa.52.0..sroa_idx.i45, align 8, !alias.scope !21476
@@ -1997,7 +1987,7 @@ bb.o:                                             ; preds = %bb.l
   br i1 %i.bb, label %bb.r, label %bb.s
 
 bb.p:                                             ; preds = %bb.l
-  %spec.select.i.i22 = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.ad, i64 %i.d)
+  %spec.select.i.i2268 = sub nuw i64 %i.ad, %i.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21567)
   %i.bc = load ptr, ptr %0, align 8, !alias.scope !21567, !nonnull !17, !align !29, !noundef !17
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21568)
@@ -2023,7 +2013,7 @@ bb.q:                                             ; preds = %bb.p
   %.sroa.565.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bl, i64 16
   store i64 %i.d, ptr %.sroa.565.0..sroa_idx, align 8, !noalias !21572
   %.sroa.666.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bl, i64 24
-  store i64 %spec.select.i.i22, ptr %.sroa.666.0..sroa_idx, align 8, !noalias !21572
+  store i64 %spec.select.i.i2268, ptr %.sroa.666.0..sroa_idx, align 8, !noalias !21572
   %i.bm = add i64 %i.bg, 1
   store i64 %i.bm, ptr %i.bf, align 8, !alias.scope !21569, !noalias !21570
   br label %bb.k
@@ -2295,7 +2285,7 @@ bb.o:                                             ; preds = %bb.l
   br i1 %i.ax, label %bb.r, label %bb.s
 
 bb.p:                                             ; preds = %bb.l
-  %spec.select.i.i22 = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.ad, i64 %i.d)
+  %spec.select.i.i2268 = sub nuw i64 %i.ad, %i.d
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.ba = load i64, ptr %i.az, align 8, !alias.scope !21649, !noalias !21650, !noundef !17 ; 3 uses
@@ -2317,7 +2307,7 @@ bb.q:                                             ; preds = %bb.p
   %.sroa.565.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bf, i64 16
   store i64 %i.d, ptr %.sroa.565.0..sroa_idx, align 8
   %.sroa.666.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bf, i64 24
-  store i64 %spec.select.i.i22, ptr %.sroa.666.0..sroa_idx, align 8
+  store i64 %spec.select.i.i2268, ptr %.sroa.666.0..sroa_idx, align 8
   %i.bg = add i64 %i.ba, 1
   store i64 %i.bg, ptr %i.az, align 8, !alias.scope !21649, !noalias !21650
   br label %bb.k
@@ -2631,7 +2621,7 @@ bb.q:                                             ; preds = %bb.n
   br i1 %i.aw, label %bb.t, label %bb.u
 
 bb.r:                                             ; preds = %bb.n
-  %spec.select.i.i35 = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.ac, i64 %i.k)
+  %spec.select.i.i3588 = sub nuw i64 %i.ac, %i.k
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.az = load i64, ptr %i.ay, align 8, !alias.scope !21749, !noalias !21750, !noundef !17 ; 3 uses
@@ -2653,7 +2643,7 @@ bb.s:                                             ; preds = %bb.r
   %.sroa.578.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.be, i64 16
   store i64 %i.k, ptr %.sroa.578.0..sroa_idx, align 8
   %.sroa.679.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.be, i64 24
-  store i64 %spec.select.i.i35, ptr %.sroa.679.0..sroa_idx, align 8
+  store i64 %spec.select.i.i3588, ptr %.sroa.679.0..sroa_idx, align 8
   %i.bf = add i64 %i.az, 1
   store i64 %i.bf, ptr %i.ay, align 8, !alias.scope !21749, !noalias !21750
   br label %bb.m
@@ -2760,10 +2750,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %i.b = add i64 %i.a, %2                         ; 14 uses
-  %i.c = add i64 %i.a, %5                         ; 16 uses
+  %i.c = add i64 %i.a, %5                         ; 14 uses
   %i.d = tail call fastcc noundef i64 @_ZN7similar10algorithms5utils17common_suffix_len17h1c064e633f72fd67E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.b, i64 noundef %3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.c, i64 noundef %6) ; 4 uses
   %i.e = sub i64 %3, %i.d                         ; 10 uses
-  %i.f = sub i64 %6, %i.d                         ; 8 uses
+  %i.f = sub i64 %6, %i.d                         ; 10 uses
   %.not2 = icmp ult i64 %i.b, %i.e                ; 2 uses
   %.not3 = icmp ult i64 %i.c, %i.f                ; 2 uses
   %or.cond = or i1 %.not2, %.not3
@@ -2832,8 +2822,8 @@ bb.j:                                             ; preds = %bb.f
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21788)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21789)
   %spec.select.i.i.i = sub nuw i64 %i.e, %i.b     ; 12 uses
-  %spec.select.i.i56.i = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.f, i64 %i.c) ; 7 uses
-  %i.m = sub i64 %spec.select.i.i.i, %spec.select.i.i56.i ; 5 uses
+  %spec.select.i.i56.i83 = sub i64 %i.f, %i.c     ; 7 uses
+  %i.m = sub i64 %spec.select.i.i.i, %spec.select.i.i56.i83 ; 5 uses
   %i.n = and i64 %i.m, 1
   %.not.i = icmp eq i64 %i.n, 0                   ; 4 uses
   %i.o = tail call noundef align 8 dereferenceable(8) ptr @"_ZN89_$LT$similar..algorithms..myers..V$u20$as$u20$core..ops..index..IndexMut$LT$isize$GT$$GT$9index_mut17h6ee0b321fca39e74E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %7, i64 noundef 1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @808), !noalias !21790
@@ -2841,7 +2831,7 @@ bb.j:                                             ; preds = %bb.f
   %i.p = tail call noundef align 8 dereferenceable(8) ptr @"_ZN89_$LT$similar..algorithms..myers..V$u20$as$u20$core..ops..index..IndexMut$LT$isize$GT$$GT$9index_mut17h6ee0b321fca39e74E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %8, i64 noundef 1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @809), !noalias !21791
   store i64 0, ptr %i.p, align 8, !noalias !21791
   %i.q = add i64 %spec.select.i.i.i, 1
-  %i.r = add i64 %i.q, %spec.select.i.i56.i
+  %i.r = add i64 %i.q, %spec.select.i.i56.i83
   %i.s = lshr i64 %i.r, 1                         ; 3 uses
   %i.t = add nuw i64 %i.s, 1
   %i.u = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -2861,19 +2851,15 @@ bb.l:                                             ; preds = %bb.j
   %i.z = icmp ult i64 %i.y, 1152921504606846976
   tail call void @llvm.assume(i1 %i.z)
   %.not42.not.i = icmp samesign ugt i64 %i.y, %i.s
-  br i1 %.not42.not.i, label %.lr.ph125.i, label %bb.m, !prof !23
-
-.lr.ph125.i:                                      ; preds = %bb.l
-  %11 = add i64 %spec.select.i.i56.i, %i.c        ; 3 uses
-  br label %bb.n
+  br i1 %.not42.not.i, label %bb.n, label %bb.m, !prof !23
 
 bb.m:                                             ; preds = %bb.l
   tail call void @_ZN4core9panicking5panic17ha264d2bb233f2b69E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @812, i64 noundef 35, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @813) #54, !noalias !21791
   unreachable
 
-bb.n:                                             ; preds = %._crit_edge120.i, %.lr.ph125.i
-  %.sroa.029.1124.i = phi i64 [ 1, %.lr.ph125.i ], [ %.sroa.029.1.i, %._crit_edge120.i ] ; 3 uses
-  %.sroa.029.0123.i = phi i64 [ 0, %.lr.ph125.i ], [ %.sroa.029.1124.i, %._crit_edge120.i ] ; 23 uses
+bb.n:                                             ; preds = %bb.l, %._crit_edge120.i
+  %.sroa.029.1124.i = phi i64 [ %.sroa.029.1.i, %._crit_edge120.i ], [ 1, %bb.l ] ; 3 uses
+  %.sroa.029.0123.i = phi i64 [ %.sroa.029.1124.i, %._crit_edge120.i ], [ 0, %bb.l ] ; 23 uses
   %i.aa = tail call noundef zeroext i1 @_ZN7similar16deadline_support17deadline_exceeded17hbf8d8876b55ae769E(i64 %9, i32 noundef range(i32 0, 1000000001) %10), !noalias !21791
   br i1 %i.aa, label %_ZN7similar10algorithms5myers17find_middle_snake17h4543af9f3b03cbf2E.exit, label %bb.o
 
@@ -2912,7 +2898,7 @@ bb.r:                                             ; preds = %._crit_edge147.i, %
   %.sroa.06.0.peel.i = phi i64 [ %i.aj, %._crit_edge147.i ], [ %i.ah, %._crit_edge145.i ] ; 6 uses
   %i.ak = sub i64 %.sroa.06.0.peel.i, %.sroa.029.0123.i ; 3 uses
   %i.al = icmp ult i64 %.sroa.06.0.peel.i, %spec.select.i.i.i
-  %i.am = icmp ult i64 %i.ak, %spec.select.i.i56.i
+  %i.am = icmp ult i64 %i.ak, %spec.select.i.i56.i83
   %or.cond107.peel.i = and i1 %i.al, %i.am
   br i1 %or.cond107.peel.i, label %bb.s, label %bb.t
 
@@ -3005,13 +2991,13 @@ bb.ab:                                            ; preds = %._crit_edge150.i, %
   %.sroa.016.0.peel.i = phi i64 [ %i.bi, %._crit_edge150.i ], [ %i.bg, %._crit_edge148.i ] ; 5 uses
   %i.bj = sub i64 %.sroa.016.0.peel.i, %.sroa.029.0123.i ; 4 uses
   %i.bk = icmp ult i64 %.sroa.016.0.peel.i, %spec.select.i.i.i
-  %i.bl = icmp ult i64 %i.bj, %spec.select.i.i56.i
+  %i.bl = icmp ult i64 %i.bj, %spec.select.i.i56.i83
   %or.cond.peel.i = and i1 %i.bk, %i.bl
   br i1 %or.cond.peel.i, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
   %i.bm = sub nuw i64 %i.e, %.sroa.016.0.peel.i
-  %i.bn = sub i64 %11, %i.bj
+  %i.bn = sub i64 %i.f, %i.bj
   %i.bo = tail call fastcc noundef i64 @_ZN7similar10algorithms5utils17common_suffix_len17h1c064e633f72fd67E(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.b, i64 noundef %i.bm, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.c, i64 noundef %i.bn), !noalias !21793 ; 2 uses
   %i.bp = add i64 %i.bo, %.sroa.016.0.peel.i
   %i.bq = add i64 %i.bo, %i.bj
@@ -3102,7 +3088,7 @@ bb.am:                                            ; preds = %._crit_edge149.i, %
   %.sroa.016.0.i = phi i64 [ %i.cg, %bb.ak ], [ %i.cj, %._crit_edge149.i ] ; 5 uses
   %i.cp = sub i64 %.sroa.016.0.i, %i.bz           ; 4 uses
   %i.cq = icmp ult i64 %.sroa.016.0.i, %spec.select.i.i.i
-  %i.cr = icmp ult i64 %i.cp, %spec.select.i.i56.i
+  %i.cr = icmp ult i64 %i.cp, %spec.select.i.i56.i83
   %or.cond.i = and i1 %i.cq, %i.cr
   br i1 %or.cond.i, label %bb.ao, label %bb.an
 
@@ -3115,7 +3101,7 @@ bb.an:                                            ; preds = %bb.ao, %bb.am
 
 bb.ao:                                            ; preds = %bb.am
   %i.ct = sub nuw i64 %i.e, %.sroa.016.0.i
-  %i.cu = sub i64 %11, %i.cp
+  %i.cu = sub i64 %i.f, %i.cp
   %i.cv = tail call fastcc noundef i64 @_ZN7similar10algorithms5utils17common_suffix_len17h1c064e633f72fd67E(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.b, i64 noundef %i.ct, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.c, i64 noundef %i.cu), !noalias !21793 ; 2 uses
   %i.cw = add i64 %i.cv, %.sroa.016.0.i
   %i.cx = add i64 %i.cv, %i.cp
@@ -3146,7 +3132,7 @@ bb.ar:                                            ; preds = %bb.ap
   %.sroa.022.0.lcssa.i = phi i64 [ %.sroa.022.0.i, %bb.ar ], [ %.sroa.022.0.peel.i, %bb.af ]
   %.sroa.016.1.lcssa.i = phi i64 [ %.sroa.016.1.i, %bb.ar ], [ %.sroa.016.1.peel.i, %bb.af ]
   %i.df = sub i64 %i.e, %.sroa.016.1.lcssa.i
-  %i.dg = sub i64 %11, %.sroa.022.0.lcssa.i
+  %i.dg = sub i64 %i.f, %.sroa.022.0.lcssa.i
   br label %bb.bc
 
 bb.as:                                            ; preds = %bb.y
@@ -3177,7 +3163,7 @@ bb.av:                                            ; preds = %._crit_edge146.i, %
   %.sroa.06.0.i = phi i64 [ %i.di, %bb.at ], [ %i.dl, %._crit_edge146.i ] ; 6 uses
   %i.dr = sub i64 %.sroa.06.0.i, %i.az            ; 3 uses
   %i.ds = icmp ult i64 %.sroa.06.0.i, %spec.select.i.i.i
-  %i.dt = icmp ult i64 %i.dr, %spec.select.i.i56.i
+  %i.dt = icmp ult i64 %i.dr, %spec.select.i.i56.i83
   %or.cond107.i = and i1 %i.ds, %i.dt
   br i1 %or.cond107.i, label %bb.ax, label %bb.aw
 
@@ -3223,7 +3209,7 @@ bb.ba:                                            ; preds = %bb.az
   br label %bb.bc
 
 bb.bb:                                            ; preds = %bb.f
-  %spec.select.i.i24 = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.f, i64 %i.c)
+  %spec.select.i.i2484 = sub nuw i64 %i.f, %i.c
   tail call fastcc void @"_ZN7similar10algorithms7replace16Replace$LT$D$GT$8flush_eq17h4c85eaf035ce3d41E"(ptr noalias noundef nonnull align 8 dereferenceable(200) %0)
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %.sroa.01.0.copyload.i25 = load i64, ptr %i.ei, align 8, !alias.scope !21794
@@ -3237,7 +3223,7 @@ bb.bb:                                            ; preds = %bb.f
   %.sroa.5.sroa.0.0.i32 = select i1 %i.ej, i64 %.sroa.4.0.copyload.i27, i64 %i.b
   %.sroa.5.sroa.5.0.i33 = select i1 %i.ej, i64 %.sroa.52.0.copyload.i29, i64 %i.c
   %i.ek = select i1 %i.ej, i64 %.sroa.6.0.copyload.i31, i64 0
-  %.sroa.5.sroa.6.0.i34 = add i64 %i.ek, %spec.select.i.i24
+  %.sroa.5.sroa.6.0.i34 = add i64 %i.ek, %spec.select.i.i2484
   store i64 1, ptr %i.ei, align 8, !alias.scope !21794
   store i64 %.sroa.5.sroa.0.0.i32, ptr %.sroa.4.0..sroa_idx.i26, align 8, !alias.scope !21794
   store i64 %.sroa.5.sroa.5.0.i33, ptr %.sroa.52.0..sroa_idx.i28, align 8, !alias.scope !21794
@@ -3274,7 +3260,6 @@ bb.be:                                            ; preds = %_ZN7similar10algori
   %.sink.i39 = phi i64 [ %i.em, %bb.bd ], [ %spec.select.i.i.i, %bb.be ]
   store i64 1, ptr %0, align 8, !alias.scope !21795
   store i64 %.sink.i39, ptr %.sroa.5.0..sroa_idx.i36, align 8, !alias.scope !21795
-  %12 = sub i64 %i.f, %i.c
   tail call fastcc void @"_ZN7similar10algorithms7replace16Replace$LT$D$GT$8flush_eq17h4c85eaf035ce3d41E"(ptr noalias noundef nonnull align 8 dereferenceable(200) %0)
   %i.en = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %.sroa.01.0.copyload.i42 = load i64, ptr %i.en, align 8, !alias.scope !21796
@@ -3288,7 +3273,7 @@ bb.be:                                            ; preds = %_ZN7similar10algori
   %.sroa.5.sroa.0.0.i49 = select i1 %i.eo, i64 %.sroa.4.0.copyload.i44, i64 %i.b
   %.sroa.5.sroa.5.0.i50 = select i1 %i.eo, i64 %.sroa.52.0.copyload.i46, i64 %i.c
   %i.ep = select i1 %i.eo, i64 %.sroa.6.0.copyload.i48, i64 0
-  %.sroa.5.sroa.6.0.i51 = add i64 %12, %i.ep
+  %.sroa.5.sroa.6.0.i51 = add i64 %spec.select.i.i56.i83, %i.ep
   store i64 1, ptr %i.en, align 8, !alias.scope !21796
   store i64 %.sroa.5.sroa.0.0.i49, ptr %.sroa.4.0..sroa_idx.i43, align 8, !alias.scope !21796
   store i64 %.sroa.5.sroa.5.0.i50, ptr %.sroa.52.0..sroa_idx.i45, align 8, !alias.scope !21796
@@ -3554,7 +3539,7 @@ bb.r:                                             ; preds = %bb.o
   br i1 %i.bq, label %bb.u, label %bb.v
 
 bb.s:                                             ; preds = %bb.o
-  %spec.select.i.i34 = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.as, i64 %i.s)
+  %spec.select.i.i3487 = sub nuw i64 %i.as, %i.s
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21908)
   %i.br = load ptr, ptr %0, align 8, !alias.scope !21908, !nonnull !17, !align !29, !noundef !17
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21909)
@@ -3580,7 +3565,7 @@ bb.t:                                             ; preds = %bb.s
   %.sroa.577.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ca, i64 16
   store i64 %i.s, ptr %.sroa.577.0..sroa_idx, align 8, !noalias !21913
   %.sroa.678.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ca, i64 24
-  store i64 %spec.select.i.i34, ptr %.sroa.678.0..sroa_idx, align 8, !noalias !21913
+  store i64 %spec.select.i.i3487, ptr %.sroa.678.0..sroa_idx, align 8, !noalias !21913
   %i.cb = add i64 %i.bv, 1
   store i64 %i.cb, ptr %i.bu, align 8, !alias.scope !21910, !noalias !21911
   br label %bb.n

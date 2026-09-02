@@ -204,23 +204,23 @@ bb.a:
   %i.p = alloca i32, align 4                      ; 4 uses
   %i.q = alloca i32, align 4                      ; 4 uses
   %6 = alloca [4 x %struct.conversation_element], align 16 ; 12 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
   store i32 0, ptr %i.c, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #8
   store i64 0, ptr %i.l, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #8
   store i64 0, ptr %i.m, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #8
   store i64 0, ptr %i.n, align 8
   %i.r = getelementptr i8, ptr %1, i64 8          ; 2 uses
   %i.s = load ptr, ptr %i.r, align 8
@@ -298,7 +298,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %.sroa.6328.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 76
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6328.0..sroa_idx, i8 0, i64 20, i1 false)
   %i.bj = load i8, ptr %3, align 1
   %i.bk = zext i8 %i.bj to i32
@@ -326,7 +326,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bu = load i32, ptr %i.bo, align 4
   %i.bv = call ptr @conversation_new_full(i32 noundef %i.bu, ptr noundef nonnull %4) ; 2 uses
   %i.bw = call ptr @wmem_file_scope()
-  %i.bx = call noalias dereferenceable_or_null(180) ptr @wmem_alloc0(ptr noundef %i.bw, i64 noundef 180) #10 ; 5 uses
+  %i.bx = call noalias dereferenceable_or_null(180) ptr @wmem_alloc0(ptr noundef %i.bw, i64 noundef 180) #9 ; 5 uses
   %i.by = load i32, ptr %i.bo, align 4
   store i32 %i.by, ptr %i.bx, align 4
   %i.bz = load i32, ptr %i.f, align 4
@@ -361,7 +361,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.cl = call ptr @conversation_new_full(i32 noundef %i.ck, ptr noundef nonnull %4) ; 2 uses
   %i.cm = call ptr @wmem_file_scope()
-  %i.cn = call noalias dereferenceable_or_null(180) ptr @wmem_alloc0(ptr noundef %i.cm, i64 noundef 180) #10 ; 5 uses
+  %i.cn = call noalias dereferenceable_or_null(180) ptr @wmem_alloc0(ptr noundef %i.cm, i64 noundef 180) #9 ; 5 uses
   %i.co = load i32, ptr %i.bo, align 4
   store i32 %i.co, ptr %i.cn, align 4
   %i.cp = load i32, ptr %i.f, align 4
@@ -644,7 +644,7 @@ bb.ad:                                            ; preds = %.preheader600.prehe
 bb.ae:                                            ; preds = %.preheader599.14
   %i.he = getelementptr i8, ptr %1, i64 416       ; 3 uses
   %i.hf = load ptr, ptr %i.he, align 8
-  %i.hg = call noalias dereferenceable_or_null(15) ptr @wmem_alloc(ptr noundef %i.hf, i64 noundef 15) #10 ; 16 uses
+  %i.hg = call noalias dereferenceable_or_null(15) ptr @wmem_alloc(ptr noundef %i.hf, i64 noundef 15) #9 ; 16 uses
   %i.hh = getelementptr i8, ptr %.0550, i64 4
   %i.hi = load i8, ptr %i.hh, align 4
   store i8 %i.hi, ptr %i.hg, align 1
@@ -723,7 +723,7 @@ bb.ae:                                            ; preds = %.preheader599.14
   %i.jp = load i32, ptr @hf_ubx_gal_inav_osnma_dsm_blk, align 4
   %i.jq = call ptr @proto_tree_add_item(ptr noundef %i.jc, i32 noundef %i.jp, ptr noundef %i.iz, i32 noundef 2, i32 noundef 13, i32 noundef 0) ; 0 uses
   %i.jr = load ptr, ptr %i.he, align 8
-  %i.js = call noalias dereferenceable_or_null(60) ptr @wmem_alloc(ptr noundef %i.jr, i64 noundef 60) #10 ; 61 uses
+  %i.js = call noalias dereferenceable_or_null(60) ptr @wmem_alloc(ptr noundef %i.jr, i64 noundef 60) #9 ; 61 uses
   %i.jt = getelementptr i8, ptr %.0550, i64 8
   %i.ju = load i32, ptr %i.jt, align 4            ; 4 uses
   %i.jv = lshr i32 %i.ju, 24
@@ -1042,9 +1042,9 @@ bb.ae:                                            ; preds = %.preheader599.14
   %i.to = call ptr @proto_tree_add_item(ptr noundef %i.ri, i32 noundef %i.tn, ptr noundef %i.rf, i32 noundef 42, i32 noundef 16, i32 noundef 0) ; 0 uses
   %i.tp = load i32, ptr @hf_ubx_gal_inav_osnma_padding, align 4
   %i.tq = call ptr @proto_tree_add_item(ptr noundef %i.ri, i32 noundef %i.tp, ptr noundef %i.rf, i32 noundef 58, i32 noundef 2, i32 noundef 0) ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
   %.sroa.6253.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 76
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6253.0..sroa_idx, i8 0, i64 20, i1 false)
   %i.tr = load i32, ptr %i.i, align 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(32) @__const.dissect_ubx_gal_inav.constellation.366, i64 32, i1 false)
@@ -1067,7 +1067,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.ty = load i32, ptr %i.bo, align 4
   %i.tz = call ptr @conversation_new_full(i32 noundef %i.ty, ptr noundef nonnull %5)
   %i.ua = call ptr @wmem_file_scope()
-  %i.ub = call noalias dereferenceable_or_null(224) ptr @wmem_alloc0(ptr noundef %i.ua, i64 noundef 224) #10 ; 2 uses
+  %i.ub = call noalias dereferenceable_or_null(224) ptr @wmem_alloc0(ptr noundef %i.ua, i64 noundef 224) #9 ; 2 uses
   %i.uc = load i32, ptr @proto_ubx_gal_inav, align 4
   call void @conversation_add_proto_data(ptr noundef %i.tz, i32 noundef %i.uc, ptr noundef %i.ub)
   br label %bb.ah
@@ -1091,7 +1091,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.uj = zext i32 %i.ui to i64
   %i.uk = getelementptr [14 x i8], ptr %.0549, i64 %i.uj
   %i.ul = getelementptr i8, ptr %i.uk, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(13) %i.ul, ptr noundef align 1 dereferenceable(13) %i.ho, i64 noundef 13, i1 noundef false) #9
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(13) %i.ul, ptr noundef align 1 dereferenceable(13) %i.ho, i64 noundef 13, i1 noundef false) #8
   %i.um = load i8, ptr %.0549, align 1, !range !12, !noundef !13
   %i.un = trunc nuw i8 %i.um to i1
   br i1 %i.un, label %bb.aj, label %.thread
@@ -1204,7 +1204,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.wl = load ptr, ptr %i.he, align 8
   %i.wm = mul nuw nsw i32 %i.wk, 13               ; 6 uses
   %i.wn = zext nneg i32 %i.wm to i64              ; 2 uses
-  %i.wo = call noalias ptr @wmem_alloc(ptr noundef %i.wl, i64 noundef %i.wn) #10 ; 2 uses
+  %i.wo = call noalias ptr @wmem_alloc(ptr noundef %i.wl, i64 noundef %i.wn) #9 ; 2 uses
   %i.wp = zext nneg i8 %.0544.lcssa to i64
   br label %bb.am
 
@@ -1214,8 +1214,8 @@ bb.am:                                            ; preds = %bb.al, %bb.am
   %i.wr = getelementptr i8, ptr %i.wo, i64 %i.wq
   %i.ws = getelementptr [14 x i8], ptr %.0549, i64 %.6612
   %i.wt = getelementptr i8, ptr %i.ws, i64 1
-  %7 = call i64 @llvm.usub.sat.i64(i64 %i.wn, i64 %i.wq)
-  %i.wu = call ptr @__memcpy_chk(ptr noundef %i.wr, ptr noundef %i.wt, i64 noundef 13, i64 noundef %7) #9, !alias.scope !14 ; 0 uses
+  %7 = sub nuw nsw i64 %i.wn, %i.wq
+  %i.wu = call ptr @__memcpy_chk(ptr noundef %i.wr, ptr noundef %i.wt, i64 noundef 13, i64 noundef %7) #8, !alias.scope !14 ; 0 uses
   %i.wv = add nuw nsw i64 %.6612, 1               ; 2 uses
   %exitcond.not = icmp eq i64 %i.wv, %i.wp
   br i1 %exitcond.not, label %bb.an, label %bb.am, !llvm.loop !9
@@ -1280,9 +1280,9 @@ bb.ap:                                            ; preds = %bb.ao
   br label %.thread
 
 bb.aq:                                            ; preds = %bb.an
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.q) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.q) #8
   %i.yr = load i32, ptr @ett_ubx_gal_inav_osnma_dsm, align 4
   %i.ys = call ptr @proto_tree_add_subtree(ptr noundef %i.ax, ptr noundef %i.ww, i32 noundef 0, i32 noundef %i.wm, i32 noundef %i.yr, ptr noundef null, ptr noundef nonnull @.str.364) ; 10 uses
   %i.yt = load i32, ptr @hf_ubx_gal_inav_osnma_dsm_nb_dp, align 4
@@ -1357,17 +1357,17 @@ bb.av:                                            ; preds = %bb.as, %bb.at, %bb.
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.as, %bb.av, %bb.ar
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #8
   br label %.thread
 
 .thread:                                          ; preds = %.preheader598.5, %.preheader598.4, %.preheader598.3, %.preheader598.2, %.preheader598.1, %bb.ak, %bb.ao, %bb.ap, %bb.aw, %bb.ai, %bb.aj, %bb.ah
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
   br label %.critedge
 
 .critedge.critedge:                               ; preds = %.preheader599.preheader, %.preheader599.1, %.preheader599.2, %.preheader599.3, %.preheader599.4, %.preheader599.5, %.preheader599.6, %.preheader599.7, %.preheader599.8, %.preheader599.9, %.preheader599.10, %.preheader599.11, %.preheader599.12, %.preheader599.13, %.preheader599.14, %bb.o, %bb.k, %bb.n, %.loopexit601
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.critedge, %bb.g, %bb.f, %.thread
@@ -1383,7 +1383,7 @@ bb.aw:                                            ; preds = %bb.as, %bb.av, %bb.
 
 bb.ax:                                            ; preds = %.critedge
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 76
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6.0..sroa_idx, i8 0, i64 20, i1 false)
   %i.aam = load i8, ptr %3, align 1
   %i.aan = zext i8 %i.aam to i32
@@ -1414,7 +1414,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.aba = load i8, ptr %i.b, align 1, !range !12, !noundef !13
   %i.abb = trunc nuw i8 %i.aba to i1
   %i.abc = select i1 %i.abb, i64 96, i64 48
-  %i.abd = call noalias ptr @wmem_alloc0(ptr noundef %i.aaz, i64 noundef %i.abc) #10 ; 5 uses
+  %i.abd = call noalias ptr @wmem_alloc0(ptr noundef %i.aaz, i64 noundef %i.abc) #9 ; 5 uses
   %i.abe = load i32, ptr %i.aar, align 4
   store i32 %i.abe, ptr %i.abd, align 4
   %i.abf = load i8, ptr %i.b, align 1, !range !12, !noundef !13
@@ -1450,7 +1450,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.abr = load i8, ptr %i.b, align 1, !range !12, !noundef !13
   %i.abs = trunc nuw i8 %i.abr to i1
   %i.abt = select i1 %i.abs, i64 96, i64 48
-  %i.abu = call noalias ptr @wmem_alloc0(ptr noundef %i.abq, i64 noundef %i.abt) #10 ; 5 uses
+  %i.abu = call noalias ptr @wmem_alloc0(ptr noundef %i.abq, i64 noundef %i.abt) #9 ; 5 uses
   %i.abv = load i32, ptr %i.aar, align 4
   store i32 %i.abv, ptr %i.abu, align 4
   %i.abw = load i8, ptr %i.b, align 1, !range !12, !noundef !13
@@ -1564,7 +1564,7 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm, %bb.
 bb.bp:                                            ; preds = %bb.bo
   %i.ado = getelementptr i8, ptr %1, i64 416
   %i.adp = load ptr, ptr %i.ado, align 8
-  %i.adq = call noalias dereferenceable_or_null(10) ptr @wmem_alloc(ptr noundef %i.adp, i64 noundef 10) #10 ; 11 uses
+  %i.adq = call noalias dereferenceable_or_null(10) ptr @wmem_alloc(ptr noundef %i.adp, i64 noundef 10) #9 ; 11 uses
   %i.adr = getelementptr i8, ptr %.0548, i64 8
   %i.ads = load i32, ptr %i.adr, align 4
   %i.adt = shl i32 %i.ads, 12                     ; 2 uses
@@ -1628,7 +1628,7 @@ bb.bp:                                            ; preds = %bb.bo
   br label %.thread593
 
 .thread593:                                       ; preds = %bb.be, %bb.ba, %bb.bd, %bb.bo, %bb.bp, %.loopexit
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #8
   br label %bb.bq
 
 bb.bq:                                            ; preds = %.thread593, %.critedge
@@ -1655,7 +1655,7 @@ bb.br:                                            ; preds = %bb.d, %bb.bq, %bb.e
 bb.bs:                                            ; preds = %bb.br
   %i.agd = getelementptr i8, ptr %1, i64 416
   %i.age = load ptr, ptr %i.agd, align 8
-  %i.agf = call noalias dereferenceable_or_null(16) ptr @wmem_alloc(ptr noundef %i.age, i64 noundef 16) #10 ; 17 uses
+  %i.agf = call noalias dereferenceable_or_null(16) ptr @wmem_alloc(ptr noundef %i.age, i64 noundef 16) #9 ; 17 uses
   %i.agg = getelementptr i8, ptr %i.agf, i64 14
   %i.agh = load i64, ptr %i.n, align 8            ; 2 uses
   %i.agi = lshr i64 %i.agh, 8
@@ -1740,20 +1740,20 @@ bb.bt:                                            ; preds = %bb.bs
 
 bb.bu:                                            ; preds = %bb.bs, %bb.bt, %bb.br
   %i.aio = call i32 @tvb_captured_length(ptr noundef %0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret i32 %i.aio
 }
 
@@ -2053,9 +2053,6 @@ declare void @col_append_str(ptr noundef, i32 noundef, ptr noundef) local_unname
 ; Function Attrs: null_pointer_is_valid
 declare ptr @proto_item_add_subtree(ptr noundef, i32 noundef) local_unnamed_addr #3
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #8
-
 attributes #0 = { nofree null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -2064,9 +2061,8 @@ attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #6 = { null_pointer_is_valid allocsize(1) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nocallback nofree nosync nounwind null_pointer_is_valid memory(argmem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { nounwind }
-attributes #10 = { allocsize(1) }
+attributes #8 = { nounwind }
+attributes #9 = { allocsize(1) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

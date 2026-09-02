@@ -206,8 +206,8 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.i = add nuw i32 %1, 2, !dbg !83200           ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !83201
-  %narrow.i = tail call i32 @llvm.usub.sat.i32(i32 %2, i32 %i.i), !dbg !83202
-  %.sink1.i = zext i32 %narrow.i to i64, !dbg !83202
+  %narrow.i36 = sub nuw i32 %2, %i.i, !dbg !83202
+  %.sink1.i = zext i32 %narrow.i36 to i64, !dbg !83202
   %i.j = add nuw nsw i64 %.sink1.i, 2, !dbg !83203 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !83204
   call void @_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs1LHh8CLbVkQ_11polars_core(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %i.j, i1 noundef zeroext false, i64 noundef 4, i64 noundef 4), !dbg !83204
@@ -610,7 +610,7 @@ bb.u:                                             ; preds = %.noexc116
 _RNvMs2_NtNtCs1LHh8CLbVkQ_11polars_core6series8iteratorNtB7_6Series4iter.exit.preheader: ; preds = %.noexc118
   %i.cq = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %.sroa.9174.16..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 1
-  %2 = call i64 @llvm.usub.sat.i64(i64 %i.au, i64 1)
+  %2 = add nsw i64 %i.au, -1
   %.sroa.463.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.cr = add i64 %i.cb, -1, !dbg !174899         ; 2 uses
   br label %_RNvMs2_NtNtCs1LHh8CLbVkQ_11polars_core6series8iteratorNtB7_6Series4iter.exit, !dbg !174899
@@ -732,7 +732,7 @@ _RNvXs3_NtNtCs1LHh8CLbVkQ_11polars_core6series8iteratorNtB5_10SeriesIterNtNtNtNt
 bb.z:                                             ; preds = %.noexc125
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !dbg !174922
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(47) %.sroa.9174.16..sroa_idx, ptr noundef nonnull align 1 dereferenceable(47) %i.cq, i64 47, i1 false), !dbg !174923
-  %i.du = add i64 %.sroa.27.0, 1, !dbg !174924
+  %i.du = add nuw i64 %.sroa.27.0, 1, !dbg !174924
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !174920
   store i8 %.sroa.0.0.copyload1.i, ptr %i.l, align 16, !dbg !174922
   %i.dv = icmp eq i64 %.sroa.27.0, %2, !dbg !174925

@@ -205,8 +205,8 @@ bb.a:
   %i.g = load i32, ptr %i.f, align 8, !tbaa !32   ; 2 uses
   %i.h = zext i32 %i.g to i64                     ; 3 uses
   %i.i = lshr i64 %i.h, 1                         ; 7 uses
-  %.sroa.0.0.copyload.pn.idx.i.i = call i64 @llvm.usub.sat.i64(i64 %i.h, i64 %i.i)
-  %.sroa.0.0.copyload.pn.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.0.0.copyload.pn.idx.i.i ; 4 uses
+  %.sroa.0.0.copyload.pn.idx.i.i19 = sub nuw nsw i64 %i.h, %i.i
+  %.sroa.0.0.copyload.pn.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.0.0.copyload.pn.idx.i.i19 ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !586)
   %i.j = trunc nuw nsw i64 %i.i to i32            ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -609,8 +609,8 @@ _ZNK12_GLOBAL__N_111ShuffleMask2loEv.exit.loopexit: ; preds = %.lr.ph.i.i65.epil
 _ZNK12_GLOBAL__N_111ShuffleMask2loEv.exit:        ; preds = %_ZNK12_GLOBAL__N_111ShuffleMask2loEv.exit.loopexit, %_ZN4llvm11HvxSelector9expandingEN12_GLOBAL__N_111ShuffleMaskENS1_5OpRefERNS1_11ResultStackE.exit.thread
   call fastcc void @_ZN4llvm11HvxSelector7shuffs1EN12_GLOBAL__N_111ShuffleMaskENS1_5OpRefERNS1_11ResultStackE(ptr dead_on_unwind noalias writable align 8 %10, ptr noundef nonnull align 8 dereferenceable(36) %1, ptr noundef nonnull byval(%"struct.(anonymous namespace)::ShuffleMask") align 8 %11, ptr noundef nonnull byval(%"struct.(anonymous namespace)::OpRef") align 8 %6, ptr noundef nonnull align 8 dereferenceable(40) %4)
   call void @llvm.experimental.noalias.scope.decl(metadata !1161)
-  %.sroa.0.0.copyload.pn.idx.i.i = call i64 @llvm.usub.sat.i64(i64 %i.an, i64 %i.bu)
-  %.sroa.0.0.copyload.pn.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.al, i64 %.sroa.0.0.copyload.pn.idx.i.i ; 3 uses
+  %.sroa.0.0.copyload.pn.idx.i1.i = sub nuw nsw i64 %i.an, %i.bu
+  %.sroa.0.0.copyload.pn.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.al, i64 %.sroa.0.0.copyload.pn.idx.i1.i ; 3 uses
   store ptr %.sroa.0.0.copyload.pn.i.i, ptr %13, align 8, !tbaa !286, !alias.scope !1161
   %.sroa.2.0..sroa_idx.i.i66 = getelementptr inbounds nuw i8, ptr %13, i64 8
   store i64 %i.bu, ptr %.sroa.2.0..sroa_idx.i.i66, align 8, !tbaa !250, !alias.scope !1161
@@ -968,8 +968,8 @@ _ZNK12_GLOBAL__N_111ShuffleMask2loEv.exit86:      ; preds = %_ZNK12_GLOBAL__N_11
   store i32 %i.af, ptr %i.jf, align 8, !tbaa !293, !alias.scope !1164
   call fastcc void @_ZN4llvm11HvxSelector7shuffs2EN12_GLOBAL__N_111ShuffleMaskENS1_5OpRefES3_RNS1_11ResultStackE(ptr dead_on_unwind noalias writable align 8 %14, ptr noundef nonnull align 8 dereferenceable(36) %1, ptr noundef nonnull byval(%"struct.(anonymous namespace)::ShuffleMask") align 8 %15, ptr noundef nonnull byval(%"struct.(anonymous namespace)::OpRef") align 8 %16, ptr noundef nonnull byval(%"struct.(anonymous namespace)::OpRef") align 8 %17, ptr noundef nonnull align 8 dereferenceable(40) %4)
   call void @llvm.experimental.noalias.scope.decl(metadata !1165)
-  %.sroa.0.0.copyload.pn.idx.i.i87 = call i64 @llvm.usub.sat.i64(i64 %i.b, i64 %i.hl)
-  %.sroa.0.0.copyload.pn.i.i88 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.04.0.copyload, i64 %.sroa.0.0.copyload.pn.idx.i.i87 ; 3 uses
+  %.sroa.0.0.copyload.pn.idx.i1.i87 = sub nuw i64 %i.b, %i.hl
+  %.sroa.0.0.copyload.pn.i.i88 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.04.0.copyload, i64 %.sroa.0.0.copyload.pn.idx.i1.i87 ; 3 uses
   store ptr %.sroa.0.0.copyload.pn.i.i88, ptr %19, align 8, !tbaa !286, !alias.scope !1165
   %.sroa.2.0..sroa_idx.i.i89 = getelementptr inbounds nuw i8, ptr %19, i64 8
   store i64 %i.hl, ptr %.sroa.2.0..sroa_idx.i.i89, align 8, !tbaa !250, !alias.scope !1165

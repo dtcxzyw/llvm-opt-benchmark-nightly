@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %.not.i.i = icmp ult i64 %i.j, %i.c
   tail call void @llvm.assume(i1 %.not.i.i)
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.j
-  %storemerge.i.i = tail call i64 @llvm.usub.sat.i64(i64 %i.c, i64 %i.j)
-  %i.l = add i64 %storemerge.i.i, -1
+  %2 = xor i64 %i.j, -1
+  %i.l = add i64 %i.c, %2
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 1
   br label %bb.c
 
@@ -608,8 +608,8 @@ bb.i:                                             ; preds = %bb.h
   %.not.i.i = icmp ult i64 %i.an, %i.ag
   tail call void @llvm.assume(i1 %.not.i.i)
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.an
-  %storemerge.i.i = tail call i64 @llvm.usub.sat.i64(i64 %i.ag, i64 %i.an)
-  %i.ap = add i64 %storemerge.i.i, -1
+  %2 = xor i64 %i.an, -1
+  %i.ap = add i64 %i.ag, %2
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 1
   %i.ar = inttoptr i64 %i.an to ptr
   br label %_RNvMs_NtNtCseHTIzroA4w0_6object4read4utilNtB4_5Bytes11read_string.exit
@@ -650,8 +650,8 @@ bb.k:                                             ; preds = %bb.j
   %.not.i.i141 = icmp ult i64 %i.bg, %i.az
   tail call void @llvm.assume(i1 %.not.i.i141)
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.bg
-  %storemerge.i.i142 = tail call i64 @llvm.usub.sat.i64(i64 %i.az, i64 %i.bg)
-  %i.bi = add i64 %storemerge.i.i142, -1
+  %3 = xor i64 %i.bg, -1
+  %i.bi = add i64 %i.az, %3
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bh, i64 1
   %i.bk = inttoptr i64 %i.bg to ptr
   br label %_RNvMs_NtNtCseHTIzroA4w0_6object4read4utilNtB4_5Bytes11read_string.exit143
@@ -762,8 +762,8 @@ bb.t:                                             ; preds = %bb.s
   %.not.i.i162 = icmp ult i64 %i.dm, %i.df
   tail call void @llvm.assume(i1 %.not.i.i162)
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dd, i64 %i.dm
-  %storemerge.i.i163 = tail call i64 @llvm.usub.sat.i64(i64 %i.df, i64 %i.dm)
-  %i.do = add i64 %storemerge.i.i163, -1
+  %4 = xor i64 %i.dm, -1
+  %i.do = add i64 %i.df, %4
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dn, i64 1
   br label %_RNvMs_NtNtCseHTIzroA4w0_6object4read4utilNtB4_5Bytes11read_string.exit164
 
@@ -800,8 +800,8 @@ bb.v:                                             ; preds = %bb.u
   %.not.i.i169 = icmp ult i64 %i.ec, %i.du
   tail call void @llvm.assume(i1 %.not.i.i169)
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ds, i64 %i.ec
-  %storemerge.i.i170 = tail call i64 @llvm.usub.sat.i64(i64 %i.du, i64 %i.ec)
-  %i.ee = add i64 %storemerge.i.i170, -1
+  %5 = xor i64 %i.ec, -1
+  %i.ee = add i64 %i.du, %5
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ed, i64 1
   %i.eg = inttoptr i64 %i.ec to ptr
   store ptr %i.ef, ptr %i.v, align 8, !alias.scope !173
@@ -1012,9 +1012,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #14
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #15
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #10
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nofree nosync nounwind nonlazybind memory(read, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

@@ -205,8 +205,8 @@ bb.ao:                                            ; preds = %bb.am
 _ZN12_GLOBAL__N_121MachineBlockPlacement24getBlockCountOrFrequencyEPKN4llvm17MachineBasicBlockE.exit.i.i: ; preds = %bb.ao, %bb.an
   %.sroa.01.1.i.i.i = phi i64 [ %i.ft, %bb.ao ], [ %spec.select.i.i84.i, %bb.an ]
   store i64 %.sroa.01.1.i.i.i, ptr %8, align 8
-  %spec.select.i.i.i.i = call i32 @llvm.usub.sat.i32(i32 %i.ff, i32 %.sroa.012.0.lcssa.i.i)
-  %i.fu = call i64 @_ZNK4llvm14BlockFrequencymlENS_17BranchProbabilityE(ptr noundef nonnull align 8 dereferenceable(8) %8, i32 %spec.select.i.i.i.i) #25
+  %spec.select.i.i58.i.i = sub nuw i32 %i.ff, %.sroa.012.0.lcssa.i.i
+  %i.fu = call i64 @_ZNK4llvm14BlockFrequencymlENS_17BranchProbabilityE(ptr noundef nonnull align 8 dereferenceable(8) %8, i32 %spec.select.i.i58.i.i) #25
   %.val46.i.i = load i64, ptr %i.ag, align 8, !tbaa !348
   %i.fv = getelementptr inbounds nuw i8, ptr %i.eh, i64 56
   %i.fw = getelementptr inbounds nuw i8, ptr %i.eh, i64 48 ; 2 uses

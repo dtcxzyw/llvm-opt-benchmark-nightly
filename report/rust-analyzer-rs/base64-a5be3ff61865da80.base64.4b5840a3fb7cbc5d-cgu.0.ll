@@ -204,9 +204,9 @@ bb.s:                                             ; preds = %bb.r, %bb.m
   br i1 %.not.i107.i, label %._crit_edge.i.i, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.s
-  %8 = tail call i64 @llvm.usub.sat.i64(i64 range(i64 0, -9223372036854775808) %5, i64 range(i64 0, -9223372036854775808) %i.n) ; 2 uses
-  %exitcond.not.i.i.not = icmp samesign ugt i64 %5, %i.n
-  br i1 %exitcond.not.i.i.not, label %bb.w, label %bb.v
+  %8 = sub nuw nsw i64 %5, %i.n                   ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %5, %i.n
+  br i1 %exitcond.not.i.i, label %bb.v, label %bb.w
 
 bb.t:                                             ; preds = %bb.r
   %i.bw = add nsw i64 %i.l, -1
