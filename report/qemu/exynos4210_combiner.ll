@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %bb.d, %bb.e, %bb.i,
 define internal void @exynos4210_combiner_write(ptr nofree noundef %0, i64 noundef %1, i64 noundef %2, i32 %3) #0 {
 bb.a:
   %i.a = lshr i64 %1, 4
-  %i.b = trunc i64 %i.a to i32                    ; 2 uses
-  %i.c = shl i32 %i.b, 2                          ; 19 uses
+  %i.b = trunc i64 %i.a to i32                    ; 4 uses
+  %i.c = shl nuw nsw i32 %i.b, 2                  ; 17 uses
   %i.d = lshr i64 %1, 2                           ; 2 uses
   %i.e = icmp ugt i32 %i.b, 63
   br i1 %i.e, label %bb.b, label %bb.d
@@ -293,7 +293,7 @@ bb.k:                                             ; preds = %bb.j
   %i.as = load i8, ptr %i.ar, align 1
   %i.at = and i8 %i.as, %i.v
   %.not.i = icmp eq i8 %i.at, 0
-  %i.au = icmp ugt i32 %i.c, 31                   ; 5 uses
+  %i.au = icmp samesign ugt i32 %i.b, 7           ; 5 uses
   %i.av = add nsw i32 %i.c, -32
   %.sink31.i = select i1 %i.au, i32 %i.av, i32 %i.c
   %.sink29.i = select i1 %i.au, i64 1480, i64 1476 ; 8 uses
@@ -448,7 +448,7 @@ bb.t:                                             ; preds = %bb.j
   %i.eb = load i8, ptr %i.ea, align 1
   %i.ec = and i8 %i.eb, %i.db
   %.not.i71 = icmp eq i8 %i.ec, 0
-  %i.ed = icmp ugt i32 %i.c, 31                   ; 5 uses
+  %i.ed = icmp samesign ugt i32 %i.b, 7           ; 5 uses
   %i.ee = add nsw i32 %i.c, -32
   %.sink31.i72 = select i1 %i.ed, i32 %i.ee, i32 %i.c
   %.sink29.i73 = select i1 %i.ed, i64 1480, i64 1476 ; 8 uses

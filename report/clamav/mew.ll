@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.h
   %.pn.us.us.peel = sub i32 %i.y, %i.c            ; 3 uses
   %.pn270.us.us.peel = zext i32 %.pn.us.us.peel to i64
   %.0233.us.us.peel = getelementptr inbounds nuw i8, ptr %0, i64 %.pn270.us.us.peel ; 3 uses
-  %.0236.us.us.peel = sub i32 %i.d, %.pn.us.us.peel ; 2 uses
+  %.0236.us.us.peel = sub nuw i32 %i.d, %.pn.us.us.peel ; 2 uses
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.8, i32 noundef 0, ptr noundef nonnull %i.u, ptr noundef %.0233.us.us.peel) #7
   %i.aa = add i32 %reass.sub, -13
   %or.cond295.not.us.us.peel = icmp ult i32 %i.aa, %i.d
@@ -308,7 +308,7 @@ bb.s:                                             ; preds = %bb.r
   %.pn.us.us = sub i32 %.pn271.ph.us, %i.c        ; 3 uses
   %.pn270.us.us = zext i32 %.pn.us.us to i64
   %.0233.us.us = getelementptr inbounds nuw i8, ptr %0, i64 %.pn270.us.us ; 3 uses
-  %.0236.us.us = sub i32 %i.d, %.pn.us.us         ; 2 uses
+  %.0236.us.us = sub nuw i32 %i.d, %.pn.us.us     ; 2 uses
   %i.bq = trunc nuw nsw i64 %indvars.iv to i32
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.8, i32 noundef %i.bq, ptr noundef nonnull %.0234.ph.us, ptr noundef %.0233.us.us) #7
   %i.br = zext i32 %.0235.ph.us to i64
@@ -430,7 +430,7 @@ bb.ad:                                            ; preds = %bb.ac
   %.pn = sub i32 %.pn271, %i.c                    ; 3 uses
   %.pn270 = zext i32 %.pn to i64
   %.0233 = getelementptr inbounds nuw i8, ptr %0, i64 %.pn270 ; 3 uses
-  %.0236 = sub i32 %i.d, %.pn                     ; 2 uses
+  %.0236 = sub nuw i32 %i.d, %.pn                 ; 2 uses
   call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.8, i32 noundef %.0231, ptr noundef nonnull %.0234, ptr noundef %.0233) #7
   %i.dr = zext i32 %.0235 to i64
   %i.ds = add i32 %.0235, -1

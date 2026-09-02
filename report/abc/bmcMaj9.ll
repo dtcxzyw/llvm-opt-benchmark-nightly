@@ -205,7 +205,7 @@ bb.ad:                                            ; preds = %Exa9_ManAlloc.exit
 bb.ae:                                            ; preds = %bb.ad
   %i.hx = load i32, ptr %i.gb, align 4, !tbaa !50 ; 14 uses
   %i.hy = shl nsw i32 %i.hx, 2
-  %i.hz = load i32, ptr %i.gd, align 8, !tbaa !51 ; 3 uses
+  %i.hz = load i32, ptr %i.gd, align 8, !tbaa !51 ; 5 uses
   %i.ia = or disjoint i32 %i.hy, 2
   %i.ib = mul i32 %i.ia, %i.hz                    ; 5 uses
   %i.ic = load ptr, ptr %i.fw, align 8, !tbaa !44
@@ -424,7 +424,7 @@ Exa9_ManCountAuxOneHot.exit.us29.i:               ; preds = %bb.ag, %.lr.ph.spli
 
 ._crit_edge.i204:                                 ; preds = %Exa9_ManCountAuxOneHot.exit.us29.i, %.lr.ph.split.us19.i, %Exa9_ManCountAuxOneHot.exit.us.i, %middle.block710, %middle.block729, %middle.block750, %.lr.ph.i205, %bb.ae
   %.0.lcssa.i = phi i32 [ 0, %bb.ae ], [ %i.kd, %.lr.ph.split.us19.i ], [ 0, %.lr.ph.i205 ], [ %i.jy, %Exa9_ManCountAuxOneHot.exit.us.i ], [ %i.jt, %middle.block750 ], [ %i.ji, %middle.block729 ], [ %i.ix, %middle.block710 ], [ %i.km, %Exa9_ManCountAuxOneHot.exit.us29.i ] ; 8 uses
-  %i.ko = shl nsw i32 %i.hz, 1                    ; 5 uses
+  %i.ko = shl nuw nsw i32 %i.hz, 1                ; 3 uses
   %i.kp = icmp slt i32 %i.hz, 1
   br i1 %i.kp, label %Exa9_ManCountAuxTotal.exit, label %bb.ah
 
@@ -444,7 +444,7 @@ Exa9_ManCountAuxTotal.exit.thread590:             ; preds = %bb.ah
   br label %bb.an
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.kv = icmp samesign ult i32 %i.ko, 7
+  %i.kv = icmp samesign ult i32 %i.hz, 4
   br i1 %i.kv, label %Exa9_ManCountAuxTotal.exit.thread, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
@@ -456,7 +456,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %Exa9_ManCountAuxTotal.exit.thread
 
 bb.ak:                                            ; preds = %bb.ah
-  %i.lb = icmp samesign ult i32 %i.ko, 6
+  %i.lb = icmp samesign ult i32 %i.hz, 3
   br i1 %i.lb, label %Exa9_ManCountAuxTotal.exit.thread588, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak

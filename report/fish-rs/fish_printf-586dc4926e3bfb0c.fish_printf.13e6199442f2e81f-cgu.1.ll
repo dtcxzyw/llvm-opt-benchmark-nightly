@@ -205,9 +205,9 @@ _RNCINvNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtBa_9TakeWhile
 
 _RINvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtB6_9TakeWhileNtNtNtBc_3str4iter5CharsNCNvXs1_NtCs1HV6ixfL8cZ_11fish_printf11printf_implReNtB1H_12FormatString12take_literals0_0ENtNtNtBa_6traits8iterator8Iterator4foldjNCNvYBV_B32_5count0EB1J_.exit: ; preds = %bb.m, %_RNCINvNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtBa_9TakeWhileppENtNtNtBe_6traits8iterator8Iterator8try_fold5checkcjINtNtNtBg_3ops9try_trait17NeverShortCircuitjENCNvXs1_NtCs1HV6ixfL8cZ_11fish_printf11printf_implReNtB2Y_12FormatString12take_literals0_0NCINvMB2a_B27_10wrap_mut_2jcNCNvYIB10_NtNtNtBg_3str4iter5CharsB2Q_EB1i_5count0E0E0B30_.exit.i.i.i, %bb.k
   %.sroa.0.1.i.i13 = phi i64 [ 0, %bb.k ], [ %i.cl, %_RNCINvNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtBa_9TakeWhileppENtNtNtBe_6traits8iterator8Iterator8try_fold5checkcjINtNtNtBg_3ops9try_trait17NeverShortCircuitjENCNvXs1_NtCs1HV6ixfL8cZ_11fish_printf11printf_implReNtB2Y_12FormatString12take_literals0_0NCINvMB2a_B27_10wrap_mut_2jcNCNvYIB10_NtNtNtBg_3str4iter5CharsB2Q_EB1i_5count0E0E0B30_.exit.i.i.i ], [ %.sroa.01.020.i.i.i, %bb.m ] ; 2 uses
-  %i.cm = lshr i64 %.sroa.0.1.i.i13, 1            ; 3 uses
+  %i.cm = lshr i64 %.sroa.0.1.i.i13, 1            ; 4 uses
   %i.cn = and i64 %.sroa.0.1.i.i13, -2
-  %i.co = add i64 %i.cn, %.sroa.01.0.i.i.i        ; 13 uses
+  %i.co = add i64 %i.cn, %.sroa.01.0.i.i.i        ; 12 uses
   %i.cp = icmp ult i64 %i.co, %.sroa.01.0.i.i.i
   br i1 %i.cp, label %bb.t, label %bb.q
 
@@ -247,7 +247,7 @@ _RNvMNtCs3oUPovFnLWP_4core3stre16split_at_checked.exit: ; preds = %.split.i18, %
   %.sroa.9.0 = phi i64 [ %i.c, %bb.q ], [ %i.cw, %.split.i18 ]
   store ptr %.sroa.7.0, ptr %0, align 8, !captures !53
   store i64 %.sroa.9.0, ptr %i.b, align 8
-  %i.cx = sub i64 %i.co, %i.cm                    ; 4 uses
+  %i.cx = sub nuw i64 %i.co, %i.cm                ; 3 uses
   %i.cy = icmp ult i64 %i.co, %i.cm
   br i1 %i.cy, label %bb.x, label %bb.v
 
@@ -257,7 +257,7 @@ bb.u:                                             ; preds = %bb.s, %.split3.i
 
 bb.v:                                             ; preds = %_RNvMNtCs3oUPovFnLWP_4core3stre16split_at_checked.exit
   %i.cz = icmp ne i64 %i.co, %i.cm
-  %.not.i19 = icmp ult i64 %i.cx, %i.co
+  %.not.i19 = icmp ne i64 %i.cm, 0
   %or.cond = and i1 %i.cz, %.not.i19
   br i1 %or.cond, label %bb.w, label %.split.i20
 

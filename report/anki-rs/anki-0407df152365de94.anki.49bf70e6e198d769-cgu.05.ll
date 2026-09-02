@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  %i.m = sub i64 %i.i, %i.k
+  %i.m = sub nuw i64 %i.i, %i.k
   tail call void @llvm.experimental.noalias.scope.decl(metadata !793)
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.o = load i64, ptr %i.n, align 8, !alias.scope !793, !noundef !3 ; 4 uses
@@ -518,7 +518,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  %i.m = sub i64 %i.i, %i.k
+  %i.m = sub nuw i64 %i.i, %i.k
   tail call void @llvm.experimental.noalias.scope.decl(metadata !811)
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.o = load i64, ptr %i.n, align 8, !alias.scope !811, !noundef !3 ; 4 uses
@@ -829,7 +829,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  %i.k = sub i64 %i.g, %i.i
+  %i.k = sub nuw i64 %i.g, %i.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !827)
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.m = load i64, ptr %i.l, align 8, !alias.scope !827, !noundef !3 ; 4 uses
@@ -1030,7 +1030,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  %i.k = sub i64 %i.g, %i.i
+  %i.k = sub nuw i64 %i.g, %i.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !844)
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.m = load i64, ptr %i.l, align 8, !alias.scope !844, !noundef !3 ; 4 uses

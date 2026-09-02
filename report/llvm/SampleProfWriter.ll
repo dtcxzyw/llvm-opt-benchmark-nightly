@@ -205,7 +205,7 @@ _ZN4llvm10drop_beginIRSt6vectorISt4pairINS_9hash_codeEPKNS_10sampleprof15Functio
   %i.n = fptoui double %i.m to i64                ; 2 uses
   %i.o = sub i64 %i.i, %i.n
   %i.p = icmp eq i64 %i.i, %i.n
-  %spec.store.select = select i1 %i.p, i64 1, i64 %i.o ; 4 uses
+  %spec.store.select = select i1 %i.p, i64 1, i64 %i.o ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !37   ; 4 uses
@@ -226,12 +226,12 @@ _ZN4llvm10drop_beginIRSt6vectorISt4pairINS_9hash_codeEPKNS_10sampleprof15Functio
   %.pre33 = ptrtoint ptr %.pre31 to i64
   %.pre35 = sub i64 %.pre32, %.pre33
   %.pre37 = ashr exact i64 %.pre35, 4             ; 2 uses
-  %.pre39 = sub i64 %.pre37, %spec.store.select
+  %.pre39 = sub nuw i64 %.pre37, %spec.store.select
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN4llvm10drop_beginIRSt6vectorISt4pairINS_9hash_codeEPKNS_10sampleprof15FunctionSamplesEESaIS8_EEEEDaOT_m.exit
-  %.pre-phi40 = phi i64 [ %.pre39, %._crit_edge.loopexit ], [ %i.y, %_ZN4llvm10drop_beginIRSt6vectorISt4pairINS_9hash_codeEPKNS_10sampleprof15FunctionSamplesEESaIS8_EEEEDaOT_m.exit ] ; 2 uses
-  %.pre-phi38 = phi i64 [ %.pre37, %._crit_edge.loopexit ], [ %i.x, %_ZN4llvm10drop_beginIRSt6vectorISt4pairINS_9hash_codeEPKNS_10sampleprof15FunctionSamplesEESaIS8_EEEEDaOT_m.exit ] ; 2 uses
+  %.pre-phi40 = phi i64 [ %.pre39, %._crit_edge.loopexit ], [ %i.y, %_ZN4llvm10drop_beginIRSt6vectorISt4pairINS_9hash_codeEPKNS_10sampleprof15FunctionSamplesEESaIS8_EEEEDaOT_m.exit ]
+  %.pre-phi38 = phi i64 [ %.pre37, %._crit_edge.loopexit ], [ %i.x, %_ZN4llvm10drop_beginIRSt6vectorISt4pairINS_9hash_codeEPKNS_10sampleprof15FunctionSamplesEESaIS8_EEEEDaOT_m.exit ]
   %i.aa = phi ptr [ %.pre31, %._crit_edge.loopexit ], [ %i.t, %_ZN4llvm10drop_beginIRSt6vectorISt4pairINS_9hash_codeEPKNS_10sampleprof15FunctionSamplesEESaIS8_EEEEDaOT_m.exit ]
   %i.ab = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.s, %_ZN4llvm10drop_beginIRSt6vectorISt4pairINS_9hash_codeEPKNS_10sampleprof15FunctionSamplesEESaIS8_EEEEDaOT_m.exit ]
   %i.ac = icmp ugt i64 %spec.store.select, %.pre-phi38
@@ -243,8 +243,8 @@ bb.a:                                             ; preds = %._crit_edge
   br label %_ZNSt6vectorISt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEESaIS7_EE6resizeEm.exit
 
 bb.b:                                             ; preds = %._crit_edge
-  %2 = icmp ult i64 %.pre-phi40, %.pre-phi38
-  br i1 %2, label %bb.c, label %_ZNSt6vectorISt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEESaIS7_EE6resizeEm.exit
+  %.not24 = icmp eq i64 %spec.store.select, 0
+  br i1 %.not24, label %_ZNSt6vectorISt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEESaIS7_EE6resizeEm.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.ae = getelementptr inbounds nuw [16 x i8], ptr %i.aa, i64 %.pre-phi40 ; 2 uses

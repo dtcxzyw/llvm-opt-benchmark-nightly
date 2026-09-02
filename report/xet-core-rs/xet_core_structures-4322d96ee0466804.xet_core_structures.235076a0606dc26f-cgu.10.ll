@@ -205,13 +205,13 @@ bb.u:                                             ; preds = %bb.s
   br i1 %i.az, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.ba = sub i64 %.val163, %i.an                 ; 6 uses
+  %i.ba = sub nuw i64 %.val163, %i.an             ; 6 uses
   %i.bb = icmp ult i64 %.val163, %i.an
   br i1 %i.bb, label %_RINvNtNtCs6f1wo00zwKs_8lz4_flex5block15decompress_safe15duplicate_sliceNtNtB6_4sink9SliceSinkECs31YAwBA1AlL_19xet_core_structures.exit, label %bb.ag
 
 bb.w:                                             ; preds = %bb.u
   tail call void @llvm.experimental.noalias.scope.decl(metadata !48)
-  %i.bc = sub i64 %.val163, %i.an                 ; 3 uses
+  %i.bc = sub nuw i64 %.val163, %i.an             ; 3 uses
   %i.bd = icmp ult i64 %.val163, %i.an
   br i1 %i.bd, label %_RINvNtNtCs6f1wo00zwKs_8lz4_flex5block15decompress_safe15duplicate_sliceNtNtB6_4sink9SliceSinkECs31YAwBA1AlL_19xet_core_structures.exit, label %bb.x
 
@@ -452,7 +452,7 @@ bb.at:                                            ; preds = %_RNvMNtCskKLDkoKarT
   %i.ea = add nuw nsw i64 %i.dz, %i.p             ; 2 uses
   %narrow = add nuw nsw i8 %i.h, 4
   %i.eb = zext nneg i8 %narrow to i64             ; 3 uses
-  %i.ec = sub i64 %i.dv, %i.dy                    ; 2 uses
+  %i.ec = sub nuw i64 %i.dv, %i.dy                ; 2 uses
   %i.ed = icmp ult i64 %i.dv, %i.dy
   br i1 %i.ed, label %bb.av, label %bb.au
 
@@ -538,7 +538,7 @@ bb.az:                                            ; preds = %bb.aw
   unreachable
 
 bb.ba:                                            ; preds = %bb.au
-  %i.fh = add i64 %i.ec, 18
+  %i.fh = add nuw i64 %i.ec, 18
   tail call void @llvm.experimental.noalias.scope.decl(metadata !107)
   %i.fi = tail call { i64, i64 } @_RINvNtNtCskKLDkoKarTP_4core5slice5index5rangeINtNtNtB6_3ops5range5RangejEECs31YAwBA1AlL_19xet_core_structures(i64 noundef %i.ec, i64 noundef %i.fh, i64 noundef range(i64 0, -9223372036854775808) %.val156, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @72), !noalias !110 ; 2 uses
   %i.fj = extractvalue { i64, i64 } %i.fi, 0      ; 2 uses
@@ -787,14 +787,14 @@ bb.x:                                             ; preds = %bb.u, %bb.at
 
 bb.y:                                             ; preds = %bb.x
   %.val216 = load i64, ptr %i.a, align 8, !noundef !5 ; 13 uses
-  %i.bf = sub i64 %.val216, %i.an                 ; 6 uses
+  %i.bf = sub nuw i64 %.val216, %i.an             ; 6 uses
   %i.bg = icmp ult i64 %.val216, %i.an
   br i1 %i.bg, label %_RINvNtNtCs6f1wo00zwKs_8lz4_flex5block15decompress_safe15duplicate_sliceNtNtB6_4sink9SliceSinkECs31YAwBA1AlL_19xet_core_structures.exit, label %bb.aj
 
 bb.z:                                             ; preds = %bb.x
   tail call void @llvm.experimental.noalias.scope.decl(metadata !135)
   %.val.i237 = load i64, ptr %i.a, align 8, !alias.scope !135, !noalias !138, !noundef !5 ; 15 uses
-  %i.bh = sub i64 %.val.i237, %i.an               ; 3 uses
+  %i.bh = sub nuw i64 %.val.i237, %i.an           ; 3 uses
   %i.bi = icmp ult i64 %.val.i237, %i.an
   br i1 %i.bi, label %_RINvNtNtCs6f1wo00zwKs_8lz4_flex5block15decompress_safe15duplicate_sliceNtNtB6_4sink9SliceSinkECs31YAwBA1AlL_19xet_core_structures.exit, label %bb.aa
 
@@ -1085,7 +1085,7 @@ bb.bb:                                            ; preds = %bb.ay, %bb.bc
   %.val217 = phi i64 [ %.val217.pre, %bb.bc ], [ %i.eh, %bb.ay ] ; 14 uses
   %.sroa.032.0 = phi i64 [ %i.ev, %bb.bc ], [ %i.en, %bb.ay ]
   %.sroa.032.0.fr = freeze i64 %.sroa.032.0       ; 4 uses
-  %i.et = sub i64 %.val217, %i.ek                 ; 2 uses
+  %i.et = sub nuw i64 %.val217, %i.ek             ; 2 uses
   %i.eu = icmp ult i64 %.val217, %i.ek
   br i1 %i.eu, label %bb.be, label %bb.bd
 

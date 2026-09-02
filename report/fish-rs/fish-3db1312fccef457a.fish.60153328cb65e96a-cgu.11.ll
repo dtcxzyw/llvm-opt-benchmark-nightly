@@ -206,7 +206,7 @@ bb.e:                                             ; preds = %bb.d, %bb.d, %bb.d,
   %i.j = load i64, ptr %i.i, align 8, !noundef !5 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 264
   %i.l = load i64, ptr %i.k, align 8, !noundef !5 ; 3 uses
-  %i.m = sub i64 %i.j, %i.l                       ; 3 uses
+  %i.m = sub nuw i64 %i.j, %i.l                   ; 3 uses
   %i.n = icmp ult i64 %i.j, %i.l
   br i1 %i.n, label %bb.cf, label %bb.ce
 
@@ -609,7 +609,7 @@ bb.av:                                            ; preds = %bb.aq
 
 bb.aw:                                            ; preds = %bb.av
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !2860
-  %i.jv = sub i64 %i.iv, %i.ju                    ; 5 uses
+  %i.jv = sub nuw i64 %i.iv, %i.ju                ; 5 uses
   %i.jw = icmp ult i64 %i.iv, %i.ju
   br i1 %i.jw, label %.invoke288.i.i.i, label %bb.ax
 
@@ -734,7 +734,7 @@ bb.bc:                                            ; preds = %_RNvXs2_NtNtNtCs3oU
 
 bb.bd:                                            ; preds = %bb.bc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !2860
-  %i.kx = sub i64 %.sroa.013.2.i74443.i.i, %i.kw  ; 3 uses
+  %i.kx = sub nuw i64 %.sroa.013.2.i74443.i.i, %i.kw ; 3 uses
   %i.ky = icmp ult i64 %.sroa.013.2.i74443.i.i, %i.kw
   br i1 %i.ky, label %.invoke288.i.i.i, label %bb.be
 
@@ -759,7 +759,7 @@ bb.bf:                                            ; preds = %bb.be
 
 bb.bg:                                            ; preds = %bb.bf
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !2860
-  %i.lh = sub i64 %i.kx, %i.lg                    ; 3 uses
+  %i.lh = sub nuw i64 %i.kx, %i.lg                ; 3 uses
   %i.li = icmp ult i64 %i.kx, %i.lg
   br i1 %i.li, label %.invoke288.i.i.i, label %bb.bh
 
@@ -1162,7 +1162,7 @@ _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   %..i199.3.i = call noundef i64 @llvm.umin.i64(i64 %i.ba, i64 %i.aaw) ; 2 uses
   %i.aaz = add nuw i64 %.sroa.022.0.ph429.3.i.lcssa, 2
   %i.aba = icmp ugt i64 %.sroa.0.0.i207.fr679.i, 4611686018427387903
-  %i.abb = shl i64 %.sroa.0.0.i207.fr679.i, 2     ; 2 uses
+  %i.abb = shl nuw i64 %.sroa.0.0.i207.fr679.i, 2 ; 2 uses
   br i1 %i.aba, label %.invoke992, label %.outer.split.4.i.preheader
 
 .outer.split.4.i.preheader:                       ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter7IterMutNtNtCs8frGy5WneL6_4fish5pager6ColumnEENtNtNtB8_6traits8iterator8Iterator4nextB1E_.exit.4.i

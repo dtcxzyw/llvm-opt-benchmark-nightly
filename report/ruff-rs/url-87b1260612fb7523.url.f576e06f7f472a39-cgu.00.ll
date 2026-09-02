@@ -204,7 +204,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val.i = load ptr, ptr %i.f, align 8, !alias.scope !618, !nonnull !4, !noundef !4 ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.val1.i = load i64, ptr %i.g, align 8, !alias.scope !618, !noundef !4 ; 11 uses
+  %.val1.i = load i64, ptr %i.g, align 8, !alias.scope !618, !noundef !4 ; 10 uses
   %i.h = zext i32 %i.e to i64                     ; 6 uses
   %i.i = icmp eq i32 %i.e, 0
   br i1 %i.i, label %_RNvMs_Csl4BgoAJVhPh_3urlNtB4_3Url16cannot_be_a_base.exit, label %bb.b
@@ -261,18 +261,18 @@ _RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10take_whileINtB6_9TakeWhileINtN
   store i8 0, ptr %i.w, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 17
   %i.y = call { i64, i64 } @_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3revINtB5_3RevNtNtNtBb_3str4iter5CharsENtNtNtB9_6traits8iterator8Iterator8try_foldjNCINvNvXs0_NtB7_10take_whileINtB2e_9TakeWhileppEB1l_8try_fold5checkcjINtNtNtBb_3ops9try_trait17NeverShortCircuitjENCNvMs_Csl4BgoAJVhPh_3urlNtB40_3Url38strip_trailing_spaces_from_opaque_path0NCINvMB3d_B3a_10wrap_mut_2jcNCNvYIB2w_BM_B3T_EB1l_5count0E0E0INtNtB3f_12control_flow11ControlFlowB3a_jEEB40_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b, i64 noundef 0, ptr noalias noundef nonnull %i.x, ptr noalias noundef nonnull dereferenceable(1) %i.w)
-  %i.z = extractvalue { i64, i64 } %i.y, 1        ; 3 uses
+  %i.z = extractvalue { i64, i64 } %i.y, 1        ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.aa = icmp sgt i64 %.val1.i, -1
   call void @llvm.assume(i1 %i.aa)
-  %i.ab = sub nsw i64 %.val1.i, %i.z              ; 3 uses
+  %i.ab = sub nuw nsw i64 %.val1.i, %i.z          ; 2 uses
   %.not.i = icmp ugt i64 %i.z, %.val1.i
   br i1 %.not.i, label %_RNvMNtCscdodAO9FK5_5alloc6stringNtB2_6String8truncate.exit, label %bb.g
 
 bb.g:                                             ; preds = %_RINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters10take_whileINtB6_9TakeWhileINtNtB8_3rev3RevNtNtNtBc_3str4iter5CharsENCNvMs_Csl4BgoAJVhPh_3urlNtB1X_3Url38strip_trailing_spaces_from_opaque_path0ENtNtNtBa_6traits8iterator8Iterator4foldjNCNvYBV_B35_5count0EB1X_.exit
   %i.ac = icmp ne i64 %.val1.i, %i.z
-  %.not2.i = icmp samesign ult i64 %i.ab, %.val1.i
-  %or.cond.i = select i1 %i.ac, i1 %.not2.i, i1 false
+  %.not2.i = icmp ne i64 %i.z, 0
+  %or.cond.i = and i1 %i.ac, %.not2.i
   br i1 %or.cond.i, label %bb.h, label %.split.i
 
 .split.i:                                         ; preds = %bb.h, %bb.g

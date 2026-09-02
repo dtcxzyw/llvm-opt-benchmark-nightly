@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.i
   %i.w = getelementptr i8, ptr %.val103, i64 4
   %.val103.val = load i32, ptr %i.w, align 4, !tbaa !30
   %i.x = sub nsw i32 %.val103.val, %.val102       ; 3 uses
-  %i.y = mul nsw i32 %i.x, %.076165               ; 2 uses
+  %i.y = mul nuw nsw i32 %i.x, %.076165           ; 2 uses
   %i.z = add nuw i32 %.076165, 1                  ; 5 uses
-  %i.aa = mul nsw i32 %i.x, %i.z                  ; 2 uses
+  %i.aa = mul nuw nsw i32 %i.x, %i.z              ; 2 uses
   %i.ab = icmp sgt i32 %i.x, 0
   br i1 %i.ab, label %.lr.ph.i, label %Gia_ManBmcCheckOutputs.exit.thread
 
@@ -609,9 +609,9 @@ bb.n:                                             ; preds = %.lr.ph175, %.thread
   %i.bv = getelementptr i8, ptr %.val124, i64 4
   %.val124.val = load i32, ptr %i.bv, align 4, !tbaa !30
   %i.bw = sub nsw i32 %.val124.val, %.val123      ; 3 uses
-  %i.bx = mul nsw i32 %i.bw, %.095174             ; 2 uses
+  %i.bx = mul nuw nsw i32 %i.bw, %.095174         ; 2 uses
   %i.by = add nuw nsw i32 %.095174, 1             ; 4 uses
-  %i.bz = mul nsw i32 %i.bw, %i.by                ; 2 uses
+  %i.bz = mul nuw nsw i32 %i.bw, %i.by            ; 2 uses
   %i.ca = icmp sgt i32 %i.bw, 0
   br i1 %i.ca, label %.lr.ph.i135, label %.thread150
 
@@ -1014,7 +1014,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %.val158.val = load i32, ptr %i.eo, align 4, !tbaa !30
   %i.ep = sub nsw i32 %.val158.val, %.val157      ; 3 uses
   %i.eq = add nuw nsw i32 %.0116225, 1            ; 4 uses
-  %i.er = mul nsw i32 %i.ep, %i.eq                ; 2 uses
+  %i.er = mul nuw nsw i32 %i.ep, %i.eq            ; 2 uses
   %i.es = icmp sgt i32 %i.ep, 0
   br i1 %i.es, label %.lr.ph.i176, label %.thread197
 

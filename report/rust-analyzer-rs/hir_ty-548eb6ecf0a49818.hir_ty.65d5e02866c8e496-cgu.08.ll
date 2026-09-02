@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.x = add nuw nsw i64 %i.v, %i.s               ; 4 uses
   %i.y = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.z = load i64, ptr %i.y, align 8, !noundef !4 ; 3 uses
-  %i.aa = sub i64 %i.z, %i.x
+  %i.aa = sub nuw i64 %i.z, %i.x
   %.not = icmp ugt i64 %i.x, %i.z
   br i1 %.not, label %bb.d, label %bb.c, !prof !4008
 
@@ -258,12 +258,13 @@ bb.i:                                             ; preds = %bb.h, %bb.f, %bb.c
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.h, %bb.i
+  %.sroa.4.0.ph = phi i64 [ undef, %bb.i ], [ %i.aa, %bb.h ]
   %.sroa.0.0.ph = phi i64 [ 0, %bb.i ], [ 1, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.j
 
 bb.j:                                             ; preds = %.sink.split, %bb.a
-  %.sroa.4.0 = phi i64 [ undef, %bb.a ], [ %i.aa, %.sink.split ]
+  %.sroa.4.0 = phi i64 [ undef, %bb.a ], [ %.sroa.4.0.ph, %.sink.split ]
   %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ %.sroa.0.0.ph, %.sink.split ]
   %i.ap = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
   %i.aq = insertvalue { i64, i64 } %i.ap, i64 %.sroa.4.0, 1

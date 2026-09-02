@@ -204,7 +204,7 @@ bb.au:                                            ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aj), !dbg !87270
   call void @llvm.experimental.noalias.scope.decl(metadata !87271), !dbg !87270
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !dbg !87274
-  %i.dm = shl i64 %2, 4, !dbg !87274              ; 3 uses
+  %i.dm = shl nuw i64 %2, 4, !dbg !87274          ; 3 uses
   %i.dn = icmp ugt i64 %2, 1152921504606846975, !dbg !87274
   br i1 %i.dn, label %_RINvNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read10read_basic24read_uncompressed_bufferNtNtNtBa_5types6native14months_days_nsINtNtCsh8eZTKRCwoO_3std2io4TakeQQINtNtB25_6cursor6CursorQRShEEECsfcROwRM8ZtH_11polars_plan.exit.thread141, label %bb.av, !dbg !87283, !prof !17871
 
@@ -607,7 +607,7 @@ bb.au:                                            ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aj), !dbg !88150
   call void @llvm.experimental.noalias.scope.decl(metadata !88151), !dbg !88150
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !dbg !88154
-  %i.dm = shl i64 %2, 4, !dbg !88154              ; 3 uses
+  %i.dm = shl nuw i64 %2, 4, !dbg !88154          ; 3 uses
   %i.dn = icmp ugt i64 %2, 1152921504606846975, !dbg !88154
   br i1 %i.dn, label %_RINvNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read10read_basic24read_uncompressed_bufferNtNtNtNtBa_5array7binview4view4ViewINtNtCsh8eZTKRCwoO_3std2io4TakeQQINtNtB22_6cursor6CursorQRShEEECsfcROwRM8ZtH_11polars_plan.exit.thread141, label %bb.av, !dbg !88163, !prof !17871
 
@@ -1010,7 +1010,7 @@ bb.au:                                            ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai), !dbg !89805
   call void @llvm.experimental.noalias.scope.decl(metadata !89806), !dbg !89805
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !dbg !89809
-  %i.dl = shl i64 %2, 3, !dbg !89809              ; 4 uses
+  %i.dl = shl nuw i64 %2, 3, !dbg !89809          ; 4 uses
   %i.dm = icmp ugt i64 %2, 2305843009213693951, !dbg !89809
   br i1 %i.dm, label %_RINvNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read10read_basic24read_uncompressed_bufferdINtNtCsh8eZTKRCwoO_3std2io4TakeQQINtNtB1u_6cursor6CursorQRShEEECsfcROwRM8ZtH_11polars_plan.exit.thread141, label %bb.av, !dbg !89818, !prof !17871
 
@@ -1413,7 +1413,7 @@ bb.au:                                            ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai), !dbg !90643
   call void @llvm.experimental.noalias.scope.decl(metadata !90644), !dbg !90643
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !dbg !90647
-  %i.dl = shl i64 %2, 2, !dbg !90647              ; 4 uses
+  %i.dl = shl nuw i64 %2, 2, !dbg !90647          ; 4 uses
   %i.dm = icmp ugt i64 %2, 4611686018427387903, !dbg !90647
   br i1 %i.dm, label %_RINvNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read10read_basic24read_uncompressed_bufferfINtNtCsh8eZTKRCwoO_3std2io4TakeQQINtNtB1u_6cursor6CursorQRShEEECsfcROwRM8ZtH_11polars_plan.exit.thread141, label %bb.av, !dbg !90656, !prof !17871
 
@@ -1816,7 +1816,7 @@ bb.au:                                            ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai), !dbg !91940
   call void @llvm.experimental.noalias.scope.decl(metadata !91941), !dbg !91940
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !dbg !91944
-  %i.dl = shl i64 %2, 2, !dbg !91944              ; 4 uses
+  %i.dl = shl nuw i64 %2, 2, !dbg !91944          ; 4 uses
   %i.dm = icmp ugt i64 %2, 4611686018427387903, !dbg !91944
   br i1 %i.dm, label %_RINvNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read10read_basic24read_uncompressed_bufferlINtNtCsh8eZTKRCwoO_3std2io4TakeQQINtNtB1u_6cursor6CursorQRShEEECsfcROwRM8ZtH_11polars_plan.exit.thread141, label %bb.av, !dbg !91953, !prof !17871
 
@@ -2219,7 +2219,7 @@ bb.au:                                            ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai), !dbg !92768
   call void @llvm.experimental.noalias.scope.decl(metadata !92769), !dbg !92768
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !dbg !92772
-  %i.dl = shl i64 %2, 2, !dbg !92772              ; 4 uses
+  %i.dl = shl nuw i64 %2, 2, !dbg !92772          ; 4 uses
   %i.dm = icmp ugt i64 %2, 4611686018427387903, !dbg !92772
   br i1 %i.dm, label %_RINvNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read10read_basic24read_uncompressed_buffermINtNtCsh8eZTKRCwoO_3std2io4TakeQQINtNtB1u_6cursor6CursorQRShEEECsfcROwRM8ZtH_11polars_plan.exit.thread141, label %bb.av, !dbg !92781, !prof !17871
 
@@ -2622,7 +2622,7 @@ bb.au:                                            ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai), !dbg !93594
   call void @llvm.experimental.noalias.scope.decl(metadata !93595), !dbg !93594
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !dbg !93598
-  %i.dl = shl i64 %2, 4, !dbg !93598              ; 4 uses
+  %i.dl = shl nuw i64 %2, 4, !dbg !93598          ; 4 uses
   %i.dm = icmp ugt i64 %2, 1152921504606846975, !dbg !93598
   br i1 %i.dm, label %_RINvNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read10read_basic24read_uncompressed_buffernINtNtCsh8eZTKRCwoO_3std2io4TakeQQINtNtB1u_6cursor6CursorQRShEEECsfcROwRM8ZtH_11polars_plan.exit.thread141, label %bb.av, !dbg !93607, !prof !17871
 
@@ -3025,7 +3025,7 @@ bb.au:                                            ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai), !dbg !94424
   call void @llvm.experimental.noalias.scope.decl(metadata !94425), !dbg !94424
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !dbg !94428
-  %i.dl = shl i64 %2, 4, !dbg !94428              ; 4 uses
+  %i.dl = shl nuw i64 %2, 4, !dbg !94428          ; 4 uses
   %i.dm = icmp ugt i64 %2, 1152921504606846975, !dbg !94428
   br i1 %i.dm, label %_RINvNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read10read_basic24read_uncompressed_bufferoINtNtCsh8eZTKRCwoO_3std2io4TakeQQINtNtB1u_6cursor6CursorQRShEEECsfcROwRM8ZtH_11polars_plan.exit.thread141, label %bb.av, !dbg !94437, !prof !17871
 
@@ -3428,7 +3428,7 @@ bb.au:                                            ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai), !dbg !96906
   call void @llvm.experimental.noalias.scope.decl(metadata !96907), !dbg !96906
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !dbg !96910
-  %i.dl = shl i64 %2, 3, !dbg !96910              ; 4 uses
+  %i.dl = shl nuw i64 %2, 3, !dbg !96910          ; 4 uses
   %i.dm = icmp ugt i64 %2, 2305843009213693951, !dbg !96910
   br i1 %i.dm, label %_RINvNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read10read_basic24read_uncompressed_bufferxINtNtCsh8eZTKRCwoO_3std2io4TakeQQINtNtB1u_6cursor6CursorQRShEEECsfcROwRM8ZtH_11polars_plan.exit.thread141, label %bb.av, !dbg !96919, !prof !17871
 
@@ -3831,7 +3831,7 @@ bb.au:                                            ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai), !dbg !97736
   call void @llvm.experimental.noalias.scope.decl(metadata !97737), !dbg !97736
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !dbg !97740
-  %i.dl = shl i64 %2, 3, !dbg !97740              ; 4 uses
+  %i.dl = shl nuw i64 %2, 3, !dbg !97740          ; 4 uses
   %i.dm = icmp ugt i64 %2, 2305843009213693951, !dbg !97740
   br i1 %i.dm, label %_RINvNtNtNtNtCs8774dFTUdNv_12polars_arrow2io3ipc4read10read_basic24read_uncompressed_bufferyINtNtCsh8eZTKRCwoO_3std2io4TakeQQINtNtB1u_6cursor6CursorQRShEEECsfcROwRM8ZtH_11polars_plan.exit.thread141, label %bb.av, !dbg !97749, !prof !17871
 

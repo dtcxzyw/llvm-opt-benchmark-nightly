@@ -205,11 +205,11 @@ bb.at:                                            ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.ga, label %bb.au, label %.sink.split.i219
 
 bb.au:                                            ; preds = %bb.at
-  %i.gb = icmp ugt i64 %i.fx, 1537228672809129301
+  %i.gb = icmp samesign ugt i64 %i.fx, 1537228672809129301
   br i1 %i.gb, label %.invoke512, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i221
 
 _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i221: ; preds = %bb.au
-  %i.gc = mul i64 %i.fx, 12
+  %i.gc = mul nuw i64 %i.fx, 12
   %i.gd = call noalias ptr @malloc(i64 noundef %i.gc) #33 ; 2 uses
   %i.ge = icmp eq ptr %i.gd, null
   br i1 %i.ge, label %.invoke512, label %.sink.split.i219
@@ -612,11 +612,11 @@ bb.at:                                            ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.ga, label %bb.au, label %.sink.split.i217
 
 bb.au:                                            ; preds = %bb.at
-  %i.gb = icmp ugt i64 %i.fx, 1537228672809129301
+  %i.gb = icmp samesign ugt i64 %i.fx, 1537228672809129301
   br i1 %i.gb, label %.invoke504, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i219
 
 _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i219: ; preds = %bb.au
-  %i.gc = mul i64 %i.fx, 12
+  %i.gc = mul nuw i64 %i.fx, 12
   %i.gd = call noalias ptr @malloc(i64 noundef %i.gc) #33 ; 2 uses
   %i.ge = icmp eq ptr %i.gd, null
   br i1 %i.ge, label %.invoke504, label %.sink.split.i217
@@ -1019,11 +1019,11 @@ bb.at:                                            ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.ga, label %bb.au, label %.sink.split.i219
 
 bb.au:                                            ; preds = %bb.at
-  %i.gb = icmp ugt i64 %i.fx, 1537228672809129301
+  %i.gb = icmp samesign ugt i64 %i.fx, 1537228672809129301
   br i1 %i.gb, label %.invoke512, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i221
 
 _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i221: ; preds = %bb.au
-  %i.gc = mul i64 %i.fx, 12
+  %i.gc = mul nuw i64 %i.fx, 12
   %i.gd = call noalias ptr @malloc(i64 noundef %i.gc) #33 ; 2 uses
   %i.ge = icmp eq ptr %i.gd, null
   br i1 %i.ge, label %.invoke512, label %.sink.split.i219

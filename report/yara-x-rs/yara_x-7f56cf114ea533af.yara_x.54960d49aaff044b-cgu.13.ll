@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t
   %i.dc = getelementptr inbounds nuw i8, ptr %i.cu, i64 24
   %i.dd = load i64, ptr %i.dc, align 8, !noalias !4667, !noundef !27 ; 4 uses
-  %i.de = sub i64 %i.dd, %.sroa.05.082
+  %i.de = sub nuw i64 %i.dd, %.sroa.05.082
   %i.df = icmp ult i64 %i.dd, %.sroa.05.082
   br i1 %i.df, label %.backedge.i, label %bb.v
 
@@ -608,7 +608,7 @@ bb.g:                                             ; preds = %bb.b, %bb.k, %bb.l,
   %i.n = zext i1 %8 to i64                        ; 3 uses
   %.sroa.038.1 = shl nuw nsw i64 %.sroa.038.0, %i.n ; 2 uses
   %.sroa.08.1 = shl i64 %.sroa.08.0, %i.n
-  %i.o = sub i64 %6, %.sroa.038.1                 ; 7 uses
+  %i.o = sub nuw i64 %6, %.sroa.038.1             ; 7 uses
   %i.p = icmp ult i64 %6, %.sroa.038.1
   br i1 %i.p, label %bb.o, label %bb.n
 

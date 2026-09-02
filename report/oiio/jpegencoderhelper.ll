@@ -205,10 +205,10 @@ bb.a:
   %i.f = load ptr, ptr %i.c, align 8, !tbaa !68   ; 2 uses
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
-  %i.i = sub i64 %i.g, %i.h                       ; 3 uses
+  %i.i = sub i64 %i.g, %i.h                       ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !114  ; 3 uses
-  %i.l = sub i64 %i.i, %i.k                       ; 2 uses
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !114  ; 4 uses
+  %i.l = sub nuw i64 %i.i, %i.k
   %i.m = icmp ugt i64 %i.k, %i.i
   br i1 %i.m, label %bb.b, label %bb.c
 
@@ -218,8 +218,8 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt6vectorIhSaIhEE6resizeEm.exit
 
 bb.c:                                             ; preds = %bb.a
-  %1 = icmp ult i64 %i.l, %i.i
-  br i1 %1, label %bb.d, label %_ZNSt6vectorIhSaIhEE6resizeEm.exit
+  %.not = icmp eq i64 %i.k, 0
+  br i1 %.not, label %_ZNSt6vectorIhSaIhEE6resizeEm.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.l ; 2 uses

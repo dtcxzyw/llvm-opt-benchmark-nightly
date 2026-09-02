@@ -205,7 +205,7 @@ bb.a:
   %i.n = load i8, ptr %i.m, align 1, !tbaa !62
   %i.o = zext i8 %i.n to i32
   %i.p = add nuw nsw i32 %.1.i, %i.o              ; 3 uses
-  %i.q = mul nsw i32 %4, %3                       ; 2 uses
+  %i.q = mul nuw nsw i32 %4, %3                   ; 2 uses
   %i.r = add nuw nsw i32 %i.h, 1
   %i.s = add nuw nsw i32 %i.r, %i.p               ; 2 uses
   %i.t = icmp sgt i32 %4, 0
@@ -608,7 +608,7 @@ bb.a:
   %i.n = load i8, ptr %i.m, align 1, !tbaa !62
   %i.o = zext i8 %i.n to i32
   %i.p = add nuw nsw i32 %.1.i, %i.o              ; 3 uses
-  %i.q = mul nsw i32 %4, %3                       ; 2 uses
+  %i.q = mul nuw nsw i32 %4, %3                   ; 2 uses
   %i.r = add nuw nsw i32 %i.h, 1
   %i.s = add nuw nsw i32 %i.r, %i.p               ; 2 uses
   %i.t = icmp sgt i32 %4, 0
@@ -1011,7 +1011,7 @@ bb.a:
   %i.n = load i8, ptr %i.m, align 1, !tbaa !62
   %i.o = zext i8 %i.n to i32
   %i.p = add nuw nsw i32 %.1.i, %i.o              ; 4 uses
-  %i.q = mul nsw i32 %4, %3                       ; 3 uses
+  %i.q = mul nuw nsw i32 %4, %3                   ; 3 uses
   %i.r = add nuw nsw i32 %i.h, 1
   %i.s = add nuw nsw i32 %i.r, %i.p               ; 3 uses
   %i.t = icmp sgt i32 %4, 0

@@ -1,0 +1,317 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 86d4c5f918076..9093da8489b54 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -111,21 +111,30 @@ struct FactOrCheck {
+     ConditionTy Cond;
+   };
+ 
+-  /// A pre-condition that must hold for the current fact to be added to the
+-  /// system.
+-  ConditionTy DoesHold;
++  union {
++    /// A pre-condition that must hold for the current fact to be added to the
++    /// system. Only used by condition facts.
++    ConditionTy DoesHold;
++
++    /// The instruction the entry is anchored at, used to order entries within
++    /// a block. Equal to Inst, except for checks anchored at a point that
++    /// dominates, but does not contain, Inst. Not used by condition facts,
++    /// which are anchored at the start of their block.
++    Instruction *ContextInst;
++  };
+ 
+   unsigned NumIn;
+   unsigned NumOut;
+   EntryTy Ty;
+ 
+-  FactOrCheck(EntryTy Ty, DomTreeNode *DTN, Instruction *Inst)
+-      : Inst(Inst), NumIn(DTN->getDFSNumIn()), NumOut(DTN->getDFSNumOut()),
+-        Ty(Ty) {}
++  FactOrCheck(EntryTy Ty, DomTreeNode *DTN, Instruction *Inst,
++              Instruction *ContextInst)
++      : Inst(Inst), ContextInst(ContextInst ? ContextInst : Inst),
++        NumIn(DTN->getDFSNumIn()), NumOut(DTN->getDFSNumOut()), Ty(Ty) {}
+ 
+   FactOrCheck(DomTreeNode *DTN, Use *U)
+-      : U(U), NumIn(DTN->getDFSNumIn()), NumOut(DTN->getDFSNumOut()),
+-        Ty(EntryTy::UseCheck) {}
++      : U(U), ContextInst(nullptr), NumIn(DTN->getDFSNumIn()),
++        NumOut(DTN->getDFSNumOut()), Ty(EntryTy::UseCheck) {}
+ 
+   FactOrCheck(DomTreeNode *DTN, CmpPredicate Pred, Value *Op0, Value *Op1,
+               ConditionTy Precond = {})
+@@ -139,15 +148,21 @@ struct FactOrCheck {
+   }
+ 
+   static FactOrCheck getInstFact(DomTreeNode *DTN, Instruction *Inst) {
+-    return FactOrCheck(EntryTy::InstFact, DTN, Inst);
++    return FactOrCheck(EntryTy::InstFact, DTN, Inst, nullptr);
+   }
+ 
+   static FactOrCheck getCheck(DomTreeNode *DTN, Use *U) {
+     return FactOrCheck(DTN, U);
+   }
+ 
+-  static FactOrCheck getCheck(DomTreeNode *DTN, Instruction *I) {
+-    return FactOrCheck(EntryTy::InstCheck, DTN, I);
++  /// Returns an entry to check \p I at \p DTN. \p ContextInst, if set, must be
++  /// in \p DTN's block and anchors the entry there; it is needed when \p DTN
++  /// dominates \p I's uses without containing \p I itself.
++  static FactOrCheck getCheck(DomTreeNode *DTN, Instruction *I,
++                              Instruction *ContextInst = nullptr) {
++    assert((!ContextInst || ContextInst->getParent() == DTN->getBlock()) &&
++           "context instruction must be in the anchoring block");
++    return FactOrCheck(EntryTy::InstCheck, DTN, I, ContextInst);
+   }
+ 
+   bool isCheck() const {
+@@ -158,7 +173,7 @@ struct FactOrCheck {
+     assert(!isConditionFact());
+     if (Ty == EntryTy::UseCheck)
+       return getContextInstForUse(*U);
+-    return Inst;
++    return ContextInst;
+   }
+ 
+   Instruction *getInstructionToSimplify() const {
+@@ -172,6 +187,9 @@ struct FactOrCheck {
+   bool isConditionFact() const { return Ty == EntryTy::ConditionFact; }
+ };
+ 
++/// There is one entry per fact and check in a function, so keep them small.
++static_assert(sizeof(FactOrCheck) <= 64, "FactOrCheck should stay compact");
++
+ /// The senses in which an induction phi is monotonic, together with the
+ /// direction it moves in.
+ struct MonotonicInfo {
+@@ -1529,10 +1547,23 @@ void State::addInfoFor(BasicBlock &BB) {
+         WorkList.push_back(FactOrCheck::getInstFact(DT.getNode(&BB), BO));
+     }
+ 
+-    // Queue instructions whose flags may be strengthened based on the facts
+-    // that hold on entry to BB.
+-    if (canStrengthenFlags(&I))
+-      WorkList.push_back(FactOrCheck::getCheck(DT.getNode(&BB), &I));
++    // Queue instructions whose flags may be strengthened, checked at the
++    // closest point dominating all uses. That point may be strictly below the
++    // defining block: if the operation does not wrap there, any use of a
++    // wrapped (and hence poison) result is unreachable, so recording the flag
++    // on the definition remains valid.
++    if (canStrengthenFlags(&I)) {
++      Instruction *NCD = nullptr;
++      for (Use &U : I.uses()) {
++        Instruction *UserI = getContextInstForUse(U);
++        NCD = NCD ? DT.findNearestCommonDominator(NCD, UserI) : UserI;
++      }
++      // All uses may be in unreachable blocks, which are not in the dominator
++      // tree; the flag holds vacuously for them.
++      if (NCD)
++        if (DomTreeNode *DTN = DT.getNode(NCD->getParent()))
++          WorkList.push_back(FactOrCheck::getCheck(DTN, &I, NCD));
++    }
+ 
+     GuaranteedToExecute &= isGuaranteedToTransferExecutionToSuccessor(&I);
+   }
+diff --git a/llvm/test/Transforms/ConstraintElimination/add-negative-constant-signed.ll b/llvm/test/Transforms/ConstraintElimination/add-negative-constant-signed.ll
+new file mode 100644
+index 0000000000000..2901a0be3dace
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/add-negative-constant-signed.ll
+@@ -0,0 +1,78 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck %s
++
++define i1 @add_neg_1_slt(i64 %x, i64 %b) {
++; CHECK-LABEL: define i1 @add_neg_1_slt(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:    [[NN:%.*]] = icmp sge i64 [[X]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[NN]])
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], -1
++; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
++; CHECK-NEXT:    ret i1 [[T]]
++;
++  %x.non.neg = icmp sge i64 %x, 0
++  call void @llvm.assume(i1 %x.non.neg)
++  %c = icmp slt i64 %x, %b
++  call void @llvm.assume(i1 %c)
++  %sub = add i64 %x, -1
++  %t = icmp slt i64 %sub, %b
++  ret i1 %t
++}
++
++define i1 @add_neg_20_slt(i64 %x, i64 %b) {
++; CHECK-LABEL: define i1 @add_neg_20_slt(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:    [[NN:%.*]] = icmp sge i64 [[X]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[NN]])
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], -20
++; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
++; CHECK-NEXT:    ret i1 [[T]]
++;
++  %x.non.neg = icmp sge i64 %x, 0
++  call void @llvm.assume(i1 %x.non.neg)
++  %c = icmp slt i64 %x, %b
++  call void @llvm.assume(i1 %c)
++  %sub = add i64 %x, -20
++  %t = icmp slt i64 %sub, %b
++  ret i1 %t
++}
++
++define i1 @add_neg_1_nonneg_from_ult(i64 %x, i64 %c) {
++; CHECK-LABEL: define i1 @add_neg_1_nonneg_from_ult(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[C:%.*]]) {
++; CHECK-NEXT:    [[NN:%.*]] = icmp sge i64 [[C]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[NN]])
++; CHECK-NEXT:    [[B:%.*]] = icmp ult i64 [[X]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[B]])
++; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], -1
++; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[C]]
++; CHECK-NEXT:    ret i1 [[T]]
++;
++  %x.non.neg = icmp sge i64 %c, 0
++  call void @llvm.assume(i1 %x.non.neg)
++  %b = icmp ult i64 %x, %c
++  call void @llvm.assume(i1 %b)
++  %sub = add i64 %x, -1
++  %t = icmp slt i64 %sub, %c
++  ret i1 %t
++}
++
++define i1 @add_neg_1_no_nonneg(i64 %x, i64 %b) {
++; CHECK-LABEL: define i1 @add_neg_1_no_nonneg(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], -1
++; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
++; CHECK-NEXT:    ret i1 [[T]]
++;
++  %c = icmp slt i64 %x, %b
++  call void @llvm.assume(i1 %c)
++  %sub = add i64 %x, -1
++  %t = icmp slt i64 %sub, %b
++  ret i1 %t
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll
+index a5c0702896efd..ff27d0f8007db 100644
+--- a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll
++++ b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-signed.ll
+@@ -46,7 +46,7 @@ define void @signed_iv_step_4(i64 %count) {
+ ; CHECK-LABEL: define void @signed_iv_step_4(
+ ; CHECK-SAME: i64 [[COUNT:%.*]]) {
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[END:%.*]] = shl nsw i64 [[COUNT]], 2
++; CHECK-NEXT:    [[END:%.*]] = shl nuw nsw i64 [[COUNT]], 2
+ ; CHECK-NEXT:    [[PRECOND:%.*]] = icmp sgt i64 [[COUNT]], -1
+ ; CHECK-NEXT:    br i1 [[PRECOND]], label [[LOOP:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       loop:
+@@ -130,7 +130,7 @@ define void @signed_iv_step_4_start_4(i64 %count) {
+ ; CHECK-LABEL: define void @signed_iv_step_4_start_4(
+ ; CHECK-SAME: i64 [[COUNT:%.*]]) {
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[END:%.*]] = shl nsw i64 [[COUNT]], 2
++; CHECK-NEXT:    [[END:%.*]] = shl nuw nsw i64 [[COUNT]], 2
+ ; CHECK-NEXT:    [[PRECOND:%.*]] = icmp sgt i64 [[COUNT]], 0
+ ; CHECK-NEXT:    br i1 [[PRECOND]], label [[LOOP:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       loop:
+@@ -171,7 +171,7 @@ define void @signed_iv_step_4_start_4_missing_precond(i64 %count) {
+ ; CHECK-LABEL: define void @signed_iv_step_4_start_4_missing_precond(
+ ; CHECK-SAME: i64 [[COUNT:%.*]]) {
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[END:%.*]] = shl nsw i64 [[COUNT]], 2
++; CHECK-NEXT:    [[END:%.*]] = shl nuw nsw i64 [[COUNT]], 2
+ ; CHECK-NEXT:    [[PRECOND:%.*]] = icmp sgt i64 [[COUNT]], -1
+ ; CHECK-NEXT:    br i1 [[PRECOND]], label [[LOOP:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       loop:
+diff --git a/llvm/test/Transforms/ConstraintElimination/strengthen-flags-at-uses.ll b/llvm/test/Transforms/ConstraintElimination/strengthen-flags-at-uses.ll
+new file mode 100644
+index 0000000000000..ab7a9859546f5
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/strengthen-flags-at-uses.ll
+@@ -0,0 +1,81 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck %s
++
++; The sub is hoisted above the branch establishing %a >=u %b, but its only use
++; is guarded by that branch, so nuw can still be inferred.
++define i64 @sub_hoisted_single_use(i64 %a, i64 %b) {
++; CHECK-LABEL: define i64 @sub_hoisted_single_use(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C:%.*]] = icmp uge i64 [[A]], [[B]]
++; CHECK-NEXT:    [[SUB:%.*]] = sub nuw i64 [[A]], [[B]]
++; CHECK-NEXT:    br i1 [[C]], label %[[IF_END:.*]], label %[[EXIT:.*]]
++; CHECK:       [[IF_END]]:
++; CHECK-NEXT:    ret i64 [[SUB]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i64 0
++;
++entry:
++  %c = icmp uge i64 %a, %b
++  %sub = sub i64 %a, %b
++  br i1 %c, label %if.end, label %exit
++
++if.end:
++  ret i64 %sub
++
++exit:
++  ret i64 0
++}
++
++; Same, but with a second use that is not guarded, so no flag can be added.
++define i64 @sub_hoisted_use_outside(i64 %a, i64 %b) {
++; CHECK-LABEL: define i64 @sub_hoisted_use_outside(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C:%.*]] = icmp uge i64 [[A]], [[B]]
++; CHECK-NEXT:    [[SUB:%.*]] = sub i64 [[A]], [[B]]
++; CHECK-NEXT:    br i1 [[C]], label %[[IF_END:.*]], label %[[EXIT:.*]]
++; CHECK:       [[IF_END]]:
++; CHECK-NEXT:    ret i64 [[SUB]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i64 [[SUB]]
++;
++entry:
++  %c = icmp uge i64 %a, %b
++  %sub = sub i64 %a, %b
++  br i1 %c, label %if.end, label %exit
++
++if.end:
++  ret i64 %sub
++
++exit:
++  ret i64 %sub
++}
++
++; The uses are all in %mid, so the check is anchored at the first of them. The
++; assume is queued as a fact at its own position (rather than on entry to %mid)
++; because @barrier may not return, so the anchor must be ordered after it.
++define i64 @sub_anchored_after_assume(i64 %a, i64 %b) {
++; CHECK-LABEL: define i64 @sub_anchored_after_assume(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[SUB:%.*]] = sub nuw i64 [[A]], [[B]]
++; CHECK-NEXT:    br label %[[MID:.*]]
++; CHECK:       [[MID]]:
++; CHECK-NEXT:    call void @barrier()
++; CHECK-NEXT:    [[C:%.*]] = icmp uge i64 [[A]], [[B]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    ret i64 [[SUB]]
++;
++entry:
++  %sub = sub i64 %a, %b
++  br label %mid
++
++mid:
++  call void @barrier()
++  %c = icmp uge i64 %a, %b
++  call void @llvm.assume(i1 %c)
++  ret i64 %sub
++}
++
++declare void @barrier()
