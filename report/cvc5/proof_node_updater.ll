@@ -202,15 +202,15 @@ bb.es:                                            ; preds = %bb.er
   %i.pm = ptrtoint ptr %i.pk to i64
   %i.pn = ptrtoint ptr %i.pl to i64
   %i.po = sub i64 %i.pm, %i.pn
-  %i.pp = ashr exact i64 %i.po, 3                 ; 3 uses
+  %i.pp = ashr exact i64 %i.po, 3                 ; 2 uses
   %i.pq = getelementptr inbounds nuw i8, ptr %i.pj, i64 8
-  %i.pr = load ptr, ptr %i.pq, align 8, !tbaa !47
-  %i.ps = load ptr, ptr %i.pj, align 8, !tbaa !46
+  %i.pr = load ptr, ptr %i.pq, align 8, !tbaa !47 ; 2 uses
+  %i.ps = load ptr, ptr %i.pj, align 8, !tbaa !46 ; 2 uses
   %i.pt = ptrtoint ptr %i.pr to i64
   %i.pu = ptrtoint ptr %i.ps to i64
   %i.pv = sub i64 %i.pt, %i.pu
   %i.pw = ashr exact i64 %i.pv, 3                 ; 3 uses
-  %i.px = sub nsw i64 %i.pp, %i.pw                ; 2 uses
+  %i.px = sub nuw nsw i64 %i.pp, %i.pw
   %i.py = icmp ugt i64 %i.pw, %i.pp
   br i1 %i.py, label %bb.et, label %bb.eu
 
@@ -220,8 +220,8 @@ bb.et:                                            ; preds = %bb.es
           to label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE6resizeEm.exit unwind label %bb.fa
 
 bb.eu:                                            ; preds = %bb.es
-  %20 = icmp ult i64 %i.px, %i.pp
-  br i1 %20, label %bb.ev, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE6resizeEm.exit
+  %.not364 = icmp eq ptr %i.pr, %i.ps
+  br i1 %.not364, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE6resizeEm.exit, label %bb.ev
 
 bb.ev:                                            ; preds = %bb.eu
   %i.qa = getelementptr inbounds nuw [8 x i8], ptr %i.pl, i64 %i.px ; 3 uses

@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.aa
   %i.cb = icmp ugt i64 %.sroa.066.0, %i.bp
-  %i.cc = sub i64 %.val157, %i.bp                 ; 9 uses
+  %i.cc = sub nuw i64 %.val157, %i.bp             ; 9 uses
   %i.cd = icmp ult i64 %.val157, %i.bp            ; 2 uses
   br i1 %i.cb, label %bb.ae, label %bb.ad
 
@@ -445,7 +445,7 @@ bb.bb:                                            ; preds = %_RNvMNtCskKLDkoKarT
   %i.ev = add nuw nsw i64 %i.eu, %i.q             ; 2 uses
   %narrow = add nuw nsw i8 %i.i, 4
   %i.ew = zext nneg i8 %narrow to i64             ; 3 uses
-  %i.ex = sub i64 %i.eq, %i.et                    ; 2 uses
+  %i.ex = sub nuw i64 %i.eq, %i.et                ; 2 uses
   %i.ey = icmp ult i64 %i.eq, %i.et
   br i1 %i.ey, label %bb.bd, label %bb.bc
 
@@ -531,7 +531,7 @@ bb.bh:                                            ; preds = %bb.be
   unreachable
 
 bb.bi:                                            ; preds = %bb.bc
-  %i.gc = add i64 %i.ex, 18
+  %i.gc = add nuw i64 %i.ex, 18
   tail call void @llvm.experimental.noalias.scope.decl(metadata !941)
   %i.gd = tail call { i64, i64 } @_RINvNtNtCskKLDkoKarTP_4core5slice5index5rangeINtNtNtB6_3ops5range5RangejEECsiAynQAjgDuT_10xet_client(i64 noundef %i.ex, i64 noundef %i.gc, i64 noundef range(i64 0, -9223372036854775808) %.val168, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @116), !noalias !942 ; 2 uses
   %i.ge = extractvalue { i64, i64 } %i.gd, 0      ; 2 uses
@@ -934,7 +934,7 @@ bb.al:                                            ; preds = %bb.ab, %bb.bh
   %.val214527 = phi i64 [ %i.cg, %bb.bh ], [ %.val215, %bb.ab ] ; 26 uses
   %.sroa.085.1 = phi i64 [ %i.fv, %bb.bh ], [ %.sroa.085.0, %bb.ab ] ; 11 uses
   %i.dg = icmp ugt i64 %.sroa.085.1, %i.bp
-  %i.dh = sub i64 %.val214527, %i.bp              ; 9 uses
+  %i.dh = sub nuw i64 %.val214527, %i.bp          ; 9 uses
   %i.di = icmp ult i64 %.val214527, %i.bp         ; 2 uses
   br i1 %i.dg, label %bb.an, label %bb.am
 
@@ -1291,7 +1291,7 @@ bb.bu:                                            ; preds = %bb.bm, %bb.bw
   %.val214528 = phi i64 [ %i.gn, %bb.bw ], [ %i.gb, %bb.bm ] ; 13 uses
   %.sroa.032.0 = phi i64 [ %i.hn, %bb.bw ], [ %i.gh, %bb.bm ]
   %.sroa.032.0.fr = freeze i64 %.sroa.032.0       ; 4 uses
-  %i.hl = sub i64 %.val214528, %i.ge              ; 2 uses
+  %i.hl = sub nuw i64 %.val214528, %i.ge          ; 2 uses
   %i.hm = icmp ult i64 %.val214528, %i.ge
   br i1 %i.hm, label %bb.by, label %bb.bx
 
@@ -1385,7 +1385,7 @@ bb.cc:                                            ; preds = %bb.bz
   unreachable
 
 bb.cd:                                            ; preds = %bb.bx
-  %i.in = add i64 %i.hl, 18
+  %i.in = add nuw i64 %i.hl, 18
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1312)
   %i.io = tail call { i64, i64 } @_RINvNtNtCskKLDkoKarTP_4core5slice5index5rangeINtNtNtB6_3ops5range5RangejEECsiAynQAjgDuT_10xet_client(i64 noundef %i.hl, i64 noundef %i.in, i64 noundef range(i64 0, -9223372036854775808) %.val226, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @116), !noalias !1313 ; 2 uses
   %i.ip = extractvalue { i64, i64 } %i.io, 0      ; 2 uses

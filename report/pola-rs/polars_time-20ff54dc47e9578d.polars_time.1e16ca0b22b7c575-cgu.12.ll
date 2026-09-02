@@ -204,7 +204,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !31329
   %i.g = load i64, ptr %i.f, align 8, !dbg !31329, !noundef !966
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !31330
-  %i.h = shl nuw i64 %i.e, 3, !dbg !31331         ; 2 uses
+  %i.h = shl nuw nsw i64 %i.e, 3, !dbg !31331     ; 2 uses
   %.not.i = icmp ugt i64 %i.e, 1152921504606846975
   br i1 %.not.i, label %bb.d, label %bb.b, !dbg !31332, !prof !1297
 
@@ -607,7 +607,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !32968
   %i.g = load i64, ptr %i.f, align 8, !dbg !32968, !noundef !966
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !32969
-  %i.h = shl nuw i64 %i.e, 3, !dbg !32970         ; 2 uses
+  %i.h = shl nuw nsw i64 %i.e, 3, !dbg !32970     ; 2 uses
   %.not.i = icmp ugt i64 %i.e, 1152921504606846975
   br i1 %.not.i, label %bb.d, label %bb.b, !dbg !32971, !prof !1297
 

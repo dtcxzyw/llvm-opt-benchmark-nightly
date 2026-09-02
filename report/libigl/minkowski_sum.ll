@@ -205,7 +205,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit460:                 ; preds = %_ZN5Eigen11IndexedV
   %i.apy = mul nsw i32 %i.jl, 3
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %73, i8 0, i64 24, i1 false)
   %i.apz = sext i32 %i.apy to i64                 ; 4 uses
-  %i.aqa = shl nsw i64 %i.apz, 4
+  %i.aqa = shl nuw nsw i64 %i.apz, 4
   %i.aqb = getelementptr inbounds nuw i8, ptr %73, i64 8 ; 26 uses
   %i.aqc = getelementptr inbounds nuw i8, ptr %73, i64 16 ; 17 uses
   br i1 %i.jn, label %bb.hh, label %bb.he
@@ -608,7 +608,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit419:                 ; preds = %_ZN5Eigen11IndexedV
   %i.aek = mul nsw i32 %i.fd, 3
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %69, i8 0, i64 24, i1 false)
   %i.ael = sext i32 %i.aek to i64                 ; 4 uses
-  %i.aem = shl nsw i64 %i.ael, 4
+  %i.aem = shl nuw nsw i64 %i.ael, 4
   %i.aen = getelementptr inbounds nuw i8, ptr %69, i64 8 ; 26 uses
   %i.aeo = getelementptr inbounds nuw i8, ptr %69, i64 16 ; 17 uses
   br i1 %i.ff, label %bb.er, label %bb.eo
@@ -1011,7 +1011,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit419:                 ; preds = %_ZN5Eigen11IndexedV
   %i.aed = mul nsw i32 %i.ew, 3
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %69, i8 0, i64 24, i1 false)
   %i.aee = sext i32 %i.aed to i64                 ; 4 uses
-  %i.aef = shl nsw i64 %i.aee, 4
+  %i.aef = shl nuw nsw i64 %i.aee, 4
   %i.aeg = getelementptr inbounds nuw i8, ptr %69, i64 8 ; 26 uses
   %i.aeh = getelementptr inbounds nuw i8, ptr %69, i64 16 ; 17 uses
   br i1 %i.ey, label %bb.er, label %bb.eo

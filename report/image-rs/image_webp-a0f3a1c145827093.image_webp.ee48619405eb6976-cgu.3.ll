@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %_RNvMNtCsj6eKBz9Db1
   %i.bs = shl nuw nsw i64 %i.br, 2                ; 5 uses
   %i.bt = call i64 @llvm.usub.sat.i64(i64 %i.bm, i64 1)
   %i.bu = shl nuw nsw i64 %i.bt, 5                ; 4 uses
-  %i.bv = sub nsw i64 %i.bs, %i.bu                ; 4 uses
+  %i.bv = sub nuw nsw i64 %i.bs, %i.bu            ; 4 uses
   %i.bw = shl nuw nsw i64 %i.bm, 2                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ak), !noalias !424
   call void @llvm.experimental.noalias.scope.decl(metadata !426)
@@ -254,7 +254,7 @@ bb.q:                                             ; preds = %.noexc43.i
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ag, i64 64 ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ag, i64 40
   %i.cn = add nsw i64 %i.bm, -1                   ; 3 uses
-  %i.co = icmp ult i64 %i.bv, 33
+  %i.co = icmp samesign ult i64 %i.bv, 33
   br label %bb.u
 
 ._crit_edge.i:                                    ; preds = %bb.al
@@ -645,7 +645,7 @@ bb.az:                                            ; preds = %_RNvMNtCsj6eKBz9Db1
   %i.fx = shl nuw nsw i64 %i.fw, 2                ; 5 uses
   %i.fy = call i64 @llvm.usub.sat.i64(i64 %i.fr, i64 1)
   %i.fz = shl nuw nsw i64 %i.fy, 3                ; 4 uses
-  %i.ga = sub nsw i64 %i.fx, %i.fz                ; 4 uses
+  %i.ga = sub nuw nsw i64 %i.fx, %i.fz            ; 4 uses
   %i.gb = shl nuw nsw i64 %i.fr, 2                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w), !noalias !439
   call void @llvm.experimental.noalias.scope.decl(metadata !441)
@@ -694,7 +694,7 @@ bb.ba:                                            ; preds = %.noexc45.i
   %i.gq = getelementptr inbounds nuw i8, ptr %i.s, i64 64 ; 2 uses
   %i.gr = getelementptr inbounds nuw i8, ptr %i.s, i64 40
   %i.gs = add nsw i64 %i.fr, -1                   ; 3 uses
-  %i.gt = icmp ult i64 %i.ga, 9
+  %i.gt = icmp samesign ult i64 %i.ga, 9
   br label %bb.be
 
 ._crit_edge.i32:                                  ; preds = %bb.bv
@@ -1089,7 +1089,7 @@ bb.cj:                                            ; preds = %_RNvMNtCsj6eKBz9Db1
   %i.ke = shl nuw nsw i64 %i.kd, 2                ; 5 uses
   %i.kf = call i64 @llvm.usub.sat.i64(i64 %i.jy, i64 1)
   %i.kg = shl nuw nsw i64 %i.kf, 4                ; 4 uses
-  %i.kh = sub nsw i64 %i.ke, %i.kg                ; 4 uses
+  %i.kh = sub nuw nsw i64 %i.ke, %i.kg            ; 4 uses
   %i.ki = shl nuw nsw i64 %i.jy, 2                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !451
   call void @llvm.experimental.noalias.scope.decl(metadata !453)
@@ -1138,7 +1138,7 @@ bb.ck:                                            ; preds = %.noexc43.i59
   %i.kx = getelementptr inbounds nuw i8, ptr %i.e, i64 64 ; 2 uses
   %i.ky = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   %i.kz = add nsw i64 %i.jy, -1                   ; 3 uses
-  %i.la = icmp ult i64 %i.kh, 17
+  %i.la = icmp samesign ult i64 %i.kh, 17
   br label %bb.co
 
 ._crit_edge.i86:                                  ; preds = %bb.df
