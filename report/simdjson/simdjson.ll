@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !44   ; 9 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !44   ; 10 uses
   %i.e = icmp slt i32 %i.d, 0
   br i1 %i.e, label %.thread, label %bb.c
 
@@ -219,18 +219,17 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph:                                           ; preds = %.preheader
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 3 uses
   %i.h = zext i32 %i.a to i64                     ; 3 uses
-  %wide.trip.count = zext nneg i32 %i.d to i64    ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.i = icmp eq i32 %i.d, 1
   br i1 %i.i, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 30
+  %1 = and i32 %i.d, 30
+  %unroll_iter = zext nneg i32 %1 to i64
   br label %bb.e
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %2 = trunc i32 %i.d to i1
+  br i1 %2, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
@@ -591,7 +590,6 @@ bb.d:                                             ; preds = %.loopexit
   %i.z = zext i32 %.2 to i64                      ; 2 uses
   %i.aa = sub nuw i32 %i.b, %.2                   ; 5 uses
   %.neg = add i32 %.2, 1
-  %xtraiter = and i32 %i.aa, 1
   %i.ab = icmp eq i32 %i.b, %.neg
   br i1 %i.ab, label %.epil.preheader, label %.lr.ph65.new
 
@@ -600,8 +598,8 @@ bb.d:                                             ; preds = %.loopexit
   br label %bb.e
 
 .preheader.loopexit.unr-lcssa:                    ; preds = %bb.e
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader, label %.epil.preheader
+  %2 = trunc i32 %i.aa to i1
+  br i1 %2, label %.epil.preheader, label %.preheader
 
 .epil.preheader:                                  ; preds = %.preheader.loopexit.unr-lcssa, %.lr.ph65
   %indvars.iv84.epil.init = phi i64 [ 0, %.lr.ph65 ], [ %indvars.iv.next85.1, %.preheader.loopexit.unr-lcssa ]
@@ -1004,8 +1002,7 @@ begin_hunk_1_@_ZN8simdjson7haswell25dom_parser_implementation6stage1EPKhmNS_11st
 
 .noexc145.i.preheader:                            ; preds = %.noexc144.i
   %i.ns = add i64 %i.nm, -2
-  %4 = and i64 %i.ns, %i.nm                       ; 2 uses
-  %xtraiter = and i64 %i.ia, 1
+  %xtraiter = and i64 %i.ns, %i.nm                ; 2 uses
   %i.nt = icmp eq i64 %i.ia, 25
   br i1 %i.nt, label %.noexc145.i.epil.preheader, label %.noexc145.i.preheader.new
 
@@ -1016,7 +1013,7 @@ begin_hunk_1_@_ZN8simdjson7haswell25dom_parser_implementation6stage1EPKhmNS_11st
 
 .noexc145.i:                                      ; preds = %.noexc145.i, %.noexc145.i.preheader.new
   %indvars.iv.i = phi i64 [ 24, %.noexc145.i.preheader.new ], [ %indvars.iv.next.i.1, %.noexc145.i ] ; 3 uses
-  %.021732257.i = phi i64 [ %4, %.noexc145.i.preheader.new ], [ %i.oi, %.noexc145.i ] ; 3 uses
+  %.021732257.i = phi i64 [ %xtraiter, %.noexc145.i.preheader.new ], [ %i.oi, %.noexc145.i ] ; 3 uses
   %niter = phi i64 [ 0, %.noexc145.i.preheader.new ], [ %niter.next.1, %.noexc145.i ] ; 2 uses
   %i.nw = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.021732257.i, i1 true)
   %i.nx = trunc nuw nsw i64 %i.nw to i32
@@ -1039,12 +1036,12 @@ begin_hunk_1_@_ZN8simdjson7haswell25dom_parser_implementation6stage1EPKhmNS_11st
   br i1 %niter.ncmp.1, label %.loopexit2250.i.loopexit.unr-lcssa, label %.noexc145.i, !llvm.loop !198
 
 .loopexit2250.i.loopexit.unr-lcssa:               ; preds = %.noexc145.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit2250.i, label %.noexc145.i.epil.preheader
+  %4 = trunc i64 %i.ia to i1
+  br i1 %4, label %.noexc145.i.epil.preheader, label %.loopexit2250.i
 
 .noexc145.i.epil.preheader:                       ; preds = %.loopexit2250.i.loopexit.unr-lcssa, %.noexc145.i.preheader
   %indvars.iv.i.epil.init = phi i64 [ 24, %.noexc145.i.preheader ], [ %indvars.iv.next.i.1, %.loopexit2250.i.loopexit.unr-lcssa ]
-  %.021732257.i.epil.init = phi i64 [ %4, %.noexc145.i.preheader ], [ %i.oi, %.loopexit2250.i.loopexit.unr-lcssa ]
+  %.021732257.i.epil.init = phi i64 [ %xtraiter, %.noexc145.i.preheader ], [ %i.oi, %.loopexit2250.i.loopexit.unr-lcssa ]
   %lcmp.mod94 = trunc i64 %i.ia to i1
   tail call void @llvm.assume(i1 %lcmp.mod94)
   %i.oj = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.021732257.i.epil.init, i1 true)
@@ -1337,8 +1334,7 @@ _ZN8simdjson7haswell12_GLOBAL__N_115utf8_validation12utf8_checker16check_next_in
 
 .noexc149.i.preheader:                            ; preds = %.noexc148.i
   %i.ww = add i64 %i.wq, -2
-  %5 = and i64 %i.ww, %i.wq                       ; 2 uses
-  %xtraiter95 = and i64 %i.re, 1
+  %xtraiter95 = and i64 %i.ww, %i.wq              ; 2 uses
   %i.wx = icmp eq i64 %i.re, 25
   br i1 %i.wx, label %.noexc149.i.epil.preheader, label %.noexc149.i.preheader.new
 
@@ -1349,7 +1345,7 @@ _ZN8simdjson7haswell12_GLOBAL__N_115utf8_validation12utf8_checker16check_next_in
 
 .noexc149.i:                                      ; preds = %.noexc149.i, %.noexc149.i.preheader.new
   %indvars.iv2316.i = phi i64 [ 24, %.noexc149.i.preheader.new ], [ %indvars.iv.next2317.i.1, %.noexc149.i ] ; 3 uses
-  %.021672259.i = phi i64 [ %5, %.noexc149.i.preheader.new ], [ %i.xm, %.noexc149.i ] ; 3 uses
+  %.021672259.i = phi i64 [ %xtraiter95, %.noexc149.i.preheader.new ], [ %i.xm, %.noexc149.i ] ; 3 uses
   %niter99 = phi i64 [ 0, %.noexc149.i.preheader.new ], [ %niter99.next.1, %.noexc149.i ] ; 2 uses
   %i.xa = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.021672259.i, i1 true)
   %i.xb = or disjoint i64 %i.xa, %.sroa.11.02261.i
@@ -1372,12 +1368,12 @@ _ZN8simdjson7haswell12_GLOBAL__N_115utf8_validation12utf8_checker16check_next_in
   br i1 %niter99.ncmp.1, label %.loopexit2248.i.loopexit.unr-lcssa, label %.noexc149.i, !llvm.loop !198
 
 .loopexit2248.i.loopexit.unr-lcssa:               ; preds = %.noexc149.i
-  %lcmp.mod96.not = icmp eq i64 %xtraiter95, 0
-  br i1 %lcmp.mod96.not, label %.loopexit2248.i, label %.noexc149.i.epil.preheader
+  %5 = trunc i64 %i.re to i1
+  br i1 %5, label %.noexc149.i.epil.preheader, label %.loopexit2248.i
 
 .noexc149.i.epil.preheader:                       ; preds = %.loopexit2248.i.loopexit.unr-lcssa, %.noexc149.i.preheader
   %indvars.iv2316.i.epil.init = phi i64 [ 24, %.noexc149.i.preheader ], [ %indvars.iv.next2317.i.1, %.loopexit2248.i.loopexit.unr-lcssa ]
-  %.021672259.i.epil.init = phi i64 [ %5, %.noexc149.i.preheader ], [ %i.xm, %.loopexit2248.i.loopexit.unr-lcssa ]
+  %.021672259.i.epil.init = phi i64 [ %xtraiter95, %.noexc149.i.preheader ], [ %i.xm, %.loopexit2248.i.loopexit.unr-lcssa ]
   %lcmp.mod97 = trunc i64 %i.re to i1
   tail call void @llvm.assume(i1 %lcmp.mod97)
   %i.xn = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.021672259.i.epil.init, i1 true)
@@ -1780,8 +1776,7 @@ begin_hunk_2_@_ZN8simdjson7haswell25dom_parser_implementation6stage1EPKhmNS_11st
 
 .noexc138.i.preheader:                            ; preds = %.noexc137.i
   %i.all = add i64 %i.alf, -2
-  %6 = and i64 %i.all, %i.alf                     ; 2 uses
-  %xtraiter100 = and i64 %i.aft, 1
+  %xtraiter100 = and i64 %i.all, %i.alf           ; 2 uses
   %i.alm = icmp eq i64 %i.aft, 25
   br i1 %i.alm, label %.noexc138.i.epil.preheader, label %.noexc138.i.preheader.new
 
@@ -1792,7 +1787,7 @@ begin_hunk_2_@_ZN8simdjson7haswell25dom_parser_implementation6stage1EPKhmNS_11st
 
 .noexc138.i:                                      ; preds = %.noexc138.i, %.noexc138.i.preheader.new
   %indvars.iv2321.i = phi i64 [ 24, %.noexc138.i.preheader.new ], [ %indvars.iv.next2322.i.1, %.noexc138.i ] ; 3 uses
-  %.021852282.i = phi i64 [ %6, %.noexc138.i.preheader.new ], [ %i.amb, %.noexc138.i ] ; 3 uses
+  %.021852282.i = phi i64 [ %xtraiter100, %.noexc138.i.preheader.new ], [ %i.amb, %.noexc138.i ] ; 3 uses
   %niter104 = phi i64 [ 0, %.noexc138.i.preheader.new ], [ %niter104.next.1, %.noexc138.i ] ; 2 uses
   %i.alp = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.021852282.i, i1 true)
   %i.alq = trunc nuw nsw i64 %i.alp to i32
@@ -1815,12 +1810,12 @@ begin_hunk_2_@_ZN8simdjson7haswell25dom_parser_implementation6stage1EPKhmNS_11st
   br i1 %niter104.ncmp.1, label %.loopexit2246.i.loopexit.unr-lcssa, label %.noexc138.i, !llvm.loop !198
 
 .loopexit2246.i.loopexit.unr-lcssa:               ; preds = %.noexc138.i
-  %lcmp.mod101.not = icmp eq i64 %xtraiter100, 0
-  br i1 %lcmp.mod101.not, label %.loopexit2246.i, label %.noexc138.i.epil.preheader
+  %6 = trunc i64 %i.aft to i1
+  br i1 %6, label %.noexc138.i.epil.preheader, label %.loopexit2246.i
 
 .noexc138.i.epil.preheader:                       ; preds = %.loopexit2246.i.loopexit.unr-lcssa, %.noexc138.i.preheader
   %indvars.iv2321.i.epil.init = phi i64 [ 24, %.noexc138.i.preheader ], [ %indvars.iv.next2322.i.1, %.loopexit2246.i.loopexit.unr-lcssa ]
-  %.021852282.i.epil.init = phi i64 [ %6, %.noexc138.i.preheader ], [ %i.amb, %.loopexit2246.i.loopexit.unr-lcssa ]
+  %.021852282.i.epil.init = phi i64 [ %xtraiter100, %.noexc138.i.preheader ], [ %i.amb, %.loopexit2246.i.loopexit.unr-lcssa ]
   %lcmp.mod102 = trunc i64 %i.aft to i1
   tail call void @llvm.assume(i1 %lcmp.mod102)
   %i.amc = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.021852282.i.epil.init, i1 true)
@@ -2113,8 +2108,7 @@ _ZN8simdjson7haswell12_GLOBAL__N_115utf8_validation12utf8_checker16check_next_in
 
 .noexc141.i.preheader:                            ; preds = %.noexc140.i
   %i.aut = add i64 %i.aun, -2
-  %7 = and i64 %i.aut, %i.aun                     ; 2 uses
-  %xtraiter105 = and i64 %i.apb, 1
+  %xtraiter105 = and i64 %i.aut, %i.aun           ; 2 uses
   %i.auu = icmp eq i64 %i.apb, 25
   br i1 %i.auu, label %.noexc141.i.epil.preheader, label %.noexc141.i.preheader.new
 
@@ -2125,7 +2119,7 @@ _ZN8simdjson7haswell12_GLOBAL__N_115utf8_validation12utf8_checker16check_next_in
 
 .noexc141.i:                                      ; preds = %.noexc141.i, %.noexc141.i.preheader.new
   %indvars.iv2326.i = phi i64 [ 24, %.noexc141.i.preheader.new ], [ %indvars.iv.next2327.i.1, %.noexc141.i ] ; 3 uses
-  %.021792284.i = phi i64 [ %7, %.noexc141.i.preheader.new ], [ %i.avj, %.noexc141.i ] ; 3 uses
+  %.021792284.i = phi i64 [ %xtraiter105, %.noexc141.i.preheader.new ], [ %i.avj, %.noexc141.i ] ; 3 uses
   %niter109 = phi i64 [ 0, %.noexc141.i.preheader.new ], [ %niter109.next.1, %.noexc141.i ] ; 2 uses
   %i.aux = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.021792284.i, i1 true)
   %i.auy = or disjoint i64 %i.aux, %.sroa.11.0.lcssa2382.i
@@ -2148,12 +2142,12 @@ _ZN8simdjson7haswell12_GLOBAL__N_115utf8_validation12utf8_checker16check_next_in
   br i1 %niter109.ncmp.1, label %.loopexit2244.i.loopexit.unr-lcssa, label %.noexc141.i, !llvm.loop !198
 
 .loopexit2244.i.loopexit.unr-lcssa:               ; preds = %.noexc141.i
-  %lcmp.mod106.not = icmp eq i64 %xtraiter105, 0
-  br i1 %lcmp.mod106.not, label %.loopexit2244.i, label %.noexc141.i.epil.preheader
+  %7 = trunc i64 %i.apb to i1
+  br i1 %7, label %.noexc141.i.epil.preheader, label %.loopexit2244.i
 
 .noexc141.i.epil.preheader:                       ; preds = %.loopexit2244.i.loopexit.unr-lcssa, %.noexc141.i.preheader
   %indvars.iv2326.i.epil.init = phi i64 [ 24, %.noexc141.i.preheader ], [ %indvars.iv.next2327.i.1, %.loopexit2244.i.loopexit.unr-lcssa ]
-  %.021792284.i.epil.init = phi i64 [ %7, %.noexc141.i.preheader ], [ %i.avj, %.loopexit2244.i.loopexit.unr-lcssa ]
+  %.021792284.i.epil.init = phi i64 [ %xtraiter105, %.noexc141.i.preheader ], [ %i.avj, %.loopexit2244.i.loopexit.unr-lcssa ]
   %lcmp.mod107 = trunc i64 %i.apb to i1
   tail call void @llvm.assume(i1 %lcmp.mod107)
   %i.avk = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.021792284.i.epil.init, i1 true)
@@ -2374,8 +2368,7 @@ _ZN8simdjson7haswell12_GLOBAL__N_16stage123json_structural_indexer4stepILm128EEE
 
 .noexc153.i.preheader:                            ; preds = %.noexc152.i
   %i.bbs = add i64 %i.bbm, -2
-  %8 = and i64 %i.bbs, %i.bbm                     ; 2 uses
-  %xtraiter110 = and i64 %i.awa, 1
+  %xtraiter110 = and i64 %i.bbs, %i.bbm           ; 2 uses
   %i.bbt = icmp eq i64 %i.awa, 25
   br i1 %i.bbt, label %.noexc153.i.epil.preheader, label %.noexc153.i.preheader.new
 
@@ -2386,7 +2379,7 @@ _ZN8simdjson7haswell12_GLOBAL__N_16stage123json_structural_indexer4stepILm128EEE
 
 .noexc153.i:                                      ; preds = %.noexc153.i, %.noexc153.i.preheader.new
   %indvars.iv2331.i = phi i64 [ 24, %.noexc153.i.preheader.new ], [ %indvars.iv.next2332.i.1, %.noexc153.i ] ; 3 uses
-  %.021652286.i = phi i64 [ %8, %.noexc153.i.preheader.new ], [ %i.bci, %.noexc153.i ] ; 3 uses
+  %.021652286.i = phi i64 [ %xtraiter110, %.noexc153.i.preheader.new ], [ %i.bci, %.noexc153.i ] ; 3 uses
   %niter114 = phi i64 [ 0, %.noexc153.i.preheader.new ], [ %niter114.next.1, %.noexc153.i ] ; 2 uses
   %i.bbw = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.021652286.i, i1 true)
   %i.bbx = trunc nuw nsw i64 %i.bbw to i32
@@ -2409,12 +2402,12 @@ _ZN8simdjson7haswell12_GLOBAL__N_16stage123json_structural_indexer4stepILm128EEE
   br i1 %niter114.ncmp.1, label %.loopexit.i.loopexit.unr-lcssa, label %.noexc153.i, !llvm.loop !198
 
 .loopexit.i.loopexit.unr-lcssa:                   ; preds = %.noexc153.i
-  %lcmp.mod111.not = icmp eq i64 %xtraiter110, 0
-  br i1 %lcmp.mod111.not, label %.loopexit.i, label %.noexc153.i.epil.preheader
+  %8 = trunc i64 %i.awa to i1
+  br i1 %8, label %.noexc153.i.epil.preheader, label %.loopexit.i
 
 .noexc153.i.epil.preheader:                       ; preds = %.loopexit.i.loopexit.unr-lcssa, %.noexc153.i.preheader
   %indvars.iv2331.i.epil.init = phi i64 [ 24, %.noexc153.i.preheader ], [ %indvars.iv.next2332.i.1, %.loopexit.i.loopexit.unr-lcssa ]
-  %.021652286.i.epil.init = phi i64 [ %8, %.noexc153.i.preheader ], [ %i.bci, %.loopexit.i.loopexit.unr-lcssa ]
+  %.021652286.i.epil.init = phi i64 [ %xtraiter110, %.noexc153.i.preheader ], [ %i.bci, %.loopexit.i.loopexit.unr-lcssa ]
   %lcmp.mod112 = trunc i64 %i.awa to i1
   tail call void @llvm.assume(i1 %lcmp.mod112)
   %i.bcj = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.021652286.i.epil.init, i1 true)
@@ -2817,8 +2810,7 @@ begin_hunk_3_@_ZN8simdjson8westmere25dom_parser_implementation6stage1EPKhmNS_11s
 
 .noexc108.i.preheader:                            ; preds = %.noexc107.i
   %i.oj = add i64 %i.od, -2
-  %4 = and i64 %i.oj, %i.od                       ; 2 uses
-  %xtraiter = and i64 %i.ir, 1
+  %xtraiter = and i64 %i.oj, %i.od                ; 2 uses
   %i.ok = icmp eq i64 %i.ir, 25
   br i1 %i.ok, label %.noexc108.i.epil.preheader, label %.noexc108.i.preheader.new
 
@@ -2829,7 +2821,7 @@ begin_hunk_3_@_ZN8simdjson8westmere25dom_parser_implementation6stage1EPKhmNS_11s
 
 .noexc108.i:                                      ; preds = %.noexc108.i, %.noexc108.i.preheader.new
   %indvars.iv.i = phi i64 [ 24, %.noexc108.i.preheader.new ], [ %indvars.iv.next.i.1, %.noexc108.i ] ; 3 uses
-  %.015941668.i = phi i64 [ %4, %.noexc108.i.preheader.new ], [ %i.oz, %.noexc108.i ] ; 3 uses
+  %.015941668.i = phi i64 [ %xtraiter, %.noexc108.i.preheader.new ], [ %i.oz, %.noexc108.i ] ; 3 uses
   %niter = phi i64 [ 0, %.noexc108.i.preheader.new ], [ %niter.next.1, %.noexc108.i ] ; 2 uses
   %i.on = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.015941668.i, i1 true)
   %i.oo = trunc nuw nsw i64 %i.on to i32
@@ -2852,12 +2844,12 @@ begin_hunk_3_@_ZN8simdjson8westmere25dom_parser_implementation6stage1EPKhmNS_11s
   br i1 %niter.ncmp.1, label %.loopexit1661.i.loopexit.unr-lcssa, label %.noexc108.i, !llvm.loop !207
 
 .loopexit1661.i.loopexit.unr-lcssa:               ; preds = %.noexc108.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit1661.i, label %.noexc108.i.epil.preheader
+  %4 = trunc i64 %i.ir to i1
+  br i1 %4, label %.noexc108.i.epil.preheader, label %.loopexit1661.i
 
 .noexc108.i.epil.preheader:                       ; preds = %.loopexit1661.i.loopexit.unr-lcssa, %.noexc108.i.preheader
   %indvars.iv.i.epil.init = phi i64 [ 24, %.noexc108.i.preheader ], [ %indvars.iv.next.i.1, %.loopexit1661.i.loopexit.unr-lcssa ]
-  %.015941668.i.epil.init = phi i64 [ %4, %.noexc108.i.preheader ], [ %i.oz, %.loopexit1661.i.loopexit.unr-lcssa ]
+  %.015941668.i.epil.init = phi i64 [ %xtraiter, %.noexc108.i.preheader ], [ %i.oz, %.loopexit1661.i.loopexit.unr-lcssa ]
   %lcmp.mod89 = trunc i64 %i.ir to i1
   tail call void @llvm.assume(i1 %lcmp.mod89)
   %i.pa = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.015941668.i.epil.init, i1 true)
@@ -3260,8 +3252,7 @@ _ZN8simdjson8westmere12_GLOBAL__N_115utf8_validation12utf8_checker16check_next_i
 
 .noexc105.i.preheader:                            ; preds = %.noexc104.i
   %i.adq = add i64 %i.adk, -2
-  %5 = and i64 %i.adq, %i.adk                     ; 2 uses
-  %xtraiter90 = and i64 %i.xy, 1
+  %xtraiter90 = and i64 %i.adq, %i.adk            ; 2 uses
   %i.adr = icmp eq i64 %i.xy, 25
   br i1 %i.adr, label %.noexc105.i.epil.preheader, label %.noexc105.i.preheader.new
 
@@ -3272,7 +3263,7 @@ _ZN8simdjson8westmere12_GLOBAL__N_115utf8_validation12utf8_checker16check_next_i
 
 .noexc105.i:                                      ; preds = %.noexc105.i, %.noexc105.i.preheader.new
   %indvars.iv1721.i = phi i64 [ 24, %.noexc105.i.preheader.new ], [ %indvars.iv.next1722.i.1, %.noexc105.i ] ; 3 uses
-  %.016001689.i = phi i64 [ %5, %.noexc105.i.preheader.new ], [ %i.aeg, %.noexc105.i ] ; 3 uses
+  %.016001689.i = phi i64 [ %xtraiter90, %.noexc105.i.preheader.new ], [ %i.aeg, %.noexc105.i ] ; 3 uses
   %niter94 = phi i64 [ 0, %.noexc105.i.preheader.new ], [ %niter94.next.1, %.noexc105.i ] ; 2 uses
   %i.adu = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.016001689.i, i1 true)
   %i.adv = trunc nuw nsw i64 %i.adu to i32
@@ -3295,12 +3286,12 @@ _ZN8simdjson8westmere12_GLOBAL__N_115utf8_validation12utf8_checker16check_next_i
   br i1 %niter94.ncmp.1, label %.loopexit1659.i.loopexit.unr-lcssa, label %.noexc105.i, !llvm.loop !207
 
 .loopexit1659.i.loopexit.unr-lcssa:               ; preds = %.noexc105.i
-  %lcmp.mod91.not = icmp eq i64 %xtraiter90, 0
-  br i1 %lcmp.mod91.not, label %.loopexit1659.i, label %.noexc105.i.epil.preheader
+  %5 = trunc i64 %i.xy to i1
+  br i1 %5, label %.noexc105.i.epil.preheader, label %.loopexit1659.i
 
 .noexc105.i.epil.preheader:                       ; preds = %.loopexit1659.i.loopexit.unr-lcssa, %.noexc105.i.preheader
   %indvars.iv1721.i.epil.init = phi i64 [ 24, %.noexc105.i.preheader ], [ %indvars.iv.next1722.i.1, %.loopexit1659.i.loopexit.unr-lcssa ]
-  %.016001689.i.epil.init = phi i64 [ %5, %.noexc105.i.preheader ], [ %i.aeg, %.loopexit1659.i.loopexit.unr-lcssa ]
+  %.016001689.i.epil.init = phi i64 [ %xtraiter90, %.noexc105.i.preheader ], [ %i.aeg, %.loopexit1659.i.loopexit.unr-lcssa ]
   %lcmp.mod92 = trunc i64 %i.xy to i1
   tail call void @llvm.assume(i1 %lcmp.mod92)
   %i.aeh = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.016001689.i.epil.init, i1 true)
@@ -3519,8 +3510,7 @@ _ZN8simdjson8westmere12_GLOBAL__N_16stage123json_structural_indexer4stepILm64EEE
 
 .noexc112.i.preheader:                            ; preds = %.noexc111.i
   %i.akn = add i64 %i.akh, -2
-  %6 = and i64 %i.akn, %i.akh                     ; 2 uses
-  %xtraiter95 = and i64 %i.aev, 1
+  %xtraiter95 = and i64 %i.akn, %i.akh            ; 2 uses
   %i.ako = icmp eq i64 %i.aev, 25
   br i1 %i.ako, label %.noexc112.i.epil.preheader, label %.noexc112.i.preheader.new
 
@@ -3531,7 +3521,7 @@ _ZN8simdjson8westmere12_GLOBAL__N_16stage123json_structural_indexer4stepILm64EEE
 
 .noexc112.i:                                      ; preds = %.noexc112.i, %.noexc112.i.preheader.new
   %indvars.iv1726.i = phi i64 [ 24, %.noexc112.i.preheader.new ], [ %indvars.iv.next1727.i.1, %.noexc112.i ] ; 3 uses
-  %.015921691.i = phi i64 [ %6, %.noexc112.i.preheader.new ], [ %i.ald, %.noexc112.i ] ; 3 uses
+  %.015921691.i = phi i64 [ %xtraiter95, %.noexc112.i.preheader.new ], [ %i.ald, %.noexc112.i ] ; 3 uses
   %niter99 = phi i64 [ 0, %.noexc112.i.preheader.new ], [ %niter99.next.1, %.noexc112.i ] ; 2 uses
   %i.akr = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.015921691.i, i1 true)
   %i.aks = or disjoint i64 %i.akr, %.sroa.11.0.lcssa1770.i
@@ -3554,12 +3544,12 @@ _ZN8simdjson8westmere12_GLOBAL__N_16stage123json_structural_indexer4stepILm64EEE
   br i1 %niter99.ncmp.1, label %.loopexit.i.loopexit.unr-lcssa, label %.noexc112.i, !llvm.loop !207
 
 .loopexit.i.loopexit.unr-lcssa:                   ; preds = %.noexc112.i
-  %lcmp.mod96.not = icmp eq i64 %xtraiter95, 0
-  br i1 %lcmp.mod96.not, label %.loopexit.i, label %.noexc112.i.epil.preheader
+  %6 = trunc i64 %i.aev to i1
+  br i1 %6, label %.noexc112.i.epil.preheader, label %.loopexit.i
 
 .noexc112.i.epil.preheader:                       ; preds = %.loopexit.i.loopexit.unr-lcssa, %.noexc112.i.preheader
   %indvars.iv1726.i.epil.init = phi i64 [ 24, %.noexc112.i.preheader ], [ %indvars.iv.next1727.i.1, %.loopexit.i.loopexit.unr-lcssa ]
-  %.015921691.i.epil.init = phi i64 [ %6, %.noexc112.i.preheader ], [ %i.ald, %.loopexit.i.loopexit.unr-lcssa ]
+  %.015921691.i.epil.init = phi i64 [ %xtraiter95, %.noexc112.i.preheader ], [ %i.ald, %.loopexit.i.loopexit.unr-lcssa ]
   %lcmp.mod97 = trunc i64 %i.aev to i1
   tail call void @llvm.assume(i1 %lcmp.mod97)
   %i.ale = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.015921691.i.epil.init, i1 true)
@@ -3962,9 +3952,8 @@ bb.a:
   %i.p = zext i8 %i.o to i64
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 %i.p
   %i.r = load i8, ptr %i.q, align 1, !tbaa !36
-  %5 = and i8 %i.r, 1
-  %.not97 = icmp eq i8 %5, 0
-  br i1 %.not97, label %.noexc._crit_edge, label %.lr.ph.preheader
+  %5 = trunc i8 %i.r to i1
+  br i1 %5, label %.lr.ph.preheader, label %.noexc._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.noexc.preheader
   %indvars.iv.next235 = add nuw nsw i64 %i.m, 1   ; 3 uses
@@ -3981,9 +3970,8 @@ bb.a:
   %i.v = zext i8 %i.u to i64
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 %i.v
   %i.x = load i8, ptr %i.w, align 1, !tbaa !36
-  %6 = and i8 %i.x, 1
-  %.not = icmp eq i8 %6, 0
-  br i1 %.not, label %.noexc._crit_edge.loopexit, label %.lr.ph, !llvm.loop !211
+  %6 = trunc i8 %i.x to i1
+  br i1 %6, label %.lr.ph, label %.noexc._crit_edge.loopexit, !llvm.loop !211
 
 .lr.ph:                                           ; preds = %.noexc
   %indvars.iv.next = add nuw nsw i64 %indvars.iv.next236, 1 ; 3 uses
@@ -4386,7 +4374,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ap, label %.thread76, label %bb.m
 
 bb.m:                                             ; preds = %._crit_edge.thread
-  %i.aq = load i32, ptr %i.c, align 4, !tbaa !44  ; 9 uses
+  %i.aq = load i32, ptr %i.c, align 4, !tbaa !44  ; 10 uses
   %i.ar = icmp slt i32 %i.aq, 0
   br i1 %i.ar, label %.thread76, label %bb.n
 
@@ -4401,18 +4389,17 @@ bb.n:                                             ; preds = %bb.m
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 3 uses
   %i.au = zext i32 %i.ao to i64                   ; 3 uses
-  %wide.trip.count.i = zext nneg i32 %i.aq to i64 ; 2 uses
-  %xtraiter = and i64 %wide.trip.count.i, 1
   %i.av = icmp eq i32 %i.aq, 1
   br i1 %i.av, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i
-  %unroll_iter = and i64 %wide.trip.count.i, 30
+  %1 = and i32 %i.aq, 30
+  %unroll_iter = zext nneg i32 %1 to i64
   br label %bb.p
 
 ._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %bb.t
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i, label %.epil.preheader
+  %2 = trunc i32 %i.aq to i1
+  br i1 %2, label %.epil.preheader, label %._crit_edge.i
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.lr.ph.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i.1, %._crit_edge.i.loopexit.unr-lcssa ] ; 2 uses

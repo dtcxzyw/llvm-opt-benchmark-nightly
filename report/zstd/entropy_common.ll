@@ -204,9 +204,8 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #4
 ; Function Attrs: nounwind uwtable
 define range(i64 -119, -9223372036854775808) i64 @HUF_readStats_wksp(ptr noundef %0, i64 noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef writeonly captures(none) %3, ptr nofree noundef writeonly captures(none) %4, ptr noundef %5, i64 noundef %6, ptr noundef %7, i64 noundef %8, i32 noundef %9) local_unnamed_addr #1 {
 bb.a:
-  %10 = and i32 %9, 1
-  %.not = icmp eq i32 %10, 0
-  br i1 %.not, label %bb.c, label %bb.b
+  %10 = trunc i32 %9 to i1
+  br i1 %10, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.a = tail call fastcc i64 @HUF_readStats_body_bmi2(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, i64 noundef %6, ptr noundef %7, i64 noundef %8)
@@ -465,11 +464,10 @@ bb.l:                                             ; preds = %bb.k
   store i32 %i.cy, ptr %i.cw, align 4, !tbaa !10
   %i.cz = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !10 ; 2 uses
-  %11 = icmp ugt i32 %i.da, 1
-  %12 = and i32 %i.da, 1
-  %.not94.i.i = icmp eq i32 %12, 0
-  %or.cond.i.i = and i1 %11, %.not94.i.i
-  br i1 %or.cond.i.i, label %bb.m, label %HUF_readStats_body_default.exit
+  %11 = icmp ult i32 %i.da, 2
+  %12 = trunc i32 %i.da to i1
+  %or.cond.i.i = or i1 %11, %12
+  br i1 %or.cond.i.i, label %HUF_readStats_body_default.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.db = trunc nuw i64 %.074.i26.i to i32
@@ -742,11 +740,10 @@ bb.j:                                             ; preds = %bb.i
   store i32 %i.cy, ptr %i.cw, align 4, !tbaa !10
   %i.cz = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !10 ; 2 uses
-  %9 = icmp ugt i32 %i.da, 1
-  %10 = and i32 %i.da, 1
-  %.not94.i = icmp eq i32 %10, 0
-  %or.cond.i = and i1 %9, %.not94.i
-  br i1 %or.cond.i, label %bb.k, label %HUF_readStats_body.exit
+  %9 = icmp ult i32 %i.da, 2
+  %10 = trunc i32 %i.da to i1
+  %or.cond.i = or i1 %9, %10
+  br i1 %or.cond.i, label %HUF_readStats_body.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.db = trunc nuw i64 %.074.i26 to i32

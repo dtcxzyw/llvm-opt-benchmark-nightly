@@ -204,9 +204,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.a, %middle.block
   %.sroa.0.04.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.04.ph, 1
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %3 = trunc i64 %2 to i1
+  br i1 %3, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.g = or disjoint i64 %.sroa.0.04.ph, 1
@@ -321,9 +320,8 @@ _RNvYNCNvMNtNtCslghKHtsL3a4_5tokio7runtime7builderNtB7_7Builder3new0INtNtNtCs3oU
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
 define hidden noundef range(i64 0, 64) i64 @_RNvMNtNtCslghKHtsL3a4_5tokio2io5readyNtB2_5Ready12intersection(i64 noundef %0, i64 noundef %1) unnamed_addr #4 {
 bb.a:
-  %2 = and i64 %1, 1
-  %.not.i = icmp eq i64 %2, 0
-  %spec.select.i = select i1 %.not.i, i64 0, i64 5 ; 2 uses
+  %2 = trunc i64 %1 to i1
+  %spec.select.i = select i1 %2, i64 5, i64 0     ; 2 uses
   %i.a = and i64 %1, 2
   %.not8.i.a = icmp eq i64 %i.a, 0
   %i.b = or disjoint i64 %spec.select.i, 10
@@ -341,9 +339,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
 define hidden noundef zeroext i1 @_RNvMNtNtCslghKHtsL3a4_5tokio2io5readyNtB2_5Ready9satisfies(i64 noundef %0, i64 noundef %1) unnamed_addr #4 {
 bb.a:
-  %2 = and i64 %1, 1
-  %.not.i = icmp eq i64 %2, 0
-  %spec.select.i = select i1 %.not.i, i64 0, i64 5 ; 2 uses
+  %2 = trunc i64 %1 to i1
+  %spec.select.i = select i1 %2, i64 5, i64 0     ; 2 uses
   %i.a = and i64 %1, 2
   %.not8.i.a = icmp eq i64 %i.a, 0
   %i.b = or disjoint i64 %spec.select.i, 10
@@ -746,7 +743,6 @@ bb.e:                                             ; preds = %bb.c
   %i.aj = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 4 uses
   %umax = tail call i32 @llvm.umax.i32(i32 %i.y, i32 1) ; 3 uses
-  %xtraiter = and i32 %umax, 1
   %i.al = icmp ult i32 %i.y, 2
   br i1 %i.al, label %.epil.preheader, label %.preheader35.i.new
 
@@ -796,8 +792,8 @@ bb.g:                                             ; preds = %bb.g, %.preheader35
   br i1 %niter.ncmp.1, label %.preheader.i.preheader.unr-lcssa, label %bb.g
 
 .preheader.i.preheader.unr-lcssa:                 ; preds = %bb.g
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader.i.preheader, label %.epil.preheader
+  %3 = trunc i32 %umax to i1
+  br i1 %3, label %.epil.preheader, label %.preheader.i.preheader
 
 .epil.preheader:                                  ; preds = %.preheader.i.preheader.unr-lcssa, %.preheader35.i
   %.sroa.024.044.i.epil.init = phi i32 [ 0, %.preheader35.i ], [ %i.ay, %.preheader.i.preheader.unr-lcssa ] ; 2 uses
@@ -1200,12 +1196,11 @@ bb.a:
   call void @_RNvMsa_NtCs3oUPovFnLWP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.g, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @68, i64 noundef 5)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.h = load i64, ptr %0, align 8, !noundef !5   ; 3 uses
-  %2 = and i64 %i.h, 1
-  %.not = icmp eq i64 %2, 0
+  %2 = trunc i64 %i.h to i1
   %i.i = trunc i64 %i.h to i8                     ; 4 uses
   %i.j = lshr i8 %i.i, 2
   %i.k = and i8 %i.j, 1                           ; 2 uses
-  %storemerge = select i1 %.not, i8 %i.k, i8 1
+  %storemerge = select i1 %2, i8 1, i8 %i.k
   store i8 %storemerge, ptr %i.f, align 1
   %i.l = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCs3oUPovFnLWP_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.g, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @69, i64 noundef 11, ptr noundef nonnull %i.f, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @66)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)

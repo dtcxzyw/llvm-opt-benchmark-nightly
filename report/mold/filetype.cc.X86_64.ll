@@ -202,9 +202,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %or.cond.not.not.not, label %bb.q, label %bb.p
 
 .critedge28:                                      ; preds = %bb.i
-  %1 = and i32 %.0.copyload.i33, 1
-  %or.cond4.not = icmp eq i32 %1, 0
-  br i1 %or.cond4.not, label %bb.q, label %bb.p
+  %1 = trunc i32 %.0.copyload.i33 to i1
+  br i1 %1, label %bb.p, label %bb.q
 
 bb.k:                                             ; preds = %bb.a
   br label %bb.q
@@ -228,8 +227,8 @@ bb.p:                                             ; preds = %.critedge28, %bb.j,
   br label %bb.q
 
 bb.q:                                             ; preds = %.critedge28, %bb.j, %bb.a, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.h, %bb.g, %bb.f, %bb.d, %bb.c, %bb.b
-  %.sroa.17.0 = phi ptr [ @.str.6, %bb.p ], [ %.sroa.17.0.copyload59, %bb.o ], [ @.str.10, %bb.b ], [ %.sroa.17.0.copyload48, %bb.c ], [ %.sroa.17.0.copyload49, %bb.d ], [ %.sroa.17.0.copyload50, %bb.f ], [ %.sroa.17.0.copyload51, %bb.g ], [ @.str.19, %bb.h ], [ @.str.20, %bb.j ], [ @.str.21, %.critedge28 ], [ @.str.9, %bb.a ], [ @.str.22, %bb.k ], [ @.str.23, %bb.l ], [ @.str.24, %bb.m ], [ %.sroa.17.0.copyload58, %bb.n ]
-  %.sroa.0.0 = phi i64 [ 0, %bb.p ], [ 11, %bb.o ], [ 6, %bb.b ], [ %.sroa.0.0.copyload35, %bb.c ], [ %.sroa.0.0.copyload36, %bb.d ], [ 7, %bb.f ], [ 9, %bb.g ], [ 5, %bb.h ], [ 7, %bb.j ], [ 7, %.critedge28 ], [ 4, %bb.a ], [ 5, %bb.k ], [ 7, %bb.l ], [ 4, %bb.m ], [ %.sroa.0.0.copyload45, %bb.n ]
+  %.sroa.17.0 = phi ptr [ @.str.6, %bb.p ], [ %.sroa.17.0.copyload59, %bb.o ], [ @.str.10, %bb.b ], [ %.sroa.17.0.copyload48, %bb.c ], [ %.sroa.17.0.copyload49, %bb.d ], [ %.sroa.17.0.copyload50, %bb.f ], [ %.sroa.17.0.copyload51, %bb.g ], [ @.str.19, %bb.h ], [ @.str.21, %.critedge28 ], [ @.str.20, %bb.j ], [ @.str.9, %bb.a ], [ @.str.22, %bb.k ], [ @.str.23, %bb.l ], [ @.str.24, %bb.m ], [ %.sroa.17.0.copyload58, %bb.n ]
+  %.sroa.0.0 = phi i64 [ 0, %bb.p ], [ 11, %bb.o ], [ 6, %bb.b ], [ %.sroa.0.0.copyload35, %bb.c ], [ %.sroa.0.0.copyload36, %bb.d ], [ 7, %bb.f ], [ 9, %bb.g ], [ 5, %bb.h ], [ 7, %.critedge28 ], [ 7, %bb.j ], [ 4, %bb.a ], [ 5, %bb.k ], [ 7, %bb.l ], [ 4, %bb.m ], [ %.sroa.0.0.copyload45, %bb.n ]
   %.fca.0.insert = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0
   %.fca.1.insert = insertvalue { i64, ptr } %.fca.0.insert, ptr %.sroa.17.0, 1
   ret { i64, ptr } %.fca.1.insert

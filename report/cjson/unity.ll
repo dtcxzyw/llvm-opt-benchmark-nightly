@@ -204,15 +204,13 @@ bb.a:
   br i1 %or.cond, label %bb.l, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %6 = icmp ne i64 %0, %1                         ; 2 uses
-  %7 = and i32 %2, 1
-  %.not = icmp eq i32 %7, 0                       ; 2 uses
-  %or.cond38 = or i1 %6, %.not
-  br i1 %or.cond38, label %bb.c, label %bb.l
+  %6 = icmp eq i64 %0, %1                         ; 2 uses
+  %7 = trunc i32 %2 to i1                         ; 2 uses
+  %or.cond36 = and i1 %6, %7
+  br i1 %or.cond36, label %bb.l, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %not. = xor i1 %6, true
-  %spec.select = zext i1 %not. to i32             ; 2 uses
+  %spec.select = zext i1 %6 to i32                ; 2 uses
   %i.e = and i32 %5, 16
   %.not28.a = icmp eq i32 %i.e, 0
   %i.f = and i32 %2, 4
@@ -270,7 +268,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  br i1 %.not, label %bb.k, label %bb.j
+  br i1 %7, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrOrEqual)
@@ -673,8 +671,7 @@ bb.a:
   %i.a = alloca [4 x ptr], align 16               ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, ptr noundef nonnull align 16 dereferenceable(32) @__const.UnityAssertDoubleSpecial.trait_names, i64 32, i1 false)
-  %4 = and i32 %3, 1
-  %.not = icmp eq i32 %4, 0
+  %4 = trunc i32 %3 to i1                         ; 2 uses
   %i.b = load i64, ptr getelementptr inbounds nuw (i8, ptr @Unity, i64 64), align 8, !tbaa !19
   %i.c = icmp ne i64 %i.b, 0
   %i.d = load i64, ptr getelementptr inbounds nuw (i8, ptr @Unity, i64 72), align 8
@@ -724,15 +721,14 @@ bb.f:                                             ; preds = %bb.b, %bb.b
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c
   %.035.in = phi i1 [ %narrow, %bb.f ], [ %narrow47, %bb.c ], [ %narrow44, %bb.d ], [ %i.l, %bb.e ]
   %.0.shrunk = phi i64 [ 3, %bb.f ], [ 0, %bb.c ], [ 1, %bb.d ], [ 2, %bb.e ]
-  %5 = trunc i32 %3 to i1
-  %i.n = xor i1 %.035.in, %5
+  %i.n = xor i1 %.035.in, %4
   br i1 %i.n, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %.thread, %bb.g
   %.0.shrunk43 = phi i64 [ 0, %.thread ], [ %.0.shrunk, %bb.g ]
   tail call fastcc void @UnityTestResultsFailBegin(i64 noundef %2)
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrExpected)
-  br i1 %.not, label %bb.i, label %bb.j
+  br i1 %4, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrNot)
@@ -947,8 +943,7 @@ bb.a:
   %i.a = alloca [4 x ptr], align 16               ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, ptr noundef nonnull align 16 dereferenceable(32) @__const.UnityAssertDoubleSpecial.trait_names, i64 32, i1 false)
-  %4 = and i32 %3, 1
-  %.not = icmp eq i32 %4, 0
+  %4 = trunc i32 %3 to i1                         ; 2 uses
   %i.b = load i64, ptr getelementptr inbounds nuw (i8, ptr @Unity, i64 64), align 8, !tbaa !19
   %i.c = icmp ne i64 %i.b, 0
   %i.d = load i64, ptr getelementptr inbounds nuw (i8, ptr @Unity, i64 72), align 8
@@ -998,15 +993,14 @@ bb.f:                                             ; preds = %bb.b, %bb.b
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c
   %.035.in = phi i1 [ %narrow, %bb.f ], [ %narrow47, %bb.c ], [ %narrow44, %bb.d ], [ %i.l, %bb.e ]
   %.0.shrunk = phi i64 [ 3, %bb.f ], [ 0, %bb.c ], [ 1, %bb.d ], [ 2, %bb.e ]
-  %5 = trunc i32 %3 to i1
-  %i.n = xor i1 %.035.in, %5
+  %i.n = xor i1 %.035.in, %4
   br i1 %i.n, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %.thread, %bb.g
   %.0.shrunk43 = phi i64 [ 0, %.thread ], [ %.0.shrunk, %bb.g ]
   tail call fastcc void @UnityTestResultsFailBegin(i64 noundef %2)
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrExpected)
-  br i1 %.not, label %bb.i, label %bb.j
+  br i1 %4, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   tail call void @UnityPrint(ptr noundef nonnull @UnityStrNot)

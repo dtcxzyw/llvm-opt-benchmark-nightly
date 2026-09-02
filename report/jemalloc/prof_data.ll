@@ -204,9 +204,8 @@ bb.u:                                             ; preds = %bb.s, %bb.l, %bb.k,
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 32
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !40
   %i.cy = ptrtoint ptr %i.cx to i64
-  %9 = and i64 %i.cy, 1
-  %.not301.i = icmp eq i64 %9, 0
-  br i1 %.not301.i, label %bb.w, label %bb.v
+  %9 = trunc i64 %i.cy to i1
+  br i1 %9, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
   %i.cz = getelementptr inbounds i8, ptr %.3.i, i64 -32
@@ -237,9 +236,8 @@ bb.x:                                             ; preds = %.lr.ph71.i
   %i.dk = getelementptr inbounds nuw i8, ptr %i.di, i64 32 ; 8 uses
   %i.dl = load ptr, ptr %i.dk, align 8, !tbaa !40 ; 4 uses
   %i.dm = ptrtoint ptr %i.dl to i64               ; 2 uses
-  %10 = and i64 %i.dm, 1
-  %.not311.i = icmp eq i64 %10, 0
-  br i1 %.not311.i, label %bb.af, label %bb.y
+  %10 = trunc i64 %i.dm to i1
+  br i1 %10, label %bb.y, label %bb.af
 
 bb.y:                                             ; preds = %bb.x
   %i.dn = and i64 %i.dm, -2                       ; 2 uses
@@ -253,9 +251,8 @@ bb.z:                                             ; preds = %bb.y
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 32 ; 3 uses
   %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !40
   %i.dt = ptrtoint ptr %i.ds to i64
-  %11 = and i64 %i.dt, 1
-  %.not315.i = icmp eq i64 %11, 0
-  br i1 %.not315.i, label %bb.ab, label %bb.aa
+  %11 = trunc i64 %i.dt to i1
+  br i1 %11, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
   store ptr %i.do, ptr %i.dk, align 8, !tbaa !40
@@ -326,9 +323,8 @@ bb.ag:                                            ; preds = %bb.af
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 32
   %i.ff = load ptr, ptr %i.fe, align 8, !tbaa !40
   %i.fg = ptrtoint ptr %i.ff to i64               ; 2 uses
-  %12 = and i64 %i.fg, 1
-  %.not313.i = icmp eq i64 %12, 0
-  br i1 %.not313.i, label %.critedge317.i, label %bb.ah
+  %12 = trunc i64 %i.fg to i1
+  br i1 %12, label %bb.ah, label %.critedge317.i
 
 bb.ah:                                            ; preds = %bb.ag
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fd, i64 32
@@ -403,9 +399,8 @@ bb.am:                                            ; preds = %.lr.ph71.i
   %i.gv = getelementptr inbounds nuw i8, ptr %i.gt, i64 32 ; 15 uses
   %i.gw = load ptr, ptr %i.gv, align 8, !tbaa !40
   %i.gx = ptrtoint ptr %i.gw to i64               ; 4 uses
-  %13 = and i64 %i.gx, 1
-  %.not303.i = icmp eq i64 %13, 0
-  br i1 %.not303.i, label %bb.aw, label %bb.an
+  %13 = trunc i64 %i.gx to i1
+  br i1 %13, label %bb.an, label %bb.aw
 
 bb.an:                                            ; preds = %bb.am
   %i.gy = getelementptr inbounds nuw i8, ptr %i.gl, i64 24 ; 2 uses
@@ -420,9 +415,8 @@ bb.ao:                                            ; preds = %bb.an
   %i.hd = getelementptr inbounds nuw i8, ptr %i.hc, i64 32 ; 2 uses
   %i.he = load ptr, ptr %i.hd, align 8, !tbaa !40
   %i.hf = ptrtoint ptr %i.he to i64               ; 2 uses
-  %14 = and i64 %i.hf, 1
-  %.not310.i = icmp eq i64 %14, 0
-  br i1 %.not310.i, label %bb.aq, label %bb.ap
+  %14 = trunc i64 %i.hf to i1
+  br i1 %14, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao
   %i.hg = and i64 %i.hf, -2
@@ -509,9 +503,8 @@ bb.av:                                            ; preds = %bb.at
   br label %tdata_tree_remove.exit
 
 bb.aw:                                            ; preds = %bb.am
-  %15 = and i64 %i.gq, 1
-  %.not304.i = icmp eq i64 %15, 0
-  br i1 %.not304.i, label %bb.bd, label %bb.ax
+  %15 = trunc i64 %i.gq to i1
+  br i1 %15, label %bb.ax, label %bb.bd
 
 bb.ax:                                            ; preds = %bb.aw
   %i.je = getelementptr inbounds nuw i8, ptr %i.gl, i64 32 ; 3 uses
@@ -524,9 +517,8 @@ bb.ay:                                            ; preds = %bb.ax
   %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 32 ; 3 uses
   %i.ji = load ptr, ptr %i.jh, align 8, !tbaa !40
   %i.jj = ptrtoint ptr %i.ji to i64
-  %16 = and i64 %i.jj, 1
-  %.not308.i = icmp eq i64 %16, 0
-  br i1 %.not308.i, label %bb.bc, label %bb.az
+  %16 = trunc i64 %i.jj to i1
+  br i1 %16, label %bb.az, label %bb.bc
 
 bb.az:                                            ; preds = %bb.ay
   %i.jk = and i64 %i.gk, -2
@@ -596,9 +588,8 @@ bb.be:                                            ; preds = %bb.bd
   %i.kx = getelementptr inbounds nuw i8, ptr %i.kw, i64 32
   %i.ky = load ptr, ptr %i.kx, align 8, !tbaa !40
   %i.kz = ptrtoint ptr %i.ky to i64               ; 2 uses
-  %17 = and i64 %i.kz, 1
-  %.not306.i = icmp eq i64 %17, 0
-  br i1 %.not306.i, label %bb.bk, label %bb.bf
+  %17 = trunc i64 %i.kz to i1
+  br i1 %17, label %bb.bf, label %bb.bk
 
 bb.bf:                                            ; preds = %bb.be
   %i.la = getelementptr inbounds nuw i8, ptr %i.gl, i64 24
@@ -1001,9 +992,8 @@ bb.ah:                                            ; preds = %bb.af, %bb.y, %bb.x
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 120
   %i.fa = load ptr, ptr %i.ez, align 8, !tbaa !87
   %i.fb = ptrtoint ptr %i.fa to i64
-  %9 = and i64 %i.fb, 1
-  %.not301.i.i = icmp eq i64 %9, 0
-  br i1 %.not301.i.i, label %bb.aj, label %bb.ai
+  %9 = trunc i64 %i.fb to i1
+  br i1 %9, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
   %i.fc = getelementptr inbounds i8, ptr %.3.i.i, i64 -32
@@ -1034,9 +1024,8 @@ bb.ak:                                            ; preds = %.lr.ph390.i.i
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fl, i64 120 ; 8 uses
   %i.fo = load ptr, ptr %i.fn, align 8, !tbaa !87 ; 4 uses
   %i.fp = ptrtoint ptr %i.fo to i64               ; 2 uses
-  %10 = and i64 %i.fp, 1
-  %.not311.i.i = icmp eq i64 %10, 0
-  br i1 %.not311.i.i, label %bb.as, label %bb.al
+  %10 = trunc i64 %i.fp to i1
+  br i1 %10, label %bb.al, label %bb.as
 
 bb.al:                                            ; preds = %bb.ak
   %i.fq = and i64 %i.fp, -2                       ; 2 uses
@@ -1050,9 +1039,8 @@ bb.am:                                            ; preds = %bb.al
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 120 ; 3 uses
   %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !87
   %i.fw = ptrtoint ptr %i.fv to i64
-  %11 = and i64 %i.fw, 1
-  %.not315.i.i = icmp eq i64 %11, 0
-  br i1 %.not315.i.i, label %bb.ao, label %bb.an
+  %11 = trunc i64 %i.fw to i1
+  br i1 %11, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
   store ptr %i.fr, ptr %i.fn, align 8, !tbaa !87
@@ -1123,9 +1111,8 @@ bb.at:                                            ; preds = %bb.as
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hg, i64 120
   %i.hi = load ptr, ptr %i.hh, align 8, !tbaa !87
   %i.hj = ptrtoint ptr %i.hi to i64               ; 2 uses
-  %12 = and i64 %i.hj, 1
-  %.not313.i.i = icmp eq i64 %12, 0
-  br i1 %.not313.i.i, label %.critedge317.i.i, label %bb.au
+  %12 = trunc i64 %i.hj to i1
+  br i1 %12, label %bb.au, label %.critedge317.i.i
 
 bb.au:                                            ; preds = %bb.at
   %i.hk = getelementptr inbounds nuw i8, ptr %i.hg, i64 120
@@ -1200,9 +1187,8 @@ bb.az:                                            ; preds = %.lr.ph390.i.i
   %i.iy = getelementptr inbounds nuw i8, ptr %i.iw, i64 120 ; 15 uses
   %i.iz = load ptr, ptr %i.iy, align 8, !tbaa !87
   %i.ja = ptrtoint ptr %i.iz to i64               ; 4 uses
-  %13 = and i64 %i.ja, 1
-  %.not303.i.i = icmp eq i64 %13, 0
-  br i1 %.not303.i.i, label %bb.bj, label %bb.ba
+  %13 = trunc i64 %i.ja to i1
+  br i1 %13, label %bb.ba, label %bb.bj
 
 bb.ba:                                            ; preds = %bb.az
   %i.jb = getelementptr inbounds nuw i8, ptr %i.io, i64 112 ; 2 uses
@@ -1217,9 +1203,8 @@ bb.bb:                                            ; preds = %bb.ba
   %i.jg = getelementptr inbounds nuw i8, ptr %i.jf, i64 120 ; 2 uses
   %i.jh = load ptr, ptr %i.jg, align 8, !tbaa !87
   %i.ji = ptrtoint ptr %i.jh to i64               ; 2 uses
-  %14 = and i64 %i.ji, 1
-  %.not310.i.i = icmp eq i64 %14, 0
-  br i1 %.not310.i.i, label %bb.bd, label %bb.bc
+  %14 = trunc i64 %i.ji to i1
+  br i1 %14, label %bb.bc, label %bb.bd
 
 bb.bc:                                            ; preds = %bb.bb
   %i.jj = and i64 %i.ji, -2
@@ -1306,9 +1291,8 @@ bb.bi:                                            ; preds = %bb.bg
   br label %tctx_tree_remove.exit.i
 
 bb.bj:                                            ; preds = %bb.az
-  %15 = and i64 %i.it, 1
-  %.not304.i.i = icmp eq i64 %15, 0
-  br i1 %.not304.i.i, label %bb.bq, label %bb.bk
+  %15 = trunc i64 %i.it to i1
+  br i1 %15, label %bb.bk, label %bb.bq
 
 bb.bk:                                            ; preds = %bb.bj
   %i.lh = getelementptr inbounds nuw i8, ptr %i.io, i64 120 ; 3 uses
@@ -1321,9 +1305,8 @@ bb.bl:                                            ; preds = %bb.bk
   %i.lk = getelementptr inbounds nuw i8, ptr %i.lj, i64 120 ; 3 uses
   %i.ll = load ptr, ptr %i.lk, align 8, !tbaa !87
   %i.lm = ptrtoint ptr %i.ll to i64
-  %16 = and i64 %i.lm, 1
-  %.not308.i.i = icmp eq i64 %16, 0
-  br i1 %.not308.i.i, label %bb.bp, label %bb.bm
+  %16 = trunc i64 %i.lm to i1
+  br i1 %16, label %bb.bm, label %bb.bp
 
 bb.bm:                                            ; preds = %bb.bl
   %i.ln = and i64 %i.in, -2
@@ -1393,9 +1376,8 @@ bb.br:                                            ; preds = %bb.bq
   %i.na = getelementptr inbounds nuw i8, ptr %i.mz, i64 120
   %i.nb = load ptr, ptr %i.na, align 8, !tbaa !87
   %i.nc = ptrtoint ptr %i.nb to i64               ; 2 uses
-  %17 = and i64 %i.nc, 1
-  %.not306.i.i = icmp eq i64 %17, 0
-  br i1 %.not306.i.i, label %bb.bx, label %bb.bs
+  %17 = trunc i64 %i.nc to i1
+  br i1 %17, label %bb.bs, label %bb.bx
 
 bb.bs:                                            ; preds = %bb.br
   %i.nd = getelementptr inbounds nuw i8, ptr %i.io, i64 112

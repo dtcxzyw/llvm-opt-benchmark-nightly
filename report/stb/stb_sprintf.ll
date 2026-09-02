@@ -204,9 +204,8 @@ bb.gg:                                            ; preds = %stbsp__lead_sign.ex
   %.3820 = call i32 @llvm.smax.i32(i32 %.2819, i32 %i.afr)
   %i.afs = sub i32 %.3820, %i.afr                 ; 3 uses
   %i.aft = sub i32 %spec.select1204, %i.afk       ; 3 uses
-  %5 = and i32 %.17795, 1
-  %6 = icmp eq i32 %5, 0
-  br i1 %6, label %bb.gh, label %bb.gj
+  %5 = trunc i32 %.17795 to i1
+  br i1 %5, label %bb.gj, label %bb.gh
 
 bb.gh:                                            ; preds = %bb.gg
   %i.afu = and i32 %.17795, 16
@@ -226,11 +225,10 @@ bb.gj:                                            ; preds = %bb.gh, %bb.gi, %bb.
   br i1 %.not1139, label %.loopexit1470, label %bb.gk
 
 bb.gk:                                            ; preds = %bb.gj
-  %7 = and i32 %.18796, 1
-  %8 = icmp eq i32 %7, 0
-  %9 = icmp sgt i32 %.4821, 0
-  %or.cond38 = and i1 %9, %8
-  br i1 %or.cond38, label %.preheader1473, label %.loopexit1475
+  %6 = trunc i32 %.18796 to i1
+  %7 = icmp slt i32 %.4821, 1
+  %or.cond38.not = or i1 %7, %6
+  br i1 %or.cond38.not, label %.loopexit1475, label %.preheader1473
 
 .preheader1473:                                   ; preds = %bb.gk, %.thread1299
   %.5936 = phi ptr [ %.8939, %.thread1299 ], [ %.1932, %bb.gk ] ; 4 uses
@@ -531,9 +529,8 @@ bb.gq:                                            ; preds = %._crit_edge1731, %b
   br i1 %.not11501735, label %._crit_edge1753, label %.lr.ph1752.split.preheader
 
 .lr.ph1752.split.preheader:                       ; preds = %.loopexit.thread
-  %xtraiter2537 = and i32 %.9, 1
-  %lcmp.mod2538.not = icmp eq i32 %xtraiter2537, 0
-  br i1 %lcmp.mod2538.not, label %.lr.ph1752.split.prol.loopexit, label %.lr.ph1752.split.prol
+  %8 = trunc i32 %.9 to i1
+  br i1 %8, label %.lr.ph1752.split.prol, label %.lr.ph1752.split.prol.loopexit
 
 .lr.ph1752.split.prol:                            ; preds = %.lr.ph1752.split.preheader
   %i.ajr = add i32 %.127181762, 1

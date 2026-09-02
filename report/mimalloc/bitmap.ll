@@ -205,12 +205,11 @@ mi_bchunk_setN.exit.peel:                         ; preds = %bb.j, %bb.i, %bb.h,
   br i1 %i.bk, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %.peel.next
-  %i.bl = atomicrmw or ptr %i.bj, i64 1 acq_rel, align 8
-  %4 = and i64 %i.bl, 1
-  %5 = icmp eq i64 %4, 0                          ; 2 uses
-  %not..i.i = xor i1 %5, true
-  %6 = zext i1 %not..i.i to i64                   ; 2 uses
-  store i64 %6, ptr %i.a, align 8, !tbaa !9
+  %i.bl = atomicrmw or ptr %i.bj, i64 1 acq_rel, align 8 ; 2 uses
+  %4 = trunc i64 %i.bl to i1
+  %not..i.i = xor i1 %4, true
+  %5 = and i64 %i.bl, 1                           ; 2 uses
+  store i64 %5, ptr %i.a, align 8, !tbaa !9
   br label %mi_bchunk_setN.exit
 
 bb.l:                                             ; preds = %.peel.next
@@ -235,8 +234,8 @@ bb.n:                                             ; preds = %bb.l
   br label %mi_bchunk_setN.exit
 
 mi_bchunk_setN.exit:                              ; preds = %bb.k, %bb.m, %bb.n
-  %i.bt = phi i64 [ %.pre49, %bb.n ], [ %6, %bb.k ], [ %i.bq, %bb.m ]
-  %.0.i = phi i1 [ %i.bs, %bb.n ], [ %5, %bb.k ], [ %i.br, %bb.m ]
+  %i.bt = phi i64 [ %.pre49, %bb.n ], [ %5, %bb.k ], [ %i.bq, %bb.m ]
+  %.0.i = phi i1 [ %i.bs, %bb.n ], [ %not..i.i, %bb.k ], [ %i.br, %bb.m ]
   %i.bu = select i1 %.0.i, i1 %.03144, i1 false   ; 2 uses
   %i.bv = add i64 %i.bt, %.03045                  ; 2 uses
   %i.bw = lshr i64 %.03342, 6
@@ -639,8 +638,8 @@ mi_bchunk_is_xsetN.exit.us:                       ; preds = %bb.o, %bb.p, %bb.n
 
 bb.q:                                             ; preds = %.lr.ph.split
   %i.bt = load atomic i64, ptr %i.br acquire, align 8
-  %4 = and i64 %i.bt, 1
-  %5 = icmp eq i64 %4, 0
+  %4 = trunc i64 %i.bt to i1
+  %5 = xor i1 %4, true
   br label %mi_bchunk_is_xsetN.exit
 
 bb.r:                                             ; preds = %.lr.ph.split
@@ -1043,8 +1042,8 @@ mi_bbitmap_chunkmap_set.exit.peel:                ; preds = %bb.r, %mi_bchunk_al
 
 bb.s:                                             ; preds = %.peel.next
   %i.bw = atomicrmw or ptr %i.bu, i64 1 acq_rel, align 8
-  %3 = and i64 %i.bw, 1
-  %4 = icmp eq i64 %3, 0
+  %3 = trunc i64 %i.bw to i1
+  %4 = xor i1 %3, true
   br label %mi_bchunk_setN.exit
 
 bb.t:                                             ; preds = %.peel.next
@@ -1447,8 +1446,8 @@ mi_bchunk_is_xsetN.exit.us:                       ; preds = %bb.o, %bb.p, %bb.n
 
 bb.q:                                             ; preds = %.lr.ph.split
   %i.bt = load atomic i64, ptr %i.br acquire, align 8
-  %4 = and i64 %i.bt, 1
-  %5 = icmp eq i64 %4, 0
+  %4 = trunc i64 %i.bt to i1
+  %5 = xor i1 %4, true
   br label %mi_bchunk_is_xsetN.exit
 
 bb.r:                                             ; preds = %.lr.ph.split
@@ -1851,9 +1850,8 @@ bb.n:                                             ; preds = %bb.m
 .lr.ph108.preheader:                              ; preds = %.thread86.thread
   %i.aq = sub nuw i64 %.148130, %i.b
   %.neg = add nuw nsw i64 %i.b, 1
-  %xtraiter = and i64 %i.aq, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph108.prol.loopexit, label %.lr.ph108.prol
+  %5 = trunc i64 %i.aq to i1
+  br i1 %5, label %.lr.ph108.prol, label %.lr.ph108.prol.loopexit
 
 .lr.ph108.prol:                                   ; preds = %.lr.ph108.preheader
   %i.ar = add i64 %.148130, -1                    ; 4 uses

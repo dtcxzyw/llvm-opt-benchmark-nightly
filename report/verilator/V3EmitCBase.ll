@@ -204,9 +204,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53.i: ; preds = %_
   br label %common.resume
 
 bb.m:                                             ; preds = %bb.c
-  %10 = and i8 %.sroa.0.0.copyload.i.i, 1
-  %.not10.i = icmp eq i8 %10, 0
-  br i1 %.not10.i, label %bb.w, label %bb.n
+  %10 = trunc i8 %.sroa.0.0.copyload.i.i to i1
+  br i1 %10, label %bb.n, label %bb.w
 
 bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
@@ -398,7 +397,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit86.i: ; preds = %_
   br label %common.resume
 
 bb.w:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit77.i, %bb.m, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit44.i, %bb.b, %_ZN7AstNode4castI7AstCUseS_EEPKT_PKT0_.exit.i
-  %.1 = phi i1 [ %.0, %bb.b ], [ %.0, %bb.m ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit77.i ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit44.i ], [ %.0, %_ZN7AstNode4castI7AstCUseS_EEPKT_PKT0_.exit.i ] ; 2 uses
+  %.1 = phi i1 [ %.0, %bb.b ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit77.i ], [ %.0, %bb.m ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit44.i ], [ %.0, %_ZN7AstNode4castI7AstCUseS_EEPKT_PKT0_.exit.i ] ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %.01732.i, i64 8
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !105 ; 2 uses
   %.not.i = icmp eq ptr %i.dp, null

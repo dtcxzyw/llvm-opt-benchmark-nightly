@@ -205,12 +205,12 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load i64, ptr %i.e, align 8, !noundef !16
-  %7 = load i64, ptr %1, align 8                  ; 5 uses
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
+  %8 = load i64, ptr %1, align 8                  ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.h = load i64, ptr %i.g, align 8              ; 2 uses
   %i.i = sub i64 %5, %i.h
-  %.promoted36 = load i64, ptr %8, align 8
+  %.promoted36 = load i64, ptr %7, align 8
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.a
@@ -225,10 +225,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   %i.n = load i8, ptr %i.m, align 1, !noundef !16
   %i.o = and i8 %i.n, 63
   %i.p = zext nneg i8 %i.o to i64
-  %9 = shl nuw i64 1, %i.p
-  %10 = and i64 %9, %i.f
-  %11 = icmp eq i64 %10, 0
-  br i1 %11, label %bb.d, label %bb.e
+  %9 = lshr i64 %i.f, %i.p
+  %10 = trunc i64 %9 to i1
+  br i1 %10, label %bb.e, label %bb.d
 
 bb.c:                                             ; preds = %bb.j, %._crit_edge
   %storemerge = phi i64 [ 0, %._crit_edge ], [ 1, %bb.j ]
@@ -241,8 +240,8 @@ bb.d:                                             ; preds = %bb.b
   br i1 %6, label %bb.f, label %.sink.split
 
 bb.e:                                             ; preds = %bb.b
-  %.sroa.0.0.i = tail call i64 @llvm.umax.i64(i64 %i.j, i64 %7)
-  %.sroa.01.0 = select i1 %6, i64 %7, i64 %.sroa.0.0.i ; 4 uses
+  %.sroa.0.0.i = tail call i64 @llvm.umax.i64(i64 %i.j, i64 %8)
+  %.sroa.01.0 = select i1 %6, i64 %8, i64 %.sroa.0.0.i ; 4 uses
   %umax50 = tail call i64 @llvm.umax.i64(i64 %.sroa.01.0, i64 %5)
   %exitcond.not87.not = icmp ult i64 %.sroa.01.0, %5
   br i1 %exitcond.not87.not, label %.lr.ph90, label %._crit_edge91
@@ -250,7 +249,7 @@ bb.e:                                             ; preds = %bb.b
 .sink.split:                                      ; preds = %bb.d, %bb.r, %bb.o
   %.sink = phi i64 [ %i.i, %bb.o ], [ 0, %bb.r ], [ 0, %bb.d ] ; 2 uses
   %.ph72 = phi i64 [ %i.al, %bb.o ], [ %i.at, %bb.r ], [ %i.q, %bb.d ]
-  store i64 %.sink, ptr %8, align 8
+  store i64 %.sink, ptr %7, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %.sink.split, %bb.r, %bb.o, %bb.d
@@ -267,7 +266,7 @@ bb.g:                                             ; preds = %bb.p
 
 ._crit_edge91:                                    ; preds = %bb.g, %bb.e
   %.sroa.05.0 = select i1 %6, i64 0, i64 %i.j     ; 2 uses
-  %i.w = icmp ult i64 %.sroa.05.0, %7
+  %i.w = icmp ult i64 %.sroa.05.0, %8
   br i1 %i.w, label %.lr.ph94, label %._crit_edge95
 
 .lr.ph90:                                         ; preds = %bb.e, %bb.g
@@ -286,13 +285,13 @@ bb.h:                                             ; preds = %bb.m
   br i1 %6, label %bb.j, label %bb.i
 
 .lr.ph94:                                         ; preds = %._crit_edge91, %bb.h
-  %.sroa.57.092 = phi i64 [ %i.ab, %bb.h ], [ %7, %._crit_edge91 ]
+  %.sroa.57.092 = phi i64 [ %i.ab, %bb.h ], [ %8, %._crit_edge91 ]
   %i.ab = add i64 %.sroa.57.092, -1               ; 6 uses
   %i.ac = icmp ult i64 %i.ab, %5
   br i1 %i.ac, label %bb.k, label %bb.l
 
 bb.i:                                             ; preds = %._crit_edge95
-  store i64 0, ptr %8, align 8
+  store i64 0, ptr %7, align 8
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %._crit_edge95
@@ -345,7 +344,7 @@ bb.q:                                             ; preds = %.lr.ph90
 bb.r:                                             ; preds = %bb.p
   %i.ar = add i64 %i.l, 1
   %i.as = add i64 %i.ar, %.sroa.02.088
-  %i.at = sub i64 %i.as, %7                       ; 3 uses
+  %i.at = sub i64 %i.as, %8                       ; 3 uses
   store i64 %i.at, ptr %i.a, align 8
   br i1 %6, label %bb.f, label %.sink.split
 }

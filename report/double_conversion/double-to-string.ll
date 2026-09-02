@@ -204,9 +204,8 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.c,
 
 bb.g:                                             ; preds = %bb.f
   %i.ay = load i32, ptr %0, align 8, !tbaa !11
-  %5 = and i32 %i.ay, 1
-  %.not32 = icmp eq i32 %5, 0
-  br i1 %.not32, label %bb.i, label %bb.h
+  %5 = trunc i32 %i.ay to i1
+  br i1 %5, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.az = load i32, ptr %i.c, align 8, !tbaa !17  ; 2 uses
@@ -327,15 +326,12 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds i8, ptr %i.k, i64 %i.l
   store i8 46, ptr %i.m, align 1, !tbaa !19
   %i.n = sub i32 0, %3                            ; 3 uses
-  %.not65 = icmp eq i32 %3, 0
-  br i1 %.not65, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit, label %.lr.ph.i.preheader
+  switch i32 %3, label %.lr.ph.i.preheader.new [
+    i32 0, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit
+    i32 -1, label %.lr.ph.i.epil.preheader
+  ]
 
-.lr.ph.i.preheader:                               ; preds = %bb.c
-  %xtraiter89 = and i32 %i.n, 1
-  %6 = icmp eq i32 %3, -1
-  br i1 %6, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
-
-.lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
+.lr.ph.i.preheader.new:                           ; preds = %bb.c
   %unroll_iter92 = and i32 %i.n, -2
   br label %.lr.ph.i
 
@@ -360,10 +356,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %niter93.ncmp.1, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !28
 
 _ZN17double_conversion13StringBuilder10AddPaddingEci.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i
-  %lcmp.mod90.not = icmp eq i32 %xtraiter89, 0
-  br i1 %lcmp.mod90.not, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit, label %.lr.ph.i.epil.preheader
+  %6 = trunc i32 %i.n to i1
+  br i1 %6, label %.lr.ph.i.epil.preheader, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit
 
-.lr.ph.i.epil.preheader:                          ; preds = %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit.loopexit.unr-lcssa, %.lr.ph.i.preheader
+.lr.ph.i.epil.preheader:                          ; preds = %bb.c, %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit.loopexit.unr-lcssa
   %lcmp.mod91 = trunc i32 %i.n to i1
   tail call void @llvm.assume(i1 %lcmp.mod91)
   %i.y = load i32, ptr %i.b, align 8, !tbaa !17   ; 2 uses
@@ -393,7 +389,6 @@ _ZN17double_conversion13StringBuilder10AddPaddingEci.exit: ; preds = %.lr.ph.i.e
 .lr.ph.i49.preheader:                             ; preds = %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit
   %i.an = add i32 %4, %3
   %.neg100 = add i32 %2, 1
-  %xtraiter94 = and i32 %i.al, 1
   %i.ao = icmp eq i32 %i.an, %.neg100
   br i1 %i.ao, label %.lr.ph.i49.epil.preheader, label %.lr.ph.i49.preheader.new
 
@@ -442,7 +437,6 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph.i53.preheader:                             ; preds = %bb.e
   %.neg = add i32 %2, 1
-  %xtraiter = and i32 %i.bh, 1
   %i.bj = icmp eq i32 %3, %.neg
   br i1 %i.bj, label %.lr.ph.i53.epil.preheader, label %.lr.ph.i53.preheader.new
 
@@ -471,8 +465,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %niter.ncmp.1, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit56.loopexit.unr-lcssa, label %.lr.ph.i53, !llvm.loop !28
 
 _ZN17double_conversion13StringBuilder10AddPaddingEci.exit56.loopexit.unr-lcssa: ; preds = %.lr.ph.i53
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit56, label %.lr.ph.i53.epil.preheader
+  %7 = trunc i32 %i.bh to i1
+  br i1 %7, label %.lr.ph.i53.epil.preheader, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit56
 
 .lr.ph.i53.epil.preheader:                        ; preds = %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit56.loopexit.unr-lcssa, %.lr.ph.i53.preheader
   %lcmp.mod78 = trunc i32 %i.bh to i1
@@ -498,7 +492,6 @@ _ZN17double_conversion13StringBuilder10AddPaddingEci.exit56: ; preds = %.lr.ph.i
   %i.cd = sext i32 %i.ca to i64
   %i.ce = getelementptr inbounds i8, ptr %i.cc, i64 %i.cd
   store i8 46, ptr %i.ce, align 1, !tbaa !19
-  %xtraiter79 = and i32 %4, 1
   %i.cf = icmp eq i32 %4, 1
   br i1 %i.cf, label %.epil.preheader, label %.lr.ph.i57.new
 
@@ -555,7 +548,6 @@ bb.g:                                             ; preds = %bb.d
 .lr.ph.i61.preheader:                             ; preds = %bb.g
   %i.di = add i32 %4, %3
   %.neg99 = add i32 %2, 1
-  %xtraiter84 = and i32 %i.dg, 1
   %i.dj = icmp eq i32 %i.di, %.neg99
   br i1 %i.dj, label %.lr.ph.i61.epil.preheader, label %.lr.ph.i61.preheader.new
 
@@ -584,8 +576,8 @@ bb.g:                                             ; preds = %bb.d
   br i1 %niter88.ncmp.1, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit52.loopexit.unr-lcssa, label %.lr.ph.i61, !llvm.loop !28
 
 _ZN17double_conversion13StringBuilder10AddPaddingEci.exit52.loopexit.unr-lcssa: ; preds = %.lr.ph.i61
-  %lcmp.mod85.not = icmp eq i32 %xtraiter84, 0
-  br i1 %lcmp.mod85.not, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit52, label %.lr.ph.i61.epil.preheader
+  %8 = trunc i32 %i.dg to i1
+  br i1 %8, label %.lr.ph.i61.epil.preheader, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit52
 
 .lr.ph.i61.epil.preheader:                        ; preds = %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit52.loopexit.unr-lcssa, %.lr.ph.i61.preheader
   %lcmp.mod86 = trunc i32 %i.dg to i1
@@ -639,8 +631,8 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit52.thread
 
 _ZN17double_conversion13StringBuilder10AddPaddingEci.exit52.thread.loopexit.unr-lcssa: ; preds = %.lr.ph.i49
-  %lcmp.mod95.not = icmp eq i32 %xtraiter94, 0
-  br i1 %lcmp.mod95.not, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit52.thread, label %.lr.ph.i49.epil.preheader
+  %9 = trunc i32 %i.al to i1
+  br i1 %9, label %.lr.ph.i49.epil.preheader, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit52.thread
 
 .lr.ph.i49.epil.preheader:                        ; preds = %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit52.thread.loopexit.unr-lcssa, %.lr.ph.i49.preheader
   %lcmp.mod96 = trunc i32 %i.al to i1
@@ -655,8 +647,8 @@ _ZN17double_conversion13StringBuilder10AddPaddingEci.exit52.thread.loopexit.unr-
   br label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit52.thread
 
 _ZN17double_conversion13StringBuilder10AddPaddingEci.exit52.thread.loopexit77.unr-lcssa: ; preds = %bb.f
-  %lcmp.mod80.not = icmp eq i32 %xtraiter79, 0
-  br i1 %lcmp.mod80.not, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit52.thread, label %.epil.preheader
+  %10 = trunc i32 %4 to i1
+  br i1 %10, label %.epil.preheader, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit52.thread
 
 .epil.preheader:                                  ; preds = %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit52.thread.loopexit77.unr-lcssa, %.lr.ph.i57
   %lcmp.mod81 = trunc i32 %4 to i1

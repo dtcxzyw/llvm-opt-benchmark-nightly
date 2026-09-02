@@ -204,8 +204,8 @@ _ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit:        ; preds = %_ZNK5Ipopt14Compoun
 .lr.ph82:                                         ; preds = %.preheader74
   %i.aw = ptrtoint ptr %i.au to i64
   %i.ax = ptrtoint ptr %i.av to i64
-  %i.ay = sub i64 %i.aw, %i.ax                    ; 3 uses
-  %i.az = ashr exact i64 %i.ay, 2                 ; 2 uses
+  %i.ay = sub i64 %i.aw, %i.ax                    ; 2 uses
+  %i.az = ashr exact i64 %i.ay, 2                 ; 3 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !25 ; 3 uses
   %i.bc = icmp eq i64 %i.ay, 4
@@ -216,9 +216,8 @@ _ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit:        ; preds = %_ZNK5Ipopt14Compoun
   br label %bb.d
 
 .preheader.loopexit.unr-lcssa:                    ; preds = %bb.d
-  %3 = and i64 %i.ay, 4
-  %lcmp.mod.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod.not, label %.preheader, label %.epil.preheader
+  %3 = trunc i64 %i.az to i1
+  br i1 %3, label %.epil.preheader, label %.preheader
 
 .epil.preheader:                                  ; preds = %.preheader.loopexit.unr-lcssa, %.lr.ph82
   %.04181.epil.init = phi i64 [ 0, %.lr.ph82 ], [ %i.ct, %.preheader.loopexit.unr-lcssa ] ; 3 uses

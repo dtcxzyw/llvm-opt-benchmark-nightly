@@ -205,11 +205,10 @@ bb.a:
   %i.p = sub i32 %2, %.02951
   %i.q = tail call range(i64 1, 65) i64 @llvm.ctpop.i64(i64 range(i64 1, 0) %.138.lcssa)
   %i.r = trunc nuw nsw i64 %i.q to i32
-  %spec.select = tail call i32 @llvm.umin.i32(i32 %i.p, i32 %i.r) ; 2 uses
-  %.027 = zext nneg i32 %spec.select to i64       ; 3 uses
-  %xtraiter = and i64 %.027, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph46.prol.loopexit, label %.lr.ph46.prol
+  %spec.select = tail call i32 @llvm.umin.i32(i32 %i.p, i32 %i.r) ; 3 uses
+  %.027 = zext nneg i32 %spec.select to i64       ; 2 uses
+  %4 = trunc i32 %spec.select to i1
+  br i1 %4, label %.lr.ph46.prol, label %.lr.ph46.prol.loopexit
 
 .lr.ph46.prol:                                    ; preds = %.lr.ph46.preheader
   %i.s = add nsw i64 %.027, -1

@@ -51,9 +51,8 @@ bb.g:                                             ; preds = %bb.f
 
 lean_dec_ref.exit:                                ; preds = %bb.e, %bb.f, %bb.g
   %i.i = ptrtoint ptr %i.e to i64                 ; 2 uses
-  %2 = and i64 %i.i, 1
-  %.not.i = icmp eq i64 %2, 0
-  br i1 %.not.i, label %bb.k, label %bb.h, !prof !14
+  %2 = trunc i64 %i.i to i1
+  br i1 %2, label %bb.h, label %bb.k, !prof !11
 
 bb.h:                                             ; preds = %lean_dec_ref.exit
   %i.j = lshr i64 %i.i, 1
@@ -456,5 +455,4 @@ attributes #4 = { noreturn nounwind }
 !11 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !12 = !{!"any pointer", !5, i64 0}
 !13 = !{!12, !12, i64 0}
-!14 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 end_hunk_1

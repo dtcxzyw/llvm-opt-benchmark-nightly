@@ -114,11 +114,10 @@ bb.a:
 define hidden noundef zeroext i1 @_ZN3tbb6detail2r112dynamic_linkEPKcPKNS1_23dynamic_link_descriptorEmPPvi(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, ptr nofree noundef writeonly captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #1 {
 bb.a:
   %i.a = alloca [20 x ptr], align 16              ; 9 uses
-  %5 = and i32 %4, 1
-  %.not = icmp eq i32 %5, 0
-  %.not.i = icmp eq ptr @dlopen, null
-  %or.cond34 = or i1 %.not.i, %.not
-  br i1 %or.cond34, label %bb.g, label %bb.b
+  %5 = trunc i32 %4 to i1
+  %.not.i = icmp ne ptr @dlopen, null
+  %or.cond33.not = and i1 %.not.i, %5
+  br i1 %or.cond33.not, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call ptr @dlopen(ptr noundef %0, i32 noundef 261) #10 ; 4 uses

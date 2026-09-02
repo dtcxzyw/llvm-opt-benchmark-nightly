@@ -202,14 +202,12 @@ bb.h:                                             ; preds = %_RINvXs2J_NtNtCs3oU
 ._crit_edge.i:                                    ; preds = %bb.m, %bb.l
   %.sroa.04.0.lcssa.i = phi i64 [ %.sroa.10.079, %bb.m ], [ %.sroa.04.026.i, %bb.l ] ; 3 uses
   %.sroa.0.0.lcssa.i = phi i8 [ %.sroa.08.2.i, %bb.m ], [ %.sroa.0.027.i, %bb.l ] ; 2 uses
-  %4 = and i8 %.sroa.0.0.lcssa.i, 1
-  %.not17.i = icmp eq i8 %4, 0
-  br i1 %.not17.i, label %bb.n, label %.thread
+  %4 = trunc i8 %.sroa.0.0.lcssa.i to i1
+  br i1 %4, label %.thread, label %bb.n
 
 ._crit_edge.i.thread:                             ; preds = %bb.h
-  %5 = and i8 %spec.select20.i, 1
-  %.not17.i50 = icmp eq i8 %5, 0
-  br i1 %.not17.i50, label %bb.n, label %.thread.thread
+  %5 = trunc i8 %spec.select20.i to i1
+  br i1 %5, label %.thread.thread, label %bb.n
 
 .lr.ph.i:                                         ; preds = %bb.h, %bb.m
   %.sroa.0.027.i = phi i8 [ %.sroa.08.2.i, %bb.m ], [ %spec.select20.i, %bb.h ] ; 4 uses

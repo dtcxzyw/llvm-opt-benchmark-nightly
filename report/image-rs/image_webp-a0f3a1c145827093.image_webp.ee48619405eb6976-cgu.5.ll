@@ -205,8 +205,8 @@ bb.a:
   %.val2 = load ptr, ptr %i.b, align 8, !nonnull !4, !noundef !4 ; 2 uses
   %i.c = ptrtoint ptr %.val2 to i64
   %i.d = ptrtoint ptr %.val to i64
-  %i.e = sub nuw i64 %i.c, %i.d                   ; 3 uses
-  %i.f = lshr exact i64 %i.e, 2                   ; 5 uses
+  %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
+  %i.f = lshr exact i64 %i.e, 2                   ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsksn9slvsHfS_10image_webp(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %i.f, i1 noundef zeroext false, i64 noundef 8, i64 noundef 16)
   %i.g = load i64, ptr %i.a, align 8, !range !10, !noundef !4
@@ -264,9 +264,8 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecTjmEE7reserveCsksn9slvsHfS_10image_we
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.preheader.i.i
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.preheader.i.i
-  %2 = and i64 %i.e, 4
-  %lcmp.mod.not = icmp eq i64 %2, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.preheader.i.i.epil.preheader
+  %2 = trunc i64 %i.f to i1
+  br i1 %2, label %.preheader.i.i.epil.preheader, label %.loopexit
 
 .preheader.i.i.epil.preheader:                    ; preds = %.loopexit.loopexit.unr-lcssa, %.preheader.i.i.preheader
   %.epil.init = phi i64 [ 0, %.preheader.i.i.preheader ], [ %i.aa, %.loopexit.loopexit.unr-lcssa ] ; 2 uses

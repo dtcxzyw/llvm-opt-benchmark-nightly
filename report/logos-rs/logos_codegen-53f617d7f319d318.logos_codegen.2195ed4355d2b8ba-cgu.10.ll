@@ -204,7 +204,6 @@ _RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos
 
 .lr.ph.preheader:                                 ; preds = %_RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11.preheader
   %i.a = getelementptr [16 x i8], ptr %2, i64 %4  ; 3 uses
-  %xtraiter = and i64 %4, 1
   %i.b = icmp eq i64 %4, 1
   br i1 %i.b, label %_RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11.epil.preheader, label %.lr.ph.preheader.new
 
@@ -217,8 +216,8 @@ bb.c:                                             ; preds = %_RNvMNtCskKLDkoKarT
   unreachable
 
 _RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11._crit_edge.loopexit.unr-lcssa: ; preds = %_RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11._crit_edge, label %_RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11.epil.preheader
+  %5 = trunc i64 %4 to i1
+  br i1 %5, label %_RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11.epil.preheader, label %_RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11._crit_edge
 
 _RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11.epil.preheader: ; preds = %_RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %.sroa.0.016.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.p, %_RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11._crit_edge.loopexit.unr-lcssa ] ; 2 uses
@@ -621,7 +620,7 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE7reverseCs2SM5xCHwwDm_13logos_codegen(ptr nofree align 8 captures(none) %0, i64 %1) unnamed_addr #6 {
 bb.a:
-  %i.a = lshr i64 %1, 1                           ; 4 uses
+  %i.a = lshr i64 %1, 1                           ; 5 uses
   %.not.i = icmp eq i64 %i.a, 0
   br i1 %.not.i, label %_RINvNvMNtCskKLDkoKarTP_4core5sliceSp7reverse7revswapTRAbj100_RjEECs2SM5xCHwwDm_13logos_codegen.exit, label %.lr.ph.preheader.i
 
@@ -656,9 +655,8 @@ _RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos
   br i1 %niter.ncmp.1, label %_RINvNvMNtCskKLDkoKarTP_4core5sliceSp7reverse7revswapTRAbj100_RjEECs2SM5xCHwwDm_13logos_codegen.exit.loopexit.unr-lcssa, label %_RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11.i
 
 _RINvNvMNtCskKLDkoKarTP_4core5sliceSp7reverse7revswapTRAbj100_RjEECs2SM5xCHwwDm_13logos_codegen.exit.loopexit.unr-lcssa: ; preds = %_RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11.i
-  %2 = and i64 %1, 2
-  %lcmp.mod.not = icmp eq i64 %2, 0
-  br i1 %lcmp.mod.not, label %_RINvNvMNtCskKLDkoKarTP_4core5sliceSp7reverse7revswapTRAbj100_RjEECs2SM5xCHwwDm_13logos_codegen.exit, label %_RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11.i.epil.preheader
+  %2 = trunc i64 %i.a to i1
+  br i1 %2, label %_RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11.i.epil.preheader, label %_RINvNvMNtCskKLDkoKarTP_4core5sliceSp7reverse7revswapTRAbj100_RjEECs2SM5xCHwwDm_13logos_codegen.exit
 
 _RNvMNtCskKLDkoKarTP_4core5sliceSTRAbj100_RjE12split_at_mutCs2SM5xCHwwDm_13logos_codegen.exit11.i.epil.preheader: ; preds = %_RINvNvMNtCskKLDkoKarTP_4core5sliceSp7reverse7revswapTRAbj100_RjEECs2SM5xCHwwDm_13logos_codegen.exit.loopexit.unr-lcssa, %.lr.ph.preheader.i
   %.sroa.0.016.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %i.m, %_RINvNvMNtCskKLDkoKarTP_4core5sliceSp7reverse7revswapTRAbj100_RjEECs2SM5xCHwwDm_13logos_codegen.exit.loopexit.unr-lcssa ] ; 2 uses

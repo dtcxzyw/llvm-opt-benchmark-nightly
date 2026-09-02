@@ -204,9 +204,8 @@ bb.a:
   %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !105 ; 9 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.ec = load ptr, ptr %i.eb, align 8, !tbaa !106 ; 9 uses
-  %6 = and i32 %i.do, 1
-  %.not169 = icmp eq i32 %6, 0
-  br i1 %.not169, label %.split.us.preheader, label %.split
+  %6 = trunc i32 %i.do to i1
+  br i1 %6, label %.split, label %.split.us.preheader
 
 .split.us.preheader:                              ; preds = %bb.a
   %i.ed = load float, ptr %i.dv, align 4, !tbaa !28
@@ -301,7 +300,7 @@ bb.a:
   store float %i.gp, ptr %i.gq, align 4, !tbaa !28
   br label %.split271.us
 
-.split271.us:                                     ; preds = %.split, %.split.us.preheader
+.split271.us:                                     ; preds = %.split.us.preheader, %.split
   %i.gr = mul nsw i32 %i.d, 3                     ; 7 uses
   %i.gs = getelementptr inbounds nuw i8, ptr %0, i64 550
   %i.gt = load i8, ptr %i.gs, align 2, !tbaa !33, !range !35, !noundef !36

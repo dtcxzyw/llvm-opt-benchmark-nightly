@@ -204,9 +204,8 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 1048
   %i.p = load i32, ptr %i.o, align 8, !tbaa !65
-  %5 = and i32 %i.p, 1
-  %6 = icmp eq i32 %5, 0
-  br i1 %6, label %bb.h, label %bb.j
+  %5 = trunc i32 %i.p to i1
+  br i1 %5, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.e, %bb.g
   tail call void @png_error(ptr noundef nonnull %0, ptr noundef nonnull @.str.47) #13
@@ -609,16 +608,13 @@ add_one_chunk.exit.us:                            ; preds = %bb.n, %.sink.split.
 
 .preheader:                                       ; preds = %.sink.split.i, %add_one_chunk.exit.us
   %.068124126 = phi ptr [ %i.i, %add_one_chunk.exit.us ], [ %i.o, %.sink.split.i ] ; 7 uses
-  %.us-phi = phi i32 [ %spec.store.select, %add_one_chunk.exit.us ], [ %.016.ph.i, %.sink.split.i ] ; 5 uses
-  %.not100 = icmp eq i32 %.us-phi, 0
-  br i1 %.not100, label %._crit_edge.thread, label %.lr.ph.preheader
+  %.us-phi = phi i32 [ %spec.store.select, %add_one_chunk.exit.us ], [ %.016.ph.i, %.sink.split.i ] ; 4 uses
+  switch i32 %.us-phi, label %.lr.ph.preheader.new [
+    i32 0, label %._crit_edge.thread
+    i32 1, label %.lr.ph.epil.preheader
+  ]
 
-.lr.ph.preheader:                                 ; preds = %.preheader
-  %xtraiter = and i32 %.us-phi, 1
-  %4 = icmp eq i32 %.us-phi, 1
-  br i1 %4, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
-
-.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
+.lr.ph.preheader.new:                             ; preds = %.preheader
   %unroll_iter = and i32 %.us-phi, -2
   br label %.lr.ph
 
@@ -717,13 +713,13 @@ bb.v:                                             ; preds = %bb.u, %.lr.ph.1
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.lr.ph, !llvm.loop !195
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.v
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  %4 = trunc i32 %.us-phi to i1
+  br i1 %4, label %.lr.ph.epil.preheader, label %._crit_edge
 
-.lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa, %.lr.ph.preheader
-  %.06298.epil.init = phi ptr [ %.068124126, %.lr.ph.preheader ], [ %.163.1, %._crit_edge.unr-lcssa ] ; 2 uses
-  %.06496.epil.init = phi ptr [ %.068124126, %.lr.ph.preheader ], [ %i.ba, %._crit_edge.unr-lcssa ] ; 3 uses
-  %.16795.epil.init = phi i32 [ 0, %.lr.ph.preheader ], [ %.2.1, %._crit_edge.unr-lcssa ] ; 2 uses
+.lr.ph.epil.preheader:                            ; preds = %.preheader, %._crit_edge.unr-lcssa
+  %.06298.epil.init = phi ptr [ %.068124126, %.preheader ], [ %.163.1, %._crit_edge.unr-lcssa ] ; 2 uses
+  %.06496.epil.init = phi ptr [ %.068124126, %.preheader ], [ %i.ba, %._crit_edge.unr-lcssa ] ; 3 uses
+  %.16795.epil.init = phi i32 [ 0, %.preheader ], [ %.2.1, %._crit_edge.unr-lcssa ] ; 2 uses
   %lcmp.mod149 = trunc i32 %.us-phi to i1
   tail call void @llvm.assume(i1 %lcmp.mod149)
   %i.bb = getelementptr inbounds nuw i8, ptr %.06496.epil.init, i64 4

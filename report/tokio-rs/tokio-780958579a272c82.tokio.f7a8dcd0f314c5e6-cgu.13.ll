@@ -143,11 +143,10 @@ bb.m:                                             ; preds = %bb.j, %_RNvMNtNtCsl
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19: ; preds = %bb.i, %bb.j
   %i.w = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7
-  %3 = and i64 %2, 1
-  %.not.i = icmp eq i64 %3, 0
+  %3 = trunc i64 %2 to i1
   %i.x = and i64 %2, 2
   %.not30.i.a = icmp eq i64 %i.x, 0               ; 2 uses
-  br i1 %.not.i, label %bb.n, label %bb.o
+  br i1 %3, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19
   br i1 %.not30.i.a, label %bb.p, label %bb.q
@@ -365,11 +364,10 @@ bb.m:                                             ; preds = %bb.j, %_RNvMNtNtCsl
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19: ; preds = %bb.i, %bb.j
   %i.w = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7
-  %3 = and i64 %2, 1
-  %.not.i = icmp eq i64 %3, 0
+  %3 = trunc i64 %2 to i1
   %i.x = and i64 %2, 2
   %.not30.i.a = icmp eq i64 %i.x, 0               ; 2 uses
-  br i1 %.not.i, label %bb.n, label %bb.o
+  br i1 %3, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19
   br i1 %.not30.i.a, label %bb.p, label %bb.q
@@ -587,11 +585,10 @@ bb.m:                                             ; preds = %bb.j, %_RNvMNtNtCsl
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19: ; preds = %bb.i, %bb.j
   %i.w = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7
-  %3 = and i64 %2, 1
-  %.not.i = icmp eq i64 %3, 0
+  %3 = trunc i64 %2 to i1
   %i.x = and i64 %2, 2
   %.not30.i.a = icmp eq i64 %i.x, 0               ; 2 uses
-  br i1 %.not.i, label %bb.n, label %bb.o
+  br i1 %3, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19
   br i1 %.not30.i.a, label %bb.p, label %bb.q
@@ -809,11 +806,10 @@ bb.m:                                             ; preds = %bb.j, %_RNvMNtNtCsl
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19: ; preds = %bb.i, %bb.j
   %i.w = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7
-  %3 = and i64 %2, 1
-  %.not.i = icmp eq i64 %3, 0
+  %3 = trunc i64 %2 to i1
   %i.x = and i64 %2, 2
   %.not30.i.a = icmp eq i64 %i.x, 0               ; 2 uses
-  br i1 %.not.i, label %bb.n, label %bb.o
+  br i1 %3, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19
   br i1 %.not30.i.a, label %bb.p, label %bb.q
@@ -1031,11 +1027,10 @@ bb.m:                                             ; preds = %bb.j, %_RNvMNtNtCsl
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19: ; preds = %bb.i, %bb.j
   %i.w = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7
-  %3 = and i64 %2, 1
-  %.not.i = icmp eq i64 %3, 0
+  %3 = trunc i64 %2 to i1
   %i.x = and i64 %2, 2
   %.not30.i.a = icmp eq i64 %i.x, 0               ; 2 uses
-  br i1 %.not.i, label %bb.n, label %bb.o
+  br i1 %3, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19
   br i1 %.not30.i.a, label %bb.p, label %bb.q
@@ -1253,11 +1248,10 @@ bb.m:                                             ; preds = %bb.j, %_RNvMNtNtCsl
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19: ; preds = %bb.i, %bb.j
   %i.w = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7
-  %3 = and i64 %2, 1
-  %.not.i = icmp eq i64 %3, 0
+  %3 = trunc i64 %2 to i1
   %i.x = and i64 %2, 2
   %.not30.i.a = icmp eq i64 %i.x, 0               ; 2 uses
-  br i1 %.not.i, label %bb.n, label %bb.o
+  br i1 %3, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19
   br i1 %.not30.i.a, label %bb.p, label %bb.q
@@ -1475,11 +1469,10 @@ bb.m:                                             ; preds = %bb.j, %_RNvMNtNtCsl
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19: ; preds = %bb.i, %bb.j
   %i.w = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7
-  %3 = and i64 %2, 1
-  %.not.i = icmp eq i64 %3, 0
+  %3 = trunc i64 %2 to i1
   %i.x = and i64 %2, 2
   %.not30.i.a = icmp eq i64 %i.x, 0               ; 2 uses
-  br i1 %.not.i, label %bb.n, label %bb.o
+  br i1 %3, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19
   br i1 %.not30.i.a, label %bb.p, label %bb.q
@@ -1697,11 +1690,10 @@ bb.m:                                             ; preds = %bb.j, %_RNvMNtNtCsl
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19: ; preds = %bb.i, %bb.j
   %i.w = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7
-  %3 = and i64 %2, 1
-  %.not.i = icmp eq i64 %3, 0
+  %3 = trunc i64 %2 to i1
   %i.x = and i64 %2, 2
   %.not30.i.a = icmp eq i64 %i.x, 0               ; 2 uses
-  br i1 %.not.i, label %bb.n, label %bb.o
+  br i1 %3, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19
   br i1 %.not30.i.a, label %bb.p, label %bb.q
@@ -1919,11 +1911,10 @@ bb.m:                                             ; preds = %bb.j, %_RNvMNtNtCsl
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19: ; preds = %bb.i, %bb.j
   %i.w = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7
-  %3 = and i64 %2, 1
-  %.not.i = icmp eq i64 %3, 0
+  %3 = trunc i64 %2 to i1
   %i.x = and i64 %2, 2
   %.not30.i.a = icmp eq i64 %i.x, 0               ; 2 uses
-  br i1 %.not.i, label %bb.n, label %bb.o
+  br i1 %3, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19
   br i1 %.not30.i.a, label %bb.p, label %bb.q
@@ -2141,11 +2132,10 @@ bb.m:                                             ; preds = %bb.j, %_RNvMNtNtCsl
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19: ; preds = %bb.i, %bb.j
   %i.w = load ptr, ptr %i.b, align 8, !nonnull !7, !noundef !7
-  %3 = and i64 %2, 1
-  %.not.i = icmp eq i64 %3, 0
+  %3 = trunc i64 %2 to i1
   %i.x = and i64 %2, 2
   %.not30.i.a = icmp eq i64 %i.x, 0               ; 2 uses
-  br i1 %.not.i, label %bb.n, label %bb.o
+  br i1 %3, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtNtBK_7runtime2io16registration_set6SyncedEEBK_.exit19
   br i1 %.not30.i.a, label %bb.p, label %bb.q
@@ -2548,9 +2538,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.sroa.03.0.i = phi i8 [ %i.c, %bb.a ], [ %i.g, %bb.c ] ; 3 uses
-  %2 = and i8 %.sroa.03.0.i, 1
-  %3 = icmp eq i8 %2, 0
-  br i1 %3, label %bb.c, label %_RNvXNtCsfC2LXmwPSoN_11parking_lot9raw_mutexNtB2_8RawMutexNtNtCshr7Cxz41BpA_8lock_api5mutex8RawMutex8try_lock.exit
+  %2 = trunc i8 %.sroa.03.0.i to i1
+  br i1 %2, label %_RNvXNtCsfC2LXmwPSoN_11parking_lot9raw_mutexNtB2_8RawMutexNtNtCshr7Cxz41BpA_8lock_api5mutex8RawMutex8try_lock.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = or disjoint i8 %.sroa.03.0.i, 1
@@ -2953,9 +2942,8 @@ bb.j:                                             ; preds = %bb.e, %bb.g, %bb.i
 define noundef zeroext i1 @_RNvXs1_NtNtCslghKHtsL3a4_5tokio2io8interestNtB5_8InterestNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !7   ; 7 uses
-  %2 = and i64 %i.a, 1
-  %.not = icmp eq i64 %2, 0
-  br i1 %.not, label %bb.b, label %bb.e
+  %2 = trunc i64 %i.a to i1
+  br i1 %2, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = and i64 %i.a, 2
@@ -3105,9 +3093,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.sroa.03.0.i.i = phi i8 [ %i.e, %bb.a ], [ %i.i, %bb.c ] ; 3 uses
-  %2 = and i8 %.sroa.03.0.i.i, 1
-  %3 = icmp eq i8 %2, 0
-  br i1 %3, label %bb.c, label %_RNvXNtCsfC2LXmwPSoN_11parking_lot9raw_mutexNtB2_8RawMutexNtNtCshr7Cxz41BpA_8lock_api5mutex8RawMutex8try_lock.exit.i
+  %2 = trunc i8 %.sroa.03.0.i.i to i1
+  br i1 %2, label %_RNvXNtCsfC2LXmwPSoN_11parking_lot9raw_mutexNtB2_8RawMutexNtNtCshr7Cxz41BpA_8lock_api5mutex8RawMutex8try_lock.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.f = or disjoint i8 %.sroa.03.0.i.i, 1
@@ -3188,9 +3175,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.sroa.03.0.i.i = phi i8 [ %i.e, %bb.a ], [ %i.i, %bb.c ] ; 3 uses
-  %2 = and i8 %.sroa.03.0.i.i, 1
-  %3 = icmp eq i8 %2, 0
-  br i1 %3, label %bb.c, label %_RNvXNtCsfC2LXmwPSoN_11parking_lot9raw_mutexNtB2_8RawMutexNtNtCshr7Cxz41BpA_8lock_api5mutex8RawMutex8try_lock.exit.i
+  %2 = trunc i8 %.sroa.03.0.i.i to i1
+  br i1 %2, label %_RNvXNtCsfC2LXmwPSoN_11parking_lot9raw_mutexNtB2_8RawMutexNtNtCshr7Cxz41BpA_8lock_api5mutex8RawMutex8try_lock.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.f = or disjoint i8 %.sroa.03.0.i.i, 1

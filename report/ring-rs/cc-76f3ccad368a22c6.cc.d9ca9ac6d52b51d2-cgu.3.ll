@@ -205,9 +205,8 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.preheader8:                                ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
   %.sroa.0.03.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.03.ph, 1
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
+  %3 = trunc i64 %2 to i1
+  br i1 %3, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader8
   %i.g = or disjoint i64 %.sroa.0.03.ph, 1
@@ -610,10 +609,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %2, ptr %i.b, align 8
   %i.c = ptrtoint ptr %2 to i64                   ; 2 uses
-  %3 = and i64 %i.c, 1
-  %.not = icmp eq i64 %3, 0
+  %3 = trunc i64 %i.c to i1
   %i.d = lshr i64 %i.c, 1
-  %.sroa.0.0 = select i1 %.not, ptr null, ptr %1
+  %.sroa.0.0 = select i1 %3, ptr %1, ptr null
   call void @_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs1xwejQucwHj_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs3U9i7nQCKwt_15find_msvc_tools(ptr sret([24 x i8]) align 8 %0, ptr %.sroa.0.0, i64 %i.d, ptr nonnull align 8 %i.a) #23
   ret void
 }
@@ -621,7 +619,7 @@ bb.a:
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define hidden void @_RNvNtCs3oUPovFnLWP_4core3ptr25swap_nonoverlapping_bytesCsiHivYpkJ4Hu_2cc(ptr nofree captures(none) %0, ptr nofree captures(none) %1, i64 %2) unnamed_addr #5 {
 bb.a:
-  %i.a = lshr i64 %2, 3                           ; 5 uses
+  %i.a = lshr i64 %2, 3                           ; 6 uses
   %i.b = and i64 %2, 7                            ; 2 uses
   %.not = icmp eq i64 %i.a, 0
   br i1 %.not, label %_RINvNvNtCs3oUPovFnLWP_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECsiHivYpkJ4Hu_2cc.exit, label %.lr.ph.i.preheader
@@ -668,9 +666,8 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.i.preheader12:                             ; preds = %vector.memcheck, %.lr.ph.i.preheader, %middle.block
   %.sroa.0.03.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.preheader ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.03.i.ph, 1
-  %3 = and i64 %2, 8
-  %lcmp.mod.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
+  %3 = trunc i64 %i.a to i1
+  br i1 %3, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader12
   %i.i = or disjoint i64 %.sroa.0.03.i.ph, 1
@@ -742,9 +739,8 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.sroa.0.1.i = phi i64 [ %.sroa.0.0.i, %bb.d ], [ %i.aa, %bb.e ] ; 2 uses
-  %4 = and i64 %2, 1
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %_RNvNvNtCs3oUPovFnLWP_4core3ptr25swap_nonoverlapping_bytes25swap_nonoverlapping_shortCsiHivYpkJ4Hu_2cc.exit, label %bb.g
+  %4 = trunc i64 %2 to i1
+  br i1 %4, label %bb.g, label %_RNvNvNtCs3oUPovFnLWP_4core3ptr25swap_nonoverlapping_bytes25swap_nonoverlapping_shortCsiHivYpkJ4Hu_2cc.exit
 
 bb.g:                                             ; preds = %bb.f
   %i.ab = getelementptr inbounds nuw i8, ptr %i.t, i64 %.sroa.0.1.i ; 2 uses

@@ -204,9 +204,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.a, %middle.block
   %.sroa.0.04.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.04.ph, 1
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %3 = trunc i64 %2 to i1
+  br i1 %3, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.g = or disjoint i64 %.sroa.0.04.ph, 1
@@ -609,8 +608,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 960 ; 2 uses
   store i8 0, ptr %i.c, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 960
-  %i.e = load i8, ptr %i.d, align 8, !noundef !5  ; 6 uses
-  %i.f = zext i8 %i.e to i64                      ; 4 uses
+  %i.e = load i8, ptr %i.d, align 8, !noundef !5  ; 7 uses
+  %i.f = zext i8 %i.e to i64                      ; 3 uses
   %i.g = icmp ult i8 %i.e, 25
   br i1 %i.g, label %.preheader, label %bb.b, !prof !6
 
@@ -638,7 +637,6 @@ bb.c:                                             ; preds = %bb.b
 
 ._crit_edge:                                      ; preds = %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 192 ; 3 uses
-  %xtraiter = and i64 %i.f, 1
   %i.n = icmp eq i8 %i.e, 1
   br i1 %i.n, label %.lr.ph47.epil.preheader, label %._crit_edge.new
 
@@ -662,8 +660,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %niter.ncmp.1, label %._crit_edge48.loopexit.unr-lcssa, label %.lr.ph47
 
 ._crit_edge48.loopexit.unr-lcssa:                 ; preds = %.lr.ph47
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge48, label %.lr.ph47.epil.preheader
+  %2 = trunc i8 %i.e to i1
+  br i1 %2, label %.lr.ph47.epil.preheader, label %._crit_edge48
 
 .lr.ph47.epil.preheader:                          ; preds = %._crit_edge48.loopexit.unr-lcssa, %._crit_edge
   %.sroa.833.045.epil.init = phi i64 [ 0, %._crit_edge ], [ %i.r, %._crit_edge48.loopexit.unr-lcssa ] ; 2 uses

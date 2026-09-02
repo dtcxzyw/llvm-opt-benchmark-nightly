@@ -206,9 +206,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 95 ; 2 uses
   %i.g = load i8, ptr %i.f, align 1, !tbaa !21    ; 2 uses
-  %1 = and i8 %i.g, 1
-  %2 = icmp eq i8 %1, 0
-  %i.h = select i1 %2, i8 0, i8 -31
+  %1 = trunc i8 %i.g to i1
+  %i.h = select i1 %1, i8 -31, i8 0
   store volatile i8 %i.h, ptr %i.c, align 1, !tbaa !21
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 81 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 88
@@ -254,9 +253,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 63 ; 2 uses
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !21  ; 2 uses
-  %3 = and i8 %i.al, 1
-  %4 = icmp eq i8 %3, 0
-  %i.am = select i1 %4, i8 0, i8 -31
+  %2 = trunc i8 %i.al to i1
+  %i.am = select i1 %2, i8 -31, i8 0
   store volatile i8 %i.am, ptr %i.b, align 1, !tbaa !21
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 49 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -302,9 +300,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 47 ; 2 uses
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !21  ; 2 uses
-  %5 = and i8 %i.bq, 1
-  %6 = icmp eq i8 %5, 0
-  %i.br = select i1 %6, i8 0, i8 -31
+  %3 = trunc i8 %i.bq to i1
+  %i.br = select i1 %3, i8 -31, i8 0
   store volatile i8 %i.br, ptr %i.a, align 1, !tbaa !21
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 33 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 40

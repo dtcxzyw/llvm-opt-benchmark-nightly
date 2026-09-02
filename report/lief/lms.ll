@@ -202,16 +202,15 @@ bb.k:                                             ; preds = %create_merkle_inter
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.k ] ; 3 uses
   %.06484 = phi i32 [ %i.x, %.lr.ph.preheader ], [ %i.ac, %bb.k ] ; 2 uses
   %i.ac = lshr i32 %.06484, 1                     ; 2 uses
-  %7 = and i32 %.06484, 1
-  %.not78 = icmp eq i32 %7, 0                     ; 2 uses
+  %7 = trunc i32 %.06484 to i1                    ; 2 uses
   %i.ad = load i32, ptr %i.i, align 4, !tbaa !11
   %i.ae = icmp eq i32 %i.ad, 4
   %i.af = select i1 %i.ae, i64 1132, i64 12
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 %i.af
   %i.ah = shl nuw nsw i64 %indvars.iv, 5
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.ah ; 2 uses
-  %.95 = select i1 %.not78, ptr %i.d, ptr %i.ai
-  %.96 = select i1 %.not78, ptr %i.ai, ptr %i.d
+  %.95 = select i1 %7, ptr %i.ai, ptr %i.d
+  %.96 = select i1 %7, ptr %i.d, ptr %i.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8

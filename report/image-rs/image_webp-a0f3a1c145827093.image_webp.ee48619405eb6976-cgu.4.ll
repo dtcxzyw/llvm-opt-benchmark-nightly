@@ -153,9 +153,8 @@ bb.e:                                             ; preds = %_RINvNtNtNtCsj6eKBz
   br label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTjmE7reverseCsksn9slvsHfS_10image_webp.exit
 
 _RNvMNtCsj6eKBz9Db1c_4core5sliceSTjmE7reverseCsksn9slvsHfS_10image_webp.exit.loopexit.unr-lcssa: ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTjmE12split_at_mutCsksn9slvsHfS_10image_webp.exit11.i.i
-  %3 = and i64 %1, 2
-  %lcmp.mod.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod.not, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTjmE7reverseCsksn9slvsHfS_10image_webp.exit, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTjmE12split_at_mutCsksn9slvsHfS_10image_webp.exit11.i.i.epil.preheader
+  %3 = trunc i64 %i.aa to i1
+  br i1 %3, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTjmE12split_at_mutCsksn9slvsHfS_10image_webp.exit11.i.i.epil.preheader, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTjmE7reverseCsksn9slvsHfS_10image_webp.exit
 
 _RNvMNtCsj6eKBz9Db1c_4core5sliceSTjmE12split_at_mutCsksn9slvsHfS_10image_webp.exit11.i.i.epil.preheader: ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTjmE7reverseCsksn9slvsHfS_10image_webp.exit.loopexit.unr-lcssa, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTjmE12split_at_mutCsksn9slvsHfS_10image_webp.exit11.preheader.i.i
   %.sroa.0.016.i.i.epil.init = phi i64 [ 0, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTjmE12split_at_mutCsksn9slvsHfS_10image_webp.exit11.preheader.i.i ], [ %i.as, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTjmE7reverseCsksn9slvsHfS_10image_webp.exit.loopexit.unr-lcssa ] ; 2 uses
@@ -177,7 +176,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSTjmE7reverseCsksn9slvsHfS_10image_webp.exit: ; 
   ret void
 
 _RNvMNtCsj6eKBz9Db1c_4core5sliceSTjmE12split_at_mutCsksn9slvsHfS_10image_webp.exit11.preheader.i.i: ; preds = %_RINvNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared17find_existing_runTjmENCINvMB6_SB12_20sort_unstable_by_keymNCNvNtCsksn9slvsHfS_10image_webp7encoder18build_huffman_trees1_0E0EB1N_.exit.thread
-  %i.aa = lshr i64 %1, 1                          ; 3 uses
+  %i.aa = lshr i64 %1, 1                          ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !17)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14)
   %i.ab = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %1 ; 3 uses
@@ -580,9 +579,8 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailTjmENCI
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i
   %i.dk = getelementptr i8, ptr %i.dv, i64 16     ; 2 uses
   %i.dl = getelementptr i8, ptr %i.du, i64 16
-  %5 = and i64 %.sroa.15.0.lcssa, 1
-  %6 = icmp eq i64 %5, 0
-  br i1 %6, label %bb.l, label %bb.k
+  %5 = trunc i64 %.sroa.15.0.lcssa to i1
+  br i1 %5, label %bb.k, label %bb.l
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.loopexit.1.i.i
   %.sroa.0.010.i.i.i = phi ptr [ %i.dp, %.lr.ph.i.i.i ], [ %.sroa.0.0.lcssa, %.loopexit.1.i.i ] ; 2 uses
@@ -985,9 +983,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.a, %middle.block
   %.sroa.0.04.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.04.ph, 1
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %3 = trunc i64 %2 to i1
+  br i1 %3, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.g = or disjoint i64 %.sroa.0.04.ph, 1

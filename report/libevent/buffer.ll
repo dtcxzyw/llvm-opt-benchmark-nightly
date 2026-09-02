@@ -104,9 +104,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e, %bb.f, %bb.d
   %i.r = phi i32 [ %i.f, %bb.e ], [ %.pre, %bb.f ], [ %i.f, %bb.d ] ; 3 uses
-  %1 = and i32 %i.r, 1
-  %.not26 = icmp eq i32 %1, 0
-  br i1 %.not26, label %bb.j, label %bb.h
+  %1 = trunc i32 %i.r to i1
+  br i1 %1, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -509,9 +508,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.aa = load i8, ptr %i.r, align 8
-  %1 = and i8 %i.aa, 1
-  %.not29 = icmp eq i8 %1, 0
-  br i1 %.not29, label %bb.l, label %bb.j
+  %1 = trunc i8 %i.aa to i1
+  br i1 %1, label %bb.j, label %bb.l
 
 bb.j:                                             ; preds = %bb.i
   %i.ab = load ptr, ptr %i.a, align 8             ; 2 uses
@@ -914,9 +912,8 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.f, %bb.g, %bb.h, %bb.i
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.ae = load i32, ptr %i.ad, align 4
-  %1 = and i32 %i.ae, 1
-  %.not36 = icmp eq i32 %1, 0
-  br i1 %.not36, label %bb.m, label %bb.k
+  %1 = trunc i32 %i.ae to i1
+  br i1 %1, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %bb.j
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 20
@@ -993,9 +990,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 60
   %i.i = load i32, ptr %i.h, align 4
-  %4 = and i32 %i.i, 1
-  %.not84 = icmp eq i32 %4, 0                     ; 2 uses
-  br i1 %.not84, label %bb.f, label %bb.l
+  %4 = trunc i32 %i.i to i1                       ; 2 uses
+  br i1 %4, label %bb.l, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -1083,10 +1079,9 @@ bb.r:                                             ; preds = %.loopexit.i
   store i32 9, ptr %i.am, align 8
   %.phi.trans.insert106 = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.pre107 = load i8, ptr %.phi.trans.insert106, align 8
-  %5 = and i8 %.pre107, 1
-  %.not92 = icmp eq i8 %5, 0
-  %or.cond = select i1 %.not84, i1 true, i1 %.not92
-  br i1 %or.cond, label %._crit_edge105, label %bb.s
+  %5 = trunc i8 %.pre107 to i1
+  %or.cond = select i1 %4, i1 %5, i1 false
+  br i1 %or.cond, label %bb.s, label %._crit_edge105
 
 bb.s:                                             ; preds = %bb.r
   store i32 11, ptr %i.am, align 8

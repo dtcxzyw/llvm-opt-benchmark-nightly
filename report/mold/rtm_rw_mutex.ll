@@ -204,9 +204,8 @@ _ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i: ; preds = %_ZN3tbb6detail2d014
 
 bb.k:                                             ; preds = %_ZN3tbb6detail2d014atomic_backoff5pauseEv.exit.i
   %i.al = atomicrmw add ptr %0, i64 4 seq_cst, align 8
-  %3 = and i64 %i.al, 1
-  %.not5.not.i = icmp eq i64 %3, 0
-  br i1 %.not5.not.i, label %_ZN3tbb6detail2d113spin_rw_mutex11lock_sharedEv.exit, label %bb.l
+  %3 = trunc i64 %i.al to i1
+  br i1 %3, label %bb.l, label %_ZN3tbb6detail2d113spin_rw_mutex11lock_sharedEv.exit
 
 bb.l:                                             ; preds = %bb.k
   %i.am = atomicrmw sub ptr %0, i64 4 seq_cst, align 8 ; 0 uses
@@ -495,9 +494,8 @@ bb.e:                                             ; preds = %_ZN3tbb6detail2r117
 
 bb.f:                                             ; preds = %bb.e
   %i.u = atomicrmw add ptr %0, i64 4 seq_cst, align 8
-  %2 = and i64 %i.u, 1
-  %.not5.not.i.i = icmp eq i64 %2, 0
-  br i1 %.not5.not.i.i, label %_ZN3tbb6detail2d113spin_rw_mutex15try_lock_sharedEv.exit.i, label %bb.g
+  %2 = trunc i64 %i.u to i1
+  br i1 %2, label %bb.g, label %_ZN3tbb6detail2d113spin_rw_mutex15try_lock_sharedEv.exit.i
 
 bb.g:                                             ; preds = %bb.f
   %i.v = atomicrmw sub ptr %0, i64 4 seq_cst, align 8 ; 0 uses
@@ -509,7 +507,7 @@ _ZN3tbb6detail2d113spin_rw_mutex15try_lock_sharedEv.exit.i: ; preds = %bb.f
   br label %_ZN3tbb6detail2r117rtm_rw_mutex_impl18try_acquire_readerERNS0_2d112rtm_rw_mutexERNS4_11scoped_lockE.exit
 
 _ZN3tbb6detail2r117rtm_rw_mutex_impl18try_acquire_readerERNS0_2d112rtm_rw_mutexERNS4_11scoped_lockE.exit: ; preds = %_ZN3tbb6detail2r117rtm_rw_mutex_impl14acquire_readerERNS0_2d112rtm_rw_mutexERNS4_11scoped_lockEb.exit.i, %bb.e, %bb.g, %_ZN3tbb6detail2d113spin_rw_mutex15try_lock_sharedEv.exit.i
-  %.0.i = phi i1 [ true, %_ZN3tbb6detail2r117rtm_rw_mutex_impl14acquire_readerERNS0_2d112rtm_rw_mutexERNS4_11scoped_lockEb.exit.i ], [ true, %_ZN3tbb6detail2d113spin_rw_mutex15try_lock_sharedEv.exit.i ], [ false, %bb.e ], [ false, %bb.g ]
+  %.0.i = phi i1 [ true, %_ZN3tbb6detail2r117rtm_rw_mutex_impl14acquire_readerERNS0_2d112rtm_rw_mutexERNS4_11scoped_lockEb.exit.i ], [ true, %_ZN3tbb6detail2d113spin_rw_mutex15try_lock_sharedEv.exit.i ], [ false, %bb.g ], [ false, %bb.e ]
   ret i1 %.0.i
 }
 

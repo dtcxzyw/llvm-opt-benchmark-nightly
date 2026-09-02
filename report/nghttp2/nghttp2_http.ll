@@ -204,9 +204,8 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.cg = load i32, ptr %i.cf, align 8, !tbaa !58
-  %6 = and i32 %i.cg, 1
-  %7 = icmp eq i32 %6, 0
-  br i1 %7, label %http_request_on_header.exit, label %bb.x
+  %6 = trunc i32 %i.cg to i1
+  br i1 %6, label %bb.x, label %http_request_on_header.exit
 
 bb.x:                                             ; preds = %bb.w
   %i.ch = or i32 %i.be, 132
@@ -609,9 +608,8 @@ bb.br:                                            ; preds = %check_header_value.
 bb.bs:                                            ; preds = %bb.br
   %i.kn = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.ko = load i32, ptr %i.kn, align 8, !tbaa !58
-  %8 = and i32 %i.ko, 1
-  %.not85.i = icmp eq i32 %8, 0
-  br i1 %.not85.i, label %memieq.exit154.i, label %bb.bt
+  %7 = trunc i32 %i.ko to i1
+  br i1 %7, label %bb.bt, label %memieq.exit154.i
 
 bb.bt:                                            ; preds = %bb.bs
   %i.kp = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 5 uses
@@ -1014,8 +1012,9 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 13
   %i.b = load i8, ptr %i.a, align 1, !tbaa !17
   %i.c = and i8 %i.b, 1
-  %sext = add nsw i8 %i.c, -1
-  %. = sext i8 %sext to i32
+  %2 = xor i8 %i.c, 1
+  %3 = zext nneg i8 %2 to i32
+  %. = sub nsw i32 0, %3
   ret i32 %.
 }
 

@@ -94,14 +94,13 @@ define range(i64 0, 72057594037927936) i64 @ZSTD_crossEntropyCost(ptr nofree nou
 bb.a:
   %i.a = sub i32 8, %1                            ; 3 uses
   %i.b = add i32 %3, 1                            ; 2 uses
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.b, i32 1) ; 2 uses
-  %wide.trip.count = zext i32 %umax to i64        ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.b, i32 1) ; 3 uses
   %i.c = icmp ult i32 %i.b, 2
   br i1 %i.c, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.a
-  %unroll_iter = and i64 %wide.trip.count, 4294967294
+  %4 = and i32 %umax, -2
+  %unroll_iter = zext i32 %4 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.new
@@ -143,8 +142,8 @@ bb.b:                                             ; preds = %bb.b, %.new
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %bb.b, !llvm.loop !1
 
 .unr-lcssa:                                       ; preds = %bb.b
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %bb.c, label %.epil.preheader
+  %5 = trunc i32 %umax to i1
+  br i1 %5, label %.epil.preheader, label %bb.c
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %bb.a
   %indvars.iv.epil.init = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.1, %.unr-lcssa ] ; 2 uses
@@ -229,14 +228,13 @@ bb.i:                                             ; preds = %bb.c
 bb.j:                                             ; preds = %bb.i
   %i.t = sub i32 8, %8                            ; 3 uses
   %i.u = add i32 %2, 1                            ; 2 uses
-  %umax.i = tail call i32 @llvm.umax.i32(i32 %i.u, i32 1) ; 2 uses
-  %wide.trip.count.i = zext i32 %umax.i to i64    ; 2 uses
-  %xtraiter = and i64 %wide.trip.count.i, 1
+  %umax.i = tail call i32 @llvm.umax.i32(i32 %i.u, i32 1) ; 3 uses
   %i.v = icmp ult i32 %i.u, 2
   br i1 %i.v, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.j
-  %unroll_iter = and i64 %wide.trip.count.i, 4294967294
+  %11 = and i32 %umax.i, -2
+  %unroll_iter = zext i32 %11 to i64
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.k, %.new
@@ -278,8 +276,8 @@ bb.k:                                             ; preds = %bb.k, %.new
   br i1 %niter.ncmp.1, label %ZSTD_crossEntropyCost.exit.unr-lcssa, label %bb.k, !llvm.loop !1
 
 ZSTD_crossEntropyCost.exit.unr-lcssa:             ; preds = %bb.k
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %ZSTD_crossEntropyCost.exit, label %.epil.preheader
+  %12 = trunc i32 %umax.i to i1
+  br i1 %12, label %.epil.preheader, label %ZSTD_crossEntropyCost.exit
 
 .epil.preheader:                                  ; preds = %ZSTD_crossEntropyCost.exit.unr-lcssa, %bb.j
   %indvars.iv.i.epil.init = phi i64 [ 0, %bb.j ], [ %indvars.iv.next.i.1, %ZSTD_crossEntropyCost.exit.unr-lcssa ] ; 2 uses

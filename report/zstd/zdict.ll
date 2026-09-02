@@ -205,7 +205,6 @@ bb.y:                                             ; preds = %bb.x
   %i.jx = zext i32 %.0219.i.i.i to i64            ; 4 uses
   %wide.trip.count.i.i.i = zext i32 %.0217.i.i.i to i64 ; 2 uses
   %i.jy = sub nsw i64 %wide.trip.count.i.i.i, %i.jx ; 3 uses
-  %xtraiter171 = and i64 %i.jy, 1
   %i.jz = add nsw i64 %wide.trip.count.i.i.i, -1
   %i.ka = icmp eq i64 %i.jz, %i.jx
   br i1 %i.ka, label %.lr.ph.i.i.i.epil.preheader, label %.lr.ph.preheader.i.i.i.new
@@ -275,8 +274,8 @@ bb.ab:                                            ; preds = %bb.aa, %.lr.ph.i.i.
   br i1 %niter180.ncmp.1, label %._crit_edge.i.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i, !llvm.loop !69
 
 ._crit_edge.i.i.i.loopexit.unr-lcssa:             ; preds = %bb.ab
-  %lcmp.mod173.not = icmp eq i64 %xtraiter171, 0
-  br i1 %lcmp.mod173.not, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i.epil.preheader
+  %7 = trunc i64 %i.jy to i1
+  br i1 %7, label %.lr.ph.i.i.i.epil.preheader, label %._crit_edge.i.i.i
 
 .lr.ph.i.i.i.epil.preheader:                      ; preds = %._crit_edge.i.i.i.loopexit.unr-lcssa, %.lr.ph.preheader.i.i.i
   %indvars.iv.i.i.i.epil.init = phi i64 [ %i.jx, %.lr.ph.preheader.i.i.i ], [ %indvars.iv.next.i.i.i.1, %._crit_edge.i.i.i.loopexit.unr-lcssa ] ; 2 uses
@@ -679,8 +678,8 @@ bb.ah:                                            ; preds = %.preheader312.56.i.
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ai, %bb.ah
-  %.0202.i.i.i = phi i32 [ %.0203.lcssa.i.i.i, %bb.ah ], [ %i.py, %bb.ai ] ; 10 uses
-  %i.pt = zext i32 %.0202.i.i.i to i64            ; 6 uses
+  %.0202.i.i.i = phi i32 [ %.0203.lcssa.i.i.i, %bb.ah ], [ %i.py, %bb.ai ] ; 11 uses
+  %i.pt = zext i32 %.0202.i.i.i to i64            ; 5 uses
   %i.pu = getelementptr i8, ptr %i.lk, i64 %i.pt
   %i.pv = getelementptr i8, ptr %i.pu, i64 -2
   %i.pw = load i8, ptr %i.pv, align 1, !tbaa !21
@@ -694,7 +693,6 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj
   store i32 0, ptr %i.fu, align 4, !tbaa !8
-  %xtraiter181 = and i64 %i.pt, 1
   %i.qa = icmp eq i32 %.0202.i.i.i, 7
   br i1 %i.qa, label %.epil.preheader, label %.new
 
@@ -730,8 +728,8 @@ bb.al:                                            ; preds = %bb.al, %.new
   br i1 %niter186.ncmp.1, label %.unr-lcssa, label %bb.al, !llvm.loop !74
 
 .unr-lcssa:                                       ; preds = %bb.al
-  %lcmp.mod183.not = icmp eq i64 %xtraiter181, 0
-  br i1 %lcmp.mod183.not, label %bb.am, label %.epil.preheader
+  %8 = trunc i32 %.0202.i.i.i to i1
+  br i1 %8, label %.epil.preheader, label %bb.am
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %bb.ak
   %.epil.init = phi i32 [ 0, %bb.ak ], [ %i.qq, %.unr-lcssa ]

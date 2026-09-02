@@ -202,9 +202,8 @@ bb.u:                                             ; preds = %._crit_edge
   br label %bb.f
 
 bb.v:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1
-  %.not30 = icmp eq i64 %6, 0
-  br i1 %.not30, label %bb.w, label %bb.x
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1
+  br i1 %6, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.cs = or i64 %1, 1
@@ -607,10 +606,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %2, ptr %i.b, align 8
   %i.c = ptrtoint ptr %2 to i64                   ; 2 uses
-  %3 = and i64 %i.c, 1
-  %.not = icmp eq i64 %3, 0
+  %3 = trunc i64 %i.c to i1
   %i.d = lshr i64 %i.c, 1
-  %.sroa.0.0 = select i1 %.not, ptr null, ptr %1
+  %.sroa.0.0 = select i1 %3, ptr %1, ptr null
   call void @_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsexYYUdYSQU6_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs5GPH1eSwN50_14target_lexicon(ptr sret([24 x i8]) align 8 %0, ptr %.sroa.0.0, i64 %i.d, ptr nonnull align 8 %i.a) #23
   ret void
 }

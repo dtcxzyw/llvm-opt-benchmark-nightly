@@ -106,7 +106,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %.preheader45, label %.thread
 
 .preheader45:                                     ; preds = %bb.b
-  %i.j = load i16, ptr %0, align 8, !tbaa !11     ; 6 uses
+  %i.j = load i16, ptr %0, align 8, !tbaa !11     ; 7 uses
   %.not = icmp eq i16 %i.j, 0
   br i1 %.not, label %.preheader, label %mp_get_digit.exit.lr.ph.split
 
@@ -115,7 +115,7 @@ mp_get_digit.exit.lr.ph.split:                    ; preds = %.preheader45
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 8 uses
   %i.m = load i16, ptr %2, align 8, !tbaa !11
   %i.n = zext i16 %i.m to i64                     ; 4 uses
-  %wide.trip.count = zext i16 %i.j to i64         ; 6 uses
+  %wide.trip.count = zext i16 %i.j to i64         ; 5 uses
   %min.iters.check = icmp ult i16 %i.j, 6
   br i1 %min.iters.check, label %mp_get_digit.exit.preheader, label %vector.memcheck
 
@@ -172,9 +172,8 @@ middle.block:                                     ; preds = %vector.body
 
 mp_get_digit.exit.preheader:                      ; preds = %vector.memcheck, %mp_get_digit.exit.lr.ph.split, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %mp_get_digit.exit.lr.ph.split ], [ %n.vec, %middle.block ] ; 7 uses
-  %xtraiter = and i64 %wide.trip.count, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %mp_get_digit.exit.prol.loopexit, label %mp_get_digit.exit.prol
+  %3 = trunc i16 %i.j to i1
+  br i1 %3, label %mp_get_digit.exit.prol, label %mp_get_digit.exit.prol.loopexit
 
 mp_get_digit.exit.prol:                           ; preds = %mp_get_digit.exit.preheader
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv.ph
