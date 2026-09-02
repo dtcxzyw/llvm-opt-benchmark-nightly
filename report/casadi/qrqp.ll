@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.loopexit.i, %.lr.ph70.i
   %i.v = phi i64 [ %i.q, %.lr.ph70.i ], [ %i.bi, %.loopexit.i ] ; 5 uses
-  %.05268.i = phi i64 [ 1, %.lr.ph70.i ], [ %.1.i, %.loopexit.i ] ; 10 uses
+  %.05268.i = phi i64 [ 1, %.lr.ph70.i ], [ %.1.i, %.loopexit.i ] ; 11 uses
   %.05366.i = phi i64 [ 0, %.lr.ph70.i ], [ %i.bj, %.loopexit.i ] ; 5 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %.05366.i
   %i.x = load double, ptr %i.w, align 8, !tbaa !135 ; 3 uses
@@ -235,7 +235,7 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ah = fneg double %i.ab
   %i.ai = fdiv double %i.ah, %i.x                 ; 3 uses
-  %i.aj = add i64 %.05268.i, -1                   ; 2 uses
+  %i.aj = add nsw i64 %.05268.i, -1               ; 2 uses
   %i.ak = icmp sgt i64 %.05268.i, 1
   br i1 %i.ak, label %.lr.ph.i, label %._crit_edge.i
 
@@ -249,23 +249,29 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %.lr.ph.i
   %i.ao = add nuw nsw i64 %.05157.i, 1            ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ao, %i.aj
-  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !598
+  br i1 %exitcond.not.i, label %._crit_edge.i.thread, label %.lr.ph.i, !llvm.loop !598
 
-._crit_edge.i:                                    ; preds = %bb.h, %.lr.ph.i, %bb.g
-  %.051.lcssa.i = phi i64 [ 0, %bb.g ], [ %i.aj, %bb.h ], [ %.05157.i, %.lr.ph.i ] ; 5 uses
+._crit_edge.i.thread:                             ; preds = %bb.h
+  %1 = add nuw i64 %.05268.i, 1
+  br label %.lr.ph65.i.preheader
+
+._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.g
+  %.051.lcssa.i = phi i64 [ 0, %bb.g ], [ %.05157.i, %.lr.ph.i ] ; 2 uses
   %i.ap = add i64 %.05268.i, 1                    ; 2 uses
   %.not60.i = icmp sgt i64 %.051.lcssa.i, %.05268.i
   br i1 %.not60.i, label %.loopexit.i, label %.lr.ph65.i.preheader
 
-.lr.ph65.i.preheader:                             ; preds = %._crit_edge.i
+.lr.ph65.i.preheader:                             ; preds = %._crit_edge.i.thread, %._crit_edge.i
+  %2 = phi i64 [ %1, %._crit_edge.i.thread ], [ %i.ap, %._crit_edge.i ]
+  %.051.lcssa.i130 = phi i64 [ %i.aj, %._crit_edge.i.thread ], [ %.051.lcssa.i, %._crit_edge.i ] ; 4 uses
   %i.aq = add i64 %.05268.i, 1
-  %i.ar = sub i64 %i.aq, %.051.lcssa.i            ; 3 uses
+  %i.ar = sub i64 %i.aq, %.051.lcssa.i130         ; 3 uses
   %min.iters.check = icmp ult i64 %i.ar, 4
   br i1 %min.iters.check, label %.lr.ph65.i.preheader161, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph65.i.preheader
   %n.vec = and i64 %i.ar, -4                      ; 3 uses
-  %i.as = add i64 %.051.lcssa.i, %n.vec
+  %i.as = add i64 %.051.lcssa.i130, %n.vec
   %vector.recur.init = insertelement <2 x double> poison, double %i.ai, i64 1
   %vector.recur.init135 = insertelement <2 x i64> poison, i64 %.05366.i, i64 1
   br label %vector.body
@@ -274,7 +280,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vector.recur = phi <2 x double> [ %vector.recur.init, %vector.ph ], [ %wide.load137, %vector.body ]
   %vector.recur136 = phi <2 x i64> [ %vector.recur.init135, %vector.ph ], [ %wide.load139, %vector.body ]
-  %i.at = add i64 %.051.lcssa.i, %index           ; 2 uses
+  %i.at = add i64 %.051.lcssa.i130, %index        ; 2 uses
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.at ; 3 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 16 ; 2 uses
   %wide.load = load <2 x double>, ptr %i.au, align 8, !tbaa !135 ; 2 uses
@@ -303,7 +309,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph65.i.preheader161:                          ; preds = %.lr.ph65.i.preheader, %middle.block
   %.063.i.ph = phi double [ %i.ai, %.lr.ph65.i.preheader ], [ %vector.recur.extract, %middle.block ]
-  %.04962.i.ph = phi i64 [ %.051.lcssa.i, %.lr.ph65.i.preheader ], [ %i.as, %middle.block ]
+  %.04962.i.ph = phi i64 [ %.051.lcssa.i130, %.lr.ph65.i.preheader ], [ %i.as, %middle.block ]
   %.05061.i.ph = phi i64 [ %.05366.i, %.lr.ph65.i.preheader ], [ %vector.recur.extract140, %middle.block ]
   br label %.lr.ph65.i
 
@@ -327,7 +333,7 @@ middle.block:                                     ; preds = %vector.body
 
 .loopexit.i:                                      ; preds = %.loopexit.loopexit.i, %._crit_edge.i, %bb.f, %bb.e, %bb.c, %bb.b
   %i.bi = phi i64 [ %i.v, %bb.b ], [ %i.v, %bb.c ], [ %i.v, %bb.e ], [ %i.v, %bb.f ], [ %i.v, %._crit_edge.i ], [ %.pre.i, %.loopexit.loopexit.i ] ; 2 uses
-  %.1.i = phi i64 [ %.05268.i, %bb.b ], [ %.05268.i, %bb.c ], [ %.05268.i, %bb.e ], [ %.05268.i, %bb.f ], [ %i.ap, %._crit_edge.i ], [ %i.ap, %.loopexit.loopexit.i ] ; 3 uses
+  %.1.i = phi i64 [ %.05268.i, %bb.b ], [ %.05268.i, %bb.c ], [ %.05268.i, %bb.e ], [ %.05268.i, %bb.f ], [ %i.ap, %._crit_edge.i ], [ %2, %.loopexit.loopexit.i ] ; 3 uses
   %i.bj = add nuw nsw i64 %.05366.i, 1            ; 2 uses
   %i.bk = icmp slt i64 %i.bj, %i.bi
   br i1 %i.bk, label %bb.b, label %_ZN6casadi28casadi_qrqp_dual_breakpointsIdEExPNS_16casadi_qrqp_dataIT_EEPS2_PxS2_.exit, !llvm.loop !601

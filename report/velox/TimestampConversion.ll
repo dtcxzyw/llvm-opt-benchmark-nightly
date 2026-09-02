@@ -204,18 +204,21 @@ _ZN8facebook5velox6StatusD2Ev.exit20:             ; preds = %bb.e, %_ZNKSt7__cxx
   br label %bb.i
 
 .preheader:                                       ; preds = %.lr.ph.preheader, %.preheader47
-  %.039.lcssa = phi i32 [ %1, %.preheader47 ], [ %i.t, %.lr.ph.preheader ] ; 4 uses
+  %.039.lcssa = phi i32 [ %1, %.preheader47 ], [ %i.t, %.lr.ph.preheader ] ; 5 uses
   %.0.lcssa = phi i64 [ 0, %.preheader47 ], [ %i.w, %.lr.ph.preheader ] ; 2 uses
   %i.ar = icmp samesign ugt i32 %.039.lcssa, 2369
   br i1 %i.ar, label %.lr.ph53.preheader, label %._crit_edge
 
 .lr.ph53.preheader:                               ; preds = %.preheader
   %i.as = add nsw i32 %.039.lcssa, -400
-  %i.at = add nsw i32 %.039.lcssa, -2370          ; 3 uses
-  %i.au = urem i32 %i.at, 400
-  %.neg65 = sub nsw i32 %i.au, %i.at
-  %i.av = add nsw i32 %.neg65, %i.as
-  %i.aw = udiv i32 %i.at, 400
+  %i.at = add nsw i32 %.039.lcssa, 399
+  %smin = tail call i32 @llvm.smin.i32(i32 %.039.lcssa, i32 2769)
+  %8 = sub nsw i32 %i.at, %smin
+  %.fr = freeze i32 %8                            ; 3 uses
+  %i.au = urem i32 %.fr, 400
+  %.neg65 = sub i32 %i.au, %.fr
+  %i.av = add i32 %.neg65, %i.as
+  %i.aw = udiv i32 %.fr, 400
   %i.ax = zext nneg i32 %i.aw to i64
   %i.ay = mul nuw nsw i64 %i.ax, 146097
   %i.az = add nsw i64 %.0.lcssa, %i.ay
@@ -617,6 +620,9 @@ _ZN5folly15expected_detail15ExpectedStorageIlN8facebook5velox6StatusELNS0_11Stor
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #9
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
