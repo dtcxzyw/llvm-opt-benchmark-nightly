@@ -205,7 +205,13 @@ bb.t:                                             ; preds = %bb.s
   %.not.i.i37.5 = icmp eq i32 %i.am, 0
   br i1 %.not.i.i37.5, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %.thread141
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %.critedge2, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t
+.thread141:                                       ; preds = %bb.t
+  switch i16 %.sroa.098.3, label %.thread147 [
+    i16 8, label %.critedge4
+    i16 47, label %.critedge4
+  ]
+
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %.critedge2
   %.0613.i.i.lcssa.wide = phi i64 [ 0, %.critedge2 ], [ 1, %bb.p ], [ 2, %bb.q ], [ 3, %bb.r ], [ 4, %bb.s ], [ 5, %bb.t ]
   %i.an = getelementptr inbounds nuw [2 x i8], ptr @_ZZL10CC_HexagonjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %.0613.i.i.lcssa.wide
   %i.ao = load i16, ptr %i.an, align 2, !tbaa !29 ; 2 uses
@@ -255,12 +261,6 @@ bb.v:                                             ; preds = %_ZN4llvm7CCState11A
 bb.w:                                             ; preds = %bb.v, %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #25
   br label %bb.ai
-
-.thread141:                                       ; preds = %bb.t
-  switch i16 %.sroa.098.3, label %.thread147 [
-    i16 8, label %.critedge4
-    i16 47, label %.critedge4
-  ]
 
 .critedge4:                                       ; preds = %.thread141, %.thread141, %bb.g, %bb.g, %bb.g, %bb.g
   %i.bm = getelementptr inbounds nuw i8, ptr %7, i64 64 ; 2 uses
@@ -336,7 +336,7 @@ bb.ae:                                            ; preds = %bb.ad
   %.not.i.i48.2 = icmp eq i32 %i.ck, 0
   br i1 %.not.i.i48.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit51, label %.thread147
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit51: ; preds = %.critedge6, %bb.ad, %bb.ae
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit51: ; preds = %bb.ae, %bb.ad, %.critedge6
   %.0613.i.i47.lcssa.wide = phi i64 [ 0, %.critedge6 ], [ 1, %bb.ad ], [ 2, %bb.ae ]
   %i.cl = getelementptr inbounds nuw [2 x i8], ptr @_ZZL10CC_HexagonjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList2, i64 %.0613.i.i47.lcssa.wide
   %i.cm = load i16, ptr %i.cl, align 2, !tbaa !29 ; 2 uses
@@ -585,7 +585,13 @@ bb.z:                                             ; preds = %bb.y
   %.not.i.i37.5 = icmp eq i32 %i.as, 0
   br i1 %.not.i.i37.5, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %.thread186
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %.critedge2, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z
+.thread186:                                       ; preds = %bb.z
+  switch i16 %.sroa.0110.3, label %_ZL10CC_SkipOddRjRN4llvm3MVTES2_RNS0_11CCValAssign7LocInfoERNS0_3ISD10ArgFlagsTyERNS0_7CCStateE.exit46.thread [
+    i16 8, label %.critedge4
+    i16 47, label %.critedge4.fold.split256
+  ]
+
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %.critedge2
   %.0613.i.i.lcssa.wide = phi i64 [ 0, %.critedge2 ], [ 1, %bb.v ], [ 2, %bb.w ], [ 3, %bb.x ], [ 4, %bb.y ], [ 5, %bb.z ]
   %i.at = getelementptr inbounds nuw [2 x i8], ptr @_ZZL10CC_HexagonjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %.0613.i.i.lcssa.wide
   %i.au = load i16, ptr %i.at, align 2, !tbaa !29 ; 2 uses
@@ -635,12 +641,6 @@ bb.ab:                                            ; preds = %_ZN4llvm7CCState11A
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #25
   br label %bb.an
-
-.thread186:                                       ; preds = %bb.z
-  switch i16 %.sroa.0110.3, label %_ZL10CC_SkipOddRjRN4llvm3MVTES2_RNS0_11CCValAssign7LocInfoERNS0_3ISD10ArgFlagsTyERNS0_7CCStateE.exit46.thread [
-    i16 8, label %.critedge4
-    i16 47, label %.critedge4.fold.split256
-  ]
 
 .critedge4.fold.split:                            ; preds = %bb.g, %bb.g
   br label %.critedge4
@@ -732,7 +732,7 @@ bb.aj:                                            ; preds = %bb.ai
   %.not.i.i48.2 = icmp eq i32 %i.cs, 0
   br i1 %.not.i.i48.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit51, label %.thread216
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit51: ; preds = %.critedge6, %bb.ai, %bb.aj
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit51: ; preds = %bb.aj, %bb.ai, %.critedge6
   %.0613.i.i47.lcssa.wide = phi i64 [ 0, %.critedge6 ], [ 1, %bb.ai ], [ 2, %bb.aj ]
   %i.ct = getelementptr inbounds nuw [2 x i8], ptr @_ZZL10CC_HexagonjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList2, i64 %.0613.i.i47.lcssa.wide
   %i.cu = load i16, ptr %i.ct, align 2, !tbaa !29 ; 2 uses

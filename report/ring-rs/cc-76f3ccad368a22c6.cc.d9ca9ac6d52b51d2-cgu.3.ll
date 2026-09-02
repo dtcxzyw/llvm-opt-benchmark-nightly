@@ -205,8 +205,8 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
   store i64 %i.au, ptr %i.l, align 8, !alias.scope !30
   br label %.sink.split.i
 
-.sink.split.i:                                    ; preds = %.loopexit49.i, %.loopexit.i.a, %bb.u, %bb.r, %bb.n, %bb.m, %bb.f, %bb.e, %bb.d
-  %.sink.i = phi i64 [ 1, %.loopexit49.i ], [ 0, %bb.u ], [ 1, %.loopexit.i.a ], [ 2, %bb.m ], [ 0, %bb.n ], [ 1, %bb.r ], [ 2, %bb.e ], [ 2, %bb.f ], [ 2, %bb.d ] ; 2 uses
+.sink.split.i:                                    ; preds = %.loopexit49.i, %.preheader.preheader.i, %bb.u, %bb.r, %bb.n, %bb.m, %bb.f, %bb.e, %bb.d
+  %.sink.i = phi i64 [ 1, %.loopexit49.i ], [ 0, %bb.u ], [ 1, %.preheader.preheader.i ], [ 2, %bb.m ], [ 0, %bb.n ], [ 1, %bb.r ], [ 2, %bb.e ], [ 2, %bb.f ], [ 2, %bb.d ] ; 2 uses
   store i64 %.sink.i, ptr %i.b, align 8, !alias.scope !30
   br label %_RNvXsv_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsiHivYpkJ4Hu_2cc.exit
 
@@ -220,7 +220,7 @@ bb.s:                                             ; preds = %bb.e
 
 bb.t:                                             ; preds = %bb.s
   %.not41.i = icmp ult i64 %i.az, %i.t
-  br i1 %.not41.i, label %.preheader.preheader.i, label %.loopexit.i.a
+  br i1 %.not41.i, label %.loopexit.i.a, label %.preheader.preheader.i
 
 bb.u:                                             ; preds = %bb.s
   store i64 %i.az, ptr %i.g, align 8, !noalias !30
@@ -228,24 +228,24 @@ bb.u:                                             ; preds = %bb.s
   store i64 %i.az, ptr %i.l, align 8, !alias.scope !30
   br label %.sink.split.i
 
-.loopexit.i.a:                                    ; preds = %bb.v, %.preheader.preheader.i, %bb.t
-  %.sroa.02.0.i = phi i64 [ %i.t, %bb.t ], [ %.sroa.08.0.i, %.preheader.preheader.i ], [ %i.t, %bb.v ] ; 2 uses
+.loopexit.i.a:                                    ; preds = %bb.t, %bb.v
+  %.sroa.08.0.i = phi i64 [ %i.ba, %bb.v ], [ %i.az, %bb.t ] ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.s, i64 %.sroa.08.0.i
+  %3 = load i8, ptr %2, align 1, !noalias !30
+  %4 = icmp sgt i8 %3, -65
+  br i1 %4, label %.preheader.preheader.i, label %bb.v
+
+.preheader.preheader.i:                           ; preds = %bb.v, %.loopexit.i.a, %bb.t
+  %.sroa.02.0.i = phi i64 [ %i.t, %bb.t ], [ %.sroa.08.0.i, %.loopexit.i.a ], [ %i.t, %bb.v ] ; 2 uses
   store i64 %.sroa.02.0.i, ptr %i.g, align 8, !noalias !30
   store i64 %i.u, ptr %i.k, align 8, !alias.scope !30
   store i64 %.sroa.02.0.i, ptr %i.l, align 8, !alias.scope !30
   br label %.sink.split.i
 
-.preheader.preheader.i:                           ; preds = %bb.t, %bb.v
-  %.sroa.08.0.i = phi i64 [ %i.ba, %bb.v ], [ %i.az, %bb.t ] ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.s, i64 %.sroa.08.0.i
-  %3 = load i8, ptr %2, align 1, !noalias !30
-  %4 = icmp sgt i8 %3, -65
-  br i1 %4, label %.loopexit.i.a, label %bb.v
-
-bb.v:                                             ; preds = %.preheader.preheader.i
+bb.v:                                             ; preds = %.loopexit.i.a
   %i.ba = add i64 %.sroa.08.0.i, 1                ; 2 uses
   %exitcond54.not.i = icmp eq i64 %i.ba, %i.t
-  br i1 %exitcond54.not.i, label %.loopexit.i.a, label %.preheader.preheader.i
+  br i1 %exitcond54.not.i, label %.preheader.preheader.i, label %.loopexit.i.a
 
 bb.w:                                             ; preds = %bb.f
   %i.bb = load i64, ptr %i.h, align 8, !noalias !30
@@ -264,10 +264,17 @@ bb.x:                                             ; preds = %bb.w
   %i.bk = load ptr, ptr %i.e, align 8, !noalias !30
   %i.bl = load i64, ptr %i.f, align 8, !noalias !30 ; 4 uses
   %.not.i = icmp ult i64 %i.bj, %i.bl
-  br i1 %.not.i, label %.preheader48.preheader.i, label %.loopexit49.i
+  br i1 %.not.i, label %.preheader48.split.i, label %.loopexit49.i
 
-.loopexit49.i:                                    ; preds = %bb.y, %.preheader48.preheader.i, %bb.x
-  %.sroa.018.0.i = phi i64 [ %i.bl, %bb.x ], [ %.sroa.013.0.i, %.preheader48.preheader.i ], [ %i.bl, %bb.y ] ; 2 uses
+.preheader48.split.i:                             ; preds = %bb.x, %bb.y
+  %.sroa.013.0.i = phi i64 [ %i.bo, %bb.y ], [ %i.bj, %bb.x ] ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.bk, i64 %.sroa.013.0.i
+  %6 = load i8, ptr %5, align 1
+  %7 = icmp sgt i8 %6, -65
+  br i1 %7, label %.loopexit49.i, label %bb.y
+
+.loopexit49.i:                                    ; preds = %bb.y, %.preheader48.split.i, %bb.x
+  %.sroa.018.0.i = phi i64 [ %i.bl, %bb.x ], [ %.sroa.013.0.i, %.preheader48.split.i ], [ %i.bl, %bb.y ] ; 2 uses
   %i.bm = load i64, ptr %i.d, align 8, !noalias !30
   %i.bn = call i64 @_RNvYjNtNtCs3oUPovFnLWP_4core3cmp3Ord3maxCs3U9i7nQCKwt_15find_msvc_tools(i64 %.sroa.018.0.i, i64 %i.bm) #23
   store i64 %i.bn, ptr %i.d, align 8, !noalias !30
@@ -275,17 +282,10 @@ bb.x:                                             ; preds = %bb.w
   store i64 %.sroa.018.0.i, ptr %i.l, align 8, !alias.scope !30
   br label %.sink.split.i
 
-.preheader48.preheader.i:                         ; preds = %bb.x, %bb.y
-  %.sroa.013.0.i = phi i64 [ %i.bo, %bb.y ], [ %i.bj, %bb.x ] ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.bk, i64 %.sroa.013.0.i
-  %6 = load i8, ptr %5, align 1
-  %7 = icmp sgt i8 %6, -65
-  br i1 %7, label %.loopexit49.i, label %bb.y
-
-bb.y:                                             ; preds = %.preheader48.preheader.i
+bb.y:                                             ; preds = %.preheader48.split.i
   %i.bo = add i64 %.sroa.013.0.i, 1               ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.bo, %i.bl
-  br i1 %exitcond.not.i, label %.loopexit49.i, label %.preheader48.preheader.i
+  br i1 %exitcond.not.i, label %.loopexit49.i, label %.preheader48.split.i
 
 _RNvXsv_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsiHivYpkJ4Hu_2cc.exit: ; preds = %.sink.split.i, %bb.w
   %i.bp = phi i64 [ %.sink.i, %.sink.split.i ], [ %i.bg, %bb.w ]

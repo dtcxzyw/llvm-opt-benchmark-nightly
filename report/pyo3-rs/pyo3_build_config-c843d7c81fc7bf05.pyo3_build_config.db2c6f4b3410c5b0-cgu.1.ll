@@ -204,27 +204,27 @@ bb.v:                                             ; preds = %bb.u
   %i.bj = load ptr, ptr %i.e, align 8, !noalias !10
   %i.bk = load i64, ptr %i.f, align 8, !noalias !10 ; 4 uses
   %.not.i = icmp ult i64 %i.bi, %i.bk
-  br i1 %.not.i, label %.preheader44.preheader.i, label %.loopexit45.i.a
+  br i1 %.not.i, label %.loopexit45.i.a, label %.preheader44.preheader.i
 
-.loopexit45.i.a:                                  ; preds = %bb.w, %.preheader44.preheader.i, %bb.v
-  %.sroa.018.0.i = phi i64 [ %i.bk, %bb.v ], [ %.sroa.013.0.i, %.preheader44.preheader.i ], [ %i.bk, %bb.w ] ; 2 uses
-  %2 = load i64, ptr %i.d, align 8, !noalias !10
-  %3 = call i64 @_RNvYjNtNtCskKLDkoKarTP_4core3cmp3Ord3maxCsiOEEQt9hBE2_17pyo3_build_config(i64 %.sroa.018.0.i, i64 %2) #22, !noalias !10
-  store i64 %3, ptr %i.d, align 8, !noalias !10
+.loopexit45.i.a:                                  ; preds = %bb.v, %bb.w
+  %.sroa.013.0.i = phi i64 [ %i.bl, %bb.w ], [ %i.bi, %bb.v ] ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.bj, i64 %.sroa.013.0.i
+  %3 = load i8, ptr %2, align 1, !noalias !10
+  %4 = icmp sgt i8 %3, -65
+  br i1 %4, label %.preheader44.preheader.i, label %bb.w
+
+.preheader44.preheader.i:                         ; preds = %bb.w, %.loopexit45.i.a, %bb.v
+  %.sroa.018.0.i = phi i64 [ %i.bk, %bb.v ], [ %.sroa.013.0.i, %.loopexit45.i.a ], [ %i.bk, %bb.w ] ; 2 uses
+  %5 = load i64, ptr %i.d, align 8, !noalias !10
+  %6 = call i64 @_RNvYjNtNtCskKLDkoKarTP_4core3cmp3Ord3maxCsiOEEQt9hBE2_17pyo3_build_config(i64 %.sroa.018.0.i, i64 %5) #22, !noalias !10
+  store i64 %6, ptr %i.d, align 8, !noalias !10
   store i64 %.sroa.018.0.i, ptr %i.k, align 8, !alias.scope !10
   br label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsiOEEQt9hBE2_17pyo3_build_config.exit
 
-.preheader44.preheader.i:                         ; preds = %bb.v, %bb.w
-  %.sroa.013.0.i = phi i64 [ %i.bl, %bb.w ], [ %i.bi, %bb.v ] ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.bj, i64 %.sroa.013.0.i
-  %5 = load i8, ptr %4, align 1, !noalias !10
-  %6 = icmp sgt i8 %5, -65
-  br i1 %6, label %.loopexit45.i.a, label %bb.w
-
-bb.w:                                             ; preds = %.preheader44.preheader.i
+bb.w:                                             ; preds = %.loopexit45.i.a
   %i.bl = add i64 %.sroa.013.0.i, 1               ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.bl, %i.bk
-  br i1 %exitcond.not.i, label %.loopexit45.i.a, label %.preheader44.preheader.i
+  br i1 %exitcond.not.i, label %.preheader44.preheader.i, label %.loopexit45.i.a
 
 _RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsiOEEQt9hBE2_17pyo3_build_config.exit.thread: ; preds = %bb.f, %bb.e, %bb.d, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -246,7 +246,7 @@ _RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %thread-pre-split
 
-_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsiOEEQt9hBE2_17pyo3_build_config.exit: ; preds = %bb.u, %.loopexit45.i.a
+_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsiOEEQt9hBE2_17pyo3_build_config.exit: ; preds = %bb.u, %.preheader44.preheader.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   switch i64 %i.bg, label %.loopexit [
     i64 0, label %.loopexit26.loopexit

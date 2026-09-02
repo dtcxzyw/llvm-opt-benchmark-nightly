@@ -205,8 +205,8 @@ bb.bw:                                            ; preds = %bb.bv, %bb.bu
   br label %_ZL18CC_Mips16RetHelperjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateE.exit
 
 .critedge2.i:                                     ; preds = %bb.bt, %bb.bh, %bb.aj
-  %.sroa.025.04485.i = phi i16 [ 7, %bb.aj ], [ 14, %bb.bt ], [ 14, %bb.bh ]
-  %.0624882.i = phi i32 [ %.06245.i, %bb.aj ], [ %.051, %bb.bt ], [ %.051, %bb.bh ]
+  %.sroa.025.04485.i = phi i16 [ 14, %bb.bt ], [ 7, %bb.aj ], [ 14, %bb.bh ]
+  %.0624882.i = phi i32 [ %.051, %bb.bt ], [ %.06245.i, %bb.aj ], [ %.051, %bb.bh ]
   %i.gw = getelementptr inbounds nuw i8, ptr %7, i64 40
   %i.gx = load i8, ptr %i.gw, align 8, !tbaa !1412, !range !23, !noundef !24
   %i.gy = trunc nuw i8 %i.gx to i1
