@@ -205,7 +205,7 @@ tg3__error_push.exit70.loopexit.sink.split.i:     ; preds = %bb.ab, %bb.aa
   br label %tg3__error_push.exit70.loopexit.i
 
 tg3__error_push.exit70.loopexit.i:                ; preds = %tg3__error_push.exit70.loopexit.sink.split.i, %bb.aa
-  %11 = tail call i64 @llvm.usub.sat.i64(i64 %3, i64 %i.be)
+  %11 = sub nuw nsw i64 %3, %i.be
   %i.bz = sub nsw i64 0, %i.be
   %i.ca = and i64 %i.bz, 3
   %umin.i = tail call i64 @llvm.umin.i64(i64 %11, i64 %i.ca)

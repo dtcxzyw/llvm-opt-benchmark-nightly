@@ -205,7 +205,7 @@ bb.aq:                                            ; preds = %bb.ap
   %.neg = sext i1 %i.ic to i64
   %i.ie = add nsw i64 %.sroa.speculated, %.neg
   store i64 %i.ie, ptr %.reload.addr858, align 8, !tbaa !95
-  %15 = call i64 @llvm.usub.sat.i64(i64 %i.ft, i64 %.sroa.speculated)
+  %15 = sub nuw nsw i64 %i.ft, %.sroa.speculated
   store i64 %15, ptr %.reload.addr857, align 8, !tbaa !95
   %.sroa.020.0.copyload = load i64, ptr %.reload.addr860, align 4, !tbaa !75
   %i.if = getelementptr inbounds nuw i8, ptr %i.i, i64 297

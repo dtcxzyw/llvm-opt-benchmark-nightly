@@ -205,10 +205,10 @@ _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5rang
 
 bb.c:                                             ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_3ops5range5RangejENCINvNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer17simplify_ordering8ir_graph24build_ir_traversal_graphNtB1v_7EdgeKeyNtB1v_4EdgeEs_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !64096
-  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.12.0.copyload33, i64 %i.k), !dbg !64097 ; 2 uses
-  %i.q = add nuw i64 %spec.select.i.i, 2, !dbg !64098 ; 2 uses
+  %spec.select.i.i64 = sub nuw i64 %.sroa.12.0.copyload33, %i.k, !dbg !64097 ; 2 uses
+  %i.q = add nuw i64 %spec.select.i.i64, 2, !dbg !64098 ; 2 uses
   %i.r = shl i64 %i.q, 3, !dbg !64099             ; 4 uses
-  %i.s = icmp ugt i64 %spec.select.i.i, 2305843009213693949, !dbg !64099
+  %i.s = icmp ugt i64 %spec.select.i.i64, 2305843009213693949, !dbg !64099
   %.not.i = icmp ugt i64 %i.r, 9223372036854775804
   %or.cond.i = select i1 %i.s, i1 true, i1 %.not.i, !dbg !64100, !prof !3031
   br i1 %or.cond.i, label %bb.e, label %bb.d, !dbg !64100, !prof !3031

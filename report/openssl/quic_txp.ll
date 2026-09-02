@@ -204,8 +204,8 @@ bb.iz:                                            ; preds = %bb.iy
   br i1 %.not.i161, label %ossl_quic_tx_packetiser_consume_unvalidated_credit.exit, label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.iz
-  %.sink.i = call i64 @llvm.usub.sat.i64(i64 %i.amu, i64 %i.ams)
-  store i64 %.sink.i, ptr %i.amb, align 8, !tbaa !27
+  %.sink.i260 = sub nuw i64 %i.amu, %i.ams
+  store i64 %.sink.i260, ptr %i.amb, align 8, !tbaa !27
   br label %ossl_quic_tx_packetiser_consume_unvalidated_credit.exit
 
 ossl_quic_tx_packetiser_consume_unvalidated_credit.exit: ; preds = %bb.iz, %.sink.split.i

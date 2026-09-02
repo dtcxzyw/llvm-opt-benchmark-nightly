@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.i = add i32 %2, -2, !dbg !86418              ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !86419
-  %narrow.i.i = tail call i32 @llvm.usub.sat.i32(i32 %i.i, i32 %1), !dbg !86420
-  %.sink1.i.i = zext i32 %narrow.i.i to i64, !dbg !86420
+  %narrow.i.i41 = sub nuw i32 %i.i, %1, !dbg !86420
+  %.sink1.i.i = zext i32 %narrow.i.i41 to i64, !dbg !86420
   %i.j = add nuw nsw i64 %.sink1.i.i, 2, !dbg !86421 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !86422
   call void @_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %i.j, i1 noundef zeroext false, i64 noundef 4, i64 noundef 4), !dbg !86422
@@ -542,8 +542,8 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.i = add nuw i32 %1, 2, !dbg !86707           ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !86708
-  %narrow.i = tail call i32 @llvm.usub.sat.i32(i32 %2, i32 %i.i), !dbg !86709
-  %.sink1.i = zext i32 %narrow.i to i64, !dbg !86709
+  %narrow.i36 = sub nuw i32 %2, %i.i, !dbg !86709
+  %.sink1.i = zext i32 %narrow.i36 to i64, !dbg !86709
   %i.j = add nuw nsw i64 %.sink1.i, 2, !dbg !86710 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !86711
   call void @_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %i.j, i1 noundef zeroext false, i64 noundef 4, i64 noundef 4), !dbg !86711

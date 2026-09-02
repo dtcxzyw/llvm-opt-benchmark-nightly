@@ -205,8 +205,8 @@ bb.h:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !dbg !54165
   store ptr %i.n, ptr %i.e, align 8, !dbg !54165
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !54166
-  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.12.0.copyload36, i64 %i.m), !dbg !54167
-  %i.v = add nuw i64 %spec.select.i.i, 2, !dbg !54168 ; 2 uses
+  %spec.select.i.i70 = sub nuw i64 %.sroa.12.0.copyload36, %i.m, !dbg !54167
+  %i.v = add nuw i64 %spec.select.i.i70, 2, !dbg !54168 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !54169
   invoke void @_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2g09Ig8GZd6_13polars_stream(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %i.v, i1 noundef zeroext false, i64 noundef 8, i64 noundef 8)
           to label %bb.i unwind label %.thread53, !dbg !54169

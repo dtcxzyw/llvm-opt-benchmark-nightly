@@ -202,7 +202,7 @@ bb.dq:                                            ; preds = %bb.dz, %.lr.ph.i
   br i1 %exitcond.not.i, label %.invoke, label %bb.dr
 
 bb.dr:                                            ; preds = %bb.dq
-  %i.od = getelementptr inbounds nuw [2 x i8], ptr %i.ne, i64 %.sroa.01.067.i ; 5 uses
+  %i.od = getelementptr [2 x i8], ptr %i.ne, i64 %.sroa.01.067.i ; 5 uses
   %i.oe = getelementptr inbounds nuw i8, ptr %i.od, i64 1
   %i.of = load i8, ptr %i.oe, align 1, !noalias !476, !noundef !5
   %i.og = zext i8 %i.of to i64                    ; 3 uses
