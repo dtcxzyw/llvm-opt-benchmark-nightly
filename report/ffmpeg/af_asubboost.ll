@@ -92,20 +92,18 @@ bb.b:                                             ; preds = %bb.a
   %i.w = insertelement <2 x double> poison, double %i.v, i64 0
   %i.x = fmul nsz double %i.k, %i.q               ; 2 uses
   %i.y = fsub nsz double 1.000000e+00, %cos.i
-  %6 = insertelement <2 x double> poison, double %i.y, i64 0
-  %7 = insertelement <2 x double> poison, double %i.x, i64 1
-  %8 = fadd nsz <2 x double> %7, <double poison, double 1.000000e+00> ; 3 uses
-  %9 = extractelement <2 x double> %8, i64 1
-  store double %9, ptr %i.r, align 8, !tbaa !38
-  %i.z = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
+  %6 = fadd nsz double %i.x, 1.000000e+00         ; 2 uses
+  store double %6, ptr %i.r, align 8, !tbaa !38
+  %7 = insertelement <2 x double> poison, double %i.y, i64 0
+  %i.z = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aa = fmul nsz <2 x double> %i.z, <double 5.000000e-01, double 1.000000e+00>
   %i.ab = fsub nsz double 1.000000e+00, %i.x
   %i.ac = insertelement <2 x double> %i.w, double %i.ab, i64 1
-  %10 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %11 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.ad = fdiv nsz <2 x double> %i.ac, %11
+  %8 = insertelement <2 x double> poison, double %6, i64 0
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.ad = fdiv nsz <2 x double> %i.ac, %9
   store <2 x double> %i.ad, ptr %i.s, align 8, !tbaa !39
-  %i.ae = fdiv nsz <2 x double> %i.aa, %10        ; 2 uses
+  %i.ae = fdiv nsz <2 x double> %i.aa, %9         ; 2 uses
   store <2 x double> %i.ae, ptr %i.t, align 8, !tbaa !39
   %i.af = extractelement <2 x double> %i.ae, i64 0
   store double %i.af, ptr %i.u, align 8, !tbaa !40
@@ -265,20 +263,18 @@ bb.c:                                             ; preds = %bb.b
   %i.al = insertelement <2 x double> poison, double %i.ak, i64 0
   %i.am = fmul nsz double %i.z, %i.af             ; 2 uses
   %i.an = fsub nsz double 1.000000e+00, %cos.i
-  %1 = insertelement <2 x double> poison, double %i.an, i64 0
-  %2 = insertelement <2 x double> poison, double %i.am, i64 1
-  %3 = fadd nsz <2 x double> %2, <double poison, double 1.000000e+00> ; 3 uses
-  %4 = extractelement <2 x double> %3, i64 1
-  store double %4, ptr %i.ag, align 8, !tbaa !38
-  %i.ao = shufflevector <2 x double> %1, <2 x double> poison, <2 x i32> zeroinitializer
+  %1 = fadd nsz double %i.am, 1.000000e+00        ; 2 uses
+  store double %1, ptr %i.ag, align 8, !tbaa !38
+  %2 = insertelement <2 x double> poison, double %i.an, i64 0
+  %i.ao = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ap = fmul nsz <2 x double> %i.ao, <double 5.000000e-01, double 1.000000e+00>
   %i.aq = fsub nsz double 1.000000e+00, %i.am
   %i.ar = insertelement <2 x double> %i.al, double %i.aq, i64 1
-  %5 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %6 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.as = fdiv nsz <2 x double> %i.ar, %6
+  %3 = insertelement <2 x double> poison, double %1, i64 0
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.as = fdiv nsz <2 x double> %i.ar, %4
   store <2 x double> %i.as, ptr %i.ah, align 8, !tbaa !39
-  %i.at = fdiv nsz <2 x double> %i.ap, %5         ; 2 uses
+  %i.at = fdiv nsz <2 x double> %i.ap, %4         ; 2 uses
   store <2 x double> %i.at, ptr %i.ai, align 8, !tbaa !39
   %i.au = extractelement <2 x double> %i.at, i64 0
   store double %i.au, ptr %i.aj, align 8, !tbaa !40

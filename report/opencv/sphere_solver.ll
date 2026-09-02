@@ -204,45 +204,49 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   br i1 %niter.ncmp.1, label %.lr.ph196.unr-lcssa, label %bb.b, !llvm.loop !79
 
 ._crit_edge197.loopexit:                          ; preds = %bb.c
-  %7 = fmul <3 x double> %19, splat (double 5.000000e-01)
-  %i.bx = shufflevector <2 x double> %16, <2 x double> %i.dm, <2 x i32> <i32 1, i32 2>
+  %7 = fmul <2 x double> %25, splat (double 5.000000e-01)
+  %8 = extractelement <2 x double> %23, i64 1
+  %9 = fmul double %8, 5.000000e-01
+  %i.bx = shufflevector <2 x double> %18, <2 x double> %19, <2 x i32> <i32 1, i32 2>
+  %10 = extractelement <2 x double> %23, i64 0
   br label %._crit_edge197
 
 ._crit_edge197:                                   ; preds = %._crit_edge, %._crit_edge197.loopexit
   %i.by = phi double [ %i.p, %._crit_edge ], [ %i.ai, %._crit_edge197.loopexit ]
-  %.0168.lcssa.a = phi double [ 0.000000e+00, %._crit_edge ], [ %13, %._crit_edge197.loopexit ] ; 5 uses
-  %.0164.lcssa.a = phi double [ 0.000000e+00, %._crit_edge ], [ %12, %._crit_edge197.loopexit ] ; 3 uses
-  %8 = phi <3 x double> [ zeroinitializer, %._crit_edge ], [ %7, %._crit_edge197.loopexit ] ; 6 uses
+  %.0168.lcssa.a = phi double [ 0.000000e+00, %._crit_edge ], [ %9, %._crit_edge197.loopexit ] ; 2 uses
+  %.0164.lcssa.a = phi double [ 0.000000e+00, %._crit_edge ], [ %10, %._crit_edge197.loopexit ] ; 5 uses
+  %.0164.lcssa = phi double [ 0.000000e+00, %._crit_edge ], [ %14, %._crit_edge197.loopexit ] ; 3 uses
   %i.bz = phi <2 x double> [ %i.o, %._crit_edge ], [ %i.ah, %._crit_edge197.loopexit ]
   %i.ca = phi <2 x double> [ zeroinitializer, %._crit_edge ], [ %i.bx, %._crit_edge197.loopexit ] ; 3 uses
-  %i.cb = phi <2 x double> [ zeroinitializer, %._crit_edge ], [ %16, %._crit_edge197.loopexit ] ; 4 uses
-  %i.cc = phi <2 x double> [ zeroinitializer, %._crit_edge ], [ %i.dm, %._crit_edge197.loopexit ] ; 3 uses
+  %11 = phi <2 x double> [ zeroinitializer, %._crit_edge ], [ %18, %._crit_edge197.loopexit ] ; 4 uses
+  %i.cb = phi <2 x double> [ zeroinitializer, %._crit_edge ], [ %19, %._crit_edge197.loopexit ] ; 3 uses
+  %i.cc = phi <2 x double> [ zeroinitializer, %._crit_edge ], [ %7, %._crit_edge197.loopexit ] ; 4 uses
   %i.cd = extractelement <2 x double> %i.ca, i64 0 ; 2 uses
   %i.ce = fneg <2 x double> %i.ca
   %i.cf = shufflevector <2 x double> %i.ce, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.cg = fmul <2 x double> %i.cb, %i.cf
-  %i.ch = insertelement <2 x double> %i.cc, double %.0168.lcssa.a, i64 0
+  %i.cg = fmul <2 x double> %11, %i.cf
+  %i.ch = insertelement <2 x double> %i.cb, double %.0164.lcssa.a, i64 0
   %i.ci = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ch, <2 x double> %i.ca, <2 x double> %i.cg) ; 4 uses
-  %i.cj = extractelement <2 x double> %i.cc, i64 1
+  %i.cj = extractelement <2 x double> %i.cb, i64 1
   %i.ck = fneg double %i.cj
-  %i.cl = fmul double %.0168.lcssa.a, %i.ck
-  %i.cm = extractelement <2 x double> %i.cb, i64 0 ; 2 uses
+  %i.cl = fmul double %.0164.lcssa.a, %i.ck
+  %i.cm = extractelement <2 x double> %11, i64 0  ; 2 uses
   %i.cn = tail call double @llvm.fmuladd.f64(double %i.cm, double %i.cd, double %i.cl) ; 3 uses
-  %foldExtExtBinop = fmul <2 x double> %i.cb, %i.ci
+  %foldExtExtBinop = fmul <2 x double> %11, %i.ci
   %i.co = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.cp = extractelement <2 x double> %i.ci, i64 1
-  %i.cq = tail call double @llvm.fmuladd.f64(double %.0164.lcssa.a, double %i.cp, double %i.co)
-  %i.cr = tail call double @llvm.fmuladd.f64(double %.0168.lcssa.a, double %i.cn, double %i.cq) ; 3 uses
+  %i.cq = tail call double @llvm.fmuladd.f64(double %.0164.lcssa, double %i.cp, double %i.co)
+  %i.cr = tail call double @llvm.fmuladd.f64(double %.0164.lcssa.a, double %i.cn, double %i.cq) ; 3 uses
   %i.cs = fcmp une double %i.cr, 0.000000e+00
   br i1 %i.cs, label %bb.d, label %bb.l
 
 bb.c:                                             ; preds = %.lr.ph196, %bb.c
   %indvars.iv226 = phi i64 [ 0, %.lr.ph196 ], [ %indvars.iv.next227, %bb.c ] ; 2 uses
-  %.0164194 = phi double [ 0.000000e+00, %.lr.ph196 ], [ %12, %bb.c ]
-  %.0168192 = phi double [ 0.000000e+00, %.lr.ph196 ], [ %13, %bb.c ]
-  %9 = phi <3 x double> [ zeroinitializer, %.lr.ph196 ], [ %19, %bb.c ]
-  %i.ct = phi <2 x double> [ zeroinitializer, %.lr.ph196 ], [ %16, %bb.c ]
-  %i.cu = phi <2 x double> [ zeroinitializer, %.lr.ph196 ], [ %i.dm, %bb.c ]
+  %.0164194 = phi double [ 0.000000e+00, %.lr.ph196 ], [ %14, %bb.c ]
+  %12 = phi <2 x double> [ zeroinitializer, %.lr.ph196 ], [ %18, %bb.c ]
+  %13 = phi <2 x double> [ zeroinitializer, %.lr.ph196 ], [ %19, %bb.c ]
+  %i.ct = phi <2 x double> [ zeroinitializer, %.lr.ph196 ], [ %25, %bb.c ]
+  %i.cu = phi <2 x double> [ zeroinitializer, %.lr.ph196 ], [ %23, %bb.c ]
   %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %indvars.iv226
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !38
   %i.cx = sext i32 %i.cw to i64                   ; 3 uses
@@ -256,60 +260,61 @@ bb.c:                                             ; preds = %.lr.ph196, %bb.c
   %i.df = insertelement <2 x float> %i.de, float %i.db, i64 1
   %i.dg = fpext <2 x float> %i.df to <2 x double>
   %i.dh = fpext float %i.dd to double
-  %i.di = fsub <2 x double> %i.dg, %i.aq          ; 7 uses
-  %10 = fsub double %i.dh, %i.ai                  ; 3 uses
-  %i.dj = extractelement <2 x double> %i.di, i64 0
+  %i.di = fsub <2 x double> %i.dg, %i.aq          ; 6 uses
   %foldExtExtBinop267 = fmul <2 x double> %i.di, %i.di ; 2 uses
-  %11 = extractelement <2 x double> %foldExtExtBinop267, i64 0
-  %i.dk = insertelement <2 x double> %i.di, double %10, i64 0 ; 2 uses
+  %i.dj = extractelement <2 x double> %foldExtExtBinop267, i64 0
+  %14 = fadd double %.0164194, %i.dj              ; 2 uses
+  %15 = shufflevector <2 x double> %i.di, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %16 = fsub double %i.dh, %i.ai                  ; 3 uses
+  %i.dk = insertelement <2 x double> %i.di, double %16, i64 0 ; 2 uses
   %i.dl = fmul <2 x double> %i.dk, %i.dk          ; 3 uses
-  %12 = fadd double %.0164194, %11                ; 2 uses
-  %13 = tail call double @llvm.fmuladd.f64(double %i.dj, double %10, double %.0168192) ; 2 uses
-  %14 = shufflevector <2 x double> %i.di, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %15 = insertelement <2 x double> %14, double %10, i64 1 ; 2 uses
-  %16 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.di, <2 x double> %15, <2 x double> %i.ct) ; 3 uses
-  %i.dm = fadd <2 x double> %i.cu, %i.dl          ; 3 uses
+  %17 = insertelement <2 x double> %15, double %16, i64 1 ; 2 uses
+  %18 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.di, <2 x double> %17, <2 x double> %12) ; 3 uses
+  %19 = fadd <2 x double> %13, %i.dl              ; 3 uses
   %shift = shufflevector <2 x double> %i.dl, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop269 = fadd <2 x double> %foldExtExtBinop267, %shift
-  %foldExtExtBinop271 = fadd <2 x double> %foldExtExtBinop269, %i.dl
-  %17 = shufflevector <2 x double> %foldExtExtBinop271, <2 x double> poison, <3 x i32> zeroinitializer
-  %18 = shufflevector <2 x double> %15, <2 x double> %i.di, <3 x i32> <i32 1, i32 2, i32 3>
-  %19 = tail call <3 x double> @llvm.fmuladd.v3f64(<3 x double> %17, <3 x double> %18, <3 x double> %9) ; 2 uses
+  %i.dm = fadd <2 x double> %foldExtExtBinop269, %i.dl ; 2 uses
+  %20 = shufflevector <2 x double> %i.di, <2 x double> poison, <2 x i32> zeroinitializer
+  %21 = insertelement <2 x double> poison, double %16, i64 0
+  %22 = shufflevector <2 x double> %21, <2 x double> %i.dm, <2 x i32> <i32 0, i32 2>
+  %23 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %20, <2 x double> %22, <2 x double> %i.cu) ; 3 uses
+  %24 = shufflevector <2 x double> %i.dm, <2 x double> poison, <2 x i32> zeroinitializer
+  %25 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %24, <2 x double> %17, <2 x double> %i.ct) ; 2 uses
   %indvars.iv.next227 = add nuw nsw i64 %indvars.iv226, 1 ; 2 uses
   %exitcond230.not = icmp eq i64 %indvars.iv.next227, %wide.trip.count229
   br i1 %exitcond230.not, label %._crit_edge197.loopexit, label %bb.c, !llvm.loop !80
 
 bb.d:                                             ; preds = %._crit_edge197
   %i.dn = fneg double %i.cd
-  %i.do = fmul double %.0164.lcssa.a, %i.dn
-  %i.dp = shufflevector <2 x double> %i.cb, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
-  %i.dq = insertelement <2 x double> %i.dp, double %.0168.lcssa.a, i64 0 ; 2 uses
+  %i.do = fmul double %.0164.lcssa, %i.dn
+  %i.dp = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
+  %i.dq = insertelement <2 x double> %i.dp, double %.0164.lcssa.a, i64 0 ; 2 uses
   %i.dr = fneg <2 x double> %i.dq
   %i.ds = fmul <2 x double> %i.dq, %i.dr
-  %i.dt = insertelement <2 x double> poison, double %.0164.lcssa.a, i64 0
+  %i.dt = insertelement <2 x double> poison, double %.0164.lcssa, i64 0
   %i.du = shufflevector <2 x double> %i.dt, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.dv = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.du, <2 x double> %i.cc, <2 x double> %i.ds) ; 2 uses
-  %i.dw = tail call double @llvm.fmuladd.f64(double %i.cm, double %.0168.lcssa.a, double %i.do) ; 2 uses
-  %20 = shufflevector <3 x double> %8, <3 x double> poison, <2 x i32> <i32 2, i32 2>
+  %i.dv = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.du, <2 x double> %i.cb, <2 x double> %i.ds) ; 2 uses
+  %i.dw = tail call double @llvm.fmuladd.f64(double %i.cm, double %.0164.lcssa.a, double %i.do) ; 2 uses
+  %26 = shufflevector <2 x double> %i.cc, <2 x double> poison, <2 x i32> zeroinitializer
   %i.dx = shufflevector <2 x double> %i.dv, <2 x double> %i.ci, <2 x i32> <i32 0, i32 2>
-  %i.dy = fmul <2 x double> %20, %i.dx
-  %21 = shufflevector <3 x double> %8, <3 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.dz = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ci, <2 x double> %21, <2 x double> %i.dy)
+  %i.dy = fmul <2 x double> %26, %i.dx
+  %27 = insertelement <2 x double> poison, double %.0168.lcssa.a, i64 0
+  %28 = shufflevector <2 x double> %27, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.dz = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ci, <2 x double> %28, <2 x double> %i.dy)
   %i.ea = insertelement <2 x double> poison, double %i.dw, i64 0
   %i.eb = insertelement <2 x double> %i.ea, double %i.cn, i64 1
-  %22 = shufflevector <3 x double> %8, <3 x double> poison, <2 x i32> zeroinitializer
-  %i.ec = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.eb, <2 x double> %22, <2 x double> %i.dz)
+  %29 = shufflevector <2 x double> %i.cc, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.ec = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.eb, <2 x double> %29, <2 x double> %i.dz)
   %i.ed = insertelement <2 x double> poison, double %i.cr, i64 0
   %i.ee = shufflevector <2 x double> %i.ed, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ef = fdiv <2 x double> %i.ec, %i.ee
   %i.eg = fadd <2 x double> %i.bz, %i.ef          ; 3 uses
-  %i.eh = extractelement <3 x double> %8, i64 2
+  %i.eh = extractelement <2 x double> %i.cc, i64 0
   %i.ei = fmul double %i.eh, %i.dw
-  %23 = extractelement <3 x double> %8, i64 1
-  %i.ej = tail call double @llvm.fmuladd.f64(double %i.cn, double %23, double %i.ei)
-  %i.ek = extractelement <3 x double> %8, i64 0
-  %i.el = extractelement <2 x double> %i.dv, i64 1
-  %i.em = tail call double @llvm.fmuladd.f64(double %i.el, double %i.ek, double %i.ej)
+  %i.ej = tail call double @llvm.fmuladd.f64(double %i.cn, double %.0168.lcssa.a, double %i.ei)
+  %i.ek = extractelement <2 x double> %i.dv, i64 1
+  %i.el = extractelement <2 x double> %i.cc, i64 1
+  %i.em = tail call double @llvm.fmuladd.f64(double %i.ek, double %i.el, double %i.ej)
   %i.en = fdiv double %i.em, %i.cr
   %i.eo = fadd double %i.by, %i.en                ; 2 uses
   br i1 %i.d, label %.lr.ph210, label %._crit_edge211
@@ -469,9 +474,6 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <3 x double> @llvm.fmuladd.v3f64(<3 x double>, <3 x double>, <3 x double>) #10
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

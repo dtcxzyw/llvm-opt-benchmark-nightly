@@ -202,8 +202,10 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   store <2 x double> %i.dx, ptr %i.cv, align 8, !tbaa !37
   %i.dy = extractelement <2 x double> %i.dx, i64 0
   store double %i.dy, ptr %i.cw, align 8, !tbaa !37
-  %i.dz = fsub nsz double 1.000000e+00, %i.dl     ; 2 uses
-  %1 = fmul nsz double %i.dz, 5.000000e-01
+  %i.dz = fsub nsz double 1.000000e+00, %i.dl
+  %1 = insertelement <2 x double> poison, double %i.dz, i64 0
+  %2 = shufflevector <2 x double> %1, <2 x double> poison, <2 x i32> zeroinitializer
+  %3 = fmul nsz <2 x double> %2, <double 5.000000e-01, double 1.000000e+00>
   %i.ea = extractelement <2 x double> %i.dp, i64 1
   %i.eb = fadd nsz double %i.ea, 1.000000e+00
   %i.ec = insertelement <2 x double> %i.dp, double %i.dn, i64 0
@@ -212,8 +214,6 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.ef = shufflevector <2 x double> %i.ee, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.eg = fdiv nsz <2 x double> %i.ed, %i.ef
   store <2 x double> %i.eg, ptr %i.dm, align 8, !tbaa !37
-  %2 = insertelement <2 x double> poison, double %1, i64 0
-  %3 = insertelement <2 x double> %2, double %i.dz, i64 1
   %i.eh = fdiv nsz <2 x double> %3, %i.ef         ; 2 uses
   store <2 x double> %i.eh, ptr %i.do, align 8, !tbaa !37
   %i.ei = getelementptr inbounds nuw i8, ptr %i.z, i64 208

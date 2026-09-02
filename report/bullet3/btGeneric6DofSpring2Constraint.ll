@@ -204,32 +204,26 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %.not378 = icmp eq i32 %11, 0                   ; 4 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %10, i64 4 ; 6 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %10, i64 4 ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 5 uses
-  %i.h = load <2 x float>, ptr %10, align 4, !tbaa !14 ; 6 uses
+  %i.h = load <2 x float>, ptr %10, align 4, !tbaa !14 ; 7 uses
   %i.i = load float, ptr %i.g, align 4, !tbaa !14 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
   br i1 %.not378, label %.split368, label %_ZN30btGeneric6DofSpring2Constraint15calculateJacobiEP23btRotationalLimitMotor2RK11btTransformS4_PN17btTypedConstraint17btConstraintInfo2EiR9btVector3ii.exit
 
 _ZN30btGeneric6DofSpring2Constraint15calculateJacobiEP23btRotationalLimitMotor2RK11btTransformS4_PN17btTypedConstraint17btConstraintInfo2EiR9btVector3ii.exit: ; preds = %bb.b
-  %13 = load float, ptr %i.f, align 4, !tbaa !14  ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.k = load <4 x float>, ptr %6, align 4
   %i.l = shufflevector <4 x float> %i.k, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
-  %15 = getelementptr inbounds nuw i8, ptr %7, i64 4
   %i.m = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.n = load float, ptr %i.m, align 4, !tbaa !14
-  %i.o = load <2 x float>, ptr %6, align 4, !tbaa !14
-  %16 = load float, ptr %14, align 4, !tbaa !14
-  %i.p = load <2 x float>, ptr %7, align 4, !tbaa !14
-  %17 = load float, ptr %15, align 4, !tbaa !14
-  %18 = fmul float %13, %17
-  %19 = fmul float %16, %13
+  %i.o = load <2 x float>, ptr %6, align 4, !tbaa !14 ; 2 uses
+  %i.p = load <2 x float>, ptr %7, align 4, !tbaa !14 ; 2 uses
+  %13 = shufflevector <2 x float> %i.h, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %14 = shufflevector <2 x float> %i.o, <2 x float> %i.p, <2 x i32> <i32 1, i32 3>
+  %15 = fmul <2 x float> %13, %14
   %i.q = shufflevector <2 x float> %i.o, <2 x float> %i.p, <2 x i32> <i32 0, i32 2>
   %i.r = shufflevector <2 x float> %i.h, <2 x float> poison, <2 x i32> zeroinitializer
-  %20 = insertelement <2 x float> poison, float %19, i64 0
-  %21 = insertelement <2 x float> %20, float %18, i64 1
-  %i.s = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.q, <2 x float> %i.r, <2 x float> %21)
+  %i.s = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.q, <2 x float> %i.r, <2 x float> %15)
   %i.t = insertelement <2 x float> %i.l, float %i.n, i64 1
   %i.u = insertelement <2 x float> poison, float %i.i, i64 0
   %i.v = shufflevector <2 x float> %i.u, <2 x float> poison, <2 x i32> zeroinitializer
