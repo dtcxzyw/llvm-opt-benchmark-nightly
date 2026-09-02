@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %nstrace_read_page.e
   ]
 
 bb.c:                                             ; preds = %.lr.ph, %.lr.ph, %.lr.ph
-  %i.s = sub i32 %.0973, %.19751353               ; 2 uses
+  %i.s = sub nuw i32 %.0973, %.19751353           ; 2 uses
   %i.t = icmp ult i32 %i.s, 8
   br i1 %i.t, label %g_strdup_inline.exit1133, label %bb.d
 
@@ -360,7 +360,7 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   br label %.critedge
 
 bb.p:                                             ; preds = %.lr.ph, %.lr.ph, %.lr.ph
-  %i.ci = sub i32 %.0973, %.19751353              ; 2 uses
+  %i.ci = sub nuw i32 %.0973, %.19751353          ; 2 uses
   %i.cj = icmp ult i32 %i.ci, 12
   br i1 %i.cj, label %g_strdup_inline.exit1127, label %bb.q
 
@@ -517,7 +517,7 @@ bb.ab:                                            ; preds = %bb.z, %bb.aa
   br label %.critedge
 
 bb.ac:                                            ; preds = %.lr.ph, %.lr.ph, %.lr.ph
-  %i.fb = sub i32 %.0973, %.19751353              ; 2 uses
+  %i.fb = sub nuw i32 %.0973, %.19751353          ; 2 uses
   %i.fc = icmp ult i32 %i.fb, 16
   br i1 %i.fc, label %g_strdup_inline.exit1121, label %bb.ad
 
@@ -673,7 +673,7 @@ bb.ao:                                            ; preds = %bb.am, %bb.an
   br label %.critedge
 
 bb.ap:                                            ; preds = %.lr.ph, %.lr.ph, %.lr.ph
-  %i.ht = sub i32 %.0973, %.19751353              ; 2 uses
+  %i.ht = sub nuw i32 %.0973, %.19751353          ; 2 uses
   %i.hu = icmp ult i32 %i.ht, 20
   br i1 %i.hu, label %g_strdup_inline.exit1115, label %bb.aq
 
@@ -834,7 +834,7 @@ bb.bb:                                            ; preds = %bb.az, %bb.ba
   br label %.critedge
 
 bb.bc:                                            ; preds = %.lr.ph, %.lr.ph, %.lr.ph
-  %i.ko = sub i32 %.0973, %.19751353              ; 2 uses
+  %i.ko = sub nuw i32 %.0973, %.19751353          ; 2 uses
   %i.kp = icmp ult i32 %i.ko, 18
   br i1 %i.kp, label %g_strdup_inline.exit1109, label %bb.bd
 
@@ -986,7 +986,7 @@ bb.bo:                                            ; preds = %bb.bm, %bb.bn
   br label %.critedge
 
 bb.bp:                                            ; preds = %.lr.ph, %.lr.ph, %.lr.ph
-  %i.ne = sub i32 %.0973, %.19751353              ; 2 uses
+  %i.ne = sub nuw i32 %.0973, %.19751353          ; 2 uses
   %i.nf = icmp ult i32 %i.ne, 22
   br i1 %i.nf, label %g_strdup_inline.exit1103, label %bb.bq
 
@@ -1143,7 +1143,7 @@ bb.cb:                                            ; preds = %bb.bz, %bb.ca
   br label %.critedge
 
 bb.cc:                                            ; preds = %.lr.ph, %.lr.ph, %.lr.ph
-  %i.px = sub i32 %.0973, %.19751353              ; 2 uses
+  %i.px = sub nuw i32 %.0973, %.19751353          ; 2 uses
   %i.py = icmp ult i32 %i.px, 24
   br i1 %i.py, label %g_strdup_inline.exit1097, label %bb.cd
 
@@ -1269,7 +1269,7 @@ bb.cl:                                            ; preds = %bb.cj, %bb.ck
   br label %.critedge
 
 bb.cm:                                            ; preds = %.lr.ph, %.lr.ph, %.lr.ph
-  %i.se = sub i32 %.0973, %.19751353              ; 2 uses
+  %i.se = sub nuw i32 %.0973, %.19751353          ; 2 uses
   %i.sf = icmp ult i32 %i.se, 28
   br i1 %i.sf, label %g_strdup_inline.exit1091, label %bb.cn
 
@@ -1400,7 +1400,7 @@ bb.cv:                                            ; preds = %bb.ct, %bb.cu
   br label %.critedge
 
 bb.cw:                                            ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph
-  %i.uo = sub i32 %.0973, %.19751353              ; 2 uses
+  %i.uo = sub nuw i32 %.0973, %.19751353          ; 2 uses
   %i.up = icmp ult i32 %i.uo, 29
   br i1 %i.up, label %g_strdup_inline.exit1085, label %bb.cx
 
@@ -1524,7 +1524,7 @@ bb.df:                                            ; preds = %bb.dd, %bb.de
   br label %.critedge
 
 bb.dg:                                            ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph
-  %i.wu = sub i32 %.0973, %.19751353              ; 2 uses
+  %i.wu = sub nuw i32 %.0973, %.19751353          ; 2 uses
   %i.wv = icmp ult i32 %i.wu, 33
   br i1 %i.wv, label %g_strdup_inline.exit1079, label %bb.dh
 
@@ -1653,7 +1653,7 @@ bb.dp:                                            ; preds = %bb.dn, %bb.do
   br label %.critedge
 
 bb.dq:                                            ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph
-  %i.zd = sub i32 %.0973, %.19751353              ; 2 uses
+  %i.zd = sub nuw i32 %.0973, %.19751353          ; 2 uses
   %i.ze = icmp ult i32 %i.zd, 31
   br i1 %i.ze, label %g_strdup_inline.exit1073, label %bb.dr
 
@@ -1783,7 +1783,7 @@ bb.dz:                                            ; preds = %bb.dx, %bb.dy
   br label %.critedge
 
 bb.ea:                                            ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph
-  %i.abm = sub i32 %.0973, %.19751353             ; 2 uses
+  %i.abm = sub nuw i32 %.0973, %.19751353         ; 2 uses
   %i.abn = icmp ult i32 %i.abm, 35
   br i1 %i.abn, label %g_strdup_inline.exit1067, label %bb.eb
 
@@ -1918,7 +1918,7 @@ bb.ej:                                            ; preds = %bb.eh, %bb.ei
   br label %.critedge
 
 bb.ek:                                            ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph
-  %i.ady = sub i32 %.0973, %.19751353             ; 2 uses
+  %i.ady = sub nuw i32 %.0973, %.19751353         ; 2 uses
   %i.adz = icmp ult i32 %i.ady, 48
   br i1 %i.adz, label %g_strdup_inline.exit1061, label %bb.el
 
@@ -2044,7 +2044,7 @@ bb.et:                                            ; preds = %bb.er, %bb.es
   br label %.critedge
 
 bb.eu:                                            ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph
-  %i.agf = sub i32 %.0973, %.19751353             ; 2 uses
+  %i.agf = sub nuw i32 %.0973, %.19751353         ; 2 uses
   %i.agg = icmp ult i32 %i.agf, 52
   br i1 %i.agg, label %g_strdup_inline.exit1055, label %bb.ev
 

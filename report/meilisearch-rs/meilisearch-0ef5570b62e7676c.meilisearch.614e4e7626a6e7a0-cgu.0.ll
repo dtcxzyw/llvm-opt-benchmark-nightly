@@ -205,7 +205,7 @@ bb.fd:                                            ; preds = %"_ZN111_$LT$alloc_s
 .split457.i.preheader.us:                         ; preds = %.lr.ph459.i, %.loopexit.i.us
   %.sroa.0.0458.i.us = phi i64 [ %i.aeb, %.loopexit.i.us ], [ %i.ady, %.lr.ph459.i ]
   %i.aeb = add i64 %.sroa.0.0458.i.us, -1         ; 4 uses
-  %i.aec = shl i64 %i.aeb, 6                      ; 2 uses
+  %i.aec = shl nuw i64 %i.aeb, 6                  ; 2 uses
   %i.aed = getelementptr inbounds nuw [4 x i8], ptr %i.sm, i64 %i.aeb ; 2 uses
   br label %.split457.i.us
 

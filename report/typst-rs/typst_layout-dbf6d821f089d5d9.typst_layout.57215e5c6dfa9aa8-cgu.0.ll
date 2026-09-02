@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.n, label %_RINvCsiSzwKAiqS6b_8smallvec10infallibleuECs7tN9tvpkfrg_12typst_layout.exit, label %bb.m
 
 bb.h:                                             ; preds = %bb.f
-  %i.p = mul i64 %i.m, 24                         ; 3 uses
+  %i.p = mul nuw i64 %i.m, 24                     ; 3 uses
   %or.cond.not.i = icmp ugt i64 %i.k, 384307168202282324
   br i1 %or.cond.not.i, label %bb.p, label %_RINvCsiSzwKAiqS6b_8smallvec12layout_arrayINtNtCs1xwejQucwHj_5alloc3vec3VecINtNtNtCsdaEETE4DqmE_13typst_library13introspection12introspector11BuilderItemNtNtB1f_8position13PagedPositionEEECs7tN9tvpkfrg_12typst_layout.exit.i, !prof !61
 
@@ -608,7 +608,7 @@ bb.de:                                            ; preds = %bb.dc
   %.sroa.663.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 24
   store ptr %i.nc, ptr %.sroa.663.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !35074
-  %i.nd = mul nuw i64 %i.na, 48                   ; 2 uses
+  %i.nd = mul nuw nsw i64 %i.na, 48               ; 2 uses
   %or.cond.i.i.i = icmp samesign ugt i64 %i.na, 192153584101141162
   br i1 %or.cond.i.i.i, label %bb.dg, label %bb.df, !prof !61
 
@@ -1011,7 +1011,7 @@ bb.fc:                                            ; preds = %bb.fb, %bb.fa, %bb.
   %.sroa.8109.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 72
   store ptr %i.an, ptr %.sroa.8109.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !35106
-  %i.sk = mul nuw i64 %i.sd, 48                   ; 2 uses
+  %i.sk = mul nuw nsw i64 %i.sd, 48               ; 2 uses
   %or.cond.i.i.i300 = icmp samesign ugt i64 %i.sd, 192153584101141162
   br i1 %or.cond.i.i.i300, label %bb.fe, label %bb.fd, !prof !61
 
@@ -1414,7 +1414,7 @@ _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterNtNtCsgCGKXfV80i0_12unico
   %i.arj = load i64, ptr %i.ari, align 8, !noundef !41 ; 6 uses
   %i.ark = icmp ult i64 %i.arj, 82351536043346213
   call void @llvm.assume(i1 %i.ark)
-  %i.arl = shl nuw i64 %i.arj, 7                  ; 2 uses
+  %i.arl = shl nuw nsw i64 %i.arj, 7              ; 2 uses
   %.not.i36 = icmp samesign ugt i64 %i.arj, 72057594037927935
   br i1 %.not.i36, label %bb.mn, label %bb.ml, !prof !61
 
@@ -1817,7 +1817,7 @@ _RNvXs3_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11CharIndicesNtNtNtNtB9_4iter6trait
 
 ._crit_edge:                                      ; preds = %_RNvXs3_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11CharIndicesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit209, %bb.f
   %i.ld = tail call i64 @llvm.usub.sat.i64(i64 %i.f, i64 1) ; 5 uses
-  %i.le = shl nuw i64 %i.ld, 3                    ; 2 uses
+  %i.le = shl nuw nsw i64 %i.ld, 3                ; 2 uses
   %.not.i.i.i.i = icmp samesign ugt i64 %i.ld, 1152921504606846975
   br i1 %.not.i.i.i.i, label %bb.bv, label %bb.bu, !prof !61
 

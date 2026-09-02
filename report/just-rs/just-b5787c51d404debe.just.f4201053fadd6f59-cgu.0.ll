@@ -205,7 +205,7 @@ _RNvYNvYeNtNtNtCsdftwklc2oBO_7similar4text11abstraction11DiffableStr14tokenize_l
   %i.p = load i64, ptr %i.b, align 8, !range !43, !noundef !28 ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !5362
-  %i.q = mul nuw i64 %i.m, 24                     ; 2 uses
+  %i.q = mul nuw nsw i64 %i.m, 24                 ; 2 uses
   %or.cond.i.i.i.i = icmp samesign ugt i64 %i.m, 384307168202282325
   br i1 %or.cond.i.i.i.i, label %bb.g, label %bb.e, !prof !42
 
@@ -608,7 +608,7 @@ _RINvMs1_NtCs37Y8JGf013z_9hashbrown3mapINtB6_7HashMapjINtNtCs4wP2HXfJTCR_5alloc3
   %i.ae = load i64, ptr %i.h, align 8, !noundef !28 ; 5 uses
   %i.af = icmp ult i64 %i.ae, 1152921504606846976
   call void @llvm.assume(i1 %i.af)
-  %i.ag = shl nuw i64 %i.ae, 4                    ; 2 uses
+  %i.ag = shl nuw nsw i64 %i.ae, 4                ; 2 uses
   %.not.i = icmp samesign ugt i64 %i.ae, 576460752303423487
   br i1 %.not.i, label %bb.g, label %bb.d, !prof !42
 
@@ -1011,7 +1011,7 @@ bb.c:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.4.0.copyload, i64 %.idx ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !33329
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !33330
-  %i.q = mul nuw i64 %.sroa.535.0.copyload, 48    ; 2 uses
+  %i.q = mul nuw nsw i64 %.sroa.535.0.copyload, 48 ; 2 uses
   %or.cond.i.i.i.i.i.i.i = icmp samesign ugt i64 %.sroa.535.0.copyload, 192153584101141162
   br i1 %or.cond.i.i.i.i.i.i.i, label %bb.f, label %bb.d, !prof !42
 
@@ -1414,7 +1414,7 @@ bb.a:
   br i1 %i.f, label %bb.l, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = mul nuw i64 %2, 24                       ; 2 uses
+  %i.g = mul nuw nsw i64 %2, 24                   ; 2 uses
   %or.cond.i.i.i = icmp samesign ugt i64 %2, 384307168202282325
   br i1 %or.cond.i.i.i, label %bb.e, label %bb.c, !prof !42
 
@@ -1817,7 +1817,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.i = load i64, ptr %i.h, align 8, !alias.scope !105964, !noalias !105965, !noundef !28 ; 4 uses
   %i.j = tail call i64 @llvm.usub.sat.i64(i64 %i.g, i64 %i.i) ; 4 uses
-  %i.k = mul nuw i64 %i.j, 24                     ; 2 uses
+  %i.k = mul nuw nsw i64 %i.j, 24                 ; 2 uses
   %.not.i.i = icmp samesign ugt i64 %i.j, 384307168202282325
   br i1 %.not.i.i, label %bb.d, label %bb.b, !prof !42
 
