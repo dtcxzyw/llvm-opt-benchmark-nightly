@@ -205,7 +205,7 @@ vec.epilog.scalar.ph441:                          ; preds = %vec.epilog.scalar.p
   %i.bu = shl i32 %.025.tr.i, 3
   %i.bv = shl i32 %i.bt, %i.bu
   %i.bw = xor i32 %i.bv, %.02634.i                ; 2 uses
-  %i.bx = add nuw i64 %.02535.i, 1                ; 2 uses
+  %i.bx = add nuw nsw i64 %.02535.i, 1            ; 2 uses
   %.not32.i = icmp eq i64 %i.bx, %i.aj
   br i1 %.not32.i, label %_ZL7getHashPKhmm.exit, label %vec.epilog.scalar.ph441, !llvm.loop !852
 
@@ -608,7 +608,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.lm = shl i32 %.025.tr.i260, 3
   %i.ln = shl i32 %i.ll, %i.lm
   %i.lo = xor i32 %i.ln, %.02634.i259             ; 2 uses
-  %i.lp = add nuw i64 %.02535.i258, 1             ; 2 uses
+  %i.lp = add nuw nsw i64 %.02535.i258, 1         ; 2 uses
   %.not32.i261 = icmp eq i64 %i.lp, %i.kb
   br i1 %.not32.i261, label %_ZL7getHashPKhmm.exit264, label %vec.epilog.scalar.ph, !llvm.loop !859
 
