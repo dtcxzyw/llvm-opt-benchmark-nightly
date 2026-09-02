@@ -205,7 +205,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueThNtNtNtCsdaEETE4DqmE_13typst_library11f
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtCsiSzwKAiqS6b_8smallvec8SmallVecAThNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueEj1_EEECs9fPPV5zPXBl_5typst.exit unwind label %bb.f, !inline_history !11614
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueThNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueEECs9fPPV5zPXBl_5typst.exit7.i: ; preds = %.lr.ph23
-  %i.n = add i64 %.sroa.0.1.i22, 1                ; 2 uses
+  %i.n = add nuw nsw i64 %.sroa.0.1.i22, 1        ; 2 uses
   %i.o = icmp eq i64 %i.n, %i.i
   br i1 %i.o, label %common.resume, label %.lr.ph23
 
@@ -608,7 +608,7 @@ _RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit43.i.i.i
   br i1 %i.dg, label %bb.s, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit47.i.i.i
 
 bb.s:                                             ; preds = %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit43.i.i.i
-  %i.dh = add i64 %.sroa.7.0.i.i.i, -2            ; 6 uses
+  %i.dh = add nsw i64 %.sroa.7.0.i.i.i, -2        ; 6 uses
   %i.di = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i.i, i64 2 ; 2 uses
   %i.dj = icmp samesign eq i64 %i.dh, 0
   br i1 %i.dj, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit47.i.i.i, label %bb.t
@@ -754,7 +754,7 @@ bb.y:                                             ; preds = %.lr.ph.split.i.i.i.
   br i1 %.not53.i.i.i.i.i, label %.thread, label %.lr.ph.split.i.i.i.i.i
 
 bb.z:                                             ; preds = %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit47.i.i.i
-  %i.fx = add i64 %.sroa.7.0.i.i.i, -2            ; 6 uses
+  %i.fx = add nsw i64 %.sroa.7.0.i.i.i, -2        ; 6 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i.i, i64 2 ; 2 uses
   %i.fz = icmp samesign eq i64 %i.fx, 0
   br i1 %i.fz, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit58.i.i.i, label %bb.aa
@@ -889,7 +889,7 @@ bb.af:                                            ; preds = %.lr.ph.split.us.i.i
   br i1 %.not53.us.i.i.i.i.i, label %.thread, label %.lr.ph.split.us.i.i.i.i.i
 
 bb.ag:                                            ; preds = %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit58.i.i.i
-  %i.ie = add i64 %.sroa.7.0.i.i.i, -2            ; 6 uses
+  %i.ie = add nsw i64 %.sroa.7.0.i.i.i, -2        ; 6 uses
   %i.if = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i.i, i64 2 ; 2 uses
   %i.ig = icmp samesign eq i64 %i.ie, 0
   br i1 %i.ig, label %.thread28.i.i.i, label %bb.ah
@@ -1173,7 +1173,7 @@ _RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit.i7.i.i:
   br i1 %i.mv, label %.split.i.i.i, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit43.i8.i.i
 
 .split.i.i.i:                                     ; preds = %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit.i7.i.i
-  %i.mw = add i64 %2, -3
+  %i.mw = add nsw i64 %2, -3
   %i.mx = getelementptr inbounds nuw i8, ptr %1, i64 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !45409
   store ptr %i.mx, ptr %i.z, align 8, !noalias !45409, !captures !117
@@ -1250,7 +1250,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringEC
   br label %.thread
 
 .split27.i.i.i:                                   ; preds = %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit43.i8.i.i
-  %i.no = add i64 %2, -3
+  %i.no = add nsw i64 %2, -3
   %i.np = getelementptr inbounds nuw i8, ptr %1, i64 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !45409
   store ptr %i.np, ptr %i.v, align 8, !noalias !45409, !captures !117
@@ -1327,7 +1327,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringEC
   br label %.thread
 
 .split31.i.i.i:                                   ; preds = %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit54.i.i.i
-  %i.og = add i64 %2, -3
+  %i.og = add nsw i64 %2, -3
   %i.oh = getelementptr inbounds nuw i8, ptr %1, i64 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !45409
   store ptr %i.oh, ptr %i.r, align 8, !noalias !45409, !captures !117
@@ -1417,7 +1417,7 @@ _RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit42.i.i.i
   br i1 %i.ou, label %bb.bl, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit46.i.i.i
 
 bb.bl:                                            ; preds = %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit42.i.i.i
-  %i.ov = add i64 %.sroa.7.0.i.i.i, -2            ; 6 uses
+  %i.ov = add nsw i64 %.sroa.7.0.i.i.i, -2        ; 6 uses
   %i.ow = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i.i, i64 2 ; 2 uses
   %i.ox = icmp samesign eq i64 %i.ov, 0
   br i1 %i.ox, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit46.i.i.i, label %bb.bm
@@ -1563,7 +1563,7 @@ bb.br:                                            ; preds = %.lr.ph.split.i.i.i4
   br i1 %.not53.i.i.i52.i.i, label %.thread, label %.lr.ph.split.i.i.i47.i.i
 
 bb.bs:                                            ; preds = %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit46.i.i.i
-  %i.rl = add i64 %.sroa.7.0.i.i.i, -2            ; 6 uses
+  %i.rl = add nsw i64 %.sroa.7.0.i.i.i, -2        ; 6 uses
   %i.rm = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i.i, i64 2 ; 2 uses
   %i.rn = icmp samesign eq i64 %i.rl, 0
   br i1 %i.rn, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit57.i.i.i, label %bb.bt
@@ -1698,7 +1698,7 @@ bb.by:                                            ; preds = %.lr.ph.split.us.i.i
   br i1 %.not53.us.i.i.i29.i.i, label %.thread, label %.lr.ph.split.us.i.i.i25.i.i
 
 bb.bz:                                            ; preds = %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit57.i.i.i
-  %i.ts = add i64 %.sroa.7.0.i.i.i, -2            ; 6 uses
+  %i.ts = add nsw i64 %.sroa.7.0.i.i.i, -2        ; 6 uses
   %i.tt = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i.i, i64 2 ; 2 uses
   %i.tu = icmp samesign eq i64 %i.ts, 0
   br i1 %i.tu, label %.thread28.i16.i.i, label %bb.ca
@@ -1981,7 +1981,7 @@ _RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit.i56.i.i
   br i1 %i.yj, label %.split.i73.i.i, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit42.i58.i.i
 
 .split.i73.i.i:                                   ; preds = %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit.i56.i.i
-  %i.yk = add i64 %2, -3
+  %i.yk = add nsw i64 %2, -3
   %i.yl = getelementptr inbounds nuw i8, ptr %1, i64 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !45439
   store ptr %i.yl, ptr %i.m, align 8, !noalias !45439, !captures !117
@@ -2058,7 +2058,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringEC
   br label %.thread
 
 .split26.i.i.i:                                   ; preds = %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit42.i58.i.i
-  %i.zc = add i64 %2, -3
+  %i.zc = add nsw i64 %2, -3
   %i.zd = getelementptr inbounds nuw i8, ptr %1, i64 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !45439
   store ptr %i.zd, ptr %i.i, align 8, !noalias !45439, !captures !117
@@ -2135,7 +2135,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringEC
   br label %.thread
 
 .split30.i.i.i:                                   ; preds = %_RNvMNtCs3oUPovFnLWP_4core5sliceSh11starts_withCs9fPPV5zPXBl_5typst.exit52.i.i.i
-  %i.zu = add i64 %2, -3
+  %i.zu = add nsw i64 %2, -3
   %i.zv = getelementptr inbounds nuw i8, ptr %1, i64 3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !45439
   store ptr %i.zv, ptr %i.e, align 8, !noalias !45439, !captures !117

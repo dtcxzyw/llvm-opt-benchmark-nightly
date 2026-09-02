@@ -206,7 +206,7 @@ bb.a:
   %or.cond.not.i.i.i.i = icmp eq i64 %i.b, 1
   %i.c = add nuw nsw i64 %0, 7
   %i.d = lshr i64 %i.c, 3                         ; 2 uses
-  %i.e = add i64 %1, -1                           ; 2 uses
+  %i.e = add nsw i64 %1, -1                       ; 2 uses
   br i1 %or.cond.not.i.i.i.i, label %.split.us, label %.split, !prof !91
 
 .split.us:                                        ; preds = %bb.a
@@ -226,7 +226,7 @@ bb.a:
   %i.o = ptrtoint ptr %i.n to i64
   %i.p = and i64 %i.e, %i.o
   %.not36.i.i.i.i.us.us68 = icmp eq i64 %i.p, 0
-  %or.cond69 = and i1 %.not.i.i.i.i.us.us67, %.not36.i.i.i.i.us.us68
+  %or.cond69 = select i1 %.not.i.i.i.i.us.us67, i1 %.not36.i.i.i.i.us.us68, i1 false, !prof !91
   br i1 %or.cond69, label %mi_malloc_aligned.exit.thread6, label %mi_malloc_aligned.exit.us.us, !prof !253
 
 mi_malloc_aligned.exit.us.us:                     ; preds = %.split.us.split.us.preheader, %_ZL18mi_try_new_handlerb.exit.us.us
@@ -252,7 +252,7 @@ _ZL18mi_try_new_handlerb.exit.us.us:              ; preds = %mi_malloc_aligned.e
   %i.aa = ptrtoint ptr %i.z to i64
   %i.ab = and i64 %i.e, %i.aa
   %.not36.i.i.i.i.us.us = icmp eq i64 %i.ab, 0
-  %or.cond = and i1 %.not.i.i.i.i.us.us, %.not36.i.i.i.i.us.us
+  %or.cond = select i1 %.not.i.i.i.i.us.us, i1 %.not36.i.i.i.i.us.us, i1 false, !prof !91
   br i1 %or.cond, label %mi_malloc_aligned.exit.thread6, label %mi_malloc_aligned.exit.us.us, !prof !254, !llvm.loop !252
 
 .split.us.split:                                  ; preds = %.split.us
@@ -336,7 +336,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i.i.i, label %bb.d, !prof !61
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = add i64 %1, -1
+  %i.n = add nsw i64 %1, -1
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = and i64 %i.n, %i.o
   %.not36.i.i.i = icmp eq i64 %i.p, 0
@@ -369,7 +369,7 @@ bb.a:
   %or.cond.not.i.i.i.i = icmp eq i64 %i.b, 1
   %i.c = add nuw nsw i64 %0, 7
   %i.d = lshr i64 %i.c, 3
-  %i.e = add i64 %1, -1
+  %i.e = add nsw i64 %1, -1
   br i1 %or.cond.not.i.i.i.i, label %.split.us, label %_ZL18mi_try_new_handlerb.exit, !prof !91
 
 .split.us:                                        ; preds = %bb.a
@@ -389,7 +389,7 @@ _ZL18mi_try_new_handlerb.exit.us.us:              ; preds = %.split.us, %bb.b
   %i.o = ptrtoint ptr %i.n to i64
   %i.p = and i64 %i.e, %i.o
   %.not36.i.i.i.i.us.us = icmp eq i64 %i.p, 0
-  %or.cond = and i1 %.not.i.i.i.i.us.us, %.not36.i.i.i.i.us.us
+  %or.cond = select i1 %.not.i.i.i.i.us.us, i1 %.not36.i.i.i.i.us.us, i1 false, !prof !91
   br i1 %or.cond, label %mi_malloc_aligned.exit.thread7, label %mi_malloc_aligned.exit.us.us, !prof !91
 
 mi_malloc_aligned.exit.us.us:                     ; preds = %_ZL18mi_try_new_handlerb.exit.us.us
@@ -742,7 +742,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i, label %bb.d, !prof !61
 
 bb.d:                                             ; preds = %bb.c
-  %i.l = add i64 %2, -1
+  %i.l = add nsw i64 %2, -1
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = add i64 %3, %i.m
   %i.o = and i64 %i.n, %i.l
@@ -793,7 +793,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i.i, label %bb.d, !prof !61
 
 bb.d:                                             ; preds = %bb.c
-  %i.l = add i64 %2, -1
+  %i.l = add nsw i64 %2, -1
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = and i64 %i.l, %i.m
   %.not36.i.i = icmp eq i64 %i.n, 0
@@ -843,7 +843,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i, label %bb.d, !prof !61
 
 bb.d:                                             ; preds = %bb.c
-  %i.l = add i64 %2, -1
+  %i.l = add nsw i64 %2, -1
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = add i64 %3, %i.m
   %i.o = and i64 %i.n, %i.l
@@ -909,7 +909,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i.i, label %bb.d, !prof !61
 
 bb.d:                                             ; preds = %bb.c
-  %i.l = add i64 %2, -1
+  %i.l = add nsw i64 %2, -1
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = and i64 %i.l, %i.m
   %.not36.i.i = icmp eq i64 %i.n, 0
@@ -985,7 +985,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i.i, label %bb.f, !prof !61
 
 bb.f:                                             ; preds = %bb.e
-  %i.o = add i64 %3, -1
+  %i.o = add nsw i64 %3, -1
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = add i64 %4, %i.p
   %i.r = and i64 %i.q, %i.o
@@ -1062,7 +1062,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i.i.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i.i.i, label %bb.f, !prof !61
 
 bb.f:                                             ; preds = %bb.e
-  %i.o = add i64 %3, -1
+  %i.o = add nsw i64 %3, -1
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = and i64 %i.o, %i.p
   %.not36.i.i.i = icmp eq i64 %i.q, 0
@@ -1129,7 +1129,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i.i, label %bb.d, !prof !61
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = add i64 %1, -1
+  %i.n = add nsw i64 %1, -1
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = add i64 %2, %i.o
   %i.q = and i64 %i.p, %i.n
@@ -1182,7 +1182,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i.i, label %bb.d, !prof !61
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = add i64 %1, -1
+  %i.n = add nsw i64 %1, -1
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = add i64 %2, %i.o
   %i.q = and i64 %i.p, %i.n
@@ -1250,7 +1250,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i.i.i, label %bb.d, !prof !61
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = add i64 %1, -1
+  %i.n = add nsw i64 %1, -1
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = and i64 %i.n, %i.o
   %.not36.i.i.i = icmp eq i64 %i.p, 0
@@ -1328,7 +1328,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i.i.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i.i.i, label %bb.f, !prof !61
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = add i64 %2, -1
+  %i.q = add nsw i64 %2, -1
   %i.r = ptrtoint ptr %i.p to i64
   %i.s = add i64 %3, %i.r
   %i.t = and i64 %i.s, %i.q
@@ -1407,7 +1407,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i.i.i.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i.i.i.i, label %bb.f, !prof !61
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = add i64 %2, -1
+  %i.q = add nsw i64 %2, -1
   %i.r = ptrtoint ptr %i.p to i64
   %i.s = and i64 %i.q, %i.r
   %.not36.i.i.i.i = icmp eq i64 %i.s, 0
@@ -1491,7 +1491,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i, label %bb.g, !prof !61
 
 bb.g:                                             ; preds = %bb.f
-  %i.o = add i64 %3, -1
+  %i.o = add nsw i64 %3, -1
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = add i64 %4, %i.p
   %i.r = and i64 %i.q, %i.o
@@ -1605,7 +1605,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not.i.i52, label %mi_heap_malloc_aligned_at.exit, label %bb.u, !prof !61
 
 bb.u:                                             ; preds = %bb.t
-  %i.bm = add i64 %3, -1
+  %i.bm = add nsw i64 %3, -1
   %i.bn = ptrtoint ptr %i.bl to i64
   %i.bo = add i64 %4, %i.bn
   %i.bp = and i64 %i.bo, %i.bm
@@ -2008,7 +2008,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i.i, label %mi_malloc_aligned.exit, label %bb.d, !prof !61
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = add i64 %1, -1
+  %i.r = add nsw i64 %1, -1
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = and i64 %i.r, %i.s
   %.not36.i.i.i.i = icmp eq i64 %i.t, 0
@@ -2068,7 +2068,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i.i.i.i, label %bb.d, !prof !61
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = add i64 %0, -1
+  %i.n = add nsw i64 %0, -1
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = and i64 %i.n, %i.o
   %.not36.i.i.i.i = icmp eq i64 %i.p, 0
@@ -2121,7 +2121,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i.i.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i.i.i.i.i, label %bb.d, !prof !61
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = add i64 %i.a, -1
+  %i.o = add nsw i64 %i.a, -1
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = and i64 %i.o, %i.p
   %.not36.i.i.i.i.i = icmp eq i64 %i.q, 0
@@ -2243,7 +2243,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i.i, label %_Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i.i.i.i, label %bb.d, !prof !61
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = add i64 %0, -1
+  %i.n = add nsw i64 %0, -1
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = and i64 %i.n, %i.o
   %.not36.i.i.i.i = icmp eq i64 %i.p, 0

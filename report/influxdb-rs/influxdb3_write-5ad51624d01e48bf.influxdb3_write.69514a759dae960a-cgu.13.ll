@@ -204,7 +204,7 @@ _RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCs92BnbMq7p8c_15influxdb3_write.exit
   br i1 %i.p, label %bb.b, label %_RNvMsD_NtCs4NRVxsYgnAr_4core3numy16from_ascii_radix.exit
 
 bb.b:                                             ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCs92BnbMq7p8c_15influxdb3_write.exit
-  %i.q = add i64 %spec.select, -10                ; 3 uses
+  %i.q = add nsw i64 %spec.select, -10            ; 3 uses
   switch i64 %i.q, label %thread-pre-split.i [
     i64 0, label %_RNvMsD_NtCs4NRVxsYgnAr_4core3numy16from_ascii_radix.exit
     i64 1, label %bb.c
@@ -607,7 +607,7 @@ _RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCs92BnbMq7p8c_15influxdb3_write.exit
   br i1 %i.p, label %bb.b, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCs92BnbMq7p8c_15influxdb3_write.exit.thread
 
 bb.b:                                             ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCs92BnbMq7p8c_15influxdb3_write.exit
-  %i.q = add i64 %spec.select, -10                ; 3 uses
+  %i.q = add nsw i64 %spec.select, -10            ; 3 uses
   switch i64 %i.q, label %thread-pre-split.i [
     i64 0, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCs92BnbMq7p8c_15influxdb3_write.exit.thread
     i64 1, label %bb.c
@@ -1010,7 +1010,7 @@ _RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCs92BnbMq7p8c_15influxdb3_write.exit
   br i1 %i.j, label %bb.b, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCs92BnbMq7p8c_15influxdb3_write.exit.thread
 
 bb.b:                                             ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCs92BnbMq7p8c_15influxdb3_write.exit
-  %i.k = add i64 %spec.select, -16                ; 3 uses
+  %i.k = add nsw i64 %spec.select, -16            ; 3 uses
   switch i64 %i.k, label %thread-pre-split.i [
     i64 0, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCs92BnbMq7p8c_15influxdb3_write.exit.thread
     i64 1, label %bb.c

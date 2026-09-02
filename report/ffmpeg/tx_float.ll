@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.bz = fneg nsz float %i.by
   %i.ca = fmul nsz float %i.bu, %i.bz
   %i.cb = tail call nsz float @llvm.fmuladd.f32(float %i.bs, float %i.bx, float %i.ca)
-  %i.cc = shl nsw i64 %i.bm, 1
-  %i.cd = mul nsw i64 %i.h, %i.cc
+  %i.cc = shl nuw nsw i64 %i.bm, 1
+  %i.cd = mul nuw nsw i64 %i.h, %i.cc
   %i.ce = getelementptr [4 x i8], ptr %1, i64 %i.cd ; 2 uses
   %i.cf = getelementptr [4 x i8], ptr %i.ce, i64 %i.h
   store float %i.cb, ptr %i.cf, align 4, !tbaa !24
@@ -542,7 +542,7 @@ bb.b:                                             ; preds = %.preheader137
   br label %bb.d
 
 bb.c:                                             ; preds = %.preheader137
-  %i.bh = add i32 %i.r, %i.ad
+  %i.bh = add nsw i32 %i.r, %i.ad
   %i.bi = sext i32 %i.bh to i64
   %i.bj = getelementptr inbounds [4 x i8], ptr %2, i64 %i.bi
   %i.bk = load float, ptr %i.bj, align 4, !tbaa !24
@@ -552,7 +552,7 @@ bb.c:                                             ; preds = %.preheader137
   %i.bo = zext nneg i32 %i.bn to i64
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.bo
   %i.bq = load float, ptr %i.bp, align 4, !tbaa !24
-  %i.br = add i32 %i.g, %i.ad
+  %i.br = add nsw i32 %i.g, %i.ad
   %i.bs = sext i32 %i.br to i64
   %i.bt = getelementptr inbounds [4 x i8], ptr %2, i64 %i.bs
   %i.bu = load float, ptr %i.bt, align 4, !tbaa !24
@@ -589,7 +589,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br i1 %i.co, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.cu = add i32 %i.r, %i.ct
+  %i.cu = add nsw i32 %i.r, %i.ct
   %i.cv = sext i32 %i.cu to i64
   %i.cw = getelementptr inbounds [4 x i8], ptr %2, i64 %i.cv
   %i.cx = load float, ptr %i.cw, align 4, !tbaa !24
@@ -599,7 +599,7 @@ bb.e:                                             ; preds = %bb.d
   %i.db = zext nneg i32 %i.da to i64
   %i.dc = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.db
   %i.dd = load float, ptr %i.dc, align 4, !tbaa !24
-  %i.de = add i32 %i.g, %i.ct
+  %i.de = add nsw i32 %i.g, %i.ct
   %i.df = sext i32 %i.de to i64
   %i.dg = getelementptr inbounds [4 x i8], ptr %2, i64 %i.df
   %i.dh = load float, ptr %i.dg, align 4, !tbaa !24
@@ -654,7 +654,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.eq, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ew = add i32 %i.r, %i.ev
+  %i.ew = add nsw i32 %i.r, %i.ev
   %i.ex = sext i32 %i.ew to i64
   %i.ey = getelementptr inbounds [4 x i8], ptr %2, i64 %i.ex
   %i.ez = load float, ptr %i.ey, align 4, !tbaa !24
@@ -664,7 +664,7 @@ bb.h:                                             ; preds = %bb.g
   %i.fd = zext nneg i32 %i.fc to i64
   %i.fe = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.fd
   %i.ff = load float, ptr %i.fe, align 4, !tbaa !24
-  %i.fg = add i32 %i.g, %i.ev
+  %i.fg = add nsw i32 %i.g, %i.ev
   %i.fh = sext i32 %i.fg to i64
   %i.fi = getelementptr inbounds [4 x i8], ptr %2, i64 %i.fh
   %i.fj = load float, ptr %i.fi, align 4, !tbaa !24
@@ -770,8 +770,8 @@ bb.k:                                             ; preds = %.lr.ph, %bb.k
   %i.ih = fneg nsz float %i.ig
   %i.ii = fmul nsz float %i.ic, %i.ih
   %i.ij = tail call nsz float @llvm.fmuladd.f32(float %i.ia, float %i.if, float %i.ii)
-  %i.ik = shl nsw i64 %i.ho, 1
-  %i.il = mul nsw i64 %i.p, %i.ik
+  %i.ik = shl nuw nsw i64 %i.ho, 1
+  %i.il = mul nuw nsw i64 %i.p, %i.ik
   %i.im = getelementptr [4 x i8], ptr %1, i64 %i.il ; 2 uses
   %i.in = getelementptr [4 x i8], ptr %i.im, i64 %i.p
   store float %i.ij, ptr %i.in, align 4, !tbaa !24
@@ -1048,7 +1048,7 @@ bb.b:                                             ; preds = %.preheader137
   br label %bb.d
 
 bb.c:                                             ; preds = %.preheader137
-  %i.bp = add i32 %i.r, %i.ad
+  %i.bp = add nsw i32 %i.r, %i.ad
   %i.bq = sext i32 %i.bp to i64
   %i.br = getelementptr inbounds [4 x i8], ptr %2, i64 %i.bq
   %i.bs = load float, ptr %i.br, align 4, !tbaa !24
@@ -1058,7 +1058,7 @@ bb.c:                                             ; preds = %.preheader137
   %i.bw = zext nneg i32 %i.bv to i64
   %i.bx = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.bw
   %i.by = load float, ptr %i.bx, align 4, !tbaa !24
-  %i.bz = add i32 %i.g, %i.ad
+  %i.bz = add nsw i32 %i.g, %i.ad
   %i.ca = sext i32 %i.bz to i64
   %i.cb = getelementptr inbounds [4 x i8], ptr %2, i64 %i.ca
   %i.cc = load float, ptr %i.cb, align 4, !tbaa !24
@@ -1095,7 +1095,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br i1 %i.cw, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.dc = add i32 %i.r, %i.db
+  %i.dc = add nsw i32 %i.r, %i.db
   %i.dd = sext i32 %i.dc to i64
   %i.de = getelementptr inbounds [4 x i8], ptr %2, i64 %i.dd
   %i.df = load float, ptr %i.de, align 4, !tbaa !24
@@ -1105,7 +1105,7 @@ bb.e:                                             ; preds = %bb.d
   %i.dj = zext nneg i32 %i.di to i64
   %i.dk = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.dj
   %i.dl = load float, ptr %i.dk, align 4, !tbaa !24
-  %i.dm = add i32 %i.g, %i.db
+  %i.dm = add nsw i32 %i.g, %i.db
   %i.dn = sext i32 %i.dm to i64
   %i.do = getelementptr inbounds [4 x i8], ptr %2, i64 %i.dn
   %i.dp = load float, ptr %i.do, align 4, !tbaa !24
@@ -1160,7 +1160,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.ey, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.fe = add i32 %i.r, %i.fd
+  %i.fe = add nsw i32 %i.r, %i.fd
   %i.ff = sext i32 %i.fe to i64
   %i.fg = getelementptr inbounds [4 x i8], ptr %2, i64 %i.ff
   %i.fh = load float, ptr %i.fg, align 4, !tbaa !24
@@ -1170,7 +1170,7 @@ bb.h:                                             ; preds = %bb.g
   %i.fl = zext nneg i32 %i.fk to i64
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.fl
   %i.fn = load float, ptr %i.fm, align 4, !tbaa !24
-  %i.fo = add i32 %i.g, %i.fd
+  %i.fo = add nsw i32 %i.g, %i.fd
   %i.fp = sext i32 %i.fo to i64
   %i.fq = getelementptr inbounds [4 x i8], ptr %2, i64 %i.fp
   %i.fr = load float, ptr %i.fq, align 4, !tbaa !24
@@ -1225,7 +1225,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %i.ha, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.hg = add i32 %i.r, %i.hf
+  %i.hg = add nsw i32 %i.r, %i.hf
   %i.hh = sext i32 %i.hg to i64
   %i.hi = getelementptr inbounds [4 x i8], ptr %2, i64 %i.hh
   %i.hj = load float, ptr %i.hi, align 4, !tbaa !24
@@ -1235,7 +1235,7 @@ bb.k:                                             ; preds = %bb.j
   %i.hn = zext nneg i32 %i.hm to i64
   %i.ho = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.hn
   %i.hp = load float, ptr %i.ho, align 4, !tbaa !24
-  %i.hq = add i32 %i.g, %i.hf
+  %i.hq = add nsw i32 %i.g, %i.hf
   %i.hr = sext i32 %i.hq to i64
   %i.hs = getelementptr inbounds [4 x i8], ptr %2, i64 %i.hr
   %i.ht = load float, ptr %i.hs, align 4, !tbaa !24
@@ -1290,7 +1290,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.jc, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.ji = add i32 %i.r, %i.jh
+  %i.ji = add nsw i32 %i.r, %i.jh
   %i.jj = sext i32 %i.ji to i64
   %i.jk = getelementptr inbounds [4 x i8], ptr %2, i64 %i.jj
   %i.jl = load float, ptr %i.jk, align 4, !tbaa !24
@@ -1300,7 +1300,7 @@ bb.n:                                             ; preds = %bb.m
   %i.jp = zext nneg i32 %i.jo to i64
   %i.jq = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.jp
   %i.jr = load float, ptr %i.jq, align 4, !tbaa !24
-  %i.js = add i32 %i.g, %i.jh
+  %i.js = add nsw i32 %i.g, %i.jh
   %i.jt = sext i32 %i.js to i64
   %i.ju = getelementptr inbounds [4 x i8], ptr %2, i64 %i.jt
   %i.jv = load float, ptr %i.ju, align 4, !tbaa !24
@@ -1434,8 +1434,8 @@ bb.q:                                             ; preds = %.lr.ph, %bb.q
   %i.nt = fneg nsz float %i.ns
   %i.nu = fmul nsz float %i.no, %i.nt
   %i.nv = tail call nsz float @llvm.fmuladd.f32(float %i.nm, float %i.nr, float %i.nu)
-  %i.nw = shl nsw i64 %i.na, 1
-  %i.nx = mul nsw i64 %i.p, %i.nw
+  %i.nw = shl nuw nsw i64 %i.na, 1
+  %i.nx = mul nuw nsw i64 %i.p, %i.nw
   %i.ny = getelementptr [4 x i8], ptr %1, i64 %i.nx ; 2 uses
   %i.nz = getelementptr [4 x i8], ptr %i.ny, i64 %i.p
   store float %i.nv, ptr %i.nz, align 4, !tbaa !24
@@ -1718,7 +1718,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
-  %i.gj = add i32 %i.r, %i.ft
+  %i.gj = add nsw i32 %i.r, %i.ft
   %i.gk = sext i32 %i.gj to i64
   %i.gl = getelementptr inbounds [4 x i8], ptr %2, i64 %i.gk
   %i.gm = load float, ptr %i.gl, align 4, !tbaa !24
@@ -1728,7 +1728,7 @@ bb.e:                                             ; preds = %bb.c
   %i.gq = zext nneg i32 %i.gp to i64
   %i.gr = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.gq
   %i.gs = load float, ptr %i.gr, align 4, !tbaa !24
-  %i.gt = add i32 %i.g, %i.ft
+  %i.gt = add nsw i32 %i.g, %i.ft
   %i.gu = sext i32 %i.gt to i64
   %i.gv = getelementptr inbounds [4 x i8], ptr %2, i64 %i.gu
   %i.gw = load float, ptr %i.gv, align 4, !tbaa !24
@@ -1795,8 +1795,8 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.il = fneg nsz float %i.ik
   %i.im = fmul nsz float %i.ig, %i.il
   %i.in = tail call nsz float @llvm.fmuladd.f32(float %i.ie, float %i.ij, float %i.im)
-  %i.io = shl nsw i64 %i.hs, 1
-  %i.ip = mul nsw i64 %i.p, %i.io
+  %i.io = shl nuw nsw i64 %i.hs, 1
+  %i.ip = mul nuw nsw i64 %i.p, %i.io
   %i.iq = getelementptr [4 x i8], ptr %1, i64 %i.ip ; 2 uses
   %i.ir = getelementptr [4 x i8], ptr %i.iq, i64 %i.p
   store float %i.in, ptr %i.ir, align 4, !tbaa !24
@@ -2077,7 +2077,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
-  %i.fz = add i32 %i.r, %i.fj
+  %i.fz = add nsw i32 %i.r, %i.fj
   %i.ga = sext i32 %i.fz to i64
   %i.gb = getelementptr inbounds [4 x i8], ptr %2, i64 %i.ga
   %i.gc = load float, ptr %i.gb, align 4, !tbaa !24
@@ -2087,7 +2087,7 @@ bb.e:                                             ; preds = %bb.c
   %i.gg = zext nneg i32 %i.gf to i64
   %i.gh = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.gg
   %i.gi = load float, ptr %i.gh, align 4, !tbaa !24
-  %i.gj = add i32 %i.g, %i.fj
+  %i.gj = add nsw i32 %i.g, %i.fj
   %i.gk = sext i32 %i.gj to i64
   %i.gl = getelementptr inbounds [4 x i8], ptr %2, i64 %i.gk
   %i.gm = load float, ptr %i.gl, align 4, !tbaa !24
@@ -2154,8 +2154,8 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.ib = fneg nsz float %i.ia
   %i.ic = fmul nsz float %i.hw, %i.ib
   %i.id = tail call nsz float @llvm.fmuladd.f32(float %i.hu, float %i.hz, float %i.ic)
-  %i.ie = shl nsw i64 %i.hi, 1
-  %i.if = mul nsw i64 %i.p, %i.ie
+  %i.ie = shl nuw nsw i64 %i.hi, 1
+  %i.if = mul nuw nsw i64 %i.p, %i.ie
   %i.ig = getelementptr [4 x i8], ptr %1, i64 %i.if ; 2 uses
   %i.ih = getelementptr [4 x i8], ptr %i.ig, i64 %i.p
   store float %i.id, ptr %i.ih, align 4, !tbaa !24
@@ -2558,7 +2558,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  %i.lr = add i32 %i.r, %i.lb
+  %i.lr = add nsw i32 %i.r, %i.lb
   %i.ls = sext i32 %i.lr to i64
   %i.lt = getelementptr inbounds [4 x i8], ptr %2, i64 %i.ls
   %i.lu = load float, ptr %i.lt, align 4, !tbaa !24
@@ -2568,7 +2568,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ly = zext nneg i32 %i.lx to i64
   %i.lz = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.ly
   %i.ma = load float, ptr %i.lz, align 4, !tbaa !24
-  %i.mb = add i32 %i.g, %i.lb
+  %i.mb = add nsw i32 %i.g, %i.lb
   %i.mc = sext i32 %i.mb to i64
   %i.md = getelementptr inbounds [4 x i8], ptr %2, i64 %i.mc
   %i.me = load float, ptr %i.md, align 4, !tbaa !24
@@ -2635,8 +2635,8 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %i.nt = fneg nsz float %i.ns
   %i.nu = fmul nsz float %i.no, %i.nt
   %i.nv = tail call nsz float @llvm.fmuladd.f32(float %i.nm, float %i.nr, float %i.nu)
-  %i.nw = shl nsw i64 %i.na, 1
-  %i.nx = mul nsw i64 %i.p, %i.nw
+  %i.nw = shl nuw nsw i64 %i.na, 1
+  %i.nx = mul nuw nsw i64 %i.p, %i.nw
   %i.ny = getelementptr [4 x i8], ptr %1, i64 %i.nx ; 2 uses
   %i.nz = getelementptr [4 x i8], ptr %i.ny, i64 %i.p
   store float %i.nv, ptr %i.nz, align 4, !tbaa !24

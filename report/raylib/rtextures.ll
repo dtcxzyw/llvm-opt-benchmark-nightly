@@ -205,9 +205,9 @@ bb.l:                                             ; preds = %bb.j
   %i.ax = icmp eq i32 %i.g, %3                    ; 3 uses
   %i.ay = icmp eq i32 %i.g, 1                     ; 3 uses
   %.not404 = icmp eq i32 %i.y, 0                  ; 4 uses
-  %.030.i305 = add i32 %4, -1                     ; 7 uses
-  %i.az = icmp sgt i32 %.030.i305, -1             ; 4 uses
-  %i.ba = zext i32 %.030.i305 to i64              ; 17 uses
+  %.030.i305 = add i32 %4, -1                     ; 4 uses
+  %i.az = icmp sgt i32 %4, 0                      ; 4 uses
+  %i.ba = zext i32 %.030.i305 to i64              ; 16 uses
   %i.bb = zext i32 %i.y to i64
   %i.bc = icmp eq i32 %7, 0
   %i.bd = sext i32 %6 to i64
@@ -320,11 +320,11 @@ bb.l:                                             ; preds = %bb.j
   %i.ck = mul nuw nsw i64 %i.ba, 3
   %indvars.iv.next.i310.prol = add nsw i64 %i.ba, -1
   %i.cl = icmp eq i32 %.030.i305, 0
-  %8 = add nuw nsw i64 %i.ba, 1                   ; 2 uses
-  %min.iters.check = icmp ult i32 %.030.i305, 7
-  %n.vec = and i64 %8, 4294967288                 ; 3 uses
+  %8 = zext nneg i32 %4 to i64                    ; 2 uses
+  %min.iters.check = icmp ult i32 %4, 8
+  %n.vec = and i64 %8, 2147483640                 ; 3 uses
   %i.cm = sub nsw i64 %i.ba, %n.vec
-  %cmp.n = icmp eq i64 %8, %n.vec
+  %cmp.n = icmp eq i64 %n.vec, %8
   %xtraiter772 = and i32 %i.y, 1
   %i.cn = icmp eq i32 %i.bh, 0
   %unroll_iter776 = and i32 %i.y, -2
@@ -348,7 +348,7 @@ bb.l:                                             ; preds = %bb.j
   %i.ct = icmp eq i32 %.030.i305, 0
   %xtraiter793 = and i64 %i.bi, 3                 ; 2 uses
   %lcmp.mod794.not = icmp eq i64 %xtraiter793, 0
-  %i.cu = icmp ult i32 %.030.i305, 3
+  %i.cu = icmp ult i32 %4, 4
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph400, %.loopexit
@@ -751,7 +751,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph63.preheader.i:                             ; preds = %.preheader.i.loopexit
   %scevgep.i = getelementptr i8, ptr %.0135174, i64 4
-  %i.it = add i32 %i.hl, %i.he
+  %i.it = add nsw i32 %i.hl, %i.he
   %i.iu = zext i32 %i.it to i64
   %i.iv = shl nuw nsw i64 %i.iu, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i, i8 0, i64 %i.iv, i1 false)

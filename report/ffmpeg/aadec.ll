@@ -205,7 +205,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !27   ; 7 uses
   %spec.store.select = tail call i64 @llvm.smax.i64(i64 %2, i64 0) ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !46   ; 4 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !46   ; 5 uses
   %.not60 = icmp eq i32 %i.d, 0
   br i1 %.not60, label %.critedge.thread66, label %.lr.ph
 
@@ -230,16 +230,16 @@ bb.c:                                             ; preds = %bb.b
   br i1 %exitcond.not, label %.critedge, label %bb.b, !llvm.loop !86
 
 .critedge:                                        ; preds = %bb.c
-  %4 = add i32 %i.d, -1                           ; 2 uses
-  %i.k = icmp slt i32 %4, 0
+  %i.k = icmp slt i32 %i.d, 1
   br i1 %i.k, label %.critedge.thread66, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !87
-  %i.n = zext nneg i32 %4 to i64
-  %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.n
-  %i.p = load ptr, ptr %i.o, align 8, !tbaa !89   ; 2 uses
+  %i.n = zext nneg i32 %i.d to i64
+  %i.o = getelementptr [8 x i8], ptr %i.m, i64 %i.n
+  %4 = getelementptr i8, ptr %i.o, i64 -8
+  %i.p = load ptr, ptr %4, align 8, !tbaa !89     ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 24
   %i.r = load i64, ptr %i.q, align 8, !tbaa !91   ; 2 uses
   br label %.critedge.thread

@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   %i.m = xor i32 %i.i, -1
   %i.n = add nsw i32 %i.b, %i.m
   %i.o = sext i32 %i.n to i64
-  %i.p = shl nsw i64 %i.o, 3
+  %i.p = shl nuw nsw i64 %i.o, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.k, ptr align 8 %i.l, i64 %i.p, i1 false)
   %.pre.i = load i32, ptr %0, align 8, !tbaa !13  ; 2 uses
   %.pre15.i = add nsw i32 %.pre.i, -1

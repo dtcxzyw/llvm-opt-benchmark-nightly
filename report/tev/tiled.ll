@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader.i1
   %broadcast.splatinsert176 = insertelement <4 x i32> poison, i32 %i.kd, i64 0
   %broadcast.splat177 = shufflevector <4 x i32> %broadcast.splatinsert176, <4 x i32> poison, <4 x i32> zeroinitializer ; 7 uses
   %i.ki = add nsw <4 x i32> %broadcast.splat, <i32 -1, i32 -2, i32 -3, i32 -4>
-  %i.kj = shl nsw <4 x i32> %i.ki, splat (i32 3)
+  %i.kj = shl nuw nsw <4 x i32> %i.ki, splat (i32 3)
   %i.kk = lshr <4 x i32> %broadcast.splat177, %i.kj
   %i.kl = trunc <4 x i32> %i.kk to <4 x i8>
   store <4 x i8> %i.kl, ptr %i.kh, align 1, !tbaa !37
@@ -214,7 +214,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader.i1
 
 vector.body.1:                                    ; preds = %vector.ph
   %i.kn = add nsw <4 x i32> %broadcast.splat, <i32 -5, i32 -6, i32 -7, i32 -8>
-  %i.ko = shl nsw <4 x i32> %i.kn, splat (i32 3)
+  %i.ko = shl nuw nsw <4 x i32> %i.kn, splat (i32 3)
   %i.kp = lshr <4 x i32> %broadcast.splat177, %i.ko
   %i.kq = trunc <4 x i32> %i.kp to <4 x i8>
   %i.kr = getelementptr i8, ptr %i.kh, i64 4
@@ -224,7 +224,7 @@ vector.body.1:                                    ; preds = %vector.ph
 
 vector.body.2:                                    ; preds = %vector.body.1
   %i.kt = add nsw <4 x i32> %broadcast.splat, <i32 -9, i32 -10, i32 -11, i32 -12>
-  %i.ku = shl nsw <4 x i32> %i.kt, splat (i32 3)
+  %i.ku = shl nuw nsw <4 x i32> %i.kt, splat (i32 3)
   %i.kv = lshr <4 x i32> %broadcast.splat177, %i.ku
   %i.kw = trunc <4 x i32> %i.kv to <4 x i8>
   %i.kx = getelementptr i8, ptr %i.kh, i64 8
@@ -234,7 +234,7 @@ vector.body.2:                                    ; preds = %vector.body.1
 
 vector.body.3:                                    ; preds = %vector.body.2
   %i.kz = add nsw <4 x i32> %broadcast.splat, <i32 -13, i32 -14, i32 -15, i32 -16>
-  %i.la = shl nsw <4 x i32> %i.kz, splat (i32 3)
+  %i.la = shl nuw nsw <4 x i32> %i.kz, splat (i32 3)
   %i.lb = lshr <4 x i32> %broadcast.splat177, %i.la
   %i.lc = trunc <4 x i32> %i.lb to <4 x i8>
   %i.ld = getelementptr i8, ptr %i.kh, i64 12
@@ -244,7 +244,7 @@ vector.body.3:                                    ; preds = %vector.body.2
 
 vector.body.4:                                    ; preds = %vector.body.3
   %i.lf = add nsw <4 x i32> %broadcast.splat, <i32 -17, i32 -18, i32 -19, i32 -20>
-  %i.lg = shl nsw <4 x i32> %i.lf, splat (i32 3)
+  %i.lg = shl nuw nsw <4 x i32> %i.lf, splat (i32 3)
   %i.lh = lshr <4 x i32> %broadcast.splat177, %i.lg
   %i.li = trunc <4 x i32> %i.lh to <4 x i8>
   %i.lj = getelementptr i8, ptr %i.kh, i64 16
@@ -254,7 +254,7 @@ vector.body.4:                                    ; preds = %vector.body.3
 
 vector.body.5:                                    ; preds = %vector.body.4
   %i.ll = add nsw <4 x i32> %broadcast.splat, <i32 -21, i32 -22, i32 -23, i32 -24>
-  %i.lm = shl nsw <4 x i32> %i.ll, splat (i32 3)
+  %i.lm = shl nuw nsw <4 x i32> %i.ll, splat (i32 3)
   %i.ln = lshr <4 x i32> %broadcast.splat177, %i.lm
   %i.lo = trunc <4 x i32> %i.ln to <4 x i8>
   %i.lp = getelementptr i8, ptr %i.kh, i64 20
@@ -264,7 +264,7 @@ vector.body.5:                                    ; preds = %vector.body.4
 
 vector.body.6:                                    ; preds = %vector.body.5
   %i.lr = add nsw <4 x i32> %broadcast.splat, <i32 -25, i32 -26, i32 -27, i32 -28>
-  %i.ls = shl nsw <4 x i32> %i.lr, splat (i32 3)
+  %i.ls = shl nuw nsw <4 x i32> %i.lr, splat (i32 3)
   %i.lt = lshr <4 x i32> %broadcast.splat177, %i.ls
   %i.lu = trunc <4 x i32> %i.lt to <4 x i8>
   %i.lv = getelementptr i8, ptr %i.kh, i64 24
@@ -284,7 +284,7 @@ middle.block:                                     ; preds = %vector.body.6, %vec
   %i.lw = trunc nuw nsw i64 %indvars.iv.i113 to i32
   %i.lx = xor i32 %i.lw, -1
   %i.ly = add nsw i32 %i.lx, %i.kf
-  %i.lz = shl nsw i32 %i.ly, 3
+  %i.lz = shl nuw nsw i32 %i.ly, 3
   %i.ma = lshr i32 %i.kd, %i.lz
   %i.mb = trunc i32 %i.ma to i8
   %i.mc = getelementptr i8, ptr %i.kh, i64 %indvars.iv.i113

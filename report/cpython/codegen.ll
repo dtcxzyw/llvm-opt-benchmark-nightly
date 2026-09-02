@@ -205,9 +205,9 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.p = tail call ptr @_PyCompile_InstrSequence(ptr noundef %0) #10
-  %i.q = shl nsw i64 %i.n, 8
+  %i.q = shl nuw nsw i64 %i.n, 8
   %i.r = or disjoint i64 %i.q, %.03254.i
-  %i.s = trunc i64 %i.r to i32
+  %i.s = trunc nsw i64 %i.r to i32
   %i.t = tail call i32 @_PyInstructionSequence_Addop(ptr noundef %i.p, i32 noundef 118, i32 noundef %i.s, i64 %1, i64 %2) #10
   %i.u = icmp eq i32 %i.t, -1
   br i1 %i.u, label %codegen_pattern_unpack_helper.exit.thread, label %.thread60.i
@@ -610,9 +610,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.e
   %i.o = tail call ptr @_PyCompile_InstrSequence(ptr noundef %0) #10
-  %i.p = shl nsw i64 %i.l, 8
+  %i.p = shl nuw nsw i64 %i.l, 8
   %i.q = or disjoint i64 %i.p, %.03254
-  %i.r = trunc i64 %i.q to i32
+  %i.r = trunc nsw i64 %i.q to i32
   %i.s = tail call i32 @_PyInstructionSequence_Addop(ptr noundef %i.o, i32 noundef 118, i32 noundef %i.r, i64 %1, i64 %2) #10
   %i.t = icmp eq i32 %i.s, -1
   br i1 %i.t, label %.thread46, label %.thread60
