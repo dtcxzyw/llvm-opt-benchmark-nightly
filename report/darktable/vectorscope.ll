@@ -205,8 +205,8 @@ dt_xyY_to_Luv.exit.i:                             ; preds = %bb.k, %bb.j
   %i.du = fmul reassoc nsz arcp contract afn float %i.dh, 2.000000e+00
   %i.dv = fsub reassoc nsz arcp contract afn float %i.dt, %i.du
   %i.dw = fmul reassoc nsz arcp contract afn float %i.dp, 1.300000e+01
-  %5 = insertelement <2 x float> poison, float %i.dv, i64 0
-  %6 = fadd reassoc nsz arcp contract afn <2 x float> %5, <float 3.000000e+00, float poison>
+  %5 = fadd reassoc nsz arcp contract afn float %i.dv, 3.000000e+00
+  %6 = insertelement <2 x float> poison, float %5, i64 0
   %i.dx = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dy = fdiv reassoc nsz arcp contract afn <2 x float> %i.ds, %i.dx
   %i.dz = fadd reassoc nsz arcp contract afn <2 x float> %i.dy, <float f0xBE562DD1, float f0xBEF9E502>
@@ -609,14 +609,14 @@ dt_xyY_to_Luv.exit:                               ; preds = %bb.c, %bb.d
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ag = fsub reassoc nsz arcp contract afn float %i.ac, %i.ae
   %i.ah = fmul reassoc nsz arcp contract afn float %i.z, 1.300000e+01
-  %5 = insertelement <2 x float> poison, float %i.ah, i64 0
-  %i.ai = insertelement <2 x float> poison, float %i.ag, i64 1
-  %6 = fadd reassoc nsz arcp contract afn <2 x float> %i.ai, <float poison, float 3.000000e+00>
-  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %8 = fdiv reassoc nsz arcp contract afn <2 x float> %i.aa, %7
-  %9 = fadd reassoc nsz arcp contract afn <2 x float> %8, <float f0xBE562DD1, float f0xBEF9E502>
-  %i.aj = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.ak = fmul reassoc nsz arcp contract afn <2 x float> %i.aj, %9
+  %5 = fadd reassoc nsz arcp contract afn float %i.ag, 3.000000e+00
+  %i.ai = insertelement <2 x float> poison, float %5, i64 0
+  %6 = shufflevector <2 x float> %i.ai, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = fdiv reassoc nsz arcp contract afn <2 x float> %i.aa, %6
+  %8 = fadd reassoc nsz arcp contract afn <2 x float> %7, <float f0xBE562DD1, float f0xBEF9E502>
+  %9 = insertelement <2 x float> poison, float %i.ah, i64 0
+  %i.aj = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.ak = fmul reassoc nsz arcp contract afn <2 x float> %i.aj, %8
   store <2 x float> %i.ak, ptr %i.af, align 4, !tbaa !111
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   br label %bb.w
