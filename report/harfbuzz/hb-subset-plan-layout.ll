@@ -205,8 +205,9 @@ bb.a:
   store i32 0, ptr %i.h, align 4, !tbaa !64
   store atomic i32 0, ptr %i.i monotonic, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33) %i.j, i8 0, i64 33, i1 false)
-  %i.k = load i16, ptr %0, align 1, !tbaa !56, !noalias !647 ; 2 uses
-  %i.l = tail call noundef i16 @llvm.bswap.i16(i16 %i.k) ; 2 uses
+  %i.k = load i16, ptr %0, align 1, !tbaa !56, !noalias !647
+  %.fr140 = freeze i16 %i.k                       ; 2 uses
+  %i.l = tail call noundef i16 @llvm.bswap.i16(i16 %.fr140) ; 2 uses
   switch i16 %i.l, label %"_ZorI13hb_map_iter_tIS0_I16hb_filter_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE10hb_array_tIKNS4_9GPOS_impl10MarkRecordEEERK8hb_set_tRK3$_6LPv0EERK3$_7L24hb_function_sortedness_t0ELSK_0EEMSA_KFjvELSP_0ELSK_0EE9hb_sink_tIRSE_ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSY_6item_tEEE5valueEvE4typeELSK_0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISY_Efp_EEEOSY_OS13_.exit" [
     i16 1, label %bb.b
     i16 2, label %bb.c
@@ -271,7 +272,7 @@ bb.f:                                             ; preds = %_ZNK2OT7ArrayOfINS_
   %.sroa.11.2.i.ph = phi i32 [ %.sroa.11.1.i, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i.i.i ], [ 0, %bb.f ], [ 0, %bb.b ] ; 2 uses
   %.sroa.7.0.i.ph = phi i32 [ 0, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i.i.i ], [ %i.af, %bb.f ], [ 0, %bb.b ] ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 12 uses
-  %i.ah = icmp eq i16 %i.k, 256                   ; 4 uses
+  %i.ah = icmp eq i16 %.fr140, 256                ; 4 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 6 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 4 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 36 ; 2 uses
