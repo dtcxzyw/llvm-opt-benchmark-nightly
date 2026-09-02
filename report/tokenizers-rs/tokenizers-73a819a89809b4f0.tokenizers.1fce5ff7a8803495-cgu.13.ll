@@ -204,9 +204,8 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
   %.ph = phi i64 [ %.sroa.5.0.copyload, %vector.memcheck ], [ %.sroa.5.0.copyload, %.lr.ph.i.i ], [ %i.p, %middle.block ] ; 3 uses
   %.sroa.0.015.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 4 uses
   %.neg = or disjoint i64 %.sroa.0.015.i.i.ph, 1
-  %xtraiter = and i64 %.sroa.0.0.i.i.i.i, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %2 = trunc i64 %.sroa.0.0.i.i.i.i to i1
+  br i1 %2, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.ab = or disjoint i64 %.sroa.0.015.i.i.ph, 1
@@ -371,9 +370,8 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
   %.ph = phi i64 [ %.sroa.5.0.copyload, %vector.memcheck ], [ %.sroa.5.0.copyload, %.lr.ph.i.i ], [ %i.p, %middle.block ] ; 3 uses
   %.sroa.0.015.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 4 uses
   %.neg = or disjoint i64 %.sroa.0.015.i.i.ph, 1
-  %xtraiter = and i64 %.sroa.0.0.i.i.i.i, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %2 = trunc i64 %.sroa.0.0.i.i.i.i to i1
+  br i1 %2, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.ab = or disjoint i64 %.sroa.0.015.i.i.ph, 1
@@ -776,8 +774,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.g = ptrtoint ptr %i.c to i64
   %i.h = ptrtoint ptr %i.a to i64
-  %i.i = sub nuw i64 %i.g, %i.h                   ; 4 uses
-  %i.j = lshr i64 %i.i, 4                         ; 4 uses
+  %i.i = sub nuw i64 %i.g, %i.h                   ; 3 uses
+  %i.j = lshr i64 %i.i, 4                         ; 5 uses
   %min.iters.check = icmp ult i64 %i.i, 160
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -833,9 +831,8 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %b
   %.ph = phi i64 [ %.sroa.5.0.copyload, %vector.memcheck ], [ %.sroa.5.0.copyload, %bb.b ], [ %i.n, %middle.block ] ; 3 uses
   %.sroa.01.0.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.b ], [ %n.vec, %middle.block ] ; 4 uses
   %.neg = or disjoint i64 %.sroa.01.0.i.ph, 1
-  %2 = and i64 %i.i, 16
-  %lcmp.mod.not = icmp eq i64 %2, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %2 = trunc i64 %i.j to i1
+  br i1 %2, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.z = getelementptr inbounds nuw [16 x i8], ptr %i.a, i64 %.sroa.01.0.i.ph
@@ -912,7 +909,6 @@ bb.b:                                             ; preds = %bb.a
   %i.i = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.j = ptrtoint ptr %i.a to i64                 ; 2 uses
   %i.k = sub i64 %i.i, %i.j                       ; 3 uses
-  %xtraiter = and i64 %i.k, 1
   %i.l = add i64 %i.i, -1
   %i.m = icmp eq i64 %i.l, %i.j
   br i1 %i.m, label %.epil.preheader, label %.new
@@ -962,8 +958,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCscdodAO9FK5_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsj_NtB2l_3vecINtB3w_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs2JiOgHzbbc7_10tokenizers.exit.loopexit.unr-lcssa, label %bb.c
 
 _RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCscdodAO9FK5_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsj_NtB2l_3vecINtB3w_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs2JiOgHzbbc7_10tokenizers.exit.loopexit.unr-lcssa: ; preds = %bb.g
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCscdodAO9FK5_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsj_NtB2l_3vecINtB3w_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs2JiOgHzbbc7_10tokenizers.exit, label %.epil.preheader
+  %2 = trunc i64 %i.k to i1
+  br i1 %2, label %.epil.preheader, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCscdodAO9FK5_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsj_NtB2l_3vecINtB3w_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs2JiOgHzbbc7_10tokenizers.exit
 
 .epil.preheader:                                  ; preds = %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCscdodAO9FK5_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsj_NtB2l_3vecINtB3w_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs2JiOgHzbbc7_10tokenizers.exit.loopexit.unr-lcssa, %bb.b
   %.epil.init = phi i64 [ %.sroa.5.0.copyload, %bb.b ], [ %i.aa, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCscdodAO9FK5_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsj_NtB2l_3vecINtB3w_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs2JiOgHzbbc7_10tokenizers.exit.loopexit.unr-lcssa ] ; 2 uses

@@ -205,7 +205,6 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = sdiv exact i64 %i.f, 24                  ; 3 uses
-  %xtraiter = and i64 %i.g, 1
   %i.h = icmp eq i64 %i.f, 24
   br i1 %i.h, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -214,8 +213,8 @@ bb.a:
   br label %.lr.ph
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  %2 = trunc i64 %i.g to i1
+  br i1 %2, label %.lr.ph.epil.preheader, label %._crit_edge
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %.011.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.y, %._crit_edge.loopexit.unr-lcssa ]
@@ -367,7 +366,6 @@ bb.g:                                             ; preds = %.noexc17
   %i.ak = ptrtoint ptr %.pr.i55 to i64
   %i.al = sub i64 %i.aj, %i.ak                    ; 2 uses
   %i.am = sdiv exact i64 %i.al, 24                ; 3 uses
-  %xtraiter = and i64 %i.am, 1
   %i.an = icmp eq i64 %i.al, 24
   br i1 %i.an, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
@@ -398,8 +396,8 @@ bb.g:                                             ; preds = %.noexc17
   br i1 %niter.ncmp.1, label %_Z19getMaxWidthOfColumnSt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EESaIS7_EEm.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !3
 
 _Z19getMaxWidthOfColumnSt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EESaIS7_EEm.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_Z19getMaxWidthOfColumnSt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EESaIS7_EEm.exit, label %.lr.ph.i.epil.preheader
+  %4 = trunc i64 %i.am to i1
+  br i1 %4, label %.lr.ph.i.epil.preheader, label %_Z19getMaxWidthOfColumnSt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EESaIS7_EEm.exit
 
 .lr.ph.i.epil.preheader:                          ; preds = %_Z19getMaxWidthOfColumnSt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EESaIS7_EEm.exit.loopexit.unr-lcssa, %.lr.ph.preheader.i
   %.011.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %i.az, %_Z19getMaxWidthOfColumnSt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EESaIS7_EEm.exit.loopexit.unr-lcssa ]
@@ -476,7 +474,6 @@ _Z19getMaxWidthOfColumnSt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIc
   %i.bu = ptrtoint ptr %i.bp to i64
   %i.bv = sub i64 %i.bt, %i.bu                    ; 2 uses
   %i.bw = sdiv exact i64 %i.bv, 24                ; 3 uses
-  %xtraiter174 = and i64 %i.bw, 1
   %i.bx = icmp eq i64 %i.bv, 24
   br i1 %i.bx, label %.lr.ph.i30.epil.preheader, label %.lr.ph.preheader.i29.new
 
@@ -507,8 +504,8 @@ _Z19getMaxWidthOfColumnSt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIc
   br i1 %niter179.ncmp.1, label %_Z19getMaxWidthOfColumnSt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EESaIS7_EEm.exit36.unr-lcssa, label %.lr.ph.i30, !llvm.loop !3
 
 _Z19getMaxWidthOfColumnSt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EESaIS7_EEm.exit36.unr-lcssa: ; preds = %.lr.ph.i30
-  %lcmp.mod175.not = icmp eq i64 %xtraiter174, 0
-  br i1 %lcmp.mod175.not, label %_Z19getMaxWidthOfColumnSt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EESaIS7_EEm.exit36, label %.lr.ph.i30.epil.preheader
+  %5 = trunc i64 %i.bw to i1
+  br i1 %5, label %.lr.ph.i30.epil.preheader, label %_Z19getMaxWidthOfColumnSt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EESaIS7_EEm.exit36
 
 .lr.ph.i30.epil.preheader:                        ; preds = %_Z19getMaxWidthOfColumnSt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EESaIS7_EEm.exit36.unr-lcssa, %.lr.ph.preheader.i29
   %.011.i31.epil.init = phi i64 [ 0, %.lr.ph.preheader.i29 ], [ %i.cj, %_Z19getMaxWidthOfColumnSt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EESaIS7_EEm.exit36.unr-lcssa ]
@@ -825,8 +822,8 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %.preheader
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
-  %i.j = sub i64 %i.h, %i.i                       ; 3 uses
-  %i.k = ashr exact i64 %i.j, 3                   ; 2 uses
+  %i.j = sub i64 %i.h, %i.i                       ; 2 uses
+  %i.k = ashr exact i64 %i.j, 3                   ; 3 uses
   %i.l = icmp eq i64 %i.j, 8
   br i1 %i.l, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -870,9 +867,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.1
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !4
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.d
-  %2 = and i64 %i.j, 8
-  %lcmp.mod.not = icmp eq i64 %2, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.epil.preheader
+  %2 = trunc i64 %i.k to i1
+  br i1 %2, label %.lr.ph.epil.preheader, label %.loopexit
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %.012.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.z, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -1275,8 +1271,8 @@ _ZNSt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EESaIS
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
   %i.ia = ptrtoint ptr %i.hy to i64
   %i.ib = ptrtoint ptr %i.hz to i64
-  %i.ic = sub i64 %i.ia, %i.ib                    ; 3 uses
-  %i.id = ashr exact i64 %i.ic, 3                 ; 2 uses
+  %i.ic = sub i64 %i.ia, %i.ib                    ; 2 uses
+  %i.id = ashr exact i64 %i.ic, 3                 ; 3 uses
   %i.ie = icmp eq i64 %i.ic, 8
   br i1 %i.ie, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
@@ -1320,9 +1316,8 @@ bb.bg:                                            ; preds = %bb.bf, %.lr.ph.i.1
   br i1 %niter.ncmp.1, label %_Z32expandMaxWidthsAccordingToLabelsRSt6vectorImSaImEERS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EE.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !4
 
 _Z32expandMaxWidthsAccordingToLabelsRSt6vectorImSaImEERS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EE.exit.loopexit.unr-lcssa: ; preds = %bb.bg
-  %46 = and i64 %i.ic, 8
-  %lcmp.mod.not = icmp eq i64 %46, 0
-  br i1 %lcmp.mod.not, label %_Z32expandMaxWidthsAccordingToLabelsRSt6vectorImSaImEERS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EE.exit, label %.lr.ph.i.epil.preheader
+  %46 = trunc i64 %i.id to i1
+  br i1 %46, label %.lr.ph.i.epil.preheader, label %_Z32expandMaxWidthsAccordingToLabelsRSt6vectorImSaImEERS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EE.exit
 
 .lr.ph.i.epil.preheader:                          ; preds = %_Z32expandMaxWidthsAccordingToLabelsRSt6vectorImSaImEERS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EE.exit.loopexit.unr-lcssa, %.lr.ph.preheader.i
   %.012.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %i.is, %_Z32expandMaxWidthsAccordingToLabelsRSt6vectorImSaImEERS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EE.exit.loopexit.unr-lcssa ] ; 2 uses
@@ -1357,8 +1352,8 @@ _Z32expandMaxWidthsAccordingToLabelsRSt6vectorImSaImEERS_INSt7__cxx1112basic_str
 .lr.ph.preheader.i245:                            ; preds = %.preheader.i243
   %i.jg = ptrtoint ptr %i.je to i64
   %i.jh = ptrtoint ptr %i.jf to i64
-  %i.ji = sub i64 %i.jg, %i.jh                    ; 3 uses
-  %i.jj = ashr exact i64 %i.ji, 3                 ; 2 uses
+  %i.ji = sub i64 %i.jg, %i.jh                    ; 2 uses
+  %i.jj = ashr exact i64 %i.ji, 3                 ; 3 uses
   %i.jk = icmp eq i64 %i.ji, 8
   br i1 %i.jk, label %.lr.ph.i246.epil.preheader, label %.lr.ph.preheader.i245.new
 
@@ -1402,9 +1397,8 @@ bb.bk:                                            ; preds = %bb.bj, %.lr.ph.i246
   br i1 %niter996.ncmp.1, label %_Z32expandMaxWidthsAccordingToLabelsRSt6vectorImSaImEERS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EE.exit249.loopexit.unr-lcssa, label %.lr.ph.i246, !llvm.loop !4
 
 _Z32expandMaxWidthsAccordingToLabelsRSt6vectorImSaImEERS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EE.exit249.loopexit.unr-lcssa: ; preds = %bb.bk
-  %47 = and i64 %i.ji, 8
-  %lcmp.mod993.not = icmp eq i64 %47, 0
-  br i1 %lcmp.mod993.not, label %_Z32expandMaxWidthsAccordingToLabelsRSt6vectorImSaImEERS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EE.exit249, label %.lr.ph.i246.epil.preheader
+  %47 = trunc i64 %i.jj to i1
+  br i1 %47, label %.lr.ph.i246.epil.preheader, label %_Z32expandMaxWidthsAccordingToLabelsRSt6vectorImSaImEERS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EE.exit249
 
 .lr.ph.i246.epil.preheader:                       ; preds = %_Z32expandMaxWidthsAccordingToLabelsRSt6vectorImSaImEERS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EE.exit249.loopexit.unr-lcssa, %.lr.ph.preheader.i245
   %.012.i247.epil.init = phi i64 [ 0, %.lr.ph.preheader.i245 ], [ %i.jy, %_Z32expandMaxWidthsAccordingToLabelsRSt6vectorImSaImEERS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EE.exit249.loopexit.unr-lcssa ] ; 2 uses
@@ -1807,7 +1801,6 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !773
   %i.j = getelementptr [16 x i8], ptr %i.i, i64 %1 ; 3 uses
-  %xtraiter = and i64 %i.g, 1
   %i.k = icmp eq i64 %i.f, 24
   br i1 %i.k, label %.epil.preheader, label %.lr.ph.new
 
@@ -1835,8 +1828,8 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.b, !llvm.loop !9
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.b
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %3 = trunc i64 %i.g to i1
+  br i1 %3, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph
   %.09.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.u, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -2167,7 +2160,6 @@ _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %bb.c, %bb.d
           to label %.lr.ph.preheader unwind label %bb.j
 
 .lr.ph.preheader:                                 ; preds = %_ZNSt14_Function_baseD2Ev.exit
-  %xtraiter = and i64 %i.g, 1
   %i.q = icmp eq i64 %i.f, 24
   br i1 %i.q, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -2176,8 +2168,8 @@ _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %bb.c, %bb.d
   br label %.lr.ph
 
 ._crit_edge.unr-lcssa:                            ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  %5 = trunc i64 %i.g to i1
+  br i1 %5, label %.lr.ph.epil.preheader, label %._crit_edge
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa, %.lr.ph.preheader
   %.020.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.at, %._crit_edge.unr-lcssa ] ; 2 uses
@@ -2580,7 +2572,6 @@ bb.f:                                             ; preds = %.noexc4.i
   br label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.noexc4.i, %bb.f
-  %xtraiter = and i64 %i.g, 1
   %i.aa = icmp eq i64 %i.f, 24
   br i1 %i.aa, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -2589,8 +2580,8 @@ bb.f:                                             ; preds = %.noexc4.i
   br label %.lr.ph
 
 ._crit_edge.unr-lcssa:                            ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  %5 = trunc i64 %i.g to i1
+  br i1 %5, label %.lr.ph.epil.preheader, label %._crit_edge
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa, %.lr.ph.preheader
   %.031.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.bb, %._crit_edge.unr-lcssa ] ; 2 uses
@@ -2993,7 +2984,6 @@ bb.f:                                             ; preds = %.noexc4.i
   br label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.noexc4.i, %bb.f
-  %xtraiter = and i64 %i.g, 1
   %i.aa = icmp eq i64 %i.f, 24
   br i1 %i.aa, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -3002,8 +2992,8 @@ bb.f:                                             ; preds = %.noexc4.i
   br label %.lr.ph
 
 ._crit_edge.unr-lcssa:                            ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  %5 = trunc i64 %i.g to i1
+  br i1 %5, label %.lr.ph.epil.preheader, label %._crit_edge
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa, %.lr.ph.preheader
   %.031.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.bb, %._crit_edge.unr-lcssa ] ; 2 uses
@@ -3406,7 +3396,6 @@ bb.h:                                             ; preds = %bb.g
           to label %.lr.ph.preheader unwind label %bb.l
 
 .lr.ph.preheader:                                 ; preds = %bb.g, %bb.h
-  %xtraiter = and i64 %i.g, 1
   %i.ad = icmp eq i64 %i.f, 24
   br i1 %i.ad, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -3438,8 +3427,8 @@ bb.l:                                             ; preds = %bb.h, %_ZNSt6vector
   br label %_ZNSt14_Function_baseD2Ev.exit21
 
 ._crit_edge.unr-lcssa:                            ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  %5 = trunc i64 %i.g to i1
+  br i1 %5, label %.lr.ph.epil.preheader, label %._crit_edge
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa, %.lr.ph.preheader
   %.036.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.bf, %._crit_edge.unr-lcssa ] ; 2 uses
@@ -3842,7 +3831,6 @@ _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %bb.c, %bb.d
           to label %.lr.ph.preheader unwind label %bb.j
 
 .lr.ph.preheader:                                 ; preds = %_ZNSt14_Function_baseD2Ev.exit
-  %xtraiter = and i64 %i.g, 1
   %i.q = icmp eq i64 %i.f, 24
   br i1 %i.q, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -3851,8 +3839,8 @@ _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %bb.c, %bb.d
   br label %.lr.ph
 
 ._crit_edge.unr-lcssa:                            ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  %5 = trunc i64 %i.g to i1
+  br i1 %5, label %.lr.ph.epil.preheader, label %._crit_edge
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa, %.lr.ph.preheader
   %.020.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.at, %._crit_edge.unr-lcssa ] ; 2 uses
@@ -4255,7 +4243,6 @@ bb.g:                                             ; preds = %_Z30getTruncatedMat
   %i.r = ptrtoint ptr %i.p to i64
   %i.s = sub i64 %i.q, %i.r                       ; 2 uses
   %i.t = sdiv exact i64 %i.s, 24                  ; 3 uses
-  %xtraiter = and i64 %i.t, 1
   %i.u = icmp eq i64 %i.s, 24
   br i1 %i.u, label %.epil.preheader, label %.lr.ph.i.i.new
 
@@ -4283,8 +4270,8 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.i.i.n
   br i1 %niter.ncmp.1, label %_Z29populateSingleColumnQcompmatrRSt6vectorIS_ISt7complexIdESaIS1_EESaIS3_EEx11PauliStrSum.exit.i.loopexit.unr-lcssa, label %bb.h, !llvm.loop !9
 
 _Z29populateSingleColumnQcompmatrRSt6vectorIS_ISt7complexIdESaIS1_EESaIS3_EEx11PauliStrSum.exit.i.loopexit.unr-lcssa: ; preds = %bb.h
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_Z29populateSingleColumnQcompmatrRSt6vectorIS_ISt7complexIdESaIS1_EESaIS3_EEx11PauliStrSum.exit.i, label %.epil.preheader
+  %23 = trunc i64 %i.t to i1
+  br i1 %23, label %.epil.preheader, label %_Z29populateSingleColumnQcompmatrRSt6vectorIS_ISt7complexIdESaIS1_EESaIS3_EEx11PauliStrSum.exit.i
 
 .epil.preheader:                                  ; preds = %_Z29populateSingleColumnQcompmatrRSt6vectorIS_ISt7complexIdESaIS1_EESaIS3_EEx11PauliStrSum.exit.i.loopexit.unr-lcssa, %.lr.ph.i.i
   %.09.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i ], [ %i.ae, %_Z29populateSingleColumnQcompmatrRSt6vectorIS_ISt7complexIdESaIS1_EESaIS3_EEx11PauliStrSum.exit.i.loopexit.unr-lcssa ] ; 2 uses
@@ -4310,7 +4297,6 @@ _Z29populateSingleColumnQcompmatrRSt6vectorIS_ISt7complexIdESaIS1_EESaIS3_EEx11P
   %i.ao = sub i64 %i.am, %i.an                    ; 2 uses
   %i.ap = sdiv exact i64 %i.ao, 24                ; 3 uses
   %i.aq = getelementptr [16 x i8], ptr %.sroa.2416.0.copyload, i64 %i.m ; 3 uses
-  %xtraiter561 = and i64 %i.ap, 1
   %i.ar = icmp eq i64 %i.ao, 24
   br i1 %i.ar, label %.epil.preheader560, label %.lr.ph.i3.i.new
 
@@ -4338,8 +4324,8 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i3.i.
   br i1 %niter565.ncmp.1, label %_Z23populateMatrixQuadrantsI11PauliStrSumEv18MatrixQuadrantIndsRSt6vectorIS2_ISt7complexIdESaIS4_EESaIS6_EES9_S9_S9_T_.exit.loopexit.unr-lcssa, label %bb.i, !llvm.loop !9
 
 _Z23populateMatrixQuadrantsI11PauliStrSumEv18MatrixQuadrantIndsRSt6vectorIS2_ISt7complexIdESaIS4_EESaIS6_EES9_S9_S9_T_.exit.loopexit.unr-lcssa: ; preds = %bb.i
-  %lcmp.mod562.not = icmp eq i64 %xtraiter561, 0
-  br i1 %lcmp.mod562.not, label %_Z23populateMatrixQuadrantsI11PauliStrSumEv18MatrixQuadrantIndsRSt6vectorIS2_ISt7complexIdESaIS4_EESaIS6_EES9_S9_S9_T_.exit, label %.epil.preheader560
+  %24 = trunc i64 %i.ap to i1
+  br i1 %24, label %.epil.preheader560, label %_Z23populateMatrixQuadrantsI11PauliStrSumEv18MatrixQuadrantIndsRSt6vectorIS2_ISt7complexIdESaIS4_EESaIS6_EES9_S9_S9_T_.exit
 
 .epil.preheader560:                               ; preds = %_Z23populateMatrixQuadrantsI11PauliStrSumEv18MatrixQuadrantIndsRSt6vectorIS2_ISt7complexIdESaIS4_EESaIS6_EES9_S9_S9_T_.exit.loopexit.unr-lcssa, %.lr.ph.i3.i
   %.09.i4.i.epil.init = phi i64 [ 0, %.lr.ph.i3.i ], [ %i.bb, %_Z23populateMatrixQuadrantsI11PauliStrSumEv18MatrixQuadrantIndsRSt6vectorIS2_ISt7complexIdESaIS4_EESaIS6_EES9_S9_S9_T_.exit.loopexit.unr-lcssa ] ; 2 uses

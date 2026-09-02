@@ -205,9 +205,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1
-  %.not30 = icmp eq i64 %6, 0
-  br i1 %.not30, label %bb.aa, label %bb.ab
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1
+  br i1 %6, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.cg = or i64 %1, 1
@@ -480,9 +479,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1
-  %.not30 = icmp eq i64 %6, 0
-  br i1 %.not30, label %bb.aa, label %bb.ab
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1
+  br i1 %6, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.cg = or i64 %1, 1
@@ -755,9 +753,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1
-  %.not30 = icmp eq i64 %6, 0
-  br i1 %.not30, label %bb.aa, label %bb.ab
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1
+  br i1 %6, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.cg = or i64 %1, 1
@@ -918,8 +915,8 @@ bb.p:                                             ; preds = %bb.i
   br label %_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6stable5drift10create_runNtNtNtCsa5QsYiPB8Gl_5image6images4flat3DimNvYB13_NtNtBa_3cmp10PartialOrd2ltEB19_.exit
 
 _RNvMNtCsj6eKBz9Db1c_4core5sliceSNtNtNtCsa5QsYiPB8Gl_5image6images4flat3Dim7reverseBA_.exit.i.loopexit.unr-lcssa: ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSNtNtNtCsa5QsYiPB8Gl_5image6images4flat3Dim12split_at_mutBA_.exit11.i.i.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSNtNtNtCsa5QsYiPB8Gl_5image6images4flat3Dim7reverseBA_.exit.i, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSNtNtNtCsa5QsYiPB8Gl_5image6images4flat3Dim12split_at_mutBA_.exit11.i.i.i.epil.preheader
+  %6 = trunc i64 %i.av to i1
+  br i1 %6, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSNtNtNtCsa5QsYiPB8Gl_5image6images4flat3Dim12split_at_mutBA_.exit11.i.i.i.epil.preheader, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSNtNtNtCsa5QsYiPB8Gl_5image6images4flat3Dim7reverseBA_.exit.i
 
 _RNvMNtCsj6eKBz9Db1c_4core5sliceSNtNtNtCsa5QsYiPB8Gl_5image6images4flat3Dim12split_at_mutBA_.exit11.i.i.i.epil.preheader: ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSNtNtNtCsa5QsYiPB8Gl_5image6images4flat3Dim7reverseBA_.exit.i.loopexit.unr-lcssa, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSNtNtNtCsa5QsYiPB8Gl_5image6images4flat3Dim12split_at_mutBA_.exit11.preheader.i.i.i
   %.sroa.0.016.i.i.i.epil.init = phi i64 [ 0, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSNtNtNtCsa5QsYiPB8Gl_5image6images4flat3Dim12split_at_mutBA_.exit11.preheader.i.i.i ], [ %i.bh, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSNtNtNtCsa5QsYiPB8Gl_5image6images4flat3Dim7reverseBA_.exit.i.loopexit.unr-lcssa ] ; 2 uses
@@ -950,7 +947,6 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSNtNtNtCsa5QsYiPB8Gl_5image6images4flat3Dim12spl
   %i.av = phi i64 [ %i.au, %bb.q ], [ 1, %.preheader.i ] ; 4 uses
   %.sroa.0.0.i566367.i = phi i64 [ %.sroa.0.0.i.i, %bb.q ], [ 2, %.preheader.i ] ; 3 uses
   %i.aw = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %.sroa.0.0.i566367.i ; 3 uses
-  %xtraiter = and i64 %i.av, 1
   %i.ax = icmp eq i64 %i.av, 1
   br i1 %i.ax, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSNtNtNtCsa5QsYiPB8Gl_5image6images4flat3Dim12split_at_mutBA_.exit11.i.i.i.epil.preheader, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSNtNtNtCsa5QsYiPB8Gl_5image6images4flat3Dim12split_at_mutBA_.exit11.preheader.i.i.i.new
 
@@ -1074,9 +1070,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1
-  %.not30 = icmp eq i64 %6, 0
-  br i1 %.not30, label %bb.aa, label %bb.ab
+  %7 = trunc i64 %.sroa.023.1.lcssa to i1
+  br i1 %7, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.da = or i64 %1, 1
@@ -1479,7 +1474,6 @@ bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.c = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.d = sub nuw i64 %i.b, %i.c                   ; 3 uses
-  %xtraiter = and i64 %i.d, 1
   %i.e = add i64 %i.b, -1
   %i.f = icmp eq i64 %i.e, %i.c
   br i1 %i.f, label %.epil.preheader, label %.new
@@ -1513,8 +1507,8 @@ bb.c:                                             ; preds = %bb.c, %.new
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldhuNCINvNtB1K_3map8map_foldhNtNtNtCs53gkmrwjETj_4tiff7decoder3ifd5ValueuNCNCINvMs0_B2I_NtB2I_5Entry3valINtNtNtBb_2io6cursor6CursorRShEEs0_00NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB55_3VecB2G_E14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB3o_EE0E0E0E0ECsa5QsYiPB8Gl_5image.exit.loopexit.unr-lcssa, label %bb.c
 
 _RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldhuNCINvNtB1K_3map8map_foldhNtNtNtCs53gkmrwjETj_4tiff7decoder3ifd5ValueuNCNCINvMs0_B2I_NtB2I_5Entry3valINtNtNtBb_2io6cursor6CursorRShEEs0_00NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB55_3VecB2G_E14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB3o_EE0E0E0E0ECsa5QsYiPB8Gl_5image.exit.loopexit.unr-lcssa: ; preds = %bb.c
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldhuNCINvNtB1K_3map8map_foldhNtNtNtCs53gkmrwjETj_4tiff7decoder3ifd5ValueuNCNCINvMs0_B2I_NtB2I_5Entry3valINtNtNtBb_2io6cursor6CursorRShEEs0_00NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB55_3VecB2G_E14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB3o_EE0E0E0E0ECsa5QsYiPB8Gl_5image.exit, label %.epil.preheader
+  %3 = trunc i64 %i.d to i1
+  br i1 %3, label %.epil.preheader, label %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldhuNCINvNtB1K_3map8map_foldhNtNtNtCs53gkmrwjETj_4tiff7decoder3ifd5ValueuNCNCINvMs0_B2I_NtB2I_5Entry3valINtNtNtBb_2io6cursor6CursorRShEEs0_00NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB55_3VecB2G_E14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB3o_EE0E0E0E0ECsa5QsYiPB8Gl_5image.exit
 
 .epil.preheader:                                  ; preds = %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldhuNCINvNtB1K_3map8map_foldhNtNtNtCs53gkmrwjETj_4tiff7decoder3ifd5ValueuNCNCINvMs0_B2I_NtB2I_5Entry3valINtNtNtBb_2io6cursor6CursorRShEEs0_00NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB55_3VecB2G_E14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB3o_EE0E0E0E0ECsa5QsYiPB8Gl_5image.exit.loopexit.unr-lcssa, %bb.b
   %.epil.init = phi i64 [ %.sroa.5.0.copyload, %bb.b ], [ %i.n, %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldhuNCINvNtB1K_3map8map_foldhNtNtNtCs53gkmrwjETj_4tiff7decoder3ifd5ValueuNCNCINvMs0_B2I_NtB2I_5Entry3valINtNtNtBb_2io6cursor6CursorRShEEs0_00NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB55_3VecB2G_E14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB3o_EE0E0E0E0ECsa5QsYiPB8Gl_5image.exit.loopexit.unr-lcssa ] ; 2 uses
@@ -1553,7 +1547,6 @@ bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.c = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.d = sub nuw i64 %i.b, %i.c                   ; 3 uses
-  %xtraiter = and i64 %i.d, 1
   %i.e = add i64 %i.b, -1
   %i.f = icmp eq i64 %i.e, %i.c
   br i1 %i.f, label %.epil.preheader, label %.new
@@ -1587,8 +1580,8 @@ bb.c:                                             ; preds = %bb.c, %.new
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldhuNCINvNtB1K_3map8map_foldhNtNtNtCs53gkmrwjETj_4tiff7decoder3ifd5ValueuNcNtB2G_4Byte0NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4d_3VecB2G_E14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB3o_EE0E0E0E0ECsa5QsYiPB8Gl_5image.exit.loopexit.unr-lcssa, label %bb.c
 
 _RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldhuNCINvNtB1K_3map8map_foldhNtNtNtCs53gkmrwjETj_4tiff7decoder3ifd5ValueuNcNtB2G_4Byte0NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4d_3VecB2G_E14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB3o_EE0E0E0E0ECsa5QsYiPB8Gl_5image.exit.loopexit.unr-lcssa: ; preds = %bb.c
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldhuNCINvNtB1K_3map8map_foldhNtNtNtCs53gkmrwjETj_4tiff7decoder3ifd5ValueuNcNtB2G_4Byte0NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4d_3VecB2G_E14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB3o_EE0E0E0E0ECsa5QsYiPB8Gl_5image.exit, label %.epil.preheader
+  %3 = trunc i64 %i.d to i1
+  br i1 %3, label %.epil.preheader, label %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldhuNCINvNtB1K_3map8map_foldhNtNtNtCs53gkmrwjETj_4tiff7decoder3ifd5ValueuNcNtB2G_4Byte0NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4d_3VecB2G_E14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB3o_EE0E0E0E0ECsa5QsYiPB8Gl_5image.exit
 
 .epil.preheader:                                  ; preds = %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldhuNCINvNtB1K_3map8map_foldhNtNtNtCs53gkmrwjETj_4tiff7decoder3ifd5ValueuNcNtB2G_4Byte0NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4d_3VecB2G_E14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB3o_EE0E0E0E0ECsa5QsYiPB8Gl_5image.exit.loopexit.unr-lcssa, %bb.b
   %.epil.init = phi i64 [ %.sroa.5.0.copyload, %bb.b ], [ %i.n, %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldhuNCINvNtB1K_3map8map_foldhNtNtNtCs53gkmrwjETj_4tiff7decoder3ifd5ValueuNcNtB2G_4Byte0NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB4d_3VecB2G_E14extend_trustedINtB2m_3MapINtB1I_6CopiedBF_EB3o_EE0E0E0E0ECsa5QsYiPB8Gl_5image.exit.loopexit.unr-lcssa ] ; 2 uses

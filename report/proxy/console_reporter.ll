@@ -202,9 +202,8 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !39   ; 13 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !31
-  %9 = and i32 %i.d, 1
-  %.not = icmp eq i32 %9, 0
-  %i.e = select i1 %.not, ptr @_ZN9benchmarkL16IgnoreColorPrintERSoNS_8LogColorEPKcz, ptr @_ZN9benchmark11ColorPrintfERSoNS_8LogColorEPKcz ; 13 uses
+  %9 = trunc i32 %i.d to i1
+  %i.e = select i1 %9, ptr @_ZN9benchmark11ColorPrintfERSoNS_8LogColorEPKcz, ptr @_ZN9benchmarkL16IgnoreColorPrintERSoNS_8LogColorEPKcz ; 13 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 488 ; 3 uses
   %i.g = load i8, ptr %i.f, align 8, !tbaa !73, !range !40, !noundef !41
   %i.h = trunc nuw i8 %i.g to i1
@@ -607,9 +606,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit119: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #19
   %i.ex = getelementptr inbounds nuw i8, ptr %.sroa.0141.0151, i64 72
   %i.ey = load i32, ptr %i.ex, align 8, !tbaa !88 ; 2 uses
-  %10 = and i32 %i.ey, 1
-  %.not86 = icmp eq i32 %10, 0
-  br i1 %.not86, label %bb.aw, label %bb.au
+  %10 = trunc i32 %i.ey to i1
+  br i1 %10, label %bb.au, label %bb.aw
 
 bb.au:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit119
   %.not87.a = icmp sgt i32 %i.ey, -1

@@ -205,9 +205,9 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.i = load i64, ptr %i.f, align 8
+  %7 = add i64 %i.b, %5                           ; 3 uses
   %i.j = getelementptr i8, ptr %2, i64 %i.b       ; 2 uses
   %i.k = add i64 %i.b, 1
-  %7 = add i64 %i.b, %5                           ; 3 uses
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.a
@@ -235,10 +235,9 @@ bb.c:                                             ; preds = %bb.b
   %i.q = load i8, ptr %i.p, align 1
   %i.r = and i8 %i.q, 63
   %i.s = zext nneg i8 %i.r to i64
-  %8 = shl nuw i64 1, %i.s
-  %9 = and i64 %8, %i.i
-  %.not17 = icmp eq i64 %9, 0
-  br i1 %.not17, label %bb.d, label %bb.e
+  %8 = lshr i64 %i.i, %i.s
+  %9 = trunc i64 %8 to i1
+  br i1 %9, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   store i64 %7, ptr %i.a, align 8
@@ -373,10 +372,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   %i.l = load i8, ptr %i.k, align 1
   %i.m = and i8 %i.l, 63
   %i.n = zext nneg i8 %i.m to i64
-  %7 = shl nuw i64 1, %i.n
-  %8 = and i64 %7, %i.f
-  %.not = icmp eq i64 %8, 0
-  br i1 %.not, label %bb.d, label %bb.e
+  %7 = lshr i64 %i.f, %i.n
+  %8 = trunc i64 %7 to i1
+  br i1 %8, label %bb.e, label %bb.d
 
 bb.c:                                             ; preds = %bb.n, %._crit_edge
   %storemerge = phi i64 [ 0, %._crit_edge ], [ 1, %bb.n ]
@@ -779,12 +777,11 @@ define internal fastcc void @_RNvNtCs1xwejQucwHj_5alloc3fmt6formatCs3U9i7nQCKwt_
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = ptrtoint ptr %2 to i64                   ; 2 uses
-  %3 = and i64 %i.b, 1
-  %.not = icmp eq i64 %3, 0
+  %3 = trunc i64 %i.b to i1
   %i.c = lshr i64 %i.b, 1                         ; 4 uses
-  %.not.i2 = icmp eq ptr %1, null
-  %.not.i = select i1 %.not, i1 true, i1 %.not.i2
-  br i1 %.not.i, label %bb.e, label %bb.b
+  %.not.i2 = icmp ne ptr %1, null
+  %.not.i = select i1 %3, i1 %.not.i2, i1 false
+  br i1 %.not.i, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !69)
@@ -1187,9 +1184,9 @@ bb.a:
   %i.a = load i8, ptr %0, align 1
   %i.b = load i8, ptr %1, align 1
   %i.c = xor i8 %i.b, %i.a
-  %2 = and i8 %i.c, 1
-  %3 = icmp eq i8 %2, 0
-  ret i1 %3
+  %2 = trunc i8 %i.c to i1
+  %.sroa.0.0 = xor i1 %2, true
+  ret i1 %.sroa.0.0
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
@@ -1592,10 +1589,9 @@ bb.y:                                             ; preds = %.sink.split.i, %.lr
   %i.dh = load i8, ptr %i.dg, align 1
   %i.di = and i8 %i.dh, 63
   %i.dj = zext nneg i8 %i.di to i64
-  %2 = shl nuw i64 1, %i.dj
-  %3 = and i64 %2, %i.db
-  %.not.i7 = icmp eq i64 %3, 0
-  br i1 %.not.i7, label %bb.z, label %bb.aa
+  %2 = lshr i64 %i.db, %i.dj
+  %3 = trunc i64 %2 to i1
+  br i1 %3, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.dk = add i64 %i.df, %i.bz                    ; 2 uses
@@ -1702,10 +1698,9 @@ bb.ah:                                            ; preds = %bb.ak, %.lr.ph.i16
   %i.er = load i8, ptr %i.eq, align 1
   %i.es = and i8 %i.er, 63
   %i.et = zext nneg i8 %i.es to i64
-  %4 = shl nuw i64 1, %i.et
-  %5 = and i64 %4, %i.em
-  %.not.i17 = icmp eq i64 %5, 0
-  br i1 %.not.i17, label %bb.ai, label %bb.aj
+  %4 = lshr i64 %i.em, %i.et
+  %5 = trunc i64 %4 to i1
+  br i1 %5, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
   %i.eu = add i64 %i.ep, %i.bz

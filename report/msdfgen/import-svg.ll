@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/msdfgen/original/import-svg?download=true
-inline.NumInlined: 174
+inline.NumInlined: 175
 inline.NumDeleted: 62
 begin_hunk_0_@_ZN7msdfgen12loadSvgShapeERNS_5ShapeEPKciPNS_7Vector2E:bb.a
   store ptr null, ptr %i.a, align 8, !tbaa !15
@@ -202,9 +202,8 @@ bb.f:                                             ; preds = %._crit_edge, %bb.d
 
 bb.g:                                             ; preds = %bb.c
   %i.m = load i32, ptr %1, align 4, !tbaa !23     ; 2 uses
-  %5 = and i32 %i.m, 1
-  %.not32 = icmp eq i32 %5, 0
-  br i1 %.not32, label %bb.s, label %bb.h
+  %5 = trunc i32 %i.m to i1
+  br i1 %5, label %bb.h, label %bb.s
 
 bb.h:                                             ; preds = %bb.g
   %i.n = or i32 %i.m, 4
@@ -344,9 +343,8 @@ bb.f:                                             ; preds = %._crit_edge, %bb.d
 
 bb.g:                                             ; preds = %bb.c
   %i.m = load i32, ptr %1, align 4, !tbaa !23     ; 2 uses
-  %5 = and i32 %i.m, 1
-  %.not32 = icmp eq i32 %5, 0
-  br i1 %.not32, label %bb.s, label %bb.h
+  %5 = trunc i32 %i.m to i1
+  br i1 %5, label %bb.h, label %bb.s
 
 bb.h:                                             ; preds = %bb.g
   %i.n = or i32 %i.m, 4
@@ -444,16 +442,17 @@ declare void @_ZN8tinyxml211XMLDocumentD1Ev(ptr noundef nonnull align 8 dead_on_
 ; Function Attrs: mustprogress uwtable
 define noundef i32 @_ZN7msdfgen12loadSvgShapeERNS_5ShapeERNS0_6BoundsEPKc(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(32) %1, ptr noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 6 uses
-  %3 = alloca %"class.tinyxml2::XMLDocument", align 8 ; 8 uses
+  %3 = alloca ptr, align 8                        ; 6 uses
+  %i.a = alloca ptr, align 8                      ; 5 uses
+  %4 = alloca %"class.tinyxml2::XMLDocument", align 8 ; 8 uses
   %i.b = alloca ptr, align 8                      ; 6 uses
   %i.c = alloca i32, align 4                      ; 6 uses
   %i.d = alloca i32, align 4                      ; 5 uses
-  %4 = alloca %"struct.msdfgen::Vector2", align 16 ; 7 uses
-  %i.e = alloca ptr, align 8                      ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
-  call void @_ZN8tinyxml211XMLDocumentC1EbNS_10WhitespaceE(ptr noundef nonnull align 8 dereferenceable(776) %3, i1 noundef zeroext true, i32 noundef 0)
-  %i.f = invoke noundef i32 @_ZN8tinyxml211XMLDocument8LoadFileEPKc(ptr noundef nonnull align 8 dereferenceable(776) %3, ptr noundef %2)
+  %5 = alloca %"struct.msdfgen::Vector2", align 16 ; 7 uses
+  %i.e = alloca ptr, align 8                      ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
+  call void @_ZN8tinyxml211XMLDocumentC1EbNS_10WhitespaceE(ptr noundef nonnull align 8 dereferenceable(776) %4, i1 noundef zeroext true, i32 noundef 0)
+  %i.f = invoke noundef i32 @_ZN8tinyxml211XMLDocument8LoadFileEPKc(ptr noundef nonnull align 8 dereferenceable(776) %4, ptr noundef %2)
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -466,7 +465,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.ac
 
 bb.d:                                             ; preds = %bb.b
-  %i.h = invoke noundef ptr @_ZNK8tinyxml27XMLNode17FirstChildElementEPKc(ptr noundef nonnull align 8 dereferenceable(104) %3, ptr noundef nonnull @.str)
+  %i.h = invoke noundef ptr @_ZNK8tinyxml27XMLNode17FirstChildElementEPKc(ptr noundef nonnull align 8 dereferenceable(104) %4, ptr noundef nonnull @.str)
           to label %_ZN8tinyxml27XMLNode17FirstChildElementEPKc.exit unwind label %bb.e ; 5 uses
 
 _ZN8tinyxml27XMLNode17FirstChildElementEPKc.exit: ; preds = %bb.d
@@ -486,18 +485,15 @@ bb.f:                                             ; preds = %_ZN8tinyxml27XMLNod
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
   store i32 0, ptr %i.d, align 4, !tbaa !23
   invoke fastcc void @_ZN7msdfgenL23findPathByBackwardIndexERPN8tinyxml210XMLElementERiS4_S2_b(ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 4 dereferenceable(4) %i.c, ptr noundef nonnull align 4 dereferenceable(4) %i.d, ptr noundef %i.h, i1 noundef zeroext false)
-          to label %5 unwind label %bb.h
+          to label %bb.g unwind label %bb.h
 
-5:                                                ; preds = %bb.f
+bb.g:                                             ; preds = %bb.f
   %6 = load ptr, ptr %i.b, align 8, !tbaa !22     ; 2 uses
-  %.not35 = icmp eq ptr %6, null
-  br i1 %.not35, label %bb.z, label %bb.g
-
-bb.g:                                             ; preds = %5
-  %i.j = load i32, ptr %i.c, align 4, !tbaa !23   ; 2 uses
-  %7 = and i32 %i.j, 1
-  %.not36 = icmp eq i32 %7, 0
-  br i1 %.not36, label %bb.z, label %bb.i
+  %.not35 = icmp ne ptr %6, null
+  %i.j = load i32, ptr %i.c, align 4              ; 2 uses
+  %7 = trunc i32 %i.j to i1
+  %or.cond = select i1 %.not35, i1 %7, i1 false
+  br i1 %or.cond, label %bb.i, label %bb.z
 
 bb.h:                                             ; preds = %bb.f
   %i.k = landingpad { ptr, i32 }
@@ -520,7 +516,7 @@ bb.k:                                             ; preds = %bb.i
 bb.l:                                             ; preds = %bb.j
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   %i.o = invoke noundef double @_ZNK8tinyxml210XMLElement15DoubleAttributeEPKcd(ptr noundef nonnull align 8 dereferenceable(120) %i.h, ptr noundef nonnull @.str.2, double noundef 0.000000e+00)
           to label %bb.m unwind label %bb.s
 
@@ -529,8 +525,8 @@ bb.m:                                             ; preds = %bb.l
           to label %bb.n unwind label %bb.s
 
 bb.n:                                             ; preds = %bb.m
-  store double %i.o, ptr %4, align 16, !tbaa !25
-  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  store double %i.o, ptr %5, align 16, !tbaa !25
+  %i.q = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   store double %i.p, ptr %i.q, align 8, !tbaa !26
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #12
   %i.r = invoke noundef ptr @_ZNK8tinyxml210XMLElement9AttributeEPKcS2_(ptr noundef nonnull align 8 dereferenceable(120) %i.h, ptr noundef nonnull @.str.4, ptr noundef null)
@@ -562,20 +558,41 @@ _ZN7msdfgenL14skipExtraCharsERPKc.exit.i:         ; preds = %.preheader
   store double %i.v, ptr %1, align 8, !tbaa !20
   %i.w = load ptr, ptr %i.a, align 8, !tbaa !15   ; 2 uses
   %i.x = icmp ugt ptr %i.w, %i.s
-  br i1 %i.x, label %bb.p, label %_ZN7msdfgenL10readDoubleERdRPKc.exit.a
-
-_ZN7msdfgenL10readDoubleERdRPKc.exit.a:           ; preds = %_ZN7msdfgenL14skipExtraCharsERPKc.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
+  br i1 %i.x, label %.preheader67, label %bb.u
+
+.preheader67:                                     ; preds = %_ZN7msdfgenL14skipExtraCharsERPKc.exit.i, %_ZN7msdfgenL10readDoubleERdRPKc.exit.a
+  %8 = phi ptr [ %10, %_ZN7msdfgenL10readDoubleERdRPKc.exit.a ], [ %i.w, %_ZN7msdfgenL14skipExtraCharsERPKc.exit.i ] ; 4 uses
+  %9 = load i8, ptr %8, align 1, !tbaa !11
+  switch i8 %9, label %bb.p [
+    i8 44, label %_ZN7msdfgenL10readDoubleERdRPKc.exit.a
+    i8 32, label %_ZN7msdfgenL10readDoubleERdRPKc.exit.a
+    i8 9, label %_ZN7msdfgenL10readDoubleERdRPKc.exit.a
+    i8 13, label %_ZN7msdfgenL10readDoubleERdRPKc.exit.a
+    i8 10, label %_ZN7msdfgenL10readDoubleERdRPKc.exit.a
+  ]
+
+_ZN7msdfgenL10readDoubleERdRPKc.exit.a:           ; preds = %.preheader67, %.preheader67, %.preheader67, %.preheader67, %.preheader67
+  %10 = getelementptr inbounds nuw i8, ptr %8, i64 1
+  br label %.preheader67, !llvm.loop !0
+
+bb.p:                                             ; preds = %.preheader67
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
+  store ptr null, ptr %3, align 8, !tbaa !15
+  %11 = call double @strtod(ptr noundef nonnull %8, ptr noundef nonnull %3) #12
+  store double %11, ptr %i.n, align 8, !tbaa !20
+  %12 = load ptr, ptr %3, align 8, !tbaa !15      ; 2 uses
+  %13 = icmp ugt ptr %12, %8
+  br i1 %13, label %bb.q, label %_ZN7msdfgenL10readDoubleERdRPKc.exit48
+
+_ZN7msdfgenL10readDoubleERdRPKc.exit48:           ; preds = %bb.p
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   br label %bb.u
 
-bb.p:                                             ; preds = %_ZN7msdfgenL14skipExtraCharsERPKc.exit.i
-  store ptr %i.w, ptr %i.e, align 8, !tbaa !15
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
-  %8 = call fastcc noundef zeroext i1 @_ZN7msdfgenL10readDoubleERdRPKc(ptr noundef nonnull align 8 dereferenceable(8) %i.n, ptr noundef nonnull align 8 dereferenceable(8) %i.e)
-  br i1 %8, label %bb.q, label %bb.u
-
 bb.q:                                             ; preds = %bb.p
-  %i.y = call fastcc noundef zeroext i1 @_ZN7msdfgenL10readDoubleERdRPKc(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 8 dereferenceable(8) %i.e)
+  store ptr %12, ptr %i.e, align 8, !tbaa !15
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
+  %i.y = call fastcc noundef zeroext i1 @_ZN7msdfgenL10readDoubleERdRPKc(ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %i.e)
   br i1 %i.y, label %bb.r, label %bb.u
 
 bb.r:                                             ; preds = %bb.q
@@ -593,11 +610,11 @@ bb.t:                                             ; preds = %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #12
   br label %bb.y
 
-bb.u:                                             ; preds = %_ZN7msdfgenL10readDoubleERdRPKc.exit.a, %bb.p, %bb.q, %bb.r, %bb.o
+bb.u:                                             ; preds = %_ZN7msdfgenL14skipExtraCharsERPKc.exit.i, %_ZN7msdfgenL10readDoubleERdRPKc.exit48, %bb.q, %bb.r, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #12
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ad = load <2 x double>, ptr %1, align 8, !tbaa !20
-  %i.ae = load <2 x double>, ptr %4, align 16, !tbaa !20 ; 4 uses
+  %i.ae = load <2 x double>, ptr %5, align 16, !tbaa !20 ; 4 uses
   %i.af = fadd <2 x double> %i.ad, %i.ae
   store <2 x double> %i.af, ptr %i.ac, align 8, !tbaa !20
   %i.ag = load ptr, ptr %0, align 8, !tbaa !29    ; 3 uses
@@ -664,16 +681,16 @@ bb.w:                                             ; preds = %_ZNSt6vectorIN7msdf
 
 bb.x:                                             ; preds = %bb.w
   %.026 = select i1 %i.ay, i32 %i.j, i32 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   br label %bb.z
 
 bb.y:                                             ; preds = %bb.t, %bb.s
   %.pn = phi { ptr, i32 } [ %i.aa, %bb.s ], [ %i.ab, %bb.t ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   br label %bb.aa
 
-bb.z:                                             ; preds = %bb.x, %bb.j, %5, %bb.g
-  %.228 = phi i32 [ 0, %5 ], [ 0, %bb.g ], [ %.026, %bb.x ], [ 0, %bb.j ]
+bb.z:                                             ; preds = %bb.x, %bb.j, %bb.g
+  %.228 = phi i32 [ 0, %bb.g ], [ %.026, %bb.x ], [ 0, %bb.j ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
@@ -688,14 +705,14 @@ bb.aa:                                            ; preds = %bb.k, %bb.y, %bb.h
 
 bb.ab:                                            ; preds = %bb.z, %_ZN8tinyxml27XMLNode17FirstChildElementEPKc.exit, %bb.b
   %.430 = phi i32 [ 0, %bb.b ], [ %.228, %bb.z ], [ 0, %_ZN8tinyxml27XMLNode17FirstChildElementEPKc.exit ]
-  call void @_ZN8tinyxml211XMLDocumentD1Ev(ptr noundef nonnull align 8 dead_on_return(776) dereferenceable(776) %3) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
+  call void @_ZN8tinyxml211XMLDocumentD1Ev(ptr noundef nonnull align 8 dead_on_return(776) dereferenceable(776) %4) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   ret i32 %.430
 
 bb.ac:                                            ; preds = %bb.e, %bb.aa, %bb.c
   %.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.g, %bb.c ], [ %.pn.pn.pn, %bb.aa ], [ %i.i, %bb.e ]
-  call void @_ZN8tinyxml211XMLDocumentD1Ev(ptr noundef nonnull align 8 dead_on_return(776) dereferenceable(776) %3) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
+  call void @_ZN8tinyxml211XMLDocumentD1Ev(ptr noundef nonnull align 8 dead_on_return(776) dereferenceable(776) %4) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   resume { ptr, i32 } %.pn.pn.pn.pn.pn
 }
 

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph650, %.loopex
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 88
   %i.v = load i8, ptr %i.u, align 8, !tbaa !97, !range !32, !noundef !33
   %i.w = trunc nuw i8 %i.v to i1
-  %i.x = load i32, ptr %i.t, align 8, !tbaa !98   ; 4 uses
+  %i.x = load i32, ptr %i.t, align 8, !tbaa !98   ; 5 uses
   %i.y = icmp sgt i32 %i.x, 0                     ; 2 uses
   br i1 %i.w, label %.preheader506, label %.preheader513
 
@@ -216,14 +216,13 @@ bb.b:                                             ; preds = %.lr.ph650, %.loopex
   %i.aa = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !99 ; 3 uses
   %i.ac = sext i32 %i.q to i64
-  %wide.trip.count = zext nneg i32 %i.x to i64    ; 2 uses
   %invariant.gep = getelementptr i8, ptr %i.z, i64 %i.ac ; 3 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.ad = icmp eq i32 %i.x, 1
   br i1 %i.ad, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %11 = and i32 %i.x, 2147483646
+  %unroll_iter = zext nneg i32 %11 to i64
   br label %bb.j
 
 .preheader506:                                    ; preds = %bb.b
@@ -363,8 +362,8 @@ bb.i:                                             ; preds = %_ZNSt6vectorIiSaIiE
   br i1 %i.cc, label %.lr.ph637, label %.loopexit507, !llvm.loop !194
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.j
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %12 = trunc i32 %i.x to i1
+  br i1 %12, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 2 uses

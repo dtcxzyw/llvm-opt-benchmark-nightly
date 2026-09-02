@@ -202,9 +202,8 @@ bb.a:
   %i.a = alloca double, align 8                   ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !39   ; 3 uses
-  %5 = and i32 %i.c, 1
-  %.not = icmp eq i32 %5, 0
-  br i1 %.not, label %_ZNK7msdfgen33PerpendicularDistanceSelectorBase14isEdgeRelevantERKNS0_9EdgeCacheEPKNS_11EdgeSegmentERKNS_7Vector2E.exit.thread201, label %bb.b
+  %5 = trunc i32 %i.c to i1
+  br i1 %5, label %bb.b, label %_ZNK7msdfgen33PerpendicularDistanceSelectorBase14isEdgeRelevantERKNS0_9EdgeCacheEPKNS_11EdgeSegmentERKNS_7Vector2E.exit.thread201
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -480,9 +479,8 @@ _ZNK7msdfgen33PerpendicularDistanceSelectorBase14isEdgeRelevantERKNS0_9EdgeCache
   %i.el = extractvalue { double, double } %i.ek, 0 ; 11 uses
   %i.em = extractvalue { double, double } %i.ek, 1 ; 6 uses
   %i.en = load i32, ptr %i.b, align 8, !tbaa !39  ; 3 uses
-  %6 = and i32 %i.en, 1
-  %.not71 = icmp eq i32 %6, 0
-  br i1 %.not71, label %_ZN7msdfgen33PerpendicularDistanceSelectorBase19addEdgeTrueDistanceEPKNS_11EdgeSegmentERKNS_14SignedDistanceEd.exit, label %bb.ac
+  %6 = trunc i32 %i.en to i1
+  br i1 %6, label %bb.ac, label %_ZN7msdfgen33PerpendicularDistanceSelectorBase19addEdgeTrueDistanceEPKNS_11EdgeSegmentERKNS_14SignedDistanceEd.exit
 
 bb.ac:                                            ; preds = %_ZNK7msdfgen33PerpendicularDistanceSelectorBase14isEdgeRelevantERKNS0_9EdgeCacheEPKNS_11EdgeSegmentERKNS_7Vector2E.exit.thread
   %i.eo = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -697,9 +695,8 @@ bb.aj:                                            ; preds = %bb.ai
 _ZN7msdfgen33PerpendicularDistanceSelectorBase24getPerpendicularDistanceERdRKNS_7Vector2ES4_.exit: ; preds = %bb.aj
   %i.kd = fneg double %i.ka                       ; 16 uses
   %i.ke = load i32, ptr %i.b, align 8, !tbaa !39  ; 3 uses
-  %7 = and i32 %i.ke, 1
-  %.not74 = icmp eq i32 %7, 0
-  br i1 %.not74, label %_ZN7msdfgen33PerpendicularDistanceSelectorBase28addEdgePerpendicularDistanceEd.exit, label %bb.ak
+  %7 = trunc i32 %i.ke to i1
+  br i1 %7, label %bb.ak, label %_ZN7msdfgen33PerpendicularDistanceSelectorBase28addEdgePerpendicularDistanceEd.exit
 
 bb.ak:                                            ; preds = %_ZN7msdfgen33PerpendicularDistanceSelectorBase24getPerpendicularDistanceERdRKNS_7Vector2ES4_.exit
   %i.kf = fcmp ult double %i.ka, 0.000000e+00
@@ -826,9 +823,8 @@ bb.be:                                            ; preds = %bb.bd
 
 _ZN7msdfgen33PerpendicularDistanceSelectorBase24getPerpendicularDistanceERdRKNS_7Vector2ES4_.exit161: ; preds = %bb.be
   %i.lt = load i32, ptr %i.b, align 8, !tbaa !39  ; 3 uses
-  %8 = and i32 %i.lt, 1
-  %.not77 = icmp eq i32 %8, 0
-  br i1 %.not77, label %_ZN7msdfgen33PerpendicularDistanceSelectorBase28addEdgePerpendicularDistanceEd.exit162.a, label %bb.bf
+  %8 = trunc i32 %i.lt to i1
+  br i1 %8, label %bb.bf, label %_ZN7msdfgen33PerpendicularDistanceSelectorBase28addEdgePerpendicularDistanceEd.exit162.a
 
 bb.bf:                                            ; preds = %_ZN7msdfgen33PerpendicularDistanceSelectorBase24getPerpendicularDistanceERdRKNS_7Vector2ES4_.exit161
   %i.lu = fcmp ugt double %i.lq, 0.000000e+00

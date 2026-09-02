@@ -204,8 +204,8 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ah
   %i.dh = xor i8 %.val28.i, -1
-  %i.di = and i8 %.val.i, %i.dh                   ; 2 uses
-  %i.dj = zext i8 %i.di to i32                    ; 5 uses
+  %i.di = and i8 %.val.i, %i.dh                   ; 3 uses
+  %i.dj = zext i8 %i.di to i32                    ; 4 uses
   %i.dk = icmp ne i8 %i.di, 0
   %.not17.i = and i1 %i.dk, %i.dg
   br i1 %.not17.i, label %bb.aj, label %bb.ao, !prof !53
@@ -245,9 +245,8 @@ bb.an:                                            ; preds = %bb.af
   br label %bb.au
 
 bb.ao:                                            ; preds = %bb.ai
-  %9 = and i32 %i.dj, 1
-  %.not18.i = icmp eq i32 %9, 0
-  br i1 %.not18.i, label %"_ZZN7V3Sched12_GLOBAL__N_19replicateEPNS0_5GraphEENK3$_0clERNS_12LogicByScopeE.exit.i", label %bb.ap
+  %9 = trunc i8 %i.di to i1
+  br i1 %9, label %bb.ap, label %"_ZZN7V3Sched12_GLOBAL__N_19replicateEPNS0_5GraphEENK3$_0clERNS_12LogicByScopeE.exit.i"
 
 bb.ap:                                            ; preds = %bb.ao
   %i.dp = getelementptr i8, ptr %.sroa.03.013.i, i64 88

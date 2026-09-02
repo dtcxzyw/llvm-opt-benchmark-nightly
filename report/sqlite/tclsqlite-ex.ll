@@ -206,8 +206,7 @@ bb.dw:                                            ; preds = %bb.dv, %bb.du, %bb.
   %.not300.i = icmp eq i8 %i.ro, 0                ; 2 uses
   %i.sp = icmp eq i32 %.0263.i, 1
   %unroll_iter209 = and i64 %i.sa, 2147483646
-  %5 = and i32 %.0263.i, 1
-  %lcmp.mod207.not = icmp eq i32 %5, 0
+  %5 = trunc i32 %.0263.i to i1
   %lcmp.mod208 = trunc i32 %.0263.i to i1
   br label %bb.dx
 
@@ -403,7 +402,7 @@ default.unreachable:                              ; preds = %bb.ei
   br i1 %niter210.ncmp.1, label %.lr.ph386.i.preheader.us.preheader.unr-lcssa, label %.lr.ph382.i, !llvm.loop !246
 
 .lr.ph386.i.preheader.us.preheader.unr-lcssa:     ; preds = %.lr.ph382.i
-  br i1 %lcmp.mod207.not, label %.lr.ph386.i.preheader.us.preheader, label %.lr.ph382.i.epil.preheader
+  br i1 %5, label %.lr.ph382.i.epil.preheader, label %.lr.ph386.i.preheader.us.preheader
 
 .lr.ph382.i.epil.preheader:                       ; preds = %.lr.ph386.i.preheader.us.preheader.unr-lcssa, %.lr.ph382.i.preheader
   %.0273381.i.epil.init = phi i64 [ 0, %.lr.ph382.i.preheader ], [ %i.ve, %.lr.ph386.i.preheader.us.preheader.unr-lcssa ] ; 2 uses
@@ -806,12 +805,11 @@ bb.x:                                             ; preds = %bb.w
 
 .thread169:                                       ; preds = %bb.x
   %i.co = load i32, ptr %i.e, align 4, !tbaa !30
-  %.not163 = icmp ne i32 %i.co, 0
-  %5 = and i32 %.0123231, 1
-  %6 = icmp eq i32 %5, 0
-  %or.cond = select i1 %.not163, i1 %6, i1 false
+  %.not163 = icmp eq i32 %i.co, 0
+  %5 = trunc i32 %.0123231 to i1
+  %or.cond = select i1 %.not163, i1 true, i1 %5
   %i.cp = and i32 %.0123231, -5
-  %masksel188 = select i1 %or.cond, i32 4, i32 0
+  %masksel188 = select i1 %or.cond, i32 0, i32 4
   %.3126 = or disjoint i32 %masksel188, %i.cp
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #20
   br label %bb.ao
@@ -1214,9 +1212,8 @@ bb.c:                                             ; preds = %bb.b
   %i.h = zext i8 %i.f to i64
   %i.i = getelementptr inbounds nuw i8, ptr @qrfCType, i64 %i.h
   %i.j = load i8, ptr %i.i, align 1, !tbaa !29
-  %3 = and i8 %i.j, 1
-  %.not.i = icmp eq i8 %3, 0
-  br i1 %.not.i, label %bb.d, label %qrfRelaxable.exit.thread
+  %3 = trunc i8 %i.j to i1
+  br i1 %3, label %qrfRelaxable.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.k = icmp eq i8 %i.f, 0
@@ -1248,9 +1245,8 @@ bb.i:                                             ; preds = %bb.h
   %i.u = zext i8 %i.s to i64
   %i.v = getelementptr inbounds nuw i8, ptr @qrfCType, i64 %i.u
   %i.w = load i8, ptr %i.v, align 1, !tbaa !29
-  %4 = and i8 %i.w, 1
-  %.not61.i = icmp eq i8 %4, 0
-  br i1 %.not61.i, label %bb.j, label %qrfRelaxable.exit.thread
+  %4 = trunc i8 %i.w to i1
+  br i1 %4, label %qrfRelaxable.exit.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 176
@@ -1653,7 +1649,7 @@ bb.t:                                             ; preds = %bb.r
   ]
 
 bb.u:                                             ; preds = %.thread, %.thread
-  %i.cv = call i32 @sqlite3_column_bytes(ptr noundef %i.cu, i32 noundef %2) #20 ; 6 uses
+  %i.cv = call i32 @sqlite3_column_bytes(ptr noundef %i.cu, i32 noundef %2) #20 ; 7 uses
   %i.cw = load ptr, ptr %0, align 8, !tbaa !46
   %i.cx = call ptr @sqlite3_column_blob(ptr noundef %i.cw, i32 noundef %2) #20 ; 3 uses
   %i.cy = load i8, ptr %i.cs, align 1, !tbaa !56
@@ -1688,13 +1684,12 @@ bb.z:                                             ; preds = %bb.y
 
 .lr.ph228.preheader:                              ; preds = %bb.z
   %i.dg = sext i32 %i.da to i64                   ; 2 uses
-  %wide.trip.count255 = zext nneg i32 %i.cv to i64 ; 2 uses
-  %xtraiter294 = and i64 %wide.trip.count255, 1
   %i.dh = icmp eq i32 %i.cv, 1
   br i1 %i.dh, label %.lr.ph228.epil.preheader, label %.lr.ph228.preheader.new
 
 .lr.ph228.preheader.new:                          ; preds = %.lr.ph228.preheader
-  %unroll_iter298 = and i64 %wide.trip.count255, 2147483646
+  %3 = and i32 %i.cv, 2147483646
+  %unroll_iter298 = zext nneg i32 %3 to i64
   br label %.lr.ph228
 
 .lr.ph228:                                        ; preds = %.lr.ph228, %.lr.ph228.preheader.new
@@ -1740,7 +1735,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %niter299.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph228, !llvm.loop !308
 
 bb.aa:                                            ; preds = %.thread, %.thread
-  %i.ek = call i32 @sqlite3_column_bytes(ptr noundef %i.cu, i32 noundef %2) #20 ; 5 uses
+  %i.ek = call i32 @sqlite3_column_bytes(ptr noundef %i.cu, i32 noundef %2) #20 ; 6 uses
   %i.el = load ptr, ptr %0, align 8, !tbaa !46
   %i.em = call ptr @sqlite3_column_blob(ptr noundef %i.el, i32 noundef %2) #20 ; 4 uses
   %i.en = load i8, ptr %i.cs, align 1, !tbaa !56
@@ -1770,11 +1765,10 @@ bb.ad:                                            ; preds = %bb.ac
 
 .lr.ph:                                           ; preds = %bb.ad
   %i.ev = sext i32 %i.ep to i64                   ; 3 uses
-  %wide.trip.count246 = zext nneg i32 %i.ek to i64 ; 3 uses
+  %wide.trip.count246 = zext nneg i32 %i.ek to i64 ; 2 uses
   br i1 %.not196, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %xtraiter288 = and i64 %wide.trip.count246, 1
   %i.ew = icmp eq i32 %i.ek, 1
   br i1 %i.ew, label %.lr.ph.split.us.epil.preheader, label %.lr.ph.split.us.preheader.new
 
@@ -1876,8 +1870,8 @@ bb.ah:                                            ; preds = %.critedge
   br label %.loopexit
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph228
-  %lcmp.mod296.not = icmp eq i64 %xtraiter294, 0
-  br i1 %lcmp.mod296.not, label %.loopexit, label %.lr.ph228.epil.preheader
+  %4 = trunc i32 %i.cv to i1
+  br i1 %4, label %.lr.ph228.epil.preheader, label %.loopexit
 
 .lr.ph228.epil.preheader:                         ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph228.preheader
   %indvars.iv250.epil.init = phi i64 [ 0, %.lr.ph228.preheader ], [ %indvars.iv.next251.1, %.loopexit.loopexit.unr-lcssa ]
@@ -1902,8 +1896,8 @@ bb.ah:                                            ; preds = %.critedge
   br label %.loopexit
 
 .loopexit.loopexit283.unr-lcssa:                  ; preds = %.lr.ph.split.us
-  %lcmp.mod290.not = icmp eq i64 %xtraiter288, 0
-  br i1 %lcmp.mod290.not, label %.loopexit, label %.lr.ph.split.us.epil.preheader
+  %5 = trunc i32 %i.ek to i1
+  br i1 %5, label %.lr.ph.split.us.epil.preheader, label %.loopexit
 
 .lr.ph.split.us.epil.preheader:                   ; preds = %.loopexit.loopexit283.unr-lcssa, %.lr.ph.split.us.preheader
   %indvars.iv241.epil.init = phi i64 [ 0, %.lr.ph.split.us.preheader ], [ %indvars.iv.next242.1, %.loopexit.loopexit283.unr-lcssa ]
@@ -2306,9 +2300,8 @@ bb.u:                                             ; preds = %bb.u, %.lr.ph185
   br i1 %niter.ncmp.1, label %._crit_edge186.loopexit.unr-lcssa, label %bb.u, !llvm.loop !322
 
 ._crit_edge186.loopexit.unr-lcssa:                ; preds = %bb.u
-  %2 = and i32 %.1.ph, 1
-  %lcmp.mod.not = icmp eq i32 %2, 0
-  br i1 %lcmp.mod.not, label %._crit_edge186, label %.epil.preheader
+  %2 = trunc i32 %.1.ph to i1
+  br i1 %2, label %.epil.preheader, label %._crit_edge186
 
 .epil.preheader:                                  ; preds = %._crit_edge186.loopexit.unr-lcssa
   %lcmp.mod287 = trunc i32 %.1.ph to i1
@@ -2711,9 +2704,8 @@ bb.af:                                            ; preds = %bb.ae
   %i.dn = zext i8 %i.dm to i64
   %i.do = getelementptr inbounds nuw i8, ptr @qrfCType, i64 %i.dn
   %i.dp = load i8, ptr %i.do, align 1, !tbaa !29  ; 2 uses
-  %6 = and i8 %i.dp, 1
-  %.not131 = icmp eq i8 %6, 0
-  br i1 %.not131, label %bb.ag, label %.thread._crit_edge
+  %6 = trunc i8 %i.dp to i1
+  br i1 %6, label %.thread._crit_edge, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %i.dq = zext i8 %i.e to i64
@@ -2746,9 +2738,8 @@ bb.ah:                                            ; preds = %.lr.ph256
   %i.ed = zext i8 %i.ec to i64
   %i.ee = getelementptr inbounds nuw i8, ptr @qrfCType, i64 %i.ed
   %i.ef = load i8, ptr %i.ee, align 1, !tbaa !29
-  %7 = and i8 %i.ef, 1
-  %.not133 = icmp eq i8 %7, 0
-  br i1 %.not133, label %bb.ah, label %.split.loop.exit, !llvm.loop !329
+  %7 = trunc i8 %i.ef to i1
+  br i1 %7, label %.split.loop.exit, label %bb.ah, !llvm.loop !329
 
 .split.loop.exit:                                 ; preds = %.lr.ph256
   %i.eg = trunc nsw i64 %indvars.iv255 to i32
@@ -3151,9 +3142,8 @@ bb.l:                                             ; preds = %.lr.ph116.split
 bb.m:                                             ; preds = %.lr.ph, %bb.av
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.av ] ; 8 uses
   %i.cc = load i32, ptr %i.l, align 4, !tbaa !162 ; 2 uses
-  %3 = and i32 %i.cc, 1
-  %.not92 = icmp eq i32 %3, 0
-  br i1 %.not92, label %bb.x, label %bb.n
+  %3 = trunc i32 %i.cc to i1
+  br i1 %3, label %bb.n, label %bb.x
 
 bb.n:                                             ; preds = %bb.m
   %i.cd = load ptr, ptr %i.m, align 8, !tbaa !194

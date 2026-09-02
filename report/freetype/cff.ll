@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.i
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !142 ; 4 uses
   store ptr %i.cc, ptr %i.bx, align 8, !tbaa !127
-  %i.cd = load i32, ptr %i.br, align 4, !tbaa !285 ; 4 uses
+  %i.cd = load i32, ptr %i.br, align 4, !tbaa !285 ; 5 uses
   %.not91104 = icmp eq i32 %i.cd, 0
   br i1 %.not91104, label %._crit_edge, label %.lr.ph.split.us
 
@@ -223,13 +223,12 @@ bb.k:                                             ; preds = %bb.i
 
 .lr.ph.split.us:                                  ; preds = %bb.k
   %i.ch = load ptr, ptr %i.f, align 8, !tbaa !143 ; 3 uses
-  %4 = zext i32 %i.cd to i64                      ; 2 uses
-  %xtraiter = and i64 %4, 1
   %i.ci = icmp eq i32 %i.cd, 1
   br i1 %i.ci, label %.epil.preheader, label %.lr.ph.split.us.new
 
 .lr.ph.split.us.new:                              ; preds = %.lr.ph.split.us
-  %unroll_iter = and i64 %4, 4294967294
+  %4 = and i32 %i.cd, -2
+  %unroll_iter = zext i32 %4 to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.p, %.lr.ph.split.us.new
@@ -330,8 +329,8 @@ bb.s:                                             ; preds = %.thread132, %bb.q, 
   br i1 %.not91.not, label %.lr.ph.split, label %._crit_edge, !llvm.loop !592
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.p
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %5 = trunc i32 %i.cd to i1
+  br i1 %5, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.split.us
   %.076106.us.epil.init = phi i64 [ 0, %.lr.ph.split.us ], [ %.0.us.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
@@ -734,7 +733,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not131, label %bb.e, label %.loopexit151
 
 bb.e:                                             ; preds = %bb.d
-  %i.n = call zeroext i8 @FT_Stream_ReadByte(ptr noundef %3, ptr noundef nonnull %i.b) #18 ; 7 uses
+  %i.n = call zeroext i8 @FT_Stream_ReadByte(ptr noundef %3, ptr noundef nonnull %i.b) #18 ; 8 uses
   %i.o = zext i8 %i.n to i32                      ; 2 uses
   %i.p = load i32, ptr %i.b, align 4, !tbaa !67   ; 2 uses
   %.not132 = icmp eq i32 %i.p, 0
@@ -766,13 +765,12 @@ bb.h:                                             ; preds = %bb.g
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 64
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !254  ; 2 uses
   %i.y = zext i32 %2 to i64                       ; 3 uses
-  %6 = zext i8 %i.n to i64                        ; 2 uses
-  %xtraiter244 = and i64 %6, 1
   %i.z = icmp eq i8 %i.n, 1
   br i1 %i.z, label %.lr.ph168.epil.preheader, label %.lr.ph168.preheader.new
 
 .lr.ph168.preheader.new:                          ; preds = %.lr.ph168.preheader
-  %unroll_iter = and i64 %6, 254
+  %6 = and i8 %i.n, -2
+  %unroll_iter = zext i8 %6 to i64
   br label %.lr.ph168
 
 .lr.ph168:                                        ; preds = %bb.k, %.lr.ph168.preheader.new
@@ -822,8 +820,8 @@ bb.k:                                             ; preds = %bb.j, %.lr.ph168.1
   br i1 %niter.ncmp.1, label %.thread.loopexit.unr-lcssa, label %.lr.ph168, !llvm.loop !621
 
 .thread.loopexit.unr-lcssa:                       ; preds = %bb.k
-  %lcmp.mod245.not = icmp eq i64 %xtraiter244, 0
-  br i1 %lcmp.mod245.not, label %.thread, label %.lr.ph168.epil.preheader
+  %7 = trunc i8 %i.n to i1
+  br i1 %7, label %.lr.ph168.epil.preheader, label %.thread
 
 .lr.ph168.epil.preheader:                         ; preds = %.thread.loopexit.unr-lcssa, %.lr.ph168.preheader
   %indvars.iv188.epil.init = phi i64 [ 1, %.lr.ph168.preheader ], [ %indvars.iv.next189.1, %.thread.loopexit.unr-lcssa ] ; 3 uses
@@ -896,9 +894,8 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.bq = zext i32 %.0114160 to i64               ; 5 uses
   %wide.trip.count = zext i32 %i.bo to i64        ; 3 uses
   %i.br = sub nsw i64 %wide.trip.count, %i.bq
-  %xtraiter = and i64 %i.br, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
+  %8 = trunc i64 %i.br to i1
+  br i1 %8, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
   %i.bs = icmp ult i32 %.0114160, %2

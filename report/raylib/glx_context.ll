@@ -204,11 +204,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.v = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.u, ptr noundef nonnull dereferenceable(9) @.str.47) #5
-  %2 = icmp ne i32 %i.v, 0
+  %2 = icmp eq i32 %i.v, 0
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.w = phi i1 [ true, %bb.a ], [ %2, %bb.b ]
+  %i.w = phi i1 [ false, %bb.a ], [ %2, %bb.b ]
   %i.x = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 139432), align 8
   %i.y = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 133888), align 8
   %i.z = load i32, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 133896), align 8
@@ -254,9 +254,8 @@ bb.f:                                             ; preds = %.lr.ph, %bb.s
   %i.as = call i32 %i.aq(ptr noundef %i.ar, ptr noundef %i.an, i32 noundef 32785, ptr noundef nonnull %i.q) #4, !inline_history !5 ; 0 uses
   %i.at = load i32, ptr %i.q, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #4
-  %3 = and i32 %i.at, 1
-  %.not73 = icmp eq i32 %3, 0
-  br i1 %.not73, label %bb.s, label %bb.g
+  %3 = trunc i32 %i.at to i1
+  br i1 %3, label %bb.g, label %bb.s
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #4
@@ -265,10 +264,9 @@ bb.g:                                             ; preds = %bb.f
   %i.aw = call i32 %i.au(ptr noundef %i.av, ptr noundef %i.an, i32 noundef 32784, ptr noundef nonnull %i.p) #4, !inline_history !5 ; 0 uses
   %i.ax = load i32, ptr %i.p, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #4
-  %4 = and i32 %i.ax, 1
-  %5 = icmp eq i32 %4, 0
-  %or.cond5 = and i1 %i.w, %5
-  br i1 %or.cond5, label %bb.s, label %bb.h
+  %4 = trunc i32 %i.ax to i1
+  %or.cond5.not = or i1 %i.w, %4
+  br i1 %or.cond5.not, label %bb.h, label %bb.s
 
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #4

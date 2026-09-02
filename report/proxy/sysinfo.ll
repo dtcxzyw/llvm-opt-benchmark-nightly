@@ -2,7 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 627
 inline.NumDeleted: 266
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -190,7 +190,7 @@ bb.a:
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 19 uses
-  %16 = alloca %struct.cpu_set_t, align 8         ; 6 uses
+  %16 = alloca %struct.cpu_set_t, align 8         ; 7 uses
   %i.h = alloca ptr, align 8                      ; 5 uses
   %i.i = alloca ptr, align 8                      ; 5 uses
   %i.j = alloca i64, align 8                      ; 6 uses
@@ -593,30 +593,52 @@ _ZN9benchmark12_GLOBAL__N_119ThreadAffinityGuard11SetAffinityEv.exit.thread2.i.i
   br label %.sink.split.i.i
 
 bb.bw:                                            ; preds = %bb.bz, %bb.bu
-  %indvars.iv.i.i.i = phi i64 [ 0, %bb.bu ], [ %indvars.iv.next.i.i.i.a, %bb.bz ] ; 3 uses
+  %indvars.iv.i.i.i = phi i64 [ 0, %bb.bu ], [ %indvars.iv.next.i.i.i.a, %bb.bz ] ; 5 uses
   %.01720.i.i.i = phi i8 [ 1, %bb.bu ], [ %.118.i.i.i.a, %bb.bz ] ; 2 uses
   %i.nj = lshr i64 %indvars.iv.i.i.i, 6
   %i.nk = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.nj ; 2 uses
   %i.nl = load i64, ptr %i.nk, align 8, !tbaa !28 ; 2 uses
-  %i.nm = and i64 %indvars.iv.i.i.i, 63
-  %32 = shl nuw i64 1, %i.nm                      ; 2 uses
-  %33 = and i64 %i.nl, %32
-  %34 = icmp eq i64 %33, 0
-  br i1 %34, label %bb.bz, label %bb.bx
+  %i.nm = and i64 %indvars.iv.i.i.i, 62           ; 2 uses
+  %32 = lshr i64 %i.nl, %i.nm
+  %33 = trunc i64 %32 to i1
+  br i1 %33, label %34, label %40
 
-bb.bx:                                            ; preds = %bb.bw
-  %i.nn = trunc nuw i8 %.01720.i.i.i to i1
+34:                                               ; preds = %bb.bw
+  %35 = trunc nuw i8 %.01720.i.i.i to i1
+  br i1 %35, label %40, label %36
+
+36:                                               ; preds = %34
+  %37 = shl nuw nsw i64 1, %i.nm
+  %38 = xor i64 %37, -1
+  %39 = and i64 %i.nl, %38
+  store i64 %39, ptr %i.nk, align 8, !tbaa !28
+  br label %40
+
+40:                                               ; preds = %36, %34, %bb.bw
+  %.118.i.i.i = phi i8 [ %.01720.i.i.i, %bb.bw ], [ 0, %36 ], [ 0, %34 ] ; 2 uses
+  %41 = lshr i64 %indvars.iv.i.i.i, 6
+  %42 = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %41 ; 2 uses
+  %43 = load i64, ptr %42, align 8, !tbaa !28     ; 2 uses
+  %indvars.iv.next.i.i.i = and i64 %indvars.iv.i.i.i, 62 ; 2 uses
+  %44 = or disjoint i64 %indvars.iv.next.i.i.i, 1
+  %45 = lshr i64 %43, %44
+  %46 = trunc i64 %45 to i1
+  br i1 %46, label %bb.bx, label %bb.bz
+
+bb.bx:                                            ; preds = %40
+  %i.nn = trunc nuw i8 %.118.i.i.i to i1
   br i1 %i.nn, label %bb.bz, label %bb.by
 
 bb.by:                                            ; preds = %bb.bx
-  %i.no = xor i64 %32, -1
-  %i.np = and i64 %i.nl, %i.no
-  store i64 %i.np, ptr %i.nk, align 8, !tbaa !28
+  %47 = shl nuw i64 2, %indvars.iv.next.i.i.i
+  %i.no = xor i64 %47, -1
+  %i.np = and i64 %43, %i.no
+  store i64 %i.np, ptr %42, align 8, !tbaa !28
   br label %bb.bz
 
-bb.bz:                                            ; preds = %bb.by, %bb.bx, %bb.bw
-  %.118.i.i.i.a = phi i8 [ %.01720.i.i.i, %bb.bw ], [ 0, %bb.by ], [ 0, %bb.bx ] ; 2 uses
-  %indvars.iv.next.i.i.i.a = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
+bb.bz:                                            ; preds = %bb.by, %bb.bx, %40
+  %.118.i.i.i.a = phi i8 [ %.118.i.i.i, %40 ], [ 0, %bb.by ], [ 0, %bb.bx ] ; 2 uses
+  %indvars.iv.next.i.i.i.a = add nuw nsw i64 %indvars.iv.i.i.i, 2 ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i.a, 1024
   br i1 %exitcond.not.i.i.i, label %bb.bv, label %bb.bw, !llvm.loop !58
 

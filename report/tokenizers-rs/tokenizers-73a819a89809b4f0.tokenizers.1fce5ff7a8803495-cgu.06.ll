@@ -205,11 +205,10 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !694)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !695)
   %i.c = ptrtoint ptr %1 to i64                   ; 2 uses
-  %2 = and i64 %i.c, 1
-  %.not.i.i.i = icmp eq i64 %2, 0
+  %2 = trunc i64 %i.c to i1
   %i.d = lshr i64 %i.c, 1                         ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !696)
-  br i1 %.not.i.i.i, label %bb.e, label %bb.b
+  br i1 %2, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !697)
@@ -612,9 +611,8 @@ bb.d:                                             ; preds = %bb.b
   %i.r = load ptr, ptr %i.q, align 8, !noalias !822, !nonnull !4, !noundef !4
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 60
   %i.t = load i32, ptr %i.s, align 4, !noalias !822, !noundef !4
-  %2 = and i32 %i.t, 1
-  %3 = icmp eq i32 %2, 0
-  br i1 %3, label %bb.c, label %_RNvMs4_NtNtCsdMFwaIVqAhb_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread13
+  %2 = trunc i32 %i.t to i1
+  br i1 %2, label %_RNvMs4_NtNtCsdMFwaIVqAhb_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread13, label %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 64
@@ -643,9 +641,8 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.ag = getelementptr inbounds nuw i8, ptr %i.p, i64 60
   %i.ah = load i32, ptr %i.ag, align 4, !noalias !822, !noundef !4
-  %4 = and i32 %i.ah, 1
-  %.not8.i = icmp eq i32 %4, 0
-  br i1 %.not8.i, label %_RNvMs4_NtNtCsdMFwaIVqAhb_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread, label %bb.i
+  %3 = trunc i32 %i.ah to i1
+  br i1 %3, label %bb.i, label %_RNvMs4_NtNtCsdMFwaIVqAhb_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ai = getelementptr inbounds nuw i8, ptr %i.p, i64 64
@@ -1048,9 +1045,8 @@ bb.a:
   %i.n = add i64 %1, -1                           ; 3 uses
   %i.o = sub i64 %i.d, %i.f
   %.neg = add i64 %i.f, 1
-  %xtraiter = and i64 %i.o, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  %2 = trunc i64 %i.o to i1
+  br i1 %2, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph
   %i.p = and i64 %i.f, %i.m
@@ -1228,9 +1224,8 @@ bb.a:                                             ; preds = %._crit_edge.i
 bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %i.k, i64 60
   %i.r = load i32, ptr %i.q, align 4, !noalias !1203, !noundef !4
-  %3 = and i32 %i.r, 1
-  %.not8.i.i = icmp eq i32 %3, 0
-  br i1 %.not8.i.i, label %_RNvMs4_NtNtCsdMFwaIVqAhb_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread.i, label %bb.c
+  %3 = trunc i32 %i.r to i1
+  br i1 %3, label %bb.c, label %_RNvMs4_NtNtCsdMFwaIVqAhb_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread.i
 
 bb.c:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %i.k, i64 64
@@ -1633,9 +1628,8 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.bh = getelementptr inbounds nuw i8, ptr %.pre.i.i.i, i64 60
   %i.bi = load i32, ptr %i.bh, align 4, !noalias !1474, !noundef !4
-  %4 = and i32 %i.bi, 1
-  %5 = icmp eq i32 %4, 0
-  br i1 %5, label %._crit_edge.i.i.i, label %bb.ag
+  %4 = trunc i32 %i.bi to i1
+  br i1 %4, label %bb.ag, label %._crit_edge.i.i.i
 
 bb.o:                                             ; preds = %._crit_edge.i.i.i
   %i.bj = getelementptr inbounds nuw i8, ptr %.pre.i.i.i, i64 64
@@ -1664,9 +1658,8 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q
   %i.bv = getelementptr inbounds nuw i8, ptr %.pre.i.i.i, i64 60
   %i.bw = load i32, ptr %i.bv, align 4, !noalias !1474, !noundef !4
-  %6 = and i32 %i.bw, 1
-  %.not8.i.i.i.i.i = icmp eq i32 %6, 0
-  br i1 %.not8.i.i.i.i.i, label %_RNCNvXs6_NtNtCsdMFwaIVqAhb_14regex_automata4meta5regexNtB7_11FindMatchesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next0Cs2JiOgHzbbc7_10tokenizers.exit.i.i, label %bb.s
+  %5 = trunc i32 %i.bw to i1
+  br i1 %5, label %bb.s, label %_RNCNvXs6_NtNtCsdMFwaIVqAhb_14regex_automata4meta5regexNtB7_11FindMatchesNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next0Cs2JiOgHzbbc7_10tokenizers.exit.i.i
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   %i.bx = getelementptr inbounds nuw i8, ptr %.pre.i.i.i, i64 64

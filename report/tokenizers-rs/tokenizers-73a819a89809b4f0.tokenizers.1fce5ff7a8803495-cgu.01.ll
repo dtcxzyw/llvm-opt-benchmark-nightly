@@ -205,9 +205,8 @@ bb.b:                                             ; preds = %bb.g, %.preheader23
 .lr.ph.i.preheader:                               ; preds = %.preheader.i
   %i.k = sub nuw i64 %i.b, %.sroa.7.026.i.lcssa
   %.neg = add i64 %.sroa.7.026.i.lcssa, 1
-  %xtraiter12 = and i64 %i.k, 1
-  %lcmp.mod13.not = icmp eq i64 %xtraiter12, 0
-  br i1 %lcmp.mod13.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
+  %1 = trunc i64 %i.k to i1
+  br i1 %1, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader
   %i.l = getelementptr inbounds nuw [32 x i8], ptr %i.f, i64 %.sroa.7.026.i.lcssa ; 2 uses
@@ -610,9 +609,8 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTciEE7reserveCs2JiOgHzbbc7_10tokenizer
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTciEE7reserveCs2JiOgHzbbc7_10tokenizers.exit
   %.neg = add i64 %.val, 1
-  %xtraiter = and i64 %i.b, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol
+  %2 = trunc i64 %i.b to i1
+  br i1 %2, label %.lr.ph.i.i.i.prol, label %.lr.ph.i.i.i.prol.loopexit
 
 .lr.ph.i.i.i.prol:                                ; preds = %.lr.ph.i.i.i.preheader
   %i.m = add nuw nsw i64 %.val, 1
@@ -1015,8 +1013,8 @@ bb.a:
   %.val3 = load ptr, ptr %i.b, align 8, !nonnull !6, !noundef !6 ; 2 uses
   %i.c = ptrtoint ptr %.val3 to i64
   %i.d = ptrtoint ptr %.val to i64
-  %i.e = sub nuw i64 %i.c, %i.d                   ; 3 uses
-  %i.f = lshr exact i64 %i.e, 5                   ; 5 uses
+  %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
+  %i.f = lshr exact i64 %i.e, 5                   ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %i.f, i1 noundef zeroext false, i64 noundef 8, i64 noundef 16)
   %i.g = load i64, ptr %i.a, align 8, !range !13, !noundef !6
@@ -1072,9 +1070,8 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTjRTNtNtB6_6string6StringmEEE7reserveC
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.preheader.i.i
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.preheader.i.i
-  %2 = and i64 %i.e, 32
-  %lcmp.mod.not = icmp eq i64 %2, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.preheader.i.i.epil.preheader
+  %2 = trunc i64 %i.f to i1
+  br i1 %2, label %.preheader.i.i.epil.preheader, label %.loopexit
 
 .preheader.i.i.epil.preheader:                    ; preds = %.loopexit.loopexit.unr-lcssa, %.preheader.i.i.preheader
   %.epil.init = phi i64 [ 0, %.preheader.i.i.preheader ], [ %i.aa, %.loopexit.loopexit.unr-lcssa ] ; 2 uses

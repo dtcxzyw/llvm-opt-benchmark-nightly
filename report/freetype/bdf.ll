@@ -205,14 +205,12 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.p, %bb.o
-  %7 = and i64 %.pre.i, 1
-  %.not71.i = icmp eq i64 %7, 0
-  br i1 %.not71.i, label %.thread.i, label %bdf_readstream_.exit._crit_edge.sink.split.i
+  %7 = trunc i64 %.pre.i to i1
+  br i1 %7, label %bdf_readstream_.exit._crit_edge.sink.split.i, label %.thread.i
 
 .thread102.i:                                     ; preds = %bb.n
-  %8 = and i64 %.pre.i, 1
-  %.not71103.i = icmp eq i64 %8, 0
-  br i1 %.not71103.i, label %.thread104.i, label %bdf_readstream_.exit._crit_edge.sink.split.i
+  %8 = trunc i64 %.pre.i to i1
+  br i1 %8, label %bdf_readstream_.exit._crit_edge.sink.split.i, label %.thread104.i
 
 bdf_readstream_.exit._crit_edge.sink.split.i:     ; preds = %.thread102.i, %bb.aa
   %i.cj = and i64 %.pre.i, 32
@@ -230,7 +228,7 @@ bb.ab:                                            ; preds = %bb.b
   br i1 %.not73.i, label %bdf_load_font.exit, label %.thread.i
 
 .thread.i:                                        ; preds = %.thread104.i, %bb.aa, %bdf_readstream_.exit._crit_edge.i, %bb.ab
-  %.0 = phi ptr [ null, %bb.ab ], [ null, %bdf_readstream_.exit._crit_edge.i ], [ %i.ba, %bb.aa ], [ null, %.thread104.i ]
+  %.0 = phi ptr [ null, %bdf_readstream_.exit._crit_edge.i ], [ null, %bb.ab ], [ %i.ba, %bb.aa ], [ null, %.thread104.i ]
   %i.ck = getelementptr inbounds nuw i8, ptr %i.i, i64 40 ; 2 uses
   %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !60
   call void @ft_mem_free(ptr noundef %i.g, ptr noundef %i.cl) #18
@@ -633,7 +631,6 @@ bb.dm:                                            ; preds = %bb.dl
 
 .lr.ph:                                           ; preds = %bb.dm
   %i.wp = load i64, ptr %i.wg, align 8, !tbaa !151 ; 3 uses
-  %xtraiter = and i64 %i.wo, 1
   %i.wq = icmp eq i64 %i.wo, 1
   br i1 %i.wq, label %.epil.preheader, label %.lr.ph.new
 
@@ -689,8 +686,8 @@ bb.dr:                                            ; preds = %bb.dq, %bb.dp
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.dn, !llvm.loop !132
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.dr
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %9 = trunc i64 %i.wo to i1
+  br i1 %9, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
   %.0166313.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.xk, %._crit_edge.loopexit.unr-lcssa ] ; 5 uses
@@ -1093,9 +1090,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
   store i32 0, ptr %i.b, align 4, !tbaa !34
   %i.e = load i64, ptr %3, align 8, !tbaa !38     ; 7 uses
-  %5 = and i64 %i.e, 1
-  %.not = icmp eq i64 %5, 0
-  br i1 %.not, label %bb.b, label %bb.f
+  %5 = trunc i64 %i.e to i1
+  br i1 %5, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.f = tail call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(10) @.str.20, i64 noundef 9) #19
@@ -1498,9 +1494,8 @@ bb.a:
   %i.q = lshr exact i32 %i.p, 6
   %i.r = add nuw nsw i32 %i.q, %i.n
   %i.s = and i32 %i.r, 15                         ; 2 uses
-  %5 = and i64 %.02531, 1
-  %.not29 = icmp eq i64 %5, 0
-  br i1 %.not29, label %bb.c, label %bb.b
+  %5 = trunc i64 %.02531 to i1
+  br i1 %5, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph
   %i.t = getelementptr inbounds nuw i8, ptr %.02630, i64 1

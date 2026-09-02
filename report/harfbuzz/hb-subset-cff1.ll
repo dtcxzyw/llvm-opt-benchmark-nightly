@@ -205,9 +205,9 @@ bb.p:                                             ; preds = %bb.m
   br i1 %.not66148, label %._crit_edge155, label %.lr.ph154.preheader
 
 .lr.ph154.preheader:                              ; preds = %bb.p
-  %i.en = add nsw i64 %.idx177, -4                ; 3 uses
+  %i.en = add nsw i64 %.idx177, -4                ; 2 uses
   %i.eo = lshr exact i64 %i.en, 2
-  %i.ep = add nuw nsw i64 %i.eo, 1                ; 2 uses
+  %i.ep = add nuw nsw i64 %i.eo, 1                ; 3 uses
   %i.eq = icmp eq i64 %i.en, 0
   br i1 %i.eq, label %.lr.ph154.epil.preheader, label %.lr.ph154.preheader.new
 
@@ -216,9 +216,8 @@ bb.p:                                             ; preds = %bb.m
   br label %.lr.ph154
 
 ._crit_edge155.loopexit.unr-lcssa:                ; preds = %.lr.ph154
-  %6 = and i64 %i.en, 4
-  %lcmp.mod219.not.not = icmp eq i64 %6, 0
-  br i1 %lcmp.mod219.not.not, label %.lr.ph154.epil.preheader, label %._crit_edge155
+  %6 = trunc i64 %i.ep to i1
+  br i1 %6, label %.lr.ph154.epil.preheader, label %._crit_edge155
 
 .lr.ph154.epil.preheader:                         ; preds = %._crit_edge155.loopexit.unr-lcssa, %.lr.ph154.preheader
   %.056152.epil.init = phi ptr [ %i.z, %.lr.ph154.preheader ], [ %.056.1, %._crit_edge155.loopexit.unr-lcssa ] ; 3 uses
@@ -621,10 +620,10 @@ bb.a:
   br i1 %.not6067.i.i, label %.loopexit.i.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %.preheader61.i.i
-  %i.k = add nsw i64 %i.d, -8                     ; 2 uses
-  %1 = and i64 %i.k, 8
-  %lcmp.mod.not.not = icmp eq i64 %1, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.prol, label %.lr.ph.i.i.prol.loopexit
+  %i.k = add nsw i64 %i.d, -8
+  %1 = lshr i64 %i.k, 3                           ; 2 uses
+  %2 = trunc i64 %1 to i1
+  br i1 %2, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol
 
 .lr.ph.i.i.prol:                                  ; preds = %.lr.ph.i.i.preheader
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -642,17 +641,17 @@ bb.a:
   %.lcssa10.unr = phi i64 [ poison, %.lr.ph.i.i.preheader ], [ %i.t, %.lr.ph.i.i.prol ]
   %.15465.i.i.unr = phi i64 [ %i.g, %.lr.ph.i.i.preheader ], [ %i.t, %.lr.ph.i.i.prol ]
   %.15864.i.i.unr = phi ptr [ %i.a, %.lr.ph.i.i.preheader ], [ %i.l, %.lr.ph.i.i.prol ]
-  %2 = icmp ult i64 %i.k, 8
-  br i1 %2, label %.loopexit.i.i, label %.lr.ph.i.i
+  %3 = icmp eq i64 %1, 0
+  br i1 %3, label %.loopexit.i.i, label %.lr.ph.i.i
 
 .preheader.i.i:                                   ; preds = %bb.a
   br i1 %.not6067.i.i, label %.loopexit.i.i, label %.lr.ph70.i.i.preheader
 
 .lr.ph70.i.i.preheader:                           ; preds = %.preheader.i.i
-  %i.u = add nsw i64 %i.d, -8                     ; 2 uses
-  %3 = and i64 %i.u, 8
-  %lcmp.mod12.not.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod12.not.not, label %.lr.ph70.i.i.prol, label %.lr.ph70.i.i.prol.loopexit
+  %i.u = add nsw i64 %i.d, -8
+  %4 = lshr i64 %i.u, 3                           ; 2 uses
+  %5 = trunc i64 %4 to i1
+  br i1 %5, label %.lr.ph70.i.i.prol.loopexit, label %.lr.ph70.i.i.prol
 
 .lr.ph70.i.i.prol:                                ; preds = %.lr.ph70.i.i.preheader
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -670,8 +669,8 @@ bb.a:
   %.lcssa.unr = phi i64 [ poison, %.lr.ph70.i.i.preheader ], [ %i.ad, %.lr.ph70.i.i.prol ]
   %.05369.i.i.unr = phi i64 [ %i.g, %.lr.ph70.i.i.preheader ], [ %i.ad, %.lr.ph70.i.i.prol ]
   %.05768.i.i.unr = phi ptr [ %i.a, %.lr.ph70.i.i.preheader ], [ %i.v, %.lr.ph70.i.i.prol ]
-  %4 = icmp ult i64 %i.u, 8
-  br i1 %4, label %.loopexit.i.i, label %.lr.ph70.i.i
+  %6 = icmp eq i64 %4, 0
+  br i1 %6, label %.loopexit.i.i, label %.lr.ph70.i.i
 
 .lr.ph70.i.i:                                     ; preds = %.lr.ph70.i.i.prol.loopexit, %.lr.ph70.i.i
   %.05369.i.i = phi i64 [ %i.av, %.lr.ph70.i.i ], [ %.05369.i.i.unr, %.lr.ph70.i.i.prol.loopexit ]
@@ -1074,9 +1073,9 @@ bb.p:                                             ; preds = %bb.m
   br i1 %.not66155, label %._crit_edge162, label %.lr.ph161.preheader
 
 .lr.ph161.preheader:                              ; preds = %bb.p
-  %i.ed = add nsw i64 %.idx184, -16               ; 3 uses
+  %i.ed = add nsw i64 %.idx184, -16               ; 2 uses
   %i.ee = lshr exact i64 %i.ed, 4
-  %i.ef = add nuw nsw i64 %i.ee, 1                ; 2 uses
+  %i.ef = add nuw nsw i64 %i.ee, 1                ; 3 uses
   %i.eg = icmp eq i64 %i.ed, 0
   br i1 %i.eg, label %.lr.ph161.epil.preheader, label %.lr.ph161.preheader.new
 
@@ -1085,9 +1084,8 @@ bb.p:                                             ; preds = %bb.m
   br label %.lr.ph161
 
 ._crit_edge162.loopexit.unr-lcssa:                ; preds = %.lr.ph161
-  %6 = and i64 %i.ed, 16
-  %lcmp.mod226.not.not = icmp eq i64 %6, 0
-  br i1 %lcmp.mod226.not.not, label %.lr.ph161.epil.preheader, label %._crit_edge162
+  %6 = trunc i64 %i.ef to i1
+  br i1 %6, label %.lr.ph161.epil.preheader, label %._crit_edge162
 
 .lr.ph161.epil.preheader:                         ; preds = %._crit_edge162.loopexit.unr-lcssa, %.lr.ph161.preheader
   %.056159.epil.init = phi ptr [ %i.z, %.lr.ph161.preheader ], [ %.056.1, %._crit_edge162.loopexit.unr-lcssa ] ; 3 uses
@@ -1490,9 +1488,8 @@ _ZN21cff1_subr_subsetter_t19complete_parsed_strERN3CFF20cff1_cs_interp_env_tERNS
   %i.me = load ptr, ptr %i.co, align 8, !tbaa !371 ; 2 uses
   %i.mf = getelementptr inbounds nuw i8, ptr %i.me, i64 20
   %i.mg = load i32, ptr %i.mf, align 4, !tbaa !254
-  %5 = and i32 %i.mg, 1
-  %.not66 = icmp eq i32 %5, 0
-  br i1 %.not66, label %bb.bl, label %bb.bm
+  %5 = trunc i32 %i.mg to i1
+  br i1 %5, label %bb.bm, label %bb.bl
 
 bb.bl:                                            ; preds = %_ZN21cff1_subr_subsetter_t19complete_parsed_strERN3CFF20cff1_cs_interp_env_tERNS0_19subr_subset_param_tERNS0_15parsed_cs_str_tE.exit
   %i.mh = getelementptr inbounds nuw i8, ptr %i.me, i64 3096
@@ -1666,9 +1663,8 @@ bb.cg:                                            ; preds = %.critedge73
   %i.nx = load ptr, ptr %i.co, align 8, !tbaa !371
   %i.ny = getelementptr inbounds nuw i8, ptr %i.nx, i64 20
   %i.nz = load i32, ptr %i.ny, align 4, !tbaa !254
-  %6 = and i32 %i.nz, 1
-  %.not68 = icmp eq i32 %6, 0
-  br i1 %.not68, label %bb.ci, label %bb.ch
+  %6 = trunc i32 %i.nz to i1
+  br i1 %6, label %bb.ch, label %bb.ci
 
 bb.ch:                                            ; preds = %bb.cg, %.critedge73
   %i.oa = load ptr, ptr %i.ch, align 8, !tbaa !287
@@ -2071,9 +2067,9 @@ bb.p:                                             ; preds = %bb.m
   br i1 %.not66152, label %._crit_edge159, label %.lr.ph158.preheader
 
 .lr.ph158.preheader:                              ; preds = %bb.p
-  %i.ed = add nsw i64 %.idx181, -16               ; 3 uses
+  %i.ed = add nsw i64 %.idx181, -16               ; 2 uses
   %i.ee = lshr exact i64 %i.ed, 4
-  %i.ef = add nuw nsw i64 %i.ee, 1                ; 2 uses
+  %i.ef = add nuw nsw i64 %i.ee, 1                ; 3 uses
   %i.eg = icmp eq i64 %i.ed, 0
   br i1 %i.eg, label %.lr.ph158.epil.preheader, label %.lr.ph158.preheader.new
 
@@ -2082,9 +2078,8 @@ bb.p:                                             ; preds = %bb.m
   br label %.lr.ph158
 
 ._crit_edge159.loopexit.unr-lcssa:                ; preds = %.lr.ph158
-  %6 = and i64 %i.ed, 16
-  %lcmp.mod223.not.not = icmp eq i64 %6, 0
-  br i1 %lcmp.mod223.not.not, label %.lr.ph158.epil.preheader, label %._crit_edge159
+  %6 = trunc i64 %i.ef to i1
+  br i1 %6, label %.lr.ph158.epil.preheader, label %._crit_edge159
 
 .lr.ph158.epil.preheader:                         ; preds = %._crit_edge159.loopexit.unr-lcssa, %.lr.ph158.preheader
   %.056156.epil.init = phi ptr [ %i.z, %.lr.ph158.preheader ], [ %.056.1, %._crit_edge159.loopexit.unr-lcssa ] ; 3 uses
@@ -2487,9 +2482,9 @@ bb.p:                                             ; preds = %bb.m
   br i1 %.not66148, label %._crit_edge155, label %.lr.ph154.preheader
 
 .lr.ph154.preheader:                              ; preds = %bb.p
-  %i.en = add nsw i64 %.idx177, -4                ; 3 uses
+  %i.en = add nsw i64 %.idx177, -4                ; 2 uses
   %i.eo = lshr exact i64 %i.en, 2
-  %i.ep = add nuw nsw i64 %i.eo, 1                ; 2 uses
+  %i.ep = add nuw nsw i64 %i.eo, 1                ; 3 uses
   %i.eq = icmp eq i64 %i.en, 0
   br i1 %i.eq, label %.lr.ph154.epil.preheader, label %.lr.ph154.preheader.new
 
@@ -2498,9 +2493,8 @@ bb.p:                                             ; preds = %bb.m
   br label %.lr.ph154
 
 ._crit_edge155.loopexit.unr-lcssa:                ; preds = %.lr.ph154
-  %6 = and i64 %i.en, 4
-  %lcmp.mod219.not.not = icmp eq i64 %6, 0
-  br i1 %lcmp.mod219.not.not, label %.lr.ph154.epil.preheader, label %._crit_edge155
+  %6 = trunc i64 %i.ep to i1
+  br i1 %6, label %.lr.ph154.epil.preheader, label %._crit_edge155
 
 .lr.ph154.epil.preheader:                         ; preds = %._crit_edge155.loopexit.unr-lcssa, %.lr.ph154.preheader
   %.056152.epil.init = phi ptr [ %i.z, %.lr.ph154.preheader ], [ %.056.1, %._crit_edge155.loopexit.unr-lcssa ] ; 3 uses

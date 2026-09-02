@@ -205,9 +205,8 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph.preheader.i41.i:                           ; preds = %bb.f
   %.015.i.i = xor i32 %i.p, 31                    ; 2 uses
   %i.r = zext nneg i32 %.015.i.i to i64           ; 3 uses
-  %xtraiter = and i32 %.015.i.i, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i42.i.prol.loopexit, label %.lr.ph.i42.i.prol
+  %3 = trunc i32 %.015.i.i to i1
+  br i1 %3, label %.lr.ph.i42.i.prol, label %.lr.ph.i42.i.prol.loopexit
 
 .lr.ph.i42.i.prol:                                ; preds = %.lr.ph.preheader.i41.i
   %i.s = trunc i32 %.045 to i8
@@ -610,9 +609,8 @@ bb.e:                                             ; preds = %bb.d, %bb.d
 .lr.ph.preheader.i35.i:                           ; preds = %.preheader.i.i
   %.015.i.i = xor i32 %i.n, 31                    ; 2 uses
   %i.p = zext nneg i32 %.015.i.i to i64           ; 3 uses
-  %xtraiter = and i32 %.015.i.i, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i36.i.prol.loopexit, label %.lr.ph.i36.i.prol
+  %3 = trunc i32 %.015.i.i to i1
+  br i1 %3, label %.lr.ph.i36.i.prol, label %.lr.ph.i36.i.prol.loopexit
 
 .lr.ph.i36.i.prol:                                ; preds = %.lr.ph.preheader.i35.i
   %i.q = and i8 %1, 1
@@ -1013,9 +1011,8 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph.preheader.i41.i:                           ; preds = %bb.f
   %.015.i.i = xor i32 %i.o, 31                    ; 2 uses
   %i.q = zext nneg i32 %.015.i.i to i64           ; 3 uses
-  %xtraiter = and i32 %.015.i.i, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i42.i.prol.loopexit, label %.lr.ph.i42.i.prol
+  %3 = trunc i32 %.015.i.i to i1
+  br i1 %3, label %.lr.ph.i42.i.prol, label %.lr.ph.i42.i.prol.loopexit
 
 .lr.ph.i42.i.prol:                                ; preds = %.lr.ph.preheader.i41.i
   %i.r = trunc i32 %1 to i8
@@ -1418,10 +1415,8 @@ bb.e:                                             ; preds = %bb.d, %bb.d
 
 .lr.ph.preheader.i41.i:                           ; preds = %.preheader.i.i
   %.015.i.i = xor i64 %i.p, 63                    ; 3 uses
-  %3 = trunc nuw nsw i64 %.015.i.i to i32
-  %xtraiter = and i32 %3, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i42.i.prol.loopexit, label %.lr.ph.i42.i.prol
+  %3 = trunc i64 %.015.i.i to i1
+  br i1 %3, label %.lr.ph.i42.i.prol, label %.lr.ph.i42.i.prol.loopexit
 
 .lr.ph.i42.i.prol:                                ; preds = %.lr.ph.preheader.i41.i
   %i.r = trunc i64 %.045 to i8
@@ -1824,10 +1819,8 @@ bb.e:                                             ; preds = %bb.d, %bb.d
 
 .lr.ph.preheader.i41.i:                           ; preds = %.preheader.i.i
   %.015.i.i = xor i64 %i.o, 63                    ; 3 uses
-  %3 = trunc nuw nsw i64 %.015.i.i to i32
-  %xtraiter = and i32 %3, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i42.i.prol.loopexit, label %.lr.ph.i42.i.prol
+  %3 = trunc i64 %.015.i.i to i1
+  br i1 %3, label %.lr.ph.i42.i.prol, label %.lr.ph.i42.i.prol.loopexit
 
 .lr.ph.i42.i.prol:                                ; preds = %.lr.ph.preheader.i41.i
   %i.q = trunc i64 %1 to i8
@@ -2230,7 +2223,7 @@ define linkonce_odr dso_local ptr @_ZNKSt8__format14__formatter_fpIcE6formatIfNS
 bb.a:
   %3 = alloca %"class.std::basic_format_arg", align 16 ; 5 uses
   %4 = alloca %"struct.std::__format::_WidthPrecVisitor", align 1 ; 3 uses
-  %.sroa.0.i203 = alloca %union.anon.1198, align 16 ; 5 uses
+  %.sroa.0.i206 = alloca %union.anon.1198, align 16 ; 5 uses
   %5 = alloca %"class.std::basic_format_arg", align 16 ; 5 uses
   %6 = alloca %"struct.std::__format::_WidthPrecVisitor", align 1 ; 3 uses
   %.sroa.0.i = alloca %union.anon.1198, align 16  ; 5 uses
@@ -2633,7 +2626,7 @@ bb.cn:                                            ; preds = %bb.cm
   br label %_ZNKSt8__format5_SpecIcE12_M_get_widthISt20basic_format_contextINS_10_Sink_iterIcEEcEEEmRT_.exit
 
 bb.co:                                            ; preds = %bb.cm
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i203)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i206)
   %i.jr = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.js = load i16, ptr %i.jr, align 2, !tbaa !141
   %i.jt = zext i16 %i.js to i64                   ; 5 uses
@@ -2651,7 +2644,7 @@ bb.cp:                                            ; preds = %bb.co
   %i.kc = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.kd = load ptr, ptr %i.kc, align 8, !tbaa !74, !noalias !980
   %i.ke = getelementptr inbounds nuw [16 x i8], ptr %i.kd, i64 %i.jt
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i203, ptr noundef nonnull align 16 dereferenceable(16) %i.ke, i64 16, i1 false), !tbaa.struct !153
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i206, ptr noundef nonnull align 16 dereferenceable(16) %i.ke, i64 16, i1 false), !tbaa.struct !153
   br label %_ZNKSt20basic_format_contextINSt8__format10_Sink_iterIcEEcE3argEm.exit.i205
 
 bb.cq:                                            ; preds = %bb.co
@@ -2665,7 +2658,7 @@ bb.cr:                                            ; preds = %bb.cq
   %i.ki = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.kj = load ptr, ptr %i.ki, align 8, !tbaa !74, !noalias !980
   %i.kk = getelementptr inbounds nuw [32 x i8], ptr %i.kj, i64 %i.jt ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i203, ptr noundef nonnull align 16 dereferenceable(16) %i.kk, i64 16, i1 false), !tbaa.struct !156
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i206, ptr noundef nonnull align 16 dereferenceable(16) %i.kk, i64 16, i1 false), !tbaa.struct !156
   %.sroa.5.0..sroa_idx3.i209 = getelementptr inbounds nuw i8, ptr %i.kk, i64 16
   %.sroa.5.0.copyload4.i210 = load i8, ptr %.sroa.5.0..sroa_idx3.i209, align 16, !tbaa !155
   br label %_ZNKSt20basic_format_contextINSt8__format10_Sink_iterIcEEcE3argEm.exit.i205
@@ -2674,7 +2667,7 @@ _ZNKSt20basic_format_contextINSt8__format10_Sink_iterIcEEcE3argEm.exit.i205: ; p
   %.sroa.5.0.i206 = phi i8 [ %i.kb, %bb.cp ], [ %.sroa.5.0.copyload4.i210, %bb.cr ], [ 0, %bb.cq ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i203, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i206, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i207 = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i8 %.sroa.5.0.i206, ptr %.sroa.5.0..sroa_idx.i207, align 16
   %i.kl = invoke noundef i64 @_ZNSt16basic_format_argISt20basic_format_contextINSt8__format10_Sink_iterIcEEcEE8_M_visitINS1_17_WidthPrecVisitorEEEDcOT_NS1_6_Arg_tE(ptr noundef nonnull align 16 dereferenceable(17) %3, ptr noundef nonnull align 1 dereferenceable(1) %4, i8 noundef zeroext %.sroa.5.0.i206)
@@ -2683,7 +2676,7 @@ _ZNKSt20basic_format_contextINSt8__format10_Sink_iterIcEEcE3argEm.exit.i205: ; p
 .noexc211:                                        ; preds = %_ZNKSt20basic_format_contextINSt8__format10_Sink_iterIcEEcE3argEm.exit.i205
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i203)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i206)
   br label %_ZNKSt8__format5_SpecIcE12_M_get_widthISt20basic_format_contextINS_10_Sink_iterIcEEcEEEmRT_.exit
 
 _ZNKSt8__format5_SpecIcE12_M_get_widthISt20basic_format_contextINS_10_Sink_iterIcEEcEEEmRT_.exit: ; preds = %.noexc211, %bb.cn
@@ -3086,7 +3079,7 @@ define linkonce_odr dso_local ptr @_ZNKSt8__format14__formatter_fpIcE6formatIdNS
 bb.a:
   %3 = alloca %"class.std::basic_format_arg", align 16 ; 5 uses
   %4 = alloca %"struct.std::__format::_WidthPrecVisitor", align 1 ; 3 uses
-  %.sroa.0.i203 = alloca %union.anon.1198, align 16 ; 5 uses
+  %.sroa.0.i206 = alloca %union.anon.1198, align 16 ; 5 uses
   %5 = alloca %"class.std::basic_format_arg", align 16 ; 5 uses
   %6 = alloca %"struct.std::__format::_WidthPrecVisitor", align 1 ; 3 uses
   %.sroa.0.i = alloca %union.anon.1198, align 16  ; 5 uses
@@ -3489,7 +3482,7 @@ bb.cn:                                            ; preds = %bb.cm
   br label %_ZNKSt8__format5_SpecIcE12_M_get_widthISt20basic_format_contextINS_10_Sink_iterIcEEcEEEmRT_.exit
 
 bb.co:                                            ; preds = %bb.cm
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i203)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i206)
   %i.jr = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.js = load i16, ptr %i.jr, align 2, !tbaa !141
   %i.jt = zext i16 %i.js to i64                   ; 5 uses
@@ -3507,7 +3500,7 @@ bb.cp:                                            ; preds = %bb.co
   %i.kc = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.kd = load ptr, ptr %i.kc, align 8, !tbaa !74, !noalias !1027
   %i.ke = getelementptr inbounds nuw [16 x i8], ptr %i.kd, i64 %i.jt
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i203, ptr noundef nonnull align 16 dereferenceable(16) %i.ke, i64 16, i1 false), !tbaa.struct !153
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i206, ptr noundef nonnull align 16 dereferenceable(16) %i.ke, i64 16, i1 false), !tbaa.struct !153
   br label %_ZNKSt20basic_format_contextINSt8__format10_Sink_iterIcEEcE3argEm.exit.i205
 
 bb.cq:                                            ; preds = %bb.co
@@ -3521,7 +3514,7 @@ bb.cr:                                            ; preds = %bb.cq
   %i.ki = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.kj = load ptr, ptr %i.ki, align 8, !tbaa !74, !noalias !1027
   %i.kk = getelementptr inbounds nuw [32 x i8], ptr %i.kj, i64 %i.jt ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i203, ptr noundef nonnull align 16 dereferenceable(16) %i.kk, i64 16, i1 false), !tbaa.struct !156
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i206, ptr noundef nonnull align 16 dereferenceable(16) %i.kk, i64 16, i1 false), !tbaa.struct !156
   %.sroa.5.0..sroa_idx3.i209 = getelementptr inbounds nuw i8, ptr %i.kk, i64 16
   %.sroa.5.0.copyload4.i210 = load i8, ptr %.sroa.5.0..sroa_idx3.i209, align 16, !tbaa !155
   br label %_ZNKSt20basic_format_contextINSt8__format10_Sink_iterIcEEcE3argEm.exit.i205
@@ -3530,7 +3523,7 @@ _ZNKSt20basic_format_contextINSt8__format10_Sink_iterIcEEcE3argEm.exit.i205: ; p
   %.sroa.5.0.i206 = phi i8 [ %i.kb, %bb.cp ], [ %.sroa.5.0.copyload4.i210, %bb.cr ], [ 0, %bb.cq ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i203, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i206, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i207 = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i8 %.sroa.5.0.i206, ptr %.sroa.5.0..sroa_idx.i207, align 16
   %i.kl = invoke noundef i64 @_ZNSt16basic_format_argISt20basic_format_contextINSt8__format10_Sink_iterIcEEcEE8_M_visitINS1_17_WidthPrecVisitorEEEDcOT_NS1_6_Arg_tE(ptr noundef nonnull align 16 dereferenceable(17) %3, ptr noundef nonnull align 1 dereferenceable(1) %4, i8 noundef zeroext %.sroa.5.0.i206)
@@ -3539,7 +3532,7 @@ _ZNKSt20basic_format_contextINSt8__format10_Sink_iterIcEEcE3argEm.exit.i205: ; p
 .noexc211:                                        ; preds = %_ZNKSt20basic_format_contextINSt8__format10_Sink_iterIcEEcE3argEm.exit.i205
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i203)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i206)
   br label %_ZNKSt8__format5_SpecIcE12_M_get_widthISt20basic_format_contextINS_10_Sink_iterIcEEcEEEmRT_.exit
 
 _ZNKSt8__format5_SpecIcE12_M_get_widthISt20basic_format_contextINS_10_Sink_iterIcEEcEEEmRT_.exit: ; preds = %.noexc211, %bb.cn
@@ -3942,7 +3935,7 @@ define linkonce_odr dso_local ptr @_ZNKSt8__format14__formatter_fpIcE6formatIeNS
 bb.a:
   %3 = alloca %"class.std::basic_format_arg", align 16 ; 5 uses
   %4 = alloca %"struct.std::__format::_WidthPrecVisitor", align 1 ; 3 uses
-  %.sroa.0.i203 = alloca %union.anon.1198, align 16 ; 5 uses
+  %.sroa.0.i206 = alloca %union.anon.1198, align 16 ; 5 uses
   %5 = alloca %"class.std::basic_format_arg", align 16 ; 5 uses
   %6 = alloca %"struct.std::__format::_WidthPrecVisitor", align 1 ; 3 uses
   %.sroa.0.i = alloca %union.anon.1198, align 16  ; 5 uses
@@ -4345,7 +4338,7 @@ bb.cn:                                            ; preds = %bb.cm
   br label %_ZNKSt8__format5_SpecIcE12_M_get_widthISt20basic_format_contextINS_10_Sink_iterIcEEcEEEmRT_.exit
 
 bb.co:                                            ; preds = %bb.cm
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i203)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i206)
   %i.jr = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.js = load i16, ptr %i.jr, align 2, !tbaa !141
   %i.jt = zext i16 %i.js to i64                   ; 5 uses
@@ -4363,7 +4356,7 @@ bb.cp:                                            ; preds = %bb.co
   %i.kc = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.kd = load ptr, ptr %i.kc, align 8, !tbaa !74, !noalias !1048
   %i.ke = getelementptr inbounds nuw [16 x i8], ptr %i.kd, i64 %i.jt
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i203, ptr noundef nonnull align 16 dereferenceable(16) %i.ke, i64 16, i1 false), !tbaa.struct !153
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i206, ptr noundef nonnull align 16 dereferenceable(16) %i.ke, i64 16, i1 false), !tbaa.struct !153
   br label %_ZNKSt20basic_format_contextINSt8__format10_Sink_iterIcEEcE3argEm.exit.i205
 
 bb.cq:                                            ; preds = %bb.co
@@ -4377,7 +4370,7 @@ bb.cr:                                            ; preds = %bb.cq
   %i.ki = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.kj = load ptr, ptr %i.ki, align 8, !tbaa !74, !noalias !1048
   %i.kk = getelementptr inbounds nuw [32 x i8], ptr %i.kj, i64 %i.jt ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i203, ptr noundef nonnull align 16 dereferenceable(16) %i.kk, i64 16, i1 false), !tbaa.struct !156
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i206, ptr noundef nonnull align 16 dereferenceable(16) %i.kk, i64 16, i1 false), !tbaa.struct !156
   %.sroa.5.0..sroa_idx3.i209 = getelementptr inbounds nuw i8, ptr %i.kk, i64 16
   %.sroa.5.0.copyload4.i210 = load i8, ptr %.sroa.5.0..sroa_idx3.i209, align 16, !tbaa !155
   br label %_ZNKSt20basic_format_contextINSt8__format10_Sink_iterIcEEcE3argEm.exit.i205
@@ -4386,7 +4379,7 @@ _ZNKSt20basic_format_contextINSt8__format10_Sink_iterIcEEcE3argEm.exit.i205: ; p
   %.sroa.5.0.i206 = phi i8 [ %i.kb, %bb.cp ], [ %.sroa.5.0.copyload4.i210, %bb.cr ], [ 0, %bb.cq ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i203, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.i206, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i207 = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i8 %.sroa.5.0.i206, ptr %.sroa.5.0..sroa_idx.i207, align 16
   %i.kl = invoke noundef i64 @_ZNSt16basic_format_argISt20basic_format_contextINSt8__format10_Sink_iterIcEEcEE8_M_visitINS1_17_WidthPrecVisitorEEEDcOT_NS1_6_Arg_tE(ptr noundef nonnull align 16 dereferenceable(17) %3, ptr noundef nonnull align 1 dereferenceable(1) %4, i8 noundef zeroext %.sroa.5.0.i206)
@@ -4395,7 +4388,7 @@ _ZNKSt20basic_format_contextINSt8__format10_Sink_iterIcEEcE3argEm.exit.i205: ; p
 .noexc211:                                        ; preds = %_ZNKSt20basic_format_contextINSt8__format10_Sink_iterIcEEcE3argEm.exit.i205
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i203)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i206)
   br label %_ZNKSt8__format5_SpecIcE12_M_get_widthISt20basic_format_contextINS_10_Sink_iterIcEEcEEEmRT_.exit
 
 _ZNKSt8__format5_SpecIcE12_M_get_widthISt20basic_format_contextINS_10_Sink_iterIcEEcEEEmRT_.exit: ; preds = %.noexc211, %bb.cn
@@ -4798,10 +4791,8 @@ _ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i47.i: ; preds = %bb.f
   %i.x = phi i64 [ %i.s, %_ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i47.i.thread ], [ %i.w, %_ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i47.i ] ; 2 uses
   %.1.i.i.i.i48.i85 = phi i64 [ %i.r, %_ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i47.i.thread ], [ %i.v, %_ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i47.i ] ; 4 uses
   %.015.i.i = sub nuw nsw i64 127, %.1.i.i.i.i48.i85 ; 2 uses
-  %3 = trunc nsw i64 %.1.i.i.i.i48.i85 to i32
-  %4 = and i32 %3, 1
-  %lcmp.mod.not.not = icmp eq i32 %4, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i50.i.prol, label %.lr.ph.i50.i.prol.loopexit
+  %3 = trunc i64 %.1.i.i.i.i48.i85 to i1
+  br i1 %3, label %.lr.ph.i50.i.prol.loopexit, label %.lr.ph.i50.i.prol
 
 .lr.ph.i50.i.prol:                                ; preds = %.lr.ph.preheader.i49.i
   %i.y = trunc i128 %.045 to i8
@@ -5204,10 +5195,8 @@ _ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i47.i: ; preds = %bb.f
   %i.w = phi i64 [ %i.r, %_ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i47.i.thread ], [ %i.v, %_ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i47.i ] ; 2 uses
   %.1.i.i.i.i48.i84 = phi i64 [ %i.q, %_ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i47.i.thread ], [ %i.u, %_ZNSt8__detail16__to_chars_len_2IoEEjT_.exit.i47.i ] ; 4 uses
   %.015.i.i = sub nuw nsw i64 127, %.1.i.i.i.i48.i84 ; 2 uses
-  %3 = trunc nsw i64 %.1.i.i.i.i48.i84 to i32
-  %4 = and i32 %3, 1
-  %lcmp.mod.not.not = icmp eq i32 %4, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i50.i.prol, label %.lr.ph.i50.i.prol.loopexit
+  %3 = trunc i64 %.1.i.i.i.i48.i84 to i1
+  br i1 %3, label %.lr.ph.i50.i.prol.loopexit, label %.lr.ph.i50.i.prol
 
 .lr.ph.i50.i.prol:                                ; preds = %.lr.ph.preheader.i49.i
   %i.x = trunc i128 %1 to i8

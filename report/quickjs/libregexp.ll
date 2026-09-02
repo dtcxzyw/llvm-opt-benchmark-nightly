@@ -205,10 +205,9 @@ bb.k:                                             ; preds = %.thread
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr @lre_id_start_table_ascii, i64 %i.ab
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !45
   %i.ae = and i32 %.02736, 31
-  %2 = shl nuw i32 1, %i.ae
-  %3 = and i32 %i.ad, %2
-  %4 = icmp eq i32 %3, 0
-  br i1 %4, label %.loopexit, label %bb.m
+  %2 = lshr i32 %i.ad, %i.ae
+  %3 = trunc i32 %2 to i1
+  br i1 %3, label %bb.m, label %.loopexit
 
 lre_js_is_ident_first.exit:                       ; preds = %bb.k
   %i.af = tail call zeroext i1 @lre_is_id_start(i32 noundef range(i32 0, 1114112) %.02736) #20
@@ -223,10 +222,9 @@ bb.l:                                             ; preds = %.thread
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr @lre_id_continue_table_ascii, i64 %i.ah
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !45
   %i.ak = and i32 %.02736, 31
-  %5 = shl nuw i32 1, %i.ak
-  %6 = and i32 %i.aj, %5
-  %7 = icmp eq i32 %6, 0
-  br i1 %7, label %.loopexit, label %bb.m
+  %4 = lshr i32 %i.aj, %i.ak
+  %5 = trunc i32 %4 to i1
+  br i1 %5, label %bb.m, label %.loopexit
 
 lre_js_is_ident_next.exit:                        ; preds = %bb.l
   %i.al = tail call zeroext i1 @lre_is_id_continue(i32 noundef range(i32 0, 1114112) %.02736) #20
@@ -629,8 +627,7 @@ declare void @abort() local_unnamed_addr #11
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -1, 1) i32 @cr_init_char_range(ptr %.96.val, ptr noundef nonnull %0, i32 noundef range(i32 0, 6) %1) unnamed_addr #2 {
 bb.a:
-  %2 = and i32 %1, 1
-  %.not = icmp eq i32 %2, 0
+  %2 = trunc i32 %1 to i1
   %i.a = lshr i32 %1, 1
   %i.b = zext nneg i32 %i.a to i64
   %i.c = getelementptr inbounds nuw [8 x i8], ptr @char_range_table, i64 %i.b
@@ -689,7 +686,7 @@ bb.d:                                             ; preds = %bb.b, %._crit_edge.
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !134
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.a
-  br i1 %.not, label %bb.g, label %bb.e
+  br i1 %2, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %._crit_edge
   %i.z = tail call i32 @cr_invert(ptr noundef nonnull %0) #20

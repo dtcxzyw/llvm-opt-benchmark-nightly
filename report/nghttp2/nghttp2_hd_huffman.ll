@@ -204,11 +204,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.sroa.0.0.lcssa = phi i16 [ %i.b, %bb.a ], [ %.sroa.0.0.copyload4, %bb.f ]
   store i16 %.sroa.0.0.lcssa, ptr %0, align 2, !tbaa !17
   store i8 %.sroa.8.0.lcssa, ptr %i.c, align 2, !tbaa !18
-  %.not27 = icmp ne i32 %4, 0
-  %5 = and i8 %.sroa.8.0.lcssa, 1
-  %.not28 = icmp eq i8 %5, 0
-  %or.cond = select i1 %.not27, i1 %.not28, i1 false
-  %.0 = select i1 %or.cond, i64 -523, i64 %3
+  %.not27 = icmp eq i32 %4, 0
+  %5 = trunc i8 %.sroa.8.0.lcssa to i1
+  %or.cond = select i1 %.not27, i1 true, i1 %5
+  %.0 = select i1 %or.cond, i64 %3, i64 -523
   ret i64 %.0
 }
 

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
   store atomic i8 1, ptr %i.b monotonic, align 8
-  %i.c = add i64 %1, 1                            ; 6 uses
+  %i.c = add i64 %1, 1                            ; 7 uses
   %i.d = icmp ugt i64 %i.c, 24019198012642645
   br i1 %i.d, label %.noexc.i, label %_ZNSt6vectorIN6spdlog7details14log_msg_bufferESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i
 
@@ -226,9 +226,8 @@ _ZNSt12_Vector_baseIN6spdlog7details14log_msg_bufferESaIS2_EEC2EmRKS3_.exit.i.i:
           to label %.lr.ph.i.i.i.i.i.i.preheader unwind label %bb.e ; 12 uses
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNSt12_Vector_baseIN6spdlog7details14log_msg_bufferESaIS2_EEC2EmRKS3_.exit.i.i
-  %2 = and i64 %1, 1
-  %lcmp.mod.not.not = icmp eq i64 %2, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.i.prol.loopexit
+  %2 = trunc i64 %i.c to i1
+  br i1 %2, label %.lr.ph.i.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.i.prol.loopexit
 
 .lr.ph.i.i.i.i.i.i.prol:                          ; preds = %.lr.ph.i.i.i.i.i.i.preheader
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16

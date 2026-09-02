@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %arena_ptr_array_flu
   %.0113 = phi ptr [ %7, %bb.a ], [ null, %arena_ptr_array_flush_impl.exit ] ; 4 uses
   %.0 = phi i32 [ 0, %bb.a ], [ %i.qx, %arena_ptr_array_flush_impl.exit ] ; 4 uses
   %i.z = sub i32 %3, %.0                          ; 2 uses
-  %spec.store.select = call i32 @llvm.umin.i32(i32 %i.z, i32 255) ; 8 uses
+  %spec.store.select = call i32 @llvm.umin.i32(i32 %i.z, i32 255) ; 9 uses
   %i.aa = load ptr, ptr %i.b, align 8, !tbaa !120
   %i.ab = zext i32 %.0 to i64
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %i.ab ; 6 uses
@@ -213,7 +213,7 @@ bb.b:                                             ; preds = %arena_ptr_array_flu
   %i.ad = add nuw nsw i32 %spec.store.select, 1
   %i.ae = zext nneg i32 %i.ad to i64              ; 2 uses
   %8 = alloca %union.emap_batch_lookup_result_u, i64 %i.ae, align 16 ; 12 uses
-  %i.af = zext nneg i32 %spec.store.select to i64 ; 3 uses
+  %i.af = zext nneg i32 %spec.store.select to i64 ; 2 uses
   %.not = icmp eq i32 %3, %.0
   br i1 %.not, label %emap_edata_lookup_batch.exit, label %.lr.ph
 
@@ -325,7 +325,6 @@ rtree_leaf_elm_lookup.exit.i:                     ; preds = %bb.g, %bb.f, %bb.e,
   br i1 %exitcond.not, label %.lr.ph133.preheader, label %.lr.ph, !llvm.loop !180
 
 .lr.ph133.preheader:                              ; preds = %rtree_leaf_elm_lookup.exit.i
-  %xtraiter = and i64 %i.af, 1
   %i.ce = icmp eq i32 %i.z, 1
   br i1 %i.ce, label %.lr.ph133.epil.preheader, label %.lr.ph133.preheader.new
 
@@ -370,8 +369,8 @@ emap_edata_lookup_batch.exit:                     ; preds = %bb.b
   br i1 %4, label %bb.h, label %._crit_edge143
 
 emap_edata_lookup_batch.exit.thread.unr-lcssa:    ; preds = %.lr.ph133
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %emap_edata_lookup_batch.exit.thread, label %.lr.ph133.epil.preheader
+  %9 = trunc i32 %spec.store.select to i1
+  br i1 %9, label %.lr.ph133.epil.preheader, label %emap_edata_lookup_batch.exit.thread
 
 .lr.ph133.epil.preheader:                         ; preds = %emap_edata_lookup_batch.exit.thread.unr-lcssa, %.lr.ph133.preheader
   %.0.i132.epil.init = phi i64 [ 0, %.lr.ph133.preheader ], [ %i.cy, %emap_edata_lookup_batch.exit.thread.unr-lcssa ]
@@ -774,9 +773,9 @@ percpu_arena_ind_limit.exit.i:                    ; preds = %bb.k
   %i.u = load i32, ptr @je_ncpus, align 4         ; 4 uses
   %i.v = icmp ugt i32 %i.u, 1
   %or.cond.i.i = and i1 %i.t, %i.v
-  %2 = and i32 %i.u, 1
-  %3 = lshr i32 %i.u, 1
-  %spec.select.i = add nuw i32 %3, %2
+  %2 = lshr i32 %i.u, 1
+  %3 = and i32 %i.u, 1
+  %spec.select.i = add nuw i32 %2, %3
   %.0.i.i = select i1 %or.cond.i.i, i32 %spec.select.i, i32 %i.u
   %i.w = icmp ult i32 %.0.val48.i, %.0.i.i
   br i1 %i.w, label %bb.l, label %arena_choose_impl.exit

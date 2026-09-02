@@ -205,9 +205,8 @@ bb.q:                                             ; preds = %.thread180
 .lr.ph.i.preheader:                               ; preds = %.loopexit.i
   %i.gc = sub nuw nsw i64 %.1.i, %.0.i
   %.neg = add nuw nsw i64 %.0.i, 1
-  %xtraiter200 = and i64 %i.gc, 1
-  %lcmp.mod201.not = icmp eq i64 %xtraiter200, 0
-  br i1 %lcmp.mod201.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
+  %5 = trunc i64 %i.gc to i1
+  br i1 %5, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader
   %i.gd = getelementptr inbounds nuw i8, ptr @BrotliStoreHuffmanTreeOfHuffmanTreeToBitMask.kStorageOrder, i64 %.0.i
@@ -409,7 +408,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %bb.e
   %.0182263 = phi i64 [ %.1183, %bb.e ], [ 0, %bb.a ] ; 4 uses
   %.0201262 = phi i64 [ %.1202, %bb.e ], [ %2, %bb.a ] ; 2 uses
-  %.0203261 = phi i64 [ %i.i, %bb.e ], [ 0, %bb.a ] ; 10 uses
+  %.0203261 = phi i64 [ %i.i, %bb.e ], [ 0, %bb.a ] ; 9 uses
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.0203261
   %i.c = load i32, ptr %i.b, align 4, !tbaa !14   ; 2 uses
   %.not214 = icmp eq i32 %i.c, 0
@@ -433,7 +432,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %bb.d, %.lr.ph
   %.1202 = phi i64 [ %i.h, %bb.d ], [ %.0201262, %.lr.ph ] ; 2 uses
   %.1183 = phi i64 [ %i.f, %bb.d ], [ %.0182263, %.lr.ph ] ; 13 uses
-  %i.i = add i64 %.0203261, 1                     ; 8 uses
+  %i.i = add i64 %.0203261, 1                     ; 9 uses
   %.not = icmp eq i64 %.1202, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !98
 
@@ -478,8 +477,7 @@ bb.f:                                             ; preds = %._crit_edge
   tail call void @llvm.memset.p0.i64(ptr align 1 %4, i8 0, i64 %i.i, i1 false)
   %.not206265 = icmp eq i64 %i.i, 0               ; 2 uses
   %i.ae = ptrtoint ptr %0 to i64                  ; 2 uses
-  %8 = and i64 %.0203261, 1
-  %lcmp.mod.not.not = icmp eq i64 %8, 0
+  %8 = trunc i64 %i.i to i1
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.0203261
   %.sink.prol = trunc i64 %.0203261 to i16
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -493,7 +491,7 @@ bb.g:                                             ; preds = %._crit_edge291, %bb
   br i1 %.not206265, label %._crit_edge270, label %.lr.ph269.preheader
 
 .lr.ph269.preheader:                              ; preds = %bb.g
-  br i1 %lcmp.mod.not.not, label %.lr.ph269.prol, label %.lr.ph269.prol.loopexit
+  br i1 %8, label %.lr.ph269.prol, label %.lr.ph269.prol.loopexit
 
 .lr.ph269.prol:                                   ; preds = %.lr.ph269.preheader
   %i.ak = load i32, ptr %i.af, align 4, !tbaa !14 ; 3 uses
@@ -778,9 +776,8 @@ bb.x:                                             ; preds = %._crit_edge291
   %i.ec = add i64 %i.dl, 4                        ; 4 uses
   store i64 %i.ec, ptr %6, align 8, !tbaa !12, !alias.scope !177, !noalias !178
   %.pre = load i64, ptr %i.a, align 16, !tbaa !12 ; 4 uses
-  %9 = and i64 %.1183, 1
-  %lcmp.mod349.not.not = icmp eq i64 %9, 0
-  br i1 %lcmp.mod349.not.not, label %.prol.preheader, label %.prol.loopexit
+  %9 = trunc i64 %.1183 to i1
+  br i1 %9, label %.prol.loopexit, label %.prol.preheader
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.af
   store i64 %spec.select359, ptr %i.a, align 1
@@ -790,9 +787,8 @@ bb.x:                                             ; preds = %._crit_edge291
 .lr.ph309.1:                                      ; preds = %.loopexit.loopexit.unr-lcssa
   %i.ed = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   %.pre.1 = load i64, ptr %i.ed, align 8, !tbaa !12 ; 4 uses
-  %xtraiter348.1 = and i64 %.1183, 1
-  %lcmp.mod349.1.not = icmp eq i64 %xtraiter348.1, 0
-  br i1 %lcmp.mod349.1.not, label %.prol.loopexit.1, label %.prol.preheader.1
+  %10 = trunc i64 %.1183 to i1
+  br i1 %10, label %.prol.preheader.1, label %.prol.loopexit.1
 
 .prol.preheader.1:                                ; preds = %.lr.ph309.1
   %i.ee = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
@@ -1195,7 +1191,6 @@ RunLengthCodeZeros.exit:                          ; preds = %.loopexit.i
   br i1 %.not86, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %RunLengthCodeZeros.exit
-  %xtraiter = and i64 %.172, 1
   %i.ek = icmp eq i64 %.172, 1
   br i1 %i.ek, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -1229,8 +1224,8 @@ RunLengthCodeZeros.exit:                          ; preds = %.loopexit.i
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !491
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  %8 = trunc i64 %.172 to i1
+  br i1 %8, label %.lr.ph.epil.preheader, label %._crit_edge
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %.081.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.fa, %._crit_edge.loopexit.unr-lcssa ]
@@ -1560,7 +1555,7 @@ bb.a:
   %i.m = phi i64 [ %i.s, %bb.c ], [ 0, %bb.a ]    ; 2 uses
   %.01926.i = phi i64 [ %i.bb, %bb.c ], [ %2, %bb.a ] ; 4 uses
   %i.n = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %i.m ; 4 uses
-  %.sroa.0.0.copyload.i = load i32, ptr %i.n, align 4, !tbaa !14 ; 3 uses
+  %.sroa.0.0.copyload.i = load i32, ptr %i.n, align 4, !tbaa !14 ; 4 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 4
   %.sroa.4.0.copyload.i = load i32, ptr %.sroa.4.0..sroa_idx.i, align 4, !tbaa !14
   %.sroa.621.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 12
@@ -1578,10 +1573,9 @@ bb.a:
   br i1 %.not23.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph29.i
-  %i.t = zext i32 %.sroa.0.0.copyload.i to i64    ; 3 uses
-  %xtraiter = and i64 %i.t, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  %i.t = zext i32 %.sroa.0.0.copyload.i to i64    ; 2 uses
+  %11 = trunc i32 %.sroa.0.0.copyload.i to i1
+  br i1 %11, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph.i
   %i.u = and i64 %.01926.i, %4
@@ -1821,9 +1815,8 @@ bb.h:                                             ; preds = %._crit_edge
   %i.ax = add i64 %i.ag, 4                        ; 4 uses
   store i64 %i.ax, ptr %6, align 8, !tbaa !12, !alias.scope !605, !noalias !606
   %.pre.i = load i64, ptr %i.a, align 16, !tbaa !12 ; 4 uses
-  %8 = and i64 %.043.lcssa, 1
-  %lcmp.mod.not.not = icmp eq i64 %8, 0
-  br i1 %lcmp.mod.not.not, label %.prol.preheader, label %.prol.loopexit
+  %8 = trunc i64 %.043.lcssa to i1
+  br i1 %8, label %.prol.loopexit, label %.prol.preheader
 
 .loopexit.i.loopexit.unr-lcssa:                   ; preds = %bb.p
   store i64 %spec.select70, ptr %i.a, align 1
@@ -1833,9 +1826,8 @@ bb.h:                                             ; preds = %._crit_edge
 .lr.ph.i.1:                                       ; preds = %.loopexit.i.loopexit.unr-lcssa
   %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   %.pre.i.1 = load i64, ptr %i.ay, align 8, !tbaa !12 ; 4 uses
-  %xtraiter.1 = and i64 %.043.lcssa, 1
-  %lcmp.mod.1.not = icmp eq i64 %xtraiter.1, 0
-  br i1 %lcmp.mod.1.not, label %.prol.loopexit.1, label %.prol.preheader.1
+  %9 = trunc i64 %.043.lcssa to i1
+  br i1 %9, label %.prol.preheader.1, label %.prol.loopexit.1
 
 .prol.preheader.1:                                ; preds = %.lr.ph.i.1
   %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
@@ -2238,17 +2230,16 @@ bb.b:                                             ; preds = %bb.a
   %.094103 = phi i64 [ %i.ao, %._crit_edge ], [ 0, %bb.b ]
   %.095102 = phi i64 [ %i.ar, %._crit_edge ], [ %2, %bb.b ] ; 4 uses
   %i.l = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %.093104 ; 2 uses
-  %.sroa.0.0.copyload = load i32, ptr %i.l, align 4, !tbaa !14 ; 3 uses
+  %.sroa.0.0.copyload = load i32, ptr %i.l, align 4, !tbaa !14 ; 4 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 4
   %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !14
-  %i.m = zext i32 %.sroa.0.0.copyload to i64      ; 4 uses
+  %i.m = zext i32 %.sroa.0.0.copyload to i64      ; 3 uses
   %.not9799 = icmp eq i32 %.sroa.0.0.copyload, 0
   br i1 %.not9799, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph106
-  %xtraiter128 = and i64 %i.m, 1
-  %lcmp.mod129.not = icmp eq i64 %xtraiter128, 0
-  br i1 %lcmp.mod129.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
+  %11 = trunc i32 %.sroa.0.0.copyload to i1
+  br i1 %11, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
   %i.n = and i64 %.095102, %4
@@ -2372,7 +2363,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph29.i
   %i.cb = phi i64 [ 0, %.lr.ph29.i ], [ %i.ch, %bb.e ] ; 2 uses
   %.01926.i = phi i64 [ %2, %.lr.ph29.i ], [ %i.dr, %bb.e ] ; 4 uses
   %i.cc = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %i.cb ; 4 uses
-  %.sroa.0.0.copyload.i = load i32, ptr %i.cc, align 4, !tbaa !14 ; 3 uses
+  %.sroa.0.0.copyload.i = load i32, ptr %i.cc, align 4, !tbaa !14 ; 4 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cc, i64 4
   %.sroa.4.0.copyload.i = load i32, ptr %.sroa.4.0..sroa_idx.i, align 4, !tbaa !14
   %.sroa.621.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cc, i64 12
@@ -2390,10 +2381,9 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph29.i
   br i1 %.not23.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c
-  %i.ci = zext i32 %.sroa.0.0.copyload.i to i64   ; 3 uses
-  %xtraiter = and i64 %i.ci, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  %i.ci = zext i32 %.sroa.0.0.copyload.i to i64   ; 2 uses
+  %12 = trunc i32 %.sroa.0.0.copyload.i to i1
+  br i1 %12, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph.i
   %i.cj = and i64 %.01926.i, %4

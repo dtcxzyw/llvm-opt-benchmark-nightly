@@ -204,9 +204,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.a, %middle.block
   %.sroa.0.04.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.04.ph, 1, !dbg !1005
-  %xtraiter = and i64 %2, 1, !dbg !1005
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0, !dbg !1005
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol, !dbg !1005
+  %3 = trunc i64 %2 to i1, !dbg !1005
+  br i1 %3, label %scalar.ph.prol, label %scalar.ph.prol.loopexit, !dbg !1005
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.g = or disjoint i64 %.sroa.0.04.ph, 1, !dbg !1006
@@ -410,8 +409,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %1 to i64, !dbg !1238
   %i.c = ptrtoint ptr %0 to i64, !dbg !1238
-  %i.d = sub nuw i64 %i.b, %i.c, !dbg !1238       ; 3 uses
-  %i.e = lshr exact i64 %i.d, 3, !dbg !1238       ; 2 uses
+  %i.d = sub nuw i64 %i.b, %i.c, !dbg !1238       ; 2 uses
+  %i.e = lshr exact i64 %i.d, 3, !dbg !1238       ; 3 uses
   %i.f = icmp eq i64 %i.d, 8, !dbg !1239
   br i1 %i.f, label %.epil.preheader, label %.new, !dbg !1239
 
@@ -444,9 +443,8 @@ bb.c:                                             ; preds = %bb.c, %.new
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddTdyEuNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB2R_9Histogram3newINtB1I_6CopiedBF_EE0NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB51_3VecB2G_E14extend_trustedINtB2m_3MapB46_B2L_EE0E0E0E0EB2V_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !1247
 
 _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddTdyEuNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB2R_9Histogram3newINtB1I_6CopiedBF_EE0NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB51_3VecB2G_E14extend_trustedINtB2m_3MapB46_B2L_EE0E0E0E0EB2V_.exit.loopexit.unr-lcssa: ; preds = %bb.c
-  %3 = and i64 %i.d, 8, !dbg !1247
-  %lcmp.mod.not = icmp eq i64 %3, 0, !dbg !1247
-  br i1 %lcmp.mod.not, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddTdyEuNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB2R_9Histogram3newINtB1I_6CopiedBF_EE0NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB51_3VecB2G_E14extend_trustedINtB2m_3MapB46_B2L_EE0E0E0E0EB2V_.exit, label %.epil.preheader, !dbg !1247
+  %3 = trunc i64 %i.e to i1, !dbg !1247
+  br i1 %3, label %.epil.preheader, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddTdyEuNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB2R_9Histogram3newINtB1I_6CopiedBF_EE0NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB51_3VecB2G_E14extend_trustedINtB2m_3MapB46_B2L_EE0E0E0E0EB2V_.exit, !dbg !1247
 
 .epil.preheader:                                  ; preds = %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddTdyEuNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB2R_9Histogram3newINtB1I_6CopiedBF_EE0NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB51_3VecB2G_E14extend_trustedINtB2m_3MapB46_B2L_EE0E0E0E0EB2V_.exit.loopexit.unr-lcssa, %bb.b
   %.epil.init = phi i64 [ %.sroa.5.0.copyload, %bb.b ], [ %i.p, %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldduNCINvNtB1K_3map8map_folddTdyEuNCINvMNtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB2R_9Histogram3newINtB1I_6CopiedBF_EE0NCINvNvBS_8for_each4callB2G_NCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB51_3VecB2G_E14extend_trustedINtB2m_3MapB46_B2L_EE0E0E0E0EB2V_.exit.loopexit.unr-lcssa ] ; 2 uses

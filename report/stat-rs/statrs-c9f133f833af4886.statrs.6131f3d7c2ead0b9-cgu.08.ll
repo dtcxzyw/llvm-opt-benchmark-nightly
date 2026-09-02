@@ -205,10 +205,9 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   %.sroa.0.0.lcssa = phi double [ 1.000000e+00, %.preheader ], [ %i.am, %._crit_edge.loopexit.unr-lcssa ], [ %i.k, %bb.c ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.m = load i64, ptr %i.l, align 8, !noundef !4
-  %1 = and i64 %i.m, 1
-  %2 = icmp eq i64 %1, 0
+  %1 = trunc i64 %i.m to i1
   %i.n = fneg double %.sroa.0.0.lcssa
-  %i.o = select i1 %2, double %.sroa.0.0.lcssa, double %i.n
+  %i.o = select i1 %1, double %i.n, double %.sroa.0.0.lcssa
   ret double %i.o
 
 bb.d:                                             ; preds = %bb.d, %.lr.ph.new
@@ -420,7 +419,6 @@ bb.o:                                             ; preds = %bb.n
   %i.bd = call noundef double @llvm.fabs.f64(double %i.bc) ; 2 uses
   %i.be = add i64 %.val.i, %i.aw                  ; 3 uses
   %reass.sub = sub i64 %.val.i, %.sroa.02.084
-  %xtraiter = and i64 %i.be, 1
   %i.bf = icmp eq i64 %reass.sub, 2
   br i1 %i.bf, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
@@ -452,8 +450,8 @@ bb.o:                                             ; preds = %bb.n
   br i1 %niter.ncmp.1, label %_RNvMs0_NtNtCsbADZB03g5jP_8nalgebra4base7min_maxINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynINtB18_5ConstKj1_EINtNtB7_11matrix_view11ViewStoragedB16_B1r_B1r_B16_EE6icamaxCs8lmMd0ZksV9_6statrs.exit.loopexit.unr-lcssa, label %.lr.ph.i
 
 _RNvMs0_NtNtCsbADZB03g5jP_8nalgebra4base7min_maxINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynINtB18_5ConstKj1_EINtNtB7_11matrix_view11ViewStoragedB16_B1r_B1r_B16_EE6icamaxCs8lmMd0ZksV9_6statrs.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RNvMs0_NtNtCsbADZB03g5jP_8nalgebra4base7min_maxINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynINtB18_5ConstKj1_EINtNtB7_11matrix_view11ViewStoragedB16_B1r_B1r_B16_EE6icamaxCs8lmMd0ZksV9_6statrs.exit, label %.lr.ph.i.epil.preheader
+  %2 = trunc i64 %i.be to i1
+  br i1 %2, label %.lr.ph.i.epil.preheader, label %_RNvMs0_NtNtCsbADZB03g5jP_8nalgebra4base7min_maxINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynINtB18_5ConstKj1_EINtNtB7_11matrix_view11ViewStoragedB16_B1r_B1r_B16_EE6icamaxCs8lmMd0ZksV9_6statrs.exit
 
 .lr.ph.i.epil.preheader:                          ; preds = %_RNvMs0_NtNtCsbADZB03g5jP_8nalgebra4base7min_maxINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynINtB18_5ConstKj1_EINtNtB7_11matrix_view11ViewStoragedB16_B1r_B1r_B16_EE6icamaxCs8lmMd0ZksV9_6statrs.exit.loopexit.unr-lcssa, %.lr.ph.preheader.i
   %.sroa.0.015.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %.sroa.0.1.i.1, %_RNvMs0_NtNtCsbADZB03g5jP_8nalgebra4base7min_maxINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynINtB18_5ConstKj1_EINtNtB7_11matrix_view11ViewStoragedB16_B1r_B1r_B16_EE6icamaxCs8lmMd0ZksV9_6statrs.exit.loopexit.unr-lcssa ]
@@ -692,7 +690,6 @@ bb.w:                                             ; preds = %bb.u
 .lr.ph.i28:                                       ; preds = %bb.w
   %.val9.i29 = load ptr, ptr %i.ak, align 8, !alias.scope !103, !noundef !4 ; 3 uses
   %.val10.i = load i64, ptr %i.al, align 8, !alias.scope !103, !noundef !4 ; 3 uses
-  %xtraiter182 = and i64 %.val8.i, 1
   %i.dj = icmp eq i64 %.val8.i, 1
   br i1 %i.dj, label %.epil.preheader, label %.lr.ph.i28.new
 
@@ -726,8 +723,8 @@ bb.x:                                             ; preds = %bb.x, %.lr.ph.i28.n
   br i1 %niter186.ncmp.1, label %_RNvMs3_NtNtCsbADZB03g5jP_8nalgebra4base7editionINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynB16_INtNtB7_11matrix_view14ViewStorageMutdB16_B16_INtB18_5ConstKj1_EB16_EE9swap_rowsCs8lmMd0ZksV9_6statrs.exit.loopexit.unr-lcssa, label %bb.x
 
 _RNvMs3_NtNtCsbADZB03g5jP_8nalgebra4base7editionINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynB16_INtNtB7_11matrix_view14ViewStorageMutdB16_B16_INtB18_5ConstKj1_EB16_EE9swap_rowsCs8lmMd0ZksV9_6statrs.exit.loopexit.unr-lcssa: ; preds = %bb.x
-  %lcmp.mod183.not = icmp eq i64 %xtraiter182, 0
-  br i1 %lcmp.mod183.not, label %_RNvMs3_NtNtCsbADZB03g5jP_8nalgebra4base7editionINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynB16_INtNtB7_11matrix_view14ViewStorageMutdB16_B16_INtB18_5ConstKj1_EB16_EE9swap_rowsCs8lmMd0ZksV9_6statrs.exit, label %.epil.preheader
+  %3 = trunc i64 %.val8.i to i1
+  br i1 %3, label %.epil.preheader, label %_RNvMs3_NtNtCsbADZB03g5jP_8nalgebra4base7editionINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynB16_INtNtB7_11matrix_view14ViewStorageMutdB16_B16_INtB18_5ConstKj1_EB16_EE9swap_rowsCs8lmMd0ZksV9_6statrs.exit
 
 .epil.preheader:                                  ; preds = %_RNvMs3_NtNtCsbADZB03g5jP_8nalgebra4base7editionINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynB16_INtNtB7_11matrix_view14ViewStorageMutdB16_B16_INtB18_5ConstKj1_EB16_EE9swap_rowsCs8lmMd0ZksV9_6statrs.exit.loopexit.unr-lcssa, %.lr.ph.i28
   %.sroa.01.011.i.epil.init = phi i64 [ 0, %.lr.ph.i28 ], [ %i.dq, %_RNvMs3_NtNtCsbADZB03g5jP_8nalgebra4base7editionINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynB16_INtNtB7_11matrix_view14ViewStorageMutdB16_B16_INtB18_5ConstKj1_EB16_EE9swap_rowsCs8lmMd0ZksV9_6statrs.exit.loopexit.unr-lcssa ]

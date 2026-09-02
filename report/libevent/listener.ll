@@ -49,13 +49,12 @@ bb.f:                                             ; preds = %bb.e
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 44
   store i16 1, ptr %i.k, align 4
   %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 48
-  %6 = shl i32 %3, 11
-  %7 = and i32 %6, 2048
+  %6 = trunc i32 %3 to i1
+  %spec.select = select i1 %6, i32 0, i32 2048
   %i.m = shl i32 %3, 17
   %i.n = and i32 %i.m, 524288
-  %i.o = or disjoint i32 %7, %i.n
-  %spec.select36 = xor i32 %i.o, 2048
-  store i32 %spec.select36, ptr %i.l, align 8
+  %i.o = or disjoint i32 %spec.select, %i.n
+  store i32 %i.o, ptr %i.l, align 8
   %i.p = and i32 %3, 16
   %.not33 = icmp eq i32 %i.p, 0
   br i1 %.not33, label %bb.j, label %bb.g
@@ -255,9 +254,8 @@ bb.q:                                             ; preds = %bb.m
   %i.as = add i16 %i.ah, -1
   store i16 %i.as, ptr %i.k, align 4
   %i.at = load i8, ptr %i.m, align 4
-  %4 = and i8 %i.at, 1
-  %.not63 = icmp eq i8 %4, 0
-  br i1 %.not63, label %bb.r, label %bb.t
+  %4 = trunc i8 %i.at to i1
+  br i1 %4, label %bb.t, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.au = load ptr, ptr %i.b, align 8             ; 2 uses
@@ -660,10 +658,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 3 uses
   %i.f = load i8, ptr %i.e, align 4               ; 2 uses
-  %3 = and i8 %i.f, 1
-  %.not13 = icmp eq i8 %3, 0
+  %3 = trunc i8 %i.f to i1
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  br i1 %.not13, label %.critedge, label %bb.d
+  br i1 %3, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
   %i.h = load ptr, ptr %i.g, align 8

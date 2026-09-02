@@ -204,9 +204,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !109  ; 3 uses
-  %5 = and i32 %i.d, 1
-  %.not = icmp eq i32 %5, 0
-  br i1 %.not, label %bb.b, label %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit
+  %5 = trunc i32 %i.d to i1
+  br i1 %5, label %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit, label %bb.b
 
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit: ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -344,9 +343,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !109  ; 3 uses
-  %5 = and i32 %i.d, 1
-  %.not = icmp eq i32 %5, 0
-  br i1 %.not, label %bb.b, label %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit
+  %5 = trunc i32 %i.d to i1
+  br i1 %5, label %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit, label %bb.b
 
 _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit: ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -749,11 +747,10 @@ _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit133: ; preds = %bb.ai, %bb.a
   %i.eq = fadd double %i.ep, %i.eo
   store double %i.eq, ptr %i.i, align 8, !tbaa !25
   %i.er = sub i32 %i.dt, %.1141
-  %8 = icmp ugt i32 %i.er, 15
-  %9 = and i32 %i.dt, 1
-  %.not72 = icmp eq i32 %9, 0
-  %or.cond = or i1 %8, %.not72
-  br i1 %or.cond, label %bb.an, label %bb.ak
+  %8 = icmp ult i32 %i.er, 16
+  %9 = trunc i32 %i.dt to i1
+  %or.cond = and i1 %8, %9
+  br i1 %or.cond, label %bb.ak, label %bb.an
 
 bb.ak:                                            ; preds = %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit133
   %.not.i.i134 = icmp ult i32 %i.cu, %i.dt
@@ -1156,11 +1153,10 @@ _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit133: ; preds = %bb.ai, %bb.a
   %i.ep = fadd double %i.eo, %i.en
   store double %i.ep, ptr %4, align 8, !tbaa !25
   %i.eq = sub i32 %i.ds, %.1141
-  %8 = icmp ugt i32 %i.eq, 15
-  %9 = and i32 %i.ds, 1
-  %.not72 = icmp eq i32 %9, 0
-  %or.cond = or i1 %8, %.not72
-  br i1 %or.cond, label %bb.an, label %bb.ak
+  %8 = icmp ult i32 %i.eq, 16
+  %9 = trunc i32 %i.ds to i1
+  %or.cond = and i1 %8, %9
+  br i1 %or.cond, label %bb.ak, label %bb.an
 
 bb.ak:                                            ; preds = %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit133
   %.not.i.i134 = icmp ult i32 %i.ct, %i.ds
@@ -1563,11 +1559,10 @@ _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit133: ; preds = %bb.ay, %bb.a
   %i.kh = phi double [ %i.o, %bb.ay ], [ %.pre314, %bb.az ]
   %i.ki = fadd double %i.kd, %i.kh                ; 3 uses
   %i.kj = sub i32 %i.jp, %.1290
-  %2 = icmp ugt i32 %i.kj, 15
-  %3 = and i32 %i.jp, 1
-  %.not72 = icmp eq i32 %3, 0
-  %or.cond = or i1 %2, %.not72
-  br i1 %or.cond, label %bb.bd, label %bb.ba
+  %2 = icmp ult i32 %i.kj, 16
+  %3 = trunc i32 %i.jp to i1
+  %or.cond = and i1 %2, %3
+  br i1 %or.cond, label %bb.ba, label %bb.bd
 
 bb.ba:                                            ; preds = %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit133
   %.not.i.i134 = icmp ult i32 %i.hg, %i.jp
@@ -1590,7 +1585,7 @@ _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit136: ; preds = %bb.bb, %bb.b
   br label %bb.bd
 
 bb.bd:                                            ; preds = %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit136, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit133
-  %.sroa.0254.0 = phi double [ %i.kc, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit133 ], [ %i.kn, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit136 ] ; 3 uses
+  %.sroa.0254.0 = phi double [ %i.kn, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit136 ], [ %i.kc, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit133 ] ; 3 uses
   %i.ko = load ptr, ptr %i.h, align 8, !tbaa !126 ; 2 uses
   %.not.i207 = icmp eq ptr %i.ko, null
   %i.kp = insertelement <2 x double> poison, double %.sroa.0254.0, i64 0
@@ -1993,11 +1988,10 @@ _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit133: ; preds = %bb.ay, %bb.a
   %i.kh = phi double [ %i.o, %bb.ay ], [ %.pre313, %bb.az ]
   %i.ki = fadd double %i.kc, %i.kh                ; 3 uses
   %i.kj = sub i32 %i.jp, %.1289
-  %2 = icmp ugt i32 %i.kj, 15
-  %3 = and i32 %i.jp, 1
-  %.not72 = icmp eq i32 %3, 0
-  %or.cond = or i1 %2, %.not72
-  br i1 %or.cond, label %bb.bd, label %bb.ba
+  %2 = icmp ult i32 %i.kj, 16
+  %3 = trunc i32 %i.jp to i1
+  %or.cond = and i1 %2, %3
+  br i1 %or.cond, label %bb.ba, label %bb.bd
 
 bb.ba:                                            ; preds = %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit133
   %.not.i.i134 = icmp ult i32 %i.hg, %i.jp
@@ -2020,7 +2014,7 @@ _ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit136: ; preds = %bb.bb, %bb.b
   br label %bb.bd
 
 bb.bd:                                            ; preds = %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit136, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit133
-  %.sroa.12.0 = phi double [ %i.kd, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit133 ], [ %i.kn, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit136 ] ; 3 uses
+  %.sroa.12.0 = phi double [ %i.kn, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit136 ], [ %i.kd, %_ZN3CFF12interp_env_tINS_8number_tEE8eval_argEj.exit133 ] ; 3 uses
   %i.ko = load ptr, ptr %i.h, align 8, !tbaa !126 ; 2 uses
   %.not.i207 = icmp eq ptr %i.ko, null
   %i.kp = insertelement <2 x double> poison, double %i.ki, i64 0

@@ -204,9 +204,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.e = tail call float @llvm.round.f32(float %1)
   %i.f = tail call i32 @llvm.fptoui.sat.i32.f32(float %i.e) ; 4 uses
-  %2 = and i32 %i.f, 1
-  %3 = icmp eq i32 %2, 0
-  br i1 %3, label %bb.g, label %bb.f
+  %2 = trunc i32 %i.f to i1
+  br i1 %2, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.g, %bb.e
   %.sroa.07.0 = phi i32 [ %i.f, %bb.e ], [ %., %bb.g ] ; 3 uses
@@ -294,9 +293,8 @@ bb.h:                                             ; preds = %bb.j, %bb.g
 bb.i:                                             ; preds = %bb.j, %bb.g
   %i.i = tail call float @llvm.round.f32(float %1)
   %i.j = tail call i32 @llvm.fptoui.sat.i32.f32(float %i.i) ; 4 uses
-  %3 = and i32 %i.j, 1
-  %4 = icmp eq i32 %3, 0
-  br i1 %4, label %bb.l, label %bb.k
+  %3 = trunc i32 %i.j to i1
+  br i1 %3, label %bb.k, label %bb.l
 
 bb.j:                                             ; preds = %bb.e
   %i.k = fcmp ogt float %2, 0.000000e+00
@@ -331,9 +329,8 @@ bb.n:                                             ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.w = tail call float @llvm.round.f32(float %2)
   %i.x = tail call i32 @llvm.fptoui.sat.i32.f32(float %i.w) ; 4 uses
-  %5 = and i32 %i.x, 1
-  %6 = icmp eq i32 %5, 0
-  br i1 %6, label %bb.p, label %bb.o
+  %4 = trunc i32 %i.x to i1
+  br i1 %4, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.p, %bb.n
   %.sroa.022.0 = phi i32 [ %i.x, %bb.n ], [ %.33, %bb.p ] ; 2 uses
@@ -451,9 +448,9 @@ _RINvXs_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemfNtB5_12SpecFromElem9from_el
   br i1 %i.n, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_RINvXs_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemfNtB5_12SpecFromElem9from_elemNtNtB9_5alloc6GlobalECsa5QsYiPB8Gl_5image.exit
-  %i.o = add i64 %.idx, -4                        ; 3 uses
+  %i.o = add i64 %.idx, -4                        ; 2 uses
   %i.p = lshr exact i64 %i.o, 2
-  %i.q = add nuw nsw i64 %i.p, 1                  ; 2 uses
+  %i.q = add nuw nsw i64 %i.p, 1                  ; 3 uses
   %i.r = icmp eq i64 %i.o, 0
   br i1 %i.r, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -493,9 +490,8 @@ _RINvXs_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemfNtB5_12SpecFromElem9from_el
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.lr.ph
 
 ._crit_edge.unr-lcssa:                            ; preds = %.lr.ph
-  %3 = and i64 %i.o, 4
-  %lcmp.mod.not.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.epil.preheader, label %._crit_edge
+  %3 = trunc i64 %i.q to i1
+  br i1 %3, label %.lr.ph.epil.preheader, label %._crit_edge
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa, %.lr.ph.preheader
   %.sroa.0.020.epil.init = phi float [ 0.000000e+00, %.lr.ph.preheader ], [ %i.aj, %._crit_edge.unr-lcssa ]
@@ -678,9 +674,9 @@ _RINvXs_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemfNtB5_12SpecFromElem9from_el
   br i1 %i.ce, label %_RNvNtNtCsa5QsYiPB8Gl_5image8imageops6sample22get_gaussian_kernel_1d.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_RINvXs_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemfNtB5_12SpecFromElem9from_elemNtNtB9_5alloc6GlobalECsa5QsYiPB8Gl_5image.exit.i
-  %i.cf = add nsw i64 %.idx.i, -4                 ; 3 uses
+  %i.cf = add nsw i64 %.idx.i, -4                 ; 2 uses
   %i.cg = lshr exact i64 %i.cf, 2
-  %i.ch = add nuw nsw i64 %i.cg, 1                ; 2 uses
+  %i.ch = add nuw nsw i64 %i.cg, 1                ; 3 uses
   %i.ci = icmp eq i64 %i.cf, 0
   br i1 %i.ci, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
 
@@ -720,9 +716,8 @@ _RINvXs_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemfNtB5_12SpecFromElem9from_el
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %.lr.ph.i
 
 ._crit_edge.i.unr-lcssa:                          ; preds = %.lr.ph.i
-  %3 = and i64 %i.cf, 4
-  %lcmp.mod.not.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.epil.preheader, label %._crit_edge.i
+  %3 = trunc i64 %i.ch to i1
+  br i1 %3, label %.lr.ph.i.epil.preheader, label %._crit_edge.i
 
 .lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i.preheader
   %.sroa.0.020.i.epil.init = phi float [ 0.000000e+00, %.lr.ph.i.preheader ], [ %i.da, %._crit_edge.i.unr-lcssa ]
@@ -840,9 +835,9 @@ _RINvXs_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemfNtB5_12SpecFromElem9from_el
   br i1 %i.ep, label %.loopexit, label %.lr.ph.i88.preheader
 
 .lr.ph.i88.preheader:                             ; preds = %_RINvXs_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemfNtB5_12SpecFromElem9from_elemNtNtB9_5alloc6GlobalECsa5QsYiPB8Gl_5image.exit.i86
-  %i.eq = add nsw i64 %.idx.i87, -4               ; 3 uses
+  %i.eq = add nsw i64 %.idx.i87, -4               ; 2 uses
   %i.er = lshr exact i64 %i.eq, 2
-  %i.es = add nuw nsw i64 %i.er, 1                ; 2 uses
+  %i.es = add nuw nsw i64 %i.er, 1                ; 3 uses
   %i.et = icmp eq i64 %i.eq, 0
   br i1 %i.et, label %.lr.ph.i88.epil.preheader, label %.lr.ph.i88.preheader.new
 
@@ -882,9 +877,8 @@ _RINvXs_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemfNtB5_12SpecFromElem9from_el
   br i1 %niter244.ncmp.1, label %._crit_edge.i93.unr-lcssa, label %.lr.ph.i88
 
 ._crit_edge.i93.unr-lcssa:                        ; preds = %.lr.ph.i88
-  %4 = and i64 %i.eq, 4
-  %lcmp.mod240.not.not = icmp eq i64 %4, 0
-  br i1 %lcmp.mod240.not.not, label %.lr.ph.i88.epil.preheader, label %._crit_edge.i93
+  %4 = trunc i64 %i.es to i1
+  br i1 %4, label %.lr.ph.i88.epil.preheader, label %._crit_edge.i93
 
 .lr.ph.i88.epil.preheader:                        ; preds = %._crit_edge.i93.unr-lcssa, %.lr.ph.i88.preheader
   %.sroa.0.020.i89.epil.init = phi float [ 0.000000e+00, %.lr.ph.i88.preheader ], [ %i.fl, %._crit_edge.i93.unr-lcssa ]

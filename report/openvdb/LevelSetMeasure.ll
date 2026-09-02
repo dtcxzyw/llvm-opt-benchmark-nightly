@@ -205,9 +205,8 @@ bb.a:
   %.elt3.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.unpack4.i.i.i.i.i.i = load i64, ptr %.elt3.i.i.i.i.i.i, align 8, !tbaa !121
   %i.c = getelementptr inbounds i8, ptr %i.b, i64 %.unpack4.i.i.i.i.i.i ; 2 uses
-  %3 = and i64 %.unpack.i.i.i.i.i.i, 1
-  %.not.i.i.i.i.i.i = icmp eq i64 %3, 0
-  br i1 %.not.i.i.i.i.i.i, label %bb.c, label %bb.b
+  %3 = trunc i64 %.unpack.i.i.i.i.i.i to i1
+  br i1 %3, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !103
@@ -610,11 +609,10 @@ bb.as:                                            ; preds = %bb.ar
           to label %_ZN7openvdb5v13_02io8readDataIfEEvRSiPT_jjPNS1_19DelayedLoadMetadataEm.exit unwind label %bb.an
 
 bb.at:                                            ; preds = %bb.ar
-  %10 = and i32 %i.q, 1
-  %.not27.i = icmp eq i32 %10, 0
+  %10 = trunc i32 %i.q to i1
   %i.dd = zext i32 %.084 to i64
   %i.de = shl nuw nsw i64 %i.dd, 2                ; 3 uses
-  br i1 %.not27.i, label %bb.av, label %bb.au
+  br i1 %10, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %bb.at
   invoke void @_ZN7openvdb5v13_02io15unzipFromStreamERSiPcm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %i.ct, i64 noundef %i.de)
@@ -1017,11 +1015,10 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN7openvdb5v13_02io8readDataINS0_4math8internal4halfEEEvRSiPT_jjPNS1_19DelayedLoadMetadataEm.exit
 
 bb.g:                                             ; preds = %bb.e
-  %6 = and i32 %3, 1
-  %.not27.i = icmp eq i32 %6, 0
+  %6 = trunc i32 %3 to i1
   %i.l = zext i32 %2 to i64
   %i.m = shl nuw nsw i64 %i.l, 1                  ; 2 uses
-  br i1 %.not27.i, label %bb.i, label %bb.h
+  br i1 %6, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   tail call void @_ZN7openvdb5v13_02io15unzipFromStreamERSiPcm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef null, i64 noundef %i.m)
@@ -1058,9 +1055,8 @@ bb.k:                                             ; preds = %bb.j
           to label %_ZN7openvdb5v13_02io8readDataINS0_4math8internal4halfEEEvRSiPT_jjPNS1_19DelayedLoadMetadataEm.exit28 unwind label %_ZNSt6vectorIN7openvdb5v13_04math8internal4halfESaIS4_EED2Ev.exit30
 
 bb.l:                                             ; preds = %bb.j
-  %7 = and i32 %3, 1
-  %.not27.i21 = icmp eq i32 %7, 0
-  br i1 %.not27.i21, label %bb.n, label %bb.m
+  %7 = trunc i32 %3 to i1
+  br i1 %7, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   invoke void @_ZN7openvdb5v13_02io15unzipFromStreamERSiPcm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.q, i64 noundef %i.p)
@@ -1463,8 +1459,8 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.j = load double, ptr %0, align 8, !tbaa !124
   store double %i.j, ptr %i.h, align 8, !tbaa !124
   %i.k = ptrtoint ptr %i.h to i64
-  %i.l = sub i64 %i.k, %i.a                       ; 3 uses
-  %i.m = ashr exact i64 %i.l, 3                   ; 3 uses
+  %i.l = sub i64 %i.k, %i.a                       ; 2 uses
+  %i.m = ashr exact i64 %i.l, 3                   ; 4 uses
   %i.n = add nsw i64 %i.m, -1
   %i.o = lshr i64 %i.n, 1
   %i.p = icmp sgt i64 %i.m, 2
@@ -1491,9 +1487,8 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
 
 ._crit_edge.i.i.i.i:                              ; preds = %.lr.ph.i.i.i.i, %.lr.ph.i.i
   %.0.lcssa.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %spec.select.i.i.i.i, %.lr.ph.i.i.i.i ] ; 5 uses
-  %4 = and i64 %i.l, 8
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %bb.c, label %bb.d
+  %4 = trunc i64 %i.m to i1
+  br i1 %4, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ad = add nsw i64 %i.m, -2
@@ -1803,8 +1798,8 @@ define linkonce_odr void @_ZSt11__make_heapIPdN9__gnu_cxx5__ops15_Iter_comp_iter
 bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
-  %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = ashr exact i64 %i.c, 3                   ; 3 uses
+  %i.c = sub i64 %i.a, %i.b
+  %i.d = ashr i64 %i.c, 3                         ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
@@ -1813,10 +1808,9 @@ bb.b:                                             ; preds = %bb.a
   %i.g = lshr i64 %i.f, 1                         ; 2 uses
   %i.h = add nsw i64 %i.d, -1
   %i.i = lshr i64 %i.h, 1                         ; 4 uses
-  %3 = and i64 %i.c, 8
-  %4 = icmp eq i64 %3, 0
+  %3 = trunc i64 %i.d to i1
   %i.j = lshr exact i64 %i.f, 1                   ; 2 uses
-  br i1 %4, label %.split.preheader, label %.split.us
+  br i1 %3, label %.split.us, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.b
   %i.k = or disjoint i64 %i.f, 1                  ; 2 uses
@@ -1941,7 +1935,7 @@ _ZSt13__adjust_heapIPdldN9__gnu_cxx5__ops15_Iter_comp_iterISt4lessIdEEEEvT_T0_S8
   %i.bk = add nsw i64 %.014, -1
   br i1 %.not, label %.loopexit, label %.split, !llvm.loop !849
 
-.loopexit:                                        ; preds = %_ZSt13__adjust_heapIPdldN9__gnu_cxx5__ops15_Iter_comp_iterISt4lessIdEEEEvT_T0_S8_T1_T2_.exit.us, %_ZSt13__adjust_heapIPdldN9__gnu_cxx5__ops15_Iter_comp_iterISt4lessIdEEEEvT_T0_S8_T1_T2_.exit, %bb.a
+.loopexit:                                        ; preds = %_ZSt13__adjust_heapIPdldN9__gnu_cxx5__ops15_Iter_comp_iterISt4lessIdEEEEvT_T0_S8_T1_T2_.exit, %_ZSt13__adjust_heapIPdldN9__gnu_cxx5__ops15_Iter_comp_iterISt4lessIdEEEEvT_T0_S8_T1_T2_.exit.us, %bb.a
   ret void
 }
 
@@ -2344,9 +2338,8 @@ bb.a:
   %.elt3.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.unpack4.i.i.i.i.i.i = load i64, ptr %.elt3.i.i.i.i.i.i, align 8, !tbaa !121
   %i.c = getelementptr inbounds i8, ptr %i.b, i64 %.unpack4.i.i.i.i.i.i ; 2 uses
-  %3 = and i64 %.unpack.i.i.i.i.i.i, 1
-  %.not.i.i.i.i.i.i = icmp eq i64 %3, 0
-  br i1 %.not.i.i.i.i.i.i, label %bb.c, label %bb.b
+  %3 = trunc i64 %.unpack.i.i.i.i.i.i to i1
+  br i1 %3, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !103
@@ -2749,11 +2742,10 @@ bb.as:                                            ; preds = %bb.ar
           to label %_ZN7openvdb5v13_02io8readDataIdEEvRSiPT_jjPNS1_19DelayedLoadMetadataEm.exit unwind label %bb.an
 
 bb.at:                                            ; preds = %bb.ar
-  %10 = and i32 %i.q, 1
-  %.not27.i = icmp eq i32 %10, 0
+  %10 = trunc i32 %i.q to i1
   %i.dd = zext i32 %.084 to i64
   %i.de = shl nuw nsw i64 %i.dd, 3                ; 3 uses
-  br i1 %.not27.i, label %bb.av, label %bb.au
+  br i1 %10, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %bb.at
   invoke void @_ZN7openvdb5v13_02io15unzipFromStreamERSiPcm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %i.ct, i64 noundef %i.de)
@@ -2997,11 +2989,10 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN7openvdb5v13_02io8readDataINS0_4math8internal4halfEEEvRSiPT_jjPNS1_19DelayedLoadMetadataEm.exit
 
 bb.g:                                             ; preds = %bb.e
-  %6 = and i32 %3, 1
-  %.not27.i = icmp eq i32 %6, 0
+  %6 = trunc i32 %3 to i1
   %i.l = zext i32 %2 to i64
   %i.m = shl nuw nsw i64 %i.l, 1                  ; 2 uses
-  br i1 %.not27.i, label %bb.i, label %bb.h
+  br i1 %6, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   tail call void @_ZN7openvdb5v13_02io15unzipFromStreamERSiPcm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef null, i64 noundef %i.m)
@@ -3038,9 +3029,8 @@ bb.k:                                             ; preds = %bb.j
           to label %_ZN7openvdb5v13_02io8readDataINS0_4math8internal4halfEEEvRSiPT_jjPNS1_19DelayedLoadMetadataEm.exit28 unwind label %_ZNSt6vectorIN7openvdb5v13_04math8internal4halfESaIS4_EED2Ev.exit30
 
 bb.l:                                             ; preds = %bb.j
-  %7 = and i32 %3, 1
-  %.not27.i21 = icmp eq i32 %7, 0
-  br i1 %.not27.i21, label %bb.n, label %bb.m
+  %7 = trunc i32 %3 to i1
+  br i1 %7, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   invoke void @_ZN7openvdb5v13_02io15unzipFromStreamERSiPcm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.q, i64 noundef %i.p)

@@ -205,7 +205,6 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.i:                                         ; preds = %.noexc
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i = load ptr, ptr %i.g, align 8, !alias.scope !188, !nonnull !5, !noundef !5 ; 3 uses
-  %xtraiter = and i64 %i.e, 1
   %i.h = icmp eq i64 %i.e, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -235,8 +234,8 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.d
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.d
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %2 = trunc i64 %i.e to i1
+  br i1 %2, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.i
   %.sroa.0.01.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.o, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -315,7 +314,6 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.i:                                         ; preds = %.noexc
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i = load ptr, ptr %i.g, align 8, !alias.scope !194, !nonnull !5, !noundef !5 ; 3 uses
-  %xtraiter = and i64 %i.e, 1
   %i.h = icmp eq i64 %i.e, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -345,8 +343,8 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.d
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.d
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %2 = trunc i64 %i.e to i1
+  br i1 %2, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.i
   %.sroa.0.01.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.o, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -425,7 +423,6 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.i:                                         ; preds = %.noexc
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i = load ptr, ptr %i.g, align 8, !alias.scope !200, !nonnull !5, !noundef !5 ; 3 uses
-  %xtraiter = and i64 %i.e, 1
   %i.h = icmp eq i64 %i.e, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -455,8 +452,8 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.d
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.d
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %2 = trunc i64 %i.e to i1
+  br i1 %2, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.i
   %.sroa.0.01.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.o, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -535,7 +532,6 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.i:                                         ; preds = %.noexc
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i = load ptr, ptr %i.g, align 8, !alias.scope !206, !nonnull !5, !noundef !5 ; 3 uses
-  %xtraiter = and i64 %i.e, 1
   %i.h = icmp eq i64 %i.e, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -565,8 +561,8 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.d
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.d
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %2 = trunc i64 %i.e to i1
+  br i1 %2, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.i
   %.sroa.0.01.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.o, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -645,7 +641,6 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.i:                                         ; preds = %.noexc
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i = load ptr, ptr %i.g, align 8, !alias.scope !212, !nonnull !5, !noundef !5 ; 3 uses
-  %xtraiter = and i64 %i.e, 1
   %i.h = icmp eq i64 %i.e, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -675,8 +670,8 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.d
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.d
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %2 = trunc i64 %i.e to i1
+  br i1 %2, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.i
   %.sroa.0.01.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.o, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -755,7 +750,6 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.i:                                         ; preds = %.noexc
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i = load ptr, ptr %i.g, align 8, !alias.scope !218, !nonnull !5, !noundef !5 ; 3 uses
-  %xtraiter = and i64 %i.e, 1
   %i.h = icmp eq i64 %i.e, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -785,8 +779,8 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.d
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.d
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %2 = trunc i64 %i.e to i1
+  br i1 %2, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.i
   %.sroa.0.01.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.o, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -865,7 +859,6 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.i:                                         ; preds = %.noexc
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i = load ptr, ptr %i.g, align 8, !alias.scope !224, !nonnull !5, !noundef !5 ; 3 uses
-  %xtraiter = and i64 %i.e, 1
   %i.h = icmp eq i64 %i.e, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -895,8 +888,8 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.d
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.d
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %2 = trunc i64 %i.e to i1
+  br i1 %2, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.i
   %.sroa.0.01.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.o, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -975,7 +968,6 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.i:                                         ; preds = %.noexc
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i = load ptr, ptr %i.g, align 8, !alias.scope !230, !nonnull !5, !noundef !5 ; 3 uses
-  %xtraiter = and i64 %i.e, 1
   %i.h = icmp eq i64 %i.e, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -1005,8 +997,8 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.d
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.d
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %2 = trunc i64 %i.e to i1
+  br i1 %2, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.i
   %.sroa.0.01.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.o, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -1085,7 +1077,6 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.i:                                         ; preds = %.noexc
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i = load ptr, ptr %i.g, align 8, !alias.scope !236, !nonnull !5, !noundef !5 ; 3 uses
-  %xtraiter = and i64 %i.e, 1
   %i.h = icmp eq i64 %i.e, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -1121,8 +1112,8 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.d
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.d
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %2 = trunc i64 %i.e to i1
+  br i1 %2, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.i
   %.sroa.0.01.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.q, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -1204,7 +1195,6 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.i:                                         ; preds = %.noexc
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i = load ptr, ptr %i.g, align 8, !alias.scope !242, !nonnull !5, !noundef !5 ; 3 uses
-  %xtraiter = and i64 %i.e, 1
   %i.h = icmp eq i64 %i.e, 1
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -1240,8 +1230,8 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.d
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.d
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %2 = trunc i64 %i.e to i1
+  br i1 %2, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.i
   %.sroa.0.01.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.q, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -1644,9 +1634,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.a, %middle.block
   %.sroa.0.04.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.04.ph, 1
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %3 = trunc i64 %2 to i1
+  br i1 %3, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.g = or disjoint i64 %.sroa.0.04.ph, 1
@@ -2049,9 +2038,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.sroa.0.01.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.01.i.i.ph, 1
-  %xtraiter = and i64 %i.em, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %3 = trunc i64 %i.em to i1
+  br i1 %3, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.ey = getelementptr inbounds nuw [16 x i8], ptr %.val.i.i, i64 %.sroa.0.01.i.i.ph

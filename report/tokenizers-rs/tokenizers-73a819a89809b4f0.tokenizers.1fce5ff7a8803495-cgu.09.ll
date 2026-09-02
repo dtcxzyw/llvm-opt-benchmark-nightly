@@ -205,8 +205,7 @@ bb.f:                                             ; preds = %.split.i.i, %bb.b
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
   %i.u = tail call i64 @llvm.usub.sat.i64(i64 range(i64 0, 576460752303423488) %.val1.i, i64 4) ; 2 uses
   %i.v = add nsw i64 %.val1.i, -3
-  %xtraiter = and i64 %.val1.i, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %0 = trunc i64 %.val1.i to i1
   br label %bb.g
 
 bb.g:                                             ; preds = %_RNvMs8_CskEsHVYarYHE_9dary_heapINtB5_8DaryHeapNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe4word5MergeKj4_E15sift_down_rangeBQ_.exit.i.i.i, %.thread.i.i
@@ -237,7 +236,7 @@ bb.g:                                             ; preds = %_RNvMs8_CskEsHVYarY
   %.val.pre.i.i.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i.i.i, align 8 ; 3 uses
   %.phi.trans.insert5.i.i.i.i.i = getelementptr i8, ptr %.phi.trans.insert.i.i.i.i.i, i64 8
   %.val6.pre.i.i.i.i.i = load i32, ptr %.phi.trans.insert5.i.i.i.i.i, align 8 ; 4 uses
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  br i1 %0, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph.i.i.i.i.i
   %i.ab = icmp ult i64 %.sroa.01.0.lcssa.i.i.i.i, %.val1.i
@@ -640,9 +639,8 @@ _RINvNtCs4NRVxsYgnAr_4core10intrinsics25typed_swap_nonoverlappingNtNtNtNtCs2JiOg
   %.phi.trans.insert5.i.i.i.i = getelementptr i8, ptr %.phi.trans.insert.i.i.i.i, i64 8
   %.val6.pre.i.i.i.i = load i32, ptr %.phi.trans.insert5.i.i.i.i, align 8, !noalias !1461 ; 4 uses
   %i.bg = add nsw i64 %i.av, -3
-  %4 = and i64 %i.av, 1
-  %lcmp.mod.not.not = icmp eq i64 %4, 0
-  br i1 %lcmp.mod.not.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
+  %4 = trunc i64 %i.av to i1
+  br i1 %4, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph.i.i.i.i
   %i.bh = icmp ult i64 %.sroa.04.01.i.i.i.i, %i.aw
@@ -1045,16 +1043,13 @@ bb.l:                                             ; preds = %bb.j
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.0.024, i64 8
   %i.af = load ptr, ptr %i.ae, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.0.024, i64 16
-  %i.ah = load i64, ptr %i.ag, align 8, !noundef !4 ; 5 uses
-  %4 = icmp eq i64 %i.ah, 0
-  br i1 %4, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterINtNtCscdodAO9FK5_5alloc2rc2RcINtNtBb_4cell7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeEEENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtB2O_8adapters3map8map_foldRBQ_ddNCNvMs6_B1H_NtB1H_7Lattice12sample_nbest0NCINvXs26_NtB2M_5accumdNtB4X_3Sum3sumINtB3y_3MapBF_B48_EE0E0EB1N_.exit, label %.preheader.preheader
+  %i.ah = load i64, ptr %i.ag, align 8, !noundef !4 ; 4 uses
+  switch i64 %i.ah, label %.preheader.preheader.new [
+    i64 0, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterINtNtCscdodAO9FK5_5alloc2rc2RcINtNtBb_4cell7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeEEENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtB2O_8adapters3map8map_foldRBQ_ddNCNvMs6_B1H_NtB1H_7Lattice12sample_nbest0NCINvXs26_NtB2M_5accumdNtB4X_3Sum3sumINtB3y_3MapBF_B48_EE0E0EB1N_.exit
+    i64 1, label %.preheader.epil.preheader
+  ]
 
-.preheader.preheader:                             ; preds = %.lr.ph
-  %xtraiter = and i64 %i.ah, 1
-  %5 = icmp eq i64 %i.ah, 1
-  br i1 %5, label %.preheader.epil.preheader, label %.preheader.preheader.new
-
-.preheader.preheader.new:                         ; preds = %.preheader.preheader
+.preheader.preheader.new:                         ; preds = %.lr.ph
   %unroll_iter = and i64 %i.ah, -2
   br label %.preheader
 
@@ -1118,12 +1113,12 @@ bb.m:                                             ; preds = %.loopexit.split-lp,
           to label %bb.d unwind label %bb.ai
 
 _RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterINtNtCscdodAO9FK5_5alloc2rc2RcINtNtBb_4cell7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeEEENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtB2O_8adapters3map8map_foldRBQ_ddNCNvMs6_B1H_NtB1H_7Lattice12sample_nbest0NCINvXs26_NtB2M_5accumdNtB4X_3Sum3sumINtB3y_3MapBF_B48_EE0E0EB1N_.exit.loopexit.unr-lcssa: ; preds = %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map8map_foldRINtNtCscdodAO9FK5_5alloc2rc2RcINtNtBa_4cell7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeEEddNCNvMs6_B1M_NtB1M_7Lattice12sample_nbest0NCINvXs26_NtNtB8_6traits5accumdNtB3D_3Sum3sumINtB4_3MapINtNtNtBa_5slice4iter4IterBV_EB2O_EE0E0B1S_.exit.i.1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterINtNtCscdodAO9FK5_5alloc2rc2RcINtNtBb_4cell7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeEEENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtB2O_8adapters3map8map_foldRBQ_ddNCNvMs6_B1H_NtB1H_7Lattice12sample_nbest0NCINvXs26_NtB2M_5accumdNtB4X_3Sum3sumINtB3y_3MapBF_B48_EE0E0EB1N_.exit, label %.preheader.epil.preheader
+  %4 = trunc i64 %i.ah to i1
+  br i1 %4, label %.preheader.epil.preheader, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterINtNtCscdodAO9FK5_5alloc2rc2RcINtNtBb_4cell7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeEEENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtB2O_8adapters3map8map_foldRBQ_ddNCNvMs6_B1H_NtB1H_7Lattice12sample_nbest0NCINvXs26_NtB2M_5accumdNtB4X_3Sum3sumINtB3y_3MapBF_B48_EE0E0EB1N_.exit
 
-.preheader.epil.preheader:                        ; preds = %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterINtNtCscdodAO9FK5_5alloc2rc2RcINtNtBb_4cell7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeEEENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtB2O_8adapters3map8map_foldRBQ_ddNCNvMs6_B1H_NtB1H_7Lattice12sample_nbest0NCINvXs26_NtB2M_5accumdNtB4X_3Sum3sumINtB3y_3MapBF_B48_EE0E0EB1N_.exit.loopexit.unr-lcssa, %.preheader.preheader
-  %.sroa.04.0.i.epil.init = phi i64 [ 0, %.preheader.preheader ], [ %i.ax, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterINtNtCscdodAO9FK5_5alloc2rc2RcINtNtBb_4cell7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeEEENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtB2O_8adapters3map8map_foldRBQ_ddNCNvMs6_B1H_NtB1H_7Lattice12sample_nbest0NCINvXs26_NtB2M_5accumdNtB4X_3Sum3sumINtB3y_3MapBF_B48_EE0E0EB1N_.exit.loopexit.unr-lcssa ]
-  %.sroa.02.0.i.epil.init = phi double [ -0.000000e+00, %.preheader.preheader ], [ %i.aw, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterINtNtCscdodAO9FK5_5alloc2rc2RcINtNtBb_4cell7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeEEENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtB2O_8adapters3map8map_foldRBQ_ddNCNvMs6_B1H_NtB1H_7Lattice12sample_nbest0NCINvXs26_NtB2M_5accumdNtB4X_3Sum3sumINtB3y_3MapBF_B48_EE0E0EB1N_.exit.loopexit.unr-lcssa ]
+.preheader.epil.preheader:                        ; preds = %.lr.ph, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterINtNtCscdodAO9FK5_5alloc2rc2RcINtNtBb_4cell7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeEEENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtB2O_8adapters3map8map_foldRBQ_ddNCNvMs6_B1H_NtB1H_7Lattice12sample_nbest0NCINvXs26_NtB2M_5accumdNtB4X_3Sum3sumINtB3y_3MapBF_B48_EE0E0EB1N_.exit.loopexit.unr-lcssa
+  %.sroa.04.0.i.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.ax, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterINtNtCscdodAO9FK5_5alloc2rc2RcINtNtBb_4cell7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeEEENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtB2O_8adapters3map8map_foldRBQ_ddNCNvMs6_B1H_NtB1H_7Lattice12sample_nbest0NCINvXs26_NtB2M_5accumdNtB4X_3Sum3sumINtB3y_3MapBF_B48_EE0E0EB1N_.exit.loopexit.unr-lcssa ]
+  %.sroa.02.0.i.epil.init = phi double [ -0.000000e+00, %.lr.ph ], [ %i.aw, %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterINtNtCscdodAO9FK5_5alloc2rc2RcINtNtBb_4cell7RefCellNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models7unigram7lattice4NodeEEENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtB2O_8adapters3map8map_foldRBQ_ddNCNvMs6_B1H_NtB1H_7Lattice12sample_nbest0NCINvXs26_NtB2M_5accumdNtB4X_3Sum3sumINtB3y_3MapBF_B48_EE0E0EB1N_.exit.loopexit.unr-lcssa ]
   %lcmp.mod31 = trunc i64 %i.ah to i1
   call void @llvm.assume(i1 %lcmp.mod31)
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %.sroa.04.0.i.epil.init
@@ -1526,9 +1521,8 @@ _RINvNtCs4NRVxsYgnAr_4core10intrinsics25typed_swap_nonoverlappingNtNtNtNtCs2JiOg
   %.phi.trans.insert4.i.i.i = getelementptr i8, ptr %.phi.trans.insert.i.i.i, i64 16
   %.val.pre.i.i.i = load double, ptr %.phi.trans.insert4.i.i.i, align 8, !noalias !2244 ; 3 uses
   %i.p = add nsw i64 %i.c, -3
-  %2 = and i64 %i.c, 1
-  %lcmp.mod.not.not = icmp eq i64 %2, 0
-  br i1 %lcmp.mod.not.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
+  %2 = trunc i64 %i.c to i1
+  br i1 %2, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph.i.i.i
   %i.q = icmp ult i64 %.sroa.04.01.i.i.i, %i.e

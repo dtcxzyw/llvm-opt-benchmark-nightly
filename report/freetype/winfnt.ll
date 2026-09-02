@@ -204,12 +204,11 @@ bb.cb:                                            ; preds = %bb.ca
   %i.ls = load i64, ptr %i.lr, align 8, !tbaa !105 ; 2 uses
   %i.lt = and i64 %i.ls, 2
   %.not124 = icmp eq i64 %i.lt, 0
-  %17 = and i64 %i.ls, 1
-  %.not125 = icmp eq i64 %17, 0                   ; 2 uses
+  %17 = trunc i64 %i.ls to i1                     ; 2 uses
   br i1 %.not124, label %bb.cf, label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cb
-  br i1 %.not125, label %bb.ce, label %bb.cd
+  br i1 %17, label %bb.cd, label %bb.ce
 
 bb.cd:                                            ; preds = %bb.cc
   store ptr @.str.4, ptr %i.lq, align 8, !tbaa !121
@@ -220,7 +219,7 @@ bb.ce:                                            ; preds = %bb.cc
   br label %FNT_Face_Done.exit
 
 bb.cf:                                            ; preds = %bb.cb
-  br i1 %.not125, label %FNT_Face_Done.exit, label %bb.cg
+  br i1 %17, label %bb.cg, label %FNT_Face_Done.exit
 
 bb.cg:                                            ; preds = %bb.cf
   store ptr @.str.6, ptr %i.lq, align 8, !tbaa !121
@@ -452,8 +451,8 @@ bb.m:                                             ; preds = %bb.l
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 184
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !27
   %i.bl = load i32, ptr %i.ad, align 4, !tbaa !127
-  %i.bm = add i32 %i.bl, 7                        ; 2 uses
-  %i.bn = lshr i32 %i.bm, 3                       ; 7 uses
+  %i.bm = add i32 %i.bl, 7
+  %i.bn = lshr i32 %i.bm, 3                       ; 8 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 4 uses
   store i32 %i.bn, ptr %i.bo, align 8, !tbaa !149
   %.not103 = icmp eq i32 %i.bn, 0
@@ -479,9 +478,8 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not104, label %.preheader.preheader, label %bb.p
 
 .preheader.preheader:                             ; preds = %bb.o
-  %4 = and i32 %i.bm, 8
-  %lcmp.mod.not = icmp eq i32 %4, 0
-  br i1 %lcmp.mod.not, label %.preheader.prol.loopexit, label %.preheader.prol
+  %4 = trunc i32 %i.bn to i1
+  br i1 %4, label %.preheader.prol, label %.preheader.prol.loopexit
 
 .preheader.prol:                                  ; preds = %.preheader.preheader
   %i.ca = load i32, ptr %i.c, align 8, !tbaa !128 ; 2 uses
@@ -754,9 +752,8 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 84
   %i.n = load i16, ptr %i.m, align 4, !tbaa !165
-  %2 = and i16 %i.n, 1
-  %.not28 = icmp eq i16 %2, 0
-  br i1 %.not28, label %bb.h, label %bb.j
+  %2 = trunc i16 %i.n to i1
+  br i1 %2, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.o = load i64, ptr %0, align 8, !tbaa !35

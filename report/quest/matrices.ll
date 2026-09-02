@@ -205,11 +205,10 @@ _ZNSt6vectorIxSaIxEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPxmxET_
   br i1 %.not.i.i.i.i, label %_Z22fast_getSubQuregValuesxPiibPx.exit.us, label %.lr.ph.us.us.preheader
 
 .lr.ph.us.us.preheader:                           ; preds = %.lr.ph43.split.us
-  %wide.trip.count81 = zext nneg i32 %3 to i64    ; 2 uses
-  %xtraiter110 = and i64 %wide.trip.count81, 1
   %5 = icmp eq i32 %3, 1
-  %unroll_iter113 = and i64 %wide.trip.count81, 2147483646
-  %lcmp.mod111.not = icmp eq i64 %xtraiter110, 0
+  %6 = and i32 %3, 2147483646
+  %unroll_iter114 = zext nneg i32 %6 to i64
+  %7 = trunc i32 %3 to i1
   %lcmp.mod112 = trunc i32 %3 to i1
   br label %.lr.ph.us.us
 
@@ -242,7 +241,7 @@ _ZNSt6vectorIxSaIxEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPxmxET_
   %i.ab = lshr i64 %i.u, %i.x                     ; 2 uses
   %indvars.iv.next78.1 = add nuw nsw i64 %indvars.iv77, 2 ; 2 uses
   %niter114.next.1 = add i64 %niter114, 2         ; 2 uses
-  %niter114.ncmp.1 = icmp eq i64 %niter114.next.1, %unroll_iter113
+  %niter114.ncmp.1 = icmp eq i64 %niter114.next.1, %unroll_iter114
   br i1 %niter114.ncmp.1, label %._crit_edge.us.us.unr-lcssa, label %.lr.ph.us.us.new, !llvm.loop !2
 
 bb.b:                                             ; preds = %._crit_edge.us.us
@@ -257,7 +256,7 @@ bb.b:                                             ; preds = %._crit_edge.us.us
   br i1 %exitcond83.not, label %._crit_edge44, label %.lr.ph.us.us, !llvm.loop !108
 
 ._crit_edge.us.us.unr-lcssa:                      ; preds = %.lr.ph.us.us.new
-  br i1 %lcmp.mod111.not, label %._crit_edge.us.us, label %.epil.preheader.a
+  br i1 %7, label %.epil.preheader.a, label %._crit_edge.us.us
 
 .epil.preheader.a:                                ; preds = %._crit_edge.us.us.unr-lcssa, %.lr.ph.us.us
   %indvars.iv77.epil.init = phi i64 [ 0, %.lr.ph.us.us ], [ %indvars.iv.next78.1, %._crit_edge.us.us.unr-lcssa ] ; 2 uses
@@ -307,21 +306,19 @@ bb.c:                                             ; preds = %_Z22fast_getSubQure
   br i1 %.not.i.i.i.i, label %.preheader, label %.lr.ph43.split.split.us.preheader
 
 .lr.ph43.split.split.us.preheader:                ; preds = %.lr.ph43.split
-  %wide.trip.count = zext nneg i32 %3 to i64      ; 5 uses
+  %wide.trip.count = zext nneg i32 %3 to i64      ; 3 uses
   %i.au = add nsw i64 %wide.trip.count, -1        ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.av = icmp eq i64 %i.au, 0
   %unroll_iter = and i64 %wide.trip.count, 2147483646
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod104.a = trunc i32 %3 to i1
-  %xtraiter105 = and i64 %wide.trip.count, 1
+  %lcmp.mod104 = trunc i32 %3 to i1
   %i.aw = icmp eq i64 %i.au, 0
   %unroll_iter108 = and i64 %wide.trip.count, 2147483646
-  %lcmp.mod106.not = icmp eq i64 %xtraiter105, 0
+  %8 = trunc i32 %3 to i1
   %lcmp.mod107 = trunc i32 %3 to i1
   br label %.lr.ph.us50.preheader
 
-.lr.ph.us50.preheader:                            ; preds = %bb.g, %.lr.ph43.split.split.us.preheader
+.lr.ph.us50.preheader:                            ; preds = %.lr.ph43.split.split.us.preheader, %bb.g
   %.042.us45 = phi i64 [ %i.ci, %bb.g ], [ 0, %.lr.ph43.split.split.us.preheader ] ; 4 uses
   br i1 %i.av, label %.lr.ph.us50.epil.preheader, label %.lr.ph.us50
 
@@ -354,12 +351,12 @@ bb.c:                                             ; preds = %_Z22fast_getSubQure
   br i1 %niter.ncmp.1, label %.preheader.us.preheader.unr-lcssa, label %.lr.ph.us50, !llvm.loop !2
 
 .preheader.us.preheader.unr-lcssa:                ; preds = %.lr.ph.us50
-  br i1 %lcmp.mod.not, label %.preheader.us.preheader, label %.lr.ph.us50.epil.preheader
+  br i1 %lcmp.mod104.a, label %.lr.ph.us50.epil.preheader, label %.preheader.us.preheader
 
 .lr.ph.us50.epil.preheader:                       ; preds = %.preheader.us.preheader.unr-lcssa, %.lr.ph.us50.preheader
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.us50.preheader ], [ %indvars.iv.next.1, %.preheader.us.preheader.unr-lcssa ] ; 2 uses
   %.024.i38.us47.epil.init = phi i64 [ %.042.us45, %.lr.ph.us50.preheader ], [ %i.bk, %.preheader.us.preheader.unr-lcssa ]
-  tail call void @llvm.assume(i1 %lcmp.mod104.a)
+  tail call void @llvm.assume(i1 %lcmp.mod104)
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.epil.init
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !47
   %i.bn = zext nneg i32 %i.bm to i64
@@ -382,10 +379,9 @@ bb.c:                                             ; preds = %_Z22fast_getSubQure
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !47
   %i.bv = add nsw i32 %i.bu, -1
   %i.bw = zext nneg i32 %i.bv to i64              ; 2 uses
-  %6 = shl nuw i64 1, %i.bw
-  %7 = and i64 %6, %i.bs
-  %.not.i.us = icmp eq i64 %7, 0
-  br i1 %.not.i.us, label %.preheader.us.1, label %bb.d
+  %9 = lshr i64 %i.bs, %i.bw
+  %10 = trunc i64 %9 to i1
+  br i1 %10, label %bb.d, label %.preheader.us.1
 
 bb.d:                                             ; preds = %.preheader.us
   %.neg.us = shl nsw i64 -1, %i.bw
@@ -401,10 +397,9 @@ bb.d:                                             ; preds = %.preheader.us
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !47
   %i.cc = add nsw i32 %i.cb, -1
   %i.cd = zext nneg i32 %i.cc to i64              ; 2 uses
-  %8 = shl nuw i64 1, %i.cd
-  %9 = and i64 %8, %i.bz
-  %.not.i.us.1 = icmp eq i64 %9, 0
-  br i1 %.not.i.us.1, label %bb.f, label %bb.e
+  %11 = lshr i64 %i.bz, %i.cd
+  %12 = trunc i64 %11 to i1
+  br i1 %12, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.preheader.us.1
   %.neg.us.1 = shl nsw i64 -1, %i.cd
@@ -430,7 +425,7 @@ bb.g:                                             ; preds = %._Z22fast_getSubQur
   br i1 %exitcond75.not, label %._crit_edge44, label %.lr.ph.us50.preheader, !llvm.loop !108
 
 ._Z22fast_getSubQuregValuesxPiibPx.exit.loopexit_crit_edge.us.unr-lcssa: ; preds = %bb.f
-  br i1 %lcmp.mod106.not, label %._Z22fast_getSubQuregValuesxPiibPx.exit.loopexit_crit_edge.us, label %.preheader.us.epil.preheader
+  br i1 %8, label %.preheader.us.epil.preheader, label %._Z22fast_getSubQuregValuesxPiibPx.exit.loopexit_crit_edge.us
 
 .preheader.us.epil.preheader:                     ; preds = %._Z22fast_getSubQuregValuesxPiibPx.exit.loopexit_crit_edge.us.unr-lcssa, %.preheader.us.preheader
   %indvars.iv69.epil.init = phi i64 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next70.1, %._Z22fast_getSubQuregValuesxPiibPx.exit.loopexit_crit_edge.us.unr-lcssa ] ; 2 uses
@@ -441,10 +436,9 @@ bb.g:                                             ; preds = %._Z22fast_getSubQur
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !47
   %i.cn = add nsw i32 %i.cm, -1
   %i.co = zext nneg i32 %i.cn to i64              ; 2 uses
-  %10 = shl nuw i64 1, %i.co
-  %11 = and i64 %10, %i.ck
-  %.not.i.us.epil = icmp eq i64 %11, 0
-  br i1 %.not.i.us.epil, label %._Z22fast_getSubQuregValuesxPiibPx.exit.loopexit_crit_edge.us, label %bb.h
+  %13 = lshr i64 %i.ck, %i.co
+  %14 = trunc i64 %13 to i1
+  br i1 %14, label %bb.h, label %._Z22fast_getSubQuregValuesxPiibPx.exit.loopexit_crit_edge.us
 
 bb.h:                                             ; preds = %.preheader.us.epil.preheader
   %.neg.us.epil = shl nsw i64 -1, %i.co
@@ -662,11 +656,10 @@ _ZNSt6vectorIxSaIxEEC2EmRKS0_.exit.thread:        ; preds = %_ZNSt6vectorIxSaIxE
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIxSaIxEEC2EmRKS0_.exit
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.s = load ptr, ptr %i.r, align 8
-  %wide.trip.count = zext nneg i32 %3 to i64      ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %4 = icmp eq i32 %3, 1
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %5 = and i32 %3, 2147483646
+  %unroll_iter = zext nneg i32 %5 to i64
+  %6 = trunc i32 %3 to i1
   %lcmp.mod71 = trunc i32 %3 to i1
   br label %.preheader.us
 
@@ -714,7 +707,7 @@ bb.b:                                             ; preds = %._Z22fast_getSubQur
   br i1 %exitcond42.not, label %._crit_edge, label %.preheader.us, !llvm.loop !110
 
 ._Z22fast_getSubQuregValuesxPiibPx.exit_crit_edge.us.unr-lcssa: ; preds = %.preheader.us.new
-  br i1 %lcmp.mod.not, label %._Z22fast_getSubQuregValuesxPiibPx.exit_crit_edge.us, label %.epil.preheader
+  br i1 %6, label %.epil.preheader, label %._Z22fast_getSubQuregValuesxPiibPx.exit_crit_edge.us
 
 .epil.preheader:                                  ; preds = %._Z22fast_getSubQuregValuesxPiibPx.exit_crit_edge.us.unr-lcssa, %.preheader.us
   %indvars.iv.epil.init = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next.1, %._Z22fast_getSubQuregValuesxPiibPx.exit_crit_edge.us.unr-lcssa ] ; 2 uses

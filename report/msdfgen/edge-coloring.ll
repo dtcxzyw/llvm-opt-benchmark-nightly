@@ -205,7 +205,7 @@ _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %_ZNSt6vectorIiSaIiE
   %i.qg = sub i64 %i.qe, %i.qf
   %i.qh = lshr exact i64 %i.qg, 2
   %i.qi = trunc i64 %i.qh to i32                  ; 5 uses
-  %i.qj = add nsw i32 %i.qi, -1                   ; 21 uses
+  %i.qj = add nsw i32 %i.qi, -1                   ; 23 uses
   %.not = icmp eq i32 %i.qj, 0
   br i1 %.not, label %bb.fx, label %bb.do
 
@@ -263,7 +263,7 @@ _ZSt6fill_nIPPdmS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc343
   br label %.lr.ph1369.preheader
 
 .lr.ph1369.preheader:                             ; preds = %.noexc343, %_ZSt6fill_nIPPdmS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i
-  %wide.trip.count = zext nneg i32 %i.qj to i64   ; 7 uses
+  %wide.trip.count = zext nneg i32 %i.qj to i64   ; 5 uses
   %i.qz = add nsw i64 %wide.trip.count, -1        ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
   %i.ra = icmp ult i32 %i.qi, 5
@@ -666,7 +666,6 @@ bb.em:                                            ; preds = %bb.el
 .lr.ph.i385:                                      ; preds = %.preheader.i384
   %i.aal = getelementptr inbounds nuw [8 x i8], ptr %i.yr, i64 %indvars.iv31.i
   %i.aam = load ptr, ptr %i.aal, align 8, !tbaa !36 ; 3 uses
-  %xtraiter3341 = and i64 %indvars.iv31.i, 1
   %i.aan = icmp eq i64 %indvars.iv31.i, 1
   br i1 %i.aan, label %.epil.preheader, label %.lr.ph.i385.new
 
@@ -675,8 +674,8 @@ bb.em:                                            ; preds = %bb.el
   br label %bb.eo
 
 ._crit_edge.i390.unr-lcssa:                       ; preds = %bb.es
-  %lcmp.mod3343.not = icmp eq i64 %xtraiter3341, 0
-  br i1 %lcmp.mod3343.not, label %._crit_edge.i390, label %.epil.preheader
+  %5 = trunc i64 %indvars.iv31.i to i1
+  br i1 %5, label %.epil.preheader, label %._crit_edge.i390
 
 .epil.preheader:                                  ; preds = %._crit_edge.i390.unr-lcssa, %.lr.ph.i385
   %indvars.iv.i386.epil.init = phi i64 [ 0, %.lr.ph.i385 ], [ %indvars.iv.next.i388.1, %._crit_edge.i390.unr-lcssa ] ; 2 uses
@@ -809,15 +808,13 @@ _ZN7msdfgenL22colorSecondDegreeGraphEPiPKPKiiy.exit: ; preds = %bb.ey
   %i.acl = getelementptr inbounds nuw i8, ptr %3, i64 72
   %i.acm = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.acn = zext i32 %.0127.lcssa to i64
-  %xtraiter3348 = and i64 %wide.trip.count, 1
   %i.aco = icmp eq i64 %i.qz, 0
   %unroll_iter3353 = and i64 %wide.trip.count, 2147483646
-  %lcmp.mod3350.not = icmp eq i64 %xtraiter3348, 0
   %lcmp.mod3352.a = trunc i32 %i.qj to i1
-  %xtraiter3355 = and i64 %wide.trip.count, 1
+  %lcmp.mod3352 = trunc i32 %i.qj to i1
   %i.acp = icmp eq i64 %i.qz, 0
   %unroll_iter3360 = and i64 %wide.trip.count, 2147483646
-  %lcmp.mod3357.not = icmp eq i64 %xtraiter3355, 0
+  %6 = trunc i32 %i.qj to i1
   %lcmp.mod3359 = trunc i32 %i.qj to i1
   br label %bb.ez
 
@@ -827,7 +824,6 @@ _ZN7msdfgenL22colorSecondDegreeGraphEPiPKPKiiy.exit: ; preds = %bb.ey
 
 .lr.ph1405.preheader:                             ; preds = %.preheader
   %wide.trip.count1831 = and i64 %i.qc, 2147483647
-  %xtraiter3362 = and i64 %i.qc, 1
   %i.acr = icmp eq i64 %wide.trip.count1831, 1
   br i1 %i.acr, label %.lr.ph1405.epil.preheader, label %.lr.ph1405.preheader.new
 
@@ -904,12 +900,12 @@ bb.fc:                                            ; preds = %bb.fb, %.lr.ph.i.i.
   br i1 %niter3354.ncmp.1, label %_ZN7msdfgenL20vertexPossibleColorsEPKiS1_i.exit.i.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !100
 
 _ZN7msdfgenL20vertexPossibleColorsEPKiS1_i.exit.i.unr-lcssa: ; preds = %bb.fc
-  br i1 %lcmp.mod3350.not, label %_ZN7msdfgenL20vertexPossibleColorsEPKiS1_i.exit.i, label %.lr.ph.i.i.epil.preheader
+  br i1 %lcmp.mod3352.a, label %.lr.ph.i.i.epil.preheader, label %_ZN7msdfgenL20vertexPossibleColorsEPKiS1_i.exit.i
 
 .lr.ph.i.i.epil.preheader:                        ; preds = %_ZN7msdfgenL20vertexPossibleColorsEPKiS1_i.exit.i.unr-lcssa, %.lr.ph.i.i.preheader
   %indvars.iv.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i.preheader ], [ %indvars.iv.next.i.i.1, %_ZN7msdfgenL20vertexPossibleColorsEPKiS1_i.exit.i.unr-lcssa ] ; 2 uses
   %.089.i.i.epil.init = phi i32 [ 0, %.lr.ph.i.i.preheader ], [ %.1.i.i.1, %_ZN7msdfgenL20vertexPossibleColorsEPKiS1_i.exit.i.unr-lcssa ] ; 2 uses
-  call void @llvm.assume(i1 %lcmp.mod3352.a)
+  call void @llvm.assume(i1 %lcmp.mod3352)
   %i.ady = getelementptr inbounds nuw [4 x i8], ptr %i.adg, i64 %indvars.iv.i.i.epil.init
   %i.adz = load i32, ptr %i.ady, align 4, !tbaa !19
   %.not.i.i392.epil = icmp eq i32 %i.adz, 0
@@ -1035,7 +1031,7 @@ bb.fj:                                            ; preds = %bb.fi, %.lr.ph.i80.
   br i1 %niter3361.ncmp.1, label %_ZN7msdfgenL20vertexPossibleColorsEPKiS1_i.exit88.i.unr-lcssa, label %.lr.ph.i80.i, !llvm.loop !100
 
 _ZN7msdfgenL20vertexPossibleColorsEPKiS1_i.exit88.i.unr-lcssa: ; preds = %bb.fj
-  br i1 %lcmp.mod3357.not, label %_ZN7msdfgenL20vertexPossibleColorsEPKiS1_i.exit88.i, label %.lr.ph.i80.i.epil.preheader
+  br i1 %6, label %.lr.ph.i80.i.epil.preheader, label %_ZN7msdfgenL20vertexPossibleColorsEPKiS1_i.exit88.i
 
 .lr.ph.i80.i.epil.preheader:                      ; preds = %_ZN7msdfgenL20vertexPossibleColorsEPKiS1_i.exit88.i.unr-lcssa, %_ZNSt5queueIiSt5dequeIiSaIiEEE3popEv.exit.i
   %indvars.iv.i81.i.epil.init = phi i64 [ 0, %_ZNSt5queueIiSt5dequeIiSaIiEEE3popEv.exit.i ], [ %indvars.iv.next.i85.i.1, %_ZN7msdfgenL20vertexPossibleColorsEPKiS1_i.exit88.i.unr-lcssa ] ; 2 uses
@@ -1193,8 +1189,8 @@ _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.fr, %bb.fv
   br label %_ZNSt6vectorIPiSaIS0_EED2Ev.exit417
 
 _ZNSt6vectorIiSaIiEED2Ev.exit407.loopexit.unr-lcssa: ; preds = %.lr.ph1405
-  %lcmp.mod3364.not = icmp eq i64 %xtraiter3362, 0
-  br i1 %lcmp.mod3364.not, label %_ZNSt6vectorIiSaIiEED2Ev.exit407, label %.lr.ph1405.epil.preheader
+  %7 = trunc i64 %i.qc to i1
+  br i1 %7, label %.lr.ph1405.epil.preheader, label %_ZNSt6vectorIiSaIiEED2Ev.exit407
 
 .lr.ph1405.epil.preheader:                        ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit407.loopexit.unr-lcssa, %.lr.ph1405.preheader
   %indvars.iv1828.epil.init = phi i64 [ 0, %.lr.ph1405.preheader ], [ %indvars.iv.next1829.1, %_ZNSt6vectorIiSaIiEED2Ev.exit407.loopexit.unr-lcssa ] ; 2 uses

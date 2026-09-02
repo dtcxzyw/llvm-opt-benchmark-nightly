@@ -205,13 +205,12 @@ bb.a:
   br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.b = icmp eq i32 %1, 1
   br i1 %i.b, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %3 = and i32 %1, 2147483646
+  %unroll_iter = zext nneg i32 %3 to i64
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.preheader
@@ -219,8 +218,8 @@ bb.a:
   br label %._crit_edge60
 
 .lr.ph59.preheader.unr-lcssa:                     ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph59.preheader, label %.lr.ph.epil.preheader
+  %4 = trunc i32 %1 to i1
+  br i1 %4, label %.lr.ph.epil.preheader, label %.lr.ph59.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %.lr.ph59.preheader.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %.lr.ph59.preheader.unr-lcssa ]
@@ -623,9 +622,8 @@ bb.s:                                             ; preds = %bb.r
   %i.de = getelementptr inbounds nuw i8, ptr %i.cv, i64 72
   %i.df = load ptr, ptr %i.de, align 8
   %i.dg = load i8, ptr %i.df, align 1             ; 2 uses
-  %7 = and i8 %i.dg, 1
-  %.not284.i = icmp eq i8 %7, 0
-  br i1 %.not284.i, label %bb.u, label %bb.t
+  %7 = trunc i8 %i.dg to i1
+  br i1 %7, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
   %i.dh = load double, ptr %i.cz, align 8
@@ -1028,19 +1026,15 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 .lr.ph.i:                                         ; preds = %bb.c, %.critedge.loopexit.i
   %i.q = call i32 @_glfwPollPOSIX(ptr noundef nonnull %0, i64 noundef 3, ptr noundef null) #17
   %.not9.i = icmp eq i32 %i.q, 0
-  br i1 %.not9.i, label %waitForAnyEvent.exit, label %.preheader.preheader.i
+  br i1 %.not9.i, label %waitForAnyEvent.exit, label %.preheader.1.i
 
-.preheader.preheader.i:                           ; preds = %.lr.ph.i
+.preheader.1.i:                                   ; preds = %.lr.ph.i
   %1 = load i16, ptr %i.i, align 2
-  %2 = and i16 %1, 1
-  %.not10.i = icmp eq i16 %2, 0
-  br i1 %.not10.i, label %.preheader.1.i, label %waitForAnyEvent.exit
-
-.preheader.1.i:                                   ; preds = %.preheader.preheader.i
+  %2 = trunc i16 %1 to i1
   %i.r = load i16, ptr %i.l, align 2
-  %3 = and i16 %i.r, 1
-  %.not10.1.i = icmp eq i16 %3, 0
-  br i1 %.not10.1.i, label %.critedge.loopexit.i, label %waitForAnyEvent.exit
+  %3 = trunc i16 %i.r to i1
+  %or.cond.i = select i1 %2, i1 true, i1 %3
+  br i1 %or.cond.i, label %waitForAnyEvent.exit, label %.critedge.loopexit.i
 
 .critedge.loopexit.i:                             ; preds = %.preheader.1.i
   %i.s = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 137816), align 8
@@ -1049,7 +1043,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.not8.i = icmp eq i32 %i.u, 0
   br i1 %.not8.i, label %.lr.ph.i, label %waitForAnyEvent.exit
 
-waitForAnyEvent.exit:                             ; preds = %.lr.ph.i, %.preheader.preheader.i, %.preheader.1.i, %.critedge.loopexit.i, %bb.c
+waitForAnyEvent.exit:                             ; preds = %.lr.ph.i, %.preheader.1.i, %.critedge.loopexit.i, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #17
   call void @_glfwPollEventsX11()
   ret void
@@ -1101,19 +1095,15 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 .lr.ph.i:                                         ; preds = %bb.c, %.critedge.loopexit.i
   %i.r = call i32 @_glfwPollPOSIX(ptr noundef nonnull %1, i64 noundef 3, ptr noundef nonnull %i.a) #17
   %.not9.i = icmp eq i32 %i.r, 0
-  br i1 %.not9.i, label %waitForAnyEvent.exit, label %.preheader.preheader.i
+  br i1 %.not9.i, label %waitForAnyEvent.exit, label %.preheader.1.i
 
-.preheader.preheader.i:                           ; preds = %.lr.ph.i
+.preheader.1.i:                                   ; preds = %.lr.ph.i
   %2 = load i16, ptr %i.j, align 2
-  %3 = and i16 %2, 1
-  %.not10.i = icmp eq i16 %3, 0
-  br i1 %.not10.i, label %.preheader.1.i, label %waitForAnyEvent.exit
-
-.preheader.1.i:                                   ; preds = %.preheader.preheader.i
+  %3 = trunc i16 %2 to i1
   %i.s = load i16, ptr %i.m, align 2
-  %4 = and i16 %i.s, 1
-  %.not10.1.i = icmp eq i16 %4, 0
-  br i1 %.not10.1.i, label %.critedge.loopexit.i, label %waitForAnyEvent.exit
+  %4 = trunc i16 %i.s to i1
+  %or.cond.i = select i1 %3, i1 true, i1 %4
+  br i1 %or.cond.i, label %waitForAnyEvent.exit, label %.critedge.loopexit.i
 
 .critedge.loopexit.i:                             ; preds = %.preheader.1.i
   %i.t = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 137816), align 8
@@ -1122,7 +1112,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.not8.i = icmp eq i32 %i.v, 0
   br i1 %.not8.i, label %.lr.ph.i, label %waitForAnyEvent.exit
 
-waitForAnyEvent.exit:                             ; preds = %.lr.ph.i, %.preheader.preheader.i, %.preheader.1.i, %.critedge.loopexit.i, %bb.c
+waitForAnyEvent.exit:                             ; preds = %.lr.ph.i, %.preheader.1.i, %.critedge.loopexit.i, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #17
   call void @_glfwPollEventsX11()
   ret void

@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %bb.j, %bb.h, %bb.f
   %i.bu = trunc i64 %i.bm to i32
   %i.bv = and i32 %i.bt, %i.bu                    ; 2 uses
   %i.bw = zext nneg i32 %.0117.lcssa to i64
-  %i.bx = ashr i64 %i.bm, %i.bw                   ; 4 uses
+  %i.bx = ashr i64 %i.bm, %i.bw                   ; 2 uses
   %i.by = add nsw i32 %.0117.lcssa, %spec.select148
   br label %bb.s
 
@@ -381,32 +381,26 @@ _ZN17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S3_.exit211: ; preds = %bb.z
   %i.dp = add nsw i32 %.0117.lcssa, -1
   %i.dq = shl nuw i32 1, %i.dp                    ; 2 uses
   %i.dr = icmp sgt i32 %i.bv, %i.dq
-  br i1 %i.dr, label %9, label %11
+  br i1 %i.dr, label %bb.ab, label %bb.aa
 
-9:                                                ; preds = %_ZN17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S3_.exit211
-  %10 = add nsw i64 %i.bx, 1
+bb.aa:                                            ; preds = %_ZN17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S3_.exit211
+  %9 = icmp ne i32 %i.bv, %i.dq
+  %10 = trunc i64 %i.bx to i1
+  %11 = xor i1 %10, true
+  %or.cond3 = select i1 %11, i1 %.0116, i1 false
+  %or.cond151 = select i1 %9, i1 true, i1 %or.cond3
+  %not.or.cond151 = xor i1 %or.cond151, true
+  %12 = zext i1 %not.or.cond151 to i64
   br label %bb.ab
 
-11:                                               ; preds = %_ZN17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S3_.exit211
-  %12 = icmp eq i32 %i.bv, %i.dq
-  br i1 %12, label %bb.aa, label %bb.ab
-
-bb.aa:                                            ; preds = %11
-  %13 = and i64 %i.bx, 1
-  %14 = icmp eq i64 %13, 0
-  %or.cond3 = select i1 %14, i1 %.0116, i1 false
-  %not.or.cond3 = xor i1 %or.cond3, true
-  %15 = zext i1 %not.or.cond3 to i64
-  %spec.select150 = add nsw i64 %i.bx, %15
-  br label %bb.ab
-
-bb.ab:                                            ; preds = %bb.aa, %11, %9
-  %.1135 = phi i64 [ %10, %9 ], [ %spec.select150, %bb.aa ], [ %i.bx, %11 ] ; 2 uses
+bb.ab:                                            ; preds = %_ZN17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S3_.exit211, %bb.aa
+  %.sink = phi i64 [ %12, %bb.aa ], [ 1, %_ZN17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S3_.exit211 ]
+  %spec.select153 = add nsw i64 %i.bx, %.sink     ; 2 uses
   %i.ds = shl nuw nsw i64 1, %i.n
-  %i.dt = and i64 %.1135, %i.ds
+  %i.dt = and i64 %spec.select153, %i.ds
   %.not146 = icmp ne i64 %i.dt, 0                 ; 2 uses
   %i.du = zext i1 %.not146 to i64
-  %.2136 = ashr i64 %.1135, %i.du
+  %.2136 = ashr i64 %spec.select153, %i.du
   %i.dv = zext i1 %.not146 to i32
   %.4132 = add nsw i32 %.2130, %i.dv
   br label %_ZN17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S3_.exit.thread
@@ -809,7 +803,7 @@ bb.f:                                             ; preds = %.lr.ph228, %_ZN17do
   %i.ba = trunc i64 %i.as to i32
   %i.bb = and i32 %i.az, %i.ba                    ; 2 uses
   %i.bc = zext nneg i32 %.0117.lcssa to i64
-  %i.bd = ashr i64 %i.as, %i.bc                   ; 4 uses
+  %i.bd = ashr i64 %i.as, %i.bc                   ; 2 uses
   br i1 %i.s, label %.split.us236, label %.split
 
 .split.us236:                                     ; preds = %._crit_edge233
@@ -922,23 +916,16 @@ _ZN17double_conversionL17AdvanceToNonspaceIPcEEbPT_S2_.exit166: ; preds = %bb.l,
   %i.cp = add nsw i32 %.0117.lcssa, -1
   %i.cq = shl nuw i32 1, %i.cp                    ; 2 uses
   %i.cr = icmp sgt i32 %i.bb, %i.cq
-  br i1 %i.cr, label %8, label %10
+  br i1 %i.cr, label %_ZN17double_conversionL17AdvanceToNonspaceIPcEEbPT_S2_.exit.thread, label %bb.m
 
-8:                                                ; preds = %_ZN17double_conversionL17AdvanceToNonspaceIPcEEbPT_S2_.exit166
-  %9 = add nsw i64 %i.bd, 1
-  br label %_ZN17double_conversionL17AdvanceToNonspaceIPcEEbPT_S2_.exit.thread
-
-10:                                               ; preds = %_ZN17double_conversionL17AdvanceToNonspaceIPcEEbPT_S2_.exit166
-  %11 = icmp eq i32 %i.bb, %i.cq
-  br i1 %11, label %bb.m, label %_ZN17double_conversionL17AdvanceToNonspaceIPcEEbPT_S2_.exit.thread
-
-bb.m:                                             ; preds = %10
-  %12 = and i64 %i.bd, 1
-  %13 = icmp eq i64 %12, 0
-  %or.cond3 = select i1 %13, i1 %.us-phi237, i1 false
-  %not.or.cond3 = xor i1 %or.cond3, true
-  %14 = zext i1 %not.or.cond3 to i64
-  %spec.select = add nsw i64 %i.bd, %14
+bb.m:                                             ; preds = %_ZN17double_conversionL17AdvanceToNonspaceIPcEEbPT_S2_.exit166
+  %8 = icmp ne i32 %i.bb, %i.cq
+  %9 = trunc i64 %i.bd to i1
+  %10 = xor i1 %9, true
+  %or.cond3 = select i1 %10, i1 %.us-phi237, i1 false
+  %or.cond = select i1 %8, i1 true, i1 %or.cond3
+  %not.or.cond = xor i1 %or.cond, true
+  %11 = zext i1 %not.or.cond to i64
   br label %_ZN17double_conversionL17AdvanceToNonspaceIPcEEbPT_S2_.exit.thread
 
 bb.n:                                             ; preds = %bb.f
@@ -993,13 +980,14 @@ _ZN17double_conversionL17AdvanceToNonspaceIPcEEbPT_S2_.exit.thread.thread: ; pre
   %i.dj = icmp eq i64 %.5139.ph.ph, 0
   br label %bb.t
 
-_ZN17double_conversionL17AdvanceToNonspaceIPcEEbPT_S2_.exit.thread: ; preds = %8, %10, %bb.m
-  %.1135 = phi i64 [ %9, %8 ], [ %spec.select, %bb.m ], [ %i.bd, %10 ] ; 2 uses
+_ZN17double_conversionL17AdvanceToNonspaceIPcEEbPT_S2_.exit.thread: ; preds = %_ZN17double_conversionL17AdvanceToNonspaceIPcEEbPT_S2_.exit166, %bb.m
+  %.sink = phi i64 [ %11, %bb.m ], [ 1, %_ZN17double_conversionL17AdvanceToNonspaceIPcEEbPT_S2_.exit166 ]
+  %12 = add nsw i64 %i.bd, %.sink                 ; 2 uses
   %i.dk = shl nuw nsw i64 1, %i.q
-  %i.dl = and i64 %.1135, %i.dk
+  %i.dl = and i64 %12, %i.dk
   %.not146 = icmp ne i64 %i.dl, 0                 ; 2 uses
   %i.dm = zext i1 %.not146 to i64
-  %.2136 = ashr i64 %.1135, %i.dm                 ; 5 uses
+  %.2136 = ashr i64 %12, %i.dm                    ; 5 uses
   %i.dn = zext i1 %.not146 to i32
   %.4132 = add nuw nsw i32 %.us-phi, %i.dn        ; 3 uses
   store i8 0, ptr %7, align 1, !tbaa !37
@@ -1402,7 +1390,7 @@ bb.k:                                             ; preds = %bb.g, %_ZN17double_
   %i.ay = trunc i64 %i.aq to i32
   %i.az = and i32 %i.ax, %i.ay                    ; 2 uses
   %i.ba = zext nneg i32 %.0117.lcssa to i64
-  %i.bb = ashr i64 %i.aq, %i.ba                   ; 4 uses
+  %i.bb = ashr i64 %i.aq, %i.ba                   ; 2 uses
   %i.bc = add nsw i32 %.0117.lcssa, %spec.select150
   br label %bb.l
 
@@ -1567,32 +1555,26 @@ _ZN17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S3_.exit213: ; preds = %bb.s
   %i.ch = add nsw i32 %.0117.lcssa, -1
   %i.ci = shl nuw i32 1, %i.ch                    ; 2 uses
   %i.cj = icmp sgt i32 %i.az, %i.ci
-  br i1 %i.cj, label %9, label %11
+  br i1 %i.cj, label %bb.u, label %bb.t
 
-9:                                                ; preds = %_ZN17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S3_.exit213
-  %10 = add nsw i64 %i.bb, 1
+bb.t:                                             ; preds = %_ZN17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S3_.exit213
+  %9 = icmp ne i32 %i.az, %i.ci
+  %10 = trunc i64 %i.bb to i1
+  %11 = xor i1 %10, true
+  %or.cond3 = select i1 %11, i1 %.0116, i1 false
+  %or.cond153 = select i1 %9, i1 true, i1 %or.cond3
+  %not.or.cond153 = xor i1 %or.cond153, true
+  %12 = zext i1 %not.or.cond153 to i64
   br label %bb.u
 
-11:                                               ; preds = %_ZN17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S3_.exit213
-  %12 = icmp eq i32 %i.az, %i.ci
-  br i1 %12, label %bb.t, label %bb.u
-
-bb.t:                                             ; preds = %11
-  %13 = and i64 %i.bb, 1
-  %14 = icmp eq i64 %13, 0
-  %or.cond3 = select i1 %14, i1 %.0116, i1 false
-  %not.or.cond3 = xor i1 %or.cond3, true
-  %15 = zext i1 %not.or.cond3 to i64
-  %spec.select152 = add nsw i64 %i.bb, %15
-  br label %bb.u
-
-bb.u:                                             ; preds = %bb.t, %11, %9
-  %.1135 = phi i64 [ %10, %9 ], [ %spec.select152, %bb.t ], [ %i.bb, %11 ] ; 2 uses
+bb.u:                                             ; preds = %_ZN17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S3_.exit213, %bb.t
+  %.sink527 = phi i64 [ %12, %bb.t ], [ 1, %_ZN17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S3_.exit213 ]
+  %spec.select155 = add nsw i64 %i.bb, %.sink527  ; 2 uses
   %i.ck = shl nuw nsw i64 1, %i.k
-  %i.cl = and i64 %.1135, %i.ck
+  %i.cl = and i64 %spec.select155, %i.ck
   %.not148 = icmp ne i64 %i.cl, 0                 ; 2 uses
   %i.cm = zext i1 %.not148 to i64
-  %.2136 = ashr i64 %.1135, %i.cm
+  %.2136 = ashr i64 %spec.select155, %i.cm
   %i.cn = zext i1 %.not148 to i32
   %.4132 = add nsw i32 %.2130, %i.cn
   br label %_ZN17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S3_.exit.thread

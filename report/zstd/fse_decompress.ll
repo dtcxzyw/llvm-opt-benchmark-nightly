@@ -27,10 +27,10 @@ bb.a:
   %i.b = zext i32 %2 to i64
   %i.c = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %i.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 2 ; 2 uses
-  %i.e = add i32 %2, 1                            ; 4 uses
+  %i.e = add i32 %2, 1                            ; 5 uses
   %i.f = shl nuw i32 1, %3                        ; 7 uses
   %i.g = add i32 %i.f, -1                         ; 7 uses
-  %i.h = zext i32 %i.e to i64                     ; 3 uses
+  %i.h = zext i32 %i.e to i64                     ; 2 uses
   %i.i = shl nuw nsw i64 %i.h, 1
   %i.j = zext nneg i32 %3 to i64
   %i.k = shl nuw i64 1, %i.j
@@ -49,7 +49,6 @@ bb.b:                                             ; preds = %bb.a
   %i.q = trunc nuw nsw i32 %3 to i16
   %sext = shl nuw nsw i32 32768, %3
   %i.r = lshr exact i32 %sext, 16                 ; 3 uses
-  %xtraiter = and i64 %i.h, 1
   %i.s = icmp eq i32 %2, 0
   br i1 %i.s, label %.epil.preheader, label %.lr.ph.new
 
@@ -121,8 +120,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %bb.c, !llvm.loop !28
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %6 = trunc i32 %i.e to i1
+  br i1 %6, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 3 uses
@@ -329,9 +328,8 @@ bb.p:                                             ; preds = %bb.o
   br i1 %niter200.ncmp.1, label %._crit_edge146.loopexit.unr-lcssa, label %bb.l, !llvm.loop !34
 
 ._crit_edge146.loopexit.unr-lcssa:                ; preds = %bb.p
-  %6 = and i16 %i.cu, 1
-  %lcmp.mod196.not = icmp eq i16 %6, 0
-  br i1 %lcmp.mod196.not, label %._crit_edge146, label %.epil.preheader194
+  %7 = trunc i16 %i.cu to i1
+  br i1 %7, label %.epil.preheader194, label %._crit_edge146
 
 .epil.preheader194:                               ; preds = %._crit_edge146.loopexit.unr-lcssa, %.lr.ph145
   %.1116143.epil.init = phi i32 [ %.0115149, %.lr.ph145 ], [ %.2.1, %._crit_edge146.loopexit.unr-lcssa ] ; 2 uses

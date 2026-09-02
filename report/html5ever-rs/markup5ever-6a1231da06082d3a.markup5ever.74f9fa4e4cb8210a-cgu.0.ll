@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %i.k, align 8, !nonnull !4, !noundef !4
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.016.0 ; 21 uses
   %i.n = load ptr, ptr %i.m, align 8, !nonnull !4, !noundef !4 ; 9 uses
-  %i.o = ptrtoint ptr %i.n to i64                 ; 8 uses
+  %i.o = ptrtoint ptr %i.n to i64                 ; 9 uses
   %i.p = icmp eq ptr %i.n, inttoptr (i64 15 to ptr)
   br i1 %i.p, label %_RNvMNtNtCsa2F6HLACPlS_11markup5ever4util12smallcharsetNtB2_12SmallCharSet20nonmember_prefix_len.exit.thread, label %bb.e
 
@@ -316,24 +316,27 @@ bb.p:                                             ; preds = %_RNvMNtNtCsa2F6HLAC
   br i1 %i.aw, label %bb.t, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %3 = and i64 %i.o, 1
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %bb.r, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsa2F6HLACPlS_11markup5ever.exit.i
+  %3 = trunc i64 %i.o to i1
+  br i1 %3, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsa2F6HLACPlS_11markup5ever.exit.i, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.ax = getelementptr inbounds nuw i8, ptr %i.m, i64 12 ; 2 uses
   %i.ay = load i32, ptr %i.ax, align 4, !noalias !123, !noundef !4
   %i.az = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   store i32 %i.ay, ptr %i.az, align 8, !noalias !123
-  %i.ba = getelementptr i8, ptr %i.n, i64 1       ; 3 uses
+  %i.ba = getelementptr i8, ptr %i.n, i64 1       ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ba) ]
   store ptr %i.ba, ptr %i.m, align 8, !noalias !123
   store i32 0, ptr %i.ax, align 4, !noalias !123
+  %.pre.i = ptrtoint ptr %i.ba to i64
   br label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsa2F6HLACPlS_11markup5ever.exit.i
 
 _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsa2F6HLACPlS_11markup5ever.exit.i: ; preds = %bb.r, %bb.q
+  %.pre-phi.i = phi i64 [ %i.o, %bb.q ], [ %.pre.i, %bb.r ]
   %i.bb = phi ptr [ %i.n, %bb.q ], [ %i.ba, %bb.r ]
-  %i.bc = getelementptr i8, ptr %i.bb, i64 -1     ; 2 uses
+  %4 = and i64 %.pre-phi.i, 1
+  %5 = sub nsw i64 0, %4
+  %i.bc = getelementptr i8, ptr %i.bb, i64 %5     ; 2 uses
   %i.bd = load i64, ptr %i.bc, align 8, !noalias !123, !noundef !4 ; 2 uses
   %i.be = icmp eq i64 %i.bd, -1
   br i1 %i.be, label %bb.s, label %_RNvXNtCsldpiDtalS19_7tendril7tendrilNtB2_9NonAtomicNtB2_9Atomicity9increment.exit.i, !prof !7
@@ -458,11 +461,10 @@ bb.ae:                                            ; preds = %_RNvMss_NtCsldpiDta
   br i1 %i.cu, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsa2F6HLACPlS_11markup5ever.exit.i42, label %bb.af
 
 bb.af:                                            ; preds = %.thread.i, %bb.ae
-  %5 = and i64 %.pre-phi, 1
-  %6 = icmp eq i64 %5, 0
+  %6 = trunc i64 %.pre-phi to i1
   %i.cv = getelementptr inbounds nuw i8, ptr %i.m, i64 12 ; 2 uses
   %i.cw = load i32, ptr %i.cv, align 4, !alias.scope !128 ; 2 uses
-  br i1 %6, label %bb.ag, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsa2F6HLACPlS_11markup5ever.exit.i40
+  br i1 %6, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsa2F6HLACPlS_11markup5ever.exit.i40, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cl, i64 8
@@ -865,7 +867,7 @@ define internal fastcc noundef range(i32 -1, 1114112) i32 @_RNvMsz_NtCsldpiDtalS
 bb.a:
   %.sroa.4.i.i = alloca i64, align 8              ; 5 uses
   %i.a = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 12 uses
-  %i.b = ptrtoint ptr %i.a to i64                 ; 10 uses
+  %i.b = ptrtoint ptr %i.a to i64                 ; 11 uses
   %i.c = icmp eq ptr %i.a, inttoptr (i64 15 to ptr)
   br i1 %i.c, label %_RNvXs3_NtNtCskKLDkoKarTP_4core3str4iterNtB5_11CharIndicesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit.thread.thread, label %bb.b
 
@@ -1040,14 +1042,13 @@ bb.j:                                             ; preds = %bb.g
   %.sroa.0.0.i18 = select i1 %i.ca, i32 %i.cd, i32 %i.cc ; 2 uses
   %i.ce = sub i32 %.sroa.0.0.i18, %i.bp           ; 2 uses
   %i.cf = icmp ult i32 %i.ce, 9
-  %1 = and i64 %i.b, 1                            ; 2 uses
   br i1 %i.cf, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsa2F6HLACPlS_11markup5ever.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %2 = icmp eq i64 %1, 0
+  %1 = trunc i64 %i.b to i1
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.ch = load i32, ptr %i.cg, align 4, !alias.scope !223 ; 2 uses
-  br i1 %2, label %bb.l, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsa2F6HLACPlS_11markup5ever.exit.i
+  br i1 %1, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsa2F6HLACPlS_11markup5ever.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.ci = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -1068,7 +1069,8 @@ _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_bu
   br label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E5clearCsa2F6HLACPlS_11markup5ever.exit
 
 _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsa2F6HLACPlS_11markup5ever.exit.i: ; preds = %bb.j
-  %i.cp = sub nsw i64 0, %1
+  %2 = and i64 %i.b, 1
+  %i.cp = sub nsw i64 0, %2
   %i.cq = getelementptr i8, ptr %i.a, i64 %i.cp
   %i.cr = trunc i64 %i.b to i1
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 12

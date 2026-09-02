@@ -204,7 +204,6 @@ _RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   %i.ds = zext i1 %.not10.i.i.i.i to i64
   %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.dq, %i.ds ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13.i) ]
-  %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1
   %i.dt = icmp eq i64 %.sroa.05.0.i.i.i.i, 1
   br i1 %i.dt, label %.epil.preheader, label %.lr.ph.i.i.new
 
@@ -213,8 +212,8 @@ _RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   br label %bb.p
 
 ._crit_edge.i.i.unr-lcssa:                        ; preds = %bb.p
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i.i, label %.epil.preheader
+  %4 = trunc i64 %.sroa.05.0.i.i.i.i to i1
+  br i1 %4, label %.epil.preheader, label %._crit_edge.i.i
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.i.unr-lcssa, %.lr.ph.i.i
   %.sroa.0.08.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i ], [ %i.ed, %._crit_edge.i.i.unr-lcssa ]
@@ -617,9 +616,8 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %2 = and i64 %i.b, 1
-  %.not1 = icmp eq i64 %2, 0
-  %. = select i1 %.not1, i8 2, i8 1
+  %2 = trunc i64 %i.b to i1
+  %. = select i1 %2, i8 1, i8 2
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -782,9 +780,8 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.g, %bb.c
   %.sroa.03.0 = phi i64 [ %i.e, %bb.c ], [ %.sroa.01.0.i, %bb.g ] ; 4 uses
-  %2 = and i64 %.sroa.03.0, 1
-  %.not = icmp eq i64 %2, 0
-  br i1 %.not, label %bb.e, label %bb.f
+  %2 = trunc i64 %.sroa.03.0 to i1
+  br i1 %2, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.f = icmp ult i64 %.sroa.03.0, %i.c
@@ -1187,9 +1184,8 @@ bb.b:                                             ; preds = %bb.k, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.510.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8.i)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !179)
-  %1 = and i64 %.sroa.06.0.i, 1
-  %.not.i.i = icmp eq i64 %1, 0
-  br i1 %.not.i.i, label %bb.c, label %bb.d, !prof !6
+  %1 = trunc i64 %.sroa.06.0.i to i1
+  br i1 %1, label %bb.d, label %bb.c, !prof !5
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 35, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #29, !noalias !179
@@ -1328,9 +1324,8 @@ _RINvMNtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB3_5State19fetch_update_act
 define noundef i64 @_RNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB2_5State22transition_to_complete(ptr nofree noundef nonnull align 8 captures(none) %0) unnamed_addr #0 {
 bb.a:
   %i.a = atomicrmw xor ptr %0, i64 3 acq_rel, align 8 ; 3 uses
-  %1 = and i64 %i.a, 1
-  %.not = icmp eq i64 %1, 0
-  br i1 %.not, label %bb.b, label %bb.c, !prof !6
+  %1 = trunc i64 %i.a to i1
+  br i1 %1, label %bb.c, label %bb.b, !prof !5
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @37, i64 noundef 35, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @38) #29
@@ -1454,9 +1449,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not1.i.i, label %bb.d, label %_RNCNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_5State29transition_to_notified_by_ref0Ba_.exit.sink.split.i
 
 bb.d:                                             ; preds = %bb.c
-  %1 = and i64 %.sroa.06.0.i, 1
-  %.not2.i.i = icmp eq i64 %1, 0
-  br i1 %.not2.i.i, label %bb.e, label %bb.g
+  %1 = trunc i64 %.sroa.06.0.i to i1
+  br i1 %1, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.d = icmp sgt i64 %.sroa.06.0.i, -1
@@ -1475,8 +1469,8 @@ bb.g:                                             ; preds = %bb.d
   br label %_RNCNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_5State29transition_to_notified_by_ref0Ba_.exit.sink.split.i
 
 _RNCNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_5State29transition_to_notified_by_ref0Ba_.exit.sink.split.i: ; preds = %bb.g, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_inc.exit.i.i, %bb.c
-  %.sroa.0.0.ph.i = phi i1 [ true, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_inc.exit.i.i ], [ false, %bb.g ], [ false, %bb.c ]
-  %.sink.i.ph.i = phi i64 [ %i.e, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_inc.exit.i.i ], [ %i.f, %bb.g ], [ %.sroa.06.0.i, %bb.c ]
+  %.sroa.0.0.ph.i = phi i1 [ false, %bb.g ], [ true, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_inc.exit.i.i ], [ false, %bb.c ]
+  %.sink.i.ph.i = phi i64 [ %i.f, %bb.g ], [ %i.e, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_inc.exit.i.i ], [ %.sroa.06.0.i, %bb.c ]
   store i64 1, ptr %.sroa.711.i, align 8, !alias.scope !195
   br label %_RNCNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_5State29transition_to_notified_by_ref0Ba_.exit.i
 
@@ -1510,9 +1504,8 @@ bb.a:
 
 bb.b:                                             ; preds = %_RNCNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_5State29transition_to_notified_by_val0Ba_.exit.i, %bb.a
   %.sroa.06.0.i = phi i64 [ %i.a, %bb.a ], [ %.sroa.01.0.i.i, %_RNCNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_5State29transition_to_notified_by_val0Ba_.exit.i ] ; 9 uses
-  %1 = and i64 %.sroa.06.0.i, 1
-  %.not.i.i = icmp eq i64 %1, 0
-  br i1 %.not.i.i, label %bb.c, label %bb.d
+  %1 = trunc i64 %.sroa.06.0.i to i1
+  br i1 %1, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.b = and i64 %.sroa.06.0.i, 6
@@ -1564,8 +1557,8 @@ bb.j:                                             ; preds = %_RNvMs_NtNtNtCslghK
   unreachable
 
 _RNCNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_5State29transition_to_notified_by_val0Ba_.exit.i: ; preds = %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_dec.exit5.i.i, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_inc.exit.i.i, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_dec.exit.i.i
-  %.sroa.0.06.i.i = phi i64 [ %i.f, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_inc.exit.i.i ], [ %i.g, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_dec.exit5.i.i ], [ %i.d, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_dec.exit.i.i ]
-  %.sroa.0.0.i.i = phi i8 [ 1, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_inc.exit.i.i ], [ %..i.i, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_dec.exit5.i.i ], [ 0, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_dec.exit.i.i ]
+  %.sroa.0.06.i.i = phi i64 [ %i.d, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_dec.exit.i.i ], [ %i.f, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_inc.exit.i.i ], [ %i.g, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_dec.exit5.i.i ]
+  %.sroa.0.0.i.i = phi i8 [ 0, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_dec.exit.i.i ], [ 1, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_inc.exit.i.i ], [ %..i.i, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_dec.exit5.i.i ]
   %i.i = cmpxchg ptr %0, i64 %.sroa.06.0.i, i64 %.sroa.0.06.i.i acq_rel acquire, align 8 ; 2 uses
   %.sroa.18.0.in.i.i = extractvalue { i64, i1 } %i.i, 1
   %.sroa.01.0.i.i = extractvalue { i64, i1 } %i.i, 0
@@ -1628,9 +1621,8 @@ bb.b:                                             ; preds = %bb.i, %bb.a
   br i1 %or.cond.i.i, label %bb.c, label %_RNCNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_5State33transition_to_notified_and_cancel0Ba_.exit.i
 
 bb.c:                                             ; preds = %bb.b
-  %1 = and i64 %.sroa.06.0.i, 1
-  %.not2.i.i = icmp eq i64 %1, 0
-  br i1 %.not2.i.i, label %bb.d, label %bb.e
+  %1 = trunc i64 %.sroa.06.0.i to i1
+  br i1 %1, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.c = and i64 %.sroa.06.0.i, 4
@@ -1658,8 +1650,8 @@ bb.h:                                             ; preds = %bb.d
   br label %_RNCNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_5State33transition_to_notified_and_cancel0Ba_.exit.sink.split.i
 
 _RNCNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_5State33transition_to_notified_and_cancel0Ba_.exit.sink.split.i: ; preds = %bb.h, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_inc.exit.i.i, %bb.e
-  %.sroa.0.0.ph.i = phi i1 [ false, %bb.e ], [ false, %bb.h ], [ true, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_inc.exit.i.i ]
-  %.sink.i.ph.i = phi i64 [ %i.d, %bb.e ], [ %i.g, %bb.h ], [ %i.f, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_inc.exit.i.i ]
+  %.sroa.0.0.ph.i = phi i1 [ false, %bb.h ], [ true, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_inc.exit.i.i ], [ false, %bb.e ]
+  %.sink.i.ph.i = phi i64 [ %i.g, %bb.h ], [ %i.f, %_RNvMs_NtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_8Snapshot7ref_inc.exit.i.i ], [ %i.d, %bb.e ]
   store i64 1, ptr %.sroa.711.i, align 8, !alias.scope !216
   br label %_RNCNvMNtNtNtCslghKHtsL3a4_5tokio7runtime4task5stateNtB4_5State33transition_to_notified_and_cancel0Ba_.exit.i
 
@@ -2062,9 +2054,8 @@ bb.g:                                             ; preds = %_RNvMNtCs3oUPovFnLW
   br label %bb.s
 
 bb.h:                                             ; preds = %bb.f
-  %2 = and i64 %i.v, 1
-  %.not27.i.i = icmp eq i64 %2, 0
-  br i1 %.not27.i.i, label %_RNvMNtNtCslghKHtsL3a4_5tokio4sync7oneshotNtB2_4Task9drop_task.exit.thread.i.i, label %bb.j
+  %2 = trunc i64 %i.v to i1
+  br i1 %2, label %bb.j, label %_RNvMNtNtCslghKHtsL3a4_5tokio4sync7oneshotNtB2_4Task9drop_task.exit.thread.i.i
 
 bb.i:                                             ; preds = %bb.f
   store i8 0, ptr %i.b, align 1, !noalias !269
@@ -2218,9 +2209,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.sroa.18.0.in.i.i.i, label %_RNvMs9_NtNtCslghKHtsL3a4_5tokio4sync7oneshotNtB5_5State12set_complete.exit.i, label %bb.c
 
 _RNvMs9_NtNtCslghKHtsL3a4_5tokio4sync7oneshotNtB5_5State12set_complete.exit.i: ; preds = %bb.d
-  %1 = and i64 %.sroa.02.0.i.i, 1
-  %.not1.i = icmp eq i64 %1, 0
-  br i1 %.not1.i, label %_RNvMs4_NtNtCslghKHtsL3a4_5tokio4sync7oneshotINtB5_5InneruE8completeB9_.exit, label %bb.e
+  %1 = trunc i64 %.sroa.02.0.i.i to i1
+  br i1 %1, label %bb.e, label %_RNvMs4_NtNtCslghKHtsL3a4_5tokio4sync7oneshotINtB5_5InneruE8completeB9_.exit
 
 bb.e:                                             ; preds = %_RNvMs9_NtNtCslghKHtsL3a4_5tokio4sync7oneshotNtB5_5State12set_complete.exit.i
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -2343,9 +2333,8 @@ bb.e:                                             ; preds = %bb.d, %_RNvMNtCs3oU
   %.sroa.01.0.i = shl i64 %.sroa.01.0.in.i, 1     ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 3 uses
   %i.ad = load atomic i64, ptr %i.ac acquire, align 8 ; 2 uses
-  %2 = and i64 %i.ad, 1
-  %.not94.i = icmp eq i64 %2, 0
-  br i1 %.not94.i, label %.lr.ph.i, label %_RNvMNtNtCslghKHtsL3a4_5tokio4sync15batch_semaphoreNtB2_9Semaphore12poll_acquire.exit.thread.thread
+  %2 = trunc i64 %i.ad to i1
+  br i1 %2, label %_RNvMNtNtCslghKHtsL3a4_5tokio4sync15batch_semaphoreNtB2_9Semaphore12poll_acquire.exit.thread.thread, label %.lr.ph.i
 
 _RNvMNtNtCslghKHtsL3a4_5tokio4sync15batch_semaphoreNtB2_9Semaphore12poll_acquire.exit.thread.thread: ; preds = %bb.e
   store i8 0, ptr %i.b, align 1
@@ -2386,9 +2375,8 @@ bb.i:                                             ; preds = %.thread27.i, %.noex
   %.pn.i = phi { i64, i1 } [ %i.aj, %.thread27.i ], [ %i.ah, %.noexc ]
   %.sroa.0.338.i = phi ptr [ %.sroa.0.295.i, %.thread27.i ], [ %.sroa.0.3.i, %.noexc ] ; 2 uses
   %.sroa.01.0.i42.i = extractvalue { i64, i1 } %.pn.i, 0 ; 2 uses
-  %3 = and i64 %.sroa.01.0.i42.i, 1
-  %.not.i = icmp eq i64 %3, 0
-  br i1 %.not.i, label %.lr.ph.i, label %.thread52.i
+  %3 = trunc i64 %.sroa.01.0.i42.i to i1
+  br i1 %3, label %.thread52.i, label %.lr.ph.i
 
 bb.j:                                             ; preds = %.thread27.i
   %i.ak = and i64 %.sroa.01.0.in.i, 9223372036854775807 ; 3 uses
@@ -2791,9 +2779,8 @@ define hidden void @_RNvXs7_NtNtCslghKHtsL3a4_5tokio4sync7oneshotINtB5_5InneruEN
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i64, ptr %i.a, align 8, !noundef !4 ; 2 uses
-  %1 = and i64 %i.b, 1
-  %.not = icmp eq i64 %1, 0
-  br i1 %.not, label %bb.b, label %bb.c
+  %1 = trunc i64 %i.b to i1
+  br i1 %1, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %i.c = and i64 %i.b, 8

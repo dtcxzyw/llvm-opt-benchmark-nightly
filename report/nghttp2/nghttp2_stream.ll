@@ -202,38 +202,33 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 116
-  %i.c = load i8, ptr %i.b, align 4, !tbaa !16
-  %1 = zext i8 %i.c to i32                        ; 2 uses
-  %2 = and i32 %1, 2
-  %.not = icmp eq i32 %2, 0
+  %i.c = load i8, ptr %i.b, align 4, !tbaa !16    ; 2 uses
+  %1 = and i8 %i.c, 2
+  %.not = icmp eq i8 %1, 0
   br i1 %.not, label %bb.c, label %bb.h
 
 bb.c:                                             ; preds = %bb.b
-  %3 = and i32 %1, 1
-  %.not9 = icmp eq i32 %3, 0
+  %2 = trunc i8 %i.c to i1
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 117
-  %.pre = load i8, ptr %.phi.trans.insert, align 1, !tbaa !15
-  %.pre14 = zext i8 %.pre to i32                  ; 4 uses
-  br i1 %.not9, label %._crit_edge, label %bb.d
+  %.pre = load i8, ptr %.phi.trans.insert, align 1, !tbaa !15 ; 4 uses
+  br i1 %2, label %bb.d, label %._crit_edge
 
 bb.d:                                             ; preds = %bb.c
-  %4 = and i32 %.pre14, 1
-  %.not10 = icmp eq i32 %4, 0
-  br i1 %.not10, label %bb.e, label %bb.h
+  %3 = trunc i8 %.pre to i1
+  br i1 %3, label %bb.h, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %5 = and i32 %.pre14, 2
-  %.not11 = icmp eq i32 %5, 0
+  %4 = and i8 %.pre, 2
+  %.not11 = icmp eq i8 %4, 0
   br i1 %.not11, label %._crit_edge, label %bb.h
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.e
-  %6 = and i32 %.pre14, 1
-  %.not12 = icmp eq i32 %6, 0
-  br i1 %.not12, label %bb.f, label %bb.h
+  %5 = trunc i8 %.pre to i1
+  br i1 %5, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge
-  %7 = and i32 %.pre14, 2
-  %.not13 = icmp eq i32 %7, 0
+  %6 = and i8 %.pre, 2
+  %.not13 = icmp eq i8 %6, 0
   br i1 %.not13, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f

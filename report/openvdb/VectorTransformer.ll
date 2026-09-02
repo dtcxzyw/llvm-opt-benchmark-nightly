@@ -205,9 +205,8 @@ bb.b:                                             ; preds = %bb.a, %.loopexit115
   br i1 %i.l, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.b
-  %4 = and i64 %indvars.iv154, 1
-  %lcmp.mod.not.not = icmp eq i64 %4, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
+  %4 = trunc i64 %indvars.iv154 to i1
+  br i1 %4, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
   %gep.idx.prol = shl nuw nsw i64 %indvars.iv, 5
@@ -610,11 +609,10 @@ bb.as:                                            ; preds = %bb.ar
           to label %_ZN7openvdb5v13_02io8readDataINS0_4math4Vec3IfEEEEvRSiPT_jjPNS1_19DelayedLoadMetadataEm.exit unwind label %bb.an
 
 bb.at:                                            ; preds = %bb.ar
-  %12 = and i32 %i.o, 1
-  %.not27.i = icmp eq i32 %12, 0
+  %12 = trunc i32 %i.o to i1
   %i.db = zext i32 %.088 to i64
   %i.dc = mul nuw nsw i64 %i.db, 12               ; 3 uses
-  br i1 %.not27.i, label %bb.av, label %bb.au
+  br i1 %12, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %bb.at
   invoke void @_ZN7openvdb5v13_02io15unzipFromStreamERSiPcm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %i.cr, i64 noundef %i.dc)
@@ -1017,11 +1015,10 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN7openvdb5v13_02io8readDataINS0_4math4Vec3INS3_8internal4halfEEEEEvRSiPT_jjPNS1_19DelayedLoadMetadataEm.exit
 
 bb.g:                                             ; preds = %bb.e
-  %6 = and i32 %3, 1
-  %.not27.i = icmp eq i32 %6, 0
+  %6 = trunc i32 %3 to i1
   %i.l = zext i32 %2 to i64
   %i.m = mul nuw nsw i64 %i.l, 6                  ; 2 uses
-  br i1 %.not27.i, label %bb.i, label %bb.h
+  br i1 %6, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   tail call void @_ZN7openvdb5v13_02io15unzipFromStreamERSiPcm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef null, i64 noundef %i.m)
@@ -1064,9 +1061,8 @@ bb.k:                                             ; preds = %.loopexit
           to label %_ZN7openvdb5v13_02io8readDataINS0_4math4Vec3INS3_8internal4halfEEEEEvRSiPT_jjPNS1_19DelayedLoadMetadataEm.exit28 unwind label %_ZNSt6vectorIN7openvdb5v13_04math4Vec3INS2_8internal4halfEEESaIS6_EED2Ev.exit31.loopexit.split-lp
 
 bb.l:                                             ; preds = %.loopexit
-  %7 = and i32 %3, 1
-  %.not27.i21 = icmp eq i32 %7, 0
-  br i1 %.not27.i21, label %bb.n, label %bb.m
+  %7 = trunc i32 %3 to i1
+  br i1 %7, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   invoke void @_ZN7openvdb5v13_02io15unzipFromStreamERSiPcm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.q, i64 noundef %i.p)
@@ -1469,11 +1465,10 @@ bb.as:                                            ; preds = %bb.ar
           to label %_ZN7openvdb5v13_02io8readDataINS0_4math4Vec3IdEEEEvRSiPT_jjPNS1_19DelayedLoadMetadataEm.exit unwind label %bb.an
 
 bb.at:                                            ; preds = %bb.ar
-  %12 = and i32 %i.o, 1
-  %.not27.i = icmp eq i32 %12, 0
+  %12 = trunc i32 %i.o to i1
   %i.de = zext i32 %.084 to i64
   %i.df = mul nuw nsw i64 %i.de, 24               ; 3 uses
-  br i1 %.not27.i, label %bb.av, label %bb.au
+  br i1 %12, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %bb.at
   invoke void @_ZN7openvdb5v13_02io15unzipFromStreamERSiPcm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %i.cu, i64 noundef %i.df)
@@ -1712,11 +1707,10 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN7openvdb5v13_02io8readDataINS0_4math4Vec3INS3_8internal4halfEEEEEvRSiPT_jjPNS1_19DelayedLoadMetadataEm.exit
 
 bb.g:                                             ; preds = %bb.e
-  %6 = and i32 %3, 1
-  %.not27.i = icmp eq i32 %6, 0
+  %6 = trunc i32 %3 to i1
   %i.l = zext i32 %2 to i64
   %i.m = mul nuw nsw i64 %i.l, 6                  ; 2 uses
-  br i1 %.not27.i, label %bb.i, label %bb.h
+  br i1 %6, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   tail call void @_ZN7openvdb5v13_02io15unzipFromStreamERSiPcm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef null, i64 noundef %i.m)
@@ -1759,9 +1753,8 @@ bb.k:                                             ; preds = %.loopexit
           to label %_ZN7openvdb5v13_02io8readDataINS0_4math4Vec3INS3_8internal4halfEEEEEvRSiPT_jjPNS1_19DelayedLoadMetadataEm.exit28 unwind label %_ZNSt6vectorIN7openvdb5v13_04math4Vec3INS2_8internal4halfEEESaIS6_EED2Ev.exit31.loopexit.split-lp
 
 bb.l:                                             ; preds = %.loopexit
-  %7 = and i32 %3, 1
-  %.not27.i21 = icmp eq i32 %7, 0
-  br i1 %.not27.i21, label %bb.n, label %bb.m
+  %7 = trunc i32 %3 to i1
+  br i1 %7, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   invoke void @_ZN7openvdb5v13_02io15unzipFromStreamERSiPcm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.q, i64 noundef %i.p)
@@ -2164,11 +2157,10 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %.not.i.i125, label %bb.aq, label %.invoke213
 
 bb.aq:                                            ; preds = %bb.ap
-  %12 = and i32 %i.o, 1
-  %.not27.i.i = icmp eq i32 %12, 0
+  %12 = trunc i32 %i.o to i1
   %i.cz = zext i32 %.088 to i64
   %i.da = mul nuw nsw i64 %i.cz, 12               ; 3 uses
-  br i1 %.not27.i.i, label %bb.ar, label %.invoke212
+  br i1 %12, label %.invoke212, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
   br i1 %i.ct, label %.invoke211, label %.invoke210
@@ -2192,11 +2184,10 @@ bb.at:                                            ; preds = %bb.as
           to label %_ZN7openvdb5v13_02io10HalfReaderILb0ENS0_4math4Vec3IiEEE4readERSiPS5_jjPNS1_19DelayedLoadMetadataEm.exit unwind label %bb.an
 
 bb.au:                                            ; preds = %bb.at
-  %13 = and i32 %i.o, 1
-  %.not27.i = icmp eq i32 %13, 0
+  %13 = trunc i32 %i.o to i1
   %i.df = zext i32 %.088 to i64
   %i.dg = mul nuw nsw i64 %i.df, 12               ; 3 uses
-  br i1 %.not27.i, label %bb.av, label %.invoke212
+  br i1 %13, label %.invoke212, label %bb.av
 
 .invoke212:                                       ; preds = %bb.au, %bb.aq
   %i.dh = phi i64 [ %i.da, %bb.aq ], [ %i.dg, %bb.au ]

@@ -205,25 +205,23 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit182:            ; preds = %bb.g, %.noexc181, %
   %i.az = sitofp <2 x i32> %i.ay to <2 x double>  ; 2 uses
   %i.ba = sext i32 %2 to i64                      ; 2 uses
   %i.bb = sext i32 %3 to i64                      ; 2 uses
-  %i.bc = zext i32 %4 to i64                      ; 4 uses
+  %i.bc = zext i32 %4 to i64                      ; 3 uses
   %brmerge228 = or i1 %i.ar, %i.av
-  %wide.trip.count247 = zext i32 %3 to i64        ; 2 uses
   %wide.trip.count257 = zext nneg i32 %3 to i64
   %brmerge231 = or i1 %i.aw, %i.ar
   %wide.trip.count281 = zext nneg i32 %5 to i64
   %i.bd = shufflevector <2 x double> %i.au, <2 x double> poison, <2 x i32> zeroinitializer
   %i.be = shufflevector <2 x double> %i.au, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %xtraiter = and i64 %wide.trip.count247, 1
   %i.bf = icmp eq i32 %3, 1
-  %unroll_iter = and i64 %wide.trip.count247, 2147483646
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %7 = and i32 %3, 2147483646
+  %unroll_iter = zext nneg i32 %7 to i64
   %lcmp.mod325.a = trunc i32 %3 to i1
-  %7 = shufflevector <2 x double> %i.az, <2 x double> poison, <2 x i32> zeroinitializer
-  %8 = shufflevector <2 x double> %i.az, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %xtraiter326 = and i64 %i.bc, 1
+  %lcmp.mod325 = trunc i32 %3 to i1
+  %8 = shufflevector <2 x double> %i.az, <2 x double> poison, <2 x i32> zeroinitializer
+  %9 = shufflevector <2 x double> %i.az, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.bg = icmp eq i32 %4, 1
   %unroll_iter329 = and i64 %i.bc, 2147483646
-  %lcmp.mod327.not = icmp eq i64 %xtraiter326, 0
+  %10 = trunc i32 %4 to i1
   %lcmp.mod328 = trunc i32 %4 to i1
   br label %.preheader190
 
@@ -256,11 +254,11 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit184
 
 ..loopexit189_crit_edge.loopexit322.unr-lcssa:    ; preds = %.lr.ph207.split
-  br i1 %lcmp.mod.not, label %..loopexit189_crit_edge, label %.lr.ph207.split.epil.preheader
+  br i1 %lcmp.mod325.a, label %.lr.ph207.split.epil.preheader, label %..loopexit189_crit_edge
 
 .lr.ph207.split.epil.preheader:                   ; preds = %..loopexit189_crit_edge.loopexit322.unr-lcssa, %.lr.ph207.split.preheader
   %indvars.iv244.epil.init = phi i64 [ 0, %.lr.ph207.split.preheader ], [ %indvars.iv.next245.1, %..loopexit189_crit_edge.loopexit322.unr-lcssa ]
-  tail call void @llvm.assume(i1 %lcmp.mod325.a)
+  tail call void @llvm.assume(i1 %lcmp.mod325)
   %i.bo = trunc i64 %indvars.iv244.epil.init to i32
   %i.bp = mul i32 %4, %i.bo
   %i.bq = add nuw i32 %i.bp, %.0162208
@@ -402,7 +400,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %niter.ncmp.1, label %..loopexit189_crit_edge.loopexit322.unr-lcssa, label %.lr.ph207.split, !llvm.loop !176
 
 ..loopexit_crit_edge.loopexit321.unr-lcssa:       ; preds = %.lr.ph217.split
-  br i1 %lcmp.mod327.not, label %..loopexit_crit_edge, label %.lr.ph217.split.epil.preheader
+  br i1 %10, label %.lr.ph217.split.epil.preheader, label %..loopexit_crit_edge
 
 .lr.ph217.split.epil.preheader:                   ; preds = %..loopexit_crit_edge.loopexit321.unr-lcssa, %.lr.ph217.split.preheader
   %indvars.iv260.epil.init = phi i64 [ 0, %.lr.ph217.split.preheader ], [ %indvars.iv.next261.1, %..loopexit_crit_edge.loopexit321.unr-lcssa ]
@@ -434,8 +432,8 @@ bb.j:                                             ; preds = %bb.i
   %i.fl = uitofp nneg i32 %i.fj to double
   %i.fm = insertelement <2 x double> poison, double %i.fl, i64 0
   %i.fn = insertelement <2 x double> %i.fm, double %i.fk, i64 1
-  %i.fo = fmul nnan <2 x double> %7, %i.fn
-  %i.fp = fdiv <2 x double> %i.fo, %8
+  %i.fo = fmul nnan <2 x double> %8, %i.fn
+  %i.fp = fdiv <2 x double> %i.fo, %9
   %i.fq = fptrunc <2 x double> %i.fp to <2 x float> ; 3 uses
   %i.fr = fptosi <2 x float> %i.fq to <2 x i32>   ; 2 uses
   %i.fs = extractelement <2 x float> %i.fq, i64 0 ; 3 uses
@@ -838,10 +836,9 @@ bb.am:                                            ; preds = %.loopexit146, %.loo
 .invoke173:                                       ; preds = %._crit_edge
   %i.fc = getelementptr inbounds nuw i8, ptr %i.ew, i64 2
   %i.fd = load i8, ptr %i.fc, align 1, !tbaa !42  ; 2 uses
-  %5 = and i8 %i.fd, 1
-  %.not47 = icmp eq i8 %5, 0                      ; 2 uses
-  %i.fe = select i1 %.not47, ptr @.str.44, ptr @.str.43
-  %i.ff = select i1 %.not47, i64 58, i64 43
+  %5 = trunc i8 %i.fd to i1                       ; 2 uses
+  %i.fe = select i1 %5, ptr @.str.43, ptr @.str.44
+  %i.ff = select i1 %5, i64 43, i64 58
   %i.fg = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, ptr noundef nonnull %i.fe, i64 noundef %i.ff)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit81.invoke unwind label %bb.an ; 0 uses
 

@@ -138,8 +138,8 @@ bb.a:
   br label %.loopexit
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.g
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit.backedge, label %.lr.ph.epil.preheader
+  %3 = trunc i64 %i.i to i1
+  br i1 %3, label %.lr.ph.epil.preheader, label %.loopexit.backedge
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %.loopexit.loopexit.unr-lcssa ]
@@ -173,7 +173,6 @@ bb.b:                                             ; preds = %.lr.ph.epil.prehead
   br label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %xtraiter = and i64 %i.i, 1
   %i.k = icmp eq i64 %i.i, 1
   br i1 %i.k, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 

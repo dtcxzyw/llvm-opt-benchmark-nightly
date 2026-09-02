@@ -202,9 +202,8 @@ bb.z:                                             ; preds = %bb.v
 bb.aa:                                            ; preds = %bb.x
   store ptr null, ptr %i.c, align 8, !alias.scope !115, !noalias !116
   %i.as = atomicrmw or ptr %i.n, i64 1 acquire, align 8
-  %3 = and i64 %i.as, 1
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %bb.ab, label %.backedge
+  %3 = trunc i64 %i.as to i1
+  br i1 %3, label %.backedge, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.at = load ptr, ptr %i.b, align 8, !align !10, !noundef !5 ; 4 uses
@@ -249,9 +248,8 @@ _RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10
 
 bb.ag:                                            ; preds = %bb.ae
   %.sroa.01.0.i57 = extractvalue { i64, i1 } %i.ax, 0
-  %5 = and i64 %.sroa.01.0.i57, 1
-  %.not36 = icmp eq i64 %5, 0
-  br i1 %.not36, label %bb.ai, label %.backedge
+  %4 = trunc i64 %.sroa.01.0.i57 to i1
+  br i1 %4, label %.backedge, label %bb.ai
 
 bb.ah:                                            ; preds = %_RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit60
   call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8) #26
@@ -319,9 +317,8 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %i.j, label %bb.d, label %bb.e
 
 bb.c:                                             ; preds = %.lr.ph
-  %2 = and i64 %.sroa.01.0.i14, 1
-  %3 = icmp eq i64 %2, 0
-  br i1 %3, label %bb.h, label %bb.g
+  %2 = trunc i64 %.sroa.01.0.i14 to i1
+  br i1 %2, label %bb.g, label %bb.h
 
 bb.d:                                             ; preds = %bb.b
   store i8 0, ptr %i.k, align 1

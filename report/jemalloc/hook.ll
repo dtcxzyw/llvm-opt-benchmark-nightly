@@ -89,16 +89,14 @@ bb.d:                                             ; preds = %bb.c
 
 malloc_mutex_lock.exit:                           ; preds = %bb.c, %bb.d
   %i.g = load atomic i64, ptr @hooks acquire, align 16 ; 2 uses
-  %2 = and i64 %i.g, 1
-  %.not.i.i6 = icmp eq i64 %2, 0
-  br i1 %.not.i.i6, label %seq_try_load_hooks.exit.i, label %seq_try_load_hooks.exit.thread.i
+  %2 = trunc i64 %i.g to i1
+  br i1 %2, label %seq_try_load_hooks.exit.thread.i, label %seq_try_load_hooks.exit.i
 
 seq_try_load_hooks.exit.thread.i:                 ; preds = %seq_try_load_hooks.exit.i, %malloc_mutex_lock.exit
   %.sroa.11.229.i = phi i64 [ %spec.select22.i, %seq_try_load_hooks.exit.i ], [ undef, %malloc_mutex_lock.exit ] ; 2 uses
   %i.h = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 48) acquire, align 16 ; 2 uses
-  %3 = and i64 %i.h, 1
-  %.not.i.1.i = icmp eq i64 %3, 0
-  br i1 %.not.i.1.i, label %.preheader.i.1.i, label %seq_try_load_hooks.exit.1.i
+  %3 = trunc i64 %i.h to i1
+  br i1 %3, label %seq_try_load_hooks.exit.1.i, label %.preheader.i.1.i
 
 .preheader.i.1.i:                                 ; preds = %seq_try_load_hooks.exit.thread.i
   %i.i = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 56) monotonic, align 8 ; 0 uses
@@ -119,9 +117,8 @@ seq_try_load_hooks.exit.1.i:                      ; preds = %.preheader.i.1.i, %
 
 bb.e:                                             ; preds = %seq_try_load_hooks.exit.1.i
   %i.p = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 96) acquire, align 16 ; 2 uses
-  %4 = and i64 %i.p, 1
-  %.not.i.2.i = icmp eq i64 %4, 0
-  br i1 %.not.i.2.i, label %.preheader.i.2.i, label %seq_try_load_hooks.exit.2.i
+  %4 = trunc i64 %i.p to i1
+  br i1 %4, label %seq_try_load_hooks.exit.2.i, label %.preheader.i.2.i
 
 .preheader.i.2.i:                                 ; preds = %bb.e
   %i.q = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 104) monotonic, align 8 ; 0 uses
@@ -142,9 +139,8 @@ seq_try_load_hooks.exit.2.i:                      ; preds = %.preheader.i.2.i, %
 
 bb.f:                                             ; preds = %seq_try_load_hooks.exit.2.i
   %i.x = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 144) acquire, align 16 ; 2 uses
-  %5 = and i64 %i.x, 1
-  %.not.i.3.i = icmp eq i64 %5, 0
-  br i1 %.not.i.3.i, label %seq_try_load_hooks.exit.3.i, label %hook_install_locked.exit.thread
+  %5 = trunc i64 %i.x to i1
+  br i1 %5, label %hook_install_locked.exit.thread, label %seq_try_load_hooks.exit.3.i
 
 seq_try_load_hooks.exit.3.i:                      ; preds = %bb.f
   %i.y = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 152) monotonic, align 8 ; 0 uses
@@ -247,9 +243,8 @@ bb.d:                                             ; preds = %bb.c
 
 malloc_mutex_lock.exit:                           ; preds = %bb.c, %bb.d
   %i.g = load atomic i64, ptr %1 acquire, align 8
-  %2 = and i64 %i.g, 1
-  %.not.i.i4 = icmp eq i64 %2, 0
-  br i1 %.not.i.i4, label %.preheader.i.i, label %hook_remove_locked.exit
+  %2 = trunc i64 %i.g to i1
+  br i1 %2, label %hook_remove_locked.exit, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %malloc_mutex_lock.exit
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -316,9 +311,8 @@ bb.a:                                             ; preds = %atomic_load_u.exit
 bb.b:                                             ; preds = %bb.a
   store i8 1, ptr %i.c, align 1, !tbaa !23
   %i.f = load atomic i64, ptr @hooks acquire, align 16 ; 2 uses
-  %4 = and i64 %i.f, 1
-  %.not.i = icmp eq i64 %4, 0
-  br i1 %.not.i, label %.preheader.i, label %seq_try_load_hooks.exit.thread
+  %4 = trunc i64 %i.f to i1
+  br i1 %4, label %seq_try_load_hooks.exit.thread, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.b
   %i.g = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 8) monotonic, align 8 ; 2 uses
@@ -343,9 +337,8 @@ bb.c:                                             ; preds = %.preheader.i
 
 seq_try_load_hooks.exit.thread:                   ; preds = %.preheader.i, %bb.b, %bb.c
   %i.q = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 48) acquire, align 16 ; 2 uses
-  %5 = and i64 %i.q, 1
-  %.not.i.1 = icmp eq i64 %5, 0
-  br i1 %.not.i.1, label %.preheader.i.1, label %seq_try_load_hooks.exit.thread.1
+  %5 = trunc i64 %i.q to i1
+  br i1 %5, label %seq_try_load_hooks.exit.thread.1, label %.preheader.i.1
 
 .preheader.i.1:                                   ; preds = %seq_try_load_hooks.exit.thread
   %i.r = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 56) monotonic, align 8 ; 2 uses
@@ -370,9 +363,8 @@ bb.d:                                             ; preds = %.preheader.i.1
 
 seq_try_load_hooks.exit.thread.1:                 ; preds = %bb.d, %.preheader.i.1, %seq_try_load_hooks.exit.thread
   %i.ab = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 96) acquire, align 16 ; 2 uses
-  %6 = and i64 %i.ab, 1
-  %.not.i.2 = icmp eq i64 %6, 0
-  br i1 %.not.i.2, label %.preheader.i.2, label %seq_try_load_hooks.exit.thread.2
+  %6 = trunc i64 %i.ab to i1
+  br i1 %6, label %seq_try_load_hooks.exit.thread.2, label %.preheader.i.2
 
 .preheader.i.2:                                   ; preds = %seq_try_load_hooks.exit.thread.1
   %i.ac = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 104) monotonic, align 8 ; 2 uses
@@ -397,9 +389,8 @@ bb.e:                                             ; preds = %.preheader.i.2
 
 seq_try_load_hooks.exit.thread.2:                 ; preds = %bb.e, %.preheader.i.2, %seq_try_load_hooks.exit.thread.1
   %i.am = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 144) acquire, align 16 ; 2 uses
-  %7 = and i64 %i.am, 1
-  %.not.i.3 = icmp eq i64 %7, 0
-  br i1 %.not.i.3, label %.preheader.i.3, label %seq_try_load_hooks.exit.thread.3
+  %7 = trunc i64 %i.am to i1
+  br i1 %7, label %seq_try_load_hooks.exit.thread.3, label %.preheader.i.3
 
 .preheader.i.3:                                   ; preds = %seq_try_load_hooks.exit.thread.2
   %i.an = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 152) monotonic, align 8 ; 2 uses
@@ -477,9 +468,8 @@ bb.a:                                             ; preds = %atomic_load_u.exit
 bb.b:                                             ; preds = %bb.a
   store i8 1, ptr %i.c, align 1, !tbaa !23
   %i.f = load atomic i64, ptr @hooks acquire, align 16 ; 2 uses
-  %3 = and i64 %i.f, 1
-  %.not.i = icmp eq i64 %3, 0
-  br i1 %.not.i, label %.preheader.i, label %seq_try_load_hooks.exit.thread
+  %3 = trunc i64 %i.f to i1
+  br i1 %3, label %seq_try_load_hooks.exit.thread, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.b
   %i.g = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 8) monotonic, align 8 ; 0 uses
@@ -504,9 +494,8 @@ bb.c:                                             ; preds = %.preheader.i
 
 seq_try_load_hooks.exit.thread:                   ; preds = %.preheader.i, %bb.b, %bb.c
   %i.q = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 48) acquire, align 16 ; 2 uses
-  %4 = and i64 %i.q, 1
-  %.not.i.1 = icmp eq i64 %4, 0
-  br i1 %.not.i.1, label %.preheader.i.1, label %seq_try_load_hooks.exit.thread.1
+  %4 = trunc i64 %i.q to i1
+  br i1 %4, label %seq_try_load_hooks.exit.thread.1, label %.preheader.i.1
 
 .preheader.i.1:                                   ; preds = %seq_try_load_hooks.exit.thread
   %i.r = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 56) monotonic, align 8 ; 0 uses
@@ -531,9 +520,8 @@ bb.d:                                             ; preds = %.preheader.i.1
 
 seq_try_load_hooks.exit.thread.1:                 ; preds = %bb.d, %.preheader.i.1, %seq_try_load_hooks.exit.thread
   %i.ab = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 96) acquire, align 16 ; 2 uses
-  %5 = and i64 %i.ab, 1
-  %.not.i.2 = icmp eq i64 %5, 0
-  br i1 %.not.i.2, label %.preheader.i.2, label %seq_try_load_hooks.exit.thread.2
+  %5 = trunc i64 %i.ab to i1
+  br i1 %5, label %seq_try_load_hooks.exit.thread.2, label %.preheader.i.2
 
 .preheader.i.2:                                   ; preds = %seq_try_load_hooks.exit.thread.1
   %i.ac = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 104) monotonic, align 8 ; 0 uses
@@ -558,9 +546,8 @@ bb.e:                                             ; preds = %.preheader.i.2
 
 seq_try_load_hooks.exit.thread.2:                 ; preds = %bb.e, %.preheader.i.2, %seq_try_load_hooks.exit.thread.1
   %i.am = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 144) acquire, align 16 ; 2 uses
-  %6 = and i64 %i.am, 1
-  %.not.i.3 = icmp eq i64 %6, 0
-  br i1 %.not.i.3, label %.preheader.i.3, label %seq_try_load_hooks.exit.thread.3
+  %6 = trunc i64 %i.am to i1
+  br i1 %6, label %seq_try_load_hooks.exit.thread.3, label %.preheader.i.3
 
 .preheader.i.3:                                   ; preds = %seq_try_load_hooks.exit.thread.2
   %i.an = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 152) monotonic, align 8 ; 0 uses
@@ -607,9 +594,8 @@ bb.a:                                             ; preds = %atomic_load_u.exit
 bb.b:                                             ; preds = %bb.a
   store i8 1, ptr %i.c, align 1, !tbaa !23
   %i.f = load atomic i64, ptr @hooks acquire, align 16 ; 2 uses
-  %6 = and i64 %i.f, 1
-  %.not.i = icmp eq i64 %6, 0
-  br i1 %.not.i, label %.preheader.i, label %seq_try_load_hooks.exit.thread
+  %6 = trunc i64 %i.f to i1
+  br i1 %6, label %seq_try_load_hooks.exit.thread, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.b
   %i.g = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 8) monotonic, align 8 ; 0 uses
@@ -634,9 +620,8 @@ bb.c:                                             ; preds = %.preheader.i
 
 seq_try_load_hooks.exit.thread:                   ; preds = %.preheader.i, %bb.b, %bb.c
   %i.q = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 48) acquire, align 16 ; 2 uses
-  %7 = and i64 %i.q, 1
-  %.not.i.1 = icmp eq i64 %7, 0
-  br i1 %.not.i.1, label %.preheader.i.1, label %seq_try_load_hooks.exit.thread.1
+  %7 = trunc i64 %i.q to i1
+  br i1 %7, label %seq_try_load_hooks.exit.thread.1, label %.preheader.i.1
 
 .preheader.i.1:                                   ; preds = %seq_try_load_hooks.exit.thread
   %i.r = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 56) monotonic, align 8 ; 0 uses
@@ -661,9 +646,8 @@ bb.d:                                             ; preds = %.preheader.i.1
 
 seq_try_load_hooks.exit.thread.1:                 ; preds = %bb.d, %.preheader.i.1, %seq_try_load_hooks.exit.thread
   %i.ab = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 96) acquire, align 16 ; 2 uses
-  %8 = and i64 %i.ab, 1
-  %.not.i.2 = icmp eq i64 %8, 0
-  br i1 %.not.i.2, label %.preheader.i.2, label %seq_try_load_hooks.exit.thread.2
+  %8 = trunc i64 %i.ab to i1
+  br i1 %8, label %seq_try_load_hooks.exit.thread.2, label %.preheader.i.2
 
 .preheader.i.2:                                   ; preds = %seq_try_load_hooks.exit.thread.1
   %i.ac = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 104) monotonic, align 8 ; 0 uses
@@ -688,9 +672,8 @@ bb.e:                                             ; preds = %.preheader.i.2
 
 seq_try_load_hooks.exit.thread.2:                 ; preds = %bb.e, %.preheader.i.2, %seq_try_load_hooks.exit.thread.1
   %i.am = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 144) acquire, align 16 ; 2 uses
-  %9 = and i64 %i.am, 1
-  %.not.i.3 = icmp eq i64 %9, 0
-  br i1 %.not.i.3, label %.preheader.i.3, label %seq_try_load_hooks.exit.thread.3
+  %9 = trunc i64 %i.am to i1
+  br i1 %9, label %seq_try_load_hooks.exit.thread.3, label %.preheader.i.3
 
 .preheader.i.3:                                   ; preds = %seq_try_load_hooks.exit.thread.2
   %i.an = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @hooks, i64 152) monotonic, align 8 ; 0 uses

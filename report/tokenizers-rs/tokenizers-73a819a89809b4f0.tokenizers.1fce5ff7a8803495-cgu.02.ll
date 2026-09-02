@@ -202,10 +202,13 @@ bb.i:                                             ; preds = %bb.h
   %i.bd = load i8, ptr %i.bc, align 1, !alias.scope !349, !noalias !351, !noundef !6
   %i.be = and i8 %i.bd, 63
   %i.bf = zext nneg i8 %i.be to i64
-  %4 = shl nuw i64 1, %i.bf
-  %5 = and i64 %4, %.sroa.7101.0.copyload.i.i.i.i
-  %6 = icmp eq i64 %5, 0
-  br i1 %6, label %bb.p, label %bb.j
+  %4 = lshr i64 %.sroa.7101.0.copyload.i.i.i.i, %i.bf
+  %5 = trunc i64 %4 to i1
+  br i1 %5, label %bb.j, label %6
+
+6:                                                ; preds = %.lr.ph.i37.us.i.i.i.i
+  %7 = add i64 %i.bb, %.sroa.15.0.copyload.i.i.i.i
+  br label %.sink.split.i.us.i.i.i.i
 
 bb.j:                                             ; preds = %.lr.ph.i37.us.i.i.i.i
   %.sroa.0.0.i.i.us.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.az, i64 %.sroa.498.0.copyload.i.i.i.i) ; 4 uses
@@ -262,19 +265,15 @@ bb.o:                                             ; preds = %bb.n
   %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.12106.0.copyload.i.i.i.i, i64 %i.bs
   %i.bx = load i8, ptr %i.bw, align 1, !alias.scope !349, !noalias !351, !noundef !6
   %.not.i38.us.i.i.i.i = icmp eq i8 %i.bv, %i.bx
-  br i1 %.not.i38.us.i.i.i.i, label %.preheader131.us.i.i.i.i, label %7
+  br i1 %.not.i38.us.i.i.i.i, label %.preheader131.us.i.i.i.i, label %bb.p
 
-7:                                                ; preds = %bb.o
-  %8 = add i64 %i.bb, %.sroa.6100.0.copyload.i.i.i.i
+bb.p:                                             ; preds = %bb.o
+  %i.by = add i64 %i.bb, %.sroa.6100.0.copyload.i.i.i.i
   br label %.sink.split.i.us.i.i.i.i
 
-bb.p:                                             ; preds = %.lr.ph.i37.us.i.i.i.i
-  %i.by = add i64 %i.bb, %.sroa.15.0.copyload.i.i.i.i
-  br label %.sink.split.i.us.i.i.i.i
-
-.sink.split.i.us.i.i.i.i:                         ; preds = %bb.p, %7, %bb.m
-  %.sink.i.us.i.i.i.i = phi i64 [ %i.au, %7 ], [ 0, %bb.m ], [ 0, %bb.p ]
-  %.ph71.i.us.i.i.i.i = phi i64 [ %8, %7 ], [ %i.bo, %bb.m ], [ %i.by, %bb.p ] ; 2 uses
+.sink.split.i.us.i.i.i.i:                         ; preds = %bb.p, %bb.m, %6
+  %.sink.i.us.i.i.i.i = phi i64 [ %i.au, %bb.p ], [ 0, %bb.m ], [ 0, %6 ]
+  %.ph71.i.us.i.i.i.i = phi i64 [ %i.by, %bb.p ], [ %i.bo, %bb.m ], [ %7, %6 ] ; 2 uses
   %i.bz = add i64 %.ph71.i.us.i.i.i.i, %i.at      ; 2 uses
   %i.ca = icmp ult i64 %i.bz, %.sroa.13107.0.copyload.i.i.i.i
   br i1 %i.ca, label %.lr.ph.i37.us.i.i.i.i, label %.loopexit.i.i.i.i
@@ -291,13 +290,16 @@ bb.q:                                             ; preds = %bb.h
   %i.ce = load i8, ptr %i.cd, align 1, !alias.scope !353, !noalias !355, !noundef !6
   %i.cf = and i8 %i.ce, 63
   %i.cg = zext nneg i8 %i.cf to i64
-  %9 = shl nuw i64 1, %i.cg
-  %10 = and i64 %9, %.sroa.7101.0.copyload.i.i.i.i
-  %11 = icmp eq i64 %10, 0
-  br i1 %11, label %12, label %.preheader.i.i.i.i.preheader
+  %8 = lshr i64 %.sroa.7101.0.copyload.i.i.i.i, %i.cg
+  %9 = trunc i64 %8 to i1
+  br i1 %9, label %.preheader.i.i.i.i.preheader, label %10
 
 .preheader.i.i.i.i.preheader:                     ; preds = %.lr.ph.i45.us.i.i.i.i
   br i1 %exitcond.not.i50.us.i.i.i.i438.not, label %.lr.ph440, label %.preheader.us.i.preheader.i.i.i
+
+10:                                               ; preds = %.lr.ph.i45.us.i.i.i.i
+  %11 = add i64 %i.cc, %.sroa.15.0.copyload.i.i.i.i
+  br label %bb.u
 
 .preheader.i.i.i.i:                               ; preds = %bb.s
   %i.ch = add i64 %.sroa.02.0.i49.us.i.i.i.i439, 1 ; 2 uses
@@ -355,12 +357,8 @@ bb.t:                                             ; preds = %bb.s
   %i.cw = add i64 %.reass328.i.reass.i.reass.i.reass.i.reass.reass, %.sroa.02.0.i49.us.i.i.i.i439
   br label %bb.u
 
-12:                                               ; preds = %.lr.ph.i45.us.i.i.i.i
-  %13 = add i64 %i.cc, %.sroa.15.0.copyload.i.i.i.i
-  br label %bb.u
-
-bb.u:                                             ; preds = %12, %bb.t, %.split.us.i.i.i
-  %i.cx = phi i64 [ %i.cw, %bb.t ], [ %13, %12 ], [ %i.cp, %.split.us.i.i.i ] ; 2 uses
+bb.u:                                             ; preds = %bb.t, %.split.us.i.i.i, %10
+  %i.cx = phi i64 [ %i.cw, %bb.t ], [ %11, %10 ], [ %i.cp, %.split.us.i.i.i ] ; 2 uses
   %i.cy = add i64 %i.cx, %i.at                    ; 2 uses
   %i.cz = icmp ult i64 %i.cy, %.sroa.13107.0.copyload.i.i.i.i
   br i1 %i.cz, label %.lr.ph.i45.us.i.i.i.i, label %.loopexit.i.i.i.i

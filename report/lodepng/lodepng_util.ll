@@ -205,7 +205,6 @@ bb.ax:                                            ; preds = %_ZN7lodepngL15decod
   %i.ni = getelementptr inbounds nuw i8, ptr %i.mg, i64 8
   store ptr %i.nh, ptr %i.ni, align 8, !tbaa !48
   %umax421 = tail call i64 @llvm.umax.i64(i64 %i.mn, i64 1) ; 3 uses
-  %xtraiter = and i64 %umax421, 1
   %i.nj = icmp ult i32 %i.mm, 2
   br i1 %i.nj, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -266,8 +265,8 @@ _ZN7lodepngL15decodeICCUint16EPKhmPm.exit297.1:   ; preds = %bb.az, %_ZN7lodepng
   br i1 %niter.ncmp.1.not, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !111
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %_ZN7lodepngL15decodeICCUint16EPKhmPm.exit297.1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.epil.preheader
+  %3 = trunc i64 %umax421 to i1
+  br i1 %3, label %.lr.ph.epil.preheader, label %.loopexit
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %.1213398.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.ol, %.loopexit.loopexit.unr-lcssa ]
@@ -670,9 +669,8 @@ bb.n:                                             ; preds = %bb.m
   br label %common.ret233
 
 bb.o:                                             ; preds = %bb.j
-  %2 = and i32 %i.l, 1
-  %.not = icmp eq i32 %2, 0
-  br i1 %.not, label %bb.s, label %bb.p
+  %2 = trunc i32 %i.l to i1
+  br i1 %2, label %bb.p, label %bb.s
 
 bb.p:                                             ; preds = %bb.o
   %i.u = fcmp oeq float %0, 0.000000e+00
@@ -684,9 +682,9 @@ bb.q:                                             ; preds = %bb.p
   %i.x = select i1 %i.v, float %i.w, float %0
   br label %common.ret233
 
-common.ret233:                                    ; preds = %bb.ad, %._crit_edge160.thread, %bb.z, %bb.y, %bb.w, %bb.v, %3, %bb.q, %bb.l, %bb.n, %bb.m, %bb.b, %bb.a, %bb.ab, %bb.t, %bb.h, %bb.e, %bb.r
-  %common.ret233.op = phi float [ %i.aa, %bb.r ], [ %i.da, %bb.ad ], [ +qnan, %bb.m ], [ 1.000000e+00, %bb.a ], [ %i.br, %bb.ab ], [ 0.000000e+00, %bb.y ], [ %i.i, %bb.e ], [ %., %bb.h ], [ 1.000000e+00, %bb.w ], [ %i.ad, %bb.t ], [ %i.de, %._crit_edge160.thread ], [ 0.000000e+00, %3 ], [ %0, %bb.b ], [ %i.q, %bb.l ], [ %i.t, %bb.n ], [ %i.x, %bb.q ], [ %i.af, %bb.v ], [ %i.am, %bb.z ]
-  ret float %common.ret233.op
+common.ret233:                                    ; preds = %bb.ad, %._crit_edge160.thread, %bb.z, %bb.y, %bb.w, %bb.q, %bb.l, %bb.n, %bb.m, %bb.b, %bb.a, %bb.ab, %bb.v, %bb.t, %bb.h, %bb.e, %bb.r
+  %common.ret231.op = phi float [ %i.aa, %bb.r ], [ %i.da, %bb.ad ], [ +qnan, %bb.m ], [ 1.000000e+00, %bb.a ], [ %i.br, %bb.ab ], [ 0.000000e+00, %bb.y ], [ %i.i, %bb.e ], [ %., %bb.h ], [ 1.000000e+00, %bb.w ], [ %i.ad, %bb.t ], [ %i.af, %bb.v ], [ %i.de, %._crit_edge160.thread ], [ %0, %bb.b ], [ %i.q, %bb.l ], [ %i.t, %bb.n ], [ %i.x, %bb.q ], [ %i.am, %bb.z ]
+  ret float %common.ret231.op
 
 bb.r:                                             ; preds = %bb.p
   %i.y = fneg float %0
@@ -706,16 +704,13 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.s
   %i.ae = fcmp olt float %0, f0xFF7FFFFF
-  br i1 %i.ae, label %3, label %bb.w
+  br i1 %i.ae, label %bb.v, label %bb.w
 
-3:                                                ; preds = %bb.u
-  %4 = fcmp ugt float %1, 0.000000e+00
-  br i1 %4, label %bb.v, label %common.ret233
-
-bb.v:                                             ; preds = %3
-  %5 = and i32 %.0, 1
-  %.not127 = icmp eq i32 %5, 0
-  %i.af = select i1 %.not127, float +inf, float -inf
+bb.v:                                             ; preds = %bb.u
+  %3 = fcmp ugt float %1, 0.000000e+00
+  %4 = trunc i32 %.0 to i1
+  %5 = select i1 %4, float -inf, float +inf
+  %i.af = select i1 %3, float %5, float 0.000000e+00
   br label %common.ret233
 
 bb.w:                                             ; preds = %bb.u

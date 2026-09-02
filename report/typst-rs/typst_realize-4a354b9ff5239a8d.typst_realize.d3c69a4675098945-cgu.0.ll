@@ -205,7 +205,6 @@ bb.j:                                             ; preds = %_RINvYNtNtNtCsdaEET
 .lr.ph155.preheader.i:                            ; preds = %_RINvYNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5LinksNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4foldjNCNvYB3_B12_5count0ECsibhcYuwTAtB_13typst_realize.exit96.i
   %i.bg = sub nuw i64 %.sroa.0.0.i, %.sroa.0.0.lcssa.i94.i ; 3 uses
   %.neg243 = add i64 %.sroa.0.0.lcssa.i94.i, 1
-  %xtraiter235 = and i64 %i.bg, 1
   %i.bh = icmp eq i64 %.sroa.0.0.i, %.neg243
   br i1 %i.bh, label %.lr.ph155.i.epil.preheader, label %.lr.ph155.preheader.i.new
 
@@ -216,7 +215,6 @@ bb.j:                                             ; preds = %_RINvYNtNtNtCsdaEET
 .lr.ph.preheader.i:                               ; preds = %bb.j
   %i.bi = sub nuw i64 %.sroa.0.0.lcssa.i94.i, %.sroa.0.0.i ; 3 uses
   %.neg = add i64 %.sroa.0.0.i, 1
-  %xtraiter = and i64 %i.bi, 1
   %i.bj = icmp eq i64 %.sroa.0.0.lcssa.i94.i, %.neg
   br i1 %i.bj, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
@@ -231,8 +229,8 @@ bb.j:                                             ; preds = %_RINvYNtNtNtCsdaEET
   br i1 %.not74.i, label %.lr.ph.i.1, label %bb.m
 
 .loopexit.i.loopexit.unr-lcssa:                   ; preds = %bb.x
-  %lcmp.mod236.not = icmp eq i64 %xtraiter235, 0
-  br i1 %lcmp.mod236.not, label %.loopexit.i, label %.lr.ph155.i.epil.preheader
+  %2 = trunc i64 %i.bg to i1
+  br i1 %2, label %.lr.ph155.i.epil.preheader, label %.loopexit.i
 
 .lr.ph155.i.epil.preheader:                       ; preds = %.loopexit.i.loopexit.unr-lcssa, %.lr.ph155.preheader.i
   %.sroa.11.2154.i.epil.init = phi ptr [ %.sroa.11.0.i, %.lr.ph155.preheader.i ], [ %.sroa.11.5.i.1, %.loopexit.i.loopexit.unr-lcssa ] ; 4 uses
@@ -250,8 +248,8 @@ bb.k:                                             ; preds = %.lr.ph155.i.epil.pr
   br label %.loopexit.i
 
 .loopexit.i.loopexit211.unr-lcssa:                ; preds = %bb.o
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit.i, label %.lr.ph.i.epil.preheader
+  %3 = trunc i64 %i.bi to i1
+  br i1 %3, label %.lr.ph.i.epil.preheader, label %.loopexit.i
 
 .lr.ph.i.epil.preheader:                          ; preds = %.loopexit.i.loopexit211.unr-lcssa, %.lr.ph.preheader.i
   %.sroa.10.0149.i.epil.init = phi ptr [ %.sroa.7105.0.copyload.i, %.lr.ph.preheader.i ], [ %.sroa.10.2.i.1, %.loopexit.i.loopexit211.unr-lcssa ] ; 4 uses
@@ -654,7 +652,6 @@ bb.j:                                             ; preds = %_RINvYNtNtNtCsdaEET
 .lr.ph155.preheader.i:                            ; preds = %_RINvYNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5LinksNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4foldjNCNvYB3_B12_5count0ECsibhcYuwTAtB_13typst_realize.exit96.i
   %i.bg = sub nuw i64 %.sroa.0.0.i, %.sroa.0.0.lcssa.i94.i ; 3 uses
   %.neg254 = add i64 %.sroa.0.0.lcssa.i94.i, 1
-  %xtraiter246 = and i64 %i.bg, 1
   %i.bh = icmp eq i64 %.sroa.0.0.i, %.neg254
   br i1 %i.bh, label %.lr.ph155.i.epil.preheader, label %.lr.ph155.preheader.i.new
 
@@ -665,7 +662,6 @@ bb.j:                                             ; preds = %_RINvYNtNtNtCsdaEET
 .lr.ph.preheader.i:                               ; preds = %bb.j
   %i.bi = sub nuw i64 %.sroa.0.0.lcssa.i94.i, %.sroa.0.0.i ; 3 uses
   %.neg = add i64 %.sroa.0.0.i, 1
-  %xtraiter = and i64 %i.bi, 1
   %i.bj = icmp eq i64 %.sroa.0.0.lcssa.i94.i, %.neg
   br i1 %i.bj, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
@@ -680,8 +676,8 @@ bb.j:                                             ; preds = %_RINvYNtNtNtCsdaEET
   br i1 %.not74.i, label %.lr.ph.i.1, label %bb.m
 
 .loopexit.i.loopexit.unr-lcssa:                   ; preds = %bb.x
-  %lcmp.mod247.not = icmp eq i64 %xtraiter246, 0
-  br i1 %lcmp.mod247.not, label %.loopexit.i, label %.lr.ph155.i.epil.preheader
+  %2 = trunc i64 %i.bg to i1
+  br i1 %2, label %.lr.ph155.i.epil.preheader, label %.loopexit.i
 
 .lr.ph155.i.epil.preheader:                       ; preds = %.loopexit.i.loopexit.unr-lcssa, %.lr.ph155.preheader.i
   %.sroa.11.2154.i.epil.init = phi ptr [ %.sroa.11.0.i, %.lr.ph155.preheader.i ], [ %.sroa.11.5.i.1, %.loopexit.i.loopexit.unr-lcssa ] ; 4 uses
@@ -699,8 +695,8 @@ bb.k:                                             ; preds = %.lr.ph155.i.epil.pr
   br label %.loopexit.i
 
 .loopexit.i.loopexit222.unr-lcssa:                ; preds = %bb.o
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit.i, label %.lr.ph.i.epil.preheader
+  %3 = trunc i64 %i.bi to i1
+  br i1 %3, label %.lr.ph.i.epil.preheader, label %.loopexit.i
 
 .lr.ph.i.epil.preheader:                          ; preds = %.loopexit.i.loopexit222.unr-lcssa, %.lr.ph.preheader.i
   %.sroa.10.0149.i.epil.init = phi ptr [ %.sroa.7105.0.copyload.i, %.lr.ph.preheader.i ], [ %.sroa.10.2.i.1, %.loopexit.i.loopexit222.unr-lcssa ] ; 4 uses
@@ -1103,7 +1099,6 @@ bb.j:                                             ; preds = %_RINvYNtNtNtCsdaEET
 .lr.ph155.preheader.i:                            ; preds = %_RINvYNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5LinksNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4foldjNCNvYB3_B12_5count0ECsibhcYuwTAtB_13typst_realize.exit96.i
   %i.bg = sub nuw i64 %.sroa.0.0.i, %.sroa.0.0.lcssa.i94.i ; 3 uses
   %.neg241 = add i64 %.sroa.0.0.lcssa.i94.i, 1
-  %xtraiter233 = and i64 %i.bg, 1
   %i.bh = icmp eq i64 %.sroa.0.0.i, %.neg241
   br i1 %i.bh, label %.lr.ph155.i.epil.preheader, label %.lr.ph155.preheader.i.new
 
@@ -1114,7 +1109,6 @@ bb.j:                                             ; preds = %_RINvYNtNtNtCsdaEET
 .lr.ph.preheader.i:                               ; preds = %bb.j
   %i.bi = sub nuw i64 %.sroa.0.0.lcssa.i94.i, %.sroa.0.0.i ; 3 uses
   %.neg = add i64 %.sroa.0.0.i, 1
-  %xtraiter = and i64 %i.bi, 1
   %i.bj = icmp eq i64 %.sroa.0.0.lcssa.i94.i, %.neg
   br i1 %i.bj, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
@@ -1129,8 +1123,8 @@ bb.j:                                             ; preds = %_RINvYNtNtNtCsdaEET
   br i1 %.not74.i, label %.lr.ph.i.1, label %bb.m
 
 .loopexit.i.loopexit.unr-lcssa:                   ; preds = %bb.x
-  %lcmp.mod234.not = icmp eq i64 %xtraiter233, 0
-  br i1 %lcmp.mod234.not, label %.loopexit.i, label %.lr.ph155.i.epil.preheader
+  %2 = trunc i64 %i.bg to i1
+  br i1 %2, label %.lr.ph155.i.epil.preheader, label %.loopexit.i
 
 .lr.ph155.i.epil.preheader:                       ; preds = %.loopexit.i.loopexit.unr-lcssa, %.lr.ph155.preheader.i
   %.sroa.11.2154.i.epil.init = phi ptr [ %.sroa.11.0.i, %.lr.ph155.preheader.i ], [ %.sroa.11.5.i.1, %.loopexit.i.loopexit.unr-lcssa ] ; 4 uses
@@ -1148,8 +1142,8 @@ bb.k:                                             ; preds = %.lr.ph155.i.epil.pr
   br label %.loopexit.i
 
 .loopexit.i.loopexit209.unr-lcssa:                ; preds = %bb.o
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit.i, label %.lr.ph.i.epil.preheader
+  %3 = trunc i64 %i.bi to i1
+  br i1 %3, label %.lr.ph.i.epil.preheader, label %.loopexit.i
 
 .lr.ph.i.epil.preheader:                          ; preds = %.loopexit.i.loopexit209.unr-lcssa, %.lr.ph.preheader.i
   %.sroa.10.0149.i.epil.init = phi ptr [ %.sroa.7105.0.copyload.i, %.lr.ph.preheader.i ], [ %.sroa.10.2.i.1, %.loopexit.i.loopexit209.unr-lcssa ] ; 4 uses
@@ -1552,9 +1546,8 @@ bb.e:                                             ; preds = %_RINvNtNtNtCs3oUPov
   br label %_RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location11LocationKey7reverseCsibhcYuwTAtB_13typst_realize.exit
 
 _RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location11LocationKey7reverseCsibhcYuwTAtB_13typst_realize.exit.loopexit.unr-lcssa: ; preds = %_RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location11LocationKey12split_at_mutCsibhcYuwTAtB_13typst_realize.exit11.i.i
-  %3 = and i64 %1, 2
-  %lcmp.mod.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod.not, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location11LocationKey7reverseCsibhcYuwTAtB_13typst_realize.exit, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location11LocationKey12split_at_mutCsibhcYuwTAtB_13typst_realize.exit11.i.i.epil.preheader
+  %3 = trunc i64 %i.u to i1
+  br i1 %3, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location11LocationKey12split_at_mutCsibhcYuwTAtB_13typst_realize.exit11.i.i.epil.preheader, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location11LocationKey7reverseCsibhcYuwTAtB_13typst_realize.exit
 
 _RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location11LocationKey12split_at_mutCsibhcYuwTAtB_13typst_realize.exit11.i.i.epil.preheader: ; preds = %_RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location11LocationKey7reverseCsibhcYuwTAtB_13typst_realize.exit.loopexit.unr-lcssa, %_RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location11LocationKey12split_at_mutCsibhcYuwTAtB_13typst_realize.exit11.preheader.i.i
   %.sroa.0.016.i.i.epil.init = phi i64 [ 0, %_RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location11LocationKey12split_at_mutCsibhcYuwTAtB_13typst_realize.exit11.preheader.i.i ], [ %i.ag, %_RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location11LocationKey7reverseCsibhcYuwTAtB_13typst_realize.exit.loopexit.unr-lcssa ] ; 2 uses
@@ -1572,7 +1565,7 @@ _RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtCsdaEETE4DqmE_13typst_library13introspect
   ret void
 
 _RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location11LocationKey12split_at_mutCsibhcYuwTAtB_13typst_realize.exit11.preheader.i.i: ; preds = %_RINvNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared17find_existing_runNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location11LocationKeyNvYB12_NtNtB8_3cmp10PartialOrd2ltECsibhcYuwTAtB_13typst_realize.exit.thread
-  %i.u = lshr i64 %1, 1                           ; 3 uses
+  %i.u = lshr i64 %1, 1                           ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1606)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1603)
   %i.v = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %1 ; 3 uses
@@ -1975,9 +1968,8 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailNtNtNtC
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i
   %i.cs = getelementptr i8, ptr %i.cz, i64 16     ; 2 uses
   %i.ct = getelementptr i8, ptr %i.cy, i64 16
-  %5 = and i64 %.sroa.15.0.lcssa, 1
-  %6 = icmp eq i64 %5, 0
-  br i1 %6, label %bb.i, label %bb.h
+  %5 = trunc i64 %.sroa.15.0.lcssa to i1
+  br i1 %5, label %bb.h, label %bb.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.loopexit.1.i.i
   %.sroa.0.010.i.i.i = phi ptr [ %i.cv, %.lr.ph.i.i.i ], [ %.sroa.0.0.lcssa, %.loopexit.1.i.i ] ; 2 uses
@@ -2380,9 +2372,8 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.aa
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bj, i64 60
   %i.bq = load i32, ptr %i.bp, align 4, !noalias !3246, !noundef !11
-  %4 = and i32 %i.bq, 1
-  %.not8.i.i.i = icmp eq i32 %4, 0
-  br i1 %.not8.i.i.i, label %_RNvMs4_NtNtCs7lTeezpKIYd_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread.i.i, label %bb.ac
+  %4 = trunc i32 %i.bq to i1
+  br i1 %4, label %bb.ac, label %_RNvMs4_NtNtCs7lTeezpKIYd_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread.i.i
 
 bb.ac:                                            ; preds = %bb.ab
   %i.br = getelementptr inbounds nuw i8, ptr %i.bj, i64 64

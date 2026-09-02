@@ -204,9 +204,8 @@ bb.ag:                                            ; preds = %_ZN7msdfgenL22prote
   %i.ls = getelementptr inbounds i8, ptr %i.lo, i64 %i.lr
   %i.lt = getelementptr inbounds nuw i8, ptr %i.ls, i64 %indvars.iv230
   %i.lu = getelementptr inbounds nuw i8, ptr %i.lt, i64 1 ; 2 uses
-  %5 = and i32 %i.ln, 1
-  %.not.i163 = icmp eq i32 %5, 0                  ; 2 uses
-  br i1 %.not.i163, label %bb.ai, label %bb.ah
+  %5 = trunc i32 %i.ln to i1                      ; 2 uses
+  br i1 %5, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
   %i.lv = load float, ptr %.0130216, align 4, !tbaa !30
@@ -247,7 +246,7 @@ _ZN7msdfgenL22protectExtremeChannelsEPhPKffi.exit166: ; preds = %bb.ak, %bb.al, 
   %i.mh = sext i32 %i.mg to i64
   %i.mi = getelementptr inbounds i8, ptr %i.mf, i64 %i.mh
   %i.mj = getelementptr inbounds nuw i8, ptr %i.mi, i64 %indvars.iv230 ; 2 uses
-  br i1 %.not.i163, label %bb.ao, label %bb.an
+  br i1 %5, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %_ZN7msdfgenL22protectExtremeChannelsEPhPKffi.exit166
   %i.mk = load float, ptr %.pn186213, align 4, !tbaa !30
@@ -650,9 +649,8 @@ bb.ag:                                            ; preds = %_ZN7msdfgenL22prote
   %i.ly = getelementptr inbounds i8, ptr %i.lu, i64 %i.lx
   %i.lz = getelementptr inbounds nuw i8, ptr %i.ly, i64 %indvars.iv230
   %i.ma = getelementptr inbounds nuw i8, ptr %i.lz, i64 1 ; 2 uses
-  %5 = and i32 %i.lt, 1
-  %.not.i163 = icmp eq i32 %5, 0                  ; 2 uses
-  br i1 %.not.i163, label %bb.ai, label %bb.ah
+  %5 = trunc i32 %i.lt to i1                      ; 2 uses
+  br i1 %5, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
   %i.mb = load float, ptr %.0130216, align 4, !tbaa !30
@@ -693,7 +691,7 @@ _ZN7msdfgenL22protectExtremeChannelsEPhPKffi.exit166: ; preds = %bb.ak, %bb.al, 
   %i.mn = sext i32 %i.mm to i64
   %i.mo = getelementptr inbounds i8, ptr %i.ml, i64 %i.mn
   %i.mp = getelementptr inbounds nuw i8, ptr %i.mo, i64 %indvars.iv230 ; 2 uses
-  br i1 %.not.i163, label %bb.ao, label %bb.an
+  br i1 %5, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %_ZN7msdfgenL22protectExtremeChannelsEPhPKffi.exit166
   %i.mq = load float, ptr %.pn186213, align 4, !tbaa !30
@@ -1096,9 +1094,8 @@ bb.g:                                             ; preds = %.lr.ph, %bb.ay
   %i.er = getelementptr inbounds i8, ptr %i.en, i64 %i.eq
   %i.es = getelementptr inbounds i8, ptr %i.er, i64 %indvars.iv
   %i.et = load i8, ptr %i.es, align 1, !tbaa !31
-  %19 = and i8 %i.et, 1
-  %.not = icmp eq i8 %19, 0
-  br i1 %.not, label %bb.h, label %bb.ay
+  %19 = trunc i8 %i.et to i1
+  br i1 %19, label %bb.ay, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.eu = load ptr, ptr %1, align 8, !tbaa !25    ; 7 uses
@@ -1501,9 +1498,8 @@ bb.g:                                             ; preds = %.lr.ph, %bb.ay
   %i.er = getelementptr inbounds i8, ptr %i.en, i64 %i.eq
   %i.es = getelementptr inbounds i8, ptr %i.er, i64 %indvars.iv
   %i.et = load i8, ptr %i.es, align 1, !tbaa !31
-  %19 = and i8 %i.et, 1
-  %.not = icmp eq i8 %19, 0
-  br i1 %.not, label %bb.h, label %bb.ay
+  %19 = trunc i8 %i.et to i1
+  br i1 %19, label %bb.ay, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.eu = load ptr, ptr %1, align 8, !tbaa !36    ; 7 uses
@@ -1906,9 +1902,8 @@ bb.l:                                             ; preds = %.lr.ph, %bb.bd
   %i.fb = getelementptr inbounds i8, ptr %i.ex, i64 %i.fa
   %i.fc = getelementptr inbounds i8, ptr %i.fb, i64 %indvars.iv
   %i.fd = load i8, ptr %i.fc, align 1, !tbaa !31
-  %19 = and i8 %i.fd, 1
-  %.not = icmp eq i8 %19, 0
-  br i1 %.not, label %bb.m, label %bb.bd
+  %19 = trunc i8 %i.fd to i1
+  br i1 %19, label %bb.bd, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.fe = load ptr, ptr %1, align 8, !tbaa !25    ; 7 uses
@@ -2311,9 +2306,8 @@ bb.l:                                             ; preds = %.lr.ph, %bb.bd
   %i.fb = getelementptr inbounds i8, ptr %i.ex, i64 %i.fa
   %i.fc = getelementptr inbounds i8, ptr %i.fb, i64 %indvars.iv
   %i.fd = load i8, ptr %i.fc, align 1, !tbaa !31
-  %19 = and i8 %i.fd, 1
-  %.not = icmp eq i8 %19, 0
-  br i1 %.not, label %bb.m, label %bb.bd
+  %19 = trunc i8 %i.fd to i1
+  br i1 %19, label %bb.bd, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.fe = load ptr, ptr %1, align 8, !tbaa !36    ; 7 uses
@@ -2716,9 +2710,8 @@ bb.c:                                             ; preds = %.preheader, %bb.e
   %.02126 = phi ptr [ %.02428, %.preheader ], [ %i.at, %bb.e ] ; 5 uses
   %.02225 = phi ptr [ %.030, %.preheader ], [ %i.as, %bb.e ] ; 2 uses
   %i.ae = load i8, ptr %.02225, align 1, !tbaa !31
-  %2 = and i8 %i.ae, 1
-  %.not = icmp eq i8 %2, 0
-  br i1 %.not, label %bb.e, label %bb.d
+  %2 = trunc i8 %i.ae to i1
+  br i1 %2, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.af = load float, ptr %.02126, align 4, !tbaa !30 ; 4 uses
@@ -2820,9 +2813,8 @@ bb.c:                                             ; preds = %.preheader, %bb.e
   %.02126 = phi ptr [ %.02428, %.preheader ], [ %i.at, %bb.e ] ; 5 uses
   %.02225 = phi ptr [ %.030, %.preheader ], [ %i.as, %bb.e ] ; 2 uses
   %i.ae = load i8, ptr %.02225, align 1, !tbaa !31
-  %2 = and i8 %i.ae, 1
-  %.not = icmp eq i8 %2, 0
-  br i1 %.not, label %bb.e, label %bb.d
+  %2 = trunc i8 %i.ae to i1
+  br i1 %2, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.af = load float, ptr %.02126, align 4, !tbaa !30 ; 4 uses
@@ -3225,9 +3217,8 @@ define linkonce_odr noundef zeroext i1 @_ZNK7msdfgen20ShapeDistanceCheckerINS_21
 bb.a:
   %i.a = alloca [3 x float], align 4              ; 5 uses
   %4 = alloca %"struct.msdfgen::Vector2", align 16 ; 4 uses
-  %5 = and i32 %3, 1
-  %.not = icmp eq i32 %5, 0
-  br i1 %.not, label %bb.d, label %bb.b
+  %5 = trunc i32 %3 to i1
+  br i1 %5, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.b = and i32 %3, 2
@@ -3630,9 +3621,8 @@ define linkonce_odr noundef zeroext i1 @_ZNK7msdfgen20ShapeDistanceCheckerINS_21
 bb.a:
   %i.a = alloca [4 x float], align 16             ; 5 uses
   %4 = alloca %"struct.msdfgen::Vector2", align 16 ; 4 uses
-  %5 = and i32 %3, 1
-  %.not = icmp eq i32 %5, 0
-  br i1 %.not, label %bb.d, label %bb.b
+  %5 = trunc i32 %3 to i1
+  br i1 %5, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.b = and i32 %3, 2
@@ -4035,9 +4025,8 @@ define linkonce_odr noundef zeroext i1 @_ZNK7msdfgen20ShapeDistanceCheckerINS_26
 bb.a:
   %i.a = alloca [3 x float], align 4              ; 5 uses
   %4 = alloca %"struct.msdfgen::Vector2", align 16 ; 4 uses
-  %5 = and i32 %3, 1
-  %.not = icmp eq i32 %5, 0
-  br i1 %.not, label %bb.d, label %bb.b
+  %5 = trunc i32 %3 to i1
+  br i1 %5, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.b = and i32 %3, 2
@@ -4440,9 +4429,8 @@ define linkonce_odr noundef zeroext i1 @_ZNK7msdfgen20ShapeDistanceCheckerINS_26
 bb.a:
   %i.a = alloca [4 x float], align 16             ; 5 uses
   %4 = alloca %"struct.msdfgen::Vector2", align 16 ; 4 uses
-  %5 = and i32 %3, 1
-  %.not = icmp eq i32 %5, 0
-  br i1 %.not, label %bb.d, label %bb.b
+  %5 = trunc i32 %3 to i1
+  br i1 %5, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.b = and i32 %3, 2

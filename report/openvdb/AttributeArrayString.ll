@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.k = load i32, ptr %0, align 4, !tbaa !54
   store i32 %i.k, ptr %i.i, align 4, !tbaa !54
   %i.l = ptrtoint ptr %i.i to i64
-  %i.m = sub i64 %i.l, %i.a                       ; 3 uses
-  %i.n = ashr exact i64 %i.m, 2                   ; 3 uses
+  %i.m = sub i64 %i.l, %i.a                       ; 2 uses
+  %i.n = ashr exact i64 %i.m, 2                   ; 4 uses
   %i.o = add nsw i64 %i.n, -1
   %i.p = lshr i64 %i.o, 1
   %i.q = icmp sgt i64 %i.n, 2
@@ -231,9 +231,8 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
 
 ._crit_edge.i.i.i.i:                              ; preds = %.lr.ph.i.i.i.i, %.lr.ph.i.i
   %.0.lcssa.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %spec.select.i.i.i.i, %.lr.ph.i.i.i.i ] ; 5 uses
-  %4 = and i64 %i.m, 4
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %bb.c, label %bb.d
+  %4 = trunc i64 %i.n to i1
+  br i1 %4, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ad = add nsw i64 %i.n, -2
@@ -545,8 +544,8 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
-  %.fr = freeze i64 %i.c                          ; 2 uses
-  %i.d = ashr exact i64 %.fr, 2                   ; 3 uses
+  %.fr = freeze i64 %i.c
+  %i.d = ashr i64 %.fr, 2                         ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
@@ -555,10 +554,9 @@ bb.b:                                             ; preds = %bb.a
   %i.g = lshr i64 %i.f, 1                         ; 2 uses
   %i.h = add nsw i64 %i.d, -1
   %i.i = lshr i64 %i.h, 1                         ; 4 uses
-  %3 = and i64 %.fr, 4
-  %4 = icmp eq i64 %3, 0
+  %3 = trunc i64 %i.d to i1
   %i.j = lshr exact i64 %i.f, 1                   ; 2 uses
-  br i1 %4, label %.split.preheader, label %.split.us
+  br i1 %3, label %.split.us, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.b
   %i.k = or disjoint i64 %i.f, 1                  ; 2 uses
@@ -681,7 +679,7 @@ _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEljNS0_5_
   %i.bi = add nsw i64 %.09, -1
   br i1 %.not, label %.loopexit, label %.split, !llvm.loop !445
 
-.loopexit:                                        ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEljNS0_5__ops15_Iter_comp_iterISt4lessIjEEEEvT_T0_SD_T1_T2_.exit.us, %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEljNS0_5__ops15_Iter_comp_iterISt4lessIjEEEEvT_T0_SD_T1_T2_.exit, %bb.a
+.loopexit:                                        ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEljNS0_5__ops15_Iter_comp_iterISt4lessIjEEEEvT_T0_SD_T1_T2_.exit, %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEljNS0_5__ops15_Iter_comp_iterISt4lessIjEEEEvT_T0_SD_T1_T2_.exit.us, %bb.a
   ret void
 }
 

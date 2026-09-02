@@ -205,10 +205,9 @@ bb.c:                                             ; preds = %.lr.ph26, %_ZNSt6ve
   %indvars.iv39 = phi i64 [ 0, %.lr.ph26 ], [ %indvars.iv.next40, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 4 uses
   %i.ab = phi ptr [ %.promoted, %.lr.ph26 ], [ %i.ax, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 5 uses
   %i.ac = phi ptr [ %.promoted21, %.lr.ph26 ], [ %i.aw, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit ] ; 11 uses
-  %4 = shl nuw i64 1, %indvars.iv39
-  %5 = and i64 %4, %.06.i.lcssa
-  %6 = icmp eq i64 %5, 0
-  br i1 %6, label %bb.d, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
+  %4 = lshr i64 %.06.i.lcssa, %indvars.iv39
+  %5 = trunc i64 %4 to i1
+  br i1 %5, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %.not.i = icmp eq ptr %i.aa, %i.ab
@@ -611,8 +610,8 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
   %i.k = load i32, ptr %0, align 4, !tbaa !33
   store i32 %i.k, ptr %i.i, align 4, !tbaa !33
   %i.l = ptrtoint ptr %i.i to i64
-  %i.m = sub i64 %i.l, %i.a                       ; 3 uses
-  %i.n = ashr exact i64 %i.m, 2                   ; 3 uses
+  %i.m = sub i64 %i.l, %i.a                       ; 2 uses
+  %i.n = ashr exact i64 %i.m, 2                   ; 4 uses
   %i.o = add nsw i64 %i.n, -1
   %i.p = lshr i64 %i.o, 1
   %i.q = icmp sgt i64 %i.n, 2
@@ -638,9 +637,8 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
 
 ._crit_edge.i.i.i.i:                              ; preds = %.lr.ph.i.i.i.i, %.lr.ph.i.i
   %.0.lcssa.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %spec.select.i.i.i.i, %.lr.ph.i.i.i.i ] ; 5 uses
-  %4 = and i64 %i.m, 4
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %bb.c, label %bb.d
+  %4 = trunc i64 %i.n to i1
+  br i1 %4, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ad = add nsw i64 %i.n, -2
@@ -952,8 +950,8 @@ bb.a:
   %i.a = ptrtoint ptr %1 to i64
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
-  %.fr = freeze i64 %i.c                          ; 2 uses
-  %i.d = ashr exact i64 %.fr, 2                   ; 3 uses
+  %.fr = freeze i64 %i.c
+  %i.d = ashr i64 %.fr, 2                         ; 4 uses
   %i.e = icmp slt i64 %i.d, 2
   br i1 %i.e, label %.loopexit, label %bb.b
 
@@ -962,10 +960,9 @@ bb.b:                                             ; preds = %bb.a
   %i.g = lshr i64 %i.f, 1                         ; 2 uses
   %i.h = add nsw i64 %i.d, -1
   %i.i = lshr i64 %i.h, 1                         ; 4 uses
-  %3 = and i64 %.fr, 4
-  %4 = icmp eq i64 %3, 0
+  %3 = trunc i64 %i.d to i1
   %i.j = lshr exact i64 %i.f, 1                   ; 2 uses
-  br i1 %4, label %.split.preheader, label %.split.us
+  br i1 %3, label %.split.us, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.b
   %i.k = or disjoint i64 %i.f, 1                  ; 2 uses
@@ -1088,7 +1085,7 @@ _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEliNS0_5_
   %i.bi = add nsw i64 %.08, -1
   br i1 %.not, label %.loopexit, label %.split, !llvm.loop !139
 
-.loopexit:                                        ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEliNS0_5__ops15_Iter_less_iterEEvT_T0_SA_T1_T2_.exit.us, %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEliNS0_5__ops15_Iter_less_iterEEvT_T0_SA_T1_T2_.exit, %bb.a
+.loopexit:                                        ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEliNS0_5__ops15_Iter_less_iterEEvT_T0_SA_T1_T2_.exit, %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEliNS0_5__ops15_Iter_less_iterEEvT_T0_SA_T1_T2_.exit.us, %bb.a
   ret void
 }
 
@@ -1388,8 +1385,8 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !35
   %i.e = ptrtoint ptr %i.d to i64
   %i.f = ptrtoint ptr %i.b to i64
-  %i.g = sub i64 %i.e, %i.f                       ; 3 uses
-  %i.h = lshr exact i64 %i.g, 2                   ; 3 uses
+  %i.g = sub i64 %i.e, %i.f                       ; 2 uses
+  %i.h = lshr exact i64 %i.g, 2                   ; 4 uses
   %i.i = trunc i64 %i.h to i32
   %i.j = icmp sgt i32 %i.i, 0
   br i1 %i.j, label %.lr.ph.preheader, label %_Z10getBitMaskPiS_i.exit
@@ -1436,9 +1433,8 @@ bb.a:
   br i1 %niter.ncmp.1, label %_Z10getBitMaskPiS_i.exit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !2
 
 _Z10getBitMaskPiS_i.exit.loopexit.unr-lcssa:      ; preds = %.lr.ph
-  %2 = and i64 %i.g, 4
-  %lcmp.mod.not = icmp eq i64 %2, 0
-  br i1 %lcmp.mod.not, label %_Z10getBitMaskPiS_i.exit, label %.lr.ph.epil.preheader
+  %2 = trunc i64 %i.h to i1
+  br i1 %2, label %.lr.ph.epil.preheader, label %_Z10getBitMaskPiS_i.exit
 
 .lr.ph.epil.preheader:                            ; preds = %_Z10getBitMaskPiS_i.exit.loopexit.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %_Z10getBitMaskPiS_i.exit.loopexit.unr-lcssa ] ; 2 uses
@@ -1841,9 +1837,8 @@ _ZNSt6vectorIiSaIiEEC2ERKS1_.exit52:              ; preds = %bb.af, %bb.ae
 
 .lr.ph.preheader.i:                               ; preds = %_ZNSt6vectorIiSaIiEEC2ERKS1_.exit52.thread185, %_ZNSt6vectorIiSaIiEEC2ERKS1_.exit52
   %i.dm = phi i64 [ 1, %_ZNSt6vectorIiSaIiEEC2ERKS1_.exit52.thread185 ], [ %i.dj, %_ZNSt6vectorIiSaIiEEC2ERKS1_.exit52 ] ; 4 uses
-  %wide.trip.count.i = and i64 %i.dm, 2147483647
-  %xtraiter = and i64 %i.dm, 1
-  %i.dn = icmp eq i64 %wide.trip.count.i, 1
+  %xtraiter = and i64 %i.dm, 2147483647
+  %i.dn = icmp eq i64 %xtraiter, 1
   br i1 %i.dn, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
@@ -1883,8 +1878,8 @@ _ZNSt6vectorIiSaIiEEC2ERKS1_.exit52:              ; preds = %bb.af, %bb.ae
   br i1 %niter.ncmp.1, label %_Z15util_getBitMaskSt6vectorIiSaIiEES1_.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2
 
 _Z15util_getBitMaskSt6vectorIiSaIiEES1_.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_Z15util_getBitMaskSt6vectorIiSaIiEES1_.exit, label %.lr.ph.i.epil.preheader
+  %6 = trunc i64 %i.dm to i1
+  br i1 %6, label %.lr.ph.i.epil.preheader, label %_Z15util_getBitMaskSt6vectorIiSaIiEES1_.exit
 
 .lr.ph.i.epil.preheader:                          ; preds = %_Z15util_getBitMaskSt6vectorIiSaIiEES1_.exit.loopexit.unr-lcssa, %.lr.ph.preheader.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i.1, %_Z15util_getBitMaskSt6vectorIiSaIiEES1_.exit.loopexit.unr-lcssa ] ; 2 uses

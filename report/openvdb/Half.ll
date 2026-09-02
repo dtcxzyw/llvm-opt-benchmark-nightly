@@ -124,23 +124,18 @@ bb.i:                                             ; preds = %bb.h
   %i.al = lshr i32 %i.ai, %i.ag                   ; 2 uses
   %i.am = and i32 %i.g, 32768
   %i.an = or i32 %i.al, %i.am
-  %i.ao = trunc nuw i32 %i.an to i16              ; 2 uses
+  %i.ao = trunc nuw i32 %i.an to i16
   %i.ap = icmp ugt i32 %i.ak, -2147483648
-  br i1 %i.ap, label %5, label %2
-
-2:                                                ; preds = %bb.i
-  %3 = icmp ne i32 %i.ak, -2147483648
-  %4 = and i32 %i.al, 1
-  %.not.i.i = icmp eq i32 %4, 0
-  %or.cond.i.i = select i1 %3, i1 true, i1 %.not.i.i
-  br i1 %or.cond.i.i, label %_ZN7openvdb5v13_04math8internal4halfC2Ef.exit, label %5
-
-5:                                                ; preds = %2, %bb.i
-  %6 = add nuw i16 %i.ao, 1
+  %2 = icmp eq i32 %i.ak, -2147483648
+  %3 = trunc nuw nsw i32 %i.al to i16
+  %4 = and i16 %3, 1
+  %5 = select i1 %2, i16 %4, i16 0
+  %6 = select i1 %i.ap, i16 1, i16 %5
+  %spec.select.i.i = add nuw i16 %6, %i.ao
   br label %_ZN7openvdb5v13_04math8internal4halfC2Ef.exit
 
-_ZN7openvdb5v13_04math8internal4halfC2Ef.exit:    ; preds = %bb.c, %bb.d, %bb.f, %bb.g, %bb.h, %2, %5
-  %.033.i.i = phi i16 [ %i.i, %bb.h ], [ %i.t, %bb.d ], [ %i.v, %bb.f ], [ %i.ad, %bb.g ], [ %i.l, %bb.c ], [ %6, %5 ], [ %i.ao, %2 ]
+_ZN7openvdb5v13_04math8internal4halfC2Ef.exit:    ; preds = %bb.c, %bb.d, %bb.f, %bb.g, %bb.h, %bb.i
+  %.033.i.i = phi i16 [ %i.i, %bb.h ], [ %i.t, %bb.d ], [ %i.v, %bb.f ], [ %i.ad, %bb.g ], [ %i.l, %bb.c ], [ %spec.select.i.i, %bb.i ]
   store i16 %.033.i.i, ptr %1, align 2, !tbaa !28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret ptr %0
@@ -165,10 +160,9 @@ bb.b:                                             ; preds = %bb.i
 
 bb.c:                                             ; preds = %bb.a, %bb.i
   %.011 = phi i32 [ 15, %bb.a ], [ %i.u, %bb.i ]  ; 4 uses
-  %2 = shl nuw i32 1, %.011
-  %3 = and i32 %2, %i.c
-  %.not = icmp eq i32 %3, 0
-  %i.d = select i1 %.not, i8 48, i8 49            ; 2 uses
+  %2 = lshr i32 %i.c, %.011
+  %3 = trunc i32 %2 to i1
+  %i.d = select i1 %3, i8 49, i8 48               ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i8 %i.d, ptr %i.b, align 1, !tbaa !8
   %i.e = load ptr, ptr %0, align 8, !tbaa !10
@@ -238,10 +232,9 @@ bb.b:                                             ; preds = %bb.i
 
 bb.c:                                             ; preds = %bb.a, %bb.i
   %.011 = phi i32 [ 31, %bb.a ], [ %i.v, %bb.i ]  ; 4 uses
-  %2 = shl nuw i32 1, %.011
-  %3 = and i32 %2, %i.c
-  %.not = icmp eq i32 %3, 0
-  %i.d = select i1 %.not, i8 48, i8 49            ; 2 uses
+  %2 = lshr i32 %i.c, %.011
+  %3 = trunc i32 %2 to i1
+  %i.d = select i1 %3, i8 49, i8 48               ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i8 %i.d, ptr %i.b, align 1, !tbaa !8
   %i.e = load ptr, ptr %0, align 8, !tbaa !10
@@ -300,7 +293,7 @@ bb.i:                                             ; preds = %_ZStlsISt11char_tra
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @_ZN7openvdb5v13_04math8internal9printBitsEPcNS2_4halfE(ptr nofree noundef writeonly captures(none) initializes((0, 19)) %0, i16 %1) local_unnamed_addr #2 {
 bb.a:
-  %i.a = zext i16 %1 to i32                       ; 5 uses
+  %i.a = zext i16 %1 to i32                       ; 4 uses
   %.not = icmp sgt i16 %1, -1
   %i.b = select i1 %.not, i8 48, i8 49
   store i8 %i.b, ptr %0, align 1, !tbaa !8
@@ -332,9 +325,8 @@ bb.a:
   %i.u = select i1 %.not.14, i8 48, i8 49
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i8 %i.u, ptr %i.v, align 1, !tbaa !8
-  %2 = and i32 %i.a, 1
-  %.not.15 = icmp eq i32 %2, 0
-  %i.w = select i1 %.not.15, i8 48, i8 49
+  %2 = trunc i16 %1 to i1
+  %i.w = select i1 %2, i8 49, i8 48
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 17
   store i8 %i.w, ptr %i.x, align 1, !tbaa !8
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 18
@@ -356,10 +348,9 @@ bb.b:                                             ; preds = %bb.e
 bb.c:                                             ; preds = %bb.a, %bb.e
   %.014 = phi i32 [ 0, %bb.a ], [ %i.k, %bb.e ]   ; 3 uses
   %.01213 = phi i32 [ 31, %bb.a ], [ %i.j, %bb.e ] ; 4 uses
-  %2 = shl nuw i32 1, %.01213
-  %3 = and i32 %2, %i.a
-  %.not = icmp eq i32 %3, 0
-  %i.c = select i1 %.not, i8 48, i8 49
+  %2 = lshr i32 %i.a, %.01213
+  %3 = trunc i32 %2 to i1
+  %i.c = select i1 %3, i8 49, i8 48
   %i.d = sext i32 %.014 to i64
   %i.e = getelementptr inbounds i8, ptr %0, i64 %i.d
   store i8 %i.c, ptr %i.e, align 1, !tbaa !8

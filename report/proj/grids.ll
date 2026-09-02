@@ -205,9 +205,8 @@ bb.v:                                             ; preds = %_ZNSt6vectorIfSaIfE
   br i1 %niter124.ncmp.3, label %_ZN5osgeo4projL10swap_wordsEPvmm.exit.loopexit.unr-lcssa, label %.preheader.i, !llvm.loop !5
 
 _ZN5osgeo4projL10swap_wordsEPvmm.exit.loopexit.unr-lcssa: ; preds = %.preheader.i
-  %6 = and i32 %.pre81, 1
-  %lcmp.mod121.not = icmp eq i32 %6, 0
-  br i1 %lcmp.mod121.not, label %_ZN5osgeo4projL10swap_wordsEPvmm.exit.loopexit, label %.preheader.i.epil.preheader
+  %6 = trunc i32 %.pre81 to i1
+  br i1 %6, label %.preheader.i.epil.preheader, label %_ZN5osgeo4projL10swap_wordsEPvmm.exit.loopexit
 
 .preheader.i.epil.preheader:                      ; preds = %_ZN5osgeo4projL10swap_wordsEPvmm.exit.loopexit.unr-lcssa, %.preheader.i.preheader
   %.023.i.epil.init = phi ptr [ %i.dv, %.preheader.i.preheader ], [ %i.eh, %_ZN5osgeo4projL10swap_wordsEPvmm.exit.loopexit.unr-lcssa ]
@@ -236,21 +235,20 @@ _ZN5osgeo4projL10swap_wordsEPvmm.exit:            ; preds = %_ZN5osgeo4projL10sw
   br i1 %i.eo, label %.lr.ph66, label %._crit_edge67
 
 .lr.ph66:                                         ; preds = %_ZN5osgeo4projL10swap_wordsEPvmm.exit
-  %i.ep = lshr i32 %i.en, 1                       ; 3 uses
+  %i.ep = lshr i32 %i.en, 1                       ; 4 uses
   %i.eq = load ptr, ptr %i.am, align 8, !tbaa !112 ; 6 uses
   %i.er = zext nneg i32 %i.en to i64              ; 3 uses
-  %wide.trip.count77 = zext nneg i32 %i.ep to i64 ; 2 uses
-  %xtraiter126 = and i64 %wide.trip.count77, 1
   %i.es = icmp eq i32 %i.ep, 1
   br i1 %i.es, label %.epil.preheader125, label %.lr.ph66.new
 
 .lr.ph66.new:                                     ; preds = %.lr.ph66
-  %unroll_iter130 = and i64 %wide.trip.count77, 1073741822
+  %7 = and i32 %i.ep, 1073741822
+  %unroll_iter130 = zext nneg i32 %7 to i64
   br label %bb.w
 
 ._crit_edge67.loopexit.unr-lcssa:                 ; preds = %bb.w
-  %lcmp.mod128.not = icmp eq i64 %xtraiter126, 0
-  br i1 %lcmp.mod128.not, label %._crit_edge67, label %.epil.preheader125
+  %8 = trunc i32 %i.ep to i1
+  br i1 %8, label %.epil.preheader125, label %._crit_edge67
 
 .epil.preheader125:                               ; preds = %._crit_edge67.loopexit.unr-lcssa, %.lr.ph66
   %indvars.iv74.epil.init = phi i64 [ 0, %.lr.ph66 ], [ %indvars.iv.next75.1, %._crit_edge67.loopexit.unr-lcssa ] ; 2 uses

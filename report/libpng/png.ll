@@ -205,13 +205,12 @@ bb.a:
 switch.lookup:                                    ; preds = %.split
   %i.f = zext nneg i32 %i.d to i64
   %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table.png_build_grayscale_palette, i64 %i.f
-  %switch.load = load i16, ptr %switch.gep, align 2 ; 2 uses
-  %switch.ext = zext i16 %switch.load to i64      ; 2 uses
+  %switch.load = load i16, ptr %switch.gep, align 2 ; 3 uses
   %switch.shiftamt = shl nuw nsw i32 %i.d, 3
   %switch.downshift = lshr i32 17913343, %switch.shiftamt
   %switch.masked = trunc i32 %switch.downshift to i8 ; 2 uses
-  %xtraiter = and i64 %switch.ext, 1
-  %unroll_iter = and i64 %switch.ext, 65534
+  %2 = and i16 %switch.load, -2
+  %unroll_iter = zext i16 %2 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %switch.lookup
@@ -239,8 +238,8 @@ switch.lookup:                                    ; preds = %.split
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !122
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.epil.preheader
+  %3 = trunc i16 %switch.load to i1
+  br i1 %3, label %.lr.ph.epil.preheader, label %.loopexit
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa
   %lcmp.mod26 = trunc i16 %switch.load to i1
@@ -643,10 +642,9 @@ bb.g:                                             ; preds = %bb.e
   %.117.i = phi i32 [ %i.v, %.preheader.i ], [ %.117.i.ph, %.preheader.i.preheader ] ; 2 uses
   %.014.i = phi double [ %.1.i, %.preheader.i ], [ 1.000000e+00, %.preheader.i.preheader ] ; 2 uses
   %.0.i = phi double [ %i.u, %.preheader.i ], [ 1.000000e+01, %.preheader.i.preheader ] ; 3 uses
-  %5 = and i32 %.117.i, 1
-  %.not.i = icmp eq i32 %5, 0
+  %5 = trunc i32 %.117.i to i1
   %i.t = fmul double %.014.i, %.0.i
-  %.1.i = select i1 %.not.i, double %.014.i, double %i.t ; 3 uses
+  %.1.i = select i1 %5, double %i.t, double %.014.i ; 3 uses
   %i.u = fmul double %.0.i, %.0.i
   %i.v = lshr i32 %.117.i, 1                      ; 2 uses
   %.not22.i = icmp eq i32 %i.v, 0
@@ -695,10 +693,9 @@ bb.j:                                             ; preds = %.lr.ph
   %.117.i176 = phi i32 [ %i.ah, %.preheader.i175 ], [ %.117.i176.ph, %.preheader.i175.preheader ] ; 2 uses
   %.014.i177 = phi double [ %.1.i180, %.preheader.i175 ], [ 1.000000e+00, %.preheader.i175.preheader ] ; 2 uses
   %.0.i178 = phi double [ %i.ag, %.preheader.i175 ], [ 1.000000e+01, %.preheader.i175.preheader ] ; 3 uses
-  %6 = and i32 %.117.i176, 1
-  %.not.i179 = icmp eq i32 %6, 0
+  %6 = trunc i32 %.117.i176 to i1
   %i.af = fmul double %.014.i177, %.0.i178
-  %.1.i180 = select i1 %.not.i179, double %.014.i177, double %i.af ; 3 uses
+  %.1.i180 = select i1 %6, double %i.af, double %.014.i177 ; 3 uses
   %i.ag = fmul double %.0.i178, %.0.i178
   %i.ah = lshr i32 %.117.i176, 1                  ; 2 uses
   %.not22.i181 = icmp eq i32 %i.ah, 0
@@ -890,9 +887,8 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not164233, label %._crit_edge238, label %.lr.ph237.preheader
 
 .lr.ph237.preheader:                              ; preds = %.thread190
-  %xtraiter = and i32 %.3115202, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph237.prol.loopexit, label %.lr.ph237.prol
+  %7 = trunc i32 %.3115202 to i1
+  br i1 %7, label %.lr.ph237.prol, label %.lr.ph237.prol.loopexit
 
 .lr.ph237.prol:                                   ; preds = %.lr.ph237.preheader
   %i.ci = load i32, ptr %i.a, align 4, !tbaa !34  ; 2 uses
@@ -1295,11 +1291,11 @@ bb.c:                                             ; preds = %bb.c, %.preheader40
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define range(i32 0, 4) i32 @png_set_option(ptr noalias nofree noundef captures(address_is_null) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #15 {
 bb.a:
-  %3 = icmp ne ptr %0, null
+  %3 = icmp eq ptr %0, null
   %i.a = and i32 %1, -15
-  %4 = icmp eq i32 %i.a, 0
-  %or.cond = and i1 %3, %4
-  br i1 %or.cond, label %bb.b, label %bb.c
+  %4 = icmp ne i32 %i.a, 0
+  %or.cond = or i1 %3, %4
+  br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = shl nuw nsw i32 3, %1
@@ -1372,10 +1368,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   call void @png_free(ptr noundef %i.n, ptr noundef nonnull %i.a) #28
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.p = load i8, ptr %i.o, align 8
-  %2 = and i8 %i.p, 1
-  %.not15.i = icmp eq i8 %2, 0
+  %2 = trunc i8 %i.p to i1
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  br i1 %.not15.i, label %bb.j, label %bb.i
+  br i1 %2, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   call void @png_destroy_write_struct(ptr noundef nonnull %1, ptr noundef nonnull %i.q) #28

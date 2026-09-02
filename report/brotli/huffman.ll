@@ -203,16 +203,15 @@ ReplicateValue.exit.1:                            ; preds = %ReplicateValue.exit
 ._crit_edge.1:                                    ; preds = %._crit_edge.loopexit.1, %._crit_edge
   %.282.lcssa.1 = phi i64 [ %.282.lcssa, %._crit_edge ], [ %i.hq, %._crit_edge.loopexit.1 ] ; 4 uses
   %.2.lcssa.1 = phi i32 [ %.2.lcssa, %._crit_edge ], [ %i.hs, %._crit_edge.loopexit.1 ] ; 2 uses
-  %i.ht = load i16, ptr %i.m, align 2, !tbaa !9   ; 3 uses
+  %i.ht = load i16, ptr %i.m, align 2, !tbaa !9   ; 4 uses
   %.not8489.2 = icmp eq i16 %i.ht, 0
   br i1 %.not8489.2, label %._crit_edge.2, label %.lr.ph.2
 
 .lr.ph.2:                                         ; preds = %._crit_edge.1
-  %i.hu = zext i16 %i.ht to i32                   ; 3 uses
+  %i.hu = zext i16 %i.ht to i32                   ; 2 uses
   %i.hv = sext i32 %.2.lcssa.1 to i64             ; 3 uses
-  %xtraiter = and i32 %i.hu, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %ReplicateValue.exit.2.prol.loopexit, label %ReplicateValue.exit.2.prol
+  %3 = trunc i16 %i.ht to i1
+  br i1 %3, label %ReplicateValue.exit.2.prol, label %ReplicateValue.exit.2.prol.loopexit
 
 ReplicateValue.exit.2.prol:                       ; preds = %.lr.ph.2
   %i.hw = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.hv
@@ -295,16 +294,15 @@ ReplicateValue.exit.2:                            ; preds = %ReplicateValue.exit
 ._crit_edge.2:                                    ; preds = %._crit_edge.loopexit.2, %._crit_edge.1
   %.282.lcssa.2 = phi i64 [ %.282.lcssa.1, %._crit_edge.1 ], [ %.lcssa119, %._crit_edge.loopexit.2 ] ; 4 uses
   %.2.lcssa.2 = phi i32 [ %.2.lcssa.1, %._crit_edge.1 ], [ %i.je, %._crit_edge.loopexit.2 ] ; 2 uses
-  %i.jf = load i16, ptr %i.r, align 2, !tbaa !9   ; 3 uses
+  %i.jf = load i16, ptr %i.r, align 2, !tbaa !9   ; 4 uses
   %.not8489.3 = icmp eq i16 %i.jf, 0
   br i1 %.not8489.3, label %._crit_edge.3, label %.lr.ph.3
 
 .lr.ph.3:                                         ; preds = %._crit_edge.2
-  %i.jg = zext i16 %i.jf to i32                   ; 3 uses
+  %i.jg = zext i16 %i.jf to i32                   ; 2 uses
   %i.jh = sext i32 %.2.lcssa.2 to i64             ; 3 uses
-  %xtraiter122 = and i32 %i.jg, 1
-  %lcmp.mod123.not = icmp eq i32 %xtraiter122, 0
-  br i1 %lcmp.mod123.not, label %ReplicateValue.exit.3.prol.loopexit, label %ReplicateValue.exit.3.prol
+  %4 = trunc i16 %i.jf to i1
+  br i1 %4, label %ReplicateValue.exit.3.prol, label %ReplicateValue.exit.3.prol.loopexit
 
 ReplicateValue.exit.3.prol:                       ; preds = %.lr.ph.3
   %i.ji = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.jh
@@ -375,16 +373,15 @@ ReplicateValue.exit.3:                            ; preds = %ReplicateValue.exit
 ._crit_edge.3:                                    ; preds = %._crit_edge.loopexit.3, %._crit_edge.2
   %.282.lcssa.3 = phi i64 [ %.282.lcssa.2, %._crit_edge.2 ], [ %.lcssa, %._crit_edge.loopexit.3 ] ; 3 uses
   %.2.lcssa.3 = phi i32 [ %.2.lcssa.2, %._crit_edge.2 ], [ %i.kk, %._crit_edge.loopexit.3 ]
-  %i.kl = load i16, ptr %i.w, align 2, !tbaa !9   ; 3 uses
+  %i.kl = load i16, ptr %i.w, align 2, !tbaa !9   ; 4 uses
   %.not8489.4 = icmp eq i16 %i.kl, 0
   br i1 %.not8489.4, label %.loopexit, label %.lr.ph.4
 
 .lr.ph.4:                                         ; preds = %._crit_edge.3
-  %i.km = zext i16 %i.kl to i32                   ; 3 uses
+  %i.km = zext i16 %i.kl to i32                   ; 2 uses
   %i.kn = sext i32 %.2.lcssa.3 to i64             ; 3 uses
-  %xtraiter124 = and i32 %i.km, 1
-  %lcmp.mod125.not = icmp eq i32 %xtraiter124, 0
-  br i1 %lcmp.mod125.not, label %ReplicateValue.exit.4.prol.loopexit, label %ReplicateValue.exit.4.prol
+  %5 = trunc i16 %i.kl to i1
+  br i1 %5, label %ReplicateValue.exit.4.prol, label %ReplicateValue.exit.4.prol.loopexit
 
 ReplicateValue.exit.4.prol:                       ; preds = %.lr.ph.4
   %i.ko = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.kn

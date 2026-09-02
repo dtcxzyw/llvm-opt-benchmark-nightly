@@ -205,9 +205,8 @@ bb.a:
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i, %bb.a
   %.036.lcssa.i.i.i = phi i64 [ %i.f, %bb.a ], [ %.lcssa65.unr, %.lr.ph.i.i.i.prol.loopexit ], [ %i.au, %.lr.ph.i.i.i ] ; 2 uses
   %.0.lcssa.i.i.i = phi ptr [ %1, %bb.a ], [ %i.h, %.lr.ph.i.i.i ], [ %i.h, %.lr.ph.i.i.i.prol.loopexit ]
-  %7 = and i64 %2, 1
-  %8 = icmp eq i64 %7, 0                          ; 2 uses
-  br i1 %8, label %_ZN4pbrt11BufferCacheIiE6BufferC2EPKim.exit, label %bb.b
+  %7 = trunc i64 %2 to i1                         ; 2 uses
+  br i1 %7, label %bb.b, label %_ZN4pbrt11BufferCacheIiE6BufferC2EPKim.exit
 
 bb.b:                                             ; preds = %._crit_edge.i.i.i
   %i.av = load i32, ptr %.0.lcssa.i.i.i, align 1
@@ -413,7 +412,7 @@ bb.m:                                             ; preds = %_ZNSt12shared_mutex
 ._crit_edge.i.i.i30:                              ; preds = %.lr.ph.i.i.i25.prol.loopexit, %.lr.ph.i.i.i25, %bb.m
   %.036.lcssa.i.i.i31 = phi i64 [ %i.f, %bb.m ], [ %.lcssa.unr, %.lr.ph.i.i.i25.prol.loopexit ], [ %i.ej, %.lr.ph.i.i.i25 ] ; 2 uses
   %.0.lcssa.i.i.i32 = phi ptr [ %.0.i.i.i, %bb.m ], [ %i.cw, %.lr.ph.i.i.i25 ], [ %i.cw, %.lr.ph.i.i.i25.prol.loopexit ]
-  br i1 %8, label %_ZN4pbrt11BufferCacheIiE6BufferC2EPKim.exit34, label %bb.n
+  br i1 %7, label %bb.n, label %_ZN4pbrt11BufferCacheIiE6BufferC2EPKim.exit34
 
 bb.n:                                             ; preds = %._crit_edge.i.i.i30
   %i.ek = load i32, ptr %.0.lcssa.i.i.i32, align 1

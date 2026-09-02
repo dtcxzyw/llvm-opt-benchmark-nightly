@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.preheader.i:                               ; preds = %bb.b
   %i.g = zext i16 %2 to i32                       ; 2 uses
-  %xtraiter = and i64 %spec.select.i, 1
   %i.h = icmp eq i64 %spec.select.i, 1
   br i1 %i.h, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
@@ -244,8 +243,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %niter.ncmp.1, label %PS_Conv_EexecDecode.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !595
 
 PS_Conv_EexecDecode.exit.loopexit.unr-lcssa:      ; preds = %.lr.ph.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %PS_Conv_EexecDecode.exit, label %.lr.ph.i.epil.preheader
+  %3 = trunc i64 %spec.select.i to i1
+  br i1 %3, label %.lr.ph.i.epil.preheader, label %PS_Conv_EexecDecode.exit
 
 .lr.ph.i.epil.preheader:                          ; preds = %PS_Conv_EexecDecode.exit.loopexit.unr-lcssa, %.lr.ph.preheader.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i.1, %PS_Conv_EexecDecode.exit.loopexit.unr-lcssa ]
@@ -648,7 +647,7 @@ bb.h:                                             ; preds = %cf2_arrstack_setCou
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.h
-  %.01057 = phi i32 [ 0, %bb.h ], [ %.01057.be, %.backedge.backedge ] ; 235 uses
+  %.01057 = phi i32 [ 0, %bb.h ], [ %.01057.be, %.backedge.backedge ] ; 236 uses
   %.01053 = phi ptr [ %i.cy, %bb.h ], [ %.01053.be, %.backedge.backedge ] ; 237 uses
   %.01052 = phi i32 [ 20000000, %bb.h ], [ %.01052.be, %.backedge.backedge ] ; 2 uses
   %.01038 = phi i32 [ 0, %bb.h ], [ %.01038.be, %.backedge.backedge ] ; 4 uses
@@ -1051,10 +1050,9 @@ bb.qc:                                            ; preds = %bb.qb
   br i1 %i.azf, label %.lr.ph2099.preheader, label %bb.qj
 
 .lr.ph2099.preheader:                             ; preds = %bb.qc
-  %i.azg = zext nneg i32 %.01057 to i64           ; 3 uses
-  %xtraiter = and i64 %i.azg, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph2099.prol.loopexit, label %.lr.ph2099.prol
+  %i.azg = zext nneg i32 %.01057 to i64           ; 2 uses
+  %18 = trunc i32 %.01057 to i1
+  br i1 %18, label %.lr.ph2099.prol, label %.lr.ph2099.prol.loopexit
 
 .lr.ph2099.prol:                                  ; preds = %.lr.ph2099.preheader
   %indvars.iv.next.prol = add nsw i64 %i.azg, -1  ; 4 uses
@@ -1457,8 +1455,7 @@ bb.us:                                            ; preds = %bb.p
   %i.bkt = phi i32 [ %i.bmh, %cf2_stack_getReal.exit1727 ], [ %.promoted2068, %bb.us ] ; 2 uses
   %i.bku = phi i32 [ %i.bnh, %cf2_stack_getReal.exit1727 ], [ %.promoted2070, %bb.us ]
   %i.bkv = sub i32 %i.bkp, %.010122072
-  %18 = and i32 %i.bkv, 1
-  %.not1145 = icmp eq i32 %18, 0
+  %19 = trunc i32 %i.bkv to i1
   %.val.i1696.pre = load ptr, ptr %i.cu, align 8, !tbaa !370 ; 6 uses
   %.val14.i1697.pre = load ptr, ptr %i.cx, align 8, !tbaa !371
   %.pre2216 = ptrtoint ptr %.val14.i1697.pre to i64
@@ -1466,7 +1463,7 @@ bb.us:                                            ; preds = %bb.p
   %.pre2220 = sub i64 %.pre2216, %.pre2218
   %.pre2222 = lshr exact i64 %.pre2220, 3
   %.pre2224 = trunc i64 %.pre2222 to i32          ; 5 uses
-  br i1 %.not1145, label %.lr.ph2074._crit_edge, label %bb.ut
+  br i1 %19, label %bb.ut, label %.lr.ph2074._crit_edge
 
 bb.ut:                                            ; preds = %.lr.ph2074
   %.not.i1690 = icmp ult i32 %.010122072, %.pre2224
@@ -1726,8 +1723,7 @@ bb.vy:                                            ; preds = %bb.p
   %i.bnt = phi i32 [ %i.bpu, %cf2_stack_getReal.exit1767 ], [ %.promoted2059, %bb.vy ] ; 2 uses
   %i.bnu = phi i32 [ %i.bqh, %cf2_stack_getReal.exit1767 ], [ %.promoted2060, %bb.vy ]
   %i.bnv = sub i32 %i.bnp, %.010092062
-  %19 = and i32 %i.bnv, 1
-  %.not1144 = icmp eq i32 %19, 0
+  %20 = trunc i32 %i.bnv to i1
   %.val.i1736.pre = load ptr, ptr %i.cu, align 8, !tbaa !370 ; 6 uses
   %.val14.i1737.pre = load ptr, ptr %i.cx, align 8, !tbaa !371
   %.pre2226 = ptrtoint ptr %.val14.i1737.pre to i64
@@ -1735,7 +1731,7 @@ bb.vy:                                            ; preds = %bb.p
   %.pre2230 = sub i64 %.pre2226, %.pre2228
   %.pre2232 = lshr exact i64 %.pre2230, 3
   %.pre2234 = trunc i64 %.pre2232 to i32          ; 5 uses
-  br i1 %.not1144, label %.lr.ph2064._crit_edge, label %bb.vz
+  br i1 %20, label %bb.vz, label %.lr.ph2064._crit_edge
 
 bb.vz:                                            ; preds = %.lr.ph2064
   %.not.i1730 = icmp ult i32 %.010092062, %.pre2234
@@ -2138,9 +2134,8 @@ bb.t:                                             ; preds = %bb.r, %bb.s, %bb.p
 .lr.ph116:                                        ; preds = %.preheader
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 6 uses
   %.neg = add i32 %.081110, 1
-  %xtraiter = and i32 %i.bu, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  %3 = trunc i32 %i.bu to i1
+  br i1 %3, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph116
   %i.bx = add nsw i32 %i.bu, -1

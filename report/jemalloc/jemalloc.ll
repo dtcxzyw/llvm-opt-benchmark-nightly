@@ -205,9 +205,9 @@ percpu_arena_ind_limit.exit.i:                    ; preds = %bb.k
   %i.u = load i32, ptr @je_ncpus, align 4         ; 4 uses
   %i.v = icmp ugt i32 %i.u, 1
   %or.cond.i.i = and i1 %i.t, %i.v
-  %2 = and i32 %i.u, 1
-  %3 = lshr i32 %i.u, 1
-  %spec.select.i = add nuw i32 %3, %2
+  %2 = lshr i32 %i.u, 1
+  %3 = and i32 %i.u, 1
+  %spec.select.i = add nuw i32 %2, %3
   %.0.i47.i = select i1 %or.cond.i.i, i32 %spec.select.i, i32 %i.u
   %i.w = icmp ult i32 %.0.val48.i, %.0.i47.i
   br i1 %i.w, label %bb.l, label %arena_choose_impl.exit
@@ -610,11 +610,10 @@ bb.ak:                                            ; preds = %bb.aj
 
 bb.al:                                            ; preds = %bb.ai
   %i.cl = load i32, ptr @je_opt_percpu_arena, align 4, !tbaa !20 ; 2 uses
-  %3 = icmp ne i32 %i.cl, 1
-  %4 = and i32 %i.ch, 1                           ; 2 uses
-  %.not6.i = icmp eq i32 %4, 0
-  %or.cond.i31 = or i1 %.not6.i, %3
-  br i1 %or.cond.i31, label %percpu_arena_ind_limit.exit.i, label %bb.am
+  %3 = icmp eq i32 %i.cl, 1
+  %4 = trunc i32 %i.ch to i1
+  %or.cond.i31 = and i1 %3, %4
+  br i1 %or.cond.i31, label %bb.am, label %percpu_arena_ind_limit.exit.i
 
 bb.am:                                            ; preds = %bb.al
   call void (ptr, ...) @je_malloc_printf(ptr noundef nonnull @.str.98, i32 noundef %i.ch) #20, !inline_history !218
@@ -624,8 +623,7 @@ bb.am:                                            ; preds = %bb.al
 
 ._crit_edge.i:                                    ; preds = %bb.am
   %.pre.i = load i32, ptr @je_opt_percpu_arena, align 4, !tbaa !20
-  %.pre17.i.a = load i32, ptr @je_ncpus, align 4  ; 2 uses
-  %.pre = and i32 %.pre17.i.a, 1
+  %.pre17.i.a = load i32, ptr @je_ncpus, align 4
   br label %percpu_arena_ind_limit.exit.i
 
 bb.an:                                            ; preds = %bb.am
@@ -633,14 +631,14 @@ bb.an:                                            ; preds = %bb.am
   unreachable
 
 percpu_arena_ind_limit.exit.i:                    ; preds = %._crit_edge.i, %bb.al
-  %.pre-phi = phi i32 [ %.pre, %._crit_edge.i ], [ %4, %bb.al ]
-  %i.co = phi i32 [ %.pre17.i.a, %._crit_edge.i ], [ %i.ch, %bb.al ] ; 3 uses
+  %i.co = phi i32 [ %.pre17.i.a, %._crit_edge.i ], [ %i.ch, %bb.al ] ; 4 uses
   %i.cp = phi i32 [ %.pre.i, %._crit_edge.i ], [ %i.cl, %bb.al ]
   %i.cq = icmp eq i32 %i.cp, 1
   %i.cr = icmp ugt i32 %i.co, 1
   %or.cond.i.i = and i1 %i.cr, %i.cq
   %i.cs = lshr i32 %i.co, 1
-  %spec.select.i = add nuw i32 %i.cs, %.pre-phi
+  %5 = and i32 %i.co, 1
+  %spec.select.i = add nuw i32 %i.cs, %5
   %.0.i.i = select i1 %or.cond.i.i, i32 %spec.select.i, i32 %i.co ; 2 uses
   %i.ct = load i32, ptr @je_opt_narenas, align 4, !tbaa !20 ; 2 uses
   %i.cu = icmp ult i32 %i.ct, %.0.i.i

@@ -18,9 +18,8 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.d = add i64 %i.b, -4                         ; 2 uses
   %i.e = udiv i64 %i.d, 3
-  %3 = and i64 %i.e, 1
-  %lcmp.mod.not.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
+  %3 = trunc i64 %i.e to i1
+  br i1 %3, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
   %.019.val.prol = load i32, ptr %1, align 1      ; 2 uses
@@ -99,10 +98,10 @@ bb.a:
   br i1 %i.d, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.e = add i64 %i.b, -1                         ; 2 uses
-  %3 = and i64 %i.e, 4
-  %lcmp.mod.not.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
+  %i.e = add i64 %i.b, -1
+  %3 = lshr i64 %i.e, 2                           ; 2 uses
+  %4 = trunc i64 %3 to i1
+  br i1 %4, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
   %.010.val.prol = load i32, ptr %1, align 1
@@ -115,8 +114,8 @@ bb.a:
   %.unr = phi <16 x i8> [ zeroinitializer, %.lr.ph.preheader ], [ %i.g, %.lr.ph.prol ]
   %.0912.unr = phi i64 [ %i.c, %.lr.ph.preheader ], [ %i.b, %.lr.ph.prol ]
   %.01011.unr = phi ptr [ %1, %.lr.ph.preheader ], [ %i.h, %.lr.ph.prol ]
-  %4 = icmp ult i64 %i.e, 4
-  br i1 %4, label %._crit_edge, label %.lr.ph
+  %5 = icmp eq i64 %3, 0
+  br i1 %5, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
   %i.i = phi <16 x i8> [ %i.r, %.lr.ph ], [ %.unr, %.lr.ph.prol.loopexit ]

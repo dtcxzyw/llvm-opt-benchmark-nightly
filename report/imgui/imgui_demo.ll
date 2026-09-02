@@ -205,8 +205,8 @@ bb.a:
   %81 = alloca %struct.ImVec2, align 8            ; 4 uses
   %82 = alloca %struct.ImVec2, align 8            ; 4 uses
   %83 = alloca %struct.ImVec2, align 8            ; 4 uses
-  %84 = alloca %struct.ImVec2, align 8            ; 4 uses
-  %85 = alloca %struct.ImVec2, align 8            ; 4 uses
+  %84 = alloca %struct.ImVec2, align 4            ; 5 uses
+  %85 = alloca %struct.ImVec2, align 4            ; 5 uses
   %86 = alloca %struct.ImVec2, align 8            ; 4 uses
   %87 = alloca %struct.ImVec2, align 8            ; 4 uses
   %88 = alloca %struct.ImVec2, align 8            ; 4 uses
@@ -609,25 +609,37 @@ bb.hh:                                            ; preds = %bb.hg
   br i1 %i.aou, label %bb.hi, label %bb.hj
 
 bb.hi:                                            ; preds = %bb.hh
-  %i.aov = call noundef ptr @_ZN5ImGui15GetMainViewportEv() ; 2 uses
-  %i.aow = getelementptr inbounds nuw i8, ptr %i.aov, i64 32
-  %i.aox = getelementptr inbounds nuw i8, ptr %i.aov, i64 40
+  %i.aov = call noundef ptr @_ZN5ImGui15GetMainViewportEv() ; 4 uses
+  %173 = getelementptr inbounds nuw i8, ptr %i.aov, i64 32
+  %.sroa.01.0.copyload.i = load float, ptr %173, align 8, !tbaa !46 ; 2 uses
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.aov, i64 36
+  %.sroa.5.0.copyload.i = load float, ptr %.sroa.5.0..sroa_idx.i, align 4, !tbaa !46 ; 2 uses
+  %i.aow = getelementptr inbounds nuw i8, ptr %i.aov, i64 40
+  %.sroa.0.0.copyload.i = load float, ptr %i.aow, align 8, !tbaa !46
+  %i.aox = getelementptr inbounds nuw i8, ptr %i.aov, i64 44
+  %.sroa.4.0.copyload.i90 = load float, ptr %i.aox, align 4, !tbaa !46
   call void @llvm.lifetime.start.p0(ptr nonnull %84) #30
+  %174 = getelementptr inbounds nuw i8, ptr %84, i64 4
   call void @llvm.lifetime.start.p0(ptr nonnull %85) #30
-  %i.aoy = load i32, ptr @_ZZL27ShowExampleAppSimpleOverlayPbE8location, align 4, !tbaa !51
-  %173 = load <2 x float>, ptr %i.aow, align 8, !tbaa !46 ; 2 uses
-  %174 = load <2 x float>, ptr %i.aox, align 8, !tbaa !46
-  %175 = insertelement <2 x i32> poison, i32 %i.aoy, i64 0
-  %176 = shufflevector <2 x i32> %175, <2 x i32> poison, <2 x i32> zeroinitializer
-  %177 = and <2 x i32> %176, <i32 1, i32 2>
-  %178 = icmp eq <2 x i32> %177, zeroinitializer  ; 2 uses
-  %179 = fadd <2 x float> %173, %174
-  %180 = fadd <2 x float> %179, splat (float -1.000000e+01)
-  %181 = fadd <2 x float> %173, splat (float 1.000000e+01)
-  %182 = select <2 x i1> %178, <2 x float> %181, <2 x float> %180
-  store <2 x float> %182, ptr %84, align 8, !tbaa !46
-  %183 = select <2 x i1> %178, <2 x float> zeroinitializer, <2 x float> splat (float 1.000000e+00)
-  store <2 x float> %183, ptr %85, align 8, !tbaa !46
+  %175 = getelementptr inbounds nuw i8, ptr %85, i64 4
+  %i.aoy = load i32, ptr @_ZZL27ShowExampleAppSimpleOverlayPbE8location, align 4, !tbaa !51 ; 2 uses
+  %176 = trunc i32 %i.aoy to i1                   ; 2 uses
+  %177 = fadd float %.sroa.01.0.copyload.i, %.sroa.0.0.copyload.i
+  %178 = fadd float %177, -1.000000e+01
+  %179 = fadd float %.sroa.01.0.copyload.i, 1.000000e+01
+  %180 = select i1 %176, float %178, float %179
+  store float %180, ptr %84, align 4, !tbaa !44
+  %181 = and i32 %i.aoy, 2
+  %.not.i91 = icmp eq i32 %181, 0                 ; 2 uses
+  %182 = fadd float %.sroa.5.0.copyload.i, %.sroa.4.0.copyload.i90
+  %183 = fadd float %182, -1.000000e+01
+  %184 = fadd float %.sroa.5.0.copyload.i, 1.000000e+01
+  %185 = select i1 %.not.i91, float %184, float %183
+  store float %185, ptr %174, align 4, !tbaa !45
+  %186 = select i1 %176, float 1.000000e+00, float 0.000000e+00
+  store float %186, ptr %85, align 4, !tbaa !44
+  %187 = select i1 %.not.i91, float 0.000000e+00, float 1.000000e+00
+  store float %187, ptr %175, align 4, !tbaa !45
   call void @_ZN5ImGui16SetNextWindowPosERK6ImVec2iS2_(ptr noundef nonnull align 4 dereferenceable(8) %84, i32 noundef 1, ptr noundef nonnull align 4 dereferenceable(8) %85)
   call void @llvm.lifetime.end.p0(ptr nonnull %85) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %84) #30
@@ -1030,9 +1042,8 @@ _ZL10HelpMarkerPKc.exit:                          ; preds = %bb.f, %bb.g
   %i.ab = load i32, ptr %i.k, align 8, !tbaa !121
   call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.162, i32 noundef %i.ab)
   %i.ac = load i32, ptr %i.k, align 8, !tbaa !121 ; 2 uses
-  %3 = and i32 %i.ac, 1
-  %.not58 = icmp eq i32 %3, 0
-  br i1 %.not58, label %bb.i, label %bb.h
+  %3 = trunc i32 %i.ac to i1
+  br i1 %3, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %_ZL10HelpMarkerPKc.exit
   call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.163)
@@ -1168,9 +1179,8 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !125
   call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.169, i32 noundef %i.bl)
   %i.bm = load i32, ptr %i.bk, align 4, !tbaa !125 ; 2 uses
-  %4 = and i32 %i.bm, 1
-  %.not63 = icmp eq i32 %4, 0
-  br i1 %.not63, label %bb.ai, label %bb.ah
+  %4 = trunc i32 %i.bm to i1
+  br i1 %4, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
   call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.170)
@@ -1573,9 +1583,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.dc = phi i32 [ %i.db, %bb.h ], [ %.pre.i, %bb.g ]
-  %84 = and i32 %i.dc, 1
-  %.not.i = icmp eq i32 %84, 0
-  br i1 %.not.i, label %.peel.next.i, label %bb.j
+  %84 = trunc i32 %i.dc to i1
+  br i1 %84, label %bb.j, label %.peel.next.i
 
 bb.j:                                             ; preds = %bb.i
   call void @_ZN5ImGui8SameLineEff(float noundef 0.000000e+00, float noundef -1.000000e+00)
@@ -1978,9 +1987,8 @@ bb.cq:                                            ; preds = %bb.co, %bb.cp
 
 bb.cr:                                            ; preds = %.lr.ph268, %.loopexit298
   %.0170267 = phi i32 [ 0, %.lr.ph268 ], [ %i.ok, %.loopexit298 ] ; 6 uses
-  %72 = and i32 %.0170267, 1
-  %.not184 = icmp eq i32 %72, 0
-  %.v = select i1 %.not184, i32 3, i32 9
+  %72 = trunc i32 %.0170267 to i1
+  %.v = select i1 %72, i32 9, i32 3
   %i.np = call noundef float @_ZN5ImGui11GetFontSizeEv()
   %i.nq = fmul float %i.np, 3.000000e+00          ; 4 uses
   %i.nr = mul nuw nsw i32 %.0170267, 1000         ; 2 uses
@@ -2383,9 +2391,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define internal noundef float @_ZZL25DemoWindowWidgetsPlottingvEN5Funcs3SawEPvi(ptr nofree readnone captures(none) %0, i32 noundef %1) #15 align 2 {
 bb.a:
-  %2 = and i32 %1, 1
-  %.not = icmp eq i32 %2, 0
-  %i.a = select i1 %.not, float -1.000000e+00, float 1.000000e+00
+  %2 = trunc i32 %1 to i1
+  %i.a = select i1 %2, float 1.000000e+00, float -1.000000e+00
   ret float %i.a
 }
 

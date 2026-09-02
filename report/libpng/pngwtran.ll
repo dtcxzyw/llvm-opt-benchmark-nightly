@@ -205,7 +205,6 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %.not181.i, label %.lr.ph157.split.preheader.i, label %.lr.ph151.us.i.preheader
 
 .lr.ph151.us.i.preheader:                         ; preds = %.lr.ph157.i
-  %xtraiter = and i64 %i.fs, 1
   %i.fz = icmp eq i64 %i.fs, 1
   br i1 %i.fz, label %.lr.ph151.us.i.epil.preheader, label %.lr.ph151.us.i.preheader.new
 
@@ -363,8 +362,8 @@ bb.ag:                                            ; preds = %bb.ae
   br i1 %exitcond.not.i51, label %.loopexit.i, label %.lr.ph137.i, !llvm.loop !16
 
 .loopexit.i.loopexit.unr-lcssa:                   ; preds = %._crit_edge152.us.i.1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit.i, label %.lr.ph151.us.i.epil.preheader
+  %2 = trunc i64 %i.fs to i1
+  br i1 %2, label %.lr.ph151.us.i.epil.preheader, label %.loopexit.i
 
 .lr.ph151.us.i.epil.preheader:                    ; preds = %.loopexit.i.loopexit.unr-lcssa, %.lr.ph151.us.i.preheader
   %.0120154.us.i.epil.init = phi ptr [ %i.ei, %.lr.ph151.us.i.preheader ], [ %i.gt, %.loopexit.i.loopexit.unr-lcssa ] ; 2 uses
@@ -462,7 +461,6 @@ bb.al:                                            ; preds = %bb.aj
   br i1 %.not95.i, label %png_do_write_swap_alpha.exit, label %.lr.ph88.i.preheader
 
 .lr.ph88.i.preheader:                             ; preds = %bb.al
-  %xtraiter223 = and i32 %i.jh, 1
   %i.jv = icmp eq i32 %i.jh, 1
   br i1 %i.jv, label %.lr.ph88.i.epil.preheader, label %.lr.ph88.i.preheader.new
 
@@ -593,8 +591,8 @@ png_do_write_swap_alpha.exit.loopexit.unr-lcssa:  ; preds = %.lr.ph92.i
   br i1 %epil.iter230.cmp.not, label %png_do_write_swap_alpha.exit, label %.lr.ph92.i.epil, !llvm.loop !21
 
 png_do_write_swap_alpha.exit.loopexit197.unr-lcssa: ; preds = %.lr.ph88.i
-  %lcmp.mod225.not = icmp eq i32 %xtraiter223, 0
-  br i1 %lcmp.mod225.not, label %png_do_write_swap_alpha.exit, label %.lr.ph88.i.epil.preheader
+  %3 = trunc i32 %i.jh to i1
+  br i1 %3, label %.lr.ph88.i.epil.preheader, label %png_do_write_swap_alpha.exit
 
 .lr.ph88.i.epil.preheader:                        ; preds = %png_do_write_swap_alpha.exit.loopexit197.unr-lcssa, %.lr.ph88.i.preheader
   %.07187.i.epil.init = phi ptr [ %i.jb, %.lr.ph88.i.preheader ], [ %i.jz, %png_do_write_swap_alpha.exit.loopexit197.unr-lcssa ] ; 2 uses
@@ -714,7 +712,6 @@ bb.as:                                            ; preds = %bb.aq
   br i1 %.not69.i, label %png_do_write_invert_alpha.exit, label %.lr.ph63.i.preheader
 
 .lr.ph63.i.preheader:                             ; preds = %bb.as
-  %xtraiter247 = and i32 %i.mg, 1
   %i.mv = icmp eq i32 %i.mg, 1
   br i1 %i.mv, label %.lr.ph63.i.epil.preheader, label %.lr.ph63.i.preheader.new
 
@@ -794,7 +791,6 @@ bb.av:                                            ; preds = %bb.at
   br i1 %.not67.i, label %png_do_write_invert_alpha.exit, label %.lr.ph.i58.preheader
 
 .lr.ph.i58.preheader:                             ; preds = %bb.av
-  %xtraiter235 = and i32 %i.nm, 1
   %i.ob = icmp eq i32 %i.nm, 1
   br i1 %i.ob, label %.lr.ph.i58.epil.preheader, label %.lr.ph.i58.preheader.new
 
@@ -849,8 +845,8 @@ png_do_write_invert_alpha.exit.loopexit.unr-lcssa: ; preds = %.lr.ph66.i
   br i1 %epil.iter254.cmp.not, label %png_do_write_invert_alpha.exit, label %.lr.ph66.i.epil, !llvm.loop !28
 
 png_do_write_invert_alpha.exit.loopexit194.unr-lcssa: ; preds = %.lr.ph63.i
-  %lcmp.mod249.not = icmp eq i32 %xtraiter247, 0
-  br i1 %lcmp.mod249.not, label %png_do_write_invert_alpha.exit, label %.lr.ph63.i.epil.preheader
+  %4 = trunc i32 %i.mg to i1
+  br i1 %4, label %.lr.ph63.i.epil.preheader, label %png_do_write_invert_alpha.exit
 
 .lr.ph63.i.epil.preheader:                        ; preds = %png_do_write_invert_alpha.exit.loopexit194.unr-lcssa, %.lr.ph63.i.preheader
   %.04861.i.epil.init = phi ptr [ %i.ma, %.lr.ph63.i.preheader ], [ %i.ng, %png_do_write_invert_alpha.exit.loopexit194.unr-lcssa ] ; 2 uses
@@ -889,8 +885,8 @@ png_do_write_invert_alpha.exit.loopexit195.unr-lcssa: ; preds = %.lr.ph60.i
   br i1 %epil.iter242.cmp.not, label %png_do_write_invert_alpha.exit, label %.lr.ph60.i.epil, !llvm.loop !29
 
 png_do_write_invert_alpha.exit.loopexit196.unr-lcssa: ; preds = %.lr.ph.i58
-  %lcmp.mod237.not = icmp eq i32 %xtraiter235, 0
-  br i1 %lcmp.mod237.not, label %png_do_write_invert_alpha.exit, label %.lr.ph.i58.epil.preheader
+  %5 = trunc i32 %i.nm to i1
+  br i1 %5, label %.lr.ph.i58.epil.preheader, label %png_do_write_invert_alpha.exit
 
 .lr.ph.i58.epil.preheader:                        ; preds = %png_do_write_invert_alpha.exit.loopexit196.unr-lcssa, %.lr.ph.i58.preheader
   %.04355.i.epil.init = phi ptr [ %i.ma, %.lr.ph.i58.preheader ], [ %i.om, %png_do_write_invert_alpha.exit.loopexit196.unr-lcssa ] ; 2 uses
@@ -908,9 +904,8 @@ png_do_write_invert_alpha.exit.loopexit196.unr-lcssa: ; preds = %.lr.ph.i58
 
 png_do_write_invert_alpha.exit:                   ; preds = %.lr.ph.i58.epil.preheader, %png_do_write_invert_alpha.exit.loopexit196.unr-lcssa, %png_do_write_invert_alpha.exit.loopexit195.unr-lcssa, %.lr.ph60.i.epil, %.lr.ph63.i.epil.preheader, %png_do_write_invert_alpha.exit.loopexit194.unr-lcssa, %png_do_write_invert_alpha.exit.loopexit.unr-lcssa, %.lr.ph66.i.epil, %bb.av, %bb.au, %bb.as, %bb.ar, %bb.ap, %png_do_write_swap_alpha.exit
   %i.pj = load i32, ptr %i.d, align 4, !tbaa !46  ; 2 uses
-  %2 = and i32 %i.pj, 1
-  %.not47 = icmp eq i32 %2, 0
-  br i1 %.not47, label %bb.ax, label %bb.aw
+  %6 = trunc i32 %i.pj to i1
+  br i1 %6, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %png_do_write_invert_alpha.exit
   %i.pk = getelementptr inbounds nuw i8, ptr %0, i64 560

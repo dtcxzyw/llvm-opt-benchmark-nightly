@@ -204,9 +204,9 @@ bb.a:
 .lr.ph.i.preheader:                               ; preds = %bb.a
     #dbg_value(!DIArgList(ptr %i.e, i64 %i.g), !20726, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 3, DW_OP_shl, DW_OP_plus, DW_OP_stack_value), !20782)
     #dbg_value(!DIArgList(ptr %i.e, i64 %i.g), !20739, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 3, DW_OP_shl, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !20778)
-  %i.j = add i64 %i.g, 2305843009213693951, !dbg !20834 ; 2 uses
+  %i.j = add i64 %i.g, 2305843009213693951, !dbg !20834
   %i.k = and i64 %i.j, 2305843009213693951, !dbg !20834 ; 2 uses
-  %i.l = add nuw nsw i64 %i.k, 1, !dbg !20834     ; 2 uses
+  %i.l = add nuw nsw i64 %i.k, 1, !dbg !20834     ; 3 uses
   %i.m = icmp eq i64 %i.k, 0, !dbg !20834
   br i1 %i.m, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new, !dbg !20834
 
@@ -287,9 +287,8 @@ bb.a:
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i, !dbg !20834
 
 ._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %.lr.ph.i
-  %2 = and i64 %i.j, 1, !dbg !20834
-  %lcmp.mod.not.not = icmp eq i64 %2, 0, !dbg !20834
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.epil.preheader, label %._crit_edge.i, !dbg !20834
+  %2 = trunc i64 %i.l to i1, !dbg !20834
+  br i1 %2, label %.lr.ph.i.epil.preheader, label %._crit_edge.i, !dbg !20834
 
 .lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.lr.ph.i.preheader
   %.sroa.0.02.i.epil.init = phi ptr [ %i.e, %.lr.ph.i.preheader ], [ %i.ac, %._crit_edge.i.loopexit.unr-lcssa ] ; 3 uses

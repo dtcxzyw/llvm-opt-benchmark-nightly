@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.p
   %i.ls = getelementptr inbounds nuw [16 x i8], ptr %i.lr, i64 %i.cr ; 2 uses
   %i.lt = load ptr, ptr %i.ls, align 8, !nonnull !5, !align !23, !noundef !5
   %i.lu = getelementptr inbounds nuw i8, ptr %i.ls, i64 8 ; 3 uses
-  %i.lv = load i64, ptr %i.lu, align 8, !noundef !5 ; 7 uses
+  %i.lv = load i64, ptr %i.lu, align 8, !noundef !5 ; 6 uses
   %i.lw = load ptr, ptr %i.lt, align 8, !nonnull !5, !noundef !5
   %i.lx = getelementptr inbounds nuw i8, ptr %i.lw, i64 16
   %i.ly = tail call noundef nonnull align 8 ptr @_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree4nodeNtB2_4Node8children(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1008) %i.lx)
@@ -217,15 +217,12 @@ bb.v:                                             ; preds = %bb.p
 bb.w:                                             ; preds = %bb.v
   %i.mb = extractvalue { ptr, i64 } %i.lz, 0      ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.mb) ]
-  %2 = icmp eq i64 %i.lv, 0
-  br i1 %2, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit, label %.preheader1070.preheader
+  switch i64 %i.lv, label %.preheader1070.preheader.new [
+    i64 0, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit
+    i64 1, label %.preheader1070.epil.preheader
+  ]
 
-.preheader1070.preheader:                         ; preds = %bb.w
-  %xtraiter2122 = and i64 %i.lv, 1
-  %3 = icmp eq i64 %i.lv, 1
-  br i1 %3, label %.preheader1070.epil.preheader, label %.preheader1070.preheader.new
-
-.preheader1070.preheader.new:                     ; preds = %.preheader1070.preheader
+.preheader1070.preheader.new:                     ; preds = %bb.w
   %unroll_iter2128 = and i64 %i.lv, -2
   br label %.preheader1070
 
@@ -248,12 +245,12 @@ bb.w:                                             ; preds = %bb.v
   br i1 %niter2129.ncmp.1, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit.loopexit.unr-lcssa, label %.preheader1070
 
 _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit.loopexit.unr-lcssa: ; preds = %.preheader1070
-  %lcmp.mod2125.not = icmp eq i64 %xtraiter2122, 0
-  br i1 %lcmp.mod2125.not, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit, label %.preheader1070.epil.preheader
+  %2 = trunc i64 %i.lv to i1
+  br i1 %2, label %.preheader1070.epil.preheader, label %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit
 
-.preheader1070.epil.preheader:                    ; preds = %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit.loopexit.unr-lcssa, %.preheader1070.preheader
-  %.sroa.01.0.i434.epil.init = phi i64 [ 0, %.preheader1070.preheader ], [ %i.mm, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit.loopexit.unr-lcssa ]
-  %.epil.init = phi <4 x i64> [ zeroinitializer, %.preheader1070.preheader ], [ %i.ml, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit.loopexit.unr-lcssa ]
+.preheader1070.epil.preheader:                    ; preds = %bb.w, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit.loopexit.unr-lcssa
+  %.sroa.01.0.i434.epil.init = phi i64 [ 0, %bb.w ], [ %i.mm, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit.loopexit.unr-lcssa ]
+  %.epil.init = phi <4 x i64> [ zeroinitializer, %bb.w ], [ %i.ml, %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoENtNtNtNtBb_4iter6traits8iterator8Iterator4foldBQ_NCNvMs4_NtBW_4iterNtB2A_5Lines9prev_impl0EBW_.exit.loopexit.unr-lcssa ]
   %lcmp.mod2127 = trunc i64 %i.lv to i1
   tail call void @llvm.assume(i1 %lcmp.mod2127)
   %i.mn = getelementptr inbounds nuw [32 x i8], ptr %i.mb, i64 %.sroa.01.0.i434.epil.init

@@ -204,9 +204,8 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define double @_RNvMNtCsatzsiS36G5T_11typst_utils6scalarNtB2_6Scalar4powi(double %0, i32 %1) unnamed_addr #0 {
 bb.a:
-  %2 = and i32 %1, 1
-  %.not11 = icmp eq i32 %2, 0
-  %.sroa.08.112 = select i1 %.not11, double 1.000000e+00, double %0 ; 2 uses
+  %2 = trunc i32 %1 to i1
+  %.sroa.08.112 = select i1 %2, double %0, double 1.000000e+00 ; 2 uses
   %.sroa.0.0.off13 = add i32 %1, 1
   %i.a = icmp ult i32 %.sroa.0.0.off13, 3
   br i1 %i.a, label %._crit_edge, label %.lr.ph
@@ -217,10 +216,9 @@ bb.a:
   %.sroa.05.014 = phi double [ %i.c, %.lr.ph ], [ %0, %bb.a ] ; 2 uses
   %i.b = sdiv i32 %.sroa.0.015, 2                 ; 3 uses
   %i.c = fmul double %.sroa.05.014, %.sroa.05.014 ; 2 uses
-  %3 = and i32 %i.b, 1
-  %.not = icmp eq i32 %3, 0
+  %3 = trunc i32 %i.b to i1
   %i.d = fmul double %.sroa.08.116, %i.c
-  %.sroa.08.1 = select i1 %.not, double %.sroa.08.116, double %i.d ; 2 uses
+  %.sroa.08.1 = select i1 %3, double %i.d, double %.sroa.08.116 ; 2 uses
   %.sroa.0.0.off = add nsw i32 %i.b, 1
   %i.e = icmp ult i32 %.sroa.0.0.off, 3
   br i1 %i.e, label %._crit_edge, label %.lr.ph
@@ -360,9 +358,8 @@ bb.a:
   %.sroa.034.0 = phi i64 [ %.sroa.034.1, %bb.e ], [ 1, %bb.a ] ; 2 uses
   %.sroa.016.0 = phi i32 [ %i.k, %bb.e ], [ %1, %bb.a ] ; 3 uses
   %.sroa.0.0 = phi i64 [ %i.j, %bb.e ], [ %0, %bb.a ] ; 3 uses
-  %2 = and i32 %.sroa.016.0, 1
-  %.not = icmp eq i32 %2, 0
-  br i1 %.not, label %bb.d, label %bb.b
+  %2 = trunc i32 %.sroa.016.0 to i1
+  br i1 %2, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %.preheader52
   %i.d = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.034.0, i64 %.sroa.0.0) ; 2 uses

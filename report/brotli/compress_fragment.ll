@@ -205,7 +205,6 @@ EmitInsertLen.exit:                               ; preds = %bb.r, %bb.q, %bb.n,
 .lr.ph239:                                        ; preds = %EmitInsertLen.exit
   %.promoted = load i64, ptr %5, align 8, !tbaa !17, !alias.scope !283, !noalias !284 ; 2 uses
   %.neg = add i64 %i.gr, 1
-  %xtraiter = and i64 %i.gs, 1
   %i.nl = icmp eq i64 %.us-phi215, %.neg
   br i1 %i.nl, label %.epil.preheader, label %.lr.ph239.new
 
@@ -266,8 +265,8 @@ bb.s:                                             ; preds = %bb.s, %.lr.ph239.ne
   br i1 %niter.ncmp.1, label %EmitLiterals.exit.loopexit.unr-lcssa, label %bb.s, !llvm.loop !5
 
 EmitLiterals.exit.loopexit.unr-lcssa:             ; preds = %bb.s
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %EmitLiterals.exit, label %.epil.preheader
+  %7 = trunc i64 %i.gs to i1
+  br i1 %7, label %.epil.preheader, label %EmitLiterals.exit
 
 .epil.preheader:                                  ; preds = %EmitLiterals.exit.loopexit.unr-lcssa, %.lr.ph239
   %.epil.init = phi i64 [ %.promoted, %.lr.ph239 ], [ %i.ov, %EmitLiterals.exit.loopexit.unr-lcssa ] ; 3 uses
@@ -670,7 +669,6 @@ EmitInsertLen.exit27:                             ; preds = %bb.bb, %bb.bd, %bb.
   %.promoted273 = load i64, ptr %5, align 8, !tbaa !17, !alias.scope !349, !noalias !350 ; 2 uses
   %i.apk = add nsw i64 %.0358.i, -1
   %i.apl = add i64 %i.apk, %.0.i.lcssa632633
-  %xtraiter645 = and i64 %i.akv, 1
   %i.apm = icmp eq i64 %i.apl, %.7.i.lcssa634635
   br i1 %i.apm, label %.epil.preheader643, label %.lr.ph272.new
 
@@ -817,7 +815,6 @@ EmitLongInsertLen.exit30:                         ; preds = %bb.bl, %bb.bm
   store i64 %.sink358, ptr %5, align 8, !tbaa !17, !noalias !19
   %i.asz = add nsw i64 %.0358.i, -1
   %i.ata = add i64 %i.asz, %.0.i.lcssa632633
-  %xtraiter636 = and i64 %i.akv, 1
   %i.atb = icmp eq i64 %i.ata, %.7.i.lcssa634635
   br i1 %i.atb, label %.epil.preheader629, label %EmitLongInsertLen.exit30.new
 
@@ -878,8 +875,8 @@ bb.bn:                                            ; preds = %bb.bn, %EmitLongIns
   br i1 %niter642.ncmp.1, label %EmitLiterals.exit33.loopexit560.unr-lcssa, label %bb.bn, !llvm.loop !5
 
 EmitLiterals.exit33.loopexit.unr-lcssa:           ; preds = %bb.bh
-  %lcmp.mod648.not = icmp eq i64 %xtraiter645, 0
-  br i1 %lcmp.mod648.not, label %EmitLiterals.exit33, label %.epil.preheader643
+  %8 = trunc i64 %i.akv to i1
+  br i1 %8, label %.epil.preheader643, label %EmitLiterals.exit33
 
 .epil.preheader643:                               ; preds = %EmitLiterals.exit33.loopexit.unr-lcssa, %.lr.ph272
   %.epil.init647 = phi i64 [ %.promoted273, %.lr.ph272 ], [ %i.aqw, %EmitLiterals.exit33.loopexit.unr-lcssa ] ; 3 uses
@@ -910,8 +907,8 @@ EmitLiterals.exit33.loopexit.unr-lcssa:           ; preds = %bb.bh
   br label %EmitLiterals.exit33
 
 EmitLiterals.exit33.loopexit560.unr-lcssa:        ; preds = %bb.bn
-  %lcmp.mod639.not = icmp eq i64 %xtraiter636, 0
-  br i1 %lcmp.mod639.not, label %EmitLiterals.exit33, label %.epil.preheader629
+  %9 = trunc i64 %i.akv to i1
+  br i1 %9, label %.epil.preheader629, label %EmitLiterals.exit33
 
 .epil.preheader629:                               ; preds = %EmitLiterals.exit33.loopexit560.unr-lcssa, %EmitLongInsertLen.exit30
   %.0.i34270.epil.init = phi i64 [ 0, %EmitLongInsertLen.exit30 ], [ %i.aum, %EmitLiterals.exit33.loopexit560.unr-lcssa ]
@@ -1314,7 +1311,6 @@ EmitInsertLen.exit:                               ; preds = %bb.r, %bb.q, %bb.n,
 .lr.ph239:                                        ; preds = %EmitInsertLen.exit
   %.promoted = load i64, ptr %5, align 8, !tbaa !17, !alias.scope !600, !noalias !601 ; 2 uses
   %.neg = add i64 %i.gr, 1
-  %xtraiter = and i64 %i.gs, 1
   %i.nl = icmp eq i64 %.us-phi215, %.neg
   br i1 %i.nl, label %.epil.preheader, label %.lr.ph239.new
 
@@ -1375,8 +1371,8 @@ bb.s:                                             ; preds = %bb.s, %.lr.ph239.ne
   br i1 %niter.ncmp.1, label %EmitLiterals.exit.loopexit.unr-lcssa, label %bb.s, !llvm.loop !5
 
 EmitLiterals.exit.loopexit.unr-lcssa:             ; preds = %bb.s
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %EmitLiterals.exit, label %.epil.preheader
+  %7 = trunc i64 %i.gs to i1
+  br i1 %7, label %.epil.preheader, label %EmitLiterals.exit
 
 .epil.preheader:                                  ; preds = %EmitLiterals.exit.loopexit.unr-lcssa, %.lr.ph239
   %.epil.init = phi i64 [ %.promoted, %.lr.ph239 ], [ %i.ov, %EmitLiterals.exit.loopexit.unr-lcssa ] ; 3 uses
@@ -1779,7 +1775,6 @@ EmitInsertLen.exit27:                             ; preds = %bb.bb, %bb.bd, %bb.
   %.promoted273 = load i64, ptr %5, align 8, !tbaa !17, !alias.scope !666, !noalias !667 ; 2 uses
   %i.apk = add nsw i64 %.0358.i, -1
   %i.apl = add i64 %i.apk, %.0.i.lcssa632633
-  %xtraiter645 = and i64 %i.akv, 1
   %i.apm = icmp eq i64 %i.apl, %.7.i.lcssa634635
   br i1 %i.apm, label %.epil.preheader643, label %.lr.ph272.new
 
@@ -1926,7 +1921,6 @@ EmitLongInsertLen.exit30:                         ; preds = %bb.bl, %bb.bm
   store i64 %.sink358, ptr %5, align 8, !tbaa !17, !noalias !19
   %i.asz = add nsw i64 %.0358.i, -1
   %i.ata = add i64 %i.asz, %.0.i.lcssa632633
-  %xtraiter636 = and i64 %i.akv, 1
   %i.atb = icmp eq i64 %i.ata, %.7.i.lcssa634635
   br i1 %i.atb, label %.epil.preheader629, label %EmitLongInsertLen.exit30.new
 
@@ -1987,8 +1981,8 @@ bb.bn:                                            ; preds = %bb.bn, %EmitLongIns
   br i1 %niter642.ncmp.1, label %EmitLiterals.exit33.loopexit560.unr-lcssa, label %bb.bn, !llvm.loop !5
 
 EmitLiterals.exit33.loopexit.unr-lcssa:           ; preds = %bb.bh
-  %lcmp.mod648.not = icmp eq i64 %xtraiter645, 0
-  br i1 %lcmp.mod648.not, label %EmitLiterals.exit33, label %.epil.preheader643
+  %8 = trunc i64 %i.akv to i1
+  br i1 %8, label %.epil.preheader643, label %EmitLiterals.exit33
 
 .epil.preheader643:                               ; preds = %EmitLiterals.exit33.loopexit.unr-lcssa, %.lr.ph272
   %.epil.init647 = phi i64 [ %.promoted273, %.lr.ph272 ], [ %i.aqw, %EmitLiterals.exit33.loopexit.unr-lcssa ] ; 3 uses
@@ -2019,8 +2013,8 @@ EmitLiterals.exit33.loopexit.unr-lcssa:           ; preds = %bb.bh
   br label %EmitLiterals.exit33
 
 EmitLiterals.exit33.loopexit560.unr-lcssa:        ; preds = %bb.bn
-  %lcmp.mod639.not = icmp eq i64 %xtraiter636, 0
-  br i1 %lcmp.mod639.not, label %EmitLiterals.exit33, label %.epil.preheader629
+  %9 = trunc i64 %i.akv to i1
+  br i1 %9, label %.epil.preheader629, label %EmitLiterals.exit33
 
 .epil.preheader629:                               ; preds = %EmitLiterals.exit33.loopexit560.unr-lcssa, %EmitLongInsertLen.exit30
   %.0.i34270.epil.init = phi i64 [ 0, %EmitLongInsertLen.exit30 ], [ %i.aum, %EmitLiterals.exit33.loopexit560.unr-lcssa ]
@@ -2423,7 +2417,6 @@ EmitInsertLen.exit:                               ; preds = %bb.r, %bb.q, %bb.n,
 .lr.ph239:                                        ; preds = %EmitInsertLen.exit
   %.promoted = load i64, ptr %5, align 8, !tbaa !17, !alias.scope !917, !noalias !918 ; 2 uses
   %.neg = add i64 %i.gr, 1
-  %xtraiter = and i64 %i.gs, 1
   %i.nl = icmp eq i64 %.us-phi215, %.neg
   br i1 %i.nl, label %.epil.preheader, label %.lr.ph239.new
 
@@ -2484,8 +2477,8 @@ bb.s:                                             ; preds = %bb.s, %.lr.ph239.ne
   br i1 %niter.ncmp.1, label %EmitLiterals.exit.loopexit.unr-lcssa, label %bb.s, !llvm.loop !5
 
 EmitLiterals.exit.loopexit.unr-lcssa:             ; preds = %bb.s
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %EmitLiterals.exit, label %.epil.preheader
+  %7 = trunc i64 %i.gs to i1
+  br i1 %7, label %.epil.preheader, label %EmitLiterals.exit
 
 .epil.preheader:                                  ; preds = %EmitLiterals.exit.loopexit.unr-lcssa, %.lr.ph239
   %.epil.init = phi i64 [ %.promoted, %.lr.ph239 ], [ %i.ov, %EmitLiterals.exit.loopexit.unr-lcssa ] ; 3 uses
@@ -2888,7 +2881,6 @@ EmitInsertLen.exit27:                             ; preds = %bb.bb, %bb.bd, %bb.
   %.promoted273 = load i64, ptr %5, align 8, !tbaa !17, !alias.scope !983, !noalias !984 ; 2 uses
   %i.apk = add nsw i64 %.0358.i, -1
   %i.apl = add i64 %i.apk, %.0.i.lcssa632633
-  %xtraiter645 = and i64 %i.akv, 1
   %i.apm = icmp eq i64 %i.apl, %.7.i.lcssa634635
   br i1 %i.apm, label %.epil.preheader643, label %.lr.ph272.new
 
@@ -3035,7 +3027,6 @@ EmitLongInsertLen.exit30:                         ; preds = %bb.bl, %bb.bm
   store i64 %.sink358, ptr %5, align 8, !tbaa !17, !noalias !19
   %i.asz = add nsw i64 %.0358.i, -1
   %i.ata = add i64 %i.asz, %.0.i.lcssa632633
-  %xtraiter636 = and i64 %i.akv, 1
   %i.atb = icmp eq i64 %i.ata, %.7.i.lcssa634635
   br i1 %i.atb, label %.epil.preheader629, label %EmitLongInsertLen.exit30.new
 
@@ -3096,8 +3087,8 @@ bb.bn:                                            ; preds = %bb.bn, %EmitLongIns
   br i1 %niter642.ncmp.1, label %EmitLiterals.exit33.loopexit560.unr-lcssa, label %bb.bn, !llvm.loop !5
 
 EmitLiterals.exit33.loopexit.unr-lcssa:           ; preds = %bb.bh
-  %lcmp.mod648.not = icmp eq i64 %xtraiter645, 0
-  br i1 %lcmp.mod648.not, label %EmitLiterals.exit33, label %.epil.preheader643
+  %8 = trunc i64 %i.akv to i1
+  br i1 %8, label %.epil.preheader643, label %EmitLiterals.exit33
 
 .epil.preheader643:                               ; preds = %EmitLiterals.exit33.loopexit.unr-lcssa, %.lr.ph272
   %.epil.init647 = phi i64 [ %.promoted273, %.lr.ph272 ], [ %i.aqw, %EmitLiterals.exit33.loopexit.unr-lcssa ] ; 3 uses
@@ -3128,8 +3119,8 @@ EmitLiterals.exit33.loopexit.unr-lcssa:           ; preds = %bb.bh
   br label %EmitLiterals.exit33
 
 EmitLiterals.exit33.loopexit560.unr-lcssa:        ; preds = %bb.bn
-  %lcmp.mod639.not = icmp eq i64 %xtraiter636, 0
-  br i1 %lcmp.mod639.not, label %EmitLiterals.exit33, label %.epil.preheader629
+  %9 = trunc i64 %i.akv to i1
+  br i1 %9, label %.epil.preheader629, label %EmitLiterals.exit33
 
 .epil.preheader629:                               ; preds = %EmitLiterals.exit33.loopexit560.unr-lcssa, %EmitLongInsertLen.exit30
   %.0.i34270.epil.init = phi i64 [ 0, %EmitLongInsertLen.exit30 ], [ %i.aum, %EmitLiterals.exit33.loopexit560.unr-lcssa ]
@@ -3532,7 +3523,6 @@ EmitInsertLen.exit:                               ; preds = %bb.r, %bb.q, %bb.n,
 .lr.ph239:                                        ; preds = %EmitInsertLen.exit
   %.promoted = load i64, ptr %5, align 8, !tbaa !17, !alias.scope !1234, !noalias !1235 ; 2 uses
   %.neg = add i64 %i.gr, 1
-  %xtraiter = and i64 %i.gs, 1
   %i.nl = icmp eq i64 %.us-phi215, %.neg
   br i1 %i.nl, label %.epil.preheader, label %.lr.ph239.new
 
@@ -3593,8 +3583,8 @@ bb.s:                                             ; preds = %bb.s, %.lr.ph239.ne
   br i1 %niter.ncmp.1, label %EmitLiterals.exit.loopexit.unr-lcssa, label %bb.s, !llvm.loop !5
 
 EmitLiterals.exit.loopexit.unr-lcssa:             ; preds = %bb.s
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %EmitLiterals.exit, label %.epil.preheader
+  %7 = trunc i64 %i.gs to i1
+  br i1 %7, label %.epil.preheader, label %EmitLiterals.exit
 
 .epil.preheader:                                  ; preds = %EmitLiterals.exit.loopexit.unr-lcssa, %.lr.ph239
   %.epil.init = phi i64 [ %.promoted, %.lr.ph239 ], [ %i.ov, %EmitLiterals.exit.loopexit.unr-lcssa ] ; 3 uses
@@ -3997,7 +3987,6 @@ EmitInsertLen.exit27:                             ; preds = %bb.bb, %bb.bd, %bb.
   %.promoted273 = load i64, ptr %5, align 8, !tbaa !17, !alias.scope !1300, !noalias !1301 ; 2 uses
   %i.apk = add nsw i64 %.0358.i, -1
   %i.apl = add i64 %i.apk, %.0.i.lcssa632633
-  %xtraiter645 = and i64 %i.akv, 1
   %i.apm = icmp eq i64 %i.apl, %.7.i.lcssa634635
   br i1 %i.apm, label %.epil.preheader643, label %.lr.ph272.new
 
@@ -4144,7 +4133,6 @@ EmitLongInsertLen.exit30:                         ; preds = %bb.bl, %bb.bm
   store i64 %.sink358, ptr %5, align 8, !tbaa !17, !noalias !19
   %i.asz = add nsw i64 %.0358.i, -1
   %i.ata = add i64 %i.asz, %.0.i.lcssa632633
-  %xtraiter636 = and i64 %i.akv, 1
   %i.atb = icmp eq i64 %i.ata, %.7.i.lcssa634635
   br i1 %i.atb, label %.epil.preheader629, label %EmitLongInsertLen.exit30.new
 
@@ -4205,8 +4193,8 @@ bb.bn:                                            ; preds = %bb.bn, %EmitLongIns
   br i1 %niter642.ncmp.1, label %EmitLiterals.exit33.loopexit560.unr-lcssa, label %bb.bn, !llvm.loop !5
 
 EmitLiterals.exit33.loopexit.unr-lcssa:           ; preds = %bb.bh
-  %lcmp.mod648.not = icmp eq i64 %xtraiter645, 0
-  br i1 %lcmp.mod648.not, label %EmitLiterals.exit33, label %.epil.preheader643
+  %8 = trunc i64 %i.akv to i1
+  br i1 %8, label %.epil.preheader643, label %EmitLiterals.exit33
 
 .epil.preheader643:                               ; preds = %EmitLiterals.exit33.loopexit.unr-lcssa, %.lr.ph272
   %.epil.init647 = phi i64 [ %.promoted273, %.lr.ph272 ], [ %i.aqw, %EmitLiterals.exit33.loopexit.unr-lcssa ] ; 3 uses
@@ -4237,8 +4225,8 @@ EmitLiterals.exit33.loopexit.unr-lcssa:           ; preds = %bb.bh
   br label %EmitLiterals.exit33
 
 EmitLiterals.exit33.loopexit560.unr-lcssa:        ; preds = %bb.bn
-  %lcmp.mod639.not = icmp eq i64 %xtraiter636, 0
-  br i1 %lcmp.mod639.not, label %EmitLiterals.exit33, label %.epil.preheader629
+  %9 = trunc i64 %i.akv to i1
+  br i1 %9, label %.epil.preheader629, label %EmitLiterals.exit33
 
 .epil.preheader629:                               ; preds = %EmitLiterals.exit33.loopexit560.unr-lcssa, %EmitLongInsertLen.exit30
   %.0.i34270.epil.init = phi i64 [ 0, %EmitLongInsertLen.exit30 ], [ %i.aum, %EmitLiterals.exit33.loopexit560.unr-lcssa ]
