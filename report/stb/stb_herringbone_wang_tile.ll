@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/stb/original/stb_herringbone_wang_tile?download=true
 inline.NumInlined: 76
 loop-unroll.NumCompletelyUnrolled: 11
-loop-unroll.NumRuntimeUnrolled: 32
+loop-unroll.NumRuntimeUnrolled: 31
 loop-unroll.NumUnrolled: 43
 begin_hunk_0_@stbhw_generate_image:bb.a
   %i.kv = or i32 %i.ku, %i.kq
@@ -204,65 +204,43 @@ bb.a:
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !101
   %i.ac = load i32, ptr %i.z, align 8, !tbaa !102
-  %i.ad = sext i32 %i.w to i64                    ; 3 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.x, i32 1) ; 3 uses
+  %i.ad = sext i32 %i.w to i64                    ; 2 uses
   %i.ae = zext nneg i32 %i.e to i64
   %i.af = sext i32 %i.v to i64
   %i.ag = sext i32 %i.ac to i64
   %wide.trip.count44 = zext nneg i32 %i.d to i64
-  %wide.trip.count = zext nneg i32 %smax to i64   ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
-  %9 = icmp eq i32 %smax, 1
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %lcmp.mod46 = trunc i32 %smax to i1
+  %wide.trip.count = zext i32 %i.x to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph.split, %._crit_edge
   %indvars.iv41 = phi i64 [ 0, %.preheader.lr.ph.split ], [ %indvars.iv.next42, %._crit_edge ] ; 3 uses
   %i.ah = mul nuw nsw i64 %indvars.iv41, %i.ae
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.ah ; 3 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.ah ; 2 uses
   %i.aj = add nsw i64 %indvars.iv41, %i.af
   %i.ak = mul nsw i64 %i.aj, %i.ag
-  %i.al = getelementptr inbounds i8, ptr %i.ab, i64 %i.ak ; 3 uses
-  br i1 %9, label %.epil.preheader, label %.preheader.new
+  %i.al = getelementptr inbounds i8, ptr %i.ab, i64 %i.ak ; 2 uses
+  br label %.preheader.new
 
-.preheader.new:                                   ; preds = %.preheader, %.preheader.new
-  %indvars.iv = phi i64 [ %indvars.iv.next.1, %.preheader.new ], [ 0, %.preheader ] ; 4 uses
-  %niter = phi i64 [ %niter.next.1, %.preheader.new ], [ 0, %.preheader ]
-  %i.am = mul nuw nsw i64 %indvars.iv, 3
+.preheader.new:                                   ; preds = %.preheader.new, %.preheader
+  %niter = phi i64 [ 0, %.preheader ], [ %niter.next.1, %.preheader.new ] ; 4 uses
+  %i.am = mul nuw nsw i64 %niter, 3
   %i.an = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.am
-  %i.ao = add nsw i64 %indvars.iv, %i.ad
+  %i.ao = add nsw i64 %niter, %i.ad
   %i.ap = mul nsw i64 %i.ao, 3
   %i.aq = getelementptr inbounds i8, ptr %i.al, i64 %i.ap
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.an, ptr noundef nonnull align 1 dereferenceable(3) %i.aq, i64 3, i1 false)
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next = or disjoint i64 %niter, 1    ; 2 uses
   %i.ar = mul nuw nsw i64 %indvars.iv.next, 3
   %i.as = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ar
   %i.at = add nsw i64 %indvars.iv.next, %i.ad
   %i.au = mul nsw i64 %i.at, 3
   %i.av = getelementptr inbounds i8, ptr %i.al, i64 %i.au
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.as, ptr noundef nonnull align 1 dereferenceable(3) %i.av, i64 3, i1 false)
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.preheader.new, !llvm.loop !103
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %wide.trip.count
+  br i1 %niter.ncmp.1, label %._crit_edge, label %.preheader.new, !llvm.loop !103
 
-._crit_edge.unr-lcssa:                            ; preds = %.preheader.new
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
-
-.epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.preheader
-  %indvars.iv.epil.init = phi i64 [ 0, %.preheader ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 2 uses
-  tail call void @llvm.assume(i1 %lcmp.mod46)
-  %10 = mul nuw nsw i64 %indvars.iv.epil.init, 3
-  %11 = getelementptr inbounds nuw i8, ptr %i.ai, i64 %10
-  %12 = add nsw i64 %indvars.iv.epil.init, %i.ad
-  %13 = mul nsw i64 %12, 3
-  %14 = getelementptr inbounds i8, ptr %i.al, i64 %13
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %11, ptr noundef nonnull align 1 dereferenceable(3) %14, i64 3, i1 false)
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.epil.preheader
+._crit_edge:                                      ; preds = %.preheader.new
   %indvars.iv.next42 = add nuw nsw i64 %indvars.iv41, 1 ; 2 uses
   %exitcond45.not = icmp eq i64 %indvars.iv.next42, %wide.trip.count44
   br i1 %exitcond45.not, label %._crit_edge39.split, label %.preheader, !llvm.loop !104
