@@ -204,11 +204,7 @@ va_clip.exit:                                     ; preds = %.critedge259, %bb.a
 
 bb.bw:                                            ; preds = %va_clip.exit, %pvm_find_va_enclose_addr.exit355.thread
   %.not248585 = icmp eq i64 %indvars.iv624, 0
-  br i1 %.not248585, label %.loopexit539, label %.lr.ph587.preheader
-
-.lr.ph587.preheader:                              ; preds = %bb.bw
-  %4 = trunc i64 %indvars.iv624 to i32
-  br label %.lr.ph587
+  br i1 %.not248585, label %.loopexit539, label %.lr.ph587
 
 bb.bx:                                            ; preds = %.thread453, %bb.bp, %bb.bv, %free_vmap_area_rb_augment_cb_propagate.exit386
   %i.ld = getelementptr [8 x i8], ptr %i.bo, i64 %indvars.iv624
@@ -274,11 +270,10 @@ bb.bx:                                            ; preds = %.thread453, %bb.bp,
   tail call void @kfree(ptr noundef nonnull %i.bo) #23
   br label %bb.ee
 
-.lr.ph587:                                        ; preds = %.lr.ph587.preheader, %merge_or_add_vmap_area_augment.exit.thread
-  %.in = phi i32 [ %5, %merge_or_add_vmap_area_augment.exit.thread ], [ %4, %.lr.ph587.preheader ]
-  %5 = add i32 %.in, -1                           ; 3 uses
-  %6 = sext i32 %5 to i64
-  %i.mj = getelementptr [8 x i8], ptr %i.bo, i64 %6 ; 2 uses
+.lr.ph587:                                        ; preds = %bb.bw, %merge_or_add_vmap_area_augment.exit.thread
+  %indvars.iv629 = phi i64 [ %indvars.iv.next630, %merge_or_add_vmap_area_augment.exit.thread ], [ %indvars.iv624, %bb.bw ]
+  %indvars.iv.next630 = add nsw i64 %indvars.iv629, -1 ; 3 uses
+  %i.mj = getelementptr [8 x i8], ptr %i.bo, i64 %indvars.iv.next630 ; 2 uses
   %i.mk = load ptr, ptr %i.mj, align 8            ; 9 uses
   %i.ml = getelementptr i8, ptr %i.mk, i64 8      ; 2 uses
   %i.mm = load ptr, ptr @free_vmap_area_root, align 8 ; 2 uses
@@ -681,7 +676,7 @@ bb.dy:                                            ; preds = %bb.dx
 
 merge_or_add_vmap_area_augment.exit.thread:       ; preds = %bb.dy, %bb.dx, %find_va_links.exit.thread, %find_va_links.exit, %__merge_or_add_vmap_area.exit
   store ptr null, ptr %i.mj, align 8
-  %.not248 = icmp eq i32 %5, 0
+  %.not248 = icmp eq i64 %indvars.iv.next630, 0
   br i1 %.not248, label %.loopexit539, label %.lr.ph587, !llvm.loop !297
 
 .loopexit539:                                     ; preds = %bb.w, %pvm_find_va_enclose_addr.exit342, %merge_or_add_vmap_area_augment.exit.thread, %.backedge, %pvm_determine_end_from_reverse.exit, %bb.bw

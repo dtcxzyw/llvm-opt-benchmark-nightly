@@ -205,7 +205,7 @@ _ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit: ; preds = %bb.j, %
   %.0.i = phi i8 [ %i.al, %bb.l ], [ %i.ag, %bb.j ], [ 0, %bb.k ]
   %i.am = trunc nuw nsw i64 %indvars.iv to i32
   %i.an = xor i32 %i.am, -1
-  %i.ao = add i32 %i.ab, %i.an
+  %i.ao = add nsw i32 %i.ab, %i.an
   %i.ap = sext i32 %i.ao to i64
   %i.aq = load ptr, ptr %3, align 8, !tbaa !48
   %i.ar = getelementptr inbounds i8, ptr %i.aq, i64 %i.ap
@@ -608,21 +608,15 @@ _ZN6icu_7815MaybeStackArrayIcLi30EEC2Ei10UErrorCode.exit.._crit_edge_crit_edge: 
 
 bb.f:                                             ; preds = %.lr.ph, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit ] ; 3 uses
-  %i.al = phi i32 [ %i.n, %.lr.ph ], [ %i.be, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit ] ; 2 uses
+  %i.al = phi i32 [ %i.n, %.lr.ph ], [ %i.be, %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit ]
   %i.am = trunc nuw nsw i64 %indvars.iv to i32
   %i.an = xor i32 %i.am, -1
-  %i.ao = add i32 %i.al, %i.an                    ; 5 uses
+  %i.ao = add nsw i32 %i.al, %i.an                ; 3 uses
   %i.ap = load i8, ptr %i.p, align 8, !tbaa !23, !range !25, !noundef !26
   %i.aq = trunc nuw i8 %i.ap to i1
-  br i1 %i.aq, label %3, label %bb.h
+  br i1 %i.aq, label %bb.g, label %bb.h
 
-3:                                                ; preds = %bb.f
-  %4 = icmp sgt i32 %i.ao, -1
-  %.not.i = icmp slt i32 %i.ao, %i.al
-  %or.cond10.i = and i1 %4, %.not.i
-  br i1 %or.cond10.i, label %bb.g, label %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit
-
-bb.g:                                             ; preds = %3
+bb.g:                                             ; preds = %bb.f
   %i.ar = load ptr, ptr %i.q, align 8, !tbaa !27
   %i.as = zext nneg i32 %i.ao to i64
   %i.at = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.as
@@ -642,8 +636,8 @@ bb.i:                                             ; preds = %bb.h
   %i.ba = and i8 %i.az, 15
   br label %_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit
 
-_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit: ; preds = %3, %bb.g, %bb.h, %bb.i
-  %.0.i = phi i8 [ %i.ba, %bb.i ], [ %i.au, %bb.g ], [ 0, %3 ], [ 0, %bb.h ]
+_ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit: ; preds = %bb.g, %bb.h, %bb.i
+  %.0.i = phi i8 [ %i.ba, %bb.i ], [ %i.au, %bb.g ], [ 0, %bb.h ]
   %i.bb = add i8 %.0.i, 48
   %i.bc = load ptr, ptr %2, align 8, !tbaa !57
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 %indvars.iv

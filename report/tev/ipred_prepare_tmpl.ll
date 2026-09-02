@@ -122,10 +122,10 @@ bb.l:                                             ; preds = %bb.j
   br i1 %.not181.not, label %bb.m, label %pixel_set.exit208
 
 bb.m:                                             ; preds = %._crit_edge259
-  %i.ar = shl i32 %13, 2                          ; 22 uses
+  %i.ar = shl i32 %13, 2                          ; 17 uses
   %i.as = sub i32 0, %i.ar
   %i.at = sext i32 %i.as to i64
-  %i.au = getelementptr [2 x i8], ptr %15, i64 %i.at ; 18 uses
+  %i.au = getelementptr [2 x i8], ptr %15, i64 %i.at ; 16 uses
   %.not182 = icmp eq i32 %1, 0                    ; 2 uses
   br i1 %.not182, label %bb.p, label %bb.n
 
@@ -140,19 +140,15 @@ bb.n:                                             ; preds = %bb.m
   %i.az = and i64 %8, 1
   %.not.i195 = icmp eq i64 %i.az, 0
   tail call void @llvm.assume(i1 %.not.i195)
-  %i.ba = ashr exact i64 %8, 1                    ; 12 uses
+  %i.ba = ashr exact i64 %8, 1                    ; 14 uses
+  %17 = sext i32 %i.ar to i64
   %wide.trip.count = zext nneg i32 %i.ax to i64   ; 6 uses
-  %min.iters.check = icmp ult i32 %i.ax, 56
+  %18 = getelementptr [2 x i8], ptr %i.au, i64 %17 ; 5 uses
+  %min.iters.check = icmp ult i32 %i.ax, 48
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph
-  %i.bb = add nsw i64 %wide.trip.count, -1        ; 3 uses
-  %17 = add i32 %i.ar, -1                         ; 2 uses
-  %18 = trunc nsw i64 %i.bb to i32
-  %19 = sub i32 %17, %18
-  %20 = icmp sgt i32 %19, %17
-  %21 = icmp ugt i64 %i.bb, 4294967295
-  %22 = or i1 %20, %21
+  %i.bb = add nsw i64 %wide.trip.count, -1
   %i.bc = mul i64 %i.ba, -2
   %scevgep = getelementptr i8, ptr %7, i64 -2     ; 4 uses
   %i.bd = icmp slt i64 %8, 0                      ; 2 uses
@@ -166,24 +162,12 @@ vector.scevcheck:                                 ; preds = %.lr.ph
   %i.bi = icmp ult ptr %i.bg, %scevgep
   %i.bj = icmp ugt ptr %i.bh, %scevgep
   %i.bk = select i1 %i.bd, i1 %i.bj, i1 %i.bi
-  %23 = or i1 %i.bk, %mul.overflow
-  %i.bl = or i1 %22, %23
+  %i.bl = or i1 %i.bk, %mul.overflow
   br i1 %i.bl, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %24 = add i32 %i.ar, -4
-  %25 = sext i32 %24 to i64
-  %26 = shl nsw i64 %25, 1                        ; 2 uses
-  %27 = add nsw i64 %26, 8
-  %28 = sext i32 %i.ar to i64                     ; 2 uses
-  %29 = shl nsw i64 %28, 1
-  %30 = add nsw i64 %28, %wide.trip.count
-  %31 = shl nsw i64 %30, 1
-  %32 = sub nsw i64 %27, %31
-  %scevgep287 = getelementptr i8, ptr %15, i64 %32
-  %33 = add nsw i64 %26, 8
-  %34 = sub nsw i64 %33, %29
-  %scevgep288.a = getelementptr i8, ptr %15, i64 %34
+  %19 = mul nsw i64 %wide.trip.count, -2
+  %scevgep288.a = getelementptr i8, ptr %15, i64 %19
   %i.bm = add nuw i64 %wide.trip.count, 9223372036854775807
   %i.bn = mul i64 %i.ba, %i.bm
   %i.bo = shl i64 %i.bn, 1
@@ -195,8 +179,8 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.br = icmp ugt ptr %scevgep289.a, %scevgep290
   %umax = select i1 %i.br, ptr %scevgep289.a, ptr %scevgep290
   %scevgep291 = getelementptr i8, ptr %umax, i64 2
-  %bound0 = icmp ult ptr %scevgep287, %scevgep291
-  %bound1 = icmp ult ptr %umin, %scevgep288.a
+  %bound0 = icmp ult ptr %scevgep288.a, %scevgep291
+  %bound1 = icmp ult ptr %umin, %15
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
@@ -253,12 +237,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.dk = insertelement <8 x i16> %i.dj, i16 %i.dc, i64 5
   %i.dl = insertelement <8 x i16> %i.dk, i16 %i.dd, i64 6
   %i.dm = insertelement <8 x i16> %i.dl, i16 %i.de, i64 7
-  %35 = trunc i64 %index to i32
-  %36 = xor i32 %35, -1
-  %37 = add i32 %i.ar, %36
-  %38 = sext i32 %37 to i64
-  %i.dn = getelementptr inbounds [2 x i8], ptr %i.au, i64 %38
-  %i.do = getelementptr inbounds i8, ptr %i.dn, i64 -14
+  %20 = xor i64 %index, -1
+  %i.dn = getelementptr [2 x i8], ptr %18, i64 %20
+  %i.do = getelementptr i8, ptr %i.dn, i64 -14
   %reverse = shufflevector <8 x i16> %i.dm, <8 x i16> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   store <8 x i16> %reverse, ptr %i.do, align 2, !tbaa !45, !alias.scope !47, !noalias !46
   %index.next = add nuw i64 %index, 8             ; 2 uses
@@ -278,29 +259,39 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %v
   br i1 %i.dq, label %bb.o, label %pixel_set.exit
 
 scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.preheader
-  %indvars.iv = phi i64 [ %indvars.iv.ph, %scalar.ph.preheader ], [ %indvars.iv.next.1, %scalar.ph ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.ph, %scalar.ph.preheader ], [ %indvars.iv.next.1, %scalar.ph ] ; 9 uses
   %i.dr = mul nsw i64 %i.ba, %indvars.iv
   %i.ds = getelementptr [2 x i8], ptr %7, i64 %i.dr
   %i.dt = getelementptr i8, ptr %i.ds, i64 -2
   %i.du = load i16, ptr %i.dt, align 2, !tbaa !45
-  %39 = trunc i64 %indvars.iv to i32
-  %40 = xor i32 %39, -1
-  %41 = add i32 %i.ar, %40
-  %42 = sext i32 %41 to i64
-  %i.dv = getelementptr inbounds [2 x i8], ptr %i.au, i64 %42
-  store i16 %i.du, ptr %i.dv, align 2, !tbaa !45
-  %indvars.iv.next.a = or disjoint i64 %indvars.iv, 1 ; 2 uses
+  %21 = xor i64 %indvars.iv, -1
+  %22 = getelementptr [2 x i8], ptr %18, i64 %21
+  store i16 %i.du, ptr %22, align 2, !tbaa !45
+  %indvars.iv.next = or disjoint i64 %indvars.iv, 1
+  %23 = mul nsw i64 %i.ba, %indvars.iv.next
+  %24 = getelementptr [2 x i8], ptr %7, i64 %23
+  %25 = getelementptr i8, ptr %24, i64 -2
+  %26 = load i16, ptr %25, align 2, !tbaa !45
+  %27 = xor i64 %indvars.iv, -2
+  %i.dv = getelementptr [2 x i8], ptr %18, i64 %27
+  store i16 %26, ptr %i.dv, align 2, !tbaa !45
+  %indvars.iv.next.a = or disjoint i64 %indvars.iv, 2
   %i.dw = mul nsw i64 %i.ba, %indvars.iv.next.a
   %i.dx = getelementptr [2 x i8], ptr %7, i64 %i.dw
   %i.dy = getelementptr i8, ptr %i.dx, i64 -2
   %i.dz = load i16, ptr %i.dy, align 2, !tbaa !45
-  %43 = trunc i64 %indvars.iv.next.a to i32
-  %44 = xor i32 %43, -1
-  %45 = add i32 %i.ar, %44
-  %46 = sext i32 %45 to i64
-  %i.ea = getelementptr inbounds [2 x i8], ptr %i.au, i64 %46
-  store i16 %i.dz, ptr %i.ea, align 2, !tbaa !45
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %28 = xor i64 %indvars.iv, -3
+  %29 = getelementptr [2 x i8], ptr %18, i64 %28
+  store i16 %i.dz, ptr %29, align 2, !tbaa !45
+  %indvars.iv.next.2 = or disjoint i64 %indvars.iv, 3
+  %30 = mul nsw i64 %i.ba, %indvars.iv.next.2
+  %31 = getelementptr [2 x i8], ptr %7, i64 %30
+  %32 = getelementptr i8, ptr %31, i64 -2
+  %33 = load i16, ptr %32, align 2, !tbaa !45
+  %34 = xor i64 %indvars.iv, -4
+  %i.ea = getelementptr [2 x i8], ptr %18, i64 %34
+  store i16 %33, ptr %i.ea, align 2, !tbaa !45
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %wide.trip.count
   br i1 %exitcond.not.1, label %._crit_edge, label %scalar.ph, !llvm.loop !12
 
