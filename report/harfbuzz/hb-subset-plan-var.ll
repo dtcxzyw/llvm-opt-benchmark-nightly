@@ -205,8 +205,6 @@ _ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit: ; preds = %bb.g, %bb.h
 
 bb.i:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %2 = shl nuw nsw i32 %0, 8
-  %3 = add nuw nsw i32 %2, 2304
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 3 uses
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !292 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -230,9 +228,10 @@ _ZN3CFF14byte_str_ref_tixEi.exit23:               ; preds = %bb.j, %bb.k
   %.0.i22 = phi ptr [ @_hb_NullPool, %bb.j ], [ %i.ao, %bb.k ]
   %i.aq = load i8, ptr %.0.i22, align 1, !tbaa !252
   %i.ar = zext i8 %i.aq to i32
-  %.masked = and i32 %3, 65280
-  %4 = or disjoint i32 %.masked, 108
-  %sext17 = add nuw nsw i32 %4, %i.ar
+  %2 = shl nuw nsw i32 %0, 8
+  %3 = add nuw nsw i32 %2, 2412
+  %sext17 = add nuw nsw i32 %3, %i.ar
+  %4 = and i32 %sext17, 65535
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
   %i.at = load i32, ptr %i.as, align 4, !tbaa !319 ; 3 uses
   %i.au = icmp ult i32 %i.at, 513
@@ -254,7 +253,7 @@ bb.m:                                             ; preds = %_ZN3CFF14byte_str_r
 
 _ZN3CFF11arg_stack_tINS_8number_tEE8push_intEi.exit25: ; preds = %bb.l, %bb.m
   %.0.i.i24 = phi ptr [ %i.ay, %bb.l ], [ @_hb_CrapPool, %bb.m ]
-  %i.ba = uitofp nneg i32 %sext17 to double
+  %i.ba = uitofp nneg i32 %4 to double
   store double %i.ba, ptr %.0.i.i24, align 8, !tbaa !321
   %i.bb = add i32 %i.ap, 1
   store i32 %i.bb, ptr %i.ah, align 4, !tbaa !292

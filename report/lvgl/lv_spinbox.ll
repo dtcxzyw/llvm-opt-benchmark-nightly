@@ -201,25 +201,24 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   %i.k = tail call i32 @llvm.abs.i32(i32 %i.g, i1 true)
   %i.l = call i32 (ptr, i64, ptr, ...) @lv_snprintf(ptr noundef nonnull %i.b, i64 noundef 14, ptr noundef nonnull @.str.1, i32 noundef %i.k) #8 ; 0 uses
-  %i.m = call i64 @lv_strlen(ptr noundef nonnull %i.b) #8 ; 3 uses
+  %i.m = call i64 @lv_strlen(ptr noundef nonnull %i.b) #8 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
   %i.o = load i16, ptr %i.n, align 8              ; 3 uses
-  %i.p = and i16 %i.o, 15                         ; 4 uses
-  %1 = zext nneg i16 %i.p to i64
-  %2 = sub i64 %1, %i.m                           ; 3 uses
-  %3 = trunc i64 %2 to i32
+  %i.p = and i16 %i.o, 15                         ; 3 uses
+  %1 = zext nneg i16 %i.p to i32                  ; 2 uses
+  %2 = trunc i64 %i.m to i32                      ; 2 uses
+  %3 = sub i32 %1, %2                             ; 3 uses
   %i.q = icmp sgt i32 %3, 0
   br i1 %i.q, label %bb.c, label %.loopexit
 
 bb.c:                                             ; preds = %._crit_edge101
-  %4 = and i64 %i.m, 2147483648
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %iter.check, label %.lr.ph71.preheader
+  %4 = icmp sgt i32 %2, -1
+  br i1 %4, label %iter.check, label %.lr.ph71.preheader
 
 iter.check:                                       ; preds = %bb.c
   %i.r = and i64 %i.m, 2147483647                 ; 8 uses
-  %6 = and i64 %2, 2147483647
-  %invariant.gep = getelementptr i8, ptr %i.b, i64 %6 ; 3 uses
+  %5 = zext nneg i32 %3 to i64
+  %invariant.gep = getelementptr i8, ptr %i.b, i64 %5 ; 3 uses
   %i.s = add nuw nsw i64 %i.r, 1                  ; 5 uses
   %min.iters.check = icmp samesign ult i64 %i.r, 7
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -287,8 +286,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.lr.ph
 
 .lr.ph71.preheader:                               ; preds = %.lr.ph, %middle.block, %vec.epilog.middle.block, %bb.c
-  %7 = and i64 %2, 2147483647
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.b, i8 48, i64 %7, i1 false), !tbaa !22
+  %6 = zext nneg i32 %3 to i64
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.b, i8 48, i64 %6, i1 false), !tbaa !22
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -342,8 +341,7 @@ bb.d:                                             ; preds = %.lr.ph74
 
 bb.e:                                             ; preds = %.critedge
   store i8 46, ptr %.161.lcssa, align 1, !tbaa !22
-  %8 = zext nneg i16 %i.p to i32
-  %i.av = icmp samesign ult i32 %.2.lcssa, %8
+  %i.av = icmp samesign ult i32 %.2.lcssa, %1
   br i1 %i.av, label %.lr.ph82.preheader, label %.critedge2
 
 .lr.ph82.preheader:                               ; preds = %bb.e

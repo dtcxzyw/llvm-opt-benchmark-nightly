@@ -205,13 +205,12 @@ bb.d:                                             ; preds = %_RNvNtNtCs8hX8rJVGc
 
 bb.e:                                             ; preds = %bb.d
   %i.v = icmp eq i32 %i.t, 0
-  %..i.i.i.i.i.i = select i1 %i.v, i32 0, i32 512
   %i.w = lshr exact i32 %i.r, 16
   %i.x = lshr i32 %i.t, 13
   %i.y = or disjoint i32 %i.x, %i.w
-  %2 = or i32 %i.y, %..i.i.i.i.i.i
-  %3 = trunc nuw i32 %2 to i16
-  %i.z = or disjoint i16 %3, 31744
+  %2 = trunc nuw i32 %i.y to i16
+  %3 = select i1 %i.v, i16 31744, i16 32256
+  %i.z = or i16 %3, %2
   br label %bb.p
 
 bb.f:                                             ; preds = %bb.d
@@ -614,13 +613,12 @@ bb.d:                                             ; preds = %_RNvNtNtCs8hX8rJVGc
 
 bb.e:                                             ; preds = %bb.d
   %i.r = icmp eq i32 %i.p, 0
-  %..i.i.i.i = select i1 %i.r, i32 0, i32 512
   %i.s = lshr exact i32 %i.n, 16
   %i.t = lshr i32 %i.p, 13
   %i.u = or disjoint i32 %i.t, %i.s
-  %3 = or i32 %i.u, %..i.i.i.i
-  %4 = trunc nuw i32 %3 to i16
-  %i.v = or disjoint i16 %4, 31744
+  %3 = trunc nuw i32 %i.u to i16
+  %4 = select i1 %i.r, i16 31744, i16 32256
+  %i.v = or i16 %4, %3
   br label %bb.p
 
 bb.f:                                             ; preds = %bb.d
@@ -769,13 +767,12 @@ bb.d:                                             ; preds = %_RNvNtNtCs8hX8rJVGc
 
 bb.e:                                             ; preds = %bb.d
   %i.r = icmp eq i32 %i.p, 0
-  %..i.i.i.i = select i1 %i.r, i32 0, i32 512
   %i.s = lshr exact i32 %i.n, 16
   %i.t = lshr i32 %i.p, 13
   %i.u = or disjoint i32 %i.t, %i.s
-  %3 = or i32 %i.u, %..i.i.i.i
-  %4 = trunc nuw i32 %3 to i16
-  %i.v = or disjoint i16 %4, 31744
+  %3 = trunc nuw i32 %i.u to i16
+  %4 = select i1 %i.r, i16 31744, i16 32256
+  %i.v = or i16 %4, %3
   br label %bb.p
 
 bb.f:                                             ; preds = %bb.d

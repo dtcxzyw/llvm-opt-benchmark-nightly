@@ -202,11 +202,10 @@ bb.an:                                            ; preds = %bb.am, %bb.am
 bb.ao:                                            ; preds = %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am, %bb.am
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.cf = load i8, ptr %i.ce, align 8
-  %3 = zext i8 %i.cf to i32
-  %4 = shl nuw nsw i32 %3, 1
-  %5 = or i32 %4, %i.c
-  %6 = trunc i32 %5 to i8
-  store i8 %6, ptr %i.ce, align 8
+  %3 = shl i8 %i.cf, 1
+  %4 = trunc i32 %i.c to i8
+  %5 = or i8 %3, %4
+  store i8 %5, ptr %i.ce, align 8
   %i.cg = add nuw nsw i32 %i.cc, 1                ; 5 uses
   %i.ch = zext nneg i32 %i.cc to i64
   %i.ci = getelementptr inbounds nuw [8 x i8], ptr @sname, i64 %i.ch

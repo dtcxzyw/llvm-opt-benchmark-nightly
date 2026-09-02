@@ -205,14 +205,13 @@ bb.d:                                             ; preds = %._crit_edge.i.i
   %i.ai = zext nneg i32 %i.ah to i64
   %i.aj = shl i64 %i.w, %i.ai
   %i.ak = lshr i32 255, %.052.lcssa.i.i
-  %3 = zext nneg i32 %i.ak to i64
-  %4 = or i64 %i.aj, %3                           ; 2 uses
-  %5 = trunc i64 %4 to i8
+  %3 = trunc nuw nsw i32 %i.ak to i8
+  %4 = trunc i64 %i.aj to i8
+  %5 = or i8 %4, %3                               ; 2 uses
   store i8 %5, ptr %.1.lcssa.i.i, align 1, !tbaa !33
   %i.al = getelementptr inbounds nuw i8, ptr %.1.lcssa.i.i, i64 1 ; 2 uses
   store i8 0, ptr %i.al, align 1, !tbaa !33
-  %6 = and i64 %4, 255
-  %.not57.i.i = icmp eq i64 %6, 255
+  %.not57.i.i = icmp eq i8 %5, -1
   %.sroa.gep65.i.i = getelementptr inbounds nuw i8, ptr %.1.lcssa.i.i, i64 2
   %.neg.sroa.sel.i.i = select i1 %.not57.i.i, ptr %.sroa.gep65.i.i, ptr %i.al
   br label %bb.e
@@ -513,14 +512,13 @@ bb.b:                                             ; preds = %._crit_edge.i
   %i.v = zext nneg i32 %i.u to i64
   %i.w = shl i64 %.sroa.20.16.copyload18, %i.v
   %i.x = lshr i32 255, %.052.lcssa.i
-  %1 = zext nneg i32 %i.x to i64
-  %2 = or i64 %i.w, %1                            ; 2 uses
-  %3 = trunc i64 %2 to i8
+  %1 = trunc nuw nsw i32 %i.x to i8
+  %2 = trunc i64 %i.w to i8
+  %3 = or i8 %2, %1                               ; 2 uses
   store i8 %3, ptr %.1.lcssa.i, align 1, !tbaa !33
   %i.y = getelementptr inbounds nuw i8, ptr %.1.lcssa.i, i64 1 ; 2 uses
   store i8 0, ptr %i.y, align 1, !tbaa !33
-  %4 = and i64 %2, 255
-  %.not57.i = icmp eq i64 %4, 255
+  %.not57.i = icmp eq i8 %3, -1
   %.sroa.gep65.i = getelementptr inbounds nuw i8, ptr %.1.lcssa.i, i64 2
   %.neg.sroa.sel.i = select i1 %.not57.i, ptr %.sroa.gep65.i, ptr %i.y
   br label %bb.c

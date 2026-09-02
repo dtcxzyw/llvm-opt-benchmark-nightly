@@ -204,7 +204,6 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.ax, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %3 = shl nuw nsw i32 %i.al, 12
   %i.ay = sext i32 %i.ah to i64
   %i.az = getelementptr inbounds i8, ptr %1, i64 %i.ay
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !25
@@ -215,6 +214,7 @@ bb.j:                                             ; preds = %bb.i
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !25
   %i.bg = and i8 %i.bf, 63
   %i.bh = zext nneg i8 %i.bg to i32
+  %3 = shl nuw nsw i32 %i.al, 12
   %.masked54 = and i32 %3, 61440
   %.masked = or disjoint i32 %i.bd, %.masked54
   %i.bi = or disjoint i32 %.masked, %i.bh
@@ -617,42 +617,42 @@ bb.bv:                                            ; preds = %bb.bu
   br i1 %.not348, label %_ZNK6icu_7815Normalizer2Impl21hasCompBoundaryBeforeEPKDsS2_.exit435.thread, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
-  %i.ll = load i16, ptr %.6299, align 2, !tbaa !34 ; 3 uses
+  %i.ll = load i16, ptr %.6299, align 2, !tbaa !34 ; 4 uses
   %i.lm = add i16 %i.ll, -4520
   %or.cond7 = icmp ult i16 %i.lm, 27
-  %7 = zext i16 %i.ll to i32                      ; 6 uses
   br i1 %or.cond7, label %bb.bx, label %bb.by
 
 bb.bx:                                            ; preds = %bb.bw
-  %8 = add nsw i32 %7, -4519
+  %7 = add nsw i16 %i.ll, -4519
   %i.ln = getelementptr inbounds nuw i8, ptr %.6299, i64 2
   br label %_ZNK6icu_7815Normalizer2Impl21hasCompBoundaryBeforeEPKDsS2_.exit435.thread
 
 bb.by:                                            ; preds = %bb.bw
+  %8 = zext i16 %i.ll to i32                      ; 5 uses
   %i.lo = load i16, ptr %i.a, align 2, !tbaa !46
   %i.lp = icmp ult i16 %i.ll, %i.lo
   br i1 %i.lp, label %_ZNK6icu_7815Normalizer2Impl21hasCompBoundaryBeforeEPKDsS2_.exit435.thread, label %bb.bz
 
 bb.bz:                                            ; preds = %bb.by
   %i.lq = getelementptr inbounds nuw i8, ptr %.6299, i64 2 ; 2 uses
-  %i.lr = and i32 %7, 63488
+  %i.lr = and i32 %8, 63488
   %i.ls = icmp eq i32 %i.lr, 55296
   br i1 %i.ls, label %bb.cb, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
   %i.lt = load ptr, ptr %i.bv, align 8, !tbaa !47 ; 2 uses
   %i.lu = load ptr, ptr %i.lt, align 8, !tbaa !49
-  %i.lv = lshr i32 %7, 6
+  %i.lv = lshr i32 %8, 6
   %i.lw = zext nneg i32 %i.lv to i64
   %i.lx = getelementptr inbounds nuw [2 x i8], ptr %i.lu, i64 %i.lw
   %i.ly = load i16, ptr %i.lx, align 2, !tbaa !50
   %i.lz = zext i16 %i.ly to i32
-  %i.ma = and i32 %7, 63
+  %i.ma = and i32 %8, 63
   %i.mb = add nuw nsw i32 %i.ma, %i.lz
   br label %bb.ch
 
 bb.cb:                                            ; preds = %bb.bz
-  %i.mc = and i32 %7, 1024
+  %i.mc = and i32 %8, 1024
   %i.md = icmp ne i32 %i.mc, 0
   %.not.i431 = icmp eq ptr %i.lq, %.0306
   %or.cond.i432 = select i1 %i.md, i1 true, i1 %.not.i431
@@ -671,7 +671,7 @@ bb.cc:                                            ; preds = %bb.cb
   br i1 %i.mh, label %bb.cd, label %bb.cg
 
 bb.cd:                                            ; preds = %bb.cc
-  %i.mi = shl nuw nsw i32 %7, 10
+  %i.mi = shl nuw nsw i32 %8, 10
   %i.mj = add nsw i32 %i.mi, -56613888
   %i.mk = add nuw nsw i32 %i.mj, %i.mf            ; 2 uses
   %i.ml = getelementptr inbounds nuw i8, ptr %.pre651, i64 24
@@ -720,14 +720,8 @@ _ZNK6icu_7815Normalizer2Impl21hasCompBoundaryBeforeEPKDsS2_.exit435: ; preds = %
 
 _ZNK6icu_7815Normalizer2Impl21hasCompBoundaryBeforeEPKDsS2_.exit435.thread: ; preds = %bb.bv, %bb.ch, %bb.by, %bb.bx, %_ZNK6icu_7815Normalizer2Impl21hasCompBoundaryBeforeEPKDsS2_.exit435
   %.7300.ph = phi ptr [ %.6299, %_ZNK6icu_7815Normalizer2Impl21hasCompBoundaryBeforeEPKDsS2_.exit435 ], [ %i.ln, %bb.bx ], [ %.6299, %bb.by ], [ %.6299, %bb.ch ], [ %.6299, %bb.bv ] ; 2 uses
-  %.0251.ph = phi i32 [ 0, %_ZNK6icu_7815Normalizer2Impl21hasCompBoundaryBeforeEPKDsS2_.exit435 ], [ %8, %bb.bx ], [ 0, %bb.by ], [ 0, %bb.ch ], [ 0, %bb.bv ]
+  %.0251.ph = phi i16 [ 0, %_ZNK6icu_7815Normalizer2Impl21hasCompBoundaryBeforeEPKDsS2_.exit435 ], [ %7, %bb.bx ], [ 0, %bb.by ], [ 0, %bb.ch ], [ 0, %bb.bv ]
   %narrow = mul nuw nsw i16 %i.lj, 21
-  %9 = zext nneg i16 %narrow to i32
-  %10 = add nuw nsw i32 %.2256, 61087
-  %11 = add nuw nsw i32 %10, %9
-  %12 = mul nuw nsw i32 %11, 28
-  %13 = add nuw nsw i32 %12, 44032
-  %14 = add nuw nsw i32 %13, %.0251.ph
   %.not350 = icmp eq ptr %.1269634, %i.lg
   br i1 %.not350, label %bb.cj, label %bb.ci
 
@@ -737,8 +731,13 @@ bb.ci:                                            ; preds = %_ZNK6icu_7815Normal
   br i1 %.not351, label %.thread573, label %bb.cj
 
 bb.cj:                                            ; preds = %bb.ci, %_ZNK6icu_7815Normalizer2Impl21hasCompBoundaryBeforeEPKDsS2_.exit435.thread
-  %i.nh = trunc i32 %14 to i16
-  %i.ni = tail call noundef signext i8 @_ZN6icu_7816ReorderingBuffer9appendBMPEDshR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(64) %5, i16 noundef zeroext %i.nh, i8 noundef zeroext 0, ptr noundef nonnull align 4 dereferenceable(4) %6)
+  %i.nh = trunc nuw nsw i32 %.2256 to i16
+  %9 = add nsw i16 %i.nh, -4449
+  %10 = add nsw i16 %9, %narrow
+  %11 = mul i16 %10, 28
+  %12 = add i16 %11, -21504
+  %13 = add i16 %12, %.0251.ph
+  %i.ni = tail call noundef signext i8 @_ZN6icu_7816ReorderingBuffer9appendBMPEDshR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(64) %5, i16 noundef zeroext %13, i8 noundef zeroext 0, ptr noundef nonnull align 4 dereferenceable(4) %6)
   %.not352 = icmp eq i8 %i.ni, 0
   br i1 %.not352, label %.thread573, label %.thread491
 

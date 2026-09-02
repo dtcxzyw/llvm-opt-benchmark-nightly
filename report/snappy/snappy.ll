@@ -205,27 +205,26 @@ _ZN6snappyL11EmitLiteralILb1EEEPcS1_PKci.exit:    ; preds = %_ZN6snappyL11EmitLi
   %.2203 = phi ptr [ %.3204, %_ZN6snappy8internalL20FindMatchLengthPlainEPKcS2_S2_.exit306 ], [ %.2203.ph, %_ZN6snappyL11EmitLiteralILb1EEEPcS1_PKci.exit.preheader ] ; 5 uses
   %.6198 = phi ptr [ %i.gi, %_ZN6snappy8internalL20FindMatchLengthPlainEPKcS2_S2_.exit306 ], [ %.5197.lcssa, %_ZN6snappyL11EmitLiteralILb1EEEPcS1_PKci.exit.preheader ] ; 2 uses
   %.5185 = phi ptr [ %.7187, %_ZN6snappy8internalL20FindMatchLengthPlainEPKcS2_S2_.exit306 ], [ %.4184.lcssa, %_ZN6snappyL11EmitLiteralILb1EEEPcS1_PKci.exit.preheader ]
-  %.5 = phi i32 [ %.7, %_ZN6snappy8internalL20FindMatchLengthPlainEPKcS2_S2_.exit306 ], [ %.4179.lcssa, %_ZN6snappyL11EmitLiteralILb1EEEPcS1_PKci.exit.preheader ] ; 3 uses
-  %i.gh = zext i32 %.5 to i64                     ; 6 uses
+  %.5 = phi i32 [ %.7, %_ZN6snappy8internalL20FindMatchLengthPlainEPKcS2_S2_.exit306 ], [ %.4179.lcssa, %_ZN6snappyL11EmitLiteralILb1EEEPcS1_PKci.exit.preheader ] ; 4 uses
+  %i.gh = zext i32 %.5 to i64                     ; 5 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %.6198, i64 %i.gh ; 17 uses
   %i.gj = ptrtoint ptr %.6198 to i64
   %i.gk = ptrtoint ptr %.5185 to i64
-  %i.gl = sub i64 %i.gj, %i.gk                    ; 9 uses
+  %i.gl = sub i64 %i.gj, %i.gk                    ; 8 uses
   %i.gm = icmp ult i32 %.5, 12
   br i1 %i.gm, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %_ZN6snappyL11EmitLiteralILb1EEEPcS1_PKci.exit
-  %7 = shl nuw nsw i64 %i.gh, 2
-  %8 = shl i64 %i.gl, 8
-  %9 = or disjoint i64 %7, %8
-  %10 = trunc i64 %9 to i32
-  %11 = trunc i64 %i.gl to i32
-  %i.gn = lshr i32 %11, 3
+  %7 = shl nuw nsw i32 %.5, 2
+  %.tr = trunc i64 %i.gl to i32                   ; 2 uses
+  %8 = shl i32 %.tr, 8
+  %9 = or disjoint i32 %8, %7
+  %i.gn = lshr i32 %.tr, 3
   %i.go = and i32 %i.gn, 224
   %i.gp = add nsw i32 %i.go, -15
   %i.gq = icmp ult i64 %i.gl, 2048                ; 2 uses
   %i.gr = select i1 %i.gq, i32 %i.gp, i32 -2
-  %i.gs = add i32 %i.gr, %10
+  %i.gs = add i32 %9, %i.gr
   store i32 %i.gs, ptr %.2203, align 1
   %i.gt = select i1 %i.gq, i64 2, i64 3
   %i.gu = getelementptr inbounds nuw i8, ptr %.2203, i64 %i.gt
@@ -628,19 +627,19 @@ bb.u:                                             ; preds = %_ZN6snappy17SnappyI
   %i.dj = zext nneg i32 %i.ad to i64
   %i.dk = getelementptr inbounds nuw [2 x i8], ptr @_ZN6snappy12_GLOBAL__N_118kLengthMinusOffsetE, i64 %i.dj
   %i.dl = load i16, ptr %i.dk, align 2, !tbaa !28 ; 2 uses
-  %2 = sext i16 %i.dl to i64
+  %2 = sext i16 %i.dl to i32
   %.0.copyload.i129 = load i32, ptr %i.ac, align 1 ; 2 uses
   %i.dm = shl nuw nsw i32 %i.ae, 3                ; 2 uses
   %i.dn = shl nsw i32 -1, %i.dm
   %i.do = xor i32 %i.dn, -1
   %i.dp = and i32 %.0.copyload.i129, %i.do
-  %i.dq = and i16 %i.dl, 255
-  %3 = zext nneg i16 %i.dq to i64                 ; 2 uses
-  %4 = sub nsw i64 %3, %2
-  %.tr = trunc nsw i64 %4 to i32
-  %.narrow = add nsw i32 %i.dp, %.tr
+  %i.dq = and i16 %i.dl, 255                      ; 2 uses
+  %3 = sub nsw i32 %i.dp, %2
+  %4 = zext nneg i16 %i.dq to i64
+  %5 = zext nneg i16 %i.dq to i32
+  %.narrow = add nsw i32 %3, %5
   %i.dr = zext i32 %.narrow to i64
-  %i.ds = call noundef zeroext i1 @_ZN6snappy17SnappyIOVecWriter14AppendFromSelfEmmPPc(ptr noundef nonnull align 8 dereferenceable(48) %1, i64 noundef %i.dr, i64 noundef %3, ptr noundef nonnull %i.a)
+  %i.ds = call noundef zeroext i1 @_ZN6snappy17SnappyIOVecWriter14AppendFromSelfEmmPPc(ptr noundef nonnull align 8 dereferenceable(48) %1, i64 noundef %i.dr, i64 noundef %4, ptr noundef nonnull %i.a)
   br i1 %i.ds, label %bb.v, label %.thread148
 
 bb.v:                                             ; preds = %bb.u
@@ -1043,24 +1042,24 @@ bb.p:                                             ; preds = %bb.g
   %i.cp = zext i8 %i.am to i64
   %i.cq = getelementptr inbounds nuw [2 x i8], ptr @_ZN6snappy12_GLOBAL__N_118kLengthMinusOffsetE, i64 %i.cp
   %i.cr = load i16, ptr %i.cq, align 2, !tbaa !28 ; 2 uses
-  %2 = sext i16 %i.cr to i64
+  %2 = sext i16 %i.cr to i32
   %.0.copyload.i129 = load i32, ptr %i.ao, align 1
   %i.cs = shl nuw nsw i32 %i.ap, 3
   %i.ct = shl nsw i32 -1, %i.cs
   %i.cu = xor i32 %i.ct, -1
   %i.cv = and i32 %.0.copyload.i129, %i.cu
-  %i.cw = and i16 %i.cr, 255
-  %3 = zext nneg i16 %i.cw to i64                 ; 2 uses
-  %4 = sub nsw i64 %3, %2
-  %.tr = trunc nsw i64 %4 to i32
-  %.narrow = add nsw i32 %i.cv, %.tr
+  %i.cw = and i16 %i.cr, 255                      ; 2 uses
+  %3 = sub nsw i32 %i.cv, %2
+  %4 = zext nneg i16 %i.cw to i32
+  %.narrow = add nsw i32 %3, %4
   %i.cx = zext i32 %.narrow to i64
   %i.cy = add nsw i64 %i.cx, -1
   %.not.i130 = icmp ugt i64 %i.ab, %i.cy
   br i1 %.not.i130, label %_ZN6snappy28SnappyDecompressionValidator14AppendFromSelfEmmPm.exit132, label %.thread192
 
 _ZN6snappy28SnappyDecompressionValidator14AppendFromSelfEmmPm.exit132: ; preds = %bb.p
-  %i.cz = add i64 %i.ab, %3                       ; 4 uses
+  %5 = zext nneg i16 %i.cw to i64
+  %i.cz = add i64 %i.ab, %5                       ; 4 uses
   %i.da = load i64, ptr %1, align 8, !tbaa !77
   %.not200 = icmp ugt i64 %i.cz, %i.da
   br i1 %.not200, label %.thread192, label %bb.q
@@ -1463,19 +1462,19 @@ bb.y:                                             ; preds = %bb.i
   %i.ej = zext nneg i32 %i.ay to i64
   %i.ek = getelementptr inbounds nuw [2 x i8], ptr @_ZN6snappy12_GLOBAL__N_118kLengthMinusOffsetE, i64 %i.ej
   %i.el = load i16, ptr %i.ek, align 2, !tbaa !28 ; 2 uses
-  %2 = sext i16 %i.el to i64
+  %2 = sext i16 %i.el to i32
   %.0.copyload.i134 = load i32, ptr %i.ax, align 1 ; 2 uses
   %i.em = shl nuw nsw i32 %i.az, 3                ; 2 uses
   %i.en = shl nsw i32 -1, %i.em
   %i.eo = xor i32 %i.en, -1
   %i.ep = and i32 %.0.copyload.i134, %i.eo
-  %i.eq = and i16 %i.el, 255
-  %3 = zext nneg i16 %i.eq to i64                 ; 3 uses
-  %4 = sub nsw i64 %3, %2
-  %.tr = trunc nsw i64 %4 to i32
-  %.narrow = add nsw i32 %i.ep, %.tr              ; 2 uses
+  %i.eq = and i16 %i.el, 255                      ; 2 uses
+  %3 = sub nsw i32 %i.ep, %2
+  %4 = zext nneg i16 %i.eq to i64                 ; 2 uses
+  %5 = zext nneg i16 %i.eq to i32
+  %.narrow = add nsw i32 %3, %5                   ; 2 uses
   %i.er = zext i32 %.narrow to i64                ; 4 uses
-  %i.es = getelementptr inbounds nuw i8, ptr %.1147.ph, i64 %3 ; 4 uses
+  %i.es = getelementptr inbounds nuw i8, ptr %.1147.ph, i64 %4 ; 4 uses
   %i.et = load ptr, ptr %1, align 8, !tbaa !68
   %i.eu = ptrtoint ptr %.1147.ph to i64
   %i.ev = ptrtoint ptr %i.et to i64
@@ -1486,7 +1485,7 @@ bb.y:                                             ; preds = %bb.i
 bb.z:                                             ; preds = %bb.y
   %i.ey = load ptr, ptr %i.x, align 8, !tbaa !71
   %i.ez = icmp uge ptr %.1147.ph, %i.ey
-  %i.fa = icmp samesign ult i64 %i.er, %3
+  %i.fa = icmp samesign ult i64 %i.er, %4
   %i.fb = or i1 %i.fa, %i.ez
   br i1 %i.fb, label %bb.aa, label %bb.ac, !prof !29
 
@@ -1854,17 +1853,17 @@ bb.v:                                             ; preds = %bb.j
   %i.ec = zext nneg i32 %i.bb to i64
   %i.ed = getelementptr inbounds nuw [2 x i8], ptr @_ZN6snappy12_GLOBAL__N_118kLengthMinusOffsetE, i64 %i.ec
   %i.ee = load i16, ptr %i.ed, align 2, !tbaa !28 ; 2 uses
-  %2 = sext i16 %i.ee to i64
+  %2 = sext i16 %i.ee to i32
   %.0.copyload.i133 = load i32, ptr %i.ba, align 1 ; 2 uses
   %i.ef = shl nuw nsw i32 %i.bc, 3                ; 2 uses
   %i.eg = shl nsw i32 -1, %i.ef
   %i.eh = xor i32 %i.eg, -1
   %i.ei = and i32 %.0.copyload.i133, %i.eh
-  %i.ej = and i16 %i.ee, 255
-  %3 = zext nneg i16 %i.ej to i64                 ; 5 uses
-  %4 = sub nsw i64 %3, %2
-  %.tr = trunc nsw i64 %4 to i32
-  %.narrow = add nsw i32 %i.ei, %.tr              ; 2 uses
+  %i.ej = and i16 %i.ee, 255                      ; 2 uses
+  %3 = sub nsw i32 %i.ei, %2
+  %4 = zext nneg i16 %i.ej to i64                 ; 4 uses
+  %5 = zext nneg i16 %i.ej to i32
+  %.narrow = add nsw i32 %3, %5                   ; 2 uses
   %i.ek = zext i32 %.narrow to i64                ; 5 uses
   %i.el = load ptr, ptr %i.a, align 8, !tbaa !115 ; 9 uses
   %i.em = load ptr, ptr %i.z, align 8, !tbaa !106
@@ -1875,7 +1874,7 @@ bb.v:                                             ; preds = %bb.j
   %i.er = load ptr, ptr %i.y, align 8
   %.not.i134 = icmp uge ptr %i.el, %i.er
   %or.cond.not.i = select i1 %i.eq, i1 true, i1 %.not.i134, !prof !122
-  %i.es = icmp samesign ult i64 %i.ek, %3
+  %i.es = icmp samesign ult i64 %i.ek, %4
   %i.et = or i1 %i.es, %or.cond.not.i
   br i1 %i.et, label %bb.w, label %bb.z, !prof !29
 
@@ -1884,7 +1883,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.eu, label %.thread178, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.ev = getelementptr inbounds nuw i8, ptr %i.el, i64 %3 ; 3 uses
+  %i.ev = getelementptr inbounds nuw i8, ptr %i.el, i64 %4 ; 3 uses
   %i.ew = load ptr, ptr %i.aa, align 8            ; 2 uses
   %i.ex = icmp ugt ptr %i.ev, %i.ew
   %or.cond35.i = select i1 %i.eq, i1 true, i1 %i.ex, !prof !122
@@ -1897,7 +1896,7 @@ bb.y:                                             ; preds = %bb.x
   br label %_ZN6snappy21SnappyScatteredWriterINS_19SnappySinkAllocatorEE14AppendFromSelfEmmPPc.exit.thread168
 
 bb.z:                                             ; preds = %bb.v
-  %i.fb = getelementptr inbounds nuw i8, ptr %i.el, i64 %3
+  %i.fb = getelementptr inbounds nuw i8, ptr %i.el, i64 %4
   %i.fc = sub nsw i64 0, %i.ek
   %i.fd = getelementptr inbounds i8, ptr %i.el, i64 %i.fc
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.el, ptr noundef nonnull align 1 dereferenceable(64) %i.fd, i64 64, i1 false)
@@ -1910,7 +1909,7 @@ _ZN6snappy21SnappyScatteredWriterINS_19SnappySinkAllocatorEE14AppendFromSelfEmmP
 
 _ZN6snappy21SnappyScatteredWriterINS_19SnappySinkAllocatorEE14AppendFromSelfEmmPPc.exit: ; preds = %bb.x
   store ptr %i.el, ptr %i.m, align 8, !tbaa !107
-  %i.fe = call noundef zeroext i1 @_ZN6snappy21SnappyScatteredWriterINS_19SnappySinkAllocatorEE18SlowAppendFromSelfEmm(ptr noundef nonnull align 8 dereferenceable(104) %1, i64 noundef %i.ek, i64 noundef %3)
+  %i.fe = call noundef zeroext i1 @_ZN6snappy21SnappyScatteredWriterINS_19SnappySinkAllocatorEE18SlowAppendFromSelfEmm(ptr noundef nonnull align 8 dereferenceable(104) %1, i64 noundef %i.ek, i64 noundef %4)
   %i.ff = load ptr, ptr %i.m, align 8, !tbaa !107
   store ptr %i.ff, ptr %i.a, align 8, !tbaa !115
   br i1 %i.fe, label %bb.aa, label %.thread178

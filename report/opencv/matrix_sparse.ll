@@ -205,20 +205,17 @@ bb.a:
   store i32 1, ptr %0, align 8, !tbaa !23
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %1, ptr %i.e, align 4, !tbaa !24
-  %4 = sext i32 %1 to i64
-  %5 = shl nsw i64 %4, 2
+  %4 = shl i32 %1, 2
   %i.f = shl i32 %3, 2
   %i.g = and i32 %i.f, 124
   %i.h = zext nneg i32 %i.g to i64
-  %i.i = lshr i64 1275511473185297, %i.h          ; 2 uses
+  %i.i = lshr i64 1275511473185297, %i.h
   %i.j = trunc i64 %i.i to i32
-  %i.k = and i32 %i.j, 15                         ; 2 uses
-  %6 = and i64 %i.i, 15
-  %7 = add nsw i64 %5, 15
-  %8 = add nsw i64 %7, %6
+  %i.k = and i32 %i.j, 15                         ; 3 uses
+  %5 = add i32 %4, 15
   %i.l = sub nsw i32 0, %i.k
-  %9 = trunc i64 %8 to i32
-  %i.m = and i32 %9, %i.l                         ; 2 uses
+  %6 = add i32 %5, %i.k
+  %i.m = and i32 %6, %i.l                         ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.m, ptr %i.n, align 8, !tbaa !25
   %i.o = lshr i32 %3, 5

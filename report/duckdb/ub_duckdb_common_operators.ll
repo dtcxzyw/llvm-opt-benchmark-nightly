@@ -205,7 +205,7 @@ bb.a:
   %i.h = getelementptr inbounds [8 x i8], ptr @_ZN6duckdb13NumericHelper13POWERS_OF_TENE, i64 %i.g
   %i.i = load i64, ptr %i.h, align 8, !tbaa !97
   %i.j = trunc i64 %i.i to i32                    ; 2 uses
-  %i.k = sext i8 %0 to i32                        ; 2 uses
+  %i.k = sext i8 %0 to i32                        ; 3 uses
   %.not.i = icmp sgt i32 %i.j, %i.k
   %i.l = sub nsw i32 0, %i.j
   %i.m = icmp sgt i32 %i.k, %i.l
@@ -336,12 +336,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit24: ; preds = %_ZN
   resume { ptr, i32 } %.pn17
 
 bb.g:                                             ; preds = %bb.a
-  %8 = sext i8 %0 to i64
   %i.an = getelementptr inbounds nuw [8 x i8], ptr @_ZN6duckdb13NumericHelper13POWERS_OF_TENE, i64 %i.f
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !97
-  %9 = mul nsw i64 %i.ao, %8
-  %10 = trunc i64 %9 to i32
-  store i32 %10, ptr %1, align 4, !tbaa !89
+  %8 = trunc i64 %i.ao to i32
+  %9 = mul i32 %8, %i.k
+  store i32 %9, ptr %1, align 4, !tbaa !89
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit21
@@ -744,7 +743,7 @@ bb.a:
   %i.h = getelementptr inbounds [8 x i8], ptr @_ZN6duckdb13NumericHelper13POWERS_OF_TENE, i64 %i.g
   %i.i = load i64, ptr %i.h, align 8, !tbaa !97
   %i.j = trunc i64 %i.i to i32                    ; 2 uses
-  %i.k = sext i16 %0 to i32                       ; 2 uses
+  %i.k = sext i16 %0 to i32                       ; 3 uses
   %.not.i = icmp sgt i32 %i.j, %i.k
   %i.l = sub nsw i32 0, %i.j
   %i.m = icmp sgt i32 %i.k, %i.l
@@ -875,12 +874,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit24: ; preds = %_ZN
   resume { ptr, i32 } %.pn17
 
 bb.g:                                             ; preds = %bb.a
-  %8 = sext i16 %0 to i64
   %i.an = getelementptr inbounds nuw [8 x i8], ptr @_ZN6duckdb13NumericHelper13POWERS_OF_TENE, i64 %i.f
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !97
-  %9 = mul nsw i64 %i.ao, %8
-  %10 = trunc i64 %9 to i32
-  store i32 %10, ptr %1, align 4, !tbaa !89
+  %8 = trunc i64 %i.ao to i32
+  %9 = mul i32 %8, %i.k
+  store i32 %9, ptr %1, align 4, !tbaa !89
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit21
@@ -1283,11 +1281,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit24: ; preds = %_ZN
   resume { ptr, i32 } %.pn17
 
 bb.g:                                             ; preds = %bb.a
-  %sext = zext i32 %0 to i64
+  %sext = trunc i32 %0 to i16
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr @_ZN6duckdb13NumericHelper13POWERS_OF_TENE, i64 %i.f
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !97
-  %8 = mul i64 %i.aq, %sext
-  %9 = trunc i64 %8 to i16
+  %8 = trunc i64 %i.aq to i16
+  %9 = mul i16 %8, %sext
   store i16 %9, ptr %1, align 2, !tbaa !116
   br label %bb.h
 

@@ -205,9 +205,9 @@ bb.af:                                            ; preds = %bb.ad, %bb.o, %bb.a
   %.lobit.i = ashr i64 %i.cq, 63, !dbg !119029
   %.sroa.0.0.i82 = add nsw i64 %.lobit.i, %i.cp, !dbg !119029 ; 2 uses
   %i.cr = icmp slt i64 %i.cq, 0, !dbg !119030
-  %1 = select i1 %i.cr, i64 1000000, i64 0, !dbg !119030
-  %spec.select.i = add nsw i64 %1, %i.cq, !dbg !119030
-  %2 = trunc nuw nsw i64 %spec.select.i to i32, !dbg !119031
+  %1 = select i1 %i.cr, i32 1000000, i32 0, !dbg !119030
+  %2 = trunc nsw i64 %i.cq to i32, !dbg !119031
+  %3 = add nsw i32 %1, %2, !dbg !119031
   %i.cs = sdiv i64 %.sroa.0.0.i82, 86400, !dbg !119032
   %i.ct = srem i64 %.sroa.0.0.i82, 86400, !dbg !119033 ; 3 uses
   %.lobit.i.i = ashr i64 %i.ct, 63, !dbg !119033
@@ -223,9 +223,9 @@ bb.af:                                            ; preds = %bb.ad, %bb.o, %bb.a
 
 bb.ag:                                            ; preds = %.noexc85
   %i.cx = icmp slt i64 %i.ct, 0, !dbg !119037
-  %3 = select i1 %i.cx, i64 86400, i64 0, !dbg !119037
-  %spec.select.i.i = add nsw i64 %3, %i.ct, !dbg !119037
-  %4 = trunc nuw nsw i64 %spec.select.i.i to i32, !dbg !119038 ; 3 uses
+  %4 = select i1 %i.cx, i32 86400, i32 0, !dbg !119037
+  %5 = trunc nsw i64 %i.ct to i32, !dbg !119038
+  %6 = add nsw i32 %4, %5, !dbg !119038           ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !dbg !119039
   %.not52 = icmp eq ptr %i.bi, null, !dbg !119040
   br i1 %.not52, label %bb.ai, label %bb.ah, !dbg !119041
@@ -402,17 +402,16 @@ bb.bh:                                            ; preds = %bb.bf
   %i.ec = trunc i32 %i.dz to i8, !dbg !119102
   %i.ed = lshr i8 %i.ec, 1, !dbg !119102
   %i.ee = and i8 %i.ed, 31, !dbg !119102
-  %i.ef = udiv i32 %4, 60, !dbg !119103
-  %i.eg = udiv i32 %4, 3600, !dbg !119104
-  %i.eh = trunc nuw nsw i32 %i.eg to i8, !dbg !119105
-  %.lhs.trunc = trunc nuw nsw i32 %i.ef to i16, !dbg !119106
-  %5 = urem i16 %.lhs.trunc, 60, !dbg !119106
-  %i.ei = trunc nuw nsw i16 %5 to i8, !dbg !119107
-  %i.ej = urem i32 %4, 60, !dbg !119108
+  %i.ef = udiv i32 %6, 60, !dbg !119103
+  %i.eg = udiv i32 %6, 3600, !dbg !119104
+  %i.eh = trunc i32 %i.eg to i8, !dbg !119105
+  %7 = urem i32 %i.ef, 60, !dbg !119106
+  %i.ei = trunc nuw nsw i32 %7 to i8, !dbg !119107
+  %i.ej = urem i32 %6, 60, !dbg !119108
   %i.ek = trunc nuw nsw i32 %i.ej to i8, !dbg !119109
   %.not60 = icmp eq ptr %.val79, null, !dbg !119110 ; 2 uses
   %. = select i1 %.not60, ptr null, ptr %i.k, !dbg !119111
-  invoke void @_RNvMs_NtNtCsbm5zPlkZccl_4pyo35types8datetimeNtB4_10PyDateTime3new(ptr noalias noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.c, i32 noundef %i.dv, i8 noundef %i.eb, i8 noundef %i.ee, i8 noundef %i.eh, i8 noundef %i.ei, i8 noundef %i.ek, i32 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(8) %.)
+  invoke void @_RNvMs_NtNtCsbm5zPlkZccl_4pyo35types8datetimeNtB4_10PyDateTime3new(ptr noalias noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.c, i32 noundef %i.dv, i8 noundef %i.eb, i8 noundef %i.ee, i8 noundef %i.eh, i8 noundef %i.ei, i8 noundef %i.ek, i32 noundef %3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(8) %.)
           to label %bb.bl unwind label %bb.bj, !dbg !119093
 
 bb.bi:                                            ; preds = %bb.bf

@@ -202,12 +202,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.m, %bb.a
   %i.ab = phi i32 [ %i.dd, %bb.m ], [ %.pre, %bb.a ]
   %i.ac = load i64, ptr %i.c, align 8, !tbaa !56
-  %1 = zext i32 %i.ab to i64
   %i.ad = load i32, ptr %i.e, align 4, !tbaa !67  ; 3 uses
-  %2 = zext i32 %i.ad to i64
-  %3 = add nuw nsw i64 %1, %2
-  %4 = sub i64 %i.ac, %3
-  %5 = trunc i64 %4 to i32                        ; 2 uses
+  %1 = trunc i64 %i.ac to i32
+  %2 = add i32 %i.ab, %i.ad
+  %3 = sub i32 %1, %2                             ; 2 uses
   %i.ae = load i32, ptr %i.a, align 4, !tbaa !31
   %i.af = add i32 %i.f, %i.ae
   %.not = icmp ult i32 %i.ad, %i.af
@@ -322,13 +320,13 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %.not124, label %.loopexit159, label %scalar.ph, !llvm.loop !98
 
 .loopexit159:                                     ; preds = %scalar.ph, %middle.block
-  %i.bw = add i32 %i.b, %5
+  %i.bw = add i32 %3, %i.b
   %i.bx = extractelement <2 x i32> %i.aj, i64 0
   br label %bb.d
 
 bb.d:                                             ; preds = %.loopexit159, %bb.b
   %i.by = phi i32 [ %i.bx, %.loopexit159 ], [ %i.ad, %bb.b ]
-  %.0110 = phi i32 [ %i.bw, %.loopexit159 ], [ %5, %bb.b ] ; 2 uses
+  %.0110 = phi i32 [ %i.bw, %.loopexit159 ], [ %3, %bb.b ] ; 2 uses
   %i.bz = load ptr, ptr %0, align 8, !tbaa !27    ; 8 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 8 ; 2 uses
   %i.cb = load i32, ptr %i.ca, align 8, !tbaa !75 ; 3 uses

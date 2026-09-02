@@ -204,9 +204,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %._crit_edge.i, %bb.l
   %.pre-phi.i = phi i64 [ %.pre-phi44.i, %._crit_edge.i ], [ %i.bd, %bb.l ] ; 3 uses
   %i.bi = sext i32 %.047 to i64                   ; 2 uses
-  %1 = zext i32 %i.az to i64
-  %2 = xor i64 %1, -1
-  %3 = add nsw i64 %.pre-phi.i, %2                ; 2 uses
+  %1 = xor i32 %i.az, -1
   %i.bj = icmp eq i64 %.pre-phi.i, 0
   br i1 %i.bj, label %.critedge.thread.i.a, label %.lr.ph
 
@@ -224,30 +222,31 @@ bb.n:                                             ; preds = %.lr.ph
 
 .critedge.i:                                      ; preds = %.lr.ph
   %i.bo = icmp slt i64 %indvars.iv.i67, 1
-  br i1 %i.bo, label %.critedge.thread.i.a, label %bb.o
+  br i1 %i.bo, label %.preheader.preheader.i, label %bb.o
 
 bb.o:                                             ; preds = %.critedge.i
   %i.bp = and i64 %indvars.iv.next.i, 4294967295
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.bp
   %i.br = load i64, ptr %i.bq, align 8, !tbaa !95
   %i.bs = icmp slt i64 %i.br, %i.bi
-  br i1 %i.bs, label %.critedge.thread.i.a, label %bb.q
+  br i1 %i.bs, label %.preheader.preheader.i, label %bb.q
 
-.critedge.thread.i.a:                             ; preds = %bb.n, %bb.m, %bb.o, %.critedge.i
-  %.in.i = phi i64 [ %indvars.iv.next.i, %.critedge.i ], [ %indvars.iv.next.i, %bb.o ], [ %3, %bb.m ], [ %3, %bb.n ]
-  %4 = getelementptr inbounds i8, ptr %i.bb, i64 -8 ; 2 uses
-  store ptr %4, ptr %i.ba, align 8, !tbaa !81
-  %.not33.i = icmp ugt ptr %4, %i.d
-  br i1 %.not33.i, label %.preheader.preheader.i, label %Insert_Y_Turns.exit
+.critedge.thread.i.a:                             ; preds = %bb.n, %bb.m
+  %2 = trunc nsw i64 %.pre-phi.i to i32
+  %3 = add i32 %2, %1
+  %4 = sext i32 %3 to i64
+  br label %.preheader.preheader.i
 
-.preheader.preheader.i:                           ; preds = %.critedge.thread.i.a
-  %sext.i = shl i64 %.in.i, 32
-  %5 = ashr exact i64 %sext.i, 32
-  br label %.preheader.i
+.preheader.preheader.i:                           ; preds = %.critedge.thread.i.a, %bb.o, %.critedge.i
+  %5 = phi i64 [ %4, %.critedge.thread.i.a ], [ %indvars.iv.next.i, %bb.o ], [ %indvars.iv.next.i, %.critedge.i ]
+  %6 = getelementptr inbounds i8, ptr %i.bb, i64 -8 ; 2 uses
+  store ptr %6, ptr %i.ba, align 8, !tbaa !81
+  %.not33.i = icmp ugt ptr %6, %i.d
+  br i1 %.not33.i, label %.preheader.i, label %Insert_Y_Turns.exit
 
-.preheader.i:                                     ; preds = %.preheader.i, %.preheader.preheader.i
-  %indvars.iv39.i = phi i64 [ %5, %.preheader.preheader.i ], [ %indvars.iv.next40.i, %.preheader.i ] ; 3 uses
-  %.030.i = phi i32 [ %.047, %.preheader.preheader.i ], [ %i.bv, %.preheader.i ]
+.preheader.i:                                     ; preds = %.preheader.preheader.i, %.preheader.i
+  %indvars.iv39.i = phi i64 [ %indvars.iv.next40.i, %.preheader.i ], [ %5, %.preheader.preheader.i ] ; 3 uses
+  %.030.i = phi i32 [ %i.bv, %.preheader.i ], [ %.047, %.preheader.preheader.i ]
   %i.bt = getelementptr inbounds [8 x i8], ptr %i.bb, i64 %indvars.iv39.i ; 2 uses
   %i.bu = load i64, ptr %i.bt, align 8, !tbaa !95
   %i.bv = trunc i64 %i.bu to i32
@@ -262,7 +261,7 @@ bb.p:                                             ; preds = %.preheader.i
   store i32 %i.by, ptr %i.ay, align 4, !tbaa !82
   br label %bb.q
 
-Insert_Y_Turns.exit:                              ; preds = %.critedge.thread.i.a
+Insert_Y_Turns.exit:                              ; preds = %.preheader.preheader.i
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i32 98, ptr %i.bz, align 8, !tbaa !79
   br label %bb.t

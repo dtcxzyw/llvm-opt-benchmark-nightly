@@ -204,7 +204,6 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ai = phi i64 [ %i.af, %bb.d ], [ %i.ah, %bb.e ] ; 3 uses
   %i.aj = sub nsw i32 156, %i.w                   ; 2 uses
-  %2 = zext nneg i32 %i.aj to i64
   %i.ak = icmp samesign ugt i32 %i.aj, 252
   br i1 %i.ak, label %bb.g, label %bb.h
 
@@ -216,7 +215,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %or.cond.i.i, label %_ZN2cvL11ui64_to_f32Em.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.041.i.i = phi i64 [ %2, %bb.f ], [ 253, %bb.g ]
+  %.041.i.i = phi i32 [ %i.aj, %bb.f ], [ 253, %bb.g ]
   %i.ao = add i64 %i.ai, 64
   %i.ap = lshr i64 %i.ao, 7
   %.038.i18.i = and i64 %i.ai, 127
@@ -225,14 +224,14 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ar = xor i64 %i.aq, -1
   %i.as = and i64 %i.ap, %i.ar                    ; 2 uses
   %.not49.i.i = icmp eq i64 %i.as, 0
-  %3 = shl nuw nsw i64 %.041.i.i, 23
-  %4 = select i1 %.not49.i.i, i64 0, i64 %3
-  %5 = add nuw nsw i64 %4, %i.as
-  %6 = trunc i64 %5 to i32
+  %2 = shl nuw nsw i32 %.041.i.i, 23
+  %3 = select i1 %.not49.i.i, i32 0, i32 %2
+  %4 = trunc i64 %i.as to i32
+  %5 = add i32 %3, %4
   br label %_ZN2cvL11ui64_to_f32Em.exit
 
 _ZN2cvL11ui64_to_f32Em.exit:                      ; preds = %bb.b, %bb.g, %bb.h
-  %storemerge.i = phi i32 [ %i.u, %bb.b ], [ %6, %bb.h ], [ 2139095040, %bb.g ]
+  %storemerge.i = phi i32 [ %i.u, %bb.b ], [ %5, %bb.h ], [ 2139095040, %bb.g ]
   store i32 %storemerge.i, ptr %0, align 4, !tbaa !10
   ret void
 }

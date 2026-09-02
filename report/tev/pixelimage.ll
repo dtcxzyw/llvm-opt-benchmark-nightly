@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.f
   %i.ar = and i16 %i.aq, 255
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 36
   store i16 %i.ar, ptr %i.as, align 4, !tbaa !146
-  %i.at = trunc i32 %6 to i8
+  %i.at = trunc i32 %6 to i8                      ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 38
   store i8 %i.at, ptr %i.au, align 2, !tbaa !166
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -223,18 +223,16 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.az = icmp samesign ult i32 %5, 65
-  %. = select i1 %i.az, i32 8, i32 16
+  %. = select i1 %i.az, i8 8, i8 16
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.k, %bb.l, %bb.m, %bb.n
-  %.051 = phi i32 [ 4, %bb.m ], [ 1, %bb.k ], [ 2, %bb.l ], [ %., %bb.n ]
-  %15 = mul nsw i32 %.051, %6                     ; 2 uses
-  %16 = trunc i32 %15 to i8
+  %.051 = phi i8 [ 4, %bb.m ], [ 1, %bb.k ], [ 2, %bb.l ], [ %., %bb.n ]
+  %15 = mul i8 %.051, %i.at                       ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 39
-  store i8 %16, ptr %i.ba, align 1, !tbaa !176
-  %17 = and i32 %15, 255
+  store i8 %15, ptr %i.ba, align 1, !tbaa !176
   %i.bb = zext i32 %spec.store.select.i to i64
-  %i.bc = zext nneg i32 %17 to i64
+  %i.bc = zext i8 %15 to i64
   %i.bd = mul nuw nsw i64 %i.bc, %i.bb
   %i.be = add nuw nsw i64 %i.bd, 14
   %i.bf = and i64 %i.be, 2199023255536            ; 2 uses

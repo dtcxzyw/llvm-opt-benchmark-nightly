@@ -204,11 +204,10 @@ bb.d:                                             ; preds = %bb.c
   %i.v = tail call noundef i32 @_ZN7RawRead4Get4Ev(ptr noundef nonnull align 8 dereferenceable(64) %1)
   %i.w = tail call noundef i32 @_ZN7RawRead8GetVSizeEm(ptr noundef nonnull align 8 dereferenceable(64) %1, i64 noundef 4) ; 2 uses
   %i.x = tail call noundef i64 @_ZN7RawRead4GetVEv(ptr noundef nonnull align 8 dereferenceable(64) %1) ; 2 uses
-  %2 = zext i32 %i.w to i64
-  %.neg = add nuw nsw i64 %2, 4294967293
-  %3 = add i64 %.neg, %i.x
-  %4 = trunc i64 %3 to i32                        ; 3 uses
-  %i.y = icmp slt i32 %4, 0
+  %.neg = add i32 %i.w, -3
+  %2 = trunc i64 %i.x to i32
+  %3 = add i32 %.neg, %2                          ; 3 uses
+  %i.y = icmp slt i32 %3, 0
   %i.z = icmp eq i32 %i.w, 0
   %or.cond = or i1 %i.z, %i.y
   %i.aa = icmp eq i64 %i.x, 0
@@ -216,7 +215,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond3, label %bb.e, label %.preheader
 
 .preheader:                                       ; preds = %bb.d
-  %.not36 = icmp eq i32 %4, 0
+  %.not36 = icmp eq i32 %3, 0
   br i1 %.not36, label %._crit_edge, label %.lr.ph
 
 bb.e:                                             ; preds = %bb.d
@@ -225,7 +224,7 @@ bb.e:                                             ; preds = %bb.d
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %.preheader, %bb.f
-  %.033 = phi i32 [ %i.am, %bb.f ], [ %4, %.preheader ] ; 2 uses
+  %.033 = phi i32 [ %i.am, %bb.f ], [ %3, %.preheader ] ; 2 uses
   %i.ac = load i64, ptr %i.n, align 8, !tbaa !80
   %i.ad = load i64, ptr %i.a, align 8, !tbaa !100 ; 2 uses
   %i.ae = sub i64 %i.ac, %i.ad

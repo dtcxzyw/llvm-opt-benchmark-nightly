@@ -204,10 +204,10 @@ bb.m:                                             ; preds = %bb.b
   %i.av = sdiv exact i64 %i.i, 24
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
   %i.ax = load i8, ptr %i.aw, align 4, !range !39, !noundef !40
-  %i.ay = xor i8 %i.ax, 1                         ; 2 uses
-  %3 = zext nneg i8 %i.ay to i64
-  %4 = sub nsw i64 %i.av, %3
-  %5 = trunc i64 %4 to i32                        ; 2 uses
+  %i.ay = xor i8 %i.ax, 1
+  %3 = zext nneg i8 %i.ay to i32                  ; 2 uses
+  %4 = trunc i64 %i.av to i32
+  %5 = sub i32 %4, %3                             ; 2 uses
   %i.az = icmp eq i32 %5, 1
   br i1 %i.az, label %bb.n, label %bb.ac
 
@@ -345,10 +345,9 @@ _ZN2v88internal11interpreter17BytecodeGenerator12ControlScope16DeferredCommands2
   br label %_ZN2v88internal11interpreter17BytecodeGenerator12ControlScope16DeferredCommands20ApplyDeferredCommandERKNS4_5EntryE.exit
 
 bb.ac:                                            ; preds = %bb.m
-  %not. = zext nneg i8 %i.ay to i32
   %i.dl = load ptr, ptr %0, align 8
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 32
-  %i.dn = tail call noundef ptr @_ZN2v88internal11interpreter20BytecodeArrayBuilder17AllocateJumpTableEii(ptr noundef nonnull align 8 dereferenceable(480) %i.dm, i32 noundef %5, i32 noundef %not.) #21 ; 3 uses
+  %i.dn = tail call noundef ptr @_ZN2v88internal11interpreter20BytecodeArrayBuilder17AllocateJumpTableEii(ptr noundef nonnull align 8 dereferenceable(480) %i.dm, i32 noundef %5, i32 noundef %3) #21 ; 3 uses
   %i.do = load ptr, ptr %0, align 8
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 32
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 40

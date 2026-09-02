@@ -202,10 +202,9 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 1088
   %i.c = load i32, ptr %i.b, align 16
   %i.d = and i32 %i.c, -2147483648
-  %4 = zext i32 %i.d to i64
-  %5 = xor i64 %4, -1
-  %6 = and i64 %2, %5
-  %7 = trunc i64 %6 to i32
+  %4 = xor i32 %i.d, -1
+  %5 = trunc i64 %2 to i32
+  %6 = and i32 %4, %5
   br label %aspeed_mii_transition.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -222,7 +221,7 @@ bb.d:                                             ; preds = %bb.a
   unreachable
 
 aspeed_mii_transition.exit:                       ; preds = %bb.c, %bb.b
-  %i.h = phi i32 [ %.pre, %bb.c ], [ %7, %bb.b ]  ; 8 uses
+  %i.h = phi i32 [ %.pre, %bb.c ], [ %6, %bb.b ]  ; 8 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 1088 ; 4 uses
   %i.j = icmp slt i32 %i.h, 0
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 1092 ; 6 uses

@@ -205,27 +205,25 @@ _RNvMs_NtNtCs5yxAJGbRKSL_4ring4aead6chachaNtB4_3Key7encrypt.exit: ; preds = %_RN
   %i.cj = add nuw nsw i64 %i.ch, %i.ci
   %i.ck = lshr i32 %i.bs, 18
   %i.cl = shl i32 %i.bv, 8
-  %5 = or disjoint i32 %i.ck, %i.cl
-  %i.cm = zext i32 %5 to i64
-  %6 = zext i32 %.sroa.6.0.copyload.i to i64
-  %7 = add nuw nsw i64 %i.cm, %6
-  %8 = zext i1 %add.narrowed.overflow.i.i to i64
-  %i.cn = add nuw nsw i64 %i.cd, %8               ; 2 uses
+  %i.cm = zext i1 %add.narrowed.overflow.i.i to i64
+  %5 = add nuw nsw i64 %i.cd, %i.cm               ; 2 uses
+  %6 = trunc i64 %5 to i32
+  %7 = lshr i64 %5, 32
+  %i.cn = add nuw nsw i64 %i.cj, %7               ; 2 uses
   %i.co = trunc i64 %i.cn to i32
   %i.cp = lshr i64 %i.cn, 32
-  %9 = add nuw nsw i64 %i.cj, %i.cp               ; 2 uses
-  %i.cq = trunc i64 %9 to i32
-  %10 = lshr i64 %9, 32
-  %11 = add nuw nsw i64 %7, %10
-  %12 = trunc i64 %11 to i32
+  %i.cq = trunc nuw nsw i64 %i.cp to i32
+  %8 = add i32 %i.cl, %.sroa.6.0.copyload.i
+  %9 = add i32 %8, %i.ck
+  %10 = add i32 %9, %i.cq
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1859
   store i32 %add.narrowed.i.i, ptr %4, align 1
   %.sroa.496.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 4
-  store i32 %i.co, ptr %.sroa.496.0..sroa_idx, align 1
+  store i32 %6, ptr %.sroa.496.0..sroa_idx, align 1
   %.sroa.597.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 %i.cq, ptr %.sroa.597.0..sroa_idx, align 1
+  store i32 %i.co, ptr %.sroa.597.0..sroa_idx, align 1
   %.sroa.698.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 12
-  store i32 %12, ptr %.sroa.698.0..sroa_idx, align 1
+  store i32 %10, ptr %.sroa.698.0..sroa_idx, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   ret void
@@ -628,19 +626,22 @@ _RNvMs_NtNtCs5yxAJGbRKSL_4ring4aead6chachaNtB4_3Key7encrypt.exit: ; preds = %_RN
   %i.cf = add nuw nsw i64 %i.cd, %i.ce
   %i.cg = lshr i32 %i.bo, 18
   %i.ch = shl i32 %i.br, 8
-  %5 = or disjoint i32 %i.cg, %i.ch
-  %6 = zext i32 %5 to i64
-  %7 = zext i32 %.sroa.6.0.copyload.i to i64
-  %i.ci = add nuw nsw i64 %6, %7
-  %8 = zext i1 %add.narrowed.overflow.i.i to i64
-  %9 = add nuw nsw i64 %i.bz, %8                  ; 2 uses
-  %10 = lshr i64 %9, 32
-  %11 = add nuw nsw i64 %i.cf, %10
+  %5 = zext i1 %add.narrowed.overflow.i.i to i64
+  %6 = add nuw nsw i64 %i.bz, %5                  ; 2 uses
+  %7 = lshr i64 %6, 32
+  %i.ci = add nuw nsw i64 %i.cf, %7               ; 2 uses
+  %8 = lshr i64 %i.ci, 32
+  %9 = trunc nuw nsw i64 %8 to i32
+  %10 = add i32 %i.ch, %.sroa.6.0.copyload.i
+  %11 = add i32 %10, %i.cg
+  %12 = add i32 %11, %9
   %.sroa.0.0.insert.ext = zext i32 %add.narrowed.i.i to i64
-  %.sroa.0.4.insert.ext = shl i64 %9, 32
+  %.sroa.0.4.insert.ext = shl i64 %6, 32
   %.sroa.0.4.insert.insert = or disjoint i64 %.sroa.0.4.insert.ext, %.sroa.0.0.insert.ext
-  %i.cj = shl i64 %i.ci, 32
-  %12 = add i64 %11, %i.cj
+  %.sroa.6.8.insert.ext = and i64 %i.ci, 4294967295
+  %.sroa.6.12.insert.ext = zext i32 %12 to i64
+  %i.cj = shl nuw i64 %.sroa.6.12.insert.ext, 32
+  %.sroa.6.12.insert.insert = or disjoint i64 %.sroa.6.8.insert.ext, %i.cj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !3887
   call void @llvm.experimental.noalias.scope.decl(metadata !3893)
   call void @llvm.experimental.noalias.scope.decl(metadata !3894)
@@ -648,7 +649,7 @@ _RNvMs_NtNtCs5yxAJGbRKSL_4ring4aead6chachaNtB4_3Key7encrypt.exit: ; preds = %_RN
   %i.ck = xor i64 %.sroa.0.0.copyload.i.i.i2.i.i.i.i, %.sroa.0.4.insert.insert
   %i.cl = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.sroa.0.0.copyload.i.i.i2.i.i.i.i.1 = load i64, ptr %i.cl, align 1, !alias.scope !3895, !noalias !3896
-  %i.cm = xor i64 %.sroa.0.0.copyload.i.i.i2.i.i.i.i.1, %12
+  %i.cm = xor i64 %.sroa.0.0.copyload.i.i.i2.i.i.i.i.1, %.sroa.6.12.insert.insert
   %i.cn = or i64 %i.cm, %i.ck
   %i.co = call noundef i64 @ring_core_0_17_16000__LIMB_is_zero(i64 noundef %i.cn) #36, !noalias !3897
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !3898
@@ -1051,26 +1052,24 @@ bb.a:
   %i.bg = add nuw nsw i64 %i.be, %i.bf
   %i.bh = lshr i32 %i.ap, 18
   %i.bi = shl i32 %i.as, 8
-  %4 = or disjoint i32 %i.bh, %i.bi
-  %i.bj = zext i32 %4 to i64
-  %5 = zext i32 %.sroa.6.0.copyload.i to i64
-  %6 = add nuw nsw i64 %i.bj, %5
-  %7 = zext i1 %add.narrowed.overflow.i.i to i64
-  %i.bk = add nuw nsw i64 %i.ba, %7               ; 2 uses
+  %i.bj = zext i1 %add.narrowed.overflow.i.i to i64
+  %4 = add nuw nsw i64 %i.ba, %i.bj               ; 2 uses
+  %5 = trunc i64 %4 to i32
+  %6 = lshr i64 %4, 32
+  %i.bk = add nuw nsw i64 %i.bg, %6               ; 2 uses
   %i.bl = trunc i64 %i.bk to i32
   %i.bm = lshr i64 %i.bk, 32
-  %8 = add nuw nsw i64 %i.bg, %i.bm               ; 2 uses
-  %i.bn = trunc i64 %8 to i32
-  %9 = lshr i64 %8, 32
-  %10 = add nuw nsw i64 %6, %9
-  %11 = trunc i64 %10 to i32
+  %i.bn = trunc nuw nsw i64 %i.bm to i32
+  %7 = add i32 %i.bi, %.sroa.6.0.copyload.i
+  %8 = add i32 %7, %i.bh
+  %9 = add i32 %8, %i.bn
   store i32 %add.narrowed.i.i, ptr %0, align 1, !alias.scope !4859, !noalias !4860
   %.sroa.5.0..sroa_idx39.i.i = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %i.bl, ptr %.sroa.5.0..sroa_idx39.i.i, align 1, !alias.scope !4859, !noalias !4860
+  store i32 %5, ptr %.sroa.5.0..sroa_idx39.i.i, align 1, !alias.scope !4859, !noalias !4860
   %.sroa.6.0..sroa_idx41.i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %i.bn, ptr %.sroa.6.0..sroa_idx41.i.i, align 1, !alias.scope !4859, !noalias !4860
+  store i32 %i.bl, ptr %.sroa.6.0..sroa_idx41.i.i, align 1, !alias.scope !4859, !noalias !4860
   %.sroa.7.0..sroa_idx43.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %11, ptr %.sroa.7.0..sroa_idx43.i.i, align 1, !alias.scope !4859, !noalias !4860
+  store i32 %9, ptr %.sroa.7.0..sroa_idx43.i.i, align 1, !alias.scope !4859, !noalias !4860
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
 }

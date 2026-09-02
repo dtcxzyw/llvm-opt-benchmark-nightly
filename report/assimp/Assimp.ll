@@ -205,28 +205,25 @@ bb.c:                                             ; preds = %.lr.ph
   %i.ai = lshr i8 %i.ag, 1
   %i.aj = getelementptr inbounds nuw i8, ptr %.14711, i64 2 ; 2 uses
   %i.ak = load i8, ptr %i.aj, align 1
-  %0 = zext i8 %i.ak to i32
-  %1 = mul nuw nsw i32 %0, 255
-  %2 = zext nneg i8 %i.ai to i32                  ; 3 uses
-  %3 = add nuw nsw i32 %1, %2
-  %.lhs.trunc = trunc nuw i32 %3 to i16
+  %0 = zext i8 %i.ak to i16
+  %1 = mul nuw i16 %0, 255
+  %2 = zext nneg i8 %i.ai to i16                  ; 3 uses
+  %.lhs.trunc = add nuw i16 %1, %2
   %.rhs.trunc = zext i8 %i.ag to i16              ; 3 uses
   %i.al = udiv i16 %.lhs.trunc, %.rhs.trunc
   %i.am = trunc i16 %i.al to i8
   store i8 %i.am, ptr %.14711, align 1
   %i.an = getelementptr inbounds nuw i8, ptr %.14711, i64 1 ; 2 uses
   %i.ao = load i8, ptr %i.an, align 1
-  %4 = zext i8 %i.ao to i32
-  %5 = mul nuw nsw i32 %4, 255
-  %6 = add nuw nsw i32 %5, %2
-  %.lhs.trunc1 = trunc nuw i32 %6 to i16
+  %3 = zext i8 %i.ao to i16
+  %4 = mul nuw i16 %3, 255
+  %.lhs.trunc1 = add nuw i16 %4, %2
   %i.ap = udiv i16 %.lhs.trunc1, %.rhs.trunc
   %i.aq = trunc i16 %i.ap to i8
   store i8 %i.aq, ptr %i.an, align 1
-  %7 = zext i8 %i.ah to i32
-  %8 = mul nuw nsw i32 %7, 255
-  %9 = add nuw nsw i32 %8, %2
-  %.lhs.trunc4 = trunc nuw i32 %9 to i16
+  %5 = zext i8 %i.ah to i16
+  %6 = mul nuw i16 %5, 255
+  %.lhs.trunc4 = add nuw i16 %6, %2
   %i.ar = udiv i16 %.lhs.trunc4, %.rhs.trunc
   %i.as = trunc i16 %i.ar to i8
   store i8 %i.as, ptr %i.aj, align 1
@@ -629,8 +626,8 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %.lr.ph81, %bb.i
   %indvars.iv94 = phi i64 [ 0, %.lr.ph81 ], [ %indvars.iv.next95, %bb.i ] ; 4 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv94
-  %i.ca = load i8, ptr %i.bz, align 1             ; 5 uses
-  %i.cb = zext i8 %i.ca to i32                    ; 3 uses
+  %i.ca = load i8, ptr %i.bz, align 1             ; 6 uses
+  %i.cb = zext i8 %i.ca to i32                    ; 2 uses
   %.not = icmp eq i8 %i.ca, 0
   br i1 %.not, label %bb.i, label %bb.g
 
@@ -646,10 +643,10 @@ bb.g:                                             ; preds = %bb.f
   %i.ck = load i16, ptr %i.cj, align 2
   %i.cl = zext i16 %i.ck to i32
   %i.cm = add nsw i32 %i.ci, %i.cl
-  %3 = shl nuw nsw i32 %i.cb, 9
-  %4 = trunc nuw nsw i64 %indvars.iv94 to i32
-  %5 = or i32 %3, %4
-  %6 = trunc i32 %5 to i16
+  %3 = trunc i64 %indvars.iv94 to i16
+  %.tr = zext i8 %i.ca to i16
+  %4 = shl i16 %.tr, 9
+  %5 = or i16 %4, %3
   %i.cn = sext i32 %i.cm to i64                   ; 2 uses
   %i.co = getelementptr inbounds i8, ptr %i.bx, i64 %i.cn
   store i8 %i.ca, ptr %i.co, align 1
@@ -673,7 +670,7 @@ iter.check:                                       ; preds = %bb.g
 bb.h:                                             ; preds = %iter.check, %bb.h
   %indvars.iv91 = phi i64 [ %i.cw, %iter.check ], [ %indvars.iv.next92, %bb.h ] ; 2 uses
   %i.cy = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %indvars.iv91
-  store i16 %6, ptr %i.cy, align 2
+  store i16 %5, ptr %i.cy, align 2
   %indvars.iv.next92 = add nuw nsw i64 %indvars.iv91, %i.cx ; 2 uses
   %i.cz = icmp samesign ult i64 %indvars.iv.next92, 512
   br i1 %i.cz, label %bb.h, label %.loopexit, !llvm.loop !232

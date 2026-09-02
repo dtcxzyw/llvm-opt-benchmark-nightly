@@ -205,17 +205,16 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds i8, ptr %i.b, i64 -16
   %i.e = load i64, ptr %i.d, align 8, !tbaa !37
+  %1 = trunc i64 %i.e to i32
   br label %_ZNK6vectorIcLb0EmE8capacityEv.exit
 
 _ZNK6vectorIcLb0EmE8capacityEv.exit:              ; preds = %bb.a, %bb.b
-  %.0.i = phi i64 [ %i.e, %bb.b ], [ 0, %bb.a ]
+  %.0.i = phi i32 [ %1, %bb.b ], [ 0, %bb.a ]
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.g = load i32, ptr %i.f, align 8, !tbaa !55
-  %1 = zext i32 %i.g to i64
-  %2 = shl nuw nsw i64 %1, 4
-  %3 = add i64 %2, %.0.i
-  %4 = trunc i64 %3 to i32
-  ret i32 %4
+  %2 = shl i32 %i.g, 4
+  %3 = add i32 %2, %.0.i
+  ret i32 %3
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
@@ -618,20 +617,19 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds i8, ptr %i.b, i64 -16
   %i.e = load i64, ptr %i.d, align 8, !tbaa !37
+  %1 = trunc i64 %i.e to i32
   br label %_ZNK7datalog13entry_storage23get_size_estimate_bytesEv.exit
 
 _ZNK7datalog13entry_storage23get_size_estimate_bytesEv.exit: ; preds = %bb.a, %bb.b
-  %.0.i.i = phi i64 [ %i.e, %bb.b ], [ 0, %bb.a ]
+  %.0.i.i = phi i32 [ %1, %bb.b ], [ 0, %bb.a ]
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.g = load i32, ptr %i.f, align 8, !tbaa !55
-  %1 = zext i32 %i.g to i64
-  %2 = shl nuw nsw i64 %1, 4
-  %3 = add i64 %2, %.0.i.i
-  %4 = trunc i64 %3 to i32
+  %2 = shl i32 %i.g, 4
+  %3 = add i32 %2, %.0.i.i
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.i = load i32, ptr %i.h, align 8, !tbaa !107
   %i.j = shl i32 %i.i, 3
-  %i.k = add i32 %i.j, %4
+  %i.k = add i32 %3, %i.j
   ret i32 %i.k
 }
 

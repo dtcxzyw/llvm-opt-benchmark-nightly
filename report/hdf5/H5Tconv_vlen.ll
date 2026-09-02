@@ -200,7 +200,7 @@ bb.u:                                             ; preds = %._crit_edge
   br label %.thread
 
 bb.v:                                             ; preds = %._crit_edge
-  %i.ch = tail call zeroext i1 @H5T_path_noop(ptr noundef nonnull %i.cc) #5
+  %i.ch = tail call zeroext i1 @H5T_path_noop(ptr noundef nonnull %i.cc) #5 ; 2 uses
   br i1 %i.ch, label %bb.am, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
@@ -322,7 +322,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.ah
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.v, %bb.al
-  %.0420 = phi i8 [ 0, %bb.al ], [ 1, %bb.v ]     ; 5 uses
+  %.0420 = phi i8 [ 0, %bb.al ], [ 1, %bb.v ]     ; 4 uses
   %.0416 = phi ptr [ %i.cl, %bb.al ], [ null, %bb.v ] ; 3 uses
   %.0414 = phi ptr [ %i.di, %bb.al ], [ null, %bb.v ] ; 4 uses
   %.1412 = phi i64 [ %.0411, %bb.al ], [ -1, %bb.v ] ; 2 uses
@@ -377,8 +377,7 @@ bb.at:                                            ; preds = %bb.ar
   %i.fp = load ptr, ptr %i.br, align 8, !tbaa !24
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fp, i64 64
   %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !28
-  %.not466 = icmp ne ptr %i.fr, null              ; 2 uses
-  %spec.select = zext i1 %.not466 to i8           ; 6 uses
+  %.not466 = icmp ne ptr %i.fr, null              ; 7 uses
   %or.cond9 = and i1 %i.fc, %.not466
   %or.cond11 = and i1 %i.bm, %or.cond9            ; 2 uses
   %i.fs = icmp sle i64 %.0385, %.0389             ; 4 uses
@@ -387,8 +386,7 @@ bb.at:                                            ; preds = %bb.ar
 
 .lr.ph946:                                        ; preds = %bb.at
   %i.ft = trunc nuw i8 %.0420 to i1               ; 2 uses
-  %11 = and i8 %.0420, %spec.select
-  %or.cond13.not = icmp eq i8 %11, 0
+  %or.cond13.not.demorgan = and i1 %i.ch, %.not466
   %i.fu = call i64 @llvm.umax.i64(i64 %i.bq, i64 %i.bv)
   %i.fv = getelementptr inbounds nuw i8, ptr %10, i64 40 ; 2 uses
   %.not = xor i1 %i.ft, true
@@ -524,7 +522,7 @@ bb.bg:                                            ; preds = %bb.bf
   br label %.thread495
 
 bb.bh:                                            ; preds = %bb.bf
-  br i1 %or.cond13.not, label %bb.bk, label %bb.bi
+  br i1 %or.cond13.not.demorgan, label %bb.bi, label %bb.bk
 
 bb.bi:                                            ; preds = %bb.bh
   %i.ie = load ptr, ptr %i.bn, align 8, !tbaa !24
@@ -899,13 +897,13 @@ bb.cx:                                            ; preds = %bb.cw
   %.9560 = phi i32 [ -1, %.loopexit658 ], [ -1, %.loopexit ], [ -1, %bb.an ], [ -1, %bb.as ], [ -1, %bb.aq ], [ -1, %.lr.ph961 ], [ 0, %bb.at ], [ 0, %bb.cu ] ; 3 uses
   %.11360559 = phi ptr [ %.10359.ph, %.loopexit658 ], [ %.10359.ph, %.loopexit ], [ null, %bb.an ], [ %.0349, %bb.as ], [ null, %bb.aq ], [ %.10359.ph, %.lr.ph961 ], [ %.0349, %bb.at ], [ %.9358, %bb.cu ] ; 3 uses
   %.8377558 = phi ptr [ %.7376.ph, %.loopexit658 ], [ %.7376.ph, %.loopexit ], [ null, %bb.an ], [ null, %bb.as ], [ null, %bb.aq ], [ %.7376.ph, %.lr.ph961 ], [ null, %bb.at ], [ %.6375, %bb.cu ] ; 3 uses
-  %.1419553 = phi i8 [ %spec.select, %.loopexit658 ], [ %spec.select, %.loopexit ], [ 0, %bb.an ], [ 0, %bb.as ], [ 0, %bb.aq ], [ %spec.select, %.lr.ph961 ], [ %spec.select, %bb.at ], [ %spec.select, %bb.cu ] ; 3 uses
+  %.1419553 = phi i1 [ %.not466, %.loopexit658 ], [ %.not466, %.loopexit ], [ false, %bb.an ], [ false, %bb.as ], [ false, %bb.aq ], [ %.not466, %.lr.ph961 ], [ %.not466, %bb.at ], [ %.not466, %bb.cu ] ; 3 uses
   %i.nr = icmp sgt i64 %.1412, -1
   br i1 %i.nr, label %bb.cy, label %.thread534.thread
 
 bb.cy:                                            ; preds = %.thread534.thread584, %.thread534
   %.1421552601 = phi i8 [ 0, %.thread534.thread584 ], [ %.0420, %.thread534 ] ; 2 uses
-  %.1419553600 = phi i8 [ 0, %.thread534.thread584 ], [ %.1419553, %.thread534 ] ; 2 uses
+  %.1419553600 = phi i1 [ false, %.thread534.thread584 ], [ %.1419553, %.thread534 ] ; 2 uses
   %.1415555599 = phi ptr [ %i.di, %.thread534.thread584 ], [ %.0414, %.thread534 ] ; 2 uses
   %.2413556598 = phi i64 [ %i.eg, %.thread534.thread584 ], [ %.1412, %.thread534 ]
   %.2410557597 = phi i64 [ %i.el, %.thread534.thread584 ], [ %.1409, %.thread534 ] ; 2 uses
@@ -933,7 +931,7 @@ bb.cz:                                            ; preds = %bb.cy
   %.2410557576626 = phi i64 [ %.1409, %.thread534.thread ], [ -1, %bb.ac ], [ -1, %bb.af ], [ -1, %bb.aj ], [ -1, %bb.aa ] ; 2 uses
   %.1415555578625 = phi ptr [ %.0414, %.thread534.thread ], [ null, %bb.ac ], [ %i.di, %bb.af ], [ %i.di, %bb.aj ], [ null, %bb.aa ] ; 2 uses
   %.1417554579624 = phi ptr [ %.0416, %.thread534.thread ], [ %i.cl, %bb.ac ], [ %i.cl, %bb.af ], [ %i.cl, %bb.aj ], [ %i.cl, %bb.aa ]
-  %.1419553581623 = phi i8 [ %.1419553, %.thread534.thread ], [ 0, %bb.ac ], [ 0, %bb.af ], [ 0, %bb.aj ], [ 0, %bb.aa ] ; 2 uses
+  %.1419553581623 = phi i1 [ %.1419553, %.thread534.thread ], [ false, %bb.ac ], [ false, %bb.af ], [ false, %bb.aj ], [ false, %bb.aa ] ; 2 uses
   %.1421552583622 = phi i8 [ %.0420, %.thread534.thread ], [ 0, %bb.ac ], [ 0, %bb.af ], [ 0, %bb.aj ], [ 0, %bb.aa ] ; 2 uses
   %i.nx = call i32 @H5T_close(ptr noundef nonnull %.1417554579624) #5
   %i.ny = icmp slt i32 %i.nx, 0
@@ -947,7 +945,7 @@ bb.da:                                            ; preds = %.thread534.thread.t
 
 bb.db:                                            ; preds = %.thread534.thread, %bb.da, %.thread534.thread.thread612, %bb.cy, %bb.cz
   %.1421552582 = phi i8 [ %.1421552601, %bb.cz ], [ %.1421552601, %bb.cy ], [ %.1421552583622, %bb.da ], [ %.1421552583622, %.thread534.thread.thread612 ], [ %.0420, %.thread534.thread ]
-  %.1419553580 = phi i8 [ %.1419553600, %bb.cz ], [ %.1419553600, %bb.cy ], [ %.1419553581623, %bb.da ], [ %.1419553581623, %.thread534.thread.thread612 ], [ %.1419553, %.thread534.thread ]
+  %.1419553580 = phi i1 [ %.1419553600, %bb.cz ], [ %.1419553600, %bb.cy ], [ %.1419553581623, %bb.da ], [ %.1419553581623, %.thread534.thread.thread612 ], [ %.1419553, %.thread534.thread ]
   %.1415555577 = phi ptr [ %.1415555599, %bb.cz ], [ %.1415555599, %bb.cy ], [ %.1415555578625, %bb.da ], [ %.1415555578625, %.thread534.thread.thread612 ], [ %.0414, %.thread534.thread ] ; 2 uses
   %.2410557575 = phi i64 [ %.2410557597, %bb.cz ], [ %.2410557597, %bb.cy ], [ %.2410557576626, %bb.da ], [ %.2410557576626, %.thread534.thread.thread612 ], [ %.1409, %.thread534.thread ] ; 2 uses
   %.8377558573 = phi ptr [ %.8377558596, %bb.cz ], [ %.8377558596, %bb.cy ], [ %.8377558574627, %bb.da ], [ %.8377558574627, %.thread534.thread.thread612 ], [ %.8377558, %.thread534.thread ] ; 2 uses
@@ -984,8 +982,8 @@ bb.dg:                                            ; preds = %bb.df
 
 .thread648:                                       ; preds = %bb.de, %bb.dg, %bb.df, %bb.dc, %bb.dd
   %.11 = phi i32 [ -1, %bb.dd ], [ %.10, %bb.dc ], [ -1, %bb.dg ], [ %.10, %bb.df ], [ %.10, %bb.de ] ; 2 uses
-  %12 = and i8 %.1421552582, %.1419553580
-  %or.cond19.not = trunc nuw i8 %12 to i1
+  %11 = trunc nuw i8 %.1421552582 to i1
+  %or.cond19.not = and i1 %.1419553580, %11
   %.not479657 = icmp eq ptr %.8377558573, null
   %.not479 = select i1 %or.cond19.not, i1 true, i1 %.not479657
   br i1 %.not479, label %bb.di, label %bb.dh

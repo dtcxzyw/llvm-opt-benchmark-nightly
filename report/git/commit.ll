@@ -204,9 +204,9 @@ bb.g:                                             ; preds = %.lr.ph, %bb.i
   %i.y = sub i64 %i.w, %i.x
   %i.z = load i8, ptr %i.v, align 1, !tbaa !16
   %i.aa = icmp ne i8 %i.z, 0
-  %3 = zext i1 %i.aa to i64
-  %4 = add nsw i64 %i.y, %3                       ; 2 uses
-  %5 = trunc i64 %4 to i32                        ; 2 uses
+  %3 = zext i1 %i.aa to i32
+  %4 = trunc i64 %i.y to i32
+  %5 = add i32 %4, %3                             ; 3 uses
   %.not34 = icmp eq i32 %.038, 0
   br i1 %.not34, label %bb.h, label %bb.i
 
@@ -222,11 +222,10 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ae = sext i32 %.2 to i64
   tail call void @strbuf_insert(ptr noundef %0, i64 noundef range(i64 -2147483648, 2147483648) %i.ae, ptr noundef nonnull @.str.27, i64 noundef 1) #26
   %i.af = sext i32 %i.ad to i64
-  %sext35 = shl i64 %4, 32
-  %6 = ashr exact i64 %sext35, 32
+  %6 = sext i32 %5 to i64
   tail call void @strbuf_insert(ptr noundef %0, i64 noundef %i.af, ptr noundef nonnull %i.u, i64 noundef %6) #26
   %i.ag = add nsw i32 %i.ad, %5
-  %i.ah = add nsw i32 %.038, %5                   ; 2 uses
+  %i.ah = add nsw i32 %5, %.038                   ; 2 uses
   %i.ai = load ptr, ptr %i.q, align 8, !tbaa !69
   %i.aj = sext i32 %i.ah to i64
   %i.ak = getelementptr inbounds i8, ptr %i.ai, i64 %i.aj ; 2 uses

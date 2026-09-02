@@ -205,10 +205,9 @@ bb.l:                                             ; preds = %._crit_edge
   %i.ce = add nuw nsw i32 %i.bx, %i.br
   %i.cf = add nuw nsw i32 %i.ce, %i.cd            ; 2 uses
   %i.cg = icmp samesign ugt i32 %i.cf, 9999
-  %2 = zext i8 %.038.lcssa to i32
-  %3 = mul nuw nsw i32 %2, 232
-  %4 = add nuw nsw i32 %i.cf, %3
-  %5 = trunc i32 %4 to i8
+  %2 = mul i8 %.038.lcssa, -24
+  %3 = trunc i32 %i.cf to i8
+  %4 = add i8 %2, %3
   br i1 %i.cg, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIcLb1EE4initERPKc.exit, label %bb.p
 
 bb.m:                                             ; preds = %._crit_edge
@@ -225,10 +224,9 @@ bb.m:                                             ; preds = %._crit_edge
   %i.cr = zext i16 %i.cq to i32
   %i.cs = add nuw nsw i32 %i.cr, %i.cl            ; 2 uses
   %i.ct = icmp samesign ugt i32 %i.cs, 9999
-  %6 = zext i8 %.038.lcssa to i32
-  %7 = mul nuw nsw i32 %6, 100
-  %8 = add nuw nsw i32 %i.cs, %7
-  %9 = trunc i32 %8 to i8
+  %5 = mul i8 %.038.lcssa, 100
+  %6 = trunc i32 %i.cs to i8
+  %7 = add i8 %5, %6
   br i1 %i.ct, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIcLb1EE4initERPKc.exit, label %bb.p
 
 bb.n:                                             ; preds = %._crit_edge
@@ -251,7 +249,7 @@ bb.o:                                             ; preds = %._crit_edge
   br i1 %i.dd, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIcLb1EE4initERPKc.exit, label %bb.p
 
 bb.p:                                             ; preds = %.thread83, %bb.m, %bb.l, %bb.o
-  %.5 = phi i8 [ %.038.lcssa, %bb.o ], [ %5, %bb.l ], [ %9, %bb.m ], [ %i.dc, %.thread83 ] ; 3 uses
+  %.5 = phi i8 [ %.038.lcssa, %bb.o ], [ %4, %bb.l ], [ %7, %bb.m ], [ %i.dc, %.thread83 ] ; 3 uses
   %i.de = trunc nuw i8 %.sroa.065.1.ph to i1
   br i1 %i.de, label %bb.q, label %bb.r
 
@@ -465,10 +463,9 @@ bb.l:                                             ; preds = %._crit_edge
   %i.ce = add nuw nsw i32 %i.bx, %i.br
   %i.cf = add nuw nsw i32 %i.ce, %i.cd            ; 2 uses
   %i.cg = icmp samesign ugt i32 %i.cf, 9999
-  %2 = zext i8 %.038.lcssa to i32
-  %3 = mul nuw nsw i32 %2, 232
-  %4 = add nuw nsw i32 %i.cf, %3
-  %5 = trunc i32 %4 to i8
+  %2 = mul i8 %.038.lcssa, -24
+  %3 = trunc i32 %i.cf to i8
+  %4 = add i8 %2, %3
   br i1 %i.cg, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIaLb1EE4initERPKc.exit, label %bb.p
 
 bb.m:                                             ; preds = %._crit_edge
@@ -485,10 +482,9 @@ bb.m:                                             ; preds = %._crit_edge
   %i.cr = zext i16 %i.cq to i32
   %i.cs = add nuw nsw i32 %i.cr, %i.cl            ; 2 uses
   %i.ct = icmp samesign ugt i32 %i.cs, 9999
-  %6 = zext i8 %.038.lcssa to i32
-  %7 = mul nuw nsw i32 %6, 100
-  %8 = add nuw nsw i32 %i.cs, %7
-  %9 = trunc i32 %8 to i8
+  %5 = mul i8 %.038.lcssa, 100
+  %6 = trunc i32 %i.cs to i8
+  %7 = add i8 %5, %6
   br i1 %i.ct, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIaLb1EE4initERPKc.exit, label %bb.p
 
 bb.n:                                             ; preds = %._crit_edge
@@ -511,7 +507,7 @@ bb.o:                                             ; preds = %._crit_edge
   br i1 %i.dd, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIaLb1EE4initERPKc.exit, label %bb.p
 
 bb.p:                                             ; preds = %.thread83, %bb.m, %bb.l, %bb.o
-  %.5 = phi i8 [ %.038.lcssa, %bb.o ], [ %5, %bb.l ], [ %9, %bb.m ], [ %i.dc, %.thread83 ] ; 3 uses
+  %.5 = phi i8 [ %.038.lcssa, %bb.o ], [ %4, %bb.l ], [ %7, %bb.m ], [ %i.dc, %.thread83 ] ; 3 uses
   %i.de = trunc nuw i8 %.sroa.065.1.ph to i1
   br i1 %i.de, label %bb.q, label %bb.r
 
@@ -695,10 +691,9 @@ bb.g:                                             ; preds = %._crit_edge
   %i.ca = add nuw nsw i32 %i.bt, %i.bn
   %i.cb = add nuw nsw i32 %i.ca, %i.bz            ; 2 uses
   %i.cc = icmp samesign ugt i32 %i.cb, 9999
-  %2 = zext i8 %.038.lcssa to i32
-  %3 = mul nuw nsw i32 %2, 232
-  %4 = add nuw nsw i32 %i.cb, %3
-  %5 = trunc i32 %4 to i8
+  %2 = mul i8 %.038.lcssa, -24
+  %3 = trunc i32 %i.cb to i8
+  %4 = add i8 %2, %3
   br i1 %i.cc, label %.loopexit, label %bb.k
 
 bb.h:                                             ; preds = %._crit_edge
@@ -715,10 +710,9 @@ bb.h:                                             ; preds = %._crit_edge
   %i.cn = zext i16 %i.cm to i32
   %i.co = add nuw nsw i32 %i.cn, %i.ch            ; 2 uses
   %i.cp = icmp samesign ugt i32 %i.co, 9999
-  %6 = zext i8 %.038.lcssa to i32
-  %7 = mul nuw nsw i32 %6, 100
-  %8 = add nuw nsw i32 %i.co, %7
-  %9 = trunc i32 %8 to i8
+  %5 = mul i8 %.038.lcssa, 100
+  %6 = trunc i32 %i.co to i8
+  %7 = add i8 %5, %6
   br i1 %i.cp, label %.loopexit, label %bb.k
 
 bb.i:                                             ; preds = %._crit_edge
@@ -741,7 +735,7 @@ bb.j:                                             ; preds = %._crit_edge
   br i1 %i.cz, label %.loopexit, label %bb.k
 
 bb.k:                                             ; preds = %.thread69, %bb.h, %bb.g, %bb.j
-  %.5 = phi i8 [ %.038.lcssa, %bb.j ], [ %5, %bb.g ], [ %9, %bb.h ], [ %i.cy, %.thread69 ]
+  %.5 = phi i8 [ %.038.lcssa, %bb.j ], [ %4, %bb.g ], [ %7, %bb.h ], [ %i.cy, %.thread69 ]
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader, %.lr.ph, %.preheader.preheader, %bb.i, %bb.h, %bb.g, %bb.j, %.tail, %.thread, %bb.k
@@ -921,10 +915,9 @@ bb.m:                                             ; preds = %._crit_edge
   %i.bt = add nuw nsw i32 %i.bm, %i.bg
   %i.bu = add nuw nsw i32 %i.bt, %i.bs            ; 2 uses
   %i.bv = icmp samesign ugt i32 %i.bu, 9999
-  %2 = zext i16 %.0.lcssa to i32
-  %3 = mul nuw nsw i32 %2, 1000
-  %4 = add nuw nsw i32 %i.bu, %3
-  %5 = trunc i32 %4 to i16
+  %2 = mul i16 %.0.lcssa, 1000
+  %3 = trunc nuw nsw i32 %i.bu to i16
+  %4 = add i16 %2, %3
   br i1 %i.bv, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIsLb1EE4initERPKc.exit, label %bb.q
 
 bb.n:                                             ; preds = %._crit_edge
@@ -941,10 +934,9 @@ bb.n:                                             ; preds = %._crit_edge
   %i.cg = zext i16 %i.cf to i32
   %i.ch = add nuw nsw i32 %i.cg, %i.ca            ; 2 uses
   %i.ci = icmp samesign ugt i32 %i.ch, 9999
-  %6 = zext i16 %.0.lcssa to i32
-  %7 = mul nuw nsw i32 %6, 100
-  %8 = add nuw nsw i32 %i.ch, %7
-  %9 = trunc i32 %8 to i16
+  %5 = mul i16 %.0.lcssa, 100
+  %6 = trunc nuw nsw i32 %i.ch to i16
+  %7 = add i16 %5, %6
   br i1 %i.ci, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIsLb1EE4initERPKc.exit, label %bb.q
 
 bb.o:                                             ; preds = %._crit_edge
@@ -966,7 +958,7 @@ bb.p:                                             ; preds = %._crit_edge
   br i1 %i.cr, label %_ZN5folly6detail12_GLOBAL__N_118SignedValueHandlerIsLb1EE4initERPKc.exit, label %bb.q
 
 bb.q:                                             ; preds = %.thread85, %bb.n, %bb.m, %bb.p
-  %.5 = phi i16 [ %.0.lcssa, %bb.p ], [ %5, %bb.m ], [ %9, %bb.n ], [ %i.cq, %.thread85 ] ; 3 uses
+  %.5 = phi i16 [ %.0.lcssa, %bb.p ], [ %4, %bb.m ], [ %7, %bb.n ], [ %i.cq, %.thread85 ] ; 3 uses
   %i.cs = trunc nuw i8 %.sroa.064.1.ph to i1
   br i1 %i.cs, label %bb.r, label %bb.s
 
@@ -1141,10 +1133,9 @@ bb.h:                                             ; preds = %._crit_edge
   %i.bp = add nuw nsw i32 %i.bi, %i.bc
   %i.bq = add nuw nsw i32 %i.bp, %i.bo            ; 2 uses
   %i.br = icmp samesign ugt i32 %i.bq, 9999
-  %2 = zext i16 %.0.lcssa to i32
-  %3 = mul nuw nsw i32 %2, 1000
-  %4 = add nuw nsw i32 %i.bq, %3
-  %5 = trunc i32 %4 to i16
+  %2 = mul i16 %.0.lcssa, 1000
+  %3 = trunc nuw nsw i32 %i.bq to i16
+  %4 = add i16 %2, %3
   br i1 %i.br, label %.loopexit, label %bb.l
 
 bb.i:                                             ; preds = %._crit_edge
@@ -1161,10 +1152,9 @@ bb.i:                                             ; preds = %._crit_edge
   %i.cc = zext i16 %i.cb to i32
   %i.cd = add nuw nsw i32 %i.cc, %i.bw            ; 2 uses
   %i.ce = icmp samesign ugt i32 %i.cd, 9999
-  %6 = zext i16 %.0.lcssa to i32
-  %7 = mul nuw nsw i32 %6, 100
-  %8 = add nuw nsw i32 %i.cd, %7
-  %9 = trunc i32 %8 to i16
+  %5 = mul i16 %.0.lcssa, 100
+  %6 = trunc nuw nsw i32 %i.cd to i16
+  %7 = add i16 %5, %6
   br i1 %i.ce, label %.loopexit, label %bb.l
 
 bb.j:                                             ; preds = %._crit_edge
@@ -1186,7 +1176,7 @@ bb.k:                                             ; preds = %._crit_edge
   br i1 %i.cn, label %.loopexit, label %bb.l
 
 bb.l:                                             ; preds = %.thread71, %bb.i, %bb.h, %bb.k
-  %.5 = phi i16 [ %.0.lcssa, %bb.k ], [ %5, %bb.h ], [ %9, %bb.i ], [ %i.cm, %.thread71 ]
+  %.5 = phi i16 [ %.0.lcssa, %bb.k ], [ %4, %bb.h ], [ %7, %bb.i ], [ %i.cm, %.thread71 ]
   %i.co = zext i16 %.5 to i32
   %i.cp = shl nuw i32 %i.co, 16
   %i.cq = or disjoint i32 %i.cp, 1

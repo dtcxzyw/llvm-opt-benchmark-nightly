@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %bb.a, %bb.f
   br i1 %.not50, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge
-  %0 = zext i8 %i.j to i32
   %i.k = zext i8 %i.h to i32
   %i.l = icmp slt i64 %indvars.iv, 0
   %notmask = shl nsw i32 -1, %.045.lcssa
@@ -215,20 +214,20 @@ bb.c:                                             ; preds = %._crit_edge
   %.0 = select i1 %i.l, i32 %i.o, i32 %i.a        ; 2 uses
   %i.p = shl i32 %i.k, %.045.lcssa
   %i.q = or i32 %i.p, %.0                         ; 2 uses
-  %1 = add nuw nsw i32 %.045.lcssa, %0
   %i.r = icmp samesign ugt i32 %.045.lcssa, 8     ; 2 uses
   %i.s = shl i32 %i.q, 1
   %i.t = or disjoint i32 %i.s, 1
   %.047.ph = select i1 %i.r, i32 %i.t, i32 %i.q
-  %2 = zext i1 %i.r to i32
-  %.046.ph = add nuw nsw i32 %1, %2
+  %0 = zext i1 %i.r to i8
   %i.u = trunc i32 %.047.ph to i16
   %i.v = add nsw i64 %indvars.iv, 256             ; 4 uses
   %i.w = getelementptr inbounds [2 x i8], ptr @uni_DCtab_lum_bits, i64 %i.v
   store i16 %i.u, ptr %i.w, align 2, !tbaa !52
-  %i.x = trunc i32 %.046.ph to i8
+  %i.x = trunc i32 %.045.lcssa to i8
+  %1 = add i8 %i.j, %i.x
+  %2 = add i8 %1, %0
   %i.y = getelementptr inbounds i8, ptr @uni_DCtab_lum_len, i64 %i.v
-  store i8 %i.x, ptr %i.y, align 1, !tbaa !50
+  store i8 %2, ptr %i.y, align 1, !tbaa !50
   %i.z = getelementptr inbounds nuw [2 x i8], ptr @ff_mpeg4_DCtab_chrom, i64 %i.f ; 2 uses
   %i.aa = load i8, ptr %i.z, align 2, !tbaa !50
   %i.ab = zext i8 %i.aa to i32

@@ -195,21 +195,20 @@ bb.a:                                             ; preds = %.preheader
 
 .preheader:                                       ; preds = %vector.ph, %.preheader
   %indvars.iv32 = phi i64 [ %indvars.iv.next33, %.preheader ], [ 0, %vector.ph ] ; 2 uses
-  %.02429 = phi i32 [ %4, %.preheader ], [ 0, %vector.ph ]
+  %.02429 = phi i8 [ %.narrow, %.preheader ], [ 0, %vector.ph ]
   %.02528 = phi i32 [ %spec.store.select, %.preheader ], [ 0, %vector.ph ] ; 2 uses
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv32 ; 2 uses
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !14 ; 2 uses
   %i.bp = zext i32 %.02528 to i64
   %i.bq = getelementptr inbounds nuw i8, ptr %2, i64 %i.bp
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !15
-  %3 = add i32 %i.bo, %.02429
-  %.tr.a = trunc i32 %3 to i8
-  %.narrow.a = add i8 %i.br, %.tr.a               ; 2 uses
-  %4 = zext i8 %.narrow.a to i32
+  %.tr.a = trunc i32 %i.bo to i8
+  %.narrow.a = add i8 %.02429, %.tr.a
+  %.narrow = add i8 %.narrow.a, %i.br             ; 2 uses
   %i.bs = add i32 %.02528, 1                      ; 2 uses
   %i.bt = icmp eq i32 %i.bs, %1
   %spec.store.select = select i1 %i.bt, i32 0, i32 %i.bs
-  %i.bu = zext i8 %.narrow.a to i64
+  %i.bu = zext i8 %.narrow to i64
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.bu ; 2 uses
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !14
   store i32 %i.bw, ptr %i.bn, align 4, !tbaa !14

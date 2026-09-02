@@ -205,14 +205,13 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %or.cond, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %narrow = add nuw i8 %i.k, 31
-  %7 = zext i8 %narrow to i32
-  %8 = shl nuw nsw i32 %7, 1
-  %9 = or disjoint i32 %8, %.073
-  %10 = trunc i32 %9 to i8
+  %narrow = shl nuw i8 %i.k, 1
+  %7 = add nsw i8 %narrow, 62
+  %8 = trunc nuw nsw i32 %.073 to i8
+  %9 = or disjoint i8 %7, %8
   %i.m = add nsw i32 %i.d, 1
   store i32 %i.m, ptr %6, align 4, !tbaa !55
-  store i8 %10, ptr %i.f, align 1, !tbaa !113
+  store i8 %9, ptr %i.f, align 1, !tbaa !113
   br label %bb.u
 
 bb.e:                                             ; preds = %bb.c

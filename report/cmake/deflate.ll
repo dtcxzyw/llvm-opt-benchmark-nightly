@@ -202,12 +202,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.o, %bb.a
   %i.t = phi i32 [ %i.dj, %bb.o ], [ %.pre, %bb.a ]
   %i.u = load i64, ptr %i.c, align 8, !tbaa !51
-  %1 = zext i32 %i.t to i64
   %i.v = load i32, ptr %i.e, align 4, !tbaa !62   ; 3 uses
-  %2 = zext i32 %i.v to i64
-  %3 = add nuw nsw i64 %1, %2
-  %4 = sub i64 %i.u, %3
-  %5 = trunc i64 %4 to i32                        ; 3 uses
+  %1 = trunc i64 %i.u to i32
+  %2 = add i32 %i.t, %i.v
+  %3 = sub i32 %1, %2                             ; 3 uses
   %i.w = load i32, ptr %i.a, align 8, !tbaa !33
   %i.x = add i32 %i.f, %i.w
   %.not = icmp ult i32 %i.v, %i.x
@@ -216,7 +214,7 @@ bb.b:                                             ; preds = %bb.o, %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.y = load ptr, ptr %i.g, align 8, !tbaa !39   ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.h
-  %i.aa = sub i32 %i.b, %5
+  %i.aa = sub i32 %i.b, %3
   %i.ab = zext i32 %i.aa to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.y, ptr align 1 %i.z, i64 %i.ab, i1 false)
   %i.ac = load <2 x i32>, ptr %i.e, align 4, !tbaa !74
@@ -349,12 +347,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %.not23.i, label %slide_hash.exit, label %scalar.ph, !llvm.loop !101
 
 slide_hash.exit:                                  ; preds = %scalar.ph, %middle.block
-  %i.cd = add i32 %i.b, %5
+  %i.cd = add i32 %3, %i.b
   br label %bb.f
 
 bb.f:                                             ; preds = %slide_hash.exit, %bb.b
   %i.ce = phi i32 [ %i.ah, %slide_hash.exit ], [ %i.v, %bb.b ]
-  %.096 = phi i32 [ %i.cd, %slide_hash.exit ], [ %5, %bb.b ] ; 2 uses
+  %.096 = phi i32 [ %i.cd, %slide_hash.exit ], [ %3, %bb.b ] ; 2 uses
   %i.cf = load ptr, ptr %0, align 8, !tbaa !28    ; 8 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 8 ; 2 uses
   %i.ch = load i32, ptr %i.cg, align 8, !tbaa !71 ; 3 uses

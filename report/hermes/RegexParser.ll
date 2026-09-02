@@ -205,7 +205,7 @@ bb.a:
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !61   ; 2 uses
   %.not4.i.i.i.i.i = icmp eq ptr %i.x, %i.z
   %i.aa = lshr i16 %i.q, 8                        ; 2 uses
-  %5 = trunc nuw i16 %i.aa to i8
+  %5 = trunc i16 %i.aa to i1
   br i1 %.not4.i.i.i.i.i, label %_ZSt8_DestroyIPSt6vectorIPN6hermes5regex4NodeESaIS4_EEEvT_S8_.exit.i.i.i, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.a, %_ZSt8_DestroyISt6vectorIPN6hermes5regex4NodeESaIS4_EEEvPT_.exit.i.i.i.i.i
@@ -419,9 +419,6 @@ bb.n:                                             ; preds = %_ZN4llvh23SmallVect
   %i.dc = trunc i16 %i.aa to i1
   %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.de = load i8, ptr %i.dd, align 4
-  %6 = lshr i8 %i.de, 3
-  %7 = xor i8 %6, -1
-  %8 = and i8 %5, %7
   %i.df = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.dg = load i32, ptr %i.df, align 8, !tbaa !296
   %i.dh = load ptr, ptr %0, align 8, !tbaa !25    ; 3 uses
@@ -582,11 +579,13 @@ bb.v:                                             ; preds = %_ZN6hermes5regex5Re
   br label %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit18
 
 _ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit18: ; preds = %bb.v, %_ZN6hermes5regex5RegexINS0_16UTF16RegexTraitsEE9spliceOutEPNS0_4NodeE.exit14
-  %9 = trunc nuw i8 %8 to i1
+  %6 = and i8 %i.de, 8
+  %.not = icmp eq i8 %6, 0
+  %7 = and i1 %.not, %5
   br label %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit
 
 _ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit: ; preds = %bb.m, %_ZN6hermes5regex5RegexINS0_16UTF16RegexTraitsEE9spliceOutEPNS0_4NodeE.exit, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit18, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex6ParserINS2_5RegexINS2_16UTF16RegexTraitsEEEPKDsE17ParseStackElementELb0EE8pop_backEv.exit
-  %.0 = phi i1 [ true, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex6ParserINS2_5RegexINS2_16UTF16RegexTraitsEEEPKDsE17ParseStackElementELb0EE8pop_backEv.exit ], [ %9, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit18 ], [ true, %_ZN6hermes5regex5RegexINS0_16UTF16RegexTraitsEE9spliceOutEPNS0_4NodeE.exit ], [ true, %bb.m ]
+  %.0 = phi i1 [ true, %_ZN4llvh23SmallVectorTemplateBaseIN6hermes5regex6ParserINS2_5RegexINS2_16UTF16RegexTraitsEEEPKDsE17ParseStackElementELb0EE8pop_backEv.exit ], [ %7, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EED2Ev.exit18 ], [ true, %_ZN6hermes5regex5RegexINS0_16UTF16RegexTraitsEE9spliceOutEPNS0_4NodeE.exit ], [ true, %bb.m ]
   %i.fq = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.fr = call noundef zeroext i1 @_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE26tryConsumeQuantifierPrefixEPNS7_10QuantifierE(ptr noundef nonnull align 8 dereferenceable(41) %0, ptr noundef nonnull %i.fq)
   br i1 %i.fr, label %bb.w, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE20tryConsumeQuantifierEPNS7_10QuantifierE.exit

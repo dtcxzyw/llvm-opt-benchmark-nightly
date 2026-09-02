@@ -205,14 +205,14 @@ bb.c:                                             ; preds = %bb.a
   %.lobit.i.i = and i32 %i.f, 1
   %i.g = add nuw nsw i32 %.lobit.i.i, 59          ; 2 uses
   %.not.i.i = icmp samesign ugt i32 %i.e, %i.g    ; 2 uses
-  %..i.i = select i1 %.not.i.i, i32 2, i32 0
+  %..i.i = select i1 %.not.i.i, i8 2, i8 0
   %.8.i.i = select i1 %.not.i.i, i32 %i.g, i32 0
   %i.h = sub nsw i32 %i.e, %.8.i.i                ; 2 uses
   %i.i = mul nsw i32 %i.h, 268
   %i.j = add nsw i32 %i.i, 8028
   %i.k = lshr i32 %i.j, 13                        ; 2 uses
-  %2 = add nuw nsw i32 %i.k, %..i.i               ; 2 uses
-  %3 = trunc i32 %2 to i8                         ; 4 uses
+  %2 = trunc i32 %i.k to i8
+  %3 = add i8 %..i.i, %2                          ; 5 uses
   %i.l = icmp ne i8 %3, 0
   tail call void @llvm.assume(i1 %i.l)
   %i.m = mul nuw nsw i32 %i.k, 3917
@@ -249,8 +249,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i16.i, label %bb.b, label %.thread10
 
 .thread10:                                        ; preds = %bb.d, %bb.f
-  %.mask.i = and i32 %2, 255
-  %i.ab = zext nneg i32 %.mask.i to i64
+  %i.ab = zext nneg i8 %3 to i64
   %.sroa.sel.i.i = select i1 %i.u, ptr getelementptr inbounds nuw (i8, ptr @96, i64 24), ptr @96
   %i.ac = getelementptr [2 x i8], ptr %.sroa.sel.i.i, i64 %i.ab
   %i.ad = getelementptr i8, ptr %i.ac, i64 -2

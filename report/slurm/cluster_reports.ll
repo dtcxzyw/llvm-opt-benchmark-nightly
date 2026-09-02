@@ -202,10 +202,10 @@ bb.v:                                             ; preds = %_set_cluster_cond.e
   br i1 %.not22.i, label %bb.af, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.cj = call i32 @list_count(ptr noundef nonnull %i.cf) #9
+  %i.cj = call i32 @list_count(ptr noundef nonnull %i.cf) #9 ; 2 uses
   %i.ck = call i32 @list_count(ptr noundef nonnull %i.cf) #9
   %i.cl = icmp slt i32 %i.ck, 2
-  br i1 %i.cl, label %_merge_cluster_recs.exit.i, label %bb.x
+  br i1 %i.cl, label %bb.af, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   %i.cm = call ptr @list_iterator_create(ptr noundef nonnull %i.cf) #9 ; 5 uses
@@ -260,14 +260,10 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.
 
 ._crit_edge.i28.i:                                ; preds = %bb.ae, %bb.x
   call void @list_iterator_destroy(ptr noundef %i.cm) #9
-  br label %_merge_cluster_recs.exit.i
-
-_merge_cluster_recs.exit.i:                       ; preds = %._crit_edge.i28.i, %bb.w
-  %2 = zext i32 %i.cj to i64
   br label %bb.af
 
-bb.af:                                            ; preds = %_merge_cluster_recs.exit.i, %bb.v
-  %.0.i = phi i64 [ %2, %_merge_cluster_recs.exit.i ], [ 1, %bb.v ]
+bb.af:                                            ; preds = %._crit_edge.i28.i, %bb.w, %bb.v
+  %.0.i = phi i32 [ 1, %bb.v ], [ %i.cj, %bb.w ], [ %i.cj, %._crit_edge.i28.i ]
   %i.cy = load i32, ptr @print_fields_have_header, align 4
   %.not23.i = icmp eq i32 %i.cy, 0
   br i1 %.not23.i, label %_get_cluster_list.exit, label %bb.ag
@@ -313,7 +309,8 @@ _get_cluster_list.exit:                           ; preds = %bb.af, %bb.aj
   %i.dj = load i64, ptr %i.bz, align 8
   %i.dk = load i64, ptr %i.bx, align 8
   %i.dl = sub nsw i64 %i.dj, %i.dk
-  %3 = mul i64 %i.dl, %.0.i
+  %2 = trunc i64 %i.dl to i32
+  %3 = mul i32 %.0.i, %2
   call void @slurmdb_destroy_cluster_cond(ptr noundef %i.m) #9
   %i.dm = call i32 @list_count(ptr noundef %i.k) #9
   %.not121 = icmp eq i32 %i.dm, 0
@@ -552,7 +549,7 @@ bb.ba:                                            ; preds = %.sink.split262, %.l
   br i1 %.not126199, label %._crit_edge202, label %.lr.ph201
 
 .lr.ph201:                                        ; preds = %._crit_edge194
-  %4 = and i64 %3, 4294967295
+  %4 = zext i32 %3 to i64
   br label %bb.bb
 
 bb.bb:                                            ; preds = %.lr.ph201, %.backedge139

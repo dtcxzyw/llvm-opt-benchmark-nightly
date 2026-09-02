@@ -205,12 +205,11 @@ bb.cl:                                            ; preds = %bb.ck
   store i16 %i.sf, ptr %i.sg, align 2, !tbaa !56
   %i.sh = sdiv i32 %i.sc, %i.rt
   %i.si = load i16, ptr %i.nv, align 4, !tbaa !56
-  %3 = zext i16 %i.si to i32
-  %4 = add nuw nsw i32 %3, 1
-  %5 = mul nsw i32 %4, %i.sh
-  %6 = trunc i32 %5 to i16
+  %3 = add i16 %i.si, 1
+  %4 = trunc i32 %i.sh to i16
+  %5 = mul i16 %3, %4
   %i.sj = getelementptr inbounds nuw [2 x i8], ptr %i.mh, i64 %indvars.iv
-  store i16 %6, ptr %i.sj, align 2, !tbaa !56
+  store i16 %5, ptr %i.sj, align 2, !tbaa !56
   %i.sk = load i16, ptr %i.nu, align 4, !tbaa !56
   %i.sl = getelementptr inbounds nuw [2 x i8], ptr %i.nu, i64 %indvars.iv
   store i16 %i.sk, ptr %i.sl, align 2, !tbaa !56

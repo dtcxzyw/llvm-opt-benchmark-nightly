@@ -205,12 +205,11 @@ bb.fg:                                            ; preds = %bb.ff
   %i.tl = getelementptr i8, ptr %.219211571, i64 1
   %i.tm = shl i8 %i.tj, 2
   %i.tn = xor i8 %i.tm, -128
-  %4 = zext i8 %i.tn to i64
   br label %bb.fh
 
 bb.fh:                                            ; preds = %.lr.ph1575, %bb.ff, %bb.fg
   %.22922 = phi ptr [ %i.tl, %bb.fg ], [ %.219211571, %bb.ff ], [ %.219211571, %.lr.ph1575 ] ; 5 uses
-  %.0813 = phi i64 [ %4, %bb.fg ], [ 0, %bb.ff ], [ 0, %.lr.ph1575 ]
+  %.0813 = phi i8 [ %i.tn, %bb.fg ], [ 0, %bb.ff ], [ 0, %.lr.ph1575 ]
   %i.to = icmp ult ptr %.22922, %i.w
   br i1 %i.to, label %bb.fi, label %bb.fk
 
@@ -262,25 +261,24 @@ bb.fp:                                            ; preds = %bb.fo
   %i.uf = getelementptr i8, ptr %.24924, i64 1
   %i.ug = and i8 %i.ud, 63
   %i.uh = xor i8 %i.ug, 32
-  %5 = zext nneg i8 %i.uh to i64
   br label %bb.fq
 
 bb.fq:                                            ; preds = %bb.fn, %bb.fo, %bb.fp
   %.25925 = phi ptr [ %i.uf, %bb.fp ], [ %.24924, %bb.fo ], [ %.24924, %bb.fn ] ; 2 uses
-  %.0810 = phi i64 [ %5, %bb.fp ], [ 0, %bb.fo ], [ 0, %bb.fn ]
+  %.0810 = phi i8 [ %i.uh, %bb.fp ], [ 0, %bb.fo ], [ 0, %bb.fn ]
   %i.ui = lshr i64 %.0812, 4
-  %6 = or i64 %i.ui, %.0813
-  %7 = trunc nuw i64 %6 to i8
-  store i8 %7, ptr %i.f, align 1, !tbaa !15
+  %4 = trunc nuw nsw i64 %i.ui to i8
+  %5 = or i8 %.0813, %4
+  store i8 %5, ptr %i.f, align 1, !tbaa !15
   %i.uj = shl nuw nsw i64 %.0812, 4
   %i.uk = lshr i64 %.0811, 2
   %i.ul = or i64 %i.uk, %i.uj
   %i.um = trunc i64 %i.ul to i8
   store i8 %i.um, ptr %.1..sroa_idx, align 1, !tbaa !15
-  %8 = shl nuw nsw i64 %.0811, 6
-  %9 = or i64 %.0810, %8
-  %10 = trunc i64 %9 to i8
-  store i8 %10, ptr %.2..sroa_idx, align 1, !tbaa !15
+  %.0811.tr = trunc nuw nsw i64 %.0811 to i8
+  %6 = shl i8 %.0811.tr, 6
+  %7 = or i8 %.0810, %6
+  store i8 %7, ptr %.2..sroa_idx, align 1, !tbaa !15
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.18171573, ptr noundef nonnull readonly align 1 dereferenceable(1) %i.f, i64 noundef range(i64 1, -9223372036854775808) %i.th, i1 noundef false) #12
   %i.un = getelementptr i8, ptr %.18171573, i64 %i.th ; 2 uses
   %i.uo = sub nuw nsw i64 %.268871572, %i.th      ; 2 uses
@@ -410,8 +408,7 @@ RSTRING_PTR.exit1140:                             ; preds = %bb.gb, %bb.gc
   %i.vs = load i8, ptr %.299291563, align 1, !tbaa !15
   %i.vt = zext i8 %i.vs to i64
   %i.vu = getelementptr i8, ptr @pack_unpack_internal.b64_xtable, i64 %i.vt
-  %i.vv = load i8, ptr %i.vu, align 1, !tbaa !15  ; 2 uses
-  %11 = sext i8 %i.vv to i32                      ; 3 uses
+  %i.vv = load i8, ptr %i.vu, align 1, !tbaa !15  ; 4 uses
   %i.vw = icmp uge ptr %i.vr, %i.w
   %i.vx = icmp eq i8 %i.vv, -1
   %or.cond57 = select i1 %i.vw, i1 true, i1 %i.vx
@@ -427,8 +424,7 @@ bb.ge:                                            ; preds = %.lr.ph1565
   %i.wa = load i8, ptr %i.vr, align 1, !tbaa !15
   %i.wb = zext i8 %i.wa to i64
   %i.wc = getelementptr i8, ptr @pack_unpack_internal.b64_xtable, i64 %i.wb
-  %i.wd = load i8, ptr %i.wc, align 1, !tbaa !15  ; 3 uses
-  %12 = sext i8 %i.wd to i32                      ; 5 uses
+  %i.wd = load i8, ptr %i.wc, align 1, !tbaa !15  ; 7 uses
   %i.we = icmp uge ptr %i.vz, %i.w
   %i.wf = icmp eq i8 %i.wd, -1
   %or.cond59 = select i1 %i.we, i1 true, i1 %i.wf
@@ -464,8 +460,7 @@ bb.gk:                                            ; preds = %bb.gg
   %i.wp = getelementptr i8, ptr %.299291563, i64 3 ; 3 uses
   %i.wq = zext i8 %i.wh to i64
   %i.wr = getelementptr i8, ptr @pack_unpack_internal.b64_xtable, i64 %i.wq
-  %i.ws = load i8, ptr %i.wr, align 1, !tbaa !15  ; 4 uses
-  %13 = sext i8 %i.ws to i32                      ; 2 uses
+  %i.ws = load i8, ptr %i.wr, align 1, !tbaa !15  ; 5 uses
   %i.wt = icmp uge ptr %i.wp, %i.w
   %i.wu = icmp eq i8 %i.ws, -1
   %or.cond61 = select i1 %i.wt, i1 true, i1 %i.wu
@@ -497,18 +492,16 @@ bb.go:                                            ; preds = %bb.gn
   unreachable
 
 bb.gp:                                            ; preds = %bb.gn
-  %14 = shl nsw i32 %11, 2
-  %15 = lshr i32 %12, 4
-  %16 = or i32 %15, %14
-  %17 = trunc i32 %16 to i8
+  %8 = shl i8 %i.vv, 2
+  %9 = ashr i8 %i.wd, 4
+  %10 = or i8 %9, %8
   %i.xe = getelementptr i8, ptr %.08071564, i64 1
-  store i8 %17, ptr %.08071564, align 1, !tbaa !15
-  %18 = shl nsw i32 %12, 4
-  %19 = lshr i32 %13, 2
-  %20 = or i32 %19, %18
-  %21 = trunc i32 %20 to i8
+  store i8 %10, ptr %.08071564, align 1, !tbaa !15
+  %11 = shl i8 %i.wd, 4
+  %12 = ashr i8 %i.ws, 2
+  %13 = or i8 %12, %11
   %i.xf = getelementptr i8, ptr %.08071564, i64 2
-  store i8 %21, ptr %i.xe, align 1, !tbaa !15
+  store i8 %13, ptr %i.xe, align 1, !tbaa !15
   %i.xg = shl i8 %i.ws, 6
   %i.xh = or i8 %i.xb, %i.xg
   %i.xi = getelementptr i8, ptr %.08071564, i64 3 ; 2 uses
@@ -517,12 +510,11 @@ bb.gp:                                            ; preds = %bb.gn
   br i1 %i.xj, label %.lr.ph1565, label %.thread1270, !llvm.loop !70
 
 .thread1253:                                      ; preds = %bb.gi
-  %22 = shl nsw i32 %11, 2
-  %23 = lshr i32 %12, 4
-  %24 = or i32 %22, %23
-  %25 = trunc i32 %24 to i8
+  %14 = shl i8 %i.vv, 2
+  %15 = ashr i8 %i.wd, 4
+  %16 = or i8 %14, %15
   %i.xk = getelementptr i8, ptr %.08071564, i64 1
-  store i8 %25, ptr %.08071564, align 1, !tbaa !15
+  store i8 %16, ptr %.08071564, align 1, !tbaa !15
   %i.xl = and i8 %i.wd, 15
   %.not1045 = icmp eq i8 %i.xl, 0
   br i1 %.not1045, label %.thread1270, label %bb.gq
@@ -533,18 +525,16 @@ bb.gq:                                            ; preds = %.thread1253
   unreachable
 
 bb.gr:                                            ; preds = %bb.gm
-  %26 = shl nsw i32 %11, 2
-  %27 = lshr i32 %12, 4
-  %28 = or i32 %27, %26
-  %29 = trunc i32 %28 to i8
+  %17 = shl i8 %i.vv, 2
+  %18 = ashr i8 %i.wd, 4
+  %19 = or i8 %18, %17
   %i.xn = getelementptr i8, ptr %.08071564, i64 1
-  store i8 %29, ptr %.08071564, align 1, !tbaa !15
-  %30 = shl nsw i32 %12, 4
-  %31 = lshr i32 %13, 2
-  %32 = or i32 %31, %30
-  %33 = trunc i32 %32 to i8
+  store i8 %19, ptr %.08071564, align 1, !tbaa !15
+  %20 = shl i8 %i.wd, 4
+  %21 = ashr i8 %i.ws, 2
+  %22 = or i8 %21, %20
   %i.xo = getelementptr i8, ptr %.08071564, i64 2
-  store i8 %33, ptr %i.xn, align 1, !tbaa !15
+  store i8 %22, ptr %i.xn, align 1, !tbaa !15
   %i.xp = and i8 %i.ws, 3
   %.not1044 = icmp eq i8 %i.xp, 0
   br i1 %.not1044, label %.thread1270, label %bb.gs
@@ -564,7 +554,7 @@ bb.gt:                                            ; preds = %bb.gt, %.preheader1
   %i.xr = load i8, ptr %.32932, align 1, !tbaa !15
   %i.xs = zext i8 %i.xr to i64
   %i.xt = getelementptr i8, ptr @pack_unpack_internal.b64_xtable, i64 %i.xs
-  %i.xu = load i8, ptr %i.xt, align 1, !tbaa !15  ; 4 uses
+  %i.xu = load i8, ptr %i.xt, align 1, !tbaa !15  ; 6 uses
   %i.xv = icmp eq i8 %i.xu, -1
   %i.xw = icmp ult ptr %.32932, %i.w              ; 2 uses
   %i.xx = select i1 %i.xv, i1 %i.xw, i1 false
@@ -572,7 +562,6 @@ bb.gt:                                            ; preds = %bb.gt, %.preheader1
   br i1 %i.xx, label %bb.gt, label %bb.gu, !llvm.loop !71
 
 bb.gu:                                            ; preds = %bb.gt
-  %34 = sext i8 %i.xu to i32                      ; 3 uses
   br i1 %i.xw, label %.preheader1333, label %.thread1270
 
 .preheader1333:                                   ; preds = %bb.gu, %.preheader1333
@@ -581,14 +570,13 @@ bb.gu:                                            ; preds = %bb.gt
   %i.xz = load i8, ptr %.33933, align 1, !tbaa !15
   %i.ya = zext i8 %i.xz to i64
   %i.yb = getelementptr i8, ptr @pack_unpack_internal.b64_xtable, i64 %i.ya
-  %i.yc = load i8, ptr %i.yb, align 1, !tbaa !15  ; 4 uses
+  %i.yc = load i8, ptr %i.yb, align 1, !tbaa !15  ; 8 uses
   %i.yd = icmp eq i8 %i.yc, -1
   %i.ye = icmp ult ptr %.33933, %i.w              ; 2 uses
   %i.yf = select i1 %i.yd, i1 %i.ye, i1 false
   br i1 %i.yf, label %.preheader1333, label %bb.gv, !llvm.loop !72
 
 bb.gv:                                            ; preds = %.preheader1333
-  %35 = sext i8 %i.yc to i32                      ; 5 uses
   br i1 %i.ye, label %.preheader, label %.thread1282
 
 .preheader:                                       ; preds = %bb.gv, %.preheader
@@ -597,7 +585,7 @@ bb.gv:                                            ; preds = %.preheader1333
   %i.yg = load i8, ptr %.34934, align 1, !tbaa !15 ; 2 uses
   %i.yh = zext i8 %i.yg to i64
   %i.yi = getelementptr i8, ptr @pack_unpack_internal.b64_xtable, i64 %i.yh
-  %i.yj = load i8, ptr %i.yi, align 1, !tbaa !15  ; 3 uses
+  %i.yj = load i8, ptr %i.yi, align 1, !tbaa !15  ; 4 uses
   %i.yk = icmp eq i8 %i.yj, -1                    ; 2 uses
   %i.yl = icmp ult ptr %.34934, %i.w              ; 2 uses
   %i.ym = select i1 %i.yk, i1 %i.yl, i1 false
@@ -606,7 +594,6 @@ bb.gv:                                            ; preds = %.preheader1333
   br i1 %or.cond1094.not, label %.preheader, label %bb.gw, !llvm.loop !73
 
 bb.gw:                                            ; preds = %.preheader
-  %36 = sext i8 %i.yj to i32                      ; 2 uses
   %or.cond1095 = select i1 %i.yn, i1 %i.yl, i1 false
   br i1 %or.cond1095, label %bb.gx, label %bb.hb
 
@@ -633,18 +620,16 @@ bb.gz:                                            ; preds = %bb.gy
   br i1 %or.cond1098, label %bb.ha, label %bb.hb
 
 bb.ha:                                            ; preds = %bb.gz
-  %37 = shl nsw i32 %34, 2
-  %38 = lshr i32 %35, 4
-  %39 = or i32 %38, %37
-  %40 = trunc i32 %39 to i8
+  %23 = shl i8 %i.xu, 2
+  %24 = ashr i8 %i.yc, 4
+  %25 = or i8 %24, %23
   %i.yy = getelementptr i8, ptr %.18081557, i64 1
-  store i8 %40, ptr %.18081557, align 1, !tbaa !15
-  %41 = shl nsw i32 %35, 4
-  %42 = lshr i32 %36, 2
-  %43 = or i32 %42, %41
-  %44 = trunc i32 %43 to i8
+  store i8 %25, ptr %.18081557, align 1, !tbaa !15
+  %26 = shl i8 %i.yc, 4
+  %27 = ashr i8 %i.yj, 2
+  %28 = or i8 %27, %26
   %i.yz = getelementptr i8, ptr %.18081557, i64 2
-  store i8 %44, ptr %i.yy, align 1, !tbaa !15
+  store i8 %28, ptr %i.yy, align 1, !tbaa !15
   %.tr = shl i8 %i.yj, 6
   %.narrow = or i8 %i.ys, %.tr
   %i.za = getelementptr i8, ptr %.18081557, i64 3 ; 2 uses
@@ -670,27 +655,24 @@ bb.hc:                                            ; preds = %bb.hb
 
 .thread1292:                                      ; preds = %.thread1282, %bb.hc
   %.3693612881295 = phi ptr [ %.36936, %bb.hc ], [ %.33933, %.thread1282 ]
-  %45 = shl nsw i32 %34, 2
-  %46 = lshr i32 %35, 4
-  %47 = or i32 %46, %45
-  %48 = trunc i32 %47 to i8
+  %29 = shl i8 %i.xu, 2
+  %30 = ashr i8 %i.yc, 4
+  %31 = or i8 %30, %29
   %i.zg = getelementptr i8, ptr %.18081557, i64 1
-  store i8 %48, ptr %.18081557, align 1, !tbaa !15
+  store i8 %31, ptr %.18081557, align 1, !tbaa !15
   br label %.thread1270
 
 bb.hd:                                            ; preds = %bb.hc
-  %49 = shl nsw i32 %34, 2
-  %50 = lshr i32 %35, 4
-  %51 = or i32 %50, %49
-  %52 = trunc i32 %51 to i8
+  %32 = shl i8 %i.xu, 2
+  %33 = ashr i8 %i.yc, 4
+  %34 = or i8 %33, %32
   %i.zh = getelementptr i8, ptr %.18081557, i64 1
-  store i8 %52, ptr %.18081557, align 1, !tbaa !15
-  %53 = shl nsw i32 %35, 4
-  %54 = lshr i32 %36, 2
-  %55 = or i32 %54, %53
-  %56 = trunc i32 %55 to i8
+  store i8 %34, ptr %.18081557, align 1, !tbaa !15
+  %35 = shl i8 %i.yc, 4
+  %36 = ashr i8 %i.yj, 2
+  %37 = or i8 %36, %35
   %i.zi = getelementptr i8, ptr %.18081557, i64 2
-  store i8 %56, ptr %i.zh, align 1, !tbaa !15
+  store i8 %37, ptr %i.zh, align 1, !tbaa !15
   br label %.thread1270
 
 .thread1270:                                      ; preds = %bb.ha, %bb.gu, %bb.gp, %.preheader1342, %.preheader1343, %.thread1282, %bb.hb, %bb.hd, %.thread1292, %.thread1253, %bb.gr

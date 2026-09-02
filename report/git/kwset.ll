@@ -204,13 +204,14 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.bh, label %.preheader150, label %.lr.ph172
 
 .preheader150:                                    ; preds = %.lr.ph172, %.lr.ph172.prol.loopexit
-  %.pre198 = load i32, ptr %i.d, align 8, !tbaa !29 ; 14 uses
+  %.pre198 = load i32, ptr %i.d, align 8, !tbaa !29 ; 10 uses
   %.pre199.pre = load ptr, ptr %i.au, align 8, !tbaa !31 ; 7 uses
   %i.bi = icmp sgt i32 %.pre198, 0
   br i1 %i.bi, label %.lr.ph174, label %._crit_edge175.thread
 
 .lr.ph174:                                        ; preds = %.preheader150
   %i.bj = zext nneg i32 %.pre198 to i64           ; 2 uses
+  %1 = trunc i32 %.pre198 to i8                   ; 5 uses
   %xtraiter219 = and i64 %i.bj, 3                 ; 3 uses
   %i.bk = icmp ult i32 %.pre198, 4
   br i1 %i.bk, label %.epil.preheader, label %.lr.ph174.new
@@ -251,41 +252,37 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph174.ne
   %indvars.iv189 = phi i64 [ 0, %.lr.ph174.new ], [ %indvars.iv.next190.3, %bb.k ] ; 5 uses
   %niter = phi i64 [ 0, %.lr.ph174.new ], [ %niter.next.3, %bb.k ]
   %indvars.iv.next190 = or disjoint i64 %indvars.iv189, 1 ; 2 uses
-  %1 = trunc i64 %indvars.iv.next190 to i32
-  %2 = sub i32 %.pre198, %1
-  %3 = trunc i32 %2 to i8
+  %2 = trunc i64 %indvars.iv.next190 to i8
+  %3 = sub i8 %1, %2
   %i.cd = getelementptr inbounds nuw i8, ptr %.pre199.pre, i64 %indvars.iv189
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !34
   %i.cf = zext i8 %i.ce to i64
   %i.cg = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.cf
   store i8 %3, ptr %i.cg, align 1, !tbaa !34
   %indvars.iv.next190.1 = or disjoint i64 %indvars.iv189, 2 ; 2 uses
-  %4 = trunc i64 %indvars.iv.next190.1 to i32
-  %5 = sub i32 %.pre198, %4
-  %6 = trunc i32 %5 to i8
+  %4 = trunc i64 %indvars.iv.next190.1 to i8
+  %5 = sub i8 %1, %4
   %i.ch = getelementptr inbounds nuw i8, ptr %.pre199.pre, i64 %indvars.iv.next190
   %i.ci = load i8, ptr %i.ch, align 1, !tbaa !34
   %i.cj = zext i8 %i.ci to i64
   %i.ck = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.cj
-  store i8 %6, ptr %i.ck, align 1, !tbaa !34
+  store i8 %5, ptr %i.ck, align 1, !tbaa !34
   %indvars.iv.next190.2 = or disjoint i64 %indvars.iv189, 3 ; 2 uses
-  %7 = trunc i64 %indvars.iv.next190.2 to i32
-  %8 = sub i32 %.pre198, %7
-  %9 = trunc i32 %8 to i8
+  %6 = trunc i64 %indvars.iv.next190.2 to i8
+  %7 = sub i8 %1, %6
   %i.cl = getelementptr inbounds nuw i8, ptr %.pre199.pre, i64 %indvars.iv.next190.1
   %i.cm = load i8, ptr %i.cl, align 1, !tbaa !34
   %i.cn = zext i8 %i.cm to i64
   %i.co = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.cn
-  store i8 %9, ptr %i.co, align 1, !tbaa !34
+  store i8 %7, ptr %i.co, align 1, !tbaa !34
   %indvars.iv.next190.3 = add nuw nsw i64 %indvars.iv189, 4 ; 3 uses
-  %10 = trunc i64 %indvars.iv.next190.3 to i32
-  %11 = sub i32 %.pre198, %10
-  %12 = trunc i32 %11 to i8
+  %8 = trunc i64 %indvars.iv.next190.3 to i8
+  %9 = sub i8 %1, %8
   %i.cp = getelementptr inbounds nuw i8, ptr %.pre199.pre, i64 %indvars.iv.next190.2
   %i.cq = load i8, ptr %i.cp, align 1, !tbaa !34
   %i.cr = zext i8 %i.cq to i64
   %i.cs = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.cr
-  store i8 %12, ptr %i.cs, align 1, !tbaa !34
+  store i8 %9, ptr %i.cs, align 1, !tbaa !34
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge175.unr-lcssa, label %bb.k, !llvm.loop !55
@@ -309,14 +306,13 @@ bb.l:                                             ; preds = %bb.l, %.epil.prehea
   %indvars.iv189.epil = phi i64 [ %indvars.iv189.epil.init, %.epil.preheader ], [ %indvars.iv.next190.epil, %bb.l ] ; 2 uses
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.l ]
   %indvars.iv.next190.epil = add nuw nsw i64 %indvars.iv189.epil, 1 ; 2 uses
-  %13 = trunc i64 %indvars.iv.next190.epil to i32
-  %14 = sub i32 %.pre198, %13
-  %15 = trunc i32 %14 to i8
+  %10 = trunc i64 %indvars.iv.next190.epil to i8
+  %11 = sub i8 %1, %10
   %i.cu = getelementptr inbounds nuw i8, ptr %.pre199.pre, i64 %indvars.iv189.epil
   %i.cv = load i8, ptr %i.cu, align 1, !tbaa !34
   %i.cw = zext i8 %i.cv to i64
   %i.cx = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.cw
-  store i8 %15, ptr %i.cx, align 1, !tbaa !34
+  store i8 %11, ptr %i.cx, align 1, !tbaa !34
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter219
   br i1 %epil.iter.cmp.not, label %._crit_edge175, label %bb.l, !llvm.loop !56

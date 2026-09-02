@@ -205,15 +205,10 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local signext i16 @swap_int16(i16 noundef signext %0) local_unnamed_addr #11 {
+define dso_local noundef signext i16 @swap_int16(i16 noundef signext %0) local_unnamed_addr #11 {
 bb.a:
-  %1 = sext i16 %0 to i32                         ; 2 uses
-  %2 = shl nsw i32 %1, 8
-  %3 = lshr i32 %1, 8
-  %4 = and i32 %3, 255
-  %5 = or disjoint i32 %4, %2
-  %6 = trunc i32 %5 to i16
-  ret i16 %6
+  %1 = tail call i16 @llvm.bswap.i16(i16 %0)
+  ret i16 %1
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable

@@ -205,10 +205,10 @@ bb.i:                                             ; preds = %bb.g
   br i1 %or.cond49, label %.thread45, label %.thread42
 
 .thread42:                                        ; preds = %bb.i
+  %1 = add nsw i8 %i.p, -87
   %.tr = trunc i32 %i.n to i8
   %i.z = shl i8 %.tr, 4
-  %1 = add i8 %i.z, -87
-  %i.aa = add i8 %1, %i.p
+  %i.aa = add i8 %1, %i.z
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.h, %cgltf_unhex.exit.thread
@@ -611,9 +611,9 @@ bb.al:                                            ; preds = %bb.aj
   br i1 %or.cond49.i.i, label %.thread45.i.i, label %.thread42.i.i
 
 .thread42.i.i:                                    ; preds = %bb.al
+  %3 = add nsw i8 %i.ek, -87
   %.tr.i.i = trunc i32 %i.ei to i8
   %i.eu = shl i8 %.tr.i.i, 4
-  %3 = add nsw i8 %i.ek, -87
   %i.ev = add i8 %3, %i.eu
   br label %bb.an
 
@@ -1016,7 +1016,6 @@ bb.a:
 define void @DrawModelEx(ptr nofree noundef byval(%struct.Model) align 8 captures(none) %0, <2 x float> %1, float %2, <2 x float> %3, float %4, float noundef %5, <2 x float> %6, float %7, i32 %8) local_unnamed_addr #33 {
 bb.a:
   %9 = alloca %struct.Material, align 8           ; 7 uses
-  %.sroa.219.0.extract.shift = lshr i32 %8, 8
   %.sroa.3.0.extract.shift = lshr i32 %8, 16
   %.sroa.4.0.extract.shift = lshr i32 %8, 24
   %i.a = fmul float %5, f0x3C8EFA35               ; 2 uses
@@ -1215,9 +1214,11 @@ MatrixRotate.exit:                                ; preds = %bb.a, %bb.b
   %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.fl = load ptr, ptr %i.fk, align 8
   %i.fm = getelementptr inbounds nuw i8, ptr %9, i64 16
-  %10 = and i32 %8, 255
-  %11 = and i32 %.sroa.219.0.extract.shift, 255
-  %12 = and i32 %.sroa.3.0.extract.shift, 255
+  %10 = trunc i32 %8 to i16                       ; 2 uses
+  %11 = and i16 %10, 255
+  %12 = lshr i16 %10, 8
+  %13 = trunc nuw i32 %.sroa.3.0.extract.shift to i16
+  %14 = and i16 %13, 255
   %i.fn = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.fp = load ptr, ptr %i.fo, align 8            ; 2 uses
@@ -1249,19 +1250,16 @@ bb.c:                                             ; preds = %.lr.ph, %bb.f
   %.sroa.68.0.copyload = load i8, ptr %.sroa.68.0..sroa_idx, align 2 ; 2 uses
   %.sroa.711.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fz, i64 23 ; 3 uses
   %.sroa.711.0.copyload = load i8, ptr %.sroa.711.0..sroa_idx, align 1 ; 2 uses
-  %13 = zext i8 %.sroa.03.0.copyload to i32
-  %14 = mul nuw nsw i32 %10, %13
-  %.lhs.trunc = trunc nuw i32 %14 to i16
+  %15 = zext i8 %.sroa.03.0.copyload to i16
+  %.lhs.trunc = mul nuw i16 %11, %15
   %i.gb = udiv i16 %.lhs.trunc, 255
   %i.gc = trunc nuw i16 %i.gb to i8
-  %15 = zext i8 %.sroa.55.0.copyload to i32
-  %16 = mul nuw nsw i32 %11, %15
-  %.lhs.trunc189 = trunc nuw i32 %16 to i16
+  %16 = zext i8 %.sroa.55.0.copyload to i16
+  %.lhs.trunc189 = mul nuw i16 %12, %16
   %i.gd = udiv i16 %.lhs.trunc189, 255
   %i.ge = trunc nuw i16 %i.gd to i8
-  %17 = zext i8 %.sroa.68.0.copyload to i32
-  %18 = mul nuw nsw i32 %12, %17
-  %.lhs.trunc191 = trunc nuw i32 %18 to i16
+  %17 = zext i8 %.sroa.68.0.copyload to i16
+  %.lhs.trunc191 = mul nuw i16 %14, %17
   %i.gf = udiv i16 %.lhs.trunc191, 255
   %i.gg = trunc nuw i16 %i.gf to i8
   %i.gh = zext i8 %.sroa.711.0.copyload to i32
@@ -1664,8 +1662,8 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %.lr.ph81, %bb.i
   %indvars.iv94 = phi i64 [ 0, %.lr.ph81 ], [ %indvars.iv.next95, %bb.i ] ; 4 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv94
-  %i.ca = load i8, ptr %i.bz, align 1             ; 5 uses
-  %i.cb = zext i8 %i.ca to i32                    ; 3 uses
+  %i.ca = load i8, ptr %i.bz, align 1             ; 6 uses
+  %i.cb = zext i8 %i.ca to i32                    ; 2 uses
   %.not = icmp eq i8 %i.ca, 0
   br i1 %.not, label %bb.i, label %bb.g
 
@@ -1681,10 +1679,10 @@ bb.g:                                             ; preds = %bb.f
   %i.ck = load i16, ptr %i.cj, align 2
   %i.cl = zext i16 %i.ck to i32
   %i.cm = add nsw i32 %i.ci, %i.cl
-  %3 = shl nuw nsw i32 %i.cb, 9
-  %4 = trunc nuw nsw i64 %indvars.iv94 to i32
-  %5 = or i32 %3, %4
-  %6 = trunc i32 %5 to i16
+  %3 = trunc i64 %indvars.iv94 to i16
+  %.tr = zext i8 %i.ca to i16
+  %4 = shl i16 %.tr, 9
+  %5 = or i16 %4, %3
   %i.cn = sext i32 %i.cm to i64                   ; 2 uses
   %i.co = getelementptr inbounds i8, ptr %i.bx, i64 %i.cn
   store i8 %i.ca, ptr %i.co, align 1
@@ -1708,7 +1706,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.lr.ph78, %bb.h
   %indvars.iv91 = phi i64 [ %i.cw, %.lr.ph78 ], [ %indvars.iv.next92, %bb.h ] ; 2 uses
   %i.cy = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %indvars.iv91
-  store i16 %6, ptr %i.cy, align 2
+  store i16 %5, ptr %i.cy, align 2
   %indvars.iv.next92 = add nuw nsw i64 %indvars.iv91, %i.cx ; 2 uses
   %i.cz = icmp samesign ult i64 %indvars.iv.next92, 512
   br i1 %i.cz, label %bb.h, label %.loopexit

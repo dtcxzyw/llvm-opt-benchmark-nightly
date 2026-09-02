@@ -204,9 +204,9 @@ bb.a:
   tail call void @llvm.assume(i1 %i.d)
   %i.e = icmp samesign ugt i64 %i.c, 4294967295
   %i.f = trunc nuw i64 %i.c to i32
-  %i.g = add i32 %i.f, 1
-  %.sroa.0.0.i.i.i = select i1 %i.e, i32 0, i32 %i.g ; 2 uses
-  %.not.i = icmp eq i32 %.sroa.0.0.i.i.i, 0
+  %i.g = add i32 %i.f, 1                          ; 2 uses
+  %.not.i10 = icmp eq i32 %i.g, 0
+  %.not.i = select i1 %i.e, i1 true, i1 %.not.i10
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -214,7 +214,7 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.i unwind label %bb.n, !noalias !1349
 
 bb.c:                                             ; preds = %bb.i, %bb.a
-  %.sroa.4.0.i = phi i64 [ 512, %bb.a ], [ 0, %bb.i ] ; 2 uses
+  %.sroa.4.0.i = phi i8 [ 2, %bb.a ], [ 0, %bb.i ]
   %i.i = load ptr, ptr %2, align 8, !invariant.load !4, !alias.scope !1349, !noalias !1348 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.i, null
   br i1 %.not.i.i.i, label %bb.e, label %bb.d
@@ -227,13 +227,13 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.k = load i64, ptr %i.j, align 8, !range !7, !invariant.load !4, !alias.scope !1349, !noalias !1348 ; 2 uses
   %i.l = icmp eq i64 %i.k, 0
-  br i1 %i.l, label %_RNvMs4_NtCsg06799QCvd1_17wasmi_collections5arenaINtB5_5ArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtB11_7reftype9ExternRefENtB1E_15ExternRefEntityE5allocB11_.exit, label %bb.f
+  br i1 %i.l, label %bb.p, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.n = load i64, ptr %i.m, align 8, !range !16, !invariant.load !4, !alias.scope !1349, !noalias !1348
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %1, i64 noundef range(i64 1, 0) %i.k, i64 noundef range(i64 1, 536870913) %i.n) #30, !noalias !1349
-  br label %_RNvMs4_NtCsg06799QCvd1_17wasmi_collections5arenaINtB5_5ArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtB11_7reftype9ExternRefENtB1E_15ExternRefEntityE5allocB11_.exit
+  br label %bb.p
 
 bb.g:                                             ; preds = %bb.d
   %i.o = landingpad { ptr, i32 }
@@ -262,11 +262,11 @@ bb.j:                                             ; preds = %bb.i
   %i.v = load i64, ptr %i.b, align 8, !alias.scope !1350, !noalias !1351, !noundef !4 ; 3 uses
   %i.w = load i64, ptr %i.a, align 8, !range !7, !alias.scope !1350, !noalias !1351, !noundef !4
   %i.x = icmp eq i64 %i.v, %i.w
-  br i1 %i.x, label %bb.k, label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCsefoF4u9kbII_5wasmi7reftype15ExternRefEntityE8push_mutBJ_.exit.i
+  br i1 %i.x, label %bb.k, label %_RNvMs4_NtCsg06799QCvd1_17wasmi_collections5arenaINtB5_5ArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtB11_7reftype9ExternRefENtB1E_15ExternRefEntityE5allocB11_.exit
 
 bb.k:                                             ; preds = %bb.j
   invoke void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtCsefoF4u9kbII_5wasmi7reftype15ExternRefEntityE8grow_oneBQ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a)
-          to label %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCsefoF4u9kbII_5wasmi7reftype15ExternRefEntityE8push_mutBJ_.exit.i unwind label %bb.l, !noalias !1351
+          to label %_RNvMs4_NtCsg06799QCvd1_17wasmi_collections5arenaINtB5_5ArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtB11_7reftype9ExternRefENtB1E_15ExternRefEntityE5allocB11_.exit unwind label %bb.l, !noalias !1351
 
 bb.l:                                             ; preds = %bb.k
   %i.y = landingpad { ptr, i32 }
@@ -280,17 +280,6 @@ bb.m:                                             ; preds = %bb.l
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #32, !noalias !1351
   unreachable
 
-_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCsefoF4u9kbII_5wasmi7reftype15ExternRefEntityE8push_mutBJ_.exit.i: ; preds = %bb.k, %bb.j
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 176
-  %4 = load ptr, ptr %3, align 8, !alias.scope !1350, !noalias !1351, !nonnull !4, !noundef !4
-  %5 = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %i.v ; 2 uses
-  store ptr %1, ptr %5, align 8, !noalias !1351
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store ptr %2, ptr %6, align 8, !noalias !1351
-  %7 = add i64 %i.v, 1
-  store i64 %7, ptr %i.b, align 8, !alias.scope !1350, !noalias !1351
-  br label %_RNvMs4_NtCsg06799QCvd1_17wasmi_collections5arenaINtB5_5ArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtB11_7reftype9ExternRefENtB1E_15ExternRefEntityE5allocB11_.exit
-
 bb.n:                                             ; preds = %bb.b
   %i.aa = landingpad { ptr, i32 }
           cleanup
@@ -303,25 +292,24 @@ bb.o:                                             ; preds = %bb.n
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #32, !noalias !1349
   unreachable
 
-_RNvMs4_NtCsg06799QCvd1_17wasmi_collections5arenaINtB5_5ArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtB11_7reftype9ExternRefENtB1E_15ExternRefEntityE5allocB11_.exit: ; preds = %bb.e, %bb.f, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCsefoF4u9kbII_5wasmi7reftype15ExternRefEntityE8push_mutBJ_.exit.i
-  %.sroa.4.1.i = phi i64 [ 0, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCsefoF4u9kbII_5wasmi7reftype15ExternRefEntityE8push_mutBJ_.exit.i ], [ %.sroa.4.0.i, %bb.e ], [ %.sroa.4.0.i, %bb.f ] ; 2 uses
-  %.sroa.0.1.i = phi i64 [ 0, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCsefoF4u9kbII_5wasmi7reftype15ExternRefEntityE8push_mutBJ_.exit.i ], [ 1, %bb.e ], [ 1, %bb.f ]
-  %.sroa.0.0.insert.insert.i = or i64 %.sroa.0.1.i, %.sroa.4.1.i
-  %8 = trunc i64 %.sroa.0.0.insert.insert.i to i1
-  br i1 %8, label %bb.p, label %9, !prof !10
+_RNvMs4_NtCsg06799QCvd1_17wasmi_collections5arenaINtB5_5ArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtB11_7reftype9ExternRefENtB1E_15ExternRefEntityE5allocB11_.exit: ; preds = %bb.j, %bb.k
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 176
+  %4 = load ptr, ptr %3, align 8, !alias.scope !1350, !noalias !1351, !nonnull !4, !noundef !4
+  %5 = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %i.v ; 2 uses
+  store ptr %1, ptr %5, align 8, !noalias !1351
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  store ptr %2, ptr %6, align 8, !noalias !1351
+  %7 = add i64 %i.v, 1
+  store i64 %7, ptr %i.b, align 8, !alias.scope !1350, !noalias !1351
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 1576
+  %9 = load i32, ptr %8, align 8, !noundef !4
+  %10 = insertvalue { i32, i32 } poison, i32 %i.g, 0
+  %11 = insertvalue { i32, i32 } %10, i32 %9, 1
+  ret { i32, i32 } %11
 
-bb.p:                                             ; preds = %_RNvMs4_NtCsg06799QCvd1_17wasmi_collections5arenaINtB5_5ArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtB11_7reftype9ExternRefENtB1E_15ExternRefEntityE5allocB11_.exit
-  %.sroa.43.0.extract.shift = lshr i64 %.sroa.4.1.i, 8
-  %.sroa.43.0.extract.trunc = trunc nuw nsw i64 %.sroa.43.0.extract.shift to i8
-  tail call void @_RNvNtCsefoF4u9kbII_5wasmi5store16handle_arena_err(i8 noundef %.sroa.43.0.extract.trunc, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @46, i64 noundef 19) #33
+bb.p:                                             ; preds = %bb.f, %bb.e
+  tail call void @_RNvNtCsefoF4u9kbII_5wasmi5store16handle_arena_err(i8 noundef %.sroa.4.0.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @46, i64 noundef 19) #33
   unreachable
-
-9:                                                ; preds = %_RNvMs4_NtCsg06799QCvd1_17wasmi_collections5arenaINtB5_5ArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtB11_7reftype9ExternRefENtB1E_15ExternRefEntityE5allocB11_.exit
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 1576
-  %11 = load i32, ptr %10, align 8, !noundef !4
-  %12 = insertvalue { i32, i32 } poison, i32 %.sroa.0.0.i.i.i, 0
-  %13 = insertvalue { i32, i32 } %12, i32 %11, 1
-  ret { i32, i32 } %13
 }
 
 ; Function Attrs: nonlazybind uwtable

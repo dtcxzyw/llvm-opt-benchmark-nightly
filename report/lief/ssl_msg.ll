@@ -205,7 +205,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = load i32, ptr %i.c, align 8, !tbaa !105  ; 2 uses
   %i.e = icmp eq i32 %i.d, 772
-  %spec.store.select = select i1 %i.e, i32 771, i32 %i.d ; 4 uses
+  %spec.store.select = select i1 %i.e, i32 771, i32 %i.d ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 8 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !83
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 1
@@ -214,10 +214,10 @@ bb.a:
   %i.k = load i8, ptr %i.j, align 1, !tbaa !32
   %i.l = icmp eq i8 %i.k, 1
   %i.m = icmp eq i32 %spec.store.select, 770
-  %3 = select i1 %i.m, i32 513, i32 512
-  %4 = sub i32 %3, %spec.store.select             ; 2 uses
-  %.0.in.i = select i1 %i.l, i32 %4, i32 %spec.store.select
-  %.0.i = trunc i32 %.0.in.i to i16
+  %3 = select i1 %i.m, i16 513, i16 512
+  %4 = trunc i32 %spec.store.select to i16        ; 3 uses
+  %5 = sub i16 %3, %4                             ; 2 uses
+  %.0.i = select i1 %i.l, i16 %5, i16 %4
   %i.n = tail call i16 @llvm.bswap.i16(i16 %.0.i)
   store i16 %i.n, ptr %i.h, align 1
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 4 uses
@@ -266,9 +266,8 @@ bb.b:                                             ; preds = %bb.a
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 9
   %i.at = load i8, ptr %i.as, align 1, !tbaa !32
   %i.au = icmp eq i8 %i.at, 1
-  %.0.in.i92 = select i1 %i.au, i32 %4, i32 %spec.store.select
-  %.0.i93 = trunc i32 %.0.in.i92 to i16
-  %i.av = tail call i16 @llvm.bswap.i16(i16 %.0.i93)
+  %.0.i92 = select i1 %i.au, i16 %5, i16 %4
+  %i.av = tail call i16 @llvm.bswap.i16(i16 %.0.i92)
   store i16 %i.av, ptr %i.aq, align 1
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 2 uses
   %i.ax = load i32, ptr %i.aw, align 8, !tbaa !100
@@ -671,10 +670,10 @@ define hidden void @mbedtls_ssl_write_version(ptr nofree noundef writeonly captu
 bb.a:
   %i.a = icmp eq i32 %1, 1
   %i.b = icmp eq i32 %2, 770
-  %3 = select i1 %i.b, i32 513, i32 512
-  %4 = sub i32 %3, %2
-  %.0.in = select i1 %i.a, i32 %4, i32 %2
-  %.0 = trunc i32 %.0.in to i16
+  %3 = select i1 %i.b, i16 513, i16 512
+  %4 = trunc i32 %2 to i16                        ; 2 uses
+  %5 = sub i16 %3, %4
+  %.0 = select i1 %i.a, i16 %5, i16 %4
   %i.c = tail call i16 @llvm.bswap.i16(i16 %.0)
   store i16 %i.c, ptr %0, align 1
   ret void

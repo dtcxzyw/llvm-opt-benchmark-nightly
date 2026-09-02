@@ -205,8 +205,8 @@ bb.l:                                             ; preds = %bb.k
   %i.bd = add nsw i32 %.0121125, 1                ; 6 uses
   %i.be = sext i32 %.0121125 to i64
   %i.bf = getelementptr i8, ptr %0, i64 %i.be     ; 6 uses
-  %i.bg = load i8, ptr %i.bf, align 1, !tbaa !37  ; 6 uses
-  %i.bh = zext i8 %i.bg to i32                    ; 3 uses
+  %i.bg = load i8, ptr %i.bf, align 1, !tbaa !37  ; 7 uses
+  %i.bh = zext i8 %i.bg to i32                    ; 2 uses
   switch i8 %i.bg, label %bb.o [
     i8 -2, label %bb.m
     i8 -1, label %bb.n
@@ -275,21 +275,17 @@ bb.r:                                             ; preds = %bb.o
   %i.co = add nsw i32 %.0121125, 2
   %i.cp = sext i32 %i.bd to i64
   %i.cq = getelementptr inbounds i8, ptr %0, i64 %i.cp
-  %i.cr = load i8, ptr %i.cq, align 1, !tbaa !37
-  %5 = zext i8 %i.cr to i32                       ; 2 uses
-  %6 = and i32 %i.bh, 63                          ; 2 uses
-  %7 = add nsw i32 %6, -40                        ; 2 uses
-  %8 = lshr i32 %5, 4
-  %9 = add nsw i32 %8, %7
-  %10 = trunc nsw i32 %9 to i8
-  %i.cs = add i8 %.sroa.0.0129, %10
-  %11 = trunc nuw nsw i32 %6 to i8
+  %i.cr = load i8, ptr %i.cq, align 1, !tbaa !37  ; 2 uses
+  %5 = and i8 %i.bg, 63                           ; 2 uses
+  %6 = lshr i8 %i.cr, 4
+  %7 = add nsw i8 %5, -40                         ; 2 uses
+  %i.cs = add i8 %7, %.sroa.0.0129
+  %8 = add i8 %i.cs, %6
   %i.ct = add i8 %.sroa.13.0128, -32
-  %i.cu = add i8 %i.ct, %11
-  %12 = and i32 %5, 15
-  %13 = add nsw i32 %12, %7
-  %14 = trunc nsw i32 %13 to i8
-  %i.cv = add i8 %.sroa.22.0127, %14
+  %i.cu = add i8 %i.ct, %5
+  %9 = and i8 %i.cr, 15
+  %10 = add i8 %7, %.sroa.22.0127
+  %i.cv = add i8 %10, %9
   br label %bb.t
 
 bb.s:                                             ; preds = %bb.o
@@ -304,7 +300,7 @@ bb.t:                                             ; preds = %bb.n, %bb.q, %bb.s,
   %.sroa.31.1 = phi i8 [ %.sroa.31.0.copyload, %bb.p ], [ %.sroa.31.0126, %bb.q ], [ %.sroa.31.0126, %bb.r ], [ %.sroa.31.0126, %bb.s ], [ %.sroa.31.0126, %bb.m ], [ %i.bz, %bb.n ] ; 3 uses
   %.sroa.22.1 = phi i8 [ %.sroa.22.0.copyload, %bb.p ], [ %i.cn, %bb.q ], [ %i.cv, %bb.r ], [ %.sroa.22.0127, %bb.s ], [ %i.bp, %bb.m ], [ %i.bw, %bb.n ] ; 3 uses
   %.sroa.13.1 = phi i8 [ %.sroa.13.0.copyload, %bb.p ], [ %i.ck, %bb.q ], [ %i.cu, %bb.r ], [ %.sroa.13.0128, %bb.s ], [ %i.bm, %bb.m ], [ %i.bu, %bb.n ] ; 3 uses
-  %.sroa.0.1 = phi i8 [ %.sroa.0.0.copyload, %bb.p ], [ %i.cg, %bb.q ], [ %i.cs, %bb.r ], [ %.sroa.0.0129, %bb.s ], [ %i.bk, %bb.m ], [ %i.bs, %bb.n ] ; 3 uses
+  %.sroa.0.1 = phi i8 [ %.sroa.0.0.copyload, %bb.p ], [ %i.cg, %bb.q ], [ %8, %bb.r ], [ %.sroa.0.0129, %bb.s ], [ %i.bk, %bb.m ], [ %i.bs, %bb.n ] ; 3 uses
   %.1 = phi i32 [ 0, %bb.p ], [ 0, %bb.q ], [ 0, %bb.r ], [ %i.cw, %bb.s ], [ 0, %bb.m ], [ 0, %bb.n ]
   %i.cx = zext i8 %.sroa.0.1 to i64
   %i.cy = mul nuw nsw i64 %i.cx, 3

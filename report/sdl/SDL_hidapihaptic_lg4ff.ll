@@ -204,17 +204,17 @@ bb.bj:                                            ; preds = %bb.bh
 
 bb.bk:                                            ; preds = %bb.bj
   %i.nk = getelementptr inbounds nuw i8, ptr %i.bg, i64 42
-  %i.nl = load i16, ptr %i.nk, align 2            ; 3 uses
+  %i.nl = load i16, ptr %i.nk, align 2            ; 2 uses
   %.not52.i.i = icmp eq i16 %i.nl, 0
   br i1 %.not52.i.i, label %bb.bm, label %get_effect_replay_length.exit.i.i
 
 get_effect_replay_length.exit.i.i:                ; preds = %bb.bk
   %i.nm = icmp eq i32 %.0.fr.i.i80.i, -1
   %spec.select.i.i.i = select i1 %i.nm, i32 0, i32 %.0.fr.i.i80.i
-  %2 = zext i16 %i.nl to i64
-  %3 = add i64 %i.lt, %2
-  %4 = trunc i64 %3 to i32
-  %5 = sub i32 %4, %spec.select.i.i.i             ; 2 uses
+  %2 = zext i16 %i.nl to i32                      ; 2 uses
+  %3 = trunc i64 %i.lt to i32
+  %4 = sub i32 %3, %spec.select.i.i.i
+  %5 = add i32 %4, %2                             ; 2 uses
   %i.nn = icmp sgt i32 %5, 0
   br i1 %i.nn, label %bb.bl, label %bb.bm
 
@@ -225,8 +225,7 @@ bb.bl:                                            ; preds = %get_effect_replay_l
   %i.nr = mul nsw i32 %i.mq, %i.nq
   %i.ns = sub nsw i32 %i.mo, %i.nr
   %i.nt = mul nsw i32 %i.ns, %5
-  %6 = zext i16 %i.nl to i32
-  %i.nu = sdiv i32 %i.nt, %6
+  %i.nu = sdiv i32 %i.nt, %2
   %i.nv = sub nsw i32 %i.mo, %i.nu
   br label %bb.bm
 
@@ -363,18 +362,16 @@ bb.bu:                                            ; preds = %bb.bs
 
 bb.bv:                                            ; preds = %bb.bu
   %i.qu = getelementptr inbounds nuw i8, ptr %i.bg, i64 36
-  %i.qv = load i16, ptr %i.qu, align 4            ; 3 uses
-  %i.qw = zext i16 %i.qv to i32
+  %i.qv = load i16, ptr %i.qu, align 4            ; 2 uses
+  %i.qw = zext i16 %i.qv to i32                   ; 2 uses
   %.not33.i.i = icmp eq i16 %i.qv, 0
   br i1 %.not33.i.i, label %lg4ff_calculate_constant.exit.i, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
-  %7 = zext i32 %i.qt to i64
-  %8 = sub i64 %i.lt, %7
-  %9 = zext i16 %i.qv to i64
-  %10 = add i64 %8, %9
-  %11 = trunc i64 %10 to i32                      ; 2 uses
-  %i.qx = icmp sgt i32 %11, 0
+  %6 = trunc i64 %i.lt to i32
+  %7 = sub i32 %6, %i.qt
+  %8 = add i32 %7, %i.qw                          ; 2 uses
+  %i.qx = icmp sgt i32 %8, 0
   br i1 %i.qx, label %bb.bx, label %lg4ff_calculate_constant.exit.i
 
 bb.bx:                                            ; preds = %bb.bw
@@ -385,7 +382,7 @@ bb.bx:                                            ; preds = %bb.bw
   %i.rc = sub nsw i32 0, %i.rb
   %i.rd = select i1 %i.qy, i32 %i.rb, i32 %i.rc
   %i.re = add nsw i32 %i.rd, %i.qb
-  %i.rf = mul nsw i32 %i.re, %11
+  %i.rf = mul nsw i32 %i.re, %8
   %i.rg = sdiv i32 %i.rf, %i.qw
   %i.rh = sub nsw i32 %i.qb, %i.rg
   br label %lg4ff_calculate_constant.exit.i
@@ -402,8 +399,8 @@ lg4ff_calculate_constant.exit.i:                  ; preds = %bb.bx, %bb.bw, %bb.
 
 bb.by:                                            ; preds = %.split.i
   %i.ro = getelementptr inbounds nuw i8, ptr %i.bg, i64 34
-  %i.rp = load i16, ptr %i.ro, align 2            ; 2 uses
-  %i.rq = zext i16 %i.rp to i64                   ; 3 uses
+  %i.rp = load i16, ptr %i.ro, align 2            ; 3 uses
+  %i.rq = zext i16 %i.rp to i64                   ; 2 uses
   %i.rr = icmp ult i64 %i.lt, %i.rq
   br i1 %i.rr, label %bb.bz, label %bb.ca
 
@@ -434,8 +431,8 @@ bb.ca:                                            ; preds = %bb.by
 
 bb.cb:                                            ; preds = %bb.ca
   %i.sk = getelementptr inbounds nuw i8, ptr %i.bg, i64 38
-  %i.sl = load i16, ptr %i.sk, align 2            ; 3 uses
-  %i.sm = zext i16 %i.sl to i32                   ; 2 uses
+  %i.sl = load i16, ptr %i.sk, align 2            ; 2 uses
+  %i.sm = zext i16 %i.sl to i32                   ; 3 uses
   %i.sn = sub i32 %i.sj, %i.sm
   %i.so = zext i32 %i.sn to i64
   %.not42.i.i = icmp ult i64 %i.lt, %i.so
@@ -448,29 +445,28 @@ bb.cc:                                            ; preds = %bb.cb
   %i.sq = load i16, ptr %i.sp, align 8            ; 2 uses
   %i.sr = sext i16 %i.sq to i32                   ; 2 uses
   %i.ss = icmp slt i16 %i.sq, 0
-  %12 = zext i32 %i.sj to i64
-  %13 = sub i64 %i.lt, %12
-  %14 = zext i16 %i.sl to i64
-  %15 = add i64 %13, %14
-  %16 = trunc i64 %15 to i32
+  %9 = trunc i64 %i.lt to i32
+  %10 = sub i32 %9, %i.sj
+  %11 = add i32 %10, %i.sm
   %i.st = getelementptr inbounds nuw i8, ptr %i.bg, i64 40
   %i.su = load i16, ptr %i.st, align 8
   %i.sv = zext i16 %i.su to i32                   ; 2 uses
   %i.sw = sub nsw i32 0, %i.sv
   %i.sx = select i1 %i.ss, i32 %i.sw, i32 %i.sv
   %i.sy = sub nsw i32 %i.sx, %i.sr
-  %i.sz = mul nsw i32 %i.sy, %16
+  %i.sz = mul nsw i32 %i.sy, %11
   %i.ta = sdiv i32 %i.sz, %i.sm
   %i.tb = sub nsw i32 %i.sr, %i.ta
   br label %lg4ff_calculate_ramp.exit.i
 
 bb.cd:                                            ; preds = %bb.cb, %bb.ca
-  %17 = sub nuw i64 %i.lt, %i.rq
-  %i.tc = trunc i64 %17 to i32
+  %12 = zext i16 %i.rp to i32
+  %i.tc = trunc i64 %i.lt to i32
+  %13 = sub i32 %i.tc, %12
   %i.td = getelementptr inbounds nuw i8, ptr %i.bg, i64 30
   %i.te = load i16, ptr %i.td, align 2
   %i.tf = sext i16 %i.te to i32
-  %i.tg = mul nsw i32 %i.le, %i.tc
+  %i.tg = mul nsw i32 %13, %i.le
   %i.th = ashr i32 %i.tg, 16
   %i.ti = add nsw i32 %i.th, %i.tf
   br label %lg4ff_calculate_ramp.exit.i
@@ -769,11 +765,11 @@ bb.k:                                             ; preds = %bb.g
   br label %bb.t
 
 bb.l:                                             ; preds = %bb.j, %bb.i, %bb.e, %bb.f
-  %.ph = phi i32 [ 12, %bb.f ], [ 1, %bb.e ], [ 1, %bb.i ], [ 12, %bb.j ]
+  %.ph = phi i8 [ 12, %bb.f ], [ 1, %bb.e ], [ 1, %bb.i ], [ 12, %bb.j ]
   %i.y = load i32, ptr %0, align 4                ; 2 uses
   %i.z = shl i32 16, %i.y
-  %2 = or disjoint i32 %i.z, %.ph
-  %3 = trunc i32 %2 to i8
+  %2 = trunc i32 %i.z to i8
+  %3 = or disjoint i8 %.ph, %2
   store i8 %3, ptr %i.b, align 4
   %i.aa = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.i)
   %i.ab = icmp eq i32 %i.aa, 1

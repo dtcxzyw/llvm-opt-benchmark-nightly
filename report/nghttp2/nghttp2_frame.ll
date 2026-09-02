@@ -202,17 +202,16 @@ bb.d:                                             ; preds = %bb.b
   store i8 %i.r, ptr %i.p, align 1, !tbaa !13
   %i.s = load ptr, ptr %i.k, align 8, !tbaa !62
   %i.t = tail call i32 @nghttp2_get_uint32(ptr noundef %i.s) #18
-  %4 = lshr i32 %i.t, 8
-  %5 = zext nneg i32 %4 to i64
-  %6 = add i64 %2, %5
-  %7 = load ptr, ptr %i.k, align 8, !tbaa !62     ; 2 uses
-  %8 = shl i64 %6, 8
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 3
-  %10 = load i8, ptr %9, align 1, !tbaa !13
-  %11 = zext i8 %10 to i64
-  %12 = or disjoint i64 %8, %11
-  %13 = trunc i64 %12 to i32
-  tail call void @nghttp2_put_uint32be(ptr noundef %7, i32 noundef %13) #18
+  %4 = load ptr, ptr %i.k, align 8, !tbaa !62     ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 3
+  %6 = load i8, ptr %5, align 1, !tbaa !13
+  %7 = zext i8 %6 to i32
+  %8 = trunc i64 %2 to i32
+  %.tr16.i = shl i32 %8, 8
+  %9 = add i32 %i.t, %.tr16.i
+  %10 = and i32 %9, -256
+  %11 = or disjoint i32 %10, %7
+  tail call void @nghttp2_put_uint32be(ptr noundef %4, i32 noundef %11) #18
   %.not.i = icmp eq i32 %3, 0
   br i1 %.not.i, label %bb.e, label %frame_set_pad.exit
 

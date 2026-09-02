@@ -202,11 +202,10 @@ bb.a:
   %i.l = load i16, ptr %i.k, align 8, !tbaa !113
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 40
   %i.n = load i32, ptr %i.m, align 8, !tbaa !129
-  %1 = zext i16 %i.l to i32
-  %2 = shl nuw nsw i32 %1, 1
-  %3 = sub nsw i32 %2, %i.n
-  %4 = trunc i32 %3 to i16
-  %i.o = call i32 @dtls1_retransmit_message(ptr noundef %0, i16 noundef zeroext %4, ptr noundef nonnull %i.b)
+  %1 = shl i16 %i.l, 1
+  %2 = trunc i32 %i.n to i16
+  %3 = sub i16 %1, %2
+  %i.o = call i32 @dtls1_retransmit_message(ptr noundef %0, i16 noundef zeroext %3, ptr noundef nonnull %i.b)
   %i.p = icmp slt i32 %i.o, 1
   br i1 %i.p, label %._crit_edge, label %bb.b
 

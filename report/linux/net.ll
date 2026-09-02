@@ -202,12 +202,11 @@ check_copy_size.exit.i.i:                         ; preds = %bb.t
 
 bb.v:                                             ; preds = %check_copy_size.exit.i.i
   %i.cr = load i32, ptr %i.s, align 8
-  %4 = zext i32 %i.cr to i64
-  %5 = add nuw nsw i64 %4, 16
-  %6 = load i64, ptr %i.t, align 8
-  %7 = add i64 %5, %6
-  %8 = trunc i64 %7 to i32
-  %i.cs = add i32 %8, %spec.select43.i
+  %4 = load i64, ptr %i.t, align 8
+  %5 = trunc i64 %4 to i32
+  %6 = add nuw i32 %spec.select43.i, 16
+  %7 = add i32 %6, %i.cr
+  %i.cs = add i32 %7, %5
   br label %io_recvmsg_multishot.exit
 
 io_recvmsg_multishot.exit:                        ; preds = %bb.u, %check_copy_size.exit.i.i, %bb.s, %bb.v

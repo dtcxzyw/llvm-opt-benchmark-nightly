@@ -202,11 +202,10 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
 bb.ad:                                            ; preds = %bb.w
   %i.cn = load i8, ptr %i.r, align 1
   %i.co = icmp eq i8 %i.cn, 0
-  %spec.select51 = zext i1 %i.co to i8
   br label %_ZN23WlanStatsTreeWidgetItem16isBroadcastBSSIDEPK8_address.exit55
 
 _ZN23WlanStatsTreeWidgetItem16isBroadcastBSSIDEPK8_address.exit55: ; preds = %bb.ac, %bb.y, %bb.z, %bb.ab, %bb.ad, %bb.x
-  %.242 = phi i8 [ 1, %bb.x ], [ %spec.select51, %bb.ad ], [ 1, %bb.ab ], [ 1, %bb.z ], [ 1, %bb.y ], [ 1, %bb.ac ] ; 4 uses
+  %.242 = phi i1 [ true, %bb.x ], [ %i.co, %bb.ad ], [ true, %bb.ab ], [ true, %bb.z ], [ true, %bb.y ], [ true, %bb.ac ] ; 4 uses
   %.038 = phi i1 [ false, %bb.x ], [ false, %bb.ad ], [ true, %bb.ab ], [ true, %bb.z ], [ true, %bb.y ], [ false, %bb.ac ] ; 2 uses
   br i1 %i.af, label %bb.ae, label %_ZN23WlanStatsTreeWidgetItem16isBroadcastBSSIDEPK8_address.exit
 
@@ -258,7 +257,7 @@ _ZN23WlanStatsTreeWidgetItem16isBroadcastBSSIDEPK8_address.exit: ; preds = %_ZN2
   br i1 %.038, label %.split97.thread, label %.thread92
 
 .split97.thread:                                  ; preds = %_ZN23WlanStatsTreeWidgetItem16isBroadcastBSSIDEPK8_address.exit, %bb.n, %bb.p, %bb.m
-  %.390.ph = phi i8 [ 1, %bb.m ], [ 1, %bb.p ], [ 1, %bb.n ], [ %.242, %_ZN23WlanStatsTreeWidgetItem16isBroadcastBSSIDEPK8_address.exit ]
+  %.390.ph = phi i1 [ true, %bb.m ], [ true, %bb.p ], [ true, %bb.n ], [ %.242, %_ZN23WlanStatsTreeWidgetItem16isBroadcastBSSIDEPK8_address.exit ]
   tail call void @_ZN25WlanNetworkTreeWidgetItem11updateBssidEPK9_wlan_hdr(ptr noundef align 8 dereferenceable_or_null(256) %0, ptr noundef %1)
   br label %.thread92
 
@@ -386,9 +385,9 @@ _ZN7QStringD2Ev.exit66:                           ; preds = %.body, %_ZN17QArray
 
 .thread92:                                        ; preds = %bb.r, %bb.p, %bb.s, %bb.v, %bb.u, %bb.t, %bb.l, %bb.o, %.split97.thread, %_ZN23WlanStatsTreeWidgetItem16isBroadcastBSSIDEPK8_address.exit, %_ZN23WlanStatsTreeWidgetItem16isBroadcastBSSIDEPK8_address.exit.thread77, %.split97, %_ZN7QStringD2Ev.exit, %bb.ah
   %.296 = phi i8 [ 1, %_ZN7QStringD2Ev.exit ], [ 1, %bb.ah ], [ 1, %.split97.thread ], [ 1, %.split97 ], [ %i.q, %_ZN23WlanStatsTreeWidgetItem16isBroadcastBSSIDEPK8_address.exit.thread77 ], [ %.1, %_ZN23WlanStatsTreeWidgetItem16isBroadcastBSSIDEPK8_address.exit ], [ %i.q, %bb.o ], [ %i.q, %bb.p ], [ %i.q, %bb.s ], [ %i.q, %bb.l ], [ %i.q, %bb.t ], [ %i.q, %bb.r ], [ %i.q, %bb.u ], [ %i.q, %bb.v ]
-  %.4 = phi i8 [ 1, %_ZN7QStringD2Ev.exit ], [ %.242, %bb.ah ], [ %.390.ph, %.split97.thread ], [ %.242, %.split97 ], [ 0, %_ZN23WlanStatsTreeWidgetItem16isBroadcastBSSIDEPK8_address.exit.thread77 ], [ %.242, %_ZN23WlanStatsTreeWidgetItem16isBroadcastBSSIDEPK8_address.exit ], [ 1, %bb.o ], [ 1, %bb.p ], [ 0, %bb.s ], [ 1, %bb.l ], [ 0, %bb.t ], [ 0, %bb.r ], [ 0, %bb.u ], [ 0, %bb.v ]
-  %5 = and i8 %.4, %.296
-  %6 = trunc nuw i8 %5 to i1
+  %.4 = phi i1 [ true, %_ZN7QStringD2Ev.exit ], [ %.242, %bb.ah ], [ %.390.ph, %.split97.thread ], [ %.242, %.split97 ], [ false, %_ZN23WlanStatsTreeWidgetItem16isBroadcastBSSIDEPK8_address.exit.thread77 ], [ %.242, %_ZN23WlanStatsTreeWidgetItem16isBroadcastBSSIDEPK8_address.exit ], [ true, %bb.o ], [ true, %bb.p ], [ false, %bb.s ], [ true, %bb.l ], [ false, %bb.t ], [ false, %bb.r ], [ false, %bb.u ], [ false, %bb.v ]
+  %5 = trunc nuw i8 %.296 to i1
+  %6 = and i1 %.4, %5
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.v, %_ZN10QByteArrayD2Ev.exit, %.thread92

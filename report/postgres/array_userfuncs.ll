@@ -202,48 +202,34 @@ bb.o:                                             ; preds = %bb.m
   %i.bz = tail call i32 @ArrayGetNItems(i32 noundef %i.al, ptr noundef nonnull %i.bc) #8
   %.val237 = load i32, ptr %i.u, align 4
   %i.ca = lshr i32 %.val237, 2
-  %1 = zext nneg i32 %i.ca to i64
   %i.cb = load i32, ptr %i.bg, align 4            ; 2 uses
   %.not220 = icmp eq i32 %i.cb, 0
-  br i1 %.not220, label %bb.p, label %2
-
-2:                                                ; preds = %bb.o
-  %3 = zext i32 %i.cb to i64
-  br label %bb.q
+  br i1 %.not220, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
   %i.cc = load i32, ptr %i.ai, align 4
-  %4 = sext i32 %i.cc to i64
-  %5 = shl nsw i64 %4, 3
-  %6 = add nsw i64 %5, 16
+  %1 = shl i32 %i.cc, 3
+  %2 = add i32 %1, 16
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.p, %2
-  %7 = phi i64 [ %3, %2 ], [ %6, %bb.p ]
-  %8 = sub nsw i64 %1, %7                         ; 2 uses
-  %9 = trunc i64 %8 to i32
+bb.q:                                             ; preds = %bb.o, %bb.p
+  %3 = phi i32 [ %2, %bb.p ], [ %i.cb, %bb.o ]
+  %4 = sub i32 %i.ca, %3                          ; 2 uses
   %.val = load i32, ptr %i.x, align 4
   %i.cd = lshr i32 %.val, 2
-  %10 = zext nneg i32 %i.cd to i64
   %i.ce = load i32, ptr %i.bn, align 4            ; 2 uses
   %.not221 = icmp eq i32 %i.ce, 0
-  br i1 %.not221, label %bb.r, label %11
-
-11:                                               ; preds = %bb.q
-  %12 = zext i32 %i.ce to i64
-  br label %bb.s
+  br i1 %.not221, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
   %i.cf = load i32, ptr %i.ak, align 4
-  %13 = sext i32 %i.cf to i64
-  %14 = shl nsw i64 %13, 3
-  %15 = add nsw i64 %14, 16
+  %5 = shl i32 %i.cf, 3
+  %6 = add i32 %5, 16
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.r, %11
-  %16 = phi i64 [ %12, %11 ], [ %15, %bb.r ]
-  %17 = sub nsw i64 %10, %16                      ; 2 uses
-  %18 = trunc i64 %17 to i32
+bb.s:                                             ; preds = %bb.q, %bb.r
+  %7 = phi i32 [ %6, %bb.r ], [ %i.ce, %bb.q ]
+  %8 = sub i32 %i.cd, %7                          ; 2 uses
   br i1 %.not213, label %bb.t, label %bb.x
 
 bb.t:                                             ; preds = %bb.s
@@ -392,7 +378,7 @@ bb.af:                                            ; preds = %bb.ae, %.lr.ph270
   %.0197 = phi i32 [ %i.aj, %bb.t ], [ %i.al, %bb.y ], [ %i.aj, %bb.ac ], [ %i.al, %bb.z ], [ %i.aj, %bb.w ], [ %i.aj, %bb.ad ] ; 6 uses
   %i.ei = tail call i32 @ArrayGetNItems(i32 noundef %.0197, ptr noundef nonnull %.0199) #8
   tail call void @ArrayCheckBounds(i32 noundef %.0197, ptr noundef nonnull %.0199, ptr noundef %.0198) #8
-  %i.ej = add i32 %18, %9                         ; 2 uses
+  %i.ej = add i32 %8, %4                          ; 2 uses
   %i.ek = load i32, ptr %i.bg, align 4
   %.not226 = icmp eq i32 %i.ek, 0
   br i1 %.not226, label %bb.ag, label %bb.ah
@@ -455,9 +441,8 @@ bb.al:                                            ; preds = %bb.aj
 bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.fm = phi i64 [ %i.fh, %bb.ak ], [ %i.fl, %bb.al ]
   %i.fn = getelementptr inbounds nuw i8, ptr %i.ex, i64 %i.fm
-  %sext = shl i64 %8, 32
-  %19 = ashr exact i64 %sext, 32                  ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fn, ptr nonnull align 1 %i.bm, i64 %19, i1 false)
+  %9 = sext i32 %4 to i64                         ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fn, ptr nonnull align 1 %i.bm, i64 %9, i1 false)
   %i.fo = load i32, ptr %i.fa, align 4            ; 2 uses
   %.not229 = icmp eq i32 %i.fo, 0
   br i1 %.not229, label %bb.ao, label %bb.an
@@ -476,10 +461,9 @@ bb.ao:                                            ; preds = %bb.am
 bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.fu = phi i64 [ %i.fp, %bb.an ], [ %i.ft, %bb.ao ]
   %i.fv = getelementptr inbounds nuw i8, ptr %i.ex, i64 %i.fu
-  %i.fw = getelementptr inbounds i8, ptr %i.fv, i64 %19
-  %sext230 = shl i64 %17, 32
-  %20 = ashr exact i64 %sext230, 32
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fw, ptr nonnull align 1 %i.bt, i64 %20, i1 false)
+  %i.fw = getelementptr inbounds i8, ptr %i.fv, i64 %9
+  %10 = sext i32 %8 to i64
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.fw, ptr nonnull align 1 %i.bt, i64 %10, i1 false)
   %i.fx = load i32, ptr %i.fa, align 4
   %.not231.a = icmp eq i32 %i.fx, 0
   br i1 %.not231.a, label %bb.at, label %bb.aq

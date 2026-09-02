@@ -205,7 +205,11 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   %.0204.in = phi i64 [ %i.eu, %bb.z ], [ %i.eo, %bb.y ]
   %.0.i = phi i32 [ 2, %bb.z ], [ 1, %bb.y ]      ; 2 uses
   %i.ey = icmp samesign ugt i32 %.0187, %.0.i
-  br i1 %i.ey, label %.lr.ph.i, label %.thread269
+  br i1 %i.ey, label %.lr.ph.i, label %.thread268
+
+.thread268:                                       ; preds = %bb.aa
+  %.1205265 = trunc i64 %.0204.in to i1
+  br label %.thread269
 
 .lr.ph.i:                                         ; preds = %bb.aa
   %i.ez = zext nneg i32 %.0.i to i64              ; 4 uses
@@ -261,7 +265,8 @@ bb.ad:                                            ; preds = %bb.ac
 
 _ZZN3fmt3v126detail12format_floatIdEEiT_iRKNS0_12format_specsEbRNS1_6bufferIcEEENKUljPcE_clEjSA_.exit: ; preds = %bb.ad, %bb.ac, %bb.ab, %.lr.ph.i
   %.lcssa290 = phi i64 [ %i.fc, %.lr.ph.i ], [ %i.fk, %bb.ab ], [ %i.fs, %bb.ac ], [ %i.ga, %bb.ad ]
-  %.lcssa289 = phi i64 [ %i.fd, %.lr.ph.i ], [ %i.fl, %bb.ab ], [ %i.ft, %bb.ac ], [ %i.gb, %bb.ad ] ; 2 uses
+  %.lcssa289 = phi i64 [ %i.fd, %.lr.ph.i ], [ %i.fl, %bb.ab ], [ %i.ft, %bb.ac ], [ %i.gb, %bb.ad ]
+  %.1205 = trunc i64 %.lcssa289 to i1             ; 2 uses
   %i.gg = icmp samesign ult i32 %.0187, 10
   br i1 %i.gg, label %bb.ae, label %bb.ah
 
@@ -269,9 +274,9 @@ bb.ae:                                            ; preds = %_ZZN3fmt3v126detail
   %.not129 = icmp eq i32 %.0187, 9
   br i1 %.not129, label %bb.af, label %.thread269
 
-.thread269:                                       ; preds = %bb.aa, %bb.ae
-  %.2210266275 = phi i64 [ %.lcssa290, %bb.ae ], [ %.0208, %bb.aa ]
-  %.1205268274.in = phi i64 [ %.lcssa289, %bb.ae ], [ %.0204.in, %bb.aa ]
+.thread269:                                       ; preds = %.thread268, %bb.ae
+  %.2210266275 = phi i64 [ %.0208, %.thread268 ], [ %.lcssa290, %bb.ae ]
+  %.1205267272 = phi i1 [ %.1205265, %.thread268 ], [ %.1205, %bb.ae ]
   %i.gh = trunc i64 %.2210266275 to i32           ; 2 uses
   %i.gi = sub nuw nsw i32 8, %i.ei
   %i.gj = zext nneg i32 %i.gi to i64
@@ -286,8 +291,7 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.af
   %i.gn = icmp eq i64 %i.eh, 5000000000
-  %6 = trunc i64 %.lcssa289 to i1
-  %i.go = or i1 %i.dc, %6
+  %i.go = or i1 %i.dc, %.1205
   %or.cond223 = select i1 %i.gn, i1 %i.go, i1 false
   br i1 %or.cond223, label %.critedge134.thread, label %.critedge136
 
@@ -372,15 +376,13 @@ _ZZN3fmt3v126detail12format_floatIdEEiT_iRKNS0_12format_specsEbRNS1_6bufferIcEEE
   br i1 %.not128, label %.split217, label %.critedge134.thread
 
 .split217:                                        ; preds = %_ZZN3fmt3v126detail12format_floatIdEEiT_iRKNS0_12format_specsEbRNS1_6bufferIcEEENKUljPcE_clEjSA_.exit147.thread
-  %.3207215 = trunc nuw nsw i64 %.3207215.in to i32
-  %7 = lshr i32 %i.ia, 31
+  %.3207215 = trunc i64 %.3207215.in to i1
   %i.if = icmp ne i32 %i.gu, 0
-  %i.ig = or i1 %i.if, %i.dc
-  %8 = zext i1 %i.ig to i32
-  %9 = or i32 %8, %.3207215
-  %10 = and i32 %7, %9
-  %11 = trunc nuw i32 %10 to i1
-  br i1 %11, label %.critedge134.thread, label %.critedge136
+  %i.ig = or i1 %i.if, %.3207215
+  %6 = or i1 %i.dc, %i.ig
+  %7 = icmp slt i32 %i.ia, 0
+  %8 = and i1 %7, %6
+  br i1 %8, label %.critedge134.thread, label %.critedge136
 
 bb.am:                                            ; preds = %_ZZN3fmt3v126detail12format_floatIdEEiT_iRKNS0_12format_specsEbRNS1_6bufferIcEEENKUljPcE_clEjSA_.exit147
   %i.ih = icmp ugt i32 %i.gu, 5
@@ -394,15 +396,12 @@ bb.an:                                            ; preds = %bb.am
   br i1 %or.cond225, label %.critedge134.thread, label %.critedge136
 
 bb.ao:                                            ; preds = %.thread269
-  %.1205268274 = trunc nsw i64 %.1205268274.in to i32
-  %12 = lshr i32 %i.gh, 31
   %i.il = or i64 %i.eh, %i.cz
   %i.im = icmp ne i64 %i.il, 0
-  %13 = zext i1 %i.im to i32
-  %14 = or i32 %.1205268274, %13
-  %15 = and i32 %14, %12
-  %16 = trunc nuw i32 %15 to i1
-  br i1 %16, label %.critedge134, label %.critedge136
+  %9 = or i1 %i.im, %.1205267272
+  %10 = icmp slt i32 %i.gh, 0
+  %11 = and i1 %9, %10
+  br i1 %11, label %.critedge134, label %.critedge136
 
 .critedge134.thread:                              ; preds = %bb.an, %bb.ag, %.split217, %bb.af, %_ZZN3fmt3v126detail12format_floatIdEEiT_iRKNS0_12format_specsEbRNS1_6bufferIcEEENKUljPcE_clEjSA_.exit147.thread, %bb.am
   %i.in = load ptr, ptr %4, align 8, !tbaa !74

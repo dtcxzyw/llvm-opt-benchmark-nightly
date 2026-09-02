@@ -204,10 +204,10 @@ bb.c:                                             ; preds = %bb.a
   %.lobit.i = ashr i64 %i.m, 63
   %.sroa.0.0.i = add nsw i64 %.lobit.i, %i.l
   %i.n = icmp slt i64 %i.m, 0
-  %2 = select i1 %i.n, i64 1000000, i64 0
-  %spec.select.i = add nsw i64 %2, %i.m
-  %3 = trunc nuw nsw i64 %spec.select.i to i32
-  %i.o = mul nuw nsw i32 %3, 1000
+  %2 = select i1 %i.n, i32 1000000, i32 0
+  %3 = trunc nsw i64 %i.m to i32
+  %4 = add nsw i32 %2, %3
+  %i.o = mul nuw nsw i32 %4, 1000
   call void @_RNvMNtNtCslCQnfik72jt_6chrono5naive8datetimeNtB2_13NaiveDateTime18checked_add_signed(ptr noalias noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.d, ptr noalias noundef nonnull readonly align 4 captures(address) dereferenceable(12) %i.c, i64 noundef %.sroa.0.0.i, i32 noundef %i.o)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %i.p = load i32, ptr %i.d, align 4, !noundef !3
@@ -610,8 +610,7 @@ bb.j:                                             ; preds = %.noexc23
   %.lobit.i.i.i.i.i = ashr i64 %i.ar, 63
   %.sroa.0.0.i.i.i.i.i = add nsw i64 %.lobit.i.i.i.i.i, %i.aq ; 2 uses
   %i.as = icmp slt i64 %i.ar, 0
-  %2 = select i1 %i.as, i64 86400, i64 0
-  %spec.select.i.i.i.i.i = add nsw i64 %2, %i.ar
+  %2 = select i1 %i.as, i32 86400, i32 0
   %i.at = add nsw i64 %.sroa.0.0.i.i.i.i.i, -2146764485
   %or.cond.i.i.i.i = icmp ult i64 %i.at, -4294967296
   br i1 %or.cond.i.i.i.i, label %.split.i.i, label %bb.k
@@ -627,13 +626,14 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not.i.i.i.i, label %.split.i.i, label %bb.l
 
 bb.l:                                             ; preds = %.noexc5
-  %i.ax = trunc nuw nsw i64 %spec.select.i.i.i.i.i to i32 ; 2 uses
+  %i.ax = trunc nsw i64 %i.ar to i32
+  %3 = add nsw i32 %2, %i.ax                      ; 2 uses
   %i.ay = icmp ugt i32 %i.ap, 1999999999
   br i1 %i.ay, label %.split.i.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.az = icmp samesign ult i32 %i.ap, 1000000000
-  %i.ba = urem i32 %i.ax, 60
+  %i.ba = urem i32 %3, 60
   %i.bb = icmp eq i32 %i.ba, 59
   %or.cond3.i.i.i.i = or i1 %i.az, %i.bb
   br i1 %or.cond3.i.i.i.i, label %_RNvNtNtNtNtCsjRvGck33osM_6diesel6sqlite5types13date_and_time6chrono12parse_julian.exit.i.i, label %.split.i.i
@@ -642,7 +642,7 @@ _RNvNtNtNtNtCsjRvGck33osM_6diesel6sqlite5types13date_and_time6chrono12parse_juli
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.aw, ptr %i.bc, align 4, !alias.scope !196, !noalias !197
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %i.ax, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !196, !noalias !197
+  store i32 %3, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !196, !noalias !197
   %.sroa.526.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.ap, ptr %.sroa.526.0..sroa_idx.i.i, align 4, !alias.scope !196, !noalias !197
   store i32 0, ptr %0, align 8, !alias.scope !196, !noalias !197
@@ -1045,8 +1045,7 @@ bb.j:                                             ; preds = %.noexc23
   %.lobit.i.i.i.i.i = ashr i64 %i.ar, 63
   %.sroa.0.0.i.i.i.i.i = add nsw i64 %.lobit.i.i.i.i.i, %i.aq ; 2 uses
   %i.as = icmp slt i64 %i.ar, 0
-  %2 = select i1 %i.as, i64 86400, i64 0
-  %spec.select.i.i.i.i.i = add nsw i64 %2, %i.ar
+  %2 = select i1 %i.as, i32 86400, i32 0
   %i.at = add nsw i64 %.sroa.0.0.i.i.i.i.i, -2146764485
   %or.cond.i.i.i.i = icmp ult i64 %i.at, -4294967296
   br i1 %or.cond.i.i.i.i, label %.split.i.i, label %bb.k
@@ -1062,13 +1061,14 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not.i.i.i.i, label %.split.i.i, label %bb.l
 
 bb.l:                                             ; preds = %.noexc5
-  %i.ax = trunc nuw nsw i64 %spec.select.i.i.i.i.i to i32 ; 2 uses
+  %i.ax = trunc nsw i64 %i.ar to i32
+  %3 = add nsw i32 %2, %i.ax                      ; 2 uses
   %i.ay = icmp ugt i32 %i.ap, 1999999999
   br i1 %i.ay, label %.split.i.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.az = icmp samesign ult i32 %i.ap, 1000000000
-  %i.ba = urem i32 %i.ax, 60
+  %i.ba = urem i32 %3, 60
   %i.bb = icmp eq i32 %i.ba, 59
   %or.cond3.i.i.i.i = or i1 %i.az, %i.bb
   br i1 %or.cond3.i.i.i.i, label %_RNvNtNtNtNtCsjRvGck33osM_6diesel6sqlite5types13date_and_time6chrono12parse_julian.exit.i.i, label %.split.i.i
@@ -1077,7 +1077,7 @@ _RNvNtNtNtNtCsjRvGck33osM_6diesel6sqlite5types13date_and_time6chrono12parse_juli
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.aw, ptr %i.bc, align 4, !alias.scope !255, !noalias !256
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %i.ax, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !255, !noalias !256
+  store i32 %3, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !255, !noalias !256
   %.sroa.526.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.ap, ptr %.sroa.526.0..sroa_idx.i.i, align 4, !alias.scope !255, !noalias !256
   store i32 0, ptr %0, align 8, !alias.scope !255, !noalias !256
@@ -1480,10 +1480,10 @@ bb.c:                                             ; preds = %bb.a
   %.lobit.i = ashr i64 %i.j, 63
   %.sroa.0.0.i = add nsw i64 %.lobit.i, %i.i
   %i.k = icmp slt i64 %i.j, 0
-  %2 = select i1 %i.k, i64 1000000, i64 0
-  %spec.select.i = add nsw i64 %2, %i.j
-  %3 = trunc nuw nsw i64 %spec.select.i to i32
-  %i.l = mul nuw nsw i32 %3, 1000
+  %2 = select i1 %i.k, i32 1000000, i32 0
+  %3 = trunc nsw i64 %i.j to i32
+  %4 = add nsw i32 %2, %3
+  %i.l = mul nuw nsw i32 %4, 1000
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i32 0, ptr %i.b, align 4
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 4
@@ -1886,11 +1886,11 @@ bb.a:
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ap, i64 48
   %.not140.i.i = icmp eq i32 %i.bk, 0             ; 19 uses
   %i.cg = lshr i32 %i.bk, 4
-  %i.ch = and i32 %i.cg, 511                      ; 9 uses
+  %i.ch = and i32 %i.cg, 511                      ; 8 uses
   %i.ci = and i32 %i.bk, 7
   %i.cj = add nuw nsw i32 %i.ch, %i.ci
   %.lhs.trunc9.i.i = trunc nuw nsw i32 %i.cj to i16
-  %i.ck = urem i16 %.lhs.trunc9.i.i, 7            ; 6 uses
+  %i.ck = urem i16 %.lhs.trunc9.i.i, 7            ; 7 uses
   %i.cl = icmp samesign ult i16 %i.ck, 6          ; 2 uses
   %narrow40.i.i = add nuw nsw i16 %i.ck, 1
   %narrow41.i.i = select i1 %i.cl, i16 %narrow40.i.i, i16 0
@@ -1931,8 +1931,7 @@ bb.a:
   %i.dp = trunc i32 %i.dm to i8                   ; 4 uses
   %i.dq = icmp ugt i8 %i.dp, 99                   ; 2 uses
   %i.dr = urem i32 %.sroa.10.0.copyload.i.i, 60   ; 2 uses
-  %2 = zext i1 %i.dn to i32
-  %.sroa.04.0.i.i = add nuw nsw i32 %i.dr, %2
+  %2 = zext i1 %i.dn to i8
   %i.ds = udiv i32 %.sroa.10.0.copyload.i.i, 60
   %i.dt = urem i32 %i.ds, 60                      ; 2 uses
   %i.du = udiv i8 %i.dp, 10                       ; 2 uses
@@ -1944,10 +1943,11 @@ bb.a:
   %i.ea = or disjoint i8 %i.dz, 48                ; 3 uses
   %i.eb = urem i8 %i.dy, 10
   %i.ec = or disjoint i8 %i.eb, 48                ; 3 uses
-  %i.ed = trunc nuw nsw i32 %.sroa.04.0.i.i to i8 ; 2 uses
-  %i.ee = udiv i8 %i.ed, 10
+  %i.ed = trunc nuw nsw i32 %i.dr to i8
+  %3 = add nuw nsw i8 %2, %i.ed                   ; 2 uses
+  %i.ee = udiv i8 %3, 10
   %i.ef = or disjoint i8 %i.ee, 48
-  %i.eg = urem i8 %i.ed, 10
+  %i.eg = urem i8 %3, 10
   %i.eh = or disjoint i8 %i.eg, 48
   %i.ei = icmp eq i32 %storemerge.i.i, 0
   %i.ej = urem i32 %storemerge.i.i, 1000000
@@ -2027,7 +2027,7 @@ bb.a:
   %switch.offset.i.i = add nuw nsw i8 %switch.idx.cast.i.i, 49
   %i.gh = trunc i32 %i.bk to i8
   %i.gi = and i8 %i.gh, 15                        ; 4 uses
-  %i.gj = trunc nuw nsw i32 %i.ch to i16
+  %i.gj = trunc nuw nsw i32 %i.ch to i16          ; 2 uses
   %i.gk = add nuw nsw i16 %i.gj, 6
   %.lhs.trunc1.i142.i.i = sub nuw nsw i16 %i.gk, %i.ck ; 2 uses
   %i.gl = udiv i16 %.lhs.trunc1.i142.i.i, 7
@@ -2037,13 +2037,10 @@ bb.a:
   %i.gp = add nuw nsw i8 %i.gn, 48
   %i.gq = urem i8 %i.gm, 10
   %i.gr = or disjoint i8 %i.gq, 48
-  %spec.select.i131.i.i = zext nneg i16 %i.ck to i32 ; 2 uses
-  %3 = add nuw nsw i32 %spec.select.i131.i.i, 7
-  %.pn.i.i.i = select i1 %i.cl, i32 %3, i32 %spec.select.i131.i.i
-  %.sroa.0.0.neg.i.i.i = add nuw nsw i32 %i.ch, 6
-  %4 = sub nsw i32 %.sroa.0.0.neg.i.i.i, %.pn.i.i.i
-  %5 = trunc nsw i32 %4 to i16
-  %.lhs.trunc1.i.i.i = add nsw i16 %5, 6
+  %4 = add nuw nsw i16 %i.ck, 7
+  %.pn.i.i.i = select i1 %i.cl, i16 %4, i16 %i.ck
+  %5 = add nuw nsw i16 %i.gj, 12
+  %.lhs.trunc1.i.i.i = sub nsw i16 %5, %.pn.i.i.i
   %i.gs = sdiv i16 %.lhs.trunc1.i.i.i, 7          ; 2 uses
   %i.gt = trunc nuw nsw i16 %i.gs to i8           ; 2 uses
   %i.gu = udiv i8 %i.gt, 10

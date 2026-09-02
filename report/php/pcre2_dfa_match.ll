@@ -26,7 +26,7 @@ target triple = "x86_64-pc-linux-gnu"
 @_pcre2_ucd_boolprop_sets_8 = external local_unnamed_addr constant [0 x i32], align 4
 @coptable = internal unnamed_addr constant <{ [98 x i8], [73 x i8] }> <{ [98 x i8] c"\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\01\01\01\01\01\01\01\01\01\03\03\03\01\01\01\03\01\01\01\01\01\01\03\03\03\01\01\01\03\01\01\01\01\01\01\03\03\03\01\01\01\03\01\01\01\01\01\01\03\03\03\01\01\01\03\01\01\01\01\01\01\03\03\03\01\01\01\03", [73 x i8] zeroinitializer }>, align 16
 @_pcre2_OP_lengths_8 = external local_unnamed_addr constant [0 x i8], align 1
-@switch.table.internal_dfa_match = private unnamed_addr constant [7 x i8] c"\05\05\03\03\03\05\05", align 8
+@switch.table.internal_dfa_match = private unnamed_addr constant [7 x i8] c"\05\05\03\03\03\05\05", align 4
 
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @php_pcre2_dfa_match(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, i32 noundef %4, ptr noundef %5, ptr nofree noundef readonly captures(address_is_null) %6, ptr noundef %7, i64 noundef %8) local_unnamed_addr #0 {
@@ -429,7 +429,6 @@ bb.g:                                             ; preds = %.loopexit4012
 
 bb.h:                                             ; preds = %bb.g, %.loopexit4012
   %i.bv = ptrtoint ptr %i.k to i64
-  %.neg = add i64 %i.bv, 4294967293
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.k, %bb.h
@@ -460,11 +459,12 @@ bb.j:                                             ; preds = %bb.i
 
 .thread3571:                                      ; preds = %.thread
   %i.ci = add nsw i32 %.02855, 1
+  %.neg3325 = select i1 %.not3321, i32 -3, i32 0
   %i.cj = ptrtoint ptr %.12986 to i64
-  %.neg3324 = select i1 %.not3321, i64 4294967293, i64 0
-  %.neg3323 = sub i64 %.neg, %i.cj
-  %.neg3325 = add i64 %.neg3323, %.neg3324
-  %.neg3326 = trunc i64 %.neg3325 to i32
+  %.neg = sub i64 %i.bv, %i.cj
+  %.neg3323 = trunc i64 %.neg to i32
+  %.neg3324 = add i32 %.neg3323, -3
+  %.neg3326 = add i32 %.neg3324, %.neg3325
   store i32 %.neg3326, ptr %.03005, align 4, !tbaa !141
   %i.ck = getelementptr inbounds nuw i8, ptr %.03005, i64 4
   store i32 0, ptr %i.ck, align 4, !tbaa !142
@@ -539,11 +539,11 @@ switch.lookup:                                    ; preds = %bb.p
   %i.dv = zext nneg i8 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.internal_dfa_match, i64 %i.dv
   %switch.load = load i8, ptr %switch.gep, align 1
-  %switch.ext = zext i8 %switch.load to i64
+  %switch.ext = zext i8 %switch.load to i32
   br label %switch.edge
 
 switch.edge:                                      ; preds = %bb.p, %switch.lookup
-  %11 = phi i64 [ %switch.ext, %switch.lookup ], [ 3, %bb.p ]
+  %11 = phi i32 [ %switch.ext, %switch.lookup ], [ 3, %bb.p ]
   %i.dw = ptrtoint ptr %i.k to i64                ; 2 uses
   %exitcond.peel.not = icmp slt i32 %7, 8
   br i1 %exitcond.peel.not, label %.critedge3469, label %bb.q
@@ -551,8 +551,8 @@ switch.edge:                                      ; preds = %bb.p, %switch.looku
 bb.q:                                             ; preds = %switch.edge
   %i.dx = ptrtoint ptr %1 to i64
   %i.dy = sub i64 %i.dx, %i.dw
-  %12 = add nsw i64 %i.dy, %11
-  %13 = trunc i64 %12 to i32
+  %12 = trunc i64 %i.dy to i32
+  %13 = add i32 %11, %12
   store i32 %13, ptr %i.aj, align 4, !tbaa !141
   %i.dz = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
   store i32 0, ptr %i.dz, align 4, !tbaa !142
@@ -955,8 +955,8 @@ bb.adu:                                           ; preds = %bb.adu, %bb.adt
 bb.adv:                                           ; preds = %bb.adu
   %i.dmx = sub i64 %i.dmk, %i.dml                 ; 6 uses
   %i.dmy = ptrtoint ptr %i.dmu to i64
-  %i.dmz = sub i64 %i.dmy, %i.fm                  ; 2 uses
-  %i.dna = trunc i64 %i.dmz to i32                ; 2 uses
+  %i.dmz = sub i64 %i.dmy, %i.fm
+  %i.dna = trunc i64 %i.dmz to i32                ; 3 uses
   %i.dnb = add i32 %i.dna, 3                      ; 2 uses
   %i.dnc = and i8 %i.dmv, -2
   %switch3511 = icmp eq i8 %i.dnc, 122
@@ -965,18 +965,17 @@ bb.adv:                                           ; preds = %bb.adu
 bb.adw:                                           ; preds = %bb.adv
   %i.dnd = getelementptr inbounds nuw i8, ptr %i.dmu, i64 1
   %i.dne = load i8, ptr %i.dnd, align 1, !tbaa !46
-  %14 = zext i8 %i.dne to i64
-  %15 = shl nuw nsw i64 %14, 8
+  %14 = zext i8 %i.dne to i32
+  %15 = shl nuw nsw i32 %14, 8
   %i.dnf = getelementptr inbounds nuw i8, ptr %i.dmu, i64 2
   %i.dng = load i8, ptr %i.dnf, align 1, !tbaa !46
-  %16 = zext i8 %i.dng to i64
-  %17 = or disjoint i64 %15, %16
-  %18 = sub nsw i64 %i.dmz, %17
-  %19 = trunc i64 %18 to i32
+  %16 = zext i8 %i.dng to i32
+  %17 = or disjoint i32 %15, %16
+  %18 = sub i32 %i.dna, %17
   br label %bb.adx
 
 bb.adx:                                           ; preds = %bb.adv, %bb.adw
-  %i.dnh = phi i32 [ %19, %bb.adw ], [ -1, %bb.adv ] ; 4 uses
+  %i.dnh = phi i32 [ %18, %bb.adw ], [ -1, %bb.adv ] ; 4 uses
   %i.dni = icmp eq i64 %i.dmx, 0
   br i1 %i.dni, label %bb.ady, label %bb.aea
 

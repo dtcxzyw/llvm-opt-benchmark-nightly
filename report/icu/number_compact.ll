@@ -202,9 +202,9 @@ bb.b:                                             ; preds = %.lr.ph91, %.thread7
   %.04290 = phi i32 [ 0, %.lr.ph91 ], [ %i.br, %.thread76 ]
   %i.j = load ptr, ptr %i.a, align 8, !tbaa !78
   %i.k = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.j) #16
-  %i.l = trunc i64 %i.k to i8
+  %i.l = trunc i64 %i.k to i8                     ; 3 uses
   %i.m = add i8 %i.l, -1                          ; 5 uses
-  %i.n = sext i8 %i.m to i32                      ; 2 uses
+  %i.n = sext i8 %i.m to i32
   %i.o = icmp sgt i8 %i.m, 19
   br i1 %i.o, label %.thread76, label %bb.c
 
@@ -230,7 +230,6 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph:                                           ; preds = %.preheader
   %i.aa = shl nsw i32 %i.n, 3
-  %7 = xor i32 %i.n, -1                           ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %.thread64
@@ -306,8 +305,8 @@ bb.l:                                             ; preds = %.lr.ph.i
   br i1 %i.bd, label %_ZN12_GLOBAL__N_110countZerosEPKDsi.exit.thread, label %bb.m
 
 _ZN12_GLOBAL__N_110countZerosEPKDsi.exit.thread:  ; preds = %bb.l
-  %8 = add i32 %.078.i, %7
-  %9 = trunc i32 %8 to i8
+  %7 = trunc i32 %.078.i to i8
+  %8 = sub i8 %7, %i.l
   br label %.thread68
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -318,13 +317,13 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 _ZN12_GLOBAL__N_110countZerosEPKDsi.exit:         ; preds = %bb.m
   %i.be = icmp sgt i32 %.1.i, 0
-  %10 = add i32 %.1.i, %7
-  %11 = trunc i32 %10 to i8
-  %spec.select = select i1 %i.be, i8 %11, i8 0
+  %9 = trunc i32 %.1.i to i8
+  %10 = sub i8 %9, %i.l
+  %spec.select = select i1 %i.be, i8 %10, i8 0
   br label %.thread68
 
 .thread68:                                        ; preds = %_ZN12_GLOBAL__N_110countZerosEPKDsi.exit, %bb.i, %_ZN12_GLOBAL__N_110countZerosEPKDsi.exit.thread, %bb.j
-  %.3.ph = phi i8 [ 0, %bb.j ], [ %9, %_ZN12_GLOBAL__N_110countZerosEPKDsi.exit.thread ], [ %spec.select, %_ZN12_GLOBAL__N_110countZerosEPKDsi.exit ], [ %.04187, %bb.i ]
+  %.3.ph = phi i8 [ 0, %bb.j ], [ %8, %_ZN12_GLOBAL__N_110countZerosEPKDsi.exit.thread ], [ %spec.select, %_ZN12_GLOBAL__N_110countZerosEPKDsi.exit ], [ %.04187, %bb.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
   br label %.thread64
 

@@ -205,31 +205,30 @@ define hidden void @_ZN6hermes3hbc25BytecodeFunctionGenerator21updateJumpTableOf
   %i.c = load ptr, ptr %0, align 8, !tbaa !70     ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %4 = zext i32 %2 to i64
-  %5 = shl nuw nsw i64 %4, 2
-  %6 = add i64 %5, %i.d
-  %7 = sub i64 %6, %i.e
-  %8 = trunc i64 %7 to i32
-  %9 = sub i32 %8, %3                             ; 4 uses
-  %i.f = trunc i32 %9 to i8
+  %4 = sub i64 %i.d, %i.e
+  %5 = shl i32 %2, 2
+  %6 = trunc i64 %4 to i32
+  %7 = sub i32 %5, %3
+  %8 = add i32 %7, %6                             ; 4 uses
+  %i.f = trunc i32 %8 to i8
   %i.g = zext i32 %1 to i64
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.g
   store i8 %i.f, ptr %i.h, align 1, !tbaa !95
-  %i.i = lshr i32 %9, 8
+  %i.i = lshr i32 %8, 8
   %i.j = add i32 %1, 1
   %i.k = trunc i32 %i.i to i8
   %i.l = zext i32 %i.j to i64
   %i.m = load ptr, ptr %0, align 8, !tbaa !70
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.l
   store i8 %i.k, ptr %i.n, align 1, !tbaa !95
-  %i.o = lshr i32 %9, 16
+  %i.o = lshr i32 %8, 16
   %i.p = add i32 %1, 2
   %i.q = trunc i32 %i.o to i8
   %i.r = zext i32 %i.p to i64
   %i.s = load ptr, ptr %0, align 8, !tbaa !70
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.r
   store i8 %i.q, ptr %i.t, align 1, !tbaa !95
-  %i.u = lshr i32 %9, 24
+  %i.u = lshr i32 %8, 24
   %i.v = add i32 %1, 3
   %i.w = trunc nuw i32 %i.u to i8
   %i.x = zext i32 %i.v to i64

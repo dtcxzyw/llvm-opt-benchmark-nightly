@@ -204,10 +204,9 @@ _ZN8nlohmann16json_abi_v3_12_06detail9dtoa_impl18compute_boundariesIdEENS2_10bou
   %i.z = mul nsw i32 %i.y, 78913
   %i.aa = sdiv i32 %i.z, 262144
   %i.ab = icmp sgt i32 %i.y, 0
-  %6 = zext i1 %i.ab to i32
-  %7 = add nsw i32 %i.aa, %6
-  %8 = trunc nsw i32 %7 to i16
-  %.lhs.trunc.i.i = add nsw i16 %8, 307
+  %6 = trunc nsw i32 %i.aa to i16
+  %7 = select i1 %i.ab, i16 308, i16 307
+  %.lhs.trunc.i.i = add nsw i16 %7, %6
   %i.ac = sdiv i16 %.lhs.trunc.i.i, 8
   %i.ad = sext i16 %i.ac to i64
   %i.ae = getelementptr inbounds nuw [16 x i8], ptr @_ZZN8nlohmann16json_abi_v3_12_06detail9dtoa_impl36get_cached_power_for_binary_exponentEiE13kCachedPowers, i64 %i.ad ; 2 uses

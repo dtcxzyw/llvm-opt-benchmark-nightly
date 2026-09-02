@@ -205,11 +205,9 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ac
   %i.gy = getelementptr inbounds nuw i8, ptr %.06372.i.i.i, i64 2
-  %i.gz = load i8, ptr %i.gy, align 1, !tbaa !86
-  %3 = zext i8 %i.gz to i32                       ; 2 uses
-  %4 = and i32 %3, 192
-  %5 = icmp eq i32 %4, 128
-  br i1 %5, label %bb.ae, label %bb.af
+  %i.gz = load i8, ptr %i.gy, align 1, !tbaa !86  ; 2 uses
+  %3 = icmp slt i8 %i.gz, -64
+  br i1 %3, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
   %i.ha = shl nuw nsw i32 %i.fd, 12
@@ -217,11 +215,11 @@ bb.ae:                                            ; preds = %bb.ad
   %i.hc = shl nuw nsw i32 %i.gv, 6                ; 2 uses
   %i.hd = and i32 %i.hc, 3840
   %i.he = or disjoint i32 %i.hd, %i.hb
-  %6 = and i32 %3, 63
-  %7 = or disjoint i32 %6, %i.hc
+  %4 = and i8 %i.gz, 63
   %.not75.i.i.i = icmp eq i32 %i.he, 0
-  %8 = trunc i32 %7 to i8
-  %i.hf = select i1 %.not75.i.i.i, i8 %8, i8 63
+  %5 = trunc i32 %i.hc to i8
+  %6 = or disjoint i8 %4, %5
+  %i.hf = select i1 %.not75.i.i.i, i8 %6, i8 63
   store i8 %i.hf, ptr %.074.i.i.i, align 1, !tbaa !86
   %i.hg = getelementptr inbounds nuw i8, ptr %.074.i.i.i, i64 1
   %i.hh = getelementptr inbounds nuw i8, ptr %.06372.i.i.i, i64 3

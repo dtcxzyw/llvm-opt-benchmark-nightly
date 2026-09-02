@@ -204,11 +204,11 @@ declare ptr @__dynamic_cast(ptr, ptr, ptr, i64) local_unnamed_addr #11
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef range(i64 0, 2) i64 @_ZN13DecoSchematic8generateEP8MMVManipP9PcgRandomN4core8vector3dIsEEb(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(329) %0, ptr noundef %1, ptr noundef %2, i48 %3, i1 noundef zeroext %4) unnamed_addr #0 align 2 {
 bb.a:
-  %.sroa.018.0.extract.trunc = trunc i48 %3 to i16 ; 2 uses
-  %.sroa.7.0.extract.shift = lshr i48 %3, 16      ; 2 uses
-  %.sroa.7.0.extract.trunc = trunc i48 %.sroa.7.0.extract.shift to i16 ; 2 uses
-  %.sroa.15.0.extract.shift = lshr i48 %3, 32     ; 2 uses
-  %.sroa.15.0.extract.trunc = trunc nuw i48 %.sroa.15.0.extract.shift to i16 ; 2 uses
+  %.sroa.018.0.extract.trunc = trunc i48 %3 to i16 ; 3 uses
+  %.sroa.7.0.extract.shift = lshr i48 %3, 16
+  %.sroa.7.0.extract.trunc = trunc i48 %.sroa.7.0.extract.shift to i16 ; 3 uses
+  %.sroa.15.0.extract.shift = lshr i48 %3, 32
+  %.sroa.15.0.extract.trunc = trunc nuw i48 %.sroa.15.0.extract.shift to i16 ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !103  ; 4 uses
   %i.c = icmp eq ptr %i.b, null
@@ -231,9 +231,8 @@ bb.d:                                             ; preds = %bb.c
   %i.j = sext i16 %i.i to i32
   %i.k = add nsw i32 %i.j, -1
   %.neg = sdiv i32 %i.k, -2
-  %5 = trunc nuw i48 %.sroa.7.0.extract.shift to i32
-  %6 = add i32 %.neg, %5
-  %7 = trunc i32 %6 to i16
+  %5 = trunc nsw i32 %.neg to i16
+  %6 = add i16 %5, %.sroa.7.0.extract.trunc
   br label %bb.h
 
 bb.e:                                             ; preds = %bb.c
@@ -257,7 +256,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.f, %bb.g, %bb.d
   %i.s = phi i16 [ %i.i, %bb.d ], [ %i.o, %bb.f ], [ %.pre, %bb.g ]
-  %.sroa.7.0 = phi i16 [ %7, %bb.d ], [ %i.q, %bb.f ], [ %i.r, %bb.g ] ; 3 uses
+  %.sroa.7.0 = phi i16 [ %6, %bb.d ], [ %i.q, %bb.f ], [ %i.r, %bb.g ] ; 3 uses
   %i.t = sext i16 %.sroa.7.0 to i32
   %i.u = sext i16 %i.s to i32
   %i.v = add nsw i32 %i.t, -1
@@ -300,24 +299,21 @@ bb.m:                                             ; preds = %bb.l
   %i.ao = load i16, ptr %i.an, align 4, !tbaa !182
   %i.ap = sext i16 %i.ao to i32
   %i.aq = add nsw i32 %i.ap, -1
-  %.neg40 = sdiv i32 %i.aq, -2                    ; 2 uses
+  %.neg40 = sdiv i32 %i.aq, -2
+  %7 = trunc nsw i32 %.neg40 to i16               ; 2 uses
   br i1 %or.cond, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %8 = trunc i48 %3 to i32
-  %9 = add i32 %.neg40, %8
-  %10 = trunc i32 %9 to i16
+  %8 = add i16 %7, %.sroa.018.0.extract.trunc
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.m
-  %11 = trunc nuw nsw i48 %.sroa.15.0.extract.shift to i32
-  %12 = add nsw i32 %.neg40, %11
-  %13 = trunc i32 %12 to i16
+  %9 = add i16 %7, %.sroa.15.0.extract.trunc
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.n, %bb.o, %bb.l
-  %.sroa.018.0 = phi i16 [ %10, %bb.n ], [ %.sroa.018.0.extract.trunc, %bb.o ], [ %.sroa.018.0.extract.trunc, %bb.l ] ; 3 uses
-  %.sroa.15.0 = phi i16 [ %.sroa.15.0.extract.trunc, %bb.n ], [ %13, %bb.o ], [ %.sroa.15.0.extract.trunc, %bb.l ] ; 3 uses
+  %.sroa.018.0 = phi i16 [ %8, %bb.n ], [ %.sroa.018.0.extract.trunc, %bb.o ], [ %.sroa.018.0.extract.trunc, %bb.l ] ; 3 uses
+  %.sroa.15.0 = phi i16 [ %.sroa.15.0.extract.trunc, %bb.n ], [ %9, %bb.o ], [ %.sroa.15.0.extract.trunc, %bb.l ] ; 3 uses
   %i.ar = and i32 %i.ai, 4
   %.not41 = icmp eq i32 %i.ar, 0
   br i1 %.not41, label %._crit_edge, label %bb.q

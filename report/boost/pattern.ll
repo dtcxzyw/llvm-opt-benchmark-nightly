@@ -204,18 +204,17 @@ bb.n:                                             ; preds = %_ZN5boost4urls8url_
   %i.bj = sext i32 %2 to i64
   %i.bk = getelementptr inbounds [4 x i8], ptr %i.au, i64 %i.bj
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !39
-  %5 = zext i32 %i.bl to i64
   br label %_ZNK5boost4urls6detail8url_impl6offsetEi.exit17.i
 
 _ZNK5boost4urls6detail8url_impl6offsetEi.exit17.i: ; preds = %bb.n, %_ZN5boost4urls8url_base4op_t4moveEPcPKcm.exit.i
-  %6 = phi i64 [ %5, %bb.n ], [ 0, %_ZN5boost4urls8url_base4op_t4moveEPcPKcm.exit.i ]
+  %5 = phi i32 [ %i.bl, %bb.n ], [ 0, %_ZN5boost4urls8url_base4op_t4moveEPcPKcm.exit.i ]
   %.06.i.i = add nsw i32 %1, 1
   %i.bm = icmp slt i32 %.06.i.i, %2
   br i1 %i.bm, label %.lr.ph.i.i, label %_ZN5boost4urls6detail8url_impl8collapseEiim.exit.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNK5boost4urls6detail8url_impl6offsetEi.exit17.i
-  %7 = sub i64 %6, %i.ai
-  %8 = trunc i64 %7 to i32                        ; 2 uses
+  %6 = trunc i64 %i.ai to i32
+  %7 = sub i32 %5, %6                             ; 2 uses
   %i.bn = sext i32 %1 to i64
   %i.bo = add nsw i64 %i.bn, 1                    ; 3 uses
   %i.bp = add i32 %2, -2
@@ -228,7 +227,7 @@ _ZNK5boost4urls6detail8url_impl6offsetEi.exit17.i: ; preds = %bb.n, %_ZN5boost4u
 vector.ph:                                        ; preds = %.lr.ph.i.i
   %n.vec = and i64 %i.bs, 8589934584              ; 3 uses
   %i.bt = add nsw i64 %i.bo, %n.vec
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %8, i64 0
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %7, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.bu = getelementptr [4 x i8], ptr %i.au, i64 %i.bo
   br label %vector.body
@@ -254,7 +253,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph.i.i, %middle
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %scalar.ph ], [ %indvars.iv.i.i.ph, %scalar.ph.preheader ] ; 2 uses
   %i.by = getelementptr inbounds [4 x i8], ptr %i.au, i64 %indvars.iv.i.i
-  store i32 %8, ptr %i.by, align 4, !tbaa !39
+  store i32 %7, ptr %i.by, align 4, !tbaa !39
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %lftr.wideiv.i.i = trunc i64 %indvars.iv.next.i.i to i32
   %exitcond.not.i.i = icmp eq i32 %2, %lftr.wideiv.i.i
@@ -449,18 +448,17 @@ bb.x:                                             ; preds = %_ZN5boost4urls8url_
   %i.eu = sext i32 %2 to i64
   %i.ev = getelementptr inbounds [4 x i8], ptr %i.ef, i64 %i.eu
   %i.ew = load i32, ptr %i.ev, align 4, !tbaa !39
-  %9 = zext i32 %i.ew to i64
   br label %_ZNK5boost4urls6detail8url_impl6offsetEi.exit35
 
 _ZNK5boost4urls6detail8url_impl6offsetEi.exit35:  ; preds = %_ZN5boost4urls8url_base4op_t4moveEPcPKcm.exit, %bb.x
-  %10 = phi i64 [ %9, %bb.x ], [ 0, %_ZN5boost4urls8url_base4op_t4moveEPcPKcm.exit ]
+  %8 = phi i32 [ %i.ew, %bb.x ], [ 0, %_ZN5boost4urls8url_base4op_t4moveEPcPKcm.exit ]
   %.06.i = add nsw i32 %1, 1
   %i.ex = icmp slt i32 %.06.i, %2
   br i1 %i.ex, label %.lr.ph.i, label %_ZN5boost4urls6detail8url_impl8collapseEiim.exit
 
 .lr.ph.i:                                         ; preds = %_ZNK5boost4urls6detail8url_impl6offsetEi.exit35
-  %11 = add i64 %10, %i.dk
-  %12 = trunc i64 %11 to i32                      ; 2 uses
+  %9 = trunc i64 %i.dk to i32
+  %10 = add i32 %8, %9                            ; 2 uses
   %i.ey = sext i32 %1 to i64
   %i.ez = add nsw i64 %i.ey, 1                    ; 3 uses
   %i.fa = add i32 %2, -2
@@ -473,7 +471,7 @@ _ZNK5boost4urls6detail8url_impl6offsetEi.exit35:  ; preds = %_ZN5boost4urls8url_
 vector.ph76:                                      ; preds = %.lr.ph.i
   %n.vec77 = and i64 %i.fd, 8589934584            ; 3 uses
   %i.fe = add nsw i64 %i.ez, %n.vec77
-  %broadcast.splatinsert78 = insertelement <4 x i32> poison, i32 %12, i64 0
+  %broadcast.splatinsert78 = insertelement <4 x i32> poison, i32 %10, i64 0
   %broadcast.splat79 = shufflevector <4 x i32> %broadcast.splatinsert78, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.ff = getelementptr [4 x i8], ptr %i.ef, i64 %i.ez
   br label %vector.body80
@@ -499,7 +497,7 @@ scalar.ph74.preheader:                            ; preds = %.lr.ph.i, %middle.b
 scalar.ph74:                                      ; preds = %scalar.ph74.preheader, %scalar.ph74
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %scalar.ph74 ], [ %indvars.iv.i.ph, %scalar.ph74.preheader ] ; 2 uses
   %i.fj = getelementptr inbounds [4 x i8], ptr %i.ef, i64 %indvars.iv.i
-  store i32 %12, ptr %i.fj, align 4, !tbaa !39
+  store i32 %10, ptr %i.fj, align 4, !tbaa !39
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
   %lftr.wideiv.i = trunc i64 %indvars.iv.next.i to i32
   %exitcond.not.i = icmp eq i32 %2, %lftr.wideiv.i

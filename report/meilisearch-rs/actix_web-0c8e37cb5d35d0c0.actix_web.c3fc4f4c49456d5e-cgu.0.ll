@@ -205,7 +205,6 @@ bb.a:
 "_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit": ; preds = %bb.a
   %i.b = icmp samesign ugt i32 %1, 99999          ; 2 uses
   %i.c = udiv i32 %1, 100000
-  %.sroa.06.0.i.i = select i1 %i.b, i32 5, i32 0
   %.sroa.03.0.i.i = select i1 %i.b, i32 %i.c, i32 %1 ; 4 uses
   %i.d = add nuw nsw i32 %.sroa.03.0.i.i, 393206
   %i.e = add nuw nsw i32 %.sroa.03.0.i.i, 524188
@@ -215,11 +214,11 @@ bb.a:
   %i.i = and i32 %i.g, %i.h
   %i.j = xor i32 %i.f, %i.i
   %i.k = lshr i32 %i.j, 17
-  %2 = add nuw nsw i32 %i.k, %.sroa.06.0.i.i      ; 2 uses
-  %3 = trunc nuw nsw i32 %2 to i8
-  %i.l = add nuw nsw i8 %3, 1
+  %2 = trunc nuw nsw i32 %i.k to i8
+  %3 = select i1 %i.b, i8 6, i8 1
+  %i.l = add nuw nsw i8 %3, %2                    ; 2 uses
   %i.m = tail call i8 @llvm.usub.sat.i8(i8 7, i8 %i.l)
-  %.not = icmp samesign ugt i32 %2, 5
+  %.not = icmp ugt i8 %i.l, 6
   br i1 %.not, label %"_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit.._crit_edge_crit_edge", label %.lr.ph
 
 "_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit.._crit_edge_crit_edge": ; preds = %"_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit"
@@ -313,7 +312,6 @@ bb.a:
 "_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit": ; preds = %bb.a
   %i.b = icmp samesign ugt i32 %1, 99999          ; 2 uses
   %i.c = udiv i32 %1, 100000
-  %.sroa.06.0.i.i = select i1 %i.b, i32 5, i32 0
   %.sroa.03.0.i.i = select i1 %i.b, i32 %i.c, i32 %1 ; 4 uses
   %i.d = add nuw nsw i32 %.sroa.03.0.i.i, 393206
   %i.e = add nuw nsw i32 %.sroa.03.0.i.i, 524188
@@ -323,11 +321,11 @@ bb.a:
   %i.i = and i32 %i.g, %i.h
   %i.j = xor i32 %i.f, %i.i
   %i.k = lshr i32 %i.j, 17
-  %2 = add nuw nsw i32 %i.k, %.sroa.06.0.i.i      ; 2 uses
-  %3 = trunc nuw nsw i32 %2 to i8
-  %i.l = add nuw nsw i8 %3, 1
+  %2 = trunc nuw nsw i32 %i.k to i8
+  %3 = select i1 %i.b, i8 6, i8 1
+  %i.l = add nuw nsw i8 %3, %2                    ; 2 uses
   %i.m = tail call i8 @llvm.usub.sat.i8(i8 6, i8 %i.l)
-  %.not = icmp samesign ugt i32 %2, 4
+  %.not = icmp ugt i8 %i.l, 5
   br i1 %.not, label %"_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit.._crit_edge_crit_edge", label %.lr.ph
 
 "_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit.._crit_edge_crit_edge": ; preds = %"_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit"
@@ -551,7 +549,6 @@ bb.a:
 "_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit": ; preds = %bb.a
   %i.b = icmp samesign ugt i32 %1, 99999          ; 2 uses
   %i.c = udiv i32 %1, 100000
-  %.sroa.06.0.i.i = select i1 %i.b, i32 5, i32 0
   %.sroa.03.0.i.i = select i1 %i.b, i32 %i.c, i32 %1 ; 4 uses
   %i.d = add nuw nsw i32 %.sroa.03.0.i.i, 393206
   %i.e = add nuw nsw i32 %.sroa.03.0.i.i, 524188
@@ -561,11 +558,11 @@ bb.a:
   %i.i = and i32 %i.g, %i.h
   %i.j = xor i32 %i.f, %i.i
   %i.k = lshr i32 %i.j, 17
-  %2 = add nuw nsw i32 %i.k, %.sroa.06.0.i.i      ; 2 uses
-  %3 = trunc nuw nsw i32 %2 to i8
-  %i.l = add nuw nsw i8 %3, 1
+  %2 = trunc nuw nsw i32 %i.k to i8
+  %3 = select i1 %i.b, i8 6, i8 1
+  %i.l = add nuw nsw i8 %3, %2                    ; 2 uses
   %i.m = tail call i8 @llvm.usub.sat.i8(i8 5, i8 %i.l)
-  %.not = icmp samesign ugt i32 %2, 3
+  %.not = icmp ugt i8 %i.l, 4
   br i1 %.not, label %"_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit.._crit_edge_crit_edge", label %.lr.ph
 
 "_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit.._crit_edge_crit_edge": ; preds = %"_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit"
@@ -760,7 +757,6 @@ bb.a:
 "_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit": ; preds = %bb.a
   %i.b = icmp samesign ugt i32 %1, 99999          ; 2 uses
   %i.c = udiv i32 %1, 100000
-  %.sroa.06.0.i.i = select i1 %i.b, i32 5, i32 0
   %.sroa.03.0.i.i = select i1 %i.b, i32 %i.c, i32 %1 ; 4 uses
   %i.d = add nuw nsw i32 %.sroa.03.0.i.i, 393206
   %i.e = add nuw nsw i32 %.sroa.03.0.i.i, 524188
@@ -770,11 +766,11 @@ bb.a:
   %i.i = and i32 %i.g, %i.h
   %i.j = xor i32 %i.f, %i.i
   %i.k = lshr i32 %i.j, 17
-  %2 = add nuw nsw i32 %i.k, %.sroa.06.0.i.i      ; 2 uses
-  %3 = trunc nuw nsw i32 %2 to i8
-  %i.l = add nuw nsw i8 %3, 1
+  %2 = trunc nuw nsw i32 %i.k to i8
+  %3 = select i1 %i.b, i8 6, i8 1
+  %i.l = add nuw nsw i8 %3, %2                    ; 2 uses
   %i.m = tail call i8 @llvm.usub.sat.i8(i8 8, i8 %i.l)
-  %.not = icmp samesign ugt i32 %2, 6
+  %.not = icmp ugt i8 %i.l, 7
   br i1 %.not, label %"_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit.._crit_edge_crit_edge", label %.lr.ph
 
 "_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit.._crit_edge_crit_edge": ; preds = %"_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit"
@@ -868,7 +864,6 @@ bb.a:
 "_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit": ; preds = %bb.a
   %i.b = icmp ugt i32 %1, 99999                   ; 2 uses
   %i.c = udiv i32 %1, 100000
-  %.sroa.06.0.i.i = select i1 %i.b, i32 5, i32 0
   %.sroa.03.0.i.i = select i1 %i.b, i32 %i.c, i32 %1 ; 4 uses
   %i.d = add nuw nsw i32 %.sroa.03.0.i.i, 393206
   %i.e = add nuw nsw i32 %.sroa.03.0.i.i, 524188
@@ -878,11 +873,11 @@ bb.a:
   %i.i = and i32 %i.g, %i.h
   %i.j = xor i32 %i.f, %i.i
   %i.k = lshr i32 %i.j, 17
-  %2 = add nuw nsw i32 %i.k, %.sroa.06.0.i.i      ; 2 uses
-  %3 = trunc nuw nsw i32 %2 to i8
-  %i.l = add nuw nsw i8 %3, 1
+  %2 = trunc nuw nsw i32 %i.k to i8
+  %3 = select i1 %i.b, i8 6, i8 1
+  %i.l = add nuw nsw i8 %3, %2                    ; 2 uses
   %i.m = tail call i8 @llvm.usub.sat.i8(i8 4, i8 %i.l)
-  %.not = icmp samesign ugt i32 %2, 2
+  %.not = icmp ugt i8 %i.l, 3
   br i1 %.not, label %"_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit.._crit_edge_crit_edge", label %.lr.ph
 
 "_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit.._crit_edge_crit_edge": ; preds = %"_ZN58_$LT$u32$u20$as$u20$time..ext..digit_count..DigitCount$GT$10num_digits17hab8317d2141eb43aE.exit"
@@ -1285,14 +1280,14 @@ bb.k:                                             ; preds = %.noexc.i
   %.lobit.i.i.i.i.i.i = and i32 %i.bf, 1
   %i.bg = add nuw nsw i32 %.lobit.i.i.i.i.i.i, 59 ; 2 uses
   %.not.i.i.i.i.i.i = icmp samesign ugt i32 %i.be, %i.bg ; 2 uses
-  %..i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, i32 2, i32 0
+  %..i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, i8 2, i8 0
   %.6.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, i32 %i.bg, i32 0
   %i.bh = sub nsw i32 %i.be, %.6.i.i.i.i.i.i      ; 2 uses
   %i.bi = mul nsw i32 %i.bh, 268
   %i.bj = add nsw i32 %i.bi, 8028
   %i.bk = lshr i32 %i.bj, 13                      ; 2 uses
-  %3 = add nuw nsw i32 %i.bk, %..i.i.i.i.i.i      ; 2 uses
-  %4 = trunc i32 %3 to i8                         ; 3 uses
+  %3 = trunc i32 %i.bk to i8
+  %4 = add i8 %..i.i.i.i.i.i, %3                  ; 3 uses
   %i.bl = icmp ne i8 %4, 0
   tail call void @llvm.assume(i1 %i.bl)
   invoke fastcc void @_ZN4time10formatting22format_number_pad_zero17h46f78ed71df0173dE(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.e, i8 noundef %4)
@@ -1325,9 +1320,6 @@ bb.l:                                             ; preds = %.noexc24.i
   store i8 45, ptr %i.bs, align 1, !noalias !10681
   %i.bt = add nuw i64 %i.bp, 1
   store i64 %i.bt, ptr %i.ao, align 8, !alias.scope !10680, !noalias !10679
-  %5 = and i32 %3, 15
-  %6 = icmp ne i32 %5, 0
-  tail call void @llvm.assume(i1 %6)
   %i.bu = mul nuw nsw i32 %i.bk, 3917
   %i.bv = add nuw nsw i32 %i.bu, 28902
   %i.bw = lshr i32 %i.bv, 7
@@ -1494,7 +1486,6 @@ bb.s:                                             ; preds = %"_ZN3std2io5impls74
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10714)
   %i.du = icmp samesign ugt i32 %.sroa.0209.0.copyload, 99999 ; 2 uses
   %i.dv = udiv i32 %.sroa.0209.0.copyload, 100000
-  %.sroa.06.0.i.i.i.i.i = select i1 %i.du, i32 5, i32 0
   %.sroa.03.0.i.i.i.i.i = select i1 %i.du, i32 %i.dv, i32 %.sroa.0209.0.copyload ; 4 uses
   %i.dw = add nuw nsw i32 %.sroa.03.0.i.i.i.i.i, 393206
   %i.dx = add nuw nsw i32 %.sroa.03.0.i.i.i.i.i, 524188
@@ -1504,8 +1495,10 @@ bb.s:                                             ; preds = %"_ZN3std2io5impls74
   %i.eb = and i32 %i.dz, %i.ea
   %i.ec = xor i32 %i.dy, %i.eb
   %i.ed = lshr i32 %i.ec, 17
-  %7 = add nuw nsw i32 %i.ed, %.sroa.06.0.i.i.i.i.i ; 2 uses
-  %.not.i241.i.i = icmp samesign ugt i32 %7, 7
+  %5 = trunc nuw nsw i32 %i.ed to i8
+  %6 = select i1 %i.du, i8 6, i8 1
+  %7 = add nuw nsw i8 %6, %5                      ; 2 uses
+  %.not.i241.i.i = icmp samesign ugt i8 %7, 8
   br i1 %.not.i241.i.i, label %.._crit_edge_crit_edge.i.i.i, label %.lr.ph.i.i.i
 
 .._crit_edge_crit_edge.i.i.i:                     ; preds = %bb.s
@@ -1513,8 +1506,8 @@ bb.s:                                             ; preds = %"_ZN3std2io5impls74
   br label %._crit_edge.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.s
-  %narrow.i.i.i = sub nuw nsw i32 8, %7
-  %wide.trip.count.i.i.i = zext nneg i32 %narrow.i.i.i to i64
+  %8 = sub nuw nsw i8 9, %7
+  %wide.trip.count.i.i.i = zext nneg i8 %8 to i64
   %.pre24.i.i.i = load i64, ptr %i.e, align 8, !range !40, !alias.scope !10717, !noalias !10718
   br label %bb.u
 

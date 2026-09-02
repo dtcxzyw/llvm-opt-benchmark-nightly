@@ -14,7 +14,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define range(i64 -44, 1) i64 @FSE_buildCTable_wksp(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef captures(none) %4, i64 noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %i.a = shl nuw i32 1, %3                        ; 12 uses
+  %i.a = shl nuw i32 1, %3                        ; 11 uses
   %i.b = add i32 %i.a, -1                         ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 4 uses
   %.not = icmp eq i32 %3, 0
@@ -282,6 +282,7 @@ bb.l:                                             ; preds = %bb.l, %.epil.prehea
 
 .loopexit174:                                     ; preds = %._crit_edge184, %.preheader172
   %wide.trip.count225 = zext i32 %i.a to i64      ; 2 uses
+  %6 = trunc i32 %i.a to i16                      ; 3 uses
   %xtraiter245 = and i64 %wide.trip.count225, 1
   %i.db = icmp eq i32 %3, 0
   br i1 %i.db, label %.epil.preheader244, label %.loopexit174.new
@@ -301,7 +302,7 @@ bb.l:                                             ; preds = %bb.l, %.epil.prehea
   %i.dc = getelementptr inbounds nuw i8, ptr %i.n, i64 %indvars.iv222.epil.init
   %i.dd = load i8, ptr %i.dc, align 1, !tbaa !10
   %i.de = trunc i64 %indvars.iv222.epil.init to i16
-  %i.df = add i16 %i.de, 1
+  %i.df = add i16 %6, %i.de
   %i.dg = zext i8 %i.dd to i64
   %i.dh = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %i.dg ; 2 uses
   %i.di = load i16, ptr %i.dh, align 2, !tbaa !9  ; 2 uses
@@ -326,9 +327,8 @@ bb.m:                                             ; preds = %bb.m, %.loopexit174
   %niter249 = phi i64 [ 0, %.loopexit174.new ], [ %niter249.next.1, %bb.m ]
   %i.dq = getelementptr inbounds nuw i8, ptr %i.n, i64 %indvars.iv222
   %i.dr = load i8, ptr %i.dq, align 1, !tbaa !10
-  %6 = trunc nuw i64 %indvars.iv222 to i32
-  %7 = add i32 %i.a, %6
-  %8 = trunc i32 %7 to i16
+  %7 = trunc i64 %indvars.iv222 to i16
+  %8 = add i16 %6, %7
   %i.ds = zext i8 %i.dr to i64
   %i.dt = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %i.ds ; 2 uses
   %i.du = load i16, ptr %i.dt, align 2, !tbaa !9  ; 2 uses
@@ -340,9 +340,8 @@ bb.m:                                             ; preds = %bb.m, %.loopexit174
   %indvars.iv.next223 = or disjoint i64 %indvars.iv222, 1 ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.n, i64 %indvars.iv.next223
   %i.dz = load i8, ptr %i.dy, align 1, !tbaa !10
-  %9 = trunc nuw i64 %indvars.iv.next223 to i32
-  %10 = add i32 %i.a, %9
-  %11 = trunc i32 %10 to i16
+  %9 = trunc i64 %indvars.iv.next223 to i16
+  %10 = add i16 %6, %9
   %i.ea = zext i8 %i.dz to i64
   %i.eb = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %i.ea ; 2 uses
   %i.ec = load i16, ptr %i.eb, align 2, !tbaa !9  ; 2 uses
@@ -350,7 +349,7 @@ bb.m:                                             ; preds = %bb.m, %.loopexit174
   store i16 %i.ed, ptr %i.eb, align 2, !tbaa !9
   %i.ee = zext i16 %i.ec to i64
   %i.ef = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %i.ee
-  store i16 %11, ptr %i.ef, align 2, !tbaa !9
+  store i16 %10, ptr %i.ef, align 2, !tbaa !9
   %indvars.iv.next223.1 = add nuw nsw i64 %indvars.iv222, 2 ; 2 uses
   %niter249.next.1 = add i64 %niter249, 2         ; 2 uses
   %niter249.ncmp.1 = icmp eq i64 %niter249.next.1, %unroll_iter248
@@ -753,10 +752,9 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   %i.ad = mul i64 %i.o, %i.x                      ; 2 uses
   %i.ae = lshr i64 %i.ad, %i.m                    ; 4 uses
-  %i.af = trunc nuw nsw i64 %i.ae to i16
-  %6 = trunc nuw nsw i64 %i.ae to i32             ; 2 uses
-  %7 = and i32 %6, 65528
-  %i.ag = icmp eq i32 %7, 0
+  %i.af = trunc nuw nsw i64 %i.ae to i16          ; 2 uses
+  %6 = and i64 %i.ae, 65528
+  %i.ag = icmp eq i64 %6, 0
   br i1 %i.ag, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
@@ -767,13 +765,12 @@ bb.k:                                             ; preds = %bb.j
   %i.al = shl i64 %i.ae, %i.m
   %i.am = sub i64 %i.ad, %i.al
   %i.an = icmp ugt i64 %i.am, %i.ak
-  %8 = zext i1 %i.an to i32
-  %9 = add nuw nsw i32 %8, %6
-  %10 = trunc nuw nsw i32 %9 to i16
+  %7 = zext i1 %i.an to i16
+  %8 = add nuw nsw i16 %7, %i.af
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %.070 = phi i16 [ %10, %bb.k ], [ %i.af, %bb.j ] ; 4 uses
+  %.070 = phi i16 [ %8, %bb.k ], [ %i.af, %bb.j ] ; 4 uses
   %i.ao = zext nneg i16 %.070 to i32
   %i.ap = icmp ugt i16 %.070, %.073104
   %spec.select = select i1 %i.ap, i32 %.079102, i32 %.076103

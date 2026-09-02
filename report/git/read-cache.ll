@@ -205,10 +205,9 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   %i.gh = load i64, ptr %i.gg, align 8, !tbaa !92 ; 3 uses
   %i.gi = and i32 %i.fz, 16384
   %.not59.i = icmp eq i32 %i.gi, 0
-  %10 = select i1 %.not59.i, i64 2, i64 4
-  %11 = add i64 %i.gh, %10
-  %12 = trunc i64 %11 to i32                      ; 2 uses
-  %i.gj = add i32 %12, 40                         ; 2 uses
+  %10 = trunc i64 %i.gh to i32
+  %11 = select i1 %.not59.i, i32 42, i32 44
+  %i.gj = add i32 %11, %10                        ; 3 uses
   br i1 %.not328, label %bb.aq, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
@@ -258,7 +257,7 @@ copy_cache_entry_to_ondisk.exit.i:                ; preds = %bb.ap, %bb.ao
   call void @hashwrite(ptr noundef %i.be, ptr noundef nonnull %7, i32 noundef %i.gj) #28
   %i.hj = getelementptr inbounds nuw i8, ptr %i.ef, i64 108
   call void @hashwrite(ptr noundef %i.be, ptr noundef nonnull %i.hj, i32 noundef %i.gl) #28
-  %i.hk = add i32 %i.gl, %12
+  %i.hk = add nsw i32 %i.gl, %i.gj
   %i.hl = and i32 %i.hk, 7
   %i.hm = sub nuw nsw i32 8, %i.hl
   call void @hashwrite(ptr noundef %i.be, ptr noundef nonnull @ce_write_entry.padding, i32 noundef %i.hm) #28

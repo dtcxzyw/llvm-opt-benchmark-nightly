@@ -205,10 +205,8 @@ _ZNK4mold6SymbolINS_6X86_64EE9has_gottpERNS_7ContextIS1_EE.exit: ; preds = %_ZNK
 _ZNK4mold6SymbolINS_6X86_64EE14get_gottp_addrERNS_7ContextIS1_EE.exit: ; preds = %_ZNK4mold6SymbolINS_6X86_64EE9has_gottpERNS_7ContextIS1_EE.exit
   %i.km = add nuw nsw i64 %storemerge464, 1       ; 2 uses
   %i.kn = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.i, i64 %i.km
-  %6 = sext i32 %i.kl to i64
-  %7 = shl nsw i64 %6, 3
+  %6 = shl i32 %i.kl, 3
   %i.ko = sub i64 %.0.copyload.i.i225, %i.dx
-  %8 = add i64 %i.ko, %7
   %i.kp = getelementptr i8, ptr %i.kn, i64 8
   %.val211 = load i32, ptr %i.kp, align 1
   %i.kq = icmp eq i32 %.val211, 31
@@ -227,8 +225,9 @@ bb.bb:                                            ; preds = %_ZNK4mold6SymbolINS
 _ZN4moldL14relax_gd_to_ieEPhRKNS_6ElfRelINS_6X86_64EEEm.exit: ; preds = %bb.ba, %bb.bb
   %.sink3.i = phi i32 [ -13, %bb.bb ], [ -12, %bb.ba ]
   %.sink2.i = phi i64 [ 9, %bb.bb ], [ 8, %bb.ba ]
-  %i.kt = trunc i64 %8 to i32
-  %i.ku = add i32 %.sink3.i, %i.kt
+  %i.kt = trunc i64 %i.ko to i32
+  %7 = add i32 %6, %i.kt
+  %i.ku = add i32 %.sink3.i, %7
   %i.kv = getelementptr inbounds nuw i8, ptr %i.dq, i64 %.sink2.i
   store i32 %i.ku, ptr %i.kv, align 1
   br label %bb.dy

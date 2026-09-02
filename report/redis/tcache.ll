@@ -205,17 +205,10 @@ bb.af:                                            ; preds = %bb.aa
 tcache_bin_flush_impl.exit:                       ; preds = %._crit_edge, %malloc_mutex_lock.exit54, %bb.af
   call void @llvm.stackrestore.p0(ptr %savedstack)
   %.val46 = load i16, ptr %i.c, align 2, !tbaa !45
-  %.val.i = load ptr, ptr %2, align 8, !tbaa !41
   %.val4.i = load i16, ptr %i.d, align 4, !tbaa !39
-  %7 = ptrtoint ptr %.val.i to i64                ; 2 uses
-  %8 = trunc i64 %7 to i16
-  %i.hi = sub i16 %.val4.i, %8
-  %9 = zext i16 %.val46 to i64
-  %10 = shl nuw nsw i64 %9, 3
-  %11 = sub i64 %7, %10
-  %12 = trunc i64 %11 to i16
-  %13 = add i16 %i.hi, %12
-  store i16 %13, ptr %i.i, align 2, !tbaa !148
+  %7 = shl i16 %.val46, 3
+  %i.hi = sub i16 %.val4.i, %7
+  store i16 %i.hi, ptr %i.i, align 2, !tbaa !148
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   br label %bb.ag
 
