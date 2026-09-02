@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/xtask.xtask.f877180179d334e7-cgu.08?download=true
 inline.NumInlined: 568
 inline.NumDeleted: 224
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RINvMsa_NtCs8yNfvVM1dno_3zip5writeINtNtB6_10zip_writer9ZipWriterINtNtNtNtCsbSS6DM8SDEO_5alloc2io8buffered9bufwriter9BufWriterNtNtCscAsMj0W7j8b_3std2fs4FileEE10start_fileReuECslkzCjlEuW1f_5xtask:bb.a
   store i64 0, ptr %i.bj, align 8, !noalias !90
   %i.bk = getelementptr inbounds nuw i8, ptr %i.al, i64 50
@@ -202,7 +204,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringEC
 bb.y:                                             ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslkzCjlEuW1f_5xtask.exit.i
   %i.db = icmp sgt i64 %.pre240.i, -1
   call void @llvm.assume(i1 %i.db)
-  %i.dc = zext i16 %i.cz to i64                   ; 3 uses
+  %i.dc = zext i16 %i.cz to i64                   ; 8 uses
   %i.dd = add i64 %.pre240.i, %i.cv
   %i.de = urem i64 %i.dd, %i.dc                   ; 2 uses
   %i.df = icmp eq i64 %i.de, 0
@@ -220,17 +222,40 @@ bb.z:                                             ; preds = %bb.ai, %bb.y, %_RIN
           to label %bb.aj unwind label %bb.f, !noalias !93
 
 bb.aa:                                            ; preds = %bb.y
-  %i.dj = sub nuw nsw i64 %i.dc, %i.de
-  br label %bb.ab
+  %i.dj = sub nuw nsw i64 %i.dc, %i.de            ; 3 uses
+  %5 = icmp samesign ult i64 %i.dj, 6
+  br i1 %5, label %6, label %bb.ac
 
-bb.ab:                                            ; preds = %bb.ab, %bb.aa
-  %.sroa.09.0.i = phi i64 [ %i.dj, %bb.aa ], [ %i.dl, %bb.ab ] ; 3 uses
-  %i.dk = icmp samesign ult i64 %.sroa.09.0.i, 6
-  %i.dl = add nuw nsw i64 %.sroa.09.0.i, %i.dc
-  br i1 %i.dk, label %bb.ab, label %bb.ac
+6:                                                ; preds = %bb.aa
+  %7 = add nuw nsw i64 %i.dj, %i.dc               ; 3 uses
+  %8 = icmp samesign ult i64 %7, 6
+  br i1 %8, label %9, label %bb.ac
 
-bb.ac:                                            ; preds = %bb.ab
-  %i.dm = add nsw i64 %.sroa.09.0.i, -4           ; 2 uses
+9:                                                ; preds = %6
+  %10 = add nuw nsw i64 %7, %i.dc                 ; 3 uses
+  %11 = icmp samesign ult i64 %10, 6
+  br i1 %11, label %12, label %bb.ac
+
+12:                                               ; preds = %9
+  %13 = add nuw nsw i64 %10, %i.dc                ; 3 uses
+  %14 = icmp samesign ult i64 %13, 6
+  br i1 %14, label %15, label %bb.ac
+
+15:                                               ; preds = %12
+  %16 = add nuw nsw i64 %13, %i.dc                ; 3 uses
+  %17 = icmp samesign ult i64 %16, 6
+  br i1 %17, label %bb.ab, label %bb.ac
+
+bb.ab:                                            ; preds = %15
+  %18 = add nuw nsw i64 %16, %i.dc                ; 3 uses
+  %i.dk = icmp samesign ult i64 %18, 6
+  %i.dl = add nuw nsw i64 %18, %i.dc
+  %spec.select = select i1 %i.dk, i64 %i.dl, i64 %18
+  br label %bb.ac
+
+bb.ac:                                            ; preds = %bb.ab, %15, %12, %9, %6, %bb.aa
+  %.sroa.09.0.i.lcssa = phi i64 [ %i.dj, %bb.aa ], [ %7, %6 ], [ %10, %9 ], [ %13, %12 ], [ %16, %15 ], [ %spec.select, %bb.ab ]
+  %i.dm = add nsw i64 %.sroa.09.0.i.lcssa, -4     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !100
   invoke void @_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslkzCjlEuW1f_5xtask(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.p, i64 noundef range(i64 -65536, 65537) %i.dm, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1)
           to label %.noexc86.i unwind label %bb.f, !noalias !93

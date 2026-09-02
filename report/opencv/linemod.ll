@@ -205,10 +205,11 @@ bb.el:                                            ; preds = %bb.eh
   %i.afd = getelementptr inbounds nuw i8, ptr %i.ads, i64 128
   %i.afe = getelementptr inbounds nuw i8, ptr %i.adq, i64 24
   %i.aff = getelementptr inbounds nuw i8, ptr %i.adq, i64 128
-  %.pre.i207 = load i32, ptr %i.adt, align 8, !tbaa !100 ; 3 uses
+  %.pre.i207 = load i32, ptr %i.adt, align 8, !tbaa !100 ; 4 uses
   br label %.preheader.i208
 
 .preheader.i208:                                  ; preds = %._crit_edge68.i, %.preheader.lr.ph.i
+  %47 = phi i32 [ %.pre.i207, %.preheader.lr.ph.i ], [ %48, %._crit_edge68.i ] ; 2 uses
   %i.afg = phi i32 [ %.pre.i207, %.preheader.lr.ph.i ], [ %i.afn, %._crit_edge68.i ] ; 2 uses
   %i.afh = phi i32 [ %.pre.i207, %.preheader.lr.ph.i ], [ %i.afo, %._crit_edge68.i ] ; 2 uses
   %i.afi = phi i32 [ %.pre.i207, %.preheader.lr.ph.i ], [ %i.afp, %._crit_edge68.i ] ; 2 uses
@@ -231,6 +232,7 @@ bb.el:                                            ; preds = %bb.eh
   br label %._crit_edge68.i
 
 ._crit_edge68.i:                                  ; preds = %._crit_edge68.loopexit.i, %.lr.ph67.split.us.preheader.i
+  %48 = phi i32 [ %50, %._crit_edge68.loopexit.i ], [ %47, %.lr.ph67.split.us.preheader.i ]
   %i.afn = phi i32 [ %i.afz, %._crit_edge68.loopexit.i ], [ %i.afg, %.lr.ph67.split.us.preheader.i ]
   %i.afo = phi i32 [ %i.aga, %._crit_edge68.loopexit.i ], [ %i.afh, %.lr.ph67.split.us.preheader.i ]
   %i.afp = phi i32 [ %i.aga, %._crit_edge68.loopexit.i ], [ %i.afi, %.lr.ph67.split.us.preheader.i ]
@@ -240,8 +242,9 @@ bb.el:                                            ; preds = %bb.eh
   br i1 %exitcond93.not.i, label %_ZN2cv7linemodL9linearizeERKNS_3MatERS1_i.exit, label %.preheader.i208, !llvm.loop !371
 
 .lr.ph67.split.i:                                 ; preds = %._crit_edge63.i, %.lr.ph67.split.preheader.i
+  %49 = phi i32 [ %47, %.lr.ph67.split.preheader.i ], [ %50, %._crit_edge63.i ] ; 3 uses
   %i.afq = phi i32 [ %i.afg, %.lr.ph67.split.preheader.i ], [ %i.afz, %._crit_edge63.i ] ; 3 uses
-  %i.afr = phi i32 [ %i.afh, %.lr.ph67.split.preheader.i ], [ %i.aga, %._crit_edge63.i ] ; 3 uses
+  %i.afr = phi i32 [ %i.afh, %.lr.ph67.split.preheader.i ], [ %i.aga, %._crit_edge63.i ] ; 2 uses
   %indvars.iv86.i = phi i64 [ %i.afl, %.lr.ph67.split.preheader.i ], [ %indvars.iv.next87.i, %._crit_edge63.i ] ; 2 uses
   %indvars.iv.i209 = phi i64 [ 0, %.lr.ph67.split.preheader.i ], [ %indvars.iv.next.i210, %._crit_edge63.i ] ; 3 uses
   %indvars88.i = trunc i64 %indvars.iv.i209 to i32 ; 2 uses
@@ -262,14 +265,15 @@ bb.el:                                            ; preds = %bb.eh
   br label %.lr.ph62.split.i
 
 ._crit_edge63.i:                                  ; preds = %._crit_edge.i212, %.lr.ph62.i, %.lr.ph67.split.i
+  %50 = phi i32 [ %49, %.lr.ph67.split.i ], [ %49, %.lr.ph62.i ], [ %i.agi, %._crit_edge.i212 ] ; 2 uses
   %i.afz = phi i32 [ %i.afq, %.lr.ph67.split.i ], [ %i.afq, %.lr.ph62.i ], [ %i.agi, %._crit_edge.i212 ] ; 2 uses
-  %i.aga = phi i32 [ %i.afr, %.lr.ph67.split.i ], [ %i.afr, %.lr.ph62.i ], [ %i.agi, %._crit_edge.i212 ] ; 3 uses
+  %i.aga = phi i32 [ %i.afr, %.lr.ph67.split.i ], [ %i.afq, %.lr.ph62.i ], [ %i.agi, %._crit_edge.i212 ] ; 3 uses
   %indvars.iv.next.i210 = add nuw nsw i64 %indvars.iv.i209, 1 ; 2 uses
   %exitcond.not.i211 = icmp eq i64 %indvars.iv.next.i210, %wide.trip.count34.i
   br i1 %exitcond.not.i211, label %._crit_edge68.loopexit.i, label %.lr.ph67.split.i, !llvm.loop !372
 
 .lr.ph62.split.i:                                 ; preds = %._crit_edge.i212, %.lr.ph62.split.preheader.i
-  %i.agb = phi i32 [ %i.afq, %.lr.ph62.split.preheader.i ], [ %i.agi, %._crit_edge.i212 ]
+  %i.agb = phi i32 [ %49, %.lr.ph62.split.preheader.i ], [ %i.agi, %._crit_edge.i212 ]
   %i.agc = phi i32 [ %i.aft, %.lr.ph62.split.preheader.i ], [ %i.agj, %._crit_edge.i212 ] ; 2 uses
   %indvars.iv83.i = phi i64 [ %indvars.iv81.i, %.lr.ph62.split.preheader.i ], [ %indvars.iv.next84.i, %._crit_edge.i212 ] ; 2 uses
   %.03959.i = phi ptr [ %i.afy, %.lr.ph62.split.preheader.i ], [ %.1.lcssa.i, %._crit_edge.i212 ] ; 2 uses
@@ -285,7 +289,7 @@ bb.el:                                            ; preds = %bb.eh
   br label %._crit_edge.i212
 
 ._crit_edge.i212:                                 ; preds = %._crit_edge.loopexit.i214, %.lr.ph62.split.i
-  %i.agi = phi i32 [ %i.agb, %.lr.ph62.split.i ], [ %.pre94.i, %._crit_edge.loopexit.i214 ] ; 4 uses
+  %i.agi = phi i32 [ %i.agb, %.lr.ph62.split.i ], [ %.pre94.i, %._crit_edge.loopexit.i214 ] ; 5 uses
   %i.agj = phi i32 [ %i.agc, %.lr.ph62.split.i ], [ %i.agp, %._crit_edge.loopexit.i214 ]
   %.1.lcssa.i = phi ptr [ %.03959.i, %.lr.ph62.split.i ], [ %i.ago, %._crit_edge.loopexit.i214 ]
   %indvars.iv.next84.i = add nuw nsw i64 %indvars.iv83.i, %wide.trip.count34.i ; 2 uses
