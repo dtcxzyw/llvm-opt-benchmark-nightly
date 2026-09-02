@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.bd, %_ZNK6vector
   %i.bq = phi ptr [ %i.be, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit ], [ %i.hs, %bb.bd ]
   %i.br = phi i8 [ %.pre, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit ], [ %i.jf, %bb.bd ]
   %.sroa.0.1 = phi i32 [ %.sroa.0.0, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit ], [ %i.hx, %bb.bd ] ; 16 uses
-  %.081 = phi i32 [ 1, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit ], [ %.283, %bb.bd ] ; 19 uses
+  %.081 = phi i32 [ 1, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit ], [ %.283, %bb.bd ] ; 23 uses
   %.077 = phi i32 [ %.0.i, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit ], [ %i.is, %bb.bd ] ; 5 uses
   %i.bs = trunc nuw i8 %i.br to i1
   %i.bt = icmp ugt i32 %.081, 4096
@@ -326,31 +326,25 @@ bb.x:                                             ; preds = %bb.w, %bb.o
   ]
 
 bb.y:                                             ; preds = %bb.x
-  %3 = zext nneg i32 %.081 to i64
   %i.ds = load i32, ptr %i.au, align 8, !tbaa !311
-  %4 = zext i32 %i.ds to i64
-  %5 = add nuw nsw i64 %4, %3                     ; 2 uses
-  %6 = trunc i64 %5 to i32
-  %7 = icmp samesign ugt i64 %5, 4294967295
+  %add127 = add i32 %i.ds, %.081                  ; 2 uses
+  %add.overflow128 = icmp ult i32 %add127, %.081
   %i.dt = load i8, ptr %i.k, align 4, !tbaa !310, !range !252, !noundef !253
-  %i.du = zext i1 %7 to i8
+  %i.du = zext i1 %add.overflow128 to i8
   %i.dv = or i8 %i.dt, %i.du
   store i8 %i.dv, ptr %i.k, align 4, !tbaa !310
-  store i32 %6, ptr %i.au, align 8, !tbaa !311
+  store i32 %add127, ptr %i.au, align 8, !tbaa !311
   br label %_ZN2pb6solver12process_cardERNS_4cardEj.exit.thread
 
 bb.z:                                             ; preds = %bb.x
-  %8 = zext nneg i32 %.081 to i64
   %i.dw = load i32, ptr %i.au, align 8, !tbaa !311
-  %9 = zext i32 %i.dw to i64
-  %10 = add nuw nsw i64 %9, %8                    ; 2 uses
-  %11 = trunc i64 %10 to i32
-  %12 = icmp samesign ugt i64 %10, 4294967295
+  %add125 = add i32 %i.dw, %.081                  ; 2 uses
+  %add.overflow126 = icmp ult i32 %add125, %.081
   %i.dx = load i8, ptr %i.k, align 4, !tbaa !310, !range !252, !noundef !253
-  %i.dy = zext i1 %12 to i8
+  %i.dy = zext i1 %add.overflow126 to i8
   %i.dz = or i8 %i.dx, %i.dy
   store i8 %i.dz, ptr %i.k, align 4, !tbaa !310
-  store i32 %11, ptr %i.au, align 8, !tbaa !311
+  store i32 %add125, ptr %i.au, align 8, !tbaa !311
   call void @_ZN2pb6solver9inc_coeffEN3sat7literalEj(ptr noundef nonnull align 8 dereferenceable(1049) %0, i32 %.sroa.0.1, i32 noundef %.081)
   %i.ea = load i64, ptr %i.bk, align 8, !tbaa !241
   %i.eb = trunc i64 %i.ea to i32
@@ -358,17 +352,14 @@ bb.z:                                             ; preds = %bb.x
   br label %_ZN2pb6solver12process_cardERNS_4cardEj.exit.thread
 
 bb.aa:                                            ; preds = %bb.x
-  %13 = zext nneg i32 %.081 to i64
   %i.ec = load i32, ptr %i.au, align 8, !tbaa !311
-  %14 = zext i32 %i.ec to i64
-  %15 = add nuw nsw i64 %14, %13                  ; 2 uses
-  %16 = trunc i64 %15 to i32
-  %17 = icmp samesign ugt i64 %15, 4294967295
+  %add122 = add i32 %i.ec, %.081                  ; 2 uses
+  %add.overflow123 = icmp ult i32 %add122, %.081
   %i.ed = load i8, ptr %i.k, align 4, !tbaa !310, !range !252, !noundef !253
-  %i.ee = zext i1 %17 to i8
+  %i.ee = zext i1 %add.overflow123 to i8
   %i.ef = or i8 %i.ed, %i.ee
   store i8 %i.ef, ptr %i.k, align 4, !tbaa !310
-  store i32 %16, ptr %i.au, align 8, !tbaa !311
+  store i32 %add122, ptr %i.au, align 8, !tbaa !311
   %i.eg = load ptr, ptr %i.e, align 8, !tbaa !114 ; 2 uses
   %i.eh = load i64, ptr %i.bk, align 8, !tbaa !241
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eg, i64 1200
@@ -536,17 +527,14 @@ bb.an:                                            ; preds = %bb.am
   br label %_ZN6vectorIN3sat7literalELb0EjE5resetEv.exit
 
 _ZN6vectorIN3sat7literalELb0EjE5resetEv.exit:     ; preds = %bb.am, %bb.an
-  %18 = zext nneg i32 %.081 to i64
   %i.gt = load i32, ptr %i.au, align 8, !tbaa !311
-  %19 = zext i32 %i.gt to i64
-  %20 = add nuw nsw i64 %19, %18                  ; 2 uses
-  %21 = trunc i64 %20 to i32
-  %22 = icmp samesign ugt i64 %20, 4294967295
+  %add = add i32 %i.gt, %.081                     ; 2 uses
+  %add.overflow = icmp ult i32 %add, %.081
   %i.gu = load i8, ptr %i.k, align 4, !tbaa !310, !range !252, !noundef !253
-  %i.gv = zext i1 %22 to i8
+  %i.gv = zext i1 %add.overflow to i8
   %i.gw = or i8 %i.gu, %i.gv
   store i8 %i.gw, ptr %i.k, align 4, !tbaa !310
-  store i32 %21, ptr %i.au, align 8, !tbaa !311
+  store i32 %add, ptr %i.au, align 8, !tbaa !311
   call void @_ZN2pb6solver9inc_coeffEN3sat7literalEj(ptr noundef nonnull align 8 dereferenceable(1049) %0, i32 %.sroa.0.1, i32 noundef %.081)
   call void @_ZN2pb6solver15get_antecedentsEN3sat7literalERKNS_3pbcER7svectorIS2_jE(ptr noundef nonnull align 8 dereferenceable(1049) %0, i32 %.sroa.0.1, ptr noundef nonnull align 8 dereferenceable(76) %i.gq, ptr noundef nonnull align 8 dereferenceable(8) %i.bm)
   %.b = load i1, ptr @_ZN2pbL15_debug_conflictE, align 1

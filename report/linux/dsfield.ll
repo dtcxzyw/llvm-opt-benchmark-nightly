@@ -202,14 +202,12 @@ bb.b:                                             ; preds = %.lr.ph, %bb.t
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %i.o = load i32, ptr %i.a, align 4
-  %3 = zext i32 %i.o to i64
+  %i.o = load i32, ptr %i.a, align 4              ; 2 uses
   %i.p = getelementptr i8, ptr %.075107, i64 40
   %i.q = load i32, ptr %i.p, align 8
-  %4 = zext i32 %i.q to i64
-  %5 = add nuw nsw i64 %4, %3                     ; 2 uses
-  %6 = icmp samesign ugt i64 %5, 4294967295
-  br i1 %6, label %bb.d, label %bb.e
+  %add = add i32 %i.q, %i.o                       ; 2 uses
+  %add.overflow84 = icmp ult i32 %add, %i.o
+  br i1 %add.overflow84, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   tail call void (ptr, i32, ptr, ...) @acpi_error(ptr noundef nonnull @_acpi_module_name, i32 noundef 297, ptr noundef nonnull @.str.2) #6
@@ -217,8 +215,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.u
 
 bb.e:                                             ; preds = %bb.c
-  %7 = trunc nuw i64 %5 to i32
-  store i32 %7, ptr %i.a, align 4
+  store i32 %add, ptr %i.a, align 4
   br label %bb.t
 
 bb.f:                                             ; preds = %bb.b, %bb.b
@@ -313,11 +310,9 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.m, %bb.n
   %i.bh = load i32, ptr %i.a, align 4             ; 2 uses
-  %8 = zext i32 %i.bh to i64
   %i.bi = load i32, ptr %i.bd, align 8
-  %9 = zext i32 %i.bi to i64
-  %10 = add nuw nsw i64 %9, %8
-  %i.bj = icmp samesign ugt i64 %10, 4294967295
+  %3 = xor i32 %i.bh, -1
+  %i.bj = icmp ugt i32 %i.bi, %3
   br i1 %i.bj, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p

@@ -205,55 +205,46 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define noundef zeroext i1 @_ZN6duckdb14TryAddOperator9OperationIhhhEEbT_T0_RT1_(i8 noundef zeroext %0, i8 noundef zeroext %1, ptr nofree noundef nonnull writeonly align 1 captures(none) dereferenceable(1) %2) local_unnamed_addr #6 align 2 {
 bb.a:
-  %3 = zext i8 %0 to i16
-  %4 = zext i8 %1 to i16
-  %5 = add nuw nsw i16 %4, %3                     ; 2 uses
-  %6 = icmp samesign ult i16 %5, 256              ; 2 uses
-  br i1 %6, label %bb.b, label %_ZN6duckdb12_GLOBAL__N_123OverflowCheckedAddition9OperationIhtEEbT_S3_RS3_.exit
+  %add.i = add i8 %1, %0                          ; 2 uses
+  %add.overflow.i = icmp uge i8 %add.i, %1        ; 2 uses
+  br i1 %add.overflow.i, label %bb.b, label %_ZN6duckdb12_GLOBAL__N_123OverflowCheckedAddition9OperationIhtEEbT_S3_RS3_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %7 = trunc nuw i16 %5 to i8
-  store i8 %7, ptr %2, align 1, !tbaa !41
+  store i8 %add.i, ptr %2, align 1, !tbaa !41
   br label %_ZN6duckdb12_GLOBAL__N_123OverflowCheckedAddition9OperationIhtEEbT_S3_RS3_.exit
 
 _ZN6duckdb12_GLOBAL__N_123OverflowCheckedAddition9OperationIhtEEbT_S3_RS3_.exit: ; preds = %bb.a, %bb.b
-  ret i1 %6
+  ret i1 %add.overflow.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define noundef zeroext i1 @_ZN6duckdb14TryAddOperator9OperationItttEEbT_T0_RT1_(i16 noundef zeroext %0, i16 noundef zeroext %1, ptr nofree noundef nonnull writeonly align 2 captures(none) dereferenceable(2) %2) local_unnamed_addr #6 align 2 {
 bb.a:
-  %3 = zext i16 %0 to i32
-  %4 = zext i16 %1 to i32
-  %5 = add nuw nsw i32 %4, %3                     ; 2 uses
-  %6 = icmp samesign ult i32 %5, 65536            ; 2 uses
-  br i1 %6, label %bb.b, label %_ZN6duckdb12_GLOBAL__N_123OverflowCheckedAddition9OperationItjEEbT_S3_RS3_.exit
+  %add.i = add i16 %1, %0                         ; 2 uses
+  %add.overflow.i = icmp uge i16 %add.i, %1       ; 2 uses
+  br i1 %add.overflow.i, label %bb.b, label %_ZN6duckdb12_GLOBAL__N_123OverflowCheckedAddition9OperationItjEEbT_S3_RS3_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %7 = trunc nuw i32 %5 to i16
-  store i16 %7, ptr %2, align 2, !tbaa !43
+  store i16 %add.i, ptr %2, align 2, !tbaa !43
   br label %_ZN6duckdb12_GLOBAL__N_123OverflowCheckedAddition9OperationItjEEbT_S3_RS3_.exit
 
 _ZN6duckdb12_GLOBAL__N_123OverflowCheckedAddition9OperationItjEEbT_S3_RS3_.exit: ; preds = %bb.a, %bb.b
-  ret i1 %6
+  ret i1 %add.overflow.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define noundef zeroext i1 @_ZN6duckdb14TryAddOperator9OperationIjjjEEbT_T0_RT1_(i32 noundef %0, i32 noundef %1, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(4) %2) local_unnamed_addr #6 align 2 {
 bb.a:
-  %3 = zext i32 %0 to i64
-  %4 = zext i32 %1 to i64
-  %5 = add nuw nsw i64 %4, %3                     ; 2 uses
-  %6 = icmp samesign ult i64 %5, 4294967296       ; 2 uses
-  br i1 %6, label %bb.b, label %_ZN6duckdb12_GLOBAL__N_123OverflowCheckedAddition9OperationIjmEEbT_S3_RS3_.exit
+  %add.i = add i32 %1, %0                         ; 2 uses
+  %add.overflow.i = icmp uge i32 %add.i, %1       ; 2 uses
+  br i1 %add.overflow.i, label %bb.b, label %_ZN6duckdb12_GLOBAL__N_123OverflowCheckedAddition9OperationIjmEEbT_S3_RS3_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %7 = trunc nuw i64 %5 to i32
-  store i32 %7, ptr %2, align 4, !tbaa !32
+  store i32 %add.i, ptr %2, align 4, !tbaa !32
   br label %_ZN6duckdb12_GLOBAL__N_123OverflowCheckedAddition9OperationIjmEEbT_S3_RS3_.exit
 
 _ZN6duckdb12_GLOBAL__N_123OverflowCheckedAddition9OperationIjmEEbT_S3_RS3_.exit: ; preds = %bb.a, %bb.b
-  ret i1 %6
+  ret i1 %add.overflow.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
@@ -656,11 +647,9 @@ bb.a:
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %7 = zext i8 %0 to i16
-  %8 = zext i8 %1 to i16
-  %9 = add nuw nsw i16 %8, %7                     ; 2 uses
-  %i.a = icmp samesign ult i16 %9, 256
-  br i1 %i.a, label %bb.h, label %_ZN6duckdb14TryAddOperator9OperationIhhhEEbT_T0_RT1_.exit
+  %add.i.i = add i8 %1, %0                        ; 2 uses
+  %i.a = icmp ult i8 %add.i.i, %1
+  br i1 %i.a, label %_ZN6duckdb14TryAddOperator9OperationIhhhEEbT_T0_RT1_.exit, label %bb.h
 
 _ZN6duckdb14TryAddOperator9OperationIhhhEEbT_T0_RT1_.exit: ; preds = %bb.a
   %i.b = tail call ptr @__cxa_allocate_exception(i64 16) #25 ; 3 uses
@@ -773,8 +762,7 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   resume { ptr, i32 } %.pn.pn26
 
 bb.h:                                             ; preds = %bb.a
-  %10 = trunc nuw i16 %9 to i8
-  ret i8 %10
+  ret i8 %add.i.i
 
 bb.i:                                             ; preds = %bb.d
   unreachable
@@ -1177,11 +1165,9 @@ bb.a:
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %7 = zext i16 %0 to i32
-  %8 = zext i16 %1 to i32
-  %9 = add nuw nsw i32 %8, %7                     ; 2 uses
-  %i.a = icmp samesign ult i32 %9, 65536
-  br i1 %i.a, label %bb.h, label %_ZN6duckdb14TryAddOperator9OperationItttEEbT_T0_RT1_.exit
+  %add.i.i = add i16 %1, %0                       ; 2 uses
+  %i.a = icmp ult i16 %add.i.i, %1
+  br i1 %i.a, label %_ZN6duckdb14TryAddOperator9OperationItttEEbT_T0_RT1_.exit, label %bb.h
 
 _ZN6duckdb14TryAddOperator9OperationItttEEbT_T0_RT1_.exit: ; preds = %bb.a
   %i.b = tail call ptr @__cxa_allocate_exception(i64 16) #25 ; 3 uses
@@ -1294,8 +1280,7 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   resume { ptr, i32 } %.pn.pn26
 
 bb.h:                                             ; preds = %bb.a
-  %10 = trunc nuw i32 %9 to i16
-  ret i16 %10
+  ret i16 %add.i.i
 
 bb.i:                                             ; preds = %bb.d
   unreachable
@@ -1698,11 +1683,9 @@ bb.a:
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %7 = zext i32 %0 to i64
-  %8 = zext i32 %1 to i64
-  %9 = add nuw nsw i64 %8, %7                     ; 2 uses
-  %i.a = icmp samesign ult i64 %9, 4294967296
-  br i1 %i.a, label %bb.h, label %_ZN6duckdb14TryAddOperator9OperationIjjjEEbT_T0_RT1_.exit
+  %add.i.i = add i32 %1, %0                       ; 2 uses
+  %i.a = icmp ult i32 %add.i.i, %1
+  br i1 %i.a, label %_ZN6duckdb14TryAddOperator9OperationIjjjEEbT_T0_RT1_.exit, label %bb.h
 
 _ZN6duckdb14TryAddOperator9OperationIjjjEEbT_T0_RT1_.exit: ; preds = %bb.a
   %i.b = tail call ptr @__cxa_allocate_exception(i64 16) #25 ; 3 uses
@@ -1815,8 +1798,7 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   resume { ptr, i32 } %.pn.pn26
 
 bb.h:                                             ; preds = %bb.a
-  %10 = trunc nuw i64 %9 to i32
-  ret i32 %10
+  ret i32 %add.i.i
 
 bb.i:                                             ; preds = %bb.d
   unreachable

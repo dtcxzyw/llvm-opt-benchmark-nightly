@@ -205,12 +205,12 @@ bb.er:                                            ; preds = %bb.eq, %bb.ep, %bb.
   br i1 %.not333, label %bb.fa, label %bb.es
 
 bb.es:                                            ; preds = %bb.er
-  %i.aac = load i16, ptr %i.v, align 4, !tbaa !126 ; 2 uses
+  %i.aac = load i16, ptr %i.v, align 4, !tbaa !126 ; 3 uses
   %i.aad = icmp ult i16 %i.aac, 22
   br i1 %i.aad, label %bb.fa, label %bb.et
 
 bb.et:                                            ; preds = %bb.es
-  %i.aae = load i16, ptr %i.u, align 2, !tbaa !125 ; 2 uses
+  %i.aae = load i16, ptr %i.u, align 2, !tbaa !125 ; 3 uses
   %i.aaf = icmp ult i16 %i.aae, 22
   br i1 %i.aaf, label %bb.fa, label %bb.eu
 
@@ -239,19 +239,17 @@ bb.ex:                                            ; preds = %bb.ew
   br i1 %or.cond429, label %bb.fa, label %bb.ey
 
 bb.ey:                                            ; preds = %bb.ex
-  %i.aaq = zext i16 %i.aae to i32                 ; 2 uses
+  %i.aaq = zext i16 %i.aae to i32
   %i.aar = load i16, ptr %i.s, align 2, !tbaa !129
-  %3 = zext i16 %i.aar to i32
-  %4 = add nuw nsw i32 %3, %i.aaq
-  %i.aas = icmp samesign ugt i32 %4, 65535
+  %3 = xor i16 %i.aae, -1
+  %i.aas = icmp ugt i16 %i.aar, %3
   br i1 %i.aas, label %bb.fa, label %bb.ez
 
 bb.ez:                                            ; preds = %bb.ey
-  %i.aat = zext i16 %i.aac to i32                 ; 2 uses
+  %i.aat = zext i16 %i.aac to i32
   %i.aau = load i16, ptr %i.t, align 8, !tbaa !128
-  %5 = zext i16 %i.aau to i32
-  %6 = add nuw nsw i32 %5, %i.aat
-  %i.aav = icmp samesign ugt i32 %6, 65535
+  %4 = xor i16 %i.aac, -1
+  %i.aav = icmp ugt i16 %i.aau, %4
   br i1 %i.aav, label %bb.fa, label %bb.fd
 
 bb.fa:                                            ; preds = %bb.ev, %bb.ez, %bb.ey, %bb.ex, %bb.ew, %bb.et, %bb.es, %bb.er

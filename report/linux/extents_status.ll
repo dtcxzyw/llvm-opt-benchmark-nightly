@@ -202,13 +202,11 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %bb.d, label %ext4_es_can_be_merged.exit.thread
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = load i32, ptr %i.e, align 4              ; 2 uses
-  %3 = zext i32 %i.n to i64                       ; 3 uses
+  %i.n = load i32, ptr %i.e, align 4              ; 3 uses
   %i.o = getelementptr i8, ptr %i.f, i64 28
   %i.p = load i32, ptr %i.o, align 4              ; 3 uses
-  %4 = zext i32 %i.p to i64
-  %5 = add nuw nsw i64 %4, %3
-  %i.q = icmp samesign ugt i64 %5, 4294967295
+  %3 = xor i32 %i.n, -1
+  %i.q = icmp ugt i32 %i.p, %3
   br i1 %i.q, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
@@ -220,8 +218,9 @@ bb.e:                                             ; preds = %bb.d
   br label %ext4_es_can_be_merged.exit.thread
 
 bb.f:                                             ; preds = %bb.d
+  %4 = zext i32 %i.n to i64                       ; 2 uses
   %i.s = zext i32 %i.g to i64
-  %i.t = add nuw nsw i64 %3, %i.s
+  %i.t = add nuw nsw i64 %4, %i.s
   %i.u = zext i32 %i.i to i64
   %.not19.i = icmp eq i64 %i.t, %i.u
   br i1 %.not19.i, label %bb.g, label %ext4_es_can_be_merged.exit.thread
@@ -233,7 +232,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.w = and i64 %.val24.i, 576460752303423487
-  %i.x = add nuw nsw i64 %i.w, %3
+  %i.x = add nuw nsw i64 %i.w, %4
   %i.y = and i64 %.val.i, 576460752303423487
   %i.z = icmp ne i64 %i.x, %i.y
   %i.aa = and i64 %.val24.i, 4611686018427387904
@@ -287,12 +286,10 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.aq = getelementptr i8, ptr %i.am, i64 28     ; 2 uses
-  %i.ar = load i32, ptr %i.aq, align 4            ; 3 uses
-  %6 = zext i32 %i.ar to i64                      ; 3 uses
+  %i.ar = load i32, ptr %i.aq, align 4            ; 4 uses
   %i.as = load i32, ptr %i.ae, align 4            ; 3 uses
-  %7 = zext i32 %i.as to i64
-  %8 = add nuw nsw i64 %7, %6
-  %i.at = icmp samesign ugt i64 %8, 4294967295
+  %5 = xor i32 %i.ar, -1
+  %i.at = icmp ugt i32 %i.as, %5
   br i1 %i.at, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
@@ -303,6 +300,7 @@ bb.n:                                             ; preds = %bb.m
   br label %ext4_es_try_to_merge_left.exit
 
 bb.o:                                             ; preds = %bb.m
+  %6 = zext i32 %i.ar to i64                      ; 2 uses
   %i.av = getelementptr i8, ptr %i.am, i64 24
   %i.aw = load i32, ptr %i.av, align 8
   %i.ax = zext i32 %i.aw to i64
@@ -361,7 +359,7 @@ ext4_es_can_be_merged.exit.thread:                ; preds = %bb.f, %bb.c, %bb.e,
 
 bb.u:                                             ; preds = %bb.b
   %i.bm = getelementptr i8, ptr %i.f, i64 28
-  %.val61 = load i32, ptr %i.bm, align 4          ; 4 uses
+  %.val61 = load i32, ptr %i.bm, align 4          ; 5 uses
   %i.bn = add i32 %.val61, %i.i                   ; 2 uses
   %i.bo = icmp ult i32 %i.bn, %i.i
   br i1 %i.bo, label %bb.v, label %ext4_es_end.exit, !prof !20
@@ -386,11 +384,9 @@ bb.w:                                             ; preds = %ext4_es_end.exit
   br i1 %.not.i69, label %bb.x, label %ext4_es_can_be_merged.exit78.thread
 
 bb.x:                                             ; preds = %bb.w
-  %9 = zext i32 %.val61 to i64                    ; 3 uses
   %i.bu = load i32, ptr %i.e, align 4             ; 3 uses
-  %10 = zext i32 %i.bu to i64
-  %11 = add nuw nsw i64 %10, %9
-  %i.bv = icmp samesign ugt i64 %11, 4294967295
+  %7 = xor i32 %.val61, -1
+  %i.bv = icmp ugt i32 %i.bu, %7
   br i1 %i.bv, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
@@ -402,8 +398,9 @@ bb.y:                                             ; preds = %bb.x
   br label %ext4_es_can_be_merged.exit78.thread
 
 bb.z:                                             ; preds = %bb.x
+  %8 = zext i32 %.val61 to i64                    ; 2 uses
   %i.bx = zext i32 %i.i to i64
-  %i.by = add nuw nsw i64 %9, %i.bx
+  %i.by = add nuw nsw i64 %8, %i.bx
   %i.bz = zext i32 %i.g to i64
   %.not19.i71 = icmp eq i64 %i.by, %i.bz
   br i1 %.not19.i71, label %bb.aa, label %ext4_es_can_be_merged.exit78.thread
@@ -415,7 +412,7 @@ bb.aa:                                            ; preds = %bb.z
 
 bb.ab:                                            ; preds = %bb.aa
   %i.cb = and i64 %.val24.i67, 576460752303423487
-  %i.cc = add nuw nsw i64 %i.cb, %9
+  %i.cc = add nuw nsw i64 %i.cb, %8
   %i.cd = and i64 %.val.i68, 576460752303423487
   %i.ce = icmp ne i64 %i.cc, %i.cd
   %i.cf = and i64 %.val24.i67, 4611686018427387904
@@ -453,13 +450,11 @@ bb.ad:                                            ; preds = %ext4_es_can_be_merg
   br i1 %.not.i.i82, label %bb.ae, label %ext4_es_try_to_merge_left.exit
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.cp = load i32, ptr %i.ci, align 4            ; 3 uses
-  %12 = zext i32 %i.cp to i64                     ; 3 uses
+  %i.cp = load i32, ptr %i.ci, align 4            ; 4 uses
   %i.cq = getelementptr i8, ptr %i.cl, i64 28
   %i.cr = load i32, ptr %i.cq, align 4            ; 3 uses
-  %13 = zext i32 %i.cr to i64
-  %14 = add nuw nsw i64 %13, %12
-  %i.cs = icmp samesign ugt i64 %14, 4294967295
+  %9 = xor i32 %i.cp, -1
+  %i.cs = icmp ugt i32 %i.cr, %9
   br i1 %i.cs, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
@@ -470,9 +465,10 @@ bb.af:                                            ; preds = %bb.ae
   br label %ext4_es_try_to_merge_left.exit
 
 bb.ag:                                            ; preds = %bb.ae
+  %10 = zext i32 %i.cp to i64                     ; 2 uses
   %i.cu = load i32, ptr %i.ch, align 8
   %i.cv = zext i32 %i.cu to i64
-  %i.cw = add nuw nsw i64 %i.cv, %12
+  %i.cw = add nuw nsw i64 %i.cv, %10
   %i.cx = getelementptr i8, ptr %i.cl, i64 24
   %i.cy = load i32, ptr %i.cx, align 8
   %i.cz = zext i32 %i.cy to i64
@@ -486,7 +482,7 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ah
   %i.db = and i64 %.val24.i.i80, 576460752303423487
-  %i.dc = add nuw nsw i64 %i.db, %12
+  %i.dc = add nuw nsw i64 %i.db, %10
   %i.dd = and i64 %.val.i.i81, 576460752303423487
   %i.de = icmp ne i64 %i.dc, %i.dd
   %i.df = and i64 %.val24.i.i80, 4611686018427387904
