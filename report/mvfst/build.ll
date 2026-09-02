@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load ptr, ptr %i.a, align 8, !tbaa !363
   store ptr %i.j, ptr %i.h, align 8, !tbaa !363
   %i.k = ptrtoint ptr %i.h to i64
-  %i.l = sub i64 %i.k, %i.e                       ; 2 uses
-  %i.m = ashr exact i64 %i.l, 3                   ; 3 uses
+  %i.l = sub i64 %i.k, %i.e
+  %i.m = ashr exact i64 %i.l, 3                   ; 4 uses
   %i.n = add nsw i64 %i.m, -1
   %i.o = sdiv i64 %i.n, 2
   %i.p = icmp sgt i64 %i.m, 2
@@ -249,9 +249,8 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterI16EdgePriorityLessEclINS_17__normal_iterato
 
 ._crit_edge.i.i.i:                                ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterI16EdgePriorityLessEclINS_17__normal_iteratorIPP4EdgeSt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.i.i.i, %bb.b
   %.0.lcssa.i.i.i = phi i64 [ 0, %bb.b ], [ %spec.select.i.i.i, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterI16EdgePriorityLessEclINS_17__normal_iteratorIPP4EdgeSt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.i.i.i ] ; 5 uses
-  %1 = and i64 %i.l, 8
-  %2 = icmp eq i64 %1, 0
-  br i1 %2, label %bb.e, label %bb.g
+  %1 = trunc i64 %i.m to i1
+  br i1 %1, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge.i.i.i
   %i.al = add nsw i64 %i.m, -2
@@ -654,38 +653,53 @@ bb.a:
   br i1 %i.e, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %4 = and i64 %2, 1
-  %.not.i.i = icmp eq i64 %4, 0
+  %4 = trunc i64 %2 to i1
   %i.f = inttoptr i64 %2 to ptr                   ; 4 uses
-  br i1 %.not.i.i, label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.us, label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.thread
+  br i1 %4, label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.us, label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.thread
 
 _ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.us: ; preds = %.lr.ph, %bb.b
   %.090.us = phi i64 [ %i.w, %bb.b ], [ %i.d, %.lr.ph ] ; 2 uses
   %.sroa.061.089.us = phi ptr [ %i.v, %bb.b ], [ %0, %.lr.ph ] ; 9 uses
-  %i.g = load ptr, ptr %.sroa.061.089.us, align 8, !tbaa !297
-  %i.h = getelementptr inbounds i8, ptr %i.g, i64 %3
-  %i.i = tail call noundef zeroext i1 %i.f(ptr noundef nonnull align 8 dereferenceable(116) %i.h) #23, !inline_history !7197
+  %5 = load ptr, ptr %.sroa.061.089.us, align 8, !tbaa !297
+  %6 = getelementptr inbounds i8, ptr %5, i64 %3  ; 2 uses
+  %i.g = load ptr, ptr %6, align 8, !tbaa !352
+  %7 = getelementptr i8, ptr %i.g, i64 %2
+  %i.h = getelementptr i8, ptr %7, i64 -1
+  %8 = load ptr, ptr %i.h, align 8, !nosanitize !309
+  %i.i = tail call noundef zeroext i1 %8(ptr noundef nonnull align 8 dereferenceable(116) %6) #23, !inline_history !7197
   br i1 %i.i, label %.loopexit, label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit20.us
 
 _ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit20.us: ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.us
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.061.089.us, i64 8
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !297
-  %i.l = getelementptr inbounds i8, ptr %i.k, i64 %3
-  %i.m = tail call noundef zeroext i1 %i.f(ptr noundef nonnull align 8 dereferenceable(116) %i.l) #23, !inline_history !7197
+  %9 = load ptr, ptr %i.j, align 8, !tbaa !297
+  %10 = getelementptr inbounds i8, ptr %9, i64 %3 ; 2 uses
+  %i.k = load ptr, ptr %10, align 8, !tbaa !352
+  %11 = getelementptr i8, ptr %i.k, i64 %2
+  %i.l = getelementptr i8, ptr %11, i64 -1
+  %12 = load ptr, ptr %i.l, align 8, !nosanitize !309
+  %i.m = tail call noundef zeroext i1 %12(ptr noundef nonnull align 8 dereferenceable(116) %10) #23, !inline_history !7197
   br i1 %i.m, label %.loopexit.loopexit.split.loop.exit121, label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit25.us
 
 _ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit25.us: ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit20.us
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.061.089.us, i64 16
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !297
-  %i.p = getelementptr inbounds i8, ptr %i.o, i64 %3
-  %i.q = tail call noundef zeroext i1 %i.f(ptr noundef nonnull align 8 dereferenceable(116) %i.p) #23, !inline_history !7197
+  %13 = load ptr, ptr %i.n, align 8, !tbaa !297
+  %14 = getelementptr inbounds i8, ptr %13, i64 %3 ; 2 uses
+  %i.o = load ptr, ptr %14, align 8, !tbaa !352
+  %15 = getelementptr i8, ptr %i.o, i64 %2
+  %i.p = getelementptr i8, ptr %15, i64 -1
+  %16 = load ptr, ptr %i.p, align 8, !nosanitize !309
+  %i.q = tail call noundef zeroext i1 %16(ptr noundef nonnull align 8 dereferenceable(116) %14) #23, !inline_history !7197
   br i1 %i.q, label %.loopexit.loopexit.split.loop.exit123, label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit30.us
 
 _ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit30.us: ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit25.us
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.061.089.us, i64 24
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !297
-  %i.t = getelementptr inbounds i8, ptr %i.s, i64 %3
-  %i.u = tail call noundef zeroext i1 %i.f(ptr noundef nonnull align 8 dereferenceable(116) %i.t) #23, !inline_history !7197
+  %17 = load ptr, ptr %i.r, align 8, !tbaa !297
+  %18 = getelementptr inbounds i8, ptr %17, i64 %3 ; 2 uses
+  %i.s = load ptr, ptr %18, align 8, !tbaa !352
+  %19 = getelementptr i8, ptr %i.s, i64 %2
+  %i.t = getelementptr i8, ptr %19, i64 -1
+  %20 = load ptr, ptr %i.t, align 8, !nosanitize !309
+  %i.u = tail call noundef zeroext i1 %20(ptr noundef nonnull align 8 dereferenceable(116) %18) #23, !inline_history !7197
   br i1 %i.u, label %.loopexit.loopexit.split.loop.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit30.us
@@ -697,46 +711,30 @@ bb.b:                                             ; preds = %_ZN9__gnu_cxx5__ops
 _ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.thread: ; preds = %.lr.ph, %bb.c
   %.090 = phi i64 [ %i.ao, %bb.c ], [ %i.d, %.lr.ph ] ; 2 uses
   %.sroa.061.089 = phi ptr [ %i.an, %bb.c ], [ %0, %.lr.ph ] ; 9 uses
-  %5 = load ptr, ptr %.sroa.061.089, align 8, !tbaa !297
-  %6 = getelementptr inbounds i8, ptr %5, i64 %3  ; 2 uses
-  %i.y = load ptr, ptr %6, align 8, !tbaa !352
-  %7 = getelementptr i8, ptr %i.y, i64 %2
-  %i.z = getelementptr i8, ptr %7, i64 -1
-  %8 = load ptr, ptr %i.z, align 8, !nosanitize !309
-  %i.aa = tail call noundef zeroext i1 %8(ptr noundef nonnull align 8 dereferenceable(116) %6) #23, !inline_history !7197
+  %i.y = load ptr, ptr %.sroa.061.089, align 8, !tbaa !297
+  %i.z = getelementptr inbounds i8, ptr %i.y, i64 %3
+  %i.aa = tail call noundef zeroext i1 %i.f(ptr noundef nonnull align 8 dereferenceable(116) %i.z) #23, !inline_history !7197
   br i1 %i.aa, label %.loopexit, label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit20.thread
 
 _ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit20.thread: ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.thread
   %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.061.089, i64 8
-  %9 = load ptr, ptr %i.ab, align 8, !tbaa !297
-  %10 = getelementptr inbounds i8, ptr %9, i64 %3 ; 2 uses
-  %i.ac = load ptr, ptr %10, align 8, !tbaa !352
-  %11 = getelementptr i8, ptr %i.ac, i64 %2
-  %i.ad = getelementptr i8, ptr %11, i64 -1
-  %12 = load ptr, ptr %i.ad, align 8, !nosanitize !309
-  %i.ae = tail call noundef zeroext i1 %12(ptr noundef nonnull align 8 dereferenceable(116) %10) #23, !inline_history !7197
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !297
+  %i.ad = getelementptr inbounds i8, ptr %i.ac, i64 %3
+  %i.ae = tail call noundef zeroext i1 %i.f(ptr noundef nonnull align 8 dereferenceable(116) %i.ad) #23, !inline_history !7197
   br i1 %i.ae, label %.loopexit.loopexit109.split.loop.exit113, label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit25.thread
 
 _ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit25.thread: ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit20.thread
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.061.089, i64 16
-  %13 = load ptr, ptr %i.af, align 8, !tbaa !297
-  %14 = getelementptr inbounds i8, ptr %13, i64 %3 ; 2 uses
-  %i.ag = load ptr, ptr %14, align 8, !tbaa !352
-  %15 = getelementptr i8, ptr %i.ag, i64 %2
-  %i.ah = getelementptr i8, ptr %15, i64 -1
-  %16 = load ptr, ptr %i.ah, align 8, !nosanitize !309
-  %i.ai = tail call noundef zeroext i1 %16(ptr noundef nonnull align 8 dereferenceable(116) %14) #23, !inline_history !7197
+  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !297
+  %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 %3
+  %i.ai = tail call noundef zeroext i1 %i.f(ptr noundef nonnull align 8 dereferenceable(116) %i.ah) #23, !inline_history !7197
   br i1 %i.ai, label %.loopexit.loopexit109.split.loop.exit115, label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit30
 
 _ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit30: ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit25.thread
   %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.061.089, i64 24
-  %17 = load ptr, ptr %i.aj, align 8, !tbaa !297
-  %18 = getelementptr inbounds i8, ptr %17, i64 %3 ; 2 uses
-  %i.ak = load ptr, ptr %18, align 8, !tbaa !352
-  %19 = getelementptr i8, ptr %i.ak, i64 %2
-  %i.al = getelementptr i8, ptr %19, i64 -1
-  %20 = load ptr, ptr %i.al, align 8, !nosanitize !309
-  %i.am = tail call noundef zeroext i1 %20(ptr noundef nonnull align 8 dereferenceable(116) %18) #23, !inline_history !7197
+  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !297
+  %i.al = getelementptr inbounds i8, ptr %i.ak, i64 %3
+  %i.am = tail call noundef zeroext i1 %i.f(ptr noundef nonnull align 8 dereferenceable(116) %i.al) #23, !inline_history !7197
   br i1 %i.am, label %.loopexit.loopexit109.split.loop.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit30
@@ -746,7 +744,7 @@ bb.c:                                             ; preds = %_ZN9__gnu_cxx5__ops
   br i1 %i.ap, label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.thread, label %._crit_edge, !llvm.loop !7198
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.b, %bb.a
-  %.sroa.061.0.lcssa = phi ptr [ %0, %bb.a ], [ %i.v, %bb.b ], [ %i.an, %bb.c ] ; 6 uses
+  %.sroa.061.0.lcssa = phi ptr [ %0, %bb.a ], [ %i.v, %bb.b ], [ %i.an, %bb.c ] ; 12 uses
   %i.aq = ptrtoint ptr %.sroa.061.0.lcssa to i64
   %i.ar = sub i64 %i.a, %i.aq
   %i.as = ashr exact i64 %i.ar, 3
@@ -757,91 +755,98 @@ bb.c:                                             ; preds = %_ZN9__gnu_cxx5__ops
   ]
 
 ._crit_edge._crit_edge106:                        ; preds = %._crit_edge
-  %.pre = and i64 %2, 1
-  br label %bb.g
+  %.pre = trunc i64 %2 to i1
+  %21 = load ptr, ptr %.sroa.061.0.lcssa, align 8, !tbaa !297
+  %22 = getelementptr inbounds i8, ptr %21, i64 %3 ; 2 uses
+  br i1 %.pre, label %bb.h, label %bb.i
 
 ._crit_edge._crit_edge:                           ; preds = %._crit_edge
-  %.pre107 = and i64 %2, 1
-  br label %bb.j
+  %.pre101 = trunc i64 %2 to i1
+  %23 = load ptr, ptr %.sroa.061.0.lcssa, align 8, !tbaa !297
+  %24 = getelementptr inbounds i8, ptr %23, i64 %3 ; 2 uses
+  br i1 %.pre101, label %bb.k, label %bb.l
 
 bb.d:                                             ; preds = %._crit_edge
   %i.at = load ptr, ptr %.sroa.061.0.lcssa, align 8, !tbaa !297
-  %i.au = getelementptr inbounds i8, ptr %i.at, i64 %3 ; 2 uses
-  %21 = and i64 %2, 1                             ; 2 uses
-  %.not.i.i34 = icmp eq i64 %21, 0
-  br i1 %.not.i.i34, label %22, label %bb.e
+  %i.au = getelementptr inbounds i8, ptr %i.at, i64 %3 ; 3 uses
+  %25 = trunc i64 %2 to i1
+  br i1 %25, label %bb.e, label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit35.a
 
 bb.e:                                             ; preds = %bb.d
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !352
   %i.aw = getelementptr i8, ptr %i.av, i64 %2
   %i.ax = getelementptr i8, ptr %i.aw, i64 -1
   %i.ay = load ptr, ptr %i.ax, align 8, !nosanitize !309
-  br label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit35.a
+  %26 = tail call noundef zeroext i1 %i.ay(ptr noundef nonnull align 8 dereferenceable(116) %i.au) #23, !inline_history !7197
+  br i1 %26, label %.loopexit, label %bb.g
 
-22:                                               ; preds = %bb.d
-  %23 = inttoptr i64 %2 to ptr
-  br label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit35.a
-
-_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit35.a: ; preds = %bb.e, %22
-  %24 = phi ptr [ %i.ay, %bb.e ], [ %23, %22 ]
-  %i.az = tail call noundef zeroext i1 %24(ptr noundef nonnull align 8 dereferenceable(116) %i.au) #23, !inline_history !7197
+_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit35.a: ; preds = %bb.d
+  %27 = inttoptr i64 %2 to ptr
+  %i.az = tail call noundef zeroext i1 %27(ptr noundef nonnull align 8 dereferenceable(116) %i.au) #23, !inline_history !7197
   br i1 %i.az, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit35.a
-  %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.061.0.lcssa, i64 8
-  br label %bb.g
+  %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.061.0.lcssa, i64 8 ; 2 uses
+  %28 = load ptr, ptr %i.ba, align 8, !tbaa !297
+  %29 = getelementptr inbounds i8, ptr %28, i64 %3
+  br label %bb.i
 
-bb.g:                                             ; preds = %._crit_edge._crit_edge106, %bb.f
-  %.pre-phi = phi i64 [ %.pre, %._crit_edge._crit_edge106 ], [ %21, %bb.f ] ; 2 uses
-  %.sroa.061.1 = phi ptr [ %.sroa.061.0.lcssa, %._crit_edge._crit_edge106 ], [ %i.ba, %bb.f ] ; 3 uses
-  %i.bb = load ptr, ptr %.sroa.061.1, align 8, !tbaa !297
-  %i.bc = getelementptr inbounds i8, ptr %i.bb, i64 %3 ; 2 uses
-  %.not.i.i39 = icmp eq i64 %.pre-phi, 0
-  br i1 %.not.i.i39, label %bb.i, label %bb.h
+bb.g:                                             ; preds = %bb.e
+  %30 = getelementptr inbounds nuw i8, ptr %.sroa.061.0.lcssa, i64 8 ; 2 uses
+  %i.bb = load ptr, ptr %30, align 8, !tbaa !297
+  %i.bc = getelementptr inbounds i8, ptr %i.bb, i64 %3
+  br label %bb.h
 
-bb.h:                                             ; preds = %bb.g
-  %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !352
+bb.h:                                             ; preds = %bb.g, %._crit_edge._crit_edge106
+  %31 = phi ptr [ %22, %._crit_edge._crit_edge106 ], [ %i.bc, %bb.g ] ; 2 uses
+  %.sroa.055.1108 = phi ptr [ %.sroa.061.0.lcssa, %._crit_edge._crit_edge106 ], [ %30, %bb.g ]
+  %i.bd = load ptr, ptr %31, align 8, !tbaa !352
   %i.be = getelementptr i8, ptr %i.bd, i64 %2
   %i.bf = getelementptr i8, ptr %i.be, i64 -1
   %i.bg = load ptr, ptr %i.bf, align 8, !nosanitize !309
   br label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit40
 
-bb.i:                                             ; preds = %bb.g
+bb.i:                                             ; preds = %bb.f, %._crit_edge._crit_edge106
+  %32 = phi ptr [ %22, %._crit_edge._crit_edge106 ], [ %29, %bb.f ]
+  %.sroa.055.1107 = phi ptr [ %.sroa.061.0.lcssa, %._crit_edge._crit_edge106 ], [ %i.ba, %bb.f ]
   %i.bh = inttoptr i64 %2 to ptr
   br label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit40
 
 _ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit40: ; preds = %bb.h, %bb.i
+  %33 = phi ptr [ %31, %bb.h ], [ %32, %bb.i ]
+  %.sroa.055.1106 = phi ptr [ %.sroa.055.1108, %bb.h ], [ %.sroa.055.1107, %bb.i ] ; 2 uses
+  %.pre-phi103 = phi i1 [ true, %bb.h ], [ false, %bb.i ]
   %i.bi = phi ptr [ %i.bg, %bb.h ], [ %i.bh, %bb.i ]
-  %i.bj = tail call noundef zeroext i1 %i.bi(ptr noundef nonnull align 8 dereferenceable(116) %i.bc) #23, !inline_history !7197
-  br i1 %i.bj, label %.loopexit, label %25
+  %i.bj = tail call noundef zeroext i1 %i.bi(ptr noundef nonnull align 8 dereferenceable(116) %33) #23, !inline_history !7197
+  br i1 %i.bj, label %.loopexit, label %bb.j
 
-25:                                               ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit40
-  %26 = getelementptr inbounds nuw i8, ptr %.sroa.061.1, i64 8
-  br label %bb.j
-
-bb.j:                                             ; preds = %._crit_edge._crit_edge, %25
-  %.pre-phi108 = phi i64 [ %.pre107, %._crit_edge._crit_edge ], [ %.pre-phi, %25 ]
-  %.sroa.061.2 = phi ptr [ %.sroa.061.0.lcssa, %._crit_edge._crit_edge ], [ %26, %25 ] ; 2 uses
-  %i.bk = load ptr, ptr %.sroa.061.2, align 8, !tbaa !297
+bb.j:                                             ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit40
+  %34 = getelementptr inbounds nuw i8, ptr %.sroa.055.1106, i64 8 ; 3 uses
+  %i.bk = load ptr, ptr %34, align 8, !tbaa !297
   %i.bl = getelementptr inbounds i8, ptr %i.bk, i64 %3 ; 2 uses
-  %.not.i.i44 = icmp eq i64 %.pre-phi108, 0
-  br i1 %.not.i.i44, label %bb.l, label %bb.k
+  br i1 %.pre-phi103, label %bb.k, label %bb.l
 
-bb.k:                                             ; preds = %bb.j
-  %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !352
+bb.k:                                             ; preds = %._crit_edge._crit_edge, %bb.j
+  %35 = phi ptr [ %24, %._crit_edge._crit_edge ], [ %i.bl, %bb.j ] ; 2 uses
+  %.sroa.055.2111 = phi ptr [ %.sroa.061.0.lcssa, %._crit_edge._crit_edge ], [ %34, %bb.j ]
+  %i.bm = load ptr, ptr %35, align 8, !tbaa !352
   %i.bn = getelementptr i8, ptr %i.bm, i64 %2
   %i.bo = getelementptr i8, ptr %i.bn, i64 -1
   %i.bp = load ptr, ptr %i.bo, align 8, !nosanitize !309
   br label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit45
 
-bb.l:                                             ; preds = %bb.j
+bb.l:                                             ; preds = %._crit_edge._crit_edge, %bb.j
+  %36 = phi ptr [ %24, %._crit_edge._crit_edge ], [ %i.bl, %bb.j ]
+  %.sroa.055.2110 = phi ptr [ %.sroa.061.0.lcssa, %._crit_edge._crit_edge ], [ %34, %bb.j ]
   %i.bq = inttoptr i64 %2 to ptr
   br label %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit45
 
 _ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit45: ; preds = %bb.k, %bb.l
+  %37 = phi ptr [ %35, %bb.k ], [ %36, %bb.l ]
+  %.sroa.055.2109 = phi ptr [ %.sroa.055.2111, %bb.k ], [ %.sroa.055.2110, %bb.l ]
   %i.br = phi ptr [ %i.bp, %bb.k ], [ %i.bq, %bb.l ]
-  %i.bs = tail call noundef zeroext i1 %i.br(ptr noundef nonnull align 8 dereferenceable(116) %i.bl) #23, !inline_history !7197
-  %spec.select = select i1 %i.bs, ptr %.sroa.061.2, ptr %1
+  %i.bs = tail call noundef zeroext i1 %i.br(ptr noundef nonnull align 8 dereferenceable(116) %37) #23, !inline_history !7197
+  %spec.select = select i1 %i.bs, ptr %.sroa.055.2109, ptr %1
   br label %.loopexit
 
 .loopexit.loopexit.split.loop.exit:               ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit30.us
@@ -868,8 +873,8 @@ _ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_ite
   %i.by = getelementptr inbounds nuw i8, ptr %.sroa.061.089, i64 16
   br label %.loopexit
 
-.loopexit:                                        ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.thread, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.us, %.loopexit.loopexit109.split.loop.exit, %.loopexit.loopexit109.split.loop.exit113, %.loopexit.loopexit109.split.loop.exit115, %.loopexit.loopexit.split.loop.exit, %.loopexit.loopexit.split.loop.exit121, %.loopexit.loopexit.split.loop.exit123, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit45, %._crit_edge, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit40, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit35.a
-  %.sroa.08.0.in.sroa.speculated = phi ptr [ %.sroa.061.1, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit40 ], [ %spec.select, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit45 ], [ %1, %._crit_edge ], [ %.sroa.061.0.lcssa, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit35.a ], [ %.sroa.061.089.us, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.us ], [ %i.bu, %.loopexit.loopexit.split.loop.exit121 ], [ %i.bv, %.loopexit.loopexit.split.loop.exit123 ], [ %i.bt, %.loopexit.loopexit.split.loop.exit ], [ %i.bw, %.loopexit.loopexit109.split.loop.exit ], [ %i.by, %.loopexit.loopexit109.split.loop.exit115 ], [ %i.bx, %.loopexit.loopexit109.split.loop.exit113 ], [ %.sroa.061.089, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.thread ]
+.loopexit:                                        ; preds = %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.thread, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.us, %.loopexit.loopexit109.split.loop.exit, %.loopexit.loopexit109.split.loop.exit113, %.loopexit.loopexit109.split.loop.exit115, %.loopexit.loopexit.split.loop.exit, %.loopexit.loopexit.split.loop.exit121, %.loopexit.loopexit.split.loop.exit123, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit35.a, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit45, %._crit_edge, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit40, %bb.e
+  %.sroa.08.0.in.sroa.speculated = phi ptr [ %.sroa.055.1106, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit40 ], [ %spec.select, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit45 ], [ %1, %._crit_edge ], [ %.sroa.061.0.lcssa, %bb.e ], [ %.sroa.061.0.lcssa, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit35.a ], [ %.sroa.061.089.us, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.us ], [ %i.bv, %.loopexit.loopexit.split.loop.exit123 ], [ %i.bu, %.loopexit.loopexit.split.loop.exit121 ], [ %i.bt, %.loopexit.loopexit.split.loop.exit ], [ %i.by, %.loopexit.loopexit109.split.loop.exit115 ], [ %i.bw, %.loopexit.loopexit109.split.loop.exit ], [ %i.bx, %.loopexit.loopexit109.split.loop.exit113 ], [ %.sroa.061.089, %_ZN9__gnu_cxx5__ops10_Iter_predISt15const_mem_fun_tIb4NodeEEclINS_17__normal_iteratorIPPS3_St6vectorIS8_SaIS8_EEEEEEbT_.exit.thread ]
   ret ptr %.sroa.08.0.in.sroa.speculated
 }
 
