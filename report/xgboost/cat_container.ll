@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %_ZNK7xgboost6common
   unreachable
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEplEl.exit: ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEplEl.exit.backedge, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEplEl.exit.preheader
-  %.0242 = phi i64 [ %i.h, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEplEl.exit.preheader ], [ %.0242.be, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEplEl.exit.backedge ] ; 7 uses
+  %.0242 = phi i64 [ %i.h, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEplEl.exit.preheader ], [ %.0242.be, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEplEl.exit.backedge ] ; 8 uses
   %.0 = phi i64 [ %i.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEplEl.exit.preheader ], [ %.0.be, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEplEl.exit.backedge ] ; 9 uses
   %.sroa.20.0 = phi i64 [ %1, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEplEl.exit.preheader ], [ %.sroa.20.0.be, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEplEl.exit.backedge ] ; 18 uses
   %i.ac = sub nsw i64 %.0242, %.0                 ; 7 uses
@@ -229,24 +229,21 @@ _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !39
   %i.aj = add i64 %.sroa.20.0, %.0242             ; 2 uses
   %.not.i.i81 = icmp ugt i64 %i.aj, %i.aa
-  br i1 %.not.i.i81, label %bb.k, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmiES5_.exit.i.i.i.i.i, !prof !55
+  br i1 %.not.i.i81, label %bb.k, label %.lr.ph.i.i.i.i.i.preheader, !prof !55
 
 bb.k:                                             ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit
   tail call void @_ZSt9terminatev() #30
   unreachable
 
-_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmiES5_.exit.i.i.i.i.i: ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit
-  %6 = add i64 %.0242, -1                         ; 3 uses
-  %7 = icmp sgt i64 %6, 0
-  br i1 %7, label %.lr.ph.i.i.i.i.i.preheader, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEplEl.exit91
-
-.lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmiES5_.exit.i.i.i.i.i
+.lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit
   %umax330 = tail call i64 @llvm.umax.i64(i64 %.sroa.20.0, i64 %i.aa) ; 2 uses
   %i.ak = xor i64 %.sroa.20.0, -1
-  %i.al = add i64 %i.aa, %i.ak
-  %i.am = sub i64 %umax330, %.sroa.20.0
-  %8 = add i64 %.0242, -2
-  %i.an = tail call i64 @llvm.umin.i64(i64 %i.al, i64 %i.am)
+  %6 = add i64 %i.aa, %i.ak
+  %i.al = add i64 %.0242, -1                      ; 2 uses
+  %7 = tail call i64 @llvm.smin.i64(i64 %i.al, i64 1)
+  %i.am = sub i64 %i.al, %7
+  %8 = sub i64 %umax330, %.sroa.20.0
+  %i.an = tail call i64 @llvm.umin.i64(i64 %6, i64 %i.am)
   %i.ao = tail call i64 @llvm.umin.i64(i64 %i.an, i64 %8)
   %i.ap = add i64 %i.ao, 1                        ; 3 uses
   %min.iters.check = icmp ult i64 %i.ap, 9
@@ -257,7 +254,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.pr
   %i.ar = icmp eq i64 %i.aq, 0
   %i.as = select i1 %i.ar, i64 8, i64 %i.aq
   %n.vec = sub i64 %i.ap, %i.as                   ; 3 uses
-  %i.at = sub i64 %6, %n.vec
+  %i.at = sub i64 %.0242, %n.vec
   %i.au = add i64 %.sroa.20.0, %n.vec
   br label %vector.body
 
@@ -278,15 +275,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.bb, label %.lr.ph.i.i.i.i.i.preheader399, label %vector.body, !llvm.loop !477
 
 .lr.ph.i.i.i.i.i.preheader399:                    ; preds = %vector.body, %.lr.ph.i.i.i.i.i.preheader
-  %.020.i.i.i.i.i.ph = phi i64 [ %6, %.lr.ph.i.i.i.i.i.preheader ], [ %i.at, %vector.body ]
+  %.020.i.i.i.i.i.ph = phi i64 [ %.0242, %.lr.ph.i.i.i.i.i.preheader ], [ %i.at, %vector.body ]
   %.sroa.413.019.i.i.i.i.i.in.ph = phi i64 [ %.sroa.20.0, %.lr.ph.i.i.i.i.i.preheader ], [ %i.au, %vector.body ]
   br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader399, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit6.i.i.i.i.i
-  %.020.i.i.i.i.i.a = phi i64 [ %9, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit6.i.i.i.i.i ], [ %.020.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader399 ] ; 2 uses
-  %.sroa.413.019.i.i.i.i.i.in = phi i64 [ %.sroa.413.019.i.i.i.i.i.a, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit6.i.i.i.i.i ], [ %.sroa.413.019.i.i.i.i.i.in.ph, %.lr.ph.i.i.i.i.i.preheader399 ] ; 3 uses
-  %.sroa.413.019.i.i.i.i.i.a = add i64 %.sroa.413.019.i.i.i.i.i.in, 1 ; 3 uses
-  %exitcond.not.i.i.i.i.i = icmp eq i64 %.sroa.413.019.i.i.i.i.i.a, %i.aa
+  %.020.i.i.i.i.i.a = phi i64 [ %.sroa.413.019.i.i.i.i.i.a, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit6.i.i.i.i.i ], [ %.020.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.preheader399 ]
+  %.sroa.413.019.i.i.i.i.i.in = phi i64 [ %.sroa.413.019.i.i.i.i.i, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit6.i.i.i.i.i ], [ %.sroa.413.019.i.i.i.i.i.in.ph, %.lr.ph.i.i.i.i.i.preheader399 ] ; 3 uses
+  %.sroa.413.019.i.i.i.i.i = add i64 %.sroa.413.019.i.i.i.i.i.in, 1 ; 3 uses
+  %.sroa.413.019.i.i.i.i.i.a = add i64 %.020.i.i.i.i.i.a, -1 ; 2 uses
+  %exitcond.not.i.i.i.i.i = icmp eq i64 %.sroa.413.019.i.i.i.i.i, %i.aa
   br i1 %exitcond.not.i.i.i.i.i, label %bb.l, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i.i.i.i.i, !prof !55
 
 bb.l:                                             ; preds = %.lr.ph.i.i.i.i.i
@@ -302,15 +300,14 @@ bb.m:                                             ; preds = %_ZNK7xgboost6common
   unreachable
 
 _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit6.i.i.i.i.i: ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i.i.i.i.i
-  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %.sroa.413.019.i.i.i.i.i.a
+  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %.sroa.413.019.i.i.i.i.i
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !39
   %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %.sroa.413.019.i.i.i.i.i.in
   store i32 %i.bd, ptr %i.be, align 4, !tbaa !39
-  %9 = add nsw i64 %.020.i.i.i.i.i.a, -1
-  %i.bf = icmp sgt i64 %.020.i.i.i.i.i.a, 1
+  %i.bf = icmp sgt i64 %.sroa.413.019.i.i.i.i.i.a, 1
   br i1 %i.bf, label %.lr.ph.i.i.i.i.i, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEplEl.exit91, !llvm.loop !478
 
-_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEplEl.exit91: ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit6.i.i.i.i.i, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmiES5_.exit.i.i.i.i.i
+_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEplEl.exit91: ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEppEv.exit6.i.i.i.i.i
   %i.bg = add i64 %i.aj, -1                       ; 3 uses
   %.not.i.i.i = icmp ugt i64 %i.bg, %i.aa
   br i1 %.not.i.i.i, label %bb.n, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmiEl.exit, !prof !55

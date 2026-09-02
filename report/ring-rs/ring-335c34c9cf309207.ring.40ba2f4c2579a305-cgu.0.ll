@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.413.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %.sroa.413.0.copyload.i = load ptr, ptr %.sroa.413.0..sroa_idx.i, align 8, !noalias !1158
   %.sroa.514.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  %.sroa.514.0.copyload.i = load i64, ptr %.sroa.514.0..sroa_idx.i, align 8, !noalias !1158 ; 35 uses
+  %.sroa.514.0.copyload.i = load i64, ptr %.sroa.514.0..sroa_idx.i, align 8, !noalias !1158 ; 33 uses
   %.sroa.615.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   %.sroa.615.0.copyload.i = load i64, ptr %.sroa.615.0..sroa_idx.i, align 8, !noalias !1158 ; 10 uses
   %i.bk = lshr i64 %.sroa.4.0.copyload, 1         ; 2 uses
@@ -608,25 +608,16 @@ bb.ch:                                            ; preds = %bb.cc
   %i.it = add nuw i64 %.sroa.514.0.copyload.i, 2  ; 3 uses
   %i.iu = load i64, ptr %i.fp, align 8, !alias.scope !1326, !noalias !1329, !noundef !18
   %.not.i.i273 = icmp eq i64 %i.iu, %.sroa.514.0.copyload.i
-  br i1 %.not.i.i273, label %2, label %bb.ci, !prof !88
+  br i1 %.not.i.i273, label %bb.cj, label %bb.ci, !prof !88
 
-2:                                                ; preds = %bb.ch
-  %3 = icmp ult i64 %.sroa.514.0.copyload.i, 4
-  br i1 %3, label %bb.ci, label %4, !prof !35
-
-4:                                                ; preds = %2
-  %5 = icmp ugt i64 %.sroa.514.0.copyload.i, 128
-  br i1 %5, label %bb.ci, label %bb.cj, !prof !35
-
-bb.ci:                                            ; preds = %4, %2, %bb.ch
-  %.sroa.42.0.ph.i274 = phi i64 [ 0, %bb.ch ], [ 1, %2 ], [ 2, %4 ]
-  invoke fastcc void @_RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint34unwrap_impossible_limb_slice_errorINtNtNtNtB2_7modulus4mont4base4MontNtNtNtB6_3rsa7keypair1PEEB6_(i64 noundef %.sroa.42.0.ph.i274) #39
+bb.ci:                                            ; preds = %bb.ch
+  invoke fastcc void @_RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint34unwrap_impossible_limb_slice_errorINtNtNtNtB2_7modulus4mont4base4MontNtNtNtB6_3rsa7keypair1PEEB6_(i64 noundef 0) #39
           to label %.noexc278 unwind label %bb.cg
 
 .noexc278:                                        ; preds = %bb.ci
   unreachable
 
-bb.cj:                                            ; preds = %4
+bb.cj:                                            ; preds = %bb.ch
   %i.iv = icmp slt i64 %.sroa.514.0.copyload.i256, 0
   br i1 %i.iv, label %bb.de, label %bb.ck, !prof !35
 
