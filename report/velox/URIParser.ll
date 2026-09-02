@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.z, label %.lr.ph.i.i.i, label %.loopexit.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.j, %bb.k
-  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %bb.k ], [ %i.y, %bb.j ] ; 4 uses
+  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %bb.k ], [ %i.y, %bb.j ] ; 3 uses
   %i.aa = getelementptr inbounds i8, ptr %0, i64 %indvars.iv.i.i.i
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !9   ; 3 uses
   %i.ac = icmp sgt i8 %i.ab, -1
@@ -228,11 +228,9 @@ bb.k:                                             ; preds = %_ZN8facebook5velox9
 
 _ZN8facebook5velox9functions12_GLOBAL__N_14testERKSt6bitsetILm128EEc.exit.thread.i.i.i: ; preds = %_ZN8facebook5velox9functions12_GLOBAL__N_14testERKSt6bitsetILm128EEc.exit.i.i.i
   %.030.lcssa.ph.i.i.i = trunc i64 %indvars.iv.i.i.i to i32 ; 2 uses
-  %6 = icmp ne i32 %i.x, %.030.lcssa.ph.i.i.i
-  %i.ak = icmp ne i64 %1, %indvars.iv.i.i.i
-  %or.cond.i.i.not18.i = and i1 %i.ak, %6
+  %i.ak = icmp ne i32 %i.x, %.030.lcssa.ph.i.i.i
   %.not37.i.i.i = icmp eq i8 %i.ab, 46
-  %or.cond.i = and i1 %.not37.i.i.i, %or.cond.i.i.not18.i
+  %or.cond.i = and i1 %.not37.i.i.i, %i.ak
   br i1 %or.cond.i, label %bb.l, label %.loopexit.i
 
 bb.l:                                             ; preds = %_ZN8facebook5velox9functions12_GLOBAL__N_14testERKSt6bitsetILm128EEc.exit.thread.i.i.i

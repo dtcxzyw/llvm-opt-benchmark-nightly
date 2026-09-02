@@ -202,8 +202,7 @@ bb.b:                                             ; preds = %.lr.ph, %.backedge
   br i1 %.not, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.sroa.3.0.copyload = load i64, ptr %.sroa.3.0..sroa_idx, align 8 ; 2 uses
-  %3 = inttoptr i64 %.sroa.3.0.copyload to ptr    ; 4 uses
+  %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8 ; 5 uses
   switch i64 %i.n, label %bb.d [
     i64 0, label %bb.e
     i64 1, label %bb.f
@@ -215,19 +214,19 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 bb.e:                                             ; preds = %bb.c
-  %i.o = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.o = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload, i64 8
   %.sroa.0.0.in.i.sroa.speculate.load. = load ptr, ptr %i.o, align 8
   br label %_RNvMs_NtNtCsfcggljOhZkm_12regex_syntax3hir7visitorNtB4_5Frame5child.exit
 
 bb.f:                                             ; preds = %bb.c
-  %.sroa.0.0.in.i.sroa.speculate.load.24 = load ptr, ptr %3, align 8
+  %.sroa.0.0.in.i.sroa.speculate.load.24 = load ptr, ptr %.sroa.3.0.copyload, align 8
   br label %_RNvMs_NtNtCsfcggljOhZkm_12regex_syntax3hir7visitorNtB4_5Frame5child.exit
 
 _RNvMs_NtNtCsfcggljOhZkm_12regex_syntax3hir7visitorNtB4_5Frame5child.exit: ; preds = %bb.c, %bb.c, %bb.e, %bb.f
-  %.sroa.0.0.in.i.sroa.speculated = phi ptr [ %.sroa.0.0.in.i.sroa.speculate.load., %bb.e ], [ %.sroa.0.0.in.i.sroa.speculate.load.24, %bb.f ], [ %3, %bb.c ], [ %3, %bb.c ]
+  %.sroa.0.0.in.i.sroa.speculated = phi ptr [ %.sroa.0.0.in.i.sroa.speculate.load., %bb.e ], [ %.sroa.0.0.in.i.sroa.speculate.load.24, %bb.f ], [ %.sroa.3.0.copyload, %bb.c ], [ %.sroa.3.0.copyload, %bb.c ]
   store ptr %.sroa.0.042, ptr %i.e, align 8
   store i64 %i.n, ptr %i.j, align 8
-  store i64 %.sroa.3.0.copyload, ptr %.sroa.3.0..sroa_idx20, align 8
+  store ptr %.sroa.3.0.copyload, ptr %.sroa.3.0..sroa_idx20, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.0..sroa_idx23, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.0..sroa_idx, i64 16, i1 false)
   br label %.backedge
 
@@ -258,7 +257,7 @@ bb.i:                                             ; preds = %.preheader
   %i.v = load ptr, ptr %i.d, align 8              ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %i.k, i64 32, i1 false)
   call void @_RNvMNtNtCsfcggljOhZkm_12regex_syntax3hir7visitorNtB2_11HeapVisitor3pop(ptr nonnull sret([32 x i8]) align 8 %i.c, ptr align 8 poison, ptr nonnull align 8 %i.a)
-  %i.w = load i64, ptr %i.c, align 8              ; 4 uses
+  %i.w = load i64, ptr %i.c, align 8              ; 3 uses
   %.not15 = icmp eq i64 %i.w, -1
   br i1 %.not15, label %bb.l, label %bb.k
 
@@ -268,10 +267,12 @@ bb.j:                                             ; preds = %.preheader
   br label %bb.u
 
 bb.k:                                             ; preds = %bb.i
-  %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8 ; 3 uses
+  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8 ; 5 uses
   switch i64 %i.w, label %bb.m [
     i64 2, label %bb.p
     i64 3, label %bb.q
+    i64 0, label %bb.n
+    i64 1, label %bb.o
   ]
 
 bb.l:                                             ; preds = %bb.i
@@ -279,41 +280,35 @@ bb.l:                                             ; preds = %bb.i
   %i.aa = call zeroext i1 @_RNvXsp_NtCs4NRVxsYgnAr_4core6resultINtB5_6ResultuNtNtB7_3fmt5ErrorENtNtNtB7_3ops9try_trait3Try6branchCsfcggljOhZkm_12regex_syntax(i1 zeroext %i.z)
   br i1 %i.aa, label %bb.t, label %.preheader
 
-.thread:                                          ; preds = %bb.q, %bb.p
-  %4 = inttoptr i64 %.sroa.4.0.copyload to ptr
-  br label %_RNvMs_NtNtCsfcggljOhZkm_12regex_syntax3hir7visitorNtB4_5Frame5child.exit18
-
 bb.m:                                             ; preds = %bb.k
-  %5 = inttoptr i64 %.sroa.4.0.copyload to ptr    ; 2 uses
-  %6 = icmp eq i64 %i.w, 0
-  br i1 %6, label %bb.n, label %bb.o
+  unreachable
 
-bb.n:                                             ; preds = %bb.m
-  %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 8
+bb.n:                                             ; preds = %bb.k
+  %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.4.0.copyload, i64 8
   %.sroa.0.0.in.i16.sroa.speculate.load. = load ptr, ptr %i.ab, align 8
   br label %_RNvMs_NtNtCsfcggljOhZkm_12regex_syntax3hir7visitorNtB4_5Frame5child.exit18
 
-bb.o:                                             ; preds = %bb.m
-  %.sroa.0.0.in.i16.sroa.speculate.load.35 = load ptr, ptr %5, align 8
+bb.o:                                             ; preds = %bb.k
+  %.sroa.0.0.in.i16.sroa.speculate.load.35 = load ptr, ptr %.sroa.4.0.copyload, align 8
   br label %_RNvMs_NtNtCsfcggljOhZkm_12regex_syntax3hir7visitorNtB4_5Frame5child.exit18
 
-_RNvMs_NtNtCsfcggljOhZkm_12regex_syntax3hir7visitorNtB4_5Frame5child.exit18: ; preds = %.thread, %bb.n, %bb.o
-  %.sroa.0.0.in.i16.sroa.speculated = phi ptr [ %.sroa.0.0.in.i16.sroa.speculate.load., %bb.n ], [ %.sroa.0.0.in.i16.sroa.speculate.load.35, %bb.o ], [ %4, %.thread ]
+_RNvMs_NtNtCsfcggljOhZkm_12regex_syntax3hir7visitorNtB4_5Frame5child.exit18: ; preds = %bb.p, %bb.q, %bb.n, %bb.o
+  %.sroa.0.0.in.i16.sroa.speculated = phi ptr [ %.sroa.0.0.in.i16.sroa.speculate.load., %bb.n ], [ %.sroa.0.0.in.i16.sroa.speculate.load.35, %bb.o ], [ %.sroa.4.0.copyload, %bb.p ], [ %.sroa.4.0.copyload, %bb.q ]
   store ptr %i.v, ptr %i.b, align 8
   store i64 %i.w, ptr %i.l, align 8
-  store i64 %.sroa.4.0.copyload, ptr %.sroa.4.0..sroa_idx31, align 8
+  store ptr %.sroa.4.0.copyload, ptr %.sroa.4.0..sroa_idx31, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.8.0..sroa_idx34, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.8.0..sroa_idx, i64 16, i1 false)
   br label %.backedge
 
 bb.p:                                             ; preds = %bb.k
   %i.ac = call zeroext i1 @_RNvYINtNtNtCsfcggljOhZkm_12regex_syntax3hir5print6WriterQNtNtCs4NRVxsYgnAr_4core3fmt9FormatterENtNtB7_7visitor7Visitor15visit_concat_inB9_(ptr nonnull align 8 %i.g)
   %i.ad = call zeroext i1 @_RNvXsp_NtCs4NRVxsYgnAr_4core6resultINtB5_6ResultuNtNtB7_3fmt5ErrorENtNtNtB7_3ops9try_trait3Try6branchCsfcggljOhZkm_12regex_syntax(i1 zeroext %i.ac)
-  br i1 %i.ad, label %bb.r, label %.thread
+  br i1 %i.ad, label %bb.r, label %_RNvMs_NtNtCsfcggljOhZkm_12regex_syntax3hir7visitorNtB4_5Frame5child.exit18
 
 bb.q:                                             ; preds = %bb.k
   %i.ae = call zeroext i1 @_RNvXs1_NtNtCsfcggljOhZkm_12regex_syntax3hir5printINtB5_6WriterQNtNtCs4NRVxsYgnAr_4core3fmt9FormatterENtNtB7_7visitor7Visitor20visit_alternation_inB9_(ptr nonnull align 8 %i.g)
   %i.af = call zeroext i1 @_RNvXsp_NtCs4NRVxsYgnAr_4core6resultINtB5_6ResultuNtNtB7_3fmt5ErrorENtNtNtB7_3ops9try_trait3Try6branchCsfcggljOhZkm_12regex_syntax(i1 zeroext %i.ae)
-  br i1 %i.af, label %bb.s, label %.thread
+  br i1 %i.af, label %bb.s, label %_RNvMs_NtNtCsfcggljOhZkm_12regex_syntax3hir7visitorNtB4_5Frame5child.exit18
 
 bb.r:                                             ; preds = %bb.p
   %i.ag = call zeroext i1 @_RNvXsq_NtCs4NRVxsYgnAr_4core6resultINtB5_6ResultuNtNtB7_3fmt5ErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleBL_EE13from_residualCsfcggljOhZkm_12regex_syntax(ptr nonnull align 8 @1)

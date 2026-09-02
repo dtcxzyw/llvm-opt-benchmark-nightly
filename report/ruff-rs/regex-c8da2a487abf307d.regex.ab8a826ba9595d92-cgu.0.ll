@@ -202,8 +202,8 @@ bb.a:
   %i.j = alloca [136 x i8], align 8               ; 4 uses
   %i.k = alloca [136 x i8], align 8               ; 4 uses
   %i.l = alloca [48 x i8], align 8                ; 3 uses
-  %.sroa.251 = alloca i64, align 8                ; 4 uses
-  %.sroa.7 = alloca i64, align 8                  ; 2 uses
+  %.sroa.251 = alloca ptr, align 8                ; 4 uses
+  %.sroa.7 = alloca ptr, align 8                  ; 2 uses
   %i.m = alloca [64 x i8], align 8                ; 8 uses
   %i.n = alloca [200 x i8], align 8               ; 5 uses
   %i.o = alloca [128 x i8], align 8               ; 5 uses
@@ -373,8 +373,7 @@ bb.o:                                             ; preds = %.noexc23
   br i1 %.not13.i.i, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %.noexc25
-  %4 = ptrtoint ptr %i.bg to i64
-  store i64 %4, ptr %.sroa.251, align 8
+  store ptr %i.bg, ptr %.sroa.251, align 8
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %.noexc25, %.noexc22
@@ -382,13 +381,12 @@ bb.q:                                             ; preds = %bb.p, %.noexc25, %.
   %.sink17.i.i.sroa.phi = phi ptr [ %.sroa.251, %.noexc22 ], [ %.sroa.251, %.noexc25 ], [ %.sroa.7, %bb.p ]
   %.sink.i.i = phi ptr [ null, %.noexc22 ], [ null, %.noexc25 ], [ %i.bm, %bb.p ]
   store ptr %.sink.i.i, ptr %.sink17.i.i.sroa.phi, align 8
-  %.sroa.251.0..sroa.251.0..sroa.251.0..sroa.251.8. = load i64, ptr %.sroa.251, align 8 ; 2 uses
-  %5 = inttoptr i64 %.sroa.251.0..sroa.251.0..sroa.251.0..sroa.251.8. to ptr ; 2 uses
-  %.not7 = icmp eq i64 %.sroa.251.0..sroa.251.0..sroa.251.0..sroa.251.8., 0
+  %.sroa.251.0..sroa.251.0..sroa.251.0..sroa.251.8. = load ptr, ptr %.sroa.251, align 8 ; 3 uses
+  %.not7 = icmp eq ptr %.sroa.251.0..sroa.251.0..sroa.251.0..sroa.251.8., null
   br i1 %.not7, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %.sroa.7.0..sroa.7.0..sroa.7.0..sroa.7.16. = load i64, ptr %.sroa.7, align 8
+  %.sroa.7.0..sroa.7.0..sroa.7.0..sroa.7.16. = load ptr, ptr %.sroa.7, align 8
   invoke void @_RNvMs_NtNtCsfcggljOhZkm_12regex_syntax3hir9translateNtB4_17TranslatorBuilder5build(ptr nonnull sret([40 x i8]) align 8 %i.h, ptr nonnull %i.bc)
           to label %bb.y unwind label %.loopexit
 
@@ -432,12 +430,11 @@ bb.x:                                             ; preds = %.loopexit.split-lp6
           to label %.loopexit.split-lp unwind label %bb.aj
 
 bb.y:                                             ; preds = %bb.r
-  %6 = inttoptr i64 %.sroa.7.0..sroa.7.0..sroa.7.0..sroa.7.16. to ptr
-  %i.br = getelementptr i8, ptr %5, i64 8
+  %i.br = getelementptr i8, ptr %.sroa.251.0..sroa.251.0..sroa.251.0..sroa.251.8., i64 8
   %.val15 = load ptr, ptr %i.br, align 8
-  %i.bs = getelementptr i8, ptr %5, i64 16
+  %i.bs = getelementptr i8, ptr %.sroa.251.0..sroa.251.0..sroa.251.0..sroa.251.8., i64 16
   %.val16 = load i64, ptr %i.bs, align 8
-  invoke void @_RNvMs0_NtNtCsfcggljOhZkm_12regex_syntax3hir9translateNtB5_10Translator9translate(ptr nonnull sret([80 x i8]) align 8 %i.i, ptr nonnull align 8 %i.h, ptr %.val15, i64 %.val16, ptr align 8 %6)
+  invoke void @_RNvMs0_NtNtCsfcggljOhZkm_12regex_syntax3hir9translateNtB5_10Translator9translate(ptr nonnull sret([80 x i8]) align 8 %i.i, ptr nonnull align 8 %i.h, ptr %.val15, i64 %.val16, ptr align 8 %.sroa.7.0..sroa.7.0..sroa.7.0..sroa.7.16.)
           to label %bb.z unwind label %.loopexit61
 
 bb.z:                                             ; preds = %bb.y

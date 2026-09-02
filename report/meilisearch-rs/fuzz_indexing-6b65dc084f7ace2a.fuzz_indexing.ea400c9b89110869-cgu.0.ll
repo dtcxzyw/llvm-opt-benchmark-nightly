@@ -205,7 +205,6 @@ bb.j:                                             ; preds = %bb.d
 bb.k:                                             ; preds = %bb.f, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i
   %.sroa.10.0.i.i.i.i = phi ptr [ inttoptr (i64 1 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i ], [ %i.aj, %bb.f ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.10.0.i.i.i.i, ptr nonnull readonly align 1 %.0.val, i64 %.8.val, i1 false), !noalias !4191
-  %.sroa.8.0..sroa.8.0.copyload.cast.i = ptrtoint ptr %i.ag to i64
   call void @llvm.experimental.noalias.scope.decl(metadata !4192)
   call void @llvm.experimental.noalias.scope.decl(metadata !4193)
   call void @llvm.experimental.noalias.scope.decl(metadata !4194)
@@ -265,7 +264,7 @@ bb.p:                                             ; preds = %bb.k, %bb.m, %bb.l
   %.sroa.316.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.8.val, ptr %.sroa.316.0..sroa_idx, align 8
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %.sroa.8.0..sroa.8.0.copyload.cast.i, ptr %.sroa.417.0..sroa_idx, align 8
+  store ptr %i.ag, ptr %.sroa.417.0..sroa_idx, align 8
   %.sroa.417.sroa.2.0..sroa.417.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i8 0, ptr %.sroa.417.sroa.2.0..sroa.417.0..sroa_idx.sroa_idx, align 8
   br label %bb.r
@@ -440,7 +439,6 @@ bb.j:                                             ; preds = %bb.d
 bb.k:                                             ; preds = %bb.f, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i
   %.sroa.10.0.i.i.i.i = phi ptr [ inttoptr (i64 1 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i ], [ %i.aj, %bb.f ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.10.0.i.i.i.i, ptr nonnull readonly align 1 %.0.val, i64 %.8.val, i1 false), !noalias !4250
-  %.sroa.8.0..sroa.8.0.copyload.cast.i = ptrtoint ptr %i.ag to i64
   call void @llvm.experimental.noalias.scope.decl(metadata !4251)
   call void @llvm.experimental.noalias.scope.decl(metadata !4252)
   call void @llvm.experimental.noalias.scope.decl(metadata !4253)
@@ -500,7 +498,7 @@ bb.p:                                             ; preds = %bb.k, %bb.m, %bb.l
   %.sroa.316.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.8.val, ptr %.sroa.316.0..sroa_idx, align 8
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %.sroa.8.0..sroa.8.0.copyload.cast.i, ptr %.sroa.417.0..sroa_idx, align 8
+  store ptr %i.ag, ptr %.sroa.417.0..sroa_idx, align 8
   %.sroa.417.sroa.2.0..sroa.417.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i8 0, ptr %.sroa.417.sroa.2.0..sroa.417.0..sroa_idx.sroa_idx, align 8
   br label %bb.r
@@ -675,7 +673,6 @@ bb.j:                                             ; preds = %bb.d
 bb.k:                                             ; preds = %bb.f, %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i
   %.sroa.10.0.i.i.i.i = phi ptr [ inttoptr (i64 1 to ptr), %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i ], [ %i.aj, %bb.f ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.10.0.i.i.i.i, ptr nonnull readonly align 1 %.0.val, i64 %.8.val, i1 false), !noalias !4309
-  %.sroa.8.0..sroa.8.0.copyload.cast.i = ptrtoint ptr %i.ag to i64
   call void @llvm.experimental.noalias.scope.decl(metadata !4310)
   call void @llvm.experimental.noalias.scope.decl(metadata !4311)
   call void @llvm.experimental.noalias.scope.decl(metadata !4312)
@@ -735,7 +732,7 @@ bb.p:                                             ; preds = %bb.k, %bb.m, %bb.l
   %.sroa.316.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.8.val, ptr %.sroa.316.0..sroa_idx, align 8
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %.sroa.8.0..sroa.8.0.copyload.cast.i, ptr %.sroa.417.0..sroa_idx, align 8
+  store ptr %i.ag, ptr %.sroa.417.0..sroa_idx, align 8
   %.sroa.417.sroa.2.0..sroa.417.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i8 0, ptr %.sroa.417.sroa.2.0..sroa.417.0..sroa_idx.sroa_idx, align 8
   br label %bb.r

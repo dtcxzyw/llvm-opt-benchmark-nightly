@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %bb.x
           cleanup
   br label %.body
 
-.body96.loopexit.split-lp.loopexit.split-lp.loopexit: ; preds = %14, %bb.av, %bb.ak, %bb.ai, %bb.ah, %bb.v, %bb.t, %bb.s, %bb.m, %bb.b, %bb.bi
+.body96.loopexit.split-lp.loopexit.split-lp.loopexit: ; preds = %bb.be, %bb.av, %bb.ak, %bb.ai, %bb.ah, %bb.v, %bb.t, %bb.s, %bb.m, %bb.b, %bb.bi
   %lpad.loopexit133 = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -221,8 +221,8 @@ _RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpaces
 
 _RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit.thread: ; preds = %.noexc, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit
   %i.bf = phi i16 [ %.pr, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit ], [ %i.aa, %.noexc ] ; 3 uses
-  %.sroa.599.0.copyload = load i64, ptr %.sroa.599.0..sroa_idx, align 8 ; 8 uses
-  %.sroa.16.0.copyload = load i64, ptr %.sroa.16.0..sroa_idx, align 8 ; 10 uses
+  %.sroa.599.0.copyload = load ptr, ptr %.sroa.599.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.16.0.copyload = load i64, ptr %.sroa.16.0..sroa_idx, align 8 ; 4 uses
   switch i16 %i.bf, label %default.unreachable [
     i16 0, label %bb.af
     i16 1, label %bb.af
@@ -301,19 +301,19 @@ bb.af:                                            ; preds = %_RNvMsG_NtCsexYYUdY
 bb.ag:                                            ; preds = %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit.thread, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit.thread, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit.thread, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit.thread, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit.thread, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit.thread, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit.thread, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit.thread
   switch i16 %i.bf, label %default.unreachable [
     i16 22, label %bb.bf
-    i16 21, label %bb.be
-    i16 20, label %bb.bd
-    i16 19, label %bb.bc
-    i16 18, label %bb.bb
-    i16 17, label %7
-    i16 16, label %6
-    i16 15, label %14
-    i16 14, label %14
-    i16 9, label %2
-    i16 10, label %3
-    i16 11, label %4
-    i16 12, label %14
-    i16 13, label %14
+    i16 21, label %bb.bf
+    i16 20, label %bb.bf
+    i16 19, label %bb.bf
+    i16 18, label %bb.bf
+    i16 17, label %bb.bf
+    i16 16, label %bb.bd
+    i16 15, label %bb.be
+    i16 14, label %bb.be
+    i16 9, label %bb.bb
+    i16 10, label %bb.bc
+    i16 11, label %bb.bf
+    i16 12, label %bb.be
+    i16 13, label %bb.be
   ]
 
 bb.ah:                                            ; preds = %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit.thread
@@ -347,7 +347,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCskSRqRFwaW70_9yara_x_py.
   br label %bb.af
 
 .loopexit135:                                     ; preds = %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCskSRqRFwaW70_9yara_x_py.exit90, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCskSRqRFwaW70_9yara_x_py.exit71, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCskSRqRFwaW70_9yara_x_py.exit, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecIBC_hEEECskSRqRFwaW70_9yara_x_py.exit
-  %.sroa.0.1 = phi ptr [ %.sroa.0.2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecIBC_hEEECskSRqRFwaW70_9yara_x_py.exit ], [ %15, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCskSRqRFwaW70_9yara_x_py.exit90 ], [ %i.bj, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCskSRqRFwaW70_9yara_x_py.exit ], [ %i.bk, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCskSRqRFwaW70_9yara_x_py.exit71 ]
+  %.sroa.0.1 = phi ptr [ %.sroa.0.2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecIBC_hEEECskSRqRFwaW70_9yara_x_py.exit ], [ %2, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCskSRqRFwaW70_9yara_x_py.exit90 ], [ %i.bj, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCskSRqRFwaW70_9yara_x_py.exit ], [ %i.bk, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCskSRqRFwaW70_9yara_x_py.exit71 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spaces20RemoveTrailingSpacesINtNtBG_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtB4_4iter6traits8iterator8Iteratorp4ItemNtNtBG_6tokens5TokenEL_EEEECskSRqRFwaW70_9yara_x_py(ptr noalias nofree noundef align 8 dereferenceable(104) %i.q)
           to label %bb.bk unwind label %bb.ab
@@ -355,7 +355,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCskSRqRFwaW70_9yara_x_py.
 bb.al:                                            ; preds = %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit.thread, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit.thread, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit.thread, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCskSRqRFwaW70_9yara_x_py.exit.thread
   %.sroa.18.0.copyload = load i64, ptr %.sroa.18.0..sroa_idx, align 8 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
-  store i64 %.sroa.599.0.copyload, ptr %i.o, align 8
+  store ptr %.sroa.599.0.copyload, ptr %i.o, align 8
   store i64 %.sroa.16.0.copyload, ptr %.sroa.16.8..sroa_idx107, align 8
   store i64 %.sroa.18.0.copyload, ptr %.sroa.18.8..sroa_idx114, align 8
   %i.br = inttoptr i64 %.sroa.16.0.copyload to ptr ; 5 uses
@@ -495,51 +495,26 @@ bb.ba:                                            ; preds = %_RNvXs_NtNtCskKLDko
   store i64 0, ptr %i.t, align 8
   br label %bb.af
 
-2:                                                ; preds = %bb.ag
-  br label %14
-
-3:                                                ; preds = %bb.ag
-  br label %14
-
-4:                                                ; preds = %bb.ag
-  %5 = inttoptr i64 %.sroa.599.0.copyload to ptr
-  br label %14
-
-6:                                                ; preds = %bb.ag
-  br label %14
-
-7:                                                ; preds = %bb.ag
-  %8 = inttoptr i64 %.sroa.599.0.copyload to ptr
-  br label %14
-
 bb.bb:                                            ; preds = %bb.ag
-  %9 = inttoptr i64 %.sroa.599.0.copyload to ptr
-  br label %14
+  br label %bb.be
 
 bb.bc:                                            ; preds = %bb.ag
-  %10 = inttoptr i64 %.sroa.599.0.copyload to ptr
-  br label %14
+  br label %bb.be
 
 bb.bd:                                            ; preds = %bb.ag
-  %11 = inttoptr i64 %.sroa.599.0.copyload to ptr
-  br label %14
+  br label %bb.be
 
-bb.be:                                            ; preds = %bb.ag
-  %12 = inttoptr i64 %.sroa.599.0.copyload to ptr
-  br label %14
-
-bb.bf:                                            ; preds = %bb.ag
-  %13 = inttoptr i64 %.sroa.599.0.copyload to ptr
-  br label %14
-
-14:                                               ; preds = %bb.ag, %bb.ag, %4, %7, %bb.bb, %bb.bc, %bb.bd, %bb.be, %bb.bf, %bb.ag, %bb.ag, %6, %3, %2
-  %.sroa.6.0 = phi i64 [ 1, %2 ], [ 1, %3 ], [ %.sroa.16.0.copyload, %4 ], [ 1, %6 ], [ %.sroa.16.0.copyload, %7 ], [ %.sroa.16.0.copyload, %bb.bb ], [ %.sroa.16.0.copyload, %bb.bc ], [ %.sroa.16.0.copyload, %bb.bd ], [ %.sroa.16.0.copyload, %bb.be ], [ %.sroa.16.0.copyload, %bb.bf ], [ 0, %bb.ag ], [ 0, %bb.ag ], [ 0, %bb.ag ], [ 0, %bb.ag ]
-  %.sroa.010.0 = phi ptr [ @53, %2 ], [ @51, %3 ], [ %5, %4 ], [ @52, %6 ], [ %8, %7 ], [ %9, %bb.bb ], [ %10, %bb.bc ], [ %11, %bb.bd ], [ %12, %bb.be ], [ %13, %bb.bf ], [ inttoptr (i64 1 to ptr), %bb.ag ], [ inttoptr (i64 1 to ptr), %bb.ag ], [ inttoptr (i64 1 to ptr), %bb.ag ], [ inttoptr (i64 1 to ptr), %bb.ag ]
-  %15 = invoke noundef ptr @_RNvXs1_NtNtCsexYYUdYSQU6_5alloc2io6cursorINtNtB9_3vec3VechENtNtNtCskKLDkoKarTP_4core2io6cursor18WriteThroughCursor9write_allCskSRqRFwaW70_9yara_x_py(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.010.0, i64 noundef range(i64 0, -9223372036854775808) %.sroa.6.0)
+bb.be:                                            ; preds = %bb.ag, %bb.ag, %bb.ag, %bb.ag, %bb.bf, %bb.bd, %bb.bc, %bb.bb
+  %.sroa.6.0 = phi i64 [ 1, %bb.bb ], [ 1, %bb.bc ], [ %.sroa.16.0.copyload, %bb.bf ], [ 1, %bb.bd ], [ 0, %bb.ag ], [ 0, %bb.ag ], [ 0, %bb.ag ], [ 0, %bb.ag ]
+  %.sroa.010.0 = phi ptr [ @53, %bb.bb ], [ @51, %bb.bc ], [ %.sroa.599.0.copyload, %bb.bf ], [ @52, %bb.bd ], [ inttoptr (i64 1 to ptr), %bb.ag ], [ inttoptr (i64 1 to ptr), %bb.ag ], [ inttoptr (i64 1 to ptr), %bb.ag ], [ inttoptr (i64 1 to ptr), %bb.ag ]
+  %2 = invoke noundef ptr @_RNvXs1_NtNtCsexYYUdYSQU6_5alloc2io6cursorINtNtB9_3vec3VechENtNtNtCskKLDkoKarTP_4core2io6cursor18WriteThroughCursor9write_allCskSRqRFwaW70_9yara_x_py(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.010.0, i64 noundef range(i64 0, -9223372036854775808) %.sroa.6.0)
           to label %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCskSRqRFwaW70_9yara_x_py.exit90 unwind label %.body96.loopexit.split-lp.loopexit.split-lp.loopexit ; 2 uses
 
-_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCskSRqRFwaW70_9yara_x_py.exit90: ; preds = %14
-  %.not44 = icmp eq ptr %15, null
+bb.bf:                                            ; preds = %bb.ag, %bb.ag, %bb.ag, %bb.ag, %bb.ag, %bb.ag, %bb.ag
+  br label %bb.be
+
+_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCskSRqRFwaW70_9yara_x_py.exit90: ; preds = %bb.be
+  %.not44 = icmp eq ptr %2, null
   br i1 %.not44, label %bb.bg, label %.loopexit135
 
 bb.bg:                                            ; preds = %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCskSRqRFwaW70_9yara_x_py.exit90

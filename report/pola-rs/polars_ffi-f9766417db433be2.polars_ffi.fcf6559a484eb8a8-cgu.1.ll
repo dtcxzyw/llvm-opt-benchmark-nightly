@@ -202,8 +202,8 @@ bb.a:
   %i.f = alloca [80 x i8], align 8                ; 8 uses
   %.sroa.12.i.i.i.i = alloca [48 x i8], align 8   ; 6 uses
   %.sroa.6.i.i.i.i = alloca [48 x i8], align 8    ; 6 uses
-  %.sroa.4.i.i.i = alloca i64, align 8            ; 5 uses
-  %.sroa.73.i.i.i = alloca i64, align 8           ; 4 uses
+  %.sroa.4.i.i.i = alloca ptr, align 8            ; 5 uses
+  %.sroa.73.i.i.i = alloca ptr, align 8           ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2179), !dbg !2237
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !2238
   %i.h = load ptr, ptr %i.g, align 8, !dbg !2238, !alias.scope !2179, !nonnull !73, !align !138, !noundef !73 ; 10 uses
@@ -459,8 +459,7 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %_RNCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0B5_.exit.i.i.i.i, %_RNCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0B5_.exit.thread.i.i.i.i
   %.sroa.62.014.i.i.i.i = phi ptr [ %i.z, %_RNCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0B5_.exit.thread.i.i.i.i ], [ %.sroa.5.i.i.sroa.6.0.copyload.i.i.i.i, %_RNCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0B5_.exit.i.i.i.i ]
   %.sroa.9.013.i.i.i.i = phi ptr [ %i.ab, %_RNCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0B5_.exit.thread.i.i.i.i ], [ %.sroa.5.i.i.sroa.7.0.copyload.i.i.i.i, %_RNCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0B5_.exit.i.i.i.i ]
-  %1 = ptrtoint ptr %.sroa.62.014.i.i.i.i to i64, !dbg !2313
-  store i64 %1, ptr %.sroa.4.i.i.i, align 8, !dbg !2313, !alias.scope !2230, !noalias !2231
+  store ptr %.sroa.62.014.i.i.i.i, ptr %.sroa.4.i.i.i, align 8, !dbg !2313, !alias.scope !2227, !noalias !2228
   br label %_RINvXNtNtCscgRAwXFJnXP_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtB7_5slice4iter4IterONtNtNtCs8774dFTUdNv_12polars_arrow3ffi9generated10ArrowArrayENCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB57_12try_for_each4callINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtB1L_5array5ArrayEL_EINtNtNtB7_3ops12control_flow11ControlFlowB6j_ENcNtB7h_5Break0E0B7h_EB2K_.exit, !dbg !2314
 
 bb.ac:                                            ; preds = %bb.aa
@@ -488,18 +487,16 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6resu
 _RINvXNtNtCscgRAwXFJnXP_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtB7_5slice4iter4IterONtNtNtCs8774dFTUdNv_12polars_arrow3ffi9generated10ArrowArrayENCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB57_12try_for_each4callINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtB1L_5array5ArrayEL_EINtNtNtB7_3ops12control_flow11ControlFlowB6j_ENcNtB7h_5Break0E0B7h_EB2K_.exit: ; preds = %bb.ab, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEECslIvKsLJE9Zc_10polars_ffi.exit.i.i.i.i.i
   %.sink23.i.i.sroa.phi.i.i.i = phi ptr [ %.sroa.73.i.i.i, %bb.ab ], [ %.sroa.4.i.i.i, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEECslIvKsLJE9Zc_10polars_ffi.exit.i.i.i.i.i ]
   %.sink.i.i.i.i.i = phi ptr [ %.sroa.9.013.i.i.i.i, %bb.ab ], [ null, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEECslIvKsLJE9Zc_10polars_ffi.exit.i.i.i.i.i ]
-  store ptr %.sink.i.i.i.i.i, ptr %.sink23.i.i.sroa.phi.i.i.i, align 8, !dbg !2318, !alias.scope !2230, !noalias !2231
+  store ptr %.sink.i.i.i.i.i, ptr %.sink23.i.i.sroa.phi.i.i.i, align 8, !dbg !2318, !alias.scope !2227, !noalias !2228
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.12.i.i.i.i), !dbg !2319
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i.i.i), !dbg !2319
-  %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i = load i64, ptr %.sroa.4.i.i.i, align 8, !dbg !2320, !alias.scope !2233, !noalias !2234, !noundef !73 ; 2 uses
-  %2 = inttoptr i64 %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i to ptr, !dbg !2320
-  %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i = load i64, ptr %.sroa.73.i.i.i, align 8, !dbg !2320, !alias.scope !2233, !noalias !2234
-  %3 = inttoptr i64 %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i to ptr, !dbg !2320
+  %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i = load ptr, ptr %.sroa.4.i.i.i, align 8, !dbg !2320, !alias.scope !2233, !noalias !2234, !noundef !73 ; 2 uses
+  %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i = load ptr, ptr %.sroa.73.i.i.i, align 8, !dbg !2320, !alias.scope !2233, !noalias !2234
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i.i), !dbg !2321
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.73.i.i.i), !dbg !2321
-  %i.bp = insertvalue { ptr, ptr } poison, ptr %2, 0, !dbg !2322
-  %.not = icmp eq i64 %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i, 0, !dbg !2323
-  %. = select i1 %.not, ptr undef, ptr %3, !dbg !2324
+  %i.bp = insertvalue { ptr, ptr } poison, ptr %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i, 0, !dbg !2322
+  %.not = icmp eq ptr %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i, null, !dbg !2323
+  %. = select i1 %.not, ptr undef, ptr %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i, !dbg !2324
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtB4_3ops12control_flow11ControlFlowINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EEECslIvKsLJE9Zc_10polars_ffi.exit, !dbg !2325
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtB4_3ops12control_flow11ControlFlowINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EEECslIvKsLJE9Zc_10polars_ffi.exit: ; preds = %_RINvXNtNtCscgRAwXFJnXP_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtB7_5slice4iter4IterONtNtNtCs8774dFTUdNv_12polars_arrow3ffi9generated10ArrowArrayENCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB57_12try_for_each4callINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtB1L_5array5ArrayEL_EINtNtNtB7_3ops12control_flow11ControlFlowB6j_ENcNtB7h_5Break0E0B7h_EB2K_.exit, %bb.a
@@ -902,16 +899,16 @@ begin_hunk_1_@llvm.umax.i64
 !2166 = distinct !DILexicalBlock(scope: !2119, file: !146, line: 197, column: 17)
 !2167 = distinct !DILocation(line: 198, column: 21, scope: !2166, inlinedAt: !2120)
 !2168 = distinct !DILocation(line: 810, column: 1, scope: !2165, inlinedAt: !2167)
-!2169 = distinct !DISubprogram(name: "from_try<core::ops::control_flow::ControlFlow<alloc::boxed::Box<dyn polars_arrow::array::Array, alloc::alloc::Global>, ()>>", linkageName: "_RNvMs3_NtNtCscgRAwXFJnXP_4core3ops12control_flowINtB5_11ControlFlowIBL_INtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EEE8from_tryCslIvKsLJE9Zc_10polars_ffi", scope: !2229, file: !2227, line: 429, type: !74, scopeLine: 429, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !73)
-!2170 = distinct !DILexicalBlock(scope: !2169, file: !2227, line: 432, column: 13)
+!2169 = distinct !DISubprogram(name: "from_try<core::ops::control_flow::ControlFlow<alloc::boxed::Box<dyn polars_arrow::array::Array, alloc::alloc::Global>, ()>>", linkageName: "_RNvMs3_NtNtCscgRAwXFJnXP_4core3ops12control_flowINtB5_11ControlFlowIBL_INtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EEE8from_tryCslIvKsLJE9Zc_10polars_ffi", scope: !2231, file: !2229, line: 429, type: !74, scopeLine: 429, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !73)
+!2170 = distinct !DILexicalBlock(scope: !2169, file: !2229, line: 432, column: 13)
 !2171 = distinct !DILexicalBlock(scope: !2119, file: !146, line: 196, column: 17)
 !2172 = distinct !DILocation(line: 196, column: 45, scope: !2171, inlinedAt: !2120)
 !2173 = distinct !{!2173, !"_RNvXNtNtCscgRAwXFJnXP_4core3ops12control_flowINtB2_11ControlFlowIBI_INtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EEENtNtB4_9try_trait3Try6branchCslIvKsLJE9Zc_10polars_ffi"}
 !2174 = distinct !{!2174, !2173, !"_RNvXNtNtCscgRAwXFJnXP_4core3ops12control_flowINtB2_11ControlFlowIBI_INtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EEENtNtB4_9try_trait3Try6branchCslIvKsLJE9Zc_10polars_ffi: argument 1"}
 !2175 = distinct !{!2175, !2173, !"_RNvXNtNtCscgRAwXFJnXP_4core3ops12control_flowINtB2_11ControlFlowIBI_INtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EEENtNtB4_9try_trait3Try6branchCslIvKsLJE9Zc_10polars_ffi: argument 0"}
-!2176 = distinct !DISubprogram(name: "branch<core::ops::control_flow::ControlFlow<alloc::boxed::Box<dyn polars_arrow::array::Array, alloc::alloc::Global>, ()>, ()>", linkageName: "_RNvXNtNtCscgRAwXFJnXP_4core3ops12control_flowINtB2_11ControlFlowIBI_INtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EEENtNtB4_9try_trait3Try6branchCslIvKsLJE9Zc_10polars_ffi", scope: !2235, file: !2227, line: 115, type: !74, scopeLine: 115, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !73)
+!2176 = distinct !DISubprogram(name: "branch<core::ops::control_flow::ControlFlow<alloc::boxed::Box<dyn polars_arrow::array::Array, alloc::alloc::Global>, ()>, ()>", linkageName: "_RNvXNtNtCscgRAwXFJnXP_4core3ops12control_flowINtB2_11ControlFlowIBI_INtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EEENtNtB4_9try_trait3Try6branchCslIvKsLJE9Zc_10polars_ffi", scope: !2235, file: !2229, line: 115, type: !74, scopeLine: 115, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !73)
 !2177 = distinct !DILocation(line: 2509, column: 21, scope: !2010, inlinedAt: !2011)
-!2178 = distinct !DISubprogram(name: "break_value<alloc::boxed::Box<dyn polars_arrow::array::Array, alloc::alloc::Global>, ()>", linkageName: "_RNvMs1_NtNtCscgRAwXFJnXP_4core3ops12control_flowINtB5_11ControlFlowINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EE11break_valueCslIvKsLJE9Zc_10polars_ffi", scope: !2229, file: !2227, line: 190, type: !74, scopeLine: 190, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !73)
+!2178 = distinct !DISubprogram(name: "break_value<alloc::boxed::Box<dyn polars_arrow::array::Array, alloc::alloc::Global>, ()>", linkageName: "_RNvMs1_NtNtCscgRAwXFJnXP_4core3ops12control_flowINtB5_11ControlFlowINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EE11break_valueCslIvKsLJE9Zc_10polars_ffi", scope: !2231, file: !2229, line: 190, type: !74, scopeLine: 190, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !73)
 !2179 = !{!1992}
 !2180 = !DILocation(line: 177, column: 14, scope: !1990)
 !2181 = !{!1997}
@@ -960,15 +957,15 @@ begin_hunk_1_@llvm.umax.i64
 !2224 = !{!2161}
 !2225 = !{!2163, !1998}
 !2226 = !{!2161, !2164, !2020, !2006, !2000, !2005, !1997, !1992}
-!2227 = !DIFile(filename: "library/core/src/ops/control_flow.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "c18dd312dbf3030aa6bcafa45bc21974")
-!2228 = !DINamespace(name: "control_flow", scope: !103)
-!2229 = !DINamespace(name: "ControlFlow", scope: !2228)
-!2230 = !{!2161, !2020}
-!2231 = !{!2164, !2006, !2000, !2005, !1997, !1998, !1992}
+!2227 = !{!2161, !2020}
+!2228 = !{!2164, !2006, !2000, !2005, !1997, !1998, !1992}
+!2229 = !DIFile(filename: "library/core/src/ops/control_flow.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "c18dd312dbf3030aa6bcafa45bc21974")
+!2230 = !DINamespace(name: "control_flow", scope: !103)
+!2231 = !DINamespace(name: "ControlFlow", scope: !2230)
 !2232 = !{!2161, !2020, !2006, !2000, !2005, !1997, !1992}
 !2233 = !{!2174}
 !2234 = !{!2175, !2006, !2000, !2005, !1997, !1998, !1992}
-!2235 = !DINamespace(name: "{impl#0}", scope: !2228)
+!2235 = !DINamespace(name: "{impl#0}", scope: !2230)
 !2236 = !DILocation(line: 177, column: 47, scope: !1990)
 !2237 = !DILocation(line: 2571, column: 14, scope: !1993, inlinedAt: !2180)
 !2238 = !DILocation(line: 195, column: 29, scope: !1994, inlinedAt: !1995)
