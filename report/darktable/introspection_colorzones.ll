@@ -205,7 +205,6 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   %i.bl = fmul reassoc nsz arcp contract afn float %i.bk, %i.av
   %i.bm = fadd reassoc nsz arcp contract afn float %i.bl, %i.bj
   %i.bn = fmul reassoc nsz arcp contract afn float %i.bm, %i.am
-  %6 = fadd reassoc nsz arcp contract afn float %i.al, %i.bn
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.at
   %i.bp = load float, ptr %i.bo, align 4, !tbaa !12
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.ay
@@ -221,7 +220,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   %i.bz = fmul reassoc nsz arcp contract afn float %exp2, %i.bw
   store float %i.bz, ptr %i.t, align 4, !tbaa !12
   %i.ca = fadd reassoc nsz arcp contract afn float %i.ab, -5.000000e-01
-  %i.cb = fadd reassoc nsz arcp contract afn float %i.ca, %6
+  %6 = fadd reassoc nsz arcp contract afn float %i.ca, %i.al
+  %i.cb = fadd reassoc nsz arcp contract afn float %6, %i.bn
   %i.cc = fmul reassoc nsz arcp contract afn float %i.cb, f0x40C90FDB
   %sincos = tail call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %i.cc) ; 2 uses
   %sin = extractvalue { float, float } %sincos, 0

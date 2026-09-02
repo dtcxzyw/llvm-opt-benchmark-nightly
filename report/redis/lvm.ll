@@ -202,7 +202,7 @@ define internal fastcc void @Arith(ptr noundef %0, ptr noundef %1, ptr noundef %
 bb.a:
   %i.a = alloca double, align 8                   ; 5 uses
   %i.b = alloca double, align 8                   ; 5 uses
-  %.sroa.060 = alloca ptr, align 8                ; 4 uses
+  %.sroa.060 = alloca double, align 8             ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.060)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8

@@ -202,12 +202,12 @@ bb.n:                                             ; preds = %bb.q
   br i1 %.not, label %.body, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  store i8 0, ptr %6, align 1
-  %i.s = icmp eq i64 %.sroa.10.060, 0
+  store i8 0, ptr %.sroa.051.057, align 1
+  %i.s = icmp eq i64 %.sroa.10.058, 0
   br i1 %i.s, label %.body, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %6, i64 noundef range(i64 1, 0) %.sroa.10.060, i64 noundef 1) #12
+  call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.051.057, i64 noundef range(i64 1, 0) %.sroa.10.058, i64 noundef 1) #12
   br label %.body
 
 .cont:                                            ; preds = %bb.i
@@ -219,9 +219,9 @@ bb.p:                                             ; preds = %bb.o
   br label %"_ZN4core6option15Option$LT$T$GT$6map_or17h765e68e151e9b886E.exit"
 
 "_ZN4core6option15Option$LT$T$GT$6map_or17h765e68e151e9b886E.exit": ; preds = %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h5dba90d1d1ee9d75E.exit32", %.cont
-  %6 = phi ptr [ %i.u, %.cont ], [ null, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h5dba90d1d1ee9d75E.exit32" ] ; 7 uses
-  %.sroa.10.060 = phi i64 [ %i.w, %.cont ], [ undef, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h5dba90d1d1ee9d75E.exit32" ] ; 6 uses
-  %i.x = call noundef ptr @EVP_MD_fetch(ptr noundef %1, ptr noundef nonnull %i.j, ptr noundef %6) #12 ; 2 uses
+  %.sroa.10.058 = phi i64 [ %i.w, %.cont ], [ undef, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h5dba90d1d1ee9d75E.exit32" ] ; 6 uses
+  %.sroa.051.057 = phi ptr [ %i.u, %.cont ], [ null, %"_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h5dba90d1d1ee9d75E.exit32" ] ; 7 uses
+  %i.x = call noundef ptr @EVP_MD_fetch(ptr noundef %1, ptr noundef nonnull %i.j, ptr noundef %.sroa.051.057) #12 ; 2 uses
   %i.y = icmp eq ptr %i.x, null
   br i1 %i.y, label %bb.q, label %bb.r
 
@@ -237,12 +237,12 @@ bb.r:                                             ; preds = %"_ZN4core6option15O
   br i1 %.not, label %"_ZN4core3ptr75drop_in_place$LT$core..option..Option$LT$alloc..ffi..c_str..CString$GT$$GT$17h6fcf3a065d70696cE.exit45", label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  store i8 0, ptr %6, align 1
-  %i.aa = icmp eq i64 %.sroa.10.060, 0
+  store i8 0, ptr %.sroa.051.057, align 1
+  %i.aa = icmp eq i64 %.sroa.10.058, 0
   br i1 %i.aa, label %"_ZN4core3ptr75drop_in_place$LT$core..option..Option$LT$alloc..ffi..c_str..CString$GT$$GT$17h6fcf3a065d70696cE.exit45", label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %6, i64 noundef range(i64 1, 0) %.sroa.10.060, i64 noundef 1) #12
+  call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.051.057, i64 noundef range(i64 1, 0) %.sroa.10.058, i64 noundef 1) #12
   br label %"_ZN4core3ptr75drop_in_place$LT$core..option..Option$LT$alloc..ffi..c_str..CString$GT$$GT$17h6fcf3a065d70696cE.exit45"
 
 bb.u:                                             ; preds = %bb.q
@@ -260,12 +260,12 @@ bb.u:                                             ; preds = %bb.q
   br i1 %.not, label %"_ZN4core3ptr75drop_in_place$LT$core..option..Option$LT$alloc..ffi..c_str..CString$GT$$GT$17h6fcf3a065d70696cE.exit46", label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  store i8 0, ptr %6, align 1
-  %i.ab = icmp eq i64 %.sroa.10.060, 0
+  store i8 0, ptr %.sroa.051.057, align 1
+  %i.ab = icmp eq i64 %.sroa.10.058, 0
   br i1 %i.ab, label %"_ZN4core3ptr75drop_in_place$LT$core..option..Option$LT$alloc..ffi..c_str..CString$GT$$GT$17h6fcf3a065d70696cE.exit46", label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %6, i64 noundef range(i64 1, 0) %.sroa.10.060, i64 noundef 1) #12
+  call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.051.057, i64 noundef range(i64 1, 0) %.sroa.10.058, i64 noundef 1) #12
   br label %"_ZN4core3ptr75drop_in_place$LT$core..option..Option$LT$alloc..ffi..c_str..CString$GT$$GT$17h6fcf3a065d70696cE.exit46"
 
 "_ZN4core3ptr75drop_in_place$LT$core..option..Option$LT$alloc..ffi..c_str..CString$GT$$GT$17h6fcf3a065d70696cE.exit46": ; preds = %bb.w, %bb.v, %bb.u

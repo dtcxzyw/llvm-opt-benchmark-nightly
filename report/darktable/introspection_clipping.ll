@@ -204,7 +204,7 @@ bb.a:
   %i.j = fmul reassoc nsz arcp contract afn float %i.i, %4
   %i.k = fmul reassoc nsz arcp contract afn float %5, %3 ; 6 uses
   %i.l = fmul reassoc nsz arcp contract afn float %i.k, %6 ; 2 uses
-  %i.m = fadd reassoc nsz arcp contract afn float %i.l, %i.j
+  %i.m = fadd reassoc nsz arcp contract afn float %i.j, %i.l
   %i.n = fadd reassoc nsz arcp contract afn float %i.m, %i.g
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.p = load float, ptr %i.o, align 4, !tbaa !13
@@ -226,7 +226,7 @@ bb.a:
   %i.ae = fsub reassoc nsz arcp contract afn float %i.ad, %i.x
   %i.af = fsub reassoc nsz arcp contract afn float %i.w, %i.u
   %i.ag = fmul reassoc nsz arcp contract afn float %i.af, %4
-  %i.ah = fadd reassoc nsz arcp contract afn float %i.ag, %i.v
+  %i.ah = fadd reassoc nsz arcp contract afn float %i.v, %i.ag
   %i.ai = fadd reassoc nsz arcp contract afn float %i.ah, %i.ae
   %i.aj = load float, ptr %i.o, align 4, !tbaa !13
   %i.ak = fmul reassoc nsz arcp contract afn float %i.aj, %i.ai
@@ -277,9 +277,9 @@ bb.a:
   %i.bw = fmul reassoc nsz arcp contract afn float %i.bq, %3 ; 2 uses
   %i.bx = fmul reassoc nsz arcp contract afn float %i.b, %i.bw ; 2 uses
   %i.by = fmul reassoc nsz arcp contract afn float %i.v, %5 ; 3 uses
-  %i.bz = fadd reassoc nsz arcp contract afn float %i.bx, %i.bs
-  %13 = fadd reassoc nsz arcp contract afn float %i.by, %i.bv
-  %14 = fsub reassoc nsz arcp contract afn float %i.bz, %13
+  %i.bz = fadd reassoc nsz arcp contract afn float %i.by, %i.bv
+  %13 = fsub reassoc nsz arcp contract afn float %i.bx, %i.bz
+  %14 = fadd reassoc nsz arcp contract afn float %13, %i.bs
   %i.ca = fmul reassoc nsz arcp contract afn float %14, %4
   %i.cb = fmul reassoc nsz arcp contract afn float %5, %5
   %i.cc = fsub reassoc nsz arcp contract afn float %i.cb, %i.b
@@ -287,8 +287,8 @@ bb.a:
   %i.ce = fmul reassoc nsz arcp contract afn float %i.cd, %i.cc
   %i.cf = fmul reassoc nsz arcp contract afn float %i.w, -2.000000e+00
   %i.cg = fmul reassoc nsz arcp contract afn float %i.cf, %6
-  %i.ch = fadd reassoc nsz arcp contract afn float %i.cg, %i.bu
-  %i.ci = fadd reassoc nsz arcp contract afn float %i.ch, %i.v
+  %i.ch = fadd reassoc nsz arcp contract afn float %i.bu, %i.v
+  %i.ci = fadd reassoc nsz arcp contract afn float %i.ch, %i.cg
   %i.cj = fmul reassoc nsz arcp contract afn float %i.ci, %i.at
   %i.ck = fadd reassoc nsz arcp contract afn float %i.cj, %i.ce
   %i.cl = fadd reassoc nsz arcp contract afn float %i.ck, %i.ca

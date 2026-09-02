@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %.body
 define hidden void @_RINvXs4_NtNtCsgZ49sUHp3tW_5alloc3vec9into_iterINtB6_8IntoIterNtNtCs2mZqlW55729_12polars_utils5arena4NodeENtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1L_8adapters3map12map_try_foldBX_INtNtB1N_6result6ResultINtNtBa_5boxed3BoxDNtNtNtCseyIfFeUOWMb_17polars_mem_engine9executors8executor8ExecutorEL_ENtCsgjwxzEoLG5s_12polars_error11PolarsErrorEuINtNtNtB1N_3ops12control_flow11ControlFlowIB60_B3O_EENCNCNCNvNtNtB4d_7planner2lp25create_physical_plan_impl0s1_00NCINvXB2R_INtB2R_12GenericShuntINtB2P_3MapBI_B6Q_EIB3s_NtNtB1N_7convert10InfallibleB5g_EEB1F_8try_folduNCINvNvB1F_12try_for_each4callB3O_B6F_NcNtB6F_5Break0E0B6F_E0E0B5Z_EB4d_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !14085 {
 bb.a:
   %i.a = alloca [72 x i8], align 8                ; 7 uses
-  %.sroa.4 = alloca i64, align 8                  ; 5 uses
-  %.sroa.75 = alloca i64, align 8                 ; 4 uses
+  %.sroa.4 = alloca ptr, align 8                  ; 5 uses
+  %.sroa.75 = alloca ptr, align 8                 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !14145
   %i.c = load ptr, ptr %i.b, align 8, !dbg !14146, !nonnull !1484, !noundef !1484
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !14147 ; 2 uses
@@ -258,8 +258,7 @@ bb.d:                                             ; preds = %bb.c
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEECseyIfFeUOWMb_17polars_mem_engine.exit.i.i unwind label %bb.f, !dbg !14163, !noalias !14139
 
 bb.e:                                             ; preds = %bb.b
-  %3 = ptrtoint ptr %.sroa.4.0.copyload.i to i64, !dbg !14164
-  store i64 %3, ptr %.sroa.4, align 8, !dbg !14164, !alias.scope !14140, !noalias !14141
+  store ptr %.sroa.4.0.copyload.i, ptr %.sroa.4, align 8, !dbg !14164, !alias.scope !14140, !noalias !14141
   br label %bb.h, !dbg !14165
 
 bb.f:                                             ; preds = %bb.d
@@ -294,16 +293,14 @@ bb.h:                                             ; preds = %_RINvNtCscgRAwXFJnX
   %.sink.i.i = phi ptr [ %.sroa.5.0.copyload.i, %bb.e ], [ null, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEECseyIfFeUOWMb_17polars_mem_engine.exit.i.i ]
   store ptr %.sink.i.i, ptr %.sink23.i.i.sroa.phi, align 8, !dbg !14171, !alias.scope !14140, !noalias !14141
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !14172
-  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. = load i64, ptr %.sroa.4, align 8, !dbg !14173, !alias.scope !14142, !noalias !14143, !noundef !1484
-  %4 = inttoptr i64 %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. to ptr, !dbg !14173
-  %.sroa.75.0..sroa.75.0..sroa.75.0..sroa.75.16. = load i64, ptr %.sroa.75, align 8, !dbg !14173, !alias.scope !14142, !noalias !14143
-  %5 = inttoptr i64 %.sroa.75.0..sroa.75.0..sroa.75.0..sroa.75.16. to ptr, !dbg !14173
+  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. = load ptr, ptr %.sroa.4, align 8, !dbg !14173, !alias.scope !14142, !noalias !14143, !noundef !1484
+  %.sroa.75.0..sroa.75.0..sroa.75.0..sroa.75.16. = load ptr, ptr %.sroa.75, align 8, !dbg !14173, !alias.scope !14142, !noalias !14143
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4), !dbg !14174
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.75), !dbg !14174
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !14175
-  store ptr %4, ptr %i.x, align 8, !dbg !14175, !alias.scope !14144
+  store ptr %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8., ptr %i.x, align 8, !dbg !14175, !alias.scope !14144
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !14175
-  store ptr %5, ptr %i.y, align 8, !dbg !14175, !alias.scope !14144
+  store ptr %.sroa.75.0..sroa.75.0..sroa.75.0..sroa.75.16., ptr %i.y, align 8, !dbg !14175, !alias.scope !14144
   br label %bb.g, !dbg !14176
 }
 
@@ -311,8 +308,8 @@ bb.h:                                             ; preds = %_RINvNtCscgRAwXFJnX
 define hidden void @_RINvXs4_NtNtCsgZ49sUHp3tW_5alloc3vec9into_iterINtB6_8IntoIterNtNtCs2mZqlW55729_12polars_utils5arena4NodeENtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1L_8adapters3map12map_try_foldBX_INtNtB1N_6result6ResultINtNtBa_5boxed3BoxDNtNtNtCseyIfFeUOWMb_17polars_mem_engine9executors8executor8ExecutorEL_ENtCsgjwxzEoLG5s_12polars_error11PolarsErrorEuINtNtNtB1N_3ops12control_flow11ControlFlowIB60_B3O_EENCNCNCNvNtNtB4d_7planner2lp25create_physical_plan_impl0s2_00NCINvXB2R_INtB2R_12GenericShuntINtB2P_3MapBI_B6Q_EIB3s_NtNtB1N_7convert10InfallibleB5g_EEB1F_8try_folduNCINvNvB1F_12try_for_each4callB3O_B6F_NcNtB6F_5Break0E0B6F_E0E0B5Z_EB4d_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !14177 {
 bb.a:
   %i.a = alloca [72 x i8], align 8                ; 7 uses
-  %.sroa.4 = alloca i64, align 8                  ; 5 uses
-  %.sroa.75 = alloca i64, align 8                 ; 4 uses
+  %.sroa.4 = alloca ptr, align 8                  ; 5 uses
+  %.sroa.75 = alloca ptr, align 8                 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !14237
   %i.c = load ptr, ptr %i.b, align 8, !dbg !14238, !nonnull !1484, !noundef !1484
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !14239 ; 2 uses
@@ -365,8 +362,7 @@ bb.d:                                             ; preds = %bb.c
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEECseyIfFeUOWMb_17polars_mem_engine.exit.i.i unwind label %bb.f, !dbg !14255, !noalias !14231
 
 bb.e:                                             ; preds = %bb.b
-  %3 = ptrtoint ptr %.sroa.4.0.copyload.i to i64, !dbg !14256
-  store i64 %3, ptr %.sroa.4, align 8, !dbg !14256, !alias.scope !14232, !noalias !14233
+  store ptr %.sroa.4.0.copyload.i, ptr %.sroa.4, align 8, !dbg !14256, !alias.scope !14232, !noalias !14233
   br label %bb.h, !dbg !14257
 
 bb.f:                                             ; preds = %bb.d
@@ -401,16 +397,14 @@ bb.h:                                             ; preds = %_RINvNtCscgRAwXFJnX
   %.sink.i.i = phi ptr [ %.sroa.5.0.copyload.i, %bb.e ], [ null, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEECseyIfFeUOWMb_17polars_mem_engine.exit.i.i ]
   store ptr %.sink.i.i, ptr %.sink23.i.i.sroa.phi, align 8, !dbg !14263, !alias.scope !14232, !noalias !14233
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !14264
-  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. = load i64, ptr %.sroa.4, align 8, !dbg !14265, !alias.scope !14234, !noalias !14235, !noundef !1484
-  %4 = inttoptr i64 %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. to ptr, !dbg !14265
-  %.sroa.75.0..sroa.75.0..sroa.75.0..sroa.75.16. = load i64, ptr %.sroa.75, align 8, !dbg !14265, !alias.scope !14234, !noalias !14235
-  %5 = inttoptr i64 %.sroa.75.0..sroa.75.0..sroa.75.0..sroa.75.16. to ptr, !dbg !14265
+  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. = load ptr, ptr %.sroa.4, align 8, !dbg !14265, !alias.scope !14234, !noalias !14235, !noundef !1484
+  %.sroa.75.0..sroa.75.0..sroa.75.0..sroa.75.16. = load ptr, ptr %.sroa.75, align 8, !dbg !14265, !alias.scope !14234, !noalias !14235
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4), !dbg !14266
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.75), !dbg !14266
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !14267
-  store ptr %4, ptr %i.x, align 8, !dbg !14267, !alias.scope !14236
+  store ptr %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8., ptr %i.x, align 8, !dbg !14267, !alias.scope !14236
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !14267
-  store ptr %5, ptr %i.y, align 8, !dbg !14267, !alias.scope !14236
+  store ptr %.sroa.75.0..sroa.75.0..sroa.75.0..sroa.75.16., ptr %i.y, align 8, !dbg !14267, !alias.scope !14236
   br label %bb.g, !dbg !14268
 }
 
@@ -418,8 +412,8 @@ bb.h:                                             ; preds = %_RINvNtCscgRAwXFJnX
 define hidden void @_RINvXs4_NtNtCsgZ49sUHp3tW_5alloc3vec9into_iterINtB6_8IntoIterNtNtCs2mZqlW55729_12polars_utils5arena4NodeENtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1L_8adapters3map12map_try_foldBX_INtNtB1N_6result6ResultINtNtBa_5boxed3BoxDNtNtNtCseyIfFeUOWMb_17polars_mem_engine9executors8executor8ExecutorEL_ENtCsgjwxzEoLG5s_12polars_error11PolarsErrorEuINtNtNtB1N_3ops12control_flow11ControlFlowIB60_B3O_EENCNCNvNtNtB4d_7planner2lp25create_physical_plan_impl0se_0NCINvXB2R_INtB2R_12GenericShuntINtB2P_3MapBI_B6Q_EIB3s_NtNtB1N_7convert10InfallibleB5g_EEB1F_8try_folduNCINvNvB1F_12try_for_each4callB3O_B6F_NcNtB6F_5Break0E0B6F_E0E0B5Z_EB4d_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !14269 {
 bb.a:
   %i.a = alloca [72 x i8], align 8                ; 7 uses
-  %.sroa.4 = alloca i64, align 8                  ; 5 uses
-  %.sroa.75 = alloca i64, align 8                 ; 4 uses
+  %.sroa.4 = alloca ptr, align 8                  ; 5 uses
+  %.sroa.75 = alloca ptr, align 8                 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !14328
   %i.c = load ptr, ptr %i.b, align 8, !dbg !14329, !nonnull !1484, !noundef !1484
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !14330 ; 2 uses
@@ -472,8 +466,7 @@ bb.d:                                             ; preds = %bb.c
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEECseyIfFeUOWMb_17polars_mem_engine.exit.i.i unwind label %bb.f, !dbg !14346, !noalias !14322
 
 bb.e:                                             ; preds = %bb.b
-  %3 = ptrtoint ptr %.sroa.4.0.copyload.i to i64, !dbg !14347
-  store i64 %3, ptr %.sroa.4, align 8, !dbg !14347, !alias.scope !14323, !noalias !14324
+  store ptr %.sroa.4.0.copyload.i, ptr %.sroa.4, align 8, !dbg !14347, !alias.scope !14323, !noalias !14324
   br label %bb.h, !dbg !14348
 
 bb.f:                                             ; preds = %bb.d
@@ -508,16 +501,14 @@ bb.h:                                             ; preds = %_RINvNtCscgRAwXFJnX
   %.sink.i.i = phi ptr [ %.sroa.5.0.copyload.i, %bb.e ], [ null, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEECseyIfFeUOWMb_17polars_mem_engine.exit.i.i ]
   store ptr %.sink.i.i, ptr %.sink23.i.i.sroa.phi, align 8, !dbg !14354, !alias.scope !14323, !noalias !14324
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !14355
-  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. = load i64, ptr %.sroa.4, align 8, !dbg !14356, !alias.scope !14325, !noalias !14326, !noundef !1484
-  %4 = inttoptr i64 %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. to ptr, !dbg !14356
-  %.sroa.75.0..sroa.75.0..sroa.75.0..sroa.75.16. = load i64, ptr %.sroa.75, align 8, !dbg !14356, !alias.scope !14325, !noalias !14326
-  %5 = inttoptr i64 %.sroa.75.0..sroa.75.0..sroa.75.0..sroa.75.16. to ptr, !dbg !14356
+  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. = load ptr, ptr %.sroa.4, align 8, !dbg !14356, !alias.scope !14325, !noalias !14326, !noundef !1484
+  %.sroa.75.0..sroa.75.0..sroa.75.0..sroa.75.16. = load ptr, ptr %.sroa.75, align 8, !dbg !14356, !alias.scope !14325, !noalias !14326
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4), !dbg !14357
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.75), !dbg !14357
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !14358
-  store ptr %4, ptr %i.x, align 8, !dbg !14358, !alias.scope !14327
+  store ptr %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8., ptr %i.x, align 8, !dbg !14358, !alias.scope !14327
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !14358
-  store ptr %5, ptr %i.y, align 8, !dbg !14358, !alias.scope !14327
+  store ptr %.sroa.75.0..sroa.75.0..sroa.75.0..sroa.75.16., ptr %i.y, align 8, !dbg !14358, !alias.scope !14327
   br label %bb.g, !dbg !14359
 }
 

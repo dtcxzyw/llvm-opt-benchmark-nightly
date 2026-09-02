@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.b
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN9SolveTask3runEi(ptr noundef nonnull align 8 dereferenceable(56) %0, i32 noundef %1) local_unnamed_addr #16 comdat align 2 {
 bb.a:
-  %.sroa.0 = alloca [4 x float], align 16         ; 6 uses
-  %.sroa.6 = alloca [4 x float], align 16         ; 6 uses
+  %.sroa.0 = alloca <4 x float>, align 16         ; 6 uses
+  %.sroa.6 = alloca <4 x float>, align 16         ; 6 uses
   %i.a = alloca [4 x float], align 16             ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32

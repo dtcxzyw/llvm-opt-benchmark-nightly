@@ -205,8 +205,8 @@ define internal fastcc void @_RNCINvNtCsf1gSX8u3EQ2_10rayon_core4join12join_cont
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
   %i.b = alloca [24 x i8], align 16               ; 5 uses
-  %.sroa.0 = alloca i64, align 8                  ; 4 uses
-  %.sroa.4 = alloca i64, align 8                  ; 3 uses
+  %.sroa.0 = alloca ptr, align 8                  ; 4 uses
+  %.sroa.4 = alloca ptr, align 8                  ; 3 uses
   %.sroa.5 = alloca i64, align 8                  ; 4 uses
   %i.c = alloca [136 x i8], align 8               ; 10 uses
   %i.d = alloca [24 x i8], align 8                ; 4 uses
@@ -383,8 +383,8 @@ bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  %.sroa.0.0.copyload = load i64, ptr %i.e, align 16
-  store i64 %.sroa.0.0.copyload, ptr %.sroa.0, align 8
+  %.sroa.0.0.copyload = load ptr, ptr %i.e, align 16
+  store ptr %.sroa.0.0.copyload, ptr %.sroa.0, align 8
   %.sroa.5.0.copyload = load i64, ptr %.sink.sroa.gep148, align 16
   store i64 %.sroa.5.0.copyload, ptr %.sroa.5, align 8
   %.sroa.065.0.copyload = load i64, ptr %i.f, align 8
@@ -644,8 +644,8 @@ define internal fastcc void @_RNCINvNtCsf1gSX8u3EQ2_10rayon_core4join12join_cont
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [24 x i8], align 16               ; 5 uses
-  %.sroa.0 = alloca i64, align 8                  ; 4 uses
-  %.sroa.4 = alloca i64, align 8                  ; 3 uses
+  %.sroa.0 = alloca ptr, align 8                  ; 4 uses
+  %.sroa.4 = alloca ptr, align 8                  ; 3 uses
   %.sroa.5 = alloca i64, align 8                  ; 4 uses
   %i.c = alloca [128 x i8], align 8               ; 10 uses
   %i.d = alloca [24 x i8], align 8                ; 4 uses
@@ -822,8 +822,8 @@ bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  %.sroa.0.0.copyload = load i64, ptr %i.e, align 16
-  store i64 %.sroa.0.0.copyload, ptr %.sroa.0, align 8
+  %.sroa.0.0.copyload = load ptr, ptr %i.e, align 16
+  store ptr %.sroa.0.0.copyload, ptr %.sroa.0, align 8
   %.sroa.5.0.copyload = load i64, ptr %.sink.sroa.gep148, align 16
   store i64 %.sroa.5.0.copyload, ptr %.sroa.5, align 8
   %.sroa.3.0.copyload = load i64, ptr %i.k, align 8
@@ -1226,10 +1226,10 @@ bb.ee:                                            ; preds = %_RNvXs1_NtCs1xwejQu
 _RNvXsz_NtCsakL8LGkl72C_4ecow3vecINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs9fPPV5zPXBl_5typst.exit.us.i.i.i.i: ; preds = %.lr.ph.i.i.i.i170, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9fPPV5zPXBl_5typst.exit.us.i.i.i.i
   %i.ow = phi ptr [ %i.pf, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9fPPV5zPXBl_5typst.exit.us.i.i.i.i ], [ %.sroa.10.0.i.i.i, %.lr.ph.i.i.i.i170 ]
   %i.ox = phi i64 [ %i.ph, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9fPPV5zPXBl_5typst.exit.us.i.i.i.i ], [ 1, %.lr.ph.i.i.i.i170 ] ; 6 uses
-  %.val1112.us.i.i.i.i = phi i64 [ %i.oy, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9fPPV5zPXBl_5typst.exit.us.i.i.i.i ], [ %.promoted.i.i.i.i, %.lr.ph.i.i.i.i170 ] ; 2 uses
+  %.val1112.us.i.i.i.i = phi i64 [ %i.oy, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9fPPV5zPXBl_5typst.exit.us.i.i.i.i ], [ %.promoted.i.i.i.i, %.lr.ph.i.i.i.i170 ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !34172)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.av), !noalias !34173
-  %i.oy = add nuw i64 %.val1112.us.i.i.i.i, 1     ; 5 uses
+  %i.oy = add nuw i64 %.val1112.us.i.i.i.i, 1     ; 4 uses
   %i.oz = getelementptr inbounds nuw [24 x i8], ptr %i.ot, i64 %.val1112.us.i.i.i.i ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.av, ptr noundef nonnull align 8 dereferenceable(24) %i.oz, i64 24, i1 false), !noalias !34174
   %.sroa.0.0.copyload6.us.i.i.i.i = load ptr, ptr %i.av, align 8, !noalias !34175 ; 2 uses
@@ -1249,9 +1249,8 @@ bb.ef:                                            ; preds = %_RNvXsz_NtCsakL8LGk
   br i1 %i.pd, label %bb.eg, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9fPPV5zPXBl_5typst.exit.us.i.i.i.i
 
 bb.eg:                                            ; preds = %bb.ef
-  %i.pe = sub i64 %i.oo, %i.oy
-  %0 = call i64 @llvm.uadd.sat.i64(i64 %i.pe, i64 1)
-  invoke fastcc void @_RINvNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs9fPPV5zPXBl_5typst(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ba, i64 noundef %i.ox, i64 noundef range(i64 1, 0) %0, i64 noundef 8, i64 noundef 24)
+  %i.pe = sub nuw i64 %i.oo, %.val1112.us.i.i.i.i
+  invoke fastcc void @_RINvNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs9fPPV5zPXBl_5typst(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ba, i64 noundef %i.ox, i64 noundef range(i64 1, 0) %i.pe, i64 noundef 8, i64 noundef 24)
           to label %._RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9fPPV5zPXBl_5typst.exit.us.i.i_crit_edge.i.i unwind label %.split.us.i.i.i.i, !noalias !34178
 
 ._RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9fPPV5zPXBl_5typst.exit.us.i.i_crit_edge.i.i: ; preds = %bb.eg
@@ -1278,10 +1277,10 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11
 .lr.ph.split.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i170, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9fPPV5zPXBl_5typst.exit.i.i.i.i
   %i.pj = phi ptr [ %i.ps, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9fPPV5zPXBl_5typst.exit.i.i.i.i ], [ %.sroa.10.0.i.i.i, %.lr.ph.i.i.i.i170 ]
   %i.pk = phi i64 [ %i.pu, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9fPPV5zPXBl_5typst.exit.i.i.i.i ], [ 1, %.lr.ph.i.i.i.i170 ] ; 6 uses
-  %.val1112.i.i.i.i = phi i64 [ %i.pl, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9fPPV5zPXBl_5typst.exit.i.i.i.i ], [ %.promoted.i.i.i.i, %.lr.ph.i.i.i.i170 ] ; 3 uses
+  %.val1112.i.i.i.i = phi i64 [ %i.pl, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9fPPV5zPXBl_5typst.exit.i.i.i.i ], [ %.promoted.i.i.i.i, %.lr.ph.i.i.i.i170 ] ; 4 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !34172)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.av), !noalias !34173
-  %i.pl = add nuw i64 %.val1112.i.i.i.i, 1        ; 6 uses
+  %i.pl = add nuw i64 %.val1112.i.i.i.i, 1        ; 5 uses
   %i.pm = icmp ult i64 %.val1112.i.i.i.i, %i.ov
   call void @llvm.assume(i1 %i.pm)
   %i.pn = getelementptr inbounds nuw [24 x i8], ptr %i.ot, i64 %.val1112.i.i.i.i
@@ -1341,9 +1340,8 @@ bb.ej:                                            ; preds = %.split.i.i.i.i, %.s
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentECs9fPPV5zPXBl_5typst.exit.i.i.i.i unwind label %bb.el, !noalias !34176
 
 bb.ek:                                            ; preds = %bb.ei
-  %i.pw = sub i64 %i.oo, %i.pl
-  %1 = call i64 @llvm.uadd.sat.i64(i64 %i.pw, i64 1)
-  invoke fastcc void @_RINvNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs9fPPV5zPXBl_5typst(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ba, i64 noundef %i.pk, i64 noundef range(i64 1, 0) %1, i64 noundef 8, i64 noundef 24)
+  %i.pw = sub nuw i64 %i.oo, %.val1112.i.i.i.i
+  invoke fastcc void @_RINvNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs9fPPV5zPXBl_5typst(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ba, i64 noundef %i.pk, i64 noundef range(i64 1, 0) %i.pw, i64 noundef 8, i64 noundef 24)
           to label %._RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9fPPV5zPXBl_5typst.exit.i.i_crit_edge.i.i unwind label %.split.i.i.i.i, !noalias !34178
 
 ._RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs9fPPV5zPXBl_5typst.exit.i.i_crit_edge.i.i: ; preds = %bb.ek
@@ -1746,7 +1744,7 @@ bb.a:
   %i.bq = alloca [24 x i8], align 8               ; 6 uses
   %.sroa.7.i.i.i.i.i.i.i.i = alloca [16 x i8], align 8 ; 7 uses
   %i.br = alloca [24 x i8], align 8               ; 8 uses
-  %.sroa.0.i.i.i.i.i.i.i.i = alloca i64, align 8  ; 5 uses
+  %.sroa.0.i.i.i.i.i.i.i.i = alloca ptr, align 8  ; 5 uses
   %i.bs = alloca [24 x i8], align 8               ; 7 uses
   %i.bt = alloca [24 x i8], align 8               ; 10 uses
   %i.bu = alloca [24 x i8], align 8               ; 5 uses
@@ -2149,8 +2147,7 @@ bb.dt:                                            ; preds = %.noexc.i.i.i
   %i.no = load ptr, ptr %i.bs, align 8, !noalias !36108, !noundef !28
   %i.np = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
   %i.nq = load i64, ptr %i.np, align 8, !noalias !36108, !noundef !28 ; 4 uses
-  %2 = ptrtoint ptr %i.no to i64
-  store i64 %2, ptr %.sroa.0.i.i.i.i.i.i.i.i, align 8, !noalias !36108
+  store ptr %i.no, ptr %.sroa.0.i.i.i.i.i.i.i.i, align 8, !noalias !36108
   %i.nr = icmp eq i64 %i.nq, 0
   br i1 %i.nr, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCs9fPPV5zPXBl_5typst4args6OutputE7reserveBI_.exit.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader
 
@@ -2553,7 +2550,7 @@ bb.a:
   %i.f = alloca [24 x i8], align 8                ; 6 uses
   %.sroa.7.i.i.i.i = alloca [16 x i8], align 8    ; 7 uses
   %i.g = alloca [24 x i8], align 8                ; 8 uses
-  %.sroa.0.i.i.i.i = alloca i64, align 8          ; 5 uses
+  %.sroa.0.i.i.i.i = alloca ptr, align 8          ; 5 uses
   %i.h = alloca [24 x i8], align 8                ; 7 uses
   %i.i = alloca [24 x i8], align 8                ; 10 uses
   %i.j = alloca [24 x i8], align 8                ; 5 uses
@@ -2830,8 +2827,7 @@ bb.l:                                             ; preds = %bb.k, %_RNvXNtNtCs1
   %i.cf = load ptr, ptr %i.h, align 8, !noalias !36630, !noundef !28
   %i.cg = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.ch = load i64, ptr %i.cg, align 8, !noalias !36630, !noundef !28 ; 4 uses
-  %4 = ptrtoint ptr %i.cf to i64
-  store i64 %4, ptr %.sroa.0.i.i.i.i, align 8, !noalias !36630
+  store ptr %i.cf, ptr %.sroa.0.i.i.i.i, align 8, !noalias !36630
   %i.ci = icmp eq i64 %i.ch, 0
   br i1 %i.ci, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCs9fPPV5zPXBl_5typst4args6OutputE7reserveBI_.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i38.preheader
 
@@ -3234,7 +3230,7 @@ begin_hunk_5_@llvm.vector.reduce.add.v2i64
 !37301 = !{!36908}
 !37302 = !{!36910, !36909, !36854, !36849, !36851, !36667, !36668}
 !37303 = !{!36912}
-!37304 = !{!"branch_weights", !"expected", i32 1609806, i32 2145873842}
+!37304 = !{!"branch_weights", !"expected", i32 1609807, i32 2145873841}
 !37305 = !{!36913, !36854, !36849, !36851, !36667, !36668}
 !37306 = !{!36912, !36913, !36854, !36849, !36851, !36667, !36668}
 !37307 = !{!36912, !36854, !36849, !36851, !36667, !36668}
