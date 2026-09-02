@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.a
   %.sroa.593.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   %.sroa.593.0.copyload = load ptr, ptr %.sroa.593.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
-  %.sroa.495.4.extract.trunc = trunc i64 %.sroa.492.0.copyload to i32 ; 4 uses
+  %.sroa.495.4.extract.trunc = trunc i64 %.sroa.492.0.copyload to i32 ; 6 uses
   %i.af = ptrtoint ptr %.sroa.593.0.copyload to i64 ; 7 uses
   %.sroa.796.12.extract.trunc = trunc i64 %i.af to i8 ; 4 uses
   %.sroa.796.13.extract.shift = lshr i64 %i.af, 8 ; 2 uses
@@ -221,9 +221,9 @@ bb.d:                                             ; preds = %bb.a
   %i.ai = srem i64 %i.ah, 400                     ; 3 uses
   %i.aj = icmp slt i64 %i.ai, 0
   %i.ak = add nsw i64 %i.ai, 400
-  %spec.select.i.i = select i1 %i.aj, i64 %i.ak, i64 %i.ai
+  %spec.select.i.i = select i1 %i.aj, i64 %i.ak, i64 %i.ai ; 2 uses
   %i.al = trunc nuw nsw i64 %spec.select.i.i to i16
-  %i.am = add nuw nsw i16 %i.al, 9599             ; 4 uses
+  %i.am = add nuw nsw i16 %i.al, 9599             ; 3 uses
   %i.an = add i8 %.sroa.796.12.extract.trunc, -1
   %or.cond1.i.i = icmp ult i8 %i.an, 12
   br i1 %or.cond1.i.i, label %bb.e, label %bb.o, !prof !17
@@ -273,7 +273,6 @@ bb.k:                                             ; preds = %_RNvNtCscxuc9kp9KZq
   %.sroa.518.0.insert.ext.i.i = shl i64 %.sroa.796.13.extract.shift, 24
   %.sroa.417.0.insert.ext.i.i = shl i64 %i.af, 16
   %.sroa.417.0.insert.shift.i.i = and i64 %.sroa.417.0.insert.ext.i.i, 16711680
-  %.sroa.016.0.insert.ext.i.i = zext nneg i16 %i.am to i64
   %or.cond.i57.i = icmp ult i8 %.sroa.796.14.extract.trunc, 24
   br i1 %or.cond.i57.i, label %bb.l, label %bb.o
 
@@ -357,45 +356,43 @@ _RNCNvCsiibOIv6tv3q_7uu_date23format_extended_default0B3_.exit: ; preds = %_RNvX
 bb.s:                                             ; preds = %bb.n
   %.sroa.5.i.sroa.5.8.insert.shift = and i64 %.sroa.796.16.extract.shift, 63
   %.sroa.417.0.insert.insert.i.i.masked = or disjoint i64 %.sroa.518.0.insert.ext.i.i, %.sroa.417.0.insert.shift.i.i
-  %.sroa.7201.12.insert.ext = or disjoint i64 %.sroa.417.0.insert.insert.i.i.masked, %.sroa.016.0.insert.ext.i.i
-  %.sroa.4275.8.extract.trunc = trunc i64 %.sroa.7201.12.insert.ext to i32 ; 3 uses
+  %.sroa.4275.8.extract.trunc = trunc i64 %.sroa.417.0.insert.insert.i.i.masked to i32 ; 2 uses
   %i.bj = shl i32 %.sroa.4275.8.extract.trunc, 8
-  %i.bk = ashr i32 %i.bj, 24                      ; 3 uses
+  %i.bk = ashr exact i32 %i.bj, 24                ; 3 uses
   %i.bl = icmp ult i32 %i.bk, 3                   ; 2 uses
   %i.bm = or disjoint i32 %i.bk, 12
   %.sroa.02.0.i.i.i.i = select i1 %i.bl, i32 %i.bm, i32 %i.bk
-  %sext.i.i.i.i = and i32 %.sroa.4275.8.extract.trunc, 32767
-  %i.bn = add nuw nsw i32 %sext.i.i.i.i, 32800
+  %6 = trunc nsw i64 %spec.select.i.i to i32
+  %i.bn = add nsw i32 %6, 42399
   %.neg.i.i.i.i = sext i1 %i.bl to i32
   %i.bo = add nsw i32 %i.bn, %.neg.i.i.i.i        ; 3 uses
   %i.bp = lshr i32 %.sroa.4275.8.extract.trunc, 24
-  %6 = udiv i32 %i.bo, 100
+  %.lhs.trunc = trunc i32 %i.bo to i16
+  %7 = udiv i16 %.lhs.trunc, 100
+  %.zext = zext nneg i16 %7 to i32
   %i.bq = mul nuw nsw i32 %i.bo, 1461
   %i.br = lshr i32 %i.bq, 2
-  %7 = udiv i32 %i.bo, 400
+  %.lhs.trunc420 = trunc i32 %i.bo to i16
+  %8 = udiv i16 %.lhs.trunc420, 400
+  %.zext421 = zext nneg i16 %8 to i32
   %i.bs = mul nsw i32 %.sroa.02.0.i.i.i.i, 979
   %i.bt = add nsw i32 %i.bs, -2919
   %i.bu = lshr i32 %i.bt, 5
   %i.bv = add nuw nsw i32 %i.bp, -12699423
-  %i.bw = sub nuw nsw i32 %i.bv, %6
-  %i.bx = add nuw nsw i32 %i.bw, %7
+  %i.bw = sub nuw nsw i32 %i.bv, %.zext
+  %i.bx = add nuw nsw i32 %i.bw, %.zext421
   %i.by = add nsw i32 %i.bx, %i.br
-  %i.bz = add nsw i32 %i.by, %i.bu
-  %8 = sext i32 %i.bz to i64
-  %i.ca = mul nsw i64 %8, 86400
+  %i.bz = add nuw nsw i32 %i.by, %i.bu
+  %9 = zext nneg i32 %i.bz to i64
+  %i.ca = mul nuw nsw i64 %9, 86400
   %i.cb = and i64 %.sroa.796.14.extract.shift, 31
   %i.cc = mul nuw nsw i64 %i.cb, 3600
   %i.cd = and i64 %.sroa.796.15.extract.shift, 63
   %i.ce = mul nuw nsw i64 %i.cd, 60
-  %9 = add nuw nsw i64 %i.cc, %.sroa.5.i.sroa.5.8.insert.shift
-  %i.cf = add nuw nsw i64 %9, %i.ce
-  %i.cg = add nsw i64 %i.cf, %i.ca                ; 2 uses
-  %10 = icmp slt i64 %i.cg, 0
-  %11 = icmp ne i32 %.sroa.495.4.extract.trunc, 0
-  %or.cond3.not.i.i.i = and i1 %11, %10           ; 2 uses
-  %12 = zext i1 %or.cond3.not.i.i.i to i64
-  %.sroa.05.0.i.i.i = add nsw i64 %i.cg, %12      ; 6 uses
-  %or.cond.i.i57.i = icmp slt i64 %.sroa.05.0.i.i.i, 253402207201
+  %i.cf = add nuw nsw i64 %i.cc, %.sroa.5.i.sroa.5.8.insert.shift
+  %i.cg = add nuw nsw i64 %i.cf, %i.ce
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %i.cg, %i.ca ; 6 uses
+  %or.cond.i.i57.i = icmp samesign ult i64 %.sroa.05.0.i.i.i, 253402207201
   br i1 %or.cond.i.i57.i, label %bb.x, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
@@ -460,8 +457,6 @@ _RNCNvCsiibOIv6tv3q_7uu_date23format_extended_defaults_0B3_.exit: ; preds = %_RN
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs3JjgEOiFeOI_4jiff5zoned5ZonedECsiibOIv6tv3q_7uu_date.exit192
 
 bb.x:                                             ; preds = %bb.s
-  %13 = add nuw nsw i32 %.sroa.495.4.extract.trunc, -1000000000
-  %.sroa.021.0.i.i.i = select i1 %or.cond3.not.i.i.i, i32 %13, i32 %.sroa.495.4.extract.trunc ; 5 uses
   %.val176 = load ptr, ptr %5, align 8, !noundef !6 ; 11 uses
   %i.ct = ptrtoint ptr %.val176 to i64            ; 2 uses
   %i.cu = and i64 %i.ct, 7                        ; 3 uses
@@ -509,30 +504,30 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 bb.af:                                            ; preds = %bb.x
-  %i.de = call noundef i32 @_RNvMNtNtNtCscxuc9kp9KZq_9jiff_core2tz4tzif5queryNtB4_8TimeZone9to_offset(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(232) %.val176, i64 noundef %.sroa.05.0.i.i.i, i32 noundef %.sroa.021.0.i.i.i) #33
+  %i.de = call noundef i32 @_RNvMNtNtNtCscxuc9kp9KZq_9jiff_core2tz4tzif5queryNtB4_8TimeZone9to_offset(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(232) %.val176, i64 noundef %.sroa.05.0.i.i.i, i32 noundef %.sroa.495.4.extract.trunc) #33
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs3JjgEOiFeOI_4jiff5zoned5ZonedECsiibOIv6tv3q_7uu_date.exit
 
 _RNvXs2_NtNtNtCs3JjgEOiFeOI_4jiff2tz8timezone4reprNtB5_4ReprNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.thread: ; preds = %bb.z
   %i.df = getelementptr i8, ptr %.val176, i64 -4
-  %i.dg = call noundef i32 @_RNvMNtNtNtCscxuc9kp9KZq_9jiff_core2tz4tzif5queryNtB4_8TimeZone9to_offset(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(232) %i.df, i64 noundef %.sroa.05.0.i.i.i, i32 noundef %.sroa.021.0.i.i.i) #33
+  %i.dg = call noundef i32 @_RNvMNtNtNtCscxuc9kp9KZq_9jiff_core2tz4tzif5queryNtB4_8TimeZone9to_offset(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(232) %i.df, i64 noundef %.sroa.05.0.i.i.i, i32 noundef %.sroa.495.4.extract.trunc) #33
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs3JjgEOiFeOI_4jiff5zoned5ZonedECsiibOIv6tv3q_7uu_date.exit
 
 _RNvXs2_NtNtNtCs3JjgEOiFeOI_4jiff2tz8timezone4reprNtB5_4ReprNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.thread356: ; preds = %bb.ab
   %i.dh = getelementptr i8, ptr %.val176, i64 -5
-  %i.di = call noundef i32 @_RNvMs0_NtNtCscxuc9kp9KZq_9jiff_core2tz5posixNtB5_8TimeZone9to_offset(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.dh, i64 noundef %.sroa.05.0.i.i.i, i32 noundef %.sroa.021.0.i.i.i) #33
+  %i.di = call noundef i32 @_RNvMs0_NtNtCscxuc9kp9KZq_9jiff_core2tz5posixNtB5_8TimeZone9to_offset(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.dh, i64 noundef %.sroa.05.0.i.i.i, i32 noundef %.sroa.495.4.extract.trunc) #33
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs3JjgEOiFeOI_4jiff5zoned5ZonedECsiibOIv6tv3q_7uu_date.exit
 
 _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs3JjgEOiFeOI_4jiff5zoned5ZonedECsiibOIv6tv3q_7uu_date.exit: ; preds = %bb.x, %bb.x, %_RNvXs2_NtNtNtCs3JjgEOiFeOI_4jiff2tz8timezone4reprNtB5_4ReprNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.thread356, %_RNvXs2_NtNtNtCs3JjgEOiFeOI_4jiff2tz8timezone4reprNtB5_4ReprNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.thread, %bb.af, %bb.ad
   %.sroa.0.0.i = phi i32 [ %i.di, %_RNvXs2_NtNtNtCs3JjgEOiFeOI_4jiff2tz8timezone4reprNtB5_4ReprNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.thread356 ], [ 0, %bb.x ], [ 0, %bb.x ], [ %i.de, %bb.af ], [ %i.dg, %_RNvXs2_NtNtNtCs3JjgEOiFeOI_4jiff2tz8timezone4reprNtB5_4ReprNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.thread ], [ %i.dc, %bb.ad ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
-  call fastcc void @_RNvMNtNtCscxuc9kp9KZq_9jiff_core2tz6offsetNtB2_6Offset11to_datetime(ptr noalias nofree noundef align 4 captures(none) dereferenceable(12) %i.o, i32 noundef %.sroa.0.0.i, i64 noundef %.sroa.05.0.i.i.i, i32 noundef %.sroa.021.0.i.i.i) #35
+  call fastcc void @_RNvMNtNtCscxuc9kp9KZq_9jiff_core2tz6offsetNtB2_6Offset11to_datetime(ptr noalias nofree noundef align 4 captures(none) dereferenceable(12) %i.o, i32 noundef %.sroa.0.0.i, i64 noundef %.sroa.05.0.i.i.i, i32 noundef %.sroa.495.4.extract.trunc) #35
   %i.dj = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %.sroa.0134.0.copyload = load i32, ptr %i.dj, align 8
   %.sroa.0136.0.copyload = load i64, ptr %i.o, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   store i64 %.sroa.05.0.i.i.i, ptr %i.q, align 8
   %.sroa.4124.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  store i32 %.sroa.021.0.i.i.i, ptr %.sroa.4124.0..sroa_idx, align 8
+  store i32 %.sroa.495.4.extract.trunc, ptr %.sroa.4124.0..sroa_idx, align 8
   %.sroa.5126.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   store ptr %.val176, ptr %.sroa.5126.0..sroa_idx, align 8
   %.sroa.6127.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.q, i64 24

@@ -204,16 +204,17 @@ bb.n:                                             ; preds = %bb.m, %bb.g
 
 bb.o:                                             ; preds = %bb.n
   %i.at = load i64, ptr %i.z, align 8, !tbaa !33  ; 2 uses
-  %i.au = load i32, ptr %i.q, align 4, !tbaa !208
+  %i.au = load i32, ptr %i.q, align 4, !tbaa !208 ; 2 uses
   %i.av = zext i32 %i.au to i64
-  %i.aw = shl nuw nsw i64 %i.av, 2                ; 2 uses
+  %i.aw = shl nuw nsw i64 %i.av, 2
   %i.ax = icmp ult i64 %i.at, %i.aw
   br i1 %i.ax, label %.thread44.sink.split, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %8 = sub nuw i64 %i.at, %i.aw
-  %i.ay = trunc i64 %8 to i32
-  store i32 %i.ay, ptr %i.p, align 8, !tbaa !199
+  %8 = shl i32 %i.au, 2
+  %i.ay = trunc i64 %i.at to i32
+  %9 = sub i32 %i.ay, %8
+  store i32 %9, ptr %i.p, align 8, !tbaa !199
   %i.az = load i8, ptr %i.aa, align 1, !range !84
   %i.ba = trunc nuw i8 %i.az to i1
   br i1 %i.ba, label %bb.q, label %.thread44

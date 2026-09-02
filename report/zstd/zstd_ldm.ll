@@ -204,19 +204,18 @@ bb.c:                                             ; preds = %.lr.ph
   %.val41 = load ptr, ptr %i.aa, align 8, !tbaa !28
   %i.aq = getelementptr inbounds nuw i8, ptr %.val41, i64 %i.ao ; 2 uses
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !29  ; 2 uses
-  %5 = zext i8 %i.ar to i32
   %i.as = zext nneg i32 %i.ap to i64
   %i.at = shl i64 %i.ao, %i.as
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %.val40, i64 %i.at
   %i.av = zext i8 %i.ar to i64
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.av
   store i64 %.sroa.0.0.insert.insert, ptr %i.aw, align 4
-  %6 = add nuw nsw i32 %5, 1
+  %5 = add i8 %i.ar, 1
   %notmask.i = shl nsw i32 -1, %i.ap
-  %7 = xor i32 %notmask.i, -1
-  %8 = and i32 %6, %7
-  %9 = trunc i32 %8 to i8
-  store i8 %9, ptr %i.aq, align 1, !tbaa !29
+  %6 = trunc i32 %notmask.i to i8
+  %7 = xor i8 %6, -1
+  %8 = and i8 %5, %7
+  store i8 %8, ptr %i.aq, align 1, !tbaa !29
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.c
@@ -619,19 +618,18 @@ bb.bj:                                            ; preds = %bb.bi
   %.val257.i = load ptr, ptr %i.aa, align 8, !tbaa !28
   %i.ky = getelementptr inbounds nuw i8, ptr %.val257.i, i64 %i.kw ; 2 uses
   %i.kz = load i8, ptr %i.ky, align 1, !tbaa !29  ; 2 uses
-  %6 = zext i8 %i.kz to i32
   %i.la = zext nneg i32 %i.kx to i64
   %i.lb = shl i64 %i.kw, %i.la
   %i.lc = getelementptr inbounds nuw [8 x i8], ptr %.val256.i, i64 %i.lb
   %i.ld = zext i8 %i.kz to i64
   %i.le = getelementptr inbounds nuw [8 x i8], ptr %i.lc, i64 %i.ld
   store i64 %.sroa.0.0.insert.insert27.i, ptr %i.le, align 4
-  %7 = add nuw nsw i32 %6, 1
+  %6 = add i8 %i.kz, 1
   %notmask.i273.i = shl nsw i32 -1, %i.kx
-  %8 = xor i32 %notmask.i273.i, -1
-  %9 = and i32 %7, %8
-  %10 = trunc i32 %9 to i8
-  store i8 %10, ptr %i.ky, align 1, !tbaa !29
+  %7 = trunc i32 %notmask.i273.i to i8
+  %8 = xor i8 %7, -1
+  %9 = and i8 %6, %8
+  store i8 %9, ptr %i.ky, align 1, !tbaa !29
   %i.lf = getelementptr inbounds nuw i8, ptr %i.ef, i64 %.0219.lcssa.i ; 4 uses
   %i.lg = icmp ugt ptr %i.lf, %i.dp
   br i1 %i.lg, label %.critedge.i, label %bb.bk
@@ -652,19 +650,18 @@ bb.bj:                                            ; preds = %bb.bi
   %.val261.i = load ptr, ptr %i.aa, align 8, !tbaa !28
   %i.ll = getelementptr inbounds nuw i8, ptr %.val261.i, i64 %i.lj ; 2 uses
   %i.lm = load i8, ptr %i.ll, align 1, !tbaa !29  ; 2 uses
-  %11 = zext i8 %i.lm to i32
   %i.ln = zext nneg i32 %i.lk to i64
   %i.lo = shl i64 %i.lj, %i.ln
   %i.lp = getelementptr inbounds nuw [8 x i8], ptr %.val260.i, i64 %i.lo
   %i.lq = zext i8 %i.lm to i64
   %i.lr = getelementptr inbounds nuw [8 x i8], ptr %i.lp, i64 %i.lq
   store i64 %.sroa.0.0.insert.insert.i, ptr %i.lr, align 4
-  %12 = add nuw nsw i32 %11, 1
+  %10 = add i8 %i.lm, 1
   %notmask.i.i = shl nsw i32 -1, %i.lk
-  %13 = xor i32 %notmask.i.i, -1
-  %14 = and i32 %12, %13
-  %15 = trunc i32 %14 to i8
-  store i8 %15, ptr %i.ll, align 1, !tbaa !29
+  %11 = trunc i32 %notmask.i.i to i8
+  %12 = xor i8 %11, -1
+  %13 = and i8 %10, %12
+  store i8 %13, ptr %i.ll, align 1, !tbaa !29
   br label %bb.bk
 
 bb.bk:                                            ; preds = %.sink.split.i, %bb.bj

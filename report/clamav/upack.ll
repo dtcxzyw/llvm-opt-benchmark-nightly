@@ -71,7 +71,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 bb.f:                                             ; preds = %bb.e
   %i.n = zext i32 %2 to i64                       ; 2 uses
   %i.o = ptrtoint ptr %i.l to i64                 ; 2 uses
-  %i.p = ptrtoint ptr %1 to i64                   ; 19 uses
+  %i.p = ptrtoint ptr %1 to i64                   ; 18 uses
   %i.q = add i64 %i.o, 12                         ; 2 uses
   %i.r = add i64 %i.n, %i.p                       ; 32 uses
   %.not1053 = icmp ule i64 %i.q, %i.r
@@ -181,7 +181,7 @@ bb.q:                                             ; preds = %bb.p, %bb.m
   %.0911 = phi ptr [ %i.aa, %bb.m ], [ null, %bb.p ] ; 42 uses
   %.0899 = phi ptr [ %i.bb, %bb.m ], [ %i.bs, %bb.p ] ; 4 uses
   %.0872 = phi i32 [ 8, %bb.m ], [ 10, %bb.p ]    ; 2 uses
-  %.0919 = getelementptr inbounds nuw i8, ptr %.pn, i64 12 ; 2 uses
+  %.0919 = getelementptr inbounds nuw i8, ptr %.pn, i64 12
   %.not1063 = icmp ult ptr %.0899, %1
   br i1 %.not1063, label %.thread1181, label %bb.r
 
@@ -229,25 +229,22 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 1
   %i.cl = load i32, ptr %i.ck, align 1, !tbaa !8  ; 2 uses
+  %10 = ptrtoint ptr %.0919 to i64
+  %11 = sub i64 %10, %i.p                         ; 2 uses
   br i1 %i.g, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  %10 = zext i32 %i.cl to i64
-  %11 = ptrtoint ptr %.0919 to i64
-  %12 = sub i64 %11, %i.p
-  %13 = add nsw i64 %12, %10
   %i.cm = getelementptr inbounds nuw i8, ptr %.pn, i64 39
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !8
-  %14 = sext i8 %i.cn to i64
-  %15 = add nsw i64 %13, %14
-  %16 = trunc i64 %15 to i32
-  %i.co = add i32 %16, 52
+  %12 = sext i8 %i.cn to i32
+  %13 = trunc i64 %11 to i32
+  %14 = add i32 %13, 52
+  %15 = add i32 %14, %i.cl
+  %i.co = add i32 %15, %12
   br label %bb.z
 
 bb.y:                                             ; preds = %bb.w
-  %17 = ptrtoint ptr %.0919 to i64
-  %18 = sub i64 %17, %i.p
-  %i.cp = trunc i64 %18 to i32
+  %i.cp = trunc i64 %11 to i32
   %i.cq = add i32 %i.cp, 53
   %i.cr = add i32 %i.cq, %i.cl
   br label %bb.z
@@ -650,13 +647,12 @@ bb.bw:                                            ; preds = %bb.bv
   %i.qy = load i32, ptr %i.qs, align 1, !tbaa !8
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.7, ptr noundef nonnull %i.qs, ptr noundef nonnull %1, i32 noundef %i.qy, i32 noundef %6) #4
   %i.qz = load i32, ptr %i.qs, align 1, !tbaa !8
-  %19 = zext i32 %i.qz to i64
-  %i.ra = zext i32 %6 to i64                      ; 5 uses
+  %i.ra = zext i32 %6 to i64                      ; 4 uses
   %i.rb = sub nsw i64 0, %i.ra                    ; 2 uses
-  %.neg = sub nsw i64 %i.ra, %19
-  %gepdiff = add nsw i64 %.neg, %i.qt             ; 2 uses
-  %20 = trunc i64 %gepdiff to i32                 ; 2 uses
-  tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.8, i32 noundef %20) #4
+  %.neg = sub i32 %6, %i.qz
+  %16 = trunc i64 %i.qt to i32
+  %17 = add i32 %.neg, %16                        ; 3 uses
+  tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.8, i32 noundef %17) #4
   %i.rc = getelementptr inbounds nuw i8, ptr %i.qs, i64 4
   %i.rd = load i32, ptr %i.rc, align 1, !tbaa !8  ; 3 uses
   %i.re = sext i32 %i.rd to i64                   ; 3 uses
@@ -841,14 +837,14 @@ middle.block1385:                                 ; preds = %vector.body1379
 
 bb.ce:                                            ; preds = %._crit_edge1267
   %i.tv = load i32, ptr %i.rg, align 1, !tbaa !8
-  %21 = and i64 %gepdiff, 4294967295              ; 2 uses
+  %18 = zext i32 %17 to i64                       ; 2 uses
   %i.tw = getelementptr inbounds nuw i8, ptr %i.rg, i64 4
-  %i.tx = add nuw nsw i64 %21, 4
+  %i.tx = add nuw nsw i64 %18, 4
   %i.ty = add i32 %i.tv, -1
   %i.tz = zext i32 %i.ty to i64
   %i.ua = mul i64 %i.tx, %i.tz
   %i.ub = add i64 %i.ua, %i.re
-  %i.uc = add i64 %i.ub, %21
+  %i.uc = add i64 %i.ub, %18
   %i.ud = add i64 %i.uc, 4
   %i.ue = sub i64 %i.ud, %i.ra
   %scevgep = getelementptr i8, ptr %1, i64 %i.ue  ; 4 uses
@@ -902,7 +898,7 @@ vector.body1392:                                  ; preds = %vector.body1392, %v
 
 bb.ch:                                            ; preds = %._crit_edge1273
   %i.uv = load i32, ptr %i.uq, align 1, !tbaa !8
-  %i.uw = add i32 %i.uv, %20
+  %i.uw = add i32 %i.uv, %17
   store i32 %i.uw, ptr %i.uq, align 1, !tbaa !8
   %i.ux = getelementptr inbounds nuw i8, ptr %scevgep, i64 28 ; 3 uses
   %i.uy = load i32, ptr %i.tw, align 1, !tbaa !8

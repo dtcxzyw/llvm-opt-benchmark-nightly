@@ -205,14 +205,13 @@ bb.av:                                            ; preds = %bb.au
   %i.lr = and i64 %.sroa.0428.1529, 7
   %i.ls = or i64 %i.lq, %i.lr
   %i.lt = icmp eq i64 %i.lm, %i.ls
-  %45 = zext i1 %i.lt to i8
   br label %.split
 
 .split:                                           ; preds = %bb.av, %bb.au
-  %46 = phi i8 [ 1, %bb.au ], [ %45, %bb.av ]
-  %47 = and i8 %46, %.0187530
-  %48 = trunc nuw i8 %47 to i1
-  br i1 %48, label %bb.bc, label %.loopexit
+  %45 = phi i1 [ true, %bb.au ], [ %i.lt, %bb.av ]
+  %46 = trunc nuw i8 %.0187530 to i1
+  %47 = and i1 %45, %46
+  br i1 %47, label %bb.bc, label %.loopexit
 
 .thread:                                          ; preds = %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit..thread_crit_edge, %_ZNK5clang4Type5getAsINS_19LValueReferenceTypeEEEPKT_v.exit.thread
   %.pre-phi574 = phi ptr [ %.pre573, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit..thread_crit_edge ], [ %i.kb, %_ZNK5clang4Type5getAsINS_19LValueReferenceTypeEEEPKT_v.exit.thread ]

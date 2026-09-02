@@ -205,16 +205,15 @@ bb.q:                                             ; preds = %bb.p
   %i.ca = trunc i64 %i.bz to i32
   %i.cb = add nsw i32 %i.ca, -1
   %i.cc = ashr i32 %i.cb, %i.br
-  %i.cd = add nsw i32 %i.cc, 1
+  %i.cd = add nsw i32 %i.cc, 1                    ; 2 uses
   %i.ce = shl i64 %i.by, 30
   %i.cf = add i64 %i.ce, 12884901888
   %sext = ashr exact i64 %i.cf, 32
   %i.cg = and i64 %sext, -4                       ; 2 uses
-  %5 = sext i32 %i.cd to i64                      ; 2 uses
-  %6 = shl nsw i64 %5, 2
-  %7 = add nsw i64 %6, %i.cg                      ; 2 uses
-  %sext34 = shl i64 %7, 32
-  %8 = ashr exact i64 %sext34, 32
+  %5 = shl i32 %i.cd, 2
+  %6 = trunc nsw i64 %i.cg to i32
+  %7 = add i32 %5, %6                             ; 2 uses
+  %8 = sext i32 %7 to i64
   %i.ch = getelementptr inbounds nuw i8, ptr %1, i64 1048
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !364 ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 4
@@ -233,14 +232,14 @@ bb.s:                                             ; preds = %._crit_edge, %bb.t,
   br label %bb.v
 
 bb.t:                                             ; preds = %bb.q
-  %9 = trunc i64 %7 to i32
+  %9 = sext i32 %i.cd to i64
   store ptr %i.cl, ptr %i.ax, align 8, !tbaa !708
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i32 %9, ptr %i.co, align 8, !tbaa !398
+  store i32 %7, ptr %i.co, align 8, !tbaa !398
   %i.cp = getelementptr inbounds i8, ptr %i.cl, i64 %i.cg ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   store ptr %i.cp, ptr %i.cq, align 8, !tbaa !709
-  invoke void @_ZNK4Luau15BytecodeBuilder16fillBaselineInfoEiPim(ptr noundef nonnull align 8 dereferenceable(1048) %1, i32 noundef %i.bo, ptr noundef %i.cp, i64 noundef %5)
+  invoke void @_ZNK4Luau15BytecodeBuilder16fillBaselineInfoEiPim(ptr noundef nonnull align 8 dereferenceable(1048) %1, i32 noundef %i.bo, ptr noundef %i.cp, i64 noundef %9)
           to label %.preheader unwind label %bb.s
 
 .preheader:                                       ; preds = %bb.t
@@ -643,9 +642,9 @@ bb.b:                                             ; preds = %bb.a
   %i.z = lshr exact i64 %i.y, 2
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !136
-  %6 = zext i8 %i.ab to i64
-  %7 = sub nsw i64 %i.z, %6
-  %8 = trunc i64 %7 to i32
+  %6 = zext i8 %i.ab to i32
+  %7 = trunc i64 %i.z to i32
+  %8 = sub i32 %7, %6
   %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %8, i32 0)
   br label %bb.c
 

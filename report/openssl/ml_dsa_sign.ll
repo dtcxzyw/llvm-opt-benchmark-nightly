@@ -204,13 +204,17 @@ bb.t:                                             ; preds = %bb.ai, %vector_ntt.
   %i.ds = load ptr, ptr %i.cl, align 8, !tbaa !24
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.a, ptr noundef nonnull readonly align 16 dereferenceable(64) %i.b, i64 64, i1 false)
-  br i1 %.not.i167.i, label %vector_expand_mask.exit.i, label %.lr.ph.i177.i.a
+  br i1 %.not.i167.i, label %vector_expand_mask.exit.i, label %.lr.ph.i177.i
 
-.lr.ph.i177.i.a:                                  ; preds = %bb.t, %.lr.ph.i177.i.a
-  %.012.i.i = phi i64 [ %i.dv, %.lr.ph.i177.i.a ], [ 0, %bb.t ] ; 3 uses
-  %17 = add i64 %.012.i.i, %.0127.i
-  %18 = trunc i64 %17 to i16
-  store i16 %18, ptr %i.dl, align 16
+.lr.ph.i177.i:                                    ; preds = %bb.t
+  %17 = trunc i64 %.0127.i to i16
+  br label %.lr.ph.i177.i.a
+
+.lr.ph.i177.i.a:                                  ; preds = %.lr.ph.i177.i.a, %.lr.ph.i177.i
+  %.012.i.i = phi i64 [ 0, %.lr.ph.i177.i ], [ %i.dv, %.lr.ph.i177.i.a ] ; 3 uses
+  %18 = trunc i64 %.012.i.i to i16
+  %19 = add i16 %18, %17
+  store i16 %19, ptr %i.dl, align 16
   %i.dt = getelementptr inbounds nuw [1024 x i8], ptr %i.bv, i64 %.012.i.i
   %i.du = call i32 @ossl_ml_dsa_poly_expand_mask(ptr noundef nonnull %i.dt, ptr noundef nonnull %i.a, i64 noundef 66, i32 noundef %i.ae, ptr noundef nonnull %i.bf, ptr noundef %i.ds) #5 ; 0 uses
   %i.dv = add nuw nsw i64 %.012.i.i, 1            ; 2 uses

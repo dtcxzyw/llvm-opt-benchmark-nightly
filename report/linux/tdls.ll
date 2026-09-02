@@ -204,9 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr i8, ptr %i.c, i64 112      ; 2 uses
   %i.l = load i32, ptr %i.k, align 8
   %i.m = trunc i64 %8 to i32                      ; 3 uses
-  %13 = add i32 %i.m, 356
-  %i.n = add i32 %13, %i.l
-  %i.o = add i32 %i.n, 20
+  %i.n = add i32 %i.m, 376
+  %i.o = add i32 %i.n, %i.l
   %i.p = tail call ptr @__netdev_alloc_skb(ptr noundef %i.j, i32 noundef %i.o, i32 noundef 2080) #9 ; 54 uses
   %.not66 = icmp eq ptr %i.p, null
   br i1 %.not66, label %bb.cv, label %bb.c

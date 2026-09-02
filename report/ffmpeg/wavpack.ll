@@ -205,10 +205,9 @@ bb.av:                                            ; preds = %bb.au
   %i.jn = add nuw nsw i32 %i.jm, 1
   %i.jo = zext nneg i32 %i.jn to i64
   %i.jp = shl nuw i64 1, %i.jo
-  %4 = zext i32 %.0126 to i64
-  %5 = xor i64 %4, -1
-  %6 = add i64 %i.jp, %5
-  %7 = trunc i64 %6 to i32                        ; 2 uses
+  %4 = xor i32 %.0126, -1
+  %5 = trunc i64 %i.jp to i32
+  %6 = add i32 %5, %4                             ; 2 uses
   %.not.i193 = icmp eq i32 %i.jm, 0
   br i1 %.not.i193, label %get_bits_long.exit, label %bb.aw
 
@@ -260,12 +259,12 @@ bb.ay:                                            ; preds = %bb.aw
 
 get_bits_long.exit:                               ; preds = %bb.av, %bb.ax, %bb.ay
   %.0.i194 = phi i32 [ %i.ke, %bb.ax ], [ %i.kx, %bb.ay ], [ 0, %bb.av ] ; 3 uses
-  %.not.i = icmp slt i32 %.0.i194, %7
+  %.not.i = icmp slt i32 %.0.i194, %6
   br i1 %.not.i, label %get_tail.exit, label %bb.az
 
 bb.az:                                            ; preds = %get_bits_long.exit
   %i.ky = shl i32 %.0.i194, 1
-  %i.kz = sub i32 %i.ky, %7
+  %i.kz = sub i32 %i.ky, %6
   %i.la = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.lb = load i32, ptr %i.la, align 8, !tbaa !81 ; 4 uses
   %i.lc = load ptr, ptr %1, align 8, !tbaa !78

@@ -204,10 +204,10 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not29.i, label %versionStr2Version.exit44.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.i, %bb.l
-  %i.v = phi i8 [ %i.ae, %bb.l ], [ %i.u, %bb.i ] ; 2 uses
+  %i.v = phi i8 [ %i.ae, %bb.l ], [ %i.u, %bb.i ] ; 3 uses
   %.01323.i.i = phi i64 [ %i.ac, %bb.l ], [ 0, %bb.i ]
   %.01422.i.i = phi i16 [ %.2.i.i, %bb.l ], [ 0, %bb.i ] ; 4 uses
-  %i.w = sext i8 %i.v to i32                      ; 2 uses
+  %i.w = sext i8 %i.v to i32
   %i.x = add nsw i32 %i.w, -48
   %i.y = icmp ult i32 %i.x, 10
   br i1 %i.y, label %bb.j, label %bb.l
@@ -225,15 +225,14 @@ versionStr2Version.exit.thread.i:                 ; preds = %bb.j
   br label %bb.m
 
 bb.k:                                             ; preds = %bb.j
-  %1 = zext nneg i16 %.01422.i.i to i32
-  %2 = mul nuw nsw i32 %1, 10
-  %3 = add nuw nsw i32 %i.w, 65488
-  %4 = add nuw nsw i32 %3, %2
-  %5 = trunc i32 %4 to i16
+  %1 = mul nuw i16 %.01422.i.i, 10
+  %2 = sext i8 %i.v to i16
+  %3 = add nsw i16 %2, -48
+  %4 = add i16 %3, %1
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %.lr.ph.i.i
-  %.2.i.i = phi i16 [ %5, %bb.k ], [ %.01422.i.i, %.lr.ph.i.i ] ; 3 uses
+  %.2.i.i = phi i16 [ %4, %bb.k ], [ %.01422.i.i, %.lr.ph.i.i ] ; 3 uses
   %i.ac = add i64 %.01323.i.i, 1                  ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.ac
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !41  ; 2 uses

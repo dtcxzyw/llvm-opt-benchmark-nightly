@@ -205,6 +205,8 @@ _ZNK6embree8GridMesh5validEmRKNS_5rangeImEE.exit.thread337: ; preds = %..critedg
   %i.dh = zext i32 %.036524 to i64                ; 7 uses
   %i.di = add nuw nsw i64 %i.dh, 3
   %i.dj = add i32 %.036524, 2                     ; 2 uses
+  %7 = and i32 %.036524, 65534
+  %.masked = zext nneg i32 %7 to i64
   br label %bb.h
 
 ._crit_edge.loopexit:                             ; preds = %_ZN6embree5LBBoxINS_6Vec3faEEC2IZNKS_8GridMesh12linearBoundsERKNS4_4GridEmmRKNS_4BBoxIfEEEUlmE_EERKT_SB_SB_f.exit
@@ -607,19 +609,18 @@ _ZN6embree5LBBoxINS_6Vec3faEEC2IZNKS_8GridMesh12linearBoundsERKNS4_4GridEmmRKNS_
   %i.th = tail call i64 @llvm.umax.i64(i64 %i.ec, i64 %i.tb) ; 2 uses
   %i.ti = add i32 %.035471, 2                     ; 3 uses
   %.not.i38 = icmp ult i32 %i.ti, %i.dr
-  %7 = select i1 %.not.i38, i32 0, i32 32768
+  %8 = select i1 %.not.i38, i64 0, i64 32768
   %i.tj = zext i16 %i.fk to i32
   %.not.i39 = icmp ult i32 %i.dj, %i.tj
-  %8 = select i1 %.not.i39, i32 0, i32 32768
+  %9 = select i1 %.not.i39, i64 0, i64 32768
   %i.tk = load ptr, ptr %i.y, align 8
   %i.tl = getelementptr inbounds nuw [8 x i8], ptr %i.tk, i64 %.2472
-  %9 = or i32 %8, %.036524
-  %10 = shl i32 %9, 16
-  %.sroa.4.0.insert.shift = zext i32 %10 to i64
-  %.sroa.4.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.ext, %.sroa.4.0.insert.shift
+  %.sroa.4.0.insert.ext = or i64 %9, %.masked
+  %.sroa.4.0.insert.shift = shl nuw nsw i64 %.sroa.4.0.insert.ext, 16
+  %.sroa.4.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.shift, %.sroa.5.0.insert.ext
   %.035.masked = and i32 %.035471, 65534
-  %11 = or i32 %7, %.035.masked
-  %.sroa.0.0.insert.ext = zext nneg i32 %11 to i64
+  %.masked409 = zext nneg i32 %.035.masked to i64
+  %.sroa.0.0.insert.ext = or i64 %8, %.masked409
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.insert, %.sroa.0.0.insert.ext
   store i64 %.sroa.0.0.insert.insert, ptr %i.tl, align 4
   %i.tm = load ptr, ptr %i.z, align 8, !nonnull !50, !align !52

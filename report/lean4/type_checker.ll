@@ -204,6 +204,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.dk = ptrtoint <4 x ptr> %i.dj to <4 x i64>
   %i.dl = lshr <4 x i64> %i.dk, splat (i64 1)
   %i.dm = call i64 @llvm.vector.reduce.add.v4i64(<4 x i64> %i.dl) ; 3 uses
+  %35 = trunc i64 %i.dm to i32
   %i.dn = and i64 %i.dm, 4294967295               ; 3 uses
   %i.do = load i64, ptr %i.dc, align 8, !tbaa !78 ; 2 uses
   %.not.i8 = icmp ugt i64 %i.do, %i.dn
@@ -606,14 +607,14 @@ bb.iw:                                            ; preds = %bb.iv
   br i1 %i.sp, label %bb.ix, label %bb.jd
 
 bb.ix:                                            ; preds = %bb.iw
-  %35 = xor i64 %i.dm, -1
-  %36 = add i64 %i.sm, %35
-  %37 = trunc i64 %36 to i32
+  %36 = xor i32 %35, -1
+  %37 = trunc i64 %i.sm to i32
+  %38 = add i32 %37, %36
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #17, !noalias !227
   %i.sq = load ptr, ptr %17, align 8, !tbaa !77, !noalias !227
   %i.sr = getelementptr inbounds nuw [8 x i8], ptr %i.sq, i64 %i.dn
   %i.ss = getelementptr inbounds nuw i8, ptr %i.sr, i64 8
-  invoke void @_ZN4lean6mk_appERKNS_4exprEjPS1_(ptr dead_on_unwind nonnull writable sret(%"class.lean::expr") align 8 %29, ptr noundef nonnull align 8 dereferenceable(8) %26, i32 noundef %37, ptr noundef nonnull %i.ss)
+  invoke void @_ZN4lean6mk_appERKNS_4exprEjPS1_(ptr dead_on_unwind nonnull writable sret(%"class.lean::expr") align 8 %29, ptr noundef nonnull align 8 dereferenceable(8) %26, i32 noundef %38, ptr noundef nonnull %i.ss)
           to label %bb.iy unwind label %bb.jc, !noalias !227, !inline_history !185
 
 bb.iy:                                            ; preds = %bb.ix

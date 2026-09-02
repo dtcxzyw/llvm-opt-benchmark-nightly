@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
   %.shrunk = phi i1 [ %i.s, %bb.a ], [ false, %bb.b ], [ %i.ac, %bb.c ]
-  %1 = zext i1 %.shrunk to i32
+  %1 = zext i1 %.shrunk to i16
   %i.ad = getelementptr inbounds nuw i8, ptr %i.p, i64 14224
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !37
   %i.af = getelementptr inbounds nuw i8, ptr %i.p, i64 12
@@ -257,14 +257,13 @@ bb.i:                                             ; preds = %bb.f, %bb.h, %bb.g
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 12
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !38
   %i.bd = tail call i32 @RandomIntra(i32 noundef %i.bc) #5
-  %2 = or i32 %i.bd, %1                           ; 2 uses
-  %sext = shl i32 %2, 16
-  %3 = ashr exact i32 %sext, 16                   ; 2 uses
+  %2 = trunc i32 %i.bd to i16
+  %3 = or i16 %2, %1                              ; 2 uses
+  %4 = sext i16 %3 to i32                         ; 2 uses
   %i.be = zext i1 %i.t to i32                     ; 2 uses
-  call void @init_enc_mb_params(ptr noundef %i.ai, ptr noundef nonnull %0, i32 noundef %3, i32 noundef %i.be) #5
+  call void @init_enc_mb_params(ptr noundef %i.ai, ptr noundef nonnull %0, i32 noundef %4, i32 noundef %i.be) #5
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ai, i64 416 ; 12 uses
-  %4 = and i32 %2, 65535
-  %i.bg = icmp ne i32 %4, 0                       ; 9 uses
+  %i.bg = icmp ne i16 %3, 0                       ; 9 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 7 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.bj = getelementptr inbounds nuw i8, ptr %i.d, i64 4
@@ -667,7 +666,7 @@ bb.ev:                                            ; preds = %.thread498, %bb.es,
   br i1 %.not440, label %bb.ex, label %bb.ew
 
 bb.ew:                                            ; preds = %bb.ev
-  call void @update_refresh_map(i32 noundef %3, i32 noundef %.0378.lcssa, ptr noundef nonnull %i.ai) #5
+  call void @update_refresh_map(i32 noundef %4, i32 noundef %.0378.lcssa, ptr noundef nonnull %i.ai) #5
   %.pre595 = load ptr, ptr @input, align 8, !tbaa !14
   br label %bb.ex
 

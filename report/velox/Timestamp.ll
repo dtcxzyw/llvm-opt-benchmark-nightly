@@ -202,7 +202,7 @@ define noundef zeroext i1 @_ZN8facebook5velox9Timestamp18epochToCalendarUtcElR2t
   br i1 %i.s, label %bb.e, label %.preheader
 
 .preheader:                                       ; preds = %._crit_edge, %.critedge
-  %.148 = phi i64 [ %i.ah, %.critedge ], [ %.0.lcssa, %._crit_edge ] ; 8 uses
+  %.148 = phi i64 [ %i.ah, %.critedge ], [ %.0.lcssa, %._crit_edge ] ; 7 uses
   %.035 = phi i64 [ %i.ae, %.critedge ], [ 1970, %._crit_edge ]
   %.035.fr = freeze i64 %.035                     ; 7 uses
   %i.t = icmp slt i64 %.148, 0
@@ -264,7 +264,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ak = add i32 %i.aj, -1900
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 20
   store i32 %i.ak, ptr %i.al, align 4, !tbaa !28
-  %i.am = trunc nuw nsw i64 %.148 to i32
+  %i.am = trunc nuw nsw i64 %.148 to i32          ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 28
   store i32 %i.am, ptr %i.an, align 4, !tbaa !50
   %i.ao = getelementptr inbounds nuw [24 x i8], ptr @_ZN8facebook5velox12_GLOBAL__N_125daysBeforeFirstDayOfMonthE, i64 %i.aa ; 3 uses
@@ -298,12 +298,11 @@ _ZSt11upper_boundIPKslET_S2_S2_RKT0_.exit:        ; preds = %_ZSt9__advanceIPKsl
   %i.bf = sext i32 %i.bd to i64
   %i.bg = getelementptr inbounds [2 x i8], ptr %i.ao, i64 %i.bf
   %i.bh = load i16, ptr %i.bg, align 2, !tbaa !30
-  %2 = sext i16 %i.bh to i64
-  %3 = sub nsw i64 %.148, %2
-  %4 = trunc nsw i64 %3 to i32
-  %5 = add nsw i32 %4, 1
+  %2 = sext i16 %i.bh to i32
+  %3 = add nuw nsw i32 %i.am, 1
+  %4 = sub nsw i32 %3, %2
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 12
-  store i32 %5, ptr %i.bi, align 4, !tbaa !32
+  store i32 %4, ptr %i.bi, align 4, !tbaa !32
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 32
   store i32 0, ptr %i.bj, align 8, !tbaa !51
   br label %bb.e

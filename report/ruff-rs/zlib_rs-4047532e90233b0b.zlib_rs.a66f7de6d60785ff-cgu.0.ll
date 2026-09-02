@@ -204,27 +204,26 @@ _RNvMs7_NtCsehVNULHUZqJ_7zlib_rs7deflateNtB5_5State6d_code.exit.i.i.i.i: ; preds
 bb.gx:                                            ; preds = %_RNvMs7_NtCsehVNULHUZqJ_7zlib_rs7deflateNtB5_5State6d_code.exit.i.i.i.i
   %i.apr = getelementptr inbounds nuw i8, ptr @43, i64 %i.apn
   %i.aps = load i8, ptr %i.apr, align 1
-  %2 = zext i8 %i.aps to i16
   %i.apt = getelementptr inbounds nuw [2 x i8], ptr @66, i64 %i.apn
   %i.apu = load i16, ptr %i.apt, align 2
   %i.apv = sub i16 %i.apf, %i.apu
   %i.apw = zext i16 %i.apv to i64
   %i.apx = shl nuw nsw i64 %i.apw, 5
   %i.apy = or i64 %i.apx, %i.apq
-  %3 = add nuw nsw i16 %2, 5
+  %2 = add i8 %i.aps, 5
   br label %_RNvNtCsehVNULHUZqJ_7zlib_rs7deflate11encode_distB3_.exit.i.i.i
 
 _RNvNtCsehVNULHUZqJ_7zlib_rs7deflate11encode_distB3_.exit.i.i.i: ; preds = %bb.gx, %_RNvMs7_NtCsehVNULHUZqJ_7zlib_rs7deflateNtB5_5State6d_code.exit.i.i.i.i
-  %.sroa.06.0.i.i.i.i = phi i16 [ %3, %bb.gx ], [ 5, %_RNvMs7_NtCsehVNULHUZqJ_7zlib_rs7deflateNtB5_5State6d_code.exit.i.i.i.i ]
+  %.sroa.06.0.i.i.i.i = phi i8 [ %2, %bb.gx ], [ 5, %_RNvMs7_NtCsehVNULHUZqJ_7zlib_rs7deflateNtB5_5State6d_code.exit.i.i.i.i ]
   %.sroa.04.0.i.i.i.i = phi i64 [ %i.apy, %bb.gx ], [ %i.apq, %_RNvMs7_NtCsehVNULHUZqJ_7zlib_rs7deflateNtB5_5State6d_code.exit.i.i.i.i ]
   %i.apz = and i16 %i.apd, 63
   %i.aqa = zext nneg i16 %i.apz to i64
   %i.aqb = shl i64 %.sroa.04.0.i.i.i.i, %i.aqa
   %i.aqc = or i64 %i.aqb, %i.ape                  ; 2 uses
-  %4 = add i16 %.sroa.06.0.i.i.i.i, %i.apd
-  %5 = trunc i16 %4 to i8
+  %3 = trunc i16 %i.apd to i8
+  %4 = add i8 %.sroa.06.0.i.i.i.i, %3
   %i.aqd = load i8, ptr %i.aoa, align 8           ; 2 uses
-  %i.aqe = add i8 %i.aqd, %5                      ; 3 uses
+  %i.aqe = add i8 %4, %i.aqd                      ; 3 uses
   %i.aqf = icmp ult i8 %i.aqe, 64
   br i1 %i.aqf, label %bb.gz, label %bb.gy
 

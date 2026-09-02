@@ -202,8 +202,7 @@ bb.d:                                             ; preds = %bb.c
   store ptr %i.i, ptr %i.k, align 8
   %i.l = getelementptr i8, ptr %.val, i64 512
   %i.m = load i32, ptr %i.l, align 8
-  %1 = zext i32 %i.m to i64
-  %2 = add nuw nsw i64 %1, 128
+  %1 = add i32 %i.m, 128
   %i.n = getelementptr i8, ptr %i.d, i64 8
   %.val24 = load i32, ptr %i.n, align 8
   %i.o = zext i32 %.val24 to i64
@@ -212,10 +211,10 @@ bb.d:                                             ; preds = %bb.c
   %i.q = zext i32 %.val25 to i64
   %i.r = add nuw nsw i64 %i.q, 80
   %i.s = tail call i64 @llvm.umax.i64(i64 %i.p, i64 %i.r)
-  %3 = add nuw nsw i64 %2, %i.s
-  %4 = trunc i64 %3 to i32
+  %2 = trunc i64 %i.s to i32
+  %3 = add i32 %1, %2
   %i.t = getelementptr i8, ptr %0, i64 4
-  store i32 %4, ptr %i.t, align 4
+  store i32 %3, ptr %i.t, align 4
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c

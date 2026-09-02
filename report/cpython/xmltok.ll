@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bk = getelementptr i8, ptr %.04668, i64 3
   %i.bl = load i8, ptr %i.bk, align 1, !tbaa !16
   %i.bm = and i8 %i.bl, 63
-  %5 = zext nneg i8 %i.bm to i64
+  %5 = zext nneg i8 %i.bm to i16
   %i.bn = add nuw nsw i64 %i.az, 16711680
   %i.bo = add nuw nsw i64 %i.bn, %i.be
   %i.bp = or disjoint i64 %i.bo, %i.bj
@@ -212,8 +212,8 @@ bb.i:                                             ; preds = %bb.h
   %i.br = trunc nuw nsw i64 %i.bq to i16
   %i.bs = or i16 %i.br, -10240
   store i16 %i.bs, ptr %.04767, align 2, !tbaa !19
-  %6 = or disjoint i64 %i.bj, %5
-  %7 = trunc nuw nsw i64 %6 to i16
+  %6 = trunc nuw nsw i64 %i.bj to i16
+  %7 = or disjoint i16 %5, %6
   %i.bt = or i16 %7, -9216
   %i.bu = getelementptr i8, ptr %.04767, i64 2
   store i16 %i.bt, ptr %i.bu, align 2, !tbaa !19
@@ -616,10 +616,9 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.m
   %.06579 = phi ptr [ %i.a, %.lr.ph ], [ %i.by, %bb.m ] ; 13 uses
-  %i.j = load i8, ptr %.06579, align 1, !tbaa !16 ; 8 uses
+  %i.j = load i8, ptr %.06579, align 1, !tbaa !16 ; 9 uses
   %i.k = getelementptr i8, ptr %.06579, i64 1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !16    ; 5 uses
-  %5 = zext i8 %i.l to i32
   switch i8 %i.l, label %bb.h [
     i8 0, label %bb.c
     i8 1, label %bb.f
@@ -715,25 +714,22 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.az, label %.thread, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %6 = shl nuw nsw i32 %5, 2
-  %7 = and i32 %6, 12
-  %8 = zext i8 %i.j to i32                        ; 2 uses
-  %9 = lshr i32 %8, 6
-  %10 = or disjoint i32 %7, %9
-  %11 = add nuw nsw i32 %10, 1                    ; 2 uses
-  %12 = trunc nuw nsw i32 %11 to i8
-  %i.ba = lshr i8 %12, 2
-  %i.bb = or i8 %i.ba, -16
+  %5 = shl i8 %i.l, 2
+  %6 = and i8 %5, 12
+  %7 = lshr i8 %i.j, 6
+  %8 = or disjoint i8 %6, %7
+  %9 = add nuw nsw i8 %8, 1                       ; 2 uses
+  %i.ba = lshr i8 %9, 2
+  %i.bb = or disjoint i8 %i.ba, -16
   %i.bc = getelementptr i8, ptr %i.at, i64 1
   store ptr %i.bc, ptr %3, align 8, !tbaa !15
   store i8 %i.bb, ptr %i.at, align 1, !tbaa !16
-  %13 = lshr i32 %8, 2
-  %14 = and i32 %13, 15
-  %15 = shl nuw nsw i32 %11, 4
-  %16 = and i32 %15, 48
-  %17 = or disjoint i32 %16, %14
-  %18 = trunc nuw nsw i32 %17 to i8
-  %i.bd = or disjoint i8 %18, -128
+  %10 = lshr i8 %i.j, 2
+  %11 = and i8 %10, 15
+  %12 = shl i8 %9, 4
+  %13 = and i8 %12, 48
+  %14 = or disjoint i8 %11, %13
+  %i.bd = or disjoint i8 %14, -128
   %i.be = load ptr, ptr %3, align 8, !tbaa !15    ; 2 uses
   %i.bf = getelementptr i8, ptr %i.be, i64 1
   store ptr %i.bf, ptr %3, align 8, !tbaa !15
@@ -1136,9 +1132,8 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.m
   %.06579 = phi ptr [ %i.a, %.lr.ph ], [ %i.by, %bb.m ] ; 13 uses
   %i.j = getelementptr i8, ptr %.06579, i64 1
-  %i.k = load i8, ptr %i.j, align 1, !tbaa !16    ; 8 uses
+  %i.k = load i8, ptr %i.j, align 1, !tbaa !16    ; 9 uses
   %i.l = load i8, ptr %.06579, align 1, !tbaa !16 ; 5 uses
-  %5 = zext i8 %i.l to i32
   switch i8 %i.l, label %bb.h [
     i8 0, label %bb.c
     i8 1, label %bb.f
@@ -1234,25 +1229,22 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.az, label %.thread, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %6 = shl nuw nsw i32 %5, 2
-  %7 = and i32 %6, 12
-  %8 = zext i8 %i.k to i32                        ; 2 uses
-  %9 = lshr i32 %8, 6
-  %10 = or disjoint i32 %7, %9
-  %11 = add nuw nsw i32 %10, 1                    ; 2 uses
-  %12 = trunc nuw nsw i32 %11 to i8
-  %i.ba = lshr i8 %12, 2
-  %i.bb = or i8 %i.ba, -16
+  %5 = shl i8 %i.l, 2
+  %6 = and i8 %5, 12
+  %7 = lshr i8 %i.k, 6
+  %8 = or disjoint i8 %6, %7
+  %9 = add nuw nsw i8 %8, 1                       ; 2 uses
+  %i.ba = lshr i8 %9, 2
+  %i.bb = or disjoint i8 %i.ba, -16
   %i.bc = getelementptr i8, ptr %i.at, i64 1
   store ptr %i.bc, ptr %3, align 8, !tbaa !15
   store i8 %i.bb, ptr %i.at, align 1, !tbaa !16
-  %13 = lshr i32 %8, 2
-  %14 = and i32 %13, 15
-  %15 = shl nuw nsw i32 %11, 4
-  %16 = and i32 %15, 48
-  %17 = or disjoint i32 %16, %14
-  %18 = trunc nuw nsw i32 %17 to i8
-  %i.bd = or disjoint i8 %18, -128
+  %10 = lshr i8 %i.k, 2
+  %11 = and i8 %10, 15
+  %12 = shl i8 %9, 4
+  %13 = and i8 %12, 48
+  %14 = or disjoint i8 %11, %13
+  %i.bd = or disjoint i8 %14, -128
   %i.be = load ptr, ptr %3, align 8, !tbaa !15    ; 2 uses
   %i.bf = getelementptr i8, ptr %i.be, i64 1
   store ptr %i.bf, ptr %3, align 8, !tbaa !15

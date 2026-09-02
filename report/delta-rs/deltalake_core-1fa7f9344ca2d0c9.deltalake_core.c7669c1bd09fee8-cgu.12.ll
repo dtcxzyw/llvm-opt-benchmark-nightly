@@ -205,8 +205,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.dp = urem i32 %i.dh, 60
-  %3 = zext i1 %i.dl to i32
-  %.sroa.04.0 = add nuw nsw i32 %i.dp, %3
+  %3 = zext i1 %i.dl to i8
   %i.dq = udiv i32 %i.dh, 60
   %i.dr = urem i32 %i.dq, 60
   %i.ds = udiv i8 %i.dn, 10
@@ -274,8 +273,9 @@ bb.f:                                             ; preds = %bb.d
   store i8 58, ptr %i.fe, align 1
   %i.ff = add nuw nsw i64 %i.m, 13
   store i64 %i.ff, ptr %i.n, align 8, !alias.scope !12407
-  %i.fg = trunc nuw nsw i32 %.sroa.04.0 to i8     ; 2 uses
-  %i.fh = udiv i8 %i.fg, 10
+  %i.fg = trunc nuw nsw i32 %i.dp to i8
+  %4 = add nuw nsw i8 %3, %i.fg                   ; 2 uses
+  %i.fh = udiv i8 %4, 10
   %i.fi = or disjoint i8 %i.fh, 48
   call void @_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VechE7reserveCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 1)
   %i.fj = load ptr, ptr %i.p, align 8, !alias.scope !12408, !nonnull !27, !noundef !27
@@ -286,7 +286,7 @@ bb.f:                                             ; preds = %bb.d
   store i8 %i.fi, ptr %i.fm, align 1
   %i.fn = add nuw i64 %i.m, 14
   store i64 %i.fn, ptr %i.n, align 8, !alias.scope !12408
-  %i.fo = urem i8 %i.fg, 10
+  %i.fo = urem i8 %4, 10
   %i.fp = or disjoint i8 %i.fo, 48
   call void @_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VechE7reserveCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 1)
   %i.fq = load ptr, ptr %i.p, align 8, !alias.scope !12409, !nonnull !27, !noundef !27
@@ -689,7 +689,7 @@ bb.q:                                             ; preds = %bb.o, %bb.p
   store i8 1, ptr %i.aq, align 8, !alias.scope !18896
   %i.ar = getelementptr inbounds nuw i8, ptr %i.k, i64 96 ; 38 uses
   %i.as = load i64, ptr %i.ar, align 8, !alias.scope !18896, !noundef !27 ; 5 uses
-  %2 = trunc i64 %i.as to i32
+  %2 = trunc i64 %i.as to i16
   %i.at = load i16, ptr %i.p, align 2, !noundef !27 ; 2 uses
   %i.au = icmp ne i16 %i.at, 0
   %i.av = getelementptr inbounds nuw i8, ptr %i.k, i64 114
@@ -1070,8 +1070,8 @@ _RINvMs3_NtCs2TwJzntlzha_11flatbuffers7builderNtB6_17FlatBufferBuilder4pushmECs1
   %.val.i.i.i100 = load ptr, ptr %i.di, align 8, !alias.scope !18917, !nonnull !27, !noundef !27
   %i.ga = getelementptr inbounds nuw i8, ptr %.val.i.i.i100, i64 %i.fy
   store i32 -252645136, ptr %i.ga, align 1, !alias.scope !18920
-  %i.gb = load i64, ptr %i.ar, align 8, !alias.scope !18917, !noundef !27 ; 3 uses
-  %i.gc = trunc i64 %i.gb to i32                  ; 6 uses
+  %i.gb = load i64, ptr %i.ar, align 8, !alias.scope !18917, !noundef !27 ; 4 uses
+  %i.gc = trunc i64 %i.gb to i32                  ; 5 uses
   %i.gd = load i64, ptr %i.do, align 8, !alias.scope !18921, !noundef !27 ; 2 uses
   %.not.i.i = icmp eq i64 %i.gd, 0
   br i1 %.not.i.i, label %_RINvYINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtBc_5slice4iter4IterNtNtCs2TwJzntlzha_11flatbuffers7builder8FieldLocENCNvB1j_19get_vtable_byte_len0ENtNtNtBa_6traits8iterator8Iterator6reduceNCINvNvB2z_6max_by4foldtNvYtNtNtBc_3cmp3Ord3cmpE0ECs14kWLkQVSKO_14deltalake_core.exit.i.i, label %bb.y
@@ -1141,8 +1141,8 @@ bb.z:                                             ; preds = %_RNvXsd_NtCs2TwJznt
   br i1 %i.ha, label %bb.aa, label %.invoke, !prof !43
 
 bb.aa:                                            ; preds = %bb.z
-  %3 = sub i32 %i.gc, %2
-  %4 = trunc i32 %3 to i16
+  %3 = trunc i64 %i.gb to i16
+  %4 = sub i16 %3, %2
   %i.hb = getelementptr inbounds nuw i8, ptr %i.gx, i64 2
   store i16 %4, ptr %i.hb, align 1
   %i.hc = load ptr, ptr %i.dt, align 8, !alias.scope !18921, !nonnull !27, !noundef !27 ; 5 uses
@@ -1545,11 +1545,11 @@ bb.a:
   %i.bx = getelementptr inbounds nuw i8, ptr %i.ah, i64 48
   %.not140.i.i = icmp eq i32 %i.bc, 0             ; 19 uses
   %i.by = lshr i32 %i.bc, 4
-  %i.bz = and i32 %i.by, 511                      ; 9 uses
+  %i.bz = and i32 %i.by, 511                      ; 8 uses
   %i.ca = and i32 %i.bc, 7
   %i.cb = add nuw nsw i32 %i.bz, %i.ca
   %.lhs.trunc9.i.i = trunc nuw nsw i32 %i.cb to i16
-  %i.cc = urem i16 %.lhs.trunc9.i.i, 7            ; 6 uses
+  %i.cc = urem i16 %.lhs.trunc9.i.i, 7            ; 7 uses
   %i.cd = icmp samesign ult i16 %i.cc, 6          ; 2 uses
   %narrow42.i.i = add nuw nsw i16 %i.cc, 1
   %narrow43.i.i = select i1 %i.cd, i16 %narrow42.i.i, i16 0
@@ -1666,7 +1666,7 @@ bb.a:
   %switch.offset.i.i = add nuw nsw i8 %switch.idx.cast.i.i, 49
   %i.fm = trunc i32 %i.bc to i8
   %i.fn = and i8 %i.fm, 15                        ; 4 uses
-  %i.fo = trunc nuw nsw i32 %i.bz to i16
+  %i.fo = trunc nuw nsw i32 %i.bz to i16          ; 2 uses
   %i.fp = add nuw nsw i16 %i.fo, 6
   %.lhs.trunc1.i142.i.i = sub nuw nsw i16 %i.fp, %i.cc ; 2 uses
   %i.fq = udiv i16 %.lhs.trunc1.i142.i.i, 7
@@ -1676,13 +1676,10 @@ bb.a:
   %i.fu = add nuw nsw i8 %i.fs, 48
   %i.fv = urem i8 %i.fr, 10
   %i.fw = or disjoint i8 %i.fv, 48
-  %spec.select.i131.i.i = zext nneg i16 %i.cc to i32 ; 2 uses
-  %2 = add nuw nsw i32 %spec.select.i131.i.i, 7
-  %.pn.i.i.i = select i1 %i.cd, i32 %2, i32 %spec.select.i131.i.i
-  %.sroa.0.0.neg.i.i.i = add nuw nsw i32 %i.bz, 6
-  %3 = sub nsw i32 %.sroa.0.0.neg.i.i.i, %.pn.i.i.i
-  %4 = trunc nsw i32 %3 to i16
-  %.lhs.trunc1.i.i.i = add nsw i16 %4, 6
+  %2 = add nuw nsw i16 %i.cc, 7
+  %.pn.i.i.i = select i1 %i.cd, i16 %2, i16 %i.cc
+  %3 = add nuw nsw i16 %i.fo, 12
+  %.lhs.trunc1.i.i.i = sub nsw i16 %3, %.pn.i.i.i
   %i.fx = sdiv i16 %.lhs.trunc1.i.i.i, 7          ; 2 uses
   %i.fy = trunc nuw nsw i16 %i.fx to i8           ; 2 uses
   %i.fz = udiv i8 %i.fy, 10
@@ -2085,18 +2082,18 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = icmp slt i64 %i.d, 0
-  %3 = select i1 %i.h, i64 86400, i64 0
-  %spec.select.i.i = add nsw i64 %3, %i.d
+  %3 = select i1 %i.h, i32 86400, i32 0
   %i.i = icmp slt i64 %i.b, 0
-  %4 = select i1 %i.i, i64 1000000, i64 0
-  %spec.select.i = add nsw i64 %4, %i.b
-  %5 = trunc nuw nsw i64 %spec.select.i to i32
-  %i.j = mul nuw nsw i32 %5, 1000
-  %i.k = trunc nuw nsw i64 %spec.select.i.i to i32
+  %4 = select i1 %i.i, i32 1000000, i32 0
+  %5 = trunc nsw i64 %i.b to i32
+  %6 = add nsw i32 %4, %5
+  %i.j = mul nuw nsw i32 %6, 1000
+  %i.k = trunc nsw i64 %i.d to i32
+  %7 = add nsw i32 %3, %i.k
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.g, ptr %i.l, align 4
   %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %i.k, ptr %.sroa.46.0..sroa_idx, align 4
+  store i32 %7, ptr %.sroa.46.0..sroa_idx, align 4
   %.sroa.57.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.j, ptr %.sroa.57.0..sroa_idx, align 4
   br label %bb.c
@@ -2115,17 +2112,16 @@ bb.a:
   %.lobit.i = ashr i64 %i.b, 63
   %.sroa.0.0.i = add nsw i64 %.lobit.i, %i.a      ; 2 uses
   %i.c = icmp slt i64 %i.b, 0
-  %3 = select i1 %i.c, i64 1000, i64 0
-  %spec.select.i = add nsw i64 %3, %i.b
-  %4 = trunc nuw nsw i64 %spec.select.i to i32
-  %i.d = mul nuw nsw i32 %4, 1000000
+  %3 = select i1 %i.c, i32 1000, i32 0
+  %4 = trunc nsw i64 %i.b to i32
+  %5 = add nsw i32 %3, %4
+  %i.d = mul nuw nsw i32 %5, 1000000
   %i.e = sdiv i64 %.sroa.0.0.i, 86400
   %i.f = srem i64 %.sroa.0.0.i, 86400             ; 3 uses
   %.lobit.i.i = ashr i64 %i.f, 63
   %.sroa.0.0.i.i = add nsw i64 %.lobit.i.i, %i.e  ; 2 uses
   %i.g = icmp slt i64 %i.f, 0
-  %5 = select i1 %i.g, i64 86400, i64 0
-  %spec.select.i.i = add nsw i64 %5, %i.f
+  %6 = select i1 %i.g, i32 86400, i32 0
   %i.h = add nsw i64 %.sroa.0.0.i.i, -2146764485
   %or.cond.i = icmp ult i64 %i.h, -4294967296
   br i1 %or.cond.i, label %bb.d, label %bb.b
@@ -2138,11 +2134,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = trunc nuw nsw i64 %spec.select.i.i to i32
+  %i.l = trunc nsw i64 %i.f to i32
+  %7 = add nsw i32 %6, %i.l
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.k, ptr %i.m, align 4
   %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %i.l, ptr %.sroa.46.0..sroa_idx, align 4
+  store i32 %7, ptr %.sroa.46.0..sroa_idx, align 4
   %.sroa.57.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.d, ptr %.sroa.57.0..sroa_idx, align 4
   br label %bb.d

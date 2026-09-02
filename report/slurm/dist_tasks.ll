@@ -202,6 +202,7 @@ bb.cs:                                            ; preds = %bb.cr, %bb.co
   %i.ls = call i64 @slurm_bit_size(ptr noundef nonnull %i.jz) #9
   %.fr.i = freeze i64 %i.ls
   %i.lt = trunc i64 %.fr.i to i32                 ; 3 uses
+  %3 = mul i16 %i.lk, %i.lg                       ; 2 uses
   %.not191.i = icmp eq i16 %i.jp, 0
   br i1 %.not191.i, label %._crit_edge190.thread.i, label %.lr.ph189.i
 
@@ -211,9 +212,8 @@ bb.cs:                                            ; preds = %bb.cr, %bb.co
   br label %bb.ds
 
 .lr.ph189.i:                                      ; preds = %bb.cs
-  %3 = mul i16 %i.lk, %i.lg
   %i.lv = icmp sgt i32 %i.lt, 0
-  %i.lw = zext i16 %3 to i32                      ; 3 uses
+  %i.lw = zext i16 %3 to i32                      ; 2 uses
   %i.lx = zext i16 %i.li to i32                   ; 3 uses
   %i.ly = shl nuw nsw i64 %i.lj, 2                ; 2 uses
   %i.lz = mul nuw nsw i64 %i.ly, %i.ll            ; 2 uses
@@ -267,14 +267,15 @@ bb.cx:                                            ; preds = %bb.cw, %bb.ct
 
 ._crit_edge.us.i:                                 ; preds = %.preheader.us.i, %._crit_edge.us.loopexit.i
   %.lcssa165.us.i = phi i64 [ %i.pc, %.preheader.us.i ], [ %i.mi, %._crit_edge.us.loopexit.i ]
-  %.297.lcssa.us.i = phi i16 [ %.196174.us.i, %.preheader.us.i ], [ %i.ml, %._crit_edge.us.loopexit.i ] ; 5 uses
+  %.297.lcssa.us.i = phi i16 [ %.196174.us.i, %.preheader.us.i ], [ %i.ml, %._crit_edge.us.loopexit.i ] ; 6 uses
   %.lcssa162.us.i = phi i32 [ %i.pe, %.preheader.us.i ], [ %i.mk, %._crit_edge.us.loopexit.i ] ; 2 uses
   %i.mm = getelementptr inbounds nuw [4 x i8], ptr %i.pb, i64 %.lcssa165.us.i
-  %i.mn = zext i16 %.297.lcssa.us.i to i32        ; 2 uses
-  %4 = mul nuw nsw i32 %i.mn, %i.lw
-  %5 = add nsw i32 %4, %.lcssa162.us.i
-  %6 = and i32 %5, 65535
-  %i.mo = urem i32 %6, %i.lt                      ; 2 uses
+  %i.mn = zext i16 %.297.lcssa.us.i to i32
+  %4 = mul i16 %.297.lcssa.us.i, %3
+  %5 = trunc i32 %.lcssa162.us.i to i16
+  %6 = add i16 %4, %5
+  %7 = zext i16 %6 to i32
+  %i.mo = urem i32 %7, %i.lt                      ; 2 uses
   %i.mp = add nsw i32 %.lcssa162.us.i, 1
   store i32 %i.mp, ptr %i.mm, align 4
   %i.mq = load ptr, ptr %i.k, align 8

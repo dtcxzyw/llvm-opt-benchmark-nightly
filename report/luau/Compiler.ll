@@ -204,7 +204,7 @@ _ZNK4Luau8Compiler10atTopLevelEv.exit.thread:     ; preds = %bb.c, %bb.a, %bb.d,
   %i.s = load i32, ptr %i.r, align 4, !tbaa !220  ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !637
-  %i.v = icmp ne ptr %i.u, null                   ; 2 uses
+  %i.v = icmp ne ptr %i.u, null                   ; 3 uses
   %i.w = load ptr, ptr %0, align 8, !tbaa !265, !nonnull !87, !align !266
   %i.x = zext i1 %i.v to i64                      ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 6 uses
@@ -250,11 +250,11 @@ bb.h:                                             ; preds = %bb.f, %bb.g, %_ZNK4
   br label %.body
 
 bb.i:                                             ; preds = %bb.g, %_ZN4Luau8Compiler12setDebugLineEPNS_7AstNodeE.exit
-  %i.au = zext i1 %i.v to i32                     ; 2 uses
+  %i.au = zext i1 %i.v to i32
   %i.av = load i64, ptr %i.y, align 8, !tbaa !267 ; 2 uses
   %i.aw = trunc i64 %i.av to i32
   %i.ax = add i32 %i.aw, %i.au                    ; 2 uses
-  %i.ay = load i32, ptr %i.r, align 4, !tbaa !220 ; 3 uses
+  %i.ay = load i32, ptr %i.r, align 4, !tbaa !220 ; 2 uses
   %i.az = add i32 %i.ax, %i.ay                    ; 3 uses
   %i.ba = icmp ugt i32 %i.az, 255
   br i1 %i.ba, label %bb.j, label %bb.k
@@ -273,12 +273,12 @@ bb.k:                                             ; preds = %bb.i
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !40
   %i.be = tail call i32 @llvm.umax.i32(i32 %i.bd, i32 %i.az)
   store i32 %i.be, ptr %i.bc, align 8, !tbaa !221
+  %7 = trunc i32 %i.ay to i8                      ; 2 uses
   %i.bf = load ptr, ptr %i.t, align 8, !tbaa !637 ; 2 uses
   %.not = icmp eq ptr %i.bf, null
   br i1 %.not, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %7 = trunc i32 %i.ay to i8
   invoke void @_ZN4Luau8Compiler9pushLocalEPNS_8AstLocalEhj(ptr noundef nonnull align 8 dereferenceable(1904) %0, ptr noundef nonnull %i.bf, i8 noundef zeroext %7, i32 noundef -1)
           to label %._crit_edge234 unwind label %bb.m
 
@@ -297,8 +297,8 @@ bb.n:                                             ; preds = %._crit_edge234, %bb
   br i1 %.not215, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.n
-  %8 = add i32 %i.ay, %i.au
-  %9 = zext i32 %8 to i64
+  %8 = zext i1 %i.v to i8
+  %9 = add i8 %7, %8
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 88
   br label %bb.o
 
@@ -307,8 +307,8 @@ bb.o:                                             ; preds = %.lr.ph, %bb.p
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !271
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bj, i64 %.068204
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !272
-  %10 = add i64 %.068204, %9
-  %11 = trunc i64 %10 to i8
+  %10 = trunc i64 %.068204 to i8
+  %11 = add i8 %9, %10
   invoke void @_ZN4Luau8Compiler9pushLocalEPNS_8AstLocalEhj(ptr noundef nonnull align 8 dereferenceable(1904) %0, ptr noundef %i.bl, i8 noundef zeroext %11, i32 noundef -1)
           to label %bb.p unwind label %bb.q
 
@@ -711,11 +711,11 @@ bb.o:                                             ; preds = %bb.n
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 6 uses
   %i.bj = load i8, ptr %i.bi, align 8, !tbaa !723, !range !86, !noundef !87 ; 2 uses
   %narrow = add nuw nsw i8 %i.bj, 1
-  %6 = zext nneg i8 %narrow to i64
+  %6 = zext nneg i8 %narrow to i32
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 12 uses
   %i.bl = load i64, ptr %i.bk, align 8, !tbaa !475
-  %7 = add i64 %i.bl, %6
-  %8 = trunc i64 %7 to i32
+  %7 = trunc i64 %i.bl to i32
+  %8 = add i32 %7, %6
   %i.bm = zext i8 %3 to i32                       ; 2 uses
   %.sroa.speculated = tail call i32 @llvm.umax.i32(i32 %8, i32 %i.bm) ; 3 uses
   br i1 %4, label %bb.p, label %bb.r
@@ -1118,8 +1118,7 @@ bb.cl:                                            ; preds = %_ZN4Luau8Compiler18
   br i1 %.not406, label %._crit_edge, label %.lr.ph401
 
 .lr.ph401:                                        ; preds = %bb.cl
-  %9 = zext i8 %i.cd to i64
-  %10 = add nuw nsw i64 %9, 1                     ; 2 uses
+  %9 = add i8 %i.cd, 1
   br label %bb.cn
 
 ._crit_edge:                                      ; preds = %bb.cs, %bb.cl
@@ -1140,21 +1139,21 @@ bb.cm:                                            ; preds = %._crit_edge
 
 bb.cn:                                            ; preds = %.lr.ph401, %bb.cs
   %i.jv = phi i64 [ %i.jm, %.lr.ph401 ], [ %i.kh, %bb.cs ]
-  %.0151400 = phi i64 [ 0, %.lr.ph401 ], [ %i.jw, %bb.cs ] ; 4 uses
+  %.0151400 = phi i64 [ 0, %.lr.ph401 ], [ %i.jw, %bb.cs ] ; 3 uses
   %.0152399 = phi i1 [ false, %.lr.ph401 ], [ %.1153, %bb.cs ]
   %i.jw = add nuw i64 %.0151400, 1                ; 3 uses
   %i.jx = icmp eq i64 %i.jw, %i.jv
   %i.jy = load ptr, ptr %i.jl, align 8, !tbaa !482
   %i.jz = getelementptr inbounds nuw [8 x i8], ptr %i.jy, i64 %.0151400
   %i.ka = load ptr, ptr %i.jz, align 8, !tbaa !447 ; 2 uses
-  %i.kb = load i8, ptr %i.bi, align 8, !tbaa !723, !range !86, !noundef !87 ; 2 uses
+  %i.kb = load i8, ptr %i.bi, align 8, !tbaa !723, !range !86, !noundef !87
+  %10 = trunc i64 %.0151400 to i8
+  %11 = add i8 %9, %10
+  %12 = add i8 %11, %i.kb                         ; 3 uses
   br i1 %i.jx, label %bb.co, label %bb.cq
 
 bb.co:                                            ; preds = %bb.cn
-  %11 = add i64 %10, %.0151400
-  %12 = trunc i64 %11 to i8
-  %13 = add i8 %i.kb, %12
-  %i.kc = invoke noundef zeroext i1 @_ZN4Luau8Compiler22compileExprTempMultRetEPNS_7AstExprEh(ptr noundef nonnull align 8 dereferenceable(1904) %0, ptr noundef %i.ka, i8 noundef zeroext %13)
+  %i.kc = invoke noundef zeroext i1 @_ZN4Luau8Compiler22compileExprTempMultRetEPNS_7AstExprEh(ptr noundef nonnull align 8 dereferenceable(1904) %0, ptr noundef %i.ka, i8 noundef zeroext %12)
           to label %bb.cs unwind label %bb.cp
 
 bb.cp:                                            ; preds = %bb.co
@@ -1163,16 +1162,11 @@ bb.cp:                                            ; preds = %bb.co
   br label %.body249
 
 bb.cq:                                            ; preds = %bb.cn
-  %14 = zext nneg i8 %i.kb to i64
-  %15 = add i64 %10, %.0151400
-  %16 = add i64 %15, %14                          ; 2 uses
-  %17 = trunc i64 %16 to i8
-  %18 = trunc i64 %16 to i32
-  %19 = and i32 %18, 255
-  %i.ke = add nuw nsw i32 %19, 1
+  %13 = zext i8 %12 to i32
+  %i.ke = add nuw nsw i32 %13, 1
   %i.kf = load i32, ptr %i.bg, align 4, !tbaa !220 ; 2 uses
   store i32 %i.ke, ptr %i.bg, align 4, !tbaa !220
-  invoke void @_ZN4Luau8Compiler11compileExprEPNS_7AstExprEhb(ptr noundef nonnull align 8 dereferenceable(1904) %0, ptr noundef %i.ka, i8 noundef zeroext %17, i1 noundef zeroext true)
+  invoke void @_ZN4Luau8Compiler11compileExprEPNS_7AstExprEhb(ptr noundef nonnull align 8 dereferenceable(1904) %0, ptr noundef %i.ka, i8 noundef zeroext %12, i1 noundef zeroext true)
           to label %_ZN4Luau8Compiler18compileExprTempTopEPNS_7AstExprEh.exit255 unwind label %bb.cr, !inline_history !17
 
 bb.cr:                                            ; preds = %bb.cq
@@ -1575,7 +1569,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.ds = lshr exact i64 %i.dr, 3
   %i.dt = trunc i64 %i.ds to i32
   %i.du = add i32 %i.dt, 1                        ; 2 uses
-  %i.dv = load i32, ptr %i.b, align 4, !tbaa !220 ; 3 uses
+  %i.dv = load i32, ptr %i.b, align 4, !tbaa !220 ; 2 uses
   %i.dw = add i32 %i.du, %i.dv                    ; 3 uses
   %i.dx = icmp ugt i32 %i.dw, 255
   br i1 %i.dx, label %bb.al, label %bb.am
@@ -1594,7 +1588,7 @@ bb.am:                                            ; preds = %bb.ak
   %i.ea = load i32, ptr %i.dz, align 8, !tbaa !40
   %i.eb = call i32 @llvm.umax.i32(i32 %i.ea, i32 %i.dw)
   store i32 %i.eb, ptr %i.dz, align 8, !tbaa !221
-  %i.ec = trunc i32 %i.dv to i8                   ; 3 uses
+  %i.ec = trunc i32 %i.dv to i8                   ; 4 uses
   %i.ed = load ptr, ptr %i.d, align 8, !tbaa !808
   invoke void @_ZN4Luau8Compiler16compileLValueUseERKNS0_6LValueEhbPNS_7AstExprE(ptr noundef nonnull align 8 dereferenceable(1904) %0, ptr noundef nonnull align 8 dereferenceable(40) %3, i8 noundef zeroext %i.ec, i1 noundef zeroext false, ptr noundef %i.ed)
           to label %.preheader unwind label %bb.ao
@@ -1606,8 +1600,7 @@ bb.am:                                            ; preds = %bb.ak
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
-  %narrow = add i32 %i.dv, 1
-  %5 = zext i32 %narrow to i64
+  %5 = add i8 %i.ec, 1
   br label %bb.ap
 
 ._crit_edge.loopexit:                             ; preds = %_ZN4Luau8Compiler15compileExprTempEPNS_7AstExprEh.exit
@@ -1636,8 +1629,8 @@ bb.ap:                                            ; preds = %.lr.ph, %_ZN4Luau8C
   %.093 = phi i64 [ 0, %.lr.ph ], [ %i.eo, %_ZN4Luau8Compiler15compileExprTempEPNS_7AstExprEh.exit ] ; 3 uses
   %i.em = getelementptr inbounds nuw [8 x i8], ptr %i.el, i64 %.093
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !447
-  %6 = add i64 %.093, %5
-  %7 = trunc i64 %6 to i8
+  %6 = trunc i64 %.093 to i8
+  %7 = add i8 %5, %6
   invoke void @_ZN4Luau8Compiler11compileExprEPNS_7AstExprEhb(ptr noundef nonnull align 8 dereferenceable(1904) %0, ptr noundef %i.en, i8 noundef zeroext %7, i1 noundef zeroext true)
           to label %_ZN4Luau8Compiler15compileExprTempEPNS_7AstExprEh.exit unwind label %bb.aq, !inline_history !19
 
@@ -2040,8 +2033,7 @@ bb.j:                                             ; preds = %_ZN4Luau8Compiler10
   %.069125 = phi i32 [ %.069.ph, %_ZN4Luau8Compiler10isConstantEPNS_7AstExprE.exit.thread.thread ], [ %.069, %_ZN4Luau8Compiler10isConstantEPNS_7AstExprE.exit.thread ] ; 2 uses
   %i.ai = phi i1 [ false, %_ZN4Luau8Compiler10isConstantEPNS_7AstExprE.exit.thread.thread ], [ %i.ah, %_ZN4Luau8Compiler10isConstantEPNS_7AstExprE.exit.thread ] ; 3 uses
   %i.aj = phi i1 [ false, %_ZN4Luau8Compiler10isConstantEPNS_7AstExprE.exit.thread.thread ], [ %i.ag, %_ZN4Luau8Compiler10isConstantEPNS_7AstExprE.exit.thread ] ; 2 uses
-  %9 = zext i8 %6 to i64
-  %10 = add nuw nsw i64 %9, 1                     ; 3 uses
+  %9 = add i8 %6, 1                               ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 1532 ; 7 uses
   %i.al = load ptr, ptr %i.b, align 8, !tbaa !482
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !447
@@ -2050,16 +2042,14 @@ bb.j:                                             ; preds = %_ZN4Luau8Compiler10
   br i1 %i.ao, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %11 = trunc i64 %10 to i8
-  %12 = trunc nuw nsw i64 %10 to i32
-  %13 = and i32 %12, 255                          ; 3 uses
-  store i32 %13, ptr %i.a, align 4, !tbaa !40
+  %10 = zext i8 %9 to i32                         ; 3 uses
+  store i32 %10, ptr %i.a, align 4, !tbaa !40
   %i.ap = load ptr, ptr %i.b, align 8, !tbaa !482
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !447
-  %i.ar = add nuw nsw i32 %13, 1
+  %i.ar = add nuw nsw i32 %10, 1
   %i.as = load i32, ptr %i.ak, align 4, !tbaa !220 ; 2 uses
   store i32 %i.ar, ptr %i.ak, align 4, !tbaa !220
-  invoke void @_ZN4Luau8Compiler11compileExprEPNS_7AstExprEhb(ptr noundef nonnull align 8 dereferenceable(1904) %0, ptr noundef %i.aq, i8 noundef zeroext %11, i1 noundef zeroext true)
+  invoke void @_ZN4Luau8Compiler11compileExprEPNS_7AstExprEhb(ptr noundef nonnull align 8 dereferenceable(1904) %0, ptr noundef %i.aq, i8 noundef zeroext %9, i1 noundef zeroext true)
           to label %_ZN4Luau8Compiler18compileExprTempTopEPNS_7AstExprEh.exit.peel unwind label %.loopexit.split-lp, !inline_history !17
 
 _ZN4Luau8Compiler18compileExprTempTopEPNS_7AstExprEh.exit.peel: ; preds = %bb.k
@@ -2072,7 +2062,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %_ZN4Luau8Compiler18compileExprTempTopEPNS_7AstExprEh.exit.peel
-  %i.au = phi i32 [ %13, %_ZN4Luau8Compiler18compileExprTempTopEPNS_7AstExprEh.exit.peel ], [ %i.at, %bb.l ] ; 2 uses
+  %i.au = phi i32 [ %10, %_ZN4Luau8Compiler18compileExprTempTopEPNS_7AstExprEh.exit.peel ], [ %i.at, %bb.l ] ; 2 uses
   %i.av = load i64, ptr %i.c, align 8, !tbaa !475
   %i.aw = icmp ugt i64 %i.av, 1
   br i1 %i.aw, label %.peel.next, label %._crit_edge
@@ -2124,19 +2114,18 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.t
 
 bb.r:                                             ; preds = %bb.p
-  %14 = add i64 %10, %.06882                      ; 2 uses
-  %i.bq = trunc i64 %14 to i8
-  %15 = trunc i64 %14 to i32
-  %16 = and i32 %15, 255                          ; 2 uses
+  %i.bq = trunc i64 %.06882 to i8
+  %11 = add i8 %9, %i.bq                          ; 2 uses
+  %12 = zext i8 %11 to i32                        ; 2 uses
   %i.br = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.06882
-  store i32 %16, ptr %i.br, align 4, !tbaa !40
+  store i32 %12, ptr %i.br, align 4, !tbaa !40
   %i.bs = load ptr, ptr %i.b, align 8, !tbaa !482
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.bs, i64 %.06882
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !447
-  %i.bv = add nuw nsw i32 %16, 1
+  %i.bv = add nuw nsw i32 %12, 1
   %i.bw = load i32, ptr %i.ak, align 4, !tbaa !220 ; 2 uses
   store i32 %i.bv, ptr %i.ak, align 4, !tbaa !220
-  invoke void @_ZN4Luau8Compiler11compileExprEPNS_7AstExprEhb(ptr noundef nonnull align 8 dereferenceable(1904) %0, ptr noundef %i.bu, i8 noundef zeroext %i.bq, i1 noundef zeroext true)
+  invoke void @_ZN4Luau8Compiler11compileExprEPNS_7AstExprEhb(ptr noundef nonnull align 8 dereferenceable(1904) %0, ptr noundef %i.bu, i8 noundef zeroext %11, i1 noundef zeroext true)
           to label %_ZN4Luau8Compiler18compileExprTempTopEPNS_7AstExprEh.exit unwind label %.loopexit99, !inline_history !17
 
 .loopexit99:                                      ; preds = %bb.r
@@ -2195,7 +2184,8 @@ bb.x:                                             ; preds = %bb.v, %bb.w, %bb.u
 
 .lr.ph85:                                         ; preds = %bb.x
   %i.cn = zext i8 %6 to i64
-  %i.co = add nuw nsw i64 %i.cn, 1                ; 4 uses
+  %i.co = add nuw nsw i64 %i.cn, 1                ; 3 uses
+  %13 = add i8 %6, 1
   br i1 %i.ax, label %.lr.ph85.split.preheader, label %.lr.ph85.split.us
 
 .lr.ph85.split.preheader:                         ; preds = %.lr.ph85
@@ -2251,8 +2241,8 @@ _ZN4Luau8Compiler9emitLoadKEhi.exit.us:           ; preds = %bb.z, %.lr.ph85.spl
 
 .lr.ph85.split.peel.next:                         ; preds = %_ZN4Luau8Compiler9emitLoadKEhi.exit.peel, %_ZN4Luau8Compiler9emitLoadKEhi.exit
   %.06783 = phi i64 [ %i.dr, %_ZN4Luau8Compiler9emitLoadKEhi.exit ], [ 1, %_ZN4Luau8Compiler9emitLoadKEhi.exit.peel ] ; 3 uses
-  %17 = add i64 %i.co, %.06783
-  %18 = trunc i64 %17 to i8                       ; 2 uses
+  %14 = trunc i64 %.06783 to i8
+  %15 = add i8 %13, %14                           ; 2 uses
   %i.dl = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.06783
   %i.dm = load i32, ptr %i.dl, align 4, !tbaa !40 ; 3 uses
   %i.dn = icmp slt i32 %i.dm, 32768
@@ -2261,11 +2251,11 @@ _ZN4Luau8Compiler9emitLoadKEhi.exit.us:           ; preds = %bb.z, %.lr.ph85.spl
 
 bb.aa:                                            ; preds = %.lr.ph85.split.peel.next
   %i.dp = trunc i32 %i.dm to i16
-  tail call void @_ZN4Luau15BytecodeBuilder6emitADE10LuauOpcodehs(ptr noundef nonnull align 8 dereferenceable(1048) %i.do, i32 noundef 5, i8 noundef zeroext %18, i16 noundef signext %i.dp)
+  tail call void @_ZN4Luau15BytecodeBuilder6emitADE10LuauOpcodehs(ptr noundef nonnull align 8 dereferenceable(1048) %i.do, i32 noundef 5, i8 noundef zeroext %15, i16 noundef signext %i.dp)
   br label %_ZN4Luau8Compiler9emitLoadKEhi.exit
 
 bb.ab:                                            ; preds = %.lr.ph85.split.peel.next
-  tail call void @_ZN4Luau15BytecodeBuilder6emitADE10LuauOpcodehs(ptr noundef nonnull align 8 dereferenceable(1048) %i.do, i32 noundef 66, i8 noundef zeroext %18, i16 noundef signext 0)
+  tail call void @_ZN4Luau15BytecodeBuilder6emitADE10LuauOpcodehs(ptr noundef nonnull align 8 dereferenceable(1048) %i.do, i32 noundef 66, i8 noundef zeroext %15, i16 noundef signext 0)
   %i.dq = load ptr, ptr %0, align 8, !tbaa !265, !nonnull !87, !align !266
   tail call void @_ZN4Luau15BytecodeBuilder7emitAuxEj(ptr noundef nonnull align 8 dereferenceable(1048) %i.dq, i32 noundef %i.dm)
   br label %_ZN4Luau8Compiler9emitLoadKEhi.exit

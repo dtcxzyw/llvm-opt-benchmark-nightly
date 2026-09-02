@@ -204,13 +204,12 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.ac = icmp eq i32 %i.aa, 0
-  %..i.i.i = select i1 %i.ac, i32 0, i32 512
   %i.ad = lshr exact i32 %i.y, 16
   %i.ae = lshr i32 %i.aa, 13
   %i.af = or disjoint i32 %i.ae, %i.ad
-  %3 = or i32 %i.af, %..i.i.i
-  %4 = trunc nuw i32 %3 to i16
-  %i.ag = or disjoint i16 %4, 31744
+  %3 = trunc nuw i32 %i.af to i16
+  %4 = select i1 %i.ac, i16 31744, i16 32256
+  %i.ag = or i16 %4, %3
   br label %_RNvNtNtCsziJ2WEe1SN_4half8binary167convert19f32_to_f16_fallback.exit.i.i
 
 bb.k:                                             ; preds = %bb.i
@@ -376,13 +375,12 @@ bb.ad:                                            ; preds = %_RNvNtNtCsziJ2WEe1S
 
 bb.ae:                                            ; preds = %bb.ad
   %i.db = icmp eq i32 %i.aa, 0
-  %..i8.i.i = select i1 %i.db, i32 0, i32 512
   %i.dc = lshr exact i32 %i.y, 16
   %i.dd = lshr i32 %i.aa, 13
   %i.de = or disjoint i32 %i.dd, %i.dc
-  %5 = or i32 %i.de, %..i8.i.i
-  %6 = trunc nuw i32 %5 to i16
-  %i.df = or disjoint i16 %6, 31744
+  %5 = trunc nuw i32 %i.de to i16
+  %6 = select i1 %i.db, i16 31744, i16 32256
+  %i.df = or i16 %6, %5
   br label %_RNvNtNtCsziJ2WEe1SN_4half8binary167convert19f32_to_f16_fallback.exit9.i.i
 
 bb.af:                                            ; preds = %bb.ad

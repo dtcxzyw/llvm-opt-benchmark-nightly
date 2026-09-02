@@ -204,14 +204,13 @@ bb.ma:                                            ; preds = %bb.lz, %bb.ly
 
 bb.mb:                                            ; preds = %bb.lx
   %i.alc = add i8 %.67, -5
-  %7 = zext i8 %i.alc to i32
   br label %bb.mc
 
 bb.mc:                                            ; preds = %bb.mb, %bb.ma
   %.683933 = phi i32 [ %i.alb, %bb.ma ], [ %.673932, %bb.mb ]
   %.683796 = phi i32 [ %i.ala, %bb.ma ], [ %.673795, %bb.mb ]
   %.683632 = phi i32 [ %i.akz, %bb.ma ], [ %i.akq, %bb.mb ]
-  %.68 = phi i32 [ 7, %bb.ma ], [ %7, %bb.mb ]
+  %.68 = phi i8 [ 7, %bb.ma ], [ %i.alc, %bb.mb ]
   %i.ald = load i32, ptr @hf_gsm_a_gm_rac_flo_iu_cap, align 4
   %i.ale = call ptr @proto_tree_add_bits_item(ptr noundef %i.x, i32 noundef %i.ald, ptr noundef %0, i32 noundef %i.ako, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.alf = add i32 %.163719, 6
@@ -221,8 +220,8 @@ bb.mc:                                            ; preds = %bb.mb, %bb.ma
   %i.alj = sub i32 %.15, %i.akn
   %i.alk = add i32 %i.alj, -5
   %i.all = shl i32 %i.alg, %i.alh
-  %8 = sub nsw i32 %.68, %i.alh
-  %9 = trunc i32 %8 to i8
+  %7 = trunc nuw i32 %i.alh to i8
+  %8 = sub i8 %.68, %7
   br label %bb.md
 
 bb.md:                                            ; preds = %bb.lv, %bb.mc, %bb.lp
@@ -230,7 +229,7 @@ bb.md:                                            ; preds = %bb.lv, %bb.mc, %bb.
   %.693797 = phi i32 [ %.683796, %bb.mc ], [ %.673795, %bb.lv ], [ %.663794, %bb.lp ] ; 4 uses
   %.173720 = phi i32 [ %i.ali, %bb.mc ], [ %i.ako, %bb.lv ], [ %i.ajx, %bb.lp ] ; 11 uses
   %.693633 = phi i32 [ %i.all, %bb.mc ], [ %i.akq, %bb.lv ], [ %i.ajz, %bb.lp ] ; 3 uses
-  %.69 = phi i8 [ %9, %bb.mc ], [ %i.akr, %bb.lv ], [ %.66, %bb.lp ] ; 6 uses
+  %.69 = phi i8 [ %8, %bb.mc ], [ %i.akr, %bb.lv ], [ %.66, %bb.lp ] ; 6 uses
   %.16 = phi i32 [ %i.alk, %bb.mc ], [ %i.akp, %bb.lv ], [ %i.ajy, %bb.lp ] ; 11 uses
   %i.alm = icmp ult i32 %.16, 2
   br i1 %i.alm, label %.thread, label %bb.me

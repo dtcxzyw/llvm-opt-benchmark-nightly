@@ -202,7 +202,6 @@ bb.q:                                             ; preds = %bb.o
   %.029.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %.1.i, %bb.x ]
   %reass.sub = sub i32 %4, %3
   %i.au = add i32 %reass.sub, 1
-  %7 = zext i32 %i.au to i64
   br label %bb.y
 
 .lr.ph.i:                                         ; preds = %bb.x, %.lr.ph.preheader.i
@@ -275,7 +274,7 @@ bb.x:                                             ; preds = %sdslen.exit.i, %.lr
 
 bb.y:                                             ; preds = %._crit_edge.i, %bb.q
   %.2.i = phi i64 [ %.029.lcssa.i, %._crit_edge.i ], [ 0, %bb.q ]
-  %.028.i = phi i64 [ %7, %._crit_edge.i ], [ 0, %bb.q ]
+  %.028.i = phi i32 [ %i.au, %._crit_edge.i ], [ 0, %bb.q ]
   %i.bt = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8032), align 8, !tbaa !106
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !16
@@ -283,9 +282,9 @@ bb.y:                                             ; preds = %._crit_edge.i, %bb.
   %i.bx = add i64 %i.bw, %.2.i
   %i.by = load ptr, ptr %i.bu, align 8, !tbaa !16
   %i.bz = tail call i64 @lpLength(ptr noundef %i.by) #8
-  %8 = add i64 %i.bz, %.028.i
-  %9 = trunc i64 %8 to i32
-  %i.ca = tail call i32 @quicklistNodeExceedsLimit(i32 noundef %i.bt, i64 noundef %i.bx, i32 noundef %9) #8
+  %7 = trunc i64 %i.bz to i32
+  %8 = add i32 %.028.i, %7
+  %i.ca = tail call i32 @quicklistNodeExceedsLimit(i32 noundef %i.bt, i64 noundef %i.bx, i32 noundef %8) #8
   %.not35.i = icmp eq i32 %i.ca, 0
   br i1 %.not35.i, label %listTypeTryConvertListpack.exit, label %bb.z
 

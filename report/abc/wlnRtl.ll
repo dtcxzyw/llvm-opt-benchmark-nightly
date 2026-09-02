@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.preheader
   %i.f = getelementptr i8, ptr %0, i64 8
   %.val32 = load ptr, ptr %i.f, align 8, !tbaa !14
-  %2 = select i1 %.not, i64 9, i64 16
+  %2 = select i1 %.not, i32 11, i32 18
   %wide.trip.count = zext nneg i32 %.val30 to i64
   br label %bb.c
 
@@ -212,9 +212,8 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %.val32, i64 %indvars.iv
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !15
   %i.i = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.h) #13
-  %3 = add i64 %i.i, %2
-  %i.j = trunc i64 %3 to i32
-  %i.k = add i32 %.034, 2
+  %i.j = trunc i64 %i.i to i32
+  %i.k = add i32 %2, %.034
   %i.l = add i32 %i.k, %i.j                       ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count

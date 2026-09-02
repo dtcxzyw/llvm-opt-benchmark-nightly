@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %sinfl_get.exit
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %.loopexit
-  %.1127327 = phi i32 [ 0, %bb.r ], [ %.5, %.loopexit ] ; 5 uses
+  %.1127327 = phi i32 [ 0, %bb.r ], [ %.5, %.loopexit ] ; 7 uses
   %i.fp = phi ptr [ %.promoted324, %bb.r ], [ %i.kt, %.loopexit ] ; 4 uses
   %i.fq = phi i32 [ %i.fc, %bb.r ], [ %i.ks, %.loopexit ] ; 6 uses
   %i.fr = phi i64 [ %i.fb, %bb.r ], [ %i.kr, %.loopexit ] ; 2 uses
@@ -262,13 +262,12 @@ bb.v:                                             ; preds = %sinfl_refill.exit18
   %i.gr = and i32 %i.gp, 15
   %i.gs = lshr i64 %.sink393, 7                   ; 2 uses
   %i.gt = add nsw i32 %.sink391, -7
-  %5 = zext nneg i32 %i.gr to i64
-  %notmask.i16.i = shl nsw i64 -1, %5
-  %6 = xor i64 %notmask.i16.i, -1
-  %7 = and i64 %i.gs, %6
-  %8 = trunc nuw nsw i64 %7 to i32
+  %notmask.i16.i = shl nsw i32 -1, %i.gr
+  %5 = xor i32 %notmask.i16.i, -1
+  %6 = trunc i64 %i.gs to i32
+  %7 = and i32 %5, %6
   %i.gu = lshr i32 %i.gp, 16
-  %i.gv = add nuw nsw i32 %i.gu, %8
+  %i.gv = add nuw nsw i32 %7, %i.gu
   %i.gw = zext nneg i32 %i.gv to i64
   %i.gx = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.gw
   %i.gy = load i32, ptr %i.gx, align 4
@@ -429,14 +428,14 @@ sinfl_get.exit199:                                ; preds = %bb.ae, %bb.af
   store i64 %i.jm, ptr %i.t, align 8
   %i.jn = add nsw i32 %i.jl, -3                   ; 2 uses
   store i32 %i.jn, ptr %i.u, align 8
-  %i.jo = sext i32 %.1127327 to i64               ; 2 uses
+  %i.jo = sext i32 %.1127327 to i64
   %scevgep362 = getelementptr i8, ptr %i.l, i64 %i.jo
   %i.jp = and i64 %.val.i2.i197, 7                ; 2 uses
   %i.jq = add nuw nsw i64 %i.jp, 3
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep362, i8 0, i64 %i.jq, i1 false)
-  %9 = add nsw i64 %i.jo, 3
-  %10 = add nsw i64 %9, %i.jp
-  %11 = trunc nsw i64 %10 to i32
+  %8 = add i32 %.1127327, 3
+  %9 = trunc nuw nsw i64 %i.jp to i32
+  %10 = add i32 %8, %9
   br label %.loopexit
 
 bb.ag:                                            ; preds = %sinfl_decode.exit
@@ -485,14 +484,14 @@ sinfl_get.exit204:                                ; preds = %bb.ah, %bb.ai
   store i64 %i.kl, ptr %i.t, align 8
   %i.km = add nsw i32 %i.kk, -7                   ; 2 uses
   store i32 %i.km, ptr %i.u, align 8
-  %i.kn = sext i32 %.1127327 to i64               ; 2 uses
+  %i.kn = sext i32 %.1127327 to i64
   %scevgep = getelementptr i8, ptr %i.l, i64 %i.kn
   %i.ko = and i64 %.val.i2.i202, 127              ; 2 uses
   %i.kp = add nuw nsw i64 %i.ko, 11
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 0, i64 %i.kp, i1 false)
-  %12 = add nsw i64 %i.kn, 11
-  %13 = add nsw i64 %12, %i.ko
-  %14 = trunc nsw i64 %13 to i32
+  %11 = add i32 %.1127327, 11
+  %12 = trunc nuw nsw i64 %i.ko to i32
+  %13 = add i32 %11, %12
   br label %.loopexit
 
 .loopexit.loopexit:                               ; preds = %bb.ac, %bb.ab, %bb.aa, %sinfl_get.exit194
@@ -504,7 +503,7 @@ sinfl_get.exit204:                                ; preds = %bb.ah, %bb.ai
   %i.kr = phi i64 [ %i.hd, %bb.w ], [ %i.jm, %sinfl_get.exit199 ], [ %i.ih, %.loopexit.loopexit ], [ %i.kl, %sinfl_get.exit204 ]
   %i.ks = phi i32 [ %i.he, %bb.w ], [ %i.jn, %sinfl_get.exit199 ], [ %i.ii, %.loopexit.loopexit ], [ %i.km, %sinfl_get.exit204 ]
   %i.kt = phi ptr [ %.sink392, %bb.w ], [ %.sink395, %sinfl_get.exit199 ], [ %.sink394, %.loopexit.loopexit ], [ %.sink396, %sinfl_get.exit204 ]
-  %.5 = phi i32 [ %i.hi, %bb.w ], [ %11, %sinfl_get.exit199 ], [ %i.kq, %.loopexit.loopexit ], [ %14, %sinfl_get.exit204 ] ; 2 uses
+  %.5 = phi i32 [ %i.hi, %bb.w ], [ %10, %sinfl_get.exit199 ], [ %i.kq, %.loopexit.loopexit ], [ %13, %sinfl_get.exit204 ] ; 2 uses
   %i.ku = icmp slt i32 %.5, %i.fo
   br i1 %i.ku, label %bb.s, label %bb.aj
 
@@ -584,13 +583,12 @@ bb.am:                                            ; preds = %sinfl_refill.exit20
   %i.mf = and i32 %i.md, 15
   %i.mg = lshr i64 %.val15.i209, 10               ; 2 uses
   %i.mh = add nsw i32 %.pre.i215, -10
-  %15 = zext nneg i32 %i.mf to i64
-  %notmask.i16.i211 = shl nsw i64 -1, %15
-  %16 = xor i64 %notmask.i16.i211, -1
-  %17 = and i64 %i.mg, %16
-  %18 = trunc nuw nsw i64 %17 to i32
+  %notmask.i16.i211 = shl nsw i32 -1, %i.mf
+  %14 = xor i32 %notmask.i16.i211, -1
+  %15 = trunc i64 %i.mg to i32
+  %16 = and i32 %14, %15
   %i.mi = lshr i32 %i.md, 16
-  %i.mj = add nuw nsw i32 %i.mi, %18
+  %i.mj = add nuw nsw i32 %16, %i.mi
   %i.mk = zext nneg i32 %i.mj to i64
   %i.ml = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.mk
   %i.mm = load i32, ptr %i.ml, align 4
@@ -642,13 +640,12 @@ bb.aq:                                            ; preds = %bb.ap
   %i.ng = lshr i64 %.val15.i217, 10               ; 2 uses
   %i.nh = load i32, ptr %i.u, align 8
   %i.ni = add nsw i32 %i.nh, -10
-  %19 = zext nneg i32 %i.nf to i64
-  %notmask.i16.i219 = shl nsw i64 -1, %19
-  %20 = xor i64 %notmask.i16.i219, -1
-  %21 = and i64 %i.ng, %20
-  %22 = trunc nuw nsw i64 %21 to i32
+  %notmask.i16.i219 = shl nsw i32 -1, %i.nf
+  %17 = xor i32 %notmask.i16.i219, -1
+  %18 = trunc i64 %i.ng to i32
+  %19 = and i32 %17, %18
   %i.nj = lshr i32 %i.nd, 16
-  %i.nk = add nuw nsw i32 %i.nj, %22
+  %i.nk = add nuw nsw i32 %19, %i.nj
   %i.nl = zext nneg i32 %i.nk to i64
   %i.nm = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.nl
   %i.nn = load i32, ptr %i.nm, align 4
@@ -728,13 +725,12 @@ bb.ay:                                            ; preds = %bb.ax
   %i.oy = and i32 %i.ow, 15
   %i.oz = lshr i64 %i.oq, 8                       ; 2 uses
   %i.pa = add nsw i32 %i.or, -8
-  %23 = zext nneg i32 %i.oy to i64
-  %notmask.i16.i229 = shl nsw i64 -1, %23
-  %24 = xor i64 %notmask.i16.i229, -1
-  %25 = and i64 %i.oz, %24
-  %26 = trunc nuw nsw i64 %25 to i32
+  %notmask.i16.i229 = shl nsw i32 -1, %i.oy
+  %20 = xor i32 %notmask.i16.i229, -1
+  %21 = trunc i64 %i.oz to i32
+  %22 = and i32 %20, %21
   %i.pb = lshr i32 %i.ow, 16
-  %i.pc = add nuw nsw i32 %i.pb, %26
+  %i.pc = add nuw nsw i32 %22, %i.pb
   %i.pd = zext nneg i32 %i.pc to i64
   %i.pe = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.pd
   %i.pf = load i32, ptr %i.pe, align 4

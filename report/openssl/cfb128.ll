@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %i.a
   %i.c = load i8, ptr %i.b, align 1, !tbaa !9
   %i.d = zext i8 %i.c to i32
-  %8 = trunc i64 %.032 to i32
-  %9 = and i32 %8, 7                              ; 3 uses
+  %8 = and i64 %.032, 7                           ; 2 uses
+  %9 = trunc nuw nsw i64 %8 to i32                ; 2 uses
   %i.e = lshr exact i32 128, %9
   %i.f = and i32 %i.e, %i.d
   %.not = icmp eq i32 %i.f, 0
@@ -222,15 +222,14 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store <16 x i8> %i.m, ptr %4, align 1, !tbaa !9
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 %i.a ; 2 uses
   %i.o = load i8, ptr %i.n, align 1, !tbaa !9
-  %10 = zext i8 %i.o to i32
   %i.p = ashr i32 -129, %9
-  %11 = and i32 %i.p, %10
-  %12 = and i8 %i.j, -128
-  %13 = zext i8 %12 to i32
-  %14 = lshr exact i32 %13, %9
-  %15 = or i32 %11, %14
-  %16 = trunc nuw i32 %15 to i8
-  store i8 %16, ptr %i.n, align 1, !tbaa !9
+  %10 = and i8 %i.j, -128
+  %11 = trunc nuw nsw i64 %8 to i8
+  %12 = lshr exact i8 %10, %11
+  %13 = trunc i32 %i.p to i8
+  %14 = and i8 %i.o, %13
+  %15 = or i8 %14, %12
+  store i8 %15, ptr %i.n, align 1, !tbaa !9
   %i.q = add nuw i64 %.032, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.q, %2
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !41

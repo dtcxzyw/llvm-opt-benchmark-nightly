@@ -205,13 +205,11 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 "_ZN4anki9scheduler9answering8learning62_$LT$impl$u20$anki..scheduler..answering..CardStateUpdater$GT$22learning_ivl_with_fuzz17hdf6da1c7a0210421E.exit.i.i": ; preds = %bb.l, %_ZN4anki9scheduler9answering29get_fuzz_seed_for_id_and_reps17h2cd40e4a6e55ee49E.exit.i.i
   %.sroa.02.1.i.i.i = phi i32 [ %.sroa.02.0.i.i.i, %bb.l ], [ %i.al, %_ZN4anki9scheduler9answering29get_fuzz_seed_for_id_and_reps17h2cd40e4a6e55ee49E.exit.i.i ]
-  %2 = zext i32 %.sroa.0.0 to i64
-  %3 = zext i32 %.sroa.02.1.i.i.i to i64
-  %.neg.i.i = sub nsw i64 %3, %2
+  %.neg.i.i = sub i32 %.sroa.02.1.i.i.i, %.sroa.0.0
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 968
   %i.bh = load i64, ptr %i.bg, align 8, !alias.scope !1538, !noalias !1537, !noundef !11
-  %4 = add i64 %.neg.i.i, %i.bh
-  %5 = trunc i64 %4 to i32
+  %2 = trunc i64 %i.bh to i32
+  %3 = add i32 %.neg.i.i, %2
   br label %"_ZN4anki9scheduler9answering7current62_$LT$impl$u20$anki..scheduler..answering..CardStateUpdater$GT$18normal_study_state28_$u7b$$u7b$closure$u7d$$u7d$17hf94b7fbeb4dcba13E.exit.i"
 
 bb.m:                                             ; preds = %bb.g
@@ -225,7 +223,7 @@ bb.m:                                             ; preds = %bb.g
   br label %"_ZN4anki9scheduler9answering7current62_$LT$impl$u20$anki..scheduler..answering..CardStateUpdater$GT$18normal_study_state28_$u7b$$u7b$closure$u7d$$u7d$17hf94b7fbeb4dcba13E.exit.i"
 
 "_ZN4anki9scheduler9answering7current62_$LT$impl$u20$anki..scheduler..answering..CardStateUpdater$GT$18normal_study_state28_$u7b$$u7b$closure$u7d$$u7d$17hf94b7fbeb4dcba13E.exit.i": ; preds = %bb.m, %"_ZN4anki9scheduler9answering8learning62_$LT$impl$u20$anki..scheduler..answering..CardStateUpdater$GT$22learning_ivl_with_fuzz17hdf6da1c7a0210421E.exit.i.i", %bb.g
-  %.sroa.0.0.i24.i = phi i32 [ %i.bn, %bb.m ], [ %5, %"_ZN4anki9scheduler9answering8learning62_$LT$impl$u20$anki..scheduler..answering..CardStateUpdater$GT$22learning_ivl_with_fuzz17hdf6da1c7a0210421E.exit.i.i" ], [ 0, %bb.g ]
+  %.sroa.0.0.i24.i = phi i32 [ %i.bn, %bb.m ], [ %3, %"_ZN4anki9scheduler9answering8learning62_$LT$impl$u20$anki..scheduler..answering..CardStateUpdater$GT$22learning_ivl_with_fuzz17hdf6da1c7a0210421E.exit.i.i" ], [ 0, %bb.g ]
   %.sroa.6.4.copyload9 = load i32, ptr %i.ae, align 8, !alias.scope !1539
   %.sroa.9.4..sroa_idx14 = getelementptr inbounds nuw i8, ptr %1, i64 108
   %.sroa.9.4.copyload15 = load i32, ptr %.sroa.9.4..sroa_idx14, align 4, !alias.scope !1539
@@ -310,13 +308,11 @@ bb.t:                                             ; preds = %bb.s, %bb.r
 
 "_ZN4anki9scheduler9answering8learning62_$LT$impl$u20$anki..scheduler..answering..CardStateUpdater$GT$22learning_ivl_with_fuzz17hdf6da1c7a0210421E.exit.i31.i": ; preds = %bb.t, %_ZN4anki9scheduler9answering29get_fuzz_seed_for_id_and_reps17h2cd40e4a6e55ee49E.exit.i28.i
   %.sroa.02.1.i.i32.i = phi i32 [ %.sroa.02.0.i.i30.i, %bb.t ], [ %i.bw, %_ZN4anki9scheduler9answering29get_fuzz_seed_for_id_and_reps17h2cd40e4a6e55ee49E.exit.i28.i ]
-  %6 = zext i32 %.sroa.0.0 to i64
-  %7 = zext i32 %.sroa.02.1.i.i32.i to i64
-  %.neg.i33.i = sub nsw i64 %7, %6
+  %.neg.i33.i = sub i32 %.sroa.02.1.i.i32.i, %.sroa.0.0
   %i.cr = getelementptr inbounds nuw i8, ptr %1, i64 968
   %i.cs = load i64, ptr %i.cr, align 8, !alias.scope !1538, !noalias !1537, !noundef !11
-  %8 = add i64 %.neg.i33.i, %i.cs
-  %9 = trunc i64 %8 to i32
+  %4 = trunc i64 %i.cs to i32
+  %5 = add i32 %.neg.i33.i, %4
   br label %"_ZN4anki9scheduler9answering7current62_$LT$impl$u20$anki..scheduler..answering..CardStateUpdater$GT$18normal_study_state28_$u7b$$u7b$closure$u7d$$u7d$17hf94b7fbeb4dcba13E.exit34.i"
 
 bb.u:                                             ; preds = %bb.o
@@ -330,7 +326,7 @@ bb.u:                                             ; preds = %bb.o
   br label %"_ZN4anki9scheduler9answering7current62_$LT$impl$u20$anki..scheduler..answering..CardStateUpdater$GT$18normal_study_state28_$u7b$$u7b$closure$u7d$$u7d$17hf94b7fbeb4dcba13E.exit34.i"
 
 "_ZN4anki9scheduler9answering7current62_$LT$impl$u20$anki..scheduler..answering..CardStateUpdater$GT$18normal_study_state28_$u7b$$u7b$closure$u7d$$u7d$17hf94b7fbeb4dcba13E.exit34.i": ; preds = %bb.u, %"_ZN4anki9scheduler9answering8learning62_$LT$impl$u20$anki..scheduler..answering..CardStateUpdater$GT$22learning_ivl_with_fuzz17hdf6da1c7a0210421E.exit.i31.i", %bb.o
-  %.sroa.0.0.i27.i = phi i32 [ %i.cy, %bb.u ], [ %9, %"_ZN4anki9scheduler9answering8learning62_$LT$impl$u20$anki..scheduler..answering..CardStateUpdater$GT$22learning_ivl_with_fuzz17hdf6da1c7a0210421E.exit.i31.i" ], [ 0, %bb.o ]
+  %.sroa.0.0.i27.i = phi i32 [ %i.cy, %bb.u ], [ %5, %"_ZN4anki9scheduler9answering8learning62_$LT$impl$u20$anki..scheduler..answering..CardStateUpdater$GT$22learning_ivl_with_fuzz17hdf6da1c7a0210421E.exit.i31.i" ], [ 0, %bb.o ]
   %.sroa.0.0.copyload4 = load i32, ptr %i.ae, align 8, !alias.scope !1539 ; 2 uses
   %.sroa.6.0..sroa_idx7 = getelementptr inbounds nuw i8, ptr %1, i64 108
   %.sroa.6.0.copyload8 = load i32, ptr %.sroa.6.0..sroa_idx7, align 4, !alias.scope !1539 ; 2 uses

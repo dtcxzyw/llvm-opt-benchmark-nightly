@@ -205,10 +205,8 @@ scalar.ph1085:                                    ; preds = %scalar.ph1085.prehe
   %i.ii = add nuw nsw i32 %spec.select346, 2
   %i.ij = call i32 @llvm.umin.i32(i32 %i.fq, i32 250)
   %i.ik = shl nuw nsw i32 %i.ij, 2
-  %11 = zext nneg i32 %i.ik to i64
-  %12 = sext i32 %i.ft to i64
-  %smin = call i64 @llvm.smin.i64(i64 %11, i64 %12)
-  %13 = add nsw i64 %smin, 1
+  %smin = call i32 @llvm.smin.i32(i32 %i.ik, i32 %i.ft)
+  %11 = add i32 %smin, 1
   %i.il = sub i64 %i.ho, %i.hm
   %diff.check1072 = icmp ugt i64 %i.il, -32
   br label %bb.w
@@ -225,8 +223,8 @@ bb.w:                                             ; preds = %.loopexit.i.loopexi
   %indvars.iv344.i = phi i64 [ 1, %.loopexit ], [ %indvars.iv.next345.i, %.loopexit.i.loopexit ] ; 9 uses
   %indvars.iv330.i = phi i32 [ %i.ih, %.loopexit ], [ %indvars.iv.next331.i, %.loopexit.i.loopexit ] ; 5 uses
   %indvars.iv324.in.i = phi i32 [ %i.fu, %.loopexit ], [ %indvars.iv324.i, %.loopexit.i.loopexit ]
-  %14 = add i64 %13, %indvars.iv346.i
-  %15 = trunc i64 %14 to i32
+  %12 = trunc i64 %indvars.iv346.i to i32
+  %13 = add i32 %11, %12
   %i.im = shl nuw nsw i64 %indvars.iv346.i, 1
   %i.in = add nuw i64 %i.im, 2
   %indvars.iv324.i = add i32 %indvars.iv324.in.i, -1 ; 3 uses
@@ -510,7 +508,7 @@ vector.body1077:                                  ; preds = %vector.body1077, %v
   %indvars.iv339.i.ph = phi i64 [ %i.io, %.lr.ph300.i.preheader ], [ %i.lv, %vector.body1077 ] ; 3 uses
   %i.mc = trunc i64 %indvars.iv339.i.ph to i32    ; 2 uses
   %i.md = sub i32 %indvars.iv330.i, %i.mc
-  %i.me = sub i32 %15, %i.mc
+  %i.me = sub i32 %13, %i.mc
   %xtraiter1181 = and i32 %i.md, 3                ; 2 uses
   %lcmp.mod1182.not = icmp eq i32 %xtraiter1181, 0
   br i1 %lcmp.mod1182.not, label %.lr.ph300.i.prol.loopexit, label %.lr.ph300.i.prol
@@ -912,9 +910,6 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #17
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #5
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

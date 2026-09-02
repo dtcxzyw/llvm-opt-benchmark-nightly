@@ -204,14 +204,15 @@ _ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEE
 
 bb.je:                                            ; preds = %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i.i
   call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(48) %11, ptr noundef nonnull %i.api, i64 noundef %i.bvf, i64 noundef 8) #10
-  %.pre.i.i168.i = load i32, ptr %i.apj, align 8, !tbaa !26
+  %.pre.i.i168.i = load i32, ptr %i.apj, align 8, !tbaa !26 ; 2 uses
   %.pre16.i.i.i = zext i32 %.pre.i.i168.i to i64
   %.pre.i169.i = load ptr, ptr %11, align 8, !tbaa !25
   br label %bb.jf
 
 bb.jf:                                            ; preds = %bb.je, %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i.i
   %i.bvg = phi ptr [ %.pre.i169.i, %bb.je ], [ %i.api, %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i.i ] ; 2 uses
-  %.pre-phi.i.i.i = phi i64 [ %.pre16.i.i.i, %bb.je ], [ 0, %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i.i ] ; 2 uses
+  %.pre-phi.i.i.i = phi i64 [ %.pre16.i.i.i, %bb.je ], [ 0, %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i.i ]
+  %30 = phi i32 [ %.pre.i.i168.i, %bb.je ], [ 0, %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i.i ]
   %i.bvh = getelementptr inbounds nuw [8 x i8], ptr %i.bvg, i64 %.pre-phi.i.i.i
   br label %.lr.ph.i.i.i.i.i.i.i
 
@@ -249,13 +250,13 @@ _ZN6hermes12PredIteratorINS_10BasicBlockEPPNS_11InstructionEEppEv.exit.i.i.i.i.i
   br i1 %.not.i.i.i.i.i.i.i, label %_ZN4llvh15SmallVectorImplIPN6hermes10BasicBlockEE6appendINS1_12PredIteratorIS2_PPNS1_11InstructionEEEvEEvT_SB_.exit.loopexit.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !234
 
 _ZN4llvh15SmallVectorImplIPN6hermes10BasicBlockEE6appendINS1_12PredIteratorIS2_PPNS1_11InstructionEEEvEEvT_SB_.exit.loopexit.i.i: ; preds = %_ZN6hermes12PredIteratorINS_10BasicBlockEPPNS_11InstructionEEppEv.exit.i.i.i.i.i.i.i
-  %30 = add nuw i64 %.pre-phi.i.i.i, %i.bvf
-  %31 = trunc i64 %30 to i32
+  %31 = trunc i64 %i.bvf to i32
+  %32 = add i32 %30, %31
   br label %_ZN4llvh11SmallVectorIPN6hermes10BasicBlockELj4EEC2INS1_12PredIteratorIS2_PPNS1_11InstructionEEEEERKNS_14iterator_rangeIT_EE.exit.i
 
 _ZN4llvh11SmallVectorIPN6hermes10BasicBlockELj4EEC2INS1_12PredIteratorIS2_PPNS1_11InstructionEEEEERKNS_14iterator_rangeIT_EE.exit.i: ; preds = %_ZN4llvh15SmallVectorImplIPN6hermes10BasicBlockEE6appendINS1_12PredIteratorIS2_PPNS1_11InstructionEEEvEEvT_SB_.exit.loopexit.i.i, %_ZN6hermes12predecessorsEPNS_10BasicBlockE.exit.i
-  %i.bvt = phi ptr [ %i.api, %_ZN6hermes12predecessorsEPNS_10BasicBlockE.exit.i ], [ %i.bvg, %_ZN4llvh15SmallVectorImplIPN6hermes10BasicBlockEE6appendINS1_12PredIteratorIS2_PPNS1_11InstructionEEEvEEvT_SB_.exit.loopexit.i.i ] ; 2 uses
-  %i.bvu = phi i32 [ 0, %_ZN6hermes12predecessorsEPNS_10BasicBlockE.exit.i ], [ %31, %_ZN4llvh15SmallVectorImplIPN6hermes10BasicBlockEE6appendINS1_12PredIteratorIS2_PPNS1_11InstructionEEEvEEvT_SB_.exit.loopexit.i.i ] ; 3 uses
+  %i.bvt = phi ptr [ %i.bvg, %_ZN4llvh15SmallVectorImplIPN6hermes10BasicBlockEE6appendINS1_12PredIteratorIS2_PPNS1_11InstructionEEEvEEvT_SB_.exit.loopexit.i.i ], [ %i.api, %_ZN6hermes12predecessorsEPNS_10BasicBlockE.exit.i ] ; 2 uses
+  %i.bvu = phi i32 [ %32, %_ZN4llvh15SmallVectorImplIPN6hermes10BasicBlockEE6appendINS1_12PredIteratorIS2_PPNS1_11InstructionEEEvEEvT_SB_.exit.loopexit.i.i ], [ 0, %_ZN6hermes12predecessorsEPNS_10BasicBlockE.exit.i ] ; 3 uses
   store i32 %i.bvu, ptr %i.apj, align 8, !tbaa !26
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #10
   store <2 x ptr> %i.apv, ptr %12, align 16, !tbaa !277

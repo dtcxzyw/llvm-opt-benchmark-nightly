@@ -16,20 +16,19 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i8, ptr %i.c, align 2, !tbaa !11
-  %1 = zext i8 %i.d to i32                        ; 2 uses
+  %i.d = load i8, ptr %i.c, align 2, !tbaa !11    ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 9
   %i.f = load i8, ptr %i.e, align 1, !tbaa !11    ; 2 uses
-  %2 = and i32 %1, 254
-  %i.g = icmp eq i32 %2, 252
+  %1 = and i8 %i.d, -2
+  %i.g = icmp eq i8 %1, -4
   br i1 %i.g, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = shl nuw nsw i32 %1, 8
-  %4 = and i8 %i.f, -64
-  %.masked = zext i8 %4 to i32
-  %5 = or disjoint i32 %3, %.masked
-  %trunc = trunc nuw i32 %5 to i16
+  %2 = and i8 %i.f, -64
+  %.masked = zext i8 %2 to i16
+  %.tr = zext i8 %i.d to i16
+  %3 = shl nuw i16 %.tr, 8
+  %trunc = or disjoint i16 %3, %.masked
   switch i16 %trunc, label %bb.g [
     i16 -384, label %.thread
     i16 -320, label %bb.d
@@ -140,20 +139,19 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 8
-  %i.v = load i8, ptr %i.u, align 2, !tbaa !11
-  %6 = zext i8 %i.v to i32                        ; 2 uses
+  %i.v = load i8, ptr %i.u, align 2, !tbaa !11    ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 9
   %i.x = load i8, ptr %i.w, align 1, !tbaa !11    ; 2 uses
-  %7 = and i32 %6, 254
-  %i.y = icmp eq i32 %7, 252
+  %6 = and i8 %i.v, -2
+  %i.y = icmp eq i8 %6, -4
   br i1 %i.y, label %.thread.i.us, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %8 = shl nuw nsw i32 %6, 8
-  %9 = and i8 %i.x, -64
-  %.masked.i.us = zext i8 %9 to i32
-  %10 = or disjoint i32 %8, %.masked.i.us
-  %trunc.i.us = trunc nuw i32 %10 to i16
+  %7 = and i8 %i.x, -64
+  %.masked.i.us = zext i8 %7 to i16
+  %.tr.i.us = zext i8 %i.v to i16
+  %8 = shl nuw i16 %.tr.i.us, 8
+  %trunc.i.us = or disjoint i16 %8, %.masked.i.us
   switch i16 %trunc.i.us, label %Curl_ipv6_scope.exit.us [
     i16 -384, label %.thread.i.us
     i16 -320, label %bb.k

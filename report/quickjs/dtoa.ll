@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.f = tail call range(i32 0, 32) i32 @llvm.ctlz.i32(i32 %2, i1 true) ; 2 uses
-  %i.g = xor i32 %i.f, 31                         ; 3 uses
+  %i.g = xor i32 %i.f, 31                         ; 2 uses
   %i.h = icmp eq i64 %1, 0
   br i1 %i.h, label %.split, label %.split35
 
@@ -215,14 +215,13 @@ bb.d:                                             ; preds = %bb.c
 
 .split35:                                         ; preds = %bb.d
   %i.i = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %1, i1 true)
-  %3 = trunc nuw nsw i64 %i.i to i32
-  %reass.sub = sub nsw i32 %i.g, %3
-  %i.j = trunc nsw i32 %reass.sub to i8
-  %.lhs.trunc = add nsw i8 %i.j, 63               ; 2 uses
-  %.rhs.trunc = trunc nuw nsw i32 %i.g to i8      ; 2 uses
-  %i.k = udiv i8 %.lhs.trunc, %.rhs.trunc         ; 3 uses
+  %3 = trunc nuw nsw i64 %i.i to i8
+  %i.j = trunc nuw nsw i32 %i.g to i8             ; 3 uses
+  %4 = sub nsw i8 %i.j, %3
+  %.lhs.trunc = add nsw i8 %4, 63                 ; 2 uses
+  %i.k = udiv i8 %.lhs.trunc, %i.j                ; 3 uses
   %i.l = lshr i32 2147483647, %i.f                ; 3 uses
-  %.not46 = icmp samesign ult i8 %.lhs.trunc, %.rhs.trunc
+  %.not46 = icmp samesign ult i8 %.lhs.trunc, %i.j
   br i1 %.not46, label %.split35.u64toa_bin_len.exit45_crit_edge, label %.lr.ph.i
 
 .split35.u64toa_bin_len.exit45_crit_edge:         ; preds = %.split35
@@ -293,15 +292,15 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.f, %bb.e
   %.033 = phi i64 [ %1, %bb.e ], [ %i.at, %bb.f ] ; 3 uses
   %.030 = phi ptr [ %i.ap, %bb.e ], [ %i.av, %bb.f ]
-  %i.ar = urem i64 %.033, %i.aq
-  %i.as = trunc nuw i64 %i.ar to i32              ; 2 uses
+  %i.ar = urem i64 %.033, %i.aq                   ; 2 uses
+  %i.as = trunc nuw i64 %i.ar to i32
   %i.at = udiv i64 %.033, %i.aq
   %i.au = icmp slt i32 %i.as, 10
-  %.0.v = select i1 %i.au, i32 48, i32 87
-  %.0 = add nsw i32 %.0.v, %i.as
-  %4 = trunc i32 %.0 to i8
+  %.0.v = select i1 %i.au, i8 48, i8 87
+  %5 = trunc i64 %i.ar to i8
+  %6 = add i8 %.0.v, %5
   %i.av = getelementptr inbounds i8, ptr %.030, i64 -1 ; 4 uses
-  store i8 %4, ptr %i.av, align 1, !tbaa !15
+  store i8 %6, ptr %i.av, align 1, !tbaa !15
   %.not = icmp ult i64 %.033, %i.aq
   br i1 %.not, label %bb.g, label %bb.f, !llvm.loop !2
 
@@ -341,7 +340,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.h = tail call range(i32 0, 32) i32 @llvm.ctlz.i32(i32 %2, i1 true) ; 2 uses
-  %i.i = xor i32 %i.h, 31                         ; 3 uses
+  %i.i = xor i32 %i.h, 31                         ; 2 uses
   %i.j = icmp eq i64 %1, 0
   br i1 %i.j, label %.split.i, label %.split35.i
 
@@ -351,14 +350,13 @@ bb.e:                                             ; preds = %bb.d
 
 .split35.i:                                       ; preds = %bb.e
   %i.k = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %1, i1 true)
-  %3 = trunc nuw nsw i64 %i.k to i32
-  %reass.sub.i = sub nsw i32 %i.i, %3
-  %i.l = trunc nsw i32 %reass.sub.i to i8
-  %.lhs.trunc.i = add nsw i8 %i.l, 63             ; 2 uses
-  %.rhs.trunc.i = trunc nuw nsw i32 %i.i to i8    ; 2 uses
-  %i.m = udiv i8 %.lhs.trunc.i, %.rhs.trunc.i     ; 3 uses
+  %3 = trunc nuw nsw i64 %i.k to i8
+  %i.l = trunc nuw nsw i32 %i.i to i8             ; 3 uses
+  %4 = sub nsw i8 %i.l, %3
+  %.lhs.trunc.i = add nsw i8 %4, 63               ; 2 uses
+  %i.m = udiv i8 %.lhs.trunc.i, %i.l              ; 3 uses
   %i.n = lshr i32 2147483647, %i.h                ; 3 uses
-  %.not46.i = icmp samesign ult i8 %.lhs.trunc.i, %.rhs.trunc.i
+  %.not46.i = icmp samesign ult i8 %.lhs.trunc.i, %i.l
   br i1 %.not46.i, label %.split35.u64toa_bin_len.exit45_crit_edge.i, label %.lr.ph.i.i
 
 .split35.u64toa_bin_len.exit45_crit_edge.i:       ; preds = %.split35.i
@@ -429,15 +427,15 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.g, %bb.f
   %.033.i = phi i64 [ %1, %bb.f ], [ %i.av, %bb.g ] ; 3 uses
   %.030.i = phi ptr [ %i.ar, %bb.f ], [ %i.ax, %bb.g ]
-  %i.at = urem i64 %.033.i, %i.as
-  %i.au = trunc nuw i64 %i.at to i32              ; 2 uses
+  %i.at = urem i64 %.033.i, %i.as                 ; 2 uses
+  %i.au = trunc nuw i64 %i.at to i32
   %i.av = udiv i64 %.033.i, %i.as
   %i.aw = icmp slt i32 %i.au, 10
-  %.0.v.i = select i1 %i.aw, i32 48, i32 87
-  %.0.i = add nsw i32 %.0.v.i, %i.au
-  %4 = trunc i32 %.0.i to i8
+  %.0.v.i = select i1 %i.aw, i8 48, i8 87
+  %5 = trunc i64 %i.at to i8
+  %6 = add i8 %.0.v.i, %5
   %i.ax = getelementptr inbounds i8, ptr %.030.i, i64 -1 ; 4 uses
-  store i8 %4, ptr %i.ax, align 1, !tbaa !15
+  store i8 %6, ptr %i.ax, align 1, !tbaa !15
   %.not.i = icmp ult i64 %.033.i, %i.as
   br i1 %.not.i, label %bb.h, label %bb.g, !llvm.loop !2
 
@@ -467,16 +465,15 @@ bb.k:                                             ; preds = %bb.i
 
 .split35.i15:                                     ; preds = %bb.k
   %i.bh = tail call range(i32 0, 32) i32 @llvm.ctlz.i32(i32 %2, i1 true) ; 2 uses
-  %i.bi = xor i32 %i.bh, 31                       ; 3 uses
+  %i.bi = xor i32 %i.bh, 31                       ; 2 uses
   %i.bj = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %i.bc, i1 true)
-  %5 = trunc nuw nsw i64 %i.bj to i32
-  %reass.sub.i16 = sub nsw i32 %i.bi, %5
-  %i.bk = trunc nsw i32 %reass.sub.i16 to i8
-  %.lhs.trunc.i17 = add nsw i8 %i.bk, 63          ; 2 uses
-  %.rhs.trunc.i18 = trunc nuw nsw i32 %i.bi to i8 ; 2 uses
-  %i.bl = udiv i8 %.lhs.trunc.i17, %.rhs.trunc.i18 ; 3 uses
+  %7 = trunc nuw nsw i64 %i.bj to i8
+  %i.bk = trunc nuw nsw i32 %i.bi to i8           ; 3 uses
+  %8 = sub nsw i8 %i.bk, %7
+  %.lhs.trunc.i15 = add nsw i8 %8, 63             ; 2 uses
+  %i.bl = udiv i8 %.lhs.trunc.i15, %i.bk          ; 3 uses
   %i.bm = lshr i32 2147483647, %i.bh              ; 3 uses
-  %.not46.i19 = icmp samesign ult i8 %.lhs.trunc.i17, %.rhs.trunc.i18
+  %.not46.i19 = icmp samesign ult i8 %.lhs.trunc.i15, %i.bk
   br i1 %.not46.i19, label %.split35.u64toa_bin_len.exit45_crit_edge.i25, label %.lr.ph.i.i20
 
 .split35.u64toa_bin_len.exit45_crit_edge.i25:     ; preds = %.split35.i15
@@ -547,15 +544,15 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.m, %bb.l
   %.033.i9 = phi i64 [ %i.bc, %bb.l ], [ %i.cu, %bb.m ] ; 3 uses
   %.030.i10 = phi ptr [ %i.cq, %bb.l ], [ %i.cw, %bb.m ]
-  %i.cs = urem i64 %.033.i9, %i.cr
-  %i.ct = trunc nuw i64 %i.cs to i32              ; 2 uses
+  %i.cs = urem i64 %.033.i9, %i.cr                ; 2 uses
+  %i.ct = trunc nuw i64 %i.cs to i32
   %i.cu = udiv i64 %.033.i9, %i.cr
   %i.cv = icmp slt i32 %i.ct, 10
-  %.0.v.i11 = select i1 %i.cv, i32 48, i32 87
-  %.0.i12 = add nsw i32 %.0.v.i11, %i.ct
-  %6 = trunc i32 %.0.i12 to i8
+  %.0.v.i11 = select i1 %i.cv, i8 48, i8 87
+  %9 = trunc i64 %i.cs to i8
+  %10 = add i8 %.0.v.i11, %9
   %i.cw = getelementptr inbounds i8, ptr %.030.i10, i64 -1 ; 4 uses
-  store i8 %6, ptr %i.cw, align 1, !tbaa !15
+  store i8 %10, ptr %i.cw, align 1, !tbaa !15
   %.not.i13 = icmp ult i64 %.033.i9, %i.cr
   br i1 %.not.i13, label %bb.n, label %bb.m, !llvm.loop !2
 
@@ -850,7 +847,7 @@ bb.u:                                             ; preds = %bb.s
 
 bb.v:                                             ; preds = %bb.u
   %i.ar = tail call range(i32 0, 32) i32 @llvm.ctlz.i32(i32 %2, i1 true) ; 2 uses
-  %i.as = xor i32 %i.ar, 31                       ; 3 uses
+  %i.as = xor i32 %i.ar, 31                       ; 2 uses
   %i.at = icmp eq i64 %i.am, 0
   br i1 %i.at, label %.split.i, label %.split35.i
 
@@ -860,14 +857,13 @@ bb.v:                                             ; preds = %bb.u
 
 .split35.i:                                       ; preds = %bb.v
   %i.au = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %i.am, i1 true)
-  %6 = trunc nuw nsw i64 %i.au to i32
-  %reass.sub.i = sub nsw i32 %i.as, %6
-  %i.av = trunc nsw i32 %reass.sub.i to i8
-  %.lhs.trunc.i = add nsw i8 %i.av, 63            ; 2 uses
-  %.rhs.trunc.i = trunc nuw nsw i32 %i.as to i8   ; 2 uses
-  %i.aw = udiv i8 %.lhs.trunc.i, %.rhs.trunc.i    ; 3 uses
+  %6 = trunc nuw nsw i64 %i.au to i8
+  %i.av = trunc nuw nsw i32 %i.as to i8           ; 3 uses
+  %7 = sub nsw i8 %i.av, %6
+  %.lhs.trunc.i = add nsw i8 %7, 63               ; 2 uses
+  %i.aw = udiv i8 %.lhs.trunc.i, %i.av            ; 3 uses
   %i.ax = lshr i32 2147483647, %i.ar              ; 3 uses
-  %.not46.i = icmp samesign ult i8 %.lhs.trunc.i, %.rhs.trunc.i
+  %.not46.i = icmp samesign ult i8 %.lhs.trunc.i, %i.av
   br i1 %.not46.i, label %.split35.u64toa_bin_len.exit45_crit_edge.i, label %.lr.ph.i.i
 
 .split35.u64toa_bin_len.exit45_crit_edge.i:       ; preds = %.split35.i
@@ -938,15 +934,15 @@ bb.w:                                             ; preds = %bb.u
 bb.x:                                             ; preds = %bb.x, %bb.w
   %.033.i = phi i64 [ %i.am, %bb.w ], [ %i.cf, %bb.x ] ; 3 uses
   %.030.i = phi ptr [ %i.cb, %bb.w ], [ %i.ch, %bb.x ]
-  %i.cd = urem i64 %.033.i, %i.cc
-  %i.ce = trunc nuw i64 %i.cd to i32              ; 2 uses
+  %i.cd = urem i64 %.033.i, %i.cc                 ; 2 uses
+  %i.ce = trunc nuw i64 %i.cd to i32
   %i.cf = udiv i64 %.033.i, %i.cc
   %i.cg = icmp slt i32 %i.ce, 10
-  %.0.v.i = select i1 %i.cg, i32 48, i32 87
-  %.0.i = add nsw i32 %.0.v.i, %i.ce
-  %7 = trunc i32 %.0.i to i8
+  %.0.v.i = select i1 %i.cg, i8 48, i8 87
+  %8 = trunc i64 %i.cd to i8
+  %9 = add i8 %.0.v.i, %8
   %i.ch = getelementptr inbounds i8, ptr %.030.i, i64 -1 ; 4 uses
-  store i8 %7, ptr %i.ch, align 1, !tbaa !15
+  store i8 %9, ptr %i.ch, align 1, !tbaa !15
   %.not.i = icmp ult i64 %.033.i, %i.cc
   br i1 %.not.i, label %bb.y, label %bb.x, !llvm.loop !2
 
@@ -1349,11 +1345,11 @@ mpb_renorm.exit:                                  ; preds = %.lr.ph.i59, %bb.h, 
   %i.cl = urem i32 %.01721.i, %2                  ; 2 uses
   %i.cm = udiv i32 %.01721.i, %2
   %i.cn = icmp slt i32 %i.cl, 10
-  %.016.v.i = select i1 %i.cn, i32 48, i32 87
-  %.016.i = add nsw i32 %.016.v.i, %i.cl
-  %5 = trunc i32 %.016.i to i8
+  %.016.v.i = select i1 %i.cn, i8 48, i8 87
+  %5 = trunc i32 %i.cl to i8
+  %6 = add i8 %.016.v.i, %5
   %i.co = getelementptr inbounds nuw i8, ptr %i.ci, i64 %indvars.iv.next.i62
-  store i8 %5, ptr %i.co, align 1, !tbaa !15
+  store i8 %6, ptr %i.co, align 1, !tbaa !15
   %i.cp = icmp samesign ugt i64 %indvars.iv.i61, 1
   br i1 %i.cp, label %.lr.ph.i60, label %limb_to_a.exit, !llvm.loop !24
 

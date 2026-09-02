@@ -205,10 +205,10 @@ bb.ga:                                            ; preds = %bb.fz
   br label %bb.fz
 
 bb.gb:                                            ; preds = %bb.fy
-  %.not552.i.i = icmp eq ptr %i.sk, null          ; 3 uses
+  %.not552.i.i = icmp ne ptr %i.sk, null          ; 4 uses
   %i.sn = getelementptr inbounds nuw i8, ptr %i.sk, i64 8
-  %.sroa.0120.0.i.i = select i1 %.not552.i.i, ptr null, ptr %i.sn
-  br i1 %.not552.i.i, label %bb.ge, label %select.unfold.i.i
+  %.sroa.0120.0.i.i = select i1 %.not552.i.i, ptr %i.sn, ptr null
+  br i1 %.not552.i.i, label %select.unfold.i.i, label %bb.ge
 
 select.unfold.i.i:                                ; preds = %bb.gb
   %i.so = getelementptr inbounds nuw i8, ptr %i.sk, i64 296
@@ -242,14 +242,12 @@ bb.ge:                                            ; preds = %bb.gd, %bb.gb
   %.sroa.0130.0803.i.i = phi ptr [ %i.sy, %bb.gd ], [ null, %bb.gb ] ; 3 uses
   %i.tb = phi i32 [ %spec.select.i.i, %bb.gd ], [ 0, %bb.gb ]
   %.sroa.4135.0.i.i = phi float [ %i.ta, %bb.gd ], [ undef, %bb.gb ]
-  %.sroa.0134.0.i.i = phi i32 [ 1, %bb.gd ], [ 0, %bb.gb ]
   %i.tc = getelementptr inbounds nuw i8, ptr %i.sg, i64 40
-  %i.td = load i32, ptr %i.tc, align 8, !range !16, !noalias !796, !noundef !3 ; 3 uses
+  %i.td = load i32, ptr %i.tc, align 8, !range !16, !noalias !796, !noundef !3 ; 2 uses
   %i.te = getelementptr inbounds nuw i8, ptr %i.sg, i64 44
   %i.tf = load float, ptr %i.te, align 4, !noalias !796 ; 2 uses
-  %i.tg = trunc nuw i32 %i.td to i1
+  %i.tg = trunc nuw i32 %i.td to i1               ; 2 uses
   %.sroa.4135.1.i.i = select i1 %i.tg, float %i.tf, float %.sroa.4135.0.i.i
-  %.sroa.0134.1.i.i = or i32 %i.td, %.sroa.0134.0.i.i
   %i.th = invoke fastcc noundef align 8 dereferenceable_or_null(8) ptr @"_ZN9hashbrown3map28HashMap$LT$K$C$V$C$S$C$A$GT$9get_inner17hda43562294f76567E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.cm, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.qv)
           to label %bb.gf unwind label %.loopexit857.i.i, !noalias !796
 
@@ -513,7 +511,7 @@ bb.ho:                                            ; preds = %bb.hm
           to label %bb.hn unwind label %.loopexit857.i.i, !noalias !796
 
 bb.hp:                                            ; preds = %bb.hn, %.split.i.i
-  %4 = trunc nuw i32 %.sroa.0134.1.i.i to i1
+  %4 = or i1 %.not552.i.i, %i.tg
   br i1 %4, label %bb.hq, label %bb.hr
 
 bb.hq:                                            ; preds = %bb.hp
@@ -535,7 +533,7 @@ bb.ht:                                            ; preds = %"_ZN5alloc3vec16Vec
   br i1 %i.uw, label %bb.ie, label %bb.if
 
 bb.hu:                                            ; preds = %bb.hs
-  br i1 %.not552.i.i, label %bb.hw, label %bb.hv
+  br i1 %.not552.i.i, label %bb.hv, label %bb.hw
 
 bb.hv:                                            ; preds = %bb.hu
   br i1 %.not565.i.i, label %.critedge.i.i, label %bb.hx

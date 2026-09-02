@@ -205,11 +205,12 @@ bb.d:                                             ; preds = %bb.a
           to label %.preheader unwind label %bb.u
 
 .preheader:                                       ; preds = %bb.d
-  %i.l = load i64, ptr %i.g, align 8, !tbaa !28   ; 5 uses
+  %i.l = load i64, ptr %i.g, align 8, !tbaa !28   ; 4 uses
   %.not35 = icmp eq i64 %i.l, 0
   br i1 %.not35, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
+  %3 = trunc i64 %i.l to i32                      ; 2 uses
   %i.m = load i8, ptr %i.b, align 4, !tbaa !48
   %i.n = add i8 %i.m, -1
   %spec.select.i.i = icmp ult i8 %i.n, 2
@@ -224,14 +225,14 @@ bb.d:                                             ; preds = %bb.a
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %bb.t
   %indvars.iv44 = phi i64 [ %indvars.iv.next45, %bb.t ], [ 0, %.lr.ph.split ] ; 3 uses
-  %3 = xor i64 %indvars.iv44, -1
-  %4 = add i64 %i.l, %3
-  %5 = trunc i64 %4 to i32                        ; 2 uses
-  %i.r = sdiv i32 %5, 4
+  %4 = trunc nuw i64 %indvars.iv44 to i32
+  %5 = xor i32 %4, -1
+  %6 = add i32 %3, %5                             ; 2 uses
+  %i.r = sdiv i32 %6, 4
   %i.s = sext i32 %i.r to i64
   %i.t = getelementptr inbounds [8 x i8], ptr %0, i64 %i.s ; 16 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 %indvars.iv44 ; 8 uses
-  %i.v = srem i32 %5, 4
+  %i.v = srem i32 %6, 4
   %i.w = shl nsw i32 %i.v, 3
   %i.x = zext i32 %i.w to i64                     ; 8 uses
   %i.y = load i8, ptr %i.u, align 1, !tbaa !29
@@ -373,15 +374,15 @@ bb.u:                                             ; preds = %bb.d
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split, %bb.am
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.am ], [ 0, %.lr.ph.split ] ; 3 uses
-  %6 = xor i64 %indvars.iv, -1
-  %7 = add i64 %i.l, %6
-  %8 = trunc i64 %7 to i32                        ; 2 uses
+  %7 = trunc nuw i64 %indvars.iv to i32
+  %8 = xor i32 %7, -1
+  %9 = add i32 %3, %8                             ; 2 uses
   %i.br = load ptr, ptr %0, align 8
-  %i.bs = sdiv i32 %8, 4
+  %i.bs = sdiv i32 %9, 4
   %i.bt = sext i32 %i.bs to i64
   %i.bu = getelementptr inbounds [8 x i8], ptr %i.br, i64 %i.bt ; 16 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.q, i64 %indvars.iv ; 8 uses
-  %i.bw = srem i32 %8, 4
+  %i.bw = srem i32 %9, 4
   %i.bx = shl nsw i32 %i.bw, 3
   %i.by = zext i32 %i.bx to i64                   ; 8 uses
   %i.bz = load i8, ptr %i.bv, align 1, !tbaa !29

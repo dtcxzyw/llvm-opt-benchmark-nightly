@@ -204,7 +204,7 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.aq
   %i.ds = invoke noundef i64 @_ZN7RawRead4GetVEv(ptr noundef nonnull align 8 dereferenceable(64) %7)
-          to label %bb.as unwind label %bb.av     ; 3 uses
+          to label %bb.as unwind label %bb.av     ; 2 uses
 
 bb.as:                                            ; preds = %bb.ar
   %i.dt = icmp eq i64 %i.ds, 0
@@ -251,16 +251,14 @@ bb.av:                                            ; preds = %.noexc231, %bb.at, 
   br label %bb.fb
 
 bb.aw:                                            ; preds = %bb.as
-  %i.eg = trunc i64 %i.ds to i32
-  %10 = zext i32 %i.dr to i64
-  %.neg = add nuw nsw i64 %10, 4294967293
-  %11 = add i64 %.neg, %i.ds                      ; 2 uses
+  %i.eg = trunc i64 %i.ds to i32                  ; 2 uses
+  %.neg = add i32 %i.dr, -3
+  %10 = add i32 %.neg, %i.eg                      ; 2 uses
   %i.eh = add i32 %i.dr, 4
   %i.ei = add i32 %i.eh, %i.eg                    ; 3 uses
-  %12 = and i64 %11, 2147483648
-  %13 = icmp ne i64 %12, 0
+  %11 = icmp slt i32 %10, 0
   %i.ej = icmp ult i32 %i.ei, 7
-  %or.cond5 = or i1 %13, %i.ej
+  %or.cond5 = or i1 %11, %i.ej
   br i1 %or.cond5, label %bb.ax, label %bb.az
 
 bb.ax:                                            ; preds = %bb.aw
@@ -296,8 +294,8 @@ bb.ay:                                            ; preds = %.noexc239.invoke, %
   br label %bb.fb
 
 bb.az:                                            ; preds = %bb.aw
-  %14 = and i64 %11, 2147483647
-  %i.eu = invoke noundef i64 @_ZN7RawRead4ReadEm(ptr noundef nonnull align 8 dereferenceable(64) %7, i64 noundef %14)
+  %12 = zext nneg i32 %10 to i64
+  %i.eu = invoke noundef i64 @_ZN7RawRead4ReadEm(ptr noundef nonnull align 8 dereferenceable(64) %7, i64 noundef %12)
           to label %bb.ba unwind label %bb.ay     ; 0 uses
 
 bb.ba:                                            ; preds = %bb.az

@@ -204,8 +204,8 @@ bb.h:                                             ; preds = %bb.g
   %i.w = load ptr, ptr %i.t, align 8, !tbaa !31   ; 2 uses
   %i.x = ptrtoint ptr %i.v to i64
   %i.y = ptrtoint ptr %i.w to i64                 ; 2 uses
-  %i.z = sub i64 %i.x, %i.y                       ; 3 uses
-  %i.aa = trunc i64 %i.z to i32                   ; 3 uses
+  %i.z = sub i64 %i.x, %i.y                       ; 2 uses
+  %i.aa = trunc i64 %i.z to i32                   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
   store i32 4, ptr %7, align 8, !tbaa !218
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
@@ -256,7 +256,7 @@ bb.h:                                             ; preds = %bb.g
 
 perf_map_jit_write_fully.exit:                    ; preds = %.lr.ph.i
   %i.ba = ptrtoint ptr %1 to i64                  ; 2 uses
-  %i.bb = zext i32 %2 to i64                      ; 3 uses
+  %i.bb = zext i32 %2 to i64                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #10
   store <4 x i8> <i8 1, i8 27, i8 3, i8 59>, ptr %8, align 4, !tbaa !199
   %i.bc = sub i32 -4, %i.aa
@@ -264,15 +264,12 @@ perf_map_jit_write_fully.exit:                    ; preds = %.lr.ph.i
   store i32 %i.bc, ptr %i.bd, align 4, !tbaa !228
   %i.be = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i32 1, ptr %i.be, align 4, !tbaa !229
-  %i.bf = and i32 %2, 7                           ; 2 uses
+  %i.bf = and i32 %2, 7
   %i.bg = icmp eq i32 %i.bf, 0
-  %narrow88 = sub nuw nsw i32 8, %i.bf
-  %narrow89 = select i1 %i.bg, i32 0, i32 %narrow88
-  %10 = zext nneg i32 %narrow89 to i64
-  %.0.i50 = add nuw nsw i64 %10, %i.bb
-  %11 = add i64 %.0.i50, %i.z
-  %12 = trunc i64 %11 to i32
-  %i.bh = sub i32 0, %12
+  %narrow88.neg = or i32 %2, -8
+  %narrow89 = select i1 %i.bg, i32 0, i32 %narrow88.neg
+  %10 = add i32 %2, %i.aa
+  %i.bh = sub i32 %narrow89, %10
   %i.bi = getelementptr inbounds nuw i8, ptr %8, i64 12
   store i32 %i.bh, ptr %i.bi, align 4, !tbaa !230
   %i.bj = getelementptr inbounds nuw i8, ptr %6, i64 16

@@ -205,6 +205,8 @@ _ZNK6embree8GridMesh5validEmRKNS_5rangeImEE.exit.thread84: ; preds = %..critedge
   %i.bi = zext i32 %.028166 to i64                ; 3 uses
   %i.bj = add nuw nsw i64 %i.bi, 3
   %i.bk = add i32 %.028166, 2                     ; 2 uses
+  %7 = and i32 %.028166, 65534
+  %.masked = zext nneg i32 %7 to i64
   br label %bb.e
 
 ._crit_edge.loopexit:                             ; preds = %_ZNK6embree8GridMesh11buildBoundsERKNS0_4GridEmmRNS_4BBoxINS_6Vec3faEEE.exit
@@ -330,19 +332,18 @@ bb.g:                                             ; preds = %bb.f
   %i.dm = add i64 %i.by, 1
   %i.dn = add i32 %.0145, 2                       ; 2 uses
   %.not.i31 = icmp ult i32 %i.dn, %i.bs
-  %7 = select i1 %.not.i31, i32 0, i32 32768
+  %8 = select i1 %.not.i31, i64 0, i64 32768
   %i.do = zext i16 %.pre218 to i32
   %.not.i32 = icmp ult i32 %i.bk, %i.do
-  %8 = select i1 %.not.i32, i32 0, i32 32768
+  %9 = select i1 %.not.i32, i64 0, i64 32768
   %i.dp = load ptr, ptr %i.m, align 8
   %i.dq = getelementptr inbounds nuw [8 x i8], ptr %i.dp, i64 %.2142
-  %9 = or i32 %8, %.028166
-  %10 = shl i32 %9, 16
-  %.sroa.4.0.insert.shift = zext i32 %10 to i64
-  %.sroa.4.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.ext, %.sroa.4.0.insert.shift
+  %.sroa.4.0.insert.ext = or i64 %9, %.masked
+  %.sroa.4.0.insert.shift = shl nuw nsw i64 %.sroa.4.0.insert.ext, 16
+  %.sroa.4.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.shift, %.sroa.5.0.insert.ext
   %.0.masked = and i32 %.0145, 65534
-  %11 = or i32 %7, %.0.masked
-  %.sroa.0.0.insert.ext = zext nneg i32 %11 to i64
+  %.masked90 = zext nneg i32 %.0.masked to i64
+  %.sroa.0.0.insert.ext = or i64 %8, %.masked90
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.insert, %.sroa.0.0.insert.ext
   store i64 %.sroa.0.0.insert.insert, ptr %i.dq, align 4
   %i.dr = add i64 %.2142, 1
@@ -626,6 +627,8 @@ _ZNK6embree8GridMesh5validEmRKNS_5rangeImEE.exit.thread332: ; preds = %..critedg
   %i.cy = zext i32 %.031519 to i64                ; 7 uses
   %i.cz = add nuw nsw i64 %i.cy, 3
   %i.da = add i32 %.031519, 2                     ; 2 uses
+  %8 = and i32 %.031519, 65534
+  %.masked = zext nneg i32 %8 to i64
   br label %bb.h
 
 ._crit_edge.loopexit:                             ; preds = %_ZN6embree5LBBoxINS_6Vec3faEEC2IZNKS_8GridMesh12linearBoundsERKNS4_4GridEmmRKNS_4BBoxIfEEEUlmE_EERKT_SB_SB_f.exit
@@ -1028,19 +1031,18 @@ _ZN6embree5LBBoxINS_6Vec3faEEC2IZNKS_8GridMesh12linearBoundsERKNS4_4GridEmmRKNS_
   %i.sx = tail call i64 @llvm.umax.i64(i64 %i.dt, i64 %i.sr) ; 2 uses
   %i.sy = add i32 %.030466, 2                     ; 3 uses
   %.not.i = icmp ult i32 %i.sy, %i.di
-  %8 = select i1 %.not.i, i32 0, i32 32768
+  %9 = select i1 %.not.i, i64 0, i64 32768
   %i.sz = zext i16 %i.fa to i32
   %.not.i33 = icmp ult i32 %i.da, %i.sz
-  %9 = select i1 %.not.i33, i32 0, i32 32768
+  %10 = select i1 %.not.i33, i64 0, i64 32768
   %i.ta = load ptr, ptr %i.q, align 8
   %i.tb = getelementptr inbounds nuw [8 x i8], ptr %i.ta, i64 %.2467
-  %10 = or i32 %9, %.031519
-  %11 = shl i32 %10, 16
-  %.sroa.4.0.insert.shift = zext i32 %11 to i64
-  %.sroa.4.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.ext, %.sroa.4.0.insert.shift
+  %.sroa.4.0.insert.ext = or i64 %10, %.masked
+  %.sroa.4.0.insert.shift = shl nuw nsw i64 %.sroa.4.0.insert.ext, 16
+  %.sroa.4.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.shift, %.sroa.5.0.insert.ext
   %.030.masked = and i32 %.030466, 65534
-  %12 = or i32 %8, %.030.masked
-  %.sroa.0.0.insert.ext = zext nneg i32 %12 to i64
+  %.masked404 = zext nneg i32 %.030.masked to i64
+  %.sroa.0.0.insert.ext = or i64 %9, %.masked404
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.insert, %.sroa.0.0.insert.ext
   store i64 %.sroa.0.0.insert.insert, ptr %i.tb, align 4
   %i.tc = add i64 %.2467, 1                       ; 2 uses

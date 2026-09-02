@@ -202,9 +202,8 @@ bb.by:                                            ; preds = %bb.bx, %bb.bu
 bb.bz:                                            ; preds = %bb.by
   %i.iw = getelementptr i8, ptr %.0254, i64 16    ; 2 uses
   %i.ix = load i8, ptr %i.iw, align 8
-  %4 = zext i8 %i.ix to i32
+  %4 = zext i8 %i.ix to i16
   %i.iy = call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %.5367)
-  %5 = add i32 %i.iy, %4                          ; 2 uses
   %i.iz = getelementptr i8, ptr %.0254, i64 8
   %i.ja = load ptr, ptr %i.iz, align 8            ; 10 uses
   %i.jb = load i8, ptr %i.ja, align 1
@@ -212,10 +211,12 @@ bb.bz:                                            ; preds = %bb.by
   %i.jd = and i8 %i.jc, 60                        ; 2 uses
   %i.je = zext nneg i8 %i.jd to i32
   %i.jf = getelementptr i8, ptr %i.ja, i64 2
-  %6 = lshr i32 %5, 8
-  %i.jg = trunc i32 %6 to i8
+  %5 = trunc i32 %i.iy to i16
+  %6 = add i16 %5, %4                             ; 2 uses
+  %7 = lshr i16 %6, 8
+  %i.jg = trunc nuw i16 %7 to i8
   store i8 %i.jg, ptr %i.jf, align 1
-  %i.jh = trunc i32 %5 to i8
+  %i.jh = trunc i16 %6 to i8
   %i.ji = getelementptr i8, ptr %i.ja, i64 3
   store i8 %i.jh, ptr %i.ji, align 1
   %i.jj = getelementptr i8, ptr %i.ja, i64 4

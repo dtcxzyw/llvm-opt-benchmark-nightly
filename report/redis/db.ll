@@ -205,7 +205,6 @@ sdslen.exit:                                      ; preds = %bb.c, %bb.d, %bb.e,
 sdslen.exit.thread:                               ; preds = %bb.b, %sdslen.exit
   %i.ab = add nsw i32 %.03245, 1                  ; 2 uses
   %i.ac = sub nsw i32 %2, %i.ab
-  %4 = zext i32 %i.ab to i64
   br label %.loopexit41
 
 .preheader.1:                                     ; preds = %.preheader.preheader
@@ -238,7 +237,7 @@ bb.h:                                             ; preds = %.preheader.3, %.pre
 
 .loopexit41:                                      ; preds = %.loopexit, %sdslen.exit, %sdslen.exit.thread, %bb.a
   %.030 = phi i32 [ 1, %bb.a ], [ %i.ac, %sdslen.exit.thread ], [ 0, %sdslen.exit ], [ 1, %.loopexit ] ; 8 uses
-  %.0 = phi i64 [ 3, %bb.a ], [ %4, %sdslen.exit.thread ], [ 3, %sdslen.exit ], [ 3, %.loopexit ] ; 2 uses
+  %.0 = phi i32 [ 3, %bb.a ], [ %i.ab, %sdslen.exit.thread ], [ 3, %sdslen.exit ], [ 3, %.loopexit ] ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 4 uses
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !112 ; 2 uses
   %.not.i = icmp eq ptr %i.am, null
@@ -308,27 +307,25 @@ getKeysPrepareResult.exit:                        ; preds = %bb.l, %bb.q
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %.0, i64 0
-  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %invariant.op = add nuw <2 x i64> splat (i64 2), %broadcast.splat
+  %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %.0, i64 0
+  %broadcast.splat = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
+  %invariant.op = add <2 x i32> splat (i32 2), %broadcast.splat
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %5 = add nuw <2 x i64> %vec.ind, %broadcast.splat
-  %.reass = add nuw <2 x i64> %vec.ind, %invariant.op
+  %vec.ind = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.bc, i64 %index
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.bc, i64 %index
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 16
-  %6 = trunc <2 x i64> %5 to <2 x i32>
-  %7 = trunc <2 x i64> %.reass to <2 x i32>
-  %interleaved.vec = shufflevector <2 x i32> %6, <2 x i32> splat (i32 146), <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  %4 = add <2 x i32> %broadcast.splat, %vec.ind
+  %.reass = add <2 x i32> %vec.ind, %invariant.op
+  %interleaved.vec = shufflevector <2 x i32> %4, <2 x i32> splat (i32 146), <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x i32> %interleaved.vec, ptr %i.be, align 4, !tbaa !18
-  %interleaved.vec59 = shufflevector <2 x i32> %7, <2 x i32> splat (i32 146), <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  %interleaved.vec59 = shufflevector <2 x i32> %.reass, <2 x i32> splat (i32 146), <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x i32> %interleaved.vec59, ptr %i.bg, align 4, !tbaa !18
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 4)
   %i.bh = icmp eq i64 %index.next, %n.vec
   br i1 %i.bh, label %middle.block, label %vector.body, !llvm.loop !257
 
@@ -342,11 +339,11 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader60, %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader60 ] ; 3 uses
-  %8 = add nuw i64 %indvars.iv, %.0
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.bc, i64 %indvars.iv ; 2 uses
-  %10 = trunc i64 %8 to i32
-  store i32 %10, ptr %9, align 4, !tbaa !158
-  %i.bi = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.bc, i64 %indvars.iv ; 2 uses
+  %6 = trunc i64 %indvars.iv to i32
+  %7 = add i32 %.0, %6
+  store i32 %7, ptr %5, align 4, !tbaa !158
+  %i.bi = getelementptr inbounds nuw i8, ptr %5, i64 4
   store i32 146, ptr %i.bi, align 4, !tbaa !159
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count

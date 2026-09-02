@@ -205,12 +205,12 @@ bb.r:                                             ; preds = %.lr.ph.i
   %i.dd = and i32 %i.cz, 65535
   %i.de = zext nneg i32 %i.dd to i64
   %i.df = call i64 @llvm.umin.i64(i64 %i.dc, i64 %i.de) ; 2 uses
-  %2 = trunc nuw nsw i64 %i.df to i32
   %i.dg = load ptr, ptr %i.t, align 8, !tbaa !28
   %i.dh = call i64 @llvm.umin.i64(i64 %i.df, i64 63)
   %i.di = trunc nuw nsw i64 %i.dh to i32
   %i.dj = call i32 @avio_read(ptr noundef %i.dg, ptr noundef nonnull %i.h, i32 noundef %i.di) #12
-  %3 = sub nsw i32 %2, %i.dj
+  %2 = zext i32 %i.dj to i64
+  %3 = sub nsw i64 %i.df, %2
   %trunc.i = trunc i32 %i.cx to i16
   switch i16 %trunc.i, label %.critedge39.i [
     i16 3, label %bb.v
@@ -241,9 +241,8 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s,
 
 .critedge39.i:                                    ; preds = %bb.v, %bb.r
   %i.dp = load ptr, ptr %i.t, align 8, !tbaa !28
-  %4 = and i32 %3, 65535
-  %5 = zext nneg i32 %4 to i64
-  %i.dq = call i64 @avio_skip(ptr noundef %i.dp, i64 noundef %5) #12 ; 0 uses
+  %4 = and i64 %3, 65535
+  %i.dq = call i64 @avio_skip(ptr noundef %i.dp, i64 noundef %4) #12 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #12
   %i.dr = load ptr, ptr %i.t, align 8, !tbaa !28
   %i.ds = call i64 @avio_seek(ptr noundef %i.dr, i64 noundef 0, i32 noundef 1) #12

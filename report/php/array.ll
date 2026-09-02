@@ -205,8 +205,8 @@ bb.x:                                             ; preds = %bb.v, %bb.w
   %i.ch = add i32 %i.cg, 1
   store i32 %i.ch, ptr %i.ca, align 4, !tbaa !29
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ca, i64 28
-  %i.cj = load i32, ptr %i.ci, align 4, !tbaa !35 ; 2 uses
-  %i.ck = zext i32 %i.cj to i64                   ; 6 uses
+  %i.cj = load i32, ptr %i.ci, align 4, !tbaa !35 ; 3 uses
+  %i.ck = zext i32 %i.cj to i64                   ; 5 uses
   %i.cl = icmp sgt i64 %i.cb, %i.ck
   br i1 %i.cl, label %bb.aa, label %bb.y
 
@@ -241,22 +241,21 @@ bb.ac:                                            ; preds = %bb.aa
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %.0286.i = phi i64 [ %i.cq, %bb.ab ], [ %spec.select.i, %bb.ac ] ; 10 uses
   %i.cw = icmp sgt i64 %.0286.i, 0
-  %3 = sub nsw i64 %i.ck, %.0286.i
-  %4 = select i1 %i.cw, i64 %3, i64 0
   %.not.i136 = icmp eq ptr %i.ce, null            ; 3 uses
   br i1 %.not.i136, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
   %i.cx = getelementptr inbounds nuw i8, ptr %i.ce, i64 28
   %i.cy = load i32, ptr %i.cx, align 4, !tbaa !35
-  %5 = zext i32 %i.cy to i64
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad
-  %6 = phi i64 [ %5, %bb.ae ], [ 0, %bb.ad ]
-  %7 = add nsw i64 %6, %4
-  %8 = trunc i64 %7 to i32
-  call void @_zend_hash_init(ptr noundef nonnull %2, i32 noundef %8, ptr noundef nonnull @zval_ptr_dtor, i1 noundef zeroext false) #18
+  %3 = phi i32 [ %i.cy, %bb.ae ], [ 0, %bb.ad ]
+  %4 = trunc i64 %.0286.i to i32
+  %5 = sub i32 %i.cj, %4
+  %6 = select i1 %i.cw, i32 %5, i32 0
+  %7 = add i32 %3, %6
+  call void @_zend_hash_init(ptr noundef nonnull %2, i32 noundef %7, ptr noundef nonnull @zval_ptr_dtor, i1 noundef zeroext false) #18
   %i.cz = getelementptr inbounds nuw i8, ptr %i.ca, i64 8 ; 2 uses
   %i.da = load i32, ptr %i.cz, align 8, !tbaa !25
   %i.db = and i32 %i.da, 4

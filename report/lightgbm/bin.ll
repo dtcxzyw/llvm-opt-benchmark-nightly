@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph.epil.prehead
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %bb.b, %.lr.ph.epil.preheader, %bb.a
-  %.0134.lcssa = phi i32 [ 0, %bb.a ], [ %.1135.1, %._crit_edge.loopexit.unr-lcssa ], [ %.0134731.epil.init, %.lr.ph.epil.preheader ], [ %i.g, %bb.b ] ; 9 uses
+  %.0134.lcssa = phi i32 [ 0, %bb.a ], [ %.1135.1, %._crit_edge.loopexit.unr-lcssa ], [ %.0134731.epil.init, %.lr.ph.epil.preheader ], [ %i.g, %bb.b ] ; 10 uses
   br i1 %9, label %bb.g, label %bb.f
 
 .lr.ph:                                           ; preds = %bb.e, %.lr.ph.preheader.new
@@ -274,16 +274,16 @@ bb.k:                                             ; preds = %bb.i
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.h, %bb.k, %bb.j, %bb.f
-  %.0136 = phi i32 [ 0, %bb.h ], [ 0, %bb.j ], [ %i.aa, %bb.k ], [ 0, %bb.f ] ; 4 uses
+  %.0136 = phi i32 [ 0, %bb.h ], [ 0, %bb.j ], [ %i.aa, %bb.k ], [ 0, %bb.f ] ; 5 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   store i32 %8, ptr %i.ab, align 8, !tbaa !295
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 3 uses
   store i32 0, ptr %i.ac, align 8, !tbaa !1583
-  %i.ad = sext i32 %.0134.lcssa to i64            ; 2 uses
-  %i.ae = sext i32 %.0136 to i64                  ; 3 uses
-  %16 = add nsw i64 %i.ad, %i.ae
-  %17 = sub i64 %3, %16
-  %18 = trunc i64 %17 to i32                      ; 7 uses
+  %i.ad = sext i32 %.0134.lcssa to i64
+  %i.ae = sext i32 %.0136 to i64                  ; 2 uses
+  %16 = trunc i64 %3 to i32                       ; 4 uses
+  %17 = add i32 %.0134.lcssa, %.0136
+  %18 = sub i32 %16, %17                          ; 7 uses
   %i.af = getelementptr inbounds [8 x i8], ptr %1, i64 %i.ad
   invoke void @_ZSt13__stable_sortIPdN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_(ptr noundef %1, ptr noundef %i.af)
           to label %_ZSt11stable_sortIPdEvT_S1_.exit unwind label %bb.n
@@ -686,8 +686,7 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit344:       ; preds = %_ZNSt6vectorIiSaIiE
   %spec.select1088 = select i1 %or.cond11, i32 0, i32 2
   %i.zq = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %spec.select1088, ptr %i.zq, align 4, !tbaa !319
-  %19 = trunc i64 %3 to i32
-  %i.zr = sub i32 %19, %.0.lcssa
+  %i.zr = sub i32 %16, %.0.lcssa
   %i.zs = load ptr, ptr %12, align 8, !tbaa !75
   store i32 %i.zr, ptr %i.zs, align 4, !tbaa !50
   br label %bb.et
@@ -764,7 +763,6 @@ bb.ey:                                            ; preds = %_ZNSt6vectorIiSaIiE
   br i1 %7, label %bb.ez, label %.loopexit1008
 
 bb.ez:                                            ; preds = %bb.ey
-  %20 = trunc i64 %3 to i32                       ; 2 uses
   %i.aai = load i32, ptr %i.ab, align 8, !tbaa !295
   %i.aaj = icmp eq i32 %i.aai, 0
   %i.aak = getelementptr inbounds nuw i8, ptr %12, i64 8
@@ -793,7 +791,7 @@ bb.fa:                                            ; preds = %.lr.ph54.i
   %i.aau = load i32, ptr %i.aat, align 4, !tbaa !50
   %i.aav = add nsw i32 %i.aau, %.03052.i          ; 3 uses
   %.not39.i = icmp slt i32 %i.aav, %6
-  %i.aaw = sub nsw i32 %20, %i.aav
+  %i.aaw = sub nsw i32 %16, %i.aav
   %.not40.i = icmp slt i32 %i.aaw, %6
   %or.cond.i = select i1 %.not39.i, i1 true, i1 %.not40.i
   br i1 %or.cond.i, label %bb.fa, label %.loopexit1008
@@ -817,7 +815,7 @@ bb.fc:                                            ; preds = %.lr.ph.i352
   %i.aba = getelementptr inbounds nuw [4 x i8], ptr %i.aam, i64 %.048.i
   %i.abb = load i32, ptr %i.aba, align 4, !tbaa !50 ; 2 uses
   %.not.i353 = icmp slt i32 %i.abb, %6
-  %i.abc = sub nsw i32 %20, %i.abb
+  %i.abc = sub nsw i32 %16, %i.abb
   %.not38.i = icmp slt i32 %i.abc, %6
   %or.cond42.i = select i1 %.not.i353, i1 true, i1 %.not38.i
   br i1 %or.cond42.i, label %bb.fc, label %.loopexit1008

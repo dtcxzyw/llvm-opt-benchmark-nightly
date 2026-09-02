@@ -202,12 +202,12 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   %i.fv = load ptr, ptr %i.fh, align 8
   call void @gres_node_state_log(ptr noundef %i.fu, ptr noundef %i.fv) #13
   %i.fw = getelementptr inbounds nuw i8, ptr %i.w, i64 436
-  %i.fx = load i16, ptr %i.fw, align 4            ; 3 uses
+  %i.fx = load i16, ptr %i.fw, align 4            ; 2 uses
   %.not468 = icmp eq i16 %i.fx, 0
   br i1 %.not468, label %bb.cb, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.fy = zext i16 %i.fx to i32                   ; 3 uses
+  %i.fy = zext i16 %i.fx to i32                   ; 4 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.w, i64 184 ; 2 uses
   call void @slurm_xfree(ptr noundef nonnull %i.fz) #13
   %i.ga = getelementptr inbounds nuw i8, ptr %i.w, i64 192 ; 11 uses
@@ -289,7 +289,6 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bg
   br i1 %.not107116.not.i, label %.loopexit, label %.lr.ph119.i
 
 .lr.ph119.i:                                      ; preds = %bb.bi
-  %2 = zext i16 %i.fx to i64
   %i.hc = getelementptr inbounds nuw i8, ptr %i.gl, i64 112
   %i.hd = getelementptr inbounds nuw i8, ptr %i.w, i64 320
   br label %bb.bj
@@ -328,8 +327,8 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
   %i.hs = load ptr, ptr %i.hc, align 8
   %i.ht = getelementptr inbounds nuw [8 x i8], ptr %i.hs, i64 %indvars.iv125.i
   %i.hu = load i64, ptr %i.ht, align 8
-  %3 = mul i64 %i.hu, %2
-  %4 = trunc i64 %3 to i32                        ; 2 uses
+  %2 = trunc i64 %i.hu to i32
+  %3 = mul i32 %2, %i.fy                          ; 2 uses
   %i.hv = load i16, ptr %i.gx, align 8
   %.not120.i = icmp eq i16 %i.hv, 0
   br i1 %.not120.i, label %._crit_edge.i581, label %.lr.ph.i580
@@ -368,7 +367,7 @@ bb.bq:                                            ; preds = %bb.bp
   %i.ih = load ptr, ptr %i.ig, align 8
   call void @bit_set(ptr noundef %i.ih, i64 noundef %indvars.iv.i) #13
   %i.ii = add nsw i32 %.077112.i, 1               ; 3 uses
-  %.not103.i = icmp ult i32 %i.ii, %4
+  %.not103.i = icmp ult i32 %i.ii, %3
   br i1 %.not103.i, label %bb.br, label %._crit_edge.i581
 
 bb.br:                                            ; preds = %bb.bq, %bb.bp, %bb.bo, %bb.bn
@@ -381,7 +380,7 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp, %bb.
 
 ._crit_edge.i581:                                 ; preds = %bb.br, %bb.bq, %bb.bm
   %.2.i582 = phi i32 [ 0, %bb.bm ], [ %.1.i, %bb.br ], [ %i.ii, %bb.bq ] ; 2 uses
-  %.not104.i = icmp eq i32 %.2.i582, %4
+  %.not104.i = icmp eq i32 %.2.i582, %3
   br i1 %.not104.i, label %._crit_edge._crit_edge.i, label %bb.bs
 
 ._crit_edge._crit_edge.i:                         ; preds = %._crit_edge.i581

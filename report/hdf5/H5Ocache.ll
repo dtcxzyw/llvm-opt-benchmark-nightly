@@ -202,25 +202,23 @@ bb.k:                                             ; preds = %bb.b
 
 bb.l:                                             ; preds = %bb.k
   %i.fs = getelementptr inbounds nuw i8, ptr %3, i64 289
-  %i.ft = load i8, ptr %i.fs, align 1, !tbaa !36
-  %4 = zext i8 %i.ft to i32                       ; 3 uses
-  %5 = lshr i32 %4, 1
-  %6 = and i32 %5, 16
-  %7 = lshr i32 %4, 2
-  %8 = and i32 %7, 4
-  %9 = and i32 %4, 3
-  %10 = shl nuw nsw i32 1, %9
-  %11 = or disjoint i32 %6, %8
-  %12 = or disjoint i32 %11, 10
-  %13 = add nuw nsw i32 %12, %10
-  %14 = zext nneg i32 %13 to i64
+  %i.ft = load i8, ptr %i.fs, align 1, !tbaa !36  ; 3 uses
+  %4 = lshr i8 %i.ft, 1
+  %5 = and i8 %4, 16
+  %6 = lshr i8 %i.ft, 2
+  %7 = and i8 %6, 4
+  %8 = and i8 %i.ft, 3
+  %9 = shl nuw nsw i8 1, %8
+  %10 = or disjoint i8 %5, %7
+  %11 = or disjoint i8 %10, 10
+  %12 = add nuw nsw i8 %11, %9
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.k, %bb.l
-  %15 = phi i64 [ %14, %bb.l ], [ 16, %bb.k ]
-  %16 = sub i64 %i.fp, %15
-  %17 = trunc i64 %16 to i8
-  store i8 %17, ptr %i.fm, align 1, !tbaa !50
+  %13 = phi i8 [ %12, %bb.l ], [ 16, %bb.k ]
+  %14 = trunc i64 %i.fp to i8
+  %15 = sub i8 %14, %13
+  store i8 %15, ptr %i.fm, align 1, !tbaa !50
   %i.fu = getelementptr inbounds nuw i8, ptr %i.j, i64 9
   %i.fv = load ptr, ptr %i.g, align 8, !tbaa !44
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 8

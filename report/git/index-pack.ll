@@ -205,30 +205,31 @@ bb.li:                                            ; preds = %bb.lh
 
 bb.lj:                                            ; preds = %bb.lh
   %i.asl = load i64, ptr %i.g, align 8, !tbaa !24 ; 4 uses
-  %i.asm = load i32, ptr %i.f, align 4, !tbaa !15 ; 2 uses
+  %i.asm = load i32, ptr %i.f, align 4, !tbaa !15
   %i.asn = load ptr, ptr @objects, align 8, !tbaa !58
   %i.aso = load i32, ptr @nr_objects, align 4, !tbaa !15 ; 2 uses
   %i.asp = add nsw i32 %i.aso, 1
   store i32 %i.asp, ptr @nr_objects, align 4, !tbaa !15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #24
-  %28 = shl i32 %i.asm, 4
-  %29 = zext i32 %28 to i64
-  %30 = and i64 %i.asl, 15
-  %31 = or disjoint i64 %30, %29                  ; 2 uses
+  %.tr.i.i.i = trunc i32 %i.asm to i8             ; 3 uses
+  %28 = shl i8 %.tr.i.i.i, 4
+  %29 = trunc i64 %i.asl to i8
+  %30 = and i8 %29, 15
+  %31 = or disjoint i8 %28, %30                   ; 2 uses
   %i.asq = lshr i64 %i.asl, 4                     ; 2 uses
   %.not37.i.i.i = icmp eq i64 %i.asq, 0
   br i1 %.not37.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.lj, %.lr.ph.i.i.i
   %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %.lr.ph.i.i.i ], [ 0, %bb.lj ] ; 2 uses
-  %.0.in40.i.i.i = phi i64 [ %33, %.lr.ph.i.i.i ], [ %31, %bb.lj ]
+  %.040.i.i.i = phi i8 [ %33, %.lr.ph.i.i.i ], [ %31, %bb.lj ]
   %.03538.i.i.i = phi i64 [ %i.ast, %.lr.ph.i.i.i ], [ %i.asq, %bb.lj ] ; 2 uses
-  %32 = trunc i64 %.0.in40.i.i.i to i8
-  %i.asr = or i8 %32, -128
+  %i.asr = or i8 %.040.i.i.i, -128
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
   %i.ass = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.i.i.i
   store i8 %i.asr, ptr %i.ass, align 1, !tbaa !22
-  %33 = and i64 %.03538.i.i.i, 127                ; 2 uses
+  %32 = trunc i64 %.03538.i.i.i to i8
+  %33 = and i8 %32, 127                           ; 2 uses
   %i.ast = lshr i64 %.03538.i.i.i, 7              ; 2 uses
   %.not.i.i.i200 = icmp eq i64 %i.ast, 0
   br i1 %.not.i.i.i200, label %._crit_edge.loopexit.i.i.i, label %.lr.ph.i.i.i, !llvm.loop !131
@@ -239,14 +240,13 @@ bb.lj:                                            ; preds = %bb.lh
 
 ._crit_edge.i.i.i:                                ; preds = %._crit_edge.loopexit.i.i.i, %bb.lj
   %.034.lcssa.i.i.i = phi i32 [ 0, %bb.lj ], [ %i.asu, %._crit_edge.loopexit.i.i.i ] ; 2 uses
-  %.0.in.lcssa.i.i.i = phi i64 [ %31, %bb.lj ], [ %33, %._crit_edge.loopexit.i.i.i ]
-  %.0.i.i18.i = trunc i64 %.0.in.lcssa.i.i.i to i8
+  %.0.lcssa.i.i.i = phi i8 [ %31, %bb.lj ], [ %33, %._crit_edge.loopexit.i.i.i ]
   %i.asv = sext i32 %i.aso to i64
   %i.asw = getelementptr inbounds [64 x i8], ptr %i.asn, i64 %i.asv ; 10 uses
   %i.asx = add nuw nsw i32 %.034.lcssa.i.i.i, 1   ; 3 uses
   %i.asy = zext nneg i32 %.034.lcssa.i.i.i to i64
   %i.asz = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.asy
-  store i8 %.0.i.i18.i, ptr %i.asz, align 1, !tbaa !22
+  store i8 %.0.lcssa.i.i.i, ptr %i.asz, align 1, !tbaa !22
   call void @crc32_begin(ptr noundef %i.aqe) #24
   call void @hashwrite(ptr noundef %i.aqe, ptr noundef nonnull %i.e, i32 noundef %i.asx) #24
   %i.ata = getelementptr inbounds nuw i8, ptr %i.asw, i64 48
@@ -254,11 +254,10 @@ bb.lj:                                            ; preds = %bb.lh
   %i.atb = trunc i32 %i.asx to i8
   %i.atc = getelementptr inbounds nuw i8, ptr %i.asw, i64 56
   store i8 %i.atb, ptr %i.atc, align 8, !tbaa !73
-  %34 = trunc i32 %i.asm to i8                    ; 2 uses
   %i.atd = getelementptr inbounds nuw i8, ptr %i.asw, i64 57
-  store i8 %34, ptr %i.atd, align 1, !tbaa !69
+  store i8 %.tr.i.i.i, ptr %i.atd, align 1, !tbaa !69
   %i.ate = getelementptr inbounds nuw i8, ptr %i.asw, i64 58
-  store i8 %34, ptr %i.ate, align 2, !tbaa !82
+  store i8 %.tr.i.i.i, ptr %i.ate, align 2, !tbaa !82
   %i.atf = getelementptr inbounds nuw i8, ptr %i.asw, i64 40
   %i.atg = load i64, ptr %i.atf, align 8, !tbaa !68
   %i.ath = zext nneg i32 %i.asx to i64

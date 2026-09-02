@@ -161,8 +161,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %.thre
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: readwrite) uwtable
 define internal range(i64 2, 5) i64 @fun_so_to_utf_16be(ptr nofree readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 %2, ptr nofree noundef writeonly captures(none) initializes((0, 1)) %3, i64 %4) #2 {
 bb.a:
-  %i.a = load i8, ptr %1, align 1, !tbaa !10      ; 4 uses
-  %i.b = zext i8 %i.a to i32                      ; 3 uses
+  %i.a = load i8, ptr %1, align 1, !tbaa !10      ; 5 uses
+  %i.b = zext i8 %i.a to i32                      ; 2 uses
   %.not = icmp sgt i8 %i.a, -1
   br i1 %.not, label %bb.b, label %bb.c
 
@@ -210,34 +210,29 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  %5 = shl nuw nsw i32 %i.b, 2
-  %6 = and i32 %5, 28
+  %5 = shl i8 %i.a, 2
+  %6 = and i8 %5, 28
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !10
   %i.ad = lshr i8 %i.ac, 4
   %i.ae = and i8 %i.ad, 3
-  %7 = zext nneg i8 %i.ae to i32
-  %8 = or disjoint i32 %6, %7
-  %9 = add nsw i32 %8, -1                         ; 2 uses
-  %10 = trunc nsw i32 %9 to i8
-  %i.af = lshr i8 %10, 2
+  %7 = or disjoint i8 %i.ae, %6
+  %8 = add nsw i8 %7, -1                          ; 2 uses
+  %i.af = lshr i8 %8, 2
   %i.ag = or i8 %i.af, -40
   store i8 %i.ag, ptr %3, align 1, !tbaa !10
-  %11 = shl nsw i32 %9, 6
   %i.ah = load i8, ptr %i.ab, align 1, !tbaa !10
   %i.ai = shl i8 %i.ah, 2
   %i.aj = and i8 %i.ai, 60
-  %12 = zext nneg i8 %i.aj to i32
-  %13 = or disjoint i32 %11, %12
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 3 uses
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !10
   %i.am = lshr i8 %i.al, 4
-  %14 = zext nneg i8 %i.am to i32
-  %15 = add nuw nsw i32 %14, 248
-  %16 = or i32 %13, %15
-  %17 = trunc i32 %16 to i8
+  %9 = add nsw i8 %i.am, -8
+  %10 = shl i8 %8, 6
+  %11 = or disjoint i8 %10, %i.aj
+  %12 = or i8 %11, %9
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 1
-  store i8 %17, ptr %i.an, align 1, !tbaa !10
+  store i8 %12, ptr %i.an, align 1, !tbaa !10
   %i.ao = load i8, ptr %i.ak, align 1, !tbaa !10
   %i.ap = lshr i8 %i.ao, 2
   %i.aq = and i8 %i.ap, 3
@@ -372,8 +367,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %.thre
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: readwrite) uwtable
 define internal range(i64 2, 5) i64 @fun_so_to_utf_16le(ptr nofree readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 %2, ptr nofree noundef writeonly captures(none) initializes((0, 2)) %3, i64 %4) #2 {
 bb.a:
-  %i.a = load i8, ptr %1, align 1, !tbaa !10      ; 4 uses
-  %i.b = zext i8 %i.a to i32                      ; 3 uses
+  %i.a = load i8, ptr %1, align 1, !tbaa !10      ; 5 uses
+  %i.b = zext i8 %i.a to i32                      ; 2 uses
   %.not = icmp sgt i8 %i.a, -1
   br i1 %.not, label %bb.b, label %bb.c
 
@@ -427,34 +422,29 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  %5 = shl nuw nsw i32 %i.b, 2
-  %6 = and i32 %5, 28
+  %5 = shl i8 %i.a, 2
+  %6 = and i8 %5, 28
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !10
   %i.ag = lshr i8 %i.af, 4
   %i.ah = and i8 %i.ag, 3
-  %7 = zext nneg i8 %i.ah to i32
-  %8 = or disjoint i32 %6, %7
-  %9 = add nsw i32 %8, -1                         ; 2 uses
-  %10 = trunc nsw i32 %9 to i8
-  %i.ai = lshr i8 %10, 2
+  %7 = or disjoint i8 %i.ah, %6
+  %8 = add nsw i8 %7, -1                          ; 2 uses
+  %i.ai = lshr i8 %8, 2
   %i.aj = or i8 %i.ai, -40
   %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 1
   store i8 %i.aj, ptr %i.ak, align 1, !tbaa !10
-  %11 = shl nsw i32 %9, 6
   %i.al = load i8, ptr %i.ae, align 1, !tbaa !10
   %i.am = shl i8 %i.al, 2
   %i.an = and i8 %i.am, 60
-  %12 = zext nneg i8 %i.an to i32
-  %13 = or disjoint i32 %11, %12
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 3 uses
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !10
   %i.aq = lshr i8 %i.ap, 4
-  %14 = zext nneg i8 %i.aq to i32
-  %15 = add nuw nsw i32 %14, 248
-  %16 = or i32 %13, %15
-  %17 = trunc i32 %16 to i8
-  store i8 %17, ptr %3, align 1, !tbaa !10
+  %9 = add nsw i8 %i.aq, -8
+  %10 = shl i8 %8, 6
+  %11 = or disjoint i8 %10, %i.an
+  %12 = or i8 %11, %9
+  store i8 %12, ptr %3, align 1, !tbaa !10
   %i.ar = load i8, ptr %i.ao, align 1, !tbaa !10
   %i.as = lshr i8 %i.ar, 2
   %i.at = and i8 %i.as, 3

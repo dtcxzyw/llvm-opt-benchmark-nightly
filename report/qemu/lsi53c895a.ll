@@ -202,12 +202,11 @@ bb.iq:                                            ; preds = %bb.io, %bb.il, %bb.
   ]
 
 bb.ir:                                            ; preds = %bb.iq
-  %1 = zext i8 %.2338 to i32
   %i.acl = lshr i8 %.2338, 7
-  %2 = shl nuw nsw i32 %1, 1
+  %1 = shl i8 %.2338, 1
   %i.acm = load i32, ptr %i.am, align 8
-  %3 = or i32 %i.acm, %2
-  %4 = trunc i32 %3 to i8
+  %2 = trunc i32 %i.acm to i8
+  %3 = or i8 %1, %2
   %i.acn = zext nneg i8 %i.acl to i32
   store i32 %i.acn, ptr %i.am, align 8
   br label %bb.ja
@@ -261,7 +260,7 @@ bb.iz:                                            ; preds = %bb.ix
   br label %bb.ja
 
 bb.ja:                                            ; preds = %bb.iq, %bb.iy, %bb.iz, %bb.iw, %bb.iv, %bb.iu, %bb.it, %bb.is, %bb.ir
-  %.3 = phi i8 [ %i.adb, %bb.iz ], [ %i.adb, %bb.iy ], [ %4, %bb.ir ], [ %i.aco, %bb.is ], [ %i.acp, %bb.it ], [ %i.acq, %bb.iu ], [ %i.act, %bb.iv ], [ %i.acv, %bb.iw ], [ %.0335, %bb.iq ] ; 2 uses
+  %.3 = phi i8 [ %i.adb, %bb.iz ], [ %i.adb, %bb.iy ], [ %3, %bb.ir ], [ %i.aco, %bb.is ], [ %i.acp, %bb.it ], [ %i.acq, %bb.iu ], [ %i.act, %bb.iv ], [ %i.acv, %bb.iw ], [ %.0335, %bb.iq ] ; 2 uses
   %i.adg = icmp eq i32 %i.wq, 6
   br i1 %i.adg, label %.thread547, label %bb.jb
 

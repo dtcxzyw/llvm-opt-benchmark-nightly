@@ -149,7 +149,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bi = load i16, ptr %i.bh, align 2            ; 3 uses
   %i.bj = zext i16 %i.bi to i32
   %i.bk = getelementptr inbounds nuw i8, ptr %3, i64 90
-  %i.bl = load i16, ptr %i.bk, align 2            ; 3 uses
+  %i.bl = load i16, ptr %i.bk, align 2            ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %3, i64 568
   %i.bn = load i16, ptr %i.bm, align 8
   %i.bo = getelementptr inbounds nuw i8, ptr %i.aa, i64 40
@@ -174,8 +174,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not193.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.m
-  %i.ca = zext i16 %i.bl to i32
-  %7 = zext i16 %i.bl to i64
+  %i.ca = zext i16 %i.bl to i32                   ; 2 uses
   br label %bb.n
 
 ._crit_edge.i.i:                                  ; preds = %bb.n, %bb.m
@@ -195,14 +194,13 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.n, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.n ] ; 5 uses
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.n ] ; 4 uses
   %.0119164.i.i = phi i32 [ 0, %.lr.ph.i.i ], [ %i.cr, %bb.n ]
-  %indvars194.i.i = trunc i64 %indvars.iv.i.i to i32
-  %8 = mul nuw nsw i64 %indvars.iv.i.i, %7
+  %indvars194.i.i = trunc i64 %indvars.iv.i.i to i32 ; 2 uses
   %i.cj = add i32 %indvars194.i.i, 1
   %i.ck = mul nuw i32 %i.cj, %i.ca
-  %9 = trunc nuw nsw i64 %8 to i32
-  %i.cl = tail call i32 @bit_set_count_range(ptr noundef %i.bs, i32 noundef %9, i32 noundef %i.ck) #8
+  %7 = mul i32 %indvars194.i.i, %i.ca
+  %i.cl = tail call i32 @bit_set_count_range(ptr noundef %i.bs, i32 noundef %7, i32 noundef %i.ck) #8
   %i.cm = trunc i32 %i.cl to i16
   %i.cn = getelementptr inbounds nuw [2 x i8], ptr %i.bz, i64 %indvars.iv.i.i
   store i16 %i.cm, ptr %i.cn, align 2

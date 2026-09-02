@@ -205,26 +205,19 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.w = tail call i32 @ArrayGetNItems(i32 noundef %i.k, ptr noundef nonnull %i.l) #16 ; 4 uses
   %.val = load i32, ptr %i.e, align 4
   %i.x = lshr i32 %.val, 2
-  %5 = zext nneg i32 %i.x to i64
   %i.y = load i32, ptr %i.p, align 4              ; 2 uses
   %.not121 = icmp eq i32 %i.y, 0
-  br i1 %.not121, label %bb.f, label %6
-
-6:                                                ; preds = %bb.e
-  %7 = zext i32 %i.y to i64
-  br label %bb.g
+  br i1 %.not121, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.z = load i32, ptr %i.j, align 4
-  %8 = sext i32 %i.z to i64
-  %9 = shl nsw i64 %8, 3
-  %10 = add nsw i64 %9, 16
+  %5 = shl i32 %i.z, 3
+  %6 = add i32 %5, 16
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %6
-  %11 = phi i64 [ %7, %6 ], [ %10, %bb.f ]
-  %12 = sub nsw i64 %5, %11                       ; 2 uses
-  %13 = trunc i64 %12 to i32                      ; 3 uses
+bb.g:                                             ; preds = %bb.e, %bb.f
+  %7 = phi i32 [ %6, %bb.f ], [ %i.y, %bb.e ]
+  %8 = sub i32 %i.x, %7                           ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.0107, i64 36 ; 4 uses
   %i.ab = load i32, ptr %i.aa, align 4
   %i.ac = add i32 %i.ab, %i.w                     ; 5 uses
@@ -277,7 +270,7 @@ bb.n:                                             ; preds = %bb.l
   store i32 1, ptr %i.av, align 4
   %i.aw = getelementptr inbounds nuw i8, ptr %.0107, i64 72
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aw, ptr nonnull align 4 %i.o, i64 %i.n, i1 false)
-  %i.ax = add i32 %13, 1
+  %i.ax = add i32 %8, 1
   %i.ay = tail call i32 @llvm.smax.i32(i32 %i.ax, i32 1024) ; 3 uses
   %i.az = tail call range(i32 1, 32) i32 @llvm.ctpop.i32(i32 %i.ay)
   %i.ba = icmp samesign ult i32 %i.az, 2
@@ -345,7 +338,7 @@ bb.s:                                             ; preds = %bb.r, %.lr.ph
 ._crit_edge278:                                   ; preds = %bb.q, %.preheader
   %i.bz = getelementptr inbounds nuw i8, ptr %.0107, i64 28
   %i.ca = load i32, ptr %i.bz, align 4
-  %i.cb = add i32 %i.ca, %13                      ; 2 uses
+  %i.cb = add i32 %i.ca, %8                       ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %.0107, i64 24 ; 2 uses
   %i.cd = load i32, ptr %i.cc, align 8            ; 2 uses
   %i.ce = icmp sgt i32 %i.cb, %i.cd
@@ -373,11 +366,10 @@ bb.u:                                             ; preds = %._crit_edge, %bb.t,
   %i.cm = load i32, ptr %i.cl, align 4
   %i.cn = sext i32 %i.cm to i64
   %i.co = getelementptr inbounds i8, ptr %i.ck, i64 %i.cn
-  %sext = shl i64 %12, 32
-  %14 = ashr exact i64 %sext, 32
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.co, ptr nonnull align 1 %i.v, i64 %14, i1 false)
+  %9 = sext i32 %8 to i64
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.co, ptr nonnull align 1 %i.v, i64 %9, i1 false)
   %i.cp = load i32, ptr %i.cl, align 4
-  %i.cq = add i32 %i.cp, %13
+  %i.cq = add i32 %i.cp, %8
   store i32 %i.cq, ptr %i.cl, align 4
   %i.cr = getelementptr inbounds nuw i8, ptr %.0107, i64 16 ; 4 uses
   %i.cs = load ptr, ptr %i.cr, align 8            ; 2 uses

@@ -204,17 +204,16 @@ bb.a:
   %.lobit.i = ashr i64 %i.b, 63
   %.sroa.0.0.i = add nsw i64 %.lobit.i, %i.a      ; 2 uses
   %i.c = icmp slt i64 %i.b, 0
-  %2 = select i1 %i.c, i64 1000, i64 0
-  %spec.select.i = add nsw i64 %2, %i.b
-  %3 = trunc nuw nsw i64 %spec.select.i to i32
-  %i.d = mul nuw nsw i32 %3, 1000000
+  %2 = select i1 %i.c, i32 1000, i32 0
+  %3 = trunc nsw i64 %i.b to i32
+  %4 = add nsw i32 %2, %3
+  %i.d = mul nuw nsw i32 %4, 1000000
   %i.e = sdiv i64 %.sroa.0.0.i, 86400
   %i.f = srem i64 %.sroa.0.0.i, 86400             ; 3 uses
   %.lobit.i.i = ashr i64 %i.f, 63
   %.sroa.0.0.i.i = add nsw i64 %.lobit.i.i, %i.e  ; 2 uses
   %i.g = icmp slt i64 %i.f, 0
-  %4 = select i1 %i.g, i64 86400, i64 0
-  %spec.select.i.i = add nsw i64 %4, %i.f
+  %5 = select i1 %i.g, i32 86400, i32 0
   %i.h = add nsw i64 %.sroa.0.0.i.i, -2146764485
   %or.cond.i = icmp ult i64 %i.h, -4294967296
   br i1 %or.cond.i, label %bb.d, label %bb.b
@@ -227,11 +226,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = trunc nuw nsw i64 %spec.select.i.i to i32
+  %i.l = trunc nsw i64 %i.f to i32
+  %6 = add nsw i32 %5, %i.l
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.k, ptr %i.m, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %i.l, ptr %.sroa.4.0..sroa_idx, align 8
+  store i32 %6, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.d, ptr %.sroa.5.0..sroa_idx, align 4
   br label %bb.e
@@ -299,10 +299,10 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvYNtNtNtCshmPyUV8PP35_6chrono8datetime5serde28MilliSecondsTimestampVisitorNtNtCs1gOyXocuPRE_10serde_core2de7Visitor8visit_i8NtNtCseqDwI8vvjGQ_10serde_json5error5ErrorECsgO8S5jLFugx_23deltalake_catalog_unity(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 4), (8, 16)) %0, i8 noundef %1) unnamed_addr #0 {
 bb.a:
-  %i.a = sext i8 %1 to i64                        ; 3 uses
+  %i.a = sext i8 %1 to i64                        ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1133)
-  %.lobit.i.i = ashr i64 %i.a, 63                 ; 3 uses
-  %i.b = trunc nsw i64 %.lobit.i.i to i32
+  %.lobit.i.i = ashr i64 %i.a, 63                 ; 2 uses
+  %i.b = trunc nsw i64 %.lobit.i.i to i32         ; 2 uses
   %i.c = add nsw i32 %i.b, 719163
   %i.d = tail call noundef i32 @_RNvMNtNtCshmPyUV8PP35_6chrono5naive4dateNtB2_9NaiveDate25from_num_days_from_ce_opt(i32 noundef %i.c), !noalias !1134 ; 2 uses
   %.not.i.i = icmp eq i32 %i.d, 0
@@ -310,18 +310,17 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = icmp slt i64 %.lobit.i.i, 0
-  %2 = select i1 %i.e, i64 86400, i64 0
-  %spec.select.i.i.i = add nsw i64 %2, %.lobit.i.i
+  %2 = select i1 %i.e, i32 86400, i32 0
   %i.f = icmp slt i8 %1, 0
-  %3 = select i1 %i.f, i64 1000, i64 0
-  %spec.select.i.i = add nsw i64 %3, %i.a
-  %4 = trunc nuw nsw i64 %spec.select.i.i to i32
-  %i.g = mul nuw nsw i32 %4, 1000000
-  %5 = trunc nuw nsw i64 %spec.select.i.i.i to i32
+  %3 = select i1 %i.f, i32 1000, i32 0
+  %4 = sext i8 %1 to i32
+  %5 = add nsw i32 %3, %4
+  %i.g = mul nuw nsw i32 %5, 1000000
+  %6 = add nsw i32 %2, %i.b
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.d, ptr %i.h, align 4, !alias.scope !1133
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %5, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !1133
+  store i32 %6, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !1133
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.g, ptr %.sroa.5.0..sroa_idx.i, align 4, !alias.scope !1133
   br label %_RINvXNtNtNtCshmPyUV8PP35_6chrono8datetime5serde15ts_millisecondsNtB5_28MilliSecondsTimestampVisitorNtNtCs1gOyXocuPRE_10serde_core2de7Visitor9visit_i64NtNtCseqDwI8vvjGQ_10serde_json5error5ErrorECsgO8S5jLFugx_23deltalake_catalog_unity.exit
@@ -375,32 +374,30 @@ define hidden void @_RINvYNtNtNtCshmPyUV8PP35_6chrono8datetime5serde28MilliSecon
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1145)
   %i.a = sdiv i16 %1, 1000
-  %.sext = sext i16 %i.a to i64
-  %i.b = srem i16 %1, 1000                        ; 2 uses
-  %.sext2 = sext i16 %i.b to i64                  ; 2 uses
-  %.lobit.i.i = ashr i64 %.sext2, 63
-  %.sroa.0.0.i.i = add nsw i64 %.lobit.i.i, %.sext ; 3 uses
-  %.lobit.i.i.i = ashr i64 %.sroa.0.0.i.i, 63
-  %2 = trunc nsw i64 %.lobit.i.i.i to i32
-  %i.c = add nsw i32 %2, 719163
+  %i.b = srem i16 %1, 1000                        ; 3 uses
+  %2 = ashr i16 %i.b, 15
+  %narrow = add nsw i16 %2, %i.a                  ; 3 uses
+  %3 = ashr i16 %narrow, 15
+  %4 = sext i16 %3 to i32
+  %i.c = add nsw i32 %4, 719163
   %i.d = tail call noundef i32 @_RNvMNtNtCshmPyUV8PP35_6chrono5naive4dateNtB2_9NaiveDate25from_num_days_from_ce_opt(i32 noundef %i.c), !noalias !1146 ; 2 uses
   %.not.i.i = icmp eq i32 %i.d, 0
   br i1 %.not.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = icmp slt i64 %.sroa.0.0.i.i, 0
-  %3 = select i1 %i.e, i64 86400, i64 0
-  %spec.select.i.i.i = add nsw i64 %3, %.sroa.0.0.i.i
+  %i.e = icmp slt i16 %narrow, 0
+  %5 = select i1 %i.e, i32 86400, i32 0
   %i.f = icmp slt i16 %i.b, 0
-  %4 = select i1 %i.f, i64 1000, i64 0
-  %spec.select.i.i = add nsw i64 %4, %.sext2
-  %5 = trunc nuw nsw i64 %spec.select.i.i to i32
-  %i.g = mul nuw nsw i32 %5, 1000000
-  %6 = trunc nuw nsw i64 %spec.select.i.i.i to i32
+  %6 = select i1 %i.f, i32 1000, i32 0
+  %7 = sext i16 %i.b to i32
+  %8 = add nsw i32 %6, %7
+  %i.g = mul nuw nsw i32 %8, 1000000
+  %9 = sext i16 %narrow to i32
+  %10 = add nsw i32 %5, %9
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.d, ptr %i.h, align 4, !alias.scope !1145
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %6, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !1145
+  store i32 %10, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !1145
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.g, ptr %.sroa.5.0..sroa_idx.i, align 4, !alias.scope !1145
   br label %_RINvXNtNtNtCshmPyUV8PP35_6chrono8datetime5serde15ts_millisecondsNtB5_28MilliSecondsTimestampVisitorNtNtCs1gOyXocuPRE_10serde_core2de7Visitor9visit_i64NtNtCseqDwI8vvjGQ_10serde_json5error5ErrorECsgO8S5jLFugx_23deltalake_catalog_unity.exit
@@ -438,15 +435,15 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.j = icmp slt i32 %i.e, 0
   %i.k = select i1 %i.j, i32 86400, i32 0
-  %spec.select.i.i.i = add nsw i32 %i.k, %i.e
   %i.l = icmp slt i32 %i.b, 0
   %i.m = select i1 %i.l, i32 1000, i32 0
   %spec.select.i.i = add nsw i32 %i.m, %i.b
   %i.n = mul nuw nsw i32 %spec.select.i.i, 1000000
+  %2 = add nsw i32 %i.k, %i.e
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.i, ptr %i.o, align 4, !alias.scope !1151
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %spec.select.i.i.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !1151
+  store i32 %2, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !1151
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.n, ptr %.sroa.5.0..sroa_idx.i, align 4, !alias.scope !1151
   br label %_RINvXNtNtNtCshmPyUV8PP35_6chrono8datetime5serde15ts_millisecondsNtB5_28MilliSecondsTimestampVisitorNtNtCs1gOyXocuPRE_10serde_core2de7Visitor9visit_i64NtNtCseqDwI8vvjGQ_10serde_json5error5ErrorECsgO8S5jLFugx_23deltalake_catalog_unity.exit

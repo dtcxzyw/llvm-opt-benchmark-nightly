@@ -205,21 +205,20 @@ bb.fp:                                            ; preds = %bb.fn
   %i.ack = zext nneg i32 %i.acf to i64
   %i.acl = add nuw nsw i64 %.sroa.01.0706, %i.ack ; 2 uses
   %i.acm = trunc nuw nsw i32 %i.acg to i8
-  %8 = zext nneg i32 %i.acg to i64                ; 2 uses
-  %notmask = shl nsw i64 -1, %8
-  %9 = xor i64 %notmask, -1
-  %i.acn = call noundef i64 @llvm.fshl.i64(i64 %i.ace, i64 %i.ace, i64 %8) ; 2 uses
+  %notmask = shl nsw i32 -1, %i.acg               ; 2 uses
+  %8 = xor i32 %notmask, -1
+  %9 = zext nneg i32 %i.acg to i64
+  %i.acn = call noundef i64 @llvm.fshl.i64(i64 %i.ace, i64 %i.ace, i64 %9) ; 2 uses
   store i64 %i.acn, ptr %i.mj, align 8
-  %10 = and i64 %i.acn, %9
-  %11 = trunc nuw nsw i64 %10 to i32              ; 2 uses
+  %10 = trunc i64 %i.acn to i32
+  %11 = and i32 %10, %8                           ; 2 uses
   %i.aco = sub i8 %i.acb, %i.acm                  ; 2 uses
   store i8 %i.aco, ptr %i.bb, align 8
   %i.acp = add nuw nsw i32 %i.acg, 31
   %i.acq = and i32 %i.acp, 31
   %.neg = shl nsw i32 -1, %i.acq
-  %i.acr = add nsw i32 %.neg, %11
-  %12 = shl nsw i32 -1, %i.acg
-  %i.acs = or disjoint i32 %12, 1
+  %i.acr = add nsw i32 %11, %.neg
+  %i.acs = or disjoint i32 %notmask, 1
   %isneg = icmp slt i32 %i.acr, 0
   %i.act = select i1 %isneg, i32 %i.acs, i32 0
   %i.acu = add nsw i32 %i.act, %11                ; 2 uses
@@ -622,21 +621,20 @@ bb.fp:                                            ; preds = %bb.fn
   %i.ack = zext nneg i32 %i.acf to i64
   %i.acl = add nuw nsw i64 %.sroa.01.0706, %i.ack ; 2 uses
   %i.acm = trunc nuw nsw i32 %i.acg to i8
-  %8 = zext nneg i32 %i.acg to i64                ; 2 uses
-  %notmask = shl nsw i64 -1, %8
-  %9 = xor i64 %notmask, -1
-  %i.acn = call noundef i64 @llvm.fshl.i64(i64 %i.ace, i64 %i.ace, i64 %8) ; 2 uses
+  %notmask = shl nsw i32 -1, %i.acg               ; 2 uses
+  %8 = xor i32 %notmask, -1
+  %9 = zext nneg i32 %i.acg to i64
+  %i.acn = call noundef i64 @llvm.fshl.i64(i64 %i.ace, i64 %i.ace, i64 %9) ; 2 uses
   store i64 %i.acn, ptr %i.mj, align 8
-  %10 = and i64 %i.acn, %9
-  %11 = trunc nuw nsw i64 %10 to i32              ; 2 uses
+  %10 = trunc i64 %i.acn to i32
+  %11 = and i32 %10, %8                           ; 2 uses
   %i.aco = sub i8 %i.acb, %i.acm                  ; 2 uses
   store i8 %i.aco, ptr %i.bb, align 8
   %i.acp = add nuw nsw i32 %i.acg, 31
   %i.acq = and i32 %i.acp, 31
   %.neg = shl nsw i32 -1, %i.acq
-  %i.acr = add nsw i32 %.neg, %11
-  %12 = shl nsw i32 -1, %i.acg
-  %i.acs = or disjoint i32 %12, 1
+  %i.acr = add nsw i32 %11, %.neg
+  %i.acs = or disjoint i32 %notmask, 1
   %isneg = icmp slt i32 %i.acr, 0
   %i.act = select i1 %isneg, i32 %i.acs, i32 0
   %i.acu = add nsw i32 %i.act, %11                ; 2 uses
@@ -1039,21 +1037,20 @@ bb.dd:                                            ; preds = %bb.db
   %i.nz = zext nneg i32 %i.nu to i64
   %i.oa = add nuw nsw i64 %.sroa.01.0, %i.nz      ; 2 uses
   %i.ob = trunc nuw nsw i32 %i.nv to i8
-  %5 = zext nneg i32 %i.nv to i64                 ; 2 uses
-  %notmask = shl nsw i64 -1, %5
-  %6 = xor i64 %notmask, -1
-  %i.oc = call noundef i64 @llvm.fshl.i64(i64 %i.nt, i64 %i.nt, i64 %5) ; 2 uses
+  %notmask = shl nsw i32 -1, %i.nv                ; 2 uses
+  %5 = xor i32 %notmask, -1
+  %6 = zext nneg i32 %i.nv to i64
+  %i.oc = call noundef i64 @llvm.fshl.i64(i64 %i.nt, i64 %i.nt, i64 %6) ; 2 uses
   store i64 %i.oc, ptr %i.aq, align 8
-  %7 = and i64 %i.oc, %6
-  %8 = trunc nuw nsw i64 %7 to i32                ; 2 uses
+  %7 = trunc i64 %i.oc to i32
+  %8 = and i32 %7, %5                             ; 2 uses
   %i.od = sub i8 %i.nq, %i.ob                     ; 2 uses
   store i8 %i.od, ptr %i.ah, align 8
   %i.oe = add nuw nsw i32 %i.nv, 31
   %i.of = and i32 %i.oe, 31
   %.neg = shl nsw i32 -1, %i.of
-  %i.og = add nsw i32 %.neg, %8
-  %9 = shl nsw i32 -1, %i.nv
-  %i.oh = or disjoint i32 %9, 1
+  %i.og = add nsw i32 %8, %.neg
+  %i.oh = or disjoint i32 %notmask, 1
   %isneg = icmp slt i32 %i.og, 0
   %i.oi = select i1 %isneg, i32 %i.oh, i32 0
   %i.oj = add nsw i32 %i.oi, %8                   ; 2 uses
@@ -1076,19 +1073,18 @@ bb.de:                                            ; preds = %bb.dc
 bb.df:                                            ; preds = %bb.dc
   %i.ot = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ou = trunc nuw nsw i32 %i.nu to i8
-  %10 = zext nneg i32 %i.nu to i64
-  %notmask66 = shl nsw i64 -1, %10
-  %11 = xor i64 %notmask66, -1
+  %notmask66 = shl nsw i32 -1, %i.nu
+  %9 = xor i32 %notmask66, -1
   %i.ov = zext nneg i32 %i.nu to i64
   %i.ow = call noundef i64 @llvm.fshl.i64(i64 %i.nt, i64 %i.nt, i64 %i.ov) ; 2 uses
   store i64 %i.ow, ptr %i.aq, align 8
-  %12 = and i64 %i.ow, %11
-  %13 = trunc nuw nsw i64 %12 to i32
+  %10 = trunc i64 %i.ow to i32
+  %11 = and i32 %10, %9
   %i.ox = sub i8 %i.nq, %i.ou
   store i8 %i.ox, ptr %i.ah, align 8
   %notmask737 = shl nsw i32 -1, %i.nu
   %i.oy = xor i32 %notmask737, -1
-  %i.oz = add nuw i32 %i.oy, %13
+  %i.oz = add nuw i32 %11, %i.oy
   store i32 %i.oz, ptr %i.ot, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w)
   br label %.loopexit330
@@ -1491,21 +1487,20 @@ bb.dd:                                            ; preds = %bb.db
   %i.nz = zext nneg i32 %i.nu to i64
   %i.oa = add nuw nsw i64 %.sroa.01.0, %i.nz      ; 2 uses
   %i.ob = trunc nuw nsw i32 %i.nv to i8
-  %5 = zext nneg i32 %i.nv to i64                 ; 2 uses
-  %notmask = shl nsw i64 -1, %5
-  %6 = xor i64 %notmask, -1
-  %i.oc = call noundef i64 @llvm.fshl.i64(i64 %i.nt, i64 %i.nt, i64 %5) ; 2 uses
+  %notmask = shl nsw i32 -1, %i.nv                ; 2 uses
+  %5 = xor i32 %notmask, -1
+  %6 = zext nneg i32 %i.nv to i64
+  %i.oc = call noundef i64 @llvm.fshl.i64(i64 %i.nt, i64 %i.nt, i64 %6) ; 2 uses
   store i64 %i.oc, ptr %i.aq, align 8
-  %7 = and i64 %i.oc, %6
-  %8 = trunc nuw nsw i64 %7 to i32                ; 2 uses
+  %7 = trunc i64 %i.oc to i32
+  %8 = and i32 %7, %5                             ; 2 uses
   %i.od = sub i8 %i.nq, %i.ob                     ; 2 uses
   store i8 %i.od, ptr %i.ah, align 8
   %i.oe = add nuw nsw i32 %i.nv, 31
   %i.of = and i32 %i.oe, 31
   %.neg = shl nsw i32 -1, %i.of
-  %i.og = add nsw i32 %.neg, %8
-  %9 = shl nsw i32 -1, %i.nv
-  %i.oh = or disjoint i32 %9, 1
+  %i.og = add nsw i32 %8, %.neg
+  %i.oh = or disjoint i32 %notmask, 1
   %isneg = icmp slt i32 %i.og, 0
   %i.oi = select i1 %isneg, i32 %i.oh, i32 0
   %i.oj = add nsw i32 %i.oi, %8                   ; 2 uses
@@ -1528,19 +1523,18 @@ bb.de:                                            ; preds = %bb.dc
 bb.df:                                            ; preds = %bb.dc
   %i.ot = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ou = trunc nuw nsw i32 %i.nu to i8
-  %10 = zext nneg i32 %i.nu to i64
-  %notmask66 = shl nsw i64 -1, %10
-  %11 = xor i64 %notmask66, -1
+  %notmask66 = shl nsw i32 -1, %i.nu
+  %9 = xor i32 %notmask66, -1
   %i.ov = zext nneg i32 %i.nu to i64
   %i.ow = call noundef i64 @llvm.fshl.i64(i64 %i.nt, i64 %i.nt, i64 %i.ov) ; 2 uses
   store i64 %i.ow, ptr %i.aq, align 8
-  %12 = and i64 %i.ow, %11
-  %13 = trunc nuw nsw i64 %12 to i32
+  %10 = trunc i64 %i.ow to i32
+  %11 = and i32 %10, %9
   %i.ox = sub i8 %i.nq, %i.ou
   store i8 %i.ox, ptr %i.ah, align 8
   %notmask737 = shl nsw i32 -1, %i.nu
   %i.oy = xor i32 %notmask737, -1
-  %i.oz = add nuw i32 %i.oy, %13
+  %i.oz = add nuw i32 %11, %i.oy
   store i32 %i.oz, ptr %i.ot, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w)
   br label %.loopexit330
@@ -1943,17 +1937,16 @@ bb.ch:                                            ; preds = %bb.cg
 bb.ci:                                            ; preds = %bb.ch
   %i.pp = shl nuw i32 1, %i.pi
   %i.pq = trunc nuw nsw i32 %i.pi to i8
-  %5 = zext nneg i32 %i.pi to i64
-  %notmask = shl nsw i64 -1, %5
-  %6 = xor i64 %notmask, -1
+  %notmask = shl nsw i32 -1, %i.pi
+  %5 = xor i32 %notmask, -1
   %i.pr = zext nneg i32 %i.pi to i64
   %i.ps = call noundef i64 @llvm.fshl.i64(i64 %i.ph, i64 %i.ph, i64 %i.pr) ; 2 uses
   store i64 %i.ps, ptr %i.cr, align 8
-  %7 = and i64 %i.ps, %6
-  %8 = trunc nuw nsw i64 %7 to i32
+  %6 = trunc i64 %i.ps to i32
+  %7 = and i32 %6, %5
   %i.pt = sub i8 %i.pe, %i.pq
   store i8 %i.pt, ptr %i.ci, align 8
-  %i.pu = add nuw i32 %i.pp, %8                   ; 2 uses
+  %i.pu = add nuw i32 %i.pp, %7                   ; 2 uses
   store i32 %i.pu, ptr %i.cf, align 8
   br label %.loopexit1369
 
@@ -2356,17 +2349,16 @@ bb.ch:                                            ; preds = %bb.cg
 bb.ci:                                            ; preds = %bb.ch
   %i.pp = shl nuw i32 1, %i.pi
   %i.pq = trunc nuw nsw i32 %i.pi to i8
-  %5 = zext nneg i32 %i.pi to i64
-  %notmask = shl nsw i64 -1, %5
-  %6 = xor i64 %notmask, -1
+  %notmask = shl nsw i32 -1, %i.pi
+  %5 = xor i32 %notmask, -1
   %i.pr = zext nneg i32 %i.pi to i64
   %i.ps = call noundef i64 @llvm.fshl.i64(i64 %i.ph, i64 %i.ph, i64 %i.pr) ; 2 uses
   store i64 %i.ps, ptr %i.cr, align 8
-  %7 = and i64 %i.ps, %6
-  %8 = trunc nuw nsw i64 %7 to i32
+  %6 = trunc i64 %i.ps to i32
+  %7 = and i32 %6, %5
   %i.pt = sub i8 %i.pe, %i.pq
   store i8 %i.pt, ptr %i.ci, align 8
-  %i.pu = add nuw i32 %i.pp, %8                   ; 2 uses
+  %i.pu = add nuw i32 %i.pp, %7                   ; 2 uses
   store i32 %i.pu, ptr %i.cf, align 8
   br label %.loopexit1369
 

@@ -205,16 +205,14 @@ _ZN4mlir10presburger15PresburgerSpaceC2ERKS1_.exit: ; preds = %._crit_edge521, %
   call void @_ZN4mlir10presburger15PresburgerSpace14removeVarRangeENS0_7VarKindEjj(ptr noundef nonnull align 8 dereferenceable(40) %97, i32 noundef %i.ay, i32 noundef %i.ba, i32 noundef %i.bb) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %98) #17
   %i.bc = load i32, ptr %i.y, align 8, !tbaa !42
-  %114 = zext i32 %i.bc to i64
   %i.bd = load i32, ptr %i.ab, align 8, !tbaa !42
-  %115 = zext i32 %i.bd to i64
-  %116 = mul nuw i64 %115, %114
+  %114 = mul i32 %i.bd, %i.bc
   %i.be = ptrtoint ptr %.sroa.11.0.lcssa to i64
   %i.bf = ptrtoint ptr %.sroa.0439.0.lcssa to i64 ; 2 uses
   %i.bg = sub i64 %i.be, %i.bf
   %i.bh = lshr exact i64 %i.bg, 2
-  %117 = add i64 %116, %i.bh
-  %118 = trunc i64 %117 to i32
+  %115 = trunc i64 %i.bh to i32
+  %116 = add i32 %114, %115
   %i.bi = load i32, ptr %i.c, align 8, !tbaa !69
   %i.bj = load i32, ptr %i.al, align 8, !tbaa !58
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
@@ -268,7 +266,7 @@ _ZN4mlir10presburger15IntegerRelationC2EjjjRKNS0_15PresburgerSpaceE.exit: ; pred
   %i.ch = load <4 x i32>, ptr %97, align 16, !tbaa !48
   %i.ci = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.ch)
   %op.rdx933 = add i32 %i.ci, 1
-  call void @_ZN4mlir10presburger6MatrixIN4llvm12DynamicAPIntEEC2Ejjjj(ptr noundef nonnull align 8 dereferenceable(288) %i.cg, i32 noundef 0, i32 noundef %op.rdx933, i32 noundef %118, i32 noundef %i.bs) #17, !inline_history !86
+  call void @_ZN4mlir10presburger6MatrixIN4llvm12DynamicAPIntEEC2Ejjjj(ptr noundef nonnull align 8 dereferenceable(288) %i.cg, i32 noundef 0, i32 noundef %op.rdx933, i32 noundef %116, i32 noundef %i.bs) #17, !inline_history !86
   %i.cj = load ptr, ptr %96, align 8, !tbaa !41   ; 2 uses
   %i.ck = load i32, ptr %i.ab, align 8, !tbaa !42 ; 2 uses
   %i.cl = zext i32 %i.ck to i64

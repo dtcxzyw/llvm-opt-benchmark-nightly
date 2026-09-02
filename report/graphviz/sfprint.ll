@@ -204,16 +204,15 @@ bb.hj:                                            ; preds = %bb.hi, %.thread1095
   %i.ww = ptrtoint ptr %.188201109 to i64
   %i.wx = ptrtoint ptr %.37661114 to i64
   %i.wy = ptrtoint ptr %.177841112 to i64
-  %3 = call i32 @llvm.smax.i32(i32 %.147541116, i32 0)
-  %4 = zext nneg i32 %3 to i64
-  %.neg1330 = sext i1 %.not994 to i64
-  %5 = add i64 %4, %i.wx
-  %6 = add i64 %5, %i.wv
-  %7 = add i64 %i.wy, %i.ww
-  %.neg1329 = sub i64 %7, %6
-  %.neg1331 = add i64 %.neg1329, %.neg1330
-  %.neg1332 = trunc i64 %.neg1331 to i32
-  %i.wz = add i32 %i.gh, %.neg1332                ; 5 uses
+  %3 = add i64 %i.wx, %i.wv
+  %4 = add i64 %i.wy, %i.ww
+  %.neg1325 = sub i64 %4, %3
+  %5 = call i32 @llvm.smax.i32(i32 %.147541116, i32 0)
+  %.neg1327 = sext i1 %.not994 to i32
+  %.neg1326 = trunc i64 %.neg1325 to i32
+  %.neg1138 = sub i32 %i.gh, %5
+  %.neg1140 = add i32 %.neg1138, %.neg1326
+  %i.wz = add i32 %.neg1140, %.neg1327            ; 5 uses
   %i.xa = icmp slt i32 %i.wz, 1
   br i1 %i.xa, label %bb.hp, label %bb.hk
 

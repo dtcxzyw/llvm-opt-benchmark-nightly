@@ -204,11 +204,10 @@ bb.j:                                             ; preds = %bb.i
   %i.am = icmp eq i32 %i.al, 2
   %i.an = load i64, ptr %i.af, align 8
   %i.ao = lshr i64 %i.an, 32
-  %3 = and i64 %i.ao, 67108863
-  %4 = sext i1 %i.am to i64
-  %5 = add nsw i64 %3, %4
-  %6 = trunc nsw i64 %5 to i32
-  %i.ap = add nsw i32 %6, -1
+  %3 = trunc nuw i64 %i.ao to i32
+  %4 = and i32 %3, 67108863
+  %5 = select i1 %i.am, i32 -2, i32 -1
+  %i.ap = add nsw i32 %5, %4
   %i.aq = icmp slt i32 %storemerge, %i.ap
   br i1 %i.aq, label %bb.q, label %bb.k
 

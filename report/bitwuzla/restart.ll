@@ -202,9 +202,9 @@ bb.a:
   %i.l = getelementptr i8, ptr %i.k, i64 16
   %i.m = load i32, ptr %i.l, align 4, !tbaa !182
   %.not = icmp eq i32 %i.m, 0
-  %1 = zext i1 %.not to i64
-  %2 = add nsw i64 %i.h, %1                       ; 3 uses
-  %3 = trunc i64 %2 to i32                        ; 6 uses
+  %1 = zext i1 %.not to i32
+  %2 = trunc i64 %i.h to i32
+  %3 = add i32 %2, %1                             ; 8 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 3684
   %i.o = load i32, ptr %i.n, align 4, !tbaa !183
   %.not29 = icmp eq i32 %i.o, 0
@@ -224,15 +224,14 @@ bb.b:                                             ; preds = %bb.a
 .preheader:                                       ; preds = %bb.b
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 324
   %i.x = load i32, ptr %i.w, align 4, !tbaa !162  ; 3 uses
-  %4 = icmp sgt i32 %i.x, %3
+  %4 = icmp slt i32 %3, %i.x
   br i1 %4, label %.lr.ph42, label %.thread
 
 .lr.ph42:                                         ; preds = %.preheader
   %i.y = load ptr, ptr %i.i, align 8, !tbaa !179
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 688
   %i.aa = zext i32 %i.p to i64
-  %sext59 = shl i64 %2, 32
-  %5 = ashr exact i64 %sext59, 32
+  %5 = sext i32 %3 to i64
   %wide.trip.count52 = sext i32 %i.x to i64
   br label %bb.c
 
@@ -272,13 +271,12 @@ bb.f:                                             ; preds = %bb.b
   %i.as = load i64, ptr %i.ar, align 8, !tbaa !166
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 324
   %i.au = load i32, ptr %i.at, align 4, !tbaa !162 ; 3 uses
-  %6 = icmp sgt i32 %i.au, %3
+  %6 = icmp slt i32 %3, %i.au
   br i1 %6, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %bb.f
   %i.av = load ptr, ptr %i.i, align 8, !tbaa !179
-  %sext = shl i64 %2, 32
-  %7 = ashr exact i64 %sext, 32
+  %7 = sext i32 %3 to i64
   %wide.trip.count = sext i32 %i.au to i64
   br label %bb.g
 

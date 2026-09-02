@@ -204,7 +204,7 @@ _ZL7getLinkDs.exit238:                            ; preds = %bb.ad, %switch.look
   %.3182 = phi i32 [ %.1180282, %._crit_edge ], [ %.0177283, %switch.lookup ], [ %.1180282, %bb.ad ] ; 11 uses
   %.1168 = phi i32 [ %.0167286, %._crit_edge ], [ 1, %switch.lookup ], [ 1, %bb.ad ] ; 6 uses
   %.1154 = phi i16 [ %.0153293, %._crit_edge ], [ %.0157291, %switch.lookup ], [ %.0157291, %bb.ad ] ; 7 uses
-  %.1150 = phi i16 [ %.0149294, %._crit_edge ], [ %i.df, %switch.lookup ], [ 0, %bb.ad ] ; 7 uses
+  %.1150 = phi i16 [ %.0149294, %._crit_edge ], [ %i.df, %switch.lookup ], [ 0, %bb.ad ] ; 8 uses
   %i.dg = icmp sgt i32 %.3182, 0
   br i1 %i.dg, label %bb.ae, label %bb.ah
 
@@ -339,35 +339,36 @@ bb.at:                                            ; preds = %.thread337, %bb.ar
   %i.fe = getelementptr i8, ptr @_ZL13IrrelevantPos, i64 %i.fd
   %i.ff = getelementptr i8, ptr %i.fe, i64 -1611
   %i.fg = load i8, ptr %i.ff, align 1, !tbaa !19
-  %6 = zext i8 %i.fg to i32
-  %7 = add nuw nsw i32 %.0170333336341, 65136
-  %8 = add nuw nsw i32 %7, %6
-  %9 = trunc i32 %8 to i16
+  %6 = zext i8 %i.fg to i16
+  %7 = trunc nuw nsw i32 %.0170333336341 to i16
+  %8 = add nuw nsw i16 %7, -400
+  %9 = add nsw i16 %8, %6
   store i16 %9, ptr %i.fb, align 2, !tbaa !14
   br label %_ZL7getLinkDs.exit225.thread
 
 bb.au:                                            ; preds = %bb.aq
   %i.fh = and i32 %i.eb, 8
   %.not205 = icmp eq i32 %i.fh, 0
-  %10 = lshr i32 %i.eb, 8                         ; 3 uses
   br i1 %.not205, label %bb.aw, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  %11 = add nuw nsw i32 %10, 64336
-  %12 = add nuw nsw i32 %11, %.0170
-  %i.fi = trunc nuw i32 %12 to i16
-  store i16 %i.fi, ptr %i.ew, align 2, !tbaa !14
+  %10 = lshr i16 %.1150, 8
+  %11 = add nuw nsw i16 %10, -1200
+  %i.fi = trunc nuw nsw i32 %.0170 to i16
+  %12 = add nuw nsw i16 %11, %i.fi
+  store i16 %12, ptr %i.ew, align 2, !tbaa !14
   br label %_ZL7getLinkDs.exit225.thread
 
 bb.aw:                                            ; preds = %bb.au
-  %.not206 = icmp ne i32 %10, 0
+  %13 = lshr i32 %i.eb, 8                         ; 2 uses
+  %.not206 = icmp ne i32 %13, 0
   %i.fj = and i32 %i.eb, 4
   %i.fk = icmp eq i32 %i.fj, 0
   %or.cond216 = and i1 %.not206, %i.fk
   br i1 %or.cond216, label %bb.ax, label %_ZL7getLinkDs.exit225.thread
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.fl = add nuw nsw i32 %10, 65136
+  %i.fl = add nuw nsw i32 %13, 65136
   %i.fm = add nuw nsw i32 %i.fl, %.0170
   %i.fn = trunc i32 %i.fm to i16
   store i16 %i.fn, ptr %i.ew, align 2, !tbaa !14

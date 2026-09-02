@@ -202,13 +202,11 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %.val60 = load i32, ptr %1, align 4
-  %i.f = add i32 %.val60, -16
-  %4 = zext i32 %i.f to i64
-  %5 = add nuw nsw i64 %4, 20
+  %i.f = add i32 %.val60, 23
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
-  %.049 = phi i64 [ %5, %bb.c ], [ 20, %bb.b ], [ 20, %bb.a ]
+  %.049 = phi i32 [ %i.f, %bb.c ], [ 39, %bb.b ], [ 39, %bb.a ]
   %.0 = phi i32 [ 0, %bb.c ], [ 256, %bb.b ], [ 256, %bb.a ] ; 2 uses
   %.not.i = icmp eq ptr %3, null
   br i1 %.not.i, label %netlink_ack_tlv_len.exit, label %bb.e
@@ -281,9 +279,8 @@ netlink_ack_tlv_len.exit:                         ; preds = %bb.d, %bb.e, %bb.h,
   %.not52 = icmp eq i64 %.027.i, 0                ; 2 uses
   %i.ai = or disjoint i32 %.0, 512
   %spec.select = select i1 %.not52, i32 %.0, i32 %i.ai ; 2 uses
-  %6 = add nsw i64 %.027.i, %.049
-  %i.aj = trunc i64 %6 to i32
-  %i.ak = add i32 %i.aj, 19
+  %i.aj = trunc i64 %.027.i to i32
+  %i.ak = add i32 %.049, %i.aj
   %i.al = and i32 %i.ak, -4
   %i.am = tail call ptr @__alloc_skb(i32 noundef %i.al, i32 noundef 3264, i32 noundef 0, i32 noundef -1) #21 ; 12 uses
   %.not53 = icmp eq ptr %i.am, null

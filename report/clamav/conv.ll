@@ -114,29 +114,24 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 %.016.i39
   %i.v = load i8, ptr %i.u, align 1, !tbaa !8
   %i.w = icmp eq i8 %i.v, 61
-  br i1 %i.w, label %bb.m, label %.critedge.loopexit.i41
+  br i1 %i.w, label %bb.m, label %.critedge.i43
 
 bb.m:                                             ; preds = %.lr.ph.i38
   %i.x = add nuw nsw i32 %.0915.i40, 1
   %.0.i46 = add i64 %.016.i39, -1                 ; 2 uses
   %.not12.i47 = icmp eq i64 %.0.i46, 0
-  br i1 %.not12.i47, label %.critedge.loopexit.i41, label %.lr.ph.i38
+  br i1 %.not12.i47, label %.critedge.i43, label %.lr.ph.i38
 
-.critedge.loopexit.i41:                           ; preds = %bb.m, %.lr.ph.i38
-  %.09.lcssa.ph.i42 = phi i32 [ %.0915.i40, %.lr.ph.i38 ], [ %i.t, %bb.m ]
-  %5 = zext nneg i32 %.09.lcssa.ph.i42 to i64
-  br label %.critedge.i43
-
-.critedge.i43:                                    ; preds = %.critedge.loopexit.i41, %.preheader.i34
-  %.09.lcssa.i44 = phi i64 [ 0, %.preheader.i34 ], [ %5, %.critedge.loopexit.i41 ]
+.critedge.i43:                                    ; preds = %.lr.ph.i38, %bb.m, %.preheader.i34
+  %.09.lcssa.i44 = phi i32 [ 0, %.preheader.i34 ], [ %i.t, %bb.m ], [ %.0915.i40, %.lr.ph.i38 ]
   %i.y = mul i64 %1, 3
   %i.z = lshr i64 %i.y, 2
-  %6 = sub nsw i64 %i.z, %.09.lcssa.i44
-  %7 = trunc i64 %6 to i32
+  %5 = trunc i64 %i.z to i32
+  %6 = sub i32 %5, %.09.lcssa.i44
   br label %base64_len.exit48
 
 base64_len.exit48:                                ; preds = %bb.l, %.critedge.i43
-  %.010.i45 = phi i32 [ %7, %.critedge.i43 ], [ 0, %bb.l ]
+  %.010.i45 = phi i32 [ %6, %.critedge.i43 ], [ 0, %bb.l ]
   %i.aa = tail call i32 @BIO_read(ptr noundef %i.s, ptr noundef nonnull %i.m, i32 noundef %.010.i45) #6
   %i.ab = sext i32 %i.aa to i64
   store i64 %i.ab, ptr %3, align 8, !tbaa !10

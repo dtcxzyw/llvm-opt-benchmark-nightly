@@ -205,17 +205,15 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %.loop
   br i1 %.not188, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %._crit_edge
-  %1 = sext i32 %.pre394 to i64
-  %2 = lshr i64 %1, 2
   %i.fj = and i32 %.pre394, 3
   %i.fk = icmp ne i32 %i.fj, 0
-  %3 = zext i1 %i.fk to i64
-  %4 = add nuw nsw i64 %2, %3
-  %5 = trunc i64 %4 to i32
+  %1 = zext i1 %i.fk to i32
+  %2 = ashr i32 %.pre394, 2
+  %3 = add nsw i32 %2, %1
   br label %bb.r
 
 bb.r:                                             ; preds = %._crit_edge, %bb.q
-  %i.fl = phi i32 [ %5, %bb.q ], [ 0, %._crit_edge ] ; 2 uses
+  %i.fl = phi i32 [ %3, %bb.q ], [ 0, %._crit_edge ] ; 2 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %calloc417, i64 716
   store i32 %i.fl, ptr %i.fm, align 4, !tbaa !145
   %i.fn = add nsw i32 %.pre394, %i.fl

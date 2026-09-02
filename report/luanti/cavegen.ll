@@ -202,7 +202,7 @@ _Z8rangelimIsiiET_RKS0_RKT0_RKT1_.exit125.thread: ; preds = %_Z8rangelimIsiiET_R
 bb.k:                                             ; preds = %_Z8rangelimIsiiET_RKS0_RKT0_RKT1_.exit
   %i.fm = sext i16 %i.dv to i32
   %i.fn = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.fo = load i32, ptr %i.fn, align 4, !tbaa !124 ; 4 uses
+  %i.fo = load i32, ptr %i.fn, align 4, !tbaa !124 ; 3 uses
   %i.fp = icmp sgt i32 %i.fo, %i.fm
   %i.fq = sext i16 %i.dt to i32
   %i.fr = icmp slt i32 %i.fo, %i.fq
@@ -211,20 +211,17 @@ bb.k:                                             ; preds = %_Z8rangelimIsiiET_R
 
 bb.l:                                             ; preds = %bb.k
   %i.fs = sdiv i16 %narrow180.sink, 3             ; 2 uses
-  %8 = zext i16 %i.fs to i32
-  %9 = zext i16 %i.eq to i32
-  %10 = add nuw nsw i32 %9, %8
-  %11 = sub nsw i32 %i.fo, %10
-  %12 = trunc nsw i32 %i.fo to i16
+  %8 = trunc nsw i32 %i.fo to i16                 ; 2 uses
+  %9 = add i16 %i.eq, %i.fs
+  %10 = sub i16 %8, %9
   %i.ft = sub i16 %i.fs, %i.eq
-  %i.fu = add i16 %i.ft, %12
+  %i.fu = add i16 %i.ft, %8
   store i16 %i.fu, ptr %i.fa, align 2, !tbaa !149
-  %sext = shl i32 %11, 16
-  %13 = ashr exact i32 %sext, 16
+  %11 = sext i16 %10 to i32
   br label %_Z8rangelimIsiiET_RKS0_RKT0_RKT1_.exit125
 
 _Z8rangelimIsiiET_RKS0_RKT0_RKT1_.exit125:        ; preds = %bb.k, %bb.l
-  %.048 = phi i32 [ %13, %bb.l ], [ 0, %bb.k ]    ; 2 uses
+  %.048 = phi i32 [ %11, %bb.l ], [ 0, %bb.k ]    ; 2 uses
   %i.fv = sext i16 %narrow180.sink to i32
   %i.fw = add nsw i32 %.048, %i.fv
   %i.fx = tail call noundef i32 @_ZN12PseudoRandom5rangeEii(ptr noundef nonnull align 4 dereferenceable(4) %4, i32 noundef %.048, i32 noundef %i.fw) ; 2 uses
@@ -627,7 +624,7 @@ _Z8rangelimIsiiET_RKS0_RKT0_RKT1_.exit94.thread:  ; preds = %_Z8rangelimIsiiET_R
 bb.f:                                             ; preds = %_Z8rangelimIsiiET_RKS0_RKT0_RKT1_.exit
   %i.dk = sext i16 %i.br to i32
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 52
-  %i.dm = load i32, ptr %i.dl, align 4, !tbaa !160 ; 4 uses
+  %i.dm = load i32, ptr %i.dl, align 4, !tbaa !160 ; 3 uses
   %i.dn = icmp sgt i32 %i.dm, %i.dk
   %i.do = sext i16 %i.bq to i32
   %i.dp = icmp slt i32 %i.dm, %i.do
@@ -636,20 +633,17 @@ bb.f:                                             ; preds = %_Z8rangelimIsiiET_R
 
 bb.g:                                             ; preds = %bb.f
   %i.dq = sdiv i16 %i.be, 3                       ; 2 uses
-  %9 = zext i16 %i.dq to i32
-  %10 = zext i16 %i.cs to i32
-  %11 = add nuw nsw i32 %10, %9
-  %12 = sub nsw i32 %i.dm, %11
-  %13 = trunc nsw i32 %i.dm to i16
+  %9 = trunc nsw i32 %i.dm to i16                 ; 2 uses
+  %10 = add i16 %i.cs, %i.dq
+  %11 = sub i16 %9, %10
   %i.dr = sub i16 %i.dq, %i.cs
-  %i.ds = add i16 %i.dr, %13
+  %i.ds = add i16 %i.dr, %9
   store i16 %i.ds, ptr %i.cy, align 2, !tbaa !174
-  %sext = shl i32 %12, 16
-  %14 = ashr exact i32 %sext, 16
+  %12 = sext i16 %11 to i32
   br label %_Z8rangelimIsiiET_RKS0_RKT0_RKT1_.exit94
 
 _Z8rangelimIsiiET_RKS0_RKT0_RKT1_.exit94:         ; preds = %bb.f, %bb.g
-  %.041 = phi i32 [ %14, %bb.g ], [ 0, %bb.f ]    ; 2 uses
+  %.041 = phi i32 [ %12, %bb.g ], [ 0, %bb.f ]    ; 2 uses
   %i.dt = sext i16 %i.be to i32
   %i.du = add nsw i32 %.041, %i.dt
   %i.dv = tail call noundef i32 @_ZN12PseudoRandom5rangeEii(ptr noundef nonnull align 4 dereferenceable(4) %4, i32 noundef %.041, i32 noundef %i.du) ; 2 uses

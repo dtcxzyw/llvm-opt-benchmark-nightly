@@ -205,15 +205,15 @@ bb.z:                                             ; preds = %bb.y
   br label %.critedge298
 
 bb.aa:                                            ; preds = %bb.y
-  %i.gw = zext nneg i32 %.1272337 to i64          ; 3 uses
+  %i.gw = zext nneg i32 %.1272337 to i64          ; 2 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.gw ; 6 uses
   %i.gy = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.gw ; 4 uses
   %i.gz = load ptr, ptr %i.ck, align 8, !tbaa !100
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gx, i64 10 ; 2 uses
   %i.hb = load i16, ptr %i.ha, align 2, !tbaa !21
   %i.hc = tail call noundef zeroext i16 %i.gz(i16 noundef zeroext %i.hb)
-  %i.hd = zext i16 %i.hc to i32
-  %i.he = add nuw i32 %.1272337, %i.hd            ; 4 uses
+  %i.hd = zext i16 %i.hc to i32                   ; 2 uses
+  %i.he = add nuw i32 %.1272337, %i.hd            ; 2 uses
   %i.hf = load ptr, ptr %i.cf, align 8, !tbaa !101
   %i.hg = tail call noundef i32 %i.hf(ptr noundef nonnull %0, ptr noundef nonnull %i.gx, i32 noundef 8, ptr noundef %i.gy, ptr noundef nonnull %4) ; 0 uses
   %i.hh = load ptr, ptr %i.co, align 8, !tbaa !102
@@ -254,14 +254,13 @@ bb.ad:                                            ; preds = %bb.aa
   %.idx = shl nuw nsw i64 %i.ic, 1                ; 2 uses
   %i.id = getelementptr inbounds nuw i8, ptr %i.hx, i64 %.idx ; 2 uses
   %i.ie = getelementptr inbounds nuw [2 x i8], ptr %i.hy, i64 %i.ic
-  %5 = add nuw nsw i64 %i.gw, 12
-  %6 = add nuw nsw i64 %5, %.idx
-  %7 = trunc nuw i64 %6 to i32                    ; 2 uses
-  %.not292419 = icmp eq i32 %i.he, %7
+  %5 = trunc nuw nsw i64 %.idx to i32             ; 2 uses
+  %.neg306 = add nsw i32 %i.hd, -12               ; 2 uses
+  %.not292419 = icmp eq i32 %.neg306, %5
   br i1 %.not292419, label %.critedge, label %.lr.ph422
 
 .lr.ph422:                                        ; preds = %bb.ad
-  %i.if = sub i32 %i.he, %7
+  %i.if = sub nsw i32 %.neg306, %5
   %i.ig = zext i32 %i.if to i64
   br label %bb.af
 

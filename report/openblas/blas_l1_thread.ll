@@ -80,12 +80,12 @@ bb.g:                                             ; preds = %bb.a, %bb.f, %bb.e,
   %i.r = and i32 %i.q, 32768
   %i.s = xor i32 %i.r, 32768
   %spec.select = or i32 %i.s, %0
-  %15 = sext i32 %12 to i64                       ; 3 uses
+  %15 = zext i32 %12 to i64                       ; 2 uses
   %i.t = icmp sgt i32 %12, 0
   br i1 %i.t, label %.lr.ph.preheader, label %.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.g
-  %xtraiter = and i64 %15, 7
+  %xtraiter = and i64 %15, 7                      ; 3 uses
   %i.u = icmp ult i32 %12, 8
   br i1 %i.u, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -94,14 +94,12 @@ bb.g:                                             ; preds = %bb.a, %bb.f, %bb.e,
   br label %.lr.ph
 
 .preheader.loopexit.unr-lcssa:                    ; preds = %.lr.ph
-  %16 = and i32 %12, 7
-  %lcmp.mod.not = icmp eq i32 %16, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.preheader, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %.preheader.loopexit.unr-lcssa, %.lr.ph.preheader
   %.07890.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.at, %.preheader.loopexit.unr-lcssa ]
-  %17 = and i32 %12, 7
-  %lcmp.mod103 = icmp ne i32 %17, 0
+  %lcmp.mod103 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod103)
   br label %.lr.ph.epil
 
@@ -165,10 +163,11 @@ bb.h:                                             ; preds = %.lr.ph95, %blas_qui
   %.193 = phi i64 [ %1, %.lr.ph95 ], [ %i.bd, %blas_quickdivide.exit ] ; 3 uses
   %.08092 = phi ptr [ %5, %.lr.ph95 ], [ %i.bz, %blas_quickdivide.exit ] ; 2 uses
   %.08191 = phi ptr [ %7, %.lr.ph95 ], [ %i.cc, %blas_quickdivide.exit ] ; 2 uses
-  %18 = add nsw i64 %.193, %15
-  %19 = xor i64 %indvars.iv, -1
-  %20 = add i64 %18, %19
-  %21 = trunc i64 %20 to i32                      ; 2 uses
+  %16 = trunc nuw nsw i64 %indvars.iv to i32
+  %17 = xor i32 %16, -1
+  %18 = trunc i64 %.193 to i32
+  %19 = add i32 %12, %18
+  %20 = add i32 %19, %17                          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.au = trunc i64 %indvars.iv to i32
   %i.av = sub i32 %12, %i.au                      ; 2 uses
@@ -179,14 +178,14 @@ bb.i:                                             ; preds = %bb.h
   %i.ax = zext i32 %i.av to i64
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr @blas_quick_divide_table, i64 %i.ax
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !10
-  %i.ba = call { i32, i32 } asm sideeffect "mull $0", "={dx},={ax},0,1,~{cc},~{dirflag},~{fpsr},~{flags}"(i32 %i.az, i32 %21) #5, !srcloc !11
+  %i.ba = call { i32, i32 } asm sideeffect "mull $0", "={dx},={ax},0,1,~{cc},~{dirflag},~{fpsr},~{flags}"(i32 %i.az, i32 %20) #5, !srcloc !11
   %i.bb = extractvalue { i32, i32 } %i.ba, 0
   store volatile i32 %i.bb, ptr %i.a, align 4, !tbaa !10
   %.0..0..0..0..0..0..i = load volatile i32, ptr %i.a, align 4, !tbaa !10
   br label %blas_quickdivide.exit
 
 blas_quickdivide.exit:                            ; preds = %bb.h, %bb.i
-  %.0.i = phi i32 [ %.0..0..0..0..0..0..i, %bb.i ], [ %21, %bb.h ]
+  %.0.i = phi i32 [ %.0..0..0..0..0..0..i, %bb.i ], [ %20, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.bc = zext i32 %.0.i to i64                   ; 2 uses
   %i.bd = sub nsw i64 %.193, %i.bc                ; 3 uses
@@ -315,12 +314,12 @@ bb.g:                                             ; preds = %bb.a, %bb.f, %bb.e,
   %.074 = phi i32 [ %i.o, %bb.f ], [ %i.d, %bb.b ], [ %i.f, %bb.c ], [ %i.i, %bb.d ], [ %i.l, %bb.e ], [ 0, %bb.a ]
   %.0 = phi i32 [ %i.p, %bb.f ], [ %i.d, %bb.b ], [ %i.g, %bb.c ], [ %i.j, %bb.d ], [ %i.m, %bb.e ], [ 0, %bb.a ]
   %i.q = or i32 %0, 32768
-  %15 = sext i32 %12 to i64                       ; 3 uses
+  %15 = zext i32 %12 to i64                       ; 2 uses
   %i.r = icmp sgt i32 %12, 0
   br i1 %i.r, label %.lr.ph.preheader, label %.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.g
-  %xtraiter = and i64 %15, 7
+  %xtraiter = and i64 %15, 7                      ; 3 uses
   %i.s = icmp ult i32 %12, 8
   br i1 %i.s, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -329,14 +328,12 @@ bb.g:                                             ; preds = %bb.a, %bb.f, %bb.e,
   br label %.lr.ph
 
 .preheader.loopexit.unr-lcssa:                    ; preds = %.lr.ph
-  %16 = and i32 %12, 7
-  %lcmp.mod.not = icmp eq i32 %16, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.preheader, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %.preheader.loopexit.unr-lcssa, %.lr.ph.preheader
   %.07887.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.ar, %.preheader.loopexit.unr-lcssa ]
-  %17 = and i32 %12, 7
-  %lcmp.mod100 = icmp ne i32 %17, 0
+  %lcmp.mod100 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod100)
   br label %.lr.ph.epil
 
@@ -400,10 +397,11 @@ bb.h:                                             ; preds = %.lr.ph92, %blas_qui
   %.190 = phi i64 [ %1, %.lr.ph92 ], [ %i.bb, %blas_quickdivide.exit ] ; 3 uses
   %.07989 = phi ptr [ %5, %.lr.ph92 ], [ %i.bz, %blas_quickdivide.exit ] ; 2 uses
   %.08088 = phi ptr [ %7, %.lr.ph92 ], [ %i.cc, %blas_quickdivide.exit ] ; 2 uses
-  %18 = add nsw i64 %.190, %15
-  %19 = xor i64 %indvars.iv, -1
-  %20 = add i64 %18, %19
-  %21 = trunc i64 %20 to i32                      ; 2 uses
+  %16 = trunc nuw nsw i64 %indvars.iv to i32
+  %17 = xor i32 %16, -1
+  %18 = trunc i64 %.190 to i32
+  %19 = add i32 %12, %18
+  %20 = add i32 %19, %17                          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.as = trunc i64 %indvars.iv to i32
   %i.at = sub i32 %12, %i.as                      ; 2 uses
@@ -414,14 +412,14 @@ bb.i:                                             ; preds = %bb.h
   %i.av = zext i32 %i.at to i64
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr @blas_quick_divide_table, i64 %i.av
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !10
-  %i.ay = call { i32, i32 } asm sideeffect "mull $0", "={dx},={ax},0,1,~{cc},~{dirflag},~{fpsr},~{flags}"(i32 %i.ax, i32 %21) #5, !srcloc !11
+  %i.ay = call { i32, i32 } asm sideeffect "mull $0", "={dx},={ax},0,1,~{cc},~{dirflag},~{fpsr},~{flags}"(i32 %i.ax, i32 %20) #5, !srcloc !11
   %i.az = extractvalue { i32, i32 } %i.ay, 0
   store volatile i32 %i.az, ptr %i.a, align 4, !tbaa !10
   %.0..0..0..0..0..0..i = load volatile i32, ptr %i.a, align 4, !tbaa !10
   br label %blas_quickdivide.exit
 
 blas_quickdivide.exit:                            ; preds = %bb.h, %bb.i
-  %.0.i = phi i32 [ %.0..0..0..0..0..0..i, %bb.i ], [ %21, %bb.h ]
+  %.0.i = phi i32 [ %.0..0..0..0..0..0..i, %bb.i ], [ %20, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.ba = zext i32 %.0.i to i64                   ; 2 uses
   %i.bb = sub nsw i64 %.190, %i.ba                ; 3 uses

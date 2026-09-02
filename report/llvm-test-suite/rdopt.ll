@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %bb.t, %bb.u, %.preh
   %.sroa.8.3 = phi i64 [ %.sroa.8.0, %bb.r ], [ %.sroa.8.0, %bb.s ], [ %.sroa.8.0, %bb.w ], [ %.sroa.8.0, %.preheader245 ], [ %.sroa.8.2, %.loopexit247 ], [ %.sroa.8.0, %bb.t ], [ %.sroa.8.0, %bb.u ] ; 2 uses
   %.sroa.5.3 = phi i64 [ %.sroa.5.0, %bb.r ], [ %.sroa.5.0, %bb.s ], [ %.sroa.5.0, %bb.w ], [ %.sroa.5.0, %.preheader245 ], [ %.sroa.5.2, %.loopexit247 ], [ %.sroa.5.0, %bb.t ], [ %.sroa.5.0, %bb.u ] ; 2 uses
   %.sroa.0.3 = phi i64 [ %.sroa.0.0, %bb.r ], [ %.sroa.0.0, %bb.s ], [ %.sroa.0.0, %bb.w ], [ %.sroa.0.0, %.preheader245 ], [ %.sroa.0.2, %.loopexit247 ], [ %.sroa.0.0, %bb.t ], [ %.sroa.0.0, %bb.u ] ; 2 uses
-  %.3218 = phi i32 [ %.0215261, %bb.r ], [ %.0215261, %bb.s ], [ %i.ju, %bb.w ], [ %.0215261, %.preheader245 ], [ %.1216, %.loopexit247 ], [ %.0215261, %bb.t ], [ %.0215261, %bb.u ] ; 7 uses
+  %.3218 = phi i32 [ %.0215261, %bb.r ], [ %.0215261, %bb.s ], [ %i.ju, %bb.w ], [ %.0215261, %.preheader245 ], [ %.1216, %.loopexit247 ], [ %.0215261, %bb.t ], [ %.0215261, %bb.u ] ; 6 uses
   %.3202 = phi i32 [ %.0199262, %bb.r ], [ %.0199262, %bb.s ], [ %.0199262, %bb.w ], [ %.0199262, %.preheader245 ], [ %.1200, %.loopexit247 ], [ %.0199262, %bb.t ], [ %.0199262, %bb.u ] ; 3 uses
   %.3 = phi double [ %.0263, %bb.r ], [ %.0263, %bb.s ], [ %.0263, %bb.w ], [ %.0263, %.preheader245 ], [ %.1, %.loopexit247 ], [ %.0263, %bb.t ], [ %.0263, %bb.u ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -212,7 +212,7 @@ bb.y:                                             ; preds = %bb.t, %bb.u, %.preh
   br i1 %exitcond.not, label %bb.z, label %bb.l, !llvm.loop !161
 
 bb.z:                                             ; preds = %bb.y
-  %i.ot = trunc i32 %.3218 to i8
+  %i.ot = trunc i32 %.3218 to i8                  ; 2 uses
   %i.ou = load ptr, ptr @img, align 8, !tbaa !16
   %i.ov = getelementptr inbounds nuw i8, ptr %i.ou, i64 128
   %i.ow = load ptr, ptr %i.ov, align 8, !tbaa !84
@@ -224,10 +224,9 @@ bb.z:                                             ; preds = %bb.y
   store i8 %i.ot, ptr %i.pb, align 1, !tbaa !45
   %i.pc = icmp eq i32 %i.cv, %.3218
   %i.pd = icmp sge i32 %.3218, %i.cv
-  %6 = sext i1 %i.pd to i32
-  %7 = add nsw i32 %.3218, %6
-  %8 = trunc i32 %7 to i8
-  %i.pe = select i1 %i.pc, i8 -1, i8 %8
+  %6 = sext i1 %i.pd to i8
+  %7 = add i8 %6, %i.ot
+  %i.pe = select i1 %i.pc, i8 -1, i8 %7
   %i.pf = load ptr, ptr @img, align 8, !tbaa !16  ; 2 uses
   %i.pg = getelementptr inbounds nuw i8, ptr %i.pf, i64 14224
   %i.ph = load ptr, ptr %i.pg, align 8, !tbaa !88

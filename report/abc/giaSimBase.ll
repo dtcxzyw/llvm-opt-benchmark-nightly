@@ -205,8 +205,7 @@ Abc_Clock.exit:                                   ; preds = %bb.a, %bb.b
   br i1 %.not, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %Abc_Clock.exit
-  %10 = zext i32 %4 to i64
-  %11 = mul nuw nsw i64 %10, 1000000
+  %10 = mul i32 %4, 1000000
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #35
   %i.f = call i32 @clock_gettime(i32 noundef 1, ptr noundef nonnull %8) #35
   %i.g = icmp slt i32 %i.f, 0
@@ -219,17 +218,17 @@ bb.d:                                             ; preds = %bb.c
   %i.k = load i64, ptr %i.j, align 8, !tbaa !89
   %i.l = sdiv i64 %i.k, 1000
   %i.m = add nsw i64 %i.l, %i.i
+  %11 = trunc i64 %i.m to i32
   br label %Abc_Clock.exit63
 
 Abc_Clock.exit63:                                 ; preds = %bb.c, %bb.d
-  %.0.i62 = phi i64 [ %i.m, %bb.d ], [ -1, %bb.c ]
+  %.0.i62 = phi i32 [ %11, %bb.d ], [ -1, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #35
-  %12 = add i64 %.0.i62, %11
-  %13 = trunc i64 %12 to i32
+  %12 = add i32 %.0.i62, %10
   br label %bb.e
 
 bb.e:                                             ; preds = %Abc_Clock.exit, %Abc_Clock.exit63
-  %i.n = phi i32 [ %13, %Abc_Clock.exit63 ], [ 0, %Abc_Clock.exit ] ; 2 uses
+  %i.n = phi i32 [ %12, %Abc_Clock.exit63 ], [ 0, %Abc_Clock.exit ] ; 2 uses
   %i.o = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.70, i32 noundef %3, i32 noundef %2) ; 0 uses
   %i.p = call i64 @Abc_RandomW(i32 noundef 0) #35 ; 0 uses
   %i.q = icmp sgt i32 %3, 0

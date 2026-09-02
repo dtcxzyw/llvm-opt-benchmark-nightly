@@ -202,7 +202,7 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call noundef i32 @_Z17luaL_checkintegerP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 3 uses
+  %i.d = tail call noundef i32 @_Z17luaL_checkintegerP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 4 uses
   %or.cond.i = icmp ult i32 %i.d, 1114112
   br i1 %or.cond.i, label %bb.d, label %bb.c
 
@@ -211,14 +211,21 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %2 = zext nneg i32 %i.d to i64                  ; 2 uses
   %i.e = icmp samesign ult i32 %i.d, 128
-  br i1 %i.e, label %_ZL11buffutfcharP9lua_StateiPcPPKc.exit, label %.preheader.i.i
+  br i1 %i.e, label %3, label %.preheader.i.preheader.i
 
-.preheader.i.i:                                   ; preds = %bb.d, %.preheader.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.preheader.i.i ], [ 1, %bb.d ] ; 3 uses
-  %.015.i.i = phi i64 [ %i.k, %.preheader.i.i ], [ %2, %bb.d ] ; 2 uses
-  %.0.i.i = phi i32 [ %i.l, %.preheader.i.i ], [ 63, %bb.d ]
+.preheader.i.preheader.i:                         ; preds = %bb.d
+  %2 = zext nneg i32 %i.d to i64
+  br label %.preheader.i.i
+
+3:                                                ; preds = %bb.d
+  %4 = trunc nuw nsw i32 %i.d to i8
+  br label %_ZL11buffutfcharP9lua_StateiPcPPKc.exit
+
+.preheader.i.i:                                   ; preds = %.preheader.i.i, %.preheader.i.preheader.i
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.preheader.i.i ], [ 1, %.preheader.i.preheader.i ] ; 3 uses
+  %.015.i.i = phi i64 [ %i.k, %.preheader.i.i ], [ %2, %.preheader.i.preheader.i ] ; 2 uses
+  %.0.i.i = phi i32 [ %i.l, %.preheader.i.i ], [ 63, %.preheader.i.preheader.i ]
   %i.f = trunc i64 %.015.i.i to i8
   %i.g = and i8 %i.f, 63
   %i.h = or disjoint i8 %i.g, -128
@@ -234,20 +241,20 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %.preheader.i.i
   %i.o = trunc nsw i64 %indvars.iv.next.i.i to i32
-  %3 = xor i32 %i.l, -1
-  %4 = shl nsw i32 %3, 1
-  %5 = zext i32 %4 to i64
-  %6 = or i64 %i.k, %5
+  %5 = trunc nuw nsw i32 %i.l to i8
+  %.tr.i.i = xor i8 %5, -1
+  %6 = shl nsw i8 %.tr.i.i, 1
+  %7 = trunc i64 %i.k to i8
+  %8 = or i8 %6, %7
   %i.p = shl i64 %indvars.iv.i.i, 32
   %sext.i.i = sub i64 30064771072, %i.p
   %i.q = ashr exact i64 %sext.i.i, 32
   br label %_ZL11buffutfcharP9lua_StateiPcPPKc.exit
 
-_ZL11buffutfcharP9lua_StateiPcPPKc.exit:          ; preds = %bb.d, %bb.e
-  %.sink29.i.i = phi i64 [ %i.q, %bb.e ], [ 7, %bb.d ]
-  %.sink.in.i.i = phi i64 [ %6, %bb.e ], [ %2, %bb.d ]
-  %.1.i.i = phi i32 [ %i.o, %bb.e ], [ 1, %bb.d ] ; 2 uses
-  %.sink.i.i = trunc i64 %.sink.in.i.i to i8
+_ZL11buffutfcharP9lua_StateiPcPPKc.exit:          ; preds = %3, %bb.e
+  %.sink29.i.i = phi i64 [ %i.q, %bb.e ], [ 7, %3 ]
+  %.sink.i.i = phi i8 [ %8, %bb.e ], [ %4, %3 ]
+  %.1.i.i = phi i32 [ %i.o, %bb.e ], [ 1, %3 ]    ; 2 uses
   %i.r = getelementptr inbounds i8, ptr %i.a, i64 %.sink29.i.i
   store i8 %.sink.i.i, ptr %i.r, align 1, !tbaa !12
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -275,7 +282,7 @@ bb.f:                                             ; preds = %bb.a
 
 bb.g:                                             ; preds = %.lr.ph, %_ZL11buffutfcharP9lua_StateiPcPPKc.exit24
   %.031 = phi i32 [ 1, %.lr.ph ], [ %i.ap, %_ZL11buffutfcharP9lua_StateiPcPPKc.exit24 ] ; 4 uses
-  %i.x = call noundef i32 @_Z17luaL_checkintegerP9lua_Statei(ptr noundef %0, i32 noundef %.031) ; 3 uses
+  %i.x = call noundef i32 @_Z17luaL_checkintegerP9lua_Statei(ptr noundef %0, i32 noundef %.031) ; 4 uses
   %or.cond.i12 = icmp ult i32 %i.x, 1114112
   br i1 %or.cond.i12, label %bb.i, label %bb.h
 
@@ -284,14 +291,21 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %bb.g
-  %7 = zext nneg i32 %i.x to i64                  ; 2 uses
   %i.y = icmp samesign ult i32 %i.x, 128
-  br i1 %i.y, label %_ZL11buffutfcharP9lua_StateiPcPPKc.exit24, label %.preheader.i.i13
+  br i1 %i.y, label %10, label %.preheader.i.preheader.i13
 
-.preheader.i.i13:                                 ; preds = %bb.i, %.preheader.i.i13
-  %indvars.iv.i.i14 = phi i64 [ %indvars.iv.next.i.i17, %.preheader.i.i13 ], [ 1, %bb.i ] ; 3 uses
-  %.015.i.i15 = phi i64 [ %i.ae, %.preheader.i.i13 ], [ %7, %bb.i ] ; 2 uses
-  %.0.i.i16 = phi i32 [ %i.af, %.preheader.i.i13 ], [ 63, %bb.i ]
+.preheader.i.preheader.i13:                       ; preds = %bb.i
+  %9 = zext nneg i32 %i.x to i64
+  br label %.preheader.i.i13
+
+10:                                               ; preds = %bb.i
+  %11 = trunc nuw nsw i32 %i.x to i8
+  br label %_ZL11buffutfcharP9lua_StateiPcPPKc.exit24
+
+.preheader.i.i13:                                 ; preds = %.preheader.i.i13, %.preheader.i.preheader.i13
+  %indvars.iv.i.i14 = phi i64 [ %indvars.iv.next.i.i17, %.preheader.i.i13 ], [ 1, %.preheader.i.preheader.i13 ] ; 3 uses
+  %.015.i.i15 = phi i64 [ %i.ae, %.preheader.i.i13 ], [ %9, %.preheader.i.preheader.i13 ] ; 2 uses
+  %.0.i.i16 = phi i32 [ %i.af, %.preheader.i.i13 ], [ 63, %.preheader.i.preheader.i13 ]
   %i.z = trunc i64 %.015.i.i15 to i8
   %i.aa = and i8 %i.z, 63
   %i.ab = or disjoint i8 %i.aa, -128
@@ -307,20 +321,20 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %.preheader.i.i13
   %i.ai = trunc nsw i64 %indvars.iv.next.i.i17 to i32
-  %8 = xor i32 %i.af, -1
-  %9 = shl nsw i32 %8, 1
-  %10 = zext i32 %9 to i64
-  %11 = or i64 %i.ae, %10
+  %12 = trunc nuw nsw i32 %i.af to i8
+  %.tr.i.i19 = xor i8 %12, -1
+  %13 = shl nsw i8 %.tr.i.i19, 1
+  %14 = trunc i64 %i.ae to i8
+  %15 = or i8 %13, %14
   %i.aj = shl i64 %indvars.iv.i.i14, 32
   %sext.i.i18 = sub i64 30064771072, %i.aj
   %i.ak = ashr exact i64 %sext.i.i18, 32
   br label %_ZL11buffutfcharP9lua_StateiPcPPKc.exit24
 
-_ZL11buffutfcharP9lua_StateiPcPPKc.exit24:        ; preds = %bb.i, %bb.j
-  %.sink29.i.i19 = phi i64 [ %i.ak, %bb.j ], [ 7, %bb.i ]
-  %.sink.in.i.i20 = phi i64 [ %11, %bb.j ], [ %7, %bb.i ]
-  %.1.i.i21 = phi i32 [ %i.ai, %bb.j ], [ 1, %bb.i ] ; 2 uses
-  %.sink.i.i22 = trunc i64 %.sink.in.i.i20 to i8
+_ZL11buffutfcharP9lua_StateiPcPPKc.exit24:        ; preds = %10, %bb.j
+  %.sink29.i.i19 = phi i64 [ %i.ak, %bb.j ], [ 7, %10 ]
+  %.sink.i.i22 = phi i8 [ %15, %bb.j ], [ %11, %10 ]
+  %.1.i.i21 = phi i32 [ %i.ai, %bb.j ], [ 1, %10 ] ; 2 uses
   %i.al = getelementptr inbounds i8, ptr %i.a, i64 %.sink29.i.i19
   store i8 %.sink.i.i22, ptr %i.al, align 1, !tbaa !12
   %narrow.i23 = sub nsw i32 0, %.1.i.i21

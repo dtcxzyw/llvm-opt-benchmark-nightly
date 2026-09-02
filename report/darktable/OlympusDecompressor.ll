@@ -204,15 +204,14 @@ _ZN8rawspeed12_GLOBAL__N_124OlympusDifferenceDecoder7getDiffERNS_14BitStreamerMS
 bb.t:                                             ; preds = %_ZN8rawspeed12_GLOBAL__N_124OlympusDifferenceDecoder7getDiffERNS_14BitStreamerMSBE.exit.i.i
   tail call void @llvm.assume(i1 %i.cd)
   %i.ej = load i16, ptr %i.cf, align 2, !tbaa !132
-  %4 = zext i16 %i.ej to i32
   br label %_ZN8rawspeed12_GLOBAL__N_123OlympusDecompressorImpl7getPredENS_10Array2DRefItEEii.exit.i.i
 
 _ZN8rawspeed12_GLOBAL__N_123OlympusDecompressorImpl7getPredENS_10Array2DRefItEEii.exit.i.i: ; preds = %bb.t, %_ZN8rawspeed12_GLOBAL__N_124OlympusDifferenceDecoder7getDiffERNS_14BitStreamerMSBE.exit.i.i
-  %.1.i.i.i = phi i32 [ 0, %_ZN8rawspeed12_GLOBAL__N_124OlympusDifferenceDecoder7getDiffERNS_14BitStreamerMSBE.exit.i.i ], [ %4, %bb.t ]
-  %5 = add nsw i32 %i.ei, %.1.i.i.i
-  %6 = trunc i32 %5 to i16
+  %.1.i.i.i = phi i16 [ 0, %_ZN8rawspeed12_GLOBAL__N_124OlympusDifferenceDecoder7getDiffERNS_14BitStreamerMSBE.exit.i.i ], [ %i.ej, %bb.t ]
+  %4 = trunc i32 %i.ei to i16
+  %5 = add i16 %.1.i.i.i, %4
   tail call void @llvm.assume(i1 %i.cg)
-  store i16 %6, ptr %i.ci, align 2, !tbaa !132
+  store i16 %5, ptr %i.ci, align 2, !tbaa !132
   %.not.i30.1.i.i = icmp samesign ult i32 %.sink.i.i, 36
   br i1 %.not.i30.1.i.i, label %bb.u, label %_ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit.1.i.i
 
@@ -317,15 +316,14 @@ bb.aa:                                            ; preds = %_ZN8rawspeed12_GLOB
   tail call void @llvm.assume(i1 %i.cd)
   %i.gi = getelementptr inbounds nuw i8, ptr %i.cf, i64 2
   %i.gj = load i16, ptr %i.gi, align 2, !tbaa !132
-  %7 = zext i16 %i.gj to i32
   br label %_ZN8rawspeed12_GLOBAL__N_123OlympusDecompressorImpl7getPredENS_10Array2DRefItEEii.exit.1.i.i
 
 _ZN8rawspeed12_GLOBAL__N_123OlympusDecompressorImpl7getPredENS_10Array2DRefItEEii.exit.1.i.i: ; preds = %bb.aa, %_ZN8rawspeed12_GLOBAL__N_124OlympusDifferenceDecoder7getDiffERNS_14BitStreamerMSBE.exit.1.i.i
-  %.1.i.1.i.i = phi i32 [ 0, %_ZN8rawspeed12_GLOBAL__N_124OlympusDifferenceDecoder7getDiffERNS_14BitStreamerMSBE.exit.1.i.i ], [ %7, %bb.aa ]
-  %8 = add nsw i32 %i.gh, %.1.i.1.i.i
-  %9 = trunc i32 %8 to i16
+  %.1.i.1.i.i = phi i16 [ 0, %_ZN8rawspeed12_GLOBAL__N_124OlympusDifferenceDecoder7getDiffERNS_14BitStreamerMSBE.exit.1.i.i ], [ %i.gj, %bb.aa ]
+  %6 = trunc i32 %i.gh to i16
+  %7 = add i16 %.1.i.1.i.i, %6
   %i.gk = getelementptr inbounds nuw i8, ptr %i.ci, i64 2
-  store i16 %9, ptr %i.gk, align 2, !tbaa !132
+  store i16 %7, ptr %i.gk, align 2, !tbaa !132
   br i1 %.not235.i.i, label %_ZNK8rawspeed12_GLOBAL__N_123OlympusDecompressorImpl13decompressRowERNS_14BitStreamerMSBEi.exit.i, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %_ZN8rawspeed12_GLOBAL__N_123OlympusDecompressorImpl7getPredENS_10Array2DRefItEEii.exit.1.i.i, %_ZN8rawspeed12_GLOBAL__N_123OlympusDecompressorImpl7getPredENS_10Array2DRefItEEii.exit24.1.i.i

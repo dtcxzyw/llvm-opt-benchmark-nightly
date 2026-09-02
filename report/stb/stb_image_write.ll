@@ -204,34 +204,31 @@ bb.j:                                             ; preds = %bb.d
 
 .preheader:                                       ; preds = %bb.j
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 3
-  %i.ax = load i8, ptr %i.aw, align 1, !tbaa !17
-  %6 = zext i8 %i.ax to i32                       ; 3 uses
+  %i.ax = load i8, ptr %i.aw, align 1, !tbaa !17  ; 2 uses
   %i.ay = load i8, ptr %5, align 1, !tbaa !17
   %i.az = xor i8 %i.ay, -1
-  %.neg46 = zext i8 %i.az to i32
-  %.neg47 = mul nuw nsw i32 %.neg46, %6
-  %.lhs.trunc = trunc nuw i32 %.neg47 to i16
+  %.neg46 = zext i8 %i.az to i16
+  %6 = zext i8 %i.ax to i16
+  %.lhs.trunc = mul nuw i16 %.neg46, %6
   %i.ba = udiv i16 %.lhs.trunc, 255
   %.zext = trunc i16 %i.ba to i8
   %i.bb = xor i8 %.zext, -1
   store i8 %i.bb, ptr %i.a, align 1, !tbaa !17
   %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 1
-  %7 = load i8, ptr %i.bc, align 1, !tbaa !17
-  %8 = zext i8 %7 to i32
-  %9 = mul nuw nsw i32 %8, %6
-  %.lhs.trunc40 = trunc nuw i32 %9 to i16
-  %10 = udiv i16 %.lhs.trunc40, 255
-  %11 = trunc i16 %10 to i8                       ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %11, ptr %12, align 1, !tbaa !17
-  %13 = getelementptr inbounds nuw i8, ptr %5, i64 2
-  %14 = load i8, ptr %13, align 1, !tbaa !17
-  %15 = xor i8 %14, -1
-  %.neg = zext i8 %15 to i32
-  %.neg48 = mul nuw nsw i32 %.neg, %6
-  %.lhs.trunc44 = trunc nuw i32 %.neg48 to i16
-  %16 = udiv i16 %.lhs.trunc44, 255
-  %.zext45 = trunc i16 %16 to i8
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  %8 = insertelement <2 x i8> poison, i8 %i.ax, i64 0
+  %9 = shufflevector <2 x i8> %8, <2 x i8> poison, <2 x i32> zeroinitializer
+  %10 = zext <2 x i8> %9 to <2 x i16>
+  %11 = load <2 x i8>, ptr %i.bc, align 1, !tbaa !17
+  %12 = xor <2 x i8> %11, <i8 0, i8 -1>
+  %13 = zext <2 x i8> %12 to <2 x i16>
+  %14 = mul nuw <2 x i16> %13, %10
+  %15 = udiv <2 x i16> %14, splat (i16 255)       ; 2 uses
+  %16 = bitcast <2 x i16> %15 to <4 x i8>
+  %17 = extractelement <4 x i8> %16, i64 0        ; 2 uses
+  store i8 %17, ptr %7, align 1, !tbaa !17
+  %18 = bitcast <2 x i16> %15 to <4 x i8>
+  %.zext45 = extractelement <4 x i8> %18, i64 2
   %i.bd = xor i8 %.zext45, -1
   %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   store i8 %i.bd, ptr %i.be, align 1, !tbaa !17
@@ -267,7 +264,7 @@ bb.k:                                             ; preds = %.preheader
   %i.ca = getelementptr inbounds i8, ptr %i.by, i64 %i.bz ; 3 uses
   store i8 %i.bi, ptr %i.ca, align 1, !tbaa !17
   %i.cb = getelementptr i8, ptr %i.ca, i64 1
-  store i8 %11, ptr %i.cb, align 1, !tbaa !17
+  store i8 %17, ptr %i.cb, align 1, !tbaa !17
   %i.cc = getelementptr i8, ptr %i.ca, i64 2
   store i8 %i.bm, ptr %i.cc, align 1, !tbaa !17
   br label %bb.q

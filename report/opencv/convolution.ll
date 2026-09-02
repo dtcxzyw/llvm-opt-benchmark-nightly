@@ -205,14 +205,11 @@ bb.b:                                             ; preds = %.loopexit309.i.i.i,
   %i.ct = srem i32 %i.cn, %i.cr                   ; 10 uses
   %i.cu = mul nsw i32 %i.cs, %i.cr
   %i.cv = add nsw i32 %i.cu, %i.ct
-  %8 = zext i32 %i.cv to i64
   %i.cw = load ptr, ptr %i.m, align 8, !tbaa !397, !nonnull !67, !align !125
   %i.cx = load i32, ptr %i.cw, align 4, !tbaa !39
-  %9 = zext i32 %i.cx to i64
-  %10 = mul nuw i64 %9, %8
+  %8 = mul i32 %i.cx, %i.cv
   %i.cy = load ptr, ptr %i.n, align 8, !tbaa !398, !nonnull !67, !align !124
   %i.cz = load i64, ptr %i.cy, align 8, !tbaa !38
-  %11 = mul i64 %10, %i.cz
   %..i.i.i = tail call i32 @llvm.smin.i32(i32 %i.cp, i32 %i.cm) ; 3 uses
   %i.da = add i32 %..i.i.i, %i.co                 ; 2 uses
   %i.db = load ptr, ptr %i.o, align 8, !tbaa !399, !nonnull !67, !align !125
@@ -268,7 +265,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.dz, label %.lr.ph351.i.i.i, label %.loopexit308.i.i.i
 
 .lr.ph351.i.i.i:                                  ; preds = %bb.f
-  %i.ea = trunc i64 %11 to i32
+  %i.ea = trunc i64 %i.cz to i32
+  %9 = mul i32 %8, %i.ea
   %i.eb = icmp slt i32 %.0214.i.i.i, %.0213.i.i.i
   %i.ec = sext i32 %i.ct to i64
   %i.ed = add nsw i32 %i.ct, 1
@@ -407,7 +405,7 @@ bb.l:                                             ; preds = %bb.k
   %i.hj = load ptr, ptr %i.at, align 8, !tbaa !430, !nonnull !67
   %i.hk = load i8, ptr %i.hj, align 1, !tbaa !107, !range !66, !noundef !67
   %i.hl = trunc nuw i8 %i.hk to i1
-  tail call fastcc void @_ZN2cv3dnnL13packInputDataEPcPfPKiS4_iiiiiiiiiiiiiiiiiiiiiiiiiiiibb(ptr noundef %i.bu, ptr noundef %i.ff, ptr noundef %i.fh, ptr noundef %i.fj, i32 noundef %.1212349.i.i.i, i32 noundef %i.ek, i32 noundef %i.fl, i32 noundef %i.fn, i32 noundef %i.fp, i32 noundef %i.fr, i32 noundef %i.ft, i32 noundef %i.fv, i32 noundef %i.fx, i32 noundef %i.fz, i32 noundef %i.gb, i32 noundef %i.gd, i32 noundef %i.gf, i32 noundef %i.gh, i32 noundef %i.gj, i32 noundef %i.gl, i32 noundef %i.gn, i32 noundef %i.gp, i32 noundef %i.gr, i32 noundef %i.gt, i32 noundef %i.gv, i32 noundef %i.gy, i32 noundef %i.ea, i32 noundef %i.hb, i32 noundef %i.he, i32 noundef %i.hg, i32 noundef %i.ef, i32 noundef %i.hi, i1 noundef zeroext %i.hl)
+  tail call fastcc void @_ZN2cv3dnnL13packInputDataEPcPfPKiS4_iiiiiiiiiiiiiiiiiiiiiiiiiiiibb(ptr noundef %i.bu, ptr noundef %i.ff, ptr noundef %i.fh, ptr noundef %i.fj, i32 noundef %.1212349.i.i.i, i32 noundef %i.ek, i32 noundef %i.fl, i32 noundef %i.fn, i32 noundef %i.fp, i32 noundef %i.fr, i32 noundef %i.ft, i32 noundef %i.fv, i32 noundef %i.fx, i32 noundef %i.fz, i32 noundef %i.gb, i32 noundef %i.gd, i32 noundef %i.gf, i32 noundef %i.gh, i32 noundef %i.gj, i32 noundef %i.gl, i32 noundef %i.gn, i32 noundef %i.gp, i32 noundef %i.gr, i32 noundef %i.gt, i32 noundef %i.gv, i32 noundef %i.gy, i32 noundef %9, i32 noundef %i.hb, i32 noundef %i.he, i32 noundef %i.hg, i32 noundef %i.ef, i32 noundef %i.hi, i1 noundef zeroext %i.hl)
   %.pre397.i.i.i = load ptr, ptr %i.p, align 8, !tbaa !402
   br label %bb.m
 

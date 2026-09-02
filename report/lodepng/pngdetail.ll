@@ -205,20 +205,17 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %8 = zext i8 %3 to i32                          ; 3 uses
-  %9 = zext i8 %0 to i32
-  %10 = mul nuw nsw i32 %8, %9
-  %.lhs.trunc = trunc nuw i32 %10 to i16
+  %8 = zext i8 %3 to i16                          ; 3 uses
+  %9 = zext i8 %0 to i16
+  %.lhs.trunc = mul nuw i16 %8, %9
   %i.a = udiv i16 %.lhs.trunc, 255
   %i.b = trunc nuw i16 %i.a to i8
-  %11 = zext i8 %1 to i32
-  %12 = mul nuw nsw i32 %8, %11
-  %.lhs.trunc104 = trunc nuw i32 %12 to i16
+  %10 = zext i8 %1 to i16
+  %.lhs.trunc104 = mul nuw i16 %8, %10
   %i.c = udiv i16 %.lhs.trunc104, 255
   %i.d = trunc nuw i16 %i.c to i8
-  %13 = zext i8 %2 to i32
-  %14 = mul nuw nsw i32 %8, %13
-  %.lhs.trunc106 = trunc nuw i32 %14 to i16
+  %11 = zext i8 %2 to i16
+  %.lhs.trunc106 = mul nuw i16 %8, %11
   %i.e = udiv i16 %.lhs.trunc106, 255
   %i.f = trunc nuw i16 %i.e to i8
   br label %bb.c
@@ -621,20 +618,17 @@ bb.aa:                                            ; preds = %_ZStlsISt11char_tra
   br i1 %.not.i99, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %5 = zext i8 %i.dl to i32                       ; 3 uses
-  %6 = zext i8 %i.cz to i32
-  %7 = mul nuw nsw i32 %5, %6
-  %.lhs.trunc.i = trunc nuw i32 %7 to i16
+  %5 = zext i8 %i.dl to i16                       ; 3 uses
+  %6 = zext i8 %i.cz to i16
+  %.lhs.trunc.i = mul nuw i16 %5, %6
   %i.dm = udiv i16 %.lhs.trunc.i, 255
   %i.dn = trunc nuw i16 %i.dm to i8
-  %8 = zext i8 %i.dd to i32
-  %9 = mul nuw nsw i32 %5, %8
-  %.lhs.trunc104.i = trunc nuw i32 %9 to i16
+  %7 = zext i8 %i.dd to i16
+  %.lhs.trunc104.i = mul nuw i16 %5, %7
   %i.do = udiv i16 %.lhs.trunc104.i, 255
   %i.dp = trunc nuw i16 %i.do to i8
-  %10 = zext i8 %i.dh to i32
-  %11 = mul nuw nsw i32 %5, %10
-  %.lhs.trunc106.i = trunc nuw i32 %11 to i16
+  %8 = zext i8 %i.dh to i16
+  %.lhs.trunc106.i = mul nuw i16 %5, %8
   %i.dq = udiv i16 %.lhs.trunc106.i, 255
   %i.dr = trunc nuw i16 %i.dq to i8
   br label %bb.ac

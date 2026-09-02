@@ -205,15 +205,14 @@ bb.w:                                             ; preds = %_ZNK2cv12cpu_baseli
   %i.ct = getelementptr i8, ptr @icvSaturate8u_cv, i64 %i.cs
   %i.cu = getelementptr i8, ptr %i.ct, i64 256
   %i.cv = load i8, ptr %i.cu, align 1, !tbaa !26
-  %38 = zext i8 %i.cv to i32
   br label %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit399.i
 
 _ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit399.i: ; preds = %bb.w, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit.i
-  %39 = phi i32 [ %38, %bb.w ], [ 0, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit.i ]
-  %40 = add nsw i32 %39, %i.co
-  %41 = trunc i32 %40 to i8
+  %38 = phi i8 [ %i.cv, %bb.w ], [ 0, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit.i ]
+  %39 = trunc i32 %i.co to i8
+  %40 = add i8 %38, %39
   %i.cw = getelementptr inbounds nuw i8, ptr %.03321606.i, i64 %indvars.iv1648.i
-  store i8 %41, ptr %i.cw, align 1, !tbaa !26
+  store i8 %40, ptr %i.cw, align 1, !tbaa !26
   %indvars.iv.next1649.i = add nuw nsw i64 %indvars.iv1648.i, 1 ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.11604.i, i64 1 ; 2 uses
   %exitcond1652.not.i = icmp eq i64 %indvars.iv.next1649.i, %wide.trip.count1651.i
@@ -580,15 +579,14 @@ bb.an:                                            ; preds = %_ZNK2cv12cpu_baseli
   %i.ln = getelementptr i8, ptr @icvSaturate8u_cv, i64 %i.lm
   %i.lo = getelementptr i8, ptr %i.ln, i64 256
   %i.lp = load i8, ptr %i.lo, align 1, !tbaa !26
-  %42 = zext i8 %i.lp to i32
   br label %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit438.i
 
 _ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit438.i: ; preds = %bb.an, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit436.i
-  %43 = phi i32 [ %42, %bb.an ], [ 0, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit436.i ]
-  %44 = sub nsw i32 %i.li, %43
-  %45 = trunc i32 %44 to i8
+  %41 = phi i8 [ %i.lp, %bb.an ], [ 0, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit436.i ]
+  %42 = trunc i32 %i.li to i8
+  %43 = sub i8 %42, %41
   %i.lq = getelementptr inbounds i8, ptr %.13331600.i, i64 %indvars.iv1635.i
-  store i8 %45, ptr %i.lq, align 1, !tbaa !26
+  store i8 %43, ptr %i.lq, align 1, !tbaa !26
   %indvars.iv.next1636.i = add nsw i64 %indvars.iv1635.i, 1 ; 2 uses
   %exitcond1639.not.i = icmp eq i64 %indvars.iv.next1636.i, %wide.trip.count1638.i
   br i1 %exitcond1639.not.i, label %._crit_edge1595.i, label %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit402.i, !llvm.loop !34
@@ -894,15 +892,14 @@ bb.ba:                                            ; preds = %_ZNK2cv12cpu_baseli
   %i.st = getelementptr i8, ptr @icvSaturate8u_cv, i64 %i.ss
   %i.su = getelementptr i8, ptr %i.st, i64 256
   %i.sv = load i8, ptr %i.su, align 1, !tbaa !26
-  %46 = zext i8 %i.sv to i32
   br label %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit476.i
 
 _ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit476.i: ; preds = %bb.ba, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit474.i
-  %47 = phi i32 [ %46, %bb.ba ], [ 0, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit474.i ]
-  %48 = sub nsw i32 %i.so, %47
+  %44 = phi i8 [ %i.sv, %bb.ba ], [ 0, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit474.i ]
   %i.sw = getelementptr inbounds i8, ptr %.13331600.i, i64 %indvars.iv1640.i
-  %i.sx = trunc i32 %48 to i8
-  store i8 %i.sx, ptr %i.sw, align 1, !tbaa !26
+  %i.sx = trunc i32 %i.so to i8
+  %45 = sub i8 %i.sx, %44
+  store i8 %45, ptr %i.sw, align 1, !tbaa !26
   %indvars.iv.next1641.i = add nsw i64 %indvars.iv1640.i, 1 ; 3 uses
   %i.sy = icmp slt i64 %indvars.iv.next1641.i, %i.dl
   br i1 %i.sy, label %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit440.i, label %.loopexit1574.loopexit.i, !llvm.loop !36
@@ -1072,15 +1069,14 @@ bb.bi:                                            ; preds = %_ZNK2cv12cpu_baseli
   %i.wy = getelementptr i8, ptr @icvSaturate8u_cv, i64 %i.wx
   %i.wz = getelementptr i8, ptr %i.wy, i64 256
   %i.xa = load i8, ptr %i.wz, align 1, !tbaa !26
-  %49 = zext i8 %i.xa to i32
   br label %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit492.i
 
 _ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit492.i: ; preds = %bb.bi, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit490.i
-  %50 = phi i32 [ %49, %bb.bi ], [ 0, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit490.i ]
-  %51 = add nsw i32 %50, %i.wl
-  %52 = trunc i32 %51 to i8
+  %46 = phi i8 [ %i.xa, %bb.bi ], [ 0, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit490.i ]
+  %47 = trunc i32 %i.wl to i8
+  %48 = add i8 %46, %47
   %i.xb = getelementptr inbounds nuw i8, ptr %.23341592.i, i64 %indvars.iv1629.i
-  store i8 %52, ptr %i.xb, align 1, !tbaa !26
+  store i8 %48, ptr %i.xb, align 1, !tbaa !26
   %indvars.iv.next1630.i = add nuw nsw i64 %indvars.iv1629.i, 1 ; 2 uses
   %i.xc = getelementptr inbounds nuw i8, ptr %.31590.i, i64 1 ; 2 uses
   %exitcond1633.not.i = icmp eq i64 %indvars.iv.next1630.i, %wide.trip.count1632.i
@@ -1483,15 +1479,14 @@ bb.fe:                                            ; preds = %_ZNK2cv12cpu_baseli
   %i.bqu = getelementptr i8, ptr @icvSaturate8u_cv, i64 %i.bqt
   %i.bqv = getelementptr i8, ptr %i.bqu, i64 256
   %i.bqw = load i8, ptr %i.bqv, align 1, !tbaa !26
-  %53 = zext i8 %i.bqw to i32
   br label %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit722.i
 
 _ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit722.i: ; preds = %bb.fe, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit720.i
-  %54 = phi i32 [ %53, %bb.fe ], [ 0, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit720.i ]
-  %55 = add nsw i32 %54, %i.bmx
-  %56 = trunc i32 %55 to i8
+  %49 = phi i8 [ %i.bqw, %bb.fe ], [ 0, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit720.i ]
+  %50 = trunc i32 %i.bmx to i8
+  %51 = add i8 %49, %50
   %i.bqx = getelementptr inbounds i8, ptr %.33351586.i, i64 %indvars.iv.i
-  store i8 %56, ptr %i.bqx, align 1, !tbaa !26
+  store i8 %51, ptr %i.bqx, align 1, !tbaa !26
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge.i, label %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit500.i, !llvm.loop !40
@@ -1894,15 +1889,14 @@ bb.ix:                                            ; preds = %_ZNK2cv12cpu_baseli
   %i.dhq = getelementptr i8, ptr @icvSaturate8u_cv, i64 %i.dhp
   %i.dhr = getelementptr i8, ptr %i.dhq, i64 256
   %i.dhs = load i8, ptr %i.dhr, align 1, !tbaa !26
-  %57 = zext i8 %i.dhs to i32
   br label %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit948.i
 
 _ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit948.i: ; preds = %bb.ix, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit946.i
-  %58 = phi i32 [ %57, %bb.ix ], [ 0, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit946.i ]
-  %59 = add nsw i32 %58, %i.ddt
+  %52 = phi i8 [ %i.dhs, %bb.ix ], [ 0, %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit946.i ]
   %i.dht = getelementptr inbounds i8, ptr %.33351586.i, i64 %indvars.iv1621.i
-  %i.dhu = trunc i32 %59 to i8
-  store i8 %i.dhu, ptr %i.dht, align 1, !tbaa !26
+  %i.dhu = trunc i32 %i.ddt to i8
+  %53 = add i8 %52, %i.dhu
+  store i8 %53, ptr %i.dht, align 1, !tbaa !26
   %indvars.iv.next1622.i = add nsw i64 %indvars.iv1621.i, 1 ; 3 uses
   %i.dhv = icmp slt i64 %indvars.iv.next1622.i, %i.xu
   br i1 %i.dhv, label %_ZNK2cv12cpu_baseline12_GLOBAL__N_18MinMax8uclERiS3_.exit724.i, label %.loopexit1579.loopexit.i, !llvm.loop !42

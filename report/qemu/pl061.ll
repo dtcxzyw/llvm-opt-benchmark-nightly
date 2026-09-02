@@ -204,16 +204,15 @@ bb.e:                                             ; preds = %bb.f
   %i.j = lshr i64 %1, 2
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 1104
   %i.l = load i32, ptr %i.k, align 16
-  %4 = zext i32 %i.l to i64
-  %5 = and i64 %i.j, %4                           ; 2 uses
+  %4 = trunc nuw nsw i64 %i.j to i32
+  %5 = and i32 %i.l, %4                           ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 1092 ; 2 uses
   %i.n = load i32, ptr %i.m, align 4
-  %6 = trunc nuw nsw i64 %5 to i32
-  %i.o = xor i32 %6, -1
+  %i.o = xor i32 %5, -1
   %i.p = and i32 %i.n, %i.o
-  %7 = and i64 %5, %2
-  %8 = trunc nuw nsw i64 %7 to i32
-  %i.q = or i32 %i.p, %8
+  %6 = trunc i64 %2 to i32
+  %7 = and i32 %5, %6
+  %i.q = or i32 %7, %i.p
   store i32 %i.q, ptr %i.m, align 4
   tail call fastcc void @pl061_update(ptr noundef %0)
   br label %bb.an

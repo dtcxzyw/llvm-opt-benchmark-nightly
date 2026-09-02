@@ -204,8 +204,8 @@ _ZN6hermes2vm15HandleRootOwner10makeHandleINS0_13JSArrayBufferEEENS0_6HandleIT_E
   %i.r = zext nneg i32 %i.q to i64
   %i.s = getelementptr i8, ptr @_ZZNK6hermes2vm16JSTypedArrayBase12getByteWidthEvE6widths, i64 %i.r
   %i.t = getelementptr i8, ptr %i.s, i64 -35
-  %i.u = load i8, ptr %i.t, align 1, !tbaa !272   ; 2 uses
-  %i.v = zext i8 %i.u to i32
+  %i.u = load i8, ptr %i.t, align 1, !tbaa !272
+  %i.v = zext i8 %i.u to i32                      ; 2 uses
   %i.w = udiv i32 -1, %i.v
   %i.x = zext i32 %i.w to i64
   %i.y = icmp ugt i64 %2, %i.x
@@ -227,10 +227,9 @@ _ZN6hermes2vm11TwineChar16C2EPKc.exit:            ; preds = %_ZN6hermes2vm15Hand
   br label %bb.g
 
 bb.d:                                             ; preds = %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_13JSArrayBufferEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit
-  %4 = zext i8 %i.u to i64
-  %5 = mul nuw nsw i64 %2, %4
-  %6 = trunc i64 %5 to i32                        ; 2 uses
-  %i.ae = tail call noundef i32 @_ZN6hermes2vm13JSArrayBuffer15createDataBlockERNS0_7RuntimeENS0_6HandleIS1_EEjb(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr %.0.i.i.i.i.i.i, i32 noundef %6, i1 noundef zeroext true) #11
+  %4 = trunc nuw i64 %2 to i32
+  %5 = mul i32 %i.v, %4                           ; 2 uses
+  %i.ae = tail call noundef i32 @_ZN6hermes2vm13JSArrayBuffer15createDataBlockERNS0_7RuntimeENS0_6HandleIS1_EEjb(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr %.0.i.i.i.i.i.i, i32 noundef %5, i1 noundef zeroext true) #11
   %i.af = icmp eq i32 %i.ae, 0
   br i1 %i.af, label %bb.g, label %bb.e
 
@@ -269,7 +268,7 @@ _ZN6hermes2vm16JSTypedArrayBase9setBufferERNS0_7RuntimeEPS1_PNS0_13JSArrayBuffer
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ah, i64 28
   store i32 0, ptr %i.bb, align 4, !tbaa !271
   %i.bc = zext i8 %i.an to i32
-  %i.bd = udiv i32 %6, %i.bc
+  %i.bd = udiv i32 %5, %i.bc
   %i.be = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
   store i32 %i.bd, ptr %i.be, align 4, !tbaa !18
   br label %bb.g

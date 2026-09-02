@@ -205,8 +205,8 @@ bb.z:                                             ; preds = %.lr.ph655, %dbuf_pu
   %i.ez = load i8, ptr %i.ey, align 1, !tbaa !218 ; 7 uses
   %i.fa = zext i8 %i.ez to i64
   %i.fb = getelementptr inbounds nuw [4 x i8], ptr @opcode_info, i64 %i.fa
-  %i.fc = load i8, ptr %i.fb, align 4, !tbaa !776 ; 4 uses
-  %i.fd = zext i8 %i.fc to i32
+  %i.fc = load i8, ptr %i.fb, align 4, !tbaa !776 ; 3 uses
+  %i.fd = zext i8 %i.fc to i32                    ; 2 uses
   %i.fe = add nsw i32 %.0266654, %i.fd            ; 32 uses
   switch i8 %i.ez, label %dbuf_put_u32.exit472 [
     i8 -53, label %bb.aa
@@ -609,11 +609,10 @@ bb.gj:                                            ; preds = %bb.z
   %i.aab = sext i32 %.val327 to i64
   %i.aac = getelementptr inbounds [24 x i8], ptr %i.aaa, i64 %i.aab
   %i.aad = load i64, ptr %i.w, align 8, !tbaa !466
-  %4 = zext i8 %i.fc to i64
-  %5 = add i64 %i.aad, %4
-  %6 = trunc i64 %5 to i32
+  %4 = trunc i64 %i.aad to i32
+  %5 = add i32 %4, %i.fd
   %i.aae = getelementptr inbounds nuw i8, ptr %i.aac, i64 8
-  store i32 %6, ptr %i.aae, align 8, !tbaa !934
+  store i32 %5, ptr %i.aae, align 8, !tbaa !934
   br label %dbuf_put_u32.exit472
 
 bb.gk:                                            ; preds = %bb.z

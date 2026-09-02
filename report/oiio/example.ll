@@ -202,17 +202,16 @@ middle.block:                                     ; preds = %vector.body
   %i.cc = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %indvars.iv64.i ; 3 uses
   %indvars.iv64.tr.i = trunc nuw nsw i64 %indvars.iv64.i to i32
   %i.cd = shl nuw nsw i32 %indvars.iv64.tr.i, 3
-  %i.ce = udiv i32 %i.cd, 15                      ; 2 uses
-  %i.cf = trunc i32 %i.ce to i8
+  %i.ce = udiv i32 %i.cd, 15
+  %i.cf = trunc i32 %i.ce to i8                   ; 2 uses
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.x, %.preheader54.i
   %indvars.iv.i = phi i64 [ 0, %.preheader54.i ], [ %indvars.iv.next.i, %bb.x ] ; 3 uses
   %.1.tr.i = trunc i64 %indvars.iv.i to i16
   %.lhs.trunc48.i = shl nuw nsw i16 %.1.tr.i, 1
-  %i.cg = udiv i16 %.lhs.trunc48.i, 5             ; 2 uses
-  %.zext49.i = zext nneg i16 %i.cg to i32
-  %i.ch = trunc i16 %i.cg to i8
+  %i.cg = udiv i16 %.lhs.trunc48.i, 5
+  %i.ch = trunc i16 %i.cg to i8                   ; 2 uses
   %i.ci = load ptr, ptr %i.cc, align 8, !tbaa !10
   %i.cj = mul nuw nsw i64 %indvars.iv.i, 3        ; 3 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 %i.cj
@@ -221,12 +220,11 @@ bb.x:                                             ; preds = %bb.x, %.preheader54
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.cj
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 1
   store i8 %i.cf, ptr %i.cn, align 1, !tbaa !39
-  %5 = add nuw nsw i32 %i.ce, %.zext49.i
-  %6 = trunc i32 %5 to i8
+  %5 = add i8 %i.ch, %i.cf
   %i.co = load ptr, ptr %i.cc, align 8, !tbaa !10
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 %i.cj
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 2
-  store i8 %6, ptr %i.cq, align 1, !tbaa !39
+  store i8 %5, ptr %i.cq, align 1, !tbaa !39
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 640
   br i1 %exitcond.not.i, label %bb.y, label %bb.x, !llvm.loop !35
