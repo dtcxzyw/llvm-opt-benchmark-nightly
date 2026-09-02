@@ -202,14 +202,11 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h, %evmap_make_space.exit
   %i.ai = phi ptr [ %.pre111, %bb.h ], [ %i.w, %evmap_make_space.exit ] ; 8 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8 ; 2 uses
-  %i.ak = load i16, ptr %i.aj, align 8            ; 2 uses
-  %3 = zext i16 %i.ak to i32
+  %i.ak = load i16, ptr %i.aj, align 8            ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 10 ; 2 uses
-  %i.am = load i16, ptr %i.al, align 2            ; 2 uses
-  %4 = zext i16 %i.am to i32
+  %i.am = load i16, ptr %i.al, align 2            ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.ai, i64 12 ; 2 uses
-  %i.ao = load i16, ptr %i.an, align 4            ; 2 uses
-  %5 = zext i16 %i.ao to i32
+  %i.ao = load i16, ptr %i.an, align 4            ; 3 uses
   %.not90 = icmp ne i16 %i.ak, 0                  ; 2 uses
   %spec.select = select i1 %.not90, i16 2, i16 0  ; 2 uses
   %.not91 = icmp ne i16 %i.am, 0                  ; 2 uses
@@ -223,31 +220,28 @@ bb.i:                                             ; preds = %bb.h, %evmap_make_s
   %i.at = and i16 %i.as, 2                        ; 2 uses
   %.not93.not = icmp eq i16 %i.at, 0
   %.lobit = lshr exact i16 %i.at, 1
-  %6 = zext nneg i16 %.lobit to i32
-  %.078 = add nuw nsw i32 %6, %3                  ; 2 uses
+  %add = add i16 %.lobit, %i.ak                   ; 2 uses
+  %add.overflow = icmp ult i16 %add, %i.ak
   %i.au = select i1 %.not93.not, i1 true, i1 %.not90
   %.071 = select i1 %i.au, i16 0, i16 2           ; 2 uses
   %i.av = and i16 %i.as, 4                        ; 2 uses
   %.not94.not = icmp eq i16 %i.av, 0
   %i.aw = or disjoint i16 %.071, 4
   %.lobit109 = lshr exact i16 %i.av, 2
-  %7 = zext nneg i16 %.lobit109 to i32
-  %.077 = add nuw nsw i32 %7, %4                  ; 2 uses
+  %add111 = add i16 %.lobit109, %i.am             ; 2 uses
+  %add.overflow112 = icmp ult i16 %add111, %i.am
   %i.ax = select i1 %.not94.not, i1 true, i1 %.not91
   %.172 = select i1 %i.ax, i16 %.071, i16 %i.aw   ; 2 uses
   %i.ay = and i16 %i.as, 128                      ; 2 uses
   %.not95.not = icmp eq i16 %i.ay, 0
   %i.az = or disjoint i16 %.172, 128
   %.lobit110 = lshr exact i16 %i.ay, 7
-  %8 = zext nneg i16 %.lobit110 to i32
-  %.076 = add nuw nsw i32 %8, %5                  ; 2 uses
+  %add113 = add i16 %.lobit110, %i.ao             ; 2 uses
+  %add.overflow114 = icmp ult i16 %add113, %i.ao
   %i.ba = select i1 %.not95.not, i1 true, i1 %.not92
   %.273 = select i1 %i.ba, i16 %.172, i16 %i.az   ; 2 uses
-  %9 = icmp samesign ugt i32 %.078, 65535
-  %10 = icmp samesign ugt i32 %.077, 65535
-  %or.cond = select i1 %9, i1 true, i1 %10, !prof !9
-  %11 = icmp samesign ugt i32 %.076, 65535
-  %i.bb = select i1 %or.cond, i1 true, i1 %11, !prof !9
+  %or.cond = select i1 %add.overflow, i1 true, i1 %add.overflow112, !prof !9
+  %i.bb = select i1 %or.cond, i1 true, i1 %add.overflow114, !prof !9
   br i1 %i.bb, label %bb.j, label %bb.k, !prof !8
 
 bb.j:                                             ; preds = %bb.i
@@ -294,12 +288,9 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.o
   %.175 = phi i32 [ 1, %bb.p ], [ 0, %bb.o ]
-  %12 = trunc nuw i32 %.078 to i16
-  store i16 %12, ptr %i.aj, align 8
-  %13 = trunc nuw i32 %.077 to i16
-  store i16 %13, ptr %i.al, align 2
-  %14 = trunc nuw i32 %.076 to i16
-  store i16 %14, ptr %i.an, align 4
+  store i16 %add, ptr %i.aj, align 8
+  store i16 %add111, ptr %i.al, align 2
+  store i16 %add113, ptr %i.an, align 4
   %i.bq = load ptr, ptr %i.ai, align 8            ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 2 uses
   store ptr %i.bq, ptr %i.br, align 8

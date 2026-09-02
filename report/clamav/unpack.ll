@@ -205,10 +205,9 @@ bb.e:                                             ; preds = %._crit_edge
   %.03449 = phi ptr [ %i.at, %.critedge ], [ %i.v, %bb.e ] ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.03449, i64 2 ; 2 uses
   %i.x = load i16, ptr %i.w, align 1, !tbaa !195  ; 2 uses
-  %2 = zext i16 %i.x to i32                       ; 2 uses
-  %3 = mul nuw nsw i32 %2, 20
-  %4 = zext nneg i32 %3 to i64
-  %i.y = getelementptr inbounds nuw i8, ptr %.03449, i64 %4 ; 2 uses
+  %2 = zext i16 %i.x to i64
+  %3 = mul nuw nsw i64 %2, 20
+  %i.y = getelementptr inbounds nuw i8, ptr %.03449, i64 %3 ; 2 uses
   %i.z = load i16, ptr %i.y, align 1, !tbaa !194
   %i.aa = icmp eq i16 %i.z, -1
   br i1 %i.aa, label %.lr.ph46, label %.critedge
@@ -228,14 +227,12 @@ bb.e:                                             ; preds = %._crit_edge
 
 .lr.ph46:                                         ; preds = %.preheader42, %bb.f
   %i.ad = phi ptr [ %i.ap, %bb.f ], [ %i.y, %.preheader42 ] ; 3 uses
-  %5 = phi i32 [ %9, %bb.f ], [ %2, %.preheader42 ]
-  %i.ae = phi i16 [ %i.ao, %bb.f ], [ %i.x, %.preheader42 ]
+  %i.ae = phi i16 [ %i.ao, %bb.f ], [ %i.x, %.preheader42 ] ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 2
   %i.ag = load i16, ptr %i.af, align 1, !tbaa !195 ; 2 uses
-  %6 = zext i16 %i.ag to i32
-  %7 = add nuw nsw i32 %5, %6
-  %8 = icmp samesign ult i32 %7, 65536
-  br i1 %8, label %bb.f, label %.critedge
+  %4 = xor i16 %i.ae, -1
+  %not.add.overflow.not = icmp ugt i16 %i.ag, %4
+  br i1 %not.add.overflow.not, label %.critedge, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph46
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ad, i64 4 ; 2 uses
@@ -249,10 +246,9 @@ bb.f:                                             ; preds = %.lr.ph46
   store ptr %i.ak, ptr %i.an, align 1, !tbaa !192
   %i.ao = add i16 %i.ag, %i.ae                    ; 3 uses
   store i16 %i.ao, ptr %i.w, align 1, !tbaa !195
-  %9 = zext i16 %i.ao to i32                      ; 2 uses
-  %10 = mul nuw nsw i32 %9, 20
-  %11 = zext nneg i32 %10 to i64
-  %i.ap = getelementptr inbounds nuw i8, ptr %.03449, i64 %11 ; 2 uses
+  %5 = zext i16 %i.ao to i64
+  %6 = mul nuw nsw i64 %5, 20
+  %i.ap = getelementptr inbounds nuw i8, ptr %.03449, i64 %6 ; 2 uses
   %i.aq = load i16, ptr %i.ap, align 1, !tbaa !194
   %i.ar = icmp eq i16 %i.aq, -1
   br i1 %i.ar, label %.lr.ph46, label %.critedge, !llvm.loop !186

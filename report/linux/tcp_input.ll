@@ -205,7 +205,7 @@ bb.av:                                            ; preds = %bb.au
 
 bb.aw:                                            ; preds = %bb.av
   %i.ej = getelementptr i8, ptr %i.ec, i64 48
-  %.val.i135.i = load i16, ptr %i.ej, align 8     ; 2 uses
+  %.val.i135.i = load i16, ptr %i.ej, align 8     ; 3 uses
   %i.ek = icmp eq i16 %.val.i135.i, 1
   br i1 %i.ek, label %tcp_skb_seglen.exit137.i, label %bb.ax
 
@@ -225,7 +225,7 @@ bb.ay:                                            ; preds = %tcp_skb_seglen.exit
   br i1 %i.eo, label %bb.az, label %bb.bc
 
 bb.az:                                            ; preds = %bb.ay
-  %i.ep = zext i16 %.val.i135.i to i32            ; 2 uses
+  %i.ep = zext i16 %.val.i135.i to i32
   %i.eq = load i32, ptr %i.ds, align 8
   %i.er = add i32 %i.eq, %spec.select116.val120.i
   %i.es = icmp ugt i32 %i.er, 524279
@@ -233,9 +233,8 @@ bb.az:                                            ; preds = %bb.ay
 
 bb.ba:                                            ; preds = %bb.az
   %.val.i138.i = load i16, ptr %i.dw, align 8
-  %7 = zext i16 %.val.i138.i to i32
-  %8 = add nuw nsw i32 %7, %i.ep
-  %i.et = icmp samesign ugt i32 %8, 65535
+  %7 = xor i16 %.val.i135.i, -1
+  %i.et = icmp ugt i16 %.val.i138.i, %7
   br i1 %i.et, label %bb.bc, label %tcp_skb_shift.exit140.i, !prof !23
 
 tcp_skb_shift.exit140.i:                          ; preds = %bb.ba

@@ -204,17 +204,17 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n
   %i.an = getelementptr inbounds nuw i8, ptr %.0128163167175180, i64 19
-  %i.ao = load i8, ptr %i.an, align 1, !tbaa !9   ; 3 uses
-  %i.ap = zext i8 %i.ao to i32                    ; 3 uses
+  %i.ao = load i8, ptr %i.an, align 1, !tbaa !9   ; 4 uses
+  %i.ap = zext i8 %i.ao to i32                    ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.0128163167175180, i64 20
-  %i.ar = load i8, ptr %i.aq, align 1, !tbaa !9   ; 2 uses
-  %i.as = zext i8 %i.ar to i32                    ; 3 uses
+  %i.ar = load i8, ptr %i.aq, align 1, !tbaa !9   ; 3 uses
+  %i.as = zext i8 %i.ar to i32                    ; 2 uses
   %.not151 = icmp eq i8 %i.ao, 0
   %i.at = icmp ugt i8 %i.ar, %i.ao
-  %or.cond = select i1 %.not151, i1 true, i1 %i.at
-  %3 = add nuw nsw i32 %i.as, %i.ap
-  %4 = icmp samesign ugt i32 %3, 255
-  %or.cond157.a = select i1 %or.cond, i1 true, i1 %4
+  %3 = xor i8 %i.ao, -1
+  %add.overflow = icmp ugt i8 %i.ar, %3
+  %4 = or i1 %i.at, %add.overflow
+  %or.cond157.a = select i1 %.not151, i1 true, i1 %4
   br i1 %or.cond157.a, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p

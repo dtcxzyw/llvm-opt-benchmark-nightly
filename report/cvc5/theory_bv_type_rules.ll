@@ -202,7 +202,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN4cvc58internal8TypeNodeD2Ev.exit.jt3
   %.02254 = phi i8 [ 0, %.lr.ph ], [ %.123.jt3, %_ZN4cvc58internal8TypeNodeD2Ev.exit.jt3 ]
-  %.02553 = phi i32 [ 0, %.lr.ph ], [ %.227.jt3, %_ZN4cvc58internal8TypeNodeD2Ev.exit.jt3 ] ; 3 uses
+  %.02553 = phi i32 [ 0, %.lr.ph ], [ %.227.jt3, %_ZN4cvc58internal8TypeNodeD2Ev.exit.jt3 ] ; 4 uses
   %.sroa.038.052 = phi ptr [ %spec.select.i.i, %.lr.ph ], [ %i.bj, %_ZN4cvc58internal8TypeNodeD2Ev.exit.jt3 ] ; 2 uses
   %i.q = load ptr, ptr %.sroa.038.052, align 8, !tbaa !16, !noalias !132
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
@@ -271,11 +271,9 @@ bb.j:                                             ; preds = %bb.i
           to label %bb.k unwind label %.loopexit70
 
 bb.k:                                             ; preds = %bb.j
-  %7 = zext i32 %.02553 to i64
-  %8 = zext i32 %i.ad to i64
-  %9 = add nuw nsw i64 %8, %7                     ; 2 uses
-  %10 = icmp samesign ult i64 %9, 4294967296      ; 2 uses
-  %or.cond.i33 = or i1 %.not.i, %10
+  %add = add i32 %i.ad, %.02553                   ; 2 uses
+  %not.add.overflow = icmp uge i32 %add, %.02553  ; 2 uses
+  %or.cond.i33 = or i1 %.not.i, %not.add.overflow
   br i1 %or.cond.i33, label %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -283,7 +281,7 @@ bb.l:                                             ; preds = %bb.k
           to label %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit.thread unwind label %.loopexit.split-lp71 ; 0 uses
 
 _ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit: ; preds = %bb.k
-  br i1 %10, label %11, label %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit.thread
+  br i1 %not.add.overflow, label %_ZN4cvc58internal8TypeNode4nullEv.exit.jt3, label %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit.thread
 
 _ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit.thread: ; preds = %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit, %bb.l
   call void @llvm.experimental.noalias.scope.decl(metadata !135)
@@ -316,13 +314,9 @@ bb.n:                                             ; preds = %bb.m
           cleanup
   br label %bb.t
 
-11:                                               ; preds = %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit
-  %12 = trunc nuw i64 %9 to i32
-  br label %_ZN4cvc58internal8TypeNode4nullEv.exit.jt3
-
-_ZN4cvc58internal8TypeNode4nullEv.exit.jt3:       ; preds = %11, %bb.i, %bb.g
-  %.227.jt3 = phi i32 [ %12, %11 ], [ %.02553, %bb.g ], [ %.02553, %bb.i ] ; 2 uses
-  %.123.jt3 = phi i8 [ 0, %11 ], [ 1, %bb.g ], [ 1, %bb.i ] ; 2 uses
+_ZN4cvc58internal8TypeNode4nullEv.exit.jt3:       ; preds = %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit, %bb.i, %bb.g
+  %.227.jt3 = phi i32 [ %add, %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit ], [ %.02553, %bb.g ], [ %.02553, %bb.i ] ; 2 uses
+  %.123.jt3 = phi i8 [ 0, %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit ], [ 1, %bb.g ], [ 1, %bb.i ] ; 2 uses
   %i.an = load ptr, ptr %6, align 8, !tbaa !11    ; 3 uses
   %i.ao = load i64, ptr %i.an, align 8            ; 3 uses
   %i.ap = and i64 %i.ao, 1152920405095219200
@@ -341,7 +335,7 @@ _ZN4cvc58internal8TypeNode4nullEv.exit.jt1.sink.split: ; preds = %_ZN4cvc58inter
   store i64 %i.au, ptr %.sink82, align 8, !noalias !20
   br label %_ZN4cvc58internal8TypeNode4nullEv.exit.jt1
 
-_ZN4cvc58internal8TypeNode4nullEv.exit.jt1:       ; preds = %_ZN4cvc58internal8TypeNode4nullEv.exit.jt1.sink.split, %bb.m, %bb.n, %bb.f, %bb.e
+_ZN4cvc58internal8TypeNode4nullEv.exit.jt1:       ; preds = %_ZN4cvc58internal8TypeNode4nullEv.exit.jt1.sink.split, %bb.n, %bb.f, %bb.m, %bb.e
   %i.av = load ptr, ptr %6, align 8, !tbaa !11    ; 3 uses
   %i.aw = load i64, ptr %i.av, align 8            ; 3 uses
   %i.ax = and i64 %i.aw, 1152920405095219200
@@ -744,16 +738,14 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit50: ; preds = %.critedge41, %bb.u,
   br label %.critedge40
 
 .critedge40:                                      ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit50
-  %i.br = phi i32 [ %i.av, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit ], [ %i.bg, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit50 ]
+  %i.br = phi i32 [ %i.av, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit ], [ %i.bg, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit50 ] ; 2 uses
   %i.bs = invoke noundef i32 @_ZNK4cvc58internal8TypeNode16getBitVectorSizeEv(ptr noundef nonnull align 8 dereferenceable(8) %6)
           to label %bb.x unwind label %bb.ah
 
 bb.x:                                             ; preds = %.critedge40
-  %9 = zext i32 %i.br to i64
-  %10 = zext i32 %i.bs to i64
-  %11 = add nuw nsw i64 %10, %9                   ; 2 uses
-  %12 = icmp samesign ult i64 %11, 4294967296     ; 2 uses
-  %or.cond.i52 = or i1 %.not.i, %12
+  %add = add i32 %i.bs, %i.br                     ; 2 uses
+  %not.add.overflow = icmp uge i32 %add, %i.br    ; 2 uses
+  %or.cond.i52 = or i1 %.not.i, %not.add.overflow
   br i1 %or.cond.i52, label %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
@@ -761,7 +753,7 @@ bb.y:                                             ; preds = %bb.x
           to label %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit.thread unwind label %bb.ah ; 0 uses
 
 _ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit: ; preds = %bb.x
-  br i1 %12, label %bb.ai, label %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit.thread
+  br i1 %not.add.overflow, label %bb.ai, label %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit.thread
 
 _ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit.thread: ; preds = %bb.y, %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit
   call void @llvm.experimental.noalias.scope.decl(metadata !253)
@@ -822,8 +814,7 @@ bb.ah:                                            ; preds = %bb.aa, %bb.y, %bb.a
   br label %bb.am
 
 bb.ai:                                            ; preds = %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit
-  %13 = trunc nuw i64 %11 to i32
-  invoke void @_ZN4cvc58internal11NodeManager15mkBitVectorTypeEj(ptr dead_on_unwind writable sret(%"class.cvc5::internal::TypeNode") align 8 %0, ptr noundef nonnull align 8 dereferenceable(3592) %1, i32 noundef %13)
+  invoke void @_ZN4cvc58internal11NodeManager15mkBitVectorTypeEj(ptr dead_on_unwind writable sret(%"class.cvc5::internal::TypeNode") align 8 %0, ptr noundef nonnull align 8 dereferenceable(3592) %1, i32 noundef %add)
           to label %_ZN4cvc58internal8TypeNode4nullEv.exit unwind label %bb.ah
 
 _ZN4cvc58internal8TypeNode4nullEv.exit.sink.split: ; preds = %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit.thread, %bb.k, %bb.c

@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.b
   br label %_ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELb0EE6resizeEmm.exit
 
 _ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyELb0EE6resizeEmm.exit: ; preds = %bb.g, %bb.f, %bb.a
-  %i.y = load i64, ptr %2, align 8, !tbaa !855    ; 3 uses
+  %i.y = load i64, ptr %2, align 8, !tbaa !855    ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 25 ; 5 uses
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !390, !range !391, !noundef !392 ; 2 uses
   %i.ab = trunc nuw i8 %i.aa to i1
@@ -228,14 +228,11 @@ _ZN5boost14multiprecision8backends12cpp_int_baseILm0ELm18446744073709551615ELNS0
   br i1 %exitcond.not.not83, label %.critedge, label %.lr.ph86
 
 .lr.ph86:                                         ; preds = %.lr.ph
-  %3 = zext i64 %i.y to i128
   %i.an = load i64, ptr %i.ak, align 8, !tbaa !855
-  %4 = zext i64 %i.an to i128
-  %5 = add nuw nsw i128 %3, %4                    ; 2 uses
-  %6 = trunc i128 %5 to i64
-  store i64 %6, ptr %i.ae, align 8, !tbaa !855
-  %.not43.peel = icmp samesign ult i128 %5, 18446744073709551616
-  br i1 %.not43.peel, label %.critedge, label %bb.h, !llvm.loop !8057
+  %add = add i64 %i.y, %i.an                      ; 2 uses
+  %not.add.overflow.not = icmp ult i64 %add, %i.y
+  store i64 %add, ptr %i.ae, align 8, !tbaa !855
+  br i1 %not.add.overflow.not, label %bb.h, label %.critedge, !llvm.loop !8057
 
 bb.h:                                             ; preds = %.lr.ph86
   %exitcond.not.not.peel = icmp eq i64 %i.am, 1

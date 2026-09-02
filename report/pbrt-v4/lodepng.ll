@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %.lr.ph, %_Z18lodepn
   %i.k = load <4 x i8>, ptr %.01523, align 1, !tbaa !29
   %i.l = load i8, ptr %i.j, align 1, !tbaa !29
   %i.m = zext <4 x i8> %i.k to <4 x i32>
-  %3 = zext i8 %i.l to i64
   %i.n = shl nuw <4 x i32> %i.m, <i32 24, i32 16, i32 8, i32 0> ; 4 uses
   %i.o = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %i.n) ; 2 uses
   %i.p = zext i32 %i.o to i64
@@ -230,13 +229,12 @@ iter.check:                                       ; preds = %bb.c
   %i.y = or disjoint i32 %i.w, %i.x
   %i.z = extractelement <4 x i32> %i.n, i64 2
   %i.aa = or disjoint i32 %i.y, %i.z
-  %i.ab = or disjoint i32 %i.aa, 11
-  %4 = zext i32 %i.ab to i64
-  %5 = add nuw nsw i64 %4, %3                     ; 2 uses
-  %6 = and i64 %5, 4294967295
-  %i.ac = icmp eq i64 %6, 4294967295
-  %7 = icmp samesign ugt i64 %5, 4294967295
-  %i.ad = or i1 %i.ac, %7
+  %i.ab = or disjoint i32 %i.aa, 11               ; 2 uses
+  %3 = zext i8 %i.l to i32
+  %add = add i32 %i.ab, %3                        ; 2 uses
+  %add.overflow = icmp ult i32 %add, %i.ab
+  %i.ac = icmp eq i32 %add, -1
+  %i.ad = or i1 %i.ac, %add.overflow
   br i1 %i.ad, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
