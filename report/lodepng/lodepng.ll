@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i.new
   %i.bk = shl i32 %.025.tr.i.3, 3
   %i.bl = shl i32 %i.bj, %i.bk
   %i.bm = xor i32 %i.bl, %i.bf                    ; 3 uses
-  %i.bn = add nuw i64 %.02535.i, 4                ; 2 uses
+  %i.bn = add nuw nsw i64 %.02535.i, 4            ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZL7getHashPKhmm.exit.loopexit.unr-lcssa, label %bb.f, !llvm.loop !857
@@ -232,7 +232,7 @@ bb.g:                                             ; preds = %bb.g, %.epil.prehea
   %i.br = shl i32 %.025.tr.i.epil, 3
   %i.bs = shl i32 %i.bq, %i.br
   %i.bt = xor i32 %i.bs, %.02634.i.epil           ; 2 uses
-  %i.bu = add nuw i64 %.02535.i.epil, 1
+  %i.bu = add nuw nsw i64 %.02535.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_ZL7getHashPKhmm.exit, label %bb.g, !llvm.loop !858
@@ -635,7 +635,7 @@ bb.bi:                                            ; preds = %bb.bi, %.lr.ph.i256
   %i.kz = shl i32 %.025.tr.i259.3, 3
   %i.la = shl i32 %i.ky, %i.kz
   %i.lb = xor i32 %i.la, %i.ku                    ; 3 uses
-  %i.lc = add nuw i64 %.02535.i257, 4             ; 2 uses
+  %i.lc = add nuw nsw i64 %.02535.i257, 4         ; 2 uses
   %niter404.next.3 = add i64 %niter404, 4         ; 2 uses
   %niter404.ncmp.3 = icmp eq i64 %niter404.next.3, %unroll_iter403
   br i1 %niter404.ncmp.3, label %_ZL7getHashPKhmm.exit263.loopexit.unr-lcssa, label %bb.bi, !llvm.loop !857
@@ -662,7 +662,7 @@ bb.bj:                                            ; preds = %bb.bj, %.epil.prehe
   %i.lg = shl i32 %.025.tr.i259.epil, 3
   %i.lh = shl i32 %i.lf, %i.lg
   %i.li = xor i32 %i.lh, %.02634.i258.epil        ; 2 uses
-  %i.lj = add nuw i64 %.02535.i257.epil, 1
+  %i.lj = add nuw nsw i64 %.02535.i257.epil, 1
   %epil.iter399.next = add i64 %epil.iter399, 1   ; 2 uses
   %epil.iter399.cmp.not = icmp eq i64 %epil.iter399.next, %xtraiter398
   br i1 %epil.iter399.cmp.not, label %_ZL7getHashPKhmm.exit263, label %bb.bj, !llvm.loop !863
