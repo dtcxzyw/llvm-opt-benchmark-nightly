@@ -204,32 +204,60 @@ bb.go:                                            ; preds = %bb.e, %bb.e
 bb.gp:                                            ; preds = %bb.e, %bb.e
   %i.aai = load i8, ptr %i.ab, align 8, !tbaa !23 ; 2 uses
   %i.aaj = load i8, ptr %i.z, align 8, !tbaa !23
-  %8 = tail call i8 @llvm.fshl.i8(i8 %i.aai, i8 %i.aai, i8 range(i8 0, 8) %i.aaj)
-  %i.aak = zext i8 %8 to i64
+  %8 = and i8 %i.aaj, 7                           ; 2 uses
+  %9 = zext i8 %i.aai to i16
+  %10 = shl i8 %i.aai, %8
+  %narrow.i2024 = sub nuw nsw i8 8, %8
+  %11 = zext nneg i8 %narrow.i2024 to i16
+  %12 = lshr i16 %9, %11
+  %13 = trunc nuw nsw i16 %12 to i8
+  %14 = or i8 %10, %13
+  %i.aak = zext i8 %14 to i64
   store i64 %i.aak, ptr %.sroa.0, align 8, !tbaa !23
   br label %_ir_fold_cast.exit2050.thread
 
 bb.gq:                                            ; preds = %bb.e
   %i.aal = load i8, ptr %i.ab, align 8, !tbaa !23 ; 2 uses
   %i.aam = load i8, ptr %i.z, align 8, !tbaa !23
-  %9 = tail call i8 @llvm.fshl.i8(i8 %i.aal, i8 %i.aal, i8 range(i8 0, 8) %i.aam)
-  %i.aan = sext i8 %9 to i64
+  %15 = and i8 %i.aam, 7                          ; 2 uses
+  %16 = zext i8 %i.aal to i16
+  %17 = shl i8 %i.aal, %15
+  %narrow.i = sub nuw nsw i8 8, %15
+  %18 = zext nneg i8 %narrow.i to i16
+  %19 = lshr i16 %16, %18
+  %20 = trunc nuw nsw i16 %19 to i8
+  %21 = or i8 %17, %20
+  %i.aan = sext i8 %21 to i64
   store i64 %i.aan, ptr %.sroa.0, align 8, !tbaa !23
   br label %_ir_fold_cast.exit2050.thread
 
 bb.gr:                                            ; preds = %bb.e
   %i.aao = load i16, ptr %i.ab, align 8, !tbaa !23 ; 2 uses
   %i.aap = load i16, ptr %i.z, align 8, !tbaa !23
-  %10 = tail call i16 @llvm.fshl.i16(i16 %i.aao, i16 %i.aao, i16 range(i16 0, 16) %i.aap)
-  %i.aaq = zext i16 %10 to i64
+  %22 = and i16 %i.aap, 15                        ; 2 uses
+  %23 = zext i16 %i.aao to i32
+  %24 = shl i16 %i.aao, %22
+  %narrow.i2026 = sub nuw nsw i16 16, %22
+  %25 = zext nneg i16 %narrow.i2026 to i32
+  %26 = lshr i32 %23, %25
+  %27 = trunc nuw nsw i32 %26 to i16
+  %28 = or i16 %24, %27
+  %i.aaq = zext i16 %28 to i64
   store i64 %i.aaq, ptr %.sroa.0, align 8, !tbaa !23
   br label %_ir_fold_cast.exit2050.thread
 
 bb.gs:                                            ; preds = %bb.e
   %i.aar = load i16, ptr %i.ab, align 8, !tbaa !23 ; 2 uses
   %i.aas = load i16, ptr %i.z, align 8, !tbaa !23
-  %11 = tail call i16 @llvm.fshl.i16(i16 %i.aar, i16 %i.aar, i16 range(i16 0, 16) %i.aas)
-  %i.aat = sext i16 %11 to i64
+  %29 = and i16 %i.aas, 15                        ; 2 uses
+  %30 = zext i16 %i.aar to i32
+  %31 = shl i16 %i.aar, %29
+  %narrow.i2025 = sub nuw nsw i16 16, %29
+  %32 = zext nneg i16 %narrow.i2025 to i32
+  %33 = lshr i32 %30, %32
+  %34 = trunc nuw nsw i32 %33 to i16
+  %35 = or i16 %31, %34
+  %i.aat = sext i16 %35 to i64
   store i64 %i.aat, ptr %.sroa.0, align 8, !tbaa !23
   br label %_ir_fold_cast.exit2050.thread
 
@@ -259,32 +287,60 @@ bb.gv:                                            ; preds = %bb.e, %bb.e
 bb.gw:                                            ; preds = %bb.e, %bb.e
   %i.abf = load i8, ptr %i.ab, align 8, !tbaa !23 ; 2 uses
   %i.abg = load i8, ptr %i.z, align 8, !tbaa !23
-  %12 = tail call i8 @llvm.fshr.i8(i8 %i.abf, i8 %i.abf, i8 range(i8 0, 8) %i.abg)
-  %i.abh = zext i8 %12 to i64
+  %36 = and i8 %i.abg, 7                          ; 2 uses
+  %37 = zext i8 %i.abf to i16
+  %38 = lshr i8 %i.abf, %36
+  %narrow.i2028 = sub nuw nsw i8 8, %36
+  %39 = zext nneg i8 %narrow.i2028 to i16
+  %40 = shl nuw i16 %37, %39
+  %41 = trunc i16 %40 to i8
+  %42 = or i8 %38, %41
+  %i.abh = zext i8 %42 to i64
   store i64 %i.abh, ptr %.sroa.0, align 8, !tbaa !23
   br label %_ir_fold_cast.exit2050.thread
 
 bb.gx:                                            ; preds = %bb.e
   %i.abi = load i8, ptr %i.ab, align 8, !tbaa !23 ; 2 uses
   %i.abj = load i8, ptr %i.z, align 8, !tbaa !23
-  %13 = tail call i8 @llvm.fshr.i8(i8 %i.abi, i8 %i.abi, i8 range(i8 0, 8) %i.abj)
-  %i.abk = sext i8 %13 to i64
+  %43 = and i8 %i.abj, 7                          ; 2 uses
+  %44 = zext i8 %i.abi to i16
+  %45 = lshr i8 %i.abi, %43
+  %narrow.i2027 = sub nuw nsw i8 8, %43
+  %46 = zext nneg i8 %narrow.i2027 to i16
+  %47 = shl nuw i16 %44, %46
+  %48 = trunc i16 %47 to i8
+  %49 = or i8 %45, %48
+  %i.abk = sext i8 %49 to i64
   store i64 %i.abk, ptr %.sroa.0, align 8, !tbaa !23
   br label %_ir_fold_cast.exit2050.thread
 
 bb.gy:                                            ; preds = %bb.e
   %i.abl = load i16, ptr %i.ab, align 8, !tbaa !23 ; 2 uses
   %i.abm = load i16, ptr %i.z, align 8, !tbaa !23
-  %14 = tail call i16 @llvm.fshr.i16(i16 %i.abl, i16 %i.abl, i16 range(i16 0, 16) %i.abm)
-  %i.abn = zext i16 %14 to i64
+  %50 = and i16 %i.abm, 15                        ; 2 uses
+  %51 = zext i16 %i.abl to i32
+  %52 = lshr i16 %i.abl, %50
+  %narrow.i2030 = sub nuw nsw i16 16, %50
+  %53 = zext nneg i16 %narrow.i2030 to i32
+  %54 = shl nuw i32 %51, %53
+  %55 = trunc i32 %54 to i16
+  %56 = or i16 %52, %55
+  %i.abn = zext i16 %56 to i64
   store i64 %i.abn, ptr %.sroa.0, align 8, !tbaa !23
   br label %_ir_fold_cast.exit2050.thread
 
 bb.gz:                                            ; preds = %bb.e
   %i.abo = load i16, ptr %i.ab, align 8, !tbaa !23 ; 2 uses
   %i.abp = load i16, ptr %i.z, align 8, !tbaa !23
-  %15 = tail call i16 @llvm.fshr.i16(i16 %i.abo, i16 %i.abo, i16 range(i16 0, 16) %i.abp)
-  %i.abq = sext i16 %15 to i64
+  %57 = and i16 %i.abp, 15                        ; 2 uses
+  %58 = zext i16 %i.abo to i32
+  %59 = lshr i16 %i.abo, %57
+  %narrow.i2029 = sub nuw nsw i16 16, %57
+  %60 = zext nneg i16 %narrow.i2029 to i32
+  %61 = shl nuw i32 %58, %60
+  %62 = trunc i32 %61 to i16
+  %63 = or i16 %59, %62
+  %i.abq = sext i16 %63 to i64
   store i64 %i.abq, ptr %.sroa.0, align 8, !tbaa !23
   br label %_ir_fold_cast.exit2050.thread
 
@@ -687,22 +743,10 @@ declare { i64, i1 } @llvm.smul.with.overflow.i64(i64, i64) #11
 declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.fshl.i8(i8, i8, i8) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.fshl.i16(i16, i16, i16) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshl.i32(i32, i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.fshl.i64(i64, i64, i64) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.fshr.i8(i8, i8, i8) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.fshr.i16(i16, i16, i16) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshr.i32(i32, i32, i32) #11

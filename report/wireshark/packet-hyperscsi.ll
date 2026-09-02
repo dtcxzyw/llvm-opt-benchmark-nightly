@@ -88,22 +88,23 @@ bb.a:
   %i.f = load i32, ptr @ett_hyperscsi, align 4
   %i.g = tail call ptr @proto_item_add_subtree(ptr noundef %i.e, i32 noundef %i.f) ; 2 uses
   %i.h = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 0) ; 2 uses
-  %i.i = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 1)
+  %i.i = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 1) ; 2 uses
   %i.j = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 2)
   %.not = icmp eq ptr %2, null
   br i1 %.not, label %.critedge, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = zext i8 %i.i to i32                      ; 2 uses
+  %4 = zext i8 %i.j to i32
+  %i.k = zext i8 %i.i to i32
   %i.l = shl nuw nsw i32 %i.k, 8
   %i.m = and i32 %i.l, 768
-  %4 = zext i8 %i.j to i32
   %5 = or disjoint i32 %i.m, %4
+  %6 = lshr i8 %i.i, 3
   %i.n = and i8 %i.h, 15
   %i.o = zext nneg i8 %i.n to i32
   %i.p = shl nuw nsw i32 %i.o, 5
-  %6 = lshr i32 %i.k, 3
-  %i.q = or disjoint i32 %i.p, %6
+  %7 = zext nneg i8 %6 to i32
+  %i.q = or disjoint i32 %i.p, %7
   %i.r = lshr i8 %i.h, 4
   %i.s = load i32, ptr @ett_hs_hdr, align 4
   %i.t = tail call ptr @proto_tree_add_subtree(ptr noundef %i.g, ptr noundef %0, i32 noundef 0, i32 noundef 3, i32 noundef %i.s, ptr noundef null, ptr noundef nonnull @.str.25) ; 4 uses

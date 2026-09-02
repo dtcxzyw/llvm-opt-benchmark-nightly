@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   %i.am = load i32, ptr %7, align 4, !tbaa !148
   %i.an = sext i32 %i.am to i64
   %i.ao = sub nsw i64 %i.al, %i.an
-  %i.ap = add nsw i64 %i.ao, 1                    ; 2 uses
+  %i.ap = add nsw i64 %i.ao, 1                    ; 3 uses
   %i.aq = load i32, ptr %i.x, align 4, !tbaa !149
   %i.ar = sext i32 %i.aq to i64
   %i.as = load i32, ptr %i.y, align 4, !tbaa !150
@@ -226,17 +226,21 @@ bb.f:                                             ; preds = %bb.e
 
 .preheader121.i:                                  ; preds = %bb.f
   %.not138.i = icmp eq i64 %i.au, %i.at
-  br i1 %.not138.i, label %.loopexit122.i, label %.lr.ph136.i.a
+  br i1 %.not138.i, label %.loopexit122.i, label %.lr.ph136.i
+
+.lr.ph136.i:                                      ; preds = %.preheader121.i
+  %11 = trunc i64 %i.ap to i32                    ; 2 uses
+  br label %.lr.ph136.i.a
 
 bb.g:                                             ; preds = %.loopexit122.i, %bb.e
   %i.ax = landingpad { ptr, i32 }
           cleanup
   br label %bb.al
 
-.lr.ph136.i.a:                                    ; preds = %.preheader121.i, %.thread115.i
-  %.075135.i = phi i64 [ %i.ec, %.thread115.i ], [ 0, %.preheader121.i ] ; 2 uses
-  %.080134.i = phi i1 [ %.2.ph.i, %.thread115.i ], [ false, %.preheader121.i ] ; 3 uses
-  %.084133.i = phi i32 [ %.4.ph114.i, %.thread115.i ], [ 0, %.preheader121.i ] ; 3 uses
+.lr.ph136.i.a:                                    ; preds = %.thread115.i, %.lr.ph136.i
+  %.075135.i = phi i64 [ 0, %.lr.ph136.i ], [ %i.ec, %.thread115.i ] ; 2 uses
+  %.080134.i = phi i1 [ false, %.lr.ph136.i ], [ %.2.ph.i, %.thread115.i ] ; 3 uses
+  %.084133.i = phi i32 [ 0, %.lr.ph136.i ], [ %.4.ph114.i, %.thread115.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %10, i8 0, i64 64, i1 false)
   %i.ay = trunc i64 %.075135.i to i32
@@ -292,17 +296,17 @@ bb.m:                                             ; preds = %bb.l
   store ptr inttoptr (i64 4096 to ptr), ptr %i.bn, align 8, !tbaa !22
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 28
   %i.bp = load i16, ptr %i.bo, align 4, !tbaa !53 ; 2 uses
-  %i.bq = sext i16 %i.bp to i32
+  %i.bq = sext i16 %i.bp to i32                   ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bm, i64 32
   store i32 %i.bq, ptr %i.br, align 8, !tbaa !54
-  %11 = sext i16 %i.bp to i64
-  %12 = mul nsw i64 %i.ap, %11                    ; 2 uses
-  %13 = trunc i64 %12 to i32
-  %14 = getelementptr inbounds nuw i8, ptr %i.bm, i64 36
-  store i32 %13, ptr %14, align 4, !tbaa !55
+  %12 = mul i32 %i.bq, %11
+  %13 = getelementptr inbounds nuw i8, ptr %i.bm, i64 36
+  store i32 %12, ptr %13, align 4, !tbaa !55
+  %14 = sext i16 %i.bp to i64
+  %15 = mul nsw i64 %i.ap, %14
   %i.bs = load i32, ptr %i.k, align 4, !tbaa !14
   %i.bt = sext i32 %i.bs to i64
-  %i.bu = mul i64 %12, %i.bt
+  %i.bu = mul i64 %15, %i.bt
   %i.bv = add i64 %i.bu, %.074127.i               ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.bw = load i16, ptr %i.aa, align 8, !tbaa !51
@@ -481,17 +485,17 @@ bb.af:                                            ; preds = %bb.ae
   store ptr %.072129.i, ptr %i.dn, align 8, !tbaa !22
   %i.do = getelementptr inbounds nuw i8, ptr %i.dm, i64 28
   %i.dp = load i16, ptr %i.do, align 4, !tbaa !53 ; 2 uses
-  %i.dq = sext i16 %i.dp to i32
+  %i.dq = sext i16 %i.dp to i32                   ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dm, i64 32
   store i32 %i.dq, ptr %i.dr, align 8, !tbaa !54
-  %15 = sext i16 %i.dp to i64
-  %16 = mul nsw i64 %i.ap, %15                    ; 2 uses
-  %17 = trunc i64 %16 to i32
-  %18 = getelementptr inbounds nuw i8, ptr %i.dm, i64 36
-  store i32 %17, ptr %18, align 4, !tbaa !55
+  %16 = mul i32 %i.dq, %11
+  %17 = getelementptr inbounds nuw i8, ptr %i.dm, i64 36
+  store i32 %16, ptr %17, align 4, !tbaa !55
+  %18 = sext i16 %i.dp to i64
+  %19 = mul nsw i64 %i.ap, %18
   %i.ds = load i32, ptr %i.k, align 4, !tbaa !14
   %i.dt = sext i32 %i.ds to i64
-  %i.du = mul i64 %16, %i.dt
+  %i.du = mul i64 %19, %i.dt
   %i.dv = getelementptr inbounds nuw i8, ptr %.072129.i, i64 %i.du
   %indvars.iv.next141.i = add nuw nsw i64 %indvars.iv140.i, 1 ; 2 uses
   %i.dw = load i16, ptr %i.aa, align 8, !tbaa !51

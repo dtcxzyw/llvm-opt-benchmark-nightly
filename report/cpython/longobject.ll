@@ -205,8 +205,8 @@ bb.m:                                             ; preds = %bb.k
 
 .preheader342.a:                                  ; preds = %.critedge.thread326
   %i.ax = getelementptr i8, ptr %0, i64 24
-  %7 = add nuw nsw i32 %1, 255
-  %8 = zext nneg i32 %7 to i64
+  %7 = trunc nuw nsw i32 %1 to i8
+  %8 = add nsw i8 %7, -1
   %i.ay = zext nneg i8 %switch.load to i64
   %i.az = add nsw i64 %i.f, -1
   br label %bb.o
@@ -235,8 +235,8 @@ bb.p:                                             ; preds = %bb.p, %bb.o
   %.1245 = phi ptr [ %.0244355, %bb.o ], [ %i.bm, %bb.p ]
   %.1243 = phi i64 [ %i.bg, %bb.o ], [ %i.bo, %bb.p ] ; 2 uses
   %.1241 = phi i32 [ %i.bh, %bb.o ], [ %i.bn, %bb.p ]
-  %9 = and i64 %.1243, %8
-  %10 = trunc i64 %9 to i8                        ; 2 uses
+  %9 = trunc i64 %.1243 to i8
+  %10 = and i8 %8, %9                             ; 2 uses
   %i.bj = icmp slt i8 %10, 10
   %i.bk = select i1 %i.bj, i8 48, i8 87
   %i.bl = add i8 %i.bk, %10
@@ -354,8 +354,8 @@ _PyUnicode_DATA.exit286:                          ; preds = %bb.ad, %bb.ac, %_Py
 
 .preheader338:                                    ; preds = %_PyUnicode_DATA.exit286
   %i.co = getelementptr i8, ptr %0, i64 24
-  %11 = add nuw nsw i32 %1, 255
-  %12 = zext nneg i32 %11 to i64
+  %11 = trunc nuw nsw i32 %1 to i8
+  %12 = add nsw i8 %11, -1
   %i.cp = zext nneg i8 %switch.load to i64
   %i.cq = add nsw i64 %i.f, -1
   br label %bb.af
@@ -384,8 +384,8 @@ bb.ag:                                            ; preds = %bb.ag, %bb.af
   %.2232 = phi ptr [ %.1231363, %bb.af ], [ %i.dd, %bb.ag ]
   %.1229 = phi i64 [ %i.cx, %bb.af ], [ %i.df, %bb.ag ] ; 2 uses
   %.1227 = phi i32 [ %i.cy, %bb.af ], [ %i.de, %bb.ag ]
-  %13 = and i64 %.1229, %12
-  %14 = trunc i64 %13 to i8                       ; 2 uses
+  %13 = trunc i64 %.1229 to i8
+  %14 = and i8 %12, %13                           ; 2 uses
   %i.da = icmp slt i8 %14, 10
   %i.db = select i1 %i.da, i8 48, i8 87
   %i.dc = add i8 %i.db, %14
@@ -484,7 +484,6 @@ _PyUnicode_DATA.exit302:                          ; preds = %bb.ar, %bb.aq, %_Py
 .preheader340:                                    ; preds = %_PyUnicode_DATA.exit302
   %i.dy = getelementptr i8, ptr %0, i64 24
   %i.dz = add nuw nsw i32 %1, 255
-  %15 = zext nneg i32 %i.dz to i64
   %i.ea = zext nneg i8 %switch.load to i64
   %i.eb = add nsw i64 %i.f, -1
   br label %bb.at
@@ -513,14 +512,17 @@ bb.au:                                            ; preds = %bb.au, %bb.at
   %.2220 = phi ptr [ %.1219359, %bb.at ], [ %i.en, %bb.au ]
   %.1217 = phi i64 [ %i.ei, %bb.at ], [ %i.ep, %bb.au ] ; 2 uses
   %.1215 = phi i32 [ %i.ej, %bb.at ], [ %i.eo, %bb.au ]
-  %16 = and i64 %.1217, %15
-  %i.el = trunc i64 %16 to i8                     ; 2 uses
+  %15 = trunc i64 %.1217 to i32
+  %16 = and i32 %i.dz, %15                        ; 2 uses
+  %i.el = trunc i32 %16 to i8
   %i.em = icmp slt i8 %i.el, 10
-  %17 = select i1 %i.em, i8 48, i8 87
-  %18 = add i8 %17, %i.el
-  %19 = sext i8 %18 to i16
+  %17 = select i1 %i.em, i16 48, i16 87
+  %18 = trunc i32 %16 to i16
+  %19 = add i16 %17, %18
+  %sext273 = shl i16 %19, 8
+  %20 = ashr exact i16 %sext273, 8
   %i.en = getelementptr i8, ptr %.2220, i64 -2    ; 4 uses
-  store i16 %19, ptr %i.en, align 2, !tbaa !148
+  store i16 %20, ptr %i.en, align 2, !tbaa !148
   %i.eo = sub i32 %.1215, %switch.ext             ; 3 uses
   %i.ep = lshr i64 %.1217, %i.ea                  ; 3 uses
   %i.eq = icmp sge i32 %i.eo, %switch.ext
@@ -614,7 +616,6 @@ _PyUnicode_DATA.exit318:                          ; preds = %bb.bf, %bb.be, %_Py
 .preheader:                                       ; preds = %_PyUnicode_DATA.exit318
   %i.fi = getelementptr i8, ptr %0, i64 24
   %i.fj = add nuw nsw i32 %1, 255
-  %20 = zext nneg i32 %i.fj to i64
   %i.fk = zext nneg i8 %switch.load to i64
   %i.fl = add nsw i64 %i.f, -1
   br label %bb.bh
@@ -643,14 +644,16 @@ bb.bi:                                            ; preds = %bb.bi, %bb.bh
   %.2 = phi ptr [ %.1212367, %bb.bh ], [ %i.fx, %bb.bi ]
   %.1210 = phi i64 [ %i.fs, %bb.bh ], [ %i.fz, %bb.bi ] ; 2 uses
   %.1208 = phi i32 [ %i.ft, %bb.bh ], [ %i.fy, %bb.bi ]
-  %21 = and i64 %.1210, %20
-  %i.fv = trunc i64 %21 to i8                     ; 2 uses
+  %21 = trunc i64 %.1210 to i32
+  %22 = and i32 %i.fj, %21                        ; 2 uses
+  %i.fv = trunc i32 %22 to i8
   %i.fw = icmp slt i8 %i.fv, 10
-  %22 = select i1 %i.fw, i8 48, i8 87
-  %23 = add i8 %22, %i.fv
-  %24 = sext i8 %23 to i32
+  %23 = select i1 %i.fw, i32 48, i32 87
+  %24 = add i32 %23, %22
+  %sext = shl i32 %24, 24
+  %25 = ashr exact i32 %sext, 24
   %i.fx = getelementptr i8, ptr %.2, i64 -4       ; 4 uses
-  store i32 %24, ptr %i.fx, align 4, !tbaa !26
+  store i32 %25, ptr %i.fx, align 4, !tbaa !26
   %i.fy = sub i32 %.1208, %switch.ext             ; 3 uses
   %i.fz = lshr i64 %.1210, %i.fk                  ; 3 uses
   %i.ga = icmp sge i32 %i.fy, %switch.ext

@@ -204,8 +204,8 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.bd
   %i.h = phi ptr [ %.pre, %.lr.ph ], [ %storemerge, %bb.bd ] ; 4 uses
   %.0155202 = phi i64 [ %3, %.lr.ph ], [ %.1156, %bb.bd ] ; 2 uses
-  %i.i = load i8, ptr %i.h, align 1, !tbaa !28    ; 6 uses
-  %i.j = zext i8 %i.i to i32                      ; 3 uses
+  %i.i = load i8, ptr %i.h, align 1, !tbaa !28    ; 7 uses
+  %i.j = zext i8 %i.i to i32                      ; 2 uses
   %i.k = icmp sgt i8 %i.i, -1
   br i1 %i.k, label %bb.c, label %bb.d
 
@@ -278,11 +278,11 @@ bb.m:                                             ; preds = %bb.h, %bb.i, %bb.j,
   %i.ap = load ptr, ptr %i.ao, align 16, !tbaa !68 ; 2 uses
   %.not175 = icmp eq ptr %i.ap, null
   %.phi.trans.insert = getelementptr i8, ptr %i.h, i64 1
-  %.pre225 = load i8, ptr %.phi.trans.insert, align 1, !tbaa !28 ; 3 uses
-  %.pre242 = zext i8 %.pre225 to i32              ; 3 uses
+  %.pre225 = load i8, ptr %.phi.trans.insert, align 1, !tbaa !28 ; 4 uses
   br i1 %.not175, label %._crit_edge, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
+  %5 = zext i8 %.pre225 to i32                    ; 2 uses
   %i.aq = getelementptr i8, ptr %i.ao, i64 8
   %i.ar = load i8, ptr %i.aq, align 8, !tbaa !69  ; 2 uses
   %i.as = zext i8 %i.ar to i32
@@ -296,7 +296,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not177, label %._crit_edge, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.av = sub nuw nsw i32 %.pre242, %i.as
+  %i.av = sub nuw nsw i32 %5, %i.as
   %i.aw = zext nneg i32 %i.av to i64
   %i.ax = getelementptr [2 x i8], ptr %i.ap, i64 %i.aw
   %i.ay = load i16, ptr %i.ax, align 2, !tbaa !34 ; 2 uses
@@ -306,7 +306,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.ba = mul nuw nsw i32 %i.j, 191
-  %i.bb = add nuw nsw i32 %i.ba, %.pre242         ; 3 uses
+  %i.bb = add nuw nsw i32 %i.ba, %5               ; 3 uses
   %i.bc = add nsw i32 %i.bb, -25849               ; 2 uses
   %or.cond7 = icmp ult i32 %i.bc, 4966
   br i1 %or.cond7, label %bb.t, label %bb.r
@@ -347,9 +347,10 @@ bb.v:                                             ; preds = %bb.t
   br i1 %i.br, label %.thread198, label %bb.bd, !llvm.loop !65
 
 ._crit_edge:                                      ; preds = %bb.m, %bb.p, %bb.o, %bb.n
-  %5 = shl nuw nsw i32 %i.j, 8
-  %6 = or disjoint i32 %5, %.pre242
-  %trunc = trunc nuw i32 %6 to i16
+  %6 = zext i8 %.pre225 to i16
+  %.tr = zext i8 %i.i to i16
+  %7 = shl nuw i16 %.tr, 8
+  %trunc = or disjoint i16 %7, %6
   switch i16 %trunc, label %.thread198 [
     i16 -30622, label %bb.w
     i16 -30620, label %bb.ae

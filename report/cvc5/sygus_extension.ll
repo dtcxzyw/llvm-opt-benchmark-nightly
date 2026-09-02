@@ -204,17 +204,18 @@ bb.ah:                                            ; preds = %_ZN4cvc58internal12
   %i.cr = icmp eq i32 %i.cq, 2
   %i.cs = load i64, ptr %i.ck, align 8
   %i.ct = lshr i64 %i.cs, 32
-  %57 = and i64 %i.ct, 67108863
-  %58 = sext i1 %i.cr to i64
-  %59 = add nsw i64 %57, %58                      ; 2 uses
-  %.not200.not660.not = icmp eq i64 %59, 0
+  %57 = sext i1 %i.cr to i32
+  %58 = trunc nuw i64 %i.ct to i32
+  %59 = and i32 %58, 67108863
+  %60 = add nsw i32 %59, %57                      ; 2 uses
+  %.not200.not660.not = icmp eq i32 %60, 0
   br i1 %.not200.not660.not, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.ah
   %i.cu = and i64 %i.av, 4294967295
   %i.cv = add i32 %5, 1
   %not. = xor i1 %6, true
-  %wide.trip.count = and i64 %59, 4294967295
+  %wide.trip.count = zext i32 %60 to i64
   br label %bb.aq
 
 bb.ai:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit340

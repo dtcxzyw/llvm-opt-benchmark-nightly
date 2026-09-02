@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %_ZN4core5slice6memc
 
 "_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit162.i.i.i": ; preds = %bb.dt, %.thread427.i.i.i, %bb.ak
   %.sroa.15.sroa.9.0.in.i = phi i64 [ %.sroa.15.sroa.9.0.extract.shift54.i, %bb.ak ], [ %.sroa.15.sroa.9.0.extract.shift56.i, %.thread427.i.i.i ], [ %.sroa.15.sroa.9.0.extract.shift56.i, %bb.dt ] ; 2 uses
-  %.sroa.15.sroa.0.0.in.i = phi i64 [ %.sroa.15.8.copyload15.i, %bb.ak ], [ %3, %.thread427.i.i.i ], [ %3, %bb.dt ] ; 2 uses
+  %.sroa.15.sroa.0.0.i = phi i32 [ %.sroa.15.sroa.0.0.extract.trunc46.i, %bb.ak ], [ %.sroa.15.sroa.0.0.extract.trunc47.i, %.thread427.i.i.i ], [ %.sroa.15.sroa.0.0.extract.trunc47.i, %bb.dt ] ; 2 uses
   %.sroa.19.0.i = phi i64 [ ptrtoint (ptr @11 to i64), %bb.ak ], [ %.sroa.43.3.ph.i.i.i, %.thread427.i.i.i ], [ %.sroa.43.3.ph.i.i.i, %bb.dt ] ; 2 uses
   %.sroa.18.0.i = phi i64 [ %.sroa.18.8.copyload23.i, %bb.ak ], [ %.sroa.39.3.ph.i.i.i, %.thread427.i.i.i ], [ %.sroa.39.3.ph.i.i.i, %bb.dt ] ; 2 uses
   %.sroa.83.0.i = phi i64 [ %.sroa.83.8.copyload7.i, %bb.ak ], [ %.sroa.15.3.ph.i.i.i, %.thread427.i.i.i ], [ %.sroa.15.3.ph.i.i.i, %bb.dt ] ; 2 uses
@@ -325,6 +325,7 @@ bb.ak:                                            ; preds = %.thread418.i.i.i
   %.sroa.83.8.copyload7.i = load i64, ptr %i.an, align 8, !noalias !17330
   %.sroa.15.8..sroa_idx14.i = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %.sroa.15.8.copyload15.i = load i64, ptr %.sroa.15.8..sroa_idx14.i, align 8, !noalias !17330 ; 2 uses
+  %.sroa.15.sroa.0.0.extract.trunc46.i = trunc i64 %.sroa.15.8.copyload15.i to i32
   %.sroa.15.sroa.9.0.extract.shift54.i = lshr i64 %.sroa.15.8.copyload15.i, 32
   %.sroa.18.8..sroa_idx22.i = getelementptr inbounds nuw i8, ptr %i.an, i64 16
   %.sroa.18.8.copyload23.i = load i64, ptr %.sroa.18.8..sroa_idx22.i, align 8, !noalias !17330
@@ -727,7 +728,7 @@ bb.dr:                                            ; preds = %"_ZN4core3ptr42drop
   br i1 %i.er, label %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit176.i.i.i", label %bb.ek
 
 .thread427.i.i.i:                                 ; preds = %bb.dr, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit294.i.i.i.i", %bb.an
-  %.sroa.28.sroa.16.sroa.0.3.ph.i.i.i = phi i56 [ %.sroa.28.sroa.16.0.extract.trunc272.i.i.i, %bb.an ], [ %.sroa.28.sroa.16.sroa.0.0.i.i.i, %bb.dr ], [ %.sroa.28.sroa.16.sroa.0.0.i.i.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit294.i.i.i.i" ]
+  %.sroa.28.sroa.16.sroa.0.3.ph.i.i.i = phi i56 [ %.sroa.28.sroa.16.0.extract.trunc272.i.i.i, %bb.an ], [ %.sroa.28.sroa.16.sroa.0.0.i.i.i, %bb.dr ], [ %.sroa.28.sroa.16.sroa.0.0.i.i.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit294.i.i.i.i" ] ; 2 uses
   %.sroa.28.sroa.0.3.ph.i.i.i = phi i8 [ %.sroa.28.sroa.0.0.extract.trunc256.i.i.i, %bb.an ], [ %.sroa.28.sroa.0.0.i.i.i, %bb.dr ], [ %.sroa.28.sroa.0.0.i.i.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit294.i.i.i.i" ]
   %.sroa.43.3.ph.i.i.i = phi i64 [ %.sroa.5385.0.copyload.i.i.i.i, %bb.an ], [ %.sroa.43.0.i.i.i, %bb.dr ], [ %.sroa.43.0.i.i.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit294.i.i.i.i" ] ; 2 uses
   %.sroa.39.3.ph.i.i.i = phi i64 [ %i.ew, %bb.an ], [ %.sroa.39.0.i.i.i, %bb.dr ], [ %.sroa.39.0.i.i.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit294.i.i.i.i" ] ; 2 uses
@@ -735,10 +736,11 @@ bb.dr:                                            ; preds = %"_ZN4core3ptr42drop
   %i.mc = phi <2 x i64> [ %i.ev, %bb.an ], [ %i.lz, %bb.dr ], [ %i.lz, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit294.i.i.i.i" ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !17317
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !17317
-  %i.md = zext i56 %.sroa.28.sroa.16.sroa.0.3.ph.i.i.i to i64 ; 2 uses
-  %1 = shl nuw i64 %i.md, 8
-  %2 = zext i8 %.sroa.28.sroa.0.3.ph.i.i.i to i64
-  %3 = or disjoint i64 %1, %2                     ; 2 uses
+  %i.md = zext i56 %.sroa.28.sroa.16.sroa.0.3.ph.i.i.i to i64
+  %1 = zext i8 %.sroa.28.sroa.0.3.ph.i.i.i to i32
+  %.tr.i = trunc i56 %.sroa.28.sroa.16.sroa.0.3.ph.i.i.i to i32
+  %2 = shl i32 %.tr.i, 8
+  %.sroa.15.sroa.0.0.extract.trunc47.i = or disjoint i32 %2, %1 ; 2 uses
   %.sroa.15.sroa.9.0.extract.shift56.i = lshr i64 %i.md, 24 ; 2 uses
   br i1 %i.er, label %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit162.i.i.i", label %bb.dt
 
@@ -1000,12 +1002,11 @@ bb.ei:                                            ; preds = %bb.i
 
 "_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit119.i.i.i": ; preds = %bb.el, %bb.ad, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit162.i.i.i"
   %.sroa.15.sroa.9.1.in.i = phi i64 [ %.sroa.15.sroa.9.0.extract.shift.i, %bb.el ], [ %.sroa.15.sroa.9.0.in.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit162.i.i.i" ], [ %.sroa.15.sroa.9.0.in.i, %bb.ad ]
-  %.sroa.15.sroa.0.1.in.i = phi i64 [ %.sroa.15.8.copyload11.i, %bb.el ], [ %.sroa.15.sroa.0.0.in.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit162.i.i.i" ], [ %.sroa.15.sroa.0.0.in.i, %bb.ad ]
+  %.sroa.15.sroa.0.1.i = phi i32 [ %.sroa.15.sroa.0.0.extract.trunc.i, %bb.el ], [ %.sroa.15.sroa.0.0.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit162.i.i.i" ], [ %.sroa.15.sroa.0.0.i, %bb.ad ]
   %.sroa.19.1.i = phi i64 [ %.sroa.19.8.copyload27.i, %bb.el ], [ %.sroa.19.0.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit162.i.i.i" ], [ %.sroa.19.0.i, %bb.ad ]
   %.sroa.18.1.i = phi i64 [ %.sroa.18.8.copyload19.i, %bb.el ], [ %.sroa.18.0.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit162.i.i.i" ], [ %.sroa.18.0.i, %bb.ad ]
   %.sroa.83.1.i = phi i64 [ %.sroa.83.8.copyload5.i, %bb.el ], [ %.sroa.83.0.i, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit162.i.i.i" ], [ %.sroa.83.0.i, %bb.ad ]
   %i.pe = phi <2 x i64> [ %i.pg, %bb.el ], [ %i.do, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit162.i.i.i" ], [ %i.do, %bb.ad ]
-  %.sroa.15.sroa.0.1.i = trunc i64 %.sroa.15.sroa.0.1.in.i to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ao), !noalias !17317
   call fastcc void @"_ZN4core3ptr144drop_in_place$LT$std..collections..hash..map..HashMap$LT$alloc..string..String$C$alloc..vec..Vec$LT$procfs_core..crypto..CryptoBlock$GT$$GT$$GT$17h4dc5aada83179561E"(ptr noalias noundef align 8 dereferenceable(48) %i.ap), !noalias !17317
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ap), !noalias !17317
@@ -1032,6 +1033,7 @@ bb.el:                                            ; preds = %bb.u
   %.sroa.83.8.copyload5.i = load i64, ptr %i.aj, align 8, !noalias !17330
   %.sroa.15.8..sroa_idx10.i = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   %.sroa.15.8.copyload11.i = load i64, ptr %.sroa.15.8..sroa_idx10.i, align 8, !noalias !17330 ; 2 uses
+  %.sroa.15.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.15.8.copyload11.i to i32
   %.sroa.15.sroa.9.0.extract.shift.i = lshr i64 %.sroa.15.8.copyload11.i, 32
   %.sroa.18.8..sroa_idx18.i = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
   %.sroa.18.8.copyload19.i = load i64, ptr %.sroa.18.8..sroa_idx18.i, align 8, !noalias !17330

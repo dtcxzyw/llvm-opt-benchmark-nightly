@@ -105,15 +105,15 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader:                                       ; preds = %bb.d, %bb.e
   %.pn = phi ptr [ %.051, %bb.e ], [ %i.a, %bb.d ] ; 2 uses
-  %.030 = phi i64 [ %i.n, %bb.e ], [ 0, %bb.d ]
+  %.030 = phi i64 [ %i.n, %bb.e ], [ 0, %bb.d ]   ; 2 uses
   %.0 = phi i64 [ %i.o, %bb.e ], [ %i.i, %bb.d ]  ; 2 uses
   %.051 = getelementptr inbounds nuw i8, ptr %.pn, i64 1 ; 2 uses
   %i.k = load i8, ptr %.051, align 1, !tbaa !11   ; 3 uses
   %.not = icmp sgt i8 %i.k, -1
-  %5 = shl i64 %.030, 7                           ; 2 uses
   br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.preheader
+  %5 = shl i64 %.030, 7
   %i.l = and i8 %i.k, 127
   %i.m = zext nneg i8 %i.l to i64
   %i.n = or disjoint i64 %5, %i.m                 ; 2 uses
@@ -125,9 +125,10 @@ bb.e:                                             ; preds = %.preheader
 
 bb.f:                                             ; preds = %.preheader
   %i.r = getelementptr inbounds nuw i8, ptr %.pn, i64 2
-  %6 = zext nneg i8 %i.k to i64
-  %7 = or disjoint i64 %5, %6
-  %8 = trunc i64 %7 to i32
+  %6 = zext nneg i8 %i.k to i32
+  %.030.tr = trunc i64 %.030 to i32
+  %7 = shl i32 %.030.tr, 7
+  %8 = or disjoint i32 %7, %6
   %i.s = add nsw i64 %.0, -1                      ; 2 uses
   %i.t = icmp eq i64 %i.s, 0
   br i1 %i.t, label %asn1_get_length.exit.thread, label %bb.h

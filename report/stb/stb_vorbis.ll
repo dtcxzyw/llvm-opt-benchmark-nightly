@@ -205,6 +205,7 @@ bb.eo:                                            ; preds = %._crit_edge546
 .lr.ph549:                                        ; preds = %bb.eo
   %i.sa = getelementptr inbounds nuw i8, ptr %i.bd, i64 1088
   %i.sb = getelementptr inbounds nuw i8, ptr %i.bd, i64 338 ; 3 uses
+  %8 = trunc i32 %i.by to i16
   %wide.trip.count = zext nneg i32 %i.ry to i64
   br label %bb.ep
 
@@ -500,8 +501,8 @@ bb.ep:                                            ; preds = %.lr.ph549, %bb.ex
   %.p.i = select i1 %i.vt, i32 %i.vu, i32 %i.vs
   %i.vv = add i32 %.p.i, %i.vj                    ; 6 uses
   %i.vw = getelementptr inbounds nuw [2 x i8], ptr %i.ca, i64 %indvars.iv594 ; 2 uses
-  %i.vx = load i16, ptr %i.vw, align 2, !tbaa !58 ; 3 uses
-  %i.vy = sext i16 %i.vx to i32                   ; 4 uses
+  %i.vx = load i16, ptr %i.vw, align 2, !tbaa !58 ; 4 uses
+  %i.vy = sext i16 %i.vx to i32                   ; 3 uses
   %i.vz = sub nsw i32 %i.by, %i.vv                ; 2 uses
   %.not398 = icmp eq i16 %i.vx, 0
   br i1 %.not398, label %bb.ew, label %bb.eq
@@ -523,8 +524,8 @@ bb.er:                                            ; preds = %bb.eq
   br i1 %i.wd, label %bb.ex, label %bb.es
 
 bb.es:                                            ; preds = %bb.er
-  %8 = xor i32 %i.vy, -1
-  %9 = add i32 %i.by, %8
+  %9 = xor i16 %i.vx, -1
+  %10 = add i16 %9, %8
   br label %.sink.split
 
 bb.et:                                            ; preds = %bb.eq
@@ -536,22 +537,24 @@ bb.eu:                                            ; preds = %bb.et
   %i.wf = add nsw i32 %i.vy, 1
   %i.wg = lshr exact i32 %i.wf, 1
   %i.wh = sub i32 %i.vv, %i.wg
+  %11 = trunc i32 %i.wh to i16
   br label %.sink.split
 
 bb.ev:                                            ; preds = %bb.et
   %i.wi = lshr exact i32 %i.vy, 1
   %i.wj = add i32 %i.vv, %i.wi
+  %12 = trunc i32 %i.wj to i16
   br label %.sink.split
 
 bb.ew:                                            ; preds = %bb.ep
   %i.wk = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv594
   store i8 0, ptr %i.wk, align 1, !tbaa !49
+  %13 = trunc i32 %i.vv to i16
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.ew, %bb.eu, %bb.ev, %bb.es
-  %.sink731 = phi i32 [ %9, %bb.es ], [ %i.wj, %bb.ev ], [ %i.wh, %bb.eu ], [ %i.vv, %bb.ew ]
-  %10 = trunc i32 %.sink731 to i16
-  store i16 %10, ptr %i.vw, align 2, !tbaa !58
+  %.sink729 = phi i16 [ %10, %bb.es ], [ %12, %bb.ev ], [ %11, %bb.eu ], [ %13, %bb.ew ]
+  store i16 %.sink729, ptr %i.vw, align 2, !tbaa !58
   br label %bb.ex
 
 bb.ex:                                            ; preds = %.sink.split, %bb.er

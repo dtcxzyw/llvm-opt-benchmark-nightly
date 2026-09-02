@@ -205,8 +205,8 @@ bb.u:                                             ; preds = %bb.t, %bb.n
 bb.v:                                             ; preds = %bb.ar, %bb.u
   %.1136188.i = phi i32 [ %..i, %bb.u ], [ %.3.i, %bb.ar ] ; 7 uses
   %i.ce = load i64, ptr %i.bx, align 8, !tbaa !190 ; 4 uses
-  %i.cf = load i16, ptr %i.at, align 8, !tbaa !74 ; 2 uses
-  %i.cg = zext i16 %i.cf to i64                   ; 2 uses
+  %i.cf = load i16, ptr %i.at, align 8, !tbaa !74 ; 3 uses
+  %i.cg = zext i16 %i.cf to i64
   %i.ch = icmp ult i64 %i.ce, %i.cg
   br i1 %i.ch, label %bb.w, label %.critedge.i
 
@@ -215,9 +215,10 @@ bb.w:                                             ; preds = %bb.v
   %i.ci = load ptr, ptr %i.ak, align 8, !tbaa !87
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 %i.ce
   store ptr %i.cj, ptr %i.by, align 8, !tbaa !191
-  %3 = sub nuw nsw i64 %i.cg, %i.ce
-  %i.ck = trunc nuw nsw i64 %3 to i32
-  store i32 %i.ck, ptr %i.bz, align 8, !tbaa !192
+  %3 = zext i16 %i.cf to i32
+  %i.ck = trunc nuw nsw i64 %i.ce to i32
+  %4 = sub nuw nsw i32 %3, %i.ck
+  store i32 %4, ptr %i.bz, align 8, !tbaa !192
   %i.cl = call ptr @__archive_read_ahead(ptr noundef %0, i64 noundef 1, ptr noundef nonnull %i.d) #17 ; 9 uses
   %i.cm = load i64, ptr %i.d, align 8, !tbaa !11  ; 3 uses
   %i.cn = icmp slt i64 %i.cm, 1

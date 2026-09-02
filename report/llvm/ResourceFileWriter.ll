@@ -205,8 +205,9 @@ _ZN4llvm5ErrorD2Ev.exit139:                       ; preds = %_ZN4llvm5ErrorD2Ev.
   store i64 %.sroa.7167.0.ph, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !97
   %i.dx = load i16, ptr %i.by, align 8, !tbaa !136
   %i.dy = zext i16 %i.dx to i64
-  %i.dz = add nuw nsw i64 %.078245, %i.dy
-  store i64 %i.dz, ptr %i.bs, align 8
+  %i.dz = add nuw i64 %.078245, %i.dy
+  %.sroa.0.0.insert.ext.i = and i64 %i.dz, 4294967295
+  store i64 %.sroa.0.0.insert.ext.i, ptr %i.bs, align 8
   store i8 1, ptr %i.bt, align 8, !tbaa !93
   call void @_ZN4llvm2rc18ResourceFileWriter13writeResourceEPKNS0_10RCResourceEMS1_FNS_5ErrorES4_E(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Error") align 8 %0, ptr noundef nonnull align 8 dereferenceable(250) %1, ptr noundef nonnull %15, i64 ptrtoint (ptr @_ZN4llvm2rc18ResourceFileWriter27writeSingleIconOrCursorBodyEPKNS0_10RCResourceE to i64), i64 0)
   %i.ea = load ptr, ptr %0, align 8, !tbaa !91

@@ -205,14 +205,15 @@ _ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEE
 
 bb.d:                                             ; preds = %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i
   tail call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull %i.n, i64 noundef %i.x, i64 noundef 8) #14
-  %.pre.i.i = load i32, ptr %i.o, align 8, !tbaa !40
+  %.pre.i.i = load i32, ptr %i.o, align 8, !tbaa !40 ; 2 uses
   %.pre16.i.i = zext i32 %.pre.i.i to i64
   %.pre.i = load ptr, ptr %0, align 8, !tbaa !39
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i
   %i.y = phi ptr [ %.pre.i, %bb.d ], [ %i.n, %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i ]
-  %.pre-phi.i.i = phi i64 [ %.pre16.i.i, %bb.d ], [ 0, %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i ] ; 2 uses
+  %.pre-phi.i.i = phi i64 [ %.pre16.i.i, %bb.d ], [ 0, %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i ]
+  %2 = phi i32 [ %.pre.i.i, %bb.d ], [ 0, %_ZSt10__distanceIN6hermes12PredIteratorINS0_10BasicBlockEPPNS0_11InstructionEEEENSt15iterator_traitsIT_E15difference_typeES8_S8_St18input_iterator_tag.exit.i.i ]
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %.pre-phi.i.i
   br label %.lr.ph.i.i.i.i.i.i
 
@@ -250,12 +251,12 @@ _ZN6hermes12PredIteratorINS_10BasicBlockEPPNS_11InstructionEEppEv.exit.i.i.i.i.i
   br i1 %.not.i.i.i.i.i.i, label %_ZN4llvh15SmallVectorImplIPN6hermes10BasicBlockEE6appendINS1_12PredIteratorIS2_PPNS1_11InstructionEEEvEEvT_SB_.exit.loopexit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !386
 
 _ZN4llvh15SmallVectorImplIPN6hermes10BasicBlockEE6appendINS1_12PredIteratorIS2_PPNS1_11InstructionEEEvEEvT_SB_.exit.loopexit.i: ; preds = %_ZN6hermes12PredIteratorINS_10BasicBlockEPPNS_11InstructionEEppEv.exit.i.i.i.i.i.i
-  %2 = add nuw i64 %.pre-phi.i.i, %i.x
-  %3 = trunc i64 %2 to i32
+  %3 = trunc i64 %i.x to i32
+  %4 = add i32 %2, %3
   br label %_ZN4llvh11SmallVectorIPN6hermes10BasicBlockELj8EEC2INS1_12PredIteratorIS2_PPNS1_11InstructionEEEvEET_SB_.exit
 
 _ZN4llvh11SmallVectorIPN6hermes10BasicBlockELj8EEC2INS1_12PredIteratorIS2_PPNS1_11InstructionEEEvEET_SB_.exit: ; preds = %_ZN4llvh16inverse_childrenIPN6hermes10BasicBlockEEENS_14iterator_rangeINS_11GraphTraitsINS_7InverseIT_EEE17ChildIteratorTypeEEERKNS5_IS7_E7NodeRefE.exit, %_ZN4llvh15SmallVectorImplIPN6hermes10BasicBlockEE6appendINS1_12PredIteratorIS2_PPNS1_11InstructionEEEvEEvT_SB_.exit.loopexit.i
-  %i.al = phi i32 [ 0, %_ZN4llvh16inverse_childrenIPN6hermes10BasicBlockEEENS_14iterator_rangeINS_11GraphTraitsINS_7InverseIT_EEE17ChildIteratorTypeEEERKNS5_IS7_E7NodeRefE.exit ], [ %3, %_ZN4llvh15SmallVectorImplIPN6hermes10BasicBlockEE6appendINS1_12PredIteratorIS2_PPNS1_11InstructionEEEvEEvT_SB_.exit.loopexit.i ]
+  %i.al = phi i32 [ %4, %_ZN4llvh15SmallVectorImplIPN6hermes10BasicBlockEE6appendINS1_12PredIteratorIS2_PPNS1_11InstructionEEEvEEvT_SB_.exit.loopexit.i ], [ 0, %_ZN4llvh16inverse_childrenIPN6hermes10BasicBlockEEENS_14iterator_rangeINS_11GraphTraitsINS_7InverseIT_EEE17ChildIteratorTypeEEERKNS5_IS7_E7NodeRefE.exit ]
   store i32 %i.al, ptr %i.o, align 8, !tbaa !40
   ret void
 }

@@ -202,7 +202,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit.i: ; preds = %bb.d, %
   %.0.i.i = phi ptr [ %i.r, %bb.c ], [ %0, %bb.d ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %.pre.i = zext nneg i8 %1 to i32                ; 2 uses
-  %.pre21.i = lshr i32 %.pre.i, 4
+  %.pre21.i = lshr i32 %.pre.i, 4                 ; 2 uses
+  %.pre25.i = trunc nuw nsw i32 %.pre21.i to i8
   br label %bb.j
 
 bb.e:                                             ; preds = %bb.a
@@ -211,9 +212,9 @@ bb.e:                                             ; preds = %bb.a
   %i.v = lshr i32 %i.u, 4
   %i.w = and i32 %i.v, 15                         ; 3 uses
   %i.x = icmp samesign ult i32 %i.w, 10
-  %2 = select i1 %i.x, i32 48, i32 87
-  %3 = add nuw nsw i32 %2, %i.w
-  %4 = trunc nuw nsw i32 %3 to i8                 ; 2 uses
+  %2 = select i1 %i.x, i8 48, i8 87
+  %3 = trunc nuw nsw i32 %i.w to i8               ; 2 uses
+  %4 = add nuw nsw i8 %2, %3                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store i8 %4, ptr %i.d, align 1, !tbaa !16
   %i.y = load ptr, ptr %0, align 8, !tbaa !20
@@ -238,9 +239,9 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit11.i: ; preds = %bb.g,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %i.ag = and i32 %i.u, 15                        ; 2 uses
   %i.ah = icmp samesign ult i32 %i.ag, 10
-  %5 = select i1 %i.ah, i32 48, i32 87
-  %6 = add nuw nsw i32 %5, %i.ag
-  %7 = trunc nuw nsw i32 %6 to i8                 ; 2 uses
+  %5 = select i1 %i.ah, i8 48, i8 87
+  %6 = trunc nuw nsw i32 %i.ag to i8
+  %7 = add nuw nsw i8 %5, %6                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i8 %7, ptr %i.c, align 1, !tbaa !16
   %i.ai = load ptr, ptr %.0.i10.i, align 8, !tbaa !20
@@ -266,16 +267,16 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit14.i: ; preds = %bb.i,
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit14.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit.i
-  %.pre-phi24.i = phi i32 [ %i.w, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit14.i ], [ %.pre21.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit.i ] ; 2 uses
+  %.pre-phi26.i = phi i8 [ %3, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit14.i ], [ %.pre25.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit.i ]
+  %.pre-phi24.i = phi i32 [ %i.w, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit14.i ], [ %.pre21.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit.i ]
   %.pre-phi.i = phi i32 [ %i.u, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit14.i ], [ %.pre.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit.i ] ; 2 uses
   %i.aq = phi ptr [ %.0.i13.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit14.i ], [ %.0.i.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit.i ] ; 6 uses
   %i.ar = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.aq, ptr noundef nonnull @.str.8, i64 noundef 5) ; 0 uses
   %i.as = icmp samesign ult i32 %.pre-phi24.i, 10
-  %8 = select i1 %i.as, i32 48, i32 87
-  %9 = add nuw nsw i32 %8, %.pre-phi24.i
-  %10 = trunc nuw nsw i32 %9 to i8                ; 2 uses
+  %8 = select i1 %i.as, i8 48, i8 87
+  %9 = add nuw nsw i8 %8, %.pre-phi26.i           ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store i8 %10, ptr %i.b, align 1, !tbaa !16
+  store i8 %9, ptr %i.b, align 1, !tbaa !16
   %i.at = load ptr, ptr %i.aq, align 8, !tbaa !20
   %i.au = getelementptr i8, ptr %i.at, i64 -24
   %i.av = load i64, ptr %i.au, align 8
@@ -290,7 +291,7 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit17.i
 
 bb.l:                                             ; preds = %bb.j
-  %i.ba = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %i.aq, i8 noundef signext %10) ; 0 uses
+  %i.ba = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %i.aq, i8 noundef signext %9) ; 0 uses
   br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit17.i
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit17.i: ; preds = %bb.l, %bb.k
@@ -298,11 +299,11 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit17.i: ; preds = %bb.l,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.bb = and i32 %.pre-phi.i, 15                 ; 2 uses
   %i.bc = icmp samesign ult i32 %i.bb, 10
-  %11 = select i1 %i.bc, i32 48, i32 87
-  %12 = add nuw nsw i32 %11, %i.bb
-  %13 = trunc nuw nsw i32 %12 to i8               ; 2 uses
+  %10 = select i1 %i.bc, i8 48, i8 87
+  %11 = trunc nuw nsw i32 %i.bb to i8
+  %12 = add nuw nsw i8 %10, %11                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store i8 %13, ptr %i.a, align 1, !tbaa !16
+  store i8 %12, ptr %i.a, align 1, !tbaa !16
   %i.bd = load ptr, ptr %.0.i16.i, align 8, !tbaa !20
   %i.be = getelementptr i8, ptr %i.bd, i64 -24
   %i.bf = load i64, ptr %i.be, align 8
@@ -317,7 +318,7 @@ bb.m:                                             ; preds = %_ZStlsISt11char_tra
   br label %_ZN4absl12lts_2026052624internal_generic_printerL13PrintCharImplIcEERSoS3_T_.exit
 
 bb.n:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit17.i
-  %i.bk = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %.0.i16.i, i8 noundef signext %13) ; 0 uses
+  %i.bk = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %.0.i16.i, i8 noundef signext %12) ; 0 uses
   br label %_ZN4absl12lts_2026052624internal_generic_printerL13PrintCharImplIcEERSoS3_T_.exit
 
 _ZN4absl12lts_2026052624internal_generic_printerL13PrintCharImplIcEERSoS3_T_.exit: ; preds = %bb.m, %bb.n
@@ -369,7 +370,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_a.exit.i: ; preds = %bb.d, %
   %.0.i.i.i = phi ptr [ %i.r, %bb.c ], [ %0, %bb.d ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %.pre.i = zext nneg i8 %1 to i32                ; 2 uses
-  %.pre18.i = lshr i32 %.pre.i, 4
+  %.pre18.i = lshr i32 %.pre.i, 4                 ; 2 uses
+  %.pre22.i = trunc nuw nsw i32 %.pre18.i to i8
   br label %bb.j
 
 bb.e:                                             ; preds = %bb.a
@@ -378,9 +380,9 @@ bb.e:                                             ; preds = %bb.a
   %i.v = lshr i32 %i.u, 4
   %i.w = and i32 %i.v, 15                         ; 3 uses
   %i.x = icmp samesign ult i32 %i.w, 10
-  %2 = select i1 %i.x, i32 48, i32 87
-  %3 = add nuw nsw i32 %2, %i.w
-  %4 = trunc nuw nsw i32 %3 to i8                 ; 2 uses
+  %2 = select i1 %i.x, i8 48, i8 87
+  %3 = trunc nuw nsw i32 %i.w to i8               ; 2 uses
+  %4 = add nuw nsw i8 %2, %3                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store i8 %4, ptr %i.d, align 1, !tbaa !16
   %i.y = load ptr, ptr %0, align 8, !tbaa !20
@@ -405,9 +407,9 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit.i: ; preds = %bb.g, %
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %i.ag = and i32 %i.u, 15                        ; 2 uses
   %i.ah = icmp samesign ult i32 %i.ag, 10
-  %5 = select i1 %i.ah, i32 48, i32 87
-  %6 = add nuw nsw i32 %5, %i.ag
-  %7 = trunc nuw nsw i32 %6 to i8                 ; 2 uses
+  %5 = select i1 %i.ah, i8 48, i8 87
+  %6 = trunc nuw nsw i32 %i.ag to i8
+  %7 = add nuw nsw i8 %5, %6                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i8 %7, ptr %i.c, align 1, !tbaa !16
   %i.ai = load ptr, ptr %.0.i.i, align 8, !tbaa !20
@@ -433,16 +435,16 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit11.i: ; preds = %bb.i,
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit11.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_a.exit.i
-  %.pre-phi21.i = phi i32 [ %i.w, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit11.i ], [ %.pre18.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_a.exit.i ] ; 2 uses
+  %.pre-phi23.i = phi i8 [ %3, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit11.i ], [ %.pre22.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_a.exit.i ]
+  %.pre-phi21.i = phi i32 [ %i.w, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit11.i ], [ %.pre18.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_a.exit.i ]
   %.pre-phi.i = phi i32 [ %i.u, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit11.i ], [ %.pre.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_a.exit.i ] ; 2 uses
   %i.aq = phi ptr [ %.0.i10.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit11.i ], [ %.0.i.i.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_a.exit.i ] ; 6 uses
   %i.ar = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.aq, ptr noundef nonnull @.str.8, i64 noundef 5) ; 0 uses
   %i.as = icmp samesign ult i32 %.pre-phi21.i, 10
-  %8 = select i1 %i.as, i32 48, i32 87
-  %9 = add nuw nsw i32 %8, %.pre-phi21.i
-  %10 = trunc nuw nsw i32 %9 to i8                ; 2 uses
+  %8 = select i1 %i.as, i8 48, i8 87
+  %9 = add nuw nsw i8 %8, %.pre-phi23.i           ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store i8 %10, ptr %i.b, align 1, !tbaa !16
+  store i8 %9, ptr %i.b, align 1, !tbaa !16
   %i.at = load ptr, ptr %i.aq, align 8, !tbaa !20
   %i.au = getelementptr i8, ptr %i.at, i64 -24
   %i.av = load i64, ptr %i.au, align 8
@@ -457,7 +459,7 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit14.i
 
 bb.l:                                             ; preds = %bb.j
-  %i.ba = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %i.aq, i8 noundef signext %10) ; 0 uses
+  %i.ba = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %i.aq, i8 noundef signext %9) ; 0 uses
   br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit14.i
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit14.i: ; preds = %bb.l, %bb.k
@@ -465,11 +467,11 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit14.i: ; preds = %bb.l,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.bb = and i32 %.pre-phi.i, 15                 ; 2 uses
   %i.bc = icmp samesign ult i32 %i.bb, 10
-  %11 = select i1 %i.bc, i32 48, i32 87
-  %12 = add nuw nsw i32 %11, %i.bb
-  %13 = trunc nuw nsw i32 %12 to i8               ; 2 uses
+  %10 = select i1 %i.bc, i8 48, i8 87
+  %11 = trunc nuw nsw i32 %i.bb to i8
+  %12 = add nuw nsw i8 %10, %11                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store i8 %13, ptr %i.a, align 1, !tbaa !16
+  store i8 %12, ptr %i.a, align 1, !tbaa !16
   %i.bd = load ptr, ptr %.0.i13.i, align 8, !tbaa !20
   %i.be = getelementptr i8, ptr %i.bd, i64 -24
   %i.bf = load i64, ptr %i.be, align 8
@@ -484,7 +486,7 @@ bb.m:                                             ; preds = %_ZStlsISt11char_tra
   br label %_ZN4absl12lts_2026052624internal_generic_printerL13PrintCharImplIaEERSoS3_T_.exit
 
 bb.n:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit14.i
-  %i.bk = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %.0.i13.i, i8 noundef signext %13) ; 0 uses
+  %i.bk = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %.0.i13.i, i8 noundef signext %12) ; 0 uses
   br label %_ZN4absl12lts_2026052624internal_generic_printerL13PrintCharImplIaEERSoS3_T_.exit
 
 _ZN4absl12lts_2026052624internal_generic_printerL13PrintCharImplIaEERSoS3_T_.exit: ; preds = %bb.m, %bb.n
@@ -626,9 +628,9 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit14.i: ; preds = %bb.l,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.bg = and i32 %i.au, 15                       ; 2 uses
   %i.bh = icmp samesign ult i32 %i.bg, 10
-  %2 = select i1 %i.bh, i32 48, i32 87
-  %3 = add nuw nsw i32 %2, %i.bg
-  %4 = trunc nuw nsw i32 %3 to i8                 ; 2 uses
+  %2 = select i1 %i.bh, i8 48, i8 87
+  %3 = trunc nuw nsw i32 %i.bg to i8
+  %4 = add nuw nsw i8 %2, %3                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i8 %4, ptr %i.a, align 1, !tbaa !16
   %i.bi = load ptr, ptr %.0.i13.i, align 8, !tbaa !20

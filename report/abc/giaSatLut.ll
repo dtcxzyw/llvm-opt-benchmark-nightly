@@ -205,10 +205,11 @@ bb.j:                                             ; preds = %.preheader258.prehe
   %i.jx = and i32 %i.jw, 536870911
   %i.jy = sub nsw i32 %i.ju, %i.jx
   %i.jz = mul nsw i32 %i.jy, 7
-  %2 = lshr i64 %.val3.i248.1409, 61
-  %3 = trunc nuw nsw i64 %2 to i32
-  %4 = xor i32 %i.bw, %3
-  %5 = and i32 %4, 1
+  %2 = and i64 %.val3.i248.1409, 2305843009213693952
+  %3 = icmp ne i64 %2, 0
+  %4 = trunc i32 %i.bw to i1
+  %.not147.1410 = xor i1 %3, %4
+  %5 = zext i1 %.not147.1410 to i32
   %i.ka = add nsw i32 %i.jz, %5
   tail call void (ptr, ptr, ...) @Vec_StrPrintF(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.48, i32 noundef %i.jp)
   tail call void (ptr, ptr, ...) @Vec_StrPrintF(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.48, i32 noundef %i.eo)

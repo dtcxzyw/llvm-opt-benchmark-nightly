@@ -28,13 +28,14 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.j, label %.thread75, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c
-  %3 = and i64 %i.e, 7
+  %3 = trunc nuw nsw i64 %i.e to i32
+  %4 = and i32 %3, 7
   %i.k = getelementptr i8, ptr %1, i64 8
   %i.l = getelementptr i8, ptr %0, i64 1872       ; 2 uses
   %i.m = getelementptr i8, ptr %0, i64 1876       ; 3 uses
-  switch i64 %3, label %.thread75.sink.split [
-    i64 1, label %__raw_uncore_read32.exit26.us.us.i.us.preheader
-    i64 0, label %.lr.ph.split.split.us
+  switch i32 %4, label %.thread75.sink.split [
+    i32 1, label %__raw_uncore_read32.exit26.us.us.i.us.preheader
+    i32 0, label %.lr.ph.split.split.us
   ]
 
 __raw_uncore_read32.exit26.us.us.i.us.preheader:  ; preds = %.lr.ph

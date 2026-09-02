@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.a, %bb.a, %bb.b, %bb.c
   %.1123 = phi i32 [ %2, %bb.c ], [ 256, %bb.b ], [ %2, %bb.a ], [ %2, %bb.a ] ; 4 uses
-  %.0121 = phi i32 [ 6, %bb.c ], [ 5, %bb.b ], [ 5, %bb.a ], [ 5, %bb.a ] ; 2 uses
+  %.0121 = phi i32 [ 6, %bb.c ], [ 5, %bb.b ], [ 5, %bb.a ], [ 5, %bb.a ] ; 3 uses
   %.not340 = icmp eq ptr %1, null
   br i1 %.not340, label %.critedge, label %.lr.ph347
 
@@ -212,8 +212,8 @@ bb.d:                                             ; preds = %bb.a, %bb.a, %bb.b,
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.not138 = icmp eq i32 %.1123, 15360
   %.sroa.8.0..sroa_idx101 = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.b = zext nneg i32 %.0121 to i64              ; 2 uses
-  %4 = add nuw nsw i64 %i.b, 4294967294
+  %i.b = zext nneg i32 %.0121 to i64
+  %4 = add nsw i32 %.0121, -2
   %i.c = load i32, ptr %1, align 4, !tbaa !36
   %.not137403 = icmp eq i32 %i.c, 0
   br i1 %.not137403, label %.critedge, label %.preheader333.preheader
@@ -325,10 +325,11 @@ bb.i:                                             ; preds = %bb.h, %.critedge6.i
   %i.t = shl i64 %indvars.iv, 4
   %i.u = getelementptr i8, ptr %3, i64 %i.t
   %scevgep = getelementptr i8, ptr %i.u, i64 16
-  %5 = sub nsw i64 %4, %indvars.iv
-  %6 = shl i64 %5, 4
-  %7 = and i64 %6, 68719476720
-  %i.v = add nuw nsw i64 %7, 16
+  %5 = trunc i64 %indvars.iv to i32
+  %6 = sub i32 %4, %5
+  %7 = zext i32 %6 to i64
+  %8 = shl nuw nsw i64 %7, 4
+  %i.v = add nuw nsw i64 %8, 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %scevgep, i8 0, i64 %i.v, i1 false), !tbaa !38
   br label %._crit_edge
 
@@ -731,7 +732,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.a, %bb.a, %bb.b, %bb.c
   %.1126 = phi i32 [ %3, %bb.c ], [ 256, %bb.b ], [ %3, %bb.a ], [ %3, %bb.a ] ; 4 uses
-  %.0123 = phi i32 [ 6, %bb.c ], [ 5, %bb.b ], [ 5, %bb.a ], [ 5, %bb.a ] ; 2 uses
+  %.0123 = phi i32 [ 6, %bb.c ], [ 5, %bb.b ], [ 5, %bb.a ], [ 5, %bb.a ] ; 3 uses
   %i.a = icmp ne ptr %1, null
   %i.b = icmp ne i64 %2, 0
   %or.cond403 = and i1 %i.a, %i.b
@@ -741,8 +742,8 @@ bb.d:                                             ; preds = %bb.a, %bb.a, %bb.b,
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 8
   %.not138 = icmp eq i32 %.1126, 15360
   %.sroa.8.0..sroa_idx102 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.d = zext nneg i32 %.0123 to i64              ; 2 uses
-  %6 = add nuw nsw i64 %i.d, 4294967294
+  %i.d = zext nneg i32 %.0123 to i64
+  %6 = add nsw i32 %.0123, -2
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph411, %is_nfs4_perms.exit.backedge
@@ -889,10 +890,11 @@ bb.j:                                             ; preds = %bb.i, %next_field.e
   %i.z = shl i64 %indvars.iv, 4
   %i.aa = getelementptr i8, ptr %5, i64 %i.z
   %scevgep437 = getelementptr i8, ptr %i.aa, i64 16
-  %7 = sub nsw i64 %6, %indvars.iv
-  %8 = shl i64 %7, 4
-  %9 = and i64 %8, 68719476720
-  %i.ab = add nuw nsw i64 %9, 16
+  %7 = trunc i64 %indvars.iv to i32
+  %8 = sub i32 %6, %7
+  %9 = zext i32 %8 to i64
+  %10 = shl nuw nsw i64 %9, 4
+  %i.ab = add nuw nsw i64 %10, 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %scevgep437, i8 0, i64 %i.ab, i1 false), !tbaa !37
   br label %._crit_edge
 

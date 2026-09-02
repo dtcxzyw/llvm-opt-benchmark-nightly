@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   br label %qrx_get_cipher_ctx_idx.exit.thread68
 
 bb.f:                                             ; preds = %bb.e
-  %i.u = zext nneg i8 %9 to i64                   ; 7 uses
+  %i.u = zext nneg i8 %9 to i64                   ; 5 uses
   switch i8 %i.p, label %qrx_get_cipher_ctx_idx.exit.thread [
     i8 1, label %bb.g
     i8 2, label %qrx_get_cipher_ctx_idx.exit
@@ -227,11 +227,14 @@ qrx_get_cipher_ctx_idx.exit.thread68:             ; preds = %.thread.i, %bb.g, %
 qrx_get_cipher_ctx_idx.exit:                      ; preds = %bb.f
   %i.aa = getelementptr inbounds nuw i8, ptr %i.e, i64 80
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !83 ; 2 uses
-  %11 = and i64 %i.ab, 1                          ; 2 uses
-  %12 = xor i64 %11, %i.u
-  %i.ac = sub i64 %i.ab, %12
+  %11 = zext nneg i8 %9 to i32                    ; 2 uses
+  %12 = trunc i64 %i.ab to i32
+  %13 = and i32 %12, 1                            ; 2 uses
+  %14 = xor i32 %13, %11
+  %15 = zext nneg i32 %14 to i64
+  %i.ac = sub i64 %i.ab, %15
   store i64 %i.ac, ptr %10, align 8, !tbaa !14
-  %.not56 = icmp eq i64 %11, %i.u
+  %.not56 = icmp eq i32 %13, %11
   br i1 %.not56, label %qrx_get_cipher_ctx_idx.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %qrx_get_cipher_ctx_idx.exit

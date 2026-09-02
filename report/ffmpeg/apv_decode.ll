@@ -204,12 +204,13 @@ apv_derive_tile_info.exit.i.i:                    ; preds = %._crit_edge40.loope
   %i.eq = trunc i32 %.1.lcssa.i.i.i to i8
   %i.er = getelementptr inbounds nuw i8, ptr %i.bf, i64 65
   store i8 %i.eq, ptr %i.er, align 1, !tbaa !102
-  %2 = and i32 %.0.lcssa.i.i.i, 255
-  %3 = and i32 %.1.lcssa.i.i.i, 255
-  %4 = mul nuw nsw i32 %3, %2
-  %5 = trunc nuw i32 %4 to i16
+  %2 = trunc i32 %.0.lcssa.i.i.i to i16
+  %3 = and i16 %2, 255
+  %4 = trunc i32 %.1.lcssa.i.i.i to i16
+  %5 = and i16 %4, 255
+  %6 = mul nuw i16 %5, %3
   %i.es = getelementptr inbounds nuw i8, ptr %i.bf, i64 66 ; 4 uses
-  store i16 %5, ptr %i.es, align 2, !tbaa !103
+  store i16 %6, ptr %i.es, align 2, !tbaa !103
   %i.et = load ptr, ptr %i.z, align 8, !tbaa !104
   %.not93.i.i = icmp eq ptr %i.et, null
   br i1 %.not93.i.i, label %bb.ab, label %bb.aa

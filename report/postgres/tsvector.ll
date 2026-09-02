@@ -204,9 +204,9 @@ bb.v:                                             ; preds = %bb.z, %bb.u
   %i.cz = phi i16 [ %.pre.i.i, %bb.u ], [ %i.dn, %bb.z ] ; 2 uses
   %.02534.i.i = phi ptr [ %.02532.i.i, %bb.u ], [ %.025.i.i, %bb.z ] ; 2 uses
   %.033.i.i = phi ptr [ %i.cw, %bb.u ], [ %.1.i.i, %bb.z ] ; 4 uses
-  %i.da = load i16, ptr %.02534.i.i, align 2      ; 5 uses
+  %i.da = load i16, ptr %.02534.i.i, align 2      ; 4 uses
   %i.db = zext i16 %i.da to i32                   ; 2 uses
-  %i.dc = and i32 %i.db, 16383                    ; 2 uses
+  %i.dc = and i32 %i.db, 16383                    ; 3 uses
   %i.dd = zext i16 %i.cz to i32                   ; 2 uses
   %i.de = and i32 %i.dd, 16383
   %.not.i.i = icmp eq i32 %i.dc, %i.de
@@ -229,11 +229,14 @@ bb.x:                                             ; preds = %bb.v
   br i1 %i.dm, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
-  store i16 %i.da, ptr %.033.i.i, align 2
+  %1 = and i16 %i.da, -16384
+  %2 = trunc nuw nsw i32 %i.dc to i16
+  %3 = or disjoint i16 %1, %2                     ; 2 uses
+  store i16 %3, ptr %.033.i.i, align 2
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x, %bb.w
-  %i.dn = phi i16 [ %i.da, %bb.w ], [ %i.da, %bb.y ], [ %i.cz, %bb.x ]
+  %i.dn = phi i16 [ %i.da, %bb.w ], [ %3, %bb.y ], [ %i.cz, %bb.x ]
   %.1.i.i = phi ptr [ %i.df, %bb.w ], [ %.033.i.i, %bb.y ], [ %.033.i.i, %bb.x ] ; 2 uses
   %.025.i.i = getelementptr inbounds nuw i8, ptr %.02534.i.i, i64 2 ; 2 uses
   %i.do = ptrtoint ptr %.025.i.i to i64
@@ -362,9 +365,9 @@ bb.ak:                                            ; preds = %bb.ao, %bb.aj
   %i.fw = phi i16 [ %.pre.i74.i, %bb.aj ], [ %i.gk, %bb.ao ] ; 2 uses
   %.02534.i75.i = phi ptr [ %.02532.i73.i, %bb.aj ], [ %.025.i80.i, %bb.ao ] ; 2 uses
   %.033.i76.i = phi ptr [ %i.ft, %bb.aj ], [ %.1.i79.i, %bb.ao ] ; 4 uses
-  %i.fx = load i16, ptr %.02534.i75.i, align 2    ; 5 uses
+  %i.fx = load i16, ptr %.02534.i75.i, align 2    ; 4 uses
   %i.fy = zext i16 %i.fx to i32                   ; 2 uses
-  %i.fz = and i32 %i.fy, 16383                    ; 2 uses
+  %i.fz = and i32 %i.fy, 16383                    ; 3 uses
   %i.ga = zext i16 %i.fw to i32                   ; 2 uses
   %i.gb = and i32 %i.ga, 16383
   %.not.i77.i = icmp eq i32 %i.fz, %i.gb
@@ -387,11 +390,14 @@ bb.am:                                            ; preds = %bb.ak
   br i1 %i.gj, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
-  store i16 %i.fx, ptr %.033.i76.i, align 2
+  %4 = and i16 %i.fx, -16384
+  %5 = trunc nuw nsw i32 %i.fz to i16
+  %6 = or disjoint i16 %4, %5                     ; 2 uses
+  store i16 %6, ptr %.033.i76.i, align 2
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.am, %bb.al
-  %i.gk = phi i16 [ %i.fx, %bb.al ], [ %i.fx, %bb.an ], [ %i.fw, %bb.am ]
+  %i.gk = phi i16 [ %i.fx, %bb.al ], [ %6, %bb.an ], [ %i.fw, %bb.am ]
   %.1.i79.i = phi ptr [ %i.gc, %bb.al ], [ %.033.i76.i, %bb.an ], [ %.033.i76.i, %bb.am ] ; 2 uses
   %.025.i80.i = getelementptr inbounds nuw i8, ptr %.02534.i75.i, i64 2 ; 2 uses
   %i.gl = ptrtoint ptr %.025.i80.i to i64
@@ -794,8 +800,8 @@ bb.h:                                             ; preds = %bb.f
   %i.ab = add nsw i64 %i.aa, 1
   %i.ac = and i64 %i.ab, -2                       ; 3 uses
   %.mask = shl i32 %i.o, 1
-  %i.ad = and i32 %.mask, 131070
-  %i.ae = zext nneg i32 %i.ad to i64              ; 2 uses
+  %i.ad = and i32 %.mask, 131070                  ; 2 uses
+  %i.ae = zext nneg i32 %i.ad to i64
   %i.af = add nuw nsw i64 %i.m, %i.ae
   %i.ag = add nsw i64 %i.af, %i.ac                ; 2 uses
   %.not124 = icmp ult i64 %i.ag, %.089136
@@ -834,6 +840,7 @@ bb.i:                                             ; preds = %bb.h
   %i.aw = getelementptr inbounds [4 x i8], ptr %i.am, i64 %i.av
   %i.ax = getelementptr inbounds i8, ptr %i.aw, i64 %i.z
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ax, ptr nonnull align 1 %i.n, i64 %i.q, i1 false)
+  %1 = trunc nsw i64 %i.aa to i32
   %.not104 = icmp eq i64 %indvars.iv152, 0
   br i1 %.not104, label %bb.k, label %bb.j
 
@@ -930,19 +937,19 @@ bb.o:                                             ; preds = %.peel.next
   br i1 %exitcond.not, label %.loopexit150, label %.peel.next, !llvm.loop !39
 
 .loopexit150:                                     ; preds = %bb.o, %bb.n
-  %1 = add nuw nsw i64 %i.ae, 2
-  %2 = add nsw i64 %1, %.192
+  %2 = add nuw nsw i32 %i.ad, 2
+  %3 = trunc i64 %.192 to i32
+  %4 = add i32 %2, %3
   br label %bb.p
 
 bb.p:                                             ; preds = %.loopexit150, %bb.k
-  %.2.in = phi i64 [ %2, %.loopexit150 ], [ %i.aa, %bb.k ]
-  %.2 = trunc i64 %.2.in to i32                   ; 2 uses
+  %.2 = phi i32 [ %4, %.loopexit150 ], [ %1, %bb.k ] ; 2 uses
   %indvars.iv.next153 = add nuw nsw i64 %indvars.iv152, 1 ; 2 uses
   %exitcond155.not = icmp eq i64 %indvars.iv.next153, %wide.trip.count154
   br i1 %exitcond155.not, label %._crit_edge140, label %bb.d, !llvm.loop !40
 
 ._crit_edge140:                                   ; preds = %bb.p
-  %i.cx = add i32 %narrow, %.2
+  %i.cx = add i32 %.2, %narrow
   %i.cy = shl i32 %i.cx, 2
   store i32 %i.cy, ptr %.195.lcssa, align 4
   br i1 %.1, label %bb.q, label %bb.r

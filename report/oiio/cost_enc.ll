@@ -204,15 +204,13 @@ bb.f:                                             ; preds = %VariableLevelCost.e
   %.pn.i.1 = zext i8 %.pn.in.i.1 to i64
   %.in.in.i.1 = getelementptr inbounds nuw [2 x i8], ptr @VP8EntropyCost, i64 %.pn.i.1
   %.in.i.1 = load i16, ptr %.in.in.i.1, align 2, !tbaa !12 ; 2 uses
-  %1 = zext i16 %.in.i.1 to i32
   %i.ff = getelementptr inbounds nuw i8, ptr %i.ef, i64 12
   %i.fg = load i8, ptr %i.ff, align 1, !tbaa !7   ; 2 uses
   %.pn.in.i46.1 = xor i8 %i.fg, -1
   %.pn.i47.1 = zext i8 %.pn.in.i46.1 to i64
   %.in.in.i48.1 = getelementptr inbounds nuw [2 x i8], ptr @VP8EntropyCost, i64 %.pn.i47.1
   %.in.i49.1 = load i16, ptr %.in.in.i48.1, align 2, !tbaa !12
-  %2 = zext i16 %.in.i49.1 to i32
-  %3 = add nuw nsw i32 %1, %2
+  %1 = add i16 %.in.i.1, %.in.i49.1
   %.pn.i51.1 = zext i8 %i.fg to i64
   %.in.in.i52.1 = getelementptr inbounds nuw [2 x i8], ptr @VP8EntropyCost, i64 %.pn.i51.1
   %.in.i53.1 = load i16, ptr %.in.in.i52.1, align 2, !tbaa !12
@@ -263,14 +261,17 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.i.1
   %i.fx = lshr i32 %.01316.i.1, 1                 ; 2 uses
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i.1, 1
   %.not.i.1 = icmp eq i32 %i.fx, 0
-  br i1 %.not.i.1, label %VariableLevelCost.exit.1, label %.lr.ph.i.1, !llvm.loop !32
+  br i1 %.not.i.1, label %VariableLevelCost.exit.loopexit.1, label %.lr.ph.i.1, !llvm.loop !32
 
-VariableLevelCost.exit.1:                         ; preds = %bb.i, %bb.g
-  %.011.lcssa.i.1 = phi i32 [ 0, %bb.g ], [ %.1.i.1, %bb.i ]
-  %4 = add nsw i32 %3, %.011.lcssa.i.1
-  %5 = trunc i32 %4 to i16
+VariableLevelCost.exit.loopexit.1:                ; preds = %bb.i
+  %2 = trunc i32 %.1.i.1 to i16
+  br label %VariableLevelCost.exit.1
+
+VariableLevelCost.exit.1:                         ; preds = %VariableLevelCost.exit.loopexit.1, %bb.g
+  %.011.lcssa.i.1 = phi i16 [ 0, %bb.g ], [ %2, %VariableLevelCost.exit.loopexit.1 ]
+  %3 = add i16 %1, %.011.lcssa.i.1
   %i.fy = getelementptr inbounds nuw [2 x i8], ptr %i.fd, i64 %indvars.iv.1
-  store i16 %5, ptr %i.fy, align 2, !tbaa !12
+  store i16 %3, ptr %i.fy, align 2, !tbaa !12
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv.1, 1 ; 2 uses
   %exitcond.1.not = icmp eq i64 %indvars.iv.next.1, 68
   br i1 %exitcond.1.not, label %bb.j, label %bb.g, !llvm.loop !33
@@ -283,15 +284,13 @@ bb.j:                                             ; preds = %VariableLevelCost.e
   %.pn.i.2 = zext i8 %.pn.in.i.2 to i64
   %.in.in.i.2 = getelementptr inbounds nuw [2 x i8], ptr @VP8EntropyCost, i64 %.pn.i.2
   %.in.i.2 = load i16, ptr %.in.in.i.2, align 2, !tbaa !12 ; 2 uses
-  %6 = zext i16 %.in.i.2 to i32
   %i.gc = getelementptr inbounds nuw i8, ptr %i.ef, i64 23
   %i.gd = load i8, ptr %i.gc, align 1, !tbaa !7   ; 2 uses
   %.pn.in.i46.2 = xor i8 %i.gd, -1
   %.pn.i47.2 = zext i8 %.pn.in.i46.2 to i64
   %.in.in.i48.2 = getelementptr inbounds nuw [2 x i8], ptr @VP8EntropyCost, i64 %.pn.i47.2
   %.in.i49.2 = load i16, ptr %.in.in.i48.2, align 2, !tbaa !12
-  %7 = zext i16 %.in.i49.2 to i32
-  %8 = add nuw nsw i32 %6, %7
+  %4 = add i16 %.in.i.2, %.in.i49.2
   %.pn.i51.2 = zext i8 %i.gd to i64
   %.in.in.i52.2 = getelementptr inbounds nuw [2 x i8], ptr @VP8EntropyCost, i64 %.pn.i51.2
   %.in.i53.2 = load i16, ptr %.in.in.i52.2, align 2, !tbaa !12
@@ -342,14 +341,17 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph.i.2
   %i.gu = lshr i32 %.01316.i.2, 1                 ; 2 uses
   %indvars.iv.next.i.2 = add nuw nsw i64 %indvars.iv.i.2, 1
   %.not.i.2 = icmp eq i32 %i.gu, 0
-  br i1 %.not.i.2, label %VariableLevelCost.exit.2, label %.lr.ph.i.2, !llvm.loop !32
+  br i1 %.not.i.2, label %VariableLevelCost.exit.loopexit.2, label %.lr.ph.i.2, !llvm.loop !32
 
-VariableLevelCost.exit.2:                         ; preds = %bb.m, %bb.k
-  %.011.lcssa.i.2 = phi i32 [ 0, %bb.k ], [ %.1.i.2, %bb.m ]
-  %9 = add nsw i32 %8, %.011.lcssa.i.2
-  %10 = trunc i32 %9 to i16
+VariableLevelCost.exit.loopexit.2:                ; preds = %bb.m
+  %5 = trunc i32 %.1.i.2 to i16
+  br label %VariableLevelCost.exit.2
+
+VariableLevelCost.exit.2:                         ; preds = %VariableLevelCost.exit.loopexit.2, %bb.k
+  %.011.lcssa.i.2 = phi i16 [ 0, %bb.k ], [ %5, %VariableLevelCost.exit.loopexit.2 ]
+  %6 = add i16 %4, %.011.lcssa.i.2
   %i.gv = getelementptr inbounds nuw [2 x i8], ptr %i.ga, i64 %indvars.iv.2
-  store i16 %10, ptr %i.gv, align 2, !tbaa !12
+  store i16 %6, ptr %i.gv, align 2, !tbaa !12
   %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv.2, 1 ; 2 uses
   %exitcond.2.not = icmp eq i64 %indvars.iv.next.2, 68
   br i1 %exitcond.2.not, label %bb.n, label %bb.k, !llvm.loop !33

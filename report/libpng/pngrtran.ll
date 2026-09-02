@@ -205,7 +205,8 @@ bb.bt:                                            ; preds = %.lr.ph, %bb.ca
 bb.bu:                                            ; preds = %bb.bt
   %i.kl = load ptr, ptr %i.ka, align 8, !tbaa !56
   %i.km = getelementptr inbounds nuw i8, ptr %i.kl, i64 %indvars.iv ; 5 uses
-  %i.kn = load i8, ptr %i.km, align 1, !tbaa !26  ; 3 uses
+  %i.kn = load i8, ptr %i.km, align 1, !tbaa !26  ; 4 uses
+  %1 = zext i8 %i.kn to i32
   switch i8 %i.kn, label %bb.bw [
     i8 -1, label %bb.bz
     i8 0, label %bb.bv
@@ -221,7 +222,6 @@ bb.bv:                                            ; preds = %bb.bu
   br label %bb.ca
 
 bb.bw:                                            ; preds = %bb.bu
-  %1 = zext i8 %i.kn to i32
   %i.kp = load i32, ptr %i.kc, align 8, !tbaa !24
   %i.kq = and i32 %i.kp, 8192
   %.not447 = icmp eq i32 %i.kq, 0
@@ -230,13 +230,13 @@ bb.bw:                                            ; preds = %bb.bu
   %i.kt = load i8, ptr %i.ks, align 1, !tbaa !40
   %i.ku = zext i8 %i.kt to i64
   %i.kv = getelementptr inbounds nuw i8, ptr %i.kr, i64 %i.ku
-  %i.kw = load i8, ptr %i.kv, align 1, !tbaa !26
-  %2 = zext i8 %i.kw to i32
-  %3 = mul nuw nsw i32 %2, %1                     ; 2 uses
+  %i.kw = load i8, ptr %i.kv, align 1, !tbaa !26  ; 2 uses
   br i1 %.not447, label %bb.by, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
-  %4 = trunc nuw i32 %3 to i16
+  %2 = zext i8 %i.kw to i16
+  %3 = zext i8 %i.kn to i16
+  %4 = mul nuw i16 %2, %3
   %.lhs.trunc = add nuw i16 %4, 128
   %i.kx = udiv i16 %.lhs.trunc, 255
   %i.ky = load ptr, ptr %i.ke, align 8, !tbaa !63 ; 3 uses
@@ -277,11 +277,13 @@ bb.bx:                                            ; preds = %bb.bw
   br label %bb.ca
 
 bb.by:                                            ; preds = %bb.bw
+  %5 = zext i8 %i.kw to i32
+  %6 = mul nuw nsw i32 %5, %1
   %i.mc = xor i8 %i.kn, -1
   %i.md = zext i8 %i.mc to i32
   %i.me = mul nuw nsw i32 %i.md, %i.kf
   %i.mf = add nuw nsw i32 %i.me, 128
-  %i.mg = add nuw nsw i32 %i.mf, %3               ; 2 uses
+  %i.mg = add nuw nsw i32 %i.mf, %6               ; 2 uses
   %i.mh = lshr i32 %i.mg, 8
   %i.mi = and i32 %i.mh, 255
   %i.mj = add nuw nsw i32 %i.mi, %i.mg

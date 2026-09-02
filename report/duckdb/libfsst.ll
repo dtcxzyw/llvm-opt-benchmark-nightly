@@ -205,12 +205,13 @@ _ZN7libfsst8Counters13count1GetNextERj.exit:      ; preds = %bb.d
   %i.ag = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.af
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !12  ; 2 uses
   %.not19.i = icmp ne i8 %i.ah, 0
-  %3 = sext i1 %.not19.i to i64
-  %spec.select.i = add nsw i64 %i.ab, %3
-  %4 = shl nuw nsw i64 %spec.select.i, 8
-  %5 = zext i8 %i.ah to i64
-  %6 = or disjoint i64 %4, %5                     ; 2 uses
-  %.not45 = icmp eq i64 %6, 0
+  %3 = sext i1 %.not19.i to i32
+  %4 = zext i8 %i.ah to i32
+  %5 = trunc nuw nsw i64 %i.ab to i32
+  %.0.tr.i = add nsw i32 %3, %5
+  %6 = shl nuw nsw i32 %.0.tr.i, 8
+  %7 = or disjoint i32 %6, %4                     ; 2 uses
+  %.not45 = icmp eq i32 %7, 0
   br i1 %.not45, label %_ZN7libfsst8Counters13count1GetNextERj.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %_ZN7libfsst8Counters13count1GetNextERj.exit
@@ -222,8 +223,9 @@ bb.e:                                             ; preds = %_ZN7libfsst8Counter
   %i.aj = lshr i64 %.sroa.7.0.copyload, 28        ; 2 uses
   %i.ak = trunc i64 %i.aj to i32                  ; 3 uses
   %i.al = icmp eq i32 %i.ak, 1
+  %8 = zext nneg i32 %7 to i64
   %i.am = select i1 %i.al, i64 3, i64 0
-  %i.an = shl nuw nsw i64 %6, %i.am
+  %i.an = shl nuw nsw i64 %8, %i.am
   %.val52.val = load i64, ptr %.0.val, align 8, !tbaa !23
   invoke fastcc void @"_ZZZN7libfsst16buildSymbolTableERNS_8CountersESt6vectorIPKhSaIS4_EEPKmbENK3$_2clEPNS_11SymbolTableES1_ENKUlRSt13unordered_setINS_7QSymbolESt4hashISD_ESt8equal_toISD_ESaISD_EENS_6SymbolEmE_clESK_SL_m"(i64 %.val52.val, ptr noundef nonnull align 8 dereferenceable(56) %2, i64 %.sroa.016.0.copyload, i64 %.sroa.7.0.copyload, i64 noundef %i.an)
           to label %bb.f unwind label %bb.h
@@ -295,12 +297,13 @@ _ZN7libfsst8Counters13count2GetNextEjRj.exit:     ; preds = %bb.l
   %i.bv = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.bu
   %i.bw = load i8, ptr %i.bv, align 1, !tbaa !12  ; 2 uses
   %.not24.i = icmp ne i8 %i.bw, 0
-  %7 = sext i1 %.not24.i to i64
-  %spec.select.i61 = add nsw i64 %i.bq, %7
-  %8 = shl nuw nsw i64 %spec.select.i61, 8
-  %9 = zext i8 %i.bw to i64
-  %10 = or disjoint i64 %8, %9                    ; 2 uses
-  %.not47 = icmp eq i64 %10, 0
+  %9 = sext i1 %.not24.i to i32
+  %10 = zext i8 %i.bw to i32
+  %11 = trunc nuw nsw i64 %i.bq to i32
+  %.0.tr.i61 = add nsw i32 %9, %11
+  %12 = shl nuw nsw i32 %.0.tr.i61, 8
+  %13 = or disjoint i32 %12, %10                  ; 2 uses
+  %.not47 = icmp eq i32 %13, 0
   br i1 %.not47, label %_ZN7libfsst8Counters13count2GetNextEjRj.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %_ZN7libfsst8Counters13count2GetNextEjRj.exit
@@ -324,9 +327,10 @@ bb.n:                                             ; preds = %bb.m
   %spec.store.select.i = call i32 @llvm.umin.i32(i32 %i.cf, i32 8)
   %reass.sub.i = mul nuw nsw i32 %spec.store.select.i, 268435448
   %i.cg = add nuw i32 %reass.sub.i, 33488960
-  %i.ch = zext i32 %i.cg to i64
+  %14 = zext i32 %i.cg to i64
+  %i.ch = zext nneg i32 %13 to i64
   %.val.val = load i64, ptr %.0.val, align 8, !tbaa !23
-  invoke fastcc void @"_ZZZN7libfsst16buildSymbolTableERNS_8CountersESt6vectorIPKhSaIS4_EEPKmbENK3$_2clEPNS_11SymbolTableES1_ENKUlRSt13unordered_setINS_7QSymbolESt4hashISD_ESt8equal_toISD_ESaISD_EENS_6SymbolEmE_clESK_SL_m"(i64 %.val.val, ptr noundef nonnull align 8 dereferenceable(56) %2, i64 %i.cc, i64 %i.ch, i64 noundef %10)
+  invoke fastcc void @"_ZZZN7libfsst16buildSymbolTableERNS_8CountersESt6vectorIPKhSaIS4_EEPKmbENK3$_2clEPNS_11SymbolTableES1_ENKUlRSt13unordered_setINS_7QSymbolESt4hashISD_ESt8equal_toISD_ESaISD_EENS_6SymbolEmE_clESK_SL_m"(i64 %.val.val, ptr noundef nonnull align 8 dereferenceable(56) %2, i64 %i.cc, i64 %14, i64 noundef %i.ch)
           to label %_ZN7libfsst8Counters13count2GetNextEjRj.exit.thread unwind label %bb.o
 
 bb.o:                                             ; preds = %bb.n

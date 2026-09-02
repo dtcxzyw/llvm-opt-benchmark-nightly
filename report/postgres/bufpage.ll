@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.preheader, %bb.d
 define dso_local void @PageIndexTupleDelete(ptr nofree noundef captures(none) %0, i16 noundef zeroext %1) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 4 uses
-  %i.b = load i16, ptr %i.a, align 4              ; 5 uses
+  %i.b = load i16, ptr %i.a, align 4              ; 4 uses
   %i.c = icmp ult i16 %i.b, 24
   br i1 %i.c, label %bb.e, label %bb.b
 
@@ -246,7 +246,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b,
 
 bb.f:                                             ; preds = %bb.d
   %i.y = icmp eq i16 %i.b, 24
-  %i.z = zext i16 %i.b to i32
+  %i.z = zext i16 %i.b to i32                     ; 2 uses
   %i.aa = add nuw nsw i32 %i.z, 262120
   %i.ab = lshr i32 %i.aa, 2
   %i.ac = trunc i32 %i.ab to i16
@@ -264,7 +264,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 bb.h:                                             ; preds = %bb.f
-  %i.ai = zext nneg i16 %1 to i64                 ; 3 uses
+  %i.ai = zext nneg i16 %1 to i64                 ; 2 uses
   %i.aj = getelementptr i8, ptr %0, i64 20        ; 6 uses
   %i.ak = getelementptr [4 x i8], ptr %i.aj, i64 %i.ai
   %i.al = load i32, ptr %i.ak, align 4            ; 2 uses
@@ -297,17 +297,18 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
 bb.l:                                             ; preds = %bb.j
   %i.az = add nuw nsw i64 %i.an, 7
   %i.ba = and i64 %i.az, 65528                    ; 3 uses
-  %2 = zext i16 %i.b to i64
-  %3 = shl nuw nsw i64 %i.ai, 2
-  %reass.sub = sub nsw i64 %2, %3                 ; 2 uses
-  %i.bb = icmp sgt i64 %reass.sub, 24
+  %.tr = zext nneg i16 %1 to i32
+  %2 = shl nuw nsw i32 %.tr, 2
+  %reass.sub = sub nsw i32 %i.z, %2               ; 2 uses
+  %i.bb = icmp sgt i32 %reass.sub, 24
   br i1 %i.bb, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %4 = add nsw i64 %reass.sub, -24
+  %3 = add nsw i32 %reass.sub, -24
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.bd = getelementptr [4 x i8], ptr %i.bc, i64 %i.ai ; 2 uses
   %i.be = getelementptr i8, ptr %i.bd, i64 -4
+  %4 = zext nneg i32 %3 to i64
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.be, ptr nonnull align 4 %i.bd, i64 %4, i1 false)
   %.pre = load i16, ptr %i.d, align 2             ; 2 uses
   %.pre82.a = zext i16 %.pre to i32

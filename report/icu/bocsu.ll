@@ -194,23 +194,23 @@ bb.r:                                             ; preds = %bb.p
   %i.ch = icmp samesign ugt i32 %i.al, -192787
   %.nonneg111.i = sub nsw i32 0, %i.al            ; 2 uses
   %i.ci = urem i32 %.nonneg111.i, 253             ; 2 uses
-  %i.cj = udiv i32 %.nonneg111.i, 253
-  %.not135.i = icmp ne i32 %i.ci, 0               ; 2 uses
+  %i.cj = udiv i32 %.nonneg111.i, 253             ; 2 uses
+  %.not135.i = icmp ne i32 %i.ci, 0               ; 4 uses
   %i.ck = trunc nuw i32 %i.ci to i8
-  %i.cl = sub i8 0, %i.ck
-  %.neg142.i = zext i1 %.not135.i to i32
-  %.182.neg.i = add nuw nsw i32 %i.cj, %.neg142.i ; 3 uses
-  %.1.i = select i1 %.not135.i, i8 %i.cl, i8 3    ; 2 uses
+  %i.cl = sub i8 0, %i.ck                         ; 2 uses
   br i1 %i.ch, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
+  %.neg142.i = zext i1 %.not135.i to i16
+  %.1.i = select i1 %.not135.i, i8 %i.cl, i8 3
   %i.cm = getelementptr inbounds nuw i8, ptr %.03454, i64 2
   store i8 %.1.i, ptr %i.cm, align 1, !tbaa !15
-  %.neg141.i.a = trunc nuw nsw i32 %.182.neg.i to i16 ; 2 uses
-  %i.cn = urem i16 %.neg141.i.a, 253              ; 2 uses
+  %.neg141.i.a = trunc nuw nsw i32 %i.cj to i16
+  %.neg141.i = add nuw nsw i16 %.neg142.i, %.neg141.i.a ; 2 uses
+  %i.cn = urem i16 %.neg141.i, 253                ; 2 uses
   %.zext117.i = trunc nuw i16 %i.cn to i8
   %.neg115.i = sub i8 0, %.zext117.i
-  %i.co = udiv i16 %.neg141.i.a, 253
+  %i.co = udiv i16 %.neg141.i, 253
   %.zext121.i = trunc nuw nsw i16 %i.co to i8
   %.not136.i = icmp ne i16 %i.cn, 0               ; 2 uses
   %i.cp = sext i1 %.not136.i to i8
@@ -224,20 +224,23 @@ bb.s:                                             ; preds = %bb.r
   br label %_ZL11u_writeDiffiPh.exit
 
 bb.t:                                             ; preds = %bb.r
+  %.neg140.i = zext i1 %.not135.i to i32
+  %.384.neg.i = add nuw nsw i32 %i.cj, %.neg140.i ; 2 uses
+  %.3.i = select i1 %.not135.i, i8 %i.cl, i8 3
   %i.ct = getelementptr inbounds nuw i8, ptr %.03454, i64 3
-  store i8 %.1.i, ptr %i.ct, align 1, !tbaa !15
-  %i.cu = urem i32 %.182.neg.i, 253               ; 2 uses
-  %i.cv = udiv i32 %.182.neg.i, 253
+  store i8 %.3.i, ptr %i.ct, align 1, !tbaa !15
+  %i.cu = urem i32 %.384.neg.i, 253               ; 2 uses
+  %i.cv = udiv i32 %.384.neg.i, 253
   %.not132.i = icmp ne i32 %i.cu, 0               ; 2 uses
   %i.cw = trunc nuw i32 %i.cu to i8
   %i.cx = sub i8 0, %i.cw
-  %.neg133.i = zext i1 %.not132.i to i32
-  %.485.neg.i = add nuw nsw i32 %i.cv, %.neg133.i
+  %.neg133.i = zext i1 %.not132.i to i16
   %.4.i = select i1 %.not132.i, i8 %i.cx, i8 3
   %i.cy = getelementptr inbounds nuw i8, ptr %.03454, i64 2
   store i8 %.4.i, ptr %i.cy, align 1, !tbaa !15
-  %.lhs.trunc130.i.a = trunc nuw i32 %.485.neg.i to i16
-  %i.cz = urem i16 %.lhs.trunc130.i.a, 253        ; 2 uses
+  %.lhs.trunc130.i.a = trunc nuw i32 %i.cv to i16
+  %.lhs.trunc130.i = add nuw i16 %.neg133.i, %.lhs.trunc130.i.a
+  %i.cz = urem i16 %.lhs.trunc130.i, 253          ; 2 uses
   %.zext131.i = trunc nuw i16 %i.cz to i8
   %.neg129.i = sub i8 0, %.zext131.i
   %.not134.i = icmp eq i16 %i.cz, 0

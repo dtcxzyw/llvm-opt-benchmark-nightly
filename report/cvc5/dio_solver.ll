@@ -204,10 +204,11 @@ bb.b:                                             ; preds = %bb.a
   %i.m = icmp eq i32 %i.l, 2
   %i.n = load i64, ptr %i.h, align 8
   %i.o = lshr i64 %i.n, 32
-  %4 = and i64 %i.o, 67108863
-  %5 = sext i1 %i.m to i64
-  %6 = add nsw i64 %4, %5
-  %i.p = icmp ugt i64 %6, 1
+  %4 = sext i1 %i.m to i32
+  %5 = trunc nuw i64 %i.o to i32
+  %6 = and i32 %5, 67108863
+  %7 = add nsw i32 %6, %4
+  %i.p = icmp ugt i32 %7, 1
   br label %_ZNK4cvc58internal6theory5arith6linear10Polynomial12numMonomialsEv.exit
 
 bb.c:                                             ; preds = %bb.a

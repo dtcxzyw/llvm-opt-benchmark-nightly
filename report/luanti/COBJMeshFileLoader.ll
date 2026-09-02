@@ -205,29 +205,30 @@ bb.bl:                                            ; preds = %.lr.ph.i321
 
 ._crit_edge.i316:                                 ; preds = %bb.bl, %.lr.ph.i321, %.lr.ph.i321, %.preheader.i
   %.0.lcssa.i = phi ptr [ %.01021179, %.preheader.i ], [ %.014.i, %.lr.ph.i321 ], [ %.014.i, %.lr.ph.i321 ], [ %scevgep.i, %bb.bl ]
-  %.lcssa.i = phi i64 [ 0, %.preheader.i ], [ 1, %.lr.ph.i321 ], [ 1, %.lr.ph.i321 ], [ 0, %bb.bl ]
+  %.lcssa.i = phi i32 [ 0, %.preheader.i ], [ 1, %.lr.ph.i321 ], [ 1, %.lr.ph.i321 ], [ 0, %bb.bl ]
   %i.nj = ptrtoint ptr %.0.lcssa.i to i64
   %i.nk = ptrtoint ptr %.01021179 to i64
   %i.nl = sub i64 %i.nj, %i.nk
-  %13 = add nsw i64 %i.nl, %.lcssa.i              ; 3 uses
+  %13 = trunc i64 %i.nl to i32
+  %14 = add i32 %.lcssa.i, %13                    ; 3 uses
   store ptr %i.ct, ptr %10, align 8, !tbaa !43, !alias.scope !219
   store i64 0, ptr %i.cu, align 8, !tbaa !46, !alias.scope !219
   store i8 0, ptr %i.ct, align 8, !tbaa !47, !alias.scope !219
-  %14 = and i64 %13, 4294967295                   ; 3 uses
-  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(ptr noundef nonnull align 8 dereferenceable(32) %10, i64 noundef %14, i8 noundef signext 0)
+  %15 = zext i32 %14 to i64                       ; 3 uses
+  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(ptr noundef nonnull align 8 dereferenceable(32) %10, i64 noundef %15, i8 noundef signext 0)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.preheader.i.i unwind label %bb.bm
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.preheader.i.i: ; preds = %._crit_edge.i316
-  %.not12.i.i = icmp eq i64 %14, 0
+  %.not12.i.i = icmp eq i32 %14, 0
   br i1 %.not12.i.i, label %_ZN5scene18COBJMeshFileLoader8copyLineEPKcS2_.exit, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.i.preheader
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.i.preheader: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.preheader.i.i
-  %xtraiter2932 = and i64 %13, 3                  ; 3 uses
-  %i.nm = icmp samesign ult i64 %14, 4
+  %xtraiter2932 = and i64 %15, 3                  ; 3 uses
+  %i.nm = icmp ult i32 %14, 4
   br i1 %i.nm, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.i.epil.preheader, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.i.preheader.new
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.i.preheader.new: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.i.preheader
-  %unroll_iter2936 = and i64 %13, 4294967292
+  %unroll_iter2936 = and i64 %15, 4294967292
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.i
 
 bb.bm:                                            ; preds = %._crit_edge.i316
@@ -630,31 +631,32 @@ bb.c:                                             ; preds = %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph, %bb.c, %.preheader
   %.0.lcssa = phi ptr [ %2, %.preheader ], [ %scevgep, %bb.c ], [ %.014, %.lr.ph ], [ %.014, %.lr.ph ]
-  %.lcssa = phi i64 [ 0, %.preheader ], [ 0, %bb.c ], [ 1, %.lr.ph ], [ 1, %.lr.ph ]
+  %.lcssa = phi i32 [ 0, %.preheader ], [ 0, %bb.c ], [ 1, %.lr.ph ], [ 1, %.lr.ph ]
   %i.i = ptrtoint ptr %.0.lcssa to i64
   %i.j = ptrtoint ptr %2 to i64
   %i.k = sub i64 %i.i, %i.j
-  %4 = add nsw i64 %i.k, %.lcssa                  ; 3 uses
+  %4 = trunc i64 %i.k to i32
+  %5 = add i32 %.lcssa, %4                        ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   store ptr %i.l, ptr %0, align 8, !tbaa !43
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %i.m, align 8, !tbaa !46
   store i8 0, ptr %i.l, align 8, !tbaa !47
-  %5 = and i64 %4, 4294967295                     ; 3 uses
-  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %5, i8 noundef signext 0)
+  %6 = zext i32 %5 to i64                         ; 3 uses
+  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %6, i8 noundef signext 0)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.preheader.i unwind label %bb.d
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.preheader.i: ; preds = %._crit_edge
-  %.not12.i = icmp eq i64 %5, 0
+  %.not12.i = icmp eq i32 %5, 0
   br i1 %.not12.i, label %_ZN4core6stringIcEC2IcEEPKT_j.exit, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.preheader
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.preheader: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.preheader.i
-  %xtraiter = and i64 %4, 3                       ; 3 uses
-  %i.n = icmp samesign ult i64 %5, 4
+  %xtraiter = and i64 %6, 3                       ; 3 uses
+  %i.n = icmp ult i32 %5, 4
   br i1 %i.n, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.epil.preheader, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.preheader.new
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.preheader.new: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i.preheader
-  %unroll_iter = and i64 %4, 4294967292
+  %unroll_iter = and i64 %6, 4294967292
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.i
 
 bb.d:                                             ; preds = %._crit_edge
