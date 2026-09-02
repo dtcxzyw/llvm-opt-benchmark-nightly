@@ -204,7 +204,7 @@ _RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultINtN
   br label %bb.dk
 
 _RNvMs5_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal6parserNtB5_14DateTimeParser20parse_date_separator.exit.i: ; preds = %bb.am, %bb.aj
-  %.sroa.9176.0 = phi i64 [ %i.bl, %bb.aj ], [ %i.cf, %bb.am ] ; 4 uses
+  %.sroa.9176.0 = phi i64 [ %i.bl, %bb.aj ], [ %i.cf, %bb.am ] ; 5 uses
   %.sroa.0175.0 = phi ptr [ %i.bk, %bb.aj ], [ %i.cg, %bb.am ] ; 7 uses
   %i.cp = icmp samesign ult i64 %.sroa.9176.0, 2
   br i1 %i.cp, label %bb.ax, label %bb.at
@@ -346,14 +346,13 @@ bb.bk:                                            ; preds = %_RNvMs5_NtNtNtCsa9s
   ]
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bk, %bb.bk
-  %4 = add i64 %.sroa.9176.0, -3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !213
-  %5 = icmp samesign ult i64 %4, 2
-  br i1 %5, label %bb.bq, label %bb.bm
+  %4 = icmp slt i64 %.sroa.9176.0, 5
+  br i1 %4, label %bb.bq, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
   %.ptr533 = getelementptr inbounds nuw i8, ptr %.sroa.0175.0, i64 5 ; 7 uses
-  %i.dz = add i64 %.sroa.9176.0, -5               ; 7 uses
+  %i.dz = add nsw i64 %.sroa.9176.0, -5           ; 6 uses
   %.sroa.0.0.i51.ptr = getelementptr inbounds nuw i8, ptr %.sroa.0175.0, i64 3
   %i.ea = load i8, ptr %.sroa.0.0.i51.ptr, align 1, !alias.scope !214, !noalias !215, !noundef !4 ; 2 uses
   %i.eb = add i8 %i.ea, -48                       ; 2 uses
@@ -428,7 +427,7 @@ bb.bw:                                            ; preds = %_RNvNtNtCsa9sSWSfjD
   br i1 %i.eq, label %_RNvMs5_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal6parserNtB5_14DateTimeParser20parse_time_separator.exit139.i, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.er = icmp samesign ult i64 %i.dz, 2
+  %i.er = icmp samesign ult i64 %.sroa.9176.0, 7
   br i1 %i.er, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i, label %.preheader543.preheader
 
 .preheader543.preheader:                          ; preds = %bb.bx
@@ -831,7 +830,7 @@ _RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultINtN
   br label %bb.di
 
 _RNvMs5_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal6parserNtB5_14DateTimeParser20parse_date_separator.exit.i.i: ; preds = %bb.am, %bb.aj
-  %.sroa.9225.0.i = phi i64 [ %i.cw, %bb.aj ], [ %i.dq, %bb.am ] ; 5 uses
+  %.sroa.9225.0.i = phi i64 [ %i.cw, %bb.aj ], [ %i.dq, %bb.am ] ; 6 uses
   %.sroa.0224.0.i = phi ptr [ %i.cv, %bb.aj ], [ %i.dr, %bb.am ] ; 8 uses
   %i.ea = icmp samesign ult i64 %.sroa.9225.0.i, 2
   br i1 %i.ea, label %bb.ax, label %bb.at
@@ -973,14 +972,13 @@ bb.bk:                                            ; preds = %_RNvMs5_NtNtNtCsa9s
   ]
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bk, %bb.bk
-  %4 = add i64 %.sroa.9225.0.i, -3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.am), !noalias !591
-  %5 = icmp samesign ult i64 %4, 2
-  br i1 %5, label %bb.bq, label %bb.bm
+  %4 = icmp slt i64 %.sroa.9225.0.i, 5
+  br i1 %4, label %bb.bq, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl
   %.ptr583.i = getelementptr inbounds nuw i8, ptr %.sroa.0224.0.i, i64 5 ; 7 uses
-  %i.fk = add i64 %.sroa.9225.0.i, -5             ; 7 uses
+  %i.fk = add nsw i64 %.sroa.9225.0.i, -5         ; 6 uses
   %.sroa.0.0.i55.ptr.i = getelementptr inbounds nuw i8, ptr %.sroa.0224.0.i, i64 3
   %i.fl = load i8, ptr %.sroa.0.0.i55.ptr.i, align 1, !alias.scope !592, !noalias !593, !noundef !4 ; 2 uses
   %i.fm = add i8 %i.fl, -48                       ; 2 uses
@@ -1054,7 +1052,7 @@ bb.bw:                                            ; preds = %_RNvNtNtCsa9sSWSfjD
   br i1 %i.gb, label %_RNvMs5_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal6parserNtB5_14DateTimeParser20parse_time_separator.exit139.i.i, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.gc = icmp samesign ult i64 %i.fk, 2
+  %i.gc = icmp samesign ult i64 %.sroa.9225.0.i, 7
   br i1 %i.gc, label %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4time4TimeNtNtBN_5error5ErrorE6unwrapBN_.exit133.i.i.i, label %.preheader600.preheader.i
 
 .preheader600.preheader.i:                        ; preds = %bb.bx
@@ -1072,7 +1070,7 @@ bb.bx:                                            ; preds = %bb.bw
 
 .thread702.i.thread:                              ; preds = %.preheader600.1.i
   %.ptr589.i60 = getelementptr inbounds nuw i8, ptr %.sroa.0224.0.i, i64 7
-  %i.gf = add i64 %.sroa.9225.0.i, -7
+  %i.gf = add nsw i64 %.sroa.9225.0.i, -7
   br label %bb.bz
 
 _RNvMs5_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8temporal6parserNtB5_14DateTimeParser20parse_time_separator.exit139.i.i: ; preds = %bb.bw

@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i.i
   store i8 0, ptr %i.bh, align 8, !tbaa !407
   %i.bi = getelementptr inbounds nuw i8, ptr %.014.i.i.i.i, i64 80
   store ptr %i.be, ptr %i.bi, align 8, !tbaa !408
-  %i.bj = add i64 %.01013.i.i.i.i, -1             ; 2 uses
+  %i.bj = add nsw i64 %.01013.i.i.i.i, -1         ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.014.i.i.i.i, i64 96 ; 2 uses
   %.not.i.i.i.i70 = icmp eq i64 %i.bj, 0
   br i1 %.not.i.i.i.i70, label %_ZNSt6vectorIN7rocksdb6StatusESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i, label %.lr.ph.i.i.i.i, !llvm.loop !35
@@ -607,7 +607,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i
   store i8 0, ptr %i.bc, align 8, !tbaa !407
   %i.bd = getelementptr inbounds nuw i8, ptr %.014.i.i.i.i, i64 80
   store ptr %i.az, ptr %i.bd, align 8, !tbaa !408
-  %i.be = add i64 %.01013.i.i.i.i, -1             ; 2 uses
+  %i.be = add nsw i64 %.01013.i.i.i.i, -1         ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.014.i.i.i.i, i64 96 ; 2 uses
   %.not.i.i.i.i76 = icmp eq i64 %i.be, 0
   br i1 %.not.i.i.i.i76, label %_ZNSt6vectorIN7rocksdb6StatusESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i, label %.lr.ph.i.i.i.i, !llvm.loop !35
@@ -1010,7 +1010,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i
   store i8 0, ptr %i.bd, align 8, !tbaa !407
   %i.be = getelementptr inbounds nuw i8, ptr %.014.i.i.i.i, i64 80
   store ptr %i.ba, ptr %i.be, align 8, !tbaa !408
-  %i.bf = add i64 %.01013.i.i.i.i, -1             ; 2 uses
+  %i.bf = add nsw i64 %.01013.i.i.i.i, -1         ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.014.i.i.i.i, i64 96 ; 2 uses
   %.not.i.i.i.i102 = icmp eq i64 %i.bf, 0
   br i1 %.not.i.i.i.i102, label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i, label %.lr.ph.i.i.i.i, !llvm.loop !35
@@ -1413,7 +1413,7 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i.i
   store i8 0, ptr %i.bh, align 8, !tbaa !407
   %i.bi = getelementptr inbounds nuw i8, ptr %.014.i.i.i.i, i64 80
   store ptr %i.be, ptr %i.bi, align 8, !tbaa !408
-  %i.bj = add i64 %.01013.i.i.i.i, -1             ; 2 uses
+  %i.bj = add nsw i64 %.01013.i.i.i.i, -1         ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.014.i.i.i.i, i64 96 ; 2 uses
   %.not.i.i.i.i70 = icmp eq i64 %i.bj, 0
   br i1 %.not.i.i.i.i70, label %_ZNSt6vectorIN7rocksdb6StatusESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i, label %.lr.ph.i.i.i.i, !llvm.loop !35
@@ -1816,7 +1816,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i
   store i8 0, ptr %i.bc, align 8, !tbaa !407
   %i.bd = getelementptr inbounds nuw i8, ptr %.014.i.i.i.i, i64 80
   store ptr %i.az, ptr %i.bd, align 8, !tbaa !408
-  %i.be = add i64 %.01013.i.i.i.i, -1             ; 2 uses
+  %i.be = add nsw i64 %.01013.i.i.i.i, -1         ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.014.i.i.i.i, i64 96 ; 2 uses
   %.not.i.i.i.i76 = icmp eq i64 %i.be, 0
   br i1 %.not.i.i.i.i76, label %_ZNSt6vectorIN7rocksdb6StatusESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i, label %.lr.ph.i.i.i.i, !llvm.loop !35

@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o
   ]
 
 bb.q:                                             ; preds = %bb.p, %bb.p
-  %i.be = add i64 %.036106.i.i, -1                ; 5 uses
+  %i.be = add nsw i64 %.036106.i.i, -1            ; 5 uses
   %i.bf = icmp ugt i64 %i.be, 1
   br i1 %i.bf, label %.lr.ph.i41.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIaEELb1ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread45.i
 
@@ -270,7 +270,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_15IntegerCastDataIaEELb0EEEb
   br i1 %i.ch, label %.lr.ph.i41.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIaEELb1ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread42.i
 
 bb.w:                                             ; preds = %bb.p, %bb.p
-  %i.ci = add i64 %.036106.i.i, -1                ; 5 uses
+  %i.ci = add nsw i64 %.036106.i.i, -1            ; 5 uses
   %i.cj = icmp ugt i64 %i.ci, 1
   br i1 %i.cj, label %.lr.ph.i45.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIaEELb1ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread45.i
 
@@ -507,7 +507,7 @@ _ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIaEELb1ELb0ENS_20IntegerCastOper
 
 bb.aq:                                            ; preds = %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i
   %i.ev = getelementptr inbounds nuw i8, ptr %.035159.i.i, i64 1
-  %i.ew = add i64 %.036158.i.i, -1                ; 2 uses
+  %i.ew = add nsw i64 %.036158.i.i, -1            ; 2 uses
   %cond.i9.i = icmp eq i64 %i.ew, 0
   br i1 %cond.i9.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIaEELb1ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i, label %.lr.ph.i8.i, !llvm.loop !623
 
@@ -833,7 +833,7 @@ bb.bp:                                            ; preds = %bb.bo
   ]
 
 bb.bq:                                            ; preds = %bb.bp, %bb.bp
-  %i.is = add i64 %.036158.i.i, -1                ; 5 uses
+  %i.is = add nsw i64 %.036158.i.i, -1            ; 5 uses
   %i.it = icmp ugt i64 %i.is, 1
   br i1 %i.it, label %.lr.ph.i50.i18.preheader.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIaEELb1ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -920,7 +920,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_22IntegerDecimalCastDataIaEE
   br i1 %or.cond.i.i.i.i.i41.i.i, label %.sink.split.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIaEELb1ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
 bb.bv:                                            ; preds = %bb.bp, %bb.bp
-  %i.ki = add i64 %.036158.i.i, -1                ; 5 uses
+  %i.ki = add nsw i64 %.036158.i.i, -1            ; 5 uses
   %i.kj = icmp ugt i64 %i.ki, 1
   br i1 %i.kj, label %.lr.ph.i68.i.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIaEELb1ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -1323,7 +1323,7 @@ bb.d:                                             ; preds = %bb.c
   ]
 
 bb.e:                                             ; preds = %bb.d, %bb.d
-  %i.r = add i64 %.03654.i.i, -1                  ; 5 uses
+  %i.r = add nsw i64 %.03654.i.i, -1              ; 5 uses
   %i.s = icmp ugt i64 %i.r, 1
   br i1 %i.s, label %.lr.ph.i.i.preheader.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIsEELb1ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -1407,7 +1407,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_15IntegerCastDataIsEELb0EEEb
   br i1 %i.bf, label %.lr.ph.i.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIsEELb1ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread26.sink.split.i
 
 bb.j:                                             ; preds = %bb.d, %bb.d
-  %i.bg = add i64 %.03654.i.i, -1                 ; 5 uses
+  %i.bg = add nsw i64 %.03654.i.i, -1             ; 5 uses
   %i.bh = icmp ugt i64 %i.bg, 1
   br i1 %i.bh, label %.lr.ph.i42.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIsEELb1ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -1502,7 +1502,7 @@ _ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIsEELb1ELb0ENS_20IntegerCastOper
 
 bb.r:                                             ; preds = %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i
   %i.ce = getelementptr inbounds nuw i8, ptr %.035159.i.i, i64 1
-  %i.cf = add i64 %.036158.i.i, -1                ; 2 uses
+  %i.cf = add nsw i64 %.036158.i.i, -1            ; 2 uses
   %cond.i9.i = icmp eq i64 %i.cf, 0
   br i1 %cond.i9.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIsEELb1ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i, label %.lr.ph.i8.i, !llvm.loop !631
 
@@ -1828,7 +1828,7 @@ bb.aq:                                            ; preds = %bb.ap
   ]
 
 bb.ar:                                            ; preds = %bb.aq, %bb.aq
-  %i.gb = add i64 %.036158.i.i, -1                ; 5 uses
+  %i.gb = add nsw i64 %.036158.i.i, -1            ; 5 uses
   %i.gc = icmp ugt i64 %i.gb, 1
   br i1 %i.gc, label %.lr.ph.i50.i.preheader.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIsEELb1ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -1915,7 +1915,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_22IntegerDecimalCastDataIsEE
   br i1 %or.cond.i.i.i.i.i41.i.i, label %.sink.split.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIsEELb1ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
 bb.aw:                                            ; preds = %bb.aq, %bb.aq
-  %i.hr = add i64 %.036158.i.i, -1                ; 5 uses
+  %i.hr = add nsw i64 %.036158.i.i, -1            ; 5 uses
   %i.hs = icmp ugt i64 %i.hr, 1
   br i1 %i.hs, label %.lr.ph.i68.i.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIsEELb1ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -2318,7 +2318,7 @@ bb.p:                                             ; preds = %bb.o
   ]
 
 bb.q:                                             ; preds = %bb.p, %bb.p
-  %i.bg = add i64 %.036105.i.i, -1                ; 5 uses
+  %i.bg = add nsw i64 %.036105.i.i, -1            ; 5 uses
   %i.bh = icmp ugt i64 %i.bg, 1
   br i1 %i.bh, label %.lr.ph.i41.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIiEELb1ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread47.i
 
@@ -2384,7 +2384,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_15IntegerCastDataIiEELb0EEEb
   br i1 %i.cl, label %.lr.ph.i41.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIiEELb1ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread44.i
 
 bb.w:                                             ; preds = %bb.p, %bb.p
-  %i.cm = add i64 %.036105.i.i, -1                ; 5 uses
+  %i.cm = add nsw i64 %.036105.i.i, -1            ; 5 uses
   %i.cn = icmp ugt i64 %i.cm, 1
   br i1 %i.cn, label %.lr.ph.i45.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIiEELb1ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread47.i
 
@@ -2623,7 +2623,7 @@ _ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIiEELb1ELb0ENS_20IntegerCastOper
 
 bb.aq:                                            ; preds = %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i
   %i.fd = getelementptr inbounds nuw i8, ptr %.035159.i.i, i64 1
-  %i.fe = add i64 %.036158.i.i, -1                ; 2 uses
+  %i.fe = add nsw i64 %.036158.i.i, -1            ; 2 uses
   %cond.i9.i = icmp eq i64 %i.fe, 0
   br i1 %cond.i9.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIiEELb1ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i, label %.lr.ph.i8.i, !llvm.loop !643
 
@@ -2949,7 +2949,7 @@ bb.bp:                                            ; preds = %bb.bo
   ]
 
 bb.bq:                                            ; preds = %bb.bp, %bb.bp
-  %i.ja = add i64 %.036158.i.i, -1                ; 5 uses
+  %i.ja = add nsw i64 %.036158.i.i, -1            ; 5 uses
   %i.jb = icmp ugt i64 %i.ja, 1
   br i1 %i.jb, label %.lr.ph.i50.i18.preheader.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIiEELb1ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -3036,7 +3036,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_22IntegerDecimalCastDataIiEE
   br i1 %or.cond.i.i.i.i.i41.i.i, label %.sink.split.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIiEELb1ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
 bb.bv:                                            ; preds = %bb.bp, %bb.bp
-  %i.kq = add i64 %.036158.i.i, -1                ; 5 uses
+  %i.kq = add nsw i64 %.036158.i.i, -1            ; 5 uses
   %i.kr = icmp ugt i64 %i.kq, 1
   br i1 %i.kr, label %.lr.ph.i68.i.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIiEELb1ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -3439,7 +3439,7 @@ bb.p:                                             ; preds = %bb.o
   ]
 
 bb.q:                                             ; preds = %bb.p, %bb.p
-  %i.bg = add i64 %.036105.i.i, -1                ; 5 uses
+  %i.bg = add nsw i64 %.036105.i.i, -1            ; 5 uses
   %i.bh = icmp ugt i64 %i.bg, 1
   br i1 %i.bh, label %.lr.ph.i41.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIlEELb1ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread46.i
 
@@ -3505,7 +3505,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_15IntegerCastDataIlEELb0EEEb
   br i1 %i.cl, label %.lr.ph.i41.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIlEELb1ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread43.i
 
 bb.w:                                             ; preds = %bb.p, %bb.p
-  %i.cm = add i64 %.036105.i.i, -1                ; 5 uses
+  %i.cm = add nsw i64 %.036105.i.i, -1            ; 5 uses
   %i.cn = icmp ugt i64 %i.cm, 1
   br i1 %i.cn, label %.lr.ph.i45.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIlEELb1ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread46.i
 
@@ -3744,7 +3744,7 @@ _ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIlEELb1ELb0ENS_20IntegerCastOper
 
 bb.aq:                                            ; preds = %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i
   %i.fd = getelementptr inbounds nuw i8, ptr %.035143.i.i, i64 1
-  %i.fe = add i64 %.036142.i.i, -1                ; 2 uses
+  %i.fe = add nsw i64 %.036142.i.i, -1            ; 2 uses
   %cond.i9.i = icmp eq i64 %i.fe, 0
   br i1 %cond.i9.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIlEELb1ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i, label %.lr.ph.i8.i, !llvm.loop !655
 
@@ -4054,7 +4054,7 @@ bb.bp:                                            ; preds = %bb.bo
   ]
 
 bb.bq:                                            ; preds = %bb.bp, %bb.bp
-  %i.iw = add i64 %.036142.i.i, -1                ; 5 uses
+  %i.iw = add nsw i64 %.036142.i.i, -1            ; 5 uses
   %i.ix = icmp ugt i64 %i.iw, 1
   br i1 %i.ix, label %.lr.ph.i48.i.preheader.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIlEELb1ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -4136,7 +4136,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_22IntegerDecimalCastDataIlEE
   br i1 %i.kk, label %.lr.ph.i48.i.i, label %.sink.split.i
 
 bb.bv:                                            ; preds = %bb.bp, %bb.bp
-  %i.kl = add i64 %.036142.i.i, -1                ; 5 uses
+  %i.kl = add nsw i64 %.036142.i.i, -1            ; 5 uses
   %i.km = icmp ugt i64 %i.kl, 1
   br i1 %i.km, label %.lr.ph.i63.i.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIlEELb1ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -4539,7 +4539,7 @@ bb.m:                                             ; preds = %bb.l
   ]
 
 bb.n:                                             ; preds = %bb.m, %bb.m
-  %i.bf = add i64 %.043111.i.i, -1                ; 5 uses
+  %i.bf = add nsw i64 %.043111.i.i, -1            ; 5 uses
   %i.bg = icmp ugt i64 %i.bf, 1
   br i1 %i.bg, label %.lr.ph.i49.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIhEELb0ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread48.i
 
@@ -4604,7 +4604,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_15IntegerCastDataIhEELb0EEEb
   br i1 %i.ci, label %.lr.ph.i49.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIhEELb0ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread45.i
 
 bb.t:                                             ; preds = %bb.m, %bb.m
-  %i.cj = add i64 %.043111.i.i, -1                ; 5 uses
+  %i.cj = add nsw i64 %.043111.i.i, -1            ; 5 uses
   %i.ck = icmp ugt i64 %i.cj, 1
   br i1 %i.ck, label %.lr.ph.i52.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIhEELb0ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread48.i
 
@@ -4841,7 +4841,7 @@ _ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIhEELb0ELb0ENS_20IntegerCastOper
 
 bb.an:                                            ; preds = %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i
   %i.ew = getelementptr inbounds nuw i8, ptr %.042169.i.i, i64 1
-  %i.ex = add i64 %.043168.i.i, -1                ; 2 uses
+  %i.ex = add nsw i64 %.043168.i.i, -1            ; 2 uses
   %cond.i9.i = icmp eq i64 %i.ex, 0
   br i1 %cond.i9.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIhEELb0ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i, label %.lr.ph.i8.i, !llvm.loop !668
 
@@ -5177,7 +5177,7 @@ bb.bl:                                            ; preds = %bb.bk
   ]
 
 bb.bm:                                            ; preds = %bb.bl, %bb.bl
-  %i.iu = add i64 %.043168.i.i, -1                ; 5 uses
+  %i.iu = add nsw i64 %.043168.i.i, -1            ; 5 uses
   %i.iv = icmp ugt i64 %i.iu, 1
   br i1 %i.iv, label %.lr.ph.i58.i.preheader.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIhEELb0ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -5263,7 +5263,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_22IntegerDecimalCastDataIhEE
   br i1 %or.cond.not.i.i.i.i.i49.i.i, label %.sink.split.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIhEELb0ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
 bb.br:                                            ; preds = %bb.bl, %bb.bl
-  %i.kj = add i64 %.043168.i.i, -1                ; 5 uses
+  %i.kj = add nsw i64 %.043168.i.i, -1            ; 5 uses
   %i.kk = icmp ugt i64 %i.kj, 1
   br i1 %i.kk, label %.lr.ph.i76.i.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIhEELb0ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -5666,7 +5666,7 @@ bb.m:                                             ; preds = %bb.l
   ]
 
 bb.n:                                             ; preds = %bb.m, %bb.m
-  %i.bh = add i64 %.043111.i.i, -1                ; 5 uses
+  %i.bh = add nsw i64 %.043111.i.i, -1            ; 5 uses
   %i.bi = icmp ugt i64 %i.bh, 1
   br i1 %i.bi, label %.lr.ph.i49.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataItEELb0ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread48.i
 
@@ -5734,7 +5734,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_15IntegerCastDataItEELb0EEEb
   br i1 %i.cm, label %.lr.ph.i49.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataItEELb0ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread45.i
 
 bb.t:                                             ; preds = %bb.m, %bb.m
-  %i.cn = add i64 %.043111.i.i, -1                ; 5 uses
+  %i.cn = add nsw i64 %.043111.i.i, -1            ; 5 uses
   %i.co = icmp ugt i64 %i.cn, 1
   br i1 %i.co, label %.lr.ph.i52.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataItEELb0ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread48.i
 
@@ -5973,7 +5973,7 @@ _ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataItEELb0ELb0ENS_20IntegerCastOper
 
 bb.an:                                            ; preds = %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i
   %i.fc = getelementptr inbounds nuw i8, ptr %.042169.i.i, i64 1
-  %i.fd = add i64 %.043168.i.i, -1                ; 2 uses
+  %i.fd = add nsw i64 %.043168.i.i, -1            ; 2 uses
   %cond.i9.i = icmp eq i64 %i.fd, 0
   br i1 %cond.i9.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataItEELb0ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i, label %.lr.ph.i8.i, !llvm.loop !682
 
@@ -6309,7 +6309,7 @@ bb.bl:                                            ; preds = %bb.bk
   ]
 
 bb.bm:                                            ; preds = %bb.bl, %bb.bl
-  %i.ja = add i64 %.043168.i.i, -1                ; 5 uses
+  %i.ja = add nsw i64 %.043168.i.i, -1            ; 5 uses
   %i.jb = icmp ugt i64 %i.ja, 1
   br i1 %i.jb, label %.lr.ph.i58.i.preheader.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataItEELb0ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -6395,7 +6395,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_22IntegerDecimalCastDataItEE
   br i1 %or.cond.not.i.i.i.i.i49.i.i, label %.sink.split.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataItEELb0ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
 bb.br:                                            ; preds = %bb.bl, %bb.bl
-  %i.kp = add i64 %.043168.i.i, -1                ; 5 uses
+  %i.kp = add nsw i64 %.043168.i.i, -1            ; 5 uses
   %i.kq = icmp ugt i64 %i.kp, 1
   br i1 %i.kq, label %.lr.ph.i76.i.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataItEELb0ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -6798,7 +6798,7 @@ bb.m:                                             ; preds = %bb.l
   ]
 
 bb.n:                                             ; preds = %bb.m, %bb.m
-  %i.bh = add i64 %.043110.i.i, -1                ; 5 uses
+  %i.bh = add nsw i64 %.043110.i.i, -1            ; 5 uses
   %i.bi = icmp ugt i64 %i.bh, 1
   br i1 %i.bi, label %.lr.ph.i49.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIjEELb0ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread48.i
 
@@ -6864,7 +6864,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_15IntegerCastDataIjEELb0EEEb
   br i1 %i.cm, label %.lr.ph.i49.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIjEELb0ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread45.i
 
 bb.t:                                             ; preds = %bb.m, %bb.m
-  %i.cn = add i64 %.043110.i.i, -1                ; 5 uses
+  %i.cn = add nsw i64 %.043110.i.i, -1            ; 5 uses
   %i.co = icmp ugt i64 %i.cn, 1
   br i1 %i.co, label %.lr.ph.i52.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIjEELb0ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread48.i
 
@@ -7103,7 +7103,7 @@ _ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataIjEELb0ELb0ENS_20IntegerCastOper
 
 bb.an:                                            ; preds = %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i
   %i.fe = getelementptr inbounds nuw i8, ptr %.042169.i.i, i64 1
-  %i.ff = add i64 %.043168.i.i, -1                ; 2 uses
+  %i.ff = add nsw i64 %.043168.i.i, -1            ; 2 uses
   %cond.i9.i = icmp eq i64 %i.ff, 0
   br i1 %cond.i9.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIjEELb0ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i, label %.lr.ph.i8.i, !llvm.loop !696
 
@@ -7439,7 +7439,7 @@ bb.bl:                                            ; preds = %bb.bk
   ]
 
 bb.bm:                                            ; preds = %bb.bl, %bb.bl
-  %i.jc = add i64 %.043168.i.i, -1                ; 5 uses
+  %i.jc = add nsw i64 %.043168.i.i, -1            ; 5 uses
   %i.jd = icmp ugt i64 %i.jc, 1
   br i1 %i.jd, label %.lr.ph.i58.i.preheader.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIjEELb0ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -7525,7 +7525,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_22IntegerDecimalCastDataIjEE
   br i1 %or.cond.not.i.i.i.i.i49.i.i, label %.sink.split.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIjEELb0ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
 bb.br:                                            ; preds = %bb.bl, %bb.bl
-  %i.kr = add i64 %.043168.i.i, -1                ; 5 uses
+  %i.kr = add nsw i64 %.043168.i.i, -1            ; 5 uses
   %i.ks = icmp ugt i64 %i.kr, 1
   br i1 %i.ks, label %.lr.ph.i76.i.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataIjEELb0ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -7928,7 +7928,7 @@ bb.m:                                             ; preds = %bb.l
   ]
 
 bb.n:                                             ; preds = %bb.m, %bb.m
-  %i.bh = add i64 %.043110.i.i, -1                ; 5 uses
+  %i.bh = add nsw i64 %.043110.i.i, -1            ; 5 uses
   %i.bi = icmp ugt i64 %i.bh, 1
   br i1 %i.bi, label %.lr.ph.i49.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataImEELb0ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread52.i
 
@@ -7994,7 +7994,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_15IntegerCastDataImEELb0EEEb
   br i1 %i.cm, label %.lr.ph.i49.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataImEELb0ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread49.i
 
 bb.t:                                             ; preds = %bb.m, %bb.m
-  %i.cn = add i64 %.043110.i.i, -1                ; 5 uses
+  %i.cn = add nsw i64 %.043110.i.i, -1            ; 5 uses
   %i.co = icmp ugt i64 %i.cn, 1
   br i1 %i.co, label %.lr.ph.i52.i.i, label %_ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataImEELb0ELb0ENS_20IntegerCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread52.i
 
@@ -8233,7 +8233,7 @@ _ZN6duckdbL14TryIntegerCastINS_15IntegerCastDataImEELb0ELb0ENS_20IntegerCastOper
 
 bb.an:                                            ; preds = %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i, %.lr.ph.i8.i
   %i.fe = getelementptr inbounds nuw i8, ptr %.042161.i.i, i64 1
-  %i.ff = add i64 %.043160.i.i, -1                ; 2 uses
+  %i.ff = add nsw i64 %.043160.i.i, -1            ; 2 uses
   %cond.i9.i = icmp eq i64 %i.ff, 0
   br i1 %cond.i9.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataImEELb0ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i, label %.lr.ph.i8.i, !llvm.loop !710
 
@@ -8604,7 +8604,7 @@ bb.bh:                                            ; preds = %bb.bg
   ]
 
 bb.bi:                                            ; preds = %bb.bh, %bb.bh
-  %i.jq = add i64 %.043160.i.i, -1                ; 5 uses
+  %i.jq = add nsw i64 %.043160.i.i, -1            ; 5 uses
   %i.jr = icmp ugt i64 %i.jq, 1
   br i1 %i.jr, label %.lr.ph.i56.i.preheader.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataImEELb0ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -8686,7 +8686,7 @@ _ZN6duckdb20IntegerCastOperation14HandleHexDigitINS_22IntegerDecimalCastDataImEE
   br i1 %i.le, label %.lr.ph.i56.i.i, label %.sink.split.i
 
 bb.bn:                                            ; preds = %bb.bh, %bb.bh
-  %i.lf = add i64 %.043160.i.i, -1                ; 5 uses
+  %i.lf = add nsw i64 %.043160.i.i, -1            ; 5 uses
   %i.lg = icmp ugt i64 %i.lf, 1
   br i1 %i.lg, label %.lr.ph.i71.i.i, label %_ZN6duckdbL14TryIntegerCastINS_22IntegerDecimalCastDataImEELb0ELb1ENS_27IntegerDecimalCastOperationELb1ELc46EEEbPKcmRT_b.exit.thread.i
 
@@ -9089,7 +9089,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 .thread.i:                                        ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %.03350.i, i64 1
-  %i.k = add i64 %.03549.i, -1
+  %i.k = add nsw i64 %.03549.i, -1
   br label %bb.f
 
 bb.d:                                             ; preds = %.lr.ph.i
@@ -9199,7 +9199,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 .thread.i:                                        ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %.03350.i, i64 1
-  %i.k = add i64 %.03549.i, -1
+  %i.k = add nsw i64 %.03549.i, -1
   br label %bb.f
 
 bb.d:                                             ; preds = %.lr.ph.i
@@ -9318,7 +9318,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 .thread.i:                                        ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %.03350.i, i64 1
-  %i.p = add i64 %.03549.i, -1
+  %i.p = add nsw i64 %.03549.i, -1
   br label %bb.f
 
 bb.d:                                             ; preds = %.lr.ph.i
@@ -9640,7 +9640,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 .thread.i:                                        ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %.03350.i, i64 1
-  %i.p = add i64 %.03549.i, -1
+  %i.p = add nsw i64 %.03549.i, -1
   br label %bb.f
 
 bb.d:                                             ; preds = %.lr.ph.i

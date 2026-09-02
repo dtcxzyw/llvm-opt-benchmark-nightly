@@ -205,9 +205,9 @@ bb.bn:                                            ; preds = %.lr.ph.i79
   %i.kj = getelementptr inbounds nuw [8 x i8], ptr %i.jt, i64 %i.kf ; 2 uses
   %i.kk = getelementptr inbounds nuw i8, ptr %i.kj, i64 8
   %i.kl = xor i32 %.023.i, -1
-  %i.km = add i32 %i.ju, %i.kl
+  %i.km = add nsw i32 %i.ju, %i.kl
   %i.kn = sext i32 %i.km to i64
-  %i.ko = shl nsw i64 %i.kn, 3
+  %i.ko = shl nuw nsw i64 %i.kn, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.kj, ptr nonnull align 8 %i.kk, i64 %i.ko, i1 false)
   %i.kp = load i32, ptr %i.jr, align 8, !tbaa !718
   %i.kq = load ptr, ptr %i.js, align 8, !tbaa !493
@@ -610,9 +610,9 @@ bb.q:                                             ; preds = %.lr.ph.i
   %i.dk = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %i.dg ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 8
   %i.dm = xor i32 %.023.i, -1
-  %i.dn = add i32 %i.cv, %i.dm
+  %i.dn = add nsw i32 %i.cv, %i.dm
   %i.do = sext i32 %i.dn to i64
-  %i.dp = shl nsw i64 %i.do, 3
+  %i.dp = shl nuw nsw i64 %i.do, 3
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.dk, ptr nonnull align 8 %i.dl, i64 %i.dp, i1 false)
   %i.dq = load i32, ptr %i.cs, align 8, !tbaa !718
   %i.dr = load ptr, ptr %i.ct, align 8, !tbaa !493
@@ -869,9 +869,9 @@ bb.c:                                             ; preds = %.lr.ph
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.p ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.v = xor i32 %.023, -1
-  %i.w = add i32 %i.e, %i.v
+  %i.w = add nsw i32 %i.e, %i.v
   %i.x = sext i32 %i.w to i64
-  %i.y = shl nsw i64 %i.x, 3
+  %i.y = shl nuw nsw i64 %i.x, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.t, ptr nonnull align 8 %i.u, i64 %i.y, i1 false)
   %i.z = load i32, ptr %i.b, align 8, !tbaa !718
   %i.aa = load ptr, ptr %i.c, align 8, !tbaa !493

@@ -205,7 +205,7 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.068.i.i.i.i.i.us.i.i.prol = phi i64 [ %i.zq, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i.prol ], [ %i.zb, %.lr.ph.i.i.i.i.i.split.us.i.i ]
   %prol.iter1151 = phi i64 [ %prol.iter1151.next, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i.prol ], [ 0, %.lr.ph.i.i.i.i.i.split.us.i.i ]
   store <2 x ptr> %i.zp, ptr %.09.i.i.i.i.i.us.i.i.prol, align 8, !tbaa !116, !noalias !2794
-  %i.zq = add i64 %.068.i.i.i.i.i.us.i.i.prol, -1 ; 2 uses
+  %i.zq = add nsw i64 %.068.i.i.i.i.i.us.i.i.prol, -1 ; 2 uses
   %i.zr = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i.prol, i64 16 ; 3 uses
   %prol.iter1151.next = add i64 %prol.iter1151, 1 ; 2 uses
   %prol.iter1151.cmp.not = icmp eq i64 %prol.iter1151.next, %xtraiter1149
@@ -236,7 +236,7 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   store <2 x ptr> %i.zp, ptr %i.zy, align 8, !tbaa !116, !noalias !2794
   %i.zz = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i, i64 112
   store <2 x ptr> %i.zp, ptr %i.zz, align 8, !tbaa !116, !noalias !2794
-  %i.aaa = add i64 %.068.i.i.i.i.i.us.i.i, -8     ; 2 uses
+  %i.aaa = add nsw i64 %.068.i.i.i.i.i.us.i.i, -8 ; 2 uses
   %i.aab = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.us.i.i.7 = icmp eq i64 %i.aaa, 0
   br i1 %.not.i.i.i.i.i.us.i.i.7, label %.loopexit.i, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i, !llvm.loop !2469
@@ -639,7 +639,7 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.068.i.i.i.i.i.us.i.i311.prol = phi i64 [ %i.agb, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i309.prol ], [ %i.afm, %.lr.ph.i.i.i.i.i.split.us.i.i308 ]
   %prol.iter1148 = phi i64 [ %prol.iter1148.next, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i309.prol ], [ 0, %.lr.ph.i.i.i.i.i.split.us.i.i308 ]
   store <2 x ptr> %i.aga, ptr %.09.i.i.i.i.i.us.i.i310.prol, align 8, !tbaa !116, !noalias !2801
-  %i.agb = add i64 %.068.i.i.i.i.i.us.i.i311.prol, -1 ; 2 uses
+  %i.agb = add nsw i64 %.068.i.i.i.i.i.us.i.i311.prol, -1 ; 2 uses
   %i.agc = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i310.prol, i64 16 ; 3 uses
   %prol.iter1148.next = add i64 %prol.iter1148, 1 ; 2 uses
   %prol.iter1148.cmp.not = icmp eq i64 %prol.iter1148.next, %xtraiter1146
@@ -670,7 +670,7 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   store <2 x ptr> %i.aga, ptr %i.agj, align 8, !tbaa !116, !noalias !2801
   %i.agk = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i310, i64 112
   store <2 x ptr> %i.aga, ptr %i.agk, align 8, !tbaa !116, !noalias !2801
-  %i.agl = add i64 %.068.i.i.i.i.i.us.i.i311, -8  ; 2 uses
+  %i.agl = add nsw i64 %.068.i.i.i.i.i.us.i.i311, -8 ; 2 uses
   %i.agm = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i310, i64 128 ; 2 uses
   %.not.i.i.i.i.i.us.i.i312.7 = icmp eq i64 %i.agl, 0
   br i1 %.not.i.i.i.i.i.us.i.i312.7, label %.loopexit.i258, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i309, !llvm.loop !2469
@@ -1073,7 +1073,7 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.068.i.i.i.i.i.us.i.i438.prol = phi i64 [ %i.azx, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436.prol ], [ %i.azk, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436.prol.preheader ]
   %prol.iter1142 = phi i64 [ %prol.iter1142.next, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436.prol ], [ 0, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436.prol.preheader ]
   store <2 x ptr> %i.azw, ptr %.09.i.i.i.i.i.us.i.i437.prol, align 8, !tbaa !116
-  %i.azx = add i64 %.068.i.i.i.i.i.us.i.i438.prol, -1 ; 2 uses
+  %i.azx = add nsw i64 %.068.i.i.i.i.i.us.i.i438.prol, -1 ; 2 uses
   %i.azy = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i437.prol, i64 16 ; 3 uses
   %prol.iter1142.next = add i64 %prol.iter1142, 1 ; 2 uses
   %prol.iter1142.cmp.not = icmp eq i64 %prol.iter1142.next, %xtraiter1140
@@ -1115,7 +1115,7 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   store <2 x ptr> %i.bag, ptr %i.ban, align 8, !tbaa !116
   %i.bao = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i437, i64 112
   store <2 x ptr> %i.bah, ptr %i.bao, align 8, !tbaa !116
-  %i.bap = add i64 %.068.i.i.i.i.i.us.i.i438, -8  ; 2 uses
+  %i.bap = add nsw i64 %.068.i.i.i.i.i.us.i.i438, -8 ; 2 uses
   %i.baq = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i437, i64 128 ; 2 uses
   %.not.i.i.i.i.i.us.i.i439.7 = icmp eq i64 %i.bap, 0
   br i1 %.not.i.i.i.i.i.us.i.i439.7, label %.loopexit3.i, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i436, !llvm.loop !2469
@@ -1272,7 +1272,7 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.068.i.i.i.i.i.us.i63.i.prol = phi i64 [ %i.bch, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol ], [ %i.bbu, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol.preheader ]
   %prol.iter1145 = phi i64 [ %prol.iter1145.next, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol ], [ 0, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i.prol.preheader ]
   store <2 x ptr> %i.bcg, ptr %.09.i.i.i.i.i.us.i62.i.prol, align 8, !tbaa !116
-  %i.bch = add i64 %.068.i.i.i.i.i.us.i63.i.prol, -1 ; 2 uses
+  %i.bch = add nsw i64 %.068.i.i.i.i.i.us.i63.i.prol, -1 ; 2 uses
   %i.bci = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i62.i.prol, i64 16 ; 3 uses
   %prol.iter1145.next = add i64 %prol.iter1145, 1 ; 2 uses
   %prol.iter1145.cmp.not = icmp eq i64 %prol.iter1145.next, %xtraiter1143
@@ -1314,7 +1314,7 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   store <2 x ptr> %i.bcq, ptr %i.bcx, align 8, !tbaa !116
   %i.bcy = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i62.i, i64 112
   store <2 x ptr> %i.bcr, ptr %i.bcy, align 8, !tbaa !116
-  %i.bcz = add i64 %.068.i.i.i.i.i.us.i63.i, -8   ; 2 uses
+  %i.bcz = add nsw i64 %.068.i.i.i.i.i.us.i63.i, -8 ; 2 uses
   %i.bda = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i62.i, i64 128 ; 2 uses
   %.not.i.i.i.i.i.us.i64.i.7 = icmp eq i64 %i.bcz, 0
   br i1 %.not.i.i.i.i.i.us.i64.i.7, label %.loopexit.i414, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i61.i, !llvm.loop !2469
@@ -1717,7 +1717,7 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.068.i.i.i.i.i.us.i.i488.prol = phi i64 [ %i.bnn, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486.prol ], [ %i.bnb, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486.prol.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486.prol ], [ 0, %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486.prol.preheader ]
   store <2 x ptr> %i.bnm, ptr %.09.i.i.i.i.i.us.i.i487.prol, align 8, !tbaa !116
-  %i.bnn = add i64 %.068.i.i.i.i.i.us.i.i488.prol, -1 ; 2 uses
+  %i.bnn = add nsw i64 %.068.i.i.i.i.i.us.i.i488.prol, -1 ; 2 uses
   %i.bno = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i487.prol, i64 16 ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -1759,7 +1759,7 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i
   store <2 x ptr> %i.bnw, ptr %i.bod, align 8, !tbaa !116
   %i.boe = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i487, i64 112
   store <2 x ptr> %i.bnx, ptr %i.boe, align 8, !tbaa !116
-  %i.bof = add i64 %.068.i.i.i.i.i.us.i.i488, -8  ; 2 uses
+  %i.bof = add nsw i64 %.068.i.i.i.i.i.us.i.i488, -8 ; 2 uses
   %i.bog = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.us.i.i487, i64 128 ; 2 uses
   %.not.i.i.i.i.i.us.i.i489.7 = icmp eq i64 %i.bof, 0
   br i1 %.not.i.i.i.i.i.us.i.i489.7, label %.loopexit.i457, label %_ZSt10_ConstructISt10shared_ptrIN5arrow5ArrayEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.i.us.i.i486, !llvm.loop !2469

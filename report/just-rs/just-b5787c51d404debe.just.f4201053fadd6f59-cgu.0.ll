@@ -205,7 +205,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.i.i: ; pred
   %i.n = zext i1 %i.m to i32
   %bcmp.i.i.fr.i.i = freeze i32 %i.n
   %i.o = icmp eq i32 %bcmp.i.i.fr.i.i, 0
-  %i.p = add i64 %.sroa.59.0.copyload.i, -2
+  %i.p = add nsw i64 %.sroa.59.0.copyload.i, -2
   %spec.select.i.i = select i1 %i.o, i64 %i.p, i64 %.sroa.59.0.copyload.i
   br label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.thread.i.i
 
@@ -608,7 +608,7 @@ _RINvYNtNtCshTCYgcDtIbU_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin
   br i1 %.not.i.i.i.i.i.i.i.i.peel.i.i.i.i.i.i.i.i, label %bb.j, label %_RINvXs6_NtCshTCYgcDtIbU_10serde_json3serINtB6_8CompoundNtNtNtCsaKJjC64KgbL_3std2io5stdio6StdoutNtB6_16CompactFormatterENtNtCsfxuqquxiU4q_10serde_core3ser12SerializeMap15serialize_valueINtNtCsj6eKBz9Db1c_4core6option6OptionNtNtCskXtk6F4WjxZ_4just7pattern7PatternEEB3C_.exit.sink.split
 
 bb.j:                                             ; preds = %_RINvYNtNtCshTCYgcDtIbU_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueNtNtNtCsaKJjC64KgbL_3std2io5stdio6StdoutECskXtk6F4WjxZ_4just.exit.thread.i.i.i.i.peel.i.i.i.i.i.i.i.i
-  %i.af = add i64 %.val8.peel.i.i.i.i.i.i.i.i, -6
+  %i.af = add nsw i64 %.val8.peel.i.i.i.i.i.i.i.i, -6
   %i.ag = tail call fastcc noundef ptr @_RINvNtCshTCYgcDtIbU_10serde_json3ser27format_escaped_str_contentsNtNtNtCsaKJjC64KgbL_3std2io5stdio6StdoutNtB2_16CompactFormatterECskXtk6F4WjxZ_4just(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.w, i64 noundef range(i64 -2, -6) %i.af), !noalias !31861 ; 2 uses
   %.not5.i.i.i.i.i.i.i.i.peel.i.i.i.i.i.i.i.i = icmp eq ptr %i.ag, null
   br i1 %.not5.i.i.i.i.i.i.i.i.peel.i.i.i.i.i.i.i.i, label %_RINvNtCshTCYgcDtIbU_10serde_json3ser18format_escaped_strNtNtNtCsaKJjC64KgbL_3std2io5stdio6StdoutNtB2_16CompactFormatterECskXtk6F4WjxZ_4just.exit.i.i.i.i.i.i.i.peel.i.i.i.i.i.i.i.i, label %_RINvXs6_NtCshTCYgcDtIbU_10serde_json3serINtB6_8CompoundNtNtNtCsaKJjC64KgbL_3std2io5stdio6StdoutNtB6_16CompactFormatterENtNtCsfxuqquxiU4q_10serde_core3ser12SerializeMap15serialize_valueINtNtCsj6eKBz9Db1c_4core6option6OptionNtNtCskXtk6F4WjxZ_4just7pattern7PatternEEB3C_.exit.sink.split
@@ -672,7 +672,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.thread.i.i.
   unreachable
 
 _RINvYNtNtCshTCYgcDtIbU_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueNtNtNtCsaKJjC64KgbL_3std2io5stdio6StdoutECskXtk6F4WjxZ_4just.exit.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.i.i.i.i.i.i.i.i.i.i
-  %i.bc = add i64 %.val8.i.i.i.i.i.i.i.i, -6
+  %i.bc = add nsw i64 %.val8.i.i.i.i.i.i.i.i, -6
   %i.bd = tail call noundef ptr @_RNvXse_NtNtCsaKJjC64KgbL_3std2io5stdioNtB5_6StdoutNtNtNtCsj6eKBz9Db1c_4core2io5write5Write9write_all(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @551, i64 noundef 1), !noalias !31863 ; 2 uses
   %.not.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.bd, null
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i, label %_RINvYNtNtCshTCYgcDtIbU_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueNtNtNtCsaKJjC64KgbL_3std2io5stdio6StdoutECskXtk6F4WjxZ_4just.exit.thread.i.i.i.i.i.i.i.i.i.i.i.i, label %_RINvXs6_NtCshTCYgcDtIbU_10serde_json3serINtB6_8CompoundNtNtNtCsaKJjC64KgbL_3std2io5stdio6StdoutNtB6_16CompactFormatterENtNtCsfxuqquxiU4q_10serde_core3ser12SerializeMap15serialize_valueINtNtCsj6eKBz9Db1c_4core6option6OptionNtNtCskXtk6F4WjxZ_4just7pattern7PatternEEB3C_.exit.sink.split, !prof !102
@@ -1075,7 +1075,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit: ; preds = 
   %i.f = zext i1 %i.e to i32
   %bcmp.i.i.fr = freeze i32 %i.f
   %i.g = icmp eq i32 %bcmp.i.i.fr, 0
-  %i.h = add i64 %2, -2
+  %i.h = add nsw i64 %2, -2
   %spec.select = select i1 %i.g, i64 %i.h, i64 %2
   br label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.thread
 
@@ -1478,7 +1478,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.i: ; preds 
   %i.oh = zext i1 %i.og to i32
   %bcmp.i.i.fr.i = freeze i32 %i.oh
   %i.oi = icmp eq i32 %bcmp.i.i.fr.i, 0
-  %i.oj = add i64 %i.by, -2
+  %i.oj = add nsw i64 %i.by, -2
   %spec.select.i = select i1 %i.oi, i64 %i.oj, i64 %i.by
   br label %_RNvMNtCskXtk6F4WjxZ_4just10modulepathNtB2_10Modulepath13from_argument.exit
 
@@ -1881,7 +1881,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh11starts_withCskXtk6F4WjxZ_4just.exit.thread: 
   br label %bb.n
 
 .lr.ph.split.preheader.i.i:                       ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh11starts_withCskXtk6F4WjxZ_4just.exit
-  %i.e = add i64 %2, -2                           ; 6 uses
+  %i.e = add nsw i64 %2, -2                       ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 5 uses
   br label %.lr.ph.split.i.i
 
@@ -1941,7 +1941,7 @@ _RNvMsf_NtNtCsj6eKBz9Db1c_4core3str4iterINtB5_13SplitInternalcE7get_endCskXtk6F4
   br i1 %.not.i3.i.not, label %_RNvMsf_NtNtCsj6eKBz9Db1c_4core3str4iterINtB5_13SplitInternalcE14next_inclusiveCskXtk6F4WjxZ_4just.exit, label %.thread
 
 .thread:                                          ; preds = %_RNvMsf_NtNtCsj6eKBz9Db1c_4core3str4iterINtB5_13SplitInternalcE7get_endCskXtk6F4WjxZ_4just.exit.i
-  %.pre.i.i55129 = add i64 %2, -3
+  %.pre.i.i55129 = add nsw i64 %2, -3
   br label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.i.i
 
 bb.f:                                             ; preds = %bb.e
@@ -2344,7 +2344,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsaKJjC64KgbL_3std4path7PathBufECskX
 
 bb.e:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 2 uses
-  %i.o = add i64 %2, -2                           ; 4 uses
+  %i.o = add nsw i64 %2, -2                       ; 4 uses
   %.sroa.461.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.461.0.copyload = load ptr, ptr %.sroa.461.0..sroa_idx, align 8 ; 4 uses
   %.sroa.562.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
@@ -2356,9 +2356,9 @@ bb.e:                                             ; preds = %bb.c
   %i.p = getelementptr i8, ptr %1, i64 %2
   %i.q = ptrtoint ptr %i.p to i64
   %invariant.op.i.i = sub i64 %i.o, %i.q
-  %i.r = add i64 %2, -3
-  %i.s = add i64 %2, -4
-  %i.t = add i64 %2, -5
+  %i.r = add nsw i64 %2, -3
+  %i.s = add nsw i64 %2, -4
+  %i.t = add nsw i64 %2, -5
   br label %bb.f
 
 bb.f:                                             ; preds = %_RNvXs_NtNtCsj6eKBz9Db1c_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher4next.exit.i.i, %bb.e
@@ -2761,7 +2761,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.i.i: ; pred
   %i.cn = zext i1 %i.cm to i32
   %bcmp.i.i.fr.i.i = freeze i32 %i.cn
   %i.co = icmp eq i32 %bcmp.i.i.fr.i.i, 0
-  %i.cp = add i64 %i.az, -2
+  %i.cp = add nsw i64 %i.az, -2
   %spec.select.i.i = select i1 %i.co, i64 %i.cp, i64 %i.az
   br label %_RNvMNtCskXtk6F4WjxZ_4just10modulepathNtB2_10Modulepath13from_argument.exit.i
 
@@ -3164,7 +3164,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit113: ; preds
   br i1 %i.v, label %.split, label %.thread135
 
 .split21:                                         ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit
-  %i.w = add i64 %1, -4
+  %i.w = add nsw i64 %1, -4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store ptr %0, ptr %i.f, align 8, !captures !36
   %i.x = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -3196,7 +3196,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.aa, label %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskXtk6F4WjxZ_4just.exit, label %bb.d
 
 .split:                                           ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit113
-  %i.ab = add i64 %1, -11
+  %i.ab = add nsw i64 %1, -11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store ptr %0, ptr %i.c, align 8, !captures !36
   %i.ac = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -3599,7 +3599,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit: ; preds = 
   br i1 %i.ac, label %bb.o, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.i.i
 
 bb.o:                                             ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit
-  %i.ad = add i64 %.sroa.479.0.copyload, -2
+  %i.ad = add nsw i64 %.sroa.479.0.copyload, -2
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.k
@@ -4002,7 +4002,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.thread.i.i.
   unreachable
 
 bb.d:                                             ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.i.i.i.i
-  %i.ac = add i64 %.val3.i.i.i, -6
+  %i.ac = add nsw i64 %.val3.i.i.i, -6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   store ptr %i.u, ptr %i.i, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %i.i, i64 8
@@ -4064,7 +4064,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.thread.i.i.
   unreachable
 
 bb.h:                                             ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.i.i.i.i111
-  %i.az = add i64 %.val3.i.i.i106, -6             ; 2 uses
+  %i.az = add nsw i64 %.val3.i.i.i106, -6         ; 2 uses
   store ptr %i.ar, ptr %i.g, align 8
   %i.ba = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store i64 %i.az, ptr %i.ba, align 8
@@ -4166,7 +4166,7 @@ bb.m:                                             ; preds = %.lr.ph
   %.pn164174203.in = phi i64 [ %.val3.i.i.i132, %_RNvXs9_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_3map3MapIBZ_INtNtNtBb_5slice4iter4IterNtNtNtCs2kgGfOW2lp_5regex5regex6string5RegexENCNvMNtCskXtk6F4WjxZ_4just7patternNtB2w_7Pattern9originals0ENvMNtB2y_9enclosureINtB3s_9EnclosureReE4tickEEINtB5_8FuseImplBY_E4nextB2y_.exit142 ], [ %.val3.i.i.i119, %bb.k ]
   %.sroa.0.0173202 = phi ptr [ %i.ca, %_RNvXs9_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_3map3MapIBZ_INtNtNtBb_5slice4iter4IterNtNtNtCs2kgGfOW2lp_5regex5regex6string5RegexENCNvMNtCskXtk6F4WjxZ_4just7patternNtB2w_7Pattern9originals0ENvMNtB2y_9enclosureINtB3s_9EnclosureReE4tickEEINtB5_8FuseImplBY_E4nextB2y_.exit142 ], [ %i.bc, %bb.k ] ; 4 uses
   %.sroa.08.0175201 = phi ptr [ %i.ci, %_RNvXs9_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_3map3MapIBZ_INtNtNtBb_5slice4iter4IterNtNtNtCs2kgGfOW2lp_5regex5regex6string5RegexENCNvMNtCskXtk6F4WjxZ_4just7patternNtB2w_7Pattern9originals0ENvMNtB2y_9enclosureINtB3s_9EnclosureReE4tickEEINtB5_8FuseImplBY_E4nextB2y_.exit142 ], [ %i.bk, %bb.k ] ; 2 uses
-  %.pn164174203 = add i64 %.pn164174203.in, -6    ; 2 uses
+  %.pn164174203 = add nsw i64 %.pn164174203.in, -6 ; 2 uses
   %i.bz = icmp eq ptr %.sroa.0.0173202, %.val103
   br i1 %i.bz, label %bb.m, label %bb.n
 
@@ -4569,7 +4569,7 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.i.i.i.peel:
   br i1 %i.iy, label %bb.dn, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.thread.i.i.i, !prof !33
 
 bb.dn:                                            ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.i.i.i.peel
-  %i.iz = add i64 %.val3.i.i.peel, -6
+  %i.iz = add nsw i64 %.val3.i.i.peel, -6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.ir, ptr %i.b, align 8, !captures !36
   store i64 %i.iz, ptr %i.ii, align 8
@@ -4637,7 +4637,7 @@ bb.dq:                                            ; preds = %bb.dr
   br i1 %i.jt, label %.loopexit664, label %bb.ds
 
 bb.dr:                                            ; preds = %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh9ends_withCskXtk6F4WjxZ_4just.exit.i.i.i
-  %i.ju = add i64 %.val3.i.i, -6
+  %i.ju = add nsw i64 %.val3.i.i, -6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.jk, ptr %i.b, align 8, !captures !36
   store i64 %i.ju, ptr %i.ii, align 8

@@ -205,9 +205,9 @@ _ZN2cv10AutoBufferImLm136EEC2Em.exit:             ; preds = %.noexc346, %bb.bm
   %i.hl = mul i64 %i.w, 3
   %i.hm = and i64 %i.hl, 4294967295               ; 2 uses
   %i.hn = getelementptr inbounds nuw [8 x i8], ptr %i.hg, i64 %i.hm ; 19 uses
-  %i.ho = add i32 %i.x, -1                        ; 6 uses
+  %i.ho = add nsw i32 %i.x, -1                    ; 6 uses
   %i.hp = icmp slt i32 %i.x, 1
-  br i1 %i.hp, label %.preheader143.i, label %.preheader149.split.us.preheader.peel.i
+  br i1 %i.hp, label %.preheader142.preheader.i, label %.preheader149.split.us.preheader.peel.i
 
 .preheader149.split.us.preheader.peel.i:          ; preds = %_ZN2cv10AutoBufferImLm136EEC2Em.exit
   %i.hq = zext nneg i32 %i.ho to i64              ; 9 uses
@@ -347,13 +347,13 @@ bb.br:                                            ; preds = %.preheader149.split
   %i.ke = and i64 %i.kd, 4294967295
   br label %bb.bs
 
-.preheader143.i:                                  ; preds = %.loopexit145.i, %._crit_edge.i, %_ZN2cv10AutoBufferImLm136EEC2Em.exit
-  %.0125.lcssa.i = phi i32 [ 0, %._crit_edge.i ], [ %i.ho, %_ZN2cv10AutoBufferImLm136EEC2Em.exit ], [ %.1126.i, %.loopexit145.i ] ; 2 uses
+.preheader143.i:                                  ; preds = %.loopexit145.i, %._crit_edge.i
+  %.0125.lcssa.i = phi i32 [ 0, %._crit_edge.i ], [ %.1126.i, %.loopexit145.i ] ; 2 uses
   %.not164.not.i = icmp slt i32 %.0125.lcssa.i, %i.x
   br i1 %.not164.not.i, label %.preheader142.preheader.i, label %.preheader141.i
 
-.preheader142.preheader.i:                        ; preds = %.split.us.peel.i, %.preheader143.i
-  %.0125.lcssa.i471 = phi i32 [ %.0125.lcssa.i, %.preheader143.i ], [ 0, %.split.us.peel.i ]
+.preheader142.preheader.i:                        ; preds = %_ZN2cv10AutoBufferImLm136EEC2Em.exit, %.split.us.peel.i, %.preheader143.i
+  %.0125.lcssa.i471 = phi i32 [ %.0125.lcssa.i, %.preheader143.i ], [ 0, %.split.us.peel.i ], [ %i.ho, %_ZN2cv10AutoBufferImLm136EEC2Em.exit ]
   %i.kf = add nsw i64 %i.ay, -1
   %i.kg = sext i32 %.0125.lcssa.i471 to i64
   br label %.preheader142.i

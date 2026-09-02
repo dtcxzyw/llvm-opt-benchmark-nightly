@@ -205,7 +205,7 @@ begin_hunk_0_@_ZN6embree4sse226HeuristicArrayOpenMergeSAHIZNS0_19BVHNBuilderTwoL
   %.sroa.10.1122 = phi <4 x float> [ %i.hu, %.lr.ph130 ], [ splat (float -inf), %._crit_edge ]
   %.sroa.054.1121 = phi <4 x float> [ %i.hr, %.lr.ph130 ], [ splat (float +inf), %._crit_edge ]
   %i.gw = phi <4 x i32> [ %i.jb, %.lr.ph130 ], [ splat (i32 1), %._crit_edge ] ; 2 uses
-  %i.gx = add i64 %.048.i128, -1                  ; 2 uses
+  %i.gx = add nsw i64 %.048.i128, -1              ; 2 uses
   %i.gy = getelementptr inbounds nuw [16 x i8], ptr %i.a, i64 %i.gx
   %i.gz = load <4 x i32>, ptr %i.gy, align 16, !noalias !731
   %i.ha = add <4 x i32> %i.gz, %i.gv              ; 2 uses
@@ -608,7 +608,7 @@ begin_hunk_1_@_ZN6embree4sse226HeuristicArrayOpenMergeSAHIZNS0_19BVHNBuilderTwoL
   %.sroa.10.1121 = phi <4 x float> [ %i.hv, %.lr.ph128 ], [ splat (float -inf), %._crit_edge ]
   %.sroa.053.1120 = phi <4 x float> [ %i.hs, %.lr.ph128 ], [ splat (float +inf), %._crit_edge ]
   %i.gx = phi <4 x i32> [ %i.jc, %.lr.ph128 ], [ splat (i32 1), %._crit_edge ] ; 2 uses
-  %i.gy = add i64 %.048.i126, -1                  ; 2 uses
+  %i.gy = add nsw i64 %.048.i126, -1              ; 2 uses
   %i.gz = getelementptr inbounds nuw [16 x i8], ptr %i.a, i64 %i.gy
   %i.ha = load <4 x i32>, ptr %i.gz, align 16, !noalias !1637
   %i.hb = add <4 x i32> %i.ha, %i.gw              ; 2 uses
@@ -1011,7 +1011,7 @@ begin_hunk_2_@_ZN6embree4sse226HeuristicArrayOpenMergeSAHIZNS0_19BVHNBuilderTwoL
   %.sroa.10.1121 = phi <4 x float> [ %i.hv, %.lr.ph128 ], [ splat (float -inf), %._crit_edge ]
   %.sroa.053.1120 = phi <4 x float> [ %i.hs, %.lr.ph128 ], [ splat (float +inf), %._crit_edge ]
   %i.gx = phi <4 x i32> [ %i.jc, %.lr.ph128 ], [ splat (i32 1), %._crit_edge ] ; 2 uses
-  %i.gy = add i64 %.048.i126, -1                  ; 2 uses
+  %i.gy = add nsw i64 %.048.i126, -1              ; 2 uses
   %i.gz = getelementptr inbounds nuw [16 x i8], ptr %i.a, i64 %i.gy
   %i.ha = load <4 x i32>, ptr %i.gz, align 16, !noalias !2517
   %i.hb = add <4 x i32> %i.ha, %i.gw              ; 2 uses
@@ -1414,7 +1414,7 @@ begin_hunk_3_@_ZN6embree4sse226HeuristicArrayOpenMergeSAHIZNS0_19BVHNBuilderTwoL
   %.sroa.10.1121 = phi <4 x float> [ %i.hv, %.lr.ph128 ], [ splat (float -inf), %._crit_edge ]
   %.sroa.053.1120 = phi <4 x float> [ %i.hs, %.lr.ph128 ], [ splat (float +inf), %._crit_edge ]
   %i.gx = phi <4 x i32> [ %i.jc, %.lr.ph128 ], [ splat (i32 1), %._crit_edge ] ; 2 uses
-  %i.gy = add i64 %.048.i126, -1                  ; 2 uses
+  %i.gy = add nsw i64 %.048.i126, -1              ; 2 uses
   %i.gz = getelementptr inbounds nuw [16 x i8], ptr %i.a, i64 %i.gy
   %i.ha = load <4 x i32>, ptr %i.gz, align 16, !noalias !3426
   %i.hb = add <4 x i32> %i.ha, %i.gw              ; 2 uses
@@ -1817,7 +1817,7 @@ begin_hunk_4_@_ZN6embree4sse226HeuristicArrayOpenMergeSAHIZNS0_19BVHNBuilderTwoL
   %.sroa.10.1121 = phi <4 x float> [ %i.hv, %.lr.ph128 ], [ splat (float -inf), %._crit_edge ]
   %.sroa.053.1120 = phi <4 x float> [ %i.hs, %.lr.ph128 ], [ splat (float +inf), %._crit_edge ]
   %i.gx = phi <4 x i32> [ %i.jc, %.lr.ph128 ], [ splat (i32 1), %._crit_edge ] ; 2 uses
-  %i.gy = add i64 %.048.i126, -1                  ; 2 uses
+  %i.gy = add nsw i64 %.048.i126, -1              ; 2 uses
   %i.gz = getelementptr inbounds nuw [16 x i8], ptr %i.a, i64 %i.gy
   %i.ha = load <4 x i32>, ptr %i.gz, align 16, !noalias !4306
   %i.hb = add <4 x i32> %i.ha, %i.gw              ; 2 uses
@@ -2220,7 +2220,7 @@ begin_hunk_5_@_ZN6embree4sse226HeuristicArrayOpenMergeSAHIZNS0_19BVHNBuilderTwoL
   %.sroa.10.1121 = phi <4 x float> [ %i.hv, %.lr.ph128 ], [ splat (float -inf), %._crit_edge ]
   %.sroa.053.1120 = phi <4 x float> [ %i.hs, %.lr.ph128 ], [ splat (float +inf), %._crit_edge ]
   %i.gx = phi <4 x i32> [ %i.jc, %.lr.ph128 ], [ splat (i32 1), %._crit_edge ] ; 2 uses
-  %i.gy = add i64 %.048.i126, -1                  ; 2 uses
+  %i.gy = add nsw i64 %.048.i126, -1              ; 2 uses
   %i.gz = getelementptr inbounds nuw [16 x i8], ptr %i.a, i64 %i.gy
   %i.ha = load <4 x i32>, ptr %i.gz, align 16, !noalias !5186
   %i.hb = add <4 x i32> %i.ha, %i.gw              ; 2 uses
@@ -2623,7 +2623,7 @@ begin_hunk_6_@_ZN6embree4sse226HeuristicArrayOpenMergeSAHIZNS0_19BVHNBuilderTwoL
   %.sroa.10.1121 = phi <4 x float> [ %i.hv, %.lr.ph128 ], [ splat (float -inf), %._crit_edge ]
   %.sroa.053.1120 = phi <4 x float> [ %i.hs, %.lr.ph128 ], [ splat (float +inf), %._crit_edge ]
   %i.gx = phi <4 x i32> [ %i.jc, %.lr.ph128 ], [ splat (i32 1), %._crit_edge ] ; 2 uses
-  %i.gy = add i64 %.048.i126, -1                  ; 2 uses
+  %i.gy = add nsw i64 %.048.i126, -1              ; 2 uses
   %i.gz = getelementptr inbounds nuw [16 x i8], ptr %i.a, i64 %i.gy
   %i.ha = load <4 x i32>, ptr %i.gz, align 16, !noalias !6066
   %i.hb = add <4 x i32> %i.ha, %i.gw              ; 2 uses

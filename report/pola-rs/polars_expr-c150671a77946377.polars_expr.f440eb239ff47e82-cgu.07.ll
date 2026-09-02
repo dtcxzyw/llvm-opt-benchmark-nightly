@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.l, !dbg !85942
 
 bb.c:                                             ; preds = %bb.a
-  %i.f = add i64 %1, -2, !dbg !85957
+  %i.f = add nsw i64 %1, -2, !dbg !85957
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !85958
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !85959
   call void @_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %1, i1 noundef zeroext false, i64 noundef 4, i64 noundef 4), !dbg !85959

@@ -202,7 +202,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %i.ch = zext nneg i32 %i.cf to i64
   br label %.preheader.i84
 
-.preheader.i84:                                   ; preds = %.preheader.i84.preheader, %.preheader.i84
+.preheader.i84:                                   ; preds = %.preheader.i84, %.preheader.i84.preheader
   %indvars.iv = phi i64 [ %i.ch, %.preheader.i84.preheader ], [ %i.ci, %.preheader.i84 ]
   %.0151.i = phi ptr [ null, %.preheader.i84.preheader ], [ %i.cv, %.preheader.i84 ]
   %i.ci = add nsw i64 %indvars.iv, -1             ; 4 uses

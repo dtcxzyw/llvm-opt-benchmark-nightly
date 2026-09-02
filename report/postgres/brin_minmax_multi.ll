@@ -205,15 +205,14 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
-  %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.f ] ; 4 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.f ] ; 3 uses
   %.01822 = phi i32 [ 1, %.lr.ph.preheader ], [ %.1, %bb.f ] ; 4 uses
-  %i.d = getelementptr [24 x i8], ptr %2, i64 %indvars.iv ; 2 uses
+  %i.d = getelementptr [24 x i8], ptr %2, i64 %indvars.iv ; 6 uses
   %i.e = getelementptr i8, ptr %i.d, i64 -24      ; 2 uses
-  %5 = getelementptr inbounds nuw [24 x i8], ptr %2, i64 %indvars.iv ; 4 uses
   %i.f = load ptr, ptr %4, align 8
   %i.g = load i32, ptr %i.a, align 8
   %i.h = load i64, ptr %i.e, align 8
-  %i.i = load i64, ptr %5, align 8
+  %i.i = load i64, ptr %i.d, align 8
   %i.j = call i64 @FunctionCall2Coll(ptr noundef %i.f, i32 noundef %i.g, i64 noundef %i.h, i64 noundef %i.i) #11
   %.not.i = icmp eq i64 %i.j, 0
   br i1 %.not.i, label %bb.b, label %compare_expanded_ranges.exit.thread
@@ -221,7 +220,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.k = load ptr, ptr %4, align 8
   %i.l = load i32, ptr %i.a, align 8
-  %i.m = load i64, ptr %5, align 8
+  %i.m = load i64, ptr %i.d, align 8
   %i.n = load i64, ptr %i.e, align 8
   %i.o = call i64 @FunctionCall2Coll(ptr noundef %i.k, i32 noundef %i.l, i64 noundef %i.m, i64 noundef %i.n) #11
   %.not23.i = icmp eq i64 %i.o, 0
@@ -232,7 +231,7 @@ bb.c:                                             ; preds = %bb.b
   %i.q = load i32, ptr %i.a, align 8
   %i.r = getelementptr i8, ptr %i.d, i64 -16      ; 2 uses
   %i.s = load i64, ptr %i.r, align 8
-  %i.t = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   %i.u = load i64, ptr %i.t, align 8
   %i.v = call i64 @FunctionCall2Coll(ptr noundef %i.p, i32 noundef %i.q, i64 noundef %i.s, i64 noundef %i.u) #11
   %.not24.i = icmp eq i64 %i.v, 0
@@ -255,7 +254,7 @@ compare_expanded_ranges.exit.thread:              ; preds = %bb.b, %.lr.ph, %bb.
 bb.d:                                             ; preds = %compare_expanded_ranges.exit.thread
   %i.ac = sext i32 %.01822 to i64
   %i.ad = getelementptr inbounds [24 x i8], ptr %2, i64 %i.ac
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ad, ptr noundef nonnull align 8 dereferenceable(24) %5, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ad, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %compare_expanded_ranges.exit.thread

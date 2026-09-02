@@ -204,9 +204,9 @@ bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %indvars.iv ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.s = xor i32 %i.j, -1
-  %i.t = add i32 %i.n, %i.s
+  %i.t = add nsw i32 %i.n, %i.s
   %i.u = sext i32 %i.t to i64
-  %i.v = shl nsw i64 %i.u, 3
+  %i.v = shl nuw nsw i64 %i.u, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.q, ptr nonnull align 8 %i.r, i64 %i.v, i1 false)
   %.pre = load i32, ptr %i.a, align 8
   br label %bb.f

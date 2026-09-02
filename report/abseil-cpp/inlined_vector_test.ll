@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 .lr.ph.i27:                                       ; preds = %bb.g, %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiED2Ev.exit.i
   %.06.i = phi i64 [ %i.af, %_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiED2Ev.exit.i ], [ %i.d, %bb.g ]
-  %i.af = add i64 %.06.i, -1                      ; 3 uses
+  %i.af = add nsw i64 %.06.i, -1                  ; 3 uses
   %i.ag = getelementptr inbounds nuw [40 x i8], ptr %i.b, i64 %i.af ; 2 uses
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !195 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 16 ; 2 uses
@@ -608,7 +608,7 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 .lr.ph.i27:                                       ; preds = %bb.g, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
   %.06.i = phi i64 [ %i.ac, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ %i.d, %bb.g ]
-  %i.ac = add i64 %.06.i, -1                      ; 3 uses
+  %i.ac = add nsw i64 %.06.i, -1                  ; 3 uses
   %i.ad = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %i.ac ; 2 uses
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !195 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 2 uses

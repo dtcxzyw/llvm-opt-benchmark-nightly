@@ -205,7 +205,7 @@ bb.bs:                                            ; preds = %bb.bp, %bb.bo, %.pr
   %.pre378 = load ptr, ptr %14, align 8, !tbaa !85
   br label %.split.us
 
-.split.us:                                        ; preds = %_ZNSt3__16vectorIcNS_9allocatorIcEEE6resizeEm.exit208, %.split.us.loopexit357
+.split.us:                                        ; preds = %.split.us.loopexit357, %_ZNSt3__16vectorIcNS_9allocatorIcEEE6resizeEm.exit208
   %i.em = phi ptr [ %.pre378, %.split.us.loopexit357 ], [ %i.dx, %_ZNSt3__16vectorIcNS_9allocatorIcEEE6resizeEm.exit208 ] ; 4 uses
   %.not.i.i = icmp eq ptr %i.em, null
   br i1 %.not.i.i, label %_ZNSt3__16vectorIcNS_9allocatorIcEEED2B8ne180100Ev.exit, label %bb.bt

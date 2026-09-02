@@ -205,7 +205,7 @@ bb.by:                                            ; preds = %bb.s, %bb.s
   br i1 %or.cond16.i, label %tiff_decode_tag.exit.thread, label %.lr.ph722.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph722.i
-  %i.jw = add i32 %i.kg, -1
+  %i.jw = add nsw i32 %i.kg, -1
   %i.jx = zext i32 %i.jw to i64
   %i.jy = getelementptr inbounds nuw [2 x i8], ptr %i.bd, i64 %i.jx
   %i.jz = load i16, ptr %i.jy, align 2, !tbaa !60
@@ -608,7 +608,7 @@ vec.epilog.middle.block3121:                      ; preds = %vec.epilog.vector.b
   call void @llvm.assume(i1 %lcmp.mod3768)
   %i.dgm = xor i64 %indvars.iv2003.epil.init, -1
   %i.dgn = add nsw i64 %i.ddv, %i.dgm
-  %i.dgo = mul nsw i64 %i.dgn, %i.ddw
+  %i.dgo = mul nuw nsw i64 %i.dgn, %i.ddw
   %gep2828.epil = getelementptr i8, ptr %invariant.gep2827, i64 %i.dgo
   %i.dgp = load i8, ptr %gep2828.epil, align 1, !tbaa !67
   %gep2830.epil = getelementptr inbounds nuw i8, ptr %invariant.gep2829, i64 %indvars.iv2003.epil.init
@@ -625,14 +625,14 @@ vec.epilog.middle.block3121:                      ; preds = %vec.epilog.vector.b
   %niter3770 = phi i64 [ %niter3770.next.1, %.preheader913.new ], [ 0, %.preheader913 ]
   %i.dgq = xor i64 %indvars.iv2003, -1
   %i.dgr = add nsw i64 %i.ddv, %i.dgq
-  %i.dgs = mul nsw i64 %i.dgr, %i.ddw
+  %i.dgs = mul nuw nsw i64 %i.dgr, %i.ddw
   %gep2828 = getelementptr i8, ptr %invariant.gep2827, i64 %i.dgs
   %i.dgt = load i8, ptr %gep2828, align 1, !tbaa !67
   %gep2830 = getelementptr inbounds nuw i8, ptr %invariant.gep2829, i64 %indvars.iv2003
   store i8 %i.dgt, ptr %gep2830, align 1, !tbaa !67
   %i.dgu = xor i64 %indvars.iv2003, -2
   %i.dgv = add nsw i64 %i.dgu, %i.ddv
-  %i.dgw = mul nsw i64 %i.dgv, %i.ddw
+  %i.dgw = mul nuw nsw i64 %i.dgv, %i.ddw
   %gep2828.1 = getelementptr i8, ptr %invariant.gep2827, i64 %i.dgw
   %i.dgx = load i8, ptr %gep2828.1, align 1, !tbaa !67
   %i.dgy = getelementptr inbounds nuw i8, ptr %invariant.gep2829, i64 %indvars.iv2003
