@@ -205,23 +205,25 @@ _ZN4pbrt6Tuple3INS_7Normal3EfEixEi.exit.2:
   %i.bn = tail call noundef float @llvm.fma.f32(float %.sroa.04.0.vec.extract.i.i51, float %.sroa.01.0.vec.extract.i.i, float %i.bk)
   %i.bo = tail call noundef float @llvm.fma.f32(float %.sroa.04.0.vec.extract.i.i51, float %i.i, float %i.bl)
   %i.bp = tail call noundef float @llvm.fma.f32(float %.sroa.04.0.vec.extract.i.i51, float %i.m, float %i.bm)
-  %5 = insertelement <3 x float> poison, float %i.bp, i64 0
-  %6 = insertelement <3 x float> %5, float %i.bo, i64 1
-  %7 = insertelement <3 x float> %6, float %i.bn, i64 2
-  %8 = tail call <3 x float> @llvm.fabs.v3f32(<3 x float> %7) ; 3 uses
-  %9 = shufflevector <2 x float> %i.ba, <2 x float> %i.at, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.bq = shufflevector <3 x float> %8, <3 x float> poison, <4 x i32> zeroinitializer
-  %i.br = fmul <4 x float> %9, %i.bq
+  %5 = tail call noundef float @llvm.fabs.f32(float %i.bn)
+  %6 = tail call noundef float @llvm.fabs.f32(float %i.bo)
+  %7 = tail call noundef float @llvm.fabs.f32(float %i.bp)
+  %8 = shufflevector <2 x float> %i.ba, <2 x float> %i.at, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %9 = insertelement <4 x float> poison, float %7, i64 0
+  %i.bq = shufflevector <4 x float> %9, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.br = fmul <4 x float> %8, %i.bq
   %i.bs = fmul <4 x float> %i.br, splat (float 2.500000e-01)
   %i.bt = fadd <4 x float> %i.bs, zeroinitializer
   %i.bu = shufflevector <2 x float> %i.bb, <2 x float> %i.aw, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %10 = shufflevector <3 x float> %8, <3 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
-  %i.bv = fmul <4 x float> %i.bu, %10
+  %10 = insertelement <4 x float> poison, float %6, i64 0
+  %11 = shufflevector <4 x float> %10, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.bv = fmul <4 x float> %i.bu, %11
   %i.bw = fmul <4 x float> %i.bv, splat (float 2.500000e-01)
   %i.bx = fadd <4 x float> %i.bt, %i.bw
   %i.by = shufflevector <2 x float> %i.as, <2 x float> %i.ar, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %11 = shufflevector <3 x float> %8, <3 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
-  %i.bz = fmul <4 x float> %i.by, %11
+  %12 = insertelement <4 x float> poison, float %5, i64 0
+  %13 = shufflevector <4 x float> %12, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.bz = fmul <4 x float> %i.by, %13
   %i.ca = fmul <4 x float> %i.bz, splat (float 5.000000e-01)
   %i.cb = fadd <4 x float> %i.bx, %i.ca           ; 2 uses
   %i.cc = shufflevector <4 x float> %i.cb, <4 x float> poison, <2 x i32> <i32 0, i32 1>
@@ -623,9 +625,6 @@ declare void @llvm.masked.store.v3f32.p0(<3 x float>, ptr captures(none), <3 x i
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.copysign.v2f32(<2 x float>, <2 x float>) #26
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <3 x float> @llvm.fabs.v3f32(<3 x float>) #26
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare <9 x float> @llvm.masked.load.v9f32.p0(ptr captures(none), <9 x i1>, <9 x float>) #36

@@ -205,6 +205,7 @@ bb.m:                                             ; preds = %bb.l, %._crit_edge
   br label %bb.q
 
 bb.n:                                             ; preds = %bb.i
+  %7 = fmul float %i.h, 5.000000e-01              ; 4 uses
   %i.bk = ashr exact i32 %i.b, 1                  ; 4 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !145 ; 2 uses
@@ -259,57 +260,55 @@ bb.n:                                             ; preds = %bb.i
   br i1 %i.cs, label %.lr.ph175.preheader, label %._crit_edge176
 
 .lr.ph175.preheader:                              ; preds = %bb.n
-  %7 = fmul float %i.h, 5.000000e-01
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !138
-  %8 = insertelement <2 x float> poison, float %7, i64 0
-  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %.lr.ph175
 
 .lr.ph175:                                        ; preds = %.lr.ph175.preheader, %.lr.ph175
   %indvars.iv180 = phi i64 [ 2, %.lr.ph175.preheader ], [ %indvars.iv.next181, %.lr.ph175 ] ; 3 uses
   %.pn169173 = phi ptr [ %i.cu, %.lr.ph175.preheader ], [ %.0, %.lr.ph175 ] ; 2 uses
-  %.0160172 = phi float [ %i.cr, %.lr.ph175.preheader ], [ %i.da, %.lr.ph175 ]
+  %.0160172 = phi float [ %i.cr, %.lr.ph175.preheader ], [ %22, %.lr.ph175 ] ; 2 uses
   %.0 = getelementptr inbounds nuw i8, ptr %.pn169173, i64 8 ; 2 uses
-  %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv180 ; 3 uses
+  %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv180 ; 4 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.cv, i64 4
   %i.cw = sub nsw i64 %i.co, %indvars.iv180
   %i.cx = getelementptr inbounds [4 x i8], ptr %i.j, i64 %i.cw ; 3 uses
-  %i.cy = load float, ptr %i.cx, align 4, !tbaa !109
-  %10 = getelementptr inbounds nuw i8, ptr %.pn169173, i64 12
-  %i.cz = getelementptr i8, ptr %i.cx, i64 -4     ; 2 uses
-  %i.da = load float, ptr %i.cz, align 4, !tbaa !109 ; 2 uses
-  %11 = getelementptr i8, ptr %i.cv, i64 -4
-  %12 = load <2 x float>, ptr %i.cv, align 4, !tbaa !109 ; 4 uses
-  %13 = insertelement <2 x float> poison, float %i.cy, i64 0
-  %14 = insertelement <2 x float> %13, float %.0160172, i64 1 ; 4 uses
-  %15 = fadd <2 x float> %14, %12
-  %16 = fsub <2 x float> %14, %12
-  %17 = shufflevector <2 x float> %16, <2 x float> %15, <2 x i32> <i32 0, i32 3>
-  %18 = fmul <2 x float> %9, %17                  ; 2 uses
-  %19 = fadd <2 x float> %12, %14
-  %20 = fsub <2 x float> %12, %14
-  %21 = shufflevector <2 x float> %19, <2 x float> %20, <2 x i32> <i32 0, i32 3>
-  %22 = fmul <2 x float> %9, %21                  ; 3 uses
-  %i.db = load float, ptr %10, align 4, !tbaa !137
+  %i.cy = load float, ptr %i.cx, align 4, !tbaa !109 ; 2 uses
+  %i.cz = getelementptr inbounds nuw i8, ptr %.pn169173, i64 12
+  %i.da = load float, ptr %i.cv, align 4, !tbaa !109 ; 2 uses
+  %9 = load float, ptr %8, align 4, !tbaa !109    ; 2 uses
+  %10 = fsub float %i.cy, %i.da
+  %11 = fadd float %.0160172, %9
+  %12 = fmul float %7, %10
+  %13 = fmul float %7, %11
+  %14 = fadd float %i.cy, %i.da
+  %15 = fmul float %7, %14                        ; 2 uses
+  %16 = fsub float %9, %.0160172
+  %17 = fmul float %7, %16                        ; 2 uses
+  %i.db = load float, ptr %i.cz, align 4, !tbaa !137
   %i.dc = load <2 x float>, ptr %.0, align 4, !tbaa !109 ; 2 uses
   %i.dd = fneg float %i.db
+  %18 = insertelement <2 x float> poison, float %12, i64 0
   %i.de = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> zeroinitializer
   %i.df = shufflevector <2 x float> %i.dc, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.dg = insertelement <2 x float> %i.df, float %i.dd, i64 0
   %i.dh = fmul <2 x float> %i.de, %i.dg
-  %23 = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.di = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %23, <2 x float> %i.dc, <2 x float> %i.dh) ; 3 uses
-  %24 = fadd <2 x float> %22, %i.di               ; 2 uses
-  %i.dj = extractelement <2 x float> %24, i64 0
-  store float %i.dj, ptr %11, align 4, !tbaa !109
-  %foldExtExtBinop = fsub <2 x float> %22, %i.di
-  %25 = extractelement <2 x float> %foldExtExtBinop, i64 0
-  store float %25, ptr %i.cz, align 4, !tbaa !109
-  %i.dk = extractelement <2 x float> %24, i64 1
-  store float %i.dk, ptr %i.cv, align 4, !tbaa !109
-  %foldExtExtBinop187 = fsub <2 x float> %i.di, %22
-  %26 = extractelement <2 x float> %foldExtExtBinop187, i64 1
-  store float %26, ptr %i.cx, align 4, !tbaa !109
+  %19 = insertelement <2 x float> poison, float %13, i64 0
+  %20 = shufflevector <2 x float> %19, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.di = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %20, <2 x float> %i.dc, <2 x float> %i.dh) ; 2 uses
+  %21 = getelementptr i8, ptr %i.cx, i64 -4       ; 2 uses
+  %22 = load float, ptr %21, align 4, !tbaa !109  ; 2 uses
+  %i.dj = extractelement <2 x float> %i.di, i64 0 ; 2 uses
+  %23 = fadd float %15, %i.dj
+  %24 = getelementptr i8, ptr %i.cv, i64 -4
+  store float %23, ptr %24, align 4, !tbaa !109
+  %25 = fsub float %15, %i.dj
+  store float %25, ptr %21, align 4, !tbaa !109
+  %i.dk = extractelement <2 x float> %i.di, i64 1 ; 2 uses
+  %26 = fadd float %17, %i.dk
+  store float %26, ptr %i.cv, align 4, !tbaa !109
+  %27 = fsub float %i.dk, %17
+  store float %27, ptr %i.cx, align 4, !tbaa !109
   %indvars.iv.next181 = add nuw nsw i64 %indvars.iv180, 2 ; 3 uses
   %i.dl = icmp slt i64 %indvars.iv.next181, %i.cl
   br i1 %i.dl, label %.lr.ph175, label %._crit_edge176.loopexit, !llvm.loop !503
@@ -320,7 +319,7 @@ bb.n:                                             ; preds = %bb.i
 
 ._crit_edge176:                                   ; preds = %._crit_edge176.loopexit, %bb.n
   %.1.lcssa = phi i32 [ 2, %bb.n ], [ %i.dm, %._crit_edge176.loopexit ]
-  %.0160.lcssa = phi float [ %i.cr, %bb.n ], [ %i.da, %._crit_edge176.loopexit ]
+  %.0160.lcssa = phi float [ %i.cr, %bb.n ], [ %22, %._crit_edge176.loopexit ]
   %.not168 = icmp sgt i32 %.1.lcssa, %i.bk
   br i1 %.not168, label %bb.p, label %bb.o
 

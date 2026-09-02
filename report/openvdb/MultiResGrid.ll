@@ -205,18 +205,17 @@ bb.a:
   %i.g = sitofp <2 x i32> %i.f to <2 x double>
   %i.h = shl nuw i32 1, %i.e
   %i.i = shl nuw i32 1, %i.d
-  %4 = insertelement <2 x i32> poison, i32 %i.i, i64 0
-  %5 = insertelement <2 x i32> %4, i32 %i.h, i64 1
-  %6 = sitofp <2 x i32> %5 to <2 x double>        ; 4 uses
+  %4 = sitofp i32 %i.h to double                  ; 2 uses
+  %5 = sitofp i32 %i.i to double                  ; 2 uses
+  %6 = insertelement <2 x double> poison, double %5, i64 0
   %i.j = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
   %i.k = fmul nnan <2 x double> %i.j, %i.g
-  %7 = extractelement <2 x double> %6, i64 0
-  %8 = fmul nnan double %7, %i.c
-  %9 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %7 = fmul nnan double %5, %i.c
+  %8 = insertelement <2 x double> poison, double %4, i64 0
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
   %i.l = fdiv <2 x double> %i.k, %9
   store <2 x double> %i.l, ptr %0, align 8, !tbaa !535, !alias.scope !2916
-  %10 = extractelement <2 x double> %6, i64 1
-  %i.m = fdiv double %8, %10
+  %i.m = fdiv double %7, %4
   store double %i.m, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !535, !alias.scope !2916
   ret void
 }
@@ -232,18 +231,17 @@ bb.a:
   %i.c = load <2 x double>, ptr %1, align 8
   %i.d = shl nuw i32 1, %i.b
   %i.e = shl nuw i32 1, %i.a
-  %4 = insertelement <2 x i32> poison, i32 %i.e, i64 0
-  %5 = insertelement <2 x i32> %4, i32 %i.d, i64 1
-  %6 = sitofp <2 x i32> %5 to <2 x double>        ; 4 uses
+  %4 = sitofp i32 %i.d to double                  ; 2 uses
+  %5 = sitofp i32 %i.e to double                  ; 2 uses
+  %6 = insertelement <2 x double> poison, double %5, i64 0
   %i.f = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
   %i.g = fmul <2 x double> %i.c, %i.f
-  %7 = extractelement <2 x double> %6, i64 0
-  %8 = fmul double %.sroa.8.0.copyload, %7
-  %9 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %7 = fmul double %.sroa.8.0.copyload, %5
+  %8 = insertelement <2 x double> poison, double %4, i64 0
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
   %i.h = fdiv <2 x double> %i.g, %9
   store <2 x double> %i.h, ptr %0, align 8, !tbaa !535, !alias.scope !2919
-  %10 = extractelement <2 x double> %6, i64 1
-  %i.i = fdiv double %8, %10
+  %i.i = fdiv double %7, %4
   store double %i.i, ptr %.sroa.8.0..sroa_idx5, align 8, !tbaa !535, !alias.scope !2919
   ret void
 }
@@ -646,18 +644,17 @@ bb.a:
   %i.g = sitofp <2 x i32> %i.f to <2 x double>
   %i.h = shl nuw i32 1, %i.e
   %i.i = shl nuw i32 1, %i.d
-  %4 = insertelement <2 x i32> poison, i32 %i.i, i64 0
-  %5 = insertelement <2 x i32> %4, i32 %i.h, i64 1
-  %6 = sitofp <2 x i32> %5 to <2 x double>        ; 4 uses
+  %4 = sitofp i32 %i.h to double                  ; 2 uses
+  %5 = sitofp i32 %i.i to double                  ; 2 uses
+  %6 = insertelement <2 x double> poison, double %5, i64 0
   %i.j = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
   %i.k = fmul nnan <2 x double> %i.j, %i.g
-  %7 = extractelement <2 x double> %6, i64 0
-  %8 = fmul nnan double %7, %i.c
-  %9 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %7 = fmul nnan double %5, %i.c
+  %8 = insertelement <2 x double> poison, double %4, i64 0
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
   %i.l = fdiv <2 x double> %i.k, %9
   store <2 x double> %i.l, ptr %0, align 8, !tbaa !535, !alias.scope !3007
-  %10 = extractelement <2 x double> %6, i64 1
-  %i.m = fdiv double %8, %10
+  %i.m = fdiv double %7, %4
   store double %i.m, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !535, !alias.scope !3007
   ret void
 }
@@ -673,18 +670,17 @@ bb.a:
   %i.c = load <2 x double>, ptr %1, align 8
   %i.d = shl nuw i32 1, %i.b
   %i.e = shl nuw i32 1, %i.a
-  %4 = insertelement <2 x i32> poison, i32 %i.e, i64 0
-  %5 = insertelement <2 x i32> %4, i32 %i.d, i64 1
-  %6 = sitofp <2 x i32> %5 to <2 x double>        ; 4 uses
+  %4 = sitofp i32 %i.d to double                  ; 2 uses
+  %5 = sitofp i32 %i.e to double                  ; 2 uses
+  %6 = insertelement <2 x double> poison, double %5, i64 0
   %i.f = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
   %i.g = fmul <2 x double> %i.c, %i.f
-  %7 = extractelement <2 x double> %6, i64 0
-  %8 = fmul double %.sroa.8.0.copyload, %7
-  %9 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %7 = fmul double %.sroa.8.0.copyload, %5
+  %8 = insertelement <2 x double> poison, double %4, i64 0
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
   %i.h = fdiv <2 x double> %i.g, %9
   store <2 x double> %i.h, ptr %0, align 8, !tbaa !535, !alias.scope !3010
-  %10 = extractelement <2 x double> %6, i64 1
-  %i.i = fdiv double %8, %10
+  %i.i = fdiv double %7, %4
   store double %i.i, ptr %.sroa.8.0..sroa_idx5, align 8, !tbaa !535, !alias.scope !3010
   ret void
 }

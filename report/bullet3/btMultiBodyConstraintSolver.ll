@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
-  %i.w = phi ptr [ %i.v, %bb.f ], [ null, %bb.e ] ; 23 uses
+  %i.w = phi ptr [ %i.v, %bb.f ], [ null, %bb.e ] ; 21 uses
   br i1 %.not261, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
@@ -607,8 +607,8 @@ bb.ae:                                            ; preds = %bb.z
 bb.af:                                            ; preds = %bb.i
   %.sroa.6539.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.gw = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.gx = load <4 x float>, ptr %2, align 4       ; 5 uses
-  %.sroa.6539.0.copyload = load float, ptr %.sroa.6539.0..sroa_idx, align 4 ; 3 uses
+  %i.gx = load <4 x float>, ptr %2, align 4       ; 6 uses
+  %.sroa.6539.0.copyload = load float, ptr %.sroa.6539.0..sroa_idx, align 4
   store <4 x float> %i.gx, ptr %i.gw, align 8
   %i.gy = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.not264 = icmp eq ptr %i.w, null
@@ -617,11 +617,9 @@ bb.af:                                            ; preds = %bb.i
 
 bb.ag:                                            ; preds = %bb.af
   %i.gz = getelementptr inbounds nuw i8, ptr %i.w, i64 372
-  %14 = getelementptr inbounds nuw i8, ptr %i.w, i64 376
   %i.ha = getelementptr inbounds nuw i8, ptr %i.w, i64 380
   %i.hb = load float, ptr %i.ha, align 4, !tbaa !56
   %i.hc = getelementptr inbounds nuw i8, ptr %i.w, i64 388
-  %15 = getelementptr inbounds nuw i8, ptr %i.w, i64 392
   %i.hd = getelementptr inbounds nuw i8, ptr %i.w, i64 396
   %i.he = load float, ptr %i.hd, align 4, !tbaa !56
   %i.hf = getelementptr inbounds nuw i8, ptr %i.w, i64 404
@@ -636,17 +634,14 @@ bb.ag:                                            ; preds = %bb.af
   %i.ho = extractelement <4 x float> %i.gx, i64 2
   %i.hp = call noundef float @llvm.fmuladd.f32(float %i.hn, float %i.ho, float %i.hl)
   %i.hq = getelementptr inbounds nuw i8, ptr %i.w, i64 672
-  %i.hr = load <2 x float>, ptr %i.gz, align 4, !tbaa !56
-  %16 = load float, ptr %14, align 4, !tbaa !56
-  %i.hs = load <2 x float>, ptr %i.hc, align 4, !tbaa !56
-  %17 = load float, ptr %15, align 4, !tbaa !56
-  %18 = fmul float %.sroa.6539.0.copyload, %17
-  %19 = fmul float %.sroa.6539.0.copyload, %16
+  %i.hr = load <2 x float>, ptr %i.gz, align 4, !tbaa !56 ; 2 uses
+  %i.hs = load <2 x float>, ptr %i.hc, align 4, !tbaa !56 ; 2 uses
+  %14 = shufflevector <4 x float> %i.gx, <4 x float> poison, <2 x i32> <i32 1, i32 1>
+  %15 = shufflevector <2 x float> %i.hr, <2 x float> %i.hs, <2 x i32> <i32 1, i32 3>
+  %16 = fmul <2 x float> %14, %15
   %i.ht = shufflevector <2 x float> %i.hr, <2 x float> %i.hs, <2 x i32> <i32 0, i32 2>
   %i.hu = shufflevector <4 x float> %i.gx, <4 x float> poison, <2 x i32> zeroinitializer
-  %20 = insertelement <2 x float> poison, float %19, i64 0
-  %21 = insertelement <2 x float> %20, float %18, i64 1
-  %i.hv = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ht, <2 x float> %i.hu, <2 x float> %21)
+  %i.hv = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ht, <2 x float> %i.hu, <2 x float> %16)
   %i.hw = insertelement <2 x float> poison, float %i.hb, i64 0
   %i.hx = insertelement <2 x float> %i.hw, float %i.he, i64 1
   %i.hy = shufflevector <4 x float> %i.gx, <4 x float> poison, <2 x i32> <i32 2, i32 2>

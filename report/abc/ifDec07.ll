@@ -205,181 +205,160 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: nounwind uwtable
 define void @If_Dec7Verify(ptr noundef %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [2 x i64], align 16               ; 6 uses
+  %i.a = alloca [2 x i64], align 16               ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   %i.b = lshr i64 %1, 16
   %i.c = and i64 %i.b, 7
-  %i.d = getelementptr inbounds nuw [16 x i8], ptr @Truth7, i64 %i.c ; 2 uses
-  %2 = load i64, ptr %i.d, align 16, !tbaa !12
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %4 = load i64, ptr %3, align 8, !tbaa !12
+  %i.d = getelementptr inbounds nuw [16 x i8], ptr @Truth7, i64 %i.c
   %i.e = lshr i64 %1, 20
   %i.f = and i64 %i.e, 7
-  %i.g = getelementptr inbounds nuw [16 x i8], ptr @Truth7, i64 %i.f ; 2 uses
-  %5 = load i64, ptr %i.g, align 16, !tbaa !12
-  %6 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %7 = load i64, ptr %6, align 8, !tbaa !12
+  %i.g = getelementptr inbounds nuw [16 x i8], ptr @Truth7, i64 %i.f
   %i.h = lshr i64 %1, 24
   %i.i = and i64 %i.h, 7
-  %i.j = getelementptr inbounds nuw [16 x i8], ptr @Truth7, i64 %i.i ; 2 uses
-  %8 = load i64, ptr %i.j, align 16, !tbaa !12
-  %9 = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %10 = load i64, ptr %9, align 8, !tbaa !12
+  %i.j = getelementptr inbounds nuw [16 x i8], ptr @Truth7, i64 %i.i
   %i.k = lshr i64 %1, 28
   %i.l = and i64 %i.k, 7
-  %i.m = getelementptr inbounds nuw [16 x i8], ptr @Truth7, i64 %i.l ; 2 uses
-  %11 = load i64, ptr %i.m, align 16, !tbaa !12
-  %12 = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  %13 = load i64, ptr %12, align 8, !tbaa !12
+  %i.m = getelementptr inbounds nuw [16 x i8], ptr @Truth7, i64 %i.l
+  %2 = load <2 x i64>, ptr %i.d, align 16, !tbaa !12
+  %3 = load <2 x i64>, ptr %i.g, align 16, !tbaa !12
+  %4 = load <2 x i64>, ptr %i.j, align 16, !tbaa !12
+  %5 = load <2 x i64>, ptr %i.m, align 16, !tbaa !12
   %i.n = trunc i64 %1 to i32
   %i.o = and i32 %i.n, 65535
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
-  %15 = phi i64 [ 0, %bb.a ], [ %40, %bb.c ]
-  %16 = phi i64 [ 0, %bb.a ], [ %41, %bb.c ]
-  %17 = phi i64 [ 0, %bb.a ], [ %42, %bb.c ]      ; 2 uses
-  %18 = phi i64 [ 0, %bb.a ], [ %43, %bb.c ]      ; 2 uses
   %.02328.i = phi i32 [ 0, %bb.a ], [ %i.s, %bb.c ] ; 6 uses
+  %6 = phi <2 x i64> [ zeroinitializer, %bb.a ], [ %34, %bb.c ]
+  %7 = phi <2 x i64> [ zeroinitializer, %bb.a ], [ %35, %bb.c ] ; 2 uses
   %i.p = shl nuw nsw i32 1, %.02328.i
   %i.q = and i32 %i.o, %i.p
   %.not.i = icmp eq i32 %i.q, 0
   br i1 %.not.i, label %bb.c, label %.preheader.preheader.i
 
 .preheader.preheader.i:                           ; preds = %bb.b
-  %19 = and i32 %.02328.i, 1
-  %sext = add nsw i32 %19, -1
-  %20 = sext i32 %sext to i64                     ; 2 uses
-  %.pn.i = xor i64 %2, %20
-  %21 = xor i64 %4, %20
-  %22 = lshr i32 %.02328.i, 1
-  %i.r = and i32 %22, 1
-  %sext64.a = add nsw i32 %i.r, -1
-  %23 = sext i32 %sext64.a to i64                 ; 2 uses
-  %. = xor i64 %5, %23
-  %.47 = xor i64 %7, %23
-  %24 = and i64 %., %.pn.i
-  %25 = and i64 %.47, %21
-  %26 = lshr i32 %.02328.i, 2
-  %27 = and i32 %26, 1
-  %sext65 = add nsw i32 %27, -1
-  %28 = sext i32 %sext65 to i64                   ; 2 uses
-  %.pn.2.i = xor i64 %8, %28
-  %29 = xor i64 %10, %28
-  %30 = and i64 %24, %.pn.2.i
-  %31 = and i64 %25, %29
-  %32 = lshr i32 %.02328.i, 3
-  %33 = and i32 %32, 1
-  %sext66 = add nsw i32 %33, -1
-  %34 = sext i32 %sext66 to i64                   ; 2 uses
-  %.pn.3.i = xor i64 %11, %34
-  %35 = xor i64 %13, %34
-  %36 = and i64 %30, %.pn.3.i
-  %37 = and i64 %31, %35
-  %38 = or i64 %36, %18                           ; 2 uses
-  %39 = or i64 %37, %17                           ; 2 uses
+  %8 = lshr i32 %.02328.i, 3
+  %9 = lshr i32 %.02328.i, 2
+  %10 = lshr i32 %.02328.i, 1
+  %11 = and i32 %8, 1
+  %12 = and i32 %9, 1
+  %13 = and i32 %.02328.i, 1
+  %i.r = and i32 %10, 1
+  %sext64.a = add nsw i32 %11, -1
+  %sext65 = add nsw i32 %12, -1
+  %sext = add nsw i32 %13, -1
+  %sext64 = add nsw i32 %i.r, -1
+  %14 = sext i32 %sext64.a to i64
+  %15 = sext i32 %sext65 to i64
+  %16 = sext i32 %sext to i64
+  %17 = sext i32 %sext64 to i64
+  %18 = insertelement <2 x i64> poison, i64 %16, i64 0
+  %19 = shufflevector <2 x i64> %18, <2 x i64> poison, <2 x i32> zeroinitializer
+  %20 = xor <2 x i64> %2, %19
+  %21 = insertelement <2 x i64> poison, i64 %17, i64 0
+  %22 = shufflevector <2 x i64> %21, <2 x i64> poison, <2 x i32> zeroinitializer
+  %23 = xor <2 x i64> %3, %22
+  %24 = and <2 x i64> %23, %20
+  %25 = insertelement <2 x i64> poison, i64 %15, i64 0
+  %26 = shufflevector <2 x i64> %25, <2 x i64> poison, <2 x i32> zeroinitializer
+  %27 = xor <2 x i64> %4, %26
+  %28 = and <2 x i64> %24, %27
+  %29 = insertelement <2 x i64> poison, i64 %14, i64 0
+  %30 = shufflevector <2 x i64> %29, <2 x i64> poison, <2 x i32> zeroinitializer
+  %31 = xor <2 x i64> %5, %30
+  %32 = and <2 x i64> %28, %31
+  %33 = or <2 x i64> %32, %7                      ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader.preheader.i, %bb.b
-  %40 = phi i64 [ %15, %bb.b ], [ %39, %.preheader.preheader.i ] ; 2 uses
-  %41 = phi i64 [ %16, %bb.b ], [ %38, %.preheader.preheader.i ] ; 3 uses
-  %42 = phi i64 [ %17, %bb.b ], [ %39, %.preheader.preheader.i ]
-  %43 = phi i64 [ %18, %bb.b ], [ %38, %.preheader.preheader.i ]
+  %34 = phi <2 x i64> [ %6, %bb.b ], [ %33, %.preheader.preheader.i ] ; 3 uses
+  %35 = phi <2 x i64> [ %7, %bb.b ], [ %33, %.preheader.preheader.i ]
   %i.s = add nuw nsw i32 %.02328.i, 1             ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.s, 16
   br i1 %exitcond.not.i, label %If_Dec7ComposeLut4.exit, label %bb.b, !llvm.loop !17
 
 If_Dec7ComposeLut4.exit:                          ; preds = %bb.c
-  store i64 %41, ptr %i.a, align 16
+  %36 = extractelement <2 x i64> %34, i64 0
+  store i64 %36, ptr %i.a, align 16
   %i.t = lshr i64 %1, 48
   %i.u = and i64 %i.t, 7
-  %i.v = getelementptr inbounds nuw [16 x i8], ptr @Truth7, i64 %i.u ; 2 uses
-  %44 = load i64, ptr %i.v, align 16, !tbaa !12
-  %45 = getelementptr inbounds nuw i8, ptr %i.v, i64 8
-  %46 = load i64, ptr %45, align 8, !tbaa !12
+  %i.v = getelementptr inbounds nuw [16 x i8], ptr @Truth7, i64 %i.u
   %i.w = lshr i64 %1, 52
   %i.x = and i64 %i.w, 7
-  %i.y = getelementptr inbounds nuw [16 x i8], ptr @Truth7, i64 %i.x ; 2 uses
-  %47 = load i64, ptr %i.y, align 16, !tbaa !12
-  %48 = getelementptr inbounds nuw i8, ptr %i.y, i64 8
-  %49 = load i64, ptr %48, align 8, !tbaa !12
+  %i.y = getelementptr inbounds nuw [16 x i8], ptr @Truth7, i64 %i.x
   %i.z = lshr i64 %1, 56
   %i.aa = and i64 %i.z, 7
-  %i.ab = getelementptr inbounds nuw [16 x i8], ptr @Truth7, i64 %i.aa ; 2 uses
-  %50 = load i64, ptr %i.ab, align 16, !tbaa !12
-  %51 = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %52 = load i64, ptr %51, align 8, !tbaa !12
+  %i.ab = getelementptr inbounds nuw [16 x i8], ptr @Truth7, i64 %i.aa
+  %37 = load <2 x i64>, ptr %i.v, align 16, !tbaa !12
+  %38 = load <2 x i64>, ptr %i.y, align 16, !tbaa !12
+  %39 = load <2 x i64>, ptr %i.ab, align 16, !tbaa !12
   %i.ac = lshr i64 %1, 32
   %i.ad = trunc nuw i64 %i.ac to i32
   %i.ae = and i32 %i.ad, 65535
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %If_Dec7ComposeLut4.exit
-  %53 = phi i64 [ 0, %If_Dec7ComposeLut4.exit ], [ %78, %bb.e ]
-  %54 = phi i64 [ 0, %If_Dec7ComposeLut4.exit ], [ %79, %bb.e ]
-  %55 = phi i64 [ 0, %If_Dec7ComposeLut4.exit ], [ %80, %bb.e ] ; 2 uses
-  %56 = phi i64 [ 0, %If_Dec7ComposeLut4.exit ], [ %81, %bb.e ] ; 2 uses
   %.02328.i23 = phi i32 [ 0, %If_Dec7ComposeLut4.exit ], [ %i.ai, %bb.e ] ; 6 uses
+  %40 = phi <2 x i64> [ zeroinitializer, %If_Dec7ComposeLut4.exit ], [ %68, %bb.e ]
+  %41 = phi <2 x i64> [ zeroinitializer, %If_Dec7ComposeLut4.exit ], [ %69, %bb.e ] ; 2 uses
   %i.af = shl nuw nsw i32 1, %.02328.i23
   %i.ag = and i32 %i.ae, %i.af
   %.not.i24 = icmp eq i32 %i.ag, 0
   br i1 %.not.i24, label %bb.e, label %.preheader.preheader.i25
 
 .preheader.preheader.i25:                         ; preds = %bb.d
-  %57 = and i32 %.02328.i23, 1
-  %sext67 = add nsw i32 %57, -1
-  %58 = sext i32 %sext67 to i64                   ; 2 uses
-  %.pn.i28 = xor i64 %44, %58
-  %59 = xor i64 %46, %58
-  %60 = lshr i32 %.02328.i23, 1
-  %i.ah = and i32 %60, 1
-  %sext68.a = add nsw i32 %i.ah, -1
-  %61 = sext i32 %sext68.a to i64                 ; 2 uses
-  %.48 = xor i64 %47, %61
-  %.49 = xor i64 %49, %61
-  %62 = and i64 %.48, %.pn.i28
-  %63 = and i64 %.49, %59
-  %64 = lshr i32 %.02328.i23, 2
-  %65 = and i32 %64, 1
-  %sext69 = add nsw i32 %65, -1
-  %66 = sext i32 %sext69 to i64                   ; 2 uses
-  %.pn.2.i34 = xor i64 %50, %66
-  %67 = xor i64 %52, %66
-  %68 = and i64 %62, %.pn.2.i34
-  %69 = and i64 %63, %67
-  %70 = lshr i32 %.02328.i23, 3
-  %71 = and i32 %70, 1
-  %sext70 = add nsw i32 %71, -1
-  %72 = sext i32 %sext70 to i64                   ; 2 uses
-  %.pn.3.i36 = xor i64 %41, %72
-  %73 = xor i64 %40, %72
-  %74 = and i64 %68, %.pn.3.i36
-  %75 = and i64 %69, %73
-  %76 = or i64 %74, %56                           ; 2 uses
-  %77 = or i64 %75, %55                           ; 2 uses
+  %42 = lshr i32 %.02328.i23, 3
+  %43 = lshr i32 %.02328.i23, 2
+  %44 = lshr i32 %.02328.i23, 1
+  %45 = and i32 %42, 1
+  %46 = and i32 %43, 1
+  %47 = and i32 %.02328.i23, 1
+  %i.ah = and i32 %44, 1
+  %sext68.a = add nsw i32 %45, -1
+  %sext69 = add nsw i32 %46, -1
+  %sext67 = add nsw i32 %47, -1
+  %sext68 = add nsw i32 %i.ah, -1
+  %48 = sext i32 %sext68.a to i64
+  %49 = sext i32 %sext69 to i64
+  %50 = sext i32 %sext67 to i64
+  %51 = sext i32 %sext68 to i64
+  %52 = insertelement <2 x i64> poison, i64 %50, i64 0
+  %53 = shufflevector <2 x i64> %52, <2 x i64> poison, <2 x i32> zeroinitializer
+  %54 = xor <2 x i64> %37, %53
+  %55 = insertelement <2 x i64> poison, i64 %51, i64 0
+  %56 = shufflevector <2 x i64> %55, <2 x i64> poison, <2 x i32> zeroinitializer
+  %57 = xor <2 x i64> %38, %56
+  %58 = and <2 x i64> %57, %54
+  %59 = insertelement <2 x i64> poison, i64 %49, i64 0
+  %60 = shufflevector <2 x i64> %59, <2 x i64> poison, <2 x i32> zeroinitializer
+  %61 = xor <2 x i64> %39, %60
+  %62 = and <2 x i64> %58, %61
+  %63 = insertelement <2 x i64> poison, i64 %48, i64 0
+  %64 = shufflevector <2 x i64> %63, <2 x i64> poison, <2 x i32> zeroinitializer
+  %65 = xor <2 x i64> %34, %64
+  %66 = and <2 x i64> %62, %65
+  %67 = or <2 x i64> %66, %41                     ; 2 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %.preheader.preheader.i25, %bb.d
-  %78 = phi i64 [ %53, %bb.d ], [ %77, %.preheader.preheader.i25 ] ; 3 uses
-  %79 = phi i64 [ %54, %bb.d ], [ %76, %.preheader.preheader.i25 ] ; 3 uses
-  %80 = phi i64 [ %55, %bb.d ], [ %77, %.preheader.preheader.i25 ]
-  %81 = phi i64 [ %56, %bb.d ], [ %76, %.preheader.preheader.i25 ]
+  %68 = phi <2 x i64> [ %40, %bb.d ], [ %67, %.preheader.preheader.i25 ] ; 4 uses
+  %69 = phi <2 x i64> [ %41, %bb.d ], [ %67, %.preheader.preheader.i25 ]
   %i.ai = add nuw nsw i32 %.02328.i23, 1          ; 2 uses
   %exitcond.not.i37 = icmp eq i32 %i.ai, 16
   br i1 %exitcond.not.i37, label %If_Dec7ComposeLut4.exit38, label %bb.d, !llvm.loop !17
 
 If_Dec7ComposeLut4.exit38:                        ; preds = %bb.e
-  store i64 %79, ptr %i.a, align 16
-  store i64 %78, ptr %14, align 8
-  %82 = load i64, ptr %0, align 8, !tbaa !12
-  %.not = icmp eq i64 %79, %82
+  store <2 x i64> %68, ptr %i.a, align 16
+  %70 = load i64, ptr %0, align 8, !tbaa !12
+  %71 = extractelement <2 x i64> %68, i64 0
+  %.not = icmp eq i64 %71, %70
   br i1 %.not, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %If_Dec7ComposeLut4.exit38
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !12
-  %.not21 = icmp eq i64 %78, %i.ak
+  %72 = extractelement <2 x i64> %68, i64 1
+  %.not21 = icmp eq i64 %72, %i.ak
   br i1 %.not21, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %If_Dec7ComposeLut4.exit38

@@ -204,7 +204,7 @@ declare float @llvm.fmuladd.f32(float, float, float) #21
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZNK4core8CMatrix4IfE14transformPlaneERNS_7plane3dIfEE(ptr noundef nonnull align 4 dereferenceable(64) %0, ptr noundef nonnull align 4 dereferenceable(16) %1) local_unnamed_addr #22 comdat align 2 {
 bb.a:
-  %2 = alloca %"class.core::CMatrix4", align 8    ; 12 uses
+  %2 = alloca %"class.core::CMatrix4", align 8    ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.b = load float, ptr %i.a, align 4, !tbaa !145
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -233,7 +233,6 @@ bb.b:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.x = load float, ptr %i.w, align 8, !tbaa !19, !noalias !246
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 36
   %i.z = load float, ptr %i.y, align 4, !tbaa !19, !noalias !246
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -241,17 +240,13 @@ bb.b:                                             ; preds = %bb.a
   %i.ac = shufflevector <4 x float> %i.ab, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.ae = load float, ptr %i.ad, align 8, !tbaa !19, !noalias !246
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %2, i64 20
-  %i.af = load <2 x float>, ptr %2, align 8, !tbaa !19
-  %4 = load <4 x float>, ptr %3, align 4
-  %5 = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %i.ag = load <2 x float>, ptr %i.v, align 8, !tbaa !19
-  %.pre16 = load float, ptr %.phi.trans.insert, align 4, !tbaa !19
+  %i.af = load <2 x float>, ptr %2, align 8, !tbaa !19 ; 2 uses
+  %i.ag = load <2 x float>, ptr %i.v, align 8, !tbaa !19 ; 2 uses
   %.phi.trans.insert17 = getelementptr inbounds nuw i8, ptr %2, i64 40
   %.pre18 = load float, ptr %.phi.trans.insert17, align 8, !tbaa !19
   %i.ah = insertelement <2 x float> %i.ac, float %i.ae, i64 1
   %i.ai = shufflevector <2 x float> %i.af, <2 x float> %i.ag, <2 x i32> <i32 0, i32 2>
-  %6 = insertelement <2 x float> %5, float %.pre16, i64 1
+  %3 = shufflevector <2 x float> %i.af, <2 x float> %i.ag, <2 x i32> <i32 1, i32 3>
   br label %_ZN4core8CMatrix4IfEC2ERKS1_NS1_12eConstructorE.exit
 
 _ZN4core8CMatrix4IfEC2ERKS1_NS1_12eConstructorE.exit: ; preds = %bb.a, %bb.b
@@ -260,7 +255,7 @@ _ZN4core8CMatrix4IfEC2ERKS1_NS1_12eConstructorE.exit: ; preds = %bb.a, %bb.b
   %i.al = phi float [ %i.x, %bb.b ], [ 0.000000e+00, %bb.a ]
   %i.am = phi <2 x float> [ %i.ah, %bb.b ], [ zeroinitializer, %bb.a ]
   %i.an = phi <2 x float> [ %i.ai, %bb.b ], [ zeroinitializer, %bb.a ]
-  %i.ao = phi <2 x float> [ %6, %bb.b ], [ zeroinitializer, %bb.a ]
+  %i.ao = phi <2 x float> [ %3, %bb.b ], [ zeroinitializer, %bb.a ]
   %i.ap = load float, ptr %i.c, align 4, !tbaa !140 ; 2 uses
   %i.aq = load float, ptr %1, align 4, !tbaa !139 ; 2 uses
   %i.ar = load float, ptr %i.d, align 4, !tbaa !141 ; 2 uses
