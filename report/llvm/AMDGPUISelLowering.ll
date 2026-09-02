@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %.critedge
-  %indvars.iv = phi i64 [ 0, %.critedge ], [ %indvars.iv.next.1, %bb.f ] ; 5 uses
+  %indvars.iv = phi i64 [ 0, %.critedge ], [ %indvars.iv.next.1, %bb.f ] ; 4 uses
   %i.d = getelementptr inbounds nuw [2 x i8], ptr @_ZZL18CC_AMDGPU_CS_CHAINjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %indvars.iv
   %i.e = load i16, ptr %i.d, align 4, !tbaa !66   ; 2 uses
   %i.f = zext i16 %i.e to i32                     ; 3 uses
@@ -217,16 +217,16 @@ bb.c:                                             ; preds = %bb.f, %.critedge
   %i.l = shl nuw i32 1, %i.k
   %i.m = and i32 %i.l, %i.j
   %.not.i.i = icmp eq i32 %i.m, 0
-  br i1 %.not.i.i, label %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i, label %bb.d
+  br i1 %.not.i.i, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %exitcond.not = icmp eq i64 %indvars.iv, 104
   br i1 %exitcond.not, label %.thread76, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %10 = getelementptr inbounds nuw [2 x i8], ptr @_ZZL18CC_AMDGPU_CS_CHAINjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %indvars.iv.next
-  %i.n = load i16, ptr %10, align 2, !tbaa !66    ; 2 uses
+  %10 = getelementptr inbounds nuw [2 x i8], ptr @_ZZL18CC_AMDGPU_CS_CHAINjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %indvars.iv
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 2
+  %i.n = load i16, ptr %11, align 2, !tbaa !66    ; 2 uses
   %i.o = zext i16 %i.n to i32                     ; 3 uses
   %i.p = lshr i32 %i.o, 5
   %i.q = zext nneg i32 %i.p to i64
@@ -236,21 +236,16 @@ bb.e:                                             ; preds = %bb.d
   %i.u = shl nuw i32 1, %i.t
   %i.v = and i32 %i.u, %i.s
   %.not.i.i.1 = icmp eq i32 %i.v, 0
-  br i1 %.not.i.i.1, label %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i, label %bb.f
+  br i1 %.not.i.i.1, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2
   br label %bb.c
 
-_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i: ; preds = %bb.e, %bb.c
-  %indvars.iv.lcssa = phi i64 [ %indvars.iv, %bb.c ], [ %indvars.iv.next, %bb.e ]
-  %.lcssa124 = phi i16 [ %i.e, %bb.c ], [ %i.n, %bb.e ]
-  %.lcssa122 = phi i32 [ %i.f, %bb.c ], [ %i.o, %bb.e ]
-  %11 = icmp eq i64 %indvars.iv.lcssa, 105
-  br i1 %11, label %.thread76, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit
-
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i
-  tail call void @_ZN4llvm7CCState13MarkAllocatedEt(ptr noundef nonnull align 8 dereferenceable(420) %7, i16 noundef zeroext %.lcssa124) #25
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.e, %bb.c
+  %.lcssa119 = phi i16 [ %i.e, %bb.c ], [ %i.n, %bb.e ]
+  %.lcssa117 = phi i32 [ %i.f, %bb.c ], [ %i.o, %bb.e ]
+  tail call void @_ZN4llvm7CCState13MarkAllocatedEt(ptr noundef nonnull align 8 dereferenceable(420) %7, i16 noundef zeroext %.lcssa119) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   %i.w = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i8 0, ptr %i.w, align 8, !tbaa !469, !alias.scope !491
@@ -268,7 +263,7 @@ _ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %_ZNK4llvm7CCStat
   store i16 %1, ptr %i.af, align 2, !tbaa !64, !alias.scope !491
   %i.ag = getelementptr inbounds nuw i8, ptr %8, i64 24
   store i16 %2, ptr %i.ag, align 8, !tbaa !64, !alias.scope !491
-  store i32 %.lcssa122, ptr %8, align 8, !tbaa !81, !alias.scope !491
+  store i32 %.lcssa117, ptr %8, align 8, !tbaa !81, !alias.scope !491
   %i.ah = getelementptr inbounds nuw i8, ptr %7, i64 24
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !483, !nonnull !19, !align !231 ; 4 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8 ; 3 uses
@@ -314,7 +309,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.m, %.critedge2
-  %indvars.iv92 = phi i64 [ 0, %.critedge2 ], [ %indvars.iv.next93.1, %bb.m ] ; 5 uses
+  %indvars.iv92 = phi i64 [ 0, %.critedge2 ], [ %indvars.iv.next93.1, %bb.m ] ; 4 uses
   %i.au = getelementptr inbounds nuw [2 x i8], ptr @_ZZL18CC_AMDGPU_CS_CHAINjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList2, i64 %indvars.iv92
   %i.av = load i16, ptr %i.au, align 4, !tbaa !66 ; 2 uses
   %i.aw = zext i16 %i.av to i32                   ; 3 uses
@@ -326,16 +321,16 @@ bb.j:                                             ; preds = %bb.m, %.critedge2
   %i.bc = shl nuw i32 1, %i.bb
   %i.bd = and i32 %i.bc, %i.ba
   %.not.i.i24 = icmp eq i32 %i.bd, 0
-  br i1 %.not.i.i24, label %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i26, label %bb.k
+  br i1 %.not.i.i24, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit27, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %exitcond95.not = icmp eq i64 %indvars.iv92, 246
   br i1 %exitcond95.not, label %.thread76, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %indvars.iv.next93 = or disjoint i64 %indvars.iv92, 1 ; 2 uses
-  %12 = getelementptr inbounds nuw [2 x i8], ptr @_ZZL18CC_AMDGPU_CS_CHAINjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList2, i64 %indvars.iv.next93
-  %i.be = load i16, ptr %12, align 2, !tbaa !66   ; 2 uses
+  %12 = getelementptr inbounds nuw [2 x i8], ptr @_ZZL18CC_AMDGPU_CS_CHAINjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList2, i64 %indvars.iv92
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 2
+  %i.be = load i16, ptr %13, align 2, !tbaa !66   ; 2 uses
   %i.bf = zext i16 %i.be to i32                   ; 3 uses
   %i.bg = lshr i32 %i.bf, 5
   %i.bh = zext nneg i32 %i.bg to i64
@@ -345,21 +340,16 @@ bb.l:                                             ; preds = %bb.k
   %i.bl = shl nuw i32 1, %i.bk
   %i.bm = and i32 %i.bl, %i.bj
   %.not.i.i24.1 = icmp eq i32 %i.bm, 0
-  br i1 %.not.i.i24.1, label %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i26, label %bb.m
+  br i1 %.not.i.i24.1, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit27, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %indvars.iv.next93.1 = add nuw nsw i64 %indvars.iv92, 2
   br label %bb.j
 
-_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i26: ; preds = %bb.l, %bb.j
-  %indvars.iv92.lcssa = phi i64 [ %indvars.iv92, %bb.j ], [ %indvars.iv.next93, %bb.l ]
-  %.lcssa118 = phi i16 [ %i.av, %bb.j ], [ %i.be, %bb.l ]
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit27: ; preds = %bb.l, %bb.j
+  %.lcssa114 = phi i16 [ %i.av, %bb.j ], [ %i.be, %bb.l ]
   %.lcssa = phi i32 [ %i.aw, %bb.j ], [ %i.bf, %bb.l ]
-  %13 = icmp eq i64 %indvars.iv92.lcssa, 247
-  br i1 %13, label %.thread76, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit27
-
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit27: ; preds = %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i26
-  tail call void @_ZN4llvm7CCState13MarkAllocatedEt(ptr noundef nonnull align 8 dereferenceable(420) %7, i16 noundef zeroext %.lcssa118) #25
+  tail call void @_ZN4llvm7CCState13MarkAllocatedEt(ptr noundef nonnull align 8 dereferenceable(420) %7, i16 noundef zeroext %.lcssa114) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #25
   %i.bn = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i8 0, ptr %i.bn, align 8, !tbaa !469, !alias.scope !494
@@ -405,8 +395,8 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #25
   br label %.thread76
 
-.thread76:                                        ; preds = %bb.d, %bb.k, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i, %.thread77, %bb.b, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i26, %bb.p, %bb.i
-  %.3 = phi i1 [ false, %bb.i ], [ false, %bb.p ], [ true, %bb.b ], [ true, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i26 ], [ true, %.thread77 ], [ true, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i ], [ true, %bb.k ], [ true, %bb.d ]
+.thread76:                                        ; preds = %bb.d, %bb.k, %.thread77, %bb.b, %bb.p, %bb.i
+  %.3 = phi i1 [ false, %bb.i ], [ false, %bb.p ], [ true, %bb.b ], [ true, %bb.k ], [ true, %.thread77 ], [ true, %bb.d ]
   ret i1 %.3
 }
 
@@ -631,7 +621,7 @@ bb.aj:                                            ; preds = %bb.ai
   %.not.i.i.29 = icmp eq i32 %i.ao, 0
   br i1 %.not.i.i.29, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %.thread147
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %.critedge2, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad, %bb.ae, %bb.af, %bb.ag, %bb.ah, %bb.ai, %bb.aj
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %.critedge2
   %.0613.i.i.lcssa.wide = phi i64 [ 0, %.critedge2 ], [ 1, %bb.h ], [ 2, %bb.i ], [ 3, %bb.j ], [ 4, %bb.k ], [ 5, %bb.l ], [ 6, %bb.m ], [ 7, %bb.n ], [ 8, %bb.o ], [ 9, %bb.p ], [ 10, %bb.q ], [ 11, %bb.r ], [ 12, %bb.s ], [ 13, %bb.t ], [ 14, %bb.u ], [ 15, %bb.v ], [ 16, %bb.w ], [ 17, %bb.x ], [ 18, %bb.y ], [ 19, %bb.z ], [ 20, %bb.aa ], [ 21, %bb.ab ], [ 22, %bb.ac ], [ 23, %bb.ad ], [ 24, %bb.ae ], [ 25, %bb.af ], [ 26, %bb.ag ], [ 27, %bb.ah ], [ 28, %bb.ai ], [ 29, %bb.aj ]
   %i.ap = getelementptr inbounds nuw [2 x i8], ptr @_ZZL14CC_AMDGPU_FuncjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %.0613.i.i.lcssa.wide
   %i.aq = load i16, ptr %i.ap, align 2, !tbaa !66 ; 2 uses
@@ -1034,7 +1024,7 @@ bb.aa:                                            ; preds = %bb.z
   %.not.i.i.25 = icmp eq i32 %i.af, 0
   br i1 %.not.i.i.25, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %.thread108
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %.critedge, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %bb.aa
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %.critedge
   %.0613.i.i.lcssa.wide = phi i64 [ 0, %.critedge ], [ 1, %bb.c ], [ 2, %bb.d ], [ 3, %bb.e ], [ 4, %bb.f ], [ 5, %bb.g ], [ 6, %bb.h ], [ 7, %bb.i ], [ 8, %bb.j ], [ 9, %bb.k ], [ 10, %bb.l ], [ 11, %bb.m ], [ 12, %bb.n ], [ 13, %bb.o ], [ 14, %bb.p ], [ 15, %bb.q ], [ 16, %bb.r ], [ 17, %bb.s ], [ 18, %bb.t ], [ 19, %bb.u ], [ 20, %bb.v ], [ 21, %bb.w ], [ 22, %bb.x ], [ 23, %bb.y ], [ 24, %bb.z ], [ 25, %bb.aa ]
   %i.ag = getelementptr inbounds nuw [2 x i8], ptr @_ZZL9CC_SI_GfxjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %.0613.i.i.lcssa.wide
   %i.ah = load i16, ptr %i.ag, align 2, !tbaa !66 ; 2 uses
@@ -1437,9 +1427,9 @@ bb.b:                                             ; preds = %.critedge
   br label %.critedge2
 
 .critedge2:                                       ; preds = %.thread86, %bb.b, %bb.a, %.critedge2.fold.split105, %.critedge
-  %i.c = phi i1 [ true, %bb.b ], [ true, %.critedge ], [ true, %bb.a ], [ false, %.critedge2.fold.split105 ], [ false, %.thread86 ] ; 5 uses
-  %.02383 = phi i32 [ 2, %bb.b ], [ 1, %.critedge ], [ %3, %bb.a ], [ %3, %.critedge2.fold.split105 ], [ %3, %.thread86 ] ; 6 uses
-  %.sroa.062.081 = phi i16 [ 7, %bb.b ], [ 7, %.critedge ], [ %2, %bb.a ], [ %2, %.critedge2.fold.split105 ], [ 6, %.thread86 ] ; 6 uses
+  %i.c = phi i1 [ true, %bb.b ], [ true, %.critedge ], [ true, %bb.a ], [ false, %.critedge2.fold.split105 ], [ false, %.thread86 ] ; 4 uses
+  %.02383 = phi i32 [ 2, %bb.b ], [ 1, %.critedge ], [ %3, %bb.a ], [ %3, %.critedge2.fold.split105 ], [ %3, %.thread86 ] ; 5 uses
+  %.sroa.062.081 = phi i16 [ 7, %bb.b ], [ 7, %.critedge ], [ %2, %bb.a ], [ %2, %.critedge2.fold.split105 ], [ 6, %.thread86 ] ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.e = load i32, ptr %i.d, align 8              ; 2 uses
   %i.f = and i32 %i.e, 254
@@ -1472,7 +1462,7 @@ bb.c:                                             ; preds = %_ZNK4llvm4Type13get
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.f, %bb.c
-  %indvars.iv = phi i64 [ 0, %bb.c ], [ %indvars.iv.next.1, %bb.f ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %bb.c ], [ %indvars.iv.next.1, %bb.f ] ; 3 uses
   %i.s = getelementptr inbounds nuw [2 x i8], ptr @_ZZL15RetCC_SI_ShaderjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %indvars.iv
   %i.t = load i16, ptr %i.s, align 4, !tbaa !66   ; 2 uses
   %i.u = zext i16 %i.t to i32                     ; 3 uses
@@ -1484,12 +1474,12 @@ bb.d:                                             ; preds = %bb.f, %bb.c
   %i.aa = shl nuw i32 1, %i.z
   %i.ab = and i32 %i.aa, %i.y
   %.not.i.i = icmp eq i32 %i.ab, 0
-  br i1 %.not.i.i, label %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i, label %bb.e
+  br i1 %.not.i.i, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %10 = getelementptr inbounds nuw [2 x i8], ptr @_ZZL15RetCC_SI_ShaderjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %indvars.iv.next
-  %i.ac = load i16, ptr %10, align 2, !tbaa !66   ; 2 uses
+  %10 = getelementptr inbounds nuw [2 x i8], ptr @_ZZL15RetCC_SI_ShaderjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %indvars.iv
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 2
+  %i.ac = load i16, ptr %11, align 2, !tbaa !66   ; 2 uses
   %i.ad = zext i16 %i.ac to i32                   ; 3 uses
   %i.ae = lshr i32 %i.ad, 5
   %i.af = zext nneg i32 %i.ae to i64
@@ -1499,22 +1489,17 @@ bb.e:                                             ; preds = %bb.d
   %i.aj = shl nuw i32 1, %i.ai
   %i.ak = and i32 %i.aj, %i.ah
   %.not.i.i.1 = icmp eq i32 %i.ak, 0
-  br i1 %.not.i.i.1, label %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i, label %bb.f
+  br i1 %.not.i.i.1, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, 44
   br i1 %exitcond.not.1, label %.thread97, label %bb.d, !llvm.loop !467
 
-_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i: ; preds = %bb.e, %bb.d
-  %indvars.iv.lcssa = phi i64 [ %indvars.iv, %bb.d ], [ %indvars.iv.next, %bb.e ]
-  %.lcssa144 = phi i16 [ %i.t, %bb.d ], [ %i.ac, %bb.e ]
-  %.lcssa142 = phi i32 [ %i.u, %bb.d ], [ %i.ad, %bb.e ]
-  %11 = icmp eq i64 %indvars.iv.lcssa, 44
-  br i1 %11, label %.thread97, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit
-
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i
-  tail call void @_ZN4llvm7CCState13MarkAllocatedEt(ptr noundef nonnull align 8 dereferenceable(420) %7, i16 noundef zeroext %.lcssa144) #25
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.e, %bb.d
+  %.lcssa139 = phi i16 [ %i.t, %bb.d ], [ %i.ac, %bb.e ]
+  %.lcssa137 = phi i32 [ %i.u, %bb.d ], [ %i.ad, %bb.e ]
+  tail call void @_ZN4llvm7CCState13MarkAllocatedEt(ptr noundef nonnull align 8 dereferenceable(420) %7, i16 noundef zeroext %.lcssa139) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   %i.al = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i8 0, ptr %i.al, align 8, !tbaa !469, !alias.scope !522
@@ -1532,7 +1517,7 @@ _ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %_ZNK4llvm7CCStat
   store i16 %1, ptr %i.au, align 2, !tbaa !64, !alias.scope !522
   %i.av = getelementptr inbounds nuw i8, ptr %8, i64 24
   store i16 %.sroa.062.081, ptr %i.av, align 8, !tbaa !64, !alias.scope !522
-  store i32 %.lcssa142, ptr %8, align 8, !tbaa !81, !alias.scope !522
+  store i32 %.lcssa137, ptr %8, align 8, !tbaa !81, !alias.scope !522
   %i.aw = getelementptr inbounds nuw i8, ptr %7, i64 24
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !483, !nonnull !19, !align !231 ; 4 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 8 ; 3 uses
@@ -1560,10 +1545,10 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
   br label %.thread103
 
-.thread97:                                        ; preds = %bb.f, %.thread86, %bb.a, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i, %_ZNK4llvm4Type13getScalarTypeEv.exit.thread, %_ZNK4llvm4Type13getScalarTypeEv.exit, %_ZNK4llvm4Type13getScalarTypeEv.exit29
-  %12 = phi i1 [ %i.c, %_ZNK4llvm4Type13getScalarTypeEv.exit.thread ], [ %i.c, %_ZNK4llvm4Type13getScalarTypeEv.exit ], [ %i.c, %_ZNK4llvm4Type13getScalarTypeEv.exit29 ], [ false, %bb.a ], [ false, %.thread86 ], [ %i.c, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i ], [ %i.c, %bb.f ]
-  %.02385 = phi i32 [ %.02383, %_ZNK4llvm4Type13getScalarTypeEv.exit.thread ], [ %.02383, %_ZNK4llvm4Type13getScalarTypeEv.exit ], [ %.02383, %_ZNK4llvm4Type13getScalarTypeEv.exit29 ], [ %3, %bb.a ], [ %3, %.thread86 ], [ %.02383, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i ], [ %.02383, %bb.f ]
-  %.sroa.062.080 = phi i16 [ %.sroa.062.081, %_ZNK4llvm4Type13getScalarTypeEv.exit.thread ], [ %.sroa.062.081, %_ZNK4llvm4Type13getScalarTypeEv.exit ], [ %.sroa.062.081, %_ZNK4llvm4Type13getScalarTypeEv.exit29 ], [ %2, %bb.a ], [ %2, %.thread86 ], [ %.sroa.062.081, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i ], [ %.sroa.062.081, %bb.f ] ; 3 uses
+.thread97:                                        ; preds = %bb.f, %.thread86, %bb.a, %_ZNK4llvm4Type13getScalarTypeEv.exit.thread, %_ZNK4llvm4Type13getScalarTypeEv.exit, %_ZNK4llvm4Type13getScalarTypeEv.exit29
+  %12 = phi i1 [ %i.c, %_ZNK4llvm4Type13getScalarTypeEv.exit.thread ], [ %i.c, %_ZNK4llvm4Type13getScalarTypeEv.exit ], [ %i.c, %_ZNK4llvm4Type13getScalarTypeEv.exit29 ], [ false, %bb.a ], [ false, %.thread86 ], [ %i.c, %bb.f ]
+  %.02385 = phi i32 [ %.02383, %_ZNK4llvm4Type13getScalarTypeEv.exit.thread ], [ %.02383, %_ZNK4llvm4Type13getScalarTypeEv.exit ], [ %.02383, %_ZNK4llvm4Type13getScalarTypeEv.exit29 ], [ %3, %bb.a ], [ %3, %.thread86 ], [ %.02383, %bb.f ]
+  %.sroa.062.080 = phi i16 [ %.sroa.062.081, %_ZNK4llvm4Type13getScalarTypeEv.exit.thread ], [ %.sroa.062.081, %_ZNK4llvm4Type13getScalarTypeEv.exit ], [ %.sroa.062.081, %_ZNK4llvm4Type13getScalarTypeEv.exit29 ], [ %2, %bb.a ], [ %2, %.thread86 ], [ %.sroa.062.081, %bb.f ] ; 3 uses
   switch i16 %.sroa.062.080, label %bb.j [
     i16 14, label %.critedge4
     i16 13, label %.critedge4
@@ -1587,7 +1572,7 @@ switch.early.test:                                ; preds = %bb.j
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.m, %.critedge4
-  %indvars.iv113 = phi i64 [ 0, %.critedge4 ], [ %indvars.iv.next114.1, %bb.m ] ; 4 uses
+  %indvars.iv113 = phi i64 [ 0, %.critedge4 ], [ %indvars.iv.next114.1, %bb.m ] ; 3 uses
   %i.bj = getelementptr inbounds nuw [2 x i8], ptr @_ZZL12RetCC_SI_GfxjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %indvars.iv113
   %i.bk = load i16, ptr %i.bj, align 4, !tbaa !66 ; 2 uses
   %i.bl = zext i16 %i.bk to i32                   ; 3 uses
@@ -1599,12 +1584,12 @@ bb.k:                                             ; preds = %bb.m, %.critedge4
   %i.br = shl nuw i32 1, %i.bq
   %i.bs = and i32 %i.br, %i.bp
   %.not.i.i32 = icmp eq i32 %i.bs, 0
-  br i1 %.not.i.i32, label %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i34, label %bb.l
+  br i1 %.not.i.i32, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit35, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %indvars.iv.next114 = or disjoint i64 %indvars.iv113, 1 ; 2 uses
-  %13 = getelementptr inbounds nuw [2 x i8], ptr @_ZZL12RetCC_SI_GfxjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %indvars.iv.next114
-  %i.bt = load i16, ptr %13, align 2, !tbaa !66   ; 2 uses
+  %13 = getelementptr inbounds nuw [2 x i8], ptr @_ZZL12RetCC_SI_GfxjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %indvars.iv113
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 2
+  %i.bt = load i16, ptr %14, align 2, !tbaa !66   ; 2 uses
   %i.bu = zext i16 %i.bt to i32                   ; 3 uses
   %i.bv = lshr i32 %i.bu, 5
   %i.bw = zext nneg i32 %i.bv to i64
@@ -1614,22 +1599,17 @@ bb.l:                                             ; preds = %bb.k
   %i.ca = shl nuw i32 1, %i.bz
   %i.cb = and i32 %i.ca, %i.by
   %.not.i.i32.1 = icmp eq i32 %i.cb, 0
-  br i1 %.not.i.i32.1, label %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i34, label %bb.m
+  br i1 %.not.i.i32.1, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit35, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %indvars.iv.next114.1 = add nuw nsw i64 %indvars.iv113, 2 ; 2 uses
   %exitcond116.not.1 = icmp eq i64 %indvars.iv.next114.1, 136
   br i1 %exitcond116.not.1, label %.thread103, label %bb.k, !llvm.loop !467
 
-_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i34: ; preds = %bb.l, %bb.k
-  %indvars.iv113.lcssa = phi i64 [ %indvars.iv113, %bb.k ], [ %indvars.iv.next114, %bb.l ]
-  %.lcssa139 = phi i16 [ %i.bk, %bb.k ], [ %i.bt, %bb.l ]
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit35: ; preds = %bb.l, %bb.k
+  %.lcssa135 = phi i16 [ %i.bk, %bb.k ], [ %i.bt, %bb.l ]
   %.lcssa = phi i32 [ %i.bl, %bb.k ], [ %i.bu, %bb.l ]
-  %14 = icmp eq i64 %indvars.iv113.lcssa, 136
-  br i1 %14, label %.thread103, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit35
-
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit35: ; preds = %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i34
-  tail call void @_ZN4llvm7CCState13MarkAllocatedEt(ptr noundef nonnull align 8 dereferenceable(420) %7, i16 noundef zeroext %.lcssa139) #25
+  tail call void @_ZN4llvm7CCState13MarkAllocatedEt(ptr noundef nonnull align 8 dereferenceable(420) %7, i16 noundef zeroext %.lcssa135) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #25
   %i.cc = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i8 0, ptr %i.cc, align 8, !tbaa !469, !alias.scope !525
@@ -1675,8 +1655,8 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #25
   br label %.thread103
 
-.thread103:                                       ; preds = %bb.m, %switch.early.test, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i34, %bb.p, %bb.i
-  %.3 = phi i1 [ false, %bb.i ], [ false, %bb.p ], [ true, %switch.early.test ], [ true, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i34 ], [ true, %bb.m ]
+.thread103:                                       ; preds = %bb.m, %switch.early.test, %bb.p, %bb.i
+  %.3 = phi i1 [ false, %bb.i ], [ false, %bb.p ], [ true, %switch.early.test ], [ true, %bb.m ]
   ret i1 %.3
 }
 
@@ -1735,7 +1715,7 @@ bb.f:                                             ; preds = %.thread
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.i, %.critedge2
-  %indvars.iv = phi i64 [ 0, %.critedge2 ], [ %indvars.iv.next.1, %bb.i ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.critedge2 ], [ %indvars.iv.next.1, %bb.i ] ; 3 uses
   %i.h = getelementptr inbounds nuw [2 x i8], ptr @_ZZL12RetCC_SI_GfxjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %indvars.iv
   %i.i = load i16, ptr %i.h, align 4, !tbaa !66   ; 2 uses
   %i.j = zext i16 %i.i to i32                     ; 3 uses
@@ -1747,12 +1727,12 @@ bb.g:                                             ; preds = %bb.i, %.critedge2
   %i.p = shl nuw i32 1, %i.o
   %i.q = and i32 %i.p, %i.n
   %.not.i.i = icmp eq i32 %i.q, 0
-  br i1 %.not.i.i, label %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i, label %bb.h
+  br i1 %.not.i.i, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %9 = getelementptr inbounds nuw [2 x i8], ptr @_ZZL12RetCC_SI_GfxjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %indvars.iv.next
-  %i.r = load i16, ptr %9, align 2, !tbaa !66     ; 2 uses
+  %9 = getelementptr inbounds nuw [2 x i8], ptr @_ZZL12RetCC_SI_GfxjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %indvars.iv
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 2
+  %i.r = load i16, ptr %10, align 2, !tbaa !66    ; 2 uses
   %i.s = zext i16 %i.r to i32                     ; 3 uses
   %i.t = lshr i32 %i.s, 5
   %i.u = zext nneg i32 %i.t to i64
@@ -1762,22 +1742,17 @@ bb.h:                                             ; preds = %bb.g
   %i.y = shl nuw i32 1, %i.x
   %i.z = and i32 %i.y, %i.w
   %.not.i.i.1 = icmp eq i32 %i.z, 0
-  br i1 %.not.i.i.1, label %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i, label %bb.i
+  br i1 %.not.i.i.1, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, 136
   br i1 %exitcond.not.1, label %.thread58, label %bb.g, !llvm.loop !467
 
-_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i: ; preds = %bb.h, %bb.g
-  %indvars.iv.lcssa = phi i64 [ %indvars.iv, %bb.g ], [ %indvars.iv.next, %bb.h ]
-  %.lcssa76 = phi i16 [ %i.i, %bb.g ], [ %i.r, %bb.h ]
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.h, %bb.g
+  %.lcssa74 = phi i16 [ %i.i, %bb.g ], [ %i.r, %bb.h ]
   %.lcssa = phi i32 [ %i.j, %bb.g ], [ %i.s, %bb.h ]
-  %10 = icmp eq i64 %indvars.iv.lcssa, 136
-  br i1 %10, label %.thread58, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit
-
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i
-  tail call void @_ZN4llvm7CCState13MarkAllocatedEt(ptr noundef nonnull align 8 dereferenceable(420) %7, i16 noundef zeroext %.lcssa76) #25
+  tail call void @_ZN4llvm7CCState13MarkAllocatedEt(ptr noundef nonnull align 8 dereferenceable(420) %7, i16 noundef zeroext %.lcssa74) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   %i.aa = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i8 0, ptr %i.aa, align 8, !tbaa !469, !alias.scope !528
@@ -1823,8 +1798,8 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
   br label %.thread58
 
-.thread58:                                        ; preds = %bb.i, %bb.f, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i, %.thread, %bb.l
-  %.1 = phi i1 [ false, %bb.l ], [ true, %.thread ], [ true, %bb.f ], [ true, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i ], [ true, %bb.i ]
+.thread58:                                        ; preds = %bb.i, %bb.f, %.thread, %bb.l
+  %.1 = phi i1 [ false, %bb.l ], [ true, %.thread ], [ true, %bb.f ], [ true, %bb.i ]
   ret i1 %.1
 }
 

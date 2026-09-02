@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
   %.not71.i = icmp eq i16 %i.w, 256
   %i.ar = sext i16 %i.w to i64
   %spec.select77.i = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 %i.ar)
-  %.055.i = select i1 %.not71.i, i64 %i.ap, i64 %spec.select77.i ; 3 uses
+  %.055.i = select i1 %.not71.i, i64 %i.ap, i64 %spec.select77.i
   %i.as = icmp ult i64 %.055.i, %spec.select.i
   br i1 %i.as, label %dfa_backref.exit.thread, label %bb.l
 
@@ -214,15 +214,11 @@ bb.l:                                             ; preds = %bb.k
 
 .preheader.i:                                     ; preds = %bb.l
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 8
-  br label %.preheader.split.i
+  br label %bb.m
 
-.preheader.split.i:                               ; preds = %bb.n, %.preheader.i
-  %.058.i = phi i64 [ %i.ba, %bb.n ], [ 0, %.preheader.i ] ; 3 uses
-  %.0.i = phi ptr [ %i.az, %bb.n ], [ %2, %.preheader.i ] ; 4 uses
-  %exitcond93.not.i = icmp eq i64 %.058.i, %.055.i
-  br i1 %exitcond93.not.i, label %.split.us.i, label %bb.m
-
-bb.m:                                             ; preds = %.preheader.split.i
+bb.m:                                             ; preds = %bb.n, %.preheader.i
+  %.058.i = phi i64 [ %i.ba, %bb.n ], [ 0, %.preheader.i ] ; 2 uses
+  %.0.i = phi ptr [ %i.az, %bb.n ], [ %2, %.preheader.i ] ; 3 uses
   %i.av = load ptr, ptr %i.au, align 8
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 576
   %i.ax = load ptr, ptr %i.aw, align 8
@@ -234,11 +230,11 @@ bb.n:                                             ; preds = %bb.m
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %.0.i, i64 %i.ac ; 2 uses
   %i.ba = add nuw i64 %.058.i, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.ba, %spec.select.i
-  br i1 %exitcond.not, label %.split.us.i, label %.preheader.split.i, !llvm.loop !19
+  br i1 %exitcond.not, label %.split.us.i, label %bb.m, !llvm.loop !19
 
-.split.us.i:                                      ; preds = %bb.n, %bb.m, %.preheader.split.i
-  %.us-phi.i = phi i64 [ %.058.i, %bb.m ], [ %.055.i, %.preheader.split.i ], [ %spec.select.i, %bb.n ]
-  %.us-phi81.i = phi ptr [ %.0.i, %bb.m ], [ %.0.i, %.preheader.split.i ], [ %i.az, %bb.n ]
+.split.us.i:                                      ; preds = %bb.n, %bb.m
+  %.us-phi.i = phi i64 [ %.058.i, %bb.m ], [ %spec.select.i, %bb.n ]
+  %.us-phi81.i = phi ptr [ %.0.i, %bb.m ], [ %i.az, %bb.n ]
   %.not74.i = icmp ult i64 %.us-phi.i, %spec.select.i
   %..1.i = select i1 %.not74.i, ptr null, ptr %.us-phi81.i
   br label %dfa_backref.exit

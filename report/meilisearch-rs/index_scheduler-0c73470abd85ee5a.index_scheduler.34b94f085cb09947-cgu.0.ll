@@ -206,7 +206,7 @@ bb.ff:                                            ; preds = %bb.fe
 
 .preheader.i.i.i.i.i:                             ; preds = %"_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$20should_unpack_parent17h475ef73029043ed3E.exit.i.i.i.i.i", %bb.fd
   %i.oh = getelementptr i8, ptr %i.nm, i64 -72    ; 3 uses
-  %i.oi = load i64, ptr %i.oh, align 8, !noalias !153717, !noundef !14 ; 8 uses
+  %i.oi = load i64, ptr %i.oh, align 8, !noalias !153717, !noundef !14 ; 5 uses
   %i.oj = icmp ult i64 %i.oi, 128102389400760776
   call void @llvm.assume(i1 %i.oj)
   %i.ok = icmp ult i64 %i.no, %i.oi
@@ -219,7 +219,7 @@ bb.ff:                                            ; preds = %bb.fe
 
 "_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$20should_unpack_parent17h475ef73029043ed3E.exit.thread.i.i.i.i.i": ; preds = %"_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$18should_unpack_leaf17h73894b80a1e47d2fE.exit.thread.i.i.i.i.i", %.preheader.i.i.i.i.i, %"_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$20should_unpack_parent17h475ef73029043ed3E.exit.i.i.i.i.i", %bb.ff, %bb.fe
   invoke fastcc void @"_ZN5rstar9algorithm7removal35DrainIterator$LT$T$C$R$C$Params$GT$8pop_node17hdb08a0c98b6b5eeeE"(ptr noalias noundef align 8 captures(address) dereferenceable(80) %i.i, ptr noalias noundef nonnull align 8 dereferenceable(56) %i.p, i1 noundef zeroext true)
-          to label %.noexc.i2.i unwind label %.loopexit.i.i, !noalias !153753
+          to label %.noexc.i2.i unwind label %.loopexit.split-lp.i.i, !noalias !153753
 
 .noexc.i2.i:                                      ; preds = %"_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$20should_unpack_parent17h475ef73029043ed3E.exit.thread.i.i.i.i.i"
   %i.om = load i64, ptr %i.i, align 8, !range !2917, !noalias !153754, !noundef !14
@@ -282,26 +282,15 @@ bb.fk:                                            ; preds = %.noexc.i2.i
   br label %.loopexit.i.i.i324
 
 bb.fl:                                            ; preds = %"_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$18should_unpack_leaf17h73894b80a1e47d2fE.exit.thread.i.i.i.i.i", %.lr.ph.i.i.i.i.i
-  %i.pb = phi i64 [ %i.no, %.lr.ph.i.i.i.i.i ], [ %i.py, %"_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$18should_unpack_leaf17h73894b80a1e47d2fE.exit.thread.i.i.i.i.i" ] ; 5 uses
+  %i.pb = phi i64 [ %i.no, %.lr.ph.i.i.i.i.i ], [ %i.py, %"_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$18should_unpack_leaf17h73894b80a1e47d2fE.exit.thread.i.i.i.i.i" ] ; 2 uses
   %i.pc = getelementptr inbounds nuw [72 x i8], ptr %.pre.i.i.i.i.i, i64 %i.pb ; 11 uses
   %i.pd = load i64, ptr %i.pc, align 8, !range !2917, !noalias !153717, !noundef !14
   %.not14.i.i.i.i.i = icmp eq i64 %i.pd, -9223372036854775808
-  br i1 %.not14.i.i.i.i.i, label %.preheader.split.i.i.i.i.i.i.i.i.i.i, label %6
+  br i1 %.not14.i.i.i.i.i, label %.preheader.split.i.i.i.i.i.i.i.i.i.i, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$11swap_remove17ha79650f378e3813cE.exit.i.i.i.i.i"
 
-6:                                                ; preds = %bb.fl
+"_ZN5alloc3vec16Vec$LT$T$C$A$GT$11swap_remove17ha79650f378e3813cE.exit.i.i.i.i.i": ; preds = %bb.fl
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !153754
   call void @llvm.experimental.noalias.scope.decl(metadata !153762)
-  %.not.i.i.i.i.i.i325 = icmp samesign ult i64 %i.pb, %i.oi
-  br i1 %.not.i.i.i.i.i.i325, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$11swap_remove17ha79650f378e3813cE.exit.i.i.i.i.i", label %.invoke.i.i, !prof !15
-
-.invoke.i.i:                                      ; preds = %7, %6
-  invoke void @"_ZN5alloc3vec16Vec$LT$T$C$A$GT$11swap_remove13assert_failed17hf3c67a49ca6f5f55E"(i64 noundef %i.pb, i64 noundef %i.oi, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2547) #80
-          to label %.cont.i.i unwind label %.loopexit.split-lp.i.i, !noalias !153753
-
-.cont.i.i:                                        ; preds = %.invoke.i.i
-  unreachable
-
-"_ZN5alloc3vec16Vec$LT$T$C$A$GT$11swap_remove17ha79650f378e3813cE.exit.i.i.i.i.i": ; preds = %6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.l, ptr noundef nonnull align 8 dereferenceable(72) %i.pc, i64 72, i1 false), !noalias !153765
   %i.pe = add nsw i64 %i.oi, -1                   ; 2 uses
   %i.pf = getelementptr inbounds nuw [72 x i8], ptr %.pre.i.i.i.i.i, i64 %i.pe
@@ -374,7 +363,7 @@ bb.fm:                                            ; preds = %.preheader.split.i.
   %.val.i.i.i.i.i.i.i.i.i.i.i.1 = load double, ptr %i.pv, align 8, !alias.scope !153820, !noalias !153821, !noundef !14
   %.val6.i.i.i.i.i.i.i.i.i.i.i.1 = load double, ptr %i.pw, align 8, !alias.scope !153822, !noalias !153823, !noundef !14
   %i.px = fcmp oeq double %.val.i.i.i.i.i.i.i.i.i.i.i.1, %.val6.i.i.i.i.i.i.i.i.i.i.i.1
-  br i1 %i.px, label %7, label %"_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$18should_unpack_leaf17h73894b80a1e47d2fE.exit.thread.i.i.i.i.i"
+  br i1 %i.px, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$11swap_remove17ha79650f378e3813cE.exit24.i.i.i.i.i", label %"_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$18should_unpack_leaf17h73894b80a1e47d2fE.exit.thread.i.i.i.i.i"
 
 "_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$18should_unpack_leaf17h73894b80a1e47d2fE.exit.thread.i.i.i.i.i": ; preds = %.preheader.split.i.i.i.i.i.i.i.i.i.i.i, %.preheader.split.i.i.i.i.i.i.i.i.i.i, %.preheader.split.i.i.i.i.i.i.i.i.i.i.1, %.preheader.split.i.i.i.i.i.i.i.i.i.i.i.1, %bb.fm, %.preheader.split.i.i.i.i.i.i.i.i.i.i.2
   %i.py = add i64 %i.pb, 1                        ; 3 uses
@@ -382,17 +371,13 @@ bb.fm:                                            ; preds = %.preheader.split.i.
   %exitcond.not.i.i.i.i = icmp eq i64 %i.py, %i.oi
   br i1 %exitcond.not.i.i.i.i, label %"_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$20should_unpack_parent17h475ef73029043ed3E.exit.thread.i.i.i.i.i", label %bb.fl
 
-7:                                                ; preds = %.preheader.split.i.i.i.i.i.i.i.i.i.i.i.1
-  %8 = getelementptr i8, ptr %i.nm, i64 -8        ; 2 uses
-  %9 = load i64, ptr %8, align 8, !noalias !153717, !noundef !14
-  %10 = add i64 %9, 1
-  store i64 %10, ptr %8, align 8, !noalias !153717
+"_ZN5alloc3vec16Vec$LT$T$C$A$GT$11swap_remove17ha79650f378e3813cE.exit24.i.i.i.i.i": ; preds = %.preheader.split.i.i.i.i.i.i.i.i.i.i.i.1
+  %6 = getelementptr i8, ptr %i.nm, i64 -8        ; 2 uses
+  %7 = load i64, ptr %6, align 8, !noalias !153717, !noundef !14
+  %8 = add i64 %7, 1
+  store i64 %8, ptr %6, align 8, !noalias !153717
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !153754
   call void @llvm.experimental.noalias.scope.decl(metadata !153824)
-  %.not.i23.i.i.i.i.i = icmp samesign ult i64 %i.pb, %i.oi
-  br i1 %.not.i23.i.i.i.i.i, label %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$11swap_remove17ha79650f378e3813cE.exit24.i.i.i.i.i", label %.invoke.i.i, !prof !15
-
-"_ZN5alloc3vec16Vec$LT$T$C$A$GT$11swap_remove17ha79650f378e3813cE.exit24.i.i.i.i.i": ; preds = %7
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.j, ptr noundef nonnull align 8 dereferenceable(72) %i.pc, i64 72, i1 false), !noalias !153827
   %i.pz = add nsw i64 %i.oi, -1                   ; 2 uses
   %i.qa = getelementptr inbounds nuw [72 x i8], ptr %.pre.i.i.i.i.i, i64 %i.pz
@@ -504,18 +489,13 @@ bb.fy:                                            ; preds = %"_ZN5alloc3vec16Vec
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !153702
   br label %"_ZN98_$LT$core..iter..adapters..take..Take$LT$I$GT$$u20$as$u20$core..iter..adapters..take..SpecTake$GT$9spec_fold17h334ec52f3d78ae55E.exit.i"
 
-.loopexit.i.i:                                    ; preds = %"_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$20should_unpack_parent17h475ef73029043ed3E.exit.thread.i.i.i.i.i"
-  %lpad.loopexit.i.i = landingpad { ptr, i32 }
-          cleanup
-  br label %.body.i1.i
-
-.loopexit.split-lp.i.i:                           ; preds = %.invoke.i.i
+.loopexit.split-lp.i.i:                           ; preds = %"_ZN154_$LT$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$T$GT$$u20$as$u20$rstar..algorithm..selection_functions..SelectionFunction$LT$T$GT$$GT$20should_unpack_parent17h475ef73029043ed3E.exit.thread.i.i.i.i.i"
   %lpad.loopexit.split-lp.i.i = landingpad { ptr, i32 }
           cleanup
   br label %.body.i1.i
 
-.body.i1.i:                                       ; preds = %.loopexit.split-lp.i.i, %.loopexit.i.i, %bb.fv, %bb.fs, %bb.fp, %.body.i.i.i.i.i
-  %eh.lpad-body.i.i = phi { ptr, i32 } [ %i.qm, %bb.fs ], [ %i.qq, %bb.fv ], [ %i.op, %.body.i.i.i.i.i ], [ %i.qg, %bb.fp ], [ %lpad.loopexit.i.i, %.loopexit.i.i ], [ %lpad.loopexit.split-lp.i.i, %.loopexit.split-lp.i.i ]
+.body.i1.i:                                       ; preds = %.loopexit.split-lp.i.i, %bb.fv, %bb.fs, %bb.fp, %.body.i.i.i.i.i
+  %eh.lpad-body.i.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp.i.i, %.loopexit.split-lp.i.i ], [ %i.qq, %bb.fv ], [ %i.op, %.body.i.i.i.i.i ], [ %i.qg, %bb.fp ], [ %i.qm, %bb.fs ]
   invoke fastcc void @"_ZN4core3ptr450drop_in_place$LT$core..iter..adapters..take..Take$LT$rstar..algorithm..removal..DrainIterator$LT$rstar..primitives..geom_with_data..GeomWithData$LT$$u5b$f64$u3b$$u20$3$u5d$$C$$LP$u32$C$$u5b$f64$u3b$$u20$2$u5d$$RP$$GT$$C$rstar..algorithm..selection_functions..SelectEqualsFunction$LT$rstar..primitives..geom_with_data..GeomWithData$LT$$u5b$f64$u3b$$u20$3$u5d$$C$$LP$u32$C$$u5b$f64$u3b$$u20$2$u5d$$RP$$GT$$GT$$C$rstar..params..DefaultParams$GT$$GT$$GT$17hcb66315d368b958cE"(ptr noalias noundef nonnull align 8 dereferenceable(56) %i.p) #81
           to label %.body330 unwind label %bb.fz, !noalias !153753
 

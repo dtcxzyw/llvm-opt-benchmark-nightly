@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %_ZNK8rawspeed10Byte
 
 _ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16: ; preds = %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16.lr.ph, %.critedge
   %.sroa.413.0.copyload.i14105 = phi i32 [ %i.l, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16.lr.ph ], [ %.sroa.413.0.copyload.i14, %.critedge ]
-  %i.s = phi i32 [ %.sroa.2.0.copyload.i, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16.lr.ph ], [ %.sroa.2.0.copyload.i12, %.critedge ] ; 6 uses
+  %i.s = phi i32 [ %.sroa.2.0.copyload.i, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16.lr.ph ], [ %.sroa.2.0.copyload.i12, %.critedge ] ; 5 uses
   %.sroa.068.0102 = phi i1 [ false, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16.lr.ph ], [ %.sroa.068.1, %.critedge ] ; 5 uses
   %.sroa.5.0101 = phi i1 [ false, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16.lr.ph ], [ %.sroa.5.1, %.critedge ] ; 4 uses
   %.sroa.7.0100 = phi i8 [ 0, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16.lr.ph ], [ %.sroa.7.1, %.critedge ] ; 5 uses
@@ -221,14 +221,14 @@ _ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16: ; preds = %_ZNK8rawspee
 _ZNK8rawspeed10ByteStream8peekByteEj.exit.i.us.i.i: ; preds = %_ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i.i, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16
   %.0.copyload.i.i.i.i.i.i.us.i.i = phi i8 [ %.0.copyload.i.i.i.i.i10.i.us.i.i, %_ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i.i ], [ %.0.copyload.i.i.i.i.i.i.us.pre.i.i, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16 ]
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %_ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i.i ], [ %i.t, %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.lr.ph.i.i16 ] ; 3 uses
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 3 uses
+  %indvars.iv.next.i.i = add nuw i64 %indvars.iv.i.i, 1 ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.012.0.copyload.i10103, i64 %indvars.iv.next.i.i
   %.0.copyload.i.i.i.i.i10.i.us.i.i = load i8, ptr %i.w, align 1, !noalias !89 ; 2 uses
   %i.x = icmp eq i8 %.0.copyload.i.i.i.i.i.i.us.i.i, -1
   %i.y = add i8 %.0.copyload.i.i.i.i.i10.i.us.i.i, -1
   %i.z = icmp ult i8 %i.y, -2
   %or.cond5.i.us.i.i = and i1 %i.x, %i.z
-  br i1 %or.cond5.i.us.i.i, label %.split11.us.loopexit.i.i, label %_ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i.i
+  br i1 %or.cond5.i.us.i.i, label %_ZN8rawspeed20AbstractLJpegDecoder13getNextMarkerEb.exit23, label %_ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i.i
 
 _ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i.i: ; preds = %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.us.i.i
   %i.aa = icmp samesign ult i64 %indvars.iv.i.i, %i.v
@@ -236,40 +236,25 @@ _ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i.i: ; preds = %_ZNK8rawspeed10Byte
   %i.ab = icmp samesign ult i64 %indvars.iv.next.i.i, %i.u
   br i1 %i.ab, label %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.us.i.i, label %.loopexit.i15, !llvm.loop !92
 
-.split11.us.loopexit.i.i:                         ; preds = %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.us.i.i
-  %4 = trunc nuw i64 %indvars.iv.i.i to i32       ; 5 uses
+_ZN8rawspeed20AbstractLJpegDecoder13getNextMarkerEb.exit23: ; preds = %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.us.i.i
+  %4 = trunc nuw i64 %indvars.iv.i.i to i32       ; 3 uses
   store i32 %4, ptr %.sroa.413.0..sroa_idx.i, align 8
-  %.not.i.not.i.i.i.i.i.i18 = icmp ugt i32 %i.s, %4
-  br i1 %.not.i.not.i.i.i.i.i.i18, label %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.i19, label %5
-
-5:                                                ; preds = %.split11.us.loopexit.i.i
-  tail call void (ptr, ...) @_ZN8rawspeed14ThrowExceptionINS_11IOExceptionEEEvPKcz(ptr noundef nonnull @.str.35, ptr noundef nonnull @__PRETTY_FUNCTION__._ZNK8rawspeed6Buffer10getSubViewEjj) #15
-  unreachable
-
-_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.i19:  ; preds = %.split11.us.loopexit.i.i
-  %6 = add nuw nsw i32 %4, 1                      ; 2 uses
-  %.not.i.not.i.i.i.i9.i.i20 = icmp samesign ult i32 %6, %i.s
-  br i1 %.not.i.not.i.i.i.i9.i.i20, label %_ZN8rawspeed20AbstractLJpegDecoder13getNextMarkerEb.exit23, label %7
-
-7:                                                ; preds = %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.i19
-  tail call void (ptr, ...) @_ZN8rawspeed14ThrowExceptionINS_11IOExceptionEEEvPKcz(ptr noundef nonnull @.str.35, ptr noundef nonnull @__PRETTY_FUNCTION__._ZNK8rawspeed6Buffer10getSubViewEjj) #15
-  unreachable
-
-.loopexit.i15:                                    ; preds = %.critedge, %_ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i.i, %.preheader
-  tail call void (ptr, ...) @_ZN8rawspeed14ThrowExceptionINS_19RawDecoderExceptionEEEvPKcz(ptr noundef nonnull @.str.34, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN8rawspeed20AbstractLJpegDecoder13getNextMarkerEb) #15
-  unreachable
-
-_ZN8rawspeed20AbstractLJpegDecoder13getNextMarkerEb.exit23: ; preds = %_ZNK8rawspeed10ByteStream8peekByteEj.exit.i.i19
-  %8 = zext nneg i32 %6 to i64
-  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.012.0.copyload.i10103, i64 %8
+  %5 = and i64 %indvars.iv.next.i.i, 4294967295
+  %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.012.0.copyload.i10103, i64 %5
   %.0.copyload.i.i.i.i.i10.i.i22 = load i8, ptr %i.ac, align 1 ; 3 uses
   %i.ad = add i8 %.0.copyload.i.i.i.i.i10.i.i22, -1
   %i.ae = icmp ult i8 %i.ad, -2
   tail call void @llvm.assume(i1 %i.ae)
-  %i.af = add nuw nsw i32 %4, 2                   ; 3 uses
+  %i.af = add nuw nsw i32 %4, 2                   ; 4 uses
+  %6 = icmp samesign ule i32 %i.af, %i.s
+  tail call void @llvm.assume(i1 %6)
   store i32 %i.af, ptr %.sroa.413.0..sroa_idx.i, align 8, !tbaa !88
   %.not5 = icmp eq i8 %.0.copyload.i.i.i.i.i10.i.i22, -39
   br i1 %.not5, label %.critedge7, label %bb.c
+
+.loopexit.i15:                                    ; preds = %.critedge, %_ZN8rawspeed10ByteStream9skipBytesEj.exit.us.i.i, %.preheader
+  tail call void (ptr, ...) @_ZN8rawspeed14ThrowExceptionINS_19RawDecoderExceptionEEEvPKcz(ptr noundef nonnull @.str.34, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN8rawspeed20AbstractLJpegDecoder13getNextMarkerEb) #15
+  unreachable
 
 bb.c:                                             ; preds = %_ZN8rawspeed20AbstractLJpegDecoder13getNextMarkerEb.exit23
   %i.ag = zext nneg i32 %i.af to i64              ; 3 uses

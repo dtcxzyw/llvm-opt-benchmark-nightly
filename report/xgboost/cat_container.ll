@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %_ZN7xgboost6common6
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt25__unguarded_linear_insertIN7xgboost6common6detail12SpanIteratorINS1_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortINS1_18IndexTransformIterIZNSB_9SortNamesINSA_6PolicyIJNS0_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSA_15CatStrArrayViewENS4_IKhLm18446744073709551615EEENS4_IKaLm18446744073709551615EEENS4_IKtLm18446744073709551615EEENS4_IKsLm18446744073709551615EEENS4_IKjLm18446744073709551615EEENS4_IKiLm18446744073709551615EEENS4_IKmLm18446744073709551615EEENS4_IKlLm18446744073709551615EEEEES5_EUlSI_E_EES6_ZZNSE_ISH_EEvSK_S15_S5_ENKUlOSI_E0_clIRKSO_EEDaS18_EUlmmE_EEvSI_SI_T0_T1_EUlRSX_S1G_E_EEEvSI_S1E_(ptr %0, i64 %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 4 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 3 uses
   %i.b = icmp ult i64 %1, %i.a
   br i1 %i.b, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit, label %bb.b, !prof !41
 
@@ -214,7 +214,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 3 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %1
   %i.f = load i32, ptr %i.e, align 4, !tbaa !39   ; 2 uses
   %.not.i = icmp eq i64 %1, 0
@@ -229,7 +229,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   unreachable
 
 _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit: ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
-  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 5 uses
+  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 3 uses
   %.sroa.8.0 = add i64 %.sroa.6.0, -1             ; 3 uses
   %i.h = icmp ult i64 %.sroa.8.0, %i.a
   br i1 %i.h, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i, label %bb.c, !prof !41
@@ -270,30 +270,21 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18In
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.m
   %i.w = load i8, ptr %i.v, align 1, !tbaa !67
   %i.x = icmp ult i8 %i.u, %i.w
-  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %5
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0 ; 2 uses
+  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSJ_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
   store i32 %i.k, ptr %4, align 4, !tbaa !39
   %i.y = add i64 %.sroa.6.0, -2
   %or.cond.not = icmp ult i64 %i.y, %i.a
-  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %.critedge.i5, !prof !455, !llvm.loop !496
+  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %bb.f, !prof !455, !llvm.loop !496
 
-.critedge.i5:                                     ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
+bb.f:                                             ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
   tail call void @_ZSt9terminatev() #30
   unreachable
 
-5:                                                ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSJ_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %6 = icmp ult i64 %.sroa.6.0, %i.a
-  br i1 %6, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7, label %bb.f, !prof !41
-
-bb.f:                                             ; preds = %5
-  tail call void @_ZSt9terminatev() #30
-  unreachable
-
-_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %5
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
-  store i32 %i.f, ptr %7, align 4, !tbaa !39
+_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSJ_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
+  store i32 %i.f, ptr %4, align 4, !tbaa !39
   ret void
 }
 
@@ -696,7 +687,7 @@ bb.j:                                             ; preds = %_ZN7xgboost6common6
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt25__unguarded_linear_insertIN7xgboost6common6detail12SpanIteratorINS1_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortINS1_18IndexTransformIterIZNSB_9SortNamesINSA_6PolicyIJNS0_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSA_15CatStrArrayViewENS4_IKhLm18446744073709551615EEENS4_IKaLm18446744073709551615EEENS4_IKtLm18446744073709551615EEENS4_IKsLm18446744073709551615EEENS4_IKjLm18446744073709551615EEENS4_IKiLm18446744073709551615EEENS4_IKmLm18446744073709551615EEENS4_IKlLm18446744073709551615EEEEES5_EUlSI_E_EES6_ZZNSE_ISH_EEvSK_S15_S5_ENKUlOSI_E0_clIRKSQ_EEDaS18_EUlmmE_EEvSI_SI_T0_T1_EUlRSX_S1G_E_EEEvSI_S1E_(ptr %0, i64 %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 4 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 3 uses
   %i.b = icmp ult i64 %1, %i.a
   br i1 %i.b, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit, label %bb.b, !prof !41
 
@@ -706,7 +697,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 3 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %1
   %i.f = load i32, ptr %i.e, align 4, !tbaa !39   ; 2 uses
   %.not.i = icmp eq i64 %1, 0
@@ -721,7 +712,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   unreachable
 
 _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit: ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
-  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 5 uses
+  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 3 uses
   %.sroa.8.0 = add i64 %.sroa.6.0, -1             ; 3 uses
   %i.h = icmp ult i64 %.sroa.8.0, %i.a
   br i1 %i.h, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i, label %bb.c, !prof !41
@@ -762,30 +753,21 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18In
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.m
   %i.w = load i8, ptr %i.v, align 1, !tbaa !67
   %i.x = icmp slt i8 %i.u, %i.w
-  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %5
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0 ; 2 uses
+  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSL_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
   store i32 %i.k, ptr %4, align 4, !tbaa !39
   %i.y = add i64 %.sroa.6.0, -2
   %or.cond.not = icmp ult i64 %i.y, %i.a
-  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %.critedge.i5, !prof !455, !llvm.loop !518
+  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %bb.f, !prof !455, !llvm.loop !518
 
-.critedge.i5:                                     ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
+bb.f:                                             ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
   tail call void @_ZSt9terminatev() #30
   unreachable
 
-5:                                                ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSL_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %6 = icmp ult i64 %.sroa.6.0, %i.a
-  br i1 %6, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7, label %bb.f, !prof !41
-
-bb.f:                                             ; preds = %5
-  tail call void @_ZSt9terminatev() #30
-  unreachable
-
-_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %5
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
-  store i32 %i.f, ptr %7, align 4, !tbaa !39
+_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSL_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
+  store i32 %i.f, ptr %4, align 4, !tbaa !39
   ret void
 }
 
@@ -1188,7 +1170,7 @@ bb.j:                                             ; preds = %_ZN7xgboost6common6
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt25__unguarded_linear_insertIN7xgboost6common6detail12SpanIteratorINS1_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortINS1_18IndexTransformIterIZNSB_9SortNamesINSA_6PolicyIJNS0_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSA_15CatStrArrayViewENS4_IKhLm18446744073709551615EEENS4_IKaLm18446744073709551615EEENS4_IKtLm18446744073709551615EEENS4_IKsLm18446744073709551615EEENS4_IKjLm18446744073709551615EEENS4_IKiLm18446744073709551615EEENS4_IKmLm18446744073709551615EEENS4_IKlLm18446744073709551615EEEEES5_EUlSI_E_EES6_ZZNSE_ISH_EEvSK_S15_S5_ENKUlOSI_E0_clIRKSS_EEDaS18_EUlmmE_EEvSI_SI_T0_T1_EUlRSX_S1G_E_EEEvSI_S1E_(ptr %0, i64 %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 4 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 3 uses
   %i.b = icmp ult i64 %1, %i.a
   br i1 %i.b, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit, label %bb.b, !prof !41
 
@@ -1198,7 +1180,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 3 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %1
   %i.f = load i32, ptr %i.e, align 4, !tbaa !39   ; 2 uses
   %.not.i = icmp eq i64 %1, 0
@@ -1213,7 +1195,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   unreachable
 
 _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit: ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
-  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 5 uses
+  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 3 uses
   %.sroa.8.0 = add i64 %.sroa.6.0, -1             ; 3 uses
   %i.h = icmp ult i64 %.sroa.8.0, %i.a
   br i1 %i.h, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i, label %bb.c, !prof !41
@@ -1254,30 +1236,21 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18In
   %i.v = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %i.m
   %i.w = load i16, ptr %i.v, align 2, !tbaa !84
   %i.x = icmp ult i16 %i.u, %i.w
-  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %5
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0 ; 2 uses
+  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSN_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
   store i32 %i.k, ptr %4, align 4, !tbaa !39
   %i.y = add i64 %.sroa.6.0, -2
   %or.cond.not = icmp ult i64 %i.y, %i.a
-  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %.critedge.i5, !prof !455, !llvm.loop !540
+  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %bb.f, !prof !455, !llvm.loop !540
 
-.critedge.i5:                                     ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
+bb.f:                                             ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
   tail call void @_ZSt9terminatev() #30
   unreachable
 
-5:                                                ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSN_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %6 = icmp ult i64 %.sroa.6.0, %i.a
-  br i1 %6, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7, label %bb.f, !prof !41
-
-bb.f:                                             ; preds = %5
-  tail call void @_ZSt9terminatev() #30
-  unreachable
-
-_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %5
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
-  store i32 %i.f, ptr %7, align 4, !tbaa !39
+_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSN_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
+  store i32 %i.f, ptr %4, align 4, !tbaa !39
   ret void
 }
 
@@ -1680,7 +1653,7 @@ bb.j:                                             ; preds = %_ZN7xgboost6common6
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt25__unguarded_linear_insertIN7xgboost6common6detail12SpanIteratorINS1_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortINS1_18IndexTransformIterIZNSB_9SortNamesINSA_6PolicyIJNS0_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSA_15CatStrArrayViewENS4_IKhLm18446744073709551615EEENS4_IKaLm18446744073709551615EEENS4_IKtLm18446744073709551615EEENS4_IKsLm18446744073709551615EEENS4_IKjLm18446744073709551615EEENS4_IKiLm18446744073709551615EEENS4_IKmLm18446744073709551615EEENS4_IKlLm18446744073709551615EEEEES5_EUlSI_E_EES6_ZZNSE_ISH_EEvSK_S15_S5_ENKUlOSI_E0_clIRKSU_EEDaS18_EUlmmE_EEvSI_SI_T0_T1_EUlRSX_S1G_E_EEEvSI_S1E_(ptr %0, i64 %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 4 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 3 uses
   %i.b = icmp ult i64 %1, %i.a
   br i1 %i.b, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit, label %bb.b, !prof !41
 
@@ -1690,7 +1663,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 3 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %1
   %i.f = load i32, ptr %i.e, align 4, !tbaa !39   ; 2 uses
   %.not.i = icmp eq i64 %1, 0
@@ -1705,7 +1678,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   unreachable
 
 _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit: ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
-  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 5 uses
+  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 3 uses
   %.sroa.8.0 = add i64 %.sroa.6.0, -1             ; 3 uses
   %i.h = icmp ult i64 %.sroa.8.0, %i.a
   br i1 %i.h, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i, label %bb.c, !prof !41
@@ -1746,30 +1719,21 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18In
   %i.v = getelementptr inbounds nuw [2 x i8], ptr %i.s, i64 %i.m
   %i.w = load i16, ptr %i.v, align 2, !tbaa !84
   %i.x = icmp slt i16 %i.u, %i.w
-  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %5
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0 ; 2 uses
+  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSP_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
   store i32 %i.k, ptr %4, align 4, !tbaa !39
   %i.y = add i64 %.sroa.6.0, -2
   %or.cond.not = icmp ult i64 %i.y, %i.a
-  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %.critedge.i5, !prof !455, !llvm.loop !562
+  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %bb.f, !prof !455, !llvm.loop !562
 
-.critedge.i5:                                     ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
+bb.f:                                             ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
   tail call void @_ZSt9terminatev() #30
   unreachable
 
-5:                                                ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSP_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %6 = icmp ult i64 %.sroa.6.0, %i.a
-  br i1 %6, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7, label %bb.f, !prof !41
-
-bb.f:                                             ; preds = %5
-  tail call void @_ZSt9terminatev() #30
-  unreachable
-
-_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %5
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
-  store i32 %i.f, ptr %7, align 4, !tbaa !39
+_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSP_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
+  store i32 %i.f, ptr %4, align 4, !tbaa !39
   ret void
 }
 
@@ -2172,7 +2136,7 @@ bb.j:                                             ; preds = %_ZN7xgboost6common6
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt25__unguarded_linear_insertIN7xgboost6common6detail12SpanIteratorINS1_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortINS1_18IndexTransformIterIZNSB_9SortNamesINSA_6PolicyIJNS0_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSA_15CatStrArrayViewENS4_IKhLm18446744073709551615EEENS4_IKaLm18446744073709551615EEENS4_IKtLm18446744073709551615EEENS4_IKsLm18446744073709551615EEENS4_IKjLm18446744073709551615EEENS4_IKiLm18446744073709551615EEENS4_IKmLm18446744073709551615EEENS4_IKlLm18446744073709551615EEEEES5_EUlSI_E_EES6_ZZNSE_ISH_EEvSK_S15_S5_ENKUlOSI_E0_clIRKSW_EEDaS18_EUlmmE_EEvSI_SI_T0_T1_EUlRSX_S1G_E_EEEvSI_S1E_(ptr %0, i64 %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 4 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 3 uses
   %i.b = icmp ult i64 %1, %i.a
   br i1 %i.b, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit, label %bb.b, !prof !41
 
@@ -2182,7 +2146,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 3 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %1
   %i.f = load i32, ptr %i.e, align 4, !tbaa !39   ; 2 uses
   %.not.i = icmp eq i64 %1, 0
@@ -2197,7 +2161,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   unreachable
 
 _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit: ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
-  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 5 uses
+  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 3 uses
   %.sroa.8.0 = add i64 %.sroa.6.0, -1             ; 3 uses
   %i.h = icmp ult i64 %.sroa.8.0, %i.a
   br i1 %i.h, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i, label %bb.c, !prof !41
@@ -2238,30 +2202,21 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18In
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.m
   %i.w = load i32, ptr %i.v, align 4, !tbaa !39
   %i.x = icmp ult i32 %i.u, %i.w
-  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %5
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0 ; 2 uses
+  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSR_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
   store i32 %i.k, ptr %4, align 4, !tbaa !39
   %i.y = add i64 %.sroa.6.0, -2
   %or.cond.not = icmp ult i64 %i.y, %i.a
-  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %.critedge.i5, !prof !455, !llvm.loop !584
+  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %bb.f, !prof !455, !llvm.loop !584
 
-.critedge.i5:                                     ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
+bb.f:                                             ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
   tail call void @_ZSt9terminatev() #30
   unreachable
 
-5:                                                ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSR_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %6 = icmp ult i64 %.sroa.6.0, %i.a
-  br i1 %6, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7, label %bb.f, !prof !41
-
-bb.f:                                             ; preds = %5
-  tail call void @_ZSt9terminatev() #30
-  unreachable
-
-_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %5
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
-  store i32 %i.f, ptr %7, align 4, !tbaa !39
+_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSR_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
+  store i32 %i.f, ptr %4, align 4, !tbaa !39
   ret void
 }
 
@@ -2664,7 +2619,7 @@ bb.j:                                             ; preds = %_ZN7xgboost6common6
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt25__unguarded_linear_insertIN7xgboost6common6detail12SpanIteratorINS1_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortINS1_18IndexTransformIterIZNSB_9SortNamesINSA_6PolicyIJNS0_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSA_15CatStrArrayViewENS4_IKhLm18446744073709551615EEENS4_IKaLm18446744073709551615EEENS4_IKtLm18446744073709551615EEENS4_IKsLm18446744073709551615EEENS4_IKjLm18446744073709551615EEENS4_IKiLm18446744073709551615EEENS4_IKmLm18446744073709551615EEENS4_IKlLm18446744073709551615EEEEES5_EUlSI_E_EES6_ZZNSE_ISH_EEvSK_S15_S5_ENKUlOSI_E0_clIRKSY_EEDaS18_EUlmmE_EEvSI_SI_T0_T1_EUlRSX_S1G_E_EEEvSI_S1E_(ptr %0, i64 %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 4 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 3 uses
   %i.b = icmp ult i64 %1, %i.a
   br i1 %i.b, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit, label %bb.b, !prof !41
 
@@ -2674,7 +2629,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 3 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %1
   %i.f = load i32, ptr %i.e, align 4, !tbaa !39   ; 2 uses
   %.not.i = icmp eq i64 %1, 0
@@ -2689,7 +2644,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   unreachable
 
 _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit: ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
-  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 5 uses
+  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 3 uses
   %.sroa.8.0 = add i64 %.sroa.6.0, -1             ; 3 uses
   %i.h = icmp ult i64 %.sroa.8.0, %i.a
   br i1 %i.h, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i, label %bb.c, !prof !41
@@ -2730,30 +2685,21 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18In
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.m
   %i.w = load i32, ptr %i.v, align 4, !tbaa !39
   %i.x = icmp slt i32 %i.u, %i.w
-  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %5
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0 ; 2 uses
+  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKST_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
   store i32 %i.k, ptr %4, align 4, !tbaa !39
   %i.y = add i64 %.sroa.6.0, -2
   %or.cond.not = icmp ult i64 %i.y, %i.a
-  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %.critedge.i5, !prof !455, !llvm.loop !606
+  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %bb.f, !prof !455, !llvm.loop !606
 
-.critedge.i5:                                     ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
+bb.f:                                             ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
   tail call void @_ZSt9terminatev() #30
   unreachable
 
-5:                                                ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKST_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %6 = icmp ult i64 %.sroa.6.0, %i.a
-  br i1 %6, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7, label %bb.f, !prof !41
-
-bb.f:                                             ; preds = %5
-  tail call void @_ZSt9terminatev() #30
-  unreachable
-
-_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %5
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
-  store i32 %i.f, ptr %7, align 4, !tbaa !39
+_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKST_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
+  store i32 %i.f, ptr %4, align 4, !tbaa !39
   ret void
 }
 
@@ -3156,7 +3102,7 @@ bb.j:                                             ; preds = %_ZN7xgboost6common6
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt25__unguarded_linear_insertIN7xgboost6common6detail12SpanIteratorINS1_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortINS1_18IndexTransformIterIZNSB_9SortNamesINSA_6PolicyIJNS0_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSA_15CatStrArrayViewENS4_IKhLm18446744073709551615EEENS4_IKaLm18446744073709551615EEENS4_IKtLm18446744073709551615EEENS4_IKsLm18446744073709551615EEENS4_IKjLm18446744073709551615EEENS4_IKiLm18446744073709551615EEENS4_IKmLm18446744073709551615EEENS4_IKlLm18446744073709551615EEEEES5_EUlSI_E_EES6_ZZNSE_ISH_EEvSK_S15_S5_ENKUlOSI_E0_clIRKS10_EEDaS18_EUlmmE_EEvSI_SI_T0_T1_EUlRSX_S1G_E_EEEvSI_S1E_(ptr %0, i64 %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 4 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 3 uses
   %i.b = icmp ult i64 %1, %i.a
   br i1 %i.b, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit, label %bb.b, !prof !41
 
@@ -3166,7 +3112,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 3 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %1
   %i.f = load i32, ptr %i.e, align 4, !tbaa !39   ; 2 uses
   %.not.i = icmp eq i64 %1, 0
@@ -3181,7 +3127,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   unreachable
 
 _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit: ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
-  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 5 uses
+  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 3 uses
   %.sroa.8.0 = add i64 %.sroa.6.0, -1             ; 3 uses
   %i.h = icmp ult i64 %.sroa.8.0, %i.a
   br i1 %i.h, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i, label %bb.c, !prof !41
@@ -3222,30 +3168,21 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18In
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.m
   %i.w = load i64, ptr %i.v, align 8, !tbaa !45
   %i.x = icmp ult i64 %i.u, %i.w
-  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %5
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0 ; 2 uses
+  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSV_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
   store i32 %i.k, ptr %4, align 4, !tbaa !39
   %i.y = add i64 %.sroa.6.0, -2
   %or.cond.not = icmp ult i64 %i.y, %i.a
-  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %.critedge.i5, !prof !455, !llvm.loop !628
+  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %bb.f, !prof !455, !llvm.loop !628
 
-.critedge.i5:                                     ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
+bb.f:                                             ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
   tail call void @_ZSt9terminatev() #30
   unreachable
 
-5:                                                ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSV_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %6 = icmp ult i64 %.sroa.6.0, %i.a
-  br i1 %6, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7, label %bb.f, !prof !41
-
-bb.f:                                             ; preds = %5
-  tail call void @_ZSt9terminatev() #30
-  unreachable
-
-_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %5
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
-  store i32 %i.f, ptr %7, align 4, !tbaa !39
+_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSV_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
+  store i32 %i.f, ptr %4, align 4, !tbaa !39
   ret void
 }
 
@@ -3648,7 +3585,7 @@ bb.j:                                             ; preds = %_ZN7xgboost6common6
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt25__unguarded_linear_insertIN7xgboost6common6detail12SpanIteratorINS1_4SpanIiLm18446744073709551615EEELb0EEEN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortINS1_18IndexTransformIterIZNSB_9SortNamesINSA_6PolicyIJNS0_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNSA_15CatStrArrayViewENS4_IKhLm18446744073709551615EEENS4_IKaLm18446744073709551615EEENS4_IKtLm18446744073709551615EEENS4_IKsLm18446744073709551615EEENS4_IKjLm18446744073709551615EEENS4_IKiLm18446744073709551615EEENS4_IKmLm18446744073709551615EEENS4_IKlLm18446744073709551615EEEEES5_EUlSI_E_EES6_ZZNSE_ISH_EEvSK_S15_S5_ENKUlOSI_E0_clIRKS12_EEDaS18_EUlmmE_EEvSI_SI_T0_T1_EUlRSX_S1G_E_EEEvSI_S1E_(ptr %0, i64 %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 4 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !415    ; 3 uses
   %i.b = icmp ult i64 %1, %i.a
   br i1 %i.b, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit, label %bb.b, !prof !41
 
@@ -3658,7 +3595,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !417  ; 3 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %1
   %i.f = load i32, ptr %i.e, align 4, !tbaa !39   ; 2 uses
   %.not.i = icmp eq i64 %1, 0
@@ -3673,7 +3610,7 @@ _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0E
   unreachable
 
 _ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit: ; preds = %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
-  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 5 uses
+  %.sroa.6.0 = phi i64 [ %.sroa.8.0, %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2 ], [ %1, %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit.preheader ] ; 3 uses
   %.sroa.8.0 = add i64 %.sroa.6.0, -1             ; 3 uses
   %i.h = icmp ult i64 %.sroa.8.0, %i.a
   br i1 %i.h, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit.i, label %bb.c, !prof !41
@@ -3714,30 +3651,21 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18In
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.m
   %i.w = load i64, ptr %i.v, align 8, !tbaa !45
   %i.x = icmp slt i64 %i.u, %i.w
-  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %5
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0 ; 2 uses
+  br i1 %i.x, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7
 
 _ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSX_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
   store i32 %i.k, ptr %4, align 4, !tbaa !39
   %i.y = add i64 %.sroa.6.0, -2
   %or.cond.not = icmp ult i64 %i.y, %i.a
-  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %.critedge.i5, !prof !455, !llvm.loop !650
+  br i1 %or.cond.not, label %_ZN7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEmmEv.exit, label %bb.f, !prof !455, !llvm.loop !650
 
-.critedge.i5:                                     ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
+bb.f:                                             ; preds = %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit2
   tail call void @_ZSt9terminatev() #30
   unreachable
 
-5:                                                ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSX_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
-  %6 = icmp ult i64 %.sroa.6.0, %i.a
-  br i1 %6, label %_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7, label %bb.f, !prof !41
-
-bb.f:                                             ; preds = %5
-  tail call void @_ZSt9terminatev() #30
-  unreachable
-
-_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %5
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.sroa.6.0
-  store i32 %i.f, ptr %7, align 4, !tbaa !39
+_ZNK7xgboost6common6detail12SpanIteratorINS0_4SpanIiLm18446744073709551615EEELb0EEdeEv.exit7: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIZN3enc8cpu_impl7ArgSortIN7xgboost6common18IndexTransformIterIZNS3_9SortNamesINS2_6PolicyIJNS5_14EncErrorPolicyEEEEEEvRKT_RKSt7variantIJNS2_15CatStrArrayViewENS6_4SpanIKhLm18446744073709551615EEENSH_IKaLm18446744073709551615EEENSH_IKtLm18446744073709551615EEENSH_IKsLm18446744073709551615EEENSH_IKjLm18446744073709551615EEENSH_IKiLm18446744073709551615EEENSH_IKmLm18446744073709551615EEENSH_IKlLm18446744073709551615EEEEENSH_IiLm18446744073709551615EEEEUlSC_E_EENS6_6detail12SpanIteratorIS11_Lb0EEEZZNS8_ISB_EEvSE_S10_S11_ENKUlOSC_E0_clIRKSX_EEDaS17_EUlmmE_EEvSC_SC_T0_T1_EUlRSS_S1F_E_EclIiS16_EEbRSC_S1D_.exit
+  store i32 %i.f, ptr %4, align 4, !tbaa !39
   ret void
 }
 
