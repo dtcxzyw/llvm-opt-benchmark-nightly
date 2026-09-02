@@ -202,8 +202,8 @@ bb.d:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  %i.n = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.o = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 4 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 5 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false)
   store double 1.000000e+00, ptr %i.o, align 16
   %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 64 ; 3 uses
@@ -530,15 +530,18 @@ bb.t:                                             ; preds = %.lr.ph219, %_ZNSt6v
   %i.fm = insertelement <2 x double> poison, double %i.fd, i64 0
   %i.fn = insertelement <2 x double> %i.fm, double %i.fe, i64 1
   %i.fo = fsub <2 x double> %i.fl, %i.fn          ; 2 uses
-  %7 = load <3 x double>, ptr %5, align 16        ; 3 uses
+  %7 = load <2 x double>, ptr %i.n, align 8
+  %8 = load <2 x double>, ptr %5, align 16
+  %9 = load double, ptr %i.o, align 16
   %i.fp = shufflevector <2 x double> %i.fj, <2 x double> %i.fi, <2 x i32> <i32 1, i32 3>
-  %8 = shufflevector <3 x double> %7, <3 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.fq = fmul <2 x double> %i.fp, %8
-  %i.fr = shufflevector <3 x double> %7, <3 x double> poison, <2 x i32> zeroinitializer
+  %10 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.fq = fmul <2 x double> %i.fp, %10
+  %i.fr = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
   %i.fs = shufflevector <2 x double> %i.fj, <2 x double> %i.fi, <2 x i32> <i32 0, i32 2>
   %i.ft = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fr, <2 x double> %i.fs, <2 x double> %i.fq)
-  %9 = shufflevector <3 x double> %7, <3 x double> poison, <2 x i32> <i32 2, i32 2>
-  %i.fu = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %i.fo, <2 x double> %i.ft) ; 2 uses
+  %11 = insertelement <2 x double> poison, double %9, i64 0
+  %12 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.fu = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %12, <2 x double> %i.fo, <2 x double> %i.ft) ; 2 uses
   %i.fv = extractelement <2 x double> %i.fu, i64 1 ; 3 uses
   %i.fw = fneg double %i.fv
   %i.fx = extractelement <2 x double> %i.fu, i64 0 ; 3 uses
@@ -941,8 +944,8 @@ bb.d:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  %i.q = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 5 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 6 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false)
   store double 1.000000e+00, ptr %i.r, align 16
   %i.s = getelementptr inbounds nuw i8, ptr %i.m, i64 64 ; 3 uses
@@ -1345,15 +1348,18 @@ _ZNSt6vectorI10aiVector3tIdESaIS1_EE9push_backERKS1_.exit: ; preds = %_ZNSt6vect
   %i.jg = insertelement <2 x double> poison, double %.sroa.8701.0.copyload, i64 0
   %i.jh = insertelement <2 x double> %i.jg, double %i.jc, i64 1
   %i.ji = fsub <2 x double> %i.jf, %i.jh          ; 2 uses
-  %19 = load <3 x double>, ptr %5, align 16       ; 3 uses
+  %19 = load <2 x double>, ptr %i.q, align 8
+  %20 = load <2 x double>, ptr %5, align 16
+  %21 = load double, ptr %i.r, align 16
   %i.jj = shufflevector <2 x double> %i.jd, <2 x double> %i.jb, <2 x i32> <i32 1, i32 3>
-  %20 = shufflevector <3 x double> %19, <3 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.jk = fmul <2 x double> %i.jj, %20
-  %i.jl = shufflevector <3 x double> %19, <3 x double> poison, <2 x i32> zeroinitializer
+  %22 = shufflevector <2 x double> %19, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.jk = fmul <2 x double> %i.jj, %22
+  %i.jl = shufflevector <2 x double> %20, <2 x double> poison, <2 x i32> zeroinitializer
   %i.jm = shufflevector <2 x double> %i.jd, <2 x double> %i.jb, <2 x i32> <i32 0, i32 2>
   %i.jn = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jl, <2 x double> %i.jm, <2 x double> %i.jk)
-  %21 = shufflevector <3 x double> %19, <3 x double> poison, <2 x i32> <i32 2, i32 2>
-  %i.jo = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %21, <2 x double> %i.ji, <2 x double> %i.jn) ; 2 uses
+  %23 = insertelement <2 x double> poison, double %21, i64 0
+  %24 = shufflevector <2 x double> %23, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.jo = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %24, <2 x double> %i.ji, <2 x double> %i.jn) ; 2 uses
   %i.jp = extractelement <2 x double> %i.jo, i64 1 ; 3 uses
   %i.jq = fneg double %i.jp
   %i.jr = extractelement <2 x double> %i.jo, i64 0 ; 3 uses
@@ -1754,29 +1760,33 @@ _ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE5clearEv.exit: ; preds = %_ZNSt6ve
   %i.pu = add nuw i64 %storemerge927, 1           ; 4 uses
   %i.pv = icmp eq i64 %i.pu, %i.op
   %i.pw = select i1 %i.pv, i64 0, i64 %i.pu
-  %i.px = getelementptr inbounds nuw [24 x i8], ptr %i.oq, i64 %i.pw ; 2 uses
+  %i.px = getelementptr inbounds nuw [24 x i8], ptr %i.oq, i64 %i.pw ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !199)
-  %22 = load <3 x double>, ptr %i.px, align 8, !noalias !199 ; 5 uses
-  %i.py = load double, ptr %i.px, align 8, !noalias !199
-  %i.pz = insertelement <2 x double> %i.pd, double %i.pb, i64 1
-  %23 = shufflevector <3 x double> %22, <3 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.qa = fmul <2 x double> %i.pz, %23
+  %25 = getelementptr inbounds nuw i8, ptr %i.px, i64 8
+  %26 = getelementptr inbounds nuw i8, ptr %i.px, i64 16
+  %27 = load double, ptr %25, align 8, !noalias !199 ; 2 uses
+  %28 = load double, ptr %i.px, align 8, !noalias !199 ; 2 uses
+  %i.py = load double, ptr %26, align 8, !noalias !199 ; 2 uses
+  %29 = insertelement <2 x double> %i.pd, double %i.pb, i64 1
+  %i.pz = insertelement <2 x double> poison, double %27, i64 0
+  %30 = shufflevector <2 x double> %i.pz, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.qa = fmul <2 x double> %29, %30
   %i.qb = shufflevector <12 x double> %i.ox, <12 x double> poison, <2 x i32> <i32 0, i32 4>
-  %i.qc = shufflevector <3 x double> %22, <3 x double> poison, <2 x i32> zeroinitializer
+  %31 = insertelement <2 x double> poison, double %28, i64 0
+  %i.qc = shufflevector <2 x double> %31, <2 x double> poison, <2 x i32> zeroinitializer
   %i.qd = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.qb, <2 x double> %i.qc, <2 x double> %i.qa)
   %i.qe = shufflevector <12 x double> %i.ox, <12 x double> poison, <2 x i32> <i32 2, i32 6>
-  %24 = shufflevector <3 x double> %22, <3 x double> poison, <2 x i32> <i32 2, i32 2>
-  %i.qf = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.qe, <2 x double> %24, <2 x double> %i.qd)
+  %32 = insertelement <2 x double> poison, double %i.py, i64 0
+  %33 = shufflevector <2 x double> %32, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.qf = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.qe, <2 x double> %33, <2 x double> %i.qd)
   %i.qg = insertelement <2 x double> %i.pc, double %i.pa, i64 1
   %i.qh = fadd <2 x double> %i.qg, %i.qf
   store <2 x double> %i.qh, ptr %16, align 16, !alias.scope !199
-  %25 = extractelement <3 x double> %22, i64 1
-  %i.qi = fmul double %i.oz, %25
+  %i.qi = fmul double %i.oz, %27
   %i.qj = extractelement <12 x double> %i.ox, i64 8
-  %i.qk = call double @llvm.fmuladd.f64(double %i.qj, double %i.py, double %i.qi)
-  %26 = extractelement <12 x double> %i.ox, i64 10
-  %i.ql = extractelement <3 x double> %22, i64 2
-  %i.qm = call double @llvm.fmuladd.f64(double %26, double %i.ql, double %i.qk)
+  %i.qk = call double @llvm.fmuladd.f64(double %i.qj, double %28, double %i.qi)
+  %i.ql = extractelement <12 x double> %i.ox, i64 10
+  %i.qm = call double @llvm.fmuladd.f64(double %i.ql, double %i.py, double %i.qk)
   %i.qn = fadd double %i.oy, %i.qm
   store double %i.qn, ptr %i.fs, align 16, !alias.scope !199
   %.not.i.i = icmp eq ptr %i.on, %i.oo

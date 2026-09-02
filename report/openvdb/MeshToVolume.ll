@@ -205,7 +205,7 @@ bb.a:
   %15 = alloca %"class.openvdb::v13_0::math::Vec3", align 16 ; 10 uses
   %16 = alloca %"struct.openvdb::v13_0::tree::LeafNode<float, 3>::ValueIter", align 8 ; 6 uses
   %17 = alloca %"class.openvdb::v13_0::math::Vec3", align 8 ; 5 uses
-  %18 = alloca %"class.openvdb::v13_0::math::Vec3", align 8 ; 5 uses
+  %18 = alloca %"class.openvdb::v13_0::math::Vec3", align 16 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #23
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !815  ; 2 uses
@@ -481,17 +481,19 @@ _ZNSt10unique_ptrIA_bSt14default_deleteIS0_EE5resetIPbvEEvT_.exit: ; preds = %_Z
   %i.bw = getelementptr inbounds nuw i8, ptr %16, i64 16
   %i.bx = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 4 uses
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.bz = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %i.ca = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %i.cb = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %i.cc = getelementptr inbounds nuw i8, ptr %13, i64 28
-  %i.cd = getelementptr inbounds nuw i8, ptr %13, i64 40
-  %i.ce = getelementptr inbounds nuw i8, ptr %13, i64 52
-  %i.cf = getelementptr inbounds nuw i8, ptr %13, i64 72 ; 2 uses
-  %i.cg = getelementptr inbounds nuw i8, ptr %13, i64 80 ; 3 uses
-  %i.ch = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.ci = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.cj = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %19 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %20 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.bz = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.ca = getelementptr inbounds nuw i8, ptr %13, i64 28
+  %i.cb = getelementptr inbounds nuw i8, ptr %13, i64 40
+  %i.cc = getelementptr inbounds nuw i8, ptr %13, i64 52
+  %i.cd = getelementptr inbounds nuw i8, ptr %13, i64 72 ; 2 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %13, i64 80 ; 3 uses
+  %i.cf = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.cg = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.ch = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.ci = getelementptr inbounds nuw i8, ptr %18, i64 8
+  %i.cj = getelementptr inbounds nuw i8, ptr %18, i64 16
   br label %bb.ag
 
 ._crit_edge379:                                   ; preds = %._crit_edge376, %_ZNSt10unique_ptrIA_bSt14default_deleteIS0_EE5resetIPbvEEvT_.exit
@@ -894,7 +896,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hk, i64 8
   %i.ho = load float, ptr %i.hn, align 4, !tbaa !572, !noalias !8526
   %i.hp = fpext float %i.ho to double
-  store double %i.hp, ptr %i.bz, align 16, !tbaa !595, !noalias !8526
+  store double %i.hp, ptr %19, align 16, !tbaa !595, !noalias !8526
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hh, i64 4
   %i.hr = load i32, ptr %i.hq, align 4, !tbaa !543, !noalias !8526
   %i.hs = zext i32 %i.hr to i64
@@ -905,7 +907,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.hw = getelementptr inbounds nuw i8, ptr %i.ht, i64 8
   %i.hx = load float, ptr %i.hw, align 4, !tbaa !572, !noalias !8526
   %i.hy = fpext float %i.hx to double
-  store double %i.hy, ptr %i.ca, align 16, !tbaa !595, !noalias !8526
+  store double %i.hy, ptr %20, align 16, !tbaa !595, !noalias !8526
   %i.hz = getelementptr inbounds nuw i8, ptr %i.hh, i64 8
   %i.ia = load i32, ptr %i.hz, align 4, !tbaa !543, !noalias !8526
   %i.ib = zext i32 %i.ia to i64
@@ -916,7 +918,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.if = getelementptr inbounds nuw i8, ptr %i.ic, i64 8
   %i.ig = load float, ptr %i.if, align 4, !tbaa !572, !noalias !8526
   %i.ih = fpext float %i.ig to double
-  store double %i.ih, ptr %i.cb, align 16, !tbaa !595, !noalias !8526
+  store double %i.ih, ptr %i.bz, align 16, !tbaa !595, !noalias !8526
   invoke void @_ZN7openvdb5v13_04math29closestPointOnTriangleToPointERKNS1_4Vec3IdEES5_S5_S5_RS3_(ptr dead_on_unwind nonnull writable sret(%"class.openvdb::v13_0::math::Vec3") align 8 %17, ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dereferenceable(24) %8, ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef nonnull align 8 dereferenceable(24) %9)
           to label %bb.be unwind label %bb.bg
 
@@ -1098,7 +1100,7 @@ bb.bk:                                            ; preds = %bb.bj
 
 bb.bl:                                            ; preds = %bb.bk
   %i.lt = and i32 %i.ll, -8
-  %i.lu = load i32, ptr %i.cc, align 4, !tbaa !543
+  %i.lu = load i32, ptr %i.ca, align 4, !tbaa !543
   %i.lv = icmp eq i32 %i.lt, %i.lu
   br i1 %i.lv, label %_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8isHashedIS7_EEbRKNS0_4math5CoordE.exit.i.i, label %_ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm0EEEEPKiSK_.exit.thread.i
 
@@ -1130,7 +1132,7 @@ _ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12Inter
 
 bb.bm:                                            ; preds = %_ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm0EEEEPKiSK_.exit.thread.i
   %i.mm = and i32 %i.ll, -128
-  %i.mn = load i32, ptr %i.cd, align 8, !tbaa !543
+  %i.mn = load i32, ptr %i.cb, align 8, !tbaa !543
   %i.mo = icmp eq i32 %i.mm, %i.mn
   br i1 %i.mo, label %_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8isHashedIS8_EEbRKNS0_4math5CoordE.exit.i.i, label %_ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm1EEEEPKiSK_.exit.thread.i
 
@@ -1141,7 +1143,7 @@ _ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12Intern
   br i1 %i.mr, label %_ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm1EEEEPKiSK_.exit.i, label %_ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm1EEEEPKiSK_.exit.thread.i
 
 _ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm1EEEEPKiSK_.exit.i: ; preds = %_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8isHashedIS8_EEbRKNS0_4math5CoordE.exit.i.i
-  %i.ms = load ptr, ptr %i.cg, align 8, !tbaa !1879
+  %i.ms = load ptr, ptr %i.ce, align 8, !tbaa !1879
   br label %.invoke
 
 _ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm1EEEEPKiSK_.exit.thread.i: ; preds = %_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8isHashedIS8_EEbRKNS0_4math5CoordE.exit.i.i, %bb.bm, %_ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm0EEEEPKiSK_.exit.thread.i
@@ -1152,7 +1154,7 @@ _ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12Inter
 
 bb.bn:                                            ; preds = %_ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm1EEEEPKiSK_.exit.thread.i
   %i.mw = and i32 %i.ll, -4096
-  %i.mx = load i32, ptr %i.ce, align 4, !tbaa !543
+  %i.mx = load i32, ptr %i.cc, align 4, !tbaa !543
   %i.my = icmp eq i32 %i.mw, %i.mx
   br i1 %i.my, label %_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8isHashedIS9_EEbRKNS0_4math5CoordE.exit.i.i, label %_ZN7openvdb5v13_017typelist_internal16TSEvalFirstIndexIZNKS0_4tree17ValueAccessorImplIKNS3_4TreeINS3_8RootNodeINS3_12InternalNodeINS7_INS3_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEEUlT_E_PKiLm3ELm4EEET0_SM_SQ_.exit.i
 
@@ -1163,7 +1165,7 @@ _ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12Intern
   br i1 %i.nb, label %bb.bo, label %_ZN7openvdb5v13_017typelist_internal16TSEvalFirstIndexIZNKS0_4tree17ValueAccessorImplIKNS3_4TreeINS3_8RootNodeINS3_12InternalNodeINS7_INS3_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEEUlT_E_PKiLm3ELm4EEET0_SM_SQ_.exit.i
 
 bb.bo:                                            ; preds = %_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8isHashedIS9_EEbRKNS0_4math5CoordE.exit.i.i
-  %i.nc = load ptr, ptr %i.cf, align 8, !tbaa !1857 ; 2 uses
+  %i.nc = load ptr, ptr %i.cd, align 8, !tbaa !1857 ; 2 uses
   %i.nd = shl i32 %i.lm, 3
   %i.ne = and i32 %i.nd, 31744
   %i.nf = lshr i32 %i.ll, 2
@@ -1196,7 +1198,7 @@ bb.bp:                                            ; preds = %bb.bo
   %.sroa.0.0.insert.insert.i.i.i.i = or disjoint i64 %.sroa.2.0.insert.shift.i.i.i.i, %.sroa.0.0.insert.ext.i.i.i.i
   store i64 %.sroa.0.0.insert.insert.i.i.i.i, ptr %.06.i.i.i.i.ptr.1.i.i.i148, align 4
   store i32 %i.ny, ptr %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i149, align 4, !tbaa !570
-  store ptr %i.nw, ptr %i.cg, align 8, !tbaa !1879
+  store ptr %i.nw, ptr %i.ce, align 8, !tbaa !1879
   %i.nz = load ptr, ptr %i.nv, align 8, !tbaa !570
   br label %.invoke
 
@@ -1311,7 +1313,7 @@ bb.by:                                            ; preds = %_ZNK7openvdb5v13_04
   %.sroa.0.0.insert.insert.i.i225 = or disjoint i64 %.sroa.2.0.insert.shift.i.i223, %.sroa.0.0.insert.ext.i.i224
   store i64 %.sroa.0.0.insert.insert.i.i225, ptr %.06.i.i.i.i.ptr.2.i.i.i150, align 8
   store i32 %i.ps, ptr %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i151, align 8, !tbaa !570
-  store ptr %i.pq, ptr %i.cf, align 8, !tbaa !1857
+  store ptr %i.pq, ptr %i.cd, align 8, !tbaa !1857
   %i.pt = load ptr, ptr %i.pp, align 8, !tbaa !1821 ; 2 uses
   %i.pu = shl i32 %i.lm, 3
   %i.pv = and i32 %i.pu, 31744
@@ -1345,7 +1347,7 @@ bb.bz:                                            ; preds = %bb.by
   %.sroa.0.0.insert.insert.i.i.i = or disjoint i64 %.sroa.2.0.insert.shift.i.i.i, %.sroa.0.0.insert.ext.i.i.i
   store i64 %.sroa.0.0.insert.insert.i.i.i, ptr %.06.i.i.i.i.ptr.1.i.i.i148, align 4
   store i32 %i.qp, ptr %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i149, align 4, !tbaa !570
-  store ptr %i.qn, ptr %i.cg, align 8, !tbaa !1879
+  store ptr %i.qn, ptr %i.ce, align 8, !tbaa !1879
   %i.qq = load ptr, ptr %i.qm, align 8, !tbaa !570
   br label %.invoke
 
@@ -1380,7 +1382,7 @@ _ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12Intern
   %i.rg = getelementptr inbounds nuw i8, ptr %i.rd, i64 8
   %i.rh = load float, ptr %i.rg, align 4, !tbaa !572, !noalias !8529
   %i.ri = fpext float %i.rh to double
-  store double %i.ri, ptr %i.ch, align 16, !tbaa !595, !noalias !8529
+  store double %i.ri, ptr %i.cf, align 16, !tbaa !595, !noalias !8529
   %i.rj = getelementptr inbounds nuw i8, ptr %i.ra, i64 4
   %i.rk = load i32, ptr %i.rj, align 4, !tbaa !543, !noalias !8529
   %i.rl = zext i32 %i.rk to i64
@@ -1391,7 +1393,7 @@ _ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12Intern
   %i.rp = getelementptr inbounds nuw i8, ptr %i.rm, i64 8
   %i.rq = load float, ptr %i.rp, align 4, !tbaa !572, !noalias !8529
   %i.rr = fpext float %i.rq to double
-  store double %i.rr, ptr %i.ci, align 16, !tbaa !595, !noalias !8529
+  store double %i.rr, ptr %i.cg, align 16, !tbaa !595, !noalias !8529
   %i.rs = getelementptr inbounds nuw i8, ptr %i.ra, i64 8
   %i.rt = load i32, ptr %i.rs, align 4, !tbaa !543, !noalias !8529
   %i.ru = zext i32 %i.rt to i64
@@ -1402,7 +1404,7 @@ _ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12Intern
   %i.ry = getelementptr inbounds nuw i8, ptr %i.rv, i64 8
   %i.rz = load float, ptr %i.ry, align 4, !tbaa !572, !noalias !8529
   %i.sa = fpext float %i.rz to double
-  store double %i.sa, ptr %i.cj, align 16, !tbaa !595, !noalias !8529
+  store double %i.sa, ptr %i.ch, align 16, !tbaa !595, !noalias !8529
   invoke void @_ZN7openvdb5v13_04math29closestPointOnTriangleToPointERKNS1_4Vec3IdEES5_S5_S5_RS3_(ptr dead_on_unwind nonnull writable sret(%"class.openvdb::v13_0::math::Vec3") align 8 %18, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef nonnull align 8 dereferenceable(24) %5)
           to label %_ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit213 unwind label %bb.cc
 
@@ -1411,20 +1413,23 @@ _ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit213: ; preds = %_ZNK7openvdb5v13_
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23, !noalias !8529
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23, !noalias !8529
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #23, !noalias !8529
-  %19 = load <3 x double>, ptr %18, align 8       ; 3 uses
+  %21 = load <2 x double>, ptr %i.ci, align 8
+  %22 = load <2 x double>, ptr %18, align 16
+  %.sroa.8.0.copyload = load double, ptr %i.cj, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #23
   %i.sb = load <2 x double>, ptr %15, align 16    ; 2 uses
   %.sroa.9.0.copyload232 = load double, ptr %i.bx, align 16
   %i.sc = shufflevector <2 x double> %i.sb, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
   %i.sd = insertelement <2 x double> %i.sc, double %i.fr, i64 0
-  %i.se = shufflevector <3 x double> %19, <3 x double> poison, <2 x i32> zeroinitializer
+  %i.se = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> zeroinitializer
   %i.sf = fsub <2 x double> %i.sd, %i.se          ; 4 uses
   %i.sg = shufflevector <2 x double> %i.fs, <2 x double> %i.sb, <2 x i32> <i32 0, i32 3>
-  %20 = shufflevector <3 x double> %19, <3 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.sh = fsub <2 x double> %i.sg, %20            ; 4 uses
-  %i.si = insertelement <2 x double> %i.gd, double %.sroa.9.0.copyload232, i64 1
-  %21 = shufflevector <3 x double> %19, <3 x double> poison, <2 x i32> <i32 2, i32 2>
-  %i.sj = fsub <2 x double> %i.si, %21            ; 4 uses
+  %23 = shufflevector <2 x double> %21, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.sh = fsub <2 x double> %i.sg, %23            ; 4 uses
+  %24 = insertelement <2 x double> %i.gd, double %.sroa.9.0.copyload232, i64 1
+  %i.si = insertelement <2 x double> poison, double %.sroa.8.0.copyload, i64 0
+  %25 = shufflevector <2 x double> %i.si, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.sj = fsub <2 x double> %24, %25              ; 4 uses
   %i.sk = fmul <2 x double> %i.sh, %i.sh
   %i.sl = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.sf, <2 x double> %i.sf, <2 x double> %i.sk)
   %i.sm = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.sj, <2 x double> %i.sj, <2 x double> %i.sl)
@@ -1827,7 +1832,7 @@ bb.a:
   %15 = alloca %"class.openvdb::v13_0::math::Vec3", align 16 ; 10 uses
   %16 = alloca %"struct.openvdb::v13_0::tree::LeafNode<double, 3>::ValueIter", align 8 ; 6 uses
   %17 = alloca %"class.openvdb::v13_0::math::Vec3", align 8 ; 5 uses
-  %18 = alloca %"class.openvdb::v13_0::math::Vec3", align 8 ; 5 uses
+  %18 = alloca %"class.openvdb::v13_0::math::Vec3", align 16 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #23
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !971  ; 2 uses
@@ -2103,17 +2108,19 @@ _ZNSt10unique_ptrIA_bSt14default_deleteIS0_EE5resetIPbvEEvT_.exit: ; preds = %_Z
   %i.bw = getelementptr inbounds nuw i8, ptr %16, i64 16
   %i.bx = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 4 uses
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.bz = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %i.ca = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %i.cb = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %i.cc = getelementptr inbounds nuw i8, ptr %13, i64 28
-  %i.cd = getelementptr inbounds nuw i8, ptr %13, i64 40
-  %i.ce = getelementptr inbounds nuw i8, ptr %13, i64 52
-  %i.cf = getelementptr inbounds nuw i8, ptr %13, i64 72 ; 2 uses
-  %i.cg = getelementptr inbounds nuw i8, ptr %13, i64 80 ; 3 uses
-  %i.ch = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.ci = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.cj = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %19 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %20 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.bz = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.ca = getelementptr inbounds nuw i8, ptr %13, i64 28
+  %i.cb = getelementptr inbounds nuw i8, ptr %13, i64 40
+  %i.cc = getelementptr inbounds nuw i8, ptr %13, i64 52
+  %i.cd = getelementptr inbounds nuw i8, ptr %13, i64 72 ; 2 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %13, i64 80 ; 3 uses
+  %i.cf = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.cg = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.ch = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.ci = getelementptr inbounds nuw i8, ptr %18, i64 8
+  %i.cj = getelementptr inbounds nuw i8, ptr %18, i64 16
   br label %bb.ag
 
 ._crit_edge377:                                   ; preds = %._crit_edge374, %_ZNSt10unique_ptrIA_bSt14default_deleteIS0_EE5resetIPbvEEvT_.exit
@@ -2516,7 +2523,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hk, i64 8
   %i.ho = load float, ptr %i.hn, align 4, !tbaa !572, !noalias !11196
   %i.hp = fpext float %i.ho to double
-  store double %i.hp, ptr %i.bz, align 16, !tbaa !595, !noalias !11196
+  store double %i.hp, ptr %19, align 16, !tbaa !595, !noalias !11196
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hh, i64 4
   %i.hr = load i32, ptr %i.hq, align 4, !tbaa !543, !noalias !11196
   %i.hs = zext i32 %i.hr to i64
@@ -2527,7 +2534,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.hw = getelementptr inbounds nuw i8, ptr %i.ht, i64 8
   %i.hx = load float, ptr %i.hw, align 4, !tbaa !572, !noalias !11196
   %i.hy = fpext float %i.hx to double
-  store double %i.hy, ptr %i.ca, align 16, !tbaa !595, !noalias !11196
+  store double %i.hy, ptr %20, align 16, !tbaa !595, !noalias !11196
   %i.hz = getelementptr inbounds nuw i8, ptr %i.hh, i64 8
   %i.ia = load i32, ptr %i.hz, align 4, !tbaa !543, !noalias !11196
   %i.ib = zext i32 %i.ia to i64
@@ -2538,7 +2545,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.if = getelementptr inbounds nuw i8, ptr %i.ic, i64 8
   %i.ig = load float, ptr %i.if, align 4, !tbaa !572, !noalias !11196
   %i.ih = fpext float %i.ig to double
-  store double %i.ih, ptr %i.cb, align 16, !tbaa !595, !noalias !11196
+  store double %i.ih, ptr %i.bz, align 16, !tbaa !595, !noalias !11196
   invoke void @_ZN7openvdb5v13_04math29closestPointOnTriangleToPointERKNS1_4Vec3IdEES5_S5_S5_RS3_(ptr dead_on_unwind nonnull writable sret(%"class.openvdb::v13_0::math::Vec3") align 8 %17, ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dereferenceable(24) %8, ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef nonnull align 8 dereferenceable(24) %9)
           to label %bb.be unwind label %bb.bg
 
@@ -2720,7 +2727,7 @@ bb.bk:                                            ; preds = %bb.bj
 
 bb.bl:                                            ; preds = %bb.bk
   %i.lt = and i32 %i.ll, -8
-  %i.lu = load i32, ptr %i.cc, align 4, !tbaa !543
+  %i.lu = load i32, ptr %i.ca, align 4, !tbaa !543
   %i.lv = icmp eq i32 %i.lt, %i.lu
   br i1 %i.lv, label %_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8isHashedIS7_EEbRKNS0_4math5CoordE.exit.i.i, label %_ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm0EEEEPKiSK_.exit.thread.i
 
@@ -2752,7 +2759,7 @@ _ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12Inter
 
 bb.bm:                                            ; preds = %_ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm0EEEEPKiSK_.exit.thread.i
   %i.mm = and i32 %i.ll, -128
-  %i.mn = load i32, ptr %i.cd, align 8, !tbaa !543
+  %i.mn = load i32, ptr %i.cb, align 8, !tbaa !543
   %i.mo = icmp eq i32 %i.mm, %i.mn
   br i1 %i.mo, label %_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8isHashedIS8_EEbRKNS0_4math5CoordE.exit.i.i, label %_ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm1EEEEPKiSK_.exit.thread.i
 
@@ -2763,7 +2770,7 @@ _ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12Intern
   br i1 %i.mr, label %_ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm1EEEEPKiSK_.exit.i, label %_ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm1EEEEPKiSK_.exit.thread.i
 
 _ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm1EEEEPKiSK_.exit.i: ; preds = %_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8isHashedIS8_EEbRKNS0_4math5CoordE.exit.i.i
-  %i.ms = load ptr, ptr %i.cg, align 8, !tbaa !1879
+  %i.ms = load ptr, ptr %i.ce, align 8, !tbaa !1879
   br label %.invoke
 
 _ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm1EEEEPKiSK_.exit.thread.i: ; preds = %_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8isHashedIS8_EEbRKNS0_4math5CoordE.exit.i.i, %bb.bm, %_ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm0EEEEPKiSK_.exit.thread.i
@@ -2774,7 +2781,7 @@ _ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12Inter
 
 bb.bn:                                            ; preds = %_ZZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEENKUlT_E_clISt17integral_constantImLm1EEEEPKiSK_.exit.thread.i
   %i.mw = and i32 %i.ll, -4096
-  %i.mx = load i32, ptr %i.ce, align 4, !tbaa !543
+  %i.mx = load i32, ptr %i.cc, align 4, !tbaa !543
   %i.my = icmp eq i32 %i.mw, %i.mx
   br i1 %i.my, label %_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8isHashedIS9_EEbRKNS0_4math5CoordE.exit.i.i, label %_ZN7openvdb5v13_017typelist_internal16TSEvalFirstIndexIZNKS0_4tree17ValueAccessorImplIKNS3_4TreeINS3_8RootNodeINS3_12InternalNodeINS7_INS3_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEEUlT_E_PKiLm3ELm4EEET0_SM_SQ_.exit.i
 
@@ -2785,7 +2792,7 @@ _ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12Intern
   br i1 %i.nb, label %bb.bo, label %_ZN7openvdb5v13_017typelist_internal16TSEvalFirstIndexIZNKS0_4tree17ValueAccessorImplIKNS3_4TreeINS3_8RootNodeINS3_12InternalNodeINS7_INS3_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8getValueERKNS0_4math5CoordEEUlT_E_PKiLm3ELm4EEET0_SM_SQ_.exit.i
 
 bb.bo:                                            ; preds = %_ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEEEELb1EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEE8isHashedIS9_EEbRKNS0_4math5CoordE.exit.i.i
-  %i.nc = load ptr, ptr %i.cf, align 8, !tbaa !1857 ; 2 uses
+  %i.nc = load ptr, ptr %i.cd, align 8, !tbaa !1857 ; 2 uses
   %i.nd = shl i32 %i.lm, 3
   %i.ne = and i32 %i.nd, 31744
   %i.nf = lshr i32 %i.ll, 2
@@ -2818,7 +2825,7 @@ bb.bp:                                            ; preds = %bb.bo
   %.sroa.0.0.insert.insert.i.i.i.i = or disjoint i64 %.sroa.2.0.insert.shift.i.i.i.i, %.sroa.0.0.insert.ext.i.i.i.i
   store i64 %.sroa.0.0.insert.insert.i.i.i.i, ptr %.06.i.i.i.i.ptr.1.i.i.i146, align 4
   store i32 %i.ny, ptr %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i147, align 4, !tbaa !570
-  store ptr %i.nw, ptr %i.cg, align 8, !tbaa !1879
+  store ptr %i.nw, ptr %i.ce, align 8, !tbaa !1879
   %i.nz = load ptr, ptr %i.nv, align 8, !tbaa !570
   br label %.invoke
 
@@ -2933,7 +2940,7 @@ bb.by:                                            ; preds = %_ZNK7openvdb5v13_04
   %.sroa.0.0.insert.insert.i.i223 = or disjoint i64 %.sroa.2.0.insert.shift.i.i221, %.sroa.0.0.insert.ext.i.i222
   store i64 %.sroa.0.0.insert.insert.i.i223, ptr %.06.i.i.i.i.ptr.2.i.i.i148, align 8
   store i32 %i.ps, ptr %.sroa.6.0..06.i.i.i.i.ptr.2.i.sroa_idx.i.i149, align 8, !tbaa !570
-  store ptr %i.pq, ptr %i.cf, align 8, !tbaa !1857
+  store ptr %i.pq, ptr %i.cd, align 8, !tbaa !1857
   %i.pt = load ptr, ptr %i.pp, align 8, !tbaa !1821 ; 2 uses
   %i.pu = shl i32 %i.lm, 3
   %i.pv = and i32 %i.pu, 31744
@@ -2967,7 +2974,7 @@ bb.bz:                                            ; preds = %bb.by
   %.sroa.0.0.insert.insert.i.i.i = or disjoint i64 %.sroa.2.0.insert.shift.i.i.i, %.sroa.0.0.insert.ext.i.i.i
   store i64 %.sroa.0.0.insert.insert.i.i.i, ptr %.06.i.i.i.i.ptr.1.i.i.i146, align 4
   store i32 %i.qp, ptr %.sroa.6.0..06.i.i.i.i.ptr.1.i.sroa_idx.i.i147, align 4, !tbaa !570
-  store ptr %i.qn, ptr %i.cg, align 8, !tbaa !1879
+  store ptr %i.qn, ptr %i.ce, align 8, !tbaa !1879
   %i.qq = load ptr, ptr %i.qm, align 8, !tbaa !570
   br label %.invoke
 
@@ -3002,7 +3009,7 @@ _ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12Intern
   %i.rg = getelementptr inbounds nuw i8, ptr %i.rd, i64 8
   %i.rh = load float, ptr %i.rg, align 4, !tbaa !572, !noalias !11199
   %i.ri = fpext float %i.rh to double
-  store double %i.ri, ptr %i.ch, align 16, !tbaa !595, !noalias !11199
+  store double %i.ri, ptr %i.cf, align 16, !tbaa !595, !noalias !11199
   %i.rj = getelementptr inbounds nuw i8, ptr %i.ra, i64 4
   %i.rk = load i32, ptr %i.rj, align 4, !tbaa !543, !noalias !11199
   %i.rl = zext i32 %i.rk to i64
@@ -3013,7 +3020,7 @@ _ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12Intern
   %i.rp = getelementptr inbounds nuw i8, ptr %i.rm, i64 8
   %i.rq = load float, ptr %i.rp, align 4, !tbaa !572, !noalias !11199
   %i.rr = fpext float %i.rq to double
-  store double %i.rr, ptr %i.ci, align 16, !tbaa !595, !noalias !11199
+  store double %i.rr, ptr %i.cg, align 16, !tbaa !595, !noalias !11199
   %i.rs = getelementptr inbounds nuw i8, ptr %i.ra, i64 8
   %i.rt = load i32, ptr %i.rs, align 4, !tbaa !543, !noalias !11199
   %i.ru = zext i32 %i.rt to i64
@@ -3024,7 +3031,7 @@ _ZNK7openvdb5v13_04tree17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeINS1_12Intern
   %i.ry = getelementptr inbounds nuw i8, ptr %i.rv, i64 8
   %i.rz = load float, ptr %i.ry, align 4, !tbaa !572, !noalias !11199
   %i.sa = fpext float %i.rz to double
-  store double %i.sa, ptr %i.cj, align 16, !tbaa !595, !noalias !11199
+  store double %i.sa, ptr %i.ch, align 16, !tbaa !595, !noalias !11199
   invoke void @_ZN7openvdb5v13_04math29closestPointOnTriangleToPointERKNS1_4Vec3IdEES5_S5_S5_RS3_(ptr dead_on_unwind nonnull writable sret(%"class.openvdb::v13_0::math::Vec3") align 8 %18, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef nonnull align 8 dereferenceable(24) %5)
           to label %_ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit211 unwind label %bb.cc
 
@@ -3033,20 +3040,23 @@ _ZN7openvdb5v13_04math4Vec3IdE9normalizeEd.exit211: ; preds = %_ZNK7openvdb5v13_
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23, !noalias !11199
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23, !noalias !11199
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #23, !noalias !11199
-  %19 = load <3 x double>, ptr %18, align 8       ; 3 uses
+  %21 = load <2 x double>, ptr %i.ci, align 8
+  %22 = load <2 x double>, ptr %18, align 16
+  %.sroa.8.0.copyload = load double, ptr %i.cj, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #23
   %i.sb = load <2 x double>, ptr %15, align 16    ; 2 uses
   %.sroa.9.0.copyload230 = load double, ptr %i.bx, align 16
   %i.sc = shufflevector <2 x double> %i.sb, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
   %i.sd = insertelement <2 x double> %i.sc, double %i.fr, i64 0
-  %i.se = shufflevector <3 x double> %19, <3 x double> poison, <2 x i32> zeroinitializer
+  %i.se = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> zeroinitializer
   %i.sf = fsub <2 x double> %i.sd, %i.se          ; 4 uses
   %i.sg = shufflevector <2 x double> %i.fs, <2 x double> %i.sb, <2 x i32> <i32 0, i32 3>
-  %20 = shufflevector <3 x double> %19, <3 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.sh = fsub <2 x double> %i.sg, %20            ; 4 uses
-  %i.si = insertelement <2 x double> %i.gd, double %.sroa.9.0.copyload230, i64 1
-  %21 = shufflevector <3 x double> %19, <3 x double> poison, <2 x i32> <i32 2, i32 2>
-  %i.sj = fsub <2 x double> %i.si, %21            ; 4 uses
+  %23 = shufflevector <2 x double> %21, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.sh = fsub <2 x double> %i.sg, %23            ; 4 uses
+  %24 = insertelement <2 x double> %i.gd, double %.sroa.9.0.copyload230, i64 1
+  %i.si = insertelement <2 x double> poison, double %.sroa.8.0.copyload, i64 0
+  %25 = shufflevector <2 x double> %i.si, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.sj = fsub <2 x double> %24, %25              ; 4 uses
   %i.sk = fmul <2 x double> %i.sh, %i.sh
   %i.sl = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.sf, <2 x double> %i.sf, <2 x double> %i.sk)
   %i.sm = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.sj, <2 x double> %i.sj, <2 x double> %i.sl)

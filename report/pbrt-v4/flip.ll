@@ -154,21 +154,24 @@ _ZN11flip_detailL11Linear2sRGBEf.exit4:           ; preds = %bb.f, %bb.g
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define dso_local noundef nonnull align 4 dereferenceable(12) ptr @_ZN11flip_detail6color313LinearRGB2XYZEv(ptr nofree noundef nonnull returned align 4 captures(ret: address, provenance) dereferenceable(12) %0) local_unnamed_addr #1 align 2 {
 bb.a:
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %1 = load <3 x float>, ptr %0, align 4, !tbaa !15 ; 5 uses
-  %.sroa.0.0.copyload = load float, ptr %0, align 4, !tbaa !15
-  %2 = shufflevector <3 x float> %1, <3 x float> poison, <2 x i32> <i32 1, i32 1>
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %.sroa.6.0.copyload = load float, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !15 ; 2 uses
+  %.sroa.0.0.copyload = load float, ptr %0, align 4, !tbaa !15 ; 2 uses
+  %.sroa.9.0.copyload = load float, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !15 ; 2 uses
+  %1 = insertelement <2 x float> poison, float %.sroa.6.0.copyload, i64 0
+  %2 = shufflevector <2 x float> %1, <2 x float> poison, <2 x i32> zeroinitializer
   %i.a = fmul <2 x float> %2, <float f0x3EB7163B, float f0x3F37163B>
-  %i.b = shufflevector <3 x float> %1, <3 x float> poison, <2 x i32> zeroinitializer
+  %3 = insertelement <2 x float> poison, float %.sroa.0.0.copyload, i64 0
+  %i.b = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
   %i.c = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.b, <2 x float> <float f0x3ED32455, float f0x3E59BD78>, <2 x float> %i.a)
-  %3 = shufflevector <3 x float> %1, <3 x float> poison, <2 x i32> <i32 2, i32 2>
-  %4 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %3, <2 x float> <float f0x3E38C803, float 7.218020e-02>, <2 x float> %i.c)
-  store <2 x float> %4, ptr %0, align 4, !tbaa !15
-  %5 = extractelement <3 x float> %1, i64 1
-  %i.d = fmul float %5, f0x3DF41DA4
+  %4 = insertelement <2 x float> poison, float %.sroa.9.0.copyload, i64 0
+  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
+  %6 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %5, <2 x float> <float f0x3E38C803, float 7.218020e-02>, <2 x float> %i.c)
+  store <2 x float> %6, ptr %0, align 4, !tbaa !15
+  %i.d = fmul float %.sroa.6.0.copyload, f0x3DF41DA4
   %i.e = tail call float @llvm.fmuladd.f32(float %.sroa.0.0.copyload, float f0x3C9E5B3F, float %i.d)
-  %6 = extractelement <3 x float> %1, i64 2
-  %i.f = tail call float @llvm.fmuladd.f32(float %6, float f0x3F734B9E, float %i.e)
+  %i.f = tail call float @llvm.fmuladd.f32(float %.sroa.9.0.copyload, float f0x3F734B9E, float %i.e)
   store float %i.f, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !14
   ret ptr %0
 }
@@ -188,21 +191,24 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define dso_local noundef nonnull align 4 dereferenceable(12) ptr @_ZN11flip_detail6color313XYZ2LinearRGBEv(ptr nofree noundef nonnull returned align 4 captures(ret: address, provenance) dereferenceable(12) %0) local_unnamed_addr #1 align 2 {
 bb.a:
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %1 = load <3 x float>, ptr %0, align 4, !tbaa !15 ; 5 uses
-  %.sroa.0.0.copyload = load float, ptr %0, align 4, !tbaa !15
-  %2 = shufflevector <3 x float> %1, <3 x float> poison, <2 x i32> <i32 1, i32 1>
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %.sroa.6.0.copyload = load float, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !15 ; 2 uses
+  %.sroa.0.0.copyload = load float, ptr %0, align 4, !tbaa !15 ; 2 uses
+  %.sroa.9.0.copyload = load float, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !15 ; 2 uses
+  %1 = insertelement <2 x float> poison, float %.sroa.6.0.copyload, i64 0
+  %2 = shufflevector <2 x float> %1, <2 x float> poison, <2 x i32> zeroinitializer
   %i.a = fmul <2 x float> %2, <float f0xBFC4C97D, float 1.875930e+00>
-  %i.b = shufflevector <3 x float> %1, <3 x float> poison, <2 x i32> zeroinitializer
+  %3 = insertelement <2 x float> poison, float %.sroa.0.0.copyload, i64 0
+  %i.b = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
   %i.c = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.b, <2 x float> <float f0x404F6C99, float f0xBF781F15>, <2 x float> %i.a)
-  %3 = shufflevector <3 x float> %1, <3 x float> poison, <2 x i32> <i32 2, i32 2>
-  %4 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %3, <2 x float> <float f0xBEFF4A95, float f0x3D2A34C4>, <2 x float> %i.c)
-  store <2 x float> %4, ptr %0, align 4, !tbaa !15
-  %5 = extractelement <3 x float> %1, i64 1
-  %i.d = fmul float %5, f0xBE50E850
+  %4 = insertelement <2 x float> poison, float %.sroa.9.0.copyload, i64 0
+  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
+  %6 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %5, <2 x float> <float f0xBEFF4A95, float f0x3D2A34C4>, <2 x float> %i.c)
+  store <2 x float> %6, ptr %0, align 4, !tbaa !15
+  %i.d = fmul float %.sroa.6.0.copyload, f0xBE50E850
   %i.e = tail call float @llvm.fmuladd.f32(float %.sroa.0.0.copyload, float f0x3D63E629, float %i.d)
-  %6 = extractelement <3 x float> %1, i64 2
-  %i.f = tail call float @llvm.fmuladd.f32(float %6, float f0x3F8750A8, float %i.e)
+  %i.f = tail call float @llvm.fmuladd.f32(float %.sroa.9.0.copyload, float f0x3F8750A8, float %i.e)
   store float %i.f, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !14
   ret ptr %0
 }
@@ -605,20 +611,21 @@ _ZN11flip_detail5imageC2ERKS0_.exit:              ; preds = %.lr.ph.i.i.i.i.i.i,
   %i.al = fadd float %i.aj, %i.ae
   %i.am = shufflevector <2 x float> %i.ai, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.an = fsub <2 x float> %i.ai, %i.am
-  %3 = insertelement <2 x float> %i.an, float %i.al, i64 1
-  %4 = fmul <2 x float> %3, <float f0x3F8B6116, float f0x3F734F49> ; 4 uses
+  %3 = extractelement <2 x float> %i.an, i64 0
+  %4 = fmul float %i.al, f0x3F734F49              ; 2 uses
+  %5 = fmul float %3, f0x3F8B6116                 ; 2 uses
   %i.ao = shufflevector <2 x float> %i.ai, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ap = fmul <2 x float> %i.ao, <float 1.875930e+00, float f0xBFC4C97D>
-  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %i.aq = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %5, <2 x float> <float f0xBF781F15, float f0x404F6C99>, <2 x float> %i.ap)
-  %i.ar = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
+  %6 = insertelement <2 x float> poison, float %4, i64 0
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.aq = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %7, <2 x float> <float f0xBF781F15, float f0x404F6C99>, <2 x float> %i.ap)
+  %8 = insertelement <2 x float> poison, float %5, i64 0
+  %i.ar = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
   %i.as = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ar, <2 x float> <float f0x3D2A34C4, float f0xBEFF4A95>, <2 x float> %i.aq) ; 3 uses
   %i.at = extractelement <2 x float> %i.as, i64 0
   store float %i.at, ptr %.sroa.4.0..sroa_idx.i, align 4, !tbaa !13
-  %6 = extractelement <2 x float> %4, i64 1
-  %i.au = tail call float @llvm.fmuladd.f32(float %6, float f0x3D63E629, float %i.ak)
-  %7 = extractelement <2 x float> %4, i64 0
-  %i.av = tail call float @llvm.fmuladd.f32(float %7, float f0x3F8750A8, float %i.au) ; 2 uses
+  %i.au = tail call float @llvm.fmuladd.f32(float %4, float f0x3D63E629, float %i.ak)
+  %i.av = tail call float @llvm.fmuladd.f32(float %5, float f0x3F8750A8, float %i.au) ; 2 uses
   %i.aw = fcmp ogt <2 x float> %i.as, splat (float 1.000000e+00)
   %i.ax = select <2 x i1> %i.aw, <2 x float> splat (float 1.000000e+00), <2 x float> %i.as ; 3 uses
   %i.ay = extractelement <2 x float> %i.ax, i64 1
