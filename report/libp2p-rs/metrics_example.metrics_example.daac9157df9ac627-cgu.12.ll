@@ -204,8 +204,8 @@ define internal fastcc void @_RNvMs0_NtCsjQblLEOeBB3_7matchit4treeINtB5_4NodeNtN
 bb.a:                                             ; preds = %.lr.ph, %bb.ap
   %.sroa.0.0298 = phi ptr [ %1, %.lr.ph ], [ %i.dx, %bb.ap ] ; 24 uses
   %.sroa.050.0.copyload = load i64, ptr %i.s, align 8
-  %.sroa.451.0.copyload = load i64, ptr %.sroa.451.0..sroa_idx, align 8 ; 11 uses
-  %.sroa.552.0.copyload = load i64, ptr %.sroa.552.0..sroa_idx, align 8 ; 6 uses
+  %.sroa.451.0.copyload = load i64, ptr %.sroa.451.0..sroa_idx, align 8 ; 10 uses
+  %.sroa.552.0.copyload = load i64, ptr %.sroa.552.0..sroa_idx, align 8 ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
   %i.as = trunc nuw i64 %.sroa.050.0.copyload to i1
   br i1 %i.as, label %bb.b, label %bb.c
@@ -258,7 +258,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsjQblLEOeBB3_7matchit6escape14Unesc
   br label %bb.ao
 
 bb.g:                                             ; preds = %bb.b
-  %i.be = sub nuw i64 %.sroa.552.0.copyload, %.sroa.451.0.copyload ; 4 uses
+  %i.be = sub nuw i64 %.sroa.552.0.copyload, %.sroa.451.0.copyload ; 5 uses
   %.not = icmp ugt i64 %.sroa.552.0.copyload, %i.au
   br i1 %.not, label %bb.i, label %bb.h, !prof !17
 
@@ -463,8 +463,7 @@ bb.ac:                                            ; preds = %bb.aa
 bb.ad:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsjQblLEOeBB3_7matchit6escape14UnescapedRouteECsiLZOIpitoQl_15metrics_example.exit202, %bb.ab
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %.sroa.386.0 = call i64 @llvm.usub.sat.i64(i64 %.sroa.552.0.copyload, i64 %.sroa.451.0.copyload)
-  call void @_RNvMs1_NtCsjQblLEOeBB3_7matchit6escapeNtB5_12UnescapedRef11slice_until(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, i64 noundef %.sroa.386.0)
+  call void @_RNvMs1_NtCsjQblLEOeBB3_7matchit6escapeNtB5_12UnescapedRef11slice_until(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, i64 noundef %i.be)
   call void @_RNvMs1_NtCsjQblLEOeBB3_7matchit6escapeNtB5_12UnescapedRef8to_owned(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.e, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)

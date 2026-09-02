@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %.lr.ph, %bb.i
   %i.bx = load i32, ptr %i.e, align 4, !alias.scope !1087, !noalias !1088, !noundef !11 ; 2 uses
   %.sroa.0.0.i.i = call noundef i32 @llvm.umin.i32(i32 %i.bx, i32 %.sroa.9.0.lcssa) ; 3 uses
   store i32 %.sroa.0.0.i.i, ptr %.sroa.9.0..sroa_idx, align 4, !alias.scope !1085, !noalias !1089
-  %4 = call i32 @llvm.usub.sat.i32(i32 %i.bx, i32 %.sroa.0.0.i.i) ; 2 uses
+  %4 = sub nuw i32 %i.bx, %.sroa.0.0.i.i          ; 2 uses
   %.sroa.0.0.i4.i = call noundef i32 @llvm.umin.i32(i32 %4, i32 %.sroa.5.0.lcssa) ; 3 uses
   store i32 %.sroa.0.0.i4.i, ptr %.sroa.5.0..sroa_idx, align 4, !alias.scope !1085, !noalias !1089
   %i.by = getelementptr inbounds nuw i8, ptr %i.e, i64 4
@@ -218,7 +218,7 @@ bb.i:                                             ; preds = %.lr.ph, %bb.i
   br i1 %i.cc, label %bb.j, label %_ZN4anki5decks4tree12NodeCountsV36capped17h783337b9b6388c24E.exit
 
 bb.j:                                             ; preds = %._crit_edge
-  %5 = call i32 @llvm.usub.sat.i32(i32 %4, i32 %.sroa.0.0.i4.i)
+  %5 = sub nuw i32 %4, %.sroa.0.0.i4.i
   %.sroa.0.0.i6.i = call noundef i32 @llvm.umin.i32(i32 %5, i32 %.sroa.0.0.i5.i) ; 2 uses
   store i32 %.sroa.0.0.i6.i, ptr %0, align 4, !alias.scope !1085, !noalias !1089
   br label %_ZN4anki5decks4tree12NodeCountsV36capped17h783337b9b6388c24E.exit
@@ -621,8 +621,8 @@ define internal fastcc void @"_ZN7matchit4tree13Node$LT$T$GT$12insert_route17h6f
 bb.a:                                             ; preds = %.lr.ph, %bb.aj
   %.sroa.0.0261 = phi ptr [ %1, %.lr.ph ], [ %i.dk, %bb.aj ] ; 18 uses
   %.sroa.051.0.copyload = load i64, ptr %i.v, align 8
-  %.sroa.452.0.copyload = load i64, ptr %.sroa.452.0..sroa_idx, align 8 ; 11 uses
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8 ; 6 uses
+  %.sroa.452.0.copyload = load i64, ptr %.sroa.452.0..sroa_idx, align 8 ; 10 uses
+  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8 ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
   %i.av = trunc nuw i64 %.sroa.051.0.copyload to i1
   br i1 %i.av, label %bb.b, label %bb.c
@@ -663,7 +663,7 @@ bb.f:                                             ; preds = %._crit_edge, %bb.t,
   ret void
 
 bb.g:                                             ; preds = %bb.b
-  %i.bd = sub nuw i64 %.sroa.5.0.copyload, %.sroa.452.0.copyload ; 4 uses
+  %i.bd = sub nuw i64 %.sroa.5.0.copyload, %.sroa.452.0.copyload ; 5 uses
   %.not = icmp ugt i64 %.sroa.5.0.copyload, %i.ax
   br i1 %.not, label %bb.i, label %bb.h, !prof !18
 
@@ -834,8 +834,7 @@ bb.z:                                             ; preds = %bb.x
 bb.aa:                                            ; preds = %bb.ad, %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %.sroa.385.0 = call i64 @llvm.usub.sat.i64(i64 %.sroa.5.0.copyload, i64 %.sroa.452.0.copyload)
-  call void @_ZN7matchit6escape12UnescapedRef11slice_until17hb5973989acc309dcE(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.d, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, i64 noundef %.sroa.385.0)
+  call void @_ZN7matchit6escape12UnescapedRef11slice_until17hb5973989acc309dcE(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.d, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, i64 noundef %i.bd)
   call void @_ZN7matchit6escape12UnescapedRef8to_owned17hb22d947067401a1cE(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.e, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(40) %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)

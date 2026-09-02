@@ -205,8 +205,8 @@ bb.bk:                                            ; preds = %bb.bj
 
 bb.bl:                                            ; preds = %bb.bi, %bb.bk, %bb.bf, %.thread210, %bb.br
   call void @llvm.experimental.noalias.scope.decl(metadata !14382)
-  %.val.i157 = load i64, ptr %i.ca, align 8, !alias.scope !14383, !noalias !14384, !noundef !45 ; 3 uses
-  %.val19.i = load i64, ptr %i.cb, align 8, !alias.scope !14383, !noalias !14384, !noundef !45 ; 5 uses
+  %.val.i157 = load i64, ptr %i.ca, align 8, !alias.scope !14383, !noalias !14384, !noundef !45 ; 2 uses
+  %.val19.i = load i64, ptr %i.cb, align 8, !alias.scope !14383, !noalias !14384, !noundef !45 ; 4 uses
   %i.hp = icmp ugt i64 %.val.i157, %.val19.i
   br i1 %i.hp, label %bb.bm, label %.thread204
 
@@ -243,7 +243,7 @@ _ZN5bytes3buf8buf_impl3Buf15chunks_vectored17hd9b876c933d45a44E.exit.i: ; preds 
   call void @llvm.experimental.noalias.scope.decl(metadata !14386)
   call void @llvm.experimental.noalias.scope.decl(metadata !14387)
   %.val.i.i.i = load ptr, ptr %i.cf, align 8, !alias.scope !14388, !noalias !14389, !nonnull !45, !noundef !45
-  %i.id = sub nuw i64 %.val.i157, %.val19.i
+  %i.id = sub nuw i64 %.val.i157, %.val19.i       ; 3 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %.val19.i
   store ptr %i.ie, ptr %i.j, align 8, !alias.scope !14387, !noalias !14390
   store i64 %i.id, ptr %i.cg, align 8, !alias.scope !14387, !noalias !14390
@@ -264,15 +264,14 @@ bb.bo:                                            ; preds = %.noexc161
 bb.bp:                                            ; preds = %bb.bo
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !14385
   call void @llvm.experimental.noalias.scope.decl(metadata !14391)
-  %2 = call i64 @llvm.usub.sat.i64(i64 %.val.i157, i64 %.val19.i) ; 2 uses
-  %i.il = icmp ult i64 %2, %i.ij
+  %i.il = icmp ult i64 %i.id, %i.ij
   br i1 %i.il, label %bb.bq, label %"_ZN78_$LT$std..io..cursor..Cursor$LT$T$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$7advance17hc9a0af60f789511dE.exit.i", !prof !47
 
 bb.bq:                                            ; preds = %bb.bp
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !14392
   store i64 %i.ij, ptr %i.i, align 8, !noalias !14392
   %i.im = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  store i64 %2, ptr %i.im, align 8, !noalias !14392
+  store i64 %i.id, ptr %i.im, align 8, !noalias !14392
   invoke void @_ZN5bytes13panic_advance17hadc1578990b3691cE(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.i) #43
           to label %.noexc162 unwind label %.loopexit.split-lp
 
@@ -675,8 +674,8 @@ bb.bm:                                            ; preds = %bb.bl
 bb.bn:                                            ; preds = %bb.bk, %bb.bm, %bb.bh, %.thread224, %bb.bw
   call void @llvm.experimental.noalias.scope.decl(metadata !14538)
   call void @llvm.experimental.noalias.scope.decl(metadata !14539)
-  %.val.i160 = load i64, ptr %i.cd, align 8, !alias.scope !14540, !noalias !14541, !noundef !45 ; 3 uses
-  %.val19.i = load i64, ptr %i.ce, align 8, !alias.scope !14540, !noalias !14541, !noundef !45 ; 5 uses
+  %.val.i160 = load i64, ptr %i.cd, align 8, !alias.scope !14540, !noalias !14541, !noundef !45 ; 2 uses
+  %.val19.i = load i64, ptr %i.ce, align 8, !alias.scope !14540, !noalias !14541, !noundef !45 ; 4 uses
   %i.ig = icmp ugt i64 %.val.i160, %.val19.i
   br i1 %i.ig, label %bb.bo, label %.thread218
 
@@ -713,7 +712,7 @@ _ZN5bytes3buf8buf_impl3Buf15chunks_vectored17hd9b876c933d45a44E.exit.i: ; preds 
   call void @llvm.experimental.noalias.scope.decl(metadata !14543)
   call void @llvm.experimental.noalias.scope.decl(metadata !14544)
   %.val.i.i.i = load ptr, ptr %i.ci, align 8, !alias.scope !14545, !noalias !14546, !nonnull !45, !noundef !45
-  %i.iu = sub nuw i64 %.val.i160, %.val19.i
+  %i.iu = sub nuw i64 %.val.i160, %.val19.i       ; 3 uses
   %i.iv = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %.val19.i
   store ptr %i.iv, ptr %i.l, align 8, !alias.scope !14544, !noalias !14547
   store i64 %i.iu, ptr %i.cj, align 8, !alias.scope !14544, !noalias !14547
@@ -776,15 +775,14 @@ bb.bu:                                            ; preds = %.noexc173
   %i.jf = ptrtoint ptr %i.iy to i64               ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !14542
   call void @llvm.experimental.noalias.scope.decl(metadata !14553)
-  %2 = call i64 @llvm.usub.sat.i64(i64 %.val.i160, i64 %.val19.i) ; 2 uses
-  %i.jg = icmp ult i64 %2, %i.jf
+  %i.jg = icmp ult i64 %i.iu, %i.jf
   br i1 %i.jg, label %bb.bv, label %.thread227.thread, !prof !47
 
 bb.bv:                                            ; preds = %"_ZN106_$LT$actix_tls..accept..rustls_0_23..TlsStream$LT$IO$GT$$u20$as$u20$tokio..io..async_write..AsyncWrite$GT$19poll_write_vectored17h8d4e2c7956a65500E.exit.thread.thread.i169"
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !14554
   store i64 %i.jf, ptr %i.j, align 8, !noalias !14554
   %i.jh = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  store i64 %2, ptr %i.jh, align 8, !noalias !14554
+  store i64 %i.iu, ptr %i.jh, align 8, !noalias !14554
   invoke void @_ZN5bytes13panic_advance17hadc1578990b3691cE(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.j) #43
           to label %.noexc174 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 

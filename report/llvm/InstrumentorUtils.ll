@@ -202,7 +202,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit35: ; preds = %_ZN
 
 bb.y:                                             ; preds = %.lr.ph
   %i.fq = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.cn
-  %12 = tail call i64 @llvm.usub.sat.i64(i64 %storemerge47, i64 %i.cn)
+  %12 = sub nuw i64 %storemerge47, %i.cn
   %i.fr = add nuw i64 %storemerge47, 1
   store i64 %i.fr, ptr %i.a, align 8, !tbaa !25
   %i.fs = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -603,9 +603,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #14

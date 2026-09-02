@@ -204,8 +204,8 @@ define internal fastcc void @_RNvMs0_NtCsjQblLEOeBB3_7matchit4treeINtB5_4NodeNtN
 bb.a:                                             ; preds = %.lr.ph, %bb.aj
   %.sroa.0.0258 = phi ptr [ %1, %.lr.ph ], [ %i.dh, %bb.aj ] ; 18 uses
   %.sroa.050.0.copyload = load i64, ptr %i.s, align 8
-  %.sroa.451.0.copyload = load i64, ptr %.sroa.451.0..sroa_idx, align 8 ; 11 uses
-  %.sroa.552.0.copyload = load i64, ptr %.sroa.552.0..sroa_idx, align 8 ; 6 uses
+  %.sroa.451.0.copyload = load i64, ptr %.sroa.451.0..sroa_idx, align 8 ; 10 uses
+  %.sroa.552.0.copyload = load i64, ptr %.sroa.552.0..sroa_idx, align 8 ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
   %i.as = trunc nuw i64 %.sroa.050.0.copyload to i1
   br i1 %i.as, label %bb.b, label %bb.c
@@ -240,7 +240,7 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.ai
 
 bb.f:                                             ; preds = %bb.b
-  %i.ba = sub nuw i64 %.sroa.552.0.copyload, %.sroa.451.0.copyload ; 4 uses
+  %i.ba = sub nuw i64 %.sroa.552.0.copyload, %.sroa.451.0.copyload ; 5 uses
   %.not = icmp ugt i64 %.sroa.552.0.copyload, %i.au
   br i1 %.not, label %bb.h, label %bb.g, !prof !12
 
@@ -406,8 +406,7 @@ bb.y:                                             ; preds = %bb.w
 bb.z:                                             ; preds = %bb.ac, %bb.x
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %.sroa.386.0 = call i64 @llvm.usub.sat.i64(i64 %.sroa.552.0.copyload, i64 %.sroa.451.0.copyload)
-  call void @_RNvMs1_NtCsjQblLEOeBB3_7matchit6escapeNtB5_12UnescapedRef11slice_until(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, i64 noundef %.sroa.386.0)
+  call void @_RNvMs1_NtCsjQblLEOeBB3_7matchit6escapeNtB5_12UnescapedRef11slice_until(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, i64 noundef %i.ba)
   call void @_RNvMs1_NtCsjQblLEOeBB3_7matchit6escapeNtB5_12UnescapedRef8to_owned(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.e, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
@@ -808,9 +807,6 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #28
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #19
