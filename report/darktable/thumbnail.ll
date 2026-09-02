@@ -205,13 +205,13 @@ bb.h:                                             ; preds = %bb.c
 
 bb.i:                                             ; preds = %bb.h
   %i.pn = fmul reassoc nnan nsz arcp contract afn double %i.pa, 2.000000e+00
-  %1 = fadd reassoc nsz arcp contract afn double %i.pn, %.neg332
   %i.po = fmul reassoc nnan nsz arcp contract afn float %i.me, 2.000000e+00
   %i.pp = fpext reassoc nsz arcp contract afn float %i.po to double
   %i.pq = fmul reassoc nnan nsz arcp contract afn float %i.me, 2.100000e+01
   %i.pr = fpext reassoc nsz arcp contract afn float %i.pq to double
-  %i.ps = fadd reassoc nsz arcp contract afn double %i.pr, %i.pp
-  %i.pt = fadd reassoc nsz arcp contract afn double %i.ps, %1
+  %1 = fadd reassoc nsz arcp contract afn double %i.pr, %i.pp
+  %i.ps = fadd reassoc nsz arcp contract afn double %1, %.neg332
+  %i.pt = fadd reassoc nsz arcp contract afn double %i.ps, %i.pn
   %i.pu = fptosi double %i.pt to i32
   %i.pv = sitofp reassoc nsz arcp contract afn i32 %i.pu to double ; 2 uses
   %i.pw = fcmp reassoc nsz arcp contract afn olt double %i.pj, %i.pv
