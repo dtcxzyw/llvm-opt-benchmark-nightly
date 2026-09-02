@@ -204,7 +204,7 @@ define internal range(i32 0, 2) i32 @aesni_init_key(ptr noundef %0, ptr noundef 
 bb.a:
   %i.a = tail call ptr @EVP_CIPHER_CTX_get_cipher_data(ptr noundef %0) #7 ; 6 uses
   %i.b = tail call i32 @EVP_CIPHER_CTX_get_key_length(ptr noundef %0) #7 ; 2 uses
-  %i.c = shl nsw i32 %i.b, 3                      ; 2 uses
+  %i.c = shl nuw nsw i32 %i.b, 3                  ; 2 uses
   %i.d = icmp slt i32 %i.b, 1
   br i1 %i.d, label %.sink.split, label %bb.b
 
@@ -317,7 +317,7 @@ define internal range(i32 0, 2) i32 @aes_init_key(ptr noundef %0, ptr noundef %1
 bb.a:
   %i.a = tail call ptr @EVP_CIPHER_CTX_get_cipher_data(ptr noundef %0) #7 ; 14 uses
   %i.b = tail call i32 @EVP_CIPHER_CTX_get_key_length(ptr noundef %0) #7 ; 2 uses
-  %i.c = shl nsw i32 %i.b, 3                      ; 6 uses
+  %i.c = shl nuw nsw i32 %i.b, 3                  ; 6 uses
   %i.d = icmp slt i32 %i.b, 1
   br i1 %i.d, label %.sink.split, label %bb.b
 
@@ -720,7 +720,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.e, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = shl nsw i32 %i.d, 3
+  %i.f = shl nuw nsw i32 %i.d, 3
   %i.g = load i32, ptr getelementptr inbounds nuw (i8, ptr @OPENSSL_ia32cap_P, i64 4), align 4, !tbaa !10
   %i.h = and i32 %i.g, 512
   %.not51 = icmp eq i32 %i.h, 0
@@ -1123,7 +1123,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = tail call i32 @EVP_CIPHER_CTX_get_key_length(ptr noundef %0) #7 ; 2 uses
-  %i.e = shl nsw i32 %i.d, 3                      ; 2 uses
+  %i.e = shl nuw nsw i32 %i.d, 3                  ; 2 uses
   %i.f = icmp sgt i32 %i.d, 0
   br i1 %i.f, label %bb.d, label %bb.g
 
@@ -1194,7 +1194,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = tail call i32 @EVP_CIPHER_CTX_get_key_length(ptr noundef %0) #7 ; 2 uses
-  %i.e = shl nsw i32 %i.d, 3                      ; 2 uses
+  %i.e = shl nuw nsw i32 %i.d, 3                  ; 2 uses
   %i.f = icmp sgt i32 %i.d, 0
   br i1 %i.f, label %bb.d, label %bb.h
 
@@ -1597,7 +1597,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = tail call i32 @EVP_CIPHER_CTX_get_key_length(ptr noundef %0) #7 ; 2 uses
-  %i.e = shl nsw i32 %i.d, 3                      ; 4 uses
+  %i.e = shl nuw nsw i32 %i.d, 3                  ; 4 uses
   %i.f = icmp slt i32 %i.d, 1
   br i1 %i.f, label %bb.d, label %bb.e
 

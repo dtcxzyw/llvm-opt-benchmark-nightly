@@ -205,7 +205,7 @@ bb.ds:                                            ; preds = %bb.dr
 
 _RNvNvNtCs8frGy5WneL6_4fish6screen14compute_layout38consumed_lines_or_truncated_suggestion.exit.thread.i: ; preds = %bb.di, %bb.dh, %_RNvNvNtCs8frGy5WneL6_4fish6screen14compute_layout38consumed_lines_or_truncated_suggestion.exit.i
   %.sroa.6.0310.i = phi i64 [ %i.qf, %_RNvNvNtCs8frGy5WneL6_4fish6screen14compute_layout38consumed_lines_or_truncated_suggestion.exit.i ], [ 1, %bb.dh ], [ %.sroa.02.1.i.i, %bb.di ] ; 2 uses
-  %i.qj = sub i64 %i.pa, %.sroa.6.0310.i
+  %i.qj = sub nuw i64 %i.pa, %.sroa.6.0310.i
   %i.qk = icmp ult i64 %i.pa, %.sroa.6.0310.i
   br i1 %i.qk, label %.invoke614.i, label %bb.dt
 
@@ -608,18 +608,18 @@ bb.lf:                                            ; preds = %bb.le
 
 bb.lg:                                            ; preds = %bb.ld
   %i.ale = getelementptr inbounds nuw i8, ptr %i.at, i64 16 ; 2 uses
-  %i.alf = load i64, ptr %i.ale, align 8, !noalias !1502, !noundef !13 ; 6 uses
+  %i.alf = load i64, ptr %i.ale, align 8, !noalias !1502, !noundef !13 ; 5 uses
   %i.alg = icmp ult i64 %i.alf, 1152921504606846976
   call void @llvm.assume(i1 %i.alg)
-  %i.alh = load i64, ptr %i.aec, align 8, !alias.scope !1516, !noalias !1517, !noundef !13 ; 3 uses
-  %i.ali = sub i64 %i.alf, %i.alh                 ; 5 uses
+  %i.alh = load i64, ptr %i.aec, align 8, !alias.scope !1516, !noalias !1517, !noundef !13 ; 4 uses
+  %i.ali = sub nuw nsw i64 %i.alf, %i.alh         ; 4 uses
   %i.alj = icmp ult i64 %i.alf, %i.alh
   br i1 %i.alj, label %.invoke2496.i.i.i, label %bb.lh
 
 bb.lh:                                            ; preds = %bb.lg
   %i.alk = getelementptr inbounds nuw i8, ptr %i.at, i64 8 ; 2 uses
-  %21 = icmp ult i64 %i.ali, %i.alf
-  br i1 %21, label %bb.li, label %.invoke2498.i.i.i
+  %.not1096.i.i.i = icmp eq i64 %i.alh, 0
+  br i1 %.not1096.i.i.i, label %.invoke2498.i.i.i, label %bb.li
 
 .invoke2496.i.i.i:                                ; preds = %bb.sj, %bb.pe, %bb.lg
   %i.all = phi ptr [ @206, %bb.lg ], [ @214, %bb.sj ], [ @209, %bb.pe ]

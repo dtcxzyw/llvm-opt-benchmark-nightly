@@ -205,7 +205,7 @@ bb.a:
   %i.g = load i32, ptr %i.f, align 4, !tbaa !235
   %i.h = zext i32 %i.g to i64
   %i.i = getelementptr inbounds nuw [20 x i8], ptr %i.e, i64 %i.h
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !128  ; 2 uses
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !128  ; 4 uses
   %i.k = sext i32 %i.j to i64                     ; 7 uses
   %i.l = and i32 %i.j, 1
   %sext304 = sub nsw i32 0, %i.l
@@ -319,8 +319,8 @@ _ZN2cvL5gfMulEhh.exit:                            ; preds = %bb.b, %bb.c
   %i.bi = load ptr, ptr %1, align 8, !tbaa !59    ; 2 uses
   %i.bj = ptrtoint ptr %i.bh to i64
   %i.bk = ptrtoint ptr %i.bi to i64
-  %i.bl = sub i64 %i.bj, %i.bk                    ; 3 uses
-  %i.bm = sub i64 %i.bl, %i.k                     ; 2 uses
+  %i.bl = sub i64 %i.bj, %i.bk                    ; 2 uses
+  %i.bm = sub nuw i64 %i.bl, %i.k
   %i.bn = icmp ult i64 %i.bl, %i.k
   br i1 %i.bn, label %bb.d, label %bb.e
 
@@ -330,8 +330,8 @@ bb.d:                                             ; preds = %._crit_edge337.thre
           to label %_ZNSt6vectorIhSaIhEE6resizeEm.exit unwind label %bb.g
 
 bb.e:                                             ; preds = %._crit_edge337.thread
-  %9 = icmp ult i64 %i.bm, %i.bl
-  br i1 %9, label %bb.f, label %_ZNSt6vectorIhSaIhEE6resizeEm.exit
+  %.not389 = icmp eq i32 %i.j, 0
+  br i1 %.not389, label %_ZNSt6vectorIhSaIhEE6resizeEm.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.bm ; 2 uses
@@ -734,8 +734,8 @@ bb.au:                                            ; preds = %.lr.ph376, %bb.au
   %i.jl = load ptr, ptr %1, align 8, !tbaa !59    ; 2 uses
   %i.jm = ptrtoint ptr %i.jk to i64
   %i.jn = ptrtoint ptr %i.jl to i64
-  %i.jo = sub i64 %i.jm, %i.jn                    ; 3 uses
-  %i.jp = sub i64 %i.jo, %i.k                     ; 2 uses
+  %i.jo = sub i64 %i.jm, %i.jn                    ; 2 uses
+  %i.jp = sub nuw i64 %i.jo, %i.k
   %i.jq = icmp ult i64 %i.jo, %i.k
   br i1 %i.jq, label %bb.av, label %bb.aw
 
@@ -745,8 +745,8 @@ bb.av:                                            ; preds = %._crit_edge387
           to label %_ZNSt6vectorIhSaIhEE6resizeEm.exit216 unwind label %bb.bi
 
 bb.aw:                                            ; preds = %._crit_edge387
-  %10 = icmp ult i64 %i.jp, %i.jo
-  br i1 %10, label %bb.ax, label %_ZNSt6vectorIhSaIhEE6resizeEm.exit216
+  %.not396 = icmp eq i32 %i.j, 0
+  br i1 %.not396, label %_ZNSt6vectorIhSaIhEE6resizeEm.exit216, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
   %i.js = getelementptr inbounds nuw i8, ptr %i.jl, i64 %i.jp ; 2 uses

@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.n, label %_RINvCsiSzwKAiqS6b_8smallvec10infallibleuECs9gmjTwvRRSu_10typst_html.exit, label %bb.m
 
 bb.h:                                             ; preds = %bb.f
-  %i.p = mul i64 %i.m, 24                         ; 3 uses
+  %i.p = mul nuw i64 %i.m, 24                     ; 3 uses
   %or.cond.not.i = icmp ugt i64 %i.k, 384307168202282324
   br i1 %or.cond.not.i, label %bb.p, label %_RINvCsiSzwKAiqS6b_8smallvec12layout_arrayINtNtCs1xwejQucwHj_5alloc3vec3VecINtNtNtCsdaEETE4DqmE_13typst_library13introspection12introspector11BuilderItemNtNtB1f_8position12HtmlPositionEEECs9gmjTwvRRSu_10typst_html.exit.i, !prof !884
 
@@ -608,7 +608,7 @@ _RINvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtB6_9TakeWhileINtN
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fm, i64 %.idx206.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !24206
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !24357
-  %i.fs = mul nuw i64 %i.fp, 24                   ; 2 uses
+  %i.fs = mul nuw nsw i64 %i.fp, 24               ; 2 uses
   %or.cond.i.i.i.i.i.i.i.i.i = icmp samesign ugt i64 %i.fp, 384307168202282325
   br i1 %or.cond.i.i.i.i.i.i.i.i.i, label %bb.af, label %bb.ae, !prof !884
 

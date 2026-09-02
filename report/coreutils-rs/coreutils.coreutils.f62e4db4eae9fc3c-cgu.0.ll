@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.h
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.419.0.copyload.i, i64 %.idx.i
   %i.bg = icmp sgt i64 %.sroa.018.0.copyload.i, -1
   call void @llvm.assume(i1 %i.bg)
-  %i.bh = mul nuw i64 %.sroa.520.0.copyload.i, 24 ; 2 uses
+  %i.bh = mul nuw nsw i64 %.sroa.520.0.copyload.i, 24 ; 2 uses
   %or.cond.i.i.i.i.i = icmp samesign ugt i64 %.sroa.520.0.copyload.i, 384307168202282325
   br i1 %or.cond.i.i.i.i.i, label %bb.m, label %bb.k, !prof !328
 

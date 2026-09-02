@@ -205,7 +205,7 @@ thread-pre-split.i.i.i.i.i.i.i73:                 ; preds = %_ZNK5Eigen9DenseBas
 bb.l:                                             ; preds = %.noexc75, %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal18scalar_quotient_opIffEEKNS_12ArrayWrapperINS_6MatrixIfLin1ELi4ELi0ELin1ELi4EEEEEKNS_9ReplicateINS5_INS_5BlockIS7_Lin1ELi1ELb1EEEEELi1ELi4EEEEEE4evalEv.exit
   %i.sz = phi i64 [ %.pr.i.i.i.i.i.i.i74, %.noexc75 ], [ %i.sw, %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal18scalar_quotient_opIffEEKNS_12ArrayWrapperINS_6MatrixIfLin1ELi4ELi0ELin1ELi4EEEEEKNS_9ReplicateINS5_INS_5BlockIS7_Lin1ELi1ELb1EEEEELi1ELi4EEEEEE4evalEv.exit ] ; 2 uses
   %i.ta = load ptr, ptr %7, align 8, !tbaa !198
-  %i.tb = shl nsw i64 %i.sz, 2
+  %i.tb = shl nuw nsw i64 %i.sz, 2
   %i.tc = icmp sgt i64 %i.sz, 0
   br i1 %i.tc, label %.lr.ph.i.i.i.i.i.i.i.i, label %.loopexit282
 
@@ -216,7 +216,7 @@ bb.l:                                             ; preds = %.noexc75, %_ZNK5Eig
   %i.tf = load <4 x float>, ptr %i.te, align 16, !tbaa !33
   store <4 x float> %i.tf, ptr %i.td, align 16, !tbaa !33
   %i.tg = add nuw nsw i64 %.011.i.i.i.i.i.i.i.i, 4 ; 2 uses
-  %14 = icmp slt i64 %i.tg, %i.tb
+  %14 = icmp samesign ult i64 %i.tg, %i.tb
   br i1 %14, label %.lr.ph.i.i.i.i.i.i.i.i, label %.loopexit282, !llvm.loop !279
 
 .loopexit282:                                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i, %bb.l
@@ -239,7 +239,7 @@ thread-pre-split.i.i.i.i.i.i.i77:                 ; preds = %.loopexit282
 bb.m:                                             ; preds = %thread-pre-split.i.i.i.i.i.i.i77
   %.pr.i.i.i.i.i.i.i78 = load i64, ptr %i.tk, align 8, !tbaa !200, !alias.scope !283 ; 3 uses
   %.pre.i.i79 = load ptr, ptr %10, align 8, !tbaa !198, !alias.scope !283 ; 2 uses
-  %i.tl = shl nsw i64 %.pr.i.i.i.i.i.i.i78, 2
+  %i.tl = shl nuw nsw i64 %.pr.i.i.i.i.i.i.i78, 2
   %i.tm = icmp sgt i64 %.pr.i.i.i.i.i.i.i78, 0
   br i1 %i.tm, label %.lr.ph.i.i.i.i.i.i.i.i80, label %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_sum_opIffEEKNS1_INS2_17scalar_product_opIffEEKNS_12ArrayWrapperINS_6MatrixIfLin1ELi4ELi0ELin1ELi4EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIfEEKNS_5ArrayIfLin1ELi4ELi0ELin1ELi4EEEEEEESJ_EEE4evalEv.exit
 
@@ -252,7 +252,7 @@ bb.m:                                             ; preds = %thread-pre-split.i.
   %i.tr = fadd <4 x float> %i.tq, splat (float 5.000000e-01)
   store <4 x float> %i.tr, ptr %i.tn, align 16, !tbaa !33
   %i.ts = add nuw nsw i64 %.011.i.i.i.i.i.i.i.i81, 4 ; 2 uses
-  %15 = icmp slt i64 %i.ts, %i.tl
+  %15 = icmp samesign ult i64 %i.ts, %i.tl
   br i1 %15, label %.lr.ph.i.i.i.i.i.i.i.i80, label %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_sum_opIffEEKNS1_INS2_17scalar_product_opIffEEKNS_12ArrayWrapperINS_6MatrixIfLin1ELi4ELi0ELin1ELi4EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIfEEKNS_5ArrayIfLin1ELi4ELi0ELin1ELi4EEEEEEESJ_EEE4evalEv.exit.loopexit, !llvm.loop !286
 
 bb.n:                                             ; preds = %thread-pre-split.i.i.i.i.i.i.i77
@@ -283,7 +283,7 @@ thread-pre-split.i.i.i.i.i.i.i85:                 ; preds = %_ZNK5Eigen9DenseBas
 bb.o:                                             ; preds = %.noexc89, %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_sum_opIffEEKNS1_INS2_17scalar_product_opIffEEKNS_12ArrayWrapperINS_6MatrixIfLin1ELi4ELi0ELin1ELi4EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIfEEKNS_5ArrayIfLin1ELi4ELi0ELin1ELi4EEEEEEESJ_EEE4evalEv.exit
   %i.tx = phi i64 [ %.pr.i.i.i.i.i.i.i86, %.noexc89 ], [ %i.tu, %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_sum_opIffEEKNS1_INS2_17scalar_product_opIffEEKNS_12ArrayWrapperINS_6MatrixIfLin1ELi4ELi0ELin1ELi4EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIfEEKNS_5ArrayIfLin1ELi4ELi0ELin1ELi4EEEEEEESJ_EEE4evalEv.exit ] ; 2 uses
   %i.ty = load ptr, ptr %7, align 8, !tbaa !198
-  %i.tz = shl nsw i64 %i.tx, 2
+  %i.tz = shl nuw nsw i64 %i.tx, 2
   %i.ua = icmp sgt i64 %i.tx, 0
   br i1 %i.ua, label %.lr.ph.i.i.i.i.i.i.i.i87, label %.loopexit281
 
@@ -294,7 +294,7 @@ bb.o:                                             ; preds = %.noexc89, %_ZNK5Eig
   %i.ud = load <4 x float>, ptr %i.uc, align 16, !tbaa !33
   store <4 x float> %i.ud, ptr %i.ub, align 16, !tbaa !33
   %i.ue = add nuw nsw i64 %.011.i.i.i.i.i.i.i.i88, 4 ; 2 uses
-  %16 = icmp slt i64 %i.ue, %i.tz
+  %16 = icmp samesign ult i64 %i.ue, %i.tz
   br i1 %16, label %.lr.ph.i.i.i.i.i.i.i.i87, label %.loopexit281, !llvm.loop !279
 
 .loopexit281:                                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i87, %bb.o

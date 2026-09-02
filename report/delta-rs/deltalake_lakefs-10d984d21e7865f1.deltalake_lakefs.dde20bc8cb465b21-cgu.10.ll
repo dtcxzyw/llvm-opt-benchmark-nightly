@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.ab
   %.sroa.0.054 = phi ptr [ %1, %.lr.ph ], [ %i.bb, %bb.ab ] ; 6 uses
-  %.sroa.6.053 = phi i64 [ %2, %.lr.ph ], [ %i.ba, %bb.ab ] ; 14 uses
+  %.sroa.6.053 = phi i64 [ %2, %.lr.ph ], [ %i.ba, %bb.ab ] ; 13 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !747)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !750)
   %i.h = load ptr, ptr %i.b, align 8, !alias.scope !747, !noalias !750, !align !29, !noundef !7 ; 4 uses
@@ -292,7 +292,7 @@ bb.l:                                             ; preds = %bb.o, %bb.k
   br label %_RNvXs0_NtNtCsdLO2CoGLRSt_6base645write7encoderINtB5_13EncoderWriterNtNtNtB9_6engine15general_purpose14GeneralPurposeQINtNtCs6Po7BT7Nknu_5alloc3vec3VechEENtNtCs2pqxYH9ZEk8_3std2io5Write5writeCsj34PGqTgg0L_16deltalake_lakefs.exit
 
 bb.m:                                             ; preds = %bb.i
-  %i.ad = sub i64 3, %i.j                         ; 7 uses
+  %i.ad = sub nuw i64 3, %i.j                     ; 6 uses
   %i.ae = icmp ugt i64 %i.j, 3
   br i1 %i.ae, label %bb.r, label %bb.q, !prof !3
 
@@ -312,7 +312,7 @@ bb.p:                                             ; preds = %bb.n
   unreachable
 
 bb.q:                                             ; preds = %bb.m
-  %.not77.i = icmp ugt i64 %i.ad, %.sroa.6.053
+  %.not77.i = icmp samesign ugt i64 %i.ad, %.sroa.6.053
   br i1 %.not77.i, label %bb.t, label %bb.s, !prof !771
 
 bb.r:                                             ; preds = %bb.m
@@ -330,7 +330,7 @@ bb.s:                                             ; preds = %bb.q
   br label %bb.j
 
 bb.t:                                             ; preds = %bb.q
-  tail call void @_RNvNtNtCsbvkFyIu7lgC_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775808) %.sroa.6.053, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @21) #25, !noalias !752
+  tail call void @_RNvNtNtCsbvkFyIu7lgC_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef 2, i64 noundef 1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @21) #25, !noalias !752
   unreachable
 
 bb.u:                                             ; preds = %bb.j

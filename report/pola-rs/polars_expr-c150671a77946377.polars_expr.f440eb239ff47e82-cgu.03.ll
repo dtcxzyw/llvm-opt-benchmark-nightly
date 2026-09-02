@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.bd, label %bb.f, label %bb.e, !dbg !57668, !prof !113
 
 bb.e:                                             ; preds = %bb.d
-  %i.be = shl i64 %3, 3, !dbg !57672              ; 4 uses
+  %i.be = shl nuw i64 %3, 3, !dbg !57672          ; 4 uses
   %i.bf = icmp ugt i64 %3, 2305843009213693951, !dbg !57672
   br i1 %i.bf, label %bb.i, label %bb.g, !dbg !57677, !prof !113
 
@@ -608,7 +608,7 @@ bb.aw:                                            ; preds = %bb.c
   br i1 %i.lu, label %bb.ay, label %bb.ax, !dbg !58180, !prof !113
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.lv = shl i64 %3, 3, !dbg !58184              ; 7 uses
+  %i.lv = shl nuw i64 %3, 3, !dbg !58184          ; 7 uses
   %i.lw = icmp ugt i64 %3, 2305843009213693951, !dbg !58184
   br i1 %i.lw, label %bb.bb, label %bb.az, !dbg !58189, !prof !113
 
@@ -1011,7 +1011,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.bd, label %bb.f, label %bb.e, !dbg !58686, !prof !113
 
 bb.e:                                             ; preds = %bb.d
-  %i.be = shl i64 %3, 2, !dbg !58690              ; 4 uses
+  %i.be = shl nuw i64 %3, 2, !dbg !58690          ; 4 uses
   %i.bf = icmp ugt i64 %3, 4611686018427387903, !dbg !58690
   br i1 %i.bf, label %bb.i, label %bb.g, !dbg !58695, !prof !113
 
@@ -1414,7 +1414,7 @@ bb.aw:                                            ; preds = %bb.c
   br i1 %i.lu, label %bb.ay, label %bb.ax, !dbg !59196, !prof !113
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.lv = shl i64 %3, 2, !dbg !59200              ; 7 uses
+  %i.lv = shl nuw i64 %3, 2, !dbg !59200          ; 7 uses
   %i.lw = icmp ugt i64 %3, 4611686018427387903, !dbg !59200
   br i1 %i.lw, label %bb.bb, label %bb.az, !dbg !59205, !prof !113
 
@@ -1817,7 +1817,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.bd, label %bb.f, label %bb.e, !dbg !60636, !prof !113
 
 bb.e:                                             ; preds = %bb.d
-  %i.be = shl i64 %3, 2, !dbg !60640              ; 4 uses
+  %i.be = shl nuw i64 %3, 2, !dbg !60640          ; 4 uses
   %i.bf = icmp ugt i64 %3, 4611686018427387903, !dbg !60640
   br i1 %i.bf, label %bb.i, label %bb.g, !dbg !60645, !prof !113
 
@@ -2220,7 +2220,7 @@ bb.aw:                                            ; preds = %bb.c
   br i1 %i.lu, label %bb.ay, label %bb.ax, !dbg !61142, !prof !113
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.lv = shl i64 %3, 2, !dbg !61146              ; 7 uses
+  %i.lv = shl nuw i64 %3, 2, !dbg !61146          ; 7 uses
   %i.lw = icmp ugt i64 %3, 4611686018427387903, !dbg !61146
   br i1 %i.lw, label %bb.bb, label %bb.az, !dbg !61151, !prof !113
 
@@ -2623,7 +2623,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.bd, label %bb.f, label %bb.e, !dbg !61648, !prof !113
 
 bb.e:                                             ; preds = %bb.d
-  %i.be = shl i64 %3, 2, !dbg !61652              ; 4 uses
+  %i.be = shl nuw i64 %3, 2, !dbg !61652          ; 4 uses
   %i.bf = icmp ugt i64 %3, 4611686018427387903, !dbg !61652
   br i1 %i.bf, label %bb.i, label %bb.g, !dbg !61657, !prof !113
 
@@ -3026,7 +3026,7 @@ bb.aw:                                            ; preds = %bb.c
   br i1 %i.lu, label %bb.ay, label %bb.ax, !dbg !62152, !prof !113
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.lv = shl i64 %3, 2, !dbg !62156              ; 7 uses
+  %i.lv = shl nuw i64 %3, 2, !dbg !62156          ; 7 uses
   %i.lw = icmp ugt i64 %3, 4611686018427387903, !dbg !62156
   br i1 %i.lw, label %bb.bb, label %bb.az, !dbg !62161, !prof !113
 
@@ -3429,7 +3429,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.bd, label %bb.f, label %bb.e, !dbg !62658, !prof !113
 
 bb.e:                                             ; preds = %bb.d
-  %i.be = shl i64 %3, 4, !dbg !62662              ; 4 uses
+  %i.be = shl nuw i64 %3, 4, !dbg !62662          ; 4 uses
   %i.bf = icmp ugt i64 %3, 1152921504606846975, !dbg !62662
   br i1 %i.bf, label %bb.i, label %bb.g, !dbg !62667, !prof !113
 
@@ -3832,7 +3832,7 @@ bb.aw:                                            ; preds = %bb.c
   br i1 %i.jw, label %bb.ay, label %bb.ax, !dbg !63157, !prof !113
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.jx = shl i64 %3, 4, !dbg !63161              ; 7 uses
+  %i.jx = shl nuw i64 %3, 4, !dbg !63161          ; 7 uses
   %i.jy = icmp ugt i64 %3, 1152921504606846975, !dbg !63161
   br i1 %i.jy, label %bb.bb, label %bb.az, !dbg !63166, !prof !113
 
@@ -4235,7 +4235,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.bd, label %bb.f, label %bb.e, !dbg !63663, !prof !113
 
 bb.e:                                             ; preds = %bb.d
-  %i.be = shl i64 %3, 4, !dbg !63667              ; 4 uses
+  %i.be = shl nuw i64 %3, 4, !dbg !63667          ; 4 uses
   %i.bf = icmp ugt i64 %3, 1152921504606846975, !dbg !63667
   br i1 %i.bf, label %bb.i, label %bb.g, !dbg !63672, !prof !113
 
@@ -4638,7 +4638,7 @@ bb.aw:                                            ; preds = %bb.c
   br i1 %i.jw, label %bb.ay, label %bb.ax, !dbg !64158, !prof !113
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.jx = shl i64 %3, 4, !dbg !64162              ; 7 uses
+  %i.jx = shl nuw i64 %3, 4, !dbg !64162          ; 7 uses
   %i.jy = icmp ugt i64 %3, 1152921504606846975, !dbg !64162
   br i1 %i.jy, label %bb.bb, label %bb.az, !dbg !64167, !prof !113
 
@@ -5041,7 +5041,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.bd, label %bb.f, label %bb.e, !dbg !66691, !prof !113
 
 bb.e:                                             ; preds = %bb.d
-  %i.be = shl i64 %3, 3, !dbg !66695              ; 4 uses
+  %i.be = shl nuw i64 %3, 3, !dbg !66695          ; 4 uses
   %i.bf = icmp ugt i64 %3, 2305843009213693951, !dbg !66695
   br i1 %i.bf, label %bb.i, label %bb.g, !dbg !66700, !prof !113
 
@@ -5444,7 +5444,7 @@ bb.aw:                                            ; preds = %bb.c
   br i1 %i.lu, label %bb.ay, label %bb.ax, !dbg !67198, !prof !113
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.lv = shl i64 %3, 3, !dbg !67202              ; 7 uses
+  %i.lv = shl nuw i64 %3, 3, !dbg !67202          ; 7 uses
   %i.lw = icmp ugt i64 %3, 2305843009213693951, !dbg !67202
   br i1 %i.lw, label %bb.bb, label %bb.az, !dbg !67207, !prof !113
 
@@ -5847,7 +5847,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.bd, label %bb.f, label %bb.e, !dbg !67704, !prof !113
 
 bb.e:                                             ; preds = %bb.d
-  %i.be = shl i64 %3, 3, !dbg !67708              ; 4 uses
+  %i.be = shl nuw i64 %3, 3, !dbg !67708          ; 4 uses
   %i.bf = icmp ugt i64 %3, 2305843009213693951, !dbg !67708
   br i1 %i.bf, label %bb.i, label %bb.g, !dbg !67713, !prof !113
 
@@ -6250,7 +6250,7 @@ bb.aw:                                            ; preds = %bb.c
   br i1 %i.lu, label %bb.ay, label %bb.ax, !dbg !68208, !prof !113
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.lv = shl i64 %3, 3, !dbg !68212              ; 7 uses
+  %i.lv = shl nuw i64 %3, 3, !dbg !68212          ; 7 uses
   %i.lw = icmp ugt i64 %3, 2305843009213693951, !dbg !68212
   br i1 %i.lw, label %bb.bb, label %bb.az, !dbg !68217, !prof !113
 

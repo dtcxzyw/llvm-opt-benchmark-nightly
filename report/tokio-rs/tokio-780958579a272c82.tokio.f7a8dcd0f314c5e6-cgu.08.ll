@@ -202,18 +202,18 @@ _RNvMNtCs1xwejQucwHj_5alloc6stringNtB2_6String8truncate.exit: ; preds = %bb.p, %
 
 bb.p:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECslghKHtsL3a4_5tokio.exit17
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.r = load i64, ptr %i.q, align 8, !noundef !15 ; 5 uses
+  %i.r = load i64, ptr %i.q, align 8, !noundef !15 ; 4 uses
   %i.s = icmp sgt i64 %i.r, -1
   tail call void @llvm.assume(i1 %i.s)
-  %i.t = sub nsw i64 %i.r, %3                     ; 3 uses
+  %i.t = sub nuw nsw i64 %i.r, %3                 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !635)
   %.not.i = icmp ugt i64 %3, %i.r
   br i1 %.not.i, label %_RNvMNtCs1xwejQucwHj_5alloc6stringNtB2_6String8truncate.exit, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.u = icmp ne i64 %i.r, %3
-  %.not2.i = icmp samesign ult i64 %i.t, %i.r
-  %or.cond.i = select i1 %i.u, i1 %.not2.i, i1 false
+  %.not2.i = icmp ne i64 %3, 0
+  %or.cond.i = and i1 %i.u, %.not2.i
   br i1 %or.cond.i, label %bb.r, label %.split.i
 
 .split.i:                                         ; preds = %bb.r, %bb.q

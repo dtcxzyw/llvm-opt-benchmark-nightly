@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.cf = load i64, ptr %i.by, align 8, !noundef !5 ; 3 uses
-  %i.cg = sub i64 %3, %i.cf                       ; 3 uses
+  %i.cg = sub nuw i64 %3, %i.cf                   ; 3 uses
   %i.ch = icmp ult i64 %3, %i.cf
   br i1 %i.ch, label %.invoke, label %bb.w
 
@@ -319,7 +319,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshMbxjpSxucW_12fish_wgetopt9WGetopter
   br label %bb.c
 
 bb.w:                                             ; preds = %bb.g
-  %i.de = icmp ugt i64 %i.cg, 1
+  %i.de = icmp samesign ugt i64 %i.cg, 1
   br i1 %i.de, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w

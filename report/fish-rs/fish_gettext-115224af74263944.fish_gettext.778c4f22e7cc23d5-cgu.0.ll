@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %i.k = sub i64 8, %i.i                          ; 3 uses
+  %i.k = sub nuw i64 8, %i.i                      ; 3 uses
   %i.l = icmp ugt i64 %i.i, 8
   br i1 %i.l, label %bb.l, label %bb.f
 
@@ -284,7 +284,7 @@ bb.n:                                             ; preds = %bb.m
   %i.an = load i64, ptr %i.am, align 8, !alias.scope !77, !noalias !78, !noundef !4
   %i.ao = or i64 %i.an, %i.al                     ; 3 uses
   store i64 %i.ao, ptr %i.am, align 8, !alias.scope !77, !noalias !78
-  %i.ap = icmp ult i64 %i.c, %i.k
+  %i.ap = icmp samesign ult i64 %i.c, %i.k
   br i1 %i.ap, label %bb.q, label %bb.p
 
 bb.o:                                             ; preds = %bb.m
@@ -323,7 +323,7 @@ bb.p:                                             ; preds = %bb.n
   br label %bb.e
 
 bb.q:                                             ; preds = %bb.n
-  %i.bn = add nuw i64 %i.i, %i.c
+  %i.bn = add nuw nsw i64 %i.i, %i.c
   br label %_RNvXsb_NtCs4gXUGq9oE06_9siphasher6sip128NtB5_11SipHasher13NtNtCs3oUPovFnLWP_4core4hash6Hasher5write.exit
 
 ._crit_edge.i.i:                                  ; preds = %bb.ab
