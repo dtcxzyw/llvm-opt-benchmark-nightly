@@ -205,17 +205,15 @@ vector.body:                                      ; preds = %pred.store.continue
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue527 ] ; 5 uses
   %i.gl = getelementptr inbounds nuw [4 x i8], ptr %.val214, i64 %index ; 2 uses
   %wide.load = load <4 x i32>, ptr %i.gl, align 4, !tbaa !332 ; 8 uses
-  %19 = icmp slt <4 x i32> %wide.load, zeroinitializer
-  %20 = icmp sgt <4 x i32> %wide.load, %broadcast.splat
-  %21 = or <4 x i1> %19, %20                      ; 3 uses
+  %19 = icmp sgt <4 x i32> %wide.load, splat (i32 -1)
+  %20 = icmp sle <4 x i32> %wide.load, %broadcast.splat
+  %.not533 = and <4 x i1> %19, %20                ; 2 uses
   %i.gm = icmp sge <4 x i32> %wide.load, %broadcast.splat515
   %i.gn = icmp sle <4 x i32> %wide.load, %broadcast.splat517
   %.not530 = and <4 x i1> %i.gm, %i.gn
-  %i.go = select <4 x i1> %21, <4 x i1> %.not530, <4 x i1> zeroinitializer
-  %22 = xor <4 x i1> %21, splat (i1 true)
-  %23 = or <4 x i1> %i.go, %22                    ; 4 uses
-  %predphi = select <4 x i1> %21, <4 x i32> %broadcast.splat521, <4 x i32> %broadcast.splat519 ; 4 uses
-  %i.gp = extractelement <4 x i1> %23, i64 0
+  %i.go = select <4 x i1> %.not533, <4 x i1> splat (i1 true), <4 x i1> %.not530 ; 4 uses
+  %predphi = select <4 x i1> %.not533, <4 x i32> %broadcast.splat519, <4 x i32> %broadcast.splat521 ; 4 uses
+  %i.gp = extractelement <4 x i1> %i.go, i64 0
   br i1 %i.gp, label %pred.store.if, label %pred.store.continue
 
 pred.store.if:                                    ; preds = %vector.body
@@ -227,7 +225,7 @@ pred.store.if:                                    ; preds = %vector.body
   br label %pred.store.continue
 
 pred.store.continue:                              ; preds = %pred.store.if, %vector.body
-  %i.gu = extractelement <4 x i1> %23, i64 1
+  %i.gu = extractelement <4 x i1> %i.go, i64 1
   br i1 %i.gu, label %pred.store.if522, label %pred.store.continue523
 
 pred.store.if522:                                 ; preds = %pred.store.continue
@@ -241,7 +239,7 @@ pred.store.if522:                                 ; preds = %pred.store.continue
   br label %pred.store.continue523
 
 pred.store.continue523:                           ; preds = %pred.store.if522, %pred.store.continue
-  %i.hb = extractelement <4 x i1> %23, i64 2
+  %i.hb = extractelement <4 x i1> %i.go, i64 2
   br i1 %i.hb, label %pred.store.if524, label %pred.store.continue525
 
 pred.store.if524:                                 ; preds = %pred.store.continue523
@@ -255,7 +253,7 @@ pred.store.if524:                                 ; preds = %pred.store.continue
   br label %pred.store.continue525
 
 pred.store.continue525:                           ; preds = %pred.store.if524, %pred.store.continue523
-  %i.hi = extractelement <4 x i1> %23, i64 3
+  %i.hi = extractelement <4 x i1> %i.go, i64 3
   br i1 %i.hi, label %pred.store.if526, label %pred.store.continue527
 
 pred.store.if526:                                 ; preds = %pred.store.continue525
