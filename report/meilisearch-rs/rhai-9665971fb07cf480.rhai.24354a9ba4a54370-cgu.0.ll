@@ -205,7 +205,7 @@ bb.ft:                                            ; preds = %._crit_edge, %bb.fn
 
 bb.fu:                                            ; preds = %bb.ft
   %i.sg = getelementptr inbounds nuw [16 x i8], ptr %8, i64 %9 ; 4 uses
-  %14 = call i64 @llvm.usub.sat.i64(i64 %9, i64 1) ; 2 uses
+  %14 = add i64 %9, -1                            ; 2 uses
   %i.sh = load i64, ptr %i.ba, align 8, !alias.scope !31156, !noalias !31157, !noundef !55 ; 4 uses
   %i.si = icmp ugt i64 %i.sh, 5
   %.sroa.gep1173 = getelementptr inbounds nuw i8, ptr %i.ba, i64 16 ; 13 uses

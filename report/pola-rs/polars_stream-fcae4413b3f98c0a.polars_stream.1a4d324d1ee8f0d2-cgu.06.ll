@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !66535
   %i.o = load ptr, ptr %i.n, align 8, !dbg !66535, !alias.scope !66459, !noalias !66460, !noundef !2876
   %.not7.i35.i = icmp eq ptr %i.o, null, !dbg !66535
-  %spec.select.i17.i41.i = tail call i64 @llvm.usub.sat.i64(i64 %i.k, i64 %i.m), !dbg !66536 ; 2 uses
+  %spec.select.i17.i41.i = sub nuw i64 %i.k, %i.m, !dbg !66536 ; 2 uses
   br i1 %.not7.i35.i, label %_RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters5chainINtB4_5ChainINtNtNtBa_3ops5range5RangejEINtNtB6_10filter_map9FilterMapBZ_NCNvXs_NtNtNtCs2g09Ig8GZd6_13polars_stream5nodes10io_sources3ipcNtB25_13IpcFileReaderNtNtNtB27_10multi_scan16reader_interface10FileReader10begin_reads0_0EENtNtNtB8_6traits8iterator8Iterator9size_hintB2b_.exit.i, label %bb.k, !dbg !66537
 
 bb.d:                                             ; preds = %bb.c, %bb.a

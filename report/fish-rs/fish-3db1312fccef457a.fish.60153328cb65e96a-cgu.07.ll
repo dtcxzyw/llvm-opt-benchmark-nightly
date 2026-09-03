@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
   %.sroa.01.0.i.i.i = tail call i64 @llvm.usub.sat.i64(i64 %i.ae, i64 %i.ac)
   %i.an = sub nuw i64 %i.ag, %i.ac
   %..i.i.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.an, i64 %.sroa.01.0.i.i.i)
-  %3 = tail call i64 @llvm.usub.sat.i64(i64 %i.ak, i64 %..i.i.i.i)
+  %3 = sub nuw i64 %i.ak, %..i.i.i.i
   br label %_RNvMs0_NtCs8frGy5WneL6_4fish13editable_lineNtB5_12EditableLine29want_to_coalesce_insertion_of.exit
 
 .invoke70:                                        ; preds = %bb.g, %bb.aa
@@ -404,7 +404,7 @@ bb.ac:                                            ; preds = %bb.ab
   %.sroa.01.0.i.i = tail call i64 @llvm.usub.sat.i64(i64 %i.cr, i64 %i.cp)
   %i.cs = sub nuw i64 %i.cj, %i.cp
   %..i.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.cs, i64 %.sroa.01.0.i.i)
-  %4 = tail call i64 @llvm.usub.sat.i64(i64 %i.cn, i64 %..i.i.i)
+  %4 = sub nuw i64 %i.cn, %..i.i.i
   br label %_RNvNtCs8frGy5WneL6_4fish13editable_line26cursor_position_after_edit.exit
 
 _RNvNtCs8frGy5WneL6_4fish13editable_line26cursor_position_after_edit.exit: ; preds = %bb.ac, %bb.ab

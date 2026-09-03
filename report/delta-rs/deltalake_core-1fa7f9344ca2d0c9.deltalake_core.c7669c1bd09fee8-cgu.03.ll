@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.v
   unreachable
 
 bb.y:                                             ; preds = %bb.v
-  %i.df = add nuw i64 %i.cn, 4                    ; 6 uses
+  %i.df = add nuw i64 %i.cn, 4                    ; 5 uses
   %.sroa.4.0.insert.ext.i.i.i = zext i8 %i.da to i64
   %.sroa.0.0.insert.ext.i.i.i = zext i8 %i.cw to i64
   %i.dg = getelementptr inbounds nuw i8, ptr %i.by, i64 %i.db
@@ -221,7 +221,7 @@ bb.y:                                             ; preds = %bb.v
   %i.do = or disjoint i64 %i.dm, %i.dn
   %i.dp = or disjoint i64 %i.do, %i.dl
   %i.dq = or disjoint i64 %i.dp, %i.dk            ; 2 uses
-  %i.dr = tail call i64 @llvm.uadd.sat.i64(i64 %i.df, i64 %i.dq) ; 6 uses
+  %i.dr = tail call i64 @llvm.uadd.sat.i64(i64 %i.df, i64 %i.dq) ; 5 uses
   %i.ds = icmp ugt i64 %i.dr, %i.bn
   br i1 %i.ds, label %bb.aa, label %bb.z
 
@@ -253,16 +253,16 @@ bb.aa:                                            ; preds = %bb.z, %bb.p, %bb.q,
   br label %_RNvXsk_NtCs2TwJzntlzha_11flatbuffers8verifierINtNtB7_6vector6VectorINtNtB7_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen6Schema5FieldEENtB5_10Verifiable12run_verifierCs14kWLkQVSKO_14deltalake_core.exit
 
 _RINvNtCs2TwJzntlzha_11flatbuffers8verifier19verify_vector_rangeINtNtB4_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen6Schema5FieldEECs14kWLkQVSKO_14deltalake_core.exit.i: ; preds = %bb.z
-  %.not.i.i.i.i327.not = icmp ugt i64 %i.dr, %i.df
-  br i1 %.not.i.i.i.i327.not, label %.lr.ph, label %_RNvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_7step_by6StepByINtNtNtBa_3ops5range5RangejEEENtNtNtB8_6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit.i
-
-.lr.ph:                                           ; preds = %_RINvNtCs2TwJzntlzha_11flatbuffers8verifier19verify_vector_rangeINtNtB4_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen6Schema5FieldEECs14kWLkQVSKO_14deltalake_core.exit.i
   %.sroa.06.0.i.i.i = sub nuw i64 %i.dr, %i.df
   %5 = lshr i64 %.sroa.06.0.i.i.i, 2
   %6 = and i64 %i.dr, 3
   %.not.i.i.i = icmp ne i64 %6, 0
   %7 = zext i1 %.not.i.i.i to i64
-  %.sroa.05.0.i.i.i = add nuw nsw i64 %5, %7
+  %.sroa.05.0.i.i.i = add nuw nsw i64 %5, %7      ; 2 uses
+  %.not.i.i.i.i327 = icmp eq i64 %.sroa.05.0.i.i.i, 0
+  br i1 %.not.i.i.i.i327, label %_RNvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_7step_by6StepByINtNtNtBa_3ops5range5RangejEEENtNtNtB8_6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit.i, label %.lr.ph
+
+.lr.ph:                                           ; preds = %_RINvNtCs2TwJzntlzha_11flatbuffers8verifier19verify_vector_rangeINtNtB4_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen6Schema5FieldEECs14kWLkQVSKO_14deltalake_core.exit.i
   %.sroa.571.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
   %.sroa.672.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ar, i64 40
   %.sroa.274.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.aw, i64 8 ; 8 uses
@@ -443,8 +443,8 @@ bb.ab:                                            ; preds = %.lr.ph, %bb.es
   %.sroa.679.0329 = phi i64 [ %i.df, %.lr.ph ], [ %i.fh, %bb.es ] ; 12 uses
   %.sroa.9.0328 = phi i64 [ %.sroa.05.0.i.i.i, %.lr.ph ], [ %i.fi, %bb.es ]
   %i.fh = add i64 %.sroa.679.0329, 4
-  %i.fi = add i64 %.sroa.9.0328, -1               ; 2 uses
-  %i.fj = add i64 %.sroa.078.0330, 1
+  %i.fi = add nsw i64 %.sroa.9.0328, -1           ; 2 uses
+  %i.fj = add nuw nsw i64 %.sroa.078.0330, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ax), !noalias !368
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aw), !noalias !368
   call void @llvm.experimental.noalias.scope.decl(metadata !369)
@@ -847,7 +847,7 @@ bb.x:                                             ; preds = %bb.v
   unreachable
 
 bb.y:                                             ; preds = %bb.v
-  %i.bp = add nuw i64 %i.ax, 4                    ; 6 uses
+  %i.bp = add nuw i64 %i.ax, 4                    ; 5 uses
   %.sroa.4.0.insert.ext.i.i.i.i = zext i8 %i.bk to i64
   %.sroa.0.0.insert.ext.i.i.i.i = zext i8 %i.bg to i64
   %i.bq = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.bl
@@ -863,7 +863,7 @@ bb.y:                                             ; preds = %bb.v
   %i.by = or disjoint i64 %i.bw, %i.bx
   %i.bz = or disjoint i64 %i.by, %i.bv
   %i.ca = or disjoint i64 %i.bz, %i.bu            ; 2 uses
-  %i.cb = tail call i64 @llvm.uadd.sat.i64(i64 %i.bp, i64 %i.ca) ; 6 uses
+  %i.cb = tail call i64 @llvm.uadd.sat.i64(i64 %i.bp, i64 %i.ca) ; 5 uses
   %i.cc = icmp ugt i64 %i.cb, %i.x
   br i1 %i.cc, label %bb.aa, label %bb.z
 
@@ -895,16 +895,16 @@ bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.q,
   br label %bb.aw
 
 _RINvNtCs2TwJzntlzha_11flatbuffers8verifier19verify_vector_rangeINtNtB4_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen6Schema8KeyValueEECs14kWLkQVSKO_14deltalake_core.exit.i.i: ; preds = %bb.z
-  %.not.i.i.i85.not.i.i = icmp ugt i64 %i.cb, %i.bp
-  br i1 %.not.i.i.i85.not.i.i, label %.lr.ph.i.i, label %_RNvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_7step_by6StepByINtNtNtBa_3ops5range5RangejEEENtNtNtB8_6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit.i.i
-
-.lr.ph.i.i:                                       ; preds = %_RINvNtCs2TwJzntlzha_11flatbuffers8verifier19verify_vector_rangeINtNtB4_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen6Schema8KeyValueEECs14kWLkQVSKO_14deltalake_core.exit.i.i
   %.sroa.06.0.i.i.i.i = sub nuw i64 %i.cb, %i.bp
   %3 = lshr i64 %.sroa.06.0.i.i.i.i, 2
   %4 = and i64 %i.cb, 3
   %.not.i.i.i.i = icmp ne i64 %4, 0
   %5 = zext i1 %.not.i.i.i.i to i64
-  %.sroa.05.0.i.i.i.i = add nuw nsw i64 %3, %5
+  %.sroa.05.0.i.i.i.i = add nuw nsw i64 %3, %5    ; 2 uses
+  %.not.i.i.i85.i.i = icmp eq i64 %.sroa.05.0.i.i.i.i, 0
+  br i1 %.not.i.i.i85.i.i, label %_RNvXs_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_7step_by6StepByINtNtNtBa_3ops5range5RangejEEENtNtNtB8_6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core.exit.i.i, label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %_RINvNtCs2TwJzntlzha_11flatbuffers8verifier19verify_vector_rangeINtNtB4_10primitives15ForwardsUOffsetNtNtNtCsdl0l68gAy31_9arrow_ipc3gen6Schema8KeyValueEECs14kWLkQVSKO_14deltalake_core.exit.i.i
   %i.cf = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %.sroa.636.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   %.sroa.339.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 40 ; 4 uses
@@ -930,8 +930,8 @@ bb.ab:                                            ; preds = %bb.au, %.lr.ph.i.i
   %.sroa.645.087.i.i = phi i64 [ %i.bp, %.lr.ph.i.i ], [ %i.ck, %bb.au ] ; 12 uses
   %.sroa.9.086.i.i = phi i64 [ %.sroa.05.0.i.i.i.i, %.lr.ph.i.i ], [ %i.cl, %bb.au ]
   %i.ck = add i64 %.sroa.645.087.i.i, 4
-  %i.cl = add i64 %.sroa.9.086.i.i, -1            ; 2 uses
-  %i.cm = add i64 %.sroa.044.089.i.i, 1
+  %i.cl = add nsw i64 %.sroa.9.086.i.i, -1        ; 2 uses
+  %i.cm = add nuw nsw i64 %.sroa.044.089.i.i, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !556
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !556
   call void @llvm.experimental.noalias.scope.decl(metadata !557)

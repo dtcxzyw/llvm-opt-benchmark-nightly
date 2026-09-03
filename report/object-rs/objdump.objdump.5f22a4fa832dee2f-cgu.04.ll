@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   %.not.i = icmp ult i64 %i.l, %i.c
   tail call void @llvm.assume(i1 %.not.i)
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.l
-  %storemerge.i = tail call i64 @llvm.usub.sat.i64(i64 %i.c, i64 %i.l)
-  %i.n = add i64 %storemerge.i, -1
+  %1 = xor i64 %i.l, -1
+  %i.n = add i64 %i.c, %1
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 1
   br label %_RINvNtNtNtCs906JEEYSgkH_6memchr4arch7generic6memchr21search_slice_with_rawNCNvNtB8_6memchr6memchr0ECs8aoZCP6pRcV_7objdump.exit
 }

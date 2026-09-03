@@ -205,9 +205,9 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = alloca [1024 x i8], align 8              ; 11 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.val = load i64, ptr %i.c, align 8, !alias.scope !424, !noundef !7 ; 4 uses
+  %.val = load i64, ptr %i.c, align 8, !alias.scope !424, !noundef !7 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %.val19 = load i64, ptr %i.d, align 8, !alias.scope !424, !noundef !7 ; 7 uses
+  %.val19 = load i64, ptr %i.d, align 8, !alias.scope !424, !noundef !7 ; 6 uses
   %i.e = icmp ugt i64 %.val, %.val19
   br i1 %i.e, label %bb.b, label %bb.c
 
@@ -224,7 +224,7 @@ bb.c:                                             ; preds = %bb.j, %bb.k, %bb.f,
 
 bb.d:                                             ; preds = %bb.b
   %.val.i = load ptr, ptr %2, align 8, !alias.scope !425, !nonnull !7, !noundef !7
-  %i.i = sub nuw i64 %.val, %.val19
+  %i.i = sub nuw i64 %.val, %.val19               ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.val.i, i64 %.val19
   %i.k = tail call { i64, ptr } @_RNvXNtNtCs2awuzAz5vY4_5tokio2io11async_writeINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCskeugdADtBsi_12pingora_core9protocols2IOEL_ENtB2_10AsyncWrite10poll_writeB1k_(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %0, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.j, i64 noundef %i.i) ; 2 uses
   %i.l = extractvalue { i64, ptr } %i.k, 0        ; 2 uses
@@ -243,18 +243,18 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.c
 
 bb.g:                                             ; preds = %bb.d, %bb.l
-  %.sroa.016.0.in = phi ptr [ %i.ai, %bb.l ], [ %i.m, %bb.d ] ; 2 uses
+  %.pre-phi = phi i64 [ %i.i, %bb.d ], [ %i.ad, %bb.l ] ; 2 uses
+  %.sroa.016.0.in = phi ptr [ %i.m, %bb.d ], [ %i.ai, %bb.l ] ; 2 uses
   %.sroa.016.0 = ptrtoint ptr %.sroa.016.0.in to i64 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !426)
-  %3 = call i64 @llvm.usub.sat.i64(i64 %.val, i64 %.val19) ; 2 uses
-  %i.n = icmp ult i64 %3, %.sroa.016.0
+  %i.n = icmp ult i64 %.pre-phi, %.sroa.016.0
   br i1 %i.n, label %bb.h, label %_RNvXs1_NtNtCs1eA6bChxBZF_5bytes3buf8buf_implINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorNtNtB9_9bytes_mut8BytesMutENtB5_3Buf7advanceCskeugdADtBsi_12pingora_core.exit, !prof !10
 
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !426
   store i64 %.sroa.016.0, ptr %i.a, align 8, !noalias !426
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 %3, ptr %i.o, align 8, !noalias !426
+  store i64 %.pre-phi, ptr %i.o, align 8, !noalias !426
   call void @_RNvCs1eA6bChxBZF_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a) #25, !noalias !426
   unreachable
 
@@ -292,7 +292,7 @@ _RNvYINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorNtNtCs1eA6bChxBZF_5bytes9bytes_m
   tail call void @llvm.experimental.noalias.scope.decl(metadata !427)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !428)
   %.val.i.i = load ptr, ptr %2, align 8, !alias.scope !429, !noalias !428, !nonnull !7, !noundef !7
-  %i.ad = sub nuw i64 %.val, %.val19
+  %i.ad = sub nuw i64 %.val, %.val19              ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %.val19
   store ptr %i.ae, ptr %i.b, align 8, !alias.scope !428, !noalias !427
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 8
