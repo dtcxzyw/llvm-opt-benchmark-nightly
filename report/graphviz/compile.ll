@@ -202,7 +202,7 @@ bb.au:                                            ; preds = %.loopexit
   br i1 %exitcond.not, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !0
 
 freeCompileProg.exit:                             ; preds = %.thread94, %.loopexit, %._crit_edge.i
-  %.061 = phi ptr [ %i.a, %.loopexit ], [ null, %.thread94 ], [ null, %._crit_edge.i ]
+  %.061 = phi ptr [ null, %.thread94 ], [ %i.a, %.loopexit ], [ null, %._crit_edge.i ]
   ret ptr %.061
 }
 

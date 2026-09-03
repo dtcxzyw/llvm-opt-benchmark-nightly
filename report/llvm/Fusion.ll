@@ -204,9 +204,9 @@ _ZN4mlir9Operation13getOpOperandsEv.exit.i.i.i:   ; preds = %bb.v
   %.not6366.i.i.i = icmp eq i64 %i.gp, 0
   br i1 %.not6366.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
-.lr.ph.i.i.i:                                     ; preds = %.critedge.i.i.i, %bb.z
-  %.sroa.032.068.i.i.i = phi ptr [ %48, %bb.z ], [ %i.go, %.critedge.i.i.i ] ; 3 uses
-  %.sroa.7.067.i.i.i = phi i32 [ %47, %bb.z ], [ 0, %.critedge.i.i.i ] ; 2 uses
+.lr.ph.i.i.i:                                     ; preds = %.critedge.i.i.i, %bb.aa
+  %.sroa.032.068.i.i.i = phi ptr [ %50, %bb.aa ], [ %i.go, %.critedge.i.i.i ] ; 3 uses
+  %.sroa.7.067.i.i.i = phi i32 [ %49, %bb.aa ], [ 0, %.critedge.i.i.i ] ; 2 uses
   %.sroa.0.0.copyload.i.i46.i.i = load ptr, ptr %.sroa.032.068.i.i.i, align 8, !tbaa !148 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11)
   store ptr %.sroa.0.0.copyload.i.i46.i.i, ptr %11, align 8
@@ -232,7 +232,7 @@ bb.x:                                             ; preds = %.lr.ph.i.i.i
 _ZN4llvm8dyn_castIN4mlir13AffineDimExprENS1_10AffineExprEEEDcRKT0_.exit.i.i.i: ; preds = %bb.x, %bb.w
   %.sroa.03.0.i.i.i.i.i = phi ptr [ %i.gu, %bb.x ], [ %i.gt, %bb.w ]
   %i.gv = icmp eq ptr %.sroa.03.0.i.i.i.i.i, null
-  br i1 %i.gv, label %bb.z, label %bb.y
+  br i1 %i.gv, label %bb.aa, label %bb.y
 
 bb.y:                                             ; preds = %_ZN4llvm8dyn_castIN4mlir13AffineDimExprENS1_10AffineExprEEEDcRKT0_.exit.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #12
@@ -245,30 +245,30 @@ bb.y:                                             ; preds = %_ZN4llvm8dyn_castIN
   %i.gx = call noundef i32 @_ZNK4mlir13AffineDimExpr11getPositionEv(ptr noundef nonnull align 8 dereferenceable(8) %14) #12
   %i.gy = icmp eq i32 %.08185.i.i, %i.gx
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #12
-  br i1 %i.gy, label %bb.aa, label %bb.z
+  br i1 %i.gy, label %bb.z, label %bb.aa
 
-bb.z:                                             ; preds = %bb.y, %_ZN4llvm8dyn_castIN4mlir13AffineDimExprENS1_10AffineExprEEEDcRKT0_.exit.i.i.i
-  %47 = add i32 %.sroa.7.067.i.i.i, 1
-  %48 = getelementptr inbounds nuw i8, ptr %.sroa.032.068.i.i.i, i64 8 ; 2 uses
-  %.not63.i.i.i = icmp eq ptr %48, %i.gq
-  br i1 %.not63.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
-
-bb.aa:                                            ; preds = %bb.y
-  %49 = getelementptr inbounds nuw i8, ptr %.02470.i.i.i, i64 24
-  %.sroa.0.0.copyload.i27.i.i.i = load ptr, ptr %49, align 8, !tbaa !12
+bb.z:                                             ; preds = %bb.y
+  %47 = getelementptr inbounds nuw i8, ptr %.02470.i.i.i, i64 24
+  %.sroa.0.0.copyload.i26.i.i.i = load ptr, ptr %47, align 8, !tbaa !12
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #12
-  %50 = zext i32 %.sroa.7.067.i.i.i to i64
+  %48 = zext i32 %.sroa.7.067.i.i.i to i64
   br label %_ZL25getShapeDefiningLoopRangeN4mlir6linalg8LinalgOpEjb.exit.i.i
 
-._crit_edge.i.i.i:                                ; preds = %bb.z, %.critedge.i.i.i
+bb.aa:                                            ; preds = %bb.y, %_ZN4llvm8dyn_castIN4mlir13AffineDimExprENS1_10AffineExprEEEDcRKT0_.exit.i.i.i
+  %49 = add i32 %.sroa.7.067.i.i.i, 1
+  %50 = getelementptr inbounds nuw i8, ptr %.sroa.032.068.i.i.i, i64 8 ; 2 uses
+  %.not51.i.i.i = icmp eq ptr %50, %i.gq
+  br i1 %.not51.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
+
+._crit_edge.i.i.i:                                ; preds = %bb.aa, %.critedge.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #12
   %i.gz = getelementptr inbounds nuw i8, ptr %.02470.i.i.i, i64 32 ; 2 uses
   %.not.i47.i.i = icmp eq ptr %i.gz, %i.gl
   br i1 %.not.i47.i.i, label %_ZL25getShapeDefiningLoopRangeN4mlir6linalg8LinalgOpEjb.exit.i.i, label %.critedge.i.i.i
 
-_ZL25getShapeDefiningLoopRangeN4mlir6linalg8LinalgOpEjb.exit.i.i: ; preds = %._crit_edge.i.i.i, %bb.aa, %_ZN4mlir9Operation13getOpOperandsEv.exit.i.i.i, %bb.v
-  %.sroa.0.5.i.i.i = phi ptr [ %.sroa.0.0.copyload.i27.i.i.i, %bb.aa ], [ undef, %_ZN4mlir9Operation13getOpOperandsEv.exit.i.i.i ], [ undef, %bb.v ], [ undef, %._crit_edge.i.i.i ]
-  %.sroa.2.5.i.i.i = phi i64 [ %50, %bb.aa ], [ 0, %_ZN4mlir9Operation13getOpOperandsEv.exit.i.i.i ], [ 0, %bb.v ], [ 0, %._crit_edge.i.i.i ]
+_ZL25getShapeDefiningLoopRangeN4mlir6linalg8LinalgOpEjb.exit.i.i: ; preds = %._crit_edge.i.i.i, %bb.z, %_ZN4mlir9Operation13getOpOperandsEv.exit.i.i.i, %bb.v
+  %.sroa.0.5.i.i.i = phi ptr [ %.sroa.0.0.copyload.i26.i.i.i, %bb.z ], [ undef, %_ZN4mlir9Operation13getOpOperandsEv.exit.i.i.i ], [ undef, %bb.v ], [ undef, %._crit_edge.i.i.i ]
+  %.sroa.2.5.i.i.i = phi i64 [ %48, %bb.z ], [ 0, %_ZN4mlir9Operation13getOpOperandsEv.exit.i.i.i ], [ 0, %bb.v ], [ 0, %._crit_edge.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %12)
   %i.ha = call i64 @_ZN4mlir6linalg17createFoldedDimOpERNS_9OpBuilderENS_8LocationENS_5ValueEl(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr %.sroa.0.0.copyload.i.i.i.i, ptr %.sroa.0.5.i.i.i, i64 noundef %.sroa.2.5.i.i.i) #12 ; 3 uses
   %i.hb = load i32, ptr %i.bl, align 8, !tbaa !46 ; 2 uses

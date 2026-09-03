@@ -204,10 +204,10 @@ bb.dk:                                            ; preds = %.thread644
   br label %.thread693
 
 .thread693:                                       ; preds = %._crit_edge765, %._crit_edge773, %._crit_edge781.a, %._crit_edge789, %.thread693.sink.split, %bb.bg
-  %.32703 = phi i32 [ 1, %._crit_edge789 ], [ %.32703.ph, %.thread693.sink.split ], [ 1, %bb.bg ], [ 1, %._crit_edge781.a ], [ 1, %._crit_edge773 ], [ 1, %._crit_edge765 ]
-  %.5529702 = phi ptr [ null, %._crit_edge789 ], [ %.5529702.ph, %.thread693.sink.split ], [ null, %bb.bg ], [ null, %._crit_edge781.a ], [ null, %._crit_edge773 ], [ null, %._crit_edge765 ]
-  %.5535701 = phi ptr [ %i.jd, %._crit_edge789 ], [ %.5535701.ph, %.thread693.sink.split ], [ null, %bb.bg ], [ %i.jd, %._crit_edge781.a ], [ %i.jd, %._crit_edge773 ], [ %i.jd, %._crit_edge765 ]
-  %.1537700 = phi ptr [ %i.aj, %._crit_edge789 ], [ %i.pq, %.thread693.sink.split ], [ %i.aj, %bb.bg ], [ %i.aj, %._crit_edge781.a ], [ %i.aj, %._crit_edge773 ], [ %i.aj, %._crit_edge765 ]
+  %.32703 = phi i32 [ 1, %._crit_edge789 ], [ 1, %bb.bg ], [ %.32703.ph, %.thread693.sink.split ], [ 1, %._crit_edge773 ], [ 1, %._crit_edge781.a ], [ 1, %._crit_edge765 ]
+  %.5529702 = phi ptr [ null, %._crit_edge789 ], [ null, %bb.bg ], [ %.5529702.ph, %.thread693.sink.split ], [ null, %._crit_edge773 ], [ null, %._crit_edge781.a ], [ null, %._crit_edge765 ]
+  %.5535701 = phi ptr [ %i.jd, %._crit_edge789 ], [ null, %bb.bg ], [ %.5535701.ph, %.thread693.sink.split ], [ %i.jd, %._crit_edge773 ], [ %i.jd, %._crit_edge781.a ], [ %i.jd, %._crit_edge765 ]
+  %.1537700 = phi ptr [ %i.aj, %._crit_edge789 ], [ %i.aj, %bb.bg ], [ %i.pq, %.thread693.sink.split ], [ %i.aj, %._crit_edge773 ], [ %i.aj, %._crit_edge781.a ], [ %i.aj, %._crit_edge765 ]
   call void @TIFFClose(ptr noundef nonnull %.1537700) #15
   br label %.thread681
 

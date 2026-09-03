@@ -202,7 +202,12 @@ bb.s:                                             ; preds = %_ZN4mlir9Operation1
   %i.dg = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE11getValuePtrEPNS_15ilist_node_implIS5_EE(ptr noundef %i.df) #18
   %i.dh = call i8 @_ZN4mlir8dataflow16DeadCodeAnalysis21initializeRecursivelyEPNS_9OperationE(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull %i.dg)
   %i.di = trunc nuw i8 %i.dh to i1
-  br i1 %i.di, label %bb.t, label %"_ZN4llvm10scope_exitIZN4mlir8dataflow16DeadCodeAnalysis21initializeRecursivelyEPNS1_9OperationEE3$_0ED2Ev.exit"
+  br i1 %i.di, label %bb.t, label %"_ZN4llvm10scope_exitIZN4mlir8dataflow16DeadCodeAnalysis21initializeRecursivelyEPNS1_9OperationEE3$_0ED2Ev.exit.thread"
+
+"_ZN4llvm10scope_exitIZN4mlir8dataflow16DeadCodeAnalysis21initializeRecursivelyEPNS1_9OperationEE3$_0ED2Ev.exit.thread": ; preds = %.lr.ph
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
+  br label %.sink.split
 
 bb.t:                                             ; preds = %.lr.ph
   %i.dj = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN4mlir6Region10OpIteratorppEv(ptr noundef nonnull align 8 dereferenceable(24) %7) #18 ; 0 uses
@@ -217,13 +222,8 @@ bb.t:                                             ; preds = %.lr.ph
   %.not36 = icmp eq ptr %i.dl, %i.db
   br i1 %.not36, label %.sink.split, label %bb.s
 
-"_ZN4llvm10scope_exitIZN4mlir8dataflow16DeadCodeAnalysis21initializeRecursivelyEPNS1_9OperationEE3$_0ED2Ev.exit": ; preds = %.lr.ph
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %._crit_edge, %bb.r, %"_ZN4llvm10scope_exitIZN4mlir8dataflow16DeadCodeAnalysis21initializeRecursivelyEPNS1_9OperationEE3$_0ED2Ev.exit"
-  %.sroa.026.5.ph = phi i8 [ 0, %"_ZN4llvm10scope_exitIZN4mlir8dataflow16DeadCodeAnalysis21initializeRecursivelyEPNS1_9OperationEE3$_0ED2Ev.exit" ], [ 1, %bb.r ], [ 1, %._crit_edge ]
+.sink.split:                                      ; preds = %._crit_edge, %bb.r, %"_ZN4llvm10scope_exitIZN4mlir8dataflow16DeadCodeAnalysis21initializeRecursivelyEPNS1_9OperationEE3$_0ED2Ev.exit.thread"
+  %.sroa.026.5.ph = phi i8 [ 0, %"_ZN4llvm10scope_exitIZN4mlir8dataflow16DeadCodeAnalysis21initializeRecursivelyEPNS1_9OperationEE3$_0ED2Ev.exit.thread" ], [ 1, %bb.r ], [ 1, %._crit_edge ]
   store i8 %i.by, ptr %i.bx, align 8, !tbaa !148
   br label %bb.u
 

@@ -205,14 +205,14 @@ _ZN5clanglsERKNS_19StreamingDiagnosticENS_17OpenACCClauseKindE.exit: ; preds = %
   %i.ee = zext i8 %i.ec to i64
   %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.eb, i64 %i.ee
   store i64 %i.dv, ptr %i.ef, align 8, !tbaa !81
-  br label %17
+  br label %.thread77
 
 bb.v:                                             ; preds = %_ZN5clanglsINS_20OpenACCDirectiveKindEEERKNS_8SemaBase21SemaDiagnosticBuilderES5_RKT_.exit
   %i.eg = getelementptr inbounds nuw i8, ptr %16, i64 128
   %i.eh = getelementptr inbounds nuw i8, ptr %16, i64 132
   %i.ei = load i8, ptr %i.eh, align 4, !tbaa !55, !range !52, !noundef !53
   %i.ej = trunc nuw i8 %i.ei to i1
-  br i1 %i.ej, label %bb.w, label %17
+  br i1 %i.ej, label %bb.w, label %.thread77
 
 bb.w:                                             ; preds = %bb.v
   %i.ek = call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK5clang8SemaBase21SemaDiagnosticBuilder22getDeviceDeferredDiagsEv(ptr noundef nonnull align 8 dereferenceable(136) %16) #17
@@ -242,7 +242,7 @@ _ZN5clang16CanonicalDeclPtrIKNS_12FunctionDeclEEC2EPS2_.exit.i57: ; preds = %bb.
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ex, i64 8
   %i.ez = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN5clanglsERKNS_19StreamingDiagnosticENS_17OpenACCClauseKindE(ptr noundef nonnull align 8 dereferenceable(20) %i.ey, i8 noundef zeroext %i.dk) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #17
-  br label %17
+  br label %.thread77
 
 .critedge.thread:                                 ; preds = %.critedge..critedge.thread_crit_edge, %bb.f, %bb.e
   %i.fa = phi i64 [ %.pre, %.critedge..critedge.thread_crit_edge ], [ %i.q, %bb.f ], [ %i.q, %bb.e ] ; 2 uses
@@ -250,6 +250,11 @@ _ZN5clang16CanonicalDeclPtrIKNS_12FunctionDeclEEC2EPS2_.exit.i57: ; preds = %bb.
   %i.fb = and i64 %i.fa, 4294967295
   %i.fc = icmp samesign ult i64 %indvars.iv.next, %i.fb
   br i1 %i.fc, label %bb.e, label %._crit_edge, !llvm.loop !430
+
+.thread77:                                        ; preds = %_ZN5clanglsERKNS_19StreamingDiagnosticENS_17OpenACCClauseKindE.exit, %bb.v, %_ZN5clang16CanonicalDeclPtrIKNS_12FunctionDeclEEC2EPS2_.exit.i57
+  call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %16) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %16) #17
+  br label %bb.z
 
 ._crit_edge:                                      ; preds = %.critedge.thread, %bb.d
   %i.fd = getelementptr inbounds nuw i8, ptr %.sroa.063.086, i64 8 ; 3 uses
@@ -274,11 +279,6 @@ _ZN4llvm20filter_iterator_baseIPKPKN5clang13OpenACCClauseENS_6detail17IsaCheckPr
   %.not81 = icmp eq ptr %.sroa.063.2, %i.b
   br i1 %.not81, label %.thread77.a, label %bb.d
 
-17:                                               ; preds = %_ZN5clanglsERKNS_19StreamingDiagnosticENS_17OpenACCClauseKindE.exit, %bb.v, %_ZN5clang16CanonicalDeclPtrIKNS_12FunctionDeclEEC2EPS2_.exit.i57
-  call void @_ZN5clang8SemaBase21SemaDiagnosticBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %16) #17
-  call void @llvm.lifetime.end.p0(ptr nonnull %16) #17
-  br label %bb.z
-
 .thread77.a:                                      ; preds = %bb.c, %_ZN4llvm20filter_iterator_baseIPKPKN5clang13OpenACCClauseENS_6detail17IsaCheckPredicateIJNS1_17OpenACCGangClauseEEEESt26bidirectional_iterator_tagEppEv.exit, %_ZN4llvm17make_filter_rangeIRNS_8ArrayRefIPKN5clang13OpenACCClauseEEENS_6detail17IsaCheckPredicateIJNS2_17OpenACCGangClauseEEEEEENS_14iterator_rangeINS_20filter_iterator_implIDTcl9adl_beginclsr3stdE7declvalIRT_EEEET0_NSt11conditionalIXsr3stdE12is_base_of_vISt26bidirectional_iterator_tagNSt15iterator_traitsISG_E17iterator_categoryEEESJ_St20forward_iterator_tagE4typeEEEEEOSE_SH_.exit, %bb.a
   %i.fj = call noundef nonnull align 8 dereferenceable(23904) ptr @_ZNK5clang8SemaBase13getASTContextEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #17
   %.sroa.08.0.copyload = load ptr, ptr %7, align 8, !tbaa !433
@@ -287,8 +287,8 @@ _ZN4llvm20filter_iterator_baseIPKPKN5clang13OpenACCClauseENS_6detail17IsaCheckPr
   %i.fk = call noundef ptr @_ZN5clang22OpenACCReductionClause6CreateERKNS_10ASTContextENS_14SourceLocationES4_NS_24OpenACCReductionOperatorEN4llvm8ArrayRefIPNS_4ExprEEENS7_INS_33OpenACCReductionRecipeWithStorageEEES4_(ptr noundef nonnull align 8 dereferenceable(23904) %i.fj, i32 %4, i32 %5, i8 noundef zeroext %6, ptr %.sroa.08.0.copyload, i64 %.sroa.2.0.copyload, ptr noundef nonnull byval(%"class.llvm::ArrayRef.502") align 8 %8, i32 %9) #17
   br label %bb.z
 
-bb.z:                                             ; preds = %17, %.thread77.a
-  %.6 = phi ptr [ %i.fk, %.thread77.a ], [ null, %17 ]
+bb.z:                                             ; preds = %.thread77, %.thread77.a
+  %.6 = phi ptr [ %i.fk, %.thread77.a ], [ null, %.thread77 ]
   ret ptr %.6
 }
 

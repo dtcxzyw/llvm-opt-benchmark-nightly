@@ -202,12 +202,12 @@ bb.cf:                                            ; preds = %bb.ce, %bb.bz
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
   br label %bb.cg
 
-.loopexit:                                        ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit103, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit75
-  br i1 %i.ci, label %bb.q, label %.thread113, !llvm.loop !130
-
 .preheader._crit_edge:                            ; preds = %.preheader, %bb.au
   store i64 %.028136, ptr %2, align 8, !tbaa !33
   br label %.thread113
+
+.loopexit:                                        ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit103, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit75
+  br i1 %i.ci, label %bb.q, label %.thread113, !llvm.loop !130
 
 bb.cg:                                            ; preds = %bb.as, %bb.at, %bb.cf, %bb.p
   %.pn45.pn.pn.pn.pn = phi { ptr, i32 } [ %i.ch, %bb.p ], [ %.pn45.pn.pn, %bb.cf ], [ %i.ij, %bb.at ], [ %.pn, %bb.as ]
