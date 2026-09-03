@@ -27,7 +27,7 @@ bb.a:
   %rt.bound1 = icmp ugt i64 %i.c, %i.a
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
   %rt.guard = freeze i1 %rt.conflict
-  br i1 %rt.guard, label %.rtscalar, label %.rtvec
+  br i1 %rt.guard, label %.rtscalar, label %.rtvec, !prof !27
 
 .rtvec:                                           ; preds = %bb.a
   store i32 %1, ptr %0, align 8, !tbaa !11
@@ -170,9 +170,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   store <4 x double> splat (double +qnan), ptr %2, align 8, !tbaa !14
-  %i.d = load ptr, ptr %0, align 8, !tbaa !31     ; 2 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !32     ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !31   ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !32   ; 2 uses
   %.not13 = icmp eq ptr %i.d, %i.f
   br i1 %.not13, label %._crit_edge.thread, label %.lr.ph
 
@@ -193,7 +193,7 @@ bb.a:
   br i1 %i.j, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %i.n, i64 32, i1 false), !tbaa.struct !32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %i.n, i64 32, i1 false), !tbaa.struct !33
   br label %_ZN4geos4geom8Envelope15expandToIncludeERKS1_.exit
 
 bb.c:                                             ; preds = %.lr.ph
@@ -229,13 +229,13 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %i.n, i64 24
-  %i.z = load double, ptr %i.y, align 8, !tbaa !33 ; 2 uses
-  %i.aa = load double, ptr %i.c, align 8, !tbaa !33
+  %i.z = load double, ptr %i.y, align 8, !tbaa !34 ; 2 uses
+  %i.aa = load double, ptr %i.c, align 8, !tbaa !34
   %i.ab = fcmp ogt double %i.z, %i.aa
   br i1 %i.ab, label %bb.j, label %_ZN4geos4geom8Envelope15expandToIncludeERKS1_.exit
 
 bb.j:                                             ; preds = %bb.i
-  store double %i.z, ptr %i.c, align 8, !tbaa !33
+  store double %i.z, ptr %i.c, align 8, !tbaa !34
   br label %_ZN4geos4geom8Envelope15expandToIncludeERKS1_.exit
 
 _ZN4geos4geom8Envelope15expandToIncludeERKS1_.exit: ; preds = %bb.j, %bb.i, %bb.b
@@ -246,8 +246,8 @@ _ZN4geos4geom8Envelope15expandToIncludeERKS1_.exit: ; preds = %bb.j, %bb.i, %bb.
 bb.k:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #4
   call void @_ZN4geos5shape7fractal14HilbertEncoderC1EjRNS_4geom8EnvelopeE(ptr noundef nonnull align 8 dereferenceable(40) %3, i32 noundef 12, ptr noundef nonnull align 8 dereferenceable(32) %2)
-  %i.ad = load ptr, ptr %0, align 8, !tbaa !31    ; 6 uses
-  %i.ae = load ptr, ptr %i.e, align 8, !tbaa !31  ; 6 uses
+  %i.ad = load ptr, ptr %0, align 8, !tbaa !32    ; 6 uses
+  %i.ae = load ptr, ptr %i.e, align 8, !tbaa !32  ; 6 uses
   %.not.i.i = icmp eq ptr %i.ad, %i.ae
   br i1 %.not.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEEZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEvT_SG_T0_.exit, label %bb.l
 
@@ -296,7 +296,7 @@ bb.n:                                             ; preds = %_ZSt25__unguarded_l
   %i.ax = load ptr, ptr %i.as, align 8, !tbaa !25
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 176
   %i.az = load ptr, ptr %i.ay, align 8
-  %i.ba = call noundef ptr %i.az(ptr noundef nonnull align 8 dereferenceable(40) %i.as), !inline_history !27 ; 4 uses
+  %i.ba = call noundef ptr %i.az(ptr noundef nonnull align 8 dereferenceable(40) %i.as), !inline_history !28 ; 4 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   %i.bc = load double, ptr %i.bb, align 8, !tbaa !13 ; 2 uses
   %i.bd = fcmp uno double %i.bc, 0.000000e+00     ; 2 uses
@@ -352,7 +352,7 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i.i.i.
   %i.ch = load ptr, ptr %i.aw, align 8, !tbaa !25
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 176
   %i.cj = load ptr, ptr %i.ci, align 8
-  %i.ck = call noundef ptr %i.cj(ptr noundef nonnull align 8 dereferenceable(40) %i.aw), !inline_history !27 ; 4 uses
+  %i.ck = call noundef ptr %i.cj(ptr noundef nonnull align 8 dereferenceable(40) %i.aw), !inline_history !28 ; 4 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 8
   %i.cm = load double, ptr %i.cl, align 8, !tbaa !13 ; 2 uses
   %i.cn = fcmp uno double %i.cm, 0.000000e+00     ; 2 uses
@@ -414,7 +414,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8Geo
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
   %i.ds = getelementptr inbounds nuw i8, ptr %.sroa.0.08.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.ds, %i.ae
-  br i1 %.not.i.i.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEEZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEvT_SG_T0_.exit, label %bb.n, !llvm.loop !28
+  br i1 %.not.i.i.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEEZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEvT_SG_T0_.exit, label %bb.n, !llvm.loop !29
 
 bb.y:                                             ; preds = %bb.l
   call fastcc void @_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_SJ_T0_(ptr %i.ad, ptr %i.ae, ptr nonnull %3)
@@ -454,7 +454,7 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEET_SJ_SJ_T0_.exit
   %i.l = icmp eq i64 %i.nl, 0
-  br i1 %i.l, label %._crit_edge, label %.lr.ph120, !llvm.loop !34
+  br i1 %i.l, label %._crit_edge, label %.lr.ph120, !llvm.loop !35
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
   %.lcssa116 = phi i64 [ %i.d, %.lr.ph ], [ %i.un, %bb.b ] ; 2 uses
@@ -490,7 +490,7 @@ bb.c:                                             ; preds = %_ZSt13__adjust_heap
   %i.af = load ptr, ptr %i.ad, align 8, !tbaa !25
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 176
   %i.ah = load ptr, ptr %i.ag, align 8
-  %i.ai = tail call noundef ptr %i.ah(ptr noundef nonnull align 8 dereferenceable(40) %i.ad), !inline_history !35 ; 4 uses
+  %i.ai = tail call noundef ptr %i.ah(ptr noundef nonnull align 8 dereferenceable(40) %i.ad), !inline_history !36 ; 4 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
   %i.ak = load double, ptr %i.aj, align 8, !tbaa !13 ; 2 uses
   %i.al = fcmp uno double %i.ak, 0.000000e+00     ; 2 uses
@@ -546,7 +546,7 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i11.i.i.
   %i.bp = load ptr, ptr %i.ae, align 8, !tbaa !25
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 176
   %i.br = load ptr, ptr %i.bq, align 8
-  %i.bs = tail call noundef ptr %i.br(ptr noundef nonnull align 8 dereferenceable(40) %i.ae), !inline_history !35 ; 4 uses
+  %i.bs = tail call noundef ptr %i.br(ptr noundef nonnull align 8 dereferenceable(40) %i.ae), !inline_history !36 ; 4 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   %i.bu = load double, ptr %i.bt, align 8, !tbaa !13 ; 2 uses
   %i.bv = fcmp uno double %i.bu, 0.000000e+00     ; 2 uses
@@ -606,7 +606,7 @@ _ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6
   %i.dc = getelementptr inbounds [8 x i8], ptr %0, i64 %.033.i.i.i.i
   store ptr %i.db, ptr %i.dc, align 8, !tbaa !23
   %i.dd = icmp slt i64 %spec.select.i.i.i.i, %i.p
-  br i1 %i.dd, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i, !llvm.loop !36
+  br i1 %i.dd, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i, !llvm.loop !37
 
 ._crit_edge.i.i.i.i:                              ; preds = %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit15.i.i.i, %bb.c
   %.0.lcssa.i.i.i.i = phi i64 [ %.09.i.i.i, %bb.c ], [ %spec.select.i.i.i.i, %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit15.i.i.i ] ; 2 uses
@@ -633,7 +633,7 @@ bb.o:                                             ; preds = %bb.n, %._crit_edge.
   %i.dj = load ptr, ptr %i.di, align 8, !tbaa !25
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 176
   %i.dl = load ptr, ptr %i.dk, align 8
-  %i.dm = tail call noundef ptr %i.dl(ptr noundef nonnull align 8 dereferenceable(40) %i.di), !inline_history !35 ; 4 uses
+  %i.dm = tail call noundef ptr %i.dl(ptr noundef nonnull align 8 dereferenceable(40) %i.di), !inline_history !36 ; 4 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dm, i64 8
   %i.do = load double, ptr %i.dn, align 8, !tbaa !13 ; 2 uses
   %i.dp = fcmp uno double %i.do, 0.000000e+00     ; 2 uses
@@ -689,7 +689,7 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i.i.i:
   %i.et = load ptr, ptr %i.w, align 8, !tbaa !25
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 176
   %i.ev = load ptr, ptr %i.eu, align 8
-  %i.ew = tail call noundef ptr %i.ev(ptr noundef nonnull align 8 dereferenceable(40) %i.w), !inline_history !35 ; 4 uses
+  %i.ew = tail call noundef ptr %i.ev(ptr noundef nonnull align 8 dereferenceable(40) %i.w), !inline_history !36 ; 4 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 8
   %i.ey = load double, ptr %i.ex, align 8, !tbaa !13 ; 2 uses
   %i.ez = fcmp uno double %i.ey, 0.000000e+00     ; 2 uses
@@ -750,7 +750,7 @@ bb.z:                                             ; preds = %_ZZN4geos5shape7fra
   %i.gf = getelementptr inbounds [8 x i8], ptr %0, i64 %.018.i.i.i.i.i
   store ptr %i.ge, ptr %i.gf, align 8, !tbaa !23
   %i.gg = icmp sgt i64 %.0919.i.i.i.i.i, %.09.i.i.i
-  br i1 %i.gg, label %.lr.ph.i.i.i.i.i, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_T0_SK_T1_T2_.exit.i.i.i, !llvm.loop !37
+  br i1 %i.gg, label %.lr.ph.i.i.i.i.i, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_T0_SK_T1_T2_.exit.i.i.i, !llvm.loop !38
 
 _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_T0_SK_T1_T2_.exit.i.i.i: ; preds = %bb.z, %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit.i.i.i, %bb.o
   %.0.lcssa.i.i.i.i.i = phi i64 [ %.1.i.i.i.i, %bb.o ], [ %.018.i.i.i.i.i, %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit.i.i.i ], [ %.0919.i.i.i.i.i, %bb.z ]
@@ -758,7 +758,7 @@ _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vec
   store ptr %i.w, ptr %i.gh, align 8, !tbaa !23
   %.not.i.i.i = icmp eq i64 %.09.i.i.i, 0
   %i.gi = add nsw i64 %.09.i.i.i, -1
-  br i1 %.not.i.i.i, label %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_SJ_RT0_.exit.i.i, label %bb.c, !llvm.loop !38
+  br i1 %.not.i.i.i, label %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_SJ_RT0_.exit.i.i, label %bb.c, !llvm.loop !39
 
 _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_SJ_RT0_.exit.i.i: ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_T0_SK_T1_T2_.exit.i.i.i
   %i.gj = icmp sgt i64 %.lcssa114, 8
@@ -790,7 +790,7 @@ _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vecto
   %i.ha = load ptr, ptr %i.gy, align 8, !tbaa !25
   %i.hb = getelementptr inbounds nuw i8, ptr %i.ha, i64 176
   %i.hc = load ptr, ptr %i.hb, align 8
-  %i.hd = tail call noundef ptr %i.hc(ptr noundef nonnull align 8 dereferenceable(40) %i.gy), !inline_history !39 ; 4 uses
+  %i.hd = tail call noundef ptr %i.hc(ptr noundef nonnull align 8 dereferenceable(40) %i.gy), !inline_history !40 ; 4 uses
   %i.he = getelementptr inbounds nuw i8, ptr %i.hd, i64 8
   %i.hf = load double, ptr %i.he, align 8, !tbaa !13 ; 2 uses
   %i.hg = fcmp uno double %i.hf, 0.000000e+00     ; 2 uses
@@ -846,7 +846,7 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i4.i.i: 
   %i.ik = load ptr, ptr %i.gz, align 8, !tbaa !25
   %i.il = getelementptr inbounds nuw i8, ptr %i.ik, i64 176
   %i.im = load ptr, ptr %i.il, align 8
-  %i.in = tail call noundef ptr %i.im(ptr noundef nonnull align 8 dereferenceable(40) %i.gz), !inline_history !39 ; 4 uses
+  %i.in = tail call noundef ptr %i.im(ptr noundef nonnull align 8 dereferenceable(40) %i.gz), !inline_history !40 ; 4 uses
   %i.io = getelementptr inbounds nuw i8, ptr %i.in, i64 8
   %i.ip = load double, ptr %i.io, align 8, !tbaa !13 ; 2 uses
   %i.iq = fcmp uno double %i.ip, 0.000000e+00     ; 2 uses
@@ -906,7 +906,7 @@ _ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6
   %i.jx = getelementptr inbounds [8 x i8], ptr %0, i64 %.033.i.i.i29.i
   store ptr %i.jw, ptr %i.jx, align 8, !tbaa !23
   %i.jy = icmp slt i64 %spec.select.i.i.i30.i, %i.gr
-  br i1 %i.jy, label %.lr.ph.i.i.i28.i, label %._crit_edge.i.i.i10.i, !llvm.loop !36
+  br i1 %i.jy, label %.lr.ph.i.i.i28.i, label %._crit_edge.i.i.i10.i, !llvm.loop !37
 
 ._crit_edge.i.i.i10.i:                            ; preds = %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit8.i.i, %.lr.ph.i9.i
   %.0.lcssa.i.i.i11.i = phi i64 [ 0, %.lr.ph.i9.i ], [ %spec.select.i.i.i30.i, %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit8.i.i ] ; 5 uses
@@ -946,7 +946,7 @@ bb.al:                                            ; preds = %bb.ak, %._crit_edge
   %i.kl = load ptr, ptr %i.kk, align 8, !tbaa !25
   %i.km = getelementptr inbounds nuw i8, ptr %i.kl, i64 176
   %i.kn = load ptr, ptr %i.km, align 8
-  %i.ko = tail call noundef ptr %i.kn(ptr noundef nonnull align 8 dereferenceable(40) %i.kk), !inline_history !39 ; 4 uses
+  %i.ko = tail call noundef ptr %i.kn(ptr noundef nonnull align 8 dereferenceable(40) %i.kk), !inline_history !40 ; 4 uses
   %i.kp = getelementptr inbounds nuw i8, ptr %i.ko, i64 8
   %i.kq = load double, ptr %i.kp, align 8, !tbaa !13 ; 2 uses
   %i.kr = fcmp uno double %i.kq, 0.000000e+00     ; 2 uses
@@ -1002,7 +1002,7 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i19.i:
   %i.lv = load ptr, ptr %i.gl, align 8, !tbaa !25
   %i.lw = getelementptr inbounds nuw i8, ptr %i.lv, i64 176
   %i.lx = load ptr, ptr %i.lw, align 8
-  %i.ly = tail call noundef ptr %i.lx(ptr noundef nonnull align 8 dereferenceable(40) %i.gl), !inline_history !39 ; 4 uses
+  %i.ly = tail call noundef ptr %i.lx(ptr noundef nonnull align 8 dereferenceable(40) %i.gl), !inline_history !40 ; 4 uses
   %i.lz = getelementptr inbounds nuw i8, ptr %i.ly, i64 8
   %i.ma = load double, ptr %i.lz, align 8, !tbaa !13 ; 2 uses
   %i.mb = fcmp uno double %i.ma, 0.000000e+00     ; 2 uses
@@ -1063,14 +1063,14 @@ bb.aw:                                            ; preds = %_ZZN4geos5shape7fra
   %i.nh = getelementptr inbounds [8 x i8], ptr %0, i64 %.018.i.i.i.i15.i
   store ptr %i.ng, ptr %i.nh, align 8, !tbaa !23
   %.not7.i.i26.i = icmp eq i64 %.0919.i.i56.i.i17.i, 0
-  br i1 %.not7.i.i26.i, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_SJ_SJ_RT0_.exit.i24.i, label %.lr.ph.i.i.i.i14.i, !llvm.loop !37
+  br i1 %.not7.i.i26.i, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_SJ_SJ_RT0_.exit.i24.i, label %.lr.ph.i.i.i.i14.i, !llvm.loop !38
 
 _ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_SJ_SJ_RT0_.exit.i24.i: ; preds = %bb.aw, %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit.i22.i, %bb.al
   %.0.lcssa.i.i.i.i25.i = phi i64 [ 0, %bb.al ], [ %.018.i.i.i.i15.i, %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit.i22.i ], [ 0, %bb.aw ]
   %i.ni = getelementptr inbounds [8 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i25.i
   store ptr %i.gl, ptr %i.ni, align 8, !tbaa !23
   %i.nj = icmp sgt i64 %i.go, 8
-  br i1 %i.nj, label %.lr.ph.i9.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_SJ_SJ_T0_.exit, !llvm.loop !40
+  br i1 %i.nj, label %.lr.ph.i9.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_SJ_SJ_T0_.exit, !llvm.loop !41
 
 .lr.ph120:                                        ; preds = %.lr.ph, %bb.b
   %storemerge24119 = phi ptr [ %.sroa.020.1.i.i, %bb.b ], [ %1, %.lr.ph ] ; 3 uses
@@ -1165,7 +1165,7 @@ bb.bi:                                            ; preds = %_ZZN4geos5shape7fra
   %i.op = load ptr, ptr %i.on, align 8, !tbaa !25
   %i.oq = getelementptr inbounds nuw i8, ptr %i.op, i64 176
   %i.or = load ptr, ptr %i.oq, align 8
-  %i.os = tail call noundef ptr %i.or(ptr noundef nonnull align 8 dereferenceable(40) %i.on), !inline_history !41 ; 4 uses
+  %i.os = tail call noundef ptr %i.or(ptr noundef nonnull align 8 dereferenceable(40) %i.on), !inline_history !42 ; 4 uses
   %i.ot = getelementptr inbounds nuw i8, ptr %i.os, i64 8
   %i.ou = load double, ptr %i.ot, align 8, !tbaa !13 ; 2 uses
   %i.ov = fcmp uno double %i.ou, 0.000000e+00     ; 2 uses
@@ -1221,7 +1221,7 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i.i.i: ;
   %i.pz = load ptr, ptr %i.oo, align 8, !tbaa !25
   %i.qa = getelementptr inbounds nuw i8, ptr %i.pz, i64 176
   %i.qb = load ptr, ptr %i.qa, align 8
-  %i.qc = tail call noundef ptr %i.qb(ptr noundef nonnull align 8 dereferenceable(40) %i.oo), !inline_history !41 ; 4 uses
+  %i.qc = tail call noundef ptr %i.qb(ptr noundef nonnull align 8 dereferenceable(40) %i.oo), !inline_history !42 ; 4 uses
   %i.qd = getelementptr inbounds nuw i8, ptr %i.qc, i64 8
   %i.qe = load double, ptr %i.qd, align 8, !tbaa !13 ; 2 uses
   %i.qf = fcmp uno double %i.qe, 0.000000e+00     ; 2 uses
@@ -1276,7 +1276,7 @@ _ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6
   %i.ri = tail call noundef i32 @_ZN4geos5shape7fractal11HilbertCode6encodeEjjj(i32 noundef %i.rh, i32 noundef %.010.i3.i.i.i, i32 noundef %.0.i4.i.i.i)
   %i.rj = icmp ugt i32 %i.py, %i.ri
   %i.rk = getelementptr inbounds nuw i8, ptr %.sroa.020.1.i.i, i64 8 ; 2 uses
-  br i1 %i.rj, label %bb.bi, label %.preheader.i.i, !llvm.loop !42
+  br i1 %i.rj, label %bb.bi, label %.preheader.i.i, !llvm.loop !43
 
 .preheader.i.i:                                   ; preds = %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit.i.i, %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit13.i.i
   %.sroa.017.0.pn.i.i = phi ptr [ %.sroa.017.1.i.i, %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit13.i.i ], [ %.sroa.017.0.i.i, %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit.i.i ]
@@ -1286,7 +1286,7 @@ _ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6
   %i.rn = load ptr, ptr %i.rl, align 8, !tbaa !25
   %i.ro = getelementptr inbounds nuw i8, ptr %i.rn, i64 176
   %i.rp = load ptr, ptr %i.ro, align 8
-  %i.rq = tail call noundef ptr %i.rp(ptr noundef nonnull align 8 dereferenceable(40) %i.rl), !inline_history !41 ; 4 uses
+  %i.rq = tail call noundef ptr %i.rp(ptr noundef nonnull align 8 dereferenceable(40) %i.rl), !inline_history !42 ; 4 uses
   %i.rr = getelementptr inbounds nuw i8, ptr %i.rq, i64 8
   %i.rs = load double, ptr %i.rr, align 8, !tbaa !13 ; 2 uses
   %i.rt = fcmp uno double %i.rs, 0.000000e+00     ; 2 uses
@@ -1342,7 +1342,7 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i9.i.i: 
   %i.sx = load ptr, ptr %i.rm, align 8, !tbaa !25
   %i.sy = getelementptr inbounds nuw i8, ptr %i.sx, i64 176
   %i.sz = load ptr, ptr %i.sy, align 8
-  %i.ta = tail call noundef ptr %i.sz(ptr noundef nonnull align 8 dereferenceable(40) %i.rm), !inline_history !41 ; 4 uses
+  %i.ta = tail call noundef ptr %i.sz(ptr noundef nonnull align 8 dereferenceable(40) %i.rm), !inline_history !42 ; 4 uses
   %i.tb = getelementptr inbounds nuw i8, ptr %i.ta, i64 8
   %i.tc = load double, ptr %i.tb, align 8, !tbaa !13 ; 2 uses
   %i.td = fcmp uno double %i.tc, 0.000000e+00     ; 2 uses
@@ -1396,7 +1396,7 @@ _ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6
   %i.uf = load i32, ptr %3, align 8, !tbaa !11
   %i.ug = tail call noundef i32 @_ZN4geos5shape7fractal11HilbertCode6encodeEjjj(i32 noundef %i.uf, i32 noundef %.010.i3.i11.i.i, i32 noundef %.0.i4.i12.i.i)
   %i.uh = icmp ugt i32 %i.sw, %i.ug
-  br i1 %i.uh, label %.preheader.i.i, label %bb.cd, !llvm.loop !43
+  br i1 %i.uh, label %.preheader.i.i, label %bb.cd, !llvm.loop !44
 
 bb.cd:                                            ; preds = %_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_.exit13.i.i
   %i.ui = icmp ult ptr %.sroa.020.1.i.i, %.sroa.017.1.i.i
@@ -1407,7 +1407,7 @@ bb.ce:                                            ; preds = %bb.cd
   %i.uk = load ptr, ptr %.sroa.017.1.i.i, align 8, !tbaa !23
   store ptr %i.uk, ptr %.sroa.020.1.i.i, align 8, !tbaa !23
   store ptr %i.uj, ptr %.sroa.017.1.i.i, align 8, !tbaa !23
-  br label %bb.bh, !llvm.loop !44
+  br label %bb.bh, !llvm.loop !45
 
 _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEET_SJ_SJ_T0_.exit: ; preds = %bb.cd
   tail call fastcc void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEElNS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_SJ_T0_T1_(ptr nonnull %.sroa.020.1.i.i, ptr %storemerge24119, i64 noundef %i.nl, ptr nonnull %3)
@@ -1415,7 +1415,7 @@ _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8G
   %i.um = sub i64 %i.ul, %i.a                     ; 2 uses
   %i.un = ashr exact i64 %i.um, 3                 ; 3 uses
   %i.uo = icmp sgt i64 %i.un, 16
-  br i1 %i.uo, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_SJ_SJ_T0_.exit, !llvm.loop !34
+  br i1 %i.uo, label %bb.b, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_SJ_SJ_T0_.exit, !llvm.loop !35
 
 _ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_SJ_SJ_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEET_SJ_SJ_T0_.exit, %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_SJ_SJ_RT0_.exit.i24.i, %bb.a, %_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_SJ_RT0_.exit.i.i
   ret void
@@ -1424,7 +1424,7 @@ _ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6ve
 ; Function Attrs: mustprogress uwtable
 define internal fastcc noundef zeroext i1 @_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !47, !nonnull !48, !align !49 ; 5 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !48, !nonnull !49, !align !50 ; 5 uses
   %i.b = load ptr, ptr %1, align 8, !tbaa !25
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 176
   %i.d = load ptr, ptr %i.c, align 8
@@ -1485,7 +1485,7 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit: ; preds
   %.0.i = phi i32 [ %i.am, %bb.f ], [ 0, %bb.e ], [ 0, %bb.d ]
   %i.an = load i32, ptr %i.a, align 8, !tbaa !11
   %i.ao = tail call noundef i32 @_ZN4geos5shape7fractal11HilbertCode6encodeEjjj(i32 noundef %i.an, i32 noundef %.010.i, i32 noundef %.0.i)
-  %i.ap = load ptr, ptr %0, align 8, !tbaa !47, !nonnull !48, !align !49 ; 5 uses
+  %i.ap = load ptr, ptr %0, align 8, !tbaa !48, !nonnull !49, !align !50 ; 5 uses
   %i.aq = load ptr, ptr %2, align 8, !tbaa !25
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 176
   %i.as = load ptr, ptr %i.ar, align 8
@@ -1589,7 +1589,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = sub i64 %i.k, %i.f                       ; 3 uses
   %i.m = ashr exact i64 %i.l, 3                   ; 2 uses
   %i.n = icmp sgt i64 %i.m, 1
-  br i1 %i.n, label %bb.d, label %bb.e, !prof !51
+  br i1 %i.n, label %bb.d, label %bb.e, !prof !52
 
 bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %.pn19, i64 16
@@ -1630,7 +1630,7 @@ bb.g:                                             ; preds = %bb.b
   %i.z = load ptr, ptr %i.u, align 8, !tbaa !25
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 176
   %i.ab = load ptr, ptr %i.aa, align 8
-  %i.ac = tail call noundef ptr %i.ab(ptr noundef nonnull align 8 dereferenceable(40) %i.u), !inline_history !52 ; 4 uses
+  %i.ac = tail call noundef ptr %i.ab(ptr noundef nonnull align 8 dereferenceable(40) %i.u), !inline_history !53 ; 4 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.ae = load double, ptr %i.ad, align 8, !tbaa !13 ; 2 uses
   %i.af = fcmp uno double %i.ae, 0.000000e+00     ; 2 uses
@@ -1686,7 +1686,7 @@ _ZN4geos5shape7fractal14HilbertEncoder6encodeEPKNS_4geom8EnvelopeE.exit.i: ; pre
   %i.bj = load ptr, ptr %i.y, align 8, !tbaa !25
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 176
   %i.bl = load ptr, ptr %i.bk, align 8
-  %i.bm = tail call noundef ptr %i.bl(ptr noundef nonnull align 8 dereferenceable(40) %i.y), !inline_history !52 ; 4 uses
+  %i.bm = tail call noundef ptr %i.bl(ptr noundef nonnull align 8 dereferenceable(40) %i.y), !inline_history !53 ; 4 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
   %i.bo = load double, ptr %i.bn, align 8, !tbaa !13 ; 2 uses
   %i.bp = fcmp uno double %i.bo, 0.000000e+00     ; 2 uses
@@ -1751,7 +1751,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8Geo
 bb.r:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPPN4geos4geom8GeometryESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_comp_iterIZNS2_5shape7fractal14HilbertEncoder4sortERS9_E17HilbertComparatorEEEvT_T0_.exit
   %.sroa.0.0 = getelementptr inbounds nuw i8, ptr %.sroa.0.020, i64 8 ; 2 uses
   %.not = icmp eq ptr %.sroa.0.0, %1
-  br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !50
+  br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !51
 
 .loopexit:                                        ; preds = %bb.r, %.preheader, %bb.a
   ret void
@@ -1799,30 +1799,31 @@ attributes #4 = { nounwind }
 !24 = !{!"vtable pointer", !4, i64 0}
 !25 = !{!24, !24, i64 0}
 !26 = !{!"llvm.loop.mustprogress"}
-!27 = distinct !{null, null, null, null, ptr @_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_}
-!28 = distinct !{!28, !26}
-!29 = !{!"any p2 pointer", !21, i64 0}
-!30 = !{!"p2 _ZTSN4geos4geom8GeometryE", !29, i64 0}
-!31 = !{!30, !30, i64 0}
-!32 = !{i64 0, i64 8, !14, i64 8, i64 8, !14, i64 16, i64 8, !14, i64 24, i64 8, !14}
-!33 = !{!12, !9, i64 24}
-!34 = distinct !{!34, !26}
-!35 = distinct !{null, null, null, ptr @_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_}
-!36 = distinct !{!36, !26}
+!27 = !{!"branch_weights", i32 1, i32 1048575}
+!28 = distinct !{null, null, null, null, ptr @_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_}
+!29 = distinct !{!29, !26}
+!30 = !{!"any p2 pointer", !21, i64 0}
+!31 = !{!"p2 _ZTSN4geos4geom8GeometryE", !30, i64 0}
+!32 = !{!31, !31, i64 0}
+!33 = !{i64 0, i64 8, !14, i64 8, i64 8, !14, i64 16, i64 8, !14, i64 24, i64 8, !14}
+!34 = !{!12, !9, i64 24}
+!35 = distinct !{!35, !26}
+!36 = distinct !{null, null, null, ptr @_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_}
 !37 = distinct !{!37, !26}
 !38 = distinct !{!38, !26}
-!39 = distinct !{null, null, ptr @_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_}
-!40 = distinct !{!40, !26}
-!41 = distinct !{null, null, ptr @_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_}
-!42 = distinct !{!42, !26}
+!39 = distinct !{!39, !26}
+!40 = distinct !{null, null, ptr @_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_}
+!41 = distinct !{!41, !26}
+!42 = distinct !{null, null, ptr @_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_}
 !43 = distinct !{!43, !26}
 !44 = distinct !{!44, !26}
-!45 = !{!"p1 _ZTSN4geos5shape7fractal14HilbertEncoderE", !21, i64 0}
-!46 = !{!"_ZTSZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEE17HilbertComparator", !45, i64 0}
-!47 = !{!46, !45, i64 0}
-!48 = !{}
-!49 = !{i64 8}
-!50 = distinct !{!50, !26}
-!51 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!52 = !{ptr @_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_}
+!45 = distinct !{!45, !26}
+!46 = !{!"p1 _ZTSN4geos5shape7fractal14HilbertEncoderE", !21, i64 0}
+!47 = !{!"_ZTSZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEE17HilbertComparator", !46, i64 0}
+!48 = !{!47, !46, i64 0}
+!49 = !{}
+!50 = !{i64 8}
+!51 = distinct !{!51, !26}
+!52 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!53 = !{ptr @_ZZN4geos5shape7fractal14HilbertEncoder4sortERSt6vectorIPNS_4geom8GeometryESaIS6_EEEN17HilbertComparatorclEPKS5_SC_}
 end_hunk_0

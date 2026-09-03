@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   call fastcc void @fe_mul(ptr noundef %i.ax, ptr noundef nonnull readonly %3, ptr noundef nonnull readonly %i.az)
   %indvars.iv.next39 = add nuw nsw i64 %indvars.iv38, 2
   %i.bf = icmp samesign ult i64 %indvars.iv38, 62
-  br i1 %i.bf, label %bb.b, label %bb.c, !llvm.loop !11
+  br i1 %i.bf, label %bb.b, label %bb.c, !llvm.loop !12
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
@@ -249,7 +249,7 @@ bb.d:                                             ; preds = %bb.c, %bb.d
   call fastcc void @fe_mul(ptr noundef %i.ax, ptr noundef nonnull readonly %3, ptr noundef nonnull readonly %i.az)
   %indvars.iv.next42 = add nuw nsw i64 %indvars.iv41, 2
   %i.bo = icmp samesign ult i64 %indvars.iv41, 62
-  br i1 %i.bo, label %bb.d, label %bb.e, !llvm.loop !12
+  br i1 %i.bo, label %bb.d, label %bb.e, !llvm.loop !13
 
 bb.e:                                             ; preds = %bb.d
   call void @OPENSSL_cleanse(ptr noundef nonnull %i.a, i64 noundef 64) #7
@@ -652,7 +652,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   call fastcc void @fe_sq(ptr noundef %i.f, ptr noundef %i.f)
   %i.fr = add nuw nsw i32 %.626.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.fr, 100
-  br i1 %exitcond.not.i, label %fe_pow22523.exit, label %bb.b, !llvm.loop !13
+  br i1 %exitcond.not.i, label %fe_pow22523.exit, label %bb.b, !llvm.loop !14
 
 fe_pow22523.exit:                                 ; preds = %bb.b
   %i.fs = getelementptr inbounds nuw i8, ptr %i.g, i64 4
@@ -1055,7 +1055,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %vec.ind.next = add <8 x i8> %vec.ind, splat (i8 8)
   %i.k = icmp eq i64 %index.next, 256
-  br i1 %i.k, label %.preheader63.i, label %vector.body, !llvm.loop !14
+  br i1 %i.k, label %.preheader63.i, label %vector.body, !llvm.loop !15
 
 .preheader63.i:                                   ; preds = %vector.body, %.loopexit62.i
   %indvars.iv90.i = phi i64 [ %indvars.iv.next91.i, %.loopexit62.i ], [ 0, %vector.body ] ; 3 uses
@@ -1116,7 +1116,7 @@ bb.e:                                             ; preds = %.lr.ph.i
   store i8 0, ptr %i.ab, align 1, !tbaa !8
   %indvars.iv.next79.i = add nuw nsw i64 %indvars.iv78.i, 1 ; 2 uses
   %exitcond81.not.i = icmp eq i64 %indvars.iv.next79.i, 256
-  br i1 %exitcond81.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !15
+  br i1 %exitcond81.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !16
 
 .loopexit.i:                                      ; preds = %bb.e, %bb.d, %bb.b, %.lr.ph67.preheader.i
   %indvars.iv.next77.i = add nuw nsw i64 %indvars.iv74.i, 1 ; 2 uses
@@ -1159,7 +1159,7 @@ bb.h:                                             ; preds = %.lr.ph.i.1
   store i8 0, ptr %i.ao, align 1, !tbaa !8
   %indvars.iv.next79.i.1 = add nuw nsw i64 %indvars.iv78.i.1, 1 ; 2 uses
   %exitcond81.not.i.1 = icmp eq i64 %indvars.iv.next79.i.1, 256
-  br i1 %exitcond81.not.i.1, label %.loopexit.i.1, label %.lr.ph.i.1, !llvm.loop !15
+  br i1 %exitcond81.not.i.1, label %.loopexit.i.1, label %.lr.ph.i.1, !llvm.loop !16
 
 bb.i:                                             ; preds = %.lr.ph.i.1
   store i8 1, ptr %i.ao, align 1, !tbaa !8
@@ -1212,7 +1212,7 @@ bb.m:                                             ; preds = %.lr.ph.i.2
   store i8 0, ptr %i.bc, align 1, !tbaa !8
   %indvars.iv.next79.i.2 = add nuw nsw i64 %indvars.iv78.i.2, 1 ; 2 uses
   %exitcond81.not.i.2 = icmp eq i64 %indvars.iv.next79.i.2, 256
-  br i1 %exitcond81.not.i.2, label %.loopexit.i.2, label %.lr.ph.i.2, !llvm.loop !15
+  br i1 %exitcond81.not.i.2, label %.loopexit.i.2, label %.lr.ph.i.2, !llvm.loop !16
 
 bb.n:                                             ; preds = %.lr.ph.i.2
   store i8 1, ptr %i.bc, align 1, !tbaa !8
@@ -1265,7 +1265,7 @@ bb.r:                                             ; preds = %.lr.ph.i.3
   store i8 0, ptr %i.bq, align 1, !tbaa !8
   %indvars.iv.next79.i.3 = add nuw nsw i64 %indvars.iv78.i.3, 1 ; 2 uses
   %exitcond81.not.i.3 = icmp eq i64 %indvars.iv.next79.i.3, 256
-  br i1 %exitcond81.not.i.3, label %.loopexit.i.3, label %.lr.ph.i.3, !llvm.loop !15
+  br i1 %exitcond81.not.i.3, label %.loopexit.i.3, label %.lr.ph.i.3, !llvm.loop !16
 
 bb.s:                                             ; preds = %.lr.ph.i.3
   store i8 1, ptr %i.bq, align 1, !tbaa !8
@@ -1318,7 +1318,7 @@ bb.w:                                             ; preds = %.lr.ph.i.4
   store i8 0, ptr %i.ce, align 1, !tbaa !8
   %indvars.iv.next79.i.4 = add nuw nsw i64 %indvars.iv78.i.4, 1 ; 2 uses
   %exitcond81.not.i.4 = icmp eq i64 %indvars.iv.next79.i.4, 256
-  br i1 %exitcond81.not.i.4, label %.loopexit.i.4, label %.lr.ph.i.4, !llvm.loop !15
+  br i1 %exitcond81.not.i.4, label %.loopexit.i.4, label %.lr.ph.i.4, !llvm.loop !16
 
 bb.x:                                             ; preds = %.lr.ph.i.4
   store i8 1, ptr %i.ce, align 1, !tbaa !8
@@ -1371,7 +1371,7 @@ bb.ab:                                            ; preds = %.lr.ph.i.5
   store i8 0, ptr %i.cs, align 1, !tbaa !8
   %indvars.iv.next79.i.5 = add nuw nsw i64 %indvars.iv78.i.5, 1 ; 2 uses
   %exitcond81.not.i.5 = icmp eq i64 %indvars.iv.next79.i.5, 256
-  br i1 %exitcond81.not.i.5, label %.loopexit62.i, label %.lr.ph.i.5, !llvm.loop !15
+  br i1 %exitcond81.not.i.5, label %.loopexit62.i, label %.lr.ph.i.5, !llvm.loop !16
 
 bb.ac:                                            ; preds = %.lr.ph.i.5
   store i8 1, ptr %i.cs, align 1, !tbaa !8
@@ -1388,7 +1388,7 @@ bb.ad:                                            ; preds = %bb.z
   %indvars.iv.next75.i = add nuw nsw i64 %indvars.iv74.i, 1
   %indvars.iv.next88.i = add nsw i32 %indvars.iv87.i, -1
   %exitcond93.not.i = icmp eq i64 %indvars.iv.next91.i, 256
-  br i1 %exitcond93.not.i, label %vector.body88, label %.preheader63.i, !llvm.loop !16
+  br i1 %exitcond93.not.i, label %vector.body88, label %.preheader63.i, !llvm.loop !17
 
 vector.body88:                                    ; preds = %.loopexit62.i, %vector.body88
   %index89 = phi i64 [ %index.next93, %vector.body88 ], [ 0, %.loopexit62.i ] ; 3 uses
@@ -1407,7 +1407,7 @@ vector.body88:                                    ; preds = %.loopexit62.i, %vec
   %index.next93 = add nuw i64 %index89, 8         ; 2 uses
   %vec.ind.next94 = add <8 x i8> %vec.ind90, splat (i8 8)
   %i.dd = icmp eq i64 %index.next93, 256
-  br i1 %i.dd, label %.preheader63.i26, label %vector.body88, !llvm.loop !17
+  br i1 %i.dd, label %.preheader63.i26, label %vector.body88, !llvm.loop !18
 
 .preheader63.i26:                                 ; preds = %vector.body88, %.loopexit62.i32
   %indvars.iv90.i27 = phi i64 [ %indvars.iv.next91.i33, %.loopexit62.i32 ], [ 0, %vector.body88 ] ; 3 uses
@@ -1468,7 +1468,7 @@ bb.ai:                                            ; preds = %.lr.ph.i45
   store i8 0, ptr %i.du, align 1, !tbaa !8
   %indvars.iv.next79.i48 = add nuw nsw i64 %indvars.iv78.i46, 1 ; 2 uses
   %exitcond81.not.i49 = icmp eq i64 %indvars.iv.next79.i48, 256
-  br i1 %exitcond81.not.i49, label %.loopexit.i50, label %.lr.ph.i45, !llvm.loop !15
+  br i1 %exitcond81.not.i49, label %.loopexit.i50, label %.lr.ph.i45, !llvm.loop !16
 
 .loopexit.i50:                                    ; preds = %bb.ai, %bb.ah, %bb.af, %.lr.ph67.preheader.i37
   %indvars.iv.next77.i52 = add nuw nsw i64 %indvars.iv74.i29, 1 ; 2 uses
@@ -1511,7 +1511,7 @@ bb.al:                                            ; preds = %.lr.ph.i45.1
   store i8 0, ptr %i.eh, align 1, !tbaa !8
   %indvars.iv.next79.i48.1 = add nuw nsw i64 %indvars.iv78.i46.1, 1 ; 2 uses
   %exitcond81.not.i49.1 = icmp eq i64 %indvars.iv.next79.i48.1, 256
-  br i1 %exitcond81.not.i49.1, label %.loopexit.i50.1, label %.lr.ph.i45.1, !llvm.loop !15
+  br i1 %exitcond81.not.i49.1, label %.loopexit.i50.1, label %.lr.ph.i45.1, !llvm.loop !16
 
 bb.am:                                            ; preds = %.lr.ph.i45.1
   store i8 1, ptr %i.eh, align 1, !tbaa !8
@@ -1564,7 +1564,7 @@ bb.aq:                                            ; preds = %.lr.ph.i45.2
   store i8 0, ptr %i.ev, align 1, !tbaa !8
   %indvars.iv.next79.i48.2 = add nuw nsw i64 %indvars.iv78.i46.2, 1 ; 2 uses
   %exitcond81.not.i49.2 = icmp eq i64 %indvars.iv.next79.i48.2, 256
-  br i1 %exitcond81.not.i49.2, label %.loopexit.i50.2, label %.lr.ph.i45.2, !llvm.loop !15
+  br i1 %exitcond81.not.i49.2, label %.loopexit.i50.2, label %.lr.ph.i45.2, !llvm.loop !16
 
 bb.ar:                                            ; preds = %.lr.ph.i45.2
   store i8 1, ptr %i.ev, align 1, !tbaa !8
@@ -1617,7 +1617,7 @@ bb.av:                                            ; preds = %.lr.ph.i45.3
   store i8 0, ptr %i.fj, align 1, !tbaa !8
   %indvars.iv.next79.i48.3 = add nuw nsw i64 %indvars.iv78.i46.3, 1 ; 2 uses
   %exitcond81.not.i49.3 = icmp eq i64 %indvars.iv.next79.i48.3, 256
-  br i1 %exitcond81.not.i49.3, label %.loopexit.i50.3, label %.lr.ph.i45.3, !llvm.loop !15
+  br i1 %exitcond81.not.i49.3, label %.loopexit.i50.3, label %.lr.ph.i45.3, !llvm.loop !16
 
 bb.aw:                                            ; preds = %.lr.ph.i45.3
   store i8 1, ptr %i.fj, align 1, !tbaa !8
@@ -1670,7 +1670,7 @@ bb.ba:                                            ; preds = %.lr.ph.i45.4
   store i8 0, ptr %i.fx, align 1, !tbaa !8
   %indvars.iv.next79.i48.4 = add nuw nsw i64 %indvars.iv78.i46.4, 1 ; 2 uses
   %exitcond81.not.i49.4 = icmp eq i64 %indvars.iv.next79.i48.4, 256
-  br i1 %exitcond81.not.i49.4, label %.loopexit.i50.4, label %.lr.ph.i45.4, !llvm.loop !15
+  br i1 %exitcond81.not.i49.4, label %.loopexit.i50.4, label %.lr.ph.i45.4, !llvm.loop !16
 
 bb.bb:                                            ; preds = %.lr.ph.i45.4
   store i8 1, ptr %i.fx, align 1, !tbaa !8
@@ -1723,7 +1723,7 @@ bb.bf:                                            ; preds = %.lr.ph.i45.5
   store i8 0, ptr %i.gl, align 1, !tbaa !8
   %indvars.iv.next79.i48.5 = add nuw nsw i64 %indvars.iv78.i46.5, 1 ; 2 uses
   %exitcond81.not.i49.5 = icmp eq i64 %indvars.iv.next79.i48.5, 256
-  br i1 %exitcond81.not.i49.5, label %.loopexit62.i32, label %.lr.ph.i45.5, !llvm.loop !15
+  br i1 %exitcond81.not.i49.5, label %.loopexit62.i32, label %.lr.ph.i45.5, !llvm.loop !16
 
 bb.bg:                                            ; preds = %.lr.ph.i45.5
   store i8 1, ptr %i.gl, align 1, !tbaa !8
@@ -1740,7 +1740,7 @@ bb.bh:                                            ; preds = %bb.bd
   %indvars.iv.next75.i34 = add nuw nsw i64 %indvars.iv74.i29, 1
   %indvars.iv.next88.i35 = add nsw i32 %indvars.iv87.i28, -1
   %exitcond93.not.i36 = icmp eq i64 %indvars.iv.next91.i33, 256
-  br i1 %exitcond93.not.i36, label %slide.exit54, label %.preheader63.i26, !llvm.loop !16
+  br i1 %exitcond93.not.i36, label %slide.exit54, label %.preheader63.i26, !llvm.loop !17
 
 slide.exit54:                                     ; preds = %.loopexit62.i32
   call fastcc void @ge_p3_to_cached(ptr noundef %5, ptr noundef %2)
@@ -1858,7 +1858,7 @@ bb.bl:                                            ; preds = %bb.bk
 bb.bm:                                            ; preds = %bb.bl
   %i.hx = add nsw i32 %.061, -2
   %.not75.1 = icmp eq i32 %i.hr, 0
-  br i1 %.not75.1, label %._crit_edge, label %bb.bi, !llvm.loop !18
+  br i1 %.not75.1, label %._crit_edge, label %bb.bi, !llvm.loop !19
 
 bb.bn:                                            ; preds = %bb.bl, %bb.bk, %bb.bi, %bb.bj
   %.061.lcssa = phi i32 [ %.061, %bb.bi ], [ %.061, %bb.bj ], [ %i.hr, %bb.bk ], [ %i.hr, %bb.bl ] ; 2 uses
@@ -2261,7 +2261,7 @@ bb.bw:                                            ; preds = %bb.bu, %bb.bv, %bb.
   call fastcc void @fe_mul(ptr noundef %i.hk, ptr noundef nonnull readonly %i.gv, ptr noundef nonnull readonly %i.gs)
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %i.sy = icmp sgt i64 %indvars.iv, 0
-  br i1 %i.sy, label %bb.bo, label %._crit_edge, !llvm.loop !19
+  br i1 %i.sy, label %bb.bo, label %._crit_edge, !llvm.loop !20
 
 ._crit_edge:                                      ; preds = %bb.bm, %bb.bw, %bb.bn
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #7
@@ -2442,32 +2442,32 @@ bb.b:                                             ; preds = %bb.a
   %i.ae = or disjoint i8 %i.ad, 64
   store i8 %i.ae, ptr %i.ab, align 1, !tbaa !8
   %i.af = load i64, ptr %2, align 1               ; 2 uses
-  store i64 %i.af, ptr %i.i, align 16, !tbaa !27
+  store i64 %i.af, ptr %i.i, align 16, !tbaa !28
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ah = load i64, ptr %i.ag, align 1            ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  store i64 %i.ah, ptr %i.ai, align 8, !tbaa !27
+  store i64 %i.ah, ptr %i.ai, align 8, !tbaa !28
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.ak = load i64, ptr %i.aj, align 1            ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  store i64 %i.ak, ptr %i.al, align 16, !tbaa !27
+  store i64 %i.ak, ptr %i.al, align 16, !tbaa !28
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.an = load i64, ptr %i.am, align 1
   %i.ao = and i64 %i.an, 9223372036854775807      ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.i, i64 24
-  store i64 %i.ao, ptr %i.ap, align 8, !tbaa !27
-  store i64 1, ptr %i.j, align 16, !tbaa !27
+  store i64 %i.ao, ptr %i.ap, align 8, !tbaa !28
+  store i64 1, ptr %i.j, align 16, !tbaa !28
   %i.aq = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aq, i8 0, i64 24, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.k, i8 0, i64 32, i1 false)
-  store i64 %i.af, ptr %i.l, align 16, !tbaa !27
+  store i64 %i.af, ptr %i.l, align 16, !tbaa !28
   %i.ar = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 3 uses
-  store i64 %i.ah, ptr %i.ar, align 8, !tbaa !27
+  store i64 %i.ah, ptr %i.ar, align 8, !tbaa !28
   %i.as = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 3 uses
-  store i64 %i.ak, ptr %i.as, align 16, !tbaa !27
+  store i64 %i.ak, ptr %i.as, align 16, !tbaa !28
   %i.at = getelementptr inbounds nuw i8, ptr %i.l, i64 24 ; 3 uses
-  store i64 %i.ao, ptr %i.at, align 8, !tbaa !27
-  store i64 1, ptr %i.m, align 16, !tbaa !27
+  store i64 %i.ao, ptr %i.at, align 8, !tbaa !28
+  store i64 1, ptr %i.m, align 16, !tbaa !28
   %i.au = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.au, i8 0, i64 24, i1 false)
   %i.av = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
@@ -2493,70 +2493,70 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.bk = xor i32 %i.bj, %.013.i
   %i.bl = zext nneg i32 %i.bk to i64
   %i.bm = sub nsw i64 0, %i.bl                    ; 8 uses
-  %i.bn = load i64, ptr %i.j, align 16, !tbaa !27 ; 2 uses
-  %i.bo = load i64, ptr %i.l, align 16, !tbaa !27 ; 2 uses
+  %i.bn = load i64, ptr %i.j, align 16, !tbaa !28 ; 2 uses
+  %i.bo = load i64, ptr %i.l, align 16, !tbaa !28 ; 2 uses
   %i.bp = xor i64 %i.bo, %i.bn
   %i.bq = and i64 %i.bp, %i.bm                    ; 2 uses
   %i.br = xor i64 %i.bq, %i.bn
-  store i64 %i.br, ptr %i.j, align 16, !tbaa !27
+  store i64 %i.br, ptr %i.j, align 16, !tbaa !28
   %i.bs = xor i64 %i.bq, %i.bo
-  store i64 %i.bs, ptr %i.l, align 16, !tbaa !27
-  %i.bt = load i64, ptr %i.aq, align 8, !tbaa !27 ; 2 uses
-  %i.bu = load i64, ptr %i.ar, align 8, !tbaa !27 ; 2 uses
+  store i64 %i.bs, ptr %i.l, align 16, !tbaa !28
+  %i.bt = load i64, ptr %i.aq, align 8, !tbaa !28 ; 2 uses
+  %i.bu = load i64, ptr %i.ar, align 8, !tbaa !28 ; 2 uses
   %i.bv = xor i64 %i.bu, %i.bt
   %i.bw = and i64 %i.bv, %i.bm                    ; 2 uses
   %i.bx = xor i64 %i.bw, %i.bt
-  store i64 %i.bx, ptr %i.aq, align 8, !tbaa !27
+  store i64 %i.bx, ptr %i.aq, align 8, !tbaa !28
   %i.by = xor i64 %i.bw, %i.bu
-  store i64 %i.by, ptr %i.ar, align 8, !tbaa !27
-  %i.bz = load i64, ptr %i.av, align 16, !tbaa !27 ; 2 uses
-  %i.ca = load i64, ptr %i.as, align 16, !tbaa !27 ; 2 uses
+  store i64 %i.by, ptr %i.ar, align 8, !tbaa !28
+  %i.bz = load i64, ptr %i.av, align 16, !tbaa !28 ; 2 uses
+  %i.ca = load i64, ptr %i.as, align 16, !tbaa !28 ; 2 uses
   %i.cb = xor i64 %i.ca, %i.bz
   %i.cc = and i64 %i.cb, %i.bm                    ; 2 uses
   %i.cd = xor i64 %i.cc, %i.bz
-  store i64 %i.cd, ptr %i.av, align 16, !tbaa !27
+  store i64 %i.cd, ptr %i.av, align 16, !tbaa !28
   %i.ce = xor i64 %i.cc, %i.ca
-  store i64 %i.ce, ptr %i.as, align 16, !tbaa !27
-  %i.cf = load i64, ptr %i.aw, align 8, !tbaa !27 ; 2 uses
-  %i.cg = load i64, ptr %i.at, align 8, !tbaa !27 ; 2 uses
+  store i64 %i.ce, ptr %i.as, align 16, !tbaa !28
+  %i.cf = load i64, ptr %i.aw, align 8, !tbaa !28 ; 2 uses
+  %i.cg = load i64, ptr %i.at, align 8, !tbaa !28 ; 2 uses
   %i.ch = xor i64 %i.cg, %i.cf
   %i.ci = and i64 %i.ch, %i.bm                    ; 2 uses
   %i.cj = xor i64 %i.ci, %i.cf
-  store i64 %i.cj, ptr %i.aw, align 8, !tbaa !27
+  store i64 %i.cj, ptr %i.aw, align 8, !tbaa !28
   %i.ck = xor i64 %i.ci, %i.cg
-  store i64 %i.ck, ptr %i.at, align 8, !tbaa !27
-  %i.cl = load i64, ptr %i.k, align 16, !tbaa !27 ; 2 uses
-  %i.cm = load i64, ptr %i.m, align 16, !tbaa !27 ; 2 uses
+  store i64 %i.ck, ptr %i.at, align 8, !tbaa !28
+  %i.cl = load i64, ptr %i.k, align 16, !tbaa !28 ; 2 uses
+  %i.cm = load i64, ptr %i.m, align 16, !tbaa !28 ; 2 uses
   %i.cn = xor i64 %i.cm, %i.cl
   %i.co = and i64 %i.cn, %i.bm                    ; 2 uses
   %i.cp = xor i64 %i.co, %i.cl
-  store i64 %i.cp, ptr %i.k, align 16, !tbaa !27
+  store i64 %i.cp, ptr %i.k, align 16, !tbaa !28
   %i.cq = xor i64 %i.co, %i.cm
-  store i64 %i.cq, ptr %i.m, align 16, !tbaa !27
-  %i.cr = load i64, ptr %i.ax, align 8, !tbaa !27 ; 2 uses
-  %i.cs = load i64, ptr %i.au, align 8, !tbaa !27 ; 2 uses
+  store i64 %i.cq, ptr %i.m, align 16, !tbaa !28
+  %i.cr = load i64, ptr %i.ax, align 8, !tbaa !28 ; 2 uses
+  %i.cs = load i64, ptr %i.au, align 8, !tbaa !28 ; 2 uses
   %i.ct = xor i64 %i.cs, %i.cr
   %i.cu = and i64 %i.ct, %i.bm                    ; 2 uses
   %i.cv = xor i64 %i.cu, %i.cr
-  store i64 %i.cv, ptr %i.ax, align 8, !tbaa !27
+  store i64 %i.cv, ptr %i.ax, align 8, !tbaa !28
   %i.cw = xor i64 %i.cu, %i.cs
-  store i64 %i.cw, ptr %i.au, align 8, !tbaa !27
-  %i.cx = load i64, ptr %i.ay, align 16, !tbaa !27 ; 2 uses
-  %i.cy = load i64, ptr %i.az, align 16, !tbaa !27 ; 2 uses
+  store i64 %i.cw, ptr %i.au, align 8, !tbaa !28
+  %i.cx = load i64, ptr %i.ay, align 16, !tbaa !28 ; 2 uses
+  %i.cy = load i64, ptr %i.az, align 16, !tbaa !28 ; 2 uses
   %i.cz = xor i64 %i.cy, %i.cx
   %i.da = and i64 %i.cz, %i.bm                    ; 2 uses
   %i.db = xor i64 %i.da, %i.cx
-  store i64 %i.db, ptr %i.ay, align 16, !tbaa !27
+  store i64 %i.db, ptr %i.ay, align 16, !tbaa !28
   %i.dc = xor i64 %i.da, %i.cy
-  store i64 %i.dc, ptr %i.az, align 16, !tbaa !27
-  %i.dd = load i64, ptr %i.ba, align 8, !tbaa !27 ; 2 uses
-  %i.de = load i64, ptr %i.bb, align 8, !tbaa !27 ; 2 uses
+  store i64 %i.dc, ptr %i.az, align 16, !tbaa !28
+  %i.dd = load i64, ptr %i.ba, align 8, !tbaa !28 ; 2 uses
+  %i.de = load i64, ptr %i.bb, align 8, !tbaa !28 ; 2 uses
   %i.df = xor i64 %i.de, %i.dd
   %i.dg = and i64 %i.df, %i.bm                    ; 2 uses
   %i.dh = xor i64 %i.dg, %i.dd
-  store i64 %i.dh, ptr %i.ba, align 8, !tbaa !27
+  store i64 %i.dh, ptr %i.ba, align 8, !tbaa !28
   %i.di = xor i64 %i.dg, %i.de
-  store i64 %i.di, ptr %i.bb, align 8, !tbaa !27
+  store i64 %i.di, ptr %i.bb, align 8, !tbaa !28
   call void @x25519_fe64_sub(ptr noundef nonnull %i.n, ptr noundef nonnull %i.l, ptr noundef nonnull %i.m) #7
   call void @x25519_fe64_sub(ptr noundef nonnull %i.o, ptr noundef nonnull %i.j, ptr noundef nonnull %i.k) #7
   call void @x25519_fe64_add(ptr noundef nonnull %i.j, ptr noundef nonnull %i.j, ptr noundef nonnull %i.k) #7
@@ -2577,7 +2577,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   call void @x25519_fe64_mul(ptr noundef nonnull %i.k, ptr noundef nonnull %i.o, ptr noundef nonnull %i.n) #7
   %i.dj = add nsw i32 %.01112.i, -1
   %.not.i = icmp eq i32 %.01112.i, 0
-  br i1 %.not.i, label %bb.d, label %bb.c, !llvm.loop !22
+  br i1 %.not.i, label %bb.d, label %bb.c, !llvm.loop !23
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #7
@@ -2699,7 +2699,7 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   call void @x25519_fe64_sqr(ptr noundef nonnull %i.h, ptr noundef nonnull %i.h) #7
   %i.dk = add nuw nsw i32 %.523.i.i, 1            ; 2 uses
   %exitcond.not.i.i = icmp eq i32 %i.dk, 100
-  br i1 %exitcond.not.i.i, label %x25519_scalar_mulx.exit, label %bb.e, !llvm.loop !23
+  br i1 %exitcond.not.i.i, label %x25519_scalar_mulx.exit, label %bb.e, !llvm.loop !24
 
 x25519_scalar_mulx.exit:                          ; preds = %bb.e
   call void @x25519_fe64_mul(ptr noundef nonnull %i.g, ptr noundef nonnull %i.h, ptr noundef nonnull %i.g) #7
@@ -2878,29 +2878,29 @@ bb.f:                                             ; preds = %bb.a
   %i.gu = or disjoint i64 %i.fu, %i.gm
   %.masked27.i = or disjoint i64 %i.gu, %i.ft
   %i.gv = or disjoint i64 %.masked27.i, %.masked32.i ; 2 uses
-  store i64 %i.gi, ptr %i.q, align 16, !tbaa !27
+  store i64 %i.gi, ptr %i.q, align 16, !tbaa !28
   %i.gw = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  store i64 %i.gl, ptr %i.gw, align 8, !tbaa !27
+  store i64 %i.gl, ptr %i.gw, align 8, !tbaa !28
   %i.gx = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  store i64 %i.gp, ptr %i.gx, align 16, !tbaa !27
+  store i64 %i.gp, ptr %i.gx, align 16, !tbaa !28
   %i.gy = getelementptr inbounds nuw i8, ptr %i.q, i64 24
-  store i64 %i.gv, ptr %i.gy, align 8, !tbaa !27
+  store i64 %i.gv, ptr %i.gy, align 8, !tbaa !28
   %i.gz = getelementptr inbounds nuw i8, ptr %i.q, i64 32
-  store i64 %i.gt, ptr %i.gz, align 16, !tbaa !27
-  store i64 1, ptr %i.r, align 16, !tbaa !27
+  store i64 %i.gt, ptr %i.gz, align 16, !tbaa !28
+  store i64 1, ptr %i.r, align 16, !tbaa !28
   %i.ha = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ha, i8 0, i64 32, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %i.s, i8 0, i64 40, i1 false)
-  store i64 %i.gi, ptr %i.t, align 16, !tbaa !27
+  store i64 %i.gi, ptr %i.t, align 16, !tbaa !28
   %i.hb = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 4 uses
-  store i64 %i.gl, ptr %i.hb, align 8, !tbaa !27
+  store i64 %i.gl, ptr %i.hb, align 8, !tbaa !28
   %i.hc = getelementptr inbounds nuw i8, ptr %i.t, i64 16 ; 4 uses
-  store i64 %i.gp, ptr %i.hc, align 16, !tbaa !27
+  store i64 %i.gp, ptr %i.hc, align 16, !tbaa !28
   %i.hd = getelementptr inbounds nuw i8, ptr %i.t, i64 24 ; 4 uses
-  store i64 %i.gv, ptr %i.hd, align 8, !tbaa !27
+  store i64 %i.gv, ptr %i.hd, align 8, !tbaa !28
   %i.he = getelementptr inbounds nuw i8, ptr %i.t, i64 32 ; 4 uses
-  store i64 %i.gt, ptr %i.he, align 16, !tbaa !27
-  store i64 1, ptr %i.u, align 16, !tbaa !27
+  store i64 %i.gt, ptr %i.he, align 16, !tbaa !28
+  store i64 1, ptr %i.u, align 16, !tbaa !28
   %i.hf = getelementptr inbounds nuw i8, ptr %i.u, i64 8 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.hf, i8 0, i64 32, i1 false)
   %i.hg = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 3 uses
@@ -2937,201 +2937,201 @@ bb.g:                                             ; preds = %bb.f, %bb.g
   %i.ig = xor i32 %i.if, %.035
   %i.ih = zext nneg i32 %i.ig to i64
   %i.ii = sub nsw i64 0, %i.ih                    ; 10 uses
-  %i.ij = load i64, ptr %i.r, align 16, !tbaa !27 ; 2 uses
-  %i.ik = load i64, ptr %i.t, align 16, !tbaa !27 ; 2 uses
+  %i.ij = load i64, ptr %i.r, align 16, !tbaa !28 ; 2 uses
+  %i.ik = load i64, ptr %i.t, align 16, !tbaa !28 ; 2 uses
   %i.il = xor i64 %i.ik, %i.ij
   %i.im = and i64 %i.il, %i.ii                    ; 2 uses
   %i.in = xor i64 %i.im, %i.ij                    ; 2 uses
   %i.io = xor i64 %i.im, %i.ik                    ; 3 uses
-  store i64 %i.io, ptr %i.t, align 16, !tbaa !27
-  %i.ip = load i64, ptr %i.ha, align 8, !tbaa !27 ; 2 uses
-  %i.iq = load i64, ptr %i.hb, align 8, !tbaa !27 ; 2 uses
+  store i64 %i.io, ptr %i.t, align 16, !tbaa !28
+  %i.ip = load i64, ptr %i.ha, align 8, !tbaa !28 ; 2 uses
+  %i.iq = load i64, ptr %i.hb, align 8, !tbaa !28 ; 2 uses
   %i.ir = xor i64 %i.iq, %i.ip
   %i.is = and i64 %i.ir, %i.ii                    ; 2 uses
   %i.it = xor i64 %i.is, %i.ip                    ; 2 uses
   %i.iu = xor i64 %i.is, %i.iq                    ; 3 uses
-  store i64 %i.iu, ptr %i.hb, align 8, !tbaa !27
-  %i.iv = load i64, ptr %i.hg, align 16, !tbaa !27 ; 2 uses
-  %i.iw = load i64, ptr %i.hc, align 16, !tbaa !27 ; 2 uses
+  store i64 %i.iu, ptr %i.hb, align 8, !tbaa !28
+  %i.iv = load i64, ptr %i.hg, align 16, !tbaa !28 ; 2 uses
+  %i.iw = load i64, ptr %i.hc, align 16, !tbaa !28 ; 2 uses
   %i.ix = xor i64 %i.iw, %i.iv
   %i.iy = and i64 %i.ix, %i.ii                    ; 2 uses
   %i.iz = xor i64 %i.iy, %i.iv                    ; 2 uses
   %i.ja = xor i64 %i.iy, %i.iw                    ; 3 uses
-  store i64 %i.ja, ptr %i.hc, align 16, !tbaa !27
-  %i.jb = load i64, ptr %i.hh, align 8, !tbaa !27 ; 2 uses
-  %i.jc = load i64, ptr %i.hd, align 8, !tbaa !27 ; 2 uses
+  store i64 %i.ja, ptr %i.hc, align 16, !tbaa !28
+  %i.jb = load i64, ptr %i.hh, align 8, !tbaa !28 ; 2 uses
+  %i.jc = load i64, ptr %i.hd, align 8, !tbaa !28 ; 2 uses
   %i.jd = xor i64 %i.jc, %i.jb
   %i.je = and i64 %i.jd, %i.ii                    ; 2 uses
   %i.jf = xor i64 %i.je, %i.jb                    ; 2 uses
   %i.jg = xor i64 %i.je, %i.jc                    ; 3 uses
-  store i64 %i.jg, ptr %i.hd, align 8, !tbaa !27
-  %i.jh = load i64, ptr %i.hi, align 16, !tbaa !27 ; 2 uses
-  %i.ji = load i64, ptr %i.he, align 16, !tbaa !27 ; 2 uses
+  store i64 %i.jg, ptr %i.hd, align 8, !tbaa !28
+  %i.jh = load i64, ptr %i.hi, align 16, !tbaa !28 ; 2 uses
+  %i.ji = load i64, ptr %i.he, align 16, !tbaa !28 ; 2 uses
   %i.jj = xor i64 %i.ji, %i.jh
   %i.jk = and i64 %i.jj, %i.ii                    ; 2 uses
   %i.jl = xor i64 %i.jk, %i.jh                    ; 2 uses
   %i.jm = xor i64 %i.jk, %i.ji                    ; 3 uses
-  store i64 %i.jm, ptr %i.he, align 16, !tbaa !27
-  %i.jn = load i64, ptr %i.s, align 16, !tbaa !27 ; 2 uses
-  %i.jo = load i64, ptr %i.u, align 16, !tbaa !27 ; 2 uses
+  store i64 %i.jm, ptr %i.he, align 16, !tbaa !28
+  %i.jn = load i64, ptr %i.s, align 16, !tbaa !28 ; 2 uses
+  %i.jo = load i64, ptr %i.u, align 16, !tbaa !28 ; 2 uses
   %i.jp = xor i64 %i.jo, %i.jn
   %i.jq = and i64 %i.jp, %i.ii                    ; 2 uses
   %i.jr = xor i64 %i.jq, %i.jn                    ; 2 uses
   %i.js = xor i64 %i.jq, %i.jo                    ; 3 uses
-  store i64 %i.js, ptr %i.u, align 16, !tbaa !27
-  %i.jt = load i64, ptr %i.hj, align 8, !tbaa !27 ; 2 uses
-  %i.ju = load i64, ptr %i.hf, align 8, !tbaa !27 ; 2 uses
+  store i64 %i.js, ptr %i.u, align 16, !tbaa !28
+  %i.jt = load i64, ptr %i.hj, align 8, !tbaa !28 ; 2 uses
+  %i.ju = load i64, ptr %i.hf, align 8, !tbaa !28 ; 2 uses
   %i.jv = xor i64 %i.ju, %i.jt
   %i.jw = and i64 %i.jv, %i.ii                    ; 2 uses
   %i.jx = xor i64 %i.jw, %i.jt                    ; 2 uses
   %i.jy = xor i64 %i.jw, %i.ju                    ; 3 uses
-  store i64 %i.jy, ptr %i.hf, align 8, !tbaa !27
-  %i.jz = load i64, ptr %i.hk, align 16, !tbaa !27 ; 2 uses
-  %i.ka = load i64, ptr %i.hl, align 16, !tbaa !27 ; 2 uses
+  store i64 %i.jy, ptr %i.hf, align 8, !tbaa !28
+  %i.jz = load i64, ptr %i.hk, align 16, !tbaa !28 ; 2 uses
+  %i.ka = load i64, ptr %i.hl, align 16, !tbaa !28 ; 2 uses
   %i.kb = xor i64 %i.ka, %i.jz
   %i.kc = and i64 %i.kb, %i.ii                    ; 2 uses
   %i.kd = xor i64 %i.kc, %i.jz                    ; 2 uses
   %i.ke = xor i64 %i.kc, %i.ka                    ; 3 uses
-  store i64 %i.ke, ptr %i.hl, align 16, !tbaa !27
-  %i.kf = load i64, ptr %i.hm, align 8, !tbaa !27 ; 2 uses
-  %i.kg = load i64, ptr %i.hn, align 8, !tbaa !27 ; 2 uses
+  store i64 %i.ke, ptr %i.hl, align 16, !tbaa !28
+  %i.kf = load i64, ptr %i.hm, align 8, !tbaa !28 ; 2 uses
+  %i.kg = load i64, ptr %i.hn, align 8, !tbaa !28 ; 2 uses
   %i.kh = xor i64 %i.kg, %i.kf
   %i.ki = and i64 %i.kh, %i.ii                    ; 2 uses
   %i.kj = xor i64 %i.ki, %i.kf                    ; 2 uses
   %i.kk = xor i64 %i.ki, %i.kg                    ; 3 uses
-  store i64 %i.kk, ptr %i.hn, align 8, !tbaa !27
-  %i.kl = load i64, ptr %i.ho, align 16, !tbaa !27 ; 2 uses
-  %i.km = load i64, ptr %i.hp, align 16, !tbaa !27 ; 2 uses
+  store i64 %i.kk, ptr %i.hn, align 8, !tbaa !28
+  %i.kl = load i64, ptr %i.ho, align 16, !tbaa !28 ; 2 uses
+  %i.km = load i64, ptr %i.hp, align 16, !tbaa !28 ; 2 uses
   %i.kn = xor i64 %i.km, %i.kl
   %i.ko = and i64 %i.kn, %i.ii                    ; 2 uses
   %i.kp = xor i64 %i.ko, %i.kl                    ; 2 uses
   %i.kq = xor i64 %i.ko, %i.km                    ; 3 uses
-  store i64 %i.kq, ptr %i.hp, align 16, !tbaa !27
+  store i64 %i.kq, ptr %i.hp, align 16, !tbaa !28
   %i.kr = add i64 %i.io, 4503599627370458
   %i.ks = sub i64 %i.kr, %i.js
-  store i64 %i.ks, ptr %i.v, align 16, !tbaa !27
+  store i64 %i.ks, ptr %i.v, align 16, !tbaa !28
   %i.kt = add i64 %i.iu, 4503599627370494
   %i.ku = sub i64 %i.kt, %i.jy
-  store i64 %i.ku, ptr %i.hq, align 8, !tbaa !27
+  store i64 %i.ku, ptr %i.hq, align 8, !tbaa !28
   %i.kv = add i64 %i.ja, 4503599627370494
   %i.kw = sub i64 %i.kv, %i.ke
-  store i64 %i.kw, ptr %i.hr, align 16, !tbaa !27
+  store i64 %i.kw, ptr %i.hr, align 16, !tbaa !28
   %i.kx = add i64 %i.jg, 4503599627370494
   %i.ky = sub i64 %i.kx, %i.kk
-  store i64 %i.ky, ptr %i.hs, align 8, !tbaa !27
+  store i64 %i.ky, ptr %i.hs, align 8, !tbaa !28
   %i.kz = add i64 %i.jm, 4503599627370494
   %i.la = sub i64 %i.kz, %i.kq
-  store i64 %i.la, ptr %i.ht, align 16, !tbaa !27
+  store i64 %i.la, ptr %i.ht, align 16, !tbaa !28
   %i.lb = add i64 %i.in, 4503599627370458
   %i.lc = sub i64 %i.lb, %i.jr
-  store i64 %i.lc, ptr %i.w, align 16, !tbaa !27
+  store i64 %i.lc, ptr %i.w, align 16, !tbaa !28
   %i.ld = add i64 %i.it, 4503599627370494
   %i.le = sub i64 %i.ld, %i.jx
-  store i64 %i.le, ptr %i.hu, align 8, !tbaa !27
+  store i64 %i.le, ptr %i.hu, align 8, !tbaa !28
   %i.lf = add i64 %i.iz, 4503599627370494
   %i.lg = sub i64 %i.lf, %i.kd
-  store i64 %i.lg, ptr %i.hv, align 16, !tbaa !27
+  store i64 %i.lg, ptr %i.hv, align 16, !tbaa !28
   %i.lh = add i64 %i.jf, 4503599627370494
   %i.li = sub i64 %i.lh, %i.kj
-  store i64 %i.li, ptr %i.hw, align 8, !tbaa !27
+  store i64 %i.li, ptr %i.hw, align 8, !tbaa !28
   %i.lj = add i64 %i.jl, 4503599627370494
   %i.lk = sub i64 %i.lj, %i.kp
-  store i64 %i.lk, ptr %i.hx, align 16, !tbaa !27
+  store i64 %i.lk, ptr %i.hx, align 16, !tbaa !28
   %i.ll = add i64 %i.jr, %i.in
-  store i64 %i.ll, ptr %i.r, align 16, !tbaa !27
+  store i64 %i.ll, ptr %i.r, align 16, !tbaa !28
   %i.lm = add i64 %i.jx, %i.it
-  store i64 %i.lm, ptr %i.ha, align 8, !tbaa !27
+  store i64 %i.lm, ptr %i.ha, align 8, !tbaa !28
   %i.ln = add i64 %i.kd, %i.iz
-  store i64 %i.ln, ptr %i.hg, align 16, !tbaa !27
+  store i64 %i.ln, ptr %i.hg, align 16, !tbaa !28
   %i.lo = add i64 %i.kj, %i.jf
-  store i64 %i.lo, ptr %i.hh, align 8, !tbaa !27
+  store i64 %i.lo, ptr %i.hh, align 8, !tbaa !28
   %i.lp = add i64 %i.kp, %i.jl
-  store i64 %i.lp, ptr %i.hi, align 16, !tbaa !27
+  store i64 %i.lp, ptr %i.hi, align 16, !tbaa !28
   %i.lq = add i64 %i.js, %i.io
-  store i64 %i.lq, ptr %i.s, align 16, !tbaa !27
+  store i64 %i.lq, ptr %i.s, align 16, !tbaa !28
   %i.lr = add i64 %i.jy, %i.iu
-  store i64 %i.lr, ptr %i.hj, align 8, !tbaa !27
+  store i64 %i.lr, ptr %i.hj, align 8, !tbaa !28
   %i.ls = add i64 %i.ke, %i.ja
-  store i64 %i.ls, ptr %i.hk, align 16, !tbaa !27
+  store i64 %i.ls, ptr %i.hk, align 16, !tbaa !28
   %i.lt = add i64 %i.kk, %i.jg
-  store i64 %i.lt, ptr %i.hm, align 8, !tbaa !27
+  store i64 %i.lt, ptr %i.hm, align 8, !tbaa !28
   %i.lu = add i64 %i.kq, %i.jm
-  store i64 %i.lu, ptr %i.ho, align 16, !tbaa !27
+  store i64 %i.lu, ptr %i.ho, align 16, !tbaa !28
   call void @x25519_fe51_mul(ptr noundef nonnull %i.u, ptr noundef nonnull %i.v, ptr noundef nonnull %i.r) #7
   call void @x25519_fe51_mul(ptr noundef nonnull %i.s, ptr noundef nonnull %i.s, ptr noundef nonnull %i.w) #7
   call void @x25519_fe51_sqr(ptr noundef nonnull %i.v, ptr noundef nonnull %i.w) #7
   call void @x25519_fe51_sqr(ptr noundef nonnull %i.w, ptr noundef nonnull %i.r) #7
-  %i.lv = load i64, ptr %i.u, align 16, !tbaa !27 ; 2 uses
-  %i.lw = load i64, ptr %i.s, align 16, !tbaa !27 ; 2 uses
+  %i.lv = load i64, ptr %i.u, align 16, !tbaa !28 ; 2 uses
+  %i.lw = load i64, ptr %i.s, align 16, !tbaa !28 ; 2 uses
   %i.lx = add i64 %i.lw, %i.lv
-  store i64 %i.lx, ptr %i.t, align 16, !tbaa !27
-  %i.ly = load i64, ptr %i.hf, align 8, !tbaa !27 ; 2 uses
-  %i.lz = load i64, ptr %i.hj, align 8, !tbaa !27 ; 2 uses
+  store i64 %i.lx, ptr %i.t, align 16, !tbaa !28
+  %i.ly = load i64, ptr %i.hf, align 8, !tbaa !28 ; 2 uses
+  %i.lz = load i64, ptr %i.hj, align 8, !tbaa !28 ; 2 uses
   %i.ma = add i64 %i.lz, %i.ly
-  store i64 %i.ma, ptr %i.hb, align 8, !tbaa !27
-  %i.mb = load i64, ptr %i.hl, align 16, !tbaa !27 ; 2 uses
-  %i.mc = load i64, ptr %i.hk, align 16, !tbaa !27 ; 2 uses
+  store i64 %i.ma, ptr %i.hb, align 8, !tbaa !28
+  %i.mb = load i64, ptr %i.hl, align 16, !tbaa !28 ; 2 uses
+  %i.mc = load i64, ptr %i.hk, align 16, !tbaa !28 ; 2 uses
   %i.md = add i64 %i.mc, %i.mb
-  store i64 %i.md, ptr %i.hc, align 16, !tbaa !27
-  %i.me = load i64, ptr %i.hn, align 8, !tbaa !27 ; 2 uses
-  %i.mf = load i64, ptr %i.hm, align 8, !tbaa !27 ; 2 uses
+  store i64 %i.md, ptr %i.hc, align 16, !tbaa !28
+  %i.me = load i64, ptr %i.hn, align 8, !tbaa !28 ; 2 uses
+  %i.mf = load i64, ptr %i.hm, align 8, !tbaa !28 ; 2 uses
   %i.mg = add i64 %i.mf, %i.me
-  store i64 %i.mg, ptr %i.hd, align 8, !tbaa !27
-  %i.mh = load i64, ptr %i.hp, align 16, !tbaa !27 ; 2 uses
-  %i.mi = load i64, ptr %i.ho, align 16, !tbaa !27 ; 2 uses
+  store i64 %i.mg, ptr %i.hd, align 8, !tbaa !28
+  %i.mh = load i64, ptr %i.hp, align 16, !tbaa !28 ; 2 uses
+  %i.mi = load i64, ptr %i.ho, align 16, !tbaa !28 ; 2 uses
   %i.mj = add i64 %i.mi, %i.mh
-  store i64 %i.mj, ptr %i.he, align 16, !tbaa !27
+  store i64 %i.mj, ptr %i.he, align 16, !tbaa !28
   %i.mk = add i64 %i.lv, 4503599627370458
   %i.ml = sub i64 %i.mk, %i.lw
-  store i64 %i.ml, ptr %i.s, align 16, !tbaa !27
+  store i64 %i.ml, ptr %i.s, align 16, !tbaa !28
   %i.mm = add i64 %i.ly, 4503599627370494
   %i.mn = sub i64 %i.mm, %i.lz
-  store i64 %i.mn, ptr %i.hj, align 8, !tbaa !27
+  store i64 %i.mn, ptr %i.hj, align 8, !tbaa !28
   %i.mo = add i64 %i.mb, 4503599627370494
   %i.mp = sub i64 %i.mo, %i.mc
-  store i64 %i.mp, ptr %i.hk, align 16, !tbaa !27
+  store i64 %i.mp, ptr %i.hk, align 16, !tbaa !28
   %i.mq = add i64 %i.me, 4503599627370494
   %i.mr = sub i64 %i.mq, %i.mf
-  store i64 %i.mr, ptr %i.hm, align 8, !tbaa !27
+  store i64 %i.mr, ptr %i.hm, align 8, !tbaa !28
   %i.ms = add i64 %i.mh, 4503599627370494
   %i.mt = sub i64 %i.ms, %i.mi
-  store i64 %i.mt, ptr %i.ho, align 16, !tbaa !27
+  store i64 %i.mt, ptr %i.ho, align 16, !tbaa !28
   call void @x25519_fe51_mul(ptr noundef nonnull %i.r, ptr noundef nonnull %i.w, ptr noundef nonnull %i.v) #7
-  %i.mu = load <2 x i64>, ptr %i.w, align 16, !tbaa !27
+  %i.mu = load <2 x i64>, ptr %i.w, align 16, !tbaa !28
   %i.mv = add <2 x i64> %i.mu, <i64 4503599627370458, i64 4503599627370494>
-  %i.mw = load <2 x i64>, ptr %i.v, align 16, !tbaa !27
+  %i.mw = load <2 x i64>, ptr %i.v, align 16, !tbaa !28
   %i.mx = sub <2 x i64> %i.mv, %i.mw
-  store <2 x i64> %i.mx, ptr %i.w, align 16, !tbaa !27
-  %i.my = load <2 x i64>, ptr %i.hv, align 16, !tbaa !27
+  store <2 x i64> %i.mx, ptr %i.w, align 16, !tbaa !28
+  %i.my = load <2 x i64>, ptr %i.hv, align 16, !tbaa !28
   %i.mz = add <2 x i64> %i.my, splat (i64 4503599627370494)
-  %i.na = load <2 x i64>, ptr %i.hr, align 16, !tbaa !27
+  %i.na = load <2 x i64>, ptr %i.hr, align 16, !tbaa !28
   %i.nb = sub <2 x i64> %i.mz, %i.na
-  store <2 x i64> %i.nb, ptr %i.hv, align 16, !tbaa !27
-  %i.nc = load i64, ptr %i.hx, align 16, !tbaa !27
+  store <2 x i64> %i.nb, ptr %i.hv, align 16, !tbaa !28
+  %i.nc = load i64, ptr %i.hx, align 16, !tbaa !28
   %i.nd = add i64 %i.nc, 4503599627370494
-  %i.ne = load i64, ptr %i.ht, align 16, !tbaa !27
+  %i.ne = load i64, ptr %i.ht, align 16, !tbaa !28
   %i.nf = sub i64 %i.nd, %i.ne
-  store i64 %i.nf, ptr %i.hx, align 16, !tbaa !27
+  store i64 %i.nf, ptr %i.hx, align 16, !tbaa !28
   call void @x25519_fe51_sqr(ptr noundef nonnull %i.s, ptr noundef nonnull %i.s) #7
   call void @x25519_fe51_mul121666(ptr noundef nonnull %i.u, ptr noundef nonnull %i.w) #7
   call void @x25519_fe51_sqr(ptr noundef nonnull %i.t, ptr noundef nonnull %i.t) #7
-  %i.ng = load <2 x i64>, ptr %i.v, align 16, !tbaa !27
-  %i.nh = load <2 x i64>, ptr %i.u, align 16, !tbaa !27
+  %i.ng = load <2 x i64>, ptr %i.v, align 16, !tbaa !28
+  %i.nh = load <2 x i64>, ptr %i.u, align 16, !tbaa !28
   %i.ni = add <2 x i64> %i.nh, %i.ng
-  store <2 x i64> %i.ni, ptr %i.v, align 16, !tbaa !27
-  %i.nj = load <2 x i64>, ptr %i.hr, align 16, !tbaa !27
-  %i.nk = load <2 x i64>, ptr %i.hl, align 16, !tbaa !27
+  store <2 x i64> %i.ni, ptr %i.v, align 16, !tbaa !28
+  %i.nj = load <2 x i64>, ptr %i.hr, align 16, !tbaa !28
+  %i.nk = load <2 x i64>, ptr %i.hl, align 16, !tbaa !28
   %i.nl = add <2 x i64> %i.nk, %i.nj
-  store <2 x i64> %i.nl, ptr %i.hr, align 16, !tbaa !27
-  %i.nm = load i64, ptr %i.ht, align 16, !tbaa !27
-  %i.nn = load i64, ptr %i.hp, align 16, !tbaa !27
+  store <2 x i64> %i.nl, ptr %i.hr, align 16, !tbaa !28
+  %i.nm = load i64, ptr %i.ht, align 16, !tbaa !28
+  %i.nn = load i64, ptr %i.hp, align 16, !tbaa !28
   %i.no = add i64 %i.nn, %i.nm
-  store i64 %i.no, ptr %i.ht, align 16, !tbaa !27
+  store i64 %i.no, ptr %i.ht, align 16, !tbaa !28
   call void @x25519_fe51_mul(ptr noundef nonnull %i.u, ptr noundef nonnull %i.q, ptr noundef nonnull %i.s) #7
   call void @x25519_fe51_mul(ptr noundef nonnull %i.s, ptr noundef nonnull %i.w, ptr noundef nonnull %i.v) #7
   %i.np = add nsw i32 %.01434, -1
   %.not36 = icmp eq i32 %.01434, 0
-  br i1 %.not36, label %bb.h, label %bb.g, !llvm.loop !24
+  br i1 %.not36, label %bb.h, label %bb.g, !llvm.loop !25
 
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
@@ -3253,7 +3253,7 @@ bb.i:                                             ; preds = %bb.i, %bb.h
   call void @x25519_fe51_sqr(ptr noundef nonnull %i.d, ptr noundef nonnull %i.d) #7
   %i.nq = add nuw nsw i32 %.523.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.nq, 100
-  br i1 %exitcond.not.i, label %fe51_invert.exit, label %bb.i, !llvm.loop !25
+  br i1 %exitcond.not.i, label %fe51_invert.exit, label %bb.i, !llvm.loop !26
 
 fe51_invert.exit:                                 ; preds = %bb.i
   call void @x25519_fe51_mul(ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, ptr noundef nonnull %i.c) #7
@@ -3319,11 +3319,11 @@ fe51_invert.exit:                                 ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   call void @x25519_fe51_mul(ptr noundef nonnull %i.r, ptr noundef nonnull %i.r, ptr noundef nonnull %i.s) #7
-  %i.nr = load i64, ptr %i.r, align 16, !tbaa !27 ; 2 uses
-  %i.ns = load i64, ptr %i.ha, align 8, !tbaa !27 ; 2 uses
-  %i.nt = load i64, ptr %i.hg, align 16, !tbaa !27 ; 2 uses
-  %i.nu = load i64, ptr %i.hh, align 8, !tbaa !27 ; 2 uses
-  %i.nv = load i64, ptr %i.hi, align 16, !tbaa !27 ; 2 uses
+  %i.nr = load i64, ptr %i.r, align 16, !tbaa !28 ; 2 uses
+  %i.ns = load i64, ptr %i.ha, align 8, !tbaa !28 ; 2 uses
+  %i.nt = load i64, ptr %i.hg, align 16, !tbaa !28 ; 2 uses
+  %i.nu = load i64, ptr %i.hh, align 8, !tbaa !28 ; 2 uses
+  %i.nv = load i64, ptr %i.hi, align 16, !tbaa !28 ; 2 uses
   %i.nw = add i64 %i.nr, 19
   %i.nx = lshr i64 %i.nw, 51
   %i.ny = add i64 %i.nx, %i.ns
@@ -3726,7 +3726,7 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   call fastcc void @fe_sq(ptr noundef %i.d, ptr noundef %i.d)
   %i.e = add nuw nsw i32 %.523, 1                 ; 2 uses
   %exitcond.not = icmp eq i32 %i.e, 100
-  br i1 %exitcond.not, label %bb.c, label %bb.b, !llvm.loop !28
+  br i1 %exitcond.not, label %bb.c, label %bb.b, !llvm.loop !29
 
 bb.c:                                             ; preds = %bb.b
   call fastcc void @fe_mul(ptr noundef %i.c, ptr noundef nonnull %i.d, ptr noundef nonnull %i.c)
@@ -4129,7 +4129,7 @@ bb.a:
   %rt.bound0 = icmp ugt i64 %i.c, %i.a
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.rtscalar, label %.rtvec
+  br i1 %rt.conflict, label %.rtscalar, label %.rtvec, !prof !11
 
 .rtvec:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
@@ -4532,7 +4532,7 @@ bb.a:
   %rt.bound0 = icmp ugt i64 %i.c, %i.a
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.rtscalar, label %.rtvec
+  br i1 %rt.conflict, label %.rtscalar, label %.rtvec, !prof !11
 
 .rtvec:                                           ; preds = %bb.a
   %i.e = alloca [10 x i32], align 16              ; 13 uses
@@ -4935,7 +4935,7 @@ bb.a:
   %rt.bound0 = icmp ugt i64 %i.d, %i.b
   %rt.bound1 = icmp ugt i64 %i.c, %i.a
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.rtscalar, label %.rtvec
+  br i1 %rt.conflict, label %.rtscalar, label %.rtvec, !prof !11
 
 .rtvec:                                           ; preds = %bb.a
   %i.e = zext nneg i8 %2 to i32
@@ -5338,7 +5338,7 @@ bb.a:
   %rt.bound0 = icmp ugt i64 %i.c, %i.a
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.rtscalar, label %.rtvec
+  br i1 %rt.conflict, label %.rtscalar, label %.rtvec, !prof !11
 
 .rtvec:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -5527,7 +5527,7 @@ bb.a:
   %rt.bound0 = icmp ugt i64 %i.c, %i.a
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.rtscalar, label %.rtvec
+  br i1 %rt.conflict, label %.rtscalar, label %.rtvec, !prof !11
 
 .rtvec:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
@@ -5930,22 +5930,23 @@ attributes #7 = { nounwind }
 !8 = !{!4, !4, i64 0}
 !9 = !{!5, !5, i64 0}
 !10 = !{!"llvm.loop.mustprogress"}
-!11 = distinct !{!11, !10}
+!11 = !{!"branch_weights", i32 1, i32 1048575}
 !12 = distinct !{!12, !10}
 !13 = distinct !{!13, !10}
-!14 = distinct !{!14, !10, !20, !21}
-!15 = distinct !{!15, !10}
+!14 = distinct !{!14, !10}
+!15 = distinct !{!15, !10, !21, !22}
 !16 = distinct !{!16, !10}
-!17 = distinct !{!17, !10, !20, !21}
-!18 = distinct !{!18, !10}
+!17 = distinct !{!17, !10}
+!18 = distinct !{!18, !10, !21, !22}
 !19 = distinct !{!19, !10}
-!20 = !{!"llvm.loop.isvectorized", i32 1}
-!21 = !{!"llvm.loop.unroll.runtime.disable"}
-!22 = distinct !{!22, !10}
+!20 = distinct !{!20, !10}
+!21 = !{!"llvm.loop.isvectorized", i32 1}
+!22 = !{!"llvm.loop.unroll.runtime.disable"}
 !23 = distinct !{!23, !10}
 !24 = distinct !{!24, !10}
 !25 = distinct !{!25, !10}
-!26 = !{!"long", !4, i64 0}
-!27 = !{!26, !26, i64 0}
-!28 = distinct !{!28, !10}
+!26 = distinct !{!26, !10}
+!27 = !{!"long", !4, i64 0}
+!28 = !{!27, !27, i64 0}
+!29 = distinct !{!29, !10}
 end_hunk_9

@@ -205,7 +205,7 @@ bb.a:
   %rt.bound0167 = icmp ugt i64 %i.c, %i.a
   %rt.bound1168 = icmp ugt i64 %i.d, %i.b
   %rt.conflict169 = and i1 %rt.bound0167, %rt.bound1168
-  br i1 %rt.conflict169, label %.lr.ph.i.i.i.i.i.i.i107.preheader.rtscalar, label %.lr.ph.i.i.i.i.i.i.i107.preheader.rtvec
+  br i1 %rt.conflict169, label %.lr.ph.i.i.i.i.i.i.i107.preheader.rtscalar, label %.lr.ph.i.i.i.i.i.i.i107.preheader.rtvec, !prof !314
 
 .lr.ph.i.i.i.i.i.i.i102.preheader:                ; preds = %bb.a
   %i.e = add i64 %i.b, 15
@@ -213,7 +213,7 @@ bb.a:
   %rt.bound0163 = icmp ugt i64 %i.e, %i.a
   %rt.bound1164 = icmp ugt i64 %i.f, %i.b
   %rt.conflict165 = and i1 %rt.bound0163, %rt.bound1164
-  br i1 %rt.conflict165, label %.lr.ph.i.i.i.i.i.i.i102.preheader.rtscalar, label %.lr.ph.i.i.i.i.i.i.i102.preheader.rtvec
+  br i1 %rt.conflict165, label %.lr.ph.i.i.i.i.i.i.i102.preheader.rtscalar, label %.lr.ph.i.i.i.i.i.i.i102.preheader.rtvec, !prof !314
 
 .lr.ph.i.i.i.i.i.i.i97.preheader:                 ; preds = %bb.a
   %i.g = add i64 %i.b, 14
@@ -221,7 +221,7 @@ bb.a:
   %rt.bound0 = icmp ugt i64 %i.g, %i.a
   %rt.bound1 = icmp ugt i64 %i.h, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.lr.ph.i.i.i.i.i.i.i97.preheader.rtscalar, label %.lr.ph.i.i.i.i.i.i.i97.preheader.rtvec
+  br i1 %rt.conflict, label %.lr.ph.i.i.i.i.i.i.i97.preheader.rtscalar, label %.lr.ph.i.i.i.i.i.i.i97.preheader.rtvec, !prof !314
 
 .lr.ph.i.i.i.i.i.i.i92.preheader:                 ; preds = %bb.a
   %i.i = load i8, ptr %1, align 1
@@ -624,13 +624,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep = getelementptr i8, ptr %0, i64 %i.mp ; 2 uses
   %next.gep149 = getelementptr i8, ptr %1, i64 %index ; 2 uses
   %i.mq = getelementptr i8, ptr %next.gep149, i64 8
-  %wide.load = load <8 x i8>, ptr %next.gep149, align 1, !alias.scope !314
-  %wide.load150 = load <8 x i8>, ptr %i.mq, align 1, !alias.scope !314
+  %wide.load = load <8 x i8>, ptr %next.gep149, align 1, !alias.scope !315
+  %wide.load150 = load <8 x i8>, ptr %i.mq, align 1, !alias.scope !315
   %i.mr = zext <8 x i8> %wide.load to <8 x i16>
   %i.ms = zext <8 x i8> %wide.load150 to <8 x i16>
   %i.mt = getelementptr i8, ptr %next.gep, i64 16
-  store <8 x i16> %i.mr, ptr %next.gep, align 2, !alias.scope !315, !noalias !314
-  store <8 x i16> %i.ms, ptr %i.mt, align 2, !alias.scope !315, !noalias !314
+  store <8 x i16> %i.mr, ptr %next.gep, align 2, !alias.scope !316, !noalias !315
+  store <8 x i16> %i.ms, ptr %i.mt, align 2, !alias.scope !316, !noalias !315
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.mu = icmp eq i64 %index.next, %n.vec
   br i1 %i.mu, label %middle.block, label %vector.body, !llvm.loop !311
@@ -657,9 +657,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.mz = shl i64 %index154, 1
   %next.gep155 = getelementptr i8, ptr %0, i64 %i.mz
   %next.gep156 = getelementptr i8, ptr %1, i64 %index154
-  %wide.load157 = load <4 x i8>, ptr %next.gep156, align 1, !alias.scope !314
+  %wide.load157 = load <4 x i8>, ptr %next.gep156, align 1, !alias.scope !315
   %i.na = zext <4 x i8> %wide.load157 to <4 x i16>
-  store <4 x i16> %i.na, ptr %next.gep155, align 2, !alias.scope !315, !noalias !314
+  store <4 x i16> %i.na, ptr %next.gep155, align 2, !alias.scope !316, !noalias !315
   %index.next158 = add nuw i64 %index154, 4       ; 2 uses
   %i.nb = icmp eq i64 %index.next158, %n.vec153
   br i1 %i.nb, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !312
@@ -1062,7 +1062,7 @@ _ZNK2v88internal11MaybeHandleINS0_16SeqOneByteStringEE5CheckEv.exit: ; preds = %
   %i.ax = inttoptr i64 %i.aw to ptr
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false), !alias.scope !320
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false), !alias.scope !321
   call void @_ZN2v88internal6String12WriteToFlat2IhEEvPT_NS0_6TaggedINS0_10ConsStringEEEjjRKNS0_31SharedStringAccessGuardIfNeededERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSC_2EEEE(ptr noundef nonnull %i.ay, i64 %i.au, i32 noundef 0, i32 noundef %i.aj, ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 1 dereferenceable(1) %3) #21
   %i.az = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.ba = load i8, ptr %i.az, align 8, !range !33, !noundef !34
@@ -1180,7 +1180,7 @@ _ZNK2v88internal11MaybeHandleINS0_16SeqTwoByteStringEE5CheckEv.exit: ; preds = %
   %i.cl = inttoptr i64 %i.ck to ptr
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false), !alias.scope !321
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false), !alias.scope !322
   call void @_ZN2v88internal6String12WriteToFlat2ItEEvPT_NS0_6TaggedINS0_10ConsStringEEEjjRKNS0_31SharedStringAccessGuardIfNeededERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSC_2EEEE(ptr noundef nonnull %i.cm, i64 %i.ci, i32 noundef 0, i32 noundef %i.aj, ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 1 dereferenceable(1) %5) #21
   %i.cn = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.co = load i8, ptr %i.cn, align 8, !range !33, !noundef !34
@@ -1415,7 +1415,7 @@ bb.d:                                             ; preds = %bb.c
   tail call void @_ZN2v88internal15JsonStringifier6ExtendEv(ptr noundef nonnull align 8 dereferenceable(2688) %0)
   %i.k = load i8, ptr %i.f, align 4, !range !33, !noundef !34
   %i.l = trunc nuw i8 %i.k to i1
-  br i1 %i.l, label %.loopexit, label %bb.c, !prof !32, !llvm.loop !322
+  br i1 %i.l, label %.loopexit, label %bb.c, !prof !32, !llvm.loop !323
 
 bb.e:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 %2
@@ -1576,7 +1576,7 @@ bb.d:                                             ; preds = %bb.c
   tail call void @_ZN2v88internal15JsonStringifier6ExtendEv(ptr noundef nonnull align 8 dereferenceable(2688) %0)
   %i.k = load i8, ptr %i.f, align 4, !range !33, !noundef !34
   %i.l = trunc nuw i8 %i.k to i1
-  br i1 %i.l, label %.loopexit, label %bb.c, !prof !32, !llvm.loop !323
+  br i1 %i.l, label %.loopexit, label %bb.c, !prof !32, !llvm.loop !324
 
 bb.e:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %2
@@ -1979,7 +1979,7 @@ _ZN2v88internal24IncrementalStringBuilder15AppendCharacterEh.exit.i.sink.split: 
 _ZN2v88internal24IncrementalStringBuilder15AppendCharacterEh.exit.i: ; preds = %_ZN2v88internal24IncrementalStringBuilder15AppendCharacterEh.exit.i.sink.split, %bb.h, %bb.g
   %i.bd = add nuw i64 %.0.i14, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.bd, %i.e
-  br i1 %exitcond.not, label %_ZN2v88internal24IncrementalStringBuilder12AppendStringESt17basic_string_viewIcSt11char_traitsIcEE.exit, label %bb.f, !llvm.loop !324
+  br i1 %exitcond.not, label %_ZN2v88internal24IncrementalStringBuilder12AppendStringESt17basic_string_viewIcSt11char_traitsIcEE.exit, label %bb.f, !llvm.loop !325
 
 _ZN2v88internal24IncrementalStringBuilder12AppendStringESt17basic_string_viewIcSt11char_traitsIcEE.exit: ; preds = %_ZN2v88internal24IncrementalStringBuilder15AppendCharacterEh.exit.i, %bb.e, %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
@@ -2382,7 +2382,7 @@ _ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE22Allocat
   %i.ab = getelementptr inbounds nuw i8, ptr %.0810.i.i.i.i, i64 32 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.011.i.i.i.i, i64 32
   %.not.i.i.i.i = icmp eq ptr %i.ab, %i.aa
-  br i1 %.not.i.i.i.i, label %_ZSt18uninitialized_copyIPN2v88internal18ContinuationRecordES3_ET0_T_S5_S4_.exit.i, label %.lr.ph.i.i.i.i, !llvm.loop !325
+  br i1 %.not.i.i.i.i, label %_ZSt18uninitialized_copyIPN2v88internal18ContinuationRecordES3_ET0_T_S5_S4_.exit.i, label %.lr.ph.i.i.i.i, !llvm.loop !326
 
 bb.e:                                             ; preds = %bb.b
   %i.ad = icmp sgt i64 %i.o, 32
@@ -2785,7 +2785,7 @@ bb.abu:                                           ; preds = %_ZN2v88internal19Fa
   %i.dfw = getelementptr inbounds i8, ptr %i.dft, i64 -32 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(32) %i.dfw, i64 32, i1 false)
   store ptr %i.dfw, ptr %i.l, align 8
-  br label %bb.b, !llvm.loop !326
+  br label %bb.b, !llvm.loop !327
 
 _ZN2v88internal19FastJsonStringifierIhE17SerializeJSObjectENS0_6TaggedINS0_8JSObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS7_2EEEE.exit.thread2562: ; preds = %.critedge.i268, %bb.h, %bb.e, %bb.f, %_ZN2v88internal12_GLOBAL__N_132CanFastSerializeJSObjectFastPathENS0_6TaggedINS0_8JSObjectEEENS2_INS0_10HeapObjectEEENS2_INS0_3MapEEEPNS0_7IsolateE.exit, %_ZN2v88internal19FastJsonStringifierIhE17SerializeJSObjectENS0_6TaggedINS0_8JSObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS7_2EEEE.exit.thread, %_ZN2v88internal19FastJsonStringifierIhE17SerializeJSObjectENS0_6TaggedINS0_8JSObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS7_2EEEE.exit, %bb.c, %bb.qn, %bb.qn, %_ZN2v88internal19FastJsonStringifierIhE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i103, %_ZN2v88internal19FastJsonStringifierIhE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i103, %bb.hr, %bb.hr, %bb.gn, %bb.gn, %_ZN2v88internal19FastJsonStringifierIhE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i, %_ZN2v88internal19FastJsonStringifierIhE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i, %bb.ag, %bb.ag, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit703, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit658, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit616, %.critedge.i234.thread2505, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit577, %_ZN2v88internal19FastJsonStringifierIhE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i103.thread2478, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit511, %.thread2464, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit472, %.critedge.i195.thread2439, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit435, %_ZN2v88internal19FastJsonStringifierIhE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i.thread2412, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit381, %.thread2398, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE12emplace_backIJS3_EEEvDpOT_.exit375, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE12emplace_backIJS3_EEEvDpOT_.exit608, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE12emplace_backIJS3_EEEvDpOT_.exit503, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE12emplace_backIJS3_EEEvDpOT_.exit464
   %.0 = phi i32 [ %i.blo, %_ZN2v88internal19FastJsonStringifierIhE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i103 ], [ 5, %.critedge.i195.thread2439 ], [ 4, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit435 ], [ 4, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE12emplace_backIJS3_EEEvDpOT_.exit608 ], [ %i.brf, %bb.qn ], [ 5, %_ZN2v88internal19FastJsonStringifierIhE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i.thread2412 ], [ 4, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit381 ], [ %i.gi, %bb.ag ], [ 4, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit703 ], [ 4, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit658 ], [ 4, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit616 ], [ 4, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE12emplace_backIJS3_EEEvDpOT_.exit503 ], [ %i.acr, %_ZN2v88internal19FastJsonStringifierIhE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i ], [ 5, %.critedge.i234.thread2505 ], [ 4, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit577 ], [ 4, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE12emplace_backIJS3_EEEvDpOT_.exit464 ], [ %i.ahy, %bb.gn ], [ 5, %_ZN2v88internal19FastJsonStringifierIhE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i103.thread2478 ], [ 4, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit511 ], [ 5, %.thread2398 ], [ %i.anq, %bb.hr ], [ 5, %.thread2464 ], [ 4, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE9push_backES3_.exit472 ], [ 4, %_ZN2v84base11SmallVectorINS_8internal18ContinuationRecordELm16ESaIS3_EE12emplace_backIJS3_EEEvDpOT_.exit375 ], [ %i.gi, %bb.ag ], [ %i.acr, %_ZN2v88internal19FastJsonStringifierIhE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i ], [ %i.ahy, %bb.gn ], [ %i.anq, %bb.hr ], [ %i.blo, %_ZN2v88internal19FastJsonStringifierIhE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i103 ], [ %i.brf, %bb.qn ], [ 5, %.critedge.i268 ], [ 5, %_ZN2v88internal12_GLOBAL__N_132CanFastSerializeJSObjectFastPathENS0_6TaggedINS0_8JSObjectEEENS2_INS0_10HeapObjectEEENS2_INS0_3MapEEEPNS0_7IsolateE.exit ], [ 5, %bb.e ], [ 5, %bb.h ], [ %.023, %_ZN2v88internal19FastJsonStringifierIhE17SerializeJSObjectENS0_6TaggedINS0_8JSObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS7_2EEEE.exit ], [ %i.t, %bb.c ], [ 0, %_ZN2v88internal19FastJsonStringifierIhE17SerializeJSObjectENS0_6TaggedINS0_8JSObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS7_2EEEE.exit.thread ], [ 5, %bb.f ]
@@ -3188,7 +3188,7 @@ bb.ag:                                            ; preds = %.preheader268
 _ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_19FastJsonStringifierIhE27SerializeJSPrimitiveWrapperENS0_6TaggedINS0_18JSPrimitiveWrapperEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSB_2EEEEEUlNS7_INS0_16SeqOneByteStringEEEE_ZNS6_27SerializeJSPrimitiveWrapperES9_SE_EUlNS7_INS0_16SeqTwoByteStringEEEE_ZNS6_27SerializeJSPrimitiveWrapperES9_SE_EUlNS7_INS0_21ExternalOneByteStringEEEE_ZNS6_27SerializeJSPrimitiveWrapperES9_SE_EUlNS7_INS0_21ExternalTwoByteStringEEEE_ZNS6_27SerializeJSPrimitiveWrapperES9_SE_EUlNS7_INS0_10ThinStringEEEE_ZNS6_27SerializeJSPrimitiveWrapperES9_SE_EUlNS7_INS0_10ConsStringEEEE_ZNS6_27SerializeJSPrimitiveWrapperES9_SE_EUlNS7_INS0_12SlicedStringEEEE_EEEEEDaNS7_INS0_6StringEEEOT_.exit: ; preds = %.preheader268, %.preheader268
   %i.jq = getelementptr inbounds nuw i8, ptr %i.cd, i64 16
   %i.jr = load i64, ptr %i.jq, align 8
-  br label %.preheader268, !llvm.loop !327
+  br label %.preheader268, !llvm.loop !328
 
 _ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit.thread: ; preds = %bb.d, %_ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit
   %i.js = and i64 %i.x, 1
@@ -3591,7 +3591,7 @@ bb.d:                                             ; preds = %._crit_edge28, %bb.
   %.122 = phi i64 [ %.02124, %._crit_edge28 ], [ %i.o, %bb.c ] ; 2 uses
   %.1 = phi i1 [ %.02025, %._crit_edge28 ], [ true, %bb.c ] ; 2 uses
   %exitcond.not = icmp eq i64 %.pre-phi, %2
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !328
+  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !329
 
 bb.e:                                             ; preds = %._crit_edge
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 %.021.lcssa ; 17 uses
@@ -3949,7 +3949,7 @@ bb.e:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i, i64 32 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i, i64 32
   %i.u = icmp eq ptr %i.s, %i.q
-  br i1 %i.u, label %_ZSt18uninitialized_moveIPN2v88internal18ContinuationRecordES3_ET0_T_S5_S4_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !329
+  br i1 %i.u, label %_ZSt18uninitialized_moveIPN2v88internal18ContinuationRecordES3_ET0_T_S5_S4_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !330
 
 _ZSt18uninitialized_moveIPN2v88internal18ContinuationRecordES3_ET0_T_S5_S4_.exit: ; preds = %.lr.ph.i.i.i.i, %bb.e
   %i.v = shl nuw i64 1, %i.j
@@ -4352,7 +4352,7 @@ bb.av:                                            ; preds = %bb.au, %bb.at, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #21
   %i.cp = add nuw i32 %.014.i55920, 1             ; 2 uses
   %exitcond1007.not = icmp eq i32 %i.cp, %i.aj
-  br i1 %exitcond1007.not, label %._crit_edge922, label %.peel.next1009, !llvm.loop !330
+  br i1 %exitcond1007.not, label %._crit_edge922, label %.peel.next1009, !llvm.loop !331
 
 ._crit_edge922:                                   ; preds = %bb.av, %bb.z, %.preheader.._crit_edge922_crit_edge
   %i.cq = phi ptr [ %.pre1052, %.preheader.._crit_edge922_crit_edge ], [ %i.bo, %bb.z ], [ %i.co, %bb.av ] ; 2 uses
@@ -4755,7 +4755,7 @@ bb.ej:                                            ; preds = %bb.ei, %.peel.next1
   tail call void @_ZN2v88internal19FastJsonStringifierIhE15SerializeDoubleEd(ptr noundef nonnull align 8 dereferenceable(944) %0, double noundef %.0.copyload.i.i.i.i184)
   %i.vw = add nuw i32 %.014.i62848, 1             ; 2 uses
   %exitcond1002.not = icmp eq i32 %i.vw, %i.aj
-  br i1 %exitcond1002.not, label %._crit_edge850, label %.peel.next1004, !llvm.loop !331
+  br i1 %exitcond1002.not, label %._crit_edge850, label %.peel.next1004, !llvm.loop !332
 
 ._crit_edge850:                                   ; preds = %bb.ej, %bb.eg, %.preheader695
   %i.vx = load ptr, ptr %i.r, align 8
@@ -5144,7 +5144,7 @@ _ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12Eleme
   %i.zf = phi ptr [ %i.ze, %_ZN2v88internal9OutBufferIhE6AppendIhQgestT_stTL0__EEvPKS4_m.exit193 ], [ %i.yj, %_ZN2v88internal19FastJsonStringifierIhE18SeparatorUncheckedEb.exit.i ] ; 2 uses
   %i.zg = add nuw i32 %.014.i69845, 1             ; 2 uses
   %exitcond998.not = icmp eq i32 %i.zg, %i.aj
-  br i1 %exitcond998.not, label %._crit_edge847, label %.peel.next1000, !llvm.loop !332
+  br i1 %exitcond998.not, label %._crit_edge847, label %.peel.next1000, !llvm.loop !333
 
 ._crit_edge847:                                   ; preds = %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE1ELb0ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit, %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE1ELb0ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.peel, %.preheader696.._crit_edge847_crit_edge
   %i.zh = phi ptr [ %.pre1032, %.preheader696.._crit_edge847_crit_edge ], [ %i.xr, %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE1ELb0ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.peel ], [ %i.zf, %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE1ELb0ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit ] ; 2 uses
@@ -5547,7 +5547,7 @@ _ZN2v88internal19FastJsonStringifierIhE9SeparatorEb.exit.i86: ; preds = %bb.jy, 
 _ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE5ELb0ENS0_16FixedDoubleArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit: ; preds = %_ZN2v88internal19FastJsonStringifierIhE9SeparatorEb.exit.i86, %_ZN2v88internal19FastJsonStringifierIhE18SeparatorUncheckedEb.exit.i87
   %i.ato = add nuw i32 %.014.i76776, 1            ; 2 uses
   %exitcond.not = icmp eq i32 %i.ato, %i.aj
-  br i1 %exitcond.not, label %._crit_edge, label %.peel.next, !llvm.loop !333
+  br i1 %exitcond.not, label %._crit_edge, label %.peel.next, !llvm.loop !334
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE5ELb0ENS0_16FixedDoubleArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit, %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE5ELb0ENS0_16FixedDoubleArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.peel, %.preheader705
   %i.atp = load ptr, ptr %i.r, align 8
@@ -5950,7 +5950,7 @@ _ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12Eleme
 bb.dp:                                            ; preds = %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE2ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.thread256, %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE2ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit
   %i.sh = add nuw i32 %.122370, 1                 ; 2 uses
   %exitcond.not = icmp eq i32 %i.sh, %.020
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph373, !llvm.loop !334
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph373, !llvm.loop !335
 
 ._crit_edge:                                      ; preds = %bb.dp, %bb.b
   %.122.lcssa = phi i32 [ %.021, %bb.b ], [ %.020, %bb.dp ] ; 2 uses
@@ -5984,7 +5984,7 @@ bb.ds:                                            ; preds = %._crit_edge
   br i1 %i.sp, label %bb.dt, label %.backedge
 
 .backedge:                                        ; preds = %bb.ds, %bb.dt
-  br label %bb.b, !llvm.loop !335
+  br label %bb.b, !llvm.loop !336
 
 bb.dt:                                            ; preds = %bb.ds
   %i.sq = load ptr, ptr %0, align 8
@@ -6387,7 +6387,7 @@ _ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12Eleme
 _ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE3ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.thread: ; preds = %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE3ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.thread.sink.split, %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE3ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit
   %i.sc = add nuw i32 %.122373, 1                 ; 2 uses
   %exitcond.not = icmp eq i32 %i.sc, %.020
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph376, !llvm.loop !336
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph376, !llvm.loop !337
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE3ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.thread, %bb.b
   %.122.lcssa = phi i32 [ %.021, %bb.b ], [ %.020, %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE3ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.thread ] ; 2 uses
@@ -6421,7 +6421,7 @@ bb.cl:                                            ; preds = %._crit_edge
   br i1 %i.sk, label %bb.cm, label %.backedge
 
 .backedge:                                        ; preds = %bb.cl, %bb.cm
-  br label %bb.b, !llvm.loop !337
+  br label %bb.b, !llvm.loop !338
 
 bb.cm:                                            ; preds = %bb.cl
   %i.sl = load ptr, ptr %0, align 8
@@ -6554,7 +6554,7 @@ bb.i:                                             ; preds = %bb.b, %.loopexit
   %i.ap = sub i64 %i.an, %i.ao
   %i.aq = ashr exact i64 %i.ap, 5
   %.not = icmp ugt i64 %i.aq, %i.am
-  br i1 %.not, label %bb.b, label %.critedge, !llvm.loop !338
+  br i1 %.not, label %bb.b, label %.critedge, !llvm.loop !339
 
 .critedge:                                        ; preds = %bb.i, %bb.f, %bb.g, %bb.d, %bb.a
   %.not30 = phi i1 [ true, %bb.g ], [ true, %bb.d ], [ false, %bb.a ], [ false, %bb.i ], [ true, %bb.f ]
@@ -6624,7 +6624,7 @@ bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.025.0, i64 8
   %i.n = load i64, ptr %i.m, align 8
   %i.o = icmp eq i64 %i.k, %i.n
-  br i1 %i.o, label %_ZNKSt10_HashtableImmSaImENSt8__detail9_IdentityESt8equal_toImESt4hashImENS1_18_Mod_range_hashingENS1_20_Default_ranged_hashENS1_20_Prime_rehash_policyENS1_17_Hashtable_traitsILb0ELb1ELb1EEEE15_M_find_node_trImEEPNS1_10_Hash_nodeImLb0EEEmRKT_m.exit, label %bb.c, !llvm.loop !339
+  br i1 %i.o, label %_ZNKSt10_HashtableImmSaImENSt8__detail9_IdentityESt8equal_toImESt4hashImENS1_18_Mod_range_hashingENS1_20_Default_ranged_hashENS1_20_Prime_rehash_policyENS1_17_Hashtable_traitsILb0ELb1ELb1EEEE15_M_find_node_trImEEPNS1_10_Hash_nodeImLb0EEEmRKT_m.exit, label %bb.c, !llvm.loop !340
 
 bb.e:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -6641,7 +6641,7 @@ bb.f:                                             ; preds = %.thread31
 
 bb.g:                                             ; preds = %bb.h
   %i.w = icmp eq i64 %i.c, %i.z
-  br i1 %i.w, label %_ZNKSt10_HashtableImmSaImENSt8__detail9_IdentityESt8equal_toImESt4hashImENS1_18_Mod_range_hashingENS1_20_Default_ranged_hashENS1_20_Prime_rehash_policyENS1_17_Hashtable_traitsILb0ELb1ELb1EEEE15_M_find_node_trImEEPNS1_10_Hash_nodeImLb0EEEmRKT_m.exit, label %.lr.ph.i.i, !llvm.loop !340
+  br i1 %i.w, label %_ZNKSt10_HashtableImmSaImENSt8__detail9_IdentityESt8equal_toImESt4hashImENS1_18_Mod_range_hashingENS1_20_Default_ranged_hashENS1_20_Prime_rehash_policyENS1_17_Hashtable_traitsILb0ELb1ELb1EEEE15_M_find_node_trImEEPNS1_10_Hash_nodeImLb0EEEmRKT_m.exit, label %.lr.ph.i.i, !llvm.loop !341
 
 .lr.ph.i.i:                                       ; preds = %bb.f, %bb.g
   %.020.i.i = phi ptr [ %i.x, %bb.g ], [ %i.s, %bb.f ]
@@ -6654,10 +6654,10 @@ bb.h:                                             ; preds = %.lr.ph.i.i
   %i.z = load i64, ptr %i.y, align 8              ; 2 uses
   %i.aa = urem i64 %i.z, %i.e
   %.not19.i.i = icmp eq i64 %i.aa, %i.f
-  br i1 %.not19.i.i, label %bb.g, label %..loopexit_crit_edge21.i.i, !llvm.loop !340
+  br i1 %.not19.i.i, label %bb.g, label %..loopexit_crit_edge21.i.i, !llvm.loop !341
 
 ..loopexit_crit_edge21.i.i:                       ; preds = %bb.h
-  br label %.critedge, !llvm.loop !340
+  br label %.critedge, !llvm.loop !341
 
 .critedge:                                        ; preds = %.lr.ph.i.i, %bb.e, %..loopexit_crit_edge21.i.i, %.thread31
   %i.ab = phi i64 [ %i.r, %bb.e ], [ %i.f, %.thread31 ], [ %i.f, %..loopexit_crit_edge21.i.i ], [ %i.f, %.lr.ph.i.i ]
@@ -6815,7 +6815,7 @@ bb.i:                                             ; preds = %.lr.ph
 bb.j:                                             ; preds = %bb.g, %bb.h, %bb.i
   %.1 = phi i64 [ %.031, %bb.i ], [ %i.l, %bb.h ], [ %i.l, %bb.g ]
   %.not = icmp eq ptr %i.i, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !341
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !342
 
 ._crit_edge:                                      ; preds = %bb.j, %_ZNSt10_HashtableImmSaImENSt8__detail9_IdentityESt8equal_toImESt4hashImENS1_18_Mod_range_hashingENS1_20_Default_ranged_hashENS1_20_Prime_rehash_policyENS1_17_Hashtable_traitsILb0ELb1ELb1EEEE19_M_allocate_bucketsEm.exit
   %i.t = load ptr, ptr %0, align 8                ; 2 uses
@@ -6893,7 +6893,7 @@ bb.c:                                             ; preds = %.lr.ph.i
   %i.z = add nuw nsw i64 %.0131.i, 4              ; 2 uses
   %i.aa = or disjoint i64 %i.z, 3
   %i.ab = icmp samesign ult i64 %i.aa, %i.k
-  br i1 %i.ab, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !342
+  br i1 %i.ab, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !343
 
 ._crit_edge.i:                                    ; preds = %bb.c, %.lr.ph.i, %bb.b
   %.013.lcssa.i = phi i64 [ 0, %bb.b ], [ %i.m, %bb.c ], [ %.0131.i, %.lr.ph.i ] ; 5 uses
@@ -6961,7 +6961,7 @@ bb.d:                                             ; preds = %.lr.ph7.i.3
   %i.bi = add nuw nsw i64 %.15.i, 4               ; 2 uses
   %niter13.next.3 = add i64 %niter13, 4           ; 2 uses
   %niter13.ncmp.3 = icmp eq i64 %niter13.next.3, %unroll_iter12
-  br i1 %niter13.ncmp.3, label %"_ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_12_GLOBAL__N_19IsFastKeyENS0_6TaggedINS0_6StringEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEEE3$_0ZNS5_9IsFastKeyES8_SD_E3$_1ZNS5_9IsFastKeyES8_SD_E3$_2EEEEEDaS8_OT_.exit.loopexit.unr-lcssa", label %.lr.ph7.i, !llvm.loop !343
+  br i1 %niter13.ncmp.3, label %"_ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_12_GLOBAL__N_19IsFastKeyENS0_6TaggedINS0_6StringEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEEE3$_0ZNS5_9IsFastKeyES8_SD_E3$_1ZNS5_9IsFastKeyES8_SD_E3$_2EEEEEDaS8_OT_.exit.loopexit.unr-lcssa", label %.lr.ph7.i, !llvm.loop !344
 
 bb.e:                                             ; preds = %bb.a
   %i.bj = getelementptr inbounds nuw i8, ptr %i.b, i64 16
@@ -7028,7 +7028,7 @@ bb.i:                                             ; preds = %.lr.ph.i13
   %i.cs = add nuw nsw i64 %.0131.i14, 4           ; 2 uses
   %i.ct = or disjoint i64 %i.cs, 3
   %i.cu = icmp samesign ult i64 %i.ct, %i.cd
-  br i1 %i.cu, label %.lr.ph.i13, label %._crit_edge.i5, !llvm.loop !342
+  br i1 %i.cu, label %.lr.ph.i13, label %._crit_edge.i5, !llvm.loop !343
 
 ._crit_edge.i5:                                   ; preds = %bb.i, %.lr.ph.i13, %_ZNK2v88internal21ExternalOneByteString8GetCharsEv.exit
   %.013.lcssa.i6 = phi i64 [ 0, %_ZNK2v88internal21ExternalOneByteString8GetCharsEv.exit ], [ %i.cf, %bb.i ], [ %.0131.i14, %.lr.ph.i13 ] ; 5 uses
@@ -7096,7 +7096,7 @@ bb.j:                                             ; preds = %.lr.ph7.i8.3
   %i.eb = add nuw nsw i64 %.15.i9, 4              ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %"_ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_12_GLOBAL__N_19IsFastKeyENS0_6TaggedINS0_6StringEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEEE3$_0ZNS5_9IsFastKeyES8_SD_E3$_1ZNS5_9IsFastKeyES8_SD_E3$_2EEEEEDaS8_OT_.exit.loopexit3.unr-lcssa", label %.lr.ph7.i8, !llvm.loop !343
+  br i1 %niter.ncmp.3, label %"_ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_12_GLOBAL__N_19IsFastKeyENS0_6TaggedINS0_6StringEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEEE3$_0ZNS5_9IsFastKeyES8_SD_E3$_1ZNS5_9IsFastKeyES8_SD_E3$_2EEEEEDaS8_OT_.exit.loopexit3.unr-lcssa", label %.lr.ph7.i8, !llvm.loop !344
 
 bb.k:                                             ; preds = %bb.a
   tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.5) #22
@@ -7133,7 +7133,7 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph7.i.ep
   %i.ej = add nuw nsw i64 %.15.i.epil, 1
   %epil.iter8.next = add i64 %epil.iter8, 1       ; 2 uses
   %epil.iter8.cmp.not = icmp eq i64 %epil.iter8.next, %xtraiter7
-  br i1 %epil.iter8.cmp.not, label %"_ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_12_GLOBAL__N_19IsFastKeyENS0_6TaggedINS0_6StringEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEEE3$_0ZNS5_9IsFastKeyES8_SD_E3$_1ZNS5_9IsFastKeyES8_SD_E3$_2EEEEEDaS8_OT_.exit", label %.lr.ph7.i.epil, !llvm.loop !344
+  br i1 %epil.iter8.cmp.not, label %"_ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_12_GLOBAL__N_19IsFastKeyENS0_6TaggedINS0_6StringEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEEE3$_0ZNS5_9IsFastKeyES8_SD_E3$_1ZNS5_9IsFastKeyES8_SD_E3$_2EEEEEDaS8_OT_.exit", label %.lr.ph7.i.epil, !llvm.loop !345
 
 "_ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_12_GLOBAL__N_19IsFastKeyENS0_6TaggedINS0_6StringEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEEE3$_0ZNS5_9IsFastKeyES8_SD_E3$_1ZNS5_9IsFastKeyES8_SD_E3$_2EEEEEDaS8_OT_.exit.loopexit3.unr-lcssa": ; preds = %.critedge20
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -7166,7 +7166,7 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph7.i8.e
   %i.er = add nuw nsw i64 %.15.i9.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %"_ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_12_GLOBAL__N_19IsFastKeyENS0_6TaggedINS0_6StringEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEEE3$_0ZNS5_9IsFastKeyES8_SD_E3$_1ZNS5_9IsFastKeyES8_SD_E3$_2EEEEEDaS8_OT_.exit", label %.lr.ph7.i8.epil, !llvm.loop !345
+  br i1 %epil.iter.cmp.not, label %"_ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_12_GLOBAL__N_19IsFastKeyENS0_6TaggedINS0_6StringEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEEE3$_0ZNS5_9IsFastKeyES8_SD_E3$_1ZNS5_9IsFastKeyES8_SD_E3$_2EEEEEDaS8_OT_.exit", label %.lr.ph7.i8.epil, !llvm.loop !346
 
 "_ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_12_GLOBAL__N_19IsFastKeyENS0_6TaggedINS0_6StringEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEEE3$_0ZNS5_9IsFastKeyES8_SD_E3$_1ZNS5_9IsFastKeyES8_SD_E3$_2EEEEEDaS8_OT_.exit": ; preds = %"_ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_12_GLOBAL__N_19IsFastKeyENS0_6TaggedINS0_6StringEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEEE3$_0ZNS5_9IsFastKeyES8_SD_E3$_1ZNS5_9IsFastKeyES8_SD_E3$_2EEEEEDaS8_OT_.exit.loopexit3.unr-lcssa", %bb.o, %"_ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_12_GLOBAL__N_19IsFastKeyENS0_6TaggedINS0_6StringEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEEE3$_0ZNS5_9IsFastKeyES8_SD_E3$_1ZNS5_9IsFastKeyES8_SD_E3$_2EEEEEDaS8_OT_.exit.loopexit.unr-lcssa", %bb.m, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %._crit_edge.i5, %bb.a, %bb.a, %bb.a, %._crit_edge.i
   %.0.i = phi i1 [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ %i.ei, %bb.m ], [ false, %bb.a ], [ true, %._crit_edge.i ], [ false, %bb.a ], [ true, %._crit_edge.i5 ], [ false, %bb.a ], [ false, %bb.a ], [ %i.bh, %"_ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_12_GLOBAL__N_19IsFastKeyENS0_6TaggedINS0_6StringEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEEE3$_0ZNS5_9IsFastKeyES8_SD_E3$_1ZNS5_9IsFastKeyES8_SD_E3$_2EEEEEDaS8_OT_.exit.loopexit.unr-lcssa" ], [ %i.ea, %"_ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_12_GLOBAL__N_19IsFastKeyENS0_6TaggedINS0_6StringEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSA_2EEEEE3$_0ZNS5_9IsFastKeyES8_SD_E3$_1ZNS5_9IsFastKeyES8_SD_E3$_2EEEEEDaS8_OT_.exit.loopexit3.unr-lcssa" ], [ %i.eq, %bb.o ]
@@ -7569,7 +7569,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   %i.ak = add i32 %.12256, 1                      ; 2 uses
   %exitcond.not = icmp eq i32 %i.ak, %.020
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !346
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !347
 
 ._crit_edge:                                      ; preds = %bb.x, %bb.b
   %.122.lcssa = phi i32 [ %.021, %bb.b ], [ %.020, %bb.x ] ; 2 uses
@@ -7603,7 +7603,7 @@ bb.aa:                                            ; preds = %._crit_edge
   br i1 %i.as, label %bb.ab, label %.backedge
 
 .backedge:                                        ; preds = %bb.aa, %bb.ab
-  br label %bb.b, !llvm.loop !347
+  br label %bb.b, !llvm.loop !348
 
 bb.ab:                                            ; preds = %bb.aa
   %i.at = load ptr, ptr %0, align 8
@@ -7671,7 +7671,7 @@ bb.e:                                             ; preds = %_ZN2v88internal9Out
   tail call void @_ZN2v88internal19FastJsonStringifierIhE15SerializeDoubleEd(ptr noundef nonnull align 8 dereferenceable(944) %0, double noundef %.0.copyload.i.i.i.i)
   %i.q = add i32 %.12250, 1                       ; 2 uses
   %exitcond.not = icmp eq i32 %i.q, %.020
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !348
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !349
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.b
   %.122.lcssa = phi i32 [ %.021, %bb.b ], [ %.020, %bb.e ] ; 2 uses
@@ -7705,7 +7705,7 @@ bb.h:                                             ; preds = %._crit_edge
   br i1 %i.y, label %bb.i, label %.backedge
 
 .backedge:                                        ; preds = %bb.h, %bb.i
-  br label %bb.b, !llvm.loop !349
+  br label %bb.b, !llvm.loop !350
 
 bb.i:                                             ; preds = %bb.h
   %i.z = load ptr, ptr %0, align 8
@@ -7940,7 +7940,7 @@ _ZN2v88internal9OutBufferIhE6AppendIhQgestT_stTL0__EEvPKS4_m.exit: ; preds = %_Z
 _ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE1ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit: ; preds = %_ZN2v88internal9OutBufferIhE6AppendIhQgestT_stTL0__EEvPKS4_m.exit, %_ZN2v88internal19FastJsonStringifierIhE18SeparatorUncheckedEb.exit.i
   %i.ay = add i32 %.12260, 1                      ; 2 uses
   %exitcond.not = icmp eq i32 %i.ay, %.020
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !350
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !351
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE1ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit, %bb.b
   %.122.lcssa = phi i32 [ %.021, %bb.b ], [ %.020, %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE1ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit ] ; 2 uses
@@ -7974,7 +7974,7 @@ bb.ad:                                            ; preds = %._crit_edge
   br i1 %i.bg, label %bb.ae, label %.backedge
 
 .backedge:                                        ; preds = %bb.ad, %bb.ae
-  br label %bb.b, !llvm.loop !351
+  br label %bb.b, !llvm.loop !352
 
 bb.ae:                                            ; preds = %bb.ad
   %i.bh = load ptr, ptr %0, align 8
@@ -8086,7 +8086,7 @@ _ZN2v88internal19FastJsonStringifierIhE9SeparatorEb.exit.i: ; preds = %_ZN2v88in
 _ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE5ELb1ENS0_16FixedDoubleArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit: ; preds = %_ZN2v88internal19FastJsonStringifierIhE9SeparatorEb.exit.i, %_ZN2v88internal19FastJsonStringifierIhE18SeparatorUncheckedEb.exit.i
   %i.ab = add i32 %.12254, 1                      ; 2 uses
   %exitcond.not = icmp eq i32 %i.ab, %.020
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !352
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !353
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE5ELb1ENS0_16FixedDoubleArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit, %bb.b
   %.122.lcssa = phi i32 [ %.021, %bb.b ], [ %.020, %_ZN2v88internal19FastJsonStringifierIhE26SerializeFixedArrayElementILNS0_12ElementsKindE5ELb1ENS0_16FixedDoubleArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit ] ; 2 uses
@@ -8120,7 +8120,7 @@ bb.k:                                             ; preds = %._crit_edge
   br i1 %i.aj, label %bb.l, label %.backedge
 
 .backedge:                                        ; preds = %bb.k, %bb.l
-  br label %bb.b, !llvm.loop !353
+  br label %bb.b, !llvm.loop !354
 
 bb.l:                                             ; preds = %bb.k
   %i.ak = load ptr, ptr %0, align 8
@@ -8523,7 +8523,7 @@ bb.apu:                                           ; preds = %_ZN2v88internal19Fa
   %i.ghs = getelementptr inbounds i8, ptr %i.ghp, i64 -32 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(32) %i.ghs, i64 32, i1 false)
   store ptr %i.ghs, ptr %i.ab, align 8
-  br label %bb.b, !llvm.loop !354
+  br label %bb.b, !llvm.loop !355
 
 _ZN2v88internal19FastJsonStringifierItE17SerializeJSObjectENS0_6TaggedINS0_8JSObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS7_2EEEE.exit.thread2803: ; preds = %.critedge.i.i, %bb.h, %bb.e, %bb.f, %_ZN2v88internal12_GLOBAL__N_132CanFastSerializeJSObjectFastPathENS0_6TaggedINS0_8JSObjectEEENS2_INS0_10HeapObjectEEENS2_INS0_3MapEEEPNS0_7IsolateE.exit.i, %_ZN2v88internal19FastJsonStringifierItE17SerializeJSObjectENS0_6TaggedINS0_8JSObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS7_2EEEE.exit.thread, %_ZN2v88internal19FastJsonStringifierItE17SerializeJSObjectENS0_6TaggedINS0_8JSObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS7_2EEEE.exit, %bb.c, %bb.vn, %bb.vn, %_ZN2v88internal19FastJsonStringifierItE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i86, %_ZN2v88internal19FastJsonStringifierItE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i86, %bb.jy, %bb.jy, %bb.jf, %bb.jf, %_ZN2v88internal19FastJsonStringifierItE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i, %_ZN2v88internal19FastJsonStringifierItE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i, %bb.x, %bb.x, %.critedge.i244.thread2745, %_ZN2v88internal19FastJsonStringifierItE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i86.thread2722, %.thread2704, %.critedge.i216.thread2680, %_ZN2v88internal19FastJsonStringifierItE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i.thread2657, %.thread2639
   %.0 = phi i32 [ %i.cyk, %_ZN2v88internal19FastJsonStringifierItE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i86 ], [ 5, %_ZN2v88internal19FastJsonStringifierItE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i86.thread2722 ], [ %i.dcb, %bb.vn ], [ %i.fj, %bb.x ], [ 5, %.thread2704 ], [ 5, %_ZN2v88internal19FastJsonStringifierItE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i.thread2657 ], [ %i.axx, %_ZN2v88internal19FastJsonStringifierItE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i ], [ %i.bbd, %bb.jf ], [ 5, %.critedge.i216.thread2680 ], [ %i.bev, %bb.jy ], [ 5, %.critedge.i244.thread2745 ], [ 5, %.thread2639 ], [ %i.fj, %bb.x ], [ %i.axx, %_ZN2v88internal19FastJsonStringifierItE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i ], [ %i.bbd, %bb.jf ], [ %i.bev, %bb.jy ], [ %i.cyk, %_ZN2v88internal19FastJsonStringifierItE24TrySerializeSimpleObjectENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE.exit.i86 ], [ %i.dcb, %bb.vn ], [ 5, %.critedge.i.i ], [ 5, %bb.e ], [ 0, %_ZN2v88internal19FastJsonStringifierItE17SerializeJSObjectENS0_6TaggedINS0_8JSObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS7_2EEEE.exit.thread ], [ 5, %bb.h ], [ %.023, %_ZN2v88internal19FastJsonStringifierItE17SerializeJSObjectENS0_6TaggedINS0_8JSObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS7_2EEEE.exit ], [ 5, %_ZN2v88internal12_GLOBAL__N_132CanFastSerializeJSObjectFastPathENS0_6TaggedINS0_8JSObjectEEENS2_INS0_10HeapObjectEEENS2_INS0_3MapEEEPNS0_7IsolateE.exit.i ], [ 5, %bb.f ], [ %i.aj, %bb.c ]
@@ -8926,7 +8926,7 @@ bb.cz:                                            ; preds = %.preheader354
 _ZNK2v88internal11StringShape22DispatchToSpecificTypeIN4absl8OverloadIJZNS0_19FastJsonStringifierItE27SerializeJSPrimitiveWrapperENS0_6TaggedINS0_18JSPrimitiveWrapperEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELSB_2EEEEEUlNS7_INS0_16SeqOneByteStringEEEE_ZNS6_27SerializeJSPrimitiveWrapperES9_SE_EUlNS7_INS0_16SeqTwoByteStringEEEE_ZNS6_27SerializeJSPrimitiveWrapperES9_SE_EUlNS7_INS0_21ExternalOneByteStringEEEE_ZNS6_27SerializeJSPrimitiveWrapperES9_SE_EUlNS7_INS0_21ExternalTwoByteStringEEEE_ZNS6_27SerializeJSPrimitiveWrapperES9_SE_EUlNS7_INS0_10ThinStringEEEE_ZNS6_27SerializeJSPrimitiveWrapperES9_SE_EUlNS7_INS0_10ConsStringEEEE_ZNS6_27SerializeJSPrimitiveWrapperES9_SE_EUlNS7_INS0_12SlicedStringEEEE_EEEEEDaNS7_INS0_6StringEEEOT_.exit: ; preds = %.preheader354, %.preheader354
   %i.ve = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
   %i.vf = load i64, ptr %i.ve, align 8
-  br label %.preheader354, !llvm.loop !355
+  br label %.preheader354, !llvm.loop !356
 
 _ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit.thread: ; preds = %bb.d, %_ZN2v88internal8IsStringENS0_6TaggedINS0_6ObjectEEE.exit
   %i.vg = and i64 %i.z, 1
@@ -9305,7 +9305,7 @@ bb.l:                                             ; preds = %bb.k, %_ZN2v88inter
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #21
   %i.cp = add nuw i32 %.014.i551167, 1            ; 2 uses
   %exitcond1256.not = icmp eq i32 %i.cp, %i.ar
-  br i1 %exitcond1256.not, label %._crit_edge1169, label %.peel.next1258, !llvm.loop !356
+  br i1 %exitcond1256.not, label %._crit_edge1169, label %.peel.next1258, !llvm.loop !357
 
 ._crit_edge1169:                                  ; preds = %bb.l, %bb.h, %.preheader.._crit_edge1169_crit_edge
   %i.cq = phi ptr [ %.pre1321, %.preheader.._crit_edge1169_crit_edge ], [ %i.bs, %bb.h ], [ %i.co, %bb.l ] ; 2 uses
@@ -9708,7 +9708,7 @@ bb.gf:                                            ; preds = %bb.ge, %.peel.next1
   tail call void @_ZN2v88internal19FastJsonStringifierItE15SerializeDoubleEd(ptr noundef nonnull align 8 dereferenceable(1200) %0, double noundef %.0.copyload.i.i.i.i254)
   %i.aom = add nuw i32 %.014.i621075, 1           ; 2 uses
   %exitcond1251.not = icmp eq i32 %i.aom, %i.ar
-  br i1 %exitcond1251.not, label %._crit_edge1077, label %.peel.next1253, !llvm.loop !357
+  br i1 %exitcond1251.not, label %._crit_edge1077, label %.peel.next1253, !llvm.loop !358
 
 ._crit_edge1077:                                  ; preds = %bb.gf, %bb.gc, %.preheader909
   %i.aon = load ptr, ptr %i.z, align 8
@@ -9907,7 +9907,7 @@ _ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12Eleme
   %i.arn = phi ptr [ %i.arm, %_ZN2v88internal9OutBufferItE14EnsureCapacityEm.exit262 ], [ %i.aqv, %_ZN2v88internal19FastJsonStringifierItE18SeparatorUncheckedEb.exit.i ] ; 2 uses
   %i.aro = add nuw i32 %.014.i691072, 1           ; 2 uses
   %exitcond1247.not = icmp eq i32 %i.aro, %i.ar
-  br i1 %exitcond1247.not, label %._crit_edge1074, label %.peel.next1249, !llvm.loop !358
+  br i1 %exitcond1247.not, label %._crit_edge1074, label %.peel.next1249, !llvm.loop !359
 
 ._crit_edge1074:                                  ; preds = %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE1ELb0ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit, %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE1ELb0ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.peel, %.preheader910.._crit_edge1074_crit_edge
   %i.arp = phi ptr [ %.pre1291, %.preheader910.._crit_edge1074_crit_edge ], [ %i.aqd, %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE1ELb0ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.peel ], [ %i.arn, %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE1ELb0ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit ] ; 2 uses
@@ -10310,7 +10310,7 @@ _ZN2v88internal19FastJsonStringifierItE9SeparatorEb.exit.i86: ; preds = %bb.nn, 
 _ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE5ELb0ENS0_16FixedDoubleArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit: ; preds = %_ZN2v88internal19FastJsonStringifierItE9SeparatorEb.exit.i86, %_ZN2v88internal19FastJsonStringifierItE18SeparatorUncheckedEb.exit.i87
   %i.cdv = add nuw i32 %.014.i76983, 1            ; 2 uses
   %exitcond.not = icmp eq i32 %i.cdv, %i.ar
-  br i1 %exitcond.not, label %._crit_edge, label %.peel.next, !llvm.loop !359
+  br i1 %exitcond.not, label %._crit_edge, label %.peel.next, !llvm.loop !360
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE5ELb0ENS0_16FixedDoubleArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit, %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE5ELb0ENS0_16FixedDoubleArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.peel, %.preheader918
   %i.cdw = load ptr, ptr %i.z, align 8
@@ -10713,7 +10713,7 @@ _ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12Eleme
 bb.if:                                            ; preds = %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE2ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.thread, %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE2ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit
   %i.aof = add nuw i32 %.122555, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.aof, %.020
-  br i1 %exitcond.not, label %._crit_edge560, label %.lr.ph559, !llvm.loop !360
+  br i1 %exitcond.not, label %._crit_edge560, label %.lr.ph559, !llvm.loop !361
 
 ._crit_edge560:                                   ; preds = %bb.if, %bb.b
   %.122.lcssa = phi i32 [ %.021, %bb.b ], [ %.020, %bb.if ] ; 2 uses
@@ -10747,7 +10747,7 @@ bb.ii:                                            ; preds = %._crit_edge560
   br i1 %i.aon, label %bb.ij, label %.backedge
 
 .backedge:                                        ; preds = %bb.ii, %bb.ij
-  br label %bb.b, !llvm.loop !361
+  br label %bb.b, !llvm.loop !362
 
 bb.ij:                                            ; preds = %bb.ii
   %i.aoo = load ptr, ptr %0, align 8
@@ -11150,7 +11150,7 @@ _ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12Eleme
 _ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE3ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.thread: ; preds = %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE3ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.thread.sink.split, %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE3ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit
   %i.aoi = add nuw i32 %.122554, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.aoi, %.020
-  br i1 %exitcond.not, label %._crit_edge559, label %.lr.ph558, !llvm.loop !362
+  br i1 %exitcond.not, label %._crit_edge559, label %.lr.ph558, !llvm.loop !363
 
 ._crit_edge559:                                   ; preds = %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE3ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.thread, %bb.b
   %.122.lcssa = phi i32 [ %.021, %bb.b ], [ %.020, %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE3ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit.thread ] ; 2 uses
@@ -11184,7 +11184,7 @@ bb.hf:                                            ; preds = %._crit_edge559
   br i1 %i.aoq, label %bb.hg, label %.backedge
 
 .backedge:                                        ; preds = %bb.hf, %bb.hg
-  br label %bb.b, !llvm.loop !363
+  br label %bb.b, !llvm.loop !364
 
 bb.hg:                                            ; preds = %bb.hf
   %i.aor = load ptr, ptr %0, align 8
@@ -11317,7 +11317,7 @@ bb.i:                                             ; preds = %bb.b, %.loopexit
   %i.ap = sub i64 %i.an, %i.ao
   %i.aq = ashr exact i64 %i.ap, 5
   %.not = icmp ugt i64 %i.aq, %i.am
-  br i1 %.not, label %bb.b, label %.critedge, !llvm.loop !364
+  br i1 %.not, label %bb.b, label %.critedge, !llvm.loop !365
 
 .critedge:                                        ; preds = %bb.i, %bb.f, %bb.g, %bb.d, %bb.a
   %.not30 = phi i1 [ true, %bb.g ], [ true, %bb.d ], [ false, %bb.a ], [ false, %bb.i ], [ true, %bb.f ]
@@ -11720,7 +11720,7 @@ bb.f:                                             ; preds = %bb.e, %_ZN2v88inter
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   %i.ag = add i32 %.12256, 1                      ; 2 uses
   %exitcond.not = icmp eq i32 %i.ag, %.020
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !365
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !366
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.b
   %.122.lcssa = phi i32 [ %.021, %bb.b ], [ %.020, %bb.f ] ; 2 uses
@@ -11754,7 +11754,7 @@ bb.i:                                             ; preds = %._crit_edge
   br i1 %i.ao, label %bb.j, label %.backedge
 
 .backedge:                                        ; preds = %bb.i, %bb.j
-  br label %bb.b, !llvm.loop !366
+  br label %bb.b, !llvm.loop !367
 
 bb.j:                                             ; preds = %bb.i
   %i.ap = load ptr, ptr %0, align 8
@@ -11822,7 +11822,7 @@ bb.e:                                             ; preds = %_ZN2v88internal9Out
   tail call void @_ZN2v88internal19FastJsonStringifierItE15SerializeDoubleEd(ptr noundef nonnull align 8 dereferenceable(1200) %0, double noundef %.0.copyload.i.i.i.i)
   %i.q = add i32 %.12250, 1                       ; 2 uses
   %exitcond.not = icmp eq i32 %i.q, %.020
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !367
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !368
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.b
   %.122.lcssa = phi i32 [ %.021, %bb.b ], [ %.020, %bb.e ] ; 2 uses
@@ -11856,7 +11856,7 @@ bb.h:                                             ; preds = %._crit_edge
   br i1 %i.y, label %bb.i, label %.backedge
 
 .backedge:                                        ; preds = %bb.h, %bb.i
-  br label %bb.b, !llvm.loop !368
+  br label %bb.b, !llvm.loop !369
 
 bb.i:                                             ; preds = %bb.h
   %i.z = load ptr, ptr %0, align 8
@@ -11996,7 +11996,7 @@ _ZN2v88internal9OutBufferItE14EnsureCapacityEm.exit28: ; preds = %_ZN2v88interna
 _ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE1ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit: ; preds = %_ZN2v88internal9OutBufferItE14EnsureCapacityEm.exit28, %_ZN2v88internal19FastJsonStringifierItE18SeparatorUncheckedEb.exit.i
   %i.au = add i32 %.12260, 1                      ; 2 uses
   %exitcond.not = icmp eq i32 %i.au, %.020
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !369
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !370
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE1ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit, %bb.b
   %.122.lcssa = phi i32 [ %.021, %bb.b ], [ %.020, %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE1ELb1ENS0_10FixedArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit ] ; 2 uses
@@ -12030,7 +12030,7 @@ bb.l:                                             ; preds = %._crit_edge
   br i1 %i.bc, label %bb.m, label %.backedge
 
 .backedge:                                        ; preds = %bb.l, %bb.m
-  br label %bb.b, !llvm.loop !370
+  br label %bb.b, !llvm.loop !371
 
 bb.m:                                             ; preds = %bb.l
   %i.bd = load ptr, ptr %0, align 8
@@ -12142,7 +12142,7 @@ _ZN2v88internal19FastJsonStringifierItE9SeparatorEb.exit.i: ; preds = %_ZN2v88in
 _ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE5ELb1ENS0_16FixedDoubleArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit: ; preds = %_ZN2v88internal19FastJsonStringifierItE9SeparatorEb.exit.i, %_ZN2v88internal19FastJsonStringifierItE18SeparatorUncheckedEb.exit.i
   %i.ab = add i32 %.12254, 1                      ; 2 uses
   %exitcond.not = icmp eq i32 %i.ab, %.020
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !371
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !372
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE5ELb1ENS0_16FixedDoubleArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit, %bb.b
   %.122.lcssa = phi i32 [ %.021, %bb.b ], [ %.020, %_ZN2v88internal19FastJsonStringifierItE26SerializeFixedArrayElementILNS0_12ElementsKindE5ELb1ENS0_16FixedDoubleArrayEEENS0_25FastJsonStringifierResultENS0_6TaggedIT1_EEjj.exit ] ; 2 uses
@@ -12176,7 +12176,7 @@ bb.k:                                             ; preds = %._crit_edge
   br i1 %i.aj, label %bb.l, label %.backedge
 
 .backedge:                                        ; preds = %bb.k, %bb.l
-  br label %bb.b, !llvm.loop !372
+  br label %bb.b, !llvm.loop !373
 
 bb.l:                                             ; preds = %bb.k
   %i.ak = load ptr, ptr %0, align 8
@@ -12543,7 +12543,7 @@ _ZN2v88internal9CopyCharsIhhEEvPT0_PKT_m.exit13:  ; preds = %_ZNRSt8optionalIN2v
   %i.ar = add nsw i32 %i.aq, -1
   %i.as = sext i32 %i.ar to i64
   %i.at = icmp slt i64 %indvars.iv.next, %i.as
-  br i1 %i.at, label %bb.am, label %._crit_edge, !llvm.loop !373
+  br i1 %i.at, label %bb.am, label %._crit_edge, !llvm.loop !374
 
 bb.bg:                                            ; preds = %bb.a
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 272
@@ -12716,7 +12716,7 @@ _ZNRSt8optionalIN2v88internal8ZoneListINS0_4base6VectorIhEEEEE5valueEv.exit: ; p
   %i.ac = add nsw i32 %i.ab, -1
   %i.ad = sext i32 %i.ac to i64
   %i.ae = icmp slt i64 %indvars.iv.next, %i.ad
-  br i1 %i.ae, label %bb.c, label %._crit_edge, !llvm.loop !374
+  br i1 %i.ae, label %bb.c, label %._crit_edge, !llvm.loop !375
 
 bb.e:                                             ; preds = %bb.a
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 272
@@ -13069,7 +13069,7 @@ _ZN2v88internal9CopyCharsIttEEvPT0_PKT_m.exit17:  ; preds = %_ZNRSt8optionalIN2v
   %i.am = add nsw i32 %i.al, -1
   %i.an = sext i32 %i.am to i64
   %i.ao = icmp slt i64 %indvars.iv.next, %i.an
-  br i1 %i.ao, label %bb.ai, label %._crit_edge, !llvm.loop !375
+  br i1 %i.ao, label %bb.ai, label %._crit_edge, !llvm.loop !376
 
 bb.ba:                                            ; preds = %bb.a
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 528
@@ -13472,15 +13472,15 @@ begin_hunk_21_@llvm.vector.reduce.add.v2i64
 !311 = distinct !{!311, !35, !42, !43}
 !312 = distinct !{!312, !35, !42, !43}
 !313 = distinct !{!313, !35, !42}
-!314 = !{!309}
-!315 = !{!310}
-!316 = distinct !{!316, !"_ZN2v88internal31SharedStringAccessGuardIfNeeded9NotNeededEv"}
-!317 = distinct !{!317, !316, !"_ZN2v88internal31SharedStringAccessGuardIfNeeded9NotNeededEv: argument 0"}
-!318 = distinct !{!318, !"_ZN2v88internal31SharedStringAccessGuardIfNeeded9NotNeededEv"}
-!319 = distinct !{!319, !318, !"_ZN2v88internal31SharedStringAccessGuardIfNeeded9NotNeededEv: argument 0"}
-!320 = !{!317}
-!321 = !{!319}
-!322 = distinct !{!322, !35}
+!314 = !{!"branch_weights", i32 1, i32 1048575}
+!315 = !{!309}
+!316 = !{!310}
+!317 = distinct !{!317, !"_ZN2v88internal31SharedStringAccessGuardIfNeeded9NotNeededEv"}
+!318 = distinct !{!318, !317, !"_ZN2v88internal31SharedStringAccessGuardIfNeeded9NotNeededEv: argument 0"}
+!319 = distinct !{!319, !"_ZN2v88internal31SharedStringAccessGuardIfNeeded9NotNeededEv"}
+!320 = distinct !{!320, !319, !"_ZN2v88internal31SharedStringAccessGuardIfNeeded9NotNeededEv: argument 0"}
+!321 = !{!318}
+!322 = !{!320}
 !323 = distinct !{!323, !35}
 !324 = distinct !{!324, !35}
 !325 = distinct !{!325, !35}
@@ -13488,11 +13488,11 @@ begin_hunk_21_@llvm.vector.reduce.add.v2i64
 !327 = distinct !{!327, !35}
 !328 = distinct !{!328, !35}
 !329 = distinct !{!329, !35}
-!330 = distinct !{!330, !35, !50}
+!330 = distinct !{!330, !35}
 !331 = distinct !{!331, !35, !50}
 !332 = distinct !{!332, !35, !50}
 !333 = distinct !{!333, !35, !50}
-!334 = distinct !{!334, !35}
+!334 = distinct !{!334, !35, !50}
 !335 = distinct !{!335, !35}
 !336 = distinct !{!336, !35}
 !337 = distinct !{!337, !35}
@@ -13502,9 +13502,9 @@ begin_hunk_21_@llvm.vector.reduce.add.v2i64
 !341 = distinct !{!341, !35}
 !342 = distinct !{!342, !35}
 !343 = distinct !{!343, !35}
-!344 = distinct !{!344, !38}
+!344 = distinct !{!344, !35}
 !345 = distinct !{!345, !38}
-!346 = distinct !{!346, !35}
+!346 = distinct !{!346, !38}
 !347 = distinct !{!347, !35}
 !348 = distinct !{!348, !35}
 !349 = distinct !{!349, !35}
@@ -13514,11 +13514,11 @@ begin_hunk_21_@llvm.vector.reduce.add.v2i64
 !353 = distinct !{!353, !35}
 !354 = distinct !{!354, !35}
 !355 = distinct !{!355, !35}
-!356 = distinct !{!356, !35, !50}
+!356 = distinct !{!356, !35}
 !357 = distinct !{!357, !35, !50}
 !358 = distinct !{!358, !35, !50}
 !359 = distinct !{!359, !35, !50}
-!360 = distinct !{!360, !35}
+!360 = distinct !{!360, !35, !50}
 !361 = distinct !{!361, !35}
 !362 = distinct !{!362, !35}
 !363 = distinct !{!363, !35}
@@ -13534,4 +13534,5 @@ begin_hunk_21_@llvm.vector.reduce.add.v2i64
 !373 = distinct !{!373, !35}
 !374 = distinct !{!374, !35}
 !375 = distinct !{!375, !35}
+!376 = distinct !{!376, !35}
 end_hunk_21

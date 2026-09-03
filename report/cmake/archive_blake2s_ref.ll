@@ -22,7 +22,7 @@ bb.a:
   %rt.bound0 = icmp ugt i64 %i.c, %i.a
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.rtscalar, label %.rtvec
+  br i1 %rt.conflict, label %.rtscalar, label %.rtvec, !prof !20
 
 .rtvec:                                           ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 32
@@ -425,7 +425,7 @@ blake2s_init_key.exit:                            ; preds = %bb.d
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.v, ptr noundef nonnull align 16 dereferenceable(64) %i.b, i64 64, i1 false)
   store i64 64, ptr %i.u, align 16, !tbaa !15
   %i.w = load volatile ptr, ptr @secure_zero_memory.memset_v, align 8, !tbaa !17
-  %i.x = call ptr %i.w(ptr noundef nonnull %i.b, i32 noundef 0, i64 noundef 64) #8, !inline_history !20 ; 0 uses
+  %i.x = call ptr %i.w(ptr noundef nonnull %i.b, i32 noundef 0, i64 noundef 64) #8, !inline_history !21 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   br label %bb.e
 
@@ -549,7 +549,7 @@ blake2s_set_lastblock.exit.i:                     ; preds = %bb.j, %bb.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, ptr noundef nonnull align 16 dereferenceable(32) %6, i64 32, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %0, ptr nonnull align 16 %i.a, i64 %1, i1 false)
   %i.bw = load volatile ptr, ptr @secure_zero_memory.memset_v, align 8, !tbaa !17
-  %i.bx = call ptr %i.bw(ptr noundef nonnull %i.a, i32 noundef 0, i64 noundef 32) #8, !inline_history !21 ; 0 uses
+  %i.bx = call ptr %i.bw(ptr noundef nonnull %i.a, i32 noundef 0, i64 noundef 32) #8, !inline_history !22 ; 0 uses
   br label %blake2s_final.exit
 
 blake2s_final.exit:                               ; preds = %.loopexit, %bb.h, %blake2s_set_lastblock.exit.i
@@ -602,6 +602,7 @@ attributes #8 = { nounwind }
 !17 = !{!16, !16, i64 0}
 !18 = !{!"llvm.loop.mustprogress"}
 !19 = !{!13, !7, i64 128}
-!20 = distinct !{ptr @blake2s_init_key, null}
-!21 = distinct !{ptr @blake2s_final, null}
+!20 = !{!"branch_weights", i32 1, i32 1048575}
+!21 = distinct !{ptr @blake2s_init_key, null}
+!22 = distinct !{ptr @blake2s_final, null}
 end_hunk_1

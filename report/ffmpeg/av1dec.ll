@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %bb.z, %.lr.ph5.i
   %rt.bound1 = icmp ult i64 %i.gi, %i.gl
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
   %rt.guard = freeze i1 %rt.conflict
-  br i1 %rt.guard, label %.preheader1.i.rtscalar, label %.preheader1.i.rtvec
+  br i1 %rt.guard, label %.preheader1.i.rtscalar, label %.preheader1.i.rtvec, !prof !266
 
 bb.aa:                                            ; preds = %bb.aa, %.lr.ph9.i
   %indvars.iv19.i = phi i64 [ 0, %.lr.ph9.i ], [ %indvars.iv.next20.i, %bb.aa ] ; 4 uses
@@ -230,8 +230,8 @@ export_film_grain.exit:                           ; preds = %bb.w
 export_film_grain.exit.thread:                    ; preds = %.preheader1.i.rtvec, %.preheader1.i.rtscalar, %bb.v, %bb.s
   %i.gv = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.gw = getelementptr inbounds nuw i8, ptr %1, i64 136
-  %i.gx = load <2 x i64>, ptr %i.gv, align 8, !tbaa !266
-  store <2 x i64> %i.gx, ptr %i.gw, align 8, !tbaa !266
+  %i.gx = load <2 x i64>, ptr %i.gv, align 8, !tbaa !267
+  store <2 x i64> %i.gx, ptr %i.gw, align 8, !tbaa !267
   call void @av_packet_unref(ptr noundef %i.h) #10
   br label %bb.ab
 
@@ -284,12 +284,12 @@ bb.ab:                                            ; preds = %bb.c, %bb.b, %expor
   %i.ig = zext <4 x i8> %i.if to <4 x i32>
   store <4 x i32> %i.ig, ptr %i.ib, align 8, !tbaa !68
   %i.ih = getelementptr inbounds nuw i8, ptr %.val, i64 4416
-  %i.ii = load i16, ptr %i.ih, align 2, !tbaa !267
+  %i.ii = load i16, ptr %i.ih, align 2, !tbaa !268
   %i.ij = zext i16 %i.ii to i32
   %i.ik = getelementptr inbounds nuw i8, ptr %i.df, i64 248
   store i32 %i.ij, ptr %i.ik, align 8, !tbaa !68
   %i.il = getelementptr inbounds nuw i8, ptr %.val, i64 4420
-  %i.im = load i16, ptr %i.il, align 2, !tbaa !268
+  %i.im = load i16, ptr %i.il, align 2, !tbaa !269
   %i.in = zext i16 %i.im to i32
   %i.io = getelementptr inbounds nuw i8, ptr %i.df, i64 252
   store i32 %i.in, ptr %i.io, align 4, !tbaa !68
@@ -667,32 +667,32 @@ bb.ab:                                            ; preds = %bb.c, %bb.b, %expor
   %i.ty = getelementptr inbounds nuw i8, ptr %i.df, i64 221
   store i8 %i.tx, ptr %i.ty, align 1, !tbaa !56
   %i.tz = getelementptr inbounds nuw i8, ptr %.val, i64 4414
-  %i.ua = load i8, ptr %i.tz, align 2, !tbaa !269
+  %i.ua = load i8, ptr %i.tz, align 2, !tbaa !270
   %i.ub = zext i8 %i.ua to i32
   %i.uc = getelementptr inbounds nuw i8, ptr %i.df, i64 232
   store i32 %i.ub, ptr %i.uc, align 8, !tbaa !68
   %i.ud = getelementptr inbounds nuw i8, ptr %.val, i64 4418
-  %i.ue = load i8, ptr %i.ud, align 2, !tbaa !270
+  %i.ue = load i8, ptr %i.ud, align 2, !tbaa !271
   %i.uf = zext i8 %i.ue to i32
   %i.ug = getelementptr inbounds nuw i8, ptr %i.df, i64 236
   store i32 %i.uf, ptr %i.ug, align 4, !tbaa !68
   %i.uh = getelementptr inbounds nuw i8, ptr %.val, i64 4415
-  %i.ui = load i8, ptr %i.uh, align 1, !tbaa !271
+  %i.ui = load i8, ptr %i.uh, align 1, !tbaa !272
   %i.uj = zext i8 %i.ui to i32
   %i.uk = getelementptr inbounds nuw i8, ptr %i.df, i64 240
   store i32 %i.uj, ptr %i.uk, align 8, !tbaa !68
   %i.ul = getelementptr inbounds nuw i8, ptr %.val, i64 4419
-  %i.um = load i8, ptr %i.ul, align 1, !tbaa !272
+  %i.um = load i8, ptr %i.ul, align 1, !tbaa !273
   %i.un = zext i8 %i.um to i32
   %i.uo = getelementptr inbounds nuw i8, ptr %i.df, i64 244
   store i32 %i.un, ptr %i.uo, align 4, !tbaa !68
   %i.up = getelementptr inbounds nuw i8, ptr %.val, i64 4416
-  %i.uq = load i16, ptr %i.up, align 2, !tbaa !267
+  %i.uq = load i16, ptr %i.up, align 2, !tbaa !268
   %i.ur = zext i16 %i.uq to i32
   %i.us = getelementptr inbounds nuw i8, ptr %i.df, i64 248
   store i32 %i.ur, ptr %i.us, align 8, !tbaa !68
   %i.ut = getelementptr inbounds nuw i8, ptr %.val, i64 4420
-  %i.uu = load i16, ptr %i.ut, align 2, !tbaa !268
+  %i.uu = load i16, ptr %i.ut, align 2, !tbaa !269
   %i.uv = zext i16 %i.uu to i32
   %i.uw = getelementptr inbounds nuw i8, ptr %i.df, i64 252
   store i32 %i.uv, ptr %i.uw, align 4, !tbaa !68
@@ -803,7 +803,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 228
-  %i.u = load i8, ptr %i.t, align 4, !tbaa !273
+  %i.u = load i8, ptr %i.t, align 4, !tbaa !274
   %.not = icmp eq i8 %i.u, 0                      ; 2 uses
   %i.v = select i1 %.not, i32 8, i32 9
   %i.w = select i1 %.not, i32 2, i32 3
@@ -1206,12 +1206,13 @@ begin_hunk_1_@llvm.assume
 !263 = !{!252, !6, i64 0}
 !264 = !{!48, !5, i64 36}
 !265 = !{!48, !5, i64 57}
-!266 = !{!13, !13, i64 0}
-!267 = !{!48, !41, i64 158}
-!268 = !{!48, !41, i64 162}
-!269 = !{!48, !5, i64 156}
-!270 = !{!48, !5, i64 160}
-!271 = !{!48, !5, i64 157}
-!272 = !{!48, !5, i64 161}
-!273 = !{!64, !5, i64 228}
+!266 = !{!"branch_weights", i32 1, i32 1048575}
+!267 = !{!13, !13, i64 0}
+!268 = !{!48, !41, i64 158}
+!269 = !{!48, !41, i64 162}
+!270 = !{!48, !5, i64 156}
+!271 = !{!48, !5, i64 160}
+!272 = !{!48, !5, i64 157}
+!273 = !{!48, !5, i64 161}
+!274 = !{!64, !5, i64 228}
 end_hunk_1

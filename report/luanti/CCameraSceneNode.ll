@@ -204,7 +204,7 @@ bb.a:
   %rt.conflict133 = and i1 %rt.bound0131, %rt.bound1132
   %rt.conflict.all = or i1 %rt.conflict, %rt.conflict133
   %rt.guard = freeze i1 %rt.conflict.all
-  br i1 %rt.guard, label %.rtscalar, label %.rtvec
+  br i1 %rt.guard, label %.rtscalar, label %.rtvec, !prof !94
 
 .rtvec:                                           ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
@@ -607,21 +607,21 @@ bb.a:
   %i.d = fadd float %i.b, %i.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 44
-  store float %i.d, ptr %i.f, align 4, !tbaa !94
+  store float %i.d, ptr %i.f, align 4, !tbaa !95
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 6 uses
   %i.h = load float, ptr %i.g, align 4, !tbaa !13
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.j = load float, ptr %i.i, align 4, !tbaa !13
   %i.k = fadd float %i.h, %i.j
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store float %i.k, ptr %i.l, align 4, !tbaa !95
+  store float %i.k, ptr %i.l, align 4, !tbaa !96
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 6 uses
   %i.n = load float, ptr %i.m, align 4, !tbaa !13
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.p = load float, ptr %i.o, align 4, !tbaa !13
   %i.q = fadd float %i.n, %i.p                    ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 52
-  store float %i.q, ptr %i.r, align 4, !tbaa !96
+  store float %i.q, ptr %i.r, align 4, !tbaa !97
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 60 ; 6 uses
   %i.t = load float, ptr %i.s, align 4, !tbaa !13
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
@@ -635,15 +635,15 @@ bb.a:
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 68
   %i.ad = fsub float %i.y, %i.z                   ; 3 uses
-  store float %i.ad, ptr %i.aa, align 4, !tbaa !94
+  store float %i.ad, ptr %i.aa, align 4, !tbaa !95
   %i.ae = load float, ptr %i.g, align 4, !tbaa !13
   %i.af = load float, ptr %i.i, align 4, !tbaa !13
   %i.ag = fsub float %i.ae, %i.af                 ; 3 uses
-  store float %i.ag, ptr %i.ab, align 4, !tbaa !95
+  store float %i.ag, ptr %i.ab, align 4, !tbaa !96
   %i.ah = load float, ptr %i.m, align 4, !tbaa !13
   %i.ai = load float, ptr %i.o, align 4, !tbaa !13
   %i.aj = fsub float %i.ah, %i.ai                 ; 3 uses
-  store float %i.aj, ptr %i.ac, align 4, !tbaa !96
+  store float %i.aj, ptr %i.ac, align 4, !tbaa !97
   %i.ak = load float, ptr %i.s, align 4, !tbaa !13
   %i.al = load float, ptr %i.u, align 4, !tbaa !13
   %i.am = fsub float %i.ak, %i.al                 ; 2 uses
@@ -663,15 +663,15 @@ bb.a:
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 84
   %i.bb = fsub float %i.ao, %i.aq                 ; 3 uses
-  store float %i.bb, ptr %i.ar, align 4, !tbaa !94
+  store float %i.bb, ptr %i.ar, align 4, !tbaa !95
   %i.bc = load float, ptr %i.g, align 4, !tbaa !13
   %i.bd = load float, ptr %i.as, align 4, !tbaa !13
   %i.be = fsub float %i.bc, %i.bd                 ; 3 uses
-  store float %i.be, ptr %i.at, align 4, !tbaa !95
+  store float %i.be, ptr %i.at, align 4, !tbaa !96
   %i.bf = load float, ptr %i.m, align 4, !tbaa !13
   %i.bg = load float, ptr %i.au, align 4, !tbaa !13
   %i.bh = fsub float %i.bf, %i.bg                 ; 3 uses
-  store float %i.bh, ptr %i.av, align 4, !tbaa !96
+  store float %i.bh, ptr %i.av, align 4, !tbaa !97
   %i.bi = load float, ptr %i.s, align 4, !tbaa !13
   %i.bj = load float, ptr %i.aw, align 4, !tbaa !13
   %i.bk = fsub float %i.bi, %i.bj
@@ -679,15 +679,15 @@ bb.a:
   %i.bl = load float, ptr %i.a, align 4, !tbaa !13
   %i.bm = load float, ptr %i.ap, align 4, !tbaa !13
   %i.bn = fadd float %i.bl, %i.bm                 ; 3 uses
-  store float %i.bn, ptr %i.ay, align 4, !tbaa !94
+  store float %i.bn, ptr %i.ay, align 4, !tbaa !95
   %i.bo = load float, ptr %i.g, align 4, !tbaa !13
   %i.bp = load float, ptr %i.as, align 4, !tbaa !13
   %i.bq = fadd float %i.bo, %i.bp                 ; 3 uses
-  store float %i.bq, ptr %i.az, align 4, !tbaa !95
+  store float %i.bq, ptr %i.az, align 4, !tbaa !96
   %i.br = load float, ptr %i.m, align 4, !tbaa !13
   %i.bs = load float, ptr %i.au, align 4, !tbaa !13
   %i.bt = fadd float %i.br, %i.bs                 ; 3 uses
-  store float %i.bt, ptr %i.ba, align 4, !tbaa !96
+  store float %i.bt, ptr %i.ba, align 4, !tbaa !97
   %i.bu = load float, ptr %i.s, align 4, !tbaa !13
   %i.bv = load float, ptr %i.aw, align 4, !tbaa !13
   %i.bw = fadd float %i.bu, %i.bv                 ; 2 uses
@@ -702,15 +702,15 @@ bb.a:
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 3 uses
   %i.cg = fsub float %i.by, %i.ca                 ; 3 uses
-  store float %i.cg, ptr %i.e, align 4, !tbaa !94
+  store float %i.cg, ptr %i.e, align 4, !tbaa !95
   %i.ch = load float, ptr %i.g, align 4, !tbaa !13
   %i.ci = load float, ptr %i.cb, align 4, !tbaa !13
   %i.cj = fsub float %i.ch, %i.ci                 ; 3 uses
-  store float %i.cj, ptr %i.cc, align 4, !tbaa !95
+  store float %i.cj, ptr %i.cc, align 4, !tbaa !96
   %i.ck = load float, ptr %i.m, align 4, !tbaa !13
   %i.cl = load float, ptr %i.cd, align 4, !tbaa !13
   %i.cm = fsub float %i.ck, %i.cl                 ; 3 uses
-  store float %i.cm, ptr %i.ce, align 4, !tbaa !96
+  store float %i.cm, ptr %i.ce, align 4, !tbaa !97
   %i.cn = load float, ptr %i.s, align 4, !tbaa !13
   %i.co = load float, ptr %i.cf, align 4, !tbaa !13
   %i.cp = fsub float %i.cn, %i.co                 ; 2 uses
@@ -721,13 +721,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.cr = load float, ptr %i.bz, align 4, !tbaa !13 ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 28
-  store float %i.cr, ptr %i.cs, align 4, !tbaa !94
+  store float %i.cr, ptr %i.cs, align 4, !tbaa !95
   %i.ct = load float, ptr %i.cb, align 4, !tbaa !13 ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store float %i.ct, ptr %i.cu, align 4, !tbaa !95
+  store float %i.ct, ptr %i.cu, align 4, !tbaa !96
   %i.cv = load float, ptr %i.cd, align 4, !tbaa !13 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 36
-  store float %i.cv, ptr %i.cw, align 4, !tbaa !96
+  store float %i.cv, ptr %i.cw, align 4, !tbaa !97
   %i.cx = load float, ptr %i.cf, align 4, !tbaa !13
   br label %bb.d
 
@@ -738,15 +738,15 @@ bb.c:                                             ; preds = %bb.a
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.dd = fadd float %i.cy, %i.cz                 ; 2 uses
-  store float %i.dd, ptr %i.da, align 4, !tbaa !94
+  store float %i.dd, ptr %i.da, align 4, !tbaa !95
   %i.de = load float, ptr %i.g, align 4, !tbaa !13
   %i.df = load float, ptr %i.cb, align 4, !tbaa !13
   %i.dg = fadd float %i.de, %i.df                 ; 2 uses
-  store float %i.dg, ptr %i.db, align 4, !tbaa !95
+  store float %i.dg, ptr %i.db, align 4, !tbaa !96
   %i.dh = load float, ptr %i.m, align 4, !tbaa !13
   %i.di = load float, ptr %i.cd, align 4, !tbaa !13
   %i.dj = fadd float %i.dh, %i.di                 ; 2 uses
-  store float %i.dj, ptr %i.dc, align 4, !tbaa !96
+  store float %i.dj, ptr %i.dc, align 4, !tbaa !97
   %i.dk = load float, ptr %i.s, align 4, !tbaa !13
   %i.dl = load float, ptr %i.cf, align 4, !tbaa !13
   %i.dm = fadd float %i.dk, %i.dl
@@ -896,8 +896,8 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.s, ptr %i.t, align 8, !tbaa !67
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 212
   %i.v = getelementptr inbounds nuw i8, ptr %i.e, i64 212
-  %i.w = load <2 x i16>, ptr %i.u, align 4, !tbaa !99
-  store <2 x i16> %i.w, ptr %i.v, align 4, !tbaa !99
+  %i.w = load <2 x i16>, ptr %i.u, align 4, !tbaa !100
+  store <2 x i16> %i.w, ptr %i.v, align 4, !tbaa !100
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.y = load i8, ptr %i.x, align 8, !tbaa !69, !range !72, !noundef !73
   %i.z = getelementptr inbounds nuw i8, ptr %i.e, i64 216
@@ -929,10 +929,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !17
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 272
   %i.ak = load ptr, ptr %i.aj, align 8
-  %i.al = tail call noundef ptr %i.ak(ptr noundef nonnull align 8 dereferenceable(218) %i.ah, ptr noundef nonnull align 8 dereferenceable(218) %i.e, ptr noundef %.024), !inline_history !97 ; 0 uses
+  %i.al = tail call noundef ptr %i.ak(ptr noundef nonnull align 8 dereferenceable(218) %i.ah, ptr noundef nonnull align 8 dereferenceable(218) %i.e, ptr noundef %.024), !inline_history !98 ; 0 uses
   %.sroa.017.0.i = load ptr, ptr %.sroa.017.023.i, align 8, !tbaa !62 ; 2 uses
   %.not20.i = icmp eq ptr %.sroa.017.0.i, %i.af
-  br i1 %.not20.i, label %_ZN5scene10ISceneNode12cloneMembersEPS0_PNS_13ISceneManagerE.exit, label %.lr.ph.i, !llvm.loop !98
+  br i1 %.not20.i, label %_ZN5scene10ISceneNode12cloneMembersEPS0_PNS_13ISceneManagerE.exit, label %.lr.ph.i, !llvm.loop !99
 
 _ZN5scene10ISceneNode12cloneMembersEPS0_PNS_13ISceneManagerE.exit: ; preds = %.lr.ph.i, %bb.d
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 232
@@ -950,7 +950,7 @@ _ZN5scene10ISceneNode12cloneMembersEPS0_PNS_13ISceneManagerE.exit: ; preds = %.l
   store <4 x float> %i.au, ptr %i.at, align 4, !tbaa !13
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 300
   %i.aw = getelementptr inbounds nuw i8, ptr %i.e, i64 300
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(280) %i.aw, ptr noundef nonnull align 4 dereferenceable(280) %i.av, i64 280, i1 false), !tbaa.struct !100
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(280) %i.aw, ptr noundef nonnull align 4 dereferenceable(280) %i.av, i64 280, i1 false), !tbaa.struct !101
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 580
   %i.ay = getelementptr inbounds nuw i8, ptr %i.e, i64 580
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.ay, ptr noundef nonnull align 4 dereferenceable(64) %i.ax, i64 64, i1 false), !tbaa.struct !81
@@ -1089,7 +1089,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = tail call noundef nonnull align 4 dereferenceable(24) ptr %i.c(ptr noundef nonnull align 8 dereferenceable(218) %1)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(24) %i.d, i64 24, i1 false), !tbaa.struct !101
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(24) %i.d, i64 24, i1 false), !tbaa.struct !102
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 96
@@ -1192,7 +1192,7 @@ _ZN4core5arrayINS_8vector3dIfEEE8set_usedEj.exit: ; preds = %bb.b, %bb.c, %bb.d,
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 56
   %i.m = load ptr, ptr %i.l, align 8
   %i.n = tail call noundef nonnull align 4 dereferenceable(24) ptr %i.m(ptr noundef nonnull align 8 dereferenceable(218) %0) ; 2 uses
-  %i.o = load ptr, ptr %1, align 8, !tbaa !103    ; 10 uses
+  %i.o = load ptr, ptr %1, align 8, !tbaa !104    ; 10 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 12
   %i.q = load <3 x float>, ptr %i.n, align 4, !tbaa !13
   %i.r = shufflevector <3 x float> %i.q, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 1>
@@ -1289,7 +1289,7 @@ _ZN4core5arrayINS_8vector3dIfEEEixEj.exit:        ; preds = %bb.f
   store float %i.cc, ptr %i.bf, align 4, !tbaa !13
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 8
-  br i1 %exitcond.not, label %bb.e, label %bb.f, !llvm.loop !102
+  br i1 %exitcond.not, label %bb.e, label %bb.f, !llvm.loop !103
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -1692,22 +1692,22 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.q = load <4 x float>, ptr %1, align 16, !tbaa !13, !noalias !106 ; 4 uses
-  %i.r = load <4 x float>, ptr %i.f, align 4, !tbaa !13, !noalias !106 ; 4 uses
-  %i.s = load <4 x float>, ptr %i.j, align 4, !tbaa !13, !noalias !106 ; 4 uses
+  %i.q = load <4 x float>, ptr %1, align 16, !tbaa !13, !noalias !107 ; 4 uses
+  %i.r = load <4 x float>, ptr %i.f, align 4, !tbaa !13, !noalias !107 ; 4 uses
+  %i.s = load <4 x float>, ptr %i.j, align 4, !tbaa !13, !noalias !107 ; 4 uses
   %i.t = shufflevector <4 x float> %i.q, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %i.u = fmul <4 x float> %i.t, %i.s
   %i.v = shufflevector <4 x float> %i.q, <4 x float> poison, <4 x i32> zeroinitializer
   %i.w = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.r, <4 x float> %i.v, <4 x float> %i.u)
-  %i.x = load <4 x float>, ptr %i.k, align 4, !tbaa !13, !noalias !106 ; 4 uses
+  %i.x = load <4 x float>, ptr %i.k, align 4, !tbaa !13, !noalias !107 ; 4 uses
   %i.y = shufflevector <4 x float> %i.q, <4 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
   %i.z = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.x, <4 x float> %i.y, <4 x float> %i.w)
-  %i.aa = load <4 x float>, ptr %i.l, align 4, !tbaa !13, !noalias !106 ; 4 uses
+  %i.aa = load <4 x float>, ptr %i.l, align 4, !tbaa !13, !noalias !107 ; 4 uses
   %i.ab = shufflevector <4 x float> %i.q, <4 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   %i.ac = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aa, <4 x float> %i.ab, <4 x float> %i.z)
   store <4 x float> %i.ac, ptr %i.p, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.ad = load <4 x float>, ptr %i.m, align 16, !tbaa !13, !noalias !106 ; 4 uses
+  %i.ad = load <4 x float>, ptr %i.m, align 16, !tbaa !13, !noalias !107 ; 4 uses
   %i.ae = shufflevector <4 x float> %i.ad, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %i.af = fmul <4 x float> %i.s, %i.ae
   %i.ag = shufflevector <4 x float> %i.ad, <4 x float> poison, <4 x i32> zeroinitializer
@@ -1718,7 +1718,7 @@ bb.b:                                             ; preds = %bb.a
   %i.al = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aa, <4 x float> %i.ak, <4 x float> %i.aj)
   store <4 x float> %i.al, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.am = load <4 x float>, ptr %i.n, align 16, !tbaa !13, !noalias !106 ; 4 uses
+  %i.am = load <4 x float>, ptr %i.n, align 16, !tbaa !13, !noalias !107 ; 4 uses
   %i.an = shufflevector <4 x float> %i.am, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %i.ao = fmul <4 x float> %i.s, %i.an
   %i.ap = shufflevector <4 x float> %i.am, <4 x float> poison, <4 x i32> zeroinitializer
@@ -1729,7 +1729,7 @@ bb.b:                                             ; preds = %bb.a
   %i.au = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.aa, <4 x float> %i.at, <4 x float> %i.as)
   store <4 x float> %i.au, ptr %.sroa.11.0..sroa_idx, align 8
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.av = load <4 x float>, ptr %i.o, align 16, !tbaa !13, !noalias !106 ; 4 uses
+  %i.av = load <4 x float>, ptr %i.o, align 16, !tbaa !13, !noalias !107 ; 4 uses
   %i.aw = shufflevector <4 x float> %i.av, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %i.ax = fmul <4 x float> %i.s, %i.aw
   %i.ay = shufflevector <4 x float> %i.av, <4 x float> poison, <4 x i32> zeroinitializer
@@ -1881,7 +1881,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = load ptr, ptr %i.m, align 8, !tbaa !17
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %i.t = load ptr, ptr %i.s, align 8
-  tail call void %i.t(ptr noundef nonnull align 8 dereferenceable(12) %i.m) #26, !inline_history !107
+  tail call void %i.t(ptr noundef nonnull align 8 dereferenceable(12) %i.m) #26, !inline_history !108
   br label %_ZNK17IReferenceCounted4dropEv.exit.i
 
 _ZNK17IReferenceCounted4dropEv.exit.i:            ; preds = %bb.d, %bb.c
@@ -2284,59 +2284,59 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   %.sroa.073.0.vec.extract = extractelement <2 x float> %.sroa.0.0.copyload.i29, i64 0 ; 4 uses
   %.sroa.073.4.vec.extract = extractelement <2 x float> %.sroa.0.0.copyload.i29, i64 1 ; 4 uses
-  %i.k = load float, ptr %i.g, align 4, !tbaa !108
+  %i.k = load float, ptr %i.g, align 4, !tbaa !109
   %i.l = fcmp ogt float %.sroa.073.0.vec.extract, %i.k
   br i1 %i.l, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store float %.sroa.073.0.vec.extract, ptr %i.g, align 4, !tbaa !108
+  store float %.sroa.073.0.vec.extract, ptr %i.g, align 4, !tbaa !109
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 124 ; 14 uses
-  %i.n = load float, ptr %i.m, align 4, !tbaa !109
+  %i.n = load float, ptr %i.m, align 4, !tbaa !110
   %i.o = fcmp ogt float %.sroa.073.4.vec.extract, %i.n
   br i1 %i.o, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  store float %.sroa.073.4.vec.extract, ptr %i.m, align 4, !tbaa !109
+  store float %.sroa.073.4.vec.extract, ptr %i.m, align 4, !tbaa !110
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.p = load float, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !110
+  %i.p = load float, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !111
   %i.q = fcmp ogt float %.sroa.2.0.copyload.i30, %i.p
   br i1 %i.q, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  store float %.sroa.2.0.copyload.i30, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !110
+  store float %.sroa.2.0.copyload.i30, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !111
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.r = load float, ptr %i.a, align 4, !tbaa !111
+  %i.r = load float, ptr %i.a, align 4, !tbaa !112
   %i.s = fcmp olt float %.sroa.073.0.vec.extract, %i.r
   br i1 %i.s, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  store float %.sroa.073.0.vec.extract, ptr %i.a, align 4, !tbaa !111
+  store float %.sroa.073.0.vec.extract, ptr %i.a, align 4, !tbaa !112
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 14 uses
-  %i.u = load float, ptr %i.t, align 4, !tbaa !112
+  %i.u = load float, ptr %i.t, align 4, !tbaa !113
   %i.v = fcmp olt float %.sroa.073.4.vec.extract, %i.u
   br i1 %i.v, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  store float %.sroa.073.4.vec.extract, ptr %i.t, align 4, !tbaa !112
+  store float %.sroa.073.4.vec.extract, ptr %i.t, align 4, !tbaa !113
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %i.w = load float, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !113
+  %i.w = load float, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !114
   %i.x = fcmp olt float %.sroa.2.0.copyload.i30, %i.w
   br i1 %i.x, label %bb.l, label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit
 
 bb.l:                                             ; preds = %bb.k
-  store float %.sroa.2.0.copyload.i30, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !113
+  store float %.sroa.2.0.copyload.i30, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !114
   br label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit
 
 _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit: ; preds = %bb.k, %bb.l
@@ -2351,57 +2351,57 @@ _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit: ; preds = %bb.k,
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %.sroa.071.0.vec.extract = extractelement <2 x float> %.sroa.0.0.copyload.i33, i64 0 ; 4 uses
   %.sroa.071.4.vec.extract = extractelement <2 x float> %.sroa.0.0.copyload.i33, i64 1 ; 4 uses
-  %i.ab = load float, ptr %i.g, align 4, !tbaa !108
+  %i.ab = load float, ptr %i.g, align 4, !tbaa !109
   %i.ac = fcmp ogt float %.sroa.071.0.vec.extract, %i.ab
   br i1 %i.ac, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit
-  store float %.sroa.071.0.vec.extract, ptr %i.g, align 4, !tbaa !108
+  store float %.sroa.071.0.vec.extract, ptr %i.g, align 4, !tbaa !109
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit
-  %i.ad = load float, ptr %i.m, align 4, !tbaa !109
+  %i.ad = load float, ptr %i.m, align 4, !tbaa !110
   %i.ae = fcmp ogt float %.sroa.071.4.vec.extract, %i.ad
   br i1 %i.ae, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  store float %.sroa.071.4.vec.extract, ptr %i.m, align 4, !tbaa !109
+  store float %.sroa.071.4.vec.extract, ptr %i.m, align 4, !tbaa !110
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
-  %i.af = load float, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !110
+  %i.af = load float, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !111
   %i.ag = fcmp ogt float %.sroa.2.0.copyload.i34, %i.af
   br i1 %i.ag, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  store float %.sroa.2.0.copyload.i34, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !110
+  store float %.sroa.2.0.copyload.i34, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !111
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  %i.ah = load float, ptr %i.a, align 4, !tbaa !111
+  %i.ah = load float, ptr %i.a, align 4, !tbaa !112
   %i.ai = fcmp olt float %.sroa.071.0.vec.extract, %i.ah
   br i1 %i.ai, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  store float %.sroa.071.0.vec.extract, ptr %i.a, align 4, !tbaa !111
+  store float %.sroa.071.0.vec.extract, ptr %i.a, align 4, !tbaa !112
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  %i.aj = load float, ptr %i.t, align 4, !tbaa !112
+  %i.aj = load float, ptr %i.t, align 4, !tbaa !113
   %i.ak = fcmp olt float %.sroa.071.4.vec.extract, %i.aj
   br i1 %i.ak, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
-  store float %.sroa.071.4.vec.extract, ptr %i.t, align 4, !tbaa !112
+  store float %.sroa.071.4.vec.extract, ptr %i.t, align 4, !tbaa !113
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  %i.al = load float, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !113
+  %i.al = load float, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !114
   %i.am = fcmp olt float %.sroa.2.0.copyload.i34, %i.al
   br i1 %i.am, label %bb.w, label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit37
 
 bb.w:                                             ; preds = %bb.v
-  store float %.sroa.2.0.copyload.i34, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !113
+  store float %.sroa.2.0.copyload.i34, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !114
   br label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit37
 
 _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit37: ; preds = %bb.v, %bb.w
@@ -2415,57 +2415,57 @@ _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit37: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   %.sroa.069.0.vec.extract = extractelement <2 x float> %.sroa.0.0.copyload.i38, i64 0 ; 4 uses
   %.sroa.069.4.vec.extract = extractelement <2 x float> %.sroa.0.0.copyload.i38, i64 1 ; 4 uses
-  %i.ap = load float, ptr %i.g, align 4, !tbaa !108
+  %i.ap = load float, ptr %i.g, align 4, !tbaa !109
   %i.aq = fcmp ogt float %.sroa.069.0.vec.extract, %i.ap
   br i1 %i.aq, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit37
-  store float %.sroa.069.0.vec.extract, ptr %i.g, align 4, !tbaa !108
+  store float %.sroa.069.0.vec.extract, ptr %i.g, align 4, !tbaa !109
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit37
-  %i.ar = load float, ptr %i.m, align 4, !tbaa !109
+  %i.ar = load float, ptr %i.m, align 4, !tbaa !110
   %i.as = fcmp ogt float %.sroa.069.4.vec.extract, %i.ar
   br i1 %i.as, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  store float %.sroa.069.4.vec.extract, ptr %i.m, align 4, !tbaa !109
+  store float %.sroa.069.4.vec.extract, ptr %i.m, align 4, !tbaa !110
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
-  %i.at = load float, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !110
+  %i.at = load float, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !111
   %i.au = fcmp ogt float %.sroa.2.0.copyload.i39, %i.at
   br i1 %i.au, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
-  store float %.sroa.2.0.copyload.i39, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !110
+  store float %.sroa.2.0.copyload.i39, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !111
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
-  %i.av = load float, ptr %i.a, align 4, !tbaa !111
+  %i.av = load float, ptr %i.a, align 4, !tbaa !112
   %i.aw = fcmp olt float %.sroa.069.0.vec.extract, %i.av
   br i1 %i.aw, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
-  store float %.sroa.069.0.vec.extract, ptr %i.a, align 4, !tbaa !111
+  store float %.sroa.069.0.vec.extract, ptr %i.a, align 4, !tbaa !112
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
-  %i.ax = load float, ptr %i.t, align 4, !tbaa !112
+  %i.ax = load float, ptr %i.t, align 4, !tbaa !113
   %i.ay = fcmp olt float %.sroa.069.4.vec.extract, %i.ax
   br i1 %i.ay, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
-  store float %.sroa.069.4.vec.extract, ptr %i.t, align 4, !tbaa !112
+  store float %.sroa.069.4.vec.extract, ptr %i.t, align 4, !tbaa !113
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae
-  %i.az = load float, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !113
+  %i.az = load float, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !114
   %i.ba = fcmp olt float %.sroa.2.0.copyload.i39, %i.az
   br i1 %i.ba, label %bb.ah, label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit42
 
 bb.ah:                                            ; preds = %bb.ag
-  store float %.sroa.2.0.copyload.i39, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !113
+  store float %.sroa.2.0.copyload.i39, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !114
   br label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit42
 
 _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit42: ; preds = %bb.ag, %bb.ah
@@ -2480,57 +2480,57 @@ _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit42: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %.sroa.067.0.vec.extract = extractelement <2 x float> %.sroa.0.0.copyload.i43, i64 0 ; 4 uses
   %.sroa.067.4.vec.extract = extractelement <2 x float> %.sroa.0.0.copyload.i43, i64 1 ; 4 uses
-  %i.be = load float, ptr %i.g, align 4, !tbaa !108
+  %i.be = load float, ptr %i.g, align 4, !tbaa !109
   %i.bf = fcmp ogt float %.sroa.067.0.vec.extract, %i.be
   br i1 %i.bf, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit42
-  store float %.sroa.067.0.vec.extract, ptr %i.g, align 4, !tbaa !108
+  store float %.sroa.067.0.vec.extract, ptr %i.g, align 4, !tbaa !109
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai, %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit42
-  %i.bg = load float, ptr %i.m, align 4, !tbaa !109
+  %i.bg = load float, ptr %i.m, align 4, !tbaa !110
   %i.bh = fcmp ogt float %.sroa.067.4.vec.extract, %i.bg
   br i1 %i.bh, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
-  store float %.sroa.067.4.vec.extract, ptr %i.m, align 4, !tbaa !109
+  store float %.sroa.067.4.vec.extract, ptr %i.m, align 4, !tbaa !110
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj
-  %i.bi = load float, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !110
+  %i.bi = load float, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !111
   %i.bj = fcmp ogt float %.sroa.2.0.copyload.i44, %i.bi
   br i1 %i.bj, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %bb.al
-  store float %.sroa.2.0.copyload.i44, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !110
+  store float %.sroa.2.0.copyload.i44, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !111
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.am, %bb.al
-  %i.bk = load float, ptr %i.a, align 4, !tbaa !111
+  %i.bk = load float, ptr %i.a, align 4, !tbaa !112
   %i.bl = fcmp olt float %.sroa.067.0.vec.extract, %i.bk
   br i1 %i.bl, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an
-  store float %.sroa.067.0.vec.extract, ptr %i.a, align 4, !tbaa !111
+  store float %.sroa.067.0.vec.extract, ptr %i.a, align 4, !tbaa !112
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an
-  %i.bm = load float, ptr %i.t, align 4, !tbaa !112
+  %i.bm = load float, ptr %i.t, align 4, !tbaa !113
   %i.bn = fcmp olt float %.sroa.067.4.vec.extract, %i.bm
   br i1 %i.bn, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ap
-  store float %.sroa.067.4.vec.extract, ptr %i.t, align 4, !tbaa !112
+  store float %.sroa.067.4.vec.extract, ptr %i.t, align 4, !tbaa !113
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap
-  %i.bo = load float, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !113
+  %i.bo = load float, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !114
   %i.bp = fcmp olt float %.sroa.2.0.copyload.i44, %i.bo
   br i1 %i.bp, label %bb.as, label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit47
 
 bb.as:                                            ; preds = %bb.ar
-  store float %.sroa.2.0.copyload.i44, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !113
+  store float %.sroa.2.0.copyload.i44, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !114
   br label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit47
 
 _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit47: ; preds = %bb.ar, %bb.as
@@ -2544,57 +2544,57 @@ _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit47: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %.sroa.065.0.vec.extract = extractelement <2 x float> %.sroa.0.0.copyload.i48, i64 0 ; 4 uses
   %.sroa.065.4.vec.extract = extractelement <2 x float> %.sroa.0.0.copyload.i48, i64 1 ; 4 uses
-  %i.bs = load float, ptr %i.g, align 4, !tbaa !108
+  %i.bs = load float, ptr %i.g, align 4, !tbaa !109
   %i.bt = fcmp ogt float %.sroa.065.0.vec.extract, %i.bs
   br i1 %i.bt, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit47
-  store float %.sroa.065.0.vec.extract, ptr %i.g, align 4, !tbaa !108
+  store float %.sroa.065.0.vec.extract, ptr %i.g, align 4, !tbaa !109
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit47
-  %i.bu = load float, ptr %i.m, align 4, !tbaa !109
+  %i.bu = load float, ptr %i.m, align 4, !tbaa !110
   %i.bv = fcmp ogt float %.sroa.065.4.vec.extract, %i.bu
   br i1 %i.bv, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %bb.au
-  store float %.sroa.065.4.vec.extract, ptr %i.m, align 4, !tbaa !109
+  store float %.sroa.065.4.vec.extract, ptr %i.m, align 4, !tbaa !110
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %bb.au
-  %i.bw = load float, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !110
+  %i.bw = load float, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !111
   %i.bx = fcmp ogt float %.sroa.2.0.copyload.i49, %i.bw
   br i1 %i.bx, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %bb.aw
-  store float %.sroa.2.0.copyload.i49, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !110
+  store float %.sroa.2.0.copyload.i49, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !111
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax, %bb.aw
-  %i.by = load float, ptr %i.a, align 4, !tbaa !111
+  %i.by = load float, ptr %i.a, align 4, !tbaa !112
   %i.bz = fcmp olt float %.sroa.065.0.vec.extract, %i.by
   br i1 %i.bz, label %bb.az, label %bb.ba
 
 bb.az:                                            ; preds = %bb.ay
-  store float %.sroa.065.0.vec.extract, ptr %i.a, align 4, !tbaa !111
+  store float %.sroa.065.0.vec.extract, ptr %i.a, align 4, !tbaa !112
   br label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az, %bb.ay
-  %i.ca = load float, ptr %i.t, align 4, !tbaa !112
+  %i.ca = load float, ptr %i.t, align 4, !tbaa !113
   %i.cb = fcmp olt float %.sroa.065.4.vec.extract, %i.ca
   br i1 %i.cb, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %bb.ba
-  store float %.sroa.065.4.vec.extract, ptr %i.t, align 4, !tbaa !112
+  store float %.sroa.065.4.vec.extract, ptr %i.t, align 4, !tbaa !113
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba
-  %i.cc = load float, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !113
+  %i.cc = load float, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !114
   %i.cd = fcmp olt float %.sroa.2.0.copyload.i49, %i.cc
   br i1 %i.cd, label %bb.bd, label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit52
 
 bb.bd:                                            ; preds = %bb.bc
-  store float %.sroa.2.0.copyload.i49, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !113
+  store float %.sroa.2.0.copyload.i49, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !114
   br label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit52
 
 _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit52: ; preds = %bb.bc, %bb.bd
@@ -2608,57 +2608,57 @@ _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit52: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %.sroa.063.0.vec.extract = extractelement <2 x float> %.sroa.0.0.copyload.i53, i64 0 ; 4 uses
   %.sroa.063.4.vec.extract = extractelement <2 x float> %.sroa.0.0.copyload.i53, i64 1 ; 4 uses
-  %i.cg = load float, ptr %i.g, align 4, !tbaa !108
+  %i.cg = load float, ptr %i.g, align 4, !tbaa !109
   %i.ch = fcmp ogt float %.sroa.063.0.vec.extract, %i.cg
   br i1 %i.ch, label %bb.be, label %bb.bf
 
 bb.be:                                            ; preds = %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit52
-  store float %.sroa.063.0.vec.extract, ptr %i.g, align 4, !tbaa !108
+  store float %.sroa.063.0.vec.extract, ptr %i.g, align 4, !tbaa !109
   br label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be, %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit52
-  %i.ci = load float, ptr %i.m, align 4, !tbaa !109
+  %i.ci = load float, ptr %i.m, align 4, !tbaa !110
   %i.cj = fcmp ogt float %.sroa.063.4.vec.extract, %i.ci
   br i1 %i.cj, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %bb.bf
-  store float %.sroa.063.4.vec.extract, ptr %i.m, align 4, !tbaa !109
+  store float %.sroa.063.4.vec.extract, ptr %i.m, align 4, !tbaa !110
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %bb.bf
-  %i.ck = load float, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !110
+  %i.ck = load float, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !111
   %i.cl = fcmp ogt float %.sroa.2.0.copyload.i54, %i.ck
   br i1 %i.cl, label %bb.bi, label %bb.bj
 
 bb.bi:                                            ; preds = %bb.bh
-  store float %.sroa.2.0.copyload.i54, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !110
+  store float %.sroa.2.0.copyload.i54, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !111
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bh
-  %i.cm = load float, ptr %i.a, align 4, !tbaa !111
+  %i.cm = load float, ptr %i.a, align 4, !tbaa !112
   %i.cn = fcmp olt float %.sroa.063.0.vec.extract, %i.cm
   br i1 %i.cn, label %bb.bk, label %bb.bl
 
 bb.bk:                                            ; preds = %bb.bj
-  store float %.sroa.063.0.vec.extract, ptr %i.a, align 4, !tbaa !111
+  store float %.sroa.063.0.vec.extract, ptr %i.a, align 4, !tbaa !112
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bj
-  %i.co = load float, ptr %i.t, align 4, !tbaa !112
+  %i.co = load float, ptr %i.t, align 4, !tbaa !113
   %i.cp = fcmp olt float %.sroa.063.4.vec.extract, %i.co
   br i1 %i.cp, label %bb.bm, label %bb.bn
 
 bb.bm:                                            ; preds = %bb.bl
-  store float %.sroa.063.4.vec.extract, ptr %i.t, align 4, !tbaa !112
+  store float %.sroa.063.4.vec.extract, ptr %i.t, align 4, !tbaa !113
   br label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm, %bb.bl
-  %i.cq = load float, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !113
+  %i.cq = load float, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !114
   %i.cr = fcmp olt float %.sroa.2.0.copyload.i54, %i.cq
   br i1 %i.cr, label %bb.bo, label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit57
 
 bb.bo:                                            ; preds = %bb.bn
-  store float %.sroa.2.0.copyload.i54, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !113
+  store float %.sroa.2.0.copyload.i54, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !114
   br label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit57
 
 _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit57: ; preds = %bb.bn, %bb.bo
@@ -2672,57 +2672,57 @@ _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit57: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
   %.sroa.0.0.vec.extract = extractelement <2 x float> %.sroa.0.0.copyload.i58, i64 0 ; 4 uses
   %.sroa.0.4.vec.extract = extractelement <2 x float> %.sroa.0.0.copyload.i58, i64 1 ; 4 uses
-  %i.cu = load float, ptr %i.g, align 4, !tbaa !108
+  %i.cu = load float, ptr %i.g, align 4, !tbaa !109
   %i.cv = fcmp ogt float %.sroa.0.0.vec.extract, %i.cu
   br i1 %i.cv, label %bb.bp, label %bb.bq
 
 bb.bp:                                            ; preds = %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit57
-  store float %.sroa.0.0.vec.extract, ptr %i.g, align 4, !tbaa !108
+  store float %.sroa.0.0.vec.extract, ptr %i.g, align 4, !tbaa !109
   br label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp, %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit57
-  %i.cw = load float, ptr %i.m, align 4, !tbaa !109
+  %i.cw = load float, ptr %i.m, align 4, !tbaa !110
   %i.cx = fcmp ogt float %.sroa.0.4.vec.extract, %i.cw
   br i1 %i.cx, label %bb.br, label %bb.bs
 
 bb.br:                                            ; preds = %bb.bq
-  store float %.sroa.0.4.vec.extract, ptr %i.m, align 4, !tbaa !109
+  store float %.sroa.0.4.vec.extract, ptr %i.m, align 4, !tbaa !110
   br label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br, %bb.bq
-  %i.cy = load float, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !110
+  %i.cy = load float, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !111
   %i.cz = fcmp ogt float %.sroa.2.0.copyload.i59, %i.cy
   br i1 %i.cz, label %bb.bt, label %bb.bu
 
 bb.bt:                                            ; preds = %bb.bs
-  store float %.sroa.2.0.copyload.i59, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !110
+  store float %.sroa.2.0.copyload.i59, ptr %.sroa.577.0..sroa_idx, align 4, !tbaa !111
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt, %bb.bs
-  %i.da = load float, ptr %i.a, align 4, !tbaa !111
+  %i.da = load float, ptr %i.a, align 4, !tbaa !112
   %i.db = fcmp olt float %.sroa.0.0.vec.extract, %i.da
   br i1 %i.db, label %bb.bv, label %bb.bw
 
 bb.bv:                                            ; preds = %bb.bu
-  store float %.sroa.0.0.vec.extract, ptr %i.a, align 4, !tbaa !111
+  store float %.sroa.0.0.vec.extract, ptr %i.a, align 4, !tbaa !112
   br label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv, %bb.bu
-  %i.dc = load float, ptr %i.t, align 4, !tbaa !112
+  %i.dc = load float, ptr %i.t, align 4, !tbaa !113
   %i.dd = fcmp olt float %.sroa.0.4.vec.extract, %i.dc
   br i1 %i.dd, label %bb.bx, label %bb.by
 
 bb.bx:                                            ; preds = %bb.bw
-  store float %.sroa.0.4.vec.extract, ptr %i.t, align 4, !tbaa !112
+  store float %.sroa.0.4.vec.extract, ptr %i.t, align 4, !tbaa !113
   br label %bb.by
 
 bb.by:                                            ; preds = %bb.bx, %bb.bw
-  %i.de = load float, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !113
+  %i.de = load float, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !114
   %i.df = fcmp olt float %.sroa.2.0.copyload.i59, %i.de
   br i1 %i.df, label %bb.bz, label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit62
 
 bb.bz:                                            ; preds = %bb.by
-  store float %.sroa.2.0.copyload.i59, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !113
+  store float %.sroa.2.0.copyload.i59, ptr %.sroa.577.0..sroa_idx78, align 4, !tbaa !114
   br label %_ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit62
 
 _ZN4core8aabbox3dIfE16addInternalPointERKNS_8vector3dIfEE.exit62: ; preds = %bb.by, %bb.bz
@@ -3006,7 +3006,7 @@ define linkonce_odr void @_ZN5scene12SViewFrustum25recalculateBoundingSphereEv(p
   %.1.7 = select i1 %i.fl, float %i.ez, float %.1.6
   %i.fm = call float @sqrtf(float noundef %.1.7) #26
   %i.fn = getelementptr inbounds nuw i8, ptr %0, i64 260
-  store float %i.fm, ptr %i.fn, align 4, !tbaa !114
+  store float %i.fm, ptr %i.fn, align 4, !tbaa !115
   ret void
 }
 
@@ -3150,19 +3150,19 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  store ptr %i.h, ptr %0, align 8, !tbaa !115
+  store ptr %i.h, ptr %0, align 8, !tbaa !116
   %i.i = load ptr, ptr %1, align 8, !tbaa !77     ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !116  ; 4 uses
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !117  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
-  store i64 %i.k, ptr %i.a, align 8, !tbaa !117
+  store i64 %i.k, ptr %i.a, align 8, !tbaa !118
   %i.l = icmp ugt i64 %i.k, 15
   br i1 %i.l, label %.noexc.i.i.i, label %._crit_edge.i.i.i.i
 
 .noexc.i.i.i:                                     ; preds = %bb.d
   %i.m = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(33) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0) ; 2 uses
   store ptr %i.m, ptr %0, align 8, !tbaa !77
-  %i.n = load i64, ptr %i.a, align 8, !tbaa !117
+  %i.n = load i64, ptr %i.a, align 8, !tbaa !118
   store i64 %i.n, ptr %i.h, align 8, !tbaa !78
   br label %._crit_edge.i.i.i.i
 
@@ -3183,9 +3183,9 @@ bb.f:                                             ; preds = %._crit_edge.i.i.i.i
   br label %_ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE12_M_constructIJRKS5_EEEvDpOT_.exit
 
 _ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE12_M_constructIJRKS5_EEEvDpOT_.exit: ; preds = %._crit_edge.i.i.i.i, %bb.e, %bb.f
-  %i.q = load i64, ptr %i.a, align 8, !tbaa !117  ; 2 uses
+  %i.q = load i64, ptr %i.a, align 8, !tbaa !118  ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.q, ptr %i.r, align 8, !tbaa !116
+  store i64 %i.q, ptr %i.r, align 8, !tbaa !117
   %i.s = load ptr, ptr %0, align 8, !tbaa !77
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.q
   store i8 0, ptr %i.t, align 1, !tbaa !78
@@ -3235,7 +3235,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = sdiv exact i64 %i.f, 12                  ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !122
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !123
   %i.j = ptrtoint ptr %i.i to i64
   %i.k = sub i64 %i.j, %i.d
   %i.l = sdiv exact i64 %i.k, 12                  ; 2 uses
@@ -3277,18 +3277,18 @@ _ZNKSt6vectorIN4core8vector3dIfEESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb
 .lr.ph.i.i.i:                                     ; preds = %_ZNKSt6vectorIN4core8vector3dIfEESaIS2_EE12_M_check_lenEmPKc.exit, %.lr.ph.i.i.i
   %.012.i.i.i = phi ptr [ %i.y, %.lr.ph.i.i.i ], [ %i.u, %_ZNKSt6vectorIN4core8vector3dIfEESaIS2_EE12_M_check_lenEmPKc.exit ] ; 2 uses
   %.0911.i.i.i = phi ptr [ %i.x, %.lr.ph.i.i.i ], [ %i.c, %_ZNKSt6vectorIN4core8vector3dIfEESaIS2_EE12_M_check_lenEmPKc.exit ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.012.i.i.i, ptr noundef nonnull align 4 dereferenceable(12) %.0911.i.i.i, i64 12, i1 false), !tbaa.struct !18, !alias.scope !123
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.012.i.i.i, ptr noundef nonnull align 4 dereferenceable(12) %.0911.i.i.i, i64 12, i1 false), !tbaa.struct !18, !alias.scope !124
   %i.x = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 12 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 12
   %.not.i.i.i = icmp eq ptr %i.x, %i.b
-  br i1 %.not.i.i.i, label %_ZNSt6vectorIN4core8vector3dIfEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i, !llvm.loop !121
+  br i1 %.not.i.i.i, label %_ZNSt6vectorIN4core8vector3dIfEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i, !llvm.loop !122
 
 _ZNSt6vectorIN4core8vector3dIfEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit: ; preds = %.lr.ph.i.i.i, %_ZNKSt6vectorIN4core8vector3dIfEESaIS2_EE12_M_check_lenEmPKc.exit
   %.not.i36 = icmp eq ptr %i.c, null
   br i1 %.not.i36, label %_ZNSt12_Vector_baseIN4core8vector3dIfEESaIS2_EE13_M_deallocateEPS2_m.exit37, label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt6vectorIN4core8vector3dIfEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit
-  %i.z = load ptr, ptr %i.h, align 8, !tbaa !122
+  %i.z = load ptr, ptr %i.h, align 8, !tbaa !123
   %i.aa = ptrtoint ptr %i.z to i64
   %i.ab = sub i64 %i.aa, %i.e
   tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %i.ab) #28
@@ -3299,7 +3299,7 @@ _ZNSt12_Vector_baseIN4core8vector3dIfEESaIS2_EE13_M_deallocateEPS2_m.exit37: ; p
   %i.ac = getelementptr inbounds nuw [12 x i8], ptr %i.v, i64 %1
   store ptr %i.ac, ptr %i.a, align 8, !tbaa !87
   %i.ad = getelementptr inbounds nuw [12 x i8], ptr %i.u, i64 %i.s
-  store ptr %i.ad, ptr %i.h, align 8, !tbaa !122
+  store ptr %i.ad, ptr %i.h, align 8, !tbaa !123
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZSt27__uninitialized_default_n_aIPN4core8vector3dIfEEmS2_ET_S4_T0_RSaIT1_E.exit, %_ZNSt12_Vector_baseIN4core8vector3dIfEESaIS2_EE13_M_deallocateEPS2_m.exit37, %bb.a
@@ -3335,7 +3335,7 @@ bb.a:
   tail call void @_ZN5scene10ISceneNode15setSceneManagerEPNS_13ISceneManagerE(ptr noundef nonnull align 8 dereferenceable(218) %i.d, ptr noundef %1)
   %.sroa.03.0 = load ptr, ptr %.sroa.03.08, align 8, !tbaa !62 ; 2 uses
   %.not = icmp eq ptr %.sroa.03.0, %i.b
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !124
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !125
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   ret void
@@ -3516,35 +3516,36 @@ attributes #30 = { noreturn }
 !91 = !{ptr @_ZN5scene16CCameraSceneNodeD1Ev}
 !92 = !{!41, !40, i64 212}
 !93 = !{ptr @_ZN5scene10ISceneNode19OnRegisterSceneNodeEv}
-!94 = !{!48, !12, i64 0}
-!95 = !{!48, !12, i64 4}
-!96 = !{!48, !12, i64 8}
-!97 = distinct !{null}
-!98 = distinct !{!98, !71}
-!99 = !{!40, !40, i64 0}
-!100 = !{i64 0, i64 4, !13, i64 4, i64 4, !13, i64 8, i64 4, !13, i64 12, i64 96, !78, i64 108, i64 4, !13, i64 112, i64 4, !13, i64 116, i64 4, !13, i64 120, i64 4, !13, i64 124, i64 4, !13, i64 128, i64 4, !13, i64 132, i64 128, !78, i64 260, i64 4, !13, i64 264, i64 4, !13, i64 268, i64 4, !13, i64 272, i64 4, !13, i64 276, i64 4, !13}
-!101 = !{i64 0, i64 4, !13, i64 4, i64 4, !13, i64 8, i64 4, !13, i64 12, i64 4, !13, i64 16, i64 4, !13, i64 20, i64 4, !13}
-!102 = distinct !{!102, !71}
-!103 = !{!85, !85, i64 0}
-!104 = distinct !{!104, !"_ZNK4core8CMatrix4IfEmlERKS1_"}
-!105 = distinct !{!105, !104, !"_ZNK4core8CMatrix4IfEmlERKS1_: argument 0"}
-!106 = !{!105}
-!107 = distinct !{ptr @_ZN5scene10ISceneNode9removeAllEv, null}
-!108 = !{!44, !12, i64 12}
-!109 = !{!44, !12, i64 16}
-!110 = !{!44, !12, i64 20}
-!111 = !{!44, !12, i64 0}
-!112 = !{!44, !12, i64 4}
-!113 = !{!44, !12, i64 8}
-!114 = !{!45, !12, i64 260}
-!115 = !{!75, !74, i64 0}
-!116 = !{!76, !29, i64 8}
-!117 = !{!29, !29, i64 0}
-!118 = distinct !{!118, !"_ZSt19__relocate_object_aIN4core8vector3dIfEES2_SaIS2_EEvPT_PT0_RT1_"}
-!119 = distinct !{!119, !118, !"_ZSt19__relocate_object_aIN4core8vector3dIfEES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
-!120 = distinct !{!120, !118, !"_ZSt19__relocate_object_aIN4core8vector3dIfEES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
-!121 = distinct !{!121, !71}
-!122 = !{!86, !85, i64 16}
-!123 = !{!120, !119}
-!124 = distinct !{!124, !71}
+!94 = !{!"branch_weights", i32 1, i32 1048575}
+!95 = !{!48, !12, i64 0}
+!96 = !{!48, !12, i64 4}
+!97 = !{!48, !12, i64 8}
+!98 = distinct !{null}
+!99 = distinct !{!99, !71}
+!100 = !{!40, !40, i64 0}
+!101 = !{i64 0, i64 4, !13, i64 4, i64 4, !13, i64 8, i64 4, !13, i64 12, i64 96, !78, i64 108, i64 4, !13, i64 112, i64 4, !13, i64 116, i64 4, !13, i64 120, i64 4, !13, i64 124, i64 4, !13, i64 128, i64 4, !13, i64 132, i64 128, !78, i64 260, i64 4, !13, i64 264, i64 4, !13, i64 268, i64 4, !13, i64 272, i64 4, !13, i64 276, i64 4, !13}
+!102 = !{i64 0, i64 4, !13, i64 4, i64 4, !13, i64 8, i64 4, !13, i64 12, i64 4, !13, i64 16, i64 4, !13, i64 20, i64 4, !13}
+!103 = distinct !{!103, !71}
+!104 = !{!85, !85, i64 0}
+!105 = distinct !{!105, !"_ZNK4core8CMatrix4IfEmlERKS1_"}
+!106 = distinct !{!106, !105, !"_ZNK4core8CMatrix4IfEmlERKS1_: argument 0"}
+!107 = !{!106}
+!108 = distinct !{ptr @_ZN5scene10ISceneNode9removeAllEv, null}
+!109 = !{!44, !12, i64 12}
+!110 = !{!44, !12, i64 16}
+!111 = !{!44, !12, i64 20}
+!112 = !{!44, !12, i64 0}
+!113 = !{!44, !12, i64 4}
+!114 = !{!44, !12, i64 8}
+!115 = !{!45, !12, i64 260}
+!116 = !{!75, !74, i64 0}
+!117 = !{!76, !29, i64 8}
+!118 = !{!29, !29, i64 0}
+!119 = distinct !{!119, !"_ZSt19__relocate_object_aIN4core8vector3dIfEES2_SaIS2_EEvPT_PT0_RT1_"}
+!120 = distinct !{!120, !119, !"_ZSt19__relocate_object_aIN4core8vector3dIfEES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
+!121 = distinct !{!121, !119, !"_ZSt19__relocate_object_aIN4core8vector3dIfEES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
+!122 = distinct !{!122, !71}
+!123 = !{!86, !85, i64 16}
+!124 = !{!121, !120}
+!125 = distinct !{!125, !71}
 end_hunk_3

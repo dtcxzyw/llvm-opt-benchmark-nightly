@@ -199,7 +199,7 @@ bb.a:
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
   %rt.guard = freeze i1 %rt.conflict
-  br i1 %rt.guard, label %.rtscalar, label %.rtvec
+  br i1 %rt.guard, label %.rtscalar, label %.rtvec, !prof !13
 
 .rtvec:                                           ; preds = %bb.a
   %i.e = load <4 x i32>, ptr %1, align 4, !tbaa !12
@@ -278,7 +278,7 @@ bb.a:
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
   %rt.guard = freeze i1 %rt.conflict
-  br i1 %rt.guard, label %.rtscalar, label %.rtvec
+  br i1 %rt.guard, label %.rtscalar, label %.rtvec, !prof !13
 
 .rtvec:                                           ; preds = %bb.a
   %i.e = load <4 x i32>, ptr %1, align 4, !tbaa !12
@@ -681,7 +681,7 @@ _ZNK6icu_789ScriptSet10nextSetBitEi.exit17:       ; preds = %_ZNK6icu_789ScriptS
 
 bb.b:                                             ; preds = %_ZNK6icu_789ScriptSet10nextSetBitEi.exit17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store i16 32, ptr %i.a, align 2, !tbaa !20
+  store i16 32, ptr %i.a, align 2, !tbaa !21
   %i.p = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendEPKDsii(ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull %i.a, i32 noundef 0, i32 noundef 1) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.c
@@ -690,7 +690,7 @@ bb.c:                                             ; preds = %bb.b, %_ZNK6icu_789
   %i.q = call ptr @uscript_getShortName_78(i32 noundef %.01018)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   call void @_ZN6icu_7813UnicodeStringC1EPKciNS0_10EInvariantE(ptr noundef nonnull align 8 dereferenceable(64) %2, ptr noundef %i.q, i32 noundef -1, i32 noundef 0)
-  %i.r = load i16, ptr %i.n, align 8, !tbaa !14   ; 2 uses
+  %i.r = load i16, ptr %i.n, align 8, !tbaa !15   ; 2 uses
   %i.s = icmp slt i16 %i.r, 0
   %i.t = ashr i16 %i.r, 5
   %i.u = sext i16 %i.t to i32
@@ -753,12 +753,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN6icu_7813UnicodeStringE, i64 16), ptr %3, align 8, !tbaa !23
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN6icu_7813UnicodeStringE, i64 16), ptr %3, align 8, !tbaa !24
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
-  store i16 2, ptr %i.d, align 8, !tbaa !14
+  store i16 2, ptr %i.d, align 8, !tbaa !15
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 3 uses
-  %i.g = load i16, ptr %i.e, align 8, !tbaa !14   ; 2 uses
+  %i.g = load i16, ptr %i.e, align 8, !tbaa !15   ; 2 uses
   %i.h = icmp slt i16 %i.g, 0
   %i.i = ashr i16 %i.g, 5
   %i.j = sext i16 %i.i to i32
@@ -794,14 +794,14 @@ bb.g:                                             ; preds = %bb.f
           to label %bb.h unwind label %bb.i       ; 0 uses
 
 bb.h:                                             ; preds = %bb.g
-  %i.s = load i16, ptr %i.e, align 8, !tbaa !14   ; 2 uses
+  %i.s = load i16, ptr %i.e, align 8, !tbaa !15   ; 2 uses
   %i.t = icmp slt i16 %i.s, 0
   %i.u = ashr i16 %i.s, 5
   %i.v = sext i16 %i.u to i32
   %i.w = load i32, ptr %i.f, align 4
   %i.x = select i1 %i.t, i32 %i.w, i32 %i.v
   %i.y = icmp slt i32 %i.p, %i.x
-  br i1 %i.y, label %bb.s, label %bb.j, !llvm.loop !21
+  br i1 %i.y, label %bb.s, label %bb.j, !llvm.loop !22
 
 bb.i:                                             ; preds = %bb.g, %bb.e, %bb.d, %bb.c
   %i.z = landingpad { ptr, i32 }
@@ -809,7 +809,7 @@ bb.i:                                             ; preds = %bb.g, %bb.e, %bb.d,
   br label %bb.t
 
 bb.j:                                             ; preds = %bb.f, %bb.h
-  %i.aa = load i16, ptr %i.d, align 8, !tbaa !14  ; 2 uses
+  %i.aa = load i16, ptr %i.d, align 8, !tbaa !15  ; 2 uses
   %i.ab = icmp slt i16 %i.aa, 0
   %i.ac = ashr i16 %i.aa, 5
   %i.ad = sext i16 %i.ac to i32
@@ -824,7 +824,7 @@ bb.k:                                             ; preds = %bb.j
           to label %bb.l unwind label %bb.n       ; 0 uses
 
 bb.l:                                             ; preds = %bb.k
-  store i8 0, ptr %i.n, align 1, !tbaa !14
+  store i8 0, ptr %i.n, align 1, !tbaa !15
   %i.ai = invoke i32 @u_getPropertyValueEnum_78(i32 noundef 4106, ptr noundef nonnull %i.a)
           to label %bb.m unwind label %bb.o       ; 4 uses
 
@@ -873,17 +873,17 @@ select.unfold:                                    ; preds = %bb.q
   %i.at = load i32, ptr %i.as, align 4, !tbaa !12
   %i.au = or i32 %i.at, %i.aq
   store i32 %i.au, ptr %i.as, align 4, !tbaa !12
-  %i.av = load i16, ptr %i.d, align 8, !tbaa !14  ; 2 uses
+  %i.av = load i16, ptr %i.d, align 8, !tbaa !15  ; 2 uses
   %i.aw = and i16 %i.av, 1
   %.not.i = icmp eq i16 %i.aw, 0
   %i.ax = and i16 %i.av, 30
   %storemerge.i = select i1 %.not.i, i16 %i.ax, i16 2
-  store i16 %storemerge.i, ptr %i.d, align 8, !tbaa !14
+  store i16 %storemerge.i, ptr %i.d, align 8, !tbaa !15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   br label %bb.s
 
 bb.s:                                             ; preds = %select.unfold, %bb.j, %bb.h
-  %i.ay = load i16, ptr %i.e, align 8, !tbaa !14  ; 2 uses
+  %i.ay = load i16, ptr %i.e, align 8, !tbaa !15  ; 2 uses
   %i.az = icmp slt i16 %i.ay, 0
   %i.ba = ashr i16 %i.ay, 5
   %i.bb = sext i16 %i.ba to i32
@@ -931,11 +931,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  store ptr %i.d, ptr %3, align 8, !tbaa !17
+  store ptr %i.d, ptr %3, align 8, !tbaa !18
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  store i32 20, ptr %i.e, align 8, !tbaa !26
+  store i32 20, ptr %i.e, align 8, !tbaa !27
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 4 uses
-  store i8 0, ptr %i.f, align 4, !tbaa !18
+  store i8 0, ptr %i.f, align 4, !tbaa !19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   br label %bb.c
 
@@ -966,20 +966,20 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i, label %.loopexit.sink.split, label %bb.g
 
 bb.g:                                             ; preds = %.noexc
-  %i.p = load i8, ptr %i.f, align 4, !tbaa !18
+  %i.p = load i8, ptr %i.f, align 4, !tbaa !19
   %.not.i.i = icmp eq i8 %i.p, 0
   br i1 %.not.i.i, label %_ZN6icu_7815MaybeStackArrayI11UScriptCodeLi20EE6resizeEii.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.q = load ptr, ptr %3, align 8, !tbaa !17
+  %i.q = load ptr, ptr %3, align 8, !tbaa !18
   invoke void @uprv_free_78(ptr noundef %i.q)
           to label %_ZN6icu_7815MaybeStackArrayI11UScriptCodeLi20EE6resizeEii.exit unwind label %bb.i
 
 _ZN6icu_7815MaybeStackArrayI11UScriptCodeLi20EE6resizeEii.exit: ; preds = %bb.g, %bb.h
-  store ptr %i.o, ptr %3, align 8, !tbaa !17
-  store i32 %i.i, ptr %i.e, align 8, !tbaa !26
-  store i8 1, ptr %i.f, align 4, !tbaa !18
-  br label %bb.c, !llvm.loop !24
+  store ptr %i.o, ptr %3, align 8, !tbaa !18
+  store i32 %i.i, ptr %i.e, align 8, !tbaa !27
+  store i8 1, ptr %i.f, align 4, !tbaa !19
+  br label %bb.c, !llvm.loop !25
 
 bb.i:                                             ; preds = %bb.h, %bb.f, %bb.c
   %i.r = landingpad { ptr, i32 }
@@ -998,7 +998,7 @@ bb.j:                                             ; preds = %bb.d
   br i1 %i.t, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.preheader
-  %i.u = load ptr, ptr %3, align 8, !tbaa !17
+  %i.u = load ptr, ptr %3, align 8, !tbaa !18
   %i.v = load i32, ptr %2, align 4, !tbaa !11
   %i.w = icmp slt i32 %i.v, 1
   br i1 %i.w, label %.lr.ph.split.preheader, label %.loopexit
@@ -1018,12 +1018,12 @@ bb.k:                                             ; preds = %bb.l
   store i32 %i.ad, ptr %i.ab, align 4, !tbaa !12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.l, !llvm.loop !25
+  br i1 %exitcond.not, label %.loopexit, label %bb.l, !llvm.loop !26
 
 bb.l:                                             ; preds = %bb.k, %.lr.ph.split.preheader
   %indvars.iv = phi i64 [ 0, %.lr.ph.split.preheader ], [ %indvars.iv.next, %bb.k ] ; 2 uses
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %indvars.iv
-  %i.af = load i32, ptr %i.ae, align 4, !tbaa !29 ; 3 uses
+  %i.af = load i32, ptr %i.ae, align 4, !tbaa !30 ; 3 uses
   %or.cond.i = icmp ugt i32 %i.af, 223
   br i1 %or.cond.i, label %.loopexit.sink.split, label %bb.k
 
@@ -1034,12 +1034,12 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.split
 
 .loopexit:                                        ; preds = %bb.k, %.loopexit.sink.split, %.lr.ph, %.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
-  %i.ag = load i8, ptr %i.f, align 4, !tbaa !18
+  %i.ag = load i8, ptr %i.f, align 4, !tbaa !19
   %.not.i.i22 = icmp eq i8 %i.ag, 0
   br i1 %.not.i.i22, label %_ZN6icu_7815MaybeStackArrayI11UScriptCodeLi20EED2Ev.exit, label %bb.m
 
 bb.m:                                             ; preds = %.loopexit
-  %i.ah = load ptr, ptr %3, align 8, !tbaa !17
+  %i.ah = load ptr, ptr %3, align 8, !tbaa !18
   invoke void @uprv_free_78(ptr noundef %i.ah)
           to label %_ZN6icu_7815MaybeStackArrayI11UScriptCodeLi20EED2Ev.exit unwind label %bb.n
 
@@ -1064,12 +1064,12 @@ declare i32 @uscript_getScriptExtensions_78(i32 noundef, ptr noundef, i32 nounde
 define linkonce_odr void @_ZN6icu_7815MaybeStackArrayI11UScriptCodeLi20EED2Ev(ptr noundef nonnull align 8 dead_on_return(96) dereferenceable(96) %0) unnamed_addr #9 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.b = load i8, ptr %i.a, align 4, !tbaa !18
+  %i.b = load i8, ptr %i.a, align 4, !tbaa !19
   %.not.i = icmp eq i8 %i.b, 0
   br i1 %.not.i, label %_ZN6icu_7815MaybeStackArrayI11UScriptCodeLi20EE12releaseArrayEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %0, align 8, !tbaa !17
+  %i.c = load ptr, ptr %0, align 8, !tbaa !18
   invoke void @uprv_free_78(ptr noundef %i.c)
           to label %_ZN6icu_7815MaybeStackArrayI11UScriptCodeLi20EE12releaseArrayEv.exit unwind label %bb.c
 
@@ -1472,7 +1472,7 @@ _ZNK6icu_789ScriptSet10nextSetBitEi.exit89:       ; preds = %_ZNK6icu_789ScriptS
   %i.dm = icmp eq i32 %i.dl, 0
   %i.dn = icmp sgt i32 %.2.i78, 0
   %i.do = and i1 %i.dn, %i.dm
-  br i1 %i.do, label %.lr.ph, label %.loopexit, !llvm.loop !30
+  br i1 %i.do, label %.lr.ph, label %.loopexit, !llvm.loop !31
 
 .loopexit:                                        ; preds = %_ZNK6icu_789ScriptSet10nextSetBitEi.exit89, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit74, %_ZNK6icu_789ScriptSet12countMembersEv.exit66
   %.016 = phi i32 [ %i.bq, %_ZNK6icu_789ScriptSet12countMembersEv.exit66 ], [ %i.cp, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit74 ], [ %i.dl, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit89 ]
@@ -1561,8 +1561,8 @@ attributes #16 = { noreturn nounwind }
 !llvm.ident = !{!4}
 !llvm.errno.tbaa = !{!9}
 
-!0 = distinct !{!0, !13}
-!1 = distinct !{!1, !13}
+!0 = distinct !{!0, !14}
+!1 = distinct !{!1, !14}
 !2 = !{i32 8, !"PIC Level", i32 2}
 !3 = !{i32 7, !"uwtable", i32 2}
 !4 = !{!"Ubuntu clang version 24.0.0 (++20260802081851+e18c3ea02484-1~exp1~20260802082001.1761)"}
@@ -1574,22 +1574,23 @@ attributes #16 = { noreturn nounwind }
 !10 = !{!"_ZTS10UErrorCode", !6, i64 0}
 !11 = !{!10, !10, i64 0}
 !12 = !{!7, !7, i64 0}
-!13 = !{!"llvm.loop.mustprogress"}
-!14 = !{!6, !6, i64 0}
-!15 = !{!"any pointer", !6, i64 0}
-!16 = !{!"_ZTSN6icu_7815MaybeStackArrayI11UScriptCodeLi20EEE", !15, i64 0, !7, i64 8, !6, i64 12, !6, i64 16}
-!17 = !{!16, !15, i64 0}
-!18 = !{!16, !6, i64 12}
-!19 = !{!"char16_t", !6, i64 0}
-!20 = !{!19, !19, i64 0}
-!21 = distinct !{!21, !13}
-!22 = !{!"vtable pointer", !5, i64 0}
-!23 = !{!22, !22, i64 0}
-!24 = distinct !{!24, !13}
-!25 = distinct !{!25, !13, !27}
-!26 = !{!16, !7, i64 8}
-!27 = !{!"llvm.loop.unswitch.partial.disable"}
-!28 = !{!"_ZTS11UScriptCode", !6, i64 0}
-!29 = !{!28, !28, i64 0}
-!30 = distinct !{!30, !13}
+!13 = !{!"branch_weights", i32 1, i32 1048575}
+!14 = !{!"llvm.loop.mustprogress"}
+!15 = !{!6, !6, i64 0}
+!16 = !{!"any pointer", !6, i64 0}
+!17 = !{!"_ZTSN6icu_7815MaybeStackArrayI11UScriptCodeLi20EEE", !16, i64 0, !7, i64 8, !6, i64 12, !6, i64 16}
+!18 = !{!17, !16, i64 0}
+!19 = !{!17, !6, i64 12}
+!20 = !{!"char16_t", !6, i64 0}
+!21 = !{!20, !20, i64 0}
+!22 = distinct !{!22, !14}
+!23 = !{!"vtable pointer", !5, i64 0}
+!24 = !{!23, !23, i64 0}
+!25 = distinct !{!25, !14}
+!26 = distinct !{!26, !14, !28}
+!27 = !{!17, !7, i64 8}
+!28 = !{!"llvm.loop.unswitch.partial.disable"}
+!29 = !{!"_ZTS11UScriptCode", !6, i64 0}
+!30 = !{!29, !29, i64 0}
+!31 = distinct !{!31, !14}
 end_hunk_2

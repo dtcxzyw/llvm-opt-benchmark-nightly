@@ -79,7 +79,7 @@ bb.a:
   %rt.bound0 = icmp ugt i64 %i.c, %i.a
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.rtscalar, label %.rtvec
+  br i1 %rt.conflict, label %.rtscalar, label %.rtvec, !prof !24
 
 .rtvec:                                           ; preds = %bb.a
   %.val12609 = load i32, ptr %5, align 1          ; 10 uses
@@ -482,7 +482,7 @@ _Py_LibHacl_Hacl_Hash_Blake2s_reset_with_key.exit:
   %.sroa.0.0.insert.ext.i = zext i8 %.sroa.4.0.copyload.i.i to i32
   %i.a = xor i32 %.sroa.0.0.insert.ext.i, 1795745383
   %.sroa.9.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load <2 x ptr>, ptr %.sroa.7129.0..sroa_idx.i.i, align 8, !tbaa !24
+  %i.b = load <2 x ptr>, ptr %.sroa.7129.0..sroa_idx.i.i, align 8, !tbaa !25
   %.sroa.7129.0.copyload.i.i = load ptr, ptr %.sroa.7129.0..sroa_idx.i.i, align 8, !tbaa !17 ; 7 uses
   %i.c = getelementptr i8, ptr %.sroa.7129.0.copyload.i.i, i64 36
   store <4 x i32> <i32 -1150833019, i32 1013904242, i32 -1521486534, i32 1359893119>, ptr %i.c, align 4, !tbaa !10
@@ -500,7 +500,7 @@ _Py_LibHacl_Hacl_Hash_Blake2s_reset_with_key.exit:
   store i8 0, ptr %0, align 8, !tbaa !12
   store i8 %.sroa.4.0.copyload.i.i, ptr %.sroa.4.0..sroa_idx.i.i, align 1, !tbaa !12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %.sroa.6128.0..sroa_idx.i.i, ptr noundef nonnull align 1 dereferenceable(13) %.sroa.8120.i.i, i64 13, i1 false)
-  store <2 x ptr> %i.b, ptr %.sroa.7129.0..sroa_idx.i.i, align 8, !tbaa !24
+  store <2 x ptr> %i.b, ptr %.sroa.7129.0..sroa_idx.i.i, align 8, !tbaa !25
   store i64 0, ptr %.sroa.9.0..sroa_idx.i.i, align 8, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8120.i.i)
   ret void
@@ -537,7 +537,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr i8, ptr %.sroa.4135.0.copyload, i64 %.
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.i, ptr align 1 %1, i64 %i.a, i1 false)
   %i.j = add i64 %.sroa.3145.0.copyload, %i.a
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0122, i64 24, i1 false), !tbaa.struct !25
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0122, i64 24, i1 false), !tbaa.struct !26
   br label %.sink.split
 
 bb.d:                                             ; preds = %bb.b
@@ -597,7 +597,7 @@ bb.f:                                             ; preds = %bb.d
   %i.ac = getelementptr i8, ptr %.sroa.462.0.copyload, i64 %.189
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ac, ptr align 1 %1, i64 %i.aa, i1 false)
   %i.ad = add i64 %.sroa.3145.0.copyload, %i.aa   ; 6 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.049, i64 24, i1 false), !tbaa.struct !25
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.049, i64 24, i1 false), !tbaa.struct !26
   store ptr %.sroa.462.0.copyload, ptr %.sroa.6120.0..sroa_idx, align 8, !tbaa !19
   store i64 %i.ad, ptr %.sroa.3145.0..sroa_idx, align 8, !tbaa !21
   %.sroa.0.0.copyload = load i64, ptr %0, align 8
@@ -1000,10 +1000,10 @@ bb.a:
   store <4 x i32> <i32 1779033703, i32 -1150833019, i32 1013904242, i32 -1521486534>, ptr %i.e, align 16, !tbaa !10
   store <4 x i32> <i32 1359893119, i32 -1694144372, i32 528734635, i32 1541459225>, ptr %i.f, align 16, !tbaa !10
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !26
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !27
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !27
-  %i.k = load i8, ptr %3, align 8, !tbaa !28      ; 2 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !28
+  %i.k = load i8, ptr %3, align 8, !tbaa !29      ; 2 uses
   %i.l = zext i8 %i.k to i32
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 1
   %i.n = load i8, ptr %i.m, align 1, !tbaa !23
@@ -1016,9 +1016,9 @@ bb.a:
   %i.u = or disjoint i32 %i.p, %i.l
   %i.v = or disjoint i32 %i.u, %i.t
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %i.x = load i32, ptr %i.w, align 4, !tbaa !29
+  %i.x = load i32, ptr %i.w, align 4, !tbaa !30
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = load i64, ptr %i.y, align 8, !tbaa !30   ; 2 uses
+  %i.z = load i64, ptr %i.y, align 8, !tbaa !31   ; 2 uses
   %i.aa = trunc i64 %i.z to i32
   %i.ab = lshr i64 %i.z, 32
   %i.ac = trunc nuw i64 %i.ab to i32
@@ -1113,11 +1113,12 @@ attributes #19 = { nounwind allocsize(0) }
 !21 = !{!20, !20, i64 0}
 !22 = !{!"Hacl_Hash_Blake2b_blake2_params_s", !8, i64 0, !8, i64 1, !8, i64 2, !8, i64 3, !9, i64 4, !20, i64 8, !8, i64 16, !8, i64 17, !18, i64 24, !18, i64 32}
 !23 = !{!22, !8, i64 1}
-!24 = !{!15, !15, i64 0}
-!25 = !{i64 0, i64 1, !12, i64 1, i64 1, !12, i64 2, i64 1, !14, i64 8, i64 8, !17, i64 16, i64 8, !17, i64 24, i64 8, !19, i64 32, i64 8, !21}
-!26 = !{!22, !18, i64 24}
-!27 = !{!22, !18, i64 32}
-!28 = !{!22, !8, i64 0}
-!29 = !{!22, !9, i64 4}
-!30 = !{!22, !20, i64 8}
+!24 = !{!"branch_weights", i32 1, i32 1048575}
+!25 = !{!15, !15, i64 0}
+!26 = !{i64 0, i64 1, !12, i64 1, i64 1, !12, i64 2, i64 1, !14, i64 8, i64 8, !17, i64 16, i64 8, !17, i64 24, i64 8, !19, i64 32, i64 8, !21}
+!27 = !{!22, !18, i64 24}
+!28 = !{!22, !18, i64 32}
+!29 = !{!22, !8, i64 0}
+!30 = !{!22, !9, i64 4}
+!31 = !{!22, !20, i64 8}
 end_hunk_2

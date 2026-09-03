@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %._crit_edge348, %bb
   %rt.bound0 = icmp ugt i64 %i.rl, %i.b
   %rt.bound1 = icmp ugt i64 %i.rk, %i.a
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.rtscalar, label %.rtvec
+  br i1 %rt.conflict, label %.rtscalar, label %.rtvec, !prof !23
 
 bb.p:                                             ; preds = %._crit_edge346, %bb.b
   %i.rm = phi float [ %.pre347, %._crit_edge346 ], [ %i.fv, %bb.b ]
@@ -559,16 +559,16 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = tail call noundef i64 @strlen(ptr noundef nonnull align 1 dereferenceable(68) %1) #10 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  store ptr %i.c, ptr %0, align 8, !tbaa !23
+  store ptr %i.c, ptr %0, align 8, !tbaa !24
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  store i64 %i.b, ptr %i.a, align 8, !tbaa !24
+  store i64 %i.b, ptr %i.a, align 8, !tbaa !25
   %i.d = icmp ugt i64 %i.b, 15
   br i1 %i.d, label %.noexc.i.i.i, label %._crit_edge.i.i.i.i
 
 .noexc.i.i.i:                                     ; preds = %bb.a
   %i.e = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0) ; 2 uses
   store ptr %i.e, ptr %0, align 8, !tbaa !14
-  %i.f = load i64, ptr %i.a, align 8, !tbaa !24
+  %i.f = load i64, ptr %i.a, align 8, !tbaa !25
   store i64 %i.f, ptr %i.c, align 8, !tbaa !15
   br label %._crit_edge.i.i.i.i
 
@@ -589,9 +589,9 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %._crit_edge.i.i.i.i
-  %i.i = load i64, ptr %i.a, align 8, !tbaa !24   ; 2 uses
+  %i.i = load i64, ptr %i.a, align 8, !tbaa !25   ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.i, ptr %i.j, align 8, !tbaa !25
+  store i64 %i.i, ptr %i.j, align 8, !tbaa !26
   %i.k = load ptr, ptr %0, align 8, !tbaa !14
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.i
   store i8 0, ptr %i.l, align 1, !tbaa !15
@@ -743,7 +743,8 @@ attributes #12 = { builtin nounwind }
 !20 = !{!6, !6, i64 0}
 !21 = !{!"double", !5, i64 0}
 !22 = !{!21, !21, i64 0}
-!23 = !{!11, !10, i64 0}
-!24 = !{!12, !12, i64 0}
-!25 = !{!13, !12, i64 8}
+!23 = !{!"branch_weights", i32 1, i32 1048575}
+!24 = !{!11, !10, i64 0}
+!25 = !{!12, !12, i64 0}
+!26 = !{!13, !12, i64 8}
 end_hunk_0

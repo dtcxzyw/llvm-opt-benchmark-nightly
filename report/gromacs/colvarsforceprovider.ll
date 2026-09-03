@@ -205,7 +205,7 @@ define void @_ZN3gmx20ColvarsForceProvider13addVirialTermEPA3_fRA3_KfRKNS_11Basi
   %rt.conflict17 = and i1 %rt.bound015, %rt.bound116
   %rt.conflict.all = or i1 %rt.conflict, %rt.conflict17
   %rt.guard = freeze i1 %rt.conflict.all
-  br i1 %rt.guard, label %.preheader.rtscalar, label %.preheader.rtvec
+  br i1 %rt.guard, label %.preheader.rtscalar, label %.preheader.rtvec, !prof !428
 
 .preheader.rtvec:                                 ; preds = %.preheader
   %i.g = load float, ptr %1, align 4, !tbaa !133  ; 2 uses
@@ -608,4 +608,5 @@ begin_hunk_1_@llvm.fmuladd.v8f64
 !425 = !{!40, !39, i64 16}
 !426 = !{i64 0, i64 8, !130, i64 8, i64 8, !130, i64 16, i64 8, !130}
 !427 = !{!423, !422}
+!428 = !{!"branch_weights", i32 1, i32 1048575}
 end_hunk_1

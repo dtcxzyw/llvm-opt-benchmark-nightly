@@ -38,7 +38,7 @@ define void @_Z13gmx_mat4_copyPA4_fS0_(ptr nofree noundef readonly captures(none
   %rt.bound0 = icmp ugt i64 %i.c, %i.a
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.preheader.rtscalar, label %.preheader.rtvec
+  br i1 %rt.conflict, label %.preheader.rtscalar, label %.preheader.rtvec, !prof !20
 
 .preheader.rtvec:                                 ; preds = %.preheader
   %i.e = load <8 x float>, ptr %0, align 4, !tbaa !10
@@ -441,16 +441,16 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = tail call noundef i64 @strlen(ptr noundef nonnull align 1 dereferenceable(66) %1) #16 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  store ptr %i.c, ptr %0, align 8, !tbaa !20
+  store ptr %i.c, ptr %0, align 8, !tbaa !21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
-  store i64 %i.b, ptr %i.a, align 8, !tbaa !21
+  store i64 %i.b, ptr %i.a, align 8, !tbaa !22
   %i.d = icmp ugt i64 %i.b, 15
   br i1 %i.d, label %.noexc.i.i.i, label %._crit_edge.i.i.i.i
 
 .noexc.i.i.i:                                     ; preds = %bb.a
   %i.e = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0) ; 2 uses
   store ptr %i.e, ptr %0, align 8, !tbaa !16
-  %i.f = load i64, ptr %i.a, align 8, !tbaa !21
+  %i.f = load i64, ptr %i.a, align 8, !tbaa !22
   store i64 %i.f, ptr %i.c, align 8, !tbaa !17
   br label %._crit_edge.i.i.i.i
 
@@ -471,9 +471,9 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %._crit_edge.i.i.i.i
-  %i.i = load i64, ptr %i.a, align 8, !tbaa !21   ; 2 uses
+  %i.i = load i64, ptr %i.a, align 8, !tbaa !22   ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.i, ptr %i.j, align 8, !tbaa !22
+  store i64 %i.i, ptr %i.j, align 8, !tbaa !23
   %i.k = load ptr, ptr %0, align 8, !tbaa !16
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.i
   store i8 0, ptr %i.l, align 1, !tbaa !17
@@ -771,7 +771,8 @@ attributes #18 = { builtin nounwind }
 !17 = !{!5, !5, i64 0}
 !18 = !{!"p1 _ZTSNSt10filesystem7__cxx114path5_List5_ImplE", !11, i64 0}
 !19 = !{!18, !18, i64 0}
-!20 = !{!13, !12, i64 0}
-!21 = !{!14, !14, i64 0}
-!22 = !{!15, !14, i64 8}
+!20 = !{!"branch_weights", i32 1, i32 1048575}
+!21 = !{!13, !12, i64 0}
+!22 = !{!14, !14, i64 0}
+!23 = !{!15, !14, i64 8}
 end_hunk_1

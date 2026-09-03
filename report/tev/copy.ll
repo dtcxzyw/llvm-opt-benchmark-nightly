@@ -15,76 +15,76 @@ bb.a:
   %rt.bound0 = icmp ugt i64 %i.c, %i.a
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.rtscalar, label %.rtvec
+  br i1 %rt.conflict, label %.rtscalar, label %.rtvec, !prof !9
 
 .rtvec:                                           ; preds = %bb.a
-  %i.e = load <16 x i8>, ptr %1, align 1, !tbaa !9
-  store <16 x i8> %i.e, ptr %0, align 1, !tbaa !9
+  %i.e = load <16 x i8>, ptr %1, align 1, !tbaa !10
+  store <16 x i8> %i.e, ptr %0, align 1, !tbaa !10
   br label %.rtcont
 
 .rtscalar:                                        ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 1
-  %i.g = load i8, ptr %1, align 1, !tbaa !9
+  %i.g = load i8, ptr %1, align 1, !tbaa !10
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %i.g, ptr %0, align 1, !tbaa !9
+  store i8 %i.g, ptr %0, align 1, !tbaa !10
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %i.j = load i8, ptr %i.f, align 1, !tbaa !9
+  %i.j = load i8, ptr %i.f, align 1, !tbaa !10
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %i.j, ptr %i.h, align 1, !tbaa !9
+  store i8 %i.j, ptr %i.h, align 1, !tbaa !10
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 3
-  %i.m = load i8, ptr %i.i, align 1, !tbaa !9
+  %i.m = load i8, ptr %i.i, align 1, !tbaa !10
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %i.m, ptr %i.k, align 1, !tbaa !9
+  store i8 %i.m, ptr %i.k, align 1, !tbaa !10
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.p = load i8, ptr %i.l, align 1, !tbaa !9
+  %i.p = load i8, ptr %i.l, align 1, !tbaa !10
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i8 %i.p, ptr %i.n, align 1, !tbaa !9
+  store i8 %i.p, ptr %i.n, align 1, !tbaa !10
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 5
-  %i.s = load i8, ptr %i.o, align 1, !tbaa !9
+  %i.s = load i8, ptr %i.o, align 1, !tbaa !10
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 5
-  store i8 %i.s, ptr %i.q, align 1, !tbaa !9
+  store i8 %i.s, ptr %i.q, align 1, !tbaa !10
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 6
-  %i.v = load i8, ptr %i.r, align 1, !tbaa !9
+  %i.v = load i8, ptr %i.r, align 1, !tbaa !10
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 6
-  store i8 %i.v, ptr %i.t, align 1, !tbaa !9
+  store i8 %i.v, ptr %i.t, align 1, !tbaa !10
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 7
-  %i.y = load i8, ptr %i.u, align 1, !tbaa !9
+  %i.y = load i8, ptr %i.u, align 1, !tbaa !10
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 7
-  store i8 %i.y, ptr %i.w, align 1, !tbaa !9
+  store i8 %i.y, ptr %i.w, align 1, !tbaa !10
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ab = load i8, ptr %i.x, align 1, !tbaa !9
+  %i.ab = load i8, ptr %i.x, align 1, !tbaa !10
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %i.ab, ptr %i.z, align 1, !tbaa !9
+  store i8 %i.ab, ptr %i.z, align 1, !tbaa !10
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 9
-  %i.ae = load i8, ptr %i.aa, align 1, !tbaa !9
+  %i.ae = load i8, ptr %i.aa, align 1, !tbaa !10
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %i.ae, ptr %i.ac, align 1, !tbaa !9
+  store i8 %i.ae, ptr %i.ac, align 1, !tbaa !10
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 10
-  %i.ah = load i8, ptr %i.ad, align 1, !tbaa !9
+  %i.ah = load i8, ptr %i.ad, align 1, !tbaa !10
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 10
-  store i8 %i.ah, ptr %i.af, align 1, !tbaa !9
+  store i8 %i.ah, ptr %i.af, align 1, !tbaa !10
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 11
-  %i.ak = load i8, ptr %i.ag, align 1, !tbaa !9
+  %i.ak = load i8, ptr %i.ag, align 1, !tbaa !10
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 11
-  store i8 %i.ak, ptr %i.ai, align 1, !tbaa !9
+  store i8 %i.ak, ptr %i.ai, align 1, !tbaa !10
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.an = load i8, ptr %i.aj, align 1, !tbaa !9
+  %i.an = load i8, ptr %i.aj, align 1, !tbaa !10
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i8 %i.an, ptr %i.al, align 1, !tbaa !9
+  store i8 %i.an, ptr %i.al, align 1, !tbaa !10
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 13
-  %i.aq = load i8, ptr %i.am, align 1, !tbaa !9
+  %i.aq = load i8, ptr %i.am, align 1, !tbaa !10
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 13
-  store i8 %i.aq, ptr %i.ao, align 1, !tbaa !9
+  store i8 %i.aq, ptr %i.ao, align 1, !tbaa !10
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 14
-  %i.at = load i8, ptr %i.ap, align 1, !tbaa !9
+  %i.at = load i8, ptr %i.ap, align 1, !tbaa !10
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 14
-  store i8 %i.at, ptr %i.ar, align 1, !tbaa !9
+  store i8 %i.at, ptr %i.ar, align 1, !tbaa !10
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 15
-  %i.aw = load i8, ptr %i.as, align 1, !tbaa !9
+  %i.aw = load i8, ptr %i.as, align 1, !tbaa !10
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 15
-  store i8 %i.aw, ptr %i.au, align 1, !tbaa !9
-  %i.ay = load i8, ptr %i.av, align 1, !tbaa !9
-  store i8 %i.ay, ptr %i.ax, align 1, !tbaa !9
+  store i8 %i.aw, ptr %i.au, align 1, !tbaa !10
+  %i.ay = load i8, ptr %i.av, align 1, !tbaa !10
+  store i8 %i.ay, ptr %i.ax, align 1, !tbaa !10
   br label %.rtcont
 
 .rtcont:                                          ; preds = %.rtscalar, %.rtvec
@@ -106,5 +106,6 @@ attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 !6 = !{!"int", !5, i64 0}
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
-!9 = !{!5, !5, i64 0}
+!9 = !{!"branch_weights", i32 1, i32 1048575}
+!10 = !{!5, !5, i64 0}
 end_hunk_0

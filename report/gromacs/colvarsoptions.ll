@@ -204,7 +204,7 @@ bb.a:
   %rt.bound1 = icmp ugt i64 %i.d, %i.a
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
   %rt.guard = freeze i1 %rt.conflict
-  br i1 %rt.guard, label %.rtscalar, label %.rtvec
+  br i1 %rt.guard, label %.rtscalar, label %.rtvec, !prof !565
 
 .rtvec:                                           ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -294,7 +294,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !112
   tail call void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE8_M_eraseEPSt13_Rb_tree_nodeIS8_E(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef %i.b)
   %i.c = getelementptr inbounds nuw i8, ptr %.07, i64 16
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !566  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !567  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.07, i64 32
   %i.f = getelementptr inbounds nuw i8, ptr %.07, i64 64
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !21   ; 2 uses
@@ -323,7 +323,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.
 _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS8_E.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.i
   tail call void @_ZdlPvm(ptr noundef nonnull %.07, i64 noundef 96) #29
   %.not = icmp eq ptr %i.d, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !565
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !566
 
 ._crit_edge:                                      ; preds = %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS8_E.exit, %bb.a
   ret void
@@ -726,6 +726,7 @@ begin_hunk_1_@llvm.umax.i64
 !562 = !{!559, !557}
 !563 = !{!"_ZTSSt22_Optional_payload_baseIfE", !12, i64 0, !43, i64 4}
 !564 = !{!563, !43, i64 4}
-!565 = distinct !{!565, !39}
-!566 = !{!62, !61, i64 16}
+!565 = !{!"branch_weights", i32 1, i32 1048575}
+!566 = distinct !{!566, !39}
+!567 = !{!62, !61, i64 16}
 end_hunk_1
