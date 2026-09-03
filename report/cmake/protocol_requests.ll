@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %._cri
   %rt.bound1 = icmp ult i64 %i.cv, %i.cu
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
   %rt.guard = freeze i1 %rt.conflict
-  br i1 %rt.guard, label %.rtscalar, label %.rtvec
+  br i1 %rt.guard, label %.rtscalar, label %.rtvec, !prof !56
 
 bb.p:                                             ; preds = %.noexc.i.i
   %i.cx = landingpad { ptr, i32 }
@@ -608,7 +608,7 @@ bb.a:
   %rt.bound0 = icmp ugt i64 %i.c, %i.a
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.rtscalar, label %.rtvec
+  br i1 %rt.conflict, label %.rtscalar, label %.rtvec, !prof !56
 
 .rtvec:                                           ; preds = %bb.a
   %i.e = load <16 x i8>, ptr %2, align 1, !tbaa !131
@@ -1011,7 +1011,7 @@ bb.a:
   %rt.bound0 = icmp ugt i64 %i.c, %i.a
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.rtscalar, label %.rtvec
+  br i1 %rt.conflict, label %.rtscalar, label %.rtvec, !prof !56
 
 .rtvec:                                           ; preds = %bb.a
   %i.e = load <16 x i8>, ptr %2, align 1, !tbaa !131
