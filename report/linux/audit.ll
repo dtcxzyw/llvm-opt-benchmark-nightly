@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %skb_tailroom.exit
   br label %bb.k
 
 bb.g:                                             ; preds = %skb_tailroom.exit
-  %i.n = trunc i65 %i.m to i64
+  %i.n = trunc nuw i65 %i.m to i64
   %i.o = icmp ult i64 %i.i, %i.n
   br i1 %i.o, label %bb.h, label %._crit_edge
 

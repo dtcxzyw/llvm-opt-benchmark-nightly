@@ -205,8 +205,8 @@ bb.z:                                             ; preds = %.thread1419
   br i1 %or.cond1476.not, label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit483.thread, label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit483.thread1566
 
 _ZN4llvmmlERKNS_15InstructionCostES2_.exit483:    ; preds = %.thread1419
-  %i.ct = extractvalue { i64, i1 } %i.cr, 0       ; 2 uses
-  %32 = sdiv i64 %i.ct, 4
+  %i.ct = extractvalue { i64, i1 } %i.cr, 0
+  %32 = lshr i64 %i.ct, 2                         ; 2 uses
   %i.cu = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %32, i64 %i.ck) ; 2 uses
   %i.cv = extractvalue { i64, i1 } %i.cu, 1
   br i1 %i.cv, label %bb.aa, label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit494
@@ -222,8 +222,8 @@ _ZN4llvmmlERKNS_15InstructionCostES2_.exit483.thread: ; preds = %bb.z
   br i1 %i.cz, label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit494.thread1572, label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit494
 
 bb.aa:                                            ; preds = %_ZN4llvmmlERKNS_15InstructionCostES2_.exit483
-  %33 = icmp sgt i64 %i.ct, 3
-  br i1 %33, label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit494.thread, label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit494.thread1572
+  %.not1535 = icmp eq i64 %32, 0
+  br i1 %.not1535, label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit494.thread1572, label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit494.thread
 
 _ZN4llvmmlERKNS_15InstructionCostES2_.exit494.thread: ; preds = %bb.aa, %_ZN4llvmmlERKNS_15InstructionCostES2_.exit483.thread1566
   %i.da = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %i.ca, i64 9223372036854775807) ; 2 uses

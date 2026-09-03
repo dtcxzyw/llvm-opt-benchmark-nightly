@@ -202,7 +202,7 @@ bb.q:                                             ; preds = %_RNvMs2_NtCs7BKkw3Q
   %i.dy = extractvalue { i32, i1 } %i.dw, 1, !dbg !6400
   %i.dz = add i32 %i.dx, -366
   %or.cond.i.i5 = icmp ult i32 %i.dz, -365
-  %or.cond.not = or i1 %or.cond.i.i5, %i.dy, !dbg !6401
+  %or.cond.not = or i1 %i.dy, %or.cond.i.i5, !dbg !6401
   br i1 %or.cond.not, label %bb.s, label %bb.r, !dbg !6401, !prof !554
 
 bb.r:                                             ; preds = %bb.q
