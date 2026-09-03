@@ -202,13 +202,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.o, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = icmp sgt i32 %i.h, 0
-  br i1 %3, label %bb.d, label %bb.e
+  %.not = icmp eq i32 %i.h, 0
+  br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.q = udiv i32 1048576, %i.h
-  %4 = icmp sgt i32 %i.p, %i.q
-  br i1 %4, label %.loopexit, label %bb.e
+  %3 = icmp samesign ugt i32 %i.p, %i.q
+  br i1 %3, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.r = tail call i32 @X509_NAME_entry_count(ptr noundef %i.a) #9

@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.a
   %i.e = extractvalue { i64, i1 } %i.b, 0
   %i.f = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.e, i64 8) ; 2 uses
   %i.g = extractvalue { i64, i1 } %i.f, 1
-  %i.h = extractvalue { i64, i1 } %i.f, 0         ; 5 uses
-  br i1 %i.g, label %bb.e, label %3
+  %i.h = extractvalue { i64, i1 } %i.f, 0         ; 4 uses
+  br i1 %i.g, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #32
@@ -224,11 +224,7 @@ bb.g:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #32
   br label %bb.k
 
-3:                                                ; preds = %bb.d
-  %4 = icmp eq i64 %i.h, 0
-  br i1 %4, label %_ZN5folly14goodMallocSizeEm.exit, label %bb.h
-
-bb.h:                                             ; preds = %3
+bb.h:                                             ; preds = %bb.d
   %i.j = load atomic i8, ptr @_ZN5folly6detail14FastStaticBoolIZNS0_23usingJEMallocOrTCMallocEvE11InitializerE5flag_E monotonic, align 1 ; 2 uses
   %.not.i.i.i.i = icmp eq i8 %i.j, 0
   br i1 %.not.i.i.i.i, label %_ZN5folly10canNallocxEv.exit.i, label %.split.i, !prof !14070
@@ -247,8 +243,8 @@ bb.i:                                             ; preds = %_ZN5folly10canNallo
   %i.n = select i1 %.not.i, i64 %i.h, i64 %i.m
   br label %_ZN5folly14goodMallocSizeEm.exit
 
-_ZN5folly14goodMallocSizeEm.exit:                 ; preds = %3, %.split.i, %_ZN5folly10canNallocxEv.exit.i, %bb.i
-  %.0.i10 = phi i64 [ 0, %3 ], [ %i.n, %bb.i ], [ %i.h, %_ZN5folly10canNallocxEv.exit.i ], [ %i.h, %.split.i ] ; 2 uses
+_ZN5folly14goodMallocSizeEm.exit:                 ; preds = %.split.i, %_ZN5folly10canNallocxEv.exit.i, %bb.i
+  %.0.i10 = phi i64 [ %i.h, %.split.i ], [ %i.n, %bb.i ], [ %i.h, %_ZN5folly10canNallocxEv.exit.i ] ; 2 uses
   %i.o = tail call noalias ptr @malloc(i64 noundef %.0.i10) #65 ; 3 uses
   %.not.i11 = icmp eq ptr %i.o, null
   br i1 %.not.i11, label %bb.j, label %_ZN5folly13checkedMallocEm.exit
@@ -583,8 +579,8 @@ bb.d:                                             ; preds = %bb.a
   %i.e = extractvalue { i64, i1 } %i.b, 0
   %i.f = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.e, i64 8) ; 2 uses
   %i.g = extractvalue { i64, i1 } %i.f, 1
-  %i.h = extractvalue { i64, i1 } %i.f, 0         ; 5 uses
-  br i1 %i.g, label %bb.e, label %6
+  %i.h = extractvalue { i64, i1 } %i.f, 0         ; 4 uses
+  br i1 %i.g, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #32
@@ -602,11 +598,7 @@ bb.g:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #32
   br label %bb.j
 
-6:                                                ; preds = %bb.d
-  %7 = icmp eq i64 %i.h, 0
-  br i1 %7, label %_ZN5folly14goodMallocSizeEm.exit, label %bb.h
-
-bb.h:                                             ; preds = %6
+bb.h:                                             ; preds = %bb.d
   %i.j = load atomic i8, ptr @_ZN5folly6detail14FastStaticBoolIZNS0_23usingJEMallocOrTCMallocEvE11InitializerE5flag_E monotonic, align 1 ; 2 uses
   %.not.i.i.i.i = icmp eq i8 %i.j, 0
   br i1 %.not.i.i.i.i, label %_ZN5folly10canNallocxEv.exit.i, label %.split.i, !prof !14070
@@ -625,8 +617,8 @@ bb.i:                                             ; preds = %_ZN5folly10canNallo
   %i.n = select i1 %.not.i, i64 %i.h, i64 %i.m
   br label %_ZN5folly14goodMallocSizeEm.exit
 
-_ZN5folly14goodMallocSizeEm.exit:                 ; preds = %6, %.split.i, %_ZN5folly10canNallocxEv.exit.i, %bb.i
-  %.0.i13 = phi i64 [ 0, %6 ], [ %i.n, %bb.i ], [ %i.h, %_ZN5folly10canNallocxEv.exit.i ], [ %i.h, %.split.i ] ; 2 uses
+_ZN5folly14goodMallocSizeEm.exit:                 ; preds = %.split.i, %_ZN5folly10canNallocxEv.exit.i, %bb.i
+  %.0.i13 = phi i64 [ %i.h, %.split.i ], [ %i.n, %bb.i ], [ %i.h, %_ZN5folly10canNallocxEv.exit.i ] ; 2 uses
   %i.o = getelementptr inbounds i8, ptr %0, i64 -8
   %i.p = add i64 %1, 9
   %i.q = add i64 %2, 9

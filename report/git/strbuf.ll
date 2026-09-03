@@ -205,22 +205,18 @@ bb.a:
   br i1 %.not, label %strbuf_grow.exit, label %st_add.exit.i
 
 st_add.exit.i:                                    ; preds = %bb.a
-  %i.a = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %1, i64 1) ; 3 uses
+  %i.a = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %1, i64 1) ; 2 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
-  br i1 %i.b, label %bb.b, label %2
+  br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %st_add.exit.i
   tail call void (ptr, ...) @die(ptr noundef nonnull @.str.46, i64 noundef %1, i64 noundef 1) #26
   unreachable
 
-2:                                                ; preds = %st_add.exit.i
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr null, ptr %3, align 8, !tbaa !21
-  %.not4 = extractvalue { i64, i1 } %i.a, 1
-  br i1 %.not4, label %strbuf_grow.exit, label %bb.c
-
-bb.c:                                             ; preds = %2
+bb.c:                                             ; preds = %st_add.exit.i
   %i.c = extractvalue { i64, i1 } %i.a, 0
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store ptr null, ptr %2, align 8, !tbaa !21
   %..i = tail call i64 @llvm.umax.i64(i64 %i.c, i64 24) ; 2 uses
   store i64 %..i, ptr %0, align 8, !tbaa !22
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -229,7 +225,7 @@ bb.c:                                             ; preds = %2
   store i8 0, ptr %i.e, align 1, !tbaa !14
   br label %strbuf_grow.exit
 
-strbuf_grow.exit:                                 ; preds = %bb.c, %2, %bb.a
+strbuf_grow.exit:                                 ; preds = %bb.c, %bb.a
   ret void
 }
 
@@ -632,9 +628,9 @@ bb.e:                                             ; preds = %st_add.exit.i.i
   unreachable
 
 bb.f:                                             ; preds = %st_add.exit.i.i
+  %4 = extractvalue { i64, i1 } %i.k, 0
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
   store ptr null, ptr %i.m, align 8, !tbaa !21
-  %4 = extractvalue { i64, i1 } %i.k, 0
   %..i.i = tail call i64 @llvm.umax.i64(i64 %4, i64 24) ; 2 uses
   store i64 %..i.i, ptr %i.i, align 8, !tbaa !22
   %i.n = tail call ptr @xrealloc(ptr noundef null, i64 noundef %..i.i) #27 ; 2 uses
