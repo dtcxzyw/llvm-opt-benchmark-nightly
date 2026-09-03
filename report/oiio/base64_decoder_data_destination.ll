@@ -46,7 +46,7 @@ bb.a:
   %5 = alloca %"class.std::allocator.19", align 1 ; 4 uses
   %6 = alloca %"class.photos_editing_formats::image_io::DataRange", align 8 ; 7 uses
   %7 = alloca %"class.std::shared_ptr.22", align 8 ; 7 uses
-  %i.a = load i64, ptr %1, align 8, !tbaa !42     ; 5 uses
+  %i.a = load i64, ptr %1, align 8, !tbaa !42     ; 6 uses
   %i.b = load i64, ptr %2, align 8, !tbaa !42     ; 2 uses
   %.not.i.i.i = icmp ult i64 %i.a, %i.b
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -63,7 +63,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !43   ; 2 uses
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !43   ; 3 uses
   %i.l = icmp ult i64 %i.a, %i.k
   br i1 %i.l, label %bb.c, label %_ZNSt6vectorIhSaIhEED2Ev.exit
 
@@ -79,16 +79,20 @@ bb.d:                                             ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !46   ; 2 uses
   %i.t = icmp eq ptr %i.q, %i.s
-  %.pre172 = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.k, i64 %i.a) ; 2 uses
-  br i1 %i.t, label %._crit_edge171.a, label %bb.e
+  br i1 %i.t, label %._crit_edge171, label %bb.e
+
+._crit_edge171:                                   ; preds = %bb.d
+  %.pre172 = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.k, i64 %i.a)
+  br label %._crit_edge171.a
 
 bb.e:                                             ; preds = %bb.d
+  %spec.select.i = sub nuw i64 %i.k, %i.a
   %i.u = ptrtoint ptr %i.s to i64
   %i.v = ptrtoint ptr %i.q to i64
   %i.w = sub i64 %i.u, %i.v                       ; 2 uses
   %i.x = and i64 %i.w, 3
   %i.y = sub nuw nsw i64 4, %i.x
-  %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.y, i64 %.pre172) ; 3 uses
+  %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.y, i64 %spec.select.i) ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.i, i64 %.sroa.speculated
   %i.aa = getelementptr inbounds i8, ptr %i.q, i64 %i.w
   tail call void @_ZNSt6vectorIhSaIhEE15_M_range_insertIPKhEEvN9__gnu_cxx17__normal_iteratorIPhS1_EET_S9_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.p, ptr nonnull %i.aa, ptr noundef nonnull %i.i, ptr noundef nonnull %i.z)
@@ -115,12 +119,12 @@ bb.f:                                             ; preds = %bb.e
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.p, i8 0, i64 24, i1 false)
   br label %._crit_edge171.a
 
-._crit_edge171.a:                                 ; preds = %bb.d, %._crit_edge
-  %spec.select.i88.pre-phi = phi i64 [ %spec.select.i87, %._crit_edge ], [ %.pre172, %bb.d ]
-  %.sroa.15.0 = phi i64 [ %i.al, %._crit_edge ], [ 0, %bb.d ] ; 2 uses
-  %.sroa.11.0 = phi i64 [ %i.af, %._crit_edge ], [ 0, %bb.d ]
-  %.sroa.0133.0 = phi ptr [ %i.ab, %._crit_edge ], [ null, %bb.d ] ; 8 uses
-  %.062 = phi i64 [ %.sroa.speculated, %._crit_edge ], [ 0, %bb.d ] ; 3 uses
+._crit_edge171.a:                                 ; preds = %._crit_edge171, %._crit_edge
+  %spec.select.i88.pre-phi = phi i64 [ %.pre172, %._crit_edge171 ], [ %spec.select.i87, %._crit_edge ]
+  %.sroa.15.0 = phi i64 [ 0, %._crit_edge171 ], [ %i.al, %._crit_edge ] ; 2 uses
+  %.sroa.11.0 = phi i64 [ 0, %._crit_edge171 ], [ %i.af, %._crit_edge ]
+  %.sroa.0133.0 = phi ptr [ null, %._crit_edge171 ], [ %i.ab, %._crit_edge ] ; 8 uses
+  %.062 = phi i64 [ 0, %._crit_edge171 ], [ %.sroa.speculated, %._crit_edge ] ; 3 uses
   %i.am = sub i64 %spec.select.i88.pre-phi, %.062 ; 2 uses
   %i.an = ptrtoint ptr %.sroa.0133.0 to i64       ; 3 uses
   %i.ao = sub i64 %.sroa.11.0, %i.an              ; 5 uses

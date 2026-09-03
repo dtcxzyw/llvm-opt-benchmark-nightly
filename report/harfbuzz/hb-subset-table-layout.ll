@@ -205,8 +205,9 @@ _ZN22hb_serialize_context_t8add_linkIN2OT8OffsetToINS1_6Layout6Common8CoverageEN
   %i.tk = zext i16 %i.tj to i64
   %i.tl = getelementptr inbounds nuw i8, ptr %0, i64 %i.tk
   %.0.i.i55 = select i1 %i.ti, ptr @_hb_NullPool, ptr %i.tl, !prof !112 ; 6 uses
-  %i.tm = load i16, ptr %.0.i.i55, align 1, !tbaa !211, !noalias !3629 ; 2 uses
-  %i.tn = call noundef i16 @llvm.bswap.i16(i16 %i.tm) ; 4 uses
+  %i.tm = load i16, ptr %.0.i.i55, align 1, !tbaa !211, !noalias !3629
+  %.fr385 = freeze i16 %i.tm                      ; 2 uses
+  %i.tn = call noundef i16 @llvm.bswap.i16(i16 %.fr385) ; 4 uses
   switch i16 %i.tn, label %"_ZNK4$_16clIRKN2OT6Layout6Common8CoverageERKNS1_7ArrayOfINS1_8OffsetToINS2_9GSUB_impl11LigatureSetINS2_10SmallTypesEEENS1_7NumTypeILb1EtLj2EEEvLb1EEESE_EETnPN12hb_enable_ifIXaasr14hb_is_iterableIT_EE5valuesr14hb_is_iterableIT0_EE5valueEvE4typeELPv0EEE13hb_zip_iter_tIDTcldtclL_ZL8hb_derefEcl10hb_declvalISK_EEE4iterEEDTcldtclL_ZL8hb_derefEcl10hb_declvalISL_EEE4iterEEEOSK_OSL_.exit" [
     i16 1, label %bb.co
     i16 2, label %bb.cp
@@ -275,7 +276,7 @@ bb.cs:                                            ; preds = %_ZNK2OT7ArrayOfINS_
   %i.uj = call noundef i16 @llvm.bswap.i16(i16 %i.ui)
   %.sroa.37.sroa.0.0.extract.trunc = zext i16 %i.uj to i32
   %i.uk = getelementptr inbounds nuw i8, ptr %.sroa.52.0.i, i64 2 ; 11 uses
-  %i.ul = icmp eq i16 %i.tm, 256                  ; 4 uses
+  %i.ul = icmp eq i16 %.fr385, 256                ; 4 uses
   %i.um = getelementptr inbounds nuw i8, ptr %.sroa.52.0.i, i64 4 ; 6 uses
   %i.un = getelementptr inbounds nuw i8, ptr %3, i64 36 ; 2 uses
   %i.uo = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 2 uses
