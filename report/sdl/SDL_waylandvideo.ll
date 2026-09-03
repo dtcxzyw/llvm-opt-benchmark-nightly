@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not95, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.ag = load i32, ptr %i.af, align 8
   %.not96 = icmp eq i32 %i.s, %i.ag
   br i1 %.not96, label %bb.j, label %bb.g
@@ -240,28 +240,33 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %bb.f
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ax = load double, ptr %i.aw, align 8         ; 2 uses
-  %i.ay = fptosi double %i.ax to i32              ; 2 uses
-  %5 = sdiv i32 %i.t, %i.ay                       ; 2 uses
-  store i32 %5, ptr %i.ad, align 4
-  %6 = sdiv i32 %i.s, %i.ay
-  store i32 %6, ptr %i.af, align 8
+  %i.ay = fptosi double %i.ax to i32
+  %5 = insertelement <2 x i32> poison, i32 %i.t, i64 0
+  %6 = insertelement <2 x i32> %5, i32 %i.s, i64 1
+  %7 = insertelement <2 x i32> poison, i32 %i.ay, i64 0
+  %8 = shufflevector <2 x i32> %7, <2 x i32> poison, <2 x i32> zeroinitializer
+  %9 = sdiv <2 x i32> %6, %8                      ; 2 uses
+  store <2 x i32> %9, ptr %i.ad, align 4
+  %10 = extractelement <2 x i32> %9, i64 0
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.d
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ba = load double, ptr %i.az, align 8         ; 2 uses
-  %i.bb = fptosi double %i.ba to i32              ; 2 uses
-  %7 = sdiv i32 %i.t, %i.bb                       ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 52
-  store i32 %7, ptr %8, align 4
-  %9 = sdiv i32 %i.s, %i.bb
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i32 %9, ptr %10, align 8
+  %i.bb = fptosi double %i.ba to i32
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 52
+  %12 = insertelement <2 x i32> poison, i32 %i.t, i64 0
+  %13 = insertelement <2 x i32> %12, i32 %i.s, i64 1
+  %14 = insertelement <2 x i32> poison, i32 %i.bb, i64 0
+  %15 = shufflevector <2 x i32> %14, <2 x i32> poison, <2 x i32> zeroinitializer
+  %16 = sdiv <2 x i32> %13, %15                   ; 2 uses
+  store <2 x i32> %16, ptr %11, align 4
+  %17 = extractelement <2 x i32> %16, i64 0
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.k
   %i.bc = phi double [ %i.ax, %bb.j ], [ %i.ao, %bb.i ], [ %i.al, %bb.h ], [ %i.ba, %bb.k ]
-  %i.bd = phi i32 [ %5, %bb.j ], [ %i.ae, %bb.i ], [ %i.ae, %bb.h ], [ %7, %bb.k ]
+  %i.bd = phi i32 [ %10, %bb.j ], [ %i.ae, %bb.i ], [ %i.ae, %bb.h ], [ %17, %bb.k ]
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %4, i8 0, i64 40, i1 false)
   %i.be = getelementptr inbounds nuw i8, ptr %4, i64 4
   store i32 370546692, ptr %i.be, align 4

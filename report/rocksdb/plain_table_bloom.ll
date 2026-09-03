@@ -94,9 +94,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define void @_ZN7rocksdb17BloomBlockBuilder13AddKeysHashesERKSt6vectorIjSaIjEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #3 align 2 {
 bb.a:
-  %i.a = load ptr, ptr %1, align 8, !tbaa !22     ; 2 uses
+  %i.a = load ptr, ptr %1, align 8, !tbaa !23     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !22   ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !23   ; 2 uses
   %i.d = icmp eq ptr %i.a, %i.c
   br i1 %i.d, label %._crit_edge, label %.lr.ph
 
@@ -111,7 +111,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit
   %.sroa.04.08 = phi ptr [ %i.a, %.lr.ph ], [ %i.de, %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit ] ; 2 uses
-  %i.h = load i32, ptr %.sroa.04.08, align 4, !tbaa !23 ; 10 uses
+  %i.h = load i32, ptr %.sroa.04.08, align 4, !tbaa !24 ; 10 uses
   %i.i = load i32, ptr %i.e, align 4, !tbaa !13   ; 2 uses
   %.not.i = icmp eq i32 %i.i, 0
   br i1 %.not.i, label %bb.d, label %bb.c
@@ -146,10 +146,10 @@ bb.c:                                             ; preds = %bb.b
   %i.w = and i32 %i.v, 63
   %i.x = zext nneg i32 %i.w to i64
   %i.y = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.x ; 2 uses
-  %i.z = load i8, ptr %i.y, align 1, !tbaa !24
+  %i.z = load i8, ptr %i.y, align 1, !tbaa !25
   %i.aa = trunc nuw i32 %i.u to i8
   %i.ab = or i8 %i.z, %i.aa
-  store i8 %i.ab, ptr %i.y, align 1, !tbaa !24
+  store i8 %i.ab, ptr %i.y, align 1, !tbaa !25
   %i.ac = tail call i32 @llvm.fshl.i32(i32 %.022.i.i, i32 %.022.i.i, i32 23)
   %i.ad = add i32 %i.ac, %i.q                     ; 4 uses
   %i.ae = and i32 %i.ad, 7
@@ -158,10 +158,10 @@ bb.c:                                             ; preds = %bb.b
   %i.ah = and i32 %i.ag, 63
   %i.ai = zext nneg i32 %i.ah to i64
   %i.aj = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.ai ; 2 uses
-  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !24
+  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !25
   %i.al = trunc nuw i32 %i.af to i8
   %i.am = or i8 %i.ak, %i.al
-  store i8 %i.am, ptr %i.aj, align 1, !tbaa !24
+  store i8 %i.am, ptr %i.aj, align 1, !tbaa !25
   %i.an = tail call i32 @llvm.fshl.i32(i32 %i.ad, i32 %i.ad, i32 23)
   %i.ao = add i32 %i.an, %i.q                     ; 4 uses
   %i.ap = and i32 %i.ao, 7
@@ -170,10 +170,10 @@ bb.c:                                             ; preds = %bb.b
   %i.as = and i32 %i.ar, 63
   %i.at = zext nneg i32 %i.as to i64
   %i.au = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.at ; 2 uses
-  %i.av = load i8, ptr %i.au, align 1, !tbaa !24
+  %i.av = load i8, ptr %i.au, align 1, !tbaa !25
   %i.aw = trunc nuw i32 %i.aq to i8
   %i.ax = or i8 %i.av, %i.aw
-  store i8 %i.ax, ptr %i.au, align 1, !tbaa !24
+  store i8 %i.ax, ptr %i.au, align 1, !tbaa !25
   %i.ay = tail call i32 @llvm.fshl.i32(i32 %i.ao, i32 %i.ao, i32 23)
   %i.az = add i32 %i.ay, %i.q                     ; 4 uses
   %i.ba = and i32 %i.az, 7
@@ -182,10 +182,10 @@ bb.c:                                             ; preds = %bb.b
   %i.bd = and i32 %i.bc, 63
   %i.be = zext nneg i32 %i.bd to i64
   %i.bf = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.be ; 2 uses
-  %i.bg = load i8, ptr %i.bf, align 1, !tbaa !24
+  %i.bg = load i8, ptr %i.bf, align 1, !tbaa !25
   %i.bh = trunc nuw i32 %i.bb to i8
   %i.bi = or i8 %i.bg, %i.bh
-  store i8 %i.bi, ptr %i.bf, align 1, !tbaa !24
+  store i8 %i.bi, ptr %i.bf, align 1, !tbaa !25
   %i.bj = tail call i32 @llvm.fshl.i32(i32 %i.az, i32 %i.az, i32 23)
   %i.bk = add i32 %i.bj, %i.q                     ; 2 uses
   %niter.next.3 = add nuw nsw i32 %niter, 4       ; 2 uses
@@ -193,70 +193,100 @@ bb.c:                                             ; preds = %bb.b
   br i1 %niter.ncmp.3, label %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit.loopexit17.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !18
 
 bb.d:                                             ; preds = %bb.b
-  %i.bl = load i32, ptr %0, align 8, !tbaa !12    ; 3 uses
-  %i.bm = load i32, ptr %i.f, align 8, !tbaa !14  ; 5 uses
-  %i.bn = load ptr, ptr %i.g, align 8, !tbaa !15  ; 3 uses
-  %i.bo = tail call i32 @llvm.fshl.i32(i32 %i.h, i32 %i.h, i32 15) ; 2 uses
+  %i.bl = load i32, ptr %0, align 8, !tbaa !12    ; 5 uses
+  %i.bm = load i32, ptr %i.f, align 8, !tbaa !14  ; 4 uses
+  %i.bn = load ptr, ptr %i.g, align 8, !tbaa !15  ; 5 uses
+  %i.bo = tail call i32 @llvm.fshl.i32(i32 %i.h, i32 %i.h, i32 15) ; 5 uses
   %i.bp = icmp sgt i32 %i.bm, 0
   br i1 %i.bp, label %.lr.ph.i2.i.preheader, label %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit
 
 .lr.ph.i2.i.preheader:                            ; preds = %bb.d
-  %xtraiter19 = and i32 %i.bm, 1
-  %2 = icmp eq i32 %i.bm, 1
-  br i1 %2, label %.lr.ph.i2.i.epil.preheader.a, label %.lr.ph.i2.i.preheader.new
+  %xtraiter19 = and i32 %i.bm, 3                  ; 3 uses
+  %2 = icmp ult i32 %i.bm, 4
+  br i1 %2, label %.lr.ph.i2.i.epil.preheader, label %.lr.ph.i2.i.preheader.new
 
 .lr.ph.i2.i.preheader.new:                        ; preds = %.lr.ph.i2.i.preheader
-  %unroll_iter23 = and i32 %i.bm, 2147483646
+  %unroll_iter23 = and i32 %i.bm, 2147483644
   br label %.lr.ph.i2.i
 
 .lr.ph.i2.i:                                      ; preds = %.lr.ph.i2.i, %.lr.ph.i2.i.preheader.new
   %.013.i.i = phi i32 [ %i.h, %.lr.ph.i2.i.preheader.new ], [ %i.cj, %.lr.ph.i2.i ] ; 2 uses
   %niter24 = phi i32 [ 0, %.lr.ph.i2.i.preheader.new ], [ %niter24.next.1, %.lr.ph.i2.i ]
-  %i.bq = urem i32 %.013.i.i, %i.bl               ; 2 uses
+  %3 = urem i32 %.013.i.i, %i.bl                  ; 2 uses
+  %4 = and i32 %3, 7
+  %5 = shl nuw nsw i32 1, %4
+  %6 = lshr i32 %3, 3
+  %7 = zext nneg i32 %6 to i64
+  %8 = getelementptr inbounds nuw i8, ptr %i.bn, i64 %7 ; 2 uses
+  %9 = load i8, ptr %8, align 1, !tbaa !25
+  %10 = trunc nuw i32 %5 to i8
+  %11 = or i8 %9, %10
+  store i8 %11, ptr %8, align 1, !tbaa !25
+  %12 = add i32 %.013.i.i, %i.bo                  ; 2 uses
+  %13 = urem i32 %12, %i.bl                       ; 2 uses
+  %14 = and i32 %13, 7
+  %15 = shl nuw nsw i32 1, %14
+  %16 = lshr i32 %13, 3
+  %17 = zext nneg i32 %16 to i64
+  %18 = getelementptr inbounds nuw i8, ptr %i.bn, i64 %17 ; 2 uses
+  %19 = load i8, ptr %18, align 1, !tbaa !25
+  %20 = trunc nuw i32 %15 to i8
+  %21 = or i8 %19, %20
+  store i8 %21, ptr %18, align 1, !tbaa !25
+  %22 = add i32 %12, %i.bo                        ; 2 uses
+  %i.bq = urem i32 %22, %i.bl                     ; 2 uses
   %i.br = and i32 %i.bq, 7
   %i.bs = shl nuw nsw i32 1, %i.br
   %i.bt = lshr i32 %i.bq, 3
   %i.bu = zext nneg i32 %i.bt to i64
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.bu ; 2 uses
-  %i.bw = load i8, ptr %i.bv, align 1, !tbaa !24
+  %i.bw = load i8, ptr %i.bv, align 1, !tbaa !25
   %i.bx = trunc nuw i32 %i.bs to i8
   %i.by = or i8 %i.bw, %i.bx
-  store i8 %i.by, ptr %i.bv, align 1, !tbaa !24
-  %i.bz = add i32 %.013.i.i, %i.bo                ; 2 uses
+  store i8 %i.by, ptr %i.bv, align 1, !tbaa !25
+  %i.bz = add i32 %22, %i.bo                      ; 2 uses
   %i.ca = urem i32 %i.bz, %i.bl                   ; 2 uses
   %i.cb = and i32 %i.ca, 7
   %i.cc = shl nuw nsw i32 1, %i.cb
   %i.cd = lshr i32 %i.ca, 3
   %i.ce = zext nneg i32 %i.cd to i64
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.ce ; 2 uses
-  %i.cg = load i8, ptr %i.cf, align 1, !tbaa !24
+  %i.cg = load i8, ptr %i.cf, align 1, !tbaa !25
   %i.ch = trunc nuw i32 %i.cc to i8
   %i.ci = or i8 %i.cg, %i.ch
-  store i8 %i.ci, ptr %i.cf, align 1, !tbaa !24
+  store i8 %i.ci, ptr %i.cf, align 1, !tbaa !25
   %i.cj = add i32 %i.bz, %i.bo                    ; 2 uses
-  %niter24.next.1 = add nuw nsw i32 %niter24, 2   ; 2 uses
+  %niter24.next.1 = add nuw nsw i32 %niter24, 4   ; 2 uses
   %niter24.ncmp.1 = icmp eq i32 %niter24.next.1, %unroll_iter23
   br i1 %niter24.ncmp.1, label %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit.loopexit.unr-lcssa, label %.lr.ph.i2.i, !llvm.loop !19
 
 _ZN7rocksdb17PlainTableBloomV17AddHashEj.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i2.i
   %lcmp.mod21.not = icmp eq i32 %xtraiter19, 0
-  br i1 %lcmp.mod21.not, label %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit, label %.lr.ph.i2.i.epil.preheader.a
+  br i1 %lcmp.mod21.not, label %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit, label %.lr.ph.i2.i.epil.preheader
 
-.lr.ph.i2.i.epil.preheader.a:                     ; preds = %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit.loopexit.unr-lcssa, %.lr.ph.i2.i.preheader
-  %.013.i.i.epil.init.a = phi i32 [ %i.h, %.lr.ph.i2.i.preheader ], [ %i.cj, %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit.loopexit.unr-lcssa ]
-  %lcmp.mod22 = trunc i32 %i.bm to i1
+.lr.ph.i2.i.epil.preheader:                       ; preds = %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit.loopexit.unr-lcssa, %.lr.ph.i2.i.preheader
+  %.013.i.i.epil.init = phi i32 [ %i.h, %.lr.ph.i2.i.preheader ], [ %i.cj, %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit.loopexit.unr-lcssa ]
+  %lcmp.mod22 = icmp ne i32 %xtraiter19, 0
   tail call void @llvm.assume(i1 %lcmp.mod22)
+  br label %.lr.ph.i2.i.epil.preheader.a
+
+.lr.ph.i2.i.epil.preheader.a:                     ; preds = %.lr.ph.i2.i.epil.preheader.a, %.lr.ph.i2.i.epil.preheader
+  %.013.i.i.epil.init.a = phi i32 [ %23, %.lr.ph.i2.i.epil.preheader.a ], [ %.013.i.i.epil.init, %.lr.ph.i2.i.epil.preheader ] ; 2 uses
+  %epil.iter20 = phi i32 [ %epil.iter20.next, %.lr.ph.i2.i.epil.preheader.a ], [ 0, %.lr.ph.i2.i.epil.preheader ]
   %i.ck = urem i32 %.013.i.i.epil.init.a, %i.bl   ; 2 uses
   %i.cl = and i32 %i.ck, 7
   %i.cm = shl nuw nsw i32 1, %i.cl
   %i.cn = lshr i32 %i.ck, 3
   %i.co = zext nneg i32 %i.cn to i64
   %i.cp = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.co ; 2 uses
-  %i.cq = load i8, ptr %i.cp, align 1, !tbaa !24
+  %i.cq = load i8, ptr %i.cp, align 1, !tbaa !25
   %i.cr = trunc nuw i32 %i.cm to i8
   %i.cs = or i8 %i.cq, %i.cr
-  store i8 %i.cs, ptr %i.cp, align 1, !tbaa !24
-  br label %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit
+  store i8 %i.cs, ptr %i.cp, align 1, !tbaa !25
+  %23 = add i32 %.013.i.i.epil.init.a, %i.bo
+  %epil.iter20.next = add i32 %epil.iter20, 1     ; 2 uses
+  %epil.iter20.cmp.not = icmp eq i32 %epil.iter20.next, %xtraiter19
+  br i1 %epil.iter20.cmp.not, label %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit, label %.lr.ph.i2.i.epil.preheader.a, !llvm.loop !20
 
 _ZN7rocksdb17PlainTableBloomV17AddHashEj.exit.loopexit17.unr-lcssa: ; preds = %.lr.ph.i.i
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -277,17 +307,17 @@ _ZN7rocksdb17PlainTableBloomV17AddHashEj.exit.loopexit17.unr-lcssa: ; preds = %.
   %i.cw = and i32 %i.cv, 63
   %i.cx = zext nneg i32 %i.cw to i64
   %i.cy = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.cx ; 2 uses
-  %i.cz = load i8, ptr %i.cy, align 1, !tbaa !24
+  %i.cz = load i8, ptr %i.cy, align 1, !tbaa !25
   %i.da = trunc nuw i32 %i.cu to i8
   %i.db = or i8 %i.cz, %i.da
-  store i8 %i.db, ptr %i.cy, align 1, !tbaa !24
+  store i8 %i.db, ptr %i.cy, align 1, !tbaa !25
   %i.dc = tail call i32 @llvm.fshl.i32(i32 %.022.i.i.epil, i32 %.022.i.i.epil, i32 23)
   %i.dd = add i32 %i.dc, %i.q
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit, label %.lr.ph.i.i.epil, !llvm.loop !20
+  br i1 %epil.iter.cmp.not, label %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit, label %.lr.ph.i.i.epil, !llvm.loop !21
 
-_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit:    ; preds = %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit.loopexit17.unr-lcssa, %.lr.ph.i.i.epil, %.lr.ph.i2.i.epil.preheader.a, %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit.loopexit.unr-lcssa, %bb.c, %bb.d
+_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit:    ; preds = %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit.loopexit17.unr-lcssa, %.lr.ph.i.i.epil, %_ZN7rocksdb17PlainTableBloomV17AddHashEj.exit.loopexit.unr-lcssa, %.lr.ph.i2.i.epil.preheader.a, %bb.c, %bb.d
   %i.de = getelementptr inbounds nuw i8, ptr %.sroa.04.08, i64 4 ; 2 uses
   %i.df = icmp eq ptr %i.de, %i.c
   br i1 %i.df, label %._crit_edge, label %bb.b
@@ -342,13 +372,14 @@ attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessib
 !15 = !{!11, !10, i64 16}
 !16 = !{!"vtable pointer", !4, i64 0}
 !17 = !{!16, !16, i64 0}
-!18 = distinct !{!18, !25}
-!19 = distinct !{!19, !25}
-!20 = distinct !{!20, !26}
-!21 = !{!"p1 int", !9, i64 0}
-!22 = !{!21, !21, i64 0}
-!23 = !{!6, !6, i64 0}
-!24 = !{!5, !5, i64 0}
-!25 = !{!"llvm.loop.mustprogress"}
-!26 = !{!"llvm.loop.unroll.disable"}
+!18 = distinct !{!18, !26}
+!19 = distinct !{!19, !26}
+!20 = distinct !{!20, !27}
+!21 = distinct !{!21, !27}
+!22 = !{!"p1 int", !9, i64 0}
+!23 = !{!22, !22, i64 0}
+!24 = !{!6, !6, i64 0}
+!25 = !{!5, !5, i64 0}
+!26 = !{!"llvm.loop.mustprogress"}
+!27 = !{!"llvm.loop.unroll.disable"}
 end_hunk_0

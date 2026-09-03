@@ -204,7 +204,7 @@ bb.a:
 define linkonce_odr hidden void @_ZZN6embree13TaskScheduler5spawnIiZNS_12parallel_forIiZNS_24parallel_reduce_internalIiNS_14BVHNStatisticsILi4EE10StatisticsEZNS_15parallel_reduceIiS6_ZNS5_10statisticsENS_10NodeRefPtrILi4EEEdNS_4BBoxIfEEEUliE_FS6_RKS6_SE_EEET0_T_SH_RKSG_RKT1_RKT2_EUlNS_5rangeIiEEE_SF_EESG_SH_SH_SH_SH_SJ_SM_SP_EUliE_EEvSH_SJ_EUlRKSR_E_EEvSH_SH_SH_SJ_PNS0_16TaskGroupContextEENKUlvE_clEv(ptr noundef nonnull align 8 dereferenceable(32) %0) local_unnamed_addr #15 comdat align 2 {
 bb.a:
   %1 = alloca %"struct.embree::BVHNStatistics<4>::Statistics", align 8 ; 4 uses
-  %2 = alloca %"struct.embree::range", align 4    ; 5 uses
+  %2 = alloca %"struct.embree::range", align 8    ; 4 uses
   %i.a = load i32, ptr %0, align 8                ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.c = load i32, ptr %i.b, align 4              ; 6 uses
@@ -219,28 +219,30 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !6, !align !7 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.i = load ptr, ptr %i.h, align 8, !nonnull !6, !align !8
-  %i.j = load i32, ptr %i.i, align 4              ; 3 uses
+  %i.j = load i32, ptr %i.i, align 4              ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !nonnull !6, !align !8
   %i.m = load i32, ptr %i.l, align 4
   %i.n = sub nsw i32 %i.m, %i.j                   ; 2 uses
-  %3 = mul nsw i32 %i.n, %i.c
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.p = load ptr, ptr %i.o, align 8, !nonnull !6, !align !8
-  %i.q = load i32, ptr %i.p, align 4              ; 2 uses
-  %4 = sdiv i32 %3, %i.q
-  %5 = add nsw i32 %4, %i.j
-  %i.r = add nsw i32 %i.c, 1
-  %i.s = mul nsw i32 %i.n, %i.r
-  %6 = sdiv i32 %i.s, %i.q
-  %7 = add nsw i32 %6, %i.j
+  %i.q = load i32, ptr %i.p, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #19
-  %8 = getelementptr inbounds nuw i8, ptr %i.h, i64 32
-  %9 = load ptr, ptr %8, align 8, !nonnull !6, !align !7
-  store i32 %5, ptr %2, align 4
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  store i32 %7, ptr %10, align 4
-  call void @_ZZN6embree15parallel_reduceIiNS_14BVHNStatisticsILi4EE10StatisticsEZNS2_10statisticsENS_10NodeRefPtrILi4EEEdNS_4BBoxIfEEEUliE_FS3_RKS3_SA_EEET0_T_SD_RKSC_RKT1_RKT2_ENKUlNS_5rangeIiEEE_clESN_(ptr dead_on_unwind nonnull writable sret(%"struct.embree::BVHNStatistics<4>::Statistics") align 8 %1, ptr noundef nonnull align 8 dereferenceable(24) %9, ptr noundef nonnull align 4 dead_on_return %2), !inline_history !130
+  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 32
+  %4 = load ptr, ptr %3, align 8, !nonnull !6, !align !7
+  %i.r = add nsw i32 %i.c, 1
+  %5 = mul nsw i32 %i.n, %i.r
+  %i.s = mul nsw i32 %i.n, %i.c
+  %6 = insertelement <2 x i32> poison, i32 %i.s, i64 0
+  %7 = insertelement <2 x i32> %6, i32 %5, i64 1
+  %8 = insertelement <2 x i32> poison, i32 %i.q, i64 0
+  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <2 x i32> zeroinitializer
+  %10 = sdiv <2 x i32> %7, %9
+  %11 = insertelement <2 x i32> poison, i32 %i.j, i64 0
+  %12 = shufflevector <2 x i32> %11, <2 x i32> poison, <2 x i32> zeroinitializer
+  %13 = add nsw <2 x i32> %10, %12
+  store <2 x i32> %13, ptr %2, align 8
+  call void @_ZZN6embree15parallel_reduceIiNS_14BVHNStatisticsILi4EE10StatisticsEZNS2_10statisticsENS_10NodeRefPtrILi4EEEdNS_4BBoxIfEEEUliE_FS3_RKS3_SA_EEET0_T_SD_RKSC_RKT1_RKT2_ENKUlNS_5rangeIiEEE_clESN_(ptr dead_on_unwind nonnull writable sret(%"struct.embree::BVHNStatistics<4>::Statistics") align 8 %1, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 4 dead_on_return %2), !inline_history !130
   %i.t = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.u = load ptr, ptr %i.t, align 8, !nonnull !6, !align !12
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 8184
@@ -643,7 +645,7 @@ bb.a:
 define linkonce_odr hidden void @_ZZN6embree13TaskScheduler5spawnIiZNS_12parallel_forIiZNS_24parallel_reduce_internalIiNS_14BVHNStatisticsILi4EE10StatisticsEZNS_15parallel_reduceIiS6_ZNS5_10statisticsENS_10NodeRefPtrILi4EEEdNS_4BBoxIfEEEUliE4_FS6_RKS6_SE_EEET0_T_SH_RKSG_RKT1_RKT2_EUlNS_5rangeIiEEE_SF_EESG_SH_SH_SH_SH_SJ_SM_SP_EUliE_EEvSH_SJ_EUlRKSR_E_EEvSH_SH_SH_SJ_PNS0_16TaskGroupContextEENKUlvE_clEv(ptr noundef nonnull align 8 dereferenceable(32) %0) local_unnamed_addr #15 comdat align 2 {
 bb.a:
   %1 = alloca %"struct.embree::BVHNStatistics<4>::Statistics", align 8 ; 4 uses
-  %2 = alloca %"struct.embree::range", align 4    ; 5 uses
+  %2 = alloca %"struct.embree::range", align 8    ; 4 uses
   %i.a = load i32, ptr %0, align 8                ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.c = load i32, ptr %i.b, align 4              ; 6 uses
@@ -658,28 +660,30 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !6, !align !7 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.i = load ptr, ptr %i.h, align 8, !nonnull !6, !align !8
-  %i.j = load i32, ptr %i.i, align 4              ; 3 uses
+  %i.j = load i32, ptr %i.i, align 4              ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !nonnull !6, !align !8
   %i.m = load i32, ptr %i.l, align 4
   %i.n = sub nsw i32 %i.m, %i.j                   ; 2 uses
-  %3 = mul nsw i32 %i.n, %i.c
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.p = load ptr, ptr %i.o, align 8, !nonnull !6, !align !8
-  %i.q = load i32, ptr %i.p, align 4              ; 2 uses
-  %4 = sdiv i32 %3, %i.q
-  %5 = add nsw i32 %4, %i.j
-  %i.r = add nsw i32 %i.c, 1
-  %i.s = mul nsw i32 %i.n, %i.r
-  %6 = sdiv i32 %i.s, %i.q
-  %7 = add nsw i32 %6, %i.j
+  %i.q = load i32, ptr %i.p, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #19
-  %8 = getelementptr inbounds nuw i8, ptr %i.h, i64 32
-  %9 = load ptr, ptr %8, align 8, !nonnull !6, !align !7
-  store i32 %5, ptr %2, align 4
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  store i32 %7, ptr %10, align 4
-  call void @_ZZN6embree15parallel_reduceIiNS_14BVHNStatisticsILi4EE10StatisticsEZNS2_10statisticsENS_10NodeRefPtrILi4EEEdNS_4BBoxIfEEEUliE4_FS3_RKS3_SA_EEET0_T_SD_RKSC_RKT1_RKT2_ENKUlNS_5rangeIiEEE_clESN_(ptr dead_on_unwind nonnull writable sret(%"struct.embree::BVHNStatistics<4>::Statistics") align 8 %1, ptr noundef nonnull align 8 dereferenceable(24) %9, ptr noundef nonnull align 4 dead_on_return %2), !inline_history !213
+  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 32
+  %4 = load ptr, ptr %3, align 8, !nonnull !6, !align !7
+  %i.r = add nsw i32 %i.c, 1
+  %5 = mul nsw i32 %i.n, %i.r
+  %i.s = mul nsw i32 %i.n, %i.c
+  %6 = insertelement <2 x i32> poison, i32 %i.s, i64 0
+  %7 = insertelement <2 x i32> %6, i32 %5, i64 1
+  %8 = insertelement <2 x i32> poison, i32 %i.q, i64 0
+  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <2 x i32> zeroinitializer
+  %10 = sdiv <2 x i32> %7, %9
+  %11 = insertelement <2 x i32> poison, i32 %i.j, i64 0
+  %12 = shufflevector <2 x i32> %11, <2 x i32> poison, <2 x i32> zeroinitializer
+  %13 = add nsw <2 x i32> %10, %12
+  store <2 x i32> %13, ptr %2, align 8
+  call void @_ZZN6embree15parallel_reduceIiNS_14BVHNStatisticsILi4EE10StatisticsEZNS2_10statisticsENS_10NodeRefPtrILi4EEEdNS_4BBoxIfEEEUliE4_FS3_RKS3_SA_EEET0_T_SD_RKSC_RKT1_RKT2_ENKUlNS_5rangeIiEEE_clESN_(ptr dead_on_unwind nonnull writable sret(%"struct.embree::BVHNStatistics<4>::Statistics") align 8 %1, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 4 dead_on_return %2), !inline_history !213
   %i.t = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.u = load ptr, ptr %i.t, align 8, !nonnull !6, !align !12
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 8184

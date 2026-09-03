@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 3537
 inline.NumDeleted: 780
 loop-unroll.NumCompletelyUnrolled: 17
-loop-unroll.NumRuntimeUnrolled: 11
-loop-unroll.NumUnrolled: 28
+loop-unroll.NumRuntimeUnrolled: 12
+loop-unroll.NumUnrolled: 29
 begin_hunk_0_@_ZN6casadi8Sparsity8nonzerosExxRKSt6vectorIxSaIxEEb:bb.a
 
 bb.o:                                             ; preds = %bb.h
@@ -205,7 +205,7 @@ _ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc69
 
 bb.u:                                             ; preds = %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc69, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i
   %i.bn = phi ptr [ null, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i ], [ %i.bh, %.noexc69 ], [ %i.bh, %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ] ; 2 uses
-  %i.bo = phi ptr [ null, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i ], [ %i.bg, %.noexc69 ], [ %i.bg, %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ] ; 7 uses
+  %i.bo = phi ptr [ null, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i ], [ %i.bg, %.noexc69 ], [ %i.bg, %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ] ; 9 uses
   %.0.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i ], [ %i.bj, %.noexc69 ], [ %i.bm, %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ]
   %i.bp = getelementptr inbounds nuw i8, ptr %16, i64 8
   store ptr %.0.i.i.i.i.i, ptr %i.bp, align 8, !tbaa !40
@@ -257,24 +257,49 @@ _ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i72: ; preds = %.noexc77
 
 bb.x:                                             ; preds = %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i72, %.noexc77, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i75
   %i.ce = phi ptr [ null, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i75 ], [ %i.by, %.noexc77 ], [ %i.by, %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i72 ] ; 2 uses
-  %i.cf = phi ptr [ null, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i75 ], [ %i.bx, %.noexc77 ], [ %i.bx, %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i72 ] ; 7 uses
+  %i.cf = phi ptr [ null, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i75 ], [ %i.bx, %.noexc77 ], [ %i.bx, %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i72 ] ; 9 uses
   %.0.i.i.i.i.i74 = phi ptr [ null, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i75 ], [ %i.ca, %.noexc77 ], [ %i.cd, %_ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i72 ]
   %i.cg = getelementptr inbounds nuw i8, ptr %17, i64 8
   store ptr %.0.i.i.i.i.i74, ptr %i.cg, align 8, !tbaa !40
   %i.ch = load ptr, ptr %i.ay, align 8, !tbaa !40 ; 2 uses
-  %i.ci = load ptr, ptr %3, align 8, !tbaa !36    ; 3 uses
+  %i.ci = load ptr, ptr %3, align 8, !tbaa !36    ; 5 uses
   %.not = icmp eq ptr %i.ch, %i.ci
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.x
   %i.cj = ptrtoint ptr %i.ch to i64
   %i.ck = ptrtoint ptr %i.ci to i64
-  %i.cl = sub i64 %i.cj, %i.ck
-  %i.cm = ashr exact i64 %i.cl, 3
-  %.neg = sext i1 %4 to i64
+  %i.cl = sub i64 %i.cj, %i.ck                    ; 3 uses
+  %i.cm = ashr exact i64 %i.cl, 3                 ; 2 uses
+  %.neg = sext i1 %4 to i64                       ; 3 uses
+  %18 = icmp eq i64 %i.cl, 8
+  br i1 %18, label %.epil.preheader, label %.lr.ph.new
+
+.lr.ph.new:                                       ; preds = %.lr.ph
+  %unroll_iter = and i64 %i.cm, -2
   br label %bb.ae
 
-._crit_edge:                                      ; preds = %bb.ae, %bb.x
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.ae
+  %19 = and i64 %i.cl, 8
+  %lcmp.mod.not = icmp eq i64 %19, 0
+  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
+  %.020101.epil.init = phi i64 [ 0, %.lr.ph ], [ %35, %._crit_edge.loopexit.unr-lcssa ] ; 3 uses
+  %lcmp.mod128 = trunc i64 %i.cm to i1
+  tail call void @llvm.assume(i1 %lcmp.mod128)
+  %20 = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %.020101.epil.init
+  %21 = load i64, ptr %20, align 8, !tbaa !39
+  %22 = add i64 %21, %.neg                        ; 2 uses
+  %23 = srem i64 %22, %1
+  %24 = getelementptr inbounds nuw [8 x i8], ptr %i.bo, i64 %.020101.epil.init
+  store i64 %23, ptr %24, align 8, !tbaa !39
+  %25 = sdiv i64 %22, %1
+  %26 = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %.020101.epil.init
+  store i64 %25, ptr %26, align 8, !tbaa !39
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.x
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28, !noalias !416
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false), !noalias !416
   invoke void @_ZN6casadi8Sparsity7tripletExxRKSt6vectorIxSaIxEES5_RS3_b(ptr dead_on_unwind writable sret(%"class.casadi::Sparsity") align 8 %0, i64 noundef %1, i64 noundef %2, ptr noundef nonnull readonly align 8 dereferenceable(24) %16, ptr noundef nonnull readonly align 8 dereferenceable(24) %17, ptr noundef nonnull align 8 dereferenceable(24) %5, i1 noundef zeroext false)
@@ -325,20 +350,32 @@ bb.ad:                                            ; preds = %bb.w, %bb.v
           cleanup
   br label %_ZNSt6vectorIxSaIxEED2Ev.exit83
 
-bb.ae:                                            ; preds = %.lr.ph, %bb.ae
-  %.020101.a = phi i64 [ 0, %.lr.ph ], [ %i.dj, %bb.ae ] ; 4 uses
-  %i.dc = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %.020101.a
+bb.ae:                                            ; preds = %bb.ae, %.lr.ph.new
+  %.020101 = phi i64 [ 0, %.lr.ph.new ], [ %35, %bb.ae ] ; 5 uses
+  %.020101.a = phi i64 [ 0, %.lr.ph.new ], [ %i.dj, %bb.ae ]
+  %27 = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %.020101
+  %28 = load i64, ptr %27, align 8, !tbaa !39
+  %29 = add i64 %28, %.neg                        ; 2 uses
+  %30 = srem i64 %29, %1
+  %31 = getelementptr inbounds nuw [8 x i8], ptr %i.bo, i64 %.020101
+  store i64 %30, ptr %31, align 8, !tbaa !39
+  %32 = sdiv i64 %29, %1
+  %33 = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %.020101
+  store i64 %32, ptr %33, align 8, !tbaa !39
+  %34 = or disjoint i64 %.020101, 1               ; 3 uses
+  %i.dc = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %34
   %i.dd = load i64, ptr %i.dc, align 8, !tbaa !39
   %i.de = add i64 %i.dd, %.neg                    ; 2 uses
   %i.df = srem i64 %i.de, %1
-  %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.bo, i64 %.020101.a
+  %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.bo, i64 %34
   store i64 %i.df, ptr %i.dg, align 8, !tbaa !39
   %i.dh = sdiv i64 %i.de, %1
-  %i.di = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %.020101.a
+  %i.di = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %34
   store i64 %i.dh, ptr %i.di, align 8, !tbaa !39
-  %i.dj = add nuw nsw i64 %.020101.a, 1           ; 2 uses
-  %exitcond.not = icmp eq i64 %i.dj, %i.cm
-  br i1 %exitcond.not, label %._crit_edge, label %bb.ae, !llvm.loop !414
+  %35 = add nuw nsw i64 %.020101, 2               ; 2 uses
+  %i.dj = add i64 %.020101.a, 2                   ; 2 uses
+  %exitcond.not = icmp eq i64 %i.dj, %unroll_iter
+  br i1 %exitcond.not, label %._crit_edge.loopexit.unr-lcssa, label %bb.ae, !llvm.loop !414
 
 bb.af:                                            ; preds = %bb.z, %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #28, !noalias !416

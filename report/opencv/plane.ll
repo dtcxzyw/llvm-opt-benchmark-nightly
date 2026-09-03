@@ -205,19 +205,23 @@ bb.a:
   %i.p = or disjoint i32 %i.o, 5
   store i32 %i.p, ptr %i.m, align 8, !tbaa !22
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
-  %6 = load i32, ptr %i.q, align 8, !tbaa !67     ; 2 uses
-  %7 = sdiv i32 %6, %2
-  %8 = srem i32 %6, %2
-  %.not = icmp ne i32 %8, 0
-  %9 = zext i1 %.not to i32
-  %spec.select = add nsw i32 %7, %9               ; 5 uses
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 3 uses
-  %11 = load i32, ptr %10, align 4, !tbaa !68     ; 2 uses
-  %12 = sdiv i32 %11, %2
-  %13 = srem i32 %11, %2
-  %.not116 = icmp ne i32 %13, 0
-  %i.r = zext i1 %.not116 to i32
-  %.094 = add nsw i32 %12, %i.r                   ; 6 uses
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
+  %7 = load <2 x i32>, ptr %i.q, align 8, !tbaa !61
+  %8 = insertelement <2 x i32> poison, i32 %2, i64 0
+  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
+  %.frozen = freeze <2 x i32> %7                  ; 2 uses
+  %10 = sdiv <2 x i32> %.frozen, %9               ; 3 uses
+  %11 = mul <2 x i32> %10, %9
+  %.decomposed = sub <2 x i32> %.frozen, %11
+  %12 = icmp ne <2 x i32> %.decomposed, zeroinitializer ; 2 uses
+  %13 = extractelement <2 x i1> %12, i64 0
+  %14 = zext i1 %13 to i32
+  %15 = extractelement <2 x i32> %10, i64 0
+  %spec.select = add nsw i32 %15, %14             ; 5 uses
+  %16 = extractelement <2 x i1> %12, i64 1
+  %i.r = zext i1 %16 to i32
+  %17 = extractelement <2 x i32> %10, i64 1
+  %.094 = add nsw i32 %17, %i.r                   ; 6 uses
   invoke void @_ZN2cv3Mat6createEiii(ptr noundef nonnull align 8 dereferenceable(208) %i.a, i32 noundef %spec.select, i32 noundef %.094, i32 noundef 69)
           to label %_ZN2cv4Mat_INS_3VecIfLi3EEEE6createEii.exit unwind label %bb.b
 
@@ -227,7 +231,7 @@ _ZN2cv4Mat_INS_3VecIfLi3EEEE6createEii.exit:      ; preds = %bb.a
 
 _ZN2cv4Mat_INS_3VecIfLi3EEEE6createEii.exit133:   ; preds = %_ZN2cv4Mat_INS_3VecIfLi3EEEE6createEii.exit
   %i.s = load i32, ptr %i.q, align 8, !tbaa !67
-  %i.t = load i32, ptr %10, align 4, !tbaa !68
+  %i.t = load i32, ptr %6, align 4, !tbaa !68
   invoke void @_ZN2cv3Mat6createEiii(ptr noundef nonnull align 8 dereferenceable(208) %i.i, i32 noundef %i.s, i32 noundef %i.t, i32 noundef 261)
           to label %_ZN2cv4Mat_INS_3VecIfLi9EEEE6createEii.exit unwind label %bb.b
 
@@ -366,7 +370,7 @@ _ZN2cv3Mat3ptrINS_3VecIfLi9EEEEEPT_ii.exit:       ; preds = %_ZNK2cv3Mat3ptrINS_
   br i1 %i.bt, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %_ZN2cv3Mat3ptrINS_3VecIfLi9EEEEEPT_ii.exit
-  %i.cl = load i32, ptr %10, align 4, !tbaa !68
+  %i.cl = load i32, ptr %6, align 4, !tbaa !68
   %i.cm = add nsw i32 %i.cl, -1                   ; 2 uses
   br i1 %i.bo, label %bb.h, label %bb.i
 

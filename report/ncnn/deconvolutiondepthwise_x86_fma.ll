@@ -205,31 +205,36 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.db
 
 bb.g:                                             ; preds = %_ZNK4ncnn3Mat5emptyEv.exit161
-  %i.bj = load i32, ptr %i.o, align 4, !tbaa !45  ; 4 uses
-  %10 = sdiv i32 %i.q, %i.bj                      ; 4 uses
-  %11 = sdiv i32 %i.h, %i.bj                      ; 4 uses
+  %i.bj = load i32, ptr %i.o, align 4, !tbaa !45  ; 3 uses
   %i.bk = icmp sgt i32 %i.bj, 0
   br i1 %i.bk, label %.lr.ph, label %._crit_edge175.split
 
 .lr.ph:                                           ; preds = %bb.g
-  %factor.op.mul171 = mul i32 %10, %11
+  %10 = insertelement <2 x i32> poison, i32 %i.q, i64 0
+  %11 = insertelement <2 x i32> %10, i32 %i.h, i64 1
+  %12 = insertelement <2 x i32> poison, i32 %i.bj, i64 0
+  %13 = shufflevector <2 x i32> %12, <2 x i32> poison, <2 x i32> zeroinitializer
+  %14 = sdiv <2 x i32> %11, %13                   ; 2 uses
+  %15 = extractelement <2 x i32> %14, i64 0       ; 4 uses
+  %16 = extractelement <2 x i32> %14, i64 1       ; 4 uses
+  %factor.op.mul171 = mul i32 %15, %16
   %.reass = mul i32 %factor.op.mul171, %i.au
   %i.bl = load ptr, ptr %4, align 8, !tbaa !20    ; 3 uses
-  %i.bm = icmp slt i32 %10, 1
-  %i.bn = icmp slt i32 %11, 1
+  %i.bm = icmp slt i32 %15, 1
+  %i.bn = icmp slt i32 %16, 1
   %i.bo = icmp slt i32 %i.au, 1
   %brmerge = select i1 %i.bm, i1 true, i1 %i.bn
   %brmerge181 = or i1 %brmerge, %i.bo
   br i1 %brmerge181, label %._crit_edge175.split, label %.preheader163.lr.ph.preheader
 
 .preheader163.lr.ph.preheader:                    ; preds = %.lr.ph
-  %i.bp = zext nneg i32 %10 to i64                ; 4 uses
+  %i.bp = zext nneg i32 %15 to i64                ; 4 uses
   %i.bq = zext nneg i32 %i.au to i64              ; 14 uses
-  %i.br = zext nneg i32 %11 to i64                ; 4 uses
+  %i.br = zext nneg i32 %16 to i64                ; 4 uses
   %wide.trip.count199 = zext nneg i32 %i.bj to i64
   %i.bs = mul i32 %i.l, %i.j
-  %i.bt = mul i32 %i.bs, %10
-  %i.bu = mul i32 %i.bt, %11
+  %i.bt = mul i32 %i.bs, %15
+  %i.bu = mul i32 %i.bt, %16
   %i.bv = mul nuw nsw i64 %i.br, %i.bq
   %i.bw = shl nuw i64 %i.bv, 2                    ; 2 uses
   %i.bx = shl nuw nsw i64 %i.bq, 2
@@ -632,7 +637,7 @@ bb.r:                                             ; preds = %_ZNK4ncnn3Mat5empty
   %i.ds = load i32, ptr %i.c, align 4, !tbaa !60
   %i.dt = mul nsw i32 %i.ds, %i.p                 ; 3 uses
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 276 ; 3 uses
-  %i.dv = load i32, ptr %i.du, align 4, !tbaa !45 ; 3 uses
+  %i.dv = load i32, ptr %i.du, align 4, !tbaa !45 ; 2 uses
   %i.dw = icmp eq i32 %i.dt, %i.dv
   %i.dx = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.dy = load i32, ptr %i.dx, align 8, !tbaa !46 ; 2 uses
@@ -654,31 +659,27 @@ bb.u:                                             ; preds = %bb.s
   br label %.sink.split
 
 ._crit_edge291:                                   ; preds = %bb.r
-  %11 = sdiv i32 %i.dt, %i.dv                     ; 4 uses
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %13 = sdiv i32 %i.dy, %i.dv                     ; 4 uses
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 208
+  %12 = insertelement <2 x i32> poison, i32 %i.dt, i64 0
+  %13 = insertelement <2 x i32> %12, i32 %i.dy, i64 1
+  %14 = insertelement <2 x i32> poison, i32 %i.dv, i64 0
+  %15 = shufflevector <2 x i32> %14, <2 x i32> poison, <2 x i32> zeroinitializer
+  %16 = sdiv <2 x i32> %13, %15                   ; 4 uses
   %i.ea = load i8, ptr %i.an, align 1, !tbaa !48, !range !49, !noundef !50
   %i.eb = trunc nuw i8 %i.ea to i1
   br i1 %i.eb, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %._crit_edge291
-  %14 = and i32 %11, 7
-  %15 = icmp eq i32 %14, 0
-  %16 = and i32 %11, 3
-  %17 = icmp eq i32 %16, 0
-  %18 = select i1 %17, i32 4, i32 1
-  %19 = select i1 %15, i32 8, i32 %18
-  %20 = and i32 %13, 7
-  %21 = icmp eq i32 %20, 0
-  %22 = and i32 %13, 3
-  %23 = icmp eq i32 %22, 0
-  %24 = select i1 %23, i32 4, i32 1
-  %25 = select i1 %21, i32 8, i32 %24
+  %17 = and <2 x i32> %16, splat (i32 7)
+  %18 = and <2 x i32> %16, splat (i32 3)
+  %19 = icmp eq <2 x i32> %17, zeroinitializer
+  %20 = icmp eq <2 x i32> %18, zeroinitializer
+  %21 = select <2 x i1> %20, <2 x i32> splat (i32 4), <2 x i32> splat (i32 1)
+  %22 = select <2 x i1> %19, <2 x i32> splat (i32 8), <2 x i32> %21
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %._crit_edge291
-  %.084 = phi i32 [ %19, %bb.v ], [ 1, %._crit_edge291 ] ; 4 uses
-  %.083 = phi i32 [ %25, %bb.v ], [ 1, %._crit_edge291 ] ; 6 uses
+  %23 = phi <2 x i32> [ %22, %bb.v ], [ splat (i32 1), %._crit_edge291 ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   %i.ec = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -715,7 +716,8 @@ bb.x:                                             ; preds = %bb.w
   br label %_ZN4ncnn3Mat6addrefEv.exit
 
 _ZN4ncnn3Mat6addrefEv.exit:                       ; preds = %bb.x, %bb.w
-  %i.ex = icmp sgt i32 %i.p, %.084
+  %24 = extractelement <2 x i32> %23, i64 0       ; 2 uses
+  %i.ex = icmp sgt i32 %i.p, %24
   br i1 %i.ex, label %bb.y, label %bb.ab
 
 bb.y:                                             ; preds = %_ZN4ncnn3Mat6addrefEv.exit
@@ -725,7 +727,7 @@ bb.y:                                             ; preds = %_ZN4ncnn3Mat6addref
   %i.ez = load ptr, ptr %i.ey, align 8, !tbaa !66
   %i.fa = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr %i.ez, ptr %i.fa, align 8, !tbaa !125
-  invoke void @_ZN4ncnn15convert_packingERKNS_3MatERS0_iRKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(72) %5, i32 noundef %.084, ptr noundef nonnull align 8 dereferenceable(64) %6)
+  invoke void @_ZN4ncnn15convert_packingERKNS_3MatERS0_iRKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(72) %5, i32 noundef %24, ptr noundef nonnull align 8 dereferenceable(64) %6)
           to label %bb.z unwind label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
@@ -785,20 +787,21 @@ bb.ac:                                            ; preds = %bb.ab
   br label %_ZN4ncnn3Mat6addrefEv.exit200
 
 _ZN4ncnn3Mat6addrefEv.exit200:                    ; preds = %bb.ac, %bb.ab
-  %i.ga = icmp samesign ult i32 %.083, %.099      ; 2 uses
+  %25 = extractelement <2 x i32> %23, i64 1       ; 4 uses
+  %i.ga = icmp samesign ult i32 %25, %.099        ; 2 uses
   br i1 %i.ga, label %bb.ad, label %bb.ag
 
 bb.ad:                                            ; preds = %_ZN4ncnn3Mat6addrefEv.exit200
   %i.gb = load i32, ptr %i.f, align 4, !tbaa !60
   %i.gc = load i32, ptr %i.g, align 4, !tbaa !60
-  %i.gd = load i32, ptr %12, align 8, !tbaa !46
-  %i.ge = sdiv i32 %i.gd, %.083
+  %i.gd = load i32, ptr %11, align 8, !tbaa !46
+  %i.ge = sdiv i32 %i.gd, %25
   %i.gf = udiv i64 %i.bb, %i.ba
-  %i.gg = zext nneg i32 %.083 to i64
+  %i.gg = zext nneg i32 %25 to i64
   %i.gh = mul i64 %i.gf, %i.gg
   %i.gi = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.gj = load ptr, ptr %i.gi, align 8, !tbaa !66
-  invoke void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %7, i32 noundef %i.gb, i32 noundef %i.gc, i32 noundef %i.ge, i64 noundef %i.gh, i32 noundef %.083, ptr noundef %i.gj)
+  invoke void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %7, i32 noundef %i.gb, i32 noundef %i.gc, i32 noundef %i.ge, i64 noundef %i.gh, i32 noundef %25, ptr noundef %i.gj)
           to label %bb.ae unwind label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
@@ -825,7 +828,6 @@ bb.ag:                                            ; preds = %_ZNK4ncnn3Mat5empty
   br i1 %.not112285, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.ag
-  %26 = sdiv i32 %11, %.084
   %i.gt = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.gv = getelementptr inbounds nuw i8, ptr %8, i64 24
@@ -833,7 +835,7 @@ bb.ag:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %i.gx = getelementptr inbounds nuw i8, ptr %8, i64 40
   %i.gy = getelementptr inbounds nuw i8, ptr %8, i64 56
   %i.gz = getelementptr inbounds nuw i8, ptr %8, i64 64
-  %27 = sdiv i32 %13, %.083
+  %26 = sdiv <2 x i32> %16, %23                   ; 2 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.hc = getelementptr inbounds nuw i8, ptr %9, i64 24
@@ -843,6 +845,8 @@ bb.ag:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %i.hg = getelementptr inbounds nuw i8, ptr %9, i64 64
   %i.hh = getelementptr inbounds nuw i8, ptr %0, i64 512
   %i.hi = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %27 = extractelement <2 x i32> %26, i64 0
+  %28 = extractelement <2 x i32> %26, i64 1
   br label %bb.ai
 
 bb.ah:                                            ; preds = %_ZN4ncnn3MatD2Ev.exit127
@@ -853,26 +857,21 @@ bb.ah:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
   br i1 %.not112, label %bb.ai, label %._crit_edge, !llvm.loop !117
 
 bb.ai:                                            ; preds = %.lr.ph, %bb.ah
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.ah ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.ah ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #12
   %i.hl = trunc i64 %indvars.iv to i32
-  %28 = mul i32 %11, %i.hl
-  %29 = sdiv i32 %28, %.084
+  %29 = insertelement <2 x i32> poison, i32 %i.hl, i64 0
+  %30 = shufflevector <2 x i32> %29, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.hm = load ptr, ptr %5, align 16, !tbaa !20, !noalias !126
   %i.hn = load i64, ptr %i.et, align 16, !tbaa !21, !noalias !126
-  %30 = sext i32 %29 to i64
-  %31 = mul i64 %i.hn, %30
   %i.ho = load i64, ptr %i.eg, align 16, !tbaa !58, !noalias !126 ; 4 uses
-  %32 = mul i64 %31, %i.ho
-  %33 = getelementptr inbounds nuw i8, ptr %i.hm, i64 %32
   %i.hp = load i32, ptr %i.ei, align 8, !tbaa !59, !noalias !126
   %i.hq = load ptr, ptr %i.ek, align 16, !tbaa !19, !noalias !126
-  store ptr %33, ptr %8, align 8, !tbaa !20
   store ptr null, ptr %i.gt, align 8, !tbaa !18
   store i64 %i.ho, ptr %i.gu, align 8, !tbaa !58
   store i32 %i.hp, ptr %i.gv, align 8, !tbaa !59
   store ptr %i.hq, ptr %i.gw, align 8, !tbaa !19
-  store i32 %26, ptr %i.gy, align 8, !tbaa !61
+  store i32 %27, ptr %i.gy, align 8, !tbaa !61
   %i.hr = load <4 x i32>, ptr %i.en, align 8, !tbaa !60, !noalias !126 ; 3 uses
   %i.hs = load i32, ptr %i.ep, align 4, !tbaa !65, !noalias !126
   %i.ht = sext i32 %i.hs to i64
@@ -889,12 +888,18 @@ bb.ai:                                            ; preds = %.lr.ph, %bb.ah
   store i64 %i.id, ptr %i.gz, align 8, !tbaa !21
   store <4 x i32> %i.hr, ptr %i.gx, align 8, !tbaa !60
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #12
-  %34 = trunc i64 %indvars.iv to i32
-  %35 = mul i32 %13, %34
-  %36 = sdiv i32 %35, %.083
+  %31 = mul <2 x i32> %16, %30
+  %32 = sdiv <2 x i32> %31, %23                   ; 2 uses
+  %33 = extractelement <2 x i32> %32, i64 0
+  %34 = sext i32 %33 to i64
+  %35 = mul i64 %i.hn, %34
+  %36 = mul i64 %35, %i.ho
+  %37 = getelementptr inbounds nuw i8, ptr %i.hm, i64 %36
+  store ptr %37, ptr %8, align 8, !tbaa !20
   %i.ie = load ptr, ptr %7, align 16, !tbaa !20, !noalias !127
   %i.if = load i64, ptr %i.fx, align 16, !tbaa !21, !noalias !127
-  %i.ig = sext i32 %36 to i64
+  %38 = extractelement <2 x i32> %32, i64 1
+  %i.ig = sext i32 %38 to i64
   %i.ih = mul i64 %i.if, %i.ig
   %i.ii = load i64, ptr %i.fm, align 16, !tbaa !58, !noalias !127 ; 4 uses
   %i.ij = mul i64 %i.ih, %i.ii
@@ -906,7 +911,7 @@ bb.ai:                                            ; preds = %.lr.ph, %bb.ah
   store i64 %i.ii, ptr %i.hb, align 8, !tbaa !58
   store i32 %i.il, ptr %i.hc, align 8, !tbaa !59
   store ptr %i.im, ptr %i.hd, align 8, !tbaa !19
-  store i32 %27, ptr %i.hf, align 8, !tbaa !61
+  store i32 %28, ptr %i.hf, align 8, !tbaa !61
   %i.in = load <4 x i32>, ptr %i.fs, align 8, !tbaa !60, !noalias !127 ; 3 uses
   %i.io = load i32, ptr %i.ft, align 4, !tbaa !65, !noalias !127
   %i.ip = sext i32 %i.io to i64

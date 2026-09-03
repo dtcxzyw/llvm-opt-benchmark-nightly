@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 97
 inline.NumDeleted: 64
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN8facebook5velox4bits11scatterBitsEiiPKcPKmPc:bb.a
   %i.cw = icmp samesign ugt i32 %i.cv, 64
   br i1 %i.cw, label %bb.i, label %_ZN8facebook5velox4bits12_GLOBAL__N_111getBitFieldEPKciRi.exit.peel
@@ -205,84 +205,39 @@ _ZN8facebook5velox4bits15loadPartialWordEPKhi.exit: ; preds = %bb.f, %bb.g
 
 bb.h:                                             ; preds = %bb.a
   %i.z = shl i64 %0, 32                           ; 2 uses
-  %i.aa = lshr i64 %0, 16                         ; 3 uses
-  %i.ab = trunc i64 %2 to i32                     ; 5 uses
+  %i.aa = lshr i64 %0, 16                         ; 2 uses
+  %i.ab = trunc i64 %2 to i32                     ; 3 uses
   %i.ac = icmp sgt i32 %i.ab, 23
-  br i1 %i.ac, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.ac, label %.lr.ph, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %bb.h
-  %3 = add nsw i32 %i.ab, -24                     ; 2 uses
-  %4 = udiv i32 %3, 24
-  %5 = and i32 %4, 1
-  %lcmp.mod.not.not = icmp eq i32 %5, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
-
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %6 = load i64, ptr %1, align 8, !tbaa !10
-  %7 = and i64 %0, 4294967295
-  %8 = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %7, i64 %6) ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %10 = load i64, ptr %9, align 8, !tbaa !10
-  %11 = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) 0, i64 %10) ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %13 = load i64, ptr %12, align 8, !tbaa !10
-  %14 = and i64 %i.aa, 4294967295
-  %15 = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %14, i64 %13) ; 2 uses
-  %16 = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %17 = add nsw i32 %i.ab, -24                    ; 2 uses
-  br label %.lr.ph.prol.loopexit
-
-.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
-  %.093.unr = phi ptr [ %1, %.lr.ph.preheader ], [ %16, %.lr.ph.prol ]
-  %.04992.unr = phi i32 [ %i.ab, %.lr.ph.preheader ], [ %17, %.lr.ph.prol ]
-  %.05091.unr = phi i64 [ %i.aa, %.lr.ph.preheader ], [ %15, %.lr.ph.prol ]
-  %.05190.unr = phi i64 [ %i.z, %.lr.ph.preheader ], [ %11, %.lr.ph.prol ]
-  %.05389.unr = phi i64 [ %0, %.lr.ph.preheader ], [ %8, %.lr.ph.prol ]
-  %.lcssa116.unr = phi i64 [ poison, %.lr.ph.preheader ], [ %8, %.lr.ph.prol ]
-  %.lcssa115.unr = phi i64 [ poison, %.lr.ph.preheader ], [ %11, %.lr.ph.prol ]
-  %.lcssa114.unr = phi i64 [ poison, %.lr.ph.preheader ], [ %15, %.lr.ph.prol ]
-  %.lcssa113.unr = phi ptr [ poison, %.lr.ph.preheader ], [ %16, %.lr.ph.prol ]
-  %.lcssa.unr = phi i32 [ poison, %.lr.ph.preheader ], [ %17, %.lr.ph.prol ]
-  %18 = icmp ult i32 %3, 24
-  br i1 %18, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.093 = phi ptr [ %i.ao, %.lr.ph ], [ %.093.unr, %.lr.ph.prol.loopexit ] ; 7 uses
-  %.04992 = phi i32 [ %i.ap, %.lr.ph ], [ %.04992.unr, %.lr.ph.prol.loopexit ] ; 2 uses
-  %.05091 = phi i64 [ %i.an, %.lr.ph ], [ %.05091.unr, %.lr.ph.prol.loopexit ]
-  %.05190 = phi i64 [ %25, %.lr.ph ], [ %.05190.unr, %.lr.ph.prol.loopexit ]
-  %.05389 = phi i64 [ %22, %.lr.ph ], [ %.05389.unr, %.lr.ph.prol.loopexit ]
+.lr.ph:                                           ; preds = %bb.h, %.lr.ph
+  %.093 = phi ptr [ %i.ao, %.lr.ph ], [ %1, %bb.h ] ; 4 uses
+  %.04992 = phi i32 [ %i.ap, %.lr.ph ], [ %i.ab, %bb.h ] ; 2 uses
+  %.05091 = phi i64 [ %i.an, %.lr.ph ], [ %i.aa, %bb.h ]
+  %.05190 = phi i64 [ %i.aj, %.lr.ph ], [ %i.z, %bb.h ]
+  %.05389 = phi i64 [ %i.af, %.lr.ph ], [ %0, %bb.h ]
   %i.ad = load i64, ptr %.093, align 8, !tbaa !10
   %i.ae = and i64 %.05389, 4294967295
-  %i.af = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.ae, i64 %i.ad)
+  %i.af = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.ae, i64 %i.ad) ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.093, i64 8
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !10
   %i.ai = and i64 %.05190, 4294967295
-  %i.aj = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.ai, i64 %i.ah)
+  %i.aj = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.ai, i64 %i.ah) ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.093, i64 16
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !10
   %i.am = and i64 %.05091, 4294967295
-  %19 = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.am, i64 %i.al)
-  %20 = getelementptr inbounds nuw i8, ptr %.093, i64 24
-  %21 = load i64, ptr %20, align 8, !tbaa !10
-  %22 = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.af, i64 %21) ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %.093, i64 32
-  %24 = load i64, ptr %23, align 8, !tbaa !10
-  %25 = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.aj, i64 %24) ; 2 uses
-  %26 = getelementptr inbounds nuw i8, ptr %.093, i64 40
-  %27 = load i64, ptr %26, align 8, !tbaa !10
-  %i.an = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %19, i64 %27) ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %.093, i64 48 ; 2 uses
-  %i.ap = add nsw i32 %.04992, -48                ; 2 uses
-  %28 = icmp sgt i32 %.04992, 71
-  br i1 %28, label %.lr.ph, label %._crit_edge, !llvm.loop !30
+  %i.an = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.am, i64 %i.al) ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %.093, i64 24 ; 2 uses
+  %i.ap = add nsw i32 %.04992, -24                ; 2 uses
+  %3 = icmp samesign ugt i32 %.04992, 47
+  br i1 %3, label %.lr.ph, label %._crit_edge, !llvm.loop !30
 
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.h
-  %.053.lcssa = phi i64 [ %0, %bb.h ], [ %.lcssa116.unr, %.lr.ph.prol.loopexit ], [ %22, %.lr.ph ] ; 4 uses
-  %.051.lcssa = phi i64 [ %i.z, %bb.h ], [ %.lcssa115.unr, %.lr.ph.prol.loopexit ], [ %25, %.lr.ph ] ; 4 uses
-  %.050.lcssa = phi i64 [ %i.aa, %bb.h ], [ %.lcssa114.unr, %.lr.ph.prol.loopexit ], [ %i.an, %.lr.ph ] ; 4 uses
-  %.049.lcssa = phi i32 [ %i.ab, %bb.h ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.ap, %.lr.ph ] ; 14 uses
-  %.0.lcssa = phi ptr [ %1, %bb.h ], [ %.lcssa113.unr, %.lr.ph.prol.loopexit ], [ %i.ao, %.lr.ph ] ; 11 uses
+._crit_edge:                                      ; preds = %.lr.ph, %bb.h
+  %.053.lcssa = phi i64 [ %0, %bb.h ], [ %i.af, %.lr.ph ] ; 4 uses
+  %.051.lcssa = phi i64 [ %i.z, %bb.h ], [ %i.aj, %.lr.ph ] ; 4 uses
+  %.050.lcssa = phi i64 [ %i.aa, %bb.h ], [ %i.an, %.lr.ph ] ; 4 uses
+  %.049.lcssa = phi i32 [ %i.ab, %bb.h ], [ %i.ap, %.lr.ph ] ; 14 uses
+  %.0.lcssa = phi ptr [ %1, %bb.h ], [ %i.ao, %.lr.ph ] ; 11 uses
   %i.aq = icmp sgt i32 %.049.lcssa, 16
   br i1 %i.aq, label %bb.i, label %bb.o
 

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 12553
 inline.NumDeleted: 2538
 loop-unroll.NumCompletelyUnrolled: 68
-loop-unroll.NumRuntimeUnrolled: 14
-loop-unroll.NumUnrolled: 82
+loop-unroll.NumRuntimeUnrolled: 15
+loop-unroll.NumUnrolled: 83
 begin_hunk_0_@_ZN6casadi16einstein_processINS_6MatrixINS_6SXElemEEEEExRKT_S6_S6_RKSt6vectorIxSaIxEESB_SB_SB_SB_SB_RS9_SC_SC_SC_:bb.a
   %i.amo = load i64, ptr %i.amn, align 8, !tbaa !84
   %i.amp = mul nsw i64 %i.amo, %.01301040
@@ -205,10 +205,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !103
-  %i.c = load ptr, ptr %1, align 8, !tbaa !101    ; 3 uses
+  %i.c = load ptr, ptr %1, align 8, !tbaa !101    ; 5 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e                       ; 6 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 7 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 6 uses
   %i.h = icmp sgt i64 %i.g, 0
   %.pre = load ptr, ptr %2, align 8, !tbaa !104   ; 5 uses
@@ -267,15 +267,15 @@ bb.e:                                             ; preds = %bb.d
   %.0134 = phi i64 [ %i.af, %bb.e ], [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %bb.b ]
   %.0133 = phi i64 [ %i.ah, %bb.e ], [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %bb.b ]
   %.0132 = phi i64 [ %i.aj, %bb.e ], [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %bb.b ]
-  %i.ak = getelementptr inbounds nuw i8, ptr %.pre, i64 8
-  %i.al = getelementptr inbounds nuw i8, ptr %.pre213, i64 8
-  %i.am = getelementptr inbounds nuw i8, ptr %.pre214, i64 8
+  %i.ak = getelementptr inbounds nuw i8, ptr %.pre, i64 8 ; 3 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.pre213, i64 8 ; 3 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %.pre214, i64 8 ; 3 uses
   %i.an = load i64, ptr %.pre, align 8, !tbaa !84
-  %i.ao = getelementptr inbounds [8 x i8], ptr %5, i64 %i.an ; 2 uses
+  %i.ao = getelementptr inbounds [8 x i8], ptr %5, i64 %i.an ; 3 uses
   %i.ap = load i64, ptr %.pre213, align 8, !tbaa !84
-  %i.aq = getelementptr inbounds [8 x i8], ptr %6, i64 %i.ap ; 2 uses
+  %i.aq = getelementptr inbounds [8 x i8], ptr %6, i64 %i.ap ; 3 uses
   %i.ar = load i64, ptr %.pre214, align 8, !tbaa !84
-  %i.as = getelementptr inbounds [8 x i8], ptr %7, i64 %i.ar ; 2 uses
+  %i.as = getelementptr inbounds [8 x i8], ptr %7, i64 %i.ar ; 3 uses
   %i.at = mul i64 %.0135147163, %.0136164
   %i.au = mul i64 %i.at, %.0137
   %i.av = sdiv i64 %0, %i.au                      ; 2 uses
@@ -292,43 +292,97 @@ bb.e:                                             ; preds = %bb.d
   br i1 %brmerge, label %.loopexit, label %.preheader171.us.us.us.preheader
 
 .preheader171.us.us.us.preheader:                 ; preds = %.preheader171.lr.ph
-  %i.bb = add nsw i64 %i.g, -4
+  %i.bb = add nsw i64 %i.g, -3                    ; 3 uses
+  %xtraiter = and i64 %i.bb, 1
+  %10 = icmp eq i64 %i.f, 32
+  %unroll_iter = and i64 %i.bb, -2
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %lcmp.mod234 = trunc i64 %i.bb to i1
   br label %.preheader171.us.us.us
 
 .preheader171.us.us.us:                           ; preds = %.preheader171.us.us.us.preheader, %._crit_edge196.us.us.us
-  %.0125198.us.us.us = phi i64 [ %i.cg, %._crit_edge196.us.us.us ], [ 0, %.preheader171.us.us.us.preheader ] ; 2 uses
-  br i1 %i.ax, label %.lr.ph.us.us.us, label %.preheader169.us.us.us.preheader.a
+  %.0125198.us.us.us = phi i64 [ %i.cg, %._crit_edge196.us.us.us ], [ 0, %.preheader171.us.us.us.preheader ] ; 3 uses
+  br i1 %i.ax, label %.lr.ph.us.us.us.preheader, label %.preheader169.us.us.us.preheader
 
-.lr.ph.us.us.us:                                  ; preds = %.preheader171.us.us.us, %.lr.ph.us.us.us
-  %.0120176.us.us.us = phi i64 [ %i.bs, %.lr.ph.us.us.us ], [ 0, %.preheader171.us.us.us ] ; 6 uses
-  %.0121175.us.us.us = phi i64 [ %i.br, %.lr.ph.us.us.us ], [ %.0125198.us.us.us, %.preheader171.us.us.us ] ; 2 uses
-  %.0122174.us.us.us = phi ptr [ %i.bq, %.lr.ph.us.us.us ], [ %i.as, %.preheader171.us.us.us ]
-  %.0123173.us.us.us = phi ptr [ %i.bm, %.lr.ph.us.us.us ], [ %i.aq, %.preheader171.us.us.us ]
-  %.0124172.us.us.us = phi ptr [ %i.bi, %.lr.ph.us.us.us ], [ %i.ao, %.preheader171.us.us.us ]
-  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %.0120176.us.us.us
+.lr.ph.us.us.us.preheader:                        ; preds = %.preheader171.us.us.us
+  br i1 %10, label %.preheader169.us.us.us.preheader.a, label %.lr.ph.us.us.us
+
+.lr.ph.us.us.us:                                  ; preds = %.lr.ph.us.us.us.preheader, %.lr.ph.us.us.us
+  %.0120176.us.us.us = phi i64 [ %28, %.lr.ph.us.us.us ], [ 0, %.lr.ph.us.us.us.preheader ] ; 6 uses
+  %.0121175.us.us.us = phi i64 [ %i.br, %.lr.ph.us.us.us ], [ %.0125198.us.us.us, %.lr.ph.us.us.us.preheader ] ; 2 uses
+  %.0122174.us.us.us = phi ptr [ %i.bq, %.lr.ph.us.us.us ], [ %i.as, %.lr.ph.us.us.us.preheader ]
+  %.0123173.us.us.us = phi ptr [ %i.bm, %.lr.ph.us.us.us ], [ %i.aq, %.lr.ph.us.us.us.preheader ]
+  %.0124172.us.us.us = phi ptr [ %i.bi, %.lr.ph.us.us.us ], [ %i.ao, %.lr.ph.us.us.us.preheader ]
+  %niter = phi i64 [ %i.bs, %.lr.ph.us.us.us ], [ 0, %.lr.ph.us.us.us.preheader ]
+  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %.0120176.us.us.us
+  %12 = load i64, ptr %11, align 8, !tbaa !84     ; 2 uses
+  %13 = srem i64 %.0121175.us.us.us, %12          ; 3 uses
+  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %.0120176.us.us.us
+  %15 = load i64, ptr %14, align 8, !tbaa !84
+  %16 = mul nsw i64 %15, %13
+  %17 = getelementptr inbounds [8 x i8], ptr %.0124172.us.us.us, i64 %16
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %.0120176.us.us.us
+  %19 = load i64, ptr %18, align 8, !tbaa !84
+  %20 = mul nsw i64 %19, %13
+  %21 = getelementptr inbounds [8 x i8], ptr %.0123173.us.us.us, i64 %20
+  %22 = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %.0120176.us.us.us
+  %23 = load i64, ptr %22, align 8, !tbaa !84
+  %24 = mul nsw i64 %23, %13
+  %25 = getelementptr inbounds [8 x i8], ptr %.0122174.us.us.us, i64 %24
+  %26 = sdiv i64 %.0121175.us.us.us, %12          ; 2 uses
+  %27 = or disjoint i64 %.0120176.us.us.us, 1     ; 4 uses
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %27
   %i.bd = load i64, ptr %i.bc, align 8, !tbaa !84 ; 2 uses
-  %i.be = srem i64 %.0121175.us.us.us, %i.bd      ; 3 uses
-  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %.0120176.us.us.us
+  %i.be = srem i64 %26, %i.bd                     ; 3 uses
+  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %27
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !84
   %i.bh = mul nsw i64 %i.bg, %i.be
-  %i.bi = getelementptr inbounds [8 x i8], ptr %.0124172.us.us.us, i64 %i.bh ; 2 uses
-  %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %.0120176.us.us.us
+  %i.bi = getelementptr inbounds [8 x i8], ptr %17, i64 %i.bh ; 3 uses
+  %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %27
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !84
   %i.bl = mul nsw i64 %i.bk, %i.be
-  %i.bm = getelementptr inbounds [8 x i8], ptr %.0123173.us.us.us, i64 %i.bl ; 2 uses
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %.0120176.us.us.us
+  %i.bm = getelementptr inbounds [8 x i8], ptr %21, i64 %i.bl ; 3 uses
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %27
   %i.bo = load i64, ptr %i.bn, align 8, !tbaa !84
   %i.bp = mul nsw i64 %i.bo, %i.be
-  %i.bq = getelementptr inbounds [8 x i8], ptr %.0122174.us.us.us, i64 %i.bp ; 2 uses
-  %i.br = sdiv i64 %.0121175.us.us.us, %i.bd
-  %i.bs = add nuw nsw i64 %.0120176.us.us.us, 1
-  %exitcond.not = icmp eq i64 %.0120176.us.us.us, %i.bb
-  br i1 %exitcond.not, label %.preheader169.us.us.us.preheader.a, label %.lr.ph.us.us.us, !llvm.loop !926
+  %i.bq = getelementptr inbounds [8 x i8], ptr %25, i64 %i.bp ; 3 uses
+  %i.br = sdiv i64 %26, %i.bd                     ; 2 uses
+  %28 = add nuw nsw i64 %.0120176.us.us.us, 2     ; 2 uses
+  %i.bs = add i64 %niter, 2                       ; 2 uses
+  %exitcond.not = icmp eq i64 %i.bs, %unroll_iter
+  br i1 %exitcond.not, label %.preheader169.us.us.us.preheader.loopexit.unr-lcssa, label %.lr.ph.us.us.us, !llvm.loop !926
 
-.preheader169.us.us.us.preheader.a:               ; preds = %.lr.ph.us.us.us, %.preheader171.us.us.us
-  %.0117193.us.us.us.ph.a = phi ptr [ %i.as, %.preheader171.us.us.us ], [ %i.bq, %.lr.ph.us.us.us ]
-  %.0118191.us.us.us.ph.a = phi ptr [ %i.aq, %.preheader171.us.us.us ], [ %i.bm, %.lr.ph.us.us.us ]
-  %.0119189.us.us.us.ph.a = phi ptr [ %i.ao, %.preheader171.us.us.us ], [ %i.bi, %.lr.ph.us.us.us ]
+.preheader169.us.us.us.preheader.loopexit.unr-lcssa: ; preds = %.lr.ph.us.us.us
+  br i1 %lcmp.mod.not, label %.preheader169.us.us.us.preheader, label %.preheader169.us.us.us.preheader.a
+
+.preheader169.us.us.us.preheader.a:               ; preds = %.preheader169.us.us.us.preheader.loopexit.unr-lcssa, %.lr.ph.us.us.us.preheader
+  %.0120176.us.us.us.epil.init = phi i64 [ 0, %.lr.ph.us.us.us.preheader ], [ %28, %.preheader169.us.us.us.preheader.loopexit.unr-lcssa ] ; 4 uses
+  %.0121175.us.us.us.epil.init = phi i64 [ %.0125198.us.us.us, %.lr.ph.us.us.us.preheader ], [ %i.br, %.preheader169.us.us.us.preheader.loopexit.unr-lcssa ]
+  %.0117193.us.us.us.ph.a = phi ptr [ %i.as, %.lr.ph.us.us.us.preheader ], [ %i.bq, %.preheader169.us.us.us.preheader.loopexit.unr-lcssa ]
+  %.0118191.us.us.us.ph.a = phi ptr [ %i.aq, %.lr.ph.us.us.us.preheader ], [ %i.bm, %.preheader169.us.us.us.preheader.loopexit.unr-lcssa ]
+  %.0119189.us.us.us.ph.a = phi ptr [ %i.ao, %.lr.ph.us.us.us.preheader ], [ %i.bi, %.preheader169.us.us.us.preheader.loopexit.unr-lcssa ]
+  call void @llvm.assume(i1 %lcmp.mod234)
+  %29 = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %.0120176.us.us.us.epil.init
+  %30 = load i64, ptr %29, align 8, !tbaa !84
+  %31 = srem i64 %.0121175.us.us.us.epil.init, %30 ; 3 uses
+  %32 = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %.0120176.us.us.us.epil.init
+  %33 = load i64, ptr %32, align 8, !tbaa !84
+  %34 = mul nsw i64 %33, %31
+  %35 = getelementptr inbounds [8 x i8], ptr %.0119189.us.us.us.ph.a, i64 %34
+  %36 = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %.0120176.us.us.us.epil.init
+  %37 = load i64, ptr %36, align 8, !tbaa !84
+  %38 = mul nsw i64 %37, %31
+  %39 = getelementptr inbounds [8 x i8], ptr %.0118191.us.us.us.ph.a, i64 %38
+  %40 = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %.0120176.us.us.us.epil.init
+  %41 = load i64, ptr %40, align 8, !tbaa !84
+  %42 = mul nsw i64 %41, %31
+  %43 = getelementptr inbounds [8 x i8], ptr %.0117193.us.us.us.ph.a, i64 %42
+  br label %.preheader169.us.us.us.preheader
+
+.preheader169.us.us.us.preheader:                 ; preds = %.preheader169.us.us.us.preheader.a, %.preheader169.us.us.us.preheader.loopexit.unr-lcssa, %.preheader171.us.us.us
+  %.0117193.us.us.us.ph = phi ptr [ %i.as, %.preheader171.us.us.us ], [ %i.bq, %.preheader169.us.us.us.preheader.loopexit.unr-lcssa ], [ %43, %.preheader169.us.us.us.preheader.a ]
+  %.0118191.us.us.us.ph = phi ptr [ %i.aq, %.preheader171.us.us.us ], [ %i.bm, %.preheader169.us.us.us.preheader.loopexit.unr-lcssa ], [ %39, %.preheader169.us.us.us.preheader.a ]
+  %.0119189.us.us.us.ph = phi ptr [ %i.ao, %.preheader171.us.us.us ], [ %i.bi, %.preheader169.us.us.us.preheader.loopexit.unr-lcssa ], [ %35, %.preheader169.us.us.us.preheader.a ]
   br label %.preheader169.us.us.us
 
 bb.f:                                             ; preds = %.preheader.us.us.us, %_ZN6casadi11ContractionINS_6SXElemEEEvRKT_S4_RS2_.exit.us.us.us
@@ -365,11 +419,11 @@ _ZN6casadi11ContractionINS_6SXElemEEEvRKT_S4_RS2_.exit.us.us.us: ; preds = %.noe
   %.0115184.us.us.us = phi ptr [ %.0119189.us.us.us, %.preheader169.us.us.us ], [ %i.by, %._crit_edge.us.us.us ] ; 2 uses
   br label %bb.f
 
-.preheader169.us.us.us:                           ; preds = %.preheader169.us.us.us.preheader.a, %._crit_edge188.us.us.us
-  %.0116195.us.us.us = phi i64 [ %i.cf, %._crit_edge188.us.us.us ], [ 0, %.preheader169.us.us.us.preheader.a ]
-  %.0117193.us.us.us = phi ptr [ %i.ce, %._crit_edge188.us.us.us ], [ %.0117193.us.us.us.ph.a, %.preheader169.us.us.us.preheader.a ] ; 2 uses
-  %.0118191.us.us.us = phi ptr [ %i.cd, %._crit_edge188.us.us.us ], [ %.0118191.us.us.us.ph.a, %.preheader169.us.us.us.preheader.a ] ; 2 uses
-  %.0119189.us.us.us = phi ptr [ %i.cc, %._crit_edge188.us.us.us ], [ %.0119189.us.us.us.ph.a, %.preheader169.us.us.us.preheader.a ] ; 2 uses
+.preheader169.us.us.us:                           ; preds = %.preheader169.us.us.us.preheader, %._crit_edge188.us.us.us
+  %.0116195.us.us.us = phi i64 [ %i.cf, %._crit_edge188.us.us.us ], [ 0, %.preheader169.us.us.us.preheader ]
+  %.0117193.us.us.us = phi ptr [ %i.ce, %._crit_edge188.us.us.us ], [ %.0117193.us.us.us.ph, %.preheader169.us.us.us.preheader ] ; 2 uses
+  %.0118191.us.us.us = phi ptr [ %i.cd, %._crit_edge188.us.us.us ], [ %.0118191.us.us.us.ph, %.preheader169.us.us.us.preheader ] ; 2 uses
+  %.0119189.us.us.us = phi ptr [ %i.cc, %._crit_edge188.us.us.us ], [ %.0119189.us.us.us.ph, %.preheader169.us.us.us.preheader ] ; 2 uses
   br label %.preheader.us.us.us
 
 ._crit_edge.us.us.us:                             ; preds = %_ZN6casadi11ContractionINS_6SXElemEEEvRKT_S4_RS2_.exit.us.us.us

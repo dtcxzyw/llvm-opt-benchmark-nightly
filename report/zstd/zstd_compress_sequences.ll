@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/zstd/original/zstd_compress_sequences?download=true
 inline.NumInlined: 105
 inline.NumDeleted: 22
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@ZSTD_selectEncodingType:bb.a
 bb.e:                                             ; preds = %bb.d
   %i.g = load i32, ptr %0, align 4, !tbaa !15
@@ -204,16 +204,37 @@ ZSTD_NCountCost.exit:                             ; preds = %ZSTD_fseBitCost.exi
   %.1.i = phi i64 [ %i.ct, %bb.s ], [ %i.cr, %ZSTD_fseBitCost.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
-  %i.cu = add i32 %2, 1
-  %umax.i67 = call i32 @llvm.umax.i32(i32 %i.cu, i32 1)
-  %wide.trip.count.i68 = zext i32 %umax.i67 to i64
+  %i.cu = add i32 %2, 1                           ; 2 uses
+  %umax.i67 = call i32 @llvm.umax.i32(i32 %i.cu, i32 1) ; 2 uses
+  %wide.trip.count.i68 = zext i32 %umax.i67 to i64 ; 2 uses
+  %xtraiter94 = and i64 %wide.trip.count.i68, 1
+  %11 = icmp ult i32 %i.cu, 2
+  br i1 %11, label %.epil.preheader93, label %ZSTD_NCountCost.exit.new
+
+ZSTD_NCountCost.exit.new:                         ; preds = %ZSTD_NCountCost.exit
+  %unroll_iter98 = and i64 %wide.trip.count.i68, 4294967294
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.t, %ZSTD_NCountCost.exit
-  %indvars.iv.i69 = phi i64 [ 0, %ZSTD_NCountCost.exit ], [ %indvars.iv.next.i70, %bb.t ] ; 2 uses
-  %.016.i = phi i32 [ 0, %ZSTD_NCountCost.exit ], [ %i.dg, %bb.t ]
+bb.t:                                             ; preds = %bb.t, %ZSTD_NCountCost.exit.new
+  %indvars.iv.i69 = phi i64 [ 0, %ZSTD_NCountCost.exit.new ], [ %indvars.iv.next.i70.1, %bb.t ] ; 3 uses
+  %.016.i = phi i32 [ 0, %ZSTD_NCountCost.exit.new ], [ %i.dg, %bb.t ]
+  %niter99 = phi i64 [ 0, %ZSTD_NCountCost.exit.new ], [ %indvars.iv.next.i70, %bb.t ]
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.i69
+  %13 = load i32, ptr %12, align 4, !tbaa !15     ; 3 uses
+  %14 = shl i32 %13, 8
+  %15 = zext i32 %14 to i64                       ; 2 uses
+  %16 = udiv i64 %15, %4
+  %17 = icmp ne i32 %13, 0
+  %18 = icmp ugt i64 %4, %15
+  %or.cond.i = and i1 %17, %18
+  %19 = select i1 %or.cond.i, i64 1, i64 %16
+  %20 = getelementptr inbounds nuw [4 x i8], ptr @kInverseProbabilityLog256, i64 %19
+  %21 = load i32, ptr %20, align 4, !tbaa !15
+  %22 = mul i32 %21, %13
+  %23 = add i32 %22, %.016.i
   %i.cv = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.i69
-  %i.cw = load i32, ptr %i.cv, align 4, !tbaa !15 ; 3 uses
+  %24 = getelementptr inbounds nuw i8, ptr %i.cv, i64 4
+  %i.cw = load i32, ptr %24, align 4, !tbaa !15   ; 3 uses
   %i.cx = shl i32 %i.cw, 8
   %i.cy = zext i32 %i.cx to i64                   ; 2 uses
   %i.cz = udiv i64 %i.cy, %4
@@ -224,14 +245,40 @@ bb.t:                                             ; preds = %bb.t, %ZSTD_NCountC
   %i.dd = getelementptr inbounds nuw [4 x i8], ptr @kInverseProbabilityLog256, i64 %i.dc
   %i.de = load i32, ptr %i.dd, align 4, !tbaa !15
   %i.df = mul i32 %i.de, %i.cw
-  %i.dg = add i32 %i.df, %.016.i                  ; 2 uses
-  %indvars.iv.next.i70 = add nuw nsw i64 %indvars.iv.i69, 1 ; 2 uses
-  %exitcond.i71 = icmp eq i64 %indvars.iv.next.i70, %wide.trip.count.i68
-  br i1 %exitcond.i71, label %ZSTD_entropyCost.exit, label %bb.t, !llvm.loop !24
+  %i.dg = add i32 %i.df, %23                      ; 3 uses
+  %indvars.iv.next.i70.1 = add nuw nsw i64 %indvars.iv.i69, 2 ; 2 uses
+  %indvars.iv.next.i70 = add i64 %niter99, 2      ; 2 uses
+  %exitcond.i71 = icmp eq i64 %indvars.iv.next.i70, %unroll_iter98
+  br i1 %exitcond.i71, label %ZSTD_entropyCost.exit.unr-lcssa, label %bb.t, !llvm.loop !24
 
-ZSTD_entropyCost.exit:                            ; preds = %bb.t
+ZSTD_entropyCost.exit.unr-lcssa:                  ; preds = %bb.t
+  %lcmp.mod95.not = icmp eq i64 %xtraiter94, 0
+  br i1 %lcmp.mod95.not, label %ZSTD_entropyCost.exit, label %.epil.preheader93
+
+.epil.preheader93:                                ; preds = %ZSTD_entropyCost.exit.unr-lcssa, %ZSTD_NCountCost.exit
+  %indvars.iv.i69.epil.init = phi i64 [ 0, %ZSTD_NCountCost.exit ], [ %indvars.iv.next.i70.1, %ZSTD_entropyCost.exit.unr-lcssa ]
+  %.016.i.epil.init = phi i32 [ 0, %ZSTD_NCountCost.exit ], [ %i.dg, %ZSTD_entropyCost.exit.unr-lcssa ]
+  %lcmp.mod97 = trunc i32 %umax.i67 to i1
+  call void @llvm.assume(i1 %lcmp.mod97)
+  %25 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.i69.epil.init
+  %26 = load i32, ptr %25, align 4, !tbaa !15     ; 3 uses
+  %27 = shl i32 %26, 8
+  %28 = zext i32 %27 to i64                       ; 2 uses
+  %29 = udiv i64 %28, %4
+  %30 = icmp ne i32 %26, 0
+  %31 = icmp ugt i64 %4, %28
+  %or.cond.i.epil = and i1 %30, %31
+  %32 = select i1 %or.cond.i.epil, i64 1, i64 %29
+  %33 = getelementptr inbounds nuw [4 x i8], ptr @kInverseProbabilityLog256, i64 %32
+  %34 = load i32, ptr %33, align 4, !tbaa !15
+  %35 = mul i32 %34, %26
+  %36 = add i32 %35, %.016.i.epil.init
+  br label %ZSTD_entropyCost.exit
+
+ZSTD_entropyCost.exit:                            ; preds = %ZSTD_entropyCost.exit.unr-lcssa, %.epil.preheader93
+  %.lcssa = phi i32 [ %i.dg, %ZSTD_entropyCost.exit.unr-lcssa ], [ %36, %.epil.preheader93 ]
   %i.dh = shl i64 %.1.i, 3
-  %i.di = lshr i32 %i.dg, 8
+  %i.di = lshr i32 %.lcssa, 8
   %i.dj = zext nneg i32 %i.di to i64
   %i.dk = add i64 %i.dh, %i.dj                    ; 2 uses
   %.not57 = icmp ugt i64 %i.be, %i.cn

@@ -2,7 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 710
 inline.NumDeleted: 226
 loop-unroll.NumCompletelyUnrolled: 12
-loop-unroll.NumUnrolled: 12
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 13
 begin_hunk_0_@ieee80211_rx_handlers:bb.a
   %i.axa = load ptr, ptr %1, align 8              ; 3 uses
   %i.axb = icmp eq ptr %i.axa, %1
@@ -204,8 +205,8 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph.i70
 ieee80211_release_reorder_frames.exit71:          ; preds = %bb.o, %bb.n, %ieee80211_release_reorder_frames.exit
   %.pre-phi84 = phi i32 [ 0, %ieee80211_release_reorder_frames.exit ], [ %i.bw, %bb.n ], [ %i.cg, %bb.o ] ; 3 uses
   %i.ci = getelementptr i8, ptr %i.aw, i64 134
-  %i.cj = load i16, ptr %i.ci, align 2            ; 3 uses
-  %i.ck = zext i16 %i.cj to i32                   ; 2 uses
+  %i.cj = load i16, ptr %i.ci, align 2            ; 5 uses
+  %i.ck = zext i16 %i.cj to i32                   ; 4 uses
   %.not68 = icmp samesign ult i32 %.pre-phi84, %i.ck
   br i1 %.not68, label %bb.q, label %bb.p
 
@@ -216,7 +217,7 @@ bb.p:                                             ; preds = %ieee80211_release_r
 
 bb.q:                                             ; preds = %ieee80211_release_reorder_frames.exit71
   %i.cm = zext nneg i32 %.pre-phi84 to i64
-  %i.cn = lshr i64 %3, %i.cm
+  %i.cn = lshr i64 %3, %i.cm                      ; 3 uses
   %.not79 = icmp eq i16 %i.cj, 0
   br i1 %.not79, label %bb.s, label %.lr.ph
 
@@ -224,32 +225,77 @@ bb.q:                                             ; preds = %ieee80211_release_r
   %i.co = trunc nuw nsw i32 %.pre-phi84 to i16
   %i.cp = add i16 %2, %i.co
   %i.cq = getelementptr i8, ptr %i.aw, i64 24     ; 2 uses
-  %.promoted = load i64, ptr %i.cq, align 8
-  %i.cr = zext i16 %i.cp to i64
-  %i.cs = zext i16 %i.cj to i64
+  %.promoted = load i64, ptr %i.cq, align 8       ; 2 uses
+  %i.cr = zext i16 %i.cp to i64                   ; 3 uses
+  %i.cs = zext i16 %i.cj to i64                   ; 2 uses
+  %xtraiter = and i64 %i.cs, 1
+  %7 = icmp eq i16 %i.cj, 1
+  br i1 %7, label %.epil.preheader, label %.lr.ph.new
+
+.lr.ph.new:                                       ; preds = %.lr.ph
+  %unroll_iter = and i64 %i.cs, 65534
   br label %bb.r
 
-bb.r:                                             ; preds = %.lr.ph, %bb.r
-  %indvars.iv.a = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.a, %bb.r ] ; 3 uses
-  %spec.select78 = phi i64 [ %.promoted, %.lr.ph ], [ %spec.select.a, %bb.r ] ; 2 uses
-  %i.ct = add nuw nsw i64 %indvars.iv.a, %i.cr
+bb.r:                                             ; preds = %bb.r, %.lr.ph.new
+  %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.r ] ; 5 uses
+  %indvars.iv.a = phi i64 [ %.promoted, %.lr.ph.new ], [ %spec.select.a, %bb.r ] ; 2 uses
+  %spec.select78 = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.a, %bb.r ]
+  %8 = add nuw nsw i64 %indvars.iv, %i.cr
+  %9 = trunc nuw nsw i64 %8 to i32
+  %10 = urem i32 %9, %i.ck
+  %11 = zext nneg i32 %10 to i64
+  %12 = shl nuw i64 1, %11                        ; 2 uses
+  %13 = xor i64 %12, -1
+  %14 = and i64 %indvars.iv.a, %13
+  %15 = shl nuw i64 1, %indvars.iv
+  %16 = and i64 %15, %i.cn
+  %.not69 = icmp eq i64 %16, 0
+  %17 = or i64 %12, %indvars.iv.a
+  %spec.select = select i1 %.not69, i64 %14, i64 %17 ; 2 uses
+  %indvars.iv.next = or disjoint i64 %indvars.iv, 1
+  %i.ct = add nuw nsw i64 %indvars.iv.next, %i.cr
   %i.cu = trunc nuw nsw i64 %i.ct to i32
   %i.cv = urem i32 %i.cu, %i.ck
   %i.cw = zext nneg i32 %i.cv to i64
   %i.cx = shl nuw i64 1, %i.cw                    ; 2 uses
   %i.cy = xor i64 %i.cx, -1
-  %i.cz = and i64 %spec.select78, %i.cy
-  %i.da = shl nuw i64 1, %indvars.iv.a
+  %i.cz = and i64 %spec.select, %i.cy
+  %i.da = shl nuw i64 2, %indvars.iv
   %i.db = and i64 %i.da, %i.cn
   %.not69.a = icmp eq i64 %i.db, 0
-  %i.dc = or i64 %i.cx, %spec.select78
-  %spec.select.a = select i1 %.not69.a, i64 %i.cz, i64 %i.dc ; 2 uses
-  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
-  %7 = icmp samesign ult i64 %indvars.iv.next.a, %i.cs
-  br i1 %7, label %bb.r, label %._crit_edge, !llvm.loop !81
+  %i.dc = or i64 %i.cx, %spec.select
+  %spec.select.a = select i1 %.not69.a, i64 %i.cz, i64 %i.dc ; 3 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %indvars.iv.next.a = add i64 %spec.select78, 2  ; 2 uses
+  %niter.ncmp.1.not = icmp eq i64 %indvars.iv.next.a, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %._crit_edge.unr-lcssa, label %bb.r, !llvm.loop !81
 
-._crit_edge:                                      ; preds = %bb.r
-  store i64 %spec.select.a, ptr %i.cq, align 8
+._crit_edge.unr-lcssa:                            ; preds = %bb.r
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
+  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 2 uses
+  %spec.select78.epil.init = phi i64 [ %.promoted, %.lr.ph ], [ %spec.select.a, %._crit_edge.unr-lcssa ] ; 2 uses
+  %lcmp.mod93 = trunc i16 %i.cj to i1
+  call void @llvm.assume(i1 %lcmp.mod93)
+  %18 = add nuw nsw i64 %indvars.iv.epil.init, %i.cr
+  %19 = trunc nuw nsw i64 %18 to i32
+  %20 = urem i32 %19, %i.ck
+  %21 = zext nneg i32 %20 to i64
+  %22 = shl nuw i64 1, %21                        ; 2 uses
+  %23 = xor i64 %22, -1
+  %24 = and i64 %spec.select78.epil.init, %23
+  %25 = shl nuw i64 1, %indvars.iv.epil.init
+  %26 = and i64 %25, %i.cn
+  %.not69.epil = icmp eq i64 %26, 0
+  %27 = or i64 %22, %spec.select78.epil.init
+  %spec.select.epil = select i1 %.not69.epil, i64 %24, i64 %27
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.epil.preheader
+  %spec.select.lcssa = phi i64 [ %spec.select.a, %._crit_edge.unr-lcssa ], [ %spec.select.epil, %.epil.preheader ]
+  store i64 %spec.select.lcssa, ptr %i.cq, align 8
   br label %bb.s
 
 bb.s:                                             ; preds = %._crit_edge, %bb.q

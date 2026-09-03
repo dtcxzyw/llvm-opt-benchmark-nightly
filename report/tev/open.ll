@@ -205,34 +205,31 @@ bb.df:                                            ; preds = %bb.de
   %i.qp = shufflevector <4 x i32> %i.qo, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.qq = lshr <4 x i32> %i.qn, %i.qp
   store <4 x i32> %i.qq, ptr %i.ql, align 4, !tbaa !134
-  %2 = lshr exact i32 16384, %i.qc                ; 6 uses
-  %i.qr = getelementptr inbounds nuw i8, ptr %0, i64 1952 ; 2 uses
-  %3 = load i32, ptr %i.qr, align 8, !tbaa !134
-  %4 = sdiv i32 %3, %2
-  store i32 %4, ptr %i.qr, align 8, !tbaa !134
-  %i.qs = getelementptr inbounds nuw i8, ptr %0, i64 1956 ; 2 uses
-  %i.qt = load i32, ptr %i.qs, align 4, !tbaa !134
-  %5 = sdiv i32 %i.qt, %2
-  store i32 %5, ptr %i.qs, align 4, !tbaa !134
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 1960 ; 2 uses
-  %7 = load i32, ptr %6, align 8, !tbaa !134
-  %8 = sdiv i32 %7, %2
-  store i32 %8, ptr %6, align 8, !tbaa !134
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 1964 ; 2 uses
-  %10 = load i32, ptr %9, align 4, !tbaa !134
-  %11 = sdiv i32 %10, %2
-  store i32 %11, ptr %9, align 4, !tbaa !134
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 1968 ; 2 uses
-  %13 = load i32, ptr %12, align 8, !tbaa !144
-  %14 = sdiv i32 %13, %2
-  store i32 %14, ptr %12, align 8, !tbaa !144
-  %15 = sub nuw nsw i32 14, %i.qc
-  %16 = lshr i32 %i.qj, %15
-  store i32 %16, ptr %i.qi, align 8, !tbaa !143
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 1948 ; 2 uses
-  %18 = load i32, ptr %17, align 4, !tbaa !145
-  %19 = sdiv i32 %18, %2
-  store i32 %19, ptr %17, align 4, !tbaa !145
+  %i.qr = getelementptr inbounds nuw i8, ptr %0, i64 1952
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1960 ; 2 uses
+  %i.qs = getelementptr inbounds nuw i8, ptr %0, i64 1968 ; 2 uses
+  %i.qt = load i32, ptr %i.qs, align 8, !tbaa !144
+  %3 = sub nuw nsw i32 14, %i.qc
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1948
+  %5 = load i32, ptr %4, align 4, !tbaa !145
+  %6 = lshr exact i32 16384, %i.qc                ; 3 uses
+  %7 = load <2 x i32>, ptr %i.qr, align 8, !tbaa !134
+  %8 = load <2 x i32>, ptr %2, align 8, !tbaa !134
+  %9 = insertelement <2 x i32> poison, i32 %6, i64 0
+  %10 = shufflevector <2 x i32> %9, <2 x i32> poison, <2 x i32> zeroinitializer
+  %11 = sdiv <2 x i32> %8, %10
+  store <2 x i32> %11, ptr %2, align 8, !tbaa !134
+  %12 = sdiv i32 %i.qt, %6
+  store i32 %12, ptr %i.qs, align 8, !tbaa !144
+  %13 = lshr i32 %i.qj, %3
+  %14 = insertelement <4 x i32> poison, i32 %13, i64 0
+  %15 = insertelement <4 x i32> %14, i32 %5, i64 1
+  %16 = shufflevector <2 x i32> %7, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %17 = shufflevector <4 x i32> %15, <4 x i32> %16, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %18 = insertelement <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>, i32 %6, i64 1
+  %19 = shufflevector <4 x i32> %18, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
+  %20 = sdiv <4 x i32> %17, %19
+  store <4 x i32> %20, ptr %i.qi, align 8, !tbaa !134
   br label %.thread595
 
 .thread595:                                       ; preds = %..thread595_crit_edge, %.preheader688, %bb.dd, %bb.de, %bb.df

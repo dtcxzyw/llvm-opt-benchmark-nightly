@@ -55,13 +55,11 @@ bb.c:                                             ; preds = %.lr.ph94
 
 .critedge:                                        ; preds = %bb.c, %bb.b, %.critedge.split.loop.exit79
   %.0.lcssa = phi i32 [ %i.p, %.critedge.split.loop.exit79 ], [ %smax, %bb.b ], [ %smax, %bb.c ] ; 3 uses
-  %i.q = sub nsw i32 %.0.lcssa, %.02854           ; 6 uses
+  %i.q = sub nsw i32 %.0.lcssa, %.02854           ; 5 uses
   %i.r = icmp eq i8 %i.h, 0
   br i1 %i.r, label %.lr.ph.preheader.i, label %bb.g
 
 .lr.ph.preheader.i:                               ; preds = %.critedge
-  %3 = add nsw i32 %i.q, -1
-  %4 = urem i32 %3, 138
   %i.s = icmp samesign ult i32 %i.q, 3
   br i1 %i.s, label %.lr.ph35.preheader.i, label %.lr.ph49
 
@@ -76,7 +74,7 @@ bb.c:                                             ; preds = %.lr.ph94
   br label %CodeRepeatedZeros.exit
 
 .lr.ph49:                                         ; preds = %.lr.ph.preheader.i, %.lr.ph.i
-  %.02331.i48 = phi i32 [ %i.ai, %.lr.ph.i ], [ %i.q, %.lr.ph.preheader.i ] ; 5 uses
+  %.02331.i48 = phi i32 [ %i.ai, %.lr.ph.i ], [ %i.q, %.lr.ph.preheader.i ] ; 6 uses
   %.02232.i47 = phi ptr [ %i.ah, %.lr.ph.i ], [ %.03052, %.lr.ph.preheader.i ] ; 8 uses
   %i.w = icmp samesign ult i32 %.02331.i48, 11
   br i1 %i.w, label %bb.d, label %bb.e
@@ -96,8 +94,8 @@ bb.e:                                             ; preds = %.lr.ph49
   br i1 %i.ab, label %bb.f, label %.lr.ph.i
 
 bb.f:                                             ; preds = %bb.e
-  %i.ac = trunc nuw i32 %4 to i8
-  %i.ad = add i8 %i.ac, -10
+  %i.ac = trunc nuw i32 %.02331.i48 to i8
+  %i.ad = add i8 %i.ac, -11
   %i.ae = getelementptr inbounds nuw i8, ptr %.02232.i47, i64 1
   store i8 %i.ad, ptr %i.ae, align 1, !tbaa !32
   %i.af = getelementptr inbounds nuw i8, ptr %.02232.i47, i64 2
@@ -125,13 +123,11 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.026.i = phi ptr [ %i.al, %bb.h ], [ %.03052, %bb.g ] ; 6 uses
-  %.025.i = phi i32 [ %i.am, %bb.h ], [ %i.q, %bb.g ] ; 8 uses
+  %.025.i = phi i32 [ %i.am, %bb.h ], [ %i.q, %bb.g ] ; 7 uses
   %i.an = icmp sgt i32 %.025.i, 0
   br i1 %i.an, label %.lr.ph.preheader.i34, label %CodeRepeatedZeros.exit
 
 .lr.ph.preheader.i34:                             ; preds = %bb.i
-  %5 = add nsw i32 %.025.i, -1
-  %6 = urem i32 %5, 6
   %i.ao = icmp samesign ult i32 %.025.i, 3
   br i1 %i.ao, label %iter.check, label %.lr.ph.preheader
 
@@ -260,14 +256,14 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader119, %.lr.ph.i36
   %.12734.i45 = phi ptr [ %i.cf, %.lr.ph.i36 ], [ %.12734.i45.ph, %.lr.ph.preheader119 ] ; 5 uses
-  %.135.i44 = phi i32 [ %i.cg, %.lr.ph.i36 ], [ %.135.i44.ph, %.lr.ph.preheader119 ] ; 3 uses
+  %.135.i44 = phi i32 [ %i.cg, %.lr.ph.i36 ], [ %.135.i44.ph, %.lr.ph.preheader119 ] ; 4 uses
   %i.bz = icmp samesign ult i32 %.135.i44, 7
   store i8 16, ptr %.12734.i45, align 1, !tbaa !31
   br i1 %i.bz, label %bb.j, label %.lr.ph.i36
 
 bb.j:                                             ; preds = %.lr.ph
-  %i.ca = trunc nuw nsw i32 %6 to i8
-  %i.cb = add nsw i8 %i.ca, -2
+  %i.ca = trunc nuw nsw i32 %.135.i44 to i8
+  %i.cb = add nsw i8 %i.ca, -3
   %i.cc = getelementptr inbounds nuw i8, ptr %.12734.i45, i64 1
   store i8 %i.cb, ptr %i.cc, align 1, !tbaa !32
   %i.cd = getelementptr inbounds nuw i8, ptr %.12734.i45, i64 2

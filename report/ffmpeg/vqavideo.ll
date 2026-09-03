@@ -88,7 +88,7 @@ bb.e:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.q = load i16, ptr %i.p, align 1, !tbaa !34
   %i.r = zext i16 %i.q to i32                     ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 1068 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 1068 ; 3 uses
   store i32 %i.r, ptr %i.s, align 4, !tbaa !37
   %i.t = tail call i32 @ff_set_dimensions(ptr noundef nonnull %0, i32 noundef %i.n, i32 noundef %i.r) #9 ; 2 uses
   %i.u = icmp slt i32 %i.t, 0
@@ -110,7 +110,7 @@ bb.g:                                             ; preds = %bb.e
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 11
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !34  ; 2 uses
   %i.ae = zext i8 %i.ad to i32                    ; 2 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 1076 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 1076 ; 3 uses
   store i32 %i.ae, ptr %i.af, align 4, !tbaa !40
   %i.ag = getelementptr inbounds nuw i8, ptr %i.x, i64 13
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !34
@@ -178,13 +178,14 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not90, label %bb.u, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %1 = load <2 x i32>, ptr %i.o, align 8, !tbaa !38
-  %2 = load <2 x i32>, ptr %i.ab, align 8, !tbaa !38
-  %3 = sdiv <2 x i32> %1, %2                      ; 2 uses
-  %4 = extractelement <2 x i32> %3, i64 0
-  %5 = shl i32 %4, 1
-  %6 = extractelement <2 x i32> %3, i64 1
-  %i.be = mul i32 %5, %6                          ; 2 uses
+  %1 = load i32, ptr %i.o, align 8, !tbaa !36
+  %2 = load i32, ptr %i.ab, align 8, !tbaa !39
+  %3 = sdiv i32 %1, %2
+  %4 = load i32, ptr %i.s, align 4, !tbaa !37
+  %5 = load i32, ptr %i.af, align 4, !tbaa !40
+  %6 = sdiv i32 %4, %5
+  %7 = shl i32 %3, 1
+  %i.be = mul i32 %7, %6                          ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.b, i64 1128
   store i32 %i.be, ptr %i.bf, align 8, !tbaa !48
   %i.bg = sext i32 %i.be to i64

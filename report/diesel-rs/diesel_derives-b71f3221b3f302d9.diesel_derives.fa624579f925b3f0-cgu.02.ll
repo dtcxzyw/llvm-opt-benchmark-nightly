@@ -2,8 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 1420
 inline.NumDeleted: 394
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvNtCsluMP4ekZjHw_14diesel_derives12sql_function18expand_nonvariadic:bb.a
   %i.ed = alloca [32 x i8], align 8               ; 10 uses
   %i.ee = alloca [32 x i8], align 8               ; 4 uses
@@ -205,10 +204,10 @@ begin_hunk_0_@_RNvNtCsluMP4ekZjHw_14diesel_derives12sql_function18expand_nonvari
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ks)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %i.ks, ptr noundef nonnull align 8 dereferenceable(224) %1, i64 224, i1 false)
   %i.le = getelementptr inbounds nuw i8, ptr %i.kx, i64 8
-  %i.lf = load ptr, ptr %i.le, align 8, !nonnull !14, !noundef !14 ; 10 uses
+  %i.lf = load ptr, ptr %i.le, align 8, !nonnull !14, !noundef !14 ; 9 uses
   %i.lg = getelementptr inbounds nuw i8, ptr %i.kx, i64 16
   %i.lh = load i64, ptr %i.lg, align 8, !noundef !14 ; 6 uses
-  %.idx1181 = mul i64 %i.lh, 264                  ; 2 uses
+  %.idx1181 = mul nuw nsw i64 %i.lh, 264
   %i.li = getelementptr inbounds nuw i8, ptr %i.lf, i64 %.idx1181 ; 4 uses
   %.not.not.not.i.not1126 = icmp eq i64 %i.lh, 0
   br i1 %.not.not.not.i.not1126, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterINtNtCsluMP4ekZjHw_14diesel_derives5attrs20AttributeSpanWrapperNtNtBV_12sql_function20SqlFunctionAttributeEENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvB1T_18expand_nonvariadic0EBV_.exit, label %.lr.ph1129
@@ -238,111 +237,46 @@ bb.b:                                             ; preds = %bb.auo, %bb.aou, %_
 _RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterINtNtCsluMP4ekZjHw_14diesel_derives5attrs20AttributeSpanWrapperNtNtBV_12sql_function20SqlFunctionAttributeEENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvB1T_18expand_nonvariadic0EBV_.exit: ; preds = %.lr.ph1129, %bb.a
   %.not.not.not.i.not.lcssa = phi i1 [ true, %bb.a ], [ %i.lk, %.lr.ph1129 ]
   %.idx.i = mul nuw nsw i64 %i.lh, 264
-  %i.ln = getelementptr inbounds nuw i8, ptr %i.lf, i64 %.idx.i
+  %i.ln = getelementptr inbounds nuw i8, ptr %i.lf, i64 %.idx.i ; 2 uses
   %i.lo = icmp eq i64 %i.lh, 0                    ; 2 uses
-  br i1 %i.lo, label %_RNvNtCsluMP4ekZjHw_14diesel_derives12sql_function34function_cannot_be_called_directly.exit, label %.lr.ph.i.preheader
+  br i1 %i.lo, label %_RNvNtCsluMP4ekZjHw_14diesel_derives12sql_function34function_cannot_be_called_directly.exit, label %.lr.ph.i
 
-.lr.ph.i.preheader:                               ; preds = %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterINtNtCsluMP4ekZjHw_14diesel_derives5attrs20AttributeSpanWrapperNtNtBV_12sql_function20SqlFunctionAttributeEENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvB1T_18expand_nonvariadic0EBV_.exit
-  %5 = add i64 %.idx1181, -264                    ; 2 uses
-  %6 = udiv i64 %5, 264                           ; 2 uses
-  %7 = add nuw nsw i64 %6, 1                      ; 2 uses
-  %8 = icmp ult i64 %5, 264
-  br i1 %8, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
-
-.lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
-  %unroll_iter = and i64 %7, 144115188075855870
-  br label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %bb.f, %.lr.ph.i.preheader.new
-  %.sroa.01.09.i = phi ptr [ %i.lf, %.lr.ph.i.preheader.new ], [ %29, %bb.f ] ; 4 uses
-  %.sroa.05.08.i = phi i8 [ 0, %.lr.ph.i.preheader.new ], [ %.sroa.05.1.i.1, %bb.f ]
-  %.sroa.03.07.i = phi i8 [ 0, %.lr.ph.i.preheader.new ], [ %.sroa.03.1.i.1, %bb.f ]
-  %niter = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %niter.next.1, %bb.f ]
+.lr.ph.i:                                         ; preds = %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterINtNtCsluMP4ekZjHw_14diesel_derives5attrs20AttributeSpanWrapperNtNtBV_12sql_function20SqlFunctionAttributeEENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvB1T_18expand_nonvariadic0EBV_.exit, %bb.f
+  %.sroa.01.09.i = phi ptr [ %i.lp, %bb.f ], [ %i.lf, %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterINtNtCsluMP4ekZjHw_14diesel_derives5attrs20AttributeSpanWrapperNtNtBV_12sql_function20SqlFunctionAttributeEENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvB1T_18expand_nonvariadic0EBV_.exit ] ; 3 uses
+  %.sroa.05.08.i = phi i8 [ %.sroa.05.1.i.1, %bb.f ], [ 0, %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterINtNtCsluMP4ekZjHw_14diesel_derives5attrs20AttributeSpanWrapperNtNtBV_12sql_function20SqlFunctionAttributeEENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvB1T_18expand_nonvariadic0EBV_.exit ]
+  %.sroa.03.07.i = phi i8 [ %.sroa.03.1.i.1, %bb.f ], [ 0, %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterINtNtCsluMP4ekZjHw_14diesel_derives5attrs20AttributeSpanWrapperNtNtBV_12sql_function20SqlFunctionAttributeEENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvB1T_18expand_nonvariadic0EBV_.exit ]
   %i.lp = getelementptr inbounds nuw i8, ptr %.sroa.01.09.i, i64 264 ; 2 uses
   %i.lq = trunc nuw i8 %.sroa.03.07.i to i1
-  br i1 %i.lq, label %24, label %21
+  br i1 %i.lq, label %bb.d, label %bb.c
 
-._crit_edge.loopexit.i.unr-lcssa:                 ; preds = %bb.f
-  %9 = and i64 %6, 1
-  %lcmp.mod.not.not = icmp eq i64 %9, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.epil.preheader, label %._crit_edge.loopexit.i
-
-.lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.loopexit.i.unr-lcssa, %.lr.ph.i.preheader
-  %.sroa.01.09.i.epil.init = phi ptr [ %i.lf, %.lr.ph.i.preheader ], [ %29, %._crit_edge.loopexit.i.unr-lcssa ] ; 2 uses
-  %.sroa.05.08.i.epil.init = phi i8 [ 0, %.lr.ph.i.preheader ], [ %.sroa.05.1.i.1, %._crit_edge.loopexit.i.unr-lcssa ]
-  %.sroa.03.07.i.epil.init = phi i8 [ 0, %.lr.ph.i.preheader ], [ %.sroa.03.1.i.1, %._crit_edge.loopexit.i.unr-lcssa ]
-  %lcmp.mod1226 = trunc i64 %7 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod1226)
-  %10 = trunc nuw i8 %.sroa.03.07.i.epil.init to i1
-  br i1 %10, label %15, label %11
-
-11:                                               ; preds = %.lr.ph.i.epil.preheader
-  %12 = load i64, ptr %.sroa.01.09.i.epil.init, align 8, !range !39, !alias.scope !2259, !noundef !14
-  %13 = icmp eq i64 %12, 42
-  %14 = zext i1 %13 to i8
-  br label %15
-
-15:                                               ; preds = %11, %.lr.ph.i.epil.preheader
-  %.sroa.03.1.i.epil = phi i8 [ %14, %11 ], [ 1, %.lr.ph.i.epil.preheader ] ; 2 uses
-  %16 = trunc nuw i8 %.sroa.05.08.i.epil.init to i1
-  br i1 %16, label %._crit_edge.loopexit.i, label %17
-
-17:                                               ; preds = %15
-  %18 = load i64, ptr %.sroa.01.09.i.epil.init, align 8, !range !39, !alias.scope !2259, !noundef !14
-  %19 = icmp eq i64 %18, 43
-  %20 = zext i1 %19 to i8
-  br label %._crit_edge.loopexit.i
-
-._crit_edge.loopexit.i:                           ; preds = %15, %17, %._crit_edge.loopexit.i.unr-lcssa
-  %.sroa.05.1.i.lcssa = phi i8 [ %.sroa.05.1.i.1, %._crit_edge.loopexit.i.unr-lcssa ], [ %20, %17 ], [ 1, %15 ]
-  %.sroa.03.1.i.lcssa = phi i8 [ %.sroa.03.1.i.1, %._crit_edge.loopexit.i.unr-lcssa ], [ %.sroa.03.1.i.epil, %17 ], [ %.sroa.03.1.i.epil, %15 ]
-  %i.lr = trunc nuw i8 %.sroa.05.1.i.lcssa to i1
-  %i.ls = trunc nuw i8 %.sroa.03.1.i.lcssa to i1
+._crit_edge.loopexit.i:                           ; preds = %bb.f
+  %i.lr = trunc nuw i8 %.sroa.05.1.i.1 to i1
+  %i.ls = trunc nuw i8 %.sroa.03.1.i.1 to i1
   %i.lt = xor i1 %i.ls, true
   %i.lu = select i1 %i.lr, i1 %i.lt, i1 false
   br label %_RNvNtCsluMP4ekZjHw_14diesel_derives12sql_function34function_cannot_be_called_directly.exit
 
-21:                                               ; preds = %.lr.ph.i
-  %22 = load i64, ptr %.sroa.01.09.i, align 8, !range !39, !alias.scope !2259, !noundef !14
-  %23 = icmp eq i64 %22, 42
-  br label %24
-
-24:                                               ; preds = %21, %.lr.ph.i
-  %.sroa.03.1.i = phi i1 [ %23, %21 ], [ true, %.lr.ph.i ]
-  %25 = trunc nuw i8 %.sroa.05.08.i to i1
-  br i1 %25, label %.lr.ph.i.1, label %26
-
-26:                                               ; preds = %24
-  %27 = load i64, ptr %.sroa.01.09.i, align 8, !range !39, !alias.scope !2259, !noundef !14
-  %28 = icmp eq i64 %27, 43
-  br label %.lr.ph.i.1
-
-.lr.ph.i.1:                                       ; preds = %26, %24
-  %.sroa.05.1.i = phi i1 [ %28, %26 ], [ true, %24 ]
-  %29 = getelementptr inbounds nuw i8, ptr %.sroa.01.09.i, i64 528 ; 2 uses
-  br i1 %.sroa.03.1.i, label %bb.d, label %bb.c
-
-bb.c:                                             ; preds = %.lr.ph.i.1
-  %i.lv = load i64, ptr %i.lp, align 8, !range !39, !alias.scope !2259, !noundef !14
+bb.c:                                             ; preds = %.lr.ph.i
+  %i.lv = load i64, ptr %.sroa.01.09.i, align 8, !range !39, !alias.scope !2259, !noundef !14
   %i.lw = icmp eq i64 %i.lv, 42
   %i.lx = zext i1 %i.lw to i8
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %.lr.ph.i.1
-  %.sroa.03.1.i.1 = phi i8 [ %i.lx, %bb.c ], [ 1, %.lr.ph.i.1 ] ; 3 uses
-  br i1 %.sroa.05.1.i, label %bb.f, label %bb.e
+bb.d:                                             ; preds = %bb.c, %.lr.ph.i
+  %.sroa.03.1.i.1 = phi i8 [ %i.lx, %bb.c ], [ 1, %.lr.ph.i ] ; 2 uses
+  %5 = trunc nuw i8 %.sroa.05.08.i to i1
+  br i1 %5, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ly = load i64, ptr %i.lp, align 8, !range !39, !alias.scope !2259, !noundef !14
+  %i.ly = load i64, ptr %.sroa.01.09.i, align 8, !range !39, !alias.scope !2259, !noundef !14
   %i.lz = icmp eq i64 %i.ly, 43
   %i.ma = zext i1 %i.lz to i8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.sroa.05.1.i.1 = phi i8 [ %i.ma, %bb.e ], [ 1, %bb.d ] ; 3 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.i.unr-lcssa, label %.lr.ph.i
+  %.sroa.05.1.i.1 = phi i8 [ %i.ma, %bb.e ], [ 1, %bb.d ] ; 2 uses
+  %niter.ncmp.1 = icmp eq ptr %i.lp, %i.ln
+  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.i, label %.lr.ph.i
 
 _RNvNtCsluMP4ekZjHw_14diesel_derives12sql_function34function_cannot_be_called_directly.exit: ; preds = %._crit_edge.loopexit.i, %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterINtNtCsluMP4ekZjHw_14diesel_derives5attrs20AttributeSpanWrapperNtNtBV_12sql_function20SqlFunctionAttributeEENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvB1T_18expand_nonvariadic0EBV_.exit
   %.sroa.05.0.lcssa.i = phi i1 [ false, %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterINtNtCsluMP4ekZjHw_14diesel_derives5attrs20AttributeSpanWrapperNtNtBV_12sql_function20SqlFunctionAttributeEENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvB1T_18expand_nonvariadic0EBV_.exit ], [ %i.lu, %._crit_edge.loopexit.i ]

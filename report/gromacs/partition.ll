@@ -205,16 +205,21 @@ bb.g:                                             ; preds = %_ZL18clearCommSetup
   %i.ar = load i32, ptr %4, align 4, !tbaa !210   ; 3 uses
   %i.as = load i32, ptr %5, align 4, !tbaa !210
   %i.at = sub nsw i32 %i.as, %i.ar                ; 2 uses
-  %i.au = trunc nsw i64 %indvars.iv to i32
-  %i.av = mul nsw i32 %i.at, %i.au
-  %33 = load i32, ptr %2, align 4, !tbaa !210     ; 2 uses
-  %34 = sdiv i32 %i.av, %33                       ; 3 uses
-  %35 = add nsw i32 %34, %i.ar                    ; 3 uses
+  %33 = load i32, ptr %2, align 4, !tbaa !210
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %36 = trunc nsw i64 %indvars.iv.next to i32
-  %37 = mul nsw i32 %i.at, %36
-  %38 = sdiv i32 %37, %33                         ; 3 uses
-  %i.aw = add nsw i32 %38, %i.ar                  ; 2 uses
+  %34 = trunc nsw i64 %indvars.iv.next to i32
+  %i.au = trunc nsw i64 %indvars.iv to i32
+  %35 = mul nsw i32 %i.at, %34
+  %i.av = mul nsw i32 %i.at, %i.au
+  %36 = insertelement <2 x i32> poison, i32 %i.av, i64 0
+  %37 = insertelement <2 x i32> %36, i32 %35, i64 1
+  %38 = insertelement <2 x i32> poison, i32 %33, i64 0
+  %39 = shufflevector <2 x i32> %38, <2 x i32> poison, <2 x i32> zeroinitializer
+  %40 = sdiv <2 x i32> %37, %39                   ; 2 uses
+  %41 = extractelement <2 x i32> %40, i64 0       ; 3 uses
+  %42 = add nsw i32 %41, %i.ar                    ; 3 uses
+  %43 = extractelement <2 x i32> %40, i64 1       ; 3 uses
+  %i.aw = add nsw i32 %43, %i.ar                  ; 2 uses
   %i.ax = icmp eq i64 %indvars.iv, 0
   %i.ay = load ptr, ptr %6, align 8, !tbaa !400   ; 11 uses
   %i.az = load i32, ptr %7, align 4, !tbaa !210   ; 6 uses
@@ -272,8 +277,8 @@ bb.h:                                             ; preds = %bb.g
   %i.cs = getelementptr inbounds nuw i8, ptr %i.ac, i64 48 ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %i.ac, i64 72 ; 2 uses
   %i.cu = load i32, ptr %i.ct, align 8, !tbaa !417 ; 2 uses
-  store i32 %35, ptr %i.c, align 4, !tbaa !210
-  %i.cv = icmp slt i32 %34, %38
+  store i32 %42, ptr %i.c, align 4, !tbaa !210
+  %i.cv = icmp slt i32 %41, %43
   br i1 %i.cv, label %.lr.ph43.i, label %_ZL21get_zone_pulse_groupsISt6vectorIiN3gmx9AllocatorIiNS1_20HostAllocationPolicyEEEEEvP12gmx_domdec_tiiiiNS1_8ArrayRefIKiEEiiiiiffPA3_fbSC_ffSC_SC_SC_PK12dd_corners_tPKfbbbbNS8_IKNS1_11BasicVectorIfEEEESA_PT_P20dd_comm_setup_work_t.exit
 
 .lr.ph43.i:                                       ; preds = %bb.h
@@ -360,7 +365,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.bg, %.lr.ph43.i
   %.041.i = phi i32 [ %i.cu, %.lr.ph43.i ], [ %.1.i, %bb.bg ] ; 5 uses
   %.023640.i = phi i32 [ 0, %.lr.ph43.i ], [ %.1237.i, %bb.bg ] ; 5 uses
-  %storemerge39.i = phi i32 [ %35, %.lr.ph43.i ], [ %i.uo, %bb.bg ] ; 8 uses
+  %storemerge39.i = phi i32 [ %42, %.lr.ph43.i ], [ %i.uo, %bb.bg ] ; 8 uses
   br i1 %i.cd, label %bb.q, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -763,7 +768,7 @@ bb.bh:                                            ; preds = %bb.g
   %i.vc = getelementptr inbounds nuw i8, ptr %i.ac, i64 48 ; 2 uses
   %i.vd = getelementptr inbounds nuw i8, ptr %i.ac, i64 72 ; 2 uses
   %i.ve = load i32, ptr %i.vd, align 8, !tbaa !417 ; 2 uses
-  %i.vf = icmp slt i32 %34, %38
+  %i.vf = icmp slt i32 %41, %43
   br i1 %i.vf, label %.lr.ph66.i, label %_ZL21get_zone_pulse_groupsISt6vectorIiN3gmx30DefaultInitializationAllocatorIiSaIiEEEEEvP12gmx_domdec_tiiiiNS1_8ArrayRefIKiEEiiiiiffPA3_fbSC_ffSC_SC_SC_PK12dd_corners_tPKfbbbbNS8_IKNS1_11BasicVectorIfEEEESA_PT_P20dd_comm_setup_work_t.exit
 
 .lr.ph66.i:                                       ; preds = %bb.bh
@@ -825,7 +830,7 @@ bb.bh:                                            ; preds = %bb.g
   %i.xb = getelementptr inbounds nuw i8, ptr %i.ac, i64 56 ; 3 uses
   %i.xc = getelementptr inbounds nuw i8, ptr %i.ac, i64 64 ; 3 uses
   %i.xd = add i32 %i.be, 1                        ; 2 uses
-  %i.xe = sext i32 %35 to i64
+  %i.xe = sext i32 %42 to i64
   %wide.trip.count.i74 = zext i32 %i.xd to i64
   %i.xf = sub nsw i64 2, %i.vq
   %i.xg = add nsw i64 %wide.trip.count.i74, -1    ; 3 uses

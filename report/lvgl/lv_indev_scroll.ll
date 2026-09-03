@@ -202,7 +202,7 @@ bb.ac:                                            ; preds = %init_scroll_limits.
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ad
   %.069115 = phi i16 [ 0, %bb.ac ], [ %i.cv, %bb.ad ]
-  %.070114 = phi i32 [ 256, %bb.ac ], [ %8, %bb.ad ]
+  %.070114 = phi i32 [ 256, %bb.ac ], [ %10, %bb.ad ]
   %.071113 = phi i32 [ 256, %bb.ac ], [ %i.cy, %bb.ad ]
   %.072112 = phi ptr [ %.0, %bb.ac ], [ %i.cz, %bb.ad ] ; 4 uses
   %i.cs = tail call ptr @lv_obj_get_style_prop(ptr noundef nonnull %.072112, i32 noundef 0, i8 noundef zeroext -100) #6
@@ -210,27 +210,27 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ad
   %i.cu = trunc i64 %i.ct to i16
   %i.cv = add i16 %.069115, %i.cu                 ; 3 uses
   %i.cw = tail call ptr @lv_obj_get_style_prop(ptr noundef nonnull %.072112, i32 noundef 0, i8 noundef zeroext -104) #6
-  %2 = ptrtoint ptr %i.cw to i64
-  %.sroa.0.0.extract.trunc.i.i = trunc i64 %2 to i32
-  %3 = tail call range(i32 1, -2147483648) i32 @llvm.smax.i32(i32 %.sroa.0.0.extract.trunc.i.i, i32 1)
-  %4 = tail call ptr @lv_obj_get_style_prop(ptr noundef nonnull %.072112, i32 noundef 0, i8 noundef zeroext -103) #6
-  %i.cx = ptrtoint ptr %4 to i64
-  %.sroa.0.0.extract.trunc.i.i78 = trunc i64 %i.cx to i32
-  %5 = tail call range(i32 1, -2147483648) i32 @llvm.smax.i32(i32 %.sroa.0.0.extract.trunc.i.i78, i32 1)
+  %2 = tail call ptr @lv_obj_get_style_prop(ptr noundef nonnull %.072112, i32 noundef 0, i8 noundef zeroext -103) #6
   %sext116 = shl i32 %.070114, 16
-  %6 = ashr exact i32 %sext116, 16
-  %7 = mul nsw i32 %3, %6
-  %8 = lshr i32 %7, 8                             ; 2 uses
   %sext117 = shl i32 %.071113, 16
-  %9 = ashr exact i32 %sext117, 16
-  %10 = mul nsw i32 %5, %9
-  %i.cy = lshr i32 %10, 8                         ; 2 uses
+  %3 = ptrtoint ptr %2 to i64
+  %i.cx = ptrtoint ptr %i.cw to i64
+  %.sroa.0.0.extract.trunc.i.i78 = trunc i64 %3 to i32
+  %.sroa.0.0.extract.trunc.i.i = trunc i64 %i.cx to i32
+  %4 = tail call range(i32 1, -2147483648) i32 @llvm.smax.i32(i32 %.sroa.0.0.extract.trunc.i.i78, i32 1)
+  %5 = tail call range(i32 1, -2147483648) i32 @llvm.smax.i32(i32 %.sroa.0.0.extract.trunc.i.i, i32 1)
+  %6 = ashr exact i32 %sext117, 16
+  %7 = ashr exact i32 %sext116, 16
+  %8 = mul nsw i32 %4, %6
+  %9 = mul nsw i32 %5, %7
+  %10 = lshr i32 %9, 8                            ; 2 uses
+  %i.cy = lshr i32 %8, 8                          ; 2 uses
   %i.cz = tail call ptr @lv_obj_get_parent(ptr noundef nonnull %.072112) #6 ; 2 uses
   %.not75 = icmp eq ptr %i.cz, null
   br i1 %.not75, label %bb.ae, label %bb.ad, !llvm.loop !54
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.da = trunc i32 %8 to i16                     ; 2 uses
+  %i.da = trunc i32 %10 to i16                    ; 2 uses
   %i.db = trunc i32 %i.cy to i16                  ; 2 uses
   %i.dc = icmp ne i16 %i.cv, 0
   %i.dd = icmp ne i16 %i.da, 256
@@ -240,21 +240,20 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %or.cond5, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
-  %spec.store.select14 = tail call i16 @llvm.umax.i16(i16 %i.db, i16 1)
-  %11 = sext i16 %spec.store.select14 to i32
-  %spec.store.select = tail call i16 @llvm.umax.i16(i16 %i.da, i16 1)
-  %12 = sext i16 %spec.store.select to i32
+  %11 = insertelement <2 x i16> poison, i16 %i.da, i64 0
+  %12 = insertelement <2 x i16> %11, i16 %i.db, i64 1
+  %13 = tail call <2 x i16> @llvm.umax.v2i16(<2 x i16> %12, <2 x i16> splat (i16 1))
   %i.df = sub i16 0, %i.cv
-  %13 = sdiv i32 65536, %12
-  %14 = sdiv i32 65536, %11
+  %14 = sext <2 x i16> %13 to <2 x i32>
+  %15 = sdiv <2 x i32> splat (i32 65536), %14
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
   store i64 0, ptr %1, align 8
   %i.dg = sext i16 %i.df to i32
-  %sext = shl i32 %13, 16
-  %15 = ashr exact i32 %sext, 16
-  %sext76 = shl i32 %14, 16
-  %16 = ashr exact i32 %sext76, 16
-  call void @lv_point_transform(ptr noundef nonnull %i.e, i32 noundef %i.dg, i32 noundef %15, i32 noundef %16, ptr noundef nonnull %1, i1 noundef zeroext false) #6
+  %16 = shl <2 x i32> %15, splat (i32 16)
+  %17 = ashr exact <2 x i32> %16, splat (i32 16)  ; 2 uses
+  %18 = extractelement <2 x i32> %17, i64 0
+  %19 = extractelement <2 x i32> %17, i64 1
+  call void @lv_point_transform(ptr noundef nonnull %i.e, i32 noundef %i.dg, i32 noundef %18, i32 noundef %19, ptr noundef nonnull %1, i1 noundef zeroext false) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #6
   br label %bb.ag
 
@@ -657,9 +656,6 @@ declare i32 @lv_obj_get_child_count(ptr noundef) local_unnamed_addr #2
 declare zeroext i1 @lv_obj_has_flag_any(ptr noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.umax.i16(i16, i16) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
@@ -673,6 +669,9 @@ declare i32 @llvm.smin.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i16> @llvm.umax.v2i16(<2 x i16>, <2 x i16>) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

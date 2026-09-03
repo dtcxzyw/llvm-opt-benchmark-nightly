@@ -205,8 +205,8 @@ bb.i:                                             ; preds = %_ZL8inflatevP8ucvec
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %.epilog-lcssa
-  %.01732.i.i = phi i32 [ %5, %.epilog-lcssa ], [ 0, %.lr.ph.i.i.preheader ] ; 2 uses
-  %.01831.i.i = phi i32 [ %4, %.epilog-lcssa ], [ 1, %.lr.ph.i.i.preheader ] ; 2 uses
+  %.01732.i.i = phi i32 [ %8, %.epilog-lcssa ], [ 0, %.lr.ph.i.i.preheader ] ; 2 uses
+  %.01831.i.i = phi i32 [ %7, %.epilog-lcssa ], [ 1, %.lr.ph.i.i.preheader ] ; 2 uses
   %.02030.i.i = phi i32 [ %i.cs, %.epilog-lcssa ], [ %i.av, %.lr.ph.i.i.preheader ] ; 3 uses
   %.02129.i.i = phi ptr [ %i.cu, %.epilog-lcssa ], [ %i.aw, %.lr.ph.i.i.preheader ] ; 3 uses
   %i.ax = tail call i32 @llvm.umin.i32(i32 %.02030.i.i, i32 5552) ; 4 uses
@@ -299,14 +299,17 @@ bb.k:                                             ; preds = %bb.k, %.epil.prehea
   %i.cs = sub nuw i32 %.02030.i.i, %i.ax          ; 2 uses
   %i.ct = zext nneg i32 %i.ax to i64
   %i.cu = getelementptr i8, ptr %.02129.i.i, i64 %i.ct
-  %4 = urem i32 %.lcssa54, 65521                  ; 2 uses
-  %5 = urem i32 %.lcssa, 65521                    ; 2 uses
+  %4 = insertelement <2 x i32> poison, i32 %.lcssa54, i64 0
+  %5 = insertelement <2 x i32> %4, i32 %.lcssa, i64 1
+  %6 = urem <2 x i32> %5, splat (i32 65521)       ; 2 uses
   %.not.i.i = icmp eq i32 %i.cs, 0
+  %7 = extractelement <2 x i32> %6, i64 0         ; 2 uses
+  %8 = extractelement <2 x i32> %6, i64 1         ; 2 uses
   br i1 %.not.i.i, label %._crit_edge.loopexit.i.i, label %.lr.ph.i.i, !llvm.loop !6
 
 ._crit_edge.loopexit.i.i:                         ; preds = %.epilog-lcssa
-  %i.cv = shl nuw i32 %5, 16
-  %i.cw = or disjoint i32 %i.cv, %4
+  %i.cv = shl nuw i32 %8, 16
+  %i.cw = or disjoint i32 %i.cv, %7
   br label %_ZL7adler32PKhj.exit
 
 _ZL7adler32PKhj.exit:                             ; preds = %bb.i, %._crit_edge.loopexit.i.i
@@ -368,8 +371,8 @@ bb.c:                                             ; preds = %_ZL7deflatePPhPmPKh
   br i1 %.not28.i.i, label %_ZL7adler32PKhj.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.c, %.epilog-lcssa
-  %.01732.i.i = phi i32 [ %6, %.epilog-lcssa ], [ 0, %bb.c ] ; 2 uses
-  %.01831.i.i = phi i32 [ %5, %.epilog-lcssa ], [ 1, %bb.c ] ; 2 uses
+  %.01732.i.i = phi i32 [ %9, %.epilog-lcssa ], [ 0, %bb.c ] ; 2 uses
+  %.01831.i.i = phi i32 [ %8, %.epilog-lcssa ], [ 1, %bb.c ] ; 2 uses
   %.02030.i.i = phi i32 [ %i.bf, %.epilog-lcssa ], [ %i.j, %bb.c ] ; 3 uses
   %.02129.i.i = phi ptr [ %i.bh, %.epilog-lcssa ], [ %2, %bb.c ] ; 3 uses
   %i.k = call i32 @llvm.umin.i32(i32 %.02030.i.i, i32 5552) ; 4 uses
@@ -462,14 +465,17 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
   %i.bf = sub nuw i32 %.02030.i.i, %i.k           ; 2 uses
   %i.bg = zext nneg i32 %i.k to i64
   %i.bh = getelementptr i8, ptr %.02129.i.i, i64 %i.bg
-  %5 = urem i32 %.lcssa65, 65521                  ; 2 uses
-  %6 = urem i32 %.lcssa, 65521                    ; 2 uses
+  %5 = insertelement <2 x i32> poison, i32 %.lcssa65, i64 0
+  %6 = insertelement <2 x i32> %5, i32 %.lcssa, i64 1
+  %7 = urem <2 x i32> %6, splat (i32 65521)       ; 2 uses
   %.not.i.i = icmp eq i32 %i.bf, 0
+  %8 = extractelement <2 x i32> %7, i64 0         ; 2 uses
+  %9 = extractelement <2 x i32> %7, i64 1         ; 2 uses
   br i1 %.not.i.i, label %._crit_edge.loopexit.i.i, label %.lr.ph.i.i, !llvm.loop !6
 
 ._crit_edge.loopexit.i.i:                         ; preds = %.epilog-lcssa
-  %i.bi = shl nuw i32 %6, 16
-  %i.bj = or disjoint i32 %i.bi, %5
+  %i.bi = shl nuw i32 %9, 16
+  %i.bj = or disjoint i32 %i.bi, %8
   br label %_ZL7adler32PKhj.exit
 
 _ZL7adler32PKhj.exit:                             ; preds = %bb.c, %._crit_edge.loopexit.i.i

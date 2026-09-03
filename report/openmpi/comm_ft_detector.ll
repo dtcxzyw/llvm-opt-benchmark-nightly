@@ -202,16 +202,17 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr i8, ptr %0, i64 264
   %.val = load ptr, ptr %i.b, align 8, !tbaa !67
   %i.c = getelementptr i8, ptr %.val, i64 16
-  %.val.val = load i32, ptr %i.c, align 8, !tbaa !70 ; 4 uses
+  %.val.val = load i32, ptr %i.c, align 8, !tbaa !70 ; 3 uses
   %i.d = getelementptr i8, ptr %0, i64 220
   %.val43 = load i32, ptr %i.d, align 4, !tbaa !56 ; 2 uses
-  %i.e = add nsw i32 %.val43, %.val.val           ; 2 uses
-  %2 = add nsw i32 %i.e, -1
-  %3 = srem i32 %2, %.val.val
-  store i32 %3, ptr getelementptr inbounds nuw (i8, ptr @comm_world_detector, i64 16), align 8, !tbaa !64
-  %4 = add nsw i32 %i.e, 1
-  %5 = srem i32 %4, %.val.val
-  store i32 %5, ptr getelementptr inbounds nuw (i8, ptr @comm_world_detector, i64 20), align 4, !tbaa !71
+  %i.e = add nsw i32 %.val43, %.val.val
+  %2 = insertelement <2 x i32> poison, i32 %i.e, i64 0
+  %3 = shufflevector <2 x i32> %2, <2 x i32> poison, <2 x i32> zeroinitializer
+  %4 = add nsw <2 x i32> %3, <i32 -1, i32 1>
+  %5 = insertelement <2 x i32> poison, i32 %.val.val, i64 0
+  %6 = shufflevector <2 x i32> %5, <2 x i32> poison, <2 x i32> zeroinitializer
+  %7 = srem <2 x i32> %4, %6
+  store <2 x i32> %7, ptr getelementptr inbounds nuw (i8, ptr @comm_world_detector, i64 16), align 8, !tbaa !22
   %i.f = load double, ptr @comm_heartbeat_period, align 8, !tbaa !18 ; 2 uses
   store double %i.f, ptr getelementptr inbounds nuw (i8, ptr @comm_world_detector, i64 48), align 8, !tbaa !107
   %i.g = load double, ptr @comm_heartbeat_timeout, align 8, !tbaa !18 ; 3 uses

@@ -205,8 +205,8 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader
   %.0181.lcssa = phi i64 [ %1, %.preheader ], [ %i.n, %.lr.ph ] ; 5 uses
-  %.0174.lcssa = phi i64 [ %3, %.preheader ], [ %i.o, %.lr.ph ] ; 10 uses
-  %.0173.lcssa = phi ptr [ %2, %.preheader ], [ %i.h, %.lr.ph ] ; 9 uses
+  %.0174.lcssa = phi i64 [ %3, %.preheader ], [ %i.o, %.lr.ph ] ; 8 uses
+  %.0173.lcssa = phi ptr [ %2, %.preheader ], [ %i.h, %.lr.ph ] ; 8 uses
   %i.u = load i64, ptr @CRC64_TRI_CUTOFF, align 8, !tbaa !19
   %i.v = icmp ugt i64 %.0174.lcssa, %i.u
   br i1 %i.v, label %bb.b, label %bb.d
@@ -246,7 +246,7 @@ bb.c:                                             ; preds = %.lr.ph218, %bb.c
   %i.an = getelementptr inbounds nuw i8, ptr %.0172213, i64 8
   %i.ao = load i64, ptr %.0171214, align 8, !tbaa !19
   %i.ap = xor i64 %i.ao, %.0169216                ; 8 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %.0171214, i64 8
+  %i.aq = getelementptr inbounds nuw i8, ptr %.0171214, i64 8 ; 2 uses
   %i.ar = and i64 %i.aj, 255
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %i.ar
   %i.at = load i64, ptr %i.as, align 8, !tbaa !19
@@ -359,21 +359,15 @@ bb.c:                                             ; preds = %.lr.ph218, %bb.c
   %i.ew = load i64, ptr %i.ev, align 8, !tbaa !19
   %i.ex = xor i64 %i.et, %i.ew                    ; 2 uses
   %.not188 = icmp eq i64 %i.ah, 0
-  br i1 %.not188, label %._crit_edge219.loopexit, label %bb.c, !llvm.loop !36
+  br i1 %.not188, label %._crit_edge219, label %bb.c, !llvm.loop !36
 
-._crit_edge219.loopexit:                          ; preds = %bb.c
-  %4 = urem i64 %.0174.lcssa, 24
-  %5 = sub i64 %.0174.lcssa, %4
-  %scevgep258 = getelementptr i8, ptr %.0173.lcssa, i64 %5
-  br label %._crit_edge219
-
-._crit_edge219:                                   ; preds = %._crit_edge219.loopexit, %bb.b
-  %.1182.lcssa = phi i64 [ %.0181.lcssa, %bb.b ], [ %i.cb, %._crit_edge219.loopexit ]
-  %.1.lcssa = phi ptr [ %.0173.lcssa, %bb.b ], [ %i.y, %._crit_edge219.loopexit ]
-  %.0172.lcssa = phi ptr [ %i.y, %bb.b ], [ %i.z, %._crit_edge219.loopexit ]
-  %.0171.lcssa = phi ptr [ %i.z, %bb.b ], [ %scevgep258, %._crit_edge219.loopexit ]
-  %.0170.lcssa = phi i64 [ 0, %bb.b ], [ %i.dm, %._crit_edge219.loopexit ]
-  %.0169.lcssa = phi i64 [ 0, %bb.b ], [ %i.ex, %._crit_edge219.loopexit ]
+._crit_edge219:                                   ; preds = %bb.c, %bb.b
+  %.1182.lcssa = phi i64 [ %.0181.lcssa, %bb.b ], [ %i.cb, %bb.c ]
+  %.1.lcssa = phi ptr [ %.0173.lcssa, %bb.b ], [ %i.y, %bb.c ]
+  %.0172.lcssa = phi ptr [ %i.y, %bb.b ], [ %i.z, %bb.c ]
+  %.0171.lcssa = phi ptr [ %i.z, %bb.b ], [ %i.aq, %bb.c ]
+  %.0170.lcssa = phi i64 [ 0, %bb.b ], [ %i.dm, %bb.c ]
+  %.0169.lcssa = phi i64 [ 0, %bb.b ], [ %i.ex, %bb.c ]
   %i.ey = ptrtoint ptr %.0172.lcssa to i64
   %i.ez = ptrtoint ptr %.1.lcssa to i64
   %i.fa = sub i64 %i.ey, %i.ez                    ; 3 uses

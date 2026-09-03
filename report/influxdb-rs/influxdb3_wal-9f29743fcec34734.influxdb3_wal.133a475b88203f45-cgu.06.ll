@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/influxdb-rs/original/influxdb3_wal-9f29743fcec34734.influxdb3_wal.133a475b88203f45-cgu.06?download=true
 inline.NumInlined: 98
 inline.NumDeleted: 59
-loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCseCDlJsl44RV_5tokio4sync7oneshot6SenderNtNtCs1ElB0qm0ygX_13influxdb3_wal12object_store11WriteResultEEB1q_:bb.a
   br i1 %or.cond.not.i.i, label %bb.c, label %_RNvXs0_NtNtCseCDlJsl44RV_5tokio4sync7oneshotINtB5_6SenderNtNtCs1ElB0qm0ygX_13influxdb3_wal12object_store11WriteResultENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBX_.exit.thread
 
@@ -204,163 +204,66 @@ bb.b:                                             ; preds = %bb.a
 
 .critedge:                                        ; preds = %bb.b
   %.idx30 = mul nuw nsw i64 %4, 104
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 %.idx30 ; 5 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 %.idx30 ; 3 uses
   %.not = icmp samesign ugt i64 %4, %i.c          ; 2 uses
   %spec.select = select i1 %.not, ptr %i.e, ptr %0
-  %i.f = mul nuw i64 %.sroa.0.0.i, 104            ; 4 uses
+  %i.f = mul nuw nsw i64 %.sroa.0.0.i, 104        ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %2, ptr nonnull align 8 %spec.select, i64 %i.f, i1 false)
-  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 %i.f ; 3 uses
-  br i1 %.not, label %bb.c, label %.lr.ph.i.preheader
-
-.lr.ph.i.preheader:                               ; preds = %.critedge
-  %6 = add i64 %i.f, -104                         ; 2 uses
-  %7 = udiv i64 %6, 104
-  %8 = and i64 %7, 1
-  %lcmp.mod.not.not = icmp eq i64 %8, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
-
-.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader
-  %.val.i19.prol = load i64, ptr %i.e, align 8, !range !10, !noalias !87, !noundef !4
-  %.val6.i.prol = load i64, ptr %2, align 8, !noalias !87
-  %9 = icmp eq i64 %.val.i19.prol, -1             ; 2 uses
-  %10 = icmp eq i64 %.val6.i.prol, -1             ; 2 uses
-  %or.cond.i.i.i.i20.prol = select i1 %9, i1 true, i1 %10
-  %or.cond.not.i.i.i.i21.prol = xor i1 %or.cond.i.i.i.i20.prol, true
-  %or.cond3.i.i.i.i22.prol = select i1 %or.cond.not.i.i.i.i21.prol, i1 true, i1 %10
-  br i1 %or.cond3.i.i.i.i22.prol, label %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.prol, label %11
-
-11:                                               ; preds = %.lr.ph.i.prol
-  tail call void @llvm.assume(i1 %9)
-  br label %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.prol
-
-_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.prol: ; preds = %11, %.lr.ph.i.prol
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %0, ptr noundef nonnull align 8 dereferenceable(104) %2, i64 104, i1 false), !noalias !87
-  %12 = getelementptr inbounds nuw i8, ptr %2, i64 104
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 104
-  br label %.lr.ph.i.prol.loopexit
-
-.lr.ph.i.prol.loopexit:                           ; preds = %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.prol, %.lr.ph.i.preheader
-  %.unr = phi ptr [ %0, %.lr.ph.i.preheader ], [ %13, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.prol ]
-  %.unr45 = phi ptr [ %2, %.lr.ph.i.preheader ], [ %12, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.prol ]
-  %14 = icmp ult i64 %6, 104
-  br i1 %14, label %_RINvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5mergeINtB3_10MergeStateNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpE10merge_downNvYB1a_NtNtBb_3cmp10PartialOrd2ltEB1c_.exit, label %.lr.ph.i
+  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 %i.f ; 2 uses
+  br i1 %.not, label %bb.c, label %.lr.ph.i
 
 bb.c:                                             ; preds = %.critedge
-  %i.h = getelementptr inbounds nuw [104 x i8], ptr %0, i64 %1 ; 2 uses
-  %i.i = getelementptr inbounds i8, ptr %i.e, i64 -104 ; 3 uses
-  %15 = add i64 %i.f, -104                        ; 2 uses
-  %16 = udiv i64 %15, 104
-  %17 = and i64 %16, 1
-  %lcmp.mod47.not.not = icmp eq i64 %17, 0
-  br i1 %lcmp.mod47.not.not, label %.split.i.prol, label %.split.i.prol.loopexit
+  %i.h = getelementptr inbounds nuw [104 x i8], ptr %0, i64 %1
+  %i.i = getelementptr inbounds i8, ptr %i.e, i64 -104
+  br label %.split.i
 
-.split.i.prol:                                    ; preds = %bb.c
-  %18 = getelementptr inbounds i8, ptr %i.g, i64 -104 ; 3 uses
-  %19 = getelementptr inbounds i8, ptr %i.h, i64 -104 ; 2 uses
-  %.val.i.prol = load i64, ptr %18, align 8, !range !10, !noalias !88, !noundef !4
-  %.val10.i.prol = load i64, ptr %i.i, align 8, !noalias !88
-  %20 = icmp eq i64 %.val.i.prol, -1              ; 2 uses
-  %21 = icmp eq i64 %.val10.i.prol, -1            ; 2 uses
-  %or.cond.i.i.i.i.prol = select i1 %20, i1 true, i1 %21
-  %or.cond.not.i.i.i.i.prol = xor i1 %or.cond.i.i.i.i.prol, true
-  %or.cond3.i.i.i.i.prol = select i1 %or.cond.not.i.i.i.i.prol, i1 true, i1 %21
-  br i1 %or.cond3.i.i.i.i.prol, label %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.prol, label %22
-
-22:                                               ; preds = %.split.i.prol
-  tail call void @llvm.assume(i1 %20)
-  br label %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.prol
-
-_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.prol: ; preds = %22, %.split.i.prol
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %19, ptr noundef nonnull align 8 dereferenceable(104) %18, i64 104, i1 false), !noalias !88
-  br label %.split.i.prol.loopexit
-
-.split.i.prol.loopexit:                           ; preds = %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.prol, %bb.c
-  %.unr48 = phi ptr [ %i.g, %bb.c ], [ %18, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.prol ]
-  %.sroa.0.0.i17.unr = phi ptr [ %i.h, %bb.c ], [ %19, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.prol ]
-  %23 = icmp ult i64 %15, 104
-  br i1 %23, label %_RINvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5mergeINtB3_10MergeStateNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpE10merge_downNvYB1a_NtNtBb_3cmp10PartialOrd2ltEB1c_.exit, label %.split.i
-
-.split.i:                                         ; preds = %.split.i.prol.loopexit, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.1
-  %i.j = phi ptr [ %25, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.1 ], [ %.unr48, %.split.i.prol.loopexit ] ; 2 uses
-  %.sroa.0.0.i17 = phi ptr [ %26, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.1 ], [ %.sroa.0.0.i17.unr, %.split.i.prol.loopexit ] ; 2 uses
-  %i.k = getelementptr inbounds i8, ptr %i.j, i64 -104 ; 2 uses
-  %i.l = getelementptr inbounds i8, ptr %.sroa.0.0.i17, i64 -104
-  %.val.i = load i64, ptr %i.k, align 8, !range !10, !noalias !88, !noundef !4
-  %.val10.i = load i64, ptr %i.i, align 8, !noalias !88
+.split.i:                                         ; preds = %bb.c, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.1
+  %i.j = phi ptr [ %i.k, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.1 ], [ %i.g, %bb.c ]
+  %.sroa.0.0.i17 = phi ptr [ %i.l, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.1 ], [ %i.h, %bb.c ]
+  %i.k = getelementptr inbounds i8, ptr %i.j, i64 -104 ; 4 uses
+  %i.l = getelementptr inbounds i8, ptr %.sroa.0.0.i17, i64 -104 ; 2 uses
+  %.val.i = load i64, ptr %i.k, align 8, !range !10, !noalias !87, !noundef !4
+  %.val10.i = load i64, ptr %i.i, align 8, !noalias !87
   %i.m = icmp eq i64 %.val.i, -1                  ; 2 uses
   %i.n = icmp eq i64 %.val10.i, -1                ; 2 uses
   %or.cond.i.i.i.i = select i1 %i.m, i1 true, i1 %i.n
   %or.cond.not.i.i.i.i = xor i1 %or.cond.i.i.i.i, true
   %or.cond3.i.i.i.i = select i1 %or.cond.not.i.i.i.i, i1 true, i1 %i.n
-  br i1 %or.cond3.i.i.i.i, label %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i, label %24
+  br i1 %or.cond3.i.i.i.i, label %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.1, label %bb.d
 
-24:                                               ; preds = %.split.i
+bb.d:                                             ; preds = %.split.i
   tail call void @llvm.assume(i1 %i.m)
-  br label %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i
-
-_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i: ; preds = %24, %.split.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.l, ptr noundef nonnull align 8 dereferenceable(104) %i.k, i64 104, i1 false), !noalias !88
-  %25 = getelementptr inbounds i8, ptr %i.j, i64 -208 ; 4 uses
-  %26 = getelementptr inbounds i8, ptr %.sroa.0.0.i17, i64 -208 ; 2 uses
-  %.val.i.1 = load i64, ptr %25, align 8, !range !10, !noalias !88, !noundef !4
-  %.val10.i.1 = load i64, ptr %i.i, align 8, !noalias !88
-  %27 = icmp eq i64 %.val.i.1, -1                 ; 2 uses
-  %28 = icmp eq i64 %.val10.i.1, -1               ; 2 uses
-  %or.cond.i.i.i.i.1 = select i1 %27, i1 true, i1 %28
-  %or.cond.not.i.i.i.i.1 = xor i1 %or.cond.i.i.i.i.1, true
-  %or.cond3.i.i.i.i.1 = select i1 %or.cond.not.i.i.i.i.1, i1 true, i1 %28
-  br i1 %or.cond3.i.i.i.i.1, label %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.1, label %bb.d
-
-bb.d:                                             ; preds = %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i
-  tail call void @llvm.assume(i1 %27)
   br label %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.1
 
-_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.1: ; preds = %bb.d, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %26, ptr noundef nonnull align 8 dereferenceable(104) %25, i64 104, i1 false), !noalias !88
-  %i.o = icmp eq ptr %25, %2
+_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.1: ; preds = %bb.d, %.split.i
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.l, ptr noundef nonnull align 8 dereferenceable(104) %i.k, i64 104, i1 false), !noalias !87
+  %i.o = icmp eq ptr %i.k, %2
   br i1 %i.o, label %_RINvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5mergeINtB3_10MergeStateNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpE10merge_downNvYB1a_NtNtBb_3cmp10PartialOrd2ltEB1c_.exit, label %.split.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.1
-  %i.p = phi ptr [ %i.u, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.1 ], [ %.unr, %.lr.ph.i.prol.loopexit ] ; 3 uses
-  %i.q = phi ptr [ %i.t, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.1 ], [ %.unr45, %.lr.ph.i.prol.loopexit ] ; 4 uses
-  %.val.i19 = load i64, ptr %i.e, align 8, !range !10, !noalias !87, !noundef !4
-  %.val6.i = load i64, ptr %i.q, align 8, !noalias !87
+.lr.ph.i:                                         ; preds = %.critedge, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.1
+  %i.p = phi ptr [ %i.u, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.1 ], [ %0, %.critedge ] ; 2 uses
+  %i.q = phi ptr [ %i.t, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.1 ], [ %2, %.critedge ] ; 3 uses
+  %.val.i19 = load i64, ptr %i.e, align 8, !range !10, !noalias !88, !noundef !4
+  %.val6.i = load i64, ptr %i.q, align 8, !noalias !88
   %i.r = icmp eq i64 %.val.i19, -1                ; 2 uses
   %i.s = icmp eq i64 %.val6.i, -1                 ; 2 uses
   %or.cond.i.i.i.i20 = select i1 %i.r, i1 true, i1 %i.s
   %or.cond.not.i.i.i.i21 = xor i1 %or.cond.i.i.i.i20, true
   %or.cond3.i.i.i.i22 = select i1 %or.cond.not.i.i.i.i21, i1 true, i1 %i.s
-  br i1 %or.cond3.i.i.i.i22, label %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23, label %29
+  br i1 %or.cond3.i.i.i.i22, label %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.1, label %bb.e
 
-29:                                               ; preds = %.lr.ph.i
+bb.e:                                             ; preds = %.lr.ph.i
   tail call void @llvm.assume(i1 %i.r)
-  br label %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23
-
-_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23: ; preds = %29, %.lr.ph.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.p, ptr noundef nonnull align 8 dereferenceable(104) %i.q, i64 104, i1 false), !noalias !87
-  %30 = getelementptr inbounds nuw i8, ptr %i.q, i64 104 ; 2 uses
-  %31 = getelementptr inbounds nuw i8, ptr %i.p, i64 104
-  %.val.i19.1 = load i64, ptr %i.e, align 8, !range !10, !noalias !87, !noundef !4
-  %.val6.i.1 = load i64, ptr %30, align 8, !noalias !87
-  %32 = icmp eq i64 %.val.i19.1, -1               ; 2 uses
-  %33 = icmp eq i64 %.val6.i.1, -1                ; 2 uses
-  %or.cond.i.i.i.i20.1 = select i1 %32, i1 true, i1 %33
-  %or.cond.not.i.i.i.i21.1 = xor i1 %or.cond.i.i.i.i20.1, true
-  %or.cond3.i.i.i.i22.1 = select i1 %or.cond.not.i.i.i.i21.1, i1 true, i1 %33
-  br i1 %or.cond3.i.i.i.i22.1, label %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.1, label %bb.e
-
-bb.e:                                             ; preds = %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23
-  tail call void @llvm.assume(i1 %32)
   br label %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.1
 
-_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.1: ; preds = %bb.e, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %31, ptr noundef nonnull align 8 dereferenceable(104) %30, i64 104, i1 false), !noalias !87
-  %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 208 ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 208
+_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.1: ; preds = %bb.e, %.lr.ph.i
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.p, ptr noundef nonnull align 8 dereferenceable(104) %i.q, i64 104, i1 false), !noalias !88
+  %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 104 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 104
   %.not.i.1 = icmp eq ptr %i.t, %i.g
   br i1 %.not.i.1, label %_RINvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5mergeINtB3_10MergeStateNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpE10merge_downNvYB1a_NtNtBb_3cmp10PartialOrd2ltEB1c_.exit, label %.lr.ph.i
 
-_RINvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5mergeINtB3_10MergeStateNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpE10merge_downNvYB1a_NtNtBb_3cmp10PartialOrd2ltEB1c_.exit: ; preds = %.lr.ph.i.prol.loopexit, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.1, %.split.i.prol.loopexit, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.1, %bb.b, %bb.a
+_RINvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5mergeINtB3_10MergeStateNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpE10merge_downNvYB1a_NtNtBb_3cmp10PartialOrd2ltEB1c_.exit: ; preds = %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i23.1, %_RNvYNvYNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtBK_3ops8function5FnMutTRB5_B1Q_EE8call_mutB7_.exit.i.1, %bb.b, %bb.a
   ret void
 }
 
@@ -763,10 +666,10 @@ attributes #21 = { nounwind }
 !80 = distinct !{!80, !"_RNvMNtCscdodAO9FK5_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerINtNtNtCseCDlJsl44RV_5tokio4sync7oneshot5InnerNtNtCs1ElB0qm0ygX_13influxdb3_wal12object_store11WriteResultEEE3newB1N_"}
 !81 = distinct !{!81, !80, !"_RNvMNtCscdodAO9FK5_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerINtNtNtCseCDlJsl44RV_5tokio4sync7oneshot5InnerNtNtCs1ElB0qm0ygX_13influxdb3_wal12object_store11WriteResultEEE3newB1N_: argument 0"}
 !82 = !{!81}
-!83 = distinct !{!83, !"_RINvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5mergeINtB3_10MergeStateNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpE8merge_upNvYB1a_NtNtBb_3cmp10PartialOrd2ltEB1c_"}
-!84 = distinct !{!84, !83, !"_RINvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5mergeINtB3_10MergeStateNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpE8merge_upNvYB1a_NtNtBb_3cmp10PartialOrd2ltEB1c_: argument 0"}
-!85 = distinct !{!85, !"_RINvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5mergeINtB3_10MergeStateNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpE10merge_downNvYB1a_NtNtBb_3cmp10PartialOrd2ltEB1c_"}
-!86 = distinct !{!86, !85, !"_RINvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5mergeINtB3_10MergeStateNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpE10merge_downNvYB1a_NtNtBb_3cmp10PartialOrd2ltEB1c_: argument 0"}
+!83 = distinct !{!83, !"_RINvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5mergeINtB3_10MergeStateNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpE10merge_downNvYB1a_NtNtBb_3cmp10PartialOrd2ltEB1c_"}
+!84 = distinct !{!84, !83, !"_RINvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5mergeINtB3_10MergeStateNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpE10merge_downNvYB1a_NtNtBb_3cmp10PartialOrd2ltEB1c_: argument 0"}
+!85 = distinct !{!85, !"_RINvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5mergeINtB3_10MergeStateNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpE8merge_upNvYB1a_NtNtBb_3cmp10PartialOrd2ltEB1c_"}
+!86 = distinct !{!86, !85, !"_RINvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5mergeINtB3_10MergeStateNtCs1ElB0qm0ygX_13influxdb3_wal5WalOpE8merge_upNvYB1a_NtNtBb_3cmp10PartialOrd2ltEB1c_: argument 0"}
 !87 = !{!84}
 !88 = !{!86}
 !89 = distinct !{!89, !"_RINvNtCs4NRVxsYgnAr_4core3ptr10swap_chunkKj8_ECs1ElB0qm0ygX_13influxdb3_wal"}

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 21
 inline.NumDeleted: 10
 loop-unroll.NumCompletelyUnrolled: 22
-loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 26
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 27
 begin_hunk_0_@cli_icongroupset_add:bb.a
 bb.k:                                             ; preds = %bb.i
   %i.u = trunc nuw i64 %indvars.iv to i32
@@ -205,7 +205,7 @@ bb.a:
   %i.i = zext nneg i32 %0 to i64                  ; 21 uses
   %i.j = shl nuw nsw i64 %i.i, 3
   %i.k = mul nuw nsw i64 %i.j, %i.i               ; 2 uses
-  %i.l = tail call ptr @cli_max_malloc(i64 noundef %i.k) #13 ; 18 uses
+  %i.l = tail call ptr @cli_max_malloc(i64 noundef %i.k) #13 ; 20 uses
   %.not = icmp eq ptr %i.l, null
   br i1 %.not, label %bb.b, label %bb.c
 
@@ -334,7 +334,7 @@ hsv.exit.us:                                      ; preds = %bb.f, %bb.e
 
 bb.g:                                             ; preds = %hsv.exit.us
   %i.cb = sub nsw i32 %i.bn, %i.bo
-  %.rhs.trunc.us = trunc nuw nsw i32 %i.bq to i16 ; 3 uses
+  %.rhs.trunc.us = trunc nuw nsw i32 %i.bq to i16 ; 2 uses
   %i.cc = sub nsw i32 %i.bm, %i.bo
   %i.cd = sub nsw i32 %i.bm, %i.bn
   %i.ce = tail call i32 @llvm.abs.i32(i32 %i.cd, i1 true)
@@ -344,17 +344,18 @@ bb.g:                                             ; preds = %hsv.exit.us
   %.zext1101.us = zext nneg i16 %i.cg to i32
   %i.ch = tail call i32 @llvm.abs.i32(i32 %i.cc, i1 true)
   %i.ci = tail call i32 @llvm.abs.i32(i32 %i.cb, i1 true)
-  %i.cj = trunc nuw nsw i32 %i.ch to i16
-  %i.ck = trunc nuw nsw i32 %i.ci to i16
-  %.lhs.trunc1096.us = mul nuw nsw i16 %i.cj, 100
-  %.lhs.trunc.us = mul nuw nsw i16 %i.ck, 100
-  %4 = udiv i16 %.lhs.trunc1096.us, %.rhs.trunc.us
-  %5 = udiv i16 %.lhs.trunc.us, %.rhs.trunc.us
-  %6 = insertelement <4 x i16> poison, i16 %5, i64 0
-  %7 = insertelement <4 x i16> %6, i16 %4, i64 1
+  %i.cj = trunc nsw i32 %i.ch to i16
+  %i.ck = trunc nsw i32 %i.ci to i16
+  %4 = insertelement <2 x i16> poison, i16 %i.ck, i64 0
+  %5 = insertelement <2 x i16> %4, i16 %i.cj, i64 1
+  %6 = mul nuw nsw <2 x i16> %5, splat (i16 100)
+  %7 = insertelement <2 x i16> poison, i16 %.rhs.trunc.us, i64 0
+  %8 = shufflevector <2 x i16> %7, <2 x i16> poison, <2 x i32> zeroinitializer
+  %9 = udiv <2 x i16> %6, %8
   %i.cl = load <4 x i32>, ptr %i.r, align 8, !tbaa !56
   %i.cm = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 0>, i32 %.zext1101.us, i64 2
-  %i.cn = zext <4 x i16> %7 to <4 x i32>
+  %10 = shufflevector <2 x i16> %9, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.cn = zext <4 x i16> %10 to <4 x i32>
   %i.co = shufflevector <4 x i32> %i.cn, <4 x i32> %i.cm, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.cp = sub <4 x i32> %i.cl, %i.co
   %i.cq = add <4 x i32> %i.cp, <i32 100, i32 100, i32 100, i32 1>
@@ -480,7 +481,7 @@ bb.m:                                             ; preds = %hsv.exit1032
 
 bb.n:                                             ; preds = %bb.m, %bb.l
   %i.et = sub nsw i32 %i.ee, %i.ef
-  %.rhs.trunc1121 = trunc nuw nsw i32 %i.eh to i16 ; 3 uses
+  %.rhs.trunc1121 = trunc nuw nsw i32 %i.eh to i16 ; 2 uses
   %i.eu = sub nsw i32 %i.ed, %i.ef
   %i.ev = sub nsw i32 %i.ed, %i.ee
   %i.ew = tail call i32 @llvm.abs.i32(i32 %i.ev, i1 true)
@@ -490,17 +491,18 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %.zext1128 = zext nneg i16 %i.ey to i32
   %i.ez = tail call i32 @llvm.abs.i32(i32 %i.eu, i1 true)
   %i.fa = tail call i32 @llvm.abs.i32(i32 %i.et, i1 true)
-  %i.fb = trunc nuw nsw i32 %i.ez to i16
-  %i.fc = trunc nuw nsw i32 %i.fa to i16
-  %.lhs.trunc1123 = mul nuw nsw i16 %i.fb, 100
-  %.lhs.trunc1120 = mul nuw nsw i16 %i.fc, 100
-  %8 = udiv i16 %.lhs.trunc1123, %.rhs.trunc1121
-  %9 = udiv i16 %.lhs.trunc1120, %.rhs.trunc1121
-  %10 = insertelement <4 x i16> poison, i16 %9, i64 0
-  %11 = insertelement <4 x i16> %10, i16 %8, i64 1
+  %i.fb = trunc nsw i32 %i.ez to i16
+  %i.fc = trunc nsw i32 %i.fa to i16
+  %11 = insertelement <2 x i16> poison, i16 %i.fc, i64 0
+  %12 = insertelement <2 x i16> %11, i16 %i.fb, i64 1
+  %13 = mul nuw nsw <2 x i16> %12, splat (i16 100)
+  %14 = insertelement <2 x i16> poison, i16 %.rhs.trunc1121, i64 0
+  %15 = shufflevector <2 x i16> %14, <2 x i16> poison, <2 x i32> zeroinitializer
+  %16 = udiv <2 x i16> %13, %15
   %i.fd = load <4 x i32>, ptr %i.r, align 8, !tbaa !56
   %i.fe = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 0>, i32 %.zext1128, i64 2
-  %i.ff = zext <4 x i16> %11 to <4 x i32>
+  %17 = shufflevector <2 x i16> %16, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.ff = zext <4 x i16> %17 to <4 x i32>
   %i.fg = shufflevector <4 x i32> %i.ff, <4 x i32> %i.fe, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.fh = sub <4 x i32> %i.fd, %i.fg
   %i.fi = add <4 x i32> %i.fh, <i32 100, i32 100, i32 100, i32 1>
@@ -597,7 +599,7 @@ hsv.exit1044:                                     ; preds = %hsv.exit1038, %bb.q
 
 bb.r:                                             ; preds = %hsv.exit1044
   %i.hb = sub nsw i32 %i.gn, %i.go
-  %.rhs.trunc1106 = trunc nuw nsw i32 %i.gq to i16 ; 3 uses
+  %.rhs.trunc1106 = trunc nuw nsw i32 %i.gq to i16 ; 2 uses
   %i.hc = sub nsw i32 %i.gm, %i.go
   %i.hd = sub nsw i32 %i.gm, %i.gn
   %i.he = tail call i32 @llvm.abs.i32(i32 %i.hd, i1 true)
@@ -607,17 +609,18 @@ bb.r:                                             ; preds = %hsv.exit1044
   %.zext1113 = zext nneg i16 %i.hg to i32
   %i.hh = tail call i32 @llvm.abs.i32(i32 %i.hc, i1 true)
   %i.hi = tail call i32 @llvm.abs.i32(i32 %i.hb, i1 true)
-  %i.hj = trunc nuw nsw i32 %i.hh to i16
-  %i.hk = trunc nuw nsw i32 %i.hi to i16
-  %.lhs.trunc1108 = mul nuw nsw i16 %i.hj, 100
-  %.lhs.trunc1105 = mul nuw nsw i16 %i.hk, 100
-  %12 = udiv i16 %.lhs.trunc1108, %.rhs.trunc1106
-  %13 = udiv i16 %.lhs.trunc1105, %.rhs.trunc1106
-  %14 = insertelement <4 x i16> poison, i16 %13, i64 0
-  %15 = insertelement <4 x i16> %14, i16 %12, i64 1
+  %i.hj = trunc nsw i32 %i.hh to i16
+  %i.hk = trunc nsw i32 %i.hi to i16
+  %18 = insertelement <2 x i16> poison, i16 %i.hk, i64 0
+  %19 = insertelement <2 x i16> %18, i16 %i.hj, i64 1
+  %20 = mul nuw nsw <2 x i16> %19, splat (i16 100)
+  %21 = insertelement <2 x i16> poison, i16 %.rhs.trunc1106, i64 0
+  %22 = shufflevector <2 x i16> %21, <2 x i16> poison, <2 x i32> zeroinitializer
+  %23 = udiv <2 x i16> %20, %22
   %i.hl = load <4 x i32>, ptr %i.r, align 8, !tbaa !56
   %i.hm = insertelement <4 x i32> <i32 poison, i32 poison, i32 poison, i32 0>, i32 %.zext1113, i64 2
-  %i.hn = zext <4 x i16> %15 to <4 x i32>
+  %24 = shufflevector <2 x i16> %23, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.hn = zext <4 x i16> %24 to <4 x i32>
   %i.ho = shufflevector <4 x i32> %i.hn, <4 x i32> %i.hm, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.hp = sub <4 x i32> %i.hl, %i.ho
   %i.hq = add <4 x i32> %i.hp, <i32 100, i32 100, i32 100, i32 1>
@@ -1020,9 +1023,9 @@ bb.aq:                                            ; preds = %bb.ap
   br label %bb.ar
 
 .preheader1171.us.preheader:                      ; preds = %bb.bj
-  %i.og = add nsw i32 %0, -1                      ; 7 uses
+  %i.og = add nsw i32 %0, -1                      ; 8 uses
   %i.oh = zext nneg i32 %0 to i64                 ; 3 uses
-  %wide.trip.count1592 = zext i32 %i.og to i64    ; 3 uses
+  %wide.trip.count1592 = zext i32 %i.og to i64    ; 4 uses
   %i.oi = add nsw i64 %wide.trip.count1592, -1    ; 5 uses
   %n.vec = and i64 %i.oi, -2                      ; 2 uses
   %i.oj = or i64 %i.oi, 1
@@ -1148,7 +1151,7 @@ scalar.ph:                                        ; preds = %middle.block, %scal
   br i1 %exitcond1588.not, label %._crit_edge1268.us, label %scalar.ph, !llvm.loop !130
 
 ._crit_edge1268.us:                               ; preds = %scalar.ph, %middle.block
-  %spec.select.us.lcssa = phi i32 [ %i.pr, %middle.block ], [ %spec.select.us, %scalar.ph ] ; 3 uses
+  %spec.select.us.lcssa = phi i32 [ %i.pr, %middle.block ], [ %spec.select.us, %scalar.ph ] ; 5 uses
   %exitcond1593.not = icmp eq i64 %indvars.iv.next1590, %wide.trip.count1592
   br i1 %exitcond1593.not, label %._crit_edge1272, label %.preheader1171.us
 
@@ -1306,17 +1309,40 @@ bb.bj:                                            ; preds = %labdiff.exit
   br i1 %.not966.not, label %.loopexit1170, label %.preheader1168.preheader
 
 .preheader1168.preheader:                         ; preds = %._crit_edge1272
-  %wide.trip.count1602 = zext nneg i32 %i.og to i64 ; 2 uses
+  %wide.trip.count1602 = zext nneg i32 %i.og to i64
+  %25 = add nsw i64 %wide.trip.count1592, -1      ; 3 uses
+  %xtraiter = and i64 %25, 1
+  %26 = icmp eq i32 %i.og, 2
+  %unroll_iter = and i64 %25, -2
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %lcmp.mod108 = trunc i64 %25 to i1
   br label %.preheader1168
 
 .preheader1168:                                   ; preds = %.preheader1168.preheader, %._crit_edge1278
   %indvars.iv1599 = phi i64 [ 1, %.preheader1168.preheader ], [ %indvars.iv.next1600, %._crit_edge1278 ] ; 2 uses
-  %i.tu = mul nuw nsw i64 %indvars.iv1599, %i.i
+  %i.tu = mul nuw nsw i64 %indvars.iv1599, %i.i   ; 3 uses
+  br i1 %26, label %.epil.preheader, label %.preheader1168.new
+
+.preheader1168.new:                               ; preds = %.preheader1168
+  %invariant.op = add nuw nsw i64 1, %i.tu
   br label %bb.bk
 
-bb.bk:                                            ; preds = %.preheader1168, %bb.bk
-  %indvars.iv1594.a = phi i64 [ 1, %.preheader1168 ], [ %indvars.iv.next1595, %bb.bk ] ; 2 uses
-  %i.tv = add nuw nsw i64 %indvars.iv1594.a, %i.tu ; 2 uses
+bb.bk:                                            ; preds = %bb.bk, %.preheader1168.new
+  %indvars.iv1594 = phi i64 [ 1, %.preheader1168.new ], [ %indvars.iv.next1595.1, %bb.bk ] ; 3 uses
+  %indvars.iv1594.a = phi i64 [ 0, %.preheader1168.new ], [ %indvars.iv.next1595, %bb.bk ]
+  %27 = add nuw nsw i64 %indvars.iv1594, %i.tu    ; 2 uses
+  %28 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %27
+  %29 = load i32, ptr %28, align 4, !tbaa !56
+  %30 = mul i32 %29, 255
+  %31 = udiv i32 %30, %spec.select.us.lcssa       ; 3 uses
+  %32 = shl i32 %31, 8
+  %33 = shl i32 %31, 16
+  %34 = or i32 %33, %32
+  %35 = or i32 %34, %31
+  %36 = or i32 %35, -16777216
+  %37 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %27
+  store i32 %36, ptr %37, align 4, !tbaa !56
+  %i.tv = add nuw nsw i64 %indvars.iv1594, %invariant.op ; 2 uses
   %i.tw = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.tv
   %i.tx = load i32, ptr %i.tw, align 4, !tbaa !56
   %i.ty = mul i32 %i.tx, 255
@@ -1328,11 +1354,32 @@ bb.bk:                                            ; preds = %.preheader1168, %bb
   %i.ue = or i32 %i.ud, -16777216
   %i.uf = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.tv
   store i32 %i.ue, ptr %i.uf, align 4, !tbaa !56
-  %indvars.iv.next1595 = add nuw nsw i64 %indvars.iv1594.a, 1 ; 2 uses
-  %exitcond1598.not = icmp eq i64 %indvars.iv.next1595, %wide.trip.count1602
-  br i1 %exitcond1598.not, label %._crit_edge1278, label %bb.bk
+  %indvars.iv.next1595.1 = add nuw nsw i64 %indvars.iv1594, 2 ; 2 uses
+  %indvars.iv.next1595 = add nuw nsw i64 %indvars.iv1594.a, 2 ; 2 uses
+  %exitcond1598.not = icmp eq i64 %indvars.iv.next1595, %unroll_iter
+  br i1 %exitcond1598.not, label %._crit_edge1278.unr-lcssa, label %bb.bk
 
-._crit_edge1278:                                  ; preds = %bb.bk
+._crit_edge1278.unr-lcssa:                        ; preds = %bb.bk
+  br i1 %lcmp.mod.not, label %._crit_edge1278, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %._crit_edge1278.unr-lcssa, %.preheader1168
+  %indvars.iv1594.epil.init = phi i64 [ 1, %.preheader1168 ], [ %indvars.iv.next1595.1, %._crit_edge1278.unr-lcssa ]
+  tail call void @llvm.assume(i1 %lcmp.mod108)
+  %38 = add nuw nsw i64 %indvars.iv1594.epil.init, %i.tu ; 2 uses
+  %39 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %38
+  %40 = load i32, ptr %39, align 4, !tbaa !56
+  %41 = mul i32 %40, 255
+  %42 = udiv i32 %41, %spec.select.us.lcssa       ; 3 uses
+  %43 = shl i32 %42, 8
+  %44 = shl i32 %42, 16
+  %45 = or i32 %44, %43
+  %46 = or i32 %45, %42
+  %47 = or i32 %46, -16777216
+  %48 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %38
+  store i32 %47, ptr %48, align 4, !tbaa !56
+  br label %._crit_edge1278
+
+._crit_edge1278:                                  ; preds = %._crit_edge1278.unr-lcssa, %.epil.preheader
   %indvars.iv.next1600 = add nuw nsw i64 %indvars.iv1599, 1 ; 2 uses
   %exitcond1603.not = icmp eq i64 %indvars.iv.next1600, %wide.trip.count1602
   br i1 %exitcond1603.not, label %.loopexit1170, label %.preheader1168

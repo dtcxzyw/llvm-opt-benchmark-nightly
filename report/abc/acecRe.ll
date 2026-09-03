@@ -204,19 +204,19 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.c = getelementptr i8, ptr %0, i64 8
   %.val8 = load ptr, ptr %i.c, align 8, !tbaa !17 ; 9 uses
-  %1 = add nsw i32 %.val, -1
-  %2 = udiv i32 %1, 6
-  %3 = add nuw nsw i32 %2, 1
-  %wide.trip.count = zext nneg i32 %3 to i64      ; 3 uses
+  %wide.trip.count = zext nneg i32 %.val to i64   ; 2 uses
   %min.iters.check = icmp ult i32 %.val, 49
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %i.d = and i64 %wide.trip.count, 7              ; 2 uses
+  %1 = add nsw i64 %wide.trip.count, -1
+  %2 = udiv i64 %1, 6
+  %3 = add nuw nsw i64 %2, 1                      ; 2 uses
+  %i.d = and i64 %3, 7                            ; 2 uses
   %i.e = icmp eq i64 %i.d, 0
   %i.f = select i1 %i.e, i64 8, i64 %i.d
-  %n.vec = sub nsw i64 %wide.trip.count, %i.f     ; 3 uses
-  %i.g = mul nsw i64 %n.vec, 6
+  %n.vec = sub nsw i64 %3, %i.f                   ; 3 uses
+  %i.g = mul i64 %n.vec, 6
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -288,9 +288,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.az = zext i1 %.not to i32
   %spec.select = add nuw nsw i32 %.010, %i.az     ; 2 uses
   %indvars.iv.next12 = add nuw nsw i64 %indvars.iv11, 1 ; 2 uses
+  %4 = mul nuw nsw i64 %indvars.iv.next12, 6
+  %5 = icmp samesign ult i64 %4, %wide.trip.count
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 6
-  %exitcond.not = icmp eq i64 %indvars.iv.next12, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !89
+  br i1 %5, label %scalar.ph, label %._crit_edge, !llvm.loop !89
 
 ._crit_edge:                                      ; preds = %scalar.ph, %bb.a
   %.0.lcssa = phi i32 [ 0, %bb.a ], [ %spec.select, %scalar.ph ]
@@ -388,19 +389,19 @@ Abc_Clock.exit:                                   ; preds = %bb.a, %bb.b
 .lr.ph.i:                                         ; preds = %Abc_Clock.exit
   %i.i = getelementptr i8, ptr %i.f, i64 8
   %.val8.i = load ptr, ptr %i.i, align 8, !tbaa !17 ; 9 uses
-  %3 = add nsw i32 %.val.i, -1
-  %4 = udiv i32 %3, 6
-  %5 = add nuw nsw i32 %4, 1
-  %wide.trip.count.i = zext nneg i32 %5 to i64    ; 3 uses
+  %wide.trip.count.i = zext nneg i32 %.val.i to i64 ; 2 uses
   %min.iters.check = icmp ult i32 %.val.i, 49
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %i.j = and i64 %wide.trip.count.i, 7            ; 2 uses
+  %3 = add nsw i64 %wide.trip.count.i, -1
+  %4 = udiv i64 %3, 6
+  %5 = add nuw nsw i64 %4, 1                      ; 2 uses
+  %i.j = and i64 %5, 7                            ; 2 uses
   %i.k = icmp eq i64 %i.j, 0
   %i.l = select i1 %i.k, i64 8, i64 %i.j
-  %n.vec = sub nsw i64 %wide.trip.count.i, %i.l   ; 3 uses
-  %i.m = mul nsw i64 %n.vec, 6
+  %n.vec = sub nsw i64 %5, %i.l                   ; 3 uses
+  %i.m = mul i64 %n.vec, 6
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -472,9 +473,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.bf = zext i1 %.not.i to i32
   %spec.select.i = add nuw nsw i32 %.010.i, %i.bf ; 2 uses
   %indvars.iv.next12.i = add nuw nsw i64 %indvars.iv11.i, 1 ; 2 uses
+  %6 = mul nuw nsw i64 %indvars.iv.next12.i, 6
+  %7 = icmp samesign ult i64 %6, %wide.trip.count.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 6
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next12.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %Ree_ManCountFadds.exit, label %scalar.ph, !llvm.loop !92
+  br i1 %7, label %scalar.ph, label %Ree_ManCountFadds.exit, !llvm.loop !92
 
 Ree_ManCountFadds.exit:                           ; preds = %scalar.ph, %Abc_Clock.exit
   %.0.lcssa.i = phi i32 [ 0, %Abc_Clock.exit ], [ %spec.select.i, %scalar.ph ] ; 2 uses

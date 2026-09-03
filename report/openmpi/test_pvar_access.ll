@@ -68,14 +68,16 @@ bb.a:
   %i.n = call i32 @MPI_Init(ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #7 ; 0 uses
   %i.o = call i32 @MPI_Comm_rank(ptr noundef nonnull @ompi_mpi_comm_world, ptr noundef nonnull %i.c) #7 ; 0 uses
   %i.p = call i32 @MPI_Comm_size(ptr noundef nonnull @ompi_mpi_comm_world, ptr noundef nonnull %i.d) #7 ; 0 uses
-  %i.q = load i32, ptr %i.d, align 4, !tbaa !17   ; 3 uses
+  %i.q = load i32, ptr %i.d, align 4, !tbaa !17   ; 2 uses
   store i32 %i.q, ptr @world_size, align 4, !tbaa !17
-  %i.r = load i32, ptr %i.c, align 4, !tbaa !17   ; 3 uses
+  %i.r = load i32, ptr %i.c, align 4, !tbaa !17   ; 2 uses
   store i32 %i.r, ptr @world_rank, align 4, !tbaa !17
-  %3 = add nsw i32 %i.r, 1
-  %4 = srem i32 %3, %i.q                          ; 2 uses
-  %5 = add nsw i32 %i.r, -1
-  %6 = srem i32 %5, %i.q
+  %3 = insertelement <2 x i32> poison, i32 %i.r, i64 0
+  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <2 x i32> zeroinitializer
+  %5 = add nsw <2 x i32> %4, <i32 1, i32 -1>
+  %6 = insertelement <2 x i32> poison, i32 %i.q, i64 0
+  %7 = shufflevector <2 x i32> %6, <2 x i32> poison, <2 x i32> zeroinitializer
+  %8 = srem <2 x i32> %5, %7                      ; 3 uses
   %i.s = call i32 @MPI_T_init_thread(i32 noundef 0, ptr noundef nonnull %i.f) #7 ; 2 uses
   %.not = icmp eq i32 %i.s, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -181,15 +183,18 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 
 bb.r:                                             ; preds = %bb.q
   store i32 25, ptr %i.e, align 4, !tbaa !17
-  %i.bl = call i32 @MPI_Isend(ptr noundef nonnull %i.e, i32 noundef 1, ptr noundef nonnull @ompi_mpi_int, i32 noundef %4, i32 noundef 201, ptr noundef nonnull @ompi_mpi_comm_world, ptr noundef nonnull %i.k) #7 ; 0 uses
+  %9 = extractelement <2 x i32> %8, i64 0
+  %i.bl = call i32 @MPI_Isend(ptr noundef nonnull %i.e, i32 noundef 1, ptr noundef nonnull @ompi_mpi_int, i32 noundef %9, i32 noundef 201, ptr noundef nonnull @ompi_mpi_comm_world, ptr noundef nonnull %i.k) #7 ; 0 uses
   br label %.preheader231
 
 .preheader231:                                    ; preds = %bb.r, %bb.q
+  %10 = extractelement <2 x i32> %8, i64 1
+  %11 = extractelement <2 x i32> %8, i64 0
   br label %bb.s
 
 bb.s:                                             ; preds = %.preheader231, %thread-pre-split
   %.085 = phi i32 [ %.2, %thread-pre-split ], [ 201, %.preheader231 ] ; 3 uses
-  %i.bm = call i32 @MPI_Irecv(ptr noundef nonnull %i.e, i32 noundef 1, ptr noundef nonnull @ompi_mpi_int, i32 noundef %6, i32 noundef %.085, ptr noundef nonnull @ompi_mpi_comm_world, ptr noundef nonnull %i.k) #7 ; 0 uses
+  %i.bm = call i32 @MPI_Irecv(ptr noundef nonnull %i.e, i32 noundef 1, ptr noundef nonnull @ompi_mpi_int, i32 noundef %10, i32 noundef %.085, ptr noundef nonnull @ompi_mpi_comm_world, ptr noundef nonnull %i.k) #7 ; 0 uses
   %i.bn = call i32 @MPI_Wait(ptr noundef nonnull %i.k, ptr noundef nonnull %2) #7 ; 0 uses
   %i.bo = load i32, ptr %i.c, align 4, !tbaa !17
   %i.bp = icmp eq i32 %i.bo, 0
@@ -204,7 +209,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t, %bb.s
   %.1 = phi i32 [ %i.bs, %bb.t ], [ %.085, %bb.s ] ; 3 uses
-  %i.bt = call i32 @MPI_Isend(ptr noundef nonnull %i.e, i32 noundef 1, ptr noundef nonnull @ompi_mpi_int, i32 noundef %4, i32 noundef %.1, ptr noundef nonnull @ompi_mpi_comm_world, ptr noundef nonnull %i.k) #7 ; 0 uses
+  %i.bt = call i32 @MPI_Isend(ptr noundef nonnull %i.e, i32 noundef 1, ptr noundef nonnull @ompi_mpi_int, i32 noundef %11, i32 noundef %.1, ptr noundef nonnull @ompi_mpi_comm_world, ptr noundef nonnull %i.k) #7 ; 0 uses
   %i.bu = load i32, ptr %i.c, align 4, !tbaa !17
   %.not117 = icmp eq i32 %i.bu, 0
   %.pr = load i32, ptr %i.e, align 4, !tbaa !17   ; 2 uses
@@ -431,32 +436,37 @@ bb.au:                                            ; preds = %bb.at
   %i.fg = call i32 @MPI_Comm_rank(ptr noundef %i.ff, ptr noundef nonnull %i.c) #7 ; 0 uses
   %i.fh = load ptr, ptr %i.i, align 8, !tbaa !23
   %i.fi = call i32 @MPI_Comm_size(ptr noundef %i.fh, ptr noundef nonnull %i.d) #7 ; 0 uses
-  %i.fj = load i32, ptr %i.d, align 4, !tbaa !17  ; 3 uses
+  %i.fj = load i32, ptr %i.d, align 4, !tbaa !17  ; 2 uses
   %i.fk = icmp sgt i32 %i.fj, 1
   br i1 %i.fk, label %bb.av, label %.loopexit
 
 bb.av:                                            ; preds = %bb.au
-  %i.fl = load i32, ptr %i.c, align 4, !tbaa !17  ; 3 uses
-  %7 = add nsw i32 %i.fl, 1
-  %8 = srem i32 %7, %i.fj                         ; 2 uses
-  %9 = add nsw i32 %i.fl, -1
-  %10 = srem i32 %9, %i.fj
+  %i.fl = load i32, ptr %i.c, align 4, !tbaa !17  ; 2 uses
+  %12 = insertelement <2 x i32> poison, i32 %i.fl, i64 0
+  %13 = shufflevector <2 x i32> %12, <2 x i32> poison, <2 x i32> zeroinitializer
+  %14 = add nsw <2 x i32> %13, <i32 1, i32 -1>
+  %15 = insertelement <2 x i32> poison, i32 %i.fj, i64 0
+  %16 = shufflevector <2 x i32> %15, <2 x i32> poison, <2 x i32> zeroinitializer
+  %17 = srem <2 x i32> %14, %16                   ; 3 uses
   %i.fm = icmp eq i32 %i.fl, 0
   br i1 %i.fm, label %bb.aw, label %.preheader
 
 bb.aw:                                            ; preds = %bb.av
   store i32 50, ptr %i.e, align 4, !tbaa !17
   %i.fn = load ptr, ptr %i.i, align 8, !tbaa !23
-  %i.fo = call i32 @MPI_Send(ptr noundef nonnull %i.e, i32 noundef 1, ptr noundef nonnull @ompi_mpi_int, i32 noundef %8, i32 noundef 201, ptr noundef %i.fn) #7 ; 0 uses
+  %18 = extractelement <2 x i32> %17, i64 0
+  %i.fo = call i32 @MPI_Send(ptr noundef nonnull %i.e, i32 noundef 1, ptr noundef nonnull @ompi_mpi_int, i32 noundef %18, i32 noundef 201, ptr noundef %i.fn) #7 ; 0 uses
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.aw, %bb.av
+  %19 = extractelement <2 x i32> %17, i64 1
+  %20 = extractelement <2 x i32> %17, i64 0
   br label %bb.ax
 
 bb.ax:                                            ; preds = %.preheader, %thread-pre-split158
   %.3 = phi i32 [ %.5, %thread-pre-split158 ], [ 201, %.preheader ] ; 3 uses
   %i.fp = load ptr, ptr %i.i, align 8, !tbaa !23
-  %i.fq = call i32 @MPI_Recv(ptr noundef nonnull %i.e, i32 noundef 1, ptr noundef nonnull @ompi_mpi_int, i32 noundef %10, i32 noundef %.3, ptr noundef %i.fp, ptr noundef nonnull %2) #7 ; 0 uses
+  %i.fq = call i32 @MPI_Recv(ptr noundef nonnull %i.e, i32 noundef 1, ptr noundef nonnull @ompi_mpi_int, i32 noundef %19, i32 noundef %.3, ptr noundef %i.fp, ptr noundef nonnull %2) #7 ; 0 uses
   %i.fr = load i32, ptr %i.c, align 4, !tbaa !17
   %i.fs = icmp eq i32 %i.fr, 0
   br i1 %i.fs, label %bb.ay, label %bb.az
@@ -471,7 +481,7 @@ bb.ay:                                            ; preds = %bb.ax
 bb.az:                                            ; preds = %bb.ay, %bb.ax
   %.4 = phi i32 [ %i.fv, %bb.ay ], [ %.3, %bb.ax ] ; 3 uses
   %i.fw = load ptr, ptr %i.i, align 8, !tbaa !23
-  %i.fx = call i32 @MPI_Send(ptr noundef nonnull %i.e, i32 noundef 1, ptr noundef nonnull @ompi_mpi_int, i32 noundef %8, i32 noundef %.4, ptr noundef %i.fw) #7 ; 0 uses
+  %i.fx = call i32 @MPI_Send(ptr noundef nonnull %i.e, i32 noundef 1, ptr noundef nonnull @ompi_mpi_int, i32 noundef %20, i32 noundef %.4, ptr noundef %i.fw) #7 ; 0 uses
   %i.fy = load i32, ptr %i.c, align 4, !tbaa !17
   %.not127 = icmp eq i32 %i.fy, 0
   %.pr159 = load i32, ptr %i.e, align 4, !tbaa !17 ; 2 uses

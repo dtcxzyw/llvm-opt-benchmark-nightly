@@ -170,7 +170,7 @@ declare ptr @lv_obj_add_event_cb(ptr noundef, ptr noundef, i32 noundef, ptr noun
 ; Function Attrs: nounwind uwtable
 define internal void @tileview_event_cb(ptr noundef %0) #0 {
 bb.a:
-  %1 = alloca %struct.lv_point_t, align 4         ; 5 uses
+  %1 = alloca %struct.lv_point_t, align 8         ; 4 uses
   %i.a = tail call i32 @lv_event_get_code(ptr noundef %0) #4
   %i.b = tail call ptr @lv_event_get_current_target(ptr noundef %0) #4 ; 9 uses
   %i.c = icmp eq i32 %i.a, 14
@@ -188,23 +188,18 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.g, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.h = tail call i32 @lv_obj_get_content_width(ptr noundef %i.b) #4 ; 2 uses
-  %i.i = tail call i32 @lv_obj_get_content_height(ptr noundef %i.b) #4 ; 2 uses
+  %i.h = tail call i32 @lv_obj_get_content_width(ptr noundef %i.b) #4
+  %i.i = tail call i32 @lv_obj_get_content_height(ptr noundef %i.b) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #4
   call void @lv_obj_get_scroll_end(ptr noundef %i.b, ptr noundef nonnull %1) #4
-  %2 = load i32, ptr %1, align 4, !tbaa !35
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %4 = load i32, ptr %3, align 4, !tbaa !36
-  %5 = sdiv i32 %i.h, 2
-  %6 = add nsw i32 %2, %5
-  %.fr = freeze i32 %6                            ; 2 uses
-  %7 = srem i32 %.fr, %i.h
-  %8 = sub nsw i32 %.fr, %7
-  %9 = sdiv i32 %i.i, 2
-  %10 = add nsw i32 %4, %9
-  %.fr40 = freeze i32 %10                         ; 2 uses
-  %11 = srem i32 %.fr40, %i.i
-  %12 = sub nsw i32 %.fr40, %11
+  %2 = load <2 x i32>, ptr %1, align 8, !tbaa !35
+  %3 = insertelement <2 x i32> poison, i32 %i.h, i64 0
+  %4 = insertelement <2 x i32> %3, i32 %i.i, i64 1 ; 2 uses
+  %5 = sdiv <2 x i32> %4, splat (i32 2)
+  %6 = add nsw <2 x i32> %2, %5
+  %7 = freeze <2 x i32> %6                        ; 2 uses
+  %8 = srem <2 x i32> %7, %4
+  %9 = sub nsw <2 x i32> %7, %8
   %i.j = call i32 @lv_obj_get_child_count(ptr noundef %i.b) #4
   %.not45 = icmp eq i32 %i.j, 0
   br i1 %.not45, label %.critedge, label %.lr.ph
@@ -220,8 +215,11 @@ bb.e:                                             ; preds = %.lr.ph
   %i.n = call ptr @lv_obj_get_child(ptr noundef %i.b, i32 noundef %.044) #4 ; 4 uses
   %i.o = call i32 @lv_obj_get_x(ptr noundef %i.n) #4
   %i.p = call i32 @lv_obj_get_y(ptr noundef %i.n) #4
-  %13 = icmp eq i32 %i.o, %8
-  %14 = icmp eq i32 %i.p, %12
+  %10 = insertelement <2 x i32> poison, i32 %i.o, i64 0
+  %11 = insertelement <2 x i32> %10, i32 %i.p, i64 1
+  %12 = icmp eq <2 x i32> %11, %9                 ; 2 uses
+  %13 = extractelement <2 x i1> %12, i64 0
+  %14 = extractelement <2 x i1> %12, i64 1
   %or.cond = select i1 %13, i1 %14, i1 false
   br i1 %or.cond, label %bb.f, label %bb.e
 
@@ -304,6 +302,5 @@ attributes #4 = { nounwind }
 !32 = !{!"p1 _ZTS10_lv_anim_t", !8, i64 0}
 !33 = !{!"_lv_indev_t", !5, i64 0, !8, i64 8, !5, i64 16, !5, i64 20, !5, i64 24, !4, i64 28, !4, i64 28, !4, i64 28, !4, i64 28, !4, i64 28, !5, i64 32, !5, i64 36, !5, i64 40, !8, i64 48, !8, i64 56, !23, i64 64, !24, i64 72, !4, i64 80, !4, i64 81, !4, i64 82, !4, i64 83, !14, i64 84, !14, i64 86, !5, i64 88, !26, i64 96, !25, i64 336, !10, i64 344, !27, i64 352, !8, i64 360, !31, i64 368, !32, i64 400, !8, i64 408}
 !34 = !{!33, !5, i64 16}
-!35 = !{!25, !5, i64 0}
-!36 = !{!25, !5, i64 4}
+!35 = !{!5, !5, i64 0}
 end_hunk_0

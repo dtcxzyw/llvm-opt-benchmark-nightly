@@ -202,10 +202,14 @@ bb.u:                                             ; preds = %_ZNSt6vectorItSaItE
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 244
   %i.cz = load i64, ptr %i.cy, align 4
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %i.db = load i64, ptr %i.da, align 8            ; 3 uses
-  %i.dc = trunc i64 %i.db to i32                  ; 5 uses
-  %i.dd = lshr i64 %i.db, 32
-  %i.de = trunc nuw i64 %i.dd to i32              ; 4 uses
+  %i.db = load i64, ptr %i.da, align 8            ; 4 uses
+  %i.dc = trunc i64 %i.db to i32                  ; 4 uses
+  %i.dd = lshr i64 %i.db, 32                      ; 2 uses
+  %7 = trunc nuw i64 %i.dd to i32
+  %8 = insertelement <2 x i32> poison, i32 %7, i64 0
+  %9 = trunc i64 %i.db to i32
+  %10 = insertelement <2 x i32> %8, i32 %9, i64 1
+  %i.de = trunc nuw i64 %i.dd to i32              ; 3 uses
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 252
   %i.dg = load i32, ptr %i.df, align 4, !tbaa !190 ; 2 uses
   %i.dh = sext i32 %i.dg to i64
@@ -290,13 +294,11 @@ bb.ad:                                            ; preds = %.invoke
 
 bb.ae:                                            ; preds = %bb.ac
   %i.em = srem i32 %i.dx, %i.dc
-  %7 = sdiv i32 %i.dx, %i.dc                      ; 2 uses
   %.not39 = icmp eq i32 %i.em, 0
   br i1 %.not39, label %bb.af, label %.invoke
 
 bb.af:                                            ; preds = %bb.ae
   %i.en = srem i32 %i.dz, %i.de
-  %8 = sdiv i32 %i.dz, %i.de                      ; 2 uses
   %.not40 = icmp eq i32 %i.en, 0
   br i1 %.not40, label %bb.ag, label %.invoke
 
@@ -309,11 +311,15 @@ bb.af:                                            ; preds = %bb.ae
   unreachable
 
 bb.ag:                                            ; preds = %bb.af
-  %9 = call i32 @llvm.abs.i32(i32 %7, i1 false)
-  %i.ep = zext i32 %9 to i64
-  %10 = call i32 @llvm.abs.i32(i32 %8, i1 false)
-  %i.eq = zext i32 %10 to i64
-  %i.er = mul nuw nsw i64 %i.eq, %i.ep
+  %11 = insertelement <2 x i32> poison, i32 %i.dz, i64 0
+  %12 = insertelement <2 x i32> %11, i32 %i.dx, i64 1
+  %13 = sdiv <2 x i32> %12, %10                   ; 3 uses
+  %14 = call <2 x i32> @llvm.abs.v2i32(<2 x i32> %13, i1 false) ; 2 uses
+  %15 = extractelement <2 x i32> %14, i64 0
+  %i.ep = zext i32 %15 to i64
+  %16 = extractelement <2 x i32> %14, i64 1
+  %i.eq = zext i32 %16 to i64
+  %i.er = mul nuw nsw i64 %i.ep, %i.eq
   %.not41 = icmp eq i64 %i.er, %i.g
   br i1 %.not41, label %bb.ak, label %bb.ah
 
@@ -330,9 +336,11 @@ bb.aj:                                            ; preds = %bb.ah
   br label %.body
 
 bb.ak:                                            ; preds = %bb.ag
-  %.sroa.6.0.insert.ext = zext i32 %8 to i64
+  %17 = extractelement <2 x i32> %13, i64 0
+  %.sroa.6.0.insert.ext = zext i32 %17 to i64
   %.sroa.6.0.insert.shift = shl nuw i64 %.sroa.6.0.insert.ext, 32
-  %.sroa.081.0.insert.ext = zext i32 %7 to i64
+  %18 = extractelement <2 x i32> %13, i64 1
+  %.sroa.081.0.insert.ext = zext i32 %18 to i64
   %.sroa.081.0.insert.insert = or disjoint i64 %.sroa.6.0.insert.shift, %.sroa.081.0.insert.ext
   %i.et = getelementptr inbounds nuw i8, ptr %0, i64 228
   %i.eu = load i16, ptr %i.et, align 4, !tbaa !192 ; 2 uses
@@ -734,6 +742,9 @@ declare i64 @llvm.umin.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #13
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.abs.v2i32(<2 x i32>, i1 immarg) #13
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

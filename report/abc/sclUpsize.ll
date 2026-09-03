@@ -204,12 +204,19 @@ Abc_SclUpsizeRemoveDangling.exit:                 ; preds = %bb.bs, %.loopexit, 
 
 bb.bt:                                            ; preds = %Abc_SclUpsizeRemoveDangling.exit
   %i.qk = load i32, ptr %i.an, align 4, !tbaa !171
-  %i.ql = call i32 @llvm.umax.i32(i32 %.1215, i32 1) ; 4 uses
-  %19 = sdiv i32 %.1205, %i.ql
-  %20 = sdiv i32 %.1203, %i.ql
-  %21 = sdiv i32 %.1199, %i.ql
-  %22 = sdiv i32 %.1201, %i.ql
-  call void @Abc_SclUpsizePrint(ptr noundef nonnull %i.az, i32 noundef %.1215, i32 noundef %i.qk, i32 noundef %19, i32 noundef %20, i32 noundef %21, i32 noundef %22, i32 noundef 1)
+  %i.ql = call i32 @llvm.umax.i32(i32 %.1215, i32 1)
+  %19 = insertelement <4 x i32> poison, i32 %.1205, i64 0
+  %20 = insertelement <4 x i32> %19, i32 %.1203, i64 1
+  %21 = insertelement <4 x i32> %20, i32 %.1199, i64 2
+  %22 = insertelement <4 x i32> %21, i32 %.1201, i64 3
+  %23 = insertelement <4 x i32> poison, i32 %i.ql, i64 0
+  %24 = shufflevector <4 x i32> %23, <4 x i32> poison, <4 x i32> zeroinitializer
+  %25 = sdiv <4 x i32> %22, %24                   ; 4 uses
+  %26 = extractelement <4 x i32> %25, i64 0
+  %27 = extractelement <4 x i32> %25, i64 1
+  %28 = extractelement <4 x i32> %25, i64 2
+  %29 = extractelement <4 x i32> %25, i64 3
+  call void @Abc_SclUpsizePrint(ptr noundef nonnull %i.az, i32 noundef %.1215, i32 noundef %i.qk, i32 noundef %26, i32 noundef %27, i32 noundef %28, i32 noundef %29, i32 noundef 1)
   br label %bb.bv
 
 bb.bu:                                            ; preds = %Abc_SclUpsizeRemoveDangling.exit

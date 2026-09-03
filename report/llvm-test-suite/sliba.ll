@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 128
 inline.NumDeleted: 6
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumRuntimeUnrolled: 16
-loop-unroll.NumUnrolled: 19
+loop-unroll.NumRuntimeUnrolled: 17
+loop-unroll.NumUnrolled: 20
 begin_hunk_0_@array_equal:bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.o = load i64, ptr %i.n, align 8, !tbaa !23   ; 2 uses
@@ -205,30 +205,44 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.b
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.as = load i64, ptr %i.ar, align 8, !tbaa !23 ; 2 uses
+  %i.as = load i64, ptr %i.ar, align 8, !tbaa !23 ; 5 uses
   %i.at = icmp sgt i64 %i.as, 0
   br i1 %i.at, label %.lr.ph61.preheader, label %.loopexit
 
 .lr.ph61.preheader:                               ; preds = %bb.e
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.av = load ptr, ptr %i.au, align 8, !tbaa !23
+  %i.av = load ptr, ptr %i.au, align 8, !tbaa !23 ; 2 uses
+  %xtraiter = and i64 %i.as, 1
+  %2 = icmp eq i64 %i.as, 1
+  br i1 %2, label %.lr.ph61.epil.preheader, label %.lr.ph61.preheader.new
+
+.lr.ph61.preheader.new:                           ; preds = %.lr.ph61.preheader
+  %unroll_iter = and i64 %i.as, 9223372036854775806
   br label %.lr.ph61
 
-.lr.ph61:                                         ; preds = %.lr.ph61.preheader, %.lr.ph61
-  %.060 = phi ptr [ %i.be, %.lr.ph61 ], [ %i.av, %.lr.ph61.preheader ] ; 2 uses
-  %.259 = phi i64 [ %i.bc, %.lr.ph61 ], [ 0, %.lr.ph61.preheader ]
-  %.24958 = phi i64 [ %i.bd, %.lr.ph61 ], [ 0, %.lr.ph61.preheader ]
+.lr.ph61:                                         ; preds = %.lr.ph61, %.lr.ph61.preheader.new
+  %.060 = phi ptr [ %i.av, %.lr.ph61.preheader.new ], [ %i.be, %.lr.ph61 ] ; 3 uses
+  %.259 = phi i64 [ 0, %.lr.ph61.preheader.new ], [ %9, %.lr.ph61 ]
+  %.24958 = phi i64 [ 0, %.lr.ph61.preheader.new ], [ %niter.next.1, %.lr.ph61 ]
   %i.aw = mul nsw i64 %.259, 17
   %i.ax = add nsw i64 %i.aw, 1
   %i.ay = load double, ptr %.060, align 8, !tbaa !28
   %i.az = fptoui double %i.ay to i64
   %i.ba = urem i64 %i.az, %1
   %i.bb = xor i64 %i.ba, %i.ax
-  %i.bc = urem i64 %i.bb, %1                      ; 2 uses
-  %i.bd = add nuw nsw i64 %.24958, 1              ; 2 uses
-  %i.be = getelementptr inbounds nuw i8, ptr %.060, i64 8
-  %exitcond79.not = icmp eq i64 %i.bd, %i.as
-  br i1 %exitcond79.not, label %.loopexit, label %.lr.ph61, !llvm.loop !57
+  %i.bc = urem i64 %i.bb, %1
+  %3 = getelementptr inbounds nuw i8, ptr %.060, i64 8
+  %4 = mul nsw i64 %i.bc, 17
+  %i.bd = add nsw i64 %4, 1
+  %5 = load double, ptr %3, align 8, !tbaa !28
+  %6 = fptoui double %5 to i64
+  %7 = urem i64 %6, %1
+  %8 = xor i64 %7, %i.bd
+  %9 = urem i64 %8, %1                            ; 3 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %.060, i64 16 ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %.24958, 2      ; 2 uses
+  %exitcond79.not = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %exitcond79.not, label %.loopexit.loopexit100.unr-lcssa, label %.lr.ph61, !llvm.loop !57
 
 bb.f:                                             ; preds = %bb.b
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -293,8 +307,26 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.ce = urem i64 %i.cd, %1
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.g, %.lr.ph61, %.lr.ph66.epil.preheader, %.loopexit.loopexit98.unr-lcssa, %.lr.ph71.epil.preheader, %.loopexit.loopexit.unr-lcssa, %bb.f, %bb.e, %bb.d, %bb.c, %.thread
-  %.051 = phi i64 [ 0, %.thread ], [ %i.ce, %.lr.ph66.epil.preheader ], [ %i.bc, %.lr.ph61 ], [ %i.by, %.lr.ph71.epil.preheader ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %bb.f ], [ %i.v, %.loopexit.loopexit.unr-lcssa ], [ %i.ap, %.loopexit.loopexit98.unr-lcssa ], [ %i.bq, %bb.g ]
+.loopexit.loopexit100.unr-lcssa:                  ; preds = %.lr.ph61
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph61.epil.preheader
+
+.lr.ph61.epil.preheader:                          ; preds = %.loopexit.loopexit100.unr-lcssa, %.lr.ph61.preheader
+  %.060.epil.init = phi ptr [ %i.av, %.lr.ph61.preheader ], [ %i.be, %.loopexit.loopexit100.unr-lcssa ]
+  %.259.epil.init = phi i64 [ 0, %.lr.ph61.preheader ], [ %9, %.loopexit.loopexit100.unr-lcssa ]
+  %lcmp.mod105 = trunc i64 %i.as to i1
+  tail call void @llvm.assume(i1 %lcmp.mod105)
+  %10 = mul nsw i64 %.259.epil.init, 17
+  %11 = add nsw i64 %10, 1
+  %12 = load double, ptr %.060.epil.init, align 8, !tbaa !28
+  %13 = fptoui double %12 to i64
+  %14 = urem i64 %13, %1
+  %15 = xor i64 %14, %11
+  %16 = urem i64 %15, %1
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.g, %.lr.ph61.epil.preheader, %.loopexit.loopexit100.unr-lcssa, %.lr.ph66.epil.preheader, %.loopexit.loopexit98.unr-lcssa, %.lr.ph71.epil.preheader, %.loopexit.loopexit.unr-lcssa, %bb.f, %bb.e, %bb.d, %bb.c, %.thread
+  %.051 = phi i64 [ 0, %.thread ], [ %i.ce, %.lr.ph66.epil.preheader ], [ %16, %.lr.ph61.epil.preheader ], [ %i.by, %.lr.ph71.epil.preheader ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %bb.f ], [ %i.v, %.loopexit.loopexit.unr-lcssa ], [ %i.ap, %.loopexit.loopexit98.unr-lcssa ], [ %9, %.loopexit.loopexit100.unr-lcssa ], [ %i.bq, %bb.g ]
   ret i64 %.051
 }
 

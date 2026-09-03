@@ -202,7 +202,7 @@ bb.a:
   %i.i = shufflevector <2 x i1> %i.h, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.j = shufflevector <2 x double> %i.d, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.k = select <2 x i1> %i.i, <2 x double> %i.d, <2 x double> %i.j ; 4 uses
-  %i.l = load i32, ptr @_ZN8Parallel5numpeE, align 4, !tbaa !9 ; 6 uses
+  %i.l = load i32, ptr @_ZN8Parallel5numpeE, align 4, !tbaa !9 ; 5 uses
   %i.m = sitofp i32 %i.l to double
   %i.n = extractelement <2 x double> %i.k, i64 1
   %i.o = fmul nnan double %i.n, %i.m
@@ -216,9 +216,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %.038.i = phi i32 [ %.sroa.speculated20.i, %bb.a ], [ %i.w, %bb.b ] ; 5 uses
+  %.038.i = phi i32 [ %.sroa.speculated20.i, %bb.a ], [ %i.w, %bb.b ] ; 4 uses
   %i.v = srem i32 %i.l, %.038.i
-  %11 = sdiv i32 %i.l, %.038.i
   %.not.i = icmp eq i32 %i.v, 0
   %i.w = add nsw i32 %.038.i, -1
   br i1 %.not.i, label %bb.c, label %bb.b, !llvm.loop !0
@@ -230,22 +229,22 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
-  %.0.i = phi i32 [ %i.z, %bb.c ], [ %i.ab, %bb.d ] ; 5 uses
+  %.0.i = phi i32 [ %i.z, %bb.c ], [ %i.ab, %bb.d ] ; 4 uses
   %i.aa = srem i32 %i.l, %.0.i
-  %12 = sdiv i32 %i.l, %.0.i
   %.not11.i = icmp eq i32 %i.aa, 0
   %i.ab = add nsw i32 %.0.i, 1
   br i1 %.not11.i, label %bb.e, label %bb.d, !llvm.loop !1
 
 bb.e:                                             ; preds = %bb.d
   %i.ac = insertelement <2 x i32> poison, i32 %.0.i, i64 0
-  %i.ad = insertelement <2 x i32> %i.ac, i32 %.038.i, i64 1
+  %i.ad = insertelement <2 x i32> %i.ac, i32 %.038.i, i64 1 ; 2 uses
   %i.ae = sitofp <2 x i32> %i.ad to <2 x double>
   %i.af = shufflevector <2 x double> %i.k, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.ag = fdiv <2 x double> %i.af, %i.ae          ; 2 uses
-  %i.ah = insertelement <2 x i32> poison, i32 %12, i64 0
-  %13 = insertelement <2 x i32> %i.ah, i32 %11, i64 1
-  %i.ai = sitofp <2 x i32> %13 to <2 x double>
+  %i.ah = insertelement <2 x i32> poison, i32 %i.l, i64 0
+  %11 = shufflevector <2 x i32> %i.ah, <2 x i32> poison, <2 x i32> zeroinitializer
+  %12 = sdiv <2 x i32> %11, %i.ad
+  %i.ai = sitofp <2 x i32> %12 to <2 x double>
   %i.aj = shufflevector <2 x double> %i.k, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ak = fdiv <2 x double> %i.aj, %i.ai          ; 2 uses
   %i.al = fcmp olt <2 x double> %i.ag, %i.ak
@@ -359,7 +358,7 @@ bb.a:
   %i.h = shufflevector <2 x i1> %i.g, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.i = shufflevector <2 x double> %i.c, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.j = select <2 x i1> %i.h, <2 x double> %i.c, <2 x double> %i.i ; 4 uses
-  %i.k = load i32, ptr @_ZN8Parallel5numpeE, align 4, !tbaa !9 ; 6 uses
+  %i.k = load i32, ptr @_ZN8Parallel5numpeE, align 4, !tbaa !9 ; 5 uses
   %i.l = sitofp i32 %i.k to double
   %i.m = extractelement <2 x double> %i.j, i64 1
   %i.n = fmul nnan double %i.m, %i.l
@@ -373,9 +372,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %.038 = phi i32 [ %.sroa.speculated20, %bb.a ], [ %i.v, %bb.b ] ; 5 uses
+  %.038 = phi i32 [ %.sroa.speculated20, %bb.a ], [ %i.v, %bb.b ] ; 4 uses
   %i.u = srem i32 %i.k, %.038
-  %1 = sdiv i32 %i.k, %.038
   %.not = icmp eq i32 %i.u, 0
   %i.v = add nsw i32 %.038, -1
   br i1 %.not, label %bb.c, label %bb.b, !llvm.loop !0
@@ -387,22 +385,22 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
-  %.0 = phi i32 [ %i.y, %bb.c ], [ %i.aa, %bb.d ] ; 5 uses
+  %.0 = phi i32 [ %i.y, %bb.c ], [ %i.aa, %bb.d ] ; 4 uses
   %i.z = srem i32 %i.k, %.0
-  %2 = sdiv i32 %i.k, %.0
   %.not11 = icmp eq i32 %i.z, 0
   %i.aa = add nsw i32 %.0, 1
   br i1 %.not11, label %bb.e, label %bb.d, !llvm.loop !1
 
 bb.e:                                             ; preds = %bb.d
   %i.ab = insertelement <2 x i32> poison, i32 %.0, i64 0
-  %i.ac = insertelement <2 x i32> %i.ab, i32 %.038, i64 1
+  %i.ac = insertelement <2 x i32> %i.ab, i32 %.038, i64 1 ; 2 uses
   %i.ad = sitofp <2 x i32> %i.ac to <2 x double>
   %i.ae = shufflevector <2 x double> %i.j, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.af = fdiv <2 x double> %i.ae, %i.ad          ; 2 uses
-  %i.ag = insertelement <2 x i32> poison, i32 %2, i64 0
-  %3 = insertelement <2 x i32> %i.ag, i32 %1, i64 1
-  %i.ah = sitofp <2 x i32> %3 to <2 x double>
+  %i.ag = insertelement <2 x i32> poison, i32 %i.k, i64 0
+  %1 = shufflevector <2 x i32> %i.ag, <2 x i32> poison, <2 x i32> zeroinitializer
+  %2 = sdiv <2 x i32> %1, %i.ac
+  %i.ah = sitofp <2 x i32> %2 to <2 x double>
   %i.ai = shufflevector <2 x double> %i.j, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aj = fdiv <2 x double> %i.ai, %i.ah          ; 2 uses
   %i.ak = fcmp olt <2 x double> %i.af, %i.aj

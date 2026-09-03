@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 10200
 inline.NumDeleted: 3855
 loop-unroll.NumCompletelyUnrolled: 65
-loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 70
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 69
 begin_hunk_0_@_ZNSt8_Rb_treeIN4llvm9StringRefESt4pairIKS1_jESt10_Select1stIS4_ESt4lessIS1_ESaIS4_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS4_ERS3_:bb.a
   %i.ac = icmp slt i32 %.fr.i.i.i33, 0
   br i1 %i.ac, label %_ZNKSt4lessIN4llvm9StringRefEEclERKS1_S4_.exit39.thread100, label %_ZNKSt4lessIN4llvm9StringRefEEclERKS1_S4_.exit39.thread
@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.c = call noundef ptr @_ZN4llvm15SmallVectorBaseIjE13mallocForGrowEPvmmRm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.b, i64 noundef 0, i64 noundef 24, ptr noundef nonnull align 8 dereferenceable(8) %i.a) #29 ; 7 uses
+  %i.c = call noundef ptr @_ZN4llvm15SmallVectorBaseIjE13mallocForGrowEPvmmRm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.b, i64 noundef 0, i64 noundef 24, ptr noundef nonnull align 8 dereferenceable(8) %i.a) #29 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !106
   %i.f = zext i32 %i.e to i64
@@ -228,61 +228,29 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt4pairIN4llvm9StringRefENS0_18IntrusiveRefCntPtrINS0_15TreePatternNodeEEEEC2IJOS1_EJRS4_EEESt21piecewise_construct_tSt5tupleIJDpT_EESA_IJDpT0_EE.exit
 
 _ZNSt4pairIN4llvm9StringRefENS0_18IntrusiveRefCntPtrINS0_15TreePatternNodeEEEEC2IJOS1_EJRS4_EEESt21piecewise_construct_tSt5tupleIJDpT_EESA_IJDpT0_EE.exit: ; preds = %bb.a, %bb.b
-  %i.p = load ptr, ptr %0, align 8, !tbaa !105    ; 6 uses
+  %i.p = load ptr, ptr %0, align 8, !tbaa !105    ; 3 uses
   %i.q = load i32, ptr %i.d, align 8, !tbaa !106  ; 2 uses
   %i.r = zext i32 %i.q to i64
-  %.idx.i = mul nuw nsw i64 %i.r, 24              ; 2 uses
+  %.idx.i = mul nuw nsw i64 %i.r, 24
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 %.idx.i
   %.not7.i.i.i.i.i.i = icmp eq i32 %i.q, 0
-  br i1 %.not7.i.i.i.i.i.i, label %_ZN4llvm23SmallVectorTemplateBaseISt4pairINS_9StringRefENS_18IntrusiveRefCntPtrINS_15TreePatternNodeEEEELb0EE19moveElementsForGrowEPS6_.exit, label %.lr.ph.i.i.i.i.i.i.preheader
+  br i1 %.not7.i.i.i.i.i.i, label %_ZN4llvm23SmallVectorTemplateBaseISt4pairINS_9StringRefENS_18IntrusiveRefCntPtrINS_15TreePatternNodeEEEELb0EE19moveElementsForGrowEPS6_.exit, label %.lr.ph.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNSt4pairIN4llvm9StringRefENS0_18IntrusiveRefCntPtrINS0_15TreePatternNodeEEEEC2IJOS1_EJRS4_EEESt21piecewise_construct_tSt5tupleIJDpT_EESA_IJDpT0_EE.exit
-  %4 = add nsw i64 %.idx.i, -24                   ; 2 uses
-  %5 = udiv i64 %4, 24
-  %6 = and i64 %5, 1
-  %lcmp.mod.not.not = icmp eq i64 %6, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.i.prol.loopexit
-
-.lr.ph.i.i.i.i.i.i.prol:                          ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %i.p, i64 16, i1 false), !tbaa.struct !552
-  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %8 = getelementptr inbounds nuw i8, ptr %i.p, i64 16 ; 2 uses
-  %9 = load ptr, ptr %8, align 8, !tbaa !230
-  store ptr %9, ptr %7, align 8, !tbaa !230
-  store ptr null, ptr %8, align 8, !tbaa !230
-  %10 = getelementptr inbounds nuw i8, ptr %i.p, i64 24
-  %11 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  br label %.lr.ph.i.i.i.i.i.i.prol.loopexit
-
-.lr.ph.i.i.i.i.i.i.prol.loopexit:                 ; preds = %.lr.ph.i.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.i.preheader
-  %.09.i.i.i.i.i.i.unr = phi ptr [ %i.c, %.lr.ph.i.i.i.i.i.i.preheader ], [ %11, %.lr.ph.i.i.i.i.i.i.prol ]
-  %.sroa.04.08.i.i.i.i.i.i.unr = phi ptr [ %i.p, %.lr.ph.i.i.i.i.i.i.preheader ], [ %10, %.lr.ph.i.i.i.i.i.i.prol ]
-  %12 = icmp ult i64 %4, 24
-  br i1 %12, label %_ZN4llvm23SmallVectorTemplateBaseISt4pairINS_9StringRefENS_18IntrusiveRefCntPtrINS_15TreePatternNodeEEEELb0EE18uninitialized_moveIPS6_S9_EEvT_SA_T0_.exit.i, label %.lr.ph.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i
-  %.09.i.i.i.i.i.i = phi ptr [ %i.x, %.lr.ph.i.i.i.i.i.i ], [ %.09.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
-  %.sroa.04.08.i.i.i.i.i.i = phi ptr [ %i.w, %.lr.ph.i.i.i.i.i.i ], [ %.sroa.04.08.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
+.lr.ph.i.i.i.i.i.i:                               ; preds = %_ZNSt4pairIN4llvm9StringRefENS0_18IntrusiveRefCntPtrINS0_15TreePatternNodeEEEEC2IJOS1_EJRS4_EEESt21piecewise_construct_tSt5tupleIJDpT_EESA_IJDpT0_EE.exit, %.lr.ph.i.i.i.i.i.i
+  %.09.i.i.i.i.i.i = phi ptr [ %i.x, %.lr.ph.i.i.i.i.i.i ], [ %i.c, %_ZNSt4pairIN4llvm9StringRefENS0_18IntrusiveRefCntPtrINS0_15TreePatternNodeEEEEC2IJOS1_EJRS4_EEESt21piecewise_construct_tSt5tupleIJDpT_EESA_IJDpT0_EE.exit ] ; 3 uses
+  %.sroa.04.08.i.i.i.i.i.i = phi ptr [ %i.w, %.lr.ph.i.i.i.i.i.i ], [ %i.p, %_ZNSt4pairIN4llvm9StringRefENS0_18IntrusiveRefCntPtrINS0_15TreePatternNodeEEEEC2IJOS1_EJRS4_EEESt21piecewise_construct_tSt5tupleIJDpT_EESA_IJDpT0_EE.exit ] ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.09.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.04.08.i.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !552
-  %13 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 16
-  %14 = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i, i64 16 ; 2 uses
-  %15 = load ptr, ptr %14, align 8, !tbaa !230
-  store ptr %15, ptr %13, align 8, !tbaa !230
-  store ptr null, ptr %14, align 8, !tbaa !230
-  %16 = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i, i64 24
-  %17 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %17, ptr noundef nonnull align 8 dereferenceable(24) %16, i64 16, i1 false), !tbaa.struct !552
-  %i.t = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 40
-  %i.u = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i, i64 40 ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 16
+  %i.u = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i, i64 16 ; 2 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !230
   store ptr %i.v, ptr %i.t, align 8, !tbaa !230
   store ptr null, ptr %i.u, align 8, !tbaa !230
-  %i.w = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i, i64 48 ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 48
+  %i.w = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i, i64 24 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 24
   %.not.i.i.i.i.i.i.1 = icmp eq ptr %i.w, %i.s
   br i1 %.not.i.i.i.i.i.i.1, label %_ZN4llvm23SmallVectorTemplateBaseISt4pairINS_9StringRefENS_18IntrusiveRefCntPtrINS_15TreePatternNodeEEEELb0EE18uninitialized_moveIPS6_S9_EEvT_SA_T0_.exit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !1743
 
-_ZN4llvm23SmallVectorTemplateBaseISt4pairINS_9StringRefENS_18IntrusiveRefCntPtrINS_15TreePatternNodeEEEELb0EE18uninitialized_moveIPS6_S9_EEvT_SA_T0_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.prol.loopexit
+_ZN4llvm23SmallVectorTemplateBaseISt4pairINS_9StringRefENS_18IntrusiveRefCntPtrINS_15TreePatternNodeEEEELb0EE18uninitialized_moveIPS6_S9_EEvT_SA_T0_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i
   %.pre.i = load ptr, ptr %0, align 8, !tbaa !105 ; 3 uses
   %.pre4.i = load i32, ptr %i.d, align 8, !tbaa !106 ; 2 uses
   %.not4.i.i = icmp eq i32 %.pre4.i, 0

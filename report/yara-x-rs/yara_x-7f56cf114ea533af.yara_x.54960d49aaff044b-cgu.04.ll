@@ -205,12 +205,13 @@ bb.d:                                             ; preds = %bb.c
   %i.h = sub nuw i64 %..i, %1                     ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 %1 ; 2 uses
   %i.j = urem i64 %i.h, 6                         ; 2 uses
-  %.idx.i = sub nuw nsw i64 %i.h, %i.j            ; 2 uses
+  %.idx.i = sub nuw nsw i64 %i.h, %i.j
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 %.idx.i
   %i.l = icmp eq i64 %i.h, %i.j
   br i1 %i.l, label %_RNvNtNtCs7gfv9tzbXmh_6yara_x7modules4math14monte_carlo_pi.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.i
+  %.sroa.01.023.i = phi i32 [ %spec.select.i, %.lr.ph.i ], [ 0, %bb.d ]
   %.sroa.01.023.i.a = phi i32 [ %spec.select.i.a, %.lr.ph.i ], [ 0, %bb.d ]
   %.sroa.06.021.i = phi ptr [ %i.al, %.lr.ph.i ], [ %i.i, %bb.d ] ; 7 uses
   %i.m = load i8, ptr %.sroa.06.021.i, align 1, !alias.scope !2648, !noundef !9
@@ -244,21 +245,18 @@ bb.d:                                             ; preds = %bb.c
   %i.ao = add nuw nsw i64 %i.am, %i.an
   %i.ap = icmp samesign ult i64 %i.ao, 281474943156225
   %i.aq = zext i1 %i.ap to i32
-  %spec.select.i.a = add i32 %.sroa.01.023.i.a, %i.aq ; 2 uses
+  %spec.select.i = add i32 %.sroa.01.023.i, %i.aq ; 2 uses
+  %spec.select.i.a = add i32 %.sroa.01.023.i.a, 1 ; 3 uses
   %i.ar = icmp eq ptr %i.al, %i.k
   br i1 %i.ar, label %._crit_edge.i, label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i
-  %3 = add nsw i64 %.idx.i, -6
-  %4 = udiv i64 %3, 6
-  %5 = trunc i64 %4 to i32
-  %6 = add i32 %5, 1                              ; 2 uses
-  %i.as = icmp eq i32 %6, 0
+  %i.as = icmp eq i32 %spec.select.i.a, 0
   br i1 %i.as, label %_RNvNtNtCs7gfv9tzbXmh_6yara_x7modules4math14monte_carlo_pi.exit, label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge.i
-  %i.at = sitofp i32 %spec.select.i.a to double
-  %i.au = sitofp i32 %6 to double
+  %i.at = sitofp i32 %spec.select.i to double
+  %i.au = sitofp i32 %spec.select.i.a to double
   %i.av = fdiv double %i.at, %i.au
   %i.aw = fmul double %i.av, 4.000000e+00
   %i.ax = fadd double %i.aw, f0xC00921FB54442D18
@@ -290,12 +288,13 @@ bb.c:                                             ; preds = %bb.a
   %i.c = extractvalue { ptr, i64 } %i.a, 0        ; 2 uses
   %i.d = extractvalue { ptr, i64 } %i.a, 1        ; 3 uses
   %i.e = urem i64 %i.d, 6                         ; 2 uses
-  %.idx.i = sub nuw nsw i64 %i.d, %i.e            ; 2 uses
+  %.idx.i = sub nuw nsw i64 %i.d, %i.e
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx.i
   %i.g = icmp eq i64 %i.d, %i.e
   br i1 %i.g, label %bb.e, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.i
+  %.sroa.01.023.i = phi i32 [ %spec.select.i, %.lr.ph.i ], [ 0, %bb.c ]
   %.sroa.01.023.i.a = phi i32 [ %spec.select.i.a, %.lr.ph.i ], [ 0, %bb.c ]
   %.sroa.06.021.i = phi ptr [ %i.ag, %.lr.ph.i ], [ %i.c, %bb.c ] ; 7 uses
   %i.h = load i8, ptr %.sroa.06.021.i, align 1, !alias.scope !2657, !noundef !9
@@ -329,21 +328,18 @@ bb.c:                                             ; preds = %bb.a
   %i.aj = add nuw nsw i64 %i.ah, %i.ai
   %i.ak = icmp samesign ult i64 %i.aj, 281474943156225
   %i.al = zext i1 %i.ak to i32
-  %spec.select.i.a = add i32 %.sroa.01.023.i.a, %i.al ; 2 uses
+  %spec.select.i = add i32 %.sroa.01.023.i, %i.al ; 2 uses
+  %spec.select.i.a = add i32 %.sroa.01.023.i.a, 1 ; 3 uses
   %i.am = icmp eq ptr %i.ag, %i.f
   br i1 %i.am, label %._crit_edge.i, label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i
-  %2 = add nsw i64 %.idx.i, -6
-  %3 = udiv i64 %2, 6
-  %4 = trunc i64 %3 to i32
-  %5 = add i32 %4, 1                              ; 2 uses
-  %i.an = icmp eq i32 %5, 0
+  %i.an = icmp eq i32 %spec.select.i.a, 0
   br i1 %i.an, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge.i
-  %i.ao = sitofp i32 %spec.select.i.a to double
-  %i.ap = sitofp i32 %5 to double
+  %i.ao = sitofp i32 %spec.select.i to double
+  %i.ap = sitofp i32 %spec.select.i.a to double
   %i.aq = fdiv double %i.ao, %i.ap
   %i.ar = fmul double %i.aq, 4.000000e+00
   %i.as = fadd double %i.ar, f0xC00921FB54442D18

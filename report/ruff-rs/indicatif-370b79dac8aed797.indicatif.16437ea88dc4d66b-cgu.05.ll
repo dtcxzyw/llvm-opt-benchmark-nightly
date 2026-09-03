@@ -1,8 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/indicatif-370b79dac8aed797.indicatif.16437ea88dc4d66b-cgu.05?download=true
 inline.NumInlined: 181
 inline.NumDeleted: 80
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvMs_NtCs1UvybGPDVxf_9indicatif12progress_barNtB4_11ProgressBar9is_hidden:bb.a
   ret i1 %i.s
 
@@ -204,89 +202,39 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %.val6 = load ptr, ptr %i.v, align 8, !nonnull !3, !noundef !3 ; 6 uses
+  %.val6 = load ptr, ptr %i.v, align 8, !nonnull !3, !noundef !3 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 64
   %.val7 = load i64, ptr %i.w, align 8, !noundef !3 ; 2 uses
-  %.idx.i = mul i64 %.val7, 72                    ; 2 uses
+  %.idx.i = mul nuw nsw i64 %.val7, 72
   %i.x = getelementptr inbounds nuw i8, ptr %.val6, i64 %.idx.i
   %i.y = icmp eq i64 %.val7, 0
-  br i1 %i.y, label %_RNvMNtCs1UvybGPDVxf_9indicatif5styleNtB2_13ProgressStyle14set_for_stderr.exit, label %.lr.ph.i.preheader
+  br i1 %i.y, label %_RNvMNtCs1UvybGPDVxf_9indicatif5styleNtB2_13ProgressStyle14set_for_stderr.exit, label %.lr.ph.i
 
-.lr.ph.i.preheader:                               ; preds = %bb.k
-  %2 = add i64 %.idx.i, -72                       ; 2 uses
-  %3 = udiv i64 %2, 72
-  %4 = and i64 %3, 1
-  %lcmp.mod.not.not = icmp eq i64 %4, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
-
-.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader
-  %5 = getelementptr inbounds nuw i8, ptr %.val6, i64 72 ; 2 uses
-  %6 = load i8, ptr %.val6, align 8, !range !559, !noundef !3
-  %7 = icmp eq i8 %6, 1
-  br i1 %7, label %8, label %.lr.ph.i.prol.loopexit
-
-8:                                                ; preds = %.lr.ph.i.prol
-  %.sroa.4.0..sroa_idx.i.prol = getelementptr inbounds nuw i8, ptr %.val6, i64 17 ; 2 uses
-  %.sroa.4.0.copyload.i.prol = load i8, ptr %.sroa.4.0..sroa_idx.i.prol, align 1
-  %.not.i.prol = icmp eq i8 %.sroa.4.0.copyload.i.prol, 2
-  %spec.store.select.i.prol = select i1 %.not.i.prol, i8 2, i8 1
-  store i8 %spec.store.select.i.prol, ptr %.sroa.4.0..sroa_idx.i.prol, align 1
-  %.sroa.49.0..sroa_idx.i.prol = getelementptr inbounds nuw i8, ptr %.val6, i64 31 ; 2 uses
-  %.sroa.49.0.copyload.i.prol = load i8, ptr %.sroa.49.0..sroa_idx.i.prol, align 1
-  %.not20.i.prol = icmp eq i8 %.sroa.49.0.copyload.i.prol, 2
-  %spec.store.select2.i.prol = select i1 %.not20.i.prol, i8 2, i8 1
-  store i8 %spec.store.select2.i.prol, ptr %.sroa.49.0..sroa_idx.i.prol, align 1
-  br label %.lr.ph.i.prol.loopexit
-
-.lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %8, %.lr.ph.i.preheader
-  %.sroa.0.01.i.unr = phi ptr [ %.val6, %.lr.ph.i.preheader ], [ %5, %8 ], [ %5, %.lr.ph.i.prol ]
-  %9 = icmp ult i64 %2, 72
-  br i1 %9, label %_RNvMNtCs1UvybGPDVxf_9indicatif5styleNtB2_13ProgressStyle14set_for_stderr.exit, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.backedge.i.1
-  %.sroa.0.01.i = phi ptr [ %11, %.backedge.i.1 ], [ %.sroa.0.01.i.unr, %.lr.ph.i.prol.loopexit ] ; 7 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i, i64 72
+.lr.ph.i:                                         ; preds = %bb.k, %.backedge.i.1
+  %.sroa.0.01.i = phi ptr [ %i.z, %.backedge.i.1 ], [ %.val6, %bb.k ] ; 4 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i, i64 72 ; 2 uses
   %i.aa = load i8, ptr %.sroa.0.01.i, align 8, !range !559, !noundef !3
   %i.ab = icmp eq i8 %i.aa, 1
-  br i1 %i.ab, label %10, label %.backedge.i
+  br i1 %i.ab, label %bb.l, label %.backedge.i.1
 
-10:                                               ; preds = %.lr.ph.i
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i, i64 17 ; 2 uses
-  %.sroa.4.0.copyload.i = load i8, ptr %.sroa.4.0..sroa_idx.i, align 1
-  %.not.i = icmp eq i8 %.sroa.4.0.copyload.i, 2
-  %spec.store.select.i = select i1 %.not.i, i8 2, i8 1
-  store i8 %spec.store.select.i, ptr %.sroa.4.0..sroa_idx.i, align 1
-  %.sroa.49.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i, i64 31 ; 2 uses
-  %.sroa.49.0.copyload.i = load i8, ptr %.sroa.49.0..sroa_idx.i, align 1
-  %.not20.i = icmp eq i8 %.sroa.49.0.copyload.i, 2
-  %spec.store.select2.i = select i1 %.not20.i, i8 2, i8 1
-  store i8 %spec.store.select2.i, ptr %.sroa.49.0..sroa_idx.i, align 1
-  br label %.backedge.i
-
-.backedge.i:                                      ; preds = %10, %.lr.ph.i
-  %11 = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i, i64 144 ; 2 uses
-  %12 = load i8, ptr %i.z, align 8, !range !559, !noundef !3
-  %13 = icmp eq i8 %12, 1
-  br i1 %13, label %bb.l, label %.backedge.i.1
-
-bb.l:                                             ; preds = %.backedge.i
-  %.sroa.4.0..sroa_idx.i.1 = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i, i64 89 ; 2 uses
+bb.l:                                             ; preds = %.lr.ph.i
+  %.sroa.4.0..sroa_idx.i.1 = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i, i64 17 ; 2 uses
   %.sroa.4.0.copyload.i.1 = load i8, ptr %.sroa.4.0..sroa_idx.i.1, align 1
   %.not.i.1 = icmp eq i8 %.sroa.4.0.copyload.i.1, 2
   %spec.store.select.i.1 = select i1 %.not.i.1, i8 2, i8 1
   store i8 %spec.store.select.i.1, ptr %.sroa.4.0..sroa_idx.i.1, align 1
-  %.sroa.49.0..sroa_idx.i.1 = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i, i64 103 ; 2 uses
+  %.sroa.49.0..sroa_idx.i.1 = getelementptr inbounds nuw i8, ptr %.sroa.0.01.i, i64 31 ; 2 uses
   %.sroa.49.0.copyload.i.1 = load i8, ptr %.sroa.49.0..sroa_idx.i.1, align 1
   %.not20.i.1 = icmp eq i8 %.sroa.49.0.copyload.i.1, 2
   %spec.store.select2.i.1 = select i1 %.not20.i.1, i8 2, i8 1
   store i8 %spec.store.select2.i.1, ptr %.sroa.49.0..sroa_idx.i.1, align 1
   br label %.backedge.i.1
 
-.backedge.i.1:                                    ; preds = %bb.l, %.backedge.i
-  %i.ac = icmp eq ptr %11, %i.x
+.backedge.i.1:                                    ; preds = %bb.l, %.lr.ph.i
+  %i.ac = icmp eq ptr %i.z, %i.x
   br i1 %i.ac, label %_RNvMNtCs1UvybGPDVxf_9indicatif5styleNtB2_13ProgressStyle14set_for_stderr.exit, label %.lr.ph.i
 
-_RNvMNtCs1UvybGPDVxf_9indicatif5styleNtB2_13ProgressStyle14set_for_stderr.exit: ; preds = %.lr.ph.i.prol.loopexit, %.backedge.i.1, %bb.k, %bb.j
+_RNvMNtCs1UvybGPDVxf_9indicatif5styleNtB2_13ProgressStyle14set_for_stderr.exit: ; preds = %.backedge.i.1, %bb.k, %bb.j
   %i.ad = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   invoke void @_RNvMNtCs1UvybGPDVxf_9indicatif5stateNtB2_8BarState9set_style(ptr noalias noundef nonnull align 8 dereferenceable(520) %i.ad, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(136) %1)
           to label %bb.m unwind label %bb.i

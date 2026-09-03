@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 8887
 inline.NumDeleted: 2262
 loop-unroll.NumCompletelyUnrolled: 9
-loop-unroll.NumRuntimeUnrolled: 37
-loop-unroll.NumUnrolled: 46
+loop-unroll.NumRuntimeUnrolled: 36
+loop-unroll.NumUnrolled: 45
 begin_hunk_0_@_ZSt16__do_uninit_copyISt13move_iteratorIPN7simplex13sparse_matrixINS1_7mpq_extEE10_row_entryEES6_ET0_T_S9_S8_:bb.a
   store i8 %i.d, ptr %i.b, align 4
   %i.e = getelementptr inbounds nuw i8, ptr %.08, i64 8 ; 2 uses
@@ -205,8 +205,8 @@ bb.j:                                             ; preds = %_ZNSt7__cxx1112basi
 
 bb.k:                                             ; preds = %bb.d
   %i.ai = zext i32 %i.l to i64
-  %i.aj = tail call noalias noundef ptr @_ZN6memory8allocateEm(i64 noundef %i.ai) ; 7 uses
-  %i.ak = load ptr, ptr %0, align 8, !tbaa !1275  ; 11 uses
+  %i.aj = tail call noalias noundef ptr @_ZN6memory8allocateEm(i64 noundef %i.ai) ; 5 uses
+  %i.ak = load ptr, ptr %0, align 8, !tbaa !1275  ; 7 uses
   %i.al = icmp eq ptr %i.ak, null
   br i1 %i.al, label %_ZSt20uninitialized_move_nIPN7simplex13sparse_matrixINS0_7mpq_extEE6columnEjS5_ESt4pairIT_T1_ES7_T0_S8_.exit, label %_ZNK6vectorIN7simplex13sparse_matrixINS0_7mpq_extEE6columnELb1EjE4sizeEv.exit
 
@@ -215,56 +215,24 @@ _ZNK6vectorIN7simplex13sparse_matrixINS0_7mpq_extEE6columnELb1EjE4sizeEv.exit: ;
   %i.an = load i32, ptr %i.am, align 4, !tbaa !68 ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
   store i32 %i.an, ptr %i.ao, align 4, !tbaa !68
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 3 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 2 uses
   %i.aq = zext i32 %i.an to i64
-  %.idx.i.i.i = mul nuw nsw i64 %i.aq, 24         ; 2 uses
+  %.idx.i.i.i = mul nuw nsw i64 %i.aq, 24
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ak, i64 %.idx.i.i.i
   %i.as = icmp eq i32 %i.an, 0
-  br i1 %i.as, label %_ZNK6vectorIN7simplex13sparse_matrixINS0_7mpq_extEE6columnELb1EjE4sizeEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
+  br i1 %i.as, label %_ZNK6vectorIN7simplex13sparse_matrixINS0_7mpq_extEE6columnELb1EjE4sizeEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNK6vectorIN7simplex13sparse_matrixINS0_7mpq_extEE6columnELb1EjE4sizeEv.exit
-  %3 = add nsw i64 %.idx.i.i.i, -24               ; 2 uses
-  %4 = udiv i64 %3, 24
-  %5 = and i64 %4, 1
-  %lcmp.mod.not.not = icmp eq i64 %5, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.i.prol.loopexit
-
-.lr.ph.i.i.i.i.i.i.prol:                          ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %6 = load ptr, ptr %i.ak, align 8, !tbaa !1281
-  store ptr %6, ptr %i.ap, align 8, !tbaa !1281
-  store ptr null, ptr %i.ak, align 8, !tbaa !1281
-  %7 = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
-  %8 = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %7, ptr noundef nonnull align 8 dereferenceable(12) %8, i64 12, i1 false)
-  %9 = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
-  %10 = getelementptr inbounds nuw i8, ptr %i.aj, i64 32
-  br label %.lr.ph.i.i.i.i.i.i.prol.loopexit
-
-.lr.ph.i.i.i.i.i.i.prol.loopexit:                 ; preds = %.lr.ph.i.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.i.preheader
-  %.08.i.i.i.i.i.i.unr = phi ptr [ %i.ap, %.lr.ph.i.i.i.i.i.i.preheader ], [ %10, %.lr.ph.i.i.i.i.i.i.prol ]
-  %.sroa.04.07.i.i.i.i.i.i.unr = phi ptr [ %i.ak, %.lr.ph.i.i.i.i.i.i.preheader ], [ %9, %.lr.ph.i.i.i.i.i.i.prol ]
-  %11 = icmp ult i64 %3, 24
-  br i1 %11, label %_ZNK6vectorIN7simplex13sparse_matrixINS0_7mpq_extEE6columnELb1EjE4sizeEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i
-  %.08.i.i.i.i.i.i = phi ptr [ %i.ax, %.lr.ph.i.i.i.i.i.i ], [ %.08.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
-  %.sroa.04.07.i.i.i.i.i.i = phi ptr [ %i.aw, %.lr.ph.i.i.i.i.i.i ], [ %.sroa.04.07.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 6 uses
-  %12 = load ptr, ptr %.sroa.04.07.i.i.i.i.i.i, align 8, !tbaa !1281
-  store ptr %12, ptr %.08.i.i.i.i.i.i, align 8, !tbaa !1281
+.lr.ph.i.i.i.i.i.i:                               ; preds = %_ZNK6vectorIN7simplex13sparse_matrixINS0_7mpq_extEE6columnELb1EjE4sizeEv.exit, %.lr.ph.i.i.i.i.i.i
+  %.08.i.i.i.i.i.i = phi ptr [ %i.ax, %.lr.ph.i.i.i.i.i.i ], [ %i.ap, %_ZNK6vectorIN7simplex13sparse_matrixINS0_7mpq_extEE6columnELb1EjE4sizeEv.exit ] ; 3 uses
+  %.sroa.04.07.i.i.i.i.i.i = phi ptr [ %i.aw, %.lr.ph.i.i.i.i.i.i ], [ %i.ak, %_ZNK6vectorIN7simplex13sparse_matrixINS0_7mpq_extEE6columnELb1EjE4sizeEv.exit ] ; 4 uses
+  %i.at = load ptr, ptr %.sroa.04.07.i.i.i.i.i.i, align 8, !tbaa !1281
+  store ptr %i.at, ptr %.08.i.i.i.i.i.i, align 8, !tbaa !1281
   store ptr null, ptr %.sroa.04.07.i.i.i.i.i.i, align 8, !tbaa !1281
-  %13 = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 8
-  %14 = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %13, ptr noundef nonnull align 8 dereferenceable(12) %14, i64 12, i1 false)
-  %15 = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 24 ; 2 uses
-  %16 = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 24
-  %i.at = load ptr, ptr %15, align 8, !tbaa !1281
-  store ptr %i.at, ptr %16, align 8, !tbaa !1281
-  store ptr null, ptr %15, align 8, !tbaa !1281
-  %i.au = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 32
-  %i.av = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 32
+  %i.au = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 8
+  %i.av = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.au, ptr noundef nonnull align 8 dereferenceable(12) %i.av, i64 12, i1 false)
-  %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 48 ; 2 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 48
+  %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 24 ; 2 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 24
   %i.ay = icmp eq ptr %i.aw, %i.ar
   br i1 %i.ay, label %_ZNK6vectorIN7simplex13sparse_matrixINS0_7mpq_extEE6columnELb1EjE4sizeEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !2104
 
@@ -274,7 +242,7 @@ _ZSt20uninitialized_move_nIPN7simplex13sparse_matrixINS0_7mpq_extEE6columnEjS5_E
   %i.ba = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   br label %_ZN6vectorIN7simplex13sparse_matrixINS0_7mpq_extEE6columnELb1EjE7destroyEv.exit
 
-_ZNK6vectorIN7simplex13sparse_matrixINS0_7mpq_extEE6columnELb1EjE4sizeEv.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i, %_ZNK6vectorIN7simplex13sparse_matrixINS0_7mpq_extEE6columnELb1EjE4sizeEv.exit
+_ZNK6vectorIN7simplex13sparse_matrixINS0_7mpq_extEE6columnELb1EjE4sizeEv.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %_ZNK6vectorIN7simplex13sparse_matrixINS0_7mpq_extEE6columnELb1EjE4sizeEv.exit
   %i.bb = getelementptr inbounds i8, ptr %i.ak, i64 -4
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !68 ; 2 uses
   %.not6.i.i.i.i.i = icmp eq i32 %i.bc, 0

@@ -10,7 +10,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local noalias noundef ptr @initDecomposition(i32 noundef %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #0 {
 .preheader:
-  %i.a = tail call noalias noundef dereferenceable_or_null(168) ptr @malloc(i64 noundef 168) #7 ; 16 uses
+  %i.a = tail call noalias noundef dereferenceable_or_null(168) ptr @malloc(i64 noundef 168) #7 ; 15 uses
   store i32 %0, ptr %i.a, align 8, !tbaa !7
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   store i32 %1, ptr %i.b, align 4, !tbaa !7
@@ -19,7 +19,6 @@ define dso_local noalias noundef ptr @initDecomposition(i32 noundef %0, i32 noun
   %i.d = tail call i32 @getMyRank() #8            ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   %i.f = sdiv i32 %i.d, %0                        ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.g = sdiv i32 %i.f, %1                        ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   store i32 %i.g, ptr %i.h, align 4, !tbaa !7
@@ -32,19 +31,18 @@ define dso_local noalias noundef ptr @initDecomposition(i32 noundef %0, i32 noun
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   %i.n = insertelement <2 x i32> poison, i32 %0, i64 0
-  %i.o = insertelement <2 x i32> %i.n, i32 %1, i64 1
+  %i.o = insertelement <2 x i32> %i.n, i32 %1, i64 1 ; 2 uses
   %i.p = sitofp <2 x i32> %i.o to <2 x double>
-  %5 = srem i32 %i.f, %1                          ; 3 uses
-  %6 = srem i32 %i.d, %0                          ; 3 uses
-  store i32 %6, ptr %i.e, align 4, !tbaa !7
-  store i32 %5, ptr %4, align 8, !tbaa !7
+  %4 = insertelement <2 x i32> poison, i32 %i.d, i64 0
+  %5 = insertelement <2 x i32> %4, i32 %i.f, i64 1
+  %6 = srem <2 x i32> %5, %i.o                    ; 4 uses
+  %7 = extractelement <2 x i32> %6, i64 0
+  store <2 x i32> %6, ptr %i.e, align 4, !tbaa !7
   %i.q = load <2 x double>, ptr %i.k, align 8, !tbaa !9
   %i.r = fdiv <2 x double> %i.q, %i.p             ; 3 uses
-  %i.s = add nsw i32 %6, 1
+  %i.s = add nsw i32 %7, 1
   store <2 x double> %i.r, ptr %i.l, align 8, !tbaa !9
-  %7 = insertelement <2 x i32> poison, i32 %6, i64 0
-  %8 = insertelement <2 x i32> %7, i32 %5, i64 1
-  %i.t = sitofp <2 x i32> %8 to <2 x double>
+  %i.t = sitofp <2 x i32> %6 to <2 x double>
   %i.u = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.t, <2 x double> %i.r, <2 x double> zeroinitializer)
   store <2 x double> %i.u, ptr %i.m, align 8, !tbaa !9
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 128
@@ -62,8 +60,8 @@ define dso_local noalias noundef ptr @initDecomposition(i32 noundef %0, i32 noun
   %i.ag = insertelement <2 x double> %i.af, double %i.ab, i64 0
   %i.ah = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ae, <2 x double> %i.ag, <2 x double> zeroinitializer)
   store <2 x double> %i.ah, ptr %i.aa, align 8, !tbaa !9
-  %9 = insertelement <2 x i32> poison, i32 %5, i64 0
-  %i.ai = insertelement <2 x i32> %9, i32 %i.g, i64 1
+  %8 = shufflevector <2 x i32> %6, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
+  %i.ai = insertelement <2 x i32> %8, i32 %i.g, i64 1
   %i.aj = add nsw <2 x i32> %i.ai, splat (i32 1)
   %i.ak = sitofp <2 x i32> %i.aj to <2 x double>
   %i.al = insertelement <2 x double> %i.af, double %i.ab, i64 1
@@ -84,21 +82,19 @@ bb.a:
   %i.e = add nsw i32 %i.c, %i.d
   %i.f = srem i32 %i.e, %i.d
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %4 = load i32, ptr %i.g, align 4, !tbaa !7
-  %5 = add nsw i32 %4, %2
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %6 = load i32, ptr %i.h, align 4, !tbaa !7      ; 3 uses
-  %7 = add nsw i32 %5, %6
-  %8 = srem i32 %7, %6
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %i.i = load i32, ptr %9, align 4, !tbaa !7
-  %10 = add nsw i32 %i.i, %3
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %12 = load i32, ptr %11, align 4, !tbaa !7      ; 2 uses
-  %13 = add nsw i32 %10, %12
-  %14 = srem i32 %13, %12
-  %15 = mul nsw i32 %14, %6
-  %i.j = add nsw i32 %15, %8
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
+  %4 = load <2 x i32>, ptr %i.g, align 4, !tbaa !7
+  %5 = insertelement <2 x i32> poison, i32 %2, i64 0
+  %6 = insertelement <2 x i32> %5, i32 %3, i64 1
+  %7 = add nsw <2 x i32> %4, %6
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !7
+  %8 = load <2 x i32>, ptr %i.h, align 4, !tbaa !7 ; 2 uses
+  %9 = add nsw <2 x i32> %7, %8
+  %10 = srem <2 x i32> %9, %8                     ; 2 uses
+  %11 = extractelement <2 x i32> %10, i64 1
+  %12 = mul nsw i32 %11, %i.i
+  %13 = extractelement <2 x i32> %10, i64 0
+  %i.j = add nsw i32 %12, %13
   %i.k = mul nsw i32 %i.j, %i.d
   %i.l = add nsw i32 %i.k, %i.f
   ret i32 %i.l

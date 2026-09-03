@@ -205,21 +205,35 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.preheader
-  %.129 = phi i32 [ %.02331, %.preheader ], [ %i.r, %bb.c ] ; 3 uses
-  %.02428 = phi ptr [ %i.b, %.preheader ], [ %i.w, %bb.c ] ; 3 uses
-  %i.l = add i32 %.129, 1
-  %i.m = urem i32 %.129, %2
+  %.129 = phi i32 [ %.02331, %.preheader ], [ %i.r, %bb.c ] ; 5 uses
+  %.02428 = phi ptr [ %i.b, %.preheader ], [ %i.w, %bb.c ] ; 5 uses
+  %6 = add i32 %.129, 1
+  %7 = urem i32 %.129, %2
+  %8 = zext i32 %7 to i64
+  %9 = getelementptr i8, ptr %1, i64 %8
+  %10 = load i8, ptr %9, align 1
+  %11 = getelementptr i8, ptr %.02428, i64 1
+  store i8 %10, ptr %.02428, align 1
+  %12 = add i32 %.129, 2
+  %13 = urem i32 %6, %2
+  %14 = zext i32 %13 to i64
+  %15 = getelementptr i8, ptr %1, i64 %14
+  %16 = load i8, ptr %15, align 1
+  %17 = getelementptr i8, ptr %.02428, i64 2
+  store i8 %16, ptr %11, align 1
+  %i.l = add i32 %.129, 3
+  %i.m = urem i32 %12, %2
   %i.n = zext i32 %i.m to i64
   %i.o = getelementptr i8, ptr %1, i64 %i.n
   %i.p = load i8, ptr %i.o, align 1
-  %i.q = getelementptr i8, ptr %.02428, i64 1     ; 2 uses
-  store i8 %i.p, ptr %.02428, align 1
-  %i.r = add i32 %.129, 2                         ; 2 uses
+  %i.q = getelementptr i8, ptr %.02428, i64 3     ; 2 uses
+  store i8 %i.p, ptr %17, align 1
+  %i.r = add i32 %.129, 4                         ; 2 uses
   %i.s = urem i32 %i.l, %2
   %i.t = zext i32 %i.s to i64
   %i.u = getelementptr i8, ptr %1, i64 %i.t
   %i.v = load i8, ptr %i.u, align 1
-  %i.w = getelementptr i8, ptr %.02428, i64 2
+  %i.w = getelementptr i8, ptr %.02428, i64 4
   store i8 %i.v, ptr %i.q, align 1
   %exitcond.not.1 = icmp eq ptr %i.q, %scevgep
   br i1 %exitcond.not.1, label %.loopexit, label %bb.c, !llvm.loop !37

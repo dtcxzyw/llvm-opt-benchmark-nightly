@@ -205,22 +205,18 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZZN7openvdb5v13_05tools7compDivINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS3_8LeafNodeINS0_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEEEEvRT_SH_EN5Local2opERNS0_11CombineArgsISA_SA_EE(ptr noundef nonnull align 8 dereferenceable(43) %0) #3 comdat align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !983    ; 3 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !983    ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !984  ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !984  ; 2 uses
   %i.d = load i32, ptr %i.a, align 4, !tbaa !548
   %i.e = load i32, ptr %i.c, align 4, !tbaa !548
   %i.f = sdiv i32 %i.d, %i.e
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %2 = load i32, ptr %1, align 4, !tbaa !548
-  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %3 = load i32, ptr %i.g, align 4, !tbaa !548
-  %4 = sdiv i32 %2, %3
-  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %5 = load i32, ptr %i.h, align 4, !tbaa !548
-  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %7 = load i32, ptr %6, align 4, !tbaa !548
-  %8 = sdiv i32 %5, %7
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  %1 = load <2 x i32>, ptr %i.g, align 4, !tbaa !548
+  %2 = load <2 x i32>, ptr %i.h, align 4, !tbaa !548
+  %3 = sdiv <2 x i32> %1, %2                      ; 2 uses
+  %4 = extractelement <2 x i32> %3, i64 0
   %.sroa.2.0.insert.ext.i.i = zext i32 %4 to i64
   %.sroa.2.0.insert.shift.i.i = shl nuw i64 %.sroa.2.0.insert.ext.i.i, 32
   %.sroa.0.0.insert.ext.i.i = zext i32 %i.f to i64
@@ -229,7 +225,8 @@ bb.a:
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !985  ; 2 uses
   store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.j, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  store i32 %8, ptr %.sroa.4.0..sroa_idx, align 4
+  %5 = extractelement <2 x i32> %3, i64 1
+  store i32 %5, ptr %.sroa.4.0..sroa_idx, align 4
   ret void
 }
 
@@ -632,22 +629,18 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZZN7openvdb5v13_05tools7compDivINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeINS0_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEEEEEEvRT_SJ_EN5Local2opERNS0_11CombineArgsISB_SB_EE(ptr noundef nonnull align 8 dereferenceable(43) %0) #3 comdat align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !983    ; 3 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !983    ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !984  ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !984  ; 2 uses
   %i.d = load i32, ptr %i.a, align 4, !tbaa !548
   %i.e = load i32, ptr %i.c, align 4, !tbaa !548
   %i.f = sdiv i32 %i.d, %i.e
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %2 = load i32, ptr %1, align 4, !tbaa !548
-  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %3 = load i32, ptr %i.g, align 4, !tbaa !548
-  %4 = sdiv i32 %2, %3
-  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %5 = load i32, ptr %i.h, align 4, !tbaa !548
-  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %7 = load i32, ptr %6, align 4, !tbaa !548
-  %8 = sdiv i32 %5, %7
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  %1 = load <2 x i32>, ptr %i.g, align 4, !tbaa !548
+  %2 = load <2 x i32>, ptr %i.h, align 4, !tbaa !548
+  %3 = sdiv <2 x i32> %1, %2                      ; 2 uses
+  %4 = extractelement <2 x i32> %3, i64 0
   %.sroa.2.0.insert.ext.i.i = zext i32 %4 to i64
   %.sroa.2.0.insert.shift.i.i = shl nuw i64 %.sroa.2.0.insert.ext.i.i, 32
   %.sroa.0.0.insert.ext.i.i = zext i32 %i.f to i64
@@ -656,7 +649,8 @@ bb.a:
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !985  ; 2 uses
   store i64 %.sroa.0.0.insert.insert.i.i, ptr %i.j, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  store i32 %8, ptr %.sroa.4.0..sroa_idx, align 4
+  %5 = extractelement <2 x i32> %3, i64 1
+  store i32 %5, ptr %.sroa.4.0..sroa_idx, align 4
   ret void
 }
 

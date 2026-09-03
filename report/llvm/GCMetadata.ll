@@ -1,8 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/GCMetadata?download=true
 inline.NumInlined: 843
 inline.NumDeleted: 557
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN4llvm12GCModuleInfoD2Ev:bb.a
   %i.au = load ptr, ptr %i.at, align 8
   tail call void %i.au(ptr noundef nonnull align 8 dereferenceable(44) %i.ar) #16, !inline_history !184
@@ -204,7 +202,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.c = call noundef ptr @_ZN4llvm15SmallVectorBaseIjE13mallocForGrowEPvmmRm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.b, i64 noundef 0, i64 noundef 24, ptr noundef nonnull align 8 dereferenceable(8) %i.a) #16 ; 7 uses
+  %i.c = call noundef ptr @_ZN4llvm15SmallVectorBaseIjE13mallocForGrowEPvmmRm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.b, i64 noundef 0, i64 noundef 24, ptr noundef nonnull align 8 dereferenceable(8) %i.a) #16 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !36
   %i.f = zext i32 %i.e to i64
@@ -214,61 +212,29 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.g, ptr noundef nonnull align 8 dereferenceable(16) %i.i, i64 16, i1 false), !tbaa.struct !82
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   store ptr null, ptr %i.j, align 8, !tbaa !84
-  %i.k = load ptr, ptr %0, align 8, !tbaa !38     ; 6 uses
+  %i.k = load ptr, ptr %0, align 8, !tbaa !38     ; 3 uses
   %i.l = load i32, ptr %i.d, align 8, !tbaa !36   ; 2 uses
   %i.m = zext i32 %i.l to i64
-  %.idx.i = mul nuw nsw i64 %i.m, 24              ; 2 uses
+  %.idx.i = mul nuw nsw i64 %i.m, 24
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 %.idx.i
   %.not7.i.i.i.i.i.i = icmp eq i32 %i.l, 0
-  br i1 %.not7.i.i.i.i.i.i, label %_ZN4llvm23SmallVectorTemplateBaseISt4pairINS_9StringRefESt10unique_ptrINS_10GCStrategyESt14default_deleteIS4_EEELb0EE19moveElementsForGrowEPS8_.exit, label %.lr.ph.i.i.i.i.i.i.preheader
+  br i1 %.not7.i.i.i.i.i.i, label %_ZN4llvm23SmallVectorTemplateBaseISt4pairINS_9StringRefESt10unique_ptrINS_10GCStrategyESt14default_deleteIS4_EEELb0EE19moveElementsForGrowEPS8_.exit, label %.lr.ph.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %bb.a
-  %4 = add nsw i64 %.idx.i, -24                   ; 2 uses
-  %5 = udiv i64 %4, 24
-  %6 = and i64 %5, 1
-  %lcmp.mod.not.not = icmp eq i64 %6, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.i.prol.loopexit
-
-.lr.ph.i.i.i.i.i.i.prol:                          ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 16, i1 false), !tbaa.struct !82
-  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %8 = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 2 uses
-  %9 = load i64, ptr %8, align 8, !tbaa !41
-  store i64 %9, ptr %7, align 8, !tbaa !41
-  store ptr null, ptr %8, align 8, !tbaa !41
-  %10 = getelementptr inbounds nuw i8, ptr %i.k, i64 24
-  %11 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  br label %.lr.ph.i.i.i.i.i.i.prol.loopexit
-
-.lr.ph.i.i.i.i.i.i.prol.loopexit:                 ; preds = %.lr.ph.i.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.i.preheader
-  %.09.i.i.i.i.i.i.unr = phi ptr [ %i.c, %.lr.ph.i.i.i.i.i.i.preheader ], [ %11, %.lr.ph.i.i.i.i.i.i.prol ]
-  %.sroa.04.08.i.i.i.i.i.i.unr = phi ptr [ %i.k, %.lr.ph.i.i.i.i.i.i.preheader ], [ %10, %.lr.ph.i.i.i.i.i.i.prol ]
-  %12 = icmp ult i64 %4, 24
-  br i1 %12, label %_ZN4llvm23SmallVectorTemplateBaseISt4pairINS_9StringRefESt10unique_ptrINS_10GCStrategyESt14default_deleteIS4_EEELb0EE18uninitialized_moveIPS8_SB_EEvT_SC_T0_.exit.i, label %.lr.ph.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i
-  %.09.i.i.i.i.i.i = phi ptr [ %i.s, %.lr.ph.i.i.i.i.i.i ], [ %.09.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
-  %.sroa.04.08.i.i.i.i.i.i = phi ptr [ %i.r, %.lr.ph.i.i.i.i.i.i ], [ %.sroa.04.08.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
+.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.a, %.lr.ph.i.i.i.i.i.i
+  %.09.i.i.i.i.i.i = phi ptr [ %i.s, %.lr.ph.i.i.i.i.i.i ], [ %i.c, %bb.a ] ; 3 uses
+  %.sroa.04.08.i.i.i.i.i.i = phi ptr [ %i.r, %.lr.ph.i.i.i.i.i.i ], [ %i.k, %bb.a ] ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.09.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.04.08.i.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !82
-  %13 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 16
-  %14 = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i, i64 16 ; 2 uses
-  %15 = load i64, ptr %14, align 8, !tbaa !41
-  store i64 %15, ptr %13, align 8, !tbaa !41
-  store ptr null, ptr %14, align 8, !tbaa !41
-  %16 = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i, i64 24
-  %17 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %17, ptr noundef nonnull align 8 dereferenceable(24) %16, i64 16, i1 false), !tbaa.struct !82
-  %i.o = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 40
-  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i, i64 40 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 16
+  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i, i64 16 ; 2 uses
   %i.q = load i64, ptr %i.p, align 8, !tbaa !41
   store i64 %i.q, ptr %i.o, align 8, !tbaa !41
   store ptr null, ptr %i.p, align 8, !tbaa !41
-  %i.r = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i, i64 48 ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 48
+  %i.r = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i, i64 24 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i, i64 24
   %.not.i.i.i.i.i.i.1 = icmp eq ptr %i.r, %i.n
   br i1 %.not.i.i.i.i.i.i.1, label %_ZN4llvm23SmallVectorTemplateBaseISt4pairINS_9StringRefESt10unique_ptrINS_10GCStrategyESt14default_deleteIS4_EEELb0EE18uninitialized_moveIPS8_SB_EEvT_SC_T0_.exit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !190
 
-_ZN4llvm23SmallVectorTemplateBaseISt4pairINS_9StringRefESt10unique_ptrINS_10GCStrategyESt14default_deleteIS4_EEELb0EE18uninitialized_moveIPS8_SB_EEvT_SC_T0_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.prol.loopexit
+_ZN4llvm23SmallVectorTemplateBaseISt4pairINS_9StringRefESt10unique_ptrINS_10GCStrategyESt14default_deleteIS4_EEELb0EE18uninitialized_moveIPS8_SB_EEvT_SC_T0_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i
   %.pre.i = load ptr, ptr %0, align 8, !tbaa !38  ; 3 uses
   %.pre3.i = load i32, ptr %i.d, align 8, !tbaa !36 ; 2 uses
   %.not4.i.i = icmp eq i32 %.pre3.i, 0

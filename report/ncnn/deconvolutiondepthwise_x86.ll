@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %_ZNK4ncnn3Mat5empty
   %i.dz = load i32, ptr %i.c, align 4, !tbaa !60
   %i.ea = mul nsw i32 %i.dz, %i.s                 ; 3 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 276 ; 3 uses
-  %i.ec = load i32, ptr %i.eb, align 4, !tbaa !45 ; 3 uses
+  %i.ec = load i32, ptr %i.eb, align 4, !tbaa !45 ; 2 uses
   %i.ed = icmp eq i32 %i.ea, %i.ec
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.ef = load i32, ptr %i.ee, align 8, !tbaa !46 ; 2 uses
@@ -223,25 +223,24 @@ bb.t:                                             ; preds = %bb.s
   br label %.sink.split
 
 ._crit_edge286:                                   ; preds = %bb.r
-  %11 = sdiv i32 %i.ea, %i.ec                     ; 3 uses
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %13 = sdiv i32 %i.ef, %i.ec                     ; 3 uses
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 208
+  %12 = insertelement <2 x i32> poison, i32 %i.ea, i64 0
+  %13 = insertelement <2 x i32> %12, i32 %i.ef, i64 1
+  %14 = insertelement <2 x i32> poison, i32 %i.ec, i64 0
+  %15 = shufflevector <2 x i32> %14, <2 x i32> poison, <2 x i32> zeroinitializer
+  %16 = sdiv <2 x i32> %13, %15                   ; 4 uses
   %i.eh = load i8, ptr %i.ax, align 1, !tbaa !48, !range !49, !noundef !50
   %i.ei = trunc nuw i8 %i.eh to i1
   br i1 %i.ei, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %._crit_edge286
-  %14 = and i32 %11, 3
-  %15 = icmp eq i32 %14, 0
-  %16 = select i1 %15, i32 4, i32 1
-  %17 = and i32 %13, 3
-  %18 = icmp eq i32 %17, 0
-  %19 = select i1 %18, i32 4, i32 1
+  %17 = and <2 x i32> %16, splat (i32 3)
+  %18 = icmp eq <2 x i32> %17, zeroinitializer
+  %19 = select <2 x i1> %18, <2 x i32> splat (i32 4), <2 x i32> splat (i32 1)
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %._crit_edge286
-  %.079 = phi i32 [ %16, %bb.u ], [ 1, %._crit_edge286 ] ; 4 uses
-  %.078 = phi i32 [ %19, %bb.u ], [ 1, %._crit_edge286 ] ; 6 uses
+  %20 = phi <2 x i32> [ %19, %bb.u ], [ splat (i32 1), %._crit_edge286 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   %i.ej = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -278,7 +277,8 @@ bb.w:                                             ; preds = %bb.v
   br label %_ZN4ncnn3Mat6addrefEv.exit
 
 _ZN4ncnn3Mat6addrefEv.exit:                       ; preds = %bb.w, %bb.v
-  %i.fe = icmp sgt i32 %i.s, %.079
+  %21 = extractelement <2 x i32> %20, i64 0       ; 3 uses
+  %i.fe = icmp sgt i32 %i.s, %21
   br i1 %i.fe, label %bb.x, label %bb.aa
 
 bb.x:                                             ; preds = %_ZN4ncnn3Mat6addrefEv.exit
@@ -288,7 +288,7 @@ bb.x:                                             ; preds = %_ZN4ncnn3Mat6addref
   %i.fg = load ptr, ptr %i.ff, align 8, !tbaa !68
   %i.fh = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr %i.fg, ptr %i.fh, align 8, !tbaa !120
-  invoke void @_ZN4ncnn15convert_packingERKNS_3MatERS0_iRKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(72) %5, i32 noundef %.079, ptr noundef nonnull align 8 dereferenceable(64) %6)
+  invoke void @_ZN4ncnn15convert_packingERKNS_3MatERS0_iRKNS_6OptionE(ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(72) %5, i32 noundef %21, ptr noundef nonnull align 8 dereferenceable(64) %6)
           to label %bb.y unwind label %bb.z
 
 bb.y:                                             ; preds = %bb.x
@@ -348,21 +348,22 @@ bb.ab:                                            ; preds = %bb.aa
   br label %_ZN4ncnn3Mat6addrefEv.exit195
 
 _ZN4ncnn3Mat6addrefEv.exit195:                    ; preds = %bb.ab, %bb.aa
-  %i.gh = icmp samesign ult i32 %.078, %.094      ; 2 uses
+  %22 = extractelement <2 x i32> %20, i64 1       ; 5 uses
+  %i.gh = icmp samesign ult i32 %22, %.094        ; 2 uses
   br i1 %i.gh, label %bb.ac, label %bb.af
 
 bb.ac:                                            ; preds = %_ZN4ncnn3Mat6addrefEv.exit195
   %i.gi = load i32, ptr %i.f, align 4, !tbaa !60
   %i.gj = load i32, ptr %i.g, align 4, !tbaa !60
-  %i.gk = load i32, ptr %12, align 8, !tbaa !46
-  %i.gl = sdiv i32 %i.gk, %.078
+  %i.gk = load i32, ptr %11, align 8, !tbaa !46
+  %i.gl = sdiv i32 %i.gk, %22
   %i.gm = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.bh, i1 true)
   %i.gn = lshr i64 %i.bi, %i.gm
-  %i.go = zext nneg i32 %.078 to i64
+  %i.go = zext nneg i32 %22 to i64
   %i.gp = mul i64 %i.gn, %i.go
   %i.gq = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.gr = load ptr, ptr %i.gq, align 8, !tbaa !68
-  invoke void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %7, i32 noundef %i.gi, i32 noundef %i.gj, i32 noundef %i.gl, i64 noundef %i.gp, i32 noundef %.078, ptr noundef %i.gr)
+  invoke void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %7, i32 noundef %i.gi, i32 noundef %i.gj, i32 noundef %i.gl, i64 noundef %i.gp, i32 noundef %22, ptr noundef %i.gr)
           to label %bb.ad unwind label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
@@ -389,7 +390,6 @@ bb.af:                                            ; preds = %_ZNK4ncnn3Mat5empty
   br i1 %.not107280, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.af
-  %20 = sdiv i32 %11, %.079
   %i.hb = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.hd = getelementptr inbounds nuw i8, ptr %8, i64 24
@@ -397,7 +397,7 @@ bb.af:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %i.hf = getelementptr inbounds nuw i8, ptr %8, i64 40
   %i.hg = getelementptr inbounds nuw i8, ptr %8, i64 56
   %i.hh = getelementptr inbounds nuw i8, ptr %8, i64 64
-  %21 = sdiv i32 %13, %.078
+  %23 = sdiv <2 x i32> %16, %20                   ; 2 uses
   %i.hi = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.hk = getelementptr inbounds nuw i8, ptr %9, i64 24
@@ -407,6 +407,10 @@ bb.af:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %i.ho = getelementptr inbounds nuw i8, ptr %9, i64 64
   %i.hp = getelementptr inbounds nuw i8, ptr %0, i64 512
   %i.hq = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %24 = extractelement <2 x i32> %23, i64 0
+  %25 = extractelement <2 x i32> %23, i64 1
+  %26 = extractelement <2 x i32> %16, i64 0
+  %27 = extractelement <2 x i32> %16, i64 1
   br label %bb.ah
 
 bb.ag:                                            ; preds = %_ZN4ncnn3MatD2Ev.exit122
@@ -420,8 +424,8 @@ bb.ah:                                            ; preds = %.lr.ph, %bb.ag
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.ag ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #12
   %i.ht = trunc i64 %indvars.iv to i32
-  %i.hu = mul i32 %11, %i.ht
-  %i.hv = sdiv i32 %i.hu, %.079
+  %i.hu = mul i32 %26, %i.ht
+  %i.hv = sdiv i32 %i.hu, %21
   %i.hw = load ptr, ptr %5, align 16, !tbaa !20, !noalias !121
   %i.hx = load i64, ptr %i.fa, align 16, !tbaa !21, !noalias !121
   %i.hy = sext i32 %i.hv to i64
@@ -436,7 +440,7 @@ bb.ah:                                            ; preds = %.lr.ph, %bb.ag
   store i64 %i.ia, ptr %i.hc, align 8, !tbaa !58
   store i32 %i.id, ptr %i.hd, align 8, !tbaa !59
   store ptr %i.ie, ptr %i.he, align 8, !tbaa !19
-  store i32 %20, ptr %i.hg, align 8, !tbaa !61
+  store i32 %24, ptr %i.hg, align 8, !tbaa !61
   %i.if = load <4 x i32>, ptr %i.eu, align 8, !tbaa !60, !noalias !121 ; 3 uses
   %i.ig = load i32, ptr %i.ew, align 4, !tbaa !65, !noalias !121
   %i.ih = sext i32 %i.ig to i64
@@ -454,8 +458,8 @@ bb.ah:                                            ; preds = %.lr.ph, %bb.ag
   store <4 x i32> %i.if, ptr %i.hf, align 8, !tbaa !60
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #12
   %i.is = trunc i64 %indvars.iv to i32
-  %i.it = mul i32 %13, %i.is
-  %i.iu = sdiv i32 %i.it, %.078
+  %i.it = mul i32 %27, %i.is
+  %i.iu = sdiv i32 %i.it, %22
   %i.iv = load ptr, ptr %7, align 16, !tbaa !20, !noalias !122
   %i.iw = load i64, ptr %i.ge, align 16, !tbaa !21, !noalias !122
   %i.ix = sext i32 %i.iu to i64
@@ -470,7 +474,7 @@ bb.ah:                                            ; preds = %.lr.ph, %bb.ag
   store i64 %i.iz, ptr %i.hj, align 8, !tbaa !58
   store i32 %i.jc, ptr %i.hk, align 8, !tbaa !59
   store ptr %i.jd, ptr %i.hl, align 8, !tbaa !19
-  store i32 %21, ptr %i.hn, align 8, !tbaa !61
+  store i32 %25, ptr %i.hn, align 8, !tbaa !61
   %i.je = load <4 x i32>, ptr %i.fz, align 8, !tbaa !60, !noalias !122 ; 3 uses
   %i.jf = load i32, ptr %i.ga, align 4, !tbaa !65, !noalias !122
   %i.jg = sext i32 %i.jf to i64

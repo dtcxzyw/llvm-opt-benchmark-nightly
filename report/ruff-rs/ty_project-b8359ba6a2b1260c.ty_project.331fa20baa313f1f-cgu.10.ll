@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/ty_project-b8359ba6a2b1260c.ty_project.331fa20baa313f1f-cgu.10?download=true
 inline.NumInlined: 1176
 inline.NumDeleted: 575
-loop-unroll.NumRuntimeUnrolled: 10
-loop-unroll.NumUnrolled: 10
+loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_RNvMNtCs4o81Y09oZk1_10ty_project2dbNtB2_15ProjectDatabase14set_check_mode:bb.a
   store ptr @_RNvXs0_NtCs4o81Y09oZk1_10ty_project2dbNtB5_9CheckModeNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmt, ptr %.sroa.421.0..sroa_idx, align 8
   store ptr @48, ptr %i.d, align 8
@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.l
 bb.o:                                             ; preds = %bb.k, %bb.m, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1053
   %i.as = icmp eq i64 %i.ai, 0
-  br i1 %i.as, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %i.as, label %.lr.ph53.preheader, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.o
   %i.at = add i64 %i.ai, 144115188075855871       ; 2 uses
@@ -233,7 +233,7 @@ bb.o:                                             ; preds = %bb.k, %bb.m, %bb.n
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.s
   %i.bd = and i64 %i.at, 1
   %lcmp.mod.not.not = icmp eq i64 %i.bd, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.epil.preheader, label %._crit_edge
+  br i1 %lcmp.mod.not.not, label %.lr.ph.epil.preheader, label %.lr.ph53.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %.sroa.01.047.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.cd, %._crit_edge.loopexit.unr-lcssa ]
@@ -259,25 +259,15 @@ bb.p:                                             ; preds = %.lr.ph.epil.prehead
   %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.06.045.epil.init, i64 112
   %i.bn = load i64, ptr %i.bm, align 8, !noundef !4
   %i.bo = add i64 %i.bn, %.sroa.04.046.epil.init
-  br label %._crit_edge
+  br label %.lr.ph53.preheader
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit.epilog-lcssa, %._crit_edge.loopexit.unr-lcssa, %bb.o
+.lr.ph53.preheader:                               ; preds = %._crit_edge.loopexit.epilog-lcssa, %._crit_edge.loopexit.unr-lcssa, %bb.o
   %.sroa.04.0.lcssa = phi i64 [ 0, %bb.o ], [ %i.cg, %._crit_edge.loopexit.unr-lcssa ], [ %i.bo, %._crit_edge.loopexit.epilog-lcssa ]
   %.sroa.01.0.lcssa = phi i64 [ 0, %bb.o ], [ %i.cd, %._crit_edge.loopexit.unr-lcssa ], [ %i.bl, %._crit_edge.loopexit.epilog-lcssa ]
-  %2 = icmp eq i64 %i.ap, 0
-  br i1 %2, label %._crit_edge54, label %.lr.ph53.preheader
-
-.lr.ph53.preheader:                               ; preds = %._crit_edge
-  %.idx57 = mul i64 %i.ap, 144
-  %3 = add i64 %.idx57, -144                      ; 2 uses
-  %4 = udiv i64 %3, 144                           ; 2 uses
-  %5 = add nuw nsw i64 %4, 1                      ; 2 uses
-  %6 = icmp ult i64 %3, 144
-  br i1 %6, label %.lr.ph53.epil.preheader, label %.lr.ph53.preheader.new
-
-.lr.ph53.preheader.new:                           ; preds = %.lr.ph53.preheader
-  %unroll_iter81 = and i64 %5, 288230376151711742
-  br label %.lr.ph53
+  %.idx57 = mul nuw nsw i64 %i.ap, 144
+  %2 = getelementptr inbounds nuw i8, ptr %i.an, i64 %.idx57
+  %3 = icmp eq i64 %i.ap, 0
+  br i1 %3, label %._crit_edge54, label %.lr.ph53.epil.preheader
 
 bb.q:                                             ; preds = %.lr.ph
   %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.06.045, i64 8
@@ -313,54 +303,22 @@ bb.s:                                             ; preds = %bb.r, %.lr.ph.1
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph
 
-.lr.ph53:                                         ; preds = %bb.u, %.lr.ph53.preheader.new
-  %.sroa.012.051 = phi i64 [ 0, %.lr.ph53.preheader.new ], [ %i.cu, %bb.u ]
-  %.sroa.015.050 = phi i64 [ 0, %.lr.ph53.preheader.new ], [ %35, %bb.u ]
-  %.sroa.017.049 = phi ptr [ %i.an, %.lr.ph53.preheader.new ], [ %28, %bb.u ] ; 9 uses
-  %niter82 = phi i64 [ 0, %.lr.ph53.preheader.new ], [ %niter82.next.1, %bb.u ]
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.017.049, i64 16
-  %8 = getelementptr inbounds nuw i8, ptr %.sroa.017.049, i64 136
-  %9 = load i64, ptr %8, align 8, !noundef !4
-  %10 = add i64 %9, %.sroa.012.051
-  %11 = load i64, ptr %7, align 8, !range !5, !noundef !4
-  %12 = trunc nuw i64 %11 to i1
-  br i1 %12, label %21, label %.lr.ph53.1
-
-._crit_edge54.loopexit.unr-lcssa:                 ; preds = %bb.u
-  %13 = and i64 %4, 1
-  %lcmp.mod77.not.not = icmp eq i64 %13, 0
-  br i1 %lcmp.mod77.not.not, label %.lr.ph53.epil.preheader, label %._crit_edge54
-
-.lr.ph53.epil.preheader:                          ; preds = %._crit_edge54.loopexit.unr-lcssa, %.lr.ph53.preheader
-  %.sroa.012.051.epil.init = phi i64 [ 0, %.lr.ph53.preheader ], [ %i.cu, %._crit_edge54.loopexit.unr-lcssa ]
-  %.sroa.015.050.epil.init = phi i64 [ 0, %.lr.ph53.preheader ], [ %35, %._crit_edge54.loopexit.unr-lcssa ]
-  %.sroa.017.049.epil.init = phi ptr [ %i.an, %.lr.ph53.preheader ], [ %28, %._crit_edge54.loopexit.unr-lcssa ] ; 4 uses
-  %lcmp.mod80 = trunc i64 %5 to i1
-  call void @llvm.assume(i1 %lcmp.mod80)
+.lr.ph53.epil.preheader:                          ; preds = %.lr.ph53.preheader, %bb.u
+  %.sroa.012.051.epil.init = phi i64 [ %i.cu, %bb.u ], [ 0, %.lr.ph53.preheader ]
+  %.sroa.015.050.epil.init = phi i64 [ %niter82.next.1, %bb.u ], [ 0, %.lr.ph53.preheader ]
+  %.sroa.017.049.epil.init = phi ptr [ %4, %bb.u ], [ %i.an, %.lr.ph53.preheader ] ; 5 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.017.049.epil.init, i64 144 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %.sroa.017.049.epil.init, i64 16
   %i.ci = getelementptr inbounds nuw i8, ptr %.sroa.017.049.epil.init, i64 136
   %i.cj = load i64, ptr %i.ci, align 8, !noundef !4
   %i.ck = add i64 %i.cj, %.sroa.012.051.epil.init
   %i.cl = load i64, ptr %i.ch, align 8, !range !5, !noundef !4
   %i.cm = trunc nuw i64 %i.cl to i1
-  br i1 %i.cm, label %14, label %._crit_edge54.loopexit.epilog-lcssa
+  br i1 %i.cm, label %bb.t, label %bb.u
 
-14:                                               ; preds = %.lr.ph53.epil.preheader
-  %15 = getelementptr inbounds nuw i8, ptr %.sroa.017.049.epil.init, i64 24
-  %16 = load i64, ptr %15, align 8
-  br label %._crit_edge54.loopexit.epilog-lcssa
-
-._crit_edge54.loopexit.epilog-lcssa:              ; preds = %14, %.lr.ph53.epil.preheader
-  %.sroa.020.0.epil = phi i64 [ %16, %14 ], [ 0, %.lr.ph53.epil.preheader ]
-  %17 = add i64 %i.ck, %.sroa.020.0.epil
-  %18 = getelementptr inbounds nuw i8, ptr %.sroa.017.049.epil.init, i64 128
-  %19 = load i64, ptr %18, align 8, !noundef !4
-  %20 = add i64 %19, %.sroa.015.050.epil.init
-  br label %._crit_edge54
-
-._crit_edge54:                                    ; preds = %._crit_edge54.loopexit.epilog-lcssa, %._crit_edge54.loopexit.unr-lcssa, %._crit_edge
-  %.sroa.015.0.lcssa = phi i64 [ 0, %._crit_edge ], [ %35, %._crit_edge54.loopexit.unr-lcssa ], [ %20, %._crit_edge54.loopexit.epilog-lcssa ]
-  %.sroa.012.0.lcssa = phi i64 [ 0, %._crit_edge ], [ %i.cu, %._crit_edge54.loopexit.unr-lcssa ], [ %17, %._crit_edge54.loopexit.epilog-lcssa ]
+._crit_edge54:                                    ; preds = %bb.u, %.lr.ph53.preheader
+  %.sroa.015.0.lcssa = phi i64 [ 0, %.lr.ph53.preheader ], [ %niter82.next.1, %bb.u ]
+  %.sroa.012.0.lcssa = phi i64 [ 0, %.lr.ph53.preheader ], [ %i.cu, %bb.u ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false)
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cn, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
@@ -377,40 +335,19 @@ bb.s:                                             ; preds = %bb.r, %.lr.ph.1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   ret void
 
-21:                                               ; preds = %.lr.ph53
-  %22 = getelementptr inbounds nuw i8, ptr %.sroa.017.049, i64 24
-  %23 = load i64, ptr %22, align 8
-  br label %.lr.ph53.1
-
-.lr.ph53.1:                                       ; preds = %.lr.ph53, %21
-  %.sroa.020.0 = phi i64 [ %23, %21 ], [ 0, %.lr.ph53 ]
-  %24 = add i64 %10, %.sroa.020.0
-  %25 = getelementptr inbounds nuw i8, ptr %.sroa.017.049, i64 128
-  %26 = load i64, ptr %25, align 8, !noundef !4
-  %27 = add i64 %26, %.sroa.015.050
-  %28 = getelementptr inbounds nuw i8, ptr %.sroa.017.049, i64 288 ; 2 uses
-  %29 = getelementptr inbounds nuw i8, ptr %.sroa.017.049, i64 160
-  %30 = getelementptr inbounds nuw i8, ptr %.sroa.017.049, i64 280
-  %31 = load i64, ptr %30, align 8, !noundef !4
-  %32 = add i64 %31, %24
-  %33 = load i64, ptr %29, align 8, !range !5, !noundef !4
-  %34 = trunc nuw i64 %33 to i1
-  br i1 %34, label %bb.t, label %bb.u
-
-bb.t:                                             ; preds = %.lr.ph53.1
-  %i.cs = getelementptr inbounds nuw i8, ptr %.sroa.017.049, i64 168
+bb.t:                                             ; preds = %.lr.ph53.epil.preheader
+  %i.cs = getelementptr inbounds nuw i8, ptr %.sroa.017.049.epil.init, i64 24
   %i.ct = load i64, ptr %i.cs, align 8
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.t, %.lr.ph53.1
-  %.sroa.020.0.1 = phi i64 [ %i.ct, %bb.t ], [ 0, %.lr.ph53.1 ]
-  %i.cu = add i64 %32, %.sroa.020.0.1             ; 3 uses
-  %i.cv = getelementptr inbounds nuw i8, ptr %.sroa.017.049, i64 272
+bb.u:                                             ; preds = %.lr.ph53.epil.preheader, %bb.t
+  %.sroa.020.0.1 = phi i64 [ %i.ct, %bb.t ], [ 0, %.lr.ph53.epil.preheader ]
+  %i.cu = add i64 %i.ck, %.sroa.020.0.1           ; 2 uses
+  %i.cv = getelementptr inbounds nuw i8, ptr %.sroa.017.049.epil.init, i64 128
   %i.cw = load i64, ptr %i.cv, align 8, !noundef !4
-  %35 = add i64 %i.cw, %27                        ; 3 uses
-  %niter82.next.1 = add i64 %niter82, 2           ; 2 uses
-  %niter82.ncmp.1 = icmp eq i64 %niter82.next.1, %unroll_iter81
-  br i1 %niter82.ncmp.1, label %._crit_edge54.loopexit.unr-lcssa, label %.lr.ph53
+  %niter82.next.1 = add i64 %i.cw, %.sroa.015.050.epil.init ; 2 uses
+  %niter82.ncmp.1 = icmp eq ptr %4, %2
+  br i1 %niter82.ncmp.1, label %._crit_edge54, label %.lr.ph53.epil.preheader
 
 bb.v:                                             ; preds = %bb.w, %bb.j, %bb.c
   %i.cx = landingpad { ptr, i32 }

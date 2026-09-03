@@ -205,35 +205,32 @@ bb.c:                                             ; preds = %bb.a
   %i.h = sext i32 %i.g to i64
   %i.i = shl nsw i32 %2, 4                        ; 2 uses
   %i.j = sext i32 %i.i to i64
-  %i.k = mul nsw i32 %2, 6                        ; 2 uses
-  %i.l = sext i32 %i.k to i64
+  %i.k = mul nsw i32 %2, 6
+  %i.l = sext i32 %i.k to i64                     ; 2 uses
   %i.m = icmp sgt i32 %2, 0
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.e, i32 1) ; 3 uses
-  %smax126.a = tail call i32 @llvm.smax.i32(i32 %i.g, i32 1) ; 2 uses
-  %smax138.a = tail call i32 @llvm.smax.i32(i32 %i.i, i32 1) ; 2 uses
-  %smax144 = tail call i32 @llvm.smax.i32(i32 %i.k, i32 6)
-  %3 = add nsw i32 %smax144, -2
-  %4 = udiv i32 %3, 6
+  %smax126.a = tail call i32 @llvm.smax.i32(i32 %i.e, i32 1) ; 3 uses
+  %smax138.a = tail call i32 @llvm.smax.i32(i32 %i.g, i32 1) ; 2 uses
+  %smax144 = tail call i32 @llvm.smax.i32(i32 %i.i, i32 1) ; 2 uses
   %wide.trip.count149 = zext nneg i32 %1 to i64
-  %wide.trip.count = zext nneg i32 %smax to i64   ; 4 uses
-  %wide.trip.count127 = zext nneg i32 %smax126.a to i64 ; 2 uses
-  %wide.trip.count139 = zext nneg i32 %smax138.a to i64 ; 2 uses
+  %wide.trip.count = zext nneg i32 %smax126.a to i64 ; 4 uses
+  %wide.trip.count127 = zext nneg i32 %smax138.a to i64 ; 2 uses
+  %wide.trip.count139 = zext nneg i32 %smax144 to i64 ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
   %unroll_iter = and i64 %wide.trip.count, 2147483644
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %lcmp.mod160 = trunc i32 %smax to i1
+  %lcmp.mod160 = trunc i32 %smax126.a to i1
   %xtraiter161 = and i64 %wide.trip.count127, 1
   %unroll_iter165 = and i64 %wide.trip.count127, 2147483640
   %lcmp.mod163.not = icmp eq i64 %xtraiter161, 0
-  %lcmp.mod164 = trunc i32 %smax126.a to i1
+  %lcmp.mod164 = trunc i32 %smax138.a to i1
   %xtraiter167 = and i64 %wide.trip.count, 1
   %unroll_iter171 = and i64 %wide.trip.count, 2147483644
   %lcmp.mod169.not = icmp eq i64 %xtraiter167, 0
-  %lcmp.mod170 = trunc i32 %smax to i1
+  %lcmp.mod170 = trunc i32 %smax126.a to i1
   %xtraiter173 = and i64 %wide.trip.count139, 1
   %unroll_iter177 = and i64 %wide.trip.count139, 2147483632
   %lcmp.mod175.not = icmp eq i64 %xtraiter173, 0
-  %lcmp.mod176 = trunc i32 %smax138.a to i1
+  %lcmp.mod176 = trunc i32 %smax144 to i1
   br label %bb.d
 
 ._crit_edge116:                                   ; preds = %._crit_edge
@@ -457,7 +454,7 @@ bb.d:                                             ; preds = %.lr.ph115, %._crit_
 
 .lr.ph112:                                        ; preds = %.lr.ph112.preheader, %.lr.ph112
   %indvars.iv141 = phi i64 [ %indvars.iv.next142, %.lr.ph112 ], [ 0, %.lr.ph112.preheader ] ; 7 uses
-  %.092110 = phi i32 [ %i.de, %.lr.ph112 ], [ 0, %.lr.ph112.preheader ] ; 3 uses
+  %.092110 = phi i32 [ %i.de, %.lr.ph112 ], [ 0, %.lr.ph112.preheader ] ; 2 uses
   %i.cj = shl nuw nsw i32 %.092110, 2             ; 5 uses
   %i.ck = load ptr, ptr %i.ai, align 8
   %i.cl = getelementptr inbounds nuw [4 x i8], ptr %i.ck, i64 %indvars.iv141
@@ -486,9 +483,9 @@ bb.d:                                             ; preds = %.lr.ph115, %._crit_
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 20
   store i32 %i.da, ptr %i.dd, align 4
   %i.de = add nuw nsw i32 %.092110, 1
-  %indvars.iv.next142 = add nuw nsw i64 %indvars.iv141, 6
-  %exitcond145.not = icmp eq i32 %.092110, %4
-  br i1 %exitcond145.not, label %._crit_edge, label %.lr.ph112
+  %indvars.iv.next142 = add nuw nsw i64 %indvars.iv141, 6 ; 2 uses
+  %3 = icmp slt i64 %indvars.iv.next142, %i.l
+  br i1 %3, label %.lr.ph112, label %._crit_edge
 
 ._crit_edge120:                                   ; preds = %bb.g, %._crit_edge116.thread
   tail call void (i32, ptr, ...) @TraceLog(i32 noundef 3, ptr noundef nonnull @.str.40)

@@ -205,7 +205,7 @@ bb.a:
   %9 = alloca %"class.std::allocator", align 1    ; 3 uses
   %10 = alloca %"class.cv::utils::trace::details::Region", align 8 ; 7 uses
   %11 = alloca %"class.cv::Mat", align 8          ; 20 uses
-  %12 = alloca %"class.cv::Mat", align 8          ; 23 uses
+  %12 = alloca %"class.cv::Mat", align 8          ; 22 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %14 = alloca %"class.std::allocator", align 1   ; 3 uses
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -510,7 +510,7 @@ bb.ak:                                            ; preds = %bb.ai
   br label %bb.cj
 
 bb.al:                                            ; preds = %bb.ah, %bb.aj, %bb.o
-  %i.bq = getelementptr inbounds nuw i8, ptr %11, i64 12 ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %11, i64 12
   %i.br = load i32, ptr %i.bq, align 4
   %i.bs = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
   %i.bt = load i32, ptr %i.bs, align 8
@@ -781,21 +781,19 @@ bb.bq:                                            ; preds = %bb.bg
   store i32 16842752, ptr %27, align 8, !tbaa !58
   %i.ev = getelementptr inbounds nuw i8, ptr %27, i64 8
   store ptr %12, ptr %i.ev, align 8, !tbaa !55
-  %38 = load i32, ptr %i.bs, align 8, !tbaa !48
   %i.ew = getelementptr inbounds nuw i8, ptr %12, i64 8
-  %39 = load i32, ptr %i.ew, align 8, !tbaa !48
-  %40 = load i32, ptr %i.bq, align 4, !tbaa !49
-  %i.ex = getelementptr inbounds nuw i8, ptr %12, i64 12
-  %41 = load i32, ptr %i.ex, align 4, !tbaa !49
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #24
-  %42 = getelementptr inbounds nuw i8, ptr %28, i64 8
-  %43 = getelementptr inbounds nuw i8, ptr %28, i64 16
-  store i64 0, ptr %43, align 8
+  %i.ex = getelementptr inbounds nuw i8, ptr %28, i64 8
+  %38 = getelementptr inbounds nuw i8, ptr %28, i64 16
+  store i64 0, ptr %38, align 8
   store i32 33619968, ptr %28, align 8, !tbaa !58
-  store ptr %23, ptr %42, align 8, !tbaa !55
-  %44 = sdiv i32 %40, %41
-  %45 = sdiv i32 %38, %39
-  invoke void @_ZN2cv6repeatERKNS_11_InputArrayEiiRKNS_12_OutputArrayE(ptr noundef nonnull align 8 dereferenceable(24) %27, i32 noundef %45, i32 noundef %44, ptr noundef nonnull align 8 dereferenceable(24) %28)
+  store ptr %23, ptr %i.ex, align 8, !tbaa !55
+  %39 = load <2 x i32>, ptr %i.bs, align 8, !tbaa !30
+  %40 = load <2 x i32>, ptr %i.ew, align 8, !tbaa !30
+  %41 = sdiv <2 x i32> %39, %40                   ; 2 uses
+  %42 = extractelement <2 x i32> %41, i64 0
+  %43 = extractelement <2 x i32> %41, i64 1
+  invoke void @_ZN2cv6repeatERKNS_11_InputArrayEiiRKNS_12_OutputArrayE(ptr noundef nonnull align 8 dereferenceable(24) %27, i32 noundef %42, i32 noundef %43, ptr noundef nonnull align 8 dereferenceable(24) %28)
           to label %bb.br unwind label %bb.bu
 
 bb.br:                                            ; preds = %bb.bq

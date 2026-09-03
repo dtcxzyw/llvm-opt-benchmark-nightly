@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 93
 inline.NumDeleted: 15
 loop-unroll.NumCompletelyUnrolled: 25
-loop-unroll.NumRuntimeUnrolled: 25
-loop-unroll.NumUnrolled: 53
+loop-unroll.NumRuntimeUnrolled: 24
+loop-unroll.NumUnrolled: 52
 begin_hunk_0_@_ZN12duckdb_miniz16tinfl_decompressEPNS_22tinfl_decompressor_tagEPKhPmPhS5_S4_j:bb.a
   br i1 %or.cond1619.not, label %bb.ew, label %bb.er
 
@@ -205,11 +205,11 @@ bb.fd:                                            ; preds = %bb.fa
   br label %bb.fe
 
 bb.fe:                                            ; preds = %.loopexit2097, %.loopexit1710
-  %.631323 = phi ptr [ %.621322, %.loopexit2097 ], [ %.591319, %.loopexit1710 ] ; 11 uses
+  %.631323 = phi ptr [ %.621322, %.loopexit2097 ], [ %.591319, %.loopexit1710 ] ; 7 uses
   %.661234 = phi ptr [ %.651233, %.loopexit2097 ], [ %.621230, %.loopexit1710 ] ; 4 uses
   %.681144 = phi i64 [ %i.aen, %.loopexit2097 ], [ %i.adr, %.loopexit1710 ] ; 4 uses
   %.651060 = phi i32 [ %.641059, %.loopexit2097 ], [ 0, %.loopexit1710 ] ; 4 uses
-  %.66972 = phi i32 [ %.65971, %.loopexit2097 ], [ %.62968, %.loopexit1710 ] ; 8 uses
+  %.66972 = phi i32 [ %.65971, %.loopexit2097 ], [ %.62968, %.loopexit1710 ] ; 6 uses
   %.63890 = phi i32 [ %i.aep, %.loopexit2097 ], [ %i.adv, %.loopexit1710 ] ; 5 uses
   %.68 = phi i32 [ %i.aeo, %.loopexit2097 ], [ %i.ads, %.loopexit1710 ] ; 4 uses
   %i.aeq = ptrtoint ptr %.631323 to i64
@@ -222,7 +222,7 @@ bb.fe:                                            ; preds = %.loopexit2097, %.lo
 bb.ff:                                            ; preds = %bb.fe
   %i.aeu = sub i64 %i.aer, %i.aes
   %i.aev = and i64 %i.aeu, %i.n
-  %i.aew = getelementptr inbounds nuw i8, ptr %3, i64 %i.aev ; 8 uses
+  %i.aew = getelementptr inbounds nuw i8, ptr %3, i64 %i.aev ; 4 uses
   %i.aex = icmp ugt ptr %.631323, %i.aew
   %i.aey = select i1 %i.aex, ptr %.631323, ptr %i.aew
   %i.aez = zext i32 %.66972 to i64
@@ -232,40 +232,7 @@ bb.ff:                                            ; preds = %bb.fe
 
 .preheader1708:                                   ; preds = %bb.ff
   %i.afc = icmp ugt i32 %.66972, 2
-  br i1 %i.afc, label %.lr.ph1752.preheader, label %._crit_edge
-
-.lr.ph1752.preheader:                             ; preds = %.preheader1708
-  %7 = add i32 %.66972, -3                        ; 2 uses
-  %8 = udiv i32 %7, 3
-  %9 = and i32 %8, 1
-  %lcmp.mod.not.not = icmp eq i32 %9, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph1752.prol, label %.lr.ph1752.prol.loopexit
-
-.lr.ph1752.prol:                                  ; preds = %.lr.ph1752.preheader
-  %10 = load i8, ptr %i.aew, align 1, !tbaa !18
-  store i8 %10, ptr %.631323, align 1, !tbaa !18
-  %11 = getelementptr inbounds nuw i8, ptr %i.aew, i64 1
-  %12 = load i8, ptr %11, align 1, !tbaa !18
-  %13 = getelementptr inbounds nuw i8, ptr %.631323, i64 1
-  store i8 %12, ptr %13, align 1, !tbaa !18
-  %14 = getelementptr inbounds nuw i8, ptr %i.aew, i64 2
-  %15 = load i8, ptr %14, align 1, !tbaa !18
-  %16 = getelementptr inbounds nuw i8, ptr %.631323, i64 2
-  store i8 %15, ptr %16, align 1, !tbaa !18
-  %17 = getelementptr inbounds nuw i8, ptr %.631323, i64 3 ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.aew, i64 3 ; 2 uses
-  %19 = add i32 %.66972, -3                       ; 2 uses
-  br label %.lr.ph1752.prol.loopexit
-
-.lr.ph1752.prol.loopexit:                         ; preds = %.lr.ph1752.prol, %.lr.ph1752.preheader
-  %.709761751.unr = phi i32 [ %.66972, %.lr.ph1752.preheader ], [ %19, %.lr.ph1752.prol ]
-  %.012591750.unr = phi ptr [ %i.aew, %.lr.ph1752.preheader ], [ %18, %.lr.ph1752.prol ]
-  %.6713271749.unr = phi ptr [ %.631323, %.lr.ph1752.preheader ], [ %17, %.lr.ph1752.prol ]
-  %.lcssa2095.unr = phi ptr [ poison, %.lr.ph1752.preheader ], [ %17, %.lr.ph1752.prol ]
-  %.lcssa2094.unr = phi ptr [ poison, %.lr.ph1752.preheader ], [ %18, %.lr.ph1752.prol ]
-  %.lcssa2093.unr = phi i32 [ poison, %.lr.ph1752.preheader ], [ %19, %.lr.ph1752.prol ]
-  %20 = icmp ult i32 %7, 3
-  br i1 %20, label %._crit_edge, label %.lr.ph1752
+  br i1 %i.afc, label %.lr.ph1752, label %._crit_edge
 
 bb.fg:                                            ; preds = %bb.ff, %bb.fj
   %.621428 = phi i64 [ %i.aer, %bb.ff ], [ %i.afe, %bb.fj ] ; 2 uses
@@ -306,42 +273,30 @@ bb.fj:                                            ; preds = %bb.fh
   store i8 %i.afj, ptr %.661326, align 1, !tbaa !18
   br label %bb.fg, !llvm.loop !229
 
-.lr.ph1752:                                       ; preds = %.lr.ph1752.prol.loopexit, %.lr.ph1752
-  %.709761751 = phi i32 [ %i.afu, %.lr.ph1752 ], [ %.709761751.unr, %.lr.ph1752.prol.loopexit ]
-  %.012591750 = phi ptr [ %i.aft, %.lr.ph1752 ], [ %.012591750.unr, %.lr.ph1752.prol.loopexit ] ; 7 uses
-  %.6713271749 = phi ptr [ %i.afs, %.lr.ph1752 ], [ %.6713271749.unr, %.lr.ph1752.prol.loopexit ] ; 7 uses
-  %21 = load i8, ptr %.012591750, align 1, !tbaa !18
-  store i8 %21, ptr %.6713271749, align 1, !tbaa !18
-  %22 = getelementptr inbounds nuw i8, ptr %.012591750, i64 1
-  %23 = load i8, ptr %22, align 1, !tbaa !18
-  %24 = getelementptr inbounds nuw i8, ptr %.6713271749, i64 1
-  store i8 %23, ptr %24, align 1, !tbaa !18
-  %25 = getelementptr inbounds nuw i8, ptr %.012591750, i64 2
-  %26 = load i8, ptr %25, align 1, !tbaa !18
-  %27 = getelementptr inbounds nuw i8, ptr %.6713271749, i64 2
-  store i8 %26, ptr %27, align 1, !tbaa !18
-  %28 = getelementptr inbounds nuw i8, ptr %.6713271749, i64 3
-  %29 = getelementptr inbounds nuw i8, ptr %.012591750, i64 3
-  %i.afl = load i8, ptr %29, align 1, !tbaa !18
-  store i8 %i.afl, ptr %28, align 1, !tbaa !18
-  %i.afm = getelementptr inbounds nuw i8, ptr %.012591750, i64 4
+.lr.ph1752:                                       ; preds = %.preheader1708, %.lr.ph1752
+  %.709761751 = phi i32 [ %i.afu, %.lr.ph1752 ], [ %.66972, %.preheader1708 ]
+  %.012591750 = phi ptr [ %i.aft, %.lr.ph1752 ], [ %i.aew, %.preheader1708 ] ; 4 uses
+  %.6713271749 = phi ptr [ %i.afs, %.lr.ph1752 ], [ %.631323, %.preheader1708 ] ; 4 uses
+  %i.afl = load i8, ptr %.012591750, align 1, !tbaa !18
+  store i8 %i.afl, ptr %.6713271749, align 1, !tbaa !18
+  %i.afm = getelementptr inbounds nuw i8, ptr %.012591750, i64 1
   %i.afn = load i8, ptr %i.afm, align 1, !tbaa !18
-  %i.afo = getelementptr inbounds nuw i8, ptr %.6713271749, i64 4
+  %i.afo = getelementptr inbounds nuw i8, ptr %.6713271749, i64 1
   store i8 %i.afn, ptr %i.afo, align 1, !tbaa !18
-  %i.afp = getelementptr inbounds nuw i8, ptr %.012591750, i64 5
+  %i.afp = getelementptr inbounds nuw i8, ptr %.012591750, i64 2
   %i.afq = load i8, ptr %i.afp, align 1, !tbaa !18
-  %i.afr = getelementptr inbounds nuw i8, ptr %.6713271749, i64 5
+  %i.afr = getelementptr inbounds nuw i8, ptr %.6713271749, i64 2
   store i8 %i.afq, ptr %i.afr, align 1, !tbaa !18
-  %i.afs = getelementptr inbounds nuw i8, ptr %.6713271749, i64 6 ; 2 uses
-  %i.aft = getelementptr inbounds nuw i8, ptr %.012591750, i64 6 ; 2 uses
-  %i.afu = add i32 %.709761751, -6                ; 3 uses
+  %i.afs = getelementptr inbounds nuw i8, ptr %.6713271749, i64 3 ; 2 uses
+  %i.aft = getelementptr inbounds nuw i8, ptr %.012591750, i64 3 ; 2 uses
+  %i.afu = add i32 %.709761751, -3                ; 3 uses
   %i.afv = icmp ugt i32 %i.afu, 2
   br i1 %i.afv, label %.lr.ph1752, label %._crit_edge, !llvm.loop !230
 
-._crit_edge:                                      ; preds = %.lr.ph1752.prol.loopexit, %.lr.ph1752, %.preheader1708
-  %.671327.lcssa = phi ptr [ %.631323, %.preheader1708 ], [ %.lcssa2095.unr, %.lr.ph1752.prol.loopexit ], [ %i.afs, %.lr.ph1752 ] ; 4 uses
-  %.01259.lcssa = phi ptr [ %i.aew, %.preheader1708 ], [ %.lcssa2094.unr, %.lr.ph1752.prol.loopexit ], [ %i.aft, %.lr.ph1752 ] ; 2 uses
-  %.70976.lcssa = phi i32 [ %.66972, %.preheader1708 ], [ %.lcssa2093.unr, %.lr.ph1752.prol.loopexit ], [ %i.afu, %.lr.ph1752 ] ; 5 uses
+._crit_edge:                                      ; preds = %.lr.ph1752, %.preheader1708
+  %.671327.lcssa = phi ptr [ %.631323, %.preheader1708 ], [ %i.afs, %.lr.ph1752 ] ; 4 uses
+  %.01259.lcssa = phi ptr [ %i.aew, %.preheader1708 ], [ %i.aft, %.lr.ph1752 ] ; 2 uses
+  %.70976.lcssa = phi i32 [ %.66972, %.preheader1708 ], [ %i.afu, %.lr.ph1752 ] ; 5 uses
   %.not1564 = icmp eq i32 %.70976.lcssa, 0
   br i1 %.not1564, label %.preheader2118, label %bb.fk, !llvm.loop !227
 

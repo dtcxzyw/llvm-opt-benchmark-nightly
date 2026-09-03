@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 1094
 inline.NumDeleted: 383
 loop-unroll.NumCompletelyUnrolled: 8
-loop-unroll.NumRuntimeUnrolled: 53
-loop-unroll.NumUnrolled: 61
+loop-unroll.NumRuntimeUnrolled: 54
+loop-unroll.NumUnrolled: 62
 begin_hunk_0_@_ZN34btDeformableMultiBodyDynamicsWorld26performGeometricCollisionsEf:bb.a
 ._crit_edge218:                                   ; preds = %.epil.preheader, %.epil.preheader, %.epil.preheader, %bb.p, %._crit_edge218.unr-lcssa
   %.1.lcssa = phi i32 [ %.1.1, %._crit_edge218.unr-lcssa ], [ %i.ir, %bb.p ], [ %.080215.epil.init, %.epil.preheader ], [ %.080215.epil.init, %.epil.preheader ], [ %.080215.epil.init, %.epil.preheader ]
@@ -205,7 +205,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 0, ptr %i.d, align 8, !tbaa !45
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1316 ; 4 uses
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !329  ; 4 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !329  ; 8 uses
   %i.g = icmp sgt i32 %i.f, 0
   br i1 %i.g, label %bb.b, label %_ZN20btAlignedObjectArrayIiED2Ev.exit
 
@@ -213,7 +213,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = zext nneg i32 %i.f to i64
   %i.i = shl nuw nsw i64 %i.h, 2                  ; 2 uses
   %i.j = invoke noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef %i.i, i32 noundef 16)
-          to label %.loopexit263 unwind label %bb.c ; 7 uses
+          to label %.loopexit263 unwind label %bb.c ; 11 uses
 
 .loopexit263:                                     ; preds = %bb.b
   store i8 1, ptr %i.a, align 8, !tbaa !42
@@ -224,8 +224,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.lr.ph, label %.lr.ph267
 
 .lr.ph267:                                        ; preds = %.lr.ph, %.loopexit263
-  %i.l = zext nneg i32 %i.f to i64
-  %_ZL4seed.promoted = load i64, ptr @_ZL4seed, align 8, !tbaa !492
+  %i.l = zext nneg i32 %i.f to i64                ; 2 uses
+  %_ZL4seed.promoted = load i64, ptr @_ZL4seed, align 8, !tbaa !492 ; 2 uses
+  %xtraiter = and i64 %i.l, 1
+  %4 = icmp eq i32 %i.f, 1
+  br i1 %4, label %.epil.preheader, label %.lr.ph267.new
+
+.lr.ph267.new:                                    ; preds = %.lr.ph267
+  %unroll_iter = and i64 %i.l, 2147483646
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -246,8 +252,33 @@ bb.c:                                             ; preds = %bb.b
   %i.r = icmp slt i64 %indvars.iv.next, %i.q
   br i1 %i.r, label %.lr.ph, label %.lr.ph267, !llvm.loop !489
 
-.preheader262:                                    ; preds = %bb.d
-  store i64 %i.aa, ptr @_ZL4seed, align 8, !tbaa !492
+.preheader262.unr-lcssa:                          ; preds = %bb.d
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.preheader262, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %.preheader262.unr-lcssa, %.lr.ph267
+  %indvars.iv277.epil.init = phi i64 [ 0, %.lr.ph267 ], [ %indvars.iv.next278.1, %.preheader262.unr-lcssa ]
+  %.epil.init = phi i64 [ %_ZL4seed.promoted, %.lr.ph267 ], [ %i.aa, %.preheader262.unr-lcssa ]
+  %lcmp.mod314 = trunc i32 %i.f to i1
+  tail call void @llvm.assume(i1 %lcmp.mod314)
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv277.epil.init ; 2 uses
+  %6 = mul nuw nsw i64 %.epil.init, 1664525
+  %7 = add nuw nsw i64 %6, 1013904223             ; 2 uses
+  %8 = and i64 %7, 4294967295
+  %.lhs.trunc.epil = trunc i64 %7 to i32
+  %9 = urem i32 %.lhs.trunc.epil, %i.f
+  %.zext.epil = zext nneg i32 %9 to i64
+  %sext.epil = shl nuw nsw i64 %.zext.epil, 2
+  %10 = getelementptr inbounds nuw i8, ptr %i.j, i64 %sext.epil ; 2 uses
+  %11 = load i32, ptr %5, align 4, !tbaa !52
+  %12 = load i32, ptr %10, align 4, !tbaa !52
+  store i32 %12, ptr %5, align 4, !tbaa !52
+  store i32 %11, ptr %10, align 4, !tbaa !52
+  br label %.preheader262
+
+.preheader262:                                    ; preds = %.preheader262.unr-lcssa, %.epil.preheader
+  %.lcssa = phi i64 [ %i.aa, %.preheader262.unr-lcssa ], [ %8, %.epil.preheader ]
+  store i64 %.lcssa, ptr @_ZL4seed, align 8, !tbaa !492
   %.pre297 = load i32, ptr %i.e, align 4, !tbaa !329 ; 2 uses
   %i.s = icmp sgt i32 %.pre297, 0
   br i1 %i.s, label %.lr.ph273, label %._crit_edge274
@@ -259,25 +290,41 @@ bb.c:                                             ; preds = %bb.b
   %wide.trip.count295 = zext nneg i32 %.pre297 to i64
   br label %bb.g
 
-bb.d:                                             ; preds = %.lr.ph267, %bb.d
-  %indvars.iv277.a = phi i64 [ 0, %.lr.ph267 ], [ %indvars.iv.next278, %bb.d ] ; 2 uses
-  %i.w = phi i64 [ %_ZL4seed.promoted, %.lr.ph267 ], [ %i.aa, %bb.d ]
-  %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv277.a ; 2 uses
-  %i.y = mul nuw nsw i64 %i.w, 1664525
+bb.d:                                             ; preds = %bb.d, %.lr.ph267.new
+  %indvars.iv277 = phi i64 [ 0, %.lr.ph267.new ], [ %indvars.iv.next278.1, %bb.d ] ; 3 uses
+  %indvars.iv277.a = phi i64 [ %_ZL4seed.promoted, %.lr.ph267.new ], [ %i.aa, %bb.d ]
+  %i.w = phi i64 [ 0, %.lr.ph267.new ], [ %indvars.iv.next278, %bb.d ]
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv277 ; 2 uses
+  %14 = mul nuw nsw i64 %indvars.iv277.a, 1664525
+  %15 = add nuw nsw i64 %14, 1013904223           ; 2 uses
+  %16 = and i64 %15, 4294967295
+  %.lhs.trunc = trunc i64 %15 to i32
+  %17 = urem i32 %.lhs.trunc, %i.f
+  %.zext = zext nneg i32 %17 to i64
+  %sext = shl nuw nsw i64 %.zext, 2
+  %18 = getelementptr inbounds nuw i8, ptr %i.j, i64 %sext ; 2 uses
+  %19 = load i32, ptr %13, align 4, !tbaa !52
+  %20 = load i32, ptr %18, align 4, !tbaa !52
+  store i32 %20, ptr %13, align 4, !tbaa !52
+  store i32 %19, ptr %18, align 4, !tbaa !52
+  %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv277
+  %21 = getelementptr inbounds nuw i8, ptr %i.x, i64 4 ; 2 uses
+  %i.y = mul nuw nsw i64 %16, 1664525
   %i.z = add nuw nsw i64 %i.y, 1013904223         ; 2 uses
-  %i.aa = and i64 %i.z, 4294967295                ; 2 uses
+  %i.aa = and i64 %i.z, 4294967295                ; 3 uses
   %.lhs.trunc.a = trunc i64 %i.z to i32
   %i.ab = urem i32 %.lhs.trunc.a, %i.f
   %.zext.a = zext nneg i32 %i.ab to i64
   %sext.a = shl nuw nsw i64 %.zext.a, 2
   %i.ac = getelementptr inbounds nuw i8, ptr %i.j, i64 %sext.a ; 2 uses
-  %i.ad = load i32, ptr %i.x, align 4, !tbaa !52
+  %i.ad = load i32, ptr %21, align 4, !tbaa !52
   %i.ae = load i32, ptr %i.ac, align 4, !tbaa !52
-  store i32 %i.ae, ptr %i.x, align 4, !tbaa !52
+  store i32 %i.ae, ptr %21, align 4, !tbaa !52
   store i32 %i.ad, ptr %i.ac, align 4, !tbaa !52
-  %indvars.iv.next278 = add nuw nsw i64 %indvars.iv277.a, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next278, %i.l
-  br i1 %exitcond.not, label %.preheader262, label %bb.d, !llvm.loop !490
+  %indvars.iv.next278.1 = add nuw nsw i64 %indvars.iv277, 2 ; 2 uses
+  %indvars.iv.next278 = add i64 %i.w, 2           ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next278, %unroll_iter
+  br i1 %exitcond.not, label %.preheader262.unr-lcssa, label %bb.d, !llvm.loop !490
 
 ._crit_edge274.loopexit:                          ; preds = %bb.q
   %.pre298 = load ptr, ptr %i.b, align 8, !tbaa !43
