@@ -205,7 +205,7 @@ define dso_local { i64, i32 } @_ZNK4llvm19RISCVTargetLowering17getVRGatherVVCost
 bb.a:
   %i.a = tail call { i64, i32 } @_ZNK4llvm19RISCVTargetLowering11getLMULCostENS_3MVTE(ptr noundef nonnull align 8 dereferenceable(518448) %0, i16 %1) ; 2 uses
   %.fca.0.extract8 = extractvalue { i64, i32 } %i.a, 0 ; 6 uses
-  %.fca.1.extract9 = extractvalue { i64, i32 } %i.a, 1 ; 3 uses
+  %.fca.1.extract9 = extractvalue { i64, i32 } %i.a, 1 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 518440
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !203, !nonnull !51, !align !204
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 345
@@ -213,13 +213,13 @@ bb.a:
   %i.f = icmp eq i8 %i.e, 1
   %i.g = icmp eq i32 %.fca.1.extract9, 0
   %or.cond = select i1 %i.f, i1 %i.g, i1 false
-  br i1 %or.cond, label %bb.b, label %.thread
+  br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.h = sdiv i64 %.fca.0.extract8, 4
   %i.i = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.h, i1 false) ; 2 uses
   %.not = icmp eq i64 %i.i, 63
-  br i1 %.not, label %.thread, label %.thread.i.i
+  br i1 %.not, label %bb.c, label %.thread.i.i
 
 .thread.i.i:                                      ; preds = %bb.b
   %i.j = shl nuw nsw i64 %i.i, 2
@@ -234,24 +234,19 @@ bb.b:                                             ; preds = %bb.a
   %.0.i.i = select i1 %i.n, i64 %spec.select, i64 %i.p
   br label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit25
 
-.thread:                                          ; preds = %bb.b, %bb.a
+bb.c:                                             ; preds = %bb.b, %bb.a
   %2 = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.fca.0.extract8, i64 %.fca.0.extract8) ; 2 uses
   %3 = extractvalue { i64, i1 } %2, 1
-  br i1 %3, label %bb.c, label %4
-
-bb.c:                                             ; preds = %.thread
+  %4 = extractvalue { i64, i1 } %2, 0
+  %5 = lshr i64 %4, 2
   %or.cond36.not = icmp eq i64 %.fca.0.extract8, 0
-  %spec.select37.a = select i1 %or.cond36.not, i64 -9223372036854775808, i64 9223372036854775807
+  %spec.select37 = select i1 %or.cond36.not, i64 -9223372036854775808, i64 9223372036854775807
+  %spec.select37.a = select i1 %3, i64 %spec.select37, i64 %5
   br label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit25
 
-4:                                                ; preds = %.thread
-  %5 = extractvalue { i64, i1 } %2, 0
-  %6 = sdiv i64 %5, 4
-  br label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit25
-
-_ZN4llvmmlERKNS_15InstructionCostES2_.exit25:     ; preds = %4, %bb.c, %.thread.i.i
-  %.sroa.014.1 = phi i64 [ %.0.i.i, %.thread.i.i ], [ %6, %4 ], [ %spec.select37.a, %bb.c ]
-  %.sroa.3.1 = phi i32 [ 0, %.thread.i.i ], [ %.fca.1.extract9, %4 ], [ %.fca.1.extract9, %bb.c ]
+_ZN4llvmmlERKNS_15InstructionCostES2_.exit25:     ; preds = %.thread.i.i, %bb.c
+  %.sroa.014.1 = phi i64 [ %spec.select37.a, %bb.c ], [ %.0.i.i, %.thread.i.i ]
+  %.sroa.3.1 = phi i32 [ %.fca.1.extract9, %bb.c ], [ 0, %.thread.i.i ]
   %.fca.0.insert = insertvalue { i64, i32 } poison, i64 %.sroa.014.1, 0
   %.fca.1.insert = insertvalue { i64, i32 } %.fca.0.insert, i32 %.sroa.3.1, 1
   ret { i64, i32 } %.fca.1.insert
