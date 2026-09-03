@@ -205,10 +205,10 @@ bb.gn:                                            ; preds = %._crit_edge
   %i.agn = ptrtoint ptr %i.agl to i64
   %i.ago = ptrtoint ptr %i.agm to i64
   %i.agp = sub i64 %i.agn, %i.ago
-  %i.agq = ashr exact i64 %i.agp, 3               ; 3 uses
-  %i.agr = load i32, ptr %i.fk, align 8, !tbaa !303
+  %i.agq = ashr exact i64 %i.agp, 3               ; 2 uses
+  %i.agr = load i32, ptr %i.fk, align 8, !tbaa !303 ; 2 uses
   %i.ags = zext i32 %i.agr to i64                 ; 3 uses
-  %i.agt = sub nsw i64 %i.agq, %i.ags             ; 2 uses
+  %i.agt = sub nuw nsw i64 %i.agq, %i.ags
   %i.agu = icmp ult i64 %i.agq, %i.ags
   br i1 %i.agu, label %bb.go, label %bb.gp
 
@@ -219,8 +219,8 @@ bb.go:                                            ; preds = %bb.gn
   br label %.thread262
 
 bb.gp:                                            ; preds = %bb.gn
-  %64 = icmp ult i64 %i.agt, %i.agq
-  br i1 %64, label %bb.gq, label %.thread262
+  %.not.i46 = icmp eq i32 %i.agr, 0
+  br i1 %.not.i46, label %.thread262, label %bb.gq
 
 bb.gq:                                            ; preds = %bb.gp
   %i.agw = getelementptr inbounds nuw [8 x i8], ptr %i.agm, i64 %i.agt ; 2 uses

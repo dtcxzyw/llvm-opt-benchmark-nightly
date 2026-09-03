@@ -45,7 +45,7 @@ bb.a:
   br i1 %i.e, label %.lr.ph39.i.i.i.i.i, label %_ZN5faiss25with_selected_simd_levelsILi7EZNS_22Top1BlockResultHandlerINS_4CMaxIflEELb0EE11add_resultsEmmPKfEUlTnNS_9SIMDLevelEvE_EEDaOT0_.exit
 
 .lr.ph39.i.i.i.i.i:                               ; preds = %bb.a
-  %i.f = sub i64 %2, %1
+  %i.f = sub nuw i64 %2, %1
   %i.g = sub i64 0, %1
   %invariant.gep.i.i.i.i.i = getelementptr [4 x i8], ptr %3, i64 %i.g
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -142,7 +142,7 @@ bb.a:
   br i1 %i.e, label %.lr.ph39.i, label %_ZN5faiss12_GLOBAL__N_121top1_add_results_noneINS_4CMaxIflEELb0EEEvPNS_22Top1BlockResultHandlerIT_XT0_EEEmmPKf.exit
 
 .lr.ph39.i:                                       ; preds = %bb.a
-  %i.f = sub i64 %2, %1
+  %i.f = sub nuw i64 %2, %1
   %i.g = sub i64 0, %1
   %invariant.gep.i = getelementptr [4 x i8], ptr %3, i64 %i.g
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -233,7 +233,7 @@ bb.a:
   br i1 %i.e, label %.lr.ph39.i.i.i.i.i, label %_ZN5faiss25with_selected_simd_levelsILi7EZNS_22Top1BlockResultHandlerINS_4CMaxIflEELb1EE11add_resultsEmmPKfEUlTnNS_9SIMDLevelEvE_EEDaOT0_.exit
 
 .lr.ph39.i.i.i.i.i:                               ; preds = %bb.a
-  %i.f = sub i64 %2, %1
+  %i.f = sub nuw i64 %2, %1
   %i.g = sub i64 0, %1
   %invariant.gep.i.i.i.i.i = getelementptr [4 x i8], ptr %3, i64 %i.g
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -324,7 +324,7 @@ bb.a:
   br i1 %i.e, label %.lr.ph39.i, label %_ZN5faiss12_GLOBAL__N_121top1_add_results_noneINS_4CMaxIflEELb1EEEvPNS_22Top1BlockResultHandlerIT_XT0_EEEmmPKf.exit
 
 .lr.ph39.i:                                       ; preds = %bb.a
-  %i.f = sub i64 %2, %1
+  %i.f = sub nuw i64 %2, %1
   %i.g = sub i64 0, %1
   %invariant.gep.i = getelementptr [4 x i8], ptr %3, i64 %i.g
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -415,7 +415,7 @@ bb.a:
   br i1 %i.e, label %.lr.ph39.i.i.i.i.i, label %_ZN5faiss25with_selected_simd_levelsILi7EZNS_22Top1BlockResultHandlerINS_4CMinIflEELb0EE11add_resultsEmmPKfEUlTnNS_9SIMDLevelEvE_EEDaOT0_.exit
 
 .lr.ph39.i.i.i.i.i:                               ; preds = %bb.a
-  %i.f = sub i64 %2, %1
+  %i.f = sub nuw i64 %2, %1
   %i.g = sub i64 0, %1
   %invariant.gep.i.i.i.i.i = getelementptr [4 x i8], ptr %3, i64 %i.g
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -506,7 +506,7 @@ bb.a:
   br i1 %i.e, label %.lr.ph39.i, label %_ZN5faiss12_GLOBAL__N_121top1_add_results_noneINS_4CMinIflEELb0EEEvPNS_22Top1BlockResultHandlerIT_XT0_EEEmmPKf.exit
 
 .lr.ph39.i:                                       ; preds = %bb.a
-  %i.f = sub i64 %2, %1
+  %i.f = sub nuw i64 %2, %1
   %i.g = sub i64 0, %1
   %invariant.gep.i = getelementptr [4 x i8], ptr %3, i64 %i.g
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -597,7 +597,7 @@ bb.a:
   br i1 %i.e, label %.lr.ph39.i.i.i.i.i, label %_ZN5faiss25with_selected_simd_levelsILi7EZNS_22Top1BlockResultHandlerINS_4CMinIflEELb1EE11add_resultsEmmPKfEUlTnNS_9SIMDLevelEvE_EEDaOT0_.exit
 
 .lr.ph39.i.i.i.i.i:                               ; preds = %bb.a
-  %i.f = sub i64 %2, %1
+  %i.f = sub nuw i64 %2, %1
   %i.g = sub i64 0, %1
   %invariant.gep.i.i.i.i.i = getelementptr [4 x i8], ptr %3, i64 %i.g
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -688,7 +688,7 @@ bb.a:
   br i1 %i.e, label %.lr.ph39.i, label %_ZN5faiss12_GLOBAL__N_121top1_add_results_noneINS_4CMinIflEELb1EEEvPNS_22Top1BlockResultHandlerIT_XT0_EEEmmPKf.exit
 
 .lr.ph39.i:                                       ; preds = %bb.a
-  %i.f = sub i64 %2, %1
+  %i.f = sub nuw i64 %2, %1
   %i.g = sub i64 0, %1
   %invariant.gep.i = getelementptr [4 x i8], ptr %3, i64 %i.g
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40

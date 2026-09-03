@@ -205,7 +205,7 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs
   %.sroa.0.4.lcssa = phi i64 [ %.sroa.0.4590, %_RNCINvNtNtCs8frGy5WneL6_4fish5wutil9hex_float15parse_hex_floatNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E0B8_.exit.peel ], [ %.sroa.0.4594, %bb.m ], [ %.sroa.0.4, %_RNCINvNtNtCs8frGy5WneL6_4fish5wutil9hex_float15parse_hex_floatNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E0B8_.exit ] ; 3 uses
   %.sroa.0.25278 = phi ptr [ %.sroa.0.23.ph, %_RNCINvNtNtCs8frGy5WneL6_4fish5wutil9hex_float15parse_hex_floatNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E0B8_.exit.peel ], [ %i.bl, %_RNCINvNtNtCs8frGy5WneL6_4fish5wutil9hex_float15parse_hex_floatNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E0B8_.exit ], [ %i.bl, %bb.m ]
   %.sroa.53.10277 = phi i32 [ -1, %_RNCINvNtNtCs8frGy5WneL6_4fish5wutil9hex_float15parse_hex_floatNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E0B8_.exit.peel ], [ %i.bh, %bb.m ], [ -1, %_RNCINvNtNtCs8frGy5WneL6_4fish5wutil9hex_float15parse_hex_floatNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E0B8_.exit ]
-  %i.bt = sub i64 %.sroa.0.4.lcssa, %.sroa.0.3.lcssa
+  %i.bt = sub nuw i64 %.sroa.0.4.lcssa, %.sroa.0.3.lcssa
   %i.bu = icmp ult i64 %.sroa.0.4.lcssa, %.sroa.0.3.lcssa
   br i1 %i.bu, label %bb.r, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E4peek0ECs8frGy5WneL6_4fish.exit119.thread.thread
 
@@ -608,8 +608,8 @@ bb.c:                                             ; preds = %_RNvMs1_NtNtCs8frGy
 _RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState13at_line_start.exit.thread: ; preds = %bb.a, %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState13at_line_start.exit
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 160
-  %i.o = load i64, ptr %i.n, align 8, !noundef !10 ; 2 uses
-  %i.p = shl i64 %i.o, 2                          ; 3 uses
+  %i.o = load i64, ptr %i.n, align 8, !noundef !10 ; 3 uses
+  %i.p = shl nuw i64 %i.o, 2                      ; 2 uses
   %i.q = icmp ugt i64 %i.o, 4611686018427387903
   br i1 %i.q, label %bb.h, label %bb.g
 
@@ -640,7 +640,7 @@ _RINvXs1V_NtCslLGyqsphxMB_10widestring9utfstringNtB7_11Utf32StringINtNtNtNtCs3oU
   ret void
 
 bb.g:                                             ; preds = %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState13at_line_start.exit.thread
-  %.not = icmp eq i64 %i.p, 0
+  %.not = icmp eq i64 %i.o, 0
   br i1 %.not, label %.split, label %.split4
 
 bb.h:                                             ; preds = %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState13at_line_start.exit.thread

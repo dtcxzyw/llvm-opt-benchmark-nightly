@@ -205,7 +205,7 @@ bb.eq:                                            ; preds = %bb.ep
   br label %.loopexit
 
 bb.er:                                            ; preds = %bb.ep
-  %i.ub = sub i64 %i.gl, %.0.i.i.i421             ; 2 uses
+  %i.ub = sub nuw i64 %i.gl, %.0.i.i.i421         ; 2 uses
   %.not124.i.i = icmp ult i64 %i.gl, %.0.i.i.i421
   br i1 %.not124.i.i, label %.loopexit, label %.lr.ph.i.i
 
@@ -608,7 +608,7 @@ bb.iz:                                            ; preds = %bb.iz, %.lr.ph6.i.i
   br label %.loopexit
 
 bb.ja:                                            ; preds = %bb.iw
-  %i.yw = sub i64 %.val223, %.0.i.i.i             ; 2 uses
+  %i.yw = sub nuw i64 %.val223, %.0.i.i.i         ; 2 uses
   %.not157.i.i = icmp ult i64 %.val223, %.0.i.i.i
   br i1 %.not157.i.i, label %.loopexit, label %.lr.ph.i.i
 
@@ -1011,7 +1011,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIlJS
   br label %_ZN4absl12lts_2026052618container_internal15btree_containerINS1_5btreeINS1_15set_params_implIlJSt4lessIlENS1_12_GLOBAL__N_118ArenaLikeAllocatorIlEEEEEEEE5eraseIlEEmRKl.exit
 
 bb.aa:                                            ; preds = %bb.w
-  %i.er = sub i64 %i.cl, %.0.i.i.i                ; 2 uses
+  %i.er = sub nuw i64 %i.cl, %.0.i.i.i            ; 2 uses
   %.not157.i.i = icmp ult i64 %i.cl, %.0.i.i.i
   br i1 %.not157.i.i, label %_ZN4absl12lts_2026052618container_internal15btree_containerINS1_5btreeINS1_15set_params_implIlJSt4lessIlENS1_12_GLOBAL__N_118ArenaLikeAllocatorIlEEEEEEEE5eraseIlEEmRKl.exit, label %.lr.ph.i.i
 
@@ -1414,7 +1414,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implINS1
   br label %_ZN4absl12lts_2026052618container_internal15btree_containerINS1_5btreeINS1_15set_params_implINS1_12_GLOBAL__N_114OveralignedKeyILm16EEEJNS5_25CheckedCompareOptedOutCmpISt4lessIS7_EEESaIS7_ESt17integral_constantIiLi144EEEEEEEE5eraseIS7_EEmRKS7_.exit.i
 
 bb.am:                                            ; preds = %bb.ai
-  %i.im = sub i64 %i.gx, %.0.i.i.i.i              ; 2 uses
+  %i.im = sub nuw i64 %i.gx, %.0.i.i.i.i          ; 2 uses
   %.not154.i.i.i = icmp ult i64 %i.gx, %.0.i.i.i.i
   br i1 %.not154.i.i.i, label %_ZN4absl12lts_2026052618container_internal15btree_containerINS1_5btreeINS1_15set_params_implINS1_12_GLOBAL__N_114OveralignedKeyILm16EEEJNS5_25CheckedCompareOptedOutCmpISt4lessIS7_EEESaIS7_ESt17integral_constantIiLi144EEEEEEEE5eraseIS7_EEmRKS7_.exit.i, label %.lr.ph.i.i.i
 
@@ -1817,7 +1817,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implINS1
   br label %_ZN4absl12lts_2026052618container_internal15btree_containerINS1_5btreeINS1_15set_params_implINS1_12_GLOBAL__N_114OveralignedKeyILm16EEEJNS5_25CheckedCompareOptedOutCmpISt4lessIS7_EEESaIS7_ESt17integral_constantIiLi160EEEEEEEE5eraseIS7_EEmRKS7_.exit.i
 
 bb.dq:                                            ; preds = %bb.dm
-  %i.aae = sub i64 %i.yp, %.0.i.i.i.i68           ; 2 uses
+  %i.aae = sub nuw i64 %i.yp, %.0.i.i.i.i68       ; 2 uses
   %.not154.i.i.i69 = icmp ult i64 %i.yp, %.0.i.i.i.i68
   br i1 %.not154.i.i.i69, label %_ZN4absl12lts_2026052618container_internal15btree_containerINS1_5btreeINS1_15set_params_implINS1_12_GLOBAL__N_114OveralignedKeyILm16EEEJNS5_25CheckedCompareOptedOutCmpISt4lessIS7_EEESaIS7_ESt17integral_constantIiLi160EEEEEEEE5eraseIS7_EEmRKS7_.exit.i, label %.lr.ph.i.i.i70
 
@@ -2220,7 +2220,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implINS1
   br label %.loopexit
 
 bb.q:                                             ; preds = %bb.m
-  %i.dh = sub i64 %i.bb, %.0.i.i.i                ; 2 uses
+  %i.dh = sub nuw i64 %i.bb, %.0.i.i.i            ; 2 uses
   %.not139.i.i = icmp ult i64 %i.bb, %.0.i.i.i
   br i1 %.not139.i.i, label %.loopexit, label %.lr.ph.i.i
 
@@ -2623,7 +2623,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implINS1
   br label %.loopexit
 
 bb.q:                                             ; preds = %bb.m
-  %i.dh = sub i64 %i.bb, %.0.i.i.i                ; 2 uses
+  %i.dh = sub nuw i64 %i.bb, %.0.i.i.i            ; 2 uses
   %.not139.i.i = icmp ult i64 %i.bb, %.0.i.i.i
   br i1 %.not139.i.i, label %.loopexit, label %.lr.ph.i.i
 

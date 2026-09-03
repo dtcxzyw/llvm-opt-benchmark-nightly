@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = load i64, ptr %i.i, align 8, !noundef !15 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.l = load i64, ptr %i.k, align 8, !noundef !15 ; 5 uses
-  %i.m = sub i64 %i.j, %i.l                       ; 3 uses
+  %i.m = sub nuw i64 %i.j, %i.l                   ; 3 uses
   %i.n = icmp ult i64 %i.j, %i.l
   br i1 %i.n, label %bb.e, label %bb.d
 
@@ -399,7 +399,7 @@ bb.r:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.by = or i64 %i.bx, 1
   store i64 %i.by, ptr %i.au, align 8, !alias.scope !167, !noalias !168
   %i.bz = shl nuw nsw i64 %i.d, 6                 ; 3 uses
-  %i.ca = sub i64 %i.bz, %.val34.i.i              ; 3 uses
+  %i.ca = sub nuw i64 %i.bz, %.val34.i.i          ; 3 uses
   %i.cb = icmp ult i64 %i.bz, %.val34.i.i
   br i1 %i.cb, label %bb.t, label %bb.s
 
@@ -412,7 +412,7 @@ bb.t:                                             ; preds = %bb.r
   unreachable
 
 bb.u:                                             ; preds = %bb.s
-  %i.cd = icmp ult i64 %i.ca, 64
+  %i.cd = icmp samesign ult i64 %i.ca, 64
   br i1 %i.cd, label %.lr.ph.i.i.i.i.i, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
@@ -815,7 +815,7 @@ bb.bw:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.hr = or i64 %i.hq, 1
   store i64 %i.hr, ptr %i.gn, align 8, !alias.scope !1439, !noalias !1440
   %i.hs = shl nuw nsw i64 %.sroa.514.0.copyload.i, 6 ; 3 uses
-  %i.ht = sub i64 %i.hs, %.sroa.615.0.copyload.i  ; 2 uses
+  %i.ht = sub nuw i64 %i.hs, %.sroa.615.0.copyload.i ; 2 uses
   %i.hu = icmp ult i64 %i.hs, %.sroa.615.0.copyload.i
   br i1 %i.hu, label %bb.by, label %bb.bx
 
@@ -831,7 +831,7 @@ bb.by:                                            ; preds = %bb.bw
   unreachable
 
 bb.bz:                                            ; preds = %bb.bx
-  %i.hw = icmp ult i64 %i.ht, 64
+  %i.hw = icmp samesign ult i64 %i.ht, 64
   br i1 %i.hw, label %.lr.ph.i.i.i.i.i.i.i.i, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
@@ -1193,7 +1193,7 @@ bb.cy:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.lj = or i64 %i.li, 1
   store i64 %i.lj, ptr %i.kf, align 8, !alias.scope !1469, !noalias !1470
   %i.lk = shl nuw nsw i64 %.sroa.514.0.copyload.i256, 6 ; 3 uses
-  %i.ll = sub nsw i64 %i.lk, %.sroa.615.0.copyload.i ; 2 uses
+  %i.ll = sub nuw nsw i64 %i.lk, %.sroa.615.0.copyload.i ; 2 uses
   %i.lm = icmp ult i64 %i.lk, %.sroa.615.0.copyload.i
   br i1 %i.lm, label %bb.da, label %bb.cz
 
@@ -1209,7 +1209,7 @@ bb.da:                                            ; preds = %bb.cy
   unreachable
 
 bb.db:                                            ; preds = %bb.cz
-  %i.lo = icmp ult i64 %i.ll, 64
+  %i.lo = icmp samesign ult i64 %i.ll, 64
   br i1 %i.lo, label %.lr.ph.i.i.i.i.i.i.i.i312, label %bb.dc
 
 bb.dc:                                            ; preds = %bb.db
@@ -1612,7 +1612,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.m = shl nuw i64 %i.k, 3                      ; 3 uses
-  %i.n = sub i64 %i.m, %i.f                       ; 2 uses
+  %i.n = sub nuw i64 %i.m, %i.f                   ; 2 uses
   %i.o = icmp ult i64 %i.m, %i.f
   br i1 %i.o, label %bb.f, label %bb.e
 
@@ -2015,7 +2015,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.n = shl nuw i64 %i.l, 3                      ; 3 uses
-  %i.o = sub i64 %i.n, %i.g                       ; 2 uses
+  %i.o = sub nuw i64 %i.n, %i.g                   ; 2 uses
   %i.p = icmp ult i64 %i.n, %i.g
   br i1 %i.p, label %bb.f, label %bb.e
 

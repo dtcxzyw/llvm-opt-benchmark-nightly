@@ -204,7 +204,7 @@ ffswap4_slow.exit:                                ; preds = %.lr.ph.i.epil.prehe
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @ffswap8(ptr nofree noundef captures(none) %0, i64 noundef %1) local_unnamed_addr #1 {
 bb.a:
-  %i.a = shl nsw i64 %1, 3
+  %i.a = shl nuw nsw i64 %1, 3
   %i.b = icmp sgt i64 %1, 0
   br i1 %i.b, label %.lr.ph.i, label %ffswap8_slow.exit
 
@@ -215,7 +215,7 @@ bb.a:
   %i.e = shufflevector <8 x i8> %i.d, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   store <8 x i8> %i.e, ptr %i.c, align 1, !tbaa !10
   %i.f = add nuw nsw i64 %.039.i, 8               ; 2 uses
-  %2 = icmp slt i64 %i.f, %i.a
+  %2 = icmp samesign ult i64 %i.f, %i.a
   br i1 %2, label %.lr.ph.i, label %ffswap8_slow.exit, !llvm.loop !26
 
 ffswap8_slow.exit:                                ; preds = %.lr.ph.i, %bb.a

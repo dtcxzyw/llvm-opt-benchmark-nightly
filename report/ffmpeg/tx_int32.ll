@@ -204,7 +204,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.b
   %i.e = getelementptr inbounds i8, ptr %i.d, i64 -28
   %i.f = mul nuw nsw i32 %2, 6
-  %i.g = shl nsw i32 %2, 2
+  %i.g = shl nuw nsw i32 %2, 2
   %i.h = zext nneg i32 %i.g to i64
   %i.i = zext nneg i32 %i.f to i64
   br label %bb.b
@@ -607,7 +607,7 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !29   ; 3 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !21   ; 6 uses
   %i.f = mul nsw i32 %i.e, 3                      ; 13 uses
-  %i.g = mul nsw i32 %i.e, 9                      ; 6 uses
+  %i.g = mul nuw nsw i32 %i.e, 9                  ; 6 uses
   %i.h = load i32, ptr %0, align 8, !tbaa !21
   %i.i = ashr i32 %i.h, 2                         ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1010,7 +1010,7 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !29   ; 3 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !21   ; 6 uses
   %i.f = mul nsw i32 %i.e, 5                      ; 21 uses
-  %i.g = mul nsw i32 %i.e, 15                     ; 10 uses
+  %i.g = mul nuw nsw i32 %i.e, 15                 ; 10 uses
   %i.h = load i32, ptr %0, align 8, !tbaa !21
   %i.i = ashr i32 %i.h, 2                         ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1413,7 +1413,7 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !29   ; 3 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !21   ; 6 uses
   %i.f = mul nsw i32 %i.e, 7                      ; 5 uses
-  %i.g = mul nsw i32 %i.e, 21                     ; 2 uses
+  %i.g = mul nuw nsw i32 %i.e, 21                 ; 2 uses
   %i.h = load i32, ptr %0, align 8, !tbaa !21
   %i.i = ashr i32 %i.h, 2                         ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1816,7 +1816,7 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !29   ; 3 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !21   ; 6 uses
   %i.f = mul nsw i32 %i.e, 9                      ; 5 uses
-  %i.g = mul nsw i32 %i.e, 27                     ; 2 uses
+  %i.g = mul nuw nsw i32 %i.e, 27                 ; 2 uses
   %i.h = load i32, ptr %0, align 8, !tbaa !21
   %i.i = ashr i32 %i.h, 2                         ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -2219,7 +2219,7 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !29   ; 3 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !21   ; 6 uses
   %i.f = mul nsw i32 %i.e, 15                     ; 5 uses
-  %i.g = mul nsw i32 %i.e, 45                     ; 2 uses
+  %i.g = mul nuw nsw i32 %i.e, 45                 ; 2 uses
   %i.h = load i32, ptr %0, align 8, !tbaa !21
   %i.i = ashr i32 %i.h, 2                         ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8

@@ -204,7 +204,6 @@ _ZN5Eigen10MatrixBaseINS_6MatrixIdLi3ELi1ELi0ELi3ELi1EEEE9normalizeEv.exit147: ;
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, i8 0, i64 24, i1 false)
   %i.hl = icmp eq ptr %i.az, %i.ba                ; 2 uses
-  %10 = mul nsw i64 %i.be, 3
   br i1 %i.hl, label %_ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.thread, label %bb.r
 
 _ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.thread:        ; preds = %_ZN5Eigen10MatrixBaseINS_6MatrixIdLi3ELi1ELi0ELi3ELi1EEEE9normalizeEv.exit147
@@ -217,11 +216,11 @@ bb.r:                                             ; preds = %_ZN5Eigen10MatrixBa
   br i1 %i.hm, label %bb.s, label %bb.u
 
 bb.s:                                             ; preds = %bb.r
-  %i.hn = icmp samesign ugt i64 %10, 2305843009213693951
+  %i.hn = icmp samesign ugt i64 %i.be, 768614336404564650
   br i1 %i.hn, label %.invoke, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i
 
 _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i: ; preds = %bb.s
-  %i.ho = mul i64 %i.be, 24
+  %i.ho = mul nuw i64 %i.be, 24
   %i.hp = call noalias ptr @malloc(i64 noundef %i.ho) #22 ; 2 uses
   %i.hq = icmp eq ptr %i.hp, null
   br i1 %i.hq, label %.invoke, label %bb.u

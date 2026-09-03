@@ -204,7 +204,7 @@ _RINvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtB6_9TakeWhileINtN
   %i.arl = call { i64, i64 } @_RINvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters3revINtB5_3RevNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32ENtNtNtB9_6traits8iterator8Iterator8try_foldjNCINvNvXs0_NtB7_10take_whileINtB2K_9TakeWhileppEB1R_8try_fold5checkcjINtNtNtBb_3ops9try_trait17NeverShortCircuitjENCNvMs9_NtNtCs8frGy5WneL6_4fish6reader6readerNtB4x_6Reader23handle_readline_commands_0NCINvMB3J_B3G_10wrap_mut_2jcNCNvYIB32_BM_B4p_EB1R_5count0E0E0INtNtB3L_12control_flow11ControlFlowB3G_jEEB4B_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bo, i64 noundef 0, ptr noalias nofree noundef nonnull %i.ark, ptr noalias nofree noundef nonnull dereferenceable(1) %i.arj)
   %i.arm = extractvalue { i64, i64 } %i.arl, 1    ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bo)
-  %i.arn = sub i64 %.val879, %i.arm               ; 3 uses
+  %i.arn = sub nuw i64 %.val879, %i.arm           ; 3 uses
   %i.aro = icmp ult i64 %.val879, %i.arm
   br i1 %i.aro, label %bb.pz, label %.preheader1918.split
 
@@ -607,7 +607,7 @@ bb.wm:                                            ; preds = %bb.wl
   %i.bgr = sext i32 %i.bgo to i64
   %i.bgs = sext i32 %i.bgq to i64
   %.val840 = load i64, ptr %i.bfb, align 8, !noundef !14 ; 2 uses
-  %i.bgt = sub i64 %.val840, %i.bgd               ; 2 uses
+  %i.bgt = sub nuw i64 %.val840, %i.bgd           ; 2 uses
   %i.bgu = icmp ult i64 %.val840, %i.bgd
   br i1 %i.bgu, label %.invoke, label %bb.wn
 
@@ -1010,7 +1010,7 @@ bb.ca:                                            ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.hm)
   %i.hn = getelementptr i8, ptr %.0.val, i64 552
   %.val63 = load i64, ptr %i.hn, align 8, !noundef !14 ; 2 uses
-  %i.ho = sub nsw i64 %.val57, %.val63            ; 2 uses
+  %i.ho = sub nuw nsw i64 %.val57, %.val63        ; 2 uses
   %i.hp = icmp ult i64 %.val57, %.val63
   br i1 %i.hp, label %bb.cq, label %bb.cr
 
@@ -1413,7 +1413,7 @@ _RNvNtNtCs8frGy5WneL6_4fish6reader6reader14is_backslashed.exit.thread: ; preds =
   %i.bf = extractvalue { i64, i64 } %i.be, 0      ; 10 uses
   %i.bg = extractvalue { i64, i64 } %i.be, 1      ; 4 uses
   %.val124 = load i64, ptr %i.an, align 8, !noundef !14 ; 2 uses
-  %i.bh = sub i64 %.val124, %i.bf                 ; 3 uses
+  %i.bh = sub nuw i64 %.val124, %i.bf             ; 3 uses
   %i.bi = icmp ult i64 %.val124, %i.bf
   br i1 %i.bi, label %bb.l, label %bb.k
 
@@ -1438,7 +1438,7 @@ bb.m:                                             ; preds = %bb.k
   %i.bn = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.bo = load i64, ptr %i.bn, align 8, !noundef !14 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af)
-  %i.bp = sub i64 %i.bh, %i.bm                    ; 5 uses
+  %i.bp = sub nuw i64 %i.bh, %i.bm                ; 5 uses
   %i.bq = icmp ult i64 %i.bh, %i.bm
   br i1 %i.bq, label %bb.p, label %bb.o
 
