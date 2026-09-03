@@ -204,9 +204,9 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = alloca [1024 x i8], align 8              ; 11 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.val1.i.i = load i64, ptr %i.c, align 8, !alias.scope !1880, !noundef !6 ; 4 uses
+  %.val1.i.i = load i64, ptr %i.c, align 8, !alias.scope !1880, !noundef !6 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %i.e = load i64, ptr %i.d, align 8, !alias.scope !1880, !noundef !6 ; 7 uses
+  %i.e = load i64, ptr %i.d, align 8, !alias.scope !1880, !noundef !6 ; 6 uses
   %i.f = icmp ugt i64 %.val1.i.i, %i.e
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -223,7 +223,7 @@ bb.c:                                             ; preds = %bb.j, %bb.k, %bb.f,
 
 bb.d:                                             ; preds = %bb.b
   %.val.i = load ptr, ptr %2, align 8, !alias.scope !1881, !nonnull !6, !noundef !6
-  %i.j = sub nuw i64 %.val1.i.i, %i.e
+  %i.j = sub nuw i64 %.val1.i.i, %i.e             ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.e
   %i.l = tail call { i64, ptr } @_RNvXs0_NtNtNtCs2LSxCQSJWSD_5hyper6common2io6compatINtB5_6CompatINtNtNtCs6VdLngu4RVT_10hyper_util6common6rewind6RewindINtNtNtB16_2rt5tokio7TokioIoINtNtCs8rTCm43AEA0_12tokio_rustls6server9TlsStreamNtNtNtNtCseCDlJsl44RV_5tokio3net3tcp6stream9TcpStreamEEEENtNtNtB3f_2io11async_write10AsyncWrite10poll_writeCsbakdBCgU4AF_16influxdb3_server(ptr noalias noundef nonnull align 8 dereferenceable(1168) %0, ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.k, i64 noundef %i.j) ; 2 uses
   %i.m = extractvalue { i64, ptr } %i.l, 0        ; 2 uses
@@ -242,18 +242,18 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.c
 
 bb.g:                                             ; preds = %bb.d, %bb.l
-  %.sroa.016.0.in = phi ptr [ %i.aj, %bb.l ], [ %i.n, %bb.d ] ; 2 uses
+  %.pre-phi = phi i64 [ %i.j, %bb.d ], [ %i.ae, %bb.l ] ; 2 uses
+  %.sroa.016.0.in = phi ptr [ %i.n, %bb.d ], [ %i.aj, %bb.l ] ; 2 uses
   %.sroa.016.0 = ptrtoint ptr %.sroa.016.0.in to i64 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1882)
-  %3 = call i64 @llvm.usub.sat.i64(i64 %.val1.i.i, i64 %i.e) ; 2 uses
-  %i.o = icmp ult i64 %3, %.sroa.016.0
+  %i.o = icmp ult i64 %.pre-phi, %.sroa.016.0
   br i1 %i.o, label %bb.h, label %_RNvXs1_NtNtCsuxFxh2mtOX_5bytes3buf8buf_implINtNtNtCs4NRVxsYgnAr_4core2io6cursor6CursorNtNtB9_9bytes_mut8BytesMutENtB5_3Buf7advanceCsbakdBCgU4AF_16influxdb3_server.exit, !prof !10
 
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1882
   store i64 %.sroa.016.0, ptr %i.a, align 8, !noalias !1882
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 %3, ptr %i.p, align 8, !noalias !1882
+  store i64 %.pre-phi, ptr %i.p, align 8, !noalias !1882
   call void @_RNvCsuxFxh2mtOX_5bytes13panic_advance(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a) #31, !noalias !1882
   unreachable
 
@@ -291,7 +291,7 @@ _RNvYINtNtNtCs4NRVxsYgnAr_4core2io6cursor6CursorNtNtCsuxFxh2mtOX_5bytes9bytes_mu
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1883)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1884)
   %.val.i.i = load ptr, ptr %2, align 8, !alias.scope !1885, !noalias !1884, !nonnull !6, !noundef !6
-  %i.ae = sub nuw i64 %.val1.i.i, %i.e
+  %i.ae = sub nuw i64 %.val1.i.i, %i.e            ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %i.e
   store ptr %i.af, ptr %i.b, align 8, !alias.scope !1884, !noalias !1883
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -425,9 +425,9 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = alloca [1024 x i8], align 8              ; 11 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.val1.i.i = load i64, ptr %i.c, align 8, !alias.scope !1899, !noundef !6 ; 4 uses
+  %.val1.i.i = load i64, ptr %i.c, align 8, !alias.scope !1899, !noundef !6 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %i.e = load i64, ptr %i.d, align 8, !alias.scope !1899, !noundef !6 ; 7 uses
+  %i.e = load i64, ptr %i.d, align 8, !alias.scope !1899, !noundef !6 ; 6 uses
   %i.f = icmp ugt i64 %.val1.i.i, %i.e
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -444,7 +444,7 @@ bb.c:                                             ; preds = %bb.j, %bb.k, %bb.f,
 
 bb.d:                                             ; preds = %bb.b
   %.val.i = load ptr, ptr %2, align 8, !alias.scope !1900, !nonnull !6, !noundef !6
-  %i.j = sub nuw i64 %.val1.i.i, %i.e
+  %i.j = sub nuw i64 %.val1.i.i, %i.e             ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.val.i, i64 %i.e
   %i.l = tail call { i64, ptr } @_RNvXs0_NtNtNtCs2LSxCQSJWSD_5hyper6common2io6compatINtB5_6CompatINtNtNtCs6VdLngu4RVT_10hyper_util6common6rewind6RewindINtNtNtB16_2rt5tokio7TokioIoNtNtNtNtCseCDlJsl44RV_5tokio3net3tcp6stream9TcpStreamEEENtNtNtB2r_2io11async_write10AsyncWrite10poll_writeCsbakdBCgU4AF_16influxdb3_server(ptr noalias noundef nonnull align 8 dereferenceable(64) %0, ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.k, i64 noundef %i.j) ; 2 uses
   %i.m = extractvalue { i64, ptr } %i.l, 0        ; 2 uses
@@ -463,18 +463,18 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.c
 
 bb.g:                                             ; preds = %bb.d, %bb.l
-  %.sroa.016.0.in = phi ptr [ %i.aj, %bb.l ], [ %i.n, %bb.d ] ; 2 uses
+  %.pre-phi = phi i64 [ %i.j, %bb.d ], [ %i.ae, %bb.l ] ; 2 uses
+  %.sroa.016.0.in = phi ptr [ %i.n, %bb.d ], [ %i.aj, %bb.l ] ; 2 uses
   %.sroa.016.0 = ptrtoint ptr %.sroa.016.0.in to i64 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1901)
-  %3 = call i64 @llvm.usub.sat.i64(i64 %.val1.i.i, i64 %i.e) ; 2 uses
-  %i.o = icmp ult i64 %3, %.sroa.016.0
+  %i.o = icmp ult i64 %.pre-phi, %.sroa.016.0
   br i1 %i.o, label %bb.h, label %_RNvXs1_NtNtCsuxFxh2mtOX_5bytes3buf8buf_implINtNtNtCs4NRVxsYgnAr_4core2io6cursor6CursorNtNtB9_9bytes_mut8BytesMutENtB5_3Buf7advanceCsbakdBCgU4AF_16influxdb3_server.exit, !prof !10
 
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1901
   store i64 %.sroa.016.0, ptr %i.a, align 8, !noalias !1901
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 %3, ptr %i.p, align 8, !noalias !1901
+  store i64 %.pre-phi, ptr %i.p, align 8, !noalias !1901
   call void @_RNvCsuxFxh2mtOX_5bytes13panic_advance(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a) #31, !noalias !1901
   unreachable
 
@@ -512,7 +512,7 @@ _RNvYINtNtNtCs4NRVxsYgnAr_4core2io6cursor6CursorNtNtCsuxFxh2mtOX_5bytes9bytes_mu
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1902)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1903)
   %.val.i.i = load ptr, ptr %2, align 8, !alias.scope !1904, !noalias !1903, !nonnull !6, !noundef !6
-  %i.ae = sub nuw i64 %.val1.i.i, %i.e
+  %i.ae = sub nuw i64 %.val1.i.i, %i.e            ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %i.e
   store ptr %i.af, ptr %i.b, align 8, !alias.scope !1903, !noalias !1902
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -914,9 +914,6 @@ declare hidden void @_RNvXs2_NtCsi0Uwx9p0WRp_12futures_core6streamINtNtNtCs5SRHc
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvXs2_NtCsi0Uwx9p0WRp_12futures_core6streamINtNtNtCs1a9RECLZJLX_10tokio_util2io13reader_stream12ReaderStreamNtNtNtCseCDlJsl44RV_5tokio2fs4file4FileENtB5_9TryStream13try_poll_nextCsbakdBCgU4AF_16influxdb3_server(ptr dead_on_unwind noalias noundef writable sret([40 x i8]) align 8 captures(address) dereferenceable(40), ptr noalias noundef align 8 dereferenceable(144), ptr noalias noundef align 8 dereferenceable(32)) unnamed_addr #0
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #23
 
 ; Function Attrs: cold noreturn nonlazybind uwtable
 declare void @_RNvCsuxFxh2mtOX_5bytes13panic_advance(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16)) unnamed_addr #4

@@ -38,7 +38,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.g, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %spec.select.i = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.c, i64 %i.a) ; 2 uses
+  %spec.select.i = sub nuw i64 %i.c, %i.a         ; 2 uses
   %i.h = load i64, ptr %2, align 8, !tbaa !26     ; 2 uses
   %.not.i.i.i = icmp ult i64 %i.a, %i.h
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -132,7 +132,7 @@ bb.a:
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.a
   %i.e = load i64, ptr %i.c, align 8, !tbaa !24
   %i.f = add i64 %i.e, 1
-  tail call void @_ZdlPvm(ptr noundef %i.b, i64 noundef %i.f) #7
+  tail call void @_ZdlPvm(ptr noundef %i.b, i64 noundef %i.f) #6
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.a, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -152,11 +152,11 @@ bb.a:
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i: ; preds = %bb.a
   %i.e = load i64, ptr %i.c, align 8, !tbaa !24
   %i.f = add i64 %i.e, 1
-  tail call void @_ZdlPvm(ptr noundef %i.b, i64 noundef %i.f) #7, !inline_history !31
+  tail call void @_ZdlPvm(ptr noundef %i.b, i64 noundef %i.f) #6, !inline_history !31
   br label %_ZN22photos_editing_formats8image_io25OStreamRefDataDestinationD2Ev.exit
 
 _ZN22photos_editing_formats8image_io25OStreamRefDataDestinationD2Ev.exit: ; preds = %bb.a, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 72) #7
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 72) #6
   ret void
 }
 
@@ -173,17 +173,13 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: nobuiltin nounwind
 declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #5
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #6
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #7 = { builtin nounwind }
+attributes #6 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

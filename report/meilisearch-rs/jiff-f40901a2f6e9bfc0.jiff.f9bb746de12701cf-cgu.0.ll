@@ -205,7 +205,7 @@ bb.bf:                                            ; preds = %bb.cb, %.lr.ph.i.i.
   br i1 %exitcond.not.i.i.i, label %.invoke477.i.i, label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf
-  %i.hs = getelementptr inbounds nuw [2 x i8], ptr %i.gv, i64 %.sroa.02.0152.i.i.i ; 5 uses
+  %i.hs = getelementptr [2 x i8], ptr %i.gv, i64 %.sroa.02.0152.i.i.i ; 5 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %i.hs, i64 1
   %i.hu = load i8, ptr %i.ht, align 1, !noalias !1969, !noundef !11
   %i.hv = zext i8 %i.hu to i64                    ; 3 uses
@@ -608,9 +608,9 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 7 uses
-  %i.h = load i64, ptr %i.g, align 8, !noundef !11 ; 10 uses
+  %i.h = load i64, ptr %i.g, align 8, !noundef !11 ; 9 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.j = load i64, ptr %i.i, align 8, !noundef !11 ; 17 uses
+  %i.j = load i64, ptr %i.i, align 8, !noundef !11 ; 15 uses
   %i.k = icmp ult i64 %i.h, %i.j
   br i1 %i.k, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit, label %bb.b
 
@@ -623,7 +623,7 @@ _ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit: ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.h ; 2 uses
   %i.n = load i8, ptr %i.m, align 1, !noundef !11
   %i.o = icmp eq i8 %i.n, 60
-  br i1 %i.o, label %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit, label %2
+  br i1 %i.o, label %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i
 
 _ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit: ; preds = %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit
   %i.p = add nuw i64 %i.h, 1                      ; 7 uses
@@ -631,24 +631,10 @@ _ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit: ; preds = %_ZN4jiff6
   %.not = icmp eq i64 %i.p, %i.j
   br i1 %.not, label %bb.k, label %bb.l
 
-2:                                                ; preds = %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit
-  %3 = tail call i64 @llvm.usub.sat.i64(i64 %i.j, i64 %i.h) ; 2 uses
-  br label %4
-
-4:                                                ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1, %2
-  %5 = phi i64 [ %i.h, %2 ], [ %i.ab, %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1 ] ; 5 uses
-  %.sroa.06.0.i = phi i64 [ 0, %2 ], [ %9, %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1 ] ; 4 uses
-  %6 = or disjoint i64 %.sroa.06.0.i, 1
-  %exitcond.not.i = icmp eq i64 %.sroa.06.0.i, %3
-  br i1 %exitcond.not.i, label %7, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i
-
-7:                                                ; preds = %8, %4
-  %.lcssa71 = phi i64 [ %5, %4 ], [ %i.w, %8 ]
-  tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %.lcssa71, i64 noundef %i.j, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @437) #45, !noalias !11635
-  unreachable
-
-_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i: ; preds = %4
-  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 %5
+_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i: ; preds = %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit, %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1
+  %2 = phi i64 [ %i.ab, %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1 ], [ %i.h, %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit ] ; 4 uses
+  %.sroa.06.0.i = phi i64 [ %3, %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1 ], [ 0, %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit ] ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 %2
   %i.r = load i8, ptr %i.q, align 1, !noalias !11635, !noundef !11
   %i.s = and i8 %i.r, -33
   %i.t = add i8 %i.s, -65
@@ -660,7 +646,7 @@ bb.c:                                             ; preds = %_ZN4jiff6shared5pos
   br i1 %exitcond29.i, label %.loopexit35, label %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i
 
 bb.d:                                             ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1, %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1, %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i, %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i
-  %i.u = phi i64 [ %5, %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i ], [ %i.j, %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i ], [ %i.w, %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1 ], [ %i.j, %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1 ] ; 4 uses
+  %i.u = phi i64 [ %2, %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i ], [ %i.j, %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i ], [ %i.w, %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1 ], [ %i.j, %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1 ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !11635
   %i.v = icmp ult i64 %i.u, %i.h
   %.not.i = icmp ugt i64 %i.u, %i.j
@@ -668,17 +654,13 @@ bb.d:                                             ; preds = %_ZN4jiff6shared5pos
   br i1 %or.cond11.i, label %bb.f, label %bb.e, !prof !57
 
 _ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i: ; preds = %bb.c
-  %i.w = add nuw i64 %5, 1                        ; 5 uses
+  %i.w = add nuw i64 %2, 1                        ; 4 uses
   store i64 %i.w, ptr %i.g, align 8, !noalias !11635
   %.not17.i = icmp eq i64 %i.w, %i.j
-  br i1 %.not17.i, label %bb.d, label %8
+  br i1 %.not17.i, label %bb.d, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1
 
-8:                                                ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i
-  %9 = add nuw nsw i64 %.sroa.06.0.i, 2
-  %exitcond.not.i.1 = icmp eq i64 %6, %3
-  br i1 %exitcond.not.i.1, label %7, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1
-
-_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1: ; preds = %8
+_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1: ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i
+  %3 = add nuw nsw i64 %.sroa.06.0.i, 2
   %i.x = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.w
   %i.y = load i8, ptr %i.x, align 1, !noalias !11635, !noundef !11
   %i.z = and i8 %i.y, -33
@@ -687,10 +669,10 @@ _ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1: ; preds = %8
   br i1 %or.cond10.i.1, label %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1, label %bb.d
 
 _ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1: ; preds = %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1
-  %i.ab = add nuw i64 %5, 2                       ; 3 uses
+  %i.ab = add nuw i64 %2, 2                       ; 3 uses
   store i64 %i.ab, ptr %i.g, align 8, !noalias !11635
   %.not17.i.1 = icmp eq i64 %i.ab, %i.j
-  br i1 %.not17.i.1, label %bb.d, label %4
+  br i1 %.not17.i.1, label %bb.d, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i
 
 bb.e:                                             ; preds = %bb.d
   %i.ac = sub nuw i64 %i.u, %i.h
@@ -1093,9 +1075,9 @@ bb.a:
   %.sroa.524.i = alloca [3 x i8], align 2         ; 5 uses
   %.sroa.5.i = alloca [3 x i8], align 2           ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 25 uses
-  %i.e = load i64, ptr %i.d, align 8, !noundef !11 ; 14 uses
+  %i.e = load i64, ptr %i.d, align 8, !noundef !11 ; 13 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.g = load i64, ptr %i.f, align 8, !noundef !11 ; 19 uses
+  %i.g = load i64, ptr %i.f, align 8, !noundef !11 ; 13 uses
   %i.h = icmp ult i64 %i.e, %i.g
   br i1 %i.h, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i, label %bb.b
 
@@ -1118,43 +1100,33 @@ bb.c:                                             ; preds = %_ZN4jiff6shared5pos
   br i1 %or.cond.i, label %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i73.i, label %bb.m
 
 _ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i: ; preds = %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i
-  %i.m = add nuw i64 %i.e, 1                      ; 4 uses
+  %i.m = add nuw i64 %i.e, 1                      ; 3 uses
   store i64 %i.m, ptr %i.d, align 8
   %.not94.i = icmp eq i64 %i.m, %i.g
   br i1 %.not94.i, label %bb.m, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.i.i
 
 _ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit66.i: ; preds = %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i
-  %i.n = add nuw i64 %i.e, 1                      ; 4 uses
+  %i.n = add nuw i64 %i.e, 1                      ; 3 uses
   store i64 %i.n, ptr %i.d, align 8
   %.not.i = icmp eq i64 %i.n, %i.g
   br i1 %.not.i, label %bb.m, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.i.i.i
 
 _ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.i.i: ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.i)
-  %1 = tail call i64 @llvm.usub.sat.i64(i64 %i.g, i64 %i.m) ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.m
   %i.p = load i8, ptr %i.o, align 1, !noundef !11
   %i.q = add i8 %i.p, -48                         ; 2 uses
   %or.cond.i.i.i = icmp ult i8 %i.q, 10
   br i1 %or.cond.i.i.i, label %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i.i, label %_ZN4jiff6shared5posix6Parser30parse_posix_julian_day_no_leap17h0a9aa93a5b989972E.exit.thread.i
 
-2:                                                ; preds = %4, %3
-  %.lcssa35.i.i = phi i64 [ %i.aa, %4 ], [ %i.s, %3 ]
-  tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %.lcssa35.i.i, i64 noundef %i.g, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @437) #45
-  unreachable
-
 _ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i.i: ; preds = %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.i.i
   %i.r = zext nneg i8 %i.q to i32                 ; 3 uses
-  %i.s = add nuw i64 %i.e, 2                      ; 4 uses
+  %i.s = add nuw i64 %i.e, 2                      ; 3 uses
   store i64 %i.s, ptr %i.d, align 8
   %i.t = icmp eq i64 %i.s, %i.g
-  br i1 %i.t, label %_ZN4jiff6shared5posix6Parser30parse_posix_julian_day_no_leap17h0a9aa93a5b989972E.exit.i, label %3
+  br i1 %i.t, label %_ZN4jiff6shared5posix6Parser30parse_posix_julian_day_no_leap17h0a9aa93a5b989972E.exit.i, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i.i
 
-3:                                                ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i.i
-  %exitcond.not.i.1.i.i = icmp eq i64 %1, 1
-  br i1 %exitcond.not.i.1.i.i, label %2, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i.i
-
-_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i.i: ; preds = %3
+_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i.i: ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i.i
   %i.u = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.s
   %i.v = load i8, ptr %i.u, align 1, !noundef !11
   %i.w = add i8 %i.v, -48                         ; 2 uses
@@ -1165,16 +1137,12 @@ _ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1.i.i: ; preds = %_
   %i.x = mul nuw nsw i32 %i.r, 10
   %i.y = zext nneg i8 %i.w to i32
   %i.z = add nuw nsw i32 %i.x, %i.y               ; 3 uses
-  %i.aa = add nuw i64 %i.e, 3                     ; 4 uses
+  %i.aa = add nuw i64 %i.e, 3                     ; 3 uses
   store i64 %i.aa, ptr %i.d, align 8
   %i.ab = icmp eq i64 %i.aa, %i.g
-  br i1 %i.ab, label %_ZN4jiff6shared5posix6Parser30parse_posix_julian_day_no_leap17h0a9aa93a5b989972E.exit.i, label %4
+  br i1 %i.ab, label %_ZN4jiff6shared5posix6Parser30parse_posix_julian_day_no_leap17h0a9aa93a5b989972E.exit.i, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.2.i.i
 
-4:                                                ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1.i.i
-  %exitcond.not.i.2.i.i = icmp eq i64 %1, 2
-  br i1 %exitcond.not.i.2.i.i, label %2, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.2.i.i
-
-_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.2.i.i: ; preds = %4
+_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.2.i.i: ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1.i.i
   %i.ac = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.aa
   %i.ad = load i8, ptr %i.ac, align 1, !noundef !11
   %i.ae = add i8 %i.ad, -48                       ; 2 uses
@@ -1217,28 +1185,19 @@ bb.d:                                             ; preds = %_ZN4jiff6shared5pos
   br label %bb.n
 
 _ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.i.i.i: ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit66.i
-  %5 = tail call i64 @llvm.usub.sat.i64(i64 %i.g, i64 %i.n)
   %i.ao = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.n
   %i.ap = load i8, ptr %i.ao, align 1, !noundef !11
   %i.aq = add i8 %i.ap, -48                       ; 4 uses
   %or.cond.i.i.i.i = icmp ult i8 %i.aq, 10
   br i1 %or.cond.i.i.i.i, label %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i.i.i, label %bb.m
 
-6:                                                ; preds = %7
-  tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %i.ar, i64 noundef %i.g, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @437) #45
-  unreachable
-
 _ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i.i.i: ; preds = %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.i.i.i
-  %i.ar = add nuw i64 %i.e, 2                     ; 5 uses
+  %i.ar = add nuw i64 %i.e, 2                     ; 4 uses
   store i64 %i.ar, ptr %i.d, align 8
   %i.as = icmp eq i64 %i.ar, %i.g
-  br i1 %i.as, label %_ZN4jiff6shared5posix6Parser11parse_month17he6c7a5dcb767eb68E.exit.i.i, label %7
+  br i1 %i.as, label %_ZN4jiff6shared5posix6Parser11parse_month17he6c7a5dcb767eb68E.exit.i.i, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i.i.i
 
-7:                                                ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i.i.i
-  %exitcond.not.i.1.i.i.i = icmp eq i64 %5, 1
-  br i1 %exitcond.not.i.1.i.i.i, label %6, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i.i.i
-
-_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i.i.i: ; preds = %7
+_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i.i.i: ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i.i.i
   %i.at = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.ar
   %i.au = load i8, ptr %i.at, align 1, !noundef !11
   %i.av = add i8 %i.au, -48                       ; 2 uses
@@ -1329,23 +1288,13 @@ _ZN4jiff6shared5posix6Parser22parse_weekday_of_month17he33117e46243b5ebE.exit.i:
 
 _ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i73.i: ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.524.i)
-  %8 = tail call i64 @llvm.usub.sat.i64(i64 %i.g, i64 %i.e) ; 2 uses
   %i.ca = zext nneg i8 %i.l to i32                ; 3 uses
-  %i.cb = add nuw i64 %i.e, 1                     ; 4 uses
+  %i.cb = add nuw i64 %i.e, 1                     ; 3 uses
   store i64 %i.cb, ptr %i.d, align 8
   %i.cc = icmp eq i64 %i.cb, %i.g
-  br i1 %i.cc, label %_ZN4jiff6shared5posix6Parser32parse_posix_julian_day_with_leap17hb476387712a927f4E.exit.i, label %10
+  br i1 %i.cc, label %_ZN4jiff6shared5posix6Parser32parse_posix_julian_day_with_leap17hb476387712a927f4E.exit.i, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i75.i
 
-9:                                                ; preds = %11, %10
-  %.lcssa34.i.i = phi i64 [ %i.cj, %11 ], [ %i.cb, %10 ]
-  tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %.lcssa34.i.i, i64 noundef %i.g, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @437) #45
-  unreachable
-
-10:                                               ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i73.i
-  %exitcond.not.i.1.i74.i = icmp eq i64 %8, 1
-  br i1 %exitcond.not.i.1.i74.i, label %9, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i75.i
-
-_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i75.i: ; preds = %10
+_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i75.i: ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i73.i
   %i.cd = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.cb
   %i.ce = load i8, ptr %i.cd, align 1, !noundef !11
   %i.cf = add i8 %i.ce, -48                       ; 2 uses
@@ -1356,16 +1305,12 @@ _ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1.i81.i: ; preds = 
   %i.cg = mul nuw nsw i32 %i.ca, 10
   %i.ch = zext nneg i8 %i.cf to i32
   %i.ci = add nuw nsw i32 %i.cg, %i.ch            ; 3 uses
-  %i.cj = add nuw i64 %i.e, 2                     ; 4 uses
+  %i.cj = add nuw i64 %i.e, 2                     ; 3 uses
   store i64 %i.cj, ptr %i.d, align 8
   %i.ck = icmp eq i64 %i.cj, %i.g
-  br i1 %i.ck, label %_ZN4jiff6shared5posix6Parser32parse_posix_julian_day_with_leap17hb476387712a927f4E.exit.i, label %11
+  br i1 %i.ck, label %_ZN4jiff6shared5posix6Parser32parse_posix_julian_day_with_leap17hb476387712a927f4E.exit.i, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.2.i83.i
 
-11:                                               ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1.i81.i
-  %exitcond.not.i.2.i82.i = icmp eq i64 %8, 2
-  br i1 %exitcond.not.i.2.i82.i, label %9, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.2.i83.i
-
-_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.2.i83.i: ; preds = %11
+_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.2.i83.i: ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.1.i81.i
   %i.cl = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.cj
   %i.cm = load i8, ptr %i.cl, align 1, !noundef !11
   %i.cn = add i8 %i.cm, -48                       ; 2 uses
@@ -1418,7 +1363,7 @@ bb.n:                                             ; preds = %bb.l, %_ZN4jiff6sha
   %.sroa.10.0.insert.shift.i = shl nuw nsw i32 %.sroa.10.0.insert.ext.i, 8
   %.sroa.10.0.insert.insert.i = or disjoint i32 %.sroa.10.0.insert.shift.i, %.sroa.16.0.i ; 3 uses
   %.sroa.0.0.insert.insert.i = or disjoint i32 %.sroa.10.0.insert.insert.i, %.sroa.0.0.i ; 2 uses
-  %i.cv = load i64, ptr %i.f, align 8, !noundef !11 ; 25 uses
+  %i.cv = load i64, ptr %i.f, align 8, !noundef !11 ; 23 uses
   %i.cw = load i64, ptr %i.d, align 8, !noundef !11 ; 7 uses
   %i.cx = icmp ult i64 %i.cw, %i.cv
   br i1 %i.cx, label %bb.o, label %bb.p
@@ -1618,7 +1563,7 @@ bb.ac:                                            ; preds = %bb.w
   br i1 %i.fc, label %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i77, label %.critedge.i
 
 _ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i77: ; preds = %bb.ac
-  %i.fd = add nuw i64 %i.dy, 1                    ; 4 uses
+  %i.fd = add nuw i64 %i.dy, 1                    ; 3 uses
   store i64 %i.fd, ptr %i.d, align 8
   %.not.i78 = icmp eq i64 %i.fd, %i.cv
   br i1 %.not.i78, label %bb.ak, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.i85.i
@@ -1638,28 +1583,19 @@ _ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i77: ; preds = %bb.ac
   br i1 %or.cond7.i, label %bb.aj, label %bb.ai, !prof !20
 
 _ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.i85.i: ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i77
-  %12 = tail call i64 @llvm.usub.sat.i64(i64 %i.cv, i64 %i.fd)
   %i.fk = getelementptr inbounds nuw i8, ptr %i.cy, i64 %i.fd
   %i.fl = load i8, ptr %i.fk, align 1, !noundef !11 ; 2 uses
   %i.fm = add i8 %i.fl, -58
   %or.cond.i.i86.i = icmp ult i8 %i.fm, -10
   br i1 %or.cond.i.i86.i, label %bb.ak, label %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i87.i
 
-13:                                               ; preds = %14
-  tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %i.fn, i64 noundef %i.cv, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @437) #45
-  unreachable
-
 _ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i87.i: ; preds = %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.i85.i
-  %i.fn = add nuw i64 %i.dy, 2                    ; 4 uses
+  %i.fn = add nuw i64 %i.dy, 2                    ; 3 uses
   store i64 %i.fn, ptr %i.d, align 8
   %i.fo = icmp eq i64 %i.fn, %i.cv
-  br i1 %i.fo, label %bb.ak, label %14
+  br i1 %i.fo, label %bb.ak, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i89.i
 
-14:                                               ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i87.i
-  %exitcond.not.i.1.i88.i = icmp eq i64 %12, 1
-  br i1 %exitcond.not.i.1.i88.i, label %13, label %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i89.i
-
-_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i89.i: ; preds = %14
+_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i.1.i89.i: ; preds = %_ZN4jiff6shared5posix6Parser4bump17h547dcb04cfe27edeE.exit.i.i87.i
   %i.fp = getelementptr inbounds nuw i8, ptr %i.cy, i64 %i.fn
   %i.fq = load i8, ptr %i.fp, align 1, !noundef !11 ; 2 uses
   %i.fr = add i8 %i.fq, -58

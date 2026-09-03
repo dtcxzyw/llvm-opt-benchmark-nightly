@@ -204,7 +204,7 @@ _ZL22hasTrailingUnitStridesN4mlir6memref9SubViewOpEl.exit.thread68: ; preds = %b
 
 bb.j:                                             ; preds = %bb.i
   %i.ak = extractvalue { ptr, i64 } %i.ah, 0
-  %.sroa.0.0.copyload.pn.idx.i.i = call i64 @llvm.usub.sat.i64(i64 %i.ai, i64 %i.af)
+  %.sroa.0.0.copyload.pn.idx.i.i = sub nuw nsw i64 %i.ai, %i.af
   %.sroa.0.0.copyload.pn.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %.sroa.0.0.copyload.pn.idx.i.i ; 4 uses
   %.idx1.i.i = shl nuw nsw i64 %i.af, 3           ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.pn.i.i, i64 %.idx1.i.i
@@ -607,7 +607,7 @@ _ZL22hasTrailingUnitStridesN4mlir6memref9SubViewOpEl.exit.thread61: ; preds = %b
 
 bb.i:                                             ; preds = %bb.h
   %i.as = extractvalue { ptr, i64 } %i.ap, 0
-  %.sroa.0.0.copyload.pn.idx.i.i = call i64 @llvm.usub.sat.i64(i64 %i.aq, i64 %i.an)
+  %.sroa.0.0.copyload.pn.idx.i.i = sub nuw nsw i64 %i.aq, %i.an
   %.sroa.0.0.copyload.pn.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %.sroa.0.0.copyload.pn.idx.i.i ; 4 uses
   %.idx1.i.i = shl nuw nsw i64 %i.an, 3           ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.pn.i.i, i64 %.idx1.i.i
@@ -1009,9 +1009,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #15
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #16

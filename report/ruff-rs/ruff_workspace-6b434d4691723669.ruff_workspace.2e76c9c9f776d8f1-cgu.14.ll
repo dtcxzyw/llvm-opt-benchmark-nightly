@@ -204,8 +204,8 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.ax
   %.sroa.0.0297 = phi ptr [ %1, %.lr.ph ], [ %.sroa.0.2, %bb.ax ] ; 15 uses
   %.sroa.061.0.copyload = load i64, ptr %i.y, align 8
-  %.sroa.462.0.copyload = load i64, ptr %.sroa.462.0..sroa_idx, align 8 ; 11 uses
-  %.sroa.563.0.copyload = load i64, ptr %.sroa.563.0..sroa_idx, align 8 ; 6 uses
+  %.sroa.462.0.copyload = load i64, ptr %.sroa.462.0..sroa_idx, align 8 ; 10 uses
+  %.sroa.563.0.copyload = load i64, ptr %.sroa.563.0..sroa_idx, align 8 ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u)
   %i.bo = trunc nuw i64 %.sroa.061.0.copyload to i1
   br i1 %i.bo, label %bb.c, label %bb.d
@@ -231,7 +231,7 @@ bb.d:                                             ; preds = %bb.b
           to label %bb.bd unwind label %bb.bc
 
 bb.e:                                             ; preds = %bb.c
-  %i.bt = sub nuw i64 %.sroa.563.0.copyload, %.sroa.462.0.copyload ; 2 uses
+  %i.bt = sub nuw i64 %.sroa.563.0.copyload, %.sroa.462.0.copyload ; 3 uses
   %i.bu = icmp ugt i64 %i.bt, 1
   br i1 %i.bu, label %bb.g, label %bb.h
 
@@ -441,8 +441,7 @@ bb.aa:                                            ; preds = %.lr.ph.i
 .loopexit:                                        ; preds = %bb.w, %bb.v, %bb.aa
   %.sroa.052.0 = phi i64 [ %i.dm, %bb.aa ], [ 0, %bb.v ], [ %i.da, %bb.w ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
-  %.sroa.399.0 = call i64 @llvm.usub.sat.i64(i64 %.sroa.563.0.copyload, i64 %.sroa.462.0.copyload)
-  call void @_RNvMs1_NtCskYQKiYedT9l_7matchit6escapeNtB5_12UnescapedRef11slice_until(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.k, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, i64 noundef %.sroa.399.0)
+  call void @_RNvMs1_NtCskYQKiYedT9l_7matchit6escapeNtB5_12UnescapedRef11slice_until(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.k, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, i64 noundef %i.bt)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   call void @_RNvMs1_NtCskYQKiYedT9l_7matchit6escapeNtB5_12UnescapedRef11slice_until(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, i64 noundef %.sroa.052.0)
@@ -845,8 +844,8 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.ax
   %.sroa.0.0280 = phi ptr [ %1, %.lr.ph ], [ %.sroa.0.2, %bb.ax ] ; 14 uses
   %.sroa.052.0.copyload = load i64, ptr %i.y, align 8
-  %.sroa.453.0.copyload = load i64, ptr %.sroa.453.0..sroa_idx, align 8 ; 11 uses
-  %.sroa.554.0.copyload = load i64, ptr %.sroa.554.0..sroa_idx, align 8 ; 6 uses
+  %.sroa.453.0.copyload = load i64, ptr %.sroa.453.0..sroa_idx, align 8 ; 10 uses
+  %.sroa.554.0.copyload = load i64, ptr %.sroa.554.0..sroa_idx, align 8 ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u)
   %i.bs = trunc nuw i64 %.sroa.052.0.copyload to i1
   br i1 %i.bs, label %bb.c, label %bb.d
@@ -870,7 +869,7 @@ bb.d:                                             ; preds = %bb.b
           to label %bb.bd unwind label %bb.bc
 
 bb.e:                                             ; preds = %bb.c
-  %i.by = sub nuw i64 %.sroa.554.0.copyload, %.sroa.453.0.copyload ; 2 uses
+  %i.by = sub nuw i64 %.sroa.554.0.copyload, %.sroa.453.0.copyload ; 3 uses
   %i.bz = icmp ugt i64 %i.by, 1
   br i1 %i.bz, label %bb.g, label %bb.h
 
@@ -1078,8 +1077,7 @@ bb.aa:                                            ; preds = %.lr.ph.i
 .loopexit:                                        ; preds = %bb.w, %bb.v, %bb.aa
   %.sroa.046.0 = phi i64 [ %i.ds, %bb.aa ], [ 0, %bb.v ], [ %i.dg, %bb.w ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
-  %.sroa.388.0 = call i64 @llvm.usub.sat.i64(i64 %.sroa.554.0.copyload, i64 %.sroa.453.0.copyload)
-  call void @_RNvMs1_NtCskYQKiYedT9l_7matchit6escapeNtB5_12UnescapedRef11slice_until(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.k, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, i64 noundef %.sroa.388.0)
+  call void @_RNvMs1_NtCskYQKiYedT9l_7matchit6escapeNtB5_12UnescapedRef11slice_until(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.k, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, i64 noundef %i.by)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   call void @_RNvMs1_NtCskYQKiYedT9l_7matchit6escapeNtB5_12UnescapedRef11slice_until(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %2, i64 noundef %.sroa.046.0)
@@ -1481,9 +1479,6 @@ declare i64 @llvm.umin.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #18
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #18
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { cold nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

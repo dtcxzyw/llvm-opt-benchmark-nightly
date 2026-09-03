@@ -205,7 +205,7 @@ _RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCs5PEMdK7bMAG_12typst_syntax4nod
   br i1 %i.ae, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCs5PEMdK7bMAG_12typst_syntax4node10SyntaxNodeEEB1c_.exit, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCs5PEMdK7bMAG_12typst_syntax4node10SyntaxNodeEEB1c_.exit.sink.split
 
 ._crit_edge.i:                                    ; preds = %bb.j, %bb.i, %bb.e
-  %.sroa.0163.0.lcssa.i = phi i64 [ 0, %bb.e ], [ %i.al, %bb.j ], [ %.sroa.0163.0279.i, %bb.i ] ; 28 uses
+  %.sroa.0163.0.lcssa.i = phi i64 [ 0, %bb.e ], [ %i.al, %bb.j ], [ %.sroa.0163.0279.i, %bb.i ] ; 27 uses
   %.promoted.i = phi i64 [ %1, %bb.e ], [ %i.ak, %bb.j ], [ %.sroa.0.0280.i, %bb.i ] ; 26 uses
   %i.af = icmp ult i64 %.promoted.i, %2           ; 2 uses
   %i.ag = icmp samesign ult i64 %.sroa.0163.0.lcssa.i, %i.n
@@ -293,7 +293,7 @@ _RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCs5PEMdK7bMAG_12typst_syntax4nod
   br i1 %i.bb, label %common.resume, label %common.resume.sink.split
 
 ._crit_edge:                                      ; preds = %bb.k, %bb.l, %._crit_edge.i
-  %.sroa.6.0.i.lcssa = phi i64 [ %i.n, %._crit_edge.i ], [ %i.as, %bb.k ], [ %.sroa.6.0.i346, %bb.l ] ; 18 uses
+  %.sroa.6.0.i.lcssa = phi i64 [ %i.n, %._crit_edge.i ], [ %i.as, %bb.k ], [ %.sroa.6.0.i346, %bb.l ] ; 17 uses
   %.sroa.4.0.i.lcssa = phi i64 [ %2, %._crit_edge.i ], [ %i.aq, %bb.k ], [ %.sroa.4.0.i347, %bb.l ] ; 31 uses
   %.lcssa156 = phi i1 [ %i.af, %._crit_edge.i ], [ %i.ao, %bb.k ], [ true, %bb.l ]
   %.sroa.0.0.copyload = load i64, ptr %3, align 8, !noalias !2035 ; 8 uses
@@ -313,7 +313,7 @@ _RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCs5PEMdK7bMAG_12typst_syntax4nod
   unreachable
 
 bb.o:                                             ; preds = %._crit_edge
-  %i.bh = sub nuw nsw i64 %.sroa.6.0.i.lcssa, %.sroa.0163.0.lcssa.i ; 5 uses
+  %i.bh = sub nuw nsw i64 %.sroa.6.0.i.lcssa, %.sroa.0163.0.lcssa.i ; 6 uses
   %.idx216.i = shl nuw nsw i64 %.sroa.0163.0.lcssa.i, 5
   %i.bi = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx216.i ; 11 uses
   %i.bj = icmp ult i64 %.sroa.4.0.i.lcssa, %.promoted.i
@@ -716,8 +716,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec6splice6S
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec6splice6SpliceINtNtBG_5drain5DrainNtNtCs5PEMdK7bMAG_12typst_syntax4node10SyntaxNodeEEEB1I_.exit.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec6splice6SpliceINtNtBG_5drain5DrainNtNtCs5PEMdK7bMAG_12typst_syntax4node10SyntaxNodeEEEB1I_.exit.sink.split.i, %bb.dc, %bb.cv
   %.sroa.14.1 = phi i64 [ %.sroa.0163.0.lcssa.i, %bb.cv ], [ %i.oa, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec6splice6SpliceINtNtBG_5drain5DrainNtNtCs5PEMdK7bMAG_12typst_syntax4node10SyntaxNodeEEEB1I_.exit.sink.split.i ], [ %.sroa.0163.0.lcssa.i, %bb.dc ] ; 2 uses
-  %.sroa.028.0.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.6.0.i.lcssa, i64 %.sroa.0163.0.lcssa.i)
-  %i.ob = add i64 %.sroa.028.0.i, %.promoted.i    ; 2 uses
+  %i.ob = add i64 %i.bh, %.promoted.i             ; 2 uses
   %i.oc = icmp ult i64 %i.ng, 288230376151711744
   tail call void @llvm.assume(i1 %i.oc)
   %i.od = sub i64 %i.ng, %i.ob                    ; 2 uses

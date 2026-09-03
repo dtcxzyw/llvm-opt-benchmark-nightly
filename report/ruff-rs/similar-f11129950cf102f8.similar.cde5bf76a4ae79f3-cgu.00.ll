@@ -202,10 +202,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %i.b = add i64 %i.a, %2                         ; 14 uses
-  %i.c = add i64 %i.a, %5                         ; 16 uses
+  %i.c = add i64 %i.a, %5                         ; 14 uses
   %i.d = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_suffix_lenINtNtCscdodAO9FK5_5alloc3vec3VecINtB2_10UniqueItemINtB2_12OffsetLookupmEEEB13_EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.b, i64 noundef %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.c, i64 noundef %6) ; 4 uses
   %i.e = sub i64 %3, %i.d                         ; 10 uses
-  %i.f = sub i64 %6, %i.d                         ; 8 uses
+  %i.f = sub i64 %6, %i.d                         ; 10 uses
   %.not16 = icmp ult i64 %i.b, %i.e               ; 2 uses
   %.not17 = icmp ult i64 %i.c, %i.f               ; 2 uses
   %or.cond = or i1 %.not16, %.not17
@@ -234,9 +234,8 @@ bb.h:                                             ; preds = %bb.f
   tail call void @llvm.experimental.noalias.scope.decl(metadata !219)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !220)
   %i.g = sub nuw i64 %i.e, %i.b                   ; 11 uses
-  %i.h = sub nuw i64 %i.f, %i.c                   ; 3 uses
-  %.sroa.037.0.i = tail call i64 @llvm.usub.sat.i64(i64 %i.f, i64 %i.c) ; 5 uses
-  %i.i = sub i64 %i.g, %.sroa.037.0.i             ; 5 uses
+  %i.h = sub nuw i64 %i.f, %i.c                   ; 7 uses
+  %i.i = sub i64 %i.g, %i.h                       ; 5 uses
   %i.j = and i64 %i.i, 1
   %.not.i = icmp eq i64 %i.j, 0                   ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %7, i64 24
@@ -270,7 +269,7 @@ bb.k:                                             ; preds = %bb.i
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %i.v ; 2 uses
   store i64 0, ptr %i.ab, align 8, !noalias !222
   %i.ac = add i64 %i.g, 1
-  %i.ad = add i64 %i.ac, %.sroa.037.0.i
+  %i.ad = add i64 %i.ac, %i.h
   %i.ae = lshr i64 %i.ad, 1                       ; 3 uses
   %i.af = icmp ult i64 %i.o, 1152921504606846976
   tail call void @llvm.assume(i1 %i.af)
@@ -294,7 +293,6 @@ bb.n:                                             ; preds = %bb.k
 .lr.ph220.i:                                      ; preds = %bb.n
   %i.ah = add i64 %i.l, -1                        ; 2 uses
   %i.ai = add i64 %i.u, -1                        ; 2 uses
-  %11 = add i64 %.sroa.037.0.i, %i.c              ; 3 uses
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.n
@@ -452,13 +450,13 @@ bb.aj:                                            ; preds = %._crit_edge311.i, %
   %.sroa.014.0.peel.i = phi i64 [ %i.bt, %._crit_edge311.i ], [ %i.bs, %bb.ai ] ; 5 uses
   %i.bu = sub i64 %.sroa.014.0.peel.i, %.sroa.047.0219.i ; 4 uses
   %i.bv = icmp ult i64 %.sroa.014.0.peel.i, %i.g
-  %i.bw = icmp ult i64 %i.bu, %.sroa.037.0.i
+  %i.bw = icmp ult i64 %i.bu, %i.h
   %or.cond.peel.i = and i1 %i.bv, %i.bw
   br i1 %or.cond.peel.i, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
   %i.bx = sub nuw i64 %i.e, %.sroa.014.0.peel.i
-  %i.by = sub i64 %11, %i.bu
+  %i.by = sub i64 %i.f, %i.bu
   %i.bz = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_suffix_lenINtNtCscdodAO9FK5_5alloc3vec3VecINtB2_10UniqueItemINtB2_12OffsetLookupmEEEB13_EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.b, i64 noundef %i.bx, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.c, i64 noundef %i.by), !noalias !222 ; 2 uses
   %i.ca = add i64 %i.bz, %.sroa.014.0.peel.i
   %i.cb = add i64 %i.bz, %i.bu
@@ -584,7 +582,7 @@ bb.az:                                            ; preds = %bb.ba, %bb.ay
   %.sroa.014.0.i = phi i64 [ %i.dg, %bb.ba ], [ %i.db, %bb.ay ] ; 5 uses
   %i.dc = sub i64 %.sroa.014.0.i, %i.cl           ; 4 uses
   %i.dd = icmp ult i64 %.sroa.014.0.i, %i.g
-  %i.de = icmp ult i64 %i.dc, %.sroa.037.0.i
+  %i.de = icmp ult i64 %i.dc, %i.h
   %or.cond.i = and i1 %i.dd, %i.de
   br i1 %or.cond.i, label %bb.bc, label %bb.bb
 
@@ -606,7 +604,7 @@ bb.bb:                                            ; preds = %bb.bc, %bb.az
 
 bb.bc:                                            ; preds = %bb.az
   %i.dj = sub nuw i64 %i.e, %.sroa.014.0.i
-  %i.dk = sub i64 %11, %i.dc
+  %i.dk = sub i64 %i.f, %i.dc
   %i.dl = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_suffix_lenINtNtCscdodAO9FK5_5alloc3vec3VecINtB2_10UniqueItemINtB2_12OffsetLookupmEEEB13_EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.b, i64 noundef %i.dj, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.c, i64 noundef %i.dk), !noalias !222 ; 2 uses
   %i.dm = add i64 %i.dl, %.sroa.014.0.i
   %i.dn = add i64 %i.dl, %i.dc
@@ -654,7 +652,7 @@ bb.bh:                                            ; preds = %bb.bg
   %.sroa.020.0.lcssa248.i = phi i64 [ %.sroa.020.0.i, %bb.bh ], [ %.sroa.020.0.peel.i, %bb.ap ]
   %.sroa.014.1.lcssa246.i = phi i64 [ %.sroa.014.1.i, %bb.bh ], [ %.sroa.014.1.peel.i, %bb.ap ]
   %i.dv = sub i64 %i.e, %.sroa.014.1.lcssa246.i
-  %i.dw = sub i64 %11, %.sroa.020.0.lcssa248.i
+  %i.dw = sub i64 %i.f, %.sroa.020.0.lcssa248.i
   br label %bb.bx
 
 bb.bi:                                            ; preds = %bb.ae
@@ -816,10 +814,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %i.b = add i64 %i.a, %2                         ; 14 uses
-  %i.c = add i64 %i.a, %5                         ; 16 uses
+  %i.c = add i64 %i.a, %5                         ; 14 uses
   %i.d = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_suffix_lenINtNtCscdodAO9FK5_5alloc3vec3VecINtB2_10UniqueItemSReEEB13_EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.b, i64 noundef %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.c, i64 noundef %6) ; 4 uses
   %i.e = sub i64 %3, %i.d                         ; 10 uses
-  %i.f = sub i64 %6, %i.d                         ; 8 uses
+  %i.f = sub i64 %6, %i.d                         ; 10 uses
   %.not16 = icmp ult i64 %i.b, %i.e               ; 2 uses
   %.not17 = icmp ult i64 %i.c, %i.f               ; 2 uses
   %or.cond = or i1 %.not16, %.not17
@@ -848,9 +846,8 @@ bb.h:                                             ; preds = %bb.f
   tail call void @llvm.experimental.noalias.scope.decl(metadata !232)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !233)
   %i.g = sub nuw i64 %i.e, %i.b                   ; 11 uses
-  %i.h = sub nuw i64 %i.f, %i.c                   ; 3 uses
-  %.sroa.037.0.i = tail call i64 @llvm.usub.sat.i64(i64 %i.f, i64 %i.c) ; 5 uses
-  %i.i = sub i64 %i.g, %.sroa.037.0.i             ; 5 uses
+  %i.h = sub nuw i64 %i.f, %i.c                   ; 7 uses
+  %i.i = sub i64 %i.g, %i.h                       ; 5 uses
   %i.j = and i64 %i.i, 1
   %.not.i = icmp eq i64 %i.j, 0                   ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %7, i64 24
@@ -884,7 +881,7 @@ bb.k:                                             ; preds = %bb.i
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %i.v ; 2 uses
   store i64 0, ptr %i.ab, align 8, !noalias !235
   %i.ac = add i64 %i.g, 1
-  %i.ad = add i64 %i.ac, %.sroa.037.0.i
+  %i.ad = add i64 %i.ac, %i.h
   %i.ae = lshr i64 %i.ad, 1                       ; 3 uses
   %i.af = icmp ult i64 %i.o, 1152921504606846976
   tail call void @llvm.assume(i1 %i.af)
@@ -908,7 +905,6 @@ bb.n:                                             ; preds = %bb.k
 .lr.ph220.i:                                      ; preds = %bb.n
   %i.ah = add i64 %i.l, -1                        ; 2 uses
   %i.ai = add i64 %i.u, -1                        ; 2 uses
-  %11 = add i64 %.sroa.037.0.i, %i.c              ; 3 uses
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.n
@@ -1066,13 +1062,13 @@ bb.aj:                                            ; preds = %._crit_edge311.i, %
   %.sroa.014.0.peel.i = phi i64 [ %i.bt, %._crit_edge311.i ], [ %i.bs, %bb.ai ] ; 5 uses
   %i.bu = sub i64 %.sroa.014.0.peel.i, %.sroa.047.0219.i ; 4 uses
   %i.bv = icmp ult i64 %.sroa.014.0.peel.i, %i.g
-  %i.bw = icmp ult i64 %i.bu, %.sroa.037.0.i
+  %i.bw = icmp ult i64 %i.bu, %i.h
   %or.cond.peel.i = and i1 %i.bv, %i.bw
   br i1 %or.cond.peel.i, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
   %i.bx = sub nuw i64 %i.e, %.sroa.014.0.peel.i
-  %i.by = sub i64 %11, %i.bu
+  %i.by = sub i64 %i.f, %i.bu
   %i.bz = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_suffix_lenINtNtCscdodAO9FK5_5alloc3vec3VecINtB2_10UniqueItemSReEEB13_EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.b, i64 noundef %i.bx, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.c, i64 noundef %i.by), !noalias !235 ; 2 uses
   %i.ca = add i64 %i.bz, %.sroa.014.0.peel.i
   %i.cb = add i64 %i.bz, %i.bu
@@ -1198,7 +1194,7 @@ bb.az:                                            ; preds = %bb.ba, %bb.ay
   %.sroa.014.0.i = phi i64 [ %i.dg, %bb.ba ], [ %i.db, %bb.ay ] ; 5 uses
   %i.dc = sub i64 %.sroa.014.0.i, %i.cl           ; 4 uses
   %i.dd = icmp ult i64 %.sroa.014.0.i, %i.g
-  %i.de = icmp ult i64 %i.dc, %.sroa.037.0.i
+  %i.de = icmp ult i64 %i.dc, %i.h
   %or.cond.i = and i1 %i.dd, %i.de
   br i1 %or.cond.i, label %bb.bc, label %bb.bb
 
@@ -1220,7 +1216,7 @@ bb.bb:                                            ; preds = %bb.bc, %bb.az
 
 bb.bc:                                            ; preds = %bb.az
   %i.dj = sub nuw i64 %i.e, %.sroa.014.0.i
-  %i.dk = sub i64 %11, %i.dc
+  %i.dk = sub i64 %i.f, %i.dc
   %i.dl = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_suffix_lenINtNtCscdodAO9FK5_5alloc3vec3VecINtB2_10UniqueItemSReEEB13_EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.b, i64 noundef %i.dj, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.c, i64 noundef %i.dk), !noalias !235 ; 2 uses
   %i.dm = add i64 %i.dl, %.sroa.014.0.i
   %i.dn = add i64 %i.dl, %i.dc
@@ -1268,7 +1264,7 @@ bb.bh:                                            ; preds = %bb.bg
   %.sroa.020.0.lcssa248.i = phi i64 [ %.sroa.020.0.i, %bb.bh ], [ %.sroa.020.0.peel.i, %bb.ap ]
   %.sroa.014.1.lcssa246.i = phi i64 [ %.sroa.014.1.i, %bb.bh ], [ %.sroa.014.1.peel.i, %bb.ap ]
   %i.dv = sub i64 %i.e, %.sroa.014.1.lcssa246.i
-  %i.dw = sub i64 %11, %.sroa.020.0.lcssa248.i
+  %i.dw = sub i64 %i.f, %.sroa.020.0.lcssa248.i
   br label %bb.bx
 
 bb.bi:                                            ; preds = %bb.ae
