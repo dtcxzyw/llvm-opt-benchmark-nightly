@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %_ZN6embree13BSpline
   %rt.bound1 = icmp ugt i64 %i.acj, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
   %rt.guard = freeze i1 %rt.conflict
-  br i1 %rt.guard, label %.rtscalar, label %.rtvec
+  br i1 %rt.guard, label %.rtscalar, label %.rtvec, !prof !35
 
 .rtvec:                                           ; preds = %bb.v
   %i.ack = getelementptr inbounds nuw i8, ptr %0, i64 10
@@ -427,7 +427,7 @@ bb.a:
   %i.g = fmul float %.011.i2227.epil, 5.000000e-01 ; 2 uses
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.lr.ph32.preheader, label %.lr.ph.epil, !llvm.loop !35
+  br i1 %epil.iter.cmp.not, label %.lr.ph32.preheader, label %.lr.ph.epil, !llvm.loop !36
 
 .lr.ph32.preheader:                               ; preds = %.lr.ph.epil, %.lr.ph32.preheader.unr-lcssa
   %.lcssa112 = phi float [ %i.q, %.lr.ph32.preheader.unr-lcssa ], [ %i.g, %.lr.ph.epil ]
@@ -453,7 +453,7 @@ bb.a:
   %i.q = fmul float %i.p, 5.000000e-01            ; 3 uses
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
-  br i1 %niter.ncmp.7, label %.lr.ph32.preheader.unr-lcssa, label %.lr.ph, !llvm.loop !36
+  br i1 %niter.ncmp.7, label %.lr.ph32.preheader.unr-lcssa, label %.lr.ph, !llvm.loop !37
 
 .lr.ph32:                                         ; preds = %.lr.ph32, %.lr.ph32.preheader.new
   %.09.i2429 = phi float [ %i.h, %.lr.ph32.preheader.new ], [ %i.y, %.lr.ph32 ]
@@ -468,7 +468,7 @@ bb.a:
   %i.y = fmul float %i.x, 2.000000e+00            ; 3 uses
   %niter121.next.7 = add i64 %niter121, 8         ; 2 uses
   %niter121.ncmp.7 = icmp eq i64 %niter121.next.7, %unroll_iter120
-  br i1 %niter121.ncmp.7, label %_ZN6embree23adjustTessellationLevelEfm.exit26.loopexit.unr-lcssa, label %.lr.ph32, !llvm.loop !37
+  br i1 %niter121.ncmp.7, label %_ZN6embree23adjustTessellationLevelEfm.exit26.loopexit.unr-lcssa, label %.lr.ph32, !llvm.loop !38
 
 _ZN6embree23adjustTessellationLevelEfm.exit26.loopexit.unr-lcssa: ; preds = %.lr.ph32
   %i.z = and i32 %i.b, 7
@@ -488,7 +488,7 @@ _ZN6embree23adjustTessellationLevelEfm.exit26.loopexit.unr-lcssa: ; preds = %.lr
   %i.ab = fmul float %.09.i2429.epil, 2.000000e+00 ; 2 uses
   %epil.iter116.next = add i64 %epil.iter116, 1   ; 2 uses
   %epil.iter116.cmp.not = icmp eq i64 %epil.iter116.next, %xtraiter115
-  br i1 %epil.iter116.cmp.not, label %_ZN6embree23adjustTessellationLevelEfm.exit26, label %.lr.ph32.epil, !llvm.loop !38
+  br i1 %epil.iter116.cmp.not, label %_ZN6embree23adjustTessellationLevelEfm.exit26, label %.lr.ph32.epil, !llvm.loop !39
 
 _ZN6embree23adjustTessellationLevelEfm.exit26:    ; preds = %_ZN6embree23adjustTessellationLevelEfm.exit26.loopexit.unr-lcssa, %.lr.ph32.epil, %bb.a
   %.sink = phi float [ %i.a, %bb.a ], [ %i.y, %_ZN6embree23adjustTessellationLevelEfm.exit26.loopexit.unr-lcssa ], [ %i.ab, %.lr.ph32.epil ]
@@ -531,7 +531,7 @@ _ZN6embree23adjustTessellationLevelEfm.exit26:    ; preds = %_ZN6embree23adjustT
   %i.an = fmul float %.011.i1734.epil, 5.000000e-01 ; 2 uses
   %epil.iter123.next = add i64 %epil.iter123, 1   ; 2 uses
   %epil.iter123.cmp.not = icmp eq i64 %epil.iter123.next, %xtraiter122
-  br i1 %epil.iter123.cmp.not, label %.lr.ph42.preheader, label %.lr.ph36.epil, !llvm.loop !39
+  br i1 %epil.iter123.cmp.not, label %.lr.ph42.preheader, label %.lr.ph36.epil, !llvm.loop !40
 
 .lr.ph42.preheader:                               ; preds = %.lr.ph36.epil, %.lr.ph42.preheader.unr-lcssa
   %.lcssa110 = phi float [ %i.ax, %.lr.ph42.preheader.unr-lcssa ], [ %i.an, %.lr.ph36.epil ]
@@ -557,7 +557,7 @@ _ZN6embree23adjustTessellationLevelEfm.exit26:    ; preds = %_ZN6embree23adjustT
   %i.ax = fmul float %i.aw, 5.000000e-01          ; 3 uses
   %niter128.next.7 = add i64 %niter128, 8         ; 2 uses
   %niter128.ncmp.7 = icmp eq i64 %niter128.next.7, %unroll_iter127
-  br i1 %niter128.ncmp.7, label %.lr.ph42.preheader.unr-lcssa, label %.lr.ph36, !llvm.loop !36
+  br i1 %niter128.ncmp.7, label %.lr.ph42.preheader.unr-lcssa, label %.lr.ph36, !llvm.loop !37
 
 .lr.ph42:                                         ; preds = %.lr.ph42, %.lr.ph42.preheader.new
   %.09.i1939 = phi float [ %i.ao, %.lr.ph42.preheader.new ], [ %i.bf, %.lr.ph42 ]
@@ -572,7 +572,7 @@ _ZN6embree23adjustTessellationLevelEfm.exit26:    ; preds = %_ZN6embree23adjustT
   %i.bf = fmul float %i.be, 2.000000e+00          ; 3 uses
   %niter135.next.7 = add i64 %niter135, 8         ; 2 uses
   %niter135.ncmp.7 = icmp eq i64 %niter135.next.7, %unroll_iter134
-  br i1 %niter135.ncmp.7, label %_ZN6embree23adjustTessellationLevelEfm.exit21.loopexit.unr-lcssa, label %.lr.ph42, !llvm.loop !37
+  br i1 %niter135.ncmp.7, label %_ZN6embree23adjustTessellationLevelEfm.exit21.loopexit.unr-lcssa, label %.lr.ph42, !llvm.loop !38
 
 _ZN6embree23adjustTessellationLevelEfm.exit21.loopexit.unr-lcssa: ; preds = %.lr.ph42
   %i.bg = and i32 %i.ai, 7
@@ -592,7 +592,7 @@ _ZN6embree23adjustTessellationLevelEfm.exit21.loopexit.unr-lcssa: ; preds = %.lr
   %i.bi = fmul float %.09.i1939.epil, 2.000000e+00 ; 2 uses
   %epil.iter130.next = add i64 %epil.iter130, 1   ; 2 uses
   %epil.iter130.cmp.not = icmp eq i64 %epil.iter130.next, %xtraiter129
-  br i1 %epil.iter130.cmp.not, label %_ZN6embree23adjustTessellationLevelEfm.exit21, label %.lr.ph42.epil, !llvm.loop !40
+  br i1 %epil.iter130.cmp.not, label %_ZN6embree23adjustTessellationLevelEfm.exit21, label %.lr.ph42.epil, !llvm.loop !41
 
 _ZN6embree23adjustTessellationLevelEfm.exit21:    ; preds = %_ZN6embree23adjustTessellationLevelEfm.exit21.loopexit.unr-lcssa, %.lr.ph42.epil, %_ZN6embree23adjustTessellationLevelEfm.exit26
   %.sink96 = phi float [ %i.ag, %_ZN6embree23adjustTessellationLevelEfm.exit26 ], [ %i.bf, %_ZN6embree23adjustTessellationLevelEfm.exit21.loopexit.unr-lcssa ], [ %i.bi, %.lr.ph42.epil ]
@@ -636,7 +636,7 @@ _ZN6embree23adjustTessellationLevelEfm.exit21:    ; preds = %_ZN6embree23adjustT
   %i.bv = fmul float %.011.i1244.epil, 5.000000e-01 ; 2 uses
   %epil.iter137.next = add i64 %epil.iter137, 1   ; 2 uses
   %epil.iter137.cmp.not = icmp eq i64 %epil.iter137.next, %xtraiter136
-  br i1 %epil.iter137.cmp.not, label %.lr.ph52.preheader, label %.lr.ph46.epil, !llvm.loop !41
+  br i1 %epil.iter137.cmp.not, label %.lr.ph52.preheader, label %.lr.ph46.epil, !llvm.loop !42
 
 .lr.ph52.preheader:                               ; preds = %.lr.ph46.epil, %.lr.ph52.preheader.unr-lcssa
   %.lcssa108 = phi float [ %i.cf, %.lr.ph52.preheader.unr-lcssa ], [ %i.bv, %.lr.ph46.epil ]
@@ -662,7 +662,7 @@ _ZN6embree23adjustTessellationLevelEfm.exit21:    ; preds = %_ZN6embree23adjustT
   %i.cf = fmul float %i.ce, 5.000000e-01          ; 3 uses
   %niter142.next.7 = add i64 %niter142, 8         ; 2 uses
   %niter142.ncmp.7 = icmp eq i64 %niter142.next.7, %unroll_iter141
-  br i1 %niter142.ncmp.7, label %.lr.ph52.preheader.unr-lcssa, label %.lr.ph46, !llvm.loop !36
+  br i1 %niter142.ncmp.7, label %.lr.ph52.preheader.unr-lcssa, label %.lr.ph46, !llvm.loop !37
 
 .lr.ph52:                                         ; preds = %.lr.ph52, %.lr.ph52.preheader.new
   %.09.i1449 = phi float [ %i.bw, %.lr.ph52.preheader.new ], [ %i.cn, %.lr.ph52 ]
@@ -677,7 +677,7 @@ _ZN6embree23adjustTessellationLevelEfm.exit21:    ; preds = %_ZN6embree23adjustT
   %i.cn = fmul float %i.cm, 2.000000e+00          ; 3 uses
   %niter149.next.7 = add i64 %niter149, 8         ; 2 uses
   %niter149.ncmp.7 = icmp eq i64 %niter149.next.7, %unroll_iter148
-  br i1 %niter149.ncmp.7, label %_ZN6embree23adjustTessellationLevelEfm.exit16.loopexit.unr-lcssa, label %.lr.ph52, !llvm.loop !37
+  br i1 %niter149.ncmp.7, label %_ZN6embree23adjustTessellationLevelEfm.exit16.loopexit.unr-lcssa, label %.lr.ph52, !llvm.loop !38
 
 _ZN6embree23adjustTessellationLevelEfm.exit16.loopexit.unr-lcssa: ; preds = %.lr.ph52
   %i.co = and i32 %i.bq, 7
@@ -697,7 +697,7 @@ _ZN6embree23adjustTessellationLevelEfm.exit16.loopexit.unr-lcssa: ; preds = %.lr
   %i.cq = fmul float %.09.i1449.epil, 2.000000e+00 ; 2 uses
   %epil.iter144.next = add i64 %epil.iter144, 1   ; 2 uses
   %epil.iter144.cmp.not = icmp eq i64 %epil.iter144.next, %xtraiter143
-  br i1 %epil.iter144.cmp.not, label %_ZN6embree23adjustTessellationLevelEfm.exit16, label %.lr.ph52.epil, !llvm.loop !42
+  br i1 %epil.iter144.cmp.not, label %_ZN6embree23adjustTessellationLevelEfm.exit16, label %.lr.ph52.epil, !llvm.loop !43
 
 _ZN6embree23adjustTessellationLevelEfm.exit16:    ; preds = %_ZN6embree23adjustTessellationLevelEfm.exit16.loopexit.unr-lcssa, %.lr.ph52.epil, %_ZN6embree23adjustTessellationLevelEfm.exit21
   %.sink97 = phi float [ %i.bo, %_ZN6embree23adjustTessellationLevelEfm.exit21 ], [ %i.cn, %_ZN6embree23adjustTessellationLevelEfm.exit16.loopexit.unr-lcssa ], [ %i.cq, %.lr.ph52.epil ]
@@ -741,7 +741,7 @@ _ZN6embree23adjustTessellationLevelEfm.exit16:    ; preds = %_ZN6embree23adjustT
   %i.dd = fmul float %.011.i54.epil, 5.000000e-01 ; 2 uses
   %epil.iter151.next = add i64 %epil.iter151, 1   ; 2 uses
   %epil.iter151.cmp.not = icmp eq i64 %epil.iter151.next, %xtraiter150
-  br i1 %epil.iter151.cmp.not, label %.lr.ph62.preheader, label %.lr.ph56.epil, !llvm.loop !43
+  br i1 %epil.iter151.cmp.not, label %.lr.ph62.preheader, label %.lr.ph56.epil, !llvm.loop !44
 
 .lr.ph62.preheader:                               ; preds = %.lr.ph56.epil, %.lr.ph62.preheader.unr-lcssa
   %.lcssa106 = phi float [ %i.dn, %.lr.ph62.preheader.unr-lcssa ], [ %i.dd, %.lr.ph56.epil ]
@@ -767,7 +767,7 @@ _ZN6embree23adjustTessellationLevelEfm.exit16:    ; preds = %_ZN6embree23adjustT
   %i.dn = fmul float %i.dm, 5.000000e-01          ; 3 uses
   %niter156.next.7 = add i64 %niter156, 8         ; 2 uses
   %niter156.ncmp.7 = icmp eq i64 %niter156.next.7, %unroll_iter155
-  br i1 %niter156.ncmp.7, label %.lr.ph62.preheader.unr-lcssa, label %.lr.ph56, !llvm.loop !36
+  br i1 %niter156.ncmp.7, label %.lr.ph62.preheader.unr-lcssa, label %.lr.ph56, !llvm.loop !37
 
 .lr.ph62:                                         ; preds = %.lr.ph62, %.lr.ph62.preheader.new
   %.09.i59 = phi float [ %i.de, %.lr.ph62.preheader.new ], [ %i.dv, %.lr.ph62 ]
@@ -782,7 +782,7 @@ _ZN6embree23adjustTessellationLevelEfm.exit16:    ; preds = %_ZN6embree23adjustT
   %i.dv = fmul float %i.du, 2.000000e+00          ; 3 uses
   %niter163.next.7 = add i64 %niter163, 8         ; 2 uses
   %niter163.ncmp.7 = icmp eq i64 %niter163.next.7, %unroll_iter162
-  br i1 %niter163.ncmp.7, label %_ZN6embree23adjustTessellationLevelEfm.exit.loopexit.unr-lcssa, label %.lr.ph62, !llvm.loop !37
+  br i1 %niter163.ncmp.7, label %_ZN6embree23adjustTessellationLevelEfm.exit.loopexit.unr-lcssa, label %.lr.ph62, !llvm.loop !38
 
 _ZN6embree23adjustTessellationLevelEfm.exit.loopexit.unr-lcssa: ; preds = %.lr.ph62
   %i.dw = and i32 %i.cy, 7
@@ -802,7 +802,7 @@ _ZN6embree23adjustTessellationLevelEfm.exit.loopexit.unr-lcssa: ; preds = %.lr.p
   %i.dy = fmul float %.09.i59.epil, 2.000000e+00  ; 2 uses
   %epil.iter158.next = add i64 %epil.iter158, 1   ; 2 uses
   %epil.iter158.cmp.not = icmp eq i64 %epil.iter158.next, %xtraiter157
-  br i1 %epil.iter158.cmp.not, label %_ZN6embree23adjustTessellationLevelEfm.exit, label %.lr.ph62.epil, !llvm.loop !44
+  br i1 %epil.iter158.cmp.not, label %_ZN6embree23adjustTessellationLevelEfm.exit, label %.lr.ph62.epil, !llvm.loop !45
 
 _ZN6embree23adjustTessellationLevelEfm.exit:      ; preds = %_ZN6embree23adjustTessellationLevelEfm.exit.loopexit.unr-lcssa, %.lr.ph62.epil, %_ZN6embree23adjustTessellationLevelEfm.exit16
   %.sink98 = phi float [ %i.cw, %_ZN6embree23adjustTessellationLevelEfm.exit16 ], [ %i.dv, %_ZN6embree23adjustTessellationLevelEfm.exit.loopexit.unr-lcssa ], [ %i.dy, %.lr.ph62.epil ]
@@ -1205,15 +1205,16 @@ attributes #15 = { builtin nounwind }
 !32 = !{!20}
 !33 = !{!"branch_weights", !"expected", i32 0, i32 -2147483648}
 !34 = !{!"branch_weights", !"expected", i32 2146410444, i32 1073204}
-!35 = distinct !{!35, !45}
-!36 = distinct !{!36, !4}
+!35 = !{!"branch_weights", i32 1, i32 1048575}
+!36 = distinct !{!36, !46}
 !37 = distinct !{!37, !4}
-!38 = distinct !{!38, !45}
-!39 = distinct !{!39, !45}
-!40 = distinct !{!40, !45}
-!41 = distinct !{!41, !45}
-!42 = distinct !{!42, !45}
-!43 = distinct !{!43, !45}
-!44 = distinct !{!44, !45}
-!45 = !{!"llvm.loop.unroll.disable"}
+!38 = distinct !{!38, !4}
+!39 = distinct !{!39, !46}
+!40 = distinct !{!40, !46}
+!41 = distinct !{!41, !46}
+!42 = distinct !{!42, !46}
+!43 = distinct !{!43, !46}
+!44 = distinct !{!44, !46}
+!45 = distinct !{!45, !46}
+!46 = !{!"llvm.loop.unroll.disable"}
 end_hunk_1

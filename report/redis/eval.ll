@@ -204,7 +204,7 @@ bb.a:
   %rt.bound0 = icmp ult i64 %i.e, %i.d
   %rt.bound1 = icmp ugt i64 %i.f, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.preheader.preheader.rtscalar, label %.preheader.preheader.rtvec
+  br i1 %rt.conflict, label %.preheader.preheader.rtscalar, label %.preheader.preheader.rtvec, !prof !157
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 2
@@ -607,7 +607,7 @@ bb.t:                                             ; preds = %sdslen.exit35
   %i.bd = load ptr, ptr @lctx, align 8, !tbaa !89
   %i.be = call i32 @lua_type(ptr noundef %i.bd, i32 noundef -1) #17
   %i.bf = icmp eq i32 %i.be, 6
-  br i1 %i.bf, label %bb.v, label %bb.u, !prof !157
+  br i1 %i.bf, label %bb.v, label %bb.u, !prof !158
 
 bb.u:                                             ; preds = %bb.t
   call void @_serverAssert(ptr noundef nonnull @.str.22, ptr noundef nonnull @.str.23, i32 noundef 471) #17
@@ -663,7 +663,7 @@ luaScriptsLRUAdd.exit:                            ; preds = %bb.v, %._crit_edge.
   %i.ce = load ptr, ptr getelementptr inbounds nuw (i8, ptr @lctx, i64 16), align 8, !tbaa !73
   %i.cf = call i32 @dictAdd(ptr noundef %i.ce, ptr noundef %i.bk, ptr noundef nonnull %i.bh) #17
   %i.cg = icmp eq i32 %i.cf, 0
-  br i1 %i.cg, label %bb.x, label %bb.w, !prof !157
+  br i1 %i.cg, label %bb.x, label %bb.w, !prof !158
 
 bb.w:                                             ; preds = %luaScriptsLRUAdd.exit
   %.not30 = icmp eq ptr %0, null
@@ -980,9 +980,9 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.r
   %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
-  %i.az = load i32, ptr %i.ay, align 8, !tbaa !158
+  %i.az = load i32, ptr %i.ay, align 8, !tbaa !159
   %i.ba = or i32 %i.az, 128
-  store i32 %i.ba, ptr %i.ay, align 8, !tbaa !158
+  store i32 %i.ba, ptr %i.ay, align 8, !tbaa !159
   %i.bb = getelementptr inbounds nuw i8, ptr %i.an, i64 16 ; 2 uses
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !135 ; 2 uses
   %.not51 = icmp eq ptr %i.bc, null
@@ -1040,7 +1040,7 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !116
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.i = load i32, ptr %i.h, align 8, !tbaa !126
-  tail call void @replicationFeedMonitors(ptr noundef %0, ptr noundef %i.a, i32 noundef %i.e, ptr noundef %i.g, i32 noundef %i.i) #17, !inline_history !159
+  tail call void @replicationFeedMonitors(ptr noundef %0, ptr noundef %i.a, i32 noundef %i.e, ptr noundef %i.g, i32 noundef %i.i) #17, !inline_history !160
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.k = load i64, ptr %i.j, align 8, !tbaa !88
   %i.l = and i64 %i.k, 33554432
@@ -1048,17 +1048,17 @@ bb.a:
   br i1 %.not.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @evalGenericCommand(ptr noundef nonnull %0, i32 noundef 0), !inline_history !159
+  tail call void @evalGenericCommand(ptr noundef nonnull %0, i32 noundef 0), !inline_history !160
   br label %evalCommand.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.m = tail call i32 @ldbStartSession(ptr noundef nonnull %0), !inline_history !160
+  %i.m = tail call i32 @ldbStartSession(ptr noundef nonnull %0), !inline_history !161
   %.not.i.i = icmp eq i32 %i.m, 0
   br i1 %.not.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @evalGenericCommand(ptr noundef nonnull %0, i32 noundef 0), !inline_history !160
-  tail call void @ldbEndSession(ptr noundef nonnull %0), !inline_history !160
+  tail call void @evalGenericCommand(ptr noundef nonnull %0, i32 noundef 0), !inline_history !161
+  tail call void @ldbEndSession(ptr noundef nonnull %0), !inline_history !161
   br label %evalCommand.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -1105,13 +1105,13 @@ bb.b:                                             ; preds = %bb.a
   br label %evalGenericCommandWithDebugging.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.m = tail call i32 @ldbStartSession(ptr noundef nonnull %0), !inline_history !161
+  %i.m = tail call i32 @ldbStartSession(ptr noundef nonnull %0), !inline_history !162
   %.not.i = icmp eq i32 %i.m, 0
   br i1 %.not.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @evalGenericCommand(ptr noundef nonnull %0, i32 noundef 0), !inline_history !161
-  tail call void @ldbEndSession(ptr noundef nonnull %0), !inline_history !161
+  tail call void @evalGenericCommand(ptr noundef nonnull %0, i32 noundef 0), !inline_history !162
+  tail call void @ldbEndSession(ptr noundef nonnull %0), !inline_history !162
   br label %evalGenericCommandWithDebugging.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -1216,7 +1216,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not55, label %bb.i, label %.thread67
 
 bb.h:                                             ; preds = %.thread.thread
-  %i.w = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8376), align 8, !tbaa !163
+  %i.w = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8376), align 8, !tbaa !164
   %.not56 = icmp ne i32 %i.w, 0
   %i.x = zext i1 %.not56 to i32
   br label %bb.i
@@ -1229,7 +1229,7 @@ bb.i:                                             ; preds = %bb.g, %bb.f, %bb.h
   %.049 = phi i32 [ %i.x, %bb.h ], [ 0, %bb.f ], [ 1, %bb.g ]
   tail call void @scriptingRelease(i32 noundef %.049)
   tail call void @scriptingInit(i32 noundef 0)
-  %i.y = load ptr, ptr @shared, align 8, !tbaa !164
+  %i.y = load ptr, ptr @shared, align 8, !tbaa !165
   tail call void @addReply(ptr noundef nonnull %0, ptr noundef %i.y) #17
   br label %.loopexit
 
@@ -1271,7 +1271,7 @@ bb.k:                                             ; preds = %.thread85, %bb.j
   %i.aq = load i32, ptr %i.b, align 8, !tbaa !126
   %i.ar = sext i32 %i.aq to i64
   %i.as = icmp slt i64 %indvars.iv.next, %i.ar
-  br i1 %i.as, label %.lr.ph, label %.loopexit, !llvm.loop !162
+  br i1 %i.as, label %.lr.ph, label %.loopexit, !llvm.loop !163
 
 bb.l:                                             ; preds = %bb.j
   %i.at = icmp eq i32 %i.c, 3
@@ -1331,7 +1331,7 @@ bb.v:                                             ; preds = %bb.u
   %i.bj = load i64, ptr %i.bi, align 8, !tbaa !88
   %i.bk = and i64 %i.bj, -100663297
   store i64 %i.bk, ptr %i.bi, align 8, !tbaa !88
-  %i.bl = load ptr, ptr @shared, align 8, !tbaa !164
+  %i.bl = load ptr, ptr @shared, align 8, !tbaa !165
   tail call void @addReply(ptr noundef nonnull %0, ptr noundef %i.bl) #17
   br label %.loopexit
 
@@ -1342,7 +1342,7 @@ bb.w:                                             ; preds = %bb.u
 
 bb.x:                                             ; preds = %bb.w
   tail call void @ldbEnable(ptr noundef nonnull %0)
-  %i.bn = load ptr, ptr @shared, align 8, !tbaa !164
+  %i.bn = load ptr, ptr @shared, align 8, !tbaa !165
   tail call void @addReply(ptr noundef nonnull %0, ptr noundef %i.bn) #17
   br label %.loopexit
 
@@ -1353,7 +1353,7 @@ bb.y:                                             ; preds = %bb.w
 
 bb.z:                                             ; preds = %bb.y
   tail call void @ldbEnable(ptr noundef nonnull %0)
-  %i.bp = load ptr, ptr @shared, align 8, !tbaa !164
+  %i.bp = load ptr, ptr @shared, align 8, !tbaa !165
   tail call void @addReply(ptr noundef nonnull %0, ptr noundef %i.bp) #17
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.br = load i64, ptr %i.bq, align 8, !tbaa !88
@@ -1419,7 +1419,7 @@ bb.a:
 
 ldbFlushLog.exit:                                 ; preds = %.lr.ph.i, %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !165
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !166
   store ptr %i.i, ptr @ldb, align 8, !tbaa !65
   store i32 1, ptr getelementptr inbounds nuw (i8, ptr @ldb, i64 300), align 4, !tbaa !139
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @ldb, i64 296), align 8, !tbaa !140
@@ -1619,7 +1619,7 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 40
   %i.v = load i64, ptr %i.u, align 8, !tbaa !130
   %.not = icmp eq i64 %i.v, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !166
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !167
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.0.lcssa = phi ptr [ %i.f, %bb.a ], [ %i.r, %.lr.ph ] ; 7 uses
@@ -1667,8 +1667,8 @@ sdslen.exit:                                      ; preds = %._crit_edge, %bb.b,
   %.0.i = phi i64 [ %i.al, %bb.f ], [ %i.aa, %bb.b ], [ %i.ad, %bb.c ], [ %i.ag, %bb.d ], [ %i.aj, %bb.e ], [ 0, %._crit_edge ]
   %i.am = load ptr, ptr %i.w, align 8, !tbaa !144
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 128
-  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !168
-  %i.ap = tail call i32 %i.ao(ptr noundef nonnull %i.w, ptr noundef nonnull %.0.lcssa, i64 noundef %.0.i) #17, !inline_history !167 ; 0 uses
+  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !169
+  %i.ap = tail call i32 %i.ao(ptr noundef nonnull %i.w, ptr noundef nonnull %.0.lcssa, i64 noundef %.0.i) #17, !inline_history !168 ; 0 uses
   tail call void @sdsfree(ptr noundef nonnull %.0.lcssa) #17
   ret void
 }
@@ -1708,7 +1708,7 @@ bb.d:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.k = call i32 @sigemptyset(ptr noundef nonnull %i.j) #17 ; 0 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 136
-  store i32 0, ptr %i.l, align 8, !tbaa !172
+  store i32 0, ptr %i.l, align 8, !tbaa !173
   store ptr inttoptr (i64 1 to ptr), ptr %1, align 8, !tbaa !24
   %i.m = call i32 @sigaction(i32 noundef 15, ptr noundef nonnull %1, ptr noundef null) #17 ; 0 uses
   %i.n = call i32 @sigaction(i32 noundef 2, ptr noundef nonnull %1, ptr noundef null) #17 ; 0 uses
@@ -1892,7 +1892,7 @@ bb.x:                                             ; preds = %.split
   %i.bo = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.bn
   store i8 0, ptr %i.bo, align 1, !tbaa !24
   %.not = icmp eq i64 %i.bn, 0
-  br i1 %.not, label %.split25.loopexit, label %.lr.ph, !llvm.loop !169
+  br i1 %.not, label %.split25.loopexit, label %.lr.ph, !llvm.loop !170
 
 .critedge:                                        ; preds = %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %.split, %bb.s, %bb.r, %bb.q, %bb.p, %.split25
   %.val.i31 = phi i8 [ %.val.i29, %bb.x ], [ %.val.i29, %bb.w ], [ %.val.i29, %bb.v ], [ %.val.i29, %bb.u ], [ %i.bf, %bb.t ], [ %.val.i29, %.split ], [ %.val.i28, %bb.s ], [ %.val.i28, %bb.r ], [ %.val.i28, %bb.q ], [ %.val.i28, %bb.p ], [ %.val.i28, %.split25 ] ; 2 uses
@@ -2088,7 +2088,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   %i.k = call i32 @kill(i32 noundef %i.g, i32 noundef 9) #17 ; 0 uses
   %i.l = call ptr @listNext(ptr noundef nonnull %0) #17 ; 2 uses
   %.not = icmp eq ptr %i.l, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !173
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !174
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.a
   %i.m = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ldb, i64 32), align 8, !tbaa !68
@@ -2491,7 +2491,7 @@ ldbLogSourceLine.exit.us:                         ; preds = %.lr.ph.i.i.us, %bb.
   %i.v = load i32, ptr getelementptr inbounds nuw (i8, ptr @ldb, i64 320), align 8, !tbaa !70
   %i.w = sext i32 %i.v to i64
   %.not.us.not = icmp slt i64 %indvars.iv19, %i.w
-  br i1 %.not.us.not, label %ldbGetSourceLine.exit.i.us, label %._crit_edge, !llvm.loop !174
+  br i1 %.not.us.not, label %ldbGetSourceLine.exit.i.us, label %._crit_edge, !llvm.loop !175
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.d
   %i.x = phi i32 [ %i.aw, %bb.d ], [ %i.a, %.lr.ph ]
@@ -2548,7 +2548,7 @@ bb.d:                                             ; preds = %.lr.ph.split, %ldbL
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.ax = sext i32 %i.aw to i64
   %.not.not = icmp slt i64 %indvars.iv, %i.ax
-  br i1 %.not.not, label %.lr.ph.split, label %._crit_edge, !llvm.loop !174
+  br i1 %.not.not, label %.lr.ph.split, label %._crit_edge, !llvm.loop !175
 
 ._crit_edge:                                      ; preds = %bb.d, %ldbLogSourceLine.exit.us, %bb.a
   ret void
@@ -2652,7 +2652,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %.lr.p
   %i.ae = add nuw nsw i32 %.06482, 1
   %i.af = tail call i32 @lua_next(ptr noundef %1, i32 noundef %i.q) #17
   %.not = icmp eq i32 %i.af, 0
-  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !175
+  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !176
 
 ._crit_edge.loopexit:                             ; preds = %bb.l
   %i.ag = select i1 %i.w, ptr %i.ad, ptr %i.y
@@ -3055,7 +3055,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.d
   %i.v = phi i64 [ %i.r, %.lr.ph ], [ %.pre, %bb.d ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.w = icmp sgt i64 %i.v, %indvars.iv.next
-  br i1 %i.w, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !176
+  br i1 %i.w, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !177
 
 ._crit_edge.loopexit:                             ; preds = %bb.e
   %.pre26 = load ptr, ptr %0, align 8, !tbaa !106
@@ -3115,7 +3115,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   %i.s = phi i64 [ %i.o, %.lr.ph ], [ %.pre, %bb.b ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.t = icmp sgt i64 %i.s, %indvars.iv.next
-  br i1 %i.t, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !177
+  br i1 %i.t, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !178
 
 ._crit_edge.loopexit:                             ; preds = %bb.c
   %.pre21 = load ptr, ptr %0, align 8, !tbaa !106
@@ -3174,7 +3174,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   %i.v = phi i64 [ %i.r, %.lr.ph ], [ %.pre, %bb.b ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.w = icmp sgt i64 %i.v, %indvars.iv.next
-  br i1 %i.w, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !178
+  br i1 %i.w, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !179
 
 ._crit_edge.loopexit:                             ; preds = %bb.c
   %.pre25 = load ptr, ptr %0, align 8, !tbaa !106
@@ -3293,14 +3293,14 @@ bb.b:                                             ; preds = %.lr.ph
   %i.i = call ptr @ldbCatStackValueRec(ptr noundef %i.h, ptr noundef %0, i32 noundef -1, i32 noundef 0)
   call void @ldbLogWithMaxLen(ptr noundef %i.i)
   call void @lua_settop(ptr noundef %0, i32 noundef -2) #17
-  br label %bb.g, !llvm.loop !179
+  br label %bb.g, !llvm.loop !180
 
 bb.c:                                             ; preds = %.lr.ph
   %i.j = add nuw nsw i32 %.01724, 1               ; 2 uses
   call void @lua_settop(ptr noundef %0, i32 noundef -2) #17
   %i.k = call ptr @lua_getlocal(ptr noundef %0, ptr noundef nonnull %2, i32 noundef %i.j) #17 ; 2 uses
   %.not22 = icmp eq ptr %i.k, null
-  br i1 %.not22, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !180
+  br i1 %.not22, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !181
 
 .critedge._crit_edge:                             ; preds = %.critedge.loopexit, %bb.a
   %i.l = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(5) @.str.107) #16
@@ -3373,7 +3373,7 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
   call void @lua_settop(ptr noundef %0, i32 noundef -2) #17
   %i.k = call ptr @lua_getlocal(ptr noundef %0, ptr noundef nonnull %1, i32 noundef %i.d) #17 ; 2 uses
   %.not13 = icmp eq ptr %i.k, null
-  br i1 %.not13, label %._crit_edge, label %.lr.ph, !llvm.loop !181
+  br i1 %.not13, label %._crit_edge, label %.lr.ph, !llvm.loop !182
 
 ._crit_edge:                                      ; preds = %bb.c
   %i.l = icmp eq i32 %.1, 0
@@ -3476,7 +3476,7 @@ ldbLogSourceLine.exit.loopexit:                   ; preds = %.lr.ph.i.i, %bb.f
   %i.ai = load i32, ptr getelementptr inbounds nuw (i8, ptr @ldb, i64 296), align 8, !tbaa !140 ; 2 uses
   %i.aj = sext i32 %i.ai to i64
   %i.ak = icmp slt i64 %indvars.iv.next43, %i.aj
-  br i1 %i.ak, label %.lr.ph38, label %.loopexit, !llvm.loop !182
+  br i1 %i.ak, label %.lr.ph38, label %.loopexit, !llvm.loop !183
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.x
   %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.x ] ; 2 uses
@@ -3652,7 +3652,7 @@ bb.x:                                             ; preds = %bb.n, %.loopexit31,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !183
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !184
 
 .loopexit:                                        ; preds = %bb.x, %ldbLogSourceLine.exit.loopexit, %.preheader, %bb.d, %bb.c
   ret void
@@ -3878,7 +3878,7 @@ sdslen.exit:                                      ; preds = %.lr.ph, %bb.d, %bb.
   tail call void @lua_pushlstring(ptr noundef %0, ptr noundef nonnull %i.i, i64 noundef %.0.i) #17
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !184
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !185
 
 ._crit_edge:                                      ; preds = %sdslen.exit, %bb.c
   store i32 1, ptr getelementptr inbounds nuw (i8, ptr @ldb, i64 300), align 4, !tbaa !139
@@ -3924,7 +3924,7 @@ bb.c:                                             ; preds = %bb.b
   %i.g = call ptr @sdsempty() #17
   %i.h = icmp eq i32 %.09, 0
   %i.i = select i1 %i.h, ptr @.str.131, ptr @.str.132
-  %i.j = load ptr, ptr %i.c, align 8, !tbaa !186  ; 2 uses
+  %i.j = load ptr, ptr %i.c, align 8, !tbaa !187  ; 2 uses
   %.not6 = icmp eq ptr %i.j, null
   %i.k = select i1 %.not6, ptr @.str.133, ptr %i.j
   %i.l = call ptr (ptr, ptr, ...) @sdscatprintf(ptr noundef %i.g, ptr noundef nonnull @.str.130, ptr noundef nonnull %i.i, ptr noundef nonnull %i.k) #17
@@ -3983,7 +3983,7 @@ bb.f:                                             ; preds = %ldbLogSourceLine.ex
   %i.aj = add nuw nsw i32 %.09, 1                 ; 2 uses
   %i.ak = call i32 @lua_getstack(ptr noundef %0, i32 noundef %i.aj, ptr noundef nonnull %1) #17
   %.not = icmp eq i32 %i.ak, 0
-  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !185
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !186
 
 ._crit_edge.thread:                               ; preds = %bb.a
   %i.al = call ptr @sdsnew(ptr noundef nonnull @.str.134) #17
@@ -4077,8 +4077,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   %i.h = load ptr, ptr @ldb, align 8, !tbaa !65   ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !144
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 144
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !189
-  %i.l = call i32 %i.k(ptr noundef nonnull %i.h, ptr noundef nonnull %i.c, i64 noundef 1024) #17, !inline_history !187 ; 2 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !190
+  %i.l = call i32 %i.k(ptr noundef nonnull %i.h, ptr noundef nonnull %i.c, i64 noundef 1024) #17, !inline_history !188 ; 2 uses
   %i.m = icmp sgt i32 %i.l, 0
   br i1 %i.m, label %bb.e, label %.thread
 
@@ -4129,7 +4129,7 @@ sdslen.exit.thread:                               ; preds = %bb.e, %sdslen.exit,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #17
   %i.aa = call ptr @ldbReplParseCommand(ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) ; 2 uses
   %i.ab = icmp eq ptr %i.aa, null
-  br i1 %i.ab, label %.lr.ph, label %._crit_edge, !llvm.loop !188
+  br i1 %i.ab, label %.lr.ph, label %._crit_edge, !llvm.loop !189
 
 ._crit_edge:                                      ; preds = %sdslen.exit.thread, %bb.b
   %.lcssa = phi ptr [ %i.d, %bb.b ], [ %i.aa, %sdslen.exit.thread ] ; 10 uses
@@ -4532,7 +4532,7 @@ ldbIsBreakpoint.exit:                             ; preds = %.lr.ph.i, %bb.c
   br i1 %i.q, label %.critedge, label %bb.d
 
 bb.d:                                             ; preds = %ldbIsBreakpoint.exit
-  %i.r = load i32, ptr %1, align 8, !tbaa !191
+  %i.r = load i32, ptr %1, align 8, !tbaa !192
   %i.s = icmp ne i32 %i.r, 3
   %i.t = load i32, ptr getelementptr inbounds nuw (i8, ptr @ldb, i64 300), align 4 ; 2 uses
   %i.u = icmp ne i32 %i.t, 0
@@ -4542,12 +4542,12 @@ bb.d:                                             ; preds = %ldbIsBreakpoint.exi
 
 bb.e:                                             ; preds = %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.w = load i64, ptr %i.v, align 8, !tbaa !192
-  %i.x = load ptr, ptr @getMonotonicUs, align 8, !tbaa !193
-  %i.y = tail call i64 %i.x() #17, !inline_history !190
+  %i.w = load i64, ptr %i.v, align 8, !tbaa !193
+  %i.x = load ptr, ptr @getMonotonicUs, align 8, !tbaa !194
+  %i.y = tail call i64 %i.x() #17, !inline_history !191
   %i.z = sub i64 %i.y, %i.w
   %i.aa = udiv i64 %i.z, 1000
-  %i.ab = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8336), align 8, !tbaa !194 ; 2 uses
+  %i.ab = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8336), align 8, !tbaa !195 ; 2 uses
   %.not35 = icmp eq i64 %i.ab, 0
   %i.ac = select i1 %.not35, i64 5000, i64 %i.ab
   %.not36.not = icmp slt i64 %i.aa, %i.ac
@@ -4626,10 +4626,10 @@ bb.i:                                             ; preds = %ldbLogSourceLine.ex
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %ldbLogSourceLine.exit
-  %i.bg = load ptr, ptr @getMonotonicUs, align 8, !tbaa !193
+  %i.bg = load ptr, ptr @getMonotonicUs, align 8, !tbaa !194
   %i.bh = tail call i64 %i.bg() #17
   %i.bi = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store i64 %i.bh, ptr %i.bi, align 8, !tbaa !192
+  store i64 %i.bh, ptr %i.bi, align 8, !tbaa !193
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.e, %bb.j, %bb.f, %ldbIsBreakpoint.exit
@@ -4831,23 +4831,23 @@ attributes #21 = { nounwind willreturn memory(none) }
 !154 = !{!"scriptFlag", !18, i64 0, !29, i64 8}
 !155 = !{!154, !18, i64 0}
 !156 = !{!154, !29, i64 8}
-!157 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!158 = !{!138, !16, i64 24}
-!159 = !{ptr @evalCommand}
-!160 = !{ptr @evalCommand, ptr @evalGenericCommandWithDebugging}
-!161 = !{ptr @evalGenericCommandWithDebugging}
-!162 = distinct !{!162, !34}
-!163 = !{!64, !16, i64 8376}
-!164 = !{!127, !20, i64 0}
-!165 = !{!87, !25, i64 16}
-!166 = distinct !{!166, !34}
-!167 = distinct !{null}
-!168 = !{!145, !19, i64 128}
-!169 = distinct !{!169, !34}
-!170 = !{!"", !15, i64 0}
-!171 = !{!"sigaction", !15, i64 0, !170, i64 8, !16, i64 136, !19, i64 144}
-!172 = !{!171, !16, i64 136}
-!173 = distinct !{!173, !34}
+!157 = !{!"branch_weights", i32 1, i32 1048575}
+!158 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!159 = !{!138, !16, i64 24}
+!160 = !{ptr @evalCommand}
+!161 = !{ptr @evalCommand, ptr @evalGenericCommandWithDebugging}
+!162 = !{ptr @evalGenericCommandWithDebugging}
+!163 = distinct !{!163, !34}
+!164 = !{!64, !16, i64 8376}
+!165 = !{!127, !20, i64 0}
+!166 = !{!87, !25, i64 16}
+!167 = distinct !{!167, !34}
+!168 = distinct !{null}
+!169 = !{!145, !19, i64 128}
+!170 = distinct !{!170, !34}
+!171 = !{!"", !15, i64 0}
+!172 = !{!"sigaction", !15, i64 0, !171, i64 8, !16, i64 136, !19, i64 144}
+!173 = !{!172, !16, i64 136}
 !174 = distinct !{!174, !34}
 !175 = distinct !{!175, !34}
 !176 = distinct !{!176, !34}
@@ -4860,13 +4860,14 @@ attributes #21 = { nounwind willreturn memory(none) }
 !183 = distinct !{!183, !34}
 !184 = distinct !{!184, !34}
 !185 = distinct !{!185, !34}
-!186 = !{!147, !29, i64 8}
-!187 = distinct !{null}
-!188 = distinct !{!188, !34}
-!189 = !{!145, !19, i64 144}
-!190 = distinct !{null, null}
-!191 = !{!147, !16, i64 0}
-!192 = !{!138, !18, i64 32}
-!193 = !{!19, !19, i64 0}
-!194 = !{!64, !39, i64 8336}
+!186 = distinct !{!186, !34}
+!187 = !{!147, !29, i64 8}
+!188 = distinct !{null}
+!189 = distinct !{!189, !34}
+!190 = !{!145, !19, i64 144}
+!191 = distinct !{null, null}
+!192 = !{!147, !16, i64 0}
+!193 = !{!138, !18, i64 32}
+!194 = !{!19, !19, i64 0}
+!195 = !{!64, !39, i64 8336}
 end_hunk_4

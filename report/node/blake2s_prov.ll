@@ -13,7 +13,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define dso_local void @ossl_blake2s_param_init(ptr nofree noundef writeonly captures(none) initializes((0, 32)) %0) local_unnamed_addr #0 {
 bb.a:
-  store <4 x i8> <i8 32, i8 0, i8 1, i8 1>, ptr %0, align 1, !tbaa !18
+  store <4 x i8> <i8 32, i8 0, i8 1, i8 1>, ptr %0, align 1, !tbaa !19
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(28) %i.a, i8 0, i64 28, i1 false)
   ret void
@@ -33,7 +33,7 @@ bb.a:
 define dso_local void @ossl_blake2s_param_set_key_length(ptr nofree noundef writeonly captures(none) initializes((1, 2)) %0, i8 noundef zeroext %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %1, ptr %i.a, align 1, !tbaa !19
+  store i8 %1, ptr %i.a, align 1, !tbaa !20
   ret void
 }
 
@@ -72,72 +72,72 @@ bb.a:
   %rt.bound0 = icmp ugt i64 %i.c, %i.a
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.rtscalar, label %.rtvec
+  br i1 %rt.conflict, label %.rtscalar, label %.rtvec, !prof !12
 
 .rtvec:                                           ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.e, i8 0, i64 96, i1 false)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 16 dereferenceable(32) @blake2s_IV, i64 32, i1 false), !tbaa !12
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 16 dereferenceable(32) @blake2s_IV, i64 32, i1 false), !tbaa !13
   %i.f = load i8, ptr %1, align 1, !tbaa !11
   %i.g = zext i8 %i.f to i64
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 120
-  store i64 %i.g, ptr %i.h, align 8, !tbaa !15
+  store i64 %i.g, ptr %i.h, align 8, !tbaa !16
   %i.i = load <4 x i32>, ptr %1, align 1
   %i.j = xor <4 x i32> %i.i, <i32 1779033703, i32 -1150833019, i32 1013904242, i32 -1521486534>
-  store <4 x i32> %i.j, ptr %0, align 8, !tbaa !12
+  store <4 x i32> %i.j, ptr %0, align 8, !tbaa !13
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.m = load <4 x i32>, ptr %i.k, align 1
   %i.n = xor <4 x i32> %i.m, <i32 1359893119, i32 -1694144372, i32 528734635, i32 1541459225>
-  store <4 x i32> %i.n, ptr %i.l, align 8, !tbaa !12
+  store <4 x i32> %i.n, ptr %i.l, align 8, !tbaa !13
   br label %.rtcont
 
 .rtscalar:                                        ; preds = %bb.a
   %i.o = getelementptr i8, ptr %0, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.o, i8 0, i64 96, i1 false)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 16 dereferenceable(32) @blake2s_IV, i64 32, i1 false), !tbaa !12
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 16 dereferenceable(32) @blake2s_IV, i64 32, i1 false), !tbaa !13
   %i.p = load i8, ptr %1, align 1, !tbaa !11
   %i.q = zext i8 %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 120
-  store i64 %i.q, ptr %i.r, align 8, !tbaa !15
+  store i64 %i.q, ptr %i.r, align 8, !tbaa !16
   %.val.i.scalar = load i32, ptr %1, align 1
   %i.s = xor i32 %.val.i.scalar, 1779033703
-  store i32 %i.s, ptr %0, align 8, !tbaa !12
+  store i32 %i.s, ptr %0, align 8, !tbaa !13
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 4
   %.val.1.i.scalar = load i32, ptr %i.t, align 1
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.v = xor i32 %.val.1.i.scalar, -1150833019
-  store i32 %i.v, ptr %i.u, align 4, !tbaa !12
+  store i32 %i.v, ptr %i.u, align 4, !tbaa !13
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.2.i.scalar = load i32, ptr %i.w, align 1
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.y = xor i32 %.val.2.i.scalar, 1013904242
-  store i32 %i.y, ptr %i.x, align 8, !tbaa !12
+  store i32 %i.y, ptr %i.x, align 8, !tbaa !13
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 12
   %.val.3.i.scalar = load i32, ptr %i.z, align 1
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.ab = xor i32 %.val.3.i.scalar, -1521486534
-  store i32 %i.ab, ptr %i.aa, align 4, !tbaa !12
+  store i32 %i.ab, ptr %i.aa, align 4, !tbaa !13
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val.4.i.scalar = load i32, ptr %i.ac, align 1
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ae = xor i32 %.val.4.i.scalar, 1359893119
-  store i32 %i.ae, ptr %i.ad, align 8, !tbaa !12
+  store i32 %i.ae, ptr %i.ad, align 8, !tbaa !13
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 20
   %.val.5.i.scalar = load i32, ptr %i.af, align 1
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.ah = xor i32 %.val.5.i.scalar, -1694144372
-  store i32 %i.ah, ptr %i.ag, align 4, !tbaa !12
+  store i32 %i.ah, ptr %i.ag, align 4, !tbaa !13
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.val.6.i.scalar = load i32, ptr %i.ai, align 1
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ak = xor i32 %.val.6.i.scalar, 528734635
-  store i32 %i.ak, ptr %i.aj, align 8, !tbaa !12
+  store i32 %i.ak, ptr %i.aj, align 8, !tbaa !13
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 28
   %.val.7.i.scalar = load i32, ptr %i.al, align 1
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.an = xor i32 %.val.7.i.scalar, 1541459225
-  store i32 %i.an, ptr %i.am, align 4, !tbaa !12
+  store i32 %i.an, ptr %i.am, align 4, !tbaa !13
   br label %.rtcont
 
 .rtcont:                                          ; preds = %.rtscalar, %.rtvec
@@ -154,26 +154,26 @@ ossl_blake2s_update.exit:
   %rt.bound0 = icmp ugt i64 %i.c, %i.a
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %ossl_blake2s_update.exit.rtscalar, label %ossl_blake2s_update.exit.rtvec
+  br i1 %rt.conflict, label %ossl_blake2s_update.exit.rtscalar, label %ossl_blake2s_update.exit.rtvec, !prof !12
 
 ossl_blake2s_update.exit.rtvec:                   ; preds = %ossl_blake2s_update.exit
   %i.e = alloca [64 x i8], align 16               ; 6 uses
   %i.f = getelementptr i8, ptr %0, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.f, i8 0, i64 96, i1 false)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 16 dereferenceable(32) @blake2s_IV, i64 32, i1 false), !tbaa !12
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 16 dereferenceable(32) @blake2s_IV, i64 32, i1 false), !tbaa !13
   %i.g = load i8, ptr %1, align 1, !tbaa !11
   %i.h = zext i8 %i.g to i64
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 120
-  store i64 %i.h, ptr %i.i, align 8, !tbaa !15
+  store i64 %i.h, ptr %i.i, align 8, !tbaa !16
   %i.j = load <4 x i32>, ptr %1, align 1
   %.val.i = load i32, ptr %1, align 1
   %i.k = xor <4 x i32> %i.j, <i32 1779033703, i32 -1150833019, i32 1013904242, i32 -1521486534>
-  store <4 x i32> %i.k, ptr %0, align 8, !tbaa !12
+  store <4 x i32> %i.k, ptr %0, align 8, !tbaa !13
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.n = load <4 x i32>, ptr %i.l, align 1
   %i.o = xor <4 x i32> %i.n, <i32 1359893119, i32 -1694144372, i32 528734635, i32 1541459225>
-  store <4 x i32> %i.o, ptr %i.m, align 8, !tbaa !12
+  store <4 x i32> %i.o, ptr %i.m, align 8, !tbaa !13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.e, i8 0, i64 64, i1 false)
   %i.p = lshr i32 %.val.i, 8
@@ -183,7 +183,7 @@ ossl_blake2s_update.exit.rtvec:                   ; preds = %ossl_blake2s_update
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.t, ptr noundef nonnull align 16 dereferenceable(64) %i.e, i64 64, i1 false)
-  store i64 64, ptr %i.s, align 8, !tbaa !16
+  store i64 64, ptr %i.s, align 8, !tbaa !17
   call void @OPENSSL_cleanse(ptr noundef nonnull %i.e, i64 noundef 64) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #8
   br label %ossl_blake2s_update.exit.rtcont
@@ -192,49 +192,49 @@ ossl_blake2s_update.exit.rtscalar:                ; preds = %ossl_blake2s_update
   %i.u = alloca [64 x i8], align 16               ; 6 uses
   %i.v = getelementptr i8, ptr %0, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.v, i8 0, i64 96, i1 false)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 16 dereferenceable(32) @blake2s_IV, i64 32, i1 false), !tbaa !12
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 16 dereferenceable(32) @blake2s_IV, i64 32, i1 false), !tbaa !13
   %i.w = load i8, ptr %1, align 1, !tbaa !11
   %i.x = zext i8 %i.w to i64
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 120
-  store i64 %i.x, ptr %i.y, align 8, !tbaa !15
+  store i64 %i.x, ptr %i.y, align 8, !tbaa !16
   %.val.i.scalar = load i32, ptr %1, align 1      ; 2 uses
   %i.z = xor i32 %.val.i.scalar, 1779033703
-  store i32 %i.z, ptr %0, align 8, !tbaa !12
+  store i32 %i.z, ptr %0, align 8, !tbaa !13
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 4
   %.val.1.i.scalar = load i32, ptr %i.aa, align 1
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.ac = xor i32 %.val.1.i.scalar, -1150833019
-  store i32 %i.ac, ptr %i.ab, align 4, !tbaa !12
+  store i32 %i.ac, ptr %i.ab, align 4, !tbaa !13
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.2.i.scalar = load i32, ptr %i.ad, align 1
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.af = xor i32 %.val.2.i.scalar, 1013904242
-  store i32 %i.af, ptr %i.ae, align 8, !tbaa !12
+  store i32 %i.af, ptr %i.ae, align 8, !tbaa !13
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 12
   %.val.3.i.scalar = load i32, ptr %i.ag, align 1
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.ai = xor i32 %.val.3.i.scalar, -1521486534
-  store i32 %i.ai, ptr %i.ah, align 4, !tbaa !12
+  store i32 %i.ai, ptr %i.ah, align 4, !tbaa !13
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val.4.i.scalar = load i32, ptr %i.aj, align 1
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.al = xor i32 %.val.4.i.scalar, 1359893119
-  store i32 %i.al, ptr %i.ak, align 8, !tbaa !12
+  store i32 %i.al, ptr %i.ak, align 8, !tbaa !13
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 20
   %.val.5.i.scalar = load i32, ptr %i.am, align 1
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.ao = xor i32 %.val.5.i.scalar, -1694144372
-  store i32 %i.ao, ptr %i.an, align 4, !tbaa !12
+  store i32 %i.ao, ptr %i.an, align 4, !tbaa !13
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.val.6.i.scalar = load i32, ptr %i.ap, align 1
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ar = xor i32 %.val.6.i.scalar, 528734635
-  store i32 %i.ar, ptr %i.aq, align 8, !tbaa !12
+  store i32 %i.ar, ptr %i.aq, align 8, !tbaa !13
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 28
   %.val.7.i.scalar = load i32, ptr %i.as, align 1
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.au = xor i32 %.val.7.i.scalar, 1541459225
-  store i32 %i.au, ptr %i.at, align 4, !tbaa !12
+  store i32 %i.au, ptr %i.at, align 4, !tbaa !13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.u, i8 0, i64 64, i1 false)
   %i.av = lshr i32 %.val.i.scalar, 8
@@ -244,7 +244,7 @@ ossl_blake2s_update.exit.rtscalar:                ; preds = %ossl_blake2s_update
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.az, ptr noundef nonnull align 16 dereferenceable(64) %i.u, i64 64, i1 false)
-  store i64 64, ptr %i.ay, align 8, !tbaa !16
+  store i64 64, ptr %i.ay, align 8, !tbaa !17
   call void @OPENSSL_cleanse(ptr noundef nonnull %i.u, i64 noundef 64) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u) #8
   br label %ossl_blake2s_update.exit.rtcont
@@ -260,7 +260,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #3
 define dso_local noundef i32 @ossl_blake2s_update(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 5 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !16   ; 4 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !17   ; 4 uses
   %i.c = sub i64 64, %i.b                         ; 4 uses
   %i.d = icmp ugt i64 %2, %i.c
   br i1 %i.d, label %bb.b, label %bb.f
@@ -274,7 +274,7 @@ bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.b
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.f, ptr align 1 %1, i64 %i.c, i1 false)
   tail call fastcc void @blake2s_compress(ptr noundef nonnull %0, ptr noundef nonnull %i.e, i64 noundef 64)
-  store i64 0, ptr %i.a, align 8, !tbaa !16
+  store i64 0, ptr %i.a, align 8, !tbaa !17
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %i.c
   %i.h = sub nuw i64 %2, %i.c
   br label %bb.d
@@ -292,7 +292,7 @@ bb.e:                                             ; preds = %bb.d
   %i.l = sub nuw i64 %.0, %i.k                    ; 2 uses
   tail call fastcc void @blake2s_compress(ptr noundef nonnull %0, ptr noundef %.033, i64 noundef %i.l)
   %i.m = getelementptr inbounds nuw i8, ptr %.033, i64 %i.l
-  %.pre = load i64, ptr %i.a, align 8, !tbaa !16
+  %.pre = load i64, ptr %i.a, align 8, !tbaa !17
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e, %bb.a
@@ -302,9 +302,9 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.n
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.p, ptr align 1 %.134, i64 %.1, i1 false)
-  %i.q = load i64, ptr %i.a, align 8, !tbaa !16
+  %i.q = load i64, ptr %i.a, align 8, !tbaa !17
   %i.r = add i64 %i.q, %.1
-  store i64 %i.r, ptr %i.a, align 8, !tbaa !16
+  store i64 %i.r, ptr %i.a, align 8, !tbaa !17
   ret i32 1
 }
 
@@ -316,39 +316,39 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #3
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @blake2s_compress(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) unnamed_addr #5 {
 .preheader:
-  %.sroa.0.0.copyload = load i32, ptr %0, align 4, !tbaa !12
+  %.sroa.0.0.copyload = load i32, ptr %0, align 4, !tbaa !13
   %.sroa.62.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
-  %.sroa.62.0.copyload = load i32, ptr %.sroa.62.0..sroa_idx, align 4, !tbaa !12
+  %.sroa.62.0.copyload = load i32, ptr %.sroa.62.0..sroa_idx, align 4, !tbaa !13
   %.sroa.121.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %.sroa.121.0.copyload = load i32, ptr %.sroa.121.0..sroa_idx, align 4, !tbaa !12
+  %.sroa.121.0.copyload = load i32, ptr %.sroa.121.0..sroa_idx, align 4, !tbaa !13
   %.sroa.180.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
-  %.sroa.180.0.copyload = load i32, ptr %.sroa.180.0..sroa_idx, align 4, !tbaa !12
+  %.sroa.180.0.copyload = load i32, ptr %.sroa.180.0..sroa_idx, align 4, !tbaa !13
   %.sroa.239.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %.sroa.239.0.copyload = load i32, ptr %.sroa.239.0..sroa_idx, align 4, !tbaa !12
+  %.sroa.239.0.copyload = load i32, ptr %.sroa.239.0..sroa_idx, align 4, !tbaa !13
   %.sroa.303.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 3 uses
-  %.sroa.303.0.copyload = load i32, ptr %.sroa.303.0..sroa_idx, align 4, !tbaa !12
+  %.sroa.303.0.copyload = load i32, ptr %.sroa.303.0..sroa_idx, align 4, !tbaa !13
   %.sroa.370.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %.sroa.370.0.copyload = load i32, ptr %.sroa.370.0..sroa_idx, align 4, !tbaa !12
+  %.sroa.370.0.copyload = load i32, ptr %.sroa.370.0..sroa_idx, align 4, !tbaa !13
   %.sroa.437.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 3 uses
-  %.sroa.437.0.copyload = load i32, ptr %.sroa.437.0..sroa_idx, align 4, !tbaa !12
+  %.sroa.437.0.copyload = load i32, ptr %.sroa.437.0..sroa_idx, align 4, !tbaa !13
   %i.a = tail call i64 @llvm.umin.i64(i64 %2, i64 64) ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.c = trunc nuw nsw i64 %i.a to i32
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 44
-  %i.g = load i32, ptr %i.e, align 8, !tbaa !12
-  %i.h = load i32, ptr %i.f, align 4, !tbaa !12
-  %.promoted = load i32, ptr %i.b, align 8, !tbaa !12
-  %.promoted432 = load i32, ptr %i.d, align 4, !tbaa !12
-  %.promoted433 = load i32, ptr %0, align 8, !tbaa !12
-  %.sroa.62.0..sroa_idx.promoted = load i32, ptr %.sroa.62.0..sroa_idx, align 4, !tbaa !12
-  %.sroa.121.0..sroa_idx.promoted = load i32, ptr %.sroa.121.0..sroa_idx, align 8, !tbaa !12
-  %.sroa.180.0..sroa_idx.promoted = load i32, ptr %.sroa.180.0..sroa_idx, align 4, !tbaa !12
-  %.sroa.239.0..sroa_idx.promoted = load i32, ptr %.sroa.239.0..sroa_idx, align 8, !tbaa !12
-  %.sroa.303.0..sroa_idx.promoted = load i32, ptr %.sroa.303.0..sroa_idx, align 4, !tbaa !12
-  %.sroa.370.0..sroa_idx.promoted = load i32, ptr %.sroa.370.0..sroa_idx, align 8, !tbaa !12
-  %.sroa.437.0..sroa_idx.promoted = load i32, ptr %.sroa.437.0..sroa_idx, align 4, !tbaa !12
+  %i.g = load i32, ptr %i.e, align 8, !tbaa !13
+  %i.h = load i32, ptr %i.f, align 4, !tbaa !13
+  %.promoted = load i32, ptr %i.b, align 8, !tbaa !13
+  %.promoted432 = load i32, ptr %i.d, align 4, !tbaa !13
+  %.promoted433 = load i32, ptr %0, align 8, !tbaa !13
+  %.sroa.62.0..sroa_idx.promoted = load i32, ptr %.sroa.62.0..sroa_idx, align 4, !tbaa !13
+  %.sroa.121.0..sroa_idx.promoted = load i32, ptr %.sroa.121.0..sroa_idx, align 8, !tbaa !13
+  %.sroa.180.0..sroa_idx.promoted = load i32, ptr %.sroa.180.0..sroa_idx, align 4, !tbaa !13
+  %.sroa.239.0..sroa_idx.promoted = load i32, ptr %.sroa.239.0..sroa_idx, align 8, !tbaa !13
+  %.sroa.303.0..sroa_idx.promoted = load i32, ptr %.sroa.303.0..sroa_idx, align 4, !tbaa !13
+  %.sroa.370.0..sroa_idx.promoted = load i32, ptr %.sroa.370.0..sroa_idx, align 8, !tbaa !13
+  %.sroa.437.0..sroa_idx.promoted = load i32, ptr %.sroa.437.0..sroa_idx, align 4, !tbaa !13
   %invariant.op = xor i32 %i.g, 528734635
   %invariant.op434 = xor i32 %i.h, 1541459225
   br label %bb.a
@@ -406,12 +406,12 @@ bb.a:                                             ; preds = %.preheader, %bb.a
   %.sroa.109.0..034.sroa_idx = getelementptr inbounds nuw i8, ptr %.034, i64 60
   %.sroa.109.0.copyload = load i32, ptr %.sroa.109.0..034.sroa_idx, align 1 ; 10 uses
   %i.s = add i32 %i.r, %i.c                       ; 4 uses
-  store i32 %i.s, ptr %i.b, align 8, !tbaa !12
+  store i32 %i.s, ptr %i.b, align 8, !tbaa !13
   %i.t = zext i32 %i.s to i64
   %i.u = icmp samesign ugt i64 %i.a, %i.t
   %i.v = zext i1 %i.u to i32
   %i.w = add i32 %i.q, %i.v                       ; 3 uses
-  store i32 %i.w, ptr %i.d, align 4, !tbaa !12
+  store i32 %i.w, ptr %i.d, align 4, !tbaa !13
   %i.x = add i32 %.sroa.239.0, %.sroa.0.0
   %i.y = add i32 %i.x, %.sroa.0332.0.copyload     ; 2 uses
   %i.z = xor i32 %i.s, %i.y
@@ -814,32 +814,32 @@ begin_hunk_1_@blake2s_compress:.preheader
   %i.aqy = tail call i32 @llvm.fshl.i32(i32 %i.aqx, i32 %i.aqx, i32 25)
   %i.aqz = xor i32 %i.p, %i.aqi
   %i.ara = xor i32 %i.aqz, %i.apd                 ; 3 uses
-  store i32 %i.ara, ptr %0, align 8, !tbaa !12
+  store i32 %i.ara, ptr %0, align 8, !tbaa !13
   %i.arb = xor i32 %i.o, %i.aqw
   %i.arc = xor i32 %i.arb, %i.apr                 ; 3 uses
-  store i32 %i.arc, ptr %.sroa.62.0..sroa_idx, align 4, !tbaa !12
+  store i32 %i.arc, ptr %.sroa.62.0..sroa_idx, align 4, !tbaa !13
   %i.ard = xor i32 %i.n, %i.apg
   %i.are = xor i32 %i.ard, %i.aqf                 ; 3 uses
-  store i32 %i.are, ptr %.sroa.121.0..sroa_idx, align 8, !tbaa !12
+  store i32 %i.are, ptr %.sroa.121.0..sroa_idx, align 8, !tbaa !13
   %i.arf = xor i32 %i.m, %i.apu
   %i.arg = xor i32 %i.arf, %i.aqt                 ; 3 uses
-  store i32 %i.arg, ptr %.sroa.180.0..sroa_idx, align 4, !tbaa !12
+  store i32 %i.arg, ptr %.sroa.180.0..sroa_idx, align 4, !tbaa !13
   %i.arh = xor i32 %i.l, %i.aqy
   %i.ari = xor i32 %i.arh, %i.apt                 ; 3 uses
-  store i32 %i.ari, ptr %.sroa.239.0..sroa_idx, align 8, !tbaa !12
+  store i32 %i.ari, ptr %.sroa.239.0..sroa_idx, align 8, !tbaa !13
   %i.arj = xor i32 %i.k, %i.api
   %i.ark = xor i32 %i.arj, %i.aqh                 ; 3 uses
-  store i32 %i.ark, ptr %.sroa.303.0..sroa_idx, align 4, !tbaa !12
+  store i32 %i.ark, ptr %.sroa.303.0..sroa_idx, align 4, !tbaa !13
   %i.arl = xor i32 %i.j, %i.apw
   %i.arm = xor i32 %i.arl, %i.aqv                 ; 3 uses
-  store i32 %i.arm, ptr %.sroa.370.0..sroa_idx, align 8, !tbaa !12
+  store i32 %i.arm, ptr %.sroa.370.0..sroa_idx, align 8, !tbaa !13
   %i.arn = xor i32 %i.i, %i.aqk
   %i.aro = xor i32 %i.arn, %i.apf                 ; 3 uses
-  store i32 %i.aro, ptr %.sroa.437.0..sroa_idx, align 4, !tbaa !12
+  store i32 %i.aro, ptr %.sroa.437.0..sroa_idx, align 4, !tbaa !13
   %i.arp = getelementptr inbounds nuw i8, ptr %.034, i64 %i.a
   %i.arq = sub i64 %.033, %i.a                    ; 2 uses
   %.not = icmp eq i64 %i.arq, 0
-  br i1 %.not, label %bb.b, label %bb.a, !llvm.loop !20
+  br i1 %.not, label %bb.b, label %bb.a, !llvm.loop !21
 
 bb.b:                                             ; preds = %bb.a
   ret void
@@ -852,7 +852,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 2 uses
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !15   ; 2 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !16   ; 2 uses
   %i.d = add i64 %i.c, 3
   %i.e = lshr i64 %i.d, 2                         ; 4 uses
   %i.f = trunc i64 %i.e to i32
@@ -860,14 +860,14 @@ bb.a:
   %i.h = icmp eq i64 %i.g, 0
   %spec.select = select i1 %i.h, ptr %0, ptr %i.a ; 10 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 40
-  store i32 -1, ptr %i.i, align 8, !tbaa !12
+  store i32 -1, ptr %i.i, align 8, !tbaa !13
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !16   ; 2 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !17   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.l
   %i.n = sub i64 64, %i.l
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.m, i8 0, i64 %i.n, i1 false)
-  %i.o = load i64, ptr %i.k, align 8, !tbaa !16
+  %i.o = load i64, ptr %i.k, align 8, !tbaa !17
   tail call fastcc void @blake2s_compress(ptr noundef %1, ptr noundef nonnull %i.j, i64 noundef %i.o)
   %i.p = icmp sgt i32 %i.f, 0
   br i1 %i.p, label %.lr.ph.preheader, label %._crit_edge
@@ -892,14 +892,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.t = getelementptr inbounds nuw i8, ptr %spec.select, i64 %i.s ; 2 uses
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 16
-  %wide.load = load <4 x i32>, ptr %i.u, align 4, !tbaa !12
-  %wide.load29 = load <4 x i32>, ptr %i.v, align 4, !tbaa !12
+  %wide.load = load <4 x i32>, ptr %i.u, align 4, !tbaa !13
+  %wide.load29 = load <4 x i32>, ptr %i.v, align 4, !tbaa !13
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 16
   store <4 x i32> %wide.load, ptr %i.t, align 1
   store <4 x i32> %wide.load29, ptr %i.w, align 1
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.x = icmp eq i64 %index.next, %n.vec
-  br i1 %i.x, label %middle.block, label %vector.body, !llvm.loop !21
+  br i1 %i.x, label %middle.block, label %vector.body, !llvm.loop !22
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %wide.trip.count, %n.vec
@@ -917,12 +917,12 @@ middle.block:                                     ; preds = %vector.body
   %i.y = shl nuw nsw i64 %indvars.iv.prol, 2
   %i.z = getelementptr inbounds nuw i8, ptr %spec.select, i64 %i.y
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.prol
-  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !12
+  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !13
   store i32 %i.ab, ptr %i.z, align 1
   %indvars.iv.next.prol = add nuw nsw i64 %indvars.iv.prol, 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !22
+  br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !llvm.loop !23
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader30
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %.lr.ph.preheader30 ], [ %indvars.iv.next.prol, %.lr.ph.prol ]
@@ -935,36 +935,36 @@ middle.block:                                     ; preds = %vector.body
   %i.ae = shl nuw nsw i64 %indvars.iv, 2
   %i.af = getelementptr inbounds nuw i8, ptr %spec.select, i64 %i.ae
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
-  %i.ah = load i32, ptr %i.ag, align 4, !tbaa !12
+  %i.ah = load i32, ptr %i.ag, align 4, !tbaa !13
   store i32 %i.ah, ptr %i.af, align 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ai = shl nuw nsw i64 %indvars.iv.next, 2
   %i.aj = getelementptr inbounds nuw i8, ptr %spec.select, i64 %i.ai
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next
-  %i.al = load i32, ptr %i.ak, align 4, !tbaa !12
+  %i.al = load i32, ptr %i.ak, align 4, !tbaa !13
   store i32 %i.al, ptr %i.aj, align 1
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %i.am = shl nuw nsw i64 %indvars.iv.next.1, 2
   %i.an = getelementptr inbounds nuw i8, ptr %spec.select, i64 %i.am
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next.1
-  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !12
+  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !13
   store i32 %i.ap, ptr %i.an, align 1
   %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
   %i.aq = shl nuw nsw i64 %indvars.iv.next.2, 2
   %i.ar = getelementptr inbounds nuw i8, ptr %spec.select, i64 %i.aq
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next.2
-  %i.at = load i32, ptr %i.as, align 4, !tbaa !12
+  %i.at = load i32, ptr %i.as, align 4, !tbaa !13
   store i32 %i.at, ptr %i.ar, align 1
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count
-  br i1 %exitcond.not.3, label %._crit_edge, label %.lr.ph, !llvm.loop !23
+  br i1 %exitcond.not.3, label %._crit_edge, label %.lr.ph, !llvm.loop !24
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %bb.a
   %.not = icmp eq ptr %spec.select, %0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
-  %i.au = load i64, ptr %i.b, align 8, !tbaa !15
+  %i.au = load i64, ptr %i.b, align 8, !tbaa !16
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %0, ptr align 1 %spec.select, i64 %i.au, i1 false)
   call void @OPENSSL_cleanse(ptr noundef %spec.select, i64 noundef 32) #8
   br label %bb.c
@@ -1007,19 +1007,20 @@ attributes #8 = { nounwind }
 !9 = !{!8, !7, i64 0}
 !10 = !{!"blake2s_param_st", !6, i64 0, !6, i64 1, !6, i64 2, !6, i64 3, !6, i64 4, !6, i64 8, !6, i64 14, !6, i64 15, !6, i64 16, !6, i64 24}
 !11 = !{!10, !6, i64 0}
-!12 = !{!7, !7, i64 0}
-!13 = !{!"long", !6, i64 0}
-!14 = !{!"blake2s_ctx_st", !6, i64 0, !6, i64 32, !6, i64 40, !6, i64 48, !13, i64 112, !13, i64 120}
-!15 = !{!14, !13, i64 120}
-!16 = !{!14, !13, i64 112}
-!17 = !{!"llvm.loop.mustprogress"}
-!18 = !{!6, !6, i64 0}
-!19 = !{!10, !6, i64 1}
-!20 = distinct !{!20, !17}
-!21 = distinct !{!21, !17, !24, !25}
-!22 = distinct !{!22, !26}
-!23 = distinct !{!23, !17, !24}
-!24 = !{!"llvm.loop.isvectorized", i32 1}
-!25 = !{!"llvm.loop.unroll.runtime.disable"}
-!26 = !{!"llvm.loop.unroll.disable"}
+!12 = !{!"branch_weights", i32 1, i32 1048575}
+!13 = !{!7, !7, i64 0}
+!14 = !{!"long", !6, i64 0}
+!15 = !{!"blake2s_ctx_st", !6, i64 0, !6, i64 32, !6, i64 40, !6, i64 48, !14, i64 112, !14, i64 120}
+!16 = !{!15, !14, i64 120}
+!17 = !{!15, !14, i64 112}
+!18 = !{!"llvm.loop.mustprogress"}
+!19 = !{!6, !6, i64 0}
+!20 = !{!10, !6, i64 1}
+!21 = distinct !{!21, !18}
+!22 = distinct !{!22, !18, !25, !26}
+!23 = distinct !{!23, !27}
+!24 = distinct !{!24, !18, !25}
+!25 = !{!"llvm.loop.isvectorized", i32 1}
+!26 = !{!"llvm.loop.unroll.runtime.disable"}
+!27 = !{!"llvm.loop.unroll.disable"}
 end_hunk_1

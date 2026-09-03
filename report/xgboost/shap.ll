@@ -205,7 +205,7 @@ _ZN7xgboost16interpretability12_GLOBAL__N_19LeafValueERKNS_4tree14ScalarTreeView
   %rt.conflict16 = and i1 %rt.bound014, %rt.bound115
   %rt.conflict.all = or i1 %rt.conflict, %rt.conflict16
   %rt.guard = freeze i1 %rt.conflict.all
-  br i1 %rt.guard, label %_ZN7xgboost16interpretability12_GLOBAL__N_19LeafValueERKNS_4tree14ScalarTreeViewEij.exit.rtscalar, label %_ZN7xgboost16interpretability12_GLOBAL__N_19LeafValueERKNS_4tree14ScalarTreeViewEij.exit.rtvec
+  br i1 %rt.guard, label %_ZN7xgboost16interpretability12_GLOBAL__N_19LeafValueERKNS_4tree14ScalarTreeViewEij.exit.rtscalar, label %_ZN7xgboost16interpretability12_GLOBAL__N_19LeafValueERKNS_4tree14ScalarTreeViewEij.exit.rtvec, !prof !98
 
 _ZN7xgboost16interpretability12_GLOBAL__N_19LeafValueERKNS_4tree14ScalarTreeViewEij.exit.rtvec: ; preds = %_ZN7xgboost16interpretability12_GLOBAL__N_19LeafValueERKNS_4tree14ScalarTreeViewEij.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #13
@@ -608,7 +608,7 @@ _ZN7xgboost16interpretability12_GLOBAL__N_19LeafValueERKNS_4tree19MultiTargetTre
   %rt.conflict18 = and i1 %rt.bound016, %rt.bound117
   %rt.conflict.all = or i1 %rt.conflict, %rt.conflict18
   %rt.guard = freeze i1 %rt.conflict.all
-  br i1 %rt.guard, label %_ZN7xgboost16interpretability12_GLOBAL__N_19LeafValueERKNS_4tree19MultiTargetTreeViewEij.exit.rtscalar, label %_ZN7xgboost16interpretability12_GLOBAL__N_19LeafValueERKNS_4tree19MultiTargetTreeViewEij.exit.rtvec
+  br i1 %rt.guard, label %_ZN7xgboost16interpretability12_GLOBAL__N_19LeafValueERKNS_4tree19MultiTargetTreeViewEij.exit.rtscalar, label %_ZN7xgboost16interpretability12_GLOBAL__N_19LeafValueERKNS_4tree19MultiTargetTreeViewEij.exit.rtvec, !prof !98
 
 _ZN7xgboost16interpretability12_GLOBAL__N_19LeafValueERKNS_4tree19MultiTargetTreeViewEij.exit.rtvec: ; preds = %_ZN7xgboost16interpretability12_GLOBAL__N_19LeafValueERKNS_4tree19MultiTargetTreeViewEij.exit
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %i.v

@@ -97,34 +97,34 @@ bb.a:
   %rt.bound137 = icmp ugt i64 %i.f, %i.b
   %rt.conflict38 = and i1 %rt.bound036, %rt.bound137
   %rt.conflict.all = or i1 %rt.conflict, %rt.conflict38
-  br i1 %rt.conflict.all, label %.rtscalar, label %.rtvec
+  br i1 %rt.conflict.all, label %.rtscalar, label %.rtvec, !prof !11
 
 .rtvec:                                           ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %i.h = load float, ptr %i.g, align 4, !tbaa !12 ; 2 uses
+  %i.h = load float, ptr %i.g, align 4, !tbaa !13 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.n = load float, ptr %i.i, align 4, !tbaa !12 ; 2 uses
-  %i.o = load float, ptr %i.g, align 4, !tbaa !12
-  %i.p = load float, ptr %i.k, align 4, !tbaa !12 ; 2 uses
-  %i.q = load float, ptr %0, align 4, !tbaa !12   ; 2 uses
-  %i.r = load <2 x float>, ptr %1, align 4, !tbaa !12
-  %i.s = load <2 x float>, ptr %0, align 4, !tbaa !12
-  %i.t = load <2 x float>, ptr %i.j, align 4, !tbaa !12
-  %i.u = load <4 x float>, ptr %1, align 4, !tbaa !12 ; 2 uses
-  %i.v = load <2 x float>, ptr %i.l, align 4, !tbaa !12
-  %i.w = load float, ptr %i.l, align 4, !tbaa !12
-  %i.x = load float, ptr %i.j, align 4, !tbaa !12
-  %i.y = load float, ptr %0, align 4, !tbaa !12
-  %i.z = load float, ptr %i.m, align 4, !tbaa !12
-  %i.aa = load float, ptr %1, align 4, !tbaa !12
+  %i.n = load float, ptr %i.i, align 4, !tbaa !13 ; 2 uses
+  %i.o = load float, ptr %i.g, align 4, !tbaa !13
+  %i.p = load float, ptr %i.k, align 4, !tbaa !13 ; 2 uses
+  %i.q = load float, ptr %0, align 4, !tbaa !13   ; 2 uses
+  %i.r = load <2 x float>, ptr %1, align 4, !tbaa !13
+  %i.s = load <2 x float>, ptr %0, align 4, !tbaa !13
+  %i.t = load <2 x float>, ptr %i.j, align 4, !tbaa !13
+  %i.u = load <4 x float>, ptr %1, align 4, !tbaa !13 ; 2 uses
+  %i.v = load <2 x float>, ptr %i.l, align 4, !tbaa !13
+  %i.w = load float, ptr %i.l, align 4, !tbaa !13
+  %i.x = load float, ptr %i.j, align 4, !tbaa !13
+  %i.y = load float, ptr %0, align 4, !tbaa !13
+  %i.z = load float, ptr %i.m, align 4, !tbaa !13
+  %i.aa = load float, ptr %1, align 4, !tbaa !13
   %i.ab = fmul float %i.x, %i.z
   %i.ac = tail call float @llvm.fmuladd.f32(float %i.q, float %i.aa, float %i.ab)
-  %i.ad = load float, ptr %i.l, align 4, !tbaa !12
-  %i.ae = load float, ptr %i.j, align 4, !tbaa !12
+  %i.ad = load float, ptr %i.l, align 4, !tbaa !13
+  %i.ae = load float, ptr %i.j, align 4, !tbaa !13
   %i.af = tail call float @llvm.fmuladd.f32(float %i.ad, float %i.p, float %i.ac)
   %i.ag = insertelement <4 x float> poison, float %i.w, i64 0
   %i.ah = insertelement <4 x float> %i.ag, float %i.y, i64 1
@@ -151,79 +151,79 @@ bb.a:
   %i.bc = shufflevector <4 x float> %i.bb, <4 x float> %i.ba, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.bd = shufflevector <4 x float> %i.u, <4 x float> <float poison, float poison, float poison, float -0.000000e+00>, <4 x i32> <i32 2, i32 0, i32 1, i32 7>
   %i.be = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bc, <4 x float> %i.bd, <4 x float> %i.az)
-  %i.bf = load <4 x float>, ptr %1, align 4, !tbaa !12
+  %i.bf = load <4 x float>, ptr %1, align 4, !tbaa !13
   %i.bg = shufflevector <4 x float> %i.bf, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 0, i32 3>
   %i.bh = shufflevector <4 x float> %i.ak, <4 x float> %i.al, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
   %i.bi = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bh, <4 x float> %i.bg, <4 x float> %i.be)
-  store <4 x float> %i.bi, ptr %2, align 4, !tbaa !12
+  store <4 x float> %i.bi, ptr %2, align 4, !tbaa !13
   br label %.rtcont
 
 .rtscalar:                                        ; preds = %bb.a
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 4 uses
-  %i.bk = load float, ptr %i.bj, align 4, !tbaa !12
-  %i.bl = load float, ptr %1, align 4, !tbaa !12
-  %i.bm = load float, ptr %0, align 4, !tbaa !12
+  %i.bk = load float, ptr %i.bj, align 4, !tbaa !13
+  %i.bl = load float, ptr %1, align 4, !tbaa !13
+  %i.bm = load float, ptr %0, align 4, !tbaa !13
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 4 uses
-  %i.bo = load float, ptr %i.bn, align 4, !tbaa !12
+  %i.bo = load float, ptr %i.bn, align 4, !tbaa !13
   %i.bp = fmul float %i.bm, %i.bo
   %i.bq = tail call float @llvm.fmuladd.f32(float %i.bk, float %i.bl, float %i.bp)
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 4 uses
-  %i.bs = load float, ptr %i.br, align 4, !tbaa !12
+  %i.bs = load float, ptr %i.br, align 4, !tbaa !13
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.bu = load float, ptr %i.bt, align 4, !tbaa !12
+  %i.bu = load float, ptr %i.bt, align 4, !tbaa !13
   %i.bv = tail call float @llvm.fmuladd.f32(float %i.bs, float %i.bu, float %i.bq)
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.bx = load float, ptr %i.bw, align 4, !tbaa !12
+  %i.bx = load float, ptr %i.bw, align 4, !tbaa !13
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 4 uses
-  %i.bz = load float, ptr %i.by, align 4, !tbaa !12
+  %i.bz = load float, ptr %i.by, align 4, !tbaa !13
   %i.ca = fneg float %i.bx
   %i.cb = tail call float @llvm.fmuladd.f32(float %i.ca, float %i.bz, float %i.bv)
-  store float %i.cb, ptr %2, align 4, !tbaa !12
-  %i.cc = load float, ptr %i.bj, align 4, !tbaa !12
-  %i.cd = load float, ptr %i.by, align 4, !tbaa !12
-  %i.ce = load float, ptr %i.br, align 4, !tbaa !12
-  %i.cf = load float, ptr %i.bn, align 4, !tbaa !12
+  store float %i.cb, ptr %2, align 4, !tbaa !13
+  %i.cc = load float, ptr %i.bj, align 4, !tbaa !13
+  %i.cd = load float, ptr %i.by, align 4, !tbaa !13
+  %i.ce = load float, ptr %i.br, align 4, !tbaa !13
+  %i.cf = load float, ptr %i.bn, align 4, !tbaa !13
   %i.cg = fmul float %i.ce, %i.cf
   %i.ch = tail call float @llvm.fmuladd.f32(float %i.cc, float %i.cd, float %i.cg)
-  %i.ci = load float, ptr %i.bw, align 4, !tbaa !12
-  %i.cj = load float, ptr %1, align 4, !tbaa !12
+  %i.ci = load float, ptr %i.bw, align 4, !tbaa !13
+  %i.cj = load float, ptr %1, align 4, !tbaa !13
   %i.ck = tail call float @llvm.fmuladd.f32(float %i.ci, float %i.cj, float %i.ch)
-  %i.cl = load float, ptr %0, align 4, !tbaa !12
-  %i.cm = load float, ptr %i.bt, align 4, !tbaa !12
+  %i.cl = load float, ptr %0, align 4, !tbaa !13
+  %i.cm = load float, ptr %i.bt, align 4, !tbaa !13
   %i.cn = fneg float %i.cl
   %i.co = tail call float @llvm.fmuladd.f32(float %i.cn, float %i.cm, float %i.ck)
   %i.cp = getelementptr inbounds nuw i8, ptr %2, i64 4
-  store float %i.co, ptr %i.cp, align 4, !tbaa !12
-  %i.cq = load float, ptr %i.bj, align 4, !tbaa !12
-  %i.cr = load float, ptr %i.bt, align 4, !tbaa !12
-  %i.cs = load float, ptr %i.bw, align 4, !tbaa !12
-  %i.ct = load float, ptr %i.bn, align 4, !tbaa !12
+  store float %i.co, ptr %i.cp, align 4, !tbaa !13
+  %i.cq = load float, ptr %i.bj, align 4, !tbaa !13
+  %i.cr = load float, ptr %i.bt, align 4, !tbaa !13
+  %i.cs = load float, ptr %i.bw, align 4, !tbaa !13
+  %i.ct = load float, ptr %i.bn, align 4, !tbaa !13
   %i.cu = fmul float %i.cs, %i.ct
   %i.cv = tail call float @llvm.fmuladd.f32(float %i.cq, float %i.cr, float %i.cu)
-  %i.cw = load float, ptr %0, align 4, !tbaa !12
-  %i.cx = load float, ptr %i.by, align 4, !tbaa !12
+  %i.cw = load float, ptr %0, align 4, !tbaa !13
+  %i.cx = load float, ptr %i.by, align 4, !tbaa !13
   %i.cy = tail call float @llvm.fmuladd.f32(float %i.cw, float %i.cx, float %i.cv)
-  %i.cz = load float, ptr %i.br, align 4, !tbaa !12
-  %i.da = load float, ptr %1, align 4, !tbaa !12
+  %i.cz = load float, ptr %i.br, align 4, !tbaa !13
+  %i.da = load float, ptr %1, align 4, !tbaa !13
   %i.db = fneg float %i.cz
   %i.dc = tail call float @llvm.fmuladd.f32(float %i.db, float %i.da, float %i.cy)
   %i.dd = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store float %i.dc, ptr %i.dd, align 4, !tbaa !12
-  %i.de = load float, ptr %i.bj, align 4, !tbaa !12
-  %i.df = load float, ptr %i.bn, align 4, !tbaa !12
-  %i.dg = load float, ptr %0, align 4, !tbaa !12
-  %i.dh = load float, ptr %1, align 4, !tbaa !12
-  %i.di = load float, ptr %i.br, align 4, !tbaa !12
-  %i.dj = load float, ptr %i.by, align 4, !tbaa !12
+  store float %i.dc, ptr %i.dd, align 4, !tbaa !13
+  %i.de = load float, ptr %i.bj, align 4, !tbaa !13
+  %i.df = load float, ptr %i.bn, align 4, !tbaa !13
+  %i.dg = load float, ptr %0, align 4, !tbaa !13
+  %i.dh = load float, ptr %1, align 4, !tbaa !13
+  %i.di = load float, ptr %i.br, align 4, !tbaa !13
+  %i.dj = load float, ptr %i.by, align 4, !tbaa !13
   %i.dk = fmul float %i.di, %i.dj
   %i.dl = tail call float @llvm.fmuladd.f32(float %i.dg, float %i.dh, float %i.dk)
-  %i.dm = load float, ptr %i.bw, align 4, !tbaa !12
-  %i.dn = load float, ptr %i.bt, align 4, !tbaa !12
+  %i.dm = load float, ptr %i.bw, align 4, !tbaa !13
+  %i.dn = load float, ptr %i.bt, align 4, !tbaa !13
   %i.do = tail call float @llvm.fmuladd.f32(float %i.dm, float %i.dn, float %i.dl)
   %i.dp = fneg float %i.do
   %i.dq = tail call float @llvm.fmuladd.f32(float %i.de, float %i.df, float %i.dp)
   %i.dr = getelementptr inbounds nuw i8, ptr %2, i64 12
-  store float %i.dq, ptr %i.dr, align 4, !tbaa !12
+  store float %i.dq, ptr %i.dr, align 4, !tbaa !13
   br label %.rtcont
 
 .rtcont:                                          ; preds = %.rtscalar, %.rtvec
@@ -254,6 +254,7 @@ attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !8 = !{!7, !6, i64 0}
 !9 = !{!"double", !5, i64 0}
 !10 = !{!9, !9, i64 0}
-!11 = !{!"float", !5, i64 0}
-!12 = !{!11, !11, i64 0}
+!11 = !{!"branch_weights", i32 1, i32 1048575}
+!12 = !{!"float", !5, i64 0}
+!13 = !{!12, !12, i64 0}
 end_hunk_0

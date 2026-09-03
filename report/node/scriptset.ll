@@ -195,7 +195,7 @@ bb.a:
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
   %rt.guard = freeze i1 %rt.conflict
-  br i1 %rt.guard, label %.rtscalar, label %.rtvec
+  br i1 %rt.guard, label %.rtscalar, label %.rtvec, !prof !7
 
 .rtvec:                                           ; preds = %bb.a
   %i.e = load <4 x i32>, ptr %1, align 4
@@ -274,7 +274,7 @@ bb.a:
   %rt.bound1 = icmp ugt i64 %i.d, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
   %rt.guard = freeze i1 %rt.conflict
-  br i1 %rt.guard, label %.rtscalar, label %.rtvec
+  br i1 %rt.guard, label %.rtscalar, label %.rtvec, !prof !7
 
 .rtvec:                                           ; preds = %bb.a
   %i.e = load <4 x i32>, ptr %1, align 4
@@ -677,7 +677,7 @@ bb.d:                                             ; preds = %bb.c
   %i.w = load i32, ptr %i.f, align 4
   %i.x = select i1 %i.t, i32 %i.w, i32 %i.v
   %i.y = icmp slt i32 %i.p, %i.x
-  br i1 %i.y, label %bb.i, label %bb.e, !llvm.loop !8
+  br i1 %i.y, label %bb.i, label %bb.e, !llvm.loop !9
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.z = load i16, ptr %i.d, align 8              ; 2 uses
@@ -822,7 +822,7 @@ _ZN6icu_7815MaybeStackArrayI11UScriptCodeLi20EE6resizeEii.exit: ; preds = %bb.d,
   %i.q = call i32 @uscript_getScriptExtensions_78(i32 noundef %1, ptr noundef nonnull %i.n, i32 noundef %i.j, ptr noundef nonnull %i.a) #11 ; 2 uses
   %i.r = load i32, ptr %i.a, align 4              ; 2 uses
   %i.s = icmp eq i32 %i.r, 15
-  br i1 %i.s, label %.lr.ph, label %._crit_edge, !llvm.loop !9
+  br i1 %i.s, label %.lr.ph, label %._crit_edge, !llvm.loop !10
 
 ._crit_edge:                                      ; preds = %_ZN6icu_7815MaybeStackArrayI11UScriptCodeLi20EE6resizeEii.exit, %bb.b
   %.lcssa20 = phi i32 [ %i.g, %bb.b ], [ %i.q, %_ZN6icu_7815MaybeStackArrayI11UScriptCodeLi20EE6resizeEii.exit ] ; 2 uses
@@ -865,7 +865,7 @@ _ZN6icu_789ScriptSet3setE11UScriptCodeR10UErrorCode.exit: ; preds = %bb.f
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   %or.cond = select i1 %i.ah, i1 true, i1 %exitcond.not
-  br i1 %or.cond, label %.loopexit, label %bb.f, !llvm.loop !10
+  br i1 %or.cond, label %.loopexit, label %bb.f, !llvm.loop !11
 
 .loopexit.sink.split:                             ; preds = %.lr.ph, %bb.c, %bb.f, %._crit_edge
   %.sink = phi i32 [ %.lcssa, %._crit_edge ], [ 1, %bb.f ], [ 7, %bb.c ], [ 7, %.lr.ph ]
@@ -1268,7 +1268,7 @@ _ZNK6icu_789ScriptSet10nextSetBitEi.exit89:       ; preds = %_ZNK6icu_789ScriptS
   %i.dm = icmp eq i32 %i.dl, 0
   %i.dn = icmp sgt i32 %.2.i78, 0
   %i.do = and i1 %i.dn, %i.dm
-  br i1 %i.do, label %.lr.ph, label %.loopexit, !llvm.loop !12
+  br i1 %i.do, label %.lr.ph, label %.loopexit, !llvm.loop !13
 
 .loopexit:                                        ; preds = %_ZNK6icu_789ScriptSet10nextSetBitEi.exit89, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit74, %_ZNK6icu_789ScriptSet12countMembersEv.exit66
   %.016 = phi i32 [ %i.bq, %_ZNK6icu_789ScriptSet12countMembersEv.exit66 ], [ %i.cp, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit74 ], [ %i.dl, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit89 ]
@@ -1338,17 +1338,18 @@ attributes #12 = { nounwind allocsize(0) }
 !llvm.module.flags = !{!2, !3, !4, !5}
 !llvm.ident = !{!6}
 
-!0 = distinct !{!0, !7}
-!1 = distinct !{!1, !7}
+!0 = distinct !{!0, !8}
+!1 = distinct !{!1, !8}
 !2 = !{i32 8, !"PIC Level", i32 2}
 !3 = !{i32 7, !"PIE Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{i32 7, !"frame-pointer", i32 2}
 !6 = !{!"Ubuntu clang version 23.0.0 (++20260707081847+70646dd3eda3-1~exp1~20260707082012.1709)"}
-!7 = !{!"llvm.loop.mustprogress"}
-!8 = distinct !{!8, !7}
-!9 = distinct !{!9, !7}
-!10 = distinct !{!10, !7, !11}
-!11 = !{!"llvm.loop.unswitch.partial.disable"}
-!12 = distinct !{!12, !7}
+!7 = !{!"branch_weights", i32 1, i32 1048575}
+!8 = !{!"llvm.loop.mustprogress"}
+!9 = distinct !{!9, !8}
+!10 = distinct !{!10, !8}
+!11 = distinct !{!11, !8, !12}
+!12 = !{!"llvm.loop.unswitch.partial.disable"}
+!13 = distinct !{!13, !8}
 end_hunk_2

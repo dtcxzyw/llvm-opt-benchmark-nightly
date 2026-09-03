@@ -56,7 +56,7 @@ bb.a:
   %rt.bound1145 = icmp ugt i64 %i.f, %i.b
   %rt.conflict146 = and i1 %rt.bound0144, %rt.bound1145
   %rt.conflict.all = or i1 %rt.conflict, %rt.conflict146
-  br i1 %rt.conflict.all, label %.rtscalar, label %.rtvec
+  br i1 %rt.conflict.all, label %.rtscalar, label %.rtvec, !prof !53
 
 .rtvec:                                           ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -459,8 +459,8 @@ declare ptr @llvm.invariant.start.p0(i64 immarg, ptr captures(none)) #5
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @_ZN8ImGuizmo7SetRectEffff(float noundef %0, float noundef %1, float noundef %2, float noundef %3) local_unnamed_addr #9 {
 bb.a:
-  store float %0, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 964), align 4, !tbaa !53
-  store float %1, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 968), align 8, !tbaa !54
+  store float %0, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 964), align 4, !tbaa !54
+  store float %1, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 968), align 8, !tbaa !55
   store float %2, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 972), align 4, !tbaa !25
   store float %3, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 976), align 8, !tbaa !26
   %i.a = fadd float %0, %2                        ; 2 uses
@@ -863,7 +863,7 @@ bb.g:                                             ; preds = %bb.f, %_ZN8ImGuizmo
   %i.kp = icmp samesign ult i32 %.027183, 2
   %i.kq = icmp eq i32 %.3, 0
   %i.kr = select i1 %i.kp, i1 %i.kq, i1 false
-  br i1 %i.kr, label %bb.c, label %._crit_edge, !llvm.loop !55
+  br i1 %i.kr, label %bb.c, label %._crit_edge, !llvm.loop !56
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -872,11 +872,11 @@ bb.a:
   %i.a = tail call noundef nonnull align 8 dereferenceable(5464) ptr @_ZN5ImGui5GetIOEv() ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 288
   %i.c = load float, ptr %i.b, align 8, !tbaa !42 ; 4 uses
-  %i.d = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 640), align 8, !tbaa !56
+  %i.d = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 640), align 8, !tbaa !57
   %i.e = fsub float %i.c, %i.d                    ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 292
   %i.g = load float, ptr %i.f, align 4, !tbaa !44 ; 4 uses
-  %i.h = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 644), align 4, !tbaa !57
+  %i.h = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 644), align 4, !tbaa !58
   %i.i = fsub float %i.g, %i.h                    ; 2 uses
   %i.j = fmul float %i.i, %i.i
   %i.k = tail call float @llvm.fmuladd.f32(float %i.e, float %i.e, float %i.j)
@@ -1279,7 +1279,7 @@ _ZN8ImGuizmo14PointOnSegmentERKNS_5vec_tES2_S2_.exit: ; preds = %bb.d, %bb.c, %b
   %i.gi = add nuw nsw i32 %.017118, 1
   %i.gj = icmp samesign ult i32 %.017118, 2
   %i.gk = and i1 %i.gj, %i.gh
-  br i1 %i.gk, label %bb.c, label %._crit_edge.loopexit, !llvm.loop !58
+  br i1 %i.gk, label %bb.c, label %._crit_edge.loopexit, !llvm.loop !59
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
@@ -1682,14 +1682,14 @@ bb.a:
   %62 = alloca %"struct.ImGuizmo::matrix_t", align 4 ; 4 uses
   %63 = alloca %"struct.ImGuizmo::matrix_t", align 4 ; 4 uses
   %64 = alloca %"struct.ImGuizmo::matrix_t", align 8 ; 9 uses
-  store i32 %3, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 8), align 8, !tbaa !68
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 12), ptr noundef nonnull readonly align 4 dereferenceable(64) %0, i64 64, i1 false), !tbaa.struct !69
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 76), ptr noundef nonnull readonly align 4 dereferenceable(64) %1, i64 64, i1 false), !tbaa.struct !69
+  store i32 %3, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 8), align 8, !tbaa !69
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 12), ptr noundef nonnull readonly align 4 dereferenceable(64) %0, i64 64, i1 false), !tbaa.struct !70
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 76), ptr noundef nonnull readonly align 4 dereferenceable(64) %1, i64 64, i1 false), !tbaa.struct !70
   %i.o = icmp eq i32 %3, 0
   br i1 %i.o, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 140), ptr noundef nonnull readonly align 4 dereferenceable(64) %4, i64 64, i1 false), !tbaa.struct !69
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 140), ptr noundef nonnull readonly align 4 dereferenceable(64) %4, i64 64, i1 false), !tbaa.struct !70
   %i.p = load <4 x float>, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 140), align 4, !tbaa !10 ; 3 uses
   %i.q = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 144), align 8, !tbaa !14 ; 2 uses
   %i.r = fmul float %i.q, %i.q
@@ -1751,7 +1751,7 @@ bb.c:                                             ; preds = %bb.a
 _ZN8ImGuizmoL14ComputeContextEPKfS1_PfNS_4MODEE.exit: ; preds = %bb.b, %bb.c
   %.sink.i = phi float [ %i.ax, %bb.b ], [ 0.000000e+00, %bb.c ]
   store float %.sink.i, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 184), align 8, !tbaa !15
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 268), ptr noundef nonnull readonly align 4 dereferenceable(64) %4, i64 64, i1 false), !tbaa.struct !69
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 268), ptr noundef nonnull readonly align 4 dereferenceable(64) %4, i64 64, i1 false), !tbaa.struct !70
   %i.bc = load <4 x float>, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 276), align 4
   %i.bd = shufflevector <4 x float> %i.bc, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.be = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 292), align 4, !tbaa !13
@@ -1778,11 +1778,11 @@ _ZN8ImGuizmoL14ComputeContextEPKfS1_PfNS_4MODEE.exit: ; preds = %bb.b, %bb.c
   %i.bv = tail call noundef float @_ZN8ImGuizmo8matrix_t7InverseERKS0_b(ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 332), ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 268), i1 noundef zeroext false) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %62) #19
   call void @_ZN8ImGuizmo21FPU_MatrixF_x_MatrixFEPKfS1_Pf(ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 12), ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 76), ptr noundef nonnull align 4 dereferenceable(64) %62)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 460), ptr noundef nonnull align 4 dereferenceable(64) %62, i64 64, i1 false), !tbaa.struct !69
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 460), ptr noundef nonnull align 4 dereferenceable(64) %62, i64 64, i1 false), !tbaa.struct !70
   call void @llvm.lifetime.end.p0(ptr nonnull %62) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #19
   call void @_ZN8ImGuizmo21FPU_MatrixF_x_MatrixFEPKfS1_Pf(ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 140), ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 460), ptr noundef nonnull align 4 dereferenceable(64) %63)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 396), ptr noundef nonnull align 4 dereferenceable(64) %63, i64 64, i1 false), !tbaa.struct !69
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 396), ptr noundef nonnull align 4 dereferenceable(64) %63, i64 64, i1 false), !tbaa.struct !70
   call void @llvm.lifetime.end.p0(ptr nonnull %63) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %64) #19
   %i.bw = call noundef float @_ZN8ImGuizmo8matrix_t7InverseERKS0_b(ptr noundef nonnull align 4 dereferenceable(64) %64, ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 12), i1 noundef zeroext false) ; 0 uses
@@ -2018,7 +2018,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.is = tail call noundef nonnull align 8 dereferenceable(5464) ptr @_ZN5ImGui5GetIOEv()
-  %i.it = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 8), align 8, !tbaa !68
+  %i.it = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 8), align 8, !tbaa !69
   %i.iu = icmp eq i32 %i.it, 0
   %i.iv = zext i1 %i.iu to i8                     ; 3 uses
   %i.iw = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 684), align 4, !tbaa !32, !range !33, !noundef !34
@@ -2053,7 +2053,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 684), align 4, !tbaa !32
-  store i32 %i.iy, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !70
+  store i32 %i.iy, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !71
   call void @llvm.lifetime.start.p0(ptr nonnull %59) #19
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %59, ptr noundef nonnull align 4 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 140), i64 16, i1 false), !tbaa.struct !17
   %i.je = getelementptr inbounds nuw i8, ptr %59, i64 16
@@ -2230,7 +2230,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.ol = fcmp olt float %i.ok, 0.000000e+00
   %i.om = fneg float %i.oh
   %i.on = select i1 %i.ol, float %i.oh, float %i.om
-  store float %i.on, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 756), align 4, !tbaa !71
+  store float %i.on, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 756), align 4, !tbaa !72
   call void @llvm.lifetime.end.p0(ptr nonnull %59) #19
   br label %_ZN8ImGuizmoL11CanActivateEv.exit.i
 
@@ -2328,7 +2328,7 @@ bb.r:                                             ; preds = %_ZN8ImGuizmoL11CanA
   %i.rr = fcmp olt float %i.rq, 0.000000e+00
   %i.rs = fneg float %i.rn
   %i.rt = select i1 %i.rr, float %i.rn, float %i.rs ; 8 uses
-  store float %i.rt, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 752), align 8, !tbaa !72
+  store float %i.rt, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 752), align 8, !tbaa !73
   %.not29.i = icmp eq ptr %6, null
   br i1 %.not29.i, label %_ZN8ImGuizmoL11ComputeSnapEPff.exit.i, label %bb.s
 
@@ -2402,7 +2402,7 @@ _ZN8ImGuizmoL11ComputeSnapEPff.exit.i:            ; preds = %.sink.split.i.i, %b
   br i1 %i.tk, label %_ZN8ImGuizmo8matrix_t12RotationAxisERKNS_5vec_tEf.exit.i, label %bb.x
 
 bb.x:                                             ; preds = %_ZN8ImGuizmoL11ComputeSnapEPff.exit.i
-  %i.tl = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 756), align 4, !tbaa !71
+  %i.tl = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 756), align 4, !tbaa !72
   %i.tm = fsub float %i.sh, %i.tl                 ; 2 uses
   %sqrt.i.i26 = tail call float @llvm.sqrt.f32(float %i.tj)
   %i.tn = tail call float @sinf(float noundef %i.tm) #19 ; 3 uses
@@ -2479,7 +2479,7 @@ _ZN8ImGuizmo8matrix_t12RotationAxisERKNS_5vec_tEf.exit.i: ; preds = %bb.x, %_ZN8
   %i.wa = phi <4 x float> [ %i.vu, %bb.x ], [ <float 0.000000e+00, float 0.000000e+00, float undef, float undef>, %_ZN8ImGuizmoL11ComputeSnapEPff.exit.i ] ; 2 uses
   %i.wb = phi <4 x float> [ %i.vs, %bb.x ], [ <float 0.000000e+00, float 0.000000e+00, float undef, float undef>, %_ZN8ImGuizmoL11ComputeSnapEPff.exit.i ] ; 2 uses
   %i.wc = phi <4 x float> [ %i.vt, %bb.x ], [ <float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 1.000000e+00>, %_ZN8ImGuizmoL11ComputeSnapEPff.exit.i ] ; 6 uses
-  store float %i.sh, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 756), align 4, !tbaa !71
+  store float %i.sh, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 756), align 4, !tbaa !72
   %i.wd = trunc nuw i8 %.1.i to i1
   br i1 %i.wd, label %bb.y, label %bb.z
 
@@ -2746,12 +2746,12 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
-  %i.aer = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !70
+  %i.aer = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !71
   br label %_ZN8ImGuizmoL14HandleRotationEPfS0_RiS0_.exit
 
 bb.af:                                            ; preds = %bb.g
   %i.aes = tail call noundef nonnull align 8 dereferenceable(5464) ptr @_ZN5ImGui5GetIOEv()
-  %i.aet = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 8), align 8, !tbaa !68
+  %i.aet = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 8), align 8, !tbaa !69
   %i.aeu = icmp eq i32 %i.aet, 0
   %i.aev = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 684), align 4, !tbaa !32, !range !33, !noundef !34
   %i.aew = trunc nuw i8 %i.aev to i1
@@ -2807,7 +2807,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.agq = fsub <2 x float> %i.agl, %i.ago
   %i.agr = fsub <2 x float> %i.agp, %i.afc        ; 3 uses
   %i.ags = fsub <2 x float> %i.agq, %i.afd        ; 2 uses
-  %i.agt = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !70 ; 2 uses
+  %i.agt = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !71 ; 2 uses
   %i.agu = add i32 %i.agt, -1
   %or.cond.i = icmp ult i32 %i.agu, 3
   br i1 %or.cond.i, label %bb.ah, label %bb.ai
@@ -3028,7 +3028,7 @@ bb.aq:                                            ; preds = %bb.ap
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap
-  %i.amg = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !70
+  %i.amg = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !71
   br label %_ZN8ImGuizmoL14HandleRotationEPfS0_RiS0_.exit
 
 bb.as:                                            ; preds = %bb.af
@@ -3056,7 +3056,7 @@ bb.aw:                                            ; preds = %bb.av
 
 bb.ax:                                            ; preds = %bb.aw
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 684), align 4, !tbaa !32
-  store i32 %i.amh, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !70
+  store i32 %i.amh, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !71
   call void @llvm.lifetime.start.p0(ptr nonnull %58) #19
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %58, ptr noundef nonnull align 4 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 140), i64 16, i1 false), !tbaa.struct !17
   %i.aml = getelementptr inbounds nuw i8, ptr %58, i64 16 ; 3 uses
@@ -3325,7 +3325,7 @@ bb.bd:                                            ; preds = %bb.bc
 
 bb.be:                                            ; preds = %bb.bd
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 684), align 4, !tbaa !32
-  store i32 %i.aud, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !70
+  store i32 %i.aud, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !71
   call void @llvm.lifetime.start.p0(ptr nonnull %53) #19
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %53, ptr noundef nonnull align 4 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 156), i64 16, i1 false), !tbaa.struct !17
   %i.auh = getelementptr inbounds nuw i8, ptr %53, i64 16
@@ -3458,7 +3458,7 @@ bb.be:                                            ; preds = %bb.bd
   store <2 x float> %i.aye, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 784), align 8
   %i.ayf = getelementptr inbounds nuw i8, ptr %i.aua, i64 288
   %i.ayg = load float, ptr %i.ayf, align 8, !tbaa !42
-  store float %i.ayg, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 792), align 8, !tbaa !73
+  store float %i.ayg, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 792), align 8, !tbaa !74
   call void @llvm.lifetime.end.p0(ptr nonnull %53) #19
   br label %_ZN8ImGuizmoL11CanActivateEv.exit.i52
 
@@ -3470,7 +3470,7 @@ _ZN8ImGuizmoL11CanActivateEv.exit.i52:            ; preds = %bb.bd, %bb.be, %bb.
 
 bb.bf:                                            ; preds = %_ZN8ImGuizmoL11CanActivateEv.exit.i52
   tail call void @_ZN5ImGui19CaptureMouseFromAppEb(i1 noundef zeroext true)
-  %i.ayj = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !70
+  %i.ayj = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !71
   %i.ayk = add i32 %i.ayj, -12                    ; 2 uses
   %or.cond.i53 = icmp ult i32 %i.ayk, 3
   br i1 %or.cond.i53, label %bb.bg, label %bb.bh
@@ -3564,7 +3564,7 @@ bb.bg:                                            ; preds = %bb.bf
 bb.bh:                                            ; preds = %bb.bf
   %i.bbo = getelementptr inbounds nuw i8, ptr %i.aua, i64 288
   %i.bbp = load float, ptr %i.bbo, align 8, !tbaa !42
-  %i.bbq = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 792), align 8, !tbaa !73
+  %i.bbq = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 792), align 8, !tbaa !74
   %i.bbr = fsub float %i.bbp, %i.bbq
   %i.bbs = fmul float %i.bbr, f0x3C23D70A
   %i.bbt = fadd float %i.bbs, 1.000000e+00        ; 2 uses
@@ -3667,7 +3667,7 @@ bb.bn:                                            ; preds = %bb.bm
   br label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn, %bb.bm
-  %i.bdp = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !70
+  %i.bdp = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 960), align 8, !tbaa !71
   br label %_ZN8ImGuizmoL14HandleRotationEPfS0_RiS0_.exit
 
 _ZN8ImGuizmoL14HandleRotationEPfS0_RiS0_.exit:    ; preds = %bb.bo, %_ZN8ImGuizmoL11CanActivateEv.exit.i52, %_ZN8ImGuizmoL11CanActivateEv.exit.i31, %bb.ar, %bb.ae, %_ZN8ImGuizmoL11CanActivateEv.exit.i, %bb.g, %bb.f
@@ -3687,7 +3687,7 @@ bb.bp:                                            ; preds = %_ZN8ImGuizmoL14Hand
   %i.bdu = load ptr, ptr @_ZN8ImGuizmoL8gContextE, align 8, !tbaa !31 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %42) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #19
-  %i.bdv = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 880), align 8, !tbaa !74 ; 2 uses
+  %i.bdv = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 880), align 8, !tbaa !75 ; 2 uses
   store i32 %i.bdv, ptr %i.k, align 4, !tbaa !52
   %i.bdw = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 892), align 4, !tbaa !51, !range !33, !noundef !34
   %i.bdx = trunc nuw i8 %i.bdw to i1
@@ -3897,10 +3897,10 @@ bb.bz:                                            ; preds = %bb.by
 bb.ca:                                            ; preds = %.preheader.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %._crit_edge712.i, label %.preheader.i, !llvm.loop !59
+  br i1 %exitcond.not.i, label %._crit_edge712.i, label %.preheader.i, !llvm.loop !60
 
 ._crit_edge712.i:                                 ; preds = %bb.ca
-  br label %split.i, !llvm.loop !59
+  br label %split.i, !llvm.loop !60
 
 .preheader.i:                                     ; preds = %bb.ca, %.preheader.preheader.i
   %indvars.iv.i = phi i64 [ 0, %.preheader.preheader.i ], [ %indvars.iv.next.i, %bb.ca ] ; 3 uses
@@ -4249,7 +4249,7 @@ bb.ce:                                            ; preds = %bb.ce, %.lr.ph.i
   call void @llvm.lifetime.end.p0(ptr nonnull %46) #19
   %i.brs = add nuw nsw i32 %.0170689.i, 1         ; 2 uses
   %exitcond699.not.i = icmp eq i32 %i.brs, %i.bpm
-  br i1 %exitcond699.not.i, label %._crit_edge.loopexit.i, label %bb.ce, !llvm.loop !60
+  br i1 %exitcond699.not.i, label %._crit_edge.loopexit.i, label %bb.ce, !llvm.loop !61
 
 bb.cf:                                            ; preds = %._crit_edge.i
   %i.brt = call fastcc noundef i32 @_ZN8ImGuizmoL11GetMoveTypeEPNS_5vec_tE(ptr noundef nonnull %49)
@@ -4337,7 +4337,7 @@ bb.cm:                                            ; preds = %bb.cl
   %.sroa.3.8.vec.insert.i.i110 = insertelement <2 x float> %i.blo, float %i.btm, i64 1
   store <2 x float> %i.bll, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 848), align 8
   store <2 x float> %.sroa.3.8.vec.insert.i.i110, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 856), align 8
-  store i32 %i.bjz, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 880), align 8, !tbaa !74
+  store i32 %i.bjz, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 880), align 8, !tbaa !75
   store i32 %i.bkc, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 884), align 4, !tbaa !52
   store i32 %i.bke, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 888), align 8, !tbaa !52
   %i.btn = getelementptr inbounds nuw [4 x i8], ptr %i.bsk, i64 %i.bkg
@@ -4348,7 +4348,7 @@ bb.cm:                                            ; preds = %bb.cl
   %i.btq = load float, ptr %i.btp, align 4, !tbaa !10
   store float %i.btq, ptr %i.blq, align 4, !tbaa !10
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 892), align 4, !tbaa !51
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 896), ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 268), i64 64, i1 false), !tbaa.struct !69
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 896), ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 268), i64 64, i1 false), !tbaa.struct !70
   br label %_ZN8ImGuizmoL11CanActivateEv.exit.i109
 
 _ZN8ImGuizmoL11CanActivateEv.exit.i109:           ; preds = %bb.cm, %bb.cl, %bb.ck, %bb.cj, %bb.ci
@@ -4414,7 +4414,7 @@ bb.cq:                                            ; preds = %bb.cp
   %.sroa.3.8.vec.insert.i278.i = insertelement <2 x float> %i.blo, float %i.bvg, i64 1
   store <2 x float> %i.bll, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 848), align 8
   store <2 x float> %.sroa.3.8.vec.insert.i278.i, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 856), align 8
-  store i32 %i.bjz, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 880), align 8, !tbaa !74
+  store i32 %i.bjz, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 880), align 8, !tbaa !75
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #19
   store i32 %i.bkc, ptr %i.l, align 4, !tbaa !52
   store i32 %i.bke, ptr %i.bjb, align 4, !tbaa !52
@@ -4430,7 +4430,7 @@ bb.cq:                                            ; preds = %bb.cp
   %i.bvn = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 864), i64 %i.bvk
   store float %i.bvm, ptr %i.bvn, align 4, !tbaa !10
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 892), align 4, !tbaa !51
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 896), ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 268), i64 64, i1 false), !tbaa.struct !69
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 896), ptr noundef nonnull align 4 dereferenceable(64) getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 268), i64 64, i1 false), !tbaa.struct !70
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #19
   %.pre714.i = load float, ptr %44, align 4, !tbaa !16
   br label %_ZN8ImGuizmoL11CanActivateEv.exit262.i
@@ -4445,7 +4445,7 @@ _ZN8ImGuizmoL15IsInContextRectE6ImVec2.exit.thread.i: ; preds = %_ZN8ImGuizmoL11
   %i.bvp = phi float [ %i.bvo, %_ZN8ImGuizmoL11CanActivateEv.exit262.i ], [ %i.bmv, %bb.cc ], [ %i.bmv, %_ZN8ImGuizmoL15IsInContextRectE6ImVec2.exit.i ], [ %i.bmv, %_ZN8ImGuizmoL15IsInContextRectE6ImVec2.exit229.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %45) #19
   %exitcond703.not.i = icmp eq i64 %indvars.iv.next701.i, 4
-  br i1 %exitcond703.not.i, label %bb.cb, label %bb.cc, !llvm.loop !61
+  br i1 %exitcond703.not.i, label %bb.cb, label %bb.cc, !llvm.loop !62
 
 bb.cr:                                            ; preds = %bb.cb
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #19
@@ -4848,7 +4848,7 @@ bb.dm:                                            ; preds = %bb.dl, %bb.cb
 
 .backedge.backedge:                               ; preds = %.thread753.i, %bb.dn
   %indvars.iv707.i.be = phi i64 [ %indvars.iv.next708.old.i, %.thread753.i ], [ %indvars.iv.next708.i, %bb.dn ]
-  br label %.backedge, !llvm.loop !62
+  br label %.backedge, !llvm.loop !63
 
 bb.dn:                                            ; preds = %bb.dm
   %.pre723.i = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 892), align 4, !tbaa !51, !range !33 ; 2 uses
@@ -5107,8 +5107,8 @@ bb.ea:                                            ; preds = %bb.eb
   %i.csn = fadd float %i.csm, %i.csj
   %i.cso = extractelement <2 x float> %i.crc, i64 1
   %i.csp = fadd float %i.cso, %i.csl
-  %.val44.i = load float, ptr %36, align 16, !tbaa !75
-  %.val45.i = load float, ptr %i.col, align 4, !tbaa !76
+  %.val44.i = load float, ptr %36, align 16, !tbaa !76
+  %.val45.i = load float, ptr %i.col, align 4, !tbaa !77
   %i.csq = fsub float %i.csn, %.val44.i           ; 2 uses
   %i.csr = fsub float %i.csp, %.val45.i           ; 2 uses
   %i.css = fmul float %i.csr, %i.csr
@@ -5168,7 +5168,7 @@ bb.eb:                                            ; preds = %bb.eb, %bb.dz
   call void @llvm.lifetime.end.p0(ptr nonnull %37) #19
   %indvars.iv.next.i113 = add nuw nsw i64 %indvars.iv.i112, 1 ; 2 uses
   %exitcond.not.i114 = icmp eq i64 %indvars.iv.next.i113, 64
-  br i1 %exitcond.not.i114, label %bb.ea, label %bb.eb, !llvm.loop !63
+  br i1 %exitcond.not.i114, label %bb.ea, label %bb.eb, !llvm.loop !64
 
 bb.ec:                                            ; preds = %bb.ea
   store float %sqrt.i115, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 636), align 4, !tbaa !49
@@ -5179,7 +5179,7 @@ bb.ed:                                            ; preds = %bb.ec, %bb.ea
   %i.cuk = load i32, ptr %i.cuj, align 4, !tbaa !52
   call void @_ZN10ImDrawList11AddPolylineEPK6ImVec2ijif(ptr noundef nonnull align 8 dereferenceable(196) %i.cmu, ptr noundef nonnull %36, i32 noundef 64, i32 noundef %i.cuk, i32 noundef 0, float noundef 2.000000e+00)
   call void @llvm.lifetime.end.p0(ptr nonnull %36) #19
-  br i1 %i.cqk, label %bb.dy, label %bb.dz, !llvm.loop !64
+  br i1 %i.cqk, label %bb.dy, label %bb.dz, !llvm.loop !65
 
 bb.ee:                                            ; preds = %bb.dy
   call void @llvm.lifetime.start.p0(ptr nonnull %39) #19
@@ -5283,8 +5283,8 @@ bb.ef:                                            ; preds = %_ZN8ImGuizmo8matrix
   %i.cxr = sext i32 %.0 to i64
   %i.cxs = getelementptr [8 x i8], ptr @_ZN8ImGuizmoL16rotationInfoMaskE, i64 %i.cxr
   %i.cxt = getelementptr i8, ptr %i.cxs, i64 -64
-  %i.cxu = load ptr, ptr %i.cxt, align 8, !tbaa !77
-  %i.cxv = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 752), align 8, !tbaa !72 ; 2 uses
+  %i.cxu = load ptr, ptr %i.cxt, align 8, !tbaa !78
+  %i.cxv = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 752), align 8, !tbaa !73 ; 2 uses
   %i.cxw = fdiv float %i.cxv, f0x40490FDB
   %i.cxx = fmul float %i.cxw, 1.800000e+02
   %i.cxy = fpext float %i.cxx to double
@@ -5399,7 +5399,7 @@ _ZN8ImGuizmo8matrix_t12RotationAxisERKNS_5vec_tEf.exit.i123: ; preds = %bb.eh, %
   store <2 x float> %i.dbc, ptr %i.dbd, align 8
   %indvars.iv.next124.i = add nuw nsw i64 %indvars.iv123.i, 1 ; 2 uses
   %exitcond126.not.i = icmp eq i64 %indvars.iv.next124.i, 64
-  br i1 %exitcond126.not.i, label %bb.ef, label %bb.eg, !llvm.loop !65
+  br i1 %exitcond126.not.i, label %bb.ef, label %bb.eg, !llvm.loop !66
 
 _ZN8ImGuizmoL17DrawRotationGizmoEi.exit:          ; preds = %bb.dy, %bb.ef
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #19
@@ -5802,7 +5802,7 @@ bb.ev:                                            ; preds = %.preheader.i140, %b
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #19
   %indvars.iv.next.i137 = add nuw nsw i64 %indvars.iv.i136, 1 ; 2 uses
   %exitcond.not.i138 = icmp eq i64 %indvars.iv.next.i137, 3
-  br i1 %exitcond.not.i138, label %bb.ep, label %bb.eq, !llvm.loop !66
+  br i1 %exitcond.not.i138, label %bb.ep, label %bb.eq, !llvm.loop !67
 
 bb.ew:                                            ; preds = %bb.ep
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #19
@@ -5915,7 +5915,7 @@ bb.ew:                                            ; preds = %bb.ep
   %i.dpb = mul nsw i32 %i.dpa, 3
   %i.dpc = sext i32 %i.dpa to i64
   %i.dpd = getelementptr inbounds [8 x i8], ptr @_ZN8ImGuizmoL19translationInfoMaskE, i64 %i.dpc
-  %i.dpe = load ptr, ptr %i.dpd, align 8, !tbaa !77
+  %i.dpe = load ptr, ptr %i.dpd, align 8, !tbaa !78
   %i.dpf = sext i32 %i.dpb to i64
   %i.dpg = getelementptr inbounds [4 x i8], ptr @_ZN8ImGuizmoL20translationInfoIndexE, i64 %i.dpf ; 3 uses
   %i.dph = load i32, ptr %i.dpg, align 4, !tbaa !52
@@ -6221,7 +6221,7 @@ bb.fm:                                            ; preds = %bb.fl, %bb.fg
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #19
   %indvars.iv.next.i149 = add nuw nsw i64 %indvars.iv.i148, 1 ; 2 uses
   %exitcond.not.i150 = icmp eq i64 %indvars.iv.next.i149, 3
-  br i1 %exitcond.not.i150, label %bb.ff, label %bb.fg, !llvm.loop !67
+  br i1 %exitcond.not.i150, label %bb.ff, label %bb.fg, !llvm.loop !68
 
 bb.fn:                                            ; preds = %bb.ff
   %.sroa.02.0.copyload.i66.i = load float, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 188), align 4, !tbaa !10 ; 3 uses
@@ -6260,7 +6260,7 @@ bb.fn:                                            ; preds = %bb.ff
   %i.dxi = mul nsw i32 %i.dxh, 3
   %i.dxj = sext i32 %i.dxh to i64
   %i.dxk = getelementptr inbounds [8 x i8], ptr @_ZN8ImGuizmoL13scaleInfoMaskE, i64 %i.dxj
-  %i.dxl = load ptr, ptr %i.dxk, align 8, !tbaa !77
+  %i.dxl = load ptr, ptr %i.dxk, align 8, !tbaa !78
   %i.dxm = sext i32 %i.dxi to i64
   %i.dxn = getelementptr inbounds [4 x i8], ptr @_ZN8ImGuizmoL20translationInfoIndexE, i64 %i.dxm
   %i.dxo = load i32, ptr %i.dxn, align 4, !tbaa !52
@@ -6663,7 +6663,7 @@ bb.h:                                             ; preds = %.critedge.loopexit,
 .loopexit:                                        ; preds = %bb.c, %bb.d, %bb.e, %bb.f, %bb.h
   %i.mk = add nuw nsw i32 %.043204, 1             ; 2 uses
   %exitcond.not = icmp eq i32 %i.mk, 6
-  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !78
+  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !79
 }
 
 declare void @_ZN10ImDrawList19AddConvexPolyFilledEPK6ImVec2ij(ptr noundef nonnull align 8 dereferenceable(196), ptr noundef, i32 noundef, i32 noundef) local_unnamed_addr #11
@@ -6895,7 +6895,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #19
   %i.gi = fadd float %.098, 1.000000e+00          ; 2 uses
   %i.gj = fcmp ugt float %i.gi, %3
-  br i1 %i.gj, label %._crit_edge, label %bb.b, !llvm.loop !79
+  br i1 %i.gj, label %._crit_edge, label %bb.b, !llvm.loop !80
 }
 
 declare void @_ZN10ImDrawList7AddLineERK6ImVec2S2_jf(ptr noundef nonnull align 8 dereferenceable(196), ptr noundef nonnull align 4 dereferenceable(8), ptr noundef nonnull align 4 dereferenceable(8), i32 noundef, float noundef) local_unnamed_addr #11
@@ -7298,7 +7298,7 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #19
   %i.bx = add nuw nsw i32 %.052, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.bx, 10
-  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !80
+  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !81
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
@@ -7428,12 +7428,12 @@ attributes #19 = { nounwind }
 !50 = !{!24, !23, i64 685}
 !51 = !{!24, !23, i64 892}
 !52 = !{!6, !6, i64 0}
-!53 = !{!24, !9, i64 964}
-!54 = !{!24, !9, i64 968}
-!55 = distinct !{!55, !48}
-!56 = !{!24, !9, i64 640}
-!57 = !{!24, !9, i64 644}
-!58 = distinct !{!58, !48}
+!53 = !{!"branch_weights", i32 1, i32 1048575}
+!54 = !{!24, !9, i64 964}
+!55 = !{!24, !9, i64 968}
+!56 = distinct !{!56, !48}
+!57 = !{!24, !9, i64 640}
+!58 = !{!24, !9, i64 644}
 !59 = distinct !{!59, !48}
 !60 = distinct !{!60, !48}
 !61 = distinct !{!61, !48}
@@ -7443,17 +7443,18 @@ attributes #19 = { nounwind }
 !65 = distinct !{!65, !48}
 !66 = distinct !{!66, !48}
 !67 = distinct !{!67, !48}
-!68 = !{!24, !20, i64 8}
-!69 = !{i64 0, i64 64, !16}
-!70 = !{!24, !6, i64 960}
-!71 = !{!24, !9, i64 756}
-!72 = !{!24, !9, i64 752}
-!73 = !{!24, !9, i64 792}
-!74 = !{!24, !6, i64 880}
-!75 = !{!22, !9, i64 0}
-!76 = !{!22, !9, i64 4}
-!77 = !{!35, !35, i64 0}
-!78 = distinct !{!78, !48}
+!68 = distinct !{!68, !48}
+!69 = !{!24, !20, i64 8}
+!70 = !{i64 0, i64 64, !16}
+!71 = !{!24, !6, i64 960}
+!72 = !{!24, !9, i64 756}
+!73 = !{!24, !9, i64 752}
+!74 = !{!24, !9, i64 792}
+!75 = !{!24, !6, i64 880}
+!76 = !{!22, !9, i64 0}
+!77 = !{!22, !9, i64 4}
+!78 = !{!35, !35, i64 0}
 !79 = distinct !{!79, !48}
 !80 = distinct !{!80, !48}
+!81 = distinct !{!81, !48}
 end_hunk_8

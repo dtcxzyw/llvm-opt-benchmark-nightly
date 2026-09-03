@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.g
   %rt.bound0 = icmp ult i64 %i.av, %i.ay
   %rt.bound1 = icmp ult i64 %i.ax, %i.aw
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.rtscalar, label %.rtvec
+  br i1 %rt.conflict, label %.rtscalar, label %.rtvec, !prof !46
 
 .rtcont:                                          ; preds = %.rtvec, %.rtscalar, %bb.d, %bb.h, %bb.f, %bb.c, %bb.b, %bb.a
   %.0 = phi i32 [ -3, %bb.f ], [ -2, %bb.a ], [ -2, %bb.b ], [ -2, %bb.c ], [ -3, %bb.d ], [ 0, %bb.h ], [ 0, %.rtscalar ], [ 0, %.rtvec ]

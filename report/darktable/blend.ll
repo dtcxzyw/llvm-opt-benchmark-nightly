@@ -205,7 +205,7 @@ _blend_legacy_blend_mode.exit383:                 ; preds = %switch.lookup585, %
   %rt.bound0 = icmp ult i64 %i.aq, %i.at
   %rt.bound1 = icmp ult i64 %i.as, %i.ar
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %_blend_legacy_blend_mode.exit383.rtscalar, label %_blend_legacy_blend_mode.exit383.rtvec
+  br i1 %rt.conflict, label %_blend_legacy_blend_mode.exit383.rtscalar, label %_blend_legacy_blend_mode.exit383.rtvec, !prof !199
 
 bb.i:                                             ; preds = %bb.f
   %i.au = icmp eq i32 %2, 3
@@ -234,11 +234,11 @@ bb.k:                                             ; preds = %bb.j
   store float %.sroa.18.0, ptr %.sroa.18.0..sroa_idx542, align 4
   %.sroa.19.0..sroa_idx561 = getelementptr inbounds nuw i8, ptr %3, i64 380
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %.sroa.19.0..sroa_idx561, ptr noundef nonnull align 4 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 380), i64 40, i1 false), !tbaa.struct !191
-  %i.av = load i32, ptr %1, align 4, !tbaa !200   ; 5 uses
+  %i.av = load i32, ptr %1, align 4, !tbaa !201   ; 5 uses
   %i.aw = icmp ne i32 %i.av, 0                    ; 2 uses
   %i.ax = zext i1 %i.aw to i32
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.az = load i32, ptr %i.ay, align 4, !tbaa !201 ; 2 uses
+  %i.az = load i32, ptr %i.ay, align 4, !tbaa !202 ; 2 uses
   %.not372.inv = icmp slt i32 %i.az, 0
   %i.ba = and i1 %i.aw, %.not372.inv
   %spec.select376 = select i1 %i.ba, i32 4, i32 0
@@ -267,11 +267,11 @@ _blend_legacy_blend_mode.exit386:                 ; preds = %switch.lookup593, %
   %.not.i385 = phi i32 [ %i.bc, %bb.k ], [ %switch.load598, %switch.lookup593 ], [ %i.bc, %switch.hole_check592 ]
   store i32 %.not.i385, ptr %.sroa.15.0..sroa_idx455, align 4, !tbaa !35
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.bg = load float, ptr %i.bf, align 4, !tbaa !202
+  %i.bg = load float, ptr %i.bf, align 4, !tbaa !203
   %i.bh = getelementptr inbounds nuw i8, ptr %3, i64 16
   store float %i.bg, ptr %i.bh, align 4, !tbaa !84
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.bj = load i32, ptr %i.bi, align 4, !tbaa !203
+  %i.bj = load i32, ptr %i.bi, align 4, !tbaa !204
   %i.bk = getelementptr inbounds nuw i8, ptr %3, i64 24
   store i32 %i.bj, ptr %i.bk, align 4, !tbaa !136
   %i.bl = and i32 %i.az, 2147483647
@@ -311,23 +311,23 @@ bb.n:                                             ; preds = %bb.m
   store float %.sroa.18.0, ptr %.sroa.18.0..sroa_idx544, align 4
   %.sroa.19.0..sroa_idx562 = getelementptr inbounds nuw i8, ptr %3, i64 380
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %.sroa.19.0..sroa_idx562, ptr noundef nonnull align 4 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 380), i64 40, i1 false), !tbaa.struct !191
-  %i.br = load i32, ptr %1, align 4, !tbaa !205   ; 2 uses
+  %i.br = load i32, ptr %1, align 4, !tbaa !206   ; 2 uses
   %i.bs = icmp ne i32 %i.br, 0                    ; 2 uses
   %i.bt = zext i1 %i.bs to i32
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.bv = tail call fastcc i32 @_blend_legacy_blend_mode(i32 noundef %i.br)
   store i32 %i.bv, ptr %.sroa.15.0..sroa_idx456, align 4, !tbaa !35
   %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.bx = load float, ptr %i.bw, align 4, !tbaa !206
+  %i.bx = load float, ptr %i.bw, align 4, !tbaa !207
   %i.by = getelementptr inbounds nuw i8, ptr %3, i64 16
   store float %i.bx, ptr %i.by, align 4, !tbaa !84
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ca = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.cc = load float, ptr %i.cb, align 4, !tbaa !207
+  %i.cc = load float, ptr %i.cb, align 4, !tbaa !208
   %i.cd = getelementptr inbounds nuw i8, ptr %3, i64 40
   store float %i.cc, ptr %i.cd, align 4, !tbaa !81
-  %i.ce = load i32, ptr %i.bu, align 4, !tbaa !208
+  %i.ce = load i32, ptr %i.bu, align 4, !tbaa !209
   %i.cf = load <2 x i32>, ptr %i.bz, align 4, !tbaa !79
   %.not370.inv = icmp slt i32 %i.ce, 0
   %i.cg = and i1 %i.bs, %.not370.inv
@@ -370,27 +370,27 @@ bb.q:                                             ; preds = %bb.p
   store float %.sroa.18.0, ptr %.sroa.18.0..sroa_idx546, align 4
   %.sroa.19.0..sroa_idx563 = getelementptr inbounds nuw i8, ptr %3, i64 380
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %.sroa.19.0..sroa_idx563, ptr noundef nonnull align 4 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 380), i64 40, i1 false), !tbaa.struct !191
-  %i.cn = load i32, ptr %1, align 4, !tbaa !210   ; 2 uses
+  %i.cn = load i32, ptr %1, align 4, !tbaa !211   ; 2 uses
   store i32 %i.cn, ptr %3, align 4, !tbaa !76
   %i.co = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.cp = load i32, ptr %i.co, align 4, !tbaa !211
+  %i.cp = load i32, ptr %i.co, align 4, !tbaa !212
   %i.cq = tail call fastcc i32 @_blend_legacy_blend_mode(i32 noundef %i.cp)
   store i32 %i.cq, ptr %.sroa.15.0..sroa_idx457, align 4, !tbaa !35
   %i.cr = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.cs = load float, ptr %i.cr, align 4, !tbaa !212
+  %i.cs = load float, ptr %i.cr, align 4, !tbaa !213
   %i.ct = getelementptr inbounds nuw i8, ptr %3, i64 16
   store float %i.cs, ptr %i.ct, align 4, !tbaa !84
   %i.cu = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 2 uses
   %i.cw = load <2 x i32>, ptr %i.cu, align 4, !tbaa !79
-  %i.cx = load i32, ptr %i.cu, align 4, !tbaa !213 ; 3 uses
+  %i.cx = load i32, ptr %i.cu, align 4, !tbaa !214 ; 3 uses
   store <2 x i32> %i.cw, ptr %i.cv, align 4, !tbaa !79
   %i.cy = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.cz = load float, ptr %i.cy, align 4, !tbaa !214
+  %i.cz = load float, ptr %i.cy, align 4, !tbaa !215
   %i.da = getelementptr inbounds nuw i8, ptr %3, i64 40
   store float %i.cz, ptr %i.da, align 4, !tbaa !81
   %i.db = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %i.dc = load i32, ptr %i.db, align 4, !tbaa !215 ; 3 uses
+  %i.dc = load i32, ptr %i.db, align 4, !tbaa !216 ; 3 uses
   %i.dd = or i32 %i.dc, 31
   %.not368571 = icmp slt i32 %i.dc, 0
   %i.de = select i1 %.not368571, i32 %i.dd, i32 %i.dc
@@ -454,27 +454,27 @@ bb.w:                                             ; preds = %bb.v
   store float %.sroa.18.0, ptr %.sroa.18.0..sroa_idx548, align 4
   %.sroa.19.0..sroa_idx564 = getelementptr inbounds nuw i8, ptr %3, i64 380
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %.sroa.19.0..sroa_idx564, ptr noundef nonnull align 4 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 380), i64 40, i1 false), !tbaa.struct !191
-  %i.dq = load i32, ptr %1, align 4, !tbaa !217   ; 2 uses
+  %i.dq = load i32, ptr %1, align 4, !tbaa !218   ; 2 uses
   store i32 %i.dq, ptr %3, align 4, !tbaa !76
   %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.ds = load i32, ptr %i.dr, align 4, !tbaa !218
+  %i.ds = load i32, ptr %i.dr, align 4, !tbaa !219
   %i.dt = tail call fastcc i32 @_blend_legacy_blend_mode(i32 noundef %i.ds)
   store i32 %i.dt, ptr %.sroa.15.0..sroa_idx458, align 4, !tbaa !35
   %i.du = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.dv = load float, ptr %i.du, align 4, !tbaa !219
+  %i.dv = load float, ptr %i.du, align 4, !tbaa !220
   %i.dw = getelementptr inbounds nuw i8, ptr %3, i64 16
   store float %i.dv, ptr %i.dw, align 4, !tbaa !84
   %i.dx = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 2 uses
   %i.dz = load <2 x i32>, ptr %i.dx, align 4, !tbaa !79
-  %i.ea = load i32, ptr %i.dx, align 4, !tbaa !220 ; 3 uses
+  %i.ea = load i32, ptr %i.dx, align 4, !tbaa !221 ; 3 uses
   store <2 x i32> %i.dz, ptr %i.dy, align 4, !tbaa !79
   %i.eb = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.ec = load float, ptr %i.eb, align 4, !tbaa !221
+  %i.ec = load float, ptr %i.eb, align 4, !tbaa !222
   %i.ed = getelementptr inbounds nuw i8, ptr %3, i64 40
   store float %i.ec, ptr %i.ed, align 4, !tbaa !81
   %i.ee = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %i.ef = load i32, ptr %i.ee, align 4, !tbaa !222
+  %i.ef = load i32, ptr %i.ee, align 4, !tbaa !223
   %i.eg = getelementptr inbounds nuw i8, ptr %3, i64 28
   store i32 %i.ef, ptr %i.eg, align 4, !tbaa !36
   %i.eh = getelementptr inbounds nuw i8, ptr %3, i64 68
@@ -534,27 +534,27 @@ bb.ac:                                            ; preds = %bb.ab
   store float %.sroa.18.0, ptr %.sroa.18.0..sroa_idx550, align 4
   %.sroa.19.0..sroa_idx565 = getelementptr inbounds nuw i8, ptr %3, i64 380
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %.sroa.19.0..sroa_idx565, ptr noundef nonnull align 4 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 380), i64 40, i1 false), !tbaa.struct !191
-  %i.eq = load i32, ptr %1, align 4, !tbaa !224   ; 2 uses
+  %i.eq = load i32, ptr %1, align 4, !tbaa !225   ; 2 uses
   store i32 %i.eq, ptr %3, align 4, !tbaa !76
   %i.er = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.es = load i32, ptr %i.er, align 4, !tbaa !225
+  %i.es = load i32, ptr %i.er, align 4, !tbaa !226
   %i.et = tail call fastcc i32 @_blend_legacy_blend_mode(i32 noundef %i.es)
   store i32 %i.et, ptr %.sroa.15.0..sroa_idx459, align 4, !tbaa !35
   %i.eu = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ev = load float, ptr %i.eu, align 4, !tbaa !226
+  %i.ev = load float, ptr %i.eu, align 4, !tbaa !227
   %i.ew = getelementptr inbounds nuw i8, ptr %3, i64 16
   store float %i.ev, ptr %i.ew, align 4, !tbaa !84
   %i.ex = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 2 uses
   %i.ez = load <2 x i32>, ptr %i.ex, align 4, !tbaa !79
-  %i.fa = load i32, ptr %i.ex, align 4, !tbaa !227 ; 3 uses
+  %i.fa = load i32, ptr %i.ex, align 4, !tbaa !228 ; 3 uses
   store <2 x i32> %i.ez, ptr %i.ey, align 4, !tbaa !79
   %i.fb = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.fc = load float, ptr %i.fb, align 4, !tbaa !228
+  %i.fc = load float, ptr %i.fb, align 4, !tbaa !229
   %i.fd = getelementptr inbounds nuw i8, ptr %3, i64 40
   store float %i.fc, ptr %i.fd, align 4, !tbaa !81
   %i.fe = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %i.ff = load i32, ptr %i.fe, align 4, !tbaa !229
+  %i.ff = load i32, ptr %i.fe, align 4, !tbaa !230
   %i.fg = getelementptr inbounds nuw i8, ptr %3, i64 28
   store i32 %i.ff, ptr %i.fg, align 4, !tbaa !36
   %i.fh = getelementptr inbounds nuw i8, ptr %3, i64 68
@@ -614,31 +614,31 @@ bb.ai:                                            ; preds = %bb.ah
   store float %.sroa.18.0, ptr %.sroa.18.0..sroa_idx552, align 4
   %.sroa.19.0..sroa_idx566 = getelementptr inbounds nuw i8, ptr %3, i64 380
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %.sroa.19.0..sroa_idx566, ptr noundef nonnull align 4 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 380), i64 40, i1 false), !tbaa.struct !191
-  %i.fq = load i32, ptr %1, align 4, !tbaa !231   ; 2 uses
+  %i.fq = load i32, ptr %1, align 4, !tbaa !232   ; 2 uses
   store i32 %i.fq, ptr %3, align 4, !tbaa !76
   %i.fr = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.fs = load i32, ptr %i.fr, align 4, !tbaa !232
+  %i.fs = load i32, ptr %i.fr, align 4, !tbaa !233
   %i.ft = tail call fastcc i32 @_blend_legacy_blend_mode(i32 noundef %i.fs)
   store i32 %i.ft, ptr %.sroa.15.0..sroa_idx460, align 4, !tbaa !35
   %i.fu = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.fv = load float, ptr %i.fu, align 4, !tbaa !233
+  %i.fv = load float, ptr %i.fu, align 4, !tbaa !234
   %i.fw = getelementptr inbounds nuw i8, ptr %3, i64 16
   store float %i.fv, ptr %i.fw, align 4, !tbaa !84
   %i.fx = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 2 uses
   %i.fz = load <2 x i32>, ptr %i.fx, align 4, !tbaa !79
-  %i.ga = load i32, ptr %i.fx, align 4, !tbaa !234 ; 3 uses
+  %i.ga = load i32, ptr %i.fx, align 4, !tbaa !235 ; 3 uses
   store <2 x i32> %i.fz, ptr %i.fy, align 4, !tbaa !79
   %i.gb = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %i.gc = load i32, ptr %i.gb, align 4, !tbaa !235
+  %i.gc = load i32, ptr %i.gb, align 4, !tbaa !236
   %i.gd = getelementptr inbounds nuw i8, ptr %3, i64 28
   store i32 %i.gc, ptr %i.gd, align 4, !tbaa !36
   %i.ge = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.gf = load float, ptr %i.ge, align 4, !tbaa !236
+  %i.gf = load float, ptr %i.ge, align 4, !tbaa !237
   %i.gg = getelementptr inbounds nuw i8, ptr %3, i64 32
   store float %i.gf, ptr %i.gg, align 4, !tbaa !80
   %i.gh = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %i.gi = load i32, ptr %i.gh, align 4, !tbaa !237
+  %i.gi = load i32, ptr %i.gh, align 4, !tbaa !238
   %i.gj = getelementptr inbounds nuw i8, ptr %3, i64 36
   store i32 %i.gi, ptr %i.gj, align 4, !tbaa !83
   %i.gk = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -646,7 +646,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.gm = load <2 x float>, ptr %i.gk, align 4, !tbaa !34
   store <2 x float> %i.gm, ptr %i.gl, align 4, !tbaa !34
   %i.gn = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.go = load float, ptr %i.gn, align 4, !tbaa !238
+  %i.go = load float, ptr %i.gn, align 4, !tbaa !239
   %i.gp = getelementptr inbounds nuw i8, ptr %3, i64 48
   store float %i.go, ptr %i.gp, align 4, !tbaa !82
   %i.gq = getelementptr inbounds nuw i8, ptr %3, i64 68
@@ -706,31 +706,31 @@ bb.ao:                                            ; preds = %bb.an
   store float %.sroa.18.0, ptr %.sroa.18.0..sroa_idx554, align 4
   %.sroa.19.0..sroa_idx567 = getelementptr inbounds nuw i8, ptr %3, i64 380
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %.sroa.19.0..sroa_idx567, ptr noundef nonnull align 4 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 380), i64 40, i1 false), !tbaa.struct !191
-  %i.gz = load i32, ptr %1, align 4, !tbaa !240   ; 3 uses
+  %i.gz = load i32, ptr %1, align 4, !tbaa !241   ; 3 uses
   store i32 %i.gz, ptr %3, align 4, !tbaa !76
   %i.ha = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.hb = load i32, ptr %i.ha, align 4, !tbaa !241
+  %i.hb = load i32, ptr %i.ha, align 4, !tbaa !242
   %i.hc = tail call fastcc i32 @_blend_legacy_blend_mode(i32 noundef %i.hb)
   store i32 %i.hc, ptr %.sroa.15.0..sroa_idx461, align 4, !tbaa !35
   %i.hd = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.he = load float, ptr %i.hd, align 4, !tbaa !242
+  %i.he = load float, ptr %i.hd, align 4, !tbaa !243
   %i.hf = getelementptr inbounds nuw i8, ptr %3, i64 16
   store float %i.he, ptr %i.hf, align 4, !tbaa !84
   %i.hg = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 2 uses
   %i.hi = load <2 x i32>, ptr %i.hg, align 4, !tbaa !79
-  %i.hj = load i32, ptr %i.hg, align 4, !tbaa !243 ; 3 uses
+  %i.hj = load i32, ptr %i.hg, align 4, !tbaa !244 ; 3 uses
   store <2 x i32> %i.hi, ptr %i.hh, align 4, !tbaa !79
   %i.hk = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %i.hl = load i32, ptr %i.hk, align 4, !tbaa !244
+  %i.hl = load i32, ptr %i.hk, align 4, !tbaa !245
   %i.hm = getelementptr inbounds nuw i8, ptr %3, i64 28
   store i32 %i.hl, ptr %i.hm, align 4, !tbaa !36
   %i.hn = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.ho = load float, ptr %i.hn, align 4, !tbaa !245
+  %i.ho = load float, ptr %i.hn, align 4, !tbaa !246
   %i.hp = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
   store float %i.ho, ptr %i.hp, align 4, !tbaa !80
   %i.hq = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %i.hr = load i32, ptr %i.hq, align 4, !tbaa !246
+  %i.hr = load i32, ptr %i.hq, align 4, !tbaa !247
   %i.hs = getelementptr inbounds nuw i8, ptr %3, i64 36 ; 2 uses
   store i32 %i.hr, ptr %i.hs, align 4, !tbaa !83
   %i.ht = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -738,7 +738,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.hv = load <2 x float>, ptr %i.ht, align 4, !tbaa !34
   store <2 x float> %i.hv, ptr %i.hu, align 4, !tbaa !34
   %i.hw = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.hx = load float, ptr %i.hw, align 4, !tbaa !247
+  %i.hx = load float, ptr %i.hw, align 4, !tbaa !248
   %i.hy = getelementptr inbounds nuw i8, ptr %3, i64 48
   store float %i.hx, ptr %i.hy, align 4, !tbaa !82
   %i.hz = getelementptr inbounds nuw i8, ptr %3, i64 68
@@ -748,24 +748,24 @@ bb.ao:                                            ; preds = %bb.an
   %i.ic = getelementptr inbounds nuw i8, ptr %1, i64 316 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.ib, ptr noundef nonnull align 4 dereferenceable(20) %i.ic, i64 20, i1 false)
   %i.id = getelementptr inbounds nuw i8, ptr %1, i64 336
-  %i.ie = load i32, ptr %i.id, align 4, !tbaa !248
+  %i.ie = load i32, ptr %i.id, align 4, !tbaa !249
   %i.if = getelementptr inbounds nuw i8, ptr %3, i64 408
-  store i32 %i.ie, ptr %i.if, align 4, !tbaa !249
+  store i32 %i.ie, ptr %i.if, align 4, !tbaa !250
   %i.ig = load i8, ptr %i.ic, align 4, !tbaa !189
   %.not363 = icmp eq i8 %i.ig, 0
   br i1 %.not363, label %bb.aq, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
   %i.ih = getelementptr inbounds nuw i8, ptr %1, i64 340
-  %i.ii = load i32, ptr %i.ih, align 4, !tbaa !250
+  %i.ii = load i32, ptr %i.ih, align 4, !tbaa !251
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ao, %bb.ap
   %i.ij = phi i32 [ %i.ii, %bb.ap ], [ -1, %bb.ao ]
   %i.ik = getelementptr inbounds nuw i8, ptr %3, i64 412
-  store i32 %i.ij, ptr %i.ik, align 4, !tbaa !251
+  store i32 %i.ij, ptr %i.ik, align 4, !tbaa !252
   %i.il = getelementptr inbounds nuw i8, ptr %1, i64 344
-  %i.im = load i32, ptr %i.il, align 4, !tbaa !252
+  %i.im = load i32, ptr %i.il, align 4, !tbaa !253
   %i.in = getelementptr inbounds nuw i8, ptr %3, i64 416
   store i32 %i.im, ptr %i.in, align 4, !tbaa !123
   %i.io = getelementptr inbounds nuw i8, ptr %3, i64 56
@@ -834,10 +834,10 @@ bb.ax:                                            ; preds = %bb.aw
   %.sroa.19.0..sroa_idx568 = getelementptr inbounds nuw i8, ptr %3, i64 380
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %.sroa.19.0..sroa_idx568, ptr noundef nonnull align 4 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 380), i64 40, i1 false), !tbaa.struct !191
   %i.iw = load <2 x i32>, ptr %1, align 4, !tbaa !79
-  %i.ix = load i32, ptr %1, align 4, !tbaa !254   ; 2 uses
+  %i.ix = load i32, ptr %1, align 4, !tbaa !255   ; 2 uses
   store <2 x i32> %i.iw, ptr %3, align 4, !tbaa !79
   %i.iy = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.iz = load i32, ptr %i.iy, align 4, !tbaa !255
+  %i.iz = load i32, ptr %i.iy, align 4, !tbaa !256
   %i.ja = tail call fastcc i32 @_blend_legacy_blend_mode(i32 noundef %i.iz)
   store i32 %i.ja, ptr %.sroa.15.0..sroa_idx462, align 4, !tbaa !35
   %i.jb = getelementptr inbounds nuw i8, ptr %1, i64 12
@@ -847,18 +847,18 @@ bb.ax:                                            ; preds = %bb.aw
   %i.je = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
   %i.jf = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 2 uses
   %i.jg = load <2 x i32>, ptr %i.je, align 4, !tbaa !79
-  %i.jh = load i32, ptr %i.je, align 4, !tbaa !256 ; 3 uses
+  %i.jh = load i32, ptr %i.je, align 4, !tbaa !257 ; 3 uses
   store <2 x i32> %i.jg, ptr %i.jf, align 4, !tbaa !79
   %i.ji = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %i.jj = load i32, ptr %i.ji, align 4, !tbaa !257
+  %i.jj = load i32, ptr %i.ji, align 4, !tbaa !258
   %i.jk = getelementptr inbounds nuw i8, ptr %3, i64 28
   store i32 %i.jj, ptr %i.jk, align 4, !tbaa !36
   %i.jl = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.jm = load float, ptr %i.jl, align 4, !tbaa !258
+  %i.jm = load float, ptr %i.jl, align 4, !tbaa !259
   %i.jn = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
   store float %i.jm, ptr %i.jn, align 4, !tbaa !80
   %i.jo = getelementptr inbounds nuw i8, ptr %1, i64 36
-  %i.jp = load i32, ptr %i.jo, align 4, !tbaa !259
+  %i.jp = load i32, ptr %i.jo, align 4, !tbaa !260
   %i.jq = getelementptr inbounds nuw i8, ptr %3, i64 36 ; 2 uses
   store i32 %i.jp, ptr %i.jq, align 4, !tbaa !83
   %i.jr = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -866,7 +866,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.jt = load <2 x float>, ptr %i.jr, align 4, !tbaa !34
   store <2 x float> %i.jt, ptr %i.js, align 4, !tbaa !34
   %i.ju = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.jv = load float, ptr %i.ju, align 4, !tbaa !260
+  %i.jv = load float, ptr %i.ju, align 4, !tbaa !261
   %i.jw = getelementptr inbounds nuw i8, ptr %3, i64 48
   store float %i.jv, ptr %i.jw, align 4, !tbaa !82
   %i.jx = getelementptr inbounds nuw i8, ptr %3, i64 52
@@ -887,24 +887,24 @@ bb.ax:                                            ; preds = %bb.aw
   %i.kj = getelementptr inbounds nuw i8, ptr %1, i64 388 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.ki, ptr noundef nonnull align 4 dereferenceable(20) %i.kj, i64 20, i1 false)
   %i.kk = getelementptr inbounds nuw i8, ptr %1, i64 408
-  %i.kl = load i32, ptr %i.kk, align 4, !tbaa !261
+  %i.kl = load i32, ptr %i.kk, align 4, !tbaa !262
   %i.km = getelementptr inbounds nuw i8, ptr %3, i64 408
-  store i32 %i.kl, ptr %i.km, align 4, !tbaa !249
+  store i32 %i.kl, ptr %i.km, align 4, !tbaa !250
   %i.kn = load i8, ptr %i.kj, align 4, !tbaa !189
   %.not361 = icmp eq i8 %i.kn, 0
   br i1 %.not361, label %bb.az, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
   %i.ko = getelementptr inbounds nuw i8, ptr %1, i64 412
-  %i.kp = load i32, ptr %i.ko, align 4, !tbaa !262
+  %i.kp = load i32, ptr %i.ko, align 4, !tbaa !263
   br label %bb.az
 
 bb.az:                                            ; preds = %bb.ax, %bb.ay
   %i.kq = phi i32 [ %i.kp, %bb.ay ], [ -1, %bb.ax ]
   %i.kr = getelementptr inbounds nuw i8, ptr %3, i64 412
-  store i32 %i.kq, ptr %i.kr, align 4, !tbaa !251
+  store i32 %i.kq, ptr %i.kr, align 4, !tbaa !252
   %i.ks = getelementptr inbounds nuw i8, ptr %1, i64 416
-  %i.kt = load i32, ptr %i.ks, align 4, !tbaa !263
+  %i.kt = load i32, ptr %i.ks, align 4, !tbaa !264
   %i.ku = getelementptr inbounds nuw i8, ptr %3, i64 416
   store i32 %i.kt, ptr %i.ku, align 4, !tbaa !123
   %i.kv = getelementptr inbounds nuw i8, ptr %3, i64 56
@@ -955,7 +955,7 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %.not357, label %bb.bg, label %_fix_masks_combine.exit
 
 bb.bg:                                            ; preds = %bb.bf
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(420) %3, ptr noundef nonnull align 4 dereferenceable(420) %1, i64 420, i1 false), !tbaa.struct !264
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(420) %3, ptr noundef nonnull align 4 dereferenceable(420) %1, i64 420, i1 false), !tbaa.struct !265
   %i.ld = load i32, ptr %3, align 4, !tbaa !76    ; 2 uses
   %i.le = and i32 %i.ld, 2
   %.not.i411 = icmp eq i32 %i.le, 0
@@ -992,13 +992,13 @@ _fix_masks_combine.exit414:                       ; preds = %bb.bg, %bb.bh, %.si
 
 bb.bk:                                            ; preds = %_fix_masks_combine.exit414
   %i.ln = getelementptr inbounds nuw i8, ptr %1, i64 412
-  %i.lo = load i32, ptr %i.ln, align 4, !tbaa !251
+  %i.lo = load i32, ptr %i.ln, align 4, !tbaa !252
   br label %bb.bl
 
 bb.bl:                                            ; preds = %_fix_masks_combine.exit414, %bb.bk
   %i.lp = phi i32 [ %i.lo, %bb.bk ], [ -1, %_fix_masks_combine.exit414 ]
   %i.lq = getelementptr inbounds nuw i8, ptr %3, i64 412
-  store i32 %i.lp, ptr %i.lq, align 4, !tbaa !251
+  store i32 %i.lp, ptr %i.lq, align 4, !tbaa !252
   %i.lr = getelementptr inbounds nuw i8, ptr %3, i64 56
   store i32 0, ptr %i.lr, align 4, !tbaa !138
   %i.ls = and i32 %i.ld, 8
@@ -1024,7 +1024,7 @@ bb.bo:                                            ; preds = %bb.bn
   br i1 %.not355, label %bb.bp, label %_fix_masks_combine.exit
 
 bb.bp:                                            ; preds = %bb.bo
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(420) %3, ptr noundef nonnull align 4 dereferenceable(420) %1, i64 420, i1 false), !tbaa.struct !264
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(420) %3, ptr noundef nonnull align 4 dereferenceable(420) %1, i64 420, i1 false), !tbaa.struct !265
   %i.lx = getelementptr inbounds nuw i8, ptr %1, i64 388
   %i.ly = load i8, ptr %i.lx, align 4, !tbaa !189
   %.not356 = icmp eq i8 %i.ly, 0
@@ -1032,13 +1032,13 @@ bb.bp:                                            ; preds = %bb.bo
 
 bb.bq:                                            ; preds = %bb.bp
   %i.lz = getelementptr inbounds nuw i8, ptr %1, i64 412
-  %i.ma = load i32, ptr %i.lz, align 4, !tbaa !251
+  %i.ma = load i32, ptr %i.lz, align 4, !tbaa !252
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.bp, %bb.bq
   %i.mb = phi i32 [ %i.ma, %bb.bq ], [ -1, %bb.bp ]
   %i.mc = getelementptr inbounds nuw i8, ptr %3, i64 412
-  store i32 %i.mb, ptr %i.mc, align 4, !tbaa !251
+  store i32 %i.mb, ptr %i.mc, align 4, !tbaa !252
   %i.md = getelementptr inbounds nuw i8, ptr %3, i64 56
   store i32 0, ptr %i.md, align 4, !tbaa !138
   %i.me = load i32, ptr %3, align 4, !tbaa !76
@@ -1063,7 +1063,7 @@ bb.bt:                                            ; preds = %bb.bn
   br i1 %or.cond378, label %bb.bu, label %_fix_masks_combine.exit
 
 bb.bu:                                            ; preds = %bb.bt
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(420) %3, ptr noundef nonnull align 4 dereferenceable(420) %1, i64 420, i1 false), !tbaa.struct !264
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(420) %3, ptr noundef nonnull align 4 dereferenceable(420) %1, i64 420, i1 false), !tbaa.struct !265
   %i.ml = load i32, ptr %3, align 4, !tbaa !76
   %i.mm = and i32 %i.ml, 8
   %.not.i419 = icmp eq i32 %i.mm, 0
@@ -1085,11 +1085,11 @@ _fix_masks_combine.exit:                          ; preds = %_blend_legacy_blend
 _blend_legacy_blend_mode.exit383.rtvec:           ; preds = %_blend_legacy_blend_mode.exit383
   store i32 %.not.i382, ptr %.sroa.15.0..sroa_idx454, align 4, !tbaa !35
   %i.mq = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.mr = load float, ptr %i.mq, align 4, !tbaa !265
+  %i.mr = load float, ptr %i.mq, align 4, !tbaa !266
   %i.ms = getelementptr inbounds nuw i8, ptr %3, i64 16
   store float %i.mr, ptr %i.ms, align 4, !tbaa !84
   %i.mt = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.mu = load i32, ptr %i.mt, align 4, !tbaa !266
+  %i.mu = load i32, ptr %i.mt, align 4, !tbaa !267
   %i.mv = getelementptr inbounds nuw i8, ptr %3, i64 24
   store i32 %i.mu, ptr %i.mv, align 4, !tbaa !136
   %i.mw = and i32 %i.ak, 255
@@ -1118,11 +1118,11 @@ _blend_legacy_blend_mode.exit383.rtvec:           ; preds = %_blend_legacy_blend
 _blend_legacy_blend_mode.exit383.rtscalar:        ; preds = %_blend_legacy_blend_mode.exit383
   store i32 %.not.i382, ptr %.sroa.15.0..sroa_idx454, align 4, !tbaa !35
   %i.nl = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.nm = load float, ptr %i.nl, align 4, !tbaa !265
+  %i.nm = load float, ptr %i.nl, align 4, !tbaa !266
   %i.nn = getelementptr inbounds nuw i8, ptr %3, i64 16
   store float %i.nm, ptr %i.nn, align 4, !tbaa !84
   %i.no = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.np = load i32, ptr %i.no, align 4, !tbaa !266
+  %i.np = load i32, ptr %i.no, align 4, !tbaa !267
   %i.nq = getelementptr inbounds nuw i8, ptr %3, i64 24
   store i32 %i.np, ptr %i.nq, align 4, !tbaa !136
   %i.nr = and i32 %i.ak, 255
@@ -1301,7 +1301,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 696
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !267
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !268
   %i.e = icmp eq i32 %i.d, 0
   br i1 %i.e, label %.sink.split, label %bb.c
 
@@ -1589,73 +1589,74 @@ attributes #15 = { nounwind allocsize(0,1) }
 !196 = !{!"dt_develop_blend_params2_t", !9, i64 0, !31, i64 4, !9, i64 8, !9, i64 12, !8, i64 16}
 !197 = !{!196, !9, i64 0}
 !198 = !{!196, !9, i64 12}
-!199 = !{!"dt_develop_blend_params3_t", !9, i64 0, !31, i64 4, !9, i64 8, !9, i64 12, !8, i64 16}
-!200 = !{!199, !9, i64 0}
-!201 = !{!199, !9, i64 12}
-!202 = !{!199, !31, i64 4}
-!203 = !{!199, !9, i64 8}
-!204 = !{!"dt_develop_blend_params4_t", !9, i64 0, !31, i64 4, !9, i64 8, !9, i64 12, !31, i64 16, !8, i64 20}
-!205 = !{!204, !9, i64 0}
-!206 = !{!204, !31, i64 4}
-!207 = !{!204, !31, i64 16}
-!208 = !{!204, !9, i64 12}
-!209 = !{!"dt_develop_blend_params5_t", !9, i64 0, !9, i64 4, !31, i64 8, !9, i64 12, !9, i64 16, !9, i64 20, !31, i64 24, !8, i64 28, !8, i64 44}
-!210 = !{!209, !9, i64 0}
-!211 = !{!209, !9, i64 4}
-!212 = !{!209, !31, i64 8}
-!213 = !{!209, !9, i64 12}
-!214 = !{!209, !31, i64 24}
-!215 = !{!209, !9, i64 20}
-!216 = !{!"dt_develop_blend_params6_t", !9, i64 0, !9, i64 4, !31, i64 8, !9, i64 12, !9, i64 16, !9, i64 20, !31, i64 24, !8, i64 28, !8, i64 44}
-!217 = !{!216, !9, i64 0}
-!218 = !{!216, !9, i64 4}
-!219 = !{!216, !31, i64 8}
-!220 = !{!216, !9, i64 12}
-!221 = !{!216, !31, i64 24}
-!222 = !{!216, !9, i64 20}
-!223 = !{!"dt_develop_blend_params7_t", !9, i64 0, !9, i64 4, !31, i64 8, !9, i64 12, !9, i64 16, !9, i64 20, !31, i64 24, !8, i64 28, !8, i64 44}
-!224 = !{!223, !9, i64 0}
-!225 = !{!223, !9, i64 4}
-!226 = !{!223, !31, i64 8}
-!227 = !{!223, !9, i64 12}
-!228 = !{!223, !31, i64 24}
-!229 = !{!223, !9, i64 20}
-!230 = !{!"dt_develop_blend_params8_t", !9, i64 0, !9, i64 4, !31, i64 8, !9, i64 12, !9, i64 16, !9, i64 20, !31, i64 24, !9, i64 28, !31, i64 32, !31, i64 36, !31, i64 40, !8, i64 44, !8, i64 60}
-!231 = !{!230, !9, i64 0}
-!232 = !{!230, !9, i64 4}
-!233 = !{!230, !31, i64 8}
-!234 = !{!230, !9, i64 12}
-!235 = !{!230, !9, i64 20}
-!236 = !{!230, !31, i64 24}
-!237 = !{!230, !9, i64 28}
-!238 = !{!230, !31, i64 40}
-!239 = !{!"dt_develop_blend_params9_t", !9, i64 0, !9, i64 4, !31, i64 8, !9, i64 12, !9, i64 16, !9, i64 20, !31, i64 24, !9, i64 28, !31, i64 32, !31, i64 36, !31, i64 40, !8, i64 44, !8, i64 60, !8, i64 316, !9, i64 336, !9, i64 340, !9, i64 344}
-!240 = !{!239, !9, i64 0}
-!241 = !{!239, !9, i64 4}
-!242 = !{!239, !31, i64 8}
-!243 = !{!239, !9, i64 12}
-!244 = !{!239, !9, i64 20}
-!245 = !{!239, !31, i64 24}
-!246 = !{!239, !9, i64 28}
-!247 = !{!239, !31, i64 40}
-!248 = !{!239, !9, i64 336}
-!249 = !{!32, !9, i64 408}
-!250 = !{!239, !9, i64 340}
-!251 = !{!32, !9, i64 412}
-!252 = !{!239, !9, i64 344}
-!253 = !{!"dt_develop_blend_params10_t", !9, i64 0, !9, i64 4, !9, i64 8, !31, i64 12, !31, i64 16, !9, i64 20, !9, i64 24, !9, i64 28, !31, i64 32, !9, i64 36, !31, i64 40, !31, i64 44, !31, i64 48, !8, i64 52, !8, i64 68, !8, i64 324, !8, i64 388, !9, i64 408, !9, i64 412, !9, i64 416}
-!254 = !{!253, !9, i64 0}
-!255 = !{!253, !9, i64 8}
-!256 = !{!253, !9, i64 20}
-!257 = !{!253, !9, i64 28}
-!258 = !{!253, !31, i64 32}
-!259 = !{!253, !9, i64 36}
-!260 = !{!253, !31, i64 48}
-!261 = !{!253, !9, i64 408}
-!262 = !{!253, !9, i64 412}
-!263 = !{!253, !9, i64 416}
-!264 = !{i64 0, i64 4, !79, i64 4, i64 4, !79, i64 8, i64 4, !79, i64 12, i64 4, !34, i64 16, i64 4, !34, i64 20, i64 4, !79, i64 24, i64 4, !79, i64 28, i64 4, !79, i64 32, i64 4, !34, i64 36, i64 4, !79, i64 40, i64 4, !34, i64 44, i64 4, !34, i64 48, i64 4, !34, i64 52, i64 4, !34, i64 56, i64 4, !79, i64 60, i64 8, !189, i64 68, i64 256, !189, i64 324, i64 64, !189, i64 388, i64 20, !189, i64 408, i64 4, !79, i64 412, i64 4, !79, i64 416, i64 4, !79}
-!265 = !{!196, !31, i64 4}
-!266 = !{!196, !9, i64 8}
-!267 = !{!28, !9, i64 696}
+!199 = !{!"branch_weights", i32 1, i32 1048575}
+!200 = !{!"dt_develop_blend_params3_t", !9, i64 0, !31, i64 4, !9, i64 8, !9, i64 12, !8, i64 16}
+!201 = !{!200, !9, i64 0}
+!202 = !{!200, !9, i64 12}
+!203 = !{!200, !31, i64 4}
+!204 = !{!200, !9, i64 8}
+!205 = !{!"dt_develop_blend_params4_t", !9, i64 0, !31, i64 4, !9, i64 8, !9, i64 12, !31, i64 16, !8, i64 20}
+!206 = !{!205, !9, i64 0}
+!207 = !{!205, !31, i64 4}
+!208 = !{!205, !31, i64 16}
+!209 = !{!205, !9, i64 12}
+!210 = !{!"dt_develop_blend_params5_t", !9, i64 0, !9, i64 4, !31, i64 8, !9, i64 12, !9, i64 16, !9, i64 20, !31, i64 24, !8, i64 28, !8, i64 44}
+!211 = !{!210, !9, i64 0}
+!212 = !{!210, !9, i64 4}
+!213 = !{!210, !31, i64 8}
+!214 = !{!210, !9, i64 12}
+!215 = !{!210, !31, i64 24}
+!216 = !{!210, !9, i64 20}
+!217 = !{!"dt_develop_blend_params6_t", !9, i64 0, !9, i64 4, !31, i64 8, !9, i64 12, !9, i64 16, !9, i64 20, !31, i64 24, !8, i64 28, !8, i64 44}
+!218 = !{!217, !9, i64 0}
+!219 = !{!217, !9, i64 4}
+!220 = !{!217, !31, i64 8}
+!221 = !{!217, !9, i64 12}
+!222 = !{!217, !31, i64 24}
+!223 = !{!217, !9, i64 20}
+!224 = !{!"dt_develop_blend_params7_t", !9, i64 0, !9, i64 4, !31, i64 8, !9, i64 12, !9, i64 16, !9, i64 20, !31, i64 24, !8, i64 28, !8, i64 44}
+!225 = !{!224, !9, i64 0}
+!226 = !{!224, !9, i64 4}
+!227 = !{!224, !31, i64 8}
+!228 = !{!224, !9, i64 12}
+!229 = !{!224, !31, i64 24}
+!230 = !{!224, !9, i64 20}
+!231 = !{!"dt_develop_blend_params8_t", !9, i64 0, !9, i64 4, !31, i64 8, !9, i64 12, !9, i64 16, !9, i64 20, !31, i64 24, !9, i64 28, !31, i64 32, !31, i64 36, !31, i64 40, !8, i64 44, !8, i64 60}
+!232 = !{!231, !9, i64 0}
+!233 = !{!231, !9, i64 4}
+!234 = !{!231, !31, i64 8}
+!235 = !{!231, !9, i64 12}
+!236 = !{!231, !9, i64 20}
+!237 = !{!231, !31, i64 24}
+!238 = !{!231, !9, i64 28}
+!239 = !{!231, !31, i64 40}
+!240 = !{!"dt_develop_blend_params9_t", !9, i64 0, !9, i64 4, !31, i64 8, !9, i64 12, !9, i64 16, !9, i64 20, !31, i64 24, !9, i64 28, !31, i64 32, !31, i64 36, !31, i64 40, !8, i64 44, !8, i64 60, !8, i64 316, !9, i64 336, !9, i64 340, !9, i64 344}
+!241 = !{!240, !9, i64 0}
+!242 = !{!240, !9, i64 4}
+!243 = !{!240, !31, i64 8}
+!244 = !{!240, !9, i64 12}
+!245 = !{!240, !9, i64 20}
+!246 = !{!240, !31, i64 24}
+!247 = !{!240, !9, i64 28}
+!248 = !{!240, !31, i64 40}
+!249 = !{!240, !9, i64 336}
+!250 = !{!32, !9, i64 408}
+!251 = !{!240, !9, i64 340}
+!252 = !{!32, !9, i64 412}
+!253 = !{!240, !9, i64 344}
+!254 = !{!"dt_develop_blend_params10_t", !9, i64 0, !9, i64 4, !9, i64 8, !31, i64 12, !31, i64 16, !9, i64 20, !9, i64 24, !9, i64 28, !31, i64 32, !9, i64 36, !31, i64 40, !31, i64 44, !31, i64 48, !8, i64 52, !8, i64 68, !8, i64 324, !8, i64 388, !9, i64 408, !9, i64 412, !9, i64 416}
+!255 = !{!254, !9, i64 0}
+!256 = !{!254, !9, i64 8}
+!257 = !{!254, !9, i64 20}
+!258 = !{!254, !9, i64 28}
+!259 = !{!254, !31, i64 32}
+!260 = !{!254, !9, i64 36}
+!261 = !{!254, !31, i64 48}
+!262 = !{!254, !9, i64 408}
+!263 = !{!254, !9, i64 412}
+!264 = !{!254, !9, i64 416}
+!265 = !{i64 0, i64 4, !79, i64 4, i64 4, !79, i64 8, i64 4, !79, i64 12, i64 4, !34, i64 16, i64 4, !34, i64 20, i64 4, !79, i64 24, i64 4, !79, i64 28, i64 4, !79, i64 32, i64 4, !34, i64 36, i64 4, !79, i64 40, i64 4, !34, i64 44, i64 4, !34, i64 48, i64 4, !34, i64 52, i64 4, !34, i64 56, i64 4, !79, i64 60, i64 8, !189, i64 68, i64 256, !189, i64 324, i64 64, !189, i64 388, i64 20, !189, i64 408, i64 4, !79, i64 412, i64 4, !79, i64 416, i64 4, !79}
+!266 = !{!196, !31, i64 4}
+!267 = !{!196, !9, i64 8}
+!268 = !{!28, !9, i64 696}
 end_hunk_0

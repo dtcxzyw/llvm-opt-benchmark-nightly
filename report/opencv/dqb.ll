@@ -205,7 +205,7 @@ bb.a:
   %rt.bound1 = icmp ugt i64 %i.c, %i.a
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
   %rt.guard = freeze i1 %rt.conflict
-  br i1 %rt.guard, label %.rtscalar, label %.rtvec
+  br i1 %rt.guard, label %.rtscalar, label %.rtvec, !prof !35
 
 .rtvec:                                           ; preds = %bb.a
   %i.e = load <4 x float>, ptr %0, align 4, !tbaa !10
@@ -277,13 +277,13 @@ bb.a:
 define hidden void @_ZN2cv6dynafumlEfRKNS0_14DualQuaternionE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.cv::dynafu::DualQuaternion") align 4 captures(none) initializes((0, 32)) %0, float noundef %1, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(32) %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.b = load <4 x float>, ptr %2, align 4, !tbaa !10, !noalias !43
+  %i.b = load <4 x float>, ptr %2, align 4, !tbaa !10, !noalias !44
   %i.c = insertelement <4 x float> poison, float %1, i64 0
   %i.d = shufflevector <4 x float> %i.c, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.e = fmul <4 x float> %i.d, %i.b
   store <4 x float> %i.e, ptr %0, align 4, !tbaa !10
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.g = load <4 x float>, ptr %i.a, align 4, !tbaa !10, !noalias !44
+  %i.g = load <4 x float>, ptr %i.a, align 4, !tbaa !10, !noalias !45
   %i.h = fmul <4 x float> %i.d, %i.g
   store <4 x float> %i.h, ptr %i.f, align 4, !tbaa !10
   ret void
@@ -419,7 +419,7 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 3 uses
   %i.g = ashr exact i64 %i.f, 2                   ; 2 uses
-  %i.h = load ptr, ptr %2, align 8, !tbaa !57     ; 3 uses
+  %i.h = load ptr, ptr %2, align 8, !tbaa !58     ; 3 uses
   %i.i = icmp eq i64 %i.f, 4
   br i1 %i.i, label %.epil.preheader, label %.lr.ph.new
 
@@ -441,12 +441,12 @@ bb.a:
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.07.epil.init
   %i.l = load float, ptr %i.k, align 4, !tbaa !10
   %i.m = getelementptr inbounds nuw [32 x i8], ptr %i.h, i64 %.07.epil.init ; 2 uses
-  %i.n = load <4 x float>, ptr %i.m, align 4, !tbaa !10, !noalias !58
+  %i.n = load <4 x float>, ptr %i.m, align 4, !tbaa !10, !noalias !59
   %i.o = insertelement <4 x float> poison, float %i.l, i64 0
   %i.p = shufflevector <4 x float> %i.o, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.q = fmul <4 x float> %i.p, %i.n
   %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 16
-  %i.s = load <4 x float>, ptr %i.r, align 4, !tbaa !10, !noalias !59
+  %i.s = load <4 x float>, ptr %i.r, align 4, !tbaa !10, !noalias !60
   %i.t = fmul <4 x float> %i.p, %i.s
   %i.u = fadd <4 x float> %i.q, %.epil.init
   %i.v = fadd <4 x float> %i.t, %.epil.init48
@@ -487,12 +487,12 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.07
   %i.au = load float, ptr %i.at, align 4, !tbaa !10
   %i.av = getelementptr inbounds nuw [32 x i8], ptr %i.h, i64 %.07 ; 2 uses
-  %i.aw = load <4 x float>, ptr %i.av, align 4, !tbaa !10, !noalias !58
+  %i.aw = load <4 x float>, ptr %i.av, align 4, !tbaa !10, !noalias !59
   %i.ax = insertelement <4 x float> poison, float %i.au, i64 0
   %i.ay = shufflevector <4 x float> %i.ax, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.az = fmul <4 x float> %i.ay, %i.aw
   %i.ba = getelementptr inbounds nuw i8, ptr %i.av, i64 16
-  %i.bb = load <4 x float>, ptr %i.ba, align 4, !tbaa !10, !noalias !59
+  %i.bb = load <4 x float>, ptr %i.ba, align 4, !tbaa !10, !noalias !60
   %i.bc = fmul <4 x float> %i.ay, %i.bb
   %i.bd = fadd <4 x float> %i.az, %i.ar
   %i.be = fadd <4 x float> %i.bc, %i.as
@@ -500,12 +500,12 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.bf
   %i.bh = load float, ptr %i.bg, align 4, !tbaa !10
   %i.bi = getelementptr inbounds nuw [32 x i8], ptr %i.h, i64 %i.bf ; 2 uses
-  %i.bj = load <4 x float>, ptr %i.bi, align 4, !tbaa !10, !noalias !58
+  %i.bj = load <4 x float>, ptr %i.bi, align 4, !tbaa !10, !noalias !59
   %i.bk = insertelement <4 x float> poison, float %i.bh, i64 0
   %i.bl = shufflevector <4 x float> %i.bk, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.bm = fmul <4 x float> %i.bl, %i.bj
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bi, i64 16
-  %i.bo = load <4 x float>, ptr %i.bn, align 4, !tbaa !10, !noalias !59
+  %i.bo = load <4 x float>, ptr %i.bn, align 4, !tbaa !10, !noalias !60
   %i.bp = fmul <4 x float> %i.bl, %i.bo
   %i.bq = fadd <4 x float> %i.bm, %i.bd           ; 3 uses
   %i.br = fadd <4 x float> %i.bp, %i.be           ; 3 uses
@@ -521,8 +521,8 @@ bb.a:
   %3 = alloca %"class.cv::dynafu::DualQuaternion", align 16 ; 7 uses
   %4 = alloca %"class.cv::dynafu::DualQuaternion", align 16 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !79   ; 3 uses
-  %i.c = load ptr, ptr %2, align 8, !tbaa !80     ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !80   ; 3 uses
+  %i.c = load ptr, ptr %2, align 8, !tbaa !81     ; 3 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
@@ -544,8 +544,8 @@ _ZNSt6vectorIN2cv6dynafu14DualQuaternionESaIS2_EE17_S_check_init_lenEmRKS3_.exit
   %i.k = getelementptr inbounds nuw [32 x i8], ptr %i.j, i64 %i.g
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.j, i8 0, i64 %i.i, i1 false)
   %i.l = ptrtoint ptr %i.k to i64
-  %.pre = load ptr, ptr %2, align 8, !tbaa !81
-  %.pre37 = load ptr, ptr %i.a, align 8, !tbaa !81
+  %.pre = load ptr, ptr %2, align 8, !tbaa !82
+  %.pre37 = load ptr, ptr %i.a, align 8, !tbaa !82
   br label %_ZNSt6vectorIN2cv6dynafu14DualQuaternionESaIS2_EEC2EmRKS3_.exit
 
 _ZNSt6vectorIN2cv6dynafu14DualQuaternionESaIS2_EEC2EmRKS3_.exit: ; preds = %.lr.ph.preheader.i.i.i.i.i, %_ZNSt6vectorIN2cv6dynafu14DualQuaternionESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
@@ -565,18 +565,18 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i
   %.sroa.0.08.i = phi ptr [ %.sroa.018.0, %.lr.ph.i ], [ %i.as, %bb.b ] ; 2 uses
   %.sroa.03.07.i = phi ptr [ %i.n, %.lr.ph.i ], [ %i.ar, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !82)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !83)
   call void @_ZN2cv6dynafu10QuaternionC2ERKNS_7Affine3IfEE(ptr noundef nonnull align 4 dereferenceable(16) %3, ptr noundef nonnull readonly align 4 dereferenceable(64) %.sroa.03.07.i)
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i, i64 12
-  %i.r = load float, ptr %i.q, align 4, !tbaa !10, !noalias !83 ; 2 uses
+  %i.r = load float, ptr %i.q, align 4, !tbaa !10, !noalias !84 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i, i64 28
-  %i.t = load float, ptr %i.s, align 4, !tbaa !10, !noalias !83
+  %i.t = load float, ptr %i.s, align 4, !tbaa !10, !noalias !84
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i, i64 44
-  %i.v = load float, ptr %i.u, align 4, !tbaa !10, !noalias !83 ; 2 uses
+  %i.v = load float, ptr %i.u, align 4, !tbaa !10, !noalias !84 ; 2 uses
   %i.w = fneg float %i.v
   %i.x = fneg float %i.r
-  %i.y = load <4 x float>, ptr %3, align 16, !tbaa !10, !alias.scope !82 ; 3 uses
-  %i.z = load float, ptr %i.p, align 4, !tbaa !10, !alias.scope !82
+  %i.y = load <4 x float>, ptr %3, align 16, !tbaa !10, !alias.scope !83 ; 3 uses
+  %i.z = load float, ptr %i.p, align 4, !tbaa !10, !alias.scope !83
   %i.aa = fneg float %i.z
   %i.ab = insertelement <4 x float> poison, float %i.t, i64 0
   %i.ac = insertelement <4 x float> %i.y, float %i.aa, i64 1
@@ -594,20 +594,20 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i
   %i.ao = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.an, <4 x float> %i.y, <4 x float> %i.ak)
   %i.ap = fmul <4 x float> %i.ao, <float 5.000000e-01, float 5.000000e-01, float 5.000000e-01, float -5.000000e-01>
   %i.aq = shufflevector <4 x float> %i.ap, <4 x float> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x float> %i.aq, ptr %i.o, align 16, !alias.scope !82
+  store <4 x float> %i.aq, ptr %i.o, align 16, !alias.scope !83
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %.sroa.0.08.i, ptr noundef nonnull align 16 dereferenceable(32) %3, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i, i64 64 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.0.08.i, i64 32
   %.not.i = icmp eq ptr %i.ar, %i.m
-  br i1 %.not.i, label %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPN2cv7Affine3IfEESt6vectorIS4_SaIS4_EEEENS1_IPNS2_6dynafu14DualQuaternionES6_ISB_SaISB_EEEEZNSA_3DQBERS6_IfSaIfEERS8_E3$_0ET0_T_SM_SL_T1_.exit", label %bb.b, !llvm.loop !64
+  br i1 %.not.i, label %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPN2cv7Affine3IfEESt6vectorIS4_SaIS4_EEEENS1_IPNS2_6dynafu14DualQuaternionES6_ISB_SaISB_EEEEZNSA_3DQBERS6_IfSaIfEERS8_E3$_0ET0_T_SM_SL_T1_.exit", label %bb.b, !llvm.loop !65
 
 "_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPN2cv7Affine3IfEESt6vectorIS4_SaIS4_EEEENS1_IPNS2_6dynafu14DualQuaternionES6_ISB_SaISB_EEEEZNSA_3DQBERS6_IfSaIfEERS8_E3$_0ET0_T_SM_SL_T1_.exit": ; preds = %bb.b, %_ZNSt6vectorIN2cv6dynafu14DualQuaternionESaIS2_EEC2EmRKS3_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #15
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !84)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !85)
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.au = load ptr, ptr %i.at, align 8, !tbaa !14, !noalias !84 ; 2 uses
-  %i.av = load ptr, ptr %1, align 8, !tbaa !15, !noalias !84 ; 5 uses
+  %i.au = load ptr, ptr %i.at, align 8, !tbaa !14, !noalias !85 ; 2 uses
+  %i.av = load ptr, ptr %1, align 8, !tbaa !15, !noalias !85 ; 5 uses
   %.not.i14 = icmp eq ptr %i.au, %i.av
   br i1 %.not.i14, label %.loopexit, label %.lr.ph.i15
 
@@ -629,27 +629,27 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i15.n
   %i.bc = phi <4 x float> [ zeroinitializer, %.lr.ph.i15.new ], [ %i.cb, %bb.c ]
   %niter = phi i64 [ 0, %.lr.ph.i15.new ], [ %niter.next.1, %bb.c ]
   %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %.07.i
-  %i.be = load float, ptr %i.bd, align 4, !tbaa !10, !noalias !84
+  %i.be = load float, ptr %i.bd, align 4, !tbaa !10, !noalias !85
   %i.bf = getelementptr inbounds nuw [32 x i8], ptr %.sroa.018.0, i64 %.07.i ; 2 uses
-  %i.bg = load <4 x float>, ptr %i.bf, align 4, !tbaa !10, !noalias !85
+  %i.bg = load <4 x float>, ptr %i.bf, align 4, !tbaa !10, !noalias !86
   %i.bh = insertelement <4 x float> poison, float %i.be, i64 0
   %i.bi = shufflevector <4 x float> %i.bh, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.bj = fmul <4 x float> %i.bi, %i.bg
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bf, i64 16
-  %i.bl = load <4 x float>, ptr %i.bk, align 4, !tbaa !10, !noalias !86
+  %i.bl = load <4 x float>, ptr %i.bk, align 4, !tbaa !10, !noalias !87
   %i.bm = fmul <4 x float> %i.bi, %i.bl
   %i.bn = fadd <4 x float> %i.bb, %i.bj
   %i.bo = fadd <4 x float> %i.bc, %i.bm
   %i.bp = or disjoint i64 %.07.i, 1               ; 2 uses
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %i.bp
-  %i.br = load float, ptr %i.bq, align 4, !tbaa !10, !noalias !84
+  %i.br = load float, ptr %i.bq, align 4, !tbaa !10, !noalias !85
   %i.bs = getelementptr inbounds nuw [32 x i8], ptr %.sroa.018.0, i64 %i.bp ; 2 uses
-  %i.bt = load <4 x float>, ptr %i.bs, align 4, !tbaa !10, !noalias !85
+  %i.bt = load <4 x float>, ptr %i.bs, align 4, !tbaa !10, !noalias !86
   %i.bu = insertelement <4 x float> poison, float %i.br, i64 0
   %i.bv = shufflevector <4 x float> %i.bu, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.bw = fmul <4 x float> %i.bv, %i.bt
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
-  %i.by = load <4 x float>, ptr %i.bx, align 4, !tbaa !10, !noalias !86
+  %i.by = load <4 x float>, ptr %i.bx, align 4, !tbaa !10, !noalias !87
   %i.bz = fmul <4 x float> %i.bv, %i.by
   %i.ca = fadd <4 x float> %i.bn, %i.bw           ; 3 uses
   %i.cb = fadd <4 x float> %i.bo, %i.bz           ; 3 uses
@@ -670,14 +670,14 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i15.n
   %lcmp.mod63 = trunc i64 %i.az to i1
   tail call void @llvm.assume(i1 %lcmp.mod63)
   %i.ce = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %.07.i.epil.init
-  %i.cf = load float, ptr %i.ce, align 4, !tbaa !10, !noalias !84
+  %i.cf = load float, ptr %i.ce, align 4, !tbaa !10, !noalias !85
   %i.cg = getelementptr inbounds nuw [32 x i8], ptr %.sroa.018.0, i64 %.07.i.epil.init ; 2 uses
-  %i.ch = load <4 x float>, ptr %i.cg, align 4, !tbaa !10, !noalias !85
+  %i.ch = load <4 x float>, ptr %i.cg, align 4, !tbaa !10, !noalias !86
   %i.ci = insertelement <4 x float> poison, float %i.cf, i64 0
   %i.cj = shufflevector <4 x float> %i.ci, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.ck = fmul <4 x float> %i.cj, %i.ch
   %i.cl = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
-  %i.cm = load <4 x float>, ptr %i.cl, align 4, !tbaa !10, !noalias !86
+  %i.cm = load <4 x float>, ptr %i.cl, align 4, !tbaa !10, !noalias !87
   %i.cn = fmul <4 x float> %i.cj, %i.cm
   %i.co = fadd <4 x float> %.epil.init, %i.ck
   %i.cp = fadd <4 x float> %.epil.init60, %i.cn
@@ -704,10 +704,10 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i15.n
   %i.dg = insertelement <4 x float> poison, float %i.df, i64 0
   %i.dh = shufflevector <4 x float> %i.dg, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.di = fmul <4 x float> %i.cq, %i.dh
-  store <4 x float> %i.di, ptr %4, align 16, !tbaa !10, !alias.scope !84
+  store <4 x float> %i.di, ptr %4, align 16, !tbaa !10, !alias.scope !85
   %i.dj = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.dk = fmul <4 x float> %i.cr, %i.dh
-  store <4 x float> %i.dk, ptr %i.dj, align 16, !tbaa !10, !alias.scope !84
+  store <4 x float> %i.dk, ptr %i.dj, align 16, !tbaa !10, !alias.scope !85
   call void @_ZNK2cv6dynafu14DualQuaternion9getAffineEv(ptr dead_on_unwind writable sret(%"class.cv::Affine3") align 4 %0, ptr noundef nonnull align 4 dereferenceable(32) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   %.not.i.i.i = icmp eq ptr %.sroa.018.0, null
@@ -817,56 +817,57 @@ attributes #18 = { builtin nounwind }
 !32 = distinct !{!32, !"_ZNK2cv7Affine3IfE11translationEv"}
 !33 = distinct !{!33, !32, !"_ZNK2cv7Affine3IfE11translationEv: argument 0"}
 !34 = !{!33}
-!35 = distinct !{!35, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE"}
-!36 = distinct !{!36, !35, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE: argument 0"}
-!37 = distinct !{!37, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_"}
-!38 = distinct !{!38, !37, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_: argument 0"}
-!39 = distinct !{!39, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE"}
-!40 = distinct !{!40, !39, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE: argument 0"}
-!41 = distinct !{!41, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_"}
-!42 = distinct !{!42, !41, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_: argument 0"}
-!43 = !{!38, !36}
-!44 = !{!42, !40}
-!45 = distinct !{!45, !"_ZN2cv6dynafumlEfRKNS0_14DualQuaternionE"}
-!46 = distinct !{!46, !45, !"_ZN2cv6dynafumlEfRKNS0_14DualQuaternionE: argument 0"}
-!47 = distinct !{!47, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE"}
-!48 = distinct !{!48, !47, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE: argument 0"}
-!49 = distinct !{!49, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_"}
-!50 = distinct !{!50, !49, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_: argument 0"}
-!51 = distinct !{!51, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE"}
-!52 = distinct !{!52, !51, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE: argument 0"}
-!53 = distinct !{!53, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_"}
-!54 = distinct !{!54, !53, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_: argument 0"}
-!55 = !{!"p1 _ZTSN2cv6dynafu14DualQuaternionE", !11, i64 0}
-!56 = !{!"_ZTSNSt12_Vector_baseIN2cv6dynafu14DualQuaternionESaIS2_EE17_Vector_impl_dataE", !55, i64 0, !55, i64 8, !55, i64 16}
-!57 = !{!56, !55, i64 0}
-!58 = !{!50, !48, !46}
-!59 = !{!54, !52, !46}
-!60 = distinct !{!60, !"_ZZN2cv6dynafu3DQBERSt6vectorIfSaIfEERS1_INS_7Affine3IfEESaIS6_EEENK3$_0clERKS6_"}
-!61 = distinct !{!61, !60, !"_ZZN2cv6dynafu3DQBERSt6vectorIfSaIfEERS1_INS_7Affine3IfEESaIS6_EEENK3$_0clERKS6_: argument 0"}
-!62 = distinct !{!62, !"_ZNK2cv7Affine3IfE11translationEv"}
-!63 = distinct !{!63, !62, !"_ZNK2cv7Affine3IfE11translationEv: argument 0"}
-!64 = distinct !{!64, !16}
-!65 = distinct !{!65, !"_ZN2cv6dynafu3DQBERSt6vectorIfSaIfEERS1_INS0_14DualQuaternionESaIS5_EE"}
-!66 = distinct !{!66, !65, !"_ZN2cv6dynafu3DQBERSt6vectorIfSaIfEERS1_INS0_14DualQuaternionESaIS5_EE: argument 0"}
-!67 = distinct !{!67, !"_ZN2cv6dynafumlEfRKNS0_14DualQuaternionE"}
-!68 = distinct !{!68, !67, !"_ZN2cv6dynafumlEfRKNS0_14DualQuaternionE: argument 0"}
-!69 = distinct !{!69, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE"}
-!70 = distinct !{!70, !69, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE: argument 0"}
-!71 = distinct !{!71, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_"}
-!72 = distinct !{!72, !71, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_: argument 0"}
-!73 = distinct !{!73, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE"}
-!74 = distinct !{!74, !73, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE: argument 0"}
-!75 = distinct !{!75, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_"}
-!76 = distinct !{!76, !75, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_: argument 0"}
-!77 = !{!"p1 _ZTSN2cv7Affine3IfEE", !11, i64 0}
-!78 = !{!"_ZTSNSt12_Vector_baseIN2cv7Affine3IfEESaIS2_EE17_Vector_impl_dataE", !77, i64 0, !77, i64 8, !77, i64 16}
-!79 = !{!78, !77, i64 8}
-!80 = !{!78, !77, i64 0}
-!81 = !{!77, !77, i64 0}
-!82 = !{!61}
-!83 = !{!63, !61}
-!84 = !{!66}
-!85 = !{!72, !70, !68, !66}
-!86 = !{!76, !74, !68, !66}
+!35 = !{!"branch_weights", i32 1, i32 1048575}
+!36 = distinct !{!36, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE"}
+!37 = distinct !{!37, !36, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE: argument 0"}
+!38 = distinct !{!38, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_"}
+!39 = distinct !{!39, !38, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_: argument 0"}
+!40 = distinct !{!40, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE"}
+!41 = distinct !{!41, !40, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE: argument 0"}
+!42 = distinct !{!42, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_"}
+!43 = distinct !{!43, !42, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_: argument 0"}
+!44 = !{!39, !37}
+!45 = !{!43, !41}
+!46 = distinct !{!46, !"_ZN2cv6dynafumlEfRKNS0_14DualQuaternionE"}
+!47 = distinct !{!47, !46, !"_ZN2cv6dynafumlEfRKNS0_14DualQuaternionE: argument 0"}
+!48 = distinct !{!48, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE"}
+!49 = distinct !{!49, !48, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE: argument 0"}
+!50 = distinct !{!50, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_"}
+!51 = distinct !{!51, !50, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_: argument 0"}
+!52 = distinct !{!52, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE"}
+!53 = distinct !{!53, !52, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE: argument 0"}
+!54 = distinct !{!54, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_"}
+!55 = distinct !{!55, !54, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_: argument 0"}
+!56 = !{!"p1 _ZTSN2cv6dynafu14DualQuaternionE", !11, i64 0}
+!57 = !{!"_ZTSNSt12_Vector_baseIN2cv6dynafu14DualQuaternionESaIS2_EE17_Vector_impl_dataE", !56, i64 0, !56, i64 8, !56, i64 16}
+!58 = !{!57, !56, i64 0}
+!59 = !{!51, !49, !47}
+!60 = !{!55, !53, !47}
+!61 = distinct !{!61, !"_ZZN2cv6dynafu3DQBERSt6vectorIfSaIfEERS1_INS_7Affine3IfEESaIS6_EEENK3$_0clERKS6_"}
+!62 = distinct !{!62, !61, !"_ZZN2cv6dynafu3DQBERSt6vectorIfSaIfEERS1_INS_7Affine3IfEESaIS6_EEENK3$_0clERKS6_: argument 0"}
+!63 = distinct !{!63, !"_ZNK2cv7Affine3IfE11translationEv"}
+!64 = distinct !{!64, !63, !"_ZNK2cv7Affine3IfE11translationEv: argument 0"}
+!65 = distinct !{!65, !16}
+!66 = distinct !{!66, !"_ZN2cv6dynafu3DQBERSt6vectorIfSaIfEERS1_INS0_14DualQuaternionESaIS5_EE"}
+!67 = distinct !{!67, !66, !"_ZN2cv6dynafu3DQBERSt6vectorIfSaIfEERS1_INS0_14DualQuaternionESaIS5_EE: argument 0"}
+!68 = distinct !{!68, !"_ZN2cv6dynafumlEfRKNS0_14DualQuaternionE"}
+!69 = distinct !{!69, !68, !"_ZN2cv6dynafumlEfRKNS0_14DualQuaternionE: argument 0"}
+!70 = distinct !{!70, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE"}
+!71 = distinct !{!71, !70, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE: argument 0"}
+!72 = distinct !{!72, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_"}
+!73 = distinct !{!73, !72, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_: argument 0"}
+!74 = distinct !{!74, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE"}
+!75 = distinct !{!75, !74, !"_ZN2cv6dynafumlEfRKNS0_10QuaternionE: argument 0"}
+!76 = distinct !{!76, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_"}
+!77 = distinct !{!77, !76, !"_ZN2cvmlIfLi4EEENS_3VecIT_XT0_EEEfRKS3_: argument 0"}
+!78 = !{!"p1 _ZTSN2cv7Affine3IfEE", !11, i64 0}
+!79 = !{!"_ZTSNSt12_Vector_baseIN2cv7Affine3IfEESaIS2_EE17_Vector_impl_dataE", !78, i64 0, !78, i64 8, !78, i64 16}
+!80 = !{!79, !78, i64 8}
+!81 = !{!79, !78, i64 0}
+!82 = !{!78, !78, i64 0}
+!83 = !{!62}
+!84 = !{!64, !62}
+!85 = !{!67}
+!86 = !{!73, !71, !69, !67}
+!87 = !{!77, !75, !69, !67}
 end_hunk_0

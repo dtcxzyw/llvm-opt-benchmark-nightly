@@ -204,7 +204,7 @@ bb.a:
   %rt.bound0167 = icmp ugt i64 %i.c, %i.a
   %rt.bound1168 = icmp ugt i64 %i.d, %i.b
   %rt.conflict169 = and i1 %rt.bound0167, %rt.bound1168
-  br i1 %rt.conflict169, label %.lr.ph.i.i.i.i.i.i.i107.preheader.rtscalar, label %.lr.ph.i.i.i.i.i.i.i107.preheader.rtvec
+  br i1 %rt.conflict169, label %.lr.ph.i.i.i.i.i.i.i107.preheader.rtscalar, label %.lr.ph.i.i.i.i.i.i.i107.preheader.rtvec, !prof !25
 
 .lr.ph.i.i.i.i.i.i.i102.preheader:                ; preds = %bb.a
   %i.e = add i64 %i.b, 30
@@ -212,7 +212,7 @@ bb.a:
   %rt.bound0163 = icmp ugt i64 %i.e, %i.a
   %rt.bound1164 = icmp ugt i64 %i.f, %i.b
   %rt.conflict165 = and i1 %rt.bound0163, %rt.bound1164
-  br i1 %rt.conflict165, label %.lr.ph.i.i.i.i.i.i.i102.preheader.rtscalar, label %.lr.ph.i.i.i.i.i.i.i102.preheader.rtvec
+  br i1 %rt.conflict165, label %.lr.ph.i.i.i.i.i.i.i102.preheader.rtscalar, label %.lr.ph.i.i.i.i.i.i.i102.preheader.rtvec, !prof !25
 
 .lr.ph.i.i.i.i.i.i.i97.preheader:                 ; preds = %bb.a
   %i.g = add i64 %i.b, 28
@@ -220,7 +220,7 @@ bb.a:
   %rt.bound0 = icmp ugt i64 %i.g, %i.a
   %rt.bound1 = icmp ugt i64 %i.h, %i.b
   %rt.conflict = and i1 %rt.bound0, %rt.bound1
-  br i1 %rt.conflict, label %.lr.ph.i.i.i.i.i.i.i97.preheader.rtscalar, label %.lr.ph.i.i.i.i.i.i.i97.preheader.rtvec
+  br i1 %rt.conflict, label %.lr.ph.i.i.i.i.i.i.i97.preheader.rtscalar, label %.lr.ph.i.i.i.i.i.i.i97.preheader.rtvec, !prof !25
 
 .lr.ph.i.i.i.i.i.i.i92.preheader:                 ; preds = %bb.a
   %i.i = load i16, ptr %1, align 2
@@ -623,13 +623,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.mp = shl i64 %index, 1
   %next.gep149 = getelementptr i8, ptr %1, i64 %i.mp ; 2 uses
   %i.mq = getelementptr i8, ptr %next.gep149, i64 16
-  %wide.load = load <8 x i16>, ptr %next.gep149, align 2, !alias.scope !25
-  %wide.load150 = load <8 x i16>, ptr %i.mq, align 2, !alias.scope !25
+  %wide.load = load <8 x i16>, ptr %next.gep149, align 2, !alias.scope !26
+  %wide.load150 = load <8 x i16>, ptr %i.mq, align 2, !alias.scope !26
   %i.mr = trunc <8 x i16> %wide.load to <8 x i8>
   %i.ms = trunc <8 x i16> %wide.load150 to <8 x i8>
   %i.mt = getelementptr i8, ptr %next.gep, i64 8
-  store <8 x i8> %i.mr, ptr %next.gep, align 1, !alias.scope !26, !noalias !25
-  store <8 x i8> %i.ms, ptr %i.mt, align 1, !alias.scope !26, !noalias !25
+  store <8 x i8> %i.mr, ptr %next.gep, align 1, !alias.scope !27, !noalias !26
+  store <8 x i8> %i.ms, ptr %i.mt, align 1, !alias.scope !27, !noalias !26
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.mu = icmp eq i64 %index.next, %n.vec
   br i1 %i.mu, label %middle.block, label %vector.body, !llvm.loop !22
@@ -640,7 +640,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.mk, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph.i.i.i.i.i.i.i112.preheader, label %vec.epilog.ph, !prof !29
+  br i1 %min.epilog.iters.check, label %.lr.ph.i.i.i.i.i.i.i112.preheader, label %vec.epilog.ph, !prof !30
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -656,9 +656,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %next.gep155 = getelementptr i8, ptr %0, i64 %index154
   %i.mz = shl i64 %index154, 1
   %next.gep156 = getelementptr i8, ptr %1, i64 %i.mz
-  %wide.load157 = load <4 x i16>, ptr %next.gep156, align 2, !alias.scope !25
+  %wide.load157 = load <4 x i16>, ptr %next.gep156, align 2, !alias.scope !26
   %i.na = trunc <4 x i16> %wide.load157 to <4 x i8>
-  store <4 x i8> %i.na, ptr %next.gep155, align 1, !alias.scope !26, !noalias !25
+  store <4 x i8> %i.na, ptr %next.gep155, align 1, !alias.scope !27, !noalias !26
   %index.next158 = add nuw i64 %index154, 4       ; 2 uses
   %i.nb = icmp eq i64 %index.next158, %n.vec153
   br i1 %i.nb, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !23
@@ -1061,7 +1061,7 @@ bb.a:
   %i.k = or disjoint i64 %i.i, 1                  ; 5 uses
   %i.l = and i64 %i.i, -262144
   %i.m = inttoptr i64 %i.l to ptr                 ; 3 uses
-  %i.n = load i64, ptr %i.m, align 262144, !noalias !34 ; 2 uses
+  %i.n = load i64, ptr %i.m, align 262144, !noalias !35 ; 2 uses
   %i.o = and i64 %i.n, 32
   %.not.i.i.i = icmp eq i64 %i.o, 0
   %i.p = and i64 %i.n, 24
@@ -1464,7 +1464,7 @@ _ZN2v88internal6HandleINS0_12CoverageInfoEEC2ENS0_6TaggedIS2_EEPNS0_12LocalIsola
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !35
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !36
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -1867,7 +1867,7 @@ bb.a:
   %i.k = or disjoint i64 %i.i, 1                  ; 5 uses
   %i.l = and i64 %i.i, -262144
   %i.m = inttoptr i64 %i.l to ptr                 ; 3 uses
-  %i.n = load i64, ptr %i.m, align 262144, !noalias !40 ; 2 uses
+  %i.n = load i64, ptr %i.m, align 262144, !noalias !41 ; 2 uses
   %i.o = and i64 %i.n, 32
   %.not.i.i.i = icmp eq i64 %i.o, 0
   %i.p = and i64 %i.n, 24
@@ -2270,7 +2270,7 @@ _ZNK2v88internal4Code14entrypoint_tagEv.exit.i:   ; preds = %bb.a
   %i.i = sext i16 %i.h to i32
   %i.j = tail call noundef i64 @_ZN2v88internal8Builtins16EntrypointTagForENS0_7BuiltinE(i32 noundef %i.i) #15
   %.not.i = icmp eq i64 %i.j, 0
-  br i1 %.not.i, label %_ZNK2v88internal4Code14entrypoint_tagEv.exit.thread18.i, label %_ZN2v88internal15JSDispatchTable16IsCompatibleCodeENS0_6TaggedINS0_4CodeEEEt.exit, !prof !42
+  br i1 %.not.i, label %_ZNK2v88internal4Code14entrypoint_tagEv.exit.thread18.i, label %_ZN2v88internal15JSDispatchTable16IsCompatibleCodeENS0_6TaggedINS0_4CodeEEEt.exit, !prof !43
 
 _ZNK2v88internal4Code14entrypoint_tagEv.exit.thread18.i: ; preds = %_ZNK2v88internal4Code14entrypoint_tagEv.exit.i, %bb.a
   %i.k = add i64 %3, 87
@@ -2283,7 +2283,7 @@ bb.b:                                             ; preds = %_ZNK2v88internal4Co
   %i.o = load atomic volatile i32, ptr %i.b monotonic, align 4
   %i.p = and i32 %i.o, 15
   %i.q = icmp eq i32 %i.p, 1
-  br i1 %i.q, label %bb.d, label %bb.c, !prof !42
+  br i1 %i.q, label %bb.d, label %bb.c, !prof !43
 
 bb.c:                                             ; preds = %bb.b
   %i.r = add i64 %3, 89
@@ -2353,7 +2353,7 @@ bb.h:                                             ; preds = %_ZN2v84base9LockGua
   %.sroa.0.0.insert.insert.i.i = add i64 %i.ae, %.sroa.8.0.insert.shift.i
   %i.af = cmpxchg ptr %1, i64 %.sroa.015.0.insert.insert.i, i64 %.sroa.0.0.insert.insert.i.i monotonic monotonic, align 4
   %i.ag = extractvalue { i64, i1 } %i.af, 1
-  br i1 %i.ag, label %_ZN2v88internal19ExternalEntityTableINS0_15JSDispatchEntryELm268435456EE16TryAllocateEntryEPNS3_5SpaceE.exit, label %bb.e, !prof !12, !llvm.loop !41
+  br i1 %i.ag, label %_ZN2v88internal19ExternalEntityTableINS0_15JSDispatchEntryELm268435456EE16TryAllocateEntryEPNS3_5SpaceE.exit, label %bb.e, !prof !12, !llvm.loop !42
 
 _ZN2v88internal19ExternalEntityTableINS0_15JSDispatchEntryELm268435456EE16TryAllocateEntryEPNS3_5SpaceE.exit: ; preds = %bb.h
   %.sroa.011.0.extract.trunc = trunc i64 %.sroa.015.2.in.i to i32
@@ -2446,22 +2446,22 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.g = shl nuw nsw i32 %i.e, 10                 ; 2 uses
   %i.h = or disjoint i32 %i.g, 1023
-  %i.i = load ptr, ptr %0, align 8, !noalias !46  ; 4 uses
-  %i.j = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 216), align 8, !range !9, !noalias !46, !noundef !10
+  %i.i = load ptr, ptr %0, align 8, !noalias !47  ; 4 uses
+  %i.j = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 216), align 8, !range !9, !noalias !47, !noundef !10
   %i.k = trunc nuw i8 %i.j to i1
   %.not.i.i.i = xor i1 %i.k, true
-  %i.l = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 219), align 1, !range !9, !noalias !46
+  %i.l = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 219), align 1, !range !9, !noalias !47
   %i.m = trunc nuw i8 %i.l to i1
   %or.cond.i.i.i = select i1 %.not.i.i.i, i1 true, i1 %i.m
   br i1 %or.cond.i.i.i, label %bb.e, label %_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj.exit.i
 
 bb.e:                                             ; preds = %bb.d
-  %i.n = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal15ThreadIsolation13trusted_data_E, i64 8), align 8, !noalias !46 ; 2 uses
+  %i.n = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal15ThreadIsolation13trusted_data_E, i64 8), align 8, !noalias !47 ; 2 uses
   %.not3.i.i.i = icmp eq i32 %i.n, -1
   br i1 %.not3.i.i.i, label %_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @_ZN2v84base19MemoryProtectionKey20SetPermissionsForKeyEiNS1_10PermissionE(i32 noundef %i.n, i32 noundef 0) #15, !noalias !46
+  tail call void @_ZN2v84base19MemoryProtectionKey20SetPermissionsForKeyEiNS1_10PermissionE(i32 noundef %i.n, i32 noundef 0) #15, !noalias !47
   br label %_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj.exit.i
 
 _ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj.exit.i: ; preds = %bb.f, %bb.e, %bb.d
@@ -2531,7 +2531,7 @@ _ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE18InitializeF
   %.in.i.i.i.i = getelementptr inbounds nuw i8, ptr %.02024.i.i.i.i, i64 %.in.v.i.i.i.i
   %.020.i.i.i.i = load ptr, ptr %.in.i.i.i.i, align 8 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.020.i.i.i.i, null
-  br i1 %.not.i.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !45
+  br i1 %.not.i.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !46
 
 ._crit_edge.i.i.i.i:                              ; preds = %.lr.ph.i.i.i.i
   br i1 %i.ak, label %._crit_edge.thread.i.i.i.i, label %bb.j
@@ -2616,7 +2616,7 @@ bb.m:                                             ; preds = %bb.l
   %.in.i.i.i.i19 = getelementptr inbounds nuw i8, ptr %.02024.i.i.i.i17, i64 %.in.v.i.i.i.i18
   %.020.i.i.i.i20 = load ptr, ptr %.in.i.i.i.i19, align 8 ; 2 uses
   %.not.i.i.i.i21 = icmp eq ptr %.020.i.i.i.i20, null
-  br i1 %.not.i.i.i.i21, label %._crit_edge.i.i.i.i22, label %.lr.ph.i.i.i.i16, !llvm.loop !45
+  br i1 %.not.i.i.i.i21, label %._crit_edge.i.i.i.i22, label %.lr.ph.i.i.i.i16, !llvm.loop !46
 
 ._crit_edge.i.i.i.i22:                            ; preds = %.lr.ph.i.i.i.i16
   br i1 %i.bm, label %._crit_edge.thread.i.i.i.i27, label %bb.o
@@ -2711,7 +2711,7 @@ bb.e:                                             ; preds = %bb.d, %bb.b
   %.2.i.i = phi i32 [ %.0720.i.i, %bb.b ], [ %i.g, %bb.d ] ; 2 uses
   %i.h = add nsw i32 %.2.i.i, 1
   %i.i = icmp slt i32 %.2.i.i, 3
-  br i1 %i.i, label %bb.b, label %_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE21TryGetSegmentFromPoolEv.exit.thread.i, !llvm.loop !47
+  br i1 %i.i, label %bb.b, label %_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE21TryGetSegmentFromPoolEv.exit.thread.i, !llvm.loop !48
 
 _ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE18TryAllocateSegmentEv.exit.thread: ; preds = %bb.c
   %i.j = lshr i32 %i.d, 14
@@ -2744,7 +2744,7 @@ bb.i:                                             ; preds = %bb.h, %bb.f
   %.2.i3.i = phi i32 [ %.0720.i1.i, %bb.f ], [ %i.r, %bb.h ] ; 2 uses
   %i.s = add nsw i32 %.2.i3.i, 1
   %i.t = icmp slt i32 %.2.i3.i, 3
-  br i1 %i.t, label %bb.f, label %_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE21TryGetSegmentFromPoolEv.exit5.thread.i, !llvm.loop !47
+  br i1 %i.t, label %bb.f, label %_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE21TryGetSegmentFromPoolEv.exit5.thread.i, !llvm.loop !48
 
 _ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE21TryGetSegmentFromPoolEv.exit5.i: ; preds = %bb.g
   %i.u = lshr i32 %i.o, 14
@@ -2771,22 +2771,22 @@ bb.j:                                             ; preds = %_ZN2v88internal14Se
 bb.k:                                             ; preds = %_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE18TryAllocateSegmentEv.exit.thread, %_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE18TryAllocateSegmentEv.exit
   %.sroa.04.0.extract.trunc28 = phi i32 [ %i.j, %_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE18TryAllocateSegmentEv.exit.thread ], [ %.sroa.07.0.i, %_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE18TryAllocateSegmentEv.exit ] ; 2 uses
   %i.y = shl i32 %.sroa.04.0.extract.trunc28, 10  ; 2 uses
-  %i.z = load ptr, ptr %0, align 8, !noalias !50  ; 4 uses
-  %i.aa = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 216), align 8, !range !9, !noalias !50, !noundef !10
+  %i.z = load ptr, ptr %0, align 8, !noalias !51  ; 4 uses
+  %i.aa = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 216), align 8, !range !9, !noalias !51, !noundef !10
   %i.ab = trunc nuw i8 %i.aa to i1
   %.not.i.i.i = xor i1 %i.ab, true
-  %i.ac = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 219), align 1, !range !9, !noalias !50
+  %i.ac = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 219), align 1, !range !9, !noalias !51
   %i.ad = trunc nuw i8 %i.ac to i1
   %or.cond.i.i.i = select i1 %.not.i.i.i, i1 true, i1 %i.ad
   br i1 %or.cond.i.i.i, label %bb.l, label %_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj.exit.i
 
 bb.l:                                             ; preds = %bb.k
-  %i.ae = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal15ThreadIsolation13trusted_data_E, i64 8), align 8, !noalias !50 ; 2 uses
+  %i.ae = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal15ThreadIsolation13trusted_data_E, i64 8), align 8, !noalias !51 ; 2 uses
   %.not3.i.i.i = icmp eq i32 %i.ae, -1
   br i1 %.not3.i.i.i, label %_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj.exit.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  tail call void @_ZN2v84base19MemoryProtectionKey20SetPermissionsForKeyEiNS1_10PermissionE(i32 noundef %i.ae, i32 noundef 0) #15, !noalias !50
+  tail call void @_ZN2v84base19MemoryProtectionKey20SetPermissionsForKeyEiNS1_10PermissionE(i32 noundef %i.ae, i32 noundef 0) #15, !noalias !51
   br label %_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj.exit.i
 
 _ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj.exit.i: ; preds = %bb.m, %bb.l, %bb.k
@@ -3189,7 +3189,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load ptr, ptr %i.c, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.k = load ptr, ptr %i.j, align 8
-  %i.l = tail call noundef zeroext i1 %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.c) #15, !inline_history !51
+  %i.l = tail call noundef zeroext i1 %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.c) #15, !inline_history !52
   br i1 %i.l, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -3202,7 +3202,7 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   %i.o = load ptr, ptr %i.c, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 72
   %i.q = load ptr, ptr %i.p, align 8
-  %i.r = tail call noundef ptr %i.q(ptr noundef nonnull align 8 dereferenceable(16) %i.c) #15, !inline_history !51
+  %i.r = tail call noundef ptr %i.q(ptr noundef nonnull align 8 dereferenceable(16) %i.c) #15, !inline_history !52
   br label %_ZNK2v88internal21ExternalOneByteString8GetCharsEv.exit
 
 _ZNK2v88internal21ExternalOneByteString8GetCharsEv.exit: ; preds = %bb.c, %bb.d
@@ -3233,7 +3233,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load ptr, ptr %i.c, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.k = load ptr, ptr %i.j, align 8
-  %i.l = tail call noundef zeroext i1 %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.c) #15, !inline_history !52
+  %i.l = tail call noundef zeroext i1 %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.c) #15, !inline_history !53
   br i1 %i.l, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -3246,7 +3246,7 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   %i.o = load ptr, ptr %i.c, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 72
   %i.q = load ptr, ptr %i.p, align 8
-  %i.r = tail call noundef ptr %i.q(ptr noundef nonnull align 8 dereferenceable(16) %i.c) #15, !inline_history !52
+  %i.r = tail call noundef ptr %i.q(ptr noundef nonnull align 8 dereferenceable(16) %i.c) #15, !inline_history !53
   br label %_ZNK2v88internal21ExternalTwoByteString8GetCharsEv.exit
 
 _ZNK2v88internal21ExternalTwoByteString8GetCharsEv.exit: ; preds = %bb.c, %bb.d
@@ -3324,7 +3324,7 @@ bb.g:                                             ; preds = %.lr.ph
   %i.o = add i64 %i.m, %i.n                       ; 4 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !53
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !54
 
 ._crit_edge:                                      ; preds = %bb.g
   %i.p = icmp ugt i64 %i.o, 4294967294
@@ -3375,7 +3375,7 @@ bb.h:                                             ; preds = %.lr.ph156
   %indvars.iv.next170 = add nuw nsw i64 %indvars.iv169, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next170 to i32
   %exitcond172.not = icmp eq i32 %1, %lftr.wideiv
-  br i1 %exitcond172.not, label %._crit_edge157, label %.lr.ph156, !llvm.loop !54
+  br i1 %exitcond172.not, label %._crit_edge157, label %.lr.ph156, !llvm.loop !55
 
 ._crit_edge157:                                   ; preds = %bb.h, %._crit_edge
   %.011.i.lcssa = phi i64 [ %i.o, %._crit_edge ], [ %i.av, %bb.h ]
@@ -3745,7 +3745,7 @@ bb.g:                                             ; preds = %.lr.ph
   %i.s = add i64 %i.q, %i.r                       ; 4 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !55
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !56
 
 ._crit_edge:                                      ; preds = %bb.g
   %i.t = icmp ugt i64 %i.s, 4294967294
@@ -3796,7 +3796,7 @@ bb.h:                                             ; preds = %.lr.ph162
   %indvars.iv.next181 = add nuw nsw i64 %indvars.iv180, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next181 to i32
   %exitcond183.not = icmp eq i32 %1, %lftr.wideiv
-  br i1 %exitcond183.not, label %._crit_edge163, label %.lr.ph162, !llvm.loop !56
+  br i1 %exitcond183.not, label %._crit_edge163, label %.lr.ph162, !llvm.loop !57
 
 ._crit_edge163:                                   ; preds = %bb.h, %._crit_edge
   %.011.i.lcssa = phi i64 [ %i.s, %._crit_edge ], [ %i.az, %bb.h ]
@@ -3812,7 +3812,7 @@ _ZN2v88internal6detail20TryParseIntegerIndexItEENS1_16IndexParseResultEPKT_jjm.e
 bb.i:                                             ; preds = %bb.j
   %indvars.iv.next185 = add nuw nsw i64 %indvars.iv184, 1 ; 2 uses
   %exitcond188.not = icmp eq i64 %indvars.iv.next185, %wide.trip.count187
-  br i1 %exitcond188.not, label %bb.k, label %bb.j, !llvm.loop !57
+  br i1 %exitcond188.not, label %bb.k, label %bb.j, !llvm.loop !58
 
 bb.j:                                             ; preds = %_ZN2v88internal6detail20TryParseIntegerIndexItEENS1_16IndexParseResultEPKT_jjm.exit, %bb.i
   %indvars.iv184 = phi i64 [ 0, %_ZN2v88internal6detail20TryParseIntegerIndexItEENS1_16IndexParseResultEPKT_jjm.exit ], [ %indvars.iv.next185, %bb.i ] ; 2 uses
@@ -3956,7 +3956,7 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %.lr.ph167
   %indvars.iv.next190 = add nuw nsw i64 %indvars.iv189, 1 ; 2 uses
   %exitcond193.not = icmp eq i64 %indvars.iv.next190, %wide.trip.count192
-  br i1 %exitcond193.not, label %._crit_edge168, label %.lr.ph167, !llvm.loop !57
+  br i1 %exitcond193.not, label %._crit_edge168, label %.lr.ph167, !llvm.loop !58
 
 .lr.ph167:                                        ; preds = %.lr.ph167.preheader, %bb.q
   %indvars.iv189 = phi i64 [ 0, %.lr.ph167.preheader ], [ %indvars.iv.next190, %bb.q ] ; 2 uses
@@ -4359,40 +4359,41 @@ attributes #20 = { builtin nounwind }
 !19 = distinct !{!19, !"LVerDomain"}
 !20 = distinct !{!20, !19}
 !21 = distinct !{!21, !19}
-!22 = distinct !{!22, !14, !27, !28}
-!23 = distinct !{!23, !14, !27, !28}
-!24 = distinct !{!24, !14, !27}
-!25 = !{!20}
-!26 = !{!21}
-!27 = !{!"llvm.loop.isvectorized", i32 1}
-!28 = !{!"llvm.loop.unroll.runtime.disable"}
-!29 = !{!"branch_weights", i32 4, i32 12}
-!30 = distinct !{!30, !"_ZN2v88internal16HeapObjectLayout19GetWriteBarrierModeERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS3_2EEEE"}
-!31 = distinct !{!31, !30, !"_ZN2v88internal16HeapObjectLayout19GetWriteBarrierModeERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS3_2EEEE: argument 0"}
-!32 = distinct !{!32, !"_ZN2v88internal12WriteBarrier28GetWriteBarrierModeForObjectENS0_6TaggedINS0_10HeapObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS6_2EEEE"}
-!33 = distinct !{!33, !32, !"_ZN2v88internal12WriteBarrier28GetWriteBarrierModeForObjectENS0_6TaggedINS0_10HeapObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS6_2EEEE: argument 0"}
-!34 = !{!33, !31}
-!35 = distinct !{!35, !14}
-!36 = distinct !{!36, !"_ZN2v88internal16HeapObjectLayout19GetWriteBarrierModeERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS3_2EEEE"}
-!37 = distinct !{!37, !36, !"_ZN2v88internal16HeapObjectLayout19GetWriteBarrierModeERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS3_2EEEE: argument 0"}
-!38 = distinct !{!38, !"_ZN2v88internal12WriteBarrier28GetWriteBarrierModeForObjectENS0_6TaggedINS0_10HeapObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS6_2EEEE"}
-!39 = distinct !{!39, !38, !"_ZN2v88internal12WriteBarrier28GetWriteBarrierModeForObjectENS0_6TaggedINS0_10HeapObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS6_2EEEE: argument 0"}
-!40 = !{!39, !37}
-!41 = distinct !{!41, !14}
-!42 = !{!"branch_weights", i32 2146410443, i32 1073205}
-!43 = distinct !{!43, !"_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj"}
-!44 = distinct !{!44, !43, !"_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj: argument 0"}
-!45 = distinct !{!45, !14}
-!46 = !{!44}
-!47 = distinct !{!47, !14}
-!48 = distinct !{!48, !"_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj"}
-!49 = distinct !{!49, !48, !"_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj: argument 0"}
-!50 = !{!49}
-!51 = distinct !{null}
+!22 = distinct !{!22, !14, !28, !29}
+!23 = distinct !{!23, !14, !28, !29}
+!24 = distinct !{!24, !14, !28}
+!25 = !{!"branch_weights", i32 1, i32 1048575}
+!26 = !{!20}
+!27 = !{!21}
+!28 = !{!"llvm.loop.isvectorized", i32 1}
+!29 = !{!"llvm.loop.unroll.runtime.disable"}
+!30 = !{!"branch_weights", i32 4, i32 12}
+!31 = distinct !{!31, !"_ZN2v88internal16HeapObjectLayout19GetWriteBarrierModeERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS3_2EEEE"}
+!32 = distinct !{!32, !31, !"_ZN2v88internal16HeapObjectLayout19GetWriteBarrierModeERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS3_2EEEE: argument 0"}
+!33 = distinct !{!33, !"_ZN2v88internal12WriteBarrier28GetWriteBarrierModeForObjectENS0_6TaggedINS0_10HeapObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS6_2EEEE"}
+!34 = distinct !{!34, !33, !"_ZN2v88internal12WriteBarrier28GetWriteBarrierModeForObjectENS0_6TaggedINS0_10HeapObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS6_2EEEE: argument 0"}
+!35 = !{!34, !32}
+!36 = distinct !{!36, !14}
+!37 = distinct !{!37, !"_ZN2v88internal16HeapObjectLayout19GetWriteBarrierModeERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS3_2EEEE"}
+!38 = distinct !{!38, !37, !"_ZN2v88internal16HeapObjectLayout19GetWriteBarrierModeERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS3_2EEEE: argument 0"}
+!39 = distinct !{!39, !"_ZN2v88internal12WriteBarrier28GetWriteBarrierModeForObjectENS0_6TaggedINS0_10HeapObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS6_2EEEE"}
+!40 = distinct !{!40, !39, !"_ZN2v88internal12WriteBarrier28GetWriteBarrierModeForObjectENS0_6TaggedINS0_10HeapObjectEEERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS6_2EEEE: argument 0"}
+!41 = !{!40, !38}
+!42 = distinct !{!42, !14}
+!43 = !{!"branch_weights", i32 2146410443, i32 1073205}
+!44 = distinct !{!44, !"_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj"}
+!45 = distinct !{!45, !44, !"_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj: argument 0"}
+!46 = distinct !{!46, !14}
+!47 = !{!45}
+!48 = distinct !{!48, !14}
+!49 = distinct !{!49, !"_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj"}
+!50 = distinct !{!50, !49, !"_ZN2v88internal14SegmentedTableINS0_15JSDispatchEntryELm268435456EE7iter_atEj: argument 0"}
+!51 = !{!50}
 !52 = distinct !{null}
-!53 = distinct !{!53, !14}
+!53 = distinct !{null}
 !54 = distinct !{!54, !14}
 !55 = distinct !{!55, !14}
 !56 = distinct !{!56, !14}
 !57 = distinct !{!57, !14}
+!58 = distinct !{!58, !14}
 end_hunk_7
