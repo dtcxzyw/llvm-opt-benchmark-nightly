@@ -204,15 +204,19 @@ bb.bt:                                            ; preds = %bb.bs
 bb.bu:                                            ; preds = %bb.bt, %bb.bs
   %i.gu = load i16, ptr %i.fd, align 8, !tbaa !133
   %i.gv = icmp sgt i16 %i.gu, 0
-  br i1 %i.gv, label %.lr.ph.i.i, label %_ZN7Imf_3_412_GLOBAL__N_115ScanLineProcess15update_pointersEPKNS_11FrameBufferEii.exit.i
+  br i1 %i.gv, label %.lr.ph.i.i.preheader, label %_ZN7Imf_3_412_GLOBAL__N_115ScanLineProcess15update_pointersEPKNS_11FrameBufferEii.exit.i
 
-.lr.ph.i.i:                                       ; preds = %bb.bu, %bb.bw
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.bw ], [ 0, %bb.bu ] ; 2 uses
+.lr.ph.i.i.preheader:                             ; preds = %bb.bu
+  %11 = insertelement <2 x i32> poison, i32 %.0114, i64 1
+  br label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %bb.bw
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.bw ], [ 0, %.lr.ph.i.i.preheader ] ; 2 uses
   %i.gw = load ptr, ptr %i.fe, align 8, !tbaa !134
   %i.gx = getelementptr inbounds nuw [48 x i8], ptr %i.gw, i64 %indvars.iv.i.i ; 7 uses
   %i.gy = load ptr, ptr %i.gx, align 8, !tbaa !136
   %i.gz = invoke noundef ptr @_ZNK7Imf_3_411FrameBuffer9findSliceEPKc(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef %i.gy)
-          to label %.noexc74 unwind label %.loopexit101 ; 7 uses
+          to label %.noexc74 unwind label %.loopexit101 ; 6 uses
 
 .noexc74:                                         ; preds = %.lr.ph.i.i
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gx, i64 8
@@ -241,17 +245,17 @@ bb.bv:                                            ; preds = %.noexc74
   %i.hr = load ptr, ptr %i.hq, align 8, !tbaa !143
   %i.hs = load i32, ptr %i.ff, align 4, !tbaa !144
   %i.ht = getelementptr inbounds nuw i8, ptr %i.gz, i64 32
-  %11 = load i32, ptr %i.ht, align 8, !tbaa !102
-  %12 = sdiv i32 %i.hs, %11
-  %13 = sext i32 %12 to i64
-  %14 = mul nsw i64 %i.hl, %13
-  %15 = getelementptr inbounds i8, ptr %i.hr, i64 %14
-  %16 = getelementptr inbounds nuw i8, ptr %i.gz, i64 36
-  %17 = load i32, ptr %16, align 4, !tbaa !103
-  %18 = sdiv i32 %.0114, %17
-  %i.hu = sext i32 %18 to i64
+  %12 = load <2 x i32>, ptr %i.ht, align 8, !tbaa !16
+  %13 = insertelement <2 x i32> %11, i32 %i.hs, i64 0
+  %14 = sdiv <2 x i32> %13, %12                   ; 2 uses
+  %15 = extractelement <2 x i32> %14, i64 0
+  %16 = sext i32 %15 to i64
+  %17 = mul nsw i64 %i.hl, %16
+  %18 = getelementptr inbounds i8, ptr %i.hr, i64 %17
+  %19 = extractelement <2 x i32> %14, i64 1
+  %i.hu = sext i32 %19 to i64
   %i.hv = mul nsw i64 %i.ho, %i.hu
-  %i.hw = getelementptr inbounds i8, ptr %15, i64 %i.hv
+  %i.hw = getelementptr inbounds i8, ptr %18, i64 %i.hv
   br label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv, %.noexc74
@@ -654,6 +658,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 .lr.ph.i:                                         ; preds = %bb.m
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %7 = insertelement <2 x i32> poison, i32 %4, i64 1
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.p, %.lr.ph.i
@@ -661,7 +666,7 @@ bb.n:                                             ; preds = %bb.p, %.lr.ph.i
   %i.af = load ptr, ptr %i.ad, align 8, !tbaa !134
   %i.ag = getelementptr inbounds nuw [48 x i8], ptr %i.af, i64 %indvars.iv.i ; 7 uses
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !136
-  %i.ai = tail call noundef ptr @_ZNK7Imf_3_411FrameBuffer9findSliceEPKc(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef %i.ah) ; 7 uses
+  %i.ai = tail call noundef ptr @_ZNK7Imf_3_411FrameBuffer9findSliceEPKc(ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef %i.ah) ; 6 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %i.ak = load i32, ptr %i.aj, align 8, !tbaa !137
   %i.al = icmp ne i32 %i.ak, 0
@@ -688,17 +693,17 @@ bb.o:                                             ; preds = %bb.n
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !143
   %i.bb = load i32, ptr %i.ae, align 4, !tbaa !144
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ai, i64 32
-  %7 = load i32, ptr %i.bc, align 8, !tbaa !102
-  %8 = sdiv i32 %i.bb, %7
-  %9 = sext i32 %8 to i64
-  %10 = mul nsw i64 %i.au, %9
-  %11 = getelementptr inbounds i8, ptr %i.ba, i64 %10
-  %12 = getelementptr inbounds nuw i8, ptr %i.ai, i64 36
-  %13 = load i32, ptr %12, align 4, !tbaa !103
-  %14 = sdiv i32 %4, %13
-  %i.bd = sext i32 %14 to i64
+  %8 = load <2 x i32>, ptr %i.bc, align 8, !tbaa !16
+  %9 = insertelement <2 x i32> %7, i32 %i.bb, i64 0
+  %10 = sdiv <2 x i32> %9, %8                     ; 2 uses
+  %11 = extractelement <2 x i32> %10, i64 0
+  %12 = sext i32 %11 to i64
+  %13 = mul nsw i64 %i.au, %12
+  %14 = getelementptr inbounds i8, ptr %i.ba, i64 %13
+  %15 = extractelement <2 x i32> %10, i64 1
+  %i.bd = sext i32 %15 to i64
   %i.be = mul nsw i64 %i.ax, %i.bd
-  %i.bf = getelementptr inbounds i8, ptr %11, i64 %i.be
+  %i.bf = getelementptr inbounds i8, ptr %14, i64 %i.be
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
@@ -1101,6 +1106,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 172
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %2 = insertelement <2 x i32> poison, i32 %1, i64 1
   br label %bb.b
 
 ._crit_edge17:                                    ; preds = %._crit_edge12, %bb.a
@@ -1111,7 +1117,7 @@ bb.b:                                             ; preds = %.lr.ph16, %._crit_e
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.02.014, i64 32 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.02.014, i64 16
   %i.h = load i64, ptr %i.g, align 8, !tbaa !141  ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %.sroa.02.014, i64 36 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %.sroa.02.014, i64 36
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.02.014, i64 24
   %i.k = load i64, ptr %i.j, align 8, !tbaa !142  ; 2 uses
   %i.l = load i32, ptr %i.b, align 8, !tbaa !129
@@ -1126,14 +1132,15 @@ bb.b:                                             ; preds = %.lr.ph16, %._crit_e
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.02.014, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !143
   %i.t = load i32, ptr %i.a, align 4, !tbaa !144
-  %2 = load i32, ptr %i.f, align 8, !tbaa !102
-  %3 = sdiv i32 %i.t, %2
-  %i.u = sext i32 %3 to i64
+  %3 = load <2 x i32>, ptr %i.f, align 8, !tbaa !16
+  %4 = insertelement <2 x i32> %2, i32 %i.t, i64 0
+  %5 = sdiv <2 x i32> %4, %3                      ; 2 uses
+  %6 = extractelement <2 x i32> %5, i64 0
+  %i.u = sext i32 %6 to i64
   %i.v = mul nsw i64 %i.h, %i.u
   %i.w = getelementptr inbounds i8, ptr %i.s, i64 %i.v
-  %4 = load i32, ptr %i.i, align 4, !tbaa !103
-  %5 = sdiv i32 %1, %4
-  %i.x = sext i32 %5 to i64
+  %7 = extractelement <2 x i32> %5, i64 1
+  %i.x = sext i32 %7 to i64
   %i.y = mul nsw i64 %i.k, %i.x
   %i.z = getelementptr inbounds i8, ptr %i.w, i64 %i.y
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.02.014, i64 40 ; 3 uses

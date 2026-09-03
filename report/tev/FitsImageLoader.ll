@@ -205,7 +205,7 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE14__assign_shortE
 
 _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSB8ne180100EPKc.exit: ; preds = %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE14__assign_shortEPKcm.exit.i.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit515, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit104, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit99, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEEbRKNS_12basic_stringIT_T0_T1_EEPKS6_.exit
   store i32 0, ptr %.reload.addr508, align 8, !tbaa !99
-  %i.bo = getelementptr inbounds nuw i8, ptr %i.b, i64 540 ; 5 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.b, i64 540 ; 4 uses
   store i32 0, ptr %i.bo, align 4, !tbaa !99
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !1125, !nonnull !140, !align !299
@@ -421,7 +421,7 @@ _ZN4tlog5debugIJRiRNSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcE
   %i.fj = call noundef double @sqrt(double noundef %i.fi) #32 ; 2 uses
   %.spill.addr495 = getelementptr inbounds nuw i8, ptr %i.b, i64 528 ; 2 uses
   store double %i.fj, ptr %.spill.addr495, align 8
-  %i.fk = fptosi double %i.fj to i32              ; 10 uses
+  %i.fk = fptosi double %i.fj to i32              ; 9 uses
   %i.fl = mul nsw i32 %i.fk, %i.fk
   %.not77 = icmp eq i32 %i.fl, %i.fh
   br i1 %.not77, label %bb.aa, label %bb.y
@@ -470,11 +470,14 @@ bb.aa:                                            ; preds = %_ZN4tlog5debugIJRiR
   %i.fw = getelementptr inbounds nuw i8, ptr %i.b, i64 488 ; 3 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.b, i64 496 ; 3 uses
   %i.fy = tail call ptr @__ctype_toupper_loc() #39
+  %13 = insertelement <2 x i32> poison, i32 %i.fk, i64 0
+  %14 = shufflevector <2 x i32> %13, <2 x i32> poison, <2 x i32> zeroinitializer
   br label %.from..preheader
 
 .from..preheader:                                 ; preds = %._crit_edge, %.preheader.from..preheader.lr.ph
   %i.fz = phi ptr [ null, %.preheader.from..preheader.lr.ph ], [ %.0.i141, %._crit_edge ]
   %.062273 = phi i32 [ 0, %.preheader.from..preheader.lr.ph ], [ %i.gc, %._crit_edge ] ; 2 uses
+  %15 = insertelement <2 x i32> poison, i32 %.062273, i64 1
   br label %bb.ab
 
 ._crit_edge274.split:                             ; preds = %._crit_edge, %bb.aa
@@ -491,20 +494,20 @@ bb.aa:                                            ; preds = %_ZN4tlog5debugIJRiR
 bb.ab:                                            ; preds = %.from._ZNSt3__114__split_bufferIhRNS_9allocatorIhEEE5clearB8ne180100Ev.exit.i.i.i, %.from..preheader
   %i.gd = phi ptr [ %i.fz, %.from..preheader ], [ %.0.i141, %.from._ZNSt3__114__split_bufferIhRNS_9allocatorIhEEE5clearB8ne180100Ev.exit.i.i.i ] ; 5 uses
   %.063272 = phi i32 [ 0, %.from..preheader ], [ %i.mg, %.from._ZNSt3__114__split_bufferIhRNS_9allocatorIhEEE5clearB8ne180100Ev.exit.i.i.i ] ; 2 uses
-  %13 = load i32, ptr %.reload.addr508, align 8, !tbaa !99
-  %14 = add nsw i32 %13, %.063272
-  %15 = srem i32 %14, %i.fk
-  %16 = load i32, ptr %i.bo, align 4, !tbaa !99
-  %17 = add nsw i32 %16, %.062273
-  %18 = srem i32 %17, %i.fk
-  %i.ge = xor i32 %18, -1
+  %16 = load <2 x i32>, ptr %.reload.addr508, align 8, !tbaa !99
+  %17 = insertelement <2 x i32> %15, i32 %.063272, i64 0
+  %18 = add nsw <2 x i32> %16, %17
+  %19 = srem <2 x i32> %18, %14                   ; 2 uses
+  %20 = extractelement <2 x i32> %19, i64 1
+  %i.ge = xor i32 %20, -1
   %i.gf = add i32 %i.ge, %i.fk
   %i.gg = load ptr, ptr %i.ft, align 8, !tbaa !383, !nonnull !140, !align !299
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gg, i64 88
   %i.gi = load i32, ptr %i.gh, align 8, !tbaa !204
   %.sroa.5236.0.insert.ext = zext i32 %i.gf to i64 ; 9 uses
   %.sroa.5236.0.insert.shift = shl nuw i64 %.sroa.5236.0.insert.ext, 32
-  %.sroa.0235.0.insert.ext = zext i32 %15 to i64
+  %21 = extractelement <2 x i32> %19, i64 0
+  %.sroa.0235.0.insert.ext = zext i32 %21 to i64
   %.sroa.0235.0.insert.insert = or disjoint i64 %.sroa.5236.0.insert.shift, %.sroa.0235.0.insert.ext ; 8 uses
   switch i32 %i.gi, label %toupper.exit.from. [
     i32 8, label %toupper.exit.from.337

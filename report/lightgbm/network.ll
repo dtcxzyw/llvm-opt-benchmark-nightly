@@ -2,7 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 860
 inline.NumDeleted: 422
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN8LightGBM7Network9AllgatherEPcPKiS3_S1_i:bb.a
   br i1 %i.cl, label %middle.block, label %vector.body, !llvm.loop !149
 
@@ -204,25 +205,28 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.t = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN8LightGBM7Network8linkers_E)
+  %5 = insertelement <2 x i32> poison, i32 %i.k, i64 0
+  %6 = insertelement <2 x i32> %5, i32 %i.r, i64 1
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.024 = phi i32 [ 1, %.lr.ph ], [ %i.ak, %bb.b ]
-  %.02023 = phi i32 [ %i.r, %.lr.ph ], [ %10, %bb.b ] ; 2 uses
-  %.02122 = phi i32 [ %i.k, %.lr.ph ], [ %7, %bb.b ] ; 2 uses
+  %.02023 = phi i32 [ 1, %.lr.ph ], [ %i.ak, %bb.b ]
+  %7 = phi <2 x i32> [ %6, %.lr.ph ], [ %14, %bb.b ] ; 3 uses
   tail call void @_ZTHN8LightGBM7Network8linkers_E()
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !19
-  %i.v = sext i32 %.02122 to i64                  ; 2 uses
+  %8 = extractelement <2 x i32> %7, i64 0
+  %i.v = sext i32 %8 to i64                       ; 2 uses
   %i.w = getelementptr inbounds [4 x i8], ptr %1, i64 %i.v
   %i.x = load i32, ptr %i.w, align 4, !tbaa !79
   %i.y = sext i32 %i.x to i64
   %i.z = getelementptr inbounds i8, ptr %3, i64 %i.y
   %i.aa = getelementptr inbounds [4 x i8], ptr %2, i64 %i.v
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !79
-  %i.ac = sext i32 %.02023 to i64                 ; 2 uses
+  %9 = extractelement <2 x i32> %7, i64 1
+  %i.ac = sext i32 %9 to i64                      ; 2 uses
   %i.ad = getelementptr inbounds [4 x i8], ptr %1, i64 %i.ac
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !79
   %i.af = sext i32 %i.ae to i64
@@ -230,14 +234,13 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ah = getelementptr inbounds [4 x i8], ptr %2, i64 %i.ac
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !79
   tail call void @_ZN8LightGBM7Linkers8SendRecvEiPciiS1_i(ptr noundef nonnull align 8 dereferenceable(304) %i.u, i32 noundef %i.o, ptr noundef %i.z, i32 noundef %i.ab, i32 noundef %i.r, ptr noundef %i.ag, i32 noundef %i.ai)
-  %5 = add nsw i32 %.02122, -1
-  %i.aj = load i32, ptr %i.m, align 4, !tbaa !79  ; 5 uses
-  %6 = add nsw i32 %5, %i.aj
-  %7 = srem i32 %6, %i.aj
-  %8 = add nsw i32 %.02023, -1
-  %9 = add nsw i32 %8, %i.aj
-  %10 = srem i32 %9, %i.aj
-  %i.ak = add nuw nsw i32 %.024, 1                ; 2 uses
+  %10 = add nsw <2 x i32> %7, splat (i32 -1)
+  %i.aj = load i32, ptr %i.m, align 4, !tbaa !79  ; 2 uses
+  %11 = insertelement <2 x i32> poison, i32 %i.aj, i64 0
+  %12 = shufflevector <2 x i32> %11, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
+  %13 = add nsw <2 x i32> %10, %12
+  %14 = srem <2 x i32> %13, %12
+  %i.ak = add nuw nsw i32 %.02023, 1              ; 2 uses
   %i.al = icmp slt i32 %i.ak, %i.aj
   br i1 %i.al, label %bb.b, label %._crit_edge, !llvm.loop !4
 }
@@ -517,7 +520,7 @@ bb.b:                                             ; preds = %.lr.ph72, %._crit_e
   %i.as = shl nuw i32 1, %i.ar
   %i.at = load i32, ptr %i.n, align 4, !tbaa !79
   %i.au = sub i32 %i.at, %.04469
-  %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %i.au, i32 %i.as) ; 3 uses
+  %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %i.au, i32 %i.as) ; 6 uses
   tail call void @_ZTHN8LightGBM7Network10bruck_map_E()
   %i.av = load ptr, ptr %i.o, align 8, !tbaa !22
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %indvars.iv
@@ -527,17 +530,47 @@ bb.b:                                             ; preds = %.lr.ph72, %._crit_e
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %indvars.iv
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !79
   %i.bb = icmp sgt i32 %.sroa.speculated, 0
-  br i1 %i.bb, label %.lr.ph.a, label %._crit_edge
+  br i1 %i.bb, label %.lr.ph, label %._crit_edge
 
-.lr.ph.a:                                         ; preds = %bb.b
-  %i.bc = load i32, ptr %i.a, align 4, !tbaa !79  ; 2 uses
-  %i.bd = load i32, ptr %i.n, align 4, !tbaa !79  ; 2 uses
-  %invariant.op.a = add i32 %.04469, %i.bc
+.lr.ph:                                           ; preds = %bb.b
+  %5 = load i32, ptr %i.a, align 4, !tbaa !79     ; 4 uses
+  %6 = load i32, ptr %i.n, align 4, !tbaa !79     ; 6 uses
+  %invariant.op = add i32 %.04469, %5             ; 3 uses
+  %xtraiter = and i32 %.sroa.speculated, 1
+  %7 = icmp eq i32 %.sroa.speculated, 1
+  br i1 %7, label %.lr.ph.a, label %.lr.ph.new
+
+.lr.ph.new:                                       ; preds = %.lr.ph
+  %unroll_iter = and i32 %.sroa.speculated, 2147483646
   br label %bb.c
 
-._crit_edge:                                      ; preds = %bb.c, %bb.b
-  %.042.lcssa = phi i32 [ 0, %bb.b ], [ %i.br, %bb.c ]
-  %.041.lcssa = phi i32 [ 0, %bb.b ], [ %i.bw, %bb.c ] ; 2 uses
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.c
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
+  %.066.epil.init = phi i32 [ 0, %.lr.ph ], [ %i.bw, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %.04165.epil.init = phi i32 [ 0, %.lr.ph ], [ %28, %._crit_edge.loopexit.unr-lcssa ]
+  %.04264.epil.init = phi i32 [ 0, %.lr.ph ], [ %i.br, %._crit_edge.loopexit.unr-lcssa ]
+  %lcmp.mod85 = trunc i32 %.sroa.speculated to i1
+  tail call void @llvm.assume(i1 %lcmp.mod85)
+  %8 = add nsw i32 %5, %.066.epil.init
+  %9 = srem i32 %8, %6
+  %10 = sext i32 %9 to i64
+  %11 = getelementptr inbounds [4 x i8], ptr %2, i64 %10
+  %i.bc = load i32, ptr %11, align 4, !tbaa !79
+  %12 = add nsw i32 %i.bc, %.04264.epil.init
+  %.reass.epil = add i32 %.066.epil.init, %invariant.op
+  %13 = srem i32 %.reass.epil, %6
+  %14 = sext i32 %13 to i64
+  %15 = getelementptr inbounds [4 x i8], ptr %2, i64 %14
+  %i.bd = load i32, ptr %15, align 4, !tbaa !79
+  %invariant.op.a = add nsw i32 %i.bd, %.04165.epil.init
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.lr.ph.a, %._crit_edge.loopexit.unr-lcssa, %bb.b
+  %.042.lcssa = phi i32 [ 0, %bb.b ], [ %i.br, %._crit_edge.loopexit.unr-lcssa ], [ %12, %.lr.ph.a ]
+  %.041.lcssa = phi i32 [ 0, %bb.b ], [ %28, %._crit_edge.loopexit.unr-lcssa ], [ %invariant.op.a, %.lr.ph.a ] ; 2 uses
   tail call void @_ZTHN8LightGBM7Network8linkers_E()
   %i.be = load ptr, ptr %i.q, align 8, !tbaa !19
   %i.bf = sext i32 %.04568 to i64
@@ -552,25 +585,40 @@ bb.b:                                             ; preds = %.lr.ph72, %._crit_e
   %i.bl = icmp slt i64 %indvars.iv.next, %i.bk
   br i1 %i.bl, label %bb.b, label %._crit_edge73, !llvm.loop !153
 
-bb.c:                                             ; preds = %.lr.ph.a, %bb.c
-  %.066.a = phi i32 [ 0, %.lr.ph.a ], [ %i.bx, %bb.c ] ; 3 uses
-  %.04165 = phi i32 [ 0, %.lr.ph.a ], [ %i.bw, %bb.c ]
-  %.04264 = phi i32 [ 0, %.lr.ph.a ], [ %i.br, %bb.c ]
-  %i.bm = add nsw i32 %i.bc, %.066.a
-  %i.bn = srem i32 %i.bm, %i.bd
+bb.c:                                             ; preds = %bb.c, %.lr.ph.new
+  %.066 = phi i32 [ 0, %.lr.ph.new ], [ %i.bw, %bb.c ] ; 4 uses
+  %.066.a = phi i32 [ 0, %.lr.ph.new ], [ %28, %bb.c ]
+  %.04165 = phi i32 [ 0, %.lr.ph.new ], [ %i.br, %bb.c ]
+  %.04264 = phi i32 [ 0, %.lr.ph.new ], [ %i.bx, %bb.c ]
+  %16 = add nsw i32 %5, %.066
+  %17 = srem i32 %16, %6
+  %18 = sext i32 %17 to i64
+  %19 = getelementptr inbounds [4 x i8], ptr %2, i64 %18
+  %20 = load i32, ptr %19, align 4, !tbaa !79
+  %21 = add nsw i32 %20, %.04165
+  %.reass = add i32 %.066, %invariant.op
+  %22 = srem i32 %.reass, %6
+  %23 = sext i32 %22 to i64
+  %24 = getelementptr inbounds [4 x i8], ptr %2, i64 %23
+  %25 = load i32, ptr %24, align 4, !tbaa !79
+  %26 = add nsw i32 %25, %.066.a
+  %27 = or disjoint i32 %.066, 1                  ; 2 uses
+  %i.bm = add nsw i32 %5, %27
+  %i.bn = srem i32 %i.bm, %6
   %i.bo = sext i32 %i.bn to i64
   %i.bp = getelementptr inbounds [4 x i8], ptr %2, i64 %i.bo
   %i.bq = load i32, ptr %i.bp, align 4, !tbaa !79
-  %i.br = add nsw i32 %i.bq, %.04264              ; 2 uses
-  %.reass.a = add i32 %.066.a, %invariant.op.a
-  %i.bs = srem i32 %.reass.a, %i.bd
+  %i.br = add nsw i32 %i.bq, %21                  ; 3 uses
+  %.reass.a = add i32 %27, %invariant.op
+  %i.bs = srem i32 %.reass.a, %6
   %i.bt = sext i32 %i.bs to i64
   %i.bu = getelementptr inbounds [4 x i8], ptr %2, i64 %i.bt
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !79
-  %i.bw = add nsw i32 %i.bv, %.04165              ; 2 uses
-  %i.bx = add nuw nsw i32 %.066.a, 1              ; 2 uses
-  %exitcond.not = icmp eq i32 %i.bx, %.sroa.speculated
-  br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !154
+  %28 = add nsw i32 %i.bv, %26                    ; 3 uses
+  %i.bw = add nuw nsw i32 %.066, 2                ; 2 uses
+  %i.bx = add i32 %.04264, 2                      ; 2 uses
+  %exitcond.not = icmp eq i32 %i.bx, %unroll_iter
+  br i1 %exitcond.not, label %._crit_edge.loopexit.unr-lcssa, label %bb.c, !llvm.loop !154
 }
 
 ; Function Attrs: inlinehint mustprogress uwtable
@@ -973,6 +1021,8 @@ bb.a:
   %i.k = add i32 %i.g, %i.i
   %i.l = srem i32 %i.k, %i.e
   %i.m = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN8LightGBM7Network8linkers_E)
+  %8 = insertelement <2 x i32> poison, i32 %i.i, i64 0
+  %9 = insertelement <2 x i32> %8, i32 %i.l, i64 1
   br label %bb.b
 
 ._crit_edge.loopexit:                             ; preds = %bb.b
@@ -993,19 +1043,20 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.031 = phi i32 [ 1, %.lr.ph ], [ %i.ao, %bb.b ]
-  %.02730 = phi i32 [ %i.l, %.lr.ph ], [ %13, %bb.b ] ; 2 uses
-  %.02829 = phi i32 [ %i.i, %.lr.ph ], [ %10, %bb.b ] ; 2 uses
+  %.02730 = phi i32 [ 1, %.lr.ph ], [ %i.ao, %bb.b ]
+  %10 = phi <2 x i32> [ %9, %.lr.ph ], [ %17, %bb.b ] ; 3 uses
   tail call void @_ZTHN8LightGBM7Network8linkers_E()
   %i.w = load ptr, ptr %i.m, align 8, !tbaa !19
-  %i.x = sext i32 %.02829 to i64                  ; 2 uses
+  %11 = extractelement <2 x i32> %10, i64 0
+  %i.x = sext i32 %11 to i64                      ; 2 uses
   %i.y = getelementptr inbounds [4 x i8], ptr %3, i64 %i.x
   %i.z = load i32, ptr %i.y, align 4, !tbaa !79
   %i.aa = sext i32 %i.z to i64
   %i.ab = getelementptr inbounds i8, ptr %0, i64 %i.aa
   %i.ac = getelementptr inbounds [4 x i8], ptr %4, i64 %i.x
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !79
-  %i.ae = sext i32 %.02730 to i64                 ; 2 uses
+  %12 = extractelement <2 x i32> %10, i64 1
+  %i.ae = sext i32 %12 to i64                     ; 2 uses
   %i.af = getelementptr inbounds [4 x i8], ptr %4, i64 %i.ae ; 2 uses
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !79
   tail call void @_ZN8LightGBM7Linkers8SendRecvEiPciiS1_i(ptr noundef nonnull align 8 dereferenceable(304) %i.w, i32 noundef %i.f, ptr noundef %i.ab, i32 noundef %i.ad, i32 noundef %i.i, ptr noundef %5, i32 noundef %i.ag)
@@ -1016,14 +1067,13 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.al = getelementptr inbounds i8, ptr %0, i64 %i.ak
   %i.am = load i32, ptr %i.af, align 4, !tbaa !79
   tail call void %i.ah(ptr noundef %5, ptr noundef %i.al, i32 noundef %2, i32 noundef %i.am)
-  %8 = add nsw i32 %.02829, -1
-  %i.an = load i32, ptr %i.d, align 4, !tbaa !79  ; 5 uses
-  %9 = add nsw i32 %8, %i.an
-  %10 = srem i32 %9, %i.an
-  %11 = add nsw i32 %.02730, -1
-  %12 = add nsw i32 %11, %i.an
-  %13 = srem i32 %12, %i.an
-  %i.ao = add nuw nsw i32 %.031, 1                ; 2 uses
+  %13 = add nsw <2 x i32> %10, splat (i32 -1)
+  %i.an = load i32, ptr %i.d, align 4, !tbaa !79  ; 2 uses
+  %14 = insertelement <2 x i32> poison, i32 %i.an, i64 0
+  %15 = shufflevector <2 x i32> %14, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
+  %16 = add nsw <2 x i32> %13, %15
+  %17 = srem <2 x i32> %16, %15
+  %i.ao = add nuw nsw i32 %.02730, 1              ; 2 uses
   %i.ap = icmp slt i32 %i.ao, %i.an
   br i1 %i.ap, label %bb.b, label %._crit_edge.loopexit, !llvm.loop !3
 }

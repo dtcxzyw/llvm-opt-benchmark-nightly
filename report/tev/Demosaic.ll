@@ -205,7 +205,7 @@ define internal fastcc void @_ZN3tevL15generalDemosaicENS_11ChannelViewIKfEENS_1
   %.reload.addr742 = getelementptr inbounds nuw i8, ptr %i.c, i64 360 ; 2 uses
   %.reload.addr743 = getelementptr inbounds nuw i8, ptr %i.c, i64 376 ; 2 uses
   %.reload.addr749 = getelementptr inbounds nuw i8, ptr %i.c, i64 416 ; 3 uses
-  %.reload.addr750 = getelementptr inbounds nuw i8, ptr %i.c, i64 424 ; 6 uses
+  %.reload.addr750 = getelementptr inbounds nuw i8, ptr %i.c, i64 424 ; 7 uses
   %.reload.addr751 = getelementptr inbounds nuw i8, ptr %i.c, i64 392 ; 2 uses
   %.reload.addr752 = getelementptr inbounds nuw i8, ptr %i.c, i64 400 ; 4 uses
   %.reload.addr753 = getelementptr inbounds nuw i8, ptr %i.c, i64 408 ; 4 uses
@@ -402,7 +402,7 @@ bb.k:                                             ; preds = %bb.g
   %i.be = lshr i64 %.sroa.0.0.copyload.i, 32
   %i.bf = trunc nuw i64 %i.be to i32
   store i32 %i.bf, ptr %.reload.addr754, align 8, !tbaa !76
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.c, i64 428 ; 4 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.c, i64 428 ; 3 uses
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !76 ; 4 uses
   %i.bi = load i32, ptr %.reload.addr750, align 8, !tbaa !76 ; 4 uses
   %i.bj = call i32 @llvm.smax.i32(i32 %i.bh, i32 %i.bi) ; 5 uses
@@ -805,6 +805,7 @@ bb.as:                                            ; preds = %bb.an
   %.074328 = phi i32 [ %i.id, %.preheader.from..preheader.lr.ph ], [ %i.ks, %._crit_edge ] ; 8 uses
   %i.ko = add nsw i32 %.074328, %i.ik
   %i.kp = mul nsw i32 %.074328, %.074328
+  %17 = insertelement <2 x i32> poison, i32 %i.ko, i64 1
   br label %bb.at
 
 ._crit_edge329.split:                             ; preds = %._crit_edge, %bb.as
@@ -826,17 +827,17 @@ bb.at:                                            ; preds = %.from.641, %.from..
   br i1 %or.cond, label %.from.641, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %17 = load i32, ptr %i.bg, align 4, !tbaa !76   ; 3 uses
-  %18 = srem i32 %i.ko, %17
-  %19 = add nsw i32 %18, %17
-  %20 = srem i32 %19, %17
-  %21 = add nsw i32 %.073324, %i.is
-  %22 = load i32, ptr %.reload.addr750, align 8, !tbaa !76 ; 4 uses
-  %23 = srem i32 %21, %22
-  %24 = add nsw i32 %23, %22
-  %25 = srem i32 %24, %22
-  %26 = mul nsw i32 %22, %20
-  %i.ku = add nsw i32 %25, %26
+  %18 = add nsw i32 %.073324, %i.is
+  %19 = load <2 x i32>, ptr %.reload.addr750, align 8, !tbaa !76 ; 3 uses
+  %20 = load i32, ptr %.reload.addr750, align 8, !tbaa !76
+  %21 = insertelement <2 x i32> %17, i32 %18, i64 0
+  %22 = srem <2 x i32> %21, %19
+  %23 = add nsw <2 x i32> %22, %19
+  %24 = srem <2 x i32> %23, %19                   ; 2 uses
+  %25 = extractelement <2 x i32> %24, i64 1
+  %26 = mul nsw i32 %20, %25
+  %27 = extractelement <2 x i32> %24, i64 0
+  %i.ku = add nsw i32 %27, %26
   %i.kv = sext i32 %i.ku to i64
   %i.kw = getelementptr inbounds nuw i8, ptr %3, i64 %i.kv
   %i.kx = load i8, ptr %i.kw, align 1, !tbaa !55

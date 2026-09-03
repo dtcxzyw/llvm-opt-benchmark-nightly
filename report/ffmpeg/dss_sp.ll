@@ -205,8 +205,8 @@ bb.ac:                                            ; preds = %.loopexit.i40.i, %d
   br i1 %exitcond44.not.i.i, label %dss_sp_convert_coeffs.exit.preheader.i, label %bb.ac, !llvm.loop !44
 
 dss_sp_convert_coeffs.exit.preheader.i:           ; preds = %.loopexit.i40.i
-  %i.uw = getelementptr inbounds nuw i8, ptr %i.d, i64 3508 ; 40 uses
-  %i.ux = getelementptr inbounds nuw i8, ptr %i.d, i64 1184 ; 14 uses
+  %i.uw = getelementptr inbounds nuw i8, ptr %i.d, i64 3508 ; 41 uses
+  %i.ux = getelementptr inbounds nuw i8, ptr %i.d, i64 1184 ; 15 uses
   %scevgep.i.i = getelementptr nuw i8, ptr %i.d, i64 1476
   %scevgep13.i.i = getelementptr nuw i8, ptr %i.d, i64 1188
   %i.uy = getelementptr inbounds nuw i8, ptr %i.d, i64 3800
@@ -396,7 +396,7 @@ bb.ad:                                            ; preds = %dss_sp_sf_synthesis
   %indvars.iv151.i = phi i64 [ 0, %dss_sp_convert_coeffs.exit.preheader.i ], [ %indvars.iv.next152.i, %dss_sp_sf_synthesis.exit.i ] ; 5 uses
   %i.abx = getelementptr inbounds nuw [2 x i8], ptr %i.pp, i64 %indvars.iv151.i
   %i.aby = load i16, ptr %i.abx, align 2, !tbaa !68 ; 2 uses
-  %i.abz = sext i16 %i.aby to i32                 ; 5 uses
+  %i.abz = sext i16 %i.aby to i32                 ; 7 uses
   %i.aca = getelementptr inbounds nuw [2 x i8], ptr %i.hb, i64 %indvars.iv151.i
   %i.acb = load i16, ptr %i.aca, align 2, !tbaa !68
   %i.acc = sext i16 %i.acb to i64
@@ -411,25 +411,34 @@ bb.ad:                                            ; preds = %dss_sp_sf_synthesis
   br label %.preheader25.i.i
 
 .preheader.i45.i:                                 ; preds = %bb.ad, %.preheader.i45.i
-  %indvars.iv32.i.i = phi i64 [ %indvars.iv.next33.i.i.1.a, %.preheader.i45.i ], [ 0, %bb.ad ] ; 4 uses
-  %i.aci = trunc nuw nsw i64 %indvars.iv32.i.i to i32
+  %indvars.iv32.i.i = phi i64 [ %indvars.iv.next33.i.i.1.a, %.preheader.i45.i ], [ 0, %bb.ad ] ; 5 uses
+  %4 = trunc nuw nsw i64 %indvars.iv32.i.i to i32
+  %5 = srem i32 %4, %i.abz
+  %6 = sub nsw i32 %i.abz, %5
+  %7 = sext i32 %6 to i64
+  %8 = getelementptr inbounds [4 x i8], ptr %i.ux, i64 %7
+  %9 = load i32, ptr %8, align 4, !tbaa !29
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.uw, i64 %indvars.iv32.i.i
+  store i32 %9, ptr %10, align 4, !tbaa !29
+  %indvars.iv.next33.i.i = add nuw nsw i64 %indvars.iv32.i.i, 1 ; 2 uses
+  %i.aci = trunc nuw nsw i64 %indvars.iv.next33.i.i to i32
   %i.acj = srem i32 %i.aci, %i.abz
   %i.ack = sub nsw i32 %i.abz, %i.acj
   %i.acl = sext i32 %i.ack to i64
   %i.acm = getelementptr inbounds [4 x i8], ptr %i.ux, i64 %i.acl
   %i.acn = load i32, ptr %i.acm, align 4, !tbaa !29
-  %i.aco = getelementptr inbounds nuw [4 x i8], ptr %i.uw, i64 %indvars.iv32.i.i
+  %i.aco = getelementptr inbounds nuw [4 x i8], ptr %i.uw, i64 %indvars.iv.next33.i.i
   store i32 %i.acn, ptr %i.aco, align 4, !tbaa !29
-  %indvars.iv.next33.i.i = or disjoint i64 %indvars.iv32.i.i, 1 ; 2 uses
-  %i.acp = trunc nuw nsw i64 %indvars.iv.next33.i.i to i32
+  %indvars.iv.next33.i.i.1 = add nuw nsw i64 %indvars.iv32.i.i, 2 ; 2 uses
+  %i.acp = trunc nuw nsw i64 %indvars.iv.next33.i.i.1 to i32
   %i.acq = srem i32 %i.acp, %i.abz
   %i.acr = sub nsw i32 %i.abz, %i.acq
   %i.acs = sext i32 %i.acr to i64
   %i.act = getelementptr inbounds [4 x i8], ptr %i.ux, i64 %i.acs
   %i.acu = load i32, ptr %i.act, align 4, !tbaa !29
-  %i.acv = getelementptr inbounds nuw [4 x i8], ptr %i.uw, i64 %indvars.iv.next33.i.i
+  %i.acv = getelementptr inbounds nuw [4 x i8], ptr %i.uw, i64 %indvars.iv.next33.i.i.1
   store i32 %i.acu, ptr %i.acv, align 4, !tbaa !29
-  %indvars.iv.next33.i.i.1.a = add nuw nsw i64 %indvars.iv32.i.i, 2 ; 2 uses
+  %indvars.iv.next33.i.i.1.a = add nuw nsw i64 %indvars.iv32.i.i, 3 ; 2 uses
   %exitcond35.not.i.i.1 = icmp eq i64 %indvars.iv.next33.i.i.1.a, 72
   br i1 %exitcond35.not.i.i.1, label %vector.ph196, label %.preheader.i45.i, !llvm.loop !45
 

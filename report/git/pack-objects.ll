@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 363
 inline.NumDeleted: 121
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 6
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@threaded_find_deltas_by_path:bb.a
   %i.l = load ptr, ptr getelementptr inbounds nuw (i8, ptr @to_pack, i64 8), align 8, !tbaa !55
   %i.m = load ptr, ptr %i.e, align 8, !tbaa !153  ; 2 uses
@@ -205,7 +205,7 @@ bb.a:
   %i.d = alloca i64, align 8                      ; 6 uses
   %5 = alloca %struct.unpacked, align 8           ; 4 uses
   %i.e = sext i32 %2 to i64
-  %i.f = tail call ptr @xcalloc(i64 noundef %i.e, i64 noundef 32) #21 ; 10 uses
+  %i.f = tail call ptr @xcalloc(i64 noundef %i.e, i64 noundef 32) #21 ; 14 uses
   %i.g = icmp sgt i32 %2, 1
   %i.h = tail call i32 @pthread_mutex_lock(ptr noundef nonnull @progress_mutex) #21 ; 0 uses
   %i.i = load i32, ptr %1, align 4, !tbaa !65     ; 2 uses
@@ -222,7 +222,7 @@ bb.a:
   %i.l = phi ptr [ %i.nb, %bb.cc ], [ %i.f, %bb.a ] ; 7 uses
   %.0378 = phi ptr [ %i.m, %bb.cc ], [ %0, %bb.a ] ; 2 uses
   %.0103377 = phi i32 [ %.3106, %bb.cc ], [ 0, %bb.a ] ; 2 uses
-  %.0107376 = phi i32 [ %.1108, %bb.cc ], [ 0, %bb.a ] ; 5 uses
+  %.0107376 = phi i32 [ %.1108, %bb.cc ], [ 0, %bb.a ] ; 6 uses
   %.0165375 = phi i64 [ %.6, %bb.cc ], [ 0, %bb.a ]
   %i.m = getelementptr inbounds nuw i8, ptr %.0378, i64 8
   %i.n = load ptr, ptr %.0378, align 8, !tbaa !121 ; 8 uses
@@ -625,7 +625,7 @@ bb.bs:                                            ; preds = %oe_in_pack.exit142.
 
 .thread179:                                       ; preds = %bb.bs, %bb.o, %bb.n, %try_delta.exit
   %.2167202 = phi i64 [ %.2167228, %try_delta.exit ], [ %.1166.lcssa, %bb.n ], [ %.3168, %bb.bs ], [ %.2167228, %bb.o ] ; 4 uses
-  %.099196 = phi i32 [ %.099229, %try_delta.exit ], [ -1, %bb.n ], [ %.2, %bb.bs ], [ %.099229, %bb.o ] ; 3 uses
+  %.099196 = phi i32 [ %.099229, %try_delta.exit ], [ -1, %bb.n ], [ %.2, %bb.bs ], [ %.099229, %bb.o ] ; 6 uses
   %i.kk = getelementptr inbounds nuw i8, ptr %i.n, i64 48 ; 4 uses
   %i.kl = load ptr, ptr %i.kk, align 8, !tbaa !192
   %i.km = icmp eq ptr %i.kl, null
@@ -737,18 +737,53 @@ oe_delta.exit158:                                 ; preds = %bb.cb
   %i.ml = getelementptr inbounds [32 x i8], ptr %i.f, i64 %i.mk
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(32) %i.ml, i64 32, i1 false), !tbaa.struct !439
   %i.mm = add i32 %.0107376, %2
-  %i.mn = sub i32 %i.mm, %.099196
-  %i.mo = urem i32 %i.mn, %2                      ; 2 uses
+  %i.mn = sub i32 %i.mm, %.099196                 ; 2 uses
+  %i.mo = urem i32 %i.mn, %2                      ; 4 uses
+  %6 = udiv i32 %i.mn, %2
   %.not129236 = icmp eq i32 %i.mo, 0
-  br i1 %.not129236, label %._crit_edge, label %.lr.ph239
+  br i1 %.not129236, label %._crit_edge, label %.lr.ph239.preheader
 
-.lr.ph239:                                        ; preds = %oe_delta.exit158, %.lr.ph239
-  %.093238 = phi i32 [ %i.mr, %.lr.ph239 ], [ %.099196, %oe_delta.exit158 ] ; 2 uses
-  %.094237 = phi i32 [ %i.mp, %.lr.ph239 ], [ %i.mo, %oe_delta.exit158 ]
-  %i.mp = add nsw i32 %.094237, -1                ; 2 uses
-  %i.mq = add nsw i32 %.093238, 1
+.lr.ph239.preheader:                              ; preds = %oe_delta.exit158
+  %7 = add i32 %.0107376, -1
+  %8 = sub i32 1, %6
+  %9 = mul i32 %2, %8
+  %10 = add i32 %7, %9
+  %xtraiter = and i32 %i.mo, 1
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph239.prol.loopexit, label %.lr.ph239.prol
+
+.lr.ph239.prol:                                   ; preds = %.lr.ph239.preheader
+  %11 = add nsw i32 %i.mo, -1
+  %12 = add nsw i32 %.099196, 1
+  %13 = srem i32 %12, %2                          ; 2 uses
+  %14 = sext i32 %.099196 to i64
+  %15 = getelementptr inbounds [32 x i8], ptr %i.f, i64 %14
+  %16 = sext i32 %13 to i64                       ; 2 uses
+  %17 = getelementptr inbounds [32 x i8], ptr %i.f, i64 %16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %15, ptr noundef nonnull align 8 dereferenceable(32) %17, i64 32, i1 false), !tbaa.struct !439
+  br label %.lr.ph239.prol.loopexit
+
+.lr.ph239.prol.loopexit:                          ; preds = %.lr.ph239.prol, %.lr.ph239.preheader
+  %.lcssa.unr = phi i64 [ poison, %.lr.ph239.preheader ], [ %16, %.lr.ph239.prol ]
+  %.093238.unr = phi i32 [ %.099196, %.lr.ph239.preheader ], [ %13, %.lr.ph239.prol ]
+  %.094237.unr = phi i32 [ %i.mo, %.lr.ph239.preheader ], [ %11, %.lr.ph239.prol ]
+  %18 = icmp eq i32 %10, %.099196
+  br i1 %18, label %._crit_edge, label %.lr.ph239
+
+.lr.ph239:                                        ; preds = %.lr.ph239.prol.loopexit, %.lr.ph239
+  %.093238 = phi i32 [ %i.mr, %.lr.ph239 ], [ %.093238.unr, %.lr.ph239.prol.loopexit ] ; 2 uses
+  %.094237 = phi i32 [ %i.mp, %.lr.ph239 ], [ %.094237.unr, %.lr.ph239.prol.loopexit ]
+  %19 = add nsw i32 %.093238, 1
+  %20 = srem i32 %19, %2                          ; 3 uses
+  %21 = sext i32 %.093238 to i64
+  %22 = getelementptr inbounds [32 x i8], ptr %i.f, i64 %21
+  %23 = sext i32 %20 to i64
+  %24 = getelementptr inbounds [32 x i8], ptr %i.f, i64 %23
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %22, ptr noundef nonnull align 8 dereferenceable(32) %24, i64 32, i1 false), !tbaa.struct !439
+  %i.mp = add nsw i32 %.094237, -2                ; 2 uses
+  %i.mq = add nsw i32 %20, 1
   %i.mr = srem i32 %i.mq, %2                      ; 2 uses
-  %i.ms = sext i32 %.093238 to i64
+  %i.ms = sext i32 %20 to i64
   %i.mt = getelementptr inbounds [32 x i8], ptr %i.f, i64 %i.ms
   %i.mu = sext i32 %i.mr to i64                   ; 2 uses
   %i.mv = getelementptr inbounds [32 x i8], ptr %i.f, i64 %i.mu
@@ -756,8 +791,8 @@ oe_delta.exit158:                                 ; preds = %bb.cb
   %.not129 = icmp eq i32 %i.mp, 0
   br i1 %.not129, label %._crit_edge, label %.lr.ph239, !llvm.loop !430
 
-._crit_edge:                                      ; preds = %.lr.ph239, %oe_delta.exit158
-  %.pre-phi = phi i64 [ %i.mk, %oe_delta.exit158 ], [ %i.mu, %.lr.ph239 ]
+._crit_edge:                                      ; preds = %.lr.ph239.prol.loopexit, %.lr.ph239, %oe_delta.exit158
+  %.pre-phi = phi i64 [ %i.mk, %oe_delta.exit158 ], [ %.lcssa.unr, %.lr.ph239.prol.loopexit ], [ %i.mu, %.lr.ph239 ]
   %i.mw = getelementptr inbounds [32 x i8], ptr %i.f, i64 %.pre-phi
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.mw, ptr noundef nonnull align 8 dereferenceable(32) %5, i64 32, i1 false), !tbaa.struct !439
   call void @llvm.lifetime.end.p0(ptr nonnull %5)

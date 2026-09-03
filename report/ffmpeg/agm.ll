@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.b
   %i.gi = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.gj = xor i1 %i.gg, true
   %i.gk = zext i1 %i.gj to i32                    ; 2 uses
-  %.rhs.trunc436 = select i1 %i.gg, i16 1, i16 2  ; 2 uses
+  %.rhs.trunc436 = select i1 %i.gg, i16 1, i16 2
   %i.gl = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.gm = getelementptr inbounds nuw i8, ptr %0, i64 696
   %i.gn = getelementptr inbounds nuw i8, ptr %0, i64 768 ; 7 uses
@@ -224,6 +224,8 @@ bb.l:                                             ; preds = %bb.b
   br i1 %i.gz, label %.preheader453.preheader, label %.critedge.thread396
 
 .preheader453.preheader:                          ; preds = %.preheader453.lr.ph
+  %7 = insertelement <2 x i16> poison, i16 %.rhs.trunc436, i64 0
+  %8 = shufflevector <2 x i16> %7, <2 x i16> poison, <2 x i32> zeroinitializer
   %i.ha = getelementptr inbounds nuw i8, ptr %0, i64 784 ; 2 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %0, i64 800 ; 2 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %0, i64 816 ; 2 uses
@@ -258,13 +260,13 @@ bb.m:                                             ; preds = %.lr.ph, %bb.as
   %i.hr = load ptr, ptr %i.gi, align 8, !tbaa !71
   %i.hs = sext i32 %i.hq to i64
   %i.ht = getelementptr inbounds [4 x i8], ptr %i.hr, i64 %i.hs ; 2 uses
-  %7 = load i16, ptr %i.ht, align 2, !tbaa !74    ; 2 uses
-  %8 = sdiv i16 %7, %.rhs.trunc436
-  %.sext437 = sext i16 %8 to i32
-  %9 = getelementptr inbounds nuw i8, ptr %i.ht, i64 2
-  %10 = load i16, ptr %9, align 2, !tbaa !75
-  %11 = sdiv i16 %10, %.rhs.trunc436
-  %.sext440 = sext i16 %11 to i32
+  %9 = load <2 x i16>, ptr %i.ht, align 2, !tbaa !79
+  %10 = load i16, ptr %i.ht, align 2, !tbaa !74
+  %11 = sdiv <2 x i16> %9, %8                     ; 2 uses
+  %12 = extractelement <2 x i16> %11, i64 0
+  %.sext437 = sext i16 %12 to i32
+  %13 = extractelement <2 x i16> %11, i64 1
+  %.sext440 = sext i16 %13 to i32
   %i.hu = load ptr, ptr %i.gl, align 8, !tbaa !40 ; 2 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hu, i64 124
   %i.hw = load i32, ptr %i.hv, align 4, !tbaa !66
@@ -489,7 +491,7 @@ bb.am:                                            ; preds = %bb.al, %bb.o
   br i1 %i.ll, label %decode_inter_block.exit, label %bb.n, !llvm.loop !136
 
 decode_inter_block.exit:                          ; preds = %bb.am
-  %i.lm = icmp sgt i16 %7, -33
+  %i.lm = icmp sgt i16 %10, -33
   br i1 %i.lm, label %bb.an, label %bb.aq
 
 bb.an:                                            ; preds = %decode_inter_block.exit

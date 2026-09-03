@@ -2,7 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 1521
 inline.NumDeleted: 792
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -113,7 +114,7 @@ bb.a:
   %8 = alloca %"class.Eigen::Matrix.64", align 8  ; 12 uses
   %9 = alloca %"class.Eigen::Matrix.74", align 8  ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !16   ; 5 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !16   ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !16   ; 10 uses
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
@@ -240,8 +241,8 @@ bb.i:                                             ; preds = %.lr.ph371, %_ZNSt13
   %i.ba = load ptr, ptr %i.ax, align 8, !tbaa !22 ; 3 uses
   %i.bb = ptrtoint ptr %i.az to i64
   %i.bc = ptrtoint ptr %i.ba to i64
-  %i.bd = sub i64 %i.bb, %i.bc                    ; 2 uses
-  %i.be = ashr exact i64 %i.bd, 2                 ; 21 uses
+  %i.bd = sub i64 %i.bb, %i.bc                    ; 3 uses
+  %i.be = ashr exact i64 %i.bd, 2                 ; 22 uses
   %i.bf = load i32, ptr %i.ba, align 4, !tbaa !36
   %i.bg = sext i32 %i.bf to i64                   ; 2 uses
   %i.bh = urem i64 %i.bg, %i.b                    ; 2 uses
@@ -316,13 +317,14 @@ bb.k:                                             ; preds = %bb.j
           to label %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit.preheader376 unwind label %bb.l
 
 _ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit.preheader376: ; preds = %bb.k
-  %i.dg = load ptr, ptr %i.ax, align 8, !tbaa !22
-  %i.dh = load ptr, ptr %2, align 8, !tbaa !83, !noalias !87
-  %i.di = load ptr, ptr %7, align 8, !tbaa !42, !noalias !88
-  %i.dj = load i64, ptr %i.ar, align 8, !tbaa !85 ; 2 uses
-  %i.dk = load i64, ptr %i.at, align 8, !tbaa !43 ; 4 uses
-  %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i = shl nsw i64 %i.dk, 4 ; 3 uses
-  %.idx2.i.i.i.i.i.i.i.i.i.i.i.i.i = shl nsw i64 %i.dj, 4
+  %i.dg = load ptr, ptr %i.ax, align 8, !tbaa !22 ; 3 uses
+  %i.dh = load ptr, ptr %2, align 8, !tbaa !83, !noalias !87 ; 3 uses
+  %i.di = load ptr, ptr %7, align 8, !tbaa !42, !noalias !88 ; 3 uses
+  %i.dj = load i64, ptr %i.ar, align 8, !tbaa !85 ; 4 uses
+  %i.dk = load i64, ptr %i.at, align 8, !tbaa !43 ; 6 uses
+  %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i = shl nsw i64 %i.dk, 4 ; 5 uses
+  %.idx2.i.i.i.i.i.i.i.i.i.i.i.i.i = shl nsw i64 %i.dj, 4 ; 3 uses
+  %unroll_iter = and i64 %i.be, -2
   br label %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit
 
 common.resume:                                    ; preds = %.body, %bb.t, %bb.l
@@ -336,18 +338,62 @@ bb.l:                                             ; preds = %bb.k
   call void @free(ptr noundef %i.dm) #21
   br label %common.resume
 
-.lr.ph363:                                        ; preds = %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit
+.lr.ph363.unr-lcssa:                              ; preds = %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit
+  %10 = and i64 %i.bd, 4
+  %lcmp.mod.not = icmp eq i64 %10, 0
+  br i1 %lcmp.mod.not, label %.lr.ph363, label %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit.epil.preheader
+
+_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit.epil.preheader: ; preds = %.lr.ph363.unr-lcssa
+  %lcmp.mod470 = trunc i64 %i.be to i1
+  call void @llvm.assume(i1 %lcmp.mod470)
+  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.dg, i64 %38
+  %12 = load i32, ptr %11, align 4, !tbaa !36
+  %13 = sext i32 %12 to i64
+  %14 = urem i64 %13, %i.b
+  %15 = getelementptr inbounds [8 x i8], ptr %i.dh, i64 %14 ; 3 uses
+  %16 = getelementptr inbounds [8 x i8], ptr %i.di, i64 %38 ; 3 uses
+  %17 = load double, ptr %15, align 8, !tbaa !39
+  store double %17, ptr %16, align 8, !tbaa !39
+  %18 = getelementptr inbounds [8 x i8], ptr %16, i64 %i.dk
+  %19 = getelementptr inbounds [8 x i8], ptr %15, i64 %i.dj
+  %20 = load double, ptr %19, align 8, !tbaa !39
+  store double %20, ptr %18, align 8, !tbaa !39
+  %21 = getelementptr inbounds i8, ptr %16, i64 %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i
+  %22 = getelementptr inbounds i8, ptr %15, i64 %.idx2.i.i.i.i.i.i.i.i.i.i.i.i.i
+  %23 = load double, ptr %22, align 8, !tbaa !39
+  store double %23, ptr %21, align 8, !tbaa !39
+  br label %.lr.ph363
+
+.lr.ph363:                                        ; preds = %.lr.ph363.unr-lcssa, %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit.epil.preheader
   %i.dn = load ptr, ptr %7, align 8, !tbaa !42, !noalias !89 ; 3 uses
   br label %bb.m
 
-_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit: ; preds = %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit.preheader376, %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit
-  %.0110361.a = phi i64 [ %i.eb, %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit ], [ 0, %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit.preheader376 ] ; 3 uses
-  %i.do = getelementptr inbounds nuw [4 x i8], ptr %i.dg, i64 %.0110361.a
+_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit: ; preds = %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit, %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit.preheader376
+  %.0110361 = phi i64 [ 0, %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit.preheader376 ], [ %38, %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit ] ; 4 uses
+  %.0110361.a = phi i64 [ 0, %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit.preheader376 ], [ %i.eb, %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit ]
+  %24 = getelementptr inbounds nuw [4 x i8], ptr %i.dg, i64 %.0110361
+  %25 = load i32, ptr %24, align 4, !tbaa !36
+  %26 = sext i32 %25 to i64
+  %27 = urem i64 %26, %i.b
+  %28 = getelementptr inbounds [8 x i8], ptr %i.dh, i64 %27 ; 3 uses
+  %29 = getelementptr inbounds [8 x i8], ptr %i.di, i64 %.0110361 ; 3 uses
+  %30 = load double, ptr %28, align 8, !tbaa !39
+  store double %30, ptr %29, align 8, !tbaa !39
+  %31 = getelementptr inbounds [8 x i8], ptr %29, i64 %i.dk
+  %32 = getelementptr inbounds [8 x i8], ptr %28, i64 %i.dj
+  %33 = load double, ptr %32, align 8, !tbaa !39
+  store double %33, ptr %31, align 8, !tbaa !39
+  %34 = getelementptr inbounds i8, ptr %29, i64 %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i
+  %35 = getelementptr inbounds i8, ptr %28, i64 %.idx2.i.i.i.i.i.i.i.i.i.i.i.i.i
+  %36 = load double, ptr %35, align 8, !tbaa !39
+  store double %36, ptr %34, align 8, !tbaa !39
+  %37 = or disjoint i64 %.0110361, 1              ; 2 uses
+  %i.do = getelementptr inbounds nuw [4 x i8], ptr %i.dg, i64 %37
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !36
   %i.dq = sext i32 %i.dp to i64
   %i.dr = urem i64 %i.dq, %i.b
   %i.ds = getelementptr inbounds [8 x i8], ptr %i.dh, i64 %i.dr ; 3 uses
-  %i.dt = getelementptr inbounds [8 x i8], ptr %i.di, i64 %.0110361.a ; 3 uses
+  %i.dt = getelementptr inbounds [8 x i8], ptr %i.di, i64 %37 ; 3 uses
   %i.du = load double, ptr %i.ds, align 8, !tbaa !39
   store double %i.du, ptr %i.dt, align 8, !tbaa !39
   %i.dv = getelementptr inbounds [8 x i8], ptr %i.dt, i64 %i.dk
@@ -358,9 +404,10 @@ _ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit: ; preds = %_ZN5E
   %i.dz = getelementptr inbounds i8, ptr %i.ds, i64 %.idx2.i.i.i.i.i.i.i.i.i.i.i.i.i
   %i.ea = load double, ptr %i.dz, align 8, !tbaa !39
   store double %i.ea, ptr %i.dy, align 8, !tbaa !39
-  %i.eb = add nuw i64 %.0110361.a, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.eb, %i.be
-  br i1 %exitcond.not, label %.lr.ph363, label %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit, !llvm.loop !73
+  %38 = add nuw i64 %.0110361, 2                  ; 3 uses
+  %i.eb = add nuw i64 %.0110361.a, 2              ; 2 uses
+  %exitcond.not = icmp eq i64 %i.eb, %unroll_iter
+  br i1 %exitcond.not, label %.lr.ph363.unr-lcssa, label %_ZN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEC2ImiEERKT_RKT0_.exit, !llvm.loop !73
 
 .critedge:                                        ; preds = %bb.m
   %exitcond388.not = icmp eq i64 %i.ec, %i.be

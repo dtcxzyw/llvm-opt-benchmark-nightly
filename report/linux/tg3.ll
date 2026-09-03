@@ -205,9 +205,9 @@ tg3_ints_init.exit:                               ; preds = %bb.x, %bb.w
 
 bb.y:                                             ; preds = %tg3_ints_init.exit
   %i.fg = getelementptr i8, ptr %0, i64 4592
-  %i.fh = load i32, ptr %i.fg, align 16           ; 7 uses
+  %i.fh = load i32, ptr %i.fg, align 16           ; 9 uses
   %i.fi = icmp eq i32 %i.fh, 1
-  %i.fj = getelementptr i8, ptr %0, i64 5628      ; 7 uses
+  %i.fj = getelementptr i8, ptr %0, i64 5628      ; 9 uses
   br i1 %i.fi, label %bb.z, label %.preheader.i
 
 bb.z:                                             ; preds = %bb.y
@@ -255,19 +255,31 @@ bb.aa:                                            ; preds = %.preheader.i.3
   br i1 %exitcond.not.i.3, label %tg3_rss_check_indir_tbl.exit, label %.preheader.i, !llvm.loop !467
 
 .thread.i88:                                      ; preds = %.thread.i88, %.thread.i88.preheader
-  %indvars.iv.i.i = phi i64 [ 0, %.thread.i88.preheader ], [ %indvars.iv.next.i.i.1.a, %.thread.i88 ] ; 4 uses
-  %i.fz = trunc nuw nsw i64 %indvars.iv.i.i to i32
+  %indvars.iv.i.i = phi i64 [ 0, %.thread.i88.preheader ], [ %indvars.iv.next.i.i.1.a, %.thread.i88 ] ; 6 uses
+  %6 = trunc nuw nsw i64 %indvars.iv.i.i to i32
+  %7 = urem i32 %6, %i.fh
+  %8 = trunc nuw nsw i32 %7 to i8
+  %9 = getelementptr i8, ptr %i.fj, i64 %indvars.iv.i.i
+  store i8 %8, ptr %9, align 1
+  %indvars.iv.next.i.i = or disjoint i64 %indvars.iv.i.i, 1 ; 2 uses
+  %10 = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
+  %11 = urem i32 %10, %i.fh
+  %12 = trunc nuw nsw i32 %11 to i8
+  %13 = getelementptr i8, ptr %i.fj, i64 %indvars.iv.next.i.i
+  store i8 %12, ptr %13, align 1
+  %indvars.iv.next.i.i.1 = or disjoint i64 %indvars.iv.i.i, 2 ; 2 uses
+  %i.fz = trunc nuw nsw i64 %indvars.iv.next.i.i.1 to i32
   %i.ga = urem i32 %i.fz, %i.fh
   %i.gb = trunc nuw nsw i32 %i.ga to i8
-  %i.gc = getelementptr i8, ptr %i.fj, i64 %indvars.iv.i.i
+  %i.gc = getelementptr i8, ptr %i.fj, i64 %indvars.iv.next.i.i.1
   store i8 %i.gb, ptr %i.gc, align 1
-  %indvars.iv.next.i.i.a = or disjoint i64 %indvars.iv.i.i, 1 ; 2 uses
+  %indvars.iv.next.i.i.a = or disjoint i64 %indvars.iv.i.i, 3 ; 2 uses
   %i.gd = trunc nuw nsw i64 %indvars.iv.next.i.i.a to i32
   %i.ge = urem i32 %i.gd, %i.fh
   %i.gf = trunc nuw nsw i32 %i.ge to i8
   %i.gg = getelementptr i8, ptr %i.fj, i64 %indvars.iv.next.i.i.a
   store i8 %i.gf, ptr %i.gg, align 1
-  %indvars.iv.next.i.i.1.a = add nuw nsw i64 %indvars.iv.i.i, 2 ; 2 uses
+  %indvars.iv.next.i.i.1.a = add nuw nsw i64 %indvars.iv.i.i, 4 ; 2 uses
   %exitcond.not.i.i89.1 = icmp eq i64 %indvars.iv.next.i.i.1.a, 128
   br i1 %exitcond.not.i.i89.1, label %tg3_rss_check_indir_tbl.exit, label %.thread.i88, !llvm.loop !2
 

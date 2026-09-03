@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.k
   %i.av = load i32, ptr %i.au, align 4, !tbaa !7
   %.not.i = icmp eq i32 %3, 0                     ; 2 uses
   %i.aw = load i32, ptr @maxSample, align 4, !tbaa !7 ; 2 uses
-  %i.ax = add nsw i32 %i.aw, 1                    ; 5 uses
+  %i.ax = add nsw i32 %i.aw, 1                    ; 4 uses
   %i.ay = load i32, ptr @precision, align 4       ; 2 uses
   %i.az = icmp sgt i32 %i.ay, 8                   ; 5 uses
   %i.ba = sitofp i32 %i.aw to double              ; 3 uses
@@ -221,6 +221,8 @@ bb.m:                                             ; preds = %bb.k
   %invariant.gep113.i = getelementptr i8, ptr %i.an, i64 %i.bf
   %i.bg = insertelement <4 x double> poison, double %i.ba, i64 0
   %i.bh = shufflevector <4 x double> %i.bg, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
+  %4 = insertelement <2 x i32> poison, i32 %i.ax, i64 0
+  %5 = shufflevector <2 x i32> %4, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.bi = insertelement <2 x double> poison, double %i.ba, i64 0
   %i.bj = shufflevector <2 x double> %i.bi, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bk = zext i1 %i.az to i64
@@ -253,9 +255,10 @@ bb.n:                                             ; preds = %bb.y, %bb.m
   %i.cc = sext i32 %i.cb to i64
   %i.cd = mul i32 %i.ax, %i.bz
   %i.ce = sdiv i32 %i.cd, 35                      ; 2 uses
-  %4 = srem i32 %i.ce, %i.ax                      ; 3 uses
-  %5 = add nsw i32 %i.ce, %i.bp
-  %6 = srem i32 %5, %i.ax                         ; 5 uses
+  %6 = add nsw i32 %i.ce, %i.bp
+  %7 = insertelement <2 x i32> poison, i32 %i.ce, i64 0
+  %8 = insertelement <2 x i32> %7, i32 %6, i64 1
+  %9 = srem <2 x i32> %8, %5                      ; 7 uses
   %.sink188 = shl nsw i64 %i.cc, %i.bk
   %scevgep104.i = getelementptr i8, ptr %i.an, i64 %.sink188
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep104.i, i8 0, i64 %.sink, i1 false), !tbaa !14
@@ -270,21 +273,21 @@ bb.o:                                             ; preds = %.lr.ph.i
   br i1 %i.az, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %7 = trunc i32 %6 to i8
+  %10 = bitcast <2 x i32> %9 to <8 x i8>
+  %11 = extractelement <8 x i8> %10, i64 4
   %i.ch = getelementptr inbounds i8, ptr %i.an, i64 %i.cg
-  store i8 %7, ptr %i.ch, align 1, !tbaa !14
+  store i8 %11, ptr %i.ch, align 1, !tbaa !14
   br label %setVal.exit88.i
 
 bb.q:                                             ; preds = %bb.o
-  %8 = trunc i32 %6 to i16
+  %12 = bitcast <2 x i32> %9 to <4 x i16>
+  %13 = extractelement <4 x i16> %12, i64 2
   %i.ci = getelementptr inbounds [2 x i8], ptr %i.an, i64 %i.cg
-  store i16 %8, ptr %i.ci, align 2, !tbaa !16
+  store i16 %13, ptr %i.ci, align 2, !tbaa !16
   br label %setVal.exit88.i
 
 bb.r:                                             ; preds = %.lr.ph.i
-  %9 = insertelement <2 x i32> poison, i32 %4, i64 0
-  %10 = insertelement <2 x i32> %9, i32 %6, i64 1
-  %i.cj = sitofp <2 x i32> %10 to <2 x double>
+  %i.cj = sitofp <2 x i32> %9 to <2 x double>
   %i.ck = fdiv <2 x double> %i.cj, %i.bj          ; 2 uses
   %i.cl = extractelement <2 x double> %i.ck, i64 0
   %i.cm = fsub double 1.000000e+00, %i.cl         ; 3 uses
@@ -344,25 +347,29 @@ bb.v:                                             ; preds = %.lr.ph.i
   br i1 %i.az, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %11 = trunc i32 %4 to i8
+  %14 = bitcast <2 x i32> %9 to <8 x i8>
+  %15 = extractelement <8 x i8> %14, i64 0
   %i.dv = getelementptr inbounds i8, ptr %i.an, i64 %i.du
-  store i8 %11, ptr %i.dv, align 1, !tbaa !14
+  store i8 %15, ptr %i.dv, align 1, !tbaa !14
   %gep112.i = getelementptr i8, ptr %invariant.gep111.i, i64 %i.dt
   store i8 %i.bw, ptr %gep112.i, align 1, !tbaa !14
-  %12 = trunc i32 %6 to i8
+  %16 = bitcast <2 x i32> %9 to <8 x i8>
+  %17 = extractelement <8 x i8> %16, i64 4
   %gep114.i = getelementptr i8, ptr %invariant.gep113.i, i64 %i.dt
-  store i8 %12, ptr %gep114.i, align 1, !tbaa !14
+  store i8 %17, ptr %gep114.i, align 1, !tbaa !14
   br label %setVal.exit88.i
 
 bb.x:                                             ; preds = %bb.v
-  %13 = trunc i32 %4 to i16
+  %18 = bitcast <2 x i32> %9 to <4 x i16>
+  %19 = extractelement <4 x i16> %18, i64 0
   %i.dw = getelementptr inbounds [2 x i8], ptr %i.an, i64 %i.du
-  store i16 %13, ptr %i.dw, align 2, !tbaa !16
+  store i16 %19, ptr %i.dw, align 2, !tbaa !16
   %gep.i = getelementptr [2 x i8], ptr %invariant.gep.i, i64 %i.dt
   store i16 %i.bv, ptr %gep.i, align 2, !tbaa !16
-  %14 = trunc i32 %6 to i16
+  %20 = bitcast <2 x i32> %9 to <4 x i16>
+  %21 = extractelement <4 x i16> %20, i64 2
   %gep110.i = getelementptr [2 x i8], ptr %invariant.gep109.i, i64 %i.dt
-  store i16 %14, ptr %gep110.i, align 2, !tbaa !16
+  store i16 %21, ptr %gep110.i, align 2, !tbaa !16
   br label %setVal.exit88.i
 
 setVal.exit88.i:                                  ; preds = %bb.x, %bb.w, %bb.u, %bb.t, %bb.q, %bb.p

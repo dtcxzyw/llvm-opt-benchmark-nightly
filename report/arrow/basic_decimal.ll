@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 502
 inline.NumDeleted: 136
 loop-unroll.NumCompletelyUnrolled: 18
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 20
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 21
 begin_hunk_0_@_ZN5arrow15BasicDecimal256rSEj:bb.a
   %i.ah = shl i64 %.in.sroa.speculated.1, %i.j
   %i.ai = or i64 %i.ah, %i.ad
@@ -205,10 +205,10 @@ bb.a:
   %4 = alloca %"struct.std::array.2", align 8     ; 13 uses
   %5 = alloca %"struct.std::array.2", align 8     ; 13 uses
   %6 = alloca %"struct.std::array.2", align 8     ; 13 uses
-  %i.a = alloca [65 x i32], align 16              ; 8 uses
+  %i.a = alloca [65 x i32], align 16              ; 10 uses
   %7 = alloca %"class.arrow::BasicDecimal256", align 8 ; 13 uses
   %8 = alloca %"class.arrow::BasicDecimal256", align 8 ; 13 uses
-  %i.b = alloca [65 x i32], align 16              ; 23 uses
+  %i.b = alloca [65 x i32], align 16              ; 25 uses
   %i.c = alloca [64 x i32], align 16              ; 22 uses
   %i.d = alloca [64 x i32], align 16              ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
@@ -367,7 +367,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not44.i.i.i, label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal256EPjRb.exit.i, label %.lr.ph.i.i.i, !llvm.loop !38
 
 _ZN5arrowL11FillInArrayERKNS_15BasicDecimal256EPjRb.exit.i: ; preds = %.lr.ph.i.i.i, %middle.block, %bb.g, %.loopexit.i.thread.i.i
-  %.120.lcssa.i.i.i = phi i64 [ 1, %.loopexit.i.thread.i.i ], [ 0, %bb.g ], [ %i.am, %middle.block ], [ %i.bj, %.lr.ph.i.i.i ] ; 27 uses
+  %.120.lcssa.i.i.i = phi i64 [ 1, %.loopexit.i.thread.i.i ], [ 0, %bb.g ], [ %i.am, %middle.block ], [ %i.bj, %.lr.ph.i.i.i ] ; 29 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #10
   %i.bm = add i64 %.120.lcssa.i.i.i, 1            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
@@ -532,10 +532,39 @@ bb.o:                                             ; preds = %_ZN5arrowL11FillInA
 .lr.ph.i.i:                                       ; preds = %bb.o
   %i.du = load i32, ptr %i.c, align 16, !tbaa !6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  %i.dv = zext i32 %i.du to i64                   ; 2 uses
+  %i.dv = zext i32 %i.du to i64                   ; 6 uses
+  %9 = add i64 %.120.lcssa.i.i.i, 1               ; 2 uses
+  %10 = icmp eq i64 %.120.lcssa.i.i.i, 0
+  br i1 %10, label %.epil.preheader, label %.lr.ph.i.i.new
+
+.lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
+  %unroll_iter = and i64 %9, -2
   br label %bb.u
 
-._crit_edge.i.i:                                  ; preds = %bb.u
+._crit_edge.i.i.unr-lcssa:                        ; preds = %bb.u
+  %11 = and i64 %.120.lcssa.i.i.i, 1
+  %lcmp.mod.not.not = icmp eq i64 %11, 0
+  br i1 %lcmp.mod.not.not, label %.epil.preheader, label %._crit_edge.i.i
+
+.epil.preheader:                                  ; preds = %._crit_edge.i.i.unr-lcssa, %.lr.ph.i.i
+  %.032.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i ], [ %31, %._crit_edge.i.i.unr-lcssa ] ; 2 uses
+  %.02231.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i ], [ %i.gd, %._crit_edge.i.i.unr-lcssa ]
+  %lcmp.mod173 = trunc i64 %9 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod173)
+  %12 = shl nuw i64 %.02231.i.i.epil.init, 32
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.032.i.i.epil.init
+  %14 = load i32, ptr %13, align 4, !tbaa !6
+  %15 = zext i32 %14 to i64
+  %16 = or disjoint i64 %12, %15                  ; 2 uses
+  %17 = udiv i64 %16, %i.dv
+  %18 = trunc i64 %17 to i32
+  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.032.i.i.epil.init
+  store i32 %18, ptr %19, align 4, !tbaa !6
+  %20 = urem i64 %16, %i.dv
+  br label %._crit_edge.i.i
+
+._crit_edge.i.i:                                  ; preds = %._crit_edge.i.i.unr-lcssa, %.epil.preheader
+  %.lcssa169 = phi i64 [ %i.gd, %._crit_edge.i.i.unr-lcssa ], [ %20, %.epil.preheader ]
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   %i.dw = add i64 %.120.lcssa.i.i.i, -8           ; 2 uses
   %i.dx = icmp sgt i64 %i.dw, -1
@@ -649,29 +678,42 @@ _ZN5arrowL14BuildFromArrayEPNS_15BasicDecimal256EPKjl.exit.i.i: ; preds = %.lr.p
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   br label %_ZN5arrowL12SingleDivideINS_15BasicDecimal256EEENS_13DecimalStatusEPKjljPT_bbS6_.exit.i
 
-bb.u:                                             ; preds = %bb.u, %.lr.ph.i.i
-  %.032.i.i.a = phi i64 [ 0, %.lr.ph.i.i ], [ %i.ge, %bb.u ] ; 4 uses
-  %.02231.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.gd, %bb.u ]
-  %i.fv = shl nuw i64 %.02231.i.i, 32
-  %i.fw = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.032.i.i.a
+bb.u:                                             ; preds = %bb.u, %.lr.ph.i.i.new
+  %.032.i.i = phi i64 [ 0, %.lr.ph.i.i.new ], [ %31, %bb.u ] ; 4 uses
+  %.032.i.i.a = phi i64 [ 0, %.lr.ph.i.i.new ], [ %i.gd, %bb.u ]
+  %.02231.i.i = phi i64 [ 0, %.lr.ph.i.i.new ], [ %i.ge, %bb.u ]
+  %21 = shl nuw i64 %.032.i.i.a, 32
+  %22 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.032.i.i
+  %23 = load i32, ptr %22, align 8, !tbaa !6
+  %24 = zext i32 %23 to i64
+  %25 = or disjoint i64 %21, %24                  ; 2 uses
+  %26 = udiv i64 %25, %i.dv
+  %27 = trunc i64 %26 to i32
+  %28 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.032.i.i
+  store i32 %27, ptr %28, align 8, !tbaa !6
+  %29 = urem i64 %25, %i.dv
+  %30 = or disjoint i64 %.032.i.i, 1              ; 2 uses
+  %i.fv = shl nuw i64 %29, 32
+  %i.fw = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %30
   %i.fx = load i32, ptr %i.fw, align 4, !tbaa !6
   %i.fy = zext i32 %i.fx to i64
   %i.fz = or disjoint i64 %i.fv, %i.fy            ; 2 uses
   %i.ga = udiv i64 %i.fz, %i.dv
   %i.gb = trunc i64 %i.ga to i32
-  %i.gc = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.032.i.i.a
+  %i.gc = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %30
   store i32 %i.gb, ptr %i.gc, align 4, !tbaa !6
-  %i.gd = urem i64 %i.fz, %i.dv                   ; 2 uses
-  %i.ge = add nuw nsw i64 %.032.i.i.a, 1
-  %exitcond.not.i.i = icmp eq i64 %.032.i.i.a, %.120.lcssa.i.i.i
-  br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %bb.u, !llvm.loop !42
+  %i.gd = urem i64 %i.fz, %i.dv                   ; 3 uses
+  %31 = add nuw nsw i64 %.032.i.i, 2              ; 2 uses
+  %i.ge = add i64 %.02231.i.i, 2                  ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %i.ge, %unroll_iter
+  br i1 %exitcond.not.i.i, label %._crit_edge.i.i.unr-lcssa, label %bb.u, !llvm.loop !42
 
 bb.v:                                             ; preds = %.lr.ph39.preheader.i.i.i.i, %.preheader.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %6, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx.i.i, i8 0, i64 24, i1 false)
-  store i64 %i.gd, ptr %3, align 8
+  store i64 %.lcssa169, ptr %3, align 8
   %i.gf = xor i1 %i.h, %i.bp
   br i1 %i.gf, label %bb.w, label %bb.x
 

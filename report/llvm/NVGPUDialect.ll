@@ -204,11 +204,10 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.ba, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m, %bb.l, %bb.k
-  %i.bb = call noundef i32 @_ZNK4mlir4Type21getIntOrFloatBitWidthEv(ptr noundef nonnull align 8 dereferenceable(8) %20) #29 ; 2 uses
-  %45 = sdiv i32 128, %i.bb
-  %46 = sext i32 %45 to i64
-  %47 = sdiv i32 32, %i.bb
-  %48 = sext i32 %47 to i64
+  %i.bb = call noundef i32 @_ZNK4mlir4Type21getIntOrFloatBitWidthEv(ptr noundef nonnull align 8 dereferenceable(8) %20) #29
+  %45 = insertelement <2 x i32> poison, i32 %i.bb, i64 0
+  %46 = shufflevector <2 x i32> %45, <2 x i32> poison, <2 x i32> zeroinitializer
+  %47 = sdiv <2 x i32> <i32 128, i32 32>, %46
   br label %bb.s
 
 bb.q:                                             ; preds = %bb.o
@@ -239,10 +238,11 @@ _ZNO4mlir18InFlightDiagnosticlsINS_13OperationNameEEEOS0_OT_.exit: ; preds = %bb
   br label %bb.cg
 
 bb.s:                                             ; preds = %bb.j, %bb.p
-  %49 = phi i64 [ %48, %bb.p ], [ 1, %bb.j ]      ; 4 uses
-  %.0 = phi i64 [ %46, %bb.p ], [ 4, %bb.j ]
-  store i64 %49, ptr %i.a, align 8, !tbaa !115
-  store i64 %49, ptr %i.b, align 8, !tbaa !115
+  %48 = phi <2 x i32> [ %47, %bb.p ], [ <i32 4, i32 1>, %bb.j ] ; 2 uses
+  %49 = extractelement <2 x i32> %48, i64 1       ; 3 uses
+  %50 = sext i32 %49 to i64                       ; 2 uses
+  store i64 %50, ptr %i.a, align 8, !tbaa !115
+  store i64 %50, ptr %i.b, align 8, !tbaa !115
   %.not = icmp eq i64 %i.s, 2
   br i1 %.not, label %bb.aa, label %bb.t
 
@@ -645,7 +645,9 @@ bb.bx:                                            ; preds = %._crit_edge, %bb.bu
   %i.hr = phi i64 [ %.pre, %._crit_edge ], [ %i.dt, %bb.bu ]
   %i.hs = sdiv i64 %.sroa.0.0.copyload, 8         ; 2 uses
   %i.ht = sdiv i64 %.sroa.8.0.copyload, 8         ; 2 uses
-  %i.hu = sdiv i64 %.sroa.13.0.copyload, %.0      ; 2 uses
+  %51 = extractelement <2 x i32> %48, i64 0
+  %52 = sext i32 %51 to i64
+  %i.hu = sdiv i64 %.sroa.13.0.copyload, %52      ; 2 uses
   %i.hv = mul nsw i64 %i.hu, %i.hs                ; 2 uses
   %i.hw = sdiv i64 %i.hv, %i.ds
   %.not57 = icmp eq i64 %i.hr, %i.hw
@@ -653,7 +655,8 @@ bb.bx:                                            ; preds = %._crit_edge, %bb.bu
 
 bb.by:                                            ; preds = %bb.bx
   %i.hx = load i64, ptr %i.du, align 8, !tbaa !115
-  %.not58 = icmp eq i64 %i.hx, %49
+  %53 = sext i32 %49 to i64
+  %.not58 = icmp eq i64 %i.hx, %53
   br i1 %.not58, label %bb.ca, label %bb.bz
 
 bb.bz:                                            ; preds = %bb.by, %bb.bx
@@ -686,7 +689,8 @@ bb.ca:                                            ; preds = %bb.by
 
 bb.cb:                                            ; preds = %bb.ca
   %i.ii = load i64, ptr %i.fl, align 8, !tbaa !115
-  %.not60 = icmp eq i64 %i.ii, %49
+  %54 = sext i32 %49 to i64
+  %.not60 = icmp eq i64 %i.ii, %54
   br i1 %.not60, label %bb.cd, label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cb, %bb.ca

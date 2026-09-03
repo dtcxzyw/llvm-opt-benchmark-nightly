@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 732
 inline.NumDeleted: 98
 loop-unroll.NumCompletelyUnrolled: 6
-loop-unroll.NumRuntimeUnrolled: 45
-loop-unroll.NumUnrolled: 51
+loop-unroll.NumRuntimeUnrolled: 46
+loop-unroll.NumUnrolled: 52
 begin_hunk_0_@long_true_divide:bb.a
 
 .preheader:                                       ; preds = %bb.o
@@ -205,12 +205,12 @@ bb.r:                                             ; preds = %v_rshift.exit, %bb.
   %i.gm = and i64 %.1156.val, 3
   %i.gn = sub nsw i64 1, %i.gm
   %i.go = lshr i64 %.1156.val, 3
-  %i.gp = mul nsw i64 %i.gn, %i.go                ; 2 uses
+  %i.gp = mul i64 %i.gn, %i.go                    ; 7 uses
   %i.gq = icmp eq i64 %i.k, 1
   br i1 %i.gq, label %bb.s, label %bb.v
 
 bb.s:                                             ; preds = %.thread212
-  %i.gr = getelementptr i8, ptr %.1156, i64 24
+  %i.gr = getelementptr i8, ptr %.1156, i64 24    ; 3 uses
   %i.gs = icmp sgt i64 %i.gp, 0
   br i1 %i.gs, label %.lr.ph.i202, label %inplace_divrem1.exit.thread
 
@@ -220,14 +220,32 @@ inplace_divrem1.exit.thread:                      ; preds = %bb.s
 
 .lr.ph.i202:                                      ; preds = %bb.s
   %i.gu = load i32, ptr %i.cf, align 8, !tbaa !26
-  %i.gv = zext i32 %i.gu to i64                   ; 2 uses
+  %i.gv = zext i32 %i.gu to i64                   ; 6 uses
+  %xtraiter286 = and i64 %i.gp, 1
+  %2 = icmp eq i64 %i.gp, 1
+  br i1 %2, label %.epil.preheader, label %.lr.ph.i202.new
+
+.lr.ph.i202.new:                                  ; preds = %.lr.ph.i202
+  %unroll_iter290 = and i64 %i.gp, 9223372036854775806
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.t, %.lr.ph.i202
-  %.014.i203.a = phi i64 [ %i.gp, %.lr.ph.i202 ], [ %i.gw, %bb.t ] ; 2 uses
-  %.01113.i = phi i64 [ 0, %.lr.ph.i202 ], [ %.fr221.a, %bb.t ]
-  %i.gw = add nsw i64 %.014.i203.a, -1            ; 2 uses
-  %i.gx = shl nuw nsw i64 %.01113.i, 30
+bb.t:                                             ; preds = %bb.t, %.lr.ph.i202.new
+  %.014.i203 = phi i64 [ %i.gp, %.lr.ph.i202.new ], [ %i.gw, %bb.t ] ; 2 uses
+  %.014.i203.a = phi i64 [ 0, %.lr.ph.i202.new ], [ %.fr221.a, %bb.t ]
+  %.01113.i = phi i64 [ 0, %.lr.ph.i202.new ], [ %niter291.next.1, %bb.t ]
+  %3 = shl nuw nsw i64 %.014.i203.a, 30
+  %4 = getelementptr [4 x i8], ptr %i.gr, i64 %.014.i203
+  %5 = getelementptr i8, ptr %4, i64 -4           ; 2 uses
+  %6 = load i32, ptr %5, align 4, !tbaa !26
+  %7 = zext i32 %6 to i64
+  %8 = or i64 %3, %7                              ; 2 uses
+  %9 = udiv i64 %8, %i.gv
+  %10 = trunc i64 %9 to i32
+  %11 = urem i64 %8, %i.gv
+  %.fr221 = freeze i64 %11
+  store i32 %10, ptr %5, align 4, !tbaa !26
+  %i.gw = add nsw i64 %.014.i203, -2              ; 3 uses
+  %i.gx = shl nuw nsw i64 %.fr221, 30
   %i.gy = getelementptr [4 x i8], ptr %i.gr, i64 %i.gw ; 2 uses
   %i.gz = load i32, ptr %i.gy, align 4, !tbaa !26
   %i.ha = zext i32 %i.gz to i64
@@ -235,14 +253,38 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph.i202
   %i.hc = udiv i64 %i.hb, %i.gv
   %i.hd = trunc i64 %i.hc to i32
   %i.he = urem i64 %i.hb, %i.gv
-  %.fr221.a = freeze i64 %i.he                    ; 2 uses
+  %.fr221.a = freeze i64 %i.he                    ; 3 uses
   store i32 %i.hd, ptr %i.gy, align 4, !tbaa !26
-  %2 = icmp samesign ugt i64 %.014.i203.a, 1
-  br i1 %2, label %bb.t, label %inplace_divrem1.exit, !llvm.loop !10
+  %niter291.next.1 = add i64 %.01113.i, 2         ; 2 uses
+  %niter291.ncmp.1.not = icmp eq i64 %niter291.next.1, %unroll_iter290
+  br i1 %niter291.ncmp.1.not, label %inplace_divrem1.exit.unr-lcssa, label %bb.t, !llvm.loop !10
 
-inplace_divrem1.exit:                             ; preds = %bb.t
+inplace_divrem1.exit.unr-lcssa:                   ; preds = %bb.t
+  %lcmp.mod287.not = icmp eq i64 %xtraiter286, 0
+  br i1 %lcmp.mod287.not, label %inplace_divrem1.exit, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %inplace_divrem1.exit.unr-lcssa, %.lr.ph.i202
+  %.014.i203.epil.init = phi i64 [ %i.gp, %.lr.ph.i202 ], [ %i.gw, %inplace_divrem1.exit.unr-lcssa ]
+  %.01113.i.epil.init = phi i64 [ 0, %.lr.ph.i202 ], [ %.fr221.a, %inplace_divrem1.exit.unr-lcssa ]
+  %lcmp.mod289 = trunc i64 %i.gp to i1
+  tail call void @llvm.assume(i1 %lcmp.mod289)
+  %12 = shl nuw nsw i64 %.01113.i.epil.init, 30
+  %13 = getelementptr [4 x i8], ptr %i.gr, i64 %.014.i203.epil.init
+  %14 = getelementptr i8, ptr %13, i64 -4         ; 2 uses
+  %15 = load i32, ptr %14, align 4, !tbaa !26
+  %16 = zext i32 %15 to i64
+  %17 = or i64 %12, %16                           ; 2 uses
+  %18 = udiv i64 %17, %i.gv
+  %19 = trunc i64 %18 to i32
+  %20 = urem i64 %17, %i.gv
+  %.fr221.epil = freeze i64 %20
+  store i32 %19, ptr %14, align 4, !tbaa !26
+  br label %inplace_divrem1.exit
+
+inplace_divrem1.exit:                             ; preds = %inplace_divrem1.exit.unr-lcssa, %.epil.preheader
+  %.fr221.lcssa = phi i64 [ %.fr221.a, %inplace_divrem1.exit.unr-lcssa ], [ %.fr221.epil, %.epil.preheader ]
   %i.hf = tail call fastcc ptr @long_normalize(ptr noundef nonnull %.1156) ; 0 uses
-  %.not174 = icmp eq i64 %.fr221.a, 0
+  %.not174 = icmp eq i64 %.fr221.lcssa, 0
   br i1 %.not174, label %bb.u, label %bb.ab
 
 bb.u:                                             ; preds = %inplace_divrem1.exit.thread, %inplace_divrem1.exit

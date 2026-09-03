@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 339
 inline.NumDeleted: 4
 loop-unroll.NumCompletelyUnrolled: 12
-loop-unroll.NumRuntimeUnrolled: 34
-loop-unroll.NumUnrolled: 46
+loop-unroll.NumRuntimeUnrolled: 35
+loop-unroll.NumUnrolled: 47
 begin_hunk_0_@start_decoder:bb.a
   %i.abl = getelementptr inbounds nuw i8, ptr %i.abj, i64 2
   store i16 %i.abk, ptr %i.abl, align 2, !tbaa !368
@@ -205,7 +205,7 @@ bb.gb:                                            ; preds = %bb.ga
   %i.aeg = call i32 @get_bits(ptr noundef nonnull %0, i32 noundef 6)
   %i.aeh = trunc i32 %i.aeg to i8
   %i.aei = add i8 %i.aeh, 1
-  %i.aej = getelementptr inbounds nuw i8, ptr %i.ads, i64 12 ; 7 uses
+  %i.aej = getelementptr inbounds nuw i8, ptr %i.ads, i64 12 ; 9 uses
   store i8 %i.aei, ptr %i.aej, align 4, !tbaa !369
   %i.aek = call i32 @get_bits(ptr noundef nonnull %0, i32 noundef 8) ; 2 uses
   %i.ael = trunc i32 %i.aek to i8
@@ -482,7 +482,7 @@ bb.hb:                                            ; preds = %bb.ha, %bb.gz
   %i.aja = load i32, ptr %i.aiz, align 4, !tbaa !61
   %i.ajb = shl i32 %i.aja, 3
   %i.ajc = call ptr @setup_malloc(ptr noundef nonnull %0, i32 noundef %i.ajb) ; 3 uses
-  %i.ajd = getelementptr inbounds nuw i8, ptr %i.ads, i64 16 ; 3 uses
+  %i.ajd = getelementptr inbounds nuw i8, ptr %i.ads, i64 16 ; 5 uses
   store ptr %i.ajc, ptr %i.ajd, align 8, !tbaa !102
   %.not1117 = icmp eq ptr %i.ajc, null
   br i1 %.not1117, label %.critedge1169, label %bb.hc
@@ -507,9 +507,9 @@ bb.hc:                                            ; preds = %._crit_edge1443
   br i1 %i.ajs, label %.lr.ph1450, label %._crit_edge1451
 
 .lr.ph1450:                                       ; preds = %bb.hc, %._crit_edge1447
-  %indvars.iv1658 = phi i64 [ %indvars.iv.next1659, %._crit_edge1447 ], [ 0, %bb.hc ] ; 4 uses
+  %indvars.iv1658 = phi i64 [ %indvars.iv.next1659, %._crit_edge1447 ], [ 0, %bb.hc ] ; 6 uses
   %i.ajt = phi ptr [ %i.akp, %._crit_edge1447 ], [ %i.ajp, %bb.hc ]
-  %i.aju = load i32, ptr %i.ajt, align 8, !tbaa !90 ; 3 uses
+  %i.aju = load i32, ptr %i.ajt, align 8, !tbaa !90 ; 4 uses
   %i.ajv = call ptr @setup_malloc(ptr noundef nonnull %0, i32 noundef %i.aju) ; 2 uses
   %i.ajw = load ptr, ptr %i.ajd, align 8, !tbaa !102
   %i.ajx = getelementptr inbounds nuw [8 x i8], ptr %i.ajw, i64 %indvars.iv1658
@@ -522,18 +522,54 @@ bb.hc:                                            ; preds = %._crit_edge1443
   br i1 %i.ajy, label %.lr.ph1446.preheader, label %._crit_edge1447
 
 .lr.ph1446.preheader:                             ; preds = %.preheader1254
-  %i.ajz = zext nneg i32 %i.aju to i64
-  %i.aka = trunc nuw nsw i64 %indvars.iv1658 to i32
-  %.pre1707 = load i8, ptr %i.aej, align 4, !tbaa !369
-  br label %.lr.ph1446
+  %i.ajz = zext nneg i32 %i.aju to i64            ; 3 uses
+  %i.aka = trunc nuw nsw i64 %indvars.iv1658 to i32 ; 3 uses
+  %.pre1707 = load i8, ptr %i.aej, align 4, !tbaa !369 ; 2 uses
+  %xtraiter2035 = and i64 %i.ajz, 1
+  %lcmp.mod2036.not = icmp eq i64 %xtraiter2035, 0
+  br i1 %lcmp.mod2036.not, label %.lr.ph1446.prol.loopexit, label %.lr.ph1446.prol
 
-.lr.ph1446:                                       ; preds = %.lr.ph1446.preheader, %.lr.ph1446
-  %i.akb = phi i8 [ %.pre1707, %.lr.ph1446.preheader ], [ %i.akj, %.lr.ph1446 ]
-  %indvars.iv1655 = phi i64 [ %i.ajz, %.lr.ph1446.preheader ], [ %indvars.iv.next1656, %.lr.ph1446 ] ; 2 uses
-  %.09391445 = phi i32 [ %i.aka, %.lr.ph1446.preheader ], [ %i.akl, %.lr.ph1446 ] ; 2 uses
-  %indvars.iv.next1656 = add nsw i64 %indvars.iv1655, -1 ; 2 uses
-  %i.akc = zext i8 %i.akb to i32
-  %i.akd = srem i32 %.09391445, %i.akc
+.lr.ph1446.prol:                                  ; preds = %.lr.ph1446.preheader
+  %indvars.iv.next1656.prol = add nsw i64 %i.ajz, -1 ; 2 uses
+  %2 = zext i8 %.pre1707 to i32
+  %3 = srem i32 %i.aka, %2
+  %4 = trunc i32 %3 to i8
+  %5 = load ptr, ptr %i.ajd, align 8, !tbaa !102
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv1658
+  %7 = load ptr, ptr %6, align 8, !tbaa !103
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 %indvars.iv.next1656.prol
+  store i8 %4, ptr %8, align 1, !tbaa !49
+  %9 = load i8, ptr %i.aej, align 4, !tbaa !369   ; 2 uses
+  %10 = zext i8 %9 to i32
+  %11 = sdiv i32 %i.aka, %10
+  br label %.lr.ph1446.prol.loopexit
+
+.lr.ph1446.prol.loopexit:                         ; preds = %.lr.ph1446.prol, %.lr.ph1446.preheader
+  %.unr = phi i8 [ %.pre1707, %.lr.ph1446.preheader ], [ %9, %.lr.ph1446.prol ]
+  %indvars.iv1655.unr = phi i64 [ %i.ajz, %.lr.ph1446.preheader ], [ %indvars.iv.next1656.prol, %.lr.ph1446.prol ]
+  %.09391445.unr = phi i32 [ %i.aka, %.lr.ph1446.preheader ], [ %11, %.lr.ph1446.prol ]
+  %12 = icmp eq i32 %i.aju, 1
+  br i1 %12, label %._crit_edge1447, label %.lr.ph1446
+
+.lr.ph1446:                                       ; preds = %.lr.ph1446.prol.loopexit, %.lr.ph1446
+  %i.akb = phi i8 [ %i.akj, %.lr.ph1446 ], [ %.unr, %.lr.ph1446.prol.loopexit ]
+  %indvars.iv1655 = phi i64 [ %indvars.iv.next1656, %.lr.ph1446 ], [ %indvars.iv1655.unr, %.lr.ph1446.prol.loopexit ] ; 3 uses
+  %.09391445 = phi i32 [ %i.akl, %.lr.ph1446 ], [ %.09391445.unr, %.lr.ph1446.prol.loopexit ] ; 2 uses
+  %13 = zext i8 %i.akb to i32
+  %14 = srem i32 %.09391445, %13
+  %15 = trunc i32 %14 to i8
+  %16 = load ptr, ptr %i.ajd, align 8, !tbaa !102
+  %17 = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %indvars.iv1658
+  %18 = load ptr, ptr %17, align 8, !tbaa !103
+  %19 = getelementptr i8, ptr %18, i64 %indvars.iv1655
+  %20 = getelementptr i8, ptr %19, i64 -1
+  store i8 %15, ptr %20, align 1, !tbaa !49
+  %21 = load i8, ptr %i.aej, align 4, !tbaa !369  ; 2 uses
+  %22 = zext i8 %21 to i32
+  %23 = sdiv i32 %.09391445, %22                  ; 2 uses
+  %indvars.iv.next1656 = add nsw i64 %indvars.iv1655, -2 ; 2 uses
+  %i.akc = zext i8 %21 to i32
+  %i.akd = srem i32 %23, %i.akc
   %i.ake = trunc i32 %i.akd to i8
   %i.akf = load ptr, ptr %i.ajd, align 8, !tbaa !102
   %i.akg = getelementptr inbounds nuw [8 x i8], ptr %i.akf, i64 %indvars.iv1658
@@ -542,11 +578,11 @@ bb.hc:                                            ; preds = %._crit_edge1443
   store i8 %i.ake, ptr %i.aki, align 1, !tbaa !49
   %i.akj = load i8, ptr %i.aej, align 4, !tbaa !369 ; 2 uses
   %i.akk = zext i8 %i.akj to i32
-  %i.akl = sdiv i32 %.09391445, %i.akk
-  %2 = icmp samesign ugt i64 %indvars.iv1655, 1
-  br i1 %2, label %.lr.ph1446, label %._crit_edge1447, !llvm.loop !341
+  %i.akl = sdiv i32 %23, %i.akk
+  %24 = icmp sgt i64 %indvars.iv1655, 2
+  br i1 %24, label %.lr.ph1446, label %._crit_edge1447, !llvm.loop !341
 
-._crit_edge1447:                                  ; preds = %.lr.ph1446, %.preheader1254
+._crit_edge1447:                                  ; preds = %.lr.ph1446.prol.loopexit, %.lr.ph1446, %.preheader1254
   %indvars.iv.next1659 = add nuw nsw i64 %indvars.iv1658, 1 ; 2 uses
   %i.akm = load ptr, ptr %i.gt, align 8, !tbaa !97
   %i.akn = load i8, ptr %i.aem, align 1, !tbaa !96

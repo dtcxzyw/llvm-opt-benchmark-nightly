@@ -204,7 +204,7 @@ bb.a:
 define internal fastcc void @_ZN3re2L13TestRecursionEiPKc(ptr nofree noundef readonly captures(none) %0) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.re2::StringPiece", align 8  ; 5 uses
-  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
+  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %3 = alloca %"class.re2::RE2", align 8          ; 7 uses
   %4 = alloca %"class.re2::StringPiece", align 8  ; 6 uses
   %5 = alloca %"class.re2::RE2::Options", align 8 ; 5 uses
@@ -218,7 +218,7 @@ bb.a:
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit unwind label %bb.c
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit: ; preds = %bb.a
-  %i.c = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #26 ; 2 uses
+  %i.c = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #26 ; 3 uses
   br label %bb.d
 
 bb.b:                                             ; preds = %bb.d
@@ -237,21 +237,28 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.k
 
 bb.d:                                             ; preds = %bb.d, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit
-  %indvars.iv = phi i64 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit ], [ %indvars.iv.next.1.a, %bb.d ] ; 4 uses
-  %i.f = urem i64 %indvars.iv, %i.c
+  %indvars.iv = phi i64 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit ], [ %indvars.iv.next.1.a, %bb.d ] ; 5 uses
+  %6 = urem i64 %indvars.iv, %i.c
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 %6
+  %8 = load i8, ptr %7, align 1, !tbaa !29
+  %9 = load ptr, ptr %2, align 8, !tbaa !28
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 %indvars.iv
+  store i8 %8, ptr %10, align 1, !tbaa !29
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.f = urem i64 %indvars.iv.next, %i.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %i.f
   %i.h = load i8, ptr %i.g, align 1, !tbaa !29
   %i.i = load ptr, ptr %2, align 8, !tbaa !28
-  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 %indvars.iv
+  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 %indvars.iv.next
   store i8 %i.h, ptr %i.j, align 1, !tbaa !29
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %i.k = urem i64 %indvars.iv.next, %i.c
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %i.k = urem i64 %indvars.iv.next.1, %i.c
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 %i.k
   %i.m = load i8, ptr %i.l, align 1, !tbaa !29
   %i.n = load ptr, ptr %2, align 8, !tbaa !28
-  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %indvars.iv.next
+  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %indvars.iv.next.1
   store i8 %i.m, ptr %i.o, align 1, !tbaa !29
-  %indvars.iv.next.1.a = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %indvars.iv.next.1.a = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1.a, 15360
   br i1 %exitcond.not.1, label %bb.b, label %bb.d, !llvm.loop !176
 

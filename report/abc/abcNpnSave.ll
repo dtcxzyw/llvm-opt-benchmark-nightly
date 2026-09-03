@@ -187,8 +187,8 @@ bb.a:                                             ; preds = %.lr.ph.i
 
 Abc_PrimeCudd.exit:                               ; preds = %.preheader.i, %bb.a
   store i32 %i.h, ptr %i.d, align 8, !tbaa !17
-  %i.n = zext nneg i32 %i.h to i64                ; 2 uses
-  %i.o = call noalias ptr @calloc(i64 noundef %i.n, i64 noundef 4) #23 ; 2 uses
+  %i.n = zext nneg i32 %i.h to i64                ; 3 uses
+  %i.o = call noalias ptr @calloc(i64 noundef %i.n, i64 noundef 4) #23 ; 3 uses
   store ptr %i.o, ptr %i.b, align 8, !tbaa !16
   %i.p = icmp sgt i32 %i.e, 0
   br i1 %i.p, label %.lr.ph53.preheader, label %._crit_edge54
@@ -200,28 +200,48 @@ Abc_PrimeCudd.exit:                               ; preds = %.preheader.i, %bb.a
 .lr.ph53:                                         ; preds = %.lr.ph53.preheader, %._crit_edge
   %indvars.iv = phi i64 [ 0, %.lr.ph53.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv
-  %i.r = load i32, ptr %i.q, align 4, !tbaa !9    ; 2 uses
+  %i.r = load i32, ptr %i.q, align 4, !tbaa !9    ; 3 uses
   %.not.i39 = icmp eq i32 %i.r, 0
   br i1 %.not.i39, label %._crit_edge, label %Npn_ManObj.exit
 
 Npn_ManObj.exit:                                  ; preds = %.lr.ph53
-  %i.s = load ptr, ptr %0, align 8, !tbaa !18     ; 2 uses
+  %i.s = load ptr, ptr %0, align 8, !tbaa !18     ; 5 uses
   %i.t = sext i32 %i.r to i64
-  %i.u = getelementptr inbounds [16 x i8], ptr %i.s, i64 %i.t ; 2 uses
+  %i.u = getelementptr inbounds [16 x i8], ptr %i.s, i64 %i.t ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 12
   %i.w = load i32, ptr %i.v, align 4, !tbaa !21   ; 2 uses
   %.not.i40 = icmp eq i32 %i.w, 0
-  %2 = sext i32 %i.w to i64
-  %3 = getelementptr inbounds [16 x i8], ptr %i.s, i64 %2
-  %.ph = select i1 %.not.i40, ptr null, ptr %3
-  %.val38 = load ptr, ptr %0, align 8, !tbaa !18  ; 2 uses
-  %4 = ptrtoint ptr %.val38 to i64
+  %2 = ptrtoint ptr %i.s to i64
+  %3 = load i64, ptr %i.u, align 8, !tbaa !22     ; 3 uses
+  %4 = mul i64 %3, 101
+  %5 = mul i64 %3, 733
+  %6 = xor i64 %4, %5
+  %7 = mul i64 %3, 1777
+  %8 = xor i64 %6, %7
+  %9 = urem i64 %8, %i.n
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %9 ; 2 uses
+  %11 = load i32, ptr %10, align 4, !tbaa !9
+  %12 = getelementptr inbounds nuw i8, ptr %i.u, i64 12
+  store i32 %11, ptr %12, align 4, !tbaa !21
+  store i32 %i.r, ptr %10, align 4, !tbaa !9
+  %.not377072 = icmp eq ptr %i.s, null
+  %.not3770 = or i1 %.not.i40, %.not377072
+  br i1 %.not3770, label %._crit_edge, label %Npn_ManObj.exit43.lr.ph
+
+Npn_ManObj.exit43.lr.ph:                          ; preds = %Npn_ManObj.exit
+  %13 = sext i32 %i.w to i64
+  %14 = getelementptr inbounds [16 x i8], ptr %i.s, i64 %13
   br label %bb.b
 
-bb.b:                                             ; preds = %Npn_ManObj.exit43, %Npn_ManObj.exit
-  %.03149 = phi ptr [ %.ph, %Npn_ManObj.exit ], [ %9, %Npn_ManObj.exit43 ] ; 3 uses
-  %.03248 = phi ptr [ %i.u, %Npn_ManObj.exit ], [ %.03149, %Npn_ManObj.exit43 ] ; 3 uses
-  %i.x = load i64, ptr %.03248, align 8, !tbaa !22 ; 3 uses
+bb.b:                                             ; preds = %Npn_ManObj.exit43.lr.ph, %bb.b
+  %.03149 = phi ptr [ %14, %Npn_ManObj.exit43.lr.ph ], [ %19, %bb.b ] ; 4 uses
+  %15 = getelementptr inbounds nuw i8, ptr %.03149, i64 12
+  %16 = load i32, ptr %15, align 4, !tbaa !21     ; 2 uses
+  %.not.i42 = icmp eq i32 %16, 0
+  %17 = sext i32 %16 to i64
+  %18 = getelementptr inbounds [16 x i8], ptr %i.s, i64 %17
+  %19 = select i1 %.not.i42, ptr null, ptr %18    ; 2 uses
+  %i.x = load i64, ptr %.03149, align 8, !tbaa !22 ; 3 uses
   %i.y = mul i64 %i.x, 101
   %i.z = mul i64 %i.x, 733
   %i.aa = xor i64 %i.y, %i.z
@@ -230,26 +250,17 @@ bb.b:                                             ; preds = %Npn_ManObj.exit43, 
   %i.ad = urem i64 %i.ac, %i.n
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.ad ; 2 uses
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !9
-  %i.ag = getelementptr inbounds nuw i8, ptr %.03248, i64 12
+  %i.ag = getelementptr inbounds nuw i8, ptr %.03149, i64 12
   store i32 %i.af, ptr %i.ag, align 4, !tbaa !21
-  %i.ah = ptrtoint ptr %.03248 to i64
-  %i.ai = sub i64 %i.ah, %4
+  %i.ah = ptrtoint ptr %.03149 to i64
+  %i.ai = sub i64 %i.ah, %2
   %i.aj = lshr exact i64 %i.ai, 4
   %i.ak = trunc i64 %i.aj to i32
   store i32 %i.ak, ptr %i.ae, align 4, !tbaa !9
-  %.not37 = icmp eq ptr %.03149, null
-  br i1 %.not37, label %._crit_edge, label %Npn_ManObj.exit43
+  %.not37 = icmp eq ptr %19, null
+  br i1 %.not37, label %._crit_edge, label %bb.b, !llvm.loop !29
 
-Npn_ManObj.exit43:                                ; preds = %bb.b
-  %5 = getelementptr inbounds nuw i8, ptr %.03149, i64 12
-  %6 = load i32, ptr %5, align 4, !tbaa !21       ; 2 uses
-  %.not.i42 = icmp eq i32 %6, 0
-  %7 = sext i32 %6 to i64
-  %8 = getelementptr inbounds [16 x i8], ptr %.val38, i64 %7
-  %9 = select i1 %.not.i42, ptr null, ptr %8
-  br label %bb.b, !llvm.loop !29
-
-._crit_edge:                                      ; preds = %bb.b, %.lr.ph53
+._crit_edge:                                      ; preds = %bb.b, %Npn_ManObj.exit, %.lr.ph53
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge54, label %.lr.ph53, !llvm.loop !30

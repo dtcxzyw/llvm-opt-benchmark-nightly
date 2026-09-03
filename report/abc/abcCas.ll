@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %._crit_edge, %bb.b
 ; Function Attrs: nounwind uwtable
 define void @Abc_NtkSuppMinFile(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 5 uses
+  %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = alloca [1000 x i8], align 16             ; 40 uses
   %i.c = tail call i32 @Gia_FileSize(ptr noundef %0) #30 ; 4 uses
   %i.d = tail call noalias ptr @fopen(ptr noundef %0, ptr noundef nonnull @.str.52) ; 4 uses
@@ -225,6 +225,7 @@ bb.c:                                             ; preds = %bb.a
   %i.l = shl nsw i64 %i.k, 3
   %i.m = tail call noalias ptr @malloc(i64 noundef %i.l) #31 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
+  store i32 -1, ptr %i.a, align 4, !tbaa !60
   %i.n = tail call ptr @fgets(ptr noundef %i.i, i32 noundef %i.c, ptr noundef nonnull %i.d)
   %.not101 = icmp eq ptr %i.n, null
   br i1 %.not101, label %.loopexit, label %.lr.ph108
@@ -495,7 +496,7 @@ Vec_WrdFreeP.exit83.peel:                         ; preds = %.thread.i82.peel, %
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #30
   br label %.peel.next
 
-.peel.next:                                       ; preds = %Vec_WrdFreeP.exit83.peel, %.peel.begin
+.peel.next:                                       ; preds = %.peel.begin, %Vec_WrdFreeP.exit83.peel
   %i.cs = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !89 ; 5 uses
   %i.cu = icmp eq ptr %i.ct, null
@@ -524,7 +525,7 @@ Vec_WrdFreeP.exit83.peel189:                      ; preds = %.thread.i82.peel188
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #30
   br label %.peel.next185
 
-.peel.next185:                                    ; preds = %Vec_WrdFreeP.exit83.peel189, %.peel.next
+.peel.next185:                                    ; preds = %.peel.next, %Vec_WrdFreeP.exit83.peel189
   %i.db = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !89 ; 5 uses
   %i.dd = icmp eq ptr %i.dc, null
@@ -553,7 +554,7 @@ Vec_WrdFreeP.exit83.peel196:                      ; preds = %.thread.i82.peel195
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #30
   br label %.peel.next192
 
-.peel.next192:                                    ; preds = %Vec_WrdFreeP.exit83.peel196, %.peel.next185
+.peel.next192:                                    ; preds = %.peel.next185, %Vec_WrdFreeP.exit83.peel196
   %i.dk = getelementptr inbounds nuw i8, ptr %i.g, i64 24 ; 2 uses
   %i.dl = load ptr, ptr %i.dk, align 8, !tbaa !89 ; 5 uses
   %i.dm = icmp eq ptr %i.dl, null
@@ -582,7 +583,7 @@ Vec_WrdFreeP.exit83.peel203:                      ; preds = %.thread.i82.peel202
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #30
   br label %.peel.next199
 
-.peel.next199:                                    ; preds = %Vec_WrdFreeP.exit83.peel203, %.peel.next192
+.peel.next199:                                    ; preds = %.peel.next192, %Vec_WrdFreeP.exit83.peel203
   %i.dt = getelementptr inbounds nuw i8, ptr %i.g, i64 32 ; 2 uses
   %i.du = load ptr, ptr %i.dt, align 8, !tbaa !89 ; 5 uses
   %i.dv = icmp eq ptr %i.du, null
@@ -611,7 +612,7 @@ Vec_WrdFreeP.exit83.peel210:                      ; preds = %.thread.i82.peel209
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #30
   br label %.peel.next206
 
-.peel.next206:                                    ; preds = %Vec_WrdFreeP.exit83.peel210, %.peel.next199
+.peel.next206:                                    ; preds = %.peel.next199, %Vec_WrdFreeP.exit83.peel210
   %i.ec = getelementptr inbounds nuw i8, ptr %i.g, i64 40 ; 2 uses
   %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !89 ; 5 uses
   %i.ee = icmp eq ptr %i.ed, null
@@ -640,7 +641,7 @@ Vec_WrdFreeP.exit83.peel217:                      ; preds = %.thread.i82.peel216
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #30
   br label %.peel.next213
 
-.peel.next213:                                    ; preds = %Vec_WrdFreeP.exit83.peel217, %.peel.next206
+.peel.next213:                                    ; preds = %.peel.next206, %Vec_WrdFreeP.exit83.peel217
   %i.el = getelementptr inbounds nuw i8, ptr %i.g, i64 48 ; 2 uses
   %i.em = load ptr, ptr %i.el, align 8, !tbaa !89 ; 5 uses
   %i.en = icmp eq ptr %i.em, null
@@ -673,7 +674,7 @@ Vec_WrdFreeP.exit83.peel224:                      ; preds = %.thread.i82.peel223
   br label %bb.ak
 
 bb.ak:                                            ; preds = %.peel.newph, %bb.am
-  %indvars.iv131 = phi i64 [ 7, %.peel.newph ], [ %indvars.iv.next132, %bb.am ] ; 4 uses
+  %indvars.iv131 = phi i64 [ %indvars.iv.next132, %bb.am ], [ 7, %.peel.newph ] ; 4 uses
   %i.eu = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv131 ; 2 uses
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !89 ; 5 uses
   %i.ew = icmp eq ptr %i.ev, null
@@ -688,7 +689,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.fa = getelementptr i8, ptr %i.ev, i64 4
   %.val = load i32, ptr %i.fa, align 4, !tbaa !84
   %i.fb = trunc i64 %indvars.iv131 to i32
-  %i.fc = add nsw i32 %i.fb, -6
+  %i.fc = add i32 %i.fb, -6
   %i.fd = shl nuw nsw i32 1, %i.fc
   %i.fe = sdiv i32 %.val, %i.fd
   %i.ff = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.85, i32 noundef %i.ey, i32 noundef %i.fe, ptr noundef nonnull %i.b) ; 0 uses

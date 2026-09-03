@@ -202,7 +202,7 @@ bb.a:
   %10 = alloca %"class.cv::Mat_", align 8         ; 10 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %12 = alloca %"class.std::allocator.3", align 1 ; 3 uses
-  %13 = alloca %"class.cv::Mat", align 8          ; 11 uses
+  %13 = alloca %"class.cv::Mat", align 8          ; 10 uses
   %14 = alloca %"class.cv::Mat", align 8          ; 11 uses
   %15 = alloca %"class.cv::MatExpr", align 8      ; 10 uses
   %16 = alloca %"class.cv::Mat", align 8          ; 7 uses
@@ -229,12 +229,11 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZNK2cv11_InputArray6getMatEi.exit
 
 _ZNK2cv11_InputArray6getMatEi.exit:               ; preds = %bb.b, %bb.c
-  %i.e = getelementptr inbounds nuw i8, ptr %13, i64 12
-  %24 = load i32, ptr %i.e, align 4, !tbaa !79
-  %25 = sdiv i32 %24, %3                          ; 2 uses
-  %26 = getelementptr inbounds nuw i8, ptr %13, i64 8
-  %27 = load i32, ptr %26, align 8, !tbaa !87
-  %28 = sdiv i32 %27, %4                          ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %13, i64 8
+  %24 = load <2 x i32>, ptr %i.e, align 8, !tbaa !53
+  %25 = insertelement <2 x i32> poison, i32 %4, i64 0
+  %26 = insertelement <2 x i32> %25, i32 %3, i64 1
+  %27 = sdiv <2 x i32> %24, %26                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #20
   %i.f = mul nsw i32 %4, %3
@@ -286,7 +285,12 @@ bb.e:                                             ; preds = %_ZNK2cv7MatExprcvNS
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.y = getelementptr inbounds nuw i8, ptr %23, i64 8
   %i.z = getelementptr inbounds nuw i8, ptr %23, i64 16
-  br i1 %i.q, label %.preheader, label %._crit_edge74.split
+  br i1 %i.q, label %.preheader.preheader, label %._crit_edge74.split
+
+.preheader.preheader:                             ; preds = %.preheader.lr.ph
+  %28 = extractelement <2 x i32> %27, i64 0       ; 2 uses
+  %29 = extractelement <2 x i32> %27, i64 1       ; 2 uses
+  br label %.preheader
 
 bb.f:                                             ; preds = %bb.e
   invoke void @_ZNK2cv3Mat7reshapeEii(ptr dead_on_unwind nonnull writable sret(%"class.cv::Mat") align 8 %0, ptr noundef nonnull align 8 dereferenceable(208) %14, i32 noundef 1, i32 noundef 1)
@@ -307,9 +311,9 @@ bb.i:                                             ; preds = %bb.f, %_ZNK2cv7MatE
           cleanup
   br label %bb.av
 
-.preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
-  %.02473 = phi i32 [ %i.ad, %._crit_edge ], [ 0, %.preheader.lr.ph ] ; 2 uses
-  %.02572 = phi i32 [ %i.bn, %._crit_edge ], [ 0, %.preheader.lr.ph ]
+.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
+  %.02473 = phi i32 [ %i.ad, %._crit_edge ], [ 0, %.preheader.preheader ] ; 2 uses
+  %.02572 = phi i32 [ %i.bn, %._crit_edge ], [ 0, %.preheader.preheader ]
   %i.ac = mul nsw i32 %.02473, %28
   %i.ad = add nuw nsw i32 %.02473, 1              ; 3 uses
   %i.ae = mul nsw i32 %i.ad, %28
@@ -331,9 +335,9 @@ bb.j:                                             ; preds = %.preheader, %bb.aj
   store i32 %i.ac, ptr %17, align 4, !tbaa !202
   store i32 %i.ae, ptr %i.r, align 4, !tbaa !203
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #20
-  %i.af = mul nsw i32 %.071, %25
+  %i.af = mul nsw i32 %.071, %29
   %i.ag = add nuw nsw i32 %.071, 1                ; 3 uses
-  %i.ah = mul nsw i32 %i.ag, %25
+  %i.ah = mul nsw i32 %i.ag, %29
   store i32 %i.af, ptr %18, align 4, !tbaa !202
   store i32 %i.ah, ptr %i.s, align 4, !tbaa !203
   invoke void @_ZN2cv3MatC1ERKS0_RKNS_5RangeES5_(ptr noundef nonnull align 8 dereferenceable(208) %16, ptr noundef nonnull align 8 dereferenceable(208) %13, ptr noundef nonnull align 4 dereferenceable(8) %17, ptr noundef nonnull align 4 dereferenceable(8) %18)

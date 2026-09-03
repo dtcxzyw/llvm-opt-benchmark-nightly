@@ -204,7 +204,7 @@ bb.an:                                            ; preds = %bb.am
   store i32 %i.pr, ptr %i.b, align 8, !tbaa !72
   %i.ps = and i32 %i.pq, 1
   %i.pt = or disjoint i32 %i.ps, 1000             ; 2 uses
-  %i.pu = getelementptr inbounds nuw i8, ptr %i.ov, i64 104 ; 3 uses
+  %i.pu = getelementptr inbounds nuw i8, ptr %i.ov, i64 104 ; 2 uses
   store i32 %i.pt, ptr %i.pu, align 4, !tbaa !65
   %i.pv = lshr i32 %i.pr, 3
   %i.pw = zext nneg i32 %i.pv to i64
@@ -228,11 +228,12 @@ bb.ao:                                            ; preds = %bb.an
 bb.ap:                                            ; preds = %bb.an
   %i.qg = zext nneg i32 %i.qe to i64
   %i.qh = tail call i64 @av_gcd(i64 noundef %i.qg, i64 noundef 1800000) #11
-  %i.qi = trunc i64 %i.qh to i32                  ; 2 uses
-  %1 = sdiv i32 %i.qe, %i.qi
-  store i32 %1, ptr %i.pu, align 4, !tbaa !65
-  %2 = sdiv i32 1800000, %i.qi
-  store i32 %2, ptr %i.pg, align 4, !tbaa !64
+  %i.qi = trunc i64 %i.qh to i32
+  %1 = insertelement <2 x i32> <i32 1800000, i32 poison>, i32 %i.qe, i64 1
+  %2 = insertelement <2 x i32> poison, i32 %i.qi, i64 0
+  %3 = shufflevector <2 x i32> %2, <2 x i32> poison, <2 x i32> zeroinitializer
+  %4 = sdiv <2 x i32> %1, %3
+  store <2 x i32> %4, ptr %i.pg, align 4, !tbaa !80
   br label %bb.ar
 
 bb.aq:                                            ; preds = %bb.am

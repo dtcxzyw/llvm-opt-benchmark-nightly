@@ -204,7 +204,7 @@ bb.a:
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !39   ; 13 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !39   ; 10 uses
   switch i32 %i.b, label %bb.c [
     i32 -1, label %bb.b
     i32 1, label %bb.b
@@ -216,23 +216,26 @@ bb.b:                                             ; preds = %bb.a, %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !40   ; 3 uses
-  %16 = add i32 %i.b, -1
-  %17 = add i32 %16, %i.d
-  %18 = srem i32 %17, %i.b
-  %19 = add nuw i32 %i.b, 1
-  %20 = add i32 %19, %i.d
-  %21 = srem i32 %20, %i.b
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !40   ; 2 uses
+  %16 = insertelement <2 x i32> poison, i32 %i.b, i64 0 ; 2 uses
+  %17 = shufflevector <2 x i32> %16, <2 x i32> poison, <2 x i32> zeroinitializer
+  %18 = insertelement <2 x i32> poison, i32 %i.d, i64 0
+  %19 = add <2 x i32> %18, %16
+  %20 = shufflevector <2 x i32> %19, <2 x i32> poison, <2 x i32> zeroinitializer
+  %21 = add <2 x i32> %20, <i32 -1, i32 1>
+  %22 = srem <2 x i32> %21, %17                   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #13
   %i.e = load ptr, ptr %1, align 8, !tbaa !57
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.g = load ptr, ptr %i.f, align 8
-  call void %i.g(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr") align 8 %8, ptr noundef nonnull align 8 dereferenceable(184) %1, i32 noundef %18)
+  %23 = extractelement <2 x i32> %22, i64 0
+  call void %i.g(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr") align 8 %8, ptr noundef nonnull align 8 dereferenceable(184) %1, i32 noundef %23)
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #13
   %i.h = load ptr, ptr %1, align 8, !tbaa !57
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.j = load ptr, ptr %i.i, align 8
-  invoke void %i.j(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr") align 8 %9, ptr noundef nonnull align 8 dereferenceable(184) %1, i32 noundef %21)
+  %24 = extractelement <2 x i32> %22, i64 1
+  invoke void %i.j(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr") align 8 %9, ptr noundef nonnull align 8 dereferenceable(184) %1, i32 noundef %24)
           to label %.preheader unwind label %bb.m
 
 .preheader:                                       ; preds = %bb.c

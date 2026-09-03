@@ -204,9 +204,8 @@ bb.s:                                             ; preds = %bb.r
   %i.fr = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 3 uses
   %i.fs = load i32, ptr %i.fr, align 4, !tbaa !262 ; 2 uses
   %i.ft = sdiv i32 %i.fq, %i.fs                   ; 2 uses
-  %5 = shl nuw i32 1, %i.ev
   %i.fu = shl i32 %i.fq, %i.ev
-  %i.fv = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %i.fv = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.fw = load i32, ptr %i.fv, align 8, !tbaa !265
   %i.fx = sdiv i32 %i.fu, %i.fw
   %i.fy = add nsw i32 %i.fs, -1
@@ -217,8 +216,11 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.gc, label %.lr.ph161, label %.loopexit
 
 .lr.ph161:                                        ; preds = %bb.s
+  %5 = shl nuw i32 1, %i.ev
   %i.gd = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.ge = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %6 = insertelement <2 x i32> poison, i32 %i.eu, i64 0
+  %7 = insertelement <2 x i32> %6, i32 %5, i64 1
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.r
@@ -243,12 +245,12 @@ bb.u:                                             ; preds = %.lr.ph161, %bb.x
   br i1 %i.gl, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %6 = load i32, ptr %i.fr, align 4, !tbaa !262
-  %7 = sdiv i32 %i.eu, %6
-  %i.gq = load i32, ptr %i.fv, align 8, !tbaa !265
-  %8 = sdiv i32 %5, %i.gq
-  %9 = load i32, ptr %i.v, align 8, !tbaa !260
-  tail call void @_ZN4Ptex4v2_49PtexUtils4fillEPKvPviiii(ptr noundef %i.gp, ptr noundef %.095158, i32 noundef %i.fq, i32 noundef %7, i32 noundef %8, i32 noundef %9)
+  %8 = load <2 x i32>, ptr %i.fr, align 4, !tbaa !102
+  %9 = sdiv <2 x i32> %7, %8                      ; 2 uses
+  %i.gq = load i32, ptr %i.v, align 8, !tbaa !260
+  %10 = extractelement <2 x i32> %9, i64 0
+  %11 = extractelement <2 x i32> %9, i64 1
+  tail call void @_ZN4Ptex4v2_49PtexUtils4fillEPKvPviiii(ptr noundef %i.gp, ptr noundef %.095158, i32 noundef %i.fq, i32 noundef %10, i32 noundef %11, i32 noundef %i.gq)
   br label %bb.x
 
 bb.w:                                             ; preds = %bb.u
@@ -421,18 +423,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !268  ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 36
-  %3 = load i32, ptr %2, align 4, !tbaa !262      ; 3 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 40
-  %4 = load i32, ptr %i.h, align 8, !tbaa !265
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %5 = load i32, ptr %i.i, align 4, !tbaa !262    ; 3 uses
-  %6 = sdiv i32 %3, %5                            ; 9 uses
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %8 = load i32, ptr %7, align 8, !tbaa !265
-  %9 = sdiv i32 %4, %8                            ; 4 uses
-  %i.j = mul nsw i32 %9, %6                       ; 4 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !268  ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 36 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
+  %2 = load <2 x i32>, ptr %i.h, align 4, !tbaa !102
+  %3 = load <2 x i32>, ptr %i.i, align 4, !tbaa !102
+  %4 = sdiv <2 x i32> %2, %3                      ; 3 uses
+  %5 = extractelement <2 x i32> %4, i64 0         ; 8 uses
+  %6 = extractelement <2 x i32> %4, i64 1         ; 3 uses
+  %i.j = mul nsw i32 %6, %5                       ; 4 uses
   %i.k = sext i32 %i.j to i64
   %i.l = shl nsw i64 %i.k, 3
   %i.m = alloca i8, i64 %i.l, align 16            ; 3 uses
@@ -440,15 +439,17 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.n, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %bb.b
-  %i.o = mul i32 %9, %3
-  %i.p = sdiv i32 %1, %5
+  %7 = load i32, ptr %i.i, align 4, !tbaa !262    ; 2 uses
+  %8 = load i32, ptr %i.h, align 4, !tbaa !262    ; 2 uses
+  %i.o = mul i32 %6, %8
+  %i.p = sdiv i32 %1, %7
   %i.q = mul i32 %i.o, %i.p
-  %i.r = srem i32 %1, %5
-  %i.s = mul nsw i32 %i.r, %6
+  %i.r = srem i32 %1, %7
+  %i.s = mul nsw i32 %i.r, %5
   %i.t = add nsw i32 %i.s, %i.q                   ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 5 uses
-  %i.v = add i32 %3, 1
-  %i.w = sub i32 %i.v, %6                         ; 2 uses
+  %i.v = add i32 %8, 1
+  %i.w = sub i32 %i.v, %5                         ; 2 uses
   %wide.trip.count = zext nneg i32 %i.j to i64    ; 2 uses
   %i.x = load ptr, ptr %i.g, align 8, !tbaa !20
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 72
@@ -463,7 +464,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %exitcond.peel.not, label %._crit_edge, label %.peel.next
 
 .peel.next:                                       ; preds = %bb.c
-  %i.af = srem i32 1, %6
+  %i.af = srem i32 1, %5
   %.not85.peel = icmp eq i32 %i.af, 0
   %i.ag = select i1 %.not85.peel, i32 %i.w, i32 1
   %i.ah = add nsw i32 %i.ag, %i.t
@@ -512,7 +513,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %i.bd = phi i1 [ false, %bb.e ], [ false, %bb.d ], [ %i.bc, %bb.f ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.be = trunc nuw nsw i64 %indvars.iv.next to i32
-  %i.bf = srem i32 %i.be, %6
+  %i.bf = srem i32 %i.be, %5
   %.not85 = icmp eq i32 %i.bf, 0
   %i.bg = select i1 %.not85, i32 %i.w, i32 1
   %i.bh = add nsw i32 %i.bg, %.07990
@@ -592,14 +593,17 @@ bb.j:                                             ; preds = %._crit_edge
   %i.cy = load i8, ptr %i.ca, align 8, !tbaa !236
   %i.cz = zext nneg i8 %i.cy to i32
   %i.da = shl i32 %i.cw, %i.cz                    ; 4 uses
-  %10 = sdiv i32 %i.da, %6                        ; 2 uses
   %i.db = load i8, ptr %i.ce, align 1, !tbaa !237
   %i.dc = zext nneg i8 %i.db to i32
   %i.dd = shl i32 %i.da, %i.dc
-  %11 = sdiv i32 %i.dd, %9
-  %i.de = add nsw i32 %6, -1
-  %i.df = mul nsw i32 %10, %i.de
-  %i.dg = sub nsw i32 %11, %i.df
+  %9 = insertelement <2 x i32> poison, i32 %i.da, i64 0
+  %10 = insertelement <2 x i32> %9, i32 %i.dd, i64 1
+  %11 = sdiv <2 x i32> %10, %4                    ; 2 uses
+  %i.de = add nsw i32 %5, -1
+  %12 = extractelement <2 x i32> %11, i64 0       ; 2 uses
+  %i.df = mul nsw i32 %12, %i.de
+  %13 = extractelement <2 x i32> %11, i64 1
+  %i.dg = sub nsw i32 %13, %i.df
   %i.dh = load ptr, ptr %i.cj, align 8, !tbaa !20
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 48
   %i.dj = load ptr, ptr %i.di, align 8
@@ -633,11 +637,11 @@ bb.m:                                             ; preds = %bb.l
   %i.dz = load i8, ptr %i.ca, align 8, !tbaa !236
   %i.ea = zext nneg i8 %i.dz to i32
   %i.eb = shl nuw i32 1, %i.ea
-  %i.ec = sdiv i32 %i.eb, %6
+  %i.ec = sdiv i32 %i.eb, %5
   %i.ed = load i8, ptr %i.ce, align 1, !tbaa !237
   %i.ee = zext nneg i8 %i.ed to i32
   %i.ef = shl nuw i32 1, %i.ee
-  %i.eg = sdiv i32 %i.ef, %9
+  %i.eg = sdiv i32 %i.ef, %6
   %i.eh = load i32, ptr %i.u, align 8, !tbaa !260
   tail call void @_ZN4Ptex4v2_49PtexUtils4fillEPKvPviiii(ptr noundef %i.dy, ptr noundef %.07292, i32 noundef %i.da, i32 noundef %i.ec, i32 noundef %i.eg, i32 noundef %i.eh)
   br label %bb.o
@@ -656,9 +660,9 @@ bb.n:                                             ; preds = %bb.l
 bb.o:                                             ; preds = %bb.n, %bb.m
   %indvars.iv.next98 = add nuw nsw i64 %indvars.iv97, 1 ; 3 uses
   %i.ep = trunc nuw nsw i64 %indvars.iv.next98 to i32
-  %i.eq = srem i32 %i.ep, %6
+  %i.eq = srem i32 %i.ep, %5
   %.not83 = icmp eq i32 %i.eq, 0
-  %i.er = select i1 %.not83, i32 %i.dg, i32 %10
+  %i.er = select i1 %.not83, i32 %i.dg, i32 %12
   %i.es = sext i32 %i.er to i64
   %i.et = getelementptr inbounds i8, ptr %.07292, i64 %i.es
   %exitcond101.not = icmp eq i64 %indvars.iv.next98, %wide.trip.count

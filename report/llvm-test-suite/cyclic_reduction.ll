@@ -203,18 +203,20 @@ begin_hunk_0_@hypre_CyclicReductionSetup:bb.a
   %i.kv = load i32, ptr %i.ao, align 4, !tbaa !7
   %i.kw = mul nsw i32 %i.kv, %i.ku
   %i.kx = load i32, ptr %i.ap, align 8, !tbaa !7
-  %i.ky = mul nsw i32 %i.kw, %i.kx                ; 2 uses
+  %i.ky = mul nsw i32 %i.kw, %i.kx
   %i.kz = load ptr, ptr %i.dn, align 8, !tbaa !52
   %i.la = getelementptr inbounds nuw i8, ptr %i.kz, i64 72
   %i.lb = load i32, ptr %i.la, align 8, !tbaa !142 ; 2 uses
-  %4 = sdiv i32 %i.lb, 2
-  %5 = sdiv i32 %4, %i.ky
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 3 uses
-  %7 = mul nsw i32 %i.lb, 5
-  %8 = sdiv i32 %7, 2
-  %9 = sdiv i32 %8, %i.ky
-  %10 = add nsw i32 %9, %5                        ; 4 uses
-  store i32 %10, ptr %6, align 4, !tbaa !62
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 3 uses
+  %5 = mul nsw i32 %i.lb, 5
+  %6 = insertelement <2 x i32> poison, i32 %5, i64 0
+  %7 = insertelement <2 x i32> %6, i32 %i.lb, i64 1
+  %8 = sdiv <2 x i32> %7, splat (i32 2)
+  %9 = insertelement <2 x i32> poison, i32 %i.ky, i64 0
+  %10 = shufflevector <2 x i32> %9, <2 x i32> poison, <2 x i32> zeroinitializer
+  %11 = sdiv <2 x i32> %8, %10
+  %12 = call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %11) ; 4 uses
+  store i32 %12, ptr %4, align 4, !tbaa !62
   %i.lc = icmp samesign ugt i32 %.0.lcssa.wide, 1
   br i1 %i.lc, label %.lr.ph261, label %bb.h
 
@@ -232,7 +234,7 @@ begin_hunk_0_@hypre_CyclicReductionSetup:bb.a
 
 bb.f:                                             ; preds = %bb.f, %.lr.ph261.new
   %indvars.iv303 = phi i64 [ 1, %.lr.ph261.new ], [ %indvars.iv.next304.3, %bb.f ] ; 5 uses
-  %i.lg = phi i32 [ %10, %.lr.ph261.new ], [ %i.mh, %bb.f ]
+  %i.lg = phi i32 [ %12, %.lr.ph261.new ], [ %i.mh, %bb.f ]
   %niter = phi i64 [ 0, %.lr.ph261.new ], [ %niter.next.3, %bb.f ]
   %i.lh = getelementptr inbounds nuw [8 x i8], ptr %i.dn, i64 %indvars.iv303
   %i.li = load ptr, ptr %i.lh, align 8, !tbaa !52
@@ -272,7 +274,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph261.ne
 
 .epil.preheader:                                  ; preds = %._crit_edge262.unr-lcssa, %.lr.ph261
   %indvars.iv303.epil.init = phi i64 [ 1, %.lr.ph261 ], [ %indvars.iv.next304.3, %._crit_edge262.unr-lcssa ]
-  %.epil.init = phi i32 [ %10, %.lr.ph261 ], [ %i.mh, %._crit_edge262.unr-lcssa ]
+  %.epil.init = phi i32 [ %12, %.lr.ph261 ], [ %i.mh, %._crit_edge262.unr-lcssa ]
   %lcmp.mod326 = icmp ne i64 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod326)
   br label %bb.g
@@ -297,11 +299,11 @@ bb.g:                                             ; preds = %bb.g, %.epil.prehea
   %i.mp = add i32 %.0.lcssa.wide, -2
   %i.mq = zext i32 %i.mp to i64
   %i.mr = add nuw nsw i64 %i.mq, 2
-  store i32 %.lcssa, ptr %6, align 4, !tbaa !62
+  store i32 %.lcssa, ptr %4, align 4, !tbaa !62
   br label %bb.h
 
 bb.h:                                             ; preds = %._crit_edge262, %._crit_edge258
-  %i.ms = phi i32 [ %.lcssa, %._crit_edge262 ], [ %10, %._crit_edge258 ]
+  %i.ms = phi i32 [ %.lcssa, %._crit_edge262 ], [ %12, %._crit_edge258 ]
   %.6.lcssa = phi i64 [ %i.mr, %._crit_edge262 ], [ 1, %._crit_edge258 ]
   br i1 %i.aw, label %bb.j, label %bb.i
 
@@ -312,7 +314,7 @@ bb.i:                                             ; preds = %bb.h
   %i.mw = load i32, ptr %i.mv, align 8, !tbaa !142
   %i.mx = sdiv i32 %i.mw, 2
   %i.my = add nsw i32 %i.ms, %i.mx
-  store i32 %i.my, ptr %6, align 4, !tbaa !62
+  store i32 %i.my, ptr %4, align 4, !tbaa !62
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -714,6 +716,9 @@ declare i32 @llvm.smax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6
