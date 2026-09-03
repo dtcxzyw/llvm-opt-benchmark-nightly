@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/anim_encode?download=true
 inline.NumInlined: 118
 inline.NumDeleted: 43
-loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumCompletelyUnrolled: 7
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@GenerateCandidates:bb.a
   %i.cp = load i32, ptr %i.co, align 4, !tbaa !13 ; 4 uses
   %i.cq = lshr i32 %i.cp, 24                      ; 4 uses
@@ -205,18 +205,18 @@ bb.q:                                             ; preds = %IncreaseTransparenc
   %i.gf = getelementptr inbounds nuw i8, ptr %i.b, i64 80
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gf, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.ge, i64 16, i1 false), !tbaa.struct !80
   %i.gg = getelementptr inbounds nuw i8, ptr %i.b, i64 60
-  store i32 3, ptr %i.gg, align 4, !tbaa !146
+  store i32 3, ptr %i.gg, align 4, !tbaa !145
   %i.gh = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.gi = load <2 x i32>, ptr %i.ge, align 4, !tbaa !13
   store <2 x i32> %i.gi, ptr %i.gh, align 8, !tbaa !13
   %i.gj = getelementptr inbounds nuw i8, ptr %i.b, i64 64
-  store i32 0, ptr %i.gj, align 8, !tbaa !147
+  store i32 0, ptr %i.gj, align 8, !tbaa !146
   %not..i = xor i1 %i.do, true
   %i.gk = zext i1 %not..i to i32
   %i.gl = getelementptr inbounds nuw i8, ptr %i.b, i64 68
-  store i32 %i.gk, ptr %i.gl, align 4, !tbaa !148
+  store i32 %i.gk, ptr %i.gl, align 4, !tbaa !147
   %i.gm = getelementptr inbounds nuw i8, ptr %i.b, i64 56
-  store i32 0, ptr %i.gm, align 8, !tbaa !149
+  store i32 0, ptr %i.gm, align 8, !tbaa !148
   tail call void @WebPMemoryWriterInit(ptr noundef nonnull %i.b) #14
   %i.gn = load i32, ptr %9, align 4, !tbaa !66
   %i.go = icmp eq i32 %i.gn, 0
@@ -225,9 +225,9 @@ bb.q:                                             ; preds = %IncreaseTransparenc
 
 bb.r:                                             ; preds = %bb.q
   %i.gp = getelementptr inbounds nuw i8, ptr %9, i64 44
-  store i32 0, ptr %i.gp, align 4, !tbaa !150
+  store i32 0, ptr %i.gp, align 4, !tbaa !149
   %i.gq = getelementptr inbounds nuw i8, ptr %9, i64 32
-  store i32 0, ptr %i.gq, align 4, !tbaa !151
+  store i32 0, ptr %i.gq, align 4, !tbaa !150
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
@@ -288,7 +288,7 @@ bb.w:                                             ; preds = %CopyCurrentCanvas.e
   %i.hk = fsub double 1.000000e+00, %i.hj
   %i.hl = call double @llvm.fmuladd.f64(double %i.hk, double 3.100000e+01, double %i.hj)
   %i.hm = fadd double %i.hl, 5.000000e-01
-  %i.hn = fptosi double %i.hm to i32              ; 2 uses
+  %i.hn = fptosi double %i.hm to i32              ; 24 uses
   %i.ho = getelementptr inbounds nuw i8, ptr %5, i64 284
   %i.hp = load i32, ptr %i.ho, align 4, !tbaa !45 ; 2 uses
   %i.hq = and i32 %i.hp, -8
@@ -311,7 +311,6 @@ bb.w:                                             ; preds = %CopyCurrentCanvas.e
   %i.ic = icmp slt i32 %.07997.i, %i.hz
   %i.id = getelementptr inbounds nuw i8, ptr %i.e, i64 80
   %i.ie = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 57 uses
-  %10 = mul nsw i32 %i.hn, 255                    ; 2 uses
   br i1 %i.ic, label %.preheader83.lr.ph.split.us.i, label %FlattenSimilarBlocks.exit
 
 .preheader83.lr.ph.split.us.i:                    ; preds = %.preheader83.lr.ph.i
@@ -345,23 +344,317 @@ bb.x:                                             ; preds = %.loopexit.us.i, %.p
   %i.iw = sext i32 %i.iq to i64
   br label %.preheader82.us.i
 
-bb.y:                                             ; preds = %.preheader82.us.i, %PixelsAreSimilar.exit.thread.us.i.a
-  %indvars.iv.i92 = phi i64 [ 0, %.preheader82.us.i ], [ %indvars.iv.next.i93, %PixelsAreSimilar.exit.thread.us.i.a ] ; 3 uses
-  %.16588.us.i = phi i32 [ %.06493.us.i, %.preheader82.us.i ], [ %.2.us.i.a, %PixelsAreSimilar.exit.thread.us.i.a ] ; 6 uses
-  %.16787.us.i = phi i32 [ %.06692.us.i, %.preheader82.us.i ], [ %.268.us.i.a, %PixelsAreSimilar.exit.thread.us.i.a ] ; 6 uses
-  %.17086.us.i = phi i32 [ %.06991.us.i, %.preheader82.us.i ], [ %.271.us.i.a, %PixelsAreSimilar.exit.thread.us.i.a ] ; 6 uses
-  %.17385.us.i = phi i32 [ %.07290.us.i, %.preheader82.us.i ], [ %.274.us.i.a, %PixelsAreSimilar.exit.thread.us.i.a ] ; 6 uses
-  %gep.i = getelementptr [4 x i8], ptr %invariant.gep.i, i64 %indvars.iv.i92
-  %11 = load i32, ptr %gep.i, align 4, !tbaa !13  ; 4 uses
-  %i.ix = icmp ugt i32 %11, -16777217
-  br i1 %i.ix, label %bb.z, label %PixelsAreSimilar.exit.thread.us.i.a
+10:                                               ; preds = %.preheader82.us.i
+  %11 = load i32, ptr %invariant.gep119.i, align 4, !tbaa !13 ; 4 uses
+  %12 = lshr i32 %204, 8
+  %13 = and i32 %12, 255                          ; 2 uses
+  %14 = and i32 %204, 255                         ; 2 uses
+  %15 = lshr i32 %11, 8
+  %16 = and i32 %15, 255
+  %17 = and i32 %11, 255
+  %18 = icmp ugt i32 %11, -16777217
+  br i1 %18, label %19, label %PixelsAreSimilar.exit.thread.us.i
 
-bb.z:                                             ; preds = %bb.y
-  %gep120.i = getelementptr [4 x i8], ptr %invariant.gep119.i, i64 %indvars.iv.i92
-  %i.iy = load i32, ptr %gep120.i, align 4, !tbaa !13 ; 4 uses
-  %i.iz = lshr i32 %11, 8
+19:                                               ; preds = %10
+  %20 = lshr i32 %11, 16
+  %21 = and i32 %20, 255
+  %22 = lshr i32 %204, 16
+  %23 = and i32 %22, 255                          ; 2 uses
+  %24 = sub nsw i32 %23, %21
+  %25 = call i32 @llvm.abs.i32(i32 %24, i1 true)
+  %.not.i.us.i = icmp sgt i32 %25, %i.hn
+  br i1 %.not.i.us.i, label %PixelsAreSimilar.exit.thread.us.i, label %26
+
+26:                                               ; preds = %19
+  %27 = sub nsw i32 %13, %16
+  %28 = call i32 @llvm.abs.i32(i32 %27, i1 true)
+  %.not23.i.us.i = icmp samesign ugt i32 %28, %i.hn
+  br i1 %.not23.i.us.i, label %PixelsAreSimilar.exit.thread.us.i, label %PixelsAreSimilar.exit.us.i
+
+PixelsAreSimilar.exit.us.i:                       ; preds = %26
+  %29 = sub nsw i32 %14, %17
+  %30 = call i32 @llvm.abs.i32(i32 %29, i1 true)
+  %.not81.us.i = icmp samesign ugt i32 %30, %i.hn
+  br i1 %.not81.us.i, label %PixelsAreSimilar.exit.thread.us.i, label %31
+
+31:                                               ; preds = %PixelsAreSimilar.exit.us.i
+  %32 = add nsw i32 %.07290.us.i, 1
+  %33 = add i32 %23, %.06991.us.i
+  %34 = add i32 %13, %.06692.us.i
+  %35 = add i32 %14, %.06493.us.i
+  br label %PixelsAreSimilar.exit.thread.us.i
+
+PixelsAreSimilar.exit.thread.us.i:                ; preds = %31, %PixelsAreSimilar.exit.us.i, %26, %19, %10, %.preheader82.us.i
+  %.274.us.i = phi i32 [ %32, %31 ], [ %.07290.us.i, %PixelsAreSimilar.exit.us.i ], [ %.07290.us.i, %.preheader82.us.i ], [ %.07290.us.i, %26 ], [ %.07290.us.i, %19 ], [ %.07290.us.i, %10 ] ; 6 uses
+  %.271.us.i = phi i32 [ %33, %31 ], [ %.06991.us.i, %PixelsAreSimilar.exit.us.i ], [ %.06991.us.i, %.preheader82.us.i ], [ %.06991.us.i, %26 ], [ %.06991.us.i, %19 ], [ %.06991.us.i, %10 ] ; 6 uses
+  %.268.us.i = phi i32 [ %34, %31 ], [ %.06692.us.i, %PixelsAreSimilar.exit.us.i ], [ %.06692.us.i, %.preheader82.us.i ], [ %.06692.us.i, %26 ], [ %.06692.us.i, %19 ], [ %.06692.us.i, %10 ] ; 6 uses
+  %.2.us.i = phi i32 [ %35, %31 ], [ %.06493.us.i, %PixelsAreSimilar.exit.us.i ], [ %.06493.us.i, %.preheader82.us.i ], [ %.06493.us.i, %26 ], [ %.06493.us.i, %19 ], [ %.06493.us.i, %10 ] ; 6 uses
+  %gep.i.1 = getelementptr i8, ptr %invariant.gep.i, i64 4
+  %36 = load i32, ptr %gep.i.1, align 4, !tbaa !13 ; 4 uses
+  %37 = icmp ugt i32 %36, -16777217
+  br i1 %37, label %38, label %PixelsAreSimilar.exit.thread.us.i.1
+
+38:                                               ; preds = %PixelsAreSimilar.exit.thread.us.i
+  %gep120.i.1 = getelementptr i8, ptr %invariant.gep119.i, i64 4
+  %39 = load i32, ptr %gep120.i.1, align 4, !tbaa !13 ; 4 uses
+  %40 = lshr i32 %36, 8
+  %41 = and i32 %40, 255                          ; 2 uses
+  %42 = and i32 %36, 255                          ; 2 uses
+  %43 = lshr i32 %39, 8
+  %44 = and i32 %43, 255
+  %45 = and i32 %39, 255
+  %46 = icmp ugt i32 %39, -16777217
+  br i1 %46, label %47, label %PixelsAreSimilar.exit.thread.us.i.1
+
+47:                                               ; preds = %38
+  %48 = lshr i32 %39, 16
+  %49 = and i32 %48, 255
+  %50 = lshr i32 %36, 16
+  %51 = and i32 %50, 255                          ; 2 uses
+  %52 = sub nsw i32 %51, %49
+  %53 = call i32 @llvm.abs.i32(i32 %52, i1 true)
+  %.not.i.us.i.1 = icmp sgt i32 %53, %i.hn
+  br i1 %.not.i.us.i.1, label %PixelsAreSimilar.exit.thread.us.i.1, label %54
+
+54:                                               ; preds = %47
+  %55 = sub nsw i32 %41, %44
+  %56 = call i32 @llvm.abs.i32(i32 %55, i1 true)
+  %.not23.i.us.i.1 = icmp samesign ugt i32 %56, %i.hn
+  br i1 %.not23.i.us.i.1, label %PixelsAreSimilar.exit.thread.us.i.1, label %PixelsAreSimilar.exit.us.i.1
+
+PixelsAreSimilar.exit.us.i.1:                     ; preds = %54
+  %57 = sub nsw i32 %42, %45
+  %58 = call i32 @llvm.abs.i32(i32 %57, i1 true)
+  %.not81.us.i.1 = icmp samesign ugt i32 %58, %i.hn
+  br i1 %.not81.us.i.1, label %PixelsAreSimilar.exit.thread.us.i.1, label %59
+
+59:                                               ; preds = %PixelsAreSimilar.exit.us.i.1
+  %60 = add nsw i32 %.274.us.i, 1
+  %61 = add i32 %51, %.271.us.i
+  %62 = add i32 %41, %.268.us.i
+  %63 = add i32 %42, %.2.us.i
+  br label %PixelsAreSimilar.exit.thread.us.i.1
+
+PixelsAreSimilar.exit.thread.us.i.1:              ; preds = %59, %PixelsAreSimilar.exit.us.i.1, %54, %47, %38, %PixelsAreSimilar.exit.thread.us.i
+  %.274.us.i.1 = phi i32 [ %60, %59 ], [ %.274.us.i, %PixelsAreSimilar.exit.us.i.1 ], [ %.274.us.i, %PixelsAreSimilar.exit.thread.us.i ], [ %.274.us.i, %54 ], [ %.274.us.i, %47 ], [ %.274.us.i, %38 ] ; 6 uses
+  %.271.us.i.1 = phi i32 [ %61, %59 ], [ %.271.us.i, %PixelsAreSimilar.exit.us.i.1 ], [ %.271.us.i, %PixelsAreSimilar.exit.thread.us.i ], [ %.271.us.i, %54 ], [ %.271.us.i, %47 ], [ %.271.us.i, %38 ] ; 6 uses
+  %.268.us.i.1 = phi i32 [ %62, %59 ], [ %.268.us.i, %PixelsAreSimilar.exit.us.i.1 ], [ %.268.us.i, %PixelsAreSimilar.exit.thread.us.i ], [ %.268.us.i, %54 ], [ %.268.us.i, %47 ], [ %.268.us.i, %38 ] ; 6 uses
+  %.2.us.i.1 = phi i32 [ %63, %59 ], [ %.2.us.i, %PixelsAreSimilar.exit.us.i.1 ], [ %.2.us.i, %PixelsAreSimilar.exit.thread.us.i ], [ %.2.us.i, %54 ], [ %.2.us.i, %47 ], [ %.2.us.i, %38 ] ; 6 uses
+  %gep.i.2 = getelementptr i8, ptr %invariant.gep.i, i64 8
+  %64 = load i32, ptr %gep.i.2, align 4, !tbaa !13 ; 4 uses
+  %65 = icmp ugt i32 %64, -16777217
+  br i1 %65, label %66, label %PixelsAreSimilar.exit.thread.us.i.2
+
+66:                                               ; preds = %PixelsAreSimilar.exit.thread.us.i.1
+  %gep120.i.2 = getelementptr i8, ptr %invariant.gep119.i, i64 8
+  %67 = load i32, ptr %gep120.i.2, align 4, !tbaa !13 ; 4 uses
+  %68 = lshr i32 %64, 8
+  %69 = and i32 %68, 255                          ; 2 uses
+  %70 = and i32 %64, 255                          ; 2 uses
+  %71 = lshr i32 %67, 8
+  %72 = and i32 %71, 255
+  %73 = and i32 %67, 255
+  %74 = icmp ugt i32 %67, -16777217
+  br i1 %74, label %75, label %PixelsAreSimilar.exit.thread.us.i.2
+
+75:                                               ; preds = %66
+  %76 = lshr i32 %67, 16
+  %77 = and i32 %76, 255
+  %78 = lshr i32 %64, 16
+  %79 = and i32 %78, 255                          ; 2 uses
+  %80 = sub nsw i32 %79, %77
+  %81 = call i32 @llvm.abs.i32(i32 %80, i1 true)
+  %.not.i.us.i.2 = icmp sgt i32 %81, %i.hn
+  br i1 %.not.i.us.i.2, label %PixelsAreSimilar.exit.thread.us.i.2, label %82
+
+82:                                               ; preds = %75
+  %83 = sub nsw i32 %69, %72
+  %84 = call i32 @llvm.abs.i32(i32 %83, i1 true)
+  %.not23.i.us.i.2 = icmp samesign ugt i32 %84, %i.hn
+  br i1 %.not23.i.us.i.2, label %PixelsAreSimilar.exit.thread.us.i.2, label %PixelsAreSimilar.exit.us.i.2
+
+PixelsAreSimilar.exit.us.i.2:                     ; preds = %82
+  %85 = sub nsw i32 %70, %73
+  %86 = call i32 @llvm.abs.i32(i32 %85, i1 true)
+  %.not81.us.i.2 = icmp samesign ugt i32 %86, %i.hn
+  br i1 %.not81.us.i.2, label %PixelsAreSimilar.exit.thread.us.i.2, label %87
+
+87:                                               ; preds = %PixelsAreSimilar.exit.us.i.2
+  %88 = add nsw i32 %.274.us.i.1, 1
+  %89 = add i32 %79, %.271.us.i.1
+  %90 = add i32 %69, %.268.us.i.1
+  %91 = add i32 %70, %.2.us.i.1
+  br label %PixelsAreSimilar.exit.thread.us.i.2
+
+PixelsAreSimilar.exit.thread.us.i.2:              ; preds = %87, %PixelsAreSimilar.exit.us.i.2, %82, %75, %66, %PixelsAreSimilar.exit.thread.us.i.1
+  %.274.us.i.2 = phi i32 [ %88, %87 ], [ %.274.us.i.1, %PixelsAreSimilar.exit.us.i.2 ], [ %.274.us.i.1, %PixelsAreSimilar.exit.thread.us.i.1 ], [ %.274.us.i.1, %82 ], [ %.274.us.i.1, %75 ], [ %.274.us.i.1, %66 ] ; 6 uses
+  %.271.us.i.2 = phi i32 [ %89, %87 ], [ %.271.us.i.1, %PixelsAreSimilar.exit.us.i.2 ], [ %.271.us.i.1, %PixelsAreSimilar.exit.thread.us.i.1 ], [ %.271.us.i.1, %82 ], [ %.271.us.i.1, %75 ], [ %.271.us.i.1, %66 ] ; 6 uses
+  %.268.us.i.2 = phi i32 [ %90, %87 ], [ %.268.us.i.1, %PixelsAreSimilar.exit.us.i.2 ], [ %.268.us.i.1, %PixelsAreSimilar.exit.thread.us.i.1 ], [ %.268.us.i.1, %82 ], [ %.268.us.i.1, %75 ], [ %.268.us.i.1, %66 ] ; 6 uses
+  %.2.us.i.2 = phi i32 [ %91, %87 ], [ %.2.us.i.1, %PixelsAreSimilar.exit.us.i.2 ], [ %.2.us.i.1, %PixelsAreSimilar.exit.thread.us.i.1 ], [ %.2.us.i.1, %82 ], [ %.2.us.i.1, %75 ], [ %.2.us.i.1, %66 ] ; 6 uses
+  %gep.i.3 = getelementptr i8, ptr %invariant.gep.i, i64 12
+  %92 = load i32, ptr %gep.i.3, align 4, !tbaa !13 ; 4 uses
+  %93 = icmp ugt i32 %92, -16777217
+  br i1 %93, label %94, label %PixelsAreSimilar.exit.thread.us.i.3
+
+94:                                               ; preds = %PixelsAreSimilar.exit.thread.us.i.2
+  %gep120.i.3 = getelementptr i8, ptr %invariant.gep119.i, i64 12
+  %95 = load i32, ptr %gep120.i.3, align 4, !tbaa !13 ; 4 uses
+  %96 = lshr i32 %92, 8
+  %97 = and i32 %96, 255                          ; 2 uses
+  %98 = and i32 %92, 255                          ; 2 uses
+  %99 = lshr i32 %95, 8
+  %100 = and i32 %99, 255
+  %101 = and i32 %95, 255
+  %102 = icmp ugt i32 %95, -16777217
+  br i1 %102, label %103, label %PixelsAreSimilar.exit.thread.us.i.3
+
+103:                                              ; preds = %94
+  %104 = lshr i32 %95, 16
+  %105 = and i32 %104, 255
+  %106 = lshr i32 %92, 16
+  %107 = and i32 %106, 255                        ; 2 uses
+  %108 = sub nsw i32 %107, %105
+  %109 = call i32 @llvm.abs.i32(i32 %108, i1 true)
+  %.not.i.us.i.3 = icmp sgt i32 %109, %i.hn
+  br i1 %.not.i.us.i.3, label %PixelsAreSimilar.exit.thread.us.i.3, label %110
+
+110:                                              ; preds = %103
+  %111 = sub nsw i32 %97, %100
+  %112 = call i32 @llvm.abs.i32(i32 %111, i1 true)
+  %.not23.i.us.i.3 = icmp samesign ugt i32 %112, %i.hn
+  br i1 %.not23.i.us.i.3, label %PixelsAreSimilar.exit.thread.us.i.3, label %PixelsAreSimilar.exit.us.i.3
+
+PixelsAreSimilar.exit.us.i.3:                     ; preds = %110
+  %113 = sub nsw i32 %98, %101
+  %114 = call i32 @llvm.abs.i32(i32 %113, i1 true)
+  %.not81.us.i.3 = icmp samesign ugt i32 %114, %i.hn
+  br i1 %.not81.us.i.3, label %PixelsAreSimilar.exit.thread.us.i.3, label %115
+
+115:                                              ; preds = %PixelsAreSimilar.exit.us.i.3
+  %116 = add nsw i32 %.274.us.i.2, 1
+  %117 = add i32 %107, %.271.us.i.2
+  %118 = add i32 %97, %.268.us.i.2
+  %119 = add i32 %98, %.2.us.i.2
+  br label %PixelsAreSimilar.exit.thread.us.i.3
+
+PixelsAreSimilar.exit.thread.us.i.3:              ; preds = %115, %PixelsAreSimilar.exit.us.i.3, %110, %103, %94, %PixelsAreSimilar.exit.thread.us.i.2
+  %.274.us.i.3 = phi i32 [ %116, %115 ], [ %.274.us.i.2, %PixelsAreSimilar.exit.us.i.3 ], [ %.274.us.i.2, %PixelsAreSimilar.exit.thread.us.i.2 ], [ %.274.us.i.2, %110 ], [ %.274.us.i.2, %103 ], [ %.274.us.i.2, %94 ] ; 6 uses
+  %.271.us.i.3 = phi i32 [ %117, %115 ], [ %.271.us.i.2, %PixelsAreSimilar.exit.us.i.3 ], [ %.271.us.i.2, %PixelsAreSimilar.exit.thread.us.i.2 ], [ %.271.us.i.2, %110 ], [ %.271.us.i.2, %103 ], [ %.271.us.i.2, %94 ] ; 6 uses
+  %.268.us.i.3 = phi i32 [ %118, %115 ], [ %.268.us.i.2, %PixelsAreSimilar.exit.us.i.3 ], [ %.268.us.i.2, %PixelsAreSimilar.exit.thread.us.i.2 ], [ %.268.us.i.2, %110 ], [ %.268.us.i.2, %103 ], [ %.268.us.i.2, %94 ] ; 6 uses
+  %.2.us.i.3 = phi i32 [ %119, %115 ], [ %.2.us.i.2, %PixelsAreSimilar.exit.us.i.3 ], [ %.2.us.i.2, %PixelsAreSimilar.exit.thread.us.i.2 ], [ %.2.us.i.2, %110 ], [ %.2.us.i.2, %103 ], [ %.2.us.i.2, %94 ] ; 6 uses
+  %gep.i.4 = getelementptr i8, ptr %invariant.gep.i, i64 16
+  %120 = load i32, ptr %gep.i.4, align 4, !tbaa !13 ; 4 uses
+  %121 = icmp ugt i32 %120, -16777217
+  br i1 %121, label %122, label %PixelsAreSimilar.exit.thread.us.i.4
+
+122:                                              ; preds = %PixelsAreSimilar.exit.thread.us.i.3
+  %gep120.i.4 = getelementptr i8, ptr %invariant.gep119.i, i64 16
+  %123 = load i32, ptr %gep120.i.4, align 4, !tbaa !13 ; 4 uses
+  %124 = lshr i32 %120, 8
+  %125 = and i32 %124, 255                        ; 2 uses
+  %126 = and i32 %120, 255                        ; 2 uses
+  %127 = lshr i32 %123, 8
+  %128 = and i32 %127, 255
+  %129 = and i32 %123, 255
+  %130 = icmp ugt i32 %123, -16777217
+  br i1 %130, label %131, label %PixelsAreSimilar.exit.thread.us.i.4
+
+131:                                              ; preds = %122
+  %132 = lshr i32 %123, 16
+  %133 = and i32 %132, 255
+  %134 = lshr i32 %120, 16
+  %135 = and i32 %134, 255                        ; 2 uses
+  %136 = sub nsw i32 %135, %133
+  %137 = call i32 @llvm.abs.i32(i32 %136, i1 true)
+  %.not.i.us.i.4 = icmp sgt i32 %137, %i.hn
+  br i1 %.not.i.us.i.4, label %PixelsAreSimilar.exit.thread.us.i.4, label %138
+
+138:                                              ; preds = %131
+  %139 = sub nsw i32 %125, %128
+  %140 = call i32 @llvm.abs.i32(i32 %139, i1 true)
+  %.not23.i.us.i.4 = icmp samesign ugt i32 %140, %i.hn
+  br i1 %.not23.i.us.i.4, label %PixelsAreSimilar.exit.thread.us.i.4, label %PixelsAreSimilar.exit.us.i.4
+
+PixelsAreSimilar.exit.us.i.4:                     ; preds = %138
+  %141 = sub nsw i32 %126, %129
+  %142 = call i32 @llvm.abs.i32(i32 %141, i1 true)
+  %.not81.us.i.4 = icmp samesign ugt i32 %142, %i.hn
+  br i1 %.not81.us.i.4, label %PixelsAreSimilar.exit.thread.us.i.4, label %143
+
+143:                                              ; preds = %PixelsAreSimilar.exit.us.i.4
+  %144 = add nsw i32 %.274.us.i.3, 1
+  %145 = add i32 %135, %.271.us.i.3
+  %146 = add i32 %125, %.268.us.i.3
+  %147 = add i32 %126, %.2.us.i.3
+  br label %PixelsAreSimilar.exit.thread.us.i.4
+
+PixelsAreSimilar.exit.thread.us.i.4:              ; preds = %143, %PixelsAreSimilar.exit.us.i.4, %138, %131, %122, %PixelsAreSimilar.exit.thread.us.i.3
+  %.274.us.i.4 = phi i32 [ %144, %143 ], [ %.274.us.i.3, %PixelsAreSimilar.exit.us.i.4 ], [ %.274.us.i.3, %PixelsAreSimilar.exit.thread.us.i.3 ], [ %.274.us.i.3, %138 ], [ %.274.us.i.3, %131 ], [ %.274.us.i.3, %122 ] ; 6 uses
+  %.271.us.i.4 = phi i32 [ %145, %143 ], [ %.271.us.i.3, %PixelsAreSimilar.exit.us.i.4 ], [ %.271.us.i.3, %PixelsAreSimilar.exit.thread.us.i.3 ], [ %.271.us.i.3, %138 ], [ %.271.us.i.3, %131 ], [ %.271.us.i.3, %122 ] ; 6 uses
+  %.268.us.i.4 = phi i32 [ %146, %143 ], [ %.268.us.i.3, %PixelsAreSimilar.exit.us.i.4 ], [ %.268.us.i.3, %PixelsAreSimilar.exit.thread.us.i.3 ], [ %.268.us.i.3, %138 ], [ %.268.us.i.3, %131 ], [ %.268.us.i.3, %122 ] ; 6 uses
+  %.2.us.i.4 = phi i32 [ %147, %143 ], [ %.2.us.i.3, %PixelsAreSimilar.exit.us.i.4 ], [ %.2.us.i.3, %PixelsAreSimilar.exit.thread.us.i.3 ], [ %.2.us.i.3, %138 ], [ %.2.us.i.3, %131 ], [ %.2.us.i.3, %122 ] ; 6 uses
+  %gep.i.5 = getelementptr i8, ptr %invariant.gep.i, i64 20
+  %148 = load i32, ptr %gep.i.5, align 4, !tbaa !13 ; 4 uses
+  %149 = icmp ugt i32 %148, -16777217
+  br i1 %149, label %bb.y, label %PixelsAreSimilar.exit.thread.us.i.5
+
+bb.y:                                             ; preds = %PixelsAreSimilar.exit.thread.us.i.4
+  %gep120.i.5 = getelementptr i8, ptr %invariant.gep119.i, i64 20
+  %150 = load i32, ptr %gep120.i.5, align 4, !tbaa !13 ; 4 uses
+  %151 = lshr i32 %148, 8
+  %152 = and i32 %151, 255                        ; 2 uses
+  %153 = and i32 %148, 255                        ; 2 uses
+  %154 = lshr i32 %150, 8
+  %155 = and i32 %154, 255
+  %156 = and i32 %150, 255
+  %i.ix = icmp ugt i32 %150, -16777217
+  br i1 %i.ix, label %157, label %PixelsAreSimilar.exit.thread.us.i.5
+
+157:                                              ; preds = %bb.y
+  %158 = lshr i32 %150, 16
+  %159 = and i32 %158, 255
+  %160 = lshr i32 %148, 16
+  %161 = and i32 %160, 255                        ; 2 uses
+  %162 = sub nsw i32 %161, %159
+  %163 = call i32 @llvm.abs.i32(i32 %162, i1 true)
+  %.not.i.us.i.5 = icmp sgt i32 %163, %i.hn
+  br i1 %.not.i.us.i.5, label %PixelsAreSimilar.exit.thread.us.i.5, label %164
+
+164:                                              ; preds = %157
+  %165 = sub nsw i32 %152, %155
+  %166 = call i32 @llvm.abs.i32(i32 %165, i1 true)
+  %.not23.i.us.i.5 = icmp samesign ugt i32 %166, %i.hn
+  br i1 %.not23.i.us.i.5, label %PixelsAreSimilar.exit.thread.us.i.5, label %PixelsAreSimilar.exit.us.i.5
+
+PixelsAreSimilar.exit.us.i.5:                     ; preds = %164
+  %167 = sub nsw i32 %153, %156
+  %168 = call i32 @llvm.abs.i32(i32 %167, i1 true)
+  %.not81.us.i.5 = icmp samesign ugt i32 %168, %i.hn
+  br i1 %.not81.us.i.5, label %PixelsAreSimilar.exit.thread.us.i.5, label %169
+
+169:                                              ; preds = %PixelsAreSimilar.exit.us.i.5
+  %170 = add nsw i32 %.274.us.i.4, 1
+  %171 = add i32 %161, %.271.us.i.4
+  %172 = add i32 %152, %.268.us.i.4
+  %173 = add i32 %153, %.2.us.i.4
+  br label %PixelsAreSimilar.exit.thread.us.i.5
+
+PixelsAreSimilar.exit.thread.us.i.5:              ; preds = %169, %PixelsAreSimilar.exit.us.i.5, %164, %157, %bb.y, %PixelsAreSimilar.exit.thread.us.i.4
+  %.274.us.i.5 = phi i32 [ %170, %169 ], [ %.274.us.i.4, %PixelsAreSimilar.exit.us.i.5 ], [ %.274.us.i.4, %PixelsAreSimilar.exit.thread.us.i.4 ], [ %.274.us.i.4, %164 ], [ %.274.us.i.4, %157 ], [ %.274.us.i.4, %bb.y ] ; 6 uses
+  %.271.us.i.5 = phi i32 [ %171, %169 ], [ %.271.us.i.4, %PixelsAreSimilar.exit.us.i.5 ], [ %.271.us.i.4, %PixelsAreSimilar.exit.thread.us.i.4 ], [ %.271.us.i.4, %164 ], [ %.271.us.i.4, %157 ], [ %.271.us.i.4, %bb.y ] ; 6 uses
+  %.268.us.i.5 = phi i32 [ %172, %169 ], [ %.268.us.i.4, %PixelsAreSimilar.exit.us.i.5 ], [ %.268.us.i.4, %PixelsAreSimilar.exit.thread.us.i.4 ], [ %.268.us.i.4, %164 ], [ %.268.us.i.4, %157 ], [ %.268.us.i.4, %bb.y ] ; 6 uses
+  %.2.us.i.5 = phi i32 [ %173, %169 ], [ %.2.us.i.4, %PixelsAreSimilar.exit.us.i.5 ], [ %.2.us.i.4, %PixelsAreSimilar.exit.thread.us.i.4 ], [ %.2.us.i.4, %164 ], [ %.2.us.i.4, %157 ], [ %.2.us.i.4, %bb.y ] ; 6 uses
+  %gep.i.6 = getelementptr i8, ptr %invariant.gep.i, i64 24
+  %174 = load i32, ptr %gep.i.6, align 4, !tbaa !13 ; 4 uses
+  %175 = icmp ugt i32 %174, -16777217
+  br i1 %175, label %bb.z, label %PixelsAreSimilar.exit.thread.us.i.a
+
+bb.z:                                             ; preds = %PixelsAreSimilar.exit.thread.us.i.5
+  %gep120.i.6 = getelementptr i8, ptr %invariant.gep119.i, i64 24
+  %i.iy = load i32, ptr %gep120.i.6, align 4, !tbaa !13 ; 4 uses
+  %i.iz = lshr i32 %174, 8
   %i.ja = and i32 %i.iz, 255                      ; 2 uses
-  %i.jb = and i32 %11, 255                        ; 2 uses
+  %i.jb = and i32 %174, 255                       ; 2 uses
   %i.jc = lshr i32 %i.iy, 8
   %i.jd = and i32 %i.jc, 255
   %i.je = and i32 %i.iy, 255
@@ -371,7 +664,7 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.z
   %i.jg = lshr i32 %i.iy, 16
   %i.jh = and i32 %i.jg, 255
-  %i.ji = lshr i32 %11, 16
+  %i.ji = lshr i32 %174, 16
   %i.jj = and i32 %i.ji, 255                      ; 2 uses
   %i.jk = sub nsw i32 %i.jj, %i.jh
   %i.jl = call i32 @llvm.abs.i32(i32 %i.jk, i1 true)
@@ -381,49 +674,93 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.aa
   %i.jm = sub nsw i32 %i.ja, %i.jd
   %i.jn = call i32 @llvm.abs.i32(i32 %i.jm, i1 true)
-  %12 = mul nuw nsw i32 %i.jn, 255
-  %.not23.i.us.i.a = icmp samesign ugt i32 %12, %10
+  %.not23.i.us.i.a = icmp samesign ugt i32 %i.jn, %i.hn
   br i1 %.not23.i.us.i.a, label %PixelsAreSimilar.exit.thread.us.i.a, label %PixelsAreSimilar.exit.us.i.a
 
 PixelsAreSimilar.exit.us.i.a:                     ; preds = %bb.ab
   %i.jo = sub nsw i32 %i.jb, %i.je
   %i.jp = call i32 @llvm.abs.i32(i32 %i.jo, i1 true)
-  %13 = mul nuw nsw i32 %i.jp, 255
-  %.not81.us.i.a = icmp samesign ugt i32 %13, %10
+  %.not81.us.i.a = icmp samesign ugt i32 %i.jp, %i.hn
   br i1 %.not81.us.i.a, label %PixelsAreSimilar.exit.thread.us.i.a, label %bb.ac
 
 bb.ac:                                            ; preds = %PixelsAreSimilar.exit.us.i.a
-  %i.jq = add nsw i32 %.17385.us.i, 1
-  %i.jr = add i32 %i.jj, %.17086.us.i
-  %i.js = add i32 %i.ja, %.16787.us.i
-  %i.jt = add i32 %i.jb, %.16588.us.i
+  %i.jq = add nsw i32 %.274.us.i.5, 1
+  %i.jr = add i32 %i.jj, %.271.us.i.5
+  %i.js = add i32 %i.ja, %.268.us.i.5
+  %i.jt = add i32 %i.jb, %.2.us.i.5
   br label %PixelsAreSimilar.exit.thread.us.i.a
 
-PixelsAreSimilar.exit.thread.us.i.a:              ; preds = %bb.ac, %PixelsAreSimilar.exit.us.i.a, %bb.ab, %bb.aa, %bb.z, %bb.y
-  %.274.us.i.a = phi i32 [ %i.jq, %bb.ac ], [ %.17385.us.i, %PixelsAreSimilar.exit.us.i.a ], [ %.17385.us.i, %bb.y ], [ %.17385.us.i, %bb.ab ], [ %.17385.us.i, %bb.aa ], [ %.17385.us.i, %bb.z ] ; 3 uses
-  %.271.us.i.a = phi i32 [ %i.jr, %bb.ac ], [ %.17086.us.i, %PixelsAreSimilar.exit.us.i.a ], [ %.17086.us.i, %bb.y ], [ %.17086.us.i, %bb.ab ], [ %.17086.us.i, %bb.aa ], [ %.17086.us.i, %bb.z ] ; 3 uses
-  %.268.us.i.a = phi i32 [ %i.js, %bb.ac ], [ %.16787.us.i, %PixelsAreSimilar.exit.us.i.a ], [ %.16787.us.i, %bb.y ], [ %.16787.us.i, %bb.ab ], [ %.16787.us.i, %bb.aa ], [ %.16787.us.i, %bb.z ] ; 3 uses
-  %.2.us.i.a = phi i32 [ %i.jt, %bb.ac ], [ %.16588.us.i, %PixelsAreSimilar.exit.us.i.a ], [ %.16588.us.i, %bb.y ], [ %.16588.us.i, %bb.ab ], [ %.16588.us.i, %bb.aa ], [ %.16588.us.i, %bb.z ] ; 3 uses
-  %indvars.iv.next.i93 = add nuw nsw i64 %indvars.iv.i92, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i93, 8
-  br i1 %exitcond.not.i, label %bb.ad, label %bb.y, !llvm.loop !142
+PixelsAreSimilar.exit.thread.us.i.a:              ; preds = %bb.ac, %PixelsAreSimilar.exit.us.i.a, %bb.ab, %bb.aa, %bb.z, %PixelsAreSimilar.exit.thread.us.i.5
+  %.274.us.i.a = phi i32 [ %i.jq, %bb.ac ], [ %.274.us.i.5, %PixelsAreSimilar.exit.us.i.a ], [ %.274.us.i.5, %PixelsAreSimilar.exit.thread.us.i.5 ], [ %.274.us.i.5, %bb.ab ], [ %.274.us.i.5, %bb.aa ], [ %.274.us.i.5, %bb.z ] ; 6 uses
+  %.271.us.i.a = phi i32 [ %i.jr, %bb.ac ], [ %.271.us.i.5, %PixelsAreSimilar.exit.us.i.a ], [ %.271.us.i.5, %PixelsAreSimilar.exit.thread.us.i.5 ], [ %.271.us.i.5, %bb.ab ], [ %.271.us.i.5, %bb.aa ], [ %.271.us.i.5, %bb.z ] ; 6 uses
+  %.268.us.i.a = phi i32 [ %i.js, %bb.ac ], [ %.268.us.i.5, %PixelsAreSimilar.exit.us.i.a ], [ %.268.us.i.5, %PixelsAreSimilar.exit.thread.us.i.5 ], [ %.268.us.i.5, %bb.ab ], [ %.268.us.i.5, %bb.aa ], [ %.268.us.i.5, %bb.z ] ; 6 uses
+  %.2.us.i.a = phi i32 [ %i.jt, %bb.ac ], [ %.2.us.i.5, %PixelsAreSimilar.exit.us.i.a ], [ %.2.us.i.5, %PixelsAreSimilar.exit.thread.us.i.5 ], [ %.2.us.i.5, %bb.ab ], [ %.2.us.i.5, %bb.aa ], [ %.2.us.i.5, %bb.z ] ; 6 uses
+  %gep.i.7 = getelementptr i8, ptr %invariant.gep.i, i64 28
+  %176 = load i32, ptr %gep.i.7, align 4, !tbaa !13 ; 4 uses
+  %177 = icmp ugt i32 %176, -16777217
+  br i1 %177, label %178, label %bb.ad
 
-bb.ad:                                            ; preds = %PixelsAreSimilar.exit.thread.us.i.a
+178:                                              ; preds = %PixelsAreSimilar.exit.thread.us.i.a
+  %gep120.i.7 = getelementptr i8, ptr %invariant.gep119.i, i64 28
+  %179 = load i32, ptr %gep120.i.7, align 4, !tbaa !13 ; 4 uses
+  %180 = lshr i32 %176, 8
+  %181 = and i32 %180, 255                        ; 2 uses
+  %182 = and i32 %176, 255                        ; 2 uses
+  %183 = lshr i32 %179, 8
+  %184 = and i32 %183, 255
+  %185 = and i32 %179, 255
+  %186 = icmp ugt i32 %179, -16777217
+  br i1 %186, label %187, label %bb.ad
+
+187:                                              ; preds = %178
+  %188 = lshr i32 %179, 16
+  %189 = and i32 %188, 255
+  %190 = lshr i32 %176, 16
+  %191 = and i32 %190, 255                        ; 2 uses
+  %192 = sub nsw i32 %191, %189
+  %193 = call i32 @llvm.abs.i32(i32 %192, i1 true)
+  %.not.i.us.i.7 = icmp sgt i32 %193, %i.hn
+  br i1 %.not.i.us.i.7, label %bb.ad, label %194
+
+194:                                              ; preds = %187
+  %195 = sub nsw i32 %181, %184
+  %196 = call i32 @llvm.abs.i32(i32 %195, i1 true)
+  %.not23.i.us.i.7 = icmp samesign ugt i32 %196, %i.hn
+  br i1 %.not23.i.us.i.7, label %bb.ad, label %PixelsAreSimilar.exit.us.i.7
+
+PixelsAreSimilar.exit.us.i.7:                     ; preds = %194
+  %197 = sub nsw i32 %182, %185
+  %198 = call i32 @llvm.abs.i32(i32 %197, i1 true)
+  %.not81.us.i.7 = icmp samesign ugt i32 %198, %i.hn
+  br i1 %.not81.us.i.7, label %bb.ad, label %199
+
+199:                                              ; preds = %PixelsAreSimilar.exit.us.i.7
+  %200 = add nsw i32 %.274.us.i.a, 1
+  %201 = add i32 %191, %.271.us.i.a
+  %202 = add i32 %181, %.268.us.i.a
+  %203 = add i32 %182, %.2.us.i.a
+  br label %bb.ad
+
+bb.ad:                                            ; preds = %199, %PixelsAreSimilar.exit.us.i.7, %194, %187, %178, %PixelsAreSimilar.exit.thread.us.i.a
+  %.274.us.i.7 = phi i32 [ %200, %199 ], [ %.274.us.i.a, %PixelsAreSimilar.exit.us.i.7 ], [ %.274.us.i.a, %PixelsAreSimilar.exit.thread.us.i.a ], [ %.274.us.i.a, %194 ], [ %.274.us.i.a, %187 ], [ %.274.us.i.a, %178 ] ; 2 uses
+  %.271.us.i.7 = phi i32 [ %201, %199 ], [ %.271.us.i.a, %PixelsAreSimilar.exit.us.i.7 ], [ %.271.us.i.a, %PixelsAreSimilar.exit.thread.us.i.a ], [ %.271.us.i.a, %194 ], [ %.271.us.i.a, %187 ], [ %.271.us.i.a, %178 ] ; 2 uses
+  %.268.us.i.7 = phi i32 [ %202, %199 ], [ %.268.us.i.a, %PixelsAreSimilar.exit.us.i.7 ], [ %.268.us.i.a, %PixelsAreSimilar.exit.thread.us.i.a ], [ %.268.us.i.a, %194 ], [ %.268.us.i.a, %187 ], [ %.268.us.i.a, %178 ] ; 2 uses
+  %.2.us.i.7 = phi i32 [ %203, %199 ], [ %.2.us.i.a, %PixelsAreSimilar.exit.us.i.7 ], [ %.2.us.i.a, %PixelsAreSimilar.exit.thread.us.i.a ], [ %.2.us.i.a, %194 ], [ %.2.us.i.a, %187 ], [ %.2.us.i.a, %178 ] ; 2 uses
   %indvars.iv.next107.i = add nuw nsw i64 %indvars.iv106.i, 1 ; 2 uses
   %exitcond109.not.i = icmp eq i64 %indvars.iv.next107.i, 8
-  br i1 %exitcond109.not.i, label %bb.ae, label %.preheader82.us.i, !llvm.loop !143
+  br i1 %exitcond109.not.i, label %bb.ae, label %.preheader82.us.i, !llvm.loop !142
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.ju = icmp eq i32 %.274.us.i.a, 64
+  %i.ju = icmp eq i32 %.274.us.i.7, 64
   br i1 %i.ju, label %.preheader.us.i, label %.loopexit.us.i
 
 .preheader.us.i:                                  ; preds = %bb.ae
-  %i.jv = sdiv i32 %.271.us.i.a, 64
+  %i.jv = sdiv i32 %.271.us.i.7, 64
   %i.jw = shl i32 %i.jv, 16
-  %i.jx = sdiv i32 %.268.us.i.a, 64
+  %i.jx = sdiv i32 %.268.us.i.7, 64
   %i.jy = shl i32 %i.jx, 8
   %i.jz = or i32 %i.jy, %i.jw
-  %i.ka = sdiv i32 %.2.us.i.a, 64
+  %i.ka = sdiv i32 %.2.us.i.7, 64
   %i.kb = or i32 %i.jz, %i.ka                     ; 57 uses
   %i.kc = insertelement <4 x i32> poison, i32 %i.kb, i64 0
   %i.kd = shufflevector <4 x i32> %i.kc, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -757,24 +1094,26 @@ bb.ae:                                            ; preds = %bb.ad
   %.277.us.i = phi i32 [ %.17698.us.i, %bb.ae ], [ 1, %.preheader.us.i ] ; 3 uses
   %indvars.iv.next113.i = add nsw i64 %indvars.iv112.i, 8 ; 2 uses
   %i.uk = icmp slt i64 %indvars.iv.next113.i, %i.ik
-  br i1 %i.uk, label %bb.x, label %..loopexit84_crit_edge.us.i, !llvm.loop !144
+  br i1 %i.uk, label %bb.x, label %..loopexit84_crit_edge.us.i, !llvm.loop !143
 
 .preheader82.us.i:                                ; preds = %bb.ad, %bb.x
   %indvars.iv106.i = phi i64 [ %indvars.iv.next107.i, %bb.ad ], [ 0, %bb.x ] ; 3 uses
-  %.06493.us.i = phi i32 [ %.2.us.i.a, %bb.ad ], [ 0, %bb.x ]
-  %.06692.us.i = phi i32 [ %.268.us.i.a, %bb.ad ], [ 0, %bb.x ]
-  %.06991.us.i = phi i32 [ %.271.us.i.a, %bb.ad ], [ 0, %bb.x ]
-  %.07290.us.i = phi i32 [ %.274.us.i.a, %bb.ad ], [ 0, %bb.x ]
+  %.06493.us.i = phi i32 [ %.2.us.i.7, %bb.ad ], [ 0, %bb.x ] ; 6 uses
+  %.06692.us.i = phi i32 [ %.268.us.i.7, %bb.ad ], [ 0, %bb.x ] ; 6 uses
+  %.06991.us.i = phi i32 [ %.271.us.i.7, %bb.ad ], [ 0, %bb.x ] ; 6 uses
+  %.07290.us.i = phi i32 [ %.274.us.i.7, %bb.ad ], [ 0, %bb.x ] ; 6 uses
   %i.ul = mul nsw i64 %indvars.iv106.i, %i.iv
   %i.um = mul nsw i64 %indvars.iv106.i, %i.iw
-  %invariant.gep.i = getelementptr [4 x i8], ptr %i.ip, i64 %i.ul
-  %invariant.gep119.i = getelementptr [4 x i8], ptr %i.iu, i64 %i.um
-  br label %bb.y
+  %invariant.gep.i = getelementptr [4 x i8], ptr %i.ip, i64 %i.ul ; 8 uses
+  %invariant.gep119.i = getelementptr [4 x i8], ptr %i.iu, i64 %i.um ; 8 uses
+  %204 = load i32, ptr %invariant.gep.i, align 4, !tbaa !13 ; 4 uses
+  %205 = icmp ugt i32 %204, -16777217
+  br i1 %205, label %10, label %PixelsAreSimilar.exit.thread.us.i
 
 ..loopexit84_crit_edge.us.i:                      ; preds = %.loopexit.us.i
   %.078.us.i = add nsw i32 %.078102.us.i, 8       ; 2 uses
   %i.un = icmp slt i32 %.078.us.i, %i.hu
-  br i1 %i.un, label %.preheader83.us.i, label %FlattenSimilarBlocks.exit, !llvm.loop !145
+  br i1 %i.un, label %.preheader83.us.i, label %FlattenSimilarBlocks.exit, !llvm.loop !144
 
 FlattenSimilarBlocks.exit:                        ; preds = %..loopexit84_crit_edge.us.i, %bb.w, %.preheader83.lr.ph.i
   %.075.lcssa.i = phi i32 [ 0, %bb.w ], [ 0, %.preheader83.lr.ph.i ], [ %.277.us.i, %..loopexit84_crit_edge.us.i ]
@@ -790,18 +1129,18 @@ bb.af:                                            ; preds = %FlattenSimilarBlock
   %i.uq = getelementptr inbounds nuw i8, ptr %i.c, i64 80
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.uq, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.up, i64 16, i1 false), !tbaa.struct !80
   %i.ur = getelementptr inbounds nuw i8, ptr %i.c, i64 60
-  store i32 3, ptr %i.ur, align 4, !tbaa !146
+  store i32 3, ptr %i.ur, align 4, !tbaa !145
   %i.us = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   %i.ut = load <2 x i32>, ptr %i.up, align 4, !tbaa !13
   store <2 x i32> %i.ut, ptr %i.us, align 8, !tbaa !13
   %i.uu = getelementptr inbounds nuw i8, ptr %i.c, i64 64
-  store i32 0, ptr %i.uu, align 8, !tbaa !147
+  store i32 0, ptr %i.uu, align 8, !tbaa !146
   %not..i94 = xor i1 %i.dp, true
   %i.uv = zext i1 %not..i94 to i32
   %i.uw = getelementptr inbounds nuw i8, ptr %i.c, i64 68
-  store i32 %i.uv, ptr %i.uw, align 4, !tbaa !148
+  store i32 %i.uv, ptr %i.uw, align 4, !tbaa !147
   %i.ux = getelementptr inbounds nuw i8, ptr %i.c, i64 56
-  store i32 0, ptr %i.ux, align 8, !tbaa !149
+  store i32 0, ptr %i.ux, align 8, !tbaa !148
   call void @WebPMemoryWriterInit(ptr noundef nonnull %i.c) #14
   %i.uy = load i32, ptr %8, align 4, !tbaa !66
   %i.uz = icmp eq i32 %i.uy, 0
@@ -810,9 +1149,9 @@ bb.af:                                            ; preds = %FlattenSimilarBlock
 
 bb.ag:                                            ; preds = %bb.af
   %i.va = getelementptr inbounds nuw i8, ptr %8, i64 44
-  store i32 0, ptr %i.va, align 4, !tbaa !150
+  store i32 0, ptr %i.va, align 4, !tbaa !149
   %i.vb = getelementptr inbounds nuw i8, ptr %8, i64 32
-  store i32 0, ptr %i.vb, align 4, !tbaa !151
+  store i32 0, ptr %i.vb, align 4, !tbaa !150
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
@@ -1062,11 +1401,10 @@ attributes #16 = { cold }
 !142 = distinct !{!142, !50}
 !143 = distinct !{!143, !50}
 !144 = distinct !{!144, !50}
-!145 = distinct !{!145, !50}
-!146 = !{!96, !12, i64 60}
-!147 = !{!96, !12, i64 64}
-!148 = !{!96, !12, i64 68}
-!149 = !{!96, !12, i64 56}
-!150 = !{!25, !12, i64 44}
-!151 = !{!25, !12, i64 32}
+!145 = !{!96, !12, i64 60}
+!146 = !{!96, !12, i64 64}
+!147 = !{!96, !12, i64 68}
+!148 = !{!96, !12, i64 56}
+!149 = !{!25, !12, i64 44}
+!150 = !{!25, !12, i64 32}
 end_hunk_0
