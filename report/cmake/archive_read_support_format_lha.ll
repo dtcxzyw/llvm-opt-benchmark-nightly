@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.j
   store i64 %i.au, ptr %5, align 8, !tbaa !13
   %i.av = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.a
   %i.aw = load i8, ptr %i.av, align 1, !tbaa !10  ; 2 uses
-  %i.ax = sub nuw nsw i64 %.0205, %i.f            ; 19 uses
+  %i.ax = sub nsw i64 %.0205, %i.f                ; 19 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.f ; 36 uses
   %i.az = icmp ne i8 %i.aw, 0
   %or.cond = select i1 %i.g, i1 %i.az, i1 false
@@ -238,7 +238,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   ]
 
 bb.o:                                             ; preds = %bb.n
-  %i.bc = icmp samesign ugt i64 %i.ax, 1
+  %i.bc = icmp ugt i64 %i.ax, 1
   br i1 %i.bc, label %bb.p, label %bb.bl
 
 bb.p:                                             ; preds = %bb.o

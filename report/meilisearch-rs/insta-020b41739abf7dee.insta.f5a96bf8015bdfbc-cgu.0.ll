@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %bb.r
 
 bb.an:                                            ; preds = %.thread403
   %i.dv = extractvalue { i64, ptr } %i.du, 0
-  %i.dw = extractvalue { i64, ptr } %i.du, 1      ; 4 uses
+  %i.dw = extractvalue { i64, ptr } %i.du, 1      ; 5 uses
   %i.dx = trunc nuw i64 %i.dv to i1
   br i1 %i.dx, label %bb.ao, label %bb.as
 
@@ -244,7 +244,7 @@ bb.ar:                                            ; preds = %bb.aq
 
 bb.as:                                            ; preds = %bb.an
   %i.ec = icmp eq ptr %i.dw, null
-  %.pre = load i64, ptr %.sroa.571.0..sroa_idx, align 8 ; 11 uses
+  %.pre = load i64, ptr %.sroa.571.0..sroa_idx, align 8 ; 10 uses
   br i1 %i.ec, label %bb.at, label %bb.ax
 
 bb.at:                                            ; preds = %bb.ax, %bb.as
@@ -257,15 +257,15 @@ bb.at:                                            ; preds = %bb.ax, %bb.as
   %i.ed = ptrtoint ptr %i.dw to i64               ; 3 uses
   %i.ee = icmp sgt i64 %.pre, -1
   call void @llvm.assume(i1 %i.ee)
-  %i.ef = sub nsw i64 %.pre, %i.ed                ; 3 uses
+  %i.ef = sub nuw nsw i64 %.pre, %i.ed            ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !18729)
   %.not.i156 = icmp ult i64 %.pre, %i.ed
   br i1 %.not.i156, label %_ZN5alloc6string6String8truncate17hf71e28f22521745fE.exit, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
   %i.eg = icmp ne i64 %.pre, %i.ed
-  %.not2.i = icmp samesign ult i64 %i.ef, %.pre
-  %or.cond.i = select i1 %i.eg, i1 %.not2.i, i1 false
+  %.not2.i = icmp ne ptr %i.dw, null
+  %or.cond.i = and i1 %i.eg, %.not2.i
   br i1 %or.cond.i, label %bb.av, label %.split.i157
 
 bb.av:                                            ; preds = %bb.au
