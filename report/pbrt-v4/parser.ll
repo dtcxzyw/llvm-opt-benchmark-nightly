@@ -205,7 +205,7 @@ _ZN4pbrt19ParameterDictionaryD2Ev.exit:           ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #35
   br label %.thread421
 
-.thread421:                                       ; preds = %bb.v, %bb.t, %bb.ac, %bb.y, %_ZN4pbrt19ParameterDictionaryD2Ev.exit
+.thread421:                                       ; preds = %bb.ac, %bb.t, %bb.v, %bb.y, %_ZN4pbrt19ParameterDictionaryD2Ev.exit
   ret void
 
 bb.db:                                            ; preds = %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit

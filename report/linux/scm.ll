@@ -204,15 +204,15 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 .split185.us:                                     ; preds = %.split186
   callbr void asm sideeffect "\0A1:\09movq $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "er,*m,!i,~{dirflag},~{fpsr},~{flags}"(i64 %i.s, ptr elementtype(%struct.__large_struct) %i.v) #12
-          to label %bb.i [label %.thread], !srcloc !22
+          to label %bb.i [label %.split.a], !srcloc !22
 
 bb.i:                                             ; preds = %.split185.us
   callbr void asm sideeffect "\0A1:\09movl $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "ir,*m,!i,~{dirflag},~{fpsr},~{flags}"(i32 %1, ptr elementtype(%struct.__large_struct) %i.w) #12
-          to label %bb.j [label %.thread], !srcloc !23
+          to label %bb.j [label %.split.a], !srcloc !23
 
 bb.j:                                             ; preds = %bb.i
   callbr void asm sideeffect "\0A1:\09movl $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "ir,*m,!i,~{dirflag},~{fpsr},~{flags}"(i32 %2, ptr elementtype(%struct.__large_struct) %i.x) #12
-          to label %.lr.ph.us.us.us [label %.thread], !srcloc !24
+          to label %.lr.ph.us.us.us [label %.split.a], !srcloc !24
 
 .lr.ph.us.us.us:                                  ; preds = %bb.j, %bb.k
   %.0105162.us.us.us = phi i64 [ %i.ae, %bb.k ], [ %i.t, %bb.j ] ; 2 uses
@@ -220,7 +220,7 @@ bb.j:                                             ; preds = %bb.i
   %.0113160.us.us.us = phi ptr [ %i.ac, %bb.k ], [ %i.y, %bb.j ] ; 3 uses
   %i.ab = load i64, ptr %.0109161.us.us.us, align 8
   callbr void asm sideeffect "\0A1:\09movq $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "er,*m,!i,~{dirflag},~{fpsr},~{flags}"(i64 %i.ab, ptr elementtype(%struct.__large_struct) %.0113160.us.us.us) #12
-          to label %bb.k [label %.thread], !srcloc !25
+          to label %bb.k [label %.split.a], !srcloc !25
 
 bb.k:                                             ; preds = %.lr.ph.us.us.us
   %i.ac = getelementptr i8, ptr %.0113160.us.us.us, i64 8 ; 3 uses
@@ -232,12 +232,12 @@ bb.k:                                             ; preds = %.lr.ph.us.us.us
 .lr.ph168.us.us.us:                               ; preds = %..preheader145_crit_edge.us.us.us
   %i.ag = load i32, ptr %i.ad, align 4
   callbr void asm sideeffect "\0A1:\09movl $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "ir,*m,!i,~{dirflag},~{fpsr},~{flags}"(i32 %i.ag, ptr elementtype(%struct.__large_struct) %i.ac) #12
-          to label %.preheader143.us.us.us.loopexit [label %.thread], !srcloc !26
+          to label %.preheader143.us.us.us.loopexit [label %.split.a], !srcloc !26
 
 .lr.ph175.us.us.us:                               ; preds = %.preheader143.us.us.us
   %i.ah = load i16, ptr %.1110.lcssa.us.us.us, align 2
   callbr void asm sideeffect "\0A1:\09movw $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "ir,*m,!i,~{dirflag},~{fpsr},~{flags}"(i16 %i.ah, ptr elementtype(%struct.__large_struct) %.1114.lcssa.us.us.us) #12
-          to label %.preheader.us.us.us.loopexit [label %.thread], !srcloc !27
+          to label %.preheader.us.us.us.loopexit [label %.split.a], !srcloc !27
 
 .preheader.us.us.us.loopexit:                     ; preds = %.lr.ph175.us.us.us
   %i.ai = add nsw i64 %.1106.lcssa.us.us.us, -2
@@ -272,7 +272,7 @@ bb.k:                                             ; preds = %.lr.ph.us.us.us
 .lr.ph182.us.us.us:                               ; preds = %.preheader.us.us.us
   %i.aq = load i8, ptr %.2111.lcssa.us.us.us, align 1
   callbr void asm sideeffect "\0A1:\09movb $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "iq,*m,!i,~{dirflag},~{fpsr},~{flags}"(i8 %i.aq, ptr elementtype(%struct.__large_struct) %.2115.lcssa.us.us.us) #12
-          to label %.split.us.us.us [label %.thread], !srcloc !28
+          to label %.split.us.us.us [label %.split.a], !srcloc !28
 
 .split.us.us.us:                                  ; preds = %.lr.ph182.us.us.us, %.preheader.us.us.us
   tail call void asm sideeffect "# ALT: oldinstr\0A771:\0A\09\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ( 9*32+20)\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09clac\0A775:\0A.popsection\0A", "~{memory},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !29
@@ -280,15 +280,15 @@ bb.k:                                             ; preds = %.lr.ph.us.us.us
 
 .split185:                                        ; preds = %.split186
   callbr void asm sideeffect "\0A1:\09movq $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "er,*m,!i,~{dirflag},~{fpsr},~{flags}"(i64 %i.s, ptr elementtype(%struct.__large_struct) %i.v) #12
-          to label %bb.l [label %.thread], !srcloc !22
+          to label %bb.l [label %.split.a], !srcloc !22
 
 bb.l:                                             ; preds = %.split185
   callbr void asm sideeffect "\0A1:\09movl $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "ir,*m,!i,~{dirflag},~{fpsr},~{flags}"(i32 %1, ptr elementtype(%struct.__large_struct) %i.w) #12
-          to label %bb.m [label %.thread], !srcloc !23
+          to label %bb.m [label %.split.a], !srcloc !23
 
 bb.m:                                             ; preds = %bb.l
   callbr void asm sideeffect "\0A1:\09movl $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "ir,*m,!i,~{dirflag},~{fpsr},~{flags}"(i32 %2, ptr elementtype(%struct.__large_struct) %i.x) #12
-          to label %.preheader145 [label %.thread], !srcloc !24
+          to label %.preheader145 [label %.split.a], !srcloc !24
 
 .preheader145:                                    ; preds = %bb.m
   br i1 %i.aa, label %.lr.ph168, label %.preheader143
@@ -306,7 +306,7 @@ bb.m:                                             ; preds = %bb.l
   %.1114165 = phi ptr [ %i.at, %bb.n ], [ %i.y, %.preheader145 ] ; 2 uses
   %i.as = load i32, ptr %.1110166, align 4
   callbr void asm sideeffect "\0A1:\09movl $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "ir,*m,!i,~{dirflag},~{fpsr},~{flags}"(i32 %i.as, ptr elementtype(%struct.__large_struct) %.1114165) #12
-          to label %bb.n [label %.thread], !srcloc !26
+          to label %bb.n [label %.split.a], !srcloc !26
 
 bb.n:                                             ; preds = %.lr.ph168
   %i.at = getelementptr i8, ptr %.1114165, i64 4  ; 2 uses
@@ -326,25 +326,25 @@ bb.n:                                             ; preds = %.lr.ph168
   %.2111.lcssa = phi ptr [ %.1110.lcssa, %.preheader143 ], [ %i.ay, %.preheader.loopexit ]
   %.2107.lcssa = phi i64 [ %.1106.lcssa, %.preheader143 ], [ %i.ax, %.preheader.loopexit ]
   %.not122179 = icmp eq i64 %.2107.lcssa, 0
-  br i1 %.not122179, label %.split.a, label %.lr.ph182
+  br i1 %.not122179, label %.thread, label %.lr.ph182
 
 .lr.ph182:                                        ; preds = %.preheader
   %i.ba = load i8, ptr %.2111.lcssa, align 1
   callbr void asm sideeffect "\0A1:\09movb $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "iq,*m,!i,~{dirflag},~{fpsr},~{flags}"(i8 %i.ba, ptr elementtype(%struct.__large_struct) %.2115.lcssa) #12
-          to label %.split.a [label %.thread], !srcloc !28
+          to label %.thread [label %.split.a], !srcloc !28
 
 .lr.ph175:                                        ; preds = %.preheader143
   %i.bb = load i16, ptr %.1110.lcssa, align 2
   callbr void asm sideeffect "\0A1:\09movw $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "ir,*m,!i,~{dirflag},~{fpsr},~{flags}"(i16 %i.bb, ptr elementtype(%struct.__large_struct) %.1114.lcssa) #12
-          to label %.preheader.loopexit [label %.thread], !srcloc !27
+          to label %.preheader.loopexit [label %.split.a], !srcloc !27
 
-.split.a:                                         ; preds = %.lr.ph182, %.preheader
-  tail call void asm sideeffect "# ALT: oldinstr\0A771:\0A\09\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ( 9*32+20)\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09clac\0A775:\0A.popsection\0A", "~{memory},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !29
-  br label %.thread141
-
-.thread:                                          ; preds = %.lr.ph168, %.lr.ph.us.us.us, %.lr.ph175, %.lr.ph168.us.us.us, %.lr.ph175.us.us.us, %bb.j, %bb.i, %.split185.us, %bb.l, %.split185, %bb.m, %.lr.ph182, %.lr.ph182.us.us.us
+.split.a:                                         ; preds = %.lr.ph168, %.lr.ph.us.us.us, %.lr.ph175, %.lr.ph168.us.us.us, %.lr.ph175.us.us.us, %bb.j, %bb.i, %.split185.us, %bb.m, %.split185, %bb.l, %.lr.ph182, %.lr.ph182.us.us.us
   tail call void asm sideeffect "# ALT: oldinstr\0A771:\0A\09\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ( 9*32+20)\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09clac\0A775:\0A.popsection\0A", "~{memory},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !29
   br label %bb.p
+
+.thread:                                          ; preds = %.lr.ph182, %.preheader
+  tail call void asm sideeffect "# ALT: oldinstr\0A771:\0A\09\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ( 9*32+20)\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09clac\0A775:\0A.popsection\0A", "~{memory},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !29
+  br label %.thread141
 
 bb.o:                                             ; preds = %bb.h
   %i.bc = getelementptr i8, ptr %i.g, i64 8
@@ -358,7 +358,7 @@ bb.o:                                             ; preds = %bb.h
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.bf, ptr align 1 %4, i64 %i.bg, i1 false)
   br label %.thread141
 
-.thread141:                                       ; preds = %.split.a, %.split.us.us.us, %bb.o
+.thread141:                                       ; preds = %.thread, %.split.us.us.us, %bb.o
   %i.bh = add nsw i64 %i.a, 7
   %i.bi = and i64 %i.bh, -8
   %i.bj = add nsw i64 %i.bi, 16
@@ -373,8 +373,8 @@ bb.o:                                             ; preds = %bb.h
   store i64 %i.bp, ptr %i.h, align 8
   br label %bb.p
 
-bb.p:                                             ; preds = %.thread, %.thread141, %bb.e, %bb.b
-  %.0 = phi i32 [ %i.e, %bb.b ], [ 0, %bb.e ], [ -14, %.thread ], [ 0, %.thread141 ]
+bb.p:                                             ; preds = %.split.a, %.thread141, %bb.e, %bb.b
+  %.0 = phi i32 [ %i.e, %bb.b ], [ 0, %bb.e ], [ -14, %.split.a ], [ 0, %.thread141 ]
   ret i32 %.0
 }
 

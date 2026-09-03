@@ -205,11 +205,6 @@ _ZN4llvmeqENS_9StringRefES0_.exit.thread52.i.i:   ; preds = %_ZN4llvmeqENS_9Stri
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1
   br label %bb.ej, !llvm.loop !955
 
-.loopexit.i.i:                                    ; preds = %_ZNK4llvm6MDNode14getNumOperandsEv.exit.thread.i.i, %_ZNK4llvm6MDNode14getNumOperandsEv.exit.i.i, %.lr.ph.i301.i
-  %110 = getelementptr inbounds nuw i8, ptr %.03284.i.i, i64 8 ; 2 uses
-  %.not.i302.i = icmp eq ptr %110, %i.aoa
-  br i1 %.not.i302.i, label %_ZNK4llvm11Instruction11hasMetadataEj.exit.thread.i.i, label %.lr.ph.i301.i
-
 bb.en:                                            ; preds = %bb.em, %bb.el
   %.sroa.0.0.i.i42.i.i = phi ptr [ %i.apm, %bb.em ], [ %i.api, %bb.el ]
   %i.apn = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.i.i42.i.i, i64 %indvars.iv.i.i
@@ -217,6 +212,11 @@ bb.en:                                            ; preds = %bb.em, %bb.el
   %i.app = load ptr, ptr %i.apo, align 8, !tbaa !1031
   %i.apq = call { ptr, i64 } @_ZNK4llvm8MDString9getStringEv(ptr noundef nonnull align 8 dereferenceable(16) %i.app) #25
   br label %_ZL13getAllocaNamePN4llvm10AllocaInstE.exit.i
+
+.loopexit.i.i:                                    ; preds = %_ZNK4llvm6MDNode14getNumOperandsEv.exit.thread.i.i, %_ZNK4llvm6MDNode14getNumOperandsEv.exit.i.i, %.lr.ph.i301.i
+  %110 = getelementptr inbounds nuw i8, ptr %.03284.i.i, i64 8 ; 2 uses
+  %.not.i302.i = icmp eq ptr %110, %i.aoa
+  br i1 %.not.i302.i, label %_ZNK4llvm11Instruction11hasMetadataEj.exit.thread.i.i, label %.lr.ph.i301.i
 
 _ZNK4llvm11Instruction11hasMetadataEj.exit.thread.i.i: ; preds = %.loopexit.i.i, %_ZNK4llvm6MDNode8operandsEv.exit.i.i, %_ZNK4llvm11Instruction11hasMetadataEj.exit.i.i, %bb.eg
   %i.apr = call { ptr, i64 } @_ZNK4llvm5Value7getNameEv(ptr noundef nonnull align 8 dereferenceable(24) %i.ani) #25

@@ -205,18 +205,13 @@ _ZNOSt8optionalIN4mlir14DictionaryAttrEE5valueEv.exit.i: ; preds = %bb.g
   %i.be = call noundef ptr @_ZNK4mlir14DictionaryAttr5beginEv(ptr noundef nonnull align 8 dereferenceable(8) %12) #29 ; 2 uses
   %i.bf = call noundef ptr @_ZNK4mlir14DictionaryAttr3endEv(ptr noundef nonnull align 8 dereferenceable(8) %12) #29 ; 2 uses
   %.not233.i = icmp eq ptr %i.be, %i.bf
-  br i1 %.not233.i, label %.thread206.i, label %.lr.ph.i
+  br i1 %.not233.i, label %select.unfold.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZNOSt8optionalIN4mlir14DictionaryAttrEE5valueEv.exit.i
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %13, i64 8
   br label %bb.i
-
-.thread206.i:                                     ; preds = %bb.p, %_ZNOSt8optionalIN4mlir14DictionaryAttrEE5valueEv.exit.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %12) #29
-  %.pre239.i = load ptr, ptr %i.b, align 8, !tbaa !85
-  br label %bb.q
 
 bb.i:                                             ; preds = %bb.p, %.lr.ph.i
   %.041234.i = phi ptr [ %i.be, %.lr.ph.i ], [ %i.cp, %bb.p ] ; 2 uses
@@ -270,13 +265,13 @@ bb.l:                                             ; preds = %bb.k
   %.sroa.0.0.copyload.i71.i = phi ptr [ %.sroa.0.0.copyload.pre.i.i, %..thread_crit_edge.i.i ], [ %i.bv, %bb.k ]
   %i.cd = call noundef zeroext i1 @_ZNK4mlir14DictionaryAttr8containsENS_10StringAttrE(ptr noundef nonnull align 8 dereferenceable(8) %i.bh, ptr %.sroa.0.0.copyload.i71.i) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %8)
-  br i1 %i.cd, label %bb.m, label %select.unfold.i
+  br i1 %i.cd, label %bb.m, label %.thread203.i
 
 _ZN4mlir9Operation7hasAttrENS_10StringAttrE.exit.i: ; preds = %bb.l
   %i.ce = extractvalue { ptr, i8 } %i.ca, 0
   %.not228.i.a = icmp eq ptr %i.ce, null
   call void @llvm.lifetime.end.p0(ptr nonnull %8)
-  br i1 %.not228.i.a, label %select.unfold.i, label %bb.m
+  br i1 %.not228.i.a, label %.thread203.i, label %bb.m
 
 bb.m:                                             ; preds = %_ZN4mlir9Operation7hasAttrENS_10StringAttrE.exit.i, %.thread.i.i
   %i.cf = call ptr @_ZNK4mlir14NamedAttribute7getNameEv(ptr noundef nonnull align 8 dereferenceable(16) %13) #29 ; 2 uses
@@ -310,21 +305,26 @@ _ZN4mlir9Operation7getAttrENS_10StringAttrE.exit.i: ; preds = %bb.o, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   %.sroa.0.0.copyload.i75.i = load ptr, ptr %i.bi, align 8, !tbaa !218
   %.not229.i.a = icmp eq ptr %.sroa.02.1.i.i, %.sroa.0.0.copyload.i75.i
-  br i1 %.not229.i.a, label %bb.p, label %select.unfold.i
+  br i1 %.not229.i.a, label %bb.p, label %.thread203.i
+
+.thread203.i:                                     ; preds = %_ZN4mlir9Operation7getAttrENS_10StringAttrE.exit.i, %_ZN4mlir9Operation7hasAttrENS_10StringAttrE.exit.i, %.thread.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %13) #29
+  call void @llvm.lifetime.end.p0(ptr nonnull %12) #29
+  br label %"_ZZN4mlir9transform7MatchOp5applyERNS0_17TransformRewriterERNS0_16TransformResultsERNS0_14TransformStateEENK3$_0clEPNS_9OperationE.exit"
 
 bb.p:                                             ; preds = %_ZN4mlir9Operation7getAttrENS_10StringAttrE.exit.i, %bb.j, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #29
   %i.cp = getelementptr inbounds nuw i8, ptr %.041234.i, i64 16 ; 2 uses
   %.not.i = icmp eq ptr %i.cp, %i.bf
-  br i1 %.not.i, label %.thread206.i, label %bb.i
+  br i1 %.not.i, label %select.unfold.i, label %bb.i
 
-select.unfold.i:                                  ; preds = %_ZN4mlir9Operation7getAttrENS_10StringAttrE.exit.i, %_ZN4mlir9Operation7hasAttrENS_10StringAttrE.exit.i, %.thread.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %13) #29
+select.unfold.i:                                  ; preds = %bb.p, %_ZNOSt8optionalIN4mlir14DictionaryAttrEE5valueEv.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #29
-  br label %"_ZZN4mlir9transform7MatchOp5applyERNS0_17TransformRewriterERNS0_16TransformResultsERNS0_14TransformStateEENK3$_0clEPNS_9OperationE.exit"
+  %.pre238.i = load ptr, ptr %i.b, align 8, !tbaa !85
+  br label %bb.q
 
-bb.q:                                             ; preds = %.thread206.i, %bb.f
-  %i.cq = phi ptr [ %.pre239.i, %.thread206.i ], [ %i.au, %bb.f ] ; 3 uses
+bb.q:                                             ; preds = %select.unfold.i, %bb.f
+  %i.cq = phi ptr [ %.pre238.i, %select.unfold.i ], [ %i.au, %bb.f ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #29
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 44
   %i.cs = load i32, ptr %i.cr, align 4            ; 2 uses
@@ -727,7 +727,7 @@ bb.ar:                                            ; preds = %bb.ap
   store i32 %i.iw, ptr %i.io, align 8, !tbaa !110
   br label %"_ZZN4mlir9transform7MatchOp5applyERNS0_17TransformRewriterERNS0_16TransformResultsERNS0_14TransformStateEENK3$_0clEPNS_9OperationE.exit"
 
-"_ZZN4mlir9transform7MatchOp5applyERNS0_17TransformRewriterERNS0_16TransformResultsERNS0_14TransformStateEENK3$_0clEPNS_9OperationE.exit": ; preds = %bb.b, %_ZNK4llvm9StringSetINS_15MallocAllocatorEE8containsENS_9StringRefE.exit.i, %bb.c, %bb.d, %bb.e, %select.unfold.i, %.thread216.i, %bb.t, %.thread222.i, %bb.aq, %bb.ar
+"_ZZN4mlir9transform7MatchOp5applyERNS0_17TransformRewriterERNS0_16TransformResultsERNS0_14TransformStateEENK3$_0clEPNS_9OperationE.exit": ; preds = %bb.b, %_ZNK4llvm9StringSetINS_15MallocAllocatorEE8containsENS_9StringRefE.exit.i, %bb.c, %bb.d, %bb.e, %.thread203.i, %.thread216.i, %bb.t, %.thread222.i, %bb.aq, %bb.ar
   ret void
 }
 

@@ -204,8 +204,8 @@ begin_hunk_0
 @.str.391 = private unnamed_addr constant [15 x i8] c"#undef CLAUSE\0A\00", align 1
 @.str.392 = private unnamed_addr constant [11 x i8] c"clangClass\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_DirectiveEmitter.cpp, ptr null }]
-@switch.table._ZL27generateDirectiveClauseSetsRKN4llvm17DirectiveLanguageEN12_GLOBAL__N_18FrontendERNS_11raw_ostreamE = private unnamed_addr constant [3 x i8] c"\04\05\05", align 8
-@switch.table._ZL27generateDirectiveClauseSetsRKN4llvm17DirectiveLanguageEN12_GLOBAL__N_18FrontendERNS_11raw_ostreamE.121 = private unnamed_addr constant [3 x ptr] [ptr @.str.51, ptr @.str.52, ptr @.str.53], align 8
+@switch.table._ZL12getQualifierB5cxx11RKN4llvm17DirectiveLanguageEN12_GLOBAL__N_18FrontendE = private unnamed_addr constant [3 x i8] c"\04\05\05", align 8
+@switch.table._ZL12getQualifierB5cxx11RKN4llvm17DirectiveLanguageEN12_GLOBAL__N_18FrontendE.120 = private unnamed_addr constant [3 x ptr] [ptr @.str.51, ptr @.str.52, ptr @.str.53], align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local noundef zeroext i1 @_ZNK4llvm17DirectiveLanguage17HasValidityErrorsEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #0 align 2 {
@@ -608,11 +608,11 @@ switch.lookup:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   %i.b = zext nneg i32 %1 to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZL27generateDirectiveClauseSetsRKN4llvm17DirectiveLanguageEN12_GLOBAL__N_18FrontendERNS_11raw_ostreamE, i64 %i.b
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZL12getQualifierB5cxx11RKN4llvm17DirectiveLanguageEN12_GLOBAL__N_18FrontendE, i64 %i.b
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.c = zext nneg i32 %1 to i64
-  %switch.gep15 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZL27generateDirectiveClauseSetsRKN4llvm17DirectiveLanguageEN12_GLOBAL__N_18FrontendERNS_11raw_ostreamE.121, i64 %i.c
+  %switch.gep15 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZL12getQualifierB5cxx11RKN4llvm17DirectiveLanguageEN12_GLOBAL__N_18FrontendE.120, i64 %i.c
   %switch.load16 = load ptr, ptr %switch.gep15, align 8
   store ptr %switch.load16, ptr %4, align 8, !alias.scope !590
   %.sroa.23.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -1015,7 +1015,7 @@ _ZL13getFESpellingN12_GLOBAL__N_18FrontendE.exit:
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %7 = alloca %"class.llvm::StringRef", align 8   ; 5 uses
-  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
+  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %11 = alloca %"class.llvm::NamespaceEmitter", align 8 ; 8 uses
@@ -1030,7 +1030,7 @@ _ZL13getFESpellingN12_GLOBAL__N_18FrontendE.exit:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
-  %i.b = icmp eq i32 %1, 2
+  %i.b = icmp eq i32 %1, 2                        ; 4 uses
   %.str.53..str.52 = select i1 %i.b, ptr @.str.53, ptr @.str.52
   store ptr %.str.53..str.52, ptr %7, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %7, i64 8
@@ -1155,21 +1155,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit35: ; preds = %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #22
-  %18 = icmp eq i32 %1, 1
-  %19 = select i1 %18, i32 0, i32 %1              ; 2 uses
-  %20 = zext nneg i32 %19 to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZL27generateDirectiveClauseSetsRKN4llvm17DirectiveLanguageEN12_GLOBAL__N_18FrontendERNS_11raw_ostreamE, i64 %20
-  %switch.load = load i8, ptr %switch.gep, align 1
-  %switch.ext = zext i8 %switch.load to i64       ; 3 uses
-  %21 = zext nneg i32 %19 to i64
-  %switch.gep128 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZL27generateDirectiveClauseSetsRKN4llvm17DirectiveLanguageEN12_GLOBAL__N_18FrontendERNS_11raw_ostreamE.121, i64 %21
-  %switch.load129 = load ptr, ptr %switch.gep128, align 8
-  %i.au = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 5 uses
-  store ptr %i.au, ptr %8, align 8, !tbaa !110, !alias.scope !836
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.au, ptr noundef nonnull align 1 dereferenceable(1) %switch.load129, i64 %switch.ext, i1 false)
-  %22 = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
-  store i64 %switch.ext, ptr %22, align 8, !tbaa !106, !alias.scope !836
-  %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 %switch.ext
+  %spec.select = select i1 %i.b, i64 5, i64 4     ; 2 uses
+  %spec.select94 = select i1 %i.b, ptr @.str.53, ptr @.str.51
+  %switch.gep = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 4 uses
+  store ptr %switch.gep, ptr %8, align 8, !tbaa !110, !alias.scope !836
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(4) %switch.gep, ptr noundef nonnull align 1 dereferenceable(4) %spec.select94, i64 %spec.select, i1 false)
+  %i.au = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
+  store i64 %spec.select, ptr %i.au, align 8, !tbaa !106, !alias.scope !836
+  %spec.select.sroa.sel.v.sroa.sel.v = select i1 %i.b, i64 21, i64 20
+  %i.av = getelementptr inbounds nuw i8, ptr %8, i64 %spec.select.sroa.sel.v.sroa.sel.v
   store i8 0, ptr %i.av, align 1, !tbaa !33
   %i.aw = load ptr, ptr %0, align 8, !tbaa !94
   %i.ax = call { ptr, i64 } @_ZNK4llvm6Record16getValueAsStringENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(192) %i.aw, ptr nonnull @.str.54, i64 12) #22
@@ -1271,7 +1265,7 @@ _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_.ex
   store i64 0, ptr %i.ca, align 8, !tbaa !106
   store i8 0, ptr %i.bs, align 8, !tbaa !33
   %i.cc = load i64, ptr %i.cb, align 8, !tbaa !106 ; 2 uses
-  %i.cd = load i64, ptr %22, align 8, !tbaa !106
+  %i.cd = load i64, ptr %i.au, align 8, !tbaa !106
   %i.ce = sub i64 4611686018427387903, %i.cd
   %i.cf = icmp ult i64 %i.ce, %i.cc
   br i1 %i.cf, label %bb.k, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit
@@ -1411,11 +1405,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZN4llvm16NamespaceEmitterD2Ev.exit:              ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit3.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #22
   %i.ep = load ptr, ptr %8, align 8, !tbaa !105   ; 2 uses
-  %i.eq = icmp eq ptr %i.ep, %i.au
+  %i.eq = icmp eq ptr %i.ep, %switch.gep
   br i1 %i.eq, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i56
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i56: ; preds = %_ZN4llvm16NamespaceEmitterD2Ev.exit
-  %i.er = load i64, ptr %i.au, align 8, !tbaa !33
+  %i.er = load i64, ptr %switch.gep, align 8, !tbaa !33
   %i.es = add i64 %i.er, 1
   call void @_ZdlPvm(ptr noundef %i.ep, i64 noundef %i.es) #24
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58

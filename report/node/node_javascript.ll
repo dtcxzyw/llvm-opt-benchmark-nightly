@@ -204,11 +204,9 @@ bb.a:
   %i.f = load ptr, ptr %i.c, align 8, !noalias !38
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.e
   %i.h = load i64, ptr %i.g, align 8, !noalias !38 ; 3 uses
-  %i.i = lshr i64 %i.h, 56                        ; 2 uses
-  %5 = icmp eq i64 %i.i, 102
+  %i.i = lshr i64 %i.h, 56
   %i.j = trunc nuw i64 %i.i to i8
-  %trunc.i.i = select i1 %5, i8 116, i8 %i.j
-  switch i8 %trunc.i.i, label %bb.d [
+  switch i8 %i.j, label %bb.d [
     i8 91, label %bb.b
     i8 123, label %bb.c
   ]
@@ -611,11 +609,9 @@ bb.a:
   %i.d = load ptr, ptr %i.a, align 8
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.c
   %i.f = load i64, ptr %i.e, align 8              ; 3 uses
-  %i.g = lshr i64 %i.f, 56                        ; 2 uses
-  %6 = icmp eq i64 %i.g, 102
+  %i.g = lshr i64 %i.f, 56
   %i.h = trunc nuw i64 %i.g to i8
-  %trunc = select i1 %6, i8 116, i8 %i.h
-  switch i8 %trunc, label %bb.l [
+  switch i8 %i.h, label %bb.l [
     i8 91, label %bb.b
     i8 123, label %bb.h
   ]
@@ -708,11 +704,9 @@ bb.a:
   %i.d = load ptr, ptr %i.a, align 8
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.c
   %i.f = load i64, ptr %i.e, align 8              ; 3 uses
-  %i.g = lshr i64 %i.f, 56                        ; 2 uses
-  %6 = icmp eq i64 %i.g, 102
+  %i.g = lshr i64 %i.f, 56
   %i.h = trunc nuw i64 %i.g to i8
-  %trunc = select i1 %6, i8 116, i8 %i.h
-  switch i8 %trunc, label %bb.d [
+  switch i8 %i.h, label %bb.d [
     i8 91, label %bb.b
     i8 123, label %bb.c
   ]
@@ -1115,17 +1109,16 @@ bb.a:
   %i.j = load ptr, ptr %i.g, align 8
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.i ; 8 uses
   %i.l = load i64, ptr %i.k, align 8              ; 8 uses
-  %i.m = lshr i64 %i.l, 56                        ; 2 uses
-  %3 = icmp eq i64 %i.m, 102
+  %i.m = lshr i64 %i.l, 56
   %i.n = trunc nuw i64 %i.m to i8
-  %trunc = select i1 %3, i8 116, i8 %i.n
-  switch i8 %trunc, label %_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit [
+  switch i8 %i.n, label %_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit [
     i8 34, label %bb.b
     i8 108, label %bb.d
     i8 117, label %bb.i
     i8 100, label %bb.m
     i8 116, label %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit
     i8 110, label %_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit.sink.split
+    i8 102, label %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -1318,7 +1311,7 @@ bb.r:                                             ; preds = %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   br label %_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit.sink.split
 
-_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit: ; preds = %bb.a
+_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit: ; preds = %bb.a, %bb.a
   %switch.selectcmp.i41 = icmp eq i64 %i.l, 7349874591868649472
   %switch.select.i = select i1 %switch.selectcmp.i41, i64 0, i64 73014444032
   %switch.selectcmp7.i = icmp eq i64 %i.l, 8358680908399640576
@@ -1337,7 +1330,7 @@ _ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_tra
   store i64 %.sink, ptr %i.bq, align 8
   br label %_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit
 
-_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit: ; preds = %_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit.sink.split, %bb.m, %bb.i, %bb.j, %bb.d, %bb.e, %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit, %bb.b, %bb.a
+_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit: ; preds = %_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit.sink.split, %bb.m, %bb.i, %bb.j, %bb.d, %bb.e, %bb.a, %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit, %bb.b
   ret void
 }
 
@@ -1740,17 +1733,16 @@ bb.a:
   %i.i = load ptr, ptr %i.f, align 8
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.h ; 8 uses
   %i.k = load i64, ptr %i.j, align 8              ; 8 uses
-  %i.l = lshr i64 %i.k, 56                        ; 2 uses
-  %2 = icmp eq i64 %i.l, 102
+  %i.l = lshr i64 %i.k, 56
   %i.m = trunc nuw i64 %i.l to i8
-  %trunc = select i1 %2, i8 116, i8 %i.m
-  switch i8 %trunc, label %_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit [
+  switch i8 %i.m, label %_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit [
     i8 34, label %bb.b
     i8 108, label %bb.ax
     i8 117, label %bb.bk
     i8 100, label %bb.bw
     i8 116, label %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit
     i8 110, label %bb.co
+    i8 102, label %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -2153,7 +2145,7 @@ _ZSt4copyIPKcPcET0_T_S4_S3_.exit89:               ; preds = %bb.cg, %bb.ch, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #22
   br label %_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit
 
-_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit: ; preds = %bb.a
+_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit: ; preds = %bb.a, %bb.a
   %switch.selectcmp.i = icmp eq i64 %i.k, 7349874591868649472
   %switch.select.i = select i1 %switch.selectcmp.i, i64 0, i64 73014444032
   %switch.selectcmp7.i = icmp eq i64 %i.k, 8358680908399640576
@@ -2274,7 +2266,7 @@ _ZN8simdjson8internal14base_formatterINS0_19fractured_formatterEE24vector_with_s
   store i64 %i.lt, ptr %i.lr, align 8
   br label %_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit
 
-_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit: ; preds = %bb.bw, %bb.bk, %bb.bl, %bb.ax, %bb.ay, %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit, %_ZN8simdjson8internal14base_formatterINS0_19fractured_formatterEE10false_atomEv.exit, %_ZN8simdjson8internal14base_formatterINS0_19fractured_formatterEE9true_atomEv.exit, %_ZSt4copyIPKcPcET0_T_S4_S3_.exit89, %_ZSt4copyIPKcPcET0_T_S4_S3_.exit78, %_ZSt4copyIPKcPcET0_T_S4_S3_.exit64, %_ZN8simdjson8internal14base_formatterINS0_19fractured_formatterEE6stringESt17basic_string_viewIcSt11char_traitsIcEE.exit, %bb.b, %bb.a, %_ZN8simdjson8internal14base_formatterINS0_19fractured_formatterEE24vector_with_small_buffer6appendEPKcS6_.exit
+_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit: ; preds = %bb.bw, %bb.bk, %bb.bl, %bb.ax, %bb.ay, %bb.a, %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit, %_ZN8simdjson8internal14base_formatterINS0_19fractured_formatterEE10false_atomEv.exit, %_ZN8simdjson8internal14base_formatterINS0_19fractured_formatterEE9true_atomEv.exit, %_ZSt4copyIPKcPcET0_T_S4_S3_.exit89, %_ZSt4copyIPKcPcET0_T_S4_S3_.exit78, %_ZSt4copyIPKcPcET0_T_S4_S3_.exit64, %_ZN8simdjson8internal14base_formatterINS0_19fractured_formatterEE6stringESt17basic_string_viewIcSt11char_traitsIcEE.exit, %bb.b, %_ZN8simdjson8internal14base_formatterINS0_19fractured_formatterEE24vector_with_small_buffer6appendEPKcS6_.exit
   ret void
 }
 
@@ -2677,16 +2669,15 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i:   ; preds = %bb.j
 _ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %bb.j
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %i.be ; 8 uses
   %i.bj = load i64, ptr %i.bi, align 8            ; 8 uses
-  %i.bk = lshr i64 %i.bj, 56                      ; 2 uses
-  %4 = icmp eq i64 %i.bk, 102
+  %i.bk = lshr i64 %i.bj, 56
   %i.bl = trunc nuw i64 %i.bk to i8
-  %trunc.i = select i1 %4, i8 116, i8 %i.bl
-  switch i8 %trunc.i, label %_ZNK8simdjson8internal24fractured_string_builder20measure_value_lengthERKNS_3dom7elementE.exit [
+  switch i8 %i.bl, label %_ZNK8simdjson8internal24fractured_string_builder20measure_value_lengthERKNS_3dom7elementE.exit [
     i8 34, label %bb.k
     i8 108, label %bb.m
     i8 117, label %bb.r
     i8 100, label %bb.u
     i8 116, label %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit.i
+    i8 102, label %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit.i
   ]
 
 bb.k:                                             ; preds = %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit
@@ -2873,7 +2864,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v
   %.pre88.pre = load ptr, ptr %3, align 8
   br label %_ZNK8simdjson8internal24fractured_string_builder20measure_value_lengthERKNS_3dom7elementE.exit
 
-_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit.i: ; preds = %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit
+_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit.i: ; preds = %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit, %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit
   %switch.selectcmp.i.i = icmp eq i64 %i.bj, 7349874591868649472
   %switch.select.i.i = select i1 %switch.selectcmp.i.i, i64 0, i64 73014444032
   %switch.selectcmp7.i.i = icmp eq i64 %i.bj, 8358680908399640576
@@ -2985,16 +2976,15 @@ bb.a:
   %i.e = load ptr, ptr %i.b, align 8
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.d ; 8 uses
   %i.g = load i64, ptr %i.f, align 8              ; 8 uses
-  %i.h = lshr i64 %i.g, 56                        ; 2 uses
-  %2 = icmp eq i64 %i.h, 102
+  %i.h = lshr i64 %i.g, 56
   %i.i = trunc nuw i64 %i.h to i8
-  %trunc = select i1 %2, i8 116, i8 %i.i
-  switch i8 %trunc, label %_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit [
+  switch i8 %i.i, label %_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit [
     i8 34, label %bb.b
     i8 108, label %bb.d
     i8 117, label %bb.i
     i8 100, label %bb.l
     i8 116, label %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit
+    i8 102, label %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -3181,7 +3171,7 @@ bb.p:                                             ; preds = %bb.o, %bb.m, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   br label %_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit
 
-_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit: ; preds = %bb.a
+_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit: ; preds = %bb.a, %bb.a
   %switch.selectcmp.i = icmp eq i64 %i.g, 7349874591868649472
   %switch.select.i = select i1 %switch.selectcmp.i, i64 0, i64 73014444032
   %switch.selectcmp7.i = icmp eq i64 %i.g, 8358680908399640576

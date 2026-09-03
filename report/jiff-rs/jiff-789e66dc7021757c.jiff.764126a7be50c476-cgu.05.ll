@@ -204,7 +204,7 @@ bb.bs:                                            ; preds = %bb.br
 bb.bt:                                            ; preds = %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parseNtB2_6Parser1f.exit533
   call void @llvm.experimental.noalias.scope.decl(metadata !1360)
   %.sroa.2.0.extract.shift.i = lshr i32 %.sroa.032.0.i, 8
-  %.sroa.3.0.extract.shift.i = lshr i32 %.sroa.5.3.insert.insert, 16 ; 2 uses
+  %.sroa.3.0.extract.shift.i = lshr i32 %.sroa.5.3.insert.insert, 16
   %.sroa.3.0.extract.trunc.i = trunc nuw i32 %.sroa.3.0.extract.shift.i to i8
   %i.nq = load ptr, ptr %i.ha, align 8, !alias.scope !1360, !nonnull !4, !noundef !4 ; 5 uses
   br i1 %i.je, label %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i, label %bb.bu
@@ -230,11 +230,10 @@ _RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i: ; p
   %.sroa.12.0.i = phi i64 [ %i.nu, %bb.bw ], [ 0, %bb.bt ], [ %i.ns, %bb.bv ], [ %i.jd, %bb.bu ] ; 3 uses
   %.sroa.7.0.i = phi ptr [ %i.nv, %bb.bw ], [ %i.nq, %bb.bt ], [ %i.nt, %bb.bv ], [ %i.nq, %bb.bu ] ; 3 uses
   %.sroa.047.0.i = phi i64 [ 1, %bb.bw ], [ 1, %bb.bt ], [ -1, %bb.bv ], [ 1, %bb.bu ]
-  %.not.i42.i = icmp eq i32 %.sroa.3.0.extract.shift.i, 255
-  %spec.select.i.i = select i1 %.not.i42.i, i8 2, i8 %.sroa.3.0.extract.trunc.i
-  switch i8 %spec.select.i.i, label %bb.bx [
+  switch i8 %.sroa.3.0.extract.trunc.i, label %bb.bx [
     i8 0, label %bb.by
     i8 2, label %bb.by
+    i8 -1, label %bb.by
   ]
 
 bb.bx:                                            ; preds = %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i
@@ -243,8 +242,8 @@ bb.bx:                                            ; preds = %_RNvNtNtNtCsa9sSWSf
   %.sroa.029.1.i.i = zext nneg i32 %narrow.i to i64
   br label %bb.by
 
-bb.by:                                            ; preds = %bb.bx, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i
-  %.sroa.029.0.i.i = phi i64 [ %.sroa.029.1.i.i, %bb.bx ], [ 0, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i ], [ 0, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i ] ; 2 uses
+bb.by:                                            ; preds = %bb.bx, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i
+  %.sroa.029.0.i.i = phi i64 [ %.sroa.029.1.i.i, %bb.bx ], [ 0, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i ], [ 0, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i ], [ 0, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i ] ; 2 uses
   %..i.i = call noundef range(i64 1, 256) i64 @llvm.umax.i64(i64 range(i64 0, 256) %.sroa.029.0.i.i, i64 2)
   %.not65.i68.i = icmp eq i64 %.sroa.12.0.i, 0
   br i1 %.not65.i68.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRhE6map_orbNCNvMs_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parseNtB12_9Extension12parse_number0EB16_.exit.i, label %.lr.ph.preheader.i552
@@ -647,7 +646,7 @@ _RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultaNtN
 bb.id:                                            ; preds = %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parseNtB2_6Parser1f.exit533
   call void @llvm.experimental.noalias.scope.decl(metadata !1428)
   %.sroa.2.0.extract.shift.i807 = lshr i32 %.sroa.032.0.i, 8
-  %.sroa.3.0.extract.shift.i808 = lshr i32 %.sroa.5.3.insert.insert, 16 ; 2 uses
+  %.sroa.3.0.extract.shift.i808 = lshr i32 %.sroa.5.3.insert.insert, 16
   %.sroa.3.0.extract.trunc.i809 = trunc nuw i32 %.sroa.3.0.extract.shift.i808 to i8
   %i.aaz = load ptr, ptr %i.ha, align 8, !alias.scope !1428, !nonnull !4, !noundef !4 ; 5 uses
   br i1 %i.je, label %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i810, label %bb.ie
@@ -673,11 +672,10 @@ _RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i810: 
   %.sroa.12.0.i811 = phi i64 [ %i.abd, %bb.ig ], [ 0, %bb.id ], [ %i.abb, %bb.if ], [ %i.jd, %bb.ie ] ; 3 uses
   %.sroa.7.0.i812 = phi ptr [ %i.abe, %bb.ig ], [ %i.aaz, %bb.id ], [ %i.abc, %bb.if ], [ %i.aaz, %bb.ie ] ; 3 uses
   %.sroa.050.0.i = phi i64 [ 1, %bb.ig ], [ 1, %bb.id ], [ -1, %bb.if ], [ 1, %bb.ie ]
-  %.not.i.i813 = icmp eq i32 %.sroa.3.0.extract.shift.i808, 255
-  %spec.select.i.i814 = select i1 %.not.i.i813, i8 0, i8 %.sroa.3.0.extract.trunc.i809
-  switch i8 %spec.select.i.i814, label %bb.ih [
+  switch i8 %.sroa.3.0.extract.trunc.i809, label %bb.ih [
     i8 0, label %bb.ii
     i8 2, label %bb.ii
+    i8 -1, label %bb.ii
   ]
 
 bb.ih:                                            ; preds = %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i810
@@ -686,9 +684,9 @@ bb.ih:                                            ; preds = %_RNvNtNtNtCsa9sSWSf
   %.sroa.029.1.i.i844 = zext nneg i32 %narrow.i843 to i64
   br label %bb.ii
 
-bb.ii:                                            ; preds = %bb.ih, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i810, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i810
-  %.sroa.029.0.i.i815 = phi i64 [ %.sroa.029.1.i.i844, %bb.ih ], [ 0, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i810 ], [ 0, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i810 ] ; 2 uses
-  %..i.i816 = call noundef range(i64 1, 256) i64 @llvm.umax.i64(i64 range(i64 0, 256) %.sroa.029.0.i.i815, i64 19)
+bb.ii:                                            ; preds = %bb.ih, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i810, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i810, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i810
+  %.sroa.029.0.i.i813 = phi i64 [ %.sroa.029.1.i.i844, %bb.ih ], [ 0, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i810 ], [ 0, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i810 ], [ 0, %_RNvNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parse19parse_optional_sign.exit.i810 ] ; 2 uses
+  %..i.i816 = call noundef range(i64 1, 256) i64 @llvm.umax.i64(i64 range(i64 0, 256) %.sroa.029.0.i.i813, i64 19)
   %.not65.i72.i = icmp eq i64 %.sroa.12.0.i811, 0
   br i1 %.not65.i72.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRhE6map_orbNCNvMs_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parseNtB12_9Extension12parse_number0EB16_.exit.i822, label %.lr.ph.preheader.i817
 
@@ -711,7 +709,7 @@ bb.ii:                                            ; preds = %bb.ih, %_RNvNtNtNtC
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRhE6map_orbNCNvMs_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parseNtB12_9Extension12parse_number0EB16_.exit.i822: ; preds = %bb.ip, %.lr.ph.i819, %bb.ii
   %.sroa.15.0.i.lcssa.i823 = phi i64 [ 0, %bb.ii ], [ %.sroa.15.0.i73.i, %.lr.ph.i819 ], [ 0, %bb.ip ] ; 6 uses
   %.sroa.02.0.i.lcssa.i824 = phi ptr [ %.sroa.7.0.i812, %bb.ii ], [ %.sroa.02.0.i74.i, %.lr.ph.i819 ], [ %scevgep.i818, %bb.ip ] ; 3 uses
-  %invariant.umin.i825 = call i64 @llvm.umin.i64(i64 %.sroa.15.0.i.lcssa.i823, i64 %.sroa.029.0.i.i815) ; 3 uses
+  %invariant.umin.i825 = call i64 @llvm.umin.i64(i64 %.sroa.15.0.i.lcssa.i823, i64 %.sroa.029.0.i.i813) ; 3 uses
   %or.cond66.i79.not.i = icmp eq i64 %invariant.umin.i825, 0
   br i1 %or.cond66.i79.not.i, label %._crit_edge.i826, label %.lr.ph81.i
 
@@ -1114,14 +1112,13 @@ _RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultaNtN
 
 bb.kc:                                            ; preds = %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parseNtB2_6Parser1f.exit533
   call void @llvm.experimental.noalias.scope.decl(metadata !1452)
-  %.sroa.3.0.extract.shift.i900 = lshr i32 %.sroa.5.3.insert.insert, 16 ; 2 uses
+  %.sroa.3.0.extract.shift.i900 = lshr i32 %.sroa.5.3.insert.insert, 16
   %.sroa.3.0.extract.trunc.i901 = trunc nuw i32 %.sroa.3.0.extract.shift.i900 to i8
   %i.aey = load ptr, ptr %i.ha, align 8, !alias.scope !1452, !nonnull !4, !noundef !4 ; 3 uses
-  %.not.i.i902 = icmp eq i32 %.sroa.3.0.extract.shift.i900, 255
-  %spec.select.i.i903 = select i1 %.not.i.i902, i8 2, i8 %.sroa.3.0.extract.trunc.i901
-  switch i8 %spec.select.i.i903, label %bb.kd [
+  switch i8 %.sroa.3.0.extract.trunc.i901, label %bb.kd [
     i8 0, label %bb.ke
     i8 2, label %bb.ke
+    i8 -1, label %bb.ke
   ]
 
 bb.kd:                                            ; preds = %bb.kc
@@ -1131,9 +1128,9 @@ bb.kd:                                            ; preds = %bb.kc
   %.sroa.029.1.i.i931 = zext nneg i32 %narrow.i930 to i64
   br label %bb.ke
 
-bb.ke:                                            ; preds = %bb.kd, %bb.kc, %bb.kc
-  %.sroa.029.0.i.i904 = phi i64 [ %.sroa.029.1.i.i931, %bb.kd ], [ 0, %bb.kc ], [ 0, %bb.kc ] ; 2 uses
-  %..i.i905 = call noundef range(i64 1, 256) i64 @llvm.umax.i64(i64 range(i64 0, 256) %.sroa.029.0.i.i904, i64 1)
+bb.ke:                                            ; preds = %bb.kd, %bb.kc, %bb.kc, %bb.kc
+  %.sroa.029.0.i.i900 = phi i64 [ %.sroa.029.1.i.i931, %bb.kd ], [ 0, %bb.kc ], [ 0, %bb.kc ], [ 0, %bb.kc ] ; 2 uses
+  %..i.i905 = call noundef range(i64 1, 256) i64 @llvm.umax.i64(i64 range(i64 0, 256) %.sroa.029.0.i.i900, i64 1)
   br i1 %i.je, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRhE6map_orbNCNvMs_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parseNtB12_9Extension12parse_number0EB16_.exit.i911, label %.lr.ph.preheader.i906
 
 .lr.ph.preheader.i906:                            ; preds = %bb.ke
@@ -1155,7 +1152,7 @@ bb.ke:                                            ; preds = %bb.kd, %bb.kc, %bb.
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRhE6map_orbNCNvMs_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parseNtB12_9Extension12parse_number0EB16_.exit.i911: ; preds = %bb.kl, %.lr.ph.i908, %bb.ke
   %.sroa.15.0.i.lcssa.i912 = phi i64 [ 0, %bb.ke ], [ %.sroa.15.0.i59.i, %.lr.ph.i908 ], [ 0, %bb.kl ] ; 6 uses
   %.sroa.02.0.i.lcssa.i913 = phi ptr [ %i.aey, %bb.ke ], [ %.sroa.02.0.i60.i, %.lr.ph.i908 ], [ %scevgep.i907, %bb.kl ] ; 3 uses
-  %invariant.umin.i914 = call i64 @llvm.umin.i64(i64 %.sroa.15.0.i.lcssa.i912, i64 %.sroa.029.0.i.i904) ; 3 uses
+  %invariant.umin.i914 = call i64 @llvm.umin.i64(i64 %.sroa.15.0.i.lcssa.i912, i64 %.sroa.029.0.i.i900) ; 3 uses
   %or.cond66.i65.not.i = icmp eq i64 %invariant.umin.i914, 0
   br i1 %or.cond66.i65.not.i, label %._crit_edge.i915, label %.lr.ph67.i
 
@@ -1558,14 +1555,13 @@ _RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultaNtN
 
 bb.mn:                                            ; preds = %_RNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parseNtB2_6Parser1f.exit533
   call void @llvm.experimental.noalias.scope.decl(metadata !1477)
-  %.sroa.3.0.extract.shift.i1024 = lshr i32 %.sroa.5.3.insert.insert, 16 ; 2 uses
+  %.sroa.3.0.extract.shift.i1024 = lshr i32 %.sroa.5.3.insert.insert, 16
   %.sroa.3.0.extract.trunc.i1025 = trunc nuw i32 %.sroa.3.0.extract.shift.i1024 to i8
   %i.ajr = load ptr, ptr %i.ha, align 8, !alias.scope !1477, !nonnull !4, !noundef !4 ; 3 uses
-  %.not.i.i1026 = icmp eq i32 %.sroa.3.0.extract.shift.i1024, 255
-  %spec.select.i.i1027 = select i1 %.not.i.i1026, i8 2, i8 %.sroa.3.0.extract.trunc.i1025
-  switch i8 %spec.select.i.i1027, label %bb.mo [
+  switch i8 %.sroa.3.0.extract.trunc.i1025, label %bb.mo [
     i8 0, label %bb.mp
     i8 2, label %bb.mp
+    i8 -1, label %bb.mp
   ]
 
 bb.mo:                                            ; preds = %bb.mn
@@ -1575,9 +1571,9 @@ bb.mo:                                            ; preds = %bb.mn
   %.sroa.029.1.i.i1055 = zext nneg i32 %narrow.i1054 to i64
   br label %bb.mp
 
-bb.mp:                                            ; preds = %bb.mo, %bb.mn, %bb.mn
-  %.sroa.029.0.i.i1028 = phi i64 [ %.sroa.029.1.i.i1055, %bb.mo ], [ 0, %bb.mn ], [ 0, %bb.mn ] ; 2 uses
-  %..i.i1029 = call noundef range(i64 1, 256) i64 @llvm.umax.i64(i64 range(i64 0, 256) %.sroa.029.0.i.i1028, i64 1)
+bb.mp:                                            ; preds = %bb.mo, %bb.mn, %bb.mn, %bb.mn
+  %.sroa.029.0.i.i1022 = phi i64 [ %.sroa.029.1.i.i1055, %bb.mo ], [ 0, %bb.mn ], [ 0, %bb.mn ], [ 0, %bb.mn ] ; 2 uses
+  %..i.i1029 = call noundef range(i64 1, 256) i64 @llvm.umax.i64(i64 range(i64 0, 256) %.sroa.029.0.i.i1022, i64 1)
   br i1 %i.je, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRhE6map_orbNCNvMs_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parseNtB12_9Extension12parse_number0EB16_.exit.i1035, label %.lr.ph.preheader.i1030
 
 .lr.ph.preheader.i1030:                           ; preds = %bb.mp
@@ -1599,7 +1595,7 @@ bb.mp:                                            ; preds = %bb.mo, %bb.mn, %bb.
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRhE6map_orbNCNvMs_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime5parseNtB12_9Extension12parse_number0EB16_.exit.i1035: ; preds = %bb.mw, %.lr.ph.i1032, %bb.mp
   %.sroa.15.0.i.lcssa.i1036 = phi i64 [ 0, %bb.mp ], [ %.sroa.15.0.i61.i, %.lr.ph.i1032 ], [ 0, %bb.mw ] ; 6 uses
   %.sroa.02.0.i.lcssa.i1037 = phi ptr [ %i.ajr, %bb.mp ], [ %.sroa.02.0.i62.i, %.lr.ph.i1032 ], [ %scevgep.i1031, %bb.mw ] ; 3 uses
-  %invariant.umin.i1038 = call i64 @llvm.umin.i64(i64 %.sroa.15.0.i.lcssa.i1036, i64 %.sroa.029.0.i.i1028) ; 3 uses
+  %invariant.umin.i1038 = call i64 @llvm.umin.i64(i64 %.sroa.15.0.i.lcssa.i1036, i64 %.sroa.029.0.i.i1022) ; 3 uses
   %or.cond66.i67.not.i = icmp eq i64 %invariant.umin.i1038, 0
   br i1 %or.cond66.i67.not.i, label %._crit_edge.i1039, label %.lr.ph69.i
 

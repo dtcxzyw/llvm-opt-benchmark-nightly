@@ -205,8 +205,6 @@ bb.ai:                                            ; preds = %.split1133, %.split
   br label %bb.kx
 
 bb.aj:                                            ; preds = %bb.n
-  %27 = icmp eq i32 %1, 5
-  %28 = select i1 %27, i32 4, i32 %1
   %i.cu = invoke noundef zeroext i1 @_ZNK2cv3Mat5emptyEv(ptr noundef nonnull align 8 dereferenceable(208) %4)
           to label %bb.ak unwind label %bb.ao
 
@@ -274,10 +272,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit179: ; preds = %bb
   br label %bb.kx
 
 bb.au:                                            ; preds = %bb.an, %bb.an, %bb.ak
-  switch i32 %28, label %bb.av [
+  switch i32 %1, label %bb.av [
     i32 4, label %bb.ba
     i32 2, label %bb.ba
     i32 1, label %bb.ba
+    i32 5, label %bb.ba
   ]
 
 bb.av:                                            ; preds = %bb.au
@@ -318,7 +317,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit182: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #30
   br label %bb.kx
 
-bb.ba:                                            ; preds = %bb.au, %bb.au, %bb.au
+bb.ba:                                            ; preds = %bb.au, %bb.au, %bb.au, %bb.au
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #30
   store ptr %3, ptr %i.b, align 16, !tbaa !44
   %i.dp = getelementptr inbounds nuw i8, ptr %i.b, i64 8

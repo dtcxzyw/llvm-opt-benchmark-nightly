@@ -52,12 +52,11 @@ bb.b:                                             ; preds = %bb.a
   %i.l = tail call i64 @mmu_interval_read_begin(ptr noundef %i.k) #12 ; 3 uses
   %i.m = getelementptr i8, ptr %0, i64 248        ; 4 uses
   %i.n = load ptr, ptr %i.m, align 8
-  %i.o = tail call i32 @ww_mutex_lock_interruptible(ptr noundef %i.n, ptr noundef null) #12 ; 3 uses
-  %1 = icmp eq i32 %i.o, -114
-  %spec.store.select.i.i = select i1 %1, i32 0, i32 %i.o
-  switch i32 %spec.store.select.i.i, label %bb.x [
+  %i.o = tail call i32 @ww_mutex_lock_interruptible(ptr noundef %i.n, ptr noundef null) #12 ; 2 uses
+  switch i32 %i.o, label %bb.x [
     i32 -35, label %bb.c
     i32 0, label %bb.e
+    i32 -114, label %bb.e
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -80,7 +79,7 @@ i915_gem_object_lock_interruptible.exit.thread:   ; preds = %bb.d, %.sink.split.
   store ptr %0, ptr inttoptr (i64 40 to ptr), align 8
   br label %bb.x
 
-bb.e:                                             ; preds = %bb.b
+bb.e:                                             ; preds = %bb.b, %bb.b
   %i.s = getelementptr i8, ptr %0, i64 1032       ; 3 uses
   %i.t = load i64, ptr %i.s, align 8
   %i.u = icmp eq i64 %i.l, %i.t
@@ -345,12 +344,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr i8, ptr %0, i64 248        ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8
-  %i.d = tail call i32 @ww_mutex_lock_interruptible(ptr noundef %i.c, ptr noundef null) #12 ; 3 uses
-  %1 = icmp eq i32 %i.d, -114
-  %spec.store.select.i.i = select i1 %1, i32 0, i32 %i.d
-  switch i32 %spec.store.select.i.i, label %bb.h [
+  %i.d = tail call i32 @ww_mutex_lock_interruptible(ptr noundef %i.c, ptr noundef null) #12 ; 2 uses
+  switch i32 %i.d, label %bb.h [
     i32 -35, label %bb.c
     i32 0, label %bb.e
+    i32 -114, label %bb.e
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -373,7 +371,7 @@ i915_gem_object_lock_interruptible.exit.thread:   ; preds = %bb.d, %.sink.split.
   store ptr %0, ptr inttoptr (i64 40 to ptr), align 8
   br label %bb.h
 
-bb.e:                                             ; preds = %bb.b
+bb.e:                                             ; preds = %bb.b, %bb.b
   %i.h = getelementptr i8, ptr %0, i64 688        ; 5 uses
   %i.i = load volatile i32, ptr %i.h, align 8     ; 2 uses
   %i.j = icmp eq i32 %i.i, 0

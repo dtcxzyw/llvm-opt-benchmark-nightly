@@ -204,8 +204,6 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 37 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !434  ; 4 uses
   %i.f = trunc i64 %i.e to i32                    ; 4 uses
-  %48 = icmp eq i32 %2, 3
-  %49 = select i1 %48, i32 0, i32 %2
   call void @llvm.lifetime.start.p0(ptr nonnull %38) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %38, i8 0, i64 16, i1 false)
   invoke void @_ZN3igl6volumeIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEENS2_IiLin1ELi4ELi0ELin1ELi4EEENS2_IdLin1ELi1ELi0ELin1ELi1EEEEEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EERNS1_15PlainObjectBaseIT1_EE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 8 dereferenceable(16) %38)
@@ -284,10 +282,11 @@ middle.block:                                     ; preds = %vector.body
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %40, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %41, i8 0, i64 16, i1 false)
-  switch i32 %49, label %_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit [
+  switch i32 %2, label %_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit [
     i32 0, label %bb.d
     i32 1, label %._crit_edge
     i32 2, label %bb.v
+    i32 3, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.a
@@ -295,7 +294,7 @@ bb.c:                                             ; preds = %bb.a
           cleanup
   br label %bb.bo
 
-bb.d:                                             ; preds = %.loopexit1258
+bb.d:                                             ; preds = %.loopexit1258, %.loopexit1258
   %i.af = shl nsw i32 %i.f, 2
   %i.ag = sext i32 %i.af to i64                   ; 3 uses
   invoke void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %39, i64 noundef %i.ag, i64 noundef 1)
@@ -698,8 +697,6 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 37 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !77   ; 4 uses
   %i.f = trunc i64 %i.e to i32                    ; 4 uses
-  %48 = icmp eq i32 %2, 3
-  %49 = select i1 %48, i32 0, i32 %2
   call void @llvm.lifetime.start.p0(ptr nonnull %38) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %38, i8 0, i64 16, i1 false)
   invoke void @_ZN3igl6volumeIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLin1ELi1ELi0ELin1ELi1EEEEEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EERNS1_15PlainObjectBaseIT1_EE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 8 dereferenceable(16) %38)
@@ -778,10 +775,11 @@ middle.block:                                     ; preds = %vector.body
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %40, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %41, i8 0, i64 16, i1 false)
-  switch i32 %49, label %_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit [
+  switch i32 %2, label %_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit [
     i32 0, label %bb.d
     i32 1, label %._crit_edge
     i32 2, label %bb.v
+    i32 3, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.a
@@ -789,7 +787,7 @@ bb.c:                                             ; preds = %bb.a
           cleanup
   br label %bb.bo
 
-bb.d:                                             ; preds = %.loopexit1258
+bb.d:                                             ; preds = %.loopexit1258, %.loopexit1258
   %i.af = shl nsw i32 %i.f, 2
   %i.ag = sext i32 %i.af to i64                   ; 3 uses
   invoke void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %39, i64 noundef %i.ag, i64 noundef 1)
@@ -1192,8 +1190,6 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 37 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !77   ; 4 uses
   %i.f = trunc i64 %i.e to i32                    ; 4 uses
-  %48 = icmp eq i32 %2, 3
-  %49 = select i1 %48, i32 0, i32 %2
   call void @llvm.lifetime.start.p0(ptr nonnull %38) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %38, i8 0, i64 16, i1 false)
   invoke void @_ZN3igl6volumeIN5Eigen6MatrixIdLin1ELin1ELi1ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLin1ELi1ELi0ELin1ELi1EEEEEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EERNS1_15PlainObjectBaseIT1_EE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 8 dereferenceable(16) %38)
@@ -1272,10 +1268,11 @@ middle.block:                                     ; preds = %vector.body
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %40, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %41, i8 0, i64 16, i1 false)
-  switch i32 %49, label %_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit [
+  switch i32 %2, label %_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit [
     i32 0, label %bb.d
     i32 1, label %._crit_edge
     i32 2, label %bb.v
+    i32 3, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.a
@@ -1283,7 +1280,7 @@ bb.c:                                             ; preds = %bb.a
           cleanup
   br label %bb.bo
 
-bb.d:                                             ; preds = %.loopexit1258
+bb.d:                                             ; preds = %.loopexit1258, %.loopexit1258
   %i.af = shl nsw i32 %i.f, 2
   %i.ag = sext i32 %i.af to i64                   ; 3 uses
   invoke void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %39, i64 noundef %i.ag, i64 noundef 1)
@@ -1686,8 +1683,6 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 37 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !77   ; 4 uses
   %i.f = trunc i64 %i.e to i32                    ; 4 uses
-  %48 = icmp eq i32 %2, 3
-  %49 = select i1 %48, i32 0, i32 %2
   call void @llvm.lifetime.start.p0(ptr nonnull %38) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %38, i8 0, i64 16, i1 false)
   invoke void @_ZN3igl6volumeIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLin1ELi1ELi0ELin1ELi1EEEEEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EERNS1_15PlainObjectBaseIT1_EE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 8 dereferenceable(16) %38)
@@ -1766,10 +1761,11 @@ middle.block:                                     ; preds = %vector.body
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %40, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %41, i8 0, i64 16, i1 false)
-  switch i32 %49, label %_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit [
+  switch i32 %2, label %_ZN5Eigen9DenseBaseINS_12ArrayWrapperINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEEEEdVERKd.exit [
     i32 0, label %bb.d
     i32 1, label %._crit_edge
     i32 2, label %bb.v
+    i32 3, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.a
@@ -1777,7 +1773,7 @@ bb.c:                                             ; preds = %bb.a
           cleanup
   br label %bb.bo
 
-bb.d:                                             ; preds = %.loopexit1258
+bb.d:                                             ; preds = %.loopexit1258, %.loopexit1258
   %i.af = shl nsw i32 %i.f, 2
   %i.ag = sext i32 %i.af to i64                   ; 3 uses
   invoke void @_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE6resizeEll(ptr noundef nonnull align 8 dereferenceable(16) %39, i64 noundef %i.ag, i64 noundef 1)

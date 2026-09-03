@@ -205,8 +205,8 @@ bb.aa:                                            ; preds = %mi_arena_is_suitabl
   %exitcond237.not = icmp eq i64 %i.dy, %i.bp
   br i1 %exitcond237.not, label %.thread185, label %.peel.next, !llvm.loop !144
 
-.thread185:                                       ; preds = %mi_arena_is_suitable_ex.exit, %mi_arena_is_suitable_ex.exit.us198, %.peel.next, %bb.aa, %.thread168, %mi_arena_is_suitable.exit.thread.i.us.us, %.lr.ph.split.us.split.us.split.us.preheader, %bb.w, %.thread168.peel, %mi_arena_start_idx.exit127, %.thread159
-  %.10 = phi ptr [ null, %.peel.next ], [ null, %.thread159 ], [ %i.ar, %mi_arena_is_suitable_ex.exit.us198 ], [ %i.ac, %mi_arena_is_suitable.exit.thread.i.us.us ], [ null, %mi_arena_start_idx.exit127 ], [ %i.ab, %.lr.ph.split.us.split.us.split.us.preheader ], [ null, %.thread168.peel ], [ %i.dc, %bb.w ], [ %i.dx, %bb.aa ], [ null, %.thread168 ], [ %i.bk, %mi_arena_is_suitable_ex.exit ]
+.thread185:                                       ; preds = %mi_arena_is_suitable_ex.exit, %mi_arena_is_suitable_ex.exit.us198, %.peel.next, %.thread168, %bb.aa, %mi_arena_is_suitable.exit.thread.i.us.us, %.lr.ph.split.us.split.us.split.us.preheader, %bb.w, %.thread168.peel, %mi_arena_start_idx.exit127, %.thread159
+  %.10 = phi ptr [ null, %.peel.next ], [ null, %.thread159 ], [ %i.ar, %mi_arena_is_suitable_ex.exit.us198 ], [ %i.ac, %mi_arena_is_suitable.exit.thread.i.us.us ], [ null, %mi_arena_start_idx.exit127 ], [ %i.ab, %.lr.ph.split.us.split.us.split.us.preheader ], [ null, %.thread168.peel ], [ %i.dc, %bb.w ], [ null, %.thread168 ], [ %i.dx, %bb.aa ], [ %i.bk, %mi_arena_is_suitable_ex.exit ]
   ret ptr %.10
 }
 

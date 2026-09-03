@@ -202,23 +202,22 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %.lr.ph.split.us
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dw, i64 24
-  %i.dz = load i32, ptr %i.dy, align 8            ; 2 uses
-  %13 = icmp eq i32 %i.dz, 100
-  %spec.store.select4.us = select i1 %13, i32 105, i32 %i.dz
-  switch i32 %spec.store.select4.us, label %bb.ak [
+  %i.dz = load i32, ptr %i.dy, align 8
+  switch i32 %i.dz, label %bb.ak [
     i32 116, label %bb.an
     i32 111, label %bb.an
     i32 118, label %bb.aj
     i32 105, label %bb.aj
+    i32 100, label %bb.aj
   ]
 
-bb.aj:                                            ; preds = %bb.ai, %bb.ai
+bb.aj:                                            ; preds = %bb.ai, %bb.ai, %bb.ai
   switch i32 %i.y, label %bb.ak [
     i32 116, label %bb.an
     i32 111, label %bb.an
   ]
 
-bb.ak:                                            ; preds = %bb.aj, %bb.ai
+bb.ak:                                            ; preds = %bb.ai, %bb.aj
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dw, i64 8
   %i.eb = load ptr, ptr %i.ea, align 8            ; 3 uses
   %.not233.us = icmp eq ptr %i.eb, null
@@ -234,7 +233,7 @@ bb.am:                                            ; preds = %bb.al
   %i.ee = icmp eq i32 %i.ed, 0
   br i1 %i.ee, label %.split.us, label %bb.an
 
-bb.an:                                            ; preds = %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.aj, %bb.ai, %bb.ai
+bb.an:                                            ; preds = %bb.ai, %bb.ai, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.aj
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count396
   br i1 %exitcond.not, label %.critedge240, label %.lr.ph.split.us, !llvm.loop !7
@@ -257,12 +256,11 @@ bb.an:                                            ; preds = %bb.am, %bb.al, %bb.
 
 bb.ao:                                            ; preds = %.lr.ph.split.split.us
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eg, i64 24
-  %i.ej = load i32, ptr %i.ei, align 8            ; 2 uses
-  %14 = icmp eq i32 %i.ej, 100
-  %spec.store.select4.us323 = select i1 %14, i32 105, i32 %i.ej
-  switch i32 %spec.store.select4.us323, label %bb.ap [
+  %i.ej = load i32, ptr %i.ei, align 8
+  switch i32 %i.ej, label %bb.ap [
     i32 118, label %bb.as
     i32 105, label %bb.as
+    i32 100, label %bb.as
   ]
 
 bb.ap:                                            ; preds = %bb.ao
@@ -281,7 +279,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.eo = icmp eq i32 %i.en, 0
   br i1 %i.eo, label %.split.us, label %bb.as
 
-bb.as:                                            ; preds = %bb.ao, %bb.ao, %bb.ar, %bb.aq, %bb.ap
+bb.as:                                            ; preds = %bb.ao, %bb.ao, %bb.ao, %bb.ar, %bb.aq, %bb.ap
   %indvars.iv.next388 = add nuw nsw i64 %indvars.iv387, 1 ; 2 uses
   %exitcond392.not = icmp eq i64 %indvars.iv.next388, %wide.trip.count396
   br i1 %exitcond392.not, label %.critedge240, label %.lr.ph.split.split.us, !llvm.loop !7

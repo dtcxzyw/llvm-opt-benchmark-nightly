@@ -204,19 +204,18 @@ bb.e:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !8508
   store ptr %i.m, ptr %i.h, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 449
-  %i.v = load i8, ptr %i.u, align 1, !range !38, !noundef !5 ; 2 uses
-  %.not.i = icmp eq i8 %i.v, -1
-  %..i = select i1 %.not.i, i8 0, i8 %i.v
-  switch i8 %..i, label %bb.f [
+  %i.v = load i8, ptr %i.u, align 1, !range !38, !noundef !5
+  switch i8 %i.v, label %bb.f [
     i8 0, label %bb.g
     i8 1, label %bb.h
     i8 2, label %bb.i
+    i8 -1, label %bb.g
   ]
 
 bb.f:                                             ; preds = %bb.e
   unreachable
 
-bb.g:                                             ; preds = %bb.e
+bb.g:                                             ; preds = %bb.e, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   %i.w = getelementptr inbounds nuw i8, ptr %i.m, i64 416 ; 2 uses
   %i.x = load ptr, ptr %i.w, align 8, !nonnull !5, !noundef !5
@@ -228,8 +227,8 @@ bb.h:                                             ; preds = %bb.e
   %i.aa = invoke fastcc noundef nonnull align 8 ptr @_RNvMsA_NtCscdodAO9FK5_5alloc4syncINtB5_3ArcNtNtNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v36schema8database14DatabaseSchemaE8make_mutBR_(ptr noalias noundef align 8 dereferenceable(8) %i.h)
           to label %bb.w unwind label %.thread44  ; 3 uses
 
-bb.i:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit29, %bb.e
-  %i.ab = phi ptr [ %.pre, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit29 ], [ %i.m, %bb.e ]
+bb.i:                                             ; preds = %bb.e, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit29
+  %i.ab = phi ptr [ %i.m, %bb.e ], [ %.pre, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit29 ]
   store i64 -1, ptr %0, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !8509)
   call void @llvm.experimental.noalias.scope.decl(metadata !8510)

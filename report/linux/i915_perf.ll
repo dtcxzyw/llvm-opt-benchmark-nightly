@@ -205,9 +205,12 @@ bb.gd:                                            ; preds = %bb.gb
   br label %bb.ge
 
 bb.ge:                                            ; preds = %bb.gd, %bb.gc
-  %.0.i.i.i140.i.i = phi i32 [ %i.zx, %bb.gc ], [ %i.zy, %bb.gd ] ; 4 uses
-  %8 = icmp eq i32 %.0.i.i.i140.i.i, 0
-  br i1 %8, label %bb.gf, label %9
+  %.0.i.i.i140.i.i = phi i32 [ %i.zx, %bb.gc ], [ %i.zy, %bb.gd ] ; 2 uses
+  switch i32 %.0.i.i.i140.i.i, label %.sink.split.i.i.i [
+    i32 0, label %bb.gf
+    i32 -35, label %bb.gh
+    i32 -114, label %bb.gj
+  ]
 
 bb.gf:                                            ; preds = %bb.ge
   %i.zz = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.zf, i32 1, ptr elementtype(i32) %i.zf) #19, !srcloc !28 ; 3 uses
@@ -231,17 +234,9 @@ i915_gem_object_get.exit.i.i.i.i.i:               ; preds = %.sink.split.i.i.i.i
   store ptr %i.zp, ptr %i.zo, align 8
   store ptr %i.aac, ptr %i.zr, align 8
   store volatile ptr %i.zo, ptr %i.aac, align 8
-  br label %9
+  br label %bb.gj
 
-9:                                                ; preds = %i915_gem_object_get.exit.i.i.i.i.i, %bb.ge
-  %10 = icmp eq i32 %.0.i.i.i140.i.i, -114
-  %spec.store.select.i6.i.i.i.i = select i1 %10, i32 0, i32 %.0.i.i.i140.i.i
-  switch i32 %spec.store.select.i6.i.i.i.i, label %.sink.split.i.i.i [
-    i32 -35, label %bb.gh
-    i32 0, label %bb.gj
-  ]
-
-bb.gh:                                            ; preds = %9
+bb.gh:                                            ; preds = %bb.ge
   %i.aad = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.zf, i32 1, ptr elementtype(i32) %i.zf) #19, !srcloc !28 ; 3 uses
   %.not.i.i.i.i.i.i19.i7.i.i.i.i = icmp eq i32 %i.aad, 0
   br i1 %.not.i.i.i.i.i.i19.i7.i.i.i.i, label %.sink.split.i.i.i.i.i.i21.i9.i.i.i.i, label %bb.gi, !prof !25
@@ -261,7 +256,7 @@ bb.gi:                                            ; preds = %bb.gh
   store ptr %i.zf, ptr %i.zt, align 8
   br label %bb.gw
 
-bb.gj:                                            ; preds = %9
+bb.gj:                                            ; preds = %i915_gem_object_get.exit.i.i.i.i.i, %bb.ge
   %i.aag = load ptr, ptr %i.zs, align 8
   %i.aah = call ptr @i915_vma_instance(ptr noundef %i.zf, ptr noundef %i.aag, ptr noundef null) #18 ; 4 uses
   store ptr %i.aah, ptr %i.a, align 8
@@ -664,8 +659,8 @@ bb.gw:                                            ; preds = %bb.gv, %.thread176.
   %.not146.i.i.i = icmp eq i32 %.0136.i.i.i, 0
   br i1 %.not146.i.i.i, label %alloc_noa_wait.exit.thread.i.i, label %bb.gx
 
-.sink.split.i.i.i:                                ; preds = %bb.gw, %9
-  %.1137181.ph.i.i.i = phi i32 [ %.0.i.i.i140.i.i, %9 ], [ %i.apq, %bb.gw ]
+.sink.split.i.i.i:                                ; preds = %bb.gw, %bb.ge
+  %.1137181.ph.i.i.i = phi i32 [ %.0.i.i.i140.i.i, %bb.ge ], [ %i.apq, %bb.gw ]
   call void @i915_gem_ww_ctx_fini(ptr noundef nonnull %3) #18
   br label %bb.gx
 
@@ -1068,9 +1063,12 @@ bb.m:                                             ; preds = %bb.k
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %.0.i.i.i.i = phi i32 [ %i.bj, %bb.l ], [ %i.bk, %bb.m ] ; 4 uses
-  %6 = icmp eq i32 %.0.i.i.i.i, 0
-  br i1 %6, label %bb.o, label %7
+  %.0.i.i.i.i = phi i32 [ %i.bj, %bb.l ], [ %i.bk, %bb.m ] ; 2 uses
+  switch i32 %.0.i.i.i.i, label %.sink.split.i.i [
+    i32 0, label %bb.o
+    i32 -35, label %bb.q
+    i32 -114, label %bb.s
+  ]
 
 bb.o:                                             ; preds = %bb.n
   %i.bl = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.ao, i32 1, ptr elementtype(i32) %i.ao) #19, !srcloc !28 ; 3 uses
@@ -1094,17 +1092,9 @@ i915_gem_object_get.exit.i.i.i.i:                 ; preds = %.sink.split.i.i.i.i
   store ptr %i.av, ptr %i.au, align 8
   store ptr %i.bo, ptr %i.ax, align 8
   store volatile ptr %i.au, ptr %i.bo, align 8
-  br label %7
+  br label %bb.s
 
-7:                                                ; preds = %i915_gem_object_get.exit.i.i.i.i, %bb.n
-  %8 = icmp eq i32 %.0.i.i.i.i, -114
-  %spec.store.select.i6.i.i.i = select i1 %8, i32 0, i32 %.0.i.i.i.i
-  switch i32 %spec.store.select.i6.i.i.i, label %.sink.split.i.i [
-    i32 -35, label %bb.q
-    i32 0, label %bb.s
-  ]
-
-bb.q:                                             ; preds = %7
+bb.q:                                             ; preds = %bb.n
   %i.bp = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.ao, i32 1, ptr elementtype(i32) %i.ao) #19, !srcloc !28 ; 3 uses
   %.not.i.i.i.i.i.i19.i7.i.i.i = icmp eq i32 %i.bp, 0
   br i1 %.not.i.i.i.i.i.i19.i7.i.i.i, label %.sink.split.i.i.i.i.i.i21.i9.i.i.i, label %bb.r, !prof !25
@@ -1124,7 +1114,7 @@ llist_add.exit.thread94.i.i:                      ; preds = %.sink.split.i.i.i.i
   store ptr %i.ao, ptr %i.bf, align 8
   br label %bb.ac
 
-bb.s:                                             ; preds = %7
+bb.s:                                             ; preds = %i915_gem_object_get.exit.i.i.i.i, %bb.n
   %i.bs = call ptr @i915_gem_object_pin_map(ptr noundef %i.ao, i32 noundef 0) #18 ; 4 uses
   %i.bt = icmp ugt ptr %i.bs, inttoptr (i64 -4096 to ptr)
   br i1 %i.bt, label %llist_add.exit.i.i, label %bb.t
@@ -1368,8 +1358,8 @@ llist_add.exit.thread.i.i:                        ; preds = %llist_add.exit.i.i
   %.not64.i.i = icmp eq i32 %.058.i.i, 0
   br i1 %.not64.i.i, label %alloc_oa_config_buffer.exit.i, label %bb.ad
 
-.sink.split.i.i:                                  ; preds = %bb.ac, %7
-  %.198.ph.i.i = phi i32 [ %.0.i.i.i.i, %7 ], [ %i.fp, %bb.ac ]
+.sink.split.i.i:                                  ; preds = %bb.ac, %bb.n
+  %.198.ph.i.i = phi i32 [ %.0.i.i.i.i, %bb.n ], [ %i.fp, %bb.ac ]
   call void @i915_gem_ww_ctx_fini(ptr noundef nonnull %4) #18
   br label %bb.ad
 
@@ -1475,8 +1465,11 @@ bb.an:                                            ; preds = %bb.al
 
 bb.ao:                                            ; preds = %bb.an, %bb.am
   %.0.i.i48 = phi i32 [ %i.gv, %bb.am ], [ %i.gw, %bb.an ] ; 4 uses
-  %9 = icmp eq i32 %.0.i.i48, 0
-  br i1 %9, label %bb.ap, label %10
+  switch i32 %.0.i.i48, label %.thread59 [
+    i32 0, label %bb.ap
+    i32 -35, label %bb.ar
+    i32 -114, label %bb.at
+  ]
 
 bb.ap:                                            ; preds = %bb.ao
   %i.gx = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.gq, i32 1, ptr elementtype(i32) %i.gq) #19, !srcloc !28 ; 3 uses
@@ -1502,17 +1495,13 @@ i915_gem_object_get.exit.i.i:                     ; preds = %.sink.split.i.i.i.i
   %i.hc = getelementptr i8, ptr %i.gq, i64 552
   store ptr %i.hb, ptr %i.hc, align 8
   store volatile ptr %i.ha, ptr %i.hb, align 8
-  br label %10
-
-10:                                               ; preds = %i915_gem_object_get.exit.i.i, %bb.ao
-  %11 = icmp eq i32 %.0.i.i48, -114
-  %spec.store.select.i6.i = select i1 %11, i32 0, i32 %.0.i.i48
-  switch i32 %spec.store.select.i6.i, label %.thread59 [
+  switch i32 %.0.i.i48, label %.thread59 [
     i32 -35, label %bb.ar
     i32 0, label %bb.at
+    i32 -114, label %bb.at
   ]
 
-bb.ar:                                            ; preds = %10
+bb.ar:                                            ; preds = %bb.ao, %i915_gem_object_get.exit.i.i
   %i.hd = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.gq, i32 1, ptr elementtype(i32) %i.gq) #19, !srcloc !28 ; 3 uses
   %.not.i.i.i.i.i.i19.i7.i = icmp eq i32 %i.hd, 0
   br i1 %.not.i.i.i.i.i.i19.i7.i, label %.sink.split.i.i.i.i.i.i21.i9.i, label %bb.as, !prof !25
@@ -1532,7 +1521,7 @@ bb.as:                                            ; preds = %bb.ar
   store ptr %i.gq, ptr %i.gp, align 8
   br label %bb.be
 
-bb.at:                                            ; preds = %10
+bb.at:                                            ; preds = %bb.ao, %i915_gem_object_get.exit.i.i, %i915_gem_object_get.exit.i.i
   %i.hg = call i32 @i915_vma_pin_ww(ptr noundef %.0.i, ptr noundef nonnull %5, i64 noundef 0, i64 noundef 0, i64 noundef 1056) #18 ; 2 uses
   %.not39 = icmp eq i32 %i.hg, 0
   br i1 %.not39, label %bb.au, label %bb.bd
@@ -1651,8 +1640,8 @@ bb.be:                                            ; preds = %.thread, %bb.bd
   %.not43 = icmp eq i32 %i.iv, 0
   br i1 %.not43, label %bb.al, label %.thread59
 
-.thread59:                                        ; preds = %10, %bb.be, %bb.bd
-  %.3 = phi i32 [ %i.iv, %bb.be ], [ %.2, %bb.bd ], [ %.0.i.i48, %10 ] ; 3 uses
+.thread59:                                        ; preds = %bb.ao, %i915_gem_object_get.exit.i.i, %bb.be, %bb.bd
+  %.3 = phi i32 [ %i.iv, %bb.be ], [ %.2, %bb.bd ], [ %.0.i.i48, %i915_gem_object_get.exit.i.i ], [ %.0.i.i48, %bb.ao ] ; 3 uses
   call void @i915_gem_ww_ctx_fini(ptr noundef nonnull %5) #18
   %.val45 = load ptr, ptr %i.gg, align 8          ; 4 uses
   %i.iw = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %.val45, i32 -1, ptr elementtype(i32) %.val45) #19, !srcloc !28 ; 2 uses

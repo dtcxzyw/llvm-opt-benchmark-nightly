@@ -205,16 +205,15 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %.0118 = load ptr, ptr %i.dm, align 8, !tbaa !143 ; 6 uses
   %.not136 = icmp ne i32 %i.ci, 0
   %i.dn = zext i1 %.not136 to i32
-  %spec.select = add nuw nsw i32 %i.ch, %i.dn     ; 2 uses
-  %3 = icmp eq i32 %spec.select, 3
-  %spec.store.select = select i1 %3, i32 4, i32 %spec.select
-  switch i32 %spec.store.select, label %.loopexit [
+  %spec.select = add nuw nsw i32 %i.ch, %i.dn
+  switch i32 %spec.select, label %.loopexit [
     i32 1, label %bb.p
     i32 2, label %bb.q
     i32 4, label %.preheader153
+    i32 3, label %.preheader153
   ]
 
-.preheader153:                                    ; preds = %bb.o
+.preheader153:                                    ; preds = %bb.o, %bb.o
   %i.do = extractelement <2 x i32> %i.dk, i64 1   ; 4 uses
   %.not212 = icmp eq i32 %i.do, 0
   br i1 %.not212, label %.loopexit, label %.lr.ph
@@ -617,13 +616,12 @@ opj_tcd_get_encoder_input_buffer_size.exit.thread: ; preds = %.lr.ph.i
   %i.bf = mul nsw i64 %i.be, %i.ay                ; 31 uses
   %.not75 = icmp ne i32 %i.at, 0
   %i.bg = zext i1 %.not75 to i32
-  %spec.select = add nuw nsw i32 %i.as, %i.bg     ; 2 uses
-  %3 = icmp eq i32 %spec.select, 3
-  %spec.store.select = select i1 %3, i32 4, i32 %spec.select
-  switch i32 %spec.store.select, label %.loopexit [
+  %spec.select = add nuw nsw i32 %i.as, %i.bg
+  switch i32 %spec.select, label %.loopexit [
     i32 1, label %bb.b
     i32 2, label %bb.c
     i32 4, label %bb.d
+    i32 3, label %bb.d
   ]
 
 bb.b:                                             ; preds = %.lr.ph113
@@ -1006,7 +1004,7 @@ middle.block194:                                  ; preds = %vector.body187
   %exitcond130.not = icmp eq i64 %i.gs, %i.bf
   br i1 %exitcond130.not, label %.loopexit, label %.lr.ph97, !llvm.loop !335
 
-bb.d:                                             ; preds = %.lr.ph113
+bb.d:                                             ; preds = %.lr.ph113, %.lr.ph113
   %.not115 = icmp eq i64 %i.bf, 0
   br i1 %.not115, label %.loopexit, label %.lr.ph.preheader
 

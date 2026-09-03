@@ -204,12 +204,12 @@ bb.al:                                            ; preds = %bb.aj
   br i1 %.not393, label %bb.ai, label %ompi_datatype_copy_content_same_ddt.exit.thread479, !llvm.loop !118
 
 ompi_datatype_copy_content_same_ddt.exit.thread479: ; preds = %.lr.ph.i, %ompi_coll_base_sendrecv.exit, %bb.ai, %bb.al, %._crit_edge, %bb.ah, %bb.r, %bb.ak, %bb.ae, %bb.m, %bb.o, %bb.l, %bb.n
-  %.1325496 = phi ptr [ %.0324426, %bb.m ], [ %.0324426, %ompi_coll_base_sendrecv.exit ], [ %.0324426, %bb.ai ], [ %.0324426, %bb.n ], [ %.0324426, %bb.l ], [ %.0324426, %bb.o ], [ %.0324426, %bb.ah ], [ %.0324426, %bb.ak ], [ %.0324426, %bb.r ], [ %.0324426, %bb.ae ], [ %.0324426, %._crit_edge ], [ %.0324426, %bb.al ], [ %.0324425, %.lr.ph.i ] ; 2 uses
-  %.0326494 = phi ptr [ null, %bb.m ], [ %i.bx, %ompi_coll_base_sendrecv.exit ], [ %i.bx, %bb.ai ], [ null, %bb.n ], [ null, %bb.l ], [ null, %bb.o ], [ %i.bx, %bb.ah ], [ %i.bx, %bb.ak ], [ %i.bx, %bb.r ], [ %i.bx, %bb.ae ], [ %i.bx, %._crit_edge ], [ %i.bx, %bb.al ], [ null, %.lr.ph.i ] ; 2 uses
-  %.0327492 = phi ptr [ null, %bb.m ], [ %i.bv, %ompi_coll_base_sendrecv.exit ], [ %i.bv, %bb.ai ], [ null, %bb.n ], [ null, %bb.l ], [ null, %bb.o ], [ %i.bv, %bb.ah ], [ %i.bv, %bb.ak ], [ %i.bv, %bb.r ], [ %i.bv, %bb.ae ], [ %i.bv, %._crit_edge ], [ %i.bv, %bb.al ], [ null, %.lr.ph.i ] ; 2 uses
-  %.0328490 = phi ptr [ null, %bb.m ], [ %i.bw, %ompi_coll_base_sendrecv.exit ], [ %i.bw, %bb.ai ], [ null, %bb.n ], [ null, %bb.l ], [ null, %bb.o ], [ %i.bw, %bb.ah ], [ %i.bw, %bb.ak ], [ %i.bw, %bb.r ], [ %i.bw, %bb.ae ], [ %i.bw, %._crit_edge ], [ %i.bw, %bb.al ], [ null, %.lr.ph.i ] ; 2 uses
-  %.0329488 = phi ptr [ null, %bb.m ], [ %i.bu, %ompi_coll_base_sendrecv.exit ], [ %i.bu, %bb.ai ], [ null, %bb.n ], [ null, %bb.l ], [ null, %bb.o ], [ %i.bu, %bb.ah ], [ %i.bu, %bb.ak ], [ %i.bu, %bb.r ], [ %i.bu, %bb.ae ], [ %i.bu, %._crit_edge ], [ %i.bu, %bb.al ], [ null, %.lr.ph.i ] ; 2 uses
-  %.11486 = phi i32 [ %i.bi, %bb.m ], [ %.0.i410, %ompi_coll_base_sendrecv.exit ], [ 0, %bb.ai ], [ %i.bn, %bb.n ], [ %i.bf, %bb.l ], [ %i.bp, %bb.o ], [ 0, %bb.ah ], [ %i.fp, %bb.ak ], [ -2, %bb.r ], [ %i.er, %bb.ae ], [ %i.ec, %._crit_edge ], [ %i.fz, %bb.al ], [ %i.ap, %.lr.ph.i ] ; 2 uses
+  %.1325496 = phi ptr [ %.0324426, %bb.m ], [ %.0324426, %ompi_coll_base_sendrecv.exit ], [ %.0324426, %bb.ai ], [ %.0324426, %bb.n ], [ %.0324426, %bb.l ], [ %.0324426, %bb.o ], [ %.0324426, %bb.ah ], [ %.0324426, %bb.ae ], [ %.0324426, %bb.r ], [ %.0324426, %bb.ak ], [ %.0324426, %._crit_edge ], [ %.0324426, %bb.al ], [ %.0324425, %.lr.ph.i ] ; 2 uses
+  %.0326494 = phi ptr [ null, %bb.m ], [ %i.bx, %ompi_coll_base_sendrecv.exit ], [ %i.bx, %bb.ai ], [ null, %bb.n ], [ null, %bb.l ], [ null, %bb.o ], [ %i.bx, %bb.ah ], [ %i.bx, %bb.ae ], [ %i.bx, %bb.r ], [ %i.bx, %bb.ak ], [ %i.bx, %._crit_edge ], [ %i.bx, %bb.al ], [ null, %.lr.ph.i ] ; 2 uses
+  %.0327492 = phi ptr [ null, %bb.m ], [ %i.bv, %ompi_coll_base_sendrecv.exit ], [ %i.bv, %bb.ai ], [ null, %bb.n ], [ null, %bb.l ], [ null, %bb.o ], [ %i.bv, %bb.ah ], [ %i.bv, %bb.ae ], [ %i.bv, %bb.r ], [ %i.bv, %bb.ak ], [ %i.bv, %._crit_edge ], [ %i.bv, %bb.al ], [ null, %.lr.ph.i ] ; 2 uses
+  %.0328490 = phi ptr [ null, %bb.m ], [ %i.bw, %ompi_coll_base_sendrecv.exit ], [ %i.bw, %bb.ai ], [ null, %bb.n ], [ null, %bb.l ], [ null, %bb.o ], [ %i.bw, %bb.ah ], [ %i.bw, %bb.ae ], [ %i.bw, %bb.r ], [ %i.bw, %bb.ak ], [ %i.bw, %._crit_edge ], [ %i.bw, %bb.al ], [ null, %.lr.ph.i ] ; 2 uses
+  %.0329488 = phi ptr [ null, %bb.m ], [ %i.bu, %ompi_coll_base_sendrecv.exit ], [ %i.bu, %bb.ai ], [ null, %bb.n ], [ null, %bb.l ], [ null, %bb.o ], [ %i.bu, %bb.ah ], [ %i.bu, %bb.ae ], [ %i.bu, %bb.r ], [ %i.bu, %bb.ak ], [ %i.bu, %._crit_edge ], [ %i.bu, %bb.al ], [ null, %.lr.ph.i ] ; 2 uses
+  %.11486 = phi i32 [ %i.bi, %bb.m ], [ %.0.i410, %ompi_coll_base_sendrecv.exit ], [ 0, %bb.ai ], [ %i.bn, %bb.n ], [ %i.bf, %bb.l ], [ %i.bp, %bb.o ], [ 0, %bb.ah ], [ %i.er, %bb.ae ], [ -2, %bb.r ], [ %i.fp, %bb.ak ], [ %i.ec, %._crit_edge ], [ %i.fz, %bb.al ], [ %i.ap, %.lr.ph.i ] ; 2 uses
   tail call void @free(ptr noundef nonnull %i.ai) #9
   %.not396 = icmp eq ptr %.1325496, null
   br i1 %.not396, label %bb.an, label %bb.am
@@ -251,7 +251,7 @@ bb.au:                                            ; preds = %bb.at
   br label %.thread545
 
 .thread545:                                       ; preds = %.thread632, %opal_datatype_span.exit, %bb.au, %bb.at, %bb.d, %bb.a
-  %.2 = phi i32 [ 13, %bb.a ], [ %i.q, %bb.d ], [ %.11486, %bb.at ], [ %.11486, %bb.au ], [ -2, %opal_datatype_span.exit ], [ -2, %.thread632 ]
+  %.2 = phi i32 [ 13, %bb.a ], [ %i.q, %bb.d ], [ %.11486, %bb.au ], [ %.11486, %bb.at ], [ -2, %opal_datatype_span.exit ], [ -2, %.thread632 ]
   ret i32 %.2
 }
 
