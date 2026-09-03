@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %.lr.ph89, %bb.ac
   %indvars.iv = phi i64 [ 0, %.lr.ph89 ], [ %indvars.iv.next, %bb.ac ] ; 3 uses
   %i.x = load ptr, ptr %i.w, align 8
-  %i.y = getelementptr inbounds nuw [56 x i8], ptr %i.x, i64 %indvars.iv ; 15 uses
+  %i.y = getelementptr inbounds nuw [56 x i8], ptr %i.x, i64 %indvars.iv ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #11
@@ -406,10 +406,10 @@ _morton_scale.exit:                               ; preds = %.lr.ph.i53, %bb.q
   %i.ct = zext i16 %i.cs to i32
   %i.cu = getelementptr inbounds nuw i8, ptr %i.y, i64 50
   %i.cv = load i16, ptr %i.h, align 2
-  %4 = zext i16 %i.cv to i32
-  %5 = getelementptr inbounds nuw i8, ptr %i.y, i64 52
-  %6 = load i16, ptr %i.i, align 2
-  %7 = zext i16 %6 to i32
+  %4 = load i16, ptr %i.i, align 2
+  %5 = insertelement <2 x i16> poison, i16 %i.cv, i64 0
+  %6 = insertelement <2 x i16> %5, i16 %4, i64 1
+  %7 = zext <2 x i16> %6 to <2 x i32>
   %i.cw = trunc nuw nsw i64 %indvars.iv to i32
   %i.cx = shl i32 %i.cw, 16
   %i.cy = add i32 %i.cx, 65536                    ; 2 uses
@@ -478,25 +478,22 @@ _find_torus_index.exit:                           ; preds = %bb.u, %bb.s, %._cri
   %i.dy = sub nsw i32 %i.dx, %i.ct
   %i.dz = srem i32 %i.dy, %i.dw
   %i.ea = load i16, ptr %i.o, align 2
-  %8 = zext i16 %i.ea to i32
-  %i.eb = load i16, ptr %i.cu, align 2
-  %9 = zext i16 %i.eb to i32                      ; 2 uses
-  %10 = add nuw nsw i32 %9, %8
-  %11 = sub nsw i32 %10, %4
-  %12 = srem i32 %11, %9
-  %13 = load i16, ptr %i.p, align 2
-  %14 = zext i16 %13 to i32
-  %15 = load i16, ptr %5, align 4
-  %16 = zext i16 %15 to i32                       ; 2 uses
-  %17 = add nuw nsw i32 %16, %14
-  %18 = sub nsw i32 %17, %7
-  %19 = srem i32 %18, %16
-  %20 = and i32 %i.dz, 65535
-  %21 = lshr i32 %20, %i.cz
-  %22 = and i32 %12, 65535
-  %i.ec = lshr i32 %22, %i.da
-  %23 = and i32 %19, 65535
-  %i.ed = lshr i32 %23, %i.db
+  %i.eb = load i16, ptr %i.p, align 2
+  %8 = insertelement <2 x i16> poison, i16 %i.ea, i64 0
+  %9 = insertelement <2 x i16> %8, i16 %i.eb, i64 1
+  %10 = zext <2 x i16> %9 to <2 x i32>
+  %11 = load <2 x i16>, ptr %i.cu, align 2
+  %12 = zext <2 x i16> %11 to <2 x i32>           ; 2 uses
+  %13 = add nuw nsw <2 x i32> %12, %10
+  %14 = sub nsw <2 x i32> %13, %7
+  %15 = srem <2 x i32> %14, %12
+  %16 = and i32 %i.dz, 65535
+  %17 = lshr i32 %16, %i.cz
+  %18 = and <2 x i32> %15, splat (i32 65535)      ; 2 uses
+  %19 = extractelement <2 x i32> %18, i64 0
+  %i.ec = lshr i32 %19, %i.da
+  %20 = extractelement <2 x i32> %18, i64 1
+  %i.ed = lshr i32 %20, %i.db
   br i1 %.not.i60, label %_morton_encode.exit, label %.lr.ph.i61
 
 .lr.ph.i61:                                       ; preds = %_find_torus_index.exit, %bb.aa
@@ -507,7 +504,7 @@ _find_torus_index.exit:                           ; preds = %bb.u, %bb.s, %._cri
   br i1 %i.ee, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %.lr.ph.i61
-  %i.ef = lshr i32 %21, %.041.i
+  %i.ef = lshr i32 %17, %.041.i
   %i.eg = and i32 %i.ef, 1
   %i.eh = add nsw i32 %.03240.i, 1
   %i.ei = shl nuw i32 %i.eg, %.03240.i

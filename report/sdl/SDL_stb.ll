@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca [64 x i16], align 16              ; 4 uses
   %i.c = alloca [4 x ptr], align 16               ; 13 uses
   %6 = alloca [4 x %struct.stbi__resample], align 16 ; 4 uses
-  %i.d = tail call noalias ptr @SDL_malloc_REAL(i64 noundef 18568) #13 ; 107 uses
+  %i.d = tail call noalias ptr @SDL_malloc_REAL(i64 noundef 18568) #13 ; 103 uses
   %.not = icmp eq ptr %i.d, null
   br i1 %.not, label %bb.b, label %bb.c
 
@@ -608,7 +608,6 @@ bb.gb:                                            ; preds = %bb.fs
 
 .lr.ph.i:                                         ; preds = %bb.gb
   %i.amf = getelementptr inbounds nuw i8, ptr %i.d, i64 18056
-  %7 = getelementptr inbounds nuw i8, ptr %i.d, i64 18060
   %wide.trip.count.i = zext nneg i32 %..i to i64  ; 2 uses
   %.pre577.i = load i32, ptr %.pre.i, align 8
   br label %bb.hb
@@ -811,32 +810,29 @@ bb.gy:                                            ; preds = %.loopexit64.i.i
   br i1 %.not77.i.i, label %output_jpeg_nv12.exit.i, label %.lr.ph75.i.i
 
 .lr.ph75.i.i:                                     ; preds = %bb.gy
-  %8 = getelementptr inbounds nuw i8, ptr %i.d, i64 18060
-  %9 = load i32, ptr %8, align 4                  ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.d, i64 18280
-  %11 = load i32, ptr %10, align 8
-  %12 = sdiv i32 %9, %11
   %i.aor = getelementptr inbounds nuw i8, ptr %i.d, i64 18056
-  %13 = load i32, ptr %i.aor, align 8             ; 2 uses
   %i.aos = getelementptr inbounds nuw i8, ptr %i.d, i64 18276
-  %14 = load i32, ptr %i.aos, align 4
-  %15 = sdiv i32 %13, %14
-  %16 = getelementptr inbounds nuw i8, ptr %i.d, i64 18184
-  %17 = load i32, ptr %16, align 8
-  %18 = sdiv i32 %9, %17
-  %19 = getelementptr inbounds nuw i8, ptr %i.d, i64 18180
-  %20 = load i32, ptr %19, align 4
-  %21 = sdiv i32 %13, %20
-  %22 = getelementptr inbounds nuw i8, ptr %i.d, i64 18224
-  %i.aot = sub i32 3, %18
+  %7 = getelementptr inbounds nuw i8, ptr %i.d, i64 18180
+  %8 = load <2 x i32>, ptr %i.aor, align 8
+  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %10 = load <2 x i32>, ptr %i.aos, align 4
+  %11 = load <2 x i32>, ptr %7, align 4
+  %12 = shufflevector <2 x i32> %10, <2 x i32> %11, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %13 = sdiv <4 x i32> %9, %12                    ; 4 uses
+  %14 = getelementptr inbounds nuw i8, ptr %i.d, i64 18224
+  %15 = extractelement <4 x i32> %13, i64 3
+  %i.aot = sub i32 3, %15
   %i.aou = getelementptr inbounds nuw i8, ptr %i.d, i64 18204
   %i.aov = getelementptr inbounds nuw i8, ptr %i.d, i64 18320
-  %i.aow = sub i32 3, %12
+  %16 = extractelement <4 x i32> %13, i64 1
+  %i.aow = sub i32 3, %16
   %i.aox = getelementptr inbounds nuw i8, ptr %i.d, i64 18300
   %i.aoy = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.aoz = sub i32 3, %21
+  %17 = extractelement <4 x i32> %13, i64 2
+  %i.aoz = sub i32 3, %17
   %i.apa = sext i32 %i.aoz to i64
-  %i.apb = sub i32 3, %15
+  %18 = extractelement <4 x i32> %13, i64 0
+  %i.apb = sub i32 3, %18
   %i.apc = sext i32 %i.apb to i64
   %.pre80.i.i = load i32, ptr %i.aol, align 8
   br label %bb.gz
@@ -861,7 +857,7 @@ bb.gz:                                            ; preds = %._crit_edge.i.i, %.
   %i.apo = mul i32 %i.apm, %i.apn
   %i.app = zext i32 %i.apo to i64
   %i.apq = getelementptr inbounds nuw i8, ptr %i.apl, i64 %i.app
-  %i.apr = load ptr, ptr %22, align 8
+  %i.apr = load ptr, ptr %14, align 8
   %i.aps = mul i32 %.173.i.i, %i.aot
   %i.apt = load i32, ptr %i.aou, align 4
   %i.apu = mul i32 %i.aps, %i.apt
@@ -932,11 +928,11 @@ output_jpeg_nv12.exit.i:                          ; preds = %bb.ha, %._crit_edge
 bb.hb:                                            ; preds = %.thread374.i, %.lr.ph.i
   %i.arl = phi i32 [ %.pre577.i, %.lr.ph.i ], [ %i.asl, %.thread374.i ]
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %.thread374.i ] ; 3 uses
-  %i.arm = getelementptr inbounds nuw [48 x i8], ptr %6, i64 %indvars.iv.i ; 8 uses
+  %i.arm = getelementptr inbounds nuw [48 x i8], ptr %6, i64 %indvars.iv.i ; 7 uses
   %i.arn = add i32 %i.arl, 3
   %i.aro = zext i32 %i.arn to i64
   %i.arp = call noalias ptr @SDL_malloc_REAL(i64 noundef range(i64 -2147483648, 4294967296) %i.aro) #13 ; 2 uses
-  %i.arq = getelementptr inbounds nuw [96 x i8], ptr %i.k, i64 %indvars.iv.i ; 4 uses
+  %i.arq = getelementptr inbounds nuw [96 x i8], ptr %i.k, i64 %indvars.iv.i ; 3 uses
   %i.arr = getelementptr inbounds nuw i8, ptr %i.arq, i64 72
   store ptr %i.arp, ptr %i.arr, align 8
   %.not303.not.i = icmp eq ptr %i.arp, null
@@ -1001,26 +997,22 @@ bb.hj:                                            ; preds = %bb.hi, %bb.hh
   br i1 %exitcond.not.i.i348.i, label %bb.ho, label %bb.hd, !llvm.loop !2
 
 bb.hk:                                            ; preds = %bb.hb
-  %23 = load i32, ptr %i.amf, align 8
   %i.asg = getelementptr inbounds nuw i8, ptr %i.arq, i64 4
-  %24 = load i32, ptr %i.asg, align 4
-  %25 = sdiv i32 %23, %24                         ; 4 uses
   %i.ash = getelementptr inbounds nuw i8, ptr %i.arm, i64 24
-  store i32 %25, ptr %i.ash, align 8
-  %26 = load i32, ptr %7, align 4
-  %27 = getelementptr inbounds nuw i8, ptr %i.arq, i64 8
-  %28 = load i32, ptr %27, align 8
-  %29 = sdiv i32 %26, %28                         ; 5 uses
-  %30 = getelementptr inbounds nuw i8, ptr %i.arm, i64 28
-  store i32 %29, ptr %30, align 4
-  %i.asi = ashr i32 %29, 1
+  %19 = load <2 x i32>, ptr %i.amf, align 8
+  %20 = load <2 x i32>, ptr %i.asg, align 4
+  %21 = sdiv <2 x i32> %19, %20                   ; 3 uses
+  store <2 x i32> %21, ptr %i.ash, align 8
+  %22 = extractelement <2 x i32> %21, i64 1       ; 4 uses
+  %i.asi = ashr i32 %22, 1
   %i.asj = getelementptr inbounds nuw i8, ptr %i.arm, i64 36
   store i32 %i.asi, ptr %i.asj, align 4
   %i.ask = load ptr, ptr %i.d, align 8            ; 7 uses
   %i.asl = load i32, ptr %i.ask, align 8          ; 6 uses
-  %i.asm = add i32 %25, -1
+  %23 = extractelement <2 x i32> %21, i64 0       ; 3 uses
+  %i.asm = add i32 %23, -1
   %i.asn = add i32 %i.asm, %i.asl
-  %i.aso = udiv i32 %i.asn, %25
+  %i.aso = udiv i32 %i.asn, %23
   %i.asp = getelementptr inbounds nuw i8, ptr %i.arm, i64 32
   store i32 %i.aso, ptr %i.asp, align 16
   %i.asq = getelementptr inbounds nuw i8, ptr %i.arm, i64 40
@@ -1031,20 +1023,20 @@ bb.hk:                                            ; preds = %bb.hb
   store ptr %i.ass, ptr %i.ast, align 16
   %i.asu = getelementptr inbounds nuw i8, ptr %i.arm, i64 8
   store ptr %i.ass, ptr %i.asu, align 8
-  switch i32 %25, label %.thread373.i [
+  switch i32 %23, label %.thread373.i [
     i32 1, label %bb.hl
     i32 2, label %bb.hm
   ]
 
 bb.hl:                                            ; preds = %bb.hk
-  %switch.selectcmp.i = icmp eq i32 %29, 2
+  %switch.selectcmp.i = icmp eq i32 %22, 2
   %switch.select.i = select i1 %switch.selectcmp.i, ptr @stbi__resample_row_v_2, ptr @stbi__resample_row_generic
-  %switch.selectcmp778.i = icmp eq i32 %29, 1
+  %switch.selectcmp778.i = icmp eq i32 %22, 1
   %switch.select779.i = select i1 %switch.selectcmp778.i, ptr @resample_row_1, ptr %switch.select.i
   br label %.thread374.i
 
 bb.hm:                                            ; preds = %bb.hk
-  switch i32 %29, label %.thread373.i [
+  switch i32 %22, label %.thread373.i [
     i32 1, label %.thread374.i
     i32 2, label %bb.hn
   ]

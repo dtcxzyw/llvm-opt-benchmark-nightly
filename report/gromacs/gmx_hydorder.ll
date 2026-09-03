@@ -205,8 +205,7 @@ _ZNSt10filesystem7__cxx114pathD2Ev.exit.i:        ; preds = %_ZNSt10filesystem7_
   %i.de = shufflevector <2 x float> %i.dd, <2 x float> poison, <2 x i32> zeroinitializer
   %i.df = fdiv <2 x float> %i.dc, %i.de
   %i.dg = fadd <2 x float> %i.df, splat (float 5.000000e-01)
-  %i.dh = fptosi <2 x float> %i.dg to <2 x i32>   ; 4 uses
-  %36 = extractelement <2 x i32> %i.dh, i64 0     ; 17 uses
+  %i.dh = fptosi <2 x float> %i.dg to <2 x i32>   ; 5 uses
   %puts.i = call i32 @puts(ptr nonnull dereferenceable(1) @str) ; 0 uses
   %i.di = invoke noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.43, ptr noundef nonnull @.str.32, i32 noundef 322, i64 noundef 1, i64 noundef 8)
           to label %.noexc35 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
@@ -311,8 +310,9 @@ bb.ap:                                            ; preds = %_ZNSt10filesystem7_
 
 .noexc43:                                         ; preds = %.noexc42
   %i.ee = icmp slt i32 %i.cw, 1                   ; 9 uses
-  %i.ef = extractelement <2 x i32> %i.dh, i64 1   ; 10 uses
+  %i.ef = extractelement <2 x i32> %i.dh, i64 1   ; 9 uses
   %i.eg = sext i32 %i.ef to i64                   ; 6 uses
+  %36 = extractelement <2 x i32> %i.dh, i64 0     ; 16 uses
   %.pre = sext i32 %36 to i64                     ; 8 uses
   br i1 %i.ee, label %._crit_edge338.i, label %.lr.ph337.i.preheader
 
@@ -715,21 +715,19 @@ begin_hunk_1_@_Z12gmx_hydorderiPPc:bb.a
   %i.wt = fdiv <2 x float> %i.wr, %i.ws
   %i.wu = fadd <2 x float> %i.wt, splat (float 1.000000e+00)
   %i.wv = fmul <2 x float> %i.wu, %i.ff
-  %i.ww = call <2 x float> @llvm.round.v2f32(<2 x float> %i.wv) ; 2 uses
-  %37 = extractelement <2 x float> %i.ww, i64 0
-  %38 = fptosi float %37 to i32
-  %39 = srem i32 %38, %36
-  %40 = extractelement <2 x float> %i.ww, i64 1
-  %41 = fptosi float %40 to i32
-  %42 = srem i32 %41, %i.ef
+  %i.ww = call <2 x float> @llvm.round.v2f32(<2 x float> %i.wv)
+  %37 = fptosi <2 x float> %i.ww to <2 x i32>
+  %38 = srem <2 x i32> %37, %i.dh                 ; 2 uses
   %i.wx = load float, ptr %i.kp, align 4, !tbaa !93
   %i.wy = sext i32 %i.wm to i64                   ; 3 uses
   %i.wz = getelementptr inbounds [8 x i8], ptr %i.ec, i64 %i.wy
   %i.xa = load ptr, ptr %i.wz, align 8, !tbaa !117
+  %39 = extractelement <2 x i32> %38, i64 0
   %i.xb = sext i32 %39 to i64                     ; 3 uses
   %i.xc = getelementptr inbounds [8 x i8], ptr %i.xa, i64 %i.xb
   %i.xd = load ptr, ptr %i.xc, align 8, !tbaa !119
-  %i.xe = sext i32 %42 to i64                     ; 3 uses
+  %40 = extractelement <2 x i32> %38, i64 1
+  %i.xe = sext i32 %40 to i64                     ; 3 uses
   %i.xf = getelementptr inbounds [4 x i8], ptr %i.xd, i64 %i.xe ; 2 uses
   %i.xg = load float, ptr %i.xf, align 4, !tbaa !93
   %i.xh = fadd float %i.wx, %i.xg
@@ -1132,13 +1130,13 @@ declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i6
 declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.round.v2f32(<2 x float>) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.round.v2f32(<2 x float>) #11
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -2,8 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 1873
 inline.NumDeleted: 1181
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZNSt10_HashtableIjSt4pairIKjN6hermes25FunctionRuntimeStatisticsEESaIS4_ENSt8__detail10_Select1stESt8equal_toIjESt4hashIjENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb0ELb0ELb1EEEED2Ev:bb.a
 
 _ZNSt10_HashtableIjSt4pairIKjN6hermes25FunctionRuntimeStatisticsEESaIS4_ENSt8__detail10_Select1stESt8equal_toIjESt4hashIjENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb0ELb0ELb1EEEE5clearEv.exit: ; preds = %_ZNSt8__detail16_Hashtable_allocISaINS_10_Hash_nodeISt4pairIKjN6hermes25FunctionRuntimeStatisticsEELb0EEEEE18_M_deallocate_nodeEPS7_.exit.i.i, %bb.a
@@ -205,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.t = mul nuw nsw i64 %i.r, 48
-  %i.u = tail call noalias ptr @malloc(i64 noundef %i.t) #29 ; 7 uses
+  %i.u = tail call noalias ptr @malloc(i64 noundef %i.t) #29 ; 3 uses
   %i.v = icmp eq ptr %i.u, null
   br i1 %i.v, label %bb.d, label %_ZN4llvh11safe_mallocEm.exit
 
@@ -214,62 +213,30 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN4llvh11safe_mallocEm.exit
 
 _ZN4llvh11safe_mallocEm.exit:                     ; preds = %bb.c, %bb.d
-  %i.w = load ptr, ptr %0, align 8, !tbaa !50     ; 7 uses
+  %i.w = load ptr, ptr %0, align 8, !tbaa !50     ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.y = load i32, ptr %i.x, align 8, !tbaa !51   ; 2 uses
   %i.z = zext i32 %i.y to i64
-  %.idx = mul nuw nsw i64 %i.z, 48                ; 2 uses
+  %.idx = mul nuw nsw i64 %i.z, 48
   %i.aa = getelementptr inbounds nuw i8, ptr %i.w, i64 %.idx
   %.not7.i.i.i.i = icmp eq i32 %i.y, 0
-  br i1 %.not7.i.i.i.i, label %_ZN4llvh23SmallVectorTemplateBaseINS_2cl6parserI17DisassemblyFormatE10OptionInfoELb0EE18uninitialized_moveIPS5_S8_EEvT_S9_T0_.exit, label %.lr.ph.i.i.i.i.preheader
+  br i1 %.not7.i.i.i.i, label %_ZN4llvh23SmallVectorTemplateBaseINS_2cl6parserI17DisassemblyFormatE10OptionInfoELb0EE18uninitialized_moveIPS5_S8_EEvT_S9_T0_.exit, label %.lr.ph.i.i.i.i
 
-.lr.ph.i.i.i.i.preheader:                         ; preds = %_ZN4llvh11safe_mallocEm.exit
-  %2 = add nsw i64 %.idx, -48                     ; 2 uses
-  %3 = udiv i64 %2, 48
-  %4 = and i64 %3, 1
-  %lcmp.mod.not.not = icmp eq i64 %4, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.prol, label %.lr.ph.i.i.i.i.prol.loopexit
-
-.lr.ph.i.i.i.i.prol:                              ; preds = %.lr.ph.i.i.i.i.preheader
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.u, ptr noundef nonnull align 8 dereferenceable(48) %i.w, i64 32, i1 false), !tbaa.struct !471
-  %5 = getelementptr inbounds nuw i8, ptr %i.u, i64 32
-  %6 = getelementptr inbounds nuw i8, ptr %i.u, i64 40
-  %7 = getelementptr inbounds nuw i8, ptr %i.w, i64 40
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %6, ptr noundef nonnull align 8 dereferenceable(5) %7, i64 5, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvh2cl11OptionValueI17DisassemblyFormatEE, i64 16), ptr %5, align 8, !tbaa !16
-  %8 = getelementptr inbounds nuw i8, ptr %i.w, i64 48
-  %9 = getelementptr inbounds nuw i8, ptr %i.u, i64 48
-  br label %.lr.ph.i.i.i.i.prol.loopexit
-
-.lr.ph.i.i.i.i.prol.loopexit:                     ; preds = %.lr.ph.i.i.i.i.prol, %.lr.ph.i.i.i.i.preheader
-  %.09.i.i.i.i.unr = phi ptr [ %i.u, %.lr.ph.i.i.i.i.preheader ], [ %9, %.lr.ph.i.i.i.i.prol ]
-  %.sroa.04.08.i.i.i.i.unr = phi ptr [ %i.w, %.lr.ph.i.i.i.i.preheader ], [ %8, %.lr.ph.i.i.i.i.prol ]
-  %10 = icmp ult i64 %2, 48
-  br i1 %10, label %_ZN4llvh23SmallVectorTemplateBaseINS_2cl6parserI17DisassemblyFormatE10OptionInfoELb0EE18uninitialized_moveIPS5_S8_EEvT_S9_T0_.exit, label %.lr.ph.i.i.i.i
-
-.lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i
-  %.09.i.i.i.i = phi ptr [ %i.af, %.lr.ph.i.i.i.i ], [ %.09.i.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ] ; 7 uses
-  %.sroa.04.08.i.i.i.i = phi ptr [ %i.ae, %.lr.ph.i.i.i.i ], [ %.sroa.04.08.i.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ] ; 5 uses
+.lr.ph.i.i.i.i:                                   ; preds = %_ZN4llvh11safe_mallocEm.exit, %.lr.ph.i.i.i.i
+  %.09.i.i.i.i = phi ptr [ %i.af, %.lr.ph.i.i.i.i ], [ %i.u, %_ZN4llvh11safe_mallocEm.exit ] ; 4 uses
+  %.sroa.04.08.i.i.i.i = phi ptr [ %i.ae, %.lr.ph.i.i.i.i ], [ %i.w, %_ZN4llvh11safe_mallocEm.exit ] ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.09.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.04.08.i.i.i.i, i64 32, i1 false), !tbaa.struct !471
-  %11 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 32
-  %12 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 40
-  %13 = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i, i64 40
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %12, ptr noundef nonnull align 8 dereferenceable(5) %13, i64 5, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvh2cl11OptionValueI17DisassemblyFormatEE, i64 16), ptr %11, align 8, !tbaa !16
-  %14 = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i, i64 48
-  %15 = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 48
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %15, ptr noundef nonnull align 8 dereferenceable(48) %14, i64 32, i1 false), !tbaa.struct !471
-  %i.ab = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 80
-  %i.ac = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 88
-  %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i, i64 88
+  %i.ab = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 32
+  %i.ac = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 40
+  %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i, i64 40
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.ac, ptr noundef nonnull align 8 dereferenceable(5) %i.ad, i64 5, i1 false)
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvh2cl11OptionValueI17DisassemblyFormatEE, i64 16), ptr %i.ab, align 8, !tbaa !16
-  %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i, i64 96 ; 2 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 96
+  %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i, i64 48 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i, i64 48
   %.not.i.i.i.i.1 = icmp eq ptr %i.ae, %i.aa
   br i1 %.not.i.i.i.i.1, label %_ZN4llvh23SmallVectorTemplateBaseINS_2cl6parserI17DisassemblyFormatE10OptionInfoELb0EE18uninitialized_moveIPS5_S8_EEvT_S9_T0_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !470
 
-_ZN4llvh23SmallVectorTemplateBaseINS_2cl6parserI17DisassemblyFormatE10OptionInfoELb0EE18uninitialized_moveIPS5_S8_EEvT_S9_T0_.exit: ; preds = %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %_ZN4llvh11safe_mallocEm.exit
+_ZN4llvh23SmallVectorTemplateBaseINS_2cl6parserI17DisassemblyFormatE10OptionInfoELb0EE18uninitialized_moveIPS5_S8_EEvT_S9_T0_.exit: ; preds = %.lr.ph.i.i.i.i, %_ZN4llvh11safe_mallocEm.exit
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ah = icmp eq ptr %i.w, %i.ag
   br i1 %i.ah, label %bb.f, label %bb.e

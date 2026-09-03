@@ -204,26 +204,23 @@ _RNvNtNtNtCs6t3BXPRE3GP_6base646engine15general_purpose6decode18complete_quads_l
 
 .preheader.i:                                     ; preds = %_RNvNtNtNtCs6t3BXPRE3GP_6base646engine15general_purpose6decode18complete_quads_len.exit.i
   %.not.i.i1116.i = icmp eq i64 %i.x, 0
-  br i1 %.not.i.i1116.i, label %._crit_edge.i, label %.lr.ph.preheader.i
-
-.lr.ph.preheader.i:                               ; preds = %.preheader.i
-  %8 = udiv i64 %5, 24                            ; 2 uses
-  br label %.lr.ph.i
+  br i1 %.not.i.i1116.i, label %._crit_edge.i, label %.lr.ph.i
 
 bb.h:                                             ; preds = %_RNvNtNtNtCs6t3BXPRE3GP_6base646engine15general_purpose6decode18complete_quads_len.exit.i
   tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.x, i64 noundef range(i64 0, -9223372036854775808) %3, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #19, !noalias !139
   unreachable
 
-.lr.ph.i:                                         ; preds = %bb.ck, %.lr.ph.preheader.i
-  %.sroa.0116.01119.i = phi ptr [ %i.y, %bb.ck ], [ %2, %.lr.ph.preheader.i ] ; 33 uses
-  %.sroa.6117.01118.i = phi i64 [ %i.z, %bb.ck ], [ %i.x, %.lr.ph.preheader.i ]
-  %.sroa.13.01117.i = phi i64 [ %i.aa, %bb.ck ], [ 0, %.lr.ph.preheader.i ] ; 14 uses
+.lr.ph.i:                                         ; preds = %.preheader.i, %bb.ck
+  %.sroa.0116.01119.i = phi ptr [ %i.y, %bb.ck ], [ %2, %.preheader.i ] ; 33 uses
+  %.sroa.6117.01118.i = phi i64 [ %i.z, %bb.ck ], [ %i.x, %.preheader.i ]
+  %.sroa.13.01117.i = phi i64 [ %i.aa, %bb.ck ], [ 0, %.preheader.i ] ; 13 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0116.01119.i, i64 32
   %i.z = add i64 %.sroa.6117.01118.i, -32         ; 2 uses
   %i.aa = add nuw nsw i64 %.sroa.13.01117.i, 1
-  %i.ab = mul nuw nsw i64 %.sroa.13.01117.i, 24   ; 2 uses
-  %exitcond.i = icmp eq i64 %.sroa.13.01117.i, %8
-  br i1 %exitcond.i, label %bb.av, label %bb.aw, !prof !11
+  %i.ab = mul nuw nsw i64 %.sroa.13.01117.i, 24   ; 3 uses
+  %8 = add nuw i64 %i.ab, 24                      ; 2 uses
+  %.not39.i = icmp ugt i64 %8, %5
+  br i1 %.not39.i, label %bb.av, label %bb.aw, !prof !11
 
 ._crit_edge.i:                                    ; preds = %bb.ck, %.preheader.i
   %i.ac = lshr exact i64 %i.x, 2                  ; 2 uses
@@ -626,9 +623,7 @@ bb.au:                                            ; preds = %bb.ar
   br i1 %.not.i.i103.i, label %._crit_edge1133.i, label %.lr.ph1132.i
 
 bb.av:                                            ; preds = %.lr.ph.i
-  %9 = mul nuw nsw i64 %8, 24
-  %10 = add nuw i64 %9, 24
-  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.ab, i64 noundef %10, i64 noundef range(i64 0, -9223372036854775808) %5, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #19, !noalias !139
+  tail call void @_RNvNtNtCshzWfHUSfYae_4core5slice5index16slice_index_fail(i64 noundef %i.ab, i64 noundef %8, i64 noundef range(i64 0, -9223372036854775808) %5, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #19, !noalias !139
   unreachable
 
 bb.aw:                                            ; preds = %.lr.ph.i

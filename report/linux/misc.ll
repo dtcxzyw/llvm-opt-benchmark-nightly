@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 40
 inline.NumDeleted: 16
 loop-unroll.NumCompletelyUnrolled: 11
-loop-unroll.NumRuntimeUnrolled: 13
-loop-unroll.NumUnrolled: 24
+loop-unroll.NumRuntimeUnrolled: 12
+loop-unroll.NumUnrolled: 23
 begin_hunk_0_@inflate_fast:bb.a
   %i.hc = getelementptr inbounds nuw i8, ptr %.2303, i64 1
   store i8 %i.hb, ptr %.2303, align 1
@@ -205,81 +205,36 @@ bb.t:                                             ; preds = %bb.r
   br label %bb.u
 
 bb.u:                                             ; preds = %.unr-lcssa631, %.unr-lcssa635, %bb.s, %.unr-lcssa, %bb.t, %bb.q, %.unr-lcssa639
-  %.5306 = phi ptr [ %.lcssa604, %.unr-lcssa639 ], [ %.0301, %bb.q ], [ %.lcssa603, %.unr-lcssa635 ], [ %.lcssa602, %.unr-lcssa631 ], [ %.0301, %bb.s ], [ %.lcssa601, %.unr-lcssa ], [ %.0301, %bb.t ] ; 6 uses
-  %.1276 = phi i32 [ %i.gg, %.unr-lcssa639 ], [ %.0275, %bb.q ], [ %i.je, %.unr-lcssa635 ], [ %i.hz, %.unr-lcssa631 ], [ %.0275, %bb.s ], [ %i.kv, %.unr-lcssa ], [ %.0275, %bb.t ] ; 5 uses
-  %.4271 = phi ptr [ %i.gj, %.unr-lcssa639 ], [ %i.ev, %bb.q ], [ %i.jh, %.unr-lcssa635 ], [ %i.x, %.unr-lcssa631 ], [ %i.gn, %bb.s ], [ %i.ky, %.unr-lcssa ], [ %i.jk, %bb.t ] ; 6 uses
+  %.5306 = phi ptr [ %.lcssa604, %.unr-lcssa639 ], [ %.0301, %bb.q ], [ %.lcssa603, %.unr-lcssa635 ], [ %.lcssa602, %.unr-lcssa631 ], [ %.0301, %bb.s ], [ %.lcssa601, %.unr-lcssa ], [ %.0301, %bb.t ] ; 2 uses
+  %.1276 = phi i32 [ %i.gg, %.unr-lcssa639 ], [ %.0275, %bb.q ], [ %i.je, %.unr-lcssa635 ], [ %i.hz, %.unr-lcssa631 ], [ %.0275, %bb.s ], [ %i.kv, %.unr-lcssa ], [ %.0275, %bb.t ] ; 3 uses
+  %.4271 = phi ptr [ %i.gj, %.unr-lcssa639 ], [ %i.ev, %bb.q ], [ %i.jh, %.unr-lcssa635 ], [ %i.x, %.unr-lcssa631 ], [ %i.gn, %bb.s ], [ %i.ky, %.unr-lcssa ], [ %i.jk, %bb.t ] ; 2 uses
   %i.kz = icmp ugt i32 %.1276, 2
-  br i1 %i.kz, label %.lr.ph421.preheader, label %._crit_edge422
+  br i1 %i.kz, label %.lr.ph421, label %._crit_edge422
 
-.lr.ph421.preheader:                              ; preds = %bb.u
-  %2 = add i32 %.1276, -3                         ; 2 uses
-  %3 = udiv i32 %2, 3
-  %4 = and i32 %3, 1
-  %lcmp.mod641.not.not = icmp eq i32 %4, 0
-  br i1 %lcmp.mod641.not.not, label %.lr.ph421.prol, label %.lr.ph421.prol.loopexit
-
-.lr.ph421.prol:                                   ; preds = %.lr.ph421.preheader
-  %5 = getelementptr inbounds nuw i8, ptr %.4271, i64 1
-  %6 = load i8, ptr %.4271, align 1
-  %7 = getelementptr inbounds nuw i8, ptr %.5306, i64 1
-  store i8 %6, ptr %.5306, align 1
-  %8 = getelementptr inbounds nuw i8, ptr %.4271, i64 2
-  %9 = load i8, ptr %5, align 1
-  %10 = getelementptr inbounds nuw i8, ptr %.5306, i64 2
-  store i8 %9, ptr %7, align 1
-  %11 = getelementptr inbounds nuw i8, ptr %.4271, i64 3 ; 2 uses
-  %12 = load i8, ptr %8, align 1
-  %13 = getelementptr inbounds nuw i8, ptr %.5306, i64 3 ; 2 uses
-  store i8 %12, ptr %10, align 1
-  %14 = add i32 %.1276, -3                        ; 2 uses
-  br label %.lr.ph421.prol.loopexit
-
-.lr.ph421.prol.loopexit:                          ; preds = %.lr.ph421.prol, %.lr.ph421.preheader
-  %.5272419.unr = phi ptr [ %.4271, %.lr.ph421.preheader ], [ %11, %.lr.ph421.prol ]
-  %.2277418.unr = phi i32 [ %.1276, %.lr.ph421.preheader ], [ %14, %.lr.ph421.prol ]
-  %.6307417.unr = phi ptr [ %.5306, %.lr.ph421.preheader ], [ %13, %.lr.ph421.prol ]
-  %.lcssa607.unr = phi ptr [ poison, %.lr.ph421.preheader ], [ %11, %.lr.ph421.prol ]
-  %.lcssa606.unr = phi ptr [ poison, %.lr.ph421.preheader ], [ %13, %.lr.ph421.prol ]
-  %.lcssa605.unr = phi i32 [ poison, %.lr.ph421.preheader ], [ %14, %.lr.ph421.prol ]
-  %15 = icmp ult i32 %2, 3
-  br i1 %15, label %._crit_edge422, label %.lr.ph421
-
-.lr.ph421:                                        ; preds = %.lr.ph421.prol.loopexit, %.lr.ph421
-  %.5272419 = phi ptr [ %i.lg, %.lr.ph421 ], [ %.5272419.unr, %.lr.ph421.prol.loopexit ] ; 7 uses
-  %.2277418 = phi i32 [ %i.lj, %.lr.ph421 ], [ %.2277418.unr, %.lr.ph421.prol.loopexit ]
-  %.6307417 = phi ptr [ %i.li, %.lr.ph421 ], [ %.6307417.unr, %.lr.ph421.prol.loopexit ] ; 7 uses
-  %16 = getelementptr inbounds nuw i8, ptr %.5272419, i64 1
-  %17 = load i8, ptr %.5272419, align 1
-  %18 = getelementptr inbounds nuw i8, ptr %.6307417, i64 1
-  store i8 %17, ptr %.6307417, align 1
-  %19 = getelementptr inbounds nuw i8, ptr %.5272419, i64 2
-  %20 = load i8, ptr %16, align 1
-  %21 = getelementptr inbounds nuw i8, ptr %.6307417, i64 2
-  store i8 %20, ptr %18, align 1
-  %22 = getelementptr inbounds nuw i8, ptr %.5272419, i64 3
-  %23 = load i8, ptr %19, align 1
-  %24 = getelementptr inbounds nuw i8, ptr %.6307417, i64 3
-  store i8 %23, ptr %21, align 1
-  %i.la = getelementptr inbounds nuw i8, ptr %.5272419, i64 4
-  %i.lb = load i8, ptr %22, align 1
-  %i.lc = getelementptr inbounds nuw i8, ptr %.6307417, i64 4
-  store i8 %i.lb, ptr %24, align 1
-  %i.ld = getelementptr inbounds nuw i8, ptr %.5272419, i64 5
+.lr.ph421:                                        ; preds = %bb.u, %.lr.ph421
+  %.5272419 = phi ptr [ %i.lg, %.lr.ph421 ], [ %.4271, %bb.u ] ; 4 uses
+  %.2277418 = phi i32 [ %i.lj, %.lr.ph421 ], [ %.1276, %bb.u ]
+  %.6307417 = phi ptr [ %i.li, %.lr.ph421 ], [ %.5306, %bb.u ] ; 4 uses
+  %i.la = getelementptr inbounds nuw i8, ptr %.5272419, i64 1
+  %i.lb = load i8, ptr %.5272419, align 1
+  %i.lc = getelementptr inbounds nuw i8, ptr %.6307417, i64 1
+  store i8 %i.lb, ptr %.6307417, align 1
+  %i.ld = getelementptr inbounds nuw i8, ptr %.5272419, i64 2
   %i.le = load i8, ptr %i.la, align 1
-  %i.lf = getelementptr inbounds nuw i8, ptr %.6307417, i64 5
+  %i.lf = getelementptr inbounds nuw i8, ptr %.6307417, i64 2
   store i8 %i.le, ptr %i.lc, align 1
-  %i.lg = getelementptr inbounds nuw i8, ptr %.5272419, i64 6 ; 2 uses
+  %i.lg = getelementptr inbounds nuw i8, ptr %.5272419, i64 3 ; 2 uses
   %i.lh = load i8, ptr %i.ld, align 1
-  %i.li = getelementptr inbounds nuw i8, ptr %.6307417, i64 6 ; 2 uses
+  %i.li = getelementptr inbounds nuw i8, ptr %.6307417, i64 3 ; 2 uses
   store i8 %i.lh, ptr %i.lf, align 1
-  %i.lj = add i32 %.2277418, -6                   ; 3 uses
+  %i.lj = add i32 %.2277418, -3                   ; 3 uses
   %i.lk = icmp ugt i32 %i.lj, 2
   br i1 %i.lk, label %.lr.ph421, label %._crit_edge422, !llvm.loop !27
 
-._crit_edge422:                                   ; preds = %.lr.ph421.prol.loopexit, %.lr.ph421, %bb.u
-  %.6307.lcssa = phi ptr [ %.5306, %bb.u ], [ %.lcssa606.unr, %.lr.ph421.prol.loopexit ], [ %i.li, %.lr.ph421 ] ; 4 uses
-  %.2277.lcssa = phi i32 [ %.1276, %bb.u ], [ %.lcssa605.unr, %.lr.ph421.prol.loopexit ], [ %i.lj, %.lr.ph421 ] ; 2 uses
-  %.5272.lcssa = phi ptr [ %.4271, %bb.u ], [ %.lcssa607.unr, %.lr.ph421.prol.loopexit ], [ %i.lg, %.lr.ph421 ] ; 2 uses
+._crit_edge422:                                   ; preds = %.lr.ph421, %bb.u
+  %.6307.lcssa = phi ptr [ %.5306, %bb.u ], [ %i.li, %.lr.ph421 ] ; 4 uses
+  %.2277.lcssa = phi i32 [ %.1276, %bb.u ], [ %i.lj, %.lr.ph421 ] ; 2 uses
+  %.5272.lcssa = phi ptr [ %.4271, %bb.u ], [ %i.lg, %.lr.ph421 ] ; 2 uses
   %.not353 = icmp eq i32 %.2277.lcssa, 0
   br i1 %.not353, label %bb.ah, label %bb.v
 

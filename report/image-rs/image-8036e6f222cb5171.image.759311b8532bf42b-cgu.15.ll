@@ -205,9 +205,6 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.f, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.e
-  %4 = udiv i64 %3, 12                            ; 2 uses
-  %5 = mul nuw nsw i64 %4, 12
-  %6 = add nuw i64 %5, 12
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   %i.h = lshr exact i64 %1, 2
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
@@ -218,7 +215,7 @@ bb.e:                                             ; preds = %bb.c
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.loopexit
   %.sroa.0.024 = phi ptr [ %i.l, %.loopexit ], [ %0, %.lr.ph.preheader ] ; 2 uses
   %.sroa.5.023 = phi i64 [ %i.m, %.loopexit ], [ %1, %.lr.ph.preheader ] ; 3 uses
-  %.sroa.10.022 = phi i64 [ %i.n, %.loopexit ], [ 0, %.lr.ph.preheader ] ; 6 uses
+  %.sroa.10.022 = phi i64 [ %i.n, %.loopexit ], [ 0, %.lr.ph.preheader ] ; 5 uses
   %..i.i.i = tail call noundef i64 @llvm.umin.i64(i64 %.sroa.5.023, i64 8) ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.024, i64 %..i.i.i
   %i.m = sub nuw nsw i64 %.sroa.5.023, %..i.i.i   ; 2 uses
@@ -232,9 +229,10 @@ bb.f:                                             ; preds = %.lr.ph
 
 _RNvNtNtCsa5QsYiPB8Gl_5image6codecs3dxt17decode_dxt1_block.exit: ; preds = %.lr.ph
   call fastcc void @_RNvNtNtCsa5QsYiPB8Gl_5image6codecs3dxt17decode_dxt_colors(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.0.024, ptr noalias nofree noundef nonnull %i.a, i64 noundef 48, i1 noundef zeroext true)
-  %i.p = mul nuw nsw i64 %.sroa.10.022, 12        ; 2 uses
-  %exitcond = icmp eq i64 %.sroa.10.022, %4
-  br i1 %exitcond, label %bb.g, label %bb.h, !prof !30
+  %i.p = mul nuw nsw i64 %.sroa.10.022, 12        ; 3 uses
+  %4 = add nuw i64 %i.p, 12                       ; 2 uses
+  %.not10 = icmp ugt i64 %4, %3
+  br i1 %.not10, label %bb.g, label %bb.h, !prof !30
 
 ._crit_edge:                                      ; preds = %.loopexit, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -242,7 +240,7 @@ _RNvNtNtCsa5QsYiPB8Gl_5image6codecs3dxt17decode_dxt1_block.exit: ; preds = %.lr.
 
 bb.g:                                             ; preds = %bb.j, %bb.i, %bb.h, %_RNvNtNtCsa5QsYiPB8Gl_5image6codecs3dxt17decode_dxt1_block.exit
   %.lcssa26 = phi i64 [ %i.p, %_RNvNtNtCsa5QsYiPB8Gl_5image6codecs3dxt17decode_dxt1_block.exit ], [ %i.s, %bb.h ], [ %i.w, %bb.i ], [ %i.ab, %bb.j ]
-  %.lcssa = phi i64 [ %6, %_RNvNtNtCsa5QsYiPB8Gl_5image6codecs3dxt17decode_dxt1_block.exit ], [ %i.t, %bb.h ], [ %i.x, %bb.i ], [ %i.ac, %bb.j ]
+  %.lcssa = phi i64 [ %4, %_RNvNtNtCsa5QsYiPB8Gl_5image6codecs3dxt17decode_dxt1_block.exit ], [ %i.t, %bb.h ], [ %i.x, %bb.i ], [ %i.ac, %bb.j ]
   tail call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %.lcssa26, i64 noundef %.lcssa, i64 noundef %3, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @61) #28
   unreachable
 
@@ -645,7 +643,7 @@ bb.c:                                             ; preds = %bb.a
   %i.f = load i32, ptr %i.e, align 1              ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 6 ; 2 uses
-  %i.h = lshr i64 %2, 4                           ; 17 uses
+  %i.h = lshr i64 %2, 4                           ; 15 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %i.i, i8 0, i64 6, i1 false)
   %i.j = load i8, ptr %i.d, align 1, !noundef !5
@@ -744,11 +742,6 @@ bb.e:                                             ; preds = %.preheader22, %.pre
   %.sink34 = phi i16 [ %i.bh, %.preheader22 ], [ %.sroa.08.0.2, %.preheader ]
   %i.br = trunc i16 %.sink34 to i8
   store i8 %i.br, ptr %.sink.sroa.phi, align 1
-  %4 = add nuw nsw i64 %2, %i.h
-  %5 = trunc nuw i64 %4 to i8
-  %.lhs.trunc = add i8 %5, -3
-  %.rhs.trunc = trunc nuw nsw i64 %i.h to i8
-  %6 = udiv i8 %.lhs.trunc, %.rhs.trunc           ; 4 uses
   %i.bs = and i32 %i.f, 3
   %i.bt = zext nneg i32 %i.bs to i64
   %i.bu = getelementptr inbounds nuw [3 x i8], ptr %i.a, i64 %i.bt
@@ -830,9 +823,9 @@ bb.e:                                             ; preds = %.preheader22, %.pre
   %i.eh = getelementptr inbounds nuw [3 x i8], ptr %i.a, i64 %i.ef
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.eg, ptr noundef nonnull readonly align 1 dereferenceable(3) %i.eh, i64 3, i1 false), !alias.scope !992, !noalias !993
   %i.ei = mul nuw nsw i64 %i.h, 12                ; 3 uses
-  %i.ej = or disjoint i64 %i.ei, 3
-  %exitcond.12 = icmp eq i8 %6, 12
-  br i1 %exitcond.12, label %bb.d, label %bb.f, !prof !21
+  %i.ej = or disjoint i64 %i.ei, 3                ; 2 uses
+  %.not21.12 = icmp samesign ugt i64 %i.ej, %2
+  br i1 %.not21.12, label %bb.d, label %bb.f, !prof !21
 
 bb.f:                                             ; preds = %bb.e
   %i.ek = lshr i32 %i.f, 24
@@ -842,9 +835,9 @@ bb.f:                                             ; preds = %bb.e
   %i.eo = getelementptr inbounds nuw [3 x i8], ptr %i.a, i64 %i.em
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.en, ptr noundef nonnull readonly align 1 dereferenceable(3) %i.eo, i64 3, i1 false), !alias.scope !992, !noalias !993
   %i.ep = mul nuw nsw i64 %i.h, 13                ; 3 uses
-  %i.eq = add nuw nsw i64 %i.ep, 3
-  %exitcond.13 = icmp eq i8 %6, 13
-  br i1 %exitcond.13, label %bb.d, label %bb.g, !prof !21
+  %i.eq = add nuw nsw i64 %i.ep, 3                ; 2 uses
+  %.not21.13 = icmp samesign ugt i64 %i.eq, %2
+  br i1 %.not21.13, label %bb.d, label %bb.g, !prof !21
 
 bb.g:                                             ; preds = %bb.f
   %i.er = lshr i32 %i.f, 26
@@ -854,9 +847,9 @@ bb.g:                                             ; preds = %bb.f
   %i.ev = getelementptr inbounds nuw [3 x i8], ptr %i.a, i64 %i.et
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.eu, ptr noundef nonnull readonly align 1 dereferenceable(3) %i.ev, i64 3, i1 false), !alias.scope !992, !noalias !993
   %i.ew = mul nuw nsw i64 %i.h, 14                ; 3 uses
-  %i.ex = add nuw nsw i64 %i.ew, 3
-  %exitcond.14 = icmp eq i8 %6, 14
-  br i1 %exitcond.14, label %bb.d, label %bb.h, !prof !21
+  %i.ex = add nuw nsw i64 %i.ew, 3                ; 2 uses
+  %.not21.14 = icmp samesign ugt i64 %i.ex, %2
+  br i1 %.not21.14, label %bb.d, label %bb.h, !prof !21
 
 bb.h:                                             ; preds = %bb.g
   %i.ey = lshr i32 %i.f, 28
@@ -866,9 +859,9 @@ bb.h:                                             ; preds = %bb.g
   %i.fc = getelementptr inbounds nuw [3 x i8], ptr %i.a, i64 %i.fa
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.fb, ptr noundef nonnull readonly align 1 dereferenceable(3) %i.fc, i64 3, i1 false), !alias.scope !992, !noalias !993
   %i.fd = mul nuw nsw i64 %i.h, 15                ; 3 uses
-  %i.fe = add nuw nsw i64 %i.fd, 3
-  %exitcond.15 = icmp eq i8 %6, 15
-  br i1 %exitcond.15, label %bb.d, label %bb.i, !prof !21
+  %i.fe = add nuw nsw i64 %i.fd, 3                ; 2 uses
+  %.not21.15 = icmp samesign ugt i64 %i.fe, %2
+  br i1 %.not21.15, label %bb.d, label %bb.i, !prof !21
 
 bb.i:                                             ; preds = %bb.h
   %i.ff = lshr i32 %i.f, 30

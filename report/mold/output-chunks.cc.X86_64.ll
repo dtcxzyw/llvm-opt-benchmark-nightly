@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 10657
 inline.NumDeleted: 4361
 loop-unroll.NumCompletelyUnrolled: 30
-loop-unroll.NumRuntimeUnrolled: 55
-loop-unroll.NumUnrolled: 85
+loop-unroll.NumRuntimeUnrolled: 54
+loop-unroll.NumUnrolled: 84
 begin_hunk_0_@_ZN4mold10OutputPhdrINS_6X86_64EE11update_shdrERNS_7ContextIS1_EE:bb.a
   %.not.i.i.i11 = icmp eq ptr %.pr, null
   br i1 %.not.i.i.i11, label %_ZNSt6vectorIN4mold7ElfPhdrINS0_6X86_64EEESaIS3_EED2Ev.exit, label %bb.ga
@@ -205,20 +205,7 @@ bb.a:
   call void @_ZN3tbb6detail2d217parallel_for_eachIN9__gnu_cxx17__normal_iteratorIPZN4mold13OutputSectionINS5_6X86_64EE20compute_section_sizeERNS5_7ContextIS7_EEE5GroupSt6vectorISC_SaISC_EEEEZNS8_20compute_section_sizeESB_EUlRSC_E_EEvT_SK_RKT0_(ptr %.sroa.038.1, ptr nonnull %.sroa.9.1, ptr noundef nonnull align 1 dereferenceable(1) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   %i.l = icmp eq ptr %.sroa.038.1, %.sroa.9.1
-  br i1 %i.l, label %._crit_edge63, label %.lr.ph62.preheader
-
-.lr.ph62.preheader:                               ; preds = %._crit_edge
-  %.sroa.038.1.lcssa8485 = ptrtoaddr ptr %.sroa.038.1 to i64
-  %.0.lcssa.i.i.i.i.i.i.pn.lcssa8283 = ptrtoaddr ptr %.0.lcssa.i.i.i.i.i.i.pn to i64
-  %4 = sub i64 %.0.lcssa.i.i.i.i.i.i.pn.lcssa8283, %.sroa.038.1.lcssa8485 ; 2 uses
-  %5 = udiv i64 %4, 40                            ; 2 uses
-  %6 = add nuw nsw i64 %5, 1                      ; 2 uses
-  %7 = icmp ult i64 %4, 40
-  br i1 %7, label %.lr.ph62.epil.preheader, label %.lr.ph62.preheader.new
-
-.lr.ph62.preheader.new:                           ; preds = %.lr.ph62.preheader
-  %unroll_iter = and i64 %6, 1152921504606846974
-  br label %.lr.ph62
+  br i1 %i.l, label %._crit_edge63, label %.lr.ph62
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt6vectorIZN4mold13OutputSectionINS0_6X86_64EE20compute_section_sizeERNS0_7ContextIS2_EEE5GroupSaIS7_EE9push_backEOS7_.exit
   %.sroa.038.056 = phi ptr [ %.sroa.038.1, %_ZNSt6vectorIZN4mold13OutputSectionINS0_6X86_64EE20compute_section_sizeERNS0_7ContextIS2_EEE5GroupSaIS7_EE9push_backEOS7_.exit ], [ null, %.lr.ph.preheader ] ; 6 uses
@@ -298,40 +285,15 @@ _ZNSt6vectorIZN4mold13OutputSectionINS0_6X86_64EE20compute_section_sizeERNS0_7Co
 _ZNSt6vectorIZN4mold13OutputSectionINS0_6X86_64EE20compute_section_sizeERNS0_7ContextIS2_EEE5GroupSaIS7_EE9push_backEOS7_.exit: ; preds = %bb.b, %_ZNSt6vectorIZN4mold13OutputSectionINS0_6X86_64EE20compute_section_sizeERNS0_7ContextIS2_EEE5GroupSaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i
   %.0.lcssa.i.i.i.i.i.i.pn = phi ptr [ %.0.lcssa.i.i.i.i.i.i, %_ZNSt6vectorIZN4mold13OutputSectionINS0_6X86_64EE20compute_section_sizeERNS0_7ContextIS2_EEE5GroupSaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i ], [ %.sroa.9.052, %bb.b ] ; 2 uses
   %.sroa.16.1 = phi ptr [ %i.aa, %_ZNSt6vectorIZN4mold13OutputSectionINS0_6X86_64EE20compute_section_sizeERNS0_7ContextIS2_EEE5GroupSaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i ], [ %.sroa.16.053, %bb.b ] ; 2 uses
-  %.sroa.038.1 = phi ptr [ %i.w, %_ZNSt6vectorIZN4mold13OutputSectionINS0_6X86_64EE20compute_section_sizeERNS0_7ContextIS2_EEE5GroupSaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i ], [ %.sroa.038.056, %bb.b ] ; 10 uses
+  %.sroa.038.1 = phi ptr [ %i.w, %_ZNSt6vectorIZN4mold13OutputSectionINS0_6X86_64EE20compute_section_sizeERNS0_7ContextIS2_EEE5GroupSaIS7_EE17_M_realloc_insertIJS7_EEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit.i.i ], [ %.sroa.038.056, %bb.b ] ; 8 uses
   %.sroa.9.1 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i.pn, i64 40 ; 4 uses
   %i.ab = sub i64 %.sroa.632.054, %.sroa.speculated ; 2 uses
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %.sroa.030.055, i64 %.sroa.speculated
   %i.ad = icmp eq i64 %i.ab, 0
   br i1 %i.ad, label %._crit_edge, label %.lr.ph, !llvm.loop !1239
 
-._crit_edge63.loopexit.unr-lcssa:                 ; preds = %.lr.ph62
-  %8 = and i64 %5, 1
-  %lcmp.mod.not.not = icmp eq i64 %8, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph62.epil.preheader, label %._crit_edge63
-
-.lr.ph62.epil.preheader:                          ; preds = %._crit_edge63.loopexit.unr-lcssa, %.lr.ph62.preheader
-  %.060.epil.init = phi i64 [ 0, %.lr.ph62.preheader ], [ %i.ar, %._crit_edge63.loopexit.unr-lcssa ] ; 2 uses
-  %.sroa.016.059.epil.init = phi ptr [ %.sroa.038.1, %.lr.ph62.preheader ], [ %i.as, %._crit_edge63.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod87 = trunc i64 %6 to i1
-  call void @llvm.assume(i1 %lcmp.mod87)
-  %9 = getelementptr inbounds nuw i8, ptr %.sroa.016.059.epil.init, i64 32
-  %10 = load i64, ptr %9, align 8, !tbaa !426     ; 3 uses
-  %11 = icmp eq i64 %10, 0
-  %12 = add i64 %.060.epil.init, -1
-  %13 = add i64 %12, %10
-  %14 = sub i64 0, %10
-  %15 = and i64 %13, %14
-  %.0.i15.epil = select i1 %11, i64 %.060.epil.init, i64 %15 ; 2 uses
-  %16 = getelementptr inbounds nuw i8, ptr %.sroa.016.059.epil.init, i64 24
-  store i64 %.0.i15.epil, ptr %16, align 8, !tbaa !427
-  %17 = getelementptr inbounds nuw i8, ptr %.sroa.016.059.epil.init, i64 16
-  %18 = load i64, ptr %17, align 8, !tbaa !428
-  %19 = add nsw i64 %.0.i15.epil, %18
-  br label %._crit_edge63
-
-._crit_edge63:                                    ; preds = %.lr.ph62.epil.preheader, %._crit_edge63.loopexit.unr-lcssa, %._crit_edge
-  %.0.lcssa = phi i64 [ 0, %._crit_edge ], [ %i.ar, %._crit_edge63.loopexit.unr-lcssa ], [ %19, %.lr.ph62.epil.preheader ]
+._crit_edge63:                                    ; preds = %.lr.ph62, %._crit_edge
+  %.0.lcssa = phi i64 [ 0, %._crit_edge ], [ %i.ar, %.lr.ph62 ]
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i64 %.0.lcssa, ptr %i.ae, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
@@ -349,40 +311,25 @@ bb.f:                                             ; preds = %._crit_edge63
 _ZNSt6vectorIZN4mold13OutputSectionINS0_6X86_64EE20compute_section_sizeERNS0_7ContextIS2_EEE5GroupSaIS7_EED2Ev.exit: ; preds = %._crit_edge63.thread, %._crit_edge63, %bb.f
   ret void
 
-.lr.ph62:                                         ; preds = %.lr.ph62, %.lr.ph62.preheader.new
-  %.060 = phi i64 [ 0, %.lr.ph62.preheader.new ], [ %i.ar, %.lr.ph62 ] ; 2 uses
-  %.sroa.016.059 = phi ptr [ %.sroa.038.1, %.lr.ph62.preheader.new ], [ %i.as, %.lr.ph62 ] ; 7 uses
-  %niter = phi i64 [ 0, %.lr.ph62.preheader.new ], [ %niter.next.1, %.lr.ph62 ]
-  %20 = getelementptr inbounds nuw i8, ptr %.sroa.016.059, i64 32
-  %21 = load i64, ptr %20, align 8, !tbaa !426    ; 3 uses
-  %22 = icmp eq i64 %21, 0
-  %23 = add i64 %.060, -1
-  %24 = add i64 %23, %21
-  %25 = sub i64 0, %21
-  %26 = and i64 %24, %25
-  %.0.i15 = select i1 %22, i64 %.060, i64 %26     ; 2 uses
-  %27 = getelementptr inbounds nuw i8, ptr %.sroa.016.059, i64 24
-  store i64 %.0.i15, ptr %27, align 8, !tbaa !427
-  %28 = getelementptr inbounds nuw i8, ptr %.sroa.016.059, i64 16
-  %29 = load i64, ptr %28, align 8, !tbaa !428
-  %30 = add nsw i64 %.0.i15, %29                  ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.016.059, i64 72
+.lr.ph62:                                         ; preds = %._crit_edge, %.lr.ph62
+  %.060 = phi i64 [ %i.ar, %.lr.ph62 ], [ 0, %._crit_edge ] ; 2 uses
+  %.sroa.016.059 = phi ptr [ %i.as, %.lr.ph62 ], [ %.sroa.038.1, %._crit_edge ] ; 5 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.016.059, i64 32
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !426 ; 3 uses
   %i.aj = icmp eq i64 %i.ai, 0
-  %i.ak = add i64 %30, -1
+  %i.ak = add i64 %.060, -1
   %i.al = add i64 %i.ak, %i.ai
   %i.am = sub i64 0, %i.ai
   %i.an = and i64 %i.al, %i.am
-  %.0.i15.1 = select i1 %i.aj, i64 %30, i64 %i.an ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.016.059, i64 64
+  %.0.i15.1 = select i1 %i.aj, i64 %.060, i64 %i.an ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.016.059, i64 24
   store i64 %.0.i15.1, ptr %i.ao, align 8, !tbaa !427
-  %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.016.059, i64 56
+  %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.016.059, i64 16
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !428
-  %i.ar = add nsw i64 %.0.i15.1, %i.aq            ; 3 uses
-  %i.as = getelementptr inbounds nuw i8, ptr %.sroa.016.059, i64 80 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge63.loopexit.unr-lcssa, label %.lr.ph62
+  %i.ar = add nsw i64 %.0.i15.1, %i.aq            ; 2 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %.sroa.016.059, i64 40
+  %niter.ncmp.1 = icmp eq ptr %.sroa.016.059, %.0.lcssa.i.i.i.i.i.i.pn
+  br i1 %niter.ncmp.1, label %._crit_edge63, label %.lr.ph62
 }
 
 ; Function Attrs: mustprogress nounwind

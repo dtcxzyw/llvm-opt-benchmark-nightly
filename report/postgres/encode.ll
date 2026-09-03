@@ -2,8 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 87
 inline.NumDeleted: 31
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@pg_base64_encode:bb.a
   br i1 %i.ai, label %.lr.ph.split.i, label %._crit_edge.i, !llvm.loop !0
 
@@ -205,85 +204,41 @@ bb.a:
 
 .lr.ph39:                                         ; preds = %bb.a, %._crit_edge
   %.037 = phi i64 [ %i.r, %._crit_edge ], [ 0, %bb.a ] ; 2 uses
-  %.02436 = phi i64 [ %.1.lcssa, %._crit_edge ], [ 0, %bb.a ] ; 4 uses
-  %.02535 = phi i32 [ %.126.lcssa, %._crit_edge ], [ 0, %bb.a ] ; 4 uses
+  %.02436 = phi i64 [ %.1.lcssa, %._crit_edge ], [ 0, %bb.a ] ; 2 uses
+  %.02535 = phi i32 [ %.126.lcssa, %._crit_edge ], [ 0, %bb.a ] ; 2 uses
   %.02734 = phi i32 [ %.128.lcssa, %._crit_edge ], [ 0, %bb.a ]
   %i.a = shl i32 %.02734, 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.037
   %i.c = load i8, ptr %i.b, align 1
   %i.d = zext i8 %i.c to i32
-  %i.e = or disjoint i32 %i.a, %i.d               ; 4 uses
+  %i.e = or disjoint i32 %i.a, %i.d               ; 2 uses
   %i.f = add nsw i32 %.02535, 8                   ; 2 uses
   %i.g = icmp sgt i32 %.02535, -4
-  br i1 %i.g, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.g, label %.lr.ph, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %.lr.ph39
-  %3 = add i32 %.02535, 3                         ; 2 uses
-  %4 = udiv i32 %3, 5
-  %5 = and i32 %4, 1
-  %lcmp.mod.not.not = icmp eq i32 %5, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
-
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %6 = add nsw i32 %.02535, 3                     ; 4 uses
-  %7 = lshr i32 %i.e, %6
-  %8 = and i32 %7, 31
-  %9 = zext nneg i32 %8 to i64
-  %10 = getelementptr inbounds nuw i8, ptr @base32hex_table, i64 %9
-  %11 = load i8, ptr %10, align 1
-  %12 = add i64 %.02436, 1                        ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %2, i64 %.02436
-  store i8 %11, ptr %13, align 1
-  %notmask.prol = shl nsw i32 -1, %6
-  %14 = xor i32 %notmask.prol, -1
-  %15 = and i32 %i.e, %14                         ; 2 uses
-  br label %.lr.ph.prol.loopexit
-
-.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
-  %.131.unr = phi i64 [ %.02436, %.lr.ph.preheader ], [ %12, %.lr.ph.prol ]
-  %.12630.unr = phi i32 [ %i.f, %.lr.ph.preheader ], [ %6, %.lr.ph.prol ]
-  %.12829.unr = phi i32 [ %i.e, %.lr.ph.preheader ], [ %15, %.lr.ph.prol ]
-  %.lcssa65.unr = phi i32 [ poison, %.lr.ph.preheader ], [ %6, %.lr.ph.prol ]
-  %.lcssa64.unr = phi i64 [ poison, %.lr.ph.preheader ], [ %12, %.lr.ph.prol ]
-  %.lcssa.unr = phi i32 [ poison, %.lr.ph.preheader ], [ %15, %.lr.ph.prol ]
-  %16 = icmp ult i32 %3, 5
-  br i1 %16, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.131 = phi i64 [ %i.n, %.lr.ph ], [ %.131.unr, %.lr.ph.prol.loopexit ] ; 3 uses
-  %.12630 = phi i32 [ %i.h, %.lr.ph ], [ %.12630.unr, %.lr.ph.prol.loopexit ] ; 3 uses
-  %.12829 = phi i32 [ %i.q, %.lr.ph ], [ %.12829.unr, %.lr.ph.prol.loopexit ] ; 2 uses
-  %17 = add nsw i32 %.12630, -5                   ; 2 uses
-  %18 = lshr i32 %.12829, %17
-  %19 = and i32 %18, 31
-  %20 = zext nneg i32 %19 to i64
-  %21 = getelementptr inbounds nuw i8, ptr @base32hex_table, i64 %20
-  %22 = load i8, ptr %21, align 1
-  %23 = getelementptr inbounds nuw i8, ptr %2, i64 %.131
-  store i8 %22, ptr %23, align 1
-  %notmask = shl nsw i32 -1, %17
-  %24 = xor i32 %notmask, -1
-  %25 = and i32 %.12829, %24                      ; 2 uses
-  %i.h = add nsw i32 %.12630, -10                 ; 4 uses
-  %i.i = lshr i32 %25, %i.h
+.lr.ph:                                           ; preds = %.lr.ph39, %.lr.ph
+  %.131 = phi i64 [ %i.n, %.lr.ph ], [ %.02436, %.lr.ph39 ] ; 2 uses
+  %.12630 = phi i32 [ %i.h, %.lr.ph ], [ %i.f, %.lr.ph39 ] ; 2 uses
+  %.12829 = phi i32 [ %i.q, %.lr.ph ], [ %i.e, %.lr.ph39 ] ; 2 uses
+  %i.h = add nsw i32 %.12630, -5                  ; 4 uses
+  %i.i = lshr i32 %.12829, %i.h
   %i.j = and i32 %i.i, 31
   %i.k = zext nneg i32 %i.j to i64
   %i.l = getelementptr inbounds nuw i8, ptr @base32hex_table, i64 %i.k
   %i.m = load i8, ptr %i.l, align 1
-  %i.n = add i64 %.131, 2                         ; 2 uses
-  %26 = getelementptr i8, ptr %2, i64 %.131
-  %i.o = getelementptr i8, ptr %26, i64 1
+  %i.n = add i64 %.131, 1                         ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 %.131
   store i8 %i.m, ptr %i.o, align 1
   %notmask.1 = shl nsw i32 -1, %i.h
   %i.p = xor i32 %notmask.1, -1
-  %i.q = and i32 %25, %i.p                        ; 2 uses
-  %27 = icmp sgt i32 %.12630, 14
-  br i1 %27, label %.lr.ph, label %._crit_edge, !llvm.loop !10
+  %i.q = and i32 %.12829, %i.p                    ; 2 uses
+  %3 = icmp samesign ugt i32 %.12630, 9
+  br i1 %3, label %.lr.ph, label %._crit_edge, !llvm.loop !10
 
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %.lr.ph39
-  %.128.lcssa = phi i32 [ %i.e, %.lr.ph39 ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.q, %.lr.ph ] ; 2 uses
-  %.126.lcssa = phi i32 [ %i.f, %.lr.ph39 ], [ %.lcssa65.unr, %.lr.ph.prol.loopexit ], [ %i.h, %.lr.ph ] ; 3 uses
-  %.1.lcssa = phi i64 [ %.02436, %.lr.ph39 ], [ %.lcssa64.unr, %.lr.ph.prol.loopexit ], [ %i.n, %.lr.ph ] ; 4 uses
+._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph39
+  %.128.lcssa = phi i32 [ %i.e, %.lr.ph39 ], [ %i.q, %.lr.ph ] ; 2 uses
+  %.126.lcssa = phi i32 [ %i.f, %.lr.ph39 ], [ %i.h, %.lr.ph ] ; 3 uses
+  %.1.lcssa = phi i64 [ %.02436, %.lr.ph39 ], [ %i.n, %.lr.ph ] ; 4 uses
   %i.r = add nuw i64 %.037, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.r, %1
   br i1 %exitcond.not, label %._crit_edge40, label %.lr.ph39, !llvm.loop !11

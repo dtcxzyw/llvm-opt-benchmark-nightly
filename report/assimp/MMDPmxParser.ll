@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/assimp/original/MMDPmxParser?download=true
 inline.NumInlined: 1415
 inline.NumDeleted: 972
-loop-unroll.NumRuntimeUnrolled: 8
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_ZN3pmx8PmxModel4ReadEPSi:bb.a
   %.idx.i.i.i.i.i171 = mul i64 %i.rk, 80          ; 2 uses
   %i.rl = icmp eq i64 %i.rk, 0
@@ -204,76 +204,30 @@ _ZNSt10unique_ptrIA_N3pmx12PmxRigidBodyESt14default_deleteIS2_EED2Ev.exit: ; pre
   %i.uw = extractvalue { i64, i1 } %i.uu, 0       ; 2 uses
   %i.ux = or disjoint i64 %i.uw, 8
   %i.uy = select i1 %i.uv, i64 -1, i64 %i.ux
-  %i.uz = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.uy) #19, !noalias !95 ; 5 uses
+  %i.uz = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.uy) #19, !noalias !95 ; 3 uses
   store i64 %i.ut, ptr %i.uz, align 16, !noalias !95
   %i.va = icmp eq i32 %i.us, 0
-  br i1 %i.va, label %_ZN3mmd11make_uniqueIA_N3pmx8PmxJointEEENS_10_Unique_ifIT_E14_Unknown_boundEm.exit, label %.preheader.preheader
+  br i1 %i.va, label %_ZN3mmd11make_uniqueIA_N3pmx8PmxJointEEENS_10_Unique_ifIT_E14_Unknown_boundEm.exit, label %.preheader
 
-.preheader.preheader:                             ; preds = %._crit_edge267
-  %8 = add nsw i64 %i.uw, -176                    ; 2 uses
-  %9 = udiv i64 %8, 176                           ; 2 uses
-  %10 = add nuw nsw i64 %9, 1                     ; 2 uses
-  %11 = icmp ult i64 %8, 176
-  br i1 %11, label %.preheader.epil.preheader, label %.preheader.preheader.new
-
-.preheader.preheader.new:                         ; preds = %.preheader.preheader
-  %unroll_iter = and i64 %10, 288230376151711742
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader, %.preheader.preheader.new
-  %.idx.i = phi i64 [ 8, %.preheader.preheader.new ], [ %.add.i.1, %.preheader ] ; 3 uses
-  %niter = phi i64 [ 0, %.preheader.preheader.new ], [ %niter.next.1, %.preheader ]
-  %.ptr.ptr.i = getelementptr inbounds nuw i8, ptr %i.uz, i64 %.idx.i ; 6 uses
-  %12 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i, i64 16 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %12, i8 0, i64 160, i1 false), !noalias !95
-  store ptr %12, ptr %.ptr.ptr.i, align 8, !noalias !95
-  %13 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i, i64 8
-  store i64 0, ptr %13, align 8, !noalias !95
-  %14 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i, i64 32
-  %15 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i, i64 48
-  store ptr %15, ptr %14, align 8, !noalias !95
-  %16 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i, i64 68
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(104) %16, i8 0, i64 104, i1 false), !noalias !95
-  %17 = getelementptr inbounds nuw i8, ptr %i.uz, i64 %.idx.i ; 6 uses
-  %.ptr.ptr.i.1 = getelementptr inbounds nuw i8, ptr %17, i64 176
-  %i.vb = getelementptr inbounds nuw i8, ptr %17, i64 192 ; 2 uses
+.preheader:                                       ; preds = %._crit_edge267, %.preheader
+  %niter = phi i64 [ %.add.i.1, %.preheader ], [ 8, %._crit_edge267 ] ; 3 uses
+  %.ptr.ptr.i.1 = getelementptr inbounds nuw i8, ptr %i.uz, i64 %niter ; 6 uses
+  %i.vb = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.1, i64 16 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %i.vb, i8 0, i64 160, i1 false), !noalias !95
   store ptr %i.vb, ptr %.ptr.ptr.i.1, align 8, !noalias !95
-  %i.vc = getelementptr inbounds nuw i8, ptr %17, i64 184
+  %i.vc = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.1, i64 8
   store i64 0, ptr %i.vc, align 8, !noalias !95
-  %i.vd = getelementptr inbounds nuw i8, ptr %17, i64 208
-  %i.ve = getelementptr inbounds nuw i8, ptr %17, i64 224
+  %i.vd = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.1, i64 32
+  %i.ve = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.1, i64 48
   store ptr %i.ve, ptr %i.vd, align 8, !noalias !95
-  %i.vf = getelementptr inbounds nuw i8, ptr %17, i64 244
+  %i.vf = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.1, i64 68
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(104) %i.vf, i8 0, i64 104, i1 false), !noalias !95
-  %.add.i.1 = add nuw nsw i64 %.idx.i, 352        ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %_ZN3mmd11make_uniqueIA_N3pmx8PmxJointEEENS_10_Unique_ifIT_E14_Unknown_boundEm.exit.loopexit.unr-lcssa, label %.preheader
+  %.add.i.1 = add nuw nsw i64 %niter, 176
+  %niter.next.1 = add nuw nsw i64 %niter, 168
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %i.uw
+  br i1 %niter.ncmp.1, label %_ZN3mmd11make_uniqueIA_N3pmx8PmxJointEEENS_10_Unique_ifIT_E14_Unknown_boundEm.exit, label %.preheader
 
-_ZN3mmd11make_uniqueIA_N3pmx8PmxJointEEENS_10_Unique_ifIT_E14_Unknown_boundEm.exit.loopexit.unr-lcssa: ; preds = %.preheader
-  %18 = and i64 %9, 1
-  %lcmp.mod395.not.not = icmp eq i64 %18, 0
-  br i1 %lcmp.mod395.not.not, label %.preheader.epil.preheader, label %_ZN3mmd11make_uniqueIA_N3pmx8PmxJointEEENS_10_Unique_ifIT_E14_Unknown_boundEm.exit
-
-.preheader.epil.preheader:                        ; preds = %_ZN3mmd11make_uniqueIA_N3pmx8PmxJointEEENS_10_Unique_ifIT_E14_Unknown_boundEm.exit.loopexit.unr-lcssa, %.preheader.preheader
-  %.idx.i.epil.init = phi i64 [ 8, %.preheader.preheader ], [ %.add.i.1, %_ZN3mmd11make_uniqueIA_N3pmx8PmxJointEEENS_10_Unique_ifIT_E14_Unknown_boundEm.exit.loopexit.unr-lcssa ]
-  %lcmp.mod396 = trunc i64 %10 to i1
-  call void @llvm.assume(i1 %lcmp.mod396)
-  %.ptr.ptr.i.epil = getelementptr inbounds nuw i8, ptr %i.uz, i64 %.idx.i.epil.init ; 6 uses
-  %19 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.epil, i64 16 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %19, i8 0, i64 160, i1 false), !noalias !95
-  store ptr %19, ptr %.ptr.ptr.i.epil, align 8, !noalias !95
-  %20 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.epil, i64 8
-  store i64 0, ptr %20, align 8, !noalias !95
-  %21 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.epil, i64 32
-  %22 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.epil, i64 48
-  store ptr %22, ptr %21, align 8, !noalias !95
-  %23 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.epil, i64 68
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(104) %23, i8 0, i64 104, i1 false), !noalias !95
-  br label %_ZN3mmd11make_uniqueIA_N3pmx8PmxJointEEENS_10_Unique_ifIT_E14_Unknown_boundEm.exit
-
-_ZN3mmd11make_uniqueIA_N3pmx8PmxJointEEENS_10_Unique_ifIT_E14_Unknown_boundEm.exit: ; preds = %.preheader.epil.preheader, %_ZN3mmd11make_uniqueIA_N3pmx8PmxJointEEENS_10_Unique_ifIT_E14_Unknown_boundEm.exit.loopexit.unr-lcssa, %._crit_edge267
+_ZN3mmd11make_uniqueIA_N3pmx8PmxJointEEENS_10_Unique_ifIT_E14_Unknown_boundEm.exit: ; preds = %.preheader, %._crit_edge267
   %.ptr5.i = getelementptr inbounds nuw i8, ptr %i.uz, i64 8
   %i.vg = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 3 uses
   %i.vh = load ptr, ptr %i.vg, align 8            ; 4 uses

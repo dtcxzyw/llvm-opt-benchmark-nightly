@@ -205,7 +205,7 @@ bb.a:
   %8 = alloca %"class.std::allocator.5", align 1  ; 3 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %10 = alloca %"class.std::allocator.5", align 1 ; 3 uses
-  %i.a = alloca [4 x i32], align 16               ; 7 uses
+  %i.a = alloca [4 x i32], align 16               ; 6 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %12 = alloca %"class.std::allocator.5", align 1 ; 3 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -223,7 +223,7 @@ bb.a:
   %25 = alloca %"class.std::allocator.5", align 1 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !89   ; 2 uses
-  %i.d = load ptr, ptr %1, align 8, !tbaa !90     ; 7 uses
+  %i.d = load ptr, ptr %1, align 8, !tbaa !90     ; 6 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
@@ -315,7 +315,7 @@ _ZNK2cv8MatShapeixEm.exit:                        ; preds = %bb.g
   %i.z = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !66
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 156
-  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !58 ; 4 uses
+  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !58 ; 3 uses
   %i.ad = mul nsw i32 %i.ac, %i.aa
   %i.ae = mul nsw i32 %i.ad, %i.ac                ; 3 uses
   %.not77 = icmp eq i32 %i.p, 2
@@ -385,23 +385,22 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i36: ; preds = %b
 
 _ZNK2cv8MatShapeixEm.exit38:                      ; preds = %_ZNK2cv8MatShapeixEm.exit32
   %i.as = getelementptr inbounds nuw i8, ptr %i.d, i64 20
-  %26 = load i32, ptr %i.as, align 4, !tbaa !66
-  %27 = sdiv i32 %26, %i.ac                       ; 2 uses
-  %28 = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %29 = load i32, ptr %28, align 4, !tbaa !66
-  %30 = sdiv i32 %29, %i.ac                       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22, !noalias !139
   store i32 %i.r, ptr %i.a, align 16, !tbaa !66, !noalias !139
   %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   store i32 %i.ae, ptr %i.at, align 4, !tbaa !66, !noalias !139
   %i.au = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  store i32 %27, ptr %i.au, align 8, !tbaa !66, !noalias !139
-  %31 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  store i32 %30, ptr %31, align 4, !tbaa !66, !noalias !139
-  %i.av = or i32 %27, %i.ae                       ; 2 uses
+  %26 = load <2 x i32>, ptr %i.as, align 4, !tbaa !66
+  %27 = insertelement <2 x i32> poison, i32 %i.ac, i64 0
+  %28 = shufflevector <2 x i32> %27, <2 x i32> poison, <2 x i32> zeroinitializer
+  %29 = sdiv <2 x i32> %26, %28                   ; 3 uses
+  store <2 x i32> %29, ptr %i.au, align 8, !tbaa !66, !noalias !139
+  %30 = extractelement <2 x i32> %29, i64 0
+  %i.av = or i32 %30, %i.ae                       ; 2 uses
   %i.aw = icmp sgt i32 %i.av, -1
   %i.ax = zext i1 %i.aw to i64
-  %i.ay = or i32 %30, %i.av
+  %31 = extractelement <2 x i32> %29, i64 1
+  %i.ay = or i32 %31, %i.av
   call void @_ZN2cv8MatShapeC1Ev(ptr noundef nonnull align 4 dereferenceable(52) %20)
   %i.az = icmp slt i32 %i.ae, 0
   %.sroa.sel.i = select i1 %i.az, ptr %i.at, ptr %i.au

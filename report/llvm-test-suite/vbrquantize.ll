@@ -203,7 +203,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 68
   %i.c = load i32, ptr %i.b, align 4, !tbaa !16
   %i.d = icmp eq i32 %i.c, 0
-  %i.e = select i1 %i.d, i32 2, i32 1             ; 16 uses
+  %i.e = select i1 %i.d, i32 2, i32 1             ; 13 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(168) %i.a, ptr noundef nonnull align 8 dereferenceable(168) %0, i64 168, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   store i32 0, ptr %i.f, align 8, !tbaa !20
@@ -277,7 +277,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.bc, label %.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.bd = getelementptr inbounds nuw i8, ptr %i.a, i64 144
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.a, i64 144 ; 2 uses
   %i.be = load double, ptr %i.bd, align 16, !tbaa !11 ; 2 uses
   %i.bf = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 72), align 8, !tbaa !9
   %i.bg = sdiv i32 %i.bf, %i.e
@@ -313,25 +313,22 @@ bb.j:                                             ; preds = %bb.i
   store double %i.z, ptr %i.u, align 8, !tbaa !11
   store double %i.ag, ptr %i.ab, align 16, !tbaa !11
   store double %i.an, ptr %i.ai, align 8, !tbaa !11
-  %3 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 76), align 4, !tbaa !9
-  %4 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 72), align 8, !tbaa !9
-  %5 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 68), align 4, !tbaa !9
-  %6 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 64), align 16, !tbaa !9
-  %7 = sdiv i32 %3, %i.e
-  %8 = sdiv i32 %4, %i.e
-  %9 = sdiv i32 %5, %i.e
-  %10 = sdiv i32 %6, %i.e
-  %11 = insertelement <4 x i32> poison, i32 %10, i64 0
-  %12 = insertelement <4 x i32> %11, i32 %9, i64 1
-  %13 = insertelement <4 x i32> %12, i32 %8, i64 2
-  %14 = insertelement <4 x i32> %13, i32 %7, i64 3
-  %15 = sitofp <4 x i32> %14 to <4 x double>
-  %16 = insertelement <4 x double> poison, double %i.aq, i64 0
-  %17 = insertelement <4 x double> %16, double %i.ax, i64 1
-  %18 = insertelement <4 x double> %17, double %i.be, i64 2
-  %19 = insertelement <4 x double> %18, double %i.bl, i64 3
-  %20 = fadd <4 x double> %19, %15
-  store <4 x double> %20, ptr %i.ap, align 16, !tbaa !11
+  %3 = load <2 x i32>, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 64), align 16, !tbaa !9
+  %4 = insertelement <2 x i32> poison, i32 %i.e, i64 0
+  %5 = shufflevector <2 x i32> %4, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
+  %6 = sdiv <2 x i32> %3, %5
+  %7 = sitofp <2 x i32> %6 to <2 x double>
+  %8 = insertelement <2 x double> poison, double %i.aq, i64 0
+  %9 = insertelement <2 x double> %8, double %i.ax, i64 1
+  %10 = fadd <2 x double> %9, %7
+  store <2 x double> %10, ptr %i.ap, align 16, !tbaa !11
+  %11 = load <2 x i32>, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 72), align 8, !tbaa !9
+  %12 = sdiv <2 x i32> %11, %5
+  %13 = sitofp <2 x i32> %12 to <2 x double>
+  %14 = insertelement <2 x double> poison, double %i.be, i64 0
+  %15 = insertelement <2 x double> %14, double %i.bl, i64 1
+  %16 = fadd <2 x double> %15, %13
+  store <2 x double> %16, ptr %i.bd, align 16, !tbaa !11
   %i.by = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 80), align 16, !tbaa !9
   %i.bz = sdiv i32 %i.by, %i.e
   %i.ca = sitofp i32 %i.bz to double

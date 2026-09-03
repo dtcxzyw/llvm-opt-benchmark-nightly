@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 863
 inline.NumDeleted: 302
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZSt22__move_median_to_firstIP6symbolN9__gnu_cxx5__ops15_Iter_comp_iterIN12param_descrs3imp5symltEEEEvT_S9_S9_S9_T0_:bb.a
   store i64 %i.c, ptr %0, align 8, !tbaa !68
   store ptr %.sroa.0.0.copyload.i.i, ptr %2, align 8, !tbaa !68
@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.k:                                             ; preds = %bb.d
   %i.ai = zext i32 %i.l to i64
   %i.aj = tail call noalias noundef ptr @_ZN6memory8allocateEm(i64 noundef %i.ai) ; 5 uses
-  %i.ak = load ptr, ptr %0, align 8, !tbaa !89    ; 6 uses
+  %i.ak = load ptr, ptr %0, align 8, !tbaa !89    ; 5 uses
   %i.al = icmp eq ptr %i.ak, null
   br i1 %i.al, label %_ZSt20uninitialized_move_nIPSt4pairI6symbolN6params5valueEEjS5_ES0_IT_T1_ES6_T0_S7_.exit, label %_ZNK6vectorISt4pairI6symbolN6params5valueEELb0EjE4sizeEv.exit
 
@@ -214,55 +214,21 @@ _ZNK6vectorISt4pairI6symbolN6params5valueEELb0EjE4sizeEv.exit: ; preds = %bb.k
   %i.an = load i32, ptr %i.am, align 4, !tbaa !73 ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
   store i32 %i.an, ptr %i.ao, align 4, !tbaa !73
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 3 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 2 uses
   %i.aq = zext i32 %i.an to i64
-  %.idx.i.i.i = mul nuw nsw i64 %i.aq, 24         ; 2 uses
+  %.idx.i.i.i = mul nuw nsw i64 %i.aq, 24
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ak, i64 %.idx.i.i.i
   %i.as = icmp eq i32 %i.an, 0
-  br i1 %i.as, label %.loopexit, label %.lr.ph.i.i.i.i.i.i.preheader
+  br i1 %i.as, label %.loopexit, label %.lr.ph.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNK6vectorISt4pairI6symbolN6params5valueEELb0EjE4sizeEv.exit
-  %3 = add nsw i64 %.idx.i.i.i, -24               ; 2 uses
-  %4 = udiv i64 %3, 24
-  %5 = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %5, 3                       ; 2 uses
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.prol
-
-.lr.ph.i.i.i.i.i.i.prol:                          ; preds = %.lr.ph.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.prol
-  %.08.i.i.i.i.i.i.prol = phi ptr [ %7, %.lr.ph.i.i.i.i.i.i.prol ], [ %i.ap, %.lr.ph.i.i.i.i.i.i.preheader ] ; 2 uses
-  %.sroa.04.07.i.i.i.i.i.i.prol = phi ptr [ %6, %.lr.ph.i.i.i.i.i.i.prol ], [ %i.ak, %.lr.ph.i.i.i.i.i.i.preheader ] ; 2 uses
-  %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.i.i.i.preheader ]
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.08.i.i.i.i.i.i.prol, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.04.07.i.i.i.i.i.i.prol, i64 24, i1 false)
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i.prol, i64 24 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i.prol, i64 24 ; 2 uses
-  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.prol, !llvm.loop !145
-
-.lr.ph.i.i.i.i.i.i.prol.loopexit:                 ; preds = %.lr.ph.i.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.i.preheader
-  %.08.i.i.i.i.i.i.unr = phi ptr [ %i.ap, %.lr.ph.i.i.i.i.i.i.preheader ], [ %7, %.lr.ph.i.i.i.i.i.i.prol ]
-  %.sroa.04.07.i.i.i.i.i.i.unr = phi ptr [ %i.ak, %.lr.ph.i.i.i.i.i.i.preheader ], [ %6, %.lr.ph.i.i.i.i.i.i.prol ]
-  %8 = icmp ult i64 %3, 72
-  br i1 %8, label %.loopexit, label %.lr.ph.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i
-  %.08.i.i.i.i.i.i = phi ptr [ %i.au, %.lr.ph.i.i.i.i.i.i ], [ %.08.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
-  %.sroa.04.07.i.i.i.i.i.i = phi ptr [ %i.at, %.lr.ph.i.i.i.i.i.i ], [ %.sroa.04.07.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
+.lr.ph.i.i.i.i.i.i:                               ; preds = %_ZNK6vectorISt4pairI6symbolN6params5valueEELb0EjE4sizeEv.exit, %.lr.ph.i.i.i.i.i.i
+  %.08.i.i.i.i.i.i = phi ptr [ %i.au, %.lr.ph.i.i.i.i.i.i ], [ %i.ap, %_ZNK6vectorISt4pairI6symbolN6params5valueEELb0EjE4sizeEv.exit ] ; 2 uses
+  %.sroa.04.07.i.i.i.i.i.i = phi ptr [ %i.at, %.lr.ph.i.i.i.i.i.i ], [ %i.ak, %_ZNK6vectorISt4pairI6symbolN6params5valueEELb0EjE4sizeEv.exit ] ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.08.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.04.07.i.i.i.i.i.i, i64 24, i1 false)
-  %9 = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 24
-  %10 = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 24
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %10, ptr noundef nonnull align 8 dereferenceable(24) %9, i64 24, i1 false)
-  %11 = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 48
-  %12 = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 48
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %12, ptr noundef nonnull align 8 dereferenceable(24) %11, i64 24, i1 false)
-  %13 = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 72
-  %14 = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 72
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %14, ptr noundef nonnull align 8 dereferenceable(24) %13, i64 24, i1 false)
-  %i.at = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 96 ; 2 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 96
+  %i.at = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 24 ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 24
   %i.av = icmp eq ptr %i.at, %i.ar
-  br i1 %i.av, label %.loopexit, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !146
+  br i1 %i.av, label %.loopexit, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !145
 
 _ZSt20uninitialized_move_nIPSt4pairI6symbolN6params5valueEEjS5_ES0_IT_T1_ES6_T0_S7_.exit: ; preds = %bb.k
   %i.aw = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
@@ -270,7 +236,7 @@ _ZSt20uninitialized_move_nIPSt4pairI6symbolN6params5valueEEjS5_ES0_IT_T1_ES6_T0_
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   br label %_ZN6vectorISt4pairI6symbolN6params5valueEELb0EjE7destroyEv.exit
 
-.loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i, %_ZNK6vectorISt4pairI6symbolN6params5valueEELb0EjE4sizeEv.exit
+.loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i.i, %_ZNK6vectorISt4pairI6symbolN6params5valueEELb0EjE4sizeEv.exit
   %i.ay = getelementptr inbounds i8, ptr %i.ak, i64 -8
   tail call void @_ZN6memory10deallocateEPv(ptr noundef nonnull %i.ay)
   br label %_ZN6vectorISt4pairI6symbolN6params5valueEELb0EjE7destroyEv.exit
@@ -477,6 +443,5 @@ attributes #25 = { nounwind willreturn memory(read) }
 !142 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !143 = distinct !{!143, !45}
 !144 = distinct !{!144, !45}
-!145 = distinct !{!145, !104}
-!146 = distinct !{!146, !45}
+!145 = distinct !{!145, !45}
 end_hunk_0

@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/dispatch?download=true
 inline.NumInlined: 1613
 inline.NumDeleted: 800
-loop-unroll.NumRuntimeUnrolled: 17
-loop-unroll.NumUnrolled: 17
+loop-unroll.NumRuntimeUnrolled: 16
+loop-unroll.NumUnrolled: 16
 begin_hunk_0_@_ZSt17__rotate_adaptiveIN9__gnu_cxx17__normal_iteratorIPSt4pairISt4spanIKhLm18446744073709551615EES5_ESt6vectorIS6_SaIS6_EEEES7_lET_SC_SC_SC_T1_SD_T0_SD_:bb.a
 
 bb.e:                                             ; preds = %bb.d
@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i.i:                                       ; preds = %bb.b, %select.unfold.i.i
   %.010.i.i = phi i64 [ %i.p, %select.unfold.i.i ], [ %.sroa.speculated, %bb.b ] ; 5 uses
-  %i.l = mul nuw nsw i64 %.010.i.i, 24            ; 3 uses
-  %i.m = tail call noalias noundef ptr @_ZnwmRKSt9nothrow_t(i64 noundef %i.l, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #27 ; 13 uses
+  %i.l = mul nuw nsw i64 %.010.i.i, 24            ; 2 uses
+  %i.m = tail call noalias noundef ptr @_ZnwmRKSt9nothrow_t(i64 noundef %i.l, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #27 ; 8 uses
   %.not.i.i = icmp eq ptr %i.m, null
   br i1 %.not.i.i, label %select.unfold.i.i, label %bb.c
 
@@ -223,60 +223,29 @@ bb.c:                                             ; preds = %.lr.ph.i.i
   %i.t = load i64, ptr %i.s, align 8              ; 2 uses
   store i64 %i.t, ptr %i.r, align 8
   %.not18.i.i.i = icmp eq i64 %.010.i.i, 1
-  br i1 %.not18.i.i.i, label %_ZSt29__uninitialized_construct_bufIPSt4pairISt4spanIKhLm18446744073709551615EESt10unique_ptrIN5crdtp16DomainDispatcherESt14default_deleteIS6_EEEN9__gnu_cxx17__normal_iteratorISB_St6vectorISA_SaISA_EEEEEvT_SI_T0_.exit.i, label %.lr.ph.i.i.preheader.i
+  br i1 %.not18.i.i.i, label %_ZSt29__uninitialized_construct_bufIPSt4pairISt4spanIKhLm18446744073709551615EESt10unique_ptrIN5crdtp16DomainDispatcherESt14default_deleteIS6_EEEN9__gnu_cxx17__normal_iteratorISB_St6vectorISA_SaISA_EEEEEvT_SI_T0_.exit.i, label %.lr.ph.i.i.i.prol
 
-.lr.ph.i.i.preheader.i:                           ; preds = %bb.c
-  %.01317.i.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 24 ; 2 uses
-  %3 = add nsw i64 %i.l, -48                      ; 2 uses
-  %4 = udiv i64 %3, 24
-  %5 = and i64 %4, 1
-  %lcmp.mod.not.not = icmp eq i64 %5, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.prol, label %.lr.ph.i.i.i.prol.loopexit
+.lr.ph.i.i.i.prol:                                ; preds = %bb.c
+  %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 24
+  br label %.lr.ph.i.i.i
 
-.lr.ph.i.i.i.prol:                                ; preds = %.lr.ph.i.i.preheader.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.01317.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 16, i1 false)
-  %6 = getelementptr inbounds nuw i8, ptr %i.m, i64 40
-  %7 = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 2 uses
-  %8 = load i64, ptr %7, align 8                  ; 2 uses
-  store i64 %8, ptr %6, align 8
-  store ptr null, ptr %7, align 8
-  %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 24 ; 2 uses
-  %.013.i.i.i.prol = getelementptr inbounds nuw i8, ptr %i.m, i64 48
-  br label %.lr.ph.i.i.i.prol.loopexit
-
-.lr.ph.i.i.i.prol.loopexit:                       ; preds = %.lr.ph.i.i.i.prol, %.lr.ph.i.i.preheader.i
-  %.lcssa95.unr = phi i64 [ poison, %.lr.ph.i.i.preheader.i ], [ %8, %.lr.ph.i.i.i.prol ]
-  %.lcssa94.unr = phi ptr [ poison, %.lr.ph.i.i.preheader.i ], [ %i.u, %.lr.ph.i.i.i.prol ]
-  %.01321.i.i.i.unr = phi ptr [ %.01317.i.i.i, %.lr.ph.i.i.preheader.i ], [ %.013.i.i.i.prol, %.lr.ph.i.i.i.prol ]
-  %.020.i.i.i.unr = phi ptr [ %i.m, %.lr.ph.i.i.preheader.i ], [ %i.u, %.lr.ph.i.i.i.prol ]
-  %9 = icmp ult i64 %3, 24
-  br i1 %9, label %_ZSt29__uninitialized_construct_bufIPSt4pairISt4spanIKhLm18446744073709551615EESt10unique_ptrIN5crdtp16DomainDispatcherESt14default_deleteIS6_EEEN9__gnu_cxx17__normal_iteratorISB_St6vectorISA_SaISA_EEEEEvT_SI_T0_.exit.i, label %.lr.ph.i.i.i
-
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i
-  %.01321.i.i.i = phi ptr [ %.013.i.i.i.1, %.lr.ph.i.i.i ], [ %.01321.i.i.i.unr, %.lr.ph.i.i.i.prol.loopexit ] ; 3 uses
-  %.020.i.i.i = phi ptr [ %i.y, %.lr.ph.i.i.i ], [ %.020.i.i.i.unr, %.lr.ph.i.i.i.prol.loopexit ] ; 7 uses
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i.i.prol
+  %.01321.i.i.i = phi ptr [ %.013.i.i.i.1, %.lr.ph.i.i.i ], [ %i.u, %.lr.ph.i.i.i.prol ] ; 2 uses
+  %.020.i.i.i = phi ptr [ %i.y, %.lr.ph.i.i.i ], [ %i.m, %.lr.ph.i.i.i.prol ] ; 4 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.01321.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.020.i.i.i, i64 16, i1 false)
-  %10 = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 40
-  %11 = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 16 ; 2 uses
-  %12 = load i64, ptr %11, align 8
-  store i64 %12, ptr %10, align 8
-  store ptr null, ptr %11, align 8
-  %13 = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 24
-  %.013.i.i.i = getelementptr inbounds nuw i8, ptr %.01321.i.i.i, i64 24
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.013.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %13, i64 16, i1 false)
-  %i.v = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 64
-  %i.w = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 40 ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 40
+  %i.w = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 16 ; 2 uses
   %i.x = load i64, ptr %i.w, align 8              ; 2 uses
   store i64 %i.x, ptr %i.v, align 8
   store ptr null, ptr %i.w, align 8
-  %i.y = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 48 ; 2 uses
-  %.013.i.i.i.1 = getelementptr inbounds nuw i8, ptr %.01321.i.i.i, i64 48 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %.020.i.i.i, i64 24 ; 2 uses
+  %.013.i.i.i.1 = getelementptr inbounds nuw i8, ptr %.01321.i.i.i, i64 24 ; 2 uses
   %.not.i.i.i.1 = icmp eq ptr %.013.i.i.i.1, %i.q
   br i1 %.not.i.i.i.1, label %_ZSt29__uninitialized_construct_bufIPSt4pairISt4spanIKhLm18446744073709551615EESt10unique_ptrIN5crdtp16DomainDispatcherESt14default_deleteIS6_EEEN9__gnu_cxx17__normal_iteratorISB_St6vectorISA_SaISA_EEEEEvT_SI_T0_.exit.i, label %.lr.ph.i.i.i, !llvm.loop !149
 
-_ZSt29__uninitialized_construct_bufIPSt4pairISt4spanIKhLm18446744073709551615EESt10unique_ptrIN5crdtp16DomainDispatcherESt14default_deleteIS6_EEEN9__gnu_cxx17__normal_iteratorISB_St6vectorISA_SaISA_EEEEEvT_SI_T0_.exit.i: ; preds = %.lr.ph.i.i.i.prol.loopexit, %.lr.ph.i.i.i, %bb.c
-  %.in.i = phi i64 [ %i.t, %bb.c ], [ %.lcssa95.unr, %.lr.ph.i.i.i.prol.loopexit ], [ %i.x, %.lr.ph.i.i.i ]
-  %.0.lcssa.i.i.i = phi ptr [ %i.m, %bb.c ], [ %.lcssa94.unr, %.lr.ph.i.i.i.prol.loopexit ], [ %i.y, %.lr.ph.i.i.i ] ; 2 uses
+_ZSt29__uninitialized_construct_bufIPSt4pairISt4spanIKhLm18446744073709551615EESt10unique_ptrIN5crdtp16DomainDispatcherESt14default_deleteIS6_EEEN9__gnu_cxx17__normal_iteratorISB_St6vectorISA_SaISA_EEEEEvT_SI_T0_.exit.i: ; preds = %.lr.ph.i.i.i, %bb.c
+  %.in.i = phi i64 [ %i.t, %bb.c ], [ %i.x, %.lr.ph.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %i.m, %bb.c ], [ %i.y, %.lr.ph.i.i.i ] ; 2 uses
   %i.z = inttoptr i64 %.in.i to ptr
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.0.lcssa.i.i.i, i64 16, i1 false)
   %i.aa = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 16

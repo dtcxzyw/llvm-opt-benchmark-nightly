@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 1764
 inline.NumDeleted: 610
 loop-unroll.NumCompletelyUnrolled: 15
-loop-unroll.NumRuntimeUnrolled: 36
-loop-unroll.NumUnrolled: 51
+loop-unroll.NumRuntimeUnrolled: 35
+loop-unroll.NumUnrolled: 50
 begin_hunk_0_@_ZN17btSoftBodyHelpers20CreateFromConvexHullER19btSoftBodyWorldInfoPK9btVector3ib:bb.a
 
 bb.n:                                             ; preds = %bb.m
@@ -205,58 +205,34 @@ bb.c:                                             ; preds = %bb.b
   %i.w = zext nneg i32 %.097.lcssa to i64
   %i.x = shl nuw nsw i64 %i.w, 4
   %i.y = invoke noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef %i.x, i32 noundef 16)
-          to label %.lr.ph110.preheader unwind label %bb.e ; 5 uses
+          to label %.lr.ph110.preheader unwind label %bb.e ; 3 uses
 
 .lr.ph110.preheader:                              ; preds = %bb.c
   store i8 1, ptr %i.p, align 8, !tbaa !40
   store ptr %i.y, ptr %i.q, align 8, !tbaa !41
   store i32 %.097.lcssa, ptr %i.s, align 8, !tbaa !43
   store i32 %.097.lcssa, ptr %i.r, align 4, !tbaa !42
-  %i.z = mul i32 %.097.lcssa, 3                   ; 2 uses
-  %smax125 = tail call i32 @llvm.smax.i32(i32 %i.z, i32 3)
-  %7 = add nsw i32 %smax125, -1
-  %8 = udiv i32 %7, 3
-  %9 = add nuw nsw i32 %8, 1                      ; 2 uses
-  %wide.trip.count126 = zext nneg i32 %9 to i64   ; 2 uses
-  %xtraiter = and i64 %wide.trip.count126, 1
-  %10 = icmp slt i32 %i.z, 4
-  br i1 %10, label %.lr.ph110.epil.preheader, label %.lr.ph110.preheader.new
-
-.lr.ph110.preheader.new:                          ; preds = %.lr.ph110.preheader
-  %unroll_iter = and i64 %wide.trip.count126, 2147483646
+  %i.z = mul nsw i32 %.097.lcssa, 3
+  %wide.trip.count126 = zext nneg i32 %i.z to i64
   br label %.lr.ph110
 
-.lr.ph110:                                        ; preds = %.lr.ph110, %.lr.ph110.preheader.new
-  %indvars.iv120 = phi i64 [ 0, %.lr.ph110.preheader.new ], [ %indvars.iv.next121.1, %.lr.ph110 ] ; 3 uses
-  %indvars.iv118.a = phi i64 [ 0, %.lr.ph110.preheader.new ], [ %indvars.iv.next119.1, %.lr.ph110 ] ; 3 uses
-  %niter = phi i64 [ 0, %.lr.ph110.preheader.new ], [ %niter.next.1, %.lr.ph110 ]
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv120 ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %11, i64 8
-  %13 = load float, ptr %12, align 4, !tbaa !19
-  %14 = getelementptr inbounds nuw [16 x i8], ptr %i.y, i64 %indvars.iv118.a ; 3 uses
-  %15 = load <2 x float>, ptr %11, align 4, !tbaa !19
-  store <2 x float> %15, ptr %14, align 4
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %14, i64 8
-  store float %13, ptr %.sroa.5.0..sroa_idx, align 4
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %14, i64 12
-  store float 0.000000e+00, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !39
-  %i.aa = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv120 ; 2 uses
-  %16 = getelementptr inbounds nuw i8, ptr %i.aa, i64 12
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 20
+.lr.ph110:                                        ; preds = %.lr.ph110.preheader, %.lr.ph110
+  %indvars.iv118.a = phi i64 [ 0, %.lr.ph110.preheader ], [ %niter.next.1, %.lr.ph110 ] ; 2 uses
+  %niter = phi i64 [ 0, %.lr.ph110.preheader ], [ %indvars.iv.next121.1, %.lr.ph110 ] ; 2 uses
+  %i.aa = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv118.a ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %i.ac = load float, ptr %i.ab, align 4, !tbaa !19
-  %i.ad = getelementptr inbounds nuw [16 x i8], ptr %i.y, i64 %indvars.iv118.a ; 3 uses
-  %17 = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
-  %i.ae = load <2 x float>, ptr %16, align 4, !tbaa !19
-  store <2 x float> %i.ae, ptr %17, align 4
-  %.sroa.5.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
+  %i.ad = getelementptr inbounds nuw [16 x i8], ptr %i.y, i64 %niter ; 3 uses
+  %i.ae = load <2 x float>, ptr %i.aa, align 4, !tbaa !19
+  store <2 x float> %i.ae, ptr %i.ad, align 4
+  %.sroa.5.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   store float %i.ac, ptr %.sroa.5.0..sroa_idx.1, align 4
-  %.sroa.6.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.ad, i64 28
+  %.sroa.6.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.ad, i64 12
   store float 0.000000e+00, ptr %.sroa.6.0..sroa_idx.1, align 4, !tbaa !39
-  %indvars.iv.next119.1 = add nuw nsw i64 %indvars.iv118.a, 2 ; 2 uses
-  %indvars.iv.next121.1 = add nuw nsw i64 %indvars.iv120, 6 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge111.unr-lcssa, label %.lr.ph110, !llvm.loop !367
+  %indvars.iv.next121.1 = add nuw nsw i64 %niter, 1
+  %niter.next.1 = add nuw nsw i64 %indvars.iv118.a, 3 ; 2 uses
+  %7 = icmp samesign ult i64 %niter.next.1, %wide.trip.count126
+  br i1 %7, label %.lr.ph110, label %._crit_edge111, !llvm.loop !367
 
 bb.d:                                             ; preds = %bb.b
   %i.af = landingpad { ptr, i32 }
@@ -268,28 +244,7 @@ bb.e:                                             ; preds = %bb.c
           cleanup
   br label %_ZN17btCollisionObjectdlEPv.exit
 
-._crit_edge111.unr-lcssa:                         ; preds = %.lr.ph110
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge111, label %.lr.ph110.epil.preheader
-
-.lr.ph110.epil.preheader:                         ; preds = %._crit_edge111.unr-lcssa, %.lr.ph110.preheader
-  %indvars.iv120.epil.init = phi i64 [ 0, %.lr.ph110.preheader ], [ %indvars.iv.next121.1, %._crit_edge111.unr-lcssa ]
-  %indvars.iv118.epil.init = phi i64 [ 0, %.lr.ph110.preheader ], [ %indvars.iv.next119.1, %._crit_edge111.unr-lcssa ]
-  %lcmp.mod145 = trunc i32 %9 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod145)
-  %18 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv120.epil.init ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %18, i64 8
-  %20 = load float, ptr %19, align 4, !tbaa !19
-  %21 = getelementptr inbounds nuw [16 x i8], ptr %i.y, i64 %indvars.iv118.epil.init ; 3 uses
-  %22 = load <2 x float>, ptr %18, align 4, !tbaa !19
-  store <2 x float> %22, ptr %21, align 4
-  %.sroa.5.0..sroa_idx.epil = getelementptr inbounds nuw i8, ptr %21, i64 8
-  store float %20, ptr %.sroa.5.0..sroa_idx.epil, align 4
-  %.sroa.6.0..sroa_idx.epil = getelementptr inbounds nuw i8, ptr %21, i64 12
-  store float 0.000000e+00, ptr %.sroa.6.0..sroa_idx.epil, align 4, !tbaa !39
-  br label %._crit_edge111
-
-._crit_edge111:                                   ; preds = %._crit_edge111.unr-lcssa, %.lr.ph110.epil.preheader
+._crit_edge111:                                   ; preds = %.lr.ph110
   %i.ah = invoke noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef 2064, i32 noundef 16)
           to label %_ZN17btCollisionObjectnwEm.exit unwind label %bb.g ; 8 uses
 

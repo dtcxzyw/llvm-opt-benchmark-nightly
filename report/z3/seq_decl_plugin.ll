@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 2960
 inline.NumDeleted: 901
 loop-unroll.NumCompletelyUnrolled: 51
-loop-unroll.NumRuntimeUnrolled: 13
-loop-unroll.NumUnrolled: 64
+loop-unroll.NumRuntimeUnrolled: 12
+loop-unroll.NumUnrolled: 63
 begin_hunk_0_@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_:bb.a
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit: ; preds = %bb.a
@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.k:                                             ; preds = %bb.d
   %i.ai = zext i32 %i.l to i64
   %i.aj = tail call noalias noundef ptr @_ZN6memory8allocateEm(i64 noundef %i.ai) ; 5 uses
-  %i.ak = load ptr, ptr %0, align 8, !tbaa !207   ; 6 uses
+  %i.ak = load ptr, ptr %0, align 8, !tbaa !207   ; 5 uses
   %i.al = icmp eq ptr %i.ak, null
   br i1 %i.al, label %_ZSt20uninitialized_move_nIPN8seq_util3rex4infoEjS3_ESt4pairIT_T1_ES5_T0_S6_.exit, label %_ZNK6vectorIN8seq_util3rex4infoELb1EjE4sizeEv.exit
 
@@ -214,55 +214,21 @@ _ZNK6vectorIN8seq_util3rex4infoELb1EjE4sizeEv.exit: ; preds = %bb.k
   %i.an = load i32, ptr %i.am, align 4, !tbaa !61 ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
   store i32 %i.an, ptr %i.ao, align 4, !tbaa !61
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 3 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 2 uses
   %i.aq = zext i32 %i.an to i64
-  %.idx.i.i.i = mul nuw nsw i64 %i.aq, 20         ; 2 uses
+  %.idx.i.i.i = mul nuw nsw i64 %i.aq, 20
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ak, i64 %.idx.i.i.i
   %i.as = icmp eq i32 %i.an, 0
-  br i1 %i.as, label %.loopexit, label %.lr.ph.i.i.i.i.i.i.preheader
+  br i1 %i.as, label %.loopexit, label %.lr.ph.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNK6vectorIN8seq_util3rex4infoELb1EjE4sizeEv.exit
-  %3 = add nsw i64 %.idx.i.i.i, -20               ; 2 uses
-  %4 = udiv i64 %3, 20
-  %5 = add nuw nsw i64 %4, 1
-  %xtraiter = and i64 %5, 3                       ; 2 uses
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.prol
-
-.lr.ph.i.i.i.i.i.i.prol:                          ; preds = %.lr.ph.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.prol
-  %.08.i.i.i.i.i.i.prol = phi ptr [ %7, %.lr.ph.i.i.i.i.i.i.prol ], [ %i.ap, %.lr.ph.i.i.i.i.i.i.preheader ] ; 2 uses
-  %.sroa.04.07.i.i.i.i.i.i.prol = phi ptr [ %6, %.lr.ph.i.i.i.i.i.i.prol ], [ %i.ak, %.lr.ph.i.i.i.i.i.i.preheader ] ; 2 uses
-  %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.i.i.i.preheader ]
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.08.i.i.i.i.i.i.prol, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.04.07.i.i.i.i.i.i.prol, i64 20, i1 false), !tbaa.struct !268
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i.prol, i64 20 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i.prol, i64 20 ; 2 uses
-  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.prol, !llvm.loop !667
-
-.lr.ph.i.i.i.i.i.i.prol.loopexit:                 ; preds = %.lr.ph.i.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.i.preheader
-  %.08.i.i.i.i.i.i.unr = phi ptr [ %i.ap, %.lr.ph.i.i.i.i.i.i.preheader ], [ %7, %.lr.ph.i.i.i.i.i.i.prol ]
-  %.sroa.04.07.i.i.i.i.i.i.unr = phi ptr [ %i.ak, %.lr.ph.i.i.i.i.i.i.preheader ], [ %6, %.lr.ph.i.i.i.i.i.i.prol ]
-  %8 = icmp ult i64 %3, 60
-  br i1 %8, label %.loopexit, label %.lr.ph.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i
-  %.08.i.i.i.i.i.i = phi ptr [ %i.au, %.lr.ph.i.i.i.i.i.i ], [ %.08.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
-  %.sroa.04.07.i.i.i.i.i.i = phi ptr [ %i.at, %.lr.ph.i.i.i.i.i.i ], [ %.sroa.04.07.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
+.lr.ph.i.i.i.i.i.i:                               ; preds = %_ZNK6vectorIN8seq_util3rex4infoELb1EjE4sizeEv.exit, %.lr.ph.i.i.i.i.i.i
+  %.08.i.i.i.i.i.i = phi ptr [ %i.au, %.lr.ph.i.i.i.i.i.i ], [ %i.ap, %_ZNK6vectorIN8seq_util3rex4infoELb1EjE4sizeEv.exit ] ; 2 uses
+  %.sroa.04.07.i.i.i.i.i.i = phi ptr [ %i.at, %.lr.ph.i.i.i.i.i.i ], [ %i.ak, %_ZNK6vectorIN8seq_util3rex4infoELb1EjE4sizeEv.exit ] ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.08.i.i.i.i.i.i, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.04.07.i.i.i.i.i.i, i64 20, i1 false), !tbaa.struct !268
-  %9 = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 20
-  %10 = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 20
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %10, ptr noundef nonnull align 4 dereferenceable(20) %9, i64 20, i1 false), !tbaa.struct !268
-  %11 = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 40
-  %12 = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 40
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %12, ptr noundef nonnull align 4 dereferenceable(20) %11, i64 20, i1 false), !tbaa.struct !268
-  %13 = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 60
-  %14 = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 60
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %14, ptr noundef nonnull align 4 dereferenceable(20) %13, i64 20, i1 false), !tbaa.struct !268
-  %i.at = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 80 ; 2 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 80
+  %i.at = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 20 ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 20
   %i.av = icmp eq ptr %i.at, %i.ar
-  br i1 %i.av, label %.loopexit, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !668
+  br i1 %i.av, label %.loopexit, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !667
 
 _ZSt20uninitialized_move_nIPN8seq_util3rex4infoEjS3_ESt4pairIT_T1_ES5_T0_S6_.exit: ; preds = %bb.k
   %i.aw = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
@@ -270,7 +236,7 @@ _ZSt20uninitialized_move_nIPN8seq_util3rex4infoEjS3_ESt4pairIT_T1_ES5_T0_S6_.exi
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   br label %_ZN6vectorIN8seq_util3rex4infoELb1EjE7destroyEv.exit
 
-.loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i, %_ZNK6vectorIN8seq_util3rex4infoELb1EjE4sizeEv.exit
+.loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i.i, %_ZNK6vectorIN8seq_util3rex4infoELb1EjE4sizeEv.exit
   %i.ay = getelementptr inbounds i8, ptr %i.ak, i64 -8
   tail call void @_ZN6memory10deallocateEPv(ptr noundef nonnull %i.ay)
   br label %_ZN6vectorIN8seq_util3rex4infoELb1EjE7destroyEv.exit
@@ -673,6 +639,5 @@ begin_hunk_1_@llvm.umin.i32
 !664 = !{!663, !661}
 !665 = distinct !{!665, !70}
 !666 = distinct !{!666, !70}
-!667 = distinct !{!667, !190}
-!668 = distinct !{!668, !70}
+!667 = distinct !{!667, !70}
 end_hunk_1

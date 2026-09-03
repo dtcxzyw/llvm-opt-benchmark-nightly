@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 3924
 inline.NumDeleted: 447
 loop-unroll.NumCompletelyUnrolled: 59
-loop-unroll.NumRuntimeUnrolled: 216
-loop-unroll.NumUnrolled: 278
+loop-unroll.NumRuntimeUnrolled: 215
+loop-unroll.NumUnrolled: 277
 begin_hunk_0_@ma_dr_mp3dec_decode_frame:bb.a
 bb.be:                                            ; preds = %.loopexit.1.i.i.i
   %i.ug = and i32 %.076.i.i, 2
@@ -205,7 +205,7 @@ ma_dr_mp3_L3_read_scalefactors.exit.i.i:          ; preds = %.loopexit.3.i.i.i, 
   %i.xe = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 1
   store i8 0, ptr %i.xe, align 1, !tbaa !119
   store i8 0, ptr %.0.lcssa.i.i.i, align 1, !tbaa !119
-  %i.xf = load i8, ptr %i.ou, align 2, !tbaa !1122 ; 4 uses
+  %i.xf = load i8, ptr %i.ou, align 2, !tbaa !1122 ; 3 uses
   %.not79.i.i = icmp eq i8 %i.xf, 0
   br i1 %.not79.i.i, label %bb.bu, label %bb.bs
 
@@ -216,62 +216,39 @@ bb.bs:                                            ; preds = %ma_dr_mp3_L3_read_s
   %i.xj = load i8, ptr %i.xi, align 1, !tbaa !119
   %i.xk = zext i8 %i.xj to i32
   %i.xl = shl nuw nsw i32 %i.xk, %i.xg
-  %i.xm = trunc i32 %i.xl to i8                   ; 3 uses
+  %i.xm = trunc i32 %i.xl to i8
   %i.xn = getelementptr inbounds nuw i8, ptr %i.oo, i64 26
   %i.xo = load i8, ptr %i.xn, align 2, !tbaa !119
   %i.xp = zext i8 %i.xo to i32
   %i.xq = shl nuw nsw i32 %i.xp, %i.xg
-  %i.xr = trunc i32 %i.xq to i8                   ; 3 uses
+  %i.xr = trunc i32 %i.xq to i8
   %i.xs = getelementptr inbounds nuw i8, ptr %i.oo, i64 27
   %i.xt = load i8, ptr %i.xs, align 1, !tbaa !119
   %i.xu = zext i8 %i.xt to i32
   %i.xv = shl nuw nsw i32 %i.xu, %i.xg
-  %i.xw = trunc i32 %i.xv to i8                   ; 3 uses
+  %i.xw = trunc i32 %i.xv to i8
   %i.xx = zext i8 %i.xh to i64
   %i.xy = zext i8 %i.xf to i64
-  %invariant.gep.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.xx ; 3 uses
-  %7 = add nsw i64 %i.xy, -1
-  %8 = udiv i64 %7, 3                             ; 2 uses
-  %9 = add nuw nsw i64 %8, 1                      ; 2 uses
-  %10 = icmp ult i8 %i.xf, 4
-  br i1 %10, label %.epil.preheader755, label %.new
-
-.new:                                             ; preds = %bb.bs
-  %unroll_iter759 = and i64 %9, 9223372036854775806
+  %invariant.gep.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.xx
   br label %bb.bt
 
-bb.bt:                                            ; preds = %bb.bt, %.new
-  %indvars.iv129.i.i = phi i64 [ 0, %.new ], [ %indvars.iv.next130.i.i.1, %bb.bt ] ; 3 uses
-  %niter760 = phi i64 [ 0, %.new ], [ %niter760.next.1, %bb.bt ]
-  %gep.i.i = getelementptr inbounds nuw i8, ptr %invariant.gep.i.i, i64 %indvars.iv129.i.i ; 4 uses
-  %11 = load i8, ptr %gep.i.i, align 1, !tbaa !119
-  %12 = add i8 %11, %i.xm
-  store i8 %12, ptr %gep.i.i, align 1, !tbaa !119
-  %13 = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 1 ; 2 uses
-  %14 = load i8, ptr %13, align 1, !tbaa !119
-  %15 = add i8 %14, %i.xr
-  store i8 %15, ptr %13, align 1, !tbaa !119
-  %16 = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 2 ; 2 uses
-  %17 = load i8, ptr %16, align 1, !tbaa !119
-  %18 = add i8 %17, %i.xw
-  store i8 %18, ptr %16, align 1, !tbaa !119
-  %19 = getelementptr inbounds nuw i8, ptr %invariant.gep.i.i, i64 %indvars.iv129.i.i ; 3 uses
-  %gep.i.i.1 = getelementptr inbounds nuw i8, ptr %19, i64 3 ; 2 uses
+bb.bt:                                            ; preds = %bb.bt, %bb.bs
+  %niter760 = phi i64 [ 0, %bb.bs ], [ %niter760.next.1, %bb.bt ] ; 2 uses
+  %gep.i.i.1 = getelementptr inbounds nuw i8, ptr %invariant.gep.i.i, i64 %niter760 ; 4 uses
   %i.xz = load i8, ptr %gep.i.i.1, align 1, !tbaa !119
   %i.ya = add i8 %i.xz, %i.xm
   store i8 %i.ya, ptr %gep.i.i.1, align 1, !tbaa !119
-  %i.yb = getelementptr inbounds nuw i8, ptr %19, i64 4 ; 2 uses
+  %i.yb = getelementptr inbounds nuw i8, ptr %gep.i.i.1, i64 1 ; 2 uses
   %i.yc = load i8, ptr %i.yb, align 1, !tbaa !119
   %i.yd = add i8 %i.yc, %i.xr
   store i8 %i.yd, ptr %i.yb, align 1, !tbaa !119
-  %i.ye = getelementptr inbounds nuw i8, ptr %19, i64 5 ; 2 uses
+  %i.ye = getelementptr inbounds nuw i8, ptr %gep.i.i.1, i64 2 ; 2 uses
   %i.yf = load i8, ptr %i.ye, align 1, !tbaa !119
   %i.yg = add i8 %i.yf, %i.xw
   store i8 %i.yg, ptr %i.ye, align 1, !tbaa !119
-  %indvars.iv.next130.i.i.1 = add nuw nsw i64 %indvars.iv129.i.i, 6 ; 2 uses
-  %niter760.next.1 = add i64 %niter760, 2         ; 2 uses
-  %niter760.ncmp.1.not = icmp eq i64 %niter760.next.1, %unroll_iter759
-  br i1 %niter760.ncmp.1.not, label %.loopexit.i.i.loopexit.unr-lcssa, label %bb.bt, !llvm.loop !2979
+  %niter760.next.1 = add nuw nsw i64 %niter760, 3 ; 2 uses
+  %7 = icmp samesign ult i64 %niter760.next.1, %i.xy
+  br i1 %7, label %bb.bt, label %.loopexit.i.i, !llvm.loop !2979
 
 bb.bu:                                            ; preds = %ma_dr_mp3_L3_read_scalefactors.exit.i.i
   %i.yh = getelementptr inbounds nuw i8, ptr %i.oo, i64 28
@@ -291,30 +268,7 @@ bb.bu:                                            ; preds = %ma_dr_mp3_L3_read_s
   store i8 %i.yo, ptr %i.nv, align 4, !tbaa !119
   br label %.loopexit.i.i
 
-.loopexit.i.i.loopexit.unr-lcssa:                 ; preds = %bb.bt
-  %20 = and i64 %8, 1
-  %lcmp.mod757.not.not = icmp eq i64 %20, 0
-  br i1 %lcmp.mod757.not.not, label %.epil.preheader755, label %.loopexit.i.i
-
-.epil.preheader755:                               ; preds = %.loopexit.i.i.loopexit.unr-lcssa, %bb.bs
-  %indvars.iv129.i.i.epil.init = phi i64 [ 0, %bb.bs ], [ %indvars.iv.next130.i.i.1, %.loopexit.i.i.loopexit.unr-lcssa ]
-  %lcmp.mod758 = trunc i64 %9 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod758)
-  %gep.i.i.epil = getelementptr inbounds nuw i8, ptr %invariant.gep.i.i, i64 %indvars.iv129.i.i.epil.init ; 4 uses
-  %21 = load i8, ptr %gep.i.i.epil, align 1, !tbaa !119
-  %22 = add i8 %21, %i.xm
-  store i8 %22, ptr %gep.i.i.epil, align 1, !tbaa !119
-  %23 = getelementptr inbounds nuw i8, ptr %gep.i.i.epil, i64 1 ; 2 uses
-  %24 = load i8, ptr %23, align 1, !tbaa !119
-  %25 = add i8 %24, %i.xr
-  store i8 %25, ptr %23, align 1, !tbaa !119
-  %26 = getelementptr inbounds nuw i8, ptr %gep.i.i.epil, i64 2 ; 2 uses
-  %27 = load i8, ptr %26, align 1, !tbaa !119
-  %28 = add i8 %27, %i.xw
-  store i8 %28, ptr %26, align 1, !tbaa !119
-  br label %.loopexit.i.i
-
-.loopexit.i.i:                                    ; preds = %.epil.preheader755, %.loopexit.i.i.loopexit.unr-lcssa, %.preheader.preheader.i.i, %bb.bu
+.loopexit.i.i:                                    ; preds = %bb.bt, %.preheader.preheader.i.i, %bb.bu
   %i.yp = getelementptr inbounds nuw i8, ptr %i.oo, i64 14
   %i.yq = load i8, ptr %i.yp, align 2, !tbaa !1128
   %i.yr = zext i8 %i.yq to i32

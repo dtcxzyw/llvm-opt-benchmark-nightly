@@ -1,8 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/grpc/original/lrs_client?download=true
 inline.NumInlined: 4079
 inline.NumDeleted: 1857
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN9grpc_core9LrsClient16ClusterDropStats21AddUncategorizedDropsEv:bb.a
   ret void
 }
@@ -204,81 +202,33 @@ bb.a:
   %i.y = extractvalue { i64, i1 } %i.v, 0
   %i.z = select i1 %i.x, i64 -1, i64 %i.y
   %i.aa = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.z) #41
-          to label %.noexc43 unwind label %bb.o   ; 5 uses
+          to label %.noexc43 unwind label %bb.o   ; 3 uses
 
 .noexc43:                                         ; preds = %.noexc
   store i64 %i.q, ptr %i.aa, align 16
   %i.ab = icmp eq i64 %i.q, 0
-  br i1 %i.ab, label %.loopexit, label %.preheader.preheader
+  br i1 %i.ab, label %.loopexit, label %.preheader
 
-.preheader.preheader:                             ; preds = %.noexc43
-  %12 = add i64 %i.u, -136                        ; 2 uses
-  %13 = udiv i64 %12, 136                         ; 2 uses
-  %14 = add nuw nsw i64 %13, 1                    ; 2 uses
-  %15 = icmp ult i64 %12, 136
-  br i1 %15, label %.preheader.epil.preheader, label %.preheader.preheader.new
-
-.preheader.preheader.new:                         ; preds = %.preheader.preheader
-  %unroll_iter = and i64 %14, 288230376151711742
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader, %.preheader.preheader.new
-  %.idx.i = phi i64 [ 8, %.preheader.preheader.new ], [ %.add.i.1, %.preheader ] ; 3 uses
-  %niter = phi i64 [ 0, %.preheader.preheader.new ], [ %niter.next.1, %.preheader ]
-  %.ptr.ptr.i = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.idx.i ; 6 uses
-  %16 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i, i64 96 ; 3 uses
-  store i32 0, ptr %16, align 8, !tbaa !62
-  %17 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i, i64 104
-  store ptr null, ptr %17, align 8, !tbaa !63
-  %18 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i, i64 112
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %.ptr.ptr.i, i8 0, i64 88, i1 false)
-  store ptr %16, ptr %18, align 8, !tbaa !64
-  %19 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i, i64 120
-  store ptr %16, ptr %19, align 8, !tbaa !65
-  %20 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i, i64 128
-  store i64 0, ptr %20, align 8, !tbaa !66
-  %21 = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.idx.i ; 6 uses
-  %.ptr.ptr.i.1 = getelementptr inbounds nuw i8, ptr %21, i64 136
-  %i.ac = getelementptr inbounds nuw i8, ptr %21, i64 232 ; 3 uses
+.preheader:                                       ; preds = %.noexc43, %.preheader
+  %niter = phi i64 [ %.add.i.1, %.preheader ], [ 8, %.noexc43 ] ; 3 uses
+  %.ptr.ptr.i.1 = getelementptr inbounds nuw i8, ptr %i.aa, i64 %niter ; 6 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.1, i64 96 ; 3 uses
   store i32 0, ptr %i.ac, align 8, !tbaa !62
-  %i.ad = getelementptr inbounds nuw i8, ptr %21, i64 240
+  %i.ad = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.1, i64 104
   store ptr null, ptr %i.ad, align 8, !tbaa !63
-  %i.ae = getelementptr inbounds nuw i8, ptr %21, i64 248
+  %i.ae = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.1, i64 112
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %.ptr.ptr.i.1, i8 0, i64 88, i1 false)
   store ptr %i.ac, ptr %i.ae, align 8, !tbaa !64
-  %i.af = getelementptr inbounds nuw i8, ptr %21, i64 256
+  %i.af = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.1, i64 120
   store ptr %i.ac, ptr %i.af, align 8, !tbaa !65
-  %i.ag = getelementptr inbounds nuw i8, ptr %21, i64 264
+  %i.ag = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.1, i64 128
   store i64 0, ptr %i.ag, align 8, !tbaa !66
-  %.add.i.1 = add nuw nsw i64 %.idx.i, 272        ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.preheader
+  %.add.i.1 = add nuw nsw i64 %niter, 136
+  %niter.next.1 = add nuw nsw i64 %niter, 128
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %i.u
+  br i1 %niter.ncmp.1, label %.loopexit, label %.preheader
 
-.loopexit.loopexit.unr-lcssa:                     ; preds = %.preheader
-  %22 = and i64 %13, 1
-  %lcmp.mod.not.not = icmp eq i64 %22, 0
-  br i1 %lcmp.mod.not.not, label %.preheader.epil.preheader, label %.loopexit
-
-.preheader.epil.preheader:                        ; preds = %.loopexit.loopexit.unr-lcssa, %.preheader.preheader
-  %.idx.i.epil.init = phi i64 [ 8, %.preheader.preheader ], [ %.add.i.1, %.loopexit.loopexit.unr-lcssa ]
-  %lcmp.mod67 = trunc i64 %14 to i1
-  call void @llvm.assume(i1 %lcmp.mod67)
-  %.ptr.ptr.i.epil = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.idx.i.epil.init ; 6 uses
-  %23 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.epil, i64 96 ; 3 uses
-  store i32 0, ptr %23, align 8, !tbaa !62
-  %24 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.epil, i64 104
-  store ptr null, ptr %24, align 8, !tbaa !63
-  %25 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.epil, i64 112
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %.ptr.ptr.i.epil, i8 0, i64 88, i1 false)
-  store ptr %23, ptr %25, align 8, !tbaa !64
-  %26 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.epil, i64 120
-  store ptr %23, ptr %26, align 8, !tbaa !65
-  %27 = getelementptr inbounds nuw i8, ptr %.ptr.ptr.i.epil, i64 128
-  store i64 0, ptr %27, align 8, !tbaa !66
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.preheader.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.noexc43
+.loopexit:                                        ; preds = %.preheader, %.noexc43
   %.ptr5.i = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 104
   store ptr %.ptr5.i, ptr %i.ah, align 8, !tbaa !115

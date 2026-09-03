@@ -205,66 +205,57 @@ define dso_local i48 @_ZN13EmergeManager18getContainingChunkEN4core8vector3dIsEE
 bb.a:
   %.sroa.058.0.extract.trunc = trunc i48 %0 to i16
   %.sroa.2.0.extract.shift = lshr i48 %0, 16
-  %.sroa.2.0.extract.trunc = trunc i48 %.sroa.2.0.extract.shift to i16
   %.sroa.3.0.extract.shift = lshr i48 %0, 32
-  %.sroa.3.0.extract.trunc = trunc nuw i48 %.sroa.3.0.extract.shift to i16
   %.sroa.053.0.extract.trunc = trunc i48 %1 to i16 ; 3 uses
   %.sroa.455.0.extract.shift = lshr i48 %1, 16
-  %.sroa.455.0.extract.trunc = trunc i48 %.sroa.455.0.extract.shift to i16 ; 2 uses
   %.sroa.6.0.extract.shift = lshr i48 %1, 32
-  %.sroa.6.0.extract.trunc = trunc nuw i48 %.sroa.6.0.extract.shift to i16
-  %2 = and i48 %1, -4294967296
-  %.sroa.3.0.insert.ext.i = sub i48 0, %2
-  %3 = and i48 %1, 4294901760
-  %.sroa.2.0.insert.ext.i = sub nsw i48 0, %3
+  %2 = insertelement <2 x i48> poison, i48 %1, i64 0
+  %3 = shufflevector <2 x i48> %2, <2 x i48> poison, <2 x i32> zeroinitializer
+  %4 = and <2 x i48> %3, <i48 -4294967296, i48 4294901760>
   %.sroa.045.0.extract.trunc = sub i16 0, %.sroa.053.0.extract.trunc
-  %.sroa.446.0.extract.shift = lshr exact i48 %.sroa.2.0.insert.ext.i, 16
-  %.sroa.446.0.extract.trunc = trunc i48 %.sroa.446.0.extract.shift to i16
-  %.sroa.547.0.extract.shift = lshr exact i48 %.sroa.3.0.insert.ext.i, 32
-  %.sroa.547.0.extract.trunc = trunc nuw i48 %.sroa.547.0.extract.shift to i16
   %i.a = sdiv i16 %.sroa.045.0.extract.trunc, 2   ; 2 uses
-  %4 = sdiv i16 %.sroa.446.0.extract.trunc, 2     ; 2 uses
-  %5 = sdiv i16 %.sroa.547.0.extract.trunc, 2     ; 2 uses
-  %6 = sub i16 %.sroa.058.0.extract.trunc, %i.a   ; 2 uses
-  %7 = sub i16 %.sroa.2.0.extract.trunc, %4       ; 2 uses
-  %8 = sub i16 %.sroa.3.0.extract.trunc, %5       ; 2 uses
-  %9 = sext i16 %6 to i32                         ; 2 uses
-  %10 = sext i16 %.sroa.053.0.extract.trunc to i32 ; 2 uses
-  %reass.sub = sub nsw i32 %9, %10
-  %11 = add nsw i32 %reass.sub, 1
-  %12 = icmp slt i16 %6, 0
-  %13 = select i1 %12, i32 %11, i32 %9
-  %14 = sdiv i32 %13, %10
-  %15 = sext i16 %7 to i32                        ; 2 uses
-  %16 = sext i16 %.sroa.455.0.extract.trunc to i32 ; 2 uses
-  %reass.sub66 = sub nsw i32 %15, %16
-  %17 = add nsw i32 %reass.sub66, 1
-  %18 = icmp slt i16 %7, 0
-  %19 = select i1 %18, i32 %17, i32 %15
-  %20 = sdiv i32 %19, %16
-  %21 = sext i16 %8 to i32                        ; 2 uses
-  %22 = ashr i48 %1, 32
-  %23 = trunc nsw i48 %22 to i32                  ; 2 uses
-  %reass.sub67 = sub nsw i32 %21, %23
-  %24 = add nsw i32 %reass.sub67, 1
-  %.not63 = icmp slt i16 %8, 0
-  %25 = select i1 %.not63, i32 %24, i32 %21
-  %26 = sdiv i32 %25, %23
-  %.sroa.0.0.extract.trunc = trunc i32 %14 to i16
-  %.sroa.4.0.extract.trunc = trunc i32 %20 to i16
-  %.sroa.5.0.extract.trunc = trunc i32 %26 to i16
-  %27 = mul i16 %.sroa.0.0.extract.trunc, %.sroa.053.0.extract.trunc
-  %28 = mul i16 %.sroa.4.0.extract.trunc, %.sroa.455.0.extract.trunc
-  %29 = mul i16 %.sroa.5.0.extract.trunc, %.sroa.6.0.extract.trunc
-  %30 = add i16 %27, %i.a
-  %31 = add i16 %28, %4
-  %32 = add i16 %29, %5
-  %.sroa.3.0.insert.ext.i35 = zext i16 %32 to i48
-  %.sroa.3.0.insert.shift.i36 = shl nuw i48 %.sroa.3.0.insert.ext.i35, 32
-  %.sroa.2.0.insert.ext.i37 = zext i16 %31 to i48
-  %.sroa.2.0.insert.shift.i38 = shl nuw nsw i48 %.sroa.2.0.insert.ext.i37, 16
-  %.sroa.2.0.insert.insert.i39 = or disjoint i48 %.sroa.3.0.insert.shift.i36, %.sroa.2.0.insert.shift.i38
-  %.sroa.0.0.insert.ext.i40 = zext i16 %30 to i48
+  %5 = sub i16 %.sroa.058.0.extract.trunc, %i.a   ; 2 uses
+  %6 = sext i16 %5 to i32                         ; 2 uses
+  %7 = sext i16 %.sroa.053.0.extract.trunc to i32 ; 2 uses
+  %reass.sub = sub nsw i32 %6, %7
+  %8 = add nsw i32 %reass.sub, 1
+  %9 = icmp slt i16 %5, 0
+  %10 = select i1 %9, i32 %8, i32 %6
+  %11 = sdiv i32 %10, %7
+  %12 = ashr i48 %1, 32
+  %13 = trunc nsw i48 %12 to i32
+  %.sroa.0.0.extract.trunc = trunc i32 %11 to i16
+  %14 = mul i16 %.sroa.0.0.extract.trunc, %.sroa.053.0.extract.trunc
+  %15 = add i16 %14, %i.a
+  %.sroa.2.0.extract.trunc = trunc i48 %.sroa.2.0.extract.shift to i16
+  %.sroa.3.0.extract.trunc = trunc nuw i48 %.sroa.3.0.extract.shift to i16
+  %.sroa.455.0.extract.trunc = trunc i48 %.sroa.455.0.extract.shift to i16 ; 2 uses
+  %.sroa.6.0.extract.trunc = trunc nuw i48 %.sroa.6.0.extract.shift to i16
+  %16 = sub <2 x i48> zeroinitializer, %4
+  %17 = lshr exact <2 x i48> %16, <i48 32, i48 16>
+  %18 = trunc <2 x i48> %17 to <2 x i16>
+  %19 = sdiv <2 x i16> %18, splat (i16 2)         ; 2 uses
+  %20 = insertelement <2 x i16> poison, i16 %.sroa.3.0.extract.trunc, i64 0
+  %21 = insertelement <2 x i16> %20, i16 %.sroa.2.0.extract.trunc, i64 1
+  %22 = sub <2 x i16> %21, %19                    ; 2 uses
+  %23 = sext i16 %.sroa.455.0.extract.trunc to i32
+  %24 = sext <2 x i16> %22 to <2 x i32>           ; 2 uses
+  %25 = insertelement <2 x i32> poison, i32 %13, i64 0
+  %26 = insertelement <2 x i32> %25, i32 %23, i64 1 ; 2 uses
+  %27 = sub nsw <2 x i32> %24, %26
+  %28 = add nsw <2 x i32> %27, splat (i32 1)
+  %29 = icmp slt <2 x i16> %22, zeroinitializer
+  %30 = select <2 x i1> %29, <2 x i32> %28, <2 x i32> %24
+  %31 = sdiv <2 x i32> %30, %26
+  %32 = trunc <2 x i32> %31 to <2 x i16>
+  %33 = insertelement <2 x i16> poison, i16 %.sroa.6.0.extract.trunc, i64 0
+  %34 = insertelement <2 x i16> %33, i16 %.sroa.455.0.extract.trunc, i64 1
+  %35 = mul <2 x i16> %34, %32
+  %36 = add <2 x i16> %35, %19
+  %37 = zext <2 x i16> %36 to <2 x i48>
+  %38 = shl nuw <2 x i48> %37, <i48 32, i48 16>
+  %.sroa.2.0.insert.insert.i39 = tail call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %38)
+  %.sroa.0.0.insert.ext.i40 = zext i16 %15 to i48
   %.sroa.0.0.insert.insert.i41 = or disjoint i48 %.sroa.2.0.insert.insert.i39, %.sroa.0.0.insert.ext.i40
   ret i48 %.sroa.0.0.insert.insert.i41
 }
@@ -666,6 +657,9 @@ declare i16 @llvm.smin.i16(i16, i16) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.smax.i16(i16, i16) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i48 @llvm.vector.reduce.or.v2i48(<2 x i48>) #12
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

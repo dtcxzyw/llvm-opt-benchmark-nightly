@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/ide_completion-492bb59092b05d84.ide_completion.b05e45e7b887cebc-cgu.11?download=true
 inline.NumInlined: 1358
 inline.NumDeleted: 631
-loop-unroll.NumRuntimeUnrolled: 9
-loop-unroll.NumUnrolled: 9
+loop-unroll.NumRuntimeUnrolled: 8
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_RINvYNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherNtNtCshzWfHUSfYae_4core4hash11BuildHasher8hash_oneINtNtCs50pZefIA5Ye_8triomphe6header11HeaderSliceINtB1B_16HeaderWithLengthRuERSINtNtCs8K4cjrcxBsw_6hir_ty3mir14ProjectionElemINtCsbq3eHDLgq0Z_8la_arena3IdxNtB2R_5LocalEEEECsf8NQSppxkmK_14ide_completion:bb.a
 bb.d:                                             ; preds = %.lr.ph.i.i.i.i
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0.03.i.i.i.i, i64 8
@@ -204,69 +204,24 @@ bb.a:
   %.val.i = load i64, ptr %i.a, align 8, !alias.scope !1401, !noalias !1402, !noundef !5
   %i.b = mul i64 %.val.i, -1065810590584100411
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.val1.i = load ptr, ptr %i.c, align 8, !alias.scope !1401, !noalias !1402, !nonnull !5, !align !26, !noundef !5 ; 6 uses
+  %.val1.i = load ptr, ptr %i.c, align 8, !alias.scope !1401, !noalias !1402, !nonnull !5, !align !26, !noundef !5 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.val2.i = load i64, ptr %i.d, align 8, !alias.scope !1401, !noalias !1402, !noundef !5 ; 3 uses
   %i.e = add i64 %.val2.i, %i.b
-  %i.f = mul i64 %i.e, -1065810590584100411       ; 3 uses
-  %.idx.i.i.i.i = mul i64 %.val2.i, 24            ; 2 uses
+  %i.f = mul i64 %i.e, -1065810590584100411       ; 2 uses
+  %.idx.i.i.i.i = mul nuw nsw i64 %.val2.i, 24
   %i.g = getelementptr inbounds nuw i8, ptr %.val1.i, i64 %.idx.i.i.i.i
   %i.h = icmp eq i64 %.val2.i, 0
-  br i1 %i.h, label %_RINvXsh_NtCs50pZefIA5Ye_8triomphe6headerINtB6_11HeaderSliceINtB6_16HeaderWithLengthRuERSTINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9opaque_ty13OpaqueTypeKeyNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtB2w_2ty2TyEENtNtCshzWfHUSfYae_4core4hash4Hash4hashNtCsh04pLiDBs3j_10rustc_hash8FxHasherECsf8NQSppxkmK_14ide_completion.exit, label %.lr.ph.i.i.i.i.preheader
+  br i1 %i.h, label %_RINvXsh_NtCs50pZefIA5Ye_8triomphe6headerINtB6_11HeaderSliceINtB6_16HeaderWithLengthRuERSTINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9opaque_ty13OpaqueTypeKeyNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtB2w_2ty2TyEENtNtCshzWfHUSfYae_4core4hash4Hash4hashNtCsh04pLiDBs3j_10rustc_hash8FxHasherECsf8NQSppxkmK_14ide_completion.exit, label %.lr.ph.i.i.i.i
 
-.lr.ph.i.i.i.i.preheader:                         ; preds = %bb.a
-  %2 = add i64 %.idx.i.i.i.i, -24                 ; 2 uses
-  %3 = udiv i64 %2, 24
-  %4 = and i64 %3, 1
-  %lcmp.mod.not.not = icmp eq i64 %4, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.prol, label %.lr.ph.i.i.i.i.prol.loopexit
-
-.lr.ph.i.i.i.i.prol:                              ; preds = %.lr.ph.i.i.i.i.preheader
-  %5 = getelementptr inbounds nuw i8, ptr %.val1.i, i64 24
-  %6 = getelementptr inbounds nuw i8, ptr %.val1.i, i64 16
-  %7 = getelementptr inbounds nuw i8, ptr %.val1.i, i64 8
-  %.val1.i.i.i.i.i.i.prol = load i64, ptr %.val1.i, align 8, !alias.scope !1403, !noalias !1404
-  %8 = add i64 %.val1.i.i.i.i.i.i.prol, %i.f
-  %9 = mul i64 %8, -1065810590584100411
-  %.val.i.i.i.i.i.i.prol = load ptr, ptr %7, align 8, !alias.scope !1403, !noalias !1404, !nonnull !5, !noundef !5
-  %10 = ptrtoint ptr %.val.i.i.i.i.i.i.prol to i64
-  %11 = add i64 %9, %10
-  %12 = mul i64 %11, -1065810590584100411
-  %.val.i.i.i.i.i.prol = load ptr, ptr %6, align 8, !alias.scope !1405, !noalias !1406, !nonnull !5, !noundef !5
-  %13 = ptrtoint ptr %.val.i.i.i.i.i.prol to i64
-  %14 = add i64 %12, %13
-  %15 = mul i64 %14, -1065810590584100411         ; 2 uses
-  br label %.lr.ph.i.i.i.i.prol.loopexit
-
-.lr.ph.i.i.i.i.prol.loopexit:                     ; preds = %.lr.ph.i.i.i.i.prol, %.lr.ph.i.i.i.i.preheader
-  %.lcssa.unr = phi i64 [ poison, %.lr.ph.i.i.i.i.preheader ], [ %15, %.lr.ph.i.i.i.i.prol ]
-  %.sroa.0.03.i.i.i.i.unr = phi ptr [ %.val1.i, %.lr.ph.i.i.i.i.preheader ], [ %5, %.lr.ph.i.i.i.i.prol ]
-  %.unr = phi i64 [ %i.f, %.lr.ph.i.i.i.i.preheader ], [ %15, %.lr.ph.i.i.i.i.prol ]
-  %16 = icmp ult i64 %2, 24
-  br i1 %16, label %_RINvXsh_NtCs50pZefIA5Ye_8triomphe6headerINtB6_11HeaderSliceINtB6_16HeaderWithLengthRuERSTINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9opaque_ty13OpaqueTypeKeyNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtB2w_2ty2TyEENtNtCshzWfHUSfYae_4core4hash4Hash4hashNtCsh04pLiDBs3j_10rustc_hash8FxHasherECsf8NQSppxkmK_14ide_completion.exit, label %.lr.ph.i.i.i.i
-
-.lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i
-  %.sroa.0.03.i.i.i.i = phi ptr [ %i.j, %.lr.ph.i.i.i.i ], [ %.sroa.0.03.i.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ] ; 7 uses
-  %i.i = phi i64 [ %i.t, %.lr.ph.i.i.i.i ], [ %.unr, %.lr.ph.i.i.i.i.prol.loopexit ]
-  %17 = getelementptr inbounds nuw i8, ptr %.sroa.0.03.i.i.i.i, i64 24
-  %18 = getelementptr inbounds nuw i8, ptr %.sroa.0.03.i.i.i.i, i64 16
-  %19 = getelementptr inbounds nuw i8, ptr %.sroa.0.03.i.i.i.i, i64 8
-  %.val1.i.i.i.i.i.i = load i64, ptr %.sroa.0.03.i.i.i.i, align 4, !alias.scope !1403, !noalias !1404
-  %20 = add i64 %.val1.i.i.i.i.i.i, %i.i
-  %21 = mul i64 %20, -1065810590584100411
-  %.val.i.i.i.i.i.i = load ptr, ptr %19, align 8, !alias.scope !1403, !noalias !1404, !nonnull !5, !noundef !5
-  %22 = ptrtoint ptr %.val.i.i.i.i.i.i to i64
-  %23 = add i64 %21, %22
-  %24 = mul i64 %23, -1065810590584100411
-  %.val.i.i.i.i.i = load ptr, ptr %18, align 8, !alias.scope !1405, !noalias !1406, !nonnull !5, !noundef !5
-  %25 = ptrtoint ptr %.val.i.i.i.i.i to i64
-  %26 = add i64 %24, %25
-  %27 = mul i64 %26, -1065810590584100411
-  %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.03.i.i.i.i, i64 48 ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.03.i.i.i.i, i64 40
-  %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.03.i.i.i.i, i64 32
-  %.val1.i.i.i.i.i.i.1 = load i64, ptr %17, align 8, !alias.scope !1403, !noalias !1404
-  %i.m = add i64 %.val1.i.i.i.i.i.i.1, %27
+.lr.ph.i.i.i.i:                                   ; preds = %bb.a, %.lr.ph.i.i.i.i
+  %.sroa.0.03.i.i.i.i = phi ptr [ %i.j, %.lr.ph.i.i.i.i ], [ %.val1.i, %bb.a ] ; 4 uses
+  %i.i = phi i64 [ %i.t, %.lr.ph.i.i.i.i ], [ %i.f, %bb.a ]
+  %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.03.i.i.i.i, i64 24 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.03.i.i.i.i, i64 16
+  %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.03.i.i.i.i, i64 8
+  %.val1.i.i.i.i.i.i.1 = load i64, ptr %.sroa.0.03.i.i.i.i, align 4, !alias.scope !1403, !noalias !1404
+  %i.m = add i64 %.val1.i.i.i.i.i.i.1, %i.i
   %i.n = mul i64 %i.m, -1065810590584100411
   %.val.i.i.i.i.i.i.1 = load ptr, ptr %i.l, align 8, !alias.scope !1403, !noalias !1404, !nonnull !5, !noundef !5
   %i.o = ptrtoint ptr %.val.i.i.i.i.i.i.1 to i64
@@ -279,8 +234,8 @@ bb.a:
   %i.u = icmp eq ptr %i.j, %i.g
   br i1 %i.u, label %_RINvXsh_NtCs50pZefIA5Ye_8triomphe6headerINtB6_11HeaderSliceINtB6_16HeaderWithLengthRuERSTINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9opaque_ty13OpaqueTypeKeyNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtB2w_2ty2TyEENtNtCshzWfHUSfYae_4core4hash4Hash4hashNtCsh04pLiDBs3j_10rustc_hash8FxHasherECsf8NQSppxkmK_14ide_completion.exit, label %.lr.ph.i.i.i.i
 
-_RINvXsh_NtCs50pZefIA5Ye_8triomphe6headerINtB6_11HeaderSliceINtB6_16HeaderWithLengthRuERSTINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9opaque_ty13OpaqueTypeKeyNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtB2w_2ty2TyEENtNtCshzWfHUSfYae_4core4hash4Hash4hashNtCsh04pLiDBs3j_10rustc_hash8FxHasherECsf8NQSppxkmK_14ide_completion.exit: ; preds = %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i, %bb.a
-  %.sroa.0.0 = phi i64 [ %i.f, %bb.a ], [ %.lcssa.unr, %.lr.ph.i.i.i.i.prol.loopexit ], [ %i.t, %.lr.ph.i.i.i.i ] ; 2 uses
+_RINvXsh_NtCs50pZefIA5Ye_8triomphe6headerINtB6_11HeaderSliceINtB6_16HeaderWithLengthRuERSTINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9opaque_ty13OpaqueTypeKeyNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtB2w_2ty2TyEENtNtCshzWfHUSfYae_4core4hash4Hash4hashNtCsh04pLiDBs3j_10rustc_hash8FxHasherECsf8NQSppxkmK_14ide_completion.exit: ; preds = %.lr.ph.i.i.i.i, %bb.a
+  %.sroa.0.0 = phi i64 [ %i.f, %bb.a ], [ %i.t, %.lr.ph.i.i.i.i ] ; 2 uses
   %i.v = tail call noundef i64 @llvm.fshl.i64(i64 %.sroa.0.0, i64 %.sroa.0.0, i64 26)
   ret i64 %i.v
 }

@@ -204,11 +204,8 @@ bb.f:                                             ; preds = %bb.e
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %.lr.ph
-  %.lhs.trunc60 = trunc nuw nsw i32 %5 to i8
-  %6 = udiv i8 %.lhs.trunc60, 3
-  %7 = shl nuw nsw i8 %6, 2
-  %8 = zext nneg i8 %7 to i64
-  %i.kl = getelementptr i8, ptr %i.k, i64 %8
+  %indvars.iv.next.3.lcssa = phi i64 [ 32, %bb.f ], [ 8, %.lr.ph ], [ 12, %bb.a ], [ 16, %bb.b ], [ 20, %bb.c ], [ 24, %bb.d ], [ 28, %bb.e ]
+  %i.kl = getelementptr i8, ptr %i.k, i64 %indvars.iv.next.3.lcssa
   store i8 0, ptr %i.kl, align 1
   %i.km = tail call ptr @proto_tree_add_string(ptr noundef %0, i32 noundef %2, ptr noundef %3, i32 noundef %4, i32 noundef %5, ptr noundef %i.k) ; 0 uses
   ret i32 %5

@@ -2,8 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 1559
 inline.NumDeleted: 734
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN4bssl6VectorINS_10ALPSConfigEE9MaybeGrowEv:bb.a
 
 bb.g:                                             ; preds = %.thread
@@ -205,7 +204,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !385
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !519  ; 5 uses
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !518  ; 5 uses
   %i.e = icmp ult i64 %i.b, %i.d
   br i1 %i.e, label %bb.h, label %bb.b
 
@@ -233,62 +232,28 @@ bb.f:                                             ; preds = %bb.e
 .thread:                                          ; preds = %bb.b, %bb.e
   %.0812 = phi i64 [ %i.g, %bb.e ], [ 16, %bb.b ] ; 2 uses
   %i.i = mul nuw i64 %.0812, 24
-  %i.j = tail call ptr @OPENSSL_malloc(i64 noundef %i.i) ; 4 uses
+  %i.j = tail call ptr @OPENSSL_malloc(i64 noundef %i.i) ; 3 uses
   %.not13 = icmp eq ptr %i.j, null
   br i1 %.not13, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.thread
   %i.k = load i64, ptr %i.a, align 8, !tbaa !385  ; 3 uses
-  %i.l = load ptr, ptr %0, align 8, !tbaa !205    ; 4 uses
-  %.idx = mul i64 %i.k, 24                        ; 2 uses
+  %i.l = load ptr, ptr %0, align 8, !tbaa !205    ; 3 uses
+  %.idx = mul nuw nsw i64 %i.k, 24
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx
   %.not11.i.i.i.i = icmp eq i64 %i.k, 0
-  br i1 %.not11.i.i.i.i, label %_ZSt18uninitialized_moveIPN4bssl18CertCompressionAlgES2_ET0_T_S4_S3_.exit, label %.lr.ph.i.i.i.i.preheader
+  br i1 %.not11.i.i.i.i, label %_ZSt18uninitialized_moveIPN4bssl18CertCompressionAlgES2_ET0_T_S4_S3_.exit, label %.lr.ph.i.i.i.i
 
-.lr.ph.i.i.i.i.preheader:                         ; preds = %bb.g
-  %1 = add i64 %.idx, -24                         ; 2 uses
-  %2 = udiv i64 %1, 24
-  %3 = add nuw nsw i64 %2, 1
-  %xtraiter = and i64 %3, 3                       ; 2 uses
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.prol
-
-.lr.ph.i.i.i.i.prol:                              ; preds = %.lr.ph.i.i.i.i.preheader, %.lr.ph.i.i.i.i.prol
-  %.013.i.i.i.i.prol = phi ptr [ %5, %.lr.ph.i.i.i.i.prol ], [ %i.j, %.lr.ph.i.i.i.i.preheader ] ; 2 uses
-  %.sroa.08.012.i.i.i.i.prol = phi ptr [ %4, %.lr.ph.i.i.i.i.prol ], [ %i.l, %.lr.ph.i.i.i.i.preheader ] ; 2 uses
-  %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.i.preheader ]
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.013.i.i.i.i.prol, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.08.012.i.i.i.i.prol, i64 24, i1 false), !tbaa.struct !520
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i.prol, i64 24 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.prol, i64 24 ; 2 uses
-  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.prol, !llvm.loop !517
-
-.lr.ph.i.i.i.i.prol.loopexit:                     ; preds = %.lr.ph.i.i.i.i.prol, %.lr.ph.i.i.i.i.preheader
-  %.013.i.i.i.i.unr = phi ptr [ %i.j, %.lr.ph.i.i.i.i.preheader ], [ %5, %.lr.ph.i.i.i.i.prol ]
-  %.sroa.08.012.i.i.i.i.unr = phi ptr [ %i.l, %.lr.ph.i.i.i.i.preheader ], [ %4, %.lr.ph.i.i.i.i.prol ]
-  %6 = icmp ult i64 %1, 72
-  br i1 %6, label %_ZSt18uninitialized_moveIPN4bssl18CertCompressionAlgES2_ET0_T_S4_S3_.exit.loopexit, label %.lr.ph.i.i.i.i
-
-.lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i
-  %.013.i.i.i.i = phi ptr [ %i.o, %.lr.ph.i.i.i.i ], [ %.013.i.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ] ; 5 uses
-  %.sroa.08.012.i.i.i.i = phi ptr [ %i.n, %.lr.ph.i.i.i.i ], [ %.sroa.08.012.i.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ] ; 5 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.013.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.08.012.i.i.i.i, i64 24, i1 false), !tbaa.struct !520
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i, i64 24
-  %8 = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i, i64 24
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, ptr noundef nonnull align 8 dereferenceable(24) %7, i64 24, i1 false), !tbaa.struct !520
-  %9 = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i, i64 48
-  %10 = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i, i64 48
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %10, ptr noundef nonnull align 8 dereferenceable(24) %9, i64 24, i1 false), !tbaa.struct !520
-  %11 = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i, i64 72
-  %12 = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i, i64 72
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %12, ptr noundef nonnull align 8 dereferenceable(24) %11, i64 24, i1 false), !tbaa.struct !520
-  %i.n = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i, i64 96 ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i, i64 96
+.lr.ph.i.i.i.i:                                   ; preds = %bb.g, %.lr.ph.i.i.i.i
+  %.013.i.i.i.i = phi ptr [ %i.o, %.lr.ph.i.i.i.i ], [ %i.j, %bb.g ] ; 2 uses
+  %.sroa.08.012.i.i.i.i = phi ptr [ %i.n, %.lr.ph.i.i.i.i ], [ %i.l, %bb.g ] ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.013.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.08.012.i.i.i.i, i64 24, i1 false), !tbaa.struct !519
+  %i.n = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i, i64 24 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i, i64 24
   %.not.i.i.i.i.3 = icmp eq ptr %i.n, %i.m
-  br i1 %.not.i.i.i.i.3, label %_ZSt18uninitialized_moveIPN4bssl18CertCompressionAlgES2_ET0_T_S4_S3_.exit.loopexit, label %.lr.ph.i.i.i.i, !llvm.loop !518
+  br i1 %.not.i.i.i.i.3, label %_ZSt18uninitialized_moveIPN4bssl18CertCompressionAlgES2_ET0_T_S4_S3_.exit.loopexit, label %.lr.ph.i.i.i.i, !llvm.loop !517
 
-_ZSt18uninitialized_moveIPN4bssl18CertCompressionAlgES2_ET0_T_S4_S3_.exit.loopexit: ; preds = %.lr.ph.i.i.i.i, %.lr.ph.i.i.i.i.prol.loopexit
+_ZSt18uninitialized_moveIPN4bssl18CertCompressionAlgES2_ET0_T_S4_S3_.exit.loopexit: ; preds = %.lr.ph.i.i.i.i
   %.pre = load ptr, ptr %0, align 8, !tbaa !205
   br label %_ZSt18uninitialized_moveIPN4bssl18CertCompressionAlgES2_ET0_T_S4_S3_.exit
 
@@ -297,7 +262,7 @@ _ZSt18uninitialized_moveIPN4bssl18CertCompressionAlgES2_ET0_T_S4_S3_.exit: ; pre
   tail call void @OPENSSL_free(ptr noundef %i.p)
   store ptr %i.j, ptr %0, align 8, !tbaa !205
   store i64 %i.k, ptr %i.a, align 8, !tbaa !385
-  store i64 %.0812, ptr %i.c, align 8, !tbaa !519
+  store i64 %.0812, ptr %i.c, align 8, !tbaa !518
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.d, %bb.f, %.thread, %_ZSt18uninitialized_moveIPN4bssl18CertCompressionAlgES2_ET0_T_S4_S3_.exit, %bb.a
@@ -700,9 +665,7 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !514 = !{!228, !15, i64 16}
 !515 = distinct !{!515, !247}
 !516 = distinct !{!516, !247}
-!517 = distinct !{!517, !521}
-!518 = distinct !{!518, !247}
-!519 = !{!160, !15, i64 16}
-!520 = !{i64 0, i64 8, !193, i64 8, i64 8, !193, i64 16, i64 2, !233}
-!521 = !{!"llvm.loop.unroll.disable"}
+!517 = distinct !{!517, !247}
+!518 = !{!160, !15, i64 16}
+!519 = !{i64 0, i64 8, !193, i64 8, i64 8, !193, i64 16, i64 2, !233}
 end_hunk_1
