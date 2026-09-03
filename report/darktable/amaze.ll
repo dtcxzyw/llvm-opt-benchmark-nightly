@@ -205,7 +205,7 @@ bb.el:                                            ; preds = %.lr.ph4144, %bb.gi
 
 .lr.ph4133:                                       ; preds = %.preheader3904
   %i.ixm = icmp slt i64 %i.iwz, %i.aq             ; 2 uses
-  %i.ixn = mul nsw i64 %i.iwz, %i.an              ; 2 uses
+  %i.ixn = mul nuw nsw i64 %i.iwz, %i.an          ; 2 uses
   br label %bb.em
 
 .preheader3903:                                   ; preds = %bb.el
@@ -213,7 +213,7 @@ bb.el:                                            ; preds = %.lr.ph4144, %bb.gi
 
 .lr.ph4139:                                       ; preds = %.preheader3903
   %i.ixo = icmp slt i64 %i.iwz, %i.aq             ; 2 uses
-  %i.ixp = mul nsw i64 %i.iwz, %i.an              ; 2 uses
+  %i.ixp = mul nuw nsw i64 %i.iwz, %i.an          ; 2 uses
   br label %bb.fk
 
 bb.em:                                            ; preds = %.lr.ph4133, %bb.fc

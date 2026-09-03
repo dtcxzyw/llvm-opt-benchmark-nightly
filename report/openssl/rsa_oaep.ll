@@ -105,8 +105,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.aj, label %.loopexit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ak = sub nsw i32 %i.b, %i.f                  ; 11 uses
-  %9 = sext i32 %i.ak to i64                      ; 3 uses
+  %i.ak = sub nuw nsw i32 %i.b, %i.f              ; 11 uses
+  %9 = zext nneg i32 %i.ak to i64                 ; 3 uses
   %i.al = tail call noalias ptr @CRYPTO_malloc(i64 noundef %9, ptr noundef nonnull @.str, i32 noundef 126) #6 ; 10 uses
   %i.am = icmp eq ptr %i.al, null
   br i1 %i.am, label %.loopexit, label %bb.l
@@ -117,8 +117,8 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ao, label %.loopexit, label %.preheader81
 
 .preheader81:                                     ; preds = %bb.l
-  %10 = icmp sgt i32 %i.ak, 0
-  br i1 %10, label %iter.check, label %._crit_edge
+  %.not96 = icmp eq i32 %i.ak, 0
+  br i1 %.not96, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %.preheader81
   %wide.trip.count = zext nneg i32 %i.ak to i64   ; 6 uses
@@ -284,8 +284,8 @@ vec.epilog.middle.block132:                       ; preds = %vec.epilog.vector.b
   %.066 = phi ptr [ null, %bb.j ], [ null, %bb.k ], [ %i.al, %bb.l ], [ %i.al, %._crit_edge ], [ null, %bb.i ], [ %i.al, %middle.block118 ], [ %i.al, %vec.epilog.middle.block132 ], [ %i.al, %.lr.ph84 ]
   %.0 = phi i32 [ 0, %bb.j ], [ %i.ak, %bb.k ], [ %i.ak, %bb.l ], [ %i.ak, %._crit_edge ], [ 0, %bb.i ], [ %i.ak, %middle.block118 ], [ %i.ak, %vec.epilog.middle.block132 ], [ %i.ak, %.lr.ph84 ]
   call void @OPENSSL_cleanse(ptr noundef nonnull %i.a, i64 noundef 64) #6
-  %11 = sext i32 %.0 to i64
-  call void @CRYPTO_clear_free(ptr noundef %.066, i64 noundef %11, ptr noundef nonnull @.str, i32 noundef 147) #6
+  %10 = zext nneg i32 %.0 to i64
+  call void @CRYPTO_clear_free(ptr noundef %.066, i64 noundef %10, ptr noundef nonnull @.str, i32 noundef 147) #6
   br label %bb.m
 
 bb.m:                                             ; preds = %.loopexit, %bb.h, %bb.f, %bb.d
