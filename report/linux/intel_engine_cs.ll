@@ -204,9 +204,12 @@ bb.ah:                                            ; preds = %bb.af
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
-  %.0.i.i.i.i = phi i32 [ %i.ed, %bb.ag ], [ %i.ee, %bb.ah ] ; 4 uses
-  %2 = icmp eq i32 %.0.i.i.i.i, 0
-  br i1 %2, label %bb.aj, label %3
+  %.0.i.i.i.i = phi i32 [ %i.ed, %bb.ag ], [ %i.ee, %bb.ah ] ; 2 uses
+  switch i32 %.0.i.i.i.i, label %.thread67.i.i [
+    i32 0, label %bb.aj
+    i32 -35, label %bb.al
+    i32 -114, label %bb.an
+  ]
 
 bb.aj:                                            ; preds = %bb.ai
   %i.ef = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.dj, i32 1, ptr elementtype(i32) %i.dj) #18, !srcloc !23 ; 3 uses
@@ -230,17 +233,9 @@ i915_gem_object_get.exit.i.i.i.i:                 ; preds = %.sink.split.i.i.i.i
   store ptr %i.o, ptr %i.dx, align 8
   store ptr %i.ei, ptr %i.dy, align 8
   store volatile ptr %i.dx, ptr %i.ei, align 8
-  br label %3
+  br label %bb.an
 
-3:                                                ; preds = %i915_gem_object_get.exit.i.i.i.i, %bb.ai
-  %4 = icmp eq i32 %.0.i.i.i.i, -114
-  %spec.store.select.i6.i.i.i = select i1 %4, i32 0, i32 %.0.i.i.i.i
-  switch i32 %spec.store.select.i6.i.i.i, label %.thread67.i.i [
-    i32 -35, label %bb.al
-    i32 0, label %bb.an
-  ]
-
-bb.al:                                            ; preds = %3
+bb.al:                                            ; preds = %bb.ai
   %i.ej = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.dj, i32 1, ptr elementtype(i32) %i.dj) #18, !srcloc !23 ; 3 uses
   %.not.i.i.i.i.i.i19.i7.i.i.i = icmp eq i32 %i.ej, 0
   br i1 %.not.i.i.i.i.i.i19.i7.i.i.i, label %.sink.split.i.i.i.i.i.i21.i9.i.i.i, label %bb.am, !prof !21
@@ -260,7 +255,7 @@ bb.am:                                            ; preds = %bb.al
   store ptr %i.dj, ptr %i.q, align 8
   br label %bb.au
 
-bb.an:                                            ; preds = %3
+bb.an:                                            ; preds = %i915_gem_object_get.exit.i.i.i.i, %bb.ai
   %i.em = load ptr, ptr %i.s, align 8
   %i.en = getelementptr i8, ptr %i.em, i64 1648
   %i.eo = load ptr, ptr %i.en, align 8
@@ -316,8 +311,8 @@ bb.at:                                            ; preds = %bb.as
   call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock decl $0", "=*m,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.dz, ptr elementtype(i32) %i.dz) #18, !srcloc !28
   br label %.thread67.i.i
 
-.thread67.i.i:                                    ; preds = %bb.at, %bb.ar, %3
-  %.2.i.i = phi i32 [ %i.ex, %bb.ar ], [ %i.fd, %bb.at ], [ %.0.i.i.i.i, %3 ] ; 2 uses
+.thread67.i.i:                                    ; preds = %bb.at, %bb.ar, %bb.ai
+  %.2.i.i = phi i32 [ %i.ex, %bb.ar ], [ %i.fd, %bb.at ], [ %.0.i.i.i.i, %bb.ai ] ; 2 uses
   %i.fe = icmp eq i32 %.2.i.i, -35
   br i1 %i.fe, label %bb.au, label %.thread52.i.i
 

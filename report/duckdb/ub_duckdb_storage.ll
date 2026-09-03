@@ -205,15 +205,14 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
 
 bb.h:                                             ; preds = %.critedge71.thread, %.critedge71
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
-  %i.ab = load i8, ptr %i.aa, align 8, !tbaa !1447 ; 2 uses
-  %18 = icmp eq i8 %i.ab, 127
-  %spec.store.select = select i1 %18, i8 1, i8 %i.ab
-  switch i8 %spec.store.select, label %bb.ad [
+  %i.ab = load i8, ptr %i.aa, align 8, !tbaa !1447
+  switch i8 %i.ab, label %bb.ad [
     i8 1, label %bb.i
     i8 0, label %bb.x
+    i8 127, label %bb.i
   ]
 
-bb.i:                                             ; preds = %bb.h
+bb.i:                                             ; preds = %bb.h, %bb.h
   %i.ac = load i64, ptr %i.a, align 8, !tbaa !437
   %.not142 = icmp eq i64 %i.ac, -1
   br i1 %.not142, label %bb.j, label %._crit_edge.i.i94

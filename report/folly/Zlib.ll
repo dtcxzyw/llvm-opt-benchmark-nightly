@@ -204,14 +204,11 @@ bb.k:                                             ; preds = %bb.d
 _ZN5folly8OptionalI10z_stream_sEaSIS1_EERS2_OT_.exit.i.i.i: ; preds = %bb.c
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.h, i8 0, i64 112, i1 false)
   store i8 1, ptr %i.i, align 8, !tbaa !54
-  %i.at = load i32, ptr %i.j, align 4, !tbaa !78  ; 2 uses
-  %9 = icmp eq i32 %i.at, 3
-  %spec.select.i.i.i = select i1 %9, i32 0, i32 %i.at
-  %i.au = load i32, ptr %i.k, align 8, !tbaa !41  ; 4 uses
-  switch i32 %spec.select.i.i.i, label %_ZN5folly11compression4zlib12_GLOBAL__N_113getWindowBitsENS1_7Options6FormatEi.exit.i.i.i [
-    i32 3, label %10
-    i32 1, label %bb.l
+  %i.at = load i32, ptr %i.j, align 4, !tbaa !78
+  %i.au = load i32, ptr %i.k, align 8, !tbaa !41  ; 3 uses
+  switch i32 %i.at, label %_ZN5folly11compression4zlib12_GLOBAL__N_113getWindowBitsENS1_7Options6FormatEi.exit.i.i.i [
     i32 2, label %bb.m
+    i32 1, label %bb.l
   ]
 
 bb.l:                                             ; preds = %_ZN5folly8OptionalI10z_stream_sEaSIS1_EERS2_OT_.exit.i.i.i
@@ -222,12 +219,8 @@ bb.m:                                             ; preds = %_ZN5folly8OptionalI
   %i.aw = sub nsw i32 0, %i.au
   br label %_ZN5folly11compression4zlib12_GLOBAL__N_113getWindowBitsENS1_7Options6FormatEi.exit.i.i.i
 
-10:                                               ; preds = %_ZN5folly8OptionalI10z_stream_sEaSIS1_EERS2_OT_.exit.i.i.i
-  %11 = add nsw i32 %i.au, 32
-  br label %_ZN5folly11compression4zlib12_GLOBAL__N_113getWindowBitsENS1_7Options6FormatEi.exit.i.i.i
-
-_ZN5folly11compression4zlib12_GLOBAL__N_113getWindowBitsENS1_7Options6FormatEi.exit.i.i.i: ; preds = %10, %bb.m, %bb.l, %_ZN5folly8OptionalI10z_stream_sEaSIS1_EERS2_OT_.exit.i.i.i
-  %.0.i.i.i.i = phi i32 [ %i.aw, %bb.m ], [ %11, %10 ], [ %i.av, %bb.l ], [ %i.au, %_ZN5folly8OptionalI10z_stream_sEaSIS1_EERS2_OT_.exit.i.i.i ]
+_ZN5folly11compression4zlib12_GLOBAL__N_113getWindowBitsENS1_7Options6FormatEi.exit.i.i.i: ; preds = %bb.m, %bb.l, %_ZN5folly8OptionalI10z_stream_sEaSIS1_EERS2_OT_.exit.i.i.i
+  %.0.i.i.i.i = phi i32 [ %i.aw, %bb.m ], [ %i.au, %_ZN5folly8OptionalI10z_stream_sEaSIS1_EERS2_OT_.exit.i.i.i ], [ %i.av, %bb.l ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #24
   %i.ax = load i32, ptr %i.l, align 8, !tbaa !39
   %i.ay = load i32, ptr %i.m, align 4, !tbaa !46

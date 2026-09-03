@@ -204,21 +204,16 @@ _ZN4llvm8ExpectedIRNS_3pdb26DbiModuleDescriptorBuilderEED2Ev.exit.i28: ; preds =
   store i32 0, ptr %i.yg, align 8
   %i.yh = load ptr, ptr %i.i, align 8, !tbaa !452, !nonnull !331, !align !453 ; 3 uses
   %i.yi = getelementptr inbounds nuw i8, ptr %i.yh, i64 4152
-  %i.yj = load i32, ptr %i.yi, align 8, !tbaa !800 ; 2 uses
-  %108 = icmp eq i32 %i.yj, 42561
-  %spec.select.i.i = select i1 %108, i32 42574, i32 %i.yj
-  switch i32 %spec.select.i.i, label %bb.cq [
+  %i.yj = load i32, ptr %i.yi, align 8, !tbaa !800
+  switch i32 %i.yj, label %bb.cq [
     i32 34404, label %_ZL19fillLinkerVerRecordRN4llvm8codeview11Compile3SymENS_4COFF12MachineTypesE.exit.i.i
-    i32 448, label %109
-    i32 43620, label %bb.cl
-    i32 42561, label %bb.cm
+    i32 448, label %bb.cl
+    i32 43620, label %bb.cm
+    i32 42561, label %bb.cn
     i32 42574, label %bb.cn
     i32 452, label %bb.co
     i32 332, label %bb.cp
   ]
-
-109:                                              ; preds = %_ZN4llvm8ExpectedIRNS_3pdb26DbiModuleDescriptorBuilderEED2Ev.exit.i28
-  br label %_ZL19fillLinkerVerRecordRN4llvm8codeview11Compile3SymENS_4COFF12MachineTypesE.exit.i.i
 
 bb.cl:                                            ; preds = %_ZN4llvm8ExpectedIRNS_3pdb26DbiModuleDescriptorBuilderEED2Ev.exit.i28
   br label %_ZL19fillLinkerVerRecordRN4llvm8codeview11Compile3SymENS_4COFF12MachineTypesE.exit.i.i
@@ -226,7 +221,7 @@ bb.cl:                                            ; preds = %_ZN4llvm8ExpectedIR
 bb.cm:                                            ; preds = %_ZN4llvm8ExpectedIRNS_3pdb26DbiModuleDescriptorBuilderEED2Ev.exit.i28
   br label %_ZL19fillLinkerVerRecordRN4llvm8codeview11Compile3SymENS_4COFF12MachineTypesE.exit.i.i
 
-bb.cn:                                            ; preds = %_ZN4llvm8ExpectedIRNS_3pdb26DbiModuleDescriptorBuilderEED2Ev.exit.i28
+bb.cn:                                            ; preds = %_ZN4llvm8ExpectedIRNS_3pdb26DbiModuleDescriptorBuilderEED2Ev.exit.i28, %_ZN4llvm8ExpectedIRNS_3pdb26DbiModuleDescriptorBuilderEED2Ev.exit.i28
   br label %_ZL19fillLinkerVerRecordRN4llvm8codeview11Compile3SymENS_4COFF12MachineTypesE.exit.i.i
 
 bb.co:                                            ; preds = %_ZN4llvm8ExpectedIRNS_3pdb26DbiModuleDescriptorBuilderEED2Ev.exit.i28
@@ -238,8 +233,8 @@ bb.cp:                                            ; preds = %_ZN4llvm8ExpectedIR
 bb.cq:                                            ; preds = %_ZN4llvm8ExpectedIRNS_3pdb26DbiModuleDescriptorBuilderEED2Ev.exit.i28
   unreachable
 
-_ZL19fillLinkerVerRecordRN4llvm8codeview11Compile3SymENS_4COFF12MachineTypesE.exit.i.i: ; preds = %bb.cp, %bb.co, %bb.cn, %bb.cm, %bb.cl, %109, %_ZN4llvm8ExpectedIRNS_3pdb26DbiModuleDescriptorBuilderEED2Ev.exit.i28
-  %.0.i.i.i.i = phi i16 [ 3, %bb.cp ], [ 104, %109 ], [ 246, %bb.cl ], [ 248, %bb.cm ], [ 249, %bb.cn ], [ 244, %bb.co ], [ 208, %_ZN4llvm8ExpectedIRNS_3pdb26DbiModuleDescriptorBuilderEED2Ev.exit.i28 ]
+_ZL19fillLinkerVerRecordRN4llvm8codeview11Compile3SymENS_4COFF12MachineTypesE.exit.i.i: ; preds = %bb.cp, %bb.co, %bb.cn, %bb.cm, %bb.cl, %_ZN4llvm8ExpectedIRNS_3pdb26DbiModuleDescriptorBuilderEED2Ev.exit.i28
+  %.0.i.i.i.i = phi i16 [ 3, %bb.cp ], [ 104, %bb.cl ], [ 246, %bb.cm ], [ 208, %_ZN4llvm8ExpectedIRNS_3pdb26DbiModuleDescriptorBuilderEED2Ev.exit.i28 ], [ 249, %bb.cn ], [ 244, %bb.co ]
   %i.yk = getelementptr inbounds nuw i8, ptr %47, i64 8
   store i16 %.0.i.i.i.i, ptr %i.yk, align 8, !tbaa !878
   %i.yl = getelementptr inbounds nuw i8, ptr %47, i64 18

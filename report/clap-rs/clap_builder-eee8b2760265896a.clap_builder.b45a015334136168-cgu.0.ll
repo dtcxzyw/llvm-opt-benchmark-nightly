@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
     i64 4, label %bb.n
   ]
 
-default.unreachable336:                           ; preds = %bb.j
+default.unreachable336:                           ; preds = %bb.cy, %bb.j
   unreachable
 
 bb.k:                                             ; preds = %bb.j
@@ -608,10 +608,8 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsSt
 
 bb.cy:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters9enumerate9EnumerateINtNtNtCs4wP2HXfJTCR_5alloc3vec9into_iter8IntoIterNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringEEECsfu0rQaTkGUu_12clap_builder.exit, %bb.cc, %bb.bv, %_RINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB6_3VecNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringE14extend_trustedINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB1O_5slice4iter4IterNtNtNtCsfu0rQaTkGUu_12clap_builder7builder6os_str5OsStrENCNvMs_NtNtB30_6parser6parserNtB3V_6Parser5react0EEB30_.exit
   %i.qo = getelementptr inbounds nuw i8, ptr %4, i64 596
-  %i.qp = load i8, ptr %i.qo, align 4, !range !53, !alias.scope !11818, !noundef !11 ; 2 uses
-  %.not.i173 = icmp eq i8 %i.qp, -1
-  %9 = select i1 %.not.i173, i8 0, i8 %i.qp
-  switch i8 %9, label %default.unreachable [
+  %i.qp = load i8, ptr %i.qo, align 4, !range !53, !alias.scope !11818, !noundef !11
+  switch i8 %i.qp, label %default.unreachable336 [
     i8 0, label %bb.cz
     i8 1, label %bb.da
     i8 2, label %bb.db
@@ -621,12 +619,10 @@ bb.cy:                                            ; preds = %_RINvNtCsj6eKBz9Db1
     i8 6, label %bb.df
     i8 7, label %bb.dg
     i8 8, label %bb.dh
+    i8 -1, label %bb.cz
   ]
 
-default.unreachable:                              ; preds = %bb.cy
-  unreachable
-
-bb.cz:                                            ; preds = %bb.cy
+bb.cz:                                            ; preds = %bb.cy, %bb.cy
   br i1 %.not252, label %switch.early.test, label %bb.dq
 
 switch.early.test:                                ; preds = %bb.cz

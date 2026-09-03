@@ -205,19 +205,18 @@ bb.gz:                                            ; preds = %bb.gy
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ax), !noalias !5276
   store ptr %i.yn, ptr %i.ax, align 8, !noalias !5276
   %i.yo = getelementptr inbounds nuw i8, ptr %i.yn, i64 449
-  %i.yp = load i8, ptr %i.yo, align 1, !range !48, !noalias !5277, !noundef !11 ; 2 uses
-  %.not.i.i254 = icmp eq i8 %i.yp, -1
-  %..i.i = select i1 %.not.i.i254, i8 0, i8 %i.yp
-  switch i8 %..i.i, label %bb.ha [
+  %i.yp = load i8, ptr %i.yo, align 1, !range !48, !noalias !5277, !noundef !11
+  switch i8 %i.yp, label %bb.ha [
     i8 0, label %bb.hb
     i8 1, label %bb.hc
     i8 2, label %bb.hl
+    i8 -1, label %bb.hb
   ]
 
 bb.ha:                                            ; preds = %bb.gz
   unreachable
 
-bb.hb:                                            ; preds = %bb.gz
+bb.hb:                                            ; preds = %bb.gz, %bb.gz
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aw), !noalias !5276
   %i.yq = getelementptr inbounds nuw i8, ptr %i.yn, i64 416 ; 2 uses
   %i.yr = load ptr, ptr %i.yq, align 8, !noalias !5277, !nonnull !11, !noundef !11

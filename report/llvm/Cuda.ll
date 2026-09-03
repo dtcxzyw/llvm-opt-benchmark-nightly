@@ -204,7 +204,6 @@ $_ZN4llvm15SmallVectorImplINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE
 @.str.110 = private unnamed_addr constant [7 x i8] c"+ptx50\00", align 1
 @.str.111 = private unnamed_addr constant [7 x i8] c"+ptx43\00", align 1
 @.str.112 = private unnamed_addr constant [7 x i8] c"+ptx42\00", align 1
-@.str.113 = private unnamed_addr constant [7 x i8] c"+ptx86\00", align 1
 @_ZTVN5clang6driver10toolchains14NVPTXToolChainE = hidden unnamed_addr constant { [103 x ptr] } { [103 x ptr] [ptr null, ptr null, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain14buildAssemblerEv, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain11buildLinkerEv, ptr @_ZNK5clang6driver9ToolChain18buildStaticLibToolEv, ptr @_ZNK5clang6driver9ToolChain7getToolENS0_6Action11ActionClassE, ptr @_ZNK5clang6driver9ToolChain23buildCompilerRTBasenameB5cxx11ERKN4llvm3opt7ArgListENS2_9StringRefENS1_8FileTypeEbb, ptr @_ZN5clang6driver10toolchains14NVPTXToolChainD2Ev, ptr @_ZN5clang6driver10toolchains14NVPTXToolChainD0Ev, ptr @_ZNK5clang6driver9ToolChain12getAuxTripleEv, ptr @_ZNK5clang6driver9ToolChain16getInputFilenameB5cxx11ERKNS0_9InputInfoE, ptr @_ZNK5clang6driver9ToolChain23getSanitizerRequirementENS_13SanitizerMaskENS_9BoundArchE, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain13TranslateArgsERKN4llvm3opt14DerivedArgListENS_9BoundArchENS0_6Action11OffloadKindE, ptr @_ZNK5clang6driver9ToolChain25TranslateOpenMPTargetArgsERKN4llvm3opt14DerivedArgListEbRNS2_15SmallVectorImplIPNS3_3ArgEEE, ptr @_ZNK5clang6driver9ToolChain18TranslateXarchArgsERKN4llvm3opt14DerivedArgListERPNS3_3ArgEPS4_PNS2_15SmallVectorImplIS8_EE, ptr @_ZNK5clang6driver9ToolChain18TranslateXarchArgsERKN4llvm3opt14DerivedArgListENS_9BoundArchENS0_6Action11OffloadKindEPNS2_15SmallVectorImplIPNS3_3ArgEEE, ptr @_ZNK5clang6driver9ToolChain10SelectToolERKNS0_9JobActionE, ptr @_ZNK5clang6driver9ToolChain16printVerboseInfoERN4llvm11raw_ostreamE, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain16isCrossCompilingEv, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain20HasNativeLLVMSupportEv, ptr @_ZNK5clang6driver9ToolChain17getDefaultLTOModeEv, ptr @_ZNK5clang6driver9ToolChain10getLTOModeERKN4llvm3opt7ArgListENS0_6Action11OffloadKindE, ptr @_ZNK5clang6driver9ToolChain22LookupTypeForExtensionEN4llvm9StringRefE, ptr @_ZNK5clang6driver9ToolChain15IsBlocksDefaultEv, ptr @_ZNK5clang6driver9ToolChain28IsIntegratedAssemblerDefaultEv, ptr @_ZNK5clang6driver9ToolChain26IsIntegratedBackendDefaultEv, ptr @_ZNK5clang6driver9ToolChain28IsIntegratedBackendSupportedEv, ptr @_ZNK5clang6driver9ToolChain31IsNonIntegratedBackendSupportedEv, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain15useIntegratedAsEv, ptr @_ZNK5clang6driver9ToolChain20useIntegratedBackendEv, ptr @_ZNK5clang6driver9ToolChain28parseInlineAsmUsingAsmParserEv, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain18IsMathErrnoDefaultEv, ptr @_ZNK5clang6driver9ToolChain37IsEncodeExtendedBlockSignatureDefaultEv, ptr @_ZNK5clang6driver9ToolChain26IsObjCNonFragileABIDefaultEv, ptr @_ZNK5clang6driver9ToolChain20UseObjCMixedDispatchEv, ptr @_ZNK5clang6driver9ToolChain19useRelaxRelocationsEv, ptr @_ZNK5clang6driver9ToolChain29GetDefaultStackProtectorLevelEb, ptr @_ZNK5clang6driver9ToolChain28GetDefaultTrivialAutoVarInitEv, ptr @_ZNK5clang6driver9ToolChain16getDefaultLinkerEv, ptr @_ZNK5clang6driver9ToolChain24GetDefaultRuntimeLibTypeEv, ptr @_ZNK5clang6driver9ToolChain23GetDefaultCXXStdlibTypeEv, ptr @_ZNK5clang6driver9ToolChain23GetDefaultUnwindLibTypeEv, ptr @_ZNK5clang6driver9ToolChain17getCompilerRTPathB5cxx11Ev, ptr @_ZNK5clang6driver9ToolChain13getCompilerRTB5cxx11ERKN4llvm3opt7ArgListENS2_9StringRefENS1_8FileTypeEb, ptr @_ZNK5clang6driver9ToolChain21addFortranRuntimeLibsERKN4llvm3opt7ArgListERNS2_11SmallVectorIPKcLj16EEE, ptr @_ZNK5clang6driver9ToolChain28addFortranRuntimeLibraryPathERKN4llvm3opt7ArgListERNS2_11SmallVectorIPKcLj16EEE, ptr @_ZNK5clang6driver9ToolChain23getArchSpecificLibPathsB5cxx11Ev, ptr @_ZNK5clang6driver9ToolChain12getOSLibNameEv, ptr @_ZNK5clang6driver9ToolChain26getDefaultUnwindTableLevelERKN4llvm3opt7ArgListE, ptr @_ZNK5clang6driver9ToolChain30IsAArch64OutlineAtomicsDefaultERKN4llvm3opt7ArgListE, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain12isPICDefaultEv, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain12isPIEDefaultERKN4llvm3opt7ArgListE, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain18isPICDefaultForcedEv, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain17SupportsProfilingEv, ptr @_ZNK5clang6driver9ToolChain12CheckObjCARCEv, ptr @_ZNK5clang6driver9ToolChain21getDefaultDebugFormatEv, ptr @_ZNK5clang6driver9ToolChain18UseDwarfDebugFlagsEv, ptr @_ZNK5clang6driver9ToolChain27GetGlobalDebugPathRemappingB5cxx11Ev, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain22GetDefaultDwarfVersionEv, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain18getMaxDwarfVersionEv, ptr @_ZNK5clang6driver9ToolChain25GetDefaultStandaloneDebugEv, ptr @_ZNK5clang6driver9ToolChain34getDefaultDebugSimpleTemplateNamesEv, ptr @_ZNK5clang6driver9ToolChain24getDefaultDebuggerTuningEv, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain23supportsDebugInfoOptionEPKN4llvm3opt3ArgE, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain19adjustDebugInfoKindERN4llvm14codegenoptions13DebugInfoKindERKNS3_3opt7ArgListE, ptr @_ZNK5clang6driver9ToolChain17GetExceptionModelERKN4llvm3opt7ArgListE, ptr @_ZNK5clang6driver9ToolChain23SupportsEmbeddedBitcodeEv, ptr @_ZNK5clang6driver9ToolChain14getThreadModelB5cxx11Ev, ptr @_ZNK5clang6driver9ToolChain22isThreadModelSupportedEN4llvm9StringRefE, ptr @_ZNK5clang6driver9ToolChain11isBareMetalEv, ptr @_ZNK5clang6driver9ToolChain18getMultiarchTripleB5cxx11ERKNS0_6DriverERKN4llvm6TripleENS5_9StringRefE, ptr @_ZNK5clang6driver9ToolChain17ComputeLLVMTripleB5cxx11ERKN4llvm3opt7ArgListENS_9BoundArchENS0_5types2IDE, ptr @_ZNK5clang6driver9ToolChain27ComputeEffectiveClangTripleB5cxx11ERKN4llvm3opt7ArgListENS_9BoundArchENS0_5types2IDE, ptr @_ZNK5clang6driver9ToolChain21getDefaultObjCRuntimeEb, ptr @_ZNK5clang6driver9ToolChain16hasBlocksRuntimeEv, ptr @_ZNK5clang6driver9ToolChain14computeSysRootB5cxx11Ev, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain25AddClangSystemIncludeArgsERKN4llvm3opt7ArgListERNS3_11SmallVectorIPKcLj16EEE, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain21addClangTargetOptionsERKN4llvm3opt7ArgListERNS3_11SmallVectorIPKcLj16EEENS_9BoundArchENS0_6Action11OffloadKindE, ptr @_ZNK5clang6driver9ToolChain26addClangCC1ASTargetOptionsERKN4llvm3opt7ArgListERNS2_11SmallVectorIPKcLj16EEE, ptr @_ZNK5clang6driver9ToolChain22addClangWarningOptionsERN4llvm11SmallVectorIPKcLj16EEE, ptr @_ZNK5clang6driver9ToolChain17GetRuntimeLibTypeERKN4llvm3opt7ArgListE, ptr @_ZNK5clang6driver9ToolChain16GetCXXStdlibTypeERKN4llvm3opt7ArgListE, ptr @_ZNK5clang6driver9ToolChain16GetUnwindLibTypeERKN4llvm3opt7ArgListE, ptr @_ZNK5clang6driver9ToolChain14GetCStdlibTypeERKN4llvm3opt7ArgListE, ptr @_ZNK5clang6driver9ToolChain19detectLibcxxVersionB5cxx11EN4llvm9StringRefE, ptr @_ZNK5clang6driver9ToolChain28AddClangCXXStdlibIncludeArgsERKN4llvm3opt7ArgListERNS2_11SmallVectorIPKcLj16EEE, ptr @_ZNK5clang6driver9ToolChain19AddCXXStdlibLibArgsERKN4llvm3opt7ArgListERNS2_11SmallVectorIPKcLj16EEE, ptr @_ZNK5clang6driver9ToolChain18AddFilePathLibArgsERKN4llvm3opt7ArgListERNS2_11SmallVectorIPKcLj16EEE, ptr @_ZNK5clang6driver9ToolChain16AddCCKextLibArgsERKN4llvm3opt7ArgListERNS2_11SmallVectorIPKcLj16EEE, ptr @_ZNK5clang6driver9ToolChain26isFastMathRuntimeAvailableERKN4llvm3opt7ArgListERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE, ptr @_ZNK5clang6driver10toolchains14NVPTXToolChain17getSystemGPUArchsB5cxx11ERKN4llvm3opt7ArgListE, ptr @_ZNK5clang6driver9ToolChain16addProfileRTLibsERKN4llvm3opt7ArgListERNS2_11SmallVectorIPKcLj16EEE, ptr @_ZNK5clang6driver9ToolChain18AddCudaIncludeArgsERKN4llvm3opt7ArgListERNS2_11SmallVectorIPKcLj16EEE, ptr @_ZNK5clang6driver9ToolChain17AddHIPIncludeArgsERKN4llvm3opt7ArgListERNS2_11SmallVectorIPKcLj16EEE, ptr @_ZNK5clang6driver9ToolChain18addSYCLIncludeArgsERKN4llvm3opt7ArgListERNS2_11SmallVectorIPKcLj16EEE, ptr @_ZNK5clang6driver9ToolChain19AddIAMCUIncludeArgsERKN4llvm3opt7ArgListERNS2_11SmallVectorIPKcLj16EEE, ptr @_ZNK5clang6driver9ToolChain18computeMSVCVersionEPKNS0_6DriverERKN4llvm3opt7ArgListE, ptr @_ZNK5clang6driver9ToolChain13getDeviceLibsERKN4llvm3opt7ArgListENS_9BoundArchENS0_6Action11OffloadKindE, ptr @_ZNK5clang6driver9ToolChain16addOffloadRTLibsEjRKN4llvm3opt7ArgListERNS2_11SmallVectorIPKcLj16EEE, ptr @_ZNK5clang6driver9ToolChain22getSupportedSanitizersENS_9BoundArchENS0_6Action11OffloadKindE, ptr @_ZNK5clang6driver9ToolChain20getDefaultSanitizersEv, ptr @_ZNK5clang6driver9ToolChain19canSplitThinLTOUnitEv, ptr @_ZNK5clang6driver9ToolChain29getDefaultDenormalModeForTypeERKN4llvm3opt7ArgListERKNS0_9JobActionEPKNS2_12fltSemanticsE] }, align 8
 @.str.114 = private unnamed_addr constant [25 x i8] c"x86_64-unknown-linux-gnu\00", align 1
 @.str.117 = private unnamed_addr constant [7 x i8] c"-march\00", align 1
@@ -607,45 +606,40 @@ bb.h:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   call void @_ZN5clang6driver24CudaInstallationDetectorC1ERKNS0_6DriverERKN4llvm6TripleERKNS5_3opt7ArgListE(ptr noundef nonnull align 8 dereferenceable(184) %5, ptr noundef nonnull align 8 dereferenceable(1208) %0, ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef nonnull align 8 dereferenceable(176) %2) #19
   %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %i.aj = load i32, ptr %i.ai, align 4, !tbaa !33 ; 2 uses
-  %6 = icmp eq i32 %i.aj, 10000
-  %spec.select.i = select i1 %6, i32 30, i32 %i.aj
-  switch i32 %spec.select.i, label %.critedge [
+  %i.aj = load i32, ptr %i.ai, align 4, !tbaa !33
+  switch i32 %i.aj, label %.critedge [
     i32 30, label %bb.aj
-    i32 29, label %7
-    i32 28, label %bb.i
-    i32 27, label %bb.j
-    i32 26, label %bb.k
-    i32 25, label %bb.l
-    i32 24, label %bb.l
-    i32 23, label %bb.m
-    i32 22, label %bb.n
-    i32 21, label %bb.o
-    i32 20, label %bb.p
-    i32 19, label %bb.q
-    i32 18, label %bb.r
-    i32 17, label %bb.s
-    i32 16, label %bb.t
-    i32 15, label %bb.u
-    i32 14, label %bb.v
-    i32 13, label %bb.w
-    i32 12, label %bb.x
-    i32 11, label %bb.y
-    i32 10, label %bb.z
-    i32 9, label %bb.aa
-    i32 8, label %bb.ab
-    i32 7, label %bb.ac
-    i32 6, label %bb.ad
-    i32 5, label %bb.ad
-    i32 4, label %bb.ae
-    i32 3, label %bb.af
-    i32 2, label %bb.ag
-    i32 1, label %bb.ah
-    i32 10000, label %bb.ai
+    i32 29, label %bb.i
+    i32 28, label %bb.j
+    i32 27, label %bb.k
+    i32 26, label %bb.l
+    i32 25, label %bb.m
+    i32 24, label %bb.m
+    i32 23, label %bb.n
+    i32 22, label %bb.o
+    i32 21, label %bb.p
+    i32 20, label %bb.q
+    i32 19, label %bb.r
+    i32 18, label %bb.s
+    i32 17, label %bb.t
+    i32 16, label %bb.u
+    i32 15, label %bb.v
+    i32 14, label %bb.w
+    i32 13, label %bb.x
+    i32 12, label %bb.y
+    i32 11, label %bb.z
+    i32 10, label %bb.aa
+    i32 9, label %bb.ab
+    i32 8, label %bb.ac
+    i32 7, label %bb.ad
+    i32 6, label %bb.ae
+    i32 5, label %bb.ae
+    i32 4, label %bb.af
+    i32 3, label %bb.ag
+    i32 2, label %bb.ah
+    i32 1, label %bb.ai
+    i32 10000, label %bb.aj
   ]
-
-7:                                                ; preds = %bb.h
-  br label %bb.aj
 
 bb.i:                                             ; preds = %bb.h
   br label %bb.aj
@@ -656,10 +650,10 @@ bb.j:                                             ; preds = %bb.h
 bb.k:                                             ; preds = %bb.h
   br label %bb.aj
 
-bb.l:                                             ; preds = %bb.h, %bb.h
+bb.l:                                             ; preds = %bb.h
   br label %bb.aj
 
-bb.m:                                             ; preds = %bb.h
+bb.m:                                             ; preds = %bb.h, %bb.h
   br label %bb.aj
 
 bb.n:                                             ; preds = %bb.h
@@ -710,10 +704,10 @@ bb.ab:                                            ; preds = %bb.h
 bb.ac:                                            ; preds = %bb.h
   br label %bb.aj
 
-bb.ad:                                            ; preds = %bb.h, %bb.h
+bb.ad:                                            ; preds = %bb.h
   br label %bb.aj
 
-bb.ae:                                            ; preds = %bb.h
+bb.ae:                                            ; preds = %bb.h, %bb.h
   br label %bb.aj
 
 bb.af:                                            ; preds = %bb.h
@@ -728,8 +722,8 @@ bb.ah:                                            ; preds = %bb.h
 bb.ai:                                            ; preds = %bb.h
   br label %bb.aj
 
-bb.aj:                                            ; preds = %bb.h, %7, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad, %bb.ae, %bb.af, %bb.ag, %bb.ah, %bb.ai
-  %.0 = phi ptr [ @.str.111, %bb.ag ], [ @.str.110, %bb.af ], [ @.str.86, %7 ], [ @.str.87, %bb.i ], [ @.str.88, %bb.j ], [ @.str.89, %bb.k ], [ @.str.90, %bb.l ], [ @.str.113, %bb.ai ], [ @.str.91, %bb.m ], [ @.str.92, %bb.n ], [ @.str.93, %bb.o ], [ @.str.94, %bb.p ], [ @.str.95, %bb.q ], [ @.str.96, %bb.r ], [ @.str.97, %bb.s ], [ @.str.98, %bb.t ], [ @.str.99, %bb.u ], [ @.str.100, %bb.v ], [ @.str.101, %bb.w ], [ @.str.102, %bb.x ], [ @.str.103, %bb.y ], [ @.str.104, %bb.z ], [ @.str.105, %bb.aa ], [ @.str.106, %bb.ab ], [ @.str.107, %bb.ac ], [ @.str.108, %bb.ad ], [ @.str.112, %bb.ah ], [ @.str.109, %bb.ae ], [ @.str.85, %bb.h ] ; 2 uses
+bb.aj:                                            ; preds = %bb.h, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad, %bb.ae, %bb.af, %bb.ag, %bb.ah, %bb.ai
+  %.0 = phi ptr [ @.str.111, %bb.ah ], [ @.str.110, %bb.ag ], [ @.str.86, %bb.i ], [ @.str.87, %bb.j ], [ @.str.88, %bb.k ], [ @.str.89, %bb.l ], [ @.str.90, %bb.m ], [ @.str.85, %bb.h ], [ @.str.91, %bb.n ], [ @.str.92, %bb.o ], [ @.str.93, %bb.p ], [ @.str.94, %bb.q ], [ @.str.95, %bb.r ], [ @.str.96, %bb.s ], [ @.str.97, %bb.t ], [ @.str.98, %bb.u ], [ @.str.99, %bb.v ], [ @.str.100, %bb.w ], [ @.str.101, %bb.x ], [ @.str.102, %bb.y ], [ @.str.103, %bb.z ], [ @.str.104, %bb.aa ], [ @.str.105, %bb.ab ], [ @.str.106, %bb.ac ], [ @.str.107, %bb.ad ], [ @.str.108, %bb.ae ], [ @.str.112, %bb.ai ], [ @.str.109, %bb.af ], [ @.str.85, %bb.h ] ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !570 ; 7 uses
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses

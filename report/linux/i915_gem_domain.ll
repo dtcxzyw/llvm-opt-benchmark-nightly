@@ -202,12 +202,11 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 bb.m:                                             ; preds = %bb.i
   %i.ap = getelementptr i8, ptr %i.x, i64 248     ; 2 uses
   %i.aq = load ptr, ptr %i.ap, align 8
-  %i.ar = tail call i32 @ww_mutex_lock_interruptible(ptr noundef %i.aq, ptr noundef null) #7 ; 3 uses
-  %3 = icmp eq i32 %i.ar, -114
-  %spec.store.select.i.i = select i1 %3, i32 0, i32 %i.ar
-  switch i32 %spec.store.select.i.i, label %bb.r [
+  %i.ar = tail call i32 @ww_mutex_lock_interruptible(ptr noundef %i.aq, ptr noundef null) #7 ; 2 uses
+  switch i32 %i.ar, label %bb.r [
     i32 -35, label %bb.n
     i32 0, label %bb.p
+    i32 -114, label %bb.p
   ]
 
 bb.n:                                             ; preds = %bb.m
@@ -230,7 +229,7 @@ i915_gem_object_lock_interruptible.exit.thread:   ; preds = %bb.o, %.sink.split.
   store ptr %i.x, ptr inttoptr (i64 40 to ptr), align 8
   br label %bb.r
 
-bb.p:                                             ; preds = %bb.m
+bb.p:                                             ; preds = %bb.m, %bb.m
   %i.av = tail call i32 @i915_gem_object_set_cache_level(ptr noundef nonnull %i.x, i32 noundef %.023) #9
   %i.aw = load ptr, ptr %i.al, align 8
   %i.ax = getelementptr i8, ptr %i.aw, i64 80

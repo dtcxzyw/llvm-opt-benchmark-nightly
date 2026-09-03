@@ -204,6 +204,11 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247: ; preds = %bb.ai, %bb.aj, %bb
   %i.gz = getelementptr inbounds nuw i8, ptr %50, i64 8 ; 2 uses
   br label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i
 
+82:                                               ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit572
+  %83 = add i64 %.0157924, 1                      ; 2 uses
+  %.not175 = icmp ugt i64 %83, %i.ge
+  br i1 %.not175, label %bb.pd, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i, !llvm.loop !446
+
 bb.am:                                            ; preds = %bb.i, %bb.f
   %i.ha = landingpad { ptr, i32 }
           cleanup
@@ -244,9 +249,9 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq
   call void @llvm.lifetime.end.p0(ptr nonnull %38) #23
   br label %bb.pp
 
-_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i: ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit572, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247
-  %.0139925 = phi i64 [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247 ], [ %.6145, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit572 ] ; 4 uses
-  %.0157924 = phi i64 [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247 ], [ %83, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit572 ] ; 8 uses
+_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i: ; preds = %82, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247
+  %.0139925 = phi i64 [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247 ], [ %.6145, %82 ] ; 4 uses
+  %.0157924 = phi i64 [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247 ], [ %83, %82 ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %39) #23
   %i.hg = load ptr, ptr %33, align 8, !tbaa !65   ; 2 uses
   %.idx653 = shl nuw nsw i64 %.0157924, 3         ; 3 uses
@@ -649,7 +654,7 @@ bb.or:                                            ; preds = %_ZSt8_DestroyIPN4cv
 _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit558: ; preds = %_ZSt8_DestroyIPN4cvc58internal12NodeTemplateILb1EEES3_EvT_S5_RSaIT0_E.exit.i555, %bb.or
   call void @llvm.lifetime.end.p0(ptr nonnull %42) #23
   %cond3 = icmp eq i32 %.2160, 0
-  br i1 %cond3, label %bb.ou, label %._crit_edge.loopexit
+  br i1 %cond3, label %bb.ou, label %._crit_edge
 
 bb.os:                                            ; preds = %.body445, %bb.ne, %bb.jt, %bb.iz, %.body286, %bb.fk, %bb.fh
   %.pn207.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn207.pn.pn.pn.pn.pn.pn.pn, %.body286 ], [ %.pn195.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn, %bb.jt ], [ %.pn183.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn, %.body445 ], [ %.pn181, %bb.ne ], [ %i.uv, %bb.fh ], [ %.pn179, %bb.iz ], [ %.pn177, %bb.fk ]
@@ -684,17 +689,12 @@ bb.ou:                                            ; preds = %bb.bg, %.lr.ph, %_Z
   %.5144 = phi i64 [ %.1140920, %.lr.ph ], [ %.1140920, %bb.bg ], [ %.4143, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit558 ] ; 2 uses
   %i.atq = add i64 %.0163916, 1                   ; 2 uses
   %.not176 = icmp ugt i64 %i.atq, %i.is
-  br i1 %.not176, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !480
+  br i1 %.not176, label %._crit_edge, label %.lr.ph, !llvm.loop !481
 
-._crit_edge.loopexit:                             ; preds = %bb.ou, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit558
-  %.3161.ph = phi i32 [ %.2160, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit558 ], [ 5, %bb.ou ]
-  %.6145.ph = phi i64 [ %.4143, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit558 ], [ %.5144, %bb.ou ]
-  %82 = icmp eq i32 %.3161.ph, 5
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN4cvc58internal8TypeNodeD2Ev.exit
-  %.3161 = phi i1 [ true, %_ZN4cvc58internal8TypeNodeD2Ev.exit ], [ %82, %._crit_edge.loopexit ] ; 2 uses
-  %.6145 = phi i64 [ %.0139925, %_ZN4cvc58internal8TypeNodeD2Ev.exit ], [ %.6145.ph, %._crit_edge.loopexit ]
+._crit_edge:                                      ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit558, %bb.ou, %_ZN4cvc58internal8TypeNodeD2Ev.exit
+  %.3161 = phi i32 [ 5, %_ZN4cvc58internal8TypeNodeD2Ev.exit ], [ 5, %bb.ou ], [ %.2160, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit558 ] ; 2 uses
+  %.6145 = phi i64 [ %.0139925, %_ZN4cvc58internal8TypeNodeD2Ev.exit ], [ %.5144, %bb.ou ], [ %.4143, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit558 ]
+  %cond1 = icmp eq i32 %.3161, 5
   %i.atr = load ptr, ptr %40, align 8, !tbaa !41  ; 3 uses
   %i.ats = load i64, ptr %i.atr, align 8          ; 3 uses
   %i.att = and i64 %i.ats, 1152920405095219200
@@ -780,10 +780,7 @@ bb.pb:                                            ; preds = %_ZSt8_DestroyIPN4cv
 
 _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit572: ; preds = %_ZSt8_DestroyIPN4cvc58internal12NodeTemplateILb1EEES3_EvT_S5_RSaIT0_E.exit.i569, %bb.pb
   call void @llvm.lifetime.end.p0(ptr nonnull %39) #23
-  %83 = add i64 %.0157924, 1                      ; 2 uses
-  %.not175 = icmp ule i64 %83, %i.ge
-  %or.cond1063.not = select i1 %.3161, i1 %.not175, i1 false
-  br i1 %or.cond1063.not, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i, label %bb.pd, !llvm.loop !481
+  br i1 %cond1, label %82, label %bb.pd
 
 bb.pc:                                            ; preds = %.body257, %bb.be, %bb.bd
   %.pn207.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn207.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn, %.body257 ], [ %i.iu, %bb.be ], [ %i.it, %bb.bd ]
@@ -797,7 +794,8 @@ bb.pc:                                            ; preds = %.body257, %bb.be, %
   call void @_ZN4cvc58internal8TypeNodeD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %37) #23
   br label %bb.pp
 
-bb.pd:                                            ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit572
+bb.pd:                                            ; preds = %82, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit572
+  %.4162 = phi i32 [ %.3161, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit572 ], [ 2, %82 ]
   %i.aut = load ptr, ptr %37, align 8, !tbaa !64  ; 3 uses
   %i.auu = load i64, ptr %i.aut, align 8          ; 3 uses
   %i.auv = and i64 %i.auu, 1152920405095219200
@@ -942,7 +940,8 @@ bb.po:                                            ; preds = %_ZSt8_DestroyIPN4cv
 
 _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit598: ; preds = %_ZSt8_DestroyIPN4cvc58internal12NodeTemplateILb1EEES3_EvT_S5_RSaIT0_E.exit.i595, %bb.po
   call void @llvm.lifetime.end.p0(ptr nonnull %33) #23
-  br i1 %.3161, label %bb.pr, label %_ZN4cvc58internal12NodeTemplateILb1EE4nullEv.exit
+  %84 = icmp eq i32 %.4162, 1
+  br i1 %84, label %_ZN4cvc58internal12NodeTemplateILb1EE4nullEv.exit, label %bb.pr
 
 bb.pp:                                            ; preds = %.body, %bb.as
   %.pn207.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn207.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn, %.body ], [ %.pn173, %bb.as ]
@@ -1345,41 +1344,41 @@ begin_hunk_2_@llvm.umax.i64
 !443 = distinct !{!443, !442, !"_ZNK4cvc58internal12NodeTemplateILb1EEixEi: argument 0"}
 !444 = distinct !{!444, !"_ZNK4cvc58internal12NodeTemplateILb1EEixEi"}
 !445 = distinct !{!445, !444, !"_ZNK4cvc58internal12NodeTemplateILb1EEixEi: argument 0"}
-!446 = distinct !{!446, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEE"}
-!447 = distinct !{!447, !446, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEE: argument 0"}
-!448 = distinct !{!448, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEE"}
-!449 = distinct !{!449, !448, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEE: argument 0"}
-!450 = distinct !{!450, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE"}
-!451 = distinct !{!451, !450, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE: argument 0"}
-!452 = distinct !{!452, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_"}
-!453 = distinct !{!453, !452, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_: argument 0"}
-!454 = distinct !{!454, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE"}
-!455 = distinct !{!455, !454, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE: argument 0"}
-!456 = distinct !{!456, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_"}
-!457 = distinct !{!457, !456, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_: argument 0"}
-!458 = distinct !{!458, !"_ZN4cvc58internal11NodeManager6mkNodeILm2EEENS0_12NodeTemplateILb1EEENS0_4kind6Kind_tERAT__KNS3_ILb0EEE"}
-!459 = distinct !{!459, !458, !"_ZN4cvc58internal11NodeManager6mkNodeILm2EEENS0_12NodeTemplateILb1EEENS0_4kind6Kind_tERAT__KNS3_ILb0EEE: argument 0"}
-!460 = distinct !{!460, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE"}
-!461 = distinct !{!461, !460, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE: argument 0"}
-!462 = distinct !{!462, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_"}
-!463 = distinct !{!463, !462, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_: argument 0"}
-!464 = distinct !{!464, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE"}
-!465 = distinct !{!465, !464, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE: argument 0"}
-!466 = distinct !{!466, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_"}
-!467 = distinct !{!467, !466, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_: argument 0"}
-!468 = distinct !{!468, !"_ZN4cvc58internal11NodeManager6mkNodeILm2EEENS0_12NodeTemplateILb1EEENS0_4kind6Kind_tERAT__KNS3_ILb0EEE"}
-!469 = distinct !{!469, !468, !"_ZN4cvc58internal11NodeManager6mkNodeILm2EEENS0_12NodeTemplateILb1EEENS0_4kind6Kind_tERAT__KNS3_ILb0EEE: argument 0"}
-!470 = distinct !{!470, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE"}
-!471 = distinct !{!471, !470, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE: argument 0"}
-!472 = distinct !{!472, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_"}
-!473 = distinct !{!473, !472, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_: argument 0"}
-!474 = distinct !{!474, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE"}
-!475 = distinct !{!475, !474, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE: argument 0"}
-!476 = distinct !{!476, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_"}
-!477 = distinct !{!477, !476, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_: argument 0"}
-!478 = distinct !{!478, !"_ZN4cvc58internal11NodeManager6mkNodeILm2EEENS0_12NodeTemplateILb1EEENS0_4kind6Kind_tERAT__KNS3_ILb0EEE"}
-!479 = distinct !{!479, !478, !"_ZN4cvc58internal11NodeManager6mkNodeILm2EEENS0_12NodeTemplateILb1EEENS0_4kind6Kind_tERAT__KNS3_ILb0EEE: argument 0"}
-!480 = distinct !{!480, !58}
+!446 = distinct !{!446, !58}
+!447 = distinct !{!447, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEE"}
+!448 = distinct !{!448, !447, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEE: argument 0"}
+!449 = distinct !{!449, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEE"}
+!450 = distinct !{!450, !449, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEE: argument 0"}
+!451 = distinct !{!451, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE"}
+!452 = distinct !{!452, !451, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE: argument 0"}
+!453 = distinct !{!453, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_"}
+!454 = distinct !{!454, !453, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_: argument 0"}
+!455 = distinct !{!455, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE"}
+!456 = distinct !{!456, !455, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE: argument 0"}
+!457 = distinct !{!457, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_"}
+!458 = distinct !{!458, !457, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_: argument 0"}
+!459 = distinct !{!459, !"_ZN4cvc58internal11NodeManager6mkNodeILm2EEENS0_12NodeTemplateILb1EEENS0_4kind6Kind_tERAT__KNS3_ILb0EEE"}
+!460 = distinct !{!460, !459, !"_ZN4cvc58internal11NodeManager6mkNodeILm2EEENS0_12NodeTemplateILb1EEENS0_4kind6Kind_tERAT__KNS3_ILb0EEE: argument 0"}
+!461 = distinct !{!461, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE"}
+!462 = distinct !{!462, !461, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE: argument 0"}
+!463 = distinct !{!463, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_"}
+!464 = distinct !{!464, !463, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_: argument 0"}
+!465 = distinct !{!465, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE"}
+!466 = distinct !{!466, !465, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE: argument 0"}
+!467 = distinct !{!467, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_"}
+!468 = distinct !{!468, !467, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_: argument 0"}
+!469 = distinct !{!469, !"_ZN4cvc58internal11NodeManager6mkNodeILm2EEENS0_12NodeTemplateILb1EEENS0_4kind6Kind_tERAT__KNS3_ILb0EEE"}
+!470 = distinct !{!470, !469, !"_ZN4cvc58internal11NodeManager6mkNodeILm2EEENS0_12NodeTemplateILb1EEENS0_4kind6Kind_tERAT__KNS3_ILb0EEE: argument 0"}
+!471 = distinct !{!471, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE"}
+!472 = distinct !{!472, !471, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE: argument 0"}
+!473 = distinct !{!473, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_"}
+!474 = distinct !{!474, !473, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_: argument 0"}
+!475 = distinct !{!475, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE"}
+!476 = distinct !{!476, !475, !"_ZNK4cvc58internal12NodeTemplateILb1EE6eqNodeILb1EEES2_RKNS1_IXT_EEE: argument 0"}
+!477 = distinct !{!477, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_"}
+!478 = distinct !{!478, !477, !"_ZN4cvc58internal11NodeManager6mkNodeENS0_4kind6Kind_tENS0_12NodeTemplateILb0EEES5_: argument 0"}
+!479 = distinct !{!479, !"_ZN4cvc58internal11NodeManager6mkNodeILm2EEENS0_12NodeTemplateILb1EEENS0_4kind6Kind_tERAT__KNS3_ILb0EEE"}
+!480 = distinct !{!480, !479, !"_ZN4cvc58internal11NodeManager6mkNodeILm2EEENS0_12NodeTemplateILb1EEENS0_4kind6Kind_tERAT__KNS3_ILb0EEE: argument 0"}
 !481 = distinct !{!481, !58}
 !482 = distinct !{!482, !"_ZN4cvc58internal12NodeTemplateILb1EE4nullEv"}
 !483 = distinct !{!483, !482, !"_ZN4cvc58internal12NodeTemplateILb1EE4nullEv: argument 0"}
@@ -1388,23 +1387,23 @@ begin_hunk_2_@llvm.umax.i64
 !486 = !{!441}
 !487 = !{!443}
 !488 = !{!445}
-!489 = !{!447}
-!490 = !{!449}
-!491 = !{!451}
-!492 = !{!453, !451}
-!493 = !{!455}
-!494 = !{!457, !455}
-!495 = !{!459}
-!496 = !{!461}
-!497 = !{!463, !461}
-!498 = !{!465}
-!499 = !{!467, !465}
-!500 = !{!469}
-!501 = !{!471}
-!502 = !{!473, !471}
-!503 = !{!475}
-!504 = !{!477, !475}
-!505 = !{!479}
+!489 = !{!448}
+!490 = !{!450}
+!491 = !{!452}
+!492 = !{!454, !452}
+!493 = !{!456}
+!494 = !{!458, !456}
+!495 = !{!460}
+!496 = !{!462}
+!497 = !{!464, !462}
+!498 = !{!466}
+!499 = !{!468, !466}
+!500 = !{!470}
+!501 = !{!472}
+!502 = !{!474, !472}
+!503 = !{!476}
+!504 = !{!478, !476}
+!505 = !{!480}
 !506 = !{!483}
 !507 = distinct !{!507, !"_ZNK4cvc58internal12NodeTemplateILb1EEixEi"}
 !508 = distinct !{!508, !507, !"_ZNK4cvc58internal12NodeTemplateILb1EEixEi: argument 0"}
