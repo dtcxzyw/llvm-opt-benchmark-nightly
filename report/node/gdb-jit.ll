@@ -204,23 +204,20 @@ _ZN2v88internal15GDBJITInterface6Writer5WriteIhEEvRKT_.exit321: ; preds = %._ZN2
   store i64 %i.akg, ptr %i.a, align 8
   %i.akh = xor i64 %indvars.iv, -1
   %i.aki = add nsw i64 %i.pl, %i.akh
-  %i.akj = shl nsw i64 %i.aki, 3
-  %i.akk = add nsw i64 %i.akj, 16
+  %i.akj = shl i64 %i.aki, 3
+  %i.akk = add i64 %i.akj, 16
+  %6 = and i64 %i.akk, 4294967288
   br label %bb.w
 
 bb.w:                                             ; preds = %_ZN2v88internal15GDBJITInterface6Writer5WriteIaEEvRKT_.exit.i, %_ZN2v88internal15GDBJITInterface6Writer5WriteIhEEvRKT_.exit321
   %i.akl = phi i64 [ %i.akg, %_ZN2v88internal15GDBJITInterface6Writer5WriteIhEEvRKT_.exit321 ], [ %i.alb, %_ZN2v88internal15GDBJITInterface6Writer5WriteIaEEvRKT_.exit.i ] ; 2 uses
-  %.01014.i = phi i64 [ %i.akk, %_ZN2v88internal15GDBJITInterface6Writer5WriteIhEEvRKT_.exit321 ], [ %7, %_ZN2v88internal15GDBJITInterface6Writer5WriteIaEEvRKT_.exit.i ] ; 2 uses
+  %.01014.i = phi i64 [ %6, %_ZN2v88internal15GDBJITInterface6Writer5WriteIhEEvRKT_.exit321 ], [ %8, %_ZN2v88internal15GDBJITInterface6Writer5WriteIaEEvRKT_.exit.i ] ; 2 uses
   %i.akm = trunc i64 %.01014.i to i8
   %i.akn = and i8 %i.akm, 127                     ; 2 uses
-  %6 = icmp samesign ugt i8 %i.akn, 63            ; 2 uses
-  %7 = ashr i64 %.01014.i, 7                      ; 3 uses
-  %8 = icmp ne i64 %7, 0
-  %or.cond.i = select i1 %8, i1 true, i1 %6
-  %or.cond.not.i = xor i1 %or.cond.i, true
-  %i.ako = icmp eq i64 %7, -1
-  %or.cond3.i = select i1 %i.ako, i1 %6, i1 false
-  %or.cond11.i = select i1 %or.cond.not.i, i1 true, i1 %or.cond3.i ; 2 uses
+  %7 = icmp samesign ult i8 %i.akn, 64
+  %8 = lshr i64 %.01014.i, 7                      ; 2 uses
+  %i.ako = icmp eq i64 %8, 0
+  %or.cond11.i = select i1 %i.ako, i1 %7, i1 false ; 2 uses
   %masksel.i324 = select i1 %or.cond11.i, i8 0, i8 -128
   %spec.select.i = or disjoint i8 %masksel.i324, %i.akn
   %i.akp = add i64 %i.akl, 1                      ; 2 uses

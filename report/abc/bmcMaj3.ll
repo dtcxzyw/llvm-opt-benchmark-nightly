@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   %i.aa = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #29
   %i.ab = trunc i64 %i.aa to i32                  ; 2 uses
   %i.ac = add nsw i32 %3, 1
-  %i.ad = shl nuw i32 1, %3                       ; 6 uses
+  %i.ad = shl nuw i32 1, %3                       ; 4 uses
   %i.ae = add nsw i32 %i.ac, %i.ad                ; 2 uses
   %.not = icmp eq i32 %i.ae, %i.ab
   br i1 %.not, label %bb.h, label %bb.g
@@ -225,7 +225,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 3 uses
-  %i.aj = sext i32 %i.ad to i64
+  %i.aj = sext i32 %i.ad to i64                   ; 3 uses
   %i.ak = getelementptr inbounds i8, ptr %i.ai, i64 %i.aj ; 3 uses
   %i.al = icmp sgt i32 %3, 0                      ; 2 uses
   %.val.pre = load ptr, ptr %i.i, align 8, !tbaa !21 ; 6 uses
@@ -314,6 +314,7 @@ Abc_TtConst0.exit:                                ; preds = %._crit_edge, %.lr.p
 .lr.ph93.split.us.split.us.preheader:             ; preds = %.lr.ph93.split.us
   %smax131 = tail call i32 @llvm.smax.i32(i32 %i.ad, i32 1)
   %wide.trip.count132 = zext nneg i32 %smax131 to i64
+  %5 = getelementptr i8, ptr %i.ai, i64 %i.aj
   %wide.trip.count126 = zext nneg i32 %3 to i64
   %i.by = shl nuw nsw i64 %i.bw, 3                ; 2 uses
   %i.bz = add nsw i64 %i.br, %i.bw
@@ -349,11 +350,8 @@ Abc_TtConst0.exit:                                ; preds = %._crit_edge, %.lr.p
 
 .lr.ph93.split.us.split.us:                       ; preds = %.lr.ph93.split.us.split.us.preheader, %Abc_TtOr.exit.us.us
   %indvars.iv128 = phi i64 [ 0, %.lr.ph93.split.us.split.us.preheader ], [ %indvars.iv.next129, %Abc_TtOr.exit.us.us ] ; 3 uses
-  %5 = trunc i64 %indvars.iv128 to i32
-  %6 = xor i32 %5, -1
-  %7 = add i32 %i.ad, %6
-  %8 = sext i32 %7 to i64
-  %i.cg = getelementptr inbounds i8, ptr %i.ai, i64 %8
+  %6 = xor i64 %indvars.iv128, -1
+  %i.cg = getelementptr i8, ptr %5, i64 %6
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !74
   %i.ci = icmp eq i8 %i.ch, 48
   br i1 %i.ci, label %Abc_TtOr.exit.us.us, label %.lr.ph.preheader.i77.us.us
@@ -630,6 +628,7 @@ vector.body155:                                   ; preds = %.lr.ph.i81.us.us.pr
 .lr.ph93.split.split.us.preheader:                ; preds = %.lr.ph93.split
   %smax = tail call i32 @llvm.smax.i32(i32 %i.ad, i32 1)
   %wide.trip.count = zext nneg i32 %smax to i64
+  %7 = getelementptr i8, ptr %i.ai, i64 %i.aj
   %i.gc = add nsw i64 %i.br, %i.bw
   %i.gd = shl nsw i64 %i.gc, 3
   %scevgep = getelementptr i8, ptr %.val.pre, i64 %i.gd
@@ -650,11 +649,8 @@ vector.body155:                                   ; preds = %.lr.ph.i81.us.us.pr
 
 .lr.ph93.split.split.us:                          ; preds = %.lr.ph93.split.split.us.preheader, %Abc_TtOr.exit.us109
   %indvars.iv117 = phi i64 [ 0, %.lr.ph93.split.split.us.preheader ], [ %indvars.iv.next118, %Abc_TtOr.exit.us109 ] ; 2 uses
-  %9 = trunc i64 %indvars.iv117 to i32
-  %10 = xor i32 %9, -1
-  %11 = add i32 %i.ad, %10
-  %12 = sext i32 %11 to i64
-  %i.gh = getelementptr inbounds i8, ptr %i.ai, i64 %12
+  %8 = xor i64 %indvars.iv117, -1
+  %i.gh = getelementptr i8, ptr %7, i64 %8
   %i.gi = load i8, ptr %i.gh, align 1, !tbaa !74
   %i.gj = icmp eq i8 %i.gi, 48
   br i1 %i.gj, label %Abc_TtOr.exit.us109, label %.lr.ph.preheader.i77.us102
