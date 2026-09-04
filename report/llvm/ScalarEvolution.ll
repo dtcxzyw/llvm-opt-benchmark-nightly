@@ -205,14 +205,13 @@ _ZNK4llvm15ScalarEvolution17getTypeSizeInBitsEPNS_4TypeE.exit: ; preds = %bb.fg,
   br i1 %i.ahp, label %.thread668.jt0, label %.critedge840
 
 .lr.ph809:                                        ; preds = %_ZN4llvm11SmallVectorINS_8SCEVUseTIPKNS_4SCEVEEELj7EED2Ev.exit, %.lr.ph813
-  %indvars.iv882 = phi i64 [ 0, %.lr.ph813 ], [ %indvars.iv.next883, %_ZN4llvm11SmallVectorINS_8SCEVUseTIPKNS_4SCEVEEELj7EED2Ev.exit ] ; 12 uses
+  %indvars.iv882 = phi i64 [ 0, %.lr.ph813 ], [ %indvars.iv.next883, %_ZN4llvm11SmallVectorINS_8SCEVUseTIPKNS_4SCEVEEELj7EED2Ev.exit ] ; 10 uses
   %indvars.iv875 = phi i32 [ 1, %.lr.ph813 ], [ %indvars.iv.next876, %_ZN4llvm11SmallVectorINS_8SCEVUseTIPKNS_4SCEVEEELj7EED2Ev.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #29
   store ptr %i.uj, ptr %25, align 8, !tbaa !107
   store i32 0, ptr %i.uk, align 8, !tbaa !134
   store i32 7, ptr %i.ul, align 4, !tbaa !135
   %i.acu = shl nuw nsw i64 %indvars.iv882, 1      ; 3 uses
-  %26 = icmp eq i64 %indvars.iv882, 0
   %i.acv = lshr i64 %indvars.iv882, 1
   %.neg.i = add nuw nsw i64 %indvars.iv882, 1     ; 3 uses
   %i.acw = trunc nsw i64 %.neg.i to i32
@@ -227,17 +226,11 @@ bb.fj:                                            ; preds = %.lr.ph809, %._crit_
   %indvars.iv884 = phi i64 [ %indvars.iv882, %.lr.ph809 ], [ %indvars.iv.next885, %._crit_edge805 ] ; 6 uses
   %indvars.iv877 = phi i32 [ %indvars.iv875, %.lr.ph809 ], [ %indvars.iv.next878, %._crit_edge805 ] ; 2 uses
   %indvars.iv873 = phi i32 [ 0, %.lr.ph809 ], [ %indvars.iv.next874, %._crit_edge805 ] ; 2 uses
-  %i.acx = sub nsw i64 %i.acu, %indvars.iv884     ; 11 uses
+  %i.acx = sub nuw nsw i64 %i.acu, %indvars.iv884 ; 10 uses
   %i.acy = icmp eq i64 %i.acx, %indvars.iv882
-  %or.cond.i = or i1 %26, %i.acy
-  br i1 %or.cond.i, label %_ZL6ChoosemmRb.exit, label %27
+  br i1 %i.acy, label %_ZL6ChoosemmRb.exit, label %bb.fk
 
-27:                                               ; preds = %bb.fj
-  %28 = and i64 %i.acx, 4294967295
-  %29 = icmp samesign ugt i64 %28, %indvars.iv882
-  br i1 %29, label %_ZL6ChoosemmRb.exit, label %bb.fk
-
-bb.fk:                                            ; preds = %27
+bb.fk:                                            ; preds = %bb.fj
   %i.acz = icmp samesign ult i64 %i.acv, %i.acx
   %i.ada = sub nuw nsw i64 %indvars.iv882, %i.acx
   %spec.select.i477 = select i1 %i.acz, i64 %i.ada, i64 %i.acx ; 5 uses
@@ -250,7 +243,7 @@ _ZL7umul_ovmmRb.exit.i.preheader:                 ; preds = %bb.fk
   br i1 %i.adb, label %_ZL7umul_ovmmRb.exit.i.epil.preheader, label %_ZL7umul_ovmmRb.exit.i.preheader.new
 
 _ZL7umul_ovmmRb.exit.i.preheader.new:             ; preds = %_ZL7umul_ovmmRb.exit.i.preheader
-  %unroll_iter = and i64 %spec.select.i477, -2
+  %unroll_iter = and i64 %spec.select.i477, 9223372036854775806
   br label %_ZL7umul_ovmmRb.exit.i
 
 _ZL7umul_ovmmRb.exit.i:                           ; preds = %_ZL7umul_ovmmRb.exit.i, %_ZL7umul_ovmmRb.exit.i.preheader.new
@@ -258,15 +251,15 @@ _ZL7umul_ovmmRb.exit.i:                           ; preds = %_ZL7umul_ovmmRb.exi
   %.026.i = phi i64 [ 1, %_ZL7umul_ovmmRb.exit.i.preheader.new ], [ %i.adm, %_ZL7umul_ovmmRb.exit.i ] ; 5 uses
   %.01925.i = phi i64 [ 1, %_ZL7umul_ovmmRb.exit.i.preheader.new ], [ %i.adl, %_ZL7umul_ovmmRb.exit.i ]
   %niter = phi i64 [ 0, %_ZL7umul_ovmmRb.exit.i.preheader.new ], [ %niter.next.1, %_ZL7umul_ovmmRb.exit.i ]
-  %i.adc = sub i64 %.neg.i, %.026.i               ; 2 uses
+  %i.adc = sub nsw i64 %.neg.i, %.026.i           ; 2 uses
   %mul.i.i = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.adc, i64 %.01925.i) ; 2 uses
   %i.add = icmp ugt i64 %i.adc, 1
   %mul.ov.i.i = extractvalue { i64, i1 } %mul.i.i, 1
   %i.ade = select i1 %i.add, i1 %mul.ov.i.i, i1 false
   %mul.val.i.i = extractvalue { i64, i1 } %mul.i.i, 0
   %i.adf = udiv i64 %mul.val.i.i, %.026.i
-  %i.adg = add nuw i64 %.026.i, 1
-  %i.adh = sub i64 %indvars.iv882, %.026.i        ; 2 uses
+  %i.adg = add nuw nsw i64 %.026.i, 1
+  %i.adh = sub nsw i64 %indvars.iv882, %.026.i    ; 2 uses
   %mul.i.i.1 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.adh, i64 %i.adf) ; 2 uses
   %i.adi = icmp ugt i64 %i.adh, 1
   %mul.ov.i.i.1 = extractvalue { i64, i1 } %mul.i.i.1, 1
@@ -275,8 +268,8 @@ _ZL7umul_ovmmRb.exit.i:                           ; preds = %_ZL7umul_ovmmRb.exi
   %.5619.1 = select i1 %i.adk, i8 1, i8 %.4618    ; 3 uses
   %mul.val.i.i.1 = extractvalue { i64, i1 } %mul.i.i.1, 0
   %i.adl = udiv i64 %mul.val.i.i.1, %i.adg        ; 3 uses
-  %i.adm = add nuw i64 %.026.i, 2                 ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %i.adm = add nuw nsw i64 %.026.i, 2             ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZL6ChoosemmRb.exit.loopexit.unr-lcssa, label %_ZL7umul_ovmmRb.exit.i, !llvm.loop !1053
 
@@ -290,7 +283,7 @@ _ZL7umul_ovmmRb.exit.i.epil.preheader:            ; preds = %_ZL6ChoosemmRb.exit
   %.01925.i.epil.init = phi i64 [ 1, %_ZL7umul_ovmmRb.exit.i.preheader ], [ %i.adl, %_ZL6ChoosemmRb.exit.loopexit.unr-lcssa ]
   %lcmp.mod1068 = trunc i64 %spec.select.i477 to i1
   call void @llvm.assume(i1 %lcmp.mod1068)
-  %i.adn = sub i64 %.neg.i, %.026.i.epil.init     ; 2 uses
+  %i.adn = sub nsw i64 %.neg.i, %.026.i.epil.init ; 2 uses
   %mul.i.i.epil = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.adn, i64 %.01925.i.epil.init) ; 2 uses
   %i.ado = icmp ugt i64 %i.adn, 1
   %mul.ov.i.i.epil = extractvalue { i64, i1 } %mul.i.i.epil, 1
@@ -300,9 +293,9 @@ _ZL7umul_ovmmRb.exit.i.epil.preheader:            ; preds = %_ZL6ChoosemmRb.exit
   %i.adq = udiv i64 %mul.val.i.i.epil, %.026.i.epil.init
   br label %_ZL6ChoosemmRb.exit
 
-_ZL6ChoosemmRb.exit:                              ; preds = %_ZL7umul_ovmmRb.exit.i.epil.preheader, %_ZL6ChoosemmRb.exit.loopexit.unr-lcssa, %bb.fj, %27, %bb.fk
-  %.6620 = phi i8 [ 0, %bb.fj ], [ 0, %27 ], [ 0, %bb.fk ], [ %.5619.1, %_ZL6ChoosemmRb.exit.loopexit.unr-lcssa ], [ %.5619.epil, %_ZL7umul_ovmmRb.exit.i.epil.preheader ] ; 2 uses
-  %.020.i = phi i64 [ 1, %bb.fj ], [ 0, %27 ], [ 1, %bb.fk ], [ %i.adl, %_ZL6ChoosemmRb.exit.loopexit.unr-lcssa ], [ %i.adq, %_ZL7umul_ovmmRb.exit.i.epil.preheader ] ; 2 uses
+_ZL6ChoosemmRb.exit:                              ; preds = %_ZL7umul_ovmmRb.exit.i.epil.preheader, %_ZL6ChoosemmRb.exit.loopexit.unr-lcssa, %bb.fj, %bb.fk
+  %.6620 = phi i8 [ 0, %bb.fj ], [ 0, %bb.fk ], [ %.5619.1, %_ZL6ChoosemmRb.exit.loopexit.unr-lcssa ], [ %.5619.epil, %_ZL7umul_ovmmRb.exit.i.epil.preheader ] ; 2 uses
+  %.020.i = phi i64 [ 1, %bb.fj ], [ 1, %bb.fk ], [ %i.adl, %_ZL6ChoosemmRb.exit.loopexit.unr-lcssa ], [ %i.adq, %_ZL7umul_ovmmRb.exit.i.epil.preheader ] ; 2 uses
   %i.adr = sub nuw nsw i64 %indvars.iv884, %indvars.iv882
   %i.ads = load i64, ptr %i.aau, align 8, !tbaa !139
   %i.adt = trunc i64 %i.ads to i32                ; 2 uses
@@ -322,7 +315,7 @@ _ZL6ChoosemmRb.exit:                              ; preds = %_ZL7umul_ovmmRb.exi
 .lr.ph804:                                        ; preds = %_ZL6ChoosemmRb.exit
   %i.aeb = icmp eq i64 %i.acu, %indvars.iv884
   %i.aec = lshr i64 %i.acx, 1
-  %.neg.i483 = add nsw i64 %i.acx, 1              ; 2 uses
+  %.neg.i483 = add nuw nsw i64 %i.acx, 1          ; 2 uses
   %i.aed = sub i32 %indvars.iv877, %i.adt
   %smax = call i32 @llvm.smax.i32(i32 %indvars.iv873, i32 %i.aed)
   %i.aee = zext nneg i32 %smax to i64

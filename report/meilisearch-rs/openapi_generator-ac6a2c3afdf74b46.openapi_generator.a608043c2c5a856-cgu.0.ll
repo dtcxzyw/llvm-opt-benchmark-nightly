@@ -205,7 +205,7 @@ bb.abr:                                           ; preds = %bb.abq, %.split.i.i
   br i1 %i.czu, label %bb.abs, label %_ZN17openapi_generator26check_query_params_in_file17h5f39b7d75028c088E.exit.i
 
 bb.abs:                                           ; preds = %.noexc144.i
-  %i.czw = add i64 %i.czv, %.sroa.0.0.i.i340      ; 25 uses
+  %i.czw = add i64 %i.czv, %.sroa.0.0.i.i340      ; 21 uses
   %i.czx = add i64 %i.czw, 2                      ; 6 uses
   %i.czy = icmp eq i64 %i.czx, 0
   br i1 %i.czy, label %bb.abv, label %bb.abt
@@ -225,7 +225,7 @@ bb.abu:                                           ; preds = %bb.abt
   br i1 %i.dac, label %bb.abv, label %.backedge.i.i
 
 bb.abv:                                           ; preds = %bb.abu, %.split.i.i.i.i359, %bb.abs
-  %i.dad = sub nuw i64 %.sroa.8213.0.copyload.i, %i.czx ; 8 uses
+  %i.dad = sub nuw i64 %.sroa.8213.0.copyload.i, %i.czx ; 6 uses
   %i.dae = getelementptr inbounds nuw i8, ptr %i.cyv, i64 %i.czx ; 4 uses
   br label %.backedge.i.i.i.i
 
@@ -294,29 +294,19 @@ bb.abz:                                           ; preds = %"_ZN4core3str21_$LT
 
 ._crit_edge.i.i.i362:                             ; preds = %bb.acb
   %i.day = icmp eq i32 %.sroa.011.1.i.i.i, 0
-  %0 = icmp sgt i8 %i.dbc, -65
   br i1 %i.day, label %bb.aca, label %.backedge.i.i
 
 bb.aca:                                           ; preds = %._crit_edge.i.i.i362
+  %0 = icmp slt i8 %i.dbc, -64
   %i.daz = getelementptr inbounds nuw i8, ptr %i.dae, i64 %i.daw ; 3 uses
   %i.dba = load i8, ptr %i.daz, align 1, !alias.scope !8106, !noalias !8100, !noundef !16
-  %1 = icmp sgt i8 %i.dba, -65
-  br i1 %1, label %.split.i20.i.i.i, label %.backedge.i.i
-
-.split.i20.i.i.i:                                 ; preds = %bb.aca
-  %.not6.i.i.i.i363 = icmp ult i64 %.sroa.015.033.i.i.i, %i.dad
-  br i1 %.not6.i.i.i.i363, label %3, label %.split7.i.i.i.i
-
-.split7.i.i.i.i:                                  ; preds = %.split.i20.i.i.i
-  %2 = icmp eq i64 %.sroa.015.033.i.i.i, %i.dad
-  br i1 %2, label %bb.ace, label %.backedge.i.i
-
-3:                                                ; preds = %.split.i20.i.i.i
-  br i1 %0, label %bb.ace, label %.backedge.i.i
+  %1 = icmp slt i8 %i.dba, -64
+  %brmerge.i.i = or i1 %0, %1
+  br i1 %brmerge.i.i, label %.backedge.i.i, label %bb.ace
 
 .lr.ph.i.i.i361:                                  ; preds = %bb.abz, %bb.acb
   %.sroa.011.034.i.i.i = phi i32 [ %.sroa.011.1.i.i.i, %bb.acb ], [ 1, %bb.abz ] ; 3 uses
-  %.sroa.015.033.i.i.i = phi i64 [ %i.dbd, %bb.acb ], [ %i.daw, %bb.abz ] ; 5 uses
+  %.sroa.015.033.i.i.i = phi i64 [ %i.dbd, %bb.acb ], [ %i.daw, %bb.abz ] ; 3 uses
   %i.dbb = getelementptr inbounds nuw i8, ptr %i.dae, i64 %.sroa.015.033.i.i.i
   %i.dbc = load i8, ptr %i.dbb, align 1, !alias.scope !8107, !noalias !8100, !noundef !16 ; 2 uses
   switch i8 %i.dbc, label %bb.acb [
@@ -340,7 +330,7 @@ bb.acd:                                           ; preds = %.lr.ph.i.i.i361
   %i.dbh = add i32 %.sroa.011.034.i.i.i, -1
   br label %bb.acb
 
-bb.ace:                                           ; preds = %3, %.split7.i.i.i.i
+bb.ace:                                           ; preds = %bb.aca
   %i.dbi = sub nuw i64 %.sroa.015.033.i.i.i, %i.daw ; 3 uses
   %i.dbj = invoke fastcc noundef zeroext i1 @"_ZN55_$LT$$RF$str$u20$as$u20$core..str..pattern..Pattern$GT$15is_contained_in17hbec7160a0e3b1a28E"(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @172, i64 noundef 12, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.daz, i64 noundef %i.dbi)
           to label %.noexc147.i unwind label %.loopexit.split-lp305.loopexit.split-lp.loopexit.split-lp.loopexit.i
@@ -348,8 +338,8 @@ bb.ace:                                           ; preds = %3, %.split7.i.i.i.i
 .noexc147.i:                                      ; preds = %bb.ace
   br i1 %i.dbj, label %bb.acf, label %.backedge.i.i
 
-.backedge.i.i:                                    ; preds = %bb.abx, %.noexc146.i, %.preheader.i.i.i.i.i.i, %bb.abw, %_ZN17openapi_generator33check_struct_fields_have_required17h20fb86d1d3eb91daE.exit.i.i, %7, %.split7.i.i92.i.i, %bb.adl, %._crit_edge.i90.i.i, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11starts_with17h0f473e4ec894617cE.exit.i.i.i", %bb.adk, %bb.adj, %.split.i.i85.i.i, %.noexc152.i, %.noexc148.i, %.noexc147.i, %3, %.split7.i.i.i.i, %bb.aca, %._crit_edge.i.i.i362, %bb.abz, %"_ZN4core3str21_$LT$impl$u20$str$GT$4find17h9ae1945b89879943E.exit.i.i.i", %bb.abu, %.split.i.i.i.i359
-  %.sroa.0.0.be.in.i.i = phi i64 [ %.sroa.051.0.i.i, %_ZN17openapi_generator33check_struct_fields_have_required17h20fb86d1d3eb91daE.exit.i.i ], [ %i.czw, %.noexc152.i ], [ %i.czw, %.noexc147.i ], [ %i.czw, %bb.abw ], [ %i.czw, %.noexc148.i ], [ %i.czw, %bb.adk ], [ %i.czw, %bb.adl ], [ %i.czw, %7 ], [ %i.czw, %bb.adj ], [ %i.czw, %._crit_edge.i90.i.i ], [ %i.czw, %.split7.i.i92.i.i ], [ %i.czw, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11starts_with17h0f473e4ec894617cE.exit.i.i.i" ], [ %i.czw, %.split.i.i85.i.i ], [ %i.czw, %3 ], [ %i.czw, %bb.aca ], [ %i.czw, %.split7.i.i.i.i ], [ %i.czw, %bb.abu ], [ %i.czw, %bb.abz ], [ %i.czw, %._crit_edge.i.i.i362 ], [ %i.czw, %.split.i.i.i.i359 ], [ %i.czw, %"_ZN4core3str21_$LT$impl$u20$str$GT$4find17h9ae1945b89879943E.exit.i.i.i" ], [ %i.czw, %.preheader.i.i.i.i.i.i ], [ %i.czw, %.noexc146.i ], [ %i.czw, %bb.abx ]
+.backedge.i.i:                                    ; preds = %bb.abx, %.noexc146.i, %.preheader.i.i.i.i.i.i, %bb.abw, %_ZN17openapi_generator33check_struct_fields_have_required17h20fb86d1d3eb91daE.exit.i.i, %bb.adl, %._crit_edge.i90.i.i, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11starts_with17h0f473e4ec894617cE.exit.i.i.i", %bb.adk, %bb.adj, %.split.i.i85.i.i, %.noexc152.i, %.noexc148.i, %.noexc147.i, %bb.aca, %._crit_edge.i.i.i362, %bb.abz, %"_ZN4core3str21_$LT$impl$u20$str$GT$4find17h9ae1945b89879943E.exit.i.i.i", %bb.abu, %.split.i.i.i.i359
+  %.sroa.0.0.be.in.i.i = phi i64 [ %.sroa.051.0.i.i, %_ZN17openapi_generator33check_struct_fields_have_required17h20fb86d1d3eb91daE.exit.i.i ], [ %i.czw, %.noexc152.i ], [ %i.czw, %.noexc147.i ], [ %i.czw, %bb.abw ], [ %i.czw, %.noexc148.i ], [ %i.czw, %bb.adl ], [ %i.czw, %bb.aca ], [ %i.czw, %bb.adk ], [ %i.czw, %bb.adj ], [ %i.czw, %._crit_edge.i90.i.i ], [ %i.czw, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11starts_with17h0f473e4ec894617cE.exit.i.i.i" ], [ %i.czw, %.split.i.i85.i.i ], [ %i.czw, %bb.abu ], [ %i.czw, %bb.abz ], [ %i.czw, %._crit_edge.i.i.i362 ], [ %i.czw, %.split.i.i.i.i359 ], [ %i.czw, %"_ZN4core3str21_$LT$impl$u20$str$GT$4find17h9ae1945b89879943E.exit.i.i.i" ], [ %i.czw, %.preheader.i.i.i.i.i.i ], [ %i.czw, %.noexc146.i ], [ %i.czw, %bb.abx ]
   %.sroa.0.0.be.i.i = add i64 %.sroa.0.0.be.in.i.i, 1
   br label %bb.abo
 
@@ -715,7 +705,7 @@ bb.adj:                                           ; preds = %bb.adi
   br i1 %i.dgd, label %bb.adk, label %.backedge.i.i
 
 bb.adk:                                           ; preds = %bb.adj, %.split.i.i85.i.i, %"_ZN4core3str21_$LT$impl$u20$str$GT$4find17h9ae1945b89879943E.exit.i.i"
-  %i.dge = sub nuw i64 %.sroa.8213.0.copyload.i, %.sroa.025.0.i.i ; 4 uses
+  %i.dge = sub nuw i64 %.sroa.8213.0.copyload.i, %.sroa.025.0.i.i ; 2 uses
   %i.dgf = getelementptr inbounds nuw i8, ptr %i.cyv, i64 %.sroa.025.0.i.i ; 3 uses
   %.not.i15.i.i.i = icmp eq i64 %.sroa.8213.0.copyload.i, %.sroa.025.0.i.i
   br i1 %.not.i15.i.i.i, label %.backedge.i.i, label %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11starts_with17h0f473e4ec894617cE.exit.i.i.i"
@@ -729,29 +719,19 @@ bb.adk:                                           ; preds = %bb.adj, %.split.i.i
 
 ._crit_edge.i90.i.i:                              ; preds = %bb.adm
   %i.dgi = icmp eq i32 %.sroa.07.1.i.i.i, 0
-  %4 = icmp sgt i8 %i.dgm, -65
   br i1 %i.dgi, label %bb.adl, label %.backedge.i.i
 
 bb.adl:                                           ; preds = %._crit_edge.i90.i.i
+  %2 = icmp slt i8 %i.dgm, -64
   %i.dgj = getelementptr inbounds nuw i8, ptr %i.dgf, i64 1 ; 2 uses
   %i.dgk = load i8, ptr %i.dgj, align 1, !alias.scope !8121, !noalias !8100, !noundef !16
-  %5 = icmp sgt i8 %i.dgk, -65
-  br i1 %5, label %.split.i17.i.i.i, label %.backedge.i.i
-
-.split.i17.i.i.i:                                 ; preds = %bb.adl
-  %.not6.i.i91.i.i = icmp ult i64 %.sroa.011.024.i.i.i, %i.dge
-  br i1 %.not6.i.i91.i.i, label %7, label %.split7.i.i92.i.i
-
-.split7.i.i92.i.i:                                ; preds = %.split.i17.i.i.i
-  %6 = icmp eq i64 %.sroa.011.024.i.i.i, %i.dge
-  br i1 %6, label %bb.adp, label %.backedge.i.i
-
-7:                                                ; preds = %.split.i17.i.i.i
-  br i1 %4, label %bb.adp, label %.backedge.i.i
+  %3 = icmp slt i8 %i.dgk, -64
+  %brmerge261.i.i = or i1 %2, %3
+  br i1 %brmerge261.i.i, label %.backedge.i.i, label %bb.adp
 
 .lr.ph.i88.i.i:                                   ; preds = %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11starts_with17h0f473e4ec894617cE.exit.i.i.i", %bb.adm
   %.sroa.07.025.i.i.i = phi i32 [ %.sroa.07.1.i.i.i, %bb.adm ], [ 1, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11starts_with17h0f473e4ec894617cE.exit.i.i.i" ] ; 3 uses
-  %.sroa.011.024.i.i.i = phi i64 [ %i.dgn, %bb.adm ], [ 1, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11starts_with17h0f473e4ec894617cE.exit.i.i.i" ] ; 5 uses
+  %.sroa.011.024.i.i.i = phi i64 [ %i.dgn, %bb.adm ], [ 1, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$11starts_with17h0f473e4ec894617cE.exit.i.i.i" ] ; 3 uses
   %i.dgl = getelementptr inbounds nuw i8, ptr %i.dgf, i64 %.sroa.011.024.i.i.i
   %i.dgm = load i8, ptr %i.dgl, align 1, !alias.scope !8120, !noalias !8100, !noundef !16 ; 2 uses
   switch i8 %i.dgm, label %bb.adm [
@@ -785,7 +765,7 @@ bb.ado:                                           ; preds = %.lr.ph.i88.i.i
 .cont2961:                                        ; preds = %.invoke2960
   unreachable
 
-bb.adp:                                           ; preds = %7, %.split7.i.i92.i.i
+bb.adp:                                           ; preds = %bb.adl
   %i.dgv = add i64 %.sroa.011.024.i.i.i, -1       ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !8122)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !8123
