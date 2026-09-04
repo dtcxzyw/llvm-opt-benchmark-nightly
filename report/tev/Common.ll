@@ -205,13 +205,13 @@ _ZNSt3__14findB8ne180100INS_11__wrap_iterIPNS_17basic_string_viewIcNS_11char_tra
   br label %_ZNSt3__16removeB8ne180100INS_11__wrap_iterIPNS_17basic_string_viewIcNS_11char_traitsIcEEEEEEA1_cEET_S9_S9_RKT0_.exit
 
 _ZNSt3__14findB8ne180100INS_11__wrap_iterIPNS_17basic_string_viewIcNS_11char_traitsIcEEEEEEA1_cEET_S9_S9_RKT0_.exit.i: ; preds = %.lr.ph.i.i.i, %bb.z
-  %.0.lcssa.i.i.i = phi ptr [ %i.bt, %bb.z ], [ %.09.i.i.i, %.lr.ph.i.i.i ] ; 4 uses
+  %.0.lcssa.i.i.i = phi ptr [ %i.bt, %bb.z ], [ %.09.i.i.i, %.lr.ph.i.i.i ] ; 2 uses
   %i.cb = ptrtoint ptr %.0.lcssa.i.i.i to i64
   %i.cc = ptrtoint ptr %i.bt to i64               ; 2 uses
   %i.cd = sub i64 %i.cb, %i.cc
-  %i.ce = getelementptr inbounds i8, ptr %i.bt, i64 %i.cd ; 2 uses
+  %i.ce = getelementptr inbounds i8, ptr %i.bt, i64 %i.cd ; 4 uses
   %.not.i = icmp eq ptr %.0.lcssa.i.i.i, %i.bv
-  %i.cf = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 16 ; 2 uses
+  %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 16 ; 2 uses
   %.not1617.i = icmp eq ptr %i.cf, %i.bv
   %or.cond.i = select i1 %.not.i, i1 true, i1 %.not1617.i
   br i1 %or.cond.i, label %_ZNSt3__16removeB8ne180100INS_11__wrap_iterIPNS_17basic_string_viewIcNS_11char_traitsIcEEEEEEA1_cEET_S9_S9_RKT0_.exit, label %.lr.ph.i
@@ -219,7 +219,7 @@ _ZNSt3__14findB8ne180100INS_11__wrap_iterIPNS_17basic_string_viewIcNS_11char_tra
 .lr.ph.i:                                         ; preds = %_ZNSt3__14findB8ne180100INS_11__wrap_iterIPNS_17basic_string_viewIcNS_11char_traitsIcEEEEEEA1_cEET_S9_S9_RKT0_.exit.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i
   %i.cg = phi ptr [ %i.ci, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i ], [ %i.cf, %_ZNSt3__14findB8ne180100INS_11__wrap_iterIPNS_17basic_string_viewIcNS_11char_traitsIcEEEEEEA1_cEET_S9_S9_RKT0_.exit.i ] ; 3 uses
   %.sroa.012.019.i = phi ptr [ %.sroa.012.1.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i ], [ %i.ce, %_ZNSt3__14findB8ne180100INS_11__wrap_iterIPNS_17basic_string_viewIcNS_11char_traitsIcEEEEEEA1_cEET_S9_S9_RKT0_.exit.i ] ; 3 uses
-  %.sroa.06.018.i = phi ptr [ %i.cg, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i ], [ %.0.lcssa.i.i.i, %_ZNSt3__14findB8ne180100INS_11__wrap_iterIPNS_17basic_string_viewIcNS_11char_traitsIcEEEEEEA1_cEET_S9_S9_RKT0_.exit.i ]
+  %.sroa.06.018.i = phi ptr [ %i.cg, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i ], [ %i.ce, %_ZNSt3__14findB8ne180100INS_11__wrap_iterIPNS_17basic_string_viewIcNS_11char_traitsIcEEEEEEA1_cEET_S9_S9_RKT0_.exit.i ]
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.06.018.i, i64 24
   %.sroa.2.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !108
   %.not.i.i56 = icmp eq i64 %.sroa.2.0.copyload.i, 0
@@ -622,14 +622,14 @@ bb.a:
   %i.e = sub i64 %i.c, %i.d
   %i.f = tail call noundef ptr @memchr(ptr noundef %1, i32 noundef 10, i64 noundef %i.e) #35 ; 2 uses
   %.not.not.i.i = icmp eq ptr %i.f, null
-  %spec.select.i.i = select i1 %.not.not.i.i, ptr %2, ptr %i.f ; 4 uses
+  %spec.select.i.i = select i1 %.not.not.i.i, ptr %2, ptr %i.f ; 3 uses
+  %3 = ptrtoint ptr %spec.select.i.i to i64
+  %4 = sub i64 %3, %i.d
+  %5 = getelementptr inbounds i8, ptr %1, i64 %4  ; 2 uses
   %.not = icmp eq ptr %spec.select.i.i, %1
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = ptrtoint ptr %spec.select.i.i to i64
-  %4 = sub i64 %3, %i.d
-  %5 = getelementptr inbounds i8, ptr %1, i64 %4
   %i.g = tail call ptr @_ZNSt3__111basic_regexIcNS_12regex_traitsIcEEE21__parse_basic_reg_expINS_11__wrap_iterIPKcEEEET_S9_S9_(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr %1, ptr nonnull %5) ; 0 uses
   br label %bb.d
 
@@ -648,7 +648,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.not30 = icmp ne ptr %spec.select.i.i, %2
   %spec.select.idx = zext i1 %.not30 to i64
-  %spec.select = getelementptr inbounds nuw i8, ptr %spec.select.i.i, i64 %spec.select.idx ; 3 uses
+  %spec.select = getelementptr inbounds nuw i8, ptr %5, i64 %spec.select.idx ; 3 uses
   %.not3134 = icmp eq ptr %spec.select, %2
   br i1 %.not3134, label %._crit_edge, label %.lr.ph
 
@@ -664,14 +664,14 @@ bb.e:                                             ; preds = %.lr.ph, %bb.h
   %i.p = sub i64 %i.c, %i.o
   %i.q = tail call noundef ptr @memchr(ptr noundef %.sroa.022.135, i32 noundef 10, i64 noundef %i.p) #35 ; 2 uses
   %.not.not.i.i14 = icmp eq ptr %i.q, null
-  %spec.select.i.i15 = select i1 %.not.not.i.i14, ptr %2, ptr %i.q ; 4 uses
+  %spec.select.i.i15 = select i1 %.not.not.i.i14, ptr %2, ptr %i.q ; 3 uses
+  %6 = ptrtoint ptr %spec.select.i.i15 to i64
+  %7 = sub i64 %6, %i.o
+  %8 = getelementptr inbounds i8, ptr %.sroa.022.135, i64 %7 ; 2 uses
   %.not32 = icmp eq ptr %spec.select.i.i15, %.sroa.022.135
   br i1 %.not32, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %6 = ptrtoint ptr %spec.select.i.i15 to i64
-  %7 = sub i64 %6, %i.o
-  %8 = getelementptr inbounds i8, ptr %.sroa.022.135, i64 %7
   %i.r = tail call ptr @_ZNSt3__111basic_regexIcNS_12regex_traitsIcEEE21__parse_basic_reg_expINS_11__wrap_iterIPKcEEEET_S9_S9_(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr %.sroa.022.135, ptr nonnull %8) ; 0 uses
   br label %bb.h
 
@@ -720,7 +720,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   store ptr %i.an, ptr %i.a, align 8, !tbaa !327
   %.not33 = icmp ne ptr %spec.select.i.i15, %2
   %spec.select29.idx = zext i1 %.not33 to i64
-  %spec.select29 = getelementptr inbounds nuw i8, ptr %spec.select.i.i15, i64 %spec.select29.idx ; 3 uses
+  %spec.select29 = getelementptr inbounds nuw i8, ptr %8, i64 %spec.select29.idx ; 3 uses
   %.not31 = icmp eq ptr %spec.select29, %2
   br i1 %.not31, label %._crit_edge, label %bb.e, !llvm.loop !1077
 
@@ -739,14 +739,14 @@ bb.a:
   %i.e = sub i64 %i.c, %i.d
   %i.f = tail call noundef ptr @memchr(ptr noundef %1, i32 noundef 10, i64 noundef %i.e) #35 ; 2 uses
   %.not.not.i.i = icmp eq ptr %i.f, null
-  %spec.select.i.i = select i1 %.not.not.i.i, ptr %2, ptr %i.f ; 4 uses
+  %spec.select.i.i = select i1 %.not.not.i.i, ptr %2, ptr %i.f ; 3 uses
+  %3 = ptrtoint ptr %spec.select.i.i to i64
+  %4 = sub i64 %3, %i.d
+  %5 = getelementptr inbounds i8, ptr %1, i64 %4  ; 2 uses
   %.not = icmp eq ptr %spec.select.i.i, %1
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = ptrtoint ptr %spec.select.i.i to i64
-  %4 = sub i64 %3, %i.d
-  %5 = getelementptr inbounds i8, ptr %1, i64 %4
   %i.g = tail call ptr @_ZNSt3__111basic_regexIcNS_12regex_traitsIcEEE24__parse_extended_reg_expINS_11__wrap_iterIPKcEEEET_S9_S9_(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr %1, ptr nonnull %5) ; 0 uses
   br label %bb.d
 
@@ -765,7 +765,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.not30 = icmp ne ptr %spec.select.i.i, %2
   %spec.select.idx = zext i1 %.not30 to i64
-  %spec.select = getelementptr inbounds nuw i8, ptr %spec.select.i.i, i64 %spec.select.idx ; 3 uses
+  %spec.select = getelementptr inbounds nuw i8, ptr %5, i64 %spec.select.idx ; 3 uses
   %.not3134 = icmp eq ptr %spec.select, %2
   br i1 %.not3134, label %._crit_edge, label %.lr.ph
 
@@ -781,14 +781,14 @@ bb.e:                                             ; preds = %.lr.ph, %bb.h
   %i.p = sub i64 %i.c, %i.o
   %i.q = tail call noundef ptr @memchr(ptr noundef %.sroa.022.135, i32 noundef 10, i64 noundef %i.p) #35 ; 2 uses
   %.not.not.i.i14 = icmp eq ptr %i.q, null
-  %spec.select.i.i15 = select i1 %.not.not.i.i14, ptr %2, ptr %i.q ; 4 uses
+  %spec.select.i.i15 = select i1 %.not.not.i.i14, ptr %2, ptr %i.q ; 3 uses
+  %6 = ptrtoint ptr %spec.select.i.i15 to i64
+  %7 = sub i64 %6, %i.o
+  %8 = getelementptr inbounds i8, ptr %.sroa.022.135, i64 %7 ; 2 uses
   %.not32 = icmp eq ptr %spec.select.i.i15, %.sroa.022.135
   br i1 %.not32, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %6 = ptrtoint ptr %spec.select.i.i15 to i64
-  %7 = sub i64 %6, %i.o
-  %8 = getelementptr inbounds i8, ptr %.sroa.022.135, i64 %7
   %i.r = tail call ptr @_ZNSt3__111basic_regexIcNS_12regex_traitsIcEEE24__parse_extended_reg_expINS_11__wrap_iterIPKcEEEET_S9_S9_(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr %.sroa.022.135, ptr nonnull %8) ; 0 uses
   br label %bb.h
 
@@ -837,7 +837,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   store ptr %i.an, ptr %i.a, align 8, !tbaa !327
   %.not33 = icmp ne ptr %spec.select.i.i15, %2
   %spec.select29.idx = zext i1 %.not33 to i64
-  %spec.select29 = getelementptr inbounds nuw i8, ptr %spec.select.i.i15, i64 %spec.select29.idx ; 3 uses
+  %spec.select29 = getelementptr inbounds nuw i8, ptr %8, i64 %spec.select29.idx ; 3 uses
   %.not31 = icmp eq ptr %spec.select29, %2
   br i1 %.not31, label %._crit_edge, label %bb.e, !llvm.loop !1078
 

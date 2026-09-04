@@ -204,9 +204,9 @@ bb.bj:                                            ; preds = %bb.bi
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !25
   %i.eo = getelementptr inbounds nuw i8, ptr %i.el, i64 1048
   %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !24
-  %i.eq = ptrtoint ptr %i.ep to i64
-  %i.er = ptrtoint ptr %i.en to i64
-  %i.es = sub i64 %i.eq, %i.er
+  %i.eq = ptrtoint ptr %i.en to i64
+  %i.er = ptrtoint ptr %i.ep to i64
+  %i.es = sub i64 %i.er, %i.eq
   %i.et = ashr exact i64 %i.es, 2
   %.not = icmp eq i64 %i.ej, %i.et
   br i1 %.not, label %bb.bx, label %bb.bk
@@ -609,9 +609,9 @@ bb.e:                                             ; preds = %bb.a, %.noexc.i
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !25   ; 6 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 1048
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !24
-  %i.aa = ptrtoint ptr %i.z to i64
-  %i.ab = ptrtoint ptr %i.x to i64                ; 2 uses
-  %i.ac = sub i64 %i.aa, %i.ab                    ; 2 uses
+  %i.aa = ptrtoint ptr %i.x to i64                ; 2 uses
+  %i.ab = ptrtoint ptr %i.z to i64
+  %i.ac = sub i64 %i.ab, %i.aa                    ; 2 uses
   %i.ad = ashr exact i64 %i.ac, 2                 ; 10 uses
   %i.ae = icmp sgt i64 %i.ad, 0
   br i1 %i.ae, label %iter.check, label %_ZSt4copyIN3gmx12ArrayRefIterIKfEEPfET0_T_S6_S5_.exit
@@ -619,7 +619,7 @@ bb.e:                                             ; preds = %bb.a, %.noexc.i
 iter.check:                                       ; preds = %bb.e
   %i.af = ptrtoaddr ptr %i.r to i64
   %min.iters.check = icmp ult i64 %i.ad, 8
-  %i.ag = sub i64 %i.ab, %i.af
+  %i.ag = sub i64 %i.aa, %i.af
   %diff.check = icmp ugt i64 %i.ag, -128
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check

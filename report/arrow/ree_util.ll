@@ -202,27 +202,24 @@ _ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i.i: ; pr
 
 _ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit.i.i.i: ; preds = %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i.i, %bb.b
   %.011.lcssa.i.i.i.i.i.i = phi ptr [ %i.q, %bb.b ], [ %.112.i.i.i.i.i.i, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i.i ]
-  %1 = ptrtoint ptr %i.q to i64
-  %i.aa = ptrtoint ptr %.011.lcssa.i.i.i.i.i.i to i64 ; 3 uses
-  %2 = sub i64 %i.aa, %1                          ; 2 uses
+  %i.aa = ptrtoint ptr %.011.lcssa.i.i.i.i.i.i to i64 ; 2 uses
   %i.ab = icmp eq i64 %i.m, 0
   br i1 %i.ab, label %_ZN5arrow8ree_util8internal18FindPhysicalLengthIsEElRKNS_9ArraySpanE.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit.i.i.i
+  %1 = ptrtoint ptr %i.q to i64
+  %2 = sub i64 %i.aa, %1                          ; 2 uses
   %i.ac = ashr exact i64 %2, 1
+  %3 = getelementptr inbounds i8, ptr %i.q, i64 %2 ; 2 uses
   %i.ad = sub nsw i64 %i.k, %i.ac                 ; 2 uses
   %i.ae = add nsw i64 %i.m, -1
   %i.af = add nsw i64 %i.ae, %i.o
   %i.ag = icmp sgt i64 %i.ad, 0
-  br i1 %i.ag, label %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i.i.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.i.i.i
+  br i1 %i.ag, label %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.i.i.i
 
-_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i.i.i: ; preds = %bb.c
-  %3 = getelementptr inbounds i8, ptr %i.q, i64 %2
-  br label %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i
-
-_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i: ; preds = %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i.i.i
-  %.017.i.i.i10.i.i.i = phi i64 [ %.1.i.i.i15.i.i.i, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i ], [ %i.ad, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i.i.i ] ; 2 uses
-  %.01116.i.i.i11.i.i.i = phi ptr [ %.112.i.i.i14.i.i.i, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i ], [ %3, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i.i.i ] ; 2 uses
+_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i: ; preds = %bb.c, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i
+  %.017.i.i.i10.i.i.i = phi i64 [ %.1.i.i.i15.i.i.i, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i ], [ %i.ad, %bb.c ] ; 2 uses
+  %.01116.i.i.i11.i.i.i = phi ptr [ %.112.i.i.i14.i.i.i, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i ], [ %3, %bb.c ] ; 2 uses
   %i.ah = lshr i64 %.017.i.i.i10.i.i.i, 1         ; 3 uses
   %i.ai = getelementptr inbounds nuw [2 x i8], ptr %.01116.i.i.i11.i.i.i, i64 %i.ah ; 2 uses
   %i.aj = load i16, ptr %i.ai, align 2, !tbaa !63
@@ -234,15 +231,12 @@ _ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i: ; p
   %.112.i.i.i14.i.i.i = select i1 %i.al, ptr %.01116.i.i.i11.i.i.i, ptr %i.am ; 2 uses
   %.1.i.i.i15.i.i.i = select i1 %i.al, i64 %i.ah, i64 %i.ao ; 2 uses
   %i.ap = icmp sgt i64 %.1.i.i.i15.i.i.i, 0
-  br i1 %i.ap, label %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.loopexit.i.i.i, !llvm.loop !0
+  br i1 %i.ap, label %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.i.i.i, !llvm.loop !0
 
-_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.loopexit.i.i.i: ; preds = %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i
-  %4 = ptrtoint ptr %.112.i.i.i14.i.i.i to i64
-  br label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.i.i.i
-
-_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.i.i.i: ; preds = %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.loopexit.i.i.i, %bb.c
-  %.011.lcssa.i.i.i8.i.i.i = phi i64 [ %i.aa, %bb.c ], [ %4, %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.loopexit.i.i.i ]
-  %i.aq = sub i64 %.011.lcssa.i.i.i8.i.i.i, %i.aa
+_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.i.i.i: ; preds = %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i, %bb.c
+  %.011.lcssa.i.i.i8.i.i.i = phi ptr [ %3, %bb.c ], [ %.112.i.i.i14.i.i.i, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i ]
+  %4 = ptrtoint ptr %.011.lcssa.i.i.i8.i.i.i to i64
+  %i.aq = sub i64 %4, %i.aa
   %i.ar = ashr exact i64 %i.aq, 1
   %i.as = add nsw i64 %i.ar, 1
   br label %_ZN5arrow8ree_util8internal18FindPhysicalLengthIsEElRKNS_9ArraySpanE.exit
@@ -269,27 +263,24 @@ _ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i.i: ; pr
 
 _ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit.i.i.i: ; preds = %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i.i, %bb.d
   %.011.lcssa.i.i.i.i.i.i7 = phi ptr [ %i.at, %bb.d ], [ %.112.i.i.i.i.i.i20, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i.i ]
-  %5 = ptrtoint ptr %i.at to i64
-  %i.bd = ptrtoint ptr %.011.lcssa.i.i.i.i.i.i7 to i64 ; 3 uses
-  %6 = sub i64 %i.bd, %5                          ; 2 uses
+  %i.bd = ptrtoint ptr %.011.lcssa.i.i.i.i.i.i7 to i64 ; 2 uses
   %i.be = icmp eq i64 %i.m, 0
   br i1 %i.be, label %_ZN5arrow8ree_util8internal18FindPhysicalLengthIsEElRKNS_9ArraySpanE.exit, label %bb.e
 
 bb.e:                                             ; preds = %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit.i.i.i
+  %5 = ptrtoint ptr %i.at to i64
+  %6 = sub i64 %i.bd, %5                          ; 2 uses
   %i.bf = ashr exact i64 %6, 2
+  %7 = getelementptr inbounds i8, ptr %i.at, i64 %6 ; 2 uses
   %i.bg = sub nsw i64 %i.k, %i.bf                 ; 2 uses
   %i.bh = add nsw i64 %i.m, -1
   %i.bi = add nsw i64 %i.bh, %i.o
   %i.bj = icmp sgt i64 %i.bg, 0
-  br i1 %i.bj, label %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i.i.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.i.i.i
+  br i1 %i.bj, label %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.i.i.i
 
-_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i.i.i: ; preds = %bb.e
-  %7 = getelementptr inbounds i8, ptr %i.at, i64 %6
-  br label %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i
-
-_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i: ; preds = %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i.i.i
-  %.017.i.i.i10.i.i.i10 = phi i64 [ %.1.i.i.i15.i.i.i15, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i ], [ %i.bg, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i.i.i ] ; 2 uses
-  %.01116.i.i.i11.i.i.i11 = phi ptr [ %.112.i.i.i14.i.i.i14, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i ], [ %7, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i.i.i ] ; 2 uses
+_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i: ; preds = %bb.e, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i
+  %.017.i.i.i10.i.i.i10 = phi i64 [ %.1.i.i.i15.i.i.i15, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i ], [ %i.bg, %bb.e ] ; 2 uses
+  %.01116.i.i.i11.i.i.i11 = phi ptr [ %.112.i.i.i14.i.i.i14, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i ], [ %7, %bb.e ] ; 2 uses
   %i.bk = lshr i64 %.017.i.i.i10.i.i.i10, 1       ; 3 uses
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %.01116.i.i.i11.i.i.i11, i64 %i.bk ; 2 uses
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !9
@@ -301,15 +292,12 @@ _ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i: ; p
   %.112.i.i.i14.i.i.i14 = select i1 %i.bo, ptr %.01116.i.i.i11.i.i.i11, ptr %i.bp ; 2 uses
   %.1.i.i.i15.i.i.i15 = select i1 %i.bo, i64 %i.bk, i64 %i.br ; 2 uses
   %i.bs = icmp sgt i64 %.1.i.i.i15.i.i.i15, 0
-  br i1 %i.bs, label %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.loopexit.i.i.i, !llvm.loop !1
+  br i1 %i.bs, label %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.i.i.i, !llvm.loop !1
 
-_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.loopexit.i.i.i: ; preds = %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i
-  %8 = ptrtoint ptr %.112.i.i.i14.i.i.i14 to i64
-  br label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.i.i.i
-
-_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.i.i.i: ; preds = %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.loopexit.i.i.i, %bb.e
-  %.011.lcssa.i.i.i8.i.i.i8 = phi i64 [ %i.bd, %bb.e ], [ %8, %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.loopexit.i.i.i ]
-  %i.bt = sub i64 %.011.lcssa.i.i.i8.i.i.i8, %i.bd
+_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.i.i.i: ; preds = %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i, %bb.e
+  %.011.lcssa.i.i.i8.i.i.i8 = phi ptr [ %7, %bb.e ], [ %.112.i.i.i14.i.i.i14, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i ]
+  %8 = ptrtoint ptr %.011.lcssa.i.i.i8.i.i.i8 to i64
+  %i.bt = sub i64 %8, %i.bd
   %i.bu = ashr exact i64 %i.bt, 2
   %i.bv = add nsw i64 %i.bu, 1
   br label %_ZN5arrow8ree_util8internal18FindPhysicalLengthIsEElRKNS_9ArraySpanE.exit
@@ -335,27 +323,24 @@ _ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i.i: ; pr
 
 _ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit.i.i.i: ; preds = %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i.i, %bb.f
   %.011.lcssa.i.i.i.i.i.i22 = phi ptr [ %i.bw, %bb.f ], [ %.112.i.i.i.i.i.i35, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i.i.i ]
-  %9 = ptrtoint ptr %i.bw to i64
-  %i.cf = ptrtoint ptr %.011.lcssa.i.i.i.i.i.i22 to i64 ; 3 uses
-  %10 = sub i64 %i.cf, %9                         ; 2 uses
+  %i.cf = ptrtoint ptr %.011.lcssa.i.i.i.i.i.i22 to i64 ; 2 uses
   %i.cg = icmp eq i64 %i.m, 0
   br i1 %i.cg, label %_ZN5arrow8ree_util8internal18FindPhysicalLengthIsEElRKNS_9ArraySpanE.exit, label %bb.g
 
 bb.g:                                             ; preds = %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit.i.i.i
+  %9 = ptrtoint ptr %i.bw to i64
+  %10 = sub i64 %i.cf, %9                         ; 2 uses
   %i.ch = ashr exact i64 %10, 3
+  %11 = getelementptr inbounds i8, ptr %i.bw, i64 %10 ; 2 uses
   %i.ci = sub nsw i64 %i.k, %i.ch                 ; 2 uses
   %i.cj = add nsw i64 %i.m, -1
   %i.ck = add nsw i64 %i.cj, %i.o
   %i.cl = icmp sgt i64 %i.ci, 0
-  br i1 %i.cl, label %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i.i.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.i.i.i
+  br i1 %i.cl, label %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.i.i.i
 
-_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i.i.i: ; preds = %bb.g
-  %11 = getelementptr inbounds i8, ptr %i.bw, i64 %10
-  br label %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i
-
-_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i: ; preds = %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i.i.i
-  %.017.i.i.i10.i.i.i25 = phi i64 [ %.1.i.i.i15.i.i.i30, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i ], [ %i.ci, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i.i.i ] ; 2 uses
-  %.01116.i.i.i11.i.i.i26 = phi ptr [ %.112.i.i.i14.i.i.i29, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i ], [ %11, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i.i.i ] ; 2 uses
+_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i: ; preds = %bb.g, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i
+  %.017.i.i.i10.i.i.i25 = phi i64 [ %.1.i.i.i15.i.i.i30, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i ], [ %i.ci, %bb.g ] ; 2 uses
+  %.01116.i.i.i11.i.i.i26 = phi ptr [ %.112.i.i.i14.i.i.i29, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i ], [ %11, %bb.g ] ; 2 uses
   %i.cm = lshr i64 %.017.i.i.i10.i.i.i25, 1       ; 3 uses
   %i.cn = getelementptr inbounds nuw [8 x i8], ptr %.01116.i.i.i11.i.i.i26, i64 %i.cm ; 2 uses
   %i.co = load i64, ptr %i.cn, align 8, !tbaa !66
@@ -366,15 +351,12 @@ _ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i: ; p
   %.112.i.i.i14.i.i.i29 = select i1 %i.cp, ptr %.01116.i.i.i11.i.i.i26, ptr %i.cq ; 2 uses
   %.1.i.i.i15.i.i.i30 = select i1 %i.cp, i64 %i.cm, i64 %i.cs ; 2 uses
   %i.ct = icmp sgt i64 %.1.i.i.i15.i.i.i30, 0
-  br i1 %i.ct, label %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.loopexit.i.i.i, !llvm.loop !2
+  br i1 %i.ct, label %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.i.i.i, !llvm.loop !2
 
-_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.loopexit.i.i.i: ; preds = %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i
-  %12 = ptrtoint ptr %.112.i.i.i14.i.i.i29 to i64
-  br label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.i.i.i
-
-_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.i.i.i: ; preds = %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.loopexit.i.i.i, %bb.g
-  %.011.lcssa.i.i.i8.i.i.i23 = phi i64 [ %i.cf, %bb.g ], [ %12, %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.loopexit.i.i.i ]
-  %i.cu = sub i64 %.011.lcssa.i.i.i8.i.i.i23, %i.cf
+_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.i.i.i: ; preds = %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i, %bb.g
+  %.011.lcssa.i.i.i8.i.i.i23 = phi ptr [ %11, %bb.g ], [ %.112.i.i.i14.i.i.i29, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i.i.i ]
+  %12 = ptrtoint ptr %.011.lcssa.i.i.i8.i.i.i23 to i64
+  %i.cu = sub i64 %12, %i.cf
   %i.cv = ashr exact i64 %i.cu, 3
   %i.cw = add nsw i64 %i.cv, 1
   br label %_ZN5arrow8ree_util8internal18FindPhysicalLengthIsEElRKNS_9ArraySpanE.exit
@@ -427,26 +409,23 @@ _ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i: ; preds 
 _ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit.i: ; preds = %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i, %bb.b
   %.011.lcssa.i.i.i.i = phi ptr [ %i.m, %bb.b ], [ %.112.i.i.i.i, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i ]
   %i.w = ptrtoint ptr %i.m to i64
-  %i.x = ptrtoint ptr %.011.lcssa.i.i.i.i to i64  ; 3 uses
+  %i.x = ptrtoint ptr %.011.lcssa.i.i.i.i to i64  ; 2 uses
   %i.y = sub i64 %i.x, %i.w                       ; 2 uses
   %i.z = ashr exact i64 %i.y, 1                   ; 3 uses
   %i.aa = icmp eq i64 %2, 0
   br i1 %i.aa, label %_ZN5arrow8ree_util8internal17FindPhysicalRangeIsEESt4pairIllEPKT_lll.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit.i
+  %3 = getelementptr inbounds i8, ptr %i.m, i64 %i.y ; 2 uses
   %i.ab = sub nsw i64 %i.k, %i.z                  ; 2 uses
   %i.ac = add i64 %1, -1
   %i.ad = add i64 %i.ac, %2
   %i.ae = icmp sgt i64 %i.ab, 0
-  br i1 %i.ae, label %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.i
+  br i1 %i.ae, label %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.i
 
-_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i: ; preds = %bb.c
-  %3 = getelementptr inbounds i8, ptr %i.m, i64 %i.y
-  br label %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i
-
-_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i: ; preds = %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i
-  %.017.i.i.i10.i = phi i64 [ %.1.i.i.i15.i, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i ], [ %i.ab, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i ] ; 2 uses
-  %.01116.i.i.i11.i = phi ptr [ %.112.i.i.i14.i, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i ], [ %3, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i ] ; 2 uses
+_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i: ; preds = %bb.c, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i
+  %.017.i.i.i10.i = phi i64 [ %.1.i.i.i15.i, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i ], [ %i.ab, %bb.c ] ; 2 uses
+  %.01116.i.i.i11.i = phi ptr [ %.112.i.i.i14.i, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i ], [ %3, %bb.c ] ; 2 uses
   %i.af = lshr i64 %.017.i.i.i10.i, 1             ; 3 uses
   %i.ag = getelementptr inbounds nuw [2 x i8], ptr %.01116.i.i.i11.i, i64 %i.af ; 2 uses
   %i.ah = load i16, ptr %i.ag, align 2, !tbaa !63
@@ -458,15 +437,12 @@ _ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i: ; preds
   %.112.i.i.i14.i = select i1 %i.aj, ptr %.01116.i.i.i11.i, ptr %i.ak ; 2 uses
   %.1.i.i.i15.i = select i1 %i.aj, i64 %i.af, i64 %i.am ; 2 uses
   %i.an = icmp sgt i64 %.1.i.i.i15.i, 0
-  br i1 %i.an, label %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.loopexit.i, !llvm.loop !0
+  br i1 %i.an, label %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.i, !llvm.loop !0
 
-_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.loopexit.i: ; preds = %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i
-  %4 = ptrtoint ptr %.112.i.i.i14.i to i64
-  br label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.i
-
-_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.i: ; preds = %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.loopexit.i, %bb.c
-  %.011.lcssa.i.i.i8.i = phi i64 [ %i.x, %bb.c ], [ %4, %_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.loopexit.i ]
-  %i.ao = sub i64 %.011.lcssa.i.i.i8.i, %i.x
+_ZN5arrow8ree_util8internal17FindPhysicalIndexIsEElPKT_lll.exit16.i: ; preds = %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i, %bb.c
+  %.011.lcssa.i.i.i8.i = phi ptr [ %3, %bb.c ], [ %.112.i.i.i14.i, %_ZSt9__advanceIPKslEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i ]
+  %4 = ptrtoint ptr %.011.lcssa.i.i.i8.i to i64
+  %i.ao = sub i64 %4, %i.x
   %i.ap = ashr exact i64 %i.ao, 1
   %i.aq = add nsw i64 %i.ap, 1
   br label %_ZN5arrow8ree_util8internal17FindPhysicalRangeIsEESt4pairIllEPKT_lll.exit
@@ -494,26 +470,23 @@ _ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i: ; preds 
 _ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit.i: ; preds = %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i, %bb.d
   %.011.lcssa.i.i.i.i19 = phi ptr [ %i.ar, %bb.d ], [ %.112.i.i.i.i34, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i ]
   %i.bb = ptrtoint ptr %i.ar to i64
-  %i.bc = ptrtoint ptr %.011.lcssa.i.i.i.i19 to i64 ; 3 uses
+  %i.bc = ptrtoint ptr %.011.lcssa.i.i.i.i19 to i64 ; 2 uses
   %i.bd = sub i64 %i.bc, %i.bb                    ; 2 uses
   %i.be = ashr exact i64 %i.bd, 2                 ; 3 uses
   %i.bf = icmp eq i64 %2, 0
   br i1 %i.bf, label %_ZN5arrow8ree_util8internal17FindPhysicalRangeIsEESt4pairIllEPKT_lll.exit, label %bb.e
 
 bb.e:                                             ; preds = %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit.i
+  %5 = getelementptr inbounds i8, ptr %i.ar, i64 %i.bd ; 2 uses
   %i.bg = sub nsw i64 %i.k, %i.be                 ; 2 uses
   %i.bh = add i64 %1, -1
   %i.bi = add i64 %i.bh, %2
   %i.bj = icmp sgt i64 %i.bg, 0
-  br i1 %i.bj, label %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.i
+  br i1 %i.bj, label %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.i
 
-_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i: ; preds = %bb.e
-  %5 = getelementptr inbounds i8, ptr %i.ar, i64 %i.bd
-  br label %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i
-
-_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i: ; preds = %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i
-  %.017.i.i.i10.i24 = phi i64 [ %.1.i.i.i15.i29, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i ], [ %i.bg, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i ] ; 2 uses
-  %.01116.i.i.i11.i25 = phi ptr [ %.112.i.i.i14.i28, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i ], [ %5, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i ] ; 2 uses
+_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i: ; preds = %bb.e, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i
+  %.017.i.i.i10.i24 = phi i64 [ %.1.i.i.i15.i29, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i ], [ %i.bg, %bb.e ] ; 2 uses
+  %.01116.i.i.i11.i25 = phi ptr [ %.112.i.i.i14.i28, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i ], [ %5, %bb.e ] ; 2 uses
   %i.bk = lshr i64 %.017.i.i.i10.i24, 1           ; 3 uses
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %.01116.i.i.i11.i25, i64 %i.bk ; 2 uses
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !9
@@ -525,15 +498,12 @@ _ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i: ; preds
   %.112.i.i.i14.i28 = select i1 %i.bo, ptr %.01116.i.i.i11.i25, ptr %i.bp ; 2 uses
   %.1.i.i.i15.i29 = select i1 %i.bo, i64 %i.bk, i64 %i.br ; 2 uses
   %i.bs = icmp sgt i64 %.1.i.i.i15.i29, 0
-  br i1 %i.bs, label %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.loopexit.i, !llvm.loop !1
+  br i1 %i.bs, label %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.i, !llvm.loop !1
 
-_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.loopexit.i: ; preds = %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i
-  %6 = ptrtoint ptr %.112.i.i.i14.i28 to i64
-  br label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.i
-
-_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.i: ; preds = %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.loopexit.i, %bb.e
-  %.011.lcssa.i.i.i8.i20 = phi i64 [ %i.bc, %bb.e ], [ %6, %_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.loopexit.i ]
-  %i.bt = sub i64 %.011.lcssa.i.i.i8.i20, %i.bc
+_ZN5arrow8ree_util8internal17FindPhysicalIndexIiEElPKT_lll.exit16.i: ; preds = %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i, %bb.e
+  %.011.lcssa.i.i.i8.i20 = phi ptr [ %5, %bb.e ], [ %.112.i.i.i14.i28, %_ZSt9__advanceIPKilEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i ]
+  %6 = ptrtoint ptr %.011.lcssa.i.i.i8.i20 to i64
+  %i.bt = sub i64 %6, %i.bc
   %i.bu = ashr exact i64 %i.bt, 2
   %i.bv = add nsw i64 %i.bu, 1
   br label %_ZN5arrow8ree_util8internal17FindPhysicalRangeIsEESt4pairIllEPKT_lll.exit
@@ -560,26 +530,23 @@ _ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i: ; preds 
 _ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit.i: ; preds = %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i, %bb.f
   %.011.lcssa.i.i.i.i36 = phi ptr [ %i.bw, %bb.f ], [ %.112.i.i.i.i51, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i ]
   %i.cf = ptrtoint ptr %i.bw to i64
-  %i.cg = ptrtoint ptr %.011.lcssa.i.i.i.i36 to i64 ; 3 uses
+  %i.cg = ptrtoint ptr %.011.lcssa.i.i.i.i36 to i64 ; 2 uses
   %i.ch = sub i64 %i.cg, %i.cf                    ; 2 uses
   %i.ci = ashr exact i64 %i.ch, 3                 ; 3 uses
   %i.cj = icmp eq i64 %2, 0
   br i1 %i.cj, label %_ZN5arrow8ree_util8internal17FindPhysicalRangeIsEESt4pairIllEPKT_lll.exit, label %bb.g
 
 bb.g:                                             ; preds = %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit.i
+  %7 = getelementptr inbounds i8, ptr %i.bw, i64 %i.ch ; 2 uses
   %i.ck = sub nsw i64 %i.k, %i.ci                 ; 2 uses
   %i.cl = add i64 %1, -1
   %i.cm = add i64 %i.cl, %2
   %i.cn = icmp sgt i64 %i.ck, 0
-  br i1 %i.cn, label %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.i
+  br i1 %i.cn, label %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.i
 
-_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i: ; preds = %bb.g
-  %7 = getelementptr inbounds i8, ptr %i.bw, i64 %i.ch
-  br label %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i
-
-_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i: ; preds = %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i
-  %.017.i.i.i10.i41 = phi i64 [ %.1.i.i.i15.i46, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i ], [ %i.ck, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i ] ; 2 uses
-  %.01116.i.i.i11.i42 = phi ptr [ %.112.i.i.i14.i45, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i ], [ %7, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.preheader.i ] ; 2 uses
+_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i: ; preds = %bb.g, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i
+  %.017.i.i.i10.i41 = phi i64 [ %.1.i.i.i15.i46, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i ], [ %i.ck, %bb.g ] ; 2 uses
+  %.01116.i.i.i11.i42 = phi ptr [ %.112.i.i.i14.i45, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i ], [ %7, %bb.g ] ; 2 uses
   %i.co = lshr i64 %.017.i.i.i10.i41, 1           ; 3 uses
   %i.cp = getelementptr inbounds nuw [8 x i8], ptr %.01116.i.i.i11.i42, i64 %i.co ; 2 uses
   %i.cq = load i64, ptr %i.cp, align 8, !tbaa !66
@@ -590,15 +557,12 @@ _ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i: ; preds
   %.112.i.i.i14.i45 = select i1 %i.cr, ptr %.01116.i.i.i11.i42, ptr %i.cs ; 2 uses
   %.1.i.i.i15.i46 = select i1 %i.cr, i64 %i.co, i64 %i.cu ; 2 uses
   %i.cv = icmp sgt i64 %.1.i.i.i15.i46, 0
-  br i1 %i.cv, label %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.loopexit.i, !llvm.loop !2
+  br i1 %i.cv, label %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i, label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.i, !llvm.loop !2
 
-_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.loopexit.i: ; preds = %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i
-  %8 = ptrtoint ptr %.112.i.i.i14.i45 to i64
-  br label %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.i
-
-_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.i: ; preds = %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.loopexit.i, %bb.g
-  %.011.lcssa.i.i.i8.i37 = phi i64 [ %i.cg, %bb.g ], [ %8, %_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.loopexit.i ]
-  %i.cw = sub i64 %.011.lcssa.i.i.i8.i37, %i.cg
+_ZN5arrow8ree_util8internal17FindPhysicalIndexIlEElPKT_lll.exit16.i: ; preds = %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i, %bb.g
+  %.011.lcssa.i.i.i8.i37 = phi ptr [ %7, %bb.g ], [ %.112.i.i.i14.i45, %_ZSt9__advanceIPKllEvRT_T0_St26random_access_iterator_tag.exit.i.i.i9.i ]
+  %8 = ptrtoint ptr %.011.lcssa.i.i.i8.i37 to i64
+  %i.cw = sub i64 %8, %i.cg
   %i.cx = ashr exact i64 %i.cw, 3
   %i.cy = add nsw i64 %i.cx, 1
   br label %_ZN5arrow8ree_util8internal17FindPhysicalRangeIsEESt4pairIllEPKT_lll.exit

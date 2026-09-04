@@ -205,9 +205,7 @@ _ZN3gmx9BiasState21resetLocalUpdateRangeERKNS_8BiasGridE.exit: ; preds = %scalar
   %i.ic = load i32, ptr %i.ib, align 4, !tbaa !119 ; 2 uses
   %i.id = load ptr, ptr %9, align 8, !tbaa !123   ; 10 uses
   %i.ie = load ptr, ptr %i.ar, align 8, !tbaa !122 ; 4 uses
-  %15 = ptrtoint ptr %i.ie to i64
   %i.if = ptrtoint ptr %i.id to i64
-  %16 = sub i64 %15, %i.if                        ; 4 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 2 uses
   %.not65.i = icmp eq ptr %i.id, %i.ie            ; 2 uses
   br i1 %.not65.i, label %._crit_edge.i95, label %.lr.ph.i91
@@ -236,6 +234,8 @@ _ZN3gmx9BiasState21resetLocalUpdateRangeERKNS_8BiasGridE.exit: ; preds = %scalar
   br i1 %.not.i92, label %._crit_edge.thread.i, label %.lr.ph.i91
 
 bb.x:                                             ; preds = %._crit_edge.thread.i, %._crit_edge.i95
+  %15 = ptrtoint ptr %i.ie to i64
+  %16 = sub i64 %15, %i.if                        ; 4 uses
   %i.is = ashr exact i64 %16, 2                   ; 6 uses
   %i.it = ashr exact i64 %16, 1
   call void @_ZNSt6vectorIdN3gmx30DefaultInitializationAllocatorIdSaIdEEEE6resizeEm(ptr noundef nonnull align 8 dereferenceable(24) %i.ig, i64 noundef %i.it)
@@ -455,9 +455,9 @@ _ZN3gmx12_GLOBAL__N_113sumHistogramsENS_8ArrayRefINS_10PointStateEEENS1_IdEEiPKN
   br i1 %i.ns, label %_ZN3gmx12_GLOBAL__N_16sumPmfENS_8ArrayRefINS_10PointStateEEEiPKNS_11BiasSharingEi.exit, label %bb.z
 
 bb.z:                                             ; preds = %_ZN3gmx12_GLOBAL__N_113sumHistogramsENS_8ArrayRefINS_10PointStateEEENS1_IdEEiPKNS_11BiasSharingEiNS1_IKiEEPSt6vectorIdNS_30DefaultInitializationAllocatorIdSaIdEEEE.exit
-  %i.nt = ptrtoint ptr %i.no to i64
-  %i.nu = ptrtoint ptr %i.nn to i64
-  %i.nv = sub i64 %i.nt, %i.nu
+  %i.nt = ptrtoint ptr %i.nn to i64
+  %i.nu = ptrtoint ptr %i.no to i64
+  %i.nv = sub i64 %i.nu, %i.nt
   %i.nw = sdiv exact i64 %i.nv, 96                ; 5 uses
   %i.nx = icmp ugt i64 %i.nw, 1152921504606846975
   br i1 %i.nx, label %.noexc.i, label %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.i
@@ -860,9 +860,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !123  ; 7 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 56 ; 3 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !122  ; 2 uses
-  %6 = ptrtoint ptr %i.l to i64
   %i.m = ptrtoint ptr %i.j to i64
-  %7 = sub i64 %6, %i.m
   %i.n = tail call i64 @_ZNK3gmx8BiasGrid15lambdaAxisIndexEv(ptr noundef nonnull align 8 dereferenceable(48) %2), !noalias !391 ; 2 uses
   %i.o = and i64 %i.n, 4294967296
   %.not.i = icmp eq i64 %i.o, 0
@@ -901,6 +899,8 @@ _ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %bb.d
   br i1 %.not23.i, label %_ZN3gmx12_GLOBAL__N_137calculateFELambdaMarginalDistributionERKNS_8BiasGridENS_8ArrayRefIKiEENS4_IKdEE.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.loopexit.i
+  %6 = ptrtoint ptr %i.l to i64
+  %7 = sub i64 %6, %i.m
   %i.w = ashr exact i64 %7, 2                     ; 3 uses
   %i.x = load ptr, ptr %2, align 8, !tbaa !32, !noalias !391
   %sext.i = shl i64 %i.n, 32

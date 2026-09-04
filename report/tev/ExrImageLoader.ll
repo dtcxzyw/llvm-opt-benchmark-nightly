@@ -205,10 +205,10 @@ _ZNSt3__110shared_ptrIN3tev11PixelBufferEED2B8ne180100Ev.exit: ; preds = %_ZN3te
   %i.adh = phi ptr [ %.pre709, %"_ZNSt3__19remove_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEEZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SP_SP_T0_.exit.from._ZNSt3__19remove_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEEZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SP_SP_T0_.exit.loopexit" ], [ %i.yr, %"_ZNSt3__17find_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEERZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SQ_SQ_T0_.exit.i" ] ; 2 uses
   %i.adi = phi ptr [ %.pre708, %"_ZNSt3__19remove_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEEZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SP_SP_T0_.exit.from._ZNSt3__19remove_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEEZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SP_SP_T0_.exit.loopexit" ], [ %i.ys, %"_ZNSt3__17find_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEERZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SQ_SQ_T0_.exit.i" ] ; 6 uses
   %.sroa.010.2.i = phi ptr [ %.sroa.010.1.i, %"_ZNSt3__19remove_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEEZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SP_SP_T0_.exit.from._ZNSt3__19remove_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEEZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SP_SP_T0_.exit.loopexit" ], [ %.sroa.01.0.lcssa.i.i, %"_ZNSt3__17find_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEERZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SQ_SQ_T0_.exit.i" ] ; 2 uses
-  %i.adj = ptrtoint ptr %.sroa.010.2.i to i64     ; 4 uses
+  %i.adj = ptrtoint ptr %.sroa.010.2.i to i64     ; 3 uses
   %i.adk = ptrtoint ptr %i.adh to i64
   %i.adl = sub i64 %i.adj, %i.adk
-  %i.adm = getelementptr inbounds i8, ptr %i.adh, i64 %i.adl ; 3 uses
+  %i.adm = getelementptr inbounds i8, ptr %i.adh, i64 %i.adl ; 4 uses
   %.not.i373 = icmp eq ptr %.sroa.010.2.i, %i.adi
   br i1 %.not.i373, label %_ZNSt3__16vectorIN3tev9ImageDataENS_9allocatorIS2_EEE5eraseENS_11__wrap_iterIPKS2_EES9_.exit, label %bb.fe
 
@@ -230,13 +230,13 @@ bb.fe:                                            ; preds = %"_ZNSt3__19remove_i
 
 _ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.i.from._ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.loopexit.i: ; preds = %.lr.ph.i.i.i.i.i.i
   %.pre.i = load ptr, ptr %i.yb, align 8, !tbaa !221
-  %24 = ptrtoint ptr %i.ads to i64
   br label %_ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.i
 
 _ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.i: ; preds = %bb.fe, %_ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.i.from._ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.loopexit.i
   %i.adt = phi ptr [ %.pre.i, %_ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.i.from._ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.loopexit.i ], [ %i.adi, %bb.fe ] ; 2 uses
-  %storemerge.lcssa.i.i.i.i.i.i = phi i64 [ %24, %_ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.i.from._ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.loopexit.i ], [ %i.adj, %bb.fe ]
-  %i.adu = sub i64 %storemerge.lcssa.i.i.i.i.i.i, %i.adj
+  %storemerge.lcssa.i.i.i.i.i.i = phi ptr [ %i.ads, %_ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.i.from._ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.loopexit.i ], [ %i.adm, %bb.fe ]
+  %24 = ptrtoint ptr %storemerge.lcssa.i.i.i.i.i.i to i64
+  %i.adu = sub i64 %24, %i.adj
   %i.adv = getelementptr inbounds i8, ptr %i.adm, i64 %i.adu ; 4 uses
   %.not6.i.i.i = icmp eq ptr %i.adv, %i.adt
   br i1 %.not6.i.i.i, label %_ZNSt3__16vectorIN3tev9ImageDataENS_9allocatorIS2_EEE17__destruct_at_endB8ne180100EPS2_.exit.i, label %.lr.ph.i.i.i
@@ -639,10 +639,10 @@ _ZNSt3__110shared_ptrIN3tev11PixelBufferEED2B8ne180100Ev.exit: ; preds = %bb.cj,
   %i.px = phi ptr [ %.pre709, %"_ZNSt3__19remove_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEEZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SP_SP_T0_.exit.from._ZNSt3__19remove_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEEZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SP_SP_T0_.exit.loopexit" ], [ %i.lh, %"_ZNSt3__17find_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEERZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SQ_SQ_T0_.exit.i" ] ; 2 uses
   %i.py = phi ptr [ %.pre708, %"_ZNSt3__19remove_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEEZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SP_SP_T0_.exit.from._ZNSt3__19remove_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEEZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SP_SP_T0_.exit.loopexit" ], [ %i.li, %"_ZNSt3__17find_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEERZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SQ_SQ_T0_.exit.i" ] ; 6 uses
   %.sroa.010.2.i = phi ptr [ %.sroa.010.1.i, %"_ZNSt3__19remove_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEEZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SP_SP_T0_.exit.from._ZNSt3__19remove_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEEZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SP_SP_T0_.exit.loopexit" ], [ %.sroa.01.0.lcssa.i.i, %"_ZNSt3__17find_ifB8ne180100INS_11__wrap_iterIPN3tev9ImageDataEEERZNKS2_14ExrImageLoader4loadERNS_19basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_4__fs10filesystem4pathENS_17basic_string_viewIcS9_EERKNS2_19ImageLoaderSettingsEiE3$_2EET_SQ_SQ_T0_.exit.i" ] ; 2 uses
-  %i.pz = ptrtoint ptr %.sroa.010.2.i to i64      ; 4 uses
+  %i.pz = ptrtoint ptr %.sroa.010.2.i to i64      ; 3 uses
   %i.qa = ptrtoint ptr %i.px to i64
   %i.qb = sub i64 %i.pz, %i.qa
-  %i.qc = getelementptr inbounds i8, ptr %i.px, i64 %i.qb ; 3 uses
+  %i.qc = getelementptr inbounds i8, ptr %i.px, i64 %i.qb ; 4 uses
   %.not.i373 = icmp eq ptr %.sroa.010.2.i, %i.py
   br i1 %.not.i373, label %_ZNSt3__16vectorIN3tev9ImageDataENS_9allocatorIS2_EEE5eraseENS_11__wrap_iterIPKS2_EES9_.exit, label %bb.ck
 
@@ -664,13 +664,13 @@ bb.ck:                                            ; preds = %"_ZNSt3__19remove_i
 
 _ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.i.from._ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.loopexit.i: ; preds = %.lr.ph.i.i.i.i.i.i
   %.pre.i = load ptr, ptr %i.kr, align 16, !tbaa !221
-  %13 = ptrtoint ptr %i.qi to i64
   br label %_ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.i
 
 _ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.i: ; preds = %bb.ck, %_ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.i.from._ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.loopexit.i
   %i.qj = phi ptr [ %.pre.i, %_ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.i.from._ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.loopexit.i ], [ %i.py, %bb.ck ] ; 2 uses
-  %storemerge.lcssa.i.i.i.i.i.i = phi i64 [ %13, %_ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.i.from._ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.loopexit.i ], [ %i.pz, %bb.ck ]
-  %i.qk = sub i64 %storemerge.lcssa.i.i.i.i.i.i, %i.pz
+  %storemerge.lcssa.i.i.i.i.i.i = phi ptr [ %i.qi, %_ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.i.from._ZNSt3__14moveB8ne180100IPN3tev9ImageDataES3_EET0_T_S5_S4_.exit.loopexit.i ], [ %i.qc, %bb.ck ]
+  %13 = ptrtoint ptr %storemerge.lcssa.i.i.i.i.i.i to i64
+  %i.qk = sub i64 %13, %i.pz
   %i.ql = getelementptr inbounds i8, ptr %i.qc, i64 %i.qk ; 4 uses
   %.not6.i.i.i = icmp eq ptr %i.ql, %i.qj
   br i1 %.not6.i.i.i, label %_ZNSt3__16vectorIN3tev9ImageDataENS_9allocatorIS2_EEE17__destruct_at_endB8ne180100EPS2_.exit.i, label %.lr.ph.i.i.i

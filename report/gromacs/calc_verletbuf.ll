@@ -205,9 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %.thread8
 
 bb.c:                                             ; preds = %.thread, %bb.b
-  %5 = ptrtoint ptr %1 to i64
   %i.e = ptrtoint ptr %0 to i64
-  %6 = sub i64 %5, %i.e
   %i.f = icmp eq ptr %0, %1
   br i1 %i.f, label %bb.d, label %bb.e
 
@@ -292,6 +290,8 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.i:          ; preds = %.noexc45.i, %_ZNSt6
   %.0.i.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %i.m, %.noexc45.i ] ; 3 uses
   %.0.i.i.i.i.i.i.i.i16 = ptrtoaddr ptr %.0.i.i.i.i.i.i.i.i to i64
   %.sroa.075.0.i17 = ptrtoaddr ptr %.sroa.075.0.i to i64
+  %5 = ptrtoint ptr %1 to i64
+  %6 = sub i64 %5, %i.e
   %reass.sub.fr.i.i = freeze i64 %6               ; 5 uses
   %i.aq = sdiv exact i64 %reass.sub.fr.i.i, 12    ; 2 uses
   %i.ar = icmp ugt i64 %i.aq, 768614336404564650
@@ -694,9 +694,9 @@ _ZL20displacementVarianceRK10t_inputrecff.exit:   ; preds = %bb.m, %._crit_edge.
 
 .lr.ph:                                           ; preds = %.loopexit96
   %i.do = icmp eq ptr %2, %3
-  %i.dp = ptrtoint ptr %3 to i64
-  %i.dq = ptrtoint ptr %2 to i64
-  %i.dr = sub i64 %i.dp, %i.dq
+  %i.dp = ptrtoint ptr %2 to i64
+  %i.dq = ptrtoint ptr %3 to i64
+  %i.dr = sub i64 %i.dq, %i.dp
   %i.ds = sdiv exact i64 %i.dr, 24
   %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 120

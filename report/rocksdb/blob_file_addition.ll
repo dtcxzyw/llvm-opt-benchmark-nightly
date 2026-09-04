@@ -202,7 +202,7 @@ bb.a:
   %i.f = load ptr, ptr %2, align 8, !tbaa !22     ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 13 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !23
-  %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.h ; 3 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.h ; 4 uses
   %i.j = tail call noundef ptr @_ZN7rocksdb14GetVarint64PtrEPKcS1_Pm(ptr noundef %i.f, ptr noundef %i.i, ptr noundef nonnull %1) ; 5 uses
   %.not52 = icmp eq ptr %i.j, null
   br i1 %.not52, label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit, label %bb.b
@@ -223,7 +223,7 @@ _ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit:      ; preds = %bb.a
   br label %bb.aj
 
 bb.b:                                             ; preds = %bb.a
-  %i.n = ptrtoint ptr %i.i to i64                 ; 4 uses
+  %i.n = ptrtoint ptr %i.i to i64                 ; 3 uses
   %i.o = ptrtoint ptr %i.j to i64
   %i.p = sub i64 %i.n, %i.o                       ; 2 uses
   store ptr %i.j, ptr %2, align 8, !tbaa !47
@@ -312,8 +312,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i: ; preds = %_ZN7rocksdb
 bb.f:                                             ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i
   %i.an = phi i32 [ %i.ak, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i ], [ %.pre.i, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i ]
   %i.ao = phi ptr [ %i.al, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i ], [ %i.am, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i ] ; 4 uses
+  %23 = ptrtoint ptr %i.i to i64
   %i.ap = ptrtoint ptr %i.ao to i64
-  %i.aq = sub i64 %i.n, %i.ap                     ; 3 uses
+  %i.aq = sub i64 %23, %i.ap                      ; 3 uses
   store ptr %i.ao, ptr %2, align 8, !tbaa !47
   store i64 %i.aq, ptr %i.g, align 8, !tbaa !48
   %i.ar = zext i32 %i.an to i64                   ; 4 uses
@@ -600,7 +601,7 @@ bb.w:                                             ; preds = %bb.af, %_ZNSt7__cxx
   %i.dy = phi i64 [ %i.fh, %bb.af ], [ %.pr51, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit33 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #18
   store i32 0, ptr %i.e, align 4, !tbaa !49
-  %i.dz = getelementptr inbounds nuw i8, ptr %i.dx, i64 %i.dy ; 3 uses
+  %i.dz = getelementptr inbounds nuw i8, ptr %i.dx, i64 %i.dy ; 4 uses
   %.not.i34 = icmp eq i64 %i.dy, 0
   br i1 %.not.i34, label %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i, label %bb.x
 
@@ -642,7 +643,7 @@ thread-pre-split:                                 ; preds = %_ZN7rocksdb14GetVar
 bb.y:                                             ; preds = %thread-pre-split, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i
   %i.ei = phi i32 [ %.pr, %thread-pre-split ], [ %i.ec, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ] ; 2 uses
   %i.ej = phi ptr [ %i.ee, %thread-pre-split ], [ %i.ed, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ] ; 7 uses
-  %i.ek = ptrtoint ptr %i.dz to i64               ; 2 uses
+  %i.ek = ptrtoint ptr %i.dz to i64
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = sub i64 %i.ek, %i.el                    ; 2 uses
   store ptr %i.ej, ptr %2, align 8, !tbaa !47
@@ -699,8 +700,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i38: ; preds = %_ZN7rocks
 bb.ad:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i38, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i43
   %i.ey = phi i32 [ %i.ev, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i43 ], [ %.pre.i39, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i38 ]
   %i.ez = phi ptr [ %i.ew, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i43 ], [ %i.ex, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i38 ] ; 3 uses
+  %24 = ptrtoint ptr %i.dz to i64
   %i.fa = ptrtoint ptr %i.ez to i64
-  %i.fb = sub i64 %i.ek, %i.fa                    ; 3 uses
+  %i.fb = sub i64 %24, %i.fa                      ; 3 uses
   store ptr %i.ez, ptr %2, align 8, !tbaa !47
   store i64 %i.fb, ptr %i.g, align 8, !tbaa !48
   %i.fc = zext i32 %i.ey to i64                   ; 3 uses

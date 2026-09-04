@@ -202,7 +202,8 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #10
 define void @_ZN3gmx11stripStringERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) #7 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %i.b = load ptr, ptr %1, align 8, !tbaa !22     ; 3 uses
+  %i.b = load ptr, ptr %1, align 8, !tbaa !22     ; 5 uses
+  %2 = ptrtoaddr ptr %i.b to i64                  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !23   ; 2 uses
   %i.e = getelementptr i8, ptr %i.b, i64 %i.d     ; 4 uses
@@ -215,16 +216,23 @@ bb.a:
   %i.g = sext i8 %i.f to i32
   %i.h = tail call i32 @isspace(i32 noundef %i.g) #23
   %.not = icmp eq i32 %i.h, 0
-  br i1 %.not, label %.critedge, label %bb.b
+  br i1 %.not, label %.critedge.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.012.019, i64 1 ; 2 uses
   %.not16 = icmp eq ptr %i.i, %i.e
-  br i1 %.not16, label %.critedge, label %.lr.ph, !llvm.loop !42
+  br i1 %.not16, label %.critedge.loopexit, label %.lr.ph, !llvm.loop !42
 
-.critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.sroa.012.0.lcssa = phi ptr [ %i.b, %bb.a ], [ %i.e, %bb.b ], [ %.sroa.012.019, %.lr.ph ] ; 6 uses
-  %.sroa.012.0.lcssa22.pre-phi = ptrtoaddr ptr %.sroa.012.0.lcssa to i64 ; 2 uses
+.critedge.loopexit:                               ; preds = %bb.b, %.lr.ph
+  %.sroa.012.0.lcssa.ph = phi ptr [ %.sroa.012.019, %.lr.ph ], [ %i.e, %bb.b ] ; 2 uses
+  %.pre = ptrtoaddr ptr %.sroa.012.0.lcssa.ph to i64
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.loopexit, %bb.a
+  %.sroa.012.0.lcssa22.pre-phi = phi i64 [ %.pre, %.critedge.loopexit ], [ %2, %bb.a ]
+  %.sroa.012.0.lcssa = phi ptr [ %.sroa.012.0.lcssa.ph, %.critedge.loopexit ], [ %i.b, %bb.a ] ; 5 uses
+  %3 = sub i64 %.sroa.012.0.lcssa22.pre-phi, %2
+  %scevgep = getelementptr i8, ptr %i.b, i64 %3   ; 2 uses
   %.not1724 = icmp eq ptr %.sroa.012.0.lcssa, %i.e
   br i1 %.not1724, label %.critedge2, label %.lr.ph26
 
@@ -242,18 +250,18 @@ bb.c:                                             ; preds = %.lr.ph26
   br i1 %.not6, label %..critedge2_crit_edge27, label %bb.c, !llvm.loop !43
 
 ..critedge2_crit_edge27:                          ; preds = %.lr.ph26
-  %2 = ptrtoint ptr %.sroa.08.025 to i64
   br label %.critedge2, !llvm.loop !43
 
 .critedge2:                                       ; preds = %bb.c, %..critedge2_crit_edge27, %.critedge
-  %.sroa.08.0.lcssa = phi i64 [ %.sroa.012.0.lcssa22.pre-phi, %.critedge ], [ %2, %..critedge2_crit_edge27 ], [ %.sroa.012.0.lcssa22.pre-phi, %bb.c ]
+  %.sroa.08.0.lcssa = phi ptr [ %scevgep, %.critedge ], [ %.sroa.08.025, %..critedge2_crit_edge27 ], [ %scevgep, %bb.c ]
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.n, ptr %0, align 8, !tbaa !24
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store i64 0, ptr %i.o, align 8, !tbaa !23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
+  %4 = ptrtoint ptr %.sroa.08.0.lcssa to i64
   %i.p = ptrtoint ptr %.sroa.012.0.lcssa to i64
-  %i.q = sub i64 %.sroa.08.0.lcssa, %i.p          ; 4 uses
+  %i.q = sub i64 %4, %i.p                         ; 4 uses
   store i64 %i.q, ptr %i.a, align 8, !tbaa !25
   %i.r = icmp ugt i64 %i.q, 15
   br i1 %i.r, label %.noexc.i, label %._crit_edge.i.i

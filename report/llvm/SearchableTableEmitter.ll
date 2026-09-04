@@ -205,10 +205,10 @@ bb.d:                                             ; preds = %"_ZSt12__move_merge
 
 _ZSt4moveIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i33.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i33, %._crit_edge.i.i
   %.08.lcssa.i.i.i.i.i.i.i28 = phi ptr [ %.sroa.0.0.lcssa.i.i, %._crit_edge.i.i ], [ %.lcssa122.unr, %.lr.ph.i.i.i.i.i.i.i33.prol.loopexit ], [ %i.hw, %.lr.ph.i.i.i.i.i.i.i33 ]
-  %i.hz = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i28 to i64 ; 3 uses
+  %i.hz = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i28 to i64 ; 2 uses
   %i.ia = ptrtoint ptr %.sroa.0.0.lcssa.i.i to i64
   %i.ib = sub i64 %i.hz, %i.ia
-  %i.ic = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i.i, i64 %i.ib ; 3 uses
+  %i.ic = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i.i, i64 %i.ib ; 4 uses
   %i.id = ptrtoint ptr %i.gf to i64               ; 2 uses
   %i.ie = ptrtoint ptr %.016.lcssa.i.i to i64
   %i.if = sub i64 %i.id, %i.ie
@@ -245,7 +245,7 @@ _ZSt4moveIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vector
   %.0910.i.i.i.i.i23.i.i.unr = phi ptr [ %.016.lcssa.i.i, %.lr.ph.i.i.i.i.i20.i.i.preheader ], [ %i.im, %.lr.ph.i.i.i.i.i20.i.i.prol ]
   %.lcssa123.unr = phi ptr [ poison, %.lr.ph.i.i.i.i.i20.i.i.preheader ], [ %i.in, %.lr.ph.i.i.i.i.i20.i.i.prol ]
   %i.ip = icmp ult i64 %i.ig, 4
-  br i1 %i.ip, label %_ZSt4moveIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i.i, label %.lr.ph.i.i.i.i.i20.i.i
+  br i1 %i.ip, label %"_ZSt12__move_mergeIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122SearchableTableEmitter18emitLookupFunctionERKNSF_12GenericTableERKNSF_11SearchIndexEbRNS1_19StringToOffsetTableERNS1_11raw_ostreamEE3$_0EEET0_T_SU_SU_SU_ST_T1_.exit.i", label %.lr.ph.i.i.i.i.i20.i.i
 
 .lr.ph.i.i.i.i.i20.i.i:                           ; preds = %.lr.ph.i.i.i.i.i20.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i20.i.i
   %.012.i.i.i.i.i21.i.i = phi i64 [ %i.jo, %.lr.ph.i.i.i.i.i20.i.i ], [ %.012.i.i.i.i.i21.i.i.unr, %.lr.ph.i.i.i.i.i20.i.i.prol.loopexit ] ; 2 uses
@@ -285,16 +285,12 @@ _ZSt4moveIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vector
   %i.jn = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22.i.i, i64 64 ; 2 uses
   %i.jo = add nsw i64 %.012.i.i.i.i.i21.i.i, -4
   %i.jp = icmp sgt i64 %.012.i.i.i.i.i21.i.i, 4
-  br i1 %i.jp, label %.lr.ph.i.i.i.i.i20.i.i, label %_ZSt4moveIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i.i, !llvm.loop !18
+  br i1 %i.jp, label %.lr.ph.i.i.i.i.i20.i.i, label %"_ZSt12__move_mergeIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122SearchableTableEmitter18emitLookupFunctionERKNSF_12GenericTableERKNSF_11SearchIndexEbRNS1_19StringToOffsetTableERNS1_11raw_ostreamEE3$_0EEET0_T_SU_SU_SU_ST_T1_.exit.i", !llvm.loop !18
 
-_ZSt4moveIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i.i: ; preds = %.lr.ph.i.i.i.i.i20.i.i, %.lr.ph.i.i.i.i.i20.i.i.prol.loopexit
-  %.lcssa123 = phi ptr [ %.lcssa123.unr, %.lr.ph.i.i.i.i.i20.i.i.prol.loopexit ], [ %i.jn, %.lr.ph.i.i.i.i.i20.i.i ]
-  %5 = ptrtoint ptr %.lcssa123 to i64
-  br label %"_ZSt12__move_mergeIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122SearchableTableEmitter18emitLookupFunctionERKNSF_12GenericTableERKNSF_11SearchIndexEbRNS1_19StringToOffsetTableERNS1_11raw_ostreamEE3$_0EEET0_T_SU_SU_SU_ST_T1_.exit.i"
-
-"_ZSt12__move_mergeIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122SearchableTableEmitter18emitLookupFunctionERKNSF_12GenericTableERKNSF_11SearchIndexEbRNS1_19StringToOffsetTableERNS1_11raw_ostreamEE3$_0EEET0_T_SU_SU_SU_ST_T1_.exit.i": ; preds = %_ZSt4moveIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i.i, %_ZSt4moveIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i
-  %.08.lcssa.i.i.i.i.i19.i.i = phi i64 [ %i.hz, %_ZSt4moveIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i ], [ %5, %_ZSt4moveIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i.i ]
-  %i.jq = sub i64 %.08.lcssa.i.i.i.i.i19.i.i, %i.hz
+"_ZSt12__move_mergeIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZN12_GLOBAL__N_122SearchableTableEmitter18emitLookupFunctionERKNSF_12GenericTableERKNSF_11SearchIndexEbRNS1_19StringToOffsetTableERNS1_11raw_ostreamEE3$_0EEET0_T_SU_SU_SU_ST_T1_.exit.i": ; preds = %.lr.ph.i.i.i.i.i20.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i20.i.i, %_ZSt4moveIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i
+  %.08.lcssa.i.i.i.i.i19.i.i = phi ptr [ %i.ic, %_ZSt4moveIPSt4pairIPKN4llvm6RecordEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i ], [ %.lcssa123.unr, %.lr.ph.i.i.i.i.i20.i.i.prol.loopexit ], [ %i.jn, %.lr.ph.i.i.i.i.i20.i.i ]
+  %5 = ptrtoint ptr %.08.lcssa.i.i.i.i.i19.i.i to i64
+  %i.jq = sub i64 %5, %i.hz
   %i.jr = getelementptr inbounds i8, ptr %i.ic, i64 %i.jq ; 2 uses
   %i.js = sub i64 %i.l, %i.id
   %i.jt = ashr exact i64 %i.js, 4                 ; 2 uses

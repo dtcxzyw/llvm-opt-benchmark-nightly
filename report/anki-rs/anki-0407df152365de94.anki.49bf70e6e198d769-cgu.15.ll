@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %.noexc40.i.i
   br i1 %i.bb, label %"_ZN91_$LT$nom..bytes..Escaped$LT$F$C$G$C$Error$GT$$u20$as$u20$nom..internal..Parser$LT$I$GT$$GT$7process28_$u7b$$u7b$closure$u7d$$u7d$17hc69043087309f000E.exit.i.i.i.i.i.i", label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.bc = load ptr, ptr %i.b, align 8, !noalias !14489, !nonnull !6, !align !15, !noundef !6 ; 5 uses
+  %i.bc = load ptr, ptr %i.b, align 8, !noalias !14489, !nonnull !6, !align !15, !noundef !6 ; 3 uses
   %i.bd = icmp eq i64 %i.ba, %.sroa.10.0208.i.i.i.i.i.i
   br i1 %i.bd, label %bb.u, label %bb.aq
 
@@ -222,10 +222,10 @@ bb.v:                                             ; preds = %bb.u
 
 .split.i.i.i99.i.i.i.i.i.i:                       ; preds = %bb.v
   %i.bi = icmp eq i64 %i.bg, %2
-  br i1 %i.bi, label %.sink.split.i.i.i20.i.i, label %.invoke.i.i
+  br i1 %i.bi, label %.split.i.i.i.i102.i.i.i.i.i.i, label %.invoke.i.i
 
 bb.w:                                             ; preds = %bb.v
-  %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 %i.bg
+  %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 %i.bg ; 2 uses
   %i.bk = load i8, ptr %i.bj, align 1, !alias.scope !14490, !noalias !14491, !noundef !6
   %i.bl = icmp sgt i8 %i.bk, -65
   br i1 %i.bl, label %bb.x, label %.invoke.i.i
@@ -243,6 +243,10 @@ bb.w:                                             ; preds = %bb.v
 "_ZN91_$LT$nom..bytes..Escaped$LT$F$C$G$C$Error$GT$$u20$as$u20$nom..internal..Parser$LT$I$GT$$GT$7process28_$u7b$$u7b$closure$u7d$$u7d$17hc69043087309f000E.exit.i.thread251.i.i.i.i.i": ; preds = %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !14489
   br label %.thread276
+
+.split.i.i.i.i102.i.i.i.i.i.i:                    ; preds = %.split.i.i.i99.i.i.i.i.i.i
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 %2
+  br label %.sink.split.i.i.i20.i.i
 
 bb.x:                                             ; preds = %bb.w
   %i.bp = sub nuw i64 %2, %i.bg
@@ -510,10 +514,10 @@ bb.ar:                                            ; preds = %.noexc45.i.i, %"_ZN
   %i.fk = getelementptr inbounds nuw i8, ptr %1, i64 %2
   br label %.sink.split.i.i.i20.i.i
 
-.sink.split.i.i.i20.i.i:                          ; preds = %"_ZN91_$LT$nom..bytes..Escaped$LT$F$C$G$C$Error$GT$$u20$as$u20$nom..internal..Parser$LT$I$GT$$GT$7process28_$u7b$$u7b$closure$u7d$$u7d$17hc69043087309f000E.exit.i.i.i.i.i.i", %bb.ad, %.split.i.i.i.i107.i.i.i.i.i.i, %bb.x, %.split.i.i.i99.i.i.i.i.i.i
-  %i.fl = phi ptr [ %i.fk, %"_ZN91_$LT$nom..bytes..Escaped$LT$F$C$G$C$Error$GT$$u20$as$u20$nom..internal..Parser$LT$I$GT$$GT$7process28_$u7b$$u7b$closure$u7d$$u7d$17hc69043087309f000E.exit.i.i.i.i.i.i" ], [ %i.de, %bb.ad ], [ %i.dh, %.split.i.i.i.i107.i.i.i.i.i.i ], [ %i.bc, %bb.x ], [ %i.bc, %.split.i.i.i99.i.i.i.i.i.i ]
-  %.sroa.24.0168.i.i.i.i.i = phi i64 [ 0, %"_ZN91_$LT$nom..bytes..Escaped$LT$F$C$G$C$Error$GT$$u20$as$u20$nom..internal..Parser$LT$I$GT$$GT$7process28_$u7b$$u7b$closure$u7d$$u7d$17hc69043087309f000E.exit.i.i.i.i.i.i" ], [ %i.di, %bb.ad ], [ 0, %.split.i.i.i.i107.i.i.i.i.i.i ], [ %i.bp, %bb.x ], [ 0, %.split.i.i.i99.i.i.i.i.i.i ]
-  %.sroa.44.0167.i.i.i.i.i = phi i64 [ %2, %"_ZN91_$LT$nom..bytes..Escaped$LT$F$C$G$C$Error$GT$$u20$as$u20$nom..internal..Parser$LT$I$GT$$GT$7process28_$u7b$$u7b$closure$u7d$$u7d$17hc69043087309f000E.exit.i.i.i.i.i.i" ], [ %i.db, %bb.ad ], [ %2, %.split.i.i.i.i107.i.i.i.i.i.i ], [ %i.bg, %bb.x ], [ %2, %.split.i.i.i99.i.i.i.i.i.i ] ; 2 uses
+.sink.split.i.i.i20.i.i:                          ; preds = %"_ZN91_$LT$nom..bytes..Escaped$LT$F$C$G$C$Error$GT$$u20$as$u20$nom..internal..Parser$LT$I$GT$$GT$7process28_$u7b$$u7b$closure$u7d$$u7d$17hc69043087309f000E.exit.i.i.i.i.i.i", %bb.ad, %.split.i.i.i.i107.i.i.i.i.i.i, %bb.x, %.split.i.i.i.i102.i.i.i.i.i.i
+  %i.fl = phi ptr [ %i.fk, %"_ZN91_$LT$nom..bytes..Escaped$LT$F$C$G$C$Error$GT$$u20$as$u20$nom..internal..Parser$LT$I$GT$$GT$7process28_$u7b$$u7b$closure$u7d$$u7d$17hc69043087309f000E.exit.i.i.i.i.i.i" ], [ %i.de, %bb.ad ], [ %i.dh, %.split.i.i.i.i107.i.i.i.i.i.i ], [ %i.bj, %bb.x ], [ %3, %.split.i.i.i.i102.i.i.i.i.i.i ]
+  %.sroa.24.0168.i.i.i.i.i = phi i64 [ 0, %"_ZN91_$LT$nom..bytes..Escaped$LT$F$C$G$C$Error$GT$$u20$as$u20$nom..internal..Parser$LT$I$GT$$GT$7process28_$u7b$$u7b$closure$u7d$$u7d$17hc69043087309f000E.exit.i.i.i.i.i.i" ], [ %i.di, %bb.ad ], [ 0, %.split.i.i.i.i107.i.i.i.i.i.i ], [ %i.bp, %bb.x ], [ 0, %.split.i.i.i.i102.i.i.i.i.i.i ]
+  %.sroa.44.0167.i.i.i.i.i = phi i64 [ %2, %"_ZN91_$LT$nom..bytes..Escaped$LT$F$C$G$C$Error$GT$$u20$as$u20$nom..internal..Parser$LT$I$GT$$GT$7process28_$u7b$$u7b$closure$u7d$$u7d$17hc69043087309f000E.exit.i.i.i.i.i.i" ], [ %i.db, %bb.ad ], [ %2, %.split.i.i.i.i107.i.i.i.i.i.i ], [ %i.bg, %bb.x ], [ %2, %.split.i.i.i.i102.i.i.i.i.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !14489
   switch i64 %.sroa.44.0167.i.i.i.i.i, label %.loopexit.i.i.i.i.i [
     i64 3, label %.preheader.i.preheader.i.i.i.i.i

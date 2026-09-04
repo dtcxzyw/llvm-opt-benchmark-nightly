@@ -205,7 +205,6 @@ bb.cf:                                            ; preds = %.lr.ph2398, %bb.cn
   %i.uv = fpext float %i.uu to double             ; 3 uses
   %i.uw = ptrtoint ptr %i.uk to i64               ; 2 uses
   %i.ux = ptrtoint ptr %i.uj to i64               ; 2 uses
-  %78 = sub i64 %i.uw, %i.ux                      ; 5 uses
   %i.uy = load ptr, ptr %i.eo, align 8
   %i.uz = ptrtoint ptr %i.uy to i64
   %i.va = sub i64 %i.uz, %i.uw
@@ -223,6 +222,7 @@ _ZSt9__advanceIPKdlEvRT_T0_St26random_access_iterator_tag.exit.i: ; preds = %bb.
   br label %bb.cn
 
 bb.cg:                                            ; preds = %bb.cf
+  %78 = sub i64 %i.uw, %i.ux                      ; 6 uses
   %i.vd = ashr exact i64 %78, 3                   ; 4 uses
   %i.ve = add nsw i64 %i.vd, -1152921504606846973
   %i.vf = icmp ult i64 %i.ve, 3
@@ -250,7 +250,7 @@ bb.ci:                                            ; preds = %_ZNKSt6vectorIdSaId
           to label %_ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i1218 unwind label %.loopexit1463
 
 _ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i1218: ; preds = %bb.ci, %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i
-  %i.vm = phi ptr [ null, %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i ], [ %i.vl, %bb.ci ] ; 9 uses
+  %i.vm = phi ptr [ null, %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i ], [ %i.vl, %bb.ci ] ; 7 uses
   %i.vn = icmp sgt i64 %78, 8
   br i1 %i.vn, label %bb.cj, label %bb.ck, !prof !26
 
@@ -265,11 +265,11 @@ bb.ck:                                            ; preds = %_ZNSt12_Vector_base
 .thread:                                          ; preds = %bb.ck
   %i.vp = load double, ptr %i.uj, align 8
   store double %i.vp, ptr %i.vm, align 8
-  %i.vq = getelementptr inbounds nuw i8, ptr %i.vm, i64 8
+  %i.vq = getelementptr inbounds nuw i8, ptr %i.vm, i64 %78 ; 3 uses
   store <2 x double> %i.us, ptr %i.vq, align 8
-  %.sroa.83008.0..sroa_idx3009 = getelementptr inbounds nuw i8, ptr %i.vm, i64 24
+  %.sroa.83008.0..sroa_idx3009 = getelementptr inbounds nuw i8, ptr %i.vq, i64 16
   store double %i.uv, ptr %.sroa.83008.0..sroa_idx3009, align 8
-  %i.vr = getelementptr inbounds nuw i8, ptr %i.vm, i64 32
+  %i.vr = getelementptr inbounds nuw i8, ptr %i.vq, i64 24
   br label %bb.cm
 
 bb.cl:                                            ; preds = %bb.ck, %bb.cj
@@ -455,7 +455,7 @@ bb.cu:                                            ; preds = %.lr.ph2404, %bb.dc
   %i.yl = fpext <2 x float> %i.yk to <2 x double> ; 3 uses
   %i.ym = ptrtoint ptr %i.ya to i64               ; 2 uses
   %i.yn = ptrtoint ptr %i.xz to i64               ; 2 uses
-  %i.yo = sub i64 %i.ym, %i.yn                    ; 6 uses
+  %i.yo = sub i64 %i.ym, %i.yn                    ; 7 uses
   %i.yp = load ptr, ptr %i.eq, align 8
   %i.yq = ptrtoint ptr %i.yp to i64
   %i.yr = sub i64 %i.yq, %i.ym
@@ -500,7 +500,7 @@ bb.cx:                                            ; preds = %_ZNKSt6vectorIdSaId
           to label %_ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i1233 unwind label %.loopexit1458
 
 _ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i1233: ; preds = %bb.cx, %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i1230
-  %i.zd = phi ptr [ null, %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i1230 ], [ %i.zc, %bb.cx ] ; 9 uses
+  %i.zd = phi ptr [ null, %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i1230 ], [ %i.zc, %bb.cx ] ; 7 uses
   %i.ze = icmp sgt i64 %i.yo, 8
   br i1 %i.ze, label %bb.cy, label %bb.cz, !prof !26
 
@@ -515,11 +515,11 @@ bb.cz:                                            ; preds = %_ZNSt12_Vector_base
 .thread1430:                                      ; preds = %bb.cz
   %i.zg = load double, ptr %i.xz, align 8
   store double %i.zg, ptr %i.zd, align 8
-  %i.zh = getelementptr inbounds nuw i8, ptr %i.zd, i64 8
+  %i.zh = getelementptr inbounds nuw i8, ptr %i.zd, i64 %i.yo ; 3 uses
   store <2 x double> %i.yi, ptr %i.zh, align 8
-  %.sroa.8.0..sroa_idx2992 = getelementptr inbounds nuw i8, ptr %i.zd, i64 24
+  %.sroa.8.0..sroa_idx2992 = getelementptr inbounds nuw i8, ptr %i.zh, i64 16
   store <2 x double> %i.yl, ptr %.sroa.8.0..sroa_idx2992, align 8
-  %i.zi = getelementptr inbounds nuw i8, ptr %i.zd, i64 40
+  %i.zi = getelementptr inbounds nuw i8, ptr %i.zh, i64 32
   br label %bb.db
 
 bb.da:                                            ; preds = %bb.cz, %bb.cy

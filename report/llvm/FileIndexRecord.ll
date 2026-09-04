@@ -202,10 +202,10 @@ _ZN4llvm15SmallVectorImplIN5clang5index14SymbolRelationEEaSEOS4_.exit113: ; pred
 
 _ZSt4moveIPN5clang5index14DeclOccurrenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i: ; preds = %_ZN4llvm15SmallVectorImplIN5clang5index14SymbolRelationEEaSEOS4_.exit113, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i30 = phi ptr [ %i.ip, %._crit_edge.i ], [ %i.kg, %_ZN4llvm15SmallVectorImplIN5clang5index14SymbolRelationEEaSEOS4_.exit113 ]
-  %i.kj = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i30 to i64 ; 3 uses
+  %i.kj = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i30 to i64 ; 2 uses
   %i.kk = ptrtoint ptr %i.ip to i64
   %i.kl = sub i64 %i.kj, %i.kk
-  %i.km = getelementptr inbounds i8, ptr %i.ip, i64 %i.kl ; 2 uses
+  %i.km = getelementptr inbounds i8, ptr %i.ip, i64 %i.kl ; 3 uses
   %i.kn = ptrtoint ptr %i.fw to i64               ; 2 uses
   %i.ko = ptrtoint ptr %.117.i to i64
   %i.kp = sub i64 %i.kn, %i.ko                    ; 2 uses
@@ -345,15 +345,12 @@ _ZN4llvm15SmallVectorImplIN5clang5index14SymbolRelationEEaSEOS4_.exit98: ; preds
   %i.ma = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22.i, i64 88 ; 2 uses
   %i.mb = add nsw i64 %.012.i.i.i.i.i21.i, -1
   %i.mc = icmp samesign ugt i64 %.012.i.i.i.i.i21.i, 1
-  br i1 %i.mc, label %.lr.ph.i.i.i.i.i20.i, label %_ZSt4moveIPN5clang5index14DeclOccurrenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i, !llvm.loop !2
+  br i1 %i.mc, label %.lr.ph.i.i.i.i.i20.i, label %"_ZSt12__move_mergeIPN5clang5index14DeclOccurrenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNKS1_15FileIndexRecord32getDeclOccurrencesSortedByOffsetEvE3$_0EEET0_T_SG_SG_SG_SF_T1_.exit", !llvm.loop !2
 
-_ZSt4moveIPN5clang5index14DeclOccurrenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i: ; preds = %_ZN4llvm15SmallVectorImplIN5clang5index14SymbolRelationEEaSEOS4_.exit98
-  %3 = ptrtoint ptr %i.ma to i64
-  br label %"_ZSt12__move_mergeIPN5clang5index14DeclOccurrenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNKS1_15FileIndexRecord32getDeclOccurrencesSortedByOffsetEvE3$_0EEET0_T_SG_SG_SG_SF_T1_.exit"
-
-"_ZSt12__move_mergeIPN5clang5index14DeclOccurrenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNKS1_15FileIndexRecord32getDeclOccurrencesSortedByOffsetEvE3$_0EEET0_T_SG_SG_SG_SF_T1_.exit": ; preds = %_ZSt4moveIPN5clang5index14DeclOccurrenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i, %_ZSt4moveIPN5clang5index14DeclOccurrenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i
-  %.08.lcssa.i.i.i.i.i18.i = phi i64 [ %i.kj, %_ZSt4moveIPN5clang5index14DeclOccurrenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i ], [ %3, %_ZSt4moveIPN5clang5index14DeclOccurrenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i ]
-  %i.md = sub i64 %.08.lcssa.i.i.i.i.i18.i, %i.kj
+"_ZSt12__move_mergeIPN5clang5index14DeclOccurrenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNKS1_15FileIndexRecord32getDeclOccurrencesSortedByOffsetEvE3$_0EEET0_T_SG_SG_SG_SF_T1_.exit": ; preds = %_ZN4llvm15SmallVectorImplIN5clang5index14SymbolRelationEEaSEOS4_.exit98, %_ZSt4moveIPN5clang5index14DeclOccurrenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i
+  %.08.lcssa.i.i.i.i.i18.i = phi ptr [ %i.km, %_ZSt4moveIPN5clang5index14DeclOccurrenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i ], [ %i.ma, %_ZN4llvm15SmallVectorImplIN5clang5index14SymbolRelationEEaSEOS4_.exit98 ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i to i64
+  %i.md = sub i64 %3, %i.kj
   %i.me = getelementptr inbounds i8, ptr %i.km, i64 %i.md ; 2 uses
   %i.mf = sub i64 %i.l, %i.kn
   %i.mg = sdiv exact i64 %i.mf, 88                ; 2 uses

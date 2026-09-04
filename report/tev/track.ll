@@ -204,17 +204,21 @@ _ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit.lo
   br label %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit
 
 _ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit: ; preds = %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit.loopexit, %bb.d
-  %.pre-phi = phi i64 [ %.pre66, %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit.loopexit ], [ %i.n, %bb.d ] ; 2 uses
+  %.pre-phi = phi i64 [ %.pre66, %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit.loopexit ], [ %i.n, %bb.d ]
   %i.bk = sub i64 %.pre-phi, %i.n
-  %i.bl = getelementptr inbounds i8, ptr %i.l, i64 %i.bk ; 2 uses
+  %i.bl = getelementptr inbounds i8, ptr %i.l, i64 %i.bk ; 3 uses
   store ptr %i.bl, ptr %i.k, align 8, !tbaa !81
   %i.bm = icmp sgt i64 %i.q, 0
-  br i1 %i.bm, label %.critedge, label %_ZNSt3__14copyB8ne180100IPKcPhEET0_T_S5_S4_.exit
+  br i1 %i.bm, label %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit..critedge_crit_edge, label %_ZNSt3__14copyB8ne180100IPKcPhEET0_T_S5_S4_.exit
 
-.critedge:                                        ; preds = %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit, %bb.c
-  %.pre-phi68 = phi i64 [ %i.n, %bb.c ], [ %.pre-phi, %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit ] ; 3 uses
-  %i.bn = phi ptr [ %i.l, %bb.c ], [ %i.bl, %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit ] ; 10 uses
-  %.0 = phi ptr [ %i.p, %bb.c ], [ %i.s, %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit ] ; 2 uses
+_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit..critedge_crit_edge: ; preds = %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit
+  %.pre67 = ptrtoint ptr %i.bl to i64
+  br label %.critedge
+
+.critedge:                                        ; preds = %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit..critedge_crit_edge, %bb.c
+  %.pre-phi68 = phi i64 [ %.pre67, %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.n, %bb.c ] ; 3 uses
+  %i.bn = phi ptr [ %i.bl, %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.l, %bb.c ] ; 10 uses
+  %.0 = phi ptr [ %i.s, %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPKcS6_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.p, %bb.c ] ; 2 uses
   %i.bo = ptrtoaddr ptr %i.bn to i64
   %i.bp = getelementptr inbounds nuw i8, ptr %i.g, i64 %4 ; 2 uses
   %i.bq = ptrtoint ptr %i.bp to i64

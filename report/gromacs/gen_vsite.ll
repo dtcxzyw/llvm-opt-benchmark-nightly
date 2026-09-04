@@ -205,9 +205,9 @@ bb.rm:                                            ; preds = %bb.rk
 bb.rn:                                            ; preds = %.thread1520
   %i.dgx = load ptr, ptr %134, align 8, !tbaa !100 ; 3 uses
   %i.dgy = load ptr, ptr %i.agk, align 8, !tbaa !37 ; 2 uses
-  %i.dgz = ptrtoint ptr %i.dgy to i64             ; 2 uses
-  %i.dha = ptrtoint ptr %i.dgx to i64
-  %i.dhb = sub i64 %i.dgz, %i.dha                 ; 2 uses
+  %i.dgz = ptrtoint ptr %i.dgx to i64
+  %i.dha = ptrtoint ptr %i.dgy to i64             ; 2 uses
+  %i.dhb = sub i64 %i.dha, %i.dgz                 ; 2 uses
   %i.dhc = sdiv exact i64 %i.dhb, 104
   %i.dhd = ashr i64 %i.dhc, 2                     ; 2 uses
   %i.dhe = icmp sgt i64 %i.dhd, 0
@@ -278,7 +278,7 @@ bb.rn:                                            ; preds = %.thread1520
 
 ._crit_edge.loopexit.i.i.i.i902:                  ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL18nitrogen_is_planarN3gmx8ArrayRefIK24VirtualSiteConfigurationEERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0EclINS2_12ArrayRefIterIS5_EEEEbT_.exit26.thread.i.i.i.i"
   %.pre.i.i.i.i903 = ptrtoint ptr %i.dhy to i64
-  %.pre43.i.i.i.i = sub i64 %i.dgz, %.pre.i.i.i.i903
+  %.pre43.i.i.i.i = sub i64 %i.dha, %.pre.i.i.i.i903
   br label %._crit_edge.i.i.i.i898
 
 ._crit_edge.i.i.i.i898:                           ; preds = %._crit_edge.loopexit.i.i.i.i902, %bb.rn
@@ -539,10 +539,10 @@ bb.sd:                                            ; preds = %bb.sc
   call void @llvm.lifetime.start.p0(ptr nonnull %153) #26
   %i.dks = load ptr, ptr %134, align 8, !tbaa !100 ; 3 uses
   %i.dkt = load ptr, ptr %i.agk, align 8, !tbaa !37 ; 2 uses
-  %i.dku = ptrtoint ptr %i.dkt to i64             ; 2 uses
-  %160 = ptrtoint ptr %i.dks to i64
-  %161 = sub i64 %i.dku, %160                     ; 2 uses
+  %i.dku = ptrtoint ptr %i.dks to i64
   call void @llvm.experimental.noalias.scope.decl(metadata !175)
+  %160 = ptrtoint ptr %i.dkt to i64               ; 2 uses
+  %161 = sub i64 %160, %i.dku                     ; 2 uses
   %i.dkv = sdiv exact i64 %161, 104
   %i.dkw = ashr i64 %i.dkv, 2                     ; 2 uses
   %i.dkx = icmp sgt i64 %i.dkw, 0
@@ -621,7 +621,7 @@ bb.sd:                                            ; preds = %bb.sc
 
 ._crit_edge.loopexit.i.i.i.i919:                  ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZL18get_dummymass_nameN3gmx8ArrayRefIK24VirtualSiteConfigurationEERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESE_E3$_0EclINS2_12ArrayRefIterIS5_EEEEbT_.exit33.thread.i.i.i.i"
   %.pre.i.i.i.i920 = ptrtoint ptr %i.dln to i64
-  %.pre50.i.i.i.i = sub i64 %i.dku, %.pre.i.i.i.i920
+  %.pre50.i.i.i.i = sub i64 %160, %.pre.i.i.i.i920
   br label %._crit_edge.i.i.i.i913
 
 ._crit_edge.i.i.i.i913:                           ; preds = %._crit_edge.loopexit.i.i.i.i919, %bb.sd

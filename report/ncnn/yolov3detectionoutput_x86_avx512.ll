@@ -202,9 +202,9 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %i.bm, ptr noundef nonnull align 4 dereferenceable(28) %i.bp, i64 28, i1 false), !tbaa.struct !66
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.h, %bb.i, %bb.j
-  %i.ce = phi ptr [ %.pre180, %bb.h ], [ %i.bm, %bb.i ], [ %i.bm, %bb.j ]
-  %i.cf = phi ptr [ %.pre178, %bb.h ], [ %i.bl, %bb.i ], [ %i.bl, %bb.j ]
+bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
+  %i.ce = phi ptr [ %i.bm, %bb.j ], [ %i.bm, %bb.i ], [ %.pre180, %bb.h ]
+  %i.cf = phi ptr [ %i.bl, %bb.j ], [ %i.bl, %bb.i ], [ %.pre178, %bb.h ]
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ce, i64 %i.bx ; 2 uses
   store ptr %i.cg, ptr %i.q, align 8, !tbaa !50
   br label %bb.x

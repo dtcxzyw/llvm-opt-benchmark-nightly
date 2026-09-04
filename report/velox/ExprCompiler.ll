@@ -205,7 +205,6 @@ bb.a:
   %i.f = alloca i64, align 8                      ; 4 uses
   %i.g = alloca ptr, align 8                      ; 4 uses
   %i.h = alloca i64, align 8                      ; 4 uses
-  %4 = ptrtoint ptr %2 to i64                     ; 3 uses
   %i.i = icmp eq ptr %1, %2
   br i1 %i.i, label %_ZN5folly4simd6detail19simdForEachAligningILi1EKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb1EE15ForEachDelegateISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISG_EEEEEEviPT0_SL_RT1_.exit, label %bb.b
 
@@ -213,6 +212,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.k = and i64 %i.j, -32                        ; 2 uses
   %i.l = inttoptr i64 %i.k to ptr                 ; 4 uses
+  %4 = ptrtoint ptr %2 to i64                     ; 2 uses
   %i.m = and i64 %4, -32                          ; 2 uses
   %i.n = inttoptr i64 %i.m to ptr                 ; 2 uses
   %i.o = and i64 %i.j, 31                         ; 2 uses
@@ -384,8 +384,9 @@ bb.h:                                             ; preds = %_ZN5folly4simd6deta
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #14
   store ptr %.2, ptr %i.g, align 8, !tbaa !266
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #14
+  %5 = ptrtoint ptr %2 to i64
   %i.bv = ptrtoint ptr %.2 to i64
-  %i.bw = sub i64 %4, %i.bv
+  %i.bw = sub i64 %5, %i.bv
   store i64 %i.bw, ptr %i.h, align 8, !tbaa !119
   %i.bx = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJPKclEEERS5_DpOT_(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull align 8 dereferenceable(8) %i.h) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #14

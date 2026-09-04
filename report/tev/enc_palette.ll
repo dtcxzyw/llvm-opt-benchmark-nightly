@@ -205,10 +205,10 @@ bb.ab:                                            ; preds = %.lr.ph36, %bb.ab
 define linkonce_odr hidden ptr @_ZNSt3__16vectorIN3jxl7ChannelENS_9allocatorIS2_EEE5eraseENS_11__wrap_iterIPKS2_EES9_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2) local_unnamed_addr #4 comdat align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !49     ; 2 uses
-  %i.b = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.b = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.c = ptrtoint ptr %i.a to i64
   %i.d = sub i64 %i.b, %i.c
-  %i.e = getelementptr inbounds i8, ptr %i.a, i64 %i.d ; 4 uses
+  %i.e = getelementptr inbounds i8, ptr %i.a, i64 %i.d ; 5 uses
   %.not = icmp eq ptr %1, %2
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -251,13 +251,13 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit: ; preds = %.lr.ph.i.i.i.i.i
   %.pre = load ptr, ptr %i.i, align 8, !tbaa !136
-  %3 = ptrtoint ptr %i.aa to i64
   br label %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit
 
 _ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit: ; preds = %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit, %bb.b
   %i.ab = phi ptr [ %i.j, %bb.b ], [ %.pre, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit ] ; 2 uses
-  %storemerge.lcssa.i.i.i.i.i = phi i64 [ %i.b, %bb.b ], [ %3, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit ]
-  %i.ac = sub i64 %storemerge.lcssa.i.i.i.i.i, %i.b
+  %storemerge.lcssa.i.i.i.i.i = phi ptr [ %i.e, %bb.b ], [ %i.aa, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit ]
+  %3 = ptrtoint ptr %storemerge.lcssa.i.i.i.i.i to i64
+  %i.ac = sub i64 %3, %i.b
   %i.ad = getelementptr inbounds i8, ptr %i.e, i64 %i.ac ; 3 uses
   %.not6.i.i = icmp eq ptr %i.ad, %i.ab
   br i1 %.not6.i.i, label %_ZNSt3__16vectorIN3jxl7ChannelENS_9allocatorIS2_EEE17__destruct_at_endB8nn180100EPS2_.exit, label %.lr.ph.i.i

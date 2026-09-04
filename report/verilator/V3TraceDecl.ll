@@ -204,10 +204,10 @@ _ZN16TraceDeclVisitor10TraceEntryaSEOS0_.exit131: ; preds = %bb.ea, %_ZNSt7__cxx
 
 _ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i: ; preds = %_ZN16TraceDeclVisitor10TraceEntryaSEOS0_.exit131, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i32 = phi ptr [ %i.vx, %._crit_edge.i ], [ %i.yj, %_ZN16TraceDeclVisitor10TraceEntryaSEOS0_.exit131 ]
-  %i.ym = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i32 to i64 ; 3 uses
+  %i.ym = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i32 to i64 ; 2 uses
   %i.yn = ptrtoint ptr %i.vx to i64
   %i.yo = sub i64 %i.ym, %i.yn
-  %i.yp = getelementptr inbounds i8, ptr %i.vx, i64 %i.yo ; 2 uses
+  %i.yp = getelementptr inbounds i8, ptr %i.vx, i64 %i.yo ; 3 uses
   %i.yq = ptrtoint ptr %i.nh to i64               ; 2 uses
   %i.yr = ptrtoint ptr %.117.i to i64
   %i.ys = sub i64 %i.yq, %i.yr                    ; 2 uses
@@ -397,15 +397,12 @@ _ZN16TraceDeclVisitor10TraceEntryaSEOS0_.exit113: ; preds = %bb.em, %_ZNSt7__cxx
   %i.aay = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22.i, i64 80 ; 2 uses
   %i.aaz = add nsw i64 %.012.i.i.i.i.i21.i, -1
   %i.aba = icmp samesign ugt i64 %.012.i.i.i.i.i21.i, 1
-  br i1 %i.aba, label %.lr.ph.i.i.i.i.i20.i, label %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24.loopexit.i, !llvm.loop !22
+  br i1 %i.aba, label %.lr.ph.i.i.i.i.i20.i, label %_ZSt12__move_mergeIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIZNS0_5visitEP8AstScopeEUlRKS1_SE_E_EEET0_T_SI_SI_SI_SH_T1_.exit, !llvm.loop !22
 
-_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24.loopexit.i: ; preds = %_ZN16TraceDeclVisitor10TraceEntryaSEOS0_.exit113
-  %3 = ptrtoint ptr %i.aay to i64
-  br label %_ZSt12__move_mergeIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIZNS0_5visitEP8AstScopeEUlRKS1_SE_E_EEET0_T_SI_SI_SI_SH_T1_.exit
-
-_ZSt12__move_mergeIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIZNS0_5visitEP8AstScopeEUlRKS1_SE_E_EEET0_T_SI_SI_SI_SH_T1_.exit: ; preds = %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i, %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24.loopexit.i
-  %.08.lcssa.i.i.i.i.i18.i = phi i64 [ %i.ym, %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i ], [ %3, %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24.loopexit.i ]
-  %i.abb = sub i64 %.08.lcssa.i.i.i.i.i18.i, %i.ym
+_ZSt12__move_mergeIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIZNS0_5visitEP8AstScopeEUlRKS1_SE_E_EEET0_T_SI_SI_SI_SH_T1_.exit: ; preds = %_ZN16TraceDeclVisitor10TraceEntryaSEOS0_.exit113, %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i
+  %.08.lcssa.i.i.i.i.i18.i = phi ptr [ %i.yp, %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i ], [ %i.aay, %_ZN16TraceDeclVisitor10TraceEntryaSEOS0_.exit113 ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i to i64
+  %i.abb = sub i64 %3, %i.ym
   %i.abc = getelementptr inbounds i8, ptr %i.yp, i64 %i.abb ; 2 uses
   %i.abd = sub i64 %i.i, %i.yq
   %i.abe = sdiv exact i64 %i.abd, 80              ; 2 uses
@@ -808,10 +805,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 _ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit: ; preds = %.lr.ph.i.i.i.i.i, %._crit_edge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa, %._crit_edge ], [ %i.t, %.lr.ph.i.i.i.i.i ]
-  %i.w = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.w = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.x = ptrtoint ptr %.sroa.0.0.lcssa to i64
   %i.y = sub i64 %i.w, %i.x
-  %i.z = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.y ; 2 uses
+  %i.z = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.y ; 3 uses
   %i.aa = ptrtoint ptr %3 to i64
   %i.ab = ptrtoint ptr %.016.lcssa to i64
   %i.ac = sub i64 %i.aa, %i.ab                    ; 2 uses
@@ -831,15 +828,12 @@ _ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6
   %i.ah = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22, i64 80 ; 2 uses
   %i.ai = add nsw i64 %.012.i.i.i.i.i21, -1
   %i.aj = icmp samesign ugt i64 %.012.i.i.i.i.i21, 1
-  br i1 %i.aj, label %.lr.ph.i.i.i.i.i20, label %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24.loopexit, !llvm.loop !22
+  br i1 %i.aj, label %.lr.ph.i.i.i.i.i20, label %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24, !llvm.loop !22
 
-_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24.loopexit: ; preds = %.lr.ph.i.i.i.i.i20
-  %5 = ptrtoint ptr %i.ah to i64
-  br label %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24
-
-_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24: ; preds = %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24.loopexit, %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit
-  %.08.lcssa.i.i.i.i.i18 = phi i64 [ %i.w, %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit ], [ %5, %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24.loopexit ]
-  %i.ak = sub i64 %.08.lcssa.i.i.i.i.i18, %i.w
+_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24: ; preds = %.lr.ph.i.i.i.i.i20, %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit
+  %.08.lcssa.i.i.i.i.i18 = phi ptr [ %i.z, %_ZSt4moveIPN16TraceDeclVisitor10TraceEntryEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit ], [ %i.ah, %.lr.ph.i.i.i.i.i20 ]
+  %5 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18 to i64
+  %i.ak = sub i64 %5, %i.w
   %i.al = getelementptr inbounds i8, ptr %i.z, i64 %i.ak
   ret ptr %i.al
 }

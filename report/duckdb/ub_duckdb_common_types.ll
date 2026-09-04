@@ -205,7 +205,7 @@ _ZN6duckdb12_GLOBAL__N_110TextReader11MatchNumberEv.exit: ; preds = %.lr.ph.i.i3
   %i.yw = load ptr, ptr %1, align 8, !tbaa !602   ; 5 uses
   %i.yx = ptrtoint ptr %i.yv to i64               ; 2 uses
   %i.yy = ptrtoint ptr %i.yw to i64
-  %i.yz = sub i64 %i.yx, %i.yy                    ; 8 uses
+  %i.yz = sub i64 %i.yx, %i.yy                    ; 9 uses
   %i.za = load ptr, ptr %i.xg, align 8, !tbaa !835
   %i.zb = ptrtoint ptr %i.za to i64
   %i.zc = sub i64 %i.zb, %i.yx
@@ -242,7 +242,7 @@ bb.dr:                                            ; preds = %_ZNKSt6vectorIcSaIc
   br label %_ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i
 
 _ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i: ; preds = %bb.dr, %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i
-  %i.zm = phi ptr [ %i.zl, %bb.dr ], [ null, %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i ] ; 7 uses
+  %i.zm = phi ptr [ %i.zl, %bb.dr ], [ null, %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i ] ; 6 uses
   %i.zn = icmp sgt i64 %i.yz, 1
   br i1 %i.zn, label %bb.ds, label %bb.dt, !prof !420
 
@@ -257,9 +257,9 @@ bb.dt:                                            ; preds = %_ZNSt12_Vector_base
 .thread:                                          ; preds = %bb.dt
   %i.zp = load i8, ptr %i.yw, align 1, !tbaa !273
   store i8 %i.zp, ptr %i.zm, align 1, !tbaa !273
-  %i.zq = getelementptr inbounds nuw i8, ptr %i.zm, i64 1
+  %i.zq = getelementptr inbounds nuw i8, ptr %i.zm, i64 %i.yz ; 2 uses
   store double %i.yu, ptr %i.zq, align 1
-  %i.zr = getelementptr inbounds nuw i8, ptr %i.zm, i64 9
+  %i.zr = getelementptr inbounds nuw i8, ptr %i.zq, i64 8
   br label %bb.dv
 
 bb.du:                                            ; preds = %bb.dt, %bb.ds
@@ -478,7 +478,7 @@ _ZN6duckdb12_GLOBAL__N_110TextReader11MatchNumberEv.exit375: ; preds = %.lr.ph.i
   %i.ach = load ptr, ptr %1, align 8, !tbaa !602  ; 5 uses
   %i.aci = ptrtoint ptr %i.acg to i64             ; 2 uses
   %i.acj = ptrtoint ptr %i.ach to i64
-  %i.ack = sub i64 %i.aci, %i.acj                 ; 8 uses
+  %i.ack = sub i64 %i.aci, %i.acj                 ; 9 uses
   %i.acl = load ptr, ptr %i.aal, align 8, !tbaa !835
   %i.acm = ptrtoint ptr %i.acl to i64
   %i.acn = sub i64 %i.acm, %i.aci
@@ -515,7 +515,7 @@ bb.es:                                            ; preds = %_ZNKSt6vectorIcSaIc
   br label %_ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i501
 
 _ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i501: ; preds = %bb.es, %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i498
-  %i.acx = phi ptr [ %i.acw, %bb.es ], [ null, %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i498 ] ; 7 uses
+  %i.acx = phi ptr [ %i.acw, %bb.es ], [ null, %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i498 ] ; 6 uses
   %i.acy = icmp sgt i64 %i.ack, 1
   br i1 %i.acy, label %bb.et, label %bb.eu, !prof !420
 
@@ -530,9 +530,9 @@ bb.eu:                                            ; preds = %_ZNSt12_Vector_base
 .thread594:                                       ; preds = %bb.eu
   %i.ada = load i8, ptr %i.ach, align 1, !tbaa !273
   store i8 %i.ada, ptr %i.acx, align 1, !tbaa !273
-  %i.adb = getelementptr inbounds nuw i8, ptr %i.acx, i64 1
+  %i.adb = getelementptr inbounds nuw i8, ptr %i.acx, i64 %i.ack ; 2 uses
   store double %i.acf, ptr %i.adb, align 1
-  %i.adc = getelementptr inbounds nuw i8, ptr %i.acx, i64 9
+  %i.adc = getelementptr inbounds nuw i8, ptr %i.adb, i64 8
   br label %bb.ew
 
 bb.ev:                                            ; preds = %bb.eu, %bb.et
@@ -935,7 +935,7 @@ _ZN6duckdb12_GLOBAL__N_110TextReader11MatchNumberEv.exit423: ; preds = %.lr.ph.i
   %i.alo = load ptr, ptr %1, align 8, !tbaa !602  ; 5 uses
   %i.alp = ptrtoint ptr %i.aln to i64             ; 2 uses
   %i.alq = ptrtoint ptr %i.alo to i64
-  %i.alr = sub i64 %i.alp, %i.alq                 ; 8 uses
+  %i.alr = sub i64 %i.alp, %i.alq                 ; 9 uses
   %i.als = load ptr, ptr %i.ajg, align 8, !tbaa !835
   %i.alt = ptrtoint ptr %i.als to i64
   %i.alu = sub i64 %i.alt, %i.alp
@@ -972,7 +972,7 @@ bb.gr:                                            ; preds = %_ZNKSt6vectorIcSaIc
   br label %_ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i516
 
 _ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i516: ; preds = %bb.gr, %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i513
-  %i.ame = phi ptr [ %i.amd, %bb.gr ], [ null, %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i513 ] ; 7 uses
+  %i.ame = phi ptr [ %i.amd, %bb.gr ], [ null, %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i513 ] ; 6 uses
   %i.amf = icmp sgt i64 %i.alr, 1
   br i1 %i.amf, label %bb.gs, label %bb.gt, !prof !420
 
@@ -987,9 +987,9 @@ bb.gt:                                            ; preds = %_ZNSt12_Vector_base
 .thread599:                                       ; preds = %bb.gt
   %i.amh = load i8, ptr %i.alo, align 1, !tbaa !273
   store i8 %i.amh, ptr %i.ame, align 1, !tbaa !273
-  %i.ami = getelementptr inbounds nuw i8, ptr %i.ame, i64 1
+  %i.ami = getelementptr inbounds nuw i8, ptr %i.ame, i64 %i.alr ; 2 uses
   store double %i.alm, ptr %i.ami, align 1
-  %i.amj = getelementptr inbounds nuw i8, ptr %i.ame, i64 9
+  %i.amj = getelementptr inbounds nuw i8, ptr %i.ami, i64 8
   br label %bb.gv
 
 bb.gu:                                            ; preds = %bb.gt, %bb.gs
@@ -1392,7 +1392,7 @@ _ZN6duckdb12_GLOBAL__N_110TextReader11MatchNumberEv.exit455: ; preds = %.lr.ph.i
   %i.asg = load ptr, ptr %1, align 8, !tbaa !602  ; 5 uses
   %i.ash = ptrtoint ptr %i.asf to i64             ; 2 uses
   %i.asi = ptrtoint ptr %i.asg to i64
-  %i.asj = sub i64 %i.ash, %i.asi                 ; 8 uses
+  %i.asj = sub i64 %i.ash, %i.asi                 ; 9 uses
   %i.ask = load ptr, ptr %i.anx, align 8, !tbaa !835
   %i.asl = ptrtoint ptr %i.ask to i64
   %i.asm = sub i64 %i.asl, %i.ash
@@ -1429,7 +1429,7 @@ bb.ij:                                            ; preds = %_ZNKSt6vectorIcSaIc
   br label %_ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i531
 
 _ZNSt12_Vector_baseIcSaIcEE11_M_allocateEm.exit.i531: ; preds = %bb.ij, %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i528
-  %i.asw = phi ptr [ %i.asv, %bb.ij ], [ null, %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i528 ] ; 7 uses
+  %i.asw = phi ptr [ %i.asv, %bb.ij ], [ null, %_ZNKSt6vectorIcSaIcEE12_M_check_lenEmPKc.exit.i528 ] ; 6 uses
   %i.asx = icmp sgt i64 %i.asj, 1
   br i1 %i.asx, label %bb.ik, label %bb.il, !prof !420
 
@@ -1444,9 +1444,9 @@ bb.il:                                            ; preds = %_ZNSt12_Vector_base
 .thread603:                                       ; preds = %bb.il
   %i.asz = load i8, ptr %i.asg, align 1, !tbaa !273
   store i8 %i.asz, ptr %i.asw, align 1, !tbaa !273
-  %i.ata = getelementptr inbounds nuw i8, ptr %i.asw, i64 1
+  %i.ata = getelementptr inbounds nuw i8, ptr %i.asw, i64 %i.asj ; 2 uses
   store double %i.ase, ptr %i.ata, align 1
-  %i.atb = getelementptr inbounds nuw i8, ptr %i.asw, i64 9
+  %i.atb = getelementptr inbounds nuw i8, ptr %i.ata, i64 8
   br label %bb.in
 
 bb.im:                                            ; preds = %bb.il, %bb.ik
@@ -1849,13 +1849,14 @@ bb.k:                                             ; preds = %bb.j
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %i.e, ptr noundef nonnull align 16 dereferenceable(20) %5, i64 20, i1 false), !tbaa.struct !926
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #46
   %i.ac = load ptr, ptr %i.d, align 8, !tbaa !927 ; 2 uses
-  %i.ad = ptrtoint ptr %i.t to i64
-  %i.ae = ptrtoint ptr %i.ac to i64
-  %i.af = sub i64 %i.ad, %i.ae                    ; 2 uses
+  %i.ad = ptrtoint ptr %i.t to i64                ; 2 uses
+  %i.ae = ptrtoint ptr %i.ac to i64               ; 2 uses
+  %i.af = sub i64 %i.ad, %i.ae
   %i.ag = getelementptr inbounds i8, ptr %i.ac, i64 %i.af
+  %.neg.i.i = sub i64 %i.ae, %i.ad
   store ptr %i.ag, ptr %i.d, align 8, !tbaa !927
   %i.ah = load i64, ptr %i.f, align 16, !tbaa !928
-  %14 = sub i64 %i.ah, %i.af
+  %14 = add i64 %.neg.i.i, %i.ah
   store i64 %14, ptr %i.f, align 16, !tbaa !928
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #46
   %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.c, align 16
@@ -1954,13 +1955,14 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %i.bf = load ptr, ptr %i.d, align 8, !tbaa !927 ; 2 uses
-  %i.bg = ptrtoint ptr %i.bd to i64
-  %i.bh = ptrtoint ptr %i.bf to i64
-  %i.bi = sub i64 %i.bg, %i.bh                    ; 2 uses
+  %i.bg = ptrtoint ptr %i.bd to i64               ; 2 uses
+  %i.bh = ptrtoint ptr %i.bf to i64               ; 2 uses
+  %i.bi = sub i64 %i.bg, %i.bh
   %i.bj = getelementptr inbounds i8, ptr %i.bf, i64 %i.bi
+  %.neg.i.i55 = sub i64 %i.bh, %i.bg
   store ptr %i.bj, ptr %i.d, align 8, !tbaa !927
   %i.bk = load i64, ptr %i.f, align 16, !tbaa !928
-  %15 = sub i64 %i.bk, %i.bi
+  %15 = add i64 %.neg.i.i55, %i.bk
   store i64 %15, ptr %i.f, align 16, !tbaa !928
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #46
   %.sroa.0.0.copyload.i.i.i55 = load ptr, ptr %i.c, align 16
@@ -2363,14 +2365,15 @@ bb.a:
   %7 = alloca %"class.duckdb_fmt::v6::arg_formatter", align 8 ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !927  ; 2 uses
-  %i.c = ptrtoint ptr %1 to i64
-  %i.d = ptrtoint ptr %i.b to i64
-  %i.e = sub i64 %i.c, %i.d                       ; 2 uses
+  %i.c = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = sub i64 %i.c, %i.d
   %i.f = getelementptr inbounds i8, ptr %i.b, i64 %i.e
+  %.neg.i = sub i64 %i.d, %i.c
   store ptr %i.f, ptr %i.a, align 8, !tbaa !927
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.h = load i64, ptr %i.g, align 16, !tbaa !928
-  %8 = sub i64 %i.h, %i.e
+  %8 = add i64 %.neg.i, %i.h
   store i64 %8, ptr %i.g, align 16, !tbaa !928
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
@@ -2448,13 +2451,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.f,
 
 bb.g:                                             ; preds = %bb.c
   %i.ac = load ptr, ptr %i.a, align 8, !tbaa !927 ; 2 uses
-  %i.ad = ptrtoint ptr %i.v to i64
-  %i.ae = ptrtoint ptr %i.ac to i64
-  %i.af = sub i64 %i.ad, %i.ae                    ; 2 uses
+  %i.ad = ptrtoint ptr %i.v to i64                ; 2 uses
+  %i.ae = ptrtoint ptr %i.ac to i64               ; 2 uses
+  %i.af = sub i64 %i.ad, %i.ae
   %i.ag = getelementptr inbounds i8, ptr %i.ac, i64 %i.af
+  %.neg.i15 = sub i64 %i.ae, %i.ad
   store ptr %i.ag, ptr %i.a, align 8, !tbaa !927
   %i.ah = load i64, ptr %i.g, align 16, !tbaa !928
-  %9 = sub i64 %i.ah, %i.af
+  %9 = add i64 %.neg.i15, %i.ah
   store i64 %9, ptr %i.g, align 16, !tbaa !928
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #46
   %.sroa.0.0.copyload.i.i = load ptr, ptr %i.i, align 16

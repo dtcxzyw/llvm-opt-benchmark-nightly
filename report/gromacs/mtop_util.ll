@@ -205,7 +205,7 @@ bb.cg:                                            ; preds = %_ZN3gmx11ListOfList
   %i.awy = ptrtoint ptr %i.aww to i64
   %i.awz = ptrtoint ptr %i.awu to i64             ; 2 uses
   %i.axa = sub i64 %i.awy, %i.awz                 ; 4 uses
-  %i.axb = getelementptr i8, ptr %i.awu, i64 %i.axa
+  %i.axb = getelementptr inbounds nuw i8, ptr %i.awu, i64 %i.axa
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %3, i8 0, i64 40, i1 false)
   call void @_Z11init_blockaP8t_blocka(ptr noundef nonnull %3)

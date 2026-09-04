@@ -204,10 +204,10 @@ bb.f:                                             ; preds = %_ZN4llvmltENS_9Stri
 
 _ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i33.prol.loopexit, %.lr.ph.i.i.i.i.i.i33, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i32 = phi ptr [ %.sroa.0.0.lcssa.i, %._crit_edge.i ], [ %.lcssa121.unr, %.lr.ph.i.i.i.i.i.i33.prol.loopexit ], [ %i.ey, %.lr.ph.i.i.i.i.i.i33 ]
-  %i.fb = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i32 to i64 ; 3 uses
+  %i.fb = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i32 to i64 ; 2 uses
   %i.fc = ptrtoint ptr %.sroa.0.0.lcssa.i to i64
   %i.fd = sub i64 %i.fb, %i.fc
-  %i.fe = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.fd ; 5 uses
+  %i.fe = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.fd ; 6 uses
   %i.ff = ptrtoint ptr %i.cx to i64               ; 2 uses
   %i.fg = ptrtoint ptr %.016.lcssa.i to i64
   %i.fh = sub i64 %i.ff, %i.fg                    ; 3 uses
@@ -239,7 +239,7 @@ _ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_
   %.0910.i.i.i.i.i22.i.unr = phi ptr [ %.016.lcssa.i, %.lr.ph.i.i.i.i.i19.i.preheader ], [ %i.fq, %.lr.ph.i.i.i.i.i19.i.prol ]
   %.lcssa122.unr = phi ptr [ poison, %.lr.ph.i.i.i.i.i19.i.preheader ], [ %i.fr, %.lr.ph.i.i.i.i.i19.i.prol ]
   %i.ft = icmp eq i64 %i.fh, 32
-  br i1 %i.ft, label %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23.loopexit.i, label %.lr.ph.i.i.i.i.i19.i
+  br i1 %i.ft, label %_ZSt12__move_mergeIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZ16sortTargetValuesIS4_EvRS8_IT_SaISF_EEEUlRKSF_RKT0_E_EEESL_SF_SF_SF_SF_SL_T1_.exit, label %.lr.ph.i.i.i.i.i19.i
 
 .lr.ph.i.i.i.i.i19.i:                             ; preds = %.lr.ph.i.i.i.i.i19.i.prol.loopexit, %.lr.ph.i.i.i.i.i19.i
   %.012.i.i.i.i.i20.i = phi i64 [ %i.gg, %.lr.ph.i.i.i.i.i19.i ], [ %.012.i.i.i.i.i20.i.unr, %.lr.ph.i.i.i.i.i19.i.prol.loopexit ] ; 2 uses
@@ -263,16 +263,12 @@ _ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_
   %i.gf = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i21.i, i64 64 ; 2 uses
   %i.gg = add nsw i64 %.012.i.i.i.i.i20.i, -2
   %i.gh = icmp sgt i64 %.012.i.i.i.i.i20.i, 2
-  br i1 %i.gh, label %.lr.ph.i.i.i.i.i19.i, label %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23.loopexit.i, !llvm.loop !22
+  br i1 %i.gh, label %.lr.ph.i.i.i.i.i19.i, label %_ZSt12__move_mergeIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZ16sortTargetValuesIS4_EvRS8_IT_SaISF_EEEUlRKSF_RKT0_E_EEESL_SF_SF_SF_SF_SL_T1_.exit, !llvm.loop !22
 
-_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23.loopexit.i: ; preds = %.lr.ph.i.i.i.i.i19.i, %.lr.ph.i.i.i.i.i19.i.prol.loopexit
-  %.lcssa122 = phi ptr [ %.lcssa122.unr, %.lr.ph.i.i.i.i.i19.i.prol.loopexit ], [ %i.gf, %.lr.ph.i.i.i.i.i19.i ]
-  %3 = ptrtoint ptr %.lcssa122 to i64
-  br label %_ZSt12__move_mergeIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZ16sortTargetValuesIS4_EvRS8_IT_SaISF_EEEUlRKSF_RKT0_E_EEESL_SF_SF_SF_SF_SL_T1_.exit
-
-_ZSt12__move_mergeIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZ16sortTargetValuesIS4_EvRS8_IT_SaISF_EEEUlRKSF_RKT0_E_EEESL_SF_SF_SF_SF_SL_T1_.exit: ; preds = %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i, %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23.loopexit.i
-  %.08.lcssa.i.i.i.i.i18.i = phi i64 [ %i.fb, %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i ], [ %3, %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23.loopexit.i ]
-  %i.gi = sub i64 %.08.lcssa.i.i.i.i.i18.i, %i.fb
+_ZSt12__move_mergeIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZ16sortTargetValuesIS4_EvRS8_IT_SaISF_EEEUlRKSF_RKT0_E_EEESL_SF_SF_SF_SF_SL_T1_.exit: ; preds = %.lr.ph.i.i.i.i.i19.i.prol.loopexit, %.lr.ph.i.i.i.i.i19.i, %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i
+  %.08.lcssa.i.i.i.i.i18.i = phi ptr [ %i.fe, %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i ], [ %.lcssa122.unr, %.lr.ph.i.i.i.i.i19.i.prol.loopexit ], [ %i.gf, %.lr.ph.i.i.i.i.i19.i ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i to i64
+  %i.gi = sub i64 %3, %i.fb
   %i.gj = getelementptr inbounds i8, ptr %i.fe, i64 %i.gi ; 2 uses
   %i.gk = sub i64 %i.i, %i.ff
   %i.gl = ashr exact i64 %i.gk, 5                 ; 2 uses
@@ -675,10 +671,10 @@ bb.c:                                             ; preds = %_ZN4llvmltENS_9Stri
 
 _ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit: ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i, %._crit_edge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa, %._crit_edge ], [ %.lcssa49.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ], [ %i.bd, %.lr.ph.i.i.i.i.i ]
-  %i.bg = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.bg = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.bh = ptrtoint ptr %.sroa.0.0.lcssa to i64
   %i.bi = sub i64 %i.bg, %i.bh
-  %i.bj = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.bi ; 5 uses
+  %i.bj = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.bi ; 6 uses
   %i.bk = ptrtoint ptr %3 to i64
   %i.bl = ptrtoint ptr %.016.lcssa to i64
   %i.bm = sub i64 %i.bk, %i.bl                    ; 3 uses
@@ -710,7 +706,7 @@ _ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_
   %.0910.i.i.i.i.i22.unr = phi ptr [ %.016.lcssa, %.lr.ph.i.i.i.i.i19.preheader ], [ %i.bv, %.lr.ph.i.i.i.i.i19.prol ]
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.i.i.i.i.i19.preheader ], [ %i.bw, %.lr.ph.i.i.i.i.i19.prol ]
   %i.by = icmp eq i64 %i.bm, 32
-  br i1 %i.by, label %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23.loopexit, label %.lr.ph.i.i.i.i.i19
+  br i1 %i.by, label %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23, label %.lr.ph.i.i.i.i.i19
 
 .lr.ph.i.i.i.i.i19:                               ; preds = %.lr.ph.i.i.i.i.i19.prol.loopexit, %.lr.ph.i.i.i.i.i19
   %.012.i.i.i.i.i20 = phi i64 [ %i.cl, %.lr.ph.i.i.i.i.i19 ], [ %.012.i.i.i.i.i20.unr, %.lr.ph.i.i.i.i.i19.prol.loopexit ] ; 2 uses
@@ -734,16 +730,12 @@ _ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_
   %i.ck = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i21, i64 64 ; 2 uses
   %i.cl = add nsw i64 %.012.i.i.i.i.i20, -2
   %i.cm = icmp sgt i64 %.012.i.i.i.i.i20, 2
-  br i1 %i.cm, label %.lr.ph.i.i.i.i.i19, label %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23.loopexit, !llvm.loop !22
+  br i1 %i.cm, label %.lr.ph.i.i.i.i.i19, label %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23, !llvm.loop !22
 
-_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23.loopexit: ; preds = %.lr.ph.i.i.i.i.i19, %.lr.ph.i.i.i.i.i19.prol.loopexit
-  %.lcssa = phi ptr [ %.lcssa.unr, %.lr.ph.i.i.i.i.i19.prol.loopexit ], [ %i.ck, %.lr.ph.i.i.i.i.i19 ]
-  %5 = ptrtoint ptr %.lcssa to i64
-  br label %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23
-
-_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23: ; preds = %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23.loopexit, %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit
-  %.08.lcssa.i.i.i.i.i18 = phi i64 [ %i.bg, %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit ], [ %5, %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23.loopexit ]
-  %i.cn = sub i64 %.08.lcssa.i.i.i.i.i18, %i.bg
+_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23: ; preds = %.lr.ph.i.i.i.i.i19.prol.loopexit, %.lr.ph.i.i.i.i.i19, %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit
+  %.08.lcssa.i.i.i.i.i18 = phi ptr [ %i.bj, %_ZSt4moveIPN4llvm13DiffScalarValINS0_9StringRefELNS0_12DiffAttrKindE3EEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit ], [ %.lcssa.unr, %.lr.ph.i.i.i.i.i19.prol.loopexit ], [ %i.ck, %.lr.ph.i.i.i.i.i19 ]
+  %5 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18 to i64
+  %i.cn = sub i64 %5, %i.bg
   %i.co = getelementptr inbounds i8, ptr %i.bj, i64 %i.cn
   ret ptr %i.co
 }

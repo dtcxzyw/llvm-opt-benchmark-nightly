@@ -202,10 +202,10 @@ bb.c:                                             ; preds = %"_ZN9__gnu_cxx5__op
 
 _ZSt4moveIPN12_GLOBAL__N_119CompressInstEmitter11CompressPatEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit: ; preds = %.lr.ph.i.i.i.i.i, %._crit_edge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.029.0.lcssa, %._crit_edge ], [ %i.aq, %.lr.ph.i.i.i.i.i ]
-  %i.at = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.at = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.au = ptrtoint ptr %.sroa.029.0.lcssa to i64
   %i.av = sub i64 %i.at, %i.au
-  %i.aw = getelementptr inbounds i8, ptr %.sroa.029.0.lcssa, i64 %i.av ; 2 uses
+  %i.aw = getelementptr inbounds i8, ptr %.sroa.029.0.lcssa, i64 %i.av ; 3 uses
   %i.ax = ptrtoint ptr %3 to i64
   %i.ay = ptrtoint ptr %.016.lcssa to i64
   %i.az = sub i64 %i.ax, %i.ay                    ; 2 uses
@@ -225,15 +225,12 @@ _ZSt4moveIPN12_GLOBAL__N_119CompressInstEmitter11CompressPatEN9__gnu_cxx17__norm
   %i.be = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i26, i64 576 ; 2 uses
   %i.bf = add nsw i64 %.012.i.i.i.i.i25, -1
   %i.bg = icmp samesign ugt i64 %.012.i.i.i.i.i25, 1
-  br i1 %i.bg, label %.lr.ph.i.i.i.i.i24, label %_ZSt4moveIPN12_GLOBAL__N_119CompressInstEmitter11CompressPatEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28.loopexit, !llvm.loop !5
+  br i1 %i.bg, label %.lr.ph.i.i.i.i.i24, label %_ZSt4moveIPN12_GLOBAL__N_119CompressInstEmitter11CompressPatEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28, !llvm.loop !5
 
-_ZSt4moveIPN12_GLOBAL__N_119CompressInstEmitter11CompressPatEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28.loopexit: ; preds = %.lr.ph.i.i.i.i.i24
-  %6 = ptrtoint ptr %i.be to i64
-  br label %_ZSt4moveIPN12_GLOBAL__N_119CompressInstEmitter11CompressPatEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28
-
-_ZSt4moveIPN12_GLOBAL__N_119CompressInstEmitter11CompressPatEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28: ; preds = %_ZSt4moveIPN12_GLOBAL__N_119CompressInstEmitter11CompressPatEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28.loopexit, %_ZSt4moveIPN12_GLOBAL__N_119CompressInstEmitter11CompressPatEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit
-  %.08.lcssa.i.i.i.i.i22 = phi i64 [ %i.at, %_ZSt4moveIPN12_GLOBAL__N_119CompressInstEmitter11CompressPatEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit ], [ %6, %_ZSt4moveIPN12_GLOBAL__N_119CompressInstEmitter11CompressPatEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28.loopexit ]
-  %i.bh = sub i64 %.08.lcssa.i.i.i.i.i22, %i.at
+_ZSt4moveIPN12_GLOBAL__N_119CompressInstEmitter11CompressPatEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28: ; preds = %.lr.ph.i.i.i.i.i24, %_ZSt4moveIPN12_GLOBAL__N_119CompressInstEmitter11CompressPatEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit
+  %.08.lcssa.i.i.i.i.i22 = phi ptr [ %i.aw, %_ZSt4moveIPN12_GLOBAL__N_119CompressInstEmitter11CompressPatEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit ], [ %i.be, %.lr.ph.i.i.i.i.i24 ]
+  %6 = ptrtoint ptr %.08.lcssa.i.i.i.i.i22 to i64
+  %i.bh = sub i64 %6, %i.at
   %i.bi = getelementptr inbounds i8, ptr %i.aw, i64 %i.bh
   ret ptr %i.bi
 }

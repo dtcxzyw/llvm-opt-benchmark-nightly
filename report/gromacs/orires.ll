@@ -205,9 +205,7 @@ bb.a:
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !166  ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %8, i64 96
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !163  ; 3 uses
-  %9 = ptrtoint ptr %i.l to i64
   %i.m = ptrtoint ptr %i.j to i64
-  %10 = sub i64 %9, %i.m
   br i1 %i.d, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -249,9 +247,9 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !166
   %i.ak = getelementptr inbounds nuw i8, ptr %8, i64 48
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !163
-  %i.am = ptrtoint ptr %i.al to i64
-  %i.an = ptrtoint ptr %i.aj to i64
-  %i.ao = sub i64 %i.am, %i.an
+  %i.am = ptrtoint ptr %i.aj to i64
+  %i.an = ptrtoint ptr %i.al to i64
+  %i.ao = sub i64 %i.an, %i.am
   %i.ap = sdiv exact i64 %i.ao, 12
   %i.aq = icmp eq i64 %i.ah, %i.ap
   br i1 %i.aq, label %bb.g, label %bb.f
@@ -310,6 +308,8 @@ bb.h:                                             ; preds = %.lr.ph, %bb.h
   br i1 %.not428, label %._crit_edge, label %bb.h
 
 ._crit_edge445:                                   ; preds = %.lr.ph444, %._crit_edge
+  %9 = ptrtoint ptr %i.l to i64
+  %10 = sub i64 %9, %i.m
   %i.bs = sdiv exact i64 %10, 12
   %i.bt = trunc i64 %i.bs to i32
   %i.bu = getelementptr inbounds nuw i8, ptr %8, i64 64

@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 .critedge:                                        ; preds = %.critedge.loopexit, %bb.f
   %i.ca = phi ptr [ %.pre, %.critedge.loopexit ], [ %i.p, %bb.f ]
   %i.cb = zext i32 %.077 to i64
-  %i.cc = getelementptr inbounds nuw [88 x i8], ptr %i.ca, i64 %i.cb ; 4 uses
+  %i.cc = getelementptr inbounds nuw [88 x i8], ptr %i.ca, i64 %i.cb ; 5 uses
   %i.cd = sub i32 %i.am, %i.v
   %i.ce = add i32 %i.cd, 1                        ; 2 uses
   %i.cf = ptrtoint ptr %i.cc to i64               ; 2 uses
@@ -244,7 +244,7 @@ bb.n:                                             ; preds = %.critedge
   %i.cx = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 48
   store i64 %i.cw, ptr %i.cx, align 8, !tbaa !39
   %i.cy = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 88 ; 2 uses
-  %i.cz = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 88 ; 2 uses
+  %i.cz = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 88 ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.cy, %i.ci
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !0
 
@@ -254,11 +254,12 @@ _ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i: ; pred
   br label %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.i
 
 _ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.i: ; preds = %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i, %bb.n
-  %i.db = phi ptr [ %i.ci, %bb.n ], [ %.pre.i, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i ] ; 2 uses
-  %storemerge.lcssa.i.i.i.i.i.i = phi i64 [ %i.cf, %bb.n ], [ %i.da, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i ]
-  %i.dc = sub i64 %storemerge.lcssa.i.i.i.i.i.i, %i.cf
-  %i.dd = getelementptr inbounds i8, ptr %i.cc, i64 %i.dc ; 3 uses
-  %.not6.i.i.i = icmp eq ptr %i.dd, %i.db
+  %.pre-phi = phi i64 [ %i.da, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i ], [ %i.cf, %bb.n ]
+  %i.db = phi ptr [ %.pre.i, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i ], [ %i.ci, %bb.n ] ; 2 uses
+  %storemerge.lcssa.i.i.i.i.i.i = phi ptr [ %i.cz, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i ], [ %i.cc, %bb.n ] ; 2 uses
+  %i.dc = sub i64 %.pre-phi, %i.cf
+  %i.dd = getelementptr inbounds i8, ptr %i.cc, i64 %i.dc
+  %.not6.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.db
   br i1 %.not6.i.i.i, label %_ZNSt3__16vectorIN3jxl7ChannelENS_9allocatorIS2_EEE17__destruct_at_endB8nn180100EPS2_.exit.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.i, %.lr.ph.i.i.i
@@ -266,7 +267,7 @@ _ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.i: ; preds = %_ZNS
   %i.de = getelementptr inbounds i8, ptr %.07.i.i.i, i64 -88 ; 2 uses
   %i.df = getelementptr inbounds i8, ptr %.07.i.i.i, i64 -64
   tail call void @_ZN3jxl13AlignedMemoryD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.df) #23
-  %.not.i.i.i = icmp eq ptr %i.dd, %i.de
+  %.not.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.de
   br i1 %.not.i.i.i, label %_ZNSt3__16vectorIN3jxl7ChannelENS_9allocatorIS2_EEE17__destruct_at_endB8nn180100EPS2_.exit.i, label %.lr.ph.i.i.i, !llvm.loop !1
 
 _ZNSt3__16vectorIN3jxl7ChannelENS_9allocatorIS2_EEE17__destruct_at_endB8nn180100EPS2_.exit.i: ; preds = %.lr.ph.i.i.i, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.i
@@ -669,7 +670,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 .critedge:                                        ; preds = %.critedge.loopexit, %bb.f
   %i.ca = phi ptr [ %.pre, %.critedge.loopexit ], [ %i.p, %bb.f ]
   %i.cb = zext i32 %.077 to i64
-  %i.cc = getelementptr inbounds nuw [88 x i8], ptr %i.ca, i64 %i.cb ; 4 uses
+  %i.cc = getelementptr inbounds nuw [88 x i8], ptr %i.ca, i64 %i.cb ; 5 uses
   %i.cd = sub i32 %i.am, %i.v
   %i.ce = add i32 %i.cd, 1                        ; 2 uses
   %i.cf = ptrtoint ptr %i.cc to i64               ; 2 uses
@@ -708,7 +709,7 @@ bb.n:                                             ; preds = %.critedge
   %i.cx = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 48
   store i64 %i.cw, ptr %i.cx, align 8, !tbaa !39
   %i.cy = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 88 ; 2 uses
-  %i.cz = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 88 ; 2 uses
+  %i.cz = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 88 ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.cy, %i.ci
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !0
 
@@ -718,11 +719,12 @@ _ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i: ; pred
   br label %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.i
 
 _ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.i: ; preds = %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i, %bb.n
-  %i.db = phi ptr [ %i.ci, %bb.n ], [ %.pre.i, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i ] ; 2 uses
-  %storemerge.lcssa.i.i.i.i.i.i = phi i64 [ %i.cf, %bb.n ], [ %i.da, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i ]
-  %i.dc = sub i64 %storemerge.lcssa.i.i.i.i.i.i, %i.cf
-  %i.dd = getelementptr inbounds i8, ptr %i.cc, i64 %i.dc ; 3 uses
-  %.not6.i.i.i = icmp eq ptr %i.dd, %i.db
+  %.pre-phi = phi i64 [ %i.da, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i ], [ %i.cf, %bb.n ]
+  %i.db = phi ptr [ %.pre.i, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i ], [ %i.ci, %bb.n ] ; 2 uses
+  %storemerge.lcssa.i.i.i.i.i.i = phi ptr [ %i.cz, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i ], [ %i.cc, %bb.n ] ; 2 uses
+  %i.dc = sub i64 %.pre-phi, %i.cf
+  %i.dd = getelementptr inbounds i8, ptr %i.cc, i64 %i.dc
+  %.not6.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.db
   br i1 %.not6.i.i.i, label %_ZNSt3__16vectorIN3jxl7ChannelENS_9allocatorIS2_EEE17__destruct_at_endB8nn180100EPS2_.exit.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.i, %.lr.ph.i.i.i
@@ -730,7 +732,7 @@ _ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.i: ; preds = %_ZNS
   %i.de = getelementptr inbounds i8, ptr %.07.i.i.i, i64 -88 ; 2 uses
   %i.df = getelementptr inbounds i8, ptr %.07.i.i.i, i64 -64
   tail call void @_ZN3jxl13AlignedMemoryD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.df) #23
-  %.not.i.i.i = icmp eq ptr %i.dd, %i.de
+  %.not.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.de
   br i1 %.not.i.i.i, label %_ZNSt3__16vectorIN3jxl7ChannelENS_9allocatorIS2_EEE17__destruct_at_endB8nn180100EPS2_.exit.i, label %.lr.ph.i.i.i, !llvm.loop !1
 
 _ZNSt3__16vectorIN3jxl7ChannelENS_9allocatorIS2_EEE17__destruct_at_endB8nn180100EPS2_.exit.i: ; preds = %.lr.ph.i.i.i, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.i
@@ -1133,7 +1135,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 .critedge:                                        ; preds = %.critedge.loopexit, %bb.f
   %i.ca = phi ptr [ %.pre, %.critedge.loopexit ], [ %i.p, %bb.f ]
   %i.cb = zext i32 %.077 to i64
-  %i.cc = getelementptr inbounds nuw [88 x i8], ptr %i.ca, i64 %i.cb ; 4 uses
+  %i.cc = getelementptr inbounds nuw [88 x i8], ptr %i.ca, i64 %i.cb ; 5 uses
   %i.cd = sub i32 %i.am, %i.v
   %i.ce = add i32 %i.cd, 1                        ; 2 uses
   %i.cf = ptrtoint ptr %i.cc to i64               ; 2 uses
@@ -1172,7 +1174,7 @@ bb.n:                                             ; preds = %.critedge
   %i.cx = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 48
   store i64 %i.cw, ptr %i.cx, align 8, !tbaa !39
   %i.cy = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 88 ; 2 uses
-  %i.cz = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 88 ; 2 uses
+  %i.cz = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 88 ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.cy, %i.ci
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !0
 
@@ -1182,11 +1184,12 @@ _ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i: ; pred
   br label %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.i
 
 _ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.i: ; preds = %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i, %bb.n
-  %i.db = phi ptr [ %i.ci, %bb.n ], [ %.pre.i, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i ] ; 2 uses
-  %storemerge.lcssa.i.i.i.i.i.i = phi i64 [ %i.cf, %bb.n ], [ %i.da, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i ]
-  %i.dc = sub i64 %storemerge.lcssa.i.i.i.i.i.i, %i.cf
-  %i.dd = getelementptr inbounds i8, ptr %i.cc, i64 %i.dc ; 3 uses
-  %.not6.i.i.i = icmp eq ptr %i.dd, %i.db
+  %.pre-phi = phi i64 [ %i.da, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i ], [ %i.cf, %bb.n ]
+  %i.db = phi ptr [ %.pre.i, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i ], [ %i.ci, %bb.n ] ; 2 uses
+  %storemerge.lcssa.i.i.i.i.i.i = phi ptr [ %i.cz, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.loopexit.i ], [ %i.cc, %bb.n ] ; 2 uses
+  %i.dc = sub i64 %.pre-phi, %i.cf
+  %i.dd = getelementptr inbounds i8, ptr %i.cc, i64 %i.dc
+  %.not6.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.db
   br i1 %.not6.i.i.i, label %_ZNSt3__16vectorIN3jxl7ChannelENS_9allocatorIS2_EEE17__destruct_at_endB8nn180100EPS2_.exit.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.i, %.lr.ph.i.i.i
@@ -1194,7 +1197,7 @@ _ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.i: ; preds = %_ZNS
   %i.de = getelementptr inbounds i8, ptr %.07.i.i.i, i64 -88 ; 2 uses
   %i.df = getelementptr inbounds i8, ptr %.07.i.i.i, i64 -64
   tail call void @_ZN3jxl13AlignedMemoryD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.df) #23
-  %.not.i.i.i = icmp eq ptr %i.dd, %i.de
+  %.not.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.de
   br i1 %.not.i.i.i, label %_ZNSt3__16vectorIN3jxl7ChannelENS_9allocatorIS2_EEE17__destruct_at_endB8nn180100EPS2_.exit.i, label %.lr.ph.i.i.i, !llvm.loop !1
 
 _ZNSt3__16vectorIN3jxl7ChannelENS_9allocatorIS2_EEE17__destruct_at_endB8nn180100EPS2_.exit.i: ; preds = %.lr.ph.i.i.i, %_ZNSt3__14moveB8nn180100IPN3jxl7ChannelES3_EET0_T_S5_S4_.exit.i

@@ -205,9 +205,9 @@ bb.ix:                                            ; preds = %bb.iw, %_ZNSt7__cxx
 .lr.ph1815.preheader:                             ; preds = %.preheader1669
   %.pre1984 = load ptr, ptr %30, align 8, !tbaa !351 ; 2 uses
   %.pre1985 = load ptr, ptr %i.av, align 8, !tbaa !352
-  %i.ahc = ptrtoint ptr %.pre1985 to i64
-  %i.ahd = ptrtoint ptr %.pre1984 to i64
-  %i.ahe = sub i64 %i.ahc, %i.ahd                 ; 2 uses
+  %i.ahc = ptrtoint ptr %.pre1984 to i64
+  %i.ahd = ptrtoint ptr %.pre1985 to i64
+  %i.ahe = sub i64 %i.ahd, %i.ahc                 ; 2 uses
   %i.ahf = icmp sgt i64 %i.ahe, 0
   %i.ahg = udiv exact i64 %i.ahe, 56
   br label %.lr.ph1815
@@ -403,9 +403,7 @@ bb.jk:                                            ; preds = %bb.jj
   %i.akq = load ptr, ptr %i.akp, align 8, !tbaa !322 ; 2 uses
   %i.akr = load ptr, ptr %30, align 8, !tbaa !351 ; 2 uses
   %i.aks = load ptr, ptr %i.av, align 8, !tbaa !352
-  %97 = ptrtoint ptr %i.aks to i64
   %i.akt = ptrtoint ptr %i.akr to i64
-  %98 = sub i64 %97, %i.akt
   %i.aku = getelementptr inbounds nuw i8, ptr %i.akq, i64 48 ; 3 uses
   %i.akv = load ptr, ptr %i.aku, align 8, !tbaa !325 ; 7 uses
   %i.akw = getelementptr inbounds nuw i8, ptr %i.akv, i64 64
@@ -423,6 +421,8 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   br i1 %.not39.i, label %_ZL16make_swap_groupsP12t_swapcoordsN3gmx8ArrayRefIK10IndexGroupEE.exit, label %.lr.ph.i921
 
 .lr.ph.i921:                                      ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.preheader.i
+  %97 = ptrtoint ptr %i.aks to i64
+  %98 = sub i64 %97, %i.akt
   %.fr44.i = freeze i64 %98                       ; 2 uses
   %i.ale = icmp sgt i64 %.fr44.i, 0
   %i.alf = udiv exact i64 %.fr44.i, 56
@@ -636,9 +636,7 @@ bb.kb:                                            ; preds = %_ZL16make_swap_grou
   %i.anz = getelementptr inbounds nuw i8, ptr %i.any, i64 81920 ; 4 uses
   %i.aoa = load ptr, ptr %30, align 8, !tbaa !351 ; 2 uses
   %i.aob = load ptr, ptr %i.av, align 8, !tbaa !352
-  %99 = ptrtoint ptr %i.aob to i64
   %i.aoc = ptrtoint ptr %i.aoa to i64
-  %100 = sub i64 %99, %i.aoc                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #30
   %i.aod = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 7 uses
   store ptr %i.aod, ptr %23, align 8, !tbaa !17
@@ -682,6 +680,8 @@ bb.ke:                                            ; preds = %bb.kd, %bb.kc, %._c
   %i.aon = getelementptr inbounds nuw i8, ptr %i.aom, i64 %i.aok
   store i8 0, ptr %i.aon, align 1, !tbaa !22
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #30
+  %99 = ptrtoint ptr %i.aob to i64
+  %100 = sub i64 %99, %i.aoc                      ; 2 uses
   %i.aoo = icmp sgt i64 %100, 0
   br i1 %i.aoo, label %.lr.ph.preheader.i.i, label %._crit_edge.i.i934
 
@@ -1084,9 +1084,9 @@ bb.lh:                                            ; preds = %bb.lg
   %i.aub = trunc i64 %i.aua to i32                ; 2 uses
   %i.auc = load ptr, ptr %68, align 8, !tbaa !30  ; 3 uses
   %i.aud = load ptr, ptr %i.asj, align 8, !tbaa !31 ; 2 uses
-  %i.aue = ptrtoint ptr %i.aud to i64
-  %i.auf = ptrtoint ptr %i.auc to i64
-  %i.aug = sub i64 %i.aue, %i.auf
+  %i.aue = ptrtoint ptr %i.auc to i64
+  %i.auf = ptrtoint ptr %i.aud to i64
+  %i.aug = sub i64 %i.auf, %i.aue
   %i.auh = ashr exact i64 %i.aug, 5               ; 3 uses
   %i.aui = mul i64 %i.aua, 12884901888
   %sext1622 = add i64 %i.aui, -12884901888
@@ -1489,9 +1489,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %.not159, label %._crit_edge163, label %.lr.ph162
 
 .lr.ph162:                                        ; preds = %.preheader130
-  %i.t = ptrtoint ptr %5 to i64
-  %i.u = ptrtoint ptr %4 to i64
-  %i.v = sub i64 %i.t, %i.u                       ; 2 uses
+  %i.t = ptrtoint ptr %4 to i64
+  %i.u = ptrtoint ptr %5 to i64
+  %i.v = sub i64 %i.u, %i.t                       ; 2 uses
   %i.w = icmp sgt i64 %i.v, 0
   %i.x = udiv exact i64 %i.v, 56
   %i.y = icmp ne i32 %8, 3

@@ -205,10 +205,10 @@ _ZNSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS2_EEaSEOS5_.ex
 
 _ZSt4moveIPSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS3_EEN9__gnu_cxx17__normal_iteratorIS7_St6vectorIS6_SaIS6_EEEEET0_T_SF_SE_.exit: ; preds = %_ZNSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS2_EEaSEOS5_.exit.i.i.i.i.i, %._crit_edge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa, %._crit_edge ], [ %i.am, %_ZNSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS2_EEaSEOS5_.exit.i.i.i.i.i ]
-  %i.ap = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.ap = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.aq = ptrtoint ptr %.sroa.0.0.lcssa to i64
   %i.ar = sub i64 %i.ap, %i.aq
-  %i.as = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.ar ; 2 uses
+  %i.as = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.ar ; 3 uses
   %i.at = ptrtoint ptr %3 to i64
   %i.au = ptrtoint ptr %.016.lcssa to i64
   %i.av = sub i64 %i.at, %i.au
@@ -237,15 +237,12 @@ _ZNSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS2_EEaSEOS5_.ex
   %i.bb = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i24, i64 8 ; 2 uses
   %i.bc = add nsw i64 %.012.i.i.i.i.i23, -1
   %i.bd = icmp sgt i64 %.012.i.i.i.i.i23, 1
-  br i1 %i.bd, label %.lr.ph.i.i.i.i.i22, label %_ZSt4moveIPSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS3_EEN9__gnu_cxx17__normal_iteratorIS7_St6vectorIS6_SaIS6_EEEEET0_T_SF_SE_.exit29.loopexit, !llvm.loop !2
+  br i1 %i.bd, label %.lr.ph.i.i.i.i.i22, label %_ZSt4moveIPSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS3_EEN9__gnu_cxx17__normal_iteratorIS7_St6vectorIS6_SaIS6_EEEEET0_T_SF_SE_.exit29, !llvm.loop !2
 
-_ZSt4moveIPSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS3_EEN9__gnu_cxx17__normal_iteratorIS7_St6vectorIS6_SaIS6_EEEEET0_T_SF_SE_.exit29.loopexit: ; preds = %_ZNSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS2_EEaSEOS5_.exit.i.i.i.i.i28
-  %5 = ptrtoint ptr %i.bb to i64
-  br label %_ZSt4moveIPSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS3_EEN9__gnu_cxx17__normal_iteratorIS7_St6vectorIS6_SaIS6_EEEEET0_T_SF_SE_.exit29
-
-_ZSt4moveIPSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS3_EEN9__gnu_cxx17__normal_iteratorIS7_St6vectorIS6_SaIS6_EEEEET0_T_SF_SE_.exit29: ; preds = %_ZSt4moveIPSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS3_EEN9__gnu_cxx17__normal_iteratorIS7_St6vectorIS6_SaIS6_EEEEET0_T_SF_SE_.exit29.loopexit, %_ZSt4moveIPSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS3_EEN9__gnu_cxx17__normal_iteratorIS7_St6vectorIS6_SaIS6_EEEEET0_T_SF_SE_.exit
-  %.08.lcssa.i.i.i.i.i21 = phi i64 [ %i.ap, %_ZSt4moveIPSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS3_EEN9__gnu_cxx17__normal_iteratorIS7_St6vectorIS6_SaIS6_EEEEET0_T_SF_SE_.exit ], [ %5, %_ZSt4moveIPSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS3_EEN9__gnu_cxx17__normal_iteratorIS7_St6vectorIS6_SaIS6_EEEEET0_T_SF_SE_.exit29.loopexit ]
-  %i.be = sub i64 %.08.lcssa.i.i.i.i.i21, %i.ap
+_ZSt4moveIPSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS3_EEN9__gnu_cxx17__normal_iteratorIS7_St6vectorIS6_SaIS6_EEEEET0_T_SF_SE_.exit29: ; preds = %_ZNSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS2_EEaSEOS5_.exit.i.i.i.i.i28, %_ZSt4moveIPSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS3_EEN9__gnu_cxx17__normal_iteratorIS7_St6vectorIS6_SaIS6_EEEEET0_T_SF_SE_.exit
+  %.08.lcssa.i.i.i.i.i21 = phi ptr [ %i.as, %_ZSt4moveIPSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS3_EEN9__gnu_cxx17__normal_iteratorIS7_St6vectorIS6_SaIS6_EEEEET0_T_SF_SE_.exit ], [ %i.bb, %_ZNSt10unique_ptrIN5clang5RISCV12RVVIntrinsicESt14default_deleteIS2_EEaSEOS5_.exit.i.i.i.i.i28 ]
+  %5 = ptrtoint ptr %.08.lcssa.i.i.i.i.i21 to i64
+  %i.be = sub i64 %5, %i.ap
   %i.bf = getelementptr inbounds i8, ptr %i.as, i64 %i.be
   ret ptr %i.bf
 }

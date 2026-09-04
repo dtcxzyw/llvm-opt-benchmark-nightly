@@ -204,10 +204,10 @@ bb.ah:                                            ; preds = %.split._crit_edge.i
 
 _ZSt4moveIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i34.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i34, %._crit_edge.i.i26
   %.08.lcssa.i.i.i.i.i.i.i28 = phi ptr [ %.sroa.0.0.lcssa.i.i, %._crit_edge.i.i26 ], [ %.lcssa673.unr.a, %.lr.ph.i.i.i.i.i.i.i34.prol.loopexit ], [ %i.pp, %.lr.ph.i.i.i.i.i.i.i34 ]
-  %i.ps = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i28 to i64 ; 3 uses
+  %i.ps = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i28 to i64 ; 2 uses
   %i.pt = ptrtoint ptr %.sroa.0.0.lcssa.i.i to i64
   %i.pu = sub i64 %i.ps, %i.pt
-  %i.pv = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i.i, i64 %i.pu ; 3 uses
+  %i.pv = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i.i, i64 %i.pu ; 4 uses
   %i.pw = ptrtoint ptr %i.lj to i64               ; 2 uses
   %i.px = ptrtoint ptr %.016.lcssa.i.i to i64
   %i.py = sub i64 %i.pw, %i.px
@@ -244,7 +244,7 @@ _ZSt4moveIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu
   %.0910.i.i.i.i.i22.i.i.unr = phi ptr [ %.016.lcssa.i.i, %.lr.ph.i.i.i.i.i19.i.i.preheader ], [ %i.qf, %.lr.ph.i.i.i.i.i19.i.i.prol ]
   %.lcssa674.unr = phi ptr [ poison, %.lr.ph.i.i.i.i.i19.i.i.preheader ], [ %i.qg, %.lr.ph.i.i.i.i.i19.i.i.prol ]
   %i.qi = icmp ult i64 %i.pz, 4
-  br i1 %i.qi, label %_ZSt4moveIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit23.loopexit.i.i, label %.lr.ph.i.i.i.i.i19.i.i
+  br i1 %i.qi, label %"_ZSt12__move_mergeIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIZNS3_16sortFuncProfilesERKNS3_16SampleProfileMapERSD_E3$_0EEET0_T_SO_SO_SO_SN_T1_.exit.i", label %.lr.ph.i.i.i.i.i19.i.i
 
 .lr.ph.i.i.i.i.i19.i.i:                           ; preds = %.lr.ph.i.i.i.i.i19.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i19.i.i
   %.012.i.i.i.i.i20.i.i = phi i64 [ %i.rh, %.lr.ph.i.i.i.i.i19.i.i ], [ %.012.i.i.i.i.i20.i.i.unr, %.lr.ph.i.i.i.i.i19.i.i.prol.loopexit ] ; 2 uses
@@ -284,16 +284,12 @@ _ZSt4moveIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu
   %i.rg = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i21.i.i, i64 64 ; 2 uses
   %i.rh = add nsw i64 %.012.i.i.i.i.i20.i.i, -4
   %i.ri = icmp sgt i64 %.012.i.i.i.i.i20.i.i, 4
-  br i1 %i.ri, label %.lr.ph.i.i.i.i.i19.i.i, label %_ZSt4moveIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit23.loopexit.i.i, !llvm.loop !30
+  br i1 %i.ri, label %.lr.ph.i.i.i.i.i19.i.i, label %"_ZSt12__move_mergeIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIZNS3_16sortFuncProfilesERKNS3_16SampleProfileMapERSD_E3$_0EEET0_T_SO_SO_SO_SN_T1_.exit.i", !llvm.loop !30
 
-_ZSt4moveIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit23.loopexit.i.i: ; preds = %.lr.ph.i.i.i.i.i19.i.i, %.lr.ph.i.i.i.i.i19.i.i.prol.loopexit
-  %.lcssa674 = phi ptr [ %.lcssa674.unr, %.lr.ph.i.i.i.i.i19.i.i.prol.loopexit ], [ %i.rg, %.lr.ph.i.i.i.i.i19.i.i ]
-  %3 = ptrtoint ptr %.lcssa674 to i64
-  br label %"_ZSt12__move_mergeIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIZNS3_16sortFuncProfilesERKNS3_16SampleProfileMapERSD_E3$_0EEET0_T_SO_SO_SO_SN_T1_.exit.i"
-
-"_ZSt12__move_mergeIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIZNS3_16sortFuncProfilesERKNS3_16SampleProfileMapERSD_E3$_0EEET0_T_SO_SO_SO_SN_T1_.exit.i": ; preds = %_ZSt4moveIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit23.loopexit.i.i, %_ZSt4moveIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i.i
-  %.08.lcssa.i.i.i.i.i18.i.i = phi i64 [ %i.ps, %_ZSt4moveIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i.i ], [ %3, %_ZSt4moveIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit23.loopexit.i.i ]
-  %i.rj = sub i64 %.08.lcssa.i.i.i.i.i18.i.i, %i.ps
+"_ZSt12__move_mergeIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIZNS3_16sortFuncProfilesERKNS3_16SampleProfileMapERSD_E3$_0EEET0_T_SO_SO_SO_SN_T1_.exit.i": ; preds = %.lr.ph.i.i.i.i.i19.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i19.i.i, %_ZSt4moveIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i.i
+  %.08.lcssa.i.i.i.i.i18.i.i = phi ptr [ %i.pv, %_ZSt4moveIPSt4pairIN4llvm9hash_codeEPKNS1_10sampleprof15FunctionSamplesEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i.i ], [ %.lcssa674.unr, %.lr.ph.i.i.i.i.i19.i.i.prol.loopexit ], [ %i.rg, %.lr.ph.i.i.i.i.i19.i.i ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i.i to i64
+  %i.rj = sub i64 %3, %i.ps
   %i.rk = getelementptr inbounds i8, ptr %i.pv, i64 %i.rj ; 2 uses
   %i.rl = sub i64 %i.l, %i.pw
   %i.rm = ashr exact i64 %i.rl, 4                 ; 2 uses

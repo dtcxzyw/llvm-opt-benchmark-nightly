@@ -204,10 +204,10 @@ _ZN4bssl12_GLOBAL__N_111IssuerEntryaSEOS1_.exit.i.i.i.i.i: ; preds = %bb.v, %_ZN
 
 _ZSt4moveIPN4bssl12_GLOBAL__N_111IssuerEntryEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit: ; preds = %_ZN4bssl12_GLOBAL__N_111IssuerEntryaSEOS1_.exit.i.i.i.i.i, %._crit_edge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa, %._crit_edge ], [ %i.bx, %_ZN4bssl12_GLOBAL__N_111IssuerEntryaSEOS1_.exit.i.i.i.i.i ]
-  %i.ca = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.ca = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.cb = ptrtoint ptr %.sroa.0.0.lcssa to i64
   %i.cc = sub i64 %i.ca, %i.cb
-  %i.cd = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.cc ; 2 uses
+  %i.cd = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.cc ; 3 uses
   %i.ce = ptrtoint ptr %3 to i64
   %i.cf = ptrtoint ptr %.016.lcssa to i64
   %i.cg = sub i64 %i.ce, %i.cf
@@ -279,15 +279,12 @@ _ZN4bssl12_GLOBAL__N_111IssuerEntryaSEOS1_.exit.i.i.i.i.i33: ; preds = %bb.ab, %
   %i.de = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i27, i64 32 ; 2 uses
   %i.df = add nsw i64 %.012.i.i.i.i.i26, -1
   %i.dg = icmp sgt i64 %.012.i.i.i.i.i26, 1
-  br i1 %i.dg, label %.lr.ph.i.i.i.i.i25, label %_ZSt4moveIPN4bssl12_GLOBAL__N_111IssuerEntryEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit34.loopexit, !llvm.loop !212
+  br i1 %i.dg, label %.lr.ph.i.i.i.i.i25, label %_ZSt4moveIPN4bssl12_GLOBAL__N_111IssuerEntryEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit34, !llvm.loop !212
 
-_ZSt4moveIPN4bssl12_GLOBAL__N_111IssuerEntryEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit34.loopexit: ; preds = %_ZN4bssl12_GLOBAL__N_111IssuerEntryaSEOS1_.exit.i.i.i.i.i33
-  %5 = ptrtoint ptr %i.de to i64
-  br label %_ZSt4moveIPN4bssl12_GLOBAL__N_111IssuerEntryEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit34
-
-_ZSt4moveIPN4bssl12_GLOBAL__N_111IssuerEntryEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit34: ; preds = %_ZSt4moveIPN4bssl12_GLOBAL__N_111IssuerEntryEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit34.loopexit, %_ZSt4moveIPN4bssl12_GLOBAL__N_111IssuerEntryEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit
-  %.08.lcssa.i.i.i.i.i24 = phi i64 [ %i.ca, %_ZSt4moveIPN4bssl12_GLOBAL__N_111IssuerEntryEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit ], [ %5, %_ZSt4moveIPN4bssl12_GLOBAL__N_111IssuerEntryEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit34.loopexit ]
-  %i.dh = sub i64 %.08.lcssa.i.i.i.i.i24, %i.ca
+_ZSt4moveIPN4bssl12_GLOBAL__N_111IssuerEntryEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit34: ; preds = %_ZN4bssl12_GLOBAL__N_111IssuerEntryaSEOS1_.exit.i.i.i.i.i33, %_ZSt4moveIPN4bssl12_GLOBAL__N_111IssuerEntryEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit
+  %.08.lcssa.i.i.i.i.i24 = phi ptr [ %i.cd, %_ZSt4moveIPN4bssl12_GLOBAL__N_111IssuerEntryEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit ], [ %i.de, %_ZN4bssl12_GLOBAL__N_111IssuerEntryaSEOS1_.exit.i.i.i.i.i33 ]
+  %5 = ptrtoint ptr %.08.lcssa.i.i.i.i.i24 to i64
+  %i.dh = sub i64 %5, %i.ca
   %i.di = getelementptr inbounds i8, ptr %i.cd, i64 %i.dh
   ret ptr %i.di
 }

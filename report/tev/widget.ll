@@ -204,11 +204,11 @@ bb.b:                                             ; preds = %.lr.ph.i.i
 
 _ZNSt3__14findB8ne180100INS_11__wrap_iterIPPN7nanogui6WidgetEEEPKS3_EET_S9_S9_RKT0_.exit: ; preds = %.lr.ph.i.i, %bb.a
   %.0.lcssa.i.i = phi ptr [ %i.b, %bb.a ], [ %.08.i.i, %.lr.ph.i.i ] ; 2 uses
-  %2 = ptrtoint ptr %.0.lcssa.i.i to i64          ; 2 uses
   %i.h = icmp eq ptr %.0.lcssa.i.i, %i.d
   br i1 %i.h, label %_ZN7nanogui6Widget19remove_child_helperERKNSt3__111__wrap_iterIPPS0_EE.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt3__14findB8ne180100INS_11__wrap_iterIPPN7nanogui6WidgetEEEPKS3_EET_S9_S9_RKT0_.exit
+  %2 = ptrtoint ptr %.0.lcssa.i.i to i64          ; 2 uses
   %i.i = ptrtoint ptr %i.b to i64
   %i.j = sub i64 %2, %i.i
   %i.k = getelementptr inbounds i8, ptr %i.b, i64 %i.j
@@ -414,13 +414,13 @@ bb.b:                                             ; preds = %.lr.ph.i.i
 
 _ZNSt3__14findB8ne180100INS_11__wrap_iterIPKPN7nanogui6WidgetEEES4_EET_S8_S8_RKT0_.exit: ; preds = %.lr.ph.i.i, %bb.b, %bb.a
   %.0.lcssa.i.i = phi ptr [ %i.b, %bb.a ], [ %.08.i.i, %.lr.ph.i.i ], [ %i.d, %bb.b ] ; 2 uses
-  %i.h = ptrtoint ptr %.0.lcssa.i.i to i64
-  %2 = ptrtoint ptr %i.b to i64
-  %3 = sub i64 %i.h, %2
-  %4 = icmp eq ptr %.0.lcssa.i.i, %i.d
-  %i.i = lshr exact i64 %3, 3
+  %i.h = ptrtoint ptr %i.b to i64
+  %2 = icmp eq ptr %.0.lcssa.i.i, %i.d
+  %3 = ptrtoint ptr %.0.lcssa.i.i to i64
+  %4 = sub i64 %3, %i.h
+  %i.i = lshr exact i64 %4, 3
   %i.j = trunc i64 %i.i to i32
-  %.0 = select i1 %4, i32 -1, i32 %i.j
+  %.0 = select i1 %2, i32 -1, i32 %i.j
   ret i32 %.0
 }
 

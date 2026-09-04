@@ -205,10 +205,10 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 
 _ZSt4moveIPSt5tupleIJPN4llvm11logicalview9LVElementEPNS2_7LVScopeES6_EEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i42, %._crit_edge.i.i
   %.08.lcssa.i.i.i.i.i.i.i36 = phi ptr [ %i.ge, %._crit_edge.i.i ], [ %i.gs, %.lr.ph.i.i.i.i.i.i.i42 ]
-  %i.gv = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i36 to i64 ; 3 uses
+  %i.gv = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i36 to i64 ; 2 uses
   %i.gw = ptrtoint ptr %i.ge to i64
   %i.gx = sub i64 %i.gv, %i.gw
-  %i.gy = getelementptr inbounds i8, ptr %i.ge, i64 %i.gx ; 2 uses
+  %i.gy = getelementptr inbounds i8, ptr %i.ge, i64 %i.gx ; 3 uses
   %i.gz = ptrtoint ptr %i.fu to i64               ; 2 uses
   %i.ha = ptrtoint ptr %.117.i.i to i64
   %i.hb = sub i64 %i.gz, %i.ha                    ; 2 uses
@@ -233,15 +233,12 @@ _ZSt4moveIPSt5tupleIJPN4llvm11logicalview9LVElementEPNS2_7LVScopeES6_EEN9__gnu_c
   %i.hj = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22.i.i, i64 24 ; 2 uses
   %i.hk = add nsw i64 %.012.i.i.i.i.i21.i.i, -1
   %i.hl = icmp samesign ugt i64 %.012.i.i.i.i.i21.i.i, 1
-  br i1 %i.hl, label %.lr.ph.i.i.i.i.i20.i.i, label %_ZSt4moveIPSt5tupleIJPN4llvm11logicalview9LVElementEPNS2_7LVScopeES6_EEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit24.loopexit.i.i, !llvm.loop !9
+  br i1 %i.hl, label %.lr.ph.i.i.i.i.i20.i.i, label %"_ZSt12__move_mergeIPSt5tupleIJPN4llvm11logicalview9LVElementEPNS2_7LVScopeES6_EEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIZNS2_8LVReader24checkIntegrityScopesTreeES6_E3$_2EEET0_T_SL_SL_SL_SK_T1_.exit.i", !llvm.loop !9
 
-_ZSt4moveIPSt5tupleIJPN4llvm11logicalview9LVElementEPNS2_7LVScopeES6_EEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit24.loopexit.i.i: ; preds = %.lr.ph.i.i.i.i.i20.i.i
-  %3 = ptrtoint ptr %i.hj to i64
-  br label %"_ZSt12__move_mergeIPSt5tupleIJPN4llvm11logicalview9LVElementEPNS2_7LVScopeES6_EEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIZNS2_8LVReader24checkIntegrityScopesTreeES6_E3$_2EEET0_T_SL_SL_SL_SK_T1_.exit.i"
-
-"_ZSt12__move_mergeIPSt5tupleIJPN4llvm11logicalview9LVElementEPNS2_7LVScopeES6_EEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIZNS2_8LVReader24checkIntegrityScopesTreeES6_E3$_2EEET0_T_SL_SL_SL_SK_T1_.exit.i": ; preds = %_ZSt4moveIPSt5tupleIJPN4llvm11logicalview9LVElementEPNS2_7LVScopeES6_EEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit24.loopexit.i.i, %_ZSt4moveIPSt5tupleIJPN4llvm11logicalview9LVElementEPNS2_7LVScopeES6_EEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i.i
-  %.08.lcssa.i.i.i.i.i18.i.i = phi i64 [ %i.gv, %_ZSt4moveIPSt5tupleIJPN4llvm11logicalview9LVElementEPNS2_7LVScopeES6_EEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i.i ], [ %3, %_ZSt4moveIPSt5tupleIJPN4llvm11logicalview9LVElementEPNS2_7LVScopeES6_EEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit24.loopexit.i.i ]
-  %i.hm = sub i64 %.08.lcssa.i.i.i.i.i18.i.i, %i.gv
+"_ZSt12__move_mergeIPSt5tupleIJPN4llvm11logicalview9LVElementEPNS2_7LVScopeES6_EEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIZNS2_8LVReader24checkIntegrityScopesTreeES6_E3$_2EEET0_T_SL_SL_SL_SK_T1_.exit.i": ; preds = %.lr.ph.i.i.i.i.i20.i.i, %_ZSt4moveIPSt5tupleIJPN4llvm11logicalview9LVElementEPNS2_7LVScopeES6_EEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i.i
+  %.08.lcssa.i.i.i.i.i18.i.i = phi ptr [ %i.gy, %_ZSt4moveIPSt5tupleIJPN4llvm11logicalview9LVElementEPNS2_7LVScopeES6_EEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i.i ], [ %i.hj, %.lr.ph.i.i.i.i.i20.i.i ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i.i to i64
+  %i.hm = sub i64 %3, %i.gv
   %i.hn = getelementptr inbounds i8, ptr %i.gy, i64 %i.hm ; 2 uses
   %i.ho = sub i64 %i.cl, %i.gz
   %i.hp = sdiv exact i64 %i.ho, 24                ; 2 uses

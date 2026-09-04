@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.a
   %.0129 = phi i32 [ %i.g, %bb.c ], [ %1, %bb.a ] ; 2 uses
   %.0123 = phi ptr [ %i.f, %bb.c ], [ %0, %bb.a ] ; 3 uses
-  %i.h = ptrtoint ptr %2 to i64                   ; 6 uses
+  %i.h = ptrtoint ptr %2 to i64                   ; 7 uses
   %.not214 = icmp eq i32 %.0129, 0
   br i1 %.not214, label %.loopexit, label %.lr.ph
 
@@ -390,7 +390,9 @@ bb.p:                                             ; preds = %bb.n
   %i.bl = add i64 %i.h, 8
   %i.bm = sub i64 %i.bl, %i.bi                    ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr align 1 %.0118.lcssa, i8 32, i64 %i.bm, i1 false)
-  %scevgep = getelementptr i8, ptr %.0118.lcssa, i64 %i.bm
+  %scevgep = getelementptr i8, ptr %.0118.lcssa, i64 %i.bm ; 2 uses
+  %.pre = ptrtoint ptr %scevgep to i64
+  %.pre236 = sub i64 %.pre, %i.h
   br label %.preheader
 
 .lr.ph198:                                        ; preds = %.lr.ph311
@@ -407,10 +409,10 @@ bb.p:                                             ; preds = %bb.n
   br i1 %.not143, label %.critedge.preheader, label %.lr.ph198, !llvm.loop !20
 
 .preheader:                                       ; preds = %.critedge.preheader216, %.critedge.preheader
-  %.pre-phi237 = phi i64 [ 8, %.critedge.preheader216 ], [ %i.bj, %.critedge.preheader ]
+  %.pre-phi237 = phi i64 [ %.pre236, %.critedge.preheader216 ], [ %i.bj, %.critedge.preheader ]
   %.1119.lcssa = phi ptr [ %scevgep, %.critedge.preheader216 ], [ %.0118.lcssa, %.critedge.preheader ] ; 2 uses
   %i.bq = icmp sgt i32 %.4133.lcssa, 0
-  %4 = icmp samesign ult i64 %.pre-phi237, 11
+  %4 = icmp slt i64 %.pre-phi237, 11
   %i.br = select i1 %i.bq, i1 %4, i1 false
   br i1 %i.br, label %.lr.ph208, label %.loopexit159.thread
 

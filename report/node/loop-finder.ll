@@ -38,13 +38,17 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8              ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.f = load ptr, ptr %i.e, align 8              ; 2 uses
   %i.g = icmp eq ptr %i.f, %i.d
   br i1 %i.g, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
+  %3 = ptrtoint ptr %i.f to i64
+  %4 = ptrtoint ptr %i.d to i64
+  %5 = sub i64 %3, %4
+  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 %5
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
   br label %bb.b
@@ -53,7 +57,7 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
-  %.sroa.08.013 = phi ptr [ %i.f, %.lr.ph ], [ %i.j, %bb.d ]
+  %.sroa.08.013 = phi ptr [ %6, %.lr.ph ], [ %i.j, %bb.d ]
   %i.j = getelementptr inbounds i8, ptr %.sroa.08.013, i64 -8 ; 3 uses
   %i.k = load ptr, ptr %i.j, align 8              ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 40

@@ -205,10 +205,10 @@ _ZNSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS2_EEEaS
 
 _ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i: ; preds = %_ZNSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS2_EEEaSEOS6_.exit.i.i.i.i.i.i38, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i31 = phi ptr [ %.sroa.0.0.lcssa.i, %._crit_edge.i ], [ %i.cl, %_ZNSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS2_EEEaSEOS6_.exit.i.i.i.i.i.i38 ]
-  %i.co = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i31 to i64 ; 3 uses
+  %i.co = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i31 to i64 ; 2 uses
   %i.cp = ptrtoint ptr %.sroa.0.0.lcssa.i to i64
   %i.cq = sub i64 %i.co, %i.cp
-  %i.cr = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.cq ; 2 uses
+  %i.cr = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.cq ; 3 uses
   %i.cs = ptrtoint ptr %i.bj to i64               ; 2 uses
   %i.ct = ptrtoint ptr %.016.lcssa.i to i64
   %i.cu = sub i64 %i.cs, %i.ct
@@ -240,15 +240,12 @@ _ZNSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS2_EEEaS
   %i.dd = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i24.i, i64 16 ; 2 uses
   %i.de = add nsw i64 %.012.i.i.i.i.i23.i, -1
   %i.df = icmp sgt i64 %.012.i.i.i.i.i23.i, 1
-  br i1 %i.df, label %.lr.ph.i.i.i.i.i22.i, label %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit29.loopexit.i, !llvm.loop !18
+  br i1 %i.df, label %.lr.ph.i.i.i.i.i22.i, label %_ZSt12__move_mergeIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIN4llvm10less_firstEEEET0_T_SL_SL_SL_SK_T1_.exit, !llvm.loop !18
 
-_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit29.loopexit.i: ; preds = %_ZNSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS2_EEEaSEOS6_.exit.i.i.i.i.i28.i
-  %3 = ptrtoint ptr %i.dd to i64
-  br label %_ZSt12__move_mergeIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIN4llvm10less_firstEEEET0_T_SL_SL_SL_SK_T1_.exit
-
-_ZSt12__move_mergeIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIN4llvm10less_firstEEEET0_T_SL_SL_SL_SK_T1_.exit: ; preds = %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i, %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit29.loopexit.i
-  %.08.lcssa.i.i.i.i.i21.i = phi i64 [ %i.co, %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i ], [ %3, %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit29.loopexit.i ]
-  %i.dg = sub i64 %.08.lcssa.i.i.i.i.i21.i, %i.co
+_ZSt12__move_mergeIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIN4llvm10less_firstEEEET0_T_SL_SL_SL_SK_T1_.exit: ; preds = %_ZNSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS2_EEEaSEOS6_.exit.i.i.i.i.i28.i, %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i
+  %.08.lcssa.i.i.i.i.i21.i = phi ptr [ %i.cr, %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i ], [ %i.dd, %_ZNSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS2_EEEaSEOS6_.exit.i.i.i.i.i28.i ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i21.i to i64
+  %i.dg = sub i64 %3, %i.co
   %i.dh = getelementptr inbounds i8, ptr %i.cr, i64 %i.dg ; 2 uses
   %i.di = sub i64 %i.i, %i.cs
   %i.dj = ashr exact i64 %i.di, 4                 ; 2 uses
@@ -651,10 +648,10 @@ _ZNSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS2_EEEaS
 
 _ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit: ; preds = %_ZNSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS2_EEEaSEOS6_.exit.i.i.i.i.i, %._crit_edge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa, %._crit_edge ], [ %i.ae, %_ZNSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS2_EEEaSEOS6_.exit.i.i.i.i.i ]
-  %i.ah = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.ah = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.ai = ptrtoint ptr %.sroa.0.0.lcssa to i64
   %i.aj = sub i64 %i.ah, %i.ai
-  %i.ak = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.aj ; 2 uses
+  %i.ak = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.aj ; 3 uses
   %i.al = ptrtoint ptr %3 to i64
   %i.am = ptrtoint ptr %.016.lcssa to i64
   %i.an = sub i64 %i.al, %i.am
@@ -686,15 +683,12 @@ _ZNSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS2_EEEaS
   %i.aw = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i24, i64 16 ; 2 uses
   %i.ax = add nsw i64 %.012.i.i.i.i.i23, -1
   %i.ay = icmp sgt i64 %.012.i.i.i.i.i23, 1
-  br i1 %i.ay, label %.lr.ph.i.i.i.i.i22, label %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit29.loopexit, !llvm.loop !18
+  br i1 %i.ay, label %.lr.ph.i.i.i.i.i22, label %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit29, !llvm.loop !18
 
-_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit29.loopexit: ; preds = %_ZNSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS2_EEEaSEOS6_.exit.i.i.i.i.i28
-  %5 = ptrtoint ptr %i.aw to i64
-  br label %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit29
-
-_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit29: ; preds = %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit29.loopexit, %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit
-  %.08.lcssa.i.i.i.i.i21 = phi i64 [ %i.ah, %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit ], [ %5, %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit29.loopexit ]
-  %i.az = sub i64 %.08.lcssa.i.i.i.i.i21, %i.ah
+_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit29: ; preds = %_ZNSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS2_EEEaSEOS6_.exit.i.i.i.i.i28, %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit
+  %.08.lcssa.i.i.i.i.i21 = phi ptr [ %i.ak, %_ZSt4moveIPSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS3_EEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit ], [ %i.aw, %_ZNSt4pairImSt10unique_ptrIN5clang16CXXBaseSpecifierESt14default_deleteIS2_EEEaSEOS6_.exit.i.i.i.i.i28 ]
+  %5 = ptrtoint ptr %.08.lcssa.i.i.i.i.i21 to i64
+  %i.az = sub i64 %5, %i.ah
   %i.ba = getelementptr inbounds i8, ptr %i.ak, i64 %i.az
   ret ptr %i.ba
 }

@@ -205,10 +205,10 @@ _ZN4llvm4bolt21IndirectCallPromotion8CallsiteaSEOS2_.exit.i.i.i.i.i: ; preds = %
 
 _ZSt4moveIPN4llvm4bolt21IndirectCallPromotion8CallsiteEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit: ; preds = %_ZN4llvm4bolt21IndirectCallPromotion8CallsiteaSEOS2_.exit.i.i.i.i.i, %._crit_edge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa, %._crit_edge ], [ %i.cc, %_ZN4llvm4bolt21IndirectCallPromotion8CallsiteaSEOS2_.exit.i.i.i.i.i ]
-  %i.cf = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.cf = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.cg = ptrtoint ptr %.sroa.0.0.lcssa to i64
   %i.ch = sub i64 %i.cf, %i.cg
-  %i.ci = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.ch ; 2 uses
+  %i.ci = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.ch ; 3 uses
   %i.cj = ptrtoint ptr %3 to i64
   %i.ck = ptrtoint ptr %.016.lcssa to i64
   %i.cl = sub i64 %i.cj, %i.ck                    ; 2 uses
@@ -250,15 +250,12 @@ _ZN4llvm4bolt21IndirectCallPromotion8CallsiteaSEOS2_.exit.i.i.i.i.i27: ; preds =
   %i.da = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i24, i64 72 ; 2 uses
   %i.db = add nsw i64 %.012.i.i.i.i.i23, -1
   %i.dc = icmp sgt i64 %.012.i.i.i.i.i23, 1
-  br i1 %i.dc, label %.lr.ph.i.i.i.i.i22, label %_ZSt4moveIPN4llvm4bolt21IndirectCallPromotion8CallsiteEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit28.loopexit, !llvm.loop !16
+  br i1 %i.dc, label %.lr.ph.i.i.i.i.i22, label %_ZSt4moveIPN4llvm4bolt21IndirectCallPromotion8CallsiteEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit28, !llvm.loop !16
 
-_ZSt4moveIPN4llvm4bolt21IndirectCallPromotion8CallsiteEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit28.loopexit: ; preds = %_ZN4llvm4bolt21IndirectCallPromotion8CallsiteaSEOS2_.exit.i.i.i.i.i27
-  %5 = ptrtoint ptr %i.da to i64
-  br label %_ZSt4moveIPN4llvm4bolt21IndirectCallPromotion8CallsiteEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit28
-
-_ZSt4moveIPN4llvm4bolt21IndirectCallPromotion8CallsiteEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit28: ; preds = %_ZSt4moveIPN4llvm4bolt21IndirectCallPromotion8CallsiteEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit28.loopexit, %_ZSt4moveIPN4llvm4bolt21IndirectCallPromotion8CallsiteEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit
-  %.08.lcssa.i.i.i.i.i20 = phi i64 [ %i.cf, %_ZSt4moveIPN4llvm4bolt21IndirectCallPromotion8CallsiteEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit ], [ %5, %_ZSt4moveIPN4llvm4bolt21IndirectCallPromotion8CallsiteEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit28.loopexit ]
-  %i.dd = sub i64 %.08.lcssa.i.i.i.i.i20, %i.cf
+_ZSt4moveIPN4llvm4bolt21IndirectCallPromotion8CallsiteEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit28: ; preds = %_ZN4llvm4bolt21IndirectCallPromotion8CallsiteaSEOS2_.exit.i.i.i.i.i27, %_ZSt4moveIPN4llvm4bolt21IndirectCallPromotion8CallsiteEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit
+  %.08.lcssa.i.i.i.i.i20 = phi ptr [ %i.ci, %_ZSt4moveIPN4llvm4bolt21IndirectCallPromotion8CallsiteEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit ], [ %i.da, %_ZN4llvm4bolt21IndirectCallPromotion8CallsiteaSEOS2_.exit.i.i.i.i.i27 ]
+  %5 = ptrtoint ptr %.08.lcssa.i.i.i.i.i20 to i64
+  %i.dd = sub i64 %5, %i.cf
   %i.de = getelementptr inbounds i8, ptr %i.ci, i64 %i.dd
   ret ptr %i.de
 }

@@ -204,9 +204,9 @@ bb.f:                                             ; preds = %bb.h, %.lr.ph.i.i.i
   %.val.i.i.i = load ptr, ptr %i.p, align 8, !tbaa !31, !noalias !183 ; 2 uses
   %i.q = getelementptr i8, ptr %storemerge26.i.i.i, i64 48
   %.val3.i.i.i = load ptr, ptr %i.q, align 8, !tbaa !32, !noalias !183
-  %i.r = ptrtoint ptr %.val3.i.i.i to i64
-  %i.s = ptrtoint ptr %.val.i.i.i to i64
-  %i.t = sub i64 %i.r, %i.s                       ; 3 uses
+  %i.r = ptrtoint ptr %.val.i.i.i to i64
+  %i.s = ptrtoint ptr %.val3.i.i.i to i64
+  %i.t = sub i64 %i.s, %i.r                       ; 3 uses
   %.sroa.speculated.i.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.o, i64 %i.t) ; 2 uses
   %i.u = icmp eq i64 %.sroa.speculated.i.i.i.i.i.i.i, 0
   br i1 %i.u, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i.i.i, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i
@@ -253,9 +253,9 @@ bb.i:                                             ; preds = %_ZN5boost9intrusive
   %.val9.i.i = load ptr, ptr %i.ad, align 8, !tbaa !31, !noalias !183 ; 2 uses
   %i.ae = getelementptr i8, ptr %.1.i.i.i, i64 48
   %.val10.i.i = load ptr, ptr %i.ae, align 8, !tbaa !32, !noalias !183
-  %i.af = ptrtoint ptr %.val10.i.i to i64
-  %i.ag = ptrtoint ptr %.val9.i.i to i64
-  %i.ah = sub i64 %i.af, %i.ag                    ; 3 uses
+  %i.af = ptrtoint ptr %.val9.i.i to i64
+  %i.ag = ptrtoint ptr %.val10.i.i to i64
+  %i.ah = sub i64 %i.ag, %i.af                    ; 3 uses
   %.sroa.speculated.i.i.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.ah, i64 %i.o) ; 2 uses
   %i.ai = icmp eq i64 %.sroa.speculated.i.i.i.i.i.i, 0
   br i1 %i.ai, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i.i, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i

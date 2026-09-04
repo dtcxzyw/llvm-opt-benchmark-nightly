@@ -205,16 +205,16 @@ bb.g:                                             ; preds = %.noexc62
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZNSt6vectorIN3gmx11t_sortblockESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
-  %.0.i.i.i.i.i182 = phi i64 [ 0, %_ZNSt6vectorIN3gmx11t_sortblockESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ], [ %i.cw, %._crit_edge.loopexit ]
+  %.0.i.i.i.i.i182 = phi i64 [ 0, %_ZNSt6vectorIN3gmx11t_sortblockESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ], [ %i.cw, %._crit_edge.loopexit ] ; 2 uses
   %.sroa.095.0178 = phi ptr [ null, %_ZNSt6vectorIN3gmx11t_sortblockESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ], [ %i.z, %._crit_edge.loopexit ] ; 17 uses
   %.sroa.21.0175 = phi i64 [ 0, %_ZNSt6vectorIN3gmx11t_sortblockESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ], [ %i.cx, %._crit_edge.loopexit ] ; 2 uses
   %i.cy = load ptr, ptr @debug, align 8, !tbaa !15 ; 3 uses
   %.not56 = icmp eq ptr %i.cy, null
-  %.pre141 = ptrtoint ptr %.sroa.095.0178 to i64  ; 3 uses
-  %.pre143 = sub i64 %.0.i.i.i.i.i182, %.pre141   ; 2 uses
+  %.pre141 = ptrtoint ptr %.sroa.095.0178 to i64  ; 4 uses
   br i1 %.not56, label %._crit_edge._crit_edge, label %bb.j
 
 ._crit_edge._crit_edge:                           ; preds = %._crit_edge
+  %.pre143 = sub i64 %.0.i.i.i.i.i182, %.pre141
   %.pre145 = ashr exact i64 %.pre143, 4
   br label %bb.l
 
@@ -230,7 +230,8 @@ bb.i:                                             ; preds = %bb.f, %bb.e
 
 bb.j:                                             ; preds = %._crit_edge
   %i.db = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %i.cy, ptr noundef nonnull @.str.5, ptr noundef nonnull @.str.1) #17 ; 0 uses
-  %i.dc = ashr exact i64 %.pre143, 4              ; 3 uses
+  %5 = sub i64 %.0.i.i.i.i.i182, %.pre141
+  %i.dc = ashr exact i64 %5, 4                    ; 3 uses
   %i.dd = icmp sgt i64 %i.dc, 0
   br i1 %i.dd, label %.lr.ph.i, label %_ZN3gmxL12pr_sortblockEP8_IO_FILEPKcNS_8ArrayRefIKNS_11t_sortblockEEE.exit
 
@@ -633,10 +634,13 @@ bb.a:
   br i1 %i.af, label %._crit_edge60, label %.lr.ph59
 
 .lr.ph59:                                         ; preds = %._crit_edge
-  %i.ag = load ptr, ptr %i.v, align 8, !tbaa !26
+  %i.ag = load ptr, ptr %i.v, align 8, !tbaa !26  ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 144
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !25
-  %i.aj = ptrtoint ptr %i.ai to i64
+  %21 = ptrtoint ptr %i.ai to i64
+  %i.aj = ptrtoint ptr %i.ag to i64
+  %22 = sub i64 %21, %i.aj
+  %23 = getelementptr inbounds nuw i8, ptr %i.ag, i64 %22
   %i.ak = load i32, ptr %i.y, align 4, !tbaa !17
   %i.al = sext i32 %i.ak to i64
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.al
@@ -688,6 +692,7 @@ bb.b:                                             ; preds = %.lr.ph59, %bb.ah
   %.08856 = phi ptr [ %i.am, %.lr.ph59 ], [ %i.wd, %bb.ah ] ; 11 uses
   %.08955 = phi i32 [ 0, %.lr.ph59 ], [ %i.wa, %bb.ah ]
   %.09054 = phi i32 [ 0, %.lr.ph59 ], [ %i.vz, %bb.ah ]
+  %.sroa.7.053 = phi ptr [ %23, %.lr.ph59 ], [ %i.cl, %bb.ah ]
   %.sroa.031.052 = phi ptr [ %i.ag, %.lr.ph59 ], [ %i.we, %bb.ah ] ; 8 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.by = getelementptr inbounds nuw [4 x i8], ptr %i.bx, i64 %indvars.iv.next
@@ -702,9 +707,10 @@ bb.b:                                             ; preds = %.lr.ph59, %bb.ah
   %i.ch = load float, ptr %i.aw, align 4, !tbaa !194 ; 2 uses
   %i.ci = load i32, ptr %i.ax, align 4, !tbaa !195
   %.not40 = icmp eq i32 %i.ci, 0                  ; 3 uses
+  %24 = ptrtoint ptr %.sroa.7.053 to i64
   %i.cj = ptrtoint ptr %.sroa.031.052 to i64
-  %i.ck = sub i64 %i.aj, %i.cj
-  %i.cl = getelementptr inbounds nuw i8, ptr %.sroa.031.052, i64 %i.ck
+  %i.ck = sub i64 %24, %i.cj
+  %i.cl = getelementptr inbounds i8, ptr %.sroa.031.052, i64 %i.ck ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15)
   call void @llvm.lifetime.start.p0(ptr nonnull %16)
   call void @llvm.lifetime.start.p0(ptr nonnull %17)

@@ -204,10 +204,10 @@ _ZN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSEOS
 
 _ZSt4moveIPN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEN9__gnu_cxx17__normal_iteratorIS9_St6vectorIS8_SaIS8_EEEEET0_T_SH_SG_.exit: ; preds = %_ZN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSEOS7_.exit.i.i.i.i.i, %._crit_edge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.045.0.lcssa, %._crit_edge ], [ %i.ct, %_ZN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSEOS7_.exit.i.i.i.i.i ]
-  %i.cw = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.cw = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.cx = ptrtoint ptr %.sroa.045.0.lcssa to i64
   %i.cy = sub i64 %i.cw, %i.cx
-  %i.cz = getelementptr inbounds i8, ptr %.sroa.045.0.lcssa, i64 %i.cy ; 2 uses
+  %i.cz = getelementptr inbounds i8, ptr %.sroa.045.0.lcssa, i64 %i.cy ; 3 uses
   %i.da = ptrtoint ptr %3 to i64
   %i.db = ptrtoint ptr %.016.lcssa to i64
   %i.dc = sub i64 %i.da, %i.db                    ; 2 uses
@@ -313,15 +313,12 @@ _ZN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSEOS
   %i.ei = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i33, i64 40 ; 2 uses
   %i.ej = add nsw i64 %.013.i.i.i.i.i32, -1
   %i.ek = icmp sgt i64 %.013.i.i.i.i.i32, 1
-  br i1 %i.ek, label %.lr.ph.i.i.i.i.i31, label %_ZSt4moveIPN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEN9__gnu_cxx17__normal_iteratorIS9_St6vectorIS8_SaIS8_EEEEET0_T_SH_SG_.exit44.loopexit, !llvm.loop !23
+  br i1 %i.ek, label %.lr.ph.i.i.i.i.i31, label %_ZSt4moveIPN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEN9__gnu_cxx17__normal_iteratorIS9_St6vectorIS8_SaIS8_EEEEET0_T_SH_SG_.exit44, !llvm.loop !23
 
-_ZSt4moveIPN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEN9__gnu_cxx17__normal_iteratorIS9_St6vectorIS8_SaIS8_EEEEET0_T_SH_SG_.exit44.loopexit: ; preds = %_ZN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSEOS7_.exit.i.i.i.i.i38
-  %6 = ptrtoint ptr %i.ei to i64
-  br label %_ZSt4moveIPN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEN9__gnu_cxx17__normal_iteratorIS9_St6vectorIS8_SaIS8_EEEEET0_T_SH_SG_.exit44
-
-_ZSt4moveIPN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEN9__gnu_cxx17__normal_iteratorIS9_St6vectorIS8_SaIS8_EEEEET0_T_SH_SG_.exit44: ; preds = %_ZSt4moveIPN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEN9__gnu_cxx17__normal_iteratorIS9_St6vectorIS8_SaIS8_EEEEET0_T_SH_SG_.exit44.loopexit, %_ZSt4moveIPN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEN9__gnu_cxx17__normal_iteratorIS9_St6vectorIS8_SaIS8_EEEEET0_T_SH_SG_.exit
-  %.08.lcssa.i.i.i.i.i29 = phi i64 [ %i.cw, %_ZSt4moveIPN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEN9__gnu_cxx17__normal_iteratorIS9_St6vectorIS8_SaIS8_EEEEET0_T_SH_SG_.exit ], [ %6, %_ZSt4moveIPN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEN9__gnu_cxx17__normal_iteratorIS9_St6vectorIS8_SaIS8_EEEEET0_T_SH_SG_.exit44.loopexit ]
-  %i.el = sub i64 %.08.lcssa.i.i.i.i.i29, %i.cw
+_ZSt4moveIPN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEN9__gnu_cxx17__normal_iteratorIS9_St6vectorIS8_SaIS8_EEEEET0_T_SH_SG_.exit44: ; preds = %_ZN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSEOS7_.exit.i.i.i.i.i38, %_ZSt4moveIPN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEN9__gnu_cxx17__normal_iteratorIS9_St6vectorIS8_SaIS8_EEEEET0_T_SH_SG_.exit
+  %.08.lcssa.i.i.i.i.i29 = phi ptr [ %i.cz, %_ZSt4moveIPN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEN9__gnu_cxx17__normal_iteratorIS9_St6vectorIS8_SaIS8_EEEEET0_T_SH_SG_.exit ], [ %i.ei, %_ZN12_GLOBAL__N_13JBTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSEOS7_.exit.i.i.i.i.i38 ]
+  %6 = ptrtoint ptr %.08.lcssa.i.i.i.i.i29 to i64
+  %i.el = sub i64 %6, %i.cw
   %i.em = getelementptr inbounds i8, ptr %i.cz, i64 %i.el
   ret ptr %i.em
 }

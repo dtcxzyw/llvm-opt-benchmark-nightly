@@ -206,7 +206,7 @@ bb.d:                                             ; preds = %bb.b
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden { ptr, i32 } @_ZN5boost4json6detail8charconv6detail10fast_float19from_chars_advancedIdcEENS2_19from_chars_result_tIT0_EEPKS7_SA_RT_NS4_15parse_options_tIS7_EE(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, i64 %3) local_unnamed_addr #7 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 5 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 3 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %4 = alloca %"struct.boost::json::detail::charconv::detail::fast_float::bigint", align 8 ; 6 uses
   %5 = alloca %"struct.boost::json::detail::charconv::detail::fast_float::parsed_number_string_t", align 8 ; 16 uses
@@ -252,8 +252,9 @@ bb.e:                                             ; preds = %bb.d, %bb.b
   br label %bb.f
 
 .critedge.i.thread:                               ; preds = %bb.g
+  %6 = ptrtoint ptr %1 to i64                     ; 2 uses
   %i.q = ptrtoint ptr %.0127.i to i64
-  %i.r = sub i64 %i.a, %i.q                       ; 3 uses
+  %i.r = sub i64 %6, %i.q                         ; 3 uses
   store ptr %.0127.i, ptr %i.d, align 8, !tbaa !191
   %.sroa.4137.0..sroa_idx171 = getelementptr inbounds nuw i8, ptr %5, i64 40
   store i64 %i.r, ptr %.sroa.4137.0..sroa_idx171, align 8, !tbaa !90
@@ -369,7 +370,7 @@ bb.l:                                             ; preds = %.critedge.i.thread,
   %i.br = phi i64 [ %i.bo, %.critedge4.i ], [ 0, %bb.h ], [ 0, %.critedge.i.thread ] ; 2 uses
   %i.bs = phi ptr [ %i.ae, %.critedge4.i ], [ null, %bb.h ], [ null, %.critedge.i.thread ] ; 4 uses
   %i.bt = phi i64 [ %i.ac, %.critedge4.i ], [ %i.ac, %bb.h ], [ %i.r, %.critedge.i.thread ] ; 2 uses
-  %i.bu = phi i64 [ %i.aa, %.critedge4.i ], [ %i.aa, %bb.h ], [ %i.a, %.critedge.i.thread ]
+  %i.bu = phi i64 [ %i.aa, %.critedge4.i ], [ %i.aa, %bb.h ], [ %6, %.critedge.i.thread ]
   %.3146.i = phi i64 [ %.2145.i.lcssa, %.critedge4.i ], [ %.0143.i225, %bb.h ], [ %i.y, %.critedge.i.thread ] ; 2 uses
   %.0140.i = phi i64 [ %i.bq, %.critedge4.i ], [ %i.ac, %bb.h ], [ %i.r, %.critedge.i.thread ] ; 3 uses
   %.0133.i = phi i64 [ %i.bn, %.critedge4.i ], [ 0, %bb.h ], [ 0, %.critedge.i.thread ] ; 3 uses

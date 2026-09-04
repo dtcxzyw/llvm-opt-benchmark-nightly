@@ -204,12 +204,15 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27
   store ptr null, ptr %i.a, align 8, !tbaa !79
   %i.e = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 12 uses
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !79   ; 6 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !79   ; 8 uses
   %i.g = load ptr, ptr %i.b, align 8, !tbaa !146
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = load i64, ptr %i.h, align 8, !tbaa !147
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.i ; 16 uses
-  %i.k = ptrtoaddr ptr %i.j to i64                ; 3 uses
+  %95 = ptrtoaddr ptr %i.f to i64
+  %i.k = ptrtoaddr ptr %i.j to i64                ; 2 uses
+  %96 = sub i64 %i.k, %95
+  %scevgep.i.i = getelementptr i8, ptr %i.f, i64 %96 ; 2 uses
   %i.l = icmp eq ptr %i.f, %i.j
   br i1 %i.l, label %._crit_edge508, label %.lr.ph505, !prof !148
 
@@ -233,7 +236,7 @@ bb.c:                                             ; preds = %.lr.ph505
   %.not.i.i = icmp samesign ugt i8 %i.p, 1
   %i.s = icmp ne i8 %i.p, 0
   %or.cond43.i.i = select i1 %.not44.i.i, i1 %.not.i.i, i1 %i.s
-  br i1 %or.cond43.i.i, label %._crit_edge506, label %bb.d
+  br i1 %or.cond43.i.i, label %._crit_edge508, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph505
   %i.t = icmp ult i32 %.028.i.i503, 64
@@ -245,15 +248,12 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph505
   %i.y = icmp slt i8 %i.o, 0
   br i1 %i.y, label %bb.b, label %bb.f, !llvm.loop !6
 
-._crit_edge506:                                   ; preds = %bb.c
-  %95 = ptrtoint ptr %.031.i.i501 to i64
-  br label %._crit_edge508
-
-._crit_edge508:                                   ; preds = %bb.b, %._crit_edge506, %bb.a
-  %.str.498.sink.i.i.a = phi ptr [ @.str.497, %bb.a ], [ @.str.498, %._crit_edge506 ], [ @.str.497, %bb.b ] ; 2 uses
-  %.132.ph.i.i = phi i64 [ %i.k, %bb.a ], [ %95, %._crit_edge506 ], [ %i.k, %bb.b ]
+._crit_edge508:                                   ; preds = %bb.b, %bb.c, %bb.a
+  %.str.498.sink.i.i = phi ptr [ @.str.497, %bb.a ], [ @.str.497, %bb.b ], [ @.str.498, %bb.c ] ; 2 uses
+  %.str.498.sink.i.i.a = phi ptr [ %scevgep.i.i, %bb.a ], [ %scevgep.i.i, %bb.b ], [ %.031.i.i501, %bb.c ]
+  %97 = ptrtoint ptr %.str.498.sink.i.i.a to i64
   %i.z = ptrtoint ptr %i.f to i64
-  %i.aa = sub i64 %.132.ph.i.i, %i.z
+  %i.aa = sub i64 %97, %i.z
   %i.ab = and i64 %i.aa, 4294967295
   %i.ac = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.ab ; 2 uses
   %i.ad = icmp ugt ptr %i.ac, %i.j
@@ -262,14 +262,14 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph505
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #27
-  %i.ae = load i8, ptr %.str.498.sink.i.i.a, align 1, !tbaa !72
+  %i.ae = load i8, ptr %.str.498.sink.i.i, align 1, !tbaa !72
   %.not.i = icmp eq i8 %i.ae, 0
   store ptr @.str.235, ptr %13, align 8
   br i1 %.not.i, label %_ZN4llvm5ErrorD2Ev.exit, label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge508
   %i.af = getelementptr inbounds nuw i8, ptr %13, i64 16
-  store ptr %.str.498.sink.i.i.a, ptr %i.af, align 8, !alias.scope !3608
+  store ptr %.str.498.sink.i.i, ptr %i.af, align 8, !alias.scope !3608
   br label %_ZN4llvm5ErrorD2Ev.exit
 
 _ZN4llvm5ErrorD2Ev.exit:                          ; preds = %._crit_edge508, %bb.e
@@ -672,7 +672,7 @@ begin_hunk_1_@_ZN4llvm6object14MachOBindEntry8moveNextEv:bb.a
   %i.ab = ptrtoaddr ptr %i.aa to i64
   %i.ac = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.n ; 5 uses
   %i.ad = ptrtoaddr ptr %i.ac to i64
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.n ; 7 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.n ; 8 uses
   %i.af = ptrtoaddr ptr %i.o to i64
   %i.ag = icmp eq ptr %.promoted503, %i.o
   br i1 %i.ag, label %._crit_edge992, label %.lr.ph991
@@ -719,7 +719,7 @@ bb.c:                                             ; preds = %.lr.ph991, %bb.cl
 
 .preheader:                                       ; preds = %bb.c
   %i.ao = icmp eq ptr %i.ak, %i.ae
-  br i1 %i.ao, label %.preheader._crit_edge, label %.lr.ph972, !prof !148
+  br i1 %i.ao, label %bb.z, label %.lr.ph972, !prof !148
 
 bb.d:                                             ; preds = %bb.c
   %i.ap = load i32, ptr %i.w, align 4, !tbaa !255
@@ -1122,16 +1122,12 @@ _ZN4llvm5ErrorD2Ev.exit123:                       ; preds = %bb.v
 
 bb.w:                                             ; preds = %bb.y
   %i.ke = icmp eq ptr %i.kr, %i.ae
-  br i1 %i.ke, label %.preheader._crit_edge, label %.lr.ph972, !prof !149, !llvm.loop !13
-
-.preheader._crit_edge:                            ; preds = %.preheader, %bb.w
-  %221 = ptrtoaddr ptr %i.ae to i64
-  br label %bb.z
+  br i1 %i.ke, label %bb.z, label %.lr.ph972, !prof !149, !llvm.loop !13
 
 .lr.ph972:                                        ; preds = %.preheader, %bb.w
   %.044.i.i971 = phi i32 [ %i.kq, %bb.w ], [ 0, %.preheader ] ; 5 uses
   %.045.i.i970 = phi i64 [ %.146.i.i, %bb.w ], [ 0, %.preheader ] ; 2 uses
-  %.050.i.i969 = phi ptr [ %i.kr, %bb.w ], [ %i.ak, %.preheader ] ; 3 uses
+  %.050.i.i969 = phi ptr [ %i.kr, %bb.w ], [ %i.ak, %.preheader ] ; 4 uses
   %i.kf = load i8, ptr %.050.i.i969, align 1, !tbaa !72 ; 4 uses
   %i.kg = and i8 %i.kf, 127
   %i.kh = zext nneg i8 %i.kg to i64               ; 2 uses
@@ -1143,7 +1139,7 @@ bb.x:                                             ; preds = %.lr.ph972
   br i1 %i.kj, label %switch.early.test.i.i, label %.critedge66.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.x
-  switch i8 %i.kf, label %222 [
+  switch i8 %i.kf, label %bb.z [
     i8 -1, label %bb.y
     i8 -128, label %bb.y
     i8 127, label %bb.y
@@ -1154,11 +1150,7 @@ switch.early.test.i.i:                            ; preds = %bb.x
   %i.kk = icmp slt i64 %.045.i.i970, 0
   %i.kl = select i1 %i.kk, i64 127, i64 0
   %.not58.i.i = icmp eq i64 %i.kl, %i.kh
-  br i1 %.not58.i.i, label %bb.y, label %222
-
-222:                                              ; preds = %.critedge66.i.i, %switch.early.test.i.i
-  %223 = ptrtoint ptr %.050.i.i969 to i64
-  br label %bb.z
+  br i1 %.not58.i.i, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %.critedge66.i.i, %switch.early.test.i.i, %switch.early.test.i.i, %switch.early.test.i.i, %switch.early.test.i.i, %.lr.ph972
   %i.km = icmp ult i32 %.044.i.i971, 64
@@ -1190,11 +1182,12 @@ _ZN4llvm6object14MachOBindEntry11readSLEB128EPPKc.exit: ; preds = %bb.y
   store i64 %.3.i.i124, ptr %i.s, align 8, !tbaa !259
   br label %bb.cl
 
-bb.z:                                             ; preds = %222, %.preheader._crit_edge
-  %.ph = phi ptr [ @.str.499, %.preheader._crit_edge ], [ @.str.500, %222 ] ; 2 uses
-  %.sink.i.i.ph = phi i64 [ %221, %.preheader._crit_edge ], [ %223, %222 ]
+bb.z:                                             ; preds = %.preheader, %bb.w, %.critedge66.i.i, %switch.early.test.i.i
+  %.ph = phi ptr [ @.str.500, %.critedge66.i.i ], [ @.str.499, %bb.w ], [ @.str.500, %switch.early.test.i.i ], [ @.str.499, %.preheader ] ; 2 uses
+  %.050.lcssa80.sink.i.i.ph = phi ptr [ %.050.i.i969, %.critedge66.i.i ], [ %i.ae, %bb.w ], [ %.050.i.i969, %switch.early.test.i.i ], [ %i.ae, %.preheader ]
+  %221 = ptrtoint ptr %.050.lcssa80.sink.i.i.ph to i64
   %i.ld = ptrtoint ptr %i.ak to i64
-  %i.le = sub i64 %.sink.i.i.ph, %i.ld
+  %i.le = sub i64 %221, %i.ld
   %i.lf = and i64 %i.le, 4294967295
   %i.lg = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.lf ; 2 uses
   %i.lh = icmp ugt ptr %i.lg, %i.ae
@@ -1597,8 +1590,7 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !146
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.f = load i64, ptr %i.e, align 8, !tbaa !147  ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.f ; 3 uses
-  %2 = ptrtoaddr ptr %i.g to i64                  ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.f ; 4 uses
   %i.h = icmp eq ptr %i.b, %i.g
   br i1 %i.h, label %._crit_edge, label %.lr.ph, !prof !148
 
@@ -1617,7 +1609,7 @@ bb.c:                                             ; preds = %._crit_edge
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %.044.i25 = phi i32 [ %i.u, %bb.b ], [ 0, %bb.a ] ; 5 uses
   %.045.i24 = phi i64 [ %.146.i, %bb.b ], [ 0, %bb.a ] ; 2 uses
-  %.050.i23 = phi ptr [ %i.v, %bb.b ], [ %i.b, %bb.a ] ; 3 uses
+  %.050.i23 = phi ptr [ %i.v, %bb.b ], [ %i.b, %bb.a ] ; 4 uses
   %i.j = load i8, ptr %.050.i23, align 1, !tbaa !72 ; 4 uses
   %i.k = and i8 %i.j, 127
   %i.l = zext nneg i8 %i.k to i64                 ; 2 uses
@@ -1644,14 +1636,10 @@ switch.early.test.i:                              ; preds = %bb.d
 
 bb.e:                                             ; preds = %.critedge66.i, %switch.early.test.i
   %.not59.i = icmp eq ptr %1, null
-  br i1 %.not59.i, label %3, label %bb.f
+  br i1 %.not59.i, label %_ZN4llvm13decodeSLEB128EPKhPjS1_PPKc.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   store ptr @.str.500, ptr %1, align 8, !tbaa !79
-  br label %3
-
-3:                                                ; preds = %bb.f, %bb.e
-  %4 = ptrtoint ptr %.050.i23 to i64
   br label %_ZN4llvm13decodeSLEB128EPKhPjS1_PPKc.exit
 
 bb.g:                                             ; preds = %.critedge66.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %.lr.ph
@@ -1673,14 +1661,14 @@ bb.h:                                             ; preds = %bb.g
   %i.z = shl nsw i64 -1, %i.y
   %i.aa = select i1 %or.cond.i, i64 0, i64 %i.z
   %.3.i = or i64 %.146.i, %i.aa
-  %5 = ptrtoint ptr %i.v to i64
   br label %_ZN4llvm13decodeSLEB128EPKhPjS1_PPKc.exit
 
-_ZN4llvm13decodeSLEB128EPKhPjS1_PPKc.exit:        ; preds = %._crit_edge, %bb.c, %3, %bb.h
-  %.sink.i = phi i64 [ %4, %3 ], [ %5, %bb.h ], [ %2, %bb.c ], [ %2, %._crit_edge ]
-  %.249.ph.i = phi i64 [ 0, %3 ], [ %.3.i, %bb.h ], [ 0, %bb.c ], [ 0, %._crit_edge ]
+_ZN4llvm13decodeSLEB128EPKhPjS1_PPKc.exit:        ; preds = %bb.e, %bb.f, %._crit_edge, %bb.c, %bb.h
+  %.050.lcssa80.sink.i = phi ptr [ %i.v, %bb.h ], [ %i.g, %._crit_edge ], [ %i.g, %bb.c ], [ %.050.i23, %bb.f ], [ %.050.i23, %bb.e ]
+  %.249.ph.i = phi i64 [ %.3.i, %bb.h ], [ 0, %._crit_edge ], [ 0, %bb.c ], [ 0, %bb.f ], [ 0, %bb.e ]
+  %2 = ptrtoint ptr %.050.lcssa80.sink.i to i64
   %i.ab = ptrtoint ptr %i.b to i64
-  %i.ac = sub i64 %.sink.i, %i.ab
+  %i.ac = sub i64 %2, %i.ab
   %i.ad = load ptr, ptr %i.a, align 8, !tbaa !249
   %i.ae = and i64 %i.ac, 4294967295
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.ae ; 2 uses

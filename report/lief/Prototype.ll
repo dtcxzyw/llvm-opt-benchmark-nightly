@@ -202,7 +202,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define noundef nonnull align 8 dereferenceable(8) ptr @_ZN4LIEF3DEXlsERSoRKNS0_9PrototypeE(ptr noundef nonnull returned align 8 dereferenceable(8) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) local_unnamed_addr #2 {
 bb.a:
-  %2 = alloca %"class.LIEF::ref_iterator", align 8 ; 6 uses
+  %2 = alloca %"class.LIEF::ref_iterator", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
   call void @_ZNK4LIEF3DEX9Prototype15parameters_typeEv(ptr dead_on_unwind nonnull writable sret(%"class.LIEF::ref_iterator") align 8 %2, ptr noundef nonnull align 8 dereferenceable(40) %1)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -218,8 +218,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.d = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str, i64 noundef 2) #10 ; 0 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !21   ; 2 uses
-  %i.g = load ptr, ptr %2, align 8, !tbaa !22     ; 7 uses
-  %i.h = ptrtoint ptr %i.g to i64                 ; 2 uses
+  %i.g = load ptr, ptr %2, align 8, !tbaa !22     ; 8 uses
+  %i.h = ptrtoint ptr %i.g to i64                 ; 3 uses
   %.not19 = icmp eq ptr %i.f, %i.g
   br i1 %.not19, label %bb.d, label %_ZN4LIEF12ref_iteratorIKSt6vectorIPNS_3DEX4TypeESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit.peel
 
@@ -227,6 +227,8 @@ _ZN4LIEF12ref_iteratorIKSt6vectorIPNS_3DEX4TypeESaIS4_EES4_N9__gnu_cxx17__normal
   %i.i = ptrtoint ptr %i.f to i64
   %i.j = sub i64 %i.i, %i.h                       ; 3 uses
   %i.k = ashr exact i64 %i.j, 3
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %.promoted = load ptr, ptr %3, align 8
   %.pre = load ptr, ptr %i.g, align 8, !tbaa !27
   %i.l = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN4LIEF3DEXlsERSoRKNS0_4TypeE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(24) %.pre) #10 ; 0 uses
   %exitcond.peel.not = icmp eq i64 %i.j, 8
@@ -262,7 +264,11 @@ _ZN4LIEF12ref_iteratorIKSt6vectorIPNS_3DEX4TypeESaIS4_EES4_N9__gnu_cxx17__normal
   ret ptr %0
 
 _ZN4LIEF12ref_iteratorIKSt6vectorIPNS_3DEX4TypeESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit: ; preds = %_ZN4LIEF12ref_iteratorIKSt6vectorIPNS_3DEX4TypeESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit.peel22, %_ZN4LIEF12ref_iteratorIKSt6vectorIPNS_3DEX4TypeESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit
+  %.pn30.in = phi ptr [ %4, %_ZN4LIEF12ref_iteratorIKSt6vectorIPNS_3DEX4TypeESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit ], [ %.promoted, %_ZN4LIEF12ref_iteratorIKSt6vectorIPNS_3DEX4TypeESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit.peel22 ]
   %.016 = phi i64 [ %i.aa, %_ZN4LIEF12ref_iteratorIKSt6vectorIPNS_3DEX4TypeESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit ], [ 2, %_ZN4LIEF12ref_iteratorIKSt6vectorIPNS_3DEX4TypeESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit.peel22 ] ; 2 uses
+  %.pn30 = ptrtoint ptr %.pn30.in to i64
+  %.pn = sub i64 %.pn30, %i.h
+  %4 = getelementptr inbounds i8, ptr %i.g, i64 %.pn
   %i.w = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.1, i64 noundef 2) #10 ; 0 uses
   %i.x = getelementptr inbounds [8 x i8], ptr %i.g, i64 %.016
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !27

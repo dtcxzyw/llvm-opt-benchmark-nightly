@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit80: ; preds = %_ZN
 bb.ai:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74, %bb.w
   %.pre-phi189 = phi i64 [ %.pre188, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74 ], [ %i.bd, %bb.w ]
   %.pre-phi = phi i64 [ %.pre187, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74 ], [ %i.bc, %bb.w ]
-  %i.dt = phi ptr [ %.pre184, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74 ], [ %i.bb, %bb.w ] ; 4 uses
+  %i.dt = phi ptr [ %.pre184, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74 ], [ %i.bb, %bb.w ] ; 5 uses
   %i.du = sub i64 %.pre-phi, %.pre-phi189
   %i.dv = icmp eq i64 %i.du, 64
   br i1 %i.dv, label %bb.ak, label %bb.aj
@@ -223,7 +223,7 @@ bb.ak:                                            ; preds = %bb.ai
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dt, i64 40
   %i.ea = load i64, ptr %i.dz, align 8, !tbaa !23
   %i.eb = icmp eq i64 %i.ea, 0                    ; 2 uses
-  br i1 %i.dy, label %bb.al, label %bb.ax
+  br i1 %i.dy, label %bb.al, label %14
 
 bb.al:                                            ; preds = %bb.ak
   br i1 %i.eb, label %bb.am, label %bb.as
@@ -333,20 +333,22 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit97: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #24
   br label %bb.bk
 
-bb.ax:                                            ; preds = %bb.ak
-  br i1 %i.eb, label %bb.bi, label %bb.ay, !llvm.loop !80
+14:                                               ; preds = %bb.ak
+  br i1 %i.eb, label %bb.bi, label %bb.ax, !llvm.loop !80
+
+bb.ax:                                            ; preds = %14
+  %15 = load ptr, ptr %0, align 8, !tbaa !35      ; 3 uses
+  %16 = load ptr, ptr %i.am, align 8, !tbaa !36   ; 2 uses
+  %17 = load ptr, ptr %i.dt, align 8, !tbaa !22
+  %18 = icmp eq ptr %15, %16
+  br i1 %18, label %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  %14 = load ptr, ptr %0, align 8, !tbaa !35      ; 3 uses
-  %15 = load ptr, ptr %i.am, align 8, !tbaa !36   ; 2 uses
   %i.fd = ptrtoint ptr %15 to i64
-  %i.fe = ptrtoint ptr %14 to i64
-  %i.ff = sub i64 %i.fd, %i.fe                    ; 2 uses
-  %16 = load ptr, ptr %i.dt, align 8, !tbaa !22
-  %17 = icmp ne ptr %14, %15
+  %i.fe = ptrtoint ptr %16 to i64
+  %i.ff = sub i64 %i.fe, %i.fd                    ; 2 uses
   %i.fg = icmp sgt i64 %i.ff, 0
-  %or.cond = and i1 %17, %i.fg
-  br i1 %or.cond, label %.lr.ph.preheader.i, label %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread
+  br i1 %i.fg, label %.lr.ph.preheader.i, label %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread
 
 .lr.ph.preheader.i:                               ; preds = %bb.ay
   %i.fh = udiv exact i64 %i.ff, 80
@@ -354,10 +356,10 @@ bb.ay:                                            ; preds = %bb.ax
 
 .lr.ph.i:                                         ; preds = %bb.az, %.lr.ph.preheader.i
   %.0611.i = phi i64 [ %i.fn, %bb.az ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %i.fi = getelementptr inbounds nuw [80 x i8], ptr %14, i64 %.0611.i
+  %i.fi = getelementptr inbounds nuw [80 x i8], ptr %15, i64 %.0611.i
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fi, i64 8
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !22
-  %i.fl = invoke noundef i32 @_Z18gmx_strcasecmp_minPKcS0_(ptr noundef %16, ptr noundef %i.fk)
+  %i.fl = invoke noundef i32 @_Z18gmx_strcasecmp_minPKcS0_(ptr noundef %17, ptr noundef %i.fk)
           to label %.noexc98 unwind label %bb.bb
 
 .noexc98:                                         ; preds = %.lr.ph.i
@@ -379,8 +381,8 @@ _Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread.loopexit: ; preds = %
   %.pre185 = load ptr, ptr %7, align 8, !tbaa !31
   br label %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread
 
-_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread: ; preds = %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread.loopexit, %bb.ay, %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit
-  %18 = phi ptr [ %.pre185, %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread.loopexit ], [ %i.dt, %bb.ay ], [ %.pre186, %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit ] ; 2 uses
+_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread: ; preds = %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread.loopexit, %bb.ay, %bb.ax, %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit
+  %19 = phi ptr [ %.pre185, %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread.loopexit ], [ %i.dt, %bb.ay ], [ %i.dt, %bb.ax ], [ %.pre186, %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #24
   store i32 0, ptr %i.c, align 4, !tbaa !37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #24
@@ -391,8 +393,8 @@ _Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread: ; preds = %_Z11searc
   store i8 0, ptr %i.f, align 1, !tbaa !39
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #24
   store i8 0, ptr %i.g, align 1, !tbaa !39
-  %i.fq = getelementptr inbounds nuw i8, ptr %18, i64 32
-  %i.fr = invoke noundef nonnull align 8 dereferenceable(76) ptr @_ZNSt6vectorI9t_inpfileSaIS0_EE12emplace_backIJiibbbRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_EEERS0_DpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.c, ptr noundef nonnull align 4 dereferenceable(4) %i.d, ptr noundef nonnull align 1 dereferenceable(1) %i.e, ptr noundef nonnull align 1 dereferenceable(1) %i.f, ptr noundef nonnull align 1 dereferenceable(1) %i.g, ptr noundef nonnull align 8 dereferenceable(32) %18, ptr noundef nonnull align 8 dereferenceable(32) %i.fq)
+  %i.fq = getelementptr inbounds nuw i8, ptr %19, i64 32
+  %i.fr = invoke noundef nonnull align 8 dereferenceable(76) ptr @_ZNSt6vectorI9t_inpfileSaIS0_EE12emplace_backIJiibbbRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_EEERS0_DpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(4) %i.c, ptr noundef nonnull align 4 dereferenceable(4) %i.d, ptr noundef nonnull align 1 dereferenceable(1) %i.e, ptr noundef nonnull align 1 dereferenceable(1) %i.f, ptr noundef nonnull align 1 dereferenceable(1) %i.g, ptr noundef nonnull align 8 dereferenceable(32) %19, ptr noundef nonnull align 8 dereferenceable(32) %i.fq)
           to label %bb.ba unwind label %bb.bc     ; 0 uses
 
 bb.ba:                                            ; preds = %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread
@@ -468,7 +470,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit106: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #24
   br label %bb.bk
 
-bb.bi:                                            ; preds = %bb.ba, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit103, %bb.ax, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit94, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit86, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit60
+bb.bi:                                            ; preds = %bb.ba, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit103, %14, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit94, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit86, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit60
   %i.gh = load ptr, ptr %7, align 8, !tbaa !31    ; 3 uses
   %i.gi = load ptr, ptr %i.ag, align 8, !tbaa !30 ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.gh, %i.gi
@@ -871,9 +873,9 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %.not = icmp eq ptr %3, null
-  %i.a = ptrtoint ptr %1 to i64
-  %i.b = ptrtoint ptr %0 to i64
-  %i.c = sub i64 %i.a, %i.b
+  %i.a = ptrtoint ptr %0 to i64
+  %i.b = ptrtoint ptr %1 to i64
+  %i.c = sub i64 %i.b, %i.a
   %.fr = freeze i64 %i.c                          ; 2 uses
   %i.d = udiv exact i64 %.fr, 80
   br i1 %.not, label %.lr.ph.split.us, label %.lr.ph.split
@@ -1005,14 +1007,15 @@ declare noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_st
 
 ; Function Attrs: mustprogress uwtable
 define void @_Z13mark_einp_setN3gmx8ArrayRefI9t_inpfileEEPKc(ptr %0, ptr %1, ptr noundef %2) local_unnamed_addr #2 {
-bb.a:
-  %i.a = ptrtoint ptr %1 to i64
-  %i.b = ptrtoint ptr %0 to i64
-  %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %3 = icmp ne ptr %0, %1
+  %4 = icmp eq ptr %0, %1
+  br i1 %4, label %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread, label %bb.a
+
+bb.a:                                             ; preds = %3
+  %i.a = ptrtoint ptr %0 to i64
+  %i.b = ptrtoint ptr %1 to i64
+  %i.c = sub i64 %i.b, %i.a                       ; 2 uses
   %i.d = icmp sgt i64 %i.c, 0
-  %or.cond = and i1 %3, %i.d
-  br i1 %or.cond, label %.lr.ph.preheader.i, label %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread
+  br i1 %i.d, label %.lr.ph.preheader.i, label %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
   %i.e = udiv exact i64 %i.c, 80
@@ -1052,7 +1055,7 @@ bb.c:                                             ; preds = %_Z11search_einpN3gm
   store i8 1, ptr %i.s, align 2, !tbaa !47
   br label %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread
 
-_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread: ; preds = %bb.b, %bb.a, %bb.c, %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit
+_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread: ; preds = %bb.b, %bb.a, %3, %bb.c, %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit
   ret void
 }
 
@@ -1069,16 +1072,18 @@ bb.a:
   %i.g = load ptr, ptr %0, align 8, !tbaa !35     ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !36   ; 2 uses
-  %2 = ptrtoint ptr %i.i to i64
-  %3 = ptrtoint ptr %i.g to i64
-  %4 = sub i64 %2, %3                             ; 2 uses
-  %5 = icmp ne ptr %i.g, %i.i
-  %6 = icmp sgt i64 %4, 0
-  %or.cond = and i1 %5, %6
-  br i1 %or.cond, label %.lr.ph.preheader.i, label %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread
+  %2 = icmp eq ptr %i.g, %i.i
+  br i1 %2, label %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread, label %.preheader.i
 
-.lr.ph.preheader.i:                               ; preds = %bb.a
-  %i.j = udiv exact i64 %4, 80
+.preheader.i:                                     ; preds = %bb.a
+  %3 = ptrtoint ptr %i.g to i64
+  %4 = ptrtoint ptr %i.i to i64
+  %5 = sub i64 %4, %3                             ; 2 uses
+  %6 = icmp sgt i64 %5, 0
+  br i1 %6, label %.lr.ph.preheader.i, label %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread
+
+.lr.ph.preheader.i:                               ; preds = %.preheader.i
+  %i.j = udiv exact i64 %5, 80
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.preheader.i
@@ -1104,7 +1109,7 @@ _Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit._crit_edge: ; preds = %_Z11s
   %.pre = load ptr, ptr %0, align 8, !tbaa !49
   br label %bb.d
 
-_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread: ; preds = %bb.b, %bb.a, %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit
+_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit.thread: ; preds = %bb.b, %.preheader.i, %bb.a, %_Z11search_einpN3gmx8ArrayRefIK9t_inpfileEEPKc.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #24
   store i32 0, ptr %i.b, align 4, !tbaa !37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #24

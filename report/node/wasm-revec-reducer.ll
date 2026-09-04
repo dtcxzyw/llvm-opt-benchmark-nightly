@@ -205,11 +205,18 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.c = load ptr, ptr %i.b, align 8, !nonnull !13, !align !17 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 48
-  %i.e = load ptr, ptr %i.d, align 8              ; 2 uses
+  %i.e = load ptr, ptr %i.d, align 8              ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
   %i.h = icmp eq ptr %i.g, %i.e
-  br i1 %i.h, label %._crit_edge, label %.lr.ph
+  br i1 %i.h, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %4 = ptrtoint ptr %i.g to i64
+  %5 = ptrtoint ptr %i.e to i64
+  %6 = sub i64 %4, %5
+  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 %6
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
@@ -219,8 +226,8 @@ bb.a:
   %i.m = icmp eq ptr %i.j, %i.l
   br i1 %i.m, label %bb.b, label %bb.e
 
-.lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.sroa.039.045 = phi ptr [ %i.n, %.lr.ph ], [ %i.g, %bb.a ]
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %.sroa.039.045 = phi ptr [ %i.n, %.lr.ph ], [ %7, %.lr.ph.preheader ]
   %i.n = getelementptr inbounds i8, ptr %.sroa.039.045, i64 -8 ; 3 uses
   %i.o = load ptr, ptr %i.n, align 8
   tail call void @_ZN2v88internal8compiler10turboshaft17WasmRevecAnalyzer12ProcessBlockERKNS2_5BlockE(ptr noundef nonnull align 8 dereferenceable(464) %0, ptr noundef nonnull align 8 dereferenceable(100) %i.o)

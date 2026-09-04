@@ -204,11 +204,11 @@ bb.ab:                                            ; preds = %bb.z
   %i.dl = load i8, ptr %i.dk, align 4, !tbaa !34, !range !25, !noalias !219, !noundef !26
   %i.dm = trunc nuw i8 %i.dl to i1                ; 2 uses
   %.sroa.082.0.in.v.i = select i1 %i.dm, i64 104, i64 80
-  %.sroa.082.0.in.i = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.082.0.in.v.i
   %.sroa.8.0.in.in.v.i = select i1 %i.dm, i64 112, i64 88
-  %.sroa.8.0.in.in.i = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.8.0.in.in.v.i
-  %.sroa.082.0.i = load ptr, ptr %.sroa.082.0.in.i, align 8, !tbaa !183, !noalias !219 ; 4 uses
-  %.sroa.8.0.in.i = load ptr, ptr %.sroa.8.0.in.in.i, align 8, !tbaa !238, !noalias !219
+  %.sroa.8.0.in.in.i = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.082.0.in.v.i
+  %.sroa.082.0.i = load ptr, ptr %.sroa.8.0.in.in.i, align 8, !tbaa !183, !noalias !219 ; 4 uses
+  %36 = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.8.0.in.in.v.i
+  %.sroa.8.0.in.i = load ptr, ptr %36, align 8, !tbaa !238, !noalias !219
   %i.dn = load ptr, ptr %i.c, align 8, !tbaa !46, !noalias !219
   %i.do = load ptr, ptr %i.b, align 8, !tbaa !47, !noalias !219 ; 3 uses
   %i.dp = ptrtoint ptr %i.dn to i64
@@ -292,7 +292,6 @@ bb.al:                                            ; preds = %bb.ab
   unreachable
 
 bb.am:                                            ; preds = %bb.ab
-  %.sroa.8.0.i = ptrtoint ptr %.sroa.8.0.in.i to i64
   %i.ek = uitofp i64 %i.ds to float
   %i.el = fneg float %i.dv                        ; 2 uses
   %i.em = fmul float %i.di, %i.el
@@ -309,8 +308,9 @@ bb.am:                                            ; preds = %bb.ab
   %i.ex = fdiv float %i.ek, %i.ew
   store ptr %.sroa.082.0.i, ptr %17, align 8, !tbaa !240, !noalias !219
   %i.ey = getelementptr inbounds nuw i8, ptr %17, i64 8
+  %37 = ptrtoint ptr %.sroa.8.0.in.i to i64
   %i.ez = ptrtoint ptr %.sroa.082.0.i to i64
-  %i.fa = sub i64 %.sroa.8.0.i, %i.ez
+  %i.fa = sub i64 %37, %i.ez
   %i.fb = getelementptr inbounds nuw i8, ptr %.sroa.082.0.i, i64 %i.fa ; 2 uses
   store ptr %i.fb, ptr %i.ey, align 8, !tbaa !240, !noalias !219
   store ptr %i.do, ptr %18, align 8, !tbaa !242, !noalias !219

@@ -136,21 +136,19 @@ atomic_store_p.exit.i:                            ; preds = %bb.f
 
 bb.g:                                             ; preds = %atomic_store_p.exit.i
   %i.ab = load i8, ptr @je_opt_retain, align 1, !tbaa !21, !range !18, !noundef !19 ; 2 uses
-  %i.ac = ptrtoint ptr %i.y to i64                ; 3 uses
+  %i.ac = ptrtoint ptr %i.y to i64                ; 2 uses
   %i.ad = add i64 %i.ac, 4095
-  %i.ae = and i64 %i.ad, -4096                    ; 5 uses
-  %i.af = sub i64 %i.ae, %i.ac
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.af ; 2 uses
-  %i.ah = add i64 %i.r, %i.ae
+  %i.ae = and i64 %i.ad, -4096
+  %i.af = sub i64 %i.ae, %i.ac                    ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.af ; 3 uses
+  %8 = ptrtoint ptr %i.ag to i64                  ; 3 uses
+  %i.ah = add i64 %i.r, %8
   %i.ai = and i64 %i.ah, %i.s                     ; 2 uses
-  %i.aj = sub i64 %i.ai, %i.ae
-  %8 = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.aj ; 8 uses
-  %9 = ptrtoint ptr %8 to i64                     ; 2 uses
-  %.not = icmp eq i64 %i.ae, %9                   ; 2 uses
+  %i.aj = sub i64 %i.ai, %8                       ; 3 uses
+  %.not = icmp eq i64 %i.ai, %8                   ; 2 uses
   br i1 %.not, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %10 = sub i64 %9, %i.ae
   %.val84 = load i32, ptr %i.t, align 64, !tbaa !73
   %i.ak = tail call i64 @je_extent_sn_next(ptr noundef nonnull %i.u) #6
   %i.al = load i64, ptr %i.d, align 8, !tbaa !75
@@ -158,7 +156,7 @@ bb.h:                                             ; preds = %bb.g
   store ptr %i.ag, ptr %i.v, align 8, !tbaa !76
   %i.an = load i64, ptr %i.w, align 8, !tbaa !77
   %i.ao = and i64 %i.an, 4095
-  %i.ap = or i64 %i.ao, %10
+  %i.ap = or i64 %i.ao, %i.aj
   store i64 %i.ap, ptr %i.w, align 8, !tbaa !77
   store i64 %i.ak, ptr %i.x, align 8, !tbaa !78
   %i.aq = and i32 %.val84, -268431361
@@ -171,14 +169,15 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %11 = sub i64 %3, %i.ac
-  %i.au = add i64 %11, %i.ai
+  %9 = add i64 %i.af, %3
+  %i.au = add i64 %9, %i.aj
   %i.av = tail call ptr @sbrk(i64 noundef %i.au) #6 ; 2 uses
   %i.aw = icmp eq ptr %i.av, %i.y
   br i1 %i.aw, label %atomic_store_p.exit, label %bb.p
 
 atomic_store_p.exit:                              ; preds = %bb.i
-  %i.ax = getelementptr inbounds nuw i8, ptr %8, i64 %3
+  %10 = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.aj ; 7 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %10, i64 %3
   store atomic ptr %i.ax, ptr @dss_max.0 release, align 8
   store atomic i8 0, ptr @dss_extending release, align 1
   br i1 %.not, label %bb.k, label %bb.j
@@ -198,7 +197,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %i.ba, label %.thread110, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bb = tail call zeroext i1 @je_pages_decommit(ptr noundef nonnull %8, i64 noundef %3) #6 ; 2 uses
+  %i.bb = tail call zeroext i1 @je_pages_decommit(ptr noundef nonnull %10, i64 noundef %3) #6 ; 2 uses
   %i.bc = zext i1 %i.bb to i8
   store i8 %i.bc, ptr %6, align 1, !tbaa !21
   %i.bd = load i8, ptr %5, align 1, !tbaa !21, !range !18, !noundef !19
@@ -219,7 +218,7 @@ bb.m:                                             ; preds = %bb.l
   %.val = load i32, ptr %i.t, align 64, !tbaa !73
   %i.bk = tail call i64 @je_extent_sn_next(ptr noundef nonnull %i.u) #6
   %i.bl = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store ptr %8, ptr %i.bl, align 8, !tbaa !76
+  store ptr %10, ptr %i.bl, align 8, !tbaa !76
   %i.bm = getelementptr inbounds nuw i8, ptr %7, i64 16
   store i64 %3, ptr %i.bm, align 8, !tbaa !77
   %i.bn = getelementptr inbounds nuw i8, ptr %7, i64 32
@@ -234,7 +233,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.br, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %.thread111
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %8, i8 0, i64 %3, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %10, i8 0, i64 %3, i1 false)
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %.thread111
@@ -255,7 +254,7 @@ atomic_store_b.exit:                              ; preds = %bb.p
   br label %.thread
 
 .thread:                                          ; preds = %bb.m, %.thread110, %bb.o, %bb.b, %bb.a, %.thread93
-  %.4 = phi ptr [ null, %bb.b ], [ null, %bb.a ], [ null, %.thread93 ], [ %8, %bb.m ], [ %8, %bb.o ], [ %8, %.thread110 ]
+  %.4 = phi ptr [ null, %bb.b ], [ null, %bb.a ], [ null, %.thread93 ], [ %10, %bb.m ], [ %10, %bb.o ], [ %10, %.thread110 ]
   ret ptr %.4
 }
 

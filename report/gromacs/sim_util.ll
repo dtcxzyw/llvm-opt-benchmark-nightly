@@ -205,14 +205,14 @@ bb.jr:                                            ; preds = %bb.jq
   br label %bb.js
 
 bb.js:                                            ; preds = %bb.jq, %bb.jr
-  %.sroa.01087.0 = phi ptr [ %i.bfh, %bb.jr ], [ %.sroa.01182.0, %bb.jq ] ; 3 uses
-  %.sroa.51088.0.in = phi ptr [ %i.bfj, %bb.jr ], [ %.sroa.71184.0, %bb.jq ]
+  %.sroa.01087.0 = phi ptr [ %i.bfj, %bb.jr ], [ %.sroa.71184.0, %bb.jq ]
+  %.sroa.51088.0.in = phi ptr [ %i.bfh, %bb.jr ], [ %.sroa.01182.0, %bb.jq ] ; 3 uses
   %.sroa.51088.0 = ptrtoint ptr %.sroa.51088.0.in to i64
   %i.bfk = getelementptr inbounds nuw i8, ptr %18, i64 640
   %i.bfl = load i32, ptr %i.bfk, align 8, !tbaa !172
   %i.bfm = ptrtoint ptr %.sroa.01087.0 to i64
-  %i.bfn = sub i64 %.sroa.51088.0, %i.bfm
-  %i.bfo = getelementptr inbounds nuw i8, ptr %.sroa.01087.0, i64 %i.bfn
+  %i.bfn = sub i64 %i.bfm, %.sroa.51088.0
+  %i.bfo = getelementptr inbounds nuw i8, ptr %.sroa.51088.0.in, i64 %i.bfn
   %i.bfp = getelementptr inbounds nuw i8, ptr %18, i64 176
   %i.bfq = load ptr, ptr %i.bfp, align 8, !tbaa !209 ; 3 uses
   %i.bfr = getelementptr inbounds nuw i8, ptr %18, i64 184
@@ -236,7 +236,7 @@ bb.js:                                            ; preds = %bb.jq, %bb.jr
   %i.bgh = load i32, ptr %i.bgg, align 8, !tbaa !482
   %i.bgi = icmp ne i32 %i.bgh, 0
   %i.bgj = getelementptr inbounds nuw i8, ptr %57, i64 24
-  call void @_Z7calc_muiiN3gmx8ArrayRefIKNS_11BasicVectorIfEEEENS0_IKfEES6_bPdS7_(i32 noundef 0, i32 noundef %i.bfl, ptr %.sroa.01087.0, ptr %i.bfo, ptr %i.bfq, ptr %i.bfw, ptr noundef nonnull byval(%"class.gmx::ArrayRef.0") align 8 %58, i1 noundef zeroext %i.bgi, ptr noundef nonnull %57, ptr noundef nonnull %i.bgj)
+  call void @_Z7calc_muiiN3gmx8ArrayRefIKNS_11BasicVectorIfEEEENS0_IKfEES6_bPdS7_(i32 noundef 0, i32 noundef %i.bfl, ptr %.sroa.51088.0.in, ptr %i.bfo, ptr %i.bfq, ptr %i.bfw, ptr noundef nonnull byval(%"class.gmx::ArrayRef.0") align 8 %58, i1 noundef zeroext %i.bgi, ptr noundef nonnull %57, ptr noundef nonnull %i.bgj)
   %i.bgk = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bgl = load ptr, ptr %i.bgk, align 8, !tbaa !483, !nonnull !142, !align !314 ; 2 uses
   %i.bgm = getelementptr inbounds nuw i8, ptr %21, i64 168
@@ -639,9 +639,9 @@ bb.f:                                             ; preds = %_ZL37gmx_omp_nthrea
 
 _ZN3gmxL10clearRVecsENS_8ArrayRefINS_11BasicVectorIfEEEEb.exit: ; preds = %_ZL37gmx_omp_nthreads_get_simple_rvec_task17ModuleMultiThreadi.exit.thread.i, %.lr.ph.preheader.i, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  %i.al = ptrtoint ptr %spec.select20 to i64
-  %i.am = ptrtoint ptr %spec.select to i64
-  %i.an = sub i64 %i.al, %i.am
+  %i.al = ptrtoint ptr %spec.select to i64
+  %i.am = ptrtoint ptr %spec.select20 to i64
+  %i.an = sub i64 %i.am, %i.al
   %reass.sub27.fr = freeze i64 %i.an              ; 3 uses
   %i.ao = sdiv exact i64 %reass.sub27.fr, 12
   %i.ap = trunc i64 %i.ao to i32

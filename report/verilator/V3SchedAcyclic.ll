@@ -205,10 +205,10 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterISt8functionIFbRKSt4pairIPN7V3Sched12_GLOBAL
 
 _ZSt4moveIPSt4pairIPN7V3Sched12_GLOBAL__N_121SchedAcyclicVarVertexEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i75.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i75, %._crit_edge.i.i
   %.08.lcssa.i.i.i.i.i.i.i57 = phi ptr [ %.sroa.0.0.lcssa.i.i, %._crit_edge.i.i ], [ %.lcssa325.unr, %.lr.ph.i.i.i.i.i.i.i75.prol.loopexit ], [ %i.kp, %.lr.ph.i.i.i.i.i.i.i75 ]
-  %i.ks = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i57 to i64 ; 3 uses
+  %i.ks = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i57 to i64 ; 2 uses
   %i.kt = ptrtoint ptr %.sroa.0.0.lcssa.i.i to i64
   %i.ku = sub i64 %i.ks, %i.kt
-  %i.kv = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i.i, i64 %i.ku ; 3 uses
+  %i.kv = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i.i, i64 %i.ku ; 4 uses
   %i.kw = ptrtoint ptr %i.iz to i64               ; 2 uses
   %i.kx = ptrtoint ptr %.016.lcssa.i.i to i64
   %i.ky = sub i64 %i.kw, %i.kx
@@ -245,7 +245,7 @@ _ZSt4moveIPSt4pairIPN7V3Sched12_GLOBAL__N_121SchedAcyclicVarVertexEjEN9__gnu_cxx
   %.0911.i.i.i.i.i25.i.i.unr = phi ptr [ %.016.lcssa.i.i, %.lr.ph.i.i.i.i.i22.i.i.preheader ], [ %i.ld, %.lr.ph.i.i.i.i.i22.i.i.prol ]
   %.lcssa326.unr = phi ptr [ poison, %.lr.ph.i.i.i.i.i22.i.i.preheader ], [ %i.le, %.lr.ph.i.i.i.i.i22.i.i.prol ]
   %i.lg = icmp ult i64 %i.kz, 4
-  br i1 %i.lg, label %_ZSt4moveIPSt4pairIPN7V3Sched12_GLOBAL__N_121SchedAcyclicVarVertexEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit28.loopexit.i.i, label %.lr.ph.i.i.i.i.i22.i.i
+  br i1 %i.lg, label %bb.by, label %.lr.ph.i.i.i.i.i22.i.i
 
 .lr.ph.i.i.i.i.i22.i.i:                           ; preds = %.lr.ph.i.i.i.i.i22.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i22.i.i
   %.013.i.i.i.i.i23.i.i = phi i64 [ %i.lx, %.lr.ph.i.i.i.i.i22.i.i ], [ %.013.i.i.i.i.i23.i.i.unr, %.lr.ph.i.i.i.i.i22.i.i.prol.loopexit ] ; 2 uses
@@ -285,16 +285,12 @@ _ZSt4moveIPSt4pairIPN7V3Sched12_GLOBAL__N_121SchedAcyclicVarVertexEjEN9__gnu_cxx
   %i.lw = getelementptr inbounds nuw i8, ptr %.0812.i.i.i.i.i24.i.i, i64 64 ; 2 uses
   %i.lx = add nsw i64 %.013.i.i.i.i.i23.i.i, -4
   %i.ly = icmp sgt i64 %.013.i.i.i.i.i23.i.i, 4
-  br i1 %i.ly, label %.lr.ph.i.i.i.i.i22.i.i, label %_ZSt4moveIPSt4pairIPN7V3Sched12_GLOBAL__N_121SchedAcyclicVarVertexEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit28.loopexit.i.i, !llvm.loop !13
+  br i1 %i.ly, label %.lr.ph.i.i.i.i.i22.i.i, label %bb.by, !llvm.loop !13
 
-_ZSt4moveIPSt4pairIPN7V3Sched12_GLOBAL__N_121SchedAcyclicVarVertexEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit28.loopexit.i.i: ; preds = %.lr.ph.i.i.i.i.i22.i.i, %.lr.ph.i.i.i.i.i22.i.i.prol.loopexit
-  %.lcssa326 = phi ptr [ %.lcssa326.unr, %.lr.ph.i.i.i.i.i22.i.i.prol.loopexit ], [ %i.lw, %.lr.ph.i.i.i.i.i22.i.i ]
-  %13 = ptrtoint ptr %.lcssa326 to i64
-  br label %bb.by
-
-bb.by:                                            ; preds = %_ZSt4moveIPSt4pairIPN7V3Sched12_GLOBAL__N_121SchedAcyclicVarVertexEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit28.loopexit.i.i, %_ZSt4moveIPSt4pairIPN7V3Sched12_GLOBAL__N_121SchedAcyclicVarVertexEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i
-  %.08.lcssa.i.i.i.i.i21.i.i = phi i64 [ %i.ks, %_ZSt4moveIPSt4pairIPN7V3Sched12_GLOBAL__N_121SchedAcyclicVarVertexEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i ], [ %13, %_ZSt4moveIPSt4pairIPN7V3Sched12_GLOBAL__N_121SchedAcyclicVarVertexEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit28.loopexit.i.i ]
-  %i.lz = sub i64 %.08.lcssa.i.i.i.i.i21.i.i, %i.ks
+bb.by:                                            ; preds = %.lr.ph.i.i.i.i.i22.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i22.i.i, %_ZSt4moveIPSt4pairIPN7V3Sched12_GLOBAL__N_121SchedAcyclicVarVertexEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i
+  %.08.lcssa.i.i.i.i.i21.i.i = phi ptr [ %i.kv, %_ZSt4moveIPSt4pairIPN7V3Sched12_GLOBAL__N_121SchedAcyclicVarVertexEjEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i ], [ %.lcssa326.unr, %.lr.ph.i.i.i.i.i22.i.i.prol.loopexit ], [ %i.lw, %.lr.ph.i.i.i.i.i22.i.i ]
+  %13 = ptrtoint ptr %.08.lcssa.i.i.i.i.i21.i.i to i64
+  %i.lz = sub i64 %13, %i.ks
   %i.ma = getelementptr inbounds i8, ptr %i.kv, i64 %i.lz ; 2 uses
   %i.mb = load ptr, ptr %i.bo, align 8, !tbaa !181 ; 2 uses
   %.not.i.i.i58 = icmp eq ptr %i.mb, null

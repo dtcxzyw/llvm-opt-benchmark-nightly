@@ -205,11 +205,11 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.e
+  %23 = ptrtoint ptr %i.n to i64
   %i.w = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !118
-  %23 = ptrtoint ptr %i.x to i64
-  %i.y = ptrtoint ptr %i.n to i64
-  %i.z = sub i64 %23, %i.y
+  %i.y = ptrtoint ptr %i.x to i64
+  %i.z = sub i64 %i.y, %23
   %i.aa = ashr exact i64 %i.z, 2                  ; 2 uses
   %i.ab = sdiv i64 %i.aa, 2
   %i.ac = sitofp i64 %i.ab to double
@@ -612,9 +612,9 @@ bb.c:                                             ; preds = %.lr.ph71, %._crit_e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #22
   %i.t = load ptr, ptr %i.m, align 8, !tbaa !131  ; 4 uses
   %i.u = load ptr, ptr %i.n, align 8, !tbaa !132
-  %i.v = ptrtoint ptr %i.u to i64
-  %i.w = ptrtoint ptr %i.t to i64
-  %i.x = sub i64 %i.v, %i.w
+  %i.v = ptrtoint ptr %i.t to i64
+  %i.w = ptrtoint ptr %i.u to i64
+  %i.x = sub i64 %i.w, %i.v
   %i.y = ashr exact i64 %i.x, 4                   ; 2 uses
   %i.z = mul i64 %i.y, %indvars.iv
   %i.aa = load i32, ptr %2, align 4, !tbaa !93
@@ -1017,9 +1017,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %_ZN3gmxL18clearBufferFlaggedILi3EEEviNS_8ArrayRefIKSt5arrayImLm2EEEENS1_IfEE.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b
-  %i.t = ptrtoint ptr %i.g to i64
-  %i.u = ptrtoint ptr %i.e to i64
-  %i.v = sub i64 %i.t, %i.u
+  %i.t = ptrtoint ptr %i.e to i64
+  %i.u = ptrtoint ptr %i.g to i64
+  %i.v = sub i64 %i.u, %i.t
   %i.w = ashr exact i64 %i.v, 4                   ; 3 uses
   %i.x = load <2 x i64>, ptr %2, align 16         ; 5 uses
   %xtraiter = and i64 %i.w, 3                     ; 3 uses
