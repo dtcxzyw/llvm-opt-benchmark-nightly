@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %bb.f, %bb.h, %get_o
   br i1 %i.eh, label %.lr.ph391, label %.thread246
 
 .thread246:                                       ; preds = %bb.x, %.lr.ph391, %js_mutex_init.exit
-  %.3131.lcssa = phi i32 [ 1, %js_mutex_init.exit ], [ %.3131385, %.lr.ph391 ], [ %.5, %bb.x ] ; 7 uses
+  %.3131.lcssa = phi i32 [ 1, %js_mutex_init.exit ], [ %.3131385, %.lr.ph391 ], [ %.5, %bb.x ] ; 6 uses
   %.0124.lcssa = phi i1 [ true, %js_mutex_init.exit ], [ %.0124386, %.lr.ph391 ], [ %.2126, %bb.x ] ; 2 uses
   %.0120.lcssa = phi i1 [ false, %js_mutex_init.exit ], [ %.0120387, %.lr.ph391 ], [ %.2122, %bb.x ]
   %.0112.lcssa = phi i1 [ false, %js_mutex_init.exit ], [ %.0112388, %.lr.ph391 ], [ %.2114, %bb.x ]
@@ -319,7 +319,11 @@ bb.ai:                                            ; preds = %bb.af, %bb.ag, %bb.
   br label %.lr.ph406
 
 bb.aj:                                            ; preds = %bb.ai
-  br i1 %i.ei, label %bb.ak, label %bb.am
+  br i1 %i.ei, label %bb.ak, label %.thread254
+
+.thread254:                                       ; preds = %bb.aj
+  store i32 0, ptr @start_index, align 4, !tbaa !41
+  br label %.sink.split
 
 bb.ak:                                            ; preds = %bb.aj
   %i.fp = tail call ptr @__ctype_b_loc() #46
@@ -340,8 +344,8 @@ bb.al:                                            ; preds = %bb.ak
   call void @namelist_load(ptr noundef nonnull @test_list, ptr noundef nonnull %i.ft)
   br label %bb.am
 
-bb.am:                                            ; preds = %bb.al, %bb.ak, %bb.aj
-  %.7 = phi i32 [ %.3131.lcssa, %bb.ak ], [ %i.fz, %bb.al ], [ %.3131.lcssa, %bb.aj ] ; 3 uses
+bb.am:                                            ; preds = %bb.al, %bb.ak
+  %.7 = phi i32 [ %.3131.lcssa, %bb.ak ], [ %i.fz, %bb.al ] ; 3 uses
   store i32 0, ptr @start_index, align 4, !tbaa !41
   store i32 -1, ptr @stop_index, align 4, !tbaa !41
   %i.ga = icmp slt i32 %.7, %0
@@ -364,10 +368,14 @@ bb.ao:                                            ; preds = %bb.an
   %i.gk = load ptr, ptr %i.gj, align 8, !tbaa !29
   %i.gl = call i64 @__isoc23_strtol(ptr noundef nonnull %i.gk, ptr noundef null, i32 noundef 10) #40, !inline_history !14
   %i.gm = trunc i64 %i.gl to i32
-  store i32 %i.gm, ptr @stop_index, align 4, !tbaa !41
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.ao, %.thread254
+  %.sink = phi i32 [ -1, %.thread254 ], [ %i.gm, %bb.ao ]
+  store i32 %.sink, ptr @stop_index, align 4, !tbaa !41
   br label %bb.ap
 
-bb.ap:                                            ; preds = %bb.an, %bb.ao, %bb.am
+bb.ap:                                            ; preds = %.sink.split, %bb.an, %bb.am
   call void @namelist_sort(ptr noundef nonnull @test_list)
   call void @namelist_sort(ptr noundef nonnull @exclude_list)
   %i.gn = load i32, ptr getelementptr inbounds nuw (i8, ptr @test_list, i64 8), align 8, !tbaa !38 ; 2 uses

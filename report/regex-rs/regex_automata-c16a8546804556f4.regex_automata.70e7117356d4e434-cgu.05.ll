@@ -204,6 +204,7 @@ _RNvNtNtCs9GYDdpCSJ4S_14regex_automata4util4utf83len.exit.i.i.thread: ; preds = 
   br i1 %i.cw, label %_RNvNtNtNtCs9GYDdpCSJ4S_14regex_automata4util4look12is_word_char3fwd.exit, label %.thread45, !dbg !9045
 
 _RNvNtNtCs9GYDdpCSJ4S_14regex_automata4util4utf86decode.exit.i.thread92: ; preds = %_RNvNtNtCs9GYDdpCSJ4S_14regex_automata4util4utf83len.exit.i40.thread.thread
+    #dbg_value(i64 1, !3478, !DIExpression(), !8928)
   %.sroa.419.4.insert.ext.i.i = zext nneg i8 %i.bx to i32, !dbg !9046
   br label %bb.ak, !dbg !9047
 
@@ -428,6 +429,7 @@ _RNvNtNtCs9GYDdpCSJ4S_14regex_automata4util4utf83len.exit.i.i.thread: ; preds = 
   br i1 %i.af, label %_RNvNtNtNtCs9GYDdpCSJ4S_14regex_automata4util4look12is_word_char3fwd.exit, label %.thread21, !dbg !9192
 
 _RNvNtNtCs9GYDdpCSJ4S_14regex_automata4util4utf86decode.exit.i.thread37: ; preds = %_RNvNtNtCs9GYDdpCSJ4S_14regex_automata4util4utf83len.exit.i.thread.thread
+    #dbg_value(i64 1, !3478, !DIExpression(), !9151)
   %.sroa.419.4.insert.ext.i.i = zext nneg i8 %i.i to i32, !dbg !9193
   br label %bb.k, !dbg !9194
 

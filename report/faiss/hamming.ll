@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph19
 
 .lr.ph19:                                         ; preds = %bb.a, %_ZN5faissL19uint64_reverse_bitsEm.exit._crit_edge
-  %.01118 = phi i64 [ %.1.lcssa, %_ZN5faissL19uint64_reverse_bitsEm.exit._crit_edge ], [ 0, %bb.a ] ; 3 uses
+  %.01118 = phi i64 [ %i.w, %_ZN5faissL19uint64_reverse_bitsEm.exit._crit_edge ], [ 0, %bb.a ] ; 2 uses
   %.01217 = phi ptr [ %i.aa, %_ZN5faissL19uint64_reverse_bitsEm.exit._crit_edge ], [ %0, %bb.a ] ; 2 uses
   %i.a = load i64, ptr %.01217, align 8, !tbaa !30
   br label %bb.b
@@ -234,7 +234,11 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph19
 
 _ZN5faissL19uint64_reverse_bitsEm.exit.preheader: ; preds = %bb.b
   %i.q = icmp ult i64 %.01118, %1
-  br i1 %i.q, label %_ZN5faissL19uint64_reverse_bitsEm.exit, label %_ZN5faissL19uint64_reverse_bitsEm.exit._crit_edge
+  br i1 %i.q, label %_ZN5faissL19uint64_reverse_bitsEm.exit, label %_ZN5faissL19uint64_reverse_bitsEm.exit._crit_edge.thread
+
+_ZN5faissL19uint64_reverse_bitsEm.exit._crit_edge.thread: ; preds = %_ZN5faissL19uint64_reverse_bitsEm.exit.preheader
+  %putchar23 = tail call i32 @putchar(i32 32)     ; 0 uses
+  br label %._crit_edge
 
 _ZN5faissL19uint64_reverse_bitsEm.exit:           ; preds = %_ZN5faissL19uint64_reverse_bitsEm.exit.preheader, %_ZN5faissL19uint64_reverse_bitsEm.exit
   %.016 = phi i64 [ %i.u, %_ZN5faissL19uint64_reverse_bitsEm.exit ], [ %i.n, %_ZN5faissL19uint64_reverse_bitsEm.exit.preheader ] ; 2 uses
@@ -245,20 +249,19 @@ _ZN5faissL19uint64_reverse_bitsEm.exit:           ; preds = %_ZN5faissL19uint64_
   %i.t = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.13, i32 noundef %i.s) ; 0 uses
   %i.u = lshr i64 %.016, 1
   %i.v = add nuw nsw i64 %.01015, 1
-  %i.w = add nuw i64 %.114, 1                     ; 3 uses
+  %i.w = add nuw i64 %.114, 1                     ; 4 uses
   %i.x = icmp samesign ult i64 %.01015, 63
   %i.y = icmp ult i64 %i.w, %1
   %i.z = select i1 %i.x, i1 %i.y, i1 false
   br i1 %i.z, label %_ZN5faissL19uint64_reverse_bitsEm.exit, label %_ZN5faissL19uint64_reverse_bitsEm.exit._crit_edge, !llvm.loop !926
 
-_ZN5faissL19uint64_reverse_bitsEm.exit._crit_edge: ; preds = %_ZN5faissL19uint64_reverse_bitsEm.exit, %_ZN5faissL19uint64_reverse_bitsEm.exit.preheader
-  %.1.lcssa = phi i64 [ %.01118, %_ZN5faissL19uint64_reverse_bitsEm.exit.preheader ], [ %i.w, %_ZN5faissL19uint64_reverse_bitsEm.exit ] ; 2 uses
+_ZN5faissL19uint64_reverse_bitsEm.exit._crit_edge: ; preds = %_ZN5faissL19uint64_reverse_bitsEm.exit
   %i.aa = getelementptr inbounds nuw i8, ptr %.01217, i64 8
   %putchar = tail call i32 @putchar(i32 32)       ; 0 uses
-  %i.ab = icmp ult i64 %.1.lcssa, %1
+  %i.ab = icmp ult i64 %i.w, %1
   br i1 %i.ab, label %.lr.ph19, label %._crit_edge, !llvm.loop !927
 
-._crit_edge:                                      ; preds = %_ZN5faissL19uint64_reverse_bitsEm.exit._crit_edge, %bb.a
+._crit_edge:                                      ; preds = %_ZN5faissL19uint64_reverse_bitsEm.exit._crit_edge, %_ZN5faissL19uint64_reverse_bitsEm.exit._crit_edge.thread, %bb.a
   ret void
 }
 

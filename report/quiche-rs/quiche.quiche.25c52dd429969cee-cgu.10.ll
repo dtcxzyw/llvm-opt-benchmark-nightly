@@ -204,7 +204,7 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
 
 bb.aj:                                            ; preds = %bb.ah
   %.not48 = icmp ult i64 %i.da, %i.di, !dbg !6724
-  br i1 %.not48, label %.thread91, label %bb.ak, !dbg !6724
+  br i1 %.not48, label %bb.ar, label %bb.ak, !dbg !6724
 
 bb.ak:                                            ; preds = %bb.aj
     #dbg_value(ptr %i.h, !6186, !DIExpression(), !6481)
@@ -248,11 +248,11 @@ bb.an:                                            ; preds = %bb.ak
   %i.dr = icmp ult i64 %i.da, %i.dn, !dbg !6736
   br i1 %i.dr, label %bb.ao, label %.thread91, !dbg !6736
 
-.thread91:                                        ; preds = %bb.aj, %bb.an, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65
-  %.pre-phi116 = phi i64 [ %i.di, %bb.aj ], [ %i.di, %bb.an ], [ %.pre115, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65 ], !dbg !6737 ; 2 uses
-  %2 = phi i64 [ %i.dh, %bb.aj ], [ %i.dh, %bb.an ], [ %.pre106, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65 ], !dbg !6738
-  %3 = phi i64 [ %i.de, %bb.aj ], [ %i.de, %bb.an ], [ %.pre105, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65 ], !dbg !6739
-  %4 = phi i64 [ %i.dc, %bb.aj ], [ %i.dc, %bb.an ], [ %.pre104, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65 ], !dbg !6740
+.thread91:                                        ; preds = %bb.an, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65
+  %.pre-phi116 = phi i64 [ %.pre115, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65 ], [ %i.di, %bb.an ], !dbg !6737 ; 2 uses
+  %2 = phi i64 [ %.pre106, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65 ], [ %i.dh, %bb.an ], !dbg !6738
+  %3 = phi i64 [ %.pre105, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65 ], [ %i.de, %bb.an ], !dbg !6739
+  %4 = phi i64 [ %.pre104, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65 ], [ %i.dc, %bb.an ], !dbg !6740
   %i.ds = icmp ult i64 %i.da, %.pre-phi116, !dbg !6741
   br i1 %i.ds, label %bb.ar, label %.backedge136, !dbg !6741
 
@@ -299,14 +299,18 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8Rang
   %.pre115 = add i64 %.pre113, %.pre106, !dbg !6737
   br label %.thread91, !dbg !6755
 
-bb.ar:                                            ; preds = %.thread91
+bb.ar:                                            ; preds = %bb.aj, %.thread91
+  %5 = phi i64 [ %4, %.thread91 ], [ %i.dc, %bb.aj ]
+  %6 = phi i64 [ %3, %.thread91 ], [ %i.de, %bb.aj ]
+  %7 = phi i64 [ %2, %.thread91 ], [ %i.dh, %bb.aj ]
+  %.pre-phi116132 = phi i64 [ %.pre-phi116, %.thread91 ], [ %i.di, %bb.aj ]
     #dbg_value(ptr %i.h, !6186, !DIExpression(), !6516)
     #dbg_value(ptr %i.h, !6191, !DIExpression(), !6519)
     #dbg_value(ptr %i.h, !6195, !DIExpression(), !6521)
   %i.dx = load i64, ptr %i.bl, align 8, !dbg !6756, !noundef !1030
   %i.dy = load i64, ptr %i.bo, align 8, !dbg !6757, !noundef !1030
   %i.dz = add i64 %i.dy, %i.dx, !dbg !6758
-  %i.ea = icmp ugt i64 %i.dz, %.pre-phi116, !dbg !6759
+  %i.ea = icmp ugt i64 %i.dz, %.pre-phi116132, !dbg !6759
   br i1 %i.ea, label %bb.as, label %.backedge136, !dbg !6759
 
 .backedge136:                                     ; preds = %bb.ar, %.thread91, %bb.au
@@ -315,9 +319,9 @@ bb.ar:                                            ; preds = %.thread91
 bb.as:                                            ; preds = %bb.ar
     #dbg_value(ptr %i.k, !6144, !DIExpression(), !6522)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !6760
-  %i.eb = add i64 %i.da, %3, !dbg !6761
-  %i.ec = sub i64 %4, %i.eb, !dbg !6761
-  %i.ed = add i64 %i.ec, %2, !dbg !6761
+  %i.eb = add i64 %i.da, %6, !dbg !6761
+  %i.ec = sub i64 %5, %i.eb, !dbg !6761
+  %i.ed = add i64 %i.ec, %7, !dbg !6761
   invoke void @_RNvMNtCs3f36owOmepS_6quiche9range_bufNtB2_8RangeBuf9split_offB4_(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.c, ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.h, i64 noundef %i.ed)
           to label %bb.at unwind label %.thread88.loopexit, !dbg !6762
 

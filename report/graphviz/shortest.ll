@@ -205,21 +205,23 @@ bb.v:                                             ; preds = %.loopexit292
   tail call void @free(ptr noundef %i.c) #12
   br label %bb.ce
 
-.loopexit290:                                     ; preds = %connecttris.exit, %.lr.ph323
-  %tris.val266 = phi i64 [ %tris.val266376, %.lr.ph323 ], [ %tris.val265, %connecttris.exit ] ; 3 uses
-  %i.cs = icmp ult i64 %i.cu, %tris.val266
+.loopexit290:                                     ; preds = %connecttris.exit
+  %i.cs = icmp ult i64 %i.cu, %tris.val265
   br i1 %i.cs, label %.lr.ph323, label %.preheader289, !llvm.loop !40
 
 .preheader289:                                    ; preds = %.loopexit290
-  %i.ct = icmp eq i64 %tris.val266, 0
-  br i1 %i.ct, label %._crit_edge327.thread, label %.lr.ph326
+  %i.ct = icmp eq i64 %tris.val265, 0
+  br i1 %i.ct, label %._crit_edge327.thread, label %.lr.ph326.preheader
+
+.lr.ph326.preheader:                              ; preds = %.lr.ph323, %.preheader289
+  br label %.lr.ph326
 
 .lr.ph323:                                        ; preds = %.preheader291, %.loopexit290
-  %tris.val266376 = phi i64 [ %tris.val266, %.loopexit290 ], [ %tris.val266321, %.preheader291 ] ; 2 uses
+  %tris.val266376 = phi i64 [ %tris.val265, %.loopexit290 ], [ %tris.val266321, %.preheader291 ]
   %.0220322 = phi i64 [ %i.cu, %.loopexit290 ], [ 0, %.preheader291 ] ; 7 uses
   %i.cu = add nuw i64 %.0220322, 1                ; 4 uses
   %i.cv = icmp ult i64 %i.cu, %tris.val266376
-  br i1 %i.cv, label %.preheader.i.preheader, label %.loopexit290
+  br i1 %i.cv, label %.preheader.i.preheader, label %.lr.ph326.preheader
 
 .preheader.i.preheader:                           ; preds = %.lr.ph323, %connecttris.exit
   %.0219320 = phi i64 [ %i.gf, %connecttris.exit ], [ %i.cu, %.lr.ph323 ] ; 7 uses
@@ -389,12 +391,12 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai, %bb.
 
 connecttris.exit:                                 ; preds = %bb.ak
   %i.gf = add nuw i64 %.0219320, 1                ; 2 uses
-  %tris.val265 = load i64, ptr getelementptr inbounds nuw (i8, ptr @tris, i64 16), align 8, !tbaa !51 ; 2 uses
+  %tris.val265 = load i64, ptr getelementptr inbounds nuw (i8, ptr @tris, i64 16), align 8, !tbaa !51 ; 4 uses
   %i.gg = icmp ult i64 %i.gf, %tris.val265
   br i1 %i.gg, label %.preheader.i.preheader, label %.loopexit290, !llvm.loop !42
 
-.lr.ph326:                                        ; preds = %.preheader289, %bb.al
-  %.1221325 = phi i64 [ %i.gi, %bb.al ], [ 0, %.preheader289 ] ; 3 uses
+.lr.ph326:                                        ; preds = %.lr.ph326.preheader, %bb.al
+  %.1221325 = phi i64 [ %i.gi, %bb.al ], [ 0, %.lr.ph326.preheader ] ; 3 uses
   %i.gh = tail call fastcc i32 @pointintri(i64 noundef %.1221325, ptr noundef %1)
   %.not247 = icmp eq i32 %i.gh, 0
   %tris.val263.pre.pre = load i64, ptr getelementptr inbounds nuw (i8, ptr @tris, i64 16), align 8, !tbaa !51 ; 3 uses

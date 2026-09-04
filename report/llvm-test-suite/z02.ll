@@ -205,14 +205,16 @@ declare ptr @NewToken(i8 noundef zeroext, ptr noundef, i8 noundef zeroext, i8 no
 define internal fastcc void @srcnext() unnamed_addr #3 {
 bb.a:
   %i.a = load i32, ptr @blksize, align 4, !tbaa !7
-  %.not = icmp ne i32 %i.a, 0
+  %.not = icmp eq i32 %i.a, 0
   %.pre = load ptr, ptr @chpt, align 8, !tbaa !20 ; 3 uses
-  %.pre13 = load ptr, ptr @limit, align 8, !tbaa !20 ; 3 uses
-  %0 = icmp ult ptr %.pre, %.pre13
-  %or.cond23 = select i1 %.not, i1 %0, i1 false
-  br i1 %or.cond23, label %bb.b, label %bb.e
+  %.pre13 = load ptr, ptr @limit, align 8, !tbaa !20 ; 4 uses
+  br i1 %.not, label %bb.e, label %0
 
-bb.b:                                             ; preds = %bb.a
+0:                                                ; preds = %bb.a
+  %1 = icmp ult ptr %.pre, %.pre13
+  br i1 %1, label %bb.b, label %bb.f
+
+bb.b:                                             ; preds = %0
   %i.b = load ptr, ptr @buf, align 8, !tbaa !20
   br label %bb.c
 
@@ -237,8 +239,9 @@ bb.e:                                             ; preds = %bb.d, %bb.a
   %.not9 = icmp ult ptr %.pre, %i.g
   br i1 %.not9, label %.thread, label %bb.f
 
-bb.f:                                             ; preds = %bb.e
-  %i.h = icmp ugt ptr %.pre, %i.g
+bb.f:                                             ; preds = %0, %bb.e
+  %2 = phi ptr [ %i.g, %bb.e ], [ %.pre13, %0 ]
+  %i.h = icmp ugt ptr %.pre, %2
   br i1 %i.h, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f

@@ -202,18 +202,20 @@ bb.q:                                             ; preds = %bb.p
           to label %bb.x unwind label %.loopexit.loopexit.i.i.i, !noalias !41
 
 bb.r:                                             ; preds = %bb.p
-  %.not28.i.i.i = icmp ne i64 %.sroa.07.0.ph.i.i.i, 0
-  %.pre87.i.i.i = load i64, ptr %i.ar, align 8, !noalias !41 ; 2 uses
-  %3 = icmp ult i64 %.sroa.07.0.ph.i.i.i, %.pre87.i.i.i
-  %or.cond107.i.i.i = select i1 %.not28.i.i.i, i1 %3, i1 false
-  br i1 %or.cond107.i.i.i, label %bb.t, label %bb.s
+  %.not28.i.i.i = icmp eq i64 %.sroa.07.0.ph.i.i.i, 0
+  %.pre87.i.i.i = load i64, ptr %i.ar, align 8, !noalias !41 ; 3 uses
+  br i1 %.not28.i.i.i, label %bb.v, label %3
 
-bb.s:                                             ; preds = %._crit_edge86.i.i.i, %bb.r
-  %i.ce = phi i64 [ %.pre.i.i.i, %._crit_edge86.i.i.i ], [ %.pre87.i.i.i, %bb.r ] ; 2 uses
+bb.s:                                             ; preds = %._crit_edge86.i.i.i, %3
+  %i.ce = phi i64 [ %.pre.i.i.i, %._crit_edge86.i.i.i ], [ %.pre87.i.i.i, %3 ] ; 2 uses
   %i.cf = icmp ult i64 %i.ce, %.sroa.07.0.ph.i.i.i
   br i1 %i.cf, label %bb.w, label %bb.v
 
-bb.t:                                             ; preds = %bb.r
+3:                                                ; preds = %bb.r
+  %4 = icmp ult i64 %.sroa.07.0.ph.i.i.i, %.pre87.i.i.i
+  br i1 %4, label %bb.t, label %bb.s
+
+bb.t:                                             ; preds = %3
   %i.cg = invoke { ptr, i64 } @_RNvXs9_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechENtNtNtCs3oUPovFnLWP_4core3ops5deref8DerefMut9deref_mutCsiHivYpkJ4Hu_2cc(ptr nonnull align 8 %i.at)
           to label %bb.u unwind label %.loopexit.split-lp.loopexit.i.i.i, !noalias !41 ; 2 uses
 
@@ -227,8 +229,9 @@ bb.u:                                             ; preds = %bb.t
   %.pre.i.i.i = load i64, ptr %i.ar, align 8, !noalias !41
   br label %bb.s
 
-bb.v:                                             ; preds = %bb.s
-  %i.cj = sub nuw i64 %i.ce, %.sroa.07.0.ph.i.i.i ; 2 uses
+bb.v:                                             ; preds = %bb.s, %bb.r
+  %5 = phi i64 [ %i.ce, %bb.s ], [ %.pre87.i.i.i, %bb.r ]
+  %i.cj = sub nuw i64 %5, %.sroa.07.0.ph.i.i.i    ; 2 uses
   store i64 %i.cj, ptr %i.ar, align 8, !noalias !41
   br label %.backedge58.i.i.i
 

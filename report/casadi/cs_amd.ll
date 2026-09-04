@@ -204,8 +204,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not784869, label %cs_wclear.exit.thread, label %.lr.ph872.preheader
 
 .lr.ph872.preheader:                              ; preds = %._crit_edge868.thread, %._crit_edge868
-  %i.el = phi ptr [ %i.eg, %._crit_edge868.thread ], [ %i.ek, %._crit_edge868 ] ; 3 uses
-  %i.em = phi i32 [ %i.ee, %._crit_edge868.thread ], [ %i.ei, %._crit_edge868 ] ; 3 uses
+  %i.el = phi ptr [ %i.eg, %._crit_edge868.thread ], [ %i.ek, %._crit_edge868 ] ; 2 uses
+  %i.em = phi i32 [ %i.ee, %._crit_edge868.thread ], [ %i.ei, %._crit_edge868 ] ; 2 uses
   %wide.trip.count1028 = zext nneg i32 %i.bd to i64 ; 3 uses
   %min.iters.check1314 = icmp ult i32 %i.bd, 148
   br i1 %min.iters.check1314, label %.lr.ph872.preheader1367, label %vector.memcheck1243
@@ -555,7 +555,7 @@ cs_wclear.exit:                                   ; preds = %bb.p, %middle.block
   store i32 -1, ptr %i.bb, align 4, !tbaa !52
   %i.iu = getelementptr inbounds [4 x i8], ptr %i.cg, i64 %i.ba
   store i32 0, ptr %i.iu, align 4, !tbaa !52
-  br i1 %i.ck, label %.lr.ph876, label %.preheader856
+  br i1 %i.ck, label %.lr.ph876, label %.lr.ph1000.preheader
 
 .lr.ph876:                                        ; preds = %cs_wclear.exit
   %i.iv = sub nuw i32 -2, %i.j
@@ -563,11 +563,11 @@ cs_wclear.exit:                                   ; preds = %bb.p, %middle.block
   %wide.trip.count1033 = zext nneg i32 %i.j to i64
   br label %bb.q
 
-.preheader856:                                    ; preds = %bb.x, %cs_wclear.exit.thread, %cs_wclear.exit
-  %.not784869116411661169 = phi i1 [ false, %cs_wclear.exit ], [ %.not78486911641166.ph, %cs_wclear.exit.thread ], [ false, %bb.x ] ; 2 uses
-  %2 = phi ptr [ %i.el, %cs_wclear.exit ], [ %.ph1167, %cs_wclear.exit.thread ], [ %i.el, %bb.x ] ; 25 uses
-  %3 = phi i32 [ %i.em, %cs_wclear.exit ], [ %.ph, %cs_wclear.exit.thread ], [ %i.em, %bb.x ]
-  %.0691.lcssa = phi i32 [ 0, %cs_wclear.exit ], [ 0, %cs_wclear.exit.thread ], [ %.1692, %bb.x ] ; 2 uses
+.preheader856:                                    ; preds = %bb.x, %cs_wclear.exit.thread
+  %.not784869116411661169 = phi i1 [ %.not78486911641166.ph, %cs_wclear.exit.thread ], [ false, %bb.x ]
+  %2 = phi ptr [ %.ph1167, %cs_wclear.exit.thread ], [ %i.el, %bb.x ] ; 25 uses
+  %3 = phi i32 [ %.ph, %cs_wclear.exit.thread ], [ %i.em, %bb.x ]
+  %.0691.lcssa = phi i32 [ 0, %cs_wclear.exit.thread ], [ %.1692, %bb.x ] ; 2 uses
   %i.ix = icmp slt i32 %.0691.lcssa, %i.j
   br i1 %i.ix, label %.preheader855.lr.ph, label %.preheader848
 
@@ -970,7 +970,7 @@ bb.bq:                                            ; preds = %bb.bp, %._crit_edge
 .preheader847:                                    ; preds = %.lr.ph997, %middle.block1360, %.preheader848
   br i1 %.not784869116411661169, label %.preheader846, label %.lr.ph1000.preheader
 
-.lr.ph1000.preheader:                             ; preds = %.preheader847
+.lr.ph1000.preheader:                             ; preds = %cs_wclear.exit, %.preheader847
   %i.wd = zext nneg i32 %i.bd to i64
   %i.we = shl nuw nsw i64 %i.wd, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.bx, i8 -1, i64 %i.we, i1 false), !tbaa !52
@@ -987,6 +987,7 @@ bb.bq:                                            ; preds = %bb.bp, %._crit_edge
   br i1 %exitcond1097.not, label %.preheader847, label %.lr.ph997, !llvm.loop !39
 
 .preheader846:                                    ; preds = %.lr.ph1000.preheader, %.preheader847
+  %.not784869116411661169117211741226 = phi i1 [ true, %.preheader847 ], [ false, %.lr.ph1000.preheader ]
   %i.wi = icmp sgt i32 %i.j, -1
   br i1 %i.wi, label %.lr.ph1002.preheader, label %.preheader
 
@@ -1079,7 +1080,7 @@ bb.bu:                                            ; preds = %bb.bt, %.lr.ph1002.
   br i1 %i.xz, label %.lr.ph1002, label %.lr.ph1004.preheader, !llvm.loop !40
 
 .preheader:                                       ; preds = %bb.bx, %.preheader846
-  br i1 %.not784869116411661169, label %.sink.split1230, label %.lr.ph1008.preheader
+  br i1 %.not784869116411661169117211741226, label %.sink.split1230, label %.lr.ph1008.preheader
 
 .lr.ph1008.preheader:                             ; preds = %.preheader
   %wide.trip.count1110 = zext nneg i32 %i.bd to i64

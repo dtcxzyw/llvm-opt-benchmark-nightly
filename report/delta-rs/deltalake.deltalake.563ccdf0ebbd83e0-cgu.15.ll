@@ -205,12 +205,17 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !noundef !23 ; 4 uses
   %i.f = icmp ugt i64 %1, %i.e
-  br i1 %i.f, label %.preheader.i, label %bb.b
+  br i1 %i.f, label %..preheader.i_crit_edge, label %bb.b
+
+..preheader.i_crit_edge:                          ; preds = %bb.a
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8
+  br label %.preheader.i
 
 bb.b:                                             ; preds = %bb.a
   %i.g = sub nuw i64 %i.e, %1                     ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.i = load ptr, ptr %i.h, align 8, !nonnull !23, !noundef !23
+  %i.i = load ptr, ptr %i.h, align 8, !nonnull !23, !noundef !23 ; 3 uses
   %i.j = getelementptr inbounds nuw [128 x i8], ptr %i.i, i64 %1 ; 2 uses
   store i64 %1, ptr %i.d, align 8
   %i.k = icmp eq i64 %i.e, %1
@@ -296,13 +301,12 @@ bb.i:                                             ; preds = %.lr.ph71
   tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #38
   unreachable
 
-.preheader.i:                                     ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtCsbpG6u9KFjWn_8indexmap6BucketNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldEECs7p2uQeJxui2_9deltalake.exit.i, %bb.b, %bb.a
-  %3 = phi i64 [ %i.e, %bb.a ], [ %1, %bb.b ], [ %1, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtCsbpG6u9KFjWn_8indexmap6BucketNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldEECs7p2uQeJxui2_9deltalake.exit.i ] ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %5 = load ptr, ptr %4, align 8, !nonnull !23, !noundef !23
+.preheader.i:                                     ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtCsbpG6u9KFjWn_8indexmap6BucketNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldEECs7p2uQeJxui2_9deltalake.exit.i, %bb.b, %..preheader.i_crit_edge
+  %3 = phi ptr [ %.pre, %..preheader.i_crit_edge ], [ %i.i, %bb.b ], [ %i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtCsbpG6u9KFjWn_8indexmap6BucketNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldEECs7p2uQeJxui2_9deltalake.exit.i ]
+  %4 = phi i64 [ %i.e, %..preheader.i_crit_edge ], [ %1, %bb.b ], [ %1, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtCsbpG6u9KFjWn_8indexmap6BucketNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldEECs7p2uQeJxui2_9deltalake.exit.i ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9520)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9521)
-  %.not.i2 = icmp eq i64 %3, 0
+  %.not.i2 = icmp eq i64 %4, 0
   br i1 %.not.i2, label %_RNvXs3_NtCsbvkFyIu7lgC_4core5sliceSINtCsbpG6u9KFjWn_8indexmap6BucketNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldEINtB5_13CloneFromSpecBx_E15spec_clone_fromCs7p2uQeJxui2_9deltalake.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
@@ -312,7 +316,7 @@ bb.i:                                             ; preds = %.lr.ph71
 
 bb.j:                                             ; preds = %_RNvXs_CsbpG6u9KFjWn_8indexmapINtB4_6BucketNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldENtNtCsbvkFyIu7lgC_4core5clone5Clone10clone_fromCs7p2uQeJxui2_9deltalake.exit.i, %.lr.ph.i
   %.sroa.0.08.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ap, %_RNvXs_CsbpG6u9KFjWn_8indexmapINtB4_6BucketNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldENtNtCsbvkFyIu7lgC_4core5clone5Clone10clone_fromCs7p2uQeJxui2_9deltalake.exit.i ] ; 3 uses
-  %i.aa = getelementptr inbounds nuw [128 x i8], ptr %5, i64 %.sroa.0.08.i ; 5 uses
+  %i.aa = getelementptr inbounds nuw [128 x i8], ptr %3, i64 %.sroa.0.08.i ; 5 uses
   %i.ab = getelementptr inbounds nuw [128 x i8], ptr %0, i64 %.sroa.0.08.i ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9522)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9523)
@@ -388,11 +392,11 @@ _RNvXs_CsbpG6u9KFjWn_8indexmapINtB4_6BucketNtNtCs6Po7BT7Nknu_5alloc6string6Strin
   store i8 %i.ak, ptr %.sroa.7.0..sroa_idx1.i.i.i, align 8, !alias.scope !9535, !noalias !9534
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i)
   %i.ap = add nuw nsw i64 %.sroa.0.08.i, 1        ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.ap, %3
+  %exitcond.not.i = icmp eq i64 %i.ap, %4
   br i1 %exitcond.not.i, label %_RNvXs3_NtCsbvkFyIu7lgC_4core5sliceSINtCsbpG6u9KFjWn_8indexmap6BucketNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldEINtB5_13CloneFromSpecBx_E15spec_clone_fromCs7p2uQeJxui2_9deltalake.exit, label %bb.j
 
 _RNvXs3_NtCsbvkFyIu7lgC_4core5sliceSINtCsbpG6u9KFjWn_8indexmap6BucketNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldEINtB5_13CloneFromSpecBx_E15spec_clone_fromCs7p2uQeJxui2_9deltalake.exit: ; preds = %_RNvXs_CsbpG6u9KFjWn_8indexmapINtB4_6BucketNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldENtNtCsbvkFyIu7lgC_4core5clone5Clone10clone_fromCs7p2uQeJxui2_9deltalake.exit.i, %.preheader.i
-  %i.aq = getelementptr inbounds nuw [128 x i8], ptr %0, i64 %3
+  %i.aq = getelementptr inbounds nuw [128 x i8], ptr %0, i64 %4
   %i.ar = getelementptr inbounds nuw [128 x i8], ptr %0, i64 %1
   tail call void @_RNvXs1_NtNtCs6Po7BT7Nknu_5alloc3vec11spec_extendINtB7_3VecINtCsbpG6u9KFjWn_8indexmap6BucketNtNtB9_6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema11StructFieldEEINtB5_10SpecExtendRBU_INtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterBU_EE11spec_extendCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull %i.aq, ptr noundef nonnull %i.ar)
   ret void

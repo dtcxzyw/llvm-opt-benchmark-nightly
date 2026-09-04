@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = add i32 %i.i, 1, !dbg !9803              ; 2 uses
   store i32 %i.j, ptr %i.h, align 8, !dbg !9803
   %.not16 = icmp eq i64 %1, 0, !dbg !9804
-  br i1 %.not16, label %._crit_edge, label %.lr.ph, !dbg !9804
+  br i1 %.not16, label %bb.f, label %.lr.ph, !dbg !9804
 
 .lr.ph:                                           ; preds = %.split, %bb.g
   %.sroa.0.017 = phi i64 [ %i.k, %bb.g ], [ %1, %.split ] ; 3 uses
@@ -215,8 +215,8 @@ bb.b:                                             ; preds = %bb.a
   %i.o = icmp ult i32 %i.n, %i.j, !dbg !9807
   br i1 %i.o, label %bb.g, label %._crit_edge, !dbg !9807
 
-._crit_edge:                                      ; preds = %bb.g, %.lr.ph, %.split
-  %.sroa.0.0.lcssa = phi i64 [ 0, %.split ], [ %.sroa.0.017, %.lr.ph ], [ 0, %bb.g ], !dbg !9808 ; 6 uses
+._crit_edge:                                      ; preds = %bb.g, %.lr.ph
+  %.sroa.0.0.lcssa = phi i64 [ %.sroa.0.017, %.lr.ph ], [ 0, %bb.g ], !dbg !9808 ; 7 uses
   %.not12 = icmp eq i64 %.sroa.0.0.lcssa, %1, !dbg !9809
   br i1 %.not12, label %bb.f, label %bb.c, !dbg !9809
 
@@ -244,8 +244,9 @@ _RNvXs8_NtNtCs3oUPovFnLWP_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivej
   tail call void @_RNvMNtCs3oUPovFnLWP_4core5sliceSh12rotate_rightCsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef nonnull %i.x, i64 noundef %i.w, i64 noundef 1), !dbg !9819
   br label %bb.f, !dbg !9820
 
-bb.f:                                             ; preds = %._crit_edge, %_RNvXs8_NtNtCs3oUPovFnLWP_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE9index_mutCsbaWXNhtWAp9_11foundations.exit
-  ret i64 %.sroa.0.0.lcssa, !dbg !9821
+bb.f:                                             ; preds = %.split, %._crit_edge, %_RNvXs8_NtNtCs3oUPovFnLWP_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE9index_mutCsbaWXNhtWAp9_11foundations.exit
+  %.sroa.0.0.lcssa25 = phi i64 [ %.sroa.0.0.lcssa, %_RNvXs8_NtNtCs3oUPovFnLWP_4core5slice5indexINtNtNtB9_3ops5range14RangeInclusivejEINtB5_10SliceIndexShE9index_mutCsbaWXNhtWAp9_11foundations.exit ], [ %.sroa.0.0.lcssa, %._crit_edge ], [ 0, %.split ]
+  ret i64 %.sroa.0.0.lcssa25, !dbg !9821
 
 bb.g:                                             ; preds = %.lr.ph
   %i.y = getelementptr inbounds nuw [152 x i8], ptr %i.f, i64 %.sroa.0.017, !dbg !9822 ; 2 uses

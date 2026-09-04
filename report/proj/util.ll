@@ -202,7 +202,7 @@ _ZN5osgeo4proj4util15BaseObjectNNPtrC2INS1_10BoxedValueEEERKN7dropbox6oxygen2nnI
   %i.u = phi ptr [ %i.n, %bb.e ], [ %.pr.pre, %bb.f ] ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.012.020, i64 48
   store ptr %i.t, ptr %i.v, align 8, !tbaa !36
-  %i.w = getelementptr inbounds nuw i8, ptr %.sroa.012.020, i64 56 ; 5 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %.sroa.012.020, i64 56 ; 4 uses
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !29   ; 3 uses
   %.not.i.i.i.i.i10 = icmp eq ptr %i.u, %i.x
   br i1 %.not.i.i.i.i.i10, label %bb.q, label %bb.g
@@ -213,7 +213,7 @@ _ZN5osgeo4proj4util15BaseObjectNNPtrC2INS1_10BoxedValueEEERKN7dropbox6oxygen2nnI
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.012.020, i64 56 ; 2 uses
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !29  ; 2 uses
   %.not.i.i.i.i.i1029 = icmp eq ptr %i.aa, null
-  br i1 %.not.i.i.i.i.i1029, label %bb.q, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i
+  br i1 %.not.i.i.i.i.i1029, label %bb.q, label %bb.k
 
 bb.g:                                             ; preds = %_ZN5osgeo4proj4util15BaseObjectNNPtrC2INS1_10BoxedValueEEERKN7dropbox6oxygen2nnISt10shared_ptrIT_EEE.exit
   %.not7.i.i.i.i.i = icmp eq ptr %i.u, null
@@ -236,14 +236,16 @@ bb.j:                                             ; preds = %bb.h
   %.pr.pre.i.i.i.i.i = load ptr, ptr %i.w, align 8, !tbaa !29
   br label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i
 
-_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i: ; preds = %_ZN5osgeo4proj4util15BaseObjectNNPtrC2INS1_10BoxedValueEEERKN7dropbox6oxygen2nnISt10shared_ptrIT_EEE.exit.thread, %bb.j, %bb.i, %bb.g
-  %4 = phi ptr [ null, %bb.g ], [ %i.u, %bb.i ], [ %i.u, %bb.j ], [ null, %_ZN5osgeo4proj4util15BaseObjectNNPtrC2INS1_10BoxedValueEEERKN7dropbox6oxygen2nnISt10shared_ptrIT_EEE.exit.thread ]
-  %5 = phi ptr [ %i.w, %bb.g ], [ %i.w, %bb.i ], [ %i.w, %bb.j ], [ %i.z, %_ZN5osgeo4proj4util15BaseObjectNNPtrC2INS1_10BoxedValueEEERKN7dropbox6oxygen2nnISt10shared_ptrIT_EEE.exit.thread ]
-  %6 = phi ptr [ %i.x, %bb.g ], [ %i.x, %bb.i ], [ %.pr.pre.i.i.i.i.i, %bb.j ], [ %i.aa, %_ZN5osgeo4proj4util15BaseObjectNNPtrC2INS1_10BoxedValueEEERKN7dropbox6oxygen2nnISt10shared_ptrIT_EEE.exit.thread ] ; 8 uses
-  %.not8.i.i.i.i.i = icmp eq ptr %6, null
+_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i: ; preds = %bb.j, %bb.i, %bb.g
+  %4 = phi ptr [ null, %bb.g ], [ %i.u, %bb.i ], [ %i.u, %bb.j ] ; 2 uses
+  %5 = phi ptr [ %i.x, %bb.g ], [ %i.x, %bb.i ], [ %.pr.pre.i.i.i.i.i, %bb.j ] ; 2 uses
+  %.not8.i.i.i.i.i = icmp eq ptr %5, null
   br i1 %.not8.i.i.i.i.i, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i.i.i, label %bb.k
 
-bb.k:                                             ; preds = %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i
+bb.k:                                             ; preds = %_ZN5osgeo4proj4util15BaseObjectNNPtrC2INS1_10BoxedValueEEERKN7dropbox6oxygen2nnISt10shared_ptrIT_EEE.exit.thread, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i
+  %6 = phi ptr [ %5, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i ], [ %i.aa, %_ZN5osgeo4proj4util15BaseObjectNNPtrC2INS1_10BoxedValueEEERKN7dropbox6oxygen2nnISt10shared_ptrIT_EEE.exit.thread ] ; 7 uses
+  %7 = phi ptr [ %i.w, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i ], [ %i.z, %_ZN5osgeo4proj4util15BaseObjectNNPtrC2INS1_10BoxedValueEEERKN7dropbox6oxygen2nnISt10shared_ptrIT_EEE.exit.thread ] ; 3 uses
+  %8 = phi ptr [ %4, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i ], [ null, %_ZN5osgeo4proj4util15BaseObjectNNPtrC2INS1_10BoxedValueEEERKN7dropbox6oxygen2nnISt10shared_ptrIT_EEE.exit.thread ] ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
   %i.ah = load atomic i64, ptr %i.ag acquire, align 8 ; 2 uses
   %i.ai = icmp eq i64 %i.ah, 4294967297
@@ -288,7 +290,9 @@ bb.p:                                             ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i.i.i
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv.exit.i.i.i.i.i: ; preds = %bb.p, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i, %bb.l, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i
-  store ptr %4, ptr %5, align 8, !tbaa !29
+  %9 = phi ptr [ %7, %bb.p ], [ %7, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i ], [ %7, %bb.l ], [ %i.w, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i ]
+  %10 = phi ptr [ %8, %bb.p ], [ %8, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i ], [ %8, %bb.l ], [ %4, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.i.i.i.i ]
+  store ptr %10, ptr %9, align 8, !tbaa !29
   br label %bb.q
 
 .critedge:                                        ; preds = %bb.b, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit

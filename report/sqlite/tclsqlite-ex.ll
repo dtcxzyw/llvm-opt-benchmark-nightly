@@ -206,9 +206,9 @@ sqlite3_qrf_wcwidth.exit:                         ; preds = %bb.aw, %bb.ax, %bb.
   %.0.i218 = phi i32 [ %.0.i, %bb.bg ], [ %.0.i, %.thread.i ], [ %.0.i, %bb.bf ], [ %.0.i, %sqlite3_qrf_decode_utf8.exit ], [ 1, %bb.az ], [ 1, %bb.ay ], [ 1, %bb.ax ], [ 1, %bb.aw ]
   %.225.shrunk.i = phi i8 [ %i.lx, %bb.bg ], [ %i.lm, %.thread.i ], [ %i.lw, %bb.bf ], [ 1, %sqlite3_qrf_decode_utf8.exit ], [ 1, %bb.az ], [ 1, %bb.ay ], [ 1, %bb.ax ], [ 1, %bb.aw ]
   %.225.i = zext i8 %.225.shrunk.i to i32
-  %i.ly = add nsw i32 %.0, %.225.i                ; 3 uses
+  %i.ly = add nsw i32 %.0, %.225.i                ; 2 uses
   %i.lz = icmp sgt i32 %i.ly, %spec.store.select
-  br i1 %i.lz, label %bb.bh, label %.thread213
+  br i1 %i.lz, label %bb.bi, label %.thread213
 
 .thread213:                                       ; preds = %bb.ao, %.thread212, %.critedge2.i, %bb.al, %sqlite3_qrf_wcwidth.exit
   %.pn.pn = phi i32 [ %.0.i218, %sqlite3_qrf_wcwidth.exit ], [ 1, %.thread212 ], [ %i.it, %.critedge2.i ], [ 1, %bb.al ], [ 1, %bb.ao ]
@@ -216,12 +216,12 @@ sqlite3_qrf_wcwidth.exit:                         ; preds = %bb.aw, %bb.ax, %bb.
   %.4 = add nsw i32 %.pn.pn, %.0171
   br label %bb.ak
 
-bb.bh:                                            ; preds = %bb.al, %sqlite3_qrf_wcwidth.exit, %bb.ao
-  %.2 = phi i32 [ %i.ly, %sqlite3_qrf_wcwidth.exit ], [ %i.iv, %bb.ao ], [ %.0, %bb.al ]
+bb.bh:                                            ; preds = %bb.al, %bb.ao
+  %.2 = phi i32 [ %.0, %bb.al ], [ %i.iv, %bb.ao ]
   %i.ma = icmp sgt i32 %.2, %spec.store.select
   br i1 %i.ma, label %bb.bi, label %.critedge200
 
-bb.bi:                                            ; preds = %bb.bh
+bb.bi:                                            ; preds = %sqlite3_qrf_wcwidth.exit, %bb.bh
   %i.mb = add nsw i32 %.0171, %i.b
   call void @sqlite3_str_truncate(ptr noundef %1, i32 noundef %i.mb) #20
   call void @sqlite3_str_append(ptr noundef %1, ptr noundef nonnull @.str.29, i32 noundef 3) #20
@@ -624,14 +624,14 @@ sqlite3_qrf_wcwidth.exit._crit_edge.thread:       ; preds = %.preheader159, %sql
   br label %bb.am
 
 .thread:                                          ; preds = %bb.z, %sqlite3_qrf_wcwidth.exit._crit_edge
-  %.0115170 = phi i32 [ %.0115.lcssa, %sqlite3_qrf_wcwidth.exit._crit_edge ], [ %.0115172, %bb.z ] ; 10 uses
-  %.0110167 = phi i32 [ %.0110.lcssa, %sqlite3_qrf_wcwidth.exit._crit_edge ], [ %.0110173, %bb.z ] ; 5 uses
+  %.0115170 = phi i32 [ %.0115.lcssa, %sqlite3_qrf_wcwidth.exit._crit_edge ], [ %.0115172, %bb.z ] ; 11 uses
+  %.0110167 = phi i32 [ %.0110.lcssa, %sqlite3_qrf_wcwidth.exit._crit_edge ], [ %.0110173, %bb.z ] ; 6 uses
   %.not129 = icmp eq i32 %2, 0
-  %.pre = sext i32 %.0115170 to i64               ; 8 uses
   br i1 %.not129, label %.thread._crit_edge, label %bb.ae
 
 bb.ae:                                            ; preds = %.thread
-  %i.dl = getelementptr inbounds i8, ptr %0, i64 %.pre
+  %6 = sext i32 %.0115170 to i64                  ; 3 uses
+  %i.dl = getelementptr inbounds i8, ptr %0, i64 %6
   %i.dm = load i8, ptr %i.dl, align 1, !tbaa !29  ; 2 uses
   %.not130 = icmp eq i8 %i.dm, 0
   br i1 %.not130, label %.thread._crit_edge, label %bb.af
@@ -659,7 +659,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.dz = sdiv i32 %.0115170, 2                   ; 4 uses
   %i.ea = sext i32 %i.dz to i64                   ; 2 uses
   %smin = tail call i32 @llvm.smin.i32(i32 %.0115170, i32 %i.dz)
-  %i.eb = add i32 %smin, -1                       ; 3 uses
+  %i.eb = add i32 %smin, -1                       ; 2 uses
   %.not132.not254 = icmp sgt i32 %.0115170, 0
   br i1 %.not132.not254, label %.lr.ph256, label %.split.loop.exit237
 
@@ -668,7 +668,7 @@ bb.ah:                                            ; preds = %.lr.ph256
   br i1 %.not132.not, label %.lr.ph256, label %.split.loop.exit237, !llvm.loop !329
 
 .lr.ph256:                                        ; preds = %.preheader158, %bb.ah
-  %indvars.iv255 = phi i64 [ %indvars.iv.next, %bb.ah ], [ %.pre, %.preheader158 ] ; 2 uses
+  %indvars.iv255 = phi i64 [ %indvars.iv.next, %bb.ah ], [ %6, %.preheader158 ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv255, -1 ; 4 uses
   %i.ec = getelementptr inbounds i8, ptr %0, i64 %indvars.iv.next
   %i.ed = load i8, ptr %i.ec, align 1, !tbaa !29
@@ -693,7 +693,7 @@ bb.ah:                                            ; preds = %.lr.ph256
   br i1 %or.cond, label %.lr.ph196, label %.loopexit
 
 .lr.ph196:                                        ; preds = %.split.loop.exit237, %bb.ai
-  %indvars.iv211 = phi i64 [ %indvars.iv.next212, %bb.ai ], [ %.pre, %.split.loop.exit237 ] ; 4 uses
+  %indvars.iv211 = phi i64 [ %indvars.iv.next212, %bb.ai ], [ %6, %.split.loop.exit237 ] ; 4 uses
   %i.em = getelementptr i8, ptr %0, i64 %indvars.iv211 ; 2 uses
   %i.en = getelementptr i8, ptr %i.em, i64 -1
   %i.eo = load i8, ptr %i.en, align 1, !tbaa !29
@@ -716,32 +716,32 @@ bb.ah:                                            ; preds = %.lr.ph256
 bb.ai:                                            ; preds = %.lr.ph196
   %indvars.iv.next212 = add nsw i64 %indvars.iv211, -1
   %.not135.not = icmp sgt i64 %indvars.iv211, %i.ea
-  br i1 %.not135.not, label %.lr.ph196, label %.loopexit, !llvm.loop !330
+  br i1 %.not135.not, label %.lr.ph196, label %.thread._crit_edge, !llvm.loop !330
 
 .loopexit.loopexit.split.loop.exit:               ; preds = %.lr.ph196
   %i.fa = trunc nsw i64 %indvars.iv211 to i32
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.ai, %.loopexit.loopexit.split.loop.exit, %.split.loop.exit237
-  %.2114 = phi i32 [ %.0112.lcssa, %.split.loop.exit237 ], [ %i.fa, %.loopexit.loopexit.split.loop.exit ], [ %i.eb, %bb.ai ] ; 3 uses
+.loopexit:                                        ; preds = %.loopexit.loopexit.split.loop.exit, %.split.loop.exit237
+  %.2114 = phi i32 [ %.0112.lcssa, %.split.loop.exit237 ], [ %i.fa, %.loopexit.loopexit.split.loop.exit ] ; 3 uses
   %.not138 = icmp slt i32 %.2114, %i.dz
   br i1 %.not138, label %.thread._crit_edge, label %bb.aj
 
 bb.aj:                                            ; preds = %.loopexit
-  %i.fb = sext i32 %.2114 to i64                  ; 2 uses
+  %i.fb = sext i32 %.2114 to i64
   %i.fc = tail call fastcc i32 @qrfDisplayWidth(ptr noundef nonnull %0, i64 noundef %i.fb, ptr noundef null)
   br label %.thread._crit_edge
 
-.thread._crit_edge:                               ; preds = %.thread, %.loopexit, %bb.aj, %bb.ag, %bb.af, %bb.ae
-  %.pre-phi = phi i64 [ %.pre, %bb.ae ], [ %.pre, %.loopexit ], [ %i.fb, %bb.aj ], [ %.pre, %bb.ag ], [ %.pre, %bb.af ], [ %.pre, %.thread ]
-  %.4119 = phi i32 [ %.0115170, %bb.ae ], [ %.0115170, %.loopexit ], [ %.2114, %bb.aj ], [ %.0115170, %bb.ag ], [ %.0115170, %bb.af ], [ %.0115170, %.thread ]
-  %.5 = phi i32 [ %.0110167, %bb.ae ], [ %.0110167, %.loopexit ], [ %i.fc, %bb.aj ], [ %.0110167, %bb.ag ], [ %.0110167, %bb.af ], [ %.0110167, %.thread ]
+.thread._crit_edge:                               ; preds = %bb.ai, %.loopexit, %bb.aj, %bb.ag, %bb.af, %bb.ae, %.thread
+  %.4119 = phi i32 [ %.0115170, %bb.af ], [ %.2114, %bb.aj ], [ %.0115170, %.loopexit ], [ %.0115170, %bb.ag ], [ %.0115170, %bb.ae ], [ %.0115170, %.thread ], [ %.0115170, %bb.ai ] ; 2 uses
+  %.5 = phi i32 [ %.0110167, %bb.af ], [ %i.fc, %bb.aj ], [ %.0110167, %.loopexit ], [ %.0110167, %bb.ag ], [ %.0110167, %bb.ae ], [ %.0110167, %.thread ], [ %.0110167, %bb.ai ]
   store i32 %.4119, ptr %3, align 4, !tbaa !30
   store i32 %.5, ptr %4, align 4, !tbaa !30
+  %7 = sext i32 %.4119 to i64
   br label %bb.ak
 
 bb.ak:                                            ; preds = %.critedge, %.thread._crit_edge
-  %indvars.iv214 = phi i64 [ %indvars.iv.next215, %.critedge ], [ %.pre-phi, %.thread._crit_edge ] ; 3 uses
+  %indvars.iv214 = phi i64 [ %indvars.iv.next215, %.critedge ], [ %7, %.thread._crit_edge ] ; 3 uses
   %i.fd = getelementptr inbounds i8, ptr %0, i64 %indvars.iv214
   %i.fe = load i8, ptr %i.fd, align 1, !tbaa !29
   switch i8 %i.fe, label %bb.al [
@@ -1144,7 +1144,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %bb.x
   %i.f = phi i8 [ %i.db, %bb.x ], [ %i.e, %bb.a ] ; 3 uses
   %i.g = phi ptr [ %i.da, %bb.x ], [ %spec.store.select1, %bb.a ] ; 9 uses
-  %.0519 = phi i32 [ %.2, %bb.x ], [ 0, %bb.a ]   ; 6 uses
+  %.0519 = phi i32 [ %.2, %bb.x ], [ 0, %bb.a ]   ; 5 uses
   %.0528 = phi i32 [ %.254, %bb.x ], [ 0, %bb.a ] ; 3 uses
   %i.h = icmp ugt i8 %i.f, -65
   br i1 %i.h, label %bb.b, label %bb.t
@@ -1346,7 +1346,7 @@ bb.v:                                             ; preds = %.critedge2.i
 
 qrfIsVt100.exit.thread:                           ; preds = %.critedge2.i, %bb.u, %bb.t
   %.not62 = icmp slt i32 %.0519, %i.c
-  br i1 %.not62, label %bb.w, label %sqlite3_qrf_wcwidth.exit._crit_edge
+  br i1 %.not62, label %bb.w, label %bb.y
 
 bb.w:                                             ; preds = %qrfIsVt100.exit.thread
   %i.cy = add nsw i32 %.0519, 1
@@ -1362,14 +1362,15 @@ bb.x:                                             ; preds = %sqlite3_qrf_wcwidth
   %.not = icmp eq i8 %i.db, 0
   br i1 %.not, label %sqlite3_qrf_wcwidth.exit._crit_edge, label %.lr.ph, !llvm.loop !333
 
-sqlite3_qrf_wcwidth.exit._crit_edge:              ; preds = %bb.x, %qrfIsVt100.exit.thread, %sqlite3_qrf_wcwidth.exit, %bb.a
-  %.052.lcssa = phi i32 [ 0, %bb.a ], [ %.0528, %sqlite3_qrf_wcwidth.exit ], [ %.0528, %qrfIsVt100.exit.thread ], [ %.254, %bb.x ] ; 3 uses
-  %.051.lcssa = phi i32 [ 0, %bb.a ], [ %.0519, %sqlite3_qrf_wcwidth.exit ], [ %.0519, %qrfIsVt100.exit.thread ], [ %.2, %bb.x ] ; 3 uses
+sqlite3_qrf_wcwidth.exit._crit_edge:              ; preds = %bb.x, %sqlite3_qrf_wcwidth.exit, %bb.a
+  %.052.lcssa = phi i32 [ 0, %bb.a ], [ %.0528, %sqlite3_qrf_wcwidth.exit ], [ %.254, %bb.x ] ; 3 uses
+  %.051.lcssa = phi i32 [ 0, %bb.a ], [ %.0519, %sqlite3_qrf_wcwidth.exit ], [ %.2, %bb.x ] ; 3 uses
   %.not63 = icmp slt i32 %.051.lcssa, %i.c
   br i1 %.not63, label %bb.z, label %bb.y
 
-bb.y:                                             ; preds = %sqlite3_qrf_wcwidth.exit._crit_edge
-  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef %2, i32 noundef %.052.lcssa) #20
+bb.y:                                             ; preds = %qrfIsVt100.exit.thread, %sqlite3_qrf_wcwidth.exit._crit_edge
+  %.05213 = phi i32 [ %.052.lcssa, %sqlite3_qrf_wcwidth.exit._crit_edge ], [ %.0528, %qrfIsVt100.exit.thread ]
+  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef %2, i32 noundef %.05213) #20
   br label %bb.ac
 
 bb.z:                                             ; preds = %sqlite3_qrf_wcwidth.exit._crit_edge

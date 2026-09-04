@@ -205,12 +205,14 @@ bb.ca:                                            ; preds = %bb.by, %.thread20, 
   store i32 %.sink96, ptr %3, align 4, !tbaa !10
   %i.kn = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ko = load ptr, ptr %i.kn, align 8, !tbaa !146 ; 2 uses
-  %.not261 = icmp ne ptr %i.ko, null
-  %i.kp = icmp eq i32 %.sink96, 1
-  %or.cond97 = select i1 %.not261, i1 %i.kp, i1 false
-  br i1 %or.cond97, label %bb.cb, label %bb.cd
+  %i.kp = icmp eq ptr %i.ko, null
+  br i1 %i.kp, label %bb.cd, label %5
 
-bb.cb:                                            ; preds = %bb.ca
+5:                                                ; preds = %bb.ca
+  %6 = icmp eq i32 %.sink96, 1
+  br i1 %6, label %bb.cb, label %.thread90
+
+bb.cb:                                            ; preds = %5
   %i.kq = getelementptr inbounds nuw i8, ptr %i.ko, i64 8
   %i.kr = load ptr, ptr %i.kq, align 8, !tbaa !184 ; 2 uses
   %i.ks = getelementptr inbounds nuw i8, ptr %i.kr, i64 72
@@ -249,7 +251,7 @@ bb.cd:                                            ; preds = %bb.cb, %bb.cc, %bb.
   store i32 %.sink98, ptr %3, align 4, !tbaa !10
   br label %.thread90
 
-.thread90:                                        ; preds = %.thread90.sink.split, %bb.bw, %bb.bw, %.thread19, %bb.cd
+.thread90:                                        ; preds = %.thread90.sink.split, %5, %bb.bw, %bb.bw, %.thread19, %bb.cd
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #16

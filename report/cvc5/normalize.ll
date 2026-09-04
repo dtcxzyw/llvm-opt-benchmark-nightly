@@ -205,9 +205,7 @@ bb.eo:                                            ; preds = %bb.en, %bb.em
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.zb, i8 0, i64 16, i1 false)
   %i.zc = load i8, ptr %i.c, align 1, !tbaa !84, !range !97, !noundef !98
   %i.zd = trunc nuw i8 %i.zc to i1
-  %.not478684 = icmp ne ptr %.pre777, %.pre779
-  %or.cond.not = select i1 %i.zd, i1 %.not478684, i1 false
-  br i1 %or.cond.not, label %.lr.ph687, label %.loopexit
+  br i1 %i.zd, label %32, label %.loopexit
 
 bb.ep:                                            ; preds = %.lr.ph677, %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEEZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_2EvT_SH_T0_.exit"
   %.sroa.0400.0675 = phi ptr [ %.pre774, %.lr.ph677 ], [ %i.aff, %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocessing6passes8NodeInfoESt6vectorIS7_SaIS7_EEEEZNS5_9Normalize13applyInternalEPNS4_17AssertionPipelineEE3$_2EvT_SH_T0_.exit" ] ; 3 uses
@@ -610,8 +608,12 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPN4cvc58internal13preprocess
           cleanup
   br label %.body376
 
-.lr.ph687:                                        ; preds = %._crit_edge678, %._crit_edge683
-  %.sroa.0396.0685 = phi ptr [ %i.afj, %._crit_edge683 ], [ %.pre777, %._crit_edge678 ] ; 3 uses
+32:                                               ; preds = %._crit_edge678
+  %.not478684 = icmp eq ptr %.pre777, %.pre779
+  br i1 %.not478684, label %._crit_edge699.thread, label %.lr.ph687
+
+.lr.ph687:                                        ; preds = %32, %._crit_edge683
+  %.sroa.0396.0685 = phi ptr [ %i.afj, %._crit_edge683 ], [ %.pre777, %32 ] ; 3 uses
   %i.afg = load ptr, ptr %.sroa.0396.0685, align 8, !tbaa !207 ; 2 uses
   %i.afh = getelementptr inbounds nuw i8, ptr %.sroa.0396.0685, i64 8
   %i.afi = load ptr, ptr %i.afh, align 8, !tbaa !207 ; 2 uses
@@ -747,7 +749,7 @@ bb.gn:                                            ; preds = %bb.gm, %bb.gl
   %.not479694 = icmp eq ptr %i.agv, %i.agu
   br i1 %.not479694, label %._crit_edge699.thread, label %.lr.ph698
 
-._crit_edge699.thread:                            ; preds = %.loopexit
+._crit_edge699.thread:                            ; preds = %.loopexit, %32
   %i.agw = load ptr, ptr %i.g, align 8, !tbaa !134 ; 2 uses
   %i.agx = load ptr, ptr %i.e, align 8, !tbaa !147 ; 2 uses
   %i.agy = ptrtoint ptr %i.agw to i64
@@ -1150,7 +1152,7 @@ bb.j:                                             ; preds = %_ZN9__gnu_cxx27__ex
   tail call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.l) #23
   br label %_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEaSERKS2_.exit
 
-_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEaSERKS2_.exit: ; preds = %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i, %bb.f, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i, %bb.j
+_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEaSERKS2_.exit: ; preds = %bb.j, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i, %bb.f, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i
   store ptr %i.d, ptr %i.b, align 8, !tbaa !179
   br label %_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEaSERKS2_.exit.thread21
 

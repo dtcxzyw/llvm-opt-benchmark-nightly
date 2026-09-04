@@ -205,6 +205,7 @@ bb.dh:                                            ; preds = %.lr.ph381
 ._crit_edge382:                                   ; preds = %bb.dh, %.lr.ph381
   %.0259 = phi i32 [ %i.ab, %bb.dh ], [ %.0380, %.lr.ph381 ]
   call void @llvm.experimental.noalias.scope.decl(metadata !750)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %0, i8 0, i64 24, i1 false), !alias.scope !750
   %i.qv = icmp ugt i64 %i.z, 9223372036854775792
   br i1 %i.qv, label %bb.di, label %.lr.ph.i.i.i.i.i.i.i.preheader, !prof !520
 
@@ -230,9 +231,9 @@ bb.di:                                            ; preds = %._crit_edge382
   br i1 %.not.i.i.i.i.i.i.i, label %.sink.split, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !9
 
 _ZSt9make_pairIRSt6vectorISt4pairIPN4llvm4bolt10BinaryDataEmESaIS6_EERjES1_INSt25__strip_reference_wrapperINSt5decayIT_E4typeEE6__typeENSB_INSC_IT0_E4typeEE6__typeEEOSD_OSI_.exit: ; preds = %._crit_edge379
-  store ptr null, ptr %0, align 8, !tbaa !362, !alias.scope !750
   %i.rb = getelementptr inbounds nuw i8, ptr null, i64 %i.z
   %i.rc = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 0, ptr %0, align 8
   store ptr %i.rb, ptr %i.rc, align 8, !tbaa !363, !alias.scope !750
   %i.rd = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr null, ptr %i.rd, align 8, !tbaa !361, !alias.scope !750
@@ -467,6 +468,7 @@ bb.i:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %bb.i, %.lr.ph
   %.09 = phi i32 [ %i.h, %bb.i ], [ %.010, %.lr.ph ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !755)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %0, i8 0, i64 24, i1 false), !alias.scope !755
   %i.ar = icmp ugt i64 %i.f, 9223372036854775792
   br i1 %i.ar, label %bb.j, label %.lr.ph.i.i.i.i.i.i.i.preheader, !prof !520
 
@@ -492,9 +494,9 @@ bb.j:                                             ; preds = %._crit_edge
   br i1 %.not.i.i.i.i.i.i.i, label %.sink.split, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !9
 
 _ZSt9make_pairIRSt6vectorISt4pairIPN4llvm4bolt10BinaryDataEmESaIS6_EERjES1_INSt25__strip_reference_wrapperINSt5decayIT_E4typeEE6__typeENSB_INSC_IT0_E4typeEE6__typeEEOSD_OSI_.exit: ; preds = %bb.a
-  store ptr null, ptr %0, align 8, !tbaa !362, !alias.scope !755
   %i.ax = getelementptr inbounds nuw i8, ptr null, i64 %i.f
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 0, ptr %0, align 8
   store ptr %i.ax, ptr %i.ay, align 8, !tbaa !363, !alias.scope !755
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr null, ptr %i.az, align 8, !tbaa !361, !alias.scope !755

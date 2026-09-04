@@ -205,17 +205,17 @@ bb.a:
   store ptr @_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE4growERNS2_6bufferIjEEm, ptr %i.f, align 8, !tbaa !59
   %i.g = load ptr, ptr %0, align 8, !tbaa !60     ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !61   ; 6 uses
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !61   ; 7 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.k = icmp eq ptr %i.g, %i.j
   br i1 %i.k, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
   store ptr %i.l, ptr %1, align 8, !tbaa !60
   store i64 %i.i, ptr %i.e, align 8, !tbaa !61
   %.not6.i.i.i = icmp eq i64 %i.b, 0
-  br i1 %.not6.i.i.i, label %_ZN3fmt3v126detail4copyIjPjS3_TnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS6_T0_vEE_EcvNS1_10has_insertIS6_SB_vEE_EEiE4typeELi0EEES6_SB_SB_S6_.exit.i.i, label %.lr.ph.i.i.i.preheader
+  br i1 %.not6.i.i.i, label %_ZN3fmt3v126detail11to_unsignedIiEENSt13make_unsignedIT_E4typeES4_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.b
   %.idx.i.i = shl i64 %i.b, 2
@@ -229,8 +229,8 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   br label %_ZN3fmt3v126detail4copyIjPjS3_TnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS6_T0_vEE_EcvNS1_10has_insertIS6_SB_vEE_EEiE4typeELi0EEES6_SB_SB_S6_.exit.i.i
 
-_ZN3fmt3v126detail4copyIjPjS3_TnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS6_T0_vEE_EcvNS1_10has_insertIS6_SB_vEE_EEiE4typeELi0EEES6_SB_SB_S6_.exit.i.i: ; preds = %.lr.ph.i.i.i.preheader, %bb.c, %bb.b
-  %2 = phi ptr [ %i.l, %.lr.ph.i.i.i.preheader ], [ %i.g, %bb.c ], [ %i.l, %bb.b ] ; 3 uses
+_ZN3fmt3v126detail4copyIjPjS3_TnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS6_T0_vEE_EcvNS1_10has_insertIS6_SB_vEE_EEiE4typeELi0EEES6_SB_SB_S6_.exit.i.i: ; preds = %.lr.ph.i.i.i.preheader, %bb.c
+  %2 = phi ptr [ %i.l, %.lr.ph.i.i.i.preheader ], [ %i.g, %bb.c ] ; 3 uses
   %i.m = icmp ugt i64 %i.b, %i.i
   br i1 %i.m, label %bb.d, label %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEEC2EOS5_.exit
 
@@ -285,7 +285,11 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEEC2EOS5_.exit: ;
   %i.ad = call noundef i64 @llvm.umin.i64(i64 %i.b, i64 %i.ab)
   store i64 %i.ad, ptr %i.ac, align 8, !tbaa !88
   %i.ae = icmp sgt i32 %i.c, -1
-  br i1 %i.ae, label %_ZN3fmt3v126detail11to_unsignedIiEENSt13make_unsignedIT_E4typeES4_.exit, label %bb.j
+  br i1 %i.ae, label %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEEC2EOS5_.exit._ZN3fmt3v126detail11to_unsignedIiEENSt13make_unsignedIT_E4typeES4_.exit_crit_edge, label %bb.j
+
+_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEEC2EOS5_.exit._ZN3fmt3v126detail11to_unsignedIiEENSt13make_unsignedIT_E4typeES4_.exit_crit_edge: ; preds = %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEEC2EOS5_.exit
+  %.pre128 = load i64, ptr %i.h, align 8, !tbaa !61
+  br label %_ZN3fmt3v126detail11to_unsignedIiEENSt13make_unsignedIT_E4typeES4_.exit
 
 bb.j:                                             ; preds = %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEEC2EOS5_.exit
   %i.af = call ptr @__cxa_allocate_exception(i64 16) #30 ; 4 uses
@@ -306,16 +310,16 @@ bb.l:                                             ; preds = %bb.j
   call void @__cxa_free_exception(ptr nonnull %i.af) #30
   br label %.body
 
-_ZN3fmt3v126detail11to_unsignedIiEENSt13make_unsignedIT_E4typeES4_.exit: ; preds = %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEEC2EOS5_.exit
-  %3 = zext nneg i32 %i.d to i64                  ; 3 uses
-  %4 = load i64, ptr %i.h, align 8, !tbaa !61     ; 2 uses
-  %i.ah = icmp ult i64 %4, %3
+_ZN3fmt3v126detail11to_unsignedIiEENSt13make_unsignedIT_E4typeES4_.exit: ; preds = %bb.b, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEEC2EOS5_.exit._ZN3fmt3v126detail11to_unsignedIiEENSt13make_unsignedIT_E4typeES4_.exit_crit_edge
+  %3 = phi i64 [ %.pre128, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEEC2EOS5_.exit._ZN3fmt3v126detail11to_unsignedIiEENSt13make_unsignedIT_E4typeES4_.exit_crit_edge ], [ %i.i, %bb.b ] ; 2 uses
+  %4 = zext nneg i32 %i.d to i64                  ; 3 uses
+  %i.ah = icmp ult i64 %3, %4
   br i1 %i.ah, label %bb.m, label %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit
 
 bb.m:                                             ; preds = %_ZN3fmt3v126detail11to_unsignedIiEENSt13make_unsignedIT_E4typeES4_.exit
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !59
-  invoke void %i.aj(ptr noundef nonnull align 8 dereferenceable(161) %0, i64 noundef %3)
+  invoke void %i.aj(ptr noundef nonnull align 8 dereferenceable(161) %0, i64 noundef %4)
           to label %.noexc43 unwind label %bb.n, !inline_history !371
 
 .noexc43:                                         ; preds = %bb.m
@@ -323,8 +327,8 @@ bb.m:                                             ; preds = %_ZN3fmt3v126detail1
   br label %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit
 
 _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit: ; preds = %_ZN3fmt3v126detail11to_unsignedIiEENSt13make_unsignedIT_E4typeES4_.exit, %.noexc43
-  %i.ak = phi i64 [ %4, %_ZN3fmt3v126detail11to_unsignedIiEENSt13make_unsignedIT_E4typeES4_.exit ], [ %.pre.i.i42, %.noexc43 ] ; 3 uses
-  %i.al = call noundef i64 @llvm.umin.i64(i64 %3, i64 %i.ak) ; 4 uses
+  %i.ak = phi i64 [ %3, %_ZN3fmt3v126detail11to_unsignedIiEENSt13make_unsignedIT_E4typeES4_.exit ], [ %.pre.i.i42, %.noexc43 ] ; 3 uses
+  %i.al = call noundef i64 @llvm.umin.i64(i64 %4, i64 %i.ak) ; 4 uses
   store i64 %i.al, ptr %i.a, align 8, !tbaa !88
   %.not = icmp eq i32 %i.c, 0
   %.pre106.pre107 = load ptr, ptr %0, align 8     ; 2 uses
@@ -360,7 +364,7 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit:
 .lr.ph68:                                         ; preds = %.preheader
   %i.ap = load ptr, ptr %1, align 8               ; 6 uses
   %i.aq = and i64 %i.b, 2147483647                ; 3 uses
-  %i.ar = add nsw i32 %i.c, -2
+  %i.ar = add i32 %i.c, -2
   %invariant.op = sub i32 1, %i.c
   %indvars.iv96.prol = add nsw i64 %i.aq, -1      ; 2 uses
   %i.as = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %indvars.iv96.prol
@@ -763,9 +767,9 @@ bb.i:                                             ; preds = %bb.e
   br i1 %i.j, label %bb.j, label %bb.r
 
 bb.j:                                             ; preds = %bb.i
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 5 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 4 uses
   %.not22 = icmp eq ptr %i.k, %1
-  br i1 %.not22, label %bb.o, label %bb.k
+  br i1 %.not22, label %bb.r, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.l = load i8, ptr %i.k, align 1, !tbaa !71
@@ -802,8 +806,8 @@ bb.n:                                             ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #30
   br label %bb.o
 
-bb.o:                                             ; preds = %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit, %bb.n, %bb.j
-  %6 = phi ptr [ %i.k, %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit ], [ %i.s, %bb.n ], [ %i.k, %bb.j ] ; 3 uses
+bb.o:                                             ; preds = %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit, %bb.n
+  %6 = phi ptr [ %i.k, %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit ], [ %i.s, %bb.n ] ; 3 uses
   %.not23 = icmp eq ptr %6, %1
   br i1 %.not23, label %bb.r, label %bb.p
 
@@ -817,7 +821,7 @@ bb.q:                                             ; preds = %bb.p
   %.sroa.3.0.pre = load i32, ptr %i.b, align 4, !tbaa !221
   br label %bb.s
 
-bb.r:                                             ; preds = %bb.o, %bb.p, %bb.i
+bb.r:                                             ; preds = %bb.j, %bb.o, %bb.p, %bb.i
   call void @_ZN3fmt3v1212report_errorEPKc(ptr noundef nonnull @.str.211) #32
   unreachable
 
