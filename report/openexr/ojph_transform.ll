@@ -204,13 +204,13 @@ bb.d:                                             ; preds = %._crit_edge.thread,
   br i1 %.not95125, label %.preheader, label %.lr.ph129.preheader
 
 .lr.ph129.preheader:                              ; preds = %._crit_edge120
-  %i.bl = zext i32 %.085.lcssa to i64             ; 2 uses
+  %i.bl = zext nneg i32 %.085.lcssa to i64        ; 2 uses
   %min.iters.check207 = icmp ult i32 %.085.lcssa, 8
   br i1 %min.iters.check207, label %.lr.ph129.preheader239, label %vector.ph208
 
 vector.ph208:                                     ; preds = %.lr.ph129.preheader
-  %n.vec209 = and i64 %i.bl, 4294967288           ; 4 uses
-  %i.bm = trunc nuw i64 %n.vec209 to i32
+  %n.vec209 = and i64 %i.bl, 2147483640           ; 4 uses
+  %i.bm = trunc nuw nsw i64 %n.vec209 to i32
   %i.bn = sub i32 %.085.lcssa, %i.bm
   %i.bo = shl nuw nsw i64 %n.vec209, 2
   %i.bp = getelementptr i8, ptr %.086.lcssa, i64 %i.bo
@@ -397,13 +397,13 @@ middle.block201:                                  ; preds = %vector.body191
   br i1 %.not96130, label %.loopexit, label %.lr.ph133.preheader
 
 .lr.ph133.preheader:                              ; preds = %.preheader
-  %i.ee = zext i32 %.084.lcssa to i64             ; 2 uses
+  %i.ee = zext nneg i32 %.084.lcssa to i64        ; 2 uses
   %min.iters.check223 = icmp ult i32 %.084.lcssa, 8
   br i1 %min.iters.check223, label %.lr.ph133.preheader238, label %vector.ph224
 
 vector.ph224:                                     ; preds = %.lr.ph133.preheader
-  %n.vec225 = and i64 %i.ee, 4294967288           ; 4 uses
-  %i.ef = trunc nuw i64 %n.vec225 to i32
+  %n.vec225 = and i64 %i.ee, 2147483640           ; 4 uses
+  %i.ef = trunc nuw nsw i64 %n.vec225 to i32
   %i.eg = sub i32 %.084.lcssa, %i.ef
   %i.eh = shl nuw nsw i64 %n.vec225, 2
   %i.ei = getelementptr i8, ptr %.087.lcssa, i64 %i.eh
