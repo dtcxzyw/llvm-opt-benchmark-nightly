@@ -204,9 +204,8 @@ populate_array_assign_ndims.exit.thread:          ; preds = %populate_array_assi
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.av = add i32 %2, -1
-  %i.aw = sext i32 %i.av to i64
-  %5 = add i32 %2, 1
+  %i.av = add i32 %2, 1
+  %i.aw = sext i32 %2 to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph, %bb.r
@@ -252,10 +251,11 @@ populate_array_element.exit.thread:               ; preds = %bb.m, %bb.n, %bb.o
   %i.bu = load ptr, ptr %i.at, align 8
   %i.bv = call ptr @accumArrayResult(ptr noundef %i.bo, i64 noundef %i.bh, i1 noundef zeroext %i.bq, i32 noundef %i.bt, ptr noundef %i.bu) #13, !inline_history !2 ; 0 uses
   %i.bw = load ptr, ptr %i.au, align 8
-  %i.bx = getelementptr inbounds [4 x i8], ptr %i.bw, i64 %i.aw ; 2 uses
-  %i.by = load i32, ptr %i.bx, align 4
+  %i.bx = getelementptr [4 x i8], ptr %i.bw, i64 %i.aw
+  %5 = getelementptr i8, ptr %i.bx, i64 -4        ; 2 uses
+  %i.by = load i32, ptr %5, align 4
   %i.bz = add i32 %i.by, 1
-  store i32 %i.bz, ptr %i.bx, align 4
+  store i32 %i.bz, ptr %5, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   br label %bb.r
 
@@ -264,7 +264,7 @@ populate_array_element.exit:                      ; preds = %bb.o
   br label %.loopexit
 
 bb.p:                                             ; preds = %bb.l
-  %i.ca = call fastcc zeroext i1 @populate_array_dim_jsonb(ptr noundef %0, ptr noundef nonnull %3, i32 noundef %5)
+  %i.ca = call fastcc zeroext i1 @populate_array_dim_jsonb(ptr noundef %0, ptr noundef nonnull %3, i32 noundef %i.av)
   br i1 %i.ca, label %bb.q, label %.loopexit
 
 bb.q:                                             ; preds = %bb.p

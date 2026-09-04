@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader.i1
   %broadcast.splatinsert176 = insertelement <8 x i32> poison, i32 %i.kd, i64 0
   %broadcast.splat177 = shufflevector <8 x i32> %broadcast.splatinsert176, <8 x i32> poison, <8 x i32> zeroinitializer ; 3 uses
   %i.ki = add nsw <8 x i32> %broadcast.splat, <i32 -1, i32 -2, i32 -3, i32 -4, i32 -5, i32 -6, i32 -7, i32 -8>
-  %i.kj = shl nsw <8 x i32> %i.ki, splat (i32 3)
+  %i.kj = shl nuw nsw <8 x i32> %i.ki, splat (i32 3)
   %i.kk = lshr <8 x i32> %broadcast.splat177, %i.kj
   %i.kl = trunc <8 x i32> %i.kk to <8 x i8>
   store <8 x i8> %i.kl, ptr %i.kh, align 1, !tbaa !37
@@ -214,7 +214,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader.i1
 
 vector.body.1:                                    ; preds = %vector.ph
   %i.kn = add nsw <8 x i32> %broadcast.splat, <i32 -9, i32 -10, i32 -11, i32 -12, i32 -13, i32 -14, i32 -15, i32 -16>
-  %i.ko = shl nsw <8 x i32> %i.kn, splat (i32 3)
+  %i.ko = shl nuw nsw <8 x i32> %i.kn, splat (i32 3)
   %i.kp = lshr <8 x i32> %broadcast.splat177, %i.ko
   %i.kq = trunc <8 x i32> %i.kp to <8 x i8>
   %i.kr = getelementptr i8, ptr %i.kh, i64 8
@@ -224,7 +224,7 @@ vector.body.1:                                    ; preds = %vector.ph
 
 vector.body.2:                                    ; preds = %vector.body.1
   %i.kt = add nsw <8 x i32> %broadcast.splat, <i32 -17, i32 -18, i32 -19, i32 -20, i32 -21, i32 -22, i32 -23, i32 -24>
-  %i.ku = shl nsw <8 x i32> %i.kt, splat (i32 3)
+  %i.ku = shl nuw nsw <8 x i32> %i.kt, splat (i32 3)
   %i.kv = lshr <8 x i32> %broadcast.splat177, %i.ku
   %i.kw = trunc <8 x i32> %i.kv to <8 x i8>
   %i.kx = getelementptr i8, ptr %i.kh, i64 16
@@ -244,7 +244,7 @@ middle.block:                                     ; preds = %vector.body.2, %vec
   %i.ky = trunc nuw nsw i64 %indvars.iv.i113 to i32
   %i.kz = xor i32 %i.ky, -1
   %i.la = add nsw i32 %i.kz, %i.kf
-  %i.lb = shl nsw i32 %i.la, 3
+  %i.lb = shl nuw nsw i32 %i.la, 3
   %i.lc = lshr i32 %i.kd, %i.lb
   %i.ld = trunc i32 %i.lc to i8
   %i.le = getelementptr i8, ptr %i.kh, i64 %indvars.iv.i113

@@ -205,7 +205,7 @@ _ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit: ; preds = %.critedge
   br i1 %i.ei, label %bb.ac, label %.critedge2.i
 
 bb.ac:                                            ; preds = %.lr.ph379
-  %i.ej = add i8 %i.ef, -48
+  %i.ej = add nsw i8 %i.ef, -48
   %i.ek = getelementptr inbounds nuw i8, ptr %.8296377, i64 1 ; 2 uses
   %i.el = mul i64 %.2285378, 10
   %i.em = zext i8 %i.ej to i64
@@ -293,7 +293,7 @@ bb.ak:                                            ; preds = %.lr.ph388
   br i1 %i.fj, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
-  %i.fk = add i8 %i.ff, -48
+  %i.fk = add nsw i8 %i.ff, -48
   %i.fl = mul nsw i64 %.073.i387, 10
   %i.fm = zext i8 %i.fk to i64
   %i.fn = add nsw i64 %i.fl, %i.fm
@@ -696,7 +696,7 @@ _ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit52: ; preds = %.crited
   br i1 %i.dl, label %bb.v, label %._crit_edge459
 
 bb.v:                                             ; preds = %.lr.ph458
-  %i.dm = add i8 %i.di, -48
+  %i.dm = add nsw i8 %i.di, -48
   %i.dn = getelementptr inbounds nuw i8, ptr %.10456, i64 1 ; 2 uses
   %i.do = mul i64 %.6457, 10
   %i.dp = zext i8 %i.dm to i64
@@ -820,7 +820,7 @@ bb.ah:                                            ; preds = %.lr.ph468
   br i1 %i.er, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.es = add i8 %i.en, -48
+  %i.es = add nsw i8 %i.en, -48
   %i.et = mul nsw i64 %.080.i467, 10
   %i.eu = zext i8 %i.es to i64
   %i.ev = add nsw i64 %i.et, %i.eu
@@ -1177,7 +1177,7 @@ _ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit: ; preds = %.critedge
   br i1 %i.kj, label %bb.bf, label %.critedge2.i
 
 bb.bf:                                            ; preds = %.lr.ph403
-  %i.kk = add i8 %i.kg, -48
+  %i.kk = add nsw i8 %i.kg, -48
   %i.kl = getelementptr inbounds nuw i8, ptr %.10292401, i64 1 ; 2 uses
   %i.km = mul i64 %.6279402, 10
   %i.kn = zext i8 %i.kk to i64
@@ -1304,7 +1304,7 @@ bb.bs:                                            ; preds = %.lr.ph412
   br i1 %i.lp, label %bb.bt, label %bb.bu
 
 bb.bt:                                            ; preds = %bb.bs
-  %i.lq = add i8 %i.ll, -48
+  %i.lq = add nsw i8 %i.ll, -48
   %i.lr = mul nsw i64 %.073.i411, 10
   %i.ls = zext i8 %i.lq to i64
   %i.lt = add nsw i64 %i.lr, %i.ls
@@ -1707,7 +1707,7 @@ _ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit.i: ; preds = %bb.ac, 
   br i1 %i.ei, label %bb.ad, label %.critedge2.i.i
 
 bb.ad:                                            ; preds = %.lr.ph315
-  %i.ej = add i8 %i.ef, -48
+  %i.ej = add nsw i8 %i.ef, -48
   %i.ek = getelementptr inbounds nuw i8, ptr %.10234313, i64 1 ; 2 uses
   %i.el = mul i64 %.4223314, 10
   %i.em = zext i8 %i.ej to i64
@@ -1795,7 +1795,7 @@ bb.al:                                            ; preds = %.lr.ph324
   br i1 %i.fj, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %bb.al
-  %i.fk = add i8 %i.ff, -48
+  %i.fk = add nsw i8 %i.ff, -48
   %i.fl = mul nsw i64 %.073.i.i323, 10
   %i.fm = zext i8 %i.fk to i64
   %i.fn = add nsw i64 %i.fl, %i.fm
@@ -2198,7 +2198,7 @@ _ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit52: ; preds = %.crited
   br i1 %i.dl, label %bb.v, label %._crit_edge451
 
 bb.v:                                             ; preds = %.lr.ph450
-  %i.dm = add i8 %i.di, -48
+  %i.dm = add nsw i8 %i.di, -48
   %i.dn = getelementptr inbounds nuw i8, ptr %.10448, i64 1 ; 2 uses
   %i.do = mul i64 %.6449, 10
   %i.dp = zext i8 %i.dm to i64
@@ -2322,7 +2322,7 @@ bb.ah:                                            ; preds = %.lr.ph460
   br i1 %i.er, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.es = add i8 %i.en, -48
+  %i.es = add nsw i8 %i.en, -48
   %i.et = mul nsw i64 %.080.i459, 10
   %i.eu = zext i8 %i.es to i64
   %i.ev = add nsw i64 %i.et, %i.eu
@@ -2679,7 +2679,7 @@ _ZN10fast_float26loop_parse_if_eight_digitsERPKcS1_Rm.exit: ; preds = %.critedge
   br i1 %i.kj, label %bb.bf, label %.critedge2.i
 
 bb.bf:                                            ; preds = %.lr.ph395
-  %i.kk = add i8 %i.kg, -48
+  %i.kk = add nsw i8 %i.kg, -48
   %i.kl = getelementptr inbounds nuw i8, ptr %.10284393, i64 1 ; 2 uses
   %i.km = mul i64 %.6271394, 10
   %i.kn = zext i8 %i.kk to i64
@@ -2806,7 +2806,7 @@ bb.bs:                                            ; preds = %.lr.ph404
   br i1 %i.lp, label %bb.bt, label %bb.bu
 
 bb.bt:                                            ; preds = %bb.bs
-  %i.lq = add i8 %i.ll, -48
+  %i.lq = add nsw i8 %i.ll, -48
   %i.lr = mul nsw i64 %.073.i403, 10
   %i.ls = zext i8 %i.lq to i64
   %i.lt = add nsw i64 %i.lr, %i.ls

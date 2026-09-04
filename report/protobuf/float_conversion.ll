@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20250
 .lr.ph109.i.prol:                                 ; preds = %.lr.ph109.i.preheader, %.lr.ph109.i.prol
   %.042107.i.prol = phi i64 [ %i.ac, %.lr.ph109.i.prol ], [ %i.z, %.lr.ph109.i.preheader ]
   %prol.iter133 = phi i64 [ %prol.iter133.next, %.lr.ph109.i.prol ], [ 0, %.lr.ph109.i.preheader ]
-  %i.ac = add i64 %.042107.i.prol, -1             ; 2 uses
+  %i.ac = add nsw i64 %.042107.i.prol, -1         ; 2 uses
   %i.ad = load ptr, ptr %i.f, align 8, !tbaa !46  ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 1
   store ptr %i.ae, ptr %i.f, align 8, !tbaa !46
@@ -233,7 +233,7 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20250
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 1
   store ptr %i.al, ptr %i.f, align 8, !tbaa !46
   store i8 48, ptr %i.ak, align 1, !tbaa !25
-  %i.am = add i64 %.042107.i, -4                  ; 2 uses
+  %i.am = add nsw i64 %.042107.i, -4              ; 2 uses
   %i.an = load ptr, ptr %i.f, align 8, !tbaa !46  ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 1
   store ptr %i.ao, ptr %i.f, align 8, !tbaa !46
@@ -562,7 +562,7 @@ bb.y:                                             ; preds = %_ZN4absl12lts_20250
 .lr.ph108.i.prol:                                 ; preds = %.lr.ph108.i.preheader, %.lr.ph108.i.prol
   %.042106.i.prol = phi i64 [ %i.fd, %.lr.ph108.i.prol ], [ %i.fa, %.lr.ph108.i.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph108.i.prol ], [ 0, %.lr.ph108.i.preheader ]
-  %i.fd = add i64 %.042106.i.prol, -1             ; 2 uses
+  %i.fd = add nsw i64 %.042106.i.prol, -1         ; 2 uses
   %i.fe = load ptr, ptr %i.f, align 8, !tbaa !46  ; 2 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fe, i64 1
   store ptr %i.ff, ptr %i.f, align 8, !tbaa !46
@@ -590,7 +590,7 @@ bb.y:                                             ; preds = %_ZN4absl12lts_20250
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 1
   store ptr %i.fm, ptr %i.f, align 8, !tbaa !46
   store i8 48, ptr %i.fl, align 1, !tbaa !25
-  %i.fn = add i64 %.042106.i, -4                  ; 2 uses
+  %i.fn = add nsw i64 %.042106.i, -4              ; 2 uses
   %i.fo = load ptr, ptr %i.f, align 8, !tbaa !46  ; 2 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 1
   store ptr %i.fp, ptr %i.f, align 8, !tbaa !46
@@ -993,7 +993,7 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20250
 .lr.ph108.i.prol:                                 ; preds = %.lr.ph108.i.preheader, %.lr.ph108.i.prol
   %.042106.i.prol = phi i64 [ %i.ac, %.lr.ph108.i.prol ], [ %i.z, %.lr.ph108.i.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph108.i.prol ], [ 0, %.lr.ph108.i.preheader ]
-  %i.ac = add i64 %.042106.i.prol, -1             ; 2 uses
+  %i.ac = add nsw i64 %.042106.i.prol, -1         ; 2 uses
   %i.ad = load ptr, ptr %i.c, align 8, !tbaa !46  ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 1
   store ptr %i.ae, ptr %i.c, align 8, !tbaa !46
@@ -1021,7 +1021,7 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20250
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 1
   store ptr %i.al, ptr %i.c, align 8, !tbaa !46
   store i8 48, ptr %i.ak, align 1, !tbaa !25
-  %i.am = add i64 %.042106.i, -4                  ; 2 uses
+  %i.am = add nsw i64 %.042106.i, -4              ; 2 uses
   %i.an = load ptr, ptr %i.c, align 8, !tbaa !46  ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 1
   store ptr %i.ao, ptr %i.c, align 8, !tbaa !46
@@ -1342,7 +1342,7 @@ bb.y:                                             ; preds = %_ZN4absl12lts_20250
 .lr.ph108.i57.prol:                               ; preds = %.lr.ph108.i57.preheader, %.lr.ph108.i57.prol
   %.042106.i58.prol = phi i64 [ %i.ey, %.lr.ph108.i57.prol ], [ %i.ev, %.lr.ph108.i57.preheader ]
   %prol.iter156 = phi i64 [ %prol.iter156.next, %.lr.ph108.i57.prol ], [ 0, %.lr.ph108.i57.preheader ]
-  %i.ey = add i64 %.042106.i58.prol, -1           ; 2 uses
+  %i.ey = add nsw i64 %.042106.i58.prol, -1       ; 2 uses
   %i.ez = load ptr, ptr %i.c, align 8, !tbaa !46  ; 2 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 1
   store ptr %i.fa, ptr %i.c, align 8, !tbaa !46
@@ -1370,7 +1370,7 @@ bb.y:                                             ; preds = %_ZN4absl12lts_20250
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fg, i64 1
   store ptr %i.fh, ptr %i.c, align 8, !tbaa !46
   store i8 48, ptr %i.fg, align 1, !tbaa !25
-  %i.fi = add i64 %.042106.i58, -4                ; 2 uses
+  %i.fi = add nsw i64 %.042106.i58, -4            ; 2 uses
   %i.fj = load ptr, ptr %i.c, align 8, !tbaa !46  ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 1
   store ptr %i.fk, ptr %i.c, align 8, !tbaa !46

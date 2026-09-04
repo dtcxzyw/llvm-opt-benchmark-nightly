@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.ct = sub nsw i64 %i.cs, %i.cr
   %i.cu = lshr i64 %i.ct, 31
   %i.cv = trunc i64 %i.cu to i32
-  %i.cw = shl nsw i64 %i.bz, 1
-  %i.cx = mul nsw i64 %i.h, %i.cw
+  %i.cw = shl nuw nsw i64 %i.bz, 1
+  %i.cx = mul nuw nsw i64 %i.h, %i.cw
   %i.cy = getelementptr [4 x i8], ptr %1, i64 %i.cx ; 2 uses
   %i.cz = getelementptr [4 x i8], ptr %i.cy, i64 %i.h
   store i32 %i.cv, ptr %i.cz, align 4, !tbaa !12
@@ -598,7 +598,7 @@ bb.b:                                             ; preds = %.preheader161
   br label %bb.d
 
 bb.c:                                             ; preds = %.preheader161
-  %i.bh = add i32 %i.r, %i.ad
+  %i.bh = add nsw i32 %i.r, %i.ad
   %i.bi = sext i32 %i.bh to i64
   %i.bj = getelementptr inbounds [4 x i8], ptr %2, i64 %i.bi
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !12
@@ -655,7 +655,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br i1 %i.cs, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.dc = add i32 %i.r, %i.cx
+  %i.dc = add nsw i32 %i.r, %i.cx
   %i.dd = sext i32 %i.dc to i64
   %i.de = getelementptr inbounds [4 x i8], ptr %2, i64 %i.dd
   %i.df = load i32, ptr %i.de, align 4, !tbaa !12
@@ -727,7 +727,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.ey, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.fi = add i32 %i.r, %i.fd
+  %i.fi = add nsw i32 %i.r, %i.fd
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %2, i64 %i.fj
   %i.fl = load i32, ptr %i.fk, align 4, !tbaa !12
@@ -886,8 +886,8 @@ bb.k:                                             ; preds = %.lr.ph, %bb.k
   %i.ka = sub nsw i64 %i.jz, %i.jy
   %i.kb = lshr i64 %i.ka, 31
   %i.kc = trunc i64 %i.kb to i32
-  %i.kd = shl nsw i64 %i.ja, 1
-  %i.ke = mul nsw i64 %i.p, %i.kd
+  %i.kd = shl nuw nsw i64 %i.ja, 1
+  %i.ke = mul nuw nsw i64 %i.p, %i.kd
   %i.kf = getelementptr [4 x i8], ptr %1, i64 %i.ke ; 2 uses
   %i.kg = getelementptr [4 x i8], ptr %i.kf, i64 %i.p
   store i32 %i.kc, ptr %i.kg, align 4, !tbaa !12
@@ -1184,7 +1184,7 @@ bb.b:                                             ; preds = %.preheader169
   br label %bb.d
 
 bb.c:                                             ; preds = %.preheader169
-  %i.bo = add i32 %i.r, %i.ab
+  %i.bo = add nsw i32 %i.r, %i.ab
   %i.bp = sext i32 %i.bo to i64
   %i.bq = getelementptr inbounds [4 x i8], ptr %2, i64 %i.bp
   %i.br = load i32, ptr %i.bq, align 4, !tbaa !12
@@ -1240,7 +1240,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br i1 %i.cx, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.dh = add i32 %i.r, %i.dc
+  %i.dh = add nsw i32 %i.r, %i.dc
   %i.di = sext i32 %i.dh to i64
   %i.dj = getelementptr inbounds [4 x i8], ptr %2, i64 %i.di
   %i.dk = load i32, ptr %i.dj, align 4, !tbaa !12
@@ -1311,7 +1311,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.fb, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.fl = add i32 %i.r, %i.fg
+  %i.fl = add nsw i32 %i.r, %i.fg
   %i.fm = sext i32 %i.fl to i64
   %i.fn = getelementptr inbounds [4 x i8], ptr %2, i64 %i.fm
   %i.fo = load i32, ptr %i.fn, align 4, !tbaa !12
@@ -1382,7 +1382,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %i.hf, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.hp = add i32 %i.r, %i.hk
+  %i.hp = add nsw i32 %i.r, %i.hk
   %i.hq = sext i32 %i.hp to i64
   %i.hr = getelementptr inbounds [4 x i8], ptr %2, i64 %i.hq
   %i.hs = load i32, ptr %i.hr, align 4, !tbaa !12
@@ -1453,7 +1453,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %i.jj, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.jt = add i32 %i.r, %i.jo
+  %i.jt = add nsw i32 %i.r, %i.jo
   %i.ju = sext i32 %i.jt to i64
   %i.jv = getelementptr inbounds [4 x i8], ptr %2, i64 %i.ju
   %i.jw = load i32, ptr %i.jv, align 4, !tbaa !12
@@ -1670,8 +1670,8 @@ bb.q:                                             ; preds = %.lr.ph, %bb.q
   %i.qn = sub nsw i64 %i.qm, %i.ql
   %i.qo = lshr i64 %i.qn, 31
   %i.qp = trunc i64 %i.qo to i32
-  %i.qq = shl nsw i64 %i.pn, 1
-  %i.qr = mul nsw i64 %i.p, %i.qq
+  %i.qq = shl nuw nsw i64 %i.pn, 1
+  %i.qr = mul nuw nsw i64 %i.p, %i.qq
   %i.qs = getelementptr [4 x i8], ptr %1, i64 %i.qr ; 2 uses
   %i.qt = getelementptr [4 x i8], ptr %i.qs, i64 %i.p
   store i32 %i.qp, ptr %i.qt, align 4, !tbaa !12
@@ -2064,7 +2064,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
-  %i.it = add i32 %i.r, %i.id
+  %i.it = add nsw i32 %i.r, %i.id
   %i.iu = sext i32 %i.it to i64
   %i.iv = getelementptr inbounds [4 x i8], ptr %2, i64 %i.iu
   %i.iw = load i32, ptr %i.iv, align 4, !tbaa !12
@@ -2156,8 +2156,8 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.lh = sub nsw i64 %i.lg, %i.lf
   %i.li = lshr i64 %i.lh, 31
   %i.lj = trunc i64 %i.li to i32
-  %i.lk = shl nsw i64 %i.kh, 1
-  %i.ll = mul nsw i64 %i.p, %i.lk
+  %i.lk = shl nuw nsw i64 %i.kh, 1
+  %i.ll = mul nuw nsw i64 %i.p, %i.lk
   %i.lm = getelementptr [4 x i8], ptr %1, i64 %i.ll ; 2 uses
   %i.ln = getelementptr [4 x i8], ptr %i.lm, i64 %i.p
   store i32 %i.lj, ptr %i.ln, align 4, !tbaa !12
@@ -2560,7 +2560,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
-  %i.kx = add i32 %i.r, %i.kh
+  %i.kx = add nsw i32 %i.r, %i.kh
   %i.ky = sext i32 %i.kx to i64
   %i.kz = getelementptr inbounds [4 x i8], ptr %2, i64 %i.ky
   %i.la = load i32, ptr %i.kz, align 4, !tbaa !12
@@ -2652,8 +2652,8 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.nl = sub nsw i64 %i.nk, %i.nj
   %i.nm = lshr i64 %i.nl, 31
   %i.nn = trunc i64 %i.nm to i32
-  %i.no = shl nsw i64 %i.ml, 1
-  %i.np = mul nsw i64 %i.p, %i.no
+  %i.no = shl nuw nsw i64 %i.ml, 1
+  %i.np = mul nuw nsw i64 %i.p, %i.no
   %i.nq = getelementptr [4 x i8], ptr %1, i64 %i.np ; 2 uses
   %i.nr = getelementptr [4 x i8], ptr %i.nq, i64 %i.p
   store i32 %i.nn, ptr %i.nr, align 4, !tbaa !12
@@ -3056,7 +3056,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  %i.wp = add i32 %i.r, %i.vz
+  %i.wp = add nsw i32 %i.r, %i.vz
   %i.wq = sext i32 %i.wp to i64
   %i.wr = getelementptr inbounds [4 x i8], ptr %2, i64 %i.wq
   %i.ws = load i32, ptr %i.wr, align 4, !tbaa !12
@@ -3148,8 +3148,8 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %i.zd = sub nsw i64 %i.zc, %i.zb
   %i.ze = lshr i64 %i.zd, 31
   %i.zf = trunc i64 %i.ze to i32
-  %i.zg = shl nsw i64 %i.yd, 1
-  %i.zh = mul nsw i64 %i.p, %i.zg
+  %i.zg = shl nuw nsw i64 %i.yd, 1
+  %i.zh = mul nuw nsw i64 %i.p, %i.zg
   %i.zi = getelementptr [4 x i8], ptr %1, i64 %i.zh ; 2 uses
   %i.zj = getelementptr [4 x i8], ptr %i.zi, i64 %i.p
   store i32 %i.zf, ptr %i.zj, align 4, !tbaa !12

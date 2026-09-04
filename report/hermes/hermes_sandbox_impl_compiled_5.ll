@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %.loopexit486
 bb.h:                                             ; preds = %.preheader, %bb.w
   %.3412 = phi i32 [ %i.do, %bb.w ], [ %.0404, %.preheader ] ; 5 uses
   %.3 = phi i32 [ %.0403, %bb.w ], [ %.2408, %.preheader ]
-  %i.do = add i32 %.3412, -1                      ; 6 uses
+  %i.do = add nsw i32 %.3412, -1                  ; 6 uses
   %.val463 = load ptr, ptr %i.g, align 8, !tbaa !18
   %i.dp = getelementptr inbounds nuw i8, ptr %.val463, i64 %i.dh
   %.0.copyload.i = load i32, ptr %i.dp, align 1   ; 2 uses
@@ -294,7 +294,7 @@ bb.n:                                             ; preds = %bb.l
   %i.ez = getelementptr inbounds nuw i8, ptr %.val458, i64 %i.ey
   %.0.copyload.i468 = load i32, ptr %i.ez, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i468) #8, !srcloc !19
-  %i.fa = shl nuw i32 %i.do, 2
+  %i.fa = shl nuw nsw i32 %i.do, 2
   %i.fb = add i32 %.0.copyload.i467, %i.fa
   %i.fc = zext i32 %i.fb to i64
   %.val457 = load ptr, ptr %i.g, align 8, !tbaa !18
@@ -395,7 +395,7 @@ bb.w:                                             ; preds = %func_types_eq.exit4
   %i.go = getelementptr inbounds nuw i8, ptr %.val453, i64 %i.gn
   %.0.copyload.i477 = load i32, ptr %i.go, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i477) #8, !srcloc !19
-  %i.gp = shl nuw i32 %i.do, 2
+  %i.gp = shl nuw nsw i32 %i.do, 2
   %i.gq = add i32 %.0.copyload.i476, %i.gp
   %i.gr = zext i32 %i.gq to i64                   ; 2 uses
   %.val452 = load ptr, ptr %i.g, align 8, !tbaa !18

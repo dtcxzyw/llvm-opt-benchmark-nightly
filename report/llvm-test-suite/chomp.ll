@@ -203,11 +203,11 @@ equal_data.exit:                                  ; preds = %.lr.ph99
   %i.ay = getelementptr inbounds nuw i8, ptr %.168, i64 8 ; 2 uses
   store ptr %i.ax, ptr %i.ay, align 8, !tbaa !26
   %i.az = tail call noalias ptr @malloc(i64 noundef %i.j) #16 ; 2 uses
-  %i.ba = add i32 %i.h, -1                        ; 2 uses
+  %i.ba = add nsw i32 %i.h, -1                    ; 2 uses
   %i.bb = sext i32 %i.ba to i64
   %i.bc = zext i32 %i.ba to i64
-  %i.bd = sub nsw i64 %i.bb, %i.bc
-  %i.be = shl nsw i64 %i.bd, 2                    ; 2 uses
+  %i.bd = sub nuw nsw i64 %i.bb, %i.bc
+  %i.be = shl nuw nsw i64 %i.bd, 2                ; 2 uses
   %scevgep.i = getelementptr i8, ptr %i.az, i64 %i.be
   %scevgep7.i = getelementptr i8, ptr %i.k, i64 %i.be
   %i.bf = shl nuw nsw i64 %i.q, 2
@@ -557,11 +557,11 @@ bb.a:
   %i.e = sext i32 %i.d to i64                     ; 7 uses
   %i.f = shl nsw i64 %i.e, 2                      ; 2 uses
   %i.g = zext i32 %i.d to i64                     ; 3 uses
-  %i.h = add i32 %i.d, -1                         ; 2 uses
+  %i.h = add nsw i32 %i.d, -1                     ; 2 uses
   %i.i = sext i32 %i.h to i64
   %i.j = zext i32 %i.h to i64
-  %i.k = sub nsw i64 %i.i, %i.j
-  %i.l = shl nsw i64 %i.k, 2                      ; 2 uses
+  %i.k = sub nuw nsw i64 %i.i, %i.j
+  %i.l = shl nuw nsw i64 %i.k, 2                  ; 2 uses
   %i.m = shl nuw nsw i64 %i.g, 2
   %i.n = add nsw i32 %i.c, -1
   br i1 %.not2638, label %._crit_edge46, label %.preheader.preheader
