@@ -204,14 +204,14 @@ declare void @_ZNK7nanogui6Object7inc_refEv(ptr noundef nonnull align 8 derefere
 define hidden void @_ZN7nanogui6Widget12remove_childEPKS0_(ptr noundef nonnull align 8 dereferenceable(148) %0, ptr nofree noundef readnone captures(address) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !44   ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !44   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !43   ; 3 uses
   %.not7.i.i = icmp eq ptr %i.b, %i.d
-  br i1 %.not7.i.i, label %_ZNSt3__14findB8ne180100INS_11__wrap_iterIPPN7nanogui6WidgetEEEPKS3_EET_S9_S9_RKT0_.exit, label %.lr.ph.i.i
+  br i1 %.not7.i.i, label %_ZN7nanogui6Widget19remove_child_helperERKNSt3__111__wrap_iterIPPS0_EE.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %bb.b
-  %.08.i.i = phi ptr [ %i.g, %bb.b ], [ %i.b, %bb.a ] ; 3 uses
+  %.08.i.i = phi ptr [ %i.g, %bb.b ], [ %i.b, %bb.a ] ; 4 uses
   %i.e = load ptr, ptr %.08.i.i, align 8, !tbaa !48
   %i.f = icmp eq ptr %i.e, %1
   br i1 %i.f, label %_ZNSt3__14findB8ne180100INS_11__wrap_iterIPPN7nanogui6WidgetEEEPKS3_EET_S9_S9_RKT0_.exit, label %bb.b
@@ -221,10 +221,9 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   %.not.i.i = icmp eq ptr %i.g, %i.d
   br i1 %.not.i.i, label %_ZN7nanogui6Widget19remove_child_helperERKNSt3__111__wrap_iterIPPS0_EE.exit, label %.lr.ph.i.i, !llvm.loop !86
 
-_ZNSt3__14findB8ne180100INS_11__wrap_iterIPPN7nanogui6WidgetEEEPKS3_EET_S9_S9_RKT0_.exit: ; preds = %.lr.ph.i.i, %bb.a
-  %.0.lcssa.i.i = phi ptr [ %i.b, %bb.a ], [ %.08.i.i, %.lr.ph.i.i ] ; 2 uses
-  %i.h = ptrtoint ptr %.0.lcssa.i.i to i64        ; 2 uses
-  %i.i = icmp eq ptr %.0.lcssa.i.i, %i.d
+_ZNSt3__14findB8ne180100INS_11__wrap_iterIPPN7nanogui6WidgetEEEPKS3_EET_S9_S9_RKT0_.exit: ; preds = %.lr.ph.i.i
+  %i.h = ptrtoint ptr %.08.i.i to i64             ; 2 uses
+  %i.i = icmp eq ptr %.08.i.i, %i.d
   br i1 %i.i, label %_ZN7nanogui6Widget19remove_child_helperERKNSt3__111__wrap_iterIPPS0_EE.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt3__14findB8ne180100INS_11__wrap_iterIPPN7nanogui6WidgetEEEPKS3_EET_S9_S9_RKT0_.exit
@@ -270,7 +269,7 @@ _ZNSt3__16vectorIPN7nanogui6WidgetENS_9allocatorIS3_EEE5eraseB8ne180100ENS_11__w
   tail call void @_ZNK7nanogui6Object7dec_refEv(ptr noundef nonnull align 8 dereferenceable(16) %i.m) #19
   br label %_ZN7nanogui6Widget19remove_child_helperERKNSt3__111__wrap_iterIPPS0_EE.exit
 
-_ZN7nanogui6Widget19remove_child_helperERKNSt3__111__wrap_iterIPPS0_EE.exit: ; preds = %bb.b, %_ZNSt3__14findB8ne180100INS_11__wrap_iterIPPN7nanogui6WidgetEEEPKS3_EET_S9_S9_RKT0_.exit, %_ZNSt3__16vectorIPN7nanogui6WidgetENS_9allocatorIS3_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS3_EE.exit.i
+_ZN7nanogui6Widget19remove_child_helperERKNSt3__111__wrap_iterIPPS0_EE.exit: ; preds = %bb.b, %bb.a, %_ZNSt3__14findB8ne180100INS_11__wrap_iterIPPN7nanogui6WidgetEEEPKS3_EET_S9_S9_RKT0_.exit, %_ZNSt3__16vectorIPN7nanogui6WidgetENS_9allocatorIS3_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS3_EE.exit.i
   ret void
 }
 

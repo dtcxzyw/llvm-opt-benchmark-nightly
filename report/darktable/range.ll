@@ -202,11 +202,9 @@ bb.f:                                             ; preds = %g_strdup_inline.exi
   br i1 %i.aw, label %.split264, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %char0169 = load i8, ptr %.2137, align 1        ; 2 uses
-  switch i8 %char0169, label %.thread260 [
-    i8 0, label %.thread242
-    i8 45, label %bb.h
-  ]
+  %char0169 = load i8, ptr %.2137, align 1
+  %cond = icmp eq i8 %char0169, 45
+  br i1 %cond, label %bb.h, label %.thread242
 
 bb.h:                                             ; preds = %bb.g, %.split
   %.not174 = icmp eq ptr %.2143, null
@@ -231,16 +229,11 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ba, label %.thread242, label %bb.k
 
 bb.j:                                             ; preds = %.thread235
-  %char0180.pr.pr = load i8, ptr %.2137, align 1  ; 2 uses
-  %.not181 = icmp eq i8 %char0180.pr.pr, 0
-  br i1 %.not181, label %.thread242, label %.thread260
+  %char0180.pr.pr = load i8, ptr %.2137, align 1
+  %.not181 = icmp eq i8 %char0180.pr.pr, 45
+  br i1 %.not181, label %bb.k, label %.thread242
 
-.thread260:                                       ; preds = %bb.g, %bb.j
-  %char0180.pr263 = phi i8 [ %char0180.pr.pr, %bb.j ], [ %char0169, %bb.g ]
-  %.not = icmp eq i8 %char0180.pr263, 45
-  br i1 %.not, label %bb.k, label %.thread242
-
-bb.k:                                             ; preds = %.split264, %.thread260
+bb.k:                                             ; preds = %bb.j, %.split264
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.bc = getelementptr inbounds nuw i8, ptr %.2137, i64 1
   %i.bd = call i32 @dt_datetime_exif_to_numbers_raw(ptr noundef nonnull %i.bb, ptr noundef nonnull %i.bc) #16
@@ -248,7 +241,7 @@ bb.k:                                             ; preds = %.split264, %.thread
   %spec.select = select i1 %.not184, i32 %.1134, i32 16
   br label %bb.l
 
-.thread242:                                       ; preds = %bb.g, %.split264, %bb.j, %.thread260
+.thread242:                                       ; preds = %bb.j, %bb.g, %.split264
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 264
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !64
   %i.bg = call i32 %i.bf(ptr noundef %.2137, ptr noundef nonnull %i.b) #16 ; 0 uses

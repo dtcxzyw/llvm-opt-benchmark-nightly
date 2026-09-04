@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %odb_source_files_do
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %5, ptr noundef nonnull align 4 dereferenceable(36) %1, i64 36, i1 false)
   %i.n = load i32, ptr %i.m, align 8, !tbaa !79   ; 4 uses
   %.not.i23 = icmp eq i32 %i.n, 0
-  br i1 %.not.i23, label %kh_get_oid_map.exit, label %bb.e
+  br i1 %.not.i23, label %kh_get_oid_map.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add i32 %i.n, -1                         ; 2 uses
@@ -260,27 +260,23 @@ bb.h:                                             ; preds = %bb.g
   %i.at = icmp eq i32 %i.as, %i.p
   br i1 %i.at, label %kh_get_oid_map.exit.thread, label %bb.f, !llvm.loop !98
 
-kh_get_oid_map.exit.thread:                       ; preds = %.critedge2.i
+kh_get_oid_map.exit.thread:                       ; preds = %.critedge2.i, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   br label %bb.j
 
-.critedge.i:                                      ; preds = %bb.h, %bb.f
+.critedge.i:                                      ; preds = %bb.f, %bb.h
   %i.au = shl nuw i32 3, %i.y
   %i.av = and i32 %i.au, %i.w
   %.not33.i = icmp eq i32 %i.av, 0
-  %spec.select.i = select i1 %.not33.i, i32 %.026.i, i32 %i.n
-  br label %kh_get_oid_map.exit
-
-kh_get_oid_map.exit:                              ; preds = %bb.d, %.critedge.i
-  %.1.i = phi i32 [ %spec.select.i, %.critedge.i ], [ 0, %bb.d ] ; 2 uses
+  %spec.select.i = select i1 %.not33.i, i32 %.026.i, i32 %i.n ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  %6 = icmp ult i32 %.1.i, %i.n
+  %6 = icmp ult i32 %spec.select.i, %i.n
   br i1 %6, label %bb.i, label %bb.j
 
-bb.i:                                             ; preds = %kh_get_oid_map.exit
+bb.i:                                             ; preds = %.critedge.i
   %i.aw = getelementptr inbounds nuw i8, ptr %i.m, i64 32
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !82
-  %i.ay = zext i32 %.1.i to i64
+  %i.ay = zext i32 %spec.select.i to i64
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %i.ay
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !83 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %3, ptr noundef nonnull readonly align 4 dereferenceable(32) %i.ba, i64 32, i1 false)
@@ -290,7 +286,7 @@ bb.i:                                             ; preds = %kh_get_oid_map.exit
   store i32 %i.bc, ptr %i.bd, align 4, !tbaa !86
   br label %.loopexit
 
-bb.j:                                             ; preds = %odb_source_files_downcast.exit, %kh_get_oid_map.exit, %kh_get_oid_map.exit.thread
+bb.j:                                             ; preds = %odb_source_files_downcast.exit, %.critedge.i, %kh_get_oid_map.exit.thread
   %.018 = load ptr, ptr %.01835, align 8, !tbaa !48 ; 2 uses
   %.not = icmp eq ptr %.018, null
   br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !99

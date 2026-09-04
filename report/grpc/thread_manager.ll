@@ -202,9 +202,9 @@ _ZN4absl12lts_202505129MutexLockC2EPNS0_5MutexE.exit: ; preds = %bb.a
           to label %_ZN4absl12lts_202505129MutexLockD2Ev.exit.preheader unwind label %bb.b
 
 _ZN4absl12lts_202505129MutexLockD2Ev.exit.preheader: ; preds = %_ZN4absl12lts_202505129MutexLockC2EPNS0_5MutexE.exit
-  %.sroa.010.014 = load ptr, ptr %1, align 8, !tbaa !58 ; 3 uses
+  %.sroa.010.014 = load ptr, ptr %1, align 8, !tbaa !58 ; 2 uses
   %.not15 = icmp eq ptr %.sroa.010.014, %1
-  br i1 %.not15, label %_ZN4absl12lts_202505129MutexLockD2Ev.exit._crit_edge, label %.lr.ph
+  br i1 %.not15, label %_ZNSt7__cxx1110_List_baseIPN4grpc13ThreadManager12WorkerThreadESaIS4_EED2Ev.exit, label %.lr.ph
 
 bb.b:                                             ; preds = %_ZN4absl12lts_202505129MutexLockC2EPNS0_5MutexE.exit
   %i.h = landingpad { ptr, i32 }
@@ -213,23 +213,19 @@ bb.b:                                             ; preds = %_ZN4absl12lts_20250
   call void @__clang_call_terminate(ptr %i.i) #27
   unreachable
 
-_ZN4absl12lts_202505129MutexLockD2Ev.exit._crit_edge.loopexit: ; preds = %_ZN4absl12lts_202505129MutexLockD2Ev.exit
-  %.pre = load ptr, ptr %1, align 8, !tbaa !58
-  br label %_ZN4absl12lts_202505129MutexLockD2Ev.exit._crit_edge
-
-_ZN4absl12lts_202505129MutexLockD2Ev.exit._crit_edge: ; preds = %_ZN4absl12lts_202505129MutexLockD2Ev.exit._crit_edge.loopexit, %_ZN4absl12lts_202505129MutexLockD2Ev.exit.preheader
-  %2 = phi ptr [ %.pre, %_ZN4absl12lts_202505129MutexLockD2Ev.exit._crit_edge.loopexit ], [ %.sroa.010.014, %_ZN4absl12lts_202505129MutexLockD2Ev.exit.preheader ] ; 2 uses
-  %.not8.i.i = icmp eq ptr %2, %1
+_ZN4absl12lts_202505129MutexLockD2Ev.exit._crit_edge: ; preds = %_ZN4absl12lts_202505129MutexLockD2Ev.exit
+  %.pre = load ptr, ptr %1, align 8, !tbaa !58    ; 2 uses
+  %.not8.i.i = icmp eq ptr %.pre, %1
   br i1 %.not8.i.i, label %_ZNSt7__cxx1110_List_baseIPN4grpc13ThreadManager12WorkerThreadESaIS4_EED2Ev.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZN4absl12lts_202505129MutexLockD2Ev.exit._crit_edge, %.lr.ph.i.i
-  %.09.i.i = phi ptr [ %i.j, %.lr.ph.i.i ], [ %2, %_ZN4absl12lts_202505129MutexLockD2Ev.exit._crit_edge ] ; 2 uses
+  %.09.i.i = phi ptr [ %i.j, %.lr.ph.i.i ], [ %.pre, %_ZN4absl12lts_202505129MutexLockD2Ev.exit._crit_edge ] ; 2 uses
   %i.j = load ptr, ptr %.09.i.i, align 8, !tbaa !58 ; 2 uses
   call void @_ZdlPvm(ptr noundef nonnull %.09.i.i, i64 noundef 24) #29
   %.not.i.i = icmp eq ptr %i.j, %1
   br i1 %.not.i.i, label %_ZNSt7__cxx1110_List_baseIPN4grpc13ThreadManager12WorkerThreadESaIS4_EED2Ev.exit, label %.lr.ph.i.i, !llvm.loop !0
 
-_ZNSt7__cxx1110_List_baseIPN4grpc13ThreadManager12WorkerThreadESaIS4_EED2Ev.exit: ; preds = %.lr.ph.i.i, %_ZN4absl12lts_202505129MutexLockD2Ev.exit._crit_edge
+_ZNSt7__cxx1110_List_baseIPN4grpc13ThreadManager12WorkerThreadESaIS4_EED2Ev.exit: ; preds = %.lr.ph.i.i, %_ZN4absl12lts_202505129MutexLockD2Ev.exit.preheader, %_ZN4absl12lts_202505129MutexLockD2Ev.exit._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #24
   ret void
 
@@ -266,7 +262,7 @@ bb.d:                                             ; preds = %.lr.ph
 _ZN4absl12lts_202505129MutexLockD2Ev.exit:        ; preds = %bb.d, %.lr.ph
   %.sroa.010.0 = load ptr, ptr %.sroa.010.016, align 8, !tbaa !58 ; 2 uses
   %.not = icmp eq ptr %.sroa.010.0, %1
-  br i1 %.not, label %_ZN4absl12lts_202505129MutexLockD2Ev.exit._crit_edge.loopexit, label %.lr.ph
+  br i1 %.not, label %_ZN4absl12lts_202505129MutexLockD2Ev.exit._crit_edge, label %.lr.ph
 }
 
 ; Function Attrs: cold mustprogress noreturn nounwind memory(inaccessiblemem: write) uwtable

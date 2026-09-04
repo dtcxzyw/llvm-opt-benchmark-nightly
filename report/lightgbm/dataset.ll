@@ -205,8 +205,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %.noex
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %13, i8 0, i64 24, i1 false)
   %i.l = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 6 uses
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !205  ; 3 uses
-  %i.n = load ptr, ptr %7, align 8, !tbaa !200    ; 3 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !205  ; 4 uses
+  %i.n = load ptr, ptr %7, align 8, !tbaa !200    ; 2 uses
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = sub i64 %i.o, %i.p                       ; 2 uses
@@ -224,13 +224,13 @@ bb.a:                                             ; preds = %_ZNSt7__cxx1112basi
 bb.b:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.t = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 7 uses
   %.not386 = icmp eq ptr %i.m, %i.n
-  br i1 %.not386, label %_ZNSt6vectorImSaImEE7reserveEm.exit, label %_ZNSt12_Vector_baseImSaImEE11_M_allocateEm.exit.i
+  br i1 %.not386, label %._crit_edge, label %_ZNSt12_Vector_baseImSaImEE11_M_allocateEm.exit.i
 
 _ZNSt12_Vector_baseImSaImEE11_M_allocateEm.exit.i: ; preds = %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
   %i.v = shl nuw nsw i64 %i.q, 1
   %i.w = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #36
-          to label %.noexc95 unwind label %bb.g   ; 5 uses
+          to label %.noexc95 unwind label %bb.g   ; 6 uses
 
 .noexc95:                                         ; preds = %_ZNSt12_Vector_baseImSaImEE11_M_allocateEm.exit.i
   %i.x = load ptr, ptr %13, align 8, !tbaa !210   ; 4 uses
@@ -256,24 +256,17 @@ bb.d:                                             ; preds = %_ZNSt6vectorImSaImE
   call void @_ZdlPvm(ptr noundef nonnull %i.x, i64 noundef %i.af) #35
   br label %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i
 
-_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i: ; preds = %bb.d, %_ZNSt6vectorImSaImEE11_S_relocateEPmS2_S2_RS0_.exit.i
+_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i: ; preds = %_ZNSt6vectorImSaImEE11_S_relocateEPmS2_S2_RS0_.exit.i, %bb.d
   store ptr %i.w, ptr %13, align 8, !tbaa !210
   store ptr %i.w, ptr %i.u, align 8, !tbaa !270
-  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.r ; 2 uses
+  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.r ; 3 uses
   store ptr %i.ag, ptr %i.t, align 8, !tbaa !249
-  %.pre = load ptr, ptr %7, align 8, !tbaa !184
-  %.pre288 = load ptr, ptr %i.l, align 8, !tbaa !184
-  br label %_ZNSt6vectorImSaImEE7reserveEm.exit
-
-_ZNSt6vectorImSaImEE7reserveEm.exit:              ; preds = %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i, %bb.b
-  %20 = phi ptr [ %i.ag, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i ], [ null, %bb.b ] ; 2 uses
-  %21 = phi ptr [ %i.w, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i ], [ null, %bb.b ] ; 2 uses
-  %22 = phi ptr [ %.pre288, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i ], [ %i.m, %bb.b ] ; 4 uses
-  %23 = phi ptr [ %.pre, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i ], [ %i.n, %bb.b ] ; 2 uses
-  %.not224259 = icmp eq ptr %23, %22
+  %.pre = load ptr, ptr %7, align 8, !tbaa !184   ; 2 uses
+  %.pre288 = load ptr, ptr %i.l, align 8, !tbaa !184 ; 4 uses
+  %.not224259 = icmp eq ptr %.pre, %.pre288
   br i1 %.not224259, label %._crit_edge, label %.lr.ph
 
-.lr.ph:                                           ; preds = %_ZNSt6vectorImSaImEE7reserveEm.exit
+.lr.ph:                                           ; preds = %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i
   %i.ah = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 4 uses
   br label %bb.h
 
@@ -282,11 +275,11 @@ _ZNSt6vectorImSaImEE7reserveEm.exit:              ; preds = %_ZNSt12_Vector_base
   %.pre290 = load ptr, ptr %7, align 8, !tbaa !200
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZNSt6vectorImSaImEE7reserveEm.exit
-  %24 = phi ptr [ %.pre290, %._crit_edge.loopexit ], [ %22, %_ZNSt6vectorImSaImEE7reserveEm.exit ] ; 4 uses
-  %25 = phi ptr [ %.pre289, %._crit_edge.loopexit ], [ %22, %_ZNSt6vectorImSaImEE7reserveEm.exit ] ; 2 uses
-  %i.ai = ptrtoint ptr %25 to i64
-  %i.aj = ptrtoint ptr %24 to i64                 ; 3 uses
+._crit_edge:                                      ; preds = %bb.b, %._crit_edge.loopexit, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i
+  %20 = phi ptr [ %.pre290, %._crit_edge.loopexit ], [ %.pre288, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i ], [ %i.m, %bb.b ] ; 4 uses
+  %21 = phi ptr [ %.pre289, %._crit_edge.loopexit ], [ %.pre288, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i ], [ %i.m, %bb.b ] ; 2 uses
+  %i.ai = ptrtoint ptr %21 to i64
+  %i.aj = ptrtoint ptr %20 to i64                 ; 3 uses
   %i.ak = sub i64 %i.ai, %i.aj                    ; 3 uses
   %i.al = icmp ugt i64 %i.ak, 9223372036854775804
   br i1 %i.al, label %bb.e, label %bb.f
@@ -299,7 +292,7 @@ bb.e:                                             ; preds = %._crit_edge
   unreachable
 
 bb.f:                                             ; preds = %._crit_edge
-  %.not225 = icmp eq ptr %25, %24
+  %.not225 = icmp eq ptr %21, %20
   br i1 %.not225, label %_ZNSt6vectorIiSaIiEE7reserveEm.exit, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i
 
 _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i: ; preds = %bb.f
@@ -320,11 +313,11 @@ bb.g:                                             ; preds = %_ZNSt12_Vector_base
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit171
 
 bb.h:                                             ; preds = %.lr.ph, %_ZNSt6vectorImSaImEE12emplace_backIJRKiEEERmDpOT_.exit
-  %i.ap = phi ptr [ %20, %.lr.ph ], [ %i.cn, %_ZNSt6vectorImSaImEE12emplace_backIJRKiEEERmDpOT_.exit ] ; 5 uses
-  %i.aq = phi ptr [ %21, %.lr.ph ], [ %i.co, %_ZNSt6vectorImSaImEE12emplace_backIJRKiEEERmDpOT_.exit ] ; 10 uses
-  %i.ar = phi ptr [ %20, %.lr.ph ], [ %i.cp, %_ZNSt6vectorImSaImEE12emplace_backIJRKiEEERmDpOT_.exit ] ; 3 uses
-  %i.as = phi ptr [ %21, %.lr.ph ], [ %i.cq, %_ZNSt6vectorImSaImEE12emplace_backIJRKiEEERmDpOT_.exit ] ; 6 uses
-  %.sroa.0214.0260 = phi ptr [ %23, %.lr.ph ], [ %i.cr, %_ZNSt6vectorImSaImEE12emplace_backIJRKiEEERmDpOT_.exit ] ; 2 uses
+  %i.ap = phi ptr [ %i.ag, %.lr.ph ], [ %i.cn, %_ZNSt6vectorImSaImEE12emplace_backIJRKiEEERmDpOT_.exit ] ; 5 uses
+  %i.aq = phi ptr [ %i.w, %.lr.ph ], [ %i.co, %_ZNSt6vectorImSaImEE12emplace_backIJRKiEEERmDpOT_.exit ] ; 10 uses
+  %i.ar = phi ptr [ %i.ag, %.lr.ph ], [ %i.cp, %_ZNSt6vectorImSaImEE12emplace_backIJRKiEEERmDpOT_.exit ] ; 3 uses
+  %i.as = phi ptr [ %i.w, %.lr.ph ], [ %i.cq, %_ZNSt6vectorImSaImEE12emplace_backIJRKiEEERmDpOT_.exit ] ; 6 uses
+  %.sroa.0214.0260 = phi ptr [ %.pre, %.lr.ph ], [ %i.cr, %_ZNSt6vectorImSaImEE12emplace_backIJRKiEEERmDpOT_.exit ] ; 2 uses
   %i.at = load i32, ptr %.sroa.0214.0260, align 4, !tbaa !138 ; 2 uses
   %i.au = icmp slt i32 %i.at, %5
   br i1 %i.au, label %bb.i, label %bb.o
@@ -493,14 +486,14 @@ _ZNSt6vectorImSaImEE12emplace_backIJRKiEEERmDpOT_.exit: ; preds = %bb.p, %_ZNSt6
   %i.cp = phi ptr [ %i.ar, %bb.p ], [ %i.cm, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %i.bt, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %i.ap, %bb.j ]
   %i.cq = phi ptr [ %i.bu, %bb.p ], [ %i.ci, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %i.bp, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i ], [ %i.az, %bb.j ]
   %i.cr = getelementptr inbounds nuw i8, ptr %.sroa.0214.0260, i64 4 ; 2 uses
-  %.not224 = icmp eq ptr %i.cr, %22
+  %.not224 = icmp eq ptr %i.cr, %.pre288
   br i1 %.not224, label %._crit_edge.loopexit, label %bb.h
 
 _ZNSt6vectorIiSaIiEE7reserveEm.exit:              ; preds = %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i, %bb.f
   %.pre-phi304 = phi i64 [ %.pre303, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ %i.aj, %bb.f ]
   %.pre-phi = phi i64 [ %.pre302, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ %i.aj, %bb.f ]
-  %i.cs = phi ptr [ %.pre292, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ %24, %bb.f ]
-  %i.ct = phi ptr [ %.pre291, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ %24, %bb.f ]
+  %i.cs = phi ptr [ %.pre292, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ %20, %bb.f ]
+  %i.ct = phi ptr [ %.pre291, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ %20, %bb.f ]
   %.sroa.0193.2 = phi ptr [ %i.am, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ null, %bb.f ] ; 4 uses
   %.sroa.23.2 = phi ptr [ %i.an, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ], [ null, %bb.f ] ; 2 uses
   %i.cu = sub i64 %.pre-phi, %.pre-phi304

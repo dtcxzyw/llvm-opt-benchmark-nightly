@@ -204,7 +204,7 @@ define hidden { ptr, i64 } @"_ZN4core3str21_$LT$impl$u20$str$GT$12trim_matches17
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 6 uses
   %i.b = icmp samesign eq i64 %1, 0
-  br i1 %i.b, label %"_ZN99_$LT$core..str..pattern..CharPredicateSearcher$LT$F$GT$$u20$as$u20$core..str..pattern..Searcher$GT$11next_reject17h6d923ce25cccf38fE.exit", label %.lr.ph.i.i
+  br i1 %i.b, label %.loopexit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %"_ZN97_$LT$core..str..pattern..MultiCharEqSearcher$LT$C$GT$$u20$as$u20$core..str..pattern..Searcher$GT$4next17h9b2c59922d0e01b4E.exit.i.i"
   %i.c = phi i64 [ %i.aq, %"_ZN97_$LT$core..str..pattern..MultiCharEqSearcher$LT$C$GT$$u20$as$u20$core..str..pattern..Searcher$GT$4next17h9b2c59922d0e01b4E.exit.i.i" ], [ 0, %bb.a ] ; 4 uses
@@ -262,7 +262,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   br label %bb.c
 
 bb.c:                                             ; preds = %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdfa7c2ed26adfcceE.exit16.i.i.i.i.i", %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdfa7c2ed26adfcceE.exit14.i.i.i.i.i", %bb.b, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdfa7c2ed26adfcceE.exit12.i.i.i.i.i"
-  %.sroa.4.0 = phi ptr [ %i.f, %bb.b ], [ %i.ae, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdfa7c2ed26adfcceE.exit16.i.i.i.i.i" ], [ %i.u, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdfa7c2ed26adfcceE.exit14.i.i.i.i.i" ], [ %i.l, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdfa7c2ed26adfcceE.exit12.i.i.i.i.i" ] ; 6 uses
+  %.sroa.4.0 = phi ptr [ %i.f, %bb.b ], [ %i.ae, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdfa7c2ed26adfcceE.exit16.i.i.i.i.i" ], [ %i.u, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdfa7c2ed26adfcceE.exit14.i.i.i.i.i" ], [ %i.l, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdfa7c2ed26adfcceE.exit12.i.i.i.i.i" ] ; 9 uses
   %.sroa.4.0.i.ph.i.i.i.i = phi i32 [ %i.s, %bb.b ], [ %i.am, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdfa7c2ed26adfcceE.exit16.i.i.i.i.i" ], [ %i.ab, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdfa7c2ed26adfcceE.exit14.i.i.i.i.i" ], [ %i.q, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hdfa7c2ed26adfcceE.exit12.i.i.i.i.i" ] ; 8 uses
   %i.an = icmp samesign ult i32 %.sroa.4.0.i.ph.i.i.i.i, 1114112
   tail call void @llvm.assume(i1 %i.an)
@@ -325,11 +325,8 @@ bb.i:                                             ; preds = %bb.e
   %i.bh = icmp eq ptr %.sroa.4.0, %i.a
   br i1 %i.bh, label %.loopexit, label %.lr.ph.i.i
 
-"_ZN99_$LT$core..str..pattern..CharPredicateSearcher$LT$F$GT$$u20$as$u20$core..str..pattern..Searcher$GT$11next_reject17h6d923ce25cccf38fE.exit": ; preds = %bb.e, %"_ZN53_$LT$F$u20$as$u20$core..str..pattern..MultiCharEq$GT$7matches17hf4228f7ba0b3d92eE.exit.i.i.i", %bb.d, %bb.a
-  %.sroa.4.122 = phi ptr [ %0, %bb.a ], [ %.sroa.4.0, %bb.d ], [ %.sroa.4.0, %"_ZN53_$LT$F$u20$as$u20$core..str..pattern..MultiCharEq$GT$7matches17hf4228f7ba0b3d92eE.exit.i.i.i" ], [ %.sroa.4.0, %bb.e ] ; 6 uses
-  %.sroa.18.020 = phi i64 [ 0, %bb.a ], [ %i.aq, %bb.d ], [ %i.aq, %"_ZN53_$LT$F$u20$as$u20$core..str..pattern..MultiCharEq$GT$7matches17hf4228f7ba0b3d92eE.exit.i.i.i" ], [ %i.aq, %bb.e ] ; 3 uses
-  %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ %i.c, %bb.d ], [ %i.c, %"_ZN53_$LT$F$u20$as$u20$core..str..pattern..MultiCharEq$GT$7matches17hf4228f7ba0b3d92eE.exit.i.i.i" ], [ %i.c, %bb.e ] ; 3 uses
-  %i.bi = icmp eq ptr %.sroa.4.122, %i.a
+"_ZN99_$LT$core..str..pattern..CharPredicateSearcher$LT$F$GT$$u20$as$u20$core..str..pattern..Searcher$GT$11next_reject17h6d923ce25cccf38fE.exit": ; preds = %bb.e, %"_ZN53_$LT$F$u20$as$u20$core..str..pattern..MultiCharEq$GT$7matches17hf4228f7ba0b3d92eE.exit.i.i.i", %bb.d
+  %i.bi = icmp eq ptr %.sroa.4.0, %i.a
   br i1 %i.bi, label %.loopexit, label %.lr.ph.i.i5
 
 .lr.ph.i.i5:                                      ; preds = %"_ZN99_$LT$core..str..pattern..CharPredicateSearcher$LT$F$GT$$u20$as$u20$core..str..pattern..Searcher$GT$11next_reject17h6d923ce25cccf38fE.exit", %bb.t
@@ -340,7 +337,7 @@ bb.i:                                             ; preds = %bb.e
   br i1 %i.bm, label %bb.j, label %"_ZN106_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..double_ended..DoubleEndedIterator$GT$9next_back17hcd73a5ff8bc68568E.exit17.i.i.i.i.i"
 
 "_ZN106_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..double_ended..DoubleEndedIterator$GT$9next_back17hcd73a5ff8bc68568E.exit17.i.i.i.i.i": ; preds = %.lr.ph.i.i5
-  %i.bn = icmp ne ptr %.sroa.4.122, %i.bk
+  %i.bn = icmp ne ptr %.sroa.4.0, %i.bk
   tail call void @llvm.assume(i1 %i.bn)
   %i.bo = getelementptr inbounds i8, ptr %i.bj, i64 -2 ; 3 uses
   %i.bp = load i8, ptr %i.bo, align 1, !noalias !332, !noundef !5 ; 3 uses
@@ -354,7 +351,7 @@ bb.j:                                             ; preds = %.lr.ph.i.i5
   br label %bb.m
 
 "_ZN106_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..double_ended..DoubleEndedIterator$GT$9next_back17hcd73a5ff8bc68568E.exit19.i.i.i.i.i": ; preds = %"_ZN106_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..double_ended..DoubleEndedIterator$GT$9next_back17hcd73a5ff8bc68568E.exit17.i.i.i.i.i"
-  %i.bu = icmp ne ptr %.sroa.4.122, %i.bo
+  %i.bu = icmp ne ptr %.sroa.4.0, %i.bo
   tail call void @llvm.assume(i1 %i.bu)
   %i.bv = getelementptr inbounds i8, ptr %i.bj, i64 -3 ; 3 uses
   %i.bw = load i8, ptr %i.bv, align 1, !noalias !332, !noundef !5 ; 3 uses
@@ -373,7 +370,7 @@ bb.k:                                             ; preds = %bb.l, %"_ZN106_$LT$
   br label %bb.m
 
 "_ZN106_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..double_ended..DoubleEndedIterator$GT$9next_back17hcd73a5ff8bc68568E.exit21.i.i.i.i.i": ; preds = %"_ZN106_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..double_ended..DoubleEndedIterator$GT$9next_back17hcd73a5ff8bc68568E.exit19.i.i.i.i.i"
-  %i.cf = icmp ne ptr %.sroa.4.122, %i.bv
+  %i.cf = icmp ne ptr %.sroa.4.0, %i.bv
   tail call void @llvm.assume(i1 %i.cf)
   %i.cg = getelementptr inbounds i8, ptr %i.bj, i64 -4 ; 2 uses
   %i.ch = load i8, ptr %i.cg, align 1, !noalias !332, !noundef !5
@@ -452,21 +449,21 @@ bb.s:                                             ; preds = %bb.o
   br i1 %i.dk, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %"_ZN53_$LT$F$u20$as$u20$core..str..pattern..MultiCharEq$GT$7matches17hf4228f7ba0b3d92eE.exit.i.i.i7", %bb.m, %bb.m, %bb.m, %bb.m, %bb.m, %bb.m
-  %i.dl = icmp eq ptr %.sroa.4.122, %i.ct
+  %i.dl = icmp eq ptr %.sroa.4.0, %i.ct
   br i1 %i.dl, label %.loopexit, label %.lr.ph.i.i5
 
 bb.u:                                             ; preds = %"_ZN53_$LT$F$u20$as$u20$core..str..pattern..MultiCharEq$GT$7matches17hf4228f7ba0b3d92eE.exit.i.i.i7", %bb.o, %bb.n
   %i.dm = ptrtoint ptr %i.bj to i64
-  %i.dn = ptrtoint ptr %.sroa.4.122 to i64
-  %i.do = sub i64 %.sroa.18.020, %i.dn
+  %i.dn = ptrtoint ptr %.sroa.4.0 to i64
+  %i.do = sub i64 %i.aq, %i.dn
   %i.dp = add i64 %i.do, %i.dm
   br label %.loopexit
 
-.loopexit:                                        ; preds = %"_ZN97_$LT$core..str..pattern..MultiCharEqSearcher$LT$C$GT$$u20$as$u20$core..str..pattern..Searcher$GT$4next17h9b2c59922d0e01b4E.exit.i.i", %bb.t, %"_ZN99_$LT$core..str..pattern..CharPredicateSearcher$LT$F$GT$$u20$as$u20$core..str..pattern..Searcher$GT$11next_reject17h6d923ce25cccf38fE.exit", %bb.u
-  %.sroa.0.043 = phi i64 [ %.sroa.0.0, %bb.u ], [ %.sroa.0.0, %"_ZN99_$LT$core..str..pattern..CharPredicateSearcher$LT$F$GT$$u20$as$u20$core..str..pattern..Searcher$GT$11next_reject17h6d923ce25cccf38fE.exit" ], [ %.sroa.0.0, %bb.t ], [ 0, %"_ZN97_$LT$core..str..pattern..MultiCharEqSearcher$LT$C$GT$$u20$as$u20$core..str..pattern..Searcher$GT$4next17h9b2c59922d0e01b4E.exit.i.i" ] ; 2 uses
-  %.sroa.02.1 = phi i64 [ %i.dp, %bb.u ], [ %.sroa.18.020, %"_ZN99_$LT$core..str..pattern..CharPredicateSearcher$LT$F$GT$$u20$as$u20$core..str..pattern..Searcher$GT$11next_reject17h6d923ce25cccf38fE.exit" ], [ %.sroa.18.020, %bb.t ], [ 0, %"_ZN97_$LT$core..str..pattern..MultiCharEqSearcher$LT$C$GT$$u20$as$u20$core..str..pattern..Searcher$GT$4next17h9b2c59922d0e01b4E.exit.i.i" ]
-  %i.dq = sub nuw i64 %.sroa.02.1, %.sroa.0.043
-  %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.043
+.loopexit:                                        ; preds = %"_ZN97_$LT$core..str..pattern..MultiCharEqSearcher$LT$C$GT$$u20$as$u20$core..str..pattern..Searcher$GT$4next17h9b2c59922d0e01b4E.exit.i.i", %bb.t, %bb.a, %"_ZN99_$LT$core..str..pattern..CharPredicateSearcher$LT$F$GT$$u20$as$u20$core..str..pattern..Searcher$GT$11next_reject17h6d923ce25cccf38fE.exit", %bb.u
+  %.sroa.0.03035 = phi i64 [ %i.c, %bb.u ], [ %i.c, %"_ZN99_$LT$core..str..pattern..CharPredicateSearcher$LT$F$GT$$u20$as$u20$core..str..pattern..Searcher$GT$11next_reject17h6d923ce25cccf38fE.exit" ], [ 0, %bb.a ], [ %i.c, %bb.t ], [ 0, %"_ZN97_$LT$core..str..pattern..MultiCharEqSearcher$LT$C$GT$$u20$as$u20$core..str..pattern..Searcher$GT$4next17h9b2c59922d0e01b4E.exit.i.i" ] ; 2 uses
+  %.sroa.02.1 = phi i64 [ %i.dp, %bb.u ], [ %i.aq, %"_ZN99_$LT$core..str..pattern..CharPredicateSearcher$LT$F$GT$$u20$as$u20$core..str..pattern..Searcher$GT$11next_reject17h6d923ce25cccf38fE.exit" ], [ 0, %bb.a ], [ %i.aq, %bb.t ], [ 0, %"_ZN97_$LT$core..str..pattern..MultiCharEqSearcher$LT$C$GT$$u20$as$u20$core..str..pattern..Searcher$GT$4next17h9b2c59922d0e01b4E.exit.i.i" ]
+  %i.dq = sub nuw i64 %.sroa.02.1, %.sroa.0.03035
+  %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.03035
   %i.ds = insertvalue { ptr, i64 } poison, ptr %i.dr, 0
   %i.dt = insertvalue { ptr, i64 } %i.ds, i64 %i.dq, 1
   ret { ptr, i64 } %i.dt

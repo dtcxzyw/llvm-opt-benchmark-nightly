@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 336
   %i.r = load i64, ptr %i.q, align 8, !tbaa !50   ; 4 uses
   %.not66 = icmp eq i64 %i.r, 0
-  br i1 %.not66, label %._crit_edge, label %.lr.ph
+  br i1 %.not66, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 352
@@ -212,7 +212,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.f
-  %storemerge59 = phi i64 [ 0, %.lr.ph ], [ %i.y, %bb.f ] ; 3 uses
+  %storemerge59 = phi i64 [ 0, %.lr.ph ], [ %i.y, %bb.f ] ; 5 uses
   %i.u = getelementptr inbounds nuw [48 x i8], ptr %i.t, i64 %storemerge59
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !54   ; 2 uses
   %i.w = icmp eq ptr %i.v, @H5O_MSG_MTIME
@@ -225,14 +225,13 @@ bb.f:                                             ; preds = %bb.e
   %exitcond.not = icmp eq i64 %i.y, %i.r
   br i1 %exitcond.not, label %._crit_edge.thread, label %bb.e, !llvm.loop !133
 
-._crit_edge.thread:                               ; preds = %bb.f
+._crit_edge.thread:                               ; preds = %bb.f, %bb.d
   store i64 %i.r, ptr %i.b, align 8, !tbaa !17
   br label %bb.g
 
-._crit_edge:                                      ; preds = %bb.e, %bb.d
-  %storemerge.lcssa58 = phi i64 [ 0, %bb.d ], [ %storemerge59, %bb.e ] ; 3 uses
-  store i64 %storemerge.lcssa58, ptr %i.b, align 8, !tbaa !17
-  %i.z = icmp eq i64 %storemerge.lcssa58, %i.r
+._crit_edge:                                      ; preds = %bb.e
+  store i64 %storemerge59, ptr %i.b, align 8, !tbaa !17
+  %i.z = icmp eq i64 %storemerge59, %i.r
   br i1 %i.z, label %bb.g, label %._crit_edge._crit_edge
 
 ._crit_edge._crit_edge:                           ; preds = %._crit_edge
@@ -274,7 +273,7 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.k
 
 bb.k:                                             ; preds = %._crit_edge._crit_edge, %bb.j
-  %i.am = phi i64 [ %storemerge.lcssa58, %._crit_edge._crit_edge ], [ %i.aj, %bb.j ]
+  %i.am = phi i64 [ %storemerge59, %._crit_edge._crit_edge ], [ %i.aj, %bb.j ]
   %i.an = phi ptr [ %.pre, %._crit_edge._crit_edge ], [ %i.ai, %bb.j ]
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 352 ; 2 uses
   %i.ap = getelementptr inbounds nuw [48 x i8], ptr %i.an, i64 %i.am

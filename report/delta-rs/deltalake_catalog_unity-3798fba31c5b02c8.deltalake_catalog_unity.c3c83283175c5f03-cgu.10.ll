@@ -203,7 +203,7 @@ bb.t:                                             ; preds = %bb.o
   store i8 3, ptr %i.c, align 8
   %i.ah = load i8, ptr %i.b, align 8, !range !7, !noundef !4 ; 2 uses
   %i.ai = icmp eq i8 %i.ah, 1
-  br i1 %i.ai, label %bb.u, label %bb.v, !prof !13
+  br i1 %i.ai, label %bb.u, label %bb.aa, !prof !13
 
 bb.u:                                             ; preds = %bb.t
   %i.aj = getelementptr inbounds nuw i8, ptr %i.b, i64 1
@@ -215,11 +215,12 @@ bb.u:                                             ; preds = %bb.t
   %i.am = getelementptr inbounds nuw i8, ptr %i.a, i64 9
   store i8 1, ptr %i.am, align 1
   invoke fastcc void @_RINvMs0_NtCseKAYRfgxGTE_14event_listener3sysINtB6_5InneruE6notifyINtNtB8_6notify13GenericNotifyNCNvB2_6remove0EECsgO8S5jLFugx_23deltalake_catalog_unity(ptr noalias noundef align 8 dereferenceable(40) %1, ptr noalias noundef align 8 captures(address) dereferenceable(16) %i.a)
-          to label %5 unwind label %bb.w
+          to label %bb.v unwind label %bb.w
 
-bb.v:                                             ; preds = %5, %bb.t
-  %4 = phi i8 [ %.pr, %5 ], [ %i.ah, %bb.t ]      ; 2 uses
-  %i.an = icmp eq i8 %4, 1
+bb.v:                                             ; preds = %bb.u
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  %.pr = load i8, ptr %i.b, align 8               ; 2 uses
+  %i.an = icmp eq i8 %.pr, 1
   br i1 %i.an, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtCseKAYRfgxGTE_14event_listener5StateuEECsgO8S5jLFugx_23deltalake_catalog_unity.exit, label %bb.aa
 
 bb.w:                                             ; preds = %bb.u
@@ -228,11 +229,6 @@ bb.w:                                             ; preds = %bb.u
   %i.ap = load i8, ptr %i.b, align 8, !range !7, !noundef !4
   %i.aq = icmp eq i8 %i.ap, 1
   br i1 %i.aq, label %bb.x, label %bb.y
-
-5:                                                ; preds = %bb.u
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %.pr = load i8, ptr %i.b, align 8
-  br label %bb.v
 
 bb.x:                                             ; preds = %bb.af, %bb.y, %bb.w
   %.pn = phi { ptr, i32 } [ %i.bf, %bb.af ], [ %i.ao, %bb.w ], [ %i.ao, %bb.y ]
@@ -265,7 +261,8 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtCseKAYRfgxGTE_14event_listener5S
   call void @llvm.experimental.noalias.scope.decl(metadata !457)
   br i1 %i.as, label %bb.p, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCseKAYRfgxGTE_14event_listener3sys4LinkuEECsgO8S5jLFugx_23deltalake_catalog_unity.exit
 
-bb.aa:                                            ; preds = %bb.v
+bb.aa:                                            ; preds = %bb.t, %bb.v
+  %4 = phi i8 [ %.pr, %bb.v ], [ %i.ah, %bb.t ]
   call void @llvm.experimental.noalias.scope.decl(metadata !459)
   %i.aw = icmp eq i8 %4, 2
   br i1 %i.aw, label %bb.ab, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtCseKAYRfgxGTE_14event_listener5StateuEECsgO8S5jLFugx_23deltalake_catalog_unity.exit

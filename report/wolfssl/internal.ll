@@ -205,7 +205,7 @@ LabelIsALabel.exit28.i:                           ; preds = %bb.l
 
 PatternHasWildcardInALabel.exit:                  ; preds = %.loopexit55.i.thread, %LabelIsALabel.exit28.i, %bb.l, %bb.k, %bb.j, %._crit_edge.thread51.i, %._crit_edge.i, %bb.f
   %.not30.i = icmp eq i32 %spec.select, 0
-  br i1 %.not30.i, label %._crit_edge.i168, label %.lr.ph.preheader.i162
+  br i1 %.not30.i, label %.critedge, label %.lr.ph.preheader.i162
 
 .lr.ph.preheader.i162:                            ; preds = %PatternHasWildcardInALabel.exit
   %wide.trip.count.i163 = zext i32 %spec.select to i64
@@ -269,19 +269,18 @@ LabelIsALabel.exit.thread.i169:                   ; preds = %LabelIsALabel.exit.
 
 bb.q:                                             ; preds = %LabelIsALabel.exit.thread.i169, %.lr.ph._crit_edge.i
   %indvars.iv.next.pre-phi.i = phi i64 [ %.pre.i, %.lr.ph._crit_edge.i ], [ %i.cr, %LabelIsALabel.exit.thread.i169 ] ; 2 uses
-  %.1.i166 = phi i32 [ %.01628.i, %.lr.ph._crit_edge.i ], [ %i.cs, %LabelIsALabel.exit.thread.i169 ] ; 2 uses
+  %.1.i166 = phi i32 [ %.01628.i, %.lr.ph._crit_edge.i ], [ %i.cs, %LabelIsALabel.exit.thread.i169 ] ; 4 uses
   %exitcond.not.i167 = icmp eq i64 %indvars.iv.next.pre-phi.i, %wide.trip.count.i163
   br i1 %exitcond.not.i167, label %._crit_edge.i168, label %.lr.ph.i164, !llvm.loop !346
 
-._crit_edge.i168:                                 ; preds = %bb.q, %PatternHasWildcardInALabel.exit
-  %.016.lcssa.i = phi i32 [ 0, %PatternHasWildcardInALabel.exit ], [ %.1.i166, %bb.q ] ; 3 uses
-  %i.ct = icmp ult i32 %.016.lcssa.i, %spec.select
+._crit_edge.i168:                                 ; preds = %bb.q
+  %i.ct = icmp ult i32 %.1.i166, %spec.select
   br i1 %i.ct, label %bb.r, label %.critedge
 
 bb.r:                                             ; preds = %._crit_edge.i168
-  %i.cu = zext i32 %.016.lcssa.i to i64
+  %i.cu = zext i32 %.1.i166 to i64
   %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 %i.cu ; 4 uses
-  %i.cw = sub nuw i32 %spec.select, %.016.lcssa.i
+  %i.cw = sub nuw i32 %spec.select, %.1.i166
   %i.cx = icmp ult i32 %i.cw, 4
   br i1 %i.cx, label %.critedge, label %bb.s
 
@@ -338,7 +337,7 @@ bb.v:                                             ; preds = %.lr.ph
   %i.ds = icmp eq i8 %i.dr, 42
   br i1 %i.ds, label %PatternHasWildcardInALabel.exit.thread, label %bb.v
 
-.critedge:                                        ; preds = %bb.v, %LabelIsALabel.exit21.i, %bb.u, %bb.t, %bb.s, %bb.r, %._crit_edge.i168
+.critedge:                                        ; preds = %bb.v, %LabelIsALabel.exit21.i, %bb.u, %bb.t, %bb.s, %bb.r, %._crit_edge.i168, %PatternHasWildcardInALabel.exit
   %i.dt = icmp slt i32 %.0106, 1
   br i1 %i.dt, label %.thread202, label %.lr.ph267
 

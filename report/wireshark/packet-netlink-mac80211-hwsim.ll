@@ -202,14 +202,13 @@ declare i32 @dissect_netlink_attributes_to_end(ptr noundef, i32 noundef, i32 nou
 define internal noundef i32 @dissect_mac80211_hwsim_attrs(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6) #0 {
 bb.a:
   %i.a = add i32 %6, %5                           ; 2 uses
-  %i.b = icmp slt i32 %5, %i.a                    ; 2 uses
-  %7 = and i32 %4, 16383
-  %.not20.i = icmp eq i32 %7, 17
-  %or.cond = and i1 %.not20.i, %i.b
-  br i1 %or.cond, label %dissect_mac80211_hwsim_generic.exit.sink.split, label %dissect_value.exit.a
+  %i.b = icmp slt i32 %5, %i.a
+  br i1 %i.b, label %dissect_value.exit.a, label %dissect_mac80211_hwsim_generic.exit
 
 dissect_value.exit.a:                             ; preds = %bb.a
-  br i1 %i.b, label %bb.b, label %dissect_mac80211_hwsim_generic.exit
+  %7 = and i32 %4, 16383
+  %.not20.i = icmp eq i32 %7, 17
+  br i1 %.not20.i, label %dissect_mac80211_hwsim_generic.exit.sink.split, label %bb.b
 
 bb.b:                                             ; preds = %dissect_value.exit.a
   switch i32 %6, label %bb.e [
@@ -228,16 +227,16 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.b
   br label %dissect_mac80211_hwsim_generic.exit.sink.split
 
-dissect_mac80211_hwsim_generic.exit.sink.split:   ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.a
-  %hf_mac80211_hwsim_attr_value32.sink.i.sink = phi ptr [ @hf_mac80211_hwsim_radio_name, %bb.a ], [ @hf_mac80211_hwsim_attr_value32, %bb.c ], [ @hf_mac80211_hwsim_attr_value, %bb.e ], [ @hf_mac80211_hwsim_attr_value64, %bb.d ], [ @hf_mac80211_hwsim_attr_value16, %bb.b ]
+dissect_mac80211_hwsim_generic.exit.sink.split:   ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %dissect_value.exit.a
+  %hf_mac80211_hwsim_attr_value32.sink.i.sink = phi ptr [ @hf_mac80211_hwsim_radio_name, %dissect_value.exit.a ], [ @hf_mac80211_hwsim_attr_value32, %bb.c ], [ @hf_mac80211_hwsim_attr_value, %bb.e ], [ @hf_mac80211_hwsim_attr_value64, %bb.d ], [ @hf_mac80211_hwsim_attr_value16, %bb.b ]
   %i.c = load i32, ptr %hf_mac80211_hwsim_attr_value32.sink.i.sink, align 4
   %i.d = getelementptr i8, ptr %2, i64 4
   %i.e = load i32, ptr %i.d, align 4
   %i.f = tail call ptr @proto_tree_add_item(ptr noundef %3, i32 noundef %i.c, ptr noundef %0, i32 noundef %5, i32 noundef %6, i32 noundef %i.e) ; 0 uses
   br label %dissect_mac80211_hwsim_generic.exit
 
-dissect_mac80211_hwsim_generic.exit:              ; preds = %dissect_mac80211_hwsim_generic.exit.sink.split, %bb.b, %dissect_value.exit.a
-  %.1 = phi i32 [ %5, %bb.b ], [ %5, %dissect_value.exit.a ], [ %i.a, %dissect_mac80211_hwsim_generic.exit.sink.split ]
+dissect_mac80211_hwsim_generic.exit:              ; preds = %dissect_mac80211_hwsim_generic.exit.sink.split, %bb.a, %bb.b
+  %.1 = phi i32 [ %5, %bb.b ], [ %5, %bb.a ], [ %i.a, %dissect_mac80211_hwsim_generic.exit.sink.split ]
   ret i32 %.1
 }
 

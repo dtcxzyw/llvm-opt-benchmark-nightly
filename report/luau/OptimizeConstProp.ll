@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 3336 ; 2 uses
   %i.d = load i64, ptr %i.c, align 8, !tbaa !201  ; 4 uses
   %.not.i.i = icmp eq i64 %i.d, 0
-  br i1 %.not.i.i, label %_ZN4Luau12DenseHashMapIjjSt4hashIjESt8equal_toIjEE5beginEv.exit, label %.lr.ph.i.i
+  br i1 %.not.i.i, label %._crit_edge, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.b
   %i.e = load ptr, ptr %i.b, align 8, !tbaa !163
@@ -214,7 +214,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.lr.ph.i.i
-  %.04.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.k, %bb.d ] ; 3 uses
+  %.04.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.k, %bb.d ] ; 4 uses
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.04.i.i
   %i.i = load i32, ptr %i.h, align 4, !tbaa !167
   %i.j = icmp eq i32 %i.i, %i.g
@@ -225,9 +225,8 @@ bb.d:                                             ; preds = %bb.c
   %exitcond.not.i.i = icmp eq i64 %i.k, %i.d
   br i1 %exitcond.not.i.i, label %._crit_edge, label %bb.c, !llvm.loop !469
 
-_ZN4Luau12DenseHashMapIjjSt4hashIjESt8equal_toIjEE5beginEv.exit: ; preds = %bb.c, %bb.b
-  %.0.lcssa.i.i = phi i64 [ 0, %bb.b ], [ %.04.i.i, %bb.c ] ; 2 uses
-  %.not5862 = icmp eq i64 %.0.lcssa.i.i, %i.d
+_ZN4Luau12DenseHashMapIjjSt4hashIjESt8equal_toIjEE5beginEv.exit: ; preds = %bb.c
+  %.not5862 = icmp eq i64 %.04.i.i, %i.d
   br i1 %.not5862, label %._crit_edge, label %.lr.ph64
 
 .lr.ph64:                                         ; preds = %_ZN4Luau12DenseHashMapIjjSt4hashIjESt8equal_toIjEE5beginEv.exit
@@ -237,13 +236,13 @@ _ZN4Luau12DenseHashMapIjjSt4hashIjESt8equal_toIjEE5beginEv.exit: ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 3352
   br label %bb.e
 
-._crit_edge:                                      ; preds = %bb.d, %_ZN4Luau6detail14DenseHashTableIjSt4pairIjjES2_IKjjENS0_16ItemInterfaceMapIjjEESt4hashIjESt8equal_toIjEE8iteratorppEv.exit, %_ZN4Luau12DenseHashMapIjjSt4hashIjESt8equal_toIjEE5beginEv.exit
+._crit_edge:                                      ; preds = %bb.d, %_ZN4Luau6detail14DenseHashTableIjSt4pairIjjES2_IKjjENS0_16ItemInterfaceMapIjjEESt4hashIjESt8equal_toIjEE8iteratorppEv.exit, %bb.b, %_ZN4Luau12DenseHashMapIjjSt4hashIjESt8equal_toIjEE5beginEv.exit
   %i.p = add i8 %3, 1
   %or.cond = icmp ult i8 %i.p, 2
   br i1 %or.cond, label %bb.k, label %_ZNSt6vectorIN4Luau7CodeGen15ArrayValueEntryESaIS2_EE5clearEv.exit
 
 bb.e:                                             ; preds = %.lr.ph64, %_ZN4Luau6detail14DenseHashTableIjSt4pairIjjES2_IKjjENS0_16ItemInterfaceMapIjjEESt4hashIjESt8equal_toIjEE8iteratorppEv.exit
-  %.sroa.6.063 = phi i64 [ %.0.lcssa.i.i, %.lr.ph64 ], [ %.lcssa.i, %_ZN4Luau6detail14DenseHashTableIjSt4pairIjjES2_IKjjENS0_16ItemInterfaceMapIjjEESt4hashIjESt8equal_toIjEE8iteratorppEv.exit ] ; 4 uses
+  %.sroa.6.063 = phi i64 [ %.04.i.i, %.lr.ph64 ], [ %.lcssa.i, %_ZN4Luau6detail14DenseHashTableIjSt4pairIjjES2_IKjjENS0_16ItemInterfaceMapIjjEESt4hashIjESt8equal_toIjEE8iteratorppEv.exit ] ; 4 uses
   %i.q = load ptr, ptr %i.b, align 8, !tbaa !163
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %.sroa.6.063 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 4

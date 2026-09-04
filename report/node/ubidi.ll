@@ -204,13 +204,13 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.n = load ptr, ptr %i.m, align 8
   %i.o = getelementptr inbounds [2 x i8], ptr %i.n, i64 %i.i
-  %i.p = load i16, ptr %i.o, align 2              ; 4 uses
+  %i.p = load i16, ptr %i.o, align 2              ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 6 ; 6 uses
   %i.r = load i16, ptr %i.q, align 2              ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 4 ; 5 uses
   %i.t = load i16, ptr %i.s, align 4              ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 488 ; 10 uses
-  %i.v = zext i16 %i.p to i32                     ; 2 uses
+  %i.v = zext i16 %i.p to i32                     ; 3 uses
   %sext = zext i16 %i.t to i64
   %i.w = icmp ugt i16 %i.r, %i.t
   br i1 %i.w, label %.lr.ph231, label %._crit_edge232
@@ -503,8 +503,7 @@ bb.u:                                             ; preds = %._crit_edge232
   br i1 %.not156, label %.thread166, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %2 = zext i16 %i.p to i32
-  %i.fb = tail call i32 @ubidi_getPairedBracketType_78(i32 noundef %2) #19
+  %i.fb = tail call i32 @ubidi_getPairedBracketType_78(i32 noundef %i.v) #19
   %i.fc = icmp eq i32 %i.fb, 1
   br i1 %i.fc, label %bb.w, label %.thread166
 
@@ -529,7 +528,7 @@ bb.z:                                             ; preds = %bb.w, %bb.y, %bb.x
   %.not159 = icmp eq i8 %i.ff, 0
   br i1 %.not159, label %.thread171, label %.thread166
 
-.thread166:                                       ; preds = %._crit_edge232, %_ZL21bracketProcessClosingP11BracketDataii.exit, %_ZL21bracketProcessClosingP11BracketDataii.exit.thread, %bb.z, %bb.v, %bb.u, %bb.a
+.thread166:                                       ; preds = %_ZL21bracketProcessClosingP11BracketDataii.exit.thread, %_ZL21bracketProcessClosingP11BracketDataii.exit, %._crit_edge232, %bb.z, %bb.v, %bb.u, %bb.a
   %i.fg = load ptr, ptr %0, align 8
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fg, i64 120
   %i.fi = load ptr, ptr %i.fh, align 8

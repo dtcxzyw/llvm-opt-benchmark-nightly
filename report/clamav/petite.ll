@@ -204,7 +204,7 @@ bb.bk:                                            ; preds = %bb.bj
   %i.hb = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.ha ; 3 uses
   %i.hc = zext i32 %i.gm to i64                   ; 3 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.hc ; 3 uses
-  br i1 %.not1501, label %.loopexit1231, label %.lr.ph
+  br i1 %.not1501, label %.loopexit1231.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.bk
   %i.he = zext i32 %spec.select1919 to i64
@@ -239,7 +239,7 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %or.cond1008, label %bb.bo, label %bb.bq
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.hq = trunc nuw i64 %indvars.iv to i32        ; 2 uses
+  %i.hq = trunc nuw i64 %indvars.iv to i32
   %.not946 = icmp eq i32 %.078814372071, 0
   br i1 %.not946, label %bb.bp, label %.loopexit1231
 
@@ -256,12 +256,11 @@ bb.bq:                                            ; preds = %bb.bl, %bb.bm, %bb.
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit1231.thread, label %bb.bl
 
-.loopexit1231:                                    ; preds = %bb.bk, %bb.bo, %bb.bp
-  %.07361234 = phi i32 [ %i.hq, %bb.bp ], [ %i.hq, %bb.bo ], [ 0, %bb.bk ]
-  %i.hu = icmp eq i32 %.07361234, %4
+.loopexit1231:                                    ; preds = %bb.bo, %bb.bp
+  %i.hu = icmp eq i32 %4, %i.hq
   br i1 %i.hu, label %.loopexit1231.thread, label %bb.br
 
-.loopexit1231.thread:                             ; preds = %.loopexit1231, %bb.bq
+.loopexit1231.thread:                             ; preds = %bb.bk, %.loopexit1231, %bb.bq
   tail call void @free(ptr noundef %i.gs) #6
   br label %.thread1189
 

@@ -202,11 +202,11 @@ bb.d:                                             ; preds = %.critedge38, %bb.b,
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %4, i64 56
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !366 ; 3 uses
   %.phi.trans.insert74 = getelementptr inbounds nuw i8, ptr %4, i64 64
-  %.pre75 = load ptr, ptr %.phi.trans.insert74, align 8, !tbaa !366 ; 3 uses
+  %.pre75 = load ptr, ptr %.phi.trans.insert74, align 8, !tbaa !366 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 64
   %.not5459 = icmp eq ptr %.pre, %.pre75
-  br i1 %.not5459, label %._crit_edge63, label %.lr.ph62
+  br i1 %.not5459, label %._crit_edge72, label %.lr.ph62
 
 .lr.ph:                                           ; preds = %bb.d, %_ZZN4Plan19ComputeCriticalPathEvEN8TopoSort11VisitTargetEPK4Node.exit
   %.sroa.050.058 = phi ptr [ %i.x, %_ZZN4Plan19ComputeCriticalPathEvEN8TopoSort11VisitTargetEPK4Node.exit ], [ %i.q, %bb.d ] ; 2 uses
@@ -225,15 +225,10 @@ _ZZN4Plan19ComputeCriticalPathEvEN8TopoSort11VisitTargetEPK4Node.exit: ; preds =
   %.not53 = icmp eq ptr %i.x, %i.s
   br i1 %.not53, label %._crit_edge, label %.lr.ph
 
-._crit_edge63.loopexit:                           ; preds = %.lr.ph62
-  %.pre76 = load ptr, ptr %i.u, align 8, !tbaa !366, !noalias !7054
-  %.pre77 = load ptr, ptr %i.t, align 8, !tbaa !366, !noalias !7055
-  br label %._crit_edge63
-
-._crit_edge63:                                    ; preds = %._crit_edge63.loopexit, %._crit_edge
-  %5 = phi ptr [ %.pre77, %._crit_edge63.loopexit ], [ %.pre, %._crit_edge ] ; 3 uses
-  %6 = phi ptr [ %.pre76, %._crit_edge63.loopexit ], [ %.pre75, %._crit_edge ] ; 2 uses
-  %.not5568 = icmp eq ptr %6, %5
+._crit_edge63:                                    ; preds = %.lr.ph62
+  %.pre76 = load ptr, ptr %i.u, align 8, !tbaa !366, !noalias !7054 ; 2 uses
+  %.pre77 = load ptr, ptr %i.t, align 8, !tbaa !366, !noalias !7055 ; 3 uses
+  %.not5568 = icmp eq ptr %.pre76, %.pre77
   br i1 %.not5568, label %._crit_edge72, label %.lr.ph71
 
 .lr.ph62:                                         ; preds = %._crit_edge, %.lr.ph62
@@ -246,7 +241,7 @@ _ZZN4Plan19ComputeCriticalPathEvEN8TopoSort11VisitTargetEPK4Node.exit: ; preds =
   store i64 %i.aa, ptr %i.ab, align 8, !tbaa !367
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.046.060, i64 8 ; 2 uses
   %.not54 = icmp eq ptr %i.ac, %.pre75
-  br i1 %.not54, label %._crit_edge63.loopexit, label %.lr.ph62
+  br i1 %.not54, label %._crit_edge63, label %.lr.ph62
 
 .loopexit.loopexit:                               ; preds = %bb.j
   %.pre78 = load ptr, ptr %i.t, align 8, !tbaa !366, !noalias !7055
@@ -257,8 +252,8 @@ _ZZN4Plan19ComputeCriticalPathEvEN8TopoSort11VisitTargetEPK4Node.exit: ; preds =
   %.not55 = icmp eq ptr %i.am, %i.ad
   br i1 %.not55, label %._crit_edge72, label %.lr.ph71, !llvm.loop !7051
 
-._crit_edge72:                                    ; preds = %.loopexit, %._crit_edge63
-  %.lcssa = phi ptr [ %5, %._crit_edge63 ], [ %i.ad, %.loopexit ] ; 2 uses
+._crit_edge72:                                    ; preds = %.loopexit, %._crit_edge, %._crit_edge63
+  %.lcssa = phi ptr [ %.pre77, %._crit_edge63 ], [ %.pre, %._crit_edge ], [ %i.ad, %.loopexit ] ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.lcssa, null
   br i1 %.not.i.i.i.i, label %_ZNSt6vectorIP4EdgeSaIS1_EED2Ev.exit.i, label %bb.f
 
@@ -299,8 +294,8 @@ _ZZN4Plan19ComputeCriticalPathEvEN8TopoSortD2Ev.exit: ; preds = %_ZNSt10_Hashtab
   ret void
 
 .lr.ph71:                                         ; preds = %._crit_edge63, %.loopexit
-  %i.al = phi ptr [ %i.ad, %.loopexit ], [ %5, %._crit_edge63 ]
-  %.sroa.044.069 = phi ptr [ %i.am, %.loopexit ], [ %6, %._crit_edge63 ]
+  %i.al = phi ptr [ %i.ad, %.loopexit ], [ %.pre77, %._crit_edge63 ]
+  %.sroa.044.069 = phi ptr [ %i.am, %.loopexit ], [ %.pre76, %._crit_edge63 ]
   %i.am = getelementptr inbounds i8, ptr %.sroa.044.069, i64 -8 ; 3 uses
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !363 ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 120

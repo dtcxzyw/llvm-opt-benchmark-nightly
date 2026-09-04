@@ -204,13 +204,12 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.i, label %_RNvXsf_NtNtCs96xUavsWfLi_15icu_locale_core7subtags8languageNtB5_8LanguageNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.thread.i, label %_RNvXsf_NtNtCs96xUavsWfLi_15icu_locale_core7subtags8languageNtB5_8LanguageNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i
 
 _RNvXsf_NtNtCs96xUavsWfLi_15icu_locale_core7subtags8languageNtB5_8LanguageNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i: ; preds = %bb.c, %bb.b, %bb.a
-  %.val15.i.lcssa.i.i.i = phi i8 [ %.sroa.0.0.copyload4, %bb.a ], [ %.sroa.4.0.copyload, %bb.b ], [ %.sroa.5.0.copyload, %bb.c ] ; 2 uses
-  %.val16.i.lcssa.i.i.i = phi i8 [ %.sroa.06.0.copyload, %bb.a ], [ %.sroa.47.0.copyload, %bb.b ], [ %.sroa.58.0.copyload, %bb.c ] ; 2 uses
+  %.val15.i.lcssa.i.i.i = phi i8 [ %.sroa.0.0.copyload4, %bb.a ], [ %.sroa.4.0.copyload, %bb.b ], [ %.sroa.5.0.copyload, %bb.c ]
+  %.val16.i.lcssa.i.i.i = phi i8 [ %.sroa.06.0.copyload, %bb.a ], [ %.sroa.47.0.copyload, %bb.b ], [ %.sroa.58.0.copyload, %bb.c ]
   %i.j = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 %.val15.i.lcssa.i.i.i, i8 %.val16.i.lcssa.i.i.i)
-  %2 = icmp eq i8 %.val15.i.lcssa.i.i.i, %.val16.i.lcssa.i.i.i
-  br i1 %2, label %_RNvXsf_NtNtCs96xUavsWfLi_15icu_locale_core7subtags8languageNtB5_8LanguageNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.thread.i, label %_RNvXsx_NtCshzWfHUSfYae_4core5tupleTNtNtNtCs96xUavsWfLi_15icu_locale_core7subtags8language8LanguageINtNtB7_6option6OptionNtNtBB_6script6ScriptEIB1z_NtNtBB_6region6RegionERNtNtBB_8variants8VariantsENtNtB7_3cmp3Ord3cmpBD_.exit
+  br label %_RNvXsx_NtCshzWfHUSfYae_4core5tupleTNtNtNtCs96xUavsWfLi_15icu_locale_core7subtags8language8LanguageINtNtB7_6option6OptionNtNtBB_6script6ScriptEIB1z_NtNtBB_6region6RegionERNtNtBB_8variants8VariantsENtNtB7_3cmp3Ord3cmpBD_.exit
 
-_RNvXsf_NtNtCs96xUavsWfLi_15icu_locale_core7subtags8languageNtB5_8LanguageNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.thread.i: ; preds = %_RNvXsf_NtNtCs96xUavsWfLi_15icu_locale_core7subtags8languageNtB5_8LanguageNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i, %bb.c
+_RNvXsf_NtNtCs96xUavsWfLi_15icu_locale_core7subtags8languageNtB5_8LanguageNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.thread.i: ; preds = %bb.c
   %.sroa.6.3.extract.trunc = trunc i32 %.sroa.0.0.copyload to i8 ; 3 uses
   %.not.i.i = icmp eq i8 %.sroa.6.3.extract.trunc, -1
   %.sroa.69.3.extract.trunc = trunc i32 %.sroa.02.0.copyload to i8 ; 4 uses

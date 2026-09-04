@@ -204,14 +204,14 @@ declare void @_ZSt28__throw_bad_array_new_lengthv() local_unnamed_addr #14
 define linkonce_odr noundef zeroext i1 @_ZNK5Ipopt13CachedResultsIdE15GetCachedResultERdRKSt6vectorIPKNS_12TaggedObjectESaIS6_EERKS3_IdSaIdEE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !221  ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !221  ; 4 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %.loopexit17, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !224  ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !224  ; 2 uses
   %.not910.i = icmp eq ptr %i.c, %i.b
-  br i1 %.not910.i, label %_ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit, label %.lr.ph.i
+  br i1 %.not910.i, label %.loopexit17, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.d
   %i.d = phi ptr [ %i.q, %bb.d ], [ %i.b, %bb.b ] ; 2 uses
@@ -221,7 +221,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   %i.h = load i8, ptr %i.g, align 8, !tbaa !241, !range !102, !noundef !103
   %i.i = trunc nuw i8 %i.h to i1
-  %i.j = load ptr, ptr %.sroa.06.011.i, align 8, !tbaa !224 ; 3 uses
+  %i.j = load ptr, ptr %.sroa.06.011.i, align 8, !tbaa !224 ; 5 uses
   br i1 %i.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph.i
@@ -241,16 +241,11 @@ bb.c:                                             ; preds = %.lr.ph.i
 bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   %i.q = phi ptr [ %.pre.i, %bb.c ], [ %i.d, %.lr.ph.i ] ; 3 uses
   %.not9.i = icmp eq ptr %i.j, %i.q
-  br i1 %.not9.i, label %_ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit.loopexit, label %.lr.ph.i, !llvm.loop !31
+  br i1 %.not9.i, label %_ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit, label %.lr.ph.i, !llvm.loop !31
 
-_ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit.loopexit: ; preds = %bb.d
-  %.sroa.010.020.pre = load ptr, ptr %i.q, align 8, !tbaa !224
-  br label %_ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit
-
-_ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit: ; preds = %_ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit.loopexit, %bb.b
-  %.sroa.010.020 = phi ptr [ %.sroa.010.020.pre, %_ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit.loopexit ], [ %i.c, %bb.b ] ; 3 uses
-  %4 = phi ptr [ %i.j, %_ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit.loopexit ], [ %i.b, %bb.b ] ; 3 uses
-  %.not1521 = icmp eq ptr %.sroa.010.020, %4
+_ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit: ; preds = %bb.d
+  %.sroa.010.020.pre = load ptr, ptr %i.q, align 8, !tbaa !224 ; 3 uses
+  %.not1521 = icmp eq ptr %.sroa.010.020.pre, %i.j
   br i1 %.not1521, label %.loopexit17, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit
@@ -269,7 +264,7 @@ _ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit: ; preds = %_ZNK5
   br i1 %i.aa, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.loopexit.us
-  %.sroa.010.022.us = phi ptr [ %.sroa.010.0.us, %.loopexit.us ], [ %.sroa.010.020, %.lr.ph ] ; 2 uses
+  %.sroa.010.022.us = phi ptr [ %.sroa.010.0.us, %.loopexit.us ], [ %.sroa.010.020.pre, %.lr.ph ] ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.010.022.us, i64 16
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !226 ; 6 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 48
@@ -346,7 +341,7 @@ bb.i:                                             ; preds = %.lr.ph34.i.us
 
 .loopexit.us:                                     ; preds = %bb.f, %bb.g, %.lr.ph34.i.us, %bb.e, %.lr.ph.split.us
   %.sroa.010.0.us = load ptr, ptr %.sroa.010.022.us, align 8, !tbaa !224 ; 2 uses
-  %.not15.us = icmp eq ptr %.sroa.010.0.us, %4
+  %.not15.us = icmp eq ptr %.sroa.010.0.us, %i.j
   br i1 %.not15.us, label %.loopexit17, label %.lr.ph.split.us, !llvm.loop !606
 
 .preheader.i.loopexit.us:                         ; preds = %bb.h
@@ -355,7 +350,7 @@ bb.i:                                             ; preds = %.lr.ph34.i.us
   br i1 %i.bm, label %.lr.ph34.preheader.i.us, label %_ZNK5Ipopt15DependentResultIdE19DependentsIdenticalERKSt6vectorIPKNS_12TaggedObjectESaIS5_EERKS2_IdSaIdEE.exit
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %.loopexit
-  %.sroa.010.022 = phi ptr [ %.sroa.010.0, %.loopexit ], [ %.sroa.010.020, %.lr.ph ] ; 2 uses
+  %.sroa.010.022 = phi ptr [ %.sroa.010.0, %.loopexit ], [ %.sroa.010.020.pre, %.lr.ph ] ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.sroa.010.022, i64 16
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !226 ; 6 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 48
@@ -418,11 +413,11 @@ _ZNK5Ipopt15DependentResultIdE19DependentsIdenticalERKSt6vectorIPKNS_12TaggedObj
 
 .loopexit:                                        ; preds = %.lr.ph34.i, %.lr.ph.split, %bb.j
   %.sroa.010.0 = load ptr, ptr %.sroa.010.022, align 8, !tbaa !224 ; 2 uses
-  %.not15 = icmp eq ptr %.sroa.010.0, %4
+  %.not15 = icmp eq ptr %.sroa.010.0, %i.j
   br i1 %.not15, label %.loopexit17, label %.lr.ph.split, !llvm.loop !606
 
-.loopexit17:                                      ; preds = %.loopexit, %.loopexit.us, %_ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit, %_ZNK5Ipopt15DependentResultIdE19DependentsIdenticalERKSt6vectorIPKNS_12TaggedObjectESaIS5_EERKS2_IdSaIdEE.exit, %bb.a
-  %.05 = phi i1 [ false, %bb.a ], [ true, %_ZNK5Ipopt15DependentResultIdE19DependentsIdenticalERKSt6vectorIPKNS_12TaggedObjectESaIS5_EERKS2_IdSaIdEE.exit ], [ false, %_ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit ], [ false, %.loopexit.us ], [ false, %.loopexit ]
+.loopexit17:                                      ; preds = %.loopexit, %.loopexit.us, %bb.b, %_ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit, %_ZNK5Ipopt15DependentResultIdE19DependentsIdenticalERKSt6vectorIPKNS_12TaggedObjectESaIS5_EERKS2_IdSaIdEE.exit, %bb.a
+  %.05 = phi i1 [ false, %bb.a ], [ true, %_ZNK5Ipopt15DependentResultIdE19DependentsIdenticalERKSt6vectorIPKNS_12TaggedObjectESaIS5_EERKS2_IdSaIdEE.exit ], [ false, %_ZNK5Ipopt13CachedResultsIdE25CleanupInvalidatedResultsEv.exit ], [ false, %.loopexit.us ], [ false, %bb.b ], [ false, %.loopexit ]
   ret i1 %.05
 }
 

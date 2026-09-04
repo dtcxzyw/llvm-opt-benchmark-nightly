@@ -202,10 +202,10 @@ bb.d:                                             ; preds = %bb.c, %.thread
   %i.m = load i64, ptr %i.l, align 8, !tbaa !22   ; 8 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   %.not = icmp eq i64 %i.m, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph
+  br i1 %.not, label %._crit_edge146.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.critedge, %bb.f
-  %.0139 = phi i64 [ %i.s, %bb.f ], [ 0, %.critedge ] ; 3 uses
+  %.0139 = phi i64 [ %i.s, %bb.f ], [ 0, %.critedge ] ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 %.0139 ; 2 uses
   %i.o = load i8, ptr %i.n, align 1, !tbaa !17
   %i.p = icmp eq i8 %i.o, 28
@@ -223,9 +223,8 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph
   %exitcond.not = icmp eq i64 %i.s, %i.m
   br i1 %exitcond.not, label %._crit_edge146.thread, label %.lr.ph, !llvm.loop !41
 
-._crit_edge:                                      ; preds = %bb.e, %.critedge
-  %.0.lcssa = phi i64 [ 0, %.critedge ], [ %.0139, %bb.e ] ; 2 uses
-  %i.t = icmp ult i64 %.0.lcssa, %i.m
+._crit_edge:                                      ; preds = %bb.e
+  %i.t = icmp ult i64 %.0139, %i.m
   br i1 %i.t, label %.lr.ph145, label %._crit_edge146.thread
 
 .lr.ph145:                                        ; preds = %._crit_edge
@@ -234,7 +233,7 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph145, %bb.r
-  %.1143 = phi i64 [ %.0.lcssa, %.lr.ph145 ], [ %i.bb, %bb.r ] ; 3 uses
+  %.1143 = phi i64 [ %.0139, %.lr.ph145 ], [ %i.bb, %bb.r ] ; 3 uses
   %.089142 = phi i32 [ 0, %.lr.ph145 ], [ %i.bs, %bb.r ] ; 6 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.k, i64 %.1143 ; 8 uses
   %i.x = load i8, ptr %i.w, align 1, !tbaa !17
@@ -343,7 +342,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %i.bu = icmp eq i32 %.089.lcssa.ph, 0
   br i1 %i.bu, label %._crit_edge146.thread, label %bb.s
 
-._crit_edge146.thread:                            ; preds = %bb.f, %._crit_edge, %._crit_edge146
+._crit_edge146.thread:                            ; preds = %bb.f, %.critedge, %._crit_edge, %._crit_edge146
   %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 2, ptr %i.bv, align 8, !tbaa !17
   br label %bb.s

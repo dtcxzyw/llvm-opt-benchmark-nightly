@@ -205,6 +205,8 @@ _ZN2cv10AutoBufferIhLm1032EEC2Em.exit:            ; preds = %bb.a, %bb.b
   %i.ai = icmp sgt i32 %i.g, 0
   %i.aj = sext i32 %i.a to i64
   %wide.trip.count158 = sext i32 %i.c to i64
+  %wide.trip.count = zext nneg i32 %.sroa.speculated to i64
+  %3 = icmp sgt i32 %i.g, 65536
   %wide.trip.count.a = zext nneg i32 %.sroa.speculated to i64
   %wide.trip.count145 = zext i32 %i.g to i64
   %wide.trip.count153 = zext nneg i32 %i.g to i64
@@ -218,22 +220,18 @@ bb.c:                                             ; preds = %.lr.ph128, %._crit_
   store <2 x float> <float f0xD8635FA9, float f0x58635FA9>, ptr %i.s, align 4, !tbaa !48
   %i.am = load float, ptr %i.al, align 4, !tbaa !48
   store float %i.am, ptr %i.q, align 4, !tbaa !48
-  br i1 %i.af, label %.lr.ph, label %.preheader114
+  br i1 %i.af, label %.lr.ph, label %.preheader113
 
 .lr.ph:                                           ; preds = %bb.c
   %i.an = load ptr, ptr %i.ag, align 8, !tbaa !52 ; 2 uses
   %i.ao = load ptr, ptr %i.ah, align 8, !tbaa !53
   br label %bb.d
 
-.preheader114:                                    ; preds = %bb.f, %bb.c
-  %.092.lcssa = phi i32 [ 1, %bb.c ], [ %.sroa.speculated, %bb.f ] ; 2 uses
-  %.090.lcssa = phi i32 [ 0, %bb.c ], [ %i.bs, %bb.f ]
-  %3 = icmp slt i32 %.092.lcssa, %i.g
+.preheader114:                                    ; preds = %bb.f
   br i1 %3, label %.lr.ph124, label %.preheader113
 
 .lr.ph124:                                        ; preds = %.preheader114
   %i.ap = load ptr, ptr %i.ah, align 8, !tbaa !53
-  %4 = zext nneg i32 %.092.lcssa to i64
   br label %bb.g
 
 bb.d:                                             ; preds = %.lr.ph, %bb.f
@@ -285,10 +283,10 @@ bb.f:                                             ; preds = %bb.e
   %i.bw = getelementptr i8, ptr %i.bq, i64 8
   store float f0x58635FA9, ptr %i.bw, align 4, !tbaa !48
   %indvars.iv.next137 = add nuw nsw i64 %indvars.iv136, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next137, %wide.trip.count.a
+  %exitcond.not = icmp eq i64 %indvars.iv.next137, %wide.trip.count
   br i1 %exitcond.not, label %.preheader114, label %bb.d, !llvm.loop !132
 
-.preheader113:                                    ; preds = %bb.i, %.preheader114
+.preheader113:                                    ; preds = %bb.i, %bb.c, %.preheader114
   br i1 %i.ai, label %.preheader.lr.ph, label %._crit_edge
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
@@ -296,8 +294,8 @@ bb.f:                                             ; preds = %bb.e
   br label %.preheader
 
 bb.g:                                             ; preds = %.lr.ph124, %bb.i
-  %indvars.iv142 = phi i64 [ %4, %.lr.ph124 ], [ %indvars.iv.next143, %bb.i ] ; 4 uses
-  %.3123 = phi i32 [ %.090.lcssa, %.lr.ph124 ], [ %i.cx, %bb.i ]
+  %indvars.iv142 = phi i64 [ %wide.trip.count.a, %.lr.ph124 ], [ %indvars.iv.next143, %bb.i ] ; 4 uses
+  %.3123 = phi i32 [ %i.bs, %.lr.ph124 ], [ %i.cx, %bb.i ]
   %i.by = getelementptr inbounds nuw [4 x i8], ptr %i.al, i64 %indvars.iv142
   %i.bz = load float, ptr %i.by, align 4, !tbaa !48 ; 2 uses
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %indvars.iv142

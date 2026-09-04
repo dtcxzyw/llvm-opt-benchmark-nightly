@@ -205,14 +205,14 @@ bb.g:                                             ; preds = %bb.d
 
 .preheader:                                       ; preds = %bb.g
   %.not42 = icmp eq i64 %i.ai, 0
-  br i1 %.not42, label %._crit_edge, label %.lr.ph38
+  br i1 %.not42, label %.loopexit, label %.lr.ph38
 
 .lr.ph38:                                         ; preds = %.preheader
   %i.av = load i64, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 133936), align 8, !tbaa !320
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph38, %bb.i
-  %.137 = phi i64 [ 0, %.lr.ph38 ], [ %i.az, %bb.i ] ; 3 uses
+  %.137 = phi i64 [ 0, %.lr.ph38 ], [ %i.az, %bb.i ] ; 4 uses
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %.137
   %i.ax = load i64, ptr %i.aw, align 8, !tbaa !66
   %i.ay = icmp eq i64 %i.ax, %i.av
@@ -223,16 +223,15 @@ bb.i:                                             ; preds = %bb.h
   %exitcond43.not = icmp eq i64 %i.az, %i.ai
   br i1 %exitcond43.not, label %.loopexit, label %bb.h
 
-._crit_edge:                                      ; preds = %bb.h, %.preheader
-  %.1.lcssa = phi i64 [ 0, %.preheader ], [ %.137, %bb.h ] ; 2 uses
-  %i.ba = icmp eq i64 %.1.lcssa, %i.ai
+._crit_edge:                                      ; preds = %bb.h
+  %i.ba = icmp eq i64 %.137, %i.ai
   br i1 %i.ba, label %.loopexit, label %bb.j
 
 bb.j:                                             ; preds = %._crit_edge
   %i.bb = getelementptr [8 x i8], ptr %i.au, i64 %i.ai
   %i.bc = getelementptr i8, ptr %i.bb, i64 -8
   %i.bd = load i64, ptr %i.bc, align 8, !tbaa !66
-  %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %.1.lcssa
+  %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %.137
   store i64 %i.bd, ptr %i.be, align 8, !tbaa !66
   %i.bf = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 134272), align 8, !tbaa !89
   %i.bg = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 130760), align 8, !tbaa !65
@@ -257,7 +256,7 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #21
   br label %bb.m
 
-.loopexit:                                        ; preds = %bb.f, %bb.i, %._crit_edge
+.loopexit:                                        ; preds = %bb.f, %bb.i, %.preheader, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #21
   br label %bb.n
 

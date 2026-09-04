@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 .preheader:                                       ; preds = %bb.e
   %i.l = add i32 %1, -1                           ; 5 uses
   %.not58 = icmp eq i32 %i.l, 0
-  br i1 %.not58, label %.critedge2, label %.lr.ph52.preheader
+  br i1 %.not58, label %.critedge2.thread, label %.lr.ph52.preheader
 
 .lr.ph52.preheader:                               ; preds = %.preheader
   %wide.trip.count63 = zext i32 %i.l to i64
@@ -215,24 +215,20 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv60
   %i.p = load i8, ptr %i.o, align 1, !tbaa !17
   %i.q = icmp eq i8 %i.n, %i.p
-  br i1 %i.q, label %bb.f, label %.critedge2.loopexit
+  br i1 %i.q, label %bb.f, label %.critedge2
 
 bb.f:                                             ; preds = %.lr.ph52
   %indvars.iv.next61 = add nuw nsw i64 %indvars.iv60, 1 ; 2 uses
   %exitcond64.not = icmp eq i64 %indvars.iv.next61, %wide.trip.count63
   br i1 %exitcond64.not, label %.critedge2.thread, label %.lr.ph52, !llvm.loop !23
 
-.critedge2.loopexit:                              ; preds = %.lr.ph52
-  %4 = trunc nuw i64 %indvars.iv60 to i32
-  br label %.critedge2
-
-.critedge2:                                       ; preds = %.critedge2.loopexit, %.preheader
-  %.1.lcssa = phi i32 [ 0, %.preheader ], [ %4, %.critedge2.loopexit ] ; 3 uses
-  %i.r = icmp eq i32 %.1.lcssa, %i.l
+.critedge2:                                       ; preds = %.lr.ph52
+  %4 = trunc nuw i64 %indvars.iv60 to i32         ; 3 uses
+  %i.r = icmp eq i32 %i.l, %4
   br i1 %i.r, label %.critedge2.thread, label %bb.g
 
-.critedge2.thread:                                ; preds = %bb.f, %.critedge2
-  %.1.lcssa72 = phi i32 [ %.1.lcssa, %.critedge2 ], [ %i.l, %bb.f ]
+.critedge2.thread:                                ; preds = %bb.f, %.preheader, %.critedge2
+  %.1.lcssa72 = phi i32 [ %4, %.critedge2 ], [ 0, %.preheader ], [ %i.l, %bb.f ]
   %i.s = zext i32 %i.l to i64                     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.s
   %i.u = load i8, ptr %i.t, align 1, !tbaa !17    ; 2 uses
@@ -247,7 +243,7 @@ bb.f:                                             ; preds = %.lr.ph52
   br i1 %or.cond, label %.critedge.thread, label %bb.g
 
 bb.g:                                             ; preds = %.critedge2.thread, %.critedge2
-  %.1.lcssa71 = phi i32 [ %.1.lcssa72, %.critedge2.thread ], [ %.1.lcssa, %.critedge2 ]
+  %.1.lcssa71 = phi i32 [ %.1.lcssa72, %.critedge2.thread ], [ %4, %.critedge2 ]
   %i.ac = zext i32 %.1.lcssa71 to i64             ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.ac
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !17

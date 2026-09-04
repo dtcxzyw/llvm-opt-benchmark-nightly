@@ -202,7 +202,7 @@ bb.au:                                            ; preds = %bb.at
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y)
   %i.dq = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  %i.dr = load ptr, ptr %i.dq, align 8, !nonnull !5, !noundef !5 ; 6 uses
+  %i.dr = load ptr, ptr %i.dq, align 8, !nonnull !5, !noundef !5 ; 5 uses
   %i.ds = load i64, ptr %i.aa, align 8, !range !6, !noundef !5 ; 3 uses
   %.idx = mul nuw nsw i64 %i.do, 56
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dr, i64 %.idx ; 4 uses
@@ -215,7 +215,7 @@ bb.au:                                            ; preds = %bb.at
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 24
   store ptr %i.dt, ptr %.sroa.6.0..sroa_idx, align 8
   %i.du = icmp eq i64 %i.do, 0
-  br i1 %i.du, label %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit.thread, label %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit.lr.ph
+  br i1 %i.du, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueSNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostECsjdJgIvFXUiH_17show_posts_step_1.exit.i.i, label %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit.lr.ph
 
 _RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit.lr.ph: ; preds = %bb.au
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 8 ; 2 uses
@@ -227,7 +227,7 @@ _RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_2
 
 _RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit: ; preds = %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit.lr.ph, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostECsjdJgIvFXUiH_17show_posts_step_1.exit
   %i.dx = phi ptr [ %i.dr, %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit.lr.ph ], [ %i.dy, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostECsjdJgIvFXUiH_17show_posts_step_1.exit ] ; 3 uses
-  %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 56 ; 4 uses
+  %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 56 ; 6 uses
   %.sroa.0.0.copyload25 = load i64, ptr %i.dx, align 8, !noalias !410 ; 2 uses
   %.not = icmp eq i64 %.sroa.0.0.copyload25, -1
   br i1 %.not, label %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit.thread, label %bb.av
@@ -243,19 +243,18 @@ bb.av:                                            ; preds = %_RNvXs4_NtNtCs40k4W
   invoke void @_RNvNtNtCsgczF5crJ4sT_3std2io5stdio6__print(ptr noundef nonnull @12, ptr noundef nonnull %i.u)
           to label %bb.ba unwind label %bb.az
 
-_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit.thread: ; preds = %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit, %bb.au
-  %0 = phi ptr [ %i.dr, %bb.au ], [ %i.dy, %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit ] ; 3 uses
+_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit.thread: ; preds = %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit
   %i.dz = ptrtoint ptr %i.dt to i64
-  %i.ea = ptrtoint ptr %0 to i64
+  %i.ea = ptrtoint ptr %i.dy to i64
   %i.eb = sub nuw i64 %i.dz, %i.ea
   %i.ec = udiv exact i64 %i.eb, 56
   call void @llvm.experimental.noalias.scope.decl(metadata !411)
-  %i.ed = icmp eq ptr %i.dt, %0
+  %i.ed = icmp eq ptr %i.dt, %i.dy
   br i1 %i.ed, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueSNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostECsjdJgIvFXUiH_17show_posts_step_1.exit.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit.thread, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostECsjdJgIvFXUiH_17show_posts_step_1.exit.i.i.i
   %.sroa.0.07.i.i.i = phi i64 [ %i.ef, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostECsjdJgIvFXUiH_17show_posts_step_1.exit.i.i.i ], [ 0, %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit.thread ] ; 2 uses
-  %i.ee = getelementptr inbounds nuw [56 x i8], ptr %0, i64 %.sroa.0.07.i.i.i ; 4 uses
+  %i.ee = getelementptr inbounds nuw [56 x i8], ptr %i.dy, i64 %.sroa.0.07.i.i.i ; 4 uses
   %i.ef = add nuw nsw i64 %.sroa.0.07.i.i.i, 1    ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !412)
   %.val4.i.i.i.i22 = load i64, ptr %i.ee, align 8, !alias.scope !413, !noalias !414 ; 2 uses
@@ -284,7 +283,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsjzWKoRIGE1n_28getting_started_step
   %i.el = icmp eq i64 %i.ef, %i.ec
   br i1 %i.el, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueSNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostECsjdJgIvFXUiH_17show_posts_step_1.exit.i.i, label %.lr.ph.i.i.i
 
-_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueSNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostECsjdJgIvFXUiH_17show_posts_step_1.exit.i.i: ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostECsjdJgIvFXUiH_17show_posts_step_1.exit, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostECsjdJgIvFXUiH_17show_posts_step_1.exit.i.i.i, %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit.thread
+_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueSNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostECsjdJgIvFXUiH_17show_posts_step_1.exit.i.i: ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostECsjdJgIvFXUiH_17show_posts_step_1.exit, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostECsjdJgIvFXUiH_17show_posts_step_1.exit.i.i.i, %bb.au, %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjdJgIvFXUiH_17show_posts_step_1.exit.thread
   %i.em = icmp eq i64 %i.ds, 0
   br i1 %i.em, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs40k4W9msRzi_5alloc3vec9into_iter8IntoIterNtNtCsjzWKoRIGE1n_28getting_started_step_1_mysql6models4PostEECsjdJgIvFXUiH_17show_posts_step_1.exit, label %bb.ay
 

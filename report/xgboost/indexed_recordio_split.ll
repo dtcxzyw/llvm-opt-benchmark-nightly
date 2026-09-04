@@ -204,10 +204,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit: ; preds = %_ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit, %_ZN4dmlc11LogCheck_EQImmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit.thread, %bb.h, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
-  %i.af = load ptr, ptr %i.e, align 8, !tbaa !67  ; 2 uses
+  %i.af = load ptr, ptr %i.e, align 8, !tbaa !67
   %i.ag = load ptr, ptr %3, align 8, !tbaa !68    ; 3 uses
   %.not188 = icmp eq ptr %i.af, %i.ag
-  br i1 %.not188, label %._crit_edge186, label %.lr.ph185
+  br i1 %.not188, label %_ZSt8_DestroyIPN4dmlc2io3URIES2_EvT_S4_RSaIT0_E.exit.i, label %.lr.ph185
 
 .lr.ph185:                                        ; preds = %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 4 uses
@@ -222,14 +222,12 @@ _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14defaul
   %i.aq = getelementptr inbounds nuw i8, ptr %6, i64 8
   br label %bb.l
 
-._crit_edge186:                                   ; preds = %_ZNSt10unique_ptrIN4dmlc6StreamESt14default_deleteIS1_EED2Ev.exit, %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit
-  %.lcssa165 = phi ptr [ %i.af, %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit ], [ %i.ft, %_ZNSt10unique_ptrIN4dmlc6StreamESt14default_deleteIS1_EED2Ev.exit ] ; 2 uses
-  %.lcssa155 = phi ptr [ %i.ag, %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit ], [ %i.fu, %_ZNSt10unique_ptrIN4dmlc6StreamESt14default_deleteIS1_EED2Ev.exit ] ; 3 uses
-  %.not4.i.i.i = icmp eq ptr %.lcssa155, %.lcssa165
+._crit_edge186:                                   ; preds = %_ZNSt10unique_ptrIN4dmlc6StreamESt14default_deleteIS1_EED2Ev.exit
+  %.not4.i.i.i = icmp eq ptr %i.fu, %i.ft
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPN4dmlc2io3URIES2_EvT_S4_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %._crit_edge186, %_ZSt8_DestroyIN4dmlc2io3URIEEvPT_.exit.i.i.i
-  %.05.i.i.i = phi ptr [ %i.bi, %_ZSt8_DestroyIN4dmlc2io3URIEEvPT_.exit.i.i.i ], [ %.lcssa155, %._crit_edge186 ] ; 7 uses
+  %.05.i.i.i = phi ptr [ %i.bi, %_ZSt8_DestroyIN4dmlc2io3URIEEvPT_.exit.i.i.i ], [ %i.fu, %._crit_edge186 ] ; 7 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 64
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !71 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 80 ; 2 uses
@@ -269,15 +267,15 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4.
 
 _ZSt8_DestroyIN4dmlc2io3URIEEvPT_.exit.i.i.i:     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3.i.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i4.i.i.i.i.i
   %i.bi = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 96 ; 2 uses
-  %.not.i.i.i = icmp eq ptr %i.bi, %.lcssa165
+  %.not.i.i.i = icmp eq ptr %i.bi, %i.ft
   br i1 %.not.i.i.i, label %_ZSt8_DestroyIPN4dmlc2io3URIES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i, label %.lr.ph.i.i.i, !llvm.loop !2
 
 _ZSt8_DestroyIPN4dmlc2io3URIES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i: ; preds = %_ZSt8_DestroyIN4dmlc2io3URIEEvPT_.exit.i.i.i
   %.pr.i = load ptr, ptr %3, align 8, !tbaa !68
   br label %_ZSt8_DestroyIPN4dmlc2io3URIES2_EvT_S4_RSaIT0_E.exit.i
 
-_ZSt8_DestroyIPN4dmlc2io3URIES2_EvT_S4_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyIPN4dmlc2io3URIES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i, %._crit_edge186
-  %7 = phi ptr [ %.pr.i, %_ZSt8_DestroyIPN4dmlc2io3URIES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i ], [ %.lcssa155, %._crit_edge186 ] ; 3 uses
+_ZSt8_DestroyIPN4dmlc2io3URIES2_EvT_S4_RSaIT0_E.exit.i: ; preds = %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit, %_ZSt8_DestroyIPN4dmlc2io3URIES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i, %._crit_edge186
+  %7 = phi ptr [ %.pr.i, %_ZSt8_DestroyIPN4dmlc2io3URIES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i ], [ %i.fu, %._crit_edge186 ], [ %i.ag, %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit ] ; 3 uses
   %.not.i.i1.i = icmp eq ptr %7, null
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIN4dmlc2io3URIESaIS2_EED2Ev.exit, label %bb.j
 
@@ -680,8 +678,8 @@ _ZNKSt14default_deleteIN4dmlc6StreamEEclEPS1_.exit.i: ; preds = %_ZN4dmlc7istrea
 
 _ZNSt10unique_ptrIN4dmlc6StreamESt14default_deleteIS1_EED2Ev.exit: ; preds = %_ZN4dmlc7istreamD1Ev.exit, %_ZNKSt14default_deleteIN4dmlc6StreamEEclEPS1_.exit.i
   %i.fs = add nuw i64 %.021184, 1                 ; 2 uses
-  %i.ft = load ptr, ptr %i.e, align 8, !tbaa !67  ; 2 uses
-  %i.fu = load ptr, ptr %3, align 8, !tbaa !68    ; 3 uses
+  %i.ft = load ptr, ptr %i.e, align 8, !tbaa !67  ; 3 uses
+  %i.fu = load ptr, ptr %3, align 8, !tbaa !68    ; 5 uses
   %i.fv = ptrtoint ptr %i.ft to i64
   %i.fw = ptrtoint ptr %i.fu to i64
   %i.fx = sub i64 %i.fv, %i.fw

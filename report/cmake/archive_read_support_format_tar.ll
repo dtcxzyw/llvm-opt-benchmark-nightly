@@ -204,7 +204,7 @@ bb.a:
   ]
 
 .preheader:                                       ; preds = %bb.a, %bb.b
-  %.035 = phi i64 [ %i.e, %bb.b ], [ 0, %bb.a ]   ; 5 uses
+  %.035 = phi i64 [ %i.e, %bb.b ], [ 0, %bb.a ]   ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.035
   %i.c = load i8, ptr %i.b, align 1, !tbaa !14
   %i.d = icmp eq i8 %i.c, 32
@@ -217,10 +217,10 @@ bb.b:                                             ; preds = %.preheader
 
 .critedge:                                        ; preds = %.preheader
   %i.f = icmp samesign ult i64 %.035, %1
-  br i1 %i.f, label %.lr.ph, label %.critedge7
+  br i1 %i.f, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.critedge, %bb.c
-  %.136 = phi i64 [ %i.j, %bb.c ], [ %.035, %.critedge ] ; 3 uses
+  %.136 = phi i64 [ %i.j, %bb.c ], [ %.035, %.critedge ] ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %.136
   %i.h = load i8, ptr %i.g, align 1, !tbaa !14
   %i.i = and i8 %i.h, -8
@@ -232,13 +232,12 @@ bb.c:                                             ; preds = %.lr.ph
   %exitcond44.not = icmp eq i64 %i.j, %1
   br i1 %exitcond44.not, label %.loopexit, label %.lr.ph, !llvm.loop !1
 
-.critedge7:                                       ; preds = %.lr.ph, %.critedge
-  %.1.lcssa = phi i64 [ %.035, %.critedge ], [ %.136, %.lr.ph ] ; 2 uses
-  %i.k = icmp samesign ult i64 %.1.lcssa, %1
+.critedge7:                                       ; preds = %.lr.ph
+  %i.k = icmp samesign ult i64 %.136, %1
   br i1 %i.k, label %.lr.ph40, label %.loopexit
 
 .lr.ph40:                                         ; preds = %.critedge7, %bb.d
-  %.239 = phi i64 [ %i.n, %bb.d ], [ %.1.lcssa, %.critedge7 ] ; 2 uses
+  %.239 = phi i64 [ %i.n, %bb.d ], [ %.136, %.critedge7 ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 %.239
   %i.m = load i8, ptr %i.l, align 1, !tbaa !14
   switch i8 %i.m, label %.loopexit [
@@ -251,8 +250,8 @@ bb.d:                                             ; preds = %.lr.ph40, %.lr.ph40
   %exitcond45.not = icmp eq i64 %i.n, %1
   br i1 %exitcond45.not, label %.loopexit, label %.lr.ph40, !llvm.loop !0
 
-.loopexit:                                        ; preds = %bb.b, %bb.c, %bb.d, %.lr.ph40, %.critedge7, %bb.a, %bb.a, %bb.a
-  %.131 = phi i32 [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %.critedge7 ], [ 1, %bb.c ], [ 1, %bb.d ], [ 0, %.lr.ph40 ], [ 1, %bb.b ]
+.loopexit:                                        ; preds = %bb.b, %bb.c, %bb.d, %.lr.ph40, %.critedge, %.critedge7, %bb.a, %bb.a, %bb.a
+  %.131 = phi i32 [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %.critedge7 ], [ 1, %bb.c ], [ 1, %bb.d ], [ 1, %.critedge ], [ 0, %.lr.ph40 ], [ 1, %bb.b ]
   ret i32 %.131
 }
 

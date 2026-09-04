@@ -205,25 +205,21 @@ bb.aw:                                            ; preds = %adjust_max_and_nice
   %i.ud = getelementptr inbounds nuw [2 x i8], ptr %i.e, i64 %i.ub
   %i.ue = getelementptr inbounds nuw i8, ptr %i.ud, i64 393218 ; 2 uses
   %.not.i205 = icmp slt i32 %i.tg, %i.tz
-  br i1 %.not.i205, label %.preheader300.preheader, label %bb.ax
-
-.preheader300.preheader:                          ; preds = %bb.aw
-  %4 = zext nneg i32 %.4278 to i64
-  br label %.preheader300
+  br i1 %.not.i205, label %.preheader300, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
   store i16 -32768, ptr %i.uc, align 2, !tbaa !45
   store i16 -32768, ptr %i.ue, align 2, !tbaa !45
   br label %bt_matchfinder_advance_one_byte.exit
 
-.preheader300:                                    ; preds = %.preheader300.preheader, %bb.bl
-  %.0134.i = phi i32 [ %i.wt, %bb.bl ], [ %i.td, %.preheader300.preheader ]
-  %.0132.i = phi i32 [ %.1133.i, %bb.bl ], [ %i.tz, %.preheader300.preheader ] ; 4 uses
-  %.0130.i = phi ptr [ %.1131.i, %bb.bl ], [ %i.uc, %.preheader300.preheader ] ; 3 uses
-  %.0128.i = phi ptr [ %.1129.i, %bb.bl ], [ %i.ue, %.preheader300.preheader ] ; 3 uses
-  %.0126.i = phi i32 [ %.1127.i, %bb.bl ], [ 0, %.preheader300.preheader ] ; 2 uses
-  %.0124.i = phi i32 [ %.1125.i, %bb.bl ], [ 0, %.preheader300.preheader ] ; 2 uses
-  %.0121.i = phi i32 [ %spec.select154.i, %bb.bl ], [ 0, %.preheader300.preheader ] ; 7 uses
+.preheader300:                                    ; preds = %bb.aw, %bb.bl
+  %.0134.i = phi i32 [ %i.wt, %bb.bl ], [ %i.td, %bb.aw ]
+  %.0132.i = phi i32 [ %.1133.i, %bb.bl ], [ %i.tz, %bb.aw ] ; 4 uses
+  %.0130.i = phi ptr [ %.1131.i, %bb.bl ], [ %i.uc, %bb.aw ] ; 3 uses
+  %.0128.i = phi ptr [ %.1129.i, %bb.bl ], [ %i.ue, %bb.aw ] ; 3 uses
+  %.0126.i = phi i32 [ %.1127.i, %bb.bl ], [ 0, %bb.aw ] ; 2 uses
+  %.0124.i = phi i32 [ %.1125.i, %bb.bl ], [ 0, %bb.aw ] ; 2 uses
+  %.0121.i = phi i32 [ %spec.select154.i, %bb.bl ], [ 0, %bb.aw ] ; 7 uses
   %i.uf = sext i32 %.0132.i to i64
   %i.ug = getelementptr inbounds i8, ptr %.4179, i64 %i.uf ; 8 uses
   %i.uh = zext nneg i32 %.0121.i to i64           ; 2 uses
@@ -292,14 +288,14 @@ bb.bd:                                            ; preds = %bb.bc
   br label %bb.be
 
 bb.be:                                            ; preds = %.preheader485, %bb.bf
-  %.1.i.i = phi i32 [ %i.vk, %bb.bf ], [ %.1.i.i.ph, %.preheader485 ] ; 6 uses
+  %.1.i.i = phi i32 [ %i.vk, %bb.bf ], [ %.1.i.i.ph, %.preheader485 ] ; 5 uses
   %i.vk = add i32 %.1.i.i, 8                      ; 2 uses
   %.not57.i.i = icmp ugt i32 %i.vk, %.4278
   br i1 %.not57.i.i, label %.preheader, label %bb.bf
 
 .preheader:                                       ; preds = %bb.be
   %i.vl = icmp ult i32 %.1.i.i, %.4278
-  br i1 %i.vl, label %.lr.ph323.preheader, label %lz_extend.exit.i
+  br i1 %i.vl, label %.lr.ph323.preheader, label %lz_extend.exit.i.thread
 
 .lr.ph323.preheader:                              ; preds = %.preheader
   %i.vm = zext nneg i32 %.1.i.i to i64
@@ -325,7 +321,8 @@ bb.bf:                                            ; preds = %bb.be
 
 bb.bg:                                            ; preds = %.lr.ph323
   %indvars.iv.next343 = add nuw nsw i64 %indvars.iv342, 1 ; 2 uses
-  %exitcond345.not = icmp eq i64 %indvars.iv.next343, %4
+  %lftr.wideiv = trunc i64 %indvars.iv.next343 to i32
+  %exitcond345.not = icmp eq i32 %.4278, %lftr.wideiv
   br i1 %exitcond345.not, label %lz_extend.exit.i.thread, label %.lr.ph323, !llvm.loop !3
 
 .loopexit:                                        ; preds = %bb.bf
@@ -345,8 +342,8 @@ lz_extend.exit.i.loopexit:                        ; preds = %.lr.ph323
   %i.wa = trunc nuw i64 %indvars.iv342 to i32
   br label %lz_extend.exit.i
 
-lz_extend.exit.i:                                 ; preds = %lz_extend.exit.i.loopexit, %.preheader, %bb.bh
-  %.047.i.i = phi i32 [ %i.vz, %bb.bh ], [ %.1.i.i, %.preheader ], [ %i.wa, %lz_extend.exit.i.loopexit ] ; 3 uses
+lz_extend.exit.i:                                 ; preds = %lz_extend.exit.i.loopexit, %bb.bh
+  %.047.i.i = phi i32 [ %i.vz, %bb.bh ], [ %i.wa, %lz_extend.exit.i.loopexit ] ; 3 uses
   %.not148.i = icmp ult i32 %.047.i.i, %.4278
   br i1 %.not148.i, label %lz_extend.exit.i._crit_edge, label %lz_extend.exit.i.thread
 
@@ -358,7 +355,7 @@ lz_extend.exit.i._crit_edge:                      ; preds = %lz_extend.exit.i
   %.pre349 = load i8, ptr %.phi.trans.insert348, align 1, !tbaa !36
   br label %bb.bi
 
-lz_extend.exit.i.thread:                          ; preds = %lz_extend.exit.i, %bb.bg
+lz_extend.exit.i.thread:                          ; preds = %lz_extend.exit.i, %.preheader, %bb.bg
   %i.wb = shl nsw i32 %.0132.i, 1
   %i.wc = and i32 %i.wb, 65534
   %i.wd = zext nneg i32 %i.wc to i64              ; 2 uses

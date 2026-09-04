@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.l, %bb.d
-  %.022.idx.i = phi i64 [ 0, %bb.d ], [ %.4.idx.i, %bb.l ]
+  %.022.idx.i = phi i64 [ 0, %bb.d ], [ %.3.idx.i, %bb.l ]
   %i.s = call i32 @EVP_DigestSqueeze(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef 168) #11
   %.not.i = icmp eq i32 %i.s, 0
   br i1 %.not.i, label %sample_scalar.exit, label %.preheader.i
@@ -239,10 +239,10 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.2.idx.i = phi i64 [ %.1.add.i, %bb.g ], [ %.1.idx.i, %bb.f ] ; 5 uses
+  %.2.idx.i = phi i64 [ %.1.add.i, %bb.g ], [ %.1.idx.i, %bb.f ] ; 4 uses
   %.2.ptr.i = getelementptr inbounds nuw i8, ptr %.129, i64 %.2.idx.i
   %.not28.i = icmp samesign ult i64 %.2.idx.i, 512
-  br i1 %.not28.i, label %bb.i, label %bb.l
+  br i1 %.not28.i, label %bb.i, label %.loopexit
 
 bb.i:                                             ; preds = %bb.h
   %i.af = zext i8 %i.u to i32
@@ -259,20 +259,19 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %.3.idx.i = phi i64 [ %.2.add.i, %bb.j ], [ %.2.idx.i, %bb.i ] ; 2 uses
+  %.3.idx.i = phi i64 [ %.2.add.i, %bb.j ], [ %.2.idx.i, %bb.i ] ; 3 uses
   %i.al = icmp samesign ult i64 %.0.idx.i, 165
   br i1 %i.al, label %.preheader.i, label %bb.l, !llvm.loop !94
 
-bb.l:                                             ; preds = %bb.k, %bb.h
-  %.4.idx.i = phi i64 [ %.3.idx.i, %bb.k ], [ %.2.idx.i, %bb.h ] ; 2 uses
-  %i.am = icmp samesign ult i64 %.4.idx.i, 512
+bb.l:                                             ; preds = %bb.k
+  %i.am = icmp samesign ult i64 %.3.idx.i, 512
   br i1 %i.am, label %bb.e, label %.loopexit, !llvm.loop !95
 
 sample_scalar.exit:                               ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   br label %.loopexit25
 
-.loopexit:                                        ; preds = %bb.l, %.preheader.i
+.loopexit:                                        ; preds = %bb.l, %bb.h, %.preheader.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   %i.an = getelementptr inbounds nuw i8, ptr %.129, i64 512 ; 2 uses
   %i.ao = add nuw nsw i32 %.030, 1                ; 2 uses

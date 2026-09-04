@@ -204,7 +204,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = load i32, ptr %i.c, align 8, !tbaa !18   ; 4 uses
   %.not63 = icmp eq i32 %i.d, 0
-  br i1 %.not63, label %._crit_edge.thread, label %.lr.ph
+  br i1 %.not63, label %bb.h, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %i.e = lshr i32 %i.d, 1
@@ -242,7 +242,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.149 = phi i32 [ %i.q, %bb.e ], [ %.04858, %bb.d ] ; 3 uses
   %i.r = icmp ult i32 %i.n, %i.b                  ; 2 uses
   %i.s = add i32 %.04161, 1
-  %.145 = select i1 %i.r, i32 %i.s, i32 %.04459   ; 6 uses
+  %.145 = select i1 %i.r, i32 %i.s, i32 %.04459   ; 7 uses
   %.143 = select i1 %i.r, i32 %.04260, i32 %.04161 ; 4 uses
   %i.t = sub i32 %i.b, %i.n
   %i.u = add i32 %i.t, %.04161                    ; 3 uses
@@ -260,15 +260,14 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.not = icmp eq i32 %.149, 0
   br i1 %.not, label %._crit_edge.thread, label %bb.h
 
-._crit_edge.thread:                               ; preds = %bb.a, %._crit_edge
-  %.044.lcssa71 = phi i32 [ %.145, %._crit_edge ], [ 0, %bb.a ] ; 2 uses
-  %i.aa = icmp ult i32 %.044.lcssa71, %i.d
+._crit_edge.thread:                               ; preds = %._crit_edge
+  %i.aa = icmp ult i32 %.145, %i.d
   br i1 %i.aa, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %._crit_edge.thread
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !19
-  %i.ad = zext i32 %.044.lcssa71 to i64
+  %i.ad = zext i32 %.145 to i64
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %i.ad ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 4
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !23
@@ -276,9 +275,9 @@ bb.g:                                             ; preds = %._crit_edge.thread
   %i.ai = and i32 %i.ah, 2147483647
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.c, %._crit_edge, %bb.g, %._crit_edge.thread
-  %.3 = phi i32 [ %i.m, %bb.c ], [ %.149, %._crit_edge ], [ %i.ag, %bb.g ], [ 0, %._crit_edge.thread ]
-  %.147 = phi i32 [ %i.b, %bb.c ], [ %i.b, %._crit_edge ], [ %i.ai, %bb.g ], [ 0, %._crit_edge.thread ]
+bb.h:                                             ; preds = %bb.a, %bb.c, %._crit_edge, %bb.g, %._crit_edge.thread
+  %.3 = phi i32 [ %i.m, %bb.c ], [ %.149, %._crit_edge ], [ %i.ag, %bb.g ], [ 0, %._crit_edge.thread ], [ 0, %bb.a ]
+  %.147 = phi i32 [ %i.b, %bb.c ], [ %i.b, %._crit_edge ], [ %i.ai, %bb.g ], [ 0, %._crit_edge.thread ], [ 0, %bb.a ]
   store i32 %.147, ptr %1, align 4, !tbaa !20
   ret i32 %.3
 }

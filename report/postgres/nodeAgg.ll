@@ -204,17 +204,16 @@ bb.af:                                            ; preds = %bb.ag, %bb.ae
   br i1 %i.gf, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
-  %i.gg = add i32 %i.ga, 1                        ; 4 uses
+  %i.gg = add i32 %i.ga, 1                        ; 3 uses
   store i32 %i.gg, ptr %i.bv, align 4
   %.not148.i = icmp slt i32 %i.gg, %.1130227.i
-  br i1 %.not148.i, label %bb.af, label %bb.ah, !llvm.loop !36
+  br i1 %.not148.i, label %bb.af, label %.backedge.i, !llvm.loop !36
 
-bb.ah:                                            ; preds = %bb.ag, %bb.af
-  %1 = phi i32 [ %i.gg, %bb.ag ], [ %i.ga, %bb.af ]
-  %.not149.i = icmp slt i32 %1, %.1130227.i
+bb.ah:                                            ; preds = %bb.af
+  %.not149.i = icmp slt i32 %i.ga, %.1130227.i
   br i1 %.not149.i, label %bb.aj, label %.backedge.i
 
-.backedge.i:                                      ; preds = %bb.bs, %bb.br, %bb.ah
+.backedge.i:                                      ; preds = %bb.ag, %bb.bs, %bb.br, %bb.ah
   %i.gh = load i8, ptr %i.e, align 1, !range !8, !noundef !9
   %i.gi = trunc nuw i8 %i.gh to i1
   br i1 %i.gi, label %agg_retrieve_direct.exit.thread, label %bb.j, !llvm.loop !37

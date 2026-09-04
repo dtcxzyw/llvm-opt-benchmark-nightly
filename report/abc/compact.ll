@@ -204,7 +204,7 @@ compact_queue.exit:                               ; preds = %map_idx.exit39.thre
   %i.hw = getelementptr inbounds nuw i8, ptr %0, i64 3792 ; 2 uses
   %i.hx = load ptr, ptr %i.hw, align 8, !tbaa !108 ; 4 uses
   %.not22.i = icmp eq ptr %i.hv, %i.hx
-  br i1 %.not22.i, label %._crit_edge.i84, label %.lr.ph.i79
+  br i1 %.not22.i, label %bb.ai, label %.lr.ph.i79
 
 .lr.ph.i79:                                       ; preds = %compact_queue.exit
   %i.hy = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -212,9 +212,8 @@ compact_queue.exit:                               ; preds = %map_idx.exit39.thre
   %i.ia = getelementptr inbounds nuw i8, ptr %0, i64 104
   br label %bb.af
 
-._crit_edge.i84:                                  ; preds = %map_idx.exit.thread.i, %compact_queue.exit
-  %.019.lcssa.i = phi ptr [ %i.hv, %compact_queue.exit ], [ %.1.i82, %map_idx.exit.thread.i ] ; 3 uses
-  %i.ib = icmp eq ptr %.019.lcssa.i, %i.hx
+._crit_edge.i84:                                  ; preds = %map_idx.exit.thread.i
+  %i.ib = icmp eq ptr %.1.i82, %i.hx
   br i1 %i.ib, label %bb.ai, label %bb.ah
 
 bb.af:                                            ; preds = %map_idx.exit.thread.i, %.lr.ph.i79
@@ -245,17 +244,17 @@ map_idx.exit.i81:                                 ; preds = %bb.ag
   br label %map_idx.exit.thread.i
 
 map_idx.exit.thread.i:                            ; preds = %map_idx.exit.i81, %bb.ag, %bb.af
-  %.1.i82 = phi ptr [ %i.ip, %map_idx.exit.i81 ], [ %.01923.i, %bb.ag ], [ %.01923.i, %bb.af ] ; 2 uses
+  %.1.i82 = phi ptr [ %i.ip, %map_idx.exit.i81 ], [ %.01923.i, %bb.ag ], [ %.01923.i, %bb.af ] ; 4 uses
   %i.iq = getelementptr inbounds nuw i8, ptr %.024.i, i64 4 ; 2 uses
   %.not.i83 = icmp eq ptr %i.iq, %i.hx
   br i1 %.not.i83, label %._crit_edge.i84, label %bb.af, !llvm.loop !79
 
 bb.ah:                                            ; preds = %._crit_edge.i84
-  store ptr %.019.lcssa.i, ptr %i.hw, align 8, !tbaa !108
+  store ptr %.1.i82, ptr %i.hw, align 8, !tbaa !108
   br label %bb.ai
 
-bb.ai:                                            ; preds = %bb.ah, %._crit_edge.i84
-  %4 = phi ptr [ %.019.lcssa.i, %bb.ah ], [ %i.hx, %._crit_edge.i84 ]
+bb.ai:                                            ; preds = %bb.ah, %._crit_edge.i84, %compact_queue.exit
+  %4 = phi ptr [ %.1.i82, %bb.ah ], [ %i.hx, %._crit_edge.i84 ], [ %i.hv, %compact_queue.exit ]
   %i.ir = getelementptr inbounds nuw i8, ptr %0, i64 3800
   %i.is = load ptr, ptr %i.ir, align 8, !tbaa !109
   %i.it = icmp eq ptr %4, %i.is

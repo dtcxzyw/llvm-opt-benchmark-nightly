@@ -202,8 +202,7 @@ bb.dh:                                            ; preds = %bb.df, %.noexc.i.i2
 ._crit_edge411:                                   ; preds = %bb.dj
   %i.rf = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 3 uses
   %i.rg = load ptr, ptr %i.rf, align 8, !tbaa !59
-  %.not157 = icmp eq ptr %i.rg, null              ; 2 uses
-  %.mux = select i1 %.not157, i64 %i.ld, i64 0
+  %.not157 = icmp eq ptr %i.rg, null
   br i1 %.not157, label %.loopexit, label %.lr.ph414
 
 .lr.ph410:                                        ; preds = %._crit_edge403, %bb.dj
@@ -315,9 +314,9 @@ bb.dv:                                            ; preds = %_ZNSt7__cxx1112basi
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %._crit_edge411
-  %.pre-phi465 = phi i64 [ %.mux, %._crit_edge411 ], [ %i.sk, %.loopexit.loopexit ]
-  %i.sn = phi ptr [ %i.kv, %._crit_edge411 ], [ %i.sd, %.loopexit.loopexit ]
-  %.not425 = phi i1 [ false, %._crit_edge411 ], [ %i.sm, %.loopexit.loopexit ]
+  %.pre-phi465 = phi i64 [ %i.sk, %.loopexit.loopexit ], [ %i.ld, %._crit_edge411 ]
+  %i.sn = phi ptr [ %i.sd, %.loopexit.loopexit ], [ %i.kv, %._crit_edge411 ]
+  %.not425 = phi i1 [ %i.sm, %.loopexit.loopexit ], [ false, %._crit_edge411 ]
   br i1 %.not425, label %._crit_edge418, label %.lr.ph417.preheader
 
 .lr.ph417.preheader:                              ; preds = %.loopexit

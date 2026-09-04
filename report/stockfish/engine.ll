@@ -205,10 +205,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23: ; preds = %_ZN
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   call void @_ZNK9Stockfish28LazyNumaReplicatedSystemWideINS_4Eval4NNUE8NetworksEE21get_status_and_errorsB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.119") align 8 %6, ptr noundef nonnull align 8 dereferenceable(80) %i.b)
   %i.ao = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
-  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !148 ; 2 uses
+  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !148
   %i.aq = load ptr, ptr %6, align 8, !tbaa !149   ; 3 uses
   %.not = icmp eq ptr %i.ap, %i.aq
-  br i1 %.not, label %._crit_edge, label %.lr.ph
+  br i1 %.not, label %_ZSt8_DestroyIPSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SD_.exit.i, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23
   %i.ar = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 6 uses
@@ -228,14 +228,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23: ; preds = %_ZN
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 1624
   br label %bb.j
 
-._crit_edge:                                      ; preds = %_ZNSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23
-  %.lcssa63 = phi ptr [ %i.ap, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23 ], [ %i.hg, %_ZNSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEED2Ev.exit ] ; 2 uses
-  %.lcssa53 = phi ptr [ %i.aq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23 ], [ %i.hh, %_ZNSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEED2Ev.exit ] ; 3 uses
-  %.not4.i.i.i = icmp eq ptr %.lcssa53, %.lcssa63
+._crit_edge:                                      ; preds = %_ZNSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEED2Ev.exit
+  %.not4.i.i.i = icmp eq ptr %i.hh, %i.hg
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SD_.exit.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %._crit_edge, %_ZSt8_DestroyISt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvPT_.exit.i.i.i
-  %.05.i.i.i = phi ptr [ %i.bp, %_ZSt8_DestroyISt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvPT_.exit.i.i.i ], [ %.lcssa53, %._crit_edge ] ; 4 uses
+  %.05.i.i.i = phi ptr [ %i.bp, %_ZSt8_DestroyISt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvPT_.exit.i.i.i ], [ %i.hh, %._crit_edge ] ; 4 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 40 ; 2 uses
   %i.bh = load i8, ptr %i.bg, align 8, !tbaa !60, !range !61, !noundef !62
   %i.bi = trunc nuw i8 %i.bh to i1
@@ -257,15 +255,15 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZSt8_DestroyISt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvPT_.exit.i.i.i: ; preds = %bb.h, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i
   %i.bp = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 48 ; 2 uses
-  %.not.i.i.i = icmp eq ptr %i.bp, %.lcssa63
+  %.not.i.i.i = icmp eq ptr %i.bp, %i.hg
   br i1 %.not.i.i.i, label %_ZSt8_DestroyIPSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SD_.exitthread-pre-split.i, label %.lr.ph.i.i.i, !llvm.loop !329
 
 _ZSt8_DestroyIPSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SD_.exitthread-pre-split.i: ; preds = %_ZSt8_DestroyISt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvPT_.exit.i.i.i
   %.pr.i = load ptr, ptr %6, align 8, !tbaa !149
   br label %_ZSt8_DestroyIPSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SD_.exit.i
 
-_ZSt8_DestroyIPSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SD_.exit.i: ; preds = %_ZSt8_DestroyIPSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SD_.exitthread-pre-split.i, %._crit_edge
-  %12 = phi ptr [ %.pr.i, %_ZSt8_DestroyIPSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SD_.exitthread-pre-split.i ], [ %.lcssa53, %._crit_edge ] ; 3 uses
+_ZSt8_DestroyIPSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SD_.exit.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23, %_ZSt8_DestroyIPSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SD_.exitthread-pre-split.i, %._crit_edge
+  %12 = phi ptr [ %.pr.i, %_ZSt8_DestroyIPSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SD_.exitthread-pre-split.i ], [ %i.hh, %._crit_edge ], [ %i.aq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23 ] ; 3 uses
   %.not.i.i1.i = icmp eq ptr %12, null
   br i1 %.not.i.i1.i, label %_ZNSt6vectorISt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaISB_EED2Ev.exit, label %bb.i
 
@@ -668,8 +666,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNSt4pairIN9Stockfish40SystemWideSharedConstantAllocationStatusESt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEED2Ev.exit: ; preds = %bb.ao, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #28
-  %i.hg = load ptr, ptr %i.ao, align 8, !tbaa !148 ; 2 uses
-  %i.hh = load ptr, ptr %6, align 8, !tbaa !149   ; 3 uses
+  %i.hg = load ptr, ptr %i.ao, align 8, !tbaa !148 ; 3 uses
+  %i.hh = load ptr, ptr %6, align 8, !tbaa !149   ; 5 uses
   %i.hi = ptrtoint ptr %i.hg to i64
   %i.hj = ptrtoint ptr %i.hh to i64
   %i.hk = sub i64 %i.hi, %i.hj

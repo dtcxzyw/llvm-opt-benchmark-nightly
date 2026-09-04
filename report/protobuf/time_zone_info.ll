@@ -205,17 +205,17 @@ _ZSt9__advanceIPKN4absl12lts_2025051213time_internal4cctz10TransitionElEvRT_T0_S
   br i1 %i.t, label %_ZSt9__advanceIPKN4absl12lts_2025051213time_internal4cctz10TransitionElEvRT_T0_St26random_access_iterator_tag.exit.i.i, label %_ZSt11upper_boundIPKN4absl12lts_2025051213time_internal4cctz10TransitionES4_NS4_10ByUnixTimeEET_S8_S8_RKT0_T1_.exit, !llvm.loop !3
 
 _ZSt11upper_boundIPKN4absl12lts_2025051213time_internal4cctz10TransitionES4_NS4_10ByUnixTimeEET_S8_S8_RKT0_T1_.exit: ; preds = %_ZSt9__advanceIPKN4absl12lts_2025051213time_internal4cctz10TransitionElEvRT_T0_St26random_access_iterator_tag.exit.i.i, %bb.b
-  %.011.lcssa.i.i = phi ptr [ %spec.select, %bb.b ], [ %.112.i.i, %_ZSt9__advanceIPKN4absl12lts_2025051213time_internal4cctz10TransitionElEvRT_T0_St26random_access_iterator_tag.exit.i.i ] ; 3 uses
+  %.011.lcssa.i.i = phi ptr [ %spec.select, %bb.b ], [ %.112.i.i, %_ZSt9__advanceIPKN4absl12lts_2025051213time_internal4cctz10TransitionElEvRT_T0_St26random_access_iterator_tag.exit.i.i ] ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.not33 = icmp eq ptr %.011.lcssa.i.i, %i.d
-  br i1 %.not33, label %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread, label %.lr.ph
+  br i1 %.not33, label %bb.g, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZSt11upper_boundIPKN4absl12lts_2025051213time_internal4cctz10TransitionES4_NS4_10ByUnixTimeEET_S8_S8_RKT0_T1_.exit
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 56
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread30
-  %.02634 = phi ptr [ %.011.lcssa.i.i, %.lr.ph ], [ %i.ar, %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread30 ] ; 7 uses
+  %.02634 = phi ptr [ %.011.lcssa.i.i, %.lr.ph ], [ %i.ar, %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread30 ] ; 8 uses
   %i.w = icmp eq ptr %.02634, %spec.select
   %i.x = getelementptr inbounds i8, ptr %.02634, i64 -40
   %.in = select i1 %i.w, ptr %i.v, ptr %i.x
@@ -253,19 +253,18 @@ _ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.e
   br i1 %.not12.i, label %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread30, label %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread
 
 _ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread30: ; preds = %bb.c, %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit
-  %i.ar = getelementptr inbounds nuw i8, ptr %.02634, i64 48 ; 3 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %.02634, i64 48 ; 2 uses
   %.not = icmp eq ptr %i.ar, %i.d
-  br i1 %.not, label %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread, label %bb.c, !llvm.loop !241
+  br i1 %.not, label %bb.g, label %bb.c, !llvm.loop !241
 
-_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread: ; preds = %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread30, %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit, %bb.e, %bb.d, %_ZSt11upper_boundIPKN4absl12lts_2025051213time_internal4cctz10TransitionES4_NS4_10ByUnixTimeEET_S8_S8_RKT0_T1_.exit
-  %.026.lcssa = phi ptr [ %.011.lcssa.i.i, %_ZSt11upper_boundIPKN4absl12lts_2025051213time_internal4cctz10TransitionES4_NS4_10ByUnixTimeEET_S8_S8_RKT0_T1_.exit ], [ %.02634, %bb.d ], [ %.02634, %bb.e ], [ %.02634, %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit ], [ %i.ar, %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread30 ] ; 4 uses
-  %.not32 = icmp eq ptr %.026.lcssa, %i.d
+_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread: ; preds = %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit, %bb.e, %bb.d
+  %.not32 = icmp eq ptr %.02634, %i.d
   br i1 %.not32, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread
-  %i.as = getelementptr inbounds nuw i8, ptr %.026.lcssa, i64 32
+  %i.as = getelementptr inbounds nuw i8, ptr %.02634, i64 32
   %.sroa.0.0.copyload = load i64, ptr %i.as, align 8, !tbaa !60
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.026.lcssa, i64 40
+  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.02634, i64 40
   %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8 ; 5 uses
   %sext.i.i = shl i64 %.sroa.2.0.copyload, 56
   %i.at = ashr exact i64 %sext.i.i, 56
@@ -285,13 +284,13 @@ bb.f:                                             ; preds = %_ZNK4absl12lts_2025
   store i64 %i.be, ptr %2, align 8, !tbaa !60
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 %.sroa.2.8.insert.ext.i, ptr %.sroa.4.0..sroa_idx, align 8
-  %i.bf = getelementptr inbounds nuw i8, ptr %.026.lcssa, i64 16
+  %i.bf = getelementptr inbounds nuw i8, ptr %.02634, i64 16
   %i.bg = getelementptr inbounds nuw i8, ptr %2, i64 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bg, ptr noundef nonnull align 8 dereferenceable(16) %i.bf, i64 16, i1 false), !tbaa.struct !82
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread, %bb.a
-  %.1 = phi i1 [ false, %bb.a ], [ false, %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread ], [ true, %bb.f ]
+bb.g:                                             ; preds = %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread30, %_ZSt11upper_boundIPKN4absl12lts_2025051213time_internal4cctz10TransitionES4_NS4_10ByUnixTimeEET_S8_S8_RKT0_T1_.exit, %bb.f, %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread, %bb.a
+  %.1 = phi i1 [ false, %bb.a ], [ false, %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread ], [ true, %bb.f ], [ false, %_ZSt11upper_boundIPKN4absl12lts_2025051213time_internal4cctz10TransitionES4_NS4_10ByUnixTimeEET_S8_S8_RKT0_T1_.exit ], [ false, %_ZNK4absl12lts_2025051213time_internal4cctz12TimeZoneInfo16EquivTransitionsEhh.exit.thread30 ]
   ret i1 %.1
 }
 

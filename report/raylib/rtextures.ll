@@ -205,32 +205,27 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr i8, ptr %0, i64 8
   %.val2.i.i.i = load ptr, ptr %i.j, align 8      ; 3 uses
   %.not3.i.i.i = icmp ult ptr %.val.i.i.i, %.val2.i.i.i
-  br i1 %.not3.i.i.i, label %bb.c, label %stbi__zget8.exit.i.i
+  br i1 %.not3.i.i.i, label %bb.c, label %stbi__parse_zlib_header.exit.thread.i
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 1 ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 1 ; 3 uses
   store ptr %i.k, ptr %0, align 8
   %i.l = load i8, ptr %.val.i.i.i, align 1
-  %i.m = zext i8 %i.l to i32
-  br label %stbi__zget8.exit.i.i
-
-stbi__zget8.exit.i.i:                             ; preds = %bb.c, %bb.b
-  %.val.i12.i.i = phi ptr [ %i.k, %bb.c ], [ %.val.i.i.i, %bb.b ] ; 3 uses
-  %6 = phi i32 [ %i.m, %bb.c ], [ 0, %bb.b ]      ; 2 uses
-  %7 = and i32 %6, 15
-  %.not3.i14.i.i = icmp ult ptr %.val.i12.i.i, %.val2.i.i.i
+  %i.m = zext i8 %i.l to i32                      ; 2 uses
+  %6 = and i32 %i.m, 15
+  %.not3.i14.i.i = icmp ult ptr %i.k, %.val2.i.i.i
   br i1 %.not3.i14.i.i, label %stbi__zget8.exit15.i.i, label %stbi__parse_zlib_header.exit.thread.i
 
-stbi__zget8.exit15.i.i:                           ; preds = %stbi__zget8.exit.i.i
-  %i.n = getelementptr inbounds nuw i8, ptr %.val.i12.i.i, i64 1 ; 2 uses
+stbi__zget8.exit15.i.i:                           ; preds = %bb.c
+  %i.n = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 2 ; 2 uses
   store ptr %i.n, ptr %0, align 8
-  %i.o = load i8, ptr %.val.i12.i.i, align 1
+  %i.o = load i8, ptr %i.k, align 1
   %i.p = zext i8 %i.o to i32                      ; 2 uses
   %i.q = icmp ult ptr %i.n, %.val2.i.i.i
   br i1 %i.q, label %bb.d, label %stbi__parse_zlib_header.exit.thread.i
 
 bb.d:                                             ; preds = %stbi__zget8.exit15.i.i
-  %i.r = shl nuw nsw i32 %6, 8
+  %i.r = shl nuw nsw i32 %i.m, 8
   %i.s = or disjoint i32 %i.r, %i.p
   %.lhs.trunc.i.i = trunc nuw i32 %i.s to i16
   %i.t = urem i16 %.lhs.trunc.i.i, 31
@@ -243,11 +238,11 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not9.i.i, label %bb.f, label %stbi__parse_zlib_header.exit.thread.i
 
 bb.f:                                             ; preds = %bb.e
-  %.not10.i.i = icmp eq i32 %7, 8
+  %.not10.i.i = icmp eq i32 %6, 8
   br i1 %.not10.i.i, label %stbi__parse_zlib_header.exit.i, label %stbi__parse_zlib_header.exit.thread.i
 
-stbi__parse_zlib_header.exit.thread.i:            ; preds = %bb.f, %bb.e, %bb.d, %stbi__zget8.exit15.i.i, %stbi__zget8.exit.i.i
-  %.str.130.sink.i.i = phi ptr [ @.str.129, %bb.e ], [ @.str.128, %bb.d ], [ @.str.128, %stbi__zget8.exit15.i.i ], [ @.str.128, %stbi__zget8.exit.i.i ], [ @.str.130, %bb.f ]
+stbi__parse_zlib_header.exit.thread.i:            ; preds = %bb.f, %bb.e, %bb.d, %stbi__zget8.exit15.i.i, %bb.c, %bb.b
+  %.str.130.sink.i.i = phi ptr [ @.str.129, %bb.e ], [ @.str.128, %bb.d ], [ @.str.128, %stbi__zget8.exit15.i.i ], [ @.str.128, %bb.b ], [ @.str.128, %bb.c ], [ @.str.130, %bb.f ]
   store ptr %.str.130.sink.i.i, ptr @stbi__g_failure_reason, align 8
   br label %stbi__parse_zlib.exit
 

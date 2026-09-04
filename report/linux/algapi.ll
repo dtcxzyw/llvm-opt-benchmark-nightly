@@ -204,12 +204,12 @@ bb.j:                                             ; preds = %.lr.ph
   %i.au = load i32, ptr %i.ac, align 8
   %i.av = or i32 %i.au, %.033.lcssa
   store i32 %i.av, ptr %i.ac, align 8
-  %i.aw = call fastcc ptr @__crypto_register_alg(ptr noundef %1, ptr noundef nonnull %2) #18, !srcloc !51 ; 6 uses
+  %i.aw = call fastcc ptr @__crypto_register_alg(ptr noundef %1, ptr noundef nonnull %2) #18, !srcloc !51 ; 5 uses
   %i.ax = icmp ugt ptr %i.aw, inttoptr (i64 -4096 to ptr)
   br i1 %i.ax, label %.thread50, label %bb.k
 
 bb.k:                                             ; preds = %._crit_edge
-  %.not41 = icmp eq ptr %i.aw, null
+  %.not41 = icmp eq ptr %i.aw, null               ; 2 uses
   br i1 %.not41, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -236,15 +236,14 @@ bb.n:                                             ; preds = %bb.m
   %i.bd = trunc i64 %i.bc to i32
   br label %crypto_remove_final.exit
 
-bb.o:                                             ; preds = %bb.m, %bb.n
+bb.o:                                             ; preds = %bb.n, %bb.m
   store volatile ptr %i.ag, ptr %i.az, align 8
   %i.be = getelementptr i8, ptr %1, i64 408
   store volatile ptr %i.az, ptr %i.be, align 8
   %i.bf = getelementptr i8, ptr %1, i64 392
   store ptr %0, ptr %i.bf, align 8
   call void @up_write(ptr noundef nonnull @crypto_alg_sem) #19
-  %.not42 = icmp eq ptr %i.aw, null
-  br i1 %.not42, label %bb.q, label %bb.p
+  br i1 %.not41, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   call void @crypto_schedule_test(ptr noundef nonnull %i.aw) #19

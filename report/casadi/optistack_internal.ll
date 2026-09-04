@@ -204,10 +204,10 @@ _ZNSt6vectorIN6casadi2MXESaIS1_EED2Ev.exit:       ; preds = %_ZSt8_DestroyIPN6ca
 
 .preheader1908:                                   ; preds = %_ZNSt6vectorIN6casadi2MXESaIS1_EED2Ev.exit
   %i.dx = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 7 uses
-  %i.dy = load ptr, ptr %i.dx, align 8, !tbaa !173 ; 2 uses
-  %i.dz = load ptr, ptr %15, align 8, !tbaa !172  ; 3 uses
+  %i.dy = load ptr, ptr %i.dx, align 8, !tbaa !173
+  %i.dz = load ptr, ptr %15, align 8, !tbaa !172  ; 2 uses
   %.not1964 = icmp eq ptr %i.dy, %i.dz
-  br i1 %.not1964, label %.preheader1907, label %.lr.ph1926
+  br i1 %.not1964, label %._crit_edge1932, label %.lr.ph1926
 
 .lr.ph1926:                                       ; preds = %.preheader1908
   %i.ea = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -291,10 +291,8 @@ bb.aj:                                            ; preds = %.noexc488, %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #27
   br label %.body
 
-.preheader1907:                                   ; preds = %bb.an, %.preheader1908
-  %.lcssa1919 = phi ptr [ %i.dy, %.preheader1908 ], [ %i.fq, %bb.an ] ; 2 uses
-  %.lcssa1917 = phi ptr [ %i.dz, %.preheader1908 ], [ %i.fr, %bb.an ] ; 2 uses
-  %.not18971928 = icmp eq ptr %.lcssa1917, %.lcssa1919
+.preheader1907:                                   ; preds = %bb.an
+  %.not18971928 = icmp eq ptr %i.fr, %i.fq
   br i1 %.not18971928, label %._crit_edge1932, label %.lr.ph1931
 
 .lr.ph1931:                                       ; preds = %.preheader1907
@@ -352,8 +350,8 @@ bb.an:                                            ; preds = %bb.am, %_ZNSt8_Rb_t
   %i.fo = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i501, i64 128
   store i64 %.02691925, ptr %i.fo, align 8, !tbaa !263
   %i.fp = add nuw nsw i64 %.02691925, 1           ; 2 uses
-  %i.fq = load ptr, ptr %i.dx, align 8, !tbaa !173 ; 2 uses
-  %i.fr = load ptr, ptr %15, align 8, !tbaa !172  ; 3 uses
+  %i.fq = load ptr, ptr %i.dx, align 8, !tbaa !173 ; 3 uses
+  %i.fr = load ptr, ptr %15, align 8, !tbaa !172  ; 4 uses
   %i.fs = ptrtoint ptr %i.fq to i64
   %i.ft = ptrtoint ptr %i.fr to i64
   %i.fu = sub i64 %i.fs, %i.ft
@@ -366,7 +364,7 @@ bb.ao:                                            ; preds = %.noexc502, %bb.al
           cleanup
   br label %bb.qe
 
-._crit_edge1932:                                  ; preds = %bb.at, %.preheader1907
+._crit_edge1932:                                  ; preds = %bb.at, %.preheader1908, %.preheader1907
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #27
   invoke void @_ZNK6casadi8OptiNode13active_symvarENS_12VariableTypeE(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.11") align 8 %16, ptr noundef nonnull align 8 dereferenceable(1248) %0, i32 noundef 1)
           to label %.preheader1906 unwind label %bb.av
@@ -385,7 +383,7 @@ bb.ao:                                            ; preds = %.noexc502, %bb.al
 
 bb.ap:                                            ; preds = %.lr.ph1931, %bb.at
   %.02701930 = phi i64 [ 0, %.lr.ph1931 ], [ %i.gy, %bb.at ] ; 2 uses
-  %.sroa.01830.01929 = phi ptr [ %.lcssa1917, %.lr.ph1931 ], [ %i.ha, %bb.at ] ; 6 uses
+  %.sroa.01830.01929 = phi ptr [ %i.fr, %.lr.ph1931 ], [ %i.ha, %bb.at ] ; 6 uses
   invoke void @_ZNK6casadi8OptiNode10assert_hasERKNS_2MXE(ptr noundef nonnull align 8 dereferenceable(1248) %0, ptr noundef nonnull align 8 dereferenceable(8) %.sroa.01830.01929)
           to label %.noexc517 unwind label %bb.au
 
@@ -476,7 +474,7 @@ bb.at:                                            ; preds = %bb.as, %_ZNSt8_Rb_t
   %i.gz = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i533, i64 48
   store i64 %i.gy, ptr %i.gz, align 8, !tbaa !854
   %i.ha = getelementptr inbounds nuw i8, ptr %.sroa.01830.01929, i64 8 ; 2 uses
-  %.not1897 = icmp eq ptr %i.ha, %.lcssa1919
+  %.not1897 = icmp eq ptr %i.ha, %i.fq
   br i1 %.not1897, label %._crit_edge1932, label %bb.ap
 
 bb.au:                                            ; preds = %.noexc534, %_ZNK6casadi13GenericMatrixINS_2MXEE3nnzEv.exit, %.noexc520, %bb.ar, %.noexc517, %bb.ap

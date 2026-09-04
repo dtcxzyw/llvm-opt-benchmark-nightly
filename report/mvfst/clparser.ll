@@ -202,33 +202,28 @@ bb.y:                                             ; preds = %_ZNKSt7__cxx1112bas
   %.134 = phi i1 [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit55 ], [ %.03369, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50 ], [ false, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i53 ]
   %i.dk = load i64, ptr %i.o, align 8, !tbaa !21  ; 2 uses
   %i.dl = icmp ult i64 %spec.select92, %i.dk
-  br i1 %i.dl, label %bb.z, label %14
+  br i1 %i.dl, label %bb.z, label %bb.ab
 
 bb.z:                                             ; preds = %bb.y
-  %i.dm = load ptr, ptr %1, align 8, !tbaa !19
+  %i.dm = load ptr, ptr %1, align 8, !tbaa !19    ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dm, i64 %spec.select92
   %i.do = load i8, ptr %i.dn, align 1, !tbaa !20
   %i.dp = icmp eq i8 %i.do, 13
   %i.dq = zext i1 %i.dp to i64
-  %spec.select = add nuw i64 %spec.select92, %i.dq
-  br label %14
+  %spec.select = add nuw i64 %spec.select92, %i.dq ; 4 uses
+  %14 = icmp ult i64 %spec.select, %i.dk
+  br i1 %14, label %bb.aa, label %bb.ab
 
-14:                                               ; preds = %bb.z, %bb.y
-  %.1 = phi i64 [ %spec.select92, %bb.y ], [ %spec.select, %bb.z ] ; 4 uses
-  %15 = icmp ult i64 %.1, %i.dk
-  br i1 %15, label %bb.aa, label %bb.ab
-
-bb.aa:                                            ; preds = %14
-  %16 = load ptr, ptr %1, align 8, !tbaa !19
-  %i.dr = getelementptr inbounds nuw i8, ptr %16, i64 %.1
+bb.aa:                                            ; preds = %bb.z
+  %i.dr = getelementptr inbounds nuw i8, ptr %i.dm, i64 %spec.select
   %i.ds = load i8, ptr %i.dr, align 1, !tbaa !20
   %i.dt = icmp eq i8 %i.ds, 10
   %i.du = zext i1 %i.dt to i64
-  %spec.select43 = add nuw i64 %.1, %i.du
+  %spec.select43 = add nuw i64 %spec.select, %i.du
   br label %bb.ab
 
-bb.ab:                                            ; preds = %bb.aa, %14
-  %.2 = phi i64 [ %.1, %14 ], [ %spec.select43, %bb.aa ] ; 2 uses
+bb.ab:                                            ; preds = %bb.y, %bb.aa, %bb.z
+  %.2 = phi i64 [ %spec.select, %bb.z ], [ %spec.select43, %bb.aa ], [ %spec.select92, %bb.y ] ; 2 uses
   %i.dv = load ptr, ptr %10, align 8, !tbaa !19   ; 2 uses
   %i.dw = icmp eq ptr %i.dv, %i.aa
   br i1 %i.dw, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i56

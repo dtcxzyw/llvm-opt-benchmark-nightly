@@ -205,10 +205,10 @@ bb.at:                                            ; preds = %.thread258
 bb.au:                                            ; preds = %bb.at
   %i.ez = load ptr, ptr %.sroa.4.0..sroa_idx.i.i72, align 8, !nonnull !10, !noundef !10 ; 2 uses
   %i.fa = load i64, ptr %.sroa.5.0..sroa_idx.i.i73, align 8, !noundef !10
-  %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.ez, i64 %i.fa ; 4 uses
+  %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.ez, i64 %i.fa ; 3 uses
   %i.fc = load ptr, ptr %i.cw, align 8, !nonnull !10, !align !17, !noundef !10 ; 2 uses
-  %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 16 ; 2 uses
-  %i.fe = getelementptr inbounds nuw i8, ptr %i.fc, i64 8 ; 2 uses
+  %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 16
+  %i.fe = getelementptr inbounds nuw i8, ptr %i.fc, i64 8
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.ax, %bb.au
@@ -217,7 +217,7 @@ bb.av:                                            ; preds = %bb.ax, %bb.au
   br i1 %i.ff, label %thread-pre-split, label %.lr.ph.i80
 
 .lr.ph.i80:                                       ; preds = %bb.av
-  %i.fg = load i64, ptr %i.fd, align 8, !noalias !4992, !noundef !10
+  %i.fg = load i64, ptr %i.fd, align 8, !noalias !4992, !noundef !10 ; 2 uses
   br label %bb.aw
 
 bb.aw:                                            ; preds = %_RNvXs1_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x8compiler2ir3dfsNtBW_16DFSWithScopeIter10for_scopes0INtB7_5FnMutTRNtBY_6ExprIdEE8call_mutB12_.exit.i83, %.lr.ph.i80
@@ -228,12 +228,12 @@ bb.aw:                                            ; preds = %_RNvXs1_NtNtNtCskKL
   br i1 %i.fj, label %_RNvXs1_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x8compiler2ir3dfsNtBW_16DFSWithScopeIter10for_scopes0INtB7_5FnMutTRNtBY_6ExprIdEE8call_mutB12_.exit.i83, label %.invoke299, !prof !20
 
 _RNvXs1_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x8compiler2ir3dfsNtBW_16DFSWithScopeIter10for_scopes0INtB7_5FnMutTRNtBY_6ExprIdEE8call_mutB12_.exit.i83: ; preds = %bb.aw
-  %i.fk = getelementptr inbounds nuw i8, ptr %i.fh, i64 4 ; 5 uses
-  %i.fl = load ptr, ptr %i.fe, align 8, !noalias !4992, !nonnull !10, !noundef !10
+  %i.fk = getelementptr inbounds nuw i8, ptr %i.fh, i64 4 ; 4 uses
+  %i.fl = load ptr, ptr %i.fe, align 8, !noalias !4992, !nonnull !10, !noundef !10 ; 2 uses
   %i.fm = getelementptr inbounds nuw [48 x i8], ptr %i.fl, i64 %i.fi
   %i.fn = load i8, ptr %i.fm, align 8, !range !25, !noalias !4992, !noundef !10
   %i.fo = icmp eq i8 %i.fn, 57                    ; 2 uses
-  %i.fp = icmp eq ptr %i.fk, %i.fb
+  %i.fp = icmp eq ptr %i.fk, %i.fb                ; 2 uses
   %or.cond136 = select i1 %i.fo, i1 true, i1 %i.fp
   br i1 %or.cond136, label %bb.ax, label %bb.aw
 
@@ -243,28 +243,22 @@ bb.ax:                                            ; preds = %_RNvXs1_NtNtNtCskKL
   br i1 %or.cond.not, label %bb.av, label %.thread128
 
 .thread128:                                       ; preds = %bb.ax
-  %2 = icmp eq ptr %i.fk, %i.fb
-  br i1 %2, label %thread-pre-split, label %.lr.ph.i92
-
-.lr.ph.i92:                                       ; preds = %.thread128
-  %3 = load i64, ptr %i.fd, align 8, !noalias !4993, !noundef !10
-  br label %bb.az
+  br i1 %i.fp, label %thread-pre-split, label %bb.az
 
 bb.ay:                                            ; preds = %_RNvXs1_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x8compiler2ir3dfsNtBW_16DFSWithScopeIter10for_scopes0INtB7_5FnMutTRNtBY_6ExprIdEE8call_mutB12_.exit.i95
   %i.fr = icmp eq ptr %i.ft, %i.fb
   br i1 %i.fr, label %thread-pre-split, label %bb.az
 
-bb.az:                                            ; preds = %bb.ay, %.lr.ph.i92
-  %i.fs = phi ptr [ %i.fk, %.lr.ph.i92 ], [ %i.ft, %bb.ay ] ; 2 uses
+bb.az:                                            ; preds = %.thread128, %bb.ay
+  %i.fs = phi ptr [ %i.ft, %bb.ay ], [ %i.fk, %.thread128 ] ; 2 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 4 ; 2 uses
   %.val5.i94 = load i32, ptr %i.fs, align 4, !noalias !4993, !noundef !10 ; 2 uses
   %i.fu = zext i32 %.val5.i94 to i64              ; 2 uses
-  %i.fv = icmp ugt i64 %3, %i.fu
+  %i.fv = icmp ugt i64 %i.fg, %i.fu
   br i1 %i.fv, label %_RNvXs1_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x8compiler2ir3dfsNtBW_16DFSWithScopeIter10for_scopes0INtB7_5FnMutTRNtBY_6ExprIdEE8call_mutB12_.exit.i95, label %.invoke299, !prof !20
 
 _RNvXs1_NtNtNtCskKLDkoKarTP_4core3ops8function5implsQNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x8compiler2ir3dfsNtBW_16DFSWithScopeIter10for_scopes0INtB7_5FnMutTRNtBY_6ExprIdEE8call_mutB12_.exit.i95: ; preds = %bb.az
-  %4 = load ptr, ptr %i.fe, align 8, !noalias !4993, !nonnull !10, !noundef !10
-  %i.fw = getelementptr inbounds nuw [48 x i8], ptr %4, i64 %i.fu
+  %i.fw = getelementptr inbounds nuw [48 x i8], ptr %i.fl, i64 %i.fu
   %i.fx = load i8, ptr %i.fw, align 8, !range !25, !noalias !4993, !noundef !10
   %i.fy = icmp eq i8 %i.fx, 57
   br i1 %i.fy, label %bb.ba, label %bb.ay

@@ -202,7 +202,7 @@ bb.bc:                                            ; preds = %bb.az
   br i1 %i.dh, label %.lr.ph407, label %._crit_edge408.thread
 
 .lr.ph407:                                        ; preds = %.preheader377, %bb.bf
-  %.2170406 = phi i32 [ %i.dn, %bb.bf ], [ 0, %.preheader377 ] ; 3 uses
+  %.2170406 = phi i32 [ %i.dn, %bb.bf ], [ 0, %.preheader377 ] ; 4 uses
   %i.di = invoke noundef ptr @_ZNK6icu_787UVector9elementAtEi(ptr noundef nonnull align 8 dereferenceable(40) %i.p, i32 noundef %.2170406)
           to label %bb.bd unwind label %.loopexit378 ; 2 uses
 
@@ -228,21 +228,20 @@ bb.be:                                            ; preds = %bb.bd
   br label %_ZN6icu_7812LocalPointerINS_19InitialTimeZoneRuleEED2Ev.exit289
 
 bb.bf:                                            ; preds = %bb.be
-  %i.dn = add nuw nsw i32 %.2170406, 1            ; 3 uses
+  %i.dn = add nuw nsw i32 %.2170406, 1            ; 2 uses
   %i.do = icmp slt i32 %i.dn, %.pre442.pre
-  br i1 %i.do, label %.lr.ph407, label %._crit_edge408, !llvm.loop !26
+  br i1 %i.do, label %.lr.ph407, label %._crit_edge408.thread, !llvm.loop !26
 
-._crit_edge408:                                   ; preds = %bb.bf, %bb.be
-  %.2170.lcssa.ph = phi i32 [ %i.dn, %bb.bf ], [ %.2170406, %bb.be ] ; 2 uses
-  %i.dp = icmp slt i32 %.2170.lcssa.ph, %.pre442.pre
+._crit_edge408:                                   ; preds = %bb.be
+  %i.dp = icmp slt i32 %.2170406, %.pre442.pre
   br i1 %i.dp, label %bb.bg, label %._crit_edge408.thread
 
-._crit_edge408.thread:                            ; preds = %.preheader377, %._crit_edge408
+._crit_edge408.thread:                            ; preds = %.preheader377, %._crit_edge408, %bb.bf
   store i32 27, ptr %4, align 4, !tbaa !11
   br label %.critedge268.thread.thread471
 
 bb.bg:                                            ; preds = %._crit_edge408
-  %i.dq = zext nneg i32 %.2170.lcssa.ph to i64
+  %i.dq = zext nneg i32 %.2170406 to i64
   %i.dr = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.dq ; 2 uses
   %i.ds = load i8, ptr %i.dr, align 1, !tbaa !38, !range !41, !noundef !42
   %i.dt = trunc nuw i8 %i.ds to i1
