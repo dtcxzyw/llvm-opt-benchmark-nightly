@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %get_angle.exit.1.i
 
 bb.k:                                             ; preds = %bb.j, %get_angle.exit.1.i, %bb.f
   %.130.1.i = phi double [ %.130.i, %bb.f ], [ %.0.i.1.i, %bb.j ], [ %.130.i, %get_angle.exit.1.i ] ; 3 uses
-  %.128.1.i = phi i32 [ 0, %bb.f ], [ 1, %bb.j ], [ 0, %get_angle.exit.1.i ] ; 2 uses
+  %.128.1.i = phi i64 [ 0, %bb.f ], [ 1, %bb.j ], [ 0, %get_angle.exit.1.i ] ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.ck = load i32, ptr %i.cj, align 4, !tbaa !12 ; 2 uses
   %i.cl = icmp slt i32 %i.ck, 1
@@ -267,7 +267,7 @@ bb.o:                                             ; preds = %get_angle.exit.2.i
 
 bb.p:                                             ; preds = %bb.o, %get_angle.exit.2.i, %bb.k
   %.130.2.i = phi double [ %.130.1.i, %bb.k ], [ %.0.i.2.i, %bb.o ], [ %.130.1.i, %get_angle.exit.2.i ]
-  %.128.2.i = phi i32 [ %.128.1.i, %bb.k ], [ 2, %bb.o ], [ %.128.1.i, %get_angle.exit.2.i ] ; 2 uses
+  %.128.2.i = phi i64 [ %.128.1.i, %bb.k ], [ 2, %bb.o ], [ %.128.1.i, %get_angle.exit.2.i ] ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.e, i64 28
   %i.dy = load i32, ptr %i.dx, align 4, !tbaa !12 ; 2 uses
   %i.dz = icmp slt i32 %i.dy, 1
@@ -323,11 +323,11 @@ bb.s:                                             ; preds = %bb.q
 get_angle.exit.3.i:                               ; preds = %bb.s, %bb.r
   %.0.i.3.i = phi double [ %i.fa, %bb.r ], [ %i.fj, %bb.s ]
   %i.fk = fcmp ogt double %.0.i.3.i, %.130.2.i
-  %spec.select.i = select i1 %i.fk, i32 3, i32 %.128.2.i
+  %spec.select.i = select i1 %i.fk, i64 3, i64 %.128.2.i
   br label %bb.t
 
 bb.t:                                             ; preds = %get_angle.exit.3.i, %bb.p
-  %.128.3.i = phi i32 [ %.128.2.i, %bb.p ], [ %spec.select.i, %get_angle.exit.3.i ]
+  %.128.3.i = phi i64 [ %.128.2.i, %bb.p ], [ %spec.select.i, %get_angle.exit.3.i ] ; 2 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
   %i.fm = load i32, ptr %i.fl, align 4, !tbaa !12 ; 2 uses
   %i.fn = icmp slt i32 %i.fm, 1
@@ -452,7 +452,7 @@ bb.ac:                                            ; preds = %get_angle.exit49.1.
 
 bb.ad:                                            ; preds = %bb.ac, %get_angle.exit49.1.i, %bb.y
   %.3.1.i = phi double [ %.3.i, %bb.y ], [ %.0.i48.1.i, %bb.ac ], [ %.3.i, %get_angle.exit49.1.i ] ; 3 uses
-  %.1.1.i = phi i32 [ 0, %bb.y ], [ 1, %bb.ac ], [ 0, %get_angle.exit49.1.i ] ; 2 uses
+  %.1.1.i = phi i64 [ 0, %bb.y ], [ 1, %bb.ac ], [ 0, %get_angle.exit49.1.i ] ; 2 uses
   %i.in = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %i.io = load i32, ptr %i.in, align 4, !tbaa !12 ; 2 uses
   %i.ip = icmp slt i32 %i.io, 1
@@ -515,7 +515,7 @@ bb.ah:                                            ; preds = %get_angle.exit49.2.
 
 bb.ai:                                            ; preds = %bb.ah, %get_angle.exit49.2.i, %bb.ad
   %.3.2.i = phi double [ %.3.1.i, %bb.ad ], [ %.0.i48.2.i, %bb.ah ], [ %.3.1.i, %get_angle.exit49.2.i ]
-  %.1.2.i = phi i32 [ %.1.1.i, %bb.ad ], [ 2, %bb.ah ], [ %.1.1.i, %get_angle.exit49.2.i ] ; 2 uses
+  %.1.2.i = phi i64 [ %.1.1.i, %bb.ad ], [ 2, %bb.ah ], [ %.1.1.i, %get_angle.exit49.2.i ] ; 2 uses
   %i.kb = getelementptr inbounds nuw i8, ptr %i.g, i64 28
   %i.kc = load i32, ptr %i.kb, align 4, !tbaa !12 ; 2 uses
   %i.kd = icmp slt i32 %i.kc, 1
@@ -571,18 +571,16 @@ bb.al:                                            ; preds = %bb.aj
 get_angle.exit49.3.i:                             ; preds = %bb.al, %bb.ak
   %.0.i48.3.i = phi double [ %i.le, %bb.ak ], [ %i.ln, %bb.al ]
   %i.lo = fcmp ogt double %.0.i48.3.i, %.3.2.i
-  %spec.select65.i = select i1 %i.lo, i32 3, i32 %.1.2.i
+  %spec.select65.i = select i1 %i.lo, i64 3, i64 %.1.2.i
   br label %get_vertex_positions.exit
 
 get_vertex_positions.exit:                        ; preds = %bb.ai, %get_angle.exit49.3.i
-  %.1.3.i = phi i32 [ %.1.2.i, %bb.ai ], [ %spec.select65.i, %get_angle.exit49.3.i ]
+  %.1.3.i = phi i64 [ %.1.2.i, %bb.ai ], [ %spec.select65.i, %get_angle.exit49.3.i ]
   %i.lp = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
-  %4 = zext nneg i32 %.128.3.i to i64             ; 2 uses
-  %i.lq = getelementptr inbounds nuw [4 x i8], ptr %i.lp, i64 %4
+  %i.lq = getelementptr inbounds nuw [4 x i8], ptr %i.lp, i64 %.128.3.i
   %i.lr = load i32, ptr %i.lq, align 4, !tbaa !12 ; 6 uses
   %i.ls = getelementptr inbounds nuw i8, ptr %i.g, i64 32 ; 2 uses
-  %5 = zext nneg i32 %.1.3.i to i64
-  %i.lt = getelementptr inbounds nuw [4 x i8], ptr %i.ls, i64 %5
+  %i.lt = getelementptr inbounds nuw [4 x i8], ptr %i.ls, i64 %.1.3.i
   %i.lu = load i32, ptr %i.lt, align 4, !tbaa !12 ; 5 uses
   %i.lv = load i32, ptr @chain_idx, align 4, !tbaa !12 ; 3 uses
   %i.lw = add nsw i32 %i.lv, 1                    ; 6 uses
@@ -917,7 +915,7 @@ monchains_at.exit159:                             ; preds = %bb.bd, %monchains_a
   %i.qb = load i32, ptr %i.qa, align 8, !tbaa !42
   %i.qc = getelementptr inbounds nuw i8, ptr %i.g, i64 48 ; 3 uses
   %i.qd = load i32, ptr %i.qc, align 8, !tbaa !42
-  %i.qe = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %4
+  %i.qe = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %.128.3.i
   store i32 %3, ptr %i.qe, align 4, !tbaa !12
   %i.qf = sext i32 %i.qb to i64                   ; 2 uses
   %i.qg = getelementptr inbounds [4 x i8], ptr %i.lp, i64 %i.qf

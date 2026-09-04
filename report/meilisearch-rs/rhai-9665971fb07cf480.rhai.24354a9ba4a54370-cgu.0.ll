@@ -205,7 +205,7 @@ bb.cv:                                            ; preds = %bb.p
   %i.rt = trunc i128 %i.rs to i64
   %i.ru = xor i64 %i.rh, -1
   %i.rv = add i64 %i.ru, %i.rt                    ; 3 uses
-  %min.iters.check = icmp ult i64 %i.rv, 34
+  %min.iters.check = icmp ult i64 %i.rv, 40
   br i1 %min.iters.check, label %.lr.ph1922.us.preheader2869, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph1922.us.preheader
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = or disjoint i64 %i.h, 4503599627370496   ; 3 uses
   %i.j = lshr i64 %i.d, 52                        ; 4 uses
   %i.k = trunc nuw nsw i64 %i.j to i16
-  %i.l = add nuw nsw i64 %i.j, 64513
+  %i.l = add nsw i64 %i.j, -1023
   %i.m = icmp samesign ult i64 %i.d, 4467570830351532032
   br i1 %i.m, label %_ZN4core4time8Duration13from_secs_f6417h09372c7b651d8f8fE.exit, label %bb.d
 
@@ -648,10 +648,8 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.e
   %i.ad = sub nsw i64 1075, %i.j
-  %1 = and i64 %i.ad, 65535
-  %i.ae = lshr i64 %i.i, %1
-  %2 = and i64 %i.l, 65535
-  %i.af = shl i64 %i.d, %2
+  %i.ae = lshr i64 %i.i, %i.ad
+  %i.af = shl i64 %i.d, %i.l
   %i.ag = and i64 %i.af, 4503599627370495
   %i.ah = zext nneg i64 %i.ag to i128
   %i.ai = mul nuw nsw i128 %i.ah, 1000000000      ; 3 uses
@@ -673,9 +671,8 @@ bb.h:                                             ; preds = %bb.e
   br label %_ZN4core4time8Duration13from_secs_f6417h09372c7b651d8f8fE.exit
 
 bb.i:                                             ; preds = %bb.g
-  %i.as = add nuw nsw i64 %i.j, 64461
-  %3 = and i64 %i.as, 65535
-  %i.at = shl nuw i64 %i.i, %3
+  %i.as = add nsw i64 %i.j, -1075
+  %i.at = shl nuw i64 %i.i, %i.as
   br label %_ZN4core4time8Duration13from_secs_f6417h09372c7b651d8f8fE.exit
 
 _ZN4core4time8Duration17try_from_secs_f6417he8336ece3395a0a6E.exit.i: ; preds = %bb.g

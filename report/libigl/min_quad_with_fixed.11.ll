@@ -205,19 +205,18 @@ bb.o:                                             ; preds = %bb.l, %bb.m, %bb.n
   %i.az = phi i1 [ true, %bb.n ], [ false, %bb.m ], [ false, %bb.l ] ; 2 uses
   %i.ba = phi i8 [ %.pre85, %bb.n ], [ %i.ar, %bb.m ], [ %i.ar, %bb.l ]
   %i.bb = phi float [ %i.ay, %bb.n ], [ %i.am, %bb.m ], [ %i.am, %bb.l ]
-  %.143.1 = phi i64 [ %.14389, %bb.n ], [ %.1438892, %bb.m ], [ %.1438892, %bb.l ]
+  %.143.1 = phi i64 [ %.14389, %bb.n ], [ %.1438892, %bb.m ], [ %.1438892, %bb.l ] ; 3 uses
   %i.bc = trunc nuw i8 %i.ba to i1                ; 2 uses
   br i1 %i.bc, label %bb.w, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.bd = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.be = load float, ptr %i.bd, align 4, !tbaa !29
-  %9 = and i64 %.143.1, 4294967295                ; 3 uses
-  %i.bf = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %9
+  %i.bf = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %.143.1
   store float %i.be, ptr %i.bf, align 4, !tbaa !29
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.bh = getelementptr [4 x i8], ptr %5, i64 %9  ; 3 uses
-  %i.bi = getelementptr [4 x i8], ptr %6, i64 %9  ; 2 uses
+  %i.bh = getelementptr [4 x i8], ptr %5, i64 %.143.1 ; 3 uses
+  %i.bi = getelementptr [4 x i8], ptr %6, i64 %.143.1 ; 2 uses
   %i.bj = load float, ptr %i.bg, align 4, !tbaa !29 ; 2 uses
   br i1 %i.b, label %bb.r, label %bb.q
 
@@ -620,7 +619,7 @@ bb.a:
   %i.as = insertelement <4 x ptr> %i.ar, ptr %scevgep108, i64 1
   %i.at = insertelement <4 x ptr> %i.as, ptr %scevgep113, i64 2
   %i.au = insertelement <4 x ptr> %i.at, ptr %i.f, i64 3
-  %min.iters.check = icmp ult i64 %3, 60
+  %min.iters.check = icmp ult i64 %3, 30
   %mul.result = shl i64 %i.m, 5                   ; 3 uses
   %mul.overflow = icmp ugt i64 %i.m, 576460752303423487
   %.mask = and i64 %i.h, 288230376151711744
@@ -1023,7 +1022,7 @@ bb.a:
   %i.ai = insertelement <4 x ptr> %i.ah, ptr %scevgep88, i64 1
   %i.aj = insertelement <4 x ptr> %i.ai, ptr %scevgep92, i64 2
   %i.ak = insertelement <4 x ptr> %i.aj, ptr %i.e, i64 3
-  %min.iters.check = icmp ult i64 %3, 60
+  %min.iters.check = icmp ult i64 %3, 30
   %mul.result = shl i64 %i.i, 5                   ; 3 uses
   %mul.overflow = icmp ugt i64 %i.i, 576460752303423487
   %.mask = and i64 %i.g, 288230376151711744

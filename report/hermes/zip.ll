@@ -205,7 +205,7 @@ bb.fy:                                            ; preds = %bb.fx
   %i.agf = sub i64 %i.age, %i.i                   ; 2 uses
   %i.agg = lshr i64 %i.agf, 3
   %i.agh = add nuw nsw i64 %i.agg, 1              ; 2 uses
-  %min.iters.check = icmp ult i64 %i.agf, 216
+  %min.iters.check = icmp ult i64 %i.agf, 232
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.fy
@@ -608,9 +608,8 @@ bb.ek:                                            ; preds = %._crit_edge367.i
   %i.aij = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.aii
   %i.aik = load i8, ptr %i.aij, align 1, !tbaa !19
   %i.ail = zext i8 %i.aik to i32
-  %2 = add nuw nsw i64 %i.ags, 4294967280
-  %3 = and i64 %2, 4294967295
-  %i.aim = getelementptr inbounds nuw i8, ptr @.str.12, i64 %3
+  %2 = getelementptr i8, ptr @.str.12, i64 %i.ags
+  %i.aim = getelementptr i8, ptr %2, i64 -16
   %i.ain = load i8, ptr %i.aim, align 1, !tbaa !19
   %i.aio = sext i8 %i.ain to i32                  ; 2 uses
   %i.aip = shl nuw nsw i32 %i.ail, %i.aif

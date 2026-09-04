@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sroa.017.0 = phi i32 [ %i.y, %bb.b ], [ 0, %bb.a ] ; 2 uses
-  %.sroa.419.0 = phi i8 [ 1, %bb.b ], [ 0, %bb.a ] ; 2 uses
+  %.sroa.419.0 = phi i64 [ 1, %bb.b ], [ 0, %bb.a ] ; 2 uses
   store <2 x ptr> %i.h, ptr %i.g, align 8, !tbaa !24
   switch i32 %i.b, label %bb.f [
     i32 1, label %bb.d
@@ -242,7 +242,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.b, %bb.h, %bb.g
   %.sroa.017.1 = phi i32 [ %.sroa.017.0, %bb.h ], [ %.sroa.017.0, %bb.g ], [ %i.y, %bb.b ]
-  %.sroa.419.1 = phi i8 [ %.sroa.419.0, %bb.h ], [ %.sroa.419.0, %bb.g ], [ 1, %bb.b ]
+  %.sroa.419.1 = phi i64 [ %.sroa.419.0, %bb.h ], [ %.sroa.419.0, %bb.g ], [ 1, %bb.b ]
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 49
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !70, !range !65, !noundef !57
   %i.ak = trunc nuw i8 %i.aj to i1
@@ -262,8 +262,7 @@ _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN6hermes6parser13StoredCommentESt6vect
 _ZN4llvh6detail10scope_exitIZN6hermes6parser7JSLexer10lookahead1ILb1EEENS2_8OptValueINS3_9TokenKindEEES8_EUlvE_ED2Ev.exit: ; preds = %bb.i, %bb.j, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN6hermes6parser13StoredCommentESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i.i.i.i
   %.sroa.413.8.extract.trunc = trunc i64 %i.m to i40
   store i40 %.sroa.413.8.extract.trunc, ptr %i.l, align 8
-  %.sroa.419.0.insert.ext = zext nneg i8 %.sroa.419.1 to i64
-  %.sroa.419.0.insert.shift = shl nuw nsw i64 %.sroa.419.0.insert.ext, 32
+  %.sroa.419.0.insert.shift = shl nuw nsw i64 %.sroa.419.1, 32
   %.sroa.017.0.insert.ext = zext i32 %.sroa.017.1 to i64
   %.sroa.017.0.insert.insert = or disjoint i64 %.sroa.419.0.insert.shift, %.sroa.017.0.insert.ext
   ret i64 %.sroa.017.0.insert.insert

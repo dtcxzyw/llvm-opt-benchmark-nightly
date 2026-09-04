@@ -202,15 +202,14 @@ bb.y:                                             ; preds = %bb.x
   %i.cz = zext i8 %i.cu to i64                    ; 2 uses
   %i.da = shl nuw nsw i64 %i.cz, 2                ; 3 uses
   %i.db = add nsw i64 %i.da, -4
-  %i.dc = add nuw nsw i64 %i.cv, 4294967295
-  %5 = and i64 %i.dc, 4294967295                  ; 2 uses
-  %i.dd = shl nuw nsw i64 %5, 2
+  %i.dc = add nsw i64 %i.cv, -1                   ; 2 uses
+  %i.dd = shl nuw nsw i64 %i.dc, 2
   %i.de = sub nsw i64 %i.db, %i.dd                ; 2 uses
   %scevgep = getelementptr i8, ptr %i.cs, i64 %i.de
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep, i8 0, i64 %i.da, i1 false), !tbaa !7
   %i.df = shl nuw nsw i64 %i.cz, 3                ; 3 uses
   %i.dg = add nsw i64 %i.df, -8
-  %i.dh = shl nuw nsw i64 %5, 3
+  %i.dh = shl nuw nsw i64 %i.dc, 3
   %i.di = sub nsw i64 %i.dg, %i.dh                ; 2 uses
   %scevgep180 = getelementptr i8, ptr %i.cw, i64 %i.di
   tail call void @llvm.memset.p0.i64(ptr align 8 %scevgep180, i8 0, i64 %i.df, i1 false), !tbaa !18

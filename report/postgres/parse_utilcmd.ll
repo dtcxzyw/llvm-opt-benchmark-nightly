@@ -204,14 +204,12 @@ bb.ad:                                            ; preds = %bb.ap, %.lr.ph.i
 bb.ae:                                            ; preds = %bb.ad
   %i.hc = zext nneg i16 %i.ha to i64
   %i.hd = load ptr, ptr %i.gr, align 8            ; 2 uses
-  %1 = add nuw nsw i64 %i.hc, 4294967295
   %i.he = load i32, ptr %i.hd, align 8
   %i.hf = sext i32 %i.he to i64
   %i.hg = shl nsw i64 %i.hf, 3
   %i.hh = getelementptr i8, ptr %i.hd, i64 %i.hg
-  %i.hi = getelementptr i8, ptr %i.hh, i64 32
-  %2 = and i64 %1, 4294967295
-  %i.hj = getelementptr inbounds nuw [100 x i8], ptr %i.hi, i64 %2
+  %i.hi = getelementptr i8, ptr %i.hh, i64 -68
+  %i.hj = getelementptr [100 x i8], ptr %i.hi, i64 %i.hc
   br label %bb.ag
 
 bb.af:                                            ; preds = %bb.ad

@@ -205,7 +205,7 @@ iter.check:                                       ; preds = %bb.a
   %i.c = ptrtoint ptr %0 to i64, !dbg !9044
   %i.d = sub nuw i64 %i.b, %i.c, !dbg !9044       ; 4 uses
   %i.e = udiv i64 %i.d, 72, !dbg !9044            ; 9 uses
-  %min.iters.check = icmp ult i64 %i.d, 576, !dbg !9045
+  %min.iters.check = icmp ult i64 %i.d, 288, !dbg !9045
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck, !dbg !9045
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -225,7 +225,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check5, label %vec.epilog.ph, label %vector.ph, !dbg !9045
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.h = and i64 %i.e, 8
+  %i.h = and i64 %i.e, 12
   %n.vec = and i64 %i.e, 288230376151711728       ; 5 uses
   %i.i = add i64 %.sroa.5.0.copyload, %n.vec      ; 2 uses
   %i.j = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
@@ -313,48 +313,32 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !9046
-  %n.vec6 = and i64 %i.e, 288230376151711736      ; 4 uses
+  %n.vec6 = and i64 %i.e, 288230376151711740      ; 4 uses
   %i.by = add i64 %.sroa.5.0.copyload, %n.vec6    ; 2 uses
   %i.bz = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
-  %index7 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next8, %vec.epilog.vector.body ], !dbg !9046 ; 10 uses
-  %3 = getelementptr inbounds nuw [72 x i8], ptr %0, i64 %index7, !dbg !9047
-  %4 = getelementptr inbounds nuw [72 x i8], ptr %0, i64 %index7, !dbg !9047
-  %5 = getelementptr inbounds nuw [72 x i8], ptr %0, i64 %index7, !dbg !9047
-  %6 = getelementptr inbounds nuw [72 x i8], ptr %0, i64 %index7, !dbg !9047
+  %index7 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next8, %vec.epilog.vector.body ], !dbg !9046 ; 6 uses
   %i.ca = getelementptr inbounds nuw [72 x i8], ptr %0, i64 %index7, !dbg !9047
   %i.cb = getelementptr inbounds nuw [72 x i8], ptr %0, i64 %index7, !dbg !9047
   %i.cc = getelementptr inbounds nuw [72 x i8], ptr %0, i64 %index7, !dbg !9047
   %i.cd = getelementptr inbounds nuw [72 x i8], ptr %0, i64 %index7, !dbg !9047
-  %7 = getelementptr i8, ptr %3, i64 64, !dbg !9048
-  %8 = getelementptr i8, ptr %4, i64 136, !dbg !9048
-  %9 = getelementptr i8, ptr %5, i64 208, !dbg !9048
-  %10 = getelementptr i8, ptr %6, i64 280, !dbg !9048
-  %i.ce = getelementptr i8, ptr %i.ca, i64 352, !dbg !9048
-  %i.cf = getelementptr i8, ptr %i.cb, i64 424, !dbg !9048
-  %i.cg = getelementptr i8, ptr %i.cc, i64 496, !dbg !9048
-  %i.ch = getelementptr i8, ptr %i.cd, i64 568, !dbg !9048
-  %11 = load i8, ptr %7, align 8, !dbg !9048, !range !549, !alias.scope !9029, !noalias !9030, !noundef !385
-  %12 = load i8, ptr %8, align 8, !dbg !9048, !range !549, !alias.scope !9029, !noalias !9030, !noundef !385
-  %13 = load i8, ptr %9, align 8, !dbg !9048, !range !549, !alias.scope !9029, !noalias !9030, !noundef !385
-  %14 = load i8, ptr %10, align 8, !dbg !9048, !range !549, !alias.scope !9029, !noalias !9030, !noundef !385
+  %i.ce = getelementptr i8, ptr %i.ca, i64 64, !dbg !9048
+  %i.cf = getelementptr i8, ptr %i.cb, i64 136, !dbg !9048
+  %i.cg = getelementptr i8, ptr %i.cc, i64 208, !dbg !9048
+  %i.ch = getelementptr i8, ptr %i.cd, i64 280, !dbg !9048
   %i.ci = load i8, ptr %i.ce, align 8, !dbg !9048, !range !549, !alias.scope !9029, !noalias !9030, !noundef !385
   %i.cj = load i8, ptr %i.cf, align 8, !dbg !9048, !range !549, !alias.scope !9029, !noalias !9030, !noundef !385
   %i.ck = load i8, ptr %i.cg, align 8, !dbg !9048, !range !549, !alias.scope !9029, !noalias !9030, !noundef !385
   %i.cl = load i8, ptr %i.ch, align 8, !dbg !9048, !range !549, !alias.scope !9029, !noalias !9030, !noundef !385
-  %15 = insertelement <8 x i8> poison, i8 %11, i64 0
-  %16 = insertelement <8 x i8> %15, i8 %12, i64 1
-  %17 = insertelement <8 x i8> %16, i8 %13, i64 2
-  %18 = insertelement <8 x i8> %17, i8 %14, i64 3
-  %19 = insertelement <8 x i8> %18, i8 %i.ci, i64 4
-  %20 = insertelement <8 x i8> %19, i8 %i.cj, i64 5
-  %21 = insertelement <8 x i8> %20, i8 %i.ck, i64 6
-  %22 = insertelement <8 x i8> %21, i8 %i.cl, i64 7
+  %3 = insertelement <4 x i8> poison, i8 %i.ci, i64 0
+  %4 = insertelement <4 x i8> %3, i8 %i.cj, i64 1
+  %5 = insertelement <4 x i8> %4, i8 %i.ck, i64 2
+  %6 = insertelement <4 x i8> %5, i8 %i.cl, i64 3
   %i.cm = getelementptr i8, ptr %i.bz, i64 %index7, !dbg !9049
-  store <8 x i8> %22, ptr %i.cm, align 1, !dbg !9050, !alias.scope !9031, !noalias !9032
-  %index.next8 = add nuw i64 %index7, 8, !dbg !9046 ; 2 uses
+  store <4 x i8> %6, ptr %i.cm, align 1, !dbg !9050, !alias.scope !9031, !noalias !9032
+  %index.next8 = add nuw i64 %index7, 4, !dbg !9046 ; 2 uses
   %i.cn = icmp eq i64 %index.next8, %n.vec6, !dbg !9051
   br i1 %i.cn, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !dbg !9051, !llvm.loop !9018
 
@@ -757,7 +741,7 @@ begin_hunk_1_@llvm.usub.sat.i64
 !9030 = !{!8999}
 !9031 = !{!9008}
 !9032 = !{!9014, !9012, !9010, !8999, !8997}
-!9033 = !{!"branch_weights", i32 8, i32 8}
+!9033 = !{!"branch_weights", i32 4, i32 12}
 !9034 = !{!9014, !9012, !9010, !8999}
 !9035 = !DILocation(line: 289, column: 13, scope: !8976, inlinedAt: !8979)
 !9036 = !DILocation(line: 810, column: 1, scope: !9025, inlinedAt: !9035)

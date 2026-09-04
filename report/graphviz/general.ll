@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/graphviz/original/general?download=true
 inline.NumInlined: 4
 inline.NumDeleted: 1
-loop-unroll.NumRuntimeUnrolled: 8
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@vector_saxpy2:bb.a
   %broadcast.splatinsert = insertelement <2 x double> poison, double %3, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.i, %.epil.prehea
 ; Function Attrs: nounwind uwtable
 define void @vector_ordering(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load ptr, ptr %2, align 8, !tbaa !54
+  %i.a = load ptr, ptr %2, align 8, !tbaa !53
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %bb.b, label %bb.g
 
@@ -241,7 +241,7 @@ bb.f:                                             ; preds = %bb.e
 
 gv_calloc.exit:                                   ; preds = %.thread.i, %bb.e
   %i.k = phi ptr [ %i.c, %.thread.i ], [ %i.f, %bb.e ]
-  store ptr %i.k, ptr %2, align 8, !tbaa !54
+  store ptr %i.k, ptr %2, align 8, !tbaa !53
   br label %bb.g
 
 bb.g:                                             ; preds = %gv_calloc.exit, %bb.a
@@ -279,48 +279,50 @@ bb.k:                                             ; preds = %bb.j
   br label %._crit_edge33
 
 .lr.ph.preheader:                                 ; preds = %bb.j
-  %wide.trip.count = zext nneg i32 %0 to i64      ; 5 uses
-  %min.iters.check = icmp ult i32 %0, 4
-  br i1 %min.iters.check, label %.lr.ph.preheader54, label %vector.ph.a
+  %wide.trip.count = zext nneg i32 %0 to i64      ; 4 uses
+  %xtraiter = and i64 %wide.trip.count, 1
+  %3 = icmp eq i32 %0, 1
+  br i1 %3, label %.lr.ph, label %vector.ph.a
 
 vector.ph.a:                                      ; preds = %.lr.ph.preheader
-  %n.vec.a = and i64 %wide.trip.count, 2147483644 ; 3 uses
+  %n.vec.a = and i64 %wide.trip.count, 2147483646
   br label %vector.body.a
 
 vector.body.a:                                    ; preds = %vector.body.a, %vector.ph.a
-  %index.a = phi i64 [ 0, %vector.ph.a ], [ %index.next.a, %vector.body.a ] ; 4 uses
-  %vec.ind = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph.a ], [ %vec.ind.next, %vector.body.a ] ; 3 uses
-  %step.add = add <2 x i32> %vec.ind, splat (i32 2)
-  %3 = uitofp nneg <2 x i32> %vec.ind to <2 x double>
-  %4 = uitofp nneg <2 x i32> %step.add to <2 x double>
-  %5 = shl nuw nsw i64 %index.a, 4
-  %6 = shl i64 %index.a, 4
-  %7 = getelementptr inbounds nuw i8, ptr %i.p, i64 %5
-  %8 = getelementptr inbounds nuw i8, ptr %i.p, i64 %6
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 32
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %index.a ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 16
-  %wide.load = load <2 x double>, ptr %10, align 8, !tbaa !10
-  %wide.load43 = load <2 x double>, ptr %11, align 8, !tbaa !10
-  %interleaved.vec = shufflevector <2 x double> %wide.load, <2 x double> %3, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  store <4 x double> %interleaved.vec, ptr %7, align 8, !tbaa !10
-  %interleaved.vec44 = shufflevector <2 x double> %wide.load43, <2 x double> %4, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  store <4 x double> %interleaved.vec44, ptr %9, align 8, !tbaa !10
-  %index.next.a = add nuw i64 %index.a, 4         ; 2 uses
-  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 4)
-  %i.w = icmp eq i64 %index.next.a, %n.vec.a
+  %indvars.iv = phi i64 [ 0, %vector.ph.a ], [ %index.next.a, %vector.body.a ] ; 5 uses
+  %index.a = phi i64 [ 0, %vector.ph.a ], [ %niter.next.1, %vector.body.a ]
+  %4 = trunc nuw nsw i64 %indvars.iv to i32
+  %5 = uitofp nneg i32 %4 to double
+  %.idx = shl nuw nsw i64 %indvars.iv, 4
+  %6 = getelementptr inbounds nuw i8, ptr %i.p, i64 %.idx ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  store double %5, ptr %7, align 8, !tbaa !10
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
+  %9 = load double, ptr %8, align 8, !tbaa !10
+  store double %9, ptr %6, align 8, !tbaa !10
+  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 3 uses
+  %10 = trunc nuw nsw i64 %indvars.iv.next to i32
+  %11 = uitofp nneg i32 %10 to double
+  %.idx.1 = shl nuw nsw i64 %indvars.iv.next, 4
+  %12 = getelementptr inbounds nuw i8, ptr %i.p, i64 %.idx.1 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 8
+  store double %11, ptr %13, align 8, !tbaa !10
+  %14 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next
+  %15 = load double, ptr %14, align 8, !tbaa !10
+  store double %15, ptr %12, align 8, !tbaa !10
+  %index.next.a = add nuw nsw i64 %indvars.iv, 2  ; 2 uses
+  %niter.next.1 = add i64 %index.a, 2             ; 2 uses
+  %i.w = icmp eq i64 %niter.next.1, %n.vec.a
   br i1 %i.w, label %middle.block, label %vector.body.a, !llvm.loop !49
 
 middle.block:                                     ; preds = %vector.body.a
-  %cmp.n = icmp eq i64 %n.vec.a, %wide.trip.count
-  br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader54
+  %cmp.n = icmp eq i64 %xtraiter, 0
+  br i1 %cmp.n, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader54:                               ; preds = %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec.a, %middle.block ]
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader54, %.lr.ph
-  %indvars.iv.a = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader54 ] ; 4 uses
+.lr.ph:                                           ; preds = %middle.block, %.lr.ph.preheader
+  %indvars.iv.a = phi i64 [ 0, %.lr.ph.preheader ], [ %index.next.a, %middle.block ] ; 3 uses
+  %lcmp.mod43 = trunc i32 %0 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod43)
   %i.x = trunc nuw nsw i64 %indvars.iv.a to i32
   %i.y = uitofp nneg i32 %i.x to double
   %.idx.a = shl nuw nsw i64 %indvars.iv.a, 4
@@ -330,14 +332,12 @@ middle.block:                                     ; preds = %vector.body.a
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.a
   %i.ac = load double, ptr %i.ab, align 8, !tbaa !10
   store double %i.ac, ptr %i.z, align 8, !tbaa !10
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !50
+  br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.lr.ph, %middle.block
+._crit_edge:                                      ; preds = %middle.block, %.lr.ph
   %i.ad = zext nneg i32 %0 to i64
   tail call void @qsort(ptr noundef nonnull %i.p, i64 noundef %i.ad, i64 noundef 16, ptr noundef nonnull @comp_ascend) #17
-  %i.ae = load ptr, ptr %2, align 8, !tbaa !54    ; 2 uses
+  %i.ae = load ptr, ptr %2, align 8, !tbaa !53    ; 2 uses
   %wide.trip.count38 = zext nneg i32 %0 to i64
   %min.iters.check46 = icmp ult i32 %0, 5
   br i1 %min.iters.check46, label %scalar.ph45.preheader, label %vector.ph47
@@ -379,7 +379,7 @@ vector.body49:                                    ; preds = %vector.body49, %vec
   store <2 x i32> %i.bd, ptr %i.bf, align 4, !tbaa !18
   %index.next51 = add nuw i64 %index50, 4         ; 2 uses
   %i.bg = icmp eq i64 %index.next51, %n.vec48
-  br i1 %i.bg, label %scalar.ph45.preheader, label %vector.body49, !llvm.loop !51
+  br i1 %i.bg, label %scalar.ph45.preheader, label %vector.body49, !llvm.loop !50
 
 scalar.ph45.preheader:                            ; preds = %vector.body49, %._crit_edge
   %indvars.iv35.ph = phi i64 [ 0, %._crit_edge ], [ %n.vec48, %vector.body49 ]
@@ -396,7 +396,7 @@ scalar.ph45:                                      ; preds = %scalar.ph45.prehead
   store i32 %i.bk, ptr %i.bl, align 4, !tbaa !18
   %indvars.iv.next36 = add nuw nsw i64 %indvars.iv35, 1 ; 2 uses
   %exitcond39.not = icmp eq i64 %indvars.iv.next36, %wide.trip.count38
-  br i1 %exitcond39.not, label %._crit_edge33, label %scalar.ph45, !llvm.loop !52
+  br i1 %exitcond39.not, label %._crit_edge33, label %scalar.ph45, !llvm.loop !51
 
 ._crit_edge33:                                    ; preds = %scalar.ph45, %._crit_edge.thread
   %i.bm = phi ptr [ %i.u, %._crit_edge.thread ], [ %i.p, %scalar.ph45 ]
@@ -521,7 +521,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   %indvars.iv.next.i.epil = add nuw nsw i64 %indvars.iv.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %distance.exit, label %bb.c, !llvm.loop !55
+  br i1 %epil.iter.cmp.not, label %distance.exit, label %bb.c, !llvm.loop !54
 
 distance.exit:                                    ; preds = %distance.exit.loopexit.unr-lcssa, %bb.c, %bb.a
   %.0.lcssa.i = phi double [ 0.000000e+00, %bb.a ], [ %i.v, %distance.exit.loopexit.unr-lcssa ], [ %i.z, %bb.c ]
@@ -612,7 +612,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %bb.c, !llvm.loop !56
+  br i1 %epil.iter.cmp.not, label %._crit_edge, label %bb.c, !llvm.loop !55
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %bb.c, %bb.a
   %.0.lcssa = phi double [ 0.000000e+00, %bb.a ], [ %i.v, %._crit_edge.loopexit.unr-lcssa ], [ %i.z, %bb.c ]
@@ -676,7 +676,7 @@ bb.a:
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !57
+  br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !56
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -702,7 +702,7 @@ bb.a:
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !58
+  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !57
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil, %bb.a
   %.0.lcssa = phi double [ 0.000000e+00, %bb.a ], [ %i.z, %._crit_edge.loopexit.unr-lcssa ], [ %i.af, %.lr.ph.epil ]
@@ -724,13 +724,13 @@ bb.c:                                             ; preds = %bb.f, %bb.b
   %.017 = phi i1 [ true, %bb.b ], [ %.129, %bb.f ] ; 2 uses
   %.0 = phi i64 [ %i.a, %bb.b ], [ %i.h, %bb.f ]  ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.0 ; 2 uses
-  %i.c = load i8, ptr %i.b, align 1, !tbaa !59    ; 2 uses
+  %i.c = load i8, ptr %i.b, align 1, !tbaa !58    ; 2 uses
   %i.d = icmp eq i8 %i.c, 46
   %or.cond = select i1 %.017, i1 %i.d, i1 false
   br i1 %or.cond, label %.thread, label %._crit_edge
 
 .thread:                                          ; preds = %bb.c
-  store i8 0, ptr %i.b, align 1, !tbaa !59
+  store i8 0, ptr %i.b, align 1, !tbaa !58
   br label %bb.e
 
 ._crit_edge:                                      ; preds = %bb.c
@@ -861,15 +861,14 @@ attributes #22 = { cold noreturn nounwind }
 !46 = !{!45, !45, i64 0}
 !47 = !{!"float", !5, i64 0}
 !48 = !{!47, !47, i64 0}
-!49 = distinct !{!49, !11, !12, !13}
-!50 = distinct !{!50, !11, !13, !12}
-!51 = distinct !{!51, !11, !12, !13}
-!52 = distinct !{!52, !11, !13, !12}
-!53 = !{!"p1 int", !15, i64 0}
-!54 = !{!53, !53, i64 0}
+!49 = distinct !{!49, !11}
+!50 = distinct !{!50, !11, !12, !13}
+!51 = distinct !{!51, !11, !13, !12}
+!52 = !{!"p1 int", !15, i64 0}
+!53 = !{!52, !52, i64 0}
+!54 = distinct !{!54, !14}
 !55 = distinct !{!55, !14}
-!56 = distinct !{!56, !14}
-!57 = distinct !{!57, !11}
-!58 = distinct !{!58, !14}
-!59 = !{!5, !5, i64 0}
+!56 = distinct !{!56, !11}
+!57 = distinct !{!57, !14}
+!58 = !{!5, !5, i64 0}
 end_hunk_0

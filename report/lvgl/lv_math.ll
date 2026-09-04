@@ -204,18 +204,17 @@ define zeroext i16 @lv_atan2(i32 noundef %0, i32 noundef %1) local_unnamed_addr 
 bb.a:
   %spec.select = tail call i32 @llvm.abs.i32(i32 %0, i1 true) ; 3 uses
   %.lobit = lshr i32 %0, 31
-  %spec.select61 = trunc nuw nsw i32 %.lobit to i8 ; 2 uses
-  %2 = icmp slt i32 %1, 0
-  %3 = or disjoint i8 %spec.select61, 2
   %.050 = tail call i32 @llvm.abs.i32(i32 %1, i1 true) ; 3 uses
-  %.148 = select i1 %2, i8 %3, i8 %spec.select61  ; 2 uses
+  %2 = lshr i32 %1, 30
+  %3 = and i32 %2, 2
+  %.148 = or disjoint i32 %3, %.lobit             ; 2 uses
   %i.a = icmp samesign ugt i32 %spec.select, %.050
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.b = mul i32 %.050, 45
   %i.c = udiv i32 %i.b, %spec.select
-  %4 = or disjoint i8 %.148, 16
+  %4 = or disjoint i32 %.148, 16
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -224,7 +223,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.249 = phi i8 [ %4, %bb.b ], [ %.148, %bb.c ]
+  %.249 = phi i32 [ %4, %bb.b ], [ %.148, %bb.c ] ; 3 uses
   %.0 = phi i32 [ %i.c, %bb.b ], [ %i.e, %bb.c ]  ; 2 uses
   %i.f = and i32 %.0, 255                         ; 9 uses
   %i.g = icmp samesign ugt i32 %i.f, 22
@@ -257,14 +256,13 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.5 = add nuw nsw i32 %i.p, %.sink69
   %spec.select67 = add nuw nsw i32 %.5, %.4.sink
   %i.q = add i32 %spec.select67, %.0              ; 2 uses
-  %5 = zext nneg i8 %.249 to i32                  ; 3 uses
-  %i.r = and i32 %5, 16
+  %i.r = and i32 %.249, 16
   %.not = icmp eq i32 %i.r, 0
   %i.s = sub i32 90, %i.q
   %spec.select64 = select i1 %.not, i32 %i.q, i32 %i.s ; 4 uses
-  %i.t = and i32 %5, 2
+  %i.t = and i32 %.249, 2
   %.not58 = icmp eq i32 %i.t, 0
-  %i.u = and i32 %5, 1
+  %i.u = and i32 %.249, 1
   %.not59 = icmp eq i32 %i.u, 0                   ; 2 uses
   br i1 %.not58, label %bb.k, label %bb.h
 

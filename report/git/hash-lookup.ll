@@ -162,18 +162,16 @@ declare void @BUG_fl(ptr noundef, i32 noundef, ptr noundef, ...) local_unnamed_a
 define dso_local range(i32 0, 2) i32 @bsearch_hash(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #2 {
 bb.a:
   %i.a = load i8, ptr %0, align 1, !tbaa !45      ; 2 uses
-  %i.b = zext i8 %i.a to i64                      ; 2 uses
-  %i.c = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.b
+  %i.b = zext i8 %i.a to i64
+  %i.c = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.b ; 2 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !49
   %i.e = tail call i32 @llvm.bswap.i32(i32 %i.d)  ; 2 uses
   %i.f = icmp eq i8 %i.a, 0
   br i1 %i.f, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %5 = add nuw nsw i64 %i.b, 4294967295
-  %6 = and i64 %5, 4294967295
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %6
-  %i.g = load i32, ptr %7, align 4, !tbaa !49
+  %5 = getelementptr i8, ptr %i.c, i64 -4
+  %i.g = load i32, ptr %5, align 4, !tbaa !49
   %i.h = tail call i32 @llvm.bswap.i32(i32 %i.g)
   br label %bb.c
 

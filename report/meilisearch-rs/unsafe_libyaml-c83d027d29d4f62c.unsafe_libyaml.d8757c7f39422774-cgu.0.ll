@@ -205,7 +205,7 @@ bb.ad:                                            ; preds = %bb.ac, %._crit_edge
   %i.cm = ptrtoint ptr %i.ck to i64
   %i.cn = ptrtoint ptr %i.cl to i64
   %i.co = sub i64 %i.cm, %i.cn                    ; 5 uses
-  %i.cp = load i32, ptr %i.m, align 8, !range !9, !noundef !6 ; 4 uses
+  %i.cp = load i32, ptr %i.m, align 8, !range !9, !noundef !6 ; 3 uses
   switch i32 %i.cp, label %default.unreachable [
     i32 1, label %bb.ae
     i32 2, label %bb.af
@@ -280,9 +280,9 @@ bb.ak:                                            ; preds = %.thread158.i, %.thr
 
 .lr.ph.preheader.i:                               ; preds = %.thread158.i, %.thread.thread.i, %.thread.i
   %.sink87 = phi i8 [ 15, %.thread.thread.i ], [ 31, %.thread.i ], [ 7, %.thread158.i ]
-  %.sroa.095.0157160164.ph.i = phi i32 [ 3, %.thread.thread.i ], [ 2, %.thread.i ], [ 4, %.thread158.i ] ; 3 uses
   %.ph.i = phi i1 [ false, %.thread.thread.i ], [ false, %.thread.i ], [ true, %.thread158.i ] ; 3 uses
   %.ph259.i = phi i1 [ true, %.thread.thread.i ], [ false, %.thread.i ], [ false, %.thread158.i ] ; 4 uses
+  %.ph261.i = phi i64 [ 3, %.thread.thread.i ], [ 2, %.thread.i ], [ 4, %.thread158.i ] ; 3 uses
   %i.dm = and i8 %i.cs, %.sink87
   %i.dn = zext nneg i8 %i.dm to i32
   %i.do = getelementptr i8, ptr %i.cl, i64 1
@@ -294,7 +294,7 @@ bb.ak:                                            ; preds = %.thread158.i, %.thr
   %i.dr = phi i1 [ false, %.thread174.i ], [ %i.cw, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.2" ], [ %i.cw, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.1" ], [ %i.cw, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i" ]
   %i.ds = phi i1 [ false, %.thread174.i ], [ %.ph259.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.2" ], [ %.ph259.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.1" ], [ %.ph259.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i" ]
   %i.dt = phi i1 [ false, %.thread174.i ], [ %.ph.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.2" ], [ %.ph.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.1" ], [ %.ph.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i" ]
-  %.sroa.095.0157160164264.i = phi i32 [ 1, %.thread174.i ], [ %.sroa.095.0157160164.ph.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.2" ], [ %.sroa.095.0157160164.ph.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.1" ], [ %.sroa.095.0157160164.ph.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i" ]
+  %.sroa.095.0157160164264.i = phi i64 [ 1, %.thread174.i ], [ %.ph261.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.2" ], [ %.ph261.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.1" ], [ %.ph261.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i" ]
   %.sroa.027.1.lcssa.i = phi i32 [ %i.dl, %.thread174.i ], [ %i.ek, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i" ], [ %i.er, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.1" ], [ %i.ey, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit.i.2" ] ; 7 uses
   %i.du = icmp ugt i32 %.sroa.027.1.lcssa.i, 127
   %or.cond.i = select i1 %i.dr, i1 %i.du, i1 false
@@ -512,7 +512,7 @@ bb.ba:                                            ; preds = %bb.as
   br label %_ZN14unsafe_libyaml6reader25yaml_parser_update_buffer17hbbc67c64774c2db6E.exit
 
 "_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i": ; preds = %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit139.i", %bb.ar, %bb.al
-  %.sroa.082.0.i = phi i32 [ 2, %bb.ar ], [ %.sroa.095.0157160164264.i, %bb.al ], [ 4, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit139.i" ] ; 4 uses
+  %.sroa.082.0.i = phi i64 [ 2, %bb.ar ], [ %.sroa.095.0157160164264.i, %bb.al ], [ 4, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit139.i" ] ; 4 uses
   %.sroa.027.0.i = phi i32 [ %i.fs, %bb.ar ], [ %.sroa.027.1.lcssa.i, %bb.al ], [ %i.gr, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit139.i" ] ; 5 uses
   switch i32 %.sroa.027.0.i, label %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.thread.i" [
     i32 13, label %bb.bb
@@ -521,13 +521,12 @@ bb.ba:                                            ; preds = %bb.as
   ]
 
 bb.bb:                                            ; preds = %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.thread.i", %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i", %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i", %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i"
-  %.sroa.027.0170.i = phi i32 [ %.sroa.027.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ %.sroa.027.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ %.sroa.027.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ %.sroa.027.0169.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.thread.i" ] ; 13 uses
-  %.sroa.082.0167.i.a = phi i32 [ %.sroa.082.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ %.sroa.082.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ %.sroa.082.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ %.sroa.082.0168.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.thread.i" ]
-  %2 = zext nneg i32 %.sroa.082.0167.i.a to i64   ; 2 uses
-  %i.hg = getelementptr i8, ptr %i.cl, i64 %2
+  %.sroa.082.0167.i.a = phi i32 [ %.sroa.027.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ %.sroa.027.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ %.sroa.027.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ %.sroa.027.0169.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.thread.i" ] ; 13 uses
+  %.sroa.082.0167.i = phi i64 [ %.sroa.082.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ %.sroa.082.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ %.sroa.082.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ %.sroa.082.0168.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.thread.i" ] ; 2 uses
+  %i.hg = getelementptr i8, ptr %i.cl, i64 %.sroa.082.0167.i
   store ptr %i.hg, ptr %i.bu, align 8
   %i.hh = load i64, ptr %i.bw, align 8, !noundef !6 ; 2 uses
-  %i.hi = add i64 %i.hh, %2                       ; 2 uses
+  %i.hi = add i64 %i.hh, %.sroa.082.0167.i        ; 2 uses
   %i.hj = icmp ult i64 %i.hi, %i.hh
   br i1 %i.hj, label %bb.bc, label %"_ZN53_$LT$u64$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h91c4fbb6759473dcE.exit142.i", !prof !4
 
@@ -537,12 +536,12 @@ bb.bc:                                            ; preds = %bb.bb
 
 "_ZN53_$LT$u64$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h91c4fbb6759473dcE.exit142.i": ; preds = %bb.bb
   store i64 %i.hi, ptr %i.bw, align 8
-  %i.hk = icmp samesign ult i32 %.sroa.027.0170.i, 128
+  %i.hk = icmp samesign ult i32 %.sroa.082.0167.i.a, 128
   br i1 %i.hk, label %bb.bf, label %bb.be
 
 "_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.thread.i": ; preds = %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i", %.lr.ph200.i
   %.sroa.027.0169.i = phi i32 [ %.sroa.027.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ %i.cp, %.lr.ph200.i ] ; 7 uses
-  %.sroa.082.0168.i = phi i32 [ %.sroa.082.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ %i.cp, %.lr.ph200.i ]
+  %.sroa.082.0168.i = phi i64 [ %.sroa.082.0.i, %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit140.i" ], [ 0, %.lr.ph200.i ]
   %i.hl = add nsw i32 %.sroa.027.0169.i, -32
   %or.cond15.i = icmp ult i32 %i.hl, 95
   %i.hm = icmp eq i32 %.sroa.027.0169.i, 133
@@ -569,19 +568,19 @@ bb.bd:                                            ; preds = %"_ZN53_$LT$u32$u20$
   br label %_ZN14unsafe_libyaml6reader25yaml_parser_update_buffer17hbbc67c64774c2db6E.exit
 
 bb.be:                                            ; preds = %"_ZN53_$LT$u64$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h91c4fbb6759473dcE.exit142.i"
-  %i.hu = icmp samesign ult i32 %.sroa.027.0170.i, 2048
+  %i.hu = icmp samesign ult i32 %.sroa.082.0167.i.a, 2048
   br i1 %i.hu, label %"_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit143.i", label %bb.bg
 
 bb.bf:                                            ; preds = %"_ZN53_$LT$u64$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h91c4fbb6759473dcE.exit142.i"
   %i.hv = load ptr, ptr %i.bl, align 8, !noundef !6 ; 2 uses
   %i.hw = getelementptr i8, ptr %i.hv, i64 1
   store ptr %i.hw, ptr %i.bl, align 8
-  %i.hx = trunc nuw nsw i32 %.sroa.027.0170.i to i8
+  %i.hx = trunc nuw nsw i32 %.sroa.082.0167.i.a to i8
   store i8 %i.hx, ptr %i.hv, align 1
   br label %bb.bh
 
 bb.bg:                                            ; preds = %bb.be
-  %i.hy = icmp samesign ult i32 %.sroa.027.0170.i, 65536
+  %i.hy = icmp samesign ult i32 %.sroa.082.0167.i.a, 65536
   %i.hz = load ptr, ptr %i.bl, align 8, !noundef !6 ; 3 uses
   %i.ia = getelementptr i8, ptr %i.hz, i64 1
   store ptr %i.ia, ptr %i.bl, align 8
@@ -591,28 +590,28 @@ bb.bg:                                            ; preds = %bb.be
   %i.ib = load ptr, ptr %i.bl, align 8, !noundef !6 ; 2 uses
   %i.ic = getelementptr i8, ptr %i.ib, i64 1
   store ptr %i.ic, ptr %i.bl, align 8
-  %i.id = lshr i32 %.sroa.027.0170.i, 6
+  %i.id = lshr i32 %.sroa.082.0167.i.a, 6
   %i.ie = trunc nuw nsw i32 %i.id to i8
   %i.if = or disjoint i8 %i.ie, -64
   store i8 %i.if, ptr %i.ib, align 1
   %i.ig = load ptr, ptr %i.bl, align 8, !noundef !6 ; 2 uses
   %i.ih = getelementptr i8, ptr %i.ig, i64 1
   store ptr %i.ih, ptr %i.bl, align 8
-  %i.ii = trunc i32 %.sroa.027.0170.i to i8
+  %i.ii = trunc i32 %.sroa.082.0167.i.a to i8
   %i.ij = and i8 %i.ii, 63
   %i.ik = or disjoint i8 %i.ij, -128
   store i8 %i.ik, ptr %i.ig, align 1
   br label %bb.bh
 
 "_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit145.i": ; preds = %bb.bg
-  %i.il = lshr i32 %.sroa.027.0170.i, 18
+  %i.il = lshr i32 %.sroa.082.0167.i.a, 18
   %i.im = trunc nuw nsw i32 %i.il to i8
   %i.in = add nuw nsw i8 %i.im, -16
   store i8 %i.in, ptr %i.hz, align 1
   %i.io = load ptr, ptr %i.bl, align 8, !noundef !6 ; 2 uses
   %i.ip = getelementptr i8, ptr %i.io, i64 1
   store ptr %i.ip, ptr %i.bl, align 8
-  %i.iq = lshr i32 %.sroa.027.0170.i, 12
+  %i.iq = lshr i32 %.sroa.082.0167.i.a, 12
   %i.ir = trunc i32 %i.iq to i8
   %i.is = and i8 %i.ir, 63
   %i.it = or disjoint i8 %i.is, -128
@@ -620,7 +619,7 @@ bb.bg:                                            ; preds = %bb.be
   %i.iu = load ptr, ptr %i.bl, align 8, !noundef !6 ; 2 uses
   %i.iv = getelementptr i8, ptr %i.iu, i64 1
   store ptr %i.iv, ptr %i.bl, align 8
-  %i.iw = lshr i32 %.sroa.027.0170.i, 6
+  %i.iw = lshr i32 %.sroa.082.0167.i.a, 6
   %i.ix = trunc i32 %i.iw to i8
   %i.iy = and i8 %i.ix, 63
   %i.iz = or disjoint i8 %i.iy, -128
@@ -628,21 +627,21 @@ bb.bg:                                            ; preds = %bb.be
   %i.ja = load ptr, ptr %i.bl, align 8, !noundef !6 ; 2 uses
   %i.jb = getelementptr i8, ptr %i.ja, i64 1
   store ptr %i.jb, ptr %i.bl, align 8
-  %i.jc = trunc i32 %.sroa.027.0170.i to i8
+  %i.jc = trunc i32 %.sroa.082.0167.i.a to i8
   %i.jd = and i8 %i.jc, 63
   %i.je = or disjoint i8 %i.jd, -128
   store i8 %i.je, ptr %i.ja, align 1
   br label %bb.bh
 
 "_ZN53_$LT$u32$u20$as$u20$unsafe_libyaml..ops..ForceAdd$GT$9force_add17h5a09d476b58d2854E.exit149.i": ; preds = %bb.bg
-  %i.jf = lshr i32 %.sroa.027.0170.i, 12
+  %i.jf = lshr i32 %.sroa.082.0167.i.a, 12
   %i.jg = trunc nuw nsw i32 %i.jf to i8
   %i.jh = or disjoint i8 %i.jg, -32
   store i8 %i.jh, ptr %i.hz, align 1
   %i.ji = load ptr, ptr %i.bl, align 8, !noundef !6 ; 2 uses
   %i.jj = getelementptr i8, ptr %i.ji, i64 1
   store ptr %i.jj, ptr %i.bl, align 8
-  %i.jk = lshr i32 %.sroa.027.0170.i, 6
+  %i.jk = lshr i32 %.sroa.082.0167.i.a, 6
   %i.jl = trunc i32 %i.jk to i8
   %i.jm = and i8 %i.jl, 63
   %i.jn = or disjoint i8 %i.jm, -128
@@ -650,7 +649,7 @@ bb.bg:                                            ; preds = %bb.be
   %i.jo = load ptr, ptr %i.bl, align 8, !noundef !6 ; 2 uses
   %i.jp = getelementptr i8, ptr %i.jo, i64 1
   store ptr %i.jp, ptr %i.bl, align 8
-  %i.jq = trunc i32 %.sroa.027.0170.i to i8
+  %i.jq = trunc i32 %.sroa.082.0167.i.a to i8
   %i.jr = and i8 %i.jq, 63
   %i.js = or disjoint i8 %i.jr, -128
   store i8 %i.js, ptr %i.jo, align 1

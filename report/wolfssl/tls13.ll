@@ -205,15 +205,14 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.m, label %ForceZero.exit, label %.thread
 
 .thread:                                          ; preds = %bb.b, %bb.c
-  %i.n = phi ptr [ %i.l, %bb.c ], [ %i.j, %bb.b ] ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 992 ; 2 uses
+  %i.n = phi ptr [ %i.l, %bb.c ], [ %i.j, %bb.b ] ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 992 ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 732 ; 2 uses
   %i.q = load i16, ptr %i.p, align 4, !tbaa !58
   %i.r = tail call i16 @llvm.umax.i16(i16 %i.q, i16 12)
-  %spec.store.select.i = zext i16 %i.r to i64
-  %i.s = add nuw nsw i64 %spec.store.select.i, 4294967288
-  %6 = and i64 %i.s, 4294967295                   ; 3 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.n, i64 %6 ; 28 uses
+  %spec.store.select.i = zext i16 %i.r to i64     ; 4 uses
+  %i.s = add nsw i64 %spec.store.select.i, -8     ; 3 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.s ; 27 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 1040
   %i.v = load i64, ptr %i.u, align 16
   %i.w = and i64 %i.v, 131072
@@ -267,8 +266,8 @@ WriteSEQTls13.exit.i:                             ; preds = %bb.e, %bb.d, %.thre
   %i.ax = trunc i32 %.sroa.6.0.i.i to i8
   %i.ay = getelementptr inbounds nuw i8, ptr %i.t, i64 7
   store i8 %i.ax, ptr %i.ay, align 1, !tbaa !57
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.n, ptr nonnull align 16 %i.o, i64 %6, i1 false)
-  %i.az = getelementptr inbounds nuw i8, ptr %i.o, i64 %6 ; 20 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.n, ptr nonnull align 16 %i.o, i64 %i.s, i1 false)
+  %i.az = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.s ; 18 uses
   %i.ba = ptrtoint ptr %i.t to i64                ; 3 uses
   %i.bb = ptrtoint ptr %i.az to i64               ; 2 uses
   %i.bc = or i64 %i.bb, %i.ba
@@ -295,7 +294,7 @@ bb.f:                                             ; preds = %WriteSEQTls13.exit.
   br i1 %.not55.i.i, label %._crit_edge.thread.i.i, label %.lr.ph.i.i
 
 ._crit_edge.thread.i.i:                           ; preds = %.preheader.i.i
-  %i.bl = getelementptr inbounds nuw i8, ptr %i.az, i64 8 ; 2 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.o, i64 %spec.store.select.i ; 2 uses
   %i.bm = ptrtoaddr ptr %i.bl to i64              ; 2 uses
   %.0.lcssa68.i.i85 = ptrtoaddr ptr %i.az to i64  ; 4 uses
   %i.bn = add nuw i64 %.0.lcssa68.i.i85, 8
@@ -392,9 +391,9 @@ bb.f:                                             ; preds = %WriteSEQTls13.exit.
   br i1 %.not127, label %XorWords.exit.i.i, label %.lr.ph.i.i.7
 
 .lr.ph.i.i.7:                                     ; preds = %.lr.ph.i.i.6
-  %i.dq = getelementptr inbounds nuw i8, ptr %i.az, i64 8
+  %i.dq = getelementptr inbounds nuw i8, ptr %i.o, i64 %spec.store.select.i
   %i.dr = load i8, ptr %i.dj, align 1, !tbaa !57
-  %i.ds = getelementptr inbounds nuw i8, ptr %i.t, i64 8
+  %i.ds = getelementptr inbounds nuw i8, ptr %i.n, i64 %spec.store.select.i
   %i.dt = load i8, ptr %i.dl, align 1, !tbaa !57
   %i.du = xor i8 %i.dt, %i.dr
   store i8 %i.du, ptr %i.dl, align 1, !tbaa !57
@@ -797,15 +796,14 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.aw, label %EncryptTls13.exit.thread, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.p, %bb.o
-  %i.ax = phi ptr [ %i.av, %bb.p ], [ %i.at, %bb.o ] ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 980 ; 2 uses
+  %i.ax = phi ptr [ %i.av, %bb.p ], [ %i.at, %bb.o ] ; 3 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 980 ; 4 uses
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 732
   %i.ba = load i16, ptr %i.az, align 4, !tbaa !58
   %i.bb = tail call i16 @llvm.umax.i16(i16 %i.ba, i16 12)
-  %spec.store.select.i.i = zext i16 %i.bb to i64
-  %i.bc = add nuw nsw i64 %spec.store.select.i.i, 4294967288
-  %9 = and i64 %i.bc, 4294967295                  ; 3 uses
-  %i.bd = getelementptr inbounds nuw i8, ptr %i.ax, i64 %9 ; 28 uses
+  %spec.store.select.i.i = zext i16 %i.bb to i64  ; 4 uses
+  %i.bc = add nsw i64 %spec.store.select.i.i, -8  ; 3 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.bc ; 27 uses
   %i.be = load i64, ptr %i.v, align 8
   %i.bf = and i64 %i.be, 131072
   %.not.i.i.i = icmp eq i64 %i.bf, 0
@@ -858,8 +856,8 @@ WriteSEQTls13.exit.i.i:                           ; preds = %bb.r, %bb.q, %.thre
   %i.cg = trunc i32 %.sroa.6.0.i.i.i to i8
   %i.ch = getelementptr inbounds nuw i8, ptr %i.bd, i64 7
   store i8 %i.cg, ptr %i.ch, align 1, !tbaa !57
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ax, ptr nonnull align 4 %i.ay, i64 %9, i1 false)
-  %i.ci = getelementptr inbounds nuw i8, ptr %i.ay, i64 %9 ; 20 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ax, ptr nonnull align 4 %i.ay, i64 %i.bc, i1 false)
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.bc ; 18 uses
   %i.cj = ptrtoint ptr %i.bd to i64               ; 3 uses
   %i.ck = ptrtoint ptr %i.ci to i64               ; 2 uses
   %i.cl = or i64 %i.ck, %i.cj
@@ -886,7 +884,7 @@ bb.s:                                             ; preds = %WriteSEQTls13.exit.
   br i1 %.not55.i.i.i, label %._crit_edge.thread.i.i.i, label %.lr.ph.i.i.i
 
 ._crit_edge.thread.i.i.i:                         ; preds = %.preheader.i.i.i
-  %i.cu = getelementptr inbounds nuw i8, ptr %i.ci, i64 8 ; 2 uses
+  %i.cu = getelementptr inbounds nuw i8, ptr %i.ay, i64 %spec.store.select.i.i ; 2 uses
   %i.cv = ptrtoaddr ptr %i.cu to i64              ; 2 uses
   %.0.lcssa68.i.i.i167 = ptrtoaddr ptr %i.ci to i64 ; 4 uses
   %i.cw = add nuw i64 %.0.lcssa68.i.i.i167, 8
@@ -983,9 +981,9 @@ bb.s:                                             ; preds = %WriteSEQTls13.exit.
   br i1 %.not214, label %XorWords.exit.i.i.i, label %.lr.ph.i.i.i.7
 
 .lr.ph.i.i.i.7:                                   ; preds = %.lr.ph.i.i.i.6
-  %i.ez = getelementptr inbounds nuw i8, ptr %i.ci, i64 8
+  %i.ez = getelementptr inbounds nuw i8, ptr %i.ay, i64 %spec.store.select.i.i
   %i.fa = load i8, ptr %i.es, align 1, !tbaa !57
-  %i.fb = getelementptr inbounds nuw i8, ptr %i.bd, i64 8
+  %i.fb = getelementptr inbounds nuw i8, ptr %i.ax, i64 %spec.store.select.i.i
   %i.fc = load i8, ptr %i.eu, align 1, !tbaa !57
   %i.fd = xor i8 %i.fc, %i.fa
   store i8 %i.fd, ptr %i.eu, align 1, !tbaa !57

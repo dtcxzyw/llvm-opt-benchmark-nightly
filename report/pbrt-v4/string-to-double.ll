@@ -204,14 +204,13 @@ bb.j:                                             ; preds = %.lr.ph.i
   br i1 %.not.not.i, label %_ZN17double_conversionL17AdvanceToNonspaceIPKtEEbPT_S3_.exit.thread, label %.lr.ph.i, !llvm.loop !3
 
 bb.k:                                             ; preds = %bb.g, %_ZN17double_conversionL24IsCharacterDigitForRadixEiic.exit, %bb.e
-  %.sink = phi i64 [ 4294967209, %_ZN17double_conversionL24IsCharacterDigitForRadixEiic.exit ], [ 4294967248, %bb.e ], [ 4294967241, %bb.g ]
-  %i.al = add nuw nsw i64 %.sink, %i.aa
+  %.sink = phi i64 [ -87, %_ZN17double_conversionL24IsCharacterDigitForRadixEiic.exit ], [ -48, %bb.e ], [ -55, %bb.g ]
+  %i.al = add nsw i64 %.sink, %i.aa
   %i.am = trunc nuw i8 %.0123 to i1
   %i.an = add nsw i32 %.0128, -4
   %spec.select150 = select i1 %i.am, i32 %i.an, i32 %.0128 ; 22 uses
   %i.ao = shl nsw i64 %.0134, 4
-  %9 = and i64 %i.al, 4294967295
-  %i.ap = add nsw i64 %i.ao, %9                   ; 24 uses
+  %i.ap = add nsw i64 %i.al, %i.ao                ; 24 uses
   %i.aq = ashr i64 %i.ap, %i.k
   %i.ar = trunc i64 %i.aq to i32                  ; 3 uses
   %.not = icmp eq i32 %i.ar, 0

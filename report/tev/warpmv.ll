@@ -202,12 +202,10 @@ bb.f:                                             ; preds = %._crit_edge
 
 bb.g:                                             ; preds = %bb.f
   %i.bw = sub nsw i64 54, %i.bq
-  %8 = and i64 %i.bw, 4294967295
-  %i.bx = shl nuw nsw i64 1, %8
+  %i.bx = shl nuw nsw i64 1, %i.bw
   %i.by = add nsw i64 %i.bu, %i.bx
   %i.bz = sub nsw i64 55, %i.bq
-  %9 = and i64 %i.bz, 4294967295
-  %i.ca = ashr i64 %i.by, %9
+  %i.ca = ashr i64 %i.by, %i.bz
   br label %resolve_divisor_64.exit
 
 bb.h:                                             ; preds = %bb.f

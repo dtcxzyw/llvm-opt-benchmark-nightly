@@ -204,7 +204,7 @@ bb.cq:                                            ; preds = %bb.cm
 
 bb.cr:                                            ; preds = %bb.cq, %bb.cp
   %.0.i669 = phi ptr [ %i.mx, %bb.cp ], [ %i.nl, %bb.cq ] ; 3 uses
-  %i.nm = add nuw nsw i64 %i.mi, 4294967295
+  %i.nm = add nsw i64 %i.mi, -1
   %i.nn = getelementptr inbounds nuw i8, ptr %.0.i669, i64 8 ; 2 uses
   %i.no = load i64, ptr %i.nn, align 8, !tbaa !66 ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.no, 0
@@ -216,8 +216,7 @@ bb.cs:                                            ; preds = %bb.cr
 
 bias_key.exit.i:                                  ; preds = %bb.cs, %bb.cr
   %i.nq = phi i64 [ %i.np, %bb.cs ], [ %i.no, %bb.cr ]
-  %8 = and i64 %i.nm, 4294967295
-  %i.nr = add i64 %i.nq, %8
+  %i.nr = add i64 %i.nm, %i.nq
   store i64 %i.nr, ptr %i.nn, align 8, !tbaa !66
   br label %create_str_cache_key.exit
 

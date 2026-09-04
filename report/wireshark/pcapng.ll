@@ -204,10 +204,9 @@ bb.h:                                             ; preds = %bb.f
   %i.m = load i8, ptr %4, align 1
   store i8 %i.m, ptr %8, align 8
   %i.n = getelementptr i8, ptr %4, i64 1
-  %i.o = add nuw nsw i64 %i.l, 4294967295
-  %9 = and i64 %i.o, 4294967295                   ; 2 uses
-  %i.p = tail call ptr @g_memdup2(ptr noundef %i.n, i64 noundef %9) #22
-  %i.q = tail call ptr @g_byte_array_new_take(ptr noundef %i.p, i64 noundef %9)
+  %i.o = add nsw i64 %i.l, -1                     ; 2 uses
+  %i.p = tail call ptr @g_memdup2(ptr noundef %i.n, i64 noundef %i.o) #22
+  %i.q = tail call ptr @g_byte_array_new_take(ptr noundef %i.p, i64 noundef %i.o)
   %i.r = getelementptr inbounds nuw i8, ptr %8, i64 8
   store ptr %i.q, ptr %i.r, align 8
   %i.s = getelementptr i8, ptr %0, i64 8

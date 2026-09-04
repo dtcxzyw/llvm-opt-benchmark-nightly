@@ -160,51 +160,47 @@ bb.c:                                             ; preds = %bb.a
   %i.ah = load i64, ptr %i.i, align 8, !range !5, !noalias !40, !noundef !6
   %i.ai = trunc nuw i64 %i.ah to i1
   %i.aj = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %i.ak = load i64, ptr %i.aj, align 8, !noalias !40, !noundef !6 ; 12 uses
+  %i.ak = load i64, ptr %i.aj, align 8, !noalias !40, !noundef !6 ; 11 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.am = load i32, ptr %i.al, align 8, !range !8, !noalias !40, !noundef !6 ; 3 uses
-  %i.an = urem i64 %i.ak, 60                      ; 3 uses
+  %i.an = urem i64 %i.ak, 60                      ; 4 uses
   %i.ao = udiv i64 %i.ak, 60
+  %6 = urem i64 %i.ao, 60                         ; 4 uses
   br i1 %i.ai, label %bb.d, label %_RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_add_std.exit.i.thread.i.i
 
 bb.d:                                             ; preds = %.noexc19.i
-  %6 = trunc nuw nsw i64 %i.an to i8              ; 2 uses
-  %7 = udiv i64 %i.ak, 60
-  %8 = urem i64 %7, 60                            ; 2 uses
-  %9 = trunc nuw nsw i64 %8 to i8                 ; 2 uses
-  %10 = sub nsw i8 0, %9
+  %7 = sub nsw i64 0, %6
   %i.ap = udiv i64 %i.ak, 3600
   %i.aq = urem i64 %i.ap, 24                      ; 2 uses
-  %11 = trunc nuw nsw i64 %i.aq to i8
   %.not.i.i = icmp eq i32 %i.am, 0
   br i1 %.not.i.i, label %.thread.i.i.i.i, label %.thread.i.i.thread.i.i, !prof !9
 
 .thread.i.i.thread.i.i:                           ; preds = %bb.d
   %i.ar = sub nuw nsw i32 1000000000, %i.am
-  %12 = xor i8 %6, -1
+  %8 = xor i64 %i.an, -1
   br label %.thread43.i.i.thread.i.i
 
 .thread.i.i.i.i:                                  ; preds = %bb.d
-  %13 = sub nsw i8 0, %6
+  %9 = sub nsw i64 0, %i.an
   %.not60.i.i = icmp eq i64 %i.an, 0
   br i1 %.not60.i.i, label %.thread43.i.i.i.i, label %.thread43.i.i.thread.i.i, !prof !10
 
 .thread43.i.i.thread.i.i:                         ; preds = %.thread.i.i.i.i, %.thread.i.i.thread.i.i
   %.sroa.04.040.i.i25.i.i = phi i32 [ %i.ar, %.thread.i.i.thread.i.i ], [ 0, %.thread.i.i.i.i ]
-  %.sroa.09.041.i.i23.i.i = phi i8 [ %12, %.thread.i.i.thread.i.i ], [ %13, %.thread.i.i.i.i ]
-  %14 = add nsw i8 %.sroa.09.041.i.i23.i.i, 60
-  %15 = xor i8 %9, -1
+  %.sroa.09.041.i.i23.i.i = phi i64 [ %8, %.thread.i.i.thread.i.i ], [ %9, %.thread.i.i.i.i ]
+  %10 = add nsw i64 %.sroa.09.041.i.i23.i.i, 60
+  %11 = xor i64 %6, -1
   br label %_RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i
 
 .thread43.i.i.i.i:                                ; preds = %.thread.i.i.i.i
-  %.not61.i.i = icmp eq i64 %8, 0
+  %.not61.i.i = icmp eq i64 %6, 0
   br i1 %.not61.i.i, label %_RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.i.i, label %_RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i, !prof !10
 
 _RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i: ; preds = %.thread43.i.i.i.i, %.thread43.i.i.thread.i.i
-  %.sroa.09.150.i.i33.i.i = phi i8 [ %14, %.thread43.i.i.thread.i.i ], [ 0, %.thread43.i.i.i.i ]
-  %.sroa.016.051.i.i31.i.i = phi i8 [ %15, %.thread43.i.i.thread.i.i ], [ %10, %.thread43.i.i.i.i ]
+  %.sroa.09.150.i.i33.i.i = phi i64 [ %10, %.thread43.i.i.thread.i.i ], [ 0, %.thread43.i.i.i.i ]
+  %.sroa.016.051.i.i31.i.i = phi i64 [ %11, %.thread43.i.i.thread.i.i ], [ %7, %.thread43.i.i.i.i ]
   %.sroa.04.040.i.i2430.i.i = phi i32 [ %.sroa.04.040.i.i25.i.i, %.thread43.i.i.thread.i.i ], [ 0, %.thread43.i.i.i.i ]
-  %16 = add nsw i8 %.sroa.016.051.i.i31.i.i, 60
+  %12 = add nsw i64 %.sroa.016.051.i.i31.i.i, 60
   %i.as = icmp ugt i64 %i.ak, 185542587187199
   br i1 %i.as, label %.invoke.i, label %bb.g
 
@@ -261,10 +257,10 @@ bb.f:                                             ; preds = %_RNvMs2_NtCst0rBzRT
   br i1 %i.cc, label %.invoke.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %_RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i
-  %.sroa.09.150.i.i324050.i.i = phi i8 [ %.sroa.09.150.i.i33.i.i, %_RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i ], [ 0, %bb.f ] ; 2 uses
+  %.sroa.09.150.i.i324050.i.i = phi i64 [ %.sroa.09.150.i.i33.i.i, %_RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i ], [ 0, %bb.f ] ; 2 uses
   %.sroa.04.040.i.i24294249.i.i = phi i32 [ %.sroa.04.040.i.i2430.i.i, %_RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i ], [ 0, %bb.f ] ; 2 uses
-  %.sroa.016.1.i.i4448.i.i = phi i8 [ %16, %_RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i ], [ 0, %bb.f ] ; 2 uses
-  %.pn.i.i = phi i8 [ 23, %_RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i ], [ 24, %bb.f ] ; 2 uses
+  %.sroa.016.1.i.i4448.i.i = phi i64 [ %12, %_RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i ], [ 0, %bb.f ] ; 2 uses
+  %.pn.i.i = phi i64 [ 23, %_RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i ], [ 24, %bb.f ] ; 2 uses
   %i.cd = udiv i64 %i.ak, 86400
   %i.ce = trunc nuw nsw i64 %i.cd to i32          ; 2 uses
   %i.cf = add nsw i32 %i.ce, -4371588
@@ -337,24 +333,21 @@ bb.k:                                             ; preds = %bb.i
   br label %_RNvXse_NtCst0rBzRTPJg_4time16offset_date_timeNtB5_14OffsetDateTimeINtNtNtCskKLDkoKarTP_4core3ops5arith3SubNtNtB19_4time8DurationE3sub.exit.i.i
 
 _RNvXse_NtCst0rBzRTPJg_4time16offset_date_timeNtB5_14OffsetDateTimeINtNtNtCskKLDkoKarTP_4core3ops5arith3SubNtNtB19_4time8DurationE3sub.exit.i.i: ; preds = %bb.k, %bb.j, %_RNvMNtCst0rBzRTPJg_4time4dateNtB2_4Date15checked_sub_std.exit.i.i.i
-  %.pn63.i.i = phi i8 [ 0, %_RNvMNtCst0rBzRTPJg_4time4dateNtB2_4Date15checked_sub_std.exit.i.i.i ], [ %.pn.i.i, %bb.k ], [ %.pn.i.i, %bb.j ]
-  %.sroa.016.1.i.i43.i.i = phi i8 [ 0, %_RNvMNtCst0rBzRTPJg_4time4dateNtB2_4Date15checked_sub_std.exit.i.i.i ], [ %.sroa.016.1.i.i4448.i.i, %bb.k ], [ %.sroa.016.1.i.i4448.i.i, %bb.j ]
+  %.pn63.i.i = phi i64 [ 0, %_RNvMNtCst0rBzRTPJg_4time4dateNtB2_4Date15checked_sub_std.exit.i.i.i ], [ %.pn.i.i, %bb.k ], [ %.pn.i.i, %bb.j ]
+  %.sroa.016.1.i.i43.i.i = phi i64 [ 0, %_RNvMNtCst0rBzRTPJg_4time4dateNtB2_4Date15checked_sub_std.exit.i.i.i ], [ %.sroa.016.1.i.i4448.i.i, %bb.k ], [ %.sroa.016.1.i.i4448.i.i, %bb.j ]
   %.sroa.04.040.i.i242941.i.i = phi i32 [ 0, %_RNvMNtCst0rBzRTPJg_4time4dateNtB2_4Date15checked_sub_std.exit.i.i.i ], [ %.sroa.04.040.i.i24294249.i.i, %bb.k ], [ %.sroa.04.040.i.i24294249.i.i, %bb.j ]
-  %.sroa.09.150.i.i3239.i.i = phi i8 [ 0, %_RNvMNtCst0rBzRTPJg_4time4dateNtB2_4Date15checked_sub_std.exit.i.i.i ], [ %.sroa.09.150.i.i324050.i.i, %bb.k ], [ %.sroa.09.150.i.i324050.i.i, %bb.j ]
+  %.sroa.09.150.i.i3239.i.i = phi i64 [ 0, %_RNvMNtCst0rBzRTPJg_4time4dateNtB2_4Date15checked_sub_std.exit.i.i.i ], [ %.sroa.09.150.i.i324050.i.i, %bb.k ], [ %.sroa.09.150.i.i324050.i.i, %bb.j ]
   %.sroa.02.0.i.i.i = phi i32 [ %i.ca, %_RNvMNtCst0rBzRTPJg_4time4dateNtB2_4Date15checked_sub_std.exit.i.i.i ], [ %i.ea, %bb.k ], [ %i.do, %bb.j ]
-  %spec.select.i.i45.i.i = sub nsw i8 %.pn63.i.i, %11
-  %.sroa.4.0.insert.ext.i.i.i.i.i = zext nneg i8 %spec.select.i.i45.i.i to i64
-  %.sroa.4.0.insert.shift.i.i.i.i.i = shl nuw nsw i64 %.sroa.4.0.insert.ext.i.i.i.i.i, 48
-  %.sroa.3.0.insert.ext.i.i.i.i.i = zext nneg i8 %.sroa.016.1.i.i43.i.i to i64
-  %.sroa.3.0.insert.shift.i.i.i.i.i = shl nuw nsw i64 %.sroa.3.0.insert.ext.i.i.i.i.i, 40
-  %.sroa.3.0.insert.insert.i.i.i.i.i = or disjoint i64 %.sroa.4.0.insert.shift.i.i.i.i.i, %.sroa.3.0.insert.shift.i.i.i.i.i
-  %.sroa.2.0.insert.ext.i.i.i.i.i = zext nneg i8 %.sroa.09.150.i.i3239.i.i to i64
-  %.sroa.2.0.insert.shift.i.i.i.i.i = shl nuw nsw i64 %.sroa.2.0.insert.ext.i.i.i.i.i, 32
+  %spec.select.i.i45.i.i = sub nsw i64 %.pn63.i.i, %i.aq
+  %.sroa.4.0.insert.shift.i.i.i.i.i = shl nuw nsw i64 %spec.select.i.i45.i.i, 48
+  %.sroa.3.0.insert.shift.i.i.i.i.i = shl nuw nsw i64 %.sroa.016.1.i.i43.i.i, 40
+  %.sroa.3.0.insert.insert.i.i.i.i.i = add nuw nsw i64 %.sroa.4.0.insert.shift.i.i.i.i.i, %.sroa.3.0.insert.shift.i.i.i.i.i
+  %.sroa.2.0.insert.ext.i.i.i.i.i = shl nuw nsw i64 %.sroa.09.150.i.i3239.i.i, 32
+  %.sroa.2.0.insert.shift.i.i.i.i.i = and i64 %.sroa.2.0.insert.ext.i.i.i.i.i, 1095216660480
   %.sroa.2.0.insert.insert.i.i.i.i.i = or disjoint i64 %.sroa.2.0.insert.shift.i.i.i.i.i, %.sroa.3.0.insert.insert.i.i.i.i.i
   br label %bb.n
 
 _RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_add_std.exit.i.thread.i.i: ; preds = %.noexc19.i
-  %17 = urem i64 %i.ao, 60
   %i.eb = udiv i64 %i.ak, 3600
   %i.ec = urem i64 %i.eb, 24
   %i.ed = icmp ugt i64 %i.ak, 185542587187199
@@ -408,7 +401,7 @@ _RNvMNtCst0rBzRTPJg_4time4dateNtB2_4Date15checked_add_std.exit.i.i.i: ; preds = 
   %i.fo = or disjoint i32 %i.fn, %i.fm
   %i.fp = or i32 %i.fo, %i.fh
   %.sroa.4.0.insert.shift.i.i.i9.i.i = shl nuw nsw i64 %i.ec, 48
-  %.sroa.3.0.insert.shift.i.i.i11.i.i = shl nuw nsw i64 %17, 40
+  %.sroa.3.0.insert.shift.i.i.i11.i.i = shl nuw nsw i64 %6, 40
   %.sroa.3.0.insert.insert.i.i.i12.i.i = or disjoint i64 %.sroa.4.0.insert.shift.i.i.i9.i.i, %.sroa.3.0.insert.shift.i.i.i11.i.i
   %.sroa.2.0.insert.shift.i.i.i14.i.i = shl nuw nsw i64 %i.an, 32
   %.sroa.2.0.insert.insert.i.i.i15.i.i = or disjoint i64 %.sroa.3.0.insert.insert.i.i.i12.i.i, %.sroa.2.0.insert.shift.i.i.i14.i.i

@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %._crit_edge.i
   %.275.i.i = phi i64 [ %i.bw, %bb.k ], [ %.14694.i.i, %.preheader.i.i ] ; 2 uses
   %.24974.i.i = phi ptr [ %i.bv, %bb.k ], [ %.14893.i.i, %.preheader.i.i ]
   %.03977.in.i.i = zext nneg i8 %.03977.in.in.i.i to i64
-  %.03977.i.i = add nuw nsw i64 %.03977.in.i.i, 4294967248
+  %.03977.i.i = add nsw i64 %.03977.in.i.i, -48   ; 2 uses
   %i.bp = icmp samesign ult i8 %.03977.in.in.i.i, 56
   %i.bq = icmp ne i64 %.275.i.i, 0
   %or.cond.i.i = select i1 %i.bp, i1 %i.bq, i1 false
@@ -216,14 +216,13 @@ bb.i:                                             ; preds = %.lr.ph78.i.i
 
 bb.j:                                             ; preds = %bb.i
   %i.bs = icmp ne i64 %.04376.i.i, %.04196.i.i
-  %2 = and i64 %.03977.i.i, 4294967295            ; 2 uses
-  %.not52.i.i = icmp samesign ugt i64 %.04097.i.i, %2
+  %.not52.i.i = icmp sgt i64 %.04097.i.i, %.03977.i.i
   %or.cond54.i.i = select i1 %i.bs, i1 true, i1 %.not52.i.i
   br i1 %or.cond54.i.i, label %bb.k, label %tar_atol256.exit
 
 bb.k:                                             ; preds = %bb.j
   %i.bt = shl nsw i64 %.04376.i.i, 3
-  %i.bu = add nsw i64 %2, %i.bt                   ; 2 uses
+  %i.bu = add nsw i64 %i.bt, %.03977.i.i          ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %.24974.i.i, i64 1 ; 2 uses
   %i.bw = add i64 %.275.i.i, -1
   %.039.in.in.i.i = load i8, ptr %i.bv, align 1, !tbaa !14 ; 2 uses
@@ -626,7 +625,7 @@ bb.i:                                             ; preds = %bb.g
   %.275.i.i = phi i64 [ %i.ab, %bb.l ], [ %.14694.i.i, %.preheader.i.i ] ; 2 uses
   %.24974.i.i = phi ptr [ %i.aa, %bb.l ], [ %.14893.i.i, %.preheader.i.i ]
   %.03977.in.i.i = zext nneg i8 %.03977.in.in.i.i to i64
-  %.03977.i.i = add nuw nsw i64 %.03977.in.i.i, 4294967248
+  %.03977.i.i = add nsw i64 %.03977.in.i.i, -48   ; 2 uses
   %i.u = icmp samesign ult i8 %.03977.in.in.i.i, 58
   %i.v = icmp ne i64 %.275.i.i, 0
   %or.cond.i.i = select i1 %i.u, i1 %i.v, i1 false
@@ -638,14 +637,13 @@ bb.j:                                             ; preds = %.lr.ph78.i.i
 
 bb.k:                                             ; preds = %bb.j
   %i.x = icmp ne i64 %.04376.i.i, 922337203685477580
-  %4 = and i64 %.03977.i.i, 4294967295            ; 2 uses
-  %.not52.i.i = icmp samesign ugt i64 %.04097.i.i, %4
+  %.not52.i.i = icmp sgt i64 %.04097.i.i, %.03977.i.i
   %or.cond54.i.i = select i1 %i.x, i1 true, i1 %.not52.i.i
   br i1 %or.cond54.i.i, label %bb.l, label %tar_atol10.exit
 
 bb.l:                                             ; preds = %bb.k
   %i.y = mul nsw i64 %.04376.i.i, 10
-  %i.z = add nsw i64 %4, %i.y                     ; 2 uses
+  %i.z = add nsw i64 %i.y, %.03977.i.i            ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.24974.i.i, i64 1 ; 2 uses
   %i.ab = add i64 %.275.i.i, -1
   %.039.in.in.i.i = load i8, ptr %i.aa, align 1, !tbaa !14 ; 2 uses
@@ -776,7 +774,7 @@ bb.e:                                             ; preds = %.critedge
   %.275.i.i = phi i64 [ %i.z, %bb.h ], [ %.14694.i.i, %.preheader.i.i ] ; 2 uses
   %.24974.i.i = phi ptr [ %i.y, %bb.h ], [ %.14893.i.i, %.preheader.i.i ]
   %.03977.in.i.i = zext nneg i8 %.03977.in.in.i.i to i64
-  %.03977.i.i = add nuw nsw i64 %.03977.in.i.i, 4294967248
+  %.03977.i.i = add nsw i64 %.03977.in.i.i, -48   ; 2 uses
   %i.s = icmp samesign ult i8 %.03977.in.in.i.i, 58
   %i.t = icmp ne i64 %.275.i.i, 0
   %or.cond.i.i = select i1 %i.s, i1 %i.t, i1 false
@@ -788,14 +786,13 @@ bb.f:                                             ; preds = %.lr.ph78.i.i
 
 bb.g:                                             ; preds = %bb.f
   %i.v = icmp ne i64 %.04376.i.i, 922337203685477580
-  %4 = and i64 %.03977.i.i, 4294967295            ; 2 uses
-  %.not52.i.i = icmp samesign ugt i64 %.04097.i.i, %4
+  %.not52.i.i = icmp sgt i64 %.04097.i.i, %.03977.i.i
   %or.cond54.i.i = select i1 %i.v, i1 true, i1 %.not52.i.i
   br i1 %or.cond54.i.i, label %bb.h, label %tar_atol10.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.w = mul nsw i64 %.04376.i.i, 10
-  %i.x = add nsw i64 %4, %i.w                     ; 2 uses
+  %i.x = add nsw i64 %i.w, %.03977.i.i            ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.24974.i.i, i64 1 ; 2 uses
   %i.z = add i64 %.275.i.i, -1
   %.039.in.in.i.i = load i8, ptr %i.y, align 1, !tbaa !14 ; 2 uses
@@ -858,7 +855,7 @@ bb.i:                                             ; preds = %.critedge
   %.275.i.i54 = phi i64 [ %i.ar, %bb.l ], [ %.14694.i.i45, %.preheader.i.i41 ] ; 2 uses
   %.24974.i.i55 = phi ptr [ %i.aq, %bb.l ], [ %.14893.i.i46, %.preheader.i.i41 ]
   %.03977.in.i.i56 = zext nneg i8 %.03977.in.in.i.i52 to i64
-  %.03977.i.i57 = add nuw nsw i64 %.03977.in.i.i56, 4294967248
+  %.03977.i.i57 = add nsw i64 %.03977.in.i.i56, -48 ; 2 uses
   %i.ak = icmp samesign ult i8 %.03977.in.in.i.i52, 58
   %i.al = icmp ne i64 %.275.i.i54, 0
   %or.cond.i.i58 = select i1 %i.ak, i1 %i.al, i1 false
@@ -870,14 +867,13 @@ bb.j:                                             ; preds = %.lr.ph78.i.i51
 
 bb.k:                                             ; preds = %bb.j
   %i.an = icmp ne i64 %.04376.i.i53, 922337203685477580
-  %5 = and i64 %.03977.i.i57, 4294967295          ; 2 uses
-  %.not52.i.i59 = icmp samesign ugt i64 %.04097.i.i43, %5
+  %.not52.i.i59 = icmp sgt i64 %.04097.i.i43, %.03977.i.i57
   %or.cond54.i.i60 = select i1 %i.an, i1 true, i1 %.not52.i.i59
   br i1 %or.cond54.i.i60, label %bb.l, label %tar_atol10.exit64
 
 bb.l:                                             ; preds = %bb.k
   %i.ao = mul nsw i64 %.04376.i.i53, 10
-  %i.ap = add nsw i64 %5, %i.ao                   ; 2 uses
+  %i.ap = add nsw i64 %i.ao, %.03977.i.i57        ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.24974.i.i55, i64 1 ; 2 uses
   %i.ar = add i64 %.275.i.i54, -1
   %.039.in.in.i.i61 = load i8, ptr %i.aq, align 1, !tbaa !14 ; 2 uses
@@ -1280,7 +1276,7 @@ bb.e:                                             ; preds = %bb.d
   %.275.i.i = phi i64 [ %i.z, %bb.h ], [ %.14694.i.i, %.preheader.i.i ] ; 2 uses
   %.24974.i.i = phi ptr [ %i.y, %bb.h ], [ %.14893.i.i, %.preheader.i.i ]
   %.03977.in.i.i = zext nneg i8 %.03977.in.in.i.i to i64
-  %.03977.i.i = add nuw nsw i64 %.03977.in.i.i, 4294967248
+  %.03977.i.i = add nsw i64 %.03977.in.i.i, -48   ; 2 uses
   %i.s = icmp samesign ult i8 %.03977.in.in.i.i, 58
   %i.t = icmp ne i64 %.275.i.i, 0
   %or.cond.i.i = select i1 %i.s, i1 %i.t, i1 false
@@ -1292,14 +1288,13 @@ bb.f:                                             ; preds = %.lr.ph78.i.i
 
 bb.g:                                             ; preds = %bb.f
   %i.v = icmp ne i64 %.04376.i.i, 922337203685477580
-  %4 = and i64 %.03977.i.i, 4294967295            ; 2 uses
-  %.not52.i.i = icmp samesign ugt i64 %.04097.i.i, %4
+  %.not52.i.i = icmp sgt i64 %.04097.i.i, %.03977.i.i
   %or.cond54.i.i = select i1 %i.v, i1 true, i1 %.not52.i.i
   br i1 %or.cond54.i.i, label %bb.h, label %tar_atol10.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.w = mul nsw i64 %.04376.i.i, 10
-  %i.x = add nsw i64 %4, %i.w                     ; 2 uses
+  %i.x = add nsw i64 %i.w, %.03977.i.i            ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.24974.i.i, i64 1 ; 2 uses
   %i.z = add i64 %.275.i.i, -1
   %.039.in.in.i.i = load i8, ptr %i.y, align 1, !tbaa !14 ; 2 uses

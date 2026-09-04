@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wasmi-rs/original/wasmi-f4c56b525af24363.wasmi.a5f598a5e97a06b2-cgu.12?download=true
 inline.NumInlined: 803
 inline.NumDeleted: 402
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvNtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5utils16return_call_host:bb.a
   %i.e = alloca [32 x i8], align 8                ; 9 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -202,7 +204,7 @@ bb.a:
   %i.d = add nsw i32 %i.b, -8                     ; 2 uses
   %i.e = lshr exact i32 %i.d, 3
   %i.f = add nuw nsw i32 %i.e, 1                  ; 2 uses
-  %min.iters.check = icmp ult i32 %i.d, 296
+  %min.iters.check = icmp ult i32 %i.d, 280
   br i1 %min.iters.check, label %.lr.ph.preheader13, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.preheader
@@ -280,89 +282,78 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.a = zext i16 %3 to i32
-  %i.b = shl nuw nsw i32 %i.a, 3                  ; 7 uses
-  %i.c = add i32 %i.b, %2                         ; 5 uses
-  %i.d = add i32 %i.b, %1                         ; 5 uses
+  %i.b = shl nuw nsw i32 %i.a, 3                  ; 3 uses
+  %i.c = add i32 %i.b, %2                         ; 2 uses
+  %i.d = add i32 %i.b, %1                         ; 2 uses
   %i.e = add nsw i32 %i.b, -8                     ; 2 uses
   %i.f = lshr exact i32 %i.e, 3
-  %i.g = add nuw nsw i32 %i.f, 1                  ; 2 uses
-  %min.iters.check = icmp ult i32 %i.e, 424
-  br i1 %min.iters.check, label %.lr.ph.preheader10, label %vector.scevcheck
+  %i.g = add nuw nsw i32 %i.f, 1
+  %xtraiter = and i32 %i.g, 3                     ; 2 uses
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.preheader10, label %vector.body
 
-vector.scevcheck:                                 ; preds = %.lr.ph.preheader
-  %4 = sub nsw i32 7, %i.b
-  %5 = icmp ugt i32 %1, %4
-  %6 = sub nsw i32 7, %i.b
-  %7 = icmp ugt i32 %2, %6
-  %8 = or i1 %5, %7
-  br i1 %8, label %.lr.ph.preheader10, label %vector.memcheck
+vector.body:                                      ; preds = %.lr.ph.preheader, %vector.body
+  %index = phi i32 [ %.reass12, %vector.body ], [ %i.d, %.lr.ph.preheader ]
+  %.sroa.03.06.prol = phi i32 [ %4, %vector.body ], [ %i.c, %.lr.ph.preheader ]
+  %prol.iter = phi i32 [ %index.next, %vector.body ], [ 0, %.lr.ph.preheader ]
+  %.reass12 = add i32 %index, -8                  ; 3 uses
+  %4 = add i32 %.sroa.03.06.prol, -8              ; 3 uses
+  %5 = zext i32 %4 to i64
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %5
+  %6 = load i64, ptr %i.h, align 8, !noalias !2015, !noundef !7
+  %i.i = zext i32 %.reass12 to i64
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %i.i
+  store i64 %6, ptr %i.j, align 8, !noalias !2016
+  %index.next = add i32 %prol.iter, 1             ; 2 uses
+  %i.k = icmp eq i32 %index.next, %xtraiter
+  br i1 %i.k, label %.lr.ph.preheader10, label %vector.body, !llvm.loop !2014
 
-vector.memcheck:                                  ; preds = %vector.scevcheck
-  %9 = add i32 %2, %i.b
-  %10 = add i32 %9, -8
-  %11 = zext i32 %10 to i64
-  %12 = add i32 %1, %i.b
-  %13 = add i32 %12, -8
-  %14 = zext i32 %13 to i64
-  %15 = sub nsw i64 %14, %11
-  %diff.check = icmp ugt i64 %15, -32
-  br i1 %diff.check, label %.lr.ph.preheader10, label %vector.ph
+.lr.ph.preheader10:                               ; preds = %vector.body, %.lr.ph.preheader
+  %.sroa.0.07.unr = phi i32 [ %i.d, %.lr.ph.preheader ], [ %.reass12, %vector.body ]
+  %.sroa.03.06.unr = phi i32 [ %i.c, %.lr.ph.preheader ], [ %4, %vector.body ]
+  %7 = icmp ult i32 %i.e, 24
+  br i1 %7, label %._crit_edge, label %.lr.ph
 
-vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i32 %i.g, 1073741820               ; 3 uses
-  %16 = mul i32 %n.vec, -8                        ; 2 uses
-  %17 = add i32 %i.d, %16
-  %18 = add i32 %i.c, %16
-  %invariant.op = add i32 %i.d, -8
-  %invariant.op11 = add i32 %i.c, -8
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %19 = mul i32 %index, -8                        ; 2 uses
-  %.reass = add i32 %19, %invariant.op
-  %.reass12 = add i32 %19, %invariant.op11
-  %20 = zext i32 %.reass12 to i64
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 %20 ; 2 uses
-  %22 = getelementptr inbounds i8, ptr %21, i64 -8
-  %i.h = getelementptr inbounds i8, ptr %21, i64 -24
-  %wide.load = load <2 x i64>, ptr %22, align 8, !noalias !2016
-  %wide.load8 = load <2 x i64>, ptr %i.h, align 8, !noalias !2016
-  %i.i = zext i32 %.reass to i64
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 %i.i ; 2 uses
-  %24 = getelementptr inbounds i8, ptr %23, i64 -8
-  %i.j = getelementptr inbounds i8, ptr %23, i64 -24
-  store <2 x i64> %wide.load, ptr %24, align 8, !noalias !2017
-  store <2 x i64> %wide.load8, ptr %i.j, align 8, !noalias !2017
-  %index.next = add nuw i32 %index, 4             ; 2 uses
-  %i.k = icmp eq i32 %index.next, %n.vec
-  br i1 %i.k, label %middle.block, label %vector.body, !llvm.loop !2014
-
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i32 %i.g, %n.vec
-  br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader10
-
-.lr.ph.preheader10:                               ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph.preheader, %middle.block
-  %.sroa.0.07.ph = phi i32 [ %i.d, %vector.memcheck ], [ %i.d, %vector.scevcheck ], [ %i.d, %.lr.ph.preheader ], [ %17, %middle.block ]
-  %.sroa.03.06.ph = phi i32 [ %i.c, %vector.memcheck ], [ %i.c, %vector.scevcheck ], [ %i.c, %.lr.ph.preheader ], [ %18, %middle.block ]
-  br label %.lr.ph
-
-._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
+._crit_edge:                                      ; preds = %.lr.ph.preheader10, %.lr.ph, %bb.a
   ret void
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader10, %.lr.ph
-  %.sroa.0.07 = phi i32 [ %i.l, %.lr.ph ], [ %.sroa.0.07.ph, %.lr.ph.preheader10 ]
-  %.sroa.03.06 = phi i32 [ %i.m, %.lr.ph ], [ %.sroa.03.06.ph, %.lr.ph.preheader10 ]
-  %i.l = add i32 %.sroa.0.07, -8                  ; 3 uses
-  %i.m = add i32 %.sroa.03.06, -8                 ; 2 uses
+  %.sroa.0.07 = phi i32 [ %i.l, %.lr.ph ], [ %.sroa.0.07.unr, %.lr.ph.preheader10 ] ; 4 uses
+  %.sroa.03.06 = phi i32 [ %i.m, %.lr.ph ], [ %.sroa.03.06.unr, %.lr.ph.preheader10 ] ; 4 uses
+  %8 = add i32 %.sroa.0.07, -8
+  %9 = add i32 %.sroa.03.06, -8
+  %10 = zext i32 %9 to i64
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 %10
+  %12 = load i64, ptr %11, align 8, !noalias !2015, !noundef !7
+  %13 = zext i32 %8 to i64
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 %13
+  store i64 %12, ptr %14, align 8, !noalias !2016
+  %15 = add i32 %.sroa.0.07, -16
+  %16 = add i32 %.sroa.03.06, -16
+  %17 = zext i32 %16 to i64
+  %18 = getelementptr inbounds nuw i8, ptr %0, i64 %17
+  %19 = load i64, ptr %18, align 8, !noalias !2015, !noundef !7
+  %20 = zext i32 %15 to i64
+  %21 = getelementptr inbounds nuw i8, ptr %0, i64 %20
+  store i64 %19, ptr %21, align 8, !noalias !2016
+  %22 = add i32 %.sroa.0.07, -24
+  %23 = add i32 %.sroa.03.06, -24
+  %24 = zext i32 %23 to i64
+  %25 = getelementptr inbounds nuw i8, ptr %0, i64 %24
+  %26 = load i64, ptr %25, align 8, !noalias !2015, !noundef !7
+  %27 = zext i32 %22 to i64
+  %28 = getelementptr inbounds nuw i8, ptr %0, i64 %27
+  store i64 %26, ptr %28, align 8, !noalias !2016
+  %i.l = add i32 %.sroa.0.07, -32                 ; 3 uses
+  %i.m = add i32 %.sroa.03.06, -32                ; 2 uses
   %i.n = zext i32 %i.m to i64
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %i.n
-  %i.p = load i64, ptr %i.o, align 8, !noalias !2016, !noundef !7
+  %i.p = load i64, ptr %i.o, align 8, !noalias !2015, !noundef !7
   %i.q = zext i32 %i.l to i64
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 %i.q
-  store i64 %i.p, ptr %i.r, align 8, !noalias !2017
+  store i64 %i.p, ptr %i.r, align 8, !noalias !2016
   %.not = icmp eq i32 %i.l, %1
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !2015
+  br i1 %.not, label %._crit_edge, label %.lr.ph
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -765,10 +756,10 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !2011 = distinct !{!2011, !2010, !"_RINvXs1b_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler4cellyNtB7_12StoreToCells14store_to_cellsNtNtB9_5state2SpEBf_: argument 0"}
 !2012 = distinct !{!2012, !"_RNvXsg_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_2SpNtNtB7_4cell11CellsWriter4next"}
 !2013 = distinct !{!2013, !2012, !"_RNvXsg_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_2SpNtNtB7_4cell11CellsWriter4next: argument 0"}
-!2014 = distinct !{!2014, !19, !20}
-!2015 = distinct !{!2015, !19}
-!2016 = !{!2009, !2008, !2006, !2005}
-!2017 = !{!2013, !2011}
+!2014 = distinct !{!2014, !2017}
+!2015 = !{!2009, !2008, !2006, !2005}
+!2016 = !{!2013, !2011}
+!2017 = !{!"llvm.loop.unroll.disable"}
 !2018 = distinct !{!2018, !"_RNvMsc_NtNtCsefoF4u9kbII_5wasmi6engine8code_mapNtB5_9FuncEntry14get_or_compile"}
 !2019 = distinct !{!2019, !2018, !"_RNvMsc_NtNtCsefoF4u9kbII_5wasmi6engine8code_mapNtB5_9FuncEntry14get_or_compile: argument 2"}
 !2020 = distinct !{!2020, !2018, !"_RNvMsc_NtNtCsefoF4u9kbII_5wasmi6engine8code_mapNtB5_9FuncEntry14get_or_compile: argument 1"}

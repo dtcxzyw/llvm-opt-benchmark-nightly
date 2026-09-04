@@ -205,10 +205,9 @@ middle.block:                                     ; preds = %pred.store.continue
   br label %bb.c
 
 bb.c:                                             ; preds = %middle.block, %bb.b
-  %narrow = add nsw i8 %0, -32
-  %1 = sext i8 %narrow to i64
-  %2 = and i64 %1, 4294967295
-  %3 = getelementptr inbounds nuw [8 x i8], ptr @findshortopt.singles, i64 %2
+  %1 = zext nneg i8 %0 to i64
+  %2 = getelementptr [8 x i8], ptr @findshortopt.singles, i64 %1
+  %3 = getelementptr i8, ptr %2, i64 -256
   %i.an = load ptr, ptr %3, align 8, !tbaa !21
   br label %bb.d
 
@@ -611,10 +610,9 @@ middle.block:                                     ; preds = %pred.store.continue
   br label %findshortopt.exit
 
 findshortopt.exit:                                ; preds = %bb.y, %middle.block
-  %narrow.i = add nsw i8 %i.gg, -32
-  %13 = sext i8 %narrow.i to i64
-  %14 = and i64 %13, 4294967295
-  %15 = getelementptr inbounds nuw [8 x i8], ptr @findshortopt.singles, i64 %14
+  %13 = zext nneg i8 %i.gg to i64
+  %14 = getelementptr [8 x i8], ptr @findshortopt.singles, i64 %13
+  %15 = getelementptr i8, ptr %14, i64 -256
   %i.hu = load ptr, ptr %15, align 8, !tbaa !21   ; 3 uses
   %.not129 = icmp eq ptr %i.hu, null
   br i1 %.not129, label %.critedge, label %bb.z

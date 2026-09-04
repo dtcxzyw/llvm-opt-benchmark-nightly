@@ -190,7 +190,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 1 ; 4 uses
   store i8 0, ptr %i.f, align 1
-  %i.h = call i64 @strtoul(ptr noundef nonnull %i.g, ptr noundef nonnull %i.b, i32 noundef 0) #8 ; 4 uses
+  %i.h = call i64 @strtoul(ptr noundef nonnull %i.g, ptr noundef nonnull %i.b, i32 noundef 0) #8 ; 3 uses
   %i.i = load ptr, ptr %i.b, align 8              ; 2 uses
   %i.j = icmp eq ptr %i.g, %i.i
   br i1 %i.j, label %.thread, label %bb.d
@@ -208,7 +208,7 @@ bb.d:                                             ; preds = %bb.c
   br label %.critedge
 
 bb.e:                                             ; preds = %bb.d
-  %3 = trunc nuw nsw i64 %i.h to i16              ; 2 uses
+  %3 = trunc nuw nsw i64 %i.h to i32              ; 5 uses
   %i.o = load ptr, ptr %i.a, align 8              ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.q = load i32, ptr %i.p, align 8
@@ -282,12 +282,11 @@ bb.k:                                             ; preds = %._crit_edge242, %ri
   %i.ar = phi ptr [ %.pre, %._crit_edge242 ], [ %i.ad, %ring_record_get_ring_inx.exit ]
   %i.as = getelementptr inbounds nuw [104 x i8], ptr %i.ar, i64 %i.ae
   %i.at = zext i16 %i.aq to i32                   ; 3 uses
-  %4 = trunc nuw nsw i64 %i.h to i32              ; 3 uses
-  %i.au = icmp slt i32 %i.at, %4
+  %i.au = icmp slt i32 %i.at, %3
   br i1 %i.au, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.av = icmp eq i32 %i.at, %4
+  %i.av = icmp eq i32 %i.at, %3
   br i1 %i.av, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
@@ -310,19 +309,18 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %._crit_edge245, %bb.k
   %.pre-phi = phi i32 [ %.pre251, %._crit_edge245 ], [ %i.at, %bb.k ]
-  %i.bc = tail call i32 (ptr, ...) @slurm_error(ptr noundef nonnull @.str.5, i32 noundef %4, i32 noundef %.pre-phi) #8 ; 0 uses
+  %i.bc = tail call i32 (ptr, ...) @slurm_error(ptr noundef nonnull @.str.5, i32 noundef %3, i32 noundef %.pre-phi) #8 ; 0 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.h, %bb.l, %bb.m, %bb.n
-  %.1185 = phi i16 [ 0, %bb.n ], [ %3, %bb.m ], [ %3, %bb.l ], [ 0, %bb.h ]
+  %.1185 = phi i32 [ 0, %bb.n ], [ %3, %bb.m ], [ %3, %bb.l ], [ 0, %bb.h ]
   %.1182 = phi i32 [ %.0810.i, %bb.n ], [ %.0810.i, %bb.m ], [ %.0810.i, %bb.l ], [ %i.ac, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
-  %5 = zext nneg i16 %.1185 to i32
   %i.bd = zext i32 %.1182 to i64
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.a
-  %.2186 = phi i32 [ %5, %bb.o ], [ 0, %bb.a ]    ; 2 uses
+  %.2186 = phi i32 [ %.1185, %bb.o ], [ 0, %bb.a ] ; 2 uses
   %.2183 = phi i64 [ %i.bd, %bb.o ], [ 4294967295, %bb.a ]
   %i.be = load ptr, ptr %i.d, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 8 uses

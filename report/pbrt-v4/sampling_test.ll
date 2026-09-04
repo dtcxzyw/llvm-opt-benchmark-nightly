@@ -205,19 +205,18 @@ bb.b:                                             ; preds = %_ZN4pbrt24WeightedR
   %i.bz = select <4 x i1> %i.by, <4 x float> %i.bx, <4 x float> splat (float f0x3F7FFFFF)
   %i.ca = fcmp olt <4 x float> %i.bz, %i.ap       ; 4 uses
   %i.cb = extractelement <4 x i1> %i.ca, i64 1
-  %spec.select23.2.i.i.i = select i1 %i.cb, i32 2, i32 0
+  %spec.select23.2.i.i.i = select i1 %i.cb, i64 2, i64 0
   %i.cc = extractelement <4 x i1> %i.ca, i64 2
-  %spec.select23.4.i.i.i = select i1 %i.cc, i32 4, i32 %spec.select23.2.i.i.i
+  %spec.select23.4.i.i.i = select i1 %i.cc, i64 4, i64 %spec.select23.2.i.i.i
   %i.cd = extractelement <4 x i1> %i.ca, i64 3
-  %spec.select23.6.i.i.i = select i1 %i.cd, i32 6, i32 %spec.select23.4.i.i.i
+  %spec.select23.6.i.i.i = select i1 %i.cd, i64 6, i64 %spec.select23.4.i.i.i
   %i.ce = extractelement <4 x i1> %i.ca, i64 0
-  %spec.select.i.i.i = select i1 %i.ce, i32 %spec.select23.6.i.i.i, i32 %spec.select22.7.i.i.i
+  %spec.select.i.i.i = select i1 %i.ce, i64 %spec.select23.6.i.i.i, i64 %spec.select22.7.i.i.i
   br label %_ZN4pbrt24WeightedReservoirSamplerIiE5MergeERKS1_.exit.i.i.i
 
 _ZN4pbrt24WeightedReservoirSamplerIiE5MergeERKS1_.exit.i.i.i: ; preds = %_ZN4pbrt24WeightedReservoirSamplerIiE3AddERKif.exit.7.i.i.i, %bb.b
-  %.sroa.19.2.i.i.i = phi i32 [ %spec.select22.7.i.i.i, %_ZN4pbrt24WeightedReservoirSamplerIiE3AddERKif.exit.7.i.i.i ], [ %spec.select.i.i.i, %bb.b ]
-  %3 = zext nneg i32 %.sroa.19.2.i.i.i to i64
-  %i.cf = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %3 ; 2 uses
+  %.sroa.19.2.i.i.i = phi i64 [ %spec.select22.7.i.i.i, %_ZN4pbrt24WeightedReservoirSamplerIiE3AddERKif.exit.7.i.i.i ], [ %spec.select.i.i.i, %bb.b ]
+  %i.cf = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.sroa.19.2.i.i.i ; 2 uses
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !20
   %i.ch = add nsw i32 %i.cg, 1
   store i32 %i.ch, ptr %i.cf, align 4, !tbaa !20
@@ -263,13 +262,13 @@ _ZN4pbrt24WeightedReservoirSamplerIiE3AddERKif.exit.7.i.i.i: ; preds = %_ZN4pbrt
   %i.dq = select <4 x i1> %i.dp, <4 x float> %i.do, <4 x float> splat (float f0x3F7FFFFF)
   %i.dr = fcmp olt <4 x float> %i.dq, %i.ah       ; 4 uses
   %i.ds = extractelement <4 x i1> %i.dr, i64 3
-  %spec.select22.1.i.i.i = zext i1 %i.ds to i32
+  %spec.select22.1.i.i.i = zext i1 %i.ds to i64
   %i.dt = extractelement <4 x i1> %i.dr, i64 2
-  %spec.select22.3.i.i.i = select i1 %i.dt, i32 3, i32 %spec.select22.1.i.i.i
+  %spec.select22.3.i.i.i = select i1 %i.dt, i64 3, i64 %spec.select22.1.i.i.i
   %i.du = extractelement <4 x i1> %i.dr, i64 1
-  %spec.select22.5.i.i.i = select i1 %i.du, i32 5, i32 %spec.select22.3.i.i.i
+  %spec.select22.5.i.i.i = select i1 %i.du, i64 5, i64 %spec.select22.3.i.i.i
   %i.dv = extractelement <4 x i1> %i.dr, i64 0
-  %spec.select22.7.i.i.i = select i1 %i.dv, i32 7, i32 %spec.select22.5.i.i.i ; 2 uses
+  %spec.select22.7.i.i.i = select i1 %i.dv, i64 7, i64 %spec.select22.5.i.i.i ; 2 uses
   br i1 %i.aj, label %_ZN4pbrt24WeightedReservoirSamplerIiE5MergeERKS1_.exit.i.i.i, label %bb.b
 
 "_ZSt10__invoke_rIvRZN38WeightedReservoir_MergeReservoirs_Test8TestBodyEvE3$_0JllEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES4_E4typeEOS5_DpOS6_.exit": ; preds = %bb.a, %.preheader.loopexit.i.i.i

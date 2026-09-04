@@ -202,17 +202,16 @@ upb_WireReader_ReadSize.exit:                     ; preds = %upb_EpsCopyInputStr
   store i32 %.0211, ptr %.sroa.0, align 8, !tbaa !8
   %i.fb = getelementptr inbounds nuw i8, ptr %.0.i27, i64 10
   %i.fc = load i8, ptr %i.fb, align 2, !tbaa !31  ; 2 uses
-  %5 = zext i8 %i.fc to i32                       ; 2 uses
+  %5 = zext i8 %i.fc to i64                       ; 2 uses
   %i.fd = getelementptr i8, ptr %.0.i27, i64 11
   %.val.i = load i8, ptr %i.fd, align 1, !tbaa !33 ; 3 uses
   %i.fe = and i8 %.val.i, 3
   %i.ff = icmp eq i8 %i.fe, 1
-  %6 = add nuw nsw i32 %5, 19
-  %spec.select.i = select i1 %i.ff, i32 %6, i32 %5 ; 2 uses
-  %7 = zext nneg i32 %spec.select.i to i64        ; 2 uses
-  %i.fg = getelementptr inbounds nuw i8, ptr @_upb_Decoder_GetDelimitedOp.kDelimitedOps, i64 %7
+  %6 = add nuw nsw i64 %5, 19
+  %spec.select.i = select i1 %i.ff, i64 %6, i64 %5 ; 3 uses
+  %i.fg = getelementptr inbounds nuw i8, ptr @_upb_Decoder_GetDelimitedOp.kDelimitedOps, i64 %spec.select.i
   %i.fh = load i8, ptr %i.fg, align 1, !tbaa !24  ; 5 uses
-  %i.fi = shl nuw i64 1, %7
+  %i.fi = shl nuw i64 1, %spec.select.i
   %i.fj = and i64 %i.fi, 1611139072
   %.not.i40 = icmp eq i64 %i.fj, 0
   %i.fk = trunc i32 %.0211 to i8                  ; 6 uses
@@ -234,9 +233,9 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %.not4.i.i, label %_upb_Decoder_DecodeWireValue.exit.thread.thread, label %_upb_Decoder_DecodeWireValue.exit
 
 bb.ad:                                            ; preds = %upb_WireReader_ReadSize.exit
-  switch i32 %spec.select.i, label %_upb_Decoder_DecodeWireValue.exit [
-    i32 31, label %bb.ae
-    i32 12, label %bb.ae
+  switch i64 %spec.select.i, label %_upb_Decoder_DecodeWireValue.exit [
+    i64 31, label %bb.ae
+    i64 12, label %bb.ae
   ]
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ad
@@ -362,10 +361,9 @@ bb.as:                                            ; preds = %bb.ao
   %i.hi = add nuw nsw i64 %i.hh, 4294967295
   %i.hj = and i64 %i.hi, 4294967295               ; 2 uses
   %i.hk = getelementptr inbounds nuw i8, ptr @_upb_FieldType_SizeLg2_dont_copy_me__upb_internal_use_only.size, i64 %i.hj
-  %i.hl = load i8, ptr %i.hk, align 1, !tbaa !24
-  %8 = sext i8 %i.hl to i64                       ; 2 uses
-  %9 = and i64 %8, 4294967295
-  %i.hm = shl i64 4, %9
+  %i.hl = load i8, ptr %i.hk, align 1, !tbaa !24  ; 2 uses
+  %7 = zext nneg i8 %i.hl to i64
+  %i.hm = shl i64 4, %7
   %i.hn = add nuw i64 %i.hm, 28
   %i.ho = and i64 %i.hn, -8                       ; 3 uses
   %.val.i.i.i.i91 = load ptr, ptr %i.p, align 8, !tbaa !41 ; 4 uses
@@ -395,6 +393,7 @@ bb.at:                                            ; preds = %upb_Arena_Malloc.ex
 _upb_Decoder_CreateArray.exit:                    ; preds = %upb_Arena_Malloc.exit.thread.i.i.i93, %upb_Arena_Malloc.exit.i.i.i94
   %.0.i19.i.i.i = phi ptr [ %.val.i.i.i.i91, %upb_Arena_Malloc.exit.thread.i.i.i93 ], [ %i.hu, %upb_Arena_Malloc.exit.i.i.i94 ] ; 6 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %.0.i19.i.i.i, i64 24
+  %8 = sext i8 %i.hl to i64
   %i.hx = icmp ne i64 %i.hj, 7
   %.neg.i.i.i.i = sext i1 %i.hx to i64
   %i.hy = add nsw i64 %.neg.i.i.i.i, %8

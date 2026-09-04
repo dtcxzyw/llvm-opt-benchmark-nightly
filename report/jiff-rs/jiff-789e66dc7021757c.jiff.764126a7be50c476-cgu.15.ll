@@ -202,8 +202,7 @@ bb.f:                                             ; preds = %bb.c
   br i1 %i.l, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.m = udiv i32 %.sroa.09.0.i, 3600
-  %3 = trunc nuw nsw i32 %i.m to i8               ; 2 uses
+  %i.m = udiv i32 %.sroa.09.0.i, 3600             ; 2 uses
   %i.n = urem i32 %.sroa.09.0.i, 3600             ; 2 uses
   %i.o = icmp eq i32 %i.n, 0
   br i1 %i.o, label %bb.h, label %.thread67.i
@@ -211,14 +210,14 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.thread67.i, %bb.g, %bb.f
   %.sroa.06.05665.i = phi i32 [ %i.c, %bb.f ], [ %i.c, %bb.g ], [ %.sroa.06.0566471.i, %.thread67.i ]
   %.sroa.0.05763.i = phi i32 [ %.sroa.0.0.i, %bb.f ], [ %.sroa.0.0.i, %bb.g ], [ %.sroa.0.0576272.i, %.thread67.i ] ; 2 uses
-  %.sroa.041.0.i = phi i8 [ 0, %bb.f ], [ %3, %bb.g ], [ %4, %.thread67.i ]
-  %.sroa.043.0.i = phi i64 [ 0, %bb.f ], [ 0, %bb.g ], [ %i.w, %.thread67.i ] ; 3 uses
+  %.sroa.041.0.shrunk.i = phi i32 [ 0, %bb.f ], [ %i.m, %bb.g ], [ %3, %.thread67.i ]
+  %.sroa.043.0.i = phi i64 [ 0, %bb.f ], [ 0, %bb.g ], [ %i.w, %.thread67.i ]
   %or.cond2.i = icmp ult i32 %.sroa.0.05763.i, 1000000000
   br i1 %or.cond2.i, label %_RNvMNtNtCsb09rMIQFAXO_9jiff_core2tz6offsetNtB2_6Offset11to_datetime.exit, label %bb.i, !prof !24
 
 .thread67.i:                                      ; preds = %bb.g, %.thread.i
   %i.p = phi i32 [ %i.n, %bb.g ], [ 3599, %.thread.i ]
-  %4 = phi i8 [ %3, %bb.g ], [ 23, %.thread.i ]
+  %3 = phi i32 [ %i.m, %bb.g ], [ 23, %.thread.i ]
   %.sroa.0.0576272.i = phi i32 [ %.sroa.0.0.i, %bb.g ], [ %i.g, %.thread.i ]
   %.sroa.06.0566471.i = phi i32 [ %i.c, %bb.g ], [ %i.i, %.thread.i ]
   %.lhs.trunc.i = trunc nuw nsw i32 %i.p to i16   ; 2 uses
@@ -260,11 +259,11 @@ _RNvMNtNtCsb09rMIQFAXO_9jiff_core2tz6offsetNtB2_6Offset11to_datetime.exit: ; pre
   %i.aq = add nuw nsw i32 %i.an, %i.ap
   %i.ar = zext i1 %i.ai to i32
   %i.as = add nuw nsw i32 %i.aq, %i.ar
-  %.sroa.440.0.insert.ext.i = zext nneg i8 %.sroa.041.0.i to i64
+  %.sroa.440.0.insert.ext.i = zext nneg i32 %.sroa.041.0.shrunk.i to i64
   %.sroa.440.0.insert.shift.i = shl nuw nsw i64 %.sroa.440.0.insert.ext.i, 32
   %.sroa.039.0.insert.ext.i = zext nneg i32 %.sroa.0.05763.i to i64
-  %i.at = or disjoint i64 %.sroa.440.0.insert.shift.i, %.sroa.039.0.insert.ext.i
-  %.sroa.039.0.insert.insert.i = or i64 %i.at, %.sroa.043.0.i ; 2 uses
+  %i.at = or i64 %.sroa.043.0.i, %.sroa.039.0.insert.ext.i ; 2 uses
+  %.sroa.039.0.insert.insert.i = or i64 %i.at, %.sroa.440.0.insert.shift.i ; 3 uses
   %.sroa.7.8.extract.trunc = trunc i32 %i.as to i16
   %.sroa.7.10.extract.shift = lshr i32 %.sroa.2.0.insert.ext.i.i, 16
   %.sroa.7.10.extract.trunc = trunc i32 %.sroa.7.10.extract.shift to i8
@@ -272,11 +271,11 @@ _RNvMNtNtCsb09rMIQFAXO_9jiff_core2tz6offsetNtB2_6Offset11to_datetime.exit: ; pre
   %.sroa.7.11.extract.trunc = add nuw nsw i8 %i.au, 1
   %.sroa.0.4.extract.shift = lshr i64 %.sroa.039.0.insert.insert.i, 32
   %.sroa.0.4.extract.trunc = trunc i64 %.sroa.0.4.extract.shift to i8 ; 2 uses
-  %.sroa.0.5.extract.shift = lshr i64 %.sroa.043.0.i, 40
+  %.sroa.0.5.extract.shift = lshr i64 %.sroa.039.0.insert.insert.i, 40
   %.sroa.0.5.extract.trunc = trunc i64 %.sroa.0.5.extract.shift to i8
-  %.sroa.0.6.extract.shift = lshr i64 %.sroa.043.0.i, 48
+  %.sroa.0.6.extract.shift = lshr i64 %.sroa.039.0.insert.insert.i, 48
   %.sroa.0.6.extract.trunc = trunc nuw nsw i64 %.sroa.0.6.extract.shift to i8
-  %.sroa.0.0.extract.trunc = trunc i64 %.sroa.039.0.insert.insert.i to i32
+  %.sroa.0.0.extract.trunc = trunc i64 %i.at to i32
   %i.av = icmp sgt i8 %.sroa.0.4.extract.trunc, 11
   %..i = zext i1 %i.av to i8
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 80

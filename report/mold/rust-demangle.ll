@@ -205,10 +205,9 @@ bb.h:                                             ; preds = %bb.g
   br label %parse_disambiguator.exit
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %next.exit.i.i.i
-  %.sink.i.i.i = phi i64 [ 4294967248, %next.exit.i.i.i ], [ 4294967209, %bb.g ], [ 4294967267, %bb.h ]
-  %i.al = add nuw nsw i64 %.sink.i.i.i, %i.ah
-  %.pn.i.i.i = and i64 %i.al, 4294967295
-  %.1.i.i.i = add i64 %.pn.i.i.i, %i.ag
+  %.sink.i.i.i = phi i64 [ -48, %next.exit.i.i.i ], [ -87, %bb.g ], [ -29, %bb.h ]
+  %i.al = add i64 %i.ag, %i.ah
+  %.1.i.i.i = add i64 %i.al, %.sink.i.i.i
   br label %eat.exit.i.i.i, !llvm.loop !1
 
 bb.j:                                             ; preds = %peek.exit.i33.i.i.i
@@ -402,10 +401,9 @@ bb.v:                                             ; preds = %bb.u
   br label %parse_disambiguator.exit108
 
 bb.w:                                             ; preds = %bb.v, %bb.u, %next.exit.i.i.i97
-  %.sink.i.i.i102 = phi i64 [ 4294967248, %next.exit.i.i.i97 ], [ 4294967209, %bb.u ], [ 4294967267, %bb.v ]
-  %i.cz = add nuw nsw i64 %.sink.i.i.i102, %i.cv
-  %.pn.i.i.i103 = and i64 %i.cz, 4294967295
-  %.1.i.i.i104 = add i64 %.pn.i.i.i103, %i.cu
+  %.sink.i.i.i102 = phi i64 [ -48, %next.exit.i.i.i97 ], [ -87, %bb.u ], [ -29, %bb.v ]
+  %i.cz = add i64 %i.cu, %i.cv
+  %.1.i.i.i104 = add i64 %i.cz, %.sink.i.i.i102
   br label %eat.exit.i.i.i92, !llvm.loop !1
 
 bb.x:                                             ; preds = %peek.exit.i33.i.i.i105
@@ -808,10 +806,9 @@ bb.bv:                                            ; preds = %bb.bu
   br label %parse_integer_62.exit166
 
 bb.bw:                                            ; preds = %bb.bv, %bb.bu, %next.exit.i154
-  %.sink.i160 = phi i64 [ 4294967248, %next.exit.i154 ], [ 4294967209, %bb.bu ], [ 4294967267, %bb.bv ]
-  %i.km = add nuw nsw i64 %.sink.i160, %i.ki
-  %.pn.i161 = and i64 %i.km, 4294967295
-  %.1.i162 = add i64 %.pn.i161, %i.kh
+  %.sink.i160 = phi i64 [ -48, %next.exit.i154 ], [ -87, %bb.bu ], [ -29, %bb.bv ]
+  %i.km = add i64 %i.kh, %i.ki
+  %.1.i162 = add i64 %i.km, %.sink.i160
   br label %eat.exit.i148, !llvm.loop !1
 
 bb.bx:                                            ; preds = %peek.exit.i33.i163
@@ -914,10 +911,9 @@ bb.ce:                                            ; preds = %bb.cd
   br label %parse_integer_62.exit
 
 bb.cf:                                            ; preds = %bb.ce, %bb.cd, %next.exit.i
-  %.sink.i = phi i64 [ 4294967248, %next.exit.i ], [ 4294967209, %bb.cd ], [ 4294967267, %bb.ce ]
-  %i.lq = add nuw nsw i64 %.sink.i, %i.ll
-  %.pn.i = and i64 %i.lq, 4294967295
-  %.1.i = add i64 %.pn.i, %i.lk
+  %.sink.i = phi i64 [ -48, %next.exit.i ], [ -87, %bb.cd ], [ -29, %bb.ce ]
+  %i.lq = add i64 %i.lk, %i.ll
+  %.1.i = add i64 %i.lq, %.sink.i
   br label %bb.cb, !llvm.loop !1
 
 bb.cg:                                            ; preds = %peek.exit.i33.i
@@ -1186,8 +1182,8 @@ next.exit.thread:                                 ; preds = %peek.exit.i41, %eat
   br label %bb.k
 
 bb.c:                                             ; preds = %next.exit
-  %2 = and i8 %i.q, 15
-  %3 = zext nneg i8 %2 to i64                     ; 2 uses
+  %2 = zext nneg i8 %i.q to i64
+  %3 = add nsw i64 %2, -48                        ; 2 uses
   %.not35 = icmp ne i8 %i.q, 48
   %i.u = icmp ult i64 %i.r, %.pre76
   %or.cond99 = select i1 %.not35, i1 %i.u, i1 false
@@ -1590,10 +1586,9 @@ bb.w:                                             ; preds = %bb.v
   br label %print_str.exit130
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %next.exit.i
-  %.sink.i = phi i64 [ 4294967248, %next.exit.i ], [ 4294967209, %bb.v ], [ 4294967267, %bb.w ]
-  %i.az = add nuw nsw i64 %.sink.i, %i.av
-  %.pn.i = and i64 %i.az, 4294967295
-  %.1.i = add i64 %.pn.i, %i.au
+  %.sink.i = phi i64 [ -48, %next.exit.i ], [ -87, %bb.v ], [ -29, %bb.w ]
+  %i.az = add i64 %i.au, %i.av
+  %.1.i = add i64 %i.az, %.sink.i
   br label %bb.t, !llvm.loop !1
 
 parse_integer_62.exit:                            ; preds = %peek.exit.i33.i
@@ -1996,10 +1991,9 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %next.exit
-  %.sink = phi i64 [ 4294967248, %next.exit ], [ 4294967209, %bb.d ], [ 4294967267, %bb.e ]
+  %.sink = phi i64 [ -48, %next.exit ], [ -87, %bb.d ], [ -29, %bb.e ]
   %i.aa = add nsw i64 %.sink, %i.v
-  %.pn = and i64 %i.aa, 4294967295
-  %.1 = add i64 %i.u, %.pn
+  %.1 = add i64 %i.u, %i.aa
   br label %bb.b, !llvm.loop !1
 
 bb.g:                                             ; preds = %peek.exit.i33
@@ -2402,10 +2396,9 @@ bb.cm:                                            ; preds = %bb.cl
   br label %parse_integer_62.exit
 
 bb.cn:                                            ; preds = %bb.cm, %bb.cl, %next.exit.i
-  %.sink.i = phi i64 [ 4294967248, %next.exit.i ], [ 4294967209, %bb.cl ], [ 4294967267, %bb.cm ]
-  %i.ob = add nuw nsw i64 %.sink.i, %i.nw
-  %.pn.i = and i64 %i.ob, 4294967295
-  %.1.i = add i64 %.pn.i, %i.nv
+  %.sink.i = phi i64 [ -48, %next.exit.i ], [ -87, %bb.cl ], [ -29, %bb.cm ]
+  %i.ob = add i64 %i.nv, %i.nw
+  %.1.i = add i64 %i.ob, %.sink.i
   br label %bb.cj, !llvm.loop !1
 
 bb.co:                                            ; preds = %peek.exit.i33.i
@@ -2547,10 +2540,9 @@ bb.g:                                             ; preds = %bb.f
   br i1 %or.cond8.i.i, label %bb.h, label %parse_opt_integer_62.exit.thread19
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %next.exit.i.i
-  %.sink.i.i = phi i64 [ 4294967248, %next.exit.i.i ], [ 4294967209, %bb.f ], [ 4294967267, %bb.g ]
-  %i.af = add nuw nsw i64 %.sink.i.i, %i.ab
-  %.pn.i.i = and i64 %i.af, 4294967295
-  %.1.i.i = add i64 %.pn.i.i, %i.aa
+  %.sink.i.i = phi i64 [ -48, %next.exit.i.i ], [ -87, %bb.f ], [ -29, %bb.g ]
+  %i.af = add i64 %i.aa, %i.ab
+  %.1.i.i = add i64 %i.af, %.sink.i.i
   br label %eat.exit.i.i, !llvm.loop !1
 
 parse_opt_integer_62.exit:                        ; preds = %peek.exit.i33.i.i
@@ -2953,10 +2945,9 @@ bb.g:                                             ; preds = %bb.f
   br label %parse_integer_62.exit
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %next.exit.i
-  %.sink.i = phi i64 [ 4294967248, %next.exit.i ], [ 4294967209, %bb.f ], [ 4294967267, %bb.g ]
-  %i.ag = add nuw nsw i64 %.sink.i, %i.ab
-  %.pn.i = and i64 %i.ag, 4294967295
-  %.1.i = add i64 %.pn.i, %i.aa
+  %.sink.i = phi i64 [ -48, %next.exit.i ], [ -87, %bb.f ], [ -29, %bb.g ]
+  %i.ag = add i64 %i.aa, %i.ab
+  %.1.i = add i64 %i.ag, %.sink.i
   br label %eat.exit.i, !llvm.loop !1
 
 bb.i:                                             ; preds = %peek.exit.i33.i
@@ -3135,10 +3126,9 @@ bb.t:                                             ; preds = %bb.s
   br label %parse_integer_62.exit50
 
 bb.u:                                             ; preds = %bb.t, %bb.s, %next.exit.i38
-  %.sink.i44 = phi i64 [ 4294967248, %next.exit.i38 ], [ 4294967209, %bb.s ], [ 4294967267, %bb.t ]
-  %i.cs = add nuw nsw i64 %.sink.i44, %i.co
-  %.pn.i45 = and i64 %i.cs, 4294967295
-  %.1.i46 = add i64 %.pn.i45, %i.cn
+  %.sink.i44 = phi i64 [ -48, %next.exit.i38 ], [ -87, %bb.s ], [ -29, %bb.t ]
+  %i.cs = add i64 %i.cn, %i.co
+  %.1.i46 = add i64 %i.cs, %.sink.i44
   br label %eat.exit.i32, !llvm.loop !1
 
 bb.v:                                             ; preds = %peek.exit.i33.i47

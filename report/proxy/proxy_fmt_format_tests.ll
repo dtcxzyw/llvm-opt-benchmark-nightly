@@ -205,10 +205,9 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.ak = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.ad, i1 true) ; 2 uses
   %i.al = trunc nuw nsw i64 %i.ak to i32
-  %i.am = add nuw nsw i64 %i.ak, 4294967286
+  %i.am = add nsw i64 %i.ak, -10
   %i.an = sub nuw nsw i32 -1063, %i.al
-  %6 = and i64 %i.am, 4294967295
-  %i.ao = shl i64 %i.ad, %6
+  %i.ao = shl i64 %i.ad, %i.am
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h

@@ -205,18 +205,17 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bc, %bb.
   br label %bb.bp
 
 bb.be:                                            ; preds = %bb.bc, %bb.bc, %bb.bc
-  %i.kg = add nuw nsw i64 %i.jn, 4294967293
+  %i.kg = add nsw i64 %i.jn, -3                   ; 2 uses
   %i.kh = getelementptr inbounds nuw i8, ptr %i.jk, i64 20
   %i.ki = load i32, ptr %i.kh, align 4
   %i.kj = sitofp i32 %i.ki to float
   %i.kk = fmul nnan float %i.kj, f0x3C8EFA35
   %i.kl = getelementptr inbounds nuw i8, ptr %i.jo, i64 3584
-  %3 = and i64 %i.kg, 4294967295                  ; 2 uses
-  %i.km = getelementptr inbounds nuw [4 x i8], ptr %i.kl, i64 %3
+  %i.km = getelementptr inbounds nuw [4 x i8], ptr %i.kl, i64 %i.kg
   %i.kn = load float, ptr %i.km, align 4
   %i.ko = fdiv float %i.kk, %i.kn
   %i.kp = getelementptr inbounds nuw i8, ptr %i.jo, i64 3596
-  %i.kq = getelementptr inbounds nuw [4 x i8], ptr %i.kp, i64 %3
+  %i.kq = getelementptr inbounds nuw [4 x i8], ptr %i.kp, i64 %i.kg
   store float %i.ko, ptr %i.kq, align 4
   br label %bb.bp
 

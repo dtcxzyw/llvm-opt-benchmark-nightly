@@ -205,7 +205,7 @@ iter.check491:                                    ; preds = %.lr.ph30.split.i
   %i.eg = load ptr, ptr %i.at, align 8, !tbaa !183 ; 12 uses
   %i.eh = sext i32 %.02126.i to i64               ; 7 uses
   %wide.trip.count.i = zext nneg i32 %i.ec to i64 ; 8 uses
-  %min.iters.check475 = icmp ult i32 %i.ec, 8
+  %min.iters.check475 = icmp ult i32 %i.ec, 4
   br i1 %min.iters.check475, label %vec.epilog.scalar.ph492.preheader, label %vector.memcheck472
 
 vector.memcheck472:                               ; preds = %iter.check491
@@ -222,7 +222,7 @@ vector.main.loop.iter.check476:                   ; preds = %vector.memcheck472
   br i1 %min.iters.check477, label %vec.epilog.ph495, label %vector.ph478
 
 vector.ph478:                                     ; preds = %vector.main.loop.iter.check476
-  %i.en = and i64 %wide.trip.count.i, 24
+  %i.en = and i64 %wide.trip.count.i, 28
   %n.vec479 = and i64 %wide.trip.count.i, 2147483616 ; 5 uses
   %i.eo = add nsw i64 %n.vec479, %i.eh            ; 2 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.eg, i64 %i.eh
@@ -256,11 +256,11 @@ middle.block487:                                  ; preds = %vector.body480
 
 vec.epilog.iter.check493:                         ; preds = %middle.block487
   %min.epilog.iters.check494 = icmp eq i64 %i.en, 0
-  br i1 %min.epilog.iters.check494, label %vec.epilog.scalar.ph492.preheader, label %vec.epilog.ph495, !prof !192
+  br i1 %min.epilog.iters.check494, label %vec.epilog.scalar.ph492.preheader, label %vec.epilog.ph495, !prof !138
 
 vec.epilog.ph495:                                 ; preds = %vector.main.loop.iter.check476, %vec.epilog.iter.check493
   %vec.epilog.resume.val489 = phi i64 [ %n.vec479, %vec.epilog.iter.check493 ], [ 0, %vector.main.loop.iter.check476 ]
-  %n.vec496 = and i64 %wide.trip.count.i, 2147483640 ; 4 uses
+  %n.vec496 = and i64 %wide.trip.count.i, 2147483644 ; 4 uses
   %i.ex = add nsw i64 %n.vec496, %i.eh            ; 2 uses
   %invariant.gep539 = getelementptr [4 x i8], ptr %i.eg, i64 %i.eh
   br label %vec.epilog.vector.body497
@@ -268,10 +268,10 @@ vec.epilog.ph495:                                 ; preds = %vector.main.loop.it
 vec.epilog.vector.body497:                        ; preds = %vec.epilog.vector.body497, %vec.epilog.ph495
   %index498 = phi i64 [ %vec.epilog.resume.val489, %vec.epilog.ph495 ], [ %index.next500, %vec.epilog.vector.body497 ] ; 3 uses
   %i.ey = getelementptr inbounds nuw [4 x i8], ptr %i.ef, i64 %index498
-  %wide.load499 = load <8 x i32>, ptr %i.ey, align 4, !tbaa !105
+  %wide.load499 = load <4 x i32>, ptr %i.ey, align 4, !tbaa !105
   %gep540 = getelementptr [4 x i8], ptr %invariant.gep539, i64 %index498
-  store <8 x i32> %wide.load499, ptr %gep540, align 4, !tbaa !105
-  %index.next500 = add nuw i64 %index498, 8       ; 2 uses
+  store <4 x i32> %wide.load499, ptr %gep540, align 4, !tbaa !105
+  %index.next500 = add nuw i64 %index498, 4       ; 2 uses
   %i.ez = icmp eq i64 %index.next500, %n.vec496
   br i1 %i.ez, label %vec.epilog.middle.block501, label %vec.epilog.vector.body497, !llvm.loop !268
 
@@ -281,8 +281,9 @@ vec.epilog.middle.block501:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph492.preheader:                ; preds = %vector.memcheck472, %iter.check491, %vec.epilog.iter.check493, %vec.epilog.middle.block501
   %indvars.iv35.i.ph = phi i64 [ %i.eh, %iter.check491 ], [ %i.eh, %vector.memcheck472 ], [ %i.eo, %vec.epilog.iter.check493 ], [ %i.ex, %vec.epilog.middle.block501 ] ; 2 uses
-  %indvars.iv.i.ph = phi i64 [ 0, %iter.check491 ], [ 0, %vector.memcheck472 ], [ %n.vec479, %vec.epilog.iter.check493 ], [ %n.vec496, %vec.epilog.middle.block501 ] ; 3 uses
-  %xtraiter = and i64 %wide.trip.count.i, 7       ; 2 uses
+  %indvars.iv.i.ph = phi i64 [ 0, %iter.check491 ], [ 0, %vector.memcheck472 ], [ %n.vec479, %vec.epilog.iter.check493 ], [ %n.vec496, %vec.epilog.middle.block501 ] ; 4 uses
+  %9 = sub nsw i64 %wide.trip.count.i, %indvars.iv.i.ph
+  %xtraiter = and i64 %9, 7                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph492.prol.loopexit, label %vec.epilog.scalar.ph492.prol
 

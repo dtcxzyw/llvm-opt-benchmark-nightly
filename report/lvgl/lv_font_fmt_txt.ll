@@ -202,15 +202,14 @@ bb.m:                                             ; preds = %bb.l
   %i.bc = zext i8 %i.az to i64
   %i.bd = zext i8 %i.au to i64
   %i.be = load ptr, ptr %i.m, align 8, !tbaa !57
-  %i.bf = add nuw nsw i64 %i.bd, 4294967295
+  %i.bf = add nsw i64 %i.bd, -1
   %i.bg = getelementptr inbounds nuw i8, ptr %i.m, i64 25
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !58
   %i.bi = zext i8 %i.bh to i64
   %i.bj = mul nuw nsw i64 %i.bf, %i.bi
-  %6 = add nuw nsw i64 %i.bc, 4294967295
-  %7 = add nuw nsw i64 %6, %i.bj
-  %8 = and i64 %7, 4294967295
-  %i.bk = getelementptr inbounds nuw i8, ptr %i.be, i64 %8
+  %6 = getelementptr i8, ptr %i.be, i64 %i.bj
+  %7 = getelementptr i8, ptr %6, i64 %i.bc
+  %i.bk = getelementptr i8, ptr %7, i64 -1
   %i.bl = load i8, ptr %i.bk, align 1, !tbaa !19
   br label %get_kern_value.exit
 

@@ -205,14 +205,14 @@ bb.gj:                                            ; preds = %bb.gi
 
 bb.gk:                                            ; preds = %bb.gj, %bb.gi
   %i.pf = phi i64 [ %.pre832, %bb.gj ], [ %i.pd, %bb.gi ] ; 2 uses
-  %.0 = phi i32 [ 2, %bb.gj ], [ 1, %bb.gi ]      ; 3 uses
+  %.0 = phi i64 [ 2, %bb.gj ], [ 1, %bb.gi ]      ; 3 uses
   %i.pg = and i64 %i.pf, 17179869184
   %.not592 = icmp eq i64 %i.pg, 0
   br i1 %.not592, label %bb.gn, label %bb.gl
 
 bb.gl:                                            ; preds = %bb.gk
   tail call void @addReplyBulkCBuffer(ptr noundef nonnull %0, ptr noundef nonnull @.str.203, i64 noundef 5)
-  %3 = add nuw nsw i32 %.0, 1
+  %3 = add nuw nsw i64 %.0, 1
   %i.ph = load i64, ptr %i.oy, align 8, !tbaa !113 ; 2 uses
   %i.pi = and i64 %i.ph, 68719476736
   %.not593 = icmp eq i64 %i.pi, 0
@@ -220,20 +220,20 @@ bb.gl:                                            ; preds = %bb.gk
 
 bb.gm:                                            ; preds = %bb.gl
   tail call void @addReplyBulkCBuffer(ptr noundef nonnull %0, ptr noundef nonnull @.str.219, i64 noundef 11)
-  %4 = add nuw nsw i32 %.0, 2
+  %4 = add nuw nsw i64 %.0, 2
   %.pre833 = load i64, ptr %i.oy, align 8, !tbaa !113
   br label %bb.gn
 
 bb.gn:                                            ; preds = %bb.gl, %bb.gm, %bb.gk
   %i.pj = phi i64 [ %.pre833, %bb.gm ], [ %i.ph, %bb.gl ], [ %i.pf, %bb.gk ] ; 2 uses
-  %.1 = phi i32 [ %4, %bb.gm ], [ %3, %bb.gl ], [ %.0, %bb.gk ] ; 3 uses
+  %.1 = phi i64 [ %4, %bb.gm ], [ %3, %bb.gl ], [ %.0, %bb.gk ] ; 3 uses
   %i.pk = and i64 %i.pj, 34359738368
   %.not594 = icmp eq i64 %i.pk, 0
   br i1 %.not594, label %bb.gq, label %bb.go
 
 bb.go:                                            ; preds = %bb.gn
   tail call void @addReplyBulkCBuffer(ptr noundef nonnull %0, ptr noundef nonnull @.str.204, i64 noundef 6)
-  %5 = add nuw nsw i32 %.1, 1
+  %5 = add nuw nsw i64 %.1, 1
   %i.pl = load i64, ptr %i.oy, align 8, !tbaa !113 ; 2 uses
   %i.pm = and i64 %i.pl, 68719476736
   %.not595 = icmp eq i64 %i.pm, 0
@@ -241,42 +241,41 @@ bb.go:                                            ; preds = %bb.gn
 
 bb.gp:                                            ; preds = %bb.go
   tail call void @addReplyBulkCBuffer(ptr noundef nonnull %0, ptr noundef nonnull @.str.220, i64 noundef 10)
-  %6 = add nuw nsw i32 %.1, 2
+  %6 = add nuw nsw i64 %.1, 2
   %.pre834 = load i64, ptr %i.oy, align 8, !tbaa !113
   br label %bb.gq
 
 bb.gq:                                            ; preds = %bb.go, %bb.gp, %bb.gn
   %i.pn = phi i64 [ %.pre834, %bb.gp ], [ %i.pl, %bb.go ], [ %i.pj, %bb.gn ] ; 2 uses
-  %.2 = phi i32 [ %6, %bb.gp ], [ %5, %bb.go ], [ %.1, %bb.gn ] ; 2 uses
+  %.2 = phi i64 [ %6, %bb.gp ], [ %5, %bb.go ], [ %.1, %bb.gn ] ; 2 uses
   %i.po = and i64 %i.pn, 137438953472
   %.not596 = icmp eq i64 %i.po, 0
   br i1 %.not596, label %bb.gs, label %bb.gr
 
 bb.gr:                                            ; preds = %bb.gq
   tail call void @addReplyBulkCBuffer(ptr noundef nonnull %0, ptr noundef nonnull @.str.205, i64 noundef 6)
-  %7 = add nuw nsw i32 %.2, 1
+  %7 = add nuw nsw i64 %.2, 1
   %.pre835 = load i64, ptr %i.oy, align 8, !tbaa !113
   br label %bb.gs
 
 bb.gs:                                            ; preds = %bb.gr, %bb.gq
   %i.pp = phi i64 [ %.pre835, %bb.gr ], [ %i.pn, %bb.gq ]
-  %.3 = phi i32 [ %7, %bb.gr ], [ %.2, %bb.gq ]   ; 2 uses
+  %.3 = phi i64 [ %7, %bb.gr ], [ %.2, %bb.gq ]   ; 2 uses
   %i.pq = and i64 %i.pp, 4294967296
   %.not597 = icmp eq i64 %i.pq, 0
   br i1 %.not597, label %bb.gu, label %bb.gt
 
 bb.gt:                                            ; preds = %bb.gs
   tail call void @addReplyBulkCBuffer(ptr noundef nonnull %0, ptr noundef nonnull @.str.221, i64 noundef 15)
-  %8 = add nuw nsw i32 %.3, 1
+  %8 = add nuw nsw i64 %.3, 1
   br label %bb.gu
 
 bb.gu:                                            ; preds = %bb.gt, %bb.gs
-  %.4 = phi i32 [ %8, %bb.gt ], [ %.3, %bb.gs ]
-  %9 = zext nneg i32 %.4 to i64
+  %.4 = phi i64 [ %8, %bb.gt ], [ %.3, %bb.gs ]
   %i.pr = load i32, ptr %i.ot, align 4, !tbaa !100
   %i.ps = icmp eq i32 %i.pr, 2
   %i.pt = select i1 %i.ps, i8 42, i8 126
-  tail call void @setDeferredAggregateLen(ptr noundef nonnull %0, ptr noundef %i.ox, i64 noundef %9, i8 noundef signext %i.pt)
+  tail call void @setDeferredAggregateLen(ptr noundef nonnull %0, ptr noundef %i.ox, i64 noundef %.4, i8 noundef signext %i.pt)
   tail call void @addReplyBulkCBuffer(ptr noundef nonnull %0, ptr noundef nonnull @.str.199, i64 noundef 8)
   %i.pu = load i64, ptr %i.oy, align 8, !tbaa !113
   %i.pv = and i64 %i.pu, 2147483648

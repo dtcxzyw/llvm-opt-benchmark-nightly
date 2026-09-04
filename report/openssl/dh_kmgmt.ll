@@ -202,13 +202,12 @@ define internal ptr @dh_import_types(i32 noundef %0) #1 {
 bb.a:
   %i.a = and i32 %0, 132
   %.not.i = icmp ne i32 %i.a, 0
-  %spec.select.i = zext i1 %.not.i to i32         ; 2 uses
+  %spec.select.i = zext i1 %.not.i to i64         ; 2 uses
   %i.b = and i32 %0, 3
   %.not5.i = icmp eq i32 %i.b, 0
-  %1 = or disjoint i32 %spec.select.i, 2
-  %.1.i = select i1 %.not5.i, i32 %spec.select.i, i32 %1
-  %2 = zext nneg i32 %.1.i to i64
-  %i.c = getelementptr inbounds nuw [8 x i8], ptr @dh_types, i64 %2
+  %1 = or disjoint i64 %spec.select.i, 2
+  %.1.i = select i1 %.not5.i, i64 %spec.select.i, i64 %1
+  %i.c = getelementptr inbounds nuw [8 x i8], ptr @dh_types, i64 %.1.i
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !42
   ret ptr %i.d
 }
@@ -284,13 +283,12 @@ define internal ptr @dh_export_types(i32 noundef %0) #1 {
 bb.a:
   %i.a = and i32 %0, 132
   %.not.i = icmp ne i32 %i.a, 0
-  %spec.select.i = zext i1 %.not.i to i32         ; 2 uses
+  %spec.select.i = zext i1 %.not.i to i64         ; 2 uses
   %i.b = and i32 %0, 3
   %.not5.i = icmp eq i32 %i.b, 0
-  %1 = or disjoint i32 %spec.select.i, 2
-  %.1.i = select i1 %.not5.i, i32 %spec.select.i, i32 %1
-  %2 = zext nneg i32 %.1.i to i64
-  %i.c = getelementptr inbounds nuw [8 x i8], ptr @dh_types, i64 %2
+  %1 = or disjoint i64 %spec.select.i, 2
+  %.1.i = select i1 %.not5.i, i64 %spec.select.i, i64 %1
+  %i.c = getelementptr inbounds nuw [8 x i8], ptr @dh_types, i64 %.1.i
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !42
   ret ptr %i.d
 }

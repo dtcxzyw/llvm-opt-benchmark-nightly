@@ -204,8 +204,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = tail call ptr @wmem_strbuf_new(ptr noundef %i.b, ptr noundef nonnull @.str.2126) ; 6 uses
   %i.d = zext nneg i8 %5 to i64
-  %i.e = add nuw nsw i64 %i.d, 4294967295
-  %zext = and i64 %i.e, 4294967295
+  %i.e = add nsw i64 %i.d, -1
   %wide.trip.count = zext nneg i8 %5 to i64
   br label %bb.b
 
@@ -224,7 +223,7 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %i.n = load ptr, ptr %i.a, align 8
   %i.o = tail call ptr @tvb_format_text(ptr noundef %i.n, ptr noundef %0, i32 noundef %i.j, i32 noundef %i.h)
   tail call void @wmem_strbuf_append(ptr noundef %i.c, ptr noundef %i.o)
-  %i.p = icmp samesign ult i64 %indvars.iv, %zext
+  %i.p = icmp samesign ult i64 %indvars.iv, %i.e
   %.str.2342..str.2341 = select i1 %i.p, ptr @.str.2342, ptr @.str.2341
   tail call void @wmem_strbuf_append(ptr noundef %i.c, ptr noundef nonnull %.str.2342..str.2341)
   %i.q = or i32 %i.h, 1

@@ -202,9 +202,8 @@ bb.a:
   %i.c = load i16, ptr %i.b, align 4              ; 2 uses
   %i.d = icmp ult i16 %i.c, 4
   %i.e = zext i16 %i.c to i64
-  %i.f = add nuw nsw i64 %i.e, 4294967294
-  %5 = and i64 %i.f, 4294967295
-  %i.g = select i1 %i.d, i64 2, i64 %5
+  %i.f = add nsw i64 %i.e, -2
+  %i.g = select i1 %i.d, i64 2, i64 %i.f
   %i.h = call i32 @gettimeofday(ptr noundef nonnull %2, ptr noundef null) #10 ; 0 uses
   %i.i = load i64, ptr %2, align 8
   %i.j = add nsw i64 %i.g, %i.i

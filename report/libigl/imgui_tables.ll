@@ -205,9 +205,8 @@ _ZN5ImGui21TableGetBoundSettingsEP10ImGuiTable.exit: ; preds = %bb.f, %bb.e
   br i1 %i.au, label %.lr.ph, label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %_ZN5ImGui21TableGetBoundSettingsEP10ImGuiTable.exit
-  %1 = sext i8 %i.at to i64
-  %2 = and i64 %1, 4294967295
-  %notmask114 = shl nsw i64 -1, %2
+  %1 = zext nneg i8 %i.at to i64
+  %notmask114 = shl nsw i64 -1, %1
   %i.av = xor i64 %notmask114, -1
   br label %bb.g
 

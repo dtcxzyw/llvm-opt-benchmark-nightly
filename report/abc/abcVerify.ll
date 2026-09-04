@@ -205,11 +205,11 @@ bb.c:                                             ; preds = %.preheader
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %.val47, i64 %i.s
   %i.x = load i32, ptr %i.w, align 4, !tbaa !37
   %.not43 = icmp ne i32 %i.x, 0
-  %spec.select = zext i1 %.not43 to i32
+  %spec.select = zext i1 %.not43 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.preheader
-  %.1 = phi i32 [ 0, %.preheader ], [ %spec.select, %bb.c ] ; 3 uses
+  %.1 = phi i64 [ 0, %.preheader ], [ %spec.select, %bb.c ] ; 3 uses
   %i.y = or disjoint i64 %i.s, 1                  ; 2 uses
   %i.z = icmp slt i64 %i.y, %i.p
   br i1 %i.z, label %bb.e, label %bb.f
@@ -221,12 +221,12 @@ bb.e:                                             ; preds = %bb.d
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %.val47.1, i64 %i.y
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !37
   %.not43.1 = icmp eq i32 %i.ad, 0
-  %1 = or disjoint i32 %.1, 2
-  %spec.select69 = select i1 %.not43.1, i32 %.1, i32 %1
+  %1 = or disjoint i64 %.1, 2
+  %spec.select69 = select i1 %.not43.1, i64 %.1, i64 %1
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.1.1 = phi i32 [ %.1, %bb.d ], [ %spec.select69, %bb.e ] ; 3 uses
+  %.1.1 = phi i64 [ %.1, %bb.d ], [ %spec.select69, %bb.e ] ; 3 uses
   %i.ae = or disjoint i64 %i.s, 2                 ; 2 uses
   %i.af = icmp slt i64 %i.ae, %i.p
   br i1 %i.af, label %bb.g, label %bb.h
@@ -238,12 +238,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %.val47.2, i64 %i.ae
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !37
   %.not43.2 = icmp eq i32 %i.aj, 0
-  %2 = or i32 %.1.1, 4
-  %spec.select70 = select i1 %.not43.2, i32 %.1.1, i32 %2
+  %2 = or i64 %.1.1, 4
+  %spec.select70 = select i1 %.not43.2, i64 %.1.1, i64 %2
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.1.2 = phi i32 [ %.1.1, %bb.f ], [ %spec.select70, %bb.g ] ; 3 uses
+  %.1.2 = phi i64 [ %.1.1, %bb.f ], [ %spec.select70, %bb.g ] ; 3 uses
   %i.ak = or disjoint i64 %i.s, 3                 ; 2 uses
   %i.al = icmp slt i64 %i.ak, %i.p
   br i1 %i.al, label %bb.i, label %bb.j
@@ -255,14 +255,13 @@ bb.i:                                             ; preds = %bb.h
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %.val47.3, i64 %i.ak
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !37
   %.not43.3 = icmp eq i32 %i.ap, 0
-  %3 = or i32 %.1.2, 8
-  %spec.select71 = select i1 %.not43.3, i32 %.1.2, i32 %3
+  %3 = or i64 %.1.2, 8
+  %spec.select71 = select i1 %.not43.3, i64 %.1.2, i64 %3
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %.1.3 = phi i32 [ %.1.2, %bb.h ], [ %spec.select71, %bb.i ]
-  %4 = zext nneg i32 %.1.3 to i64
-  %i.aq = getelementptr inbounds nuw i8, ptr @.str.72, i64 %4
+  %.1.3 = phi i64 [ %.1.2, %bb.h ], [ %spec.select71, %bb.i ]
+  %i.aq = getelementptr inbounds nuw i8, ptr @.str.72, i64 %.1.3
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !40
   %i.as = xor i64 %indvars.iv, -1
   %i.at = getelementptr i8, ptr %i.r, i64 %i.as

@@ -204,9 +204,8 @@ bb.bc:                                            ; preds = %bb.d
 
 bb.bd:                                            ; preds = %bb.bc
   %i.hw = zext nneg i8 %.0320 to i32
-  %i.hx = add nuw nsw i32 %i.hw, 65520
-  %4 = and i32 %i.hx, 65535                       ; 2 uses
-  %i.hy = add nuw nsw i32 %.0, %4                 ; 2 uses
+  %i.hx = add nsw i32 %i.hw, -16                  ; 2 uses
+  %i.hy = add nuw nsw i32 %.0, %i.hx              ; 2 uses
   %i.hz = load i32, ptr @hf_edonkey_metatag, align 4
   %i.ia = tail call ptr @proto_tree_add_item(ptr noundef %3, i32 noundef %i.hz, ptr noundef %0, i32 noundef %2, i32 noundef %i.hy, i32 noundef 0)
   %i.ib = load i32, ptr @ett_edonkey_metatag, align 4
@@ -241,7 +240,7 @@ bb.bh:                                            ; preds = %bb.bf
 
 edonkey_tree_add_metatag_name.exit340:            ; preds = %bb.bg, %bb.bh
   %i.ir = load i32, ptr @hf_edonkey_string, align 4
-  %i.is = tail call ptr @proto_tree_add_item(ptr noundef %i.ic, i32 noundef %i.ir, ptr noundef %0, i32 noundef %i.l, i32 noundef %4, i32 noundef 0) ; 0 uses
+  %i.is = tail call ptr @proto_tree_add_item(ptr noundef %i.ic, i32 noundef %i.ir, ptr noundef %0, i32 noundef %i.l, i32 noundef %i.hx, i32 noundef 0) ; 0 uses
   br label %edonkey_tree_add_metatag_name.exit328
 
 bb.bi:                                            ; preds = %bb.bc

@@ -205,9 +205,8 @@ bb.r:                                             ; preds = %bb.q
 .lr.ph12.i:                                       ; preds = %.lr.ph12.i, %.lr.ph12.preheader.i
   %indvars.iv30.i = phi i64 [ %i.bs, %.lr.ph12.preheader.i ], [ %indvars.iv.next31.i, %.lr.ph12.i ] ; 2 uses
   %.2659.i = phi ptr [ %.164.i, %.lr.ph12.preheader.i ], [ %i.bw, %.lr.ph12.i ] ; 2 uses
-  %6 = add nuw nsw i64 %indvars.iv30.i, 4294967295
-  %7 = and i64 %6, 4294967295
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.a, i64 %7
+  %6 = getelementptr i8, ptr %i.a, i64 %indvars.iv30.i
+  %i.bt = getelementptr i8, ptr %6, i64 -1
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !11
   %i.bv = zext i8 %i.bu to i32
   tail call void @opj_write_bytes_LE(ptr noundef nonnull %.2659.i, i32 noundef %i.bv, i32 noundef 1) #21

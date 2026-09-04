@@ -116,52 +116,72 @@ _ZN9gim_arrayI15GIM_RSORT_TOKENE6resizeEjbRKS0_.exit: ; preds = %bb.f
 .lr.ph:                                           ; preds = %_ZN9gim_arrayI15GIM_RSORT_TOKENE6resizeEjbRKS0_.exit.thread129, %_ZN9gim_arrayI15GIM_RSORT_TOKENE6resizeEjbRKS0_.exit
   %i.ab = phi ptr [ %i.u, %_ZN9gim_arrayI15GIM_RSORT_TOKENE6resizeEjbRKS0_.exit.thread129 ], [ %i.aa, %_ZN9gim_arrayI15GIM_RSORT_TOKENE6resizeEjbRKS0_.exit ] ; 4 uses
   %.pre102132 = phi i32 [ %.pre, %_ZN9gim_arrayI15GIM_RSORT_TOKENE6resizeEjbRKS0_.exit.thread129 ], [ %.pre102.pre.pre, %_ZN9gim_arrayI15GIM_RSORT_TOKENE6resizeEjbRKS0_.exit ] ; 2 uses
-  %i.ac = load ptr, ptr %1, align 8, !tbaa !13    ; 3 uses
+  %i.ac = load ptr, ptr %1, align 8, !tbaa !13    ; 5 uses
   %wide.trip.count = zext i32 %.pre102132 to i64  ; 3 uses
-  %min.iters.check = icmp ult i32 %.pre102132, 2
+  %min.iters.check = icmp ult i32 %.pre102132, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %n.vec = and i64 %wide.trip.count, 4294967294   ; 3 uses
+  %n.vec = and i64 %wide.trip.count, 4294967292   ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
-  %vec.ind = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 6 uses
+  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %5 = getelementptr inbounds nuw [48 x i8], ptr %i.ac, i64 %index ; 3 uses
+  %6 = getelementptr inbounds nuw [48 x i8], ptr %i.ac, i64 %index ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 48
   %i.ad = getelementptr inbounds nuw [48 x i8], ptr %i.ac, i64 %index ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.ad, i64 96
   %i.ae = getelementptr inbounds nuw [48 x i8], ptr %i.ac, i64 %index ; 3 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 48
-  %i.ag = load float, ptr %i.ad, align 4, !tbaa !17
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 144
+  %9 = load float, ptr %5, align 4, !tbaa !17
+  %10 = load float, ptr %7, align 4, !tbaa !17
+  %i.ag = load float, ptr %8, align 4, !tbaa !17
   %i.ah = load float, ptr %i.af, align 4, !tbaa !17
-  %5 = insertelement <2 x float> poison, float %i.ag, i64 0
-  %6 = insertelement <2 x float> %5, float %i.ah, i64 1
-  %7 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %6, <2 x float> splat (float 1.000000e+03), <2 x float> splat (float 1.000000e+00))
-  %8 = fptosi <2 x float> %7 to <2 x i32>
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 4
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.ae, i64 52
+  %11 = insertelement <4 x float> poison, float %9, i64 0
+  %12 = insertelement <4 x float> %11, float %10, i64 1
+  %13 = insertelement <4 x float> %12, float %i.ag, i64 2
+  %14 = insertelement <4 x float> %13, float %i.ah, i64 3
+  %15 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %14, <4 x float> splat (float 1.000000e+03), <4 x float> splat (float 1.000000e+00))
+  %16 = fptosi <4 x float> %15 to <4 x i32>
+  %17 = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %18 = getelementptr inbounds nuw i8, ptr %6, i64 52
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ad, i64 100
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.ae, i64 148
+  %19 = load float, ptr %17, align 4, !tbaa !17
+  %20 = load float, ptr %18, align 4, !tbaa !17
   %i.ak = load float, ptr %i.ai, align 4, !tbaa !17
   %i.al = load float, ptr %i.aj, align 4, !tbaa !17
-  %9 = insertelement <2 x float> poison, float %i.ak, i64 0
-  %10 = insertelement <2 x float> %9, float %i.al, i64 1
-  %11 = fmul <2 x float> %10, splat (float 1.333000e+03)
-  %12 = fptosi <2 x float> %11 to <2 x i32>
-  %i.am = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  %i.an = getelementptr inbounds nuw i8, ptr %i.ae, i64 56
+  %21 = insertelement <4 x float> poison, float %19, i64 0
+  %22 = insertelement <4 x float> %21, float %20, i64 1
+  %23 = insertelement <4 x float> %22, float %i.ak, i64 2
+  %24 = insertelement <4 x float> %23, float %i.al, i64 3
+  %25 = fmul <4 x float> %24, splat (float 1.333000e+03)
+  %26 = fptosi <4 x float> %25 to <4 x i32>
+  %27 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %28 = getelementptr inbounds nuw i8, ptr %6, i64 56
+  %i.am = getelementptr inbounds nuw i8, ptr %i.ad, i64 104
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ae, i64 152
+  %29 = load float, ptr %27, align 4, !tbaa !17
+  %30 = load float, ptr %28, align 4, !tbaa !17
   %i.ao = load float, ptr %i.am, align 4, !tbaa !17
   %i.ap = load float, ptr %i.an, align 4, !tbaa !17
-  %13 = insertelement <2 x float> poison, float %i.ao, i64 0
-  %14 = insertelement <2 x float> %13, float %i.ap, i64 1
-  %15 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %14, <2 x float> splat (float 2.133000e+03), <2 x float> splat (float 3.000000e+00))
-  %16 = fptosi <2 x float> %15 to <2 x i32>
-  %17 = shl <2 x i32> %12, splat (i32 4)
-  %18 = add <2 x i32> %17, %8
-  %19 = shl <2 x i32> %16, splat (i32 8)
-  %20 = add <2 x i32> %18, %19
+  %31 = insertelement <4 x float> poison, float %29, i64 0
+  %32 = insertelement <4 x float> %31, float %30, i64 1
+  %33 = insertelement <4 x float> %32, float %i.ao, i64 2
+  %34 = insertelement <4 x float> %33, float %i.ap, i64 3
+  %35 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %34, <4 x float> splat (float 2.133000e+03), <4 x float> splat (float 3.000000e+00))
+  %36 = fptosi <4 x float> %35 to <4 x i32>
+  %37 = shl <4 x i32> %26, splat (i32 4)
+  %38 = add <4 x i32> %37, %16
+  %39 = shl <4 x i32> %36, splat (i32 8)
+  %40 = add <4 x i32> %38, %39
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %index
-  %interleaved.vec = shufflevector <2 x i32> %20, <2 x i32> %vec.ind, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  store <4 x i32> %interleaved.vec, ptr %i.aq, align 4, !tbaa !18
-  %index.next = add nuw i64 %index, 2             ; 2 uses
-  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 2)
+  %interleaved.vec = shufflevector <4 x i32> %40, <4 x i32> %vec.ind, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  store <8 x i32> %interleaved.vec, ptr %i.aq, align 4, !tbaa !18
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 4)
   %i.ar = icmp eq i64 %index.next, %n.vec
   br i1 %i.ar, label %middle.block, label %vector.body, !llvm.loop !28
 
@@ -562,6 +582,9 @@ declare void @_ZSt9terminatev() local_unnamed_addr #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #4

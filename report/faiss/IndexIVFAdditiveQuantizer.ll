@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/faiss/original/IndexIVFAdditiveQuantizer?download=true
 inline.NumInlined: 404
 inline.NumDeleted: 131
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN5faiss12_GLOBAL__N_124AQInvertedListScannerLUTILb0ELNS_17AdditiveQuantizer13Search_type_tE6EED2Ev:bb.a
   %.not.i.i.i = icmp eq ptr %i.b, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIfSaIfEED2Ev.exit, label %bb.b
@@ -204,7 +204,7 @@ _ZNSt12_Vector_baseImSaImEEC2EmRKS0_.exit.thread.i: ; preds = %_ZNSt6vectorImSaI
 
 .noexc11:                                         ; preds = %_ZNSt6vectorImSaImEE17_S_check_init_lenEmRKS0_.exit.i
   %i.b = shl nuw nsw i64 %4, 3                    ; 3 uses
-  %i.c = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.b) #30 ; 8 uses
+  %i.c = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.b) #30 ; 7 uses
   store ptr %i.c, ptr %9, align 8, !tbaa !68
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %4
   %i.e = getelementptr inbounds nuw i8, ptr %9, i64 16
@@ -212,47 +212,49 @@ _ZNSt12_Vector_baseImSaImEEC2EmRKS0_.exit.thread.i: ; preds = %_ZNSt6vectorImSaI
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.b ; 3 uses
   %i.g = add nsw i64 %i.b, -8                     ; 2 uses
   %i.h = lshr exact i64 %i.g, 3
-  %i.i = add nuw nsw i64 %i.h, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.g, 24
-  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, label %vector.ph
+  %i.i = add nuw nsw i64 %i.h, 1
+  %xtraiter = and i64 %i.i, 7                     ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, label %vector.body
 
-vector.ph:                                        ; preds = %.noexc11
-  %n.vec = and i64 %i.i, 4611686018427387900      ; 3 uses
-  %10 = shl i64 %n.vec, 3
-  %11 = getelementptr i8, ptr %i.c, i64 %10
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %5, i64 0
-  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  br label %vector.body
+vector.body:                                      ; preds = %.noexc11, %vector.body
+  %.06.i.i.i.i.i.i.i.i.i.prol = phi ptr [ %10, %vector.body ], [ %i.c, %.noexc11 ] ; 2 uses
+  %prol.iter = phi i64 [ %index.next, %vector.body ], [ 0, %.noexc11 ]
+  store i64 %5, ptr %.06.i.i.i.i.i.i.i.i.i.prol, align 8, !tbaa !18
+  %10 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i.prol, i64 8 ; 2 uses
+  %index.next = add i64 %prol.iter, 1             ; 2 uses
+  %i.j = icmp eq i64 %index.next, %xtraiter
+  br i1 %i.j, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, label %vector.body, !llvm.loop !189
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %12 = shl i64 %index, 3
-  %next.gep = getelementptr i8, ptr %i.c, i64 %12 ; 2 uses
-  %13 = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %broadcast.splat, ptr %next.gep, align 8, !tbaa !18
-  store <2 x i64> %broadcast.splat, ptr %13, align 8, !tbaa !18
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.j = icmp eq i64 %index.next, %n.vec
-  br i1 %i.j, label %middle.block, label %vector.body, !llvm.loop !189
-
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.i, %n.vec
-  br i1 %cmp.n, label %.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader
-
-.lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %.noexc11, %middle.block
-  %.06.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.c, %.noexc11 ], [ %11, %middle.block ]
-  br label %.lr.ph.i.i.i.i.i.i.i.i.i
+.lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %vector.body, %.noexc11
+  %.06.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.c, %.noexc11 ], [ %10, %vector.body ]
+  %11 = icmp ult i64 %i.g, 56
+  br i1 %11, label %.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i.i.i
-  %.06.i.i.i.i.i.i.i.i.i = phi ptr [ %i.k, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %.06.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.preheader ] ; 2 uses
+  %.06.i.i.i.i.i.i.i.i.i = phi ptr [ %i.k, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %.06.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.preheader ] ; 9 uses
   store i64 %5, ptr %.06.i.i.i.i.i.i.i.i.i, align 8, !tbaa !18
-  %i.k = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 8 ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 8
+  store i64 %5, ptr %12, align 8, !tbaa !18
+  %13 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 16
+  store i64 %5, ptr %13, align 8, !tbaa !18
+  %14 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 24
+  store i64 %5, ptr %14, align 8, !tbaa !18
+  %15 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 32
+  store i64 %5, ptr %15, align 8, !tbaa !18
+  %16 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 40
+  store i64 %5, ptr %16, align 8, !tbaa !18
+  %17 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 48
+  store i64 %5, ptr %17, align 8, !tbaa !18
+  %18 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 56
+  store i64 %5, ptr %18, align 8, !tbaa !18
+  %i.k = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 64 ; 2 uses
   %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.k, %i.f
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i, !llvm.loop !190
 
-.loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %middle.block, %_ZNSt12_Vector_baseImSaImEEC2EmRKS0_.exit.thread.i
-  %i.l = phi ptr [ null, %_ZNSt12_Vector_baseImSaImEEC2EmRKS0_.exit.thread.i ], [ %i.c, %middle.block ], [ %i.c, %.lr.ph.i.i.i.i.i.i.i.i.i ]
-  %.0.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseImSaImEEC2EmRKS0_.exit.thread.i ], [ %i.f, %middle.block ], [ %i.f, %.lr.ph.i.i.i.i.i.i.i.i.i ]
+.loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i.i.i, %_ZNSt12_Vector_baseImSaImEEC2EmRKS0_.exit.thread.i
+  %i.l = phi ptr [ null, %_ZNSt12_Vector_baseImSaImEEC2EmRKS0_.exit.thread.i ], [ %i.c, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %i.c, %.lr.ph.i.i.i.i.i.i.i.i.i.preheader ]
+  %.0.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseImSaImEEC2EmRKS0_.exit.thread.i ], [ %i.f, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %i.f, %.lr.ph.i.i.i.i.i.i.i.i.i.preheader ]
   %i.m = getelementptr inbounds nuw i8, ptr %9, i64 8
   store ptr %.0.i.i.i.i.i.i.i, ptr %i.m, align 8, !tbaa !192
   store ptr getelementptr inbounds nuw inrange(-16, 336) (i8, ptr @_ZTVN5faiss25IndexIVFResidualQuantizerE, i64 16), ptr %0, align 8, !tbaa !10
@@ -655,8 +657,8 @@ attributes #32 = { cold nounwind }
 !186 = !{ptr @_ZN5faiss12_GLOBAL__N_124AQInvertedListScannerLUTILb0ELNS_17AdditiveQuantizer13Search_type_tE7EED2Ev, ptr @_ZN5faiss12_GLOBAL__N_121AQInvertedListScannerD2Ev}
 !187 = !{ptr @_ZN5faiss12_GLOBAL__N_124AQInvertedListScannerLUTILb0ELNS_17AdditiveQuantizer13Search_type_tE6EED2Ev}
 !188 = !{ptr @_ZN5faiss12_GLOBAL__N_124AQInvertedListScannerLUTILb0ELNS_17AdditiveQuantizer13Search_type_tE6EED2Ev, ptr @_ZN5faiss12_GLOBAL__N_121AQInvertedListScannerD2Ev}
-!189 = distinct !{!189, !66, !123, !124}
-!190 = distinct !{!190, !66, !124, !123}
+!189 = distinct !{!189, !129}
+!190 = distinct !{!190, !66}
 !191 = !{!67, !23, i64 16}
 !192 = !{!67, !23, i64 8}
 end_hunk_1

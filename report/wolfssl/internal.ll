@@ -205,7 +205,7 @@ iter.check:                                       ; preds = %bb.x
   %i.de = trunc i32 %i.dd to i8                   ; 7 uses
   %i.df = add i32 %i.dd, 1                        ; 6 uses
   %umax = call i32 @llvm.umax.i32(i32 %i.df, i32 1) ; 5 uses
-  %min.iters.check = icmp ult i32 %i.df, 8
+  %min.iters.check = icmp ult i32 %i.df, 4
   %i.dg = xor i32 %.0195, -1
   %i.dh = icmp ugt i32 %i.dd, %i.dg
   %or.cond286 = select i1 %min.iters.check, i1 true, i1 %i.dh
@@ -216,7 +216,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check276, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.di = and i32 %umax, 24
+  %i.di = and i32 %umax, 28
   %n.vec = and i32 %umax, -32                     ; 5 uses
   %i.dj = add i32 %.0195, %n.vec
   %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %i.de, i64 0
@@ -245,10 +245,10 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i32 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec277 = and i32 %umax, -8                   ; 4 uses
+  %n.vec277 = and i32 %umax, -4                   ; 4 uses
   %i.dp = add i32 %.0195, %n.vec277
-  %broadcast.splatinsert278 = insertelement <8 x i8> poison, i8 %i.de, i64 0
-  %broadcast.splat279 = shufflevector <8 x i8> %broadcast.splatinsert278, <8 x i8> poison, <8 x i32> zeroinitializer
+  %broadcast.splatinsert278 = insertelement <4 x i8> poison, i8 %i.de, i64 0
+  %broadcast.splat279 = shufflevector <4 x i8> %broadcast.splatinsert278, <4 x i8> poison, <4 x i32> zeroinitializer
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -256,8 +256,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.dq = add i32 %.0195, %index280
   %i.dr = zext i32 %i.dq to i64
   %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 %i.dr
-  store <8 x i8> %broadcast.splat279, ptr %i.ds, align 1, !tbaa !52
-  %index.next281 = add nuw i32 %index280, 8       ; 2 uses
+  store <4 x i8> %broadcast.splat279, ptr %i.ds, align 1, !tbaa !52
+  %index.next281 = add nuw i32 %index280, 4       ; 2 uses
   %i.dt = icmp eq i32 %index.next281, %n.vec277
   br i1 %i.dt, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !457
 
@@ -660,8 +660,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.preheader:                                 ; preds = %.preheader
   %i.e = zext i16 %i.b to i64
-  %i.f = add nuw nsw i64 %i.e, 4294967295
-  %3 = and i64 %i.f, 4294967295
+  %i.f = add nsw i64 %i.e, -1
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
@@ -679,8 +678,8 @@ bb.c:                                             ; preds = %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph, %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %4 = icmp samesign ult i64 %indvars.iv.next, %3
-  br i1 %4, label %.lr.ph, label %.loopexit, !llvm.loop !501
+  %3 = icmp slt i64 %indvars.iv.next, %i.f
+  br i1 %3, label %.lr.ph, label %.loopexit, !llvm.loop !501
 
 .loopexit.loopexit.split.loop.exit19:             ; preds = %bb.c
   %i.m = trunc nuw nsw i64 %indvars.iv to i32
@@ -1083,7 +1082,7 @@ begin_hunk_2_@llvm.umax.i64
 !466 = !{!270, !10, i64 24}
 !467 = !{!270, !10, i64 8}
 !468 = !{!270, !35, i64 20}
-!469 = !{!"branch_weights", i32 8, i32 24}
+!469 = !{!"branch_weights", i32 4, i32 28}
 !470 = !{!48, !9, i64 296}
 !471 = !{!48, !23, i64 272}
 !472 = !{!48, !23, i64 280}

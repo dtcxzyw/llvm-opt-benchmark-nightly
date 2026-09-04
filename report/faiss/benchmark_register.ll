@@ -205,7 +205,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheade
   br i1 %found.conflict, label %.lr.ph.i.i.preheader41, label %vector.ph23
 
 vector.ph23:                                      ; preds = %vector.memcheck
-  %n.vec24 = and i64 %i.av, 9223372036854775800   ; 4 uses
+  %n.vec24 = and i64 %i.av, 9223372036854775804   ; 4 uses
   %i.bh = mul i64 %n.vec24, -4
   %i.bi = getelementptr i8, ptr %.sroa.0.08.i.i, i64 %i.bh
   %i.bj = shl i64 %n.vec24, 2
@@ -215,25 +215,17 @@ vector.ph23:                                      ; preds = %vector.memcheck
 vector.body25:                                    ; preds = %vector.body25, %vector.ph23
   %index26 = phi i64 [ 0, %vector.ph23 ], [ %index.next36, %vector.body25 ] ; 3 uses
   %i.bl = mul i64 %index26, -4
-  %next.gep27 = getelementptr i8, ptr %.sroa.0.08.i.i, i64 %i.bl ; 2 uses
+  %next.gep27 = getelementptr i8, ptr %.sroa.0.08.i.i, i64 %i.bl
   %i.bm = shl i64 %index26, 2
-  %next.gep28 = getelementptr i8, ptr %i.o, i64 %i.bm ; 3 uses
-  %i.bn = getelementptr i8, ptr %next.gep28, i64 16 ; 2 uses
-  %wide.load29 = load <4 x i32>, ptr %next.gep28, align 4, !tbaa !82, !alias.scope !985, !noalias !986
+  %i.bn = getelementptr i8, ptr %i.o, i64 %i.bm   ; 2 uses
   %wide.load30.a = load <4 x i32>, ptr %i.bn, align 4, !tbaa !82, !alias.scope !985, !noalias !986
-  %4 = getelementptr i8, ptr %next.gep27, i64 -12 ; 2 uses
-  %i.bo = getelementptr i8, ptr %next.gep27, i64 -28 ; 2 uses
-  %wide.load31 = load <4 x i32>, ptr %4, align 4, !tbaa !82, !alias.scope !986
+  %i.bo = getelementptr i8, ptr %next.gep27, i64 -12 ; 2 uses
   %wide.load32 = load <4 x i32>, ptr %i.bo, align 4, !tbaa !82, !alias.scope !986
-  %reverse = shufflevector <4 x i32> %wide.load31, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   %reverse33 = shufflevector <4 x i32> %wide.load32, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i32> %reverse, ptr %next.gep28, align 4, !tbaa !82, !alias.scope !985, !noalias !986
   store <4 x i32> %reverse33, ptr %i.bn, align 4, !tbaa !82, !alias.scope !985, !noalias !986
-  %reverse34 = shufflevector <4 x i32> %wide.load29, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   %reverse35 = shufflevector <4 x i32> %wide.load30.a, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i32> %reverse34, ptr %4, align 4, !tbaa !82, !alias.scope !986
   store <4 x i32> %reverse35, ptr %i.bo, align 4, !tbaa !82, !alias.scope !986
-  %index.next36 = add nuw i64 %index26, 8         ; 2 uses
+  %index.next36 = add nuw i64 %index26, 4         ; 2 uses
   %i.bp = icmp eq i64 %index.next36, %n.vec24
   br i1 %i.bp, label %middle.block37, label %vector.body25, !llvm.loop !983
 

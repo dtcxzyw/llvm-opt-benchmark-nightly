@@ -205,20 +205,19 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph47, %._crit_edge44
   %indvars.iv = phi i64 [ 0, %.lr.ph47 ], [ %indvars.iv.next, %._crit_edge44 ] ; 2 uses
-  %.03645 = phi i64 [ 4294967295, %.lr.ph47 ], [ %i.i, %._crit_edge44 ]
-  %i.e = add nuw nsw i64 %.03645, 2
+  %.03645 = phi i64 [ -1, %.lr.ph47 ], [ %i.i, %._crit_edge44 ]
+  %i.e = add nsw i64 %.03645, 2                   ; 3 uses
   %i.f = load ptr, ptr %i.b, align 8, !tbaa !143
   %i.g = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %indvars.iv
   %i.h = load i16, ptr %i.g, align 2, !tbaa !74
   %i.i = zext i16 %i.h to i64                     ; 4 uses
-  %1 = and i64 %i.e, 4294967295                   ; 3 uses
-  %i.j = icmp samesign ult i64 %1, %i.i
+  %i.j = icmp samesign ult i64 %i.e, %i.i
   br i1 %i.j, label %.lr.ph.preheader, label %._crit_edge44
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.k = load ptr, ptr %i.c, align 8, !tbaa !140  ; 2 uses
   %i.l = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %i.i
-  %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %1
+  %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %i.e
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -235,7 +234,7 @@ bb.b:                                             ; preds = %.lr.ph47, %._crit_e
 .lr.ph43.preheader:                               ; preds = %.lr.ph
   %i.q = load ptr, ptr %i.d, align 8, !tbaa !142  ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.i
-  %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 %1
+  %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.e
   br label %.lr.ph43
 
 .lr.ph43:                                         ; preds = %.lr.ph43.preheader, %.lr.ph43

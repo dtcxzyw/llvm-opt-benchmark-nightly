@@ -206,15 +206,14 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !67
   %.not = icmp ne ptr %i.v, null
-  %spec.select = zext i1 %.not to i32             ; 2 uses
+  %spec.select = zext i1 %.not to i64             ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   %i.x = load i64, ptr %i.w, align 8, !tbaa !69
   %.not52 = icmp eq i64 %i.x, 0
-  %2 = or disjoint i32 %spec.select, 2
-  %.1 = select i1 %.not52, i32 %spec.select, i32 %2
+  %2 = or disjoint i64 %spec.select, 2
+  %.1 = select i1 %.not52, i64 %spec.select, i64 %2
   %i.y = load ptr, ptr @RedisModule_SaveUnsigned, align 8, !tbaa !24
-  %3 = zext nneg i32 %.1 to i64
-  tail call void %i.y(ptr noundef %0, i64 noundef %3) #22
+  tail call void %i.y(ptr noundef %0, i64 noundef %.1) #22
   %i.z = load ptr, ptr %i.u, align 8, !tbaa !67
   %.not53 = icmp eq ptr %i.z, null
   br i1 %.not53, label %bb.c, label %bb.b

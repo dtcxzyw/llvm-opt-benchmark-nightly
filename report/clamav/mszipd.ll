@@ -205,7 +205,7 @@ bb.cg:                                            ; preds = %._crit_edge474.i, %
   br i1 %i.pl, label %zip_read_lens.exit.thread, label %iter.check1192
 
 iter.check1192:                                   ; preds = %bb.cg
-  %min.iters.check1180 = icmp ult i32 %.0.i434, 8
+  %min.iters.check1180 = icmp ult i32 %.0.i434, 4
   %i.pm = sub nsw i32 0, %.0.i434
   %i.pn = icmp ugt i32 %.2506.i, %i.pm
   %or.cond = select i1 %min.iters.check1180, i1 true, i1 %i.pn
@@ -216,7 +216,7 @@ vector.main.loop.iter.check1181:                  ; preds = %iter.check1192
   br i1 %min.iters.check1182, label %vec.epilog.ph1196, label %vector.ph1183
 
 vector.ph1183:                                    ; preds = %vector.main.loop.iter.check1181
-  %i.po = and i32 %.0.i434, 24
+  %i.po = and i32 %.0.i434, 28
   %n.vec1184 = and i32 %.0.i434, -32              ; 4 uses
   %i.pp = and i32 %.0.i434, 31
   %i.pq = add i32 %.2506.i, %n.vec1184            ; 2 uses
@@ -246,11 +246,11 @@ vec.epilog.iter.check1194:                        ; preds = %middle.block1188
 
 vec.epilog.ph1196:                                ; preds = %vector.main.loop.iter.check1181, %vec.epilog.iter.check1194
   %vec.epilog.resume.val1190 = phi i32 [ %n.vec1184, %vec.epilog.iter.check1194 ], [ 0, %vector.main.loop.iter.check1181 ]
-  %n.vec1197 = and i32 %.0.i434, -8               ; 3 uses
-  %i.pw = and i32 %.0.i434, 7
+  %n.vec1197 = and i32 %.0.i434, -4               ; 3 uses
+  %i.pw = and i32 %.0.i434, 3
   %i.px = add i32 %.2506.i, %n.vec1197            ; 2 uses
-  %broadcast.splatinsert1198 = insertelement <8 x i8> poison, i8 %.0176.i, i64 0
-  %broadcast.splat1199 = shufflevector <8 x i8> %broadcast.splatinsert1198, <8 x i8> poison, <8 x i32> zeroinitializer
+  %broadcast.splatinsert1198 = insertelement <4 x i8> poison, i8 %.0176.i, i64 0
+  %broadcast.splat1199 = shufflevector <4 x i8> %broadcast.splatinsert1198, <4 x i8> poison, <4 x i32> zeroinitializer
   br label %vec.epilog.vector.body1200
 
 vec.epilog.vector.body1200:                       ; preds = %vec.epilog.vector.body1200, %vec.epilog.ph1196
@@ -258,8 +258,8 @@ vec.epilog.vector.body1200:                       ; preds = %vec.epilog.vector.b
   %i.py = add i32 %.2506.i, %index1201
   %i.pz = zext i32 %i.py to i64
   %i.qa = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.pz
-  store <8 x i8> %broadcast.splat1199, ptr %i.qa, align 1, !tbaa !32
-  %index.next1202 = add nuw i32 %index1201, 8     ; 2 uses
+  store <4 x i8> %broadcast.splat1199, ptr %i.qa, align 1, !tbaa !32
+  %index.next1202 = add nuw i32 %index1201, 4     ; 2 uses
   %i.qb = icmp eq i32 %index.next1202, %n.vec1197
   br i1 %i.qb, label %vec.epilog.middle.block1203, label %vec.epilog.vector.body1200, !llvm.loop !45
 
@@ -662,7 +662,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.ags, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph740.preheader, label %vec.epilog.ph, !prof !56
+  br i1 %min.epilog.iters.check, label %.lr.ph740.preheader, label %vec.epilog.ph, !prof !55
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -1065,7 +1065,7 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
   %i.ah = lshr i32 %.0102.epil, 1
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.epilog-lcssa, label %bb.d, !llvm.loop !57
+  br i1 %epil.iter.cmp.not, label %.epilog-lcssa, label %bb.d, !llvm.loop !56
 
 .epilog-lcssa:                                    ; preds = %bb.d, %.unr-lcssa
   %.lcssa217 = phi i32 [ %i.ac, %.unr-lcssa ], [ %i.ag, %bb.d ] ; 2 uses
@@ -1087,7 +1087,7 @@ iter.check:                                       ; preds = %.epilog-lcssa
   %i.an = add i32 %.1106.prol, -1                 ; 2 uses
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter220
-  br i1 %prol.iter.cmp.not, label %.preheader178.prol.loopexit, label %.preheader178.prol, !llvm.loop !58
+  br i1 %prol.iter.cmp.not, label %.preheader178.prol.loopexit, label %.preheader178.prol, !llvm.loop !57
 
 .preheader178.prol.loopexit:                      ; preds = %.preheader178.prol, %iter.check
   %.1111.unr = phi i32 [ %.lcssa217, %iter.check ], [ %i.am, %.preheader178.prol ]
@@ -1115,7 +1115,7 @@ iter.check:                                       ; preds = %.epilog-lcssa
   %i.az = add i32 %i.aw, %i.g
   %i.ba = add i32 %.1106, -4                      ; 2 uses
   %.not140.3 = icmp eq i32 %i.ba, 0
-  br i1 %.not140.3, label %.loopexit143, label %.preheader178, !llvm.loop !59
+  br i1 %.not140.3, label %.loopexit143, label %.preheader178, !llvm.loop !58
 
 .loopexit143:                                     ; preds = %.preheader178.prol.loopexit, %.preheader178, %bb.b
   %.2 = phi i32 [ %.199154, %bb.b ], [ %i.ai, %.preheader178 ], [ %i.ai, %.preheader178.prol.loopexit ] ; 6 uses
@@ -1192,7 +1192,7 @@ bb.i:                                             ; preds = %bb.i, %.epil.prehea
   %i.cc = lshr i32 %.1103.epil, 1
   %epil.iter225.next = add i32 %epil.iter225, 1   ; 2 uses
   %epil.iter225.cmp.not = icmp eq i32 %epil.iter225.next, %xtraiter224
-  br i1 %epil.iter225.cmp.not, label %.epilog-lcssa227, label %bb.i, !llvm.loop !60
+  br i1 %epil.iter225.cmp.not, label %.epilog-lcssa227, label %bb.i, !llvm.loop !59
 
 .epilog-lcssa227:                                 ; preds = %bb.i, %.unr-lcssa222
   %.lcssa215 = phi i32 [ %i.bx, %.unr-lcssa222 ], [ %i.cb, %bb.i ]
@@ -1282,7 +1282,7 @@ bb.l:                                             ; preds = %bb.l, %.epil.prehea
   %i.dj = lshr i32 %.2104.us.epil, 1
   %epil.iter235.next = add i32 %epil.iter235, 1   ; 2 uses
   %epil.iter235.cmp.not = icmp eq i32 %epil.iter235.next, %xtraiter234
-  br i1 %epil.iter235.cmp.not, label %.preheader.us.preheader, label %bb.l, !llvm.loop !61
+  br i1 %epil.iter235.cmp.not, label %.preheader.us.preheader, label %bb.l, !llvm.loop !60
 
 .preheader.us.preheader:                          ; preds = %bb.l, %.preheader.us.preheader.unr-lcssa
   %.lcssa = phi i32 [ %i.de, %.preheader.us.preheader.unr-lcssa ], [ %i.di, %bb.l ]
@@ -1436,11 +1436,10 @@ attributes #7 = { nounwind }
 !52 = distinct !{!52, !37}
 !53 = !{!10, !9, i64 72}
 !54 = !{!"llvm.loop.unroll.runtime.disable"}
-!55 = !{!"branch_weights", i32 8, i32 24}
-!56 = !{!"branch_weights", i32 4, i32 28}
+!55 = !{!"branch_weights", i32 4, i32 28}
+!56 = distinct !{!56, !34}
 !57 = distinct !{!57, !34}
-!58 = distinct !{!58, !34}
-!59 = distinct !{!59, !37}
+!58 = distinct !{!58, !37}
+!59 = distinct !{!59, !34}
 !60 = distinct !{!60, !34}
-!61 = distinct !{!61, !34}
 end_hunk_2

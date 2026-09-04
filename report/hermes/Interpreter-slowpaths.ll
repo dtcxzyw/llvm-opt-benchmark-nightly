@@ -202,7 +202,7 @@ bb.a:
   %i.b = load i8, ptr %i.a, align 1, !tbaa !31
   %i.c = and i8 %i.b, 1
   %i.d = or disjoint i8 %i.c, 44
-  %3 = zext nneg i8 %i.d to i16                   ; 2 uses
+  %3 = zext nneg i8 %i.d to i32                   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !11   ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 192 ; 2 uses
@@ -258,13 +258,13 @@ _ZN6hermes2vm13MutableHandleINS0_8CallableEEC2ERNS0_15HandleRootOwnerEPS2_.exit2
   br i1 %i.z, label %bb.g, label %bb.f, !prof !7
 
 bb.f:                                             ; preds = %_ZN6hermes2vm13MutableHandleINS0_8CallableEEC2ERNS0_15HandleRootOwnerEPS2_.exit25
-  %4 = or disjoint i16 %3, 64
+  %4 = or disjoint i32 %3, 64
   %i.aa = or i64 %i.y, -281474976710656
   store i64 %i.aa, ptr %.0.i.i.i.i.i.i, align 8, !tbaa !54
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %_ZN6hermes2vm13MutableHandleINS0_8CallableEEC2ERNS0_15HandleRootOwnerEPS2_.exit25
-  %.sroa.034.0 = phi i16 [ %3, %_ZN6hermes2vm13MutableHandleINS0_8CallableEEC2ERNS0_15HandleRootOwnerEPS2_.exit25 ], [ %4, %bb.f ] ; 2 uses
+  %.sroa.034.0 = phi i32 [ %3, %_ZN6hermes2vm13MutableHandleINS0_8CallableEEC2ERNS0_15HandleRootOwnerEPS2_.exit25 ], [ %4, %bb.f ] ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !31
   %i.ad = zext i8 %i.ac to i64
@@ -275,13 +275,13 @@ bb.g:                                             ; preds = %bb.f, %_ZN6hermes2v
   br i1 %i.ag, label %bb.i, label %bb.h, !prof !7
 
 bb.h:                                             ; preds = %bb.g
-  %5 = or i16 %.sroa.034.0, 128
+  %5 = or i32 %.sroa.034.0, 128
   %i.ah = or i64 %i.af, -281474976710656
   store i64 %i.ah, ptr %.0.i.i.i.i.i.i24, align 8, !tbaa !54
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %.sroa.034.1 = phi i16 [ %.sroa.034.0, %bb.g ], [ %5, %bb.h ]
+  %.sroa.034.1 = phi i32 [ %.sroa.034.0, %bb.g ], [ %5, %bb.h ]
   %i.ai = tail call i64 @_ZN6hermes2vm16PropertyAccessor6createERNS0_7RuntimeENS0_6HandleINS0_8CallableEEES6_(ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr %.0.i.i.i.i.i.i, ptr %.0.i.i.i.i.i.i24) #12
   %i.aj = or i64 %i.ai, -281474976710656          ; 2 uses
   %i.ak = load ptr, ptr %i.e, align 8, !tbaa !11  ; 3 uses
@@ -312,8 +312,7 @@ _ZN6hermes2vm15HandleRootOwner10makeHandleINS0_16PropertyAccessorEEENS0_6HandleI
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !31
   %i.ay = zext i8 %i.ax to i64
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.ay
-  %.sroa.034.0.insert.ext = zext nneg i16 %.sroa.034.1 to i32
-  %i.ba = tail call i32 @_ZN6hermes2vm8JSObject17defineOwnComputedENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS0_19DefinePropertyFlagsES7_NS0_11PropOpFlagsE(ptr %i.av, ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr %i.az, i32 %.sroa.034.0.insert.ext, ptr %.0.i.i.i.i.i.i27, i32 0) #12
+  %i.ba = tail call i32 @_ZN6hermes2vm8JSObject17defineOwnComputedENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS0_19DefinePropertyFlagsES7_NS0_11PropOpFlagsE(ptr %i.av, ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr %i.az, i32 %.sroa.034.1, ptr %.0.i.i.i.i.i.i27, i32 0) #12
   %i.bb = shl i32 %i.ba, 24
   %i.bc = ashr exact i32 %i.bb, 24
   ret i32 %i.bc

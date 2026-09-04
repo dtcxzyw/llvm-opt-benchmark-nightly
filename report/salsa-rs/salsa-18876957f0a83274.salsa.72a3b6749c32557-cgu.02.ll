@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/salsa-rs/original/salsa-18876957f0a83274.salsa.72a3b6749c32557-cgu.02?download=true
 inline.NumInlined: 266
 inline.NumDeleted: 104
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvXs5_NtCsC8CapfvpQ1_5salsa5tableNtB5_11ErasedSlotsNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next:bb.a
   %i.af = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   %i.ag = load atomic i64, ptr %i.af acquire, align 8, !noalias !258
@@ -202,45 +204,47 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.c = add nsw i64 %.idx, -8                    ; 2 uses
   %i.d = lshr exact i64 %i.c, 3
-  %i.e = add nuw nsw i64 %i.d, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.c, 24
-  br i1 %min.iters.check, label %.lr.ph.preheader5, label %vector.ph
+  %i.e = add nuw nsw i64 %i.d, 1
+  %xtraiter = and i64 %i.e, 7                     ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.preheader5, label %vector.body
 
-vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %i.e, 4611686018427387900      ; 3 uses
-  %3 = shl i64 %n.vec, 3
-  %4 = getelementptr i8, ptr %0, i64 %3
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %2, i64 0
-  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  br label %vector.body
+vector.body:                                      ; preds = %.lr.ph.preheader, %vector.body
+  %.sroa.01.04.prol = phi ptr [ %i.f, %vector.body ], [ %0, %.lr.ph.preheader ] ; 2 uses
+  %prol.iter = phi i64 [ %index.next, %vector.body ], [ 0, %.lr.ph.preheader ]
+  %i.f = getelementptr inbounds nuw i8, ptr %.sroa.01.04.prol, i64 8 ; 2 uses
+  store i64 %2, ptr %.sroa.01.04.prol, align 8
+  %index.next = add i64 %prol.iter, 1             ; 2 uses
+  %i.g = icmp eq i64 %index.next, %xtraiter
+  br i1 %i.g, label %.lr.ph.preheader5, label %vector.body, !llvm.loop !260
 
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %5 = shl i64 %index, 3
-  %next.gep = getelementptr i8, ptr %0, i64 %5    ; 2 uses
-  %i.f = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %broadcast.splat, ptr %next.gep, align 8
-  store <2 x i64> %broadcast.splat, ptr %i.f, align 8
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %i.g = icmp eq i64 %index.next, %n.vec
-  br i1 %i.g, label %middle.block, label %vector.body, !llvm.loop !260
-
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.e, %n.vec
-  br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader5
-
-.lr.ph.preheader5:                                ; preds = %.lr.ph.preheader, %middle.block
-  %.sroa.01.04.ph = phi ptr [ %0, %.lr.ph.preheader ], [ %4, %middle.block ]
-  br label %.lr.ph
+.lr.ph.preheader5:                                ; preds = %vector.body, %.lr.ph.preheader
+  %.sroa.01.04.ph = phi ptr [ %0, %.lr.ph.preheader ], [ %i.f, %vector.body ]
+  %3 = icmp ult i64 %i.c, 56
+  br i1 %3, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader5, %.lr.ph
-  %.sroa.01.04 = phi ptr [ %i.h, %.lr.ph ], [ %.sroa.01.04.ph, %.lr.ph.preheader5 ] ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.01.04, i64 8 ; 2 uses
+  %.sroa.01.04 = phi ptr [ %i.h, %.lr.ph ], [ %.sroa.01.04.ph, %.lr.ph.preheader5 ] ; 9 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.04, i64 8
   store i64 %2, ptr %.sroa.01.04, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.01.04, i64 16
+  store i64 %2, ptr %4, align 8
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.01.04, i64 24
+  store i64 %2, ptr %5, align 8
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.01.04, i64 32
+  store i64 %2, ptr %6, align 8
+  %8 = getelementptr inbounds nuw i8, ptr %.sroa.01.04, i64 40
+  store i64 %2, ptr %7, align 8
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.01.04, i64 48
+  store i64 %2, ptr %8, align 8
+  %10 = getelementptr inbounds nuw i8, ptr %.sroa.01.04, i64 56
+  store i64 %2, ptr %9, align 8
+  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.01.04, i64 64 ; 2 uses
+  store i64 %2, ptr %10, align 8
   %i.i = icmp eq ptr %i.h, %i.a
-  br i1 %i.i, label %._crit_edge, label %.lr.ph, !llvm.loop !261
+  br i1 %i.i, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
+._crit_edge:                                      ; preds = %.lr.ph.preheader5, %.lr.ph, %bb.a
   ret void
 }
 
@@ -260,12 +264,12 @@ bb.a:
 define hidden noundef zeroext i1 @_RNvXsa_NtCs4NRVxsYgnAr_4core5arrayANtNtCsC8CapfvpQ1_5salsa8revision8Revisionj3_NtNtB7_3fmt5Debug3fmtBB_(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %0, ptr noalias noundef align 8 dereferenceable(24) %1) unnamed_addr #1 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !267
-  call void @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter10debug_list(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(24) %1), !noalias !268
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !265
+  call void @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter10debug_list(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias noundef nonnull align 8 dereferenceable(24) %1), !noalias !266
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.c = call noundef nonnull align 8 ptr @_RINvMs5_NtNtCs4NRVxsYgnAr_4core3fmt8buildersNtB6_9DebugList7entriesRNtNtCsC8CapfvpQ1_5salsa8revision8RevisionINtNtNtBa_5slice4iter4IterB14_EEB18_(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull readonly align 8 %0, ptr noundef nonnull readonly %i.b)
   %i.d = call noundef zeroext i1 @_RNvMs5_NtNtCs4NRVxsYgnAr_4core3fmt8buildersNtB5_9DebugList6finish(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.c)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !267
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !265
   ret i1 %i.d
 }
 
@@ -283,7 +287,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define hidden { ptr, ptr } @_RNvXsn_Csa3bo7ChGFM8_8thin_vecRINtB5_7ThinVecTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBM_2id2IdEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect12IntoIterator9into_iterBM_(ptr noalias noundef readonly align 8 captures(none) dereferenceable(8) %0) unnamed_addr #10 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !alias.scope !271, !nonnull !3, !noundef !3 ; 2 uses
+  %i.a = load ptr, ptr %0, align 8, !alias.scope !269, !nonnull !3, !noundef !3 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %i.c = load i64, ptr %i.a, align 8, !noundef !3
   %i.d = getelementptr inbounds nuw [24 x i8], ptr %i.b, i64 %i.c
@@ -686,16 +690,14 @@ begin_hunk_1_@llvm.memset.p0.i64
 !257 = !{!248, !244}
 !258 = !{!252, !250, !246, !245}
 !259 = !{i64 1, i64 0}
-!260 = distinct !{!260, !262, !263}
-!261 = distinct !{!261, !263, !262}
-!262 = !{!"llvm.loop.isvectorized", i32 1}
-!263 = !{!"llvm.loop.unroll.runtime.disable"}
-!264 = distinct !{!264, !"_RNvXsr_NtCs4NRVxsYgnAr_4core3fmtSNtNtCsC8CapfvpQ1_5salsa8revision8RevisionNtB5_5Debug3fmtBz_"}
-!265 = distinct !{!265, !264, !"_RNvXsr_NtCs4NRVxsYgnAr_4core3fmtSNtNtCsC8CapfvpQ1_5salsa8revision8RevisionNtB5_5Debug3fmtBz_: argument 1"}
-!266 = distinct !{!266, !264, !"_RNvXsr_NtCs4NRVxsYgnAr_4core3fmtSNtNtCsC8CapfvpQ1_5salsa8revision8RevisionNtB5_5Debug3fmtBz_: argument 0"}
-!267 = !{!266, !265}
-!268 = !{!266}
-!269 = distinct !{!269, !"_RNvMs3_Csa3bo7ChGFM8_8thin_vecINtB5_7ThinVecTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBL_2id2IdEE8data_rawBL_"}
-!270 = distinct !{!270, !269, !"_RNvMs3_Csa3bo7ChGFM8_8thin_vecINtB5_7ThinVecTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBL_2id2IdEE8data_rawBL_: argument 0"}
-!271 = !{!270}
+!260 = distinct !{!260, !261}
+!261 = !{!"llvm.loop.unroll.disable"}
+!262 = distinct !{!262, !"_RNvXsr_NtCs4NRVxsYgnAr_4core3fmtSNtNtCsC8CapfvpQ1_5salsa8revision8RevisionNtB5_5Debug3fmtBz_"}
+!263 = distinct !{!263, !262, !"_RNvXsr_NtCs4NRVxsYgnAr_4core3fmtSNtNtCsC8CapfvpQ1_5salsa8revision8RevisionNtB5_5Debug3fmtBz_: argument 1"}
+!264 = distinct !{!264, !262, !"_RNvXsr_NtCs4NRVxsYgnAr_4core3fmtSNtNtCsC8CapfvpQ1_5salsa8revision8RevisionNtB5_5Debug3fmtBz_: argument 0"}
+!265 = !{!264, !263}
+!266 = !{!264}
+!267 = distinct !{!267, !"_RNvMs3_Csa3bo7ChGFM8_8thin_vecINtB5_7ThinVecTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBL_2id2IdEE8data_rawBL_"}
+!268 = distinct !{!268, !267, !"_RNvMs3_Csa3bo7ChGFM8_8thin_vecINtB5_7ThinVecTNtNtCsC8CapfvpQ1_5salsa14tracked_struct8IdentityNtNtBL_2id2IdEE8data_rawBL_: argument 0"}
+!269 = !{!268}
 end_hunk_1

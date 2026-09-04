@@ -205,11 +205,8 @@ bb.i:                                             ; preds = %.loopexit.i
 bb.j:                                             ; preds = %bb.i
   %i.ak = tail call noundef i16 @llvm.bswap.i16(i16 %.sroa.0.0.copyload.i10.pre.i)
   %i.al = zext i16 %i.ak to i64
-  %2 = add nuw nsw i64 %i.al, 4294967295
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !58
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %4 = and i64 %2, 4294967295
-  %i.am = getelementptr inbounds nuw [3 x i8], ptr %3, i64 %4
+  %i.am = getelementptr [3 x i8], ptr %0, i64 %i.al
   br label %_ZNK3CFF11FDSelect3_4IN2OT7NumTypeILb1EtLj2EEENS2_ILb1EhLj1EEEE12get_fd_rangeEj.exit
 
 _ZNK3CFF11FDSelect3_4IN2OT7NumTypeILb1EtLj2EEENS2_ILb1EhLj1EEEE12get_fd_rangeEj.exit: ; preds = %.thread.i, %bb.h, %bb.i, %bb.j
@@ -520,11 +517,9 @@ bb.j:                                             ; preds = %._crit_edge.i
 bb.k:                                             ; preds = %._crit_edge.i
   %i.ah = tail call noundef i16 @llvm.bswap.i16(i16 %i.af)
   %i.ai = zext i16 %i.ah to i64
-  %7 = add nuw nsw i64 %i.ai, 4294967295
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !58
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.w, i64 2
-  %8 = and i64 %7, 4294967295
-  %i.ak = getelementptr inbounds nuw [3 x i8], ptr %i.aj, i64 %8
+  %i.aj = getelementptr i8, ptr %i.w, i64 -1
+  %i.ak = getelementptr [3 x i8], ptr %i.aj, i64 %i.ai
   br label %_ZN3CFF11FDSelect3_4IN2OT7NumTypeILb1EtLj2EEENS2_ILb1EhLj1EEEE8sentinelEv.exit.i
 
 _ZN3CFF11FDSelect3_4IN2OT7NumTypeILb1EtLj2EEENS2_ILb1EhLj1EEEE8sentinelEv.exit.i: ; preds = %bb.k, %bb.j

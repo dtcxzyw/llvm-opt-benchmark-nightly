@@ -205,10 +205,9 @@ bb.ji:                                            ; preds = %bb.jg
 bb.jj:                                            ; preds = %bb.ji
   %i.auq = zext i16 %i.aup to i64
   %i.aur = load ptr, ptr %i.ct, align 8, !tbaa !634
-  %8 = add nuw nsw i64 %i.auq, 4294967295
-  %9 = and i64 %8, 4294967295
-  %10 = getelementptr inbounds nuw [2 x i8], ptr %i.aur, i64 %9
-  %i.aus = load i16, ptr %10, align 2, !tbaa !128
+  %8 = getelementptr [2 x i8], ptr %i.aur, i64 %i.auq
+  %9 = getelementptr i8, ptr %8, i64 -2
+  %i.aus = load i16, ptr %9, align 2, !tbaa !128
   %i.aut = add i16 %i.aus, 1
   br label %bb.jk
 
@@ -611,14 +610,14 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.ak = and i16 %i.y, 1
   %.not122 = icmp eq i16 %i.ak, 0
-  %spec.select = select i1 %.not122, i32 2, i32 4 ; 3 uses
+  %spec.select = select i1 %.not122, i64 2, i64 4 ; 3 uses
   %i.al = zext i16 %i.z to i32                    ; 7 uses
   %i.am = and i32 %i.al, 8
   %.not123 = icmp eq i32 %i.am, 0                 ; 2 uses
   br i1 %.not123, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %1 = add nuw nsw i32 %spec.select, 2
+  %1 = add nuw nsw i64 %spec.select, 2
   br label %bb.j
 
 bb.g:                                             ; preds = %bb.e
@@ -627,19 +626,19 @@ bb.g:                                             ; preds = %bb.e
   br i1 %.not124, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %2 = add nuw nsw i32 %spec.select, 4
+  %2 = add nuw nsw i64 %spec.select, 4
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
   %i.ao = lshr i32 %i.al, 4
   %i.ap = and i32 %i.ao, 8
-  %spec.select133 = or disjoint i32 %i.ap, %spec.select
+  %3 = zext nneg i32 %i.ap to i64
+  %spec.select133 = or disjoint i64 %spec.select, %3
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f
-  %.1 = phi i32 [ %1, %bb.f ], [ %2, %bb.h ], [ %spec.select133, %bb.i ]
-  %3 = zext nneg i32 %.1 to i64
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.m, i64 %3
+  %.1 = phi i64 [ %1, %bb.f ], [ %2, %bb.h ], [ %spec.select133, %bb.i ]
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.m, i64 %.1
   %i.ar = icmp ugt ptr %i.aq, %i.d
   br i1 %i.ar, label %.loopexit, label %bb.k
 

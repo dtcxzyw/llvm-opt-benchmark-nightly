@@ -202,8 +202,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.bg = mul nuw nsw i32 %i.bd, 372
-  %i.bh = add nuw nsw i32 %i.bg, 65164
-  %4 = and i32 %i.bh, 65532
+  %i.bh = add nsw i32 %i.bg, -372
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.j
@@ -219,7 +218,7 @@ switch.lookup:                                    ; preds = %bb.l
   br label %bb.m
 
 bb.m:                                             ; preds = %switch.lookup, %bb.k, %bb.i
-  %.0.i.ph.i = phi i32 [ %switch.ext, %switch.lookup ], [ 372, %bb.i ], [ %4, %bb.k ] ; 2 uses
+  %.0.i.ph.i = phi i32 [ %switch.ext, %switch.lookup ], [ 372, %bb.i ], [ %i.bh, %bb.k ] ; 2 uses
   %i.bk = load i32, ptr @hf_iso7816_atr_ta1_fi, align 4
   %i.bl = tail call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format(ptr noundef %i.ba, i32 noundef %i.bk, ptr noundef %0, i32 noundef %i.au, i32 noundef 1, i32 noundef %.0.i.ph.i, ptr noundef nonnull @.str.191, i32 noundef %.0.i.ph.i, i32 noundef %i.bd) ; 0 uses
   br label %FI_to_Fi.exit.i

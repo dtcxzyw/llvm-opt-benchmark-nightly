@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph80, %bb.k
-  %indvars.iv88 = phi i64 [ 0, %.lr.ph80 ], [ %indvars.iv.next89, %bb.k ] ; 15 uses
+  %indvars.iv88 = phi i64 [ 0, %.lr.ph80 ], [ %indvars.iv.next89, %bb.k ] ; 14 uses
   %i.t = shl nuw nsw i64 %indvars.iv88, 3         ; 3 uses
   %i.u = add nuw i64 %i.t, 8                      ; 2 uses
   %scevgep93 = getelementptr i8, ptr %i.h, i64 %i.u ; 2 uses
@@ -240,26 +240,35 @@ vector.memcheck:                                  ; preds = %.lr.ph
   br i1 %conflict.rdx105, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %indvars.iv88, 9223372036854775806 ; 3 uses
-  %i.ac = or i64 %indvars.iv88, 1                 ; 2 uses
+  %n.vec = and i64 %indvars.iv88, 9223372036854775804 ; 4 uses
+  %i.ac = or disjoint i64 %n.vec, 1               ; 2 uses
   %i.ad = load double, ptr %i.o, align 8, !tbaa !71, !alias.scope !251
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.ad, i64 0
-  %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
+  %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
   %i.ae = or disjoint i64 %index, 1               ; 2 uses
-  %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %index
-  %wide.load.a = load <2 x double>, ptr %i.af, align 8, !tbaa !52, !alias.scope !252
+  %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %index ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.af, i64 16
+  %wide.load = load <2 x double>, ptr %i.af, align 8, !tbaa !52, !alias.scope !252
+  %wide.load.a = load <2 x double>, ptr %4, align 8, !tbaa !52, !alias.scope !252
+  %5 = fmul <2 x double> %broadcast.splat, %wide.load
   %i.ag = fmul <2 x double> %broadcast.splat, %wide.load.a
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.ae
-  store <2 x double> %i.ag, ptr %i.ah, align 8, !tbaa !52, !alias.scope !253, !noalias !254
-  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %index
-  %wide.load106 = load <2 x ptr>, ptr %i.ai, align 8, !tbaa !57, !alias.scope !255
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.ae
-  store <2 x ptr> %wide.load106, ptr %i.aj, align 8, !tbaa !57, !alias.scope !256, !noalias !255
-  %index.next = add nuw i64 %index, 2             ; 2 uses
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.ae ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
+  store <2 x double> %5, ptr %i.ah, align 8, !tbaa !52, !alias.scope !253, !noalias !254
+  store <2 x double> %i.ag, ptr %6, align 8, !tbaa !52, !alias.scope !253, !noalias !254
+  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %index ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
+  %wide.load107 = load <2 x ptr>, ptr %i.ai, align 8, !tbaa !57, !alias.scope !255
+  %wide.load106 = load <2 x ptr>, ptr %7, align 8, !tbaa !57, !alias.scope !255
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.ae ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
+  store <2 x ptr> %wide.load107, ptr %i.aj, align 8, !tbaa !57, !alias.scope !256, !noalias !255
+  store <2 x ptr> %wide.load106, ptr %8, align 8, !tbaa !57, !alias.scope !256, !noalias !255
+  %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ak = icmp eq i64 %index.next, %n.vec
   br i1 %i.ak, label %middle.block, label %vector.body, !llvm.loop !249
 

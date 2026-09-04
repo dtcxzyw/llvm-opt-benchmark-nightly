@@ -205,7 +205,7 @@ bb.ce:                                            ; preds = %bb.cd
 
 .outer:                                           ; preds = %.thread, %bb.ce
   %indvars.iv725.ph = phi i64 [ %indvars.iv.next726812, %.thread ], [ 0, %bb.ce ] ; 5 uses
-  %.0349683.ph = phi i8 [ %43, %.thread ], [ 0, %bb.ce ] ; 3 uses
+  %.0349683.ph = phi i32 [ %43, %.thread ], [ 0, %bb.ce ] ; 3 uses
   %i.js = getelementptr inbounds nuw [8 x i8], ptr %.0336, i64 %indvars.iv725.ph
   %i.jt = getelementptr inbounds nuw [8 x i8], ptr %.0335, i64 %indvars.iv725.ph
   %i.ju = load double, ptr %i.jt, align 8, !tbaa !34 ; 4 uses
@@ -447,7 +447,7 @@ bb.cx:                                            ; preds = %bb.cv, %bb.cw
 
 .thread:                                          ; preds = %bb.ck
   %i.lx = icmp slt i64 %i.ko, 256
-  %43 = zext i1 %i.lx to i8                       ; 2 uses
+  %43 = zext i1 %i.lx to i32                      ; 2 uses
   %indvars.iv.next726812 = add nuw nsw i64 %indvars.iv725.ph, 1 ; 2 uses
   %exitcond727.not813 = icmp eq i64 %indvars.iv.next726812, %i.dp
   br i1 %exitcond727.not813, label %.loopexit667, label %.outer, !llvm.loop !75
@@ -561,13 +561,12 @@ bb.cz:                                            ; preds = %bb.cy
 
 .loopexit667:                                     ; preds = %.thread, %.split.epil.preheader, %.loopexit667.loopexit921.unr-lcssa, %bb.cz
   %i.nu = phi i64 [ 0, %bb.cz ], [ 0, %.split.epil.preheader ], [ 0, %.loopexit667.loopexit921.unr-lcssa ], [ 1, %.thread ]
-  %.1350814817 = phi i8 [ %.0349683.ph, %bb.cz ], [ %.0349683.ph, %.split.epil.preheader ], [ %.0349683.ph, %.loopexit667.loopexit921.unr-lcssa ], [ %43, %.thread ]
+  %.1350814817 = phi i32 [ %.0349683.ph, %bb.cz ], [ %.0349683.ph, %.split.epil.preheader ], [ %.0349683.ph, %.loopexit667.loopexit921.unr-lcssa ], [ %43, %.thread ]
   %.0342 = phi ptr [ %i.ly, %bb.cz ], [ %i.ly, %.split.epil.preheader ], [ %i.ly, %.loopexit667.loopexit921.unr-lcssa ], [ %i.jo, %.thread ]
   %i.nv = getelementptr inbounds nuw [256 x i8], ptr @_ZN2cvL7randTabE, i64 %i.nu
   %i.nw = zext nneg i32 %i.y to i64
   %i.nx = getelementptr inbounds nuw [8 x i8], ptr %i.nv, i64 %i.nw
-  %44 = zext nneg i8 %.1350814817 to i32
-  %i.ny = shl nuw nsw i32 %44, 30
+  %i.ny = shl nsw i32 %.1350814817, 30
   br label %bb.db
 
 bb.da:                                            ; preds = %bb.cd

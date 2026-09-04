@@ -204,12 +204,12 @@ bench_async_handle.exit.thread:                   ; preds = %bb.k, %.preheader15
   br i1 %i.be, label %.loopexit155, label %iter.check
 
 iter.check:                                       ; preds = %bench_async_handle.exit.thread
-  %wide.trip.count = zext nneg i32 %.0 to i64     ; 5 uses
+  %wide.trip.count = zext nneg i32 %.0 to i64     ; 6 uses
   %min.iters.check237 = icmp samesign ult i32 %.0, 32
   br i1 %min.iters.check237, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %iter.check
-  %i.bf = and i64 %wide.trip.count, 28
+  %i.bf = and i64 %wide.trip.count, 24
   %n.vec = and i64 %wide.trip.count, 96           ; 5 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   store <16 x i8> <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15>, ptr %i.f, align 16, !tbaa !158
@@ -238,34 +238,43 @@ middle.block:                                     ; preds = %vector.body.2, %vec
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.bf, 0
-  br i1 %min.epilog.iters.check, label %.preheader148, label %vec.epilog.ph, !prof !159
+  br i1 %min.epilog.iters.check, label %.preheader148.preheader, label %vec.epilog.ph, !prof !159
 
 vec.epilog.ph:                                    ; preds = %iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %iter.check ] ; 2 uses
+  %n.vec238 = and i64 %wide.trip.count, 120       ; 3 uses
   %i.bn = trunc nuw nsw i64 %vec.epilog.resume.val to i8
-  %broadcast.splatinsert = insertelement <4 x i8> poison, i8 %i.bn, i64 0
-  %broadcast.splat = shufflevector <4 x i8> %broadcast.splatinsert, <4 x i8> poison, <4 x i32> zeroinitializer
-  %induction = or disjoint <4 x i8> %broadcast.splat, <i8 0, i8 1, i8 2, i8 3>
+  %broadcast.splatinsert = insertelement <8 x i8> poison, i8 %i.bn, i64 0
+  %broadcast.splat = shufflevector <8 x i8> %broadcast.splatinsert, <8 x i8> poison, <8 x i32> zeroinitializer
+  %induction = or disjoint <8 x i8> %broadcast.splat, <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7>
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index239 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next241, %vec.epilog.vector.body ] ; 2 uses
-  %vec.ind240 = phi <4 x i8> [ %induction, %vec.epilog.ph ], [ %vec.ind.next242, %vec.epilog.vector.body ] ; 2 uses
+  %vec.ind240 = phi <8 x i8> [ %induction, %vec.epilog.ph ], [ %vec.ind.next242, %vec.epilog.vector.body ] ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.f, i64 %index239
-  store <4 x i8> %vec.ind240, ptr %i.bo, align 4, !tbaa !158
-  %index.next241 = add nuw i64 %index239, 4       ; 2 uses
-  %vec.ind.next242 = add <4 x i8> %vec.ind240, splat (i8 4)
-  %i.bp = icmp eq i64 %index.next241, %wide.trip.count
-  br i1 %i.bp, label %.loopexit149, label %vec.epilog.vector.body, !llvm.loop !152
+  store <8 x i8> %vec.ind240, ptr %i.bo, align 8, !tbaa !158
+  %index.next241 = add nuw i64 %index239, 8       ; 2 uses
+  %vec.ind.next242 = add <8 x i8> %vec.ind240, splat (i8 8)
+  %i.bp = icmp eq i64 %index.next241, %n.vec238
+  br i1 %i.bp, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !152
 
-.loopexit149:                                     ; preds = %.preheader148, %vec.epilog.vector.body, %middle.block
+vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
+  %cmp.n243 = icmp eq i64 %n.vec238, %wide.trip.count
+  br i1 %cmp.n243, label %.loopexit149, label %.preheader148.preheader
+
+.preheader148.preheader:                          ; preds = %vec.epilog.iter.check, %vec.epilog.middle.block
+  %indvars.iv.ph = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ %n.vec238, %vec.epilog.middle.block ]
+  br label %.preheader148
+
+.loopexit149:                                     ; preds = %.preheader148, %vec.epilog.middle.block, %middle.block
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
   %i.bq = call i32 @clock_gettime(i32 noundef 0, ptr noundef nonnull %3) #16
   %i.br = icmp slt i32 %i.bq, 0
   br i1 %i.br, label %bb.l, label %bench_stats_start.exit84
 
-.preheader148:                                    ; preds = %vec.epilog.iter.check, %.preheader148
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader148 ], [ %n.vec, %vec.epilog.iter.check ] ; 3 uses
+.preheader148:                                    ; preds = %.preheader148.preheader, %.preheader148
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader148 ], [ %indvars.iv.ph, %.preheader148.preheader ] ; 3 uses
   %i.bs = trunc i64 %indvars.iv to i8
   %i.bt = getelementptr inbounds nuw i8, ptr %i.f, i64 %indvars.iv
   store i8 %i.bs, ptr %i.bt, align 1, !tbaa !158
@@ -668,7 +677,7 @@ attributes #19 = { nounwind willreturn memory(read) }
 !156 = distinct !{!156, !13}
 !157 = distinct !{!157, !13}
 !158 = !{!5, !5, i64 0}
-!159 = !{!"branch_weights", i32 4, i32 28}
+!159 = !{!"branch_weights", i32 8, i32 24}
 !160 = !{!"llvm.loop.isvectorized", i32 1}
 !161 = !{!"llvm.loop.unroll.runtime.disable"}
 !162 = !{!"p1 _ZTS12ecc_set_type", !10, i64 0}

@@ -204,22 +204,20 @@ bb.ai:                                            ; preds = %bb.ah
   %i.cl = icmp ult i32 %.1.3.i.i, 1114112
   br i1 %i.cl, label %.lr.ph.preheader.i, label %utf16_literal_to_utf8.exit.thread
 
-.lr.ph.preheader.i:                               ; preds = %bb.ai, %bb.ah, %bb.ag, %.thread83.i
+.lr.ph.preheader.i:                               ; preds = %.thread83.i, %bb.ag, %bb.ah, %bb.ai
   %.04669.i = phi i64 [ 6, %bb.ah ], [ 12, %.thread83.i ], [ 6, %bb.ag ], [ 6, %bb.ai ]
   %.167.shrunk.i = phi i32 [ %.1.3.i.i, %bb.ah ], [ %i.ch, %.thread83.i ], [ %.1.3.i.i, %bb.ag ], [ %.1.3.i.i, %bb.ai ] ; 2 uses
-  %.048.i = phi i32 [ 3, %bb.ah ], [ 4, %.thread83.i ], [ 2, %bb.ag ], [ 4, %bb.ai ] ; 2 uses
+  %.048.i = phi i64 [ 3, %bb.ah ], [ 4, %.thread83.i ], [ 2, %bb.ag ], [ 4, %bb.ai ] ; 4 uses
   %.045.i = phi i64 [ 224, %bb.ah ], [ 240, %.thread83.i ], [ 192, %bb.ag ], [ 240, %bb.ai ]
-  %narrow.i = add nuw nsw i32 %.048.i, 255
-  %2 = and i32 %narrow.i, 255
-  %3 = zext nneg i32 %2 to i64                    ; 3 uses
   %i.cm = trunc i32 %.167.shrunk.i to i8
   %i.cn = and i8 %i.cm, 63
   %i.co = or disjoint i8 %i.cn, -128
-  %i.cp = getelementptr inbounds nuw i8, ptr %.090119, i64 %3
+  %2 = getelementptr i8, ptr %.090119, i64 %.048.i
+  %i.cp = getelementptr i8, ptr %2, i64 -1
   store i8 %i.co, ptr %i.cp, align 1, !tbaa !53
   %i.cq = lshr i32 %.167.shrunk.i, 6              ; 2 uses
   %i.cr = zext nneg i32 %i.cq to i64              ; 3 uses
-  %indvars.iv.next.i = add nsw i64 %3, -1         ; 2 uses
+  %indvars.iv.next.i = add nsw i64 %.048.i, -2    ; 2 uses
   %i.cs = and i64 %indvars.iv.next.i, 255
   %.not54.i = icmp eq i64 %i.cs, 0
   br i1 %.not54.i, label %bb.aj, label %.lr.ph.i.1
@@ -231,7 +229,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.cw = getelementptr inbounds nuw i8, ptr %.090119, i64 %indvars.iv.next.i
   store i8 %i.cv, ptr %i.cw, align 1, !tbaa !53
   %i.cx = lshr i64 %i.cr, 6                       ; 2 uses
-  %indvars.iv.next.i.1 = add nsw i64 %3, -2       ; 2 uses
+  %indvars.iv.next.i.1 = add nsw i64 %.048.i, -3  ; 2 uses
   %i.cy = and i64 %indvars.iv.next.i.1, 255
   %.not54.i.1 = icmp eq i64 %i.cy, 0
   br i1 %.not54.i.1, label %bb.aj, label %.lr.ph.i.2
@@ -248,7 +246,6 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %.lr.ph.i.2, %.lr.ph.i.1, %.lr.ph.preheader.i
   %.lcssa = phi i64 [ %i.cr, %.lr.ph.preheader.i ], [ %i.cx, %.lr.ph.i.1 ], [ %i.dd, %.lr.ph.i.2 ]
   %i.de = or i64 %.lcssa, %.045.i
-  %4 = zext nneg i32 %.048.i to i64
   br label %utf16_literal_to_utf8.exit
 
 bb.ak:                                            ; preds = %bb.af, %bb.aa, %bb.x, %bb.u, %bb.r
@@ -259,7 +256,7 @@ bb.ak:                                            ; preds = %bb.af, %bb.aa, %bb.
 utf16_literal_to_utf8.exit:                       ; preds = %bb.aj, %bb.ak
   %.16795.sink.i = phi i64 [ %.16795.i, %bb.ak ], [ %i.de, %bb.aj ]
   %.0466998108.i = phi i64 [ 6, %bb.ak ], [ %.04669.i, %bb.aj ]
-  %.04899106.i = phi i64 [ 1, %bb.ak ], [ %4, %bb.aj ]
+  %.04899106.i = phi i64 [ 1, %bb.ak ], [ %.048.i, %bb.aj ]
   %i.df = trunc i64 %.16795.sink.i to i8
   store i8 %i.df, ptr %.090119, align 1, !tbaa !53
   %i.dg = getelementptr inbounds nuw i8, ptr %.090119, i64 %.04899106.i

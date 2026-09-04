@@ -205,19 +205,24 @@ vector.memcheck:                                  ; preds = %bb.b
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.e, 4611686018427387900      ; 4 uses
+  %n.vec = and i64 %i.e, 4611686018427387896      ; 4 uses
   %i.h = add i64 %.sroa.5.0.copyload, %n.vec      ; 2 uses
   %i.i = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.j = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %index
-  %wide.load.a = load <4 x float>, ptr %i.j, align 4, !alias.scope !10209, !noalias !10210
+  %i.j = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %index ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 16
+  %wide.load = load <4 x float>, ptr %i.j, align 4, !alias.scope !10209, !noalias !10210
+  %wide.load.a = load <4 x float>, ptr %3, align 4, !alias.scope !10209, !noalias !10210
+  %4 = tail call <4 x i8> @llvm.fptoui.sat.v4i8.v4f32(<4 x float> %wide.load)
   %i.k = tail call <4 x i8> @llvm.fptoui.sat.v4i8.v4f32(<4 x float> %wide.load.a)
-  %i.l = getelementptr i8, ptr %i.i, i64 %index
+  %5 = getelementptr i8, ptr %i.i, i64 %index     ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %5, i64 4
+  store <4 x i8> %4, ptr %5, align 1, !alias.scope !10211, !noalias !10212
   store <4 x i8> %i.k, ptr %i.l, align 1, !alias.scope !10211, !noalias !10212
-  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.m = icmp eq i64 %index.next, %n.vec
   br i1 %i.m, label %middle.block, label %vector.body, !llvm.loop !10207
 
@@ -309,19 +314,24 @@ vector.memcheck:                                  ; preds = %bb.b
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.e, 4611686018427387900      ; 4 uses
+  %n.vec = and i64 %i.e, 4611686018427387896      ; 4 uses
   %i.h = add i64 %.sroa.5.0.copyload, %n.vec      ; 2 uses
   %i.i = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.j = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %index
-  %wide.load.a = load <4 x float>, ptr %i.j, align 4, !alias.scope !10227, !noalias !10228
+  %i.j = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %index ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 16
+  %wide.load = load <4 x float>, ptr %i.j, align 4, !alias.scope !10227, !noalias !10228
+  %wide.load.a = load <4 x float>, ptr %3, align 4, !alias.scope !10227, !noalias !10228
+  %4 = tail call <4 x i8> @llvm.fptoui.sat.v4i8.v4f32(<4 x float> %wide.load)
   %i.k = tail call <4 x i8> @llvm.fptoui.sat.v4i8.v4f32(<4 x float> %wide.load.a)
-  %i.l = getelementptr i8, ptr %i.i, i64 %index
+  %5 = getelementptr i8, ptr %i.i, i64 %index     ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %5, i64 4
+  store <4 x i8> %4, ptr %5, align 1, !alias.scope !10229, !noalias !10230
   store <4 x i8> %i.k, ptr %i.l, align 1, !alias.scope !10229, !noalias !10230
-  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.m = icmp eq i64 %index.next, %n.vec
   br i1 %i.m, label %middle.block, label %vector.body, !llvm.loop !10225
 

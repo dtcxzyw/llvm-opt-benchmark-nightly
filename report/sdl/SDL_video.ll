@@ -205,8 +205,7 @@ bb.au:                                            ; preds = %bb.at
 .critedge.thread87:                               ; preds = %bb.ao, %bb.ap, %bb.aq, %bb.ar, %bb.as, %bb.at, %bb.au, %.critedge
   %.394 = phi i64 [ %.039.lcssa, %.critedge ], [ 0, %bb.ao ], [ 1, %bb.ap ], [ 2, %bb.aq ], [ 3, %bb.ar ], [ 4, %bb.as ], [ 5, %bb.at ], [ 6, %bb.au ]
   %.593 = phi ptr [ %.045.lcssa, %.critedge ], [ %i.ck, %bb.ao ], [ %i.cm, %bb.ap ], [ %i.co, %bb.aq ], [ %i.cq, %bb.ar ], [ %i.cs, %bb.as ], [ %i.cu, %bb.at ], [ %i.cw, %bb.au ] ; 2 uses
-  %1 = and i64 %.394, 4294967295
-  %i.cx = getelementptr inbounds nuw [8 x i8], ptr @bootstrap, i64 %1
+  %i.cx = getelementptr inbounds [8 x i8], ptr @bootstrap, i64 %.394
   %i.cy = load ptr, ptr %i.cx, align 8            ; 2 uses
   %i.cz = load ptr, ptr %i.cy, align 8
   tail call void @SDL_DebugLogBackend(ptr noundef nonnull @.str.5, ptr noundef %i.cz) #19

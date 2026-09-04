@@ -204,20 +204,21 @@ bb.q:                                             ; preds = %bb.p
   tail call void @llvm.assume(i1 %i.db)
   %i.dc = shl i64 %.sroa.054.7, 5
   %.not44.4 = icmp sgt i64 %i.cz, -1
-  %i.dd = select i1 %.not44.4, i64 8, i64 6
+  %i.dd = select i1 %.not44.4, i64 10, i64 8
   br label %.thread
 
 .thread:                                          ; preds = %bb.q, %bb.n, %bb.o, %bb.p
   %.sroa.054.2144162 = phi i64 [ %i.cz, %bb.q ], [ %i.cw, %bb.p ], [ %i.ct, %bb.o ], [ %i.cr, %bb.n ]
   %.sroa.13.2143160 = phi i32 [ %i.da, %bb.q ], [ %i.cx, %bb.p ], [ %i.cu, %bb.o ], [ %i.cq, %bb.n ]
   %i.de = phi i64 [ %i.dc, %bb.q ], [ %i.cz, %bb.p ], [ %i.cw, %bb.o ], [ %i.ct, %bb.n ]
-  %.0137 = phi i64 [ %i.dd, %bb.q ], [ 4, %bb.p ], [ 2, %bb.o ], [ 0, %bb.n ]
+  %.0137 = phi i64 [ %i.dd, %bb.q ], [ 6, %bb.p ], [ 4, %bb.o ], [ 2, %bb.n ]
   %i.df = lshr i64 %i.de, 63
   %i.dg = add nsw i32 %.sroa.13.2143160, -2
   %i.dh = shl i64 %.sroa.054.2144162, 2
   %i.di = getelementptr inbounds nuw [4 x i8], ptr @_ZZNK8rawspeed20PhaseOneDecompressor15decompressStripERKNS_13PhaseOneStripEE6length, i64 %i.df
-  %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.di, i64 %.0137
-  %i.dk = load i32, ptr %i.dj, align 4, !tbaa !111
+  %i.dj = getelementptr [4 x i8], ptr %i.di, i64 %.0137
+  %4 = getelementptr i8, ptr %i.dj, i64 -8
+  %i.dk = load i32, ptr %4, align 4, !tbaa !111
   store i32 %i.dk, ptr %3, align 4, !tbaa !111
   br label %.preheader.1
 
@@ -262,20 +263,21 @@ bb.u:                                             ; preds = %bb.t
   tail call void @llvm.assume(i1 %i.dy)
   %i.dz = shl i64 %.sroa.054.4, 5
   %.not44.4.1 = icmp sgt i64 %i.dw, -1
-  %i.ea = select i1 %.not44.4.1, i64 8, i64 6
+  %i.ea = select i1 %.not44.4.1, i64 10, i64 8
   br label %.thread.1
 
 .thread.1:                                        ; preds = %bb.u, %bb.r, %bb.s, %bb.t
   %.sroa.054.2144162.1 = phi i64 [ %i.dw, %bb.u ], [ %i.dt, %bb.t ], [ %i.dq, %bb.s ], [ %i.do, %bb.r ]
   %.sroa.13.2143160.1 = phi i32 [ %i.dx, %bb.u ], [ %i.du, %bb.t ], [ %i.dr, %bb.s ], [ %i.dn, %bb.r ]
   %i.eb = phi i64 [ %i.dz, %bb.u ], [ %i.dw, %bb.t ], [ %i.dt, %bb.s ], [ %i.dq, %bb.r ]
-  %.0137.1 = phi i64 [ %i.ea, %bb.u ], [ 4, %bb.t ], [ 2, %bb.s ], [ 0, %bb.r ]
+  %.0137.1 = phi i64 [ %i.ea, %bb.u ], [ 6, %bb.t ], [ 4, %bb.s ], [ 2, %bb.r ]
   %i.ec = lshr i64 %i.eb, 63
   %i.ed = add nsw i32 %.sroa.13.2143160.1, -2
   %i.ee = shl i64 %.sroa.054.2144162.1, 2
   %i.ef = getelementptr inbounds nuw [4 x i8], ptr @_ZZNK8rawspeed20PhaseOneDecompressor15decompressStripERKNS_13PhaseOneStripEE6length, i64 %i.ec
-  %i.eg = getelementptr inbounds nuw [4 x i8], ptr %i.ef, i64 %.0137.1
-  %i.eh = load i32, ptr %i.eg, align 4, !tbaa !111
+  %i.eg = getelementptr [4 x i8], ptr %i.ef, i64 %.0137.1
+  %5 = getelementptr i8, ptr %i.eg, i64 -8
+  %i.eh = load i32, ptr %5, align 4, !tbaa !111
   store i32 %i.eh, ptr %i.ag, align 4, !tbaa !111
   br label %.loopexit
 

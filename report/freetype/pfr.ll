@@ -205,24 +205,22 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %i.ei = and i32 %i.eg, 8
   %.not67.i = icmp eq i32 %i.ei, 0
-  %spec.select.i160 = select i1 %.not67.i, i32 1, i32 2 ; 2 uses
+  %spec.select.i160 = select i1 %.not67.i, i64 1, i64 2 ; 2 uses
   %i.ej = and i32 %i.eg, 3
   %i.ek = icmp eq i32 %i.ej, 0
-  %6 = add nuw nsw i32 %spec.select.i160, 3
-  %spec.select76.i = select i1 %i.ek, i32 %6, i32 %spec.select.i160
+  %6 = add nuw nsw i64 %spec.select.i160, 3
+  %spec.select76.i = select i1 %i.ek, i64 %6, i64 %spec.select.i160
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v
-  %.1.i = phi i32 [ 0, %bb.v ], [ %spec.select76.i, %bb.w ]
+  %.1.i = phi i64 [ 0, %bb.v ], [ %spec.select76.i, %bb.w ]
   %i.el = and i32 %i.eg, 16
   %.not68.i = icmp eq i32 %i.el, 0                ; 2 uses
   %i.em = and i32 %i.eg, 32
   %.not69.i = icmp eq i32 %i.em, 0                ; 2 uses
-  %spec.select75.v.i = select i1 %.not69.i, i32 1, i32 2
-  %spec.select75.i = select i1 %.not68.i, i32 0, i32 %spec.select75.v.i
-  %.2.i = add nuw nsw i32 %.1.i, %spec.select75.i
-  %7 = zext nneg i32 %.2.i to i64
-  %i.en = add nuw nsw i64 %7, 13
+  %7 = select i1 %.not69.i, i64 14, i64 15
+  %.2.i = select i1 %.not68.i, i64 13, i64 %7
+  %i.en = add nuw nsw i64 %.2.i, %.1.i
   %i.eo = icmp samesign ugt i64 %i.en, %i.bm
   br i1 %i.eo, label %bb.ar, label %bb.y
 
@@ -625,10 +623,9 @@ bb.ek:                                            ; preds = %bb.ej
   %i.tx = zext i16 %i.tw to i64
   %i.ty = getelementptr inbounds nuw i8, ptr %i.tp, i64 120
   %i.tz = load ptr, ptr %i.ty, align 8, !tbaa !136
-  %6 = add nuw nsw i64 %i.tx, 4294967295
-  %7 = and i64 %6, 4294967295
-  %8 = getelementptr inbounds nuw [2 x i8], ptr %i.tz, i64 %7
-  %i.ua = load i16, ptr %8, align 2, !tbaa !114
+  %6 = getelementptr [2 x i8], ptr %i.tz, i64 %i.tx
+  %7 = getelementptr i8, ptr %6, i64 -2
+  %i.ua = load i16, ptr %7, align 2, !tbaa !114
   %i.ub = zext i16 %i.ua to i32
   br label %bb.el
 
@@ -818,10 +815,9 @@ bb.c:                                             ; preds = %bb.b
   %i.k = zext i16 %i.j to i64
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 120
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !136
-  %1 = add nuw nsw i64 %i.k, 4294967295
-  %2 = and i64 %1, 4294967295
-  %3 = getelementptr inbounds nuw [2 x i8], ptr %i.m, i64 %2
-  %i.n = load i16, ptr %3, align 2, !tbaa !114
+  %1 = getelementptr [2 x i8], ptr %i.m, i64 %i.k
+  %2 = getelementptr i8, ptr %1, i64 -2
+  %i.n = load i16, ptr %2, align 2, !tbaa !114
   %i.o = zext i16 %i.n to i32
   br label %bb.d
 

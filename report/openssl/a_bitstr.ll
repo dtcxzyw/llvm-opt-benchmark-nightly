@@ -202,20 +202,19 @@ bb.m:                                             ; preds = %bb.k
   %i.av = zext i8 %i.au to i32                    ; 3 uses
   %i.aw = and i32 %i.av, 15
   %.not60 = icmp eq i32 %i.aw, 0
-  %spec.select63 = select i1 %.not60, i8 7, i8 3  ; 2 uses
+  %spec.select63 = select i1 %.not60, i64 7, i64 3 ; 2 uses
   %i.ax = and i32 %i.av, 51
   %.not61 = icmp eq i32 %i.ax, 0
-  %3 = add nsw i8 %spec.select63, -2
-  %.1 = select i1 %.not61, i8 %spec.select63, i8 %3
+  %3 = add nsw i64 %spec.select63, -2
+  %.1 = select i1 %.not61, i64 %spec.select63, i64 %3
   %i.ay = and i32 %i.av, 85
   %.not62 = icmp ne i32 %i.ay, 0
-  %4 = sext i1 %.not62 to i8
-  %.2 = add nsw i8 %.1, %4
+  %4 = sext i1 %.not62 to i64
+  %.2 = add nsw i64 %.1, %4
   %i.az = load i64, ptr %i.g, align 8, !tbaa !15
   %i.ba = and i64 %i.az, -16
-  %5 = add nuw nsw i8 %.2, 8
-  %6 = zext nneg i8 %5 to i64
-  %i.bb = or disjoint i64 %i.ba, %6
+  %5 = or i64 %i.ba, %.2
+  %i.bb = or i64 %5, 8
   store i64 %i.bb, ptr %i.g, align 8, !tbaa !15
   br label %.critedge
 

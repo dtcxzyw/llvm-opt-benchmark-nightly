@@ -205,10 +205,9 @@ bb.ax:                                            ; preds = %bb.av, %bb.aw
   %i.ga = sext i32 %i.fz to i64
   %i.gb = getelementptr inbounds i8, ptr %1, i64 %i.ga
   %i.gc = load ptr, ptr %i.g, align 8, !tbaa !55
-  %2 = add nuw nsw i64 %i.fu, 4294967286
-  %3 = and i64 %2, 4294967295
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.gc, i64 %3
-  store ptr %i.gb, ptr %4, align 8, !tbaa !68
+  %2 = getelementptr [8 x i8], ptr %i.gc, i64 %i.fu
+  %3 = getelementptr i8, ptr %2, i64 -80
+  store ptr %i.gb, ptr %3, align 8, !tbaa !68
   br label %.loopexit
 
 bb.ay:                                            ; preds = %bb.h
@@ -611,12 +610,12 @@ bb.b:                                             ; preds = %.lr.ph, %bb.l
   %i.i = sext i32 %i.h to i64
   %i.j = getelementptr inbounds [16 x i8], ptr %i.d, i64 %i.i ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %i.l = load i8, ptr %i.k, align 1, !tbaa !22    ; 3 uses
+  %i.l = load i8, ptr %i.k, align 1, !tbaa !22    ; 2 uses
+  %4 = zext i8 %i.l to i64                        ; 2 uses
   %i.m = icmp ult i8 %i.l, 12
   br i1 %i.m, label %bb.c, label %bb.i
 
 bb.c:                                             ; preds = %bb.b
-  %4 = zext nneg i8 %i.l to i64
   %i.n = load i8, ptr %i.j, align 8, !tbaa !22
   %i.o = icmp eq i8 %i.n, 66
   br i1 %i.o, label %bb.d, label %bb.f
@@ -683,8 +682,7 @@ bb.i:                                             ; preds = %bb.b
   br i1 %.not71, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %5 = zext i8 %i.l to i64
-  %i.au = getelementptr inbounds nuw i8, ptr @ir_type_size, i64 %5
+  %i.au = getelementptr inbounds nuw i8, ptr @ir_type_size, i64 %4
   %i.av = load i8, ptr %i.au, align 1, !tbaa !22
   %narrow = tail call i8 @llvm.umax.i8(i8 %i.av, i8 8)
   %spec.select77 = zext i8 %narrow to i32

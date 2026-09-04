@@ -205,19 +205,18 @@ bb.n:                                             ; preds = %bb.k, %bb.l, %bb.m
   %i.az = phi i1 [ true, %bb.m ], [ false, %bb.l ], [ false, %bb.k ] ; 2 uses
   %i.ba = phi i8 [ %.pre85, %bb.m ], [ %i.ar, %bb.l ], [ %i.ar, %bb.k ]
   %i.bb = phi double [ %i.ay, %bb.m ], [ %i.am, %bb.l ], [ %i.am, %bb.k ]
-  %.143.1 = phi i64 [ %.14390, %bb.m ], [ %.1438993, %bb.l ], [ %.1438993, %bb.k ]
+  %.143.1 = phi i64 [ %.14390, %bb.m ], [ %.1438993, %bb.l ], [ %.1438993, %bb.k ] ; 3 uses
   %i.bc = trunc nuw i8 %i.ba to i1                ; 2 uses
   br i1 %i.bc, label %bb.v, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.bd = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.be = load double, ptr %i.bd, align 8, !tbaa !15
-  %9 = and i64 %.143.1, 4294967295                ; 3 uses
-  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %9
+  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %.143.1
   store double %i.be, ptr %i.bf, align 8, !tbaa !15
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.bh = getelementptr [8 x i8], ptr %5, i64 %9  ; 3 uses
-  %i.bi = getelementptr [8 x i8], ptr %6, i64 %9  ; 2 uses
+  %i.bh = getelementptr [8 x i8], ptr %5, i64 %.143.1 ; 3 uses
+  %i.bi = getelementptr [8 x i8], ptr %6, i64 %.143.1 ; 2 uses
   %i.bj = load double, ptr %i.bg, align 8, !tbaa !15 ; 2 uses
   br i1 %i.b, label %bb.q, label %bb.p
 

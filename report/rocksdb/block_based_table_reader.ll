@@ -205,12 +205,11 @@ bb.dz:                                            ; preds = %bb.dy
   br i1 %or.cond8.i.i, label %.lr.ph.i.1.i, label %_ZN7rocksdb14ParseBaseCharsILi16EEEbPPKcmPm.exit.thread.i
 
 .lr.ph.i.1.i:                                     ; preds = %bb.dz, %bb.dy, %.lr.ph.i.preheader.i
-  %.sink.i = phi i64 [ 4294967241, %bb.dy ], [ 4294967248, %.lr.ph.i.preheader.i ], [ 4294967209, %bb.dz ]
-  %i.qt = add nuw nsw i64 %.sink.i, %i.qo
+  %.sink.i = phi i64 [ -55, %bb.dy ], [ -48, %.lr.ph.i.preheader.i ], [ -87, %bb.dz ]
+  %i.qt = add nsw i64 %.sink.i, %i.qo
   %i.qu = getelementptr inbounds nuw i8, ptr %.0212238.i, i64 1
   %i.qv = load i8, ptr %i.qu, align 1, !tbaa !96  ; 4 uses
-  %.sink.i.i = shl nuw nsw i64 %i.qt, 4
-  %102 = and i64 %.sink.i.i, 68719476720          ; 3 uses
+  %.sink.i.i = shl nuw nsw i64 %i.qt, 4           ; 3 uses
   %i.qw = sext i8 %i.qv to i32                    ; 3 uses
   %i.qx = add i8 %i.qv, -48
   %or.cond.i.1.i = icmp ult i8 %i.qx, 10
@@ -229,19 +228,19 @@ bb.eb:                                            ; preds = %bb.ea
 bb.ec:                                            ; preds = %bb.eb
   %i.ra = add nsw i32 %i.qw, -87
   %i.rb = zext nneg i32 %i.ra to i64
-  %i.rc = add nuw nsw i64 %102, %i.rb
+  %i.rc = add nuw nsw i64 %.sink.i.i, %i.rb
   br label %_ZN7rocksdb14ParseBaseCharsILi16EEEbPPKcmPm.exit.i
 
 bb.ed:                                            ; preds = %bb.ea
   %i.rd = add nsw i32 %i.qw, -55
   %i.re = zext nneg i32 %i.rd to i64
-  %i.rf = add nuw nsw i64 %102, %i.re
+  %i.rf = add nuw nsw i64 %.sink.i.i, %i.re
   br label %_ZN7rocksdb14ParseBaseCharsILi16EEEbPPKcmPm.exit.i
 
 bb.ee:                                            ; preds = %.lr.ph.i.1.i
   %i.rg = add nsw i32 %i.qw, -48
   %i.rh = zext nneg i32 %i.rg to i64
-  %i.ri = or disjoint i64 %102, %i.rh
+  %i.ri = or disjoint i64 %.sink.i.i, %i.rh
   br label %_ZN7rocksdb14ParseBaseCharsILi16EEEbPPKcmPm.exit.i
 
 _ZN7rocksdb14ParseBaseCharsILi16EEEbPPKcmPm.exit.i: ; preds = %bb.ee, %bb.ed, %bb.ec

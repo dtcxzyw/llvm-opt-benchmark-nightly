@@ -205,9 +205,7 @@ bb.c:                                             ; preds = %bb.b
 .thread:                                          ; preds = %bb.c
   %i.k = icmp ult i16 %i.i, 2
   %i.l = zext i16 %i.i to i64
-  %2 = add nuw nsw i64 %i.l, 4294967295
-  %3 = and i64 %2, 4294967295
-  %i.m = add nuw nsw i64 %3, 2
+  %i.m = add nuw nsw i64 %i.l, 1
   %i.n = select i1 %i.k, i64 2, i64 %i.m
   %i.o = tail call ptr @llvm.stacksave.p0()
   %i.p = alloca i64, i64 %i.n, align 16           ; 3 uses
@@ -221,28 +219,22 @@ bb.d:                                             ; preds = %.thread
   %i.t = load i16, ptr %i.g, align 2, !tbaa !39
   %i.u = icmp samesign ult i16 %i.q, 2
   %i.v = shl nuw nsw i16 %i.q, 3
-  %4 = zext nneg i16 %i.v to i64
-  %5 = add nuw nsw i64 %4, 34359738360
-  %6 = and i64 %5, 34359738360
-  %7 = add nuw nsw i64 %6, 16
-  %8 = select i1 %i.u, i64 16, i64 %7
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.p, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %8, i1 false)
+  %narrow = add nuw nsw i16 %i.v, 8
+  %narrow41 = select i1 %i.u, i16 16, i16 %narrow
+  %2 = zext nneg i16 %narrow41 to i64
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.p, ptr noundef nonnull align 8 dereferenceable(1) %0, i64 %2, i1 false)
   %i.w = load i16, ptr %1, align 8, !tbaa !40     ; 2 uses
   %i.x = icmp ult i16 %i.w, 2
   %i.y = zext i16 %i.w to i64
   %i.z = shl nuw nsw i64 %i.y, 3
-  %9 = add nuw nsw i64 %i.z, 34359738360
-  %10 = and i64 %9, 34359738360
-  %i.aa = add nuw nsw i64 %10, 16
+  %i.aa = add nuw nsw i64 %i.z, 8
   %i.ab = select i1 %i.x, i64 16, i64 %i.aa
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %0, ptr noundef nonnull align 8 dereferenceable(1) %1, i64 %i.ab, i1 false)
   %i.ac = load i16, ptr %i.p, align 16, !tbaa !40 ; 2 uses
   %i.ad = icmp ult i16 %i.ac, 2
   %i.ae = zext i16 %i.ac to i64
   %i.af = shl nuw nsw i64 %i.ae, 3
-  %11 = add nuw nsw i64 %i.af, 34359738360
-  %12 = and i64 %11, 34359738360
-  %i.ag = add nuw nsw i64 %12, 16
+  %i.ag = add nuw nsw i64 %i.af, 8
   %i.ah = select i1 %i.ad, i64 16, i64 %i.ag
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(1) %i.p, i64 %i.ah, i1 false)
   store i16 %i.s, ptr %i.c, align 2, !tbaa !39
@@ -645,10 +637,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.b = zext i16 %i.a to i64
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %2 = add nuw nsw i64 %i.b, 4294967295
-  %3 = and i64 %2, 4294967295
-  %i.c = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %3
+  %i.c = getelementptr [8 x i8], ptr %0, i64 %i.b
   %i.d = load i64, ptr %i.c, align 8, !tbaa !36
   br label %bb.d
 
@@ -1051,31 +1040,30 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph.i26
   br i1 %.not55.i, label %_sp_div_10.exit, label %_sp_div_10.exit.sink.split
 
 bb.o:                                             ; preds = %bb.i
-  %i.ci = load i16, ptr %0, align 8, !tbaa !40    ; 2 uses
+  %i.ci = load i16, ptr %0, align 8, !tbaa !40    ; 3 uses
   %.not42.i = icmp eq i16 %i.ci, 0
   br i1 %.not42.i, label %._crit_edge.i, label %.lr.ph.i34
 
 .lr.ph.i34:                                       ; preds = %bb.o
-  %i.cj = zext i16 %i.ci to i64                   ; 2 uses
-  %.03139.i = add nuw nsw i64 %i.cj, 4294967295   ; 2 uses
+  %i.cj = zext i16 %i.ci to i64                   ; 4 uses
+  %.03139.i = add nsw i64 %i.cj, -1               ; 4 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.cl = zext i64 %1 to i128                     ; 5 uses
   %.not38.i = icmp eq ptr %2, null
   %i.cm = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %4 = and i64 %.03139.i, 4294967295              ; 5 uses
   br i1 %.not38.i, label %.lr.ph.split.us.i.preheader, label %.lr.ph.split.i
 
 .lr.ph.split.us.i.preheader:                      ; preds = %.lr.ph.i34
-  %5 = add nuw nsw i64 %4, 1                      ; 2 uses
-  %i.cn = icmp eq i64 %4, 0
+  %xtraiter = and i64 %i.cj, 1
+  %i.cn = icmp eq i64 %.03139.i, 0
   br i1 %i.cn, label %.lr.ph.split.us.i.epil.preheader, label %.lr.ph.split.us.i.preheader.new
 
 .lr.ph.split.us.i.preheader.new:                  ; preds = %.lr.ph.split.us.i.preheader
-  %unroll_iter = and i64 %5, 8589934590
+  %unroll_iter = and i64 %i.cj, 65534
   br label %.lr.ph.split.us.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.split.us.i, %.lr.ph.split.us.i.preheader.new
-  %indvars.iv46.i = phi i64 [ %4, %.lr.ph.split.us.i.preheader.new ], [ %indvars.iv.next47.i.1, %.lr.ph.split.us.i ] ; 3 uses
+  %indvars.iv46.i = phi i64 [ %.03139.i, %.lr.ph.split.us.i.preheader.new ], [ %indvars.iv.next47.i.1, %.lr.ph.split.us.i ] ; 3 uses
   %.03040.us.i = phi i128 [ 0, %.lr.ph.split.us.i.preheader.new ], [ %i.cz, %.lr.ph.split.us.i ]
   %niter = phi i64 [ 0, %.lr.ph.split.us.i.preheader.new ], [ %niter.next.1, %.lr.ph.split.us.i ]
   %i.co = getelementptr inbounds nuw [8 x i8], ptr %i.ck, i64 %indvars.iv46.i
@@ -1098,7 +1086,7 @@ bb.o:                                             ; preds = %bb.i
   br i1 %niter.ncmp.1, label %._crit_edge.thread.i39.unr-lcssa, label %.lr.ph.split.us.i, !llvm.loop !81
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i34, %.lr.ph.split.i
-  %indvars.iv.i35 = phi i64 [ %indvars.iv.next.i36, %.lr.ph.split.i ], [ %4, %.lr.ph.i34 ] ; 4 uses
+  %indvars.iv.i35 = phi i64 [ %indvars.iv.next.i36, %.lr.ph.split.i ], [ %.03139.i, %.lr.ph.i34 ] ; 4 uses
   %.03040.i = phi i128 [ %i.dh, %.lr.ph.split.i ], [ 0, %.lr.ph.i34 ]
   %i.da = getelementptr inbounds nuw [8 x i8], ptr %i.ck, i64 %indvars.iv.i35
   %i.db = load i64, ptr %i.da, align 8, !tbaa !36
@@ -1116,15 +1104,14 @@ bb.o:                                             ; preds = %bb.i
   br i1 %.not66.i, label %.preheader.i37, label %.lr.ph.split.i, !llvm.loop !81
 
 ._crit_edge.thread.i39.unr-lcssa:                 ; preds = %.lr.ph.split.us.i
-  %6 = and i64 %.03139.i, 1
-  %lcmp.mod.not.not = icmp eq i64 %6, 0
+  %lcmp.mod.not.not = icmp eq i64 %xtraiter, 0
   %extract.t = trunc nuw i128 %i.cz to i64
-  br i1 %lcmp.mod.not.not, label %.lr.ph.split.us.i.epil.preheader, label %._crit_edge.thread.i39
+  br i1 %lcmp.mod.not.not, label %._crit_edge.thread.i39, label %.lr.ph.split.us.i.epil.preheader
 
 .lr.ph.split.us.i.epil.preheader:                 ; preds = %._crit_edge.thread.i39.unr-lcssa, %.lr.ph.split.us.i.preheader
-  %indvars.iv46.i.epil.init = phi i64 [ %4, %.lr.ph.split.us.i.preheader ], [ %indvars.iv.next47.i.1, %._crit_edge.thread.i39.unr-lcssa ]
+  %indvars.iv46.i.epil.init = phi i64 [ %.03139.i, %.lr.ph.split.us.i.preheader ], [ %indvars.iv.next47.i.1, %._crit_edge.thread.i39.unr-lcssa ]
   %.03040.us.i.epil.init = phi i128 [ 0, %.lr.ph.split.us.i.preheader ], [ %i.cz, %._crit_edge.thread.i39.unr-lcssa ]
-  %lcmp.mod99 = trunc i64 %5 to i1
+  %lcmp.mod99 = trunc i16 %i.ci to i1
   tail call void @llvm.assume(i1 %lcmp.mod99)
   %i.dk = getelementptr inbounds nuw [8 x i8], ptr %i.ck, i64 %indvars.iv46.i.epil.init
   %i.dl = load i64, ptr %i.dk, align 8, !tbaa !36
@@ -1527,9 +1514,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
   %i.aa = zext i16 %i.z to i64
-  %3 = add nuw nsw i64 %i.aa, 4294967295
-  %4 = and i64 %3, 4294967295
-  %i.ab = add nuw nsw i64 %4, 2
+  %i.ab = add nuw nsw i64 %i.aa, 1
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.i, %bb.k
@@ -1932,10 +1917,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.b
   %i.g = zext i16 %i.d to i64
-  %4 = add nuw nsw i64 %i.b, 4294967295
-  %i.h = add nuw nsw i64 %4, %i.g
-  %5 = and i64 %i.h, 4294967295
-  %i.i = add nuw nsw i64 %5, 2
+  %i.h = add nuw nsw i64 %i.b, 1
+  %i.i = add nuw nsw i64 %i.h, %i.g
   %i.j = tail call ptr @llvm.stacksave.p0()
   %i.k = alloca i64, i64 %i.i, align 16           ; 6 uses
   %i.l = load i16, ptr %0, align 8, !tbaa !40     ; 2 uses

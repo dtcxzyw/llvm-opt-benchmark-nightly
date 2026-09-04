@@ -205,8 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = tail call noundef i16 @llvm.bswap.i16(i16 %i.b)
   %i.e = zext i16 %i.d to i64
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.g = add nuw nsw i64 %i.e, 4294967295
-  %.sroa.2.8.insert.ext.i.i.i = and i64 %i.g, 4294967295 ; 2 uses
+  %i.g = add nsw i64 %i.e, -1                     ; 2 uses
   %i.h = icmp eq ptr %i.c, null
   br i1 %i.h, label %bb.c, label %bb.d
 
@@ -219,7 +218,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.m = phi ptr [ %i.l, %bb.c ], [ %i.c, %bb.b ] ; 4 uses
-  %.not13.i.i = icmp eq i64 %.sroa.2.8.insert.ext.i.i.i, 0
+  %.not13.i.i = icmp eq i64 %i.g, 0
   br i1 %.not13.i.i, label %"_ZNK4$_18clIRK10hb_array_tIKN2OT7NumTypeILb1EtLj2EEEERPK8hb_map_tRK4$_19TnPN12hb_enable_ifIXsr14hb_is_iterableIT_EE5valueEvE4typeELPv0EEEbOSH_OT0_OT1_.exit.i", label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.d
@@ -236,7 +235,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 bb.e:                                             ; preds = %_ZNR9hb_iter_tI10hb_array_tIKN2OT7NumTypeILb1EtLj2EEEERS4_EppEv.exit.i.i, %.lr.ph.split.i.i
   %.sroa.0.015.i.i = phi ptr [ %i.f, %.lr.ph.split.i.i ], [ %i.ar, %_ZNR9hb_iter_tI10hb_array_tIKN2OT7NumTypeILb1EtLj2EEEERS4_EppEv.exit.i.i ] ; 2 uses
-  %.sroa.6.014.i.i = phi i64 [ %.sroa.2.8.insert.ext.i.i.i, %.lr.ph.split.i.i ], [ %.sroa.6.8.insert.ext.i.i, %_ZNR9hb_iter_tI10hb_array_tIKN2OT7NumTypeILb1EtLj2EEEERS4_EppEv.exit.i.i ]
+  %.sroa.6.014.i.i = phi i64 [ %i.g, %.lr.ph.split.i.i ], [ %.sroa.6.8.insert.ext.i.i, %_ZNR9hb_iter_tI10hb_array_tIKN2OT7NumTypeILb1EtLj2EEEERS4_EppEv.exit.i.i ]
   %.val7.i.i = load i16, ptr %.sroa.0.015.i.i, align 1, !tbaa !211
   %i.s = tail call noundef i16 @llvm.bswap.i16(i16 %.val7.i.i)
   %i.t = zext i16 %i.s to i32                     ; 3 uses
@@ -282,7 +281,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %i.ap, label %_ZNR9hb_iter_tI10hb_array_tIKN2OT7NumTypeILb1EtLj2EEEERS4_EppEv.exit.i.i, label %_ZNK2OT4RuleINS_6Layout10SmallTypesEE6subsetEP19hb_subset_context_tPK8hb_map_tS8_.exit
 
 _ZNR9hb_iter_tI10hb_array_tIKN2OT7NumTypeILb1EtLj2EEEERS4_EppEv.exit.i.i: ; preds = %"_ZNK4$_22clIRPK8hb_map_tRKN2OT7NumTypeILb1EtLj2EEEEEN10_hb_head_tIbJDTcl4implclsr3stdE7forwardIT_Efp_Eclsr3stdE7forwardIT0_Efp0_Ecv11hb_priorityILj16EE_EEEEE4typeEOSB_OSC_.exit.i.i"
-  %i.aq = add nuw nsw i64 %.sroa.6.014.i.i, 4294967295
+  %i.aq = add nsw i64 %.sroa.6.014.i.i, 4294967295
   %.sroa.6.8.insert.ext.i.i = and i64 %i.aq, 4294967295 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.sroa.0.015.i.i, i64 2
   %.not.i.i = icmp eq i64 %.sroa.6.8.insert.ext.i.i, 0

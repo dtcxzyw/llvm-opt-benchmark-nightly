@@ -128,21 +128,22 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.m, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %2 = lshr i32 %narrow, 12
-  %i.o = trunc nuw nsw i32 %2 to i8
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %2 = trunc nuw i32 %narrow to i16
+  %3 = lshr i16 %2, 12
+  %i.o = trunc nuw nsw i16 %3 to i8
   %i.p = or disjoint i8 %i.o, -32
   store i8 %i.p, ptr %0, align 1, !tbaa !8
   %i.q = lshr i32 %narrow, 6
   %i.r = trunc i32 %i.q to i8
   %i.s = and i8 %i.r, 63
   %i.t = or disjoint i8 %i.s, -128
-  store i8 %i.t, ptr %i.n, align 1, !tbaa !8
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  store i8 %i.t, ptr %4, align 1, !tbaa !8
   %i.u = trunc i32 %narrow to i8
   %i.v = and i8 %i.u, 63
   %i.w = or disjoint i8 %i.v, -128
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %i.w, ptr %3, align 1, !tbaa !8
+  store i8 %i.w, ptr %i.n, align 1, !tbaa !8
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e

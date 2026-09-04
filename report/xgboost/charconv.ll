@@ -202,12 +202,11 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not82, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.ap = add nuw nsw i64 %i.d, 4294967295
-  %7 = and i64 %i.ap, 4294967295                  ; 2 uses
-  %i.aq = mul nuw nsw i64 %7, 163391164108059
+  %i.ap = add nsw i64 %i.d, -1                    ; 2 uses
+  %i.aq = mul nuw nsw i64 %i.ap, 163391164108059
   %i.ar = lshr i64 %i.aq, 46
   %i.as = trunc nuw nsw i64 %i.ar to i32
-  %i.at = getelementptr inbounds nuw [8 x i8], ptr @_ZN7xgboost6detail14RyuPowLogUtils18kFloatPow5InvSplitE, i64 %7
+  %i.at = getelementptr inbounds nuw [8 x i8], ptr @_ZN7xgboost6detail14RyuPowLogUtils18kFloatPow5InvSplitE, i64 %i.ap
   %i.au = load i64, ptr %i.at, align 8, !tbaa !14 ; 2 uses
   %i.av = lshr i64 %i.au, 32
   %i.aw = and i64 %i.au, 4294967295
@@ -319,9 +318,8 @@ bb.i:                                             ; preds = %bb.a
   %i.cu = lshr i64 %i.cs, 32
   %i.cv = add nuw i64 %i.cu, %i.ct
   %i.cw = add nuw nsw i64 %i.cf, 28
-  %i.cx = sub nsw i64 %i.cw, %i.cl
-  %8 = and i64 %i.cx, 4294967295                  ; 3 uses
-  %i.cy = lshr i64 %i.cv, %8
+  %i.cx = sub nsw i64 %i.cw, %i.cl                ; 3 uses
+  %i.cy = lshr i64 %i.cv, %i.cx
   %i.cz = trunc i64 %i.cy to i32
   %i.da = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 %i.cz, ptr %i.da, align 4, !tbaa !29
@@ -329,7 +327,7 @@ bb.i:                                             ; preds = %bb.a
   %i.dc = mul nuw i64 %i.cp, %.sroa.19.8.extract.shift
   %i.dd = lshr i64 %i.db, 32
   %i.de = add nuw i64 %i.dd, %i.dc
-  %i.df = lshr i64 %i.de, %8
+  %i.df = lshr i64 %i.de, %i.cx
   %i.dg = trunc i64 %i.df to i32                  ; 3 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 2 uses
   store i32 %i.dg, ptr %i.dh, align 4, !tbaa !30
@@ -337,7 +335,7 @@ bb.i:                                             ; preds = %bb.a
   %i.dj = mul nuw i64 %i.cp, %.sroa.8.0.extract.shift
   %i.dk = lshr i64 %i.di, 32
   %i.dl = add nuw i64 %i.dk, %i.dj
-  %i.dm = lshr i64 %i.dl, %8
+  %i.dm = lshr i64 %i.dl, %i.cx
   %i.dn = trunc i64 %i.dm to i32                  ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %4, i64 4
   store i32 %i.dn, ptr %i.do, align 4, !tbaa !28
@@ -367,8 +365,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ee = add nuw i64 %i.ed, %i.ec
   %i.ef = add nuw nsw i64 %i.cf, 27
   %i.eg = sub nsw i64 %i.ef, %i.dv
-  %9 = and i64 %i.eg, 4294967295
-  %i.eh = lshr i64 %i.ee, %9
+  %i.eh = lshr i64 %i.ee, %i.eg
   %i.ei = trunc i64 %i.eh to i32
   %i.ej = urem i32 %i.ei, 10
   %i.ek = trunc nuw nsw i32 %i.ej to i8

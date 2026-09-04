@@ -204,14 +204,15 @@ bb.co:                                            ; preds = %bb.cn
   %i.mv = getelementptr inbounds nuw i8, ptr %i.mq, i64 16
   %i.mw = load ptr, ptr %i.mv, align 8, !tbaa !31 ; 3 uses
   %i.mx = load i8, ptr %i.mw, align 1, !tbaa !12  ; 2 uses
+  %6 = zext nneg i8 %i.mx to i16
   %i.my = add i8 %i.mx, -58
   %or.cond.i.i = icmp ult i8 %i.my, -10
   br i1 %or.cond.i.i, label %parse_uint.exit.thread.i, label %.preheader.i.1.i
 
 .preheader.i.1.i:                                 ; preds = %.preheader.i.i
-  %6 = and i8 %i.mx, 15
   %i.mz = getelementptr inbounds nuw i8, ptr %i.mw, i64 1
   %i.na = load i8, ptr %i.mz, align 1, !tbaa !12  ; 2 uses
+  %7 = zext nneg i8 %i.na to i16
   %i.nb = add i8 %i.na, -58
   %or.cond.i.1.i = icmp ult i8 %i.nb, -10
   br i1 %or.cond.i.1.i, label %parse_uint.exit.thread.i, label %.preheader.i.2.i
@@ -224,15 +225,13 @@ bb.co:                                            ; preds = %bb.cn
   br i1 %or.cond.i.2.i, label %parse_uint.exit.thread.i, label %parse_uint.exit.i
 
 parse_uint.exit.i:                                ; preds = %.preheader.i.2.i
-  %7 = and i8 %i.nd, 15
-  %i.nf = zext nneg i8 %7 to i16
-  %narrow.i = mul nuw i8 %6, 10
-  %8 = zext i8 %narrow.i to i16
-  %9 = and i8 %i.na, 15
-  %10 = zext nneg i8 %9 to i16
-  %i.ng = add nuw nsw i16 %10, %8
-  %11 = mul nuw nsw i16 %i.ng, 10
-  %i.nh = add nuw nsw i16 %11, %i.nf              ; 2 uses
+  %i.nf = zext nneg i8 %i.nd to i16
+  %8 = mul nuw nsw i16 %6, 10
+  %9 = add nsw i16 %8, -528
+  %10 = add nsw i16 %9, %7
+  %11 = mul nuw nsw i16 %10, 10
+  %i.ng = add nsw i16 %11, -48
+  %i.nh = add nsw i16 %i.ng, %i.nf                ; 2 uses
   %i.ni = getelementptr inbounds nuw i8, ptr %1, i64 108
   store i16 %i.nh, ptr %i.ni, align 4, !tbaa !21
   %cond.i = icmp eq i16 %i.nh, 101
@@ -635,22 +634,22 @@ bb.a:
   %.01723 = phi i64 [ %i.h, %bb.c ], [ 0, %bb.a ] ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.024
   %i.c = load i8, ptr %i.b, align 1, !tbaa !12    ; 2 uses
+  %2 = zext i8 %i.c to i64                        ; 2 uses
   %i.d = add i8 %i.c, -58
   %or.cond = icmp ult i8 %i.d, -10
   %i.e = icmp sgt i64 %.01723, 922337203685477580
-  %or.cond22 = select i1 %or.cond, i1 true, i1 %i.e
+  %or.cond22 = or i1 %or.cond, %i.e
   br i1 %or.cond22, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %.preheader
   %i.f = mul nsw i64 %.01723, 10                  ; 2 uses
-  %2 = and i8 %i.c, 15
-  %3 = zext nneg i8 %2 to i64                     ; 2 uses
-  %4 = xor i64 %3, 9223372036854775807
-  %i.g = icmp sgt i64 %i.f, %4
+  %3 = sub nuw i64 -9223372036854775761, %2
+  %i.g = icmp sgt i64 %i.f, %3
   br i1 %i.g, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = add nsw i64 %i.f, %3                     ; 2 uses
+  %4 = add i64 %i.f, -48
+  %i.h = add i64 %4, %2                           ; 2 uses
   %i.i = add nuw i64 %.024, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.i, %1
   br i1 %exitcond.not, label %.loopexit, label %.preheader, !llvm.loop !74

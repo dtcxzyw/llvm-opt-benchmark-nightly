@@ -204,12 +204,11 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNod
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !1606
   %i.cj = zext nneg i24 %.sroa.20.sroa.0.3.i.i.i to i64
   %i.ck = shl nuw nsw i64 %i.cj, 40
-  %6 = and i64 %.sroa.185.3.i.i.i, 1095216660480
   %i.cl = zext nneg i24 %.sroa.18.sroa.0.3.i.i.i to i64
   %i.cm = shl nuw nsw i64 %i.cl, 8
-  %i.cn = or disjoint i64 %6, %i.cm
-  %i.co = or disjoint i64 %i.cn, %i.ck
-  %7 = add nuw nsw i64 %i.co, %.sroa.0.3.i.i.i
+  %i.cn = or i64 %i.cm, %.sroa.185.3.i.i.i
+  %i.co = or i64 %i.cn, %i.ck
+  %6 = or i64 %i.co, %.sroa.0.3.i.i.i
   br label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4PathE6map_orNtNtNtCs6oosyzwIepl_6ide_db7imports13import_assets19PathDefinitionKindsNCNvB1L_21path_import_candidate0EB1P_.exit
 
 bb.ar:                                            ; preds = %bb.bb, %bb.an
@@ -304,7 +303,7 @@ bb.bb:                                            ; preds = %bb.ba
   br label %.thread
 
 _RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4PathE6map_orNtNtNtCs6oosyzwIepl_6ide_db7imports13import_assets19PathDefinitionKindsNCNvB1L_21path_import_candidate0EB1P_.exit: ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs6oosyzwIepl_6ide_db.exit.i.i.i, %bb.b, %bb.a
-  %.sroa.05.0.i = phi i64 [ 72340172838076673, %bb.a ], [ %7, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs6oosyzwIepl_6ide_db.exit.i.i.i ], [ 72340172838076673, %bb.b ]
+  %.sroa.05.0.i = phi i64 [ 72340172838076673, %bb.a ], [ %6, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs6oosyzwIepl_6ide_db.exit.i.i.i ], [ 72340172838076673, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10.sroa.0.sroa.11.sroa.10)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.12)
   %.not = icmp eq ptr %3, null

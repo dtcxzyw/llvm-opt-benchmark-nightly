@@ -205,8 +205,7 @@ bb.k:                                             ; preds = %bb.h
 
 bb.l:                                             ; preds = %bb.k
   %i.ap = trunc nuw nsw i64 %spec.select.i.i.i to i32 ; 2 uses
-  %i.aq = udiv i32 %i.ap, 3600
-  %3 = trunc nuw nsw i32 %i.aq to i8              ; 2 uses
+  %i.aq = udiv i32 %i.ap, 3600                    ; 2 uses
   %i.ar = urem i32 %i.ap, 3600                    ; 2 uses
   %i.as = icmp eq i32 %i.ar, 0
   br i1 %i.as, label %_ZN4jiff5civil4time4Time21from_second_unchecked17h6c924a705560a3dfE.exit.i.i, label %bb.m
@@ -223,9 +222,9 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZN4jiff5civil4time4Time21from_second_unchecked17h6c924a705560a3dfE.exit.i.i
 
 _ZN4jiff5civil4time4Time21from_second_unchecked17h6c924a705560a3dfE.exit.i.i: ; preds = %bb.m, %bb.l, %bb.k
-  %.sroa.07.0.i.i.i = phi i8 [ 0, %bb.k ], [ %3, %bb.l ], [ %3, %bb.m ]
+  %.sroa.07.0.shrunk.i.i.i = phi i32 [ 0, %bb.k ], [ %i.aq, %bb.l ], [ %i.aq, %bb.m ]
   %.sroa.09.0.i.i.i = phi i64 [ 0, %bb.k ], [ 0, %bb.l ], [ %i.az, %bb.m ]
-  %.sroa.2.0.insert.ext.i.i.i = zext nneg i8 %.sroa.07.0.i.i.i to i64
+  %.sroa.2.0.insert.ext.i.i.i = zext nneg i32 %.sroa.07.0.shrunk.i.i.i to i64
   %.sroa.2.0.insert.shift.i.i.i = shl nuw nsw i64 %.sroa.2.0.insert.ext.i.i.i, 32
   %.sroa.2.0.insert.insert.i.i.i = or i64 %.sroa.2.0.insert.shift.i.i.i, %.sroa.09.0.i.i.i
   %i.ba = ashr i64 %.sroa.0.0.insert.insert.i.i.i, 32
@@ -628,16 +627,15 @@ bb.n:                                             ; preds = %bb.k
   br label %bb.r
 
 bb.o:                                             ; preds = %bb.m
-  %i.bv = udiv i32 %spec.select.i, 3600
-  %4 = trunc nuw nsw i32 %i.bv to i8              ; 2 uses
+  %i.bv = udiv i32 %spec.select.i, 3600           ; 2 uses
   %i.bw = urem i32 %spec.select.i, 3600           ; 2 uses
   %i.bx = icmp eq i32 %i.bw, 0
   br i1 %i.bx, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o, %bb.m, %bb.q
-  %.sroa.438.0 = phi i8 [ 0, %bb.m ], [ %4, %bb.o ], [ %4, %bb.q ]
+  %.sroa.438.0.shrunk = phi i32 [ 0, %bb.m ], [ %i.bv, %bb.o ], [ %i.bv, %bb.q ]
   %.sroa.640.0 = phi i64 [ 0, %bb.m ], [ 0, %bb.o ], [ %i.cg, %bb.q ]
-  %.sroa.438.0.insert.ext = zext nneg i8 %.sroa.438.0 to i64
+  %.sroa.438.0.insert.ext = zext nneg i32 %.sroa.438.0.shrunk to i64
   %.sroa.438.0.insert.shift = shl nuw nsw i64 %.sroa.438.0.insert.ext, 32
   %.sroa.438.0.insert.insert = or i64 %.sroa.438.0.insert.shift, %.sroa.640.0
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 8
