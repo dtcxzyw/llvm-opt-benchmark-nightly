@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %bb.k, %.lr.ph.i
   %.112.i = tail call i32 @llvm.smin.i32(i32 %i.co, i32 %.137.i)
   %spec.select118.i = tail call i32 @llvm.smax.i32(i32 %.112.i, i32 %.138.i)
   %i.cp = trunc nuw i32 %spec.select118.i to i16
-  %i.cq = sub nsw i64 %indvars.iv.i, %indvars.iv59
-  %i.cr = getelementptr inbounds [6 x i8], ptr %i.bl, i64 %i.cq ; 2 uses
+  %i.cq = sub nuw nsw i64 %indvars.iv.i, %indvars.iv59
+  %i.cr = getelementptr inbounds nuw [6 x i8], ptr %i.bl, i64 %i.cq ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 2
   store i16 %i.cp, ptr %i.cs, align 2, !tbaa !77
   %i.ct = load i16, ptr %i.h, align 2, !tbaa !82  ; 2 uses
