@@ -98,11 +98,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond5, label %bb.d, label %.thread
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %.lr.ph
-  %.sink = phi i64 [ 4294967248, %.lr.ph ], [ 4294967241, %bb.b ], [ 4294967209, %bb.c ]
+  %.sink = phi i64 [ -48, %.lr.ph ], [ -55, %bb.b ], [ -87, %bb.c ]
   %i.f = add nsw i64 %.sink, %i.b
   %i.g = shl i64 %.sroa.0.028, 4
-  %2 = and i64 %i.f, 4294967295
-  %i.h = add nuw i64 %i.g, %2                     ; 2 uses
+  %i.h = add nuw i64 %i.f, %i.g                   ; 2 uses
   %i.i = add i64 %.02130, -1                      ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.4.029, i64 1
   %.not = icmp eq i64 %i.i, 0
@@ -143,9 +142,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond5.i, label %.lr.ph.i.1, label %_Z8parseHexPKcm.exit.thread
 
 .lr.ph.i.1:                                       ; preds = %bb.b, %bb.a, %.lr.ph.i
-  %.sink.i = phi i64 [ 4294967248, %.lr.ph.i ], [ 4294967241, %bb.a ], [ 4294967209, %bb.b ]
-  %i.f = add nuw nsw i64 %.sink.i, %i.b
-  %2 = and i64 %i.f, 4294967295                   ; 2 uses
+  %.sink.i = phi i64 [ -48, %.lr.ph.i ], [ -55, %bb.a ], [ -87, %bb.b ]
+  %i.f = add nsw i64 %.sink.i, %i.b               ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
   %i.h = load i8, ptr %i.g, align 1, !tbaa !10    ; 5 uses
   %i.i = zext nneg i8 %i.h to i64                 ; 2 uses
@@ -166,18 +164,17 @@ bb.d:                                             ; preds = %bb.c
 _Z8parseHexPKcm.exit.thread:                      ; preds = %bb.d, %bb.b
   %.pre-phi.ph = phi i64 [ %i.b, %bb.b ], [ %i.i, %bb.d ]
   %.ph = phi i8 [ %i.a, %bb.b ], [ %i.h, %bb.d ]
-  %.sroa.0.0.lcssa.i.ph = phi i64 [ 0, %bb.b ], [ %2, %bb.d ]
+  %.sroa.0.0.lcssa.i.ph = phi i64 [ 0, %bb.b ], [ %i.f, %bb.d ]
   %.sroa.4.0.lcssa.i.ph = phi ptr [ %1, %bb.b ], [ %i.g, %bb.d ] ; 2 uses
   store i64 %.sroa.0.0.lcssa.i.ph, ptr %0, align 8, !tbaa !12
   %scevgep.i151 = getelementptr i8, ptr %.sroa.4.0.lcssa.i.ph, i64 4
   br label %bb.e
 
 _Z8parseHexPKcm.exit:                             ; preds = %.lr.ph.i.1, %bb.c, %bb.d
-  %.sink.i.1 = phi i64 [ 4294967248, %.lr.ph.i.1 ], [ 4294967241, %bb.c ], [ 4294967209, %bb.d ]
-  %3 = add nuw nsw i64 %.sink.i.1, %i.i
-  %i.m = shl nuw nsw i64 %2, 4
-  %4 = and i64 %3, 4294967295
-  %i.n = add nuw nsw i64 %4, %i.m
+  %.sink.i.1 = phi i64 [ -48, %.lr.ph.i.1 ], [ -55, %bb.c ], [ -87, %bb.d ]
+  %i.m = shl nsw i64 %i.f, 4
+  %2 = add nsw i64 %i.m, %i.i
+  %i.n = add nsw i64 %2, %.sink.i.1
   %.pre = load i8, ptr %scevgep.i, align 1, !tbaa !10 ; 3 uses
   %.pre43 = zext nneg i8 %.pre to i64             ; 2 uses
   %.pre44 = add i8 %.pre, -48
@@ -204,9 +201,8 @@ bb.f:                                             ; preds = %bb.e
   %scevgep.i158 = phi ptr [ %scevgep.i1, %_Z8parseHexPKcm.exit ], [ %scevgep.i157, %bb.e ], [ %scevgep.i157, %bb.f ]
   %.sroa.4.0.lcssa.i56 = phi ptr [ %scevgep.i, %_Z8parseHexPKcm.exit ], [ %.sroa.4.0.lcssa.i55, %bb.e ], [ %.sroa.4.0.lcssa.i55, %bb.f ] ; 3 uses
   %.pre-phi54 = phi i64 [ %.pre43, %_Z8parseHexPKcm.exit ], [ %.pre-phi53, %bb.e ], [ %.pre-phi53, %bb.f ]
-  %.sink.i13 = phi i64 [ 4294967248, %_Z8parseHexPKcm.exit ], [ 4294967241, %bb.e ], [ 4294967209, %bb.f ]
-  %i.r = add nuw nsw i64 %.sink.i13, %.pre-phi54
-  %5 = and i64 %i.r, 4294967295                   ; 2 uses
+  %.sink.i13 = phi i64 [ -48, %_Z8parseHexPKcm.exit ], [ -55, %bb.e ], [ -87, %bb.f ]
+  %i.r = add nsw i64 %.pre-phi54, %.sink.i13      ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.4.0.lcssa.i56, i64 1 ; 2 uses
   %i.t = load i8, ptr %i.s, align 1, !tbaa !10    ; 4 uses
   %i.u = zext nneg i8 %i.t to i64
@@ -225,11 +221,10 @@ bb.h:                                             ; preds = %bb.g
   br i1 %or.cond5.i8.1, label %.lr.ph.i2.2, label %_Z8parseHexPKcm.exit15
 
 .lr.ph.i2.2:                                      ; preds = %bb.h, %bb.g, %.lr.ph.i2.1
-  %.sink.i13.1 = phi i64 [ 4294967248, %.lr.ph.i2.1 ], [ 4294967241, %bb.g ], [ 4294967209, %bb.h ]
-  %6 = add nuw nsw i64 %.sink.i13.1, %i.u
-  %i.y = shl nuw nsw i64 %5, 4
-  %7 = and i64 %6, 4294967295
-  %i.z = add nuw nsw i64 %7, %i.y                 ; 2 uses
+  %.sink.i13.1 = phi i64 [ -48, %.lr.ph.i2.1 ], [ -55, %bb.g ], [ -87, %bb.h ]
+  %i.y = shl nsw i64 %i.r, 4
+  %3 = add nsw i64 %i.y, %i.u
+  %i.z = add nsw i64 %3, %.sink.i13.1             ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.4.0.lcssa.i56, i64 2 ; 2 uses
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !10  ; 4 uses
   %i.ac = zext nneg i8 %i.ab to i64
@@ -248,11 +243,10 @@ bb.j:                                             ; preds = %bb.i
   br i1 %or.cond5.i8.2, label %.lr.ph.i2.3, label %_Z8parseHexPKcm.exit15
 
 .lr.ph.i2.3:                                      ; preds = %bb.j, %bb.i, %.lr.ph.i2.2
-  %.sink.i13.2 = phi i64 [ 4294967248, %.lr.ph.i2.2 ], [ 4294967241, %bb.i ], [ 4294967209, %bb.j ]
-  %8 = add nuw nsw i64 %.sink.i13.2, %i.ac
-  %i.ag = shl nuw nsw i64 %i.z, 4
-  %9 = and i64 %8, 4294967295
-  %i.ah = add nuw nsw i64 %9, %i.ag               ; 2 uses
+  %.sink.i13.2 = phi i64 [ -48, %.lr.ph.i2.2 ], [ -55, %bb.i ], [ -87, %bb.j ]
+  %i.ag = shl nsw i64 %i.z, 4
+  %4 = add nsw i64 %i.ag, %i.ac
+  %i.ah = add nsw i64 %4, %.sink.i13.2            ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.4.0.lcssa.i56, i64 3 ; 2 uses
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !10  ; 4 uses
   %i.ak = zext nneg i8 %i.aj to i64
@@ -271,15 +265,14 @@ bb.l:                                             ; preds = %bb.k
   br i1 %or.cond5.i8.3, label %bb.m, label %_Z8parseHexPKcm.exit15
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %.lr.ph.i2.3
-  %.sink.i13.3 = phi i64 [ 4294967248, %.lr.ph.i2.3 ], [ 4294967241, %bb.k ], [ 4294967209, %bb.l ]
-  %10 = add nuw nsw i64 %.sink.i13.3, %i.ak
-  %i.ao = shl nuw nsw i64 %i.ah, 4
-  %11 = and i64 %10, 4294967295
-  %i.ap = add nuw nsw i64 %11, %i.ao
+  %.sink.i13.3 = phi i64 [ -48, %.lr.ph.i2.3 ], [ -55, %bb.k ], [ -87, %bb.l ]
+  %i.ao = shl nsw i64 %i.ah, 4
+  %5 = add nsw i64 %i.ao, %i.ak
+  %i.ap = add nsw i64 %5, %.sink.i13.3
   br label %_Z8parseHexPKcm.exit15
 
 _Z8parseHexPKcm.exit15:                           ; preds = %bb.m, %bb.l, %bb.j, %bb.h, %bb.f
-  %.sroa.0.0.lcssa.i9 = phi i64 [ %i.ap, %bb.m ], [ 0, %bb.f ], [ %5, %bb.h ], [ %i.ah, %bb.l ], [ %i.z, %bb.j ]
+  %.sroa.0.0.lcssa.i9 = phi i64 [ %i.ap, %bb.m ], [ 0, %bb.f ], [ %i.r, %bb.h ], [ %i.ah, %bb.l ], [ %i.z, %bb.j ]
   %.sroa.4.0.lcssa.i10 = phi ptr [ %scevgep.i158, %bb.m ], [ %.sroa.4.0.lcssa.i55, %bb.f ], [ %i.s, %bb.h ], [ %i.ai, %bb.l ], [ %i.aa, %bb.j ] ; 4 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.0.0.lcssa.i9, ptr %i.aq, align 8, !tbaa !12
@@ -301,9 +294,8 @@ bb.o:                                             ; preds = %bb.n
   br i1 %or.cond5.i23, label %.lr.ph.i17.1, label %_Z8parseHexPKcm.exit30
 
 .lr.ph.i17.1:                                     ; preds = %bb.o, %bb.n, %_Z8parseHexPKcm.exit15
-  %.sink.i28 = phi i64 [ 4294967248, %_Z8parseHexPKcm.exit15 ], [ 4294967241, %bb.n ], [ 4294967209, %bb.o ]
-  %i.aw = add nuw nsw i64 %.sink.i28, %i.as
-  %12 = and i64 %i.aw, 4294967295                 ; 2 uses
+  %.sink.i28 = phi i64 [ -48, %_Z8parseHexPKcm.exit15 ], [ -55, %bb.n ], [ -87, %bb.o ]
+  %i.aw = add nsw i64 %.sink.i28, %i.as           ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.4.0.lcssa.i10, i64 1 ; 2 uses
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !10  ; 4 uses
   %i.az = zext nneg i8 %i.ay to i64
@@ -322,15 +314,14 @@ bb.q:                                             ; preds = %bb.p
   br i1 %or.cond5.i23.1, label %bb.r, label %_Z8parseHexPKcm.exit30
 
 bb.r:                                             ; preds = %bb.q, %bb.p, %.lr.ph.i17.1
-  %.sink.i28.1 = phi i64 [ 4294967248, %.lr.ph.i17.1 ], [ 4294967241, %bb.p ], [ 4294967209, %bb.q ]
-  %13 = add nuw nsw i64 %.sink.i28.1, %i.az
-  %i.bd = shl nuw nsw i64 %12, 4
-  %14 = and i64 %13, 4294967295
-  %i.be = add nuw nsw i64 %14, %i.bd
+  %.sink.i28.1 = phi i64 [ -48, %.lr.ph.i17.1 ], [ -55, %bb.p ], [ -87, %bb.q ]
+  %i.bd = shl nsw i64 %i.aw, 4
+  %6 = add nsw i64 %i.bd, %i.az
+  %i.be = add nsw i64 %6, %.sink.i28.1
   br label %_Z8parseHexPKcm.exit30
 
 _Z8parseHexPKcm.exit30:                           ; preds = %bb.r, %bb.q, %bb.o
-  %.sroa.0.0.lcssa.i24 = phi i64 [ %i.be, %bb.r ], [ 0, %bb.o ], [ %12, %bb.q ]
+  %.sroa.0.0.lcssa.i24 = phi i64 [ %i.be, %bb.r ], [ 0, %bb.o ], [ %i.aw, %bb.q ]
   %.sroa.4.0.lcssa.i25 = phi ptr [ %scevgep.i16, %bb.r ], [ %.sroa.4.0.lcssa.i10, %bb.o ], [ %i.ax, %bb.q ]
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.sroa.0.0.lcssa.i24, ptr %i.bf, align 8, !tbaa !12
@@ -397,11 +388,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond5.i, label %bb.d, label %_Z8parseHexPKcm.exit14
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %.lr.ph.i
-  %.sink.i = phi i64 [ 4294967248, %.lr.ph.i ], [ 4294967241, %bb.b ], [ 4294967209, %bb.c ]
-  %1 = add nuw nsw i64 %.sink.i, %i.p
+  %.sink.i = phi i64 [ -48, %.lr.ph.i ], [ -55, %bb.b ], [ -87, %bb.c ]
   %i.t = shl i64 %.sroa.0.028.i, 4
-  %2 = and i64 %1, 4294967295
-  %i.u = add nuw i64 %2, %i.t                     ; 2 uses
+  %1 = add i64 %i.t, %i.p
+  %i.u = add i64 %1, %.sink.i                     ; 2 uses
   %i.v = add nsw i64 %.02130.i, -1                ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.4.029.i, i64 1
   %.not.i = icmp eq i64 %i.v, 0

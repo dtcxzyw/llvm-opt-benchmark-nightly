@@ -205,10 +205,9 @@ bb.d:                                             ; preds = %.preheader.30, %.pr
   %.lcssa = phi i64 [ 1, %.preheader.preheader ], [ 2, %.preheader.1 ], [ 3, %.preheader.2 ], [ 4, %.preheader.3 ], [ 5, %.preheader.4 ], [ 6, %.preheader.5 ], [ 7, %.preheader.6 ], [ 8, %.preheader.7 ], [ 9, %.preheader.8 ], [ 10, %.preheader.9 ], [ 11, %.preheader.10 ], [ 12, %.preheader.11 ], [ 13, %.preheader.12 ], [ 14, %.preheader.13 ], [ 15, %.preheader.14 ], [ 16, %.preheader.15 ], [ 17, %.preheader.16 ], [ 18, %.preheader.17 ], [ 19, %.preheader.18 ], [ 20, %.preheader.19 ], [ 21, %.preheader.20 ], [ 22, %.preheader.21 ], [ 23, %.preheader.22 ], [ 24, %.preheader.23 ], [ 25, %.preheader.24 ], [ 26, %.preheader.25 ], [ 27, %.preheader.26 ], [ 28, %.preheader.27 ], [ 29, %.preheader.28 ], [ 30, %.preheader.29 ], [ 31, %.preheader.30 ] ; 2 uses
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.lcssa
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !180
-  %2 = add nuw nsw i64 %.lcssa, 4294967295
-  %3 = and i64 %2, 4294967295
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %3
-  %i.cx = load i64, ptr %4, align 8, !tbaa !168
+  %2 = getelementptr [8 x i8], ptr %i.a, i64 %.lcssa
+  %3 = getelementptr i8, ptr %2, i64 -8
+  %i.cx = load i64, ptr %3, align 8, !tbaa !168
   %i.cy = sub i64 %1, %i.cx
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cw, i64 %i.cy
   br label %bb.e

@@ -202,7 +202,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = sext i32 %1 to i64                       ; 5 uses
-  %i.c = getelementptr inbounds [332 x i8], ptr %i.a, i64 %i.b ; 8 uses
+  %i.c = getelementptr inbounds [332 x i8], ptr %i.a, i64 %i.b ; 9 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %i.e = load i8, ptr %i.d, align 1               ; 8 uses
   %.not56 = icmp eq i8 %i.e, 0
@@ -255,24 +255,19 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
   %i.u = zext i8 %i.e to i64
-  %2 = add nuw nsw i64 %i.u, 4294967294
-  %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %3 = and i64 %2, 4294967295
-  %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %3
+  %i.v = getelementptr i8, ptr %i.c, i64 -4
+  %i.w = getelementptr [4 x i8], ptr %i.v, i64 %i.u
   %i.x = load i32, ptr %i.w, align 4
   br label %.loopexit
 
 bb.l:                                             ; preds = %bb.d
   %i.y = zext i8 %i.e to i64
-  %4 = add nuw nsw i64 %i.y, 4294967295
-  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %6 = and i64 %4, 4294967295
-  %i.z = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %6
+  %i.z = getelementptr [4 x i8], ptr %i.c, i64 %i.y
   %i.aa = load i32, ptr %i.z, align 4
   br label %.loopexit
 
 bb.m:                                             ; preds = %bb.c
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 3 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 2 uses
   %i.ac = load i32, ptr %i.ab, align 4            ; 3 uses
   %i.ad = icmp ult i32 %0, %i.ac
   br i1 %i.ad, label %bb.n, label %bb.o
@@ -287,9 +282,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m
   %i.aj = zext i8 %i.e to i64
-  %7 = add nuw nsw i64 %i.aj, 4294967295
-  %8 = and i64 %7, 4294967295
-  %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %8
+  %i.ak = getelementptr [4 x i8], ptr %i.c, i64 %i.aj
   %i.al = load i32, ptr %i.ak, align 4            ; 2 uses
   %i.am = icmp ult i32 %i.al, %0
   br i1 %i.am, label %bb.p, label %.preheader

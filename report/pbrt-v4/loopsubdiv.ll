@@ -205,12 +205,11 @@ bb.de:                                            ; preds = %bb.dd
   br i1 %i.acd, label %_ZN4pbrt6SDFace8prevFaceEPNS_8SDVertexE.exit.i1297, label %.invoke2319
 
 _ZN4pbrt6SDFace8prevFaceEPNS_8SDVertexE.exit.i1297: ; preds = %bb.de, %bb.dd, %.preheader.i1294
-  %.0711.lcssa.wide.i.i20.i1298 = phi i32 [ 2, %.preheader.i1294 ], [ 3, %bb.dd ], [ 4, %bb.de ] ; 2 uses
+  %.0711.lcssa.wide.i.i20.i1298 = phi i64 [ 2, %.preheader.i1294 ], [ 3, %bb.dd ], [ 4, %bb.de ] ; 2 uses
   %i.ace = getelementptr inbounds nuw i8, ptr %.2.i1295, i64 24
-  %.urem.i.i1299 = add nsw i32 %.0711.lcssa.wide.i.i20.i1298, -3
-  %28 = select i1 %i.abx, i32 %.0711.lcssa.wide.i.i20.i1298, i32 %.urem.i.i1299
-  %29 = zext nneg i32 %28 to i64
-  %i.acf = getelementptr inbounds nuw [8 x i8], ptr %i.ace, i64 %29
+  %.urem.i.i1299 = add nsw i64 %.0711.lcssa.wide.i.i20.i1298, -3
+  %28 = select i1 %i.abx, i64 %.0711.lcssa.wide.i.i20.i1298, i64 %.urem.i.i1299
+  %i.acf = getelementptr inbounds [8 x i8], ptr %i.ace, i64 %28
   %i.acg = load ptr, ptr %i.acf, align 8, !tbaa !23 ; 2 uses
   %.not17.i1300 = icmp eq ptr %i.acg, null
   %i.ach = add nuw i32 %.1.i1296, 1               ; 2 uses
@@ -613,12 +612,11 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZN4pbrt6SDFace8prevFaceEPNS_8SDVertexE.exit:     ; preds = %.preheader, %bb.j, %bb.k
-  %.0711.lcssa.wide.i.i20 = phi i32 [ 2, %.preheader ], [ 3, %bb.j ], [ 4, %bb.k ] ; 2 uses
+  %.0711.lcssa.wide.i.i20 = phi i64 [ 2, %.preheader ], [ 3, %bb.j ], [ 4, %bb.k ] ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.2, i64 24
-  %.urem.i = add nsw i32 %.0711.lcssa.wide.i.i20, -3
-  %1 = select i1 %i.ae, i32 %.0711.lcssa.wide.i.i20, i32 %.urem.i
-  %2 = zext nneg i32 %1 to i64
-  %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %2
+  %.urem.i = add nsw i64 %.0711.lcssa.wide.i.i20, -3
+  %1 = select i1 %i.ae, i64 %.0711.lcssa.wide.i.i20, i64 %.urem.i
+  %i.am = getelementptr inbounds [8 x i8], ptr %i.al, i64 %1
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !23 ; 2 uses
   %.not17 = icmp eq ptr %i.an, null
   %i.ao = add nuw nsw i32 %.1, 1                  ; 2 uses
@@ -1021,11 +1019,10 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 _ZN4pbrt6SDFace8prevVertEPNS_8SDVertexE.exit:     ; preds = %bb.m, %bb.n, %bb.o
-  %.0711.lcssa.wide.i.i22 = phi i32 [ 2, %bb.m ], [ 3, %bb.n ], [ 4, %bb.o ] ; 2 uses
-  %.urem.i = add nsw i32 %.0711.lcssa.wide.i.i22, -3
-  %2 = select i1 %i.ay, i32 %.0711.lcssa.wide.i.i22, i32 %.urem.i
-  %3 = zext nneg i32 %2 to i64
-  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %.1, i64 %3
+  %.0711.lcssa.wide.i.i22 = phi i64 [ 2, %bb.m ], [ 3, %bb.n ], [ 4, %bb.o ] ; 2 uses
+  %.urem.i = add nsw i64 %.0711.lcssa.wide.i.i22, -3
+  %2 = select i1 %i.ay, i64 %.0711.lcssa.wide.i.i22, i64 %.urem.i
+  %i.bf = getelementptr inbounds [8 x i8], ptr %.1, i64 %2
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !20
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.115, ptr noundef nonnull align 8 dereferenceable(12) %i.bg, i64 12, i1 false)
   %i.bh = load ptr, ptr %.1, align 8, !tbaa !20
@@ -1049,12 +1046,11 @@ bb.s:                                             ; preds = %bb.r
   unreachable
 
 _ZN4pbrt6SDFace8prevFaceEPNS_8SDVertexE.exit:     ; preds = %_ZN4pbrt6SDFace8prevVertEPNS_8SDVertexE.exit, %bb.q, %bb.r
-  %.0711.lcssa.wide.i.i23 = phi i32 [ 2, %_ZN4pbrt6SDFace8prevVertEPNS_8SDVertexE.exit ], [ 3, %bb.q ], [ 4, %bb.r ] ; 2 uses
+  %.0711.lcssa.wide.i.i23 = phi i64 [ 2, %_ZN4pbrt6SDFace8prevVertEPNS_8SDVertexE.exit ], [ 3, %bb.q ], [ 4, %bb.r ] ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %.1, i64 24
-  %.urem.i24 = add nsw i32 %.0711.lcssa.wide.i.i23, -3
-  %4 = select i1 %i.bi, i32 %.0711.lcssa.wide.i.i23, i32 %.urem.i24
-  %5 = zext nneg i32 %4 to i64
-  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %5
+  %.urem.i24 = add nsw i64 %.0711.lcssa.wide.i.i23, -3
+  %3 = select i1 %i.bi, i64 %.0711.lcssa.wide.i.i23, i64 %.urem.i24
+  %i.bq = getelementptr inbounds [8 x i8], ptr %i.bp, i64 %3
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !23 ; 2 uses
   %.not18 = icmp eq ptr %i.br, null
   br i1 %.not18, label %.loopexit, label %bb.m, !llvm.loop !181

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.critedge, %bb.d
-  %.1 = phi i32 [ 1, %.critedge ], [ 0, %bb.d ]   ; 2 uses
+  %.1 = phi i64 [ 1, %.critedge ], [ 0, %bb.d ]   ; 2 uses
   %i.l = tail call noundef zeroext i1 @_ZN21MapblockMeshGenerator10isSameRailEN4core8vector3dIsEE(ptr noundef nonnull align 8 dereferenceable(496) %0, i48 -4294901760)
   br i1 %i.l, label %.critedge.1, label %bb.f
 
@@ -220,13 +220,13 @@ bb.g:                                             ; preds = %bb.f
 .critedge.1:                                      ; preds = %bb.e, %bb.g, %bb.f
   %.13358.1 = phi i32 [ 0, %bb.g ], [ 0, %bb.f ], [ 180, %bb.e ]
   %.13655.1 = phi i1 [ %i.i, %bb.g ], [ %i.i, %bb.f ], [ true, %bb.e ]
-  %4 = or disjoint i32 %.1, 2
+  %4 = or disjoint i64 %.1, 2
   br label %bb.h
 
 bb.h:                                             ; preds = %.critedge.1, %bb.g
   %.13357.1 = phi i32 [ %.13358.1, %.critedge.1 ], [ 0, %bb.g ] ; 3 uses
   %.13654.1 = phi i1 [ %.13655.1, %.critedge.1 ], [ %i.i, %bb.g ] ; 3 uses
-  %.1.1 = phi i32 [ %4, %.critedge.1 ], [ %.1, %bb.g ] ; 2 uses
+  %.1.1 = phi i64 [ %4, %.critedge.1 ], [ %.1, %bb.g ] ; 2 uses
   %i.o = tail call noundef zeroext i1 @_ZN21MapblockMeshGenerator10isSameRailEN4core8vector3dIsEE(ptr noundef nonnull align 8 dereferenceable(496) %0, i48 131071)
   br i1 %i.o, label %.critedge.2, label %bb.i
 
@@ -241,13 +241,13 @@ bb.j:                                             ; preds = %bb.i
 .critedge.2:                                      ; preds = %bb.h, %bb.j, %bb.i
   %.13358.2 = phi i32 [ %.13357.1, %bb.j ], [ %.13357.1, %bb.i ], [ 90, %bb.h ]
   %.13655.2 = phi i1 [ %.13654.1, %bb.j ], [ %.13654.1, %bb.i ], [ true, %bb.h ]
-  %5 = or i32 %.1.1, 4
+  %5 = or i64 %.1.1, 4
   br label %bb.k
 
 bb.k:                                             ; preds = %.critedge.2, %bb.j
   %.13357.2 = phi i32 [ %.13358.2, %.critedge.2 ], [ %.13357.1, %bb.j ] ; 2 uses
   %.13654.2 = phi i1 [ %.13655.2, %.critedge.2 ], [ %.13654.1, %bb.j ] ; 2 uses
-  %.1.2 = phi i32 [ %5, %.critedge.2 ], [ %.1.1, %bb.j ] ; 2 uses
+  %.1.2 = phi i64 [ %5, %.critedge.2 ], [ %.1.1, %bb.j ] ; 2 uses
   %i.r = tail call noundef zeroext i1 @_ZN21MapblockMeshGenerator10isSameRailEN4core8vector3dIsEE(ptr noundef nonnull align 8 dereferenceable(496) %0, i48 65537)
   br i1 %i.r, label %.critedge.3.thread, label %bb.l
 
@@ -260,16 +260,15 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.t, label %.critedge.3, label %bb.n
 
 .critedge.3:                                      ; preds = %bb.m, %bb.l
-  %6 = or i32 %.1.2, 8
+  %6 = or i64 %.1.2, 8
   br i1 %.13654.2, label %.critedge.3.thread, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
   br i1 %.13654.2, label %.critedge.3.thread, label %bb.o
 
 bb.o:                                             ; preds = %.critedge.3, %bb.n
-  %.1.365 = phi i32 [ %6, %.critedge.3 ], [ %.1.2, %bb.n ]
-  %7 = zext nneg i32 %.1.365 to i64
-  %i.u = getelementptr inbounds nuw [8 x i8], ptr @_ZN12_GLOBAL__N_110rail_kindsE, i64 %7 ; 2 uses
+  %.1.365 = phi i64 [ %6, %.critedge.3 ], [ %.1.2, %bb.n ]
+  %i.u = getelementptr inbounds nuw [8 x i8], ptr @_ZN12_GLOBAL__N_110rail_kindsE, i64 %.1.365 ; 2 uses
   %i.v = load i32, ptr %i.u, align 8, !tbaa !236
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 4
   %i.x = load i32, ptr %i.w, align 4, !tbaa !237

@@ -205,16 +205,15 @@ bb.ae:                                            ; preds = %bb.ab, %bb.z, %bb.a
 bb.af:                                            ; preds = %bb.ae
   %i.eb = load i8, ptr %i.g, align 8, !tbaa !157, !range !44, !noundef !45
   %i.ec = trunc nuw i8 %i.eb to i1
-  %. = select i1 %i.ec, i32 2, i32 1
+  %. = select i1 %i.ec, i64 2, i64 1
   br label %.thread75
 
 .thread75:                                        ; preds = %bb.ac, %bb.af, %bb.ae
-  %.049 = phi i32 [ 0, %bb.ae ], [ %., %bb.af ], [ 0, %bb.ac ] ; 2 uses
+  %.049 = phi i64 [ 0, %bb.ae ], [ %., %bb.af ], [ 0, %bb.ac ] ; 2 uses
   %i.ed = icmp eq i32 %3, 6
-  %6 = add nuw nsw i32 %.049, 3
-  %spec.select63 = select i1 %i.ed, i32 %6, i32 %.049
-  %7 = zext nneg i32 %spec.select63 to i64
-  %i.ee = getelementptr inbounds nuw [8 x i8], ptr @_ZZN2cv15OcvDftBasicImpl4initEiiiiPbE7dft_tbl, i64 %7
+  %6 = add nuw nsw i64 %.049, 3
+  %spec.select63 = select i1 %i.ed, i64 %6, i64 %.049
+  %i.ee = getelementptr inbounds nuw [8 x i8], ptr @_ZZN2cv15OcvDftBasicImpl4initEiiiiPbE7dft_tbl, i64 %spec.select63
   %i.ef = load ptr, ptr %i.ee, align 8, !tbaa !47
   %i.eg = getelementptr inbounds nuw i8, ptr %0, i64 64
   store ptr %i.ef, ptr %i.eg, align 8, !tbaa !48

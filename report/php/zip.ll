@@ -202,7 +202,7 @@ bb.co:                                            ; preds = %bb.cm
   br label %.thread1716
 
 bb.cp:                                            ; preds = %bb.ca
-  %i.jk = load i16, ptr %i.ep, align 1            ; 4 uses
+  %i.jk = load i16, ptr %i.ep, align 1            ; 3 uses
   %.not1372 = icmp eq i16 %i.jk, 0
   br i1 %.not1372, label %bb.cq, label %bb.de
 
@@ -290,8 +290,7 @@ bb.dd:                                            ; preds = %bb.db
   br label %.thread1716
 
 bb.de:                                            ; preds = %bb.cp
-  %15 = zext i16 %i.jk to i32                     ; 2 uses
-  %i.kf = zext i16 %i.jk to i64                   ; 5 uses
+  %i.kf = zext i16 %i.jk to i64                   ; 7 uses
   %i.kg = load i16, ptr %i.dq, align 2
   %i.kh = and i16 %i.kg, 256
   %.not1735 = icmp eq i16 %i.kh, 0
@@ -442,7 +441,7 @@ bb.dz:                                            ; preds = %bb.dy
   br i1 %.not1380, label %bb.eb, label %bb.ea
 
 bb.ea:                                            ; preds = %bb.dz
-  %16 = add nsw i32 %15, -1
+  %15 = add nsw i64 %i.kf, -1
   %i.ly = getelementptr inbounds nuw i8, ptr %i.kt, i64 16 ; 2 uses
   %i.lz = load i64, ptr %i.ly, align 8, !tbaa !52
   %i.ma = add i64 %i.lz, -1
@@ -450,7 +449,7 @@ bb.ea:                                            ; preds = %bb.dz
   br label %bb.eb
 
 bb.eb:                                            ; preds = %bb.ea, %bb.dz
-  %.0 = phi i32 [ %16, %bb.ea ], [ 1, %bb.dz ]
+  %.0 = phi i64 [ %15, %bb.ea ], [ 1, %bb.dz ]
   %i.mb = load i32, ptr %i.el, align 8, !tbaa !47
   %i.mc = or i32 %i.mb, 511
   store i32 %i.mc, ptr %i.el, align 8, !tbaa !47
@@ -462,10 +461,9 @@ bb.ec:                                            ; preds = %bb.dy
   br label %bb.ed
 
 bb.ed:                                            ; preds = %bb.ec, %bb.eb
-  %.1 = phi i32 [ %.0, %bb.eb ], [ %15, %bb.ec ]
+  %.1 = phi i64 [ %.0, %bb.eb ], [ %i.kf, %bb.ec ]
   %i.me = getelementptr inbounds nuw i8, ptr %i.kt, i64 24
-  %17 = zext nneg i32 %.1 to i64
-  %i.mf = getelementptr inbounds nuw i8, ptr %i.me, i64 %17
+  %i.mf = getelementptr inbounds nuw i8, ptr %i.me, i64 %.1
   store i8 0, ptr %i.mf, align 1, !tbaa !12
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #14
   %i.mg = load i16, ptr %i.dq, align 2

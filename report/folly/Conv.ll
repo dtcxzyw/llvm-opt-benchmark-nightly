@@ -205,12 +205,12 @@ bb.k:                                             ; preds = %_ZZN3fmt2v96detail1
   br label %_ZN3fmt2v96detail10write_charIcNS0_8appenderEEET0_S4_T_RKNS0_18basic_format_specsIS5_EE.exit
 
 _ZN3fmt2v96detail16check_char_specsIcNS1_13error_handlerEEEbRKNS0_18basic_format_specsIT_EEOT0_.exit: ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
-  %4 = sext i8 %1 to i32                          ; 2 uses
+  %4 = sext i8 %1 to i64                          ; 2 uses
   %i.aj = icmp slt i8 %1, 0
   br i1 %i.aj, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %_ZN3fmt2v96detail16check_char_specsIcNS1_13error_handlerEEEbRKNS0_18basic_format_specsIT_EEOT0_.exit
-  %5 = sub nsw i32 0, %4
+  %5 = sub nsw i64 0, %4
   br label %_ZN3fmt2v96detail18make_write_int_argIiEENS1_13write_int_argINSt11conditionalIXaalecl8num_bitsIT_EELi32EntLi0EEjNS4_IXlecl8num_bitsIS5_EELi64EEmoE4typeEE4typeEEES5_NS0_4sign4typeE.exit
 
 bb.m:                                             ; preds = %_ZN3fmt2v96detail16check_char_specsIcNS1_13error_handlerEEEbRKNS0_18basic_format_specsIT_EEOT0_.exit
@@ -227,9 +227,8 @@ bb.m:                                             ; preds = %_ZN3fmt2v96detail16
 
 _ZN3fmt2v96detail18make_write_int_argIiEENS1_13write_int_argINSt11conditionalIXaalecl8num_bitsIT_EELi32EntLi0EEjNS4_IXlecl8num_bitsIS5_EELi64EEmoE4typeEE4typeEEES5_NS0_4sign4typeE.exit: ; preds = %bb.l, %bb.m
   %.06.i = phi i64 [ 72057787311456256, %bb.l ], [ %i.as, %bb.m ]
-  %.0.i9 = phi i32 [ %5, %bb.l ], [ %4, %bb.m ]
-  %.sroa.0.0.insert.ext.i = zext nneg i32 %.0.i9 to i64
-  %.sroa.0.0.insert.insert.i = or disjoint i64 %.06.i, %.sroa.0.0.insert.ext.i
+  %.0.i9 = phi i64 [ %5, %bb.l ], [ %4, %bb.m ]
+  %.sroa.0.0.insert.insert.i = or disjoint i64 %.0.i9, %.06.i
   %i.at = tail call ptr @_ZN3fmt2v96detail18write_int_noinlineIcNS0_8appenderEjEET0_S4_NS1_13write_int_argIT1_EERKNS0_18basic_format_specsIT_EENS1_10locale_refE(ptr %0, i64 %.sroa.0.0.insert.insert.i, ptr noundef nonnull align 4 dereferenceable(16) %2, ptr %3)
   br label %_ZN3fmt2v96detail10write_charIcNS0_8appenderEEET0_S4_T_RKNS0_18basic_format_specsIS5_EE.exit
 

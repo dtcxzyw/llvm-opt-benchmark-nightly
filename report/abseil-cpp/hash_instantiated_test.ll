@@ -205,8 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.h = icmp ugt i64 %i.e, %i.g
   %.neg.i.i = sext i1 %i.h to i64
   %i.i = add nsw i64 %i.f, %.neg.i.i
-  %9 = and i64 %i.i, 4294967295
-  %i.j = lshr i64 -1, %9
+  %i.j = lshr i64 -1, %i.i
   br label %_ZN4absl12lts_2026052618container_internal29SelectBucketCountForIterRangeIPKiEEmT_S5_m.exit
 
 _ZN4absl12lts_2026052618container_internal29SelectBucketCountForIterRangeIPKiEEmT_S5_m.exit: ; preds = %bb.a, %bb.c

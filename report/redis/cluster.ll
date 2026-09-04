@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.052 = phi i32 [ 2, %bb.b ], [ 1, %bb.a ]      ; 2 uses
+  %.052 = phi i64 [ 2, %bb.b ], [ 1, %bb.a ]      ; 2 uses
   %i.f = tail call i32 @clusterNodeTlsPort(ptr noundef %1) #21
   %.not54 = icmp eq i32 %i.f, 0
   br i1 %.not54, label %bb.e, label %bb.d
@@ -213,18 +213,18 @@ bb.d:                                             ; preds = %bb.c
   %i.g = tail call i32 @clusterNodeTlsPort(ptr noundef %1) #21
   %i.h = sext i32 %i.g to i64
   tail call void @addReplyLongLong(ptr noundef %0, i64 noundef %i.h) #21
-  %2 = add nuw nsw i32 %.052, 1
+  %2 = add nuw nsw i64 %.052, 1
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.1 = phi i32 [ %2, %bb.d ], [ %.052, %bb.c ]   ; 2 uses
+  %.1 = phi i64 [ %2, %bb.d ], [ %.052, %bb.c ]   ; 2 uses
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.57) #21
   %i.i = tail call ptr @clusterNodeIp(ptr noundef %1) #21
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef %i.i) #21
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.58) #21
   %i.j = tail call ptr @clusterNodePreferredEndpoint(ptr noundef %1) #21
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef %i.j) #21
-  %3 = add nuw nsw i32 %.1, 2                     ; 2 uses
+  %3 = add nuw nsw i64 %.1, 2                     ; 2 uses
   %i.k = tail call ptr @clusterNodeHostname(ptr noundef %1) #21 ; 3 uses
   %.not55 = icmp eq ptr %i.k, null
   br i1 %.not55, label %bb.h, label %bb.f
@@ -237,11 +237,11 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.59) #21
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull %i.k) #21
-  %4 = add nuw nsw i32 %.1, 3
+  %4 = add nuw nsw i64 %.1, 3
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
-  %.2 = phi i32 [ %4, %bb.g ], [ %3, %bb.f ], [ %3, %bb.e ]
+  %.2 = phi i64 [ %4, %bb.g ], [ %3, %bb.f ], [ %3, %bb.e ]
   %i.m = tail call i32 @clusterNodeIsMyself(ptr noundef %1) #21
   %.not57 = icmp eq i32 %i.m, 0
   br i1 %.not57, label %bb.l, label %bb.i
@@ -288,9 +288,8 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.0 = phi ptr [ @.str.65, %bb.m ], [ %.str.66..str.67, %bb.n ]
   tail call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull %.0) #21
-  %5 = add nuw nsw i32 %.2, 3
-  %6 = zext nneg i32 %5 to i64
-  tail call void @setDeferredMapLen(ptr noundef %0, ptr noundef %i.a, i64 noundef %6) #21
+  %5 = add nuw nsw i64 %.2, 3
+  tail call void @setDeferredMapLen(ptr noundef %0, ptr noundef %i.a, i64 noundef %5) #21
   ret void
 }
 

@@ -202,7 +202,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 bb.bh:                                            ; preds = %bb.v, %bb.bg, %bb.d
   %.sroa.04.1 = phi i8 [ undef, %bb.d ], [ undef, %bb.bg ], [ %.val13, %bb.v ] ; 4 uses
-  %.sroa.25.1 = phi i8 [ 0, %bb.d ], [ 0, %bb.bg ], [ 1, %bb.v ] ; 4 uses
+  %.sroa.25.1 = phi i16 [ 0, %bb.d ], [ 0, %bb.bg ], [ 1, %bb.v ] ; 4 uses
   %i.jq = load ptr, ptr %7, align 8, !tbaa !44    ; 2 uses
   %i.jr = icmp eq ptr %i.jq, %i.d
   br i1 %i.jr, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i27, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i26
@@ -239,7 +239,7 @@ _ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv
   br i1 %.not.i.i29, label %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit, label %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.thread.i, !prof !115
 
 _ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.thread.i: ; preds = %bb.a, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i27
-  %.sroa.25.211 = phi i8 [ %.sroa.25.1, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.i ], [ %.sroa.25.1, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i27 ], [ 0, %bb.a ] ; 2 uses
+  %.sroa.25.211 = phi i16 [ %.sroa.25.1, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.i ], [ %.sroa.25.1, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i27 ], [ 0, %bb.a ] ; 2 uses
   %.sroa.04.29 = phi i8 [ %.sroa.04.1, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.i ], [ %.sroa.04.1, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i27 ], [ undef, %bb.a ] ; 2 uses
   %i.jz = phi ptr [ %.pr.pre.i, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.i ], [ %.pr, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i27 ], [ %i.a, %bb.a ]
   %i.ka = getelementptr inbounds nuw i8, ptr %i.jz, i64 1
@@ -252,11 +252,10 @@ bb.bj:                                            ; preds = %_ZN5arrow6ResultINS
   br label %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit
 
 _ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit: ; preds = %bb.bi, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.i, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.thread.i, %bb.bj
-  %.sroa.25.210 = phi i8 [ %.sroa.25.211, %bb.bj ], [ %.sroa.25.1, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.i ], [ %.sroa.25.211, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.thread.i ], [ %.sroa.25.1, %bb.bi ]
+  %.sroa.25.210 = phi i16 [ %.sroa.25.211, %bb.bj ], [ %.sroa.25.1, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.i ], [ %.sroa.25.211, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.thread.i ], [ %.sroa.25.1, %bb.bi ]
   %.sroa.04.28 = phi i8 [ %.sroa.04.29, %bb.bj ], [ %.sroa.04.1, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.i ], [ %.sroa.04.29, %_ZN5arrow6ResultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7DestroyEv.exit.thread.i ], [ %.sroa.04.1, %bb.bi ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30
-  %.sroa.25.0.insert.ext = zext nneg i8 %.sroa.25.210 to i16
-  %.sroa.25.0.insert.shift = shl nuw nsw i16 %.sroa.25.0.insert.ext, 8
+  %.sroa.25.0.insert.shift = shl nuw nsw i16 %.sroa.25.210, 8
   %.sroa.04.0.insert.ext = zext i8 %.sroa.04.28 to i16
   %.sroa.04.0.insert.insert = or disjoint i16 %.sroa.25.0.insert.shift, %.sroa.04.0.insert.ext
   ret i16 %.sroa.04.0.insert.insert

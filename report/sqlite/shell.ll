@@ -206,13 +206,13 @@ bb.d:                                             ; preds = %bb.i, %bb.c
   %.139 = phi ptr [ %i.j, %bb.c ], [ %i.r, %bb.i ] ; 3 uses
   %.037 = phi i64 [ 0, %bb.c ], [ %i.q, %bb.i ]   ; 3 uses
   %i.k = load i8, ptr %.139, align 1, !tbaa !52   ; 4 uses
-  %1 = sext i8 %i.k to i32                        ; 3 uses
+  %1 = sext i8 %i.k to i64                        ; 3 uses
   %i.l = add i8 %i.k, -48
   %or.cond.i = icmp ult i8 %i.l, 10
   br i1 %or.cond.i, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %2 = add nsw i32 %1, -48
+  %2 = add nsw i64 %1, -48
   br label %hexDigitValue.exit.thread
 
 bb.f:                                             ; preds = %bb.d
@@ -221,24 +221,23 @@ bb.f:                                             ; preds = %bb.d
   br i1 %or.cond5.i, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %3 = add nsw i32 %1, -87
+  %3 = add nsw i64 %1, -87
   br label %hexDigitValue.exit.thread
 
 bb.h:                                             ; preds = %bb.f
-  %4 = add nsw i32 %1, -55
+  %4 = add nsw i64 %1, -55
   %i.n = add i8 %i.k, -65
   %or.cond53 = icmp ult i8 %i.n, 6
   br i1 %or.cond53, label %hexDigitValue.exit.thread, label %.thread
 
 hexDigitValue.exit.thread:                        ; preds = %bb.h, %bb.g, %bb.e
-  %.0.i49 = phi i32 [ %4, %bb.h ], [ %3, %bb.g ], [ %2, %bb.e ]
+  %.0.i49 = phi i64 [ %4, %bb.h ], [ %3, %bb.g ], [ %2, %bb.e ]
   %i.o = icmp ugt i64 %.037, 1152921504606846975
   br i1 %i.o, label %.loopexit54, label %bb.i
 
 bb.i:                                             ; preds = %hexDigitValue.exit.thread
   %i.p = shl nuw i64 %.037, 4
-  %5 = zext nneg i32 %.0.i49 to i64
-  %i.q = add i64 %i.p, %5
+  %i.q = add i64 %.0.i49, %i.p
   %i.r = getelementptr inbounds nuw i8, ptr %.139, i64 1
   br label %bb.d, !llvm.loop !934
 
@@ -641,8 +640,8 @@ bb.df:                                            ; preds = %bb.de
   %i.nn = load ptr, ptr %i.bp, align 8, !tbaa !132
   %i.no = getelementptr inbounds nuw i8, ptr %i.ek, i64 16
   %i.np = load ptr, ptr %i.no, align 8, !tbaa !88 ; 2 uses
-  %i.nq = load i8, ptr %i.np, align 1, !tbaa !52  ; 3 uses
-  %i.nr = zext i8 %i.nq to i64
+  %i.nq = load i8, ptr %i.np, align 1, !tbaa !52  ; 2 uses
+  %i.nr = zext i8 %i.nq to i64                    ; 2 uses
   %i.ns = getelementptr inbounds nuw [2 x i8], ptr %i.nn, i64 %i.nr
   %i.nt = load i16, ptr %i.ns, align 2, !tbaa !98
   %i.nu = and i16 %i.nt, 2048
@@ -663,10 +662,8 @@ bb.dh:                                            ; preds = %bb.dg
 bb.di:                                            ; preds = %bb.dh
   %i.nz = getelementptr inbounds nuw i8, ptr %1, i64 4720
   %i.oa = load ptr, ptr %i.nz, align 8, !tbaa !343
-  %i.ob = getelementptr inbounds nuw i8, ptr %1, i64 4600
-  %8 = and i8 %i.nq, 7
-  %9 = zext nneg i8 %8 to i64
-  %i.oc = getelementptr inbounds nuw [24 x i8], ptr %i.ob, i64 %9 ; 3 uses
+  %i.ob = getelementptr i8, ptr %1, i64 3448
+  %i.oc = getelementptr [24 x i8], ptr %i.ob, i64 %i.nr ; 3 uses
   %i.od = icmp eq ptr %i.oa, %i.oc
   br i1 %i.od, label %bb.dj, label %bb.dk
 
@@ -1069,9 +1066,8 @@ bb.t:                                             ; preds = %bb.s
   %i.aw = zext i16 %i.av to i64
   %i.ax = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !586
-  %3 = add nuw nsw i64 %i.aw, 4294967295
-  %4 = and i64 %3, 4294967295
-  %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 %4
+  %3 = getelementptr i8, ptr %i.ay, i64 %i.aw
+  %i.az = getelementptr i8, ptr %3, i64 -1
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !52
   %.not64 = icmp eq i8 %i.ba, 47
   br i1 %.not64, label %bb.x, label %bb.u

@@ -204,10 +204,9 @@ bb.h:                                             ; preds = %bb.g
   %i.bz = trunc i64 %i.bx to i32
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !33
-  %3 = add nuw nsw i64 %i.bv, 4294967295
-  %4 = and i64 %3, 4294967295
-  %5 = getelementptr inbounds nuw [16 x i8], ptr %i.cb, i64 %4
-  store i32 %i.bz, ptr %5, align 4, !tbaa !35
+  %3 = getelementptr [16 x i8], ptr %i.cb, i64 %i.bv
+  %4 = getelementptr i8, ptr %3, i64 -16
+  store i32 %i.bz, ptr %4, align 4, !tbaa !35
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %getlength.exit.thread36

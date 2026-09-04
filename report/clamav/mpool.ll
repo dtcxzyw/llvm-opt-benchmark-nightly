@@ -204,7 +204,6 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.c = getelementptr inbounds i8, ptr %1, i64 -1 ; 2 uses
   %i.d = load i8, ptr %i.c, align 1, !tbaa !8     ; 3 uses
-  %3 = zext i8 %i.d to i64                        ; 2 uses
   %i.e = icmp ugt i8 %i.d, 99
   br i1 %i.e, label %from_bits.exit.thread, label %from_bits.exit
 
@@ -213,7 +212,8 @@ from_bits.exit.thread:                            ; preds = %bb.d, %bb.c
   br label %bb.g
 
 from_bits.exit:                                   ; preds = %bb.d
-  %i.f = getelementptr inbounds nuw [4 x i8], ptr @fragsz, i64 %3
+  %3 = zext nneg i8 %i.d to i64
+  %i.f = getelementptr [4 x i8], ptr @fragsz, i64 %3 ; 2 uses
   %i.g = load i32, ptr %i.f, align 4, !tbaa !18
   %i.h = zext i32 %i.g to i64
   %i.i = load i8, ptr %i.b, align 1, !tbaa !8
@@ -228,10 +228,8 @@ bb.e:                                             ; preds = %from_bits.exit
   br i1 %.not44, label %bb.g, label %from_bits.exit48
 
 from_bits.exit48:                                 ; preds = %bb.e
-  %4 = add nuw nsw i64 %3, 4294967295
-  %5 = and i64 %4, 4294967295
-  %6 = getelementptr inbounds nuw [4 x i8], ptr @fragsz, i64 %5
-  %i.l = load i32, ptr %6, align 4, !tbaa !18
+  %4 = getelementptr i8, ptr %i.f, i64 -4
+  %i.l = load i32, ptr %4, align 4, !tbaa !18
   %i.m = zext i32 %i.l to i64
   %reass.sub = sub nsw i64 %i.m, %i.j
   %i.n = add nsw i64 %reass.sub, -2
@@ -278,7 +276,6 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.b = getelementptr inbounds i8, ptr %1, i64 -1 ; 2 uses
   %i.c = load i8, ptr %i.b, align 1, !tbaa !8     ; 3 uses
-  %3 = zext i8 %i.c to i64                        ; 2 uses
   %i.d = icmp ugt i8 %i.c, 99
   br i1 %i.d, label %from_bits.exit.thread.i, label %from_bits.exit.i
 
@@ -287,7 +284,8 @@ from_bits.exit.thread.i:                          ; preds = %bb.c, %bb.b
   br label %bb.f
 
 from_bits.exit.i:                                 ; preds = %bb.c
-  %i.e = getelementptr inbounds nuw [4 x i8], ptr @fragsz, i64 %3
+  %3 = zext nneg i8 %i.c to i64
+  %i.e = getelementptr [4 x i8], ptr @fragsz, i64 %3 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !18
   %i.g = zext i32 %i.f to i64
   %i.h = load i8, ptr %i.a, align 1, !tbaa !8
@@ -302,10 +300,8 @@ bb.d:                                             ; preds = %from_bits.exit.i
   br i1 %.not44.i, label %mpool_free.exit, label %from_bits.exit48.i
 
 from_bits.exit48.i:                               ; preds = %bb.d
-  %4 = add nuw nsw i64 %3, 4294967295
-  %5 = and i64 %4, 4294967295
-  %6 = getelementptr inbounds nuw [4 x i8], ptr @fragsz, i64 %5
-  %i.k = load i32, ptr %6, align 4, !tbaa !18
+  %4 = getelementptr i8, ptr %i.e, i64 -4
+  %i.k = load i32, ptr %4, align 4, !tbaa !18
   %i.l = zext i32 %i.k to i64
   %reass.sub = sub nsw i64 %i.l, %i.i
   %i.m = add nsw i64 %reass.sub, -2

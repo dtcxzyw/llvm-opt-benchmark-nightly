@@ -91,10 +91,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not30, label %bb.n, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %3 = add nuw nsw i64 %i.i, 4294967295
-  %4 = and i64 %3, 4294967295
-  %5 = getelementptr inbounds nuw [2 x i8], ptr %i.l, i64 %4
-  %i.o = load i16, ptr %5, align 2, !tbaa !24
+  %3 = getelementptr [2 x i8], ptr %i.l, i64 %i.i
+  %4 = getelementptr i8, ptr %3, i64 -2
+  %i.o = load i16, ptr %4, align 2, !tbaa !24
   %i.p = zext i16 %i.o to i32
   %i.q = add nuw nsw i32 %i.p, 1
   %.not31 = icmp eq i32 %i.q, %i.f
@@ -497,18 +496,17 @@ bb.b:                                             ; preds = %.outer, %bb.aq
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.aj
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.aj ], [ 0, %bb.b ] ; 2 uses
-  %.096.i = phi i64 [ %i.at, %bb.aj ], [ 4294967295, %bb.b ]
+  %.096.i = phi i64 [ %i.at, %bb.aj ], [ -1, %bb.b ] ; 2 uses
   store i32 0, ptr %i.r, align 8, !tbaa !84
   store ptr null, ptr %i.s, align 8, !tbaa !85
-  %i.ap = add nuw nsw i64 %.096.i, 1
+  %i.ap = add nsw i64 %.096.i, 1                  ; 2 uses
   %i.aq = load ptr, ptr %i.t, align 8, !tbaa !139
   %i.ar = getelementptr inbounds nuw [2 x i8], ptr %i.aq, i64 %indvars.iv.i
   %i.as = load i16, ptr %i.ar, align 2, !tbaa !24
   %i.at = zext i16 %i.as to i64                   ; 3 uses
   %i.au = load ptr, ptr %i.u, align 8, !tbaa !140 ; 2 uses
   %i.av = getelementptr inbounds nuw [16 x i8], ptr %i.au, i64 %i.at ; 5 uses
-  %3 = and i64 %i.ap, 4294967295                  ; 2 uses
-  %i.aw = getelementptr inbounds nuw [16 x i8], ptr %i.au, i64 %3 ; 4 uses
+  %i.aw = getelementptr inbounds nuw [16 x i8], ptr %i.au, i64 %i.ap ; 4 uses
   %i.ax = load i64, ptr %i.aw, align 8, !tbaa !62
   %i.ay = load i32, ptr %i.v, align 4, !tbaa !70
   %i.az = sext i32 %i.ay to i64                   ; 4 uses
@@ -537,8 +535,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   %.sroa.13.0.i.i = phi i64 [ %i.bd, %bb.c ], [ %i.bh, %.lr.ph.i ] ; 2 uses
   %.sroa.0107.0.i.i = phi i64 [ %i.bo, %bb.c ], [ %i.bk, %.lr.ph.i ] ; 2 uses
   %.sroa.7.0.i.i = phi i64 [ %i.bk, %bb.c ], [ %i.bo, %.lr.ph.i ] ; 2 uses
-  %i.bp = load ptr, ptr %i.x, align 8, !tbaa !141 ; 2 uses
-  %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 %3 ; 4 uses
+  %i.bp = load ptr, ptr %i.x, align 8, !tbaa !141 ; 3 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.ap ; 3 uses
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !76  ; 3 uses
   %i.bs = and i8 %i.br, 4
   %.not197.i.i = icmp eq i8 %i.bs, 0
@@ -581,7 +579,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %.sroa.084.1.i.i = phi i64 [ %.sroa.0107.0.i.i, %bb.h ], [ %i.cc, %bb.i ]
   %.sroa.13.1.i.i = phi i64 [ %.sroa.7.0.i.i, %bb.h ], [ %i.ce, %bb.i ]
   %i.cf = getelementptr inbounds i8, ptr %i.aw, i64 -16
-  %i.cg = getelementptr inbounds i8, ptr %i.bq, i64 -1
+  %i.cg = getelementptr inbounds i8, ptr %i.bp, i64 %.096.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.f

@@ -205,8 +205,7 @@ bb.f:                                             ; preds = %bb.c
   br i1 %i.n, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.o = udiv i32 %.sroa.09.0, 3600
-  %4 = trunc nuw nsw i32 %i.o to i8               ; 2 uses
+  %i.o = udiv i32 %.sroa.09.0, 3600               ; 2 uses
   %i.p = urem i32 %.sroa.09.0, 3600               ; 2 uses
   %i.q = icmp eq i32 %i.p, 0
   br i1 %i.q, label %bb.h, label %.thread67
@@ -214,14 +213,14 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.f, %.thread67
   %.sroa.06.05665 = phi i32 [ %i.e, %bb.f ], [ %i.e, %bb.g ], [ %.sroa.06.0566471, %.thread67 ]
   %.sroa.0.05763 = phi i32 [ %.sroa.0.0, %bb.f ], [ %.sroa.0.0, %bb.g ], [ %.sroa.0.0576272, %.thread67 ] ; 2 uses
-  %.sroa.041.0 = phi i8 [ 0, %bb.f ], [ %4, %bb.g ], [ %5, %.thread67 ]
+  %.sroa.041.0.shrunk = phi i32 [ 0, %bb.f ], [ %i.o, %bb.g ], [ %4, %.thread67 ]
   %.sroa.043.0 = phi i64 [ 0, %bb.f ], [ 0, %bb.g ], [ %i.y, %.thread67 ]
   %or.cond2 = icmp ult i32 %.sroa.0.05763, 1000000000
   br i1 %or.cond2, label %bb.j, label %bb.i, !prof !59
 
 .thread67:                                        ; preds = %.thread, %bb.g
   %i.r = phi i32 [ %i.p, %bb.g ], [ 3599, %.thread ]
-  %5 = phi i8 [ %4, %bb.g ], [ 23, %.thread ]
+  %4 = phi i32 [ %i.o, %bb.g ], [ 23, %.thread ]
   %.sroa.0.0576272 = phi i32 [ %.sroa.0.0, %bb.g ], [ %i.i, %.thread ]
   %.sroa.06.0566471 = phi i32 [ %i.e, %bb.g ], [ %i.k, %.thread ]
   %.lhs.trunc = trunc nuw nsw i32 %i.r to i16     ; 2 uses
@@ -270,7 +269,7 @@ bb.j:                                             ; preds = %bb.h
   %i.au = add nuw nsw i32 %i.as, %i.at
   %.sroa.0.0.insert.ext.i = and i32 %i.au, 65535
   %.sroa.0.0.insert.insert.i = or disjoint i32 %.sroa.2.0.insert.insert.i, %.sroa.0.0.insert.ext.i
-  %.sroa.440.0.insert.ext = zext nneg i8 %.sroa.041.0 to i64
+  %.sroa.440.0.insert.ext = zext nneg i32 %.sroa.041.0.shrunk to i64
   %.sroa.440.0.insert.shift = shl nuw nsw i64 %.sroa.440.0.insert.ext, 32
   %.sroa.039.0.insert.ext = zext nneg i32 %.sroa.0.05763 to i64
   %.sroa.440.0.insert.insert = or i64 %.sroa.043.0, %.sroa.039.0.insert.ext

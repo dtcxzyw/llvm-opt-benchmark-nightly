@@ -205,9 +205,8 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.bb = zext i16 %.0.i to i64
-  %i.bc = add nuw nsw i64 %i.bb, 4294967288
-  %2 = and i64 %i.bc, 4294967295
-  %i.bd = call i32 @_php_stream_seek(ptr noundef nonnull %0, i64 noundef %2, i32 noundef 1) #11
+  %i.bc = add nsw i64 %i.bb, -8
+  %i.bd = call i32 @_php_stream_seek(ptr noundef nonnull %0, i64 noundef %i.bc, i32 noundef 1) #11
   %.not42 = icmp eq i32 %i.bd, 0
   br i1 %.not42, label %.outer, label %php_next_marker.exit.thread
 

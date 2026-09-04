@@ -204,15 +204,12 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %.lr.ph351
   %i.aj = zext nneg i8 %i.ah to i64
-  %2 = add nuw nsw i64 %i.aj, 4294967280
-  %3 = and i64 %2, 4294967295                     ; 2 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr @_ZZN5RarVM21ExecuteStandardFilterE18VM_StandardFiltersE5Masks, i64 %3
-  %i.al = load i8, ptr %i.ak, align 1, !tbaa !16
+  %2 = getelementptr i8, ptr @_ZZN5RarVM21ExecuteStandardFilterE18VM_StandardFiltersE5Masks, i64 %i.aj
+  %i.ak = getelementptr i8, ptr %2, i64 -16
+  %i.al = load i8, ptr %i.ak, align 1, !tbaa !16  ; 2 uses
   %i.am = zext i8 %i.al to i32                    ; 3 uses
-  %4 = shl nuw nsw i64 1, %3
-  %5 = and i64 %4, 52272
-  %.not282.not = icmp eq i64 %5, 0
-  br i1 %.not282.not, label %.preheader.preheader, label %.loopexit
+  %.not282.not = icmp eq i8 %i.al, 0
+  br i1 %.not282.not, label %.loopexit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.n
   %i.an = and i32 %i.am, 1

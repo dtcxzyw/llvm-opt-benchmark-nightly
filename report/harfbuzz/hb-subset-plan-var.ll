@@ -205,7 +205,7 @@ _ZNK2OT7ArrayOfINS_7NumTypeILb1EtLj2EEES2_E8sanitizeIJEEEbP21hb_sanitize_context
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZNK3CFF11FDSelect3_4IN2OT7NumTypeILb1EtLj2EEENS2_ILb1EhLj1EEEE8sanitizeEP21hb_sanitize_context_tj(ptr noundef nonnull align 1 dereferenceable(5) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 6 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !286
   %i.d = ptrtoint ptr %i.a to i64                 ; 3 uses
@@ -352,10 +352,9 @@ _ZNK2OT7ArrayOfIN3CFF17FDSelect3_4_RangeINS_7NumTypeILb1EtLj2EEENS3_ILb1EhLj1EEE
 bb.j:                                             ; preds = %._crit_edge
   %i.bi = tail call noundef i16 @llvm.bswap.i16(i16 %.sroa.0.0.copyload.i.i)
   %i.bj = zext i16 %i.bi to i64
-  %3 = add nuw nsw i64 %i.bj, 4294967295
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !71
-  %4 = and i64 %3, 4294967295
-  %i.bk = getelementptr inbounds nuw [3 x i8], ptr %i.a, i64 %4
+  %3 = getelementptr i8, ptr %0, i64 -1
+  %i.bk = getelementptr [3 x i8], ptr %3, i64 %i.bj
   br label %_ZNK3CFF11FDSelect3_4IN2OT7NumTypeILb1EtLj2EEENS2_ILb1EhLj1EEEE8sentinelEv.exit
 
 _ZNK3CFF11FDSelect3_4IN2OT7NumTypeILb1EtLj2EEENS2_ILb1EhLj1EEEE8sentinelEv.exit: ; preds = %._crit_edge, %bb.j
@@ -379,10 +378,9 @@ bb.k:                                             ; preds = %_ZNK3CFF11FDSelect3
 bb.l:                                             ; preds = %bb.k
   %i.bs = tail call noundef i16 @llvm.bswap.i16(i16 %.sroa.0.0.copyload.i.i27)
   %i.bt = zext i16 %i.bs to i64
-  %5 = add nuw nsw i64 %i.bt, 4294967295
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !71
-  %6 = and i64 %5, 4294967295
-  %i.bu = getelementptr inbounds nuw [3 x i8], ptr %i.a, i64 %6
+  %4 = getelementptr i8, ptr %0, i64 -1
+  %i.bu = getelementptr [3 x i8], ptr %4, i64 %i.bt
   br label %_ZNK3CFF11FDSelect3_4IN2OT7NumTypeILb1EtLj2EEENS2_ILb1EhLj1EEEE8sentinelEv.exit30
 
 _ZNK3CFF11FDSelect3_4IN2OT7NumTypeILb1EtLj2EEENS2_ILb1EhLj1EEEE8sentinelEv.exit30: ; preds = %bb.k, %bb.l

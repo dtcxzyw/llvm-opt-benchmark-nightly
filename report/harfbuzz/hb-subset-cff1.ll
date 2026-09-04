@@ -205,18 +205,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !181
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
   %.sroa.0.0.copyload.i.i = load i8, ptr %i.e, align 1, !tbaa !97 ; 2 uses
   %.not.i.not.i = icmp eq i8 %.sroa.0.0.copyload.i.i, 0
   br i1 %.not.i.not.i, label %_ZNK2OT7ArrayOfINS_7NumTypeILb1EhLj1EEES2_EixEi.exit.i, label %bb.d, !prof !86
 
 bb.d:                                             ; preds = %bb.c
   %i.f = zext i8 %.sroa.0.0.copyload.i.i to i64
-  %3 = add nuw nsw i64 %i.f, 4294967295
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !181
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %5 = and i64 %3, 4294967295
-  %i.g = getelementptr inbounds nuw i8, ptr %4, i64 %5
+  %i.g = getelementptr i8, ptr %i.e, i64 %i.f
   br label %_ZNK2OT7ArrayOfINS_7NumTypeILb1EhLj1EEES2_EixEi.exit.i
 
 _ZNK2OT7ArrayOfINS_7NumTypeILb1EhLj1EEES2_EixEi.exit.i: ; preds = %bb.d, %bb.c
@@ -233,11 +230,8 @@ bb.e:                                             ; preds = %bb.b
 
 bb.f:                                             ; preds = %bb.e
   %i.j = zext i8 %.sroa.0.0.copyload.i2.i to i64
-  %6 = add nuw nsw i64 %i.j, 4294967295
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !181
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %8 = and i64 %6, 4294967295
-  %i.k = getelementptr inbounds nuw [2 x i8], ptr %7, i64 %8
+  %i.k = getelementptr [2 x i8], ptr %0, i64 %i.j
   br label %_ZNK2OT7ArrayOfIN3CFF15Encoding1_RangeENS_7NumTypeILb1EhLj1EEEEixEi.exit.i
 
 _ZNK2OT7ArrayOfIN3CFF15Encoding1_RangeENS_7NumTypeILb1EhLj1EEEEixEi.exit.i: ; preds = %bb.f, %bb.e

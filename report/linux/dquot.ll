@@ -204,11 +204,10 @@ bb.bq:                                            ; preds = %bb.bp
 .lr.ph.preheader:                                 ; preds = %bb.r, %bb.n, %.loopexit
   %.5289 = phi i32 [ %.lcssa227, %.loopexit ], [ %i.cv, %bb.r ], [ %i.ch, %bb.n ]
   %.1220233288 = phi i64 [ %.1220.lcssa231.wide, %.loopexit ], [ 2, %bb.r ], [ 1, %bb.n ]
-  %5 = and i64 %.1220233288, 4294967295
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.by
-  %indvars.iv = phi i64 [ %5, %.lr.ph.preheader ], [ %i.lm, %bb.by ] ; 2 uses
+  %indvars.iv = phi i64 [ %.1220233288, %.lr.ph.preheader ], [ %i.lm, %bb.by ] ; 2 uses
   %i.lm = add nsw i64 %indvars.iv, -1             ; 3 uses
   %i.ln = getelementptr i8, ptr %i.c, i64 %i.lm
   %i.lo = load i8, ptr %i.ln, align 1

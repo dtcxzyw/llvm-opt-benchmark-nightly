@@ -204,7 +204,7 @@ bb.ei:                                            ; preds = %bb.eh, %bb.eg
 
 bb.ej:                                            ; preds = %.preheader936, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit387
   %i.vf = phi i1 [ true, %.preheader936 ], [ false, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit387 ]
-  %.0481440 = phi i32 [ 0, %.preheader936 ], [ 1, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit387 ] ; 2 uses
+  %.0481440 = phi i64 [ 0, %.preheader936 ], [ 1, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit387 ] ; 2 uses
   %i.vg = load ptr, ptr %.sroa.sel.sroa.sel899, align 8, !tbaa !29 ; 3 uses
   %.val931 = load ptr, ptr %i.al, align 8
   %.val932 = load ptr, ptr %i.ai, align 16
@@ -252,10 +252,9 @@ bb.eo:                                            ; preds = %bb.ej
           to label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit352 unwind label %bb.fk
 
 _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE9push_backERKS3_.exit352: ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit.i349, %bb.eo
-  %113 = or disjoint i32 %.0481440, 2
-  %114 = select i1 %i.pc, i32 %113, i32 %.0481440
-  %115 = zext nneg i32 %114 to i64
-  %i.vx = getelementptr inbounds nuw [48 x i8], ptr %i.am, i64 %115 ; 3 uses
+  %113 = or disjoint i64 %.0481440, 2
+  %114 = select i1 %i.pc, i64 %113, i64 %.0481440
+  %i.vx = getelementptr inbounds nuw [48 x i8], ptr %i.am, i64 %114 ; 3 uses
   %i.vy = getelementptr inbounds nuw i8, ptr %i.vx, i64 16
   %i.vz = load ptr, ptr %i.vy, align 8, !tbaa !23 ; 2 uses
   %i.wa = getelementptr inbounds nuw i8, ptr %i.vx, i64 8 ; 3 uses

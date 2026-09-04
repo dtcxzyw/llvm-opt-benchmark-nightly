@@ -204,8 +204,7 @@ _ZN4absl12lts_202605267GetFlagIlEET_RKNS0_14flags_internal4FlagIS2_EE.exit: ; pr
   %i.p = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.031172, i1 true) ; 2 uses
   %i.q = icmp ugt i64 %.031172, 16777215          ; 2 uses
   %i.r = sub nsw i64 40, %i.p
-  %19 = and i64 %i.r, 4294967295
-  %.neg = shl nsw i64 -1, %19
+  %.neg = shl nsw i64 -1, %i.r
   %i.s = lshr i64 9223372036854775807, %i.p
   %.030.neg = select i1 %i.q, i64 %.neg, i64 -1
   %.029 = select i1 %i.q, i64 %i.s, i64 0         ; 2 uses

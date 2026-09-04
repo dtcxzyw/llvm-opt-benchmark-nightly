@@ -56,11 +56,8 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph
 
 bb.c:                                             ; preds = %bb.b
   %i.aa = sub nuw nsw i64 %.0125136, %spec.select131 ; 2 uses
-  %scevgep = getelementptr i8, ptr %.0139, i64 32
   %i.ab = shl nuw nsw i64 %spec.select131, 5
-  %3 = add nuw nsw i64 %i.ab, 137438953440
-  %4 = and i64 %3, 137438953440
-  %scevgep159 = getelementptr i8, ptr %scevgep, i64 %4 ; 2 uses
+  %scevgep159 = getelementptr i8, ptr %.0139, i64 %i.ab ; 2 uses
   %i.ac = shl <4 x i32> %i.l, splat (i32 5)
   %i.ad = add <4 x i32> %i.x, %i.ac
   %i.ae = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.u)

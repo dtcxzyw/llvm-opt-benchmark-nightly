@@ -204,8 +204,7 @@ bb.k:                                             ; preds = %bb.j
 .thread97:                                        ; preds = %bb.h
   %.073103107 = trunc i64 %indvars.iv to i32
   %.3100 = trunc i64 %indvars.iv to i8            ; 2 uses
-  %2 = and i32 %.073103107, 255
-  %.not86 = icmp samesign ult i32 %i.e, %2
+  %.not86 = icmp samesign ult i32 %i.e, %.073103107
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 171320
   %i.aq = load i32, ptr %i.ap, align 8            ; 4 uses
   br i1 %.not86, label %bb.m, label %bb.l

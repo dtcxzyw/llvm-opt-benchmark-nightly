@@ -205,12 +205,12 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.af = icmp eq i32 %i.w, 70
-  %spec.select = select i1 %i.af, i32 2, i32 0    ; 2 uses
+  %spec.select = select i1 %i.af, i64 2, i64 0    ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 381836 ; 2 uses
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !145
   %i.ai = icmp eq i32 %i.ah, 14
-  %1 = add nuw nsw i32 %spec.select, 3
-  %.1 = select i1 %i.ai, i32 %1, i32 %spec.select
+  %1 = add nuw nsw i64 %spec.select, 3
+  %.1 = select i1 %i.ai, i64 %1, i64 %spec.select
   call void @_ZN6LibRaw11read_shortsEPtj(ptr noundef nonnull align 8 dereferenceable(768512) %0, ptr noundef nonnull %i.c, i32 noundef 4)
   %i.aj = load i32, ptr %i.ag, align 4, !tbaa !145
   %i.ak = shl nuw i32 1, %i.aj
@@ -267,8 +267,7 @@ bb.h:                                             ; preds = %.lr.ph
 
 .critedge:                                        ; preds = %.lr.ph, %bb.h, %bb.g
   %.2.lcssa = phi i32 [ %.168, %bb.g ], [ 2, %bb.h ], [ %.2119, %.lr.ph ]
-  %2 = zext nneg i32 %.1 to i64
-  %i.bi = getelementptr inbounds nuw [32 x i8], ptr @_ZZN6LibRaw14nikon_load_rawEvE10nikon_tree, i64 %2 ; 2 uses
+  %i.bi = getelementptr inbounds nuw [32 x i8], ptr @_ZZN6LibRaw14nikon_load_rawEvE10nikon_tree, i64 %.1 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.bi, ptr %i.b, align 8, !tbaa !98
   %i.bj = call noundef ptr @_ZN6LibRaw16make_decoder_refEPPKh(ptr noundef nonnull align 8 dereferenceable(768512) %0, ptr noundef nonnull %i.b) ; 2 uses

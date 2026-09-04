@@ -202,7 +202,7 @@ bb.bq:                                            ; preds = %.loopexit
   br i1 %i.gx, label %bb.br, label %bb.bs
 
 bb.br:                                            ; preds = %.thread375, %bb.bq
-  %.0242377 = phi i32 [ 9, %.thread375 ], [ 8, %bb.bq ]
+  %.0242377 = phi i64 [ 9, %.thread375 ], [ 8, %bb.bq ]
   call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.58) #12
   %i.hp = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6408), align 8, !tbaa !115
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 40
@@ -211,7 +211,7 @@ bb.br:                                            ; preds = %.thread375, %bb.bq
   br label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br, %bb.bq
-  %.1 = phi i32 [ %.0242377, %bb.br ], [ 7, %bb.bq ] ; 3 uses
+  %.1 = phi i64 [ %.0242377, %bb.br ], [ 7, %bb.bq ] ; 3 uses
   call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.59) #12
   %i.hs = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6408), align 8, !tbaa !115
   %i.ht = getelementptr inbounds nuw i8, ptr %i.hs, i64 48
@@ -225,24 +225,24 @@ bb.bs:                                            ; preds = %bb.br, %bb.bq
   %i.hw = getelementptr inbounds nuw i8, ptr %i.hv, i64 56
   %i.hx = load i64, ptr %i.hw, align 8, !tbaa !87
   call void @addReplyLongLong(ptr noundef %0, i64 noundef %i.hx) #12
-  %2 = add nuw nsw i32 %.1, 1
+  %2 = add nuw nsw i64 %.1, 1
   br label %bb.bu
 
 bb.bt:                                            ; preds = %bb.bs
   br i1 %i.gx, label %bb.bu, label %bb.bv
 
 bb.bu:                                            ; preds = %.thread378, %bb.bt
-  %.2380 = phi i32 [ %2, %.thread378 ], [ %.1, %bb.bt ]
+  %.2380 = phi i64 [ %2, %.thread378 ], [ %.1, %bb.bt ]
   call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.61) #12
   %i.hy = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6408), align 8, !tbaa !115
   %i.hz = getelementptr inbounds nuw i8, ptr %i.hy, i64 64
   %i.ia = load i64, ptr %i.hz, align 8, !tbaa !85
   call void @addReplyLongLong(ptr noundef %0, i64 noundef %i.ia) #12
-  %3 = add nuw nsw i32 %.2380, 1
+  %3 = add nuw nsw i64 %.2380, 1
   br label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu, %bb.bt
-  %.3 = phi i32 [ %3, %bb.bu ], [ %.1, %bb.bt ]   ; 2 uses
+  %.3 = phi i64 [ %3, %bb.bu ], [ %.1, %bb.bt ]   ; 2 uses
   call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.62) #12
   %i.ib = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6408), align 8, !tbaa !115
   %i.ic = getelementptr inbounds nuw i8, ptr %i.ib, i64 72
@@ -269,7 +269,7 @@ bb.bw:                                            ; preds = %bb.bv
   call void @addReplyLongLong(ptr noundef %0, i64 noundef %.0253591) #12
   call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.66) #12
   call void @addReplyLongLong(ptr noundef %0, i64 noundef %.0252592) #12
-  %4 = add nuw nsw i32 %.3, 2
+  %4 = add nuw nsw i64 %.3, 2
   %.pre549 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6408), align 8, !tbaa !115
   %.phi.trans.insert550 = getelementptr inbounds nuw i8, ptr %.pre549, i64 136
   %.pre551 = load i64, ptr %.phi.trans.insert550, align 8, !tbaa !25
@@ -277,7 +277,7 @@ bb.bw:                                            ; preds = %bb.bv
 
 bb.bx:                                            ; preds = %bb.bw, %bb.bv
   %i.im = phi i64 [ %.pre551, %bb.bw ], [ %i.ik, %bb.bv ] ; 2 uses
-  %.4 = phi i32 [ %4, %bb.bw ], [ %.3, %bb.bv ]   ; 2 uses
+  %.4 = phi i64 [ %4, %bb.bw ], [ %.3, %bb.bv ]   ; 2 uses
   %i.in = and i64 %i.im, 2
   %.not342 = icmp eq i64 %i.in, 0
   br i1 %.not342, label %bb.bz, label %bb.by
@@ -285,7 +285,7 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bv
 bb.by:                                            ; preds = %bb.bx
   call void @addReplyBulkCString(ptr noundef %0, ptr noundef nonnull @.str.67) #12
   call void @addReplyLongLong(ptr noundef %0, i64 noundef %.0251) #12
-  %5 = add nuw nsw i32 %.4, 1
+  %5 = add nuw nsw i64 %.4, 1
   %.pre552 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6408), align 8, !tbaa !115
   %.phi.trans.insert553 = getelementptr inbounds nuw i8, ptr %.pre552, i64 136
   %.pre554 = load i64, ptr %.phi.trans.insert553, align 8, !tbaa !25
@@ -293,7 +293,7 @@ bb.by:                                            ; preds = %bb.bx
 
 bb.bz:                                            ; preds = %bb.by, %bb.bx
   %i.io = phi i64 [ %.pre554, %bb.by ], [ %i.im, %bb.bx ] ; 2 uses
-  %.5 = phi i32 [ %5, %bb.by ], [ %.4, %bb.bx ]   ; 2 uses
+  %.5 = phi i64 [ %5, %bb.by ], [ %.4, %bb.bx ]   ; 2 uses
   %i.ip = and i64 %i.io, 1
   %.not343 = icmp eq i64 %i.ip, 0
   br i1 %.not343, label %bb.cg, label %bb.ca
@@ -312,7 +312,7 @@ bb.ca:                                            ; preds = %bb.bz
 
 ._crit_edge:                                      ; preds = %sdslen.exit, %bb.ca
   call void @zfree(ptr noundef %.0250) #12
-  %6 = add nuw nsw i32 %.5, 1
+  %6 = add nuw nsw i64 %.5, 1
   %.pre555 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6408), align 8, !tbaa !115
   %.phi.trans.insert556 = getelementptr inbounds nuw i8, ptr %.pre555, i64 136
   %.pre557 = load i64, ptr %.phi.trans.insert556, align 8, !tbaa !25
@@ -373,7 +373,7 @@ sdslen.exit:                                      ; preds = %.lr.ph447, %bb.cb, 
 
 bb.cg:                                            ; preds = %._crit_edge, %bb.bz
   %i.jl = phi i64 [ %.pre557, %._crit_edge ], [ %i.io, %bb.bz ]
-  %.6 = phi i32 [ %6, %._crit_edge ], [ %.5, %bb.bz ] ; 2 uses
+  %.6 = phi i64 [ %6, %._crit_edge ], [ %.5, %bb.bz ] ; 2 uses
   %i.jm = and i64 %i.jl, 2
   %.not344 = icmp eq i64 %i.jm, 0
   br i1 %.not344, label %bb.cn, label %bb.ch
@@ -392,7 +392,7 @@ bb.ch:                                            ; preds = %bb.cg
 
 ._crit_edge451:                                   ; preds = %sdslen.exit366, %bb.ch
   call void @zfree(ptr noundef %.0249) #12
-  %7 = add nuw nsw i32 %.6, 1
+  %7 = add nuw nsw i64 %.6, 1
   br label %bb.cn
 
 .lr.ph450:                                        ; preds = %.lr.ph450.preheader, %sdslen.exit366
@@ -449,9 +449,8 @@ sdslen.exit366:                                   ; preds = %.lr.ph450, %bb.ci, 
   br i1 %exitcond526.not, label %._crit_edge451, label %.lr.ph450, !llvm.loop !113
 
 bb.cn:                                            ; preds = %._crit_edge451, %bb.cg
-  %.7 = phi i32 [ %7, %._crit_edge451 ], [ %.6, %bb.cg ]
-  %8 = zext nneg i32 %.7 to i64
-  call void @setDeferredMapLen(ptr noundef %0, ptr noundef %i.hb, i64 noundef %8) #12
+  %.7 = phi i64 [ %7, %._crit_edge451 ], [ %.6, %bb.cg ]
+  call void @setDeferredMapLen(ptr noundef %0, ptr noundef %i.hb, i64 noundef %.7) #12
   br label %bb.cw
 
 bb.co:                                            ; preds = %bb.ba

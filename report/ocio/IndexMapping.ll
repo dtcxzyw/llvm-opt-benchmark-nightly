@@ -204,9 +204,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !18   ; 5 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !16     ; 7 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !16     ; 5 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -242,71 +242,26 @@ _ZNKSt6vectorISt4pairIffESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.c
   %i.r = add nuw nsw i64 %.sroa.speculated.i, %i.g
   %i.s = tail call i64 @llvm.umin.i64(i64 %i.r, i64 1152921504606846975) ; 2 uses
   %i.t = shl nuw nsw i64 %i.s, 3
-  %i.u = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #19 ; 7 uses
+  %i.u = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #19 ; 4 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.f ; 2 uses
   %i.w = shl nuw nsw i64 %1, 3
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.v, i8 0, i64 %i.w, i1 false), !tbaa !22
   %.not10.i.i.i = icmp eq ptr %i.c, %i.b
-  br i1 %.not10.i.i.i, label %_ZNSt6vectorISt4pairIffESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i.preheader
+  br i1 %.not10.i.i.i, label %_ZNSt6vectorISt4pairIffESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i
 
-.lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt4pairIffESaIS1_EE12_M_check_lenEmPKc.exit
-  %2 = ptrtoaddr ptr %i.u to i64
-  %3 = add i64 %i.d, -8
-  %4 = sub i64 %3, %i.e                           ; 2 uses
-  %5 = lshr i64 %4, 3
-  %6 = add nuw nsw i64 %5, 1                      ; 2 uses
-  %min.iters.check = icmp ult i64 %4, 72
-  %7 = sub i64 %i.e, %2
-  %diff.check = icmp ugt i64 %7, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.preheader43, label %vector.ph
-
-vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader
-  %n.vec = and i64 %6, 4611686018427387900        ; 3 uses
-  %8 = shl i64 %n.vec, 3                          ; 2 uses
-  %9 = getelementptr i8, ptr %i.u, i64 %8
-  %10 = getelementptr i8, ptr %i.c, i64 %8
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %11 = shl i64 %index, 3                         ; 2 uses
-  %next.gep = getelementptr i8, ptr %i.u, i64 %11 ; 2 uses
-  %next.gep40 = getelementptr i8, ptr %i.c, i64 %11 ; 2 uses
+.lr.ph.i.i.i:                                     ; preds = %_ZNKSt6vectorISt4pairIffESaIS1_EE12_M_check_lenEmPKc.exit, %.lr.ph.i.i.i
+  %.012.i.i.i = phi ptr [ %i.z, %.lr.ph.i.i.i ], [ %i.u, %_ZNKSt6vectorISt4pairIffESaIS1_EE12_M_check_lenEmPKc.exit ] ; 2 uses
+  %.0911.i.i.i = phi ptr [ %i.y, %.lr.ph.i.i.i ], [ %i.c, %_ZNKSt6vectorISt4pairIffESaIS1_EE12_M_check_lenEmPKc.exit ] ; 2 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !37)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !38)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !39)
-  %12 = getelementptr i8, ptr %next.gep40, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep40, align 4, !alias.scope !39, !noalias !38
-  %wide.load41 = load <2 x i64>, ptr %12, align 4, !alias.scope !39, !noalias !38
-  %13 = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %wide.load, ptr %next.gep, align 4, !alias.scope !38, !noalias !39
-  store <2 x i64> %wide.load41, ptr %13, align 4, !alias.scope !38, !noalias !39
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %14 = icmp eq i64 %index.next, %n.vec
-  br i1 %14, label %middle.block, label %vector.body, !llvm.loop !36
-
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %6, %n.vec
-  br i1 %cmp.n, label %_ZNSt6vectorISt4pairIffESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i.preheader43
-
-.lr.ph.i.i.i.preheader43:                         ; preds = %.lr.ph.i.i.i.preheader, %middle.block
-  %.012.i.i.i.ph = phi ptr [ %i.u, %.lr.ph.i.i.i.preheader ], [ %9, %middle.block ]
-  %.0911.i.i.i.ph = phi ptr [ %i.c, %.lr.ph.i.i.i.preheader ], [ %10, %middle.block ]
-  br label %.lr.ph.i.i.i
-
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader43, %.lr.ph.i.i.i
-  %.012.i.i.i = phi ptr [ %i.z, %.lr.ph.i.i.i ], [ %.012.i.i.i.ph, %.lr.ph.i.i.i.preheader43 ] ; 2 uses
-  %.0911.i.i.i = phi ptr [ %i.y, %.lr.ph.i.i.i ], [ %.0911.i.i.i.ph, %.lr.ph.i.i.i.preheader43 ] ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !38)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !39)
-  %i.x = load i64, ptr %.0911.i.i.i, align 4, !alias.scope !39, !noalias !38
-  store i64 %i.x, ptr %.012.i.i.i, align 4, !alias.scope !38, !noalias !39
+  %i.x = load i64, ptr %.0911.i.i.i, align 4, !alias.scope !38, !noalias !37
+  store i64 %i.x, ptr %.012.i.i.i, align 4, !alias.scope !37, !noalias !38
   %i.y = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 8 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 8
   %.not.i.i.i = icmp eq ptr %i.y, %i.b
-  br i1 %.not.i.i.i, label %_ZNSt6vectorISt4pairIffESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i, !llvm.loop !37
+  br i1 %.not.i.i.i, label %_ZNSt6vectorISt4pairIffESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i, !llvm.loop !36
 
-_ZNSt6vectorISt4pairIffESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit: ; preds = %.lr.ph.i.i.i, %middle.block, %_ZNKSt6vectorISt4pairIffESaIS1_EE12_M_check_lenEmPKc.exit
+_ZNSt6vectorISt4pairIffESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit: ; preds = %.lr.ph.i.i.i, %_ZNKSt6vectorISt4pairIffESaIS1_EE12_M_check_lenEmPKc.exit
   %.not.i36 = icmp eq ptr %i.c, null
   br i1 %.not.i36, label %_ZNSt12_Vector_baseISt4pairIffESaIS1_EE13_M_deallocateEPS1_m.exit37, label %bb.e
 
@@ -415,10 +370,7 @@ attributes #19 = { builtin allocsize(0) }
 !33 = distinct !{!33, !"_ZSt19__relocate_object_aISt4pairIffES1_SaIS1_EEvPT_PT0_RT1_"}
 !34 = distinct !{!34, !33, !"_ZSt19__relocate_object_aISt4pairIffES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !35 = distinct !{!35, !33, !"_ZSt19__relocate_object_aISt4pairIffES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
-!36 = distinct !{!36, !24, !40, !41}
-!37 = distinct !{!37, !24, !40}
-!38 = !{!34}
-!39 = !{!35}
-!40 = !{!"llvm.loop.isvectorized", i32 1}
-!41 = !{!"llvm.loop.unroll.runtime.disable"}
+!36 = distinct !{!36, !24}
+!37 = !{!34}
+!38 = !{!35}
 end_hunk_0

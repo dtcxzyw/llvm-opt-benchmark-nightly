@@ -205,15 +205,14 @@ bb.bn:                                            ; preds = %cff_index_get_sid_s
   %.sink581 = phi ptr [ %i.jt, %cff_index_get_sid_string.exit433.thread ], [ %i.iz, %bb.bm ]
   %i.ju = getelementptr inbounds nuw i8, ptr %1, i64 48
   store ptr %.sink581, ptr %i.ju, align 8, !tbaa !337
-  %spec.select = select i1 %.not376.not, i32 2073, i32 2065 ; 2 uses
+  %spec.select = select i1 %.not376.not, i64 2073, i64 2065 ; 2 uses
   %i.jv = getelementptr inbounds nuw i8, ptr %i.as, i64 1664
   %i.jw = load i8, ptr %i.jv, align 8, !tbaa !132
   %.not407 = icmp eq i8 %i.jw, 0
-  %6 = or disjoint i32 %spec.select, 4
-  %.1331 = select i1 %.not407, i32 %spec.select, i32 %6
-  %7 = zext nneg i32 %.1331 to i64
+  %6 = or disjoint i64 %spec.select, 4
+  %.1331 = select i1 %.not407, i64 %spec.select, i64 %6
   %i.jx = load i64, ptr %i.bo, align 8, !tbaa !111
-  %i.jy = or i64 %i.jx, %7
+  %i.jy = or i64 %.1331, %i.jx
   store i64 %i.jy, ptr %i.bo, align 8, !tbaa !111
   %i.jz = getelementptr inbounds nuw i8, ptr %i.as, i64 1672
   %i.ka = load i64, ptr %i.jz, align 8, !tbaa !133
@@ -616,7 +615,7 @@ bb.ak:                                            ; preds = %bb.y
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj, %cff_fd_select_get.exit.i
-  %.1299.i = phi i8 [ 0, %bb.ak ], [ 1, %bb.aj ], [ 0, %cff_fd_select_get.exit.i ]
+  %.1299.i = phi i32 [ 0, %bb.ak ], [ 1, %bb.aj ], [ 0, %cff_fd_select_get.exit.i ]
   %.sroa.8.0.i = phi i64 [ %.sroa.8.0.copyload97.i, %bb.ak ], [ %.sroa.8.0.copyload.i, %bb.aj ], [ %.sroa.8.0.copyload.i, %cff_fd_select_get.exit.i ] ; 4 uses
   %.sroa.0.0.i = phi i64 [ %.sroa.0.0.copyload94.i, %bb.ak ], [ %.sroa.0.0.copyload.i, %bb.aj ], [ %.sroa.0.0.copyload.i, %cff_fd_select_get.exit.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #18
@@ -704,7 +703,7 @@ bb.as:                                            ; preds = %bb.ar
 
 bb.at:                                            ; preds = %bb.as, %bb.ar
   %.0302.i = phi i1 [ false, %bb.as ], [ %i.fo, %bb.ar ]
-  %.2300.i = phi i8 [ 1, %bb.as ], [ %.1299.i, %bb.ar ]
+  %.2300.i = phi i32 [ 1, %bb.as ], [ %.1299.i, %bb.ar ]
   %.0292.i = phi i32 [ %i.jx, %bb.as ], [ %i.js, %bb.ar ] ; 2 uses
   %i.jy = load ptr, ptr %i.iw, align 8, !tbaa !201
   %i.jz = getelementptr inbounds nuw i8, ptr %i.jy, i64 104
@@ -1023,7 +1022,7 @@ bb.bq:                                            ; preds = %bb.bp
 
 bb.br:                                            ; preds = %bb.bq, %bb.bp
   %i.pv = phi i64 [ %i.po, %bb.bp ], [ %i.pu, %bb.bq ]
-  %i.pw = icmp ne i8 %.2300.i, 0
+  %i.pw = icmp ne i32 %.2300.i, 0
   %or.cond16.i = or i1 %.not332.not.i, %i.pw
   br i1 %or.cond16.i, label %bb.bs, label %bb.bu
 

@@ -204,14 +204,14 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %bcmp.i348.fr = freeze i32 %i.nu
   %i.nv = icmp eq i32 %bcmp.i348.fr, 0            ; 2 uses
   %spec.select = zext i1 %i.nv to i8
-  %spec.select473 = zext i1 %i.nv to i32
+  %spec.select473 = zext i1 %i.nv to i64
   br label %.thread449
 
 .thread449:                                       ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit349, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347.thread441
   %i.nw = phi ptr [ %i.mn, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347.thread441 ], [ %i.mt, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347 ], [ %i.mn, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit349 ] ; 3 uses
   %i.nx = phi ptr [ %i.mo, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347.thread441 ], [ %i.mu, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347 ], [ %i.mo, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit349 ] ; 3 uses
   %.0187 = phi i8 [ 0, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347.thread441 ], [ 0, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347 ], [ %spec.select, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit349 ] ; 4 uses
-  %.0184 = phi i32 [ 0, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347.thread441 ], [ 0, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347 ], [ %spec.select473, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit349 ] ; 4 uses
+  %.0184 = phi i64 [ 0, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347.thread441 ], [ 0, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347 ], [ %spec.select473, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit349 ] ; 4 uses
   %i.ny = icmp ugt i64 %i.lt, 3
   br i1 %i.ny, label %bb.co, label %.thread453
 
@@ -238,8 +238,8 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.op = zext i1 %i.oo to i32
   %bcmp.i350.fr = freeze i32 %i.op
   %i.oq = icmp eq i32 %bcmp.i350.fr, 0            ; 2 uses
-  %29 = add nuw nsw i32 %.0184, 3
-  %spec.select465 = select i1 %i.oq, i32 %29, i32 %.0184
+  %29 = add nuw nsw i64 %.0184, 3
+  %spec.select465 = select i1 %i.oq, i64 %29, i64 %.0184
   br label %.thread453
 
 .thread453:                                       ; preds = %.thread449.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit351, %bb.co, %bb.cl, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347, %.thread449
@@ -248,11 +248,10 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %.0189 = phi i1 [ false, %.thread449 ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347 ], [ false, %bb.co ], [ false, %bb.cl ], [ %i.oq, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit351 ], [ false, %.thread449.thread ] ; 4 uses
   %.1188 = phi i8 [ %.0187, %.thread449 ], [ 0, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347 ], [ %.0187, %bb.co ], [ 0, %bb.cl ], [ %.0187, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit351 ], [ 0, %.thread449.thread ] ; 2 uses
   %.0186 = phi i1 [ false, %.thread449 ], [ true, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347 ], [ false, %bb.co ], [ false, %bb.cl ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit351 ], [ false, %.thread449.thread ]
-  %.1185 = phi i32 [ %.0184, %.thread449 ], [ 1, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347 ], [ %.0184, %bb.co ], [ 0, %bb.cl ], [ %spec.select465, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit351 ], [ 0, %.thread449.thread ]
+  %.1185 = phi i64 [ %.0184, %.thread449 ], [ 1, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit347 ], [ %.0184, %bb.co ], [ 0, %bb.cl ], [ %spec.select465, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit351 ], [ 0, %.thread449.thread ]
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #23
   %i.ot = getelementptr inbounds nuw i8, ptr %i.i, i64 32 ; 2 uses
-  %30 = zext nneg i32 %.1185 to i64
-  %i.ou = sub nsw i64 0, %30
+  %i.ou = sub nsw i64 0, %.1185
   %i.ov = getelementptr inbounds [32 x i8], ptr %i.k, i64 %i.ou ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !156)
   %i.ow = icmp eq ptr %i.ov, %i.ot

@@ -202,14 +202,12 @@ bb.ch:                                            ; preds = %bb.cg
 bb.ci:                                            ; preds = %bb.ch
   %i.li = zext nneg i16 %i.lf to i64
   %i.lj = load ptr, ptr %i.ko, align 8            ; 2 uses
-  %15 = add nuw nsw i64 %i.li, 4294967295
   %i.lk = load i32, ptr %i.lj, align 8
   %i.ll = sext i32 %i.lk to i64
   %i.lm = shl nsw i64 %i.ll, 3
   %i.ln = getelementptr i8, ptr %i.lj, i64 %i.lm
-  %16 = and i64 %15, 4294967295
-  %i.lo = getelementptr [100 x i8], ptr %i.ln, i64 %16
-  %i.lp = getelementptr i8, ptr %i.lo, i64 122
+  %i.lo = getelementptr [100 x i8], ptr %i.ln, i64 %i.li
+  %i.lp = getelementptr i8, ptr %i.lo, i64 22
   %i.lq = load i8, ptr %i.lp, align 2
   %.not496.us679.us = icmp eq i8 %i.lq, 0
   br i1 %.not496.us679.us, label %.critedge543.us681.us, label %.split668.us

@@ -202,10 +202,9 @@ switch.lookup:
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 28
   %i.g = load i8, ptr %i.f, align 4, !tbaa !17
   %i.h = sext i8 %i.g to i64
-  %1 = add nsw i64 %i.h, %i.e
-  %switch.tableidx = add nsw i64 %1, 4294967161
-  %2 = and i64 %switch.tableidx, 4294967295
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.php_math_round_mode_from_enum, i64 %2
+  %1 = getelementptr i8, ptr @switch.table.php_math_round_mode_from_enum, i64 %i.h
+  %2 = getelementptr i8, ptr %1, i64 %i.e
+  %switch.gep = getelementptr i8, ptr %2, i64 -135
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i32
   ret i32 %switch.ext

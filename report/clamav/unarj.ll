@@ -205,9 +205,8 @@ bb.l:                                             ; preds = %bb.j
   br i1 %.not88, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.al = add nuw nsw i64 %i.aj, 4294967266
-  %4 = and i64 %i.al, 4294967295
-  %i.am = add i64 %.pre, %4                       ; 2 uses
+  %i.al = add nsw i64 %i.aj, -30
+  %i.am = add i64 %i.al, %.pre                    ; 2 uses
   store i64 %i.am, ptr %i.b, align 8, !tbaa !16
   br label %bb.n
 
@@ -610,9 +609,8 @@ bb.r:                                             ; preds = %bb.p
   br i1 %.not101.i, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.ax = add nuw nsw i64 %i.av, 4294967266
-  %4 = and i64 %i.ax, 4294967295
-  %i.ay = add i64 %.pre.i, %4                     ; 2 uses
+  %i.ax = add nsw i64 %i.av, -30
+  %i.ay = add i64 %i.ax, %.pre.i                  ; 2 uses
   store i64 %i.ay, ptr %i.e, align 8, !tbaa !16
   br label %bb.t
 

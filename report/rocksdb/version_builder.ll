@@ -205,8 +205,8 @@ _ZNSt12_Vector_baseISt10shared_ptrIN7rocksdb16BlobFileMetaDataEESaIS3_EE11_M_all
   %i.aa = ptrtoint ptr %i.z to i64
   %i.ab = sub i64 %i.aa, %i.u
   %i.ac = shl nuw nsw i64 %i.n, 4
-  %i.ad = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ac) #29 ; 12 uses
-  %i.ae = load ptr, ptr %i.o, align 8, !tbaa !1057 ; 14 uses
+  %i.ad = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ac) #29 ; 11 uses
+  %i.ae = load ptr, ptr %i.o, align 8, !tbaa !1057 ; 13 uses
   %i.af = ptrtoaddr ptr %i.ae to i64              ; 2 uses
   %i.ag = load ptr, ptr %i.y, align 8, !tbaa !1056 ; 3 uses
   %i.ah = ptrtoaddr ptr %i.ag to i64              ; 2 uses
@@ -218,7 +218,7 @@ _ZNSt12_Vector_baseISt10shared_ptrIN7rocksdb16BlobFileMetaDataEESaIS3_EE11_M_all
   %i.aj = sub i64 %i.ai, %i.af                    ; 2 uses
   %i.ak = lshr i64 %i.aj, 4
   %i.al = add nuw nsw i64 %i.ak, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.aj, 272
+  %min.iters.check = icmp ult i64 %i.aj, 304
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader33, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
@@ -251,20 +251,14 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.au = shl i64 %index, 4                       ; 3 uses
-  %3 = or disjoint i64 %i.au, 32                  ; 2 uses
-  %next.gep = getelementptr i8, ptr %i.ad, i64 %i.au
-  %next.gep24 = getelementptr i8, ptr %i.ad, i64 %3
-  %next.gep25 = getelementptr i8, ptr %i.ae, i64 %i.au ; 2 uses
-  %next.gep26 = getelementptr i8, ptr %i.ae, i64 %3 ; 2 uses
+  %i.au = shl i64 %index, 4                       ; 2 uses
+  %next.gep25 = getelementptr i8, ptr %i.ad, i64 %i.au
+  %next.gep26 = getelementptr i8, ptr %i.ae, i64 %i.au ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1059)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1060)
-  %wide.vec = load <4 x ptr>, ptr %next.gep25, align 8, !tbaa !56, !alias.scope !1060, !noalias !1059
-  %wide.vec28 = load <4 x ptr>, ptr %next.gep26, align 8, !tbaa !56, !alias.scope !1060, !noalias !1059
-  store <4 x ptr> %wide.vec, ptr %next.gep, align 8, !tbaa !56, !alias.scope !1059, !noalias !1060
-  store <4 x ptr> %wide.vec28, ptr %next.gep24, align 8, !tbaa !56, !alias.scope !1059, !noalias !1060
-  store <4 x ptr> splat (ptr null), ptr %next.gep25, align 8, !tbaa !56, !alias.scope !1060, !noalias !1059
-  store <4 x ptr> splat (ptr null), ptr %next.gep26, align 8, !tbaa !56, !alias.scope !1060, !noalias !1059
+  %wide.vec = load <8 x ptr>, ptr %next.gep26, align 8, !tbaa !56, !alias.scope !1060, !noalias !1059
+  store <8 x ptr> %wide.vec, ptr %next.gep25, align 8, !tbaa !56, !alias.scope !1059, !noalias !1060
+  store <8 x ptr> splat (ptr null), ptr %next.gep26, align 8, !tbaa !56, !alias.scope !1060, !noalias !1059
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.av = icmp eq i64 %index.next, %n.vec
   br i1 %i.av, label %middle.block, label %vector.body, !llvm.loop !1054

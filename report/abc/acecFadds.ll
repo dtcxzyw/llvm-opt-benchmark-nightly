@@ -117,7 +117,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.0 = phi i32 [ 1, %bb.d ], [ 0, %bb.c ]        ; 2 uses
+  %.0 = phi i64 [ 1, %bb.d ], [ 0, %bb.c ]        ; 2 uses
   %i.ae = or disjoint i32 %i.aa, 1                ; 2 uses
   %i.af = or disjoint i32 %i.ab, 1                ; 2 uses
   %i.ag = tail call i32 @Gia_ManHashLookupInt(ptr noundef nonnull %0, i32 noundef %i.ae, i32 noundef %i.af) #31 ; 2 uses
@@ -127,11 +127,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 bb.f:                                             ; preds = %bb.e
   %i.ah = ashr i32 %i.ag, 1
   tail call fastcc void @Vec_IntPushTwo(ptr noundef nonnull %i.d, i32 noundef %i.x, i32 noundef %i.ah)
-  %2 = add nuw nsw i32 %.0, 1
+  %2 = add nuw nsw i64 %.0, 1
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %.1 = phi i32 [ %2, %bb.f ], [ %.0, %bb.e ]     ; 2 uses
+  %.1 = phi i64 [ %2, %bb.f ], [ %.0, %bb.e ]     ; 2 uses
   %i.ai = tail call i32 @Gia_ManHashLookupInt(ptr noundef nonnull %0, i32 noundef %i.aa, i32 noundef %i.af) #31 ; 2 uses
   %.not166 = icmp eq i32 %i.ai, 0
   br i1 %.not166, label %bb.i, label %bb.h
@@ -139,11 +139,11 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %bb.g
   %i.aj = ashr i32 %i.ai, 1
   tail call fastcc void @Vec_IntPushTwo(ptr noundef nonnull %i.d, i32 noundef %i.x, i32 noundef %i.aj)
-  %3 = add nuw nsw i32 %.1, 1
+  %3 = add nuw nsw i64 %.1, 1
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %.2 = phi i32 [ %3, %bb.h ], [ %.1, %bb.g ]     ; 2 uses
+  %.2 = phi i64 [ %3, %bb.h ], [ %.1, %bb.g ]     ; 2 uses
   %i.ak = tail call i32 @Gia_ManHashLookupInt(ptr noundef nonnull %0, i32 noundef %i.ae, i32 noundef %i.ab) #31 ; 2 uses
   %.not167 = icmp eq i32 %i.ak, 0
   br i1 %.not167, label %bb.k, label %bb.j
@@ -151,13 +151,12 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 bb.j:                                             ; preds = %bb.i
   %i.al = ashr i32 %i.ak, 1
   tail call fastcc void @Vec_IntPushTwo(ptr noundef nonnull %i.d, i32 noundef %i.x, i32 noundef %i.al)
-  %4 = add nuw nsw i32 %.2, 1
+  %4 = add nuw nsw i64 %.2, 1
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %.3 = phi i32 [ %4, %bb.j ], [ %.2, %bb.i ]
-  %5 = zext nneg i32 %.3 to i64
-  %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %5 ; 2 uses
+  %.3 = phi i64 [ %4, %bb.j ], [ %.2, %bb.i ]
+  %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.3 ; 2 uses
   %i.an = load i32, ptr %i.am, align 4, !tbaa !43
   %i.ao = add nsw i32 %i.an, 1
   store i32 %i.ao, ptr %i.am, align 4, !tbaa !43
@@ -233,7 +232,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r, %bb.q
   %.val181 = phi ptr [ %.val181.pre, %bb.r ], [ %.val182, %bb.q ]
   %.val179 = phi i64 [ %.val179.pre, %bb.r ], [ %.val175, %bb.q ] ; 2 uses
-  %.4 = phi i32 [ 1, %bb.r ], [ 0, %bb.q ]        ; 2 uses
+  %.4 = phi i64 [ 1, %bb.r ], [ 0, %bb.q ]        ; 2 uses
   %i.bl = lshr i64 %.val179, 32
   %i.bm = trunc nuw i64 %i.bl to i32
   %i.bn = and i32 %i.bm, 536870911
@@ -246,13 +245,13 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 bb.t:                                             ; preds = %bb.s
   call fastcc void @Vec_IntPushTwo(ptr noundef nonnull %i.d, i32 noundef %i.bf, i32 noundef %i.bo)
-  %6 = add nuw nsw i32 %.4, 1
+  %5 = add nuw nsw i64 %.4, 1
   %.pre218 = load i64, ptr %i.ay, align 4
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
   %i.bt = phi i64 [ %.pre218, %bb.t ], [ %.val179, %bb.s ]
-  %.5 = phi i32 [ %6, %bb.t ], [ %.4, %bb.s ]     ; 4 uses
+  %.5 = phi i64 [ %5, %bb.t ], [ %.4, %bb.s ]     ; 4 uses
   %i.bu = load ptr, ptr %i.a, align 8, !tbaa !71
   %.val184 = load ptr, ptr %i.au, align 8, !tbaa !42
   %i.bv = ptrtoint ptr %i.bu to i64
@@ -288,11 +287,11 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %i.cr = ashr i32 %i.cq, 1
   call fastcc void @Vec_IntPushTwo(ptr noundef nonnull %i.d, i32 noundef %i.bf, i32 noundef %i.cr)
-  %7 = add nuw nsw i32 %.5, 1
+  %6 = add nuw nsw i64 %.5, 1
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v
-  %.6 = phi i32 [ %7, %bb.w ], [ %.5, %bb.v ]     ; 2 uses
+  %.6 = phi i64 [ %6, %bb.w ], [ %.5, %bb.v ]     ; 2 uses
   %i.cs = or disjoint i32 %i.co, 1
   %i.ct = or disjoint i32 %i.cp, 1
   %i.cu = call i32 @Gia_ManHashLookupInt(ptr noundef nonnull %0, i32 noundef %i.cs, i32 noundef %i.ct) #31 ; 2 uses
@@ -308,11 +307,11 @@ bb.y:                                             ; preds = %bb.u
 bb.z:                                             ; preds = %bb.y
   %i.cx = ashr i32 %i.cw, 1
   call fastcc void @Vec_IntPushTwo(ptr noundef nonnull %i.d, i32 noundef %i.bf, i32 noundef %i.cx)
-  %8 = add nuw nsw i32 %.5, 1
+  %7 = add nuw nsw i64 %.5, 1
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
-  %.7 = phi i32 [ %8, %bb.z ], [ %.5, %bb.y ]     ; 2 uses
+  %.7 = phi i64 [ %7, %bb.z ], [ %.5, %bb.y ]     ; 2 uses
   %i.cy = or disjoint i32 %i.co, 1
   %i.cz = call i32 @Gia_ManHashLookupInt(ptr noundef nonnull %0, i32 noundef %i.cy, i32 noundef %i.cp) #31 ; 2 uses
   %.not157 = icmp eq i32 %i.cz, 0
@@ -320,16 +319,15 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
 
 .sink.split:                                      ; preds = %bb.aa, %bb.x
   %.sink232 = phi i32 [ %i.cu, %bb.x ], [ %i.cz, %bb.aa ]
-  %.7.sink = phi i32 [ %.6, %bb.x ], [ %.7, %bb.aa ]
+  %.7.sink = phi i64 [ %.6, %bb.x ], [ %.7, %bb.aa ]
   %i.da = ashr i32 %.sink232, 1
   call fastcc void @Vec_IntPushTwo(ptr noundef nonnull %i.d, i32 noundef %i.bf, i32 noundef %i.da)
-  %9 = add nuw nsw i32 %.7.sink, 1
+  %8 = add nuw nsw i64 %.7.sink, 1
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.sink.split, %bb.aa, %bb.x
-  %.8 = phi i32 [ %.7, %bb.aa ], [ %.6, %bb.x ], [ %9, %.sink.split ]
-  %10 = zext nneg i32 %.8 to i64
-  %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %10 ; 2 uses
+  %.8 = phi i64 [ %.7, %bb.aa ], [ %.6, %bb.x ], [ %8, %.sink.split ]
+  %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.8 ; 2 uses
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !43
   %i.dd = add nsw i32 %i.dc, 1
   store i32 %i.dd, ptr %i.db, align 4, !tbaa !43

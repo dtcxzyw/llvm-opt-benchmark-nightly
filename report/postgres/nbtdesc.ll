@@ -200,8 +200,7 @@ bb.a:
   %i.f = zext i16 %3 to i64
   %i.g = shl nuw nsw i64 %i.f, 1
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.g
-  %i.i = add nuw nsw i64 %i.e, 4294967295
-  %4 = and i64 %i.i, 4294967295
+  %i.i = add nsw i64 %i.e, -1
   %wide.trip.count = zext i16 %3 to i64
   br label %bb.b
 
@@ -228,8 +227,8 @@ bb.b:                                             ; preds = %.lr.ph41, %bb.g
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.b
   tail call void @appendStringInfoString(ptr noundef %0, ptr noundef nonnull @.str.31) #3
-  %5 = icmp samesign ult i64 %indvars.iv45, %4
-  br i1 %5, label %bb.f, label %bb.g
+  %4 = icmp slt i64 %indvars.iv45, %i.i
+  br i1 %4, label %bb.f, label %bb.g
 
 bb.c:                                             ; preds = %.lr.ph, %bb.e
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 3 uses

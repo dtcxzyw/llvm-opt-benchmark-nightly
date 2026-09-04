@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN3gmxL15sc_iClusterSizeENS_15NbnxmKernelTypeE.exit
 
 _ZN3gmxL15sc_iClusterSizeENS_15NbnxmKernelTypeE.exit: ; preds = %bb.a, %bb.a, %bb.a, %bb.b, %bb.c
-  %.0.i = phi i32 [ 8, %bb.c ], [ 0, %bb.b ], [ 4, %bb.a ], [ 4, %bb.a ], [ 4, %bb.a ] ; 5 uses
+  %.0.i = phi i64 [ 8, %bb.c ], [ 0, %bb.b ], [ 4, %bb.a ], [ 4, %bb.a ], [ 4, %bb.a ] ; 5 uses
   switch i32 %0, label %_ZN3gmxL15sc_jClusterSizeENS_15NbnxmKernelTypeE.exit [
     i32 7, label %bb.g
     i32 2, label %bb.d
@@ -227,10 +227,9 @@ bb.g:                                             ; preds = %_ZN3gmxL15sc_iClust
   br label %_ZN3gmxL15sc_jClusterSizeENS_15NbnxmKernelTypeE.exit
 
 _ZN3gmxL15sc_jClusterSizeENS_15NbnxmKernelTypeE.exit: ; preds = %bb.a, %_ZN3gmxL15sc_iClusterSizeENS_15NbnxmKernelTypeE.exit, %bb.d, %bb.e, %bb.f, %bb.g
-  %.0.i6 = phi i32 [ %.0.i, %_ZN3gmxL15sc_iClusterSizeENS_15NbnxmKernelTypeE.exit ], [ %.0.i, %bb.g ], [ %.0.i, %bb.d ], [ %.0.i, %bb.e ], [ %.0.i, %bb.f ], [ 1, %bb.a ]
+  %.0.i6 = phi i64 [ %.0.i, %_ZN3gmxL15sc_iClusterSizeENS_15NbnxmKernelTypeE.exit ], [ %.0.i, %bb.g ], [ %.0.i, %bb.d ], [ %.0.i, %bb.e ], [ %.0.i, %bb.f ], [ 1, %bb.a ]
   %.0.i3 = phi i64 [ 17179869184, %_ZN3gmxL15sc_iClusterSizeENS_15NbnxmKernelTypeE.exit ], [ 0, %bb.g ], [ 68719476736, %bb.d ], [ 34359738368, %bb.e ], [ 4294967296, %bb.f ], [ 4294967296, %bb.a ]
-  %1 = zext nneg i32 %.0.i6 to i64
-  %i.a = or disjoint i64 %.0.i3, %1
+  %i.a = or disjoint i64 %.0.i3, %.0.i6
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.a, %_ZN3gmxL15sc_jClusterSizeENS_15NbnxmKernelTypeE.exit

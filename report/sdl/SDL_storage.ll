@@ -119,8 +119,7 @@ bb.h:                                             ; preds = %bb.b, %bb.a
 .critedge.thread60:                               ; preds = %bb.h, %.critedge
   %.365 = phi i64 [ %.033.lcssa, %.critedge ], [ 0, %bb.h ]
   %.33764 = phi ptr [ %.034.lcssa, %.critedge ], [ %i.u, %bb.h ]
-  %2 = and i64 %.365, 4294967295
-  %i.v = getelementptr inbounds nuw [8 x i8], ptr @titlebootstrap, i64 %2
+  %i.v = getelementptr inbounds [8 x i8], ptr @titlebootstrap, i64 %.365
   %i.w = load ptr, ptr %i.v, align 8
   %i.x = load ptr, ptr %i.w, align 8
   tail call void @SDL_DebugLogBackend(ptr noundef nonnull @.str.1, ptr noundef %i.x) #5
@@ -260,8 +259,7 @@ bb.k:                                             ; preds = %bb.j
 .critedge.thread62:                               ; preds = %bb.j, %bb.k, %.critedge
   %.367 = phi i64 [ %.035.lcssa, %.critedge ], [ 0, %bb.j ], [ 1, %bb.k ]
   %.33966 = phi ptr [ %.036.lcssa, %.critedge ], [ %i.ab, %bb.j ], [ %i.ad, %bb.k ]
-  %3 = and i64 %.367, 4294967295
-  %i.ae = getelementptr inbounds nuw [8 x i8], ptr @userbootstrap, i64 %3
+  %i.ae = getelementptr inbounds [8 x i8], ptr @userbootstrap, i64 %.367
   %i.af = load ptr, ptr %i.ae, align 8
   %i.ag = load ptr, ptr %i.af, align 8
   tail call void @SDL_DebugLogBackend(ptr noundef nonnull @.str.5, ptr noundef %i.ag) #5

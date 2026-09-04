@@ -204,10 +204,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br label %.thread
 
 bb.i:                                             ; preds = %bb.e
-  %narrow = add nuw nsw i32 %i.n, 65535
-  %4 = and i32 %narrow, 65535
-  %5 = zext nneg i32 %4 to i64
-  %6 = getelementptr inbounds nuw [4 x i8], ptr @reply_handle.error_codes, i64 %5
+  %4 = zext nneg i32 %i.n to i64
+  %5 = getelementptr [4 x i8], ptr @reply_handle.error_codes, i64 %4
+  %6 = getelementptr i8, ptr %5, i64 -4
   %i.s = load i32, ptr %6, align 4                ; 6 uses
   switch i32 %i.s, label %.thread [
     i32 4, label %bb.j

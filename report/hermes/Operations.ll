@@ -204,10 +204,10 @@ bb.i:                                             ; preds = %_ZNK6hermes2vm10Str
   br i1 %or.cond.i, label %_ZN6hermes12toArrayIndexIPKcEENS_8OptValueIjEET_S5_.exit, label %bb.j
 
 bb.j:                                             ; preds = %.preheader.i
-  %2 = mul nuw nsw i64 %.0.i, 10
-  %3 = and i8 %i.w, 15
-  %4 = zext nneg i8 %3 to i64
-  %i.y = add nuw nsw i64 %2, %4
+  %2 = zext nneg i8 %i.w to i64
+  %3 = mul nuw nsw i64 %.0.i, 10
+  %4 = add nsw i64 %3, -48
+  %i.y = add nsw i64 %4, %2
   %.fr.i = freeze i64 %i.y                        ; 4 uses
   %i.z = icmp samesign ult i64 %.fr.i, 4294967296
   br i1 %i.z, label %bb.k, label %_ZN6hermes12toArrayIndexIPKcEENS_8OptValueIjEET_S5_.exit
@@ -294,10 +294,10 @@ bb.t:                                             ; preds = %_ZNK6hermes2vm10Str
   br i1 %or.cond.i14, label %_ZN6hermes12toArrayIndexIPKcEENS_8OptValueIjEET_S5_.exit, label %bb.u
 
 bb.u:                                             ; preds = %.preheader.i11
-  %5 = mul nuw nsw i64 %.0.i12, 10
-  %6 = and i16 %i.aw, 15
-  %7 = zext nneg i16 %6 to i64
-  %i.ay = add nuw nsw i64 %5, %7
+  %5 = zext nneg i16 %i.aw to i64
+  %6 = mul nuw nsw i64 %.0.i12, 10
+  %7 = add nsw i64 %6, -48
+  %i.ay = add nsw i64 %7, %5
   %.fr.i15 = freeze i64 %i.ay                     ; 4 uses
   %i.az = icmp samesign ult i64 %.fr.i15, 4294967296
   br i1 %i.az, label %bb.v, label %_ZN6hermes12toArrayIndexIPKcEENS_8OptValueIjEET_S5_.exit
@@ -700,36 +700,31 @@ _ZNK6hermes2vm10StringView14const_iteratordeEv.exit.jt1: ; preds = %bb.ao, %bb.a
 bb.au:                                            ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit
   %.mask = and i16 %i.df, 255
   %i.du = zext nneg i16 %.mask to i64
-  %i.dv = add nuw nsw i64 %i.du, 4294967248
-  %3 = and i64 %i.dv, 4294967295
+  %i.dv = add nsw i64 %i.du, -48
   br label %_ZN6hermes2vm10StringView14const_iteratorppEv.exit
 
 bb.av:                                            ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit.jt3
   %.mask.jt3 = and i16 %i.di, 255
   %i.dw = zext nneg i16 %.mask.jt3 to i64
-  %i.dx = add nuw nsw i64 %i.dw, 4294967248
-  %4 = and i64 %i.dx, 4294967295
+  %i.dx = add nsw i64 %i.dw, -48
   br label %_ZN6hermes2vm10StringView14const_iteratorppEv.exit.jt3
 
 bb.aw:                                            ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit.jt2
   %.mask.jt2 = and i16 %i.dl, 255
   %i.dy = zext nneg i16 %.mask.jt2 to i64
-  %i.dz = add nuw nsw i64 %i.dy, 4294967248
-  %5 = and i64 %i.dz, 4294967295
+  %i.dz = add nsw i64 %i.dy, -48
   br label %_ZN6hermes2vm10StringView14const_iteratorppEv.exit.jt2
 
 bb.ax:                                            ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit.jt0
   %.mask.jt0 = and i16 %i.do, 255
   %i.ea = zext nneg i16 %.mask.jt0 to i64
-  %i.eb = add nuw nsw i64 %i.ea, 4294967248
-  %6 = and i64 %i.eb, 4294967295
+  %i.eb = add nsw i64 %i.ea, -48
   br label %_ZN6hermes2vm10StringView14const_iteratorppEv.exit.jt0
 
 bb.ay:                                            ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit.jt1
   %.mask.jt1 = and i16 %i.dr, 255
   %i.ec = zext nneg i16 %.mask.jt1 to i64
-  %i.ed = add nuw nsw i64 %i.ec, 4294967248
-  %7 = and i64 %i.ed, 4294967295
+  %i.ed = add nsw i64 %i.ec, -48
   br label %_ZN6hermes2vm10StringView14const_iteratorppEv.exit.jt1
 
 bb.az:                                            ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit
@@ -763,7 +758,7 @@ bb.bd:                                            ; preds = %_ZNK6hermes2vm10Str
   br label %_ZN6hermes2vm10StringView14const_iteratorppEv.exit.jt1
 
 _ZN6hermes2vm10StringView14const_iteratorppEv.exit: ; preds = %bb.az, %bb.au
-  %.141 = phi i64 [ %3, %bb.au ], [ %i.eg, %bb.az ] ; 3 uses
+  %.141 = phi i64 [ %i.dv, %bb.au ], [ %i.eg, %bb.az ] ; 3 uses
   %i.et = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i87, i64 1
   %.sroa.7.2.idx = select i1 %.not.i66, i64 2, i64 0
   %.sroa.7.2 = getelementptr inbounds nuw i8, ptr %.sroa.3.0.i85, i64 %.sroa.7.2.idx ; 2 uses
@@ -781,7 +776,7 @@ _ZN6hermes2vm10StringView14const_iteratorppEv.exit.jt4: ; preds = %_ZNK6hermes2v
   br label %bb.be
 
 _ZN6hermes2vm10StringView14const_iteratorppEv.exit.jt3: ; preds = %bb.ba, %bb.av
-  %.141.jt3 = phi i64 [ %4, %bb.av ], [ %i.ej, %bb.ba ]
+  %.141.jt3 = phi i64 [ %i.dx, %bb.av ], [ %i.ej, %bb.ba ]
   %i.ex = getelementptr inbounds nuw i8, ptr %.sroa.069.1139, i64 1
   %.sroa.7.2.idx.jt3 = select i1 %.not.i66.jt3, i64 2, i64 0
   %.sroa.7.2.jt3 = getelementptr inbounds nuw i8, ptr %.sroa.7.1131, i64 %.sroa.7.2.idx.jt3
@@ -789,7 +784,7 @@ _ZN6hermes2vm10StringView14const_iteratorppEv.exit.jt3: ; preds = %bb.ba, %bb.av
   br label %.split174
 
 _ZN6hermes2vm10StringView14const_iteratorppEv.exit.jt2: ; preds = %bb.bb, %bb.aw
-  %.141.jt2 = phi i64 [ %5, %bb.aw ], [ %i.em, %bb.bb ]
+  %.141.jt2 = phi i64 [ %i.dz, %bb.aw ], [ %i.em, %bb.bb ]
   %i.ey = getelementptr inbounds nuw i8, ptr %.sroa.069.1.jt1, i64 1
   %.sroa.7.2.idx.jt2 = select i1 %.not.i66.jt2, i64 2, i64 0
   %.sroa.7.2.jt2 = getelementptr inbounds nuw i8, ptr %.sroa.7.1.jt1, i64 %.sroa.7.2.idx.jt2
@@ -797,7 +792,7 @@ _ZN6hermes2vm10StringView14const_iteratorppEv.exit.jt2: ; preds = %bb.bb, %bb.aw
   br label %bb.bf
 
 _ZN6hermes2vm10StringView14const_iteratorppEv.exit.jt0: ; preds = %bb.bc, %bb.ax
-  %.141.jt0 = phi i64 [ %6, %bb.ax ], [ %i.ep, %bb.bc ]
+  %.141.jt0 = phi i64 [ %i.eb, %bb.ax ], [ %i.ep, %bb.bc ]
   %i.ez = getelementptr inbounds nuw i8, ptr %.sroa.069.1134247, i64 1
   %.sroa.7.2.idx.jt0 = select i1 %.not.i66.jt0, i64 2, i64 0
   %.sroa.7.2.jt0 = getelementptr inbounds nuw i8, ptr %.sroa.7.1126248, i64 %.sroa.7.2.idx.jt0
@@ -805,7 +800,7 @@ _ZN6hermes2vm10StringView14const_iteratorppEv.exit.jt0: ; preds = %bb.bc, %bb.ax
   br label %bb.bg
 
 _ZN6hermes2vm10StringView14const_iteratorppEv.exit.jt1: ; preds = %bb.bd, %bb.ay
-  %.141.jt1 = phi i64 [ %7, %bb.ay ], [ %i.es, %bb.bd ]
+  %.141.jt1 = phi i64 [ %i.ed, %bb.ay ], [ %i.es, %bb.bd ]
   %i.fa = getelementptr inbounds nuw i8, ptr %.sroa.069.1140, i64 1
   %.sroa.7.2.idx.jt1 = select i1 %.not.i66.jt1, i64 2, i64 0
   %.sroa.7.2.jt1 = getelementptr inbounds nuw i8, ptr %.sroa.7.1132, i64 %.sroa.7.2.idx.jt1

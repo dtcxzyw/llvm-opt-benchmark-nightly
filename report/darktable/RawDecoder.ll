@@ -205,7 +205,7 @@ _ZNK8rawspeed10Array2DRefIiE15getAsArray1DRefEv.exit: ; preds = %bb.s, %bb.t
 iter.check:                                       ; preds = %_ZNK8rawspeed10Array2DRefIiE15getAsArray1DRefEv.exit
   %i.dr = load ptr, ptr %i.cq, align 8, !tbaa !2588 ; 4 uses
   %wide.trip.count = zext nneg i32 %i.cy to i64   ; 7 uses
-  %min.iters.check = icmp ult i32 %i.cy, 4
+  %min.iters.check = icmp ult i32 %i.cy, 8
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -220,7 +220,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check252, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.dv = and i64 %wide.trip.count, 28
+  %i.dv = and i64 %wide.trip.count, 24
   %n.vec = and i64 %wide.trip.count, 2147483616   ; 4 uses
   br label %vector.body
 
@@ -256,16 +256,16 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec256 = and i64 %wide.trip.count, 2147483644 ; 3 uses
+  %n.vec256 = and i64 %wide.trip.count, 2147483640 ; 3 uses
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index257 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next260, %vec.epilog.vector.body ] ; 3 uses
   %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.dr, i64 %index257
-  %wide.load259 = load <4 x i32>, ptr %i.ef, align 4, !tbaa !114
+  %wide.load259 = load <8 x i32>, ptr %i.ef, align 4, !tbaa !114
   %i.eg = getelementptr inbounds nuw [4 x i8], ptr %i.dh, i64 %index257
-  store <4 x i32> %wide.load259, ptr %i.eg, align 4, !tbaa !114
-  %index.next260 = add nuw i64 %index257, 4       ; 2 uses
+  store <8 x i32> %wide.load259, ptr %i.eg, align 4, !tbaa !114
+  %index.next260 = add nuw i64 %index257, 8       ; 2 uses
   %i.eh = icmp eq i64 %index.next260, %n.vec256
   br i1 %i.eh, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !2560
 
@@ -274,9 +274,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n262, label %.thread, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv212.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec256, %vec.epilog.middle.block ] ; 3 uses
-  %12 = sub nsw i64 %wide.trip.count, %indvars.iv212.ph
-  %xtraiter = and i64 %12, 7                      ; 2 uses
+  %indvars.iv212.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec256, %vec.epilog.middle.block ] ; 2 uses
+  %xtraiter = and i64 %wide.trip.count, 7         ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -679,7 +678,7 @@ begin_hunk_1_@llvm.umax.i64
 !2588 = !{!2577, !154, i64 0}
 !2589 = !{!"llvm.loop.isvectorized", i32 1}
 !2590 = !{!"llvm.loop.unroll.runtime.disable"}
-!2591 = !{!"branch_weights", i32 4, i32 28}
+!2591 = !{!"branch_weights", i32 8, i32 24}
 !2592 = !{!"llvm.loop.unroll.disable"}
 !2593 = !{!191, !95, i64 592}
 !2594 = !{!2564}

@@ -202,9 +202,8 @@ bb.a:
   %.lobit.i = ashr i64 %0, 63
   %i.a = xor i64 %.lobit.i, %0
   %i.b = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.a, i1 false)
-  %i.c = add nuw nsw i64 %i.b, 4294967295
-  %1 = and i64 %i.c, 4294967295
-  ret i64 %1
+  %i.c = add nsw i64 %i.b, -1
+  ret i64 %i.c
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable

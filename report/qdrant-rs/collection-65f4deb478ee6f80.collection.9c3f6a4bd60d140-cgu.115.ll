@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %_RINvYINtNtNtCs1Faf
   %i.br = or disjoint i64 %i.bq, 4503599627370496 ; 3 uses
   %i.bs = lshr i64 %i.bp, 52                      ; 4 uses
   %i.bt = trunc nuw nsw i64 %i.bs to i16
-  %i.bu = add nuw nsw i64 %i.bs, 64513
+  %i.bu = add nsw i64 %i.bs, -1023
   %i.bv = icmp samesign ult i64 %i.bp, 4467570830351532032
   br i1 %i.bv, label %_RNvMNtNtCsPYQCUnoTxQ_10collection6common14eta_calculatorNtB2_13EtaCalculator12estimate_raw.exit, label %bb.d
 
@@ -232,10 +232,8 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.e
   %i.ci = sub nsw i64 1075, %i.bs
-  %2 = and i64 %i.ci, 65535
-  %i.cj = lshr i64 %i.br, %2
-  %3 = and i64 %i.bu, 65535
-  %i.ck = shl i64 %i.bp, %3
+  %i.cj = lshr i64 %i.br, %i.ci
+  %i.ck = shl i64 %i.bp, %i.bu
   %i.cl = and i64 %i.ck, 4503599627370495
   %i.cm = zext nneg i64 %i.cl to i128
   %i.cn = mul nuw nsw i128 %i.cm, 1000000000      ; 3 uses
@@ -246,9 +244,8 @@ bb.h:                                             ; preds = %bb.e
   br i1 %i.cr, label %bb.k, label %bb.j
 
 bb.i:                                             ; preds = %bb.g
-  %i.cs = add nuw nsw i64 %i.bs, 64461
-  %4 = and i64 %i.cs, 65535
-  %i.ct = shl nuw i64 %i.br, %4
+  %i.cs = add nsw i64 %i.bs, -1075
+  %i.ct = shl nuw i64 %i.br, %i.cs
   br label %_RNvMNtNtCsPYQCUnoTxQ_10collection6common14eta_calculatorNtB2_13EtaCalculator12estimate_raw.exit
 
 bb.j:                                             ; preds = %bb.h

@@ -204,9 +204,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond5, label %bb.c, label %bb.bk
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.sink = phi i64 [ 4294967248, %bb.a ], [ 4294967209, %bb.b ]
-  %i.e = add nsw i64 %.sink, %i.b
-  %.2.ph = and i64 %i.e, 4294967295               ; 3 uses
+  %.sink = phi i64 [ -48, %bb.a ], [ -87, %bb.b ]
+  %i.e = add nsw i64 %.sink, %i.b                 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.g = load i8, ptr %i.f, align 1, !tbaa !18    ; 3 uses
   %i.h = sext i8 %i.g to i32                      ; 2 uses
@@ -220,14 +219,14 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond5.1, label %bb.e, label %bb.bk
 
 bb.e:                                             ; preds = %bb.d
-  %i.k = shl nuw nsw i64 %.2.ph, 4
+  %i.k = shl nuw nsw i64 %i.e, 4
   %i.l = add nsw i32 %i.h, -87
   %i.m = zext nneg i32 %i.l to i64
   %i.n = add nuw nsw i64 %i.k, %i.m
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.c
-  %i.o = shl nuw nsw i64 %.2.ph, 4
+  %i.o = shl nuw nsw i64 %i.e, 4
   %i.p = add nsw i32 %i.h, -48
   %i.q = zext nneg i32 %i.p to i64
   %i.r = or disjoint i64 %i.o, %i.q
@@ -626,7 +625,7 @@ bb.bj:                                            ; preds = %bb.bg
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bi, %bb.bj, %bb.bh, %bb.bd, %bb.az, %bb.av, %bb.ar, %bb.an, %bb.aj, %bb.af, %bb.ab, %bb.x, %bb.t, %bb.p, %bb.l, %bb.h, %bb.d, %bb.b
-  %.023.lcssa = phi i64 [ 0, %bb.b ], [ %.2.ph.7, %bb.af ], [ %.2.ph, %bb.d ], [ %.2.ph.14, %bb.bh ], [ %.2.ph.1, %bb.h ], [ %.2.ph.9, %bb.an ], [ %.2.ph.2, %bb.l ], [ %.2.ph.13, %bb.bd ], [ %.2.ph.3, %bb.p ], [ %.2.ph.8, %bb.aj ], [ %.2.ph.4, %bb.t ], [ %.2.ph.12, %bb.az ], [ %.2.ph.5, %bb.x ], [ %.2.ph.10, %bb.ar ], [ %.2.ph.6, %bb.ab ], [ %.2.ph.11, %bb.av ], [ %i.gn, %bb.bi ], [ %i.gr, %bb.bj ]
+  %.023.lcssa = phi i64 [ 0, %bb.b ], [ %.2.ph.7, %bb.af ], [ %i.e, %bb.d ], [ %.2.ph.14, %bb.bh ], [ %.2.ph.1, %bb.h ], [ %.2.ph.9, %bb.an ], [ %.2.ph.2, %bb.l ], [ %.2.ph.13, %bb.bd ], [ %.2.ph.3, %bb.p ], [ %.2.ph.8, %bb.aj ], [ %.2.ph.4, %bb.t ], [ %.2.ph.12, %bb.az ], [ %.2.ph.5, %bb.x ], [ %.2.ph.10, %bb.ar ], [ %.2.ph.6, %bb.ab ], [ %.2.ph.11, %bb.av ], [ %i.gn, %bb.bi ], [ %i.gr, %bb.bj ]
   %.022.lcssa = phi i64 [ 0, %bb.b ], [ 8, %bb.af ], [ 1, %bb.d ], [ 15, %bb.bh ], [ 2, %bb.h ], [ 10, %bb.an ], [ 3, %bb.l ], [ 14, %bb.bd ], [ 4, %bb.p ], [ 9, %bb.aj ], [ 5, %bb.t ], [ 13, %bb.az ], [ 6, %bb.x ], [ 11, %bb.ar ], [ 7, %bb.ab ], [ 12, %bb.av ], [ 16, %bb.bi ], [ 16, %bb.bj ]
   %.not = icmp eq ptr %1, null
   br i1 %.not, label %bb.bm, label %bb.bl

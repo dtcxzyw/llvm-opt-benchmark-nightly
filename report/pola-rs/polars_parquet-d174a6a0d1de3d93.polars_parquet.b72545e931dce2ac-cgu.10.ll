@@ -205,10 +205,9 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSm12split_at_mutCsfISxE4fmY1Y_14polars_parquet.e
 bb.o:                                             ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSm12split_at_mutCsfISxE4fmY1Y_14polars_parquet.exit115
   %i.bg = call i16 @llvm.umax.i16(i16 %i.at, i16 16), !dbg !40428
   %i.bh = zext i16 %i.bg to i64, !dbg !40428
-  %.sroa.0.0.i = add nuw nsw i64 %i.bh, 4294967280, !dbg !40428
-  %12 = and i64 %.sroa.0.0.i, 4294967295, !dbg !40351 ; 4 uses
+  %.sroa.0.0.i = add nsw i64 %i.bh, -16, !dbg !40428 ; 4 uses
   %i.bi = zext i16 %i.at to i64, !dbg !40429      ; 2 uses
-  %.old1188 = icmp samesign ult i64 %12, %i.bi, !dbg !40430
+  %.old1188 = icmp samesign ult i64 %.sroa.0.0.i, %i.bi, !dbg !40430
   br i1 %.old1188, label %.preheader.lr.ph, label %.loopexit.split, !dbg !40430
 
 .preheader.lr.ph:                                 ; preds = %bb.o
@@ -258,7 +257,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q, %.preheader.split.split.us
   %i.cd = icmp ule i64 %i.bv, %9, !dbg !40442
-  %i.ce = icmp ugt i64 %i.bq, %12
+  %i.ce = icmp ugt i64 %i.bq, %.sroa.0.0.i
   %or.cond2.us = and i1 %i.ce, %i.cd, !dbg !40442
   br i1 %or.cond2.us, label %.preheader.split.split.us, label %.loopexit.split, !dbg !40442
 
@@ -305,7 +304,7 @@ bb.v:                                             ; preds = %bb.x, %bb.w, %_RNvM
   %.sroa.017.2 = phi i64 [ %.sroa.017.1190, %_RNvMNtCscgRAwXFJnXP_4core5sliceSh8split_atCsfISxE4fmY1Y_14polars_parquet.exit120 ], [ %.sroa.057.0, %bb.x ], [ %.sroa.017.1190, %bb.w ], !dbg !40450
   %.sroa.012.2 = phi i64 [ %.sroa.012.1191, %_RNvMNtCscgRAwXFJnXP_4core5sliceSh8split_atCsfISxE4fmY1Y_14polars_parquet.exit120 ], [ %i.da, %bb.x ], [ %.sroa.012.1191, %bb.w ], !dbg !40451
   %.sroa.010.3 = phi i1 [ %.sroa.010.2192, %_RNvMNtCscgRAwXFJnXP_4core5sliceSh8split_atCsfISxE4fmY1Y_14polars_parquet.exit120 ], [ true, %bb.x ], [ %.sroa.010.2192, %bb.w ], !dbg !40452 ; 2 uses
-  %.old1 = icmp ugt i64 %i.bq, %12, !dbg !40430
+  %.old1 = icmp ugt i64 %i.bq, %.sroa.0.0.i, !dbg !40430
   br i1 %.old1, label %.preheader, label %.loopexit.split, !dbg !40430
 
 bb.w:                                             ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSh8split_atCsfISxE4fmY1Y_14polars_parquet.exit120
@@ -333,7 +332,7 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %.preheader.split.split
   %i.dc = sub i64 %7, %i.ck, !dbg !40436
   %i.dd = icmp ule i64 %i.dc, %9, !dbg !40442
-  %i.de = icmp ugt i64 %i.cg, %12
+  %i.de = icmp ugt i64 %i.cg, %.sroa.0.0.i
   %or.cond2 = and i1 %i.de, %i.dd, !dbg !40442
   br i1 %or.cond2, label %.preheader.split.split, label %.loopexit.split, !dbg !40442
 
@@ -736,10 +735,9 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSm12split_at_mutCsfISxE4fmY1Y_14polars_parquet.e
 bb.o:                                             ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSm12split_at_mutCsfISxE4fmY1Y_14polars_parquet.exit115
   %i.bg = call i16 @llvm.umax.i16(i16 %i.at, i16 64), !dbg !40771
   %i.bh = zext i16 %i.bg to i64, !dbg !40771
-  %.sroa.0.0.i = add nuw nsw i64 %i.bh, 4294967232, !dbg !40771
-  %12 = and i64 %.sroa.0.0.i, 4294967295, !dbg !40694 ; 4 uses
+  %.sroa.0.0.i = add nsw i64 %i.bh, -64, !dbg !40771 ; 4 uses
   %i.bi = zext i16 %i.at to i64, !dbg !40772      ; 2 uses
-  %.old1188 = icmp samesign ult i64 %12, %i.bi, !dbg !40773
+  %.old1188 = icmp samesign ult i64 %.sroa.0.0.i, %i.bi, !dbg !40773
   br i1 %.old1188, label %.preheader.lr.ph, label %.loopexit.split, !dbg !40773
 
 .preheader.lr.ph:                                 ; preds = %bb.o
@@ -789,7 +787,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q, %.preheader.split.split.us
   %i.cd = icmp ule i64 %i.bv, %9, !dbg !40785
-  %i.ce = icmp ugt i64 %i.bq, %12
+  %i.ce = icmp ugt i64 %i.bq, %.sroa.0.0.i
   %or.cond2.us = and i1 %i.ce, %i.cd, !dbg !40785
   br i1 %or.cond2.us, label %.preheader.split.split.us, label %.loopexit.split, !dbg !40785
 
@@ -836,7 +834,7 @@ bb.v:                                             ; preds = %bb.x, %bb.w, %_RNvM
   %.sroa.017.2 = phi i64 [ %.sroa.017.1190, %_RNvMNtCscgRAwXFJnXP_4core5sliceSh8split_atCsfISxE4fmY1Y_14polars_parquet.exit120 ], [ %.sroa.057.0, %bb.x ], [ %.sroa.017.1190, %bb.w ], !dbg !40793
   %.sroa.012.2 = phi i64 [ %.sroa.012.1191, %_RNvMNtCscgRAwXFJnXP_4core5sliceSh8split_atCsfISxE4fmY1Y_14polars_parquet.exit120 ], [ %i.da, %bb.x ], [ %.sroa.012.1191, %bb.w ], !dbg !40794
   %.sroa.010.3 = phi i1 [ %.sroa.010.2192, %_RNvMNtCscgRAwXFJnXP_4core5sliceSh8split_atCsfISxE4fmY1Y_14polars_parquet.exit120 ], [ true, %bb.x ], [ %.sroa.010.2192, %bb.w ], !dbg !40795 ; 2 uses
-  %.old1 = icmp ugt i64 %i.bq, %12, !dbg !40773
+  %.old1 = icmp ugt i64 %i.bq, %.sroa.0.0.i, !dbg !40773
   br i1 %.old1, label %.preheader, label %.loopexit.split, !dbg !40773
 
 bb.w:                                             ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSh8split_atCsfISxE4fmY1Y_14polars_parquet.exit120
@@ -864,7 +862,7 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %.preheader.split.split
   %i.dc = sub i64 %7, %i.ck, !dbg !40779
   %i.dd = icmp ule i64 %i.dc, %9, !dbg !40785
-  %i.de = icmp ugt i64 %i.cg, %12
+  %i.de = icmp ugt i64 %i.cg, %.sroa.0.0.i
   %or.cond2 = and i1 %i.de, %i.dd, !dbg !40785
   br i1 %or.cond2, label %.preheader.split.split, label %.loopexit.split, !dbg !40785
 

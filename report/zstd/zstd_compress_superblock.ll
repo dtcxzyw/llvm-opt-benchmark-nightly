@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %ZSTD_getSequenceLen
   %i.fv = getelementptr inbounds nuw [8 x i8], ptr %.0282423.i, i64 %.09.i.i ; 2 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 4
   %i.fx = load i16, ptr %i.fw, align 4, !tbaa !71
-  %8 = zext i16 %i.fx to i32                      ; 3 uses
+  %8 = zext i16 %i.fx to i64                      ; 3 uses
   %i.fy = ptrtoint ptr %i.fv to i64
   %i.fz = sub i64 %i.fy, %i.fs
   %i.ga = lshr exact i64 %i.fz, 3
@@ -215,19 +215,18 @@ bb.aa:                                            ; preds = %ZSTD_getSequenceLen
 bb.ab:                                            ; preds = %bb.aa
   %i.gd = load i32, ptr %i.ed, align 8, !tbaa !74
   %i.ge = icmp eq i32 %i.gd, 1
-  %9 = or disjoint i32 %8, 65536
-  %spec.select.i.i.i = select i1 %i.ge, i32 %9, i32 %8
+  %9 = or disjoint i64 %8, 65536
+  %spec.select.i.i.i = select i1 %i.ge, i64 %9, i64 %8
   br label %ZSTD_getSequenceLength.exit.i.i
 
 ZSTD_getSequenceLength.exit.i.i:                  ; preds = %bb.ab, %bb.aa
-  %.sroa.0.1.i.i.i = phi i32 [ %8, %bb.aa ], [ %spec.select.i.i.i, %bb.ab ]
-  %.sroa.0.0.insert.ext.i.i.i = zext nneg i32 %.sroa.0.1.i.i.i to i64
-  %i.gf = add i64 %.078.i.i, %.sroa.0.0.insert.ext.i.i.i
+  %.sroa.0.1.i.i.i = phi i64 [ %8, %bb.aa ], [ %spec.select.i.i.i, %bb.ab ]
+  %i.gf = add i64 %.sroa.0.1.i.i.i, %.078.i.i
   %i.gg = getelementptr inbounds nuw [8 x i8], ptr %.0282423.i, i64 %.09.i.i ; 2 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gg, i64 8
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gg, i64 12
   %i.gj = load i16, ptr %i.gi, align 4, !tbaa !71
-  %10 = zext i16 %i.gj to i32                     ; 3 uses
+  %10 = zext i16 %i.gj to i64                     ; 3 uses
   %i.gk = ptrtoint ptr %i.gh to i64
   %i.gl = sub i64 %i.gk, %i.fs
   %i.gm = lshr exact i64 %i.gl, 3
@@ -238,14 +237,13 @@ ZSTD_getSequenceLength.exit.i.i:                  ; preds = %bb.ab, %bb.aa
 bb.ac:                                            ; preds = %ZSTD_getSequenceLength.exit.i.i
   %i.gp = load i32, ptr %i.ed, align 8, !tbaa !74
   %i.gq = icmp eq i32 %i.gp, 1
-  %11 = or disjoint i32 %10, 65536
-  %spec.select.i.i.i.1 = select i1 %i.gq, i32 %11, i32 %10
+  %11 = or disjoint i64 %10, 65536
+  %spec.select.i.i.i.1 = select i1 %i.gq, i64 %11, i64 %10
   br label %ZSTD_getSequenceLength.exit.i.i.1
 
 ZSTD_getSequenceLength.exit.i.i.1:                ; preds = %bb.ac, %ZSTD_getSequenceLength.exit.i.i
-  %.sroa.0.1.i.i.i.1 = phi i32 [ %10, %ZSTD_getSequenceLength.exit.i.i ], [ %spec.select.i.i.i.1, %bb.ac ]
-  %.sroa.0.0.insert.ext.i.i.i.1 = zext nneg i32 %.sroa.0.1.i.i.i.1 to i64
-  %i.gr = add i64 %i.gf, %.sroa.0.0.insert.ext.i.i.i.1 ; 3 uses
+  %.sroa.0.1.i.i.i.1 = phi i64 [ %10, %ZSTD_getSequenceLength.exit.i.i ], [ %spec.select.i.i.i.1, %bb.ac ]
+  %i.gr = add i64 %.sroa.0.1.i.i.i.1, %i.gf       ; 3 uses
   %i.gs = add nuw i64 %.09.i.i, 2                 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -263,7 +261,7 @@ ZSTD_getSequenceLength.exit.i.i.1:                ; preds = %bb.ac, %ZSTD_getSeq
   %i.gt = getelementptr inbounds nuw [8 x i8], ptr %.0282423.i, i64 %.09.i.i.epil.init ; 2 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 4
   %i.gv = load i16, ptr %i.gu, align 4, !tbaa !71
-  %12 = zext i16 %i.gv to i32                     ; 3 uses
+  %12 = zext i16 %i.gv to i64                     ; 3 uses
   %i.gw = ptrtoint ptr %i.gt to i64
   %i.gx = sub i64 %i.gw, %i.fs
   %i.gy = lshr exact i64 %i.gx, 3
@@ -274,14 +272,13 @@ ZSTD_getSequenceLength.exit.i.i.1:                ; preds = %bb.ac, %ZSTD_getSeq
 bb.ad:                                            ; preds = %.epil.preheader
   %i.hb = load i32, ptr %i.ed, align 8, !tbaa !74
   %i.hc = icmp eq i32 %i.hb, 1
-  %13 = or disjoint i32 %12, 65536
-  %spec.select.i.i.i.epil = select i1 %i.hc, i32 %13, i32 %12
+  %13 = or disjoint i64 %12, 65536
+  %spec.select.i.i.i.epil = select i1 %i.hc, i64 %13, i64 %12
   br label %ZSTD_getSequenceLength.exit.i.i.epil
 
 ZSTD_getSequenceLength.exit.i.i.epil:             ; preds = %bb.ad, %.epil.preheader
-  %.sroa.0.1.i.i.i.epil = phi i32 [ %12, %.epil.preheader ], [ %spec.select.i.i.i.epil, %bb.ad ]
-  %.sroa.0.0.insert.ext.i.i.i.epil = zext nneg i32 %.sroa.0.1.i.i.i.epil to i64
-  %i.hd = add i64 %.078.i.i.epil.init, %.sroa.0.0.insert.ext.i.i.i.epil
+  %.sroa.0.1.i.i.i.epil = phi i64 [ %12, %.epil.preheader ], [ %spec.select.i.i.i.epil, %bb.ad ]
+  %i.hd = add i64 %.sroa.0.1.i.i.i.epil, %.078.i.i.epil.init
   br label %.lr.ph.i323.i.preheader
 
 .lr.ph.i323.i.preheader:                          ; preds = %.lr.ph.i323.i.preheader.unr-lcssa, %ZSTD_getSequenceLength.exit.i.i.epil
@@ -301,8 +298,8 @@ ZSTD_getSequenceLength.exit.i.i.epil:             ; preds = %bb.ad, %.epil.prehe
   %i.hf = getelementptr inbounds nuw [8 x i8], ptr %.0282423.i, i64 %.01011.i.i ; 2 uses
   %i.hg = getelementptr inbounds nuw i8, ptr %i.hf, i64 6
   %i.hh = load i16, ptr %i.hg, align 2, !tbaa !72
-  %14 = zext i16 %i.hh to i32                     ; 2 uses
-  %15 = add nuw nsw i32 %14, 3                    ; 2 uses
+  %14 = zext i16 %i.hh to i64                     ; 2 uses
+  %15 = add nuw nsw i64 %14, 3                    ; 2 uses
   %i.hi = ptrtoint ptr %i.hf to i64
   %i.hj = sub i64 %i.hi, %i.fs
   %i.hk = lshr exact i64 %i.hj, 3
@@ -313,20 +310,19 @@ ZSTD_getSequenceLength.exit.i.i.epil:             ; preds = %bb.ad, %.epil.prehe
 bb.ae:                                            ; preds = %.lr.ph.i323.i
   %i.hn = load i32, ptr %i.ed, align 8, !tbaa !74
   %i.ho = icmp eq i32 %i.hn, 2
-  %16 = add nuw nsw i32 %14, 65539
-  %spec.select8.i.i.i = select i1 %i.ho, i32 %16, i32 %15
+  %16 = add nuw nsw i64 %14, 65539
+  %spec.select8.i.i.i = select i1 %i.ho, i64 %16, i64 %15
   br label %ZSTD_getSequenceLength.exit.i324.i
 
 ZSTD_getSequenceLength.exit.i324.i:               ; preds = %bb.ae, %.lr.ph.i323.i
-  %.sroa.4.0.i.i.i = phi i32 [ %15, %.lr.ph.i323.i ], [ %spec.select8.i.i.i, %bb.ae ]
-  %.sroa.4.0.insert.ext.i.i.i = zext nneg i32 %.sroa.4.0.i.i.i to i64
-  %i.hp = add i64 %.012.i.i, %.sroa.4.0.insert.ext.i.i.i
+  %.sroa.4.0.i.i.i = phi i64 [ %15, %.lr.ph.i323.i ], [ %spec.select8.i.i.i, %bb.ae ]
+  %i.hp = add i64 %.sroa.4.0.i.i.i, %.012.i.i
   %i.hq = getelementptr inbounds nuw [8 x i8], ptr %.0282423.i, i64 %.01011.i.i ; 2 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hq, i64 8
   %i.hs = getelementptr inbounds nuw i8, ptr %i.hq, i64 14
   %i.ht = load i16, ptr %i.hs, align 2, !tbaa !72
-  %17 = zext i16 %i.ht to i32                     ; 2 uses
-  %18 = add nuw nsw i32 %17, 3                    ; 2 uses
+  %17 = zext i16 %i.ht to i64                     ; 2 uses
+  %18 = add nuw nsw i64 %17, 3                    ; 2 uses
   %i.hu = ptrtoint ptr %i.hr to i64
   %i.hv = sub i64 %i.hu, %i.fs
   %i.hw = lshr exact i64 %i.hv, 3
@@ -337,14 +333,13 @@ ZSTD_getSequenceLength.exit.i324.i:               ; preds = %bb.ae, %.lr.ph.i323
 bb.af:                                            ; preds = %ZSTD_getSequenceLength.exit.i324.i
   %i.hz = load i32, ptr %i.ed, align 8, !tbaa !74
   %i.ia = icmp eq i32 %i.hz, 2
-  %19 = add nuw nsw i32 %17, 65539
-  %spec.select8.i.i.i.1 = select i1 %i.ia, i32 %19, i32 %18
+  %19 = add nuw nsw i64 %17, 65539
+  %spec.select8.i.i.i.1 = select i1 %i.ia, i64 %19, i64 %18
   br label %ZSTD_getSequenceLength.exit.i324.i.1
 
 ZSTD_getSequenceLength.exit.i324.i.1:             ; preds = %bb.af, %ZSTD_getSequenceLength.exit.i324.i
-  %.sroa.4.0.i.i.i.1 = phi i32 [ %18, %ZSTD_getSequenceLength.exit.i324.i ], [ %spec.select8.i.i.i.1, %bb.af ]
-  %.sroa.4.0.insert.ext.i.i.i.1 = zext nneg i32 %.sroa.4.0.i.i.i.1 to i64
-  %i.ib = add i64 %i.hp, %.sroa.4.0.insert.ext.i.i.i.1 ; 3 uses
+  %.sroa.4.0.i.i.i.1 = phi i64 [ %18, %ZSTD_getSequenceLength.exit.i324.i ], [ %spec.select8.i.i.i.1, %bb.af ]
+  %i.ib = add i64 %.sroa.4.0.i.i.i.1, %i.hp       ; 3 uses
   %i.ic = add nuw i64 %.01011.i.i, 2              ; 2 uses
   %niter195.next.1 = add i64 %niter195, 2         ; 2 uses
   %niter195.ncmp.1 = icmp eq i64 %niter195.next.1, %unroll_iter194
@@ -362,8 +357,8 @@ ZSTD_seqDecompressedSize.exit.i.unr-lcssa:        ; preds = %ZSTD_getSequenceLen
   %i.id = getelementptr inbounds nuw [8 x i8], ptr %.0282423.i, i64 %.01011.i.i.epil.init ; 2 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %i.id, i64 6
   %i.if = load i16, ptr %i.ie, align 2, !tbaa !72
-  %20 = zext i16 %i.if to i32                     ; 2 uses
-  %21 = add nuw nsw i32 %20, 3                    ; 2 uses
+  %20 = zext i16 %i.if to i64                     ; 2 uses
+  %21 = add nuw nsw i64 %20, 3                    ; 2 uses
   %i.ig = ptrtoint ptr %i.id to i64
   %i.ih = sub i64 %i.ig, %i.fs
   %i.ii = lshr exact i64 %i.ih, 3
@@ -374,14 +369,13 @@ ZSTD_seqDecompressedSize.exit.i.unr-lcssa:        ; preds = %ZSTD_getSequenceLen
 bb.ag:                                            ; preds = %.lr.ph.i323.i.epil.preheader
   %i.il = load i32, ptr %i.ed, align 8, !tbaa !74
   %i.im = icmp eq i32 %i.il, 2
-  %22 = add nuw nsw i32 %20, 65539
-  %spec.select8.i.i.i.epil = select i1 %i.im, i32 %22, i32 %21
+  %22 = add nuw nsw i64 %20, 65539
+  %spec.select8.i.i.i.epil = select i1 %i.im, i64 %22, i64 %21
   br label %ZSTD_getSequenceLength.exit.i324.i.epil
 
 ZSTD_getSequenceLength.exit.i324.i.epil:          ; preds = %bb.ag, %.lr.ph.i323.i.epil.preheader
-  %.sroa.4.0.i.i.i.epil = phi i32 [ %21, %.lr.ph.i323.i.epil.preheader ], [ %spec.select8.i.i.i.epil, %bb.ag ]
-  %.sroa.4.0.insert.ext.i.i.i.epil = zext nneg i32 %.sroa.4.0.i.i.i.epil to i64
-  %i.in = add i64 %.012.i.i.epil.init, %.sroa.4.0.insert.ext.i.i.i.epil
+  %.sroa.4.0.i.i.i.epil = phi i64 [ %21, %.lr.ph.i323.i.epil.preheader ], [ %spec.select8.i.i.i.epil, %bb.ag ]
+  %i.in = add i64 %.sroa.4.0.i.i.i.epil, %.012.i.i.epil.init
   br label %ZSTD_seqDecompressedSize.exit.i
 
 ZSTD_seqDecompressedSize.exit.i:                  ; preds = %ZSTD_seqDecompressedSize.exit.i.unr-lcssa, %ZSTD_getSequenceLength.exit.i324.i.epil
@@ -497,8 +491,8 @@ bb.al:                                            ; preds = %ZSTD_getSequenceLen
   %i.jk = getelementptr inbounds nuw [8 x i8], ptr %.6288.i, i64 %.01011.i329.i ; 2 uses
   %i.jl = getelementptr inbounds nuw i8, ptr %i.jk, i64 6
   %i.jm = load i16, ptr %i.jl, align 2, !tbaa !72
-  %23 = zext i16 %i.jm to i32                     ; 2 uses
-  %24 = add nuw nsw i32 %23, 3                    ; 2 uses
+  %23 = zext i16 %i.jm to i64                     ; 2 uses
+  %24 = add nuw nsw i64 %23, 3                    ; 2 uses
   %i.jn = ptrtoint ptr %i.jk to i64
   %i.jo = sub i64 %i.jn, %i.jh
   %i.jp = lshr exact i64 %i.jo, 3
@@ -509,20 +503,19 @@ bb.al:                                            ; preds = %ZSTD_getSequenceLen
 bb.am:                                            ; preds = %bb.al
   %i.js = load i32, ptr %i.ji, align 8, !tbaa !74
   %i.jt = icmp eq i32 %i.js, 2
-  %25 = add nuw nsw i32 %23, 65539
-  %spec.select8.i.i335.i = select i1 %i.jt, i32 %25, i32 %24
+  %25 = add nuw nsw i64 %23, 65539
+  %spec.select8.i.i334.i = select i1 %i.jt, i64 %25, i64 %24
   br label %ZSTD_getSequenceLength.exit.i330.i
 
 ZSTD_getSequenceLength.exit.i330.i:               ; preds = %bb.am, %bb.al
-  %.sroa.4.0.i.i331.i = phi i32 [ %24, %bb.al ], [ %spec.select8.i.i335.i, %bb.am ]
-  %.sroa.4.0.insert.ext.i.i332.i = zext nneg i32 %.sroa.4.0.i.i331.i to i64
-  %i.ju = add i64 %.012.i328.i, %.sroa.4.0.insert.ext.i.i332.i
+  %.sroa.4.0.i.i331.i = phi i64 [ %24, %bb.al ], [ %spec.select8.i.i334.i, %bb.am ]
+  %i.ju = add i64 %.sroa.4.0.i.i331.i, %.012.i328.i
   %i.jv = getelementptr inbounds nuw [8 x i8], ptr %.6288.i, i64 %.01011.i329.i ; 2 uses
   %i.jw = getelementptr inbounds nuw i8, ptr %i.jv, i64 8
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jv, i64 14
   %i.jy = load i16, ptr %i.jx, align 2, !tbaa !72
-  %26 = zext i16 %i.jy to i32                     ; 2 uses
-  %27 = add nuw nsw i32 %26, 3                    ; 2 uses
+  %26 = zext i16 %i.jy to i64                     ; 2 uses
+  %27 = add nuw nsw i64 %26, 3                    ; 2 uses
   %i.jz = ptrtoint ptr %i.jw to i64
   %i.ka = sub i64 %i.jz, %i.jh
   %i.kb = lshr exact i64 %i.ka, 3
@@ -533,14 +526,13 @@ ZSTD_getSequenceLength.exit.i330.i:               ; preds = %bb.am, %bb.al
 bb.an:                                            ; preds = %ZSTD_getSequenceLength.exit.i330.i
   %i.ke = load i32, ptr %i.ji, align 8, !tbaa !74
   %i.kf = icmp eq i32 %i.ke, 2
-  %28 = add nuw nsw i32 %26, 65539
-  %spec.select8.i.i335.i.1 = select i1 %i.kf, i32 %28, i32 %27
+  %28 = add nuw nsw i64 %26, 65539
+  %spec.select8.i.i334.i.1 = select i1 %i.kf, i64 %28, i64 %27
   br label %ZSTD_getSequenceLength.exit.i330.i.1
 
 ZSTD_getSequenceLength.exit.i330.i.1:             ; preds = %bb.an, %ZSTD_getSequenceLength.exit.i330.i
-  %.sroa.4.0.i.i331.i.1 = phi i32 [ %27, %ZSTD_getSequenceLength.exit.i330.i ], [ %spec.select8.i.i335.i.1, %bb.an ]
-  %.sroa.4.0.insert.ext.i.i332.i.1 = zext nneg i32 %.sroa.4.0.i.i331.i.1 to i64
-  %i.kg = add i64 %i.ju, %.sroa.4.0.insert.ext.i.i332.i.1 ; 3 uses
+  %.sroa.4.0.i.i331.i.1 = phi i64 [ %27, %ZSTD_getSequenceLength.exit.i330.i ], [ %spec.select8.i.i334.i.1, %bb.an ]
+  %i.kg = add i64 %.sroa.4.0.i.i331.i.1, %i.ju    ; 3 uses
   %i.kh = add nuw i64 %.01011.i329.i, 2           ; 2 uses
   %niter202.next.1 = add i64 %niter202, 2         ; 2 uses
   %niter202.ncmp.1 = icmp eq i64 %niter202.next.1, %unroll_iter201
@@ -558,8 +550,8 @@ ZSTD_seqDecompressedSize.exit336.i.loopexit.unr-lcssa: ; preds = %ZSTD_getSequen
   %i.ki = getelementptr inbounds nuw [8 x i8], ptr %.6288.i, i64 %.01011.i329.i.epil.init ; 2 uses
   %i.kj = getelementptr inbounds nuw i8, ptr %i.ki, i64 6
   %i.kk = load i16, ptr %i.kj, align 2, !tbaa !72
-  %29 = zext i16 %i.kk to i32                     ; 2 uses
-  %30 = add nuw nsw i32 %29, 3                    ; 2 uses
+  %29 = zext i16 %i.kk to i64                     ; 2 uses
+  %30 = add nuw nsw i64 %29, 3                    ; 2 uses
   %i.kl = ptrtoint ptr %i.ki to i64
   %i.km = sub i64 %i.kl, %i.jh
   %i.kn = lshr exact i64 %i.km, 3
@@ -570,14 +562,13 @@ ZSTD_seqDecompressedSize.exit336.i.loopexit.unr-lcssa: ; preds = %ZSTD_getSequen
 bb.ao:                                            ; preds = %.epil.preheader196
   %i.kq = load i32, ptr %i.ji, align 8, !tbaa !74
   %i.kr = icmp eq i32 %i.kq, 2
-  %31 = add nuw nsw i32 %29, 65539
-  %spec.select8.i.i335.i.epil = select i1 %i.kr, i32 %31, i32 %30
+  %31 = add nuw nsw i64 %29, 65539
+  %spec.select8.i.i334.i.epil = select i1 %i.kr, i64 %31, i64 %30
   br label %ZSTD_getSequenceLength.exit.i330.i.epil
 
 ZSTD_getSequenceLength.exit.i330.i.epil:          ; preds = %bb.ao, %.epil.preheader196
-  %.sroa.4.0.i.i331.i.epil = phi i32 [ %30, %.epil.preheader196 ], [ %spec.select8.i.i335.i.epil, %bb.ao ]
-  %.sroa.4.0.insert.ext.i.i332.i.epil = zext nneg i32 %.sroa.4.0.i.i331.i.epil to i64
-  %i.ks = add i64 %.012.i328.i.epil.init, %.sroa.4.0.insert.ext.i.i332.i.epil
+  %.sroa.4.0.i.i331.i.epil = phi i64 [ %30, %.epil.preheader196 ], [ %spec.select8.i.i334.i.epil, %bb.ao ]
+  %i.ks = add i64 %.sroa.4.0.i.i331.i.epil, %.012.i328.i.epil.init
   br label %ZSTD_seqDecompressedSize.exit336.i
 
 ZSTD_seqDecompressedSize.exit336.i:               ; preds = %ZSTD_getSequenceLength.exit.i330.i.epil, %ZSTD_seqDecompressedSize.exit336.i.loopexit.unr-lcssa, %.thread381.i
@@ -717,7 +708,7 @@ bb.az:                                            ; preds = %ZSTD_updateRep.exit
   %i.mo = load i32, ptr %.0200450.i, align 4, !tbaa !75 ; 3 uses
   %i.mp = getelementptr inbounds nuw i8, ptr %.0200450.i, i64 4
   %i.mq = load i16, ptr %i.mp, align 4, !tbaa !71
-  %32 = zext i16 %i.mq to i32                     ; 3 uses
+  %32 = zext i16 %i.mq to i64                     ; 3 uses
   %i.mr = ptrtoint ptr %.0200450.i to i64
   %i.ms = sub i64 %i.mr, %i.mj
   %i.mt = lshr exact i64 %i.ms, 3
@@ -728,12 +719,12 @@ bb.az:                                            ; preds = %ZSTD_updateRep.exit
 bb.ba:                                            ; preds = %bb.az
   %i.mw = load i32, ptr %i.mk, align 8, !tbaa !74
   %i.mx = icmp eq i32 %i.mw, 1
-  %33 = or disjoint i32 %32, 65536
-  %spec.select.i338.i = select i1 %i.mx, i32 %33, i32 %32
+  %33 = or disjoint i64 %32, 65536
+  %spec.select.i337.i = select i1 %i.mx, i64 %33, i64 %32
   br label %ZSTD_getSequenceLength.exit.i
 
 ZSTD_getSequenceLength.exit.i:                    ; preds = %bb.ba, %bb.az
-  %.sroa.0.1.i.i = phi i32 [ %32, %bb.az ], [ %spec.select.i338.i, %bb.ba ]
+  %.sroa.0.1.i.i = phi i64 [ %32, %bb.az ], [ %spec.select.i337.i, %bb.ba ]
   %i.my = icmp ugt i32 %i.mo, 3
   br i1 %i.my, label %bb.bb, label %bb.bc
 
@@ -744,7 +735,7 @@ bb.bb:                                            ; preds = %ZSTD_getSequenceLen
   br label %.sink.split.i.i
 
 bb.bc:                                            ; preds = %ZSTD_getSequenceLength.exit.i
-  %i.na = icmp eq i32 %.sroa.0.1.i.i, 0
+  %i.na = icmp eq i64 %.sroa.0.1.i.i, 0
   %i.nb = zext i1 %i.na to i32
   %i.nc = add nsw i32 %i.mo, -1
   %i.nd = add nsw i32 %i.nc, %i.nb                ; 3 uses

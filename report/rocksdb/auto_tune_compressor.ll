@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %_ZNSt10shared_ptrIN
   br label %bb.as
 
 bb.n:                                             ; preds = %.lr.ph83, %_ZNSt6vectorIS_ISt10unique_ptrIN7rocksdb10CompressorESt14default_deleteIS2_EESaIS5_EESaIS7_EE12emplace_backIJEEERS7_DpOT_.exit
-  %i.aq = phi ptr [ %i.p, %.lr.ph83 ], [ %i.ho, %_ZNSt6vectorIS_ISt10unique_ptrIN7rocksdb10CompressorESt14default_deleteIS2_EESaIS5_EESaIS7_EE12emplace_backIJEEERS7_DpOT_.exit ] ; 2 uses
+  %i.aq = phi ptr [ %i.p, %.lr.ph83 ], [ %i.ho, %_ZNSt6vectorIS_ISt10unique_ptrIN7rocksdb10CompressorESt14default_deleteIS2_EESaIS5_EESaIS7_EE12emplace_backIJEEERS7_DpOT_.exit ]
   %storemerge81 = phi i64 [ 0, %.lr.ph83 ], [ %i.hm, %_ZNSt6vectorIS_ISt10unique_ptrIN7rocksdb10CompressorESt14default_deleteIS2_EESaIS5_EESaIS7_EE12emplace_backIJEEERS7_DpOT_.exit ] ; 4 uses
   %i.ar = trunc i64 %storemerge81 to i8
   %i.as = add i8 %i.ar, 1                         ; 10 uses
@@ -212,11 +212,10 @@ bb.n:                                             ; preds = %.lr.ph83, %_ZNSt6ve
   br i1 %i.at, label %_ZNSt6vectorIS_ISt10unique_ptrIN7rocksdb10CompressorESt14default_deleteIS2_EESaIS5_EESaIS7_EE12emplace_backIJEEERS7_DpOT_.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.au = zext i8 %i.as to i64                    ; 3 uses
-  %i.av = add nuw nsw i64 %i.au, 4294967295
-  %6 = and i64 %i.av, 4294967295
-  %i.aw = getelementptr inbounds nuw [24 x i8], ptr %i.aq, i64 %6 ; 2 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
+  %i.au = zext i8 %i.as to i64
+  %i.av = add nsw i64 %i.au, -1                   ; 2 uses
+  %i.aw = getelementptr inbounds nuw [24 x i8], ptr %i.aq, i64 %i.av ; 3 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8 ; 2 uses
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !73
   %i.az = load ptr, ptr %i.aw, align 8, !tbaa !29
   %i.ba = icmp eq ptr %i.ay, %i.az
@@ -364,11 +363,8 @@ bb.ab:                                            ; preds = %_ZSt4findIN9__gnu_c
 bb.ac:                                            ; preds = %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKN7rocksdb15CompressionTypeESt6vectorIS3_SaIS3_EEEES3_ET_SA_SA_RKT0_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %3, i8 0, i64 24, i1 false)
-  %7 = getelementptr [24 x i8], ptr %i.aq, i64 %i.au ; 2 uses
-  %8 = getelementptr i8, ptr %7, i64 -24
-  %9 = getelementptr i8, ptr %7, i64 -16
-  %i.cu = load ptr, ptr %9, align 8, !tbaa !73
-  %i.cv = load ptr, ptr %8, align 8, !tbaa !29    ; 2 uses
+  %i.cu = load ptr, ptr %i.ax, align 8, !tbaa !73
+  %i.cv = load ptr, ptr %i.aw, align 8, !tbaa !29 ; 2 uses
   %.not85 = icmp eq ptr %i.cu, %i.cv
   br i1 %.not85, label %._crit_edge, label %.lr.ph.preheader
 
@@ -690,11 +686,10 @@ _ZNSt6vectorISt4pairImmESaIS1_EE12emplace_backIJRmS5_EEERS1_DpOT_.exit: ; preds 
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
   %i.gl = add nuw i64 %storemerge1680, 1          ; 2 uses
   %i.gm = load ptr, ptr @_ZN7rocksdb19CostAwareCompressor18kCompressionLevelsE, align 8, !tbaa !25
-  %i.gn = getelementptr [24 x i8], ptr %i.gm, i64 %i.au ; 2 uses
-  %10 = getelementptr i8, ptr %i.gn, i64 -24
-  %i.go = getelementptr i8, ptr %i.gn, i64 -16
+  %i.gn = getelementptr inbounds nuw [24 x i8], ptr %i.gm, i64 %i.av ; 2 uses
+  %i.go = getelementptr inbounds nuw i8, ptr %i.gn, i64 8
   %i.gp = load ptr, ptr %i.go, align 8, !tbaa !73
-  %i.gq = load ptr, ptr %10, align 8, !tbaa !29   ; 2 uses
+  %i.gq = load ptr, ptr %i.gn, align 8, !tbaa !29 ; 2 uses
   %i.gr = ptrtoint ptr %i.gp to i64
   %i.gs = ptrtoint ptr %i.gq to i64
   %i.gt = sub i64 %i.gr, %i.gs

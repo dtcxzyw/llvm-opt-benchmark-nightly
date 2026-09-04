@@ -205,8 +205,6 @@ bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !149
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false), !noalias !149
   %i.ax = lshr i8 %i.au, 4                        ; 2 uses
-  %2 = zext nneg i8 %i.ax to i64
-  %3 = add nuw nsw i64 %2, 4294967295
   %i.ay = icmp eq i8 %i.ax, 0
   br i1 %i.ay, label %bb.y, label %bb.x
 
@@ -231,12 +229,14 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringEC
           to label %.loopexit.sink.split unwind label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %bb.t
+  %2 = zext nneg i8 %i.ax to i64
+  %3 = add nsw i64 %2, -1
   %i.bb = icmp ult i8 %i.au, 64
-  br i1 %i.bb, label %4, label %bb.z
+  br i1 %i.bb, label %bb.y, label %bb.z
 
-bb.y:                                             ; preds = %4, %bb.t
-  %.sroa.741.0.i = phi i64 [ %5, %4 ], [ undef, %bb.t ]
-  %.sroa.040.0.i = phi i64 [ 1, %4 ], [ 0, %bb.t ]
+bb.y:                                             ; preds = %bb.x, %bb.t
+  %.sroa.741.0.i = phi i64 [ undef, %bb.t ], [ %3, %bb.x ]
+  %.sroa.040.0.i = phi i64 [ 0, %bb.t ], [ 1, %bb.x ]
   %i.bc = lshr i8 %i.au, 2
   %i.bd = and i8 %i.bc, 3                         ; 2 uses
   %i.be = icmp ne i8 %i.bd, 3
@@ -268,10 +268,6 @@ bb.ac:                                            ; preds = %bb.ab
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsdsTQD3x2eOp_3exr.exit.i.i.invoke: ; preds = %bb.ae, %bb.aa
   invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsdsTQD3x2eOp_3exr(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b)
           to label %.loopexit.sink.split.sink.split unwind label %.loopexit.split-lp
-
-4:                                                ; preds = %bb.x
-  %5 = and i64 %3, 4294967295
-  br label %bb.y
 
 bb.ad:                                            ; preds = %bb.y
   %i.bj = load i64, ptr %i.b, align 8, !range !6, !alias.scope !151, !noalias !149, !noundef !4

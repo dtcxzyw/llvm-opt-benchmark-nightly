@@ -202,9 +202,8 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph
   %i.j = mul nuw nsw i64 %i.f, 9
-  %narrow = add nuw nsw i64 %i.j, 4294967287
-  %2 = and i64 %narrow, 4294967295
-  %i.k = tail call ptr @lv_malloc(i64 noundef %2) #9 ; 4 uses
+  %narrow = add nsw i64 %i.j, -9
+  %i.k = tail call ptr @lv_malloc(i64 noundef %narrow) #9 ; 4 uses
   %.not45 = icmp eq ptr %i.k, null
   br i1 %.not45, label %.loopexit, label %bb.d
 

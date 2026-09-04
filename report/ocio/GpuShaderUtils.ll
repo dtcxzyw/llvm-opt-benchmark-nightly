@@ -202,18 +202,17 @@ bb.c:                                             ; preds = %bb.a, %_ZNSt7__cxx1
   %.02066 = phi i32 [ 0, %bb.a ], [ %i.ao, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit32 ] ; 2 uses
   %.lhs.trunc = trunc nuw nsw i32 %.02066 to i8   ; 2 uses
   %i.i = udiv i8 %.lhs.trunc, 3
-  %.zext = zext nneg i8 %i.i to i32               ; 2 uses
+  %.zext = zext nneg i8 %i.i to i64               ; 2 uses
   %i.j = urem i8 %.lhs.trunc, 3
-  %.zext53 = zext nneg i8 %i.j to i32             ; 2 uses
-  %7 = mul nuw nsw i32 %.zext53, 3
-  %8 = add nuw nsw i32 %7, %.zext
-  %9 = mul nuw nsw i32 %.zext, 3
-  %10 = add nuw nsw i32 %9, %.zext53
-  %11 = select i1 %3, i32 %8, i32 %10
+  %.zext53 = zext nneg i8 %i.j to i64             ; 2 uses
+  %7 = mul nuw nsw i64 %.zext53, 3
+  %8 = add nuw nsw i64 %7, %.zext
+  %9 = mul nuw nsw i64 %.zext, 3
+  %10 = add nuw nsw i64 %9, %.zext53
+  %11 = select i1 %3, i64 %8, i64 %10
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
-  %12 = zext nneg i32 %11 to i64
-  %i.k = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %12
+  %i.k = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %11
   %i.l = load float, ptr %i.k, align 4, !tbaa !53
   invoke void @_ZN16OpenColorIO_v2_514getFloatStringIfEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_NS_11GpuLanguageE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %5, float noundef %i.l, i32 noundef %2)
           to label %bb.d unwind label %bb.i
@@ -473,18 +472,17 @@ bb.c:                                             ; preds = %bb.a, %_ZNSt7__cxx1
   %.02066 = phi i32 [ 0, %bb.a ], [ %i.ao, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit32 ] ; 2 uses
   %.lhs.trunc = trunc nuw nsw i32 %.02066 to i8   ; 2 uses
   %i.i = udiv i8 %.lhs.trunc, 3
-  %.zext = zext nneg i8 %i.i to i32               ; 2 uses
+  %.zext = zext nneg i8 %i.i to i64               ; 2 uses
   %i.j = urem i8 %.lhs.trunc, 3
-  %.zext53 = zext nneg i8 %i.j to i32             ; 2 uses
-  %7 = mul nuw nsw i32 %.zext53, 3
-  %8 = add nuw nsw i32 %7, %.zext
-  %9 = mul nuw nsw i32 %.zext, 3
-  %10 = add nuw nsw i32 %9, %.zext53
-  %11 = select i1 %3, i32 %8, i32 %10
+  %.zext53 = zext nneg i8 %i.j to i64             ; 2 uses
+  %7 = mul nuw nsw i64 %.zext53, 3
+  %8 = add nuw nsw i64 %7, %.zext
+  %9 = mul nuw nsw i64 %.zext, 3
+  %10 = add nuw nsw i64 %9, %.zext53
+  %11 = select i1 %3, i64 %8, i64 %10
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
-  %12 = zext nneg i32 %11 to i64
-  %i.k = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %12
+  %i.k = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %11
   %i.l = load double, ptr %i.k, align 8, !tbaa !62
   invoke void @_ZN16OpenColorIO_v2_514getFloatStringIdEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_NS_11GpuLanguageE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %5, double noundef %i.l, i32 noundef %2)
           to label %bb.d unwind label %bb.i

@@ -204,7 +204,7 @@ _ZN6hermes6bigint10isNegativeENS0_18ImmutableBigIntRefE.exit.i.i.i: ; preds = %b
   %.fr.i = freeze i64 %i.f                        ; 3 uses
   %i.g = icmp slt i64 %.fr.i, 0
   %.lobit.i = lshr i64 %.fr.i, 63
-  %4 = trunc nuw nsw i64 %.lobit.i to i8          ; 4 uses
+  %4 = trunc nuw nsw i64 %.lobit.i to i32         ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !115
   store i64 -65536, ptr %i.b, align 8, !tbaa !13, !noalias !115
   %i.h = icmp sgt i64 %.fr.i, -1
@@ -263,7 +263,7 @@ bb.e:                                             ; preds = %bb.d, %.thread52.i
   br label %.thread56.i
 
 .thread56.i:                                      ; preds = %bb.a, %bb.e, %bb.d
-  %5 = phi i8 [ %4, %bb.e ], [ %4, %bb.d ], [ 0, %bb.a ]
+  %5 = phi i32 [ %4, %bb.e ], [ %4, %bb.d ], [ 0, %bb.a ]
   %i.s = phi i64 [ %i.r, %bb.e ], [ %i.q, %bb.d ], [ 0, %bb.a ]
   %i.t = trunc i64 %i.s to i32
   %i.u = add i32 %i.t, 63
@@ -271,10 +271,10 @@ bb.e:                                             ; preds = %bb.d, %.thread52.i
   br label %_ZN6hermes6bigint12_GLOBAL__N_121getShiftAmountAndSignENS0_18ImmutableBigIntRefE.exit
 
 _ZN6hermes6bigint12_GLOBAL__N_121getShiftAmountAndSignENS0_18ImmutableBigIntRefE.exit: ; preds = %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.thread.i, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.i, %.thread56.i
-  %.sink63.i = phi i8 [ %5, %.thread56.i ], [ %4, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.thread.i ], [ %4, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.i ]
+  %.sink63.i = phi i32 [ %5, %.thread56.i ], [ %4, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.thread.i ], [ %4, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.i ]
   %.sink.i = phi i32 [ %i.v, %.thread56.i ], [ 129, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.thread.i ], [ 129, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.i ]
-  %.sink63.i.fr = freeze i8 %.sink63.i
-  %i.w = icmp eq i8 %.sink63.i.fr, 0
+  %.sink63.i.fr = freeze i32 %.sink63.i
+  %i.w = icmp eq i32 %.sink63.i.fr, 0
   %spec.select = select i1 %i.w, i32 %.sink.i, i32 0
   br label %_ZN6hermes6bigint12_GLOBAL__N_121getShiftAmountAndSignENS0_18ImmutableBigIntRefE.exit.thread
 
@@ -300,7 +300,7 @@ _ZN6hermes6bigint10isNegativeENS0_18ImmutableBigIntRefE.exit.i.i.i: ; preds = %b
   %.fr.i = freeze i64 %i.f                        ; 3 uses
   %i.g = icmp slt i64 %.fr.i, 0
   %.lobit.i = lshr i64 %.fr.i, 63
-  %4 = trunc nuw nsw i64 %.lobit.i to i8          ; 6 uses
+  %4 = trunc nuw nsw i64 %.lobit.i to i32         ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !118
   store i64 -65536, ptr %i.b, align 8, !tbaa !13, !noalias !118
   %i.h = icmp sgt i64 %.fr.i, -1
@@ -359,7 +359,7 @@ bb.e:                                             ; preds = %bb.d, %.thread52.i
   br label %.thread56.i
 
 .thread56.i:                                      ; preds = %bb.a, %bb.e, %bb.d
-  %5 = phi i8 [ %4, %bb.e ], [ %4, %bb.d ], [ 0, %bb.a ]
+  %5 = phi i32 [ %4, %bb.e ], [ %4, %bb.d ], [ 0, %bb.a ]
   %i.s = phi i64 [ %i.r, %bb.e ], [ %i.q, %bb.d ], [ 0, %bb.a ]
   %i.t = trunc i64 %i.s to i32
   %i.u = add i32 %i.t, 63
@@ -367,9 +367,9 @@ bb.e:                                             ; preds = %bb.d, %.thread52.i
   br label %_ZN6hermes6bigint12_GLOBAL__N_121getShiftAmountAndSignENS0_18ImmutableBigIntRefE.exit
 
 _ZN6hermes6bigint12_GLOBAL__N_121getShiftAmountAndSignENS0_18ImmutableBigIntRefE.exit: ; preds = %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.thread32.i, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.i, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.thread.i, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.i, %.thread56.i
-  %.sink63.i = phi i8 [ %5, %.thread56.i ], [ %4, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.thread.i ], [ %4, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.thread32.i ], [ %4, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.i ], [ %4, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.i ]
+  %.sink63.i = phi i32 [ %5, %.thread56.i ], [ %4, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.thread.i ], [ %4, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.thread32.i ], [ %4, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.i ], [ %4, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.i ]
   %.sink.i = phi i32 [ %i.v, %.thread56.i ], [ 129, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.thread.i ], [ 129, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.thread32.i ], [ 129, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.i ], [ 129, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.i ]
-  %i.w = icmp eq i8 %.sink63.i, 1
+  %i.w = icmp eq i32 %.sink63.i, 1
   %.0.i = select i1 %i.w, i32 %.sink.i, i32 0
   %i.x = add i32 %.0.i, %1
   ret i32 %i.x
@@ -398,7 +398,7 @@ _ZN6hermes6bigint10isNegativeENS0_18ImmutableBigIntRefE.exit.i.i.i.i: ; preds = 
   %.fr.i.i = freeze i64 %i.f                      ; 3 uses
   %i.g = icmp slt i64 %.fr.i.i, 0
   %.lobit.i.i = lshr i64 %.fr.i.i, 63
-  %5 = trunc nuw nsw i64 %.lobit.i.i to i8        ; 6 uses
+  %5 = trunc nuw nsw i64 %.lobit.i.i to i32       ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !123
   store i64 -65536, ptr %i.b, align 8, !tbaa !13, !noalias !123
   %i.h = icmp sgt i64 %.fr.i.i, -1
@@ -457,16 +457,15 @@ bb.e:                                             ; preds = %bb.d, %.thread52.i.
   br label %.thread56.i.i
 
 .thread56.i.i:                                    ; preds = %bb.e, %bb.d, %bb.a
-  %6 = phi i8 [ %5, %bb.e ], [ %5, %bb.d ], [ 0, %bb.a ]
+  %6 = phi i32 [ %5, %bb.e ], [ %5, %bb.d ], [ 0, %bb.a ]
   %i.s = phi i64 [ %i.r, %bb.e ], [ %i.q, %bb.d ], [ 0, %bb.a ]
   %i.t = trunc i64 %i.s to i32
   br label %_ZN6hermes6bigint12_GLOBAL__N_131getShiftAmountSignAndResultSizeENS1_9ShiftOpIsENS0_18ImmutableBigIntRefES3_.exit
 
 _ZN6hermes6bigint12_GLOBAL__N_131getShiftAmountSignAndResultSizeENS1_9ShiftOpIsENS0_18ImmutableBigIntRefES3_.exit: ; preds = %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.thread32.i.i, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.i.i, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.thread.i.i, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.i.i, %.thread56.i.i
-  %.sink63.i.i = phi i8 [ %6, %.thread56.i.i ], [ %5, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.thread.i.i ], [ %5, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.thread32.i.i ], [ %5, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.i.i ], [ %5, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.i.i ]
+  %.sink63.i.i = phi i32 [ %6, %.thread56.i.i ], [ %5, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.thread.i.i ], [ %5, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.thread32.i.i ], [ %5, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.i.i ], [ %5, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.i.i ]
   %.sink.i.i = phi i32 [ %i.t, %.thread56.i.i ], [ 8193, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.thread.i.i ], [ 8193, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.thread32.i.i ], [ 8193, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit23.i.i ], [ 8193, %_ZN6hermes6bigint7compareENS0_18ImmutableBigIntRefEl.exit.i.i ] ; 2 uses
-  %7 = zext nneg i8 %.sink63.i.i to i32
-  %.not.i.not = icmp eq i32 %0, %7                ; 2 uses
+  %.not.i.not = icmp eq i32 %0, %.sink63.i.i      ; 2 uses
   %i.u = add i32 %.sink.i.i, 63
   %i.v = lshr i32 %i.u, 6
   %.0.i.i = select i1 %.not.i.not, i32 %i.v, i32 0

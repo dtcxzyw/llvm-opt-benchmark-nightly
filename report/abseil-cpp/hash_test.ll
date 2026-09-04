@@ -204,8 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = icmp ugt i64 %2, %i.d
   %.neg.i.i.i.i = sext i1 %i.e to i64
   %i.f = add nsw i64 %i.c, %.neg.i.i.i.i
-  %7 = and i64 %i.f, 4294967295
-  %i.g = lshr i64 -1, %7
+  %i.g = lshr i64 -1, %i.f
   store i64 0, ptr %6, align 8
   %.sroa.speculated.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.g, i64 281474976710655)
   call void @_ZN4absl12lts_2026052618container_internal45ReserveEmptyNonAllocatedTableToFitBucketCountERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEm(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dereferenceable(72) @_ZZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS0_13flat_hash_setIiNS0_13hash_internal4HashIiEESt8equal_toIiESaIiEEEEEJEE18GetPolicyFunctionsEvE5value, i64 noundef %.sroa.speculated.i.i.i)
@@ -608,8 +607,7 @@ bb.c:                                             ; preds = %bb.b
   %i.h = icmp ugt i64 %i.e, %i.g
   %.neg.i.i = sext i1 %i.h to i64
   %i.i = add nsw i64 %i.f, %.neg.i.i
-  %9 = and i64 %i.i, 4294967295
-  %i.j = lshr i64 -1, %9
+  %i.j = lshr i64 -1, %i.i
   br label %_ZN4absl12lts_2026052618container_internal29SelectBucketCountForIterRangeIPKiEEmT_S5_m.exit
 
 _ZN4absl12lts_2026052618container_internal29SelectBucketCountForIterRangeIPKiEEmT_S5_m.exit: ; preds = %bb.a, %bb.c

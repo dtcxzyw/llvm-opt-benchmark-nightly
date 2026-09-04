@@ -202,7 +202,7 @@ bb.a:
   br i1 %.not37, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %i.k = getelementptr i8, ptr %2, i64 20
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
   br label %bb.b
@@ -211,9 +211,7 @@ bb.b:                                             ; preds = %.lr.ph, %addDatum.e
   %.039 = phi i16 [ 0, %.lr.ph ], [ %.1, %addDatum.exit ] ; 3 uses
   %.03238 = phi i16 [ %3, %.lr.ph ], [ %i.aw, %addDatum.exit ] ; 2 uses
   %i.n = zext nneg i16 %.03238 to i64
-  %5 = add nuw nsw i64 %i.n, 4294967295
-  %6 = and i64 %5, 4294967295
-  %i.o = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %6
+  %i.o = getelementptr [4 x i8], ptr %i.k, i64 %i.n
   %.val34 = load i32, ptr %i.o, align 4
   %i.p = and i32 %.val34, 32767
   %i.q = zext nneg i32 %i.p to i64

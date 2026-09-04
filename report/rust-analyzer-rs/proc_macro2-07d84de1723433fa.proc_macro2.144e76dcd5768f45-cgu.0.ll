@@ -161,7 +161,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.08.0.ph = phi i32 [ %i.v, %bb.k ], [ 0, %bb.b ] ; 3 uses
   %.not = icmp eq i32 %.sroa.08.0.ph, 0
   %i.e = call { i64, i32 } @_RNvXs0_NtNtNtCshzWfHUSfYae_4core4iter6traits8iteratorQNtNtNtBb_3str4iter11CharIndicesNtB5_8Iterator4nextCs1K5DUQUZc67_11proc_macro2(ptr nonnull align 8 %i.a) #15
-  %i.f = extractvalue { i64, i32 } %i.e, 1        ; 8 uses
+  %i.f = extractvalue { i64, i32 } %i.e, 1        ; 7 uses
   %.not16 = icmp eq i32 %i.f, -1                  ; 2 uses
   br i1 %.not, label %.outer.split, label %.outer.split.us
 
@@ -169,10 +169,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not16, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.outer.split.us, %bb.f
-  %i.g = phi i32 [ %i.l, %bb.f ], [ %i.f, %.outer.split.us ] ; 7 uses
-  %i.h = add i32 %i.g, -48
+  %i.g = phi i32 [ %i.l, %bb.f ], [ %i.f, %.outer.split.us ] ; 6 uses
+  %i.h = add i32 %i.g, -48                        ; 2 uses
   %or.cond.us = icmp ult i32 %i.h, 10
-  br i1 %or.cond.us, label %.split.us, label %bb.c
+  br i1 %or.cond.us, label %bb.j, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
   %i.i = add i32 %i.g, -97
@@ -200,19 +200,14 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not16, label %.loopexit, label %bb.g
 
 bb.g:                                             ; preds = %.outer.split
-  %i.m = add i32 %i.f, -48
+  %i.m = add i32 %i.f, -48                        ; 2 uses
   %or.cond = icmp ult i32 %i.m, 10
-  br i1 %or.cond, label %.split.us, label %bb.h
+  br i1 %or.cond, label %bb.k, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.n = add i32 %i.f, -97
   %or.cond1 = icmp ult i32 %i.n, 6
   br i1 %or.cond1, label %.split27.us, label %bb.i
-
-.split.us:                                        ; preds = %.lr.ph, %bb.g
-  %.us-phi = phi i32 [ %i.f, %bb.g ], [ %i.g, %.lr.ph ]
-  %1 = add nuw nsw i32 %.us-phi, 208
-  br label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   %i.o = add i32 %i.f, -65
@@ -221,12 +216,12 @@ bb.i:                                             ; preds = %bb.h
 
 .split27.us:                                      ; preds = %bb.c, %bb.h
   %.us-phi28 = phi i32 [ %i.f, %bb.h ], [ %i.g, %bb.c ]
-  %i.p = add nuw nsw i32 %.us-phi28, 169
+  %i.p = add nsw i32 %.us-phi28, -87
   br label %bb.j
 
 .split30.us:                                      ; preds = %bb.d, %bb.i
   %.us-phi31 = phi i32 [ %i.f, %bb.i ], [ %i.g, %bb.d ]
-  %i.q = add nuw nsw i32 %.us-phi31, 201
+  %i.q = add nsw i32 %.us-phi31, -55
   br label %bb.j
 
 .split33.us:                                      ; preds = %bb.e
@@ -234,15 +229,15 @@ bb.i:                                             ; preds = %bb.h
   %i.s = call i32 @_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptioncE5ok_orNtNtCs1K5DUQUZc67_11proc_macro25parse6RejectEBU_(i32 %i.r) #15
   br label %.loopexit
 
-bb.j:                                             ; preds = %.split30.us, %.split27.us, %.split.us
-  %.sroa.015.0 = phi i32 [ %1, %.split.us ], [ %i.p, %.split27.us ], [ %i.q, %.split30.us ]
+bb.j:                                             ; preds = %.lr.ph, %.split30.us, %.split27.us
+  %.sroa.015.0 = phi i32 [ %i.q, %.split30.us ], [ %i.p, %.split27.us ], [ %i.h, %.lr.ph ]
   %i.t = icmp eq i32 %.sroa.08.0.ph, 6
   br i1 %i.t, label %.loopexit, label %bb.k
 
-bb.k:                                             ; preds = %bb.j
-  %2 = shl i32 %.sroa.05.0.ph, 4
-  %3 = and i32 %.sroa.015.0, 255
-  %i.u = add nuw nsw i32 %3, %2
+bb.k:                                             ; preds = %bb.g, %bb.j
+  %.sroa.015.069 = phi i32 [ %.sroa.015.0, %bb.j ], [ %i.m, %bb.g ]
+  %1 = shl i32 %.sroa.05.0.ph, 4
+  %i.u = add nuw nsw i32 %.sroa.015.069, %1
   %i.v = add nuw nsw i32 %.sroa.08.0.ph, 1
   br label %.outer
 }
