@@ -2,7 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 1244
 inline.NumDeleted: 622
 loop-unroll.NumCompletelyUnrolled: 10
-loop-unroll.NumUnrolled: 12
+loop-unroll.NumUnrolled: 13
 begin_hunk_0_@_GLOBAL__sub_I_test_merge.cpp:bb.a
   %exitcond.not.i.i.i.i.i = icmp eq i64 %i.m, 624
   br i1 %exitcond.not.i.i.i.i.i, label %bb.g, label %bb.f
@@ -204,24 +204,8 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %exitcond.not.i.i, label %.preheader6.i.i, label %bb.k, !llvm.loop !292
 
 .preheader.i.i:                                   ; preds = %bb.r
-  %i.dr = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_12cdE, i64 48), align 8, !tbaa !59
-  br label %vector.body168
-
-vector.body168:                                   ; preds = %vector.body168, %.preheader.i.i
-  %index169 = phi i64 [ 0, %.preheader.i.i ], [ %index.next170, %vector.body168 ] ; 2 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %.preheader.i.i ], [ %vec.ind.next, %vector.body168 ] ; 3 uses
-  %14 = mul nuw nsw <2 x i64> %vec.ind, splat (i64 456)
-  %15 = mul nuw <2 x i64> %vec.ind, splat (i64 456)
-  %16 = add nuw nsw <2 x i64> %14, splat (i64 123)
-  %17 = add nuw <2 x i64> %15, splat (i64 1035)
-  %18 = getelementptr inbounds nuw [8 x i8], ptr %i.dr, i64 %index169 ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %18, i64 16
-  store <2 x i64> %16, ptr %18, align 8, !tbaa !55
-  store <2 x i64> %17, ptr %19, align 8, !tbaa !55
-  %index.next170 = add nuw i64 %index169, 4       ; 2 uses
-  %vec.ind.next = add nuw <2 x i64> %vec.ind, splat (i64 4)
-  %20 = icmp eq i64 %index.next170, 1000
-  br i1 %20, label %middle.block171, label %vector.body168, !llvm.loop !293
+  %i.dr = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_12cdE, i64 48), align 8, !tbaa !59 ; 5 uses
+  br label %14
 
 bb.o:                                             ; preds = %bb.r, %.preheader6.i.i
   %i.ds = phi i64 [ %i.ct, %.preheader6.i.i ], [ %i.fx, %bb.r ]
@@ -268,7 +252,7 @@ vector.body157:                                   ; preds = %vector.body157, %ve
   store <2 x i64> %i.ek, ptr %i.dx, align 8, !tbaa !55
   %index.next163 = add nuw i64 %index158, 2       ; 2 uses
   %i.el = icmp eq i64 %index.next163, 226
-  br i1 %i.el, label %vector.ph146, label %vector.body157, !llvm.loop !294
+  br i1 %i.el, label %vector.ph146, label %vector.body157, !llvm.loop !293
 
 vector.ph146:                                     ; preds = %vector.body157
   %vector.recur.extract165 = extractelement <2 x i64> %wide.load161, i64 1
@@ -310,7 +294,7 @@ vector.body147:                                   ; preds = %vector.body147, %ve
   store <2 x i64> %i.fj, ptr %i.ex, align 8, !tbaa !55
   %index.next153 = add nuw i64 %index148, 2       ; 2 uses
   %i.fk = icmp eq i64 %index.next153, 396
-  br i1 %i.fk, label %_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv.exit.i54.i.i, label %vector.body147, !llvm.loop !295
+  br i1 %i.fk, label %_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv.exit.i54.i.i, label %vector.body147, !llvm.loop !294
 
 _ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE11_M_gen_randEv.exit.i54.i.i: ; preds = %vector.body147
   %i.fl = load i64, ptr %i.ab, align 8, !tbaa !55
@@ -365,12 +349,42 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   store float %i.gs, ptr %i.gt, align 4, !tbaa !159
   %i.gu = add nuw nsw i64 %.01211.i.i, 1          ; 2 uses
   %exitcond16.not.i.i = icmp eq i64 %i.gu, 6400
-  br i1 %exitcond16.not.i.i, label %.preheader.i.i, label %bb.o, !llvm.loop !296
+  br i1 %exitcond16.not.i.i, label %.preheader.i.i, label %bb.o, !llvm.loop !295
 
-middle.block171:                                  ; preds = %vector.body168
+middle.block171:                                  ; preds = %14
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #26
   invoke void @_ZN5faiss12IndexIVFFlatC1EPNS_5IndexEmmNS_10MetricTypeEb(ptr noundef nonnull align 8 dereferenceable(273) %13, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_12cdE, i64 72), i64 noundef 64, i64 noundef 40, i32 noundef 1, i1 noundef zeroext true)
           to label %bb.s unwind label %bb.t
+
+14:                                               ; preds = %14, %.preheader.i.i
+  %.012.i.i = phi i64 [ 0, %.preheader.i.i ], [ %34, %14 ] ; 7 uses
+  %15 = mul nuw nsw i64 %.012.i.i, 456
+  %16 = add nuw nsw i64 %15, 123
+  %17 = getelementptr inbounds nuw [8 x i8], ptr %i.dr, i64 %.012.i.i
+  store i64 %16, ptr %17, align 8, !tbaa !55
+  %18 = add nuw nsw i64 %.012.i.i, 1              ; 2 uses
+  %19 = mul nuw nsw i64 %18, 456
+  %20 = add nuw nsw i64 %19, 123
+  %21 = getelementptr inbounds nuw [8 x i8], ptr %i.dr, i64 %18
+  store i64 %20, ptr %21, align 8, !tbaa !55
+  %22 = add nuw nsw i64 %.012.i.i, 2              ; 2 uses
+  %23 = mul nuw nsw i64 %22, 456
+  %24 = add nuw nsw i64 %23, 123
+  %25 = getelementptr inbounds nuw [8 x i8], ptr %i.dr, i64 %22
+  store i64 %24, ptr %25, align 8, !tbaa !55
+  %26 = add nuw nsw i64 %.012.i.i, 3              ; 2 uses
+  %27 = mul nuw nsw i64 %26, 456
+  %28 = add nuw nsw i64 %27, 123
+  %29 = getelementptr inbounds nuw [8 x i8], ptr %i.dr, i64 %26
+  store i64 %28, ptr %29, align 8, !tbaa !55
+  %30 = add nuw nsw i64 %.012.i.i, 4              ; 2 uses
+  %31 = mul nuw nsw i64 %30, 456
+  %32 = add nuw nsw i64 %31, 123
+  %33 = getelementptr inbounds nuw [8 x i8], ptr %i.dr, i64 %30
+  store i64 %32, ptr %33, align 8, !tbaa !55
+  %34 = add nuw nsw i64 %.012.i.i, 5              ; 2 uses
+  %exitcond17.not.i.i.4 = icmp eq i64 %34, 1000
+  br i1 %exitcond17.not.i.i.4, label %middle.block171, label %14, !llvm.loop !296
 
 bb.s:                                             ; preds = %middle.block171
   %i.gv = load ptr, ptr @_ZN12_GLOBAL__N_12cdE, align 8, !tbaa !53
@@ -774,7 +788,7 @@ begin_hunk_1_@llvm.log.f80
 !292 = distinct !{!292, !96}
 !293 = distinct !{!293, !96, !300, !301}
 !294 = distinct !{!294, !96, !300, !301}
-!295 = distinct !{!295, !96, !300, !301}
+!295 = distinct !{!295, !96}
 !296 = distinct !{!296, !96}
 !297 = !{!58, !57, i64 8}
 !298 = !{!"_ZTSSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE", !11, i64 0, !15, i64 4992}

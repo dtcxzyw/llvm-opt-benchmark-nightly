@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 3537
 inline.NumDeleted: 780
 loop-unroll.NumCompletelyUnrolled: 17
-loop-unroll.NumRuntimeUnrolled: 11
-loop-unroll.NumUnrolled: 28
+loop-unroll.NumRuntimeUnrolled: 12
+loop-unroll.NumUnrolled: 29
 begin_hunk_0_@_ZN6casadi8Sparsity11enlargeRowsExRKSt6vectorIxSaIxEEb:bb.a
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i40: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39
@@ -205,7 +205,7 @@ define void @_ZN6casadi8Sparsity4diagExx(ptr dead_on_unwind noalias writable sre
 bb.a:
   %3 = alloca %"class.std::vector.3", align 8     ; 12 uses
   %4 = alloca %"class.std::vector.3", align 8     ; 9 uses
-  %.sroa.speculated = tail call i64 @llvm.smin.i64(i64 %2, i64 %1) ; 8 uses
+  %.sroa.speculated = tail call i64 @llvm.smin.i64(i64 %2, i64 %1) ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
   %i.a = add nsw i64 %2, 1                        ; 4 uses
   %i.b = icmp ugt i64 %i.a, 1152921504606846975
@@ -225,54 +225,56 @@ _ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i: ; preds = %_ZNSt6vectorIxSaI
 
 .noexc10:                                         ; preds = %_ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i
   %i.c = shl nuw nsw i64 %i.a, 3                  ; 2 uses
-  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #32 ; 8 uses
+  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #32 ; 7 uses
   store ptr %i.d, ptr %3, align 8, !tbaa !36
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.a
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16
   store ptr %i.e, ptr %i.f, align 8, !tbaa !37
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.c ; 3 uses
-  %i.h = and i64 %2, 2305843009213693951          ; 2 uses
-  %i.i = add nuw nsw i64 %i.h, 1                  ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.h, 3
-  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, label %vector.ph
+  %i.h = and i64 %2, 2305843009213693951
+  %i.i = add i64 %2, 1
+  %xtraiter = and i64 %i.i, 7                     ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, label %vector.body.a
 
-vector.ph:                                        ; preds = %.noexc10
-  %n.vec = and i64 %i.i, 4611686018427387900      ; 3 uses
-  %5 = shl i64 %n.vec, 3
-  %6 = getelementptr i8, ptr %i.d, i64 %5
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %.sroa.speculated, i64 0
-  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  br label %vector.body.a
+vector.body.a:                                    ; preds = %.noexc10, %vector.body.a
+  %.06.i.i.i.i.i.i.i.i.i.prol = phi ptr [ %5, %vector.body.a ], [ %i.d, %.noexc10 ] ; 2 uses
+  %prol.iter = phi i64 [ %index.next.a, %vector.body.a ], [ 0, %.noexc10 ]
+  store i64 %.sroa.speculated, ptr %.06.i.i.i.i.i.i.i.i.i.prol, align 8, !tbaa !39
+  %5 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i.prol, i64 8 ; 2 uses
+  %index.next.a = add i64 %prol.iter, 1           ; 2 uses
+  %i.j = icmp eq i64 %index.next.a, %xtraiter
+  br i1 %i.j, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, label %vector.body.a, !llvm.loop !273
 
-vector.body.a:                                    ; preds = %vector.body.a, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next.a, %vector.body.a ] ; 2 uses
-  %7 = shl i64 %index, 3
-  %next.gep = getelementptr i8, ptr %i.d, i64 %7  ; 2 uses
-  %8 = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %broadcast.splat, ptr %next.gep, align 8, !tbaa !39
-  store <2 x i64> %broadcast.splat, ptr %8, align 8, !tbaa !39
-  %index.next.a = add nuw i64 %index, 4           ; 2 uses
-  %i.j = icmp eq i64 %index.next.a, %n.vec
-  br i1 %i.j, label %middle.block, label %vector.body.a, !llvm.loop !273
-
-middle.block:                                     ; preds = %vector.body.a
-  %cmp.n = icmp eq i64 %i.i, %n.vec
-  br i1 %cmp.n, label %.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader
-
-.lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %.noexc10, %middle.block
-  %.06.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.d, %.noexc10 ], [ %6, %middle.block ]
-  br label %.lr.ph.i.i.i.i.i.i.i.i.i
+.lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %vector.body.a, %.noexc10
+  %.06.i.i.i.i.i.i.i.i.i.ph = phi ptr [ %i.d, %.noexc10 ], [ %5, %vector.body.a ]
+  %6 = icmp samesign ult i64 %i.h, 7
+  br i1 %6, label %.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i.i.i
-  %.06.i.i.i.i.i.i.i.i.i = phi ptr [ %i.k, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %.06.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.preheader ] ; 2 uses
+  %.06.i.i.i.i.i.i.i.i.i = phi ptr [ %i.k, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %.06.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.preheader ] ; 9 uses
   store i64 %.sroa.speculated, ptr %.06.i.i.i.i.i.i.i.i.i, align 8, !tbaa !39
-  %i.k = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 8 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 8
+  store i64 %.sroa.speculated, ptr %7, align 8, !tbaa !39
+  %8 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 16
+  store i64 %.sroa.speculated, ptr %8, align 8, !tbaa !39
+  %9 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 24
+  store i64 %.sroa.speculated, ptr %9, align 8, !tbaa !39
+  %10 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 32
+  store i64 %.sroa.speculated, ptr %10, align 8, !tbaa !39
+  %11 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 40
+  store i64 %.sroa.speculated, ptr %11, align 8, !tbaa !39
+  %12 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 48
+  store i64 %.sroa.speculated, ptr %12, align 8, !tbaa !39
+  %13 = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 56
+  store i64 %.sroa.speculated, ptr %13, align 8, !tbaa !39
+  %i.k = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i.i.i.i.i.i, i64 64 ; 2 uses
   %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.k, %i.g
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i, !llvm.loop !274
 
-.loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %middle.block, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i
-  %i.l = phi ptr [ null, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i ], [ %i.d, %middle.block ], [ %i.d, %.lr.ph.i.i.i.i.i.i.i.i.i ] ; 2 uses
-  %.0.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i ], [ %i.g, %middle.block ], [ %i.g, %.lr.ph.i.i.i.i.i.i.i.i.i ]
+.loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i.i.i, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i
+  %i.l = phi ptr [ null, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i ], [ %i.d, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %i.d, %.lr.ph.i.i.i.i.i.i.i.i.i.preheader ] ; 2 uses
+  %.0.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i ], [ %i.g, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %i.g, %.lr.ph.i.i.i.i.i.i.i.i.i.preheader ]
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %.0.i.i.i.i.i.i.i, ptr %i.m, align 8, !tbaa !40
   %i.n = icmp sgt i64 %.sroa.speculated, 0
@@ -675,8 +677,8 @@ begin_hunk_1_@bcmp
 !270 = distinct !{!270, !"_ZN6casadi6strvecB5cxx11Ev"}
 !271 = distinct !{!271, !270, !"_ZN6casadi6strvecB5cxx11Ev: argument 0"}
 !272 = !{!271}
-!273 = distinct !{!273, !33, !44, !45}
-!274 = distinct !{!274, !33, !45, !44}
+!273 = distinct !{!273, !43}
+!274 = distinct !{!274, !33}
 !275 = distinct !{!275, !33, !44, !45}
 !276 = distinct !{!276, !33, !45, !44}
 !277 = distinct !{!277, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_OS8_"}

@@ -202,11 +202,10 @@ bb.b:                                             ; preds = %bb.a, %switch.looku
   %i.c = srem i32 %1, 10
   %i.d = shl nsw i32 %i.c, 8
   %i.e = add nsw i32 %i.d, 12288
-  %3 = and i32 %i.e, 65280
   %i.f = sdiv i32 %1, 10
   %i.g = add nsw i32 %i.f, 48
   %i.h = and i32 %i.g, 255
-  %i.i = or disjoint i32 %3, %i.h
+  %i.i = or disjoint i32 %i.e, %i.h
   %i.j = or disjoint i32 %i.i, %.sink
   ret i32 %i.j
 }
@@ -229,11 +228,13 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.k = srem i32 %1, 10
+  %3 = shl nsw i32 %i.k, 8
+  %4 = add nsw i32 %3, 12288                      ; 2 uses
   %i.l = sdiv i32 %1, 10
   %i.m = trunc i32 %i.l to i8
   %i.n = add i8 %i.m, 48
-  %3 = trunc nsw i32 %i.k to i8
-  %4 = add nsw i8 %3, 48
+  %5 = lshr exact i32 %4, 8
+  %6 = trunc nuw nsw i32 %5 to i8
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 64
   %wide.trip.count = and i64 %i.h, 2147483647
   %switch.tableidx = add i32 %2, -1               ; 2 uses
@@ -256,20 +257,21 @@ switch.lookup:                                    ; preds = %bb.b
   br label %_ZN2cv17AVIWriteContainer11getAVIIndexEiNS_10StreamTypeE.exit
 
 _ZN2cv17AVIWriteContainer11getAVIIndexEiNS_10StreamTypeE.exit: ; preds = %bb.b, %switch.lookup
-  %.sink.i = phi i32 [ %switch.load, %switch.lookup ], [ 1650720768, %bb.b ] ; 2 uses
+  %.sink.i = phi i32 [ %switch.load, %switch.lookup ], [ 1650720768, %bb.b ]
+  %7 = or i32 %.sink.i, %4                        ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 552 ; 7 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !111
   store i8 %i.n, ptr %i.t, align 1, !tbaa !33
   %i.u = load ptr, ptr %i.s, align 8, !tbaa !111
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 1
-  store i8 %4, ptr %i.v, align 1, !tbaa !33
-  %i.w = lshr exact i32 %.sink.i, 16
+  store i8 %6, ptr %i.v, align 1, !tbaa !33
+  %i.w = lshr i32 %7, 16
   %i.x = trunc i32 %i.w to i8
   %i.y = load ptr, ptr %i.s, align 8, !tbaa !111
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 2
   store i8 %i.x, ptr %i.z, align 1, !tbaa !33
-  %i.aa = lshr i32 %.sink.i, 24
-  %i.ab = trunc nuw nsw i32 %i.aa to i8
+  %i.aa = lshr i32 %7, 24
+  %i.ab = trunc nuw i32 %i.aa to i8
   %i.ac = load ptr, ptr %i.s, align 8, !tbaa !111
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 3
   store i8 %i.ab, ptr %i.ad, align 1, !tbaa !33

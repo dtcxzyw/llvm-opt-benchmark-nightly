@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.a
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = sub i64 %i.n, %i.o
-  %i.q = sdiv exact i64 %i.p, 72                  ; 3 uses
-  %i.r = trunc i64 %i.q to i32                    ; 8 uses
+  %i.q = sdiv exact i64 %i.p, 72                  ; 7 uses
+  %i.r = trunc i64 %i.q to i32                    ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 236 ; 5 uses
   %i.t = load i32, ptr %i.s, align 4, !tbaa !45   ; 3 uses
   %.not.i222 = icmp eq i32 %i.t, 0
@@ -252,9 +252,11 @@ switch.lookup:                                    ; preds = %bb.e
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4ncnn18MultiHeadAttention12forward_int8ERKSt6vectorINS_3MatESaIS2_EERS4_RKNS_6OptionE.5, i64 %i.z
   %switch.load = load i8, ptr %switch.gep, align 1
   %narrow = add nsw i64 %i.q, 4294967293
-  %switch.offset.a = and i64 %narrow, 4294967295
-  %switch.offset342 = add nsw i32 %i.r, -2
-  %switch.offset343 = add nsw i32 %i.r, -1
+  %switch.offset = and i64 %narrow, 4294967295
+  %narrow362 = add nsw i64 %i.q, 4294967294
+  %switch.offset.a = and i64 %narrow362, 4294967295
+  %narrow363 = add nsw i64 %i.q, 4294967295
+  %switch.offset345 = and i64 %narrow363, 4294967295
   br label %bb.l
 
 switch.lookup352:                                 ; preds = %bb.h
@@ -268,9 +270,9 @@ switch.lookup352:                                 ; preds = %bb.h
 bb.l:                                             ; preds = %switch.lookup352, %bb.h, %switch.lookup, %bb.e
   %.0237.ph.shrunk = phi i8 [ 0, %bb.h ], [ %switch.load, %switch.lookup ], [ 0, %bb.e ], [ %switch.load354, %switch.lookup352 ] ; 2 uses
   %.0236.ph = phi i32 [ 0, %bb.h ], [ %switch.tableidx, %switch.lookup ], [ 0, %bb.e ], [ %switch.tableidx351, %switch.lookup352 ] ; 3 uses
-  %.0235.ph = phi i64 [ 0, %bb.h ], [ %switch.offset.a, %switch.lookup ], [ 0, %bb.e ], [ %switch.offset357, %switch.lookup352 ]
-  %.0234.ph = phi i32 [ 0, %bb.h ], [ %switch.offset342, %switch.lookup ], [ 0, %bb.e ], [ 0, %switch.lookup352 ] ; 2 uses
-  %.0.ph = phi i32 [ 0, %bb.h ], [ %switch.offset343, %switch.lookup ], [ 0, %bb.e ], [ 0, %switch.lookup352 ] ; 2 uses
+  %.0235.ph = phi i64 [ 0, %bb.h ], [ %switch.offset, %switch.lookup ], [ 0, %bb.e ], [ %switch.offset357, %switch.lookup352 ]
+  %.0234.ph = phi i64 [ 0, %bb.h ], [ %switch.offset.a, %switch.lookup ], [ 0, %bb.e ], [ 0, %switch.lookup352 ] ; 2 uses
+  %.0.ph = phi i64 [ 0, %bb.h ], [ %switch.offset345, %switch.lookup ], [ 0, %bb.e ], [ 0, %switch.lookup352 ] ; 2 uses
   %.0237.ph = zext i8 %.0237.ph.shrunk to i32     ; 2 uses
   %i.ab = zext i8 %.0237.ph.shrunk to i64
   %i.ac = getelementptr inbounds nuw [72 x i8], ptr %i.m, i64 %i.ab ; 2 uses
@@ -319,15 +321,17 @@ switch.lookup345:                                 ; preds = %bb.f
   %switch.gep346 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4ncnn18MultiHeadAttention12forward_int8ERKSt6vectorINS_3MatESaIS2_EERS4_RKNS_6OptionE.5, i64 %i.bc
   %switch.load347 = load i8, ptr %switch.gep346, align 1
   %switch.ext348 = zext i8 %switch.load347 to i32
-  %switch.offset349 = add nsw i32 %i.r, -2
-  %switch.offset350 = add nsw i32 %i.r, -1
+  %narrow364 = add nsw i64 %i.q, 4294967294
+  %switch.offset352 = and i64 %narrow364, 4294967295
+  %narrow365 = add nsw i64 %i.q, 4294967295
+  %switch.offset354 = and i64 %narrow365, 4294967295
   br label %bb.n
 
 bb.n:                                             ; preds = %switch.lookup345, %bb.f, %bb.k, %bb.j, %bb.i
   %.0237 = phi i32 [ 0, %bb.i ], [ 0, %bb.f ], [ 1, %bb.j ], [ 1, %bb.k ], [ %switch.ext348, %switch.lookup345 ] ; 2 uses
   %.0236 = phi i32 [ 0, %bb.i ], [ 0, %bb.f ], [ 1, %bb.j ], [ 2, %bb.k ], [ %switch.tableidx344, %switch.lookup345 ] ; 2 uses
-  %.0234 = phi i32 [ 0, %bb.i ], [ 0, %bb.f ], [ 0, %bb.j ], [ 0, %bb.k ], [ %switch.offset349, %switch.lookup345 ]
-  %.0 = phi i32 [ 0, %bb.i ], [ 0, %bb.f ], [ 0, %bb.j ], [ 0, %bb.k ], [ %switch.offset350, %switch.lookup345 ]
+  %.0234 = phi i64 [ 0, %bb.i ], [ 0, %bb.f ], [ 0, %bb.j ], [ 0, %bb.k ], [ %switch.offset352, %switch.lookup345 ]
+  %.0 = phi i64 [ 0, %bb.i ], [ 0, %bb.f ], [ 0, %bb.j ], [ 0, %bb.k ], [ %switch.offset354, %switch.lookup345 ]
   %i.bd = zext nneg i32 %.0237 to i64
   %i.be = getelementptr inbounds nuw [72 x i8], ptr %i.m, i64 %i.bd
   %i.bf = zext nneg i32 %.0236 to i64
@@ -344,8 +348,8 @@ _ZN4ncnn3Mat6addrefEv.exit:                       ; preds = %bb.m, %bb.l, %bb.n
   %i.bj = phi i32 [ %i.t, %bb.n ], [ %i.t, %bb.l ], [ %.pre, %bb.m ]
   %i.bk = phi ptr [ %i.bg, %bb.n ], [ %i.ae, %bb.l ], [ %i.ae, %bb.m ]
   %i.bl = phi ptr [ %i.be, %bb.n ], [ %i.ac, %bb.l ], [ %i.ac, %bb.m ] ; 2 uses
-  %.0251 = phi i32 [ %.0, %bb.n ], [ %.0.ph, %bb.l ], [ %.0.ph, %bb.m ]
-  %.0234249 = phi i32 [ %.0234, %bb.n ], [ %.0234.ph, %bb.l ], [ %.0234.ph, %bb.m ]
+  %.0251 = phi i64 [ %.0, %bb.n ], [ %.0.ph, %bb.l ], [ %.0.ph, %bb.m ]
+  %.0234249 = phi i64 [ %.0234, %bb.n ], [ %.0234.ph, %bb.l ], [ %.0234.ph, %bb.m ]
   %.0236246 = phi i32 [ %.0236, %bb.n ], [ %.0236.ph, %bb.l ], [ %.0236.ph, %bb.m ]
   %.0237244 = phi i32 [ %.0237, %bb.n ], [ %.0237.ph, %bb.l ], [ %.0237.ph, %bb.m ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
@@ -353,9 +357,8 @@ _ZN4ncnn3Mat6addrefEv.exit:                       ; preds = %bb.m, %bb.l, %bb.n
   br i1 %.not64, label %_ZN4ncnn3Mat6addrefEv.exit219.thread, label %bb.o
 
 bb.o:                                             ; preds = %_ZN4ncnn3Mat6addrefEv.exit
-  %12 = zext nneg i32 %.0234249 to i64
   %i.bm = load ptr, ptr %1, align 8, !tbaa !55
-  %i.bn = getelementptr inbounds nuw [72 x i8], ptr %i.bm, i64 %12 ; 8 uses
+  %i.bn = getelementptr inbounds nuw [72 x i8], ptr %i.bm, i64 %.0234249 ; 8 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !18 ; 2 uses
   %i.bq = load <2 x ptr>, ptr %i.bn, align 8, !tbaa !47
@@ -408,9 +411,8 @@ _ZN4ncnn3Mat6addrefEv.exit219:                    ; preds = %bb.o
   br i1 %i.cm, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %_ZN4ncnn3Mat6addrefEv.exit219.thread336, %_ZN4ncnn3Mat6addrefEv.exit219
-  %13 = zext nneg i32 %.0251 to i64
   %i.cn = load ptr, ptr %1, align 8, !tbaa !55
-  %i.co = getelementptr inbounds nuw [72 x i8], ptr %i.cn, i64 %13 ; 8 uses
+  %i.co = getelementptr inbounds nuw [72 x i8], ptr %i.cn, i64 %.0251 ; 8 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 8
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !18 ; 2 uses
   %i.cr = load <2 x ptr>, ptr %i.co, align 8, !tbaa !47
@@ -813,8 +815,8 @@ bb.a:
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = ptrtoint ptr %i.m to i64
   %i.p = sub i64 %i.n, %i.o
-  %i.q = sdiv exact i64 %i.p, 72                  ; 3 uses
-  %i.r = trunc i64 %i.q to i32                    ; 8 uses
+  %i.q = sdiv exact i64 %i.p, 72                  ; 7 uses
+  %i.r = trunc i64 %i.q to i32                    ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 236 ; 5 uses
   %i.t = load i32, ptr %i.s, align 4, !tbaa !45   ; 3 uses
   %.not.i314 = icmp eq i32 %i.t, 0
@@ -861,9 +863,11 @@ switch.lookup:                                    ; preds = %bb.c
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4ncnn18MultiHeadAttention12forward_int8ERKSt6vectorINS_3MatESaIS2_EERS4_RKNS_6OptionE.5, i64 %i.z
   %switch.load = load i8, ptr %switch.gep, align 1
   %narrow = add nsw i64 %i.q, 4294967293
-  %switch.offset.a = and i64 %narrow, 4294967295
-  %switch.offset470 = add nsw i32 %i.r, -2
-  %switch.offset471 = add nsw i32 %i.r, -1
+  %switch.offset = and i64 %narrow, 4294967295
+  %narrow490 = add nsw i64 %i.q, 4294967294
+  %switch.offset.a = and i64 %narrow490, 4294967295
+  %narrow491 = add nsw i64 %i.q, 4294967295
+  %switch.offset473 = and i64 %narrow491, 4294967295
   br label %bb.j
 
 switch.lookup480:                                 ; preds = %bb.f
@@ -877,9 +881,9 @@ switch.lookup480:                                 ; preds = %bb.f
 bb.j:                                             ; preds = %switch.lookup480, %bb.f, %switch.lookup, %bb.c
   %.0329.ph.shrunk = phi i8 [ 0, %bb.f ], [ %switch.load, %switch.lookup ], [ 0, %bb.c ], [ %switch.load482, %switch.lookup480 ] ; 2 uses
   %.0328.ph = phi i32 [ 0, %bb.f ], [ %switch.tableidx, %switch.lookup ], [ 0, %bb.c ], [ %switch.tableidx479, %switch.lookup480 ] ; 3 uses
-  %.0327.ph = phi i64 [ 0, %bb.f ], [ %switch.offset.a, %switch.lookup ], [ 0, %bb.c ], [ %switch.offset485, %switch.lookup480 ]
-  %.0326.ph = phi i32 [ 0, %bb.f ], [ %switch.offset470, %switch.lookup ], [ 0, %bb.c ], [ 0, %switch.lookup480 ] ; 2 uses
-  %.0.ph = phi i32 [ 0, %bb.f ], [ %switch.offset471, %switch.lookup ], [ 0, %bb.c ], [ 0, %switch.lookup480 ] ; 2 uses
+  %.0327.ph = phi i64 [ 0, %bb.f ], [ %switch.offset, %switch.lookup ], [ 0, %bb.c ], [ %switch.offset485, %switch.lookup480 ]
+  %.0326.ph = phi i64 [ 0, %bb.f ], [ %switch.offset.a, %switch.lookup ], [ 0, %bb.c ], [ 0, %switch.lookup480 ] ; 2 uses
+  %.0.ph = phi i64 [ 0, %bb.f ], [ %switch.offset473, %switch.lookup ], [ 0, %bb.c ], [ 0, %switch.lookup480 ] ; 2 uses
   %.0329.ph = zext i8 %.0329.ph.shrunk to i32     ; 2 uses
   %i.ab = zext i8 %.0329.ph.shrunk to i64
   %i.ac = getelementptr inbounds nuw [72 x i8], ptr %i.m, i64 %i.ab ; 2 uses
@@ -928,15 +932,17 @@ switch.lookup473:                                 ; preds = %bb.d
   %switch.gep474 = getelementptr inbounds nuw i8, ptr @switch.table._ZNK4ncnn18MultiHeadAttention12forward_int8ERKSt6vectorINS_3MatESaIS2_EERS4_RKNS_6OptionE.5, i64 %i.bc
   %switch.load475 = load i8, ptr %switch.gep474, align 1
   %switch.ext476 = zext i8 %switch.load475 to i32
-  %switch.offset477 = add nsw i32 %i.r, -2
-  %switch.offset478 = add nsw i32 %i.r, -1
+  %narrow492 = add nsw i64 %i.q, 4294967294
+  %switch.offset480 = and i64 %narrow492, 4294967295
+  %narrow493 = add nsw i64 %i.q, 4294967295
+  %switch.offset482 = and i64 %narrow493, 4294967295
   br label %bb.l
 
 bb.l:                                             ; preds = %switch.lookup473, %bb.d, %bb.i, %bb.h, %bb.g
   %.0329 = phi i32 [ 0, %bb.g ], [ 0, %bb.d ], [ 1, %bb.h ], [ 1, %bb.i ], [ %switch.ext476, %switch.lookup473 ] ; 2 uses
   %.0328 = phi i32 [ 0, %bb.g ], [ 0, %bb.d ], [ 1, %bb.h ], [ 2, %bb.i ], [ %switch.tableidx472, %switch.lookup473 ] ; 2 uses
-  %.0326 = phi i32 [ 0, %bb.g ], [ 0, %bb.d ], [ 0, %bb.h ], [ 0, %bb.i ], [ %switch.offset477, %switch.lookup473 ]
-  %.0 = phi i32 [ 0, %bb.g ], [ 0, %bb.d ], [ 0, %bb.h ], [ 0, %bb.i ], [ %switch.offset478, %switch.lookup473 ]
+  %.0326 = phi i64 [ 0, %bb.g ], [ 0, %bb.d ], [ 0, %bb.h ], [ 0, %bb.i ], [ %switch.offset480, %switch.lookup473 ]
+  %.0 = phi i64 [ 0, %bb.g ], [ 0, %bb.d ], [ 0, %bb.h ], [ 0, %bb.i ], [ %switch.offset482, %switch.lookup473 ]
   %i.bd = zext nneg i32 %.0329 to i64
   %i.be = getelementptr inbounds nuw [72 x i8], ptr %i.m, i64 %i.bd
   %i.bf = zext nneg i32 %.0328 to i64
@@ -953,8 +959,8 @@ _ZN4ncnn3Mat6addrefEv.exit:                       ; preds = %bb.k, %bb.j, %bb.l
   %i.bj = phi i32 [ %i.t, %bb.l ], [ %i.t, %bb.j ], [ %.pre, %bb.k ]
   %i.bk = phi ptr [ %i.bg, %bb.l ], [ %i.ae, %bb.j ], [ %i.ae, %bb.k ]
   %i.bl = phi ptr [ %i.be, %bb.l ], [ %i.ac, %bb.j ], [ %i.ac, %bb.k ] ; 2 uses
-  %.0343 = phi i32 [ %.0, %bb.l ], [ %.0.ph, %bb.j ], [ %.0.ph, %bb.k ]
-  %.0326341 = phi i32 [ %.0326, %bb.l ], [ %.0326.ph, %bb.j ], [ %.0326.ph, %bb.k ]
+  %.0343 = phi i64 [ %.0, %bb.l ], [ %.0.ph, %bb.j ], [ %.0.ph, %bb.k ]
+  %.0326341 = phi i64 [ %.0326, %bb.l ], [ %.0326.ph, %bb.j ], [ %.0326.ph, %bb.k ]
   %.0328338 = phi i32 [ %.0328, %bb.l ], [ %.0328.ph, %bb.j ], [ %.0328.ph, %bb.k ]
   %.0329336 = phi i32 [ %.0329, %bb.l ], [ %.0329.ph, %bb.j ], [ %.0329.ph, %bb.k ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
@@ -962,9 +968,8 @@ _ZN4ncnn3Mat6addrefEv.exit:                       ; preds = %bb.k, %bb.j, %bb.l
   br i1 %.not69, label %_ZN4ncnn3Mat6addrefEv.exit309.thread, label %bb.m
 
 bb.m:                                             ; preds = %_ZN4ncnn3Mat6addrefEv.exit
-  %17 = zext nneg i32 %.0326341 to i64
   %i.bm = load ptr, ptr %1, align 8, !tbaa !55
-  %i.bn = getelementptr inbounds nuw [72 x i8], ptr %i.bm, i64 %17 ; 8 uses
+  %i.bn = getelementptr inbounds nuw [72 x i8], ptr %i.bm, i64 %.0326341 ; 8 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !18 ; 2 uses
   %i.bq = load <2 x ptr>, ptr %i.bn, align 8, !tbaa !47
@@ -1017,9 +1022,8 @@ _ZN4ncnn3Mat6addrefEv.exit309:                    ; preds = %bb.m
   br i1 %i.cm, label %bb.p, label %bb.n
 
 bb.n:                                             ; preds = %_ZN4ncnn3Mat6addrefEv.exit309.thread464, %_ZN4ncnn3Mat6addrefEv.exit309
-  %18 = zext nneg i32 %.0343 to i64
   %i.cn = load ptr, ptr %1, align 8, !tbaa !55
-  %i.co = getelementptr inbounds nuw [72 x i8], ptr %i.cn, i64 %18 ; 8 uses
+  %i.co = getelementptr inbounds nuw [72 x i8], ptr %i.cn, i64 %.0343 ; 8 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 8
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !18 ; 2 uses
   %i.cr = load <2 x ptr>, ptr %i.co, align 8, !tbaa !47

@@ -205,8 +205,8 @@ _ZN5ImGui17TabBarFindTabByIDEP11ImGuiTabBarj.exit.i: ; preds = %bb.y
 bb.z:                                             ; preds = %_ZN5ImGui17TabBarFindTabByIDEP11ImGuiTabBarj.exit.i
   %i.dq = trunc i64 %indvars.iv.i.i to i32
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.ds = load i16, ptr %i.dr, align 8, !tbaa !603 ; 2 uses
-  %i.dt = sext i16 %i.ds to i32                   ; 2 uses
+  %i.ds = load i16, ptr %i.dr, align 8, !tbaa !603 ; 3 uses
+  %i.dt = sext i16 %i.ds to i32
   %i.du = add nsw i32 %i.dt, %i.dq                ; 2 uses
   %or.cond.i = icmp ult i32 %i.du, %i.dg
   br i1 %or.cond.i, label %bb.aa, label %_ZN5ImGui20TabBarProcessReorderEP11ImGuiTabBar.exit.thread
@@ -234,8 +234,8 @@ bb.ac:                                            ; preds = %bb.ab
   %i.ee = select i1 %i.ec, ptr %i.ed, ptr %i.dw
   %i.ef = getelementptr inbounds nuw i8, ptr %i.dw, i64 44
   %i.eg = select i1 %i.ec, ptr %i.dk, ptr %i.ef
-  %9 = tail call i32 @llvm.abs.i32(i32 %i.dt, i1 true)
-  %i.eh = zext nneg i32 %9 to i64
+  %9 = tail call i16 @llvm.abs.i16(i16 %i.ds, i1 false)
+  %i.eh = zext i16 %9 to i64
   %i.ei = mul nuw nsw i64 %i.eh, 44
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.eg, ptr nonnull align 4 %i.ee, i64 %i.ei, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(41) %i.dw, ptr noundef nonnull align 4 dereferenceable(41) %6, i64 41, i1 false), !tbaa.struct !597
@@ -638,8 +638,8 @@ _ZN5ImGui17TabBarFindTabByIDEP11ImGuiTabBarj.exit: ; preds = %bb.c
 bb.d:                                             ; preds = %_ZN5ImGui17TabBarFindTabByIDEP11ImGuiTabBarj.exit
   %i.n = trunc i64 %indvars.iv.i to i32
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.p = load i16, ptr %i.o, align 8, !tbaa !603  ; 2 uses
-  %i.q = sext i16 %i.p to i32                     ; 2 uses
+  %i.p = load i16, ptr %i.o, align 8, !tbaa !603  ; 3 uses
+  %i.q = sext i16 %i.p to i32
   %i.r = add nsw i32 %i.n, %i.q                   ; 2 uses
   %or.cond = icmp ult i32 %i.r, %i.d
   br i1 %or.cond, label %bb.e, label %_ZN5ImGui17TabBarFindTabByIDEP11ImGuiTabBarj.exit.thread
@@ -667,8 +667,8 @@ bb.g:                                             ; preds = %bb.f
   %i.ab = select i1 %i.z, ptr %i.aa, ptr %i.t
   %i.ac = getelementptr inbounds nuw i8, ptr %i.t, i64 44
   %i.ad = select i1 %i.z, ptr %i.h, ptr %i.ac
-  %2 = tail call i32 @llvm.abs.i32(i32 %i.q, i1 true)
-  %i.ae = zext nneg i32 %2 to i64
+  %2 = tail call i16 @llvm.abs.i16(i16 %i.p, i1 false)
+  %i.ae = zext i16 %2 to i64
   %i.af = mul nuw nsw i64 %i.ae, 44
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.ad, ptr nonnull align 4 %i.ab, i64 %i.af, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(41) %i.t, ptr noundef nonnull align 4 dereferenceable(41) %1, i64 41, i1 false), !tbaa.struct !597
@@ -1070,6 +1070,9 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #39
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.abs.i64(i64, i1 immarg) #39
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.abs.i16(i16, i1 immarg) #39
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #4

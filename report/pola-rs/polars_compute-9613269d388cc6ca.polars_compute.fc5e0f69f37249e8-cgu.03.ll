@@ -204,7 +204,7 @@ iter.check:                                       ; preds = %bb.a
   %i.e = ptrtoint ptr %i.c to i64, !dbg !18298    ; 3 uses
   %i.f = ptrtoint ptr %i.a to i64, !dbg !18298    ; 4 uses
   %i.g = sub nuw i64 %i.e, %i.f, !dbg !18298      ; 8 uses
-  %min.iters.check = icmp ult i64 %i.g, 8, !dbg !18299
+  %min.iters.check = icmp ult i64 %i.g, 4, !dbg !18299
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck, !dbg !18299
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -218,7 +218,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check3, label %vec.epilog.ph, label %vector.ph, !dbg !18299
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.j = and i64 %i.g, 24
+  %i.j = and i64 %i.g, 28
   %n.vec = and i64 %i.g, -32                      ; 5 uses
   %i.k = add i64 %.sroa.5.0.copyload, %n.vec      ; 2 uses
   %i.l = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
@@ -248,7 +248,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !18300
-  %n.vec5 = and i64 %i.g, -8                      ; 4 uses
+  %n.vec5 = and i64 %i.g, -4                      ; 4 uses
   %i.r = add i64 %.sroa.5.0.copyload, %n.vec5     ; 2 uses
   %i.s = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
   br label %vec.epilog.vector.body
@@ -256,10 +256,10 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index6 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next8, %vec.epilog.vector.body ], !dbg !18300 ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 %index6, !dbg !18301
-  %wide.load7 = load <8 x i8>, ptr %i.t, align 1, !dbg !18302, !noalias !18287
+  %wide.load7 = load <4 x i8>, ptr %i.t, align 1, !dbg !18302, !noalias !18287
   %i.u = getelementptr i8, ptr %i.s, i64 %index6, !dbg !18303
-  store <8 x i8> %wide.load7, ptr %i.u, align 1, !dbg !18304, !noalias !18288
-  %index.next8 = add nuw i64 %index6, 8, !dbg !18300 ; 2 uses
+  store <4 x i8> %wide.load7, ptr %i.u, align 1, !dbg !18304, !noalias !18288
+  %index.next8 = add nuw i64 %index6, 4, !dbg !18300 ; 2 uses
   %i.v = icmp eq i64 %index.next8, %n.vec5, !dbg !18305
   br i1 %i.v, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !dbg !18305, !llvm.loop !18276
 
@@ -662,19 +662,24 @@ vector.memcheck:                                  ; preds = %bb.b
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph, !dbg !20424
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.h, 4611686018427387900      ; 4 uses
+  %n.vec = and i64 %i.h, 4611686018427387896      ; 4 uses
   %i.k = add i64 %.sroa.5.0.copyload, %n.vec      ; 2 uses
   %i.l = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
   br label %vector.body, !dbg !20424
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ], !dbg !20424 ; 3 uses
-  %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index, !dbg !20425
-  %wide.load.a = load <4 x float>, ptr %i.m, align 4, !dbg !20426, !alias.scope !20408, !noalias !20409
+  %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index, !dbg !20425 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.m, i64 16, !dbg !20426
+  %wide.load = load <4 x float>, ptr %i.m, align 4, !dbg !20426, !alias.scope !20408, !noalias !20409
+  %wide.load.a = load <4 x float>, ptr %2, align 4, !dbg !20426, !alias.scope !20408, !noalias !20409
+  %3 = tail call <4 x i8> @llvm.fptoui.sat.v4i8.v4f32(<4 x float> %wide.load), !dbg !20427
   %i.n = tail call <4 x i8> @llvm.fptoui.sat.v4i8.v4f32(<4 x float> %wide.load.a), !dbg !20427
-  %i.o = getelementptr i8, ptr %i.l, i64 %index, !dbg !20428
+  %4 = getelementptr i8, ptr %i.l, i64 %index, !dbg !20428 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 4, !dbg !20429
+  store <4 x i8> %3, ptr %4, align 1, !dbg !20429, !alias.scope !20410, !noalias !20411
   store <4 x i8> %i.n, ptr %i.o, align 1, !dbg !20429, !alias.scope !20410, !noalias !20411
-  %index.next = add nuw i64 %index, 4, !dbg !20424 ; 2 uses
+  %index.next = add nuw i64 %index, 8, !dbg !20424 ; 2 uses
   %i.p = icmp eq i64 %index.next, %n.vec, !dbg !20430
   br i1 %i.p, label %middle.block, label %vector.body, !dbg !20430, !llvm.loop !20398
 
@@ -1077,7 +1082,7 @@ iter.check:                                       ; preds = %bb.a
   %i.e = ptrtoint ptr %i.c to i64, !dbg !21298    ; 3 uses
   %i.f = ptrtoint ptr %i.a to i64, !dbg !21298    ; 4 uses
   %i.g = sub nuw i64 %i.e, %i.f, !dbg !21298      ; 8 uses
-  %min.iters.check = icmp ult i64 %i.g, 8, !dbg !21299
+  %min.iters.check = icmp ult i64 %i.g, 4, !dbg !21299
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck, !dbg !21299
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -1091,7 +1096,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check3, label %vec.epilog.ph, label %vector.ph, !dbg !21299
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.j = and i64 %i.g, 24
+  %i.j = and i64 %i.g, 28
   %n.vec = and i64 %i.g, -32                      ; 5 uses
   %i.k = add i64 %.sroa.5.0.copyload, %n.vec      ; 2 uses
   %i.l = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
@@ -1121,7 +1126,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ], !dbg !21300
-  %n.vec5 = and i64 %i.g, -8                      ; 4 uses
+  %n.vec5 = and i64 %i.g, -4                      ; 4 uses
   %i.r = add i64 %.sroa.5.0.copyload, %n.vec5     ; 2 uses
   %i.s = getelementptr i8, ptr %.sroa.7.0.copyload, i64 %.sroa.5.0.copyload
   br label %vec.epilog.vector.body
@@ -1129,10 +1134,10 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index6 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next8, %vec.epilog.vector.body ], !dbg !21300 ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 %index6, !dbg !21301
-  %wide.load7 = load <8 x i8>, ptr %i.t, align 1, !dbg !21302, !noalias !21287
+  %wide.load7 = load <4 x i8>, ptr %i.t, align 1, !dbg !21302, !noalias !21287
   %i.u = getelementptr i8, ptr %i.s, i64 %index6, !dbg !21303
-  store <8 x i8> %wide.load7, ptr %i.u, align 1, !dbg !21304, !noalias !21288
-  %index.next8 = add nuw i64 %index6, 8, !dbg !21300 ; 2 uses
+  store <4 x i8> %wide.load7, ptr %i.u, align 1, !dbg !21304, !noalias !21288
+  %index.next8 = add nuw i64 %index6, 4, !dbg !21300 ; 2 uses
   %i.v = icmp eq i64 %index.next8, %n.vec5, !dbg !21305
   br i1 %i.v, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !dbg !21305, !llvm.loop !21276
 
@@ -1535,7 +1540,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = ptrtoint ptr %i.a to i64, !dbg !28224
   %i.g = sub nuw i64 %i.e, %i.f, !dbg !28224      ; 4 uses
   %i.h = lshr i64 %i.g, 1, !dbg !28224            ; 5 uses
-  %min.iters.check = icmp ult i64 %i.g, 32, !dbg !28225
+  %min.iters.check = icmp ult i64 %i.g, 28, !dbg !28225
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck, !dbg !28225
 
 vector.memcheck:                                  ; preds = %bb.b
@@ -1667,7 +1672,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = ptrtoint ptr %i.a to i64, !dbg !28312
   %i.g = sub nuw i64 %i.e, %i.f, !dbg !28312      ; 4 uses
   %i.h = lshr i64 %i.g, 1, !dbg !28312            ; 5 uses
-  %min.iters.check = icmp ult i64 %i.g, 32, !dbg !28313
+  %min.iters.check = icmp ult i64 %i.g, 28, !dbg !28313
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck, !dbg !28313
 
 vector.memcheck:                                  ; preds = %bb.b
@@ -2070,7 +2075,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = ptrtoint ptr %i.a to i64, !dbg !31479
   %i.g = sub nuw i64 %i.e, %i.f, !dbg !31479      ; 4 uses
   %i.h = lshr i64 %i.g, 3, !dbg !31479            ; 5 uses
-  %min.iters.check = icmp ult i64 %i.g, 64, !dbg !31480
+  %min.iters.check = icmp ult i64 %i.g, 48, !dbg !31480
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck, !dbg !31480
 
 vector.memcheck:                                  ; preds = %bb.b
@@ -2473,7 +2478,7 @@ begin_hunk_5_@llvm.fptoui.sat.v4i16.v4f32
 !983 = !DINamespace(name: "{impl#60}", scope: !804)
 !984 = !DILexicalBlockFile(scope: !424, file: !792, discriminator: 0)
 !985 = !DILexicalBlockFile(scope: !428, file: !792, discriminator: 0)
-!986 = !{!"branch_weights", i32 8, i32 24}
+!986 = !{!"branch_weights", i32 4, i32 28}
 !987 = !{!"branch_weights", i32 4, i32 12}
 !988 = !DILexicalBlockFile(scope: !440, file: !792, discriminator: 0)
 !989 = !DILexicalBlockFile(scope: !444, file: !792, discriminator: 0)
@@ -2876,15 +2881,15 @@ begin_hunk_6_@llvm.fptoui.sat.v4i16.v4f32
 !20386 = distinct !DILocation(line: 88, column: 21, scope: !20378, inlinedAt: !20379)
 !20387 = distinct !DILocation(line: 884, column: 29, scope: !20385, inlinedAt: !20386)
 !20388 = distinct !DILocation(line: 4029, column: 36, scope: !20384, inlinedAt: !20387)
-!20389 = distinct !{!20389, !20371}
-!20390 = distinct !{!20390, !"_RNCINvNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map8map_foldRfhuNCINvNtNtCs8774dFTUdNv_12polars_arrow7compute5arity5unaryfNvYfINtNtCslmKYcnV0hjo_10num_traits4cast11AsPrimitivehE3as_hE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callhNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB3X_3VechE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter4IterfEBY_EE0E0E0CslFlrwjHoTci_14polars_compute"}
-!20391 = distinct !{!20391, !20390, !"_RNCINvNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map8map_foldRfhuNCINvNtNtCs8774dFTUdNv_12polars_arrow7compute5arity5unaryfNvYfINtNtCslmKYcnV0hjo_10num_traits4cast11AsPrimitivehE3as_hE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callhNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB3X_3VechE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter4IterfEBY_EE0E0E0CslFlrwjHoTci_14polars_compute: argument 0"}
-!20392 = distinct !{!20392, !"_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator8for_each4callhNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB1p_3VechE14extend_trustedINtNtNtBc_8adapters3map3MapINtNtNtBe_5slice4iter4IterfENCINvNtNtCs8774dFTUdNv_12polars_arrow7compute5arity5unaryfNvYfINtNtCslmKYcnV0hjo_10num_traits4cast11AsPrimitivehE3as_hE0EE0E0CslFlrwjHoTci_14polars_compute"}
-!20393 = distinct !{!20393, !20392, !"_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator8for_each4callhNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB1p_3VechE14extend_trustedINtNtNtBc_8adapters3map3MapINtNtNtBe_5slice4iter4IterfENCINvNtNtCs8774dFTUdNv_12polars_arrow7compute5arity5unaryfNvYfINtNtCslmKYcnV0hjo_10num_traits4cast11AsPrimitivehE3as_hE0EE0E0CslFlrwjHoTci_14polars_compute: argument 0"}
-!20394 = distinct !{!20394, !"_RNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB8_3VechE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB19_5slice4iter4IterfENCINvNtNtCs8774dFTUdNv_12polars_arrow7compute5arity5unaryfNvYfINtNtCslmKYcnV0hjo_10num_traits4cast11AsPrimitivehE3as_hE0EE0CslFlrwjHoTci_14polars_compute"}
-!20395 = distinct !{!20395, !20394, !"_RNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB8_3VechE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB19_5slice4iter4IterfENCINvNtNtCs8774dFTUdNv_12polars_arrow7compute5arity5unaryfNvYfINtNtCslmKYcnV0hjo_10num_traits4cast11AsPrimitivehE3as_hE0EE0CslFlrwjHoTci_14polars_compute: argument 0"}
-!20396 = distinct !DISubprogram(name: "write<u8>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr5writehECslFlrwjHoTci_14polars_compute", scope: !597, file: !595, line: 1898, type: !599, scopeLine: 1898, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !598)
-!20397 = distinct !DILocation(line: 4029, column: 21, scope: !20384, inlinedAt: !20387)
+!20389 = distinct !DISubprogram(name: "write<u8>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr5writehECslFlrwjHoTci_14polars_compute", scope: !597, file: !595, line: 1898, type: !599, scopeLine: 1898, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !598)
+!20390 = distinct !DILocation(line: 4029, column: 21, scope: !20384, inlinedAt: !20387)
+!20391 = distinct !{!20391, !20371}
+!20392 = distinct !{!20392, !"_RNCINvNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map8map_foldRfhuNCINvNtNtCs8774dFTUdNv_12polars_arrow7compute5arity5unaryfNvYfINtNtCslmKYcnV0hjo_10num_traits4cast11AsPrimitivehE3as_hE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callhNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB3X_3VechE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter4IterfEBY_EE0E0E0CslFlrwjHoTci_14polars_compute"}
+!20393 = distinct !{!20393, !20392, !"_RNCINvNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map8map_foldRfhuNCINvNtNtCs8774dFTUdNv_12polars_arrow7compute5arity5unaryfNvYfINtNtCslmKYcnV0hjo_10num_traits4cast11AsPrimitivehE3as_hE0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callhNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB3X_3VechE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter4IterfEBY_EE0E0E0CslFlrwjHoTci_14polars_compute: argument 0"}
+!20394 = distinct !{!20394, !"_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator8for_each4callhNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB1p_3VechE14extend_trustedINtNtNtBc_8adapters3map3MapINtNtNtBe_5slice4iter4IterfENCINvNtNtCs8774dFTUdNv_12polars_arrow7compute5arity5unaryfNvYfINtNtCslmKYcnV0hjo_10num_traits4cast11AsPrimitivehE3as_hE0EE0E0CslFlrwjHoTci_14polars_compute"}
+!20395 = distinct !{!20395, !20394, !"_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator8for_each4callhNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB1p_3VechE14extend_trustedINtNtNtBc_8adapters3map3MapINtNtNtBe_5slice4iter4IterfENCINvNtNtCs8774dFTUdNv_12polars_arrow7compute5arity5unaryfNvYfINtNtCslmKYcnV0hjo_10num_traits4cast11AsPrimitivehE3as_hE0EE0E0CslFlrwjHoTci_14polars_compute: argument 0"}
+!20396 = distinct !{!20396, !"_RNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB8_3VechE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB19_5slice4iter4IterfENCINvNtNtCs8774dFTUdNv_12polars_arrow7compute5arity5unaryfNvYfINtNtCslmKYcnV0hjo_10num_traits4cast11AsPrimitivehE3as_hE0EE0CslFlrwjHoTci_14polars_compute"}
+!20397 = distinct !{!20397, !20396, !"_RNCINvMsj_NtCsgZ49sUHp3tW_5alloc3vecINtB8_3VechE14extend_trustedINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB19_5slice4iter4IterfENCINvNtNtCs8774dFTUdNv_12polars_arrow7compute5arity5unaryfNvYfINtNtCslmKYcnV0hjo_10num_traits4cast11AsPrimitivehE3as_hE0EE0CslFlrwjHoTci_14polars_compute: argument 0"}
 !20398 = distinct !{!20398, !894, !895}
 !20399 = distinct !DISubprogram(name: "increment_len", linkageName: "_RNvMNtNtCsgZ49sUHp3tW_5alloc3vec15set_len_on_dropNtB2_12SetLenOnDrop13increment_len", scope: !775, file: !773, line: 18, type: !599, scopeLine: 18, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !598)
 !20400 = distinct !DILocation(line: 4033, column: 31, scope: !20384, inlinedAt: !20387)
@@ -2897,9 +2902,9 @@ begin_hunk_6_@llvm.fptoui.sat.v4i16.v4f32
 !20407 = !DILocation(line: 128, column: 30, scope: !20349)
 !20408 = !{!20372}
 !20409 = !{!20374}
-!20410 = !{!20389}
-!20411 = !{!20395, !20393, !20391, !20374, !20372}
-!20412 = !{!20395, !20393, !20391, !20374}
+!20410 = !{!20391}
+!20411 = !{!20397, !20395, !20393, !20374, !20372}
+!20412 = !{!20397, !20395, !20393, !20374}
 !20413 = !DILocation(line: 289, column: 13, scope: !20352, inlinedAt: !20355)
 !20414 = !DILocation(line: 810, column: 1, scope: !20404, inlinedAt: !20413)
 !20415 = !DILocation(line: 810, column: 1, scope: !20405, inlinedAt: !20414)
@@ -2916,7 +2921,7 @@ begin_hunk_6_@llvm.fptoui.sat.v4i16.v4f32
 !20426 = !DILocation(line: 279, column: 27, scope: !20369, inlinedAt: !20355)
 !20427 = !DILocation(line: 742, column: 44, scope: !20375, inlinedAt: !20382)
 !20428 = !DILocation(line: 961, column: 18, scope: !20383, inlinedAt: !20388)
-!20429 = !DILocation(line: 1921, column: 41, scope: !20396, inlinedAt: !20397)
+!20429 = !DILocation(line: 1921, column: 41, scope: !20389, inlinedAt: !20390)
 !20430 = !DILocation(line: 284, column: 24, scope: !20369, inlinedAt: !20355)
 !20431 = !DILocation(line: 19, column: 9, scope: !20399, inlinedAt: !20400)
 !20432 = !DILocation(line: 898, column: 17, scope: !20401, inlinedAt: !20402)

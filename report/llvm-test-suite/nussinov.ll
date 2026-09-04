@@ -109,7 +109,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #13
   store ptr null, ptr %i.c, align 8, !tbaa !11
   %i.d = call i32 @posix_memalign(ptr noundef nonnull %i.c, i64 noundef 4096, i64 noundef 2500) #13
-  %i.e = load ptr, ptr %i.c, align 8, !tbaa !11   ; 10 uses
+  %i.e = load ptr, ptr %i.c, align 8, !tbaa !11   ; 16 uses
   %i.f = icmp eq ptr %i.e, null
   %i.g = icmp ne i32 %i.d, 0
   %or.cond.i.i = select i1 %i.f, i1 true, i1 %i.g
@@ -174,7 +174,13 @@ vector.body:                                      ; preds = %vector.body, %iter.
 
 vec.epilog.vector.body:                           ; preds = %vector.body
   %i.aa = getelementptr inbounds nuw i8, ptr %i.e, i64 2496
-  store <4 x i8> <i8 1, i8 2, i8 3, i8 0>, ptr %i.aa, align 1, !tbaa !26
+  store i8 1, ptr %i.aa, align 1, !tbaa !26
+  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 2497
+  store i8 2, ptr %2, align 1, !tbaa !26
+  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 2498
+  store i8 3, ptr %3, align 1, !tbaa !26
+  %4 = getelementptr inbounds nuw i8, ptr %i.e, i64 2499
+  store i8 0, ptr %4, align 1, !tbaa !26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(25000000) %i.k, i8 0, i64 25000000, i1 false), !tbaa !7
   br label %bb.e
 
@@ -300,7 +306,13 @@ vector.body96:                                    ; preds = %._crit_edge135.i, %
 
 vec.epilog.vector.body110:                        ; preds = %vector.body96
   %i.bt = getelementptr inbounds nuw i8, ptr %i.e, i64 2496
-  store <4 x i8> <i8 1, i8 2, i8 3, i8 0>, ptr %i.bt, align 1, !tbaa !26
+  store i8 1, ptr %i.bt, align 1, !tbaa !26
+  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 2497
+  store i8 2, ptr %5, align 1, !tbaa !26
+  %6 = getelementptr inbounds nuw i8, ptr %i.e, i64 2498
+  store i8 3, ptr %6, align 1, !tbaa !26
+  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 2499
+  store i8 0, ptr %7, align 1, !tbaa !26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(25000000) %i.q, i8 0, i64 25000000, i1 false), !tbaa !7
   br label %bb.h
 

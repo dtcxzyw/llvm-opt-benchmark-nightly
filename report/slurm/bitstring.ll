@@ -202,8 +202,8 @@ bb.h:                                             ; preds = %.lr.ph
   %i.ax = load i64, ptr %i.al, align 8
   %i.ay = and i64 %.06391, 63
   %i.az = lshr i64 %i.ax, %i.ay
-  %2 = trunc i64 %i.az to i8
-  %spec.select = and i8 %2, 1                     ; 3 uses
+  %2 = trunc i64 %i.az to i32
+  %spec.select = and i32 %2, 1                    ; 3 uses
   %i.ba = add nsw i64 %.06391, 1                  ; 3 uses
   %i.bb = icmp slt i64 %i.ba, %.061
   br i1 %i.bb, label %bb.i, label %bb.j
@@ -217,12 +217,12 @@ bb.i:                                             ; preds = %bb.h
   %i.bh = shl nuw i64 1, %i.bg
   %i.bi = and i64 %i.bf, %i.bh
   %.not77 = icmp eq i64 %i.bi, 0
-  %3 = or disjoint i8 %spec.select, 2
-  %spec.select80 = select i1 %.not77, i8 %spec.select, i8 %3
+  %3 = or disjoint i32 %spec.select, 2
+  %spec.select80 = select i1 %.not77, i32 %spec.select, i32 %3
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %.165 = phi i8 [ %spec.select, %bb.h ], [ %spec.select80, %bb.i ] ; 3 uses
+  %.165 = phi i32 [ %spec.select, %bb.h ], [ %spec.select80, %bb.i ] ; 3 uses
   %i.bj = add nsw i64 %.06391, 2                  ; 3 uses
   %i.bk = icmp slt i64 %i.bj, %.061
   br i1 %i.bk, label %bb.k, label %bb.l
@@ -236,12 +236,12 @@ bb.k:                                             ; preds = %bb.j
   %i.bq = shl nuw i64 1, %i.bp
   %i.br = and i64 %i.bo, %i.bq
   %.not78 = icmp eq i64 %i.br, 0
-  %4 = or i8 %.165, 4
-  %spec.select81 = select i1 %.not78, i8 %.165, i8 %4
+  %4 = or i32 %.165, 4
+  %spec.select81 = select i1 %.not78, i32 %.165, i32 %4
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %.2 = phi i8 [ %.165, %bb.j ], [ %spec.select81, %bb.k ] ; 3 uses
+  %.2 = phi i32 [ %.165, %bb.j ], [ %spec.select81, %bb.k ] ; 3 uses
   %i.bs = add nsw i64 %.06391, 3                  ; 3 uses
   %i.bt = icmp slt i64 %i.bs, %.061
   br i1 %i.bt, label %bb.m, label %bb.n
@@ -255,16 +255,18 @@ bb.m:                                             ; preds = %bb.l
   %i.bz = shl nuw i64 1, %i.by
   %i.ca = and i64 %i.bx, %i.bz
   %.not79 = icmp eq i64 %i.ca, 0
-  %5 = or i8 %.2, 8
-  %spec.select82 = select i1 %.not79, i8 %.2, i8 %5
+  %5 = or i32 %.2, 8
+  %spec.select82 = select i1 %.not79, i32 %.2, i32 %5
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %.3 = phi i8 [ %.2, %bb.l ], [ %spec.select82, %bb.m ] ; 3 uses
+  %.3 = phi i32 [ %.2, %bb.l ], [ %spec.select82, %bb.m ] ; 2 uses
   %i.cb = add nsw i64 %.06391, 4
-  %i.cc = icmp samesign ult i8 %.3, 10
-  %i.cd = or disjoint i8 %.3, 48
-  %i.ce = add nuw nsw i8 %.3, 55
+  %6 = and i32 %.3, 254
+  %i.cc = icmp samesign ult i32 %6, 10
+  %7 = trunc nuw nsw i32 %.3 to i8                ; 2 uses
+  %i.cd = or i8 %7, 48
+  %i.ce = add nuw nsw i8 %7, 55
   %.4 = select i1 %i.cc, i8 %i.cd, i8 %i.ce
   %i.cf = getelementptr inbounds i8, ptr %.06690, i64 -1
   store i8 %.4, ptr %.06690, align 1

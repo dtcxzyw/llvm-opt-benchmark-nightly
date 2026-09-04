@@ -205,7 +205,7 @@ _ZN2cv3Mat3ptrIfEEPT_ii.exit:                     ; preds = %.lr.ph, %middle.blo
   %.pn143.in.v = select i1 %i.hb, i64 128, i64 136
   %.pn143.in = getelementptr inbounds nuw i8, ptr %i.as, i64 %.pn143.in.v
   %.pn143 = load i64, ptr %.pn143.in, align 8, !tbaa !18 ; 6 uses
-  %.0.i = getelementptr inbounds nuw i8, ptr %i.au, i64 %.pn143 ; 14 uses
+  %.0.i = getelementptr inbounds nuw i8, ptr %i.au, i64 %.pn143 ; 15 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 2 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %0, i64 248
   %i.he = load ptr, ptr %i.hd, align 8, !tbaa !65
@@ -246,7 +246,7 @@ _ZN2cv3Mat3ptrIfEEPT_ii.exit:                     ; preds = %.lr.ph, %middle.blo
   %i.hv = getelementptr i8, ptr %i.au, i64 %.pn143
   %scevgep377 = getelementptr i8, ptr %i.hv, i64 %i.hu
   %scevgep379 = getelementptr i8, ptr %i.hf, i64 16
-  %min.iters.check384 = icmp ult i64 %i.hm, 20
+  %min.iters.check384 = icmp ult i64 %i.hm, 18
   %mul.result = shl i64 %i.hq, 4                  ; 3 uses
   %mul.overflow = icmp ugt i64 %i.hq, 1152921504606846975
   %n.vec386 = and i64 %i.hm, 2305843009213693948  ; 4 uses
@@ -294,24 +294,27 @@ vector.memcheck374:                               ; preds = %vector.scevcheck
 vector.ph385:                                     ; preds = %vector.memcheck374
   %i.ii = add i64 %.1199.us.us, %i.hw             ; 2 uses
   %i.ij = load float, ptr %i.hf, align 4, !tbaa !67, !alias.scope !180
-  %broadcast.splatinsert389 = insertelement <4 x float> poison, float %i.ij, i64 0
+  %broadcast.splatinsert389 = insertelement <2 x float> poison, float %i.ij, i64 0
   %i.ik = load float, ptr %i.hn, align 4, !tbaa !67, !alias.scope !180
-  %broadcast.splatinsert391 = insertelement <4 x float> poison, float %i.ik, i64 0
+  %broadcast.splatinsert391 = insertelement <2 x float> poison, float %i.ik, i64 0
   %i.il = load float, ptr %i.ho, align 4, !tbaa !67, !alias.scope !180
-  %broadcast.splatinsert393 = insertelement <4 x float> poison, float %i.il, i64 0
+  %broadcast.splatinsert393 = insertelement <2 x float> poison, float %i.il, i64 0
   %i.im = load float, ptr %i.hp, align 4, !tbaa !67, !alias.scope !180
-  %broadcast.splatinsert395 = insertelement <4 x float> poison, float %i.im, i64 0
-  %18 = getelementptr [4 x i8], ptr %.0.i, i64 %.1199.us.us
-  %19 = shufflevector <4 x float> %broadcast.splatinsert389, <4 x float> %broadcast.splatinsert391, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
-  %20 = shufflevector <4 x float> %broadcast.splatinsert393, <4 x float> %broadcast.splatinsert395, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
-  %interleaved.vec397 = shufflevector <8 x float> %19, <8 x float> %20, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
+  %broadcast.splatinsert395 = insertelement <2 x float> poison, float %i.im, i64 0
+  %18 = shufflevector <2 x float> %broadcast.splatinsert389, <2 x float> %broadcast.splatinsert391, <4 x i32> <i32 0, i32 0, i32 2, i32 2>
+  %19 = shufflevector <2 x float> %broadcast.splatinsert393, <2 x float> %broadcast.splatinsert395, <4 x i32> <i32 0, i32 0, i32 2, i32 2>
+  %interleaved.vec397 = shufflevector <4 x float> %18, <4 x float> %19, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 1, i32 3, i32 5, i32 7> ; 2 uses
   br label %vector.body387
 
 vector.body387:                                   ; preds = %vector.body387, %vector.ph385
   %index388 = phi i64 [ 0, %vector.ph385 ], [ %index.next398, %vector.body387 ] ; 2 uses
-  %.idx = shl i64 %index388, 4
-  %i.in = getelementptr i8, ptr %18, i64 %.idx
-  store <16 x float> %interleaved.vec397, ptr %i.in, align 4, !tbaa !67, !alias.scope !181, !noalias !180
+  %.idx = shl i64 %index388, 2
+  %20 = add i64 %.1199.us.us, %.idx               ; 2 uses
+  %21 = getelementptr inbounds [4 x i8], ptr %.0.i, i64 %20
+  %22 = getelementptr [4 x i8], ptr %.0.i, i64 %20
+  %i.in = getelementptr i8, ptr %22, i64 32
+  store <8 x float> %interleaved.vec397, ptr %21, align 4, !tbaa !67, !alias.scope !181, !noalias !180
+  store <8 x float> %interleaved.vec397, ptr %i.in, align 4, !tbaa !67, !alias.scope !181, !noalias !180
   %index.next398 = add nuw i64 %index388, 4       ; 2 uses
   %i.io = icmp eq i64 %index.next398, %n.vec386
   br i1 %i.io, label %middle.block399, label %vector.body387, !llvm.loop !162

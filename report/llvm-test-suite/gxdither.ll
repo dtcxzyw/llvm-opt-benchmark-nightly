@@ -200,35 +200,35 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   %.0202 = phi i16 [ %i.dk, %bb.q ], [ %i.co, %bb.p ] ; 2 uses
   %.0197 = phi i16 [ %i.dj, %bb.q ], [ %i.cu, %bb.p ] ; 8 uses
   %.0194 = phi i16 [ -1, %bb.q ], [ 1, %bb.p ]
-  %.0182 = phi i16 [ 30, %bb.q ], [ 0, %bb.p ]    ; 2 uses
+  %.0182 = phi i32 [ 30, %bb.q ], [ 0, %bb.p ]    ; 2 uses
   %i.dl = icmp slt i16 %i.cw, 0
   br i1 %i.dl, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
   %i.dm = xor i16 %i.cw, -1
   %i.dn = add nuw nsw i16 %i.cq, 1
-  %narrow = add nuw nsw i16 %.0182, 59
+  %narrow = add nuw nsw i32 %.0182, 59
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.r, %bb.s
   %.0200 = phi i16 [ %i.dn, %bb.s ], [ %i.cq, %bb.r ] ; 2 uses
   %.0196 = phi i16 [ %i.dm, %bb.s ], [ %i.cw, %bb.r ] ; 8 uses
   %.0192 = phi i16 [ -1, %bb.s ], [ 1, %bb.r ]
-  %.1 = phi i16 [ %narrow, %bb.s ], [ %.0182, %bb.r ] ; 2 uses
+  %.1 = phi i32 [ %narrow, %bb.s ], [ %.0182, %bb.r ] ; 2 uses
   %i.do = icmp slt i16 %i.cy, 0
   br i1 %i.do, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
   %i.dp = xor i16 %i.cy, -1
   %i.dq = add nuw nsw i16 %i.cs, 1
-  %3 = add nuw nsw i16 %.1, 11
+  %3 = add nuw nsw i32 %.1, 11
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.t, %bb.u
   %.0198 = phi i16 [ %i.dq, %bb.u ], [ %i.cs, %bb.t ] ; 2 uses
   %.0195 = phi i16 [ %i.dp, %bb.u ], [ %i.cy, %bb.t ] ; 9 uses
   %.0193 = phi i16 [ -1, %bb.u ], [ 1, %bb.t ]
-  %.2 = phi i16 [ %3, %bb.u ], [ %.1, %bb.t ]
+  %.2 = phi i32 [ %3, %bb.u ], [ %.1, %bb.t ]
   %i.dr = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 3 uses
   %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !45
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 40
@@ -353,8 +353,9 @@ bb.al:                                            ; preds = %bb.aj
   %i.fo = zext nneg i32 %.1184 to i64
   %i.fp = getelementptr inbounds nuw [2 x i8], ptr @lum, i64 %i.fo
   %i.fq = load i16, ptr %i.fp, align 2, !tbaa !54
-  %4 = icmp ult i16 %i.fq, %.2
-  br i1 %4, label %bb.am, label %bb.an
+  %4 = zext i16 %i.fq to i32
+  %5 = icmp samesign ugt i32 %.2, %4
+  br i1 %5, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %bb.al
   %i.fr = getelementptr inbounds nuw i8, ptr %1, i64 8
