@@ -98,7 +98,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = add i32 %i.h, -224
   %i.j = add i32 %i.h, -248
   %i.k = add i32 %i.h, -240
-  %i.l = add i64 %i.a, -8
+  %i.l = add i64 %i.a, -17
   br label %.preheader356.outer
 
 bb.c:                                             ; preds = %bb.bn
@@ -134,7 +134,7 @@ bb.e:                                             ; preds = %bb.c
   %.lcssa865 = phi i8 [ %i.mx, %.preheader356.outer ], [ %i.s, %.preheader356 ] ; 4 uses
   %.lcssa = zext i8 %.lcssa865 to i32             ; 14 uses
   %.1213452521.lcssa = ptrtoaddr ptr %.1213452.lcssa to i64 ; 6 uses
-  %.1249449526.lcssa = ptrtoaddr ptr %.1249449.ph to i64 ; 13 uses
+  %.1249449526.lcssa = ptrtoaddr ptr %.1249449.ph to i64 ; 12 uses
   %i.u = and i32 %.lcssa, 240                     ; 2 uses
   %i.v = icmp eq i32 %i.u, 0
   br i1 %i.v, label %bb.f, label %bb.u
@@ -537,10 +537,7 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bf
   br i1 %i.hd, label %iter.check842, label %.preheader351
 
 iter.check842:                                    ; preds = %.preheader353
-  %6 = add i64 %.1249449526.lcssa, 16
-  %umax823 = tail call i64 @llvm.umax.i64(i64 %i.l, i64 %6)
-  %7 = add i64 %umax823, -9
-  %i.he = sub i64 %7, %.1249449526.lcssa          ; 3 uses
+  %i.he = sub i64 %i.l, %.1249449526.lcssa        ; 3 uses
   %i.hf = lshr i64 %i.he, 3
   %i.hg = add nuw nsw i64 %i.hf, 1                ; 5 uses
   %min.iters.check824 = icmp ult i64 %i.he, 24

@@ -204,27 +204,23 @@ middle.block:                                     ; preds = %vector.body
 
 .preheader:                                       ; preds = %.lr.ph69.prol.loopexit, %.lr.ph69, %middle.block, %bb.r
   %.050.lcssa = phi ptr [ %i.aj, %bb.r ], [ %i.aw, %middle.block ], [ %.lcssa.unr, %.lr.ph69.prol.loopexit ], [ %i.db, %.lr.ph69 ] ; 6 uses
-  %.0.lcssa = phi i32 [ 0, %bb.r ], [ %.154, %middle.block ], [ %.154, %.lr.ph69 ], [ %.154, %.lr.ph69.prol.loopexit ] ; 8 uses
+  %.0.lcssa = phi i32 [ 0, %bb.r ], [ %.154, %middle.block ], [ %.154, %.lr.ph69 ], [ %.154, %.lr.ph69.prol.loopexit ] ; 6 uses
   %.157.lcssa = phi ptr [ %.15765, %bb.r ], [ %i.at, %middle.block ], [ %.157.lcssa117.unr, %.lr.ph69.prol.loopexit ], [ %.157.7, %.lr.ph69 ] ; 6 uses
   %i.bl = icmp slt i32 %.0.lcssa, %.052
   br i1 %i.bl, label %.lr.ph76.preheader, label %.loopexit
 
 .lr.ph76.preheader:                               ; preds = %.preheader
-  %4 = add nuw i32 %.0.lcssa, 2
-  %5 = tail call i32 @llvm.smax.i32(i32 %.052, i32 %4)
   %i.bm = xor i32 %.0.lcssa, -1
-  %i.bn = add i32 %5, %i.bm                       ; 2 uses
+  %i.bn = add i32 %.052, %i.bm                    ; 2 uses
   %i.bo = lshr i32 %i.bn, 1
   %narrow = add nuw i32 %i.bo, 1
   %i.bp = zext i32 %narrow to i64                 ; 2 uses
-  %min.iters.check100 = icmp ult i32 %i.bn, 30
+  %min.iters.check100 = icmp ult i32 %i.bn, 22
   br i1 %min.iters.check100, label %.lr.ph76.preheader115, label %vector.memcheck93
 
 vector.memcheck93:                                ; preds = %.lr.ph76.preheader
-  %6 = add nuw i32 %.0.lcssa, 2
-  %smax = tail call i32 @llvm.smax.i32(i32 %.052, i32 %6)
   %i.bq = xor i32 %.0.lcssa, -1
-  %i.br = add i32 %smax, %i.bq
+  %i.br = add i32 %.052, %i.bq
   %i.bs = lshr i32 %i.br, 1
   %i.bt = zext nneg i32 %i.bs to i64
   %i.bu = shl nuw nsw i64 %i.bt, 2

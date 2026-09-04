@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 3898
 inline.NumDeleted: 1811
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_ZNSt17_Function_handlerIFvRKSt6vectorISt4pairIidESaIS2_EEPdEZN8LightGBM9PredictorC1EPNS9_8BoostingEiibbbbidEUlS6_S7_E2_E9_M_invokeERKSt9_Any_dataS6_OS7_:bb.a
 
 ; Function Attrs: mustprogress uwtable
@@ -205,30 +205,69 @@ bb.a:
   br i1 %i.a, label %.lr.ph.i, label %_ZZN8LightGBM7Network17GlobalSyncUpByMinIiEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.b = sext i32 %2 to i64                       ; 3 uses
+  %i.b = sext i32 %2 to i64                       ; 7 uses
+  %4 = add nsw i32 %3, -1                         ; 2 uses
+  %5 = udiv i32 %4, %2                            ; 2 uses
+  %6 = add i32 %5, 1                              ; 2 uses
+  %7 = icmp ugt i32 %2, %4
+  br i1 %7, label %.epil.preheader, label %.lr.ph.i.new
+
+.lr.ph.i.new:                                     ; preds = %.lr.ph.i
+  %unroll_iter = and i32 %6, -2
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.d, %.lr.ph.i
-  %.018.i = phi i32 [ 0, %.lr.ph.i ], [ %i.h, %bb.d ]
-  %.01417.i.a = phi ptr [ %0, %.lr.ph.i ], [ %i.f, %bb.d ] ; 3 uses
-  %.01516.i = phi ptr [ %1, %.lr.ph.i ], [ %i.g, %bb.d ] ; 3 uses
-  %i.c = load i32, ptr %.01417.i.a, align 4, !tbaa !115
-  %i.d = load i32, ptr %.01516.i, align 4, !tbaa !115
+bb.b:                                             ; preds = %bb.d, %.lr.ph.i.new
+  %.01417.i = phi ptr [ %0, %.lr.ph.i.new ], [ %i.f, %bb.d ] ; 3 uses
+  %.01417.i.a = phi ptr [ %1, %.lr.ph.i.new ], [ %i.g, %bb.d ] ; 3 uses
+  %niter = phi i32 [ 0, %.lr.ph.i.new ], [ %i.h, %bb.d ]
+  %i.c = load i32, ptr %.01417.i, align 4, !tbaa !115
+  %i.d = load i32, ptr %.01417.i.a, align 4, !tbaa !115
   %i.e = icmp slt i32 %i.c, %i.d
-  br i1 %i.e, label %bb.c, label %bb.d
+  br i1 %i.e, label %8, label %9
 
-bb.c:                                             ; preds = %bb.b
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.01516.i, ptr nonnull align 4 %.01417.i.a, i64 %i.b, i1 false)
+8:                                                ; preds = %bb.b
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.01417.i.a, ptr nonnull align 4 %.01417.i, i64 %i.b, i1 false)
+  br label %9
+
+9:                                                ; preds = %8, %bb.b
+  %10 = getelementptr inbounds i8, ptr %.01417.i, i64 %i.b ; 3 uses
+  %11 = getelementptr inbounds i8, ptr %.01417.i.a, i64 %i.b ; 3 uses
+  %12 = load i32, ptr %10, align 4, !tbaa !115
+  %13 = load i32, ptr %11, align 4, !tbaa !115
+  %14 = icmp slt i32 %12, %13
+  br i1 %14, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %9
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %11, ptr nonnull align 4 %10, i64 %i.b, i1 false)
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.f = getelementptr inbounds i8, ptr %.01417.i.a, i64 %i.b
-  %i.g = getelementptr inbounds i8, ptr %.01516.i, i64 %i.b
-  %i.h = add nsw i32 %.018.i, %2                  ; 2 uses
-  %4 = icmp slt i32 %i.h, %3
-  br i1 %4, label %bb.b, label %_ZZN8LightGBM7Network17GlobalSyncUpByMinIiEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit, !llvm.loop !578
+bb.d:                                             ; preds = %bb.c, %9
+  %i.f = getelementptr inbounds i8, ptr %10, i64 %i.b ; 2 uses
+  %i.g = getelementptr inbounds i8, ptr %11, i64 %i.b ; 2 uses
+  %i.h = add i32 %niter, 2                        ; 2 uses
+  %niter.ncmp.1.not = icmp eq i32 %i.h, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %_ZZN8LightGBM7Network17GlobalSyncUpByMinIiEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit.loopexit.unr-lcssa, label %bb.b, !llvm.loop !578
 
-_ZZN8LightGBM7Network17GlobalSyncUpByMinIiEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit: ; preds = %bb.d, %bb.a
+_ZZN8LightGBM7Network17GlobalSyncUpByMinIiEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit.loopexit.unr-lcssa: ; preds = %bb.d
+  %15 = and i32 %5, 1
+  %lcmp.mod.not.not = icmp eq i32 %15, 0
+  br i1 %lcmp.mod.not.not, label %.epil.preheader, label %_ZZN8LightGBM7Network17GlobalSyncUpByMinIiEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit
+
+.epil.preheader:                                  ; preds = %_ZZN8LightGBM7Network17GlobalSyncUpByMinIiEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit.loopexit.unr-lcssa, %.lr.ph.i
+  %.01417.i.epil.init = phi ptr [ %0, %.lr.ph.i ], [ %i.f, %_ZZN8LightGBM7Network17GlobalSyncUpByMinIiEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit.loopexit.unr-lcssa ] ; 2 uses
+  %.01516.i.epil.init = phi ptr [ %1, %.lr.ph.i ], [ %i.g, %_ZZN8LightGBM7Network17GlobalSyncUpByMinIiEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod4 = trunc i32 %6 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod4)
+  %16 = load i32, ptr %.01417.i.epil.init, align 4, !tbaa !115
+  %17 = load i32, ptr %.01516.i.epil.init, align 4, !tbaa !115
+  %18 = icmp slt i32 %16, %17
+  br i1 %18, label %19, label %_ZZN8LightGBM7Network17GlobalSyncUpByMinIiEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit
+
+19:                                               ; preds = %.epil.preheader
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.01516.i.epil.init, ptr nonnull align 4 %.01417.i.epil.init, i64 %i.b, i1 false)
+  br label %_ZZN8LightGBM7Network17GlobalSyncUpByMinIiEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit
+
+_ZZN8LightGBM7Network17GlobalSyncUpByMinIiEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit: ; preds = %_ZZN8LightGBM7Network17GlobalSyncUpByMinIiEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit.loopexit.unr-lcssa, %19, %.epil.preheader, %bb.a
   ret void
 }
 
@@ -631,30 +670,69 @@ bb.a:
   br i1 %i.a, label %.lr.ph.i, label %_ZZN8LightGBM7Network17GlobalSyncUpByMinIdEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.b = sext i32 %2 to i64                       ; 3 uses
+  %i.b = sext i32 %2 to i64                       ; 7 uses
+  %4 = add nsw i32 %3, -1                         ; 2 uses
+  %5 = udiv i32 %4, %2                            ; 2 uses
+  %6 = add i32 %5, 1                              ; 2 uses
+  %7 = icmp ugt i32 %2, %4
+  br i1 %7, label %.epil.preheader, label %.lr.ph.i.new
+
+.lr.ph.i.new:                                     ; preds = %.lr.ph.i
+  %unroll_iter = and i32 %6, -2
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.d, %.lr.ph.i
-  %.018.i = phi i32 [ 0, %.lr.ph.i ], [ %i.h, %bb.d ]
-  %.01417.i.a = phi ptr [ %0, %.lr.ph.i ], [ %i.f, %bb.d ] ; 3 uses
-  %.01516.i = phi ptr [ %1, %.lr.ph.i ], [ %i.g, %bb.d ] ; 3 uses
-  %i.c = load double, ptr %.01417.i.a, align 8, !tbaa !121
-  %i.d = load double, ptr %.01516.i, align 8, !tbaa !121
+bb.b:                                             ; preds = %bb.d, %.lr.ph.i.new
+  %.01417.i = phi ptr [ %0, %.lr.ph.i.new ], [ %i.f, %bb.d ] ; 3 uses
+  %.01417.i.a = phi ptr [ %1, %.lr.ph.i.new ], [ %i.g, %bb.d ] ; 3 uses
+  %niter = phi i32 [ 0, %.lr.ph.i.new ], [ %i.h, %bb.d ]
+  %i.c = load double, ptr %.01417.i, align 8, !tbaa !121
+  %i.d = load double, ptr %.01417.i.a, align 8, !tbaa !121
   %i.e = fcmp olt double %i.c, %i.d
-  br i1 %i.e, label %bb.c, label %bb.d
+  br i1 %i.e, label %8, label %9
 
-bb.c:                                             ; preds = %bb.b
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.01516.i, ptr nonnull align 8 %.01417.i.a, i64 %i.b, i1 false)
+8:                                                ; preds = %bb.b
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.01417.i.a, ptr nonnull align 8 %.01417.i, i64 %i.b, i1 false)
+  br label %9
+
+9:                                                ; preds = %8, %bb.b
+  %10 = getelementptr inbounds i8, ptr %.01417.i, i64 %i.b ; 3 uses
+  %11 = getelementptr inbounds i8, ptr %.01417.i.a, i64 %i.b ; 3 uses
+  %12 = load double, ptr %10, align 8, !tbaa !121
+  %13 = load double, ptr %11, align 8, !tbaa !121
+  %14 = fcmp olt double %12, %13
+  br i1 %14, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %9
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %11, ptr nonnull align 8 %10, i64 %i.b, i1 false)
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.f = getelementptr inbounds i8, ptr %.01417.i.a, i64 %i.b
-  %i.g = getelementptr inbounds i8, ptr %.01516.i, i64 %i.b
-  %i.h = add nsw i32 %.018.i, %2                  ; 2 uses
-  %4 = icmp slt i32 %i.h, %3
-  br i1 %4, label %bb.b, label %_ZZN8LightGBM7Network17GlobalSyncUpByMinIdEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit, !llvm.loop !619
+bb.d:                                             ; preds = %bb.c, %9
+  %i.f = getelementptr inbounds i8, ptr %10, i64 %i.b ; 2 uses
+  %i.g = getelementptr inbounds i8, ptr %11, i64 %i.b ; 2 uses
+  %i.h = add i32 %niter, 2                        ; 2 uses
+  %niter.ncmp.1.not = icmp eq i32 %i.h, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %_ZZN8LightGBM7Network17GlobalSyncUpByMinIdEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit.loopexit.unr-lcssa, label %bb.b, !llvm.loop !619
 
-_ZZN8LightGBM7Network17GlobalSyncUpByMinIdEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit: ; preds = %bb.d, %bb.a
+_ZZN8LightGBM7Network17GlobalSyncUpByMinIdEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit.loopexit.unr-lcssa: ; preds = %bb.d
+  %15 = and i32 %5, 1
+  %lcmp.mod.not.not = icmp eq i32 %15, 0
+  br i1 %lcmp.mod.not.not, label %.epil.preheader, label %_ZZN8LightGBM7Network17GlobalSyncUpByMinIdEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit
+
+.epil.preheader:                                  ; preds = %_ZZN8LightGBM7Network17GlobalSyncUpByMinIdEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit.loopexit.unr-lcssa, %.lr.ph.i
+  %.01417.i.epil.init = phi ptr [ %0, %.lr.ph.i ], [ %i.f, %_ZZN8LightGBM7Network17GlobalSyncUpByMinIdEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit.loopexit.unr-lcssa ] ; 2 uses
+  %.01516.i.epil.init = phi ptr [ %1, %.lr.ph.i ], [ %i.g, %_ZZN8LightGBM7Network17GlobalSyncUpByMinIdEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod4 = trunc i32 %6 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod4)
+  %16 = load double, ptr %.01417.i.epil.init, align 8, !tbaa !121
+  %17 = load double, ptr %.01516.i.epil.init, align 8, !tbaa !121
+  %18 = fcmp olt double %16, %17
+  br i1 %18, label %19, label %_ZZN8LightGBM7Network17GlobalSyncUpByMinIdEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit
+
+19:                                               ; preds = %.epil.preheader
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.01516.i.epil.init, ptr nonnull align 8 %.01417.i.epil.init, i64 %i.b, i1 false)
+  br label %_ZZN8LightGBM7Network17GlobalSyncUpByMinIdEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit
+
+_ZZN8LightGBM7Network17GlobalSyncUpByMinIdEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit: ; preds = %_ZZN8LightGBM7Network17GlobalSyncUpByMinIdEET_S2_ENKUlPKcPciiE_clES4_S5_ii.exit.loopexit.unr-lcssa, %19, %.epil.preheader, %bb.a
   ret void
 }
 

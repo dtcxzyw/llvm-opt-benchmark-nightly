@@ -205,12 +205,10 @@ _RNCINvMNtCsexYYUdYSQU6_5alloc5sliceSRNtNtCs2iisHxfqoT7_15libp2p_identity7peer_i
 
 .lr.ph57.i88.us.preheader:                        ; preds = %.lr.ph57.i88.preheader
   %i.aja = shl i64 %.sroa.0.0.i75, 3
-  %7 = add i64 %i.aja, %i.e
-  %i.ajb = ptrtoaddr ptr %.sroa.9.1.lcssa.i79 to i64 ; 2 uses
-  %i.ajc = add i64 %i.ajb, 8
-  %8 = call i64 @llvm.umax.i64(i64 %7, i64 %i.ajc)
+  %i.ajb = ptrtoaddr ptr %.sroa.9.1.lcssa.i79 to i64
+  %i.ajc = add i64 %i.aja, %i.e
   %i.ajd = xor i64 %i.ajb, -1
-  %i.aje = add i64 %8, %i.ajd                     ; 2 uses
+  %i.aje = add i64 %i.ajc, %i.ajd                 ; 2 uses
   %i.ajf = lshr i64 %i.aje, 3
   %i.ajg = add nuw nsw i64 %i.ajf, 1              ; 2 uses
   %min.iters.check660 = icmp ult i64 %i.aje, 24
@@ -612,9 +610,6 @@ declare <4 x i32> @llvm.fshl.v4i32(<4 x i32>, <4 x i32>, <4 x i32>) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i32> @llvm.fshl.v8i32(<8 x i32>, <8 x i32>, <8 x i32>) #24
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #24
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nofree norecurse nosync nounwind nonlazybind memory(read, inaccessiblemem: write, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

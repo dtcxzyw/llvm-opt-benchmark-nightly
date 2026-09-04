@@ -205,7 +205,7 @@ _ZNSt3__16vectorIPN4args7CommandENS_9allocatorIS3_EEE18__construct_at_endINS_11_
   br label %.critedge
 
 .critedge:                                        ; preds = %_ZNSt3__16vectorIPN4args7CommandENS_9allocatorIS3_EEE18__construct_at_endINS_11__wrap_iterIPS3_EESA_EEvT_T0_m.exit..critedge_crit_edge, %bb.c
-  %.pre-phi = phi i64 [ %.pre48, %_ZNSt3__16vectorIPN4args7CommandENS_9allocatorIS3_EEE18__construct_at_endINS_11__wrap_iterIPS3_EESA_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.l, %bb.c ] ; 4 uses
+  %.pre-phi = phi i64 [ %.pre48, %_ZNSt3__16vectorIPN4args7CommandENS_9allocatorIS3_EEE18__construct_at_endINS_11__wrap_iterIPS3_EESA_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.l, %bb.c ] ; 3 uses
   %i.y = phi ptr [ %i.w, %_ZNSt3__16vectorIPN4args7CommandENS_9allocatorIS3_EEE18__construct_at_endINS_11__wrap_iterIPS3_EESA_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.j, %bb.c ] ; 8 uses
   %.sroa.0.0 = phi ptr [ %i.s, %_ZNSt3__16vectorIPN4args7CommandENS_9allocatorIS3_EEE18__construct_at_endINS_11__wrap_iterIPS3_EESA_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.o, %bb.c ] ; 2 uses
   %i.z = ptrtoaddr ptr %i.y to i64
@@ -217,11 +217,8 @@ _ZNSt3__16vectorIPN4args7CommandENS_9allocatorIS3_EEE18__construct_at_endINS_11_
   br i1 %i.ae, label %.lr.ph.i.preheader, label %._crit_edge.i
 
 .lr.ph.i.preheader:                               ; preds = %.critedge
-  %i.af = shl i64 %4, 3                           ; 2 uses
-  %5 = add i64 %.pre-phi, 8
-  %6 = sub i64 %5, %i.af
-  %7 = tail call i64 @llvm.umax.i64(i64 %i.l, i64 %6)
-  %i.ag = add i64 %7, %i.af
+  %i.af = shl i64 %4, 3
+  %i.ag = add i64 %i.af, %i.l
   %i.ah = xor i64 %.pre-phi, -1
   %i.ai = add i64 %i.ag, %i.ah                    ; 2 uses
   %i.aj = lshr i64 %i.ai, 3
@@ -449,7 +446,7 @@ _ZNSt3__16vectorIPN4args8FlagBaseENS_9allocatorIS3_EEE18__construct_at_endINS_11
   br label %.critedge
 
 .critedge:                                        ; preds = %_ZNSt3__16vectorIPN4args8FlagBaseENS_9allocatorIS3_EEE18__construct_at_endINS_11__wrap_iterIPS3_EESA_EEvT_T0_m.exit..critedge_crit_edge, %bb.c
-  %.pre-phi = phi i64 [ %.pre48, %_ZNSt3__16vectorIPN4args8FlagBaseENS_9allocatorIS3_EEE18__construct_at_endINS_11__wrap_iterIPS3_EESA_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.l, %bb.c ] ; 4 uses
+  %.pre-phi = phi i64 [ %.pre48, %_ZNSt3__16vectorIPN4args8FlagBaseENS_9allocatorIS3_EEE18__construct_at_endINS_11__wrap_iterIPS3_EESA_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.l, %bb.c ] ; 3 uses
   %i.y = phi ptr [ %i.w, %_ZNSt3__16vectorIPN4args8FlagBaseENS_9allocatorIS3_EEE18__construct_at_endINS_11__wrap_iterIPS3_EESA_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.j, %bb.c ] ; 8 uses
   %.sroa.0.0 = phi ptr [ %i.s, %_ZNSt3__16vectorIPN4args8FlagBaseENS_9allocatorIS3_EEE18__construct_at_endINS_11__wrap_iterIPS3_EESA_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.o, %bb.c ] ; 2 uses
   %i.z = ptrtoaddr ptr %i.y to i64
@@ -461,11 +458,8 @@ _ZNSt3__16vectorIPN4args8FlagBaseENS_9allocatorIS3_EEE18__construct_at_endINS_11
   br i1 %i.ae, label %.lr.ph.i.preheader, label %._crit_edge.i
 
 .lr.ph.i.preheader:                               ; preds = %.critedge
-  %i.af = shl i64 %4, 3                           ; 2 uses
-  %5 = add i64 %.pre-phi, 8
-  %6 = sub i64 %5, %i.af
-  %7 = tail call i64 @llvm.umax.i64(i64 %i.l, i64 %6)
-  %i.ag = add i64 %7, %i.af
+  %i.af = shl i64 %4, 3
+  %i.ag = add i64 %i.af, %i.l
   %i.ah = xor i64 %.pre-phi, -1
   %i.ai = add i64 %i.ag, %i.ah                    ; 2 uses
   %i.aj = lshr i64 %i.ai, 3

@@ -204,11 +204,9 @@ bb.a:
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
   %i.b = ptrtoaddr ptr %1 to i64
-  %i.c = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %3 = add i64 %i.c, 8
-  %4 = tail call i64 @llvm.umax.i64(i64 %i.b, i64 %3)
+  %i.c = ptrtoaddr ptr %0 to i64
   %i.d = xor i64 %i.c, -1
-  %i.e = add i64 %4, %i.d                         ; 2 uses
+  %i.e = add i64 %i.d, %i.b                       ; 2 uses
   %i.f = lshr i64 %i.e, 3
   %i.g = add nuw nsw i64 %i.f, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.e, 56
@@ -611,11 +609,9 @@ bb.a:
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
   %i.b = ptrtoaddr ptr %1 to i64
-  %i.c = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %3 = add i64 %i.c, 8
-  %4 = tail call i64 @llvm.umax.i64(i64 %i.b, i64 %3)
+  %i.c = ptrtoaddr ptr %0 to i64
   %i.d = xor i64 %i.c, -1
-  %i.e = add i64 %4, %i.d                         ; 2 uses
+  %i.e = add i64 %i.d, %i.b                       ; 2 uses
   %i.f = lshr i64 %i.e, 3
   %i.g = add nuw nsw i64 %i.f, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.e, 56
@@ -1016,9 +1012,6 @@ declare i32 @llvm.smin.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #4

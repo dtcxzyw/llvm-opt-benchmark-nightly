@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
 
 .preheader.lr.ph:                                 ; preds = %bb.c
   %.not = icmp eq i32 %i.au, 31
-  %i.ax = shl i32 2, %i.au                        ; 4 uses
+  %i.ax = shl i32 2, %i.au                        ; 3 uses
   %i.ay = sext i32 %i.ax to i64                   ; 2 uses
   br i1 %.not, label %.loopexit, label %.preheader.preheader
 
@@ -213,8 +213,7 @@ bb.c:                                             ; preds = %bb.a
   %i.az = sext i32 %i.av to i64                   ; 2 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.av, i32 1) ; 2 uses
   %wide.trip.count = zext nneg i32 %smax to i64   ; 4 uses
-  %smax60 = tail call i32 @llvm.smax.i32(i32 %i.d, i32 %i.ax)
-  %i.ba = add nsw i32 %smax60, -1
+  %i.ba = add nsw i32 %i.d, -1
   %i.bb = shl nuw nsw i64 %wide.trip.count, 3     ; 2 uses
   %i.bc = shl nsw i64 %i.az, 3                    ; 2 uses
   %scevgep61.a = getelementptr i8, ptr %0, i64 %i.bc
@@ -617,6 +616,7 @@ bb.a:
   %i.g = select i1 %i.d, i32 1, i32 %i.f          ; 7 uses
   %i.h = icmp sgt i32 %i.g, 0                     ; 2 uses
   %wide.trip.count = zext nneg i32 %1 to i64      ; 3 uses
+  %3 = add i32 %i.g, -1
   %min.iters.check = icmp ult i32 %i.g, 4
   %i.i = and i32 %i.g, 2147483644
   %n.vec = zext nneg i32 %i.i to i64
@@ -754,13 +754,11 @@ bb.e:                                             ; preds = %bb.c
   %i.bf = trunc i64 %indvars.iv to i32            ; 2 uses
   %i.bg = add i32 %i.bf, -6                       ; 2 uses
   %i.bh = shl nuw i32 1, %i.bg                    ; 4 uses
-  %i.bi = shl i32 2, %i.bg                        ; 4 uses
+  %i.bi = shl i32 2, %i.bg                        ; 3 uses
   %i.bj = sext i32 %i.bi to i64                   ; 2 uses
   %i.bk = sext i32 %i.bh to i64                   ; 2 uses
   %smax.i = tail call i32 @llvm.smax.i32(i32 %i.bh, i32 1) ; 2 uses
   %wide.trip.count.i = zext nneg i32 %smax.i to i64 ; 4 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.g, i32 %i.bi)
-  %3 = add nsw i32 %smax, -1
   %i.bl = shl nuw nsw i64 %wide.trip.count.i, 3   ; 2 uses
   %i.bm = shl nsw i64 %i.bk, 3                    ; 2 uses
   %scevgep159 = getelementptr i8, ptr %0, i64 %i.bm
@@ -1163,6 +1161,7 @@ If_CluCopy.exit78:                                ; preds = %If_CluCopy.exit, %.
 
 .lr.ph:                                           ; preds = %If_CluCopy.exit78
   %wide.trip.count122 = zext nneg i32 %2 to i64
+  %5 = add i32 %i.f, -1
   %min.iters.check164 = icmp samesign ult i64 %.pre-phi, 4
   %n.vec166 = and i64 %.pre-phi, 4294967292       ; 3 uses
   %cmp.n179 = icmp eq i64 %.pre-phi, %n.vec166
@@ -1250,7 +1249,7 @@ bb.j:                                             ; preds = %bb.h
 
 .preheader.lr.ph.i:                               ; preds = %bb.j
   %i.fl = icmp eq i64 %i.fi, 31
-  %i.fm = shl i32 2, %i.fj                        ; 4 uses
+  %i.fm = shl i32 2, %i.fj                        ; 3 uses
   %i.fn = sext i32 %i.fm to i64                   ; 2 uses
   br i1 %i.fl, label %If_CluChangePhase.exit, label %.preheader.preheader.i
 
@@ -1258,8 +1257,6 @@ bb.j:                                             ; preds = %bb.h
   %i.fo = sext i32 %i.fk to i64                   ; 2 uses
   %smax.i80 = tail call i32 @llvm.smax.i32(i32 %i.fk, i32 1) ; 2 uses
   %wide.trip.count.i81 = zext nneg i32 %smax.i80 to i64 ; 4 uses
-  %smax = call i32 @llvm.smax.i32(i32 %i.f, i32 %i.fm)
-  %5 = add nsw i32 %smax, -1
   %i.fp = shl nuw nsw i64 %wide.trip.count.i81, 3 ; 2 uses
   %i.fq = shl nsw i64 %i.fo, 3                    ; 2 uses
   %scevgep182 = getelementptr i8, ptr %0, i64 %i.fq

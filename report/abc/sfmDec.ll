@@ -205,19 +205,17 @@ scalar.ph264.epil:                                ; preds = %scalar.ph264.epil, 
   %.036.lcssa.i = phi ptr [ %8, %._crit_edge ], [ %.137.i, %bb.j ] ; 5 uses
   %.033.lcssa.i = phi ptr [ %3, %._crit_edge ], [ %.134.i, %bb.j ] ; 5 uses
   %.0.lcssa.i = phi ptr [ %4, %._crit_edge ], [ %.1.i, %bb.j ] ; 5 uses
-  %.0.lcssa.i176 = ptrtoaddr ptr %.0.lcssa.i to i64 ; 3 uses
+  %.0.lcssa.i176 = ptrtoaddr ptr %.0.lcssa.i to i64 ; 2 uses
   %i.bb = icmp ult ptr %.033.lcssa.i, %i.av
   br i1 %i.bb, label %.lr.ph13.i.preheader, label %.preheader.i64
 
 .lr.ph13.i.preheader:                             ; preds = %.preheader5.i
-  %.033.lcssa.i170 = ptrtoaddr ptr %.033.lcssa.i to i64 ; 3 uses
+  %.033.lcssa.i170 = ptrtoaddr ptr %.033.lcssa.i to i64 ; 2 uses
   %.036.lcssa.i169 = ptrtoaddr ptr %.036.lcssa.i to i64
   %i.bc = ptrtoaddr ptr %3 to i64
-  %10 = add i64 %i.j, %i.bc
-  %i.bd = add i64 %.033.lcssa.i170, 4
-  %11 = tail call i64 @llvm.umax.i64(i64 %10, i64 %i.bd)
+  %i.bd = add i64 %i.j, %i.bc
   %i.be = xor i64 %.033.lcssa.i170, -1
-  %i.bf = add i64 %11, %i.be                      ; 2 uses
+  %i.bf = add i64 %i.bd, %i.be                    ; 2 uses
   %i.bg = lshr i64 %i.bf, 2
   %i.bh = add nuw nsw i64 %i.bg, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bf, 44
@@ -303,11 +301,9 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f
 .lr.ph17.i.preheader:                             ; preds = %.preheader.i64
   %.238.lcssa.i175 = ptrtoaddr ptr %.238.lcssa.i to i64
   %i.cc = ptrtoaddr ptr %4 to i64
-  %12 = add i64 %.idx19.i, %i.cc
-  %i.cd = add i64 %.0.lcssa.i176, 4
-  %13 = tail call i64 @llvm.umax.i64(i64 %12, i64 %i.cd)
+  %i.cd = add i64 %.idx19.i, %i.cc
   %i.ce = xor i64 %.0.lcssa.i176, -1
-  %i.cf = add i64 %13, %i.ce                      ; 2 uses
+  %i.cf = add i64 %i.cd, %i.ce                    ; 2 uses
   %i.cg = lshr i64 %i.cf, 2
   %i.ch = add nuw nsw i64 %i.cg, 1                ; 2 uses
   %min.iters.check179 = icmp ult i64 %i.cf, 44
@@ -710,14 +706,14 @@ declare i32 @llvm.smax.i32(i32, i32) #23
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.ctpop.i64(i64) #23
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #23
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.and.v2i64(<2 x i64>) #23

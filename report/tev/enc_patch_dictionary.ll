@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %.preheader.i.i
   br i1 %.not2554.i, label %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_5clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.thread.i", label %.lr.ph57.i
 
 .lr.ph57.i:                                       ; preds = %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_5clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.i"
-  %i.ea = shl i64 %.02461.i, 2                    ; 3 uses
+  %i.ea = shl i64 %.02461.i, 2                    ; 2 uses
   %i.eb = add i64 %i.ea, -4                       ; 2 uses
   %i.ec = add i64 %i.ea, 4                        ; 2 uses
   %.not2651.i = icmp ugt i64 %i.eb, %i.ec
@@ -221,20 +221,19 @@ bb.k:                                             ; preds = %.preheader.i.i
   %i.eh = getelementptr inbounds nuw i8, ptr %.val30.i, i64 16 ; 3 uses
   %sext50.i = shl i64 %i.eb, 32
   %i.ei = ashr exact i64 %sext50.i, 32            ; 3 uses
-  %.not26.i = icmp eq i64 %i.ea, -4
   %sext50.1.i = shl i64 %.02461.i, 34
   %i.ej = ashr exact i64 %sext50.1.i, 32          ; 3 uses
   %sext50.2.i = shl i64 %i.ec, 32
   %i.ek = ashr exact i64 %sext50.2.i, 32          ; 3 uses
   br label %.lr.ph.i
 
-._crit_edge58.i:                                  ; preds = %._crit_edge.i
-  %i.el = icmp ult i64 %.lcssa.i, 8
+._crit_edge58.i:                                  ; preds = %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.2.i"
+  %i.el = icmp ult i64 %4, 8
   br i1 %i.el, label %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_5clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.thread.i", label %bb.s
 
-.lr.ph.i:                                         ; preds = %._crit_edge.i, %.lr.ph57.split.i
-  %.02056.i = phi i64 [ %i.n, %.lr.ph57.split.i ], [ %3, %._crit_edge.i ] ; 3 uses
-  %.02155.i = phi i64 [ 0, %.lr.ph57.split.i ], [ %.lcssa.i, %._crit_edge.i ]
+.lr.ph.i:                                         ; preds = %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.2.i", %.lr.ph57.split.i
+  %.02056.i = phi i64 [ %i.n, %.lr.ph57.split.i ], [ %i.he, %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.2.i" ] ; 3 uses
+  %.02155.i = phi i64 [ 0, %.lr.ph57.split.i ], [ %4, %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.2.i" ]
   %sext.i = shl i64 %.02056.i, 32
   %i.em = ashr exact i64 %sext.i, 32
   %i.en = mul i64 %i.em, %.val31.i                ; 7 uses
@@ -245,13 +244,7 @@ bb.k:                                             ; preds = %.preheader.i.i
   %i.es = tail call noundef float @llvm.fabs.f32(float %i.er)
   %i.et = fpext float %i.es to double
   %i.eu = fcmp ule double %i.et, 1.000000e-04
-  br i1 %i.eu, label %bb.l, label %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.i"
-
-._crit_edge.i:                                    ; preds = %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.2.i", %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.i"
-  %.lcssa.i = phi i64 [ %4, %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.i" ], [ %i.he, %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.2.i" ] ; 2 uses
-  %3 = add nuw nsw i64 %.02056.i, 4
-  %.not25.not.i = icmp samesign ult i64 %.02056.i, %i.q
-  br i1 %.not25.not.i, label %.lr.ph.i, label %._crit_edge58.i, !llvm.loop !871
+  br i1 %i.eu, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %.lr.ph.i
   %i.ev = load ptr, ptr %i.eg, align 8, !tbaa !183
@@ -262,7 +255,7 @@ bb.l:                                             ; preds = %.lr.ph.i
   %i.fa = tail call noundef float @llvm.fabs.f32(float %i.ez)
   %i.fb = fpext float %i.fa to double
   %i.fc = fcmp ule double %i.fb, 1.000000e-04
-  br i1 %i.fc, label %bb.m, label %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.i"
+  br i1 %i.fc, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
   %i.fd = load ptr, ptr %i.eh, align 8, !tbaa !183
@@ -274,14 +267,11 @@ bb.m:                                             ; preds = %bb.l
   %i.fj = fpext float %i.fi to double
   %i.fk = fcmp ule double %i.fj, 1.000000e-04
   %spec.select.i.i = zext i1 %i.fk to i64
-  br label %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.i"
+  br label %bb.n
 
-"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.i": ; preds = %bb.m, %bb.l, %.lr.ph.i
+bb.n:                                             ; preds = %bb.m, %bb.l, %.lr.ph.i
   %.lcssa.i.i = phi i64 [ 0, %.lr.ph.i ], [ %spec.select.i.i, %bb.m ], [ 0, %bb.l ]
-  %4 = add i64 %.lcssa.i.i, %.02155.i             ; 2 uses
-  br i1 %.not26.i, label %._crit_edge.i, label %bb.n
-
-bb.n:                                             ; preds = %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.i"
+  %3 = add i64 %.lcssa.i.i, %.02155.i
   %i.fl = getelementptr [4 x i8], ptr %i.eo, i64 %i.ej
   %i.fm = load float, ptr %i.fl, align 4, !tbaa !106
   %i.fn = fsub float %i.ac, %i.fm
@@ -315,7 +305,7 @@ bb.p:                                             ; preds = %bb.o
 
 "_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.1.i": ; preds = %bb.p, %bb.o, %bb.n
   %.lcssa.i.1.i = phi i64 [ 0, %bb.n ], [ %spec.select.i.1.i, %bb.p ], [ 0, %bb.o ]
-  %i.gh = add i64 %.lcssa.i.1.i, %4
+  %i.gh = add i64 %3, %.lcssa.i.1.i
   %i.gi = getelementptr [4 x i8], ptr %i.eo, i64 %i.ek
   %i.gj = load float, ptr %i.gi, align 4, !tbaa !106
   %i.gk = fsub float %i.ac, %i.gj
@@ -349,8 +339,10 @@ bb.r:                                             ; preds = %bb.q
 
 "_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.2.i": ; preds = %bb.r, %bb.q, %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.1.i"
   %.lcssa.i.2.i = phi i64 [ 0, %"_ZZN3jxl12_GLOBAL__N_119FindTextLikePatchesERKNS_14CompressParamsERKNS_6Image3IfEEPKNS_18PassesEncoderStateEPNS_10ThreadPoolEPNS_6AuxOutEbENK3$_3clERKNSt3__14pairIiiEERKNSG_5arrayIfLm3EEE.exit.1.i" ], [ %spec.select.i.2.i, %bb.r ], [ 0, %bb.q ]
-  %i.he = add i64 %i.gh, %.lcssa.i.2.i
-  br label %._crit_edge.i
+  %4 = add i64 %i.gh, %.lcssa.i.2.i               ; 2 uses
+  %i.he = add nuw nsw i64 %.02056.i, 4
+  %.not25.not.i = icmp samesign ult i64 %.02056.i, %i.q
+  br i1 %.not25.not.i, label %.lr.ph.i, label %._crit_edge58.i, !llvm.loop !871
 
 bb.s:                                             ; preds = %._crit_edge58.i
   %i.hf = load ptr, ptr %i.s, align 8, !tbaa !882, !nonnull !70, !align !875 ; 2 uses
@@ -753,7 +745,7 @@ _ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wr
   br i1 %i.ao, label %.critedge, label %_ZNSt3__114__split_bufferINS_4pairIjjEERNS_9allocatorIS2_EEED2Ev.exit
 
 .critedge:                                        ; preds = %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit, %bb.c
-  %.pre-phi57 = phi i64 [ %i.m, %bb.c ], [ %.pre-phi, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit ] ; 4 uses
+  %.pre-phi57 = phi i64 [ %i.m, %bb.c ], [ %.pre-phi, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit ] ; 3 uses
   %i.ap = phi ptr [ %i.k, %bb.c ], [ %i.an, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit ] ; 8 uses
   %.sroa.045.0 = phi ptr [ %i.p, %bb.c ], [ %i.t, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit ] ; 3 uses
   %.sroa.045.095 = ptrtoaddr ptr %.sroa.045.0 to i64 ; 2 uses
@@ -766,11 +758,8 @@ _ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wr
   br i1 %i.av, label %.lr.ph.i.preheader, label %._crit_edge.i
 
 .lr.ph.i.preheader:                               ; preds = %.critedge
-  %i.aw = shl i64 %4, 3                           ; 2 uses
-  %5 = add i64 %.pre-phi57, 8
-  %6 = sub i64 %5, %i.aw
-  %7 = tail call i64 @llvm.umax.i64(i64 %i.m, i64 %6)
-  %i.ax = add i64 %7, %i.aw
+  %i.aw = shl i64 %4, 3
+  %i.ax = add i64 %i.aw, %i.m
   %i.ay = xor i64 %.pre-phi57, -1
   %i.az = add i64 %i.ax, %i.ay                    ; 2 uses
   %i.ba = lshr i64 %i.az, 3

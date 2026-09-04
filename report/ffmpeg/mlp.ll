@@ -200,16 +200,13 @@ bb.a:
   br i1 %i.i, label %.lr.ph27.preheader, label %._crit_edge
 
 .lr.ph27.preheader:                               ; preds = %.preheader
-  %2 = add i64 %i.c, %i.a
-  %3 = add i64 %2, -3
-  %i.j = ptrtoaddr ptr %.019.lcssa to i64         ; 2 uses
-  %i.k = add i64 %i.j, 4
-  %4 = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.k)
-  %5 = xor i64 %i.j, -1
-  %6 = add i64 %4, %5                             ; 2 uses
-  %i.l = lshr i64 %6, 2
+  %i.j = ptrtoaddr ptr %.019.lcssa to i64
+  %i.k = add i64 %i.c, %i.a
+  %2 = add i64 %i.k, -4
+  %3 = sub i64 %2, %i.j                           ; 2 uses
+  %i.l = lshr i64 %3, 2
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %6, 28
+  %min.iters.check = icmp ult i64 %3, 28
   br i1 %min.iters.check, label %.lr.ph27.preheader72, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph27.preheader
@@ -336,9 +333,6 @@ middle.block64:                                   ; preds = %vector.body56
 }
 
 declare i32 @av_crc_init(ptr noundef, i32 noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.xor.v4i32(<4 x i32>) #6
