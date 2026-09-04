@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 18193
 inline.NumDeleted: 6360
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 53
-loop-unroll.NumUnrolled: 56
+loop-unroll.NumRuntimeUnrolled: 55
+loop-unroll.NumUnrolled: 58
 begin_hunk_0_@_ZN8LightGBM7Network12num_machinesEv
 declare noundef i32 @_ZN8LightGBM7Network12num_machinesEv() local_unnamed_addr #11
 
@@ -205,24 +205,76 @@ bb.a:
   br i1 %i.a, label %.lr.ph.i, label %_ZZN8LightGBM7Network9GlobalSumIdEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.b = sext i32 %2 to i64                       ; 2 uses
+  %i.b = sext i32 %2 to i64                       ; 10 uses
+  %4 = add nsw i32 %3, -1
+  %5 = udiv i32 %4, %2                            ; 2 uses
+  %6 = add i32 %5, 1                              ; 2 uses
+  %xtraiter = and i32 %6, 3                       ; 3 uses
+  %7 = icmp ult i32 %5, 3
+  br i1 %7, label %.epil.preheader, label %.lr.ph.i.new
+
+.lr.ph.i.new:                                     ; preds = %.lr.ph.i
+  %unroll_iter = and i32 %6, -4
+  br label %8
+
+8:                                                ; preds = %8, %.lr.ph.i.new
+  %.01114.i = phi ptr [ %0, %.lr.ph.i.new ], [ %27, %8 ] ; 2 uses
+  %.01213.i = phi ptr [ %1, %.lr.ph.i.new ], [ %28, %8 ] ; 3 uses
+  %niter = phi i32 [ 0, %.lr.ph.i.new ], [ %niter.next.3, %8 ]
+  %9 = load double, ptr %.01114.i, align 8, !tbaa !309
+  %10 = load double, ptr %.01213.i, align 8, !tbaa !309
+  %11 = fadd double %9, %10
+  store double %11, ptr %.01213.i, align 8, !tbaa !309
+  %12 = getelementptr inbounds i8, ptr %.01114.i, i64 %i.b ; 2 uses
+  %13 = getelementptr inbounds i8, ptr %.01213.i, i64 %i.b ; 3 uses
+  %14 = load double, ptr %12, align 8, !tbaa !309
+  %15 = load double, ptr %13, align 8, !tbaa !309
+  %16 = fadd double %14, %15
+  store double %16, ptr %13, align 8, !tbaa !309
+  %17 = getelementptr inbounds i8, ptr %12, i64 %i.b ; 2 uses
+  %18 = getelementptr inbounds i8, ptr %13, i64 %i.b ; 3 uses
+  %19 = load double, ptr %17, align 8, !tbaa !309
+  %20 = load double, ptr %18, align 8, !tbaa !309
+  %21 = fadd double %19, %20
+  store double %21, ptr %18, align 8, !tbaa !309
+  %22 = getelementptr inbounds i8, ptr %17, i64 %i.b ; 2 uses
+  %23 = getelementptr inbounds i8, ptr %18, i64 %i.b ; 3 uses
+  %24 = load double, ptr %22, align 8, !tbaa !309
+  %25 = load double, ptr %23, align 8, !tbaa !309
+  %26 = fadd double %24, %25
+  store double %26, ptr %23, align 8, !tbaa !309
+  %27 = getelementptr inbounds i8, ptr %22, i64 %i.b ; 2 uses
+  %28 = getelementptr inbounds i8, ptr %23, i64 %i.b ; 2 uses
+  %niter.next.3 = add i32 %niter, 4               ; 2 uses
+  %niter.ncmp.3.not = icmp eq i32 %niter.next.3, %unroll_iter
+  br i1 %niter.ncmp.3.not, label %_ZZN8LightGBM7Network9GlobalSumIdEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit.loopexit.unr-lcssa, label %8, !llvm.loop !2340
+
+_ZZN8LightGBM7Network9GlobalSumIdEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit.loopexit.unr-lcssa: ; preds = %8
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %_ZZN8LightGBM7Network9GlobalSumIdEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %_ZZN8LightGBM7Network9GlobalSumIdEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit.loopexit.unr-lcssa, %.lr.ph.i
+  %.01114.i.epil.init = phi ptr [ %0, %.lr.ph.i ], [ %27, %_ZZN8LightGBM7Network9GlobalSumIdEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit.loopexit.unr-lcssa ]
+  %.01213.i.epil.init = phi ptr [ %1, %.lr.ph.i ], [ %28, %_ZZN8LightGBM7Network9GlobalSumIdEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit.loopexit.unr-lcssa ]
+  %lcmp.mod3 = icmp ne i32 %xtraiter, 0
+  tail call void @llvm.assume(i1 %lcmp.mod3)
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.b, %.lr.ph.i
-  %.015.i = phi i32 [ 0, %.lr.ph.i ], [ %i.h, %bb.b ]
-  %.01114.i.a = phi ptr [ %0, %.lr.ph.i ], [ %i.f, %bb.b ] ; 2 uses
-  %.01213.i = phi ptr [ %1, %.lr.ph.i ], [ %i.g, %bb.b ] ; 3 uses
-  %i.c = load double, ptr %.01114.i.a, align 8, !tbaa !309
-  %i.d = load double, ptr %.01213.i, align 8, !tbaa !309
+bb.b:                                             ; preds = %bb.b, %.epil.preheader
+  %.01114.i.epil = phi ptr [ %.01114.i.epil.init, %.epil.preheader ], [ %i.f, %bb.b ] ; 2 uses
+  %.01114.i.a = phi ptr [ %.01213.i.epil.init, %.epil.preheader ], [ %i.g, %bb.b ] ; 3 uses
+  %epil.iter = phi i32 [ 0, %.epil.preheader ], [ %i.h, %bb.b ]
+  %i.c = load double, ptr %.01114.i.epil, align 8, !tbaa !309
+  %i.d = load double, ptr %.01114.i.a, align 8, !tbaa !309
   %i.e = fadd double %i.c, %i.d
-  store double %i.e, ptr %.01213.i, align 8, !tbaa !309
-  %i.f = getelementptr inbounds i8, ptr %.01114.i.a, i64 %i.b
-  %i.g = getelementptr inbounds i8, ptr %.01213.i, i64 %i.b
-  %i.h = add nsw i32 %.015.i, %2                  ; 2 uses
-  %4 = icmp slt i32 %i.h, %3
-  br i1 %4, label %bb.b, label %_ZZN8LightGBM7Network9GlobalSumIdEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit, !llvm.loop !2340
+  store double %i.e, ptr %.01114.i.a, align 8, !tbaa !309
+  %i.f = getelementptr inbounds i8, ptr %.01114.i.epil, i64 %i.b
+  %i.g = getelementptr inbounds i8, ptr %.01114.i.a, i64 %i.b
+  %i.h = add i32 %epil.iter, 1                    ; 2 uses
+  %epil.iter.cmp.not = icmp eq i32 %i.h, %xtraiter
+  br i1 %epil.iter.cmp.not, label %_ZZN8LightGBM7Network9GlobalSumIdEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit, label %bb.b, !llvm.loop !2341
 
-_ZZN8LightGBM7Network9GlobalSumIdEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit: ; preds = %bb.b, %bb.a
+_ZZN8LightGBM7Network9GlobalSumIdEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit: ; preds = %_ZZN8LightGBM7Network9GlobalSumIdEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit.loopexit.unr-lcssa, %bb.b, %bb.a
   ret void
 }
 
@@ -233,24 +285,76 @@ bb.a:
   br i1 %i.a, label %.lr.ph.i, label %_ZZN8LightGBM7Network9GlobalSumIiEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.b = sext i32 %2 to i64                       ; 2 uses
+  %i.b = sext i32 %2 to i64                       ; 10 uses
+  %4 = add nsw i32 %3, -1
+  %5 = udiv i32 %4, %2                            ; 2 uses
+  %6 = add i32 %5, 1                              ; 2 uses
+  %xtraiter = and i32 %6, 3                       ; 3 uses
+  %7 = icmp ult i32 %5, 3
+  br i1 %7, label %.epil.preheader, label %.lr.ph.i.new
+
+.lr.ph.i.new:                                     ; preds = %.lr.ph.i
+  %unroll_iter = and i32 %6, -4
+  br label %8
+
+8:                                                ; preds = %8, %.lr.ph.i.new
+  %.01114.i = phi ptr [ %0, %.lr.ph.i.new ], [ %27, %8 ] ; 2 uses
+  %.01213.i = phi ptr [ %1, %.lr.ph.i.new ], [ %28, %8 ] ; 3 uses
+  %niter = phi i32 [ 0, %.lr.ph.i.new ], [ %niter.next.3, %8 ]
+  %9 = load i32, ptr %.01114.i, align 4, !tbaa !198
+  %10 = load i32, ptr %.01213.i, align 4, !tbaa !198
+  %11 = add nsw i32 %10, %9
+  store i32 %11, ptr %.01213.i, align 4, !tbaa !198
+  %12 = getelementptr inbounds i8, ptr %.01114.i, i64 %i.b ; 2 uses
+  %13 = getelementptr inbounds i8, ptr %.01213.i, i64 %i.b ; 3 uses
+  %14 = load i32, ptr %12, align 4, !tbaa !198
+  %15 = load i32, ptr %13, align 4, !tbaa !198
+  %16 = add nsw i32 %15, %14
+  store i32 %16, ptr %13, align 4, !tbaa !198
+  %17 = getelementptr inbounds i8, ptr %12, i64 %i.b ; 2 uses
+  %18 = getelementptr inbounds i8, ptr %13, i64 %i.b ; 3 uses
+  %19 = load i32, ptr %17, align 4, !tbaa !198
+  %20 = load i32, ptr %18, align 4, !tbaa !198
+  %21 = add nsw i32 %20, %19
+  store i32 %21, ptr %18, align 4, !tbaa !198
+  %22 = getelementptr inbounds i8, ptr %17, i64 %i.b ; 2 uses
+  %23 = getelementptr inbounds i8, ptr %18, i64 %i.b ; 3 uses
+  %24 = load i32, ptr %22, align 4, !tbaa !198
+  %25 = load i32, ptr %23, align 4, !tbaa !198
+  %26 = add nsw i32 %25, %24
+  store i32 %26, ptr %23, align 4, !tbaa !198
+  %27 = getelementptr inbounds i8, ptr %22, i64 %i.b ; 2 uses
+  %28 = getelementptr inbounds i8, ptr %23, i64 %i.b ; 2 uses
+  %niter.next.3 = add i32 %niter, 4               ; 2 uses
+  %niter.ncmp.3.not = icmp eq i32 %niter.next.3, %unroll_iter
+  br i1 %niter.ncmp.3.not, label %_ZZN8LightGBM7Network9GlobalSumIiEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit.loopexit.unr-lcssa, label %8, !llvm.loop !2342
+
+_ZZN8LightGBM7Network9GlobalSumIiEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit.loopexit.unr-lcssa: ; preds = %8
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %_ZZN8LightGBM7Network9GlobalSumIiEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %_ZZN8LightGBM7Network9GlobalSumIiEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit.loopexit.unr-lcssa, %.lr.ph.i
+  %.01114.i.epil.init = phi ptr [ %0, %.lr.ph.i ], [ %27, %_ZZN8LightGBM7Network9GlobalSumIiEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit.loopexit.unr-lcssa ]
+  %.01213.i.epil.init = phi ptr [ %1, %.lr.ph.i ], [ %28, %_ZZN8LightGBM7Network9GlobalSumIiEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit.loopexit.unr-lcssa ]
+  %lcmp.mod3 = icmp ne i32 %xtraiter, 0
+  tail call void @llvm.assume(i1 %lcmp.mod3)
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.b, %.lr.ph.i
-  %.015.i = phi i32 [ 0, %.lr.ph.i ], [ %i.h, %bb.b ]
-  %.01114.i.a = phi ptr [ %0, %.lr.ph.i ], [ %i.f, %bb.b ] ; 2 uses
-  %.01213.i = phi ptr [ %1, %.lr.ph.i ], [ %i.g, %bb.b ] ; 3 uses
-  %i.c = load i32, ptr %.01114.i.a, align 4, !tbaa !198
-  %i.d = load i32, ptr %.01213.i, align 4, !tbaa !198
+bb.b:                                             ; preds = %bb.b, %.epil.preheader
+  %.01114.i.epil = phi ptr [ %.01114.i.epil.init, %.epil.preheader ], [ %i.f, %bb.b ] ; 2 uses
+  %.01114.i.a = phi ptr [ %.01213.i.epil.init, %.epil.preheader ], [ %i.g, %bb.b ] ; 3 uses
+  %epil.iter = phi i32 [ 0, %.epil.preheader ], [ %i.h, %bb.b ]
+  %i.c = load i32, ptr %.01114.i.epil, align 4, !tbaa !198
+  %i.d = load i32, ptr %.01114.i.a, align 4, !tbaa !198
   %i.e = add nsw i32 %i.d, %i.c
-  store i32 %i.e, ptr %.01213.i, align 4, !tbaa !198
-  %i.f = getelementptr inbounds i8, ptr %.01114.i.a, i64 %i.b
-  %i.g = getelementptr inbounds i8, ptr %.01213.i, i64 %i.b
-  %i.h = add nsw i32 %.015.i, %2                  ; 2 uses
-  %4 = icmp slt i32 %i.h, %3
-  br i1 %4, label %bb.b, label %_ZZN8LightGBM7Network9GlobalSumIiEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit, !llvm.loop !2341
+  store i32 %i.e, ptr %.01114.i.a, align 4, !tbaa !198
+  %i.f = getelementptr inbounds i8, ptr %.01114.i.epil, i64 %i.b
+  %i.g = getelementptr inbounds i8, ptr %.01114.i.a, i64 %i.b
+  %i.h = add i32 %epil.iter, 1                    ; 2 uses
+  %epil.iter.cmp.not = icmp eq i32 %i.h, %xtraiter
+  br i1 %epil.iter.cmp.not, label %_ZZN8LightGBM7Network9GlobalSumIiEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit, label %bb.b, !llvm.loop !2343
 
-_ZZN8LightGBM7Network9GlobalSumIiEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit: ; preds = %bb.b, %bb.a
+_ZZN8LightGBM7Network9GlobalSumIiEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit: ; preds = %_ZZN8LightGBM7Network9GlobalSumIiEESt6vectorIT_SaIS3_EEPS5_ENKUlPKcPciiE_clES8_S9_ii.exit.loopexit.unr-lcssa, %bb.b, %bb.a
   ret void
 }
 
@@ -377,7 +481,7 @@ bb.g:                                             ; preds = %bb.f, %_ZN8LightGBM
   %i.bz = phi double [ %.01519.i, %bb.f ], [ %i.by, %_ZN8LightGBM6CommonL12FindInBitsetIiEEbPKjiT_.exit.i ], [ %i.bq, %_ZN8LightGBM6CommonL12FindInBitsetIiEEbPKjiT_.exit.thread.i ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %_ZNK8LightGBM29CostEfficientGradientBoosting22CalculateOndemandCostsEiii.exit, label %bb.e, !llvm.loop !2342
+  br i1 %exitcond.not.i, label %_ZNK8LightGBM29CostEfficientGradientBoosting22CalculateOndemandCostsEiii.exit, label %bb.e, !llvm.loop !2344
 
 _ZNK8LightGBM29CostEfficientGradientBoosting22CalculateOndemandCostsEiii.exit: ; preds = %bb.g, %bb.d
   %.016.i = phi double [ 0.000000e+00, %bb.d ], [ %i.bz, %bb.g ]
@@ -637,7 +741,7 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %bb.d, !llvm.loop !2343
+  br i1 %epil.iter.cmp.not, label %._crit_edge, label %bb.d, !llvm.loop !2345
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %bb.d, %bb.c
   %indvars.iv.next32 = add nsw i64 %indvars.iv31, 1
@@ -681,7 +785,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %bb.e, !llvm.loop !2344
+  br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %bb.e, !llvm.loop !2346
 
 bb.f:                                             ; preds = %._crit_edge
   %indvars.iv.next30 = add i64 %indvars.iv29, %i.y ; 2 uses
@@ -1084,8 +1188,10 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !2338 = !{!2323, !2323, i64 0}
 !2339 = !{!2331, !2330, i64 0}
 !2340 = distinct !{!2340, !218}
-!2341 = distinct !{!2341, !218}
+!2341 = distinct !{!2341, !332}
 !2342 = distinct !{!2342, !218}
 !2343 = distinct !{!2343, !332}
 !2344 = distinct !{!2344, !218}
+!2345 = distinct !{!2345, !332}
+!2346 = distinct !{!2346, !218}
 end_hunk_1

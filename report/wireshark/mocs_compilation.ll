@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 11451
 inline.NumDeleted: 4808
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@_ZN5QListI21QPersistentModelIndexE5clearEv:bb.a
 
 _ZN9QtPrivate16QGenericArrayOpsI21QPersistentModelIndexE10destroyAllEv.exit.i: ; preds = %.lr.ph.i.i.i.i.i, %bb.d
@@ -205,7 +205,7 @@ _ZNK17QArrayDataPointerI21QPersistentModelIndexE11needsDetachEv.exit.thread: ; p
   call void @_ZN17QArrayDataPointerI21QPersistentModelIndexE12allocateGrowERKS1_xN10QArrayData14GrowthPositionE(ptr dead_on_unwind nonnull writable sret(%struct.QArrayDataPointer.457) align 8 %4, ptr noundef align 8 dereferenceable(24) %0, i64 noundef %2, i32 noundef %1)
   %i.v = icmp sgt i64 %2, 0
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
-  %i.x = load ptr, ptr %i.w, align 8              ; 3 uses
+  %i.x = load ptr, ptr %i.w, align 8              ; 5 uses
   %.not = icmp eq ptr %i.x, null
   %or.cond41 = select i1 %i.v, i1 %.not, i1 false
   br i1 %or.cond41, label %bb.d, label %bb.g
@@ -278,34 +278,62 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %_ZNK17QArrayDataPointerI21QPersistentModelIndexE11needsDetachEv.exit33
   %i.as = getelementptr i8, ptr %0, i64 8
-  %i.at = load ptr, ptr %i.as, align 8            ; 3 uses
-  %.idx = shl i64 %spec.select, 3                 ; 2 uses
+  %i.at = load ptr, ptr %i.as, align 8            ; 6 uses
+  %.idx = shl i64 %spec.select, 3                 ; 3 uses
   %i.au = getelementptr i8, ptr %i.at, i64 %.idx  ; 2 uses
   %i.av = icmp ne i64 %.idx, 0
   %i.aw = icmp ult ptr %i.at, %i.au
   %or.cond58 = select i1 %i.av, i1 %i.aw, i1 false
-  br i1 %or.cond58, label %.lr.ph.i34.a, label %_ZN9QtPrivate16QGenericArrayOpsI21QPersistentModelIndexE10copyAppendEPKS1_S4_.exit
+  br i1 %or.cond58, label %.lr.ph.i34, label %_ZN9QtPrivate16QGenericArrayOpsI21QPersistentModelIndexE10copyAppendEPKS1_S4_.exit
 
-.lr.ph.i34.a:                                     ; preds = %bb.k
-  %i.ax = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
-  %.pre.i35.a = load i64, ptr %i.ax, align 16
-  br label %bb.l
+.lr.ph.i34:                                       ; preds = %bb.k
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses
+  %.pre.i35 = load i64, ptr %5, align 16          ; 2 uses
+  %6 = add i64 %.idx, -8                          ; 2 uses
+  %7 = and i64 %6, 8
+  %lcmp.mod.not.not = icmp eq i64 %7, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.i34.a, label %.prol.loopexit
 
-bb.l:                                             ; preds = %bb.l, %.lr.ph.i34.a
-  %i.ay = phi i64 [ %.pre.i35.a, %.lr.ph.i34.a ], [ %i.bd, %bb.l ]
-  %.010.i36 = phi ptr [ %i.at, %.lr.ph.i34.a ], [ %i.bb, %bb.l ] ; 3 uses
-  %i.az = getelementptr [8 x i8], ptr %i.x, i64 %i.ay
-  %i.ba = load ptr, ptr %.010.i36, align 8
+.lr.ph.i34.a:                                     ; preds = %.lr.ph.i34
+  %8 = getelementptr [8 x i8], ptr %i.x, i64 %.pre.i35
+  %9 = load ptr, ptr %i.at, align 8
+  store ptr null, ptr %i.at, align 8
+  store ptr %9, ptr %8, align 8
+  %i.ax = getelementptr i8, ptr %i.at, i64 8
+  %.pre.i35.a = load i64, ptr %5, align 16
+  %10 = add i64 %.pre.i35.a, 1                    ; 2 uses
+  store i64 %10, ptr %5, align 16
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.lr.ph.i34.a, %.lr.ph.i34
+  %.unr = phi i64 [ %.pre.i35, %.lr.ph.i34 ], [ %10, %.lr.ph.i34.a ]
+  %.010.i36.unr = phi ptr [ %i.at, %.lr.ph.i34 ], [ %i.ax, %.lr.ph.i34.a ]
+  %11 = icmp eq i64 %6, 0
+  br i1 %11, label %_ZN9QtPrivate16QGenericArrayOpsI21QPersistentModelIndexE10copyAppendEPKS1_S4_.exit, label %bb.l
+
+bb.l:                                             ; preds = %.prol.loopexit, %bb.l
+  %i.ay = phi i64 [ %i.bd, %bb.l ], [ %.unr, %.prol.loopexit ]
+  %.010.i36 = phi ptr [ %i.bb, %bb.l ], [ %.010.i36.unr, %.prol.loopexit ] ; 4 uses
+  %12 = getelementptr [8 x i8], ptr %i.x, i64 %i.ay
+  %13 = load ptr, ptr %.010.i36, align 8
   store ptr null, ptr %.010.i36, align 8
+  store ptr %13, ptr %12, align 8
+  %14 = getelementptr i8, ptr %.010.i36, i64 8    ; 2 uses
+  %15 = load i64, ptr %5, align 16
+  %16 = add i64 %15, 1                            ; 2 uses
+  store i64 %16, ptr %5, align 16
+  %i.az = getelementptr [8 x i8], ptr %i.x, i64 %16
+  %i.ba = load ptr, ptr %14, align 8
+  store ptr null, ptr %14, align 8
   store ptr %i.ba, ptr %i.az, align 8
-  %i.bb = getelementptr i8, ptr %.010.i36, i64 8  ; 2 uses
-  %i.bc = load i64, ptr %i.ax, align 16
+  %i.bb = getelementptr i8, ptr %.010.i36, i64 16 ; 2 uses
+  %i.bc = load i64, ptr %5, align 16
   %i.bd = add i64 %i.bc, 1                        ; 2 uses
-  store i64 %i.bd, ptr %i.ax, align 16
+  store i64 %i.bd, ptr %5, align 16
   %i.be = icmp ult ptr %i.bb, %i.au
   br i1 %i.be, label %bb.l, label %_ZN9QtPrivate16QGenericArrayOpsI21QPersistentModelIndexE10copyAppendEPKS1_S4_.exit, !llvm.loop !1418
 
-_ZN9QtPrivate16QGenericArrayOpsI21QPersistentModelIndexE10copyAppendEPKS1_S4_.exit: ; preds = %bb.l, %.noexc, %bb.k, %_ZNK17QArrayDataPointerI21QPersistentModelIndexE11needsDetachEv.exit33.thread, %bb.g
+_ZN9QtPrivate16QGenericArrayOpsI21QPersistentModelIndexE10copyAppendEPKS1_S4_.exit: ; preds = %.prol.loopexit, %bb.l, %.noexc, %bb.k, %_ZNK17QArrayDataPointerI21QPersistentModelIndexE11needsDetachEv.exit33.thread, %bb.g
   %i.bf = load ptr, ptr %0, align 8               ; 3 uses
   %i.bg = getelementptr i8, ptr %0, i64 8
   %i.bh = load ptr, ptr %i.bg, align 8            ; 2 uses
