@@ -205,14 +205,15 @@ _ZN3fmt2v916visit_format_argINS0_6detail16custom_formatterIcEENS0_20basic_format
   %.sroa.092.8..sroa.092.8..sroa.092.8..sroa.2.0.copyload.i = inttoptr i64 %.sroa.092.8..sroa.092.8..sroa.092.8..sroa.2.0.copyload.i.in to ptr
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !712 ; 2 uses
-  %i.ag = ptrtoint ptr %2 to i64
-  %i.ah = ptrtoint ptr %i.af to i64
-  %i.ai = sub i64 %i.ag, %i.ah                    ; 2 uses
+  %i.ag = ptrtoint ptr %2 to i64                  ; 2 uses
+  %i.ah = ptrtoint ptr %i.af to i64               ; 2 uses
+  %i.ai = sub i64 %i.ag, %i.ah
   %i.aj = getelementptr inbounds i8, ptr %i.af, i64 %i.ai
+  %.neg = sub i64 %i.ah, %i.ag
   store ptr %i.aj, ptr %i.ae, align 8, !tbaa !712
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !713
-  %9 = sub i64 %i.al, %i.ai
+  %9 = add i64 %.neg, %i.al
   store i64 %9, ptr %i.ak, align 8, !tbaa !713
   tail call void %.sroa.092.8..sroa.092.8..sroa.092.8..sroa.2.0.copyload.i(ptr noundef %.sroa.092.0..sroa.092.0..sroa.092.0..sroa.0.0.copyload.i, ptr noundef nonnull align 8 dereferenceable(20) %i.ae, ptr noundef nonnull align 8 dereferenceable(32) %i.a), !inline_history !705
   %i.am = load ptr, ptr %i.ae, align 8, !tbaa !712

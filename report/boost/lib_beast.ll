@@ -205,14 +205,14 @@ bb.q:                                             ; preds = %bb.p, %bb.a
 bb.r:                                             ; preds = %bb.q
   %i.bu = ptrtoint ptr %.1135 to i64              ; 6 uses
   %i.bv = add i64 %i.bu, 7
-  %i.bw = and i64 %i.bv, -8                       ; 3 uses
+  %i.bw = and i64 %i.bv, -8                       ; 2 uses
   %i.bx = inttoptr i64 %i.bw to ptr
   %i.by = icmp ult ptr %.1135, %i.bx
   br i1 %i.by, label %.lr.ph205.preheader, label %._crit_edge206
 
 .lr.ph205.preheader:                              ; preds = %bb.r
   %i.bz = sub i64 %i.bw, %i.bu
-  %scevgep = getelementptr i8, ptr %.1135, i64 %i.bz ; 2 uses
+  %scevgep = getelementptr i8, ptr %.1135, i64 %i.bz ; 3 uses
   br label %.lr.ph205
 
 .lr.ph205:                                        ; preds = %.lr.ph205.preheader, %bb.s
@@ -224,7 +224,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %.lr.ph205
   %i.cb = getelementptr inbounds nuw i8, ptr %.2136203, i64 1 ; 2 uses
   %exitcond.not = icmp eq ptr %i.cb, %scevgep
-  br i1 %exitcond.not, label %._crit_edge206, label %.lr.ph205, !llvm.loop !1076
+  br i1 %exitcond.not, label %._crit_edge206.loopexit, label %.lr.ph205, !llvm.loop !1076
 
 bb.t:                                             ; preds = %.lr.ph205
   %i.cc = ptrtoint ptr %.2136203 to i64
@@ -232,9 +232,13 @@ bb.t:                                             ; preds = %.lr.ph205
   %i.cd = sub i64 %.neg45, %i.cc
   br label %bb.ak
 
-._crit_edge206:                                   ; preds = %bb.s, %bb.r
-  %.pre-phi = phi i64 [ %i.bu, %bb.r ], [ %i.bw, %bb.s ]
-  %.2136.lcssa = phi ptr [ %.1135, %bb.r ], [ %scevgep, %bb.s ] ; 3 uses
+._crit_edge206.loopexit:                          ; preds = %bb.s
+  %.pre268 = ptrtoint ptr %scevgep to i64
+  br label %._crit_edge206
+
+._crit_edge206:                                   ; preds = %._crit_edge206.loopexit, %bb.r
+  %.pre-phi = phi i64 [ %.pre268, %._crit_edge206.loopexit ], [ %i.bu, %bb.r ]
+  %.2136.lcssa = phi ptr [ %scevgep, %._crit_edge206.loopexit ], [ %.1135, %bb.r ] ; 3 uses
   %.neg = sub i64 %i.bu, %.pre-phi
   %i.ce = add i64 %.neg, %.0142                   ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %.2136.lcssa, i64 %i.ce ; 2 uses

@@ -204,11 +204,11 @@ bb.a:
   br i1 %i.f, label %._crit_edge.thread, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.e ; 2 uses
-  %4 = ptrtoint ptr %i.g to i64
+  %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.e
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit
+  %4 = phi ptr [ %6, %_RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit ], [ %i.g, %.lr.ph.preheader ] ; 2 uses
   %.sroa.01.010 = phi i32 [ %.sroa.01.1, %_RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.h = phi ptr [ %.sroa.01.05, %_RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit ], [ %i.c, %.lr.ph.preheader ] ; 7 uses
   %i.i = load i8, ptr %i.h, align 1, !noalias !54, !noundef !4 ; 7 uses
@@ -298,12 +298,14 @@ _RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   br label %_RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit
 
 _RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit: ; preds = %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5zhLZWy8nm_11toml_parser.exit14.i35, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5zhLZWy8nm_11toml_parser.exit12.i32, %bb.g
-  %.sroa.01.05 = phi ptr [ %i.aq, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5zhLZWy8nm_11toml_parser.exit12.i32 ], [ %i.as, %bb.g ], [ %spec.select, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5zhLZWy8nm_11toml_parser.exit14.i35 ] ; 4 uses
+  %.sroa.01.05 = phi ptr [ %i.aq, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5zhLZWy8nm_11toml_parser.exit12.i32 ], [ %i.as, %bb.g ], [ %spec.select, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5zhLZWy8nm_11toml_parser.exit14.i35 ] ; 5 uses
+  %5 = ptrtoint ptr %4 to i64
   %i.au = ptrtoint ptr %.sroa.01.05 to i64
-  %i.av = sub nuw i64 %4, %i.au
+  %i.av = sub nuw i64 %5, %i.au                   ; 2 uses
   store ptr %.sroa.01.05, ptr %0, align 8, !alias.scope !55, !captures !5
   store i64 %i.av, ptr %i.d, align 8, !alias.scope !55
-  %i.aw = icmp eq ptr %i.g, %.sroa.01.05
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.01.05, i64 %i.av
+  %i.aw = icmp eq ptr %4, %.sroa.01.05
   br i1 %i.aw, label %._crit_edge, label %.lr.ph
 
 bb.h:                                             ; preds = %._crit_edge

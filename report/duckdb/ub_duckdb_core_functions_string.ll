@@ -205,13 +205,14 @@ bb.k:                                             ; preds = %bb.j
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %i.e, ptr noundef nonnull align 16 dereferenceable(20) %5, i64 20, i1 false), !tbaa.struct !206
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   %i.ac = load ptr, ptr %i.d, align 8, !tbaa !315 ; 2 uses
-  %i.ad = ptrtoint ptr %i.t to i64
-  %i.ae = ptrtoint ptr %i.ac to i64
-  %i.af = sub i64 %i.ad, %i.ae                    ; 2 uses
+  %i.ad = ptrtoint ptr %i.t to i64                ; 2 uses
+  %i.ae = ptrtoint ptr %i.ac to i64               ; 2 uses
+  %i.af = sub i64 %i.ad, %i.ae
   %i.ag = getelementptr inbounds i8, ptr %i.ac, i64 %i.af
+  %.neg.i.i = sub i64 %i.ae, %i.ad
   store ptr %i.ag, ptr %i.d, align 8, !tbaa !315
   %i.ah = load i64, ptr %i.f, align 16, !tbaa !316
-  %14 = sub i64 %i.ah, %i.af
+  %14 = add i64 %.neg.i.i, %i.ah
   store i64 %14, ptr %i.f, align 16, !tbaa !316
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.c, align 16
@@ -269,13 +270,14 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.ax = load ptr, ptr %i.d, align 8, !tbaa !315 ; 2 uses
-  %i.ay = ptrtoint ptr %i.av to i64
-  %i.az = ptrtoint ptr %i.ax to i64
-  %i.ba = sub i64 %i.ay, %i.az                    ; 2 uses
+  %i.ay = ptrtoint ptr %i.av to i64               ; 2 uses
+  %i.az = ptrtoint ptr %i.ax to i64               ; 2 uses
+  %i.ba = sub i64 %i.ay, %i.az
   %i.bb = getelementptr inbounds i8, ptr %i.ax, i64 %i.ba
+  %.neg.i.i55 = sub i64 %i.az, %i.ay
   store ptr %i.bb, ptr %i.d, align 8, !tbaa !315
   %i.bc = load i64, ptr %i.f, align 16, !tbaa !316
-  %15 = sub i64 %i.bc, %i.ba
+  %15 = add i64 %.neg.i.i55, %i.bc
   store i64 %15, ptr %i.f, align 16, !tbaa !316
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   %.sroa.0.0.copyload.i.i.i55 = load ptr, ptr %i.c, align 16
@@ -678,14 +680,15 @@ bb.a:
   %7 = alloca %"class.duckdb_fmt::v6::arg_formatter", align 8 ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !315  ; 2 uses
-  %i.c = ptrtoint ptr %1 to i64
-  %i.d = ptrtoint ptr %i.b to i64
-  %i.e = sub i64 %i.c, %i.d                       ; 2 uses
+  %i.c = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.e = sub i64 %i.c, %i.d
   %i.f = getelementptr inbounds i8, ptr %i.b, i64 %i.e
+  %.neg.i = sub i64 %i.d, %i.c
   store ptr %i.f, ptr %i.a, align 8, !tbaa !315
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.h = load i64, ptr %i.g, align 16, !tbaa !316
-  %8 = sub i64 %i.h, %i.e
+  %8 = add i64 %.neg.i, %i.h
   store i64 %8, ptr %i.g, align 16, !tbaa !316
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
@@ -763,13 +766,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.f,
 
 bb.g:                                             ; preds = %bb.c
   %i.ac = load ptr, ptr %i.a, align 8, !tbaa !315 ; 2 uses
-  %i.ad = ptrtoint ptr %i.v to i64
-  %i.ae = ptrtoint ptr %i.ac to i64
-  %i.af = sub i64 %i.ad, %i.ae                    ; 2 uses
+  %i.ad = ptrtoint ptr %i.v to i64                ; 2 uses
+  %i.ae = ptrtoint ptr %i.ac to i64               ; 2 uses
+  %i.af = sub i64 %i.ad, %i.ae
   %i.ag = getelementptr inbounds i8, ptr %i.ac, i64 %i.af
+  %.neg.i15 = sub i64 %i.ae, %i.ad
   store ptr %i.ag, ptr %i.a, align 8, !tbaa !315
   %i.ah = load i64, ptr %i.g, align 16, !tbaa !316
-  %9 = sub i64 %i.ah, %i.af
+  %9 = add i64 %.neg.i15, %i.ah
   store i64 %9, ptr %i.g, align 16, !tbaa !316
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
   %.sroa.0.0.copyload.i.i = load ptr, ptr %i.i, align 16

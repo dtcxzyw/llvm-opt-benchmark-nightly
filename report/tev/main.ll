@@ -205,17 +205,21 @@ _ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocator
   br label %_ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit
 
 _ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit: ; preds = %_ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit.loopexit, %bb.d
-  %.pre-phi = phi i64 [ %.pre53, %_ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit.loopexit ], [ %i.l, %bb.d ] ; 2 uses
+  %.pre-phi = phi i64 [ %.pre53, %_ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit.loopexit ], [ %i.l, %bb.d ]
   %i.ac = sub i64 %.pre-phi, %i.l
-  %i.ad = getelementptr inbounds i8, ptr %i.j, i64 %i.ac ; 2 uses
+  %i.ad = getelementptr inbounds i8, ptr %i.j, i64 %i.ac ; 3 uses
   store ptr %i.ad, ptr %i.i, align 8, !tbaa !540
   %i.ae = icmp sgt i64 %i.p, 0
-  br i1 %i.ae, label %.critedge, label %_ZNSt3__14copyB8ne180100INS_13move_iteratorINS_11__wrap_iterIPNS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES9_jEEEEEEESB_EET0_T_SF_SE_.exit
+  br i1 %i.ae, label %_ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit..critedge_crit_edge, label %_ZNSt3__14copyB8ne180100INS_13move_iteratorINS_11__wrap_iterIPNS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES9_jEEEEEEESB_EET0_T_SF_SE_.exit
 
-.critedge:                                        ; preds = %_ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit, %bb.c
-  %.pre-phi55 = phi i64 [ %i.l, %bb.c ], [ %.pre-phi, %_ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit ]
-  %i.af = phi ptr [ %i.j, %bb.c ], [ %i.ad, %_ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit ] ; 4 uses
-  %.sroa.0.0 = phi ptr [ %i.o, %bb.c ], [ %i.s, %_ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit ] ; 2 uses
+_ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit..critedge_crit_edge: ; preds = %_ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit
+  %.pre54 = ptrtoint ptr %i.ad to i64
+  br label %.critedge
+
+.critedge:                                        ; preds = %_ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit..critedge_crit_edge, %bb.c
+  %.pre-phi55 = phi i64 [ %.pre54, %_ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.l, %bb.c ]
+  %i.af = phi ptr [ %i.ad, %_ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.j, %bb.c ] ; 4 uses
+  %.sroa.0.0 = phi ptr [ %i.s, %_ZNSt3__16vectorINS_5tupleIJNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_jEEENS5_IS8_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS8_EEEESG_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.o, %bb.c ] ; 2 uses
   %i.ag = getelementptr inbounds nuw [56 x i8], ptr %i.e, i64 %4 ; 2 uses
   %i.ah = ptrtoint ptr %i.ag to i64
   %i.ai = sub i64 %.pre-phi55, %i.ah
@@ -618,17 +622,21 @@ _ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_I
   br label %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit
 
 _ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit: ; preds = %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit.loopexit, %bb.d
-  %.pre-phi = phi i64 [ %.pre51, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit.loopexit ], [ %i.l, %bb.d ] ; 2 uses
+  %.pre-phi = phi i64 [ %.pre51, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit.loopexit ], [ %i.l, %bb.d ]
   %i.x = sub i64 %.pre-phi, %i.l
-  %i.y = getelementptr inbounds i8, ptr %i.j, i64 %i.x ; 2 uses
+  %i.y = getelementptr inbounds i8, ptr %i.j, i64 %i.x ; 3 uses
   store ptr %i.y, ptr %i.i, align 8, !tbaa !102
   %i.z = icmp sgt i64 %i.p, 0
-  br i1 %i.z, label %.critedge, label %_ZNSt3__14copyB8ne180100INS_13move_iteratorINS_11__wrap_iterIPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEEEES9_EET0_T_SD_SC_.exit
+  br i1 %i.z, label %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit..critedge_crit_edge, label %_ZNSt3__14copyB8ne180100INS_13move_iteratorINS_11__wrap_iterIPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEEEES9_EET0_T_SD_SC_.exit
 
-.critedge:                                        ; preds = %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit, %bb.c
-  %.pre-phi53 = phi i64 [ %i.l, %bb.c ], [ %.pre-phi, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit ]
-  %i.aa = phi ptr [ %i.j, %bb.c ], [ %i.y, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit ] ; 4 uses
-  %.sroa.0.0 = phi ptr [ %i.o, %bb.c ], [ %i.s, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit ] ; 2 uses
+_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit..critedge_crit_edge: ; preds = %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit
+  %.pre52 = ptrtoint ptr %i.y to i64
+  br label %.critedge
+
+.critedge:                                        ; preds = %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit..critedge_crit_edge, %bb.c
+  %.pre-phi53 = phi i64 [ %.pre52, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.l, %bb.c ]
+  %i.aa = phi ptr [ %i.y, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.j, %bb.c ] ; 4 uses
+  %.sroa.0.0 = phi ptr [ %i.s, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_13move_iteratorINS_11__wrap_iterIPS6_EEEESE_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.o, %bb.c ] ; 2 uses
   %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.e, i64 %4 ; 2 uses
   %i.ac = ptrtoint ptr %i.ab to i64
   %i.ad = sub i64 %.pre-phi53, %i.ac
@@ -1031,20 +1039,24 @@ _ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_I
   br label %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit
 
 _ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit: ; preds = %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit.loopexit, %bb.d
-  %.pre-phi = phi i64 [ %.pre53, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit.loopexit ], [ %i.n, %bb.d ] ; 2 uses
+  %.pre-phi = phi i64 [ %.pre53, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit.loopexit ], [ %i.n, %bb.d ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #40
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #40
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.ah = sub i64 %.pre-phi, %i.n
-  %i.ai = getelementptr inbounds i8, ptr %i.l, i64 %i.ah ; 2 uses
+  %i.ai = getelementptr inbounds i8, ptr %i.l, i64 %i.ah ; 3 uses
   store ptr %i.ai, ptr %i.k, align 8, !tbaa !102
   %i.aj = icmp sgt i64 %i.r, 0
-  br i1 %i.aj, label %.critedge, label %_ZNSt3__14copyB8ne180100INS_11__wrap_iterIPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEES8_EET0_T_SB_SA_.exit
+  br i1 %i.aj, label %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit..critedge_crit_edge, label %_ZNSt3__14copyB8ne180100INS_11__wrap_iterIPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEES8_EET0_T_SB_SA_.exit
 
-.critedge:                                        ; preds = %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit, %bb.c
-  %.pre-phi55 = phi i64 [ %i.n, %bb.c ], [ %.pre-phi, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit ]
-  %i.ak = phi ptr [ %i.l, %bb.c ], [ %i.ai, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit ] ; 4 uses
-  %.sroa.0.0 = phi ptr [ %i.q, %bb.c ], [ %i.u, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit ] ; 2 uses
+_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit..critedge_crit_edge: ; preds = %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit
+  %.pre54 = ptrtoint ptr %i.ai to i64
+  br label %.critedge
+
+.critedge:                                        ; preds = %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit..critedge_crit_edge, %bb.c
+  %.pre-phi55 = phi i64 [ %.pre54, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.n, %bb.c ]
+  %i.ak = phi ptr [ %i.ai, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.l, %bb.c ] ; 4 uses
+  %.sroa.0.0 = phi ptr [ %i.u, %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE18__construct_at_endINS_11__wrap_iterIPS6_EESC_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.q, %bb.c ] ; 2 uses
   %i.al = getelementptr inbounds nuw [24 x i8], ptr %i.g, i64 %4 ; 2 uses
   %i.am = ptrtoint ptr %i.al to i64
   %i.an = sub i64 %.pre-phi55, %i.am
@@ -1447,10 +1459,10 @@ bb.f:                                             ; preds = %bb.c, %_ZNSt3__16ve
 define linkonce_odr hidden ptr @_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE5eraseENS_11__wrap_iterIPKS6_EESC_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !101    ; 2 uses
-  %i.b = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.b = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.c = ptrtoint ptr %i.a to i64
   %i.d = sub i64 %i.b, %i.c
-  %i.e = getelementptr inbounds i8, ptr %i.a, i64 %i.d ; 4 uses
+  %i.e = getelementptr inbounds i8, ptr %i.a, i64 %i.d ; 5 uses
   %.not = icmp eq ptr %1, %2
   br i1 %.not, label %bb.e, label %bb.b
 
@@ -1490,13 +1502,13 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSB8ne180100EOS5_
 
 _ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit: ; preds = %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSB8ne180100EOS5_.exit.i.i.i.i.i
   %.pre = load ptr, ptr %i.i, align 8, !tbaa !102
-  %3 = ptrtoint ptr %i.s to i64
   br label %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit
 
 _ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit: ; preds = %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit, %bb.b
   %i.t = phi ptr [ %i.j, %bb.b ], [ %.pre, %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit ] ; 2 uses
-  %storemerge.lcssa.i.i.i.i.i = phi i64 [ %i.b, %bb.b ], [ %3, %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit ]
-  %i.u = sub i64 %storemerge.lcssa.i.i.i.i.i, %i.b
+  %storemerge.lcssa.i.i.i.i.i = phi ptr [ %i.e, %bb.b ], [ %i.s, %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit ]
+  %3 = ptrtoint ptr %storemerge.lcssa.i.i.i.i.i to i64
+  %i.u = sub i64 %3, %i.b
   %i.v = getelementptr inbounds i8, ptr %i.e, i64 %i.u ; 3 uses
   %.not6.i.i = icmp eq ptr %i.v, %i.t
   br i1 %.not6.i.i, label %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE17__destruct_at_endB8ne180100EPS6_.exit, label %.lr.ph.i.i
@@ -1532,10 +1544,10 @@ bb.e:                                             ; preds = %_ZNSt3__16vectorINS
 define linkonce_odr hidden ptr @_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS6_EE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1) local_unnamed_addr #19 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !101    ; 2 uses
-  %i.b = ptrtoint ptr %1 to i64                   ; 3 uses
+  %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.c = ptrtoint ptr %i.a to i64
   %i.d = sub i64 %i.b, %i.c
-  %i.e = getelementptr inbounds i8, ptr %i.a, i64 %i.d ; 4 uses
+  %i.e = getelementptr inbounds i8, ptr %i.a, i64 %i.d ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !102  ; 3 uses
@@ -1569,13 +1581,13 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSB8ne180100EOS5_
 
 _ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit: ; preds = %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSB8ne180100EOS5_.exit.i.i.i.i.i
   %.pre = load ptr, ptr %i.g, align 8, !tbaa !102
-  %2 = ptrtoint ptr %i.q to i64
   br label %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit
 
 _ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit: ; preds = %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit, %bb.a
   %i.r = phi ptr [ %i.h, %bb.a ], [ %.pre, %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit ] ; 2 uses
-  %storemerge.lcssa.i.i.i.i.i = phi i64 [ %i.b, %bb.a ], [ %2, %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit ]
-  %i.s = sub i64 %storemerge.lcssa.i.i.i.i.i, %i.b
+  %storemerge.lcssa.i.i.i.i.i = phi ptr [ %i.e, %bb.a ], [ %i.q, %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit ]
+  %2 = ptrtoint ptr %storemerge.lcssa.i.i.i.i.i to i64
+  %i.s = sub i64 %2, %i.b
   %i.t = getelementptr inbounds i8, ptr %i.e, i64 %i.s ; 3 uses
   %.not6.i.i = icmp eq ptr %i.t, %i.r
   br i1 %.not6.i.i, label %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE17__destruct_at_endB8ne180100EPS6_.exit, label %.lr.ph.i.i

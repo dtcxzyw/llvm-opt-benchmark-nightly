@@ -205,12 +205,12 @@ bb.p:                                             ; preds = %.lr.ph.i.i.i.i
 
 .loopexit164:                                     ; preds = %bb.p, %.lr.ph.i.i.i.i, %bb.o
   %.0.lcssa.i.i.i.i = phi ptr [ %i.da, %bb.o ], [ %i.dc, %bb.p ], [ %.08.i.i.i.i, %.lr.ph.i.i.i.i ]
-  %i.dg = ptrtoint ptr %.0.lcssa.i.i.i.i to i64
-  %i.dh = ptrtoint ptr %i.da to i64               ; 2 uses
-  %i.di = sub i64 %i.dg, %i.dh                    ; 2 uses
+  %i.dg = ptrtoint ptr %i.da to i64               ; 2 uses
+  %i.dh = ptrtoint ptr %.0.lcssa.i.i.i.i to i64
+  %i.di = sub i64 %i.dh, %i.dg                    ; 2 uses
   %i.dj = ashr exact i64 %i.di, 4
   %i.dk = ptrtoint ptr %i.dc to i64
-  %i.dl = sub i64 %i.dk, %i.dh
+  %i.dl = sub i64 %i.dk, %i.dg
   %.not.i91 = icmp ult i64 %i.di, %i.dl
   %i.dm = select i1 %.not.i91, i64 %i.dj, i64 0   ; 6 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 1080 ; 2 uses
@@ -613,12 +613,12 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i.i
 
 _ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit: ; preds = %.lr.ph.i.i.i.i, %bb.h, %bb.g
   %.0.lcssa.i.i.i.i = phi ptr [ %i.cg, %bb.g ], [ %.08.i.i.i.i, %.lr.ph.i.i.i.i ], [ %i.ci, %bb.h ]
-  %i.cm = ptrtoint ptr %.0.lcssa.i.i.i.i to i64
-  %i.cn = ptrtoint ptr %i.cg to i64               ; 2 uses
-  %i.co = sub i64 %i.cm, %i.cn                    ; 2 uses
+  %i.cm = ptrtoint ptr %i.cg to i64               ; 2 uses
+  %i.cn = ptrtoint ptr %.0.lcssa.i.i.i.i to i64
+  %i.co = sub i64 %i.cn, %i.cm                    ; 2 uses
   %i.cp = ashr exact i64 %i.co, 4
   %i.cq = ptrtoint ptr %i.ci to i64
-  %i.cr = sub i64 %i.cq, %i.cn
+  %i.cr = sub i64 %i.cq, %i.cm
   %.not.i45 = icmp ult i64 %i.co, %i.cr
   %i.cs = select i1 %.not.i45, i64 %i.cp, i64 0   ; 5 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 1080 ; 2 uses
@@ -1021,7 +1021,7 @@ bb.r:                                             ; preds = %._crit_edge
 
 _ZNSt3__110shared_ptrIN3tev5ImageEEC2B8ne180100ERKS3_.exit: ; preds = %._crit_edge, %bb.r
   %i.by = phi ptr [ %i.bq, %._crit_edge ], [ %.pre, %bb.r ]
-  %i.bz = getelementptr inbounds [16 x i8], ptr %i.by, i64 %1 ; 4 uses
+  %i.bz = getelementptr inbounds [16 x i8], ptr %i.by, i64 %1 ; 5 uses
   %i.ca = ptrtoint ptr %i.bz to i64               ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bz, i64 16 ; 2 uses
   %i.cc = load ptr, ptr %i.c, align 16, !tbaa !506 ; 3 uses
@@ -1055,7 +1055,7 @@ bb.t:                                             ; preds = %bb.s
 
 _ZNSt3__110shared_ptrIN3tev5ImageEEaSB8ne180100EOS3_.exit.i.i.i.i.i.i: ; preds = %bb.t, %bb.s, %.lr.ph.i.i.i.i.i.i
   %i.cm = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 16 ; 2 uses
-  %i.cn = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 16 ; 2 uses
+  %i.cn = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 16 ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.cm, %i.cc
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !18
 
@@ -1065,11 +1065,12 @@ _ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.lo
   br label %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.i
 
 _ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.i: ; preds = %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i, %_ZNSt3__110shared_ptrIN3tev5ImageEEC2B8ne180100ERKS3_.exit
-  %i.cp = phi ptr [ %i.cc, %_ZNSt3__110shared_ptrIN3tev5ImageEEC2B8ne180100ERKS3_.exit ], [ %.pre.i, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i ] ; 2 uses
-  %storemerge.lcssa.i.i.i.i.i.i = phi i64 [ %i.ca, %_ZNSt3__110shared_ptrIN3tev5ImageEEC2B8ne180100ERKS3_.exit ], [ %i.co, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i ]
-  %i.cq = sub i64 %storemerge.lcssa.i.i.i.i.i.i, %i.ca
-  %i.cr = getelementptr inbounds i8, ptr %i.bz, i64 %i.cq ; 3 uses
-  %.not6.i.i.i = icmp eq ptr %i.cr, %i.cp
+  %.pre-phi = phi i64 [ %i.co, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i ], [ %i.ca, %_ZNSt3__110shared_ptrIN3tev5ImageEEC2B8ne180100ERKS3_.exit ]
+  %i.cp = phi ptr [ %.pre.i, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i ], [ %i.cc, %_ZNSt3__110shared_ptrIN3tev5ImageEEC2B8ne180100ERKS3_.exit ] ; 2 uses
+  %storemerge.lcssa.i.i.i.i.i.i = phi ptr [ %i.cn, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i ], [ %i.bz, %_ZNSt3__110shared_ptrIN3tev5ImageEEC2B8ne180100ERKS3_.exit ] ; 2 uses
+  %i.cq = sub i64 %.pre-phi, %i.ca
+  %i.cr = getelementptr inbounds i8, ptr %i.bz, i64 %i.cq
+  %.not6.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.cp
   br i1 %.not6.i.i.i, label %.loopexit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.i, %_ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrIN3tev5ImageEEEEEE7destroyB8ne180100IS5_vvEEvRS6_PT_.exit.i.i.i
@@ -1095,7 +1096,7 @@ bb.v:                                             ; preds = %bb.u
   br label %_ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrIN3tev5ImageEEEEEE7destroyB8ne180100IS5_vvEEvRS6_PT_.exit.i.i.i
 
 _ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrIN3tev5ImageEEEEEE7destroyB8ne180100IS5_vvEEvRS6_PT_.exit.i.i.i: ; preds = %bb.v, %bb.u, %.lr.ph.i.i.i
-  %.not.i.i.i = icmp eq ptr %i.cr, %i.cs
+  %.not.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.cs
   br i1 %.not.i.i.i, label %.loopexit, label %.lr.ph.i.i.i
 
 bb.w:                                             ; preds = %.lr.ph, %bb.x
@@ -1498,12 +1499,12 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNKSt3__16ranges6__find4__fnclB8ne180100ITkNS0_11input_rangeERKNS_6vectorINS_10shared_ptrIN3tev5ImageEEENS_9allocatorIS8_EEEES8_NS_8identityEQ25indirect_binary_predicateINS0_8equal_toENS_16__projected_implIDTclL_ZNS0_5__cpo5beginEEclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENS_7_IfImplIX14borrowed_rangeISI_EEE7_SelectISK_NS0_8danglingEEEOSI_RSP_SL_.exit: ; preds = %bb.b, %bb.c, %bb.a
   %.0.lcssa.i.i.i = phi ptr [ %i.b, %bb.a ], [ %i.d, %bb.c ], [ %.08.i.i.i, %bb.b ]
-  %i.i = ptrtoint ptr %.0.lcssa.i.i.i to i64
-  %i.j = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.k = sub i64 %i.i, %i.j                       ; 2 uses
+  %i.i = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.j = ptrtoint ptr %.0.lcssa.i.i.i to i64
+  %i.k = sub i64 %i.j, %i.i                       ; 2 uses
   %i.l = ashr exact i64 %i.k, 4
   %i.m = ptrtoint ptr %i.d to i64
-  %i.n = sub i64 %i.m, %i.j
+  %i.n = sub i64 %i.m, %i.i
   %.not = icmp ult i64 %i.k, %i.n                 ; 2 uses
   %.sroa.3.sroa.2.0 = zext i1 %.not to i8
   %.sroa.0.0.insert.insert = select i1 %.not, i64 %i.l, i64 0
@@ -1906,11 +1907,11 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i
 
 _ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.i: ; preds = %bb.d, %.lr.ph.i.i.i.i.i, %_ZNSt3__110shared_ptrIN3tev5ImageEEC2B8ne180100ERKS3_.exit
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.o, %_ZNSt3__110shared_ptrIN3tev5ImageEEC2B8ne180100ERKS3_.exit ], [ %i.o, %bb.d ], [ %.08.i.i.i.i.i, %.lr.ph.i.i.i.i.i ]
-  %i.t = ptrtoint ptr %.0.lcssa.i.i.i.i.i to i64
-  %i.u = ptrtoint ptr %i.p to i64                 ; 2 uses
-  %i.v = sub i64 %i.t, %i.u
+  %i.t = ptrtoint ptr %i.p to i64                 ; 2 uses
+  %i.u = ptrtoint ptr %.0.lcssa.i.i.i.i.i to i64
+  %i.v = sub i64 %i.u, %i.t
   %i.w = ptrtoint ptr %i.o to i64
-  %i.x = sub i64 %i.w, %i.u
+  %i.x = sub i64 %i.w, %i.t
   %.not.i.i = icmp ult i64 %i.v, %i.x
   br i1 %.not.i.i, label %bb.e, label %_ZN3tev11ImageViewer11reloadImageENSt3__110shared_ptrINS_5ImageEEEb.exit
 
@@ -1996,11 +1997,11 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit: ; preds = %bb.b, %bb.c, %bb.a
   %.0.lcssa.i.i.i.i = phi ptr [ %i.b, %bb.a ], [ %.08.i.i.i.i, %bb.b ], [ %i.d, %bb.c ]
-  %i.i = ptrtoint ptr %.0.lcssa.i.i.i.i to i64
-  %i.j = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.k = sub i64 %i.i, %i.j
+  %i.i = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.j = ptrtoint ptr %.0.lcssa.i.i.i.i to i64
+  %i.k = sub i64 %i.j, %i.i
   %i.l = ptrtoint ptr %i.d to i64
-  %i.m = sub i64 %i.l, %i.j
+  %i.m = sub i64 %i.l, %i.i
   %.not.i = icmp ult i64 %i.k, %i.m
   br i1 %.not.i, label %bb.d, label %bb.e
 
@@ -2403,7 +2404,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.i
 
 bb.d:                                             ; preds = %bb.c
   %i.x = load ptr, ptr %i.a, align 8, !tbaa !505
-  %i.y = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %indvars.iv.next ; 4 uses
+  %i.y = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %indvars.iv.next ; 5 uses
   %i.z = ptrtoint ptr %i.y to i64                 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 16 ; 2 uses
   %i.ab = load ptr, ptr %i.c, align 16, !tbaa !506 ; 3 uses
@@ -2437,7 +2438,7 @@ bb.f:                                             ; preds = %bb.e
 
 _ZNSt3__110shared_ptrIN3tev5ImageEEaSB8ne180100EOS3_.exit.i.i.i.i.i.i: ; preds = %bb.f, %bb.e, %.lr.ph.i.i.i.i.i.i
   %i.al = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 16 ; 2 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 16 ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 16 ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.al, %i.ab
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !18
 
@@ -2447,11 +2448,12 @@ _ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.lo
   br label %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.i
 
 _ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.i: ; preds = %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i, %bb.d
-  %i.ao = phi ptr [ %i.ab, %bb.d ], [ %.pre.i, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i ] ; 2 uses
-  %storemerge.lcssa.i.i.i.i.i.i = phi i64 [ %i.z, %bb.d ], [ %i.an, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i ]
-  %i.ap = sub i64 %storemerge.lcssa.i.i.i.i.i.i, %i.z
-  %i.aq = getelementptr inbounds i8, ptr %i.y, i64 %i.ap ; 3 uses
-  %.not6.i.i.i = icmp eq ptr %i.aq, %i.ao
+  %.pre-phi = phi i64 [ %i.an, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i ], [ %i.z, %bb.d ]
+  %i.ao = phi ptr [ %.pre.i, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i ], [ %i.ab, %bb.d ] ; 2 uses
+  %storemerge.lcssa.i.i.i.i.i.i = phi ptr [ %i.am, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i ], [ %i.y, %bb.d ] ; 2 uses
+  %i.ap = sub i64 %.pre-phi, %i.z
+  %i.aq = getelementptr inbounds i8, ptr %i.y, i64 %i.ap
+  %.not6.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.ao
   br i1 %.not6.i.i.i, label %_ZNSt3__16vectorINS_10shared_ptrIN3tev5ImageEEENS_9allocatorIS4_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS4_EE.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.i, %_ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrIN3tev5ImageEEEEEE7destroyB8ne180100IS5_vvEEvRS6_PT_.exit.i.i.i
@@ -2477,7 +2479,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrIN3tev5ImageEEEEEE7destroyB8ne180100IS5_vvEEvRS6_PT_.exit.i.i.i
 
 _ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrIN3tev5ImageEEEEEE7destroyB8ne180100IS5_vvEEvRS6_PT_.exit.i.i.i: ; preds = %bb.h, %bb.g, %.lr.ph.i.i.i
-  %.not.i.i.i = icmp eq ptr %i.aq, %i.ar
+  %.not.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.ar
   br i1 %.not.i.i.i, label %_ZNSt3__16vectorINS_10shared_ptrIN3tev5ImageEEENS_9allocatorIS4_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS4_EE.exit, label %.lr.ph.i.i.i
 
 _ZNSt3__16vectorINS_10shared_ptrIN3tev5ImageEEENS_9allocatorIS4_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS4_EE.exit: ; preds = %_ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrIN3tev5ImageEEEEEE7destroyB8ne180100IS5_vvEEvRS6_PT_.exit.i.i.i, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.i
@@ -2540,12 +2542,12 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit: ; preds = %bb.b, %bb.c, %bb.a
   %.0.lcssa.i.i.i.i = phi ptr [ %i.b, %bb.a ], [ %.08.i.i.i.i, %bb.b ], [ %i.d, %bb.c ]
-  %i.i = ptrtoint ptr %.0.lcssa.i.i.i.i to i64
-  %i.j = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.k = sub i64 %i.i, %i.j                       ; 2 uses
+  %i.i = ptrtoint ptr %i.b to i64                 ; 3 uses
+  %i.j = ptrtoint ptr %.0.lcssa.i.i.i.i to i64
+  %i.k = sub i64 %i.j, %i.i                       ; 2 uses
   %i.l = ashr exact i64 %i.k, 4                   ; 3 uses
   %i.m = ptrtoint ptr %i.d to i64
-  %i.n = sub i64 %i.m, %i.j                       ; 4 uses
+  %i.n = sub i64 %i.m, %i.i                       ; 4 uses
   %.not.i = icmp ult i64 %i.k, %i.n               ; 2 uses
   %.sroa.0.0.insert.insert.i = select i1 %.not.i, i64 %i.l, i64 0 ; 3 uses
   br i1 %.not.i, label %bb.d, label %bb.as
@@ -2594,7 +2596,7 @@ bb.i:                                             ; preds = %bb.j, %.lr.ph.i.i.i
 
 ._ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.i_crit_edge: ; preds = %bb.i
   %.pre76.a = ptrtoint ptr %.08.i.i.i.i.i to i64
-  %.pre78 = sub i64 %.pre76.a, %i.j
+  %.pre78 = sub i64 %.pre76.a, %i.i
   br label %_ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.i
 
 bb.j:                                             ; preds = %bb.i
@@ -2682,11 +2684,11 @@ bb.o:                                             ; preds = %.lr.ph.i.i.i.i12
 
 _ZNSt3__1ssB8ne180100ImTkNS_25three_way_comparable_withIT_EEmEENS_24compare_three_way_resultIS2_T0_E4typeERKNS_8optionalIS2_EERKNS7_IS4_EE.exit: ; preds = %bb.o, %.lr.ph.i.i.i.i12, %_ZN3tev11ImageViewer9nextImageERKNSt3__110shared_ptrINS_5ImageEEENS_10EDirectionE.exit
   %.0.lcssa.i.i.i.i15 = phi ptr [ %i.bf, %_ZN3tev11ImageViewer9nextImageERKNSt3__110shared_ptrINS_5ImageEEENS_10EDirectionE.exit ], [ %i.bf, %bb.o ], [ %.08.i.i.i.i13, %.lr.ph.i.i.i.i12 ]
-  %i.bk = ptrtoint ptr %.0.lcssa.i.i.i.i15 to i64
-  %i.bl = ptrtoint ptr %i.bg to i64               ; 3 uses
-  %i.bm = sub i64 %i.bk, %i.bl                    ; 2 uses
+  %i.bk = ptrtoint ptr %i.bg to i64               ; 3 uses
+  %i.bl = ptrtoint ptr %.0.lcssa.i.i.i.i15 to i64
+  %i.bm = sub i64 %i.bl, %i.bk                    ; 2 uses
   %i.bn = ptrtoint ptr %i.bf to i64
-  %i.bo = sub i64 %i.bn, %i.bl                    ; 4 uses
+  %i.bo = sub i64 %i.bn, %i.bk                    ; 4 uses
   %.not.i16 = icmp uge i64 %i.bm, %i.bo
   %i.bp = ashr exact i64 %i.bm, 4
   %i.bq = icmp ult i64 %i.bp, %.sroa.0.0.insert.insert.i
@@ -2712,7 +2714,7 @@ bb.q:                                             ; preds = %bb.r, %.lr.ph.i.i.i
 
 ._ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.i26_crit_edge: ; preds = %bb.q
   %.pre73.a = ptrtoint ptr %.08.i.i.i.i.i24 to i64
-  %.pre74 = sub i64 %.pre73.a, %i.bl
+  %.pre74 = sub i64 %.pre73.a, %i.bk
   br label %_ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.i26
 
 bb.r:                                             ; preds = %bb.q
@@ -2841,7 +2843,7 @@ _ZNSt3__110shared_ptrIN3tev5ImageEED2B8ne180100Ev.exit42: ; preds = %bb.z, %bb.a
 
 bb.ac:                                            ; preds = %_ZNSt3__110shared_ptrIN3tev5ImageEED2B8ne180100Ev.exit42
   %i.dr = load ptr, ptr %i.a, align 8, !tbaa !505
-  %i.ds = getelementptr inbounds [16 x i8], ptr %i.dr, i64 %.sroa.0.0.insert.insert.i ; 4 uses
+  %i.ds = getelementptr inbounds [16 x i8], ptr %i.dr, i64 %.sroa.0.0.insert.insert.i ; 5 uses
   %i.dt = ptrtoint ptr %i.ds to i64               ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %i.ds, i64 16 ; 2 uses
   %i.dv = load ptr, ptr %i.c, align 16, !tbaa !506 ; 3 uses
@@ -2875,7 +2877,7 @@ bb.ae:                                            ; preds = %bb.ad
 
 _ZNSt3__110shared_ptrIN3tev5ImageEEaSB8ne180100EOS3_.exit.i.i.i.i.i.i: ; preds = %bb.ae, %bb.ad, %.lr.ph.i.i.i.i.i.i
   %i.ef = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 16 ; 2 uses
-  %i.eg = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 16 ; 2 uses
+  %i.eg = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 16 ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.ef, %i.dv
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !18
 
@@ -2885,11 +2887,12 @@ _ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.lo
   br label %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.i
 
 _ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.i: ; preds = %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i, %bb.ac
-  %i.ei = phi ptr [ %i.dv, %bb.ac ], [ %.pre.i, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i ] ; 2 uses
-  %storemerge.lcssa.i.i.i.i.i.i = phi i64 [ %i.dt, %bb.ac ], [ %i.eh, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i ]
-  %i.ej = sub i64 %storemerge.lcssa.i.i.i.i.i.i, %i.dt
-  %i.ek = getelementptr inbounds i8, ptr %i.ds, i64 %i.ej ; 3 uses
-  %.not6.i.i.i = icmp eq ptr %i.ek, %i.ei
+  %.pre-phi = phi i64 [ %i.eh, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i ], [ %i.dt, %bb.ac ]
+  %i.ei = phi ptr [ %.pre.i, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i ], [ %i.dv, %bb.ac ] ; 2 uses
+  %storemerge.lcssa.i.i.i.i.i.i = phi ptr [ %i.eg, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.loopexit.i ], [ %i.ds, %bb.ac ] ; 2 uses
+  %i.ej = sub i64 %.pre-phi, %i.dt
+  %i.ek = getelementptr inbounds i8, ptr %i.ds, i64 %i.ej
+  %.not6.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.ei
   br i1 %.not6.i.i.i, label %.loopexit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.i, %_ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrIN3tev5ImageEEEEEE7destroyB8ne180100IS5_vvEEvRS6_PT_.exit.i.i.i
@@ -2915,7 +2918,7 @@ bb.ag:                                            ; preds = %bb.af
   br label %_ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrIN3tev5ImageEEEEEE7destroyB8ne180100IS5_vvEEvRS6_PT_.exit.i.i.i
 
 _ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrIN3tev5ImageEEEEEE7destroyB8ne180100IS5_vvEEvRS6_PT_.exit.i.i.i: ; preds = %bb.ag, %bb.af, %.lr.ph.i.i.i
-  %.not.i.i.i = icmp eq ptr %i.ek, %i.el
+  %.not.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.el
   br i1 %.not.i.i.i, label %.loopexit, label %.lr.ph.i.i.i
 
 .loopexit:                                        ; preds = %_ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrIN3tev5ImageEEEEEE7destroyB8ne180100IS5_vvEEvRS6_PT_.exit.i.i.i, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrIN3tev5ImageEEES5_EET0_T_S7_S6_.exit.i
@@ -3051,12 +3054,12 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit: ; preds = %bb.c, %bb.d
   %.0.lcssa.i.i.i.i.ph = phi ptr [ %i.d, %bb.d ], [ %.08.i.i.i.i, %bb.c ]
-  %i.l = ptrtoint ptr %.0.lcssa.i.i.i.i.ph to i64
-  %i.m = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.n = sub i64 %i.l, %i.m                       ; 2 uses
+  %i.l = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.m = ptrtoint ptr %.0.lcssa.i.i.i.i.ph to i64
+  %i.n = sub i64 %i.m, %i.l                       ; 2 uses
   %i.o = lshr exact i64 %i.n, 4
   %i.p = ptrtoint ptr %i.d to i64
-  %i.q = sub i64 %i.p, %i.m                       ; 2 uses
+  %i.q = sub i64 %i.p, %i.l                       ; 2 uses
   %.not.i = icmp ult i64 %i.n, %i.q
   %i.r = trunc i64 %i.o to i32
   %i.s = select i1 %.not.i, i32 %i.r, i32 0       ; 2 uses
@@ -3459,12 +3462,12 @@ bb.cd:                                            ; preds = %bb.cc
 
 _ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.i: ; preds = %bb.cd, %bb.cc
   %.0.lcssa.i.i.i.i.ph.i = phi ptr [ %i.qo, %bb.cd ], [ %.08.i.i.i.i.i, %bb.cc ]
-  %i.qv = ptrtoint ptr %.0.lcssa.i.i.i.i.ph.i to i64
-  %i.qw = ptrtoint ptr %i.qm to i64               ; 2 uses
-  %i.qx = sub i64 %i.qv, %i.qw                    ; 2 uses
+  %i.qv = ptrtoint ptr %i.qm to i64               ; 2 uses
+  %i.qw = ptrtoint ptr %.0.lcssa.i.i.i.i.ph.i to i64
+  %i.qx = sub i64 %i.qw, %i.qv                    ; 2 uses
   %i.qy = lshr exact i64 %i.qx, 4
   %i.qz = ptrtoint ptr %i.qo to i64
-  %i.ra = sub i64 %i.qz, %i.qw                    ; 2 uses
+  %i.ra = sub i64 %i.qz, %i.qv                    ; 2 uses
   %.not.i.i115 = icmp ult i64 %i.qx, %i.ra
   %i.rb = trunc i64 %i.qy to i32
   %i.rc = select i1 %.not.i.i115, i32 %i.rb, i32 0 ; 2 uses
@@ -3585,12 +3588,12 @@ bb.cp:                                            ; preds = %bb.co
 
 _ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.i123: ; preds = %bb.cp, %bb.co
   %.0.lcssa.i.i.i.i.ph.i124 = phi ptr [ %i.sn, %bb.cp ], [ %.08.i.i.i.i.i121, %bb.co ]
-  %i.st = ptrtoint ptr %.0.lcssa.i.i.i.i.ph.i124 to i64
-  %i.su = ptrtoint ptr %i.sm to i64               ; 2 uses
-  %i.sv = sub i64 %i.st, %i.su                    ; 2 uses
+  %i.st = ptrtoint ptr %i.sm to i64               ; 2 uses
+  %i.su = ptrtoint ptr %.0.lcssa.i.i.i.i.ph.i124 to i64
+  %i.sv = sub i64 %i.su, %i.st                    ; 2 uses
   %i.sw = lshr exact i64 %i.sv, 4
   %i.sx = ptrtoint ptr %i.sn to i64
-  %i.sy = sub i64 %i.sx, %i.su                    ; 2 uses
+  %i.sy = sub i64 %i.sx, %i.st                    ; 2 uses
   %.not.i.i125 = icmp ult i64 %i.sv, %i.sy
   %i.sz = trunc i64 %i.sw to i32
   %i.ta = select i1 %.not.i.i125, i32 %i.sz, i32 0 ; 2 uses
@@ -3993,11 +3996,11 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i
 
 _ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.i: ; preds = %bb.g, %.lr.ph.i.i.i.i.i, %_ZNSt3__110shared_ptrIN3tev5ImageEEC2B8ne180100ERKS3_.exit
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.z, %_ZNSt3__110shared_ptrIN3tev5ImageEEC2B8ne180100ERKS3_.exit ], [ %i.aa, %bb.g ], [ %.08.i.i.i.i.i, %.lr.ph.i.i.i.i.i ]
-  %i.ae = ptrtoint ptr %.0.lcssa.i.i.i.i.i to i64
-  %i.af = ptrtoint ptr %i.z to i64                ; 2 uses
-  %i.ag = sub i64 %i.ae, %i.af
+  %i.ae = ptrtoint ptr %i.z to i64                ; 2 uses
+  %i.af = ptrtoint ptr %.0.lcssa.i.i.i.i.i to i64
+  %i.ag = sub i64 %i.af, %i.ae
   %i.ah = ptrtoint ptr %i.aa to i64
-  %i.ai = sub i64 %i.ah, %i.af
+  %i.ai = sub i64 %i.ah, %i.ae
   %.not.i.i = icmp ult i64 %i.ag, %i.ai
   br i1 %.not.i.i, label %bb.h, label %_ZN3tev11ImageViewer11reloadImageENSt3__110shared_ptrINS_5ImageEEEb.exit
 
@@ -4123,11 +4126,11 @@ bb.g:                                             ; preds = %bb.f
 
 _ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit: ; preds = %bb.f, %bb.g
   %.0.lcssa.i.i.i.i = phi ptr [ %.08.i.i.i.i, %bb.f ], [ %i.g, %bb.g ] ; 3 uses
-  %i.p = ptrtoint ptr %.0.lcssa.i.i.i.i to i64
-  %i.q = ptrtoint ptr %i.e to i64                 ; 4 uses
-  %i.r = sub i64 %i.p, %i.q
+  %i.p = ptrtoint ptr %i.e to i64                 ; 4 uses
+  %i.q = ptrtoint ptr %.0.lcssa.i.i.i.i to i64
+  %i.r = sub i64 %i.q, %i.p
   %i.s = ptrtoint ptr %i.g to i64                 ; 2 uses
-  %i.t = sub i64 %i.s, %i.q                       ; 3 uses
+  %i.t = sub i64 %i.s, %i.p                       ; 3 uses
   %.not.i26 = icmp ult i64 %i.r, %i.t             ; 2 uses
   %i.u = load ptr, ptr %1, align 8, !tbaa !439
   br label %bb.h
@@ -4150,7 +4153,7 @@ bb.i:                                             ; preds = %bb.h
 _ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit37: ; preds = %bb.i, %._ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit37.loopexit_crit_edge, %_ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.thread
   %.not.i26107 = phi i1 [ %.not.i26105, %_ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.thread ], [ %.not.i26, %._ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit37.loopexit_crit_edge ], [ %.not.i26, %bb.i ]
   %i.y = phi i64 [ %i.j, %_ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.thread ], [ %i.t, %._ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit37.loopexit_crit_edge ], [ %i.t, %bb.i ]
-  %i.z = phi i64 [ %i.h, %_ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.thread ], [ %i.q, %._ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit37.loopexit_crit_edge ], [ %i.q, %bb.i ]
+  %i.z = phi i64 [ %i.h, %_ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.thread ], [ %i.p, %._ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit37.loopexit_crit_edge ], [ %i.p, %bb.i ]
   %.0.lcssa.i.i.i.i106 = phi ptr [ %i.e, %_ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.thread ], [ %.0.lcssa.i.i.i.i, %._ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit37.loopexit_crit_edge ], [ %.0.lcssa.i.i.i.i, %bb.i ]
   %.pre-phi = phi i64 [ %i.h, %_ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.thread ], [ %.pre81, %._ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit37.loopexit_crit_edge ], [ %i.s, %bb.i ]
   %.0.lcssa.i.i.i.i31 = phi ptr [ %i.e, %_ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.thread ], [ %.08.i.i.i.i29, %._ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit37.loopexit_crit_edge ], [ %i.g, %bb.i ]
@@ -4345,11 +4348,11 @@ bb.y:                                             ; preds = %bb.x
 
 .loopexit:                                        ; preds = %bb.y, %bb.x, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2INS_17basic_string_viewIcS2_EETnNS_9enable_ifIXaasr33__can_be_converted_to_string_viewIcS2_T_EE5valuentsr17__is_same_uncvrefISA_S5_EE5valueEiE4typeELi0EEERKSA_.exit
   %.0.lcssa.i.i.i.i45 = phi ptr [ %i.cu, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2INS_17basic_string_viewIcS2_EETnNS_9enable_ifIXaasr33__can_be_converted_to_string_viewIcS2_T_EE5valuentsr17__is_same_uncvrefISA_S5_EE5valueEiE4typeELi0EEERKSA_.exit ], [ %.08.i.i.i.i43, %bb.x ], [ %i.cv, %bb.y ]
-  %i.db = ptrtoint ptr %.0.lcssa.i.i.i.i45 to i64
-  %i.dc = ptrtoint ptr %i.cu to i64               ; 2 uses
-  %i.dd = sub i64 %i.db, %i.dc                    ; 3 uses
+  %i.db = ptrtoint ptr %i.cu to i64               ; 2 uses
+  %i.dc = ptrtoint ptr %.0.lcssa.i.i.i.i45 to i64
+  %i.dd = sub i64 %i.dc, %i.db                    ; 3 uses
   %i.de = ptrtoint ptr %i.cv to i64
-  %i.df = sub i64 %i.de, %i.dc
+  %i.df = sub i64 %i.de, %i.db
   %.not.i46 = icmp ult i64 %i.dd, %i.df
   %i.dg = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !507 ; 6 uses
@@ -4752,11 +4755,11 @@ _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_1
 
 _ZNK3tev11ImageViewer7imageIdENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEE.exit.i: ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i.i, %bb.a
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.h, %bb.a ], [ %.val2.i.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i.i ], [ %.04.i.i.i.i.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i.i ]
-  %i.x = ptrtoint ptr %.0.lcssa.i.i.i.i.i to i64
-  %i.y = ptrtoint ptr %i.h to i64                 ; 2 uses
-  %i.z = sub i64 %i.x, %i.y                       ; 2 uses
+  %i.x = ptrtoint ptr %i.h to i64                 ; 2 uses
+  %i.y = ptrtoint ptr %.0.lcssa.i.i.i.i.i to i64
+  %i.z = sub i64 %i.y, %i.x                       ; 2 uses
   %i.aa = ptrtoint ptr %.val2.i.i to i64
-  %i.ab = sub i64 %i.aa, %i.y
+  %i.ab = sub i64 %i.aa, %i.x
   %.not.i.i = icmp ult i64 %i.z, %i.ab
   br i1 %.not.i.i, label %_ZNSt3__16vectorINS_10shared_ptrIN3tev5ImageEEENS_9allocatorIS4_EEE2atEm.exit.i, label %.critedge
 
@@ -4949,11 +4952,11 @@ _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_1
 
 _ZNK3tev11ImageViewer7imageIdENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEE.exit: ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i, %bb.a
   %.0.lcssa.i.i.i.i = phi ptr [ %i.b, %bb.a ], [ %.04.i.i.i.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i ], [ %.val2.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i ]
-  %i.r = ptrtoint ptr %.0.lcssa.i.i.i.i to i64
-  %i.s = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.t = sub i64 %i.r, %i.s                       ; 2 uses
+  %i.r = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.s = ptrtoint ptr %.0.lcssa.i.i.i.i to i64
+  %i.t = sub i64 %i.s, %i.r                       ; 2 uses
   %i.u = ptrtoint ptr %.val2.i to i64
-  %i.v = sub i64 %i.u, %i.s
+  %i.v = sub i64 %i.u, %i.r
   %.not.i = icmp ult i64 %i.t, %i.v
   br i1 %.not.i, label %_ZNSt3__16vectorINS_10shared_ptrIN3tev5ImageEEENS_9allocatorIS4_EEE2atEm.exit, label %bb.c
 
@@ -5035,11 +5038,11 @@ _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_1
 
 _ZNK3tev11ImageViewer7imageIdENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEE.exit.i: ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i.i, %bb.a
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.h, %bb.a ], [ %.val2.i.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i.i.i ], [ %.04.i.i.i.i.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i.i.i ]
-  %i.x = ptrtoint ptr %.0.lcssa.i.i.i.i.i to i64
-  %i.y = ptrtoint ptr %i.h to i64                 ; 2 uses
-  %i.z = sub i64 %i.x, %i.y                       ; 2 uses
+  %i.x = ptrtoint ptr %i.h to i64                 ; 2 uses
+  %i.y = ptrtoint ptr %.0.lcssa.i.i.i.i.i to i64
+  %i.z = sub i64 %i.y, %i.x                       ; 2 uses
   %i.aa = ptrtoint ptr %.val2.i.i to i64
-  %i.ab = sub i64 %i.aa, %i.y
+  %i.ab = sub i64 %i.aa, %i.x
   %.not.i.i = icmp ult i64 %i.z, %i.ab
   br i1 %.not.i.i, label %_ZNSt3__16vectorINS_10shared_ptrIN3tev5ImageEEENS_9allocatorIS4_EEE2atEm.exit.i, label %.critedge
 
@@ -5442,12 +5445,12 @@ _ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_1
 
 "_ZNKSt3__16ranges6__find4__fnclB8ne180100ITkNS0_11input_rangeERKNS_6vectorINS_10shared_ptrIN3tev5ImageEEENS_9allocatorIS8_EEEENS_17basic_string_viewIcNS_11char_traitsIcEEEEZNKS6_11ImageViewer7imageIdESH_E3$_0Q25indirect_binary_predicateINS0_8equal_toENS_16__projected_implIDTclL_ZNS0_5__cpo5beginEEclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENS_7_IfImplIX14borrowed_rangeISN_EEE7_SelectISP_NS0_8danglingEEEOSN_RSU_SQ_.exit": ; preds = %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i, %bb.a
   %.0.lcssa.i.i.i = phi ptr [ %i.b, %bb.a ], [ %.val2, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.thread.i.i.i ], [ %.04.i.i.i, %_ZNSt3__1eqB8ne180100IcNS_11char_traitsIcEEEEbNS_17basic_string_viewIT_T0_EENS_13type_identityIS6_E4typeE.exit.i.i.i ]
-  %i.r = ptrtoint ptr %.0.lcssa.i.i.i to i64
-  %i.s = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.t = sub i64 %i.r, %i.s                       ; 2 uses
+  %i.r = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.s = ptrtoint ptr %.0.lcssa.i.i.i to i64
+  %i.t = sub i64 %i.s, %i.r                       ; 2 uses
   %i.u = ashr exact i64 %i.t, 4
   %i.v = ptrtoint ptr %.val2 to i64
-  %i.w = sub i64 %i.v, %i.s
+  %i.w = sub i64 %i.v, %i.r
   %.not = icmp ult i64 %i.t, %i.w                 ; 2 uses
   %.sroa.3.sroa.2.0 = zext i1 %.not to i8
   %.sroa.05.0.insert.insert = select i1 %.not, i64 %i.u, i64 0
@@ -5850,11 +5853,11 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
 
 _ZNK3tev11ImageViewer7imageIdERKNSt3__110shared_ptrINS_5ImageEEE.exit.i.i.i.i.i: ; preds = %bb.c, %.lr.ph.i.i.i.i.i.i.i.i.i, %_ZNSt3__110shared_ptrIN3tev5ImageEEC2B8ne180100ERKS3_.exit.i.i.i.i
   %.0.lcssa.i.i.i.i.i.i.i.i.i = phi ptr [ %i.j, %_ZNSt3__110shared_ptrIN3tev5ImageEEC2B8ne180100ERKS3_.exit.i.i.i.i ], [ %i.l, %bb.c ], [ %.08.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i ]
-  %i.p = ptrtoint ptr %.0.lcssa.i.i.i.i.i.i.i.i.i to i64
-  %i.q = ptrtoint ptr %i.j to i64                 ; 2 uses
-  %i.r = sub i64 %i.p, %i.q
+  %i.p = ptrtoint ptr %i.j to i64                 ; 2 uses
+  %i.q = ptrtoint ptr %.0.lcssa.i.i.i.i.i.i.i.i.i to i64
+  %i.r = sub i64 %i.q, %i.p
   %i.s = ptrtoint ptr %i.l to i64
-  %i.t = sub i64 %i.s, %i.q
+  %i.t = sub i64 %i.s, %i.p
   %.not.i.i.i.i.i.i = icmp ult i64 %i.r, %i.t
   br i1 %.not.i.i.i.i.i.i, label %bb.d, label %_ZN3tev11ImageViewer11reloadImageENSt3__110shared_ptrINS_5ImageEEEb.exit.i.i.i.i
 
