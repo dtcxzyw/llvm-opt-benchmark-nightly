@@ -204,11 +204,11 @@ bb.ab:                                            ; preds = %._crit_edge.i, %.lr
   %i.cx = getelementptr inbounds nuw [104 x i8], ptr %i.bt, i64 %indvars.iv123.i ; 2 uses
   %i.cy = load ptr, ptr %i.ch, align 8, !tbaa !75 ; 3 uses
   %i.cz = load ptr, ptr %i.cr, align 8, !tbaa !72
-  %i.da = ptrtoint ptr %i.cz to i64
-  %7 = ptrtoint ptr %i.cy to i64
-  %8 = sub i64 %i.da, %7
-  %9 = load ptr, ptr %i.cx, align 8, !tbaa !75    ; 3 uses
-  %i.db = ashr exact i64 %8, 6                    ; 3 uses
+  %i.da = ptrtoint ptr %i.cy to i64
+  %7 = load ptr, ptr %i.cx, align 8, !tbaa !75    ; 3 uses
+  %8 = ptrtoint ptr %i.cz to i64
+  %9 = sub i64 %8, %i.da
+  %i.db = ashr exact i64 %9, 6                    ; 3 uses
   %i.dc = icmp sgt i64 %i.db, 0
   br i1 %i.dc, label %.lr.ph79.i, label %.._crit_edge_crit_edge.i
 
@@ -217,11 +217,11 @@ bb.ab:                                            ; preds = %._crit_edge.i, %.lr
   br label %._crit_edge.i
 
 .lr.ph79.i:                                       ; preds = %bb.ab
+  %10 = ptrtoint ptr %7 to i64
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !72
-  %10 = ptrtoint ptr %i.de to i64
-  %i.df = ptrtoint ptr %9 to i64
-  %i.dg = sub i64 %10, %i.df
+  %i.df = ptrtoint ptr %i.de to i64
+  %i.dg = sub i64 %i.df, %10
   %.fr.i = freeze i64 %i.dg
   %i.dh = ashr i64 %.fr.i, 6                      ; 3 uses
   %i.di = icmp sgt i64 %i.dh, 0
@@ -247,7 +247,7 @@ bb.ab:                                            ; preds = %._crit_edge.i, %.lr
 
 bb.ac:                                            ; preds = %.preheader.us.us.i, %bb.ag
   %indvars.iv113.i = phi i64 [ 0, %.preheader.us.us.i ], [ %indvars.iv.next114.i, %bb.ag ] ; 4 uses
-  %i.do = getelementptr inbounds nuw [64 x i8], ptr %9, i64 %indvars.iv113.i ; 2 uses
+  %i.do = getelementptr inbounds nuw [64 x i8], ptr %7, i64 %indvars.iv113.i ; 2 uses
   %i.dp = load i32, ptr %i.do, align 8, !tbaa !28
   %i.dq = icmp eq i32 %i.dp, 1
   %.not51.us.us.i = icmp eq i64 %indvars.iv117.i, %indvars.iv113.i
@@ -336,7 +336,7 @@ bb.ag:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.ah:                                            ; preds = %bb.al, %.preheader.us.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.al ], [ 0, %.preheader.us.i ] ; 3 uses
-  %i.ep = getelementptr inbounds nuw [64 x i8], ptr %9, i64 %indvars.iv.i ; 2 uses
+  %i.ep = getelementptr inbounds nuw [64 x i8], ptr %7, i64 %indvars.iv.i ; 2 uses
   %i.eq = load i32, ptr %i.ep, align 8, !tbaa !28
   %i.er = icmp eq i32 %i.eq, 1
   br i1 %i.er, label %bb.al, label %bb.ai
@@ -739,9 +739,9 @@ bb.h:                                             ; preds = %._crit_edge.i, %.lr
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !75 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !72
-  %i.aj = ptrtoint ptr %i.ai to i64
-  %i.ak = ptrtoint ptr %i.ag to i64
-  %i.al = sub i64 %i.aj, %i.ak
+  %i.aj = ptrtoint ptr %i.ag to i64
+  %i.ak = ptrtoint ptr %i.ai to i64
+  %i.al = sub i64 %i.ak, %i.aj
   %i.am = ashr exact i64 %i.al, 6                 ; 2 uses
   %i.an = icmp sgt i64 %i.am, 0
   %i.ao = add nuw nsw i64 %indvars.iv48.i, 1      ; 3 uses

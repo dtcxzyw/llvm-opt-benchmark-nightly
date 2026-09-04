@@ -205,14 +205,14 @@ bb.a:
   %i.e = sub i64 %i.c, %i.d
   %i.f = tail call noundef ptr @memchr(ptr noundef %1, i32 noundef 10, i64 noundef %i.e) #29 ; 2 uses
   %.not.not.i.i = icmp eq ptr %i.f, null
-  %spec.select.i.i = select i1 %.not.not.i.i, ptr %2, ptr %i.f ; 4 uses
+  %spec.select.i.i = select i1 %.not.not.i.i, ptr %2, ptr %i.f ; 3 uses
+  %3 = ptrtoint ptr %spec.select.i.i to i64
+  %4 = sub i64 %3, %i.d
+  %5 = getelementptr inbounds i8, ptr %1, i64 %4  ; 2 uses
   %.not = icmp eq ptr %spec.select.i.i, %1
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = ptrtoint ptr %spec.select.i.i to i64
-  %4 = sub i64 %3, %i.d
-  %5 = getelementptr inbounds i8, ptr %1, i64 %4
   %i.g = tail call ptr @_ZNSt3__111basic_regexIcNS_12regex_traitsIcEEE21__parse_basic_reg_expINS_11__wrap_iterIPKcEEEET_S9_S9_(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr %1, ptr nonnull %5) ; 0 uses
   br label %bb.d
 
@@ -231,7 +231,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.not30 = icmp ne ptr %spec.select.i.i, %2
   %spec.select.idx = zext i1 %.not30 to i64
-  %spec.select = getelementptr inbounds nuw i8, ptr %spec.select.i.i, i64 %spec.select.idx ; 3 uses
+  %spec.select = getelementptr inbounds nuw i8, ptr %5, i64 %spec.select.idx ; 3 uses
   %.not3134 = icmp eq ptr %spec.select, %2
   br i1 %.not3134, label %._crit_edge, label %.lr.ph
 
@@ -247,14 +247,14 @@ bb.e:                                             ; preds = %.lr.ph, %bb.h
   %i.p = sub i64 %i.c, %i.o
   %i.q = tail call noundef ptr @memchr(ptr noundef %.sroa.022.135, i32 noundef 10, i64 noundef %i.p) #29 ; 2 uses
   %.not.not.i.i14 = icmp eq ptr %i.q, null
-  %spec.select.i.i15 = select i1 %.not.not.i.i14, ptr %2, ptr %i.q ; 4 uses
+  %spec.select.i.i15 = select i1 %.not.not.i.i14, ptr %2, ptr %i.q ; 3 uses
+  %6 = ptrtoint ptr %spec.select.i.i15 to i64
+  %7 = sub i64 %6, %i.o
+  %8 = getelementptr inbounds i8, ptr %.sroa.022.135, i64 %7 ; 2 uses
   %.not32 = icmp eq ptr %spec.select.i.i15, %.sroa.022.135
   br i1 %.not32, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %6 = ptrtoint ptr %spec.select.i.i15 to i64
-  %7 = sub i64 %6, %i.o
-  %8 = getelementptr inbounds i8, ptr %.sroa.022.135, i64 %7
   %i.r = tail call ptr @_ZNSt3__111basic_regexIcNS_12regex_traitsIcEEE21__parse_basic_reg_expINS_11__wrap_iterIPKcEEEET_S9_S9_(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr %.sroa.022.135, ptr nonnull %8) ; 0 uses
   br label %bb.h
 
@@ -303,7 +303,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   store ptr %i.an, ptr %i.a, align 8, !tbaa !138
   %.not33 = icmp ne ptr %spec.select.i.i15, %2
   %spec.select29.idx = zext i1 %.not33 to i64
-  %spec.select29 = getelementptr inbounds nuw i8, ptr %spec.select.i.i15, i64 %spec.select29.idx ; 3 uses
+  %spec.select29 = getelementptr inbounds nuw i8, ptr %8, i64 %spec.select29.idx ; 3 uses
   %.not31 = icmp eq ptr %spec.select29, %2
   br i1 %.not31, label %._crit_edge, label %bb.e, !llvm.loop !331
 
@@ -322,14 +322,14 @@ bb.a:
   %i.e = sub i64 %i.c, %i.d
   %i.f = tail call noundef ptr @memchr(ptr noundef %1, i32 noundef 10, i64 noundef %i.e) #29 ; 2 uses
   %.not.not.i.i = icmp eq ptr %i.f, null
-  %spec.select.i.i = select i1 %.not.not.i.i, ptr %2, ptr %i.f ; 4 uses
+  %spec.select.i.i = select i1 %.not.not.i.i, ptr %2, ptr %i.f ; 3 uses
+  %3 = ptrtoint ptr %spec.select.i.i to i64
+  %4 = sub i64 %3, %i.d
+  %5 = getelementptr inbounds i8, ptr %1, i64 %4  ; 2 uses
   %.not = icmp eq ptr %spec.select.i.i, %1
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = ptrtoint ptr %spec.select.i.i to i64
-  %4 = sub i64 %3, %i.d
-  %5 = getelementptr inbounds i8, ptr %1, i64 %4
   %i.g = tail call ptr @_ZNSt3__111basic_regexIcNS_12regex_traitsIcEEE24__parse_extended_reg_expINS_11__wrap_iterIPKcEEEET_S9_S9_(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr %1, ptr nonnull %5) ; 0 uses
   br label %bb.d
 
@@ -348,7 +348,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.not30 = icmp ne ptr %spec.select.i.i, %2
   %spec.select.idx = zext i1 %.not30 to i64
-  %spec.select = getelementptr inbounds nuw i8, ptr %spec.select.i.i, i64 %spec.select.idx ; 3 uses
+  %spec.select = getelementptr inbounds nuw i8, ptr %5, i64 %spec.select.idx ; 3 uses
   %.not3134 = icmp eq ptr %spec.select, %2
   br i1 %.not3134, label %._crit_edge, label %.lr.ph
 
@@ -364,14 +364,14 @@ bb.e:                                             ; preds = %.lr.ph, %bb.h
   %i.p = sub i64 %i.c, %i.o
   %i.q = tail call noundef ptr @memchr(ptr noundef %.sroa.022.135, i32 noundef 10, i64 noundef %i.p) #29 ; 2 uses
   %.not.not.i.i14 = icmp eq ptr %i.q, null
-  %spec.select.i.i15 = select i1 %.not.not.i.i14, ptr %2, ptr %i.q ; 4 uses
+  %spec.select.i.i15 = select i1 %.not.not.i.i14, ptr %2, ptr %i.q ; 3 uses
+  %6 = ptrtoint ptr %spec.select.i.i15 to i64
+  %7 = sub i64 %6, %i.o
+  %8 = getelementptr inbounds i8, ptr %.sroa.022.135, i64 %7 ; 2 uses
   %.not32 = icmp eq ptr %spec.select.i.i15, %.sroa.022.135
   br i1 %.not32, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %6 = ptrtoint ptr %spec.select.i.i15 to i64
-  %7 = sub i64 %6, %i.o
-  %8 = getelementptr inbounds i8, ptr %.sroa.022.135, i64 %7
   %i.r = tail call ptr @_ZNSt3__111basic_regexIcNS_12regex_traitsIcEEE24__parse_extended_reg_expINS_11__wrap_iterIPKcEEEET_S9_S9_(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr %.sroa.022.135, ptr nonnull %8) ; 0 uses
   br label %bb.h
 
@@ -420,7 +420,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   store ptr %i.an, ptr %i.a, align 8, !tbaa !138
   %.not33 = icmp ne ptr %spec.select.i.i15, %2
   %spec.select29.idx = zext i1 %.not33 to i64
-  %spec.select29 = getelementptr inbounds nuw i8, ptr %spec.select.i.i15, i64 %spec.select29.idx ; 3 uses
+  %spec.select29 = getelementptr inbounds nuw i8, ptr %8, i64 %spec.select29.idx ; 3 uses
   %.not31 = icmp eq ptr %spec.select29, %2
   br i1 %.not31, label %._crit_edge, label %bb.e, !llvm.loop !332
 

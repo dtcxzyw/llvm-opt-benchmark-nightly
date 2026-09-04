@@ -205,9 +205,9 @@ _ZN3gmx13MultiDimArrayISt6vectorIfSaIfEENS_7extentsIJLln1ELln1EEEENS_12layout_ri
 
 .lr.ph.i.preheader.i.preheader:                   ; preds = %_ZN3gmx13MultiDimArrayISt6vectorIfSaIfEENS_7extentsIJLln1ELln1EEEENS_12layout_rightEE6resizeIJllEEEvDpT_.exit.i
   %i.am = ptrtoaddr ptr %i.ak to i64
-  %i.an = sub i64 %i.am, %i.fj
-  %i.ao = add i64 %i.fi, -4
-  %i.ap = sub i64 %i.ao, %i.fj                    ; 3 uses
+  %i.an = sub i64 %i.am, %i.fi
+  %i.ao = add i64 %5, -4
+  %i.ap = sub i64 %i.ao, %i.fi                    ; 3 uses
   %i.aq = lshr i64 %i.ap, 2
   %i.ar = add nuw nsw i64 %i.aq, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.ap, 28
@@ -234,7 +234,7 @@ iter.check:                                       ; preds = %.lr.ph.i.preheader.
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.bb = mul i64 %i.fk, %.018.i
+  %i.bb = mul i64 %6, %.018.i
   %.reass181 = add i64 %i.bb, %invariant.op
   %diff.check = icmp ult i64 %.reass181, 127
   br i1 %diff.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
@@ -444,20 +444,20 @@ bb.f:                                             ; preds = %_ZNK3gmx10IntegerBo
   %i.ey = load ptr, ptr %i.ex, align 8, !tbaa !20 ; 2 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ew, i64 24
   %i.fa = load ptr, ptr %i.ez, align 8, !tbaa !24
-  %5 = ptrtoint ptr %i.fa to i64
   %i.fb = ptrtoint ptr %i.ey to i64
-  %6 = sub i64 %5, %i.fb
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.fd = load ptr, ptr %i.fc, align 8, !tbaa !30 ; 2 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 16
   %i.ff = load ptr, ptr %i.fe, align 8, !tbaa !20 ; 8 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %i.fd, i64 24
   %i.fh = load ptr, ptr %i.fg, align 8, !tbaa !24 ; 3 uses
-  %i.fi = ptrtoint ptr %i.fh to i64               ; 2 uses
-  %i.fj = ptrtoint ptr %i.ff to i64               ; 3 uses
-  %i.fk = sub i64 %i.fi, %i.fj                    ; 2 uses
-  %i.fl = ashr exact i64 %6, 2                    ; 4 uses
-  %i.fm = ashr exact i64 %i.fk, 2                 ; 4 uses
+  %i.fi = ptrtoint ptr %i.ff to i64               ; 3 uses
+  %i.fj = ptrtoint ptr %i.fa to i64
+  %i.fk = sub i64 %i.fj, %i.fb
+  %i.fl = ashr exact i64 %i.fk, 2                 ; 4 uses
+  %5 = ptrtoint ptr %i.fh to i64                  ; 2 uses
+  %6 = sub i64 %5, %i.fi                          ; 2 uses
+  %i.fm = ashr exact i64 %6, 2                    ; 4 uses
   %i.fn = mul nsw i64 %i.fm, %i.fl                ; 4 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.fp = load ptr, ptr %i.fo, align 8, !tbaa !24, !noalias !90 ; 2 uses

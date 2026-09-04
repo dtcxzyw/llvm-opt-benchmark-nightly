@@ -202,7 +202,6 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %_RNvMs_NtNtCs20C9KvGHlPa_15icu_collections13codepointtrie6cptrieINtB4_13CodePointTriemE25get32_by_small_index_coldCs9CN1NTpuHUY_14icu_normalizer.exit.i, %bb.s
   %i.fh = load ptr, ptr %i.ba, align 8, !noalias !223, !nonnull !4, !noundef !4 ; 2 uses
   %i.fi = load ptr, ptr %i.bb, align 8, !noalias !223, !nonnull !4, !noundef !4 ; 3 uses
-  %3 = ptrtoint ptr %i.fi to i64
   %i.fj = icmp eq ptr %i.fh, %i.fi
   br i1 %i.fj, label %._crit_edge, label %.lr.ph
 
@@ -251,6 +250,7 @@ bb.z:                                             ; preds = %bb.x, %.split.i.i.i
   unreachable
 
 bb.aa:                                            ; preds = %.lr.ph
+  %3 = ptrtoint ptr %i.fi to i64
   %i.fu = ptrtoint ptr %i.fl to i64
   %.neg.i = sub i64 %i.fu, %3
   %i.fv = add i64 %.neg.i, %i.ff                  ; 2 uses
@@ -653,7 +653,6 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.
 bb.af:                                            ; preds = %_RNvMs_NtNtCs20C9KvGHlPa_15icu_collections13codepointtrie6cptrieINtB4_13CodePointTriemE25get32_by_small_index_coldCs9CN1NTpuHUY_14icu_normalizer.exit.i, %bb.ae
   %i.fh = load ptr, ptr %i.br, align 8, !noalias !326, !nonnull !4, !noundef !4 ; 2 uses
   %i.fi = load ptr, ptr %i.bs, align 8, !noalias !326, !nonnull !4, !noundef !4 ; 3 uses
-  %4 = ptrtoint ptr %i.fi to i64
   %i.fj = icmp eq ptr %i.fh, %i.fi
   br i1 %i.fj, label %._crit_edge, label %.lr.ph
 
@@ -693,6 +692,7 @@ _RNvXsZ_NtCsbSS6DM8SDEO_5alloc6stringNtB5_6StringNtNtCshzWfHUSfYae_4core3fmt5Wri
   br label %.loopexit107.i
 
 bb.ai:                                            ; preds = %.lr.ph
+  %4 = ptrtoint ptr %i.fi to i64
   %i.fu = ptrtoint ptr %i.fl to i64
   %.neg.i = sub i64 %i.fu, %4
   %i.fv = add i64 %.neg.i, %i.ff                  ; 2 uses
@@ -1095,7 +1095,6 @@ bb.t:                                             ; preds = %bb.s, %.split.i.i, 
 bb.u:                                             ; preds = %_RNvMs_NtNtCs20C9KvGHlPa_15icu_collections13codepointtrie6cptrieINtB4_13CodePointTriemE25get32_by_small_index_coldCs9CN1NTpuHUY_14icu_normalizer.exit118.i, %bb.t
   %i.fq = load ptr, ptr %i.dy, align 8, !noalias !443, !nonnull !4, !noundef !4 ; 4 uses
   %i.fr = load ptr, ptr %i.dz, align 8, !noalias !443, !nonnull !4, !noundef !4 ; 5 uses
-  %3 = ptrtoint ptr %i.fr to i64
   %i.fs = icmp eq ptr %i.fq, %i.fr
   br i1 %i.fs, label %._crit_edge, label %.lr.ph
 
@@ -1144,6 +1143,7 @@ bb.aa:                                            ; preds = %bb.y, %.split.i.i.i
   unreachable
 
 bb.ab:                                            ; preds = %.lr.ph
+  %3 = ptrtoint ptr %i.fr to i64
   %i.gd = ptrtoint ptr %i.fu to i64
   %i.ge = xor i64 %3, -1
   %i.gf = add i64 %i.fo, %i.ge
@@ -1546,7 +1546,6 @@ bb.ae:                                            ; preds = %bb.ad, %.split.i.i6
 bb.af:                                            ; preds = %_RNvMs_NtNtCs20C9KvGHlPa_15icu_collections13codepointtrie6cptrieINtB4_13CodePointTriemE25get32_by_small_index_coldCs9CN1NTpuHUY_14icu_normalizer.exit116.i, %bb.ae
   %i.fv = load ptr, ptr %i.eg, align 8, !noalias !611, !nonnull !4, !noundef !4 ; 4 uses
   %i.fw = load ptr, ptr %i.eh, align 8, !noalias !611, !nonnull !4, !noundef !4 ; 5 uses
-  %4 = ptrtoint ptr %i.fw to i64
   %i.fx = icmp eq ptr %i.fv, %i.fw
   br i1 %i.fx, label %._crit_edge, label %.lr.ph
 
@@ -1585,6 +1584,7 @@ _RNvXsZ_NtCsbSS6DM8SDEO_5alloc6stringNtB5_6StringNtNtCshzWfHUSfYae_4core3fmt5Wri
   br label %.loopexit316.sink.split.i
 
 bb.ai:                                            ; preds = %.lr.ph
+  %4 = ptrtoint ptr %i.fw to i64
   %i.gi = ptrtoint ptr %i.fz to i64
   %i.gj = xor i64 %4, -1
   %i.gk = add i64 %i.ft, %i.gj

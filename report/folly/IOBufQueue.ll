@@ -202,10 +202,10 @@ _ZNK5folly10IOBufQueue9createBufEm.exit:          ; preds = %bb.c, %bb.d
   %i.ad = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !66
   %i.af = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ae
-  %i.ag = ptrtoint ptr %i.af to i64               ; 2 uses
+  %i.ag = ptrtoint ptr %i.af to i64
   %i.ah = ptrtoint ptr %i.aa to i64
   %i.ai = sub i64 %i.ag, %i.ah
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ai
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ai ; 2 uses
   %i.ak = load ptr, ptr %i.c, align 8, !tbaa !32  ; 2 uses
   store ptr %i.aa, ptr %i.ak, align 8, !tbaa !67
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
@@ -231,9 +231,8 @@ _ZN12_GLOBAL__N_113appendToChainERSt10unique_ptrIN5folly5IOBufESt14default_delet
   %.pre = load ptr, ptr %i.c, align 8, !tbaa !32  ; 2 uses
   %.pre16 = load ptr, ptr %.pre, align 8, !tbaa !37 ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 8
-  %.pre17 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !160
+  %.pre17 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !160 ; 2 uses
   %.pre18 = load ptr, ptr %4, align 8, !tbaa !35  ; 3 uses
-  %5 = ptrtoint ptr %.pre17 to i64                ; 2 uses
   %.not.i5 = icmp eq ptr %.pre18, null
   br i1 %.not.i5, label %_ZNSt10unique_ptrIN5folly5IOBufESt14default_deleteIS1_EED2Ev.exit, label %_ZNKSt14default_deleteIN5folly5IOBufEEclEPS1_.exit.i
 
@@ -244,8 +243,9 @@ _ZNKSt14default_deleteIN5folly5IOBufEEclEPS1_.exit.i: ; preds = %_ZN12_GLOBAL__N
 
 _ZNSt10unique_ptrIN5folly5IOBufESt14default_deleteIS1_EED2Ev.exit: ; preds = %_ZN12_GLOBAL__N_113appendToChainERSt10unique_ptrIN5folly5IOBufESt14default_deleteIS2_EEOS5_b.exit.thread, %_ZN12_GLOBAL__N_113appendToChainERSt10unique_ptrIN5folly5IOBufESt14default_deleteIS2_EEOS5_b.exit, %_ZNKSt14default_deleteIN5folly5IOBufEEclEPS1_.exit.i
   %i.as = phi ptr [ %i.aa, %_ZN12_GLOBAL__N_113appendToChainERSt10unique_ptrIN5folly5IOBufESt14default_deleteIS2_EEOS5_b.exit.thread ], [ %.pre16, %_ZN12_GLOBAL__N_113appendToChainERSt10unique_ptrIN5folly5IOBufESt14default_deleteIS2_EEOS5_b.exit ], [ %.pre16, %_ZNKSt14default_deleteIN5folly5IOBufEEclEPS1_.exit.i ] ; 2 uses
-  %6 = phi i64 [ %i.ag, %_ZN12_GLOBAL__N_113appendToChainERSt10unique_ptrIN5folly5IOBufESt14default_deleteIS2_EEOS5_b.exit.thread ], [ %5, %_ZN12_GLOBAL__N_113appendToChainERSt10unique_ptrIN5folly5IOBufESt14default_deleteIS2_EEOS5_b.exit ], [ %5, %_ZNKSt14default_deleteIN5folly5IOBufEEclEPS1_.exit.i ]
+  %5 = phi ptr [ %i.aj, %_ZN12_GLOBAL__N_113appendToChainERSt10unique_ptrIN5folly5IOBufESt14default_deleteIS2_EEOS5_b.exit.thread ], [ %.pre17, %_ZN12_GLOBAL__N_113appendToChainERSt10unique_ptrIN5folly5IOBufESt14default_deleteIS2_EEOS5_b.exit ], [ %.pre17, %_ZNKSt14default_deleteIN5folly5IOBufEEclEPS1_.exit.i ]
   %.fca.0.insert.i = insertvalue { ptr, i64 } poison, ptr %i.as, 0
+  %6 = ptrtoint ptr %5 to i64
   %i.at = ptrtoint ptr %i.as to i64
   %i.au = sub i64 %6, %i.at
   %.sroa.speculated = call i64 @llvm.umin.i64(i64 %i.au, i64 %3)

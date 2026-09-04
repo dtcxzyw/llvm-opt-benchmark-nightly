@@ -202,13 +202,13 @@ _ZN12v8_inspector12_GLOBAL__N_124inlineUTF8SequenceLengthEc.exit.jt0.i: ; preds 
   br label %_ZNSt6vectorIDsSaIDsEED2Ev.exit
 
 _ZN12v8_inspector12_GLOBAL__N_118convertUTF8ToUTF16EPPKcS2_PPDsS4_Pbb.exit: ; preds = %bb.aa
-  %3 = ptrtoint ptr %.344.i to i64
-  %4 = sub i64 %3, %i.m                           ; 5 uses
-  %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  store ptr %i.cr, ptr %0, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  store i64 0, ptr %5, align 8
-  %i.cs = ashr exact i64 %4, 1                    ; 5 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  store ptr %3, ptr %0, align 8
+  %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  store i64 0, ptr %i.cr, align 8
+  %4 = ptrtoint ptr %.344.i to i64
+  %5 = sub i64 %4, %i.m                           ; 5 uses
+  %i.cs = ashr exact i64 %5, 1                    ; 5 uses
   %i.ct = icmp ugt i64 %i.cs, 7
   br i1 %i.ct, label %bb.ab, label %._crit_edge.i.i
 
@@ -221,7 +221,7 @@ bb.ac:                                            ; preds = %bb.ab
   unreachable
 
 bb.ad:                                            ; preds = %bb.ab
-  %i.cv = icmp eq i64 %4, 9223372036854775806
+  %i.cv = icmp eq i64 %5, 9223372036854775806
   br i1 %i.cv, label %bb.ae, label %_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE9_M_createERmm.exit.i.i, !prof !5
 
 bb.ae:                                            ; preds = %bb.ad
@@ -229,14 +229,14 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 _ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE9_M_createERmm.exit.i.i: ; preds = %bb.ad
-  %i.cw = add nuw nsw i64 %4, 2
+  %i.cw = add nuw nsw i64 %5, 2
   %i.cx = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cw) #8 ; 2 uses
   store ptr %i.cx, ptr %0, align 8
-  store i64 %i.cs, ptr %i.cr, align 8
+  store i64 %i.cs, ptr %3, align 8
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE9_M_createERmm.exit.i.i, %_ZN12v8_inspector12_GLOBAL__N_118convertUTF8ToUTF16EPPKcS2_PPDsS4_Pbb.exit
-  %i.cy = phi ptr [ %i.cx, %_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE9_M_createERmm.exit.i.i ], [ %i.cr, %_ZN12v8_inspector12_GLOBAL__N_118convertUTF8ToUTF16EPPKcS2_PPDsS4_Pbb.exit ] ; 3 uses
+  %i.cy = phi ptr [ %i.cx, %_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE9_M_createERmm.exit.i.i ], [ %3, %_ZN12v8_inspector12_GLOBAL__N_118convertUTF8ToUTF16EPPKcS2_PPDsS4_Pbb.exit ] ; 3 uses
   switch i64 %i.cs, label %bb.ag [
     i64 1, label %bb.af
     i64 0, label %_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEC2IPDsvEET_S7_RKS3_.exit
@@ -248,12 +248,12 @@ bb.af:                                            ; preds = %._crit_edge.i.i
   br label %_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEC2IPDsvEET_S7_RKS3_.exit
 
 bb.ag:                                            ; preds = %._crit_edge.i.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 2 %i.cy, ptr nonnull align 2 %i.g, i64 %4, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 2 %i.cy, ptr nonnull align 2 %i.g, i64 %5, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEC2IPDsvEET_S7_RKS3_.exit
 
 _ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEC2IPDsvEET_S7_RKS3_.exit: ; preds = %._crit_edge.i.i, %bb.af, %bb.ag
-  store i64 %i.cs, ptr %5, align 8
-  %i.da = getelementptr inbounds nuw i8, ptr %i.cy, i64 %4
+  store i64 %i.cs, ptr %i.cr, align 8
+  %i.da = getelementptr inbounds nuw i8, ptr %i.cy, i64 %5
   store i16 0, ptr %i.da, align 2
   br label %_ZNSt6vectorIDsSaIDsEED2Ev.exit
 

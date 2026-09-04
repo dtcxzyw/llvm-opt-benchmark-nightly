@@ -205,12 +205,12 @@ bb.g:                                             ; preds = %switch.early.test
   br label %bb.w
 
 bb.h:                                             ; preds = %switch.early.test
-  %4 = ptrtoint ptr %.1 to i64
   %i.bp = ptrtoint ptr %.pre50 to i64
-  %5 = sub i64 %4, %i.bp
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !52
+  %4 = ptrtoint ptr %.1 to i64
+  %5 = sub i64 %4, %i.bp
   %i.bt = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.bq, i64 noundef 0, i64 noundef %i.bs, ptr noundef nonnull %.pre50, i64 noundef %5) ; 0 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 5 uses
   store i32 1, ptr %i.bu, align 8, !tbaa !102

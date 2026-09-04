@@ -205,20 +205,20 @@ bb.ea:                                            ; preds = %bb.dw
   %.val466 = load ptr, ptr %i.aeu, align 8, !tbaa !379 ; 12 uses
   %i.aev = getelementptr i8, ptr %11, i64 800
   %.val467 = load ptr, ptr %i.aev, align 8, !tbaa !380
-  %i.aew = ptrtoint ptr %.val467 to i64
-  %74 = ptrtoint ptr %.val466 to i64              ; 2 uses
-  %75 = sub i64 %i.aew, %74                       ; 2 uses
-  %76 = getelementptr inbounds nuw i8, ptr %3, i64 896 ; 3 uses
-  %i.aex = ashr exact i64 %75, 2                  ; 12 uses
-  call void @_ZNSt6vectorIiN3gmx30DefaultInitializationAllocatorIiSaIiEEEE6resizeEm(ptr noundef nonnull align 8 dereferenceable(24) %76, i64 noundef %i.aex)
+  %i.aew = ptrtoint ptr %.val466 to i64           ; 2 uses
+  %74 = getelementptr inbounds nuw i8, ptr %3, i64 896 ; 3 uses
+  %75 = ptrtoint ptr %.val467 to i64
+  %76 = sub i64 %75, %i.aew                       ; 2 uses
+  %i.aex = ashr exact i64 %76, 2                  ; 12 uses
+  call void @_ZNSt6vectorIiN3gmx30DefaultInitializationAllocatorIiSaIiEEEE6resizeEm(ptr noundef nonnull align 8 dereferenceable(24) %74, i64 noundef %i.aex)
   %i.aey = icmp sgt i64 %i.aex, 0
   br i1 %i.aey, label %iter.check, label %._crit_edge.i487
 
 iter.check:                                       ; preds = %bb.ea
-  %i.aez = load ptr, ptr %76, align 8, !tbaa !371 ; 12 uses
+  %i.aez = load ptr, ptr %74, align 8, !tbaa !371 ; 12 uses
   %min.iters.check = icmp ult i64 %i.aex, 4
   %i.afa = ptrtoaddr ptr %i.aez to i64
-  %i.afb = sub i64 %74, %i.afa
+  %i.afb = sub i64 %i.aew, %i.afa
   %diff.check = icmp ugt i64 %i.afb, -128
   %or.cond1643.a = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond1643.a, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -258,7 +258,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge.i487, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
-  %i.afl = and i64 %75, 112
+  %i.afl = and i64 %76, 112
   %min.epilog.iters.check = icmp eq i64 %i.afl, 0
   br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !383
 
@@ -471,7 +471,7 @@ _ZL17restoreAtomGroupsP12gmx_domdec_tPK7t_state.exit: ; preds = %_ZL17restoreAto
   %i.ajg = load double, ptr %i.ajf, align 8, !tbaa !240
   %i.ajh = fadd double %i.ajg, %i.aje
   store double %i.ajh, ptr %i.ajf, align 8, !tbaa !240
-  %i.aji = load ptr, ptr %76, align 8, !tbaa !371 ; 3 uses
+  %i.aji = load ptr, ptr %74, align 8, !tbaa !371 ; 3 uses
   %i.ajj = getelementptr inbounds nuw i8, ptr %3, i64 904
   %i.ajk = load ptr, ptr %i.ajj, align 8, !tbaa !372
   call void @llvm.lifetime.start.p0(ptr nonnull %58) #19
@@ -874,7 +874,7 @@ bb.ii:                                            ; preds = %.lr.ph.i67.i, %bb.j
           cleanup
   br label %bb.jj
 
-.loopexit.i527:                                   ; preds = %.lr.ph.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i, %bb.ih, %._crit_edge.i53.i, %bb.ig
+.loopexit.i527:                                   ; preds = %.lr.ph.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i, %._crit_edge.i53.i, %bb.ih, %bb.ig
   %i.bxm = load i32, ptr %i.bwd, align 4, !tbaa !685 ; 2 uses
   %i.bxn = and i32 %i.bxm, 256
   %.not104.i = icmp eq i32 %i.bxn, 0

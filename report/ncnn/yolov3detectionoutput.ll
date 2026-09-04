@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %i.bm, ptr noundef nonnull align 4 dereferenceable(28) %i.bq, i64 28, i1 false), !tbaa.struct !61
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.h, %bb.i, %bb.j
+bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bm, i64 %i.by ; 2 uses
   store ptr %i.cf, ptr %i.q, align 8, !tbaa !62
   br label %bb.x

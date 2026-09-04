@@ -205,10 +205,10 @@ _ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPDoFvPvPSt9type_infoPPFvS2_EES
   br i1 %or.cond.i, label %_ZSt5eraseIPDoFvPvPSt9type_infoPPFvS0_EESaIS7_ES6_ENSt6vectorIT_T0_E9size_typeERSC_RKT1_.exit.i, label %_ZSt8_DestroyIPPDoFvPvPSt9type_infoPPFvS0_EES7_EvT_S9_RSaIT0_E.exit.i.i.i.i.i
 
 _ZSt8_DestroyIPPDoFvPvPSt9type_infoPPFvS0_EES7_EvT_S9_RSaIT0_E.exit.i.i.i.i.i: ; preds = %_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPDoFvPvPSt9type_infoPPFvS2_EESt6vectorIS9_SaIS9_EEEENS0_5__ops16_Iter_equals_valIS8_EEET_SI_SI_T0_.exit.i.i
-  %2 = ptrtoint ptr %.sroa.013.2.i.i.i to i64
   %.pre.i.i = load ptr, ptr @_ZZN5folly16exception_tracer20getCxaThrowCallbacksEvE9Callbacks, align 8, !tbaa !45 ; 2 uses
-  %.pre33.i.i.a = ptrtoint ptr %.pre.i.i to i64
-  %i.be = sub i64 %2, %.pre33.i.i.a
+  %.pre33.i.i = ptrtoint ptr %.pre.i.i to i64
+  %.pre33.i.i.a = ptrtoint ptr %.sroa.013.2.i.i.i to i64
+  %i.be = sub i64 %.pre33.i.i.a, %.pre33.i.i
   %i.bf = getelementptr inbounds i8, ptr %.pre.i.i, i64 %i.be
   store ptr %i.bf, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5folly16exception_tracer20getCxaThrowCallbacksEvE9Callbacks, i64 8), align 8, !tbaa !33
   br label %_ZSt5eraseIPDoFvPvPSt9type_infoPPFvS0_EESaIS7_ES6_ENSt6vectorIT_T0_E9size_typeERSC_RKT1_.exit.i
@@ -611,10 +611,10 @@ _ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPDoFvPvESt6vectorIS4_SaIS4_EEE
   br i1 %or.cond.i, label %_ZSt5eraseIPDoFvPvESaIS2_ES1_ENSt6vectorIT_T0_E9size_typeERS7_RKT1_.exit.i, label %_ZSt8_DestroyIPPDoFvPvES2_EvT_S4_RSaIT0_E.exit.i.i.i.i.i
 
 _ZSt8_DestroyIPPDoFvPvES2_EvT_S4_RSaIT0_E.exit.i.i.i.i.i: ; preds = %_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPDoFvPvESt6vectorIS4_SaIS4_EEEENS0_5__ops16_Iter_equals_valIS3_EEET_SD_SD_T0_.exit.i.i
-  %2 = ptrtoint ptr %.sroa.013.2.i.i.i to i64
   %.pre.i.i = load ptr, ptr @_ZZN5folly16exception_tracer25getCxaBeginCatchCallbacksEvE9Callbacks, align 8, !tbaa !45 ; 2 uses
-  %.pre33.i.i.a = ptrtoint ptr %.pre.i.i to i64
-  %i.be = sub i64 %2, %.pre33.i.i.a
+  %.pre33.i.i = ptrtoint ptr %.pre.i.i to i64
+  %.pre33.i.i.a = ptrtoint ptr %.sroa.013.2.i.i.i to i64
+  %i.be = sub i64 %.pre33.i.i.a, %.pre33.i.i
   %i.bf = getelementptr inbounds i8, ptr %.pre.i.i, i64 %i.be
   store ptr %i.bf, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5folly16exception_tracer25getCxaBeginCatchCallbacksEvE9Callbacks, i64 8), align 8, !tbaa !51
   br label %_ZSt5eraseIPDoFvPvESaIS2_ES1_ENSt6vectorIT_T0_E9size_typeERS7_RKT1_.exit.i
@@ -1017,10 +1017,10 @@ bb.n:                                             ; preds = %_ZSt11__remove_ifIN
   br i1 %i.bc, label %_ZSt5eraseIPDoFvvESaIS1_ES0_ENSt6vectorIT_T0_E9size_typeERS6_RKT1_.exit, label %_ZSt8_DestroyIPPDoFvvES1_EvT_S3_RSaIT0_E.exit.i.i.i.i
 
 _ZSt8_DestroyIPPDoFvvES1_EvT_S3_RSaIT0_E.exit.i.i.i.i: ; preds = %bb.n
-  %3 = ptrtoint ptr %.sroa.013.2.i.i to i64
   %.pre.i = load ptr, ptr %0, align 8, !tbaa !45  ; 2 uses
-  %.pre33.i.a = ptrtoint ptr %.pre.i to i64
-  %i.bd = sub i64 %3, %.pre33.i.a
+  %.pre33.i = ptrtoint ptr %.pre.i to i64
+  %.pre33.i.a = ptrtoint ptr %.sroa.013.2.i.i to i64
+  %i.bd = sub i64 %.pre33.i.a, %.pre33.i
   %i.be = getelementptr inbounds i8, ptr %.pre.i, i64 %i.bd
   store ptr %i.be, ptr %i.l, align 8, !tbaa !54
   br label %_ZSt5eraseIPDoFvvESaIS1_ES0_ENSt6vectorIT_T0_E9size_typeERS6_RKT1_.exit
@@ -1423,10 +1423,10 @@ _ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPDoFvNSt15__exception_ptr13exc
   br i1 %or.cond.i, label %_ZSt5eraseIPDoFvNSt15__exception_ptr13exception_ptrEESaIS3_ES2_ENSt6vectorIT_T0_E9size_typeERS8_RKT1_.exit.i, label %_ZSt8_DestroyIPPDoFvNSt15__exception_ptr13exception_ptrEES3_EvT_S5_RSaIT0_E.exit.i.i.i.i.i
 
 _ZSt8_DestroyIPPDoFvNSt15__exception_ptr13exception_ptrEES3_EvT_S5_RSaIT0_E.exit.i.i.i.i.i: ; preds = %_ZSt11__remove_ifIN9__gnu_cxx17__normal_iteratorIPPDoFvNSt15__exception_ptr13exception_ptrEESt6vectorIS5_SaIS5_EEEENS0_5__ops16_Iter_equals_valIS4_EEET_SE_SE_T0_.exit.i.i
-  %2 = ptrtoint ptr %.sroa.013.2.i.i.i to i64
   %.pre.i.i = load ptr, ptr @_ZZN5folly16exception_tracer28getRethrowExceptionCallbacksEvE9Callbacks, align 8, !tbaa !45 ; 2 uses
-  %.pre33.i.i.a = ptrtoint ptr %.pre.i.i to i64
-  %i.be = sub i64 %2, %.pre33.i.i.a
+  %.pre33.i.i = ptrtoint ptr %.pre.i.i to i64
+  %.pre33.i.i.a = ptrtoint ptr %.sroa.013.2.i.i.i to i64
+  %i.be = sub i64 %.pre33.i.i.a, %.pre33.i.i
   %i.bf = getelementptr inbounds i8, ptr %.pre.i.i, i64 %i.be
   store ptr %i.bf, ptr getelementptr inbounds nuw (i8, ptr @_ZZN5folly16exception_tracer28getRethrowExceptionCallbacksEvE9Callbacks, i64 8), align 8, !tbaa !57
   br label %_ZSt5eraseIPDoFvNSt15__exception_ptr13exception_ptrEESaIS3_ES2_ENSt6vectorIT_T0_E9size_typeERS8_RKT1_.exit.i

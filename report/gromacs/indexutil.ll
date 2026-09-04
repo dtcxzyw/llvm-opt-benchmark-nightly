@@ -204,30 +204,30 @@ bb.p:                                             ; preds = %bb.n
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !29 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ad, i64 40
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !40
-  %i.ai = ptrtoint ptr %i.ah to i64
-  %7 = ptrtoint ptr %i.af to i64
-  %8 = sub i64 %i.ai, %7                          ; 2 uses
-  %9 = load ptr, ptr %0, align 8, !tbaa !221
-  %10 = load ptr, ptr %9, align 8, !tbaa !57
-  %11 = getelementptr inbounds nuw [24 x i8], ptr %10, i64 %indvars.iv86 ; 5 uses
-  %i.aj = lshr exact i64 %8, 2
+  %i.ai = ptrtoint ptr %i.af to i64
+  %7 = load ptr, ptr %0, align 8, !tbaa !221
+  %8 = load ptr, ptr %7, align 8, !tbaa !57
+  %9 = getelementptr inbounds nuw [24 x i8], ptr %8, i64 %indvars.iv86 ; 5 uses
+  %10 = ptrtoint ptr %i.ah to i64
+  %11 = sub i64 %10, %i.ai                        ; 2 uses
+  %i.aj = lshr exact i64 %11, 2
   %i.ak = trunc i64 %i.aj to i32
-  store i32 %i.ak, ptr %11, align 8, !tbaa !59
-  %sext = shl i64 %8, 30
+  store i32 %i.ak, ptr %9, align 8, !tbaa !59
+  %sext = shl i64 %11, 30
   %i.al = ashr exact i64 %sext, 32
   %i.am = invoke noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.6, ptr noundef nonnull @.str.3, i32 noundef 179, i64 noundef range(i64 -2147483648, 2147483648) %i.al, i64 noundef 4)
           to label %_ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit unwind label %bb.u ; 2 uses
 
 _ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit:          ; preds = %.lr.ph83
-  %i.an = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %i.an = getelementptr inbounds nuw i8, ptr %9, i64 8
   store ptr %i.am, ptr %i.an, align 8, !tbaa !42
-  %i.ao = load i32, ptr %11, align 8, !tbaa !59   ; 2 uses
+  %i.ao = load i32, ptr %9, align 8, !tbaa !59    ; 2 uses
   %i.ap = icmp sgt i32 %i.ao, 0
   br i1 %i.ap, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %_ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit
   %.lcssa = phi i32 [ %i.ao, %_ZL13gmx_snew_implIiEvPKcS1_iRPT_m.exit ], [ %i.bq, %.lr.ph ]
-  %i.aq = getelementptr inbounds nuw i8, ptr %11, i64 16
+  %i.aq = getelementptr inbounds nuw i8, ptr %9, i64 16
   store i32 %.lcssa, ptr %i.aq, align 8, !tbaa !60
   %i.ar = load ptr, ptr %0, align 8, !tbaa !221   ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 32 ; 3 uses
@@ -309,7 +309,7 @@ bb.u:                                             ; preds = %bb.t, %.noexc.i.i, 
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %indvars.iv
   store i32 %i.bo, ptr %i.bp, align 4, !tbaa !44
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.bq = load i32, ptr %11, align 8, !tbaa !59   ; 2 uses
+  %i.bq = load i32, ptr %9, align 8, !tbaa !59    ; 2 uses
   %i.br = sext i32 %i.bq to i64
   %i.bs = icmp slt i64 %indvars.iv.next, %i.br
   br i1 %i.bs, label %.lr.ph, label %._crit_edge, !llvm.loop !218

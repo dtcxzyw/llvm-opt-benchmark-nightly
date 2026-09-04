@@ -204,8 +204,7 @@ bb.d:                                             ; preds = %bb.b
   resume { ptr, i32 } %i.k
 
 bb.e:                                             ; preds = %bb.a
-  %i.l = getelementptr inbounds [24 x i8], ptr %i.d, i64 %1 ; 4 uses
-  %2 = ptrtoint ptr %i.l to i64                   ; 2 uses
+  %i.l = getelementptr inbounds [24 x i8], ptr %i.d, i64 %1 ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 24 ; 2 uses
   %.not7.i.i.i.i.i.i = icmp eq ptr %i.m, %i.c
   br i1 %.not7.i.i.i.i.i.i, label %_ZNSt3__14moveB8ne180100IPN4gdcm7OverlayES3_EET0_T_S5_S4_.exit.i, label %.lr.ph.i.i.i.i.i.i
@@ -221,15 +220,12 @@ bb.e:                                             ; preds = %bb.a
 
 _ZNSt3__14moveB8ne180100IPN4gdcm7OverlayES3_EET0_T_S5_S4_.exit.loopexit.i: ; preds = %.lr.ph.i.i.i.i.i.i
   %.pre.i = load ptr, ptr %i.b, align 8, !tbaa !114
-  %3 = ptrtoint ptr %i.p to i64
   br label %_ZNSt3__14moveB8ne180100IPN4gdcm7OverlayES3_EET0_T_S5_S4_.exit.i
 
 _ZNSt3__14moveB8ne180100IPN4gdcm7OverlayES3_EET0_T_S5_S4_.exit.i: ; preds = %_ZNSt3__14moveB8ne180100IPN4gdcm7OverlayES3_EET0_T_S5_S4_.exit.loopexit.i, %bb.e
   %i.q = phi ptr [ %i.c, %bb.e ], [ %.pre.i, %_ZNSt3__14moveB8ne180100IPN4gdcm7OverlayES3_EET0_T_S5_S4_.exit.loopexit.i ] ; 2 uses
-  %storemerge.lcssa.i.i.i.i.i.i = phi i64 [ %2, %bb.e ], [ %3, %_ZNSt3__14moveB8ne180100IPN4gdcm7OverlayES3_EET0_T_S5_S4_.exit.loopexit.i ]
-  %4 = sub i64 %storemerge.lcssa.i.i.i.i.i.i, %2
-  %5 = getelementptr inbounds i8, ptr %i.l, i64 %4 ; 3 uses
-  %.not6.i.i.i = icmp eq ptr %5, %i.q
+  %storemerge.lcssa.i.i.i.i.i.i = phi ptr [ %i.l, %bb.e ], [ %i.p, %_ZNSt3__14moveB8ne180100IPN4gdcm7OverlayES3_EET0_T_S5_S4_.exit.loopexit.i ] ; 3 uses
+  %.not6.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.q
   br i1 %.not6.i.i.i, label %_ZNSt3__16vectorIN4gdcm7OverlayENS_9allocatorIS2_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS2_EE.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt3__14moveB8ne180100IPN4gdcm7OverlayES3_EET0_T_S5_S4_.exit.i, %.lr.ph.i.i.i
@@ -238,10 +234,14 @@ _ZNSt3__14moveB8ne180100IPN4gdcm7OverlayES3_EET0_T_S5_S4_.exit.i: ; preds = %_ZN
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !17
   %i.t = load ptr, ptr %i.s, align 8
   tail call void %i.t(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.r) #22, !inline_history !281
-  %.not.i.i.i = icmp eq ptr %5, %i.r
+  %.not.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.r
   br i1 %.not.i.i.i, label %_ZNSt3__16vectorIN4gdcm7OverlayENS_9allocatorIS2_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS2_EE.exit, label %.lr.ph.i.i.i
 
 _ZNSt3__16vectorIN4gdcm7OverlayENS_9allocatorIS2_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS2_EE.exit: ; preds = %.lr.ph.i.i.i, %_ZNSt3__14moveB8ne180100IPN4gdcm7OverlayES3_EET0_T_S5_S4_.exit.i
+  %2 = ptrtoint ptr %storemerge.lcssa.i.i.i.i.i.i to i64
+  %3 = ptrtoint ptr %i.l to i64
+  %4 = sub i64 %2, %3
+  %5 = getelementptr inbounds i8, ptr %i.l, i64 %4
   store ptr %5, ptr %i.b, align 8, !tbaa !114
   ret void
 }

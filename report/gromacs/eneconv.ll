@@ -205,8 +205,8 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 bb.p:                                             ; preds = %bb.h
   %i.cq = ptrtoint ptr %i.ck to i64
   %i.cr = ptrtoint ptr %i.ch to i64
-  %i.cs = sub i64 %i.cq, %i.cr                    ; 4 uses
-  %i.ct = ashr exact i64 %i.cs, 5                 ; 27 uses
+  %i.cs = sub i64 %i.cq, %i.cr                    ; 6 uses
+  %i.ct = ashr exact i64 %i.cs, 5                 ; 25 uses
   %i.cu = add nsw i64 %i.ct, 1                    ; 3 uses
   %i.cv = invoke noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.40, ptr noundef nonnull @.str.38, i32 noundef 536, i64 noundef %i.cu, i64 noundef 4)
           to label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit unwind label %.loopexit.split-lp359.loopexit.split-lp ; 31 uses
@@ -609,7 +609,7 @@ bb.an:                                            ; preds = %bb.al, %bb.aj, %bb.
 .split.i:                                         ; preds = %._crit_edge85.i
   store i32 0, ptr %i.cz, align 4, !tbaa !10
   store float 0.000000e+00, ptr %i.cv, align 4, !tbaa !98
-  %.old = icmp ugt i64 %i.ct, 1
+  %.old = icmp ugt i64 %i.cs, 32
   %or.cond345 = and i1 %.051.lcssa.i, %.old
   br i1 %or.cond345, label %bb.ao, label %.loopexit._crit_edge.i
 
@@ -660,7 +660,7 @@ bb.an:                                            ; preds = %bb.al, %bb.aj, %bb.
 
 .loopexit.i205:                                   ; preds = %.lr.ph.i210.prol.loopexit, %.lr.ph.i210, %middle.block, %vec.epilog.middle.block, %._crit_edge85.i, %.preheader.i
   %.3.i = phi i1 [ %i.fh, %.preheader.i ], [ %.051.lcssa.i, %._crit_edge85.i ], [ %i.fh, %middle.block ], [ %i.fh, %vec.epilog.middle.block ], [ %i.fh, %.lr.ph.i210 ], [ %i.fh, %.lr.ph.i210.prol.loopexit ]
-  %i.iy = icmp ugt i64 %i.ct, 1
+  %i.iy = icmp ugt i64 %i.cs, 32
   %or.cond344 = and i1 %.3.i, %i.iy
   br i1 %or.cond344, label %bb.ao, label %.loopexit._crit_edge.i
 
