@@ -205,9 +205,9 @@ bb.r:                                             ; preds = %.lr.ph.i38
   %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.cq, i64 %i.dc ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 8
   %i.di = xor i32 %.023.i, -1
-  %i.dj = add i32 %i.cr, %i.di
+  %i.dj = add nsw i32 %i.cr, %i.di
   %i.dk = sext i32 %i.dj to i64
-  %i.dl = shl nsw i64 %i.dk, 3
+  %i.dl = shl nuw nsw i64 %i.dk, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.dg, ptr nonnull align 8 %i.dh, i64 %i.dl, i1 false)
   %i.dm = load i32, ptr %i.co, align 8, !tbaa !504
   %i.dn = load ptr, ptr %i.cp, align 8, !tbaa !340
@@ -610,7 +610,7 @@ bb.hq:                                            ; preds = %bb.hp, %bb.hp
 
 _ZL7ImClampRK6ImVec2S1_S_.exit.i:                 ; preds = %bb.hq, %bb.hp
   %i.arv = phi float [ %i.anl, %bb.hq ], [ f0xFF7FFFFF, %bb.hp ]
-  %i.arw = add i32 %i.aou, -1
+  %i.arw = add nsw i32 %i.aou, -1
   %i.arx = and i32 %i.aou, 2147483646
   %i.ary = fmul <2 x float> %i.aoj, %i.ano
   %i.arz = icmp eq i32 %i.arx, 2                  ; 2 uses
@@ -1013,9 +1013,9 @@ bb.c:                                             ; preds = %.lr.ph
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.p ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.v = xor i32 %.023, -1
-  %i.w = add i32 %i.e, %i.v
+  %i.w = add nsw i32 %i.e, %i.v
   %i.x = sext i32 %i.w to i64
-  %i.y = shl nsw i64 %i.x, 3
+  %i.y = shl nuw nsw i64 %i.x, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.t, ptr nonnull align 8 %i.u, i64 %i.y, i1 false)
   %i.z = load i32, ptr %i.b, align 8, !tbaa !504
   %i.aa = load ptr, ptr %i.c, align 8, !tbaa !340

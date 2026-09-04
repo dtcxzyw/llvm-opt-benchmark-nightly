@@ -205,7 +205,9 @@ bb.ah:                                            ; preds = %bb.ag
 
 .lr.ph1034.i:                                     ; preds = %.preheader877.i
   %.not530.i = icmp eq i32 %i.fj, 0
+  %5 = zext nneg i32 %i.fm to i64
   %wide.trip.count1202.i = zext nneg i32 %i.fk to i64
+  %6 = getelementptr [88 x i8], ptr %i.aq, i64 %5
   br label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
@@ -229,24 +231,21 @@ bb.ak:                                            ; preds = %bb.aj
   %.fr.i = freeze i8 %i.fu
   %i.fv = zext i8 %.fr.i to i32
   %i.fw = shl nuw i32 %i.fv, 24
-  %i.fx = ashr exact i32 %i.fw, 21
+  %i.fx = ashr exact i32 %i.fw, 21                ; 3 uses
+  %7 = icmp sgt i32 %i.fx, 0
+  %8 = add nuw nsw i32 %i.fx, 64
+  %9 = lshr i32 %8, 7
+  %spec.select1419.i = select i1 %7, i32 %9, i32 0
+  %10 = add nuw nsw i32 %spec.select1419.i, %i.fx
   br label %bytestream2_get_byte.exit595.i
 
-bytestream2_get_byte.exit595.i:                   ; preds = %bb.ak, %bb.aj
+bytestream2_get_byte.exit595.i:                   ; preds = %bb.aj, %bb.ak
   %.sroa.0690.36.i = phi ptr [ %i.ft, %bb.ak ], [ %i.ay, %bb.aj ] ; 4 uses
-  %.0.i594.i = phi i32 [ %i.fx, %bb.ak ], [ 0, %bb.aj ] ; 3 uses
-  %5 = trunc i64 %indvars.iv1199.i to i32
-  %6 = xor i32 %5, -1
-  %7 = add i32 %i.fm, %6
-  %8 = sext i32 %7 to i64
-  %i.fy = getelementptr inbounds [88 x i8], ptr %i.aq, i64 %8 ; 3 uses
+  %.0.i594.i = phi i32 [ %10, %bb.ak ], [ 0, %bb.aj ]
+  %.pn = xor i64 %indvars.iv1199.i, -1
+  %i.fy = getelementptr [88 x i8], ptr %6, i64 %.pn ; 3 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 8
-  %9 = icmp sgt i32 %.0.i594.i, 0
-  %10 = add nuw nsw i32 %.0.i594.i, 64
-  %11 = lshr i32 %10, 7
-  %spec.select = select i1 %9, i32 %11, i32 0
-  %storemerge.i = add nuw nsw i32 %spec.select, %.0.i594.i
-  store i32 %storemerge.i, ptr %i.fz, align 8, !tbaa !63
+  store i32 %.0.i594.i, ptr %i.fz, align 8, !tbaa !63
   br i1 %.not530.i, label %bb.an, label %bb.al
 
 bb.al:                                            ; preds = %bytestream2_get_byte.exit595.i

@@ -205,8 +205,9 @@ middle.block924:                                  ; preds = %vector.body921
   %i.he = sext i32 %i.gu to i64
   %i.hf = sext i32 %2 to i64                      ; 3 uses
   %i.hg = add i32 %.fr689, 1                      ; 2 uses
-  %i.hh = sext i32 %i.gs to i64
-  %i.hi = sext i32 %i.gt to i64
+  %5 = sext i32 %i.gs to i64
+  %i.hh = sext i32 %i.gt to i64
+  %i.hi = sext i32 %i.gy to i64
   %i.hj = sext i32 %.fr689 to i64                 ; 6 uses
   %smax803 = tail call i32 @llvm.smax.i32(i32 %i.gt, i32 %i.gs)
   %i.hk = add i32 %i.d, %smax803
@@ -609,9 +610,7 @@ _ZN2cv11xfeatures2d16MSDDetector_Impl18computeAvgDistanceERSt6vectorIiSaIiEEi.ex
   %.6635 = phi i32 [ %.8, %._crit_edge629.split ], [ 0, %.lr.ph638.split ]
   %i.pf = icmp eq i64 %indvars.iv798, %indvars.iv833
   %i.pg = add nsw i64 %indvars.iv798, %i.hj
-  %5 = trunc nsw i64 %indvars.iv798 to i32
-  %6 = add i32 %5, %i.gy
-  %7 = sext i32 %6 to i64
+  %6 = add nsw i64 %indvars.iv798, %i.hi
   br label %bb.ax
 
 ._crit_edge629.split:                             ; preds = %bb.bb
@@ -620,7 +619,7 @@ _ZN2cv11xfeatures2d16MSDDetector_Impl18computeAvgDistanceERSt6vectorIiSaIiEEi.ex
   br i1 %.not404.not, label %.lr.ph628, label %._crit_edge639.split, !llvm.loop !133
 
 bb.ax:                                            ; preds = %.lr.ph628, %bb.bb
-  %indvars.iv792 = phi i64 [ %i.hh, %.lr.ph628 ], [ %indvars.iv.next793, %bb.bb ] ; 4 uses
+  %indvars.iv792 = phi i64 [ %5, %.lr.ph628 ], [ %indvars.iv.next793, %bb.bb ] ; 4 uses
   %.7625 = phi i32 [ %.6635, %.lr.ph628 ], [ %.8, %bb.bb ] ; 3 uses
   %i.ph = icmp eq i64 %indvars.iv792, %i.hf
   %or.cond421 = and i1 %i.pf, %i.ph
@@ -669,7 +668,7 @@ bb.ay:                                            ; preds = %.lr.ph618, %bb.ay
   %i.qi = load i32, ptr %i.gv, align 4, !tbaa !52
   %i.qj = icmp slt i32 %i.qi, 2                   ; 2 uses
   %i.qk = load i64, ptr %i.gx, align 8            ; 2 uses
-  %i.ql = mul i64 %i.qk, %7
+  %i.ql = mul i64 %i.qk, %6
   %.sink.idx.i448 = select i1 %i.qj, i64 0, i64 %i.ql
   %.sink.i449 = getelementptr inbounds nuw i8, ptr %i.pk, i64 %.sink.idx.i448
   %i.qm = getelementptr inbounds i8, ptr %.sink.i449, i64 %i.po
@@ -720,7 +719,7 @@ bb.ba:                                            ; preds = %.lr.ph622
 bb.bb:                                            ; preds = %bb.ax, %.loopexit508
   %.8 = phi i32 [ %.7625, %bb.ax ], [ %i.rf, %.loopexit508 ] ; 2 uses
   %indvars.iv.next793 = add nsw i64 %indvars.iv792, 1
-  %.not407.not = icmp slt i64 %indvars.iv792, %i.hi
+  %.not407.not = icmp slt i64 %indvars.iv792, %i.hh
   br i1 %.not407.not, label %bb.ax, label %._crit_edge629.split, !llvm.loop !132
 
 .preheader510:                                    ; preds = %.preheader510.lr.ph, %_ZN2cv11xfeatures2d16MSDDetector_Impl18computeAvgDistanceERSt6vectorIiSaIiEEi.exit458

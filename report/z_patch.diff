@@ -1,0 +1,466 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index c4bc584028e83..e315e3dc59422 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -318,6 +318,10 @@ class ConstraintInfo {
+   /// signed system implies it or because ValueTracking can prove it.
+   bool isKnownNonNegative(Value *V) const;
+ 
++  /// Returns true if \p V is known to be non-positive, either because the
++  /// signed system implies it or because ValueTracking can prove it.
++  bool isKnownNonPositive(Value *V) const;
++
+   void addFact(CmpInst::Predicate Pred, Value *A, Value *B, unsigned NumIn,
+                unsigned NumOut, SmallVectorImpl<StackEntry> &DFSInStack);
+ 
+@@ -913,6 +917,12 @@ bool ConstraintInfo::isKnownNonNegative(Value *V) const {
+          ::isKnownNonNegative(V, DL, /*Depth=*/MaxAnalysisRecursionDepth - 1);
+ }
+ 
++bool ConstraintInfo::isKnownNonPositive(Value *V) const {
++  return doesHold(CmpInst::ICMP_SLE, V, ConstantInt::get(V->getType(), 0)) ||
++         computeKnownBits(V, DL, /*Depth=*/MaxAnalysisRecursionDepth - 1)
++             .isNonPositive();
++}
++
+ void ConstraintInfo::transferToOtherSystem(
+     CmpInst::Predicate Pred, Value *A, Value *B, unsigned NumIn,
+     unsigned NumOut, SmallVectorImpl<StackEntry> &DFSInStack) {
+@@ -1297,6 +1307,10 @@ static bool canStrengthenFlags(Instruction *I) {
+     // A - B does not wrap unsigned, if A >=u B. Subs with constant operands get
+     // canonicalized to Add.
+     return !BO->hasNoUnsignedWrap() && !isa<Constant>(BO->getOperand(1));
++  case Instruction::Add:
++    // A + B does not wrap signed, if one operand is non-negative and the
++    // other is non-positive.
++    return !BO->hasNoSignedWrap();
+   case Instruction::Mul:
+   case Instruction::Shl:
+     if (BO->hasNoUnsignedWrap() && BO->hasNoSignedWrap())
+@@ -1356,6 +1370,21 @@ static bool tryToStrengthenFlags(Instruction *I, ConstraintInfo &Info,
+     I->setHasNoUnsignedWrap();
+     return true;
+   }
++  case Instruction::Add: {
++    // Op0 + Op1 does not wrap signed, if one operand is non-negative and the
++    // other is non-positive: the sum is then bounded by the two operands.
++    auto IsNonNegativeAndNonPositive = [&Info](Value *NonNegOp,
++                                               Value *NonPosOp) {
++      return Info.isKnownNonNegative(NonNegOp) &&
++             Info.isKnownNonPositive(NonPosOp);
++    };
++    if (!IsNonNegativeAndNonPositive(Op0, Op1) &&
++        !IsNonNegativeAndNonPositive(Op1, Op0))
++      return false;
++    LLVM_DEBUG(dbgs() << "Adding nsw to " << *I << "\n");
++    I->setHasNoSignedWrap();
++    return true;
++  }
+   case Instruction::Mul:
+   case Instruction::Shl: {
+     auto Opcode = static_cast<Instruction::BinaryOps>(I->getOpcode());
+diff --git a/llvm/test/Transforms/ConstraintElimination/add-nsw.ll b/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
+index 4b8ac09801ab2..43537547b9a2d 100644
+--- a/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
++++ b/llvm/test/Transforms/ConstraintElimination/add-nsw.ll
+@@ -897,3 +897,239 @@ entry:
+   %c = icmp ult i32 %sub, %a
+   ret i1 %c
+ }
++
++; Tests below need to materialize the nsw flag first.
++
++define i1 @add_neg_1_slt(i64 %x, i64 %b) {
++; CHECK-LABEL: @add_neg_1_slt(
++; CHECK-NEXT:    [[X_NON_NEG:%.*]] = icmp sge i64 [[X:%.*]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[X_NON_NEG]])
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[SUB:%.*]] = add nsw i64 [[X]], -1
++; CHECK-NEXT:    ret i1 true
++;
++  %x.non.neg = icmp sge i64 %x, 0
++  call void @llvm.assume(i1 %x.non.neg)
++  %c = icmp slt i64 %x, %b
++  call void @llvm.assume(i1 %c)
++  %sub = add i64 %x, -1
++  %t = icmp slt i64 %sub, %b
++  ret i1 %t
++}
++
++define i1 @add_neg_20_slt(i64 %x, i64 %b) {
++; CHECK-LABEL: @add_neg_20_slt(
++; CHECK-NEXT:    [[X_NON_NEG:%.*]] = icmp sge i64 [[X:%.*]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[X_NON_NEG]])
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[SUB:%.*]] = add nsw i64 [[X]], -20
++; CHECK-NEXT:    ret i1 true
++;
++  %x.non.neg = icmp sge i64 %x, 0
++  call void @llvm.assume(i1 %x.non.neg)
++  %c = icmp slt i64 %x, %b
++  call void @llvm.assume(i1 %c)
++  %sub = add i64 %x, -20
++  %t = icmp slt i64 %sub, %b
++  ret i1 %t
++}
++
++define i1 @add_neg_1_nonneg_from_ult(i64 %x, i64 %c) {
++; CHECK-LABEL: @add_neg_1_nonneg_from_ult(
++; CHECK-NEXT:    [[X_NON_NEG:%.*]] = icmp sge i64 [[C:%.*]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[X_NON_NEG]])
++; CHECK-NEXT:    [[B:%.*]] = icmp ult i64 [[X:%.*]], [[C]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[B]])
++; CHECK-NEXT:    [[SUB:%.*]] = add nsw i64 [[X]], -1
++; CHECK-NEXT:    ret i1 true
++;
++  %x.non.neg = icmp sge i64 %c, 0
++  call void @llvm.assume(i1 %x.non.neg)
++  %b = icmp ult i64 %x, %c
++  call void @llvm.assume(i1 %b)
++  %sub = add i64 %x, -1
++  %t = icmp slt i64 %sub, %c
++  ret i1 %t
++}
++
++define i1 @add_neg_1_no_nonneg(i64 %x, i64 %b) {
++; CHECK-LABEL: @add_neg_1_no_nonneg(
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X:%.*]], [[B:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], -1
++; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
++; CHECK-NEXT:    ret i1 [[T]]
++;
++  %c = icmp slt i64 %x, %b
++  call void @llvm.assume(i1 %c)
++  %sub = add i64 %x, -1
++  %t = icmp slt i64 %sub, %b
++  ret i1 %t
++}
++
++define i1 @add_non_positive_slt(i64 %x, i64 %y, i64 %b) {
++; CHECK-LABEL: @add_non_positive_slt(
++; CHECK-NEXT:    [[X_NON_NEG:%.*]] = icmp sge i64 [[X:%.*]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[X_NON_NEG]])
++; CHECK-NEXT:    [[Y_NON_POS:%.*]] = icmp sle i64 [[Y:%.*]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[Y_NON_POS]])
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[SUB:%.*]] = add nsw i64 [[X]], [[Y]]
++; CHECK-NEXT:    ret i1 true
++;
++  %x.non.neg = icmp sge i64 %x, 0
++  call void @llvm.assume(i1 %x.non.neg)
++  %y.non.pos = icmp sle i64 %y, 0
++  call void @llvm.assume(i1 %y.non.pos)
++  %c = icmp slt i64 %x, %b
++  call void @llvm.assume(i1 %c)
++  %sub = add i64 %x, %y
++  %t = icmp slt i64 %sub, %b
++  ret i1 %t
++}
++
++define i1 @add_non_positive_slt_commuted(i64 %x, i64 %y, i64 %b) {
++; CHECK-LABEL: @add_non_positive_slt_commuted(
++; CHECK-NEXT:    [[X_NON_NEG:%.*]] = icmp sge i64 [[X:%.*]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[X_NON_NEG]])
++; CHECK-NEXT:    [[Y_NON_POS:%.*]] = icmp sle i64 [[Y:%.*]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[Y_NON_POS]])
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[SUB:%.*]] = add nsw i64 [[Y]], [[X]]
++; CHECK-NEXT:    ret i1 true
++;
++  %x.non.neg = icmp sge i64 %x, 0
++  call void @llvm.assume(i1 %x.non.neg)
++  %y.non.pos = icmp sle i64 %y, 0
++  call void @llvm.assume(i1 %y.non.pos)
++  %c = icmp slt i64 %x, %b
++  call void @llvm.assume(i1 %c)
++  %sub = add i64 %y, %x
++  %t = icmp slt i64 %sub, %b
++  ret i1 %t
++}
++
++define i1 @add_non_positive_slt_hoisted(i64 %x, i64 %y, i64 %b) {
++; CHECK-LABEL: @add_non_positive_slt_hoisted(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[X_NON_NEG:%.*]] = icmp sge i64 [[X:%.*]], 0
++; CHECK-NEXT:    [[Y_NON_POS:%.*]] = icmp sle i64 [[Y:%.*]], 0
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B:%.*]]
++; CHECK-NEXT:    [[AND_1:%.*]] = and i1 [[X_NON_NEG]], [[Y_NON_POS]]
++; CHECK-NEXT:    [[AND_2:%.*]] = and i1 [[AND_1]], [[C]]
++; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], [[Y]]
++; CHECK-NEXT:    br i1 [[AND_2]], label [[IF_END:%.*]], label [[EXIT:%.*]]
++; CHECK:       if.end:
++; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
++; CHECK-NEXT:    ret i1 [[T]]
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %x.non.neg = icmp sge i64 %x, 0
++  %y.non.pos = icmp sle i64 %y, 0
++  %c = icmp slt i64 %x, %b
++  %and.1 = and i1 %x.non.neg, %y.non.pos
++  %and.2 = and i1 %and.1, %c
++  %sub = add i64 %x, %y
++  br i1 %and.2, label %if.end, label %exit
++
++if.end:
++  %t = icmp slt i64 %sub, %b
++  ret i1 %t
++
++exit:
++  ret i1 false
++}
++
++; %y is not known to be non-positive.
++define i1 @add_unknown_sign_slt(i64 %x, i64 %y, i64 %b) {
++; CHECK-LABEL: @add_unknown_sign_slt(
++; CHECK-NEXT:    [[X_NON_NEG:%.*]] = icmp sge i64 [[X:%.*]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[X_NON_NEG]])
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], [[Y:%.*]]
++; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
++; CHECK-NEXT:    ret i1 [[T]]
++;
++  %x.non.neg = icmp sge i64 %x, 0
++  call void @llvm.assume(i1 %x.non.neg)
++  %c = icmp slt i64 %x, %b
++  call void @llvm.assume(i1 %c)
++  %sub = add i64 %x, %y
++  %t = icmp slt i64 %sub, %b
++  ret i1 %t
++}
++
++; %x is not known to be non-negative.
++define i1 @add_non_positive_no_nonneg(i64 %x, i64 %y, i64 %b) {
++; CHECK-LABEL: @add_non_positive_no_nonneg(
++; CHECK-NEXT:    [[Y_NON_POS:%.*]] = icmp sle i64 [[Y:%.*]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[Y_NON_POS]])
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X:%.*]], [[B:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], [[Y]]
++; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
++; CHECK-NEXT:    ret i1 [[T]]
++;
++  %y.non.pos = icmp sle i64 %y, 0
++  call void @llvm.assume(i1 %y.non.pos)
++  %c = icmp slt i64 %x, %b
++  call void @llvm.assume(i1 %c)
++  %sub = add i64 %x, %y
++  %t = icmp slt i64 %sub, %b
++  ret i1 %t
++}
++
++; Both operands are non-negative, so the add can wrap.
++define i1 @add_both_non_negative_slt(i64 %x, i64 %y, i64 %b) {
++; CHECK-LABEL: @add_both_non_negative_slt(
++; CHECK-NEXT:    [[X_NON_NEG:%.*]] = icmp sge i64 [[X:%.*]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[X_NON_NEG]])
++; CHECK-NEXT:    [[Y_NON_NEG:%.*]] = icmp sge i64 [[Y:%.*]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[Y_NON_NEG]])
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], [[Y]]
++; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
++; CHECK-NEXT:    ret i1 [[T]]
++;
++  %x.non.neg = icmp sge i64 %x, 0
++  call void @llvm.assume(i1 %x.non.neg)
++  %y.non.neg = icmp sge i64 %y, 0
++  call void @llvm.assume(i1 %y.non.neg)
++  %c = icmp slt i64 %x, %b
++  call void @llvm.assume(i1 %c)
++  %sub = add i64 %x, %y
++  %t = icmp slt i64 %sub, %b
++  ret i1 %t
++}
++
++; Both operands are non-positive, so the add can wrap.
++define i1 @add_both_non_positive_slt(i64 %x, i64 %y, i64 %b) {
++; CHECK-LABEL: @add_both_non_positive_slt(
++; CHECK-NEXT:    [[X_NON_POS:%.*]] = icmp sle i64 [[X:%.*]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[X_NON_POS]])
++; CHECK-NEXT:    [[Y_NON_POS:%.*]] = icmp sle i64 [[Y:%.*]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[Y_NON_POS]])
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[X]], [[B:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[X]], [[Y]]
++; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[SUB]], [[B]]
++; CHECK-NEXT:    ret i1 [[T]]
++;
++  %x.non.pos = icmp sle i64 %x, 0
++  call void @llvm.assume(i1 %x.non.pos)
++  %y.non.pos = icmp sle i64 %y, 0
++  call void @llvm.assume(i1 %y.non.pos)
++  %c = icmp slt i64 %x, %b
++  call void @llvm.assume(i1 %c)
++  %sub = add i64 %x, %y
++  %t = icmp slt i64 %sub, %b
++  ret i1 %t
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+index 31ae62c564dd6..9d60fc7270482 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+@@ -8,7 +8,7 @@ define i1 @latch_counted_header_check_removable(ptr %p, i64 %n, i64 %lim) {
+ ; CHECK-NEXT:    [[POS:%.*]] = icmp sgt i64 [[N]], 0
+ ; CHECK-NEXT:    br i1 [[POS]], label %[[PH:.*]], label %[[EXIT_0:.*]]
+ ; CHECK:       [[PH]]:
+-; CHECK-NEXT:    [[NM1:%.*]] = add i64 [[N]], -1
++; CHECK-NEXT:    [[NM1:%.*]] = add nsw i64 [[N]], -1
+ ; CHECK-NEXT:    [[G4:%.*]] = shl nuw nsw i64 [[NM1]], 2
+ ; CHECK-NEXT:    [[G:%.*]] = icmp ult i64 [[G4]], [[LIM]]
+ ; CHECK-NEXT:    br i1 [[G]], label %[[LOOP_HEADER:.*]], label %[[EXIT_1:.*]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+index 1fa5344c9911d..5083728fe3489 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+@@ -681,7 +681,7 @@ define void @latch_postdec_negative_step_folds() {
+ ; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    br label %[[LOOP_LATCH]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], -1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i8 [[IV]], -1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i8 [[IV_NEXT]], 2
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
+@@ -946,7 +946,7 @@ define void @latch_postdec_redundant_header_guard(i32 %n) {
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[N]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
+ ; CHECK-NEXT:    br i1 true, label %[[LOOP_LATCH]], label %[[EXIT]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], -1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i32 [[IV]], -1
+ ; CHECK-NEXT:    call void @launch(i32 [[IV_NEXT]])
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], 0
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[LAST:.*]], label %[[LOOP]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-nowrap-from-scev-not-ir.ll b/llvm/test/Transforms/ConstraintElimination/induction-nowrap-from-scev-not-ir.ll
+index 393d5b626d807..7f8ee517bb579 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-nowrap-from-scev-not-ir.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-nowrap-from-scev-not-ir.ll
+@@ -74,7 +74,7 @@ define void @zero_step_constant_start(i32 %n) {
+ ; CHECK-NEXT:    [[C:%.*]] = icmp ne i32 [[IV]], [[N]]
+ ; CHECK-NEXT:    br i1 [[C]], label %[[LATCH]], label %[[EXIT:.*]]
+ ; CHECK:       [[LATCH]]:
+-; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 0
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i32 [[IV]], 0
+ ; CHECK-NEXT:    br label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll
+index 32d38acb8bac9..e8d0e0a4b697b 100644
+--- a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll
++++ b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-decrement.ll
+@@ -15,7 +15,7 @@ define void @add_rec_decreasing_cond_true_constant(i8 noundef %len) {
+ ; CHECK-NEXT:    br i1 [[CMP2_NOT]], label [[EXIT:%.*]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[K_DEC]] = add i8 [[K_0]], -1
++; CHECK-NEXT:    [[K_DEC]] = add nsw i8 [[K_0]], -1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -50,7 +50,7 @@ define void @add_rec_decreasing_cond_not_true_constant(i8 noundef %len) {
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    [[CMP_NOT_I:%.*]] = icmp ult i8 [[K_0]], 4
+ ; CHECK-NEXT:    call void @use(i1 [[CMP_NOT_I]])
+-; CHECK-NEXT:    [[K_DEC]] = add i8 [[K_0]], -1
++; CHECK-NEXT:    [[K_DEC]] = add nsw i8 [[K_0]], -1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -79,7 +79,7 @@ define void @add_rec_decreasing_cond_true_start_signed_positive(i8 noundef %star
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[PRECOND:%.*]] = icmp sge i8 [[START]], 1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[PRECOND]])
+-; CHECK-NEXT:    [[START_1:%.*]] = add i8 [[START]], -1
++; CHECK-NEXT:    [[START_1:%.*]] = add nsw i8 [[START]], -1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER:%.*]]
+ ; CHECK:       loop.header:
+ ; CHECK-NEXT:    [[K_0:%.*]] = phi i8 [ [[START_1]], [[ENTRY:%.*]] ], [ [[K_DEC:%.*]], [[LOOP_LATCH:%.*]] ]
+@@ -87,7 +87,7 @@ define void @add_rec_decreasing_cond_true_start_signed_positive(i8 noundef %star
+ ; CHECK-NEXT:    br i1 [[CMP2_NOT]], label [[EXIT:%.*]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[K_DEC]] = add i8 [[K_0]], -1
++; CHECK-NEXT:    [[K_DEC]] = add nsw i8 [[K_0]], -1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -127,7 +127,7 @@ define void @add_rec_decreasing_cond_not_true_start_signed_positive(i8 noundef %
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    [[CMP_NOT_I:%.*]] = icmp ult i8 [[K_0]], [[START]]
+ ; CHECK-NEXT:    call void @use(i1 [[CMP_NOT_I]])
+-; CHECK-NEXT:    [[K_DEC]] = add i8 [[K_0]], -1
++; CHECK-NEXT:    [[K_DEC]] = add nsw i8 [[K_0]], -1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -471,7 +471,7 @@ define void @add_rec_decreasing_nsw_from_scev(i8 %b) {
+ ; CHECK-NEXT:    [[POSITIVE:%.*]] = icmp sgt i8 [[K_0]], 0
+ ; CHECK-NEXT:    br i1 [[POSITIVE]], label [[LOOP_LATCH]], label [[EXIT]]
+ ; CHECK:       loop.latch:
+-; CHECK-NEXT:    [[K_DEC]] = add i8 [[K_0]], -1
++; CHECK-NEXT:    [[K_DEC]] = add nsw i8 [[K_0]], -1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-wrapping.ll b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-wrapping.ll
+index cd4afed80df59..1c0de052402af 100644
+--- a/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-wrapping.ll
++++ b/llvm/test/Transforms/ConstraintElimination/monotonic-int-phis-wrapping.ll
+@@ -20,7 +20,7 @@ define void @test_iv_wraps_1(i8 %len.n, i8 %a) {
+ ; CHECK:       loop.latch:
+ ; CHECK-NEXT:    [[T_1:%.*]] = icmp uge i8 [[IV]], -1
+ ; CHECK-NEXT:    call void @use.i1(i1 [[T_1]])
+-; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nsw i8 [[IV]], 1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    ret void
+@@ -85,7 +85,7 @@ exit:
+ define void @test_iv_nuw_nsw_2_uge_start(i8 %len.n, i8 %a) {
+ ; CHECK-LABEL: @test_iv_nuw_nsw_2_uge_start(
+ ; CHECK-NEXT:  loop.ph:
+-; CHECK-NEXT:    [[START:%.*]] = add i8 -2, 1
++; CHECK-NEXT:    [[START:%.*]] = add nsw i8 -2, 1
+ ; CHECK-NEXT:    br label [[LOOP_HEADER:%.*]]
+ ; CHECK:       loop.header:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ [[START]], [[LOOP_PH:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP_LATCH:%.*]] ]
+diff --git a/llvm/test/Transforms/ConstraintElimination/wrapping-math.ll b/llvm/test/Transforms/ConstraintElimination/wrapping-math.ll
+index 09dea55ba01c7..6aa55412330ea 100644
+--- a/llvm/test/Transforms/ConstraintElimination/wrapping-math.ll
++++ b/llvm/test/Transforms/ConstraintElimination/wrapping-math.ll
+@@ -20,7 +20,7 @@ define i1 @wrapping_add_known_1(i8 %a) {
+ ; CHECK-NEXT:    [[PRE:%.*]] = icmp eq i8 [[A:%.*]], 1
+ ; CHECK-NEXT:    br i1 [[PRE]], label [[THEN:%.*]], label [[ELSE:%.*]]
+ ; CHECK:       then:
+-; CHECK-NEXT:    [[SUB_1:%.*]] = add i8 [[A]], -1
++; CHECK-NEXT:    [[SUB_1:%.*]] = add nsw i8 [[A]], -1
+ ; CHECK-NEXT:    ret i1 true
+ ; CHECK:       else:
+ ; CHECK-NEXT:    [[SUB_2:%.*]] = add i8 [[A]], -1
+@@ -48,7 +48,7 @@ define i1 @wrapping_add_unknown_2(i8 %a) {
+ ; CHECK-NEXT:    [[PRE:%.*]] = icmp eq i8 [[A:%.*]], 0
+ ; CHECK-NEXT:    br i1 [[PRE]], label [[THEN:%.*]], label [[ELSE:%.*]]
+ ; CHECK:       then:
+-; CHECK-NEXT:    [[SUB_1:%.*]] = add i8 [[A]], -1
++; CHECK-NEXT:    [[SUB_1:%.*]] = add nsw i8 [[A]], -1
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp eq i8 [[SUB_1]], 0
+ ; CHECK-NEXT:    ret i1 [[C_1]]
+ ; CHECK:       else:
+@@ -272,8 +272,8 @@ define i1 @wrapping_add_known_1_add_nuw(i8 %a) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[PRE:%.*]] = icmp eq i8 [[A:%.*]], 1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
+-; CHECK-NEXT:    [[SUB_1:%.*]] = add i8 [[A]], -1
+-; CHECK-NEXT:    [[ADD:%.*]] = add nuw i8 [[SUB_1]], 10
++; CHECK-NEXT:    [[SUB_1:%.*]] = add nsw i8 [[A]], -1
++; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i8 [[SUB_1]], 10
+ ; CHECK-NEXT:    [[RES_1:%.*]] = xor i1 true, true
+ ; CHECK-NEXT:    [[RES_2:%.*]] = xor i1 [[RES_1]], false
+ ; CHECK-NEXT:    ret i1 [[RES_2]]

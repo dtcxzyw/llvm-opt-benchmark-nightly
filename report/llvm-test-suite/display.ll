@@ -127,7 +127,7 @@ bb.a:
   %i.i = trunc nuw nsw i64 %indvars.iv to i32
   %i.j = xor i32 %i.i, -1
   %i.k = add nsw i32 %i.a, %i.j
-  %i.l = mul nsw i32 %i.k, %i.b                   ; 4 uses
+  %i.l = mul nuw nsw i32 %i.k, %i.b               ; 4 uses
   %i.m = trunc nuw i64 %i.h to i32                ; 2 uses
   %i.n = trunc nuw i64 %i.h to i32                ; 2 uses
   br label %bb.b

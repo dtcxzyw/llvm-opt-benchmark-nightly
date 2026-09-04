@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i21
   %i.ds = load i32, ptr %.0125178.i, align 4, !tbaa !94
   %i.dt = sub i32 %i.ds, %i.dr
   store i32 %i.dt, ptr %.0125178.i, align 4, !tbaa !94
-  %i.du = trunc nuw i64 %indvars.iv227.i to i32
-  %.02930.i.i = add i32 %i.du, -1                 ; 3 uses
-  %i.dv = icmp sgt i32 %.02930.i.i, 0
+  %i.du = trunc nuw i64 %indvars.iv227.i to i32   ; 2 uses
+  %.02930.i.i = add nsw i32 %i.du, -1             ; 2 uses
+  %i.dv = icmp sgt i32 %i.du, 1
   br i1 %i.dv, label %.lr.ph.i.i, label %._crit_edge.i.i
 
 .lr.ph.i.i:                                       ; preds = %._crit_edge175.i

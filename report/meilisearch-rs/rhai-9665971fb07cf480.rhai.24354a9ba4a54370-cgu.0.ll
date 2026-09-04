@@ -205,7 +205,7 @@ bb.lk:                                            ; preds = %.lr.ph.i, %bb.lj
 bb.ll:                                            ; preds = %bb.lm, %.noexc871
   %.sroa.01.029.i = phi i64 [ %9, %.noexc871 ], [ %i.afp, %bb.lm ]
   %.sroa.0.128.i = phi ptr [ %8, %.noexc871 ], [ %i.afr, %bb.lm ] ; 5 uses
-  %i.afp = add i64 %.sroa.01.029.i, -1            ; 2 uses
+  %i.afp = add nsw i64 %.sroa.01.029.i, -1        ; 2 uses
   %i.afq = icmp eq ptr %.sroa.0.128.i, %i.afl
   br i1 %i.afq, label %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h4d6f7f10207fc700E.exit.thread.i.thread", label %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h4d6f7f10207fc700E.exit.i"
 
@@ -608,7 +608,7 @@ bb.y:                                             ; preds = %bb.x
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %"_ZN100_$LT$core..iter..adapters..take..Take$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h0c60cb289dd63464E.exit.thread.i"
   %.sroa.0.018.i = phi ptr [ %.sroa.0.19.i, %"_ZN100_$LT$core..iter..adapters..take..Take$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h0c60cb289dd63464E.exit.thread.i" ], [ %3, %.lr.ph.i.preheader ] ; 7 uses
   %.sroa.9.017.i = phi i64 [ %i.bc, %"_ZN100_$LT$core..iter..adapters..take..Take$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h0c60cb289dd63464E.exit.thread.i" ], [ %i.bb, %.lr.ph.i.preheader ]
-  %i.bc = add i64 %.sroa.9.017.i, -1              ; 2 uses
+  %i.bc = add nsw i64 %.sroa.9.017.i, -1          ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.018.i) ]
   %.not.i.i.i = icmp eq ptr %.sroa.0.018.i, %i.t
   br i1 %.not.i.i.i, label %"_ZN104_$LT$smartstring..SmartString$LT$Mode$GT$$u20$as$u20$core..iter..traits..collect..Extend$LT$char$GT$$GT$6extend17h9007b2e6b4424768E.exit.thread", label %bb.z

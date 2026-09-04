@@ -202,18 +202,17 @@ bb.l:                                             ; preds = %bb.k
   %i.as = zext nneg i32 %i.aq to i64
   %i.at = getelementptr i8, ptr %i.j, i64 %i.as
   %i.au = load i8, ptr %i.at, align 1
+  %1 = sext i32 %i.aq to i64
   br label %.lr.ph401
 
 .lr.ph401:                                        ; preds = %.lr.ph401.preheader, %.lr.ph401
-  %.2285399 = phi i32 [ %1, %.lr.ph401 ], [ %i.aq, %.lr.ph401.preheader ] ; 2 uses
-  %1 = add i32 %.2285399, -1                      ; 3 uses
-  %2 = sext i32 %1 to i64
-  %i.av = getelementptr i8, ptr %i.j, i64 %2
+  %indvars.iv505 = phi i64 [ %1, %.lr.ph401.preheader ], [ %indvars.iv.next506, %.lr.ph401 ] ; 2 uses
+  %indvars.iv.next506 = add nsw i64 %indvars.iv505, -1 ; 3 uses
+  %i.av = getelementptr i8, ptr %i.j, i64 %indvars.iv.next506
   %i.aw = load i8, ptr %i.av, align 1
-  %3 = sext i32 %.2285399 to i64
-  %i.ax = getelementptr i8, ptr %i.j, i64 %3
+  %i.ax = getelementptr i8, ptr %i.j, i64 %indvars.iv505
   store i8 %i.aw, ptr %i.ax, align 1
-  %.not350 = icmp eq i32 %1, 0
+  %.not350 = icmp eq i64 %indvars.iv.next506, 0
   br i1 %.not350, label %._crit_edge402, label %.lr.ph401, !llvm.loop !21
 
 ._crit_edge402:                                   ; preds = %.lr.ph401, %._crit_edge.thread

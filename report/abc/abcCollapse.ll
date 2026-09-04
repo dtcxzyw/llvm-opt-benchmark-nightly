@@ -204,8 +204,8 @@ Vec_WecCollectFirsts.exit.loopexit:               ; preds = %bb.q
 
 Vec_WecCollectFirsts.exit:                        ; preds = %Vec_WecCollectFirsts.exit.loopexit, %Vec_IntAlloc.exit.i
   %.val130 = phi ptr [ %i.be, %Vec_WecCollectFirsts.exit.loopexit ], [ %i.ac, %Vec_IntAlloc.exit.i ]
-  %.val127 = phi i32 [ %.val127.pre, %Vec_WecCollectFirsts.exit.loopexit ], [ 0, %Vec_IntAlloc.exit.i ] ; 11 uses
-  %i.bk = add i32 %.val127, -1                    ; 3 uses
+  %.val127 = phi i32 [ %.val127.pre, %Vec_WecCollectFirsts.exit.loopexit ], [ 0, %Vec_IntAlloc.exit.i ] ; 10 uses
+  %i.bk = add i32 %.val127, -1                    ; 2 uses
   %or.cond.i = icmp ult i32 %i.bk, 15
   %spec.store.select.i = select i1 %or.cond.i, i32 16, i32 %.val127 ; 3 uses
   %.not.i = icmp eq i32 %spec.store.select.i, 0
@@ -373,7 +373,7 @@ Vec_PtrStart.exit:                                ; preds = %bb.ae, %bb.af
   %i.df = getelementptr inbounds nuw i8, ptr %i.cz, i64 8 ; 2 uses
   store ptr %i.dd, ptr %i.df, align 8, !tbaa !26
   store i32 %.val127, ptr %i.de, align 4, !tbaa !24
-  %i.dg = sext i32 %.val127 to i64
+  %i.dg = sext i32 %.val127 to i64                ; 3 uses
   %i.dh = shl nsw i64 %i.dg, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.dd, i8 0, i64 %i.dh, i1 false)
   %i.di = load ptr, ptr @stdout, align 8, !tbaa !72
@@ -401,8 +401,8 @@ Extra_ProgressBarUpdate.exit:                     ; preds = %bb.ag, %bb.ah
   %i.do = getelementptr i8, ptr %i.f, i64 8       ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
   %wide.trip.count202 = zext nneg i32 %.val127 to i64
-  %12 = zext nneg i32 %i.bk to i64
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.cm, i64 %12
+  %12 = getelementptr [4 x i8], ptr %i.cm, i64 %i.dg
+  %13 = getelementptr i8, ptr %12, i64 -4
   %i.dq = load i32, ptr %13, align 4, !tbaa !32
   %i.dr = sext i32 %i.dq to i64                   ; 4 uses
   %i.ds = getelementptr inbounds [4 x i8], ptr %.val129, i64 %i.dr
@@ -471,15 +471,16 @@ bb.aq:                                            ; preds = %.lr.ph187
 
 bb.ar:                                            ; preds = %bb.aq, %Vec_StrFree.exit.peel
   %exitcond203.peel.not = icmp eq i32 %.val127, 1
-  br i1 %exitcond203.peel.not, label %._crit_edge, label %.peel.next.a
+  br i1 %exitcond203.peel.not, label %._crit_edge, label %.peel.next
 
-.peel.next.a:                                     ; preds = %bb.ar, %bb.bb
-  %indvars.iv199 = phi i64 [ %indvars.iv.next200, %bb.bb ], [ 1, %bb.ar ] ; 4 uses
-  %14 = trunc i64 %indvars.iv199 to i32
-  %15 = xor i32 %14, -1
-  %16 = add i32 %.val127, %15
-  %17 = sext i32 %16 to i64
-  %i.ek = getelementptr inbounds [4 x i8], ptr %i.cm, i64 %17
+.peel.next:                                       ; preds = %bb.ar
+  %14 = getelementptr [4 x i8], ptr %i.cm, i64 %i.dg
+  br label %.peel.next.a
+
+.peel.next.a:                                     ; preds = %.peel.next, %bb.bb
+  %indvars.iv199 = phi i64 [ 1, %.peel.next ], [ %indvars.iv.next200, %bb.bb ] ; 4 uses
+  %15 = xor i64 %indvars.iv199, -1
+  %i.ek = getelementptr [4 x i8], ptr %14, i64 %15
   %i.el = load i32, ptr %i.ek, align 4, !tbaa !32
   %i.em = sext i32 %i.el to i64                   ; 4 uses
   %i.en = getelementptr inbounds [4 x i8], ptr %.val129, i64 %i.em

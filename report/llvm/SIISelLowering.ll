@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.t = icmp eq i32 %.084, %i.k
   %i.u = icmp eq i32 %.084, %i.l
-  %or.cond = or i1 %i.t, %i.u
+  %or.cond = select i1 %i.t, i1 true, i1 %i.u
   br i1 %or.cond, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d, %bb.b

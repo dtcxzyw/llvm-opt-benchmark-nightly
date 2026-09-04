@@ -204,7 +204,7 @@ bb.a:
   %i.b = getelementptr i8, ptr %0, i64 -232       ; 2 uses
   %i.c = getelementptr i8, ptr %0, i64 -226
   %.val103 = load i16, ptr %i.c, align 2          ; 6 uses
-  %i.d = sext i16 %.val103 to i32                 ; 3 uses
+  %i.d = sext i16 %.val103 to i32                 ; 4 uses
   %or.cond = icmp ugt i16 %.val103, 5
   br i1 %or.cond, label %bb.b, label %bb.c
 
@@ -342,10 +342,10 @@ ext4_cache_extents.exit:                          ; preds = %bb.m, %bb.j
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.o
-  %i.av = phi ptr [ %.val, %bb.o ], [ %.pre, %.lr.ph.preheader ] ; 3 uses
-  %.092122 = phi i16 [ %i.cb, %bb.o ], [ 0, %.lr.ph.preheader ] ; 2 uses
-  %.093121 = phi i16 [ %4, %bb.o ], [ %.val103, %.lr.ph.preheader ] ; 2 uses
-  %i.aw = sext i16 %.092122 to i64
+  %i.av = phi ptr [ %.pre, %.lr.ph.preheader ], [ %.val, %bb.o ] ; 3 uses
+  %indvars.iv = phi i32 [ %i.d, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.o ] ; 2 uses
+  %.093121 = phi i16 [ 0, %.lr.ph.preheader ], [ %i.cb, %bb.o ] ; 2 uses
+  %i.aw = sext i16 %.093121 to i64
   %i.ax = getelementptr [48 x i8], ptr %.1, i64 %i.aw ; 4 uses
   %i.ay = getelementptr i8, ptr %i.av, i64 24     ; 3 uses
   %i.az = getelementptr i8, ptr %i.av, i64 2
@@ -387,12 +387,12 @@ ext4_ext_binsearch_idx.exit:                      ; preds = %.lr.ph.i108, %.lr.p
   %i.bt = or disjoint i64 %i.bs, %i.bq
   store i64 %i.bt, ptr %i.ax, align 8
   %i.bu = getelementptr i8, ptr %i.ax, i64 8
-  store i16 %.093121, ptr %i.bu, align 8
+  %4 = trunc nsw i32 %indvars.iv to i16
+  store i16 %4, ptr %i.bu, align 8
   %i.bv = getelementptr i8, ptr %i.ax, i64 16
   store ptr null, ptr %i.bv, align 8
-  %4 = add nsw i16 %.093121, -1                   ; 3 uses
-  %5 = zext nneg i16 %4 to i32
-  %i.bw = tail call fastcc ptr @__read_extent_tree_block(ptr noundef nonnull @__func__.ext4_find_extent, i32 noundef 939, ptr noundef %0, ptr noundef %i.bm, i32 noundef %5, i32 noundef %3) #16, !srcloc !53 ; 4 uses
+  %indvars.iv.next = add nsw i32 %indvars.iv, -1  ; 2 uses
+  %i.bw = tail call fastcc ptr @__read_extent_tree_block(ptr noundef nonnull @__func__.ext4_find_extent, i32 noundef 939, ptr noundef %0, ptr noundef %i.bm, i32 noundef %indvars.iv.next, i32 noundef %3) #16, !srcloc !53 ; 4 uses
   %i.bx = icmp ugt ptr %i.bw, inttoptr (i64 -4096 to ptr)
   br i1 %i.bx, label %bb.n, label %bb.o
 
@@ -405,14 +405,14 @@ bb.n:                                             ; preds = %ext4_ext_binsearch_
 bb.o:                                             ; preds = %ext4_ext_binsearch_idx.exit
   %i.ca = getelementptr i8, ptr %i.bw, i64 40
   %.val = load ptr, ptr %i.ca, align 8            ; 2 uses
-  %i.cb = add nuw i16 %.092122, 1                 ; 2 uses
+  %i.cb = add nuw i16 %.093121, 1                 ; 3 uses
   %i.cc = sext i16 %i.cb to i64
   %i.cd = getelementptr [48 x i8], ptr %.1, i64 %i.cc ; 2 uses
   %i.ce = getelementptr i8, ptr %i.cd, i64 40
   store ptr %i.bw, ptr %i.ce, align 8
   %i.cf = getelementptr i8, ptr %i.cd, i64 32
   store ptr %.val, ptr %i.cf, align 8
-  %.not101 = icmp eq i16 %4, 0
+  %.not101 = icmp eq i16 %i.cb, %.val103
   br i1 %.not101, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !51
 
 ._crit_edge.loopexit:                             ; preds = %bb.o

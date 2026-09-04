@@ -204,6 +204,7 @@ bb.f:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %bb.f
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 10
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %4 = sext i32 %i.h to i64
   %wide.trip.count = zext nneg i32 %spec.select44 to i64
   br label %bb.h
 
@@ -220,25 +221,24 @@ bb.h:                                             ; preds = %.lr.ph, %bb.g
   %i.an = trunc i64 %indvars.iv to i32
   %i.ao = sub i32 %1, %i.an
   %i.ap = tail call noundef zeroext i16 %i.am(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %i.ao), !inline_history !2
-  %4 = trunc i64 %indvars.iv to i32
-  %5 = xor i32 %4, -1
-  %6 = add i32 %i.h, %5                           ; 2 uses
+  %5 = xor i64 %indvars.iv, -1
+  %6 = add nsw i64 %4, %5                         ; 2 uses
   %i.aq = load i16, ptr %i.a, align 8, !tbaa !44  ; 3 uses
   %i.ar = icmp slt i16 %i.aq, 0
   %i.as = ashr i16 %i.aq, 5
   %i.at = sext i16 %i.as to i32
   %i.au = load i32, ptr %i.f, align 4
   %i.av = select i1 %i.ar, i32 %i.au, i32 %i.at
-  %7 = icmp ult i32 %6, %i.av
-  br i1 %7, label %bb.i, label %_ZNK6icu_7813UnicodeString6charAtEi.exit47
+  %7 = trunc nsw i64 %6 to i32
+  %8 = icmp ugt i32 %i.av, %7
+  br i1 %8, label %bb.i, label %_ZNK6icu_7813UnicodeString6charAtEi.exit47
 
 bb.i:                                             ; preds = %bb.h
   %i.aw = and i16 %i.aq, 2
   %.not.i.i.i46 = icmp eq i16 %i.aw, 0
   %i.ax = load ptr, ptr %i.aj, align 8
   %i.ay = select i1 %.not.i.i.i46, ptr %i.ax, ptr %i.ai
-  %8 = sext i32 %6 to i64
-  %i.az = getelementptr inbounds [2 x i8], ptr %i.ay, i64 %8
+  %i.az = getelementptr inbounds [2 x i8], ptr %i.ay, i64 %6
   %i.ba = load i16, ptr %i.az, align 2, !tbaa !43
   br label %_ZNK6icu_7813UnicodeString6charAtEi.exit47
 
