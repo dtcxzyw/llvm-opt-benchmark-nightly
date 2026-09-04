@@ -205,13 +205,13 @@ bb.e:                                             ; preds = %bb.d
 _ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partition_typeEEEE18check_being_stolenINS1_9start_forINS1_13blocked_rangeImEENS0_2d225parallel_for_body_wrapperIN9__gnu_cxx17__normal_iteratorIPN4mold9ReaderJobESt6vectorISG_SaISG_EEEEZNSF_L16read_input_filesINSF_6X86_64EEEvRNSF_7ContextIT_EERSK_EUlRSG_RNS1_6feederISG_EEE_SG_EEKNS1_16auto_partitionerEEEEEbRSP_RKNS1_14execution_dataE.exit: ; preds = %_ZN3tbb6detail2d116is_same_affinityERKNS1_14execution_dataE.exit.thread, %bb.c, %bb.d, %bb.e
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
-  %i.x = load i64, ptr %i.w, align 16, !tbaa !639 ; 4 uses
+  %i.x = load i64, ptr %i.w, align 16, !tbaa !639 ; 3 uses
   %i.y = load i64, ptr %i.v, align 64, !tbaa !640 ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !641 ; 4 uses
-  %i.ab = sub i64 %i.y, %i.aa                     ; 4 uses
+  %i.ab = sub i64 %i.y, %i.aa                     ; 3 uses
   %i.ac = icmp ult i64 %i.x, %i.ab
-  br i1 %i.ac, label %bb.f, label %.critedge.i
+  br i1 %i.ac, label %bb.f, label %bb.o
 
 bb.f:                                             ; preds = %_ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partition_typeEEEE18check_being_stolenINS1_9start_forINS1_13blocked_rangeImEENS0_2d225parallel_for_body_wrapperIN9__gnu_cxx17__normal_iteratorIPN4mold9ReaderJobESt6vectorISG_SaISG_EEEEZNSF_L16read_input_filesINSF_6X86_64EEEvRNSF_7ContextIT_EERSK_EUlRSG_RNS1_6feederISG_EEE_SG_EEKNS1_16auto_partitionerEEEEEbRSP_RKNS1_14execution_dataE.exit
   %i.ad = load i64, ptr %i.g, align 8, !tbaa !624 ; 2 uses
@@ -292,12 +292,12 @@ _ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11.i: ; preds = %_ZN3
   %.val.i.i.i = load ptr, ptr %1, align 8, !tbaa !644
   call void @_ZN3tbb6detail2r15spawnERNS0_2d14taskERNS2_18task_group_contextE(ptr noundef nonnull align 64 dereferenceable(144) %i.al, ptr noundef nonnull align 8 dereferenceable(128) %.val.i.i.i) #19, !inline_history !1171
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
-  %i.bm = load i64, ptr %i.w, align 16, !tbaa !639 ; 4 uses
+  %i.bm = load i64, ptr %i.w, align 16, !tbaa !639 ; 3 uses
   %i.bn = load i64, ptr %i.v, align 64, !tbaa !640 ; 4 uses
   %i.bo = load i64, ptr %i.z, align 8, !tbaa !641 ; 4 uses
-  %i.bp = sub i64 %i.bn, %i.bo                    ; 4 uses
+  %i.bp = sub i64 %i.bn, %i.bo                    ; 3 uses
   %i.bq = icmp ult i64 %i.bm, %i.bp
-  br i1 %i.bq, label %bb.j, label %.critedge.i
+  br i1 %i.bq, label %bb.j, label %bb.o
 
 bb.j:                                             ; preds = %_ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11.i
   %i.br = load i64, ptr %i.g, align 8, !tbaa !624 ; 2 uses
@@ -322,11 +322,11 @@ bb.m:                                             ; preds = %bb.l
 _ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11.i.backedge: ; preds = %bb.m, %bb.j
   br label %_ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11.i, !llvm.loop !1172
 
-.critedge.i:                                      ; preds = %bb.l, %bb.k, %_ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11.i, %bb.h, %bb.g, %_ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partition_typeEEEE18check_being_stolenINS1_9start_forINS1_13blocked_rangeImEENS0_2d225parallel_for_body_wrapperIN9__gnu_cxx17__normal_iteratorIPN4mold9ReaderJobESt6vectorISG_SaISG_EEEEZNSF_L16read_input_filesINSF_6X86_64EEEvRNSF_7ContextIT_EERSK_EUlRSG_RNS1_6feederISG_EEE_SG_EEKNS1_16auto_partitionerEEEEEbRSP_RKNS1_14execution_dataE.exit
-  %.pre-phi.i = phi i64 [ %i.ab, %_ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partition_typeEEEE18check_being_stolenINS1_9start_forINS1_13blocked_rangeImEENS0_2d225parallel_for_body_wrapperIN9__gnu_cxx17__normal_iteratorIPN4mold9ReaderJobESt6vectorISG_SaISG_EEEEZNSF_L16read_input_filesINSF_6X86_64EEEvRNSF_7ContextIT_EERSK_EUlRSG_RNS1_6feederISG_EEE_SG_EEKNS1_16auto_partitionerEEEEEbRSP_RKNS1_14execution_dataE.exit ], [ %i.ab, %bb.g ], [ %i.ab, %bb.h ], [ %i.bp, %_ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11.i ], [ %i.bp, %bb.k ], [ %i.bp, %bb.l ]
-  %5 = phi i64 [ %i.aa, %_ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partition_typeEEEE18check_being_stolenINS1_9start_forINS1_13blocked_rangeImEENS0_2d225parallel_for_body_wrapperIN9__gnu_cxx17__normal_iteratorIPN4mold9ReaderJobESt6vectorISG_SaISG_EEEEZNSF_L16read_input_filesINSF_6X86_64EEEvRNSF_7ContextIT_EERSK_EUlRSG_RNS1_6feederISG_EEE_SG_EEKNS1_16auto_partitionerEEEEEbRSP_RKNS1_14execution_dataE.exit ], [ %i.aa, %bb.g ], [ %i.aa, %bb.h ], [ %i.bo, %_ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11.i ], [ %i.bo, %bb.k ], [ %i.bo, %bb.l ] ; 2 uses
-  %6 = phi i64 [ %i.y, %_ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partition_typeEEEE18check_being_stolenINS1_9start_forINS1_13blocked_rangeImEENS0_2d225parallel_for_body_wrapperIN9__gnu_cxx17__normal_iteratorIPN4mold9ReaderJobESt6vectorISG_SaISG_EEEEZNSF_L16read_input_filesINSF_6X86_64EEEvRNSF_7ContextIT_EERSK_EUlRSG_RNS1_6feederISG_EEE_SG_EEKNS1_16auto_partitionerEEEEEbRSP_RKNS1_14execution_dataE.exit ], [ %i.y, %bb.g ], [ %i.y, %bb.h ], [ %i.bn, %_ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11.i ], [ %i.bn, %bb.k ], [ %i.bn, %bb.l ] ; 2 uses
-  %7 = phi i64 [ %i.x, %_ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partition_typeEEEE18check_being_stolenINS1_9start_forINS1_13blocked_rangeImEENS0_2d225parallel_for_body_wrapperIN9__gnu_cxx17__normal_iteratorIPN4mold9ReaderJobESt6vectorISG_SaISG_EEEEZNSF_L16read_input_filesINSF_6X86_64EEEvRNSF_7ContextIT_EERSK_EUlRSG_RNS1_6feederISG_EEE_SG_EEKNS1_16auto_partitionerEEEEEbRSP_RKNS1_14execution_dataE.exit ], [ %i.x, %bb.g ], [ %i.x, %bb.h ], [ %i.bm, %_ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11.i ], [ %i.bm, %bb.k ], [ %i.bm, %bb.l ]
+.critedge.i:                                      ; preds = %bb.l, %bb.k, %bb.h, %bb.g
+  %.pre-phi.i = phi i64 [ %i.ab, %bb.h ], [ %i.ab, %bb.g ], [ %i.bp, %bb.k ], [ %i.bp, %bb.l ]
+  %5 = phi i64 [ %i.aa, %bb.h ], [ %i.aa, %bb.g ], [ %i.bo, %bb.k ], [ %i.bo, %bb.l ] ; 2 uses
+  %6 = phi i64 [ %i.y, %bb.h ], [ %i.y, %bb.g ], [ %i.bn, %bb.k ], [ %i.bn, %bb.l ] ; 2 uses
+  %7 = phi i64 [ %i.x, %bb.h ], [ %i.x, %bb.g ], [ %i.bm, %bb.k ], [ %i.bm, %bb.l ]
   %i.bv = icmp ult i64 %7, %.pre-phi.i
   br i1 %i.bv, label %bb.n, label %bb.o
 
@@ -336,9 +336,11 @@ bb.n:                                             ; preds = %.critedge.i
   %.not.i12.i = icmp eq i8 %i.bx, 0
   br i1 %.not.i12.i, label %bb.o, label %bb.q
 
-bb.o:                                             ; preds = %bb.n, %.critedge.i
+bb.o:                                             ; preds = %_ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11.i, %bb.n, %.critedge.i, %_ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partition_typeEEEE18check_being_stolenINS1_9start_forINS1_13blocked_rangeImEENS0_2d225parallel_for_body_wrapperIN9__gnu_cxx17__normal_iteratorIPN4mold9ReaderJobESt6vectorISG_SaISG_EEEEZNSF_L16read_input_filesINSF_6X86_64EEEvRNSF_7ContextIT_EERSK_EUlRSG_RNS1_6feederISG_EEE_SG_EEKNS1_16auto_partitionerEEEEEbRSP_RKNS1_14execution_dataE.exit
+  %8 = phi i64 [ %6, %.critedge.i ], [ %6, %bb.n ], [ %i.y, %_ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partition_typeEEEE18check_being_stolenINS1_9start_forINS1_13blocked_rangeImEENS0_2d225parallel_for_body_wrapperIN9__gnu_cxx17__normal_iteratorIPN4mold9ReaderJobESt6vectorISG_SaISG_EEEEZNSF_L16read_input_filesINSF_6X86_64EEEvRNSF_7ContextIT_EERSK_EUlRSG_RNS1_6feederISG_EEE_SG_EEKNS1_16auto_partitionerEEEEEbRSP_RKNS1_14execution_dataE.exit ], [ %i.bn, %_ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11.i ] ; 2 uses
+  %9 = phi i64 [ %5, %.critedge.i ], [ %5, %bb.n ], [ %i.aa, %_ZN3tbb6detail2d122dynamic_grainsize_modeINS1_13adaptive_modeINS1_19auto_partition_typeEEEE18check_being_stolenINS1_9start_forINS1_13blocked_rangeImEENS0_2d225parallel_for_body_wrapperIN9__gnu_cxx17__normal_iteratorIPN4mold9ReaderJobESt6vectorISG_SaISG_EEEEZNSF_L16read_input_filesINSF_6X86_64EEEvRNSF_7ContextIT_EERSK_EUlRSG_RNS1_6feederISG_EEE_SG_EEKNS1_16auto_partitionerEEEEEbRSP_RKNS1_14execution_dataE.exit ], [ %i.bo, %_ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11.i ] ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %.not1.i.i.i.i.i.i.i.i = icmp eq i64 %5, %6
+  %.not1.i.i.i.i.i.i.i.i = icmp eq i64 %9, %8
   br i1 %.not1.i.i.i.i.i.i.i.i, label %_ZN3tbb6detail2d119partition_type_baseINS1_19auto_partition_typeEE7executeINS1_9start_forINS1_13blocked_rangeImEENS0_2d225parallel_for_body_wrapperIN9__gnu_cxx17__normal_iteratorIPN4mold9ReaderJobESt6vectorISE_SaISE_EEEEZNSD_L16read_input_filesINSD_6X86_64EEEvRNSD_7ContextIT_EERSI_EUlRSE_RNS1_6feederISE_EEE_SE_EEKNS1_16auto_partitionerEEES8_EEvRSN_RT0_RNS1_14execution_dataE.exit, label %.lr.ph.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %bb.o
@@ -347,14 +349,14 @@ bb.o:                                             ; preds = %bb.n, %.critedge.i
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.p, %.lr.ph.i.i.i.i.i.i.i.i
-  %.02.i.i.i.i.i.i.i.i = phi i64 [ %5, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.cf, %bb.p ] ; 2 uses
+  %.02.i.i.i.i.i.i.i.i = phi i64 [ %9, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.cf, %bb.p ] ; 2 uses
   %i.cb = load ptr, ptr %i.bz, align 32, !tbaa !1179, !nonnull !59, !align !456
   %i.cc = load ptr, ptr %i.by, align 8, !tbaa !1180
   %i.cd = getelementptr inbounds [120 x i8], ptr %i.cc, i64 %.02.i.i.i.i.i.i.i.i
   %i.ce = load ptr, ptr %i.ca, align 8, !tbaa !1181
   call fastcc void @_ZN3tbb6detail2d235parallel_for_each_operator_selectorIZN4moldL16read_input_filesINS3_6X86_64EEEvRNS3_7ContextIT_EERSt6vectorINS3_9ReaderJobESaISB_EEEUlRSB_RNS0_2d16feederISB_EEE_E4callISF_NS1_11feeder_implISK_SB_EEEEDTcmclsr3tbb6detailE6invokefp_clsr3stdE7forwardIS7_Efp0_Edefp1_Ecvv_EERKSK_OS7_PT0_(ptr noundef nonnull align 8 dereferenceable(16) %i.cb, ptr noundef nonnull align 8 dereferenceable(120) %i.cd, ptr noundef %i.ce), !inline_history !1173
   %i.cf = add i64 %.02.i.i.i.i.i.i.i.i, 1         ; 2 uses
-  %.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.cf, %6
+  %.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.cf, %8
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZN3tbb6detail2d119partition_type_baseINS1_19auto_partition_typeEE7executeINS1_9start_forINS1_13blocked_rangeImEENS0_2d225parallel_for_body_wrapperIN9__gnu_cxx17__normal_iteratorIPN4mold9ReaderJobESt6vectorISE_SaISE_EEEEZNSD_L16read_input_filesINSD_6X86_64EEEvRNSD_7ContextIT_EERSI_EUlRSE_RNS1_6feederISE_EEE_SE_EEKNS1_16auto_partitionerEEES8_EEvRSN_RT0_RNS1_14execution_dataE.exit, label %bb.p, !llvm.loop !1174
 
 bb.q:                                             ; preds = %bb.n

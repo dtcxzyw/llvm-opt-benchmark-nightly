@@ -204,27 +204,23 @@ bb.d:                                             ; preds = %bb.a, %_ZNK17IRefer
 define linkonce_odr dso_local void @_ZN5scene10ISceneNode9removeAllEv(ptr noundef nonnull align 8 dereferenceable(218) %0) unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 9 uses
-  %.sroa.06.09 = load ptr, ptr %i.a, align 8, !tbaa !386 ; 3 uses
+  %.sroa.06.09 = load ptr, ptr %i.a, align 8, !tbaa !386 ; 2 uses
   %.not10 = icmp eq ptr %.sroa.06.09, %i.a
-  br i1 %.not10, label %._crit_edge, label %.lr.ph
+  br i1 %.not10, label %_ZNSt7__cxx114listIPN5scene10ISceneNodeESaIS3_EE5clearEv.exit, label %.lr.ph
 
-._crit_edge.loopexit:                             ; preds = %_ZNK17IReferenceCounted4dropEv.exit
-  %.pre = load ptr, ptr %i.a, align 8, !tbaa !386
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %1 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %.sroa.06.09, %bb.a ] ; 2 uses
-  %.not8.i.i = icmp eq ptr %1, %i.a
+._crit_edge:                                      ; preds = %_ZNK17IReferenceCounted4dropEv.exit
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !386 ; 2 uses
+  %.not8.i.i = icmp eq ptr %.pre, %i.a
   br i1 %.not8.i.i, label %_ZNSt7__cxx114listIPN5scene10ISceneNodeESaIS3_EE5clearEv.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %._crit_edge, %.lr.ph.i.i
-  %.09.i.i = phi ptr [ %i.b, %.lr.ph.i.i ], [ %1, %._crit_edge ] ; 2 uses
+  %.09.i.i = phi ptr [ %i.b, %.lr.ph.i.i ], [ %.pre, %._crit_edge ] ; 2 uses
   %i.b = load ptr, ptr %.09.i.i, align 8, !tbaa !386 ; 2 uses
   tail call void @_ZdlPvm(ptr noundef nonnull %.09.i.i, i64 noundef 24) #28
   %.not.i.i = icmp eq ptr %i.b, %i.a
   br i1 %.not.i.i, label %_ZNSt7__cxx114listIPN5scene10ISceneNodeESaIS3_EE5clearEv.exit, label %.lr.ph.i.i, !llvm.loop !7
 
-_ZNSt7__cxx114listIPN5scene10ISceneNodeESaIS3_EE5clearEv.exit: ; preds = %.lr.ph.i.i, %._crit_edge
+_ZNSt7__cxx114listIPN5scene10ISceneNodeESaIS3_EE5clearEv.exit: ; preds = %.lr.ph.i.i, %bb.a, %._crit_edge
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 160
   store ptr %i.a, ptr %i.c, align 8, !tbaa !385
   store ptr %i.a, ptr %i.a, align 8, !tbaa !386
@@ -262,7 +258,7 @@ bb.b:                                             ; preds = %.lr.ph
 _ZNK17IReferenceCounted4dropEv.exit:              ; preds = %.lr.ph, %bb.b
   %.sroa.06.0 = load ptr, ptr %.sroa.06.011, align 8, !tbaa !386 ; 2 uses
   %.not = icmp eq ptr %.sroa.06.0, %i.a
-  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph
+  br i1 %.not, label %._crit_edge, label %.lr.ph
 }
 
 ; Function Attrs: mustprogress uwtable

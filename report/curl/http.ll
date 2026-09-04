@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %.critedge.i, label %sub_0.i
 
 sub_0.i:                                          ; preds = %bb.b
-  %i.r = load i8, ptr %i.q, align 1               ; 2 uses
+  %i.r = load i8, ptr %i.q, align 1
   %.not37.i = icmp eq i8 %i.r, 104
-  br i1 %.not37.i, label %sub_1.i, label %.tail.thread.i
+  br i1 %.not37.i, label %sub_1.i, label %.critedge.i
 
 sub_1.i:                                          ; preds = %sub_0.i
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 1
@@ -221,11 +221,6 @@ sub_1.i:                                          ; preds = %sub_0.i
   %spec.select = select i1 %.not25.i120, ptr @.str.65, ptr @.str.68
   br label %.critedge.i
 
-.tail.thread.i:                                   ; preds = %sub_0.i
-  %6 = zext i8 %i.r to i32
-  %7 = sub nsw i32 104, %6
-  br label %.tail32.i
-
 sub_033.i:                                        ; preds = %sub_1.i
   %i.w = zext i8 %i.t to i32
   %i.x = sub nsw i32 50, %i.w
@@ -239,9 +234,9 @@ sub_235.i:                                        ; preds = %sub_033.i
   %i.ab = sub nsw i32 0, %i.aa
   br label %.tail32.i
 
-.tail32.i:                                        ; preds = %sub_235.i, %sub_033.i, %.tail.thread.i
-  %8 = phi i32 [ %7, %.tail.thread.i ], [ %i.x, %sub_033.i ], [ %i.ab, %sub_235.i ]
-  %.not26.i = icmp eq i32 %8, 0
+.tail32.i:                                        ; preds = %sub_235.i, %sub_033.i
+  %6 = phi i32 [ %i.ab, %sub_235.i ], [ %i.x, %sub_033.i ]
+  %.not26.i = icmp eq i32 %6, 0
   br i1 %.not26.i, label %bb.c, label %.critedge.i
 
 bb.c:                                             ; preds = %.tail32.i
@@ -255,8 +250,8 @@ bb.d:                                             ; preds = %bb.c
   %.not28.i = icmp eq i32 %i.ae, 0
   br i1 %.not28.i, label %.critedge.i, label %http_check_new_conn.exit.thread152
 
-.critedge.i:                                      ; preds = %.tail.i.thread, %bb.d, %bb.c, %.tail32.i, %bb.b
-  %.0.i = phi ptr [ @.str.67, %bb.c ], [ %spec.select, %.tail.i.thread ], [ @.str.67, %bb.d ], [ @.str.68, %bb.b ], [ @.str.68, %.tail32.i ]
+.critedge.i:                                      ; preds = %.tail.i.thread, %sub_0.i, %bb.d, %bb.c, %.tail32.i, %bb.b
+  %.0.i = phi ptr [ @.str.67, %bb.c ], [ %spec.select, %.tail.i.thread ], [ @.str.67, %bb.d ], [ @.str.68, %bb.b ], [ @.str.68, %.tail32.i ], [ @.str.68, %sub_0.i ]
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 2187
   %i.ag = load i64, ptr %i.af, align 1
   %i.ah = and i64 %i.ag, 536870912

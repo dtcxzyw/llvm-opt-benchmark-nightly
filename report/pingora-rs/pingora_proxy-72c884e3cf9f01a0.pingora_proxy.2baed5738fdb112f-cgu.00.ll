@@ -204,7 +204,7 @@ bb.ca:                                            ; preds = %bb.bu
   br label %_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i
 
 _RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i: ; preds = %bb.ce, %.preheader56.i.i.i.preheader, %.preheader56.i.i.i, %bb.cf, %.lr.ph.i.i.i, %.preheader.i.i.i, %bb.cc, %bb.cc, %bb.cb, %bb.ca
-  %.sroa.9.0.i.i = phi i64 [ undef, %bb.ca ], [ 0, %.preheader.i.i.i ], [ undef, %bb.cc ], [ undef, %bb.cb ], [ undef, %bb.cc ], [ %i.of, %bb.cf ], [ undef, %.lr.ph.i.i.i ], [ undef, %bb.ce ], [ undef, %.preheader56.i.i.i.preheader ], [ %i.nv, %.preheader56.i.i.i ] ; 4 uses
+  %.sroa.9.0.i.i = phi i64 [ undef, %bb.ca ], [ 0, %.preheader.i.i.i ], [ undef, %bb.cc ], [ undef, %bb.cb ], [ undef, %bb.cc ], [ %i.of, %bb.cf ], [ undef, %.lr.ph.i.i.i ], [ undef, %bb.ce ], [ undef, %.preheader56.i.i.i.preheader ], [ %i.nv, %.preheader56.i.i.i ] ; 5 uses
   %.sroa.016.0.i.i = phi i1 [ false, %bb.ca ], [ true, %.preheader.i.i.i ], [ false, %bb.cc ], [ false, %bb.cb ], [ false, %bb.cc ], [ %i.oa, %bb.cf ], [ %i.oa, %.lr.ph.i.i.i ], [ false, %bb.ce ], [ false, %.preheader56.i.i.i.preheader ], [ true, %.preheader56.i.i.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !783
   invoke void @_RNvMNtNtCs3gSIjo26Km0_14regex_automata4util8capturesNtB2_8Captures17get_group_by_name(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.s, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %.sroa.5.0..sroa_idx.i.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @36, i64 noundef 3)
@@ -335,7 +335,7 @@ bb.cm:                                            ; preds = %bb.cg
 .loopexit.i.i:                                    ; preds = %bb.cq, %.preheader56.i172.i.i.preheader, %.lr.ph.i182.i.i, %bb.co, %bb.co, %bb.cn, %bb.cm
   %.not109.i.i = icmp ult i64 %.sroa.9.0.i.i, %.sroa.4.1.i
   %or.cond116.i.i = select i1 %.sroa.016.0.i.i, i1 %.not109.i.i, i1 false
-  br i1 %or.cond116.i.i, label %6, label %bb.cz
+  br i1 %or.cond116.i.i, label %.loopexit290.i.i, label %bb.cz
 
 bb.cn:                                            ; preds = %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit.i164.i.i, %bb.ck, %bb.ci
   %i.ox = sub nuw i64 %i.ol, %i.ok                ; 2 uses
@@ -420,28 +420,25 @@ _RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl.exit189.i.i: ; p
   br i1 %.sroa.016.0.i.i, label %bb.cs, label %bb.ct
 
 bb.cs:                                            ; preds = %_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl.exit189.i.i
-  %.not108.i.i.a = icmp ult i64 %.sroa.9.0.i.i, %.sroa.4.1.i
-  br i1 %.not108.i.i.a, label %bb.cu, label %bb.cz
+  %.not108.i.i = icmp uge i64 %.sroa.9.0.i.i, %.sroa.4.1.i
+  %5 = call i64 @llvm.umin.i64(i64 %i.hv, i64 %.sroa.11230.0.i.i) ; 2 uses
+  %.not108.i.i.a = icmp ult i64 %5, %.sroa.9.0.i.i
+  %or.cond.i112 = select i1 %.not108.i.i, i1 true, i1 %.not108.i.i.a
+  br i1 %or.cond.i112, label %bb.cz, label %bb.cu
 
 bb.ct:                                            ; preds = %_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl.exit189.i.i
   %spec.select.i.i = call i64 @llvm.usub.sat.i64(i64 %.sroa.4.1.i, i64 %.sroa.11230.0.i.i)
   br label %.loopexit290.i.i
 
 bb.cu:                                            ; preds = %bb.cs
-  %5 = call i64 @llvm.umin.i64(i64 %i.hv, i64 %.sroa.11230.0.i.i)
   %i.py = add nuw i64 %5, 1
-  br label %6
+  br label %.loopexit290.i.i
 
-.loopexit290.i.i:                                 ; preds = %6, %bb.ct
-  %.sroa.525.0.i.i = phi i64 [ %.sroa.4.1.i, %bb.ct ], [ %.sroa.036.0.i.i, %6 ] ; 2 uses
-  %.sroa.023.0.i.i = phi i64 [ %spec.select.i.i, %bb.ct ], [ %.sroa.9.0.i.i, %6 ] ; 2 uses
+.loopexit290.i.i:                                 ; preds = %.loopexit.i.i, %bb.cu, %bb.ct
+  %.sroa.525.0.i.i = phi i64 [ %.sroa.4.1.i, %bb.ct ], [ %i.py, %bb.cu ], [ %.sroa.4.1.i, %.loopexit.i.i ] ; 2 uses
+  %.sroa.023.0.i.i = phi i64 [ %spec.select.i.i, %bb.ct ], [ %.sroa.9.0.i.i, %bb.cu ], [ %.sroa.9.0.i.i, %.loopexit.i.i ] ; 2 uses
   %i.pz = icmp ult i64 %.sroa.023.0.i.i, %.sroa.038.0.ph392.i.i
   br i1 %i.pz, label %bb.cx, label %bb.cv
-
-6:                                                ; preds = %bb.cu, %.loopexit.i.i
-  %.sroa.036.0.i.i = phi i64 [ %i.py, %bb.cu ], [ %.sroa.4.1.i, %.loopexit.i.i ] ; 2 uses
-  %.not110.i.i = icmp ugt i64 %.sroa.036.0.i.i, %.sroa.9.0.i.i
-  br i1 %.not110.i.i, label %.loopexit290.i.i, label %bb.cz
 
 bb.cv:                                            ; preds = %.loopexit290.i.i
   %i.qa = load i64, ptr %i.hj, align 8, !alias.scope !819, !noalias !783, !noundef !5 ; 3 uses
@@ -475,7 +472,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs6xJwbBeREfY_5regex5regex6string8
   %i.qi = trunc nuw i8 %i.qh to i1
   br i1 %i.qi, label %.outer._crit_edge.i.i, label %.lr.ph391.i.i
 
-bb.cz:                                            ; preds = %6, %bb.cs, %.loopexit.i.i
+bb.cz:                                            ; preds = %bb.cs, %.loopexit.i.i
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs3gSIjo26Km0_14regex_automata4util8captures8CapturesECs3Kwrwkha1e5_13pingora_proxy(ptr noalias nofree noundef align 8 dereferenceable(40) %.sroa.5.0..sroa_idx.i.i)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs6xJwbBeREfY_5regex5regex6string8CapturesECs3Kwrwkha1e5_13pingora_proxy.exit196.i.i unwind label %.thread244.loopexit.split-lp.loopexit.loopexit.i.i, !noalias !784
 

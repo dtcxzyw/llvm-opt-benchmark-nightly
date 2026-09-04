@@ -205,14 +205,14 @@ MoveToFrontTransform.exit:                        ; preds = %MoveToFront.exit.i,
   br label %.preheader78.i
 
 .preheader78.i:                                   ; preds = %.critedge2.i, %MoveToFrontTransform.exit
-  %.088.i = phi i32 [ 0, %MoveToFrontTransform.exit ], [ %.068.lcssa.i, %.critedge2.i ] ; 3 uses
-  %.06487.i = phi i64 [ 0, %MoveToFrontTransform.exit ], [ %.2.lcssa.i, %.critedge2.i ] ; 2 uses
+  %.088.i = phi i32 [ 0, %MoveToFrontTransform.exit ], [ %10, %.critedge2.i ] ; 4 uses
+  %.06487.i = phi i64 [ 0, %MoveToFrontTransform.exit ], [ %.282.i, %.critedge2.i ] ; 2 uses
   %i.cj = add nuw i64 %.06487.i, 1
   %umax.i = tail call i64 @llvm.umax.i64(i64 range(i64 1, 0) %3, i64 %i.cj)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %.preheader78.i
-  %.180.i = phi i64 [ %.06487.i, %.preheader78.i ], [ %i.cm, %bb.e ] ; 6 uses
+  %.180.i = phi i64 [ %.06487.i, %.preheader78.i ], [ %i.cm, %bb.e ] ; 5 uses
   %i.ck = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %.180.i
   %i.cl = load i32, ptr %i.ck, align 4, !tbaa !14, !alias.scope !518, !noalias !519
   %.not75.i = icmp eq i32 %i.cl, 0
@@ -225,20 +225,15 @@ bb.e:                                             ; preds = %bb.d
 
 .critedge.i:                                      ; preds = %bb.d
   %i.cn = icmp ult i64 %.180.i, %3
-  br i1 %i.cn, label %.lr.ph.preheader.i, label %.critedge2.i
+  br i1 %i.cn, label %.lr.ph.i64, label %.critedge2.thread.i
 
-.lr.ph.preheader.i:                               ; preds = %.critedge.i
-  %8 = trunc i64 %.180.i to i32
-  %9 = sub i32 %i.ci, %8
-  br label %.lr.ph.i64
-
-.lr.ph.i64:                                       ; preds = %bb.f, %.lr.ph.preheader.i
-  %.282.i = phi i64 [ %i.cs, %bb.f ], [ %.180.i, %.lr.ph.preheader.i ] ; 3 uses
-  %.06881.i = phi i32 [ %i.cr, %bb.f ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
+.lr.ph.i64:                                       ; preds = %.critedge.i, %bb.f
+  %.282.i = phi i64 [ %i.cs, %bb.f ], [ %.180.i, %.critedge.i ] ; 3 uses
+  %.06881.i = phi i32 [ %i.cr, %bb.f ], [ 0, %.critedge.i ] ; 2 uses
   %i.co = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %.282.i
   %i.cp = load i32, ptr %i.co, align 4, !tbaa !14, !alias.scope !518, !noalias !519
   %i.cq = icmp eq i32 %i.cp, 0
-  br i1 %i.cq, label %bb.f, label %.critedge2.loopexit.i
+  br i1 %i.cq, label %bb.f, label %.critedge2.i
 
 bb.f:                                             ; preds = %.lr.ph.i64
   %i.cr = add i32 %.06881.i, 1
@@ -246,22 +241,20 @@ bb.f:                                             ; preds = %.lr.ph.i64
   %exitcond101.not.i = icmp eq i64 %i.cs, %3
   br i1 %exitcond101.not.i, label %.critedge2.loopexit.i, label %.lr.ph.i64, !llvm.loop !487
 
-.critedge2.loopexit.i:                            ; preds = %bb.f, %.lr.ph.i64
-  %.068.lcssa.ph.i = phi i32 [ %.06881.i, %.lr.ph.i64 ], [ %9, %bb.f ]
-  %.2.lcssa.ph.i = phi i64 [ %.282.i, %.lr.ph.i64 ], [ %3, %bb.f ]
-  %i.ct = tail call i32 @llvm.umax.i32(i32 %.068.lcssa.ph.i, i32 %.088.i)
-  br label %.critedge2.i
+.critedge2.loopexit.i:                            ; preds = %bb.f
+  %8 = trunc i64 %.180.i to i32
+  %9 = sub i32 %i.ci, %8
+  %i.ct = tail call i32 @llvm.umax.i32(i32 %9, i32 %.088.i)
+  br label %.critedge2.thread.i
 
-.critedge2.i:                                     ; preds = %.critedge2.loopexit.i, %.critedge.i
-  %.068.lcssa.i = phi i32 [ %.088.i, %.critedge.i ], [ %i.ct, %.critedge2.loopexit.i ] ; 2 uses
-  %.2.lcssa.i = phi i64 [ %.180.i, %.critedge.i ], [ %.2.lcssa.ph.i, %.critedge2.loopexit.i ] ; 2 uses
-  %10 = icmp ult i64 %.2.lcssa.i, %3
-  br i1 %10, label %.preheader78.i, label %.critedge2.thread.i, !llvm.loop !488
+.critedge2.i:                                     ; preds = %.lr.ph.i64
+  %10 = tail call i32 @llvm.umax.i32(i32 %.06881.i, i32 %.088.i)
+  br label %.preheader78.i, !llvm.loop !488
 
-.critedge2.thread.i:                              ; preds = %.critedge2.i, %bb.e
-  %.068.lcssa111.i = phi i32 [ %.088.i, %bb.e ], [ %.068.lcssa.i, %.critedge2.i ] ; 2 uses
-  %.not.i = icmp eq i32 %.068.lcssa111.i, 0
-  %i.cu = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %.068.lcssa111.i, i1 true)
+.critedge2.thread.i:                              ; preds = %.critedge.i, %bb.e, %.critedge2.loopexit.i
+  %.068.lcssa112.i = phi i32 [ %i.ct, %.critedge2.loopexit.i ], [ %.088.i, %bb.e ], [ %.088.i, %.critedge.i ] ; 2 uses
+  %.not.i = icmp eq i32 %.068.lcssa112.i, 0
+  %i.cu = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %.068.lcssa112.i, i1 true)
   %i.cv = xor i32 %i.cu, 31
   %i.cw = tail call i32 @llvm.umin.i32(i32 range(i32 0, 32) %i.cv, i32 6)
   %i.cx = select i1 %.not.i, i32 0, i32 %i.cw

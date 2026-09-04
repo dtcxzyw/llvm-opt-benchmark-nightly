@@ -204,7 +204,7 @@ _ZNK4node16MaybeStackBufferIN2v85LocalINS1_5ValueEEELm8EEixEm.exit: ; preds = %_
   %i.ae = phi i64 [ 0, %_ZNK4node16MaybeStackBufferIN2v85LocalINS1_5ValueEEELm8EEixEm.exit.lr.ph ], [ %i.js, %bb.bv ]
   %.0389 = phi i32 [ 0, %_ZNK4node16MaybeStackBufferIN2v85LocalINS1_5ValueEEELm8EEixEm.exit.lr.ph ], [ %i.jr, %bb.bv ]
   %.sroa.0204.0388 = phi ptr [ null, %_ZNK4node16MaybeStackBufferIN2v85LocalINS1_5ValueEEELm8EEixEm.exit.lr.ph ], [ %.sroa.0204.3264, %bb.bv ] ; 20 uses
-  %.sroa.9.0387 = phi ptr [ null, %_ZNK4node16MaybeStackBufferIN2v85LocalINS1_5ValueEEELm8EEixEm.exit.lr.ph ], [ %.sroa.9.3263, %bb.bv ] ; 9 uses
+  %.sroa.9.0387 = phi ptr [ null, %_ZNK4node16MaybeStackBufferIN2v85LocalINS1_5ValueEEELm8EEixEm.exit.lr.ph ], [ %.sroa.9.3263, %bb.bv ] ; 8 uses
   %.sroa.17.0386 = phi ptr [ null, %_ZNK4node16MaybeStackBufferIN2v85LocalINS1_5ValueEEELm8EEixEm.exit.lr.ph ], [ %.sroa.17.3262, %bb.bv ] ; 13 uses
   %i.af = load ptr, ptr %i.y, align 8
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %i.ae
@@ -353,7 +353,7 @@ bb.t:                                             ; preds = %bb.o
   br i1 %i.cc, label %_ZNKSt6ranges9__find_fnclITkNS_11input_rangeERN2v811LocalVectorINS2_11ArrayBufferEEENS2_5LocalIS4_EESt8identityQ25indirect_binary_predicateINS_8equal_toENSt8__detail11__projectedIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENSt13__conditionalIX14borrowed_rangeISD_EEE4typeISF_NS_8danglingEEEOSD_RSK_SG_.exit.thread, label %.lr.ph.split.split.i.i
 
 .lr.ph.split.split.i.i:                           ; preds = %bb.t, %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_11ArrayBufferEEES5_EEbRKT_RKT0_.exit.thread.i.i
-  %.sroa.01.05.i.i = phi ptr [ %i.ci, %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_11ArrayBufferEEES5_EEbRKT_RKT0_.exit.thread.i.i ], [ %.sroa.0204.0388, %bb.t ] ; 3 uses
+  %.sroa.01.05.i.i = phi ptr [ %i.ci, %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_11ArrayBufferEEES5_EEbRKT_RKT0_.exit.thread.i.i ], [ %.sroa.0204.0388, %bb.t ] ; 2 uses
   %i.cd = load ptr, ptr %.sroa.01.05.i.i, align 8 ; 2 uses
   %i.ce = icmp eq ptr %i.cd, null
   br i1 %i.ce, label %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_11ArrayBufferEEES5_EEbRKT_RKT0_.exit.thread.i.i, label %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_11ArrayBufferEEES5_EEbRKT_RKT0_.exit.i.i
@@ -362,18 +362,14 @@ _ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_11ArrayBufferEEES5_EEbR
   %i.cf = load i64, ptr %i.cd, align 8
   %i.cg = load i64, ptr %i.ai, align 8
   %i.ch = icmp eq i64 %i.cf, %i.cg
-  br i1 %i.ch, label %_ZNKSt6ranges9__find_fnclITkNS_11input_rangeERN2v811LocalVectorINS2_11ArrayBufferEEENS2_5LocalIS4_EESt8identityQ25indirect_binary_predicateINS_8equal_toENSt8__detail11__projectedIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENSt13__conditionalIX14borrowed_rangeISD_EEE4typeISF_NS_8danglingEEEOSD_RSK_SG_.exit, label %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_11ArrayBufferEEES5_EEbRKT_RKT0_.exit.thread.i.i
+  br i1 %i.ch, label %bb.u, label %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_11ArrayBufferEEES5_EEbRKT_RKT0_.exit.thread.i.i
 
 _ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_11ArrayBufferEEES5_EEbRKT_RKT0_.exit.thread.i.i: ; preds = %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_11ArrayBufferEEES5_EEbRKT_RKT0_.exit.i.i, %.lr.ph.split.split.i.i
   %i.ci = getelementptr inbounds nuw i8, ptr %.sroa.01.05.i.i, i64 8 ; 2 uses
   %i.cj = icmp eq ptr %i.ci, %.sroa.9.0387
   br i1 %i.cj, label %_ZNKSt6ranges9__find_fnclITkNS_11input_rangeERN2v811LocalVectorINS2_11ArrayBufferEEENS2_5LocalIS4_EESt8identityQ25indirect_binary_predicateINS_8equal_toENSt8__detail11__projectedIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENSt13__conditionalIX14borrowed_rangeISD_EEE4typeISF_NS_8danglingEEEOSD_RSK_SG_.exit.thread, label %.lr.ph.split.split.i.i, !llvm.loop !81
 
-_ZNKSt6ranges9__find_fnclITkNS_11input_rangeERN2v811LocalVectorINS2_11ArrayBufferEEENS2_5LocalIS4_EESt8identityQ25indirect_binary_predicateINS_8equal_toENSt8__detail11__projectedIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENSt13__conditionalIX14borrowed_rangeISD_EEE4typeISF_NS_8danglingEEEOSD_RSK_SG_.exit: ; preds = %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_11ArrayBufferEEES5_EEbRKT_RKT0_.exit.i.i
-  %26 = icmp eq ptr %.sroa.01.05.i.i, %.sroa.9.0387
-  br i1 %26, label %_ZNKSt6ranges9__find_fnclITkNS_11input_rangeERN2v811LocalVectorINS2_11ArrayBufferEEENS2_5LocalIS4_EESt8identityQ25indirect_binary_predicateINS_8equal_toENSt8__detail11__projectedIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENSt13__conditionalIX14borrowed_rangeISD_EEE4typeISF_NS_8danglingEEEOSD_RSK_SG_.exit.thread, label %bb.u
-
-bb.u:                                             ; preds = %_ZNKSt6ranges9__find_fnclITkNS_11input_rangeERN2v811LocalVectorINS2_11ArrayBufferEEENS2_5LocalIS4_EESt8identityQ25indirect_binary_predicateINS_8equal_toENSt8__detail11__projectedIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENSt13__conditionalIX14borrowed_rangeISD_EEE4typeISF_NS_8danglingEEEOSD_RSK_SG_.exit
+bb.u:                                             ; preds = %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_11ArrayBufferEEES5_EEbRKT_RKT0_.exit.i.i
   %i.ck = load ptr, ptr %i.a, align 8
   %i.cl = call ptr @_ZN2v86String14NewFromOneByteEPNS_7IsolateEPKhNS_13NewStringTypeEi(ptr noundef %i.ck, ptr noundef nonnull @.str.16, i32 noundef 1, i32 noundef 44) #29 ; 2 uses
   %i.cm = icmp eq ptr %i.cl, null
@@ -417,7 +413,7 @@ _ZN4node6worker12_GLOBAL__N_123ThrowDataCloneExceptionEN2v85LocalINS2_7ContextEE
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #29
   br label %_ZN4node17BaseObjectPtrImplINS_10BaseObjectELb0EED2Ev.exit127.thread.thread
 
-_ZNKSt6ranges9__find_fnclITkNS_11input_rangeERN2v811LocalVectorINS2_11ArrayBufferEEENS2_5LocalIS4_EESt8identityQ25indirect_binary_predicateINS_8equal_toENSt8__detail11__projectedIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENSt13__conditionalIX14borrowed_rangeISD_EEE4typeISF_NS_8danglingEEEOSD_RSK_SG_.exit.thread: ; preds = %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_11ArrayBufferEEES5_EEbRKT_RKT0_.exit.thread.i.i, %bb.t, %_ZNKSt6ranges9__find_fnclITkNS_11input_rangeERN2v811LocalVectorINS2_11ArrayBufferEEENS2_5LocalIS4_EESt8identityQ25indirect_binary_predicateINS_8equal_toENSt8__detail11__projectedIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENSt13__conditionalIX14borrowed_rangeISD_EEE4typeISF_NS_8danglingEEEOSD_RSK_SG_.exit
+_ZNKSt6ranges9__find_fnclITkNS_11input_rangeERN2v811LocalVectorINS2_11ArrayBufferEEENS2_5LocalIS4_EESt8identityQ25indirect_binary_predicateINS_8equal_toENSt8__detail11__projectedIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENSt13__conditionalIX14borrowed_rangeISD_EEE4typeISF_NS_8danglingEEEOSD_RSK_SG_.exit.thread: ; preds = %_ZN2v88internal12HandleHelper12EqualHandlesINS_5LocalINS_11ArrayBufferEEES5_EEbRKT_RKT0_.exit.thread.i.i, %bb.t
   %i.cw = ptrtoint ptr %.sroa.9.0387 to i64       ; 2 uses
   %i.cx = ptrtoint ptr %.sroa.0204.0388 to i64    ; 3 uses
   %i.cy = sub i64 %i.cw, %i.cx                    ; 4 uses

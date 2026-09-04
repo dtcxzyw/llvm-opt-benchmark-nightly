@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %bb.p, %bb.a
   %.02855.i = phi i32 [ 1, %bb.a ], [ %.350.i, %bb.p ] ; 4 uses
   %.03154.i = phi i32 [ 0, %bb.a ], [ %i.aj, %bb.p ] ; 3 uses
   %.03253.i = phi i64 [ %spec.select, %bb.a ], [ %.13349.i, %bb.p ] ; 7 uses
-  %.03452.i = phi ptr [ %i.d, %bb.a ], [ %.337.i, %bb.p ] ; 6 uses
+  %.03452.i = phi ptr [ %i.d, %bb.a ], [ %.337.i, %bb.p ] ; 8 uses
   %i.g = icmp ne i64 %.03253.i, 0
   %i.h = icmp slt i32 %.03154.i, %.02855.i
   %i.i = select i1 %i.g, i1 true, i1 %i.h
@@ -312,23 +312,21 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m,
   %.13349.i = phi i64 [ %.133.i, %bb.m ], [ 0, %bb.o ], [ %.133.i, %bb.n ], [ %.133.i, %bb.k ], [ %.133.ph.i, %.thread.i ]
   %.337.i = phi ptr [ %i.af, %bb.m ], [ %i.ah, %bb.o ], [ %.236.i, %bb.n ], [ %.236.i, %bb.k ], [ %.236.ph.i, %.thread.i ] ; 3 uses
   %i.ak = icmp ugt ptr %.337.i, %i.a
-  br i1 %i.ak, label %bb.b, label %png_format_number.exit, !llvm.loop !1
+  br i1 %i.ak, label %bb.b, label %bb.r, !llvm.loop !1
 
-png_format_number.exit:                           ; preds = %bb.b, %bb.p
-  %4 = phi i8 [ %i.f, %bb.b ], [ %i.ai, %bb.p ]
-  %.034.lcssa.i = phi ptr [ %.03452.i, %bb.b ], [ %.337.i, %bb.p ] ; 3 uses
-  %i.al = icmp ugt ptr %.034.lcssa.i, %i.a
+png_format_number.exit:                           ; preds = %bb.b
+  %i.al = icmp ugt ptr %.03452.i, %i.a
   %or.cond = and i1 %i.b, %i.al
   br i1 %or.cond, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %png_format_number.exit
-  %i.am = getelementptr inbounds i8, ptr %.034.lcssa.i, i64 -1 ; 2 uses
+  %i.am = getelementptr inbounds i8, ptr %.03452.i, i64 -1 ; 2 uses
   store i8 45, ptr %i.am, align 1, !tbaa !29
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.q, %png_format_number.exit
-  %5 = phi i8 [ 45, %bb.q ], [ %4, %png_format_number.exit ] ; 2 uses
-  %.0 = phi ptr [ %i.am, %bb.q ], [ %.034.lcssa.i, %png_format_number.exit ]
+bb.r:                                             ; preds = %bb.p, %bb.q, %png_format_number.exit
+  %4 = phi i8 [ 45, %bb.q ], [ %i.f, %png_format_number.exit ], [ %i.ai, %bb.p ] ; 2 uses
+  %.0 = phi ptr [ %i.am, %bb.q ], [ %.03452.i, %png_format_number.exit ], [ %.337.i, %bb.p ]
   %i.an = add i32 %1, -1
   %or.cond.i14 = icmp ult i32 %i.an, 8
   br i1 %or.cond.i14, label %bb.s, label %png_warning_parameter.exit
@@ -341,11 +339,11 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not.i.not.i, label %png_warning_parameter.exit, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.s
-  %.not.i15 = icmp eq i8 %5, 0
+  %.not.i15 = icmp eq i8 %4, 0
   br i1 %.not.i15, label %.loopexit.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.preheader.i.i, %.lr.ph.i.i
-  %i.ar = phi i8 [ %i.av, %.lr.ph.i.i ], [ %5, %.preheader.i.i ]
+  %i.ar = phi i8 [ %i.av, %.lr.ph.i.i ], [ %4, %.preheader.i.i ]
   %.020.i.i = phi ptr [ %i.as, %.lr.ph.i.i ], [ %.0, %.preheader.i.i ]
   %.01219.i.i = phi i64 [ %i.at, %.lr.ph.i.i ], [ 0, %.preheader.i.i ] ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.020.i.i, i64 1 ; 2 uses

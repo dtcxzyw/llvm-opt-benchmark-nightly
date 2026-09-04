@@ -204,12 +204,11 @@ send_connect_ack.exit.thread42:                   ; preds = %construct_message.e
   br i1 %or.cond.i35, label %bb.ao, label %bb.aq
 
 send_connect_ack.exit:                            ; preds = %construct_message.exit.thread.i, %construct_message.exit.i
-  %.0.i19.i = phi i32 [ %.0.i.ph.i, %construct_message.exit.thread.i ], [ %i.aq, %construct_message.exit.i ] ; 3 uses
+  %.0.i19.i = phi i32 [ %.0.i.ph.i, %construct_message.exit.thread.i ], [ %i.aq, %construct_message.exit.i ] ; 2 uses
   %i.hr = call ptr @PMIx_Error_string(i32 noundef %.0.i19.i) #19
   call void (i32, ptr, ...) @pmix_output(i32 noundef 0, ptr noundef nonnull @.str.30, ptr noundef %i.hr, ptr noundef nonnull @.str.31, i32 noundef 561) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #19
-  %cond = icmp eq i32 %.0.i19.i, -2
-  br i1 %cond, label %bb.am, label %send_connect_ack.exit.thread
+  br label %send_connect_ack.exit.thread
 
 send_connect_ack.exit.thread:                     ; preds = %construct_message.exit.thread20.i, %send_connect_ack.exit
   %.0.i41 = phi i32 [ %.0.i19.i, %send_connect_ack.exit ], [ -25, %construct_message.exit.thread20.i ] ; 2 uses
@@ -217,8 +216,8 @@ send_connect_ack.exit.thread:                     ; preds = %construct_message.e
   call void (i32, ptr, ...) @pmix_output(i32 noundef 0, ptr noundef nonnull @.str.30, ptr noundef %i.hs, ptr noundef nonnull @.str.31, i32 noundef 650) #19
   br label %bb.am
 
-bb.am:                                            ; preds = %send_connect_ack.exit, %send_connect_ack.exit.thread44, %send_connect_ack.exit.thread
-  %.0.i40 = phi i32 [ -2, %send_connect_ack.exit ], [ %.0.i41, %send_connect_ack.exit.thread ], [ -2, %send_connect_ack.exit.thread44 ] ; 2 uses
+bb.am:                                            ; preds = %send_connect_ack.exit.thread44, %send_connect_ack.exit.thread
+  %.0.i40 = phi i32 [ -2, %send_connect_ack.exit.thread44 ], [ %.0.i41, %send_connect_ack.exit.thread ] ; 2 uses
   %i.ht = load i32, ptr %i.h, align 4, !tbaa !101 ; 2 uses
   %i.hu = icmp sgt i32 %i.ht, -1
   br i1 %i.hu, label %bb.an, label %.loopexit

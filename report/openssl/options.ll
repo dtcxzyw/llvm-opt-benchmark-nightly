@@ -100,7 +100,7 @@ bb.a:
   %i.b = tail call i32 @opt_num_rest() #6         ; 3 uses
   %. = tail call i32 @llvm.smin.i32(i32 %i.b, i32 100) ; 2 uses
   %i.c = icmp sgt i32 %i.b, 0
-  br i1 %i.c, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.c, label %.lr.ph.preheader, label %bb.e
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %wide.trip.count = zext nneg i32 %. to i64
@@ -125,16 +125,15 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !14
 
-._crit_edge:                                      ; preds = %bb.c, %bb.a
-  %.011.lcssa = phi i32 [ 0, %bb.a ], [ %., %bb.c ] ; 2 uses
-  %0 = icmp slt i32 %.011.lcssa, %i.b
+._crit_edge:                                      ; preds = %bb.c
+  %0 = icmp sgt i32 %i.b, 100
   br i1 %0, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %._crit_edge
-  %i.k = tail call i32 (ptr, ...) @test_printf_stderr(ptr noundef nonnull @.str.3, i32 noundef %.011.lcssa) #6 ; 0 uses
+  %i.k = tail call i32 (ptr, ...) @test_printf_stderr(ptr noundef nonnull @.str.3, i32 noundef %.) #6 ; 0 uses
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %._crit_edge
+bb.e:                                             ; preds = %bb.a, %bb.d, %._crit_edge
   ret void
 }
 

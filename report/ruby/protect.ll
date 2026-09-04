@@ -34,7 +34,7 @@ bb.a:
 .preheader:                                       ; preds = %bb.a
   %i.c = load i64, ptr %1, align 8, !tbaa !11
   %.not6 = icmp eq i32 %0, 1
-  br i1 %.not6, label %3, label %bb.b
+  br i1 %.not6, label %rb_scan_args_set.exit, label %bb.b
 
 bb.b:                                             ; preds = %.preheader
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -43,19 +43,15 @@ bb.b:                                             ; preds = %.preheader
   %i.g = icmp ne i64 %i.f, 0
   %i.h = zext i1 %i.g to i32
   %i.i = icmp eq i32 %0, 2
-  br label %3
+  br i1 %i.i, label %rb_scan_args_set.exit, label %bb.c
 
-3:                                                ; preds = %.preheader, %bb.b
-  %4 = phi i32 [ %i.h, %bb.b ], [ 0, %.preheader ]
-  %.185.i.lcssa = phi i1 [ %i.i, %bb.b ], [ true, %.preheader ]
-  br i1 %.185.i.lcssa, label %rb_scan_args_set.exit, label %bb.c
-
-bb.c:                                             ; preds = %3, %bb.a
+bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @rb_error_arity(i32 noundef %0, i32 noundef 1, i32 noundef 2) #5
   unreachable
 
-rb_scan_args_set.exit:                            ; preds = %3
-  call void @rb_load_protect(i64 noundef %i.c, i32 noundef %4, ptr noundef nonnull %i.a) #4
+rb_scan_args_set.exit:                            ; preds = %.preheader, %bb.b
+  %3 = phi i32 [ %i.h, %bb.b ], [ 0, %.preheader ]
+  call void @rb_load_protect(i64 noundef %i.c, i32 noundef %3, ptr noundef nonnull %i.a) #4
   %i.j = load i32, ptr %i.a, align 4, !tbaa !9    ; 2 uses
   %.not = icmp eq i32 %i.j, 0
   br i1 %.not, label %bb.e, label %bb.d

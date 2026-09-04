@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %thread-pre-split, %bb.c
   %.028 = phi ptr [ %i.c, %bb.c ], [ %i.w, %thread-pre-split ] ; 9 uses
   %.027 = phi ptr [ %i.c, %bb.c ], [ %.1, %thread-pre-split ] ; 6 uses
-  %i.d = load i8, ptr %.028, align 1, !tbaa !12   ; 2 uses
+  %i.d = load i8, ptr %.028, align 1, !tbaa !12
   switch i8 %i.d, label %thread-pre-split [
     i8 47, label %bb.e
     i8 0, label %bb.i
@@ -253,21 +253,20 @@ bb.k:                                             ; preds = %bb.j
 .thread-pre-split_crit_edge:                      ; preds = %bb.k
   %i.v = getelementptr inbounds nuw i8, ptr %.028, i64 1
   %.pr.pre = load i8, ptr %.028, align 1, !tbaa !12
-  br label %thread-pre-split
+  %3 = icmp eq i8 %.pr.pre, 0
+  br i1 %3, label %.sink.split, label %thread-pre-split
 
-thread-pre-split:                                 ; preds = %bb.h, %bb.g, %bb.e, %.thread-pre-split_crit_edge, %bb.d
-  %3 = phi i8 [ %i.d, %bb.d ], [ %.pr.pre, %.thread-pre-split_crit_edge ], [ 47, %bb.h ], [ 47, %bb.g ], [ 47, %bb.e ]
-  %.1 = phi ptr [ %.027, %bb.d ], [ %i.v, %.thread-pre-split_crit_edge ], [ %.027, %bb.h ], [ %.027, %bb.g ], [ %.027, %bb.e ]
-  %4 = icmp eq i8 %3, 0
+thread-pre-split:                                 ; preds = %bb.e, %bb.g, %bb.h, %bb.d, %.thread-pre-split_crit_edge
+  %.1 = phi ptr [ %i.v, %.thread-pre-split_crit_edge ], [ %.027, %bb.d ], [ %.027, %bb.h ], [ %.027, %bb.g ], [ %.027, %bb.e ]
   %i.w = getelementptr inbounds nuw i8, ptr %.028, i64 1
-  br i1 %4, label %.sink.split, label %bb.d, !llvm.loop !55
+  br label %bb.d, !llvm.loop !55
 
 bb.l:                                             ; preds = %bb.k, %bb.i
   tail call void @ERR_put_error(i32 noundef 11, i32 noundef 0, i32 noundef 7, ptr noundef nonnull @.str, i32 noundef 283) #3
   br label %.sink.split
 
-.sink.split:                                      ; preds = %thread-pre-split, %bb.j, %bb.l, %bb.b
-  %.029.ph = phi i32 [ 1, %bb.b ], [ 0, %bb.l ], [ 1, %bb.j ], [ 1, %thread-pre-split ]
+.sink.split:                                      ; preds = %.thread-pre-split_crit_edge, %bb.j, %bb.l, %bb.b
+  %.029.ph = phi i32 [ 1, %bb.b ], [ 0, %bb.l ], [ 1, %bb.j ], [ 1, %.thread-pre-split_crit_edge ]
   tail call void @OPENSSL_free(ptr noundef nonnull %i.a) #3
   br label %bb.m
 

@@ -204,18 +204,20 @@ bb.ak:                                            ; preds = %.lr.ph
 bb.al:                                            ; preds = %.lr.ph
   %i.fw = add nuw i64 %.025167, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.fw, %i.fd
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !419
+  br i1 %exitcond.not, label %bb.am, label %.lr.ph, !llvm.loop !419
 
-.loopexit:                                        ; preds = %bb.al, %.critedge, %.critedge.preheader, %.preheader, %bb.aj, %bb.ak, %bb.ah
-  %18 = phi i64 [ %i.fd, %.critedge.preheader ], [ %i.fd, %bb.ah ], [ 0, %.preheader ], [ %i.fd, %bb.aj ], [ %.025167, %bb.ak ], [ %i.fd, %.critedge ], [ %i.fd, %bb.al ] ; 2 uses
-  %19 = phi i64 [ 0, %.critedge.preheader ], [ 0, %bb.ah ], [ 0, %.preheader ], [ %.026228, %bb.aj ], [ 0, %bb.ak ], [ 0, %.critedge ], [ 0, %bb.al ] ; 2 uses
+.loopexit:                                        ; preds = %.critedge, %.critedge.preheader, %.preheader, %bb.aj, %bb.ak, %bb.ah
+  %18 = phi i64 [ %.025167, %bb.ak ], [ %i.fd, %bb.ah ], [ 0, %.preheader ], [ %i.fd, %bb.aj ], [ %i.fd, %.critedge.preheader ], [ %i.fd, %.critedge ] ; 2 uses
+  %19 = phi i64 [ 0, %bb.ak ], [ 0, %bb.ah ], [ 0, %.preheader ], [ %.026228, %bb.aj ], [ 0, %.critedge.preheader ], [ 0, %.critedge ] ; 2 uses
   %i.fx = icmp ult i64 %19, %18
   br i1 %i.fx, label %bb.am, label %_ZNSt6vectorIN7rocksdb11BlockHandleESaIS1_EE6assignIN9__gnu_cxx17__normal_iteratorIPS1_S3_EEvEEvT_S9_.exit
 
-bb.am:                                            ; preds = %.loopexit
-  %.idx160 = shl nsw i64 %19, 4                   ; 3 uses
+bb.am:                                            ; preds = %bb.al, %.loopexit
+  %20 = phi i64 [ %19, %.loopexit ], [ 0, %bb.al ]
+  %21 = phi i64 [ %18, %.loopexit ], [ %i.fd, %bb.al ]
+  %.idx160 = shl nsw i64 %20, 4                   ; 3 uses
   %i.fy = getelementptr inbounds i8, ptr %i.ez, i64 %.idx160
-  %.idx = shl nsw i64 %18, 4                      ; 2 uses
+  %.idx = shl nsw i64 %21, 4                      ; 2 uses
   %gepdiff = sub nsw i64 %.idx, %.idx160          ; 4 uses
   %i.fz = icmp ugt i64 %gepdiff, 9223372036854775792
   br i1 %i.fz, label %bb.an, label %_ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE11_M_allocateEm.exit.i.i

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 BufFileFlush.exit:                                ; preds = %bb.a, %bb.b
   %.not55 = icmp eq i64 %2, 0
-  br i1 %.not55, label %BufFileLoadBuffer.exit._crit_edge, label %.lr.ph
+  br i1 %.not55, label %bb.u, label %.lr.ph
 
 .lr.ph:                                           ; preds = %BufFileFlush.exit
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
@@ -361,8 +361,8 @@ bb.p:                                             ; preds = %BufFileLoadBuffer.e
   %.not = icmp eq i64 %i.br, 0
   br i1 %.not, label %BufFileLoadBuffer.exit._crit_edge, label %bb.c, !llvm.loop !9
 
-BufFileLoadBuffer.exit._crit_edge:                ; preds = %bb.o, %bb.p, %BufFileFlush.exit
-  %.040.lcssa = phi i64 [ 0, %BufFileFlush.exit ], [ %.04058, %bb.o ], [ %i.bs, %bb.p ] ; 5 uses
+BufFileLoadBuffer.exit._crit_edge:                ; preds = %bb.o, %bb.p
+  %.040.lcssa = phi i64 [ %i.bs, %bb.p ], [ %.04058, %bb.o ] ; 5 uses
   %.not50 = xor i1 %3, true
   %.not48 = icmp eq i64 %.040.lcssa, %2
   %i.bt = icmp eq i64 %.040.lcssa, 0
@@ -391,8 +391,9 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   call void @errfinish(ptr noundef nonnull @.str.1, i32 noundef 636, ptr noundef nonnull @__func__.BufFileReadCommon) #5
   unreachable
 
-bb.u:                                             ; preds = %BufFileLoadBuffer.exit._crit_edge
-  ret i64 %.040.lcssa
+bb.u:                                             ; preds = %BufFileFlush.exit, %BufFileLoadBuffer.exit._crit_edge
+  %.040.lcssa75 = phi i64 [ %.040.lcssa, %BufFileLoadBuffer.exit._crit_edge ], [ 0, %BufFileFlush.exit ]
+  ret i64 %.040.lcssa75
 }
 
 ; Function Attrs: nounwind uwtable

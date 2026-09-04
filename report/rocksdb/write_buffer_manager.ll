@@ -204,9 +204,9 @@ bb.f:                                             ; preds = %bb.b
 
 _ZNSt11unique_lockISt5mutexED2Ev.exit13:          ; preds = %bb.c, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit, %_ZNK7rocksdb18WriteBufferManager11ShouldStallEv.exit, %_ZNK7rocksdb18WriteBufferManager11ShouldStallEv.exit.thread27, %bb.e
   %i.ad = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.g) #15 ; 0 uses
-  %i.ae = load ptr, ptr %2, align 8, !tbaa !21    ; 3 uses
+  %i.ae = load ptr, ptr %2, align 8, !tbaa !21    ; 2 uses
   %i.af = icmp eq ptr %i.ae, %2
-  br i1 %i.af, label %bb.i, label %bb.g
+  br i1 %i.af, label %_ZNSt7__cxx1110_List_baseIPN7rocksdb14StallInterfaceESaIS3_EED2Ev.exit, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt11unique_lockISt5mutexED2Ev.exit13
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
@@ -215,30 +215,26 @@ bb.g:                                             ; preds = %_ZNSt11unique_lockI
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
   %i.ak = load ptr, ptr %i.aj, align 8
   invoke void %i.ak(ptr noundef nonnull align 8 dereferenceable(8) %i.ah)
-          to label %._crit_edge unwind label %bb.h
-
-._crit_edge:                                      ; preds = %bb.g
-  %.pre = load ptr, ptr %2, align 8, !tbaa !21
-  br label %bb.i
+          to label %bb.i unwind label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.al = landingpad { ptr, i32 }
           cleanup
   br label %bb.j
 
-bb.i:                                             ; preds = %._crit_edge, %_ZNSt11unique_lockISt5mutexED2Ev.exit13
-  %3 = phi ptr [ %.pre, %._crit_edge ], [ %i.ae, %_ZNSt11unique_lockISt5mutexED2Ev.exit13 ] ; 2 uses
-  %.not8.i.i = icmp eq ptr %3, %2
+bb.i:                                             ; preds = %bb.g
+  %.pre = load ptr, ptr %2, align 8, !tbaa !21    ; 2 uses
+  %.not8.i.i = icmp eq ptr %.pre, %2
   br i1 %.not8.i.i, label %_ZNSt7__cxx1110_List_baseIPN7rocksdb14StallInterfaceESaIS3_EED2Ev.exit, label %.lr.ph.i.i14
 
 .lr.ph.i.i14:                                     ; preds = %bb.i, %.lr.ph.i.i14
-  %.09.i.i = phi ptr [ %i.am, %.lr.ph.i.i14 ], [ %3, %bb.i ] ; 2 uses
+  %.09.i.i = phi ptr [ %i.am, %.lr.ph.i.i14 ], [ %.pre, %bb.i ] ; 2 uses
   %i.am = load ptr, ptr %.09.i.i, align 8, !tbaa !21 ; 2 uses
   call void @_ZdlPvm(ptr noundef nonnull %.09.i.i, i64 noundef 24) #14
   %.not.i.i15 = icmp eq ptr %i.am, %2
   br i1 %.not.i.i15, label %_ZNSt7__cxx1110_List_baseIPN7rocksdb14StallInterfaceESaIS3_EED2Ev.exit, label %.lr.ph.i.i14, !llvm.loop !0
 
-_ZNSt7__cxx1110_List_baseIPN7rocksdb14StallInterfaceESaIS3_EED2Ev.exit: ; preds = %.lr.ph.i.i14, %bb.i
+_ZNSt7__cxx1110_List_baseIPN7rocksdb14StallInterfaceESaIS3_EED2Ev.exit: ; preds = %.lr.ph.i.i14, %_ZNSt11unique_lockISt5mutexED2Ev.exit13, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   ret void
 

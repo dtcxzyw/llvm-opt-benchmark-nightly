@@ -204,7 +204,7 @@ bb.bc:                                            ; preds = %_ZNSt7__cxx1112basi
 bb.bd:                                            ; preds = %bb.w
   %i.jt = add i64 %.0707, 2                       ; 5 uses
   %.not161 = icmp ult i64 %i.jt, %i.ak
-  br i1 %.not161, label %bb.bu, label %bb.be
+  br i1 %.not161, label %.lr.ph, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
   br i1 %.not.i368, label %_ZTW11errorstream.exit262, label %bb.bf
@@ -349,17 +349,12 @@ _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i469: ; preds = %.noexc472, %
 _ZN11StreamProxylsEPFRSoS0_E.exit280:             ; preds = %bb.bl, %.noexc474
   %i.lm = load ptr, ptr %4, align 8, !tbaa !124   ; 2 uses
   %i.ln = icmp eq ptr %i.lm, %i.aj
-  br i1 %i.ln, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit283, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i281
+  br i1 %i.ln, label %bb.bu, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i281
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i281: ; preds = %_ZN11StreamProxylsEPFRSoS0_E.exit280
   %i.lo = load i64, ptr %i.aj, align 8, !tbaa !31
   %i.lp = add i64 %i.lo, 1
   call void @_ZdlPvm(ptr noundef %i.lm, i64 noundef %i.lp) #24
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit283
-
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit283: ; preds = %_ZN11StreamProxylsEPFRSoS0_E.exit280, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i281
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
-  %.pre758 = load i64, ptr %i.t, align 8, !tbaa !53
   br label %bb.bu
 
 bb.bs:                                            ; preds = %bb.bg
@@ -394,12 +389,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit286: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   br label %bb.it
 
-bb.bu:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit283, %bb.bd
-  %11 = phi i64 [ %.pre758, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit283 ], [ %i.ak, %bb.bd ] ; 3 uses
-  %i.lv = icmp ult i64 %i.jt, %11
+bb.bu:                                            ; preds = %_ZN11StreamProxylsEPFRSoS0_E.exit280, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i281
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
+  %.pre758 = load i64, ptr %i.t, align 8, !tbaa !53 ; 2 uses
+  %i.lv = icmp ult i64 %i.jt, %.pre758
   br i1 %i.lv, label %.lr.ph, label %.critedge3.thread
 
-.lr.ph:                                           ; preds = %bb.bu
+.lr.ph:                                           ; preds = %bb.bd, %bb.bu
+  %11 = phi i64 [ %.pre758, %bb.bu ], [ %i.ak, %bb.bd ] ; 2 uses
   %i.lw = load ptr, ptr %2, align 8, !tbaa !46
   %i.lx = add i64 %11, -2
   %i.ly = sub i64 %i.lx, %.0707                   ; 2 uses

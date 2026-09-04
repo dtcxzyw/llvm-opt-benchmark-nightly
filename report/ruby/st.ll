@@ -204,13 +204,15 @@ bb.b:                                             ; preds = %st_rehash_linear.ex
   %i.x = load ptr, ptr %i.m, align 8, !tbaa !42
   %i.y = getelementptr [24 x i8], ptr %i.x, i64 %.03446.i.i ; 4 uses
   %i.z = load i64, ptr %i.y, align 8, !tbaa !50
-  %4 = icmp ne i64 %i.z, -1
+  %4 = icmp eq i64 %i.z, -1
   %.pre52.i.i = add nuw i64 %.03446.i.i, 1        ; 4 uses
-  %5 = icmp ult i64 %.pre52.i.i, %i.w
-  %or.cond.i.i = select i1 %4, i1 %5, i1 false
-  br i1 %or.cond.i.i, label %.lr.ph.i.i, label %.loopexit.i.i
+  br i1 %4, label %.loopexit.i.i, label %.preheader.i.i
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph48.i.i
+.preheader.i.i:                                   ; preds = %.lr.ph48.i.i
+  %5 = icmp ult i64 %.pre52.i.i, %i.w
+  br i1 %5, label %.lr.ph.i.i, label %st_rehash.exit
+
+.lr.ph.i.i:                                       ; preds = %.preheader.i.i
   %i.aa = getelementptr i8, ptr %i.y, i64 8
   br label %bb.c
 
@@ -507,7 +509,7 @@ bb.ab:                                            ; preds = %.critedge.i.i10.i, 
   %i.ep = icmp ult i64 %i.en, %i.eo
   br i1 %i.ep, label %.lr.ph.i4.i, label %st_rehash.exit, !llvm.loop !113
 
-st_rehash.exit:                                   ; preds = %bb.b, %bb.j, %bb.ab, %.loopexit.i.i
+st_rehash.exit:                                   ; preds = %bb.b, %bb.j, %bb.ab, %.preheader.i.i, %.loopexit.i.i
   ret void
 }
 

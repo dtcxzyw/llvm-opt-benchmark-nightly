@@ -205,17 +205,17 @@ bb.a:
   store ptr @_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE4growERNS2_6bufferIjEEm, ptr %i.f, align 8, !tbaa !214
   %i.g = load ptr, ptr %0, align 8, !tbaa !215    ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !216  ; 8 uses
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !216  ; 9 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.k = icmp eq ptr %i.g, %i.j
   br i1 %i.k, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
   store ptr %i.l, ptr %1, align 8, !tbaa !215
   store i64 %i.i, ptr %i.e, align 8, !tbaa !216
   %.not6.i.i.i = icmp eq i64 %i.b, 0
-  br i1 %.not6.i.i.i, label %_ZN3fmt3v126detail4copyIjPjS3_TnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS6_T0_vEE_EcvNS1_10has_insertIS6_SB_vEE_EEiE4typeELi0EEES6_SB_SB_S6_.exit.i.i, label %.lr.ph.i.i.i.preheader
+  br i1 %.not6.i.i.i, label %.noexc.i, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.b
   %.idx.i.i = shl i64 %i.b, 2
@@ -229,9 +229,9 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   br label %_ZN3fmt3v126detail4copyIjPjS3_TnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS6_T0_vEE_EcvNS1_10has_insertIS6_SB_vEE_EEiE4typeELi0EEES6_SB_SB_S6_.exit.i.i
 
-_ZN3fmt3v126detail4copyIjPjS3_TnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS6_T0_vEE_EcvNS1_10has_insertIS6_SB_vEE_EEiE4typeELi0EEES6_SB_SB_S6_.exit.i.i: ; preds = %.lr.ph.i.i.i.preheader, %bb.c, %bb.b
-  %2 = phi ptr [ %i.l, %.lr.ph.i.i.i.preheader ], [ %i.g, %bb.c ], [ %i.l, %bb.b ] ; 2 uses
-  %3 = phi i64 [ %i.i, %.lr.ph.i.i.i.preheader ], [ 0, %bb.c ], [ %i.i, %bb.b ] ; 2 uses
+_ZN3fmt3v126detail4copyIjPjS3_TnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS6_T0_vEE_EcvNS1_10has_insertIS6_SB_vEE_EEiE4typeELi0EEES6_SB_SB_S6_.exit.i.i: ; preds = %.lr.ph.i.i.i.preheader, %bb.c
+  %2 = phi ptr [ %i.l, %.lr.ph.i.i.i.preheader ], [ %i.g, %bb.c ] ; 2 uses
+  %3 = phi i64 [ %i.i, %.lr.ph.i.i.i.preheader ], [ 0, %bb.c ] ; 2 uses
   %i.m = icmp ugt i64 %i.b, %i.i
   br i1 %i.m, label %bb.d, label %.noexc.i
 
@@ -285,9 +285,9 @@ bb.j:                                             ; preds = %bb.h
   call void @__clang_call_terminate(ptr %i.x) #37
   unreachable
 
-.noexc.i:                                         ; preds = %_ZN3fmt3v126detail9allocatorIjE8allocateEm.exit.i, %bb.i, %_ZN3fmt3v126detail4copyIjPjS3_TnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS6_T0_vEE_EcvNS1_10has_insertIS6_SB_vEE_EEiE4typeELi0EEES6_SB_SB_S6_.exit.i.i
-  %4 = phi i64 [ %3, %_ZN3fmt3v126detail4copyIjPjS3_TnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS6_T0_vEE_EcvNS1_10has_insertIS6_SB_vEE_EEiE4typeELi0EEES6_SB_SB_S6_.exit.i.i ], [ %.pre.pre, %bb.i ], [ %3, %_ZN3fmt3v126detail9allocatorIjE8allocateEm.exit.i ] ; 2 uses
-  %5 = phi i64 [ %i.i, %_ZN3fmt3v126detail4copyIjPjS3_TnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS6_T0_vEE_EcvNS1_10has_insertIS6_SB_vEE_EEiE4typeELi0EEES6_SB_SB_S6_.exit.i.i ], [ %.pre.i.i.i.i.pre, %bb.i ], [ %.0.i, %_ZN3fmt3v126detail9allocatorIjE8allocateEm.exit.i ]
+.noexc.i:                                         ; preds = %_ZN3fmt3v126detail9allocatorIjE8allocateEm.exit.i, %bb.i, %_ZN3fmt3v126detail4copyIjPjS3_TnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS6_T0_vEE_EcvNS1_10has_insertIS6_SB_vEE_EEiE4typeELi0EEES6_SB_SB_S6_.exit.i.i, %bb.b
+  %4 = phi i64 [ %3, %_ZN3fmt3v126detail4copyIjPjS3_TnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS6_T0_vEE_EcvNS1_10has_insertIS6_SB_vEE_EEiE4typeELi0EEES6_SB_SB_S6_.exit.i.i ], [ %i.i, %bb.b ], [ %.pre.pre, %bb.i ], [ %3, %_ZN3fmt3v126detail9allocatorIjE8allocateEm.exit.i ] ; 2 uses
+  %5 = phi i64 [ %i.i, %_ZN3fmt3v126detail4copyIjPjS3_TnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS6_T0_vEE_EcvNS1_10has_insertIS6_SB_vEE_EEiE4typeELi0EEES6_SB_SB_S6_.exit.i.i ], [ %i.i, %bb.b ], [ %.pre.i.i.i.i.pre, %bb.i ], [ %.0.i, %_ZN3fmt3v126detail9allocatorIjE8allocateEm.exit.i ]
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.z = call noundef i64 @llvm.umin.i64(i64 %i.b, i64 %5)
   store i64 %i.z, ptr %i.y, align 8, !tbaa !221
@@ -690,9 +690,9 @@ bb.g:                                             ; preds = %bb.a
   br i1 %i.ai, label %bb.h, label %bb.p
 
 bb.h:                                             ; preds = %bb.g
-  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 5 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 4 uses
   %.not = icmp eq ptr %i.aj, %1
-  br i1 %.not, label %bb.m, label %bb.i
+  br i1 %.not, label %bb.p, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !72
@@ -729,8 +729,8 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
   br label %bb.m
 
-bb.m:                                             ; preds = %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit, %bb.l, %bb.h
-  %.0 = phi ptr [ %i.aj, %bb.h ], [ %i.ar, %bb.l ], [ %i.aj, %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit ] ; 3 uses
+bb.m:                                             ; preds = %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit, %bb.l
+  %.0 = phi ptr [ %i.aj, %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit ], [ %i.ar, %bb.l ] ; 3 uses
   %.not22 = icmp eq ptr %.0, %1
   br i1 %.not22, label %bb.p, label %bb.n
 
@@ -744,7 +744,7 @@ bb.o:                                             ; preds = %bb.n
   %.sroa.3.0.pre = load i32, ptr %i.a, align 4, !tbaa !240
   br label %bb.q
 
-bb.p:                                             ; preds = %bb.m, %bb.n, %bb.g
+bb.p:                                             ; preds = %bb.h, %bb.m, %bb.n, %bb.g
   call void @_ZN3fmt3v1212report_errorEPKc(ptr noundef nonnull @.str.51) #38
   unreachable
 
@@ -1147,7 +1147,7 @@ bb.a:
   %i.i = load i64, ptr %i.h, align 8, !tbaa !186  ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.i ; 2 uses
   %.not.i = icmp samesign eq i64 %i.i, 0
-  br i1 %.not.i, label %bb.d, label %bb.b
+  br i1 %.not.i, label %.critedge.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.k = load i8, ptr %i.g, align 1, !tbaa !72
@@ -1159,8 +1159,8 @@ bb.c:                                             ; preds = %bb.b
   store i32 49152, ptr %3, align 8, !tbaa !144
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
-  %.0.i = phi ptr [ %i.m, %bb.c ], [ %i.g, %bb.b ], [ %i.g, %bb.a ] ; 3 uses
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.0.i = phi ptr [ %i.m, %bb.c ], [ %i.g, %bb.b ] ; 3 uses
   %.not13.i = icmp eq ptr %.0.i, %i.j
   br i1 %.not13.i, label %.critedge.i, label %bb.e
 
@@ -1177,14 +1177,15 @@ bb.f:                                             ; preds = %bb.e
   %.pre7 = load i64, ptr %i.h, align 8, !tbaa !186
   br label %_ZN3fmt3v129formatterINS0_7weekdayEcvE5parseERNS0_13parse_contextIcEE.exit
 
-.critedge.i:                                      ; preds = %bb.d
+.critedge.i:                                      ; preds = %bb.d, %bb.a
+  %.016.i = phi ptr [ %i.j, %bb.d ], [ %i.g, %bb.a ]
   store i8 0, ptr %i.f, align 8, !tbaa !261
   br label %_ZN3fmt3v129formatterINS0_7weekdayEcvE5parseERNS0_13parse_contextIcEE.exit
 
 _ZN3fmt3v129formatterINS0_7weekdayEcvE5parseERNS0_13parse_contextIcEE.exit: ; preds = %bb.e, %bb.f, %.critedge.i
   %i.r = phi i64 [ %.pre7, %bb.f ], [ %i.i, %.critedge.i ], [ %i.i, %bb.e ]
   %i.s = phi ptr [ %.pre, %bb.f ], [ %i.g, %.critedge.i ], [ %i.g, %bb.e ] ; 2 uses
-  %i.t = phi ptr [ %i.q, %bb.f ], [ %i.j, %.critedge.i ], [ %.0.i, %bb.e ]
+  %i.t = phi ptr [ %i.q, %bb.f ], [ %.016.i, %.critedge.i ], [ %.0.i, %bb.e ]
   %i.u = ptrtoint ptr %i.t to i64
   %i.v = ptrtoint ptr %i.s to i64
   %i.w = sub i64 %i.u, %i.v                       ; 2 uses

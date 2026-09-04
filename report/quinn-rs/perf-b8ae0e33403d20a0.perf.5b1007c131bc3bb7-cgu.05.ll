@@ -90,7 +90,7 @@ bb.a:
     #dbg_value(ptr undef, !8789, !DIExpression(), !8792)
     #dbg_value(ptr undef, !8784, !DIExpression(), !8791)
   %i.b = icmp samesign eq i64 %1, 0, !dbg !9265
-  br i1 %i.b, label %_RNvXso_NtNtCskKLDkoKarTP_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs7OITKvp9Irj_4perf.exit, label %.lr.ph.i.i, !dbg !9266
+  br i1 %i.b, label %.loopexit, label %.lr.ph.i.i, !dbg !9266
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %_RNvXs8_NtNtCskKLDkoKarTP_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs7OITKvp9Irj_4perf.exit.i.i
   %i.c = phi i64 [ %i.aq, %_RNvXs8_NtNtCskKLDkoKarTP_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs7OITKvp9Irj_4perf.exit.i.i ], [ 0, %bb.a ] ; 4 uses
@@ -190,7 +190,7 @@ _RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   br label %bb.c, !dbg !9298
 
 bb.c:                                             ; preds = %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs7OITKvp9Irj_4perf.exit30.i.i.i.i.i, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs7OITKvp9Irj_4perf.exit28.i.i.i.i.i, %bb.b, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs7OITKvp9Irj_4perf.exit26.i.i.i.i.i
-  %.sroa.4.0 = phi ptr [ %i.f, %bb.b ], [ %i.ae, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs7OITKvp9Irj_4perf.exit30.i.i.i.i.i ], [ %i.u, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs7OITKvp9Irj_4perf.exit28.i.i.i.i.i ], [ %i.l, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs7OITKvp9Irj_4perf.exit26.i.i.i.i.i ], !dbg !9299 ; 6 uses
+  %.sroa.4.0 = phi ptr [ %i.f, %bb.b ], [ %i.ae, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs7OITKvp9Irj_4perf.exit30.i.i.i.i.i ], [ %i.u, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs7OITKvp9Irj_4perf.exit28.i.i.i.i.i ], [ %i.l, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs7OITKvp9Irj_4perf.exit26.i.i.i.i.i ], !dbg !9299 ; 9 uses
   %.sroa.4.0.i.ph.i.i.i.i = phi i32 [ %i.s, %bb.b ], [ %i.am, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs7OITKvp9Irj_4perf.exit30.i.i.i.i.i ], [ %i.ab, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs7OITKvp9Irj_4perf.exit28.i.i.i.i.i ], [ %i.q, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs7OITKvp9Irj_4perf.exit26.i.i.i.i.i ] ; 8 uses
     #dbg_value(ptr %.sroa.4.0, !8693, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8853)
     #dbg_value(i32 1, !8985, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !8996)
@@ -325,23 +325,20 @@ _RNvXs8_NtNtCskKLDkoKarTP_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_
   %i.bh = icmp eq ptr %.sroa.4.0, %i.a, !dbg !9265
   br i1 %i.bh, label %.loopexit, label %.lr.ph.i.i, !dbg !9266
 
-_RNvXso_NtNtCskKLDkoKarTP_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs7OITKvp9Irj_4perf.exit: ; preds = %bb.e, %_RNvXs3_NtNtCskKLDkoKarTP_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCs7OITKvp9Irj_4perf.exit.i.i.i, %bb.d, %bb.a
-  %.sroa.4.127 = phi ptr [ %0, %bb.a ], [ %.sroa.4.0, %bb.d ], [ %.sroa.4.0, %_RNvXs3_NtNtCskKLDkoKarTP_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCs7OITKvp9Irj_4perf.exit.i.i.i ], [ %.sroa.4.0, %bb.e ] ; 6 uses
-  %.sroa.18.025 = phi i64 [ 0, %bb.a ], [ %i.aq, %bb.d ], [ %i.aq, %_RNvXs3_NtNtCskKLDkoKarTP_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCs7OITKvp9Irj_4perf.exit.i.i.i ], [ %i.aq, %bb.e ] ; 3 uses
-  %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ %i.c, %bb.d ], [ %i.c, %_RNvXs3_NtNtCskKLDkoKarTP_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCs7OITKvp9Irj_4perf.exit.i.i.i ], [ %i.c, %bb.e ], !dbg !8793 ; 3 uses
-    #dbg_value(i64 %.sroa.0.0, !8818, !DIExpression(), !8822)
-    #dbg_value(i64 %.sroa.0.0, !8809, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8814)
-    #dbg_value(i64 %.sroa.0.0, !8797, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8802)
-    #dbg_value(i64 %.sroa.0.0, !8694, !DIExpression(), !8817)
-    #dbg_value(i64 %.sroa.0.0, !8691, !DIExpression(), !8816)
-    #dbg_value(i64 %.sroa.18.025, !8809, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8814)
-    #dbg_value(i64 %.sroa.18.025, !8797, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8802)
-    #dbg_value(i64 %.sroa.18.025, !8696, !DIExpression(), !8824)
-    #dbg_value(i64 %.sroa.18.025, !8695, !DIExpression(), !8817)
-    #dbg_value(i64 %.sroa.18.025, !8692, !DIExpression(), !8823)
+_RNvXso_NtNtCskKLDkoKarTP_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs7OITKvp9Irj_4perf.exit: ; preds = %bb.e, %_RNvXs3_NtNtCskKLDkoKarTP_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCs7OITKvp9Irj_4perf.exit.i.i.i, %bb.d
+    #dbg_value(i64 %i.c, !8818, !DIExpression(), !8822)
+    #dbg_value(i64 %i.c, !8809, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8814)
+    #dbg_value(i64 %i.c, !8797, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8802)
+    #dbg_value(i64 %i.c, !8694, !DIExpression(), !8817)
+    #dbg_value(i64 %i.c, !8691, !DIExpression(), !8816)
+    #dbg_value(i64 %i.aq, !8809, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8814)
+    #dbg_value(i64 %i.aq, !8797, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8802)
+    #dbg_value(i64 %i.aq, !8696, !DIExpression(), !8824)
+    #dbg_value(i64 %i.aq, !8695, !DIExpression(), !8817)
+    #dbg_value(i64 %i.aq, !8692, !DIExpression(), !8823)
     #dbg_value(ptr undef, !8769, !DIExpression(), !8772)
     #dbg_value(ptr undef, !8759, !DIExpression(), !8771)
-  %i.bi = icmp eq ptr %.sroa.4.127, %i.a, !dbg !9320
+  %i.bi = icmp eq ptr %.sroa.4.0, %i.a, !dbg !9320
   br i1 %i.bi, label %.loopexit, label %.lr.ph.i.i10, !dbg !9321
 
 .lr.ph.i.i10:                                     ; preds = %_RNvXso_NtNtCskKLDkoKarTP_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs7OITKvp9Irj_4perf.exit, %bb.t
@@ -371,7 +368,7 @@ _RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits1
     #dbg_value(ptr %i.bk, !9093, !DIExpression(), !9152)
     #dbg_value(ptr undef, !9087, !DIExpression(), !9153)
     #dbg_value(ptr poison, !9088, !DIExpression(), !9154)
-  %i.bn = icmp ne ptr %.sroa.4.127, %i.bk, !dbg !9324
+  %i.bn = icmp ne ptr %.sroa.4.0, %i.bk, !dbg !9324
   tail call void @llvm.assume(i1 %i.bn), !dbg !9325
     #dbg_value(ptr undef, !9114, !DIExpression(), !9155)
     #dbg_value(ptr %i.bk, !9128, !DIExpression(), !9150)
@@ -408,7 +405,7 @@ _RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits1
     #dbg_value(ptr %i.bo, !9093, !DIExpression(), !9175)
     #dbg_value(ptr undef, !9087, !DIExpression(), !9176)
     #dbg_value(ptr poison, !9088, !DIExpression(), !9177)
-  %i.bu = icmp ne ptr %.sroa.4.127, %i.bo, !dbg !9333
+  %i.bu = icmp ne ptr %.sroa.4.0, %i.bo, !dbg !9333
   tail call void @llvm.assume(i1 %i.bu), !dbg !9334
     #dbg_value(ptr undef, !9114, !DIExpression(), !9178)
     #dbg_value(ptr %i.bo, !9128, !DIExpression(), !9173)
@@ -456,7 +453,7 @@ _RNvXs2K_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits1
     #dbg_value(ptr %i.bv, !9093, !DIExpression(), !9187)
     #dbg_value(ptr undef, !9087, !DIExpression(), !9188)
     #dbg_value(ptr poison, !9088, !DIExpression(), !9189)
-  %i.cf = icmp ne ptr %.sroa.4.127, %i.bv, !dbg !9343
+  %i.cf = icmp ne ptr %.sroa.4.0, %i.bv, !dbg !9343
   tail call void @llvm.assume(i1 %i.cf), !dbg !9344
     #dbg_value(ptr undef, !9114, !DIExpression(), !9190)
     #dbg_value(ptr %i.bv, !9128, !DIExpression(), !9185)
@@ -511,10 +508,10 @@ bb.m:                                             ; preds = %bb.k, %bb.j
   %i.cu = icmp samesign ult i32 %.sroa.4.1.i.ph.i.i.i.i, 1114112, !dbg !9355
   tail call void @llvm.assume(i1 %i.cu), !dbg !9355
     #dbg_value(ptr undef, !8938, !DIExpression(), !9216)
-    #dbg_value(!DIArgList(i64 %.sroa.18.025, ptr %i.ct, ptr %.sroa.4.127), !8738, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_minus, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value), !9240)
+    #dbg_value(!DIArgList(i64 %i.aq, ptr %i.ct, ptr %.sroa.4.0), !8738, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_minus, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value), !9240)
     #dbg_value(i32 %.sroa.4.1.i.ph.i.i.i.i, !8739, !DIExpression(), !9240)
     #dbg_value(ptr undef, !8938, !DIExpression(), !9241)
-    #dbg_value(!DIArgList(ptr %i.ct, ptr %.sroa.4.127), !8740, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_minus, DW_OP_stack_value), !9242)
+    #dbg_value(!DIArgList(ptr %i.ct, ptr %.sroa.4.0), !8740, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_minus, DW_OP_stack_value), !9242)
     #dbg_value(!DIArgList(ptr %i.bj, ptr %i.ct), !8741, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_minus, DW_OP_stack_value), !9243)
     #dbg_value(ptr poison, !9034, !DIExpression(), !9244)
     #dbg_value(i32 %.sroa.4.1.i.ph.i.i.i.i, !9038, !DIExpression(), !9244)
@@ -578,7 +575,7 @@ bb.t:                                             ; preds = %_RNvXs3_NtNtCskKLDk
     #dbg_value(ptr undef, !8719, !DIExpression(), !8743)
     #dbg_value(ptr undef, !8736, !DIExpression(), !9249)
     #dbg_value(ptr undef, !8938, !DIExpression(), !9250)
-    #dbg_value(!DIArgList(ptr %i.ct, ptr %.sroa.4.127), !8737, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_minus, DW_OP_stack_value), !9251)
+    #dbg_value(!DIArgList(ptr %i.ct, ptr %.sroa.4.0), !8737, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_minus, DW_OP_stack_value), !9251)
     #dbg_value(ptr undef, !9111, !DIExpression(), !9252)
     #dbg_declare(ptr poison, !9200, !DIExpression(), !9253)
     #dbg_value(ptr undef, !9108, !DIExpression(), !9254)
@@ -595,13 +592,13 @@ bb.t:                                             ; preds = %_RNvXs3_NtNtCskKLDk
     #dbg_value(ptr %i.ct, !9093, !DIExpression(), !9259)
     #dbg_value(ptr undef, !9087, !DIExpression(), !9260)
     #dbg_value(ptr poison, !9088, !DIExpression(), !9261)
-  %i.dl = icmp eq ptr %.sroa.4.127, %i.ct, !dbg !9320
+  %i.dl = icmp eq ptr %.sroa.4.0, %i.ct, !dbg !9320
   br i1 %i.dl, label %.loopexit, label %.lr.ph.i.i10, !dbg !9321
 
 bb.u:                                             ; preds = %_RNvXs3_NtNtCskKLDkoKarTP_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCs7OITKvp9Irj_4perf.exit.i.i.i12, %bb.o, %bb.n
   %i.dm = ptrtoint ptr %i.bj to i64
-  %i.dn = ptrtoint ptr %.sroa.4.127 to i64
-  %i.do = sub i64 %.sroa.18.025, %i.dn
+  %i.dn = ptrtoint ptr %.sroa.4.0 to i64
+  %i.do = sub i64 %i.aq, %i.dn
   %i.dp = add i64 %i.do, %i.dm, !dbg !9243
     #dbg_value(i64 %i.dp, !8692, !DIExpression(), !8823)
     #dbg_value(i64 %i.dp, !8695, !DIExpression(), !8817)
@@ -610,9 +607,9 @@ bb.u:                                             ; preds = %_RNvXs3_NtNtCskKLDk
     #dbg_value(i64 %i.dp, !8809, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8814)
   br label %.loopexit, !dbg !9372
 
-.loopexit:                                        ; preds = %_RNvXs8_NtNtCskKLDkoKarTP_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs7OITKvp9Irj_4perf.exit.i.i, %bb.t, %_RNvXso_NtNtCskKLDkoKarTP_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs7OITKvp9Irj_4perf.exit, %bb.u
-  %.sroa.0.048 = phi i64 [ %.sroa.0.0, %bb.u ], [ %.sroa.0.0, %_RNvXso_NtNtCskKLDkoKarTP_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs7OITKvp9Irj_4perf.exit ], [ %.sroa.0.0, %bb.t ], [ 0, %_RNvXs8_NtNtCskKLDkoKarTP_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs7OITKvp9Irj_4perf.exit.i.i ] ; 2 uses
-  %.sroa.02.1 = phi i64 [ %i.dp, %bb.u ], [ %.sroa.18.025, %_RNvXso_NtNtCskKLDkoKarTP_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs7OITKvp9Irj_4perf.exit ], [ %.sroa.18.025, %bb.t ], [ 0, %_RNvXs8_NtNtCskKLDkoKarTP_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs7OITKvp9Irj_4perf.exit.i.i ], !dbg !8853
+.loopexit:                                        ; preds = %_RNvXs8_NtNtCskKLDkoKarTP_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs7OITKvp9Irj_4perf.exit.i.i, %bb.t, %bb.a, %_RNvXso_NtNtCskKLDkoKarTP_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs7OITKvp9Irj_4perf.exit, %bb.u
+  %.sroa.0.03540 = phi i64 [ %i.c, %bb.u ], [ %i.c, %_RNvXso_NtNtCskKLDkoKarTP_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs7OITKvp9Irj_4perf.exit ], [ 0, %bb.a ], [ %i.c, %bb.t ], [ 0, %_RNvXs8_NtNtCskKLDkoKarTP_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs7OITKvp9Irj_4perf.exit.i.i ] ; 2 uses
+  %.sroa.02.1 = phi i64 [ %i.dp, %bb.u ], [ %i.aq, %_RNvXso_NtNtCskKLDkoKarTP_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs7OITKvp9Irj_4perf.exit ], [ 0, %bb.a ], [ %i.aq, %bb.t ], [ 0, %_RNvXs8_NtNtCskKLDkoKarTP_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs7OITKvp9Irj_4perf.exit.i.i ], !dbg !8853
     #dbg_value(i64 %.sroa.02.1, !8809, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8814)
     #dbg_value(i64 %.sroa.02.1, !8797, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8802)
     #dbg_value(i64 %.sroa.02.1, !8696, !DIExpression(), !8824)
@@ -620,10 +617,10 @@ bb.u:                                             ; preds = %_RNvXs3_NtNtCskKLDk
     #dbg_value(i64 %.sroa.02.1, !8692, !DIExpression(), !8823)
     #dbg_value(ptr %0, !8810, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9262)
     #dbg_value(i64 %1, !8810, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9262)
-  %i.dq = sub nuw i64 %.sroa.02.1, %.sroa.0.048, !dbg !9373
+  %i.dq = sub nuw i64 %.sroa.02.1, %.sroa.0.03540, !dbg !9373
     #dbg_value(i64 %i.dq, !8811, !DIExpression(), !9263)
     #dbg_value(ptr %0, !8819, !DIExpression(), !8822)
-  %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.048, !dbg !9374
+  %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.03540, !dbg !9374
   %i.ds = insertvalue { ptr, i64 } poison, ptr %i.dr, 0, !dbg !9375
   %i.dt = insertvalue { ptr, i64 } %i.ds, i64 %i.dq, 1, !dbg !9375
   ret { ptr, i64 } %i.dt, !dbg !9375

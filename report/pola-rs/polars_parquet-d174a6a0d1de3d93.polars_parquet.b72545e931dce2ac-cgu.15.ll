@@ -205,7 +205,7 @@ bb.a:
   %i.ag = alloca [12 x i8], align 4               ; 6 uses
   %i.ah = alloca [32 x i8], align 8               ; 8 uses
   %i.ai = alloca [24 x i8], align 8               ; 9 uses
-  %i.aj = alloca [32 x i8], align 8               ; 7 uses
+  %i.aj = alloca [32 x i8], align 8               ; 8 uses
   %i.ak = alloca [32 x i8], align 8               ; 6 uses
   %i.al = alloca [32 x i8], align 8               ; 5 uses
   %.sroa.674.i = alloca [24 x i8], align 8        ; 6 uses
@@ -608,7 +608,7 @@ bb.ev:                                            ; preds = %bb.ex, %bb.ew, %bb.
   br label %bb.ez, !dbg !27065
 
 bb.ew:                                            ; preds = %bb.dz
-  %i.wg = add nuw nsw i64 %i.va, 1, !dbg !27066   ; 6 uses
+  %i.wg = add nuw nsw i64 %i.va, 1, !dbg !27066   ; 5 uses
   store i64 %i.wg, ptr %i.bh, align 8, !dbg !27066, !noalias !26407
   %i.wh = load ptr, ptr %i.bo, align 8, !dbg !27067, !noalias !26407, !nonnull !1321, !noundef !1321 ; 2 uses
   %i.wi = getelementptr inbounds nuw [16 x i8], ptr %i.wh, i64 %i.va, !dbg !27068 ; 2 uses
@@ -625,15 +625,19 @@ bb.ex:                                            ; preds = %bb.ew
 
 bb.ey:                                            ; preds = %bb.ex
   %i.wo = icmp samesign ult i64 %i.wg, %i.uz, !dbg !27073
-  br i1 %i.wo, label %bb.fa, label %bb.ez, !dbg !27073
+  br i1 %i.wo, label %bb.fa, label %.thread.i, !dbg !27073
 
-bb.ez:                                            ; preds = %bb.fa, %bb.ey, %bb.ev
-  %2 = phi i64 [ %i.wf, %bb.ev ], [ %i.wq, %bb.fa ], [ %i.wg, %bb.ey ], !dbg !27074 ; 3 uses
-  %.sroa.581.0.i = phi i32 [ undef, %bb.ev ], [ %.sroa.5175.0.extract.trunc.i, %bb.fa ], [ undef, %bb.ey ], !dbg !27075
-  %.sroa.080.0.i = phi i32 [ 0, %bb.ev ], [ %..i, %bb.fa ], [ 0, %bb.ey ], !dbg !27075
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.aj), !dbg !27076, !noalias !26407
-  %i.wp = icmp ult i64 %2, %i.uz, !dbg !27074
-  br i1 %i.wp, label %bb.fb, label %.split.i223.i, !dbg !27074
+.thread.i:                                        ; preds = %bb.ey
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.aj), !dbg !27074, !noalias !26407
+  br label %.split.i223.i, !dbg !27075
+
+bb.ez:                                            ; preds = %bb.fa, %bb.ev
+  %2 = phi i64 [ %i.wf, %bb.ev ], [ %i.wq, %bb.fa ], !dbg !27075 ; 3 uses
+  %.sroa.581.0.i = phi i32 [ undef, %bb.ev ], [ %.sroa.5175.0.extract.trunc.i, %bb.fa ], !dbg !27076
+  %.sroa.080.0.i = phi i32 [ 0, %bb.ev ], [ %..i, %bb.fa ], !dbg !27076
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.aj), !dbg !27074, !noalias !26407
+  %i.wp = icmp ult i64 %2, %i.uz, !dbg !27075
+  br i1 %i.wp, label %bb.fb, label %.split.i223.i, !dbg !27075
 
 bb.fa:                                            ; preds = %bb.ey
   %i.wq = add nuw nsw i64 %i.va, 2, !dbg !27077   ; 2 uses
@@ -658,15 +662,15 @@ bb.fb:                                            ; preds = %bb.ez
   %i.xa = load ptr, ptr %i.wz, align 8, !dbg !27087, !noalias !26407, !nonnull !1321, !noundef !1321 ; 2 uses
   %i.xb = getelementptr inbounds nuw i8, ptr %i.wz, i64 8, !dbg !27087
   %i.xc = load i64, ptr %i.xb, align 8, !dbg !27087, !noalias !26407, !noundef !1321 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !26496), !dbg !27076
-  call void @llvm.experimental.noalias.scope.decl(metadata !26497), !dbg !27076
+  call void @llvm.experimental.noalias.scope.decl(metadata !26496), !dbg !27074
+  call void @llvm.experimental.noalias.scope.decl(metadata !26497), !dbg !27074
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !26407
   store ptr @115, ptr %i.u, align 8, !noalias !26498
   store i64 1, ptr %i.de, align 8, !noalias !26498
   %i.xd = icmp eq i64 %i.xc, 1, !dbg !27088
   br i1 %i.xd, label %bb.fc, label %.split25.i218.i, !dbg !27088
 
-.split.i223.i:                                    ; preds = %bb.ez
+.split.i223.i:                                    ; preds = %bb.ez, %.thread.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !26407
   store ptr @115, ptr %i.u, align 8, !noalias !26499
   store i64 1, ptr %i.de, align 8, !noalias !26499
@@ -1069,9 +1073,9 @@ begin_hunk_2_@llvm.smax.i64
 !27071 = !DILocation(line: 158, column: 13, scope: !26104, inlinedAt: !26105)
 !27072 = !DILocation(line: 462, column: 30, scope: !26025, inlinedAt: !25851)
 !27073 = !DILocation(line: 230, column: 12, scope: !25852, inlinedAt: !26106)
-!27074 = !DILocation(line: 230, column: 12, scope: !25852, inlinedAt: !26108)
-!27075 = !DILocation(line: 0, scope: !26024, inlinedAt: !25851)
-!27076 = !DILocation(line: 468, column: 9, scope: !26107, inlinedAt: !25851)
+!27074 = !DILocation(line: 468, column: 9, scope: !26107, inlinedAt: !25851)
+!27075 = !DILocation(line: 230, column: 12, scope: !25852, inlinedAt: !26108)
+!27076 = !DILocation(line: 0, scope: !26024, inlinedAt: !25851)
 !27077 = !DILocation(line: 231, column: 13, scope: !25852, inlinedAt: !26106)
 !27078 = !DILocation(line: 272, column: 9, scope: !25874, inlinedAt: !26111)
 !27079 = !DILocation(line: 232, column: 18, scope: !25852, inlinedAt: !26106)

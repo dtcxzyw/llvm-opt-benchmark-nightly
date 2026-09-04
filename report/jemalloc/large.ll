@@ -112,12 +112,12 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.ab = icmp ugt i64 %2, 8070450532247928832
-  br i1 %i.ab, label %sz_s2u.exit29, label %bb.j, !prof !15
+  br i1 %i.ab, label %sz_sa2u.exit.thread, label %bb.j, !prof !15
 
 bb.j:                                             ; preds = %bb.i
   %i.ac = load i8, ptr @je_opt_disable_large_size_classes, align 1, !tbaa !18, !range !16, !noundef !19
   %i.ad = trunc nuw i8 %i.ac to i1
-  br i1 %i.ad, label %7, label %bb.k
+  br i1 %i.ad, label %sz_s2u.exit29, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.ae = shl nuw i64 %2, 1
@@ -125,22 +125,18 @@ bb.k:                                             ; preds = %bb.j
   %i.ag = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 8193, -2305843009213693952) %i.af, i1 true) ; 2 uses
   %notmask.i33 = ashr exact i64 -1152921504606846976, %i.ag
   %i.ah = lshr i64 1152921504606846975, %i.ag
-  %5 = add nuw nsw i64 %2, %i.ah
-  %6 = and i64 %5, %notmask.i33
   br label %sz_s2u.exit29
 
-7:                                                ; preds = %bb.j
-  %8 = add nuw nsw i64 %2, 4095
-  %9 = and i64 %8, 9223372036854771712
-  br label %sz_s2u.exit29
-
-sz_s2u.exit29:                                    ; preds = %7, %bb.k, %bb.i
-  %.0.i30 = phi i64 [ %6, %bb.k ], [ %9, %7 ], [ 0, %bb.i ] ; 2 uses
-  %i.ai = icmp ult i64 %.0.i30, %2
+sz_s2u.exit29:                                    ; preds = %bb.j, %bb.k
+  %.sink69 = phi i64 [ %i.ah, %bb.k ], [ 4095, %bb.j ]
+  %.sink68 = phi i64 [ %notmask.i33, %bb.k ], [ 9223372036854771712, %bb.j ]
+  %5 = add nuw nsw i64 %2, %.sink69
+  %6 = and i64 %5, %.sink68                       ; 2 uses
+  %i.ai = icmp samesign ult i64 %6, %2
   br i1 %i.ai, label %sz_sa2u.exit.thread, label %.thread43
 
 .thread43:                                        ; preds = %bb.e, %sz_s2u.exit, %sz_s2u.exit29, %bb.h
-  %.0.i = phi i64 [ %.0.i30, %sz_s2u.exit29 ], [ 16384, %bb.h ], [ 16384, %bb.e ], [ 16384, %sz_s2u.exit ] ; 3 uses
+  %.0.i = phi i64 [ %6, %sz_s2u.exit29 ], [ 16384, %bb.h ], [ 16384, %bb.e ], [ 16384, %sz_s2u.exit ] ; 3 uses
   %i.aj = load i64, ptr @je_sz_large_pad, align 8, !tbaa !14
   %i.ak = add nuw nsw i64 %3, 4095
   %i.al = and i64 %i.ak, 9223372036854771712
@@ -454,8 +450,8 @@ arena_decay_ticks.exit:                           ; preds = %bb.ao, %ticker_geom
   %.val = load ptr, ptr %i.fc, align 8, !tbaa !89
   br label %sz_sa2u.exit.thread
 
-sz_sa2u.exit.thread:                              ; preds = %bb.d, %sz_s2u.exit29, %bb.g, %arena_choose_maybe_huge.exit, %arena_choose_maybe_huge.exit.thread, %sz_sa2u.exit, %arena_decay_ticks.exit
-  %.0 = phi ptr [ %.val, %arena_decay_ticks.exit ], [ null, %sz_sa2u.exit ], [ null, %arena_choose_maybe_huge.exit.thread ], [ null, %arena_choose_maybe_huge.exit ], [ null, %bb.g ], [ null, %sz_s2u.exit29 ], [ null, %bb.d ]
+sz_sa2u.exit.thread:                              ; preds = %bb.i, %bb.d, %sz_s2u.exit29, %bb.g, %arena_choose_maybe_huge.exit, %arena_choose_maybe_huge.exit.thread, %sz_sa2u.exit, %arena_decay_ticks.exit
+  %.0 = phi ptr [ %.val, %arena_decay_ticks.exit ], [ null, %sz_sa2u.exit ], [ null, %arena_choose_maybe_huge.exit.thread ], [ null, %arena_choose_maybe_huge.exit ], [ null, %bb.g ], [ null, %sz_s2u.exit29 ], [ null, %bb.d ], [ null, %bb.i ]
   ret ptr %.0
 }
 

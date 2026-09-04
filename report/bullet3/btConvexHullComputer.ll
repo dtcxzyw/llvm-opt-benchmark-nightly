@@ -205,7 +205,7 @@ bb.a:
   br label %tailrecurse
 
 tailrecurse:                                      ; preds = %bb.n, %bb.a
-  %.tr41 = phi i32 [ %2, %bb.a ], [ %.230, %bb.n ] ; 4 uses
+  %.tr41 = phi i32 [ %2, %bb.a ], [ %.2, %bb.n ]  ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !95
   %i.c = add nsw i32 %.tr41, %3
   %i.d = sdiv i32 %i.c, 2
@@ -218,9 +218,9 @@ tailrecurse:                                      ; preds = %bb.n, %bb.a
   %.sroa.7.0.copyload = load i32, ptr %.sroa.7.0..sroa_idx, align 4, !tbaa !80 ; 2 uses
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.l, %tailrecurse
-  %.028 = phi i32 [ %.tr41, %tailrecurse ], [ %.230, %bb.l ]
-  %.0 = phi i32 [ %3, %tailrecurse ], [ %.2, %bb.l ]
+bb.b:                                             ; preds = %bb.k, %tailrecurse
+  %.028 = phi i32 [ %.tr41, %tailrecurse ], [ %i.aj, %bb.k ]
+  %.0 = phi i32 [ %3, %tailrecurse ], [ %i.ak, %bb.k ]
   %i.g = load ptr, ptr %i.a, align 8, !tbaa !95   ; 2 uses
   %i.h = sext i32 %.028 to i64
   br label %bb.c
@@ -253,7 +253,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.s, label %_ZNK8pointCmpclERKN20btConvexHullInternal7Point32ES3_.exit.thread, label %.preheader
 
 .preheader:                                       ; preds = %.split, %bb.f, %bb.d
-  %i.t = trunc nsw i64 %indvars.iv to i32         ; 2 uses
+  %i.t = trunc nsw i64 %indvars.iv to i32         ; 3 uses
   %i.u = sext i32 %.0 to i64
   br label %bb.g
 
@@ -303,26 +303,23 @@ bb.k:                                             ; preds = %_ZNK8pointCmpclERKN
   %i.ah = load ptr, ptr %i.a, align 8, !tbaa !95
   %i.ai = getelementptr inbounds [16 x i8], ptr %i.ah, i64 %indvars.iv53
   store <4 x i32> %.sroa.0.0.copyload70, ptr %i.ai, align 4
-  %i.aj = add nsw i32 %i.t, 1
-  %i.ak = add nsw i32 %i.ag, -1
-  br label %bb.l
+  %i.aj = add nsw i32 %i.t, 1                     ; 2 uses
+  %i.ak = add nsw i32 %i.ag, -1                   ; 3 uses
+  %.not33.not = icmp sgt i32 %i.ak, %i.t
+  br i1 %.not33.not, label %bb.b, label %bb.l, !llvm.loop !307
 
 bb.l:                                             ; preds = %_ZNK8pointCmpclERKN20btConvexHullInternal7Point32ES3_.exit34.thread39, %bb.k
-  %.230 = phi i32 [ %i.aj, %bb.k ], [ %i.t, %_ZNK8pointCmpclERKN20btConvexHullInternal7Point32ES3_.exit34.thread39 ] ; 4 uses
-  %.2 = phi i32 [ %i.ak, %bb.k ], [ %i.ag, %_ZNK8pointCmpclERKN20btConvexHullInternal7Point32ES3_.exit34.thread39 ] ; 4 uses
-  %.not33 = icmp sgt i32 %.230, %.2
-  br i1 %.not33, label %4, label %bb.b, !llvm.loop !307
+  %.230 = phi i32 [ %i.ak, %bb.k ], [ %i.ag, %_ZNK8pointCmpclERKN20btConvexHullInternal7Point32ES3_.exit34.thread39 ] ; 2 uses
+  %.2 = phi i32 [ %i.aj, %bb.k ], [ %i.t, %_ZNK8pointCmpclERKN20btConvexHullInternal7Point32ES3_.exit34.thread39 ] ; 2 uses
+  %4 = icmp slt i32 %.tr41, %.230
+  br i1 %4, label %bb.m, label %bb.n
 
-4:                                                ; preds = %bb.l
-  %5 = icmp slt i32 %.tr41, %.2
-  br i1 %5, label %bb.m, label %bb.n
-
-bb.m:                                             ; preds = %4
-  tail call void @_ZN20btAlignedObjectArrayIN20btConvexHullInternal7Point32EE17quickSortInternalI8pointCmpEEvRKT_ii(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, i32 noundef %.tr41, i32 noundef %.2)
+bb.m:                                             ; preds = %bb.l
+  tail call void @_ZN20btAlignedObjectArrayIN20btConvexHullInternal7Point32EE17quickSortInternalI8pointCmpEEvRKT_ii(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, i32 noundef %.tr41, i32 noundef %.230)
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.m, %4
-  %i.al = icmp slt i32 %.230, %3
+bb.n:                                             ; preds = %bb.m, %bb.l
+  %i.al = icmp slt i32 %.2, %3
   br i1 %i.al, label %tailrecurse, label %bb.o
 
 bb.o:                                             ; preds = %bb.n

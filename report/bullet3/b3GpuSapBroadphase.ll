@@ -205,9 +205,9 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %i.f, i64 16, i1 false), !tbaa.struct !126
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.g, %bb.a
-  %.028 = phi i32 [ %2, %bb.a ], [ %.230, %bb.g ]
-  %.0 = phi i32 [ %3, %bb.a ], [ %.2, %bb.g ]
+bb.b:                                             ; preds = %bb.f, %bb.a
+  %.028 = phi i32 [ %2, %bb.a ], [ %i.v, %bb.f ]
+  %.0 = phi i32 [ %3, %bb.a ], [ %i.w, %bb.f ]
   %i.g = sext i32 %.028 to i64
   br label %bb.c
 
@@ -232,7 +232,7 @@ bb.d:                                             ; preds = %bb.d, %.preheader
   br i1 %i.n, label %bb.d, label %bb.e, !llvm.loop !263
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = trunc nsw i64 %indvars.iv to i32         ; 2 uses
+  %i.o = trunc nsw i64 %indvars.iv to i32         ; 3 uses
   %i.p = trunc nsw i64 %indvars.iv37 to i32       ; 2 uses
   %.not = icmp sgt i64 %indvars.iv, %indvars.iv37
   br i1 %.not, label %bb.g, label %bb.f
@@ -246,30 +246,27 @@ bb.f:                                             ; preds = %bb.e
   %i.t = load ptr, ptr %i.a, align 8, !tbaa !122
   %i.u = getelementptr inbounds [16 x i8], ptr %i.t, i64 %indvars.iv37
   store <4 x i32> %.sroa.0.i.sroa.0.0.copyload, ptr %i.u, align 16, !tbaa !116
-  %i.v = add nsw i32 %i.o, 1
-  %i.w = add nsw i32 %i.p, -1
-  br label %bb.g
+  %i.v = add nsw i32 %i.o, 1                      ; 2 uses
+  %i.w = add nsw i32 %i.p, -1                     ; 3 uses
+  %.not33.not = icmp sgt i32 %i.w, %i.o
+  br i1 %.not33.not, label %bb.b, label %bb.g, !llvm.loop !264
 
 bb.g:                                             ; preds = %bb.e, %bb.f
-  %.230 = phi i32 [ %i.v, %bb.f ], [ %i.o, %bb.e ] ; 4 uses
-  %.2 = phi i32 [ %i.w, %bb.f ], [ %i.p, %bb.e ]  ; 4 uses
-  %.not33 = icmp sgt i32 %.230, %.2
-  br i1 %.not33, label %5, label %bb.b, !llvm.loop !264
+  %.230 = phi i32 [ %i.w, %bb.f ], [ %i.p, %bb.e ] ; 2 uses
+  %.2 = phi i32 [ %i.v, %bb.f ], [ %i.o, %bb.e ]  ; 2 uses
+  %5 = icmp slt i32 %2, %.230
+  br i1 %5, label %bb.h, label %bb.i
 
-5:                                                ; preds = %bb.g
-  %6 = icmp slt i32 %2, %.2
-  br i1 %6, label %bb.h, label %bb.i
-
-bb.h:                                             ; preds = %5
-  call void @_ZN20b3AlignedObjectArrayI6b3Int4E17quickSortInternalIFbRKS0_S4_EEEvRKT_ii(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr noundef nonnull %1, i32 noundef %2, i32 noundef %.2)
+bb.h:                                             ; preds = %bb.g
+  call void @_ZN20b3AlignedObjectArrayI6b3Int4E17quickSortInternalIFbRKS0_S4_EEEvRKT_ii(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr noundef nonnull %1, i32 noundef %2, i32 noundef %.230)
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %5
-  %i.x = icmp slt i32 %.230, %3
+bb.i:                                             ; preds = %bb.h, %bb.g
+  %i.x = icmp slt i32 %.2, %3
   br i1 %i.x, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  call void @_ZN20b3AlignedObjectArrayI6b3Int4E17quickSortInternalIFbRKS0_S4_EEEvRKT_ii(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr noundef nonnull %1, i32 noundef %.230, i32 noundef %3)
+  call void @_ZN20b3AlignedObjectArrayI6b3Int4E17quickSortInternalIFbRKS0_S4_EEEvRKT_ii(ptr noundef nonnull align 8 dereferenceable(25) %0, ptr noundef nonnull %1, i32 noundef %.2, i32 noundef %3)
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i

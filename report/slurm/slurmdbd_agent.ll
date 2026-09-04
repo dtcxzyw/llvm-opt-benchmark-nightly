@@ -202,7 +202,7 @@ bb.t:                                             ; preds = %bb.s
 
 .thread:                                          ; preds = %_create_agent.exit, %bb.h, %bb.p
   %i.am = phi ptr [ %.pr, %bb.p ], [ %i.aa, %_create_agent.exit ], [ %i.r, %bb.h ]
-  %i.an = tail call i32 @slurm_list_count(ptr noundef nonnull %i.am) #13 ; 8 uses
+  %i.an = tail call i32 @slurm_list_count(ptr noundef nonnull %i.am) #13 ; 7 uses
   %i.ao = load i32, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 696), align 8
   %i.ap = lshr i32 %i.ao, 1
   %.not57 = icmp ult i32 %i.an, %i.ap
@@ -226,12 +226,12 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v, %bb.u, %.thread
   %.037 = phi i1 [ true, %bb.v ], [ false, %bb.u ], [ false, %.thread ] ; 2 uses
   %.b.i = load i1, ptr @max_dbd_msg_action, align 4
-  %i.ax = load i32, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 696), align 8 ; 4 uses
+  %i.ax = load i32, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 696), align 8 ; 3 uses
   br i1 %.b.i, label %bb.x, label %bb.z
 
 bb.x:                                             ; preds = %bb.w
   %i.ay = icmp ult i32 %i.an, %i.ax
-  br i1 %i.ay, label %_max_dbd_msg_action.exit, label %bb.y
+  br i1 %i.ay, label %bb.ad, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   tail call fastcc void @_save_dbd_state()
@@ -262,13 +262,13 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %.pre70 = load i32, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 696), align 8
   br label %_max_dbd_msg_action.exit
 
-_max_dbd_msg_action.exit:                         ; preds = %bb.x, %bb.z, %bb.ac
-  %2 = phi i32 [ %i.ax, %bb.x ], [ %i.ax, %bb.z ], [ %.pre70, %bb.ac ]
-  %.0 = phi i32 [ %i.an, %bb.x ], [ %i.an, %bb.z ], [ %i.bc, %bb.ac ] ; 2 uses
-  %3 = icmp uge i32 %.0, %2                       ; 3 uses
-  br i1 %3, label %bb.ae, label %bb.ad
+_max_dbd_msg_action.exit:                         ; preds = %bb.z, %bb.ac
+  %2 = phi i32 [ %.pre70, %bb.ac ], [ %i.ax, %bb.z ]
+  %.0 = phi i32 [ %i.bc, %bb.ac ], [ %i.an, %bb.z ] ; 2 uses
+  %.not87 = icmp ult i32 %.0, %2
+  br i1 %.not87, label %bb.ad, label %bb.ae
 
-bb.ad:                                            ; preds = %_max_dbd_msg_action.exit
+bb.ad:                                            ; preds = %bb.x, %_max_dbd_msg_action.exit
   %i.bf = load ptr, ptr @agent_list, align 8
   call void @slurm_list_enqueue(ptr noundef %i.bf, ptr noundef nonnull %i.l) #13
   br label %bb.af
@@ -285,6 +285,7 @@ bb.ae:                                            ; preds = %_max_dbd_msg_action
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ad, %bb.ae
+  %3 = phi i1 [ false, %bb.ad ], [ true, %bb.ae ] ; 2 uses
   %.038 = phi i32 [ 0, %bb.ad ], [ -1, %bb.ae ]   ; 2 uses
   %i.bn = call i32 @pthread_cond_broadcast(ptr noundef nonnull @agent_cond) #13 ; 2 uses
   %.not58 = icmp eq i32 %i.bn, 0

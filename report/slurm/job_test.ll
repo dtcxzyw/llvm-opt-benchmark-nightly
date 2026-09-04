@@ -202,22 +202,18 @@ _socks_per_node.exit.i69:                         ; preds = %bb.aa, %bb.z, %bb.y
   %i.es = tail call i64 @bit_ffs(ptr noundef %4) #9 ; 2 uses
   %i.et = trunc i64 %i.es to i32                  ; 2 uses
   %.not.i71 = icmp eq i32 %i.et, -1
-  br i1 %.not.i71, label %16, label %bb.ab
+  br i1 %.not.i71, label %_get_res_avail.exit, label %bb.ab
 
 bb.ab:                                            ; preds = %_socks_per_node.exit.i69
   %i.eu = tail call i64 @bit_fls(ptr noundef %4) #9
-  %i.ev = trunc i64 %i.eu to i32
-  br label %16
-
-16:                                               ; preds = %bb.ab, %_socks_per_node.exit.i69
-  %.0.i = phi i32 [ %i.ev, %bb.ab ], [ -2, %_socks_per_node.exit.i69 ] ; 2 uses
-  %.not2325.i = icmp slt i32 %.0.i, %i.et
+  %i.ev = trunc i64 %i.eu to i32                  ; 2 uses
+  %.not2325.i = icmp slt i32 %i.ev, %i.et
   br i1 %.not2325.i, label %_get_res_avail.exit, label %.lr.ph.preheader.i
 
-.lr.ph.preheader.i:                               ; preds = %16
+.lr.ph.preheader.i:                               ; preds = %bb.ab
   %sext.i = shl i64 %i.es, 32
   %i.ew = ashr exact i64 %sext.i, 32
-  %i.ex = add i32 %.0.i, 1
+  %i.ex = add i32 %i.ev, 1
   br label %.lr.ph.i72
 
 .lr.ph.i72:                                       ; preds = %bb.ad, %.lr.ph.preheader.i
@@ -239,7 +235,7 @@ bb.ad:                                            ; preds = %bb.ac, %.lr.ph.i72
   %exitcond.not.i75 = icmp eq i32 %i.ex, %lftr.wideiv.i
   br i1 %exitcond.not.i75, label %_get_res_avail.exit, label %.lr.ph.i72, !llvm.loop !48
 
-_get_res_avail.exit:                              ; preds = %bb.ad, %16
+_get_res_avail.exit:                              ; preds = %bb.ad, %_socks_per_node.exit.i69, %bb.ab
   store ptr %i.er, ptr %i.k, align 8
   %.not54 = icmp eq ptr %i.er, null
   br i1 %.not54, label %bb.at, label %bb.ae

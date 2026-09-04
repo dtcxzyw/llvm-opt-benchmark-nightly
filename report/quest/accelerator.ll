@@ -204,7 +204,7 @@ declare void @_Z48cpu_statevector_anyCtrlAnyTargZOrPhaseGadget_subILin1EEv5Qureg
 ; Function Attrs: mustprogress uwtable
 define void @_Z40accel_statevec_setQuregToWeightedSum_sub5QuregSt6vectorISt7complexIdESaIS2_EES0_IS_SaIS_EE(ptr nofree noundef readonly byval(%struct.Qureg) align 8 captures(none) %0, ptr nofree noundef readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::vector.98", align 8    ; 6 uses
+  %3 = alloca %"class.std::vector.98", align 8    ; 10 uses
   %4 = alloca %"class.std::vector.103", align 8   ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = load i32, ptr %i.a, align 4, !tbaa !16
@@ -235,52 +235,58 @@ bb.b:                                             ; preds = %.critedge44, %_ZNSt
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !27
   tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef 56) #12
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.p = load ptr, ptr %i.o, align 8, !tbaa !61   ; 3 uses
-  %i.q = load ptr, ptr %1, align 8, !tbaa !62     ; 3 uses
+  %i.p = load ptr, ptr %i.o, align 8, !tbaa !61   ; 2 uses
+  %i.q = load ptr, ptr %1, align 8, !tbaa !62     ; 2 uses
   %i.r = ptrtoint ptr %i.p to i64
   %i.s = ptrtoint ptr %i.q to i64
-  %i.t = sub i64 %i.r, %i.s                       ; 3 uses
+  %i.t = sub i64 %i.r, %i.s                       ; 4 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
   %.not.i.i.i.i = icmp eq ptr %i.p, %i.q
-  br i1 %.not.i.i.i.i, label %bb.d, label %bb.c
+  br i1 %.not.i.i.i.i, label %.thread, label %bb.c
+
+.thread:                                          ; preds = %bb.b
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr null, i64 %i.t
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  store ptr %6, ptr %7, align 8, !tbaa !63
+  br label %_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.u = icmp ugt i64 %i.t, 9223372036854775792
-  br i1 %i.u, label %.noexc.i.i, label %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i, !prof !28
+  br i1 %i.u, label %.noexc.i.i, label %bb.d, !prof !28
 
 .noexc.i.i:                                       ; preds = %bb.c
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #13
   unreachable
 
-_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.c
-  %5 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #11
-  %.pre = load ptr, ptr %1, align 8, !tbaa !46
-  %.pre105 = load ptr, ptr %i.o, align 8, !tbaa !46
-  br label %bb.d
-
-bb.d:                                             ; preds = %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i, %bb.b
-  %6 = phi ptr [ %i.p, %bb.b ], [ %.pre105, %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i ] ; 2 uses
-  %7 = phi ptr [ %i.q, %bb.b ], [ %.pre, %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i ] ; 2 uses
-  %8 = phi ptr [ null, %bb.b ], [ %5, %_ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i ] ; 4 uses
+bb.d:                                             ; preds = %bb.c
+  %8 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #11 ; 5 uses
+  %.pre = load ptr, ptr %1, align 8, !tbaa !46    ; 2 uses
+  %.pre105 = load ptr, ptr %i.o, align 8, !tbaa !46 ; 2 uses
   store ptr %8, ptr %3, align 8, !tbaa !62
-  %i.v = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.v = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
+  store ptr %8, ptr %i.v, align 8, !tbaa !61
   %i.w = getelementptr inbounds nuw i8, ptr %8, i64 %i.t
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   store ptr %i.w, ptr %i.x, align 8, !tbaa !63
-  %.not7.i.i.i.i.i = icmp eq ptr %7, %6
+  %.not7.i.i.i.i.i = icmp eq ptr %.pre, %.pre105
   br i1 %.not7.i.i.i.i.i, label %_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.d, %.lr.ph.i.i.i.i.i
   %.09.i.i.i.i.i = phi ptr [ %i.z, %.lr.ph.i.i.i.i.i ], [ %8, %bb.d ] ; 2 uses
-  %.sroa.04.08.i.i.i.i.i = phi ptr [ %i.y, %.lr.ph.i.i.i.i.i ], [ %7, %bb.d ] ; 2 uses
+  %.sroa.04.08.i.i.i.i.i = phi ptr [ %i.y, %.lr.ph.i.i.i.i.i ], [ %.pre, %bb.d ] ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.09.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.04.08.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !65
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i, i64 16 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i, i64 16 ; 2 uses
-  %.not.i.i.i.i.i = icmp eq ptr %i.y, %6
+  %.not.i.i.i.i.i = icmp eq ptr %i.y, %.pre105
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !56
 
-_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit:  ; preds = %.lr.ph.i.i.i.i.i, %bb.d
-  %.0.lcssa.i.i.i.i.i = phi ptr [ %8, %bb.d ], [ %i.z, %.lr.ph.i.i.i.i.i ]
-  store ptr %.0.lcssa.i.i.i.i.i, ptr %i.v, align 8, !tbaa !61
+_ZNSt6vectorISt7complexIdESaIS1_EEC2ERKS3_.exit:  ; preds = %.lr.ph.i.i.i.i.i, %.thread, %bb.d
+  %9 = phi ptr [ %i.x, %bb.d ], [ %7, %.thread ], [ %i.x, %.lr.ph.i.i.i.i.i ] ; 2 uses
+  %10 = phi ptr [ %i.v, %bb.d ], [ %5, %.thread ], [ %i.v, %.lr.ph.i.i.i.i.i ]
+  %.0.lcssa.i.i.i.i.i = phi ptr [ %8, %bb.d ], [ null, %.thread ], [ %i.z, %.lr.ph.i.i.i.i.i ]
+  store ptr %.0.lcssa.i.i.i.i.i, ptr %10, align 8, !tbaa !61
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !58 ; 2 uses
   %i.ac = load ptr, ptr %2, align 8, !tbaa !59    ; 3 uses
@@ -365,7 +371,7 @@ _ZNSt6vectorI5QuregSaIS0_EED2Ev.exit:             ; preds = %bb.j, %bb.k
   br i1 %.not.i.i.i62, label %_ZNSt6vectorISt7complexIdESaIS1_EED2Ev.exit, label %bb.l
 
 bb.l:                                             ; preds = %_ZNSt6vectorI5QuregSaIS0_EED2Ev.exit
-  %i.ay = load ptr, ptr %i.x, align 8, !tbaa !63
+  %i.ay = load ptr, ptr %9, align 8, !tbaa !63
   %i.az = ptrtoint ptr %i.ay to i64
   %i.ba = ptrtoint ptr %i.ax to i64
   %i.bb = sub i64 %i.az, %i.ba
@@ -402,7 +408,7 @@ _ZNSt6vectorI5QuregSaIS0_EED2Ev.exit64:           ; preds = %bb.o, %bb.n, %bb.m
   br i1 %.not.i.i.i65, label %_ZNSt6vectorISt7complexIdESaIS1_EED2Ev.exit66, label %bb.p
 
 bb.p:                                             ; preds = %_ZNSt6vectorI5QuregSaIS0_EED2Ev.exit64
-  %i.bk = load ptr, ptr %i.x, align 8, !tbaa !63
+  %i.bk = load ptr, ptr %9, align 8, !tbaa !63
   %i.bl = ptrtoint ptr %i.bk to i64
   %i.bm = ptrtoint ptr %i.bj to i64
   %i.bn = sub i64 %i.bl, %i.bm

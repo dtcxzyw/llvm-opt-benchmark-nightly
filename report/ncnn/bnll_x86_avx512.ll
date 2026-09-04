@@ -202,11 +202,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.da, label %.lr.ph, label %._crit_edge, !llvm.loop !61
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.noexc
-  %i.db = phi i32 [ %i.o, %.noexc ], [ %i.cz, %.lr.ph ] ; 4 uses
+  %i.db = phi i32 [ %i.o, %.noexc ], [ %i.cz, %.lr.ph ] ; 5 uses
   %.053.lcssa = phi ptr [ %i.u, %.noexc ], [ %i.cw, %.lr.ph ] ; 3 uses
-  %.052.lcssa = phi i32 [ 0, %.noexc ], [ %i.cx, %.lr.ph ] ; 3 uses
+  %.052.lcssa = phi i32 [ 0, %.noexc ], [ %i.cx, %.lr.ph ] ; 2 uses
   %i.dc = icmp slt i32 %.052.lcssa, %i.db
-  br i1 %i.dc, label %bb.c, label %5
+  br i1 %i.dc, label %bb.c, label %._crit_edge93
 
 bb.c:                                             ; preds = %._crit_edge
   %i.dd = sub nuw nsw i32 %i.db, %.052.lcssa
@@ -294,18 +294,13 @@ bb.c:                                             ; preds = %._crit_edge
   %i.gg = shufflevector <4 x i64> %i.gf, <4 x i64> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   %i.gh = bitcast <4 x i64> %i.gg to <16 x i16>
   call void @llvm.masked.store.v16i16.p0(<16 x i16> %i.gh, ptr align 1 %.053.lcssa, <16 x i1> %i.dg)
-  %.pre101 = load i32, ptr %4, align 4, !tbaa !18
-  br label %5
+  %.pre101 = load i32, ptr %4, align 4, !tbaa !18 ; 4 uses
+  %5 = icmp slt i32 %i.db, %.pre101
+  br i1 %5, label %.lr.ph92, label %._crit_edge93
 
-5:                                                ; preds = %bb.c, %._crit_edge
-  %6 = phi i32 [ %.pre101, %bb.c ], [ %i.db, %._crit_edge ] ; 3 uses
-  %.1 = phi i32 [ %i.db, %bb.c ], [ %.052.lcssa, %._crit_edge ] ; 2 uses
-  %7 = icmp slt i32 %.1, %6
-  br i1 %7, label %.lr.ph92, label %._crit_edge93
-
-.lr.ph92:                                         ; preds = %5, %bb.f
-  %.290 = phi i32 [ %i.gz, %bb.f ], [ %.1, %5 ]
-  %.15489 = phi ptr [ %i.gy, %bb.f ], [ %.053.lcssa, %5 ] ; 3 uses
+.lr.ph92:                                         ; preds = %bb.c, %bb.f
+  %.290 = phi i32 [ %i.gz, %bb.f ], [ %i.db, %bb.c ]
+  %.15489 = phi ptr [ %i.gy, %bb.f ], [ %.053.lcssa, %bb.c ] ; 3 uses
   %i.gi = load i16, ptr %.15489, align 2, !tbaa !65
   %i.gj = zext i16 %i.gi to i32
   %i.gk = shl nuw i32 %i.gj, 16
@@ -335,10 +330,11 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   store i16 %i.gx, ptr %.15489, align 2, !tbaa !65
   %i.gy = getelementptr inbounds nuw i8, ptr %.15489, i64 2
   %i.gz = add nuw nsw i32 %.290, 1                ; 2 uses
-  %exitcond.not = icmp eq i32 %i.gz, %6
+  %exitcond.not = icmp eq i32 %i.gz, %.pre101
   br i1 %exitcond.not, label %._crit_edge93, label %.lr.ph92, !llvm.loop !62
 
-._crit_edge93:                                    ; preds = %bb.f, %5
+._crit_edge93:                                    ; preds = %bb.f, %._crit_edge, %bb.c
+  %6 = phi i32 [ %i.db, %._crit_edge ], [ %.pre101, %bb.c ], [ %.pre101, %bb.f ]
   %indvars.iv.next = add nsw i64 %indvars.iv, 1
   %i.ha = load i32, ptr %i.b, align 4, !tbaa !18
   %i.hb = sext i32 %i.ha to i64

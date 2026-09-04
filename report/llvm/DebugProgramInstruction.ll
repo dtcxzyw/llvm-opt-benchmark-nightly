@@ -202,9 +202,9 @@ _ZNK4llvm17DbgVariableRecord12location_opsEv.exit: ; preds = %.critedge.i
   br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.j, %.lr.ph.i.preheader.i.i.i
-  %.sroa.01.0.copyload.i.i6.i.i.i.i = phi i64 [ %storemerge.i.i.i.i.i, %bb.j ], [ %.sroa.026.047, %.lr.ph.i.preheader.i.i.i ] ; 8 uses
+  %.sroa.01.0.copyload.i.i6.i.i.i.i = phi i64 [ %storemerge.i.i.i.i.i, %bb.j ], [ %.sroa.026.047, %.lr.ph.i.preheader.i.i.i ] ; 7 uses
   %i.ad = and i64 %.sroa.01.0.copyload.i.i6.i.i.i.i, 4 ; 2 uses
-  %i.ae = icmp eq i64 %i.ad, 0
+  %i.ae = icmp eq i64 %i.ad, 0                    ; 2 uses
   br i1 %i.ae, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.lr.ph.i.i.i.i
@@ -299,11 +299,9 @@ _ZL13getAsMetadataPN4llvm5ValueE.exit:            ; preds = %bb.q, %bb.r
   br i1 %.not52, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZL13getAsMetadataPN4llvm5ValueE.exit
-  %5 = and i64 %.sroa.01.0.copyload.i.i6.i.i.i.i, 4
-  %6 = icmp eq i64 %5, 0
   %i.bo = and i64 %.sroa.01.0.copyload.i.i6.i.i.i.i, -5
   %i.bp = inttoptr i64 %i.bo to ptr
-  br i1 %6, label %.lr.ph.split.us, label %.lr.ph.split
+  br i1 %i.ae, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   %i.bq = inttoptr i64 %.sroa.01.0.copyload.i.i6.i.i.i.i to ptr

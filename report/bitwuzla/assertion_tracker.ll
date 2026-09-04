@@ -202,10 +202,10 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !43   ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !43
   %i.h = load ptr, ptr %6, align 8, !tbaa !41     ; 3 uses
   %.not81 = icmp eq ptr %i.g, %i.h
-  br i1 %.not81, label %._crit_edge, label %.lr.ph
+  br i1 %.not81, label %_ZSt8_DestroyIPN4bzla4NodeES1_EvT_S3_RSaIT0_E.exit.i, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -220,25 +220,23 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %6, i64 16
   br label %bb.e
 
-._crit_edge:                                      ; preds = %_ZNSt6vectorIN4bzla4NodeESaIS1_EE9push_backERKS1_.exit, %.preheader
-  %.lcssa69 = phi ptr [ %i.g, %.preheader ], [ %i.co, %_ZNSt6vectorIN4bzla4NodeESaIS1_EE9push_backERKS1_.exit ] ; 2 uses
-  %.lcssa = phi ptr [ %i.h, %.preheader ], [ %i.cp, %_ZNSt6vectorIN4bzla4NodeESaIS1_EE9push_backERKS1_.exit ] ; 3 uses
-  %.not4.i.i.i = icmp eq ptr %.lcssa, %.lcssa69
+._crit_edge:                                      ; preds = %_ZNSt6vectorIN4bzla4NodeESaIS1_EE9push_backERKS1_.exit
+  %.not4.i.i.i = icmp eq ptr %i.cp, %i.co
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPN4bzla4NodeES1_EvT_S3_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %._crit_edge, %.lr.ph.i.i.i
-  %.05.i.i.i = phi ptr [ %i.s, %.lr.ph.i.i.i ], [ %.lcssa, %._crit_edge ] ; 2 uses
+  %.05.i.i.i = phi ptr [ %i.s, %.lr.ph.i.i.i ], [ %i.cp, %._crit_edge ] ; 2 uses
   call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %.05.i.i.i) #15
   %i.s = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 8 ; 2 uses
-  %.not.i.i.i = icmp eq ptr %i.s, %.lcssa69
+  %.not.i.i.i = icmp eq ptr %i.s, %i.co
   br i1 %.not.i.i.i, label %_ZSt8_DestroyIPN4bzla4NodeES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i, label %.lr.ph.i.i.i, !llvm.loop !1
 
 _ZSt8_DestroyIPN4bzla4NodeES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i: ; preds = %.lr.ph.i.i.i
   %.pr.i = load ptr, ptr %6, align 8, !tbaa !41
   br label %_ZSt8_DestroyIPN4bzla4NodeES1_EvT_S3_RSaIT0_E.exit.i
 
-_ZSt8_DestroyIPN4bzla4NodeES1_EvT_S3_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyIPN4bzla4NodeES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i, %._crit_edge
-  %8 = phi ptr [ %.pr.i, %_ZSt8_DestroyIPN4bzla4NodeES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i ], [ %.lcssa, %._crit_edge ] ; 3 uses
+_ZSt8_DestroyIPN4bzla4NodeES1_EvT_S3_RSaIT0_E.exit.i: ; preds = %.preheader, %_ZSt8_DestroyIPN4bzla4NodeES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i, %._crit_edge
+  %8 = phi ptr [ %.pr.i, %_ZSt8_DestroyIPN4bzla4NodeES1_EvT_S3_RSaIT0_E.exitthread-pre-split.i ], [ %i.cp, %._crit_edge ], [ %i.h, %.preheader ] ; 3 uses
   %.not.i.i1.i = icmp eq ptr %8, null
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIN4bzla4NodeESaIS1_EED2Ev.exit, label %bb.b
 
@@ -544,8 +542,8 @@ _ZNSt6vectorIN4bzla4NodeESaIS1_EE9push_backERKS1_.exit: ; preds = %_ZNKSt8__deta
   call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %7) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #15
   %i.cn = add nuw i64 %.01379, 1                  ; 2 uses
-  %i.co = load ptr, ptr %i.f, align 8, !tbaa !43  ; 2 uses
-  %i.cp = load ptr, ptr %6, align 8, !tbaa !41    ; 3 uses
+  %i.co = load ptr, ptr %i.f, align 8, !tbaa !43  ; 3 uses
+  %i.cp = load ptr, ptr %6, align 8, !tbaa !41    ; 5 uses
   %i.cq = ptrtoint ptr %i.co to i64
   %i.cr = ptrtoint ptr %i.cp to i64
   %i.cs = sub i64 %i.cq, %i.cr

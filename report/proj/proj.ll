@@ -202,26 +202,20 @@ sub_0364:                                         ; preds = %bb.au
   store i1 true, ptr @_ZL9postscale, align 4
   %i.dp = getelementptr inbounds nuw i8, ptr %.1207, i64 8 ; 4 uses
   %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !11 ; 5 uses
-  %i.dr = load i8, ptr %i.dq, align 1             ; 2 uses
+  %i.dr = load i8, ptr %i.dq, align 1
   %.not454 = icmp eq i8 %i.dr, 49
-  br i1 %.not454, label %.tail363, label %.tail367
+  br i1 %.not454, label %.tail363, label %bb.ax
 
 .tail363:                                         ; preds = %sub_0364
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dq, i64 1
   %i.dt = load i8, ptr %i.ds, align 1
   %.not290 = icmp eq i8 %i.dt, 47
-  br i1 %.not290, label %bb.av, label %sub_1369
+  br i1 %.not290, label %bb.av, label %.tail367
 
-sub_1369:                                         ; preds = %.tail363
+.tail367:                                         ; preds = %.tail363
   %10 = getelementptr inbounds nuw i8, ptr %i.dq, i64 1
   %11 = load i8, ptr %10, align 1
-  br label %.tail367
-
-.tail367:                                         ; preds = %sub_0364, %sub_1369
-  %.sink605 = phi i8 [ %11, %sub_1369 ], [ %i.dr, %sub_0364 ]
-  %.sink603 = phi i32 [ 58, %sub_1369 ], [ 49, %sub_0364 ]
-  %12 = zext i8 %.sink605 to i32
-  %.not291 = icmp eq i32 %.sink603, %12
+  %.not291 = icmp eq i8 %11, 58
   br i1 %.not291, label %bb.av, label %bb.ax
 
 bb.av:                                            ; preds = %.tail367, %.tail363
@@ -236,7 +230,7 @@ bb.aw:                                            ; preds = %bb.av
   store double %i.dx, ptr @_ZL6fscale, align 8, !tbaa !56
   br label %.preheader382.backedge
 
-bb.ax:                                            ; preds = %.tail367
+bb.ax:                                            ; preds = %sub_0364, %.tail367
   %i.dy = tail call double @strtod(ptr noundef nonnull captures(none) %i.dq, ptr noundef null) #19, !inline_history !28 ; 2 uses
   store double %i.dy, ptr @_ZL6fscale, align 8, !tbaa !56
   %i.dz = fcmp oeq double %i.dy, 0.000000e+00

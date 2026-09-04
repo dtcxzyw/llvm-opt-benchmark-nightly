@@ -206,9 +206,9 @@ define void @_RNvMNtCs6xpQEr8gLsQ_11typst_utils6bitsetNtB2_6BitSet6insert(ptr no
 bb.a:
   %i.a = lshr i64 %1, 6                           ; 5 uses
   %i.b = load ptr, ptr %0, align 8, !nonnull !5, !noundef !5 ; 2 uses
-  %i.c = load i64, ptr %i.b, align 8, !noundef !5 ; 3 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !5 ; 2 uses
   %.not = icmp ult i64 %i.a, %i.c
-  br i1 %.not, label %_RNvMs4_CsieRLDaoupkO_8thin_vecINtB5_7ThinVecjE6resizeCs6xpQEr8gLsQ_11typst_utils.exit, label %bb.b
+  br i1 %.not, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !382)
@@ -266,24 +266,20 @@ bb.d:                                             ; preds = %._crit_edge.i
   %.pre.i8.i = load i64, ptr %.val.pre.i7.i, align 8, !noalias !386
   br label %_RNvMs3_CsieRLDaoupkO_8thin_vecINtB5_7ThinVecjE4pushCs6xpQEr8gLsQ_11typst_utils.exit9.i
 
-_RNvMs3_CsieRLDaoupkO_8thin_vecINtB5_7ThinVecjE4pushCs6xpQEr8gLsQ_11typst_utils.exit9.i: ; preds = %bb.d, %._crit_edge.i
+_RNvMs3_CsieRLDaoupkO_8thin_vecINtB5_7ThinVecjE4pushCs6xpQEr8gLsQ_11typst_utils.exit9.i: ; preds = %._crit_edge.i, %bb.d
   %i.w = phi i64 [ %i.s, %._crit_edge.i ], [ %.pre.i8.i, %bb.d ] ; 2 uses
   %.val.i6.i = phi ptr [ %i.r, %._crit_edge.i ], [ %.val.pre.i7.i, %bb.d ] ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.val.i6.i, i64 16
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.w
   store i64 0, ptr %i.y, align 8, !noalias !386
-  %i.z = add i64 %i.w, 1                          ; 2 uses
+  %i.z = add i64 %i.w, 1                          ; 3 uses
   store i64 %i.z, ptr %.val.i6.i, align 8, !noalias !386
-  br label %_RNvMs4_CsieRLDaoupkO_8thin_vecINtB5_7ThinVecjE6resizeCs6xpQEr8gLsQ_11typst_utils.exit
+  %2 = icmp ult i64 %i.a, %i.z
+  br i1 %2, label %bb.e, label %bb.f
 
-_RNvMs4_CsieRLDaoupkO_8thin_vecINtB5_7ThinVecjE6resizeCs6xpQEr8gLsQ_11typst_utils.exit: ; preds = %_RNvMs3_CsieRLDaoupkO_8thin_vecINtB5_7ThinVecjE4pushCs6xpQEr8gLsQ_11typst_utils.exit9.i, %bb.a
-  %2 = phi i64 [ %i.z, %_RNvMs3_CsieRLDaoupkO_8thin_vecINtB5_7ThinVecjE4pushCs6xpQEr8gLsQ_11typst_utils.exit9.i ], [ %i.c, %bb.a ] ; 2 uses
-  %.val = phi ptr [ %.val.i6.i, %_RNvMs3_CsieRLDaoupkO_8thin_vecINtB5_7ThinVecjE4pushCs6xpQEr8gLsQ_11typst_utils.exit9.i ], [ %i.b, %bb.a ]
-  %3 = icmp ult i64 %i.a, %2
-  br i1 %3, label %bb.e, label %bb.f
-
-bb.e:                                             ; preds = %_RNvMs4_CsieRLDaoupkO_8thin_vecINtB5_7ThinVecjE6resizeCs6xpQEr8gLsQ_11typst_utils.exit
-  %i.aa = getelementptr inbounds nuw i8, ptr %.val, i64 16
+bb.e:                                             ; preds = %bb.a, %_RNvMs3_CsieRLDaoupkO_8thin_vecINtB5_7ThinVecjE4pushCs6xpQEr8gLsQ_11typst_utils.exit9.i
+  %.val11 = phi ptr [ %.val.i6.i, %_RNvMs3_CsieRLDaoupkO_8thin_vecINtB5_7ThinVecjE4pushCs6xpQEr8gLsQ_11typst_utils.exit9.i ], [ %i.b, %bb.a ]
+  %i.aa = getelementptr inbounds nuw i8, ptr %.val11, i64 16
   %i.ab = and i64 %1, 63
   %i.ac = shl nuw i64 1, %i.ab
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %i.a ; 2 uses
@@ -292,8 +288,8 @@ bb.e:                                             ; preds = %_RNvMs4_CsieRLDaoup
   store i64 %i.af, ptr %i.ad, align 8
   ret void
 
-bb.f:                                             ; preds = %_RNvMs4_CsieRLDaoupkO_8thin_vecINtB5_7ThinVecjE6resizeCs6xpQEr8gLsQ_11typst_utils.exit
-  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.a, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @92) #36
+bb.f:                                             ; preds = %_RNvMs3_CsieRLDaoupkO_8thin_vecINtB5_7ThinVecjE4pushCs6xpQEr8gLsQ_11typst_utils.exit9.i
+  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.a, i64 noundef %i.z, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @92) #36
   unreachable
 }
 

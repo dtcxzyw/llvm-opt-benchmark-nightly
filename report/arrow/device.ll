@@ -202,14 +202,14 @@ _ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i.i.i.i: ; preds = %bb.g
 
 _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.i: ; preds = %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i.i.i.i, %bb.f
   %i.x = phi ptr [ %i.r, %bb.f ], [ %.pr.pre, %_ZNKSt14default_deleteIN5arrow6BufferEEclEPS1_.exit.i.i.i.i ] ; 3 uses
-  %i.y = load ptr, ptr %5, align 8, !tbaa !54     ; 2 uses
+  %i.y = load ptr, ptr %5, align 8, !tbaa !54     ; 3 uses
   %i.z = icmp eq ptr %i.y, null
   br i1 %i.z, label %bb.h, label %bb.k, !prof !55
 
 _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.i.thread: ; preds = %bb.g
-  %i.aa = load ptr, ptr %5, align 8, !tbaa !54    ; 2 uses
+  %i.aa = load ptr, ptr %5, align 8, !tbaa !54
   %i.ab = icmp eq ptr %i.aa, null
-  br i1 %i.ab, label %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEEaSEOS6_.exit.thread, label %bb.k, !prof !55
+  br i1 %i.ab, label %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEEaSEOS6_.exit.thread, label %bb.l, !prof !55
 
 bb.h:                                             ; preds = %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.i
   %.not.i.i.i = icmp eq ptr %i.x, null
@@ -236,13 +236,11 @@ _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEEaSEOS6_.exit
   store i64 %i.ah, ptr %i.j, align 8, !tbaa !81
   br label %bb.n
 
-bb.k:                                             ; preds = %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.i.thread, %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.i
-  %9 = phi ptr [ %i.aa, %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.i.thread ], [ %i.y, %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.i ] ; 2 uses
-  %10 = phi ptr [ null, %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.i.thread ], [ %i.x, %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.i ]
-  %.not.i8.i = icmp eq ptr %10, %9
+bb.k:                                             ; preds = %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.i
+  %.not.i8.i = icmp eq ptr %i.x, %i.y
   br i1 %.not.i8.i, label %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.thread.i, label %bb.l
 
-bb.l:                                             ; preds = %bb.k
+bb.l:                                             ; preds = %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.i.thread, %bb.k
   invoke void @_ZN5arrow6Status8CopyFromERKS0_(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %5)
           to label %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEEaSEOS6_.exit unwind label %bb.m
 
@@ -274,7 +272,7 @@ _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.e
   br i1 %.not.i.i, label %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEED2Ev.exit, label %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.thread.i, !prof !56
 
 _ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.thread.i: ; preds = %bb.k, %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.i20, %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEEaSEOS6_.exit
-  %i.aq = phi ptr [ %.pr.pre.i, %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.i20 ], [ %.pr45.pre, %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEEaSEOS6_.exit ], [ %9, %bb.k ]
+  %i.aq = phi ptr [ %.pr.pre.i, %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEE7DestroyEv.exit.i20 ], [ %.pr45.pre, %_ZN5arrow6ResultISt10unique_ptrINS_6BufferESt14default_deleteIS2_EEEaSEOS6_.exit ], [ %i.y, %bb.k ]
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 1
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !66, !range !67, !noundef !68
   %i.at = trunc nuw i8 %i.as to i1
@@ -677,7 +675,7 @@ bb.k:                                             ; preds = %_ZN9__gnu_cxx27__ex
   tail call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.l) #26
   br label %_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEaSERKS2_.exit
 
-_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEaSERKS2_.exit: ; preds = %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i, %bb.g, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i, %bb.k
+_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEaSERKS2_.exit: ; preds = %bb.k, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i, %bb.g, %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i
   store ptr %i.d, ptr %i.b, align 8, !tbaa !38
   br label %_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEaSERKS2_.exit.thread21
 

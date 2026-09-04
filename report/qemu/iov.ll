@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.lr.ph40, %bb.c
 
 .preheader:                                       ; preds = %bb.d
   %.not43 = icmp eq i64 %i.m, 0
-  br i1 %.not43, label %.critedge, label %.lr.ph.preheader
+  br i1 %.not43, label %.critedge.thread, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader
   %i.q = load ptr, ptr %i.j, align 8
@@ -218,7 +218,7 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
   %.02635 = phi ptr [ %i.v, %bb.f ], [ %i.r, %.lr.ph.preheader ] ; 2 uses
   %.02734 = phi ptr [ %i.w, %bb.f ], [ %i.q, %.lr.ph.preheader ] ; 2 uses
-  %.02833 = phi i64 [ %i.x, %bb.f ], [ 0, %.lr.ph.preheader ] ; 2 uses
+  %.02833 = phi i64 [ %i.x, %bb.f ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.s = load i8, ptr %.02734, align 1
   %i.t = load i8, ptr %.02635, align 1
   %i.u = icmp eq i8 %i.s, %i.t
@@ -231,14 +231,13 @@ bb.f:                                             ; preds = %.lr.ph
   %exitcond.not = icmp eq i64 %i.x, %i.m
   br i1 %exitcond.not, label %.critedge.thread, label %.lr.ph, !llvm.loop !39
 
-.critedge.thread:                                 ; preds = %bb.f
+.critedge.thread:                                 ; preds = %bb.f, %.preheader
   %i.y = add i64 %i.m, %.02939
   br label %bb.c
 
-.critedge:                                        ; preds = %.lr.ph, %.preheader
-  %.028.lcssa = phi i64 [ 0, %.preheader ], [ %.02833, %.lr.ph ] ; 2 uses
-  %i.z = add i64 %.028.lcssa, %.02939             ; 2 uses
-  %.not = icmp eq i64 %.028.lcssa, %i.m
+.critedge:                                        ; preds = %.lr.ph
+  %i.z = add i64 %.02833, %.02939                 ; 2 uses
+  %.not = icmp eq i64 %.02833, %i.m
   br i1 %.not, label %bb.c, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.critedge, %bb.c, %.preheader32

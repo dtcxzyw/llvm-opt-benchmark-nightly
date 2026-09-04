@@ -205,7 +205,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph86, %.loopexit75
-  %.06185 = phi i32 [ 0, %.lr.ph86 ], [ %.lcssa114, %.loopexit75 ] ; 7 uses
+  %.06185 = phi i32 [ 0, %.lr.ph86 ], [ %.lcssa, %.loopexit75 ] ; 6 uses
   %i.i = zext i32 %.06185 to i64                  ; 2 uses
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.i ; 2 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !10   ; 4 uses
@@ -249,7 +249,7 @@ insert_value_in_array.exit.i:                     ; preds = %bb.d, %bb.c
 
 large_instruction_change.exit:                    ; preds = %bb.b, %insert_value_in_array.exit.i
   %i.z = icmp slt i32 %.06185, %1
-  br i1 %i.z, label %.lr.ph, label %.loopexit75
+  br i1 %i.z, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %large_instruction_change.exit
   %i.aa = load i32, ptr %i.j, align 4, !tbaa !10
@@ -277,7 +277,7 @@ bb.f:                                             ; preds = %bb.e
 
 .critedge:                                        ; preds = %bb.f, %.critedge.split.loop.exit
   %.060.lcssa = phi i32 [ %indvars92.le, %.critedge.split.loop.exit ], [ %i.ab, %bb.f ] ; 5 uses
-  %.lcssa = phi i32 [ %i.ae, %.critedge.split.loop.exit ], [ %1, %bb.f ] ; 3 uses
+  %.lcssa = phi i32 [ %i.ae, %.critedge.split.loop.exit ], [ %1, %bb.f ] ; 2 uses
   %i.af = icmp samesign ult i32 %.060.lcssa, 3
   br i1 %i.af, label %.preheader74, label %bb.h
 
@@ -382,12 +382,11 @@ bb.k:                                             ; preds = %insert_value_in_arr
   %exitcond93.not = icmp eq i32 %i.bw, %.060.lcssa
   br i1 %exitcond93.not, label %.loopexit75, label %bb.k, !llvm.loop !82
 
-.loopexit75:                                      ; preds = %bb.k, %insert_value_in_array.exit, %large_instruction_change.exit, %.preheader74
-  %.lcssa114 = phi i32 [ %.06185, %large_instruction_change.exit ], [ %.lcssa, %insert_value_in_array.exit ], [ %.lcssa, %.preheader74 ], [ %.lcssa, %bb.k ] ; 2 uses
-  %i.bx = icmp slt i32 %.lcssa114, %1
+.loopexit75:                                      ; preds = %bb.k, %insert_value_in_array.exit, %.preheader74
+  %i.bx = icmp slt i32 %.lcssa, %1
   br i1 %i.bx, label %bb.b, label %._crit_edge, !llvm.loop !83
 
-._crit_edge:                                      ; preds = %.loopexit75, %bb.a
+._crit_edge:                                      ; preds = %large_instruction_change.exit, %.loopexit75, %bb.a
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.bz = load i32, ptr %i.by, align 8, !tbaa !14 ; 2 uses
   %.not = icmp eq i32 %i.bz, %1

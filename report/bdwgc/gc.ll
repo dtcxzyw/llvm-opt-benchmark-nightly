@@ -205,7 +205,7 @@ GC_repeat_read.exit.i.loopexit:                   ; preds = %bb.h
   br label %GC_repeat_read.exit.i
 
 GC_repeat_read.exit.i:                            ; preds = %.preheader53.i, %bb.h, %GC_repeat_read.exit.i.loopexit
-  %.217.i.i = phi i64 [ %.1.i.i, %bb.h ], [ %.014.i.i, %.preheader53.i ], [ %.116.i.i, %GC_repeat_read.exit.i.loopexit ] ; 9 uses
+  %.217.i.i = phi i64 [ %.1.i.i, %bb.h ], [ %.014.i.i, %.preheader53.i ], [ %.116.i.i, %GC_repeat_read.exit.i.loopexit ] ; 8 uses
   %i.ac = icmp slt i64 %.217.i.i, 0
   br i1 %i.ac, label %bb.i, label %bb.j
 
@@ -236,11 +236,11 @@ bb.j:                                             ; preds = %GC_repeat_read.exit
 
 .preheader.i:                                     ; preds = %.critedge2.i
   %i.aj = icmp slt i64 %.4.i, %.217.i.i
-  br i1 %i.aj, label %.lr.ph.i, label %.critedge4.i
+  br i1 %i.aj, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.ak = tail call ptr @__ctype_b_loc() #51
-  %i.al = load ptr, ptr %i.ak, align 8
+  %i.al = load ptr, ptr %i.ak, align 8            ; 2 uses
   br label %bb.m
 
 bb.k:                                             ; preds = %.lr.ph
@@ -293,13 +293,13 @@ bb.l:                                             ; preds = %.lr.ph32
   br label %.critedge2.i, !llvm.loop !162
 
 .critedge2.i:                                     ; preds = %bb.l, %..critedge2.i_crit_edge, %.critedge.i
-  %.4.i = phi i64 [ %i.av, %..critedge2.i_crit_edge ], [ %smax64.i, %.critedge.i ], [ %smax64.i, %bb.l ] ; 4 uses
+  %.4.i = phi i64 [ %i.av, %..critedge2.i_crit_edge ], [ %smax64.i, %.critedge.i ], [ %smax64.i, %bb.l ] ; 3 uses
   %i.bc = add nuw nsw i64 %.03655.i, 1            ; 2 uses
   %exitcond66.not.i = icmp eq i64 %i.bc, 27
   br i1 %exitcond66.not.i, label %.preheader.i, label %.preheader52.i, !llvm.loop !163
 
 bb.m:                                             ; preds = %bb.n, %.lr.ph.i
-  %.557.i = phi i64 [ %.4.i, %.lr.ph.i ], [ %i.bj, %bb.n ] ; 3 uses
+  %.557.i = phi i64 [ %.4.i, %.lr.ph.i ], [ %i.bj, %bb.n ] ; 6 uses
   %i.bd = getelementptr inbounds i8, ptr %i.a, i64 %.557.i
   %i.be = load i8, ptr %i.bd, align 1
   %i.bf = sext i8 %i.be to i64
@@ -307,22 +307,16 @@ bb.m:                                             ; preds = %bb.n, %.lr.ph.i
   %i.bh = load i16, ptr %i.bg, align 2
   %i.bi = and i16 %i.bh, 8192
   %.not46.i = icmp eq i16 %i.bi, 0
-  br i1 %.not46.i, label %.critedge4.i, label %bb.n
+  br i1 %.not46.i, label %.lr.ph61.i, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bj = add i64 %.557.i, 1                      ; 2 uses
   %exitcond67.not.i = icmp eq i64 %i.bj, %.217.i.i
   br i1 %exitcond67.not.i, label %._crit_edge.i, label %bb.m, !llvm.loop !164
 
-.critedge4.i:                                     ; preds = %bb.m, %.preheader.i
-  %.5.lcssa.i = phi i64 [ %.4.i, %.preheader.i ], [ %.557.i, %bb.m ] ; 5 uses
-  %1 = icmp slt i64 %.5.lcssa.i, %.217.i.i
-  br i1 %1, label %.lr.ph61.i, label %._crit_edge.i
-
-.lr.ph61.i:                                       ; preds = %.critedge4.i
-  %2 = tail call ptr @__ctype_b_loc() #51
-  %3 = load ptr, ptr %2, align 8
-  %i.bk = sub i64 %.217.i.i, %.5.lcssa.i
+.lr.ph61.i:                                       ; preds = %bb.m
+  %1 = getelementptr inbounds i8, ptr %i.a, i64 %.557.i
+  %i.bk = sub i64 %.217.i.i, %.557.i
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.p
@@ -333,26 +327,25 @@ bb.o:                                             ; preds = %bb.p
 bb.p:                                             ; preds = %bb.o, %.lr.ph61.i
   %.13760.i = phi i64 [ 0, %.lr.ph61.i ], [ %i.bl, %bb.o ] ; 2 uses
   %i.bm = getelementptr i8, ptr %i.a, i64 %.13760.i ; 2 uses
-  %i.bn = getelementptr i8, ptr %i.bm, i64 %.5.lcssa.i
+  %i.bn = getelementptr i8, ptr %i.bm, i64 %.557.i
   %i.bo = load i8, ptr %i.bn, align 1
   %i.bp = sext i8 %i.bo to i64
-  %i.bq = getelementptr inbounds [2 x i8], ptr %3, i64 %i.bp
+  %i.bq = getelementptr inbounds [2 x i8], ptr %i.al, i64 %i.bp
   %i.br = load i16, ptr %i.bq, align 2
   %i.bs = and i16 %i.br, 2048
   %.not47.i = icmp eq i16 %i.bs, 0
   br i1 %.not47.i, label %bb.q, label %bb.o
 
-._crit_edge.i:                                    ; preds = %bb.n, %bb.o, %.critedge4.i
+._crit_edge.i:                                    ; preds = %bb.n, %bb.o, %.preheader.i
   %i.bt = load ptr, ptr @GC_on_abort, align 8
   call void %i.bt(ptr noundef nonnull @.str.244) #45, !inline_history !160
   call void @abort() #48
   unreachable
 
 bb.q:                                             ; preds = %bb.p
-  %i.bu = getelementptr i8, ptr %i.bm, i64 %.5.lcssa.i
+  %i.bu = getelementptr i8, ptr %i.bm, i64 %.557.i
   store i8 0, ptr %i.bu, align 1
-  %4 = getelementptr inbounds i8, ptr %i.a, i64 %.5.lcssa.i
-  %i.bv = call i64 @__isoc23_strtoul(ptr noundef nonnull %4, ptr noundef null, i32 noundef 10) #45 ; 4 uses
+  %i.bv = call i64 @__isoc23_strtoul(ptr noundef nonnull %1, ptr noundef null, i32 noundef 10) #45 ; 4 uses
   %i.bw = icmp ugt i64 %i.bv, 1048575
   %i.bx = and i64 %i.bv, 7
   %.not49.i = icmp eq i64 %i.bx, 0

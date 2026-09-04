@@ -204,9 +204,9 @@ bb.l:                                             ; preds = %bb.i, %bb.k, %bb.h
   %i.u = load i64, ptr %i.b, align 8, !tbaa !438  ; 3 uses
   %i.v = sub i64 %i.u, %i.s
   store i64 %i.v, ptr %i.b, align 8, !tbaa !438
-  %i.w = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.u
+  %i.w = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.u ; 2 uses
   %.not.i31 = icmp eq i64 %i.u, %i.s
-  br i1 %.not.i31, label %bb.o, label %bb.m
+  br i1 %.not.i31, label %_ZN3fmt3v129formatterISt4pairIN4LIEF3ELF6X86ISA4FLAGENS5_3ISAEEcvE5parseERNS0_13parse_contextIcEE.exit35, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.x = load i8, ptr %i.t, align 1, !tbaa !46
@@ -219,8 +219,8 @@ bb.n:                                             ; preds = %bb.m
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.aa, i8 0, i64 48, i1 false)
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
-  %.0.i32 = phi ptr [ %i.z, %bb.n ], [ %i.t, %bb.m ], [ %i.t, %bb.l ] ; 4 uses
+bb.o:                                             ; preds = %bb.n, %bb.m
+  %.0.i32 = phi ptr [ %i.z, %bb.n ], [ %i.t, %bb.m ] ; 3 uses
   %.not15.i33 = icmp eq ptr %.0.i32, %i.w
   br i1 %.not15.i33, label %_ZN3fmt3v129formatterISt4pairIN4LIEF3ELF6X86ISA4FLAGENS5_3ISAEEcvE5parseERNS0_13parse_contextIcEE.exit35, label %bb.p
 
@@ -233,9 +233,10 @@ bb.q:                                             ; preds = %bb.p
   tail call void @_ZN3fmt3v1212report_errorEPKc(ptr noundef nonnull @.str.75) #28
   unreachable
 
-_ZN3fmt3v129formatterISt4pairIN4LIEF3ELF6X86ISA4FLAGENS5_3ISAEEcvE5parseERNS0_13parse_contextIcEE.exit35: ; preds = %bb.o, %bb.p
+_ZN3fmt3v129formatterISt4pairIN4LIEF3ELF6X86ISA4FLAGENS5_3ISAEEcvE5parseERNS0_13parse_contextIcEE.exit35: ; preds = %bb.l, %bb.o, %bb.p
+  %.021.i35 = phi ptr [ %i.w, %bb.o ], [ %.0.i32, %bb.p ], [ %i.t, %bb.l ] ; 2 uses
   %i.ac = load ptr, ptr %1, align 8, !tbaa !437   ; 2 uses
-  %i.ad = ptrtoint ptr %.0.i32 to i64
+  %i.ad = ptrtoint ptr %.021.i35 to i64
   %i.ae = ptrtoint ptr %i.ac to i64
   %i.af = sub i64 %i.ad, %i.ae                    ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.af
@@ -246,7 +247,7 @@ _ZN3fmt3v129formatterISt4pairIN4LIEF3ELF6X86ISA4FLAGENS5_3ISAEEcvE5parseERNS0_13
 
 _ZN3fmt3v129formatterISt4pairIN4LIEF3ELF6X86ISA4FLAGENS5_3ISAEEcvE5parseERNS0_13parse_contextIcEE.exit: ; preds = %bb.a, %_ZN3fmt3v129formatterISt4pairIN4LIEF3ELF6X86ISA4FLAGENS5_3ISAEEcvE5parseERNS0_13parse_contextIcEE.exit35
   %storemerge = phi i64 [ %i.ai, %_ZN3fmt3v129formatterISt4pairIN4LIEF3ELF6X86ISA4FLAGENS5_3ISAEEcvE5parseERNS0_13parse_contextIcEE.exit35 ], [ 0, %bb.a ]
-  %.021 = phi ptr [ %.0.i32, %_ZN3fmt3v129formatterISt4pairIN4LIEF3ELF6X86ISA4FLAGENS5_3ISAEEcvE5parseERNS0_13parse_contextIcEE.exit35 ], [ %i.a, %bb.a ]
+  %.021 = phi ptr [ %.021.i35, %_ZN3fmt3v129formatterISt4pairIN4LIEF3ELF6X86ISA4FLAGENS5_3ISAEEcvE5parseERNS0_13parse_contextIcEE.exit35 ], [ %i.a, %bb.a ]
   store i64 %storemerge, ptr %i.b, align 8, !tbaa !438
   ret ptr %.021
 }

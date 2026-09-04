@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ac = icmp ugt i64 %i.d, 8070450532247928832
-  br i1 %i.ac, label %sz_s2u.exit27, label %bb.i, !prof !16
+  br i1 %i.ac, label %sz_sa2u.exit, label %bb.i, !prof !16
 
 bb.i:                                             ; preds = %bb.h
   %i.ad = shl nuw i64 %i.d, 1
@@ -214,16 +214,12 @@ bb.i:                                             ; preds = %bb.h
   %notmask.i = ashr exact i64 -1152921504606846976, %i.af
   %i.ag = lshr i64 1152921504606846975, %i.af
   %i.ah = add nuw nsw i64 %i.d, %i.ag
-  %i.ai = and i64 %i.ah, %notmask.i
-  br label %sz_s2u.exit27
-
-sz_s2u.exit27:                                    ; preds = %bb.i, %bb.h
-  %.0.i30 = phi i64 [ %i.ai, %bb.i ], [ 0, %bb.h ] ; 2 uses
-  %4 = icmp ult i64 %.0.i30, %i.d
+  %i.ai = and i64 %i.ah, %notmask.i               ; 2 uses
+  %4 = icmp samesign ult i64 %i.ai, %i.d
   br i1 %4, label %sz_sa2u.exit, label %.thread38
 
-.thread38:                                        ; preds = %sz_s2u.exit, %sz_s2u.exit27, %bb.g
-  %.0.i = phi i64 [ %.0.i30, %sz_s2u.exit27 ], [ 16384, %bb.g ], [ 16384, %sz_s2u.exit ] ; 3 uses
+.thread38:                                        ; preds = %sz_s2u.exit, %bb.i, %bb.g
+  %.0.i = phi i64 [ %i.ai, %bb.i ], [ 16384, %bb.g ], [ 16384, %sz_s2u.exit ] ; 3 uses
   %i.aj = load i64, ptr @je_sz_large_pad, align 8, !tbaa !18
   %i.ak = add nuw nsw i64 %i.c, 4095
   %i.al = and i64 %i.ak, 9223372036854771712
@@ -234,8 +230,8 @@ sz_s2u.exit27:                                    ; preds = %bb.i, %bb.h
   %..0.i = select i1 %i.ap, i64 0, i64 %.0.i
   br label %sz_sa2u.exit
 
-sz_sa2u.exit:                                     ; preds = %bb.d, %sz_s2u.exit, %bb.f, %sz_s2u.exit27, %.thread38
-  %.018.i = phi i64 [ 0, %bb.f ], [ %.0.i25, %sz_s2u.exit ], [ %..0.i, %.thread38 ], [ 0, %sz_s2u.exit27 ], [ 0, %bb.d ] ; 2 uses
+sz_sa2u.exit:                                     ; preds = %bb.h, %bb.d, %sz_s2u.exit, %bb.f, %bb.i, %.thread38
+  %.018.i = phi i64 [ 0, %bb.f ], [ %.0.i25, %sz_s2u.exit ], [ %..0.i, %.thread38 ], [ 0, %bb.i ], [ 0, %bb.d ], [ 0, %bb.h ] ; 2 uses
   %i.aq = load atomic ptr, ptr @je_arenas acquire, align 8 ; 2 uses
   %i.ar = icmp eq ptr %i.aq, null
   br i1 %i.ar, label %bb.j, label %arena_get.exit, !prof !16

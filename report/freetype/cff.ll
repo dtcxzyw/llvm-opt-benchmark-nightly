@@ -205,16 +205,12 @@ bb.g:                                             ; preds = %bb.e, %bb.e
 
 .loopexit.loopexit:                               ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
   %indvars.iv.next.lcssa = phi i64 [ %i.bc, %vec.epilog.middle.block ], [ %i.aw, %middle.block ], [ %indvars.iv.next, %vec.epilog.scalar.ph ]
-  %i.y = trunc nuw i64 %indvars.iv.next.lcssa to i32
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.k
-  %.2.lcssa = phi i32 [ %.182117, %bb.k ], [ %i.y, %.loopexit.loopexit ] ; 2 uses
-  %.not99 = icmp ult i32 %.2.lcssa, %1
+  %i.y = trunc nuw i64 %indvars.iv.next.lcssa to i32 ; 2 uses
+  %.not99 = icmp ugt i32 %1, %i.y
   br i1 %.not99, label %.lr.ph118, label %.loopexit112, !llvm.loop !613
 
-.lr.ph118:                                        ; preds = %bb.g, %.loopexit
-  %.182117 = phi i32 [ %.2.lcssa, %.loopexit ], [ 1, %bb.g ] ; 3 uses
+.lr.ph118:                                        ; preds = %bb.g, %.loopexit.loopexit
+  %.182117 = phi i32 [ %i.y, %.loopexit.loopexit ], [ 1, %bb.g ] ; 2 uses
   %i.z = call zeroext i16 @FT_Stream_ReadUShort(ptr noundef nonnull %2, ptr noundef nonnull %i.b) #18 ; 7 uses
   %i.aa = load i32, ptr %i.b, align 4, !tbaa !67
   %.not96 = icmp eq i32 %i.aa, 0
@@ -249,7 +245,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %.180 = select i1 %i.al, i32 %i.an, i32 %.079
   %.180.fr = freeze i32 %.180                     ; 2 uses
   %i.ao = icmp ult i32 %.182117, %1
-  br i1 %i.ao, label %iter.check, label %.loopexit
+  br i1 %i.ao, label %iter.check, label %.loopexit112
 
 iter.check:                                       ; preds = %bb.k
   %i.ap = load ptr, ptr %i.n, align 8, !tbaa !71  ; 3 uses
@@ -352,7 +348,7 @@ bb.l:                                             ; preds = %bb.e
   store i32 3, ptr %i.b, align 4, !tbaa !67
   br label %thread-pre-split
 
-.loopexit112:                                     ; preds = %.loopexit, %bb.g, %._crit_edge
+.loopexit112:                                     ; preds = %.loopexit.loopexit, %bb.k, %bb.g, %._crit_edge
   %.not101 = icmp eq i8 %5, 0
   br i1 %.not101, label %thread-pre-split, label %bb.x
 

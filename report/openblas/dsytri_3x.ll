@@ -202,7 +202,11 @@ bb.x:                                             ; preds = %bb.x, %.epil.prehea
   br i1 %i.xg, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %.lr.ph802
-  br i1 %.not698795, label %.loopexit719, label %.lr.ph798
+  br i1 %.not698795, label %.loopexit719.thread, label %.lr.ph798
+
+.loopexit719.thread:                              ; preds = %bb.y
+  %9 = add nsw i32 %storemerge685801, 1
+  br label %._crit_edge803
 
 .lr.ph798:                                        ; preds = %bb.y
   %i.xh = add nsw i32 %i.xc, %i.fo
@@ -373,14 +377,14 @@ bb.z:                                             ; preds = %.lr.ph802
   %i.aat = add nsw i32 %storemerge685801, 1
   br label %.loopexit719
 
-.loopexit719:                                     ; preds = %.prol.loopexit2310, %.lr.ph798.new, %bb.y, %._crit_edge794
-  %storemerge685799 = phi i32 [ %i.aat, %._crit_edge794 ], [ %storemerge685801, %bb.y ], [ %storemerge685801, %.lr.ph798.new ], [ %storemerge685801, %.prol.loopexit2310 ] ; 2 uses
+.loopexit719:                                     ; preds = %.prol.loopexit2310, %.lr.ph798.new, %._crit_edge794
+  %storemerge685799 = phi i32 [ %i.aat, %._crit_edge794 ], [ %storemerge685801, %.lr.ph798.new ], [ %storemerge685801, %.prol.loopexit2310 ] ; 2 uses
   %i.aau = add nsw i32 %storemerge685799, 1       ; 2 uses
   %.not686.not = icmp slt i32 %storemerge685799, %i.lf
   br i1 %.not686.not, label %.lr.ph802, label %._crit_edge803, !llvm.loop !44
 
-._crit_edge803:                                   ; preds = %.loopexit719, %.preheader721
-  %storemerge685.lcssa = phi i32 [ 1, %.preheader721 ], [ %i.aau, %.loopexit719 ]
+._crit_edge803:                                   ; preds = %.loopexit719, %.loopexit719.thread, %.preheader721
+  %storemerge685.lcssa = phi i32 [ 1, %.preheader721 ], [ %9, %.loopexit719.thread ], [ %i.aau, %.loopexit719 ]
   store i32 %storemerge685.lcssa, ptr %i.f, align 4, !tbaa !137
   %i.aav = load i32, ptr %1, align 4, !tbaa !137
   %i.aaw = add i32 %i.jx, 1

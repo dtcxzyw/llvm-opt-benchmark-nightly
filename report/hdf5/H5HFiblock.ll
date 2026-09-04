@@ -204,14 +204,16 @@ bb.b:                                             ; preds = %bb.a
   %i.p = udiv i32 %1, %i.o                        ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.i, i64 252 ; 2 uses
   %i.r = load i32, ptr %i.q, align 4, !tbaa !76
-  %.not = icmp ne i32 %i.r, 0
+  %.not = icmp eq i32 %i.r, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.i, i64 312
   %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !44 ; 3 uses
-  %4 = icmp ult i32 %i.p, %.pre
-  %or.cond = select i1 %.not, i1 %4, i1 false
-  br i1 %or.cond, label %bb.c, label %._crit_edge
+  br i1 %.not, label %._crit_edge, label %4
 
-bb.c:                                             ; preds = %bb.b
+4:                                                ; preds = %bb.b
+  %5 = icmp ult i32 %i.p, %.pre
+  br i1 %5, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %4
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 352
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !54
   %i.u = getelementptr inbounds nuw [16 x i8], ptr %i.t, i64 %i.l ; 2 uses
@@ -224,7 +226,7 @@ bb.c:                                             ; preds = %bb.b
   %.not104 = icmp ult i32 %i.p, %.pre
   br i1 %.not104, label %bb.e, label %bb.d
 
-bb.d:                                             ; preds = %._crit_edge
+bb.d:                                             ; preds = %4, %._crit_edge
   %i.w = mul i32 %.pre, %i.o
   %i.x = sub i32 %1, %i.w
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 320

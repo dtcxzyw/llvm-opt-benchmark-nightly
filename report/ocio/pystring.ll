@@ -130,22 +130,23 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearE
 
 bb.b:                                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit
   %.not88.i = icmp eq i64 %i.s, 0
-  br i1 %.not88.i, label %._crit_edge.i, label %.preheader.lr.ph.i
+  br i1 %.not88.i, label %_ZN8pystring12_GLOBAL__N_116split_whitespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERSt6vectorIS6_SaIS6_EEi.exit, label %.preheader.lr.ph.i
 
 .preheader.lr.ph.i:                               ; preds = %bb.b
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 10 uses
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %.pre133 = load ptr, ptr %0, align 8, !tbaa !20
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.critedge4.i, %.preheader.lr.ph.i
+  %9 = phi ptr [ %.pre133, %.preheader.lr.ph.i ], [ %10, %.critedge4.i ] ; 5 uses
   %.04284.i = phi i64 [ 0, %.preheader.lr.ph.i ], [ %.4.i, %.critedge4.i ]
-  %.04583.i = phi i32 [ %spec.store.select, %.preheader.lr.ph.i ], [ %.146.i, %.critedge4.i ] ; 4 uses
-  %9 = load ptr, ptr %0, align 8, !tbaa !20       ; 3 uses
+  %.04583.i = phi i32 [ %spec.store.select, %.preheader.lr.ph.i ], [ %.146.i, %.critedge4.i ] ; 3 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.preheader.i
-  %.14374.i = phi i64 [ %.04284.i, %.preheader.i ], [ %i.aa, %bb.d ] ; 13 uses
+  %.14374.i = phi i64 [ %.04284.i, %.preheader.i ], [ %i.aa, %bb.d ] ; 11 uses
   %i.w = getelementptr inbounds nuw i8, ptr %9, i64 %.14374.i
   %i.x = load i8, ptr %i.w, align 1, !tbaa !21
   %i.y = sext i8 %i.x to i32
@@ -161,7 +162,7 @@ bb.d:                                             ; preds = %bb.c
 .critedge.i:                                      ; preds = %bb.c
   %i.ac = getelementptr inbounds nuw i8, ptr %9, i64 %.14374.i ; 2 uses
   %i.ad = icmp ult i64 %.14374.i, %i.s
-  br i1 %i.ad, label %.lr.ph.i, label %.critedge4.i
+  br i1 %i.ad, label %.lr.ph.i, label %_ZN8pystring12_GLOBAL__N_116split_whitespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERSt6vectorIS6_SaIS6_EEi.exit
 
 .lr.ph.i:                                         ; preds = %.critedge.i, %bb.e
   %.24475.i = phi i64 [ %i.ai, %bb.e ], [ %.14374.i, %.critedge.i ] ; 3 uses
@@ -178,12 +179,12 @@ bb.e:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %.critedge2.i, label %.lr.ph.i, !llvm.loop !32
 
 .critedge2.i:                                     ; preds = %bb.e, %.lr.ph.i
-  %.244.lcssa.i = phi i64 [ %.24475.i, %.lr.ph.i ], [ %i.s, %bb.e ] ; 7 uses
+  %.244.lcssa.i = phi i64 [ %.24475.i, %.lr.ph.i ], [ %i.s, %bb.e ] ; 5 uses
   %i.aj = icmp ult i64 %.14374.i, %.244.lcssa.i
   br i1 %i.aj, label %bb.f, label %.critedge4.i
 
 bb.f:                                             ; preds = %.critedge2.i
-  %i.ak = add nsw i32 %.04583.i, -1               ; 2 uses
+  %i.ak = add nsw i32 %.04583.i, -1
   %i.al = icmp slt i32 %.04583.i, 1
   br i1 %i.al, label %._crit_edge.i, label %bb.g
 
@@ -291,10 +292,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit.thread.i, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   %i.bn = icmp ult i64 %.244.lcssa.i, %i.s
-  br i1 %i.bn, label %.lr.ph79.i, label %.critedge4.i
+  br i1 %i.bn, label %.lr.ph79.i, label %_ZN8pystring12_GLOBAL__N_116split_whitespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERSt6vectorIS6_SaIS6_EEi.exit
 
 .lr.ph79.i:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
-  %i.bo = load ptr, ptr %0, align 8, !tbaa !20
+  %i.bo = load ptr, ptr %0, align 8, !tbaa !20    ; 2 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.o, %.lr.ph79.i
@@ -328,15 +329,17 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53.i: ; preds = %b
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   br label %common.resume
 
-.critedge4.i:                                     ; preds = %bb.n, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %.critedge2.i, %.critedge.i
-  %.146.i = phi i32 [ %.04583.i, %.critedge2.i ], [ %i.ak, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ %.04583.i, %.critedge.i ], [ %i.ak, %bb.n ]
-  %.4.i = phi i64 [ %.244.lcssa.i, %.critedge2.i ], [ %.244.lcssa.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ %.14374.i, %.critedge.i ], [ %.378.i, %bb.n ] ; 2 uses
-  %.1.i = phi i64 [ %.14374.i, %.critedge2.i ], [ %.244.lcssa.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ %.14374.i, %.critedge.i ], [ %.378.i, %bb.n ]
+.critedge4.i:                                     ; preds = %bb.n, %.critedge2.i
+  %10 = phi ptr [ %9, %.critedge2.i ], [ %i.bo, %bb.n ] ; 2 uses
+  %.146.i = phi i32 [ %.04583.i, %.critedge2.i ], [ %i.ak, %bb.n ]
+  %.4.i = phi i64 [ %.244.lcssa.i, %.critedge2.i ], [ %.378.i, %bb.n ] ; 2 uses
+  %.1.i = phi i64 [ %.14374.i, %.critedge2.i ], [ %.378.i, %bb.n ]
   %i.bz = icmp ult i64 %.4.i, %i.s
   br i1 %i.bz, label %.preheader.i, label %._crit_edge.i, !llvm.loop !36
 
-._crit_edge.i:                                    ; preds = %.critedge4.i, %bb.f, %bb.b
-  %.2.i = phi i64 [ 0, %bb.b ], [ %.1.i, %.critedge4.i ], [ %.14374.i, %bb.f ] ; 5 uses
+._crit_edge.i:                                    ; preds = %.critedge4.i, %bb.f
+  %11 = phi ptr [ %9, %bb.f ], [ %10, %.critedge4.i ]
+  %.2.i = phi i64 [ %.14374.i, %bb.f ], [ %.1.i, %.critedge4.i ] ; 5 uses
   %i.ca = icmp ult i64 %.2.i, %i.s
   br i1 %i.ca, label %bb.q, label %_ZN8pystring12_GLOBAL__N_116split_whitespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERSt6vectorIS6_SaIS6_EEi.exit
 
@@ -354,8 +357,7 @@ bb.r:                                             ; preds = %bb.q
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i54.i: ; preds = %bb.q
   %i.cd = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 10 uses
   store ptr %i.cd, ptr %5, align 8, !tbaa !24, !alias.scope !47
-  %10 = load ptr, ptr %0, align 8, !tbaa !20, !noalias !47
-  %i.ce = getelementptr inbounds nuw i8, ptr %10, i64 %.2.i ; 2 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %11, i64 %.2.i ; 2 uses
   %i.cf = call i64 @llvm.umin.i64(i64 %i.s, i64 %i.cb)
   %spec.select.i.i.i55.i = sub nuw i64 %i.cf, %.2.i ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #24, !noalias !47
@@ -395,8 +397,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm.exit58.i: ; pre
   store i8 0, ptr %i.co, align 1, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #24, !noalias !47
   %i.cp = load ptr, ptr %i.g, align 8, !tbaa !15  ; 6 uses
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.cq = load ptr, ptr %11, align 8, !tbaa !26
+  %i.cq = load ptr, ptr %i.v, align 8, !tbaa !26
   %.not.i.i59.i = icmp eq ptr %i.cp, %i.cq
   br i1 %.not.i.i59.i, label %bb.w, label %bb.u
 
@@ -799,7 +800,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit70: ; preds = %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
   br label %_ZN8pystring12_GLOBAL__N_116split_whitespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERSt6vectorIS6_SaIS6_EEi.exit
 
-_ZN8pystring12_GLOBAL__N_116split_whitespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERSt6vectorIS6_SaIS6_EEi.exit: ; preds = %bb.d, %bb.o, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66.i, %._crit_edge.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit70
+_ZN8pystring12_GLOBAL__N_116split_whitespaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERSt6vectorIS6_SaIS6_EEi.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %.critedge.i, %bb.d, %bb.o, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit66.i, %._crit_edge.i, %bb.b, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit70
   ret void
 
 bb.ax:                                            ; preds = %bb.aw

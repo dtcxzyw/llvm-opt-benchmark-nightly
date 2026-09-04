@@ -33,7 +33,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   store ptr %1, ptr %i.b, align 8, !tbaa !16
   %i.g = sext i32 %2 to i64                       ; 9 uses
-  %i.h = getelementptr i8, ptr %1, i64 %i.g       ; 40 uses
+  %i.h = getelementptr i8, ptr %1, i64 %i.g       ; 39 uses
   store i32 0, ptr %4, align 4, !tbaa !17
   %i.i = load i32, ptr %0, align 8, !tbaa !21     ; 9 uses
   %i.j = and i32 %i.i, 4
@@ -436,7 +436,7 @@ bb.ci:                                            ; preds = %bb.ch
 
 bb.cj:                                            ; preds = %bb.cg
   %i.lu = load i8, ptr %i.lp, align 1, !tbaa !23  ; 2 uses
-  switch i8 %i.lu, label %5 [
+  switch i8 %i.lu, label %bb.cn [
     i8 43, label %bb.ck
     i8 45, label %bb.ck
   ]
@@ -445,7 +445,7 @@ bb.ck:                                            ; preds = %bb.cj, %bb.cj
   %i.lv = getelementptr inbounds nuw i8, ptr %i.lg, i64 2 ; 3 uses
   store ptr %i.lv, ptr %i.b, align 8, !tbaa !16
   %i.lw = icmp eq ptr %i.lv, %i.h
-  br i1 %i.lw, label %bb.cl, label %5
+  br i1 %i.lw, label %bb.cl, label %bb.cn
 
 bb.cl:                                            ; preds = %bb.ck
   br i1 %i.k, label %.split612, label %bb.cm
@@ -460,26 +460,22 @@ bb.cm:                                            ; preds = %bb.cl
   %i.lz = load double, ptr %i.ly, align 8, !tbaa !25
   br label %.thread370
 
-5:                                                ; preds = %bb.cj, %bb.ck
-  %.promoted488 = phi ptr [ %i.lv, %bb.ck ], [ %i.lp, %bb.cj ] ; 5 uses
-  %.0184 = phi i8 [ %i.lu, %bb.ck ], [ 43, %bb.cj ]
-  %6 = icmp eq ptr %.promoted488, %i.h
-  br i1 %6, label %bb.co, label %bb.cn
-
-bb.cn:                                            ; preds = %5
-  %i.ma = load i8, ptr %.promoted488, align 1, !tbaa !23 ; 2 uses
+bb.cn:                                            ; preds = %bb.cj, %bb.ck
+  %.0184608 = phi i8 [ %i.lu, %bb.ck ], [ 43, %bb.cj ]
+  %.promoted488607 = phi ptr [ %i.lv, %bb.ck ], [ %i.lp, %bb.cj ] ; 4 uses
+  %i.ma = load i8, ptr %.promoted488607, align 1, !tbaa !23 ; 2 uses
   %i.mb = add i8 %i.ma, -58
   %or.cond230 = icmp ult i8 %i.mb, -10
   br i1 %or.cond230, label %bb.co, label %.preheader
 
 .preheader:                                       ; preds = %bb.cn
   %i.mc = add i64 %i.a, %i.g
-  %.promoted488541 = ptrtoaddr ptr %.promoted488 to i64
+  %.promoted488541 = ptrtoaddr ptr %.promoted488607 to i64
   %i.md = sub i64 %i.mc, %.promoted488541
-  %scevgep542 = getelementptr i8, ptr %.promoted488, i64 %i.md
+  %scevgep542 = getelementptr i8, ptr %.promoted488607, i64 %i.md
   br label %bb.cq
 
-bb.co:                                            ; preds = %bb.cn, %5
+bb.co:                                            ; preds = %bb.cn
   br i1 %i.k, label %.split613, label %bb.cp
 
 .split613:                                        ; preds = %bb.co
@@ -494,7 +490,7 @@ bb.cp:                                            ; preds = %bb.co
 
 bb.cq:                                            ; preds = %.preheader, %bb.cu
   %i.mh = phi i8 [ %i.mr, %bb.cu ], [ %i.ma, %.preheader ] ; 2 uses
-  %i.mi = phi ptr [ %i.mq, %bb.cu ], [ %.promoted488, %.preheader ]
+  %i.mi = phi ptr [ %i.mq, %bb.cu ], [ %.promoted488607, %.preheader ]
   %.0182 = phi i32 [ %.1183, %bb.cu ], [ 0, %.preheader ] ; 3 uses
   %i.mj = zext nneg i8 %i.mh to i32
   %i.mk = icmp sgt i32 %.0182, 107374181
@@ -527,7 +523,7 @@ bb.cu:                                            ; preds = %bb.ct
 bb.cv:                                            ; preds = %bb.ct, %bb.cu
   %.lcssa505 = phi ptr [ %scevgep542, %bb.ct ], [ %i.mq, %bb.cu ] ; 2 uses
   store ptr %.lcssa505, ptr %i.b, align 8, !tbaa !16
-  %i.mt = icmp eq i8 %.0184, 45
+  %i.mt = icmp eq i8 %.0184608, 45
   %i.mu = sub nsw i32 0, %.1183
   %i.mv = select i1 %i.mt, i32 %i.mu, i32 %.1183
   %i.mw = add nsw i32 %i.mv, %.4161
@@ -787,7 +783,7 @@ bb.a:
   store ptr %1, ptr %i.a, align 8, !tbaa !40
   %i.f = sext i32 %2 to i64
   %.idx = shl nsw i64 %i.f, 1
-  %i.g = getelementptr i8, ptr %1, i64 %.idx      ; 37 uses
+  %i.g = getelementptr i8, ptr %1, i64 %.idx      ; 36 uses
   store i32 0, ptr %4, align 4, !tbaa !17
   %i.h = load i32, ptr %0, align 8, !tbaa !21     ; 9 uses
   %i.i = and i32 %i.h, 4
@@ -1190,7 +1186,7 @@ bb.ci:                                            ; preds = %bb.ch
 
 bb.cj:                                            ; preds = %bb.cg
   %i.kr = load i16, ptr %i.km, align 2, !tbaa !41 ; 2 uses
-  switch i16 %i.kr, label %5 [
+  switch i16 %i.kr, label %bb.cn [
     i16 43, label %bb.ck
     i16 45, label %bb.ck
   ]
@@ -1199,7 +1195,7 @@ bb.ck:                                            ; preds = %bb.cj, %bb.cj
   %i.ks = zext nneg i16 %i.kr to i32
   %i.kt = getelementptr inbounds nuw i8, ptr %i.kd, i64 4 ; 2 uses
   %i.ku = icmp eq ptr %i.kt, %i.g
-  br i1 %i.ku, label %bb.cl, label %5
+  br i1 %i.ku, label %bb.cl, label %bb.cn
 
 bb.cl:                                            ; preds = %bb.ck
   br i1 %i.j, label %.split606, label %bb.cm
@@ -1214,19 +1210,15 @@ bb.cm:                                            ; preds = %bb.cl
   %i.kx = load double, ptr %i.kw, align 8, !tbaa !25
   br label %.thread370
 
-5:                                                ; preds = %bb.cj, %bb.ck
-  %.promoted488 = phi ptr [ %i.kt, %bb.ck ], [ %i.km, %bb.cj ] ; 3 uses
-  %.0184 = phi i32 [ %i.ks, %bb.ck ], [ 43, %bb.cj ]
-  %6 = icmp eq ptr %.promoted488, %i.g
-  br i1 %6, label %bb.co, label %bb.cn
-
-bb.cn:                                            ; preds = %5
-  %i.ky = load i16, ptr %.promoted488, align 2, !tbaa !41 ; 2 uses
+bb.cn:                                            ; preds = %bb.cj, %bb.ck
+  %.0184602 = phi i32 [ %i.ks, %bb.ck ], [ 43, %bb.cj ]
+  %.promoted488601 = phi ptr [ %i.kt, %bb.ck ], [ %i.km, %bb.cj ] ; 2 uses
+  %i.ky = load i16, ptr %.promoted488601, align 2, !tbaa !41 ; 2 uses
   %i.kz = add i16 %i.ky, -58
   %or.cond230 = icmp ult i16 %i.kz, -10
   br i1 %or.cond230, label %bb.co, label %.preheader
 
-bb.co:                                            ; preds = %bb.cn, %5
+bb.co:                                            ; preds = %bb.cn
   br i1 %i.j, label %.split607, label %bb.cp
 
 .split607:                                        ; preds = %bb.co
@@ -1241,7 +1233,7 @@ bb.cp:                                            ; preds = %bb.co
 
 .preheader:                                       ; preds = %bb.cn, %bb.ct
   %i.ld = phi i16 [ %i.ln, %bb.ct ], [ %i.ky, %bb.cn ] ; 2 uses
-  %i.le = phi ptr [ %i.lm, %bb.ct ], [ %.promoted488, %bb.cn ]
+  %i.le = phi ptr [ %i.lm, %bb.ct ], [ %.promoted488601, %bb.cn ]
   %.0182 = phi i32 [ %.1183, %bb.ct ], [ 0, %bb.cn ] ; 3 uses
   %i.lf = zext nneg i16 %i.ld to i32
   %i.lg = icmp sgt i32 %.0182, 107374181
@@ -1273,7 +1265,7 @@ bb.ct:                                            ; preds = %bb.cs
 
 bb.cu:                                            ; preds = %bb.cs, %bb.ct
   store ptr %i.lm, ptr %i.a, align 8, !tbaa !40
-  %sext.mask = and i32 %.0184, 255
+  %sext.mask = and i32 %.0184602, 255
   %i.lp = icmp eq i32 %sext.mask, 45
   %i.lq = sub nsw i32 0, %.1183
   %i.lr = select i1 %i.lp, i32 %i.lq, i32 %.1183

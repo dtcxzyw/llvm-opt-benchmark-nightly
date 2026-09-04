@@ -132,7 +132,7 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 48 ; 4 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !26   ; 6 uses
   %i.p = icmp ult ptr %i.m, %i.o
-  br i1 %i.p, label %.lr.ph.preheader.i, label %buf_skip_eol.exit
+  br i1 %i.p, label %.lr.ph.preheader.i, label %.loopexit
 
 .lr.ph.preheader.i:                               ; preds = %.critedge
   %i.q = ptrtoaddr ptr %i.o to i64
@@ -152,8 +152,8 @@ bb.c:                                             ; preds = %.lr.ph.i
   %exitcond.not.i = icmp eq ptr %i.u, %i.o
   br i1 %exitcond.not.i, label %buf_skip_eol.exit, label %.lr.ph.i, !llvm.loop !33
 
-buf_skip_eol.exit:                                ; preds = %.lr.ph.i, %bb.c, %.critedge
-  %.0.lcssa.i = phi ptr [ %i.m, %.critedge ], [ %scevgep.i, %bb.c ], [ %.07.i, %.lr.ph.i ] ; 4 uses
+buf_skip_eol.exit:                                ; preds = %.lr.ph.i, %bb.c
+  %.0.lcssa.i = phi ptr [ %scevgep.i, %bb.c ], [ %.07.i, %.lr.ph.i ] ; 5 uses
   store ptr %.0.lcssa.i, ptr %i.l, align 8, !tbaa !25
   %i.v = icmp ult ptr %.0.lcssa.i, %i.o
   br i1 %i.v, label %.lr.ph.i99, label %.loopexit
@@ -173,9 +173,10 @@ bb.d:                                             ; preds = %.lr.ph.i99
   %exitcond.not.i100 = icmp eq ptr %i.x, %i.o
   br i1 %exitcond.not.i100, label %.loopexit, label %.lr.ph.i99, !llvm.loop !34
 
-.loopexit:                                        ; preds = %bb.d, %buf_skip_eol.exit
+.loopexit:                                        ; preds = %bb.d, %.critedge, %buf_skip_eol.exit
+  %.0.lcssa.i121.ph = phi ptr [ %i.m, %.critedge ], [ %.0.lcssa.i, %buf_skip_eol.exit ], [ %.0.lcssa.i, %bb.d ]
   %i.z = ptrtoint ptr %i.o to i64                 ; 2 uses
-  %i.aa = ptrtoint ptr %.0.lcssa.i to i64
+  %i.aa = ptrtoint ptr %.0.lcssa.i121.ph to i64
   %i.ab = sub i64 %i.z, %i.aa                     ; 5 uses
   %i.ac = trunc i64 %i.ab to i32
   %i.ad = icmp sgt i32 %i.ac, 0

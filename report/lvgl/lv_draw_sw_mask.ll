@@ -205,8 +205,8 @@ bb.ah:                                            ; preds = %bb.ag, %.thread134.
 
 bb.ai:                                            ; preds = %bb.an, %bb.ah
   %i.co = phi i32 [ %.pre.i, %bb.ah ], [ %i.di, %bb.an ] ; 3 uses
-  %.1101.i = phi i32 [ %.0100136.i, %bb.ah ], [ %i.dj, %bb.an ] ; 4 uses
-  %.198.i = phi i32 [ %.097.i, %bb.ah ], [ %i.dk, %bb.an ] ; 5 uses
+  %.1101.i = phi i32 [ %.0100136.i, %bb.ah ], [ %i.dj, %bb.an ] ; 5 uses
+  %.198.i = phi i32 [ %.097.i, %bb.ah ], [ %i.dk, %bb.an ] ; 9 uses
   %i.cp = icmp sgt i32 %.1101.i, %i.co
   br i1 %i.cp, label %bb.aj, label %bb.ao
 
@@ -251,35 +251,33 @@ mask_mix.exit130.i:                               ; preds = %bb.am, %bb.al, %bb.
 
 bb.an:                                            ; preds = %mask_mix.exit130.i, %bb.aj
   %i.di = phi i32 [ %.pre142.i, %mask_mix.exit130.i ], [ %i.co, %bb.aj ] ; 2 uses
-  %i.dj = sub nsw i32 %.1101.i, %i.di             ; 2 uses
+  %i.dj = sub nsw i32 %.1101.i, %i.di
   %i.dk = add nsw i32 %.198.i, 1                  ; 3 uses
   %.not119.i = icmp slt i32 %i.dk, %3
-  br i1 %.not119.i, label %bb.ai, label %bb.ao, !llvm.loop !58
+  br i1 %.not119.i, label %bb.ai, label %bb.as, !llvm.loop !58
 
-bb.ao:                                            ; preds = %bb.an, %bb.ai
-  %.2102.i = phi i32 [ %i.dj, %bb.an ], [ %.1101.i, %bb.ai ] ; 2 uses
-  %.299.i = phi i32 [ %i.dk, %bb.an ], [ %.198.i, %bb.ai ] ; 5 uses
-  %i.dl = icmp slt i32 %.299.i, %3
-  %i.dm = icmp sgt i32 %.299.i, -1
+bb.ao:                                            ; preds = %bb.ai
+  %i.dl = icmp slt i32 %.198.i, %3
+  %i.dm = icmp sgt i32 %.198.i, -1
   %or.cond.i = and i1 %i.dl, %i.dm
-  %.pre73 = load i8, ptr %i.j, align 4            ; 2 uses
   br i1 %or.cond.i, label %bb.ap, label %bb.as
 
 bb.ap:                                            ; preds = %bb.ao
   %i.dn = getelementptr inbounds nuw i8, ptr %4, i64 44
   %i.do = load i32, ptr %i.dn, align 4, !tbaa !26
-  %i.dp = mul nsw i32 %i.do, %.2102.i
+  %i.dp = mul nsw i32 %i.do, %.1101.i
   %i.dq = lshr i32 %i.dp, 10
-  %i.dr = mul i32 %i.dq, %.2102.i
+  %i.dr = mul i32 %i.dq, %.1101.i
   %i.ds = lshr i32 %i.dr, 9
   %i.dt = load i32, ptr %i.ag, align 8, !tbaa !25
   %.lobit138.i = ashr i32 %i.dt, 31
   %.2139.i = xor i32 %i.ds, %.lobit138.i
   %.2.i = trunc i32 %.2139.i to i8
-  %i.du = shl i8 %.pre73, 6
+  %5 = load i8, ptr %i.j, align 4
+  %i.du = shl i8 %5, 6
   %sext140.i = ashr i8 %i.du, 7
   %.3.i = xor i8 %sext140.i, %.2.i                ; 3 uses
-  %i.dv = zext nneg i32 %.299.i to i64
+  %i.dv = zext nneg i32 %.198.i to i64
   %i.dw = getelementptr inbounds nuw i8, ptr %0, i64 %i.dv ; 2 uses
   %i.dx = load i8, ptr %i.dw, align 1, !tbaa !29  ; 2 uses
   %i.dy = zext i8 %.3.i to i32
@@ -301,12 +299,12 @@ bb.ar:                                            ; preds = %bb.aq
 mask_mix.exit132.i:                               ; preds = %bb.ar, %bb.aq, %bb.ap
   %.0.i131.i = phi i8 [ %i.ef, %bb.ar ], [ %i.dx, %bb.ap ], [ 0, %bb.aq ]
   store i8 %.0.i131.i, ptr %i.dw, align 1, !tbaa !29
-  %.pre = load i8, ptr %i.j, align 4
   br label %bb.as
 
-bb.as:                                            ; preds = %mask_mix.exit132.i, %bb.ao
-  %5 = phi i8 [ %.pre, %mask_mix.exit132.i ], [ %.pre73, %bb.ao ]
-  %i.eg = and i8 %5, 2
+bb.as:                                            ; preds = %bb.an, %mask_mix.exit132.i, %bb.ao
+  %.299141.i = phi i32 [ %.198.i, %bb.ao ], [ %.198.i, %mask_mix.exit132.i ], [ %i.dk, %bb.an ] ; 2 uses
+  %6 = load i8, ptr %i.j, align 4
+  %i.eg = and i8 %6, 2
   %.not121.i = icmp eq i8 %i.eg, 0
   br i1 %.not121.i, label %bb.aw, label %bb.at
 
@@ -324,8 +322,8 @@ bb.av:                                            ; preds = %bb.au
   br label %line_mask_flat.exit
 
 bb.aw:                                            ; preds = %bb.as
-  %i.ek = add nsw i32 %.299.i, 1                  ; 3 uses
-  %i.el = icmp slt i32 %.299.i, -1
+  %i.ek = add nsw i32 %.299141.i, 1               ; 3 uses
+  %i.el = icmp slt i32 %.299141.i, -1
   br i1 %i.el, label %line_mask_flat.exit, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw

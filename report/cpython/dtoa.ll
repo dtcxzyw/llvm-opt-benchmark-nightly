@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.ad, %bb.af, %.thread, %bb.y
   %i.eu = phi i32 [ %i.ds, %bb.ad ], [ %i.ds, %bb.af ], [ %i.ds, %.thread ], [ %i.di, %bb.y ]
   %.0415.lcssa1123 = phi i32 [ %.0415.lcssa1124, %bb.ad ], [ %.0415.lcssa1124, %bb.af ], [ %.0415.lcssa1124, %.thread ], [ %.0415.lcssa.ph, %bb.y ] ; 3 uses
-  %.0449.lcssa11111121 = phi i32 [ %.0449.lcssa11111122, %bb.ad ], [ %.0449.lcssa11111122, %bb.af ], [ %.0449.lcssa11111122, %.thread ], [ %.04491394, %bb.y ] ; 20 uses
+  %.0449.lcssa11111121 = phi i32 [ %.0449.lcssa11111122, %bb.ad ], [ %.0449.lcssa11111122, %bb.af ], [ %.0449.lcssa11111122, %.thread ], [ %.04491394, %bb.y ] ; 19 uses
   %i.ev = phi i32 [ %i.dt, %bb.ad ], [ %i.dt, %bb.af ], [ %i.dt, %.thread ], [ %i.ck, %bb.y ] ; 4 uses
   %spec.select56811141119 = phi i32 [ %spec.select56811141120, %bb.ad ], [ %spec.select56811141120, %bb.af ], [ %spec.select56811141120, %.thread ], [ %spec.select5681110, %bb.y ] ; 20 uses
   %i.ew = phi double [ %i.du, %bb.ad ], [ %i.du, %bb.af ], [ %i.du, %.thread ], [ %i.dq, %bb.y ] ; 4 uses
@@ -608,7 +608,7 @@ bb.fo:                                            ; preds = %bb.fm
   br i1 %or.cond20, label %.thread680, label %bb.fp
 
 bb.fp:                                            ; preds = %bb.fo
-  br i1 %i.qa, label %cmp.exit618.thread, label %bb.gu
+  br i1 %i.qa, label %bb.gq, label %bb.gu
 
 bb.fq:                                            ; preds = %bb.fn
   %i.acr = fcmp olt double %i.acj, 1.000000e+00
@@ -835,18 +835,20 @@ bb.gp:                                            ; preds = %Bfree.exit644
   store ptr %i.vi, ptr %i.afw, align 8, !tbaa !27
   br label %Bfree.exit646.backedge
 
-cmp.exit618.thread:                               ; preds = %bb.gf, %bb.ge, %bb.eg, %bb.ea, %bb.ef, %.thread677, %bb.fp, %bb.er, %.thread679, %bb.eq, %bb.ep, %cmp.exit618, %bb.dy, %bb.dz, %.loopexit1162, %cmp.exit618.thread675._crit_edge, %bb.en, %bb.dw
-  %.0449659 = phi i32 [ %.0449.lcssa11111121, %.loopexit1162 ], [ %.0449658672, %bb.dy ], [ %.0449658672, %bb.dz ], [ %.0449.lcssa11111121, %bb.dw ], [ %.0449658673, %bb.ep ], [ %.0449.lcssa11111121, %bb.fp ], [ %.0449658673, %cmp.exit618.thread675._crit_edge ], [ %.0449658672, %cmp.exit618 ], [ %.0449658672, %bb.ea ], [ %.0449.lcssa11111121, %bb.en ], [ %.0449.lcssa11111121, %bb.er ], [ %.0449.lcssa11111121, %.thread679 ], [ %.0449658672, %bb.ef ], [ %.0449.lcssa11111121, %bb.eq ], [ %.0449658672, %bb.eg ], [ %.0449.lcssa11111121, %.thread677 ], [ %.0449.lcssa11111121, %bb.ge ], [ %.0449.lcssa11111121, %bb.gf ]
-  %.2 = phi ptr [ %i.vi, %.loopexit1162 ], [ %i.vi, %bb.dy ], [ %i.vi, %bb.dz ], [ %i.vi, %bb.dw ], [ %.1384, %bb.ep ], [ %i.vi, %bb.fp ], [ %.1384, %cmp.exit618.thread675._crit_edge ], [ %i.xc, %cmp.exit618 ], [ %i.vi, %bb.ea ], [ %i.vi, %bb.en ], [ %i.vi, %bb.er ], [ %i.vi, %.thread679 ], [ %i.xc, %bb.ef ], [ %i.vi, %bb.eq ], [ %i.xc, %bb.eg ], [ %i.vi, %.thread677 ], [ %i.vi, %bb.ge ], [ %i.vi, %bb.gf ] ; 3 uses
+cmp.exit618.thread:                               ; preds = %bb.gf, %bb.ge, %bb.eg, %bb.ea, %bb.ef, %.thread677, %bb.er, %.thread679, %bb.eq, %bb.ep, %cmp.exit618, %bb.dy, %bb.dz, %.loopexit1162, %cmp.exit618.thread675._crit_edge, %bb.en, %bb.dw
+  %.0449659 = phi i32 [ %.0449.lcssa11111121, %.loopexit1162 ], [ %.0449658672, %bb.dy ], [ %.0449658672, %bb.dz ], [ %.0449.lcssa11111121, %bb.dw ], [ %.0449658673, %bb.ep ], [ %.0449.lcssa11111121, %.thread677 ], [ %.0449658673, %cmp.exit618.thread675._crit_edge ], [ %.0449658672, %cmp.exit618 ], [ %.0449658672, %bb.ea ], [ %.0449.lcssa11111121, %bb.en ], [ %.0449.lcssa11111121, %bb.er ], [ %.0449.lcssa11111121, %.thread679 ], [ %.0449658672, %bb.ef ], [ %.0449.lcssa11111121, %bb.eq ], [ %.0449658672, %bb.eg ], [ %.0449.lcssa11111121, %bb.ge ], [ %.0449.lcssa11111121, %bb.gf ]
+  %.2 = phi ptr [ %i.vi, %.loopexit1162 ], [ %i.vi, %bb.dy ], [ %i.vi, %bb.dz ], [ %i.vi, %bb.dw ], [ %.1384, %bb.ep ], [ %i.vi, %.thread677 ], [ %.1384, %cmp.exit618.thread675._crit_edge ], [ %i.xc, %cmp.exit618 ], [ %i.vi, %bb.ea ], [ %i.vi, %bb.en ], [ %i.vi, %bb.er ], [ %i.vi, %.thread679 ], [ %i.xc, %bb.ef ], [ %i.vi, %bb.eq ], [ %i.xc, %bb.eg ], [ %i.vi, %bb.ge ], [ %i.vi, %bb.gf ] ; 2 uses
   %i.afy = icmp sgt i32 %.0449659, %.04441137
   br i1 %i.afy, label %bb.gq, label %bb.gr
 
-bb.gq:                                            ; preds = %cmp.exit618.thread
+bb.gq:                                            ; preds = %bb.fp, %cmp.exit618.thread
+  %.2686 = phi ptr [ %.2, %cmp.exit618.thread ], [ %i.vi, %bb.fp ] ; 2 uses
   %i.afz = call fastcc i32 @bigcomp(ptr noundef %2, ptr noundef %.1429, ptr noundef %3)
   %.not562 = icmp eq i32 %i.afz, 0
   br i1 %.not562, label %bb.gr, label %s2b.exit.thread
 
 bb.gr:                                            ; preds = %bb.gq, %cmp.exit618.thread
+  %.2685 = phi ptr [ %.2686, %bb.gq ], [ %.2, %cmp.exit618.thread ] ; 2 uses
   %.pre1029 = load double, ptr %2, align 8        ; 2 uses
   br i1 %i.qe, label %bb.gt, label %bb.gs
 
@@ -860,7 +862,7 @@ bb.gs:                                            ; preds = %bb.gr
   %.2399.ph = phi ptr [ %.1398, %bb.gs ], [ null, %bb.ag ], [ null, %bb.ae ], [ null, %bb.ac ]
   %.0393.ph = phi ptr [ %.031.i, %bb.gs ], [ null, %bb.ag ], [ null, %bb.ae ], [ null, %bb.ac ]
   %.3388.ph = phi ptr [ %.2387, %bb.gs ], [ null, %bb.ag ], [ null, %bb.ae ], [ null, %bb.ac ]
-  %.3.ph = phi ptr [ %.2, %bb.gs ], [ null, %bb.ag ], [ null, %bb.ae ], [ null, %bb.ac ]
+  %.3.ph = phi ptr [ %.2685, %bb.gs ], [ null, %bb.ag ], [ null, %bb.ae ], [ null, %bb.ac ]
   store double %.sink, ptr %2, align 8, !tbaa !11
   br label %bb.gt
 
@@ -870,7 +872,7 @@ bb.gt:                                            ; preds = %.sink.split, %bb.gr
   %.2399 = phi ptr [ %.1398, %bb.gr ], [ null, %bb.t ], [ null, %bb.z ], [ %.2399.ph, %.sink.split ]
   %.0393 = phi ptr [ %.031.i, %bb.gr ], [ null, %bb.t ], [ null, %bb.z ], [ %.0393.ph, %.sink.split ]
   %.3388 = phi ptr [ %.2387, %bb.gr ], [ null, %bb.t ], [ null, %bb.z ], [ %.3388.ph, %.sink.split ]
-  %.3 = phi ptr [ %.2, %bb.gr ], [ null, %bb.t ], [ null, %bb.z ], [ %.3.ph, %.sink.split ]
+  %.3 = phi ptr [ %.2685, %bb.gr ], [ null, %bb.t ], [ null, %bb.z ], [ %.3.ph, %.sink.split ]
   %i.agc = fneg double %i.agb
   %i.agd = select i1 %.1439, double %i.agb, double %i.agc
   br label %bb.gv
@@ -880,7 +882,7 @@ s2b.exit.thread:                                  ; preds = %.lr.ph49.i, %.lr.ph
   %.4408 = phi ptr [ null, %.lr.ph57.i ], [ %.2406, %bb.da ], [ %i.rw, %Bfree.exit.i ], [ %.2406, %Bfree.exit.i601 ], [ null, %bb.bp ], [ %.2406, %bb.gq ], [ %.2406, %bb.eb ], [ %i.rw, %bb.cl ], [ %i.rw, %bb.ch ], [ null, %bb.ca ], [ null, %Bfree.exit ], [ %.2406, %bb.dn ], [ %.2406, %bb.dm ], [ %.2406, %bb.dk ], [ %.2406, %pow5mult.exit605 ], [ null, %bb.cx ], [ %i.rw, %pow5mult.exit ], [ null, %bb.cc ], [ null, %.lr.ph49.i ]
   %.3400 = phi ptr [ null, %.lr.ph57.i ], [ null, %bb.da ], [ %.1.i, %Bfree.exit.i ], [ null, %Bfree.exit.i601 ], [ null, %bb.bp ], [ %.1398, %bb.gq ], [ %.1398, %bb.eb ], [ %.1.i, %bb.cl ], [ %.1.i, %bb.ch ], [ null, %bb.ca ], [ %.1.i, %Bfree.exit ], [ %.1398, %bb.dn ], [ %.1398, %bb.dm ], [ null, %bb.dk ], [ null, %pow5mult.exit605 ], [ %.1.i, %bb.cx ], [ %.1.i, %pow5mult.exit ], [ %.1.i, %bb.cc ], [ null, %.lr.ph49.i ]
   %.4389 = phi ptr [ null, %.lr.ph57.i ], [ %.1386, %bb.da ], [ null, %Bfree.exit.i ], [ %.1386, %Bfree.exit.i601 ], [ null, %bb.bp ], [ %.2387, %bb.gq ], [ %.2387, %bb.eb ], [ null, %bb.cl ], [ null, %bb.ch ], [ null, %bb.ca ], [ %.120.i667, %Bfree.exit ], [ %.2387, %bb.dn ], [ null, %bb.dm ], [ %.1386, %bb.dk ], [ %.1386, %pow5mult.exit605 ], [ %.1386, %bb.cx ], [ null, %pow5mult.exit ], [ null, %bb.cc ], [ null, %.lr.ph49.i ]
-  %.4 = phi ptr [ null, %.lr.ph57.i ], [ null, %bb.da ], [ null, %Bfree.exit.i ], [ null, %Bfree.exit.i601 ], [ null, %bb.bp ], [ %.2, %bb.gq ], [ null, %bb.eb ], [ null, %bb.cc ], [ null, %pow5mult.exit ], [ null, %bb.cx ], [ null, %pow5mult.exit605 ], [ null, %bb.dk ], [ null, %bb.dm ], [ null, %bb.dn ], [ null, %Bfree.exit ], [ null, %bb.ca ], [ null, %bb.ch ], [ null, %bb.cl ], [ null, %.lr.ph49.i ]
+  %.4 = phi ptr [ null, %.lr.ph57.i ], [ null, %bb.da ], [ null, %Bfree.exit.i ], [ null, %Bfree.exit.i601 ], [ null, %bb.bp ], [ %.2686, %bb.gq ], [ null, %bb.eb ], [ null, %bb.cc ], [ null, %pow5mult.exit ], [ null, %bb.cx ], [ null, %pow5mult.exit605 ], [ null, %bb.dk ], [ null, %bb.dm ], [ null, %bb.dn ], [ null, %Bfree.exit ], [ null, %bb.ca ], [ null, %bb.ch ], [ null, %bb.cl ], [ null, %.lr.ph49.i ]
   %i.age = tail call ptr @__errno_location() #12
   store i32 12, ptr %i.age, align 4, !tbaa !10
   br label %bb.gv

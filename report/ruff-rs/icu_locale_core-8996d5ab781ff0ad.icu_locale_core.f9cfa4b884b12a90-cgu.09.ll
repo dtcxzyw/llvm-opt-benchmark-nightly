@@ -204,13 +204,12 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.bb, label %_RNvXse_NtNtNtCslrJNpMdrWwK_15icu_locale_core10extensions7unicode3keyNtB5_3KeyNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit.thread.i.i, label %_RNvXse_NtNtNtCslrJNpMdrWwK_15icu_locale_core10extensions7unicode3keyNtB5_3KeyNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit.i.i
 
 _RNvXse_NtNtNtCslrJNpMdrWwK_15icu_locale_core10extensions7unicode3keyNtB5_3KeyNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit.i.i: ; preds = %bb.u, %bb.t
-  %.val16.i.lcssa.i.i.i.i = phi i8 [ %i.av, %bb.t ], [ %.val2.i.i, %bb.u ] ; 2 uses
-  %.val17.i.lcssa.i.i.i.i = phi i8 [ %i.ax, %bb.t ], [ %.val4.i.i, %bb.u ] ; 2 uses
+  %.val16.i.lcssa.i.i.i.i = phi i8 [ %i.av, %bb.t ], [ %.val2.i.i, %bb.u ]
+  %.val17.i.lcssa.i.i.i.i = phi i8 [ %i.ax, %bb.t ], [ %.val4.i.i, %bb.u ]
   %i.bc = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 %.val16.i.lcssa.i.i.i.i, i8 %.val17.i.lcssa.i.i.i.i)
-  %2 = icmp eq i8 %.val16.i.lcssa.i.i.i.i, %.val17.i.lcssa.i.i.i.i
-  br i1 %2, label %_RNvXse_NtNtNtCslrJNpMdrWwK_15icu_locale_core10extensions7unicode3keyNtB5_3KeyNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit.thread.i.i, label %_RNvXsc_NtCslrJNpMdrWwK_15icu_locale_core8shortvecINtB5_18ShortBoxSliceInnerTNtNtNtNtB7_10extensions7unicode3key3KeyNtNtB1g_5value5ValueEENtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmpB7_.exit
+  br label %_RNvXsc_NtCslrJNpMdrWwK_15icu_locale_core8shortvecINtB5_18ShortBoxSliceInnerTNtNtNtNtB7_10extensions7unicode3key3KeyNtNtB1g_5value5ValueEENtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmpB7_.exit
 
-_RNvXse_NtNtNtCslrJNpMdrWwK_15icu_locale_core10extensions7unicode3keyNtB5_3KeyNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit.thread.i.i: ; preds = %_RNvXse_NtNtNtCslrJNpMdrWwK_15icu_locale_core10extensions7unicode3keyNtB5_3KeyNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit.i.i, %bb.u
+_RNvXse_NtNtNtCslrJNpMdrWwK_15icu_locale_core10extensions7unicode3keyNtB5_3KeyNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit.thread.i.i: ; preds = %bb.u
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 3 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !85)

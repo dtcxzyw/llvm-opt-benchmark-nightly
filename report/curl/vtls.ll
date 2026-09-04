@@ -202,9 +202,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not10, label %.sink.split, label %sub_0
 
 sub_0:                                            ; preds = %bb.d
-  %i.h = load i8, ptr %i.d, align 1               ; 2 uses
+  %i.h = load i8, ptr %i.d, align 1
   %.not18 = icmp eq i8 %i.h, 104
-  br i1 %.not18, label %sub_1, label %.tail.thread
+  br i1 %.not18, label %sub_1, label %bb.e
 
 sub_1:                                            ; preds = %sub_0
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 1
@@ -226,11 +226,6 @@ sub_2:                                            ; preds = %sub_1
   %.not11 = icmp eq i32 %i.q, 0
   br i1 %.not11, label %.sink.split, label %sub_115
 
-.tail.thread:                                     ; preds = %sub_0
-  %5 = zext i8 %i.h to i32
-  %6 = sub nsw i32 104, %5
-  br label %.tail13
-
 sub_115:                                          ; preds = %.tail
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 1
   %i.s = load i8, ptr %i.r, align 1               ; 2 uses
@@ -246,9 +241,9 @@ sub_216:                                          ; preds = %sub_115
   %i.y = sub nsw i32 0, %i.x
   br label %.tail13
 
-.tail13:                                          ; preds = %.tail.thread, %sub_115, %sub_216
-  %7 = phi i32 [ %6, %.tail.thread ], [ %i.u, %sub_115 ], [ %i.y, %sub_216 ]
-  %.not12 = icmp eq i32 %7, 0
+.tail13:                                          ; preds = %sub_115, %sub_216
+  %5 = phi i32 [ %i.y, %sub_216 ], [ %i.u, %sub_115 ]
+  %.not12 = icmp eq i32 %5, 0
   br i1 %.not12, label %.sink.split, label %bb.e
 
 .sink.split:                                      ; preds = %.tail13, %.tail, %bb.d
@@ -259,7 +254,7 @@ sub_216:                                          ; preds = %sub_115
   store i8 %.sink, ptr %i.ab, align 2, !tbaa !178
   br label %bb.e
 
-bb.e:                                             ; preds = %.sink.split, %bb.b, %bb.c, %.tail13, %bb.a
+bb.e:                                             ; preds = %sub_0, %.sink.split, %bb.b, %bb.c, %.tail13, %bb.a
   ret i32 0
 }
 

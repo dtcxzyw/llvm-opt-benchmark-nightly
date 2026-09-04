@@ -205,7 +205,7 @@ _ZN4llvh7hashing6detail18get_execution_seedEv.exit: ; preds = %bb.a, %bb.b, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %.not47 = icmp eq ptr %0, %1
-  br i1 %.not47, label %_ZN4llvh7hashing6detail17store_and_advanceIPN6hermes13LiteralStringEEEbRPcS6_RKT_m.exit, label %.lr.ph
+  br i1 %.not47, label %bb.d, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN4llvh7hashing6detail18get_execution_seedEv.exit
   %i.i = load ptr, ptr %0, align 8, !tbaa !502
@@ -269,14 +269,15 @@ _ZN4llvh7hashing6detail18get_execution_seedEv.exit: ; preds = %bb.a, %bb.b, %bb.
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 64
   br label %_ZN4llvh7hashing6detail17store_and_advanceIPN6hermes13LiteralStringEEEbRPcS6_RKT_m.exit
 
-_ZN4llvh7hashing6detail17store_and_advanceIPN6hermes13LiteralStringEEEbRPcS6_RKT_m.exit: ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %.lr.ph.7, %_ZN4llvh7hashing6detail18get_execution_seedEv.exit
-  %.sroa.028.0.lcssa = phi ptr [ %0, %_ZN4llvh7hashing6detail18get_execution_seedEv.exit ], [ %i.j, %.lr.ph ], [ %i.l, %.lr.ph.1 ], [ %i.n, %.lr.ph.2 ], [ %i.p, %.lr.ph.3 ], [ %i.r, %.lr.ph.4 ], [ %i.t, %.lr.ph.5 ], [ %i.v, %.lr.ph.6 ], [ %i.x, %.lr.ph.7 ] ; 2 uses
-  %.037.idx.lcssa = phi i64 [ 0, %_ZN4llvh7hashing6detail18get_execution_seedEv.exit ], [ 8, %.lr.ph ], [ 16, %.lr.ph.1 ], [ 24, %.lr.ph.2 ], [ 32, %.lr.ph.3 ], [ 40, %.lr.ph.4 ], [ 48, %.lr.ph.5 ], [ 56, %.lr.ph.6 ], [ 64, %.lr.ph.7 ]
-  %i.y = icmp eq ptr %.sroa.028.0.lcssa, %1
+_ZN4llvh7hashing6detail17store_and_advanceIPN6hermes13LiteralStringEEEbRPcS6_RKT_m.exit: ; preds = %.lr.ph.7, %.lr.ph.6, %.lr.ph.5, %.lr.ph.4, %.lr.ph.3, %.lr.ph.2, %.lr.ph.1, %.lr.ph
+  %.037.add.lcssa = phi i64 [ 8, %.lr.ph ], [ 16, %.lr.ph.1 ], [ 24, %.lr.ph.2 ], [ 32, %.lr.ph.3 ], [ 40, %.lr.ph.4 ], [ 48, %.lr.ph.5 ], [ 56, %.lr.ph.6 ], [ 64, %.lr.ph.7 ]
+  %.lcssa105 = phi ptr [ %i.j, %.lr.ph ], [ %i.l, %.lr.ph.1 ], [ %i.n, %.lr.ph.2 ], [ %i.p, %.lr.ph.3 ], [ %i.r, %.lr.ph.4 ], [ %i.t, %.lr.ph.5 ], [ %i.v, %.lr.ph.6 ], [ %i.x, %.lr.ph.7 ] ; 2 uses
+  %i.y = icmp eq ptr %.lcssa105, %1
   br i1 %i.y, label %bb.d, label %bb.e
 
-bb.d:                                             ; preds = %_ZN4llvh7hashing6detail17store_and_advanceIPN6hermes13LiteralStringEEEbRPcS6_RKT_m.exit
-  %i.z = call noundef i64 @_ZN4llvh7hashing6detail10hash_shortEPKcmm(ptr noundef nonnull %i.a, i64 noundef %.037.idx.lcssa, i64 noundef %i.g)
+bb.d:                                             ; preds = %_ZN4llvh7hashing6detail18get_execution_seedEv.exit, %_ZN4llvh7hashing6detail17store_and_advanceIPN6hermes13LiteralStringEEEbRPcS6_RKT_m.exit
+  %.037.idx.lcssa78 = phi i64 [ %.037.add.lcssa, %_ZN4llvh7hashing6detail17store_and_advanceIPN6hermes13LiteralStringEEEbRPcS6_RKT_m.exit ], [ 0, %_ZN4llvh7hashing6detail18get_execution_seedEv.exit ]
+  %i.z = call noundef i64 @_ZN4llvh7hashing6detail10hash_shortEPKcmm(ptr noundef nonnull %i.a, i64 noundef %.037.idx.lcssa78, i64 noundef %i.g)
   br label %bb.n
 
 bb.e:                                             ; preds = %_ZN4llvh7hashing6detail17store_and_advanceIPN6hermes13LiteralStringEEEbRPcS6_RKT_m.exit
@@ -373,7 +374,7 @@ bb.e:                                             ; preds = %_ZN4llvh7hashing6de
   %.sroa.24.058 = phi i64 [ %i.bz, %bb.e ], [ %i.ef, %_ZN4llvh7hashing6detail17store_and_advanceIPN6hermes13LiteralStringEEEbRPcS6_RKT_m.exit8 ] ; 2 uses
   %.sroa.30.057 = phi i64 [ %i.co, %bb.e ], [ %i.es, %_ZN4llvh7hashing6detail17store_and_advanceIPN6hermes13LiteralStringEEEbRPcS6_RKT_m.exit8 ] ; 2 uses
   %.sroa.36.056 = phi i64 [ %i.cn, %bb.e ], [ %i.er, %_ZN4llvh7hashing6detail17store_and_advanceIPN6hermes13LiteralStringEEEbRPcS6_RKT_m.exit8 ] ; 2 uses
-  %.sroa.028.155 = phi ptr [ %.sroa.028.0.lcssa, %bb.e ], [ %.lcssa, %_ZN4llvh7hashing6detail17store_and_advanceIPN6hermes13LiteralStringEEEbRPcS6_RKT_m.exit8 ] ; 9 uses
+  %.sroa.028.155 = phi ptr [ %.lcssa105, %bb.e ], [ %.lcssa, %_ZN4llvh7hashing6detail17store_and_advanceIPN6hermes13LiteralStringEEEbRPcS6_RKT_m.exit8 ] ; 9 uses
   %i.cp = load ptr, ptr %.sroa.028.155, align 8, !tbaa !502
   store ptr %i.cp, ptr %i.a, align 16
   %i.cq = getelementptr inbounds nuw i8, ptr %.sroa.028.155, i64 8 ; 3 uses

@@ -202,7 +202,11 @@ bb.g:                                             ; preds = %bb.e
 
 .preheader51:                                     ; preds = %bb.g
   %.not58 = icmp eq i64 %1, 1
-  br i1 %.not58, label %.loopexit, label %.lr.ph
+  br i1 %.not58, label %.loopexit.thread, label %.lr.ph
+
+.loopexit.thread:                                 ; preds = %.preheader51
+  store i64 1, ptr %3, align 8, !tbaa !20
+  br label %bb.i
 
 .lr.ph:                                           ; preds = %.preheader51, %.lr.ph
   %.03953 = phi i64 [ %.039., %.lr.ph ], [ %1, %.preheader51 ] ; 2 uses
@@ -218,8 +222,8 @@ bb.g:                                             ; preds = %bb.e
   %i.u = icmp ugt i64 %.039., %i.t
   br i1 %i.u, label %.lr.ph, label %.loopexit, !llvm.loop !57
 
-.loopexit:                                        ; preds = %.lr.ph, %.preheader51, %bb.g
-  %storemerge = phi i64 [ 0, %bb.g ], [ 1, %.preheader51 ], [ %.039., %.lr.ph ] ; 6 uses
+.loopexit:                                        ; preds = %.lr.ph, %bb.g
+  %storemerge = phi i64 [ 0, %bb.g ], [ %.039., %.lr.ph ] ; 7 uses
   store i64 %storemerge, ptr %3, align 8, !tbaa !20
   %i.v = icmp eq i64 %storemerge, %1
   br i1 %i.v, label %bb.i, label %bb.h
@@ -236,8 +240,9 @@ bb.h:                                             ; preds = %.loopexit
   %i.aa = icmp ugt i64 %1, %i.z
   br i1 %i.aa, label %.lr.ph56, label %._crit_edge
 
-bb.i:                                             ; preds = %bb.h, %.loopexit
-  store i64 %storemerge, ptr %4, align 8, !tbaa !20
+bb.i:                                             ; preds = %.loopexit.thread, %bb.h, %.loopexit
+  %storemerge63 = phi i64 [ 1, %.loopexit.thread ], [ %storemerge, %bb.h ], [ %storemerge, %.loopexit ]
+  store i64 %storemerge63, ptr %4, align 8, !tbaa !20
   br label %bb.j
 
 .lr.ph56:                                         ; preds = %.preheader, %.lr.ph56

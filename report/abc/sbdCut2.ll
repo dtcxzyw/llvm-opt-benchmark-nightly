@@ -202,9 +202,9 @@ bb.a:
   br i1 %i.g, label %.split, label %.split34.us
 
 .split:                                           ; preds = %bb.a, %.critedge
-  %.val1248 = phi i32 [ %.val12, %.critedge ], [ %i.f, %bb.a ] ; 4 uses
+  %.val1248 = phi i32 [ %.val12, %.critedge ], [ %i.f, %bb.a ] ; 3 uses
   %i.h = icmp sgt i32 %.val1248, 0
-  br i1 %i.h, label %.lr.ph, label %.critedge
+  br i1 %i.h, label %.lr.ph, label %.split34.us
 
 .lr.ph:                                           ; preds = %.split
   %.val = load ptr, ptr %i.b, align 8, !tbaa !23  ; 9 uses
@@ -293,7 +293,7 @@ bb.e:                                             ; preds = %Vec_IntFind.exit68.
   br i1 %i.au, label %bb.y, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.av = trunc nuw nsw i64 %indvars.iv to i32    ; 3 uses
+  %i.av = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
   store i32 %i.i, ptr %i.a, align 4, !tbaa !21
   %i.aw = icmp sgt i32 %i.i, %i.av
   br i1 %i.aw, label %.lr.ph.i69.i, label %Vec_IntDrop.exit.i
@@ -500,13 +500,12 @@ bb.y:                                             ; preds = %Vec_IntFind.exit68.
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count.i.i
   br i1 %exitcond.not, label %.split34.us, label %bb.b, !llvm.loop !59
 
-.critedge:                                        ; preds = %.split, %Vec_IntPushOrder.exit90.i, %bb.m
-  %.val12 = phi i32 [ %.val12.pre47, %bb.m ], [ %.val12.pre, %Vec_IntPushOrder.exit90.i ], [ %.val1248, %.split ] ; 2 uses
-  %.025 = phi i32 [ %i.av, %bb.m ], [ %i.av, %Vec_IntPushOrder.exit90.i ], [ 0, %.split ]
-  %4 = icmp slt i32 %.025, %.val12
+.critedge:                                        ; preds = %Vec_IntPushOrder.exit90.i, %bb.m
+  %.val12 = phi i32 [ %.val12.pre47, %bb.m ], [ %.val12.pre, %Vec_IntPushOrder.exit90.i ] ; 2 uses
+  %4 = icmp sgt i32 %.val12, %i.av
   br i1 %4, label %.split, label %.split34.us, !llvm.loop !60
 
-.split34.us:                                      ; preds = %.critedge, %bb.y, %bb.a
+.split34.us:                                      ; preds = %.split, %.critedge, %bb.y, %bb.a
   ret void
 }
 
