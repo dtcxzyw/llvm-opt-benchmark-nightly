@@ -205,10 +205,10 @@ bb.y:                                             ; preds = %bb.x, %bb.w
 
 _ZSt4moveIPSt4pairImN4llvm9StringRefEEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i36, %._crit_edge.i.i
   %.08.lcssa.i.i.i.i.i.i.i30 = phi ptr [ %i.fe, %._crit_edge.i.i ], [ %i.fr, %.lr.ph.i.i.i.i.i.i.i36 ]
-  %i.fu = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i30 to i64 ; 3 uses
+  %i.fu = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i30 to i64 ; 2 uses
   %i.fv = ptrtoint ptr %i.fe to i64
   %i.fw = sub i64 %i.fu, %i.fv
-  %i.fx = getelementptr inbounds i8, ptr %i.fe, i64 %i.fw ; 2 uses
+  %i.fx = getelementptr inbounds i8, ptr %i.fe, i64 %i.fw ; 3 uses
   %i.fy = ptrtoint ptr %i.es to i64               ; 2 uses
   %i.fz = ptrtoint ptr %.117.i.i to i64
   %i.ga = sub i64 %i.fy, %i.fz                    ; 2 uses
@@ -232,15 +232,12 @@ _ZSt4moveIPSt4pairImN4llvm9StringRefEEN9__gnu_cxx17__normal_iteratorIS4_St6vecto
   %i.gh = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22.i.i, i64 24 ; 2 uses
   %i.gi = add nsw i64 %.012.i.i.i.i.i21.i.i, -1
   %i.gj = icmp samesign ugt i64 %.012.i.i.i.i.i21.i.i, 1
-  br i1 %i.gj, label %.lr.ph.i.i.i.i.i20.i.i, label %_ZSt4moveIPSt4pairImN4llvm9StringRefEEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit24.loopexit.i.i, !llvm.loop !54
+  br i1 %i.gj, label %.lr.ph.i.i.i.i.i20.i.i, label %"_ZSt12__move_mergeIPSt4pairImN4llvm9StringRefEEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEENS5_5__ops15_Iter_comp_iterIZL13DumpEnumValueRKN5clang8QualTypeERN12lldb_private6StreamERKNSH_13DataExtractorEmmjjE3$_0EEET0_T_SQ_SQ_SQ_SP_T1_.exit.i", !llvm.loop !54
 
-_ZSt4moveIPSt4pairImN4llvm9StringRefEEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit24.loopexit.i.i: ; preds = %.lr.ph.i.i.i.i.i20.i.i
-  %3 = ptrtoint ptr %i.gh to i64
-  br label %"_ZSt12__move_mergeIPSt4pairImN4llvm9StringRefEEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEENS5_5__ops15_Iter_comp_iterIZL13DumpEnumValueRKN5clang8QualTypeERN12lldb_private6StreamERKNSH_13DataExtractorEmmjjE3$_0EEET0_T_SQ_SQ_SQ_SP_T1_.exit.i"
-
-"_ZSt12__move_mergeIPSt4pairImN4llvm9StringRefEEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEENS5_5__ops15_Iter_comp_iterIZL13DumpEnumValueRKN5clang8QualTypeERN12lldb_private6StreamERKNSH_13DataExtractorEmmjjE3$_0EEET0_T_SQ_SQ_SQ_SP_T1_.exit.i": ; preds = %_ZSt4moveIPSt4pairImN4llvm9StringRefEEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit24.loopexit.i.i, %_ZSt4moveIPSt4pairImN4llvm9StringRefEEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit.i.i
-  %.08.lcssa.i.i.i.i.i18.i.i = phi i64 [ %i.fu, %_ZSt4moveIPSt4pairImN4llvm9StringRefEEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit.i.i ], [ %3, %_ZSt4moveIPSt4pairImN4llvm9StringRefEEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit24.loopexit.i.i ]
-  %i.gk = sub i64 %.08.lcssa.i.i.i.i.i18.i.i, %i.fu
+"_ZSt12__move_mergeIPSt4pairImN4llvm9StringRefEEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEENS5_5__ops15_Iter_comp_iterIZL13DumpEnumValueRKN5clang8QualTypeERN12lldb_private6StreamERKNSH_13DataExtractorEmmjjE3$_0EEET0_T_SQ_SQ_SQ_SP_T1_.exit.i": ; preds = %.lr.ph.i.i.i.i.i20.i.i, %_ZSt4moveIPSt4pairImN4llvm9StringRefEEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit.i.i
+  %.08.lcssa.i.i.i.i.i18.i.i = phi ptr [ %i.fx, %_ZSt4moveIPSt4pairImN4llvm9StringRefEEN9__gnu_cxx17__normal_iteratorIS4_St6vectorIS3_SaIS3_EEEEET0_T_SC_SB_.exit.i.i ], [ %i.gh, %.lr.ph.i.i.i.i.i20.i.i ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i.i to i64
+  %i.gk = sub i64 %3, %i.fu
   %i.gl = getelementptr inbounds i8, ptr %i.fx, i64 %i.gk ; 2 uses
   %i.gm = sub i64 %i.bj, %i.fy
   %i.gn = sdiv exact i64 %i.gm, 24                ; 2 uses
@@ -643,10 +640,10 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 _ZSt4moveIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa.i, %._crit_edge.i ], [ %.lcssa106.unr.a, %.lr.ph.i.i.i.i.i.i.prol.loopexit ], [ %i.bb, %.lr.ph.i.i.i.i.i.i ]
-  %i.be = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i to i64 ; 3 uses
+  %i.be = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i to i64 ; 2 uses
   %i.bf = ptrtoint ptr %.sroa.0.0.lcssa.i to i64
   %i.bg = sub i64 %i.be, %i.bf
-  %i.bh = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.bg ; 3 uses
+  %i.bh = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.bg ; 4 uses
   %i.bi = ptrtoint ptr %i.g to i64                ; 2 uses
   %i.bj = ptrtoint ptr %.016.lcssa.i to i64
   %i.bk = sub i64 %i.bi, %i.bj
@@ -683,7 +680,7 @@ _ZSt4moveIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iterator
   %.0910.i.i.i.i.i22.i.unr = phi ptr [ %.016.lcssa.i, %.lr.ph.i.i.i.i.i19.i.preheader ], [ %i.br, %.lr.ph.i.i.i.i.i19.i.prol ]
   %.lcssa107.unr = phi ptr [ poison, %.lr.ph.i.i.i.i.i19.i.preheader ], [ %i.bs, %.lr.ph.i.i.i.i.i19.i.prol ]
   %i.bu = icmp ult i64 %i.bl, 4
-  br i1 %i.bu, label %_ZSt4moveIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23.loopexit.i, label %.lr.ph.i.i.i.i.i19.i
+  br i1 %i.bu, label %_ZSt12__move_mergeIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIN4llvm10less_firstEEEET0_T_SI_SI_SI_SH_T1_.exit, label %.lr.ph.i.i.i.i.i19.i
 
 .lr.ph.i.i.i.i.i19.i:                             ; preds = %.lr.ph.i.i.i.i.i19.i.prol.loopexit, %.lr.ph.i.i.i.i.i19.i
   %.012.i.i.i.i.i20.i = phi i64 [ %i.ct, %.lr.ph.i.i.i.i.i19.i ], [ %.012.i.i.i.i.i20.i.unr, %.lr.ph.i.i.i.i.i19.i.prol.loopexit ] ; 2 uses
@@ -723,16 +720,12 @@ _ZSt4moveIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iterator
   %i.cs = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i21.i, i64 64 ; 2 uses
   %i.ct = add nsw i64 %.012.i.i.i.i.i20.i, -4
   %i.cu = icmp sgt i64 %.012.i.i.i.i.i20.i, 4
-  br i1 %i.cu, label %.lr.ph.i.i.i.i.i19.i, label %_ZSt4moveIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23.loopexit.i, !llvm.loop !63
+  br i1 %i.cu, label %.lr.ph.i.i.i.i.i19.i, label %_ZSt12__move_mergeIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIN4llvm10less_firstEEEET0_T_SI_SI_SI_SH_T1_.exit, !llvm.loop !63
 
-_ZSt4moveIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23.loopexit.i: ; preds = %.lr.ph.i.i.i.i.i19.i, %.lr.ph.i.i.i.i.i19.i.prol.loopexit
-  %.lcssa107 = phi ptr [ %.lcssa107.unr, %.lr.ph.i.i.i.i.i19.i.prol.loopexit ], [ %i.cs, %.lr.ph.i.i.i.i.i19.i ]
-  %4 = ptrtoint ptr %.lcssa107 to i64
-  br label %_ZSt12__move_mergeIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIN4llvm10less_firstEEEET0_T_SI_SI_SI_SH_T1_.exit
-
-_ZSt12__move_mergeIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIN4llvm10less_firstEEEET0_T_SI_SI_SI_SH_T1_.exit: ; preds = %_ZSt4moveIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i, %_ZSt4moveIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23.loopexit.i
-  %.08.lcssa.i.i.i.i.i18.i = phi i64 [ %i.be, %_ZSt4moveIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i ], [ %4, %_ZSt4moveIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit23.loopexit.i ]
-  %i.cv = sub i64 %.08.lcssa.i.i.i.i.i18.i, %i.be
+_ZSt12__move_mergeIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIN4llvm10less_firstEEEET0_T_SI_SI_SI_SH_T1_.exit: ; preds = %.lr.ph.i.i.i.i.i19.i.prol.loopexit, %.lr.ph.i.i.i.i.i19.i, %_ZSt4moveIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i
+  %.08.lcssa.i.i.i.i.i18.i = phi ptr [ %i.bh, %_ZSt4moveIPSt4pairIiPN12lldb_private10TypeSystemEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i ], [ %.lcssa107.unr, %.lr.ph.i.i.i.i.i19.i.prol.loopexit ], [ %i.cs, %.lr.ph.i.i.i.i.i19.i ]
+  %4 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i to i64
+  %i.cv = sub i64 %4, %i.be
   %i.cw = getelementptr inbounds i8, ptr %i.bh, i64 %i.cv ; 2 uses
   %i.cx = sub i64 %i.b, %i.bi
   %i.cy = ashr exact i64 %i.cx, 4                 ; 2 uses

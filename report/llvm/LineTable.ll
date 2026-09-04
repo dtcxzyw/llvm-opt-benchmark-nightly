@@ -204,10 +204,10 @@ _ZN12lldb_private9LineTable8SequenceaSEOS1_.exit.i.i.i.i.i: ; preds = %bb.n, %.l
 
 _ZSt4moveIPN12lldb_private9LineTable8SequenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit: ; preds = %_ZN12lldb_private9LineTable8SequenceaSEOS1_.exit.i.i.i.i.i, %._crit_edge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.029.0.lcssa, %._crit_edge ], [ %i.cj, %_ZN12lldb_private9LineTable8SequenceaSEOS1_.exit.i.i.i.i.i ]
-  %i.cm = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.cm = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.cn = ptrtoint ptr %.sroa.029.0.lcssa to i64
   %i.co = sub i64 %i.cm, %i.cn
-  %i.cp = getelementptr inbounds i8, ptr %.sroa.029.0.lcssa, i64 %i.co ; 2 uses
+  %i.cp = getelementptr inbounds i8, ptr %.sroa.029.0.lcssa, i64 %i.co ; 3 uses
   %i.cq = ptrtoint ptr %3 to i64
   %i.cr = ptrtoint ptr %.016.lcssa to i64
   %i.cs = sub i64 %i.cq, %i.cr                    ; 2 uses
@@ -246,15 +246,12 @@ _ZN12lldb_private9LineTable8SequenceaSEOS1_.exit.i.i.i.i.i27: ; preds = %bb.o, %
   %i.df = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i24, i64 24 ; 2 uses
   %i.dg = add nsw i64 %.012.i.i.i.i.i23, -1
   %i.dh = icmp sgt i64 %.012.i.i.i.i.i23, 1
-  br i1 %i.dh, label %.lr.ph.i.i.i.i.i22, label %_ZSt4moveIPN12lldb_private9LineTable8SequenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28.loopexit, !llvm.loop !6
+  br i1 %i.dh, label %.lr.ph.i.i.i.i.i22, label %_ZSt4moveIPN12lldb_private9LineTable8SequenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28, !llvm.loop !6
 
-_ZSt4moveIPN12lldb_private9LineTable8SequenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28.loopexit: ; preds = %_ZN12lldb_private9LineTable8SequenceaSEOS1_.exit.i.i.i.i.i27
-  %6 = ptrtoint ptr %i.df to i64
-  br label %_ZSt4moveIPN12lldb_private9LineTable8SequenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28
-
-_ZSt4moveIPN12lldb_private9LineTable8SequenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28: ; preds = %_ZSt4moveIPN12lldb_private9LineTable8SequenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28.loopexit, %_ZSt4moveIPN12lldb_private9LineTable8SequenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit
-  %.08.lcssa.i.i.i.i.i20 = phi i64 [ %i.cm, %_ZSt4moveIPN12lldb_private9LineTable8SequenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit ], [ %6, %_ZSt4moveIPN12lldb_private9LineTable8SequenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28.loopexit ]
-  %i.di = sub i64 %.08.lcssa.i.i.i.i.i20, %i.cm
+_ZSt4moveIPN12lldb_private9LineTable8SequenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28: ; preds = %_ZN12lldb_private9LineTable8SequenceaSEOS1_.exit.i.i.i.i.i27, %_ZSt4moveIPN12lldb_private9LineTable8SequenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit
+  %.08.lcssa.i.i.i.i.i20 = phi ptr [ %i.cp, %_ZSt4moveIPN12lldb_private9LineTable8SequenceEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit ], [ %i.df, %_ZN12lldb_private9LineTable8SequenceaSEOS1_.exit.i.i.i.i.i27 ]
+  %6 = ptrtoint ptr %.08.lcssa.i.i.i.i.i20 to i64
+  %i.di = sub i64 %6, %i.cm
   %i.dj = getelementptr inbounds i8, ptr %i.cp, i64 %i.di
   ret ptr %i.dj
 }

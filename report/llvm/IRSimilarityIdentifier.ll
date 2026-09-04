@@ -204,10 +204,10 @@ _ZN4llvm15SmallVectorImplIjEaSEOS1_.exit113:      ; preds = %.lr.ph.i.i.i.i.i.i3
 
 _ZSt4moveIPN4llvm10SuffixTree17RepeatedSubstringEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i: ; preds = %_ZN4llvm15SmallVectorImplIjEaSEOS1_.exit113, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i30 = phi ptr [ %i.iz, %._crit_edge.i ], [ %i.kt, %_ZN4llvm15SmallVectorImplIjEaSEOS1_.exit113 ]
-  %i.kw = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i30 to i64 ; 3 uses
+  %i.kw = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i30 to i64 ; 2 uses
   %i.kx = ptrtoint ptr %i.iz to i64
   %i.ky = sub i64 %i.kw, %i.kx
-  %i.kz = getelementptr inbounds i8, ptr %i.iz, i64 %i.ky ; 2 uses
+  %i.kz = getelementptr inbounds i8, ptr %i.iz, i64 %i.ky ; 3 uses
   %i.la = ptrtoint ptr %i.ge to i64               ; 2 uses
   %i.lb = ptrtoint ptr %.117.i to i64
   %i.lc = sub i64 %i.la, %i.lb                    ; 2 uses
@@ -350,15 +350,12 @@ _ZN4llvm15SmallVectorImplIjEaSEOS1_.exit98:       ; preds = %.lr.ph.i.i.i.i.i20.
   %i.mq = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22.i, i64 72 ; 2 uses
   %i.mr = add nsw i64 %.012.i.i.i.i.i21.i, -1
   %i.ms = icmp samesign ugt i64 %.012.i.i.i.i.i21.i, 1
-  br i1 %i.ms, label %.lr.ph.i.i.i.i.i20.i, label %_ZSt4moveIPN4llvm10SuffixTree17RepeatedSubstringEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i, !llvm.loop !21
+  br i1 %i.ms, label %.lr.ph.i.i.i.i.i20.i, label %"_ZSt12__move_mergeIPN4llvm10SuffixTree17RepeatedSubstringEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNS0_12IRSimilarity22IRSimilarityIdentifier14findCandidatesERS6_IPNSC_17IRInstructionDataESaISF_EERS6_IjSaIjEEE3$_0EEET0_T_SP_SP_SP_SO_T1_.exit", !llvm.loop !21
 
-_ZSt4moveIPN4llvm10SuffixTree17RepeatedSubstringEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i: ; preds = %_ZN4llvm15SmallVectorImplIjEaSEOS1_.exit98
-  %3 = ptrtoint ptr %i.mq to i64
-  br label %"_ZSt12__move_mergeIPN4llvm10SuffixTree17RepeatedSubstringEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNS0_12IRSimilarity22IRSimilarityIdentifier14findCandidatesERS6_IPNSC_17IRInstructionDataESaISF_EERS6_IjSaIjEEE3$_0EEET0_T_SP_SP_SP_SO_T1_.exit"
-
-"_ZSt12__move_mergeIPN4llvm10SuffixTree17RepeatedSubstringEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNS0_12IRSimilarity22IRSimilarityIdentifier14findCandidatesERS6_IPNSC_17IRInstructionDataESaISF_EERS6_IjSaIjEEE3$_0EEET0_T_SP_SP_SP_SO_T1_.exit": ; preds = %_ZSt4moveIPN4llvm10SuffixTree17RepeatedSubstringEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i, %_ZSt4moveIPN4llvm10SuffixTree17RepeatedSubstringEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i
-  %.08.lcssa.i.i.i.i.i18.i = phi i64 [ %i.kw, %_ZSt4moveIPN4llvm10SuffixTree17RepeatedSubstringEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i ], [ %3, %_ZSt4moveIPN4llvm10SuffixTree17RepeatedSubstringEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i ]
-  %i.mt = sub i64 %.08.lcssa.i.i.i.i.i18.i, %i.kw
+"_ZSt12__move_mergeIPN4llvm10SuffixTree17RepeatedSubstringEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNS0_12IRSimilarity22IRSimilarityIdentifier14findCandidatesERS6_IPNSC_17IRInstructionDataESaISF_EERS6_IjSaIjEEE3$_0EEET0_T_SP_SP_SP_SO_T1_.exit": ; preds = %_ZN4llvm15SmallVectorImplIjEaSEOS1_.exit98, %_ZSt4moveIPN4llvm10SuffixTree17RepeatedSubstringEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i
+  %.08.lcssa.i.i.i.i.i18.i = phi ptr [ %i.kz, %_ZSt4moveIPN4llvm10SuffixTree17RepeatedSubstringEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i ], [ %i.mq, %_ZN4llvm15SmallVectorImplIjEaSEOS1_.exit98 ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i to i64
+  %i.mt = sub i64 %3, %i.kw
   %i.mu = getelementptr inbounds i8, ptr %i.kz, i64 %i.mt ; 2 uses
   %i.mv = sub i64 %i.l, %i.la
   %i.mw = sdiv exact i64 %i.mv, 72                ; 2 uses

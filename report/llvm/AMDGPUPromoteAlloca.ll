@@ -205,10 +205,10 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 _ZSt4moveIPN12_GLOBAL__N_114AllocaAnalysisEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i34, %._crit_edge.i.i
   %.08.lcssa.i.i.i.i.i.i.i26 = phi ptr [ %i.cm, %._crit_edge.i.i ], [ %i.cx, %.lr.ph.i.i.i.i.i.i.i34 ]
-  %i.da = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i26 to i64 ; 3 uses
+  %i.da = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i26 to i64 ; 2 uses
   %i.db = ptrtoint ptr %i.cm to i64
   %i.dc = sub i64 %i.da, %i.db
-  %i.dd = getelementptr inbounds i8, ptr %i.cm, i64 %i.dc ; 2 uses
+  %i.dd = getelementptr inbounds i8, ptr %i.cm, i64 %i.dc ; 3 uses
   %i.de = ptrtoint ptr %i.ce to i64               ; 2 uses
   %i.df = ptrtoint ptr %.117.i.i to i64
   %i.dg = sub i64 %i.de, %i.df                    ; 2 uses
@@ -228,15 +228,12 @@ _ZSt4moveIPN12_GLOBAL__N_114AllocaAnalysisEN9__gnu_cxx17__normal_iteratorIS2_St6
   %i.dl = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i23.i.i, i64 392 ; 2 uses
   %i.dm = add nsw i64 %.012.i.i.i.i.i22.i.i, -1
   %i.dn = icmp samesign ugt i64 %.012.i.i.i.i.i22.i.i, 1
-  br i1 %i.dn, label %.lr.ph.i.i.i.i.i21.i.i, label %_ZSt4moveIPN12_GLOBAL__N_114AllocaAnalysisEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit25.loopexit.i.i, !llvm.loop !10
+  br i1 %i.dn, label %.lr.ph.i.i.i.i.i21.i.i, label %"_ZSt12__move_mergeIPN12_GLOBAL__N_114AllocaAnalysisEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIZNS0_23AMDGPUPromoteAllocaImpl3runERN4llvm8FunctionEbE3$_0EEET0_T_SI_SI_SI_SH_T1_.exit.i", !llvm.loop !10
 
-_ZSt4moveIPN12_GLOBAL__N_114AllocaAnalysisEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit25.loopexit.i.i: ; preds = %.lr.ph.i.i.i.i.i21.i.i
-  %3 = ptrtoint ptr %i.dl to i64
-  br label %"_ZSt12__move_mergeIPN12_GLOBAL__N_114AllocaAnalysisEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIZNS0_23AMDGPUPromoteAllocaImpl3runERN4llvm8FunctionEbE3$_0EEET0_T_SI_SI_SI_SH_T1_.exit.i"
-
-"_ZSt12__move_mergeIPN12_GLOBAL__N_114AllocaAnalysisEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIZNS0_23AMDGPUPromoteAllocaImpl3runERN4llvm8FunctionEbE3$_0EEET0_T_SI_SI_SI_SH_T1_.exit.i": ; preds = %_ZSt4moveIPN12_GLOBAL__N_114AllocaAnalysisEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit25.loopexit.i.i, %_ZSt4moveIPN12_GLOBAL__N_114AllocaAnalysisEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i.i
-  %.08.lcssa.i.i.i.i.i19.i.i = phi i64 [ %i.da, %_ZSt4moveIPN12_GLOBAL__N_114AllocaAnalysisEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i.i ], [ %3, %_ZSt4moveIPN12_GLOBAL__N_114AllocaAnalysisEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit25.loopexit.i.i ]
-  %i.do = sub i64 %.08.lcssa.i.i.i.i.i19.i.i, %i.da
+"_ZSt12__move_mergeIPN12_GLOBAL__N_114AllocaAnalysisEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIZNS0_23AMDGPUPromoteAllocaImpl3runERN4llvm8FunctionEbE3$_0EEET0_T_SI_SI_SI_SH_T1_.exit.i": ; preds = %.lr.ph.i.i.i.i.i21.i.i, %_ZSt4moveIPN12_GLOBAL__N_114AllocaAnalysisEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i.i
+  %.08.lcssa.i.i.i.i.i19.i.i = phi ptr [ %i.dd, %_ZSt4moveIPN12_GLOBAL__N_114AllocaAnalysisEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i.i ], [ %i.dl, %.lr.ph.i.i.i.i.i21.i.i ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i19.i.i to i64
+  %i.do = sub i64 %3, %i.da
   %i.dp = getelementptr inbounds i8, ptr %i.dd, i64 %i.do ; 2 uses
   %i.dq = sub i64 %i.l, %i.de
   %i.dr = sdiv exact i64 %i.dq, 392               ; 2 uses

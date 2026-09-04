@@ -205,10 +205,10 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
 
 _ZSt4moveIPSt5tupleIJiPN3lld5macho19CStringInputSectionEmEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i38, %._crit_edge.i.i
   %.08.lcssa.i.i.i.i.i.i.i32 = phi ptr [ %i.md, %._crit_edge.i.i ], [ %i.mu, %.lr.ph.i.i.i.i.i.i.i38 ]
-  %i.mx = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i32 to i64 ; 3 uses
+  %i.mx = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i32 to i64 ; 2 uses
   %i.my = ptrtoint ptr %i.md to i64
   %i.mz = sub i64 %i.mx, %i.my
-  %i.na = getelementptr inbounds i8, ptr %i.md, i64 %i.mz ; 2 uses
+  %i.na = getelementptr inbounds i8, ptr %i.md, i64 %i.mz ; 3 uses
   %i.nb = ptrtoint ptr %i.lv to i64               ; 2 uses
   %i.nc = ptrtoint ptr %.117.i.i to i64
   %i.nd = sub i64 %i.nb, %i.nc                    ; 2 uses
@@ -237,15 +237,12 @@ _ZSt4moveIPSt5tupleIJiPN3lld5macho19CStringInputSectionEmEEN9__gnu_cxx17__normal
   %i.no = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22.i.i, i64 24 ; 2 uses
   %i.np = add nsw i64 %.012.i.i.i.i.i21.i.i, -1
   %i.nq = icmp samesign ugt i64 %.012.i.i.i.i.i21.i.i, 1
-  br i1 %i.nq, label %.lr.ph.i.i.i.i.i20.i.i, label %_ZSt4moveIPSt5tupleIJiPN3lld5macho19CStringInputSectionEmEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i.i, !llvm.loop !14
+  br i1 %i.nq, label %.lr.ph.i.i.i.i.i20.i.i, label %"_ZSt12__move_mergeIPSt5tupleIJiPN3lld5macho19CStringInputSectionEmEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZNKS2_15PriorityBuilder18forEachStringPieceEN4llvm8ArrayRefIS4_EESt8functionIFvRS3_RNS2_11StringPieceEmEEbbE3$_0EEET0_T_SS_SS_SS_SR_T1_.exit.i", !llvm.loop !14
 
-_ZSt4moveIPSt5tupleIJiPN3lld5macho19CStringInputSectionEmEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i.i: ; preds = %.lr.ph.i.i.i.i.i20.i.i
-  %3 = ptrtoint ptr %i.no to i64
-  br label %"_ZSt12__move_mergeIPSt5tupleIJiPN3lld5macho19CStringInputSectionEmEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZNKS2_15PriorityBuilder18forEachStringPieceEN4llvm8ArrayRefIS4_EESt8functionIFvRS3_RNS2_11StringPieceEmEEbbE3$_0EEET0_T_SS_SS_SS_SR_T1_.exit.i"
-
-"_ZSt12__move_mergeIPSt5tupleIJiPN3lld5macho19CStringInputSectionEmEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZNKS2_15PriorityBuilder18forEachStringPieceEN4llvm8ArrayRefIS4_EESt8functionIFvRS3_RNS2_11StringPieceEmEEbbE3$_0EEET0_T_SS_SS_SS_SR_T1_.exit.i": ; preds = %_ZSt4moveIPSt5tupleIJiPN3lld5macho19CStringInputSectionEmEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i.i, %_ZSt4moveIPSt5tupleIJiPN3lld5macho19CStringInputSectionEmEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i
-  %.08.lcssa.i.i.i.i.i18.i.i = phi i64 [ %i.mx, %_ZSt4moveIPSt5tupleIJiPN3lld5macho19CStringInputSectionEmEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i ], [ %3, %_ZSt4moveIPSt5tupleIJiPN3lld5macho19CStringInputSectionEmEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i.i ]
-  %i.nr = sub i64 %.08.lcssa.i.i.i.i.i18.i.i, %i.mx
+"_ZSt12__move_mergeIPSt5tupleIJiPN3lld5macho19CStringInputSectionEmEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZNKS2_15PriorityBuilder18forEachStringPieceEN4llvm8ArrayRefIS4_EESt8functionIFvRS3_RNS2_11StringPieceEmEEbbE3$_0EEET0_T_SS_SS_SS_SR_T1_.exit.i": ; preds = %.lr.ph.i.i.i.i.i20.i.i, %_ZSt4moveIPSt5tupleIJiPN3lld5macho19CStringInputSectionEmEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i
+  %.08.lcssa.i.i.i.i.i18.i.i = phi ptr [ %i.na, %_ZSt4moveIPSt5tupleIJiPN3lld5macho19CStringInputSectionEmEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i ], [ %i.no, %.lr.ph.i.i.i.i.i20.i.i ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i.i to i64
+  %i.nr = sub i64 %3, %i.mx
   %i.ns = getelementptr inbounds i8, ptr %i.na, i64 %i.nr ; 2 uses
   %i.nt = sub i64 %i.ie, %i.nb
   %i.nu = sdiv exact i64 %i.nt, 24                ; 2 uses

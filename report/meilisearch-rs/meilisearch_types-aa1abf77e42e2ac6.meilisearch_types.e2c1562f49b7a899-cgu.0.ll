@@ -205,11 +205,11 @@ bb.n:                                             ; preds = %bb.l
 bb.o:                                             ; preds = %bb.m
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %.sroa.026.083.i
   %i.aw = load atomic ptr, ptr %i.av seq_cst, align 8, !noalias !8612 ; 3 uses
-  %i.ax = ptrtoint ptr %i.aw to i64               ; 3 uses
-  %i.ay = and i64 %i.ax, -8                       ; 2 uses
-  %i.az = sub i64 %i.ay, %i.ax
-  %i.ba = getelementptr i8, ptr %i.aw, i64 %i.az  ; 5 uses
-  %i.bb = icmp eq i64 %i.ay, 0
+  %i.ax = ptrtoint ptr %i.aw to i64               ; 2 uses
+  %i.ay = and i64 %i.ax, 7
+  %i.az = sub nsw i64 0, %i.ay
+  %i.ba = getelementptr i8, ptr %i.aw, i64 %i.az  ; 6 uses
+  %i.bb = icmp eq ptr %i.ba, null
   br i1 %i.bb, label %.backedge.i, label %bb.p
 
 .backedge.i:                                      ; preds = %"_ZN53_$LT$Q$u20$as$u20$equivalent..Equivalent$LT$K$GT$$GT$10equivalent17h29806816ddabce49E.exit.i", %bb.p, %bb.o, %bb.m
@@ -587,11 +587,11 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %.sroa.026.074.i
   %i.aw = load atomic ptr, ptr %i.av seq_cst, align 8, !noalias !8638 ; 3 uses
-  %i.ax = ptrtoint ptr %i.aw to i64               ; 3 uses
-  %i.ay = and i64 %i.ax, -8                       ; 2 uses
-  %i.az = sub i64 %i.ay, %i.ax
-  %i.ba = getelementptr i8, ptr %i.aw, i64 %i.az  ; 3 uses
-  %i.bb = icmp eq i64 %i.ay, 0
+  %i.ax = ptrtoint ptr %i.aw to i64               ; 2 uses
+  %i.ay = and i64 %i.ax, 7
+  %i.az = sub nsw i64 0, %i.ay
+  %i.ba = getelementptr i8, ptr %i.aw, i64 %i.az  ; 4 uses
+  %i.bb = icmp eq ptr %i.ba, null
   br i1 %i.bb, label %.backedge.i, label %bb.o
 
 .backedge.i:                                      ; preds = %"_ZN53_$LT$Q$u20$as$u20$equivalent..Equivalent$LT$K$GT$$GT$10equivalent17h29806816ddabce49E.exit.i", %bb.o, %bb.n, %bb.m
@@ -994,19 +994,16 @@ bb.u:                                             ; preds = %bb.s
 bb.v:                                             ; preds = %bb.r
   %i.de = getelementptr inbounds nuw [8 x i8], ptr %i.ch, i64 %.sroa.072.0442.i.i.i
   %i.df = load atomic ptr, ptr %i.de seq_cst, align 8, !noalias !8760 ; 3 uses
-  %i.dg = ptrtoint ptr %i.df to i64               ; 2 uses
-  %i.dh = and i64 %i.dg, -8                       ; 2 uses
-  %i.di = icmp eq i64 %i.dh, 0
-  br i1 %i.di, label %_ZN4core3cmp9PartialEq2ne17hbe4cb7e26b86de13E.exit.thread.i.i.i, label %2
+  %i.dg = ptrtoint ptr %i.df to i64
+  %i.dh = and i64 %i.dg, 7
+  %2 = sub nsw i64 0, %i.dh
+  %3 = getelementptr i8, ptr %i.df, i64 %2        ; 2 uses
+  %i.di = icmp eq ptr %3, null
+  br i1 %i.di, label %_ZN4core3cmp9PartialEq2ne17hbe4cb7e26b86de13E.exit.thread.i.i.i, label %bb.w
 
-2:                                                ; preds = %bb.v
-  %3 = sub i64 %i.dh, %i.dg
-  %4 = getelementptr i8, ptr %i.df, i64 %3
-  br label %bb.w
-
-bb.w:                                             ; preds = %"_ZN6papaya3raw33ComputeState$LT$F$C$K$C$V$C$T$GT$7restore17heef292e06d8c7fc4E.exit140.i.i.i", %2
-  %.sroa.10.0.i.i.i = phi ptr [ %i.eh, %"_ZN6papaya3raw33ComputeState$LT$F$C$K$C$V$C$T$GT$7restore17heef292e06d8c7fc4E.exit140.i.i.i" ], [ %4, %2 ] ; 3 uses
-  %.sroa.047.0.i.i.i = phi ptr [ %.sroa.58.0.i.i.i.i, %"_ZN6papaya3raw33ComputeState$LT$F$C$K$C$V$C$T$GT$7restore17heef292e06d8c7fc4E.exit140.i.i.i" ], [ %i.df, %2 ] ; 2 uses
+bb.w:                                             ; preds = %"_ZN6papaya3raw33ComputeState$LT$F$C$K$C$V$C$T$GT$7restore17heef292e06d8c7fc4E.exit140.i.i.i", %bb.v
+  %.sroa.10.0.i.i.i = phi ptr [ %i.eh, %"_ZN6papaya3raw33ComputeState$LT$F$C$K$C$V$C$T$GT$7restore17heef292e06d8c7fc4E.exit140.i.i.i" ], [ %3, %bb.v ] ; 3 uses
+  %.sroa.047.0.i.i.i = phi ptr [ %.sroa.58.0.i.i.i.i, %"_ZN6papaya3raw33ComputeState$LT$F$C$K$C$V$C$T$GT$7restore17heef292e06d8c7fc4E.exit140.i.i.i" ], [ %i.df, %bb.v ] ; 2 uses
   %i.dj = load i64, ptr %i.p, align 8, !range !25, !alias.scope !8757, !noalias !8770, !noundef !21
   %i.dk = icmp eq i64 %i.dj, -9223372036854775808 ; 2 uses
   %i.dl = load ptr, ptr %i.bs, align 8, !alias.scope !8757, !noalias !8770 ; 2 uses
@@ -1102,11 +1099,11 @@ bb.ad:                                            ; preds = %bb.y
   br i1 %i.ec, label %"_ZN6papaya3raw24HashMap$LT$K$C$V$C$S$GT$9insert_at17h61c49d4215be6d6cE.exit.thread.i.i.i", label %bb.ae
 
 bb.ae:                                            ; preds = %"_ZN6papaya3raw22LazyEntry$LT$K$C$V$GT$4init17h6ec7a4bf80685da0E.exit.i.i.i"
-  %i.ee = ptrtoint ptr %i.ed to i64               ; 2 uses
-  %i.ef = and i64 %i.ee, -8                       ; 2 uses
-  %i.eg = sub i64 %i.ef, %i.ee
-  %i.eh = getelementptr i8, ptr %i.ed, i64 %i.eg  ; 2 uses
-  %i.ei = icmp eq i64 %i.ef, 0                    ; 2 uses
+  %i.ee = ptrtoint ptr %i.ed to i64
+  %i.ef = and i64 %i.ee, 7
+  %i.eg = sub nsw i64 0, %i.ef
+  %i.eh = getelementptr i8, ptr %i.ed, i64 %i.eg  ; 3 uses
+  %i.ei = icmp eq ptr %i.eh, null                 ; 2 uses
   br i1 %i.ei, label %bb.af, label %bb.ag
 
 "_ZN6papaya3raw24HashMap$LT$K$C$V$C$S$GT$9insert_at17h61c49d4215be6d6cE.exit.thread.i.i.i": ; preds = %"_ZN6papaya3raw22LazyEntry$LT$K$C$V$GT$4init17h6ec7a4bf80685da0E.exit.i.i.i"
@@ -1509,19 +1506,16 @@ bb.u:                                             ; preds = %bb.s
 bb.v:                                             ; preds = %bb.r
   %i.cu = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %.sroa.072.0446.i.i.i
   %i.cv = load atomic ptr, ptr %i.cu seq_cst, align 8, !noalias !8932 ; 3 uses
-  %i.cw = ptrtoint ptr %i.cv to i64               ; 2 uses
-  %i.cx = and i64 %i.cw, -8                       ; 2 uses
-  %i.cy = icmp eq i64 %i.cx, 0
-  br i1 %i.cy, label %_ZN4core3cmp9PartialEq2ne17hbe4cb7e26b86de13E.exit.thread.i.i.i, label %2
+  %i.cw = ptrtoint ptr %i.cv to i64
+  %i.cx = and i64 %i.cw, 7
+  %2 = sub nsw i64 0, %i.cx
+  %3 = getelementptr i8, ptr %i.cv, i64 %2        ; 2 uses
+  %i.cy = icmp eq ptr %3, null
+  br i1 %i.cy, label %_ZN4core3cmp9PartialEq2ne17hbe4cb7e26b86de13E.exit.thread.i.i.i, label %bb.w
 
-2:                                                ; preds = %bb.v
-  %3 = sub i64 %i.cx, %i.cw
-  %4 = getelementptr i8, ptr %i.cv, i64 %3
-  br label %bb.w
-
-bb.w:                                             ; preds = %"_ZN6papaya3raw33ComputeState$LT$F$C$K$C$V$C$T$GT$7restore17h9729900273464c49E.exit140.i.i.i", %2
-  %.sroa.10.0.i.i.i = phi ptr [ %i.dx, %"_ZN6papaya3raw33ComputeState$LT$F$C$K$C$V$C$T$GT$7restore17h9729900273464c49E.exit140.i.i.i" ], [ %4, %2 ] ; 3 uses
-  %.sroa.047.0.i.i.i = phi ptr [ %.sroa.58.0.i.i.i.i, %"_ZN6papaya3raw33ComputeState$LT$F$C$K$C$V$C$T$GT$7restore17h9729900273464c49E.exit140.i.i.i" ], [ %i.cv, %2 ] ; 2 uses
+bb.w:                                             ; preds = %"_ZN6papaya3raw33ComputeState$LT$F$C$K$C$V$C$T$GT$7restore17h9729900273464c49E.exit140.i.i.i", %bb.v
+  %.sroa.10.0.i.i.i = phi ptr [ %i.dx, %"_ZN6papaya3raw33ComputeState$LT$F$C$K$C$V$C$T$GT$7restore17h9729900273464c49E.exit140.i.i.i" ], [ %3, %bb.v ] ; 3 uses
+  %.sroa.047.0.i.i.i = phi ptr [ %.sroa.58.0.i.i.i.i, %"_ZN6papaya3raw33ComputeState$LT$F$C$K$C$V$C$T$GT$7restore17h9729900273464c49E.exit140.i.i.i" ], [ %i.cv, %bb.v ] ; 2 uses
   %i.cz = load i64, ptr %i.p, align 8, !range !25, !alias.scope !8929, !noalias !8942, !noundef !21
   %i.da = icmp eq i64 %i.cz, -9223372036854775808 ; 2 uses
   %i.db = load ptr, ptr %i.bn, align 8, !alias.scope !8929, !noalias !8942 ; 2 uses
@@ -1617,11 +1611,11 @@ bb.ad:                                            ; preds = %bb.y
   br i1 %i.ds, label %"_ZN6papaya3raw24HashMap$LT$K$C$V$C$S$GT$9insert_at17h61c49d4215be6d6cE.exit.thread.i.i.i", label %bb.ae
 
 bb.ae:                                            ; preds = %"_ZN6papaya3raw22LazyEntry$LT$K$C$V$GT$4init17h6ec7a4bf80685da0E.exit.i.i.i"
-  %i.du = ptrtoint ptr %i.dt to i64               ; 2 uses
-  %i.dv = and i64 %i.du, -8                       ; 2 uses
-  %i.dw = sub i64 %i.dv, %i.du
-  %i.dx = getelementptr i8, ptr %i.dt, i64 %i.dw  ; 2 uses
-  %i.dy = icmp eq i64 %i.dv, 0                    ; 2 uses
+  %i.du = ptrtoint ptr %i.dt to i64
+  %i.dv = and i64 %i.du, 7
+  %i.dw = sub nsw i64 0, %i.dv
+  %i.dx = getelementptr i8, ptr %i.dt, i64 %i.dw  ; 3 uses
+  %i.dy = icmp eq ptr %i.dx, null                 ; 2 uses
   br i1 %i.dy, label %bb.af, label %bb.ag
 
 "_ZN6papaya3raw24HashMap$LT$K$C$V$C$S$GT$9insert_at17h61c49d4215be6d6cE.exit.thread.i.i.i": ; preds = %"_ZN6papaya3raw22LazyEntry$LT$K$C$V$GT$4init17h6ec7a4bf80685da0E.exit.i.i.i"
@@ -2024,13 +2018,15 @@ bb.q:                                             ; preds = %bb.o
   %i.hw = getelementptr inbounds nuw [8 x i8], ptr %i.bc, i64 %.sroa.026.07.i.i.i
   %i.hx = cmpxchg ptr %i.hw, ptr null, ptr %i.cb seq_cst seq_cst, align 8, !noalias !25124 ; 2 uses
   %i.hy = extractvalue { ptr, i1 } %i.hx, 1
-  %5 = extractvalue { ptr, i1 } %i.hx, 0          ; 2 uses
   br i1 %i.hy, label %.split9.us.i.i.i, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.hz = ptrtoint ptr %5 to i64                  ; 2 uses
-  %i.ia = and i64 %i.hz, -8                       ; 2 uses
-  %i.ib = icmp eq i64 %i.ia, 0
+  %5 = extractvalue { ptr, i1 } %i.hx, 0          ; 2 uses
+  %i.hz = ptrtoint ptr %5 to i64
+  %i.ia = and i64 %i.hz, 7
+  %6 = sub nsw i64 0, %i.ia
+  %7 = getelementptr i8, ptr %5, i64 %6           ; 3 uses
+  %i.ib = icmp eq ptr %7, null
   br i1 %i.ib, label %bb.x, label %bb.s
 
 .split9.us.i.i.i:                                 ; preds = %bb.q
@@ -2038,8 +2034,6 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.z
 
 bb.s:                                             ; preds = %bb.r
-  %6 = sub i64 %i.ia, %i.hz
-  %7 = getelementptr i8, ptr %5, i64 %6           ; 2 uses
   %.val.i.i.i = load i64, ptr %i.al, align 8, !noalias !25124, !noundef !21 ; 2 uses
   %.val34.i.i.i = load i64, ptr %i.am, align 8, !noalias !25124, !noundef !21 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !25131)
@@ -2442,18 +2436,18 @@ bb.dt:                                            ; preds = %bb.ds
   %i.aoy = getelementptr inbounds nuw [8 x i8], ptr %i.aou, i64 %.sroa.026.07.us.i.i.us.i
   %i.aoz = cmpxchg ptr %i.aoy, ptr null, ptr %i.aoq seq_cst seq_cst, align 8, !noalias !25233 ; 2 uses
   %i.apa = extractvalue { ptr, i1 } %i.aoz, 1
-  %8 = extractvalue { ptr, i1 } %i.aoz, 0         ; 2 uses
   br i1 %i.apa, label %bb.ee, label %bb.du
 
 bb.du:                                            ; preds = %bb.dt
-  %i.apb = ptrtoint ptr %8 to i64                 ; 2 uses
-  %i.apc = and i64 %i.apb, -8                     ; 2 uses
-  %i.apd = icmp eq i64 %i.apc, 0
+  %8 = extractvalue { ptr, i1 } %i.aoz, 0         ; 2 uses
+  %i.apb = ptrtoint ptr %8 to i64
+  %i.apc = and i64 %i.apb, 7
+  %9 = sub nsw i64 0, %i.apc
+  %10 = getelementptr i8, ptr %8, i64 %9          ; 3 uses
+  %i.apd = icmp eq ptr %10, null
   br i1 %i.apd, label %bb.ea, label %bb.dv
 
 bb.dv:                                            ; preds = %bb.du
-  %9 = sub i64 %i.apc, %i.apb
-  %10 = getelementptr i8, ptr %8, i64 %9          ; 2 uses
   %.val.us.i.i.us.i = load i64, ptr %i.anv, align 8, !noalias !25233, !noundef !21 ; 2 uses
   %.val34.us.i.i.us.i = load i64, ptr %i.anw, align 8, !noalias !25233, !noundef !21 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !25234)
@@ -2856,18 +2850,17 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = extractvalue { ptr, i1 } %i.d, 0         ; 3 uses
-  %i.g = ptrtoint ptr %i.f to i64                 ; 3 uses
-  %i.h = and i64 %i.g, -8                         ; 2 uses
-  %i.i = sub i64 %i.h, %i.g
-  %i.j = getelementptr i8, ptr %i.f, i64 %i.i
-  %i.k = icmp eq i64 %i.h, 0                      ; 2 uses
+  %i.g = ptrtoint ptr %i.f to i64                 ; 2 uses
+  %i.h = and i64 %i.g, 7
+  %i.i = sub nsw i64 0, %i.h
+  %i.j = getelementptr i8, ptr %i.f, i64 %i.i     ; 2 uses
+  %i.k = icmp eq ptr %i.j, null
   %i.l = and i64 %i.g, 1
   %. = sub nuw nsw i64 2, %i.l
-  %.sroa.6.0 = select i1 %i.k, ptr undef, ptr %i.f
   %.sroa.02.0 = select i1 %i.k, i64 0, i64 %.
   store i64 %.sroa.02.0, ptr %0, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.6.0, ptr %.sroa.6.0..sroa_idx, align 8
+  store ptr %i.f, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.j, ptr %.sroa.8.0..sroa_idx, align 8
   br label %bb.p

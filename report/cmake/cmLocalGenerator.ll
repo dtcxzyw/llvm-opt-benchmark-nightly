@@ -204,10 +204,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i.i.i.i: ; p
 
 _ZSt4moveIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i.i.i.i, %._crit_edge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa, %._crit_edge ], [ %i.cy, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i.i.i.i ]
-  %i.db = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.db = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.dc = ptrtoint ptr %.sroa.0.0.lcssa to i64
   %i.dd = sub i64 %i.db, %i.dc
-  %i.de = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.dd ; 2 uses
+  %i.de = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.dd ; 3 uses
   %i.df = ptrtoint ptr %3 to i64
   %i.dg = ptrtoint ptr %.016.lcssa to i64
   %i.dh = sub i64 %i.df, %i.dg
@@ -306,15 +306,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i.i.i.i35: ;
   %i.ek = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i30, i64 32 ; 2 uses
   %i.el = add nsw i64 %.013.i.i.i.i.i29, -1
   %i.em = icmp sgt i64 %.013.i.i.i.i.i29, 1
-  br i1 %i.em, label %.lr.ph.i.i.i.i.i28, label %_ZSt4moveIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit41.loopexit, !llvm.loop !25
+  br i1 %i.em, label %.lr.ph.i.i.i.i.i28, label %_ZSt4moveIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit41, !llvm.loop !25
 
-_ZSt4moveIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit41.loopexit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i.i.i.i35
-  %6 = ptrtoint ptr %i.ek to i64
-  br label %_ZSt4moveIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit41
-
-_ZSt4moveIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit41: ; preds = %_ZSt4moveIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit41.loopexit, %_ZSt4moveIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit
-  %.08.lcssa.i.i.i.i.i27 = phi i64 [ %i.db, %_ZSt4moveIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit ], [ %6, %_ZSt4moveIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit41.loopexit ]
-  %i.en = sub i64 %.08.lcssa.i.i.i.i.i27, %i.db
+_ZSt4moveIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit41: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i.i.i.i35, %_ZSt4moveIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit
+  %.08.lcssa.i.i.i.i.i27 = phi ptr [ %i.de, %_ZSt4moveIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit ], [ %i.ek, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit.i.i.i.i.i35 ]
+  %6 = ptrtoint ptr %.08.lcssa.i.i.i.i.i27 to i64
+  %i.en = sub i64 %6, %i.db
   %i.eo = getelementptr inbounds i8, ptr %i.de, i64 %i.en
   ret ptr %i.eo
 }
@@ -717,10 +714,10 @@ _ZN2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSEOS6_.exit100: ; p
 
 _ZSt4moveIP2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i: ; preds = %_ZN2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSEOS6_.exit100, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i24 = phi ptr [ %i.lj, %._crit_edge.i ], [ %i.nm, %_ZN2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSEOS6_.exit100 ]
-  %i.np = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i24 to i64 ; 3 uses
+  %i.np = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i24 to i64 ; 2 uses
   %i.nq = ptrtoint ptr %i.lj to i64
   %i.nr = sub i64 %i.np, %i.nq
-  %i.ns = getelementptr inbounds i8, ptr %i.lj, i64 %i.nr ; 2 uses
+  %i.ns = getelementptr inbounds i8, ptr %i.lj, i64 %i.nr ; 3 uses
   %i.nt = ptrtoint ptr %i.hs to i64               ; 2 uses
   %i.nu = ptrtoint ptr %.117.i to i64
   %i.nv = sub i64 %i.nt, %i.nu                    ; 2 uses
@@ -877,15 +874,12 @@ _ZN2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSEOS6_.exit86: ; pr
   %i.ps = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22.i, i64 48 ; 2 uses
   %i.pt = add nsw i64 %.012.i.i.i.i.i21.i, -1
   %i.pu = icmp samesign ugt i64 %.012.i.i.i.i.i21.i, 1
-  br i1 %i.pu, label %.lr.ph.i.i.i.i.i20.i, label %_ZSt4moveIP2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit24.loopexit.i, !llvm.loop !31
+  br i1 %i.pu, label %.lr.ph.i.i.i.i.i20.i, label %"_ZSt12__move_mergeIP2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIZL23MoveSystemIncludesToEndRSD_RKS6_SJ_PK17cmGeneratorTargetE3$_0EEET0_T_SQ_SQ_SQ_SP_T1_.exit", !llvm.loop !31
 
-_ZSt4moveIP2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit24.loopexit.i: ; preds = %_ZN2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSEOS6_.exit86
-  %6 = ptrtoint ptr %i.ps to i64
-  br label %"_ZSt12__move_mergeIP2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIZL23MoveSystemIncludesToEndRSD_RKS6_SJ_PK17cmGeneratorTargetE3$_0EEET0_T_SQ_SQ_SQ_SP_T1_.exit"
-
-"_ZSt12__move_mergeIP2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIZL23MoveSystemIncludesToEndRSD_RKS6_SJ_PK17cmGeneratorTargetE3$_0EEET0_T_SQ_SQ_SQ_SP_T1_.exit": ; preds = %_ZSt4moveIP2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i, %_ZSt4moveIP2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit24.loopexit.i
-  %.08.lcssa.i.i.i.i.i18.i = phi i64 [ %i.np, %_ZSt4moveIP2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i ], [ %6, %_ZSt4moveIP2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit24.loopexit.i ]
-  %i.pv = sub i64 %.08.lcssa.i.i.i.i.i18.i, %i.np
+"_ZSt12__move_mergeIP2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEENS9_5__ops15_Iter_comp_iterIZL23MoveSystemIncludesToEndRSD_RKS6_SJ_PK17cmGeneratorTargetE3$_0EEET0_T_SQ_SQ_SQ_SP_T1_.exit": ; preds = %_ZN2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSEOS6_.exit86, %_ZSt4moveIP2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i
+  %.08.lcssa.i.i.i.i.i18.i = phi ptr [ %i.ns, %_ZSt4moveIP2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEN9__gnu_cxx17__normal_iteratorIS8_St6vectorIS7_SaIS7_EEEEET0_T_SG_SF_.exit.i ], [ %i.ps, %_ZN2BTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSEOS6_.exit86 ]
+  %6 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i to i64
+  %i.pv = sub i64 %6, %i.np
   %i.pw = getelementptr inbounds i8, ptr %i.ns, i64 %i.pv ; 2 uses
   %i.px = sub i64 %i.l, %i.nt
   %i.py = sdiv exact i64 %i.px, 48                ; 2 uses

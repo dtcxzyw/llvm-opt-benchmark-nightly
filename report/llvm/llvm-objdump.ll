@@ -205,10 +205,10 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 _ZSt4moveIPSt4pairImN4llvm6object10SectionRefEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i33, %._crit_edge.i.i
   %.08.lcssa.i.i.i.i.i.i.i27 = phi ptr [ %i.ez, %._crit_edge.i.i ], [ %i.fm, %.lr.ph.i.i.i.i.i.i.i33 ]
-  %i.fp = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i27 to i64 ; 3 uses
+  %i.fp = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i27 to i64 ; 2 uses
   %i.fq = ptrtoint ptr %i.ez to i64
   %i.fr = sub i64 %i.fp, %i.fq
-  %i.fs = getelementptr inbounds i8, ptr %i.ez, i64 %i.fr ; 2 uses
+  %i.fs = getelementptr inbounds i8, ptr %i.ez, i64 %i.fr ; 3 uses
   %i.ft = ptrtoint ptr %i.dy to i64               ; 2 uses
   %i.fu = ptrtoint ptr %.117.i.i to i64
   %i.fv = sub i64 %i.ft, %i.fu                    ; 2 uses
@@ -232,15 +232,12 @@ _ZSt4moveIPSt4pairImN4llvm6object10SectionRefEEN9__gnu_cxx17__normal_iteratorIS5
   %i.gc = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22.i.i, i64 24 ; 2 uses
   %i.gd = add nsw i64 %.012.i.i.i.i.i21.i.i, -1
   %i.ge = icmp samesign ugt i64 %.012.i.i.i.i.i21.i.i, 1
-  br i1 %i.ge, label %.lr.ph.i.i.i.i.i20.i.i, label %_ZSt4moveIPSt4pairImN4llvm6object10SectionRefEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit24.loopexit.i.i, !llvm.loop !71
+  br i1 %i.ge, label %.lr.ph.i.i.i.i.i20.i.i, label %"_ZSt12__move_mergeIPSt4pairImN4llvm6object10SectionRefEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZL17disassembleObjectRNS2_10ObjectFileERKSE_RN12_GLOBAL__N_118DisassemblerTargetERSt8optionalISJ_ERNS1_7objdump13SourcePrinterEbRNS1_11raw_ostreamEE3$_4EEET0_T_SW_SW_SW_SV_T1_.exit.i", !llvm.loop !71
 
-_ZSt4moveIPSt4pairImN4llvm6object10SectionRefEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit24.loopexit.i.i: ; preds = %.lr.ph.i.i.i.i.i20.i.i
-  %3 = ptrtoint ptr %i.gc to i64
-  br label %"_ZSt12__move_mergeIPSt4pairImN4llvm6object10SectionRefEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZL17disassembleObjectRNS2_10ObjectFileERKSE_RN12_GLOBAL__N_118DisassemblerTargetERSt8optionalISJ_ERNS1_7objdump13SourcePrinterEbRNS1_11raw_ostreamEE3$_4EEET0_T_SW_SW_SW_SV_T1_.exit.i"
-
-"_ZSt12__move_mergeIPSt4pairImN4llvm6object10SectionRefEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZL17disassembleObjectRNS2_10ObjectFileERKSE_RN12_GLOBAL__N_118DisassemblerTargetERSt8optionalISJ_ERNS1_7objdump13SourcePrinterEbRNS1_11raw_ostreamEE3$_4EEET0_T_SW_SW_SW_SV_T1_.exit.i": ; preds = %_ZSt4moveIPSt4pairImN4llvm6object10SectionRefEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit24.loopexit.i.i, %_ZSt4moveIPSt4pairImN4llvm6object10SectionRefEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i.i
-  %.08.lcssa.i.i.i.i.i18.i.i = phi i64 [ %i.fp, %_ZSt4moveIPSt4pairImN4llvm6object10SectionRefEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i.i ], [ %3, %_ZSt4moveIPSt4pairImN4llvm6object10SectionRefEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit24.loopexit.i.i ]
-  %i.gf = sub i64 %.08.lcssa.i.i.i.i.i18.i.i, %i.fp
+"_ZSt12__move_mergeIPSt4pairImN4llvm6object10SectionRefEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZL17disassembleObjectRNS2_10ObjectFileERKSE_RN12_GLOBAL__N_118DisassemblerTargetERSt8optionalISJ_ERNS1_7objdump13SourcePrinterEbRNS1_11raw_ostreamEE3$_4EEET0_T_SW_SW_SW_SV_T1_.exit.i": ; preds = %.lr.ph.i.i.i.i.i20.i.i, %_ZSt4moveIPSt4pairImN4llvm6object10SectionRefEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i.i
+  %.08.lcssa.i.i.i.i.i18.i.i = phi ptr [ %i.fs, %_ZSt4moveIPSt4pairImN4llvm6object10SectionRefEEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i.i ], [ %i.gc, %.lr.ph.i.i.i.i.i20.i.i ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i.i to i64
+  %i.gf = sub i64 %3, %i.fp
   %i.gg = getelementptr inbounds i8, ptr %i.fs, i64 %i.gf ; 2 uses
   %i.gh = sub i64 %i.l, %i.ft
   %i.gi = sdiv exact i64 %i.gh, 24                ; 2 uses

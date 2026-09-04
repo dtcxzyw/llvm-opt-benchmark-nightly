@@ -205,10 +205,10 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 _ZSt4moveIPN4llvm12IRSimilarity21IRSimilarityCandidateEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i31, %._crit_edge.i.i
   %.08.lcssa.i.i.i.i.i.i.i25 = phi ptr [ %i.cg, %._crit_edge.i.i ], [ %i.cr, %.lr.ph.i.i.i.i.i.i.i31 ]
-  %i.cu = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i25 to i64 ; 3 uses
+  %i.cu = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i25 to i64 ; 2 uses
   %i.cv = ptrtoint ptr %i.cg to i64
   %i.cw = sub i64 %i.cu, %i.cv
-  %i.cx = getelementptr inbounds i8, ptr %i.cg, i64 %i.cw ; 2 uses
+  %i.cx = getelementptr inbounds i8, ptr %i.cg, i64 %i.cw ; 3 uses
   %i.cy = ptrtoint ptr %i.ca to i64               ; 2 uses
   %i.cz = ptrtoint ptr %.117.i.i to i64
   %i.da = sub i64 %i.cy, %i.cz                    ; 2 uses
@@ -228,15 +228,12 @@ _ZSt4moveIPN4llvm12IRSimilarity21IRSimilarityCandidateEN9__gnu_cxx17__normal_ite
   %i.df = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22.i.i, i64 120 ; 2 uses
   %i.dg = add nsw i64 %.012.i.i.i.i.i21.i.i, -1
   %i.dh = icmp samesign ugt i64 %.012.i.i.i.i.i21.i.i, 1
-  br i1 %i.dh, label %.lr.ph.i.i.i.i.i20.i.i, label %_ZSt4moveIPN4llvm12IRSimilarity21IRSimilarityCandidateEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i.i, !llvm.loop !41
+  br i1 %i.dh, label %.lr.ph.i.i.i.i.i20.i.i, label %"_ZSt12__move_mergeIPN4llvm12IRSimilarity21IRSimilarityCandidateEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNS0_10IROutliner24pruneIncompatibleRegionsERS8_R15OutlinableGroupE3$_0EEET0_T_SJ_SJ_SJ_SI_T1_.exit.i", !llvm.loop !41
 
-_ZSt4moveIPN4llvm12IRSimilarity21IRSimilarityCandidateEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i.i: ; preds = %.lr.ph.i.i.i.i.i20.i.i
-  %3 = ptrtoint ptr %i.df to i64
-  br label %"_ZSt12__move_mergeIPN4llvm12IRSimilarity21IRSimilarityCandidateEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNS0_10IROutliner24pruneIncompatibleRegionsERS8_R15OutlinableGroupE3$_0EEET0_T_SJ_SJ_SJ_SI_T1_.exit.i"
-
-"_ZSt12__move_mergeIPN4llvm12IRSimilarity21IRSimilarityCandidateEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNS0_10IROutliner24pruneIncompatibleRegionsERS8_R15OutlinableGroupE3$_0EEET0_T_SJ_SJ_SJ_SI_T1_.exit.i": ; preds = %_ZSt4moveIPN4llvm12IRSimilarity21IRSimilarityCandidateEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i.i, %_ZSt4moveIPN4llvm12IRSimilarity21IRSimilarityCandidateEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i.i
-  %.08.lcssa.i.i.i.i.i18.i.i = phi i64 [ %i.cu, %_ZSt4moveIPN4llvm12IRSimilarity21IRSimilarityCandidateEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i.i ], [ %3, %_ZSt4moveIPN4llvm12IRSimilarity21IRSimilarityCandidateEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i.i ]
-  %i.di = sub i64 %.08.lcssa.i.i.i.i.i18.i.i, %i.cu
+"_ZSt12__move_mergeIPN4llvm12IRSimilarity21IRSimilarityCandidateEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNS0_10IROutliner24pruneIncompatibleRegionsERS8_R15OutlinableGroupE3$_0EEET0_T_SJ_SJ_SJ_SI_T1_.exit.i": ; preds = %.lr.ph.i.i.i.i.i20.i.i, %_ZSt4moveIPN4llvm12IRSimilarity21IRSimilarityCandidateEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i.i
+  %.08.lcssa.i.i.i.i.i18.i.i = phi ptr [ %i.cx, %_ZSt4moveIPN4llvm12IRSimilarity21IRSimilarityCandidateEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i.i ], [ %i.df, %.lr.ph.i.i.i.i.i20.i.i ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i.i to i64
+  %i.di = sub i64 %3, %i.cu
   %i.dj = getelementptr inbounds i8, ptr %i.cx, i64 %i.di ; 2 uses
   %i.dk = sub i64 %i.l, %i.cy
   %i.dl = sdiv exact i64 %i.dk, 120               ; 2 uses

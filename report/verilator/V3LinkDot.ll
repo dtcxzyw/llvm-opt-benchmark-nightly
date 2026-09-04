@@ -205,10 +205,10 @@ _ZZN19LinkDotScopeVisitor26processDeferredAliasScopesEvENKUlRKSt4pairIP13AstAlia
 
 _ZSt4moveIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa.i, %._crit_edge.i ], [ %.lcssa236.unr.a, %.lr.ph.i.i.i.i.i.i.prol.loopexit ], [ %i.cz, %.lr.ph.i.i.i.i.i.i ]
-  %i.dc = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i to i64 ; 3 uses
+  %i.dc = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i to i64 ; 2 uses
   %i.dd = ptrtoint ptr %.sroa.0.0.lcssa.i to i64
   %i.de = sub i64 %i.dc, %i.dd
-  %i.df = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.de ; 3 uses
+  %i.df = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.de ; 4 uses
   %i.dg = ptrtoint ptr %i.j to i64                ; 2 uses
   %i.dh = ptrtoint ptr %.016.lcssa.i to i64
   %i.di = sub i64 %i.dg, %i.dh
@@ -241,7 +241,7 @@ _ZSt4moveIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_S
   %.0910.i.i.i.i.i22.i.unr = phi ptr [ %.016.lcssa.i, %.lr.ph.i.i.i.i.i19.i.preheader ], [ %i.dm, %.lr.ph.i.i.i.i.i19.i.prol ]
   %.lcssa237.unr = phi ptr [ poison, %.lr.ph.i.i.i.i.i19.i.preheader ], [ %i.dn, %.lr.ph.i.i.i.i.i19.i.prol ]
   %i.dp = icmp ult i64 %i.dj, 8
-  br i1 %i.dp, label %_ZSt4moveIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit23.loopexit.i, label %.lr.ph.i.i.i.i.i19.i
+  br i1 %i.dp, label %_ZSt12__move_mergeIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZN19LinkDotScopeVisitor26processDeferredAliasScopesEvEUlRKS5_SH_E_EEET0_T_SL_SL_SL_SK_T1_.exit, label %.lr.ph.i.i.i.i.i19.i
 
 .lr.ph.i.i.i.i.i19.i:                             ; preds = %.lr.ph.i.i.i.i.i19.i.prol.loopexit, %.lr.ph.i.i.i.i.i19.i
   %.012.i.i.i.i.i20.i = phi i64 [ %i.eo, %.lr.ph.i.i.i.i.i19.i ], [ %.012.i.i.i.i.i20.i.unr, %.lr.ph.i.i.i.i.i19.i.prol.loopexit ] ; 2 uses
@@ -281,16 +281,12 @@ _ZSt4moveIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_S
   %i.en = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i21.i, i64 128 ; 2 uses
   %i.eo = add nsw i64 %.012.i.i.i.i.i20.i, -8
   %i.ep = icmp sgt i64 %.012.i.i.i.i.i20.i, 8
-  br i1 %i.ep, label %.lr.ph.i.i.i.i.i19.i, label %_ZSt4moveIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit23.loopexit.i, !llvm.loop !17
+  br i1 %i.ep, label %.lr.ph.i.i.i.i.i19.i, label %_ZSt12__move_mergeIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZN19LinkDotScopeVisitor26processDeferredAliasScopesEvEUlRKS5_SH_E_EEET0_T_SL_SL_SL_SK_T1_.exit, !llvm.loop !17
 
-_ZSt4moveIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit23.loopexit.i: ; preds = %.lr.ph.i.i.i.i.i19.i, %.lr.ph.i.i.i.i.i19.i.prol.loopexit
-  %.lcssa237 = phi ptr [ %.lcssa237.unr, %.lr.ph.i.i.i.i.i19.i.prol.loopexit ], [ %i.en, %.lr.ph.i.i.i.i.i19.i ]
-  %6 = ptrtoint ptr %.lcssa237 to i64
-  br label %_ZSt12__move_mergeIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZN19LinkDotScopeVisitor26processDeferredAliasScopesEvEUlRKS5_SH_E_EEET0_T_SL_SL_SL_SK_T1_.exit
-
-_ZSt12__move_mergeIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZN19LinkDotScopeVisitor26processDeferredAliasScopesEvEUlRKS5_SH_E_EEET0_T_SL_SL_SL_SK_T1_.exit: ; preds = %_ZSt4moveIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i, %_ZSt4moveIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit23.loopexit.i
-  %.08.lcssa.i.i.i.i.i18.i = phi i64 [ %i.dc, %_ZSt4moveIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i ], [ %6, %_ZSt4moveIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit23.loopexit.i ]
-  %i.eq = sub i64 %.08.lcssa.i.i.i.i.i18.i, %i.dc
+_ZSt12__move_mergeIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZN19LinkDotScopeVisitor26processDeferredAliasScopesEvEUlRKS5_SH_E_EEET0_T_SL_SL_SL_SK_T1_.exit: ; preds = %.lr.ph.i.i.i.i.i19.i.prol.loopexit, %.lr.ph.i.i.i.i.i19.i, %_ZSt4moveIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i
+  %.08.lcssa.i.i.i.i.i18.i = phi ptr [ %i.df, %_ZSt4moveIPSt4pairIP13AstAliasScopeP7VSymEntEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i ], [ %.lcssa237.unr, %.lr.ph.i.i.i.i.i19.i.prol.loopexit ], [ %i.en, %.lr.ph.i.i.i.i.i19.i ]
+  %6 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i to i64
+  %i.eq = sub i64 %6, %i.dc
   %i.er = getelementptr inbounds i8, ptr %i.df, i64 %i.eq ; 2 uses
   %i.es = sub i64 %i.b, %i.dg
   %i.et = ashr exact i64 %i.es, 4                 ; 2 uses

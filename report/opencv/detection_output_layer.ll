@@ -205,10 +205,10 @@ middle.block157:                                  ; preds = %vector.body142
 
 _ZSt4moveIPSt4pairIfiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i, %middle.block157, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i = phi ptr [ %.sroa.024.0.lcssa.i, %._crit_edge.i ], [ %i.u, %middle.block157 ], [ %i.ae, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
-  %i.ah = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i to i64 ; 4 uses
+  %i.ah = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i to i64 ; 3 uses
   %i.ai = ptrtoint ptr %.sroa.024.0.lcssa.i to i64 ; 2 uses
   %i.aj = sub i64 %i.ah, %i.ai                    ; 2 uses
-  %i.ak = getelementptr i8, ptr %.sroa.024.0.lcssa.i, i64 %i.aj ; 6 uses
+  %i.ak = getelementptr i8, ptr %.sroa.024.0.lcssa.i, i64 %i.aj ; 7 uses
   %i.al = ptrtoint ptr %i.g to i64                ; 2 uses
   %i.am = ptrtoint ptr %.016.lcssa.i to i64
   %i.an = sub i64 %i.al, %i.am                    ; 3 uses
@@ -266,7 +266,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.ao, %n.vec
-  br i1 %cmp.n, label %_ZSt4moveIPSt4pairIfiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit23.loopexit.i, label %.lr.ph.i.i.i.i.i19.i.preheader249
+  br i1 %cmp.n, label %_ZSt12__move_mergeIPSt4pairIfiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIPFbRKS1_SC_EEEET0_T_SH_SH_SH_SG_T1_.exit, label %.lr.ph.i.i.i.i.i19.i.preheader249
 
 .lr.ph.i.i.i.i.i19.i.preheader249:                ; preds = %vector.memcheck, %.lr.ph.i.i.i.i.i19.i.preheader, %middle.block
   %.012.i.i.i.i.i20.i.ph = phi i64 [ %i.ao, %vector.memcheck ], [ %i.ao, %.lr.ph.i.i.i.i.i19.i.preheader ], [ %i.as, %middle.block ]
@@ -288,16 +288,12 @@ middle.block:                                     ; preds = %vector.body
   %i.be = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i21.i, i64 8 ; 2 uses
   %i.bf = add nsw i64 %.012.i.i.i.i.i20.i, -1
   %i.bg = icmp samesign ugt i64 %.012.i.i.i.i.i20.i, 1
-  br i1 %i.bg, label %.lr.ph.i.i.i.i.i19.i, label %_ZSt4moveIPSt4pairIfiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit23.loopexit.i, !llvm.loop !413
+  br i1 %i.bg, label %.lr.ph.i.i.i.i.i19.i, label %_ZSt12__move_mergeIPSt4pairIfiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIPFbRKS1_SC_EEEET0_T_SH_SH_SH_SG_T1_.exit, !llvm.loop !413
 
-_ZSt4moveIPSt4pairIfiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit23.loopexit.i: ; preds = %.lr.ph.i.i.i.i.i19.i, %middle.block
-  %.lcssa97 = phi ptr [ %i.au, %middle.block ], [ %i.be, %.lr.ph.i.i.i.i.i19.i ]
-  %5 = ptrtoint ptr %.lcssa97 to i64
-  br label %_ZSt12__move_mergeIPSt4pairIfiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIPFbRKS1_SC_EEEET0_T_SH_SH_SH_SG_T1_.exit
-
-_ZSt12__move_mergeIPSt4pairIfiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIPFbRKS1_SC_EEEET0_T_SH_SH_SH_SG_T1_.exit: ; preds = %_ZSt4moveIPSt4pairIfiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i, %_ZSt4moveIPSt4pairIfiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit23.loopexit.i
-  %.08.lcssa.i.i.i.i.i18.i = phi i64 [ %i.ah, %_ZSt4moveIPSt4pairIfiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i ], [ %5, %_ZSt4moveIPSt4pairIfiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit23.loopexit.i ]
-  %i.bh = sub i64 %.08.lcssa.i.i.i.i.i18.i, %i.ah
+_ZSt12__move_mergeIPSt4pairIfiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIPFbRKS1_SC_EEEET0_T_SH_SH_SH_SG_T1_.exit: ; preds = %.lr.ph.i.i.i.i.i19.i, %middle.block, %_ZSt4moveIPSt4pairIfiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i
+  %.08.lcssa.i.i.i.i.i18.i = phi ptr [ %i.ak, %_ZSt4moveIPSt4pairIfiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i ], [ %i.au, %middle.block ], [ %i.be, %.lr.ph.i.i.i.i.i19.i ]
+  %5 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i to i64
+  %i.bh = sub i64 %5, %i.ah
   %i.bi = getelementptr inbounds i8, ptr %i.ak, i64 %i.bh ; 2 uses
   %i.bj = sub i64 %i.b, %i.al
   %i.bk = ashr exact i64 %i.bj, 3                 ; 2 uses

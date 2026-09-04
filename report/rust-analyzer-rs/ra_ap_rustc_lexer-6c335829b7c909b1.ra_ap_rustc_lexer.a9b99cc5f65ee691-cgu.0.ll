@@ -202,16 +202,15 @@ bb.q:                                             ; preds = %bb.m
           to label %bb.w unwind label %.loopexit.split-lp
 
 bb.r:                                             ; preds = %bb.p, %.split.i.i, %bb.n
-  %i.mh = getelementptr inbounds nuw i8, ptr %i.ka, i64 %i.lw ; 9 uses
-  %i.mi = getelementptr inbounds nuw i8, ptr %i.ka, i64 %i.lm
+  %i.mh = getelementptr inbounds nuw i8, ptr %i.ka, i64 %i.lw ; 8 uses
+  %i.mi = getelementptr inbounds nuw i8, ptr %i.ka, i64 %i.lm ; 3 uses
   store ptr %i.mh, ptr %0, align 8, !alias.scope !278
   store ptr %i.mi, ptr %i.r, align 8, !alias.scope !278
   call void @llvm.experimental.noalias.scope.decl(metadata !281)
   %i.mj = ptrtoint ptr %i.mh to i64               ; 2 uses
-  %i.mk = sub nuw i64 %i.t, %i.mj                 ; 6 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.mh, i64 %i.mk ; 2 uses
+  %i.mk = sub nuw i64 %i.t, %i.mj                 ; 5 uses
   %i.ml = load atomic ptr, ptr @_RNvNvNtNtNtCslLTI5cSnp8O_6memchr4arch6x86_646memchr10memchr_raw2FN monotonic, align 8, !noalias !282, !nonnull !4, !noundef !4
-  %i.mm = invoke { i64, ptr } %i.ml(i8 noundef 10, ptr noundef nonnull readonly %i.mh, ptr noundef nonnull readonly %2)
+  %i.mm = invoke { i64, ptr } %i.ml(i8 noundef 10, ptr noundef nonnull readonly %i.mh, ptr noundef nonnull readonly %i.mi)
           to label %.noexc129 unwind label %.loopexit.split-lp, !inline_history !169 ; 2 uses
 
 .noexc129:                                        ; preds = %bb.r
@@ -247,7 +246,7 @@ bb.v:                                             ; preds = %bb.u, %.split.i.i12
   br label %_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor9eat_until.exit
 
 _RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor9eat_until.exit: ; preds = %.noexc129, %bb.v
-  %.sroa.5.0.i = phi ptr [ %2, %bb.v ], [ inttoptr (i64 1 to ptr), %.noexc129 ]
+  %.sroa.5.0.i = phi ptr [ %i.mi, %bb.v ], [ inttoptr (i64 1 to ptr), %.noexc129 ]
   %.sroa.0.0.i126 = phi ptr [ %i.my, %bb.v ], [ inttoptr (i64 1 to ptr), %.noexc129 ]
   store ptr %.sroa.0.0.i126, ptr %0, align 8, !alias.scope !281
   store ptr %.sroa.5.0.i, ptr %i.r, align 8, !alias.scope !281
@@ -650,16 +649,15 @@ _RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor4bump.exit.i177: ; preds = %
   br i1 %.not.i.i178, label %_RINvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB5_6Cursor9eat_whileNCNvB2_11frontmatters7_0EB5_.exit.loopexit, label %.lr.ph.i175
 
 bb.bx:                                            ; preds = %bb.bv, %.split.i.i171, %.thread207
-  %i.yj = getelementptr inbounds nuw i8, ptr %i.ka, i64 %.sroa.414.0 ; 9 uses
-  %i.yk = getelementptr inbounds nuw i8, ptr %i.ka, i64 %i.xr
+  %i.yj = getelementptr inbounds nuw i8, ptr %i.ka, i64 %.sroa.414.0 ; 8 uses
+  %i.yk = getelementptr inbounds nuw i8, ptr %i.ka, i64 %i.xr ; 3 uses
   store ptr %i.yj, ptr %0, align 8, !alias.scope !321
   store ptr %i.yk, ptr %i.r, align 8, !alias.scope !321
   call void @llvm.experimental.noalias.scope.decl(metadata !324)
   %i.yl = ptrtoint ptr %i.yj to i64               ; 2 uses
-  %i.ym = sub nuw i64 %i.xq, %i.yl                ; 6 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.yj, i64 %i.ym ; 2 uses
+  %i.ym = sub nuw i64 %i.xq, %i.yl                ; 5 uses
   %i.yn = load atomic ptr, ptr @_RNvNvNtNtNtCslLTI5cSnp8O_6memchr4arch6x86_646memchr10memchr_raw2FN monotonic, align 8, !noalias !325, !nonnull !4, !noundef !4
-  %i.yo = invoke { i64, ptr } %i.yn(i8 noundef 10, ptr noundef nonnull readonly %i.yj, ptr noundef nonnull readonly %3)
+  %i.yo = invoke { i64, ptr } %i.yn(i8 noundef 10, ptr noundef nonnull readonly %i.yj, ptr noundef nonnull readonly %i.yk)
           to label %.noexc186 unwind label %.loopexit.split-lp, !inline_history !169 ; 2 uses
 
 .noexc186:                                        ; preds = %bb.bx
@@ -695,7 +693,7 @@ bb.cb:                                            ; preds = %bb.ca, %.split.i.i1
   br label %_RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor9eat_until.exit188
 
 _RNvMs_CsezrqMfYJdg3_17ra_ap_rustc_lexerNtB4_6Cursor9eat_until.exit188: ; preds = %.noexc186, %bb.cb
-  %.sroa.5.0.i182 = phi ptr [ %3, %bb.cb ], [ inttoptr (i64 1 to ptr), %.noexc186 ]
+  %.sroa.5.0.i182 = phi ptr [ %i.yk, %bb.cb ], [ inttoptr (i64 1 to ptr), %.noexc186 ]
   %.sroa.0.0.i183 = phi ptr [ %i.za, %bb.cb ], [ inttoptr (i64 1 to ptr), %.noexc186 ]
   store ptr %.sroa.0.0.i183, ptr %0, align 8, !alias.scope !324
   store ptr %.sroa.5.0.i182, ptr %i.r, align 8, !alias.scope !324

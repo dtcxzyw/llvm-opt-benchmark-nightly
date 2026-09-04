@@ -204,7 +204,7 @@ _ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit.threadthrea
 
 _ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit.thread: ; preds = %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit.threadthread-pre-split, %bb.ao
   %.pre550 = phi i8 [ %.pre550.pr, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit.threadthread-pre-split ], [ %i.el, %bb.ao ] ; 2 uses
-  %.promoted448 = phi ptr [ %.promoted448.ph, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit.threadthread-pre-split ], [ %i.eh, %bb.ao ] ; 5 uses
+  %.promoted448 = phi ptr [ %.promoted448.ph, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit.threadthread-pre-split ], [ %i.eh, %bb.ao ] ; 6 uses
   %i.et = load i32, ptr %0, align 8, !tbaa !21    ; 3 uses
   %i.eu = and i32 %i.et, 128
   %.not218 = icmp eq i32 %i.eu, 0
@@ -213,10 +213,9 @@ _ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit.thread: ; p
   br i1 %or.cond225, label %bb.ax, label %bb.aq
 
 bb.aq:                                            ; preds = %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit.thread
-  switch i8 %.pre550, label %._crit_edge [
+  switch i8 %.pre550, label %bb.ax [
     i8 120, label %bb.ar
     i8 88, label %bb.ar
-    i8 48, label %.lr.ph450
   ]
 
 bb.ar:                                            ; preds = %bb.aq, %bb.aq
@@ -329,15 +328,18 @@ bb.aw:                                            ; preds = %_ZN14arrow_vendored
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   br label %.thread
 
-bb.ax:                                            ; preds = %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit.thread
+bb.ax:                                            ; preds = %bb.aq, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit.thread
+  %.promoted448539 = ptrtoaddr ptr %.promoted448 to i64
   %i.gg = icmp eq i8 %.pre550, 48
   br i1 %i.gg, label %.lr.ph450, label %._crit_edge
 
-.lr.ph450:                                        ; preds = %bb.aq, %bb.ax
+.lr.ph450:                                        ; preds = %bb.ax
   br i1 %i.eg, label %.split361.us.preheader, label %_ZN14arrow_vendored17double_conversionL7isDigitEii.exit.thread.i277
 
 .split361.us.preheader:                           ; preds = %.lr.ph450
-  %i.gh = add i64 %i.a, %i.g                      ; 2 uses
+  %i.gh = add i64 %i.a, %i.g
+  %5 = sub i64 %i.gh, %.promoted448539
+  %scevgep540 = getelementptr i8, ptr %.promoted448, i64 %5 ; 2 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %.promoted448, i64 1 ; 2 uses
   %i.gj = icmp eq ptr %i.gi, %i.h
   br i1 %i.gj, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread, label %.backedge415.us
@@ -357,11 +359,11 @@ _ZN14arrow_vendored17double_conversionL7isDigitEii.exit.thread.i277: ; preds = %
   %i.gp = phi ptr [ %i.gt, %.backedge415 ], [ %.promoted448, %.lr.ph450 ] ; 2 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gp, i64 1 ; 4 uses
   %i.gr = icmp eq ptr %i.gq, %i.h
-  br i1 %i.gr, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread.loopexit650, label %bb.ay
+  br i1 %i.gr, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread, label %bb.ay
 
-.backedge415:                                     ; preds = %bb.az, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281
-  %i.gs = phi i8 [ %.pre551.pre, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281 ], [ %i.gz, %bb.az ]
-  %i.gt = phi ptr [ %i.gq, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281 ], [ %i.gv, %bb.az ] ; 2 uses
+.backedge415:                                     ; preds = %bb.az, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread.loopexit650
+  %i.gs = phi i8 [ %.pre551.pre, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread.loopexit650 ], [ %i.gz, %bb.az ]
+  %i.gt = phi ptr [ %i.gq, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread.loopexit650 ], [ %i.gv, %bb.az ] ; 2 uses
   %i.gu = icmp eq i8 %i.gs, 48
   br i1 %i.gu, label %_ZN14arrow_vendored17double_conversionL7isDigitEii.exit.thread.i277, label %._crit_edge, !llvm.loop !43
 
@@ -372,7 +374,7 @@ bb.ay:                                            ; preds = %_ZN14arrow_vendored
   %i.gx = sext i8 %.pre551.pre to i32
   %i.gy = icmp eq i32 %i.gx, %i.ef
   %or.cond648 = select i1 %i.gw, i1 %i.gy, i1 false
-  br i1 %or.cond648, label %bb.az, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281
+  br i1 %or.cond648, label %bb.az, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread.loopexit650
 
 bb.az:                                            ; preds = %bb.ay
   %i.gz = load i8, ptr %i.gv, align 1, !tbaa !23  ; 3 uses
@@ -381,26 +383,23 @@ bb.az:                                            ; preds = %bb.ay
   %or.cond.i25.i278 = icmp ult i32 %i.hb, 10
   %i.hc = icmp ult i8 %i.gz, 58
   %or.cond19.i26.i279 = and i1 %i.hc, %or.cond.i25.i278
-  br i1 %or.cond19.i26.i279, label %.backedge415, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281
+  br i1 %or.cond19.i26.i279, label %.backedge415, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread.loopexit650
 
-_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281: ; preds = %bb.az, %bb.ay
+_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread.loopexit650: ; preds = %bb.az, %bb.ay
   br label %.backedge415
 
-_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread.loopexit650: ; preds = %_ZN14arrow_vendored17double_conversionL7isDigitEii.exit.thread.i277
-  %5 = ptrtoint ptr %i.gq to i64
-  br label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread
-
-_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread: ; preds = %.split361.us, %.split361.us.preheader, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread.loopexit650
-  %.us-phi = phi i64 [ %5, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread.loopexit650 ], [ %i.gh, %.split361.us.preheader ], [ %i.gh, %.split361.us ]
+_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit281.thread: ; preds = %_ZN14arrow_vendored17double_conversionL7isDigitEii.exit.thread.i277, %.split361.us, %.split361.us.preheader
+  %.us-phi = phi ptr [ %scevgep540, %.split361.us.preheader ], [ %scevgep540, %.split361.us ], [ %i.gq, %_ZN14arrow_vendored17double_conversionL7isDigitEii.exit.thread.i277 ]
+  %6 = ptrtoint ptr %.us-phi to i64
   %i.hd = ptrtoint ptr %1 to i64
-  %i.he = sub i64 %.us-phi, %i.hd
+  %i.he = sub i64 %6, %i.hd
   %i.hf = trunc i64 %i.he to i32
   store i32 %i.hf, ptr %4, align 4, !tbaa !17
   %i.hg = select i1 %.0180, double -0.000000e+00, double 0.000000e+00
   br label %.thread
 
-._crit_edge:                                      ; preds = %.backedge415, %.backedge415.us, %bb.aq, %bb.ax
-  %.lcssa449 = phi ptr [ %.promoted448, %bb.ax ], [ %.promoted448, %bb.aq ], [ %i.gm, %.backedge415.us ], [ %i.gt, %.backedge415 ] ; 2 uses
+._crit_edge:                                      ; preds = %.backedge415, %.backedge415.us, %bb.ax
+  %.lcssa449 = phi ptr [ %.promoted448, %bb.ax ], [ %i.gm, %.backedge415.us ], [ %i.gt, %.backedge415 ] ; 2 uses
   store ptr %.lcssa449, ptr %i.b, align 8
   %i.hh = trunc i32 %i.et to i8
   %i.hi = lshr i8 %i.hh, 1

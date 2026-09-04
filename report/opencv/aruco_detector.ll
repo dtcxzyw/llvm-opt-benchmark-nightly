@@ -205,10 +205,10 @@ _ZN2cv5aruco19MarkerCandidateTreeaSEOS1_.exit61:  ; preds = %_ZSt8_DestroyIPN2cv
 
 _ZSt4moveIPN2cv5aruco19MarkerCandidateTreeEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i: ; preds = %_ZN2cv5aruco19MarkerCandidateTreeaSEOS1_.exit61, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa.i, %._crit_edge.i ], [ %i.fw, %_ZN2cv5aruco19MarkerCandidateTreeaSEOS1_.exit61 ]
-  %i.fz = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i to i64 ; 3 uses
+  %i.fz = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i to i64 ; 2 uses
   %i.ga = ptrtoint ptr %.sroa.0.0.lcssa.i to i64
   %i.gb = sub i64 %i.fz, %i.ga
-  %i.gc = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.gb ; 2 uses
+  %i.gc = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.gb ; 3 uses
   %i.gd = ptrtoint ptr %i.g to i64                ; 2 uses
   %i.ge = ptrtoint ptr %.016.lcssa.i to i64
   %i.gf = sub i64 %i.gd, %i.ge                    ; 2 uses
@@ -340,15 +340,12 @@ _ZN2cv5aruco19MarkerCandidateTreeaSEOS1_.exit:    ; preds = %_ZSt8_DestroyIPN2cv
   %i.ik = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22.i, i64 88 ; 2 uses
   %i.il = add nsw i64 %.012.i.i.i.i.i21.i, -1
   %i.im = icmp samesign ugt i64 %.012.i.i.i.i.i21.i, 1
-  br i1 %i.im, label %.lr.ph.i.i.i.i.i20.i, label %_ZSt4moveIPN2cv5aruco19MarkerCandidateTreeEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i, !llvm.loop !14
+  br i1 %i.im, label %.lr.ph.i.i.i.i.i20.i, label %_ZSt12__move_mergeIPN2cv5aruco19MarkerCandidateTreeEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_less_iterEET0_T_SD_SD_SD_SC_T1_.exit, !llvm.loop !14
 
-_ZSt4moveIPN2cv5aruco19MarkerCandidateTreeEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i: ; preds = %_ZN2cv5aruco19MarkerCandidateTreeaSEOS1_.exit
-  %4 = ptrtoint ptr %i.ik to i64
-  br label %_ZSt12__move_mergeIPN2cv5aruco19MarkerCandidateTreeEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_less_iterEET0_T_SD_SD_SD_SC_T1_.exit
-
-_ZSt12__move_mergeIPN2cv5aruco19MarkerCandidateTreeEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_less_iterEET0_T_SD_SD_SD_SC_T1_.exit: ; preds = %_ZSt4moveIPN2cv5aruco19MarkerCandidateTreeEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i, %_ZSt4moveIPN2cv5aruco19MarkerCandidateTreeEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i
-  %.08.lcssa.i.i.i.i.i18.i = phi i64 [ %i.fz, %_ZSt4moveIPN2cv5aruco19MarkerCandidateTreeEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i ], [ %4, %_ZSt4moveIPN2cv5aruco19MarkerCandidateTreeEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit24.loopexit.i ]
-  %i.in = sub i64 %.08.lcssa.i.i.i.i.i18.i, %i.fz
+_ZSt12__move_mergeIPN2cv5aruco19MarkerCandidateTreeEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_less_iterEET0_T_SD_SD_SD_SC_T1_.exit: ; preds = %_ZN2cv5aruco19MarkerCandidateTreeaSEOS1_.exit, %_ZSt4moveIPN2cv5aruco19MarkerCandidateTreeEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i
+  %.08.lcssa.i.i.i.i.i18.i = phi ptr [ %i.gc, %_ZSt4moveIPN2cv5aruco19MarkerCandidateTreeEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i ], [ %i.ik, %_ZN2cv5aruco19MarkerCandidateTreeaSEOS1_.exit ]
+  %4 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i to i64
+  %i.in = sub i64 %4, %i.fz
   %i.io = getelementptr inbounds i8, ptr %i.gc, i64 %i.in ; 2 uses
   %i.ip = sub i64 %i.b, %i.gd
   %i.iq = sdiv exact i64 %i.ip, 88                ; 2 uses

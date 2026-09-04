@@ -204,22 +204,20 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.e ; 2 uses
   %i.g = call noundef ptr @_ZN7rocksdb14GetVarint64PtrEPKcS1_Pm(ptr noundef %i.c, ptr noundef %i.f, ptr noundef nonnull %i.a) ; 2 uses
   %.not7 = icmp eq ptr %i.g, null
-  br i1 %.not7, label %._crit_edge, label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.preheader
+  br i1 %.not7, label %._crit_edge, label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit
 
-_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.preheader: ; preds = %bb.a
-  %1 = ptrtoint ptr %i.f to i64
-  br label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit
-
-_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit:      ; preds = %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.preheader, %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit
-  %i.h = phi ptr [ %i.m, %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit ], [ %i.g, %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.preheader ] ; 3 uses
-  %i.i = ptrtoint ptr %i.h to i64
-  %i.j = sub i64 %1, %i.i
+_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit:      ; preds = %bb.a, %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit
+  %1 = phi ptr [ %i.m, %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit ], [ %i.g, %bb.a ] ; 3 uses
+  %i.h = phi ptr [ %i.l, %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit ], [ %i.f, %bb.a ]
+  %2 = ptrtoint ptr %i.h to i64
+  %i.i = ptrtoint ptr %1 to i64
+  %i.j = sub i64 %2, %i.i
   %i.k = load i64, ptr %i.a, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
   store i64 0, ptr %i.a, align 8, !tbaa !28
-  %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.j
-  %i.m = call noundef ptr @_ZN7rocksdb14GetVarint64PtrEPKcS1_Pm(ptr noundef nonnull %i.h, ptr noundef nonnull %i.l, ptr noundef nonnull %i.a) ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 %i.j ; 2 uses
+  %i.m = call noundef ptr @_ZN7rocksdb14GetVarint64PtrEPKcS1_Pm(ptr noundef nonnull %1, ptr noundef nonnull %i.l, ptr noundef nonnull %i.a) ; 2 uses
   %.not = icmp eq ptr %i.m, null
   br i1 %.not, label %._crit_edge, label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit
 
@@ -622,22 +620,20 @@ _ZN7rocksdb21BlockCacheTraceHelper17GetSequenceNumberERKNS_21BlockCacheTraceReco
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.bi ; 2 uses
   %i.bl = call noundef ptr @_ZN7rocksdb14GetVarint64PtrEPKcS1_Pm(ptr noundef %i.bj, ptr noundef %i.bk, ptr noundef nonnull %i.a) ; 2 uses
   %.not7.i = icmp eq ptr %i.bl, null
-  br i1 %.not7.i, label %_ZN7rocksdb21BlockCacheTraceHelper20GetBlockOffsetInFileERKNS_21BlockCacheTraceRecordE.exit, label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.preheader.i
+  br i1 %.not7.i, label %_ZN7rocksdb21BlockCacheTraceHelper20GetBlockOffsetInFileERKNS_21BlockCacheTraceRecordE.exit, label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.i
 
-_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.preheader.i: ; preds = %_ZN7rocksdb21BlockCacheTraceHelper17GetSequenceNumberERKNS_21BlockCacheTraceRecordE.exit
-  %9 = ptrtoint ptr %i.bk to i64
-  br label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.i
-
-_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.i:    ; preds = %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.i, %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.preheader.i
-  %i.bm = phi ptr [ %i.br, %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.i ], [ %i.bl, %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.preheader.i ] ; 3 uses
-  %i.bn = ptrtoint ptr %i.bm to i64
-  %i.bo = sub i64 %9, %i.bn
+_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.i:    ; preds = %_ZN7rocksdb21BlockCacheTraceHelper17GetSequenceNumberERKNS_21BlockCacheTraceRecordE.exit, %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.i
+  %9 = phi ptr [ %i.br, %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.i ], [ %i.bl, %_ZN7rocksdb21BlockCacheTraceHelper17GetSequenceNumberERKNS_21BlockCacheTraceRecordE.exit ] ; 3 uses
+  %i.bm = phi ptr [ %i.bq, %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.i ], [ %i.bk, %_ZN7rocksdb21BlockCacheTraceHelper17GetSequenceNumberERKNS_21BlockCacheTraceRecordE.exit ]
+  %10 = ptrtoint ptr %i.bm to i64
+  %i.bn = ptrtoint ptr %9 to i64
+  %i.bo = sub i64 %10, %i.bn
   %i.bp = load i64, ptr %i.a, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
   store i64 0, ptr %i.a, align 8, !tbaa !28
-  %i.bq = getelementptr inbounds nuw i8, ptr %i.bm, i64 %i.bo
-  %i.br = call noundef ptr @_ZN7rocksdb14GetVarint64PtrEPKcS1_Pm(ptr noundef nonnull %i.bm, ptr noundef nonnull %i.bq, ptr noundef nonnull %i.a) ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %9, i64 %i.bo ; 2 uses
+  %i.br = call noundef ptr @_ZN7rocksdb14GetVarint64PtrEPKcS1_Pm(ptr noundef nonnull %9, ptr noundef nonnull %i.bq, ptr noundef nonnull %i.a) ; 2 uses
   %.not.i = icmp eq ptr %i.br, null
   br i1 %.not.i, label %_ZN7rocksdb21BlockCacheTraceHelper20GetBlockOffsetInFileERKNS_21BlockCacheTraceRecordE.exit, label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit.i
 

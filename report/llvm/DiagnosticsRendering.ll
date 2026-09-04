@@ -202,10 +202,10 @@ _ZN12lldb_private16DiagnosticDetailaSEOS0_.exit139: ; preds = %bb.ck, %_ZNSt7__c
 
 _ZSt4moveIPN12lldb_private16DiagnosticDetailEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i: ; preds = %_ZN12lldb_private16DiagnosticDetailaSEOS0_.exit139, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i30 = phi ptr [ %i.ob, %._crit_edge.i ], [ %i.qn, %_ZN12lldb_private16DiagnosticDetailaSEOS0_.exit139 ]
-  %i.qq = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i30 to i64 ; 3 uses
+  %i.qq = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i30 to i64 ; 2 uses
   %i.qr = ptrtoint ptr %i.ob to i64
   %i.qs = sub i64 %i.qq, %i.qr
-  %i.qt = getelementptr inbounds i8, ptr %i.ob, i64 %i.qs ; 2 uses
+  %i.qt = getelementptr inbounds i8, ptr %i.ob, i64 %i.qs ; 3 uses
   %i.qu = ptrtoint ptr %i.jm to i64               ; 2 uses
   %i.qv = ptrtoint ptr %.117.i to i64
   %i.qw = sub i64 %i.qu, %i.qv                    ; 2 uses
@@ -395,15 +395,12 @@ _ZN12lldb_private16DiagnosticDetailaSEOS0_.exit121: ; preds = %bb.cw, %_ZNSt7__c
   %i.tc = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22.i, i64 120 ; 2 uses
   %i.td = add nsw i64 %.012.i.i.i.i.i21.i, -1
   %i.te = icmp samesign ugt i64 %.012.i.i.i.i.i21.i, 1
-  br i1 %i.te, label %.lr.ph.i.i.i.i.i20.i, label %_ZSt4moveIPN12lldb_private16DiagnosticDetailEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24.loopexit.i, !llvm.loop !3
+  br i1 %i.te, label %.lr.ph.i.i.i.i.i20.i, label %"_ZSt12__move_mergeIPN12lldb_private16DiagnosticDetailEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIZZNS0_23RenderDiagnosticDetailsERNS0_6StreamESt8optionalItEbN4llvm8ArrayRefIS1_EEbENK3$_0clERS7_EUlRT_RT0_E_EEESM_SK_SK_SK_SK_SM_T1_.exit", !llvm.loop !3
 
-_ZSt4moveIPN12lldb_private16DiagnosticDetailEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24.loopexit.i: ; preds = %_ZN12lldb_private16DiagnosticDetailaSEOS0_.exit121
-  %7 = ptrtoint ptr %i.tc to i64
-  br label %"_ZSt12__move_mergeIPN12lldb_private16DiagnosticDetailEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIZZNS0_23RenderDiagnosticDetailsERNS0_6StreamESt8optionalItEbN4llvm8ArrayRefIS1_EEbENK3$_0clERS7_EUlRT_RT0_E_EEESM_SK_SK_SK_SK_SM_T1_.exit"
-
-"_ZSt12__move_mergeIPN12lldb_private16DiagnosticDetailEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIZZNS0_23RenderDiagnosticDetailsERNS0_6StreamESt8optionalItEbN4llvm8ArrayRefIS1_EEbENK3$_0clERS7_EUlRT_RT0_E_EEESM_SK_SK_SK_SK_SM_T1_.exit": ; preds = %_ZSt4moveIPN12lldb_private16DiagnosticDetailEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i, %_ZSt4moveIPN12lldb_private16DiagnosticDetailEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24.loopexit.i
-  %.08.lcssa.i.i.i.i.i18.i = phi i64 [ %i.qq, %_ZSt4moveIPN12lldb_private16DiagnosticDetailEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i ], [ %7, %_ZSt4moveIPN12lldb_private16DiagnosticDetailEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit24.loopexit.i ]
-  %i.tf = sub i64 %.08.lcssa.i.i.i.i.i18.i, %i.qq
+"_ZSt12__move_mergeIPN12lldb_private16DiagnosticDetailEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEENS3_5__ops15_Iter_comp_iterIZZNS0_23RenderDiagnosticDetailsERNS0_6StreamESt8optionalItEbN4llvm8ArrayRefIS1_EEbENK3$_0clERS7_EUlRT_RT0_E_EEESM_SK_SK_SK_SK_SM_T1_.exit": ; preds = %_ZN12lldb_private16DiagnosticDetailaSEOS0_.exit121, %_ZSt4moveIPN12lldb_private16DiagnosticDetailEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i
+  %.08.lcssa.i.i.i.i.i18.i = phi ptr [ %i.qt, %_ZSt4moveIPN12lldb_private16DiagnosticDetailEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit.i ], [ %i.tc, %_ZN12lldb_private16DiagnosticDetailaSEOS0_.exit121 ]
+  %7 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i to i64
+  %i.tf = sub i64 %7, %i.qq
   %i.tg = getelementptr inbounds i8, ptr %i.qt, i64 %i.tf ; 2 uses
   %i.th = sub i64 %i.n, %i.qu
   %i.ti = sdiv exact i64 %i.th, 120               ; 2 uses
