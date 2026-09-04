@@ -205,7 +205,7 @@ bb.ci:                                            ; preds = %bb.ch
   br label %bb.cj
 
 bb.cj:                                            ; preds = %bb.ci, %bb.ch, %bb.cg
-  %i.lj = sub i32 %.131011, %i.lc                 ; 2 uses
+  %i.lj = sub nuw i32 %.131011, %i.lc             ; 2 uses
   %i.lk = getelementptr inbounds nuw i8, ptr %.131075, i64 %indvars.iv.next2844 ; 2 uses
   br i1 %i.kz, label %.loopexit1282, label %bb.cm
 
@@ -300,7 +300,7 @@ bb.cv:                                            ; preds = %bb.cu
   br label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv, %bb.cu, %bb.ct
-  %i.mn = sub i32 %.151013, %i.mg                 ; 2 uses
+  %i.mn = sub nuw i32 %.151013, %i.mg             ; 2 uses
   %i.mo = getelementptr inbounds nuw i8, ptr %.151077, i64 %indvars.iv.next2847 ; 2 uses
   br i1 %i.md, label %.loopexit1282, label %bb.cz
 
