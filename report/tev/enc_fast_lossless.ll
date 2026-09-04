@@ -205,7 +205,7 @@ _ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN22default_implem
 _ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN22default_implementation12_GLOBAL__N_19LLPrepareINS3_9UpTo8BitsEEEP25JxlFastLosslessFrameState26JxlChunkedFrameInputSourcemmT_mbiiEUljjE_PjEEvT1_SD_T0_.exit: ; preds = %_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN22default_implementation12_GLOBAL__N_19LLPrepareINS3_9UpTo8BitsEEEP25JxlFastLosslessFrameState26JxlChunkedFrameInputSourcemmT_mbiiEUljjE_PjEEvT1_SD_T0_.exit.outer520, %bb.de
   %.0129 = phi ptr [ %.154.lcssa.i, %bb.de ], [ %.0129.ph521, %_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN22default_implementation12_GLOBAL__N_19LLPrepareINS3_9UpTo8BitsEEEP25JxlFastLosslessFrameState26JxlChunkedFrameInputSourcemmT_mbiiEUljjE_PjEEvT1_SD_T0_.exit.outer520 ] ; 53 uses
   %.046 = phi i64 [ %i.tw, %bb.de ], [ %.046.ph523, %_ZNSt3__116__insertion_sortB8nn180100INS_17_ClassicAlgPolicyERZN22default_implementation12_GLOBAL__N_19LLPrepareINS3_9UpTo8BitsEEEP25JxlFastLosslessFrameState26JxlChunkedFrameInputSourcemmT_mbiiEUljjE_PjEEvT1_SD_T0_.exit.outer520 ] ; 2 uses
-  %i.i = ptrtoint ptr %.0129 to i64               ; 4 uses
+  %i.i = ptrtoint ptr %.0129 to i64               ; 3 uses
   %i.j = sub i64 %i.b, %i.i
   %i.k = ashr exact i64 %i.j, 2                   ; 8 uses
   switch i64 %i.k, label %bb.j [
@@ -608,11 +608,9 @@ _ZZN22default_implementation12_GLOBAL__N_19LLPrepareINS0_9UpTo8BitsEEEP25JxlFast
   br i1 %brmerge.i, label %_ZZN22default_implementation12_GLOBAL__N_19LLPrepareINS0_9UpTo8BitsEEEP25JxlFastLosslessFrameState26JxlChunkedFrameInputSourcemmT_mbiiENKUljjE_clEjj.exit31.thread.i, label %.lr.ph79.i
 
 .critedge.thread.i:                               ; preds = %.lr.ph.i79
-  %i.aaw = add i64 %i.i, 8
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.b, i64 %i.aaw)
-  %reass.sub = sub i64 %umax.i, %i.i
-  %5 = add i64 %reass.sub, -5
-  %i.aax = and i64 %5, -4
+  %i.aaw = add i64 %i.b, -5
+  %reass.sub = sub i64 %i.aaw, %i.i
+  %i.aax = and i64 %reass.sub, -4
   %i.aay = getelementptr i8, ptr %.0129, i64 %i.aax
   %scevgep.i = getelementptr i8, ptr %i.aay, i64 8 ; 2 uses
   %i.aaz = icmp ult ptr %scevgep.i, %.0132.ph

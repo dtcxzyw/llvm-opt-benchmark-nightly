@@ -205,24 +205,25 @@ bb.as:                                            ; preds = %.unr-lcssa3456, %.l
   %i.cdl = add nsw i64 %spec.select2231.idx.i, %i.ccy ; 2 uses
   %i.cdm = getelementptr i8, ptr %.6.lcssa.i, i64 %i.cdk
   %scevgep913 = getelementptr i8, ptr %i.cdm, i64 4
+  %9 = add i32 %8, -4
   %i.cdn = lshr i64 %i.cdd, 2
   %i.cdo = add nuw nsw i64 %i.cdn, 1              ; 10 uses
-  %i.cdp = add i32 %8, -2
-  %i.cdq = add i32 %8, -4                         ; 4 uses
-  %i.cdr = lshr i32 %i.cdq, 2
+  %i.cdp = add i32 %8, -4                         ; 5 uses
+  %i.cdq = add i32 %8, -2
+  %i.cdr = lshr i32 %i.cdp, 2
   %i.cds = add nuw nsw i32 %i.cdr, 1              ; 6 uses
   %xtraiter3504 = and i32 %i.cds, 3               ; 3 uses
-  %i.cdt = icmp ult i32 %i.cdq, 12
+  %i.cdt = icmp ult i32 %i.cdp, 12
   %unroll_iter3514 = and i32 %i.cds, 2147483644
   %lcmp.mod3508.not = icmp eq i32 %xtraiter3504, 0
   %lcmp.mod3513 = icmp ne i32 %xtraiter3504, 0
   %xtraiter3520 = and i32 %i.cds, 3               ; 3 uses
-  %i.cdu = icmp ult i32 %i.cdq, 12
+  %i.cdu = icmp ult i32 %i.cdp, 12
   %unroll_iter3529 = and i32 %i.cds, 2147483644
   %lcmp.mod3524.not = icmp eq i32 %xtraiter3520, 0
   %lcmp.mod3528 = icmp ne i32 %xtraiter3520, 0
   %xtraiter3535 = and i32 %i.cds, 3               ; 3 uses
-  %i.cdv = icmp ult i32 %i.cdq, 12
+  %i.cdv = icmp ult i32 %i.cdp, 12
   %unroll_iter3543 = and i32 %i.cds, 2147483644
   %lcmp.mod3539.not = icmp eq i32 %xtraiter3535, 0
   %lcmp.mod3542 = icmp ne i32 %xtraiter3535, 0
@@ -625,7 +626,7 @@ vec.epilog.middle.block2831:                      ; preds = %vec.epilog.vector.b
   br i1 %i.eny, label %iter.check2723, label %.preheader.i
 
 iter.check2723:                                   ; preds = %._crit_edge2320.i
-  %i.enz = sub i32 %i.cdp, %.01805.lcssa3381.i    ; 3 uses
+  %i.enz = sub i32 %i.cdq, %.01805.lcssa3381.i    ; 3 uses
   %i.eoa = lshr i32 %i.enz, 1
   %narrow2842.a = add nuw i32 %i.eoa, 1
   %i.eob = zext i32 %narrow2842.a to i64          ; 5 uses
@@ -853,16 +854,13 @@ vec.epilog.middle.block2744:                      ; preds = %vec.epilog.vector.b
   %.31822.lcssa.i = phi i32 [ %.21821.i, %._crit_edge2320.i ], [ %i.esc, %vec.epilog.middle.block2744 ], [ %i.era, %middle.block2710 ], [ %i.ews, %.lr.ph2332.i ]
   %.31817.lcssa.i = phi i32 [ %.21816.i, %._crit_edge2320.i ], [ %i.esb, %vec.epilog.middle.block2744 ], [ %i.eqz, %middle.block2710 ], [ %i.exc, %.lr.ph2332.i ]
   %.21811.lcssa.i = phi ptr [ %.11810.i, %._crit_edge2320.i ], [ %i.erf, %vec.epilog.middle.block2744 ], [ %i.eoh, %middle.block2710 ], [ %i.exd, %.lr.ph2332.i ] ; 6 uses
-  %.11806.lcssa.i = phi i32 [ %.01805.lcssa3381.i, %._crit_edge2320.i ], [ %i.erd, %vec.epilog.middle.block2744 ], [ %i.eof, %middle.block2710 ], [ %i.exf, %.lr.ph2332.i ] ; 7 uses
+  %.11806.lcssa.i = phi i32 [ %.01805.lcssa3381.i, %._crit_edge2320.i ], [ %i.erd, %vec.epilog.middle.block2744 ], [ %i.eof, %middle.block2710 ], [ %i.exf, %.lr.ph2332.i ] ; 6 uses
   %i.esd = add nuw nsw i32 %.11806.lcssa.i, 3
   %i.ese = icmp slt i32 %i.esd, %8
   br i1 %i.ese, label %iter.check2608, label %._crit_edge2350.i
 
 iter.check2608:                                   ; preds = %.preheader.i
-  %9 = add i32 %.11806.lcssa.i, 7
-  %smax2562 = tail call i32 @llvm.smax.i32(i32 %8, i32 %9)
-  %10 = add i32 %smax2562, -4
-  %i.esf = sub i32 %10, %.11806.lcssa.i           ; 3 uses
+  %i.esf = sub i32 %i.cdp, %.11806.lcssa.i        ; 3 uses
   %i.esg = lshr i32 %i.esf, 2
   %narrow2843.a = add nuw nsw i32 %i.esg, 1
   %i.esh = zext nneg i32 %narrow2843.a to i64     ; 5 uses
@@ -1265,7 +1263,7 @@ vec.epilog.middle.block2482:                      ; preds = %vec.epilog.vector.b
   br label %._crit_edge2386.i
 
 ._crit_edge2386.i:                                ; preds = %.loopexit, %bb.bp
-  %.01786.lcssa3391.i = phi i32 [ %i.cdb, %.loopexit ], [ 0, %bb.bp ] ; 7 uses
+  %.01786.lcssa3391.i = phi i32 [ %i.cdb, %.loopexit ], [ 0, %bb.bp ] ; 6 uses
   %.181986.lcssa3387.i = phi ptr [ %scevgep2979.i, %.loopexit ], [ %.1719852417.i, %bb.bp ] ; 7 uses
   %.21795.i = phi i32 [ %i.ffy, %.loopexit ], [ %.01793.i, %bb.bp ]
   %.11790.i = phi ptr [ %i.eiz, %.loopexit ], [ %.82425.i, %bb.bp ] ; 7 uses
@@ -1274,10 +1272,7 @@ vec.epilog.middle.block2482:                      ; preds = %vec.epilog.vector.b
   br i1 %i.fga, label %iter.check2385, label %._crit_edge2400.i
 
 iter.check2385:                                   ; preds = %._crit_edge2386.i
-  %11 = add i32 %.01786.lcssa3391.i, 7
-  %smax = tail call i32 @llvm.smax.i32(i32 %8, i32 %11)
-  %12 = add i32 %smax, -4
-  %i.fgb = sub i32 %12, %.01786.lcssa3391.i       ; 3 uses
+  %i.fgb = sub i32 %9, %.01786.lcssa3391.i        ; 3 uses
   %i.fgc = lshr i32 %i.fgb, 2
   %narrow2844 = add nuw nsw i32 %i.fgc, 1
   %i.fgd = zext nneg i32 %narrow2844 to i64       ; 5 uses

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader.lr.ph:                                 ; preds = %bb.b
   %.not = icmp eq i32 %i.lq, 31
-  %i.lt = shl i32 2, %i.lq                        ; 4 uses
+  %i.lt = shl i32 2, %i.lq                        ; 3 uses
   %i.lu = sext i32 %i.lt to i64                   ; 2 uses
   br i1 %.not, label %.loopexit, label %.preheader.preheader
 
@@ -213,8 +213,7 @@ bb.b:                                             ; preds = %bb.a
   %i.lv = sext i32 %i.lr to i64                   ; 2 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.lr, i32 1) ; 2 uses
   %wide.trip.count122 = zext nneg i32 %smax to i64 ; 4 uses
-  %smax184 = tail call i32 @llvm.smax.i32(i32 %i.d, i32 %i.lt)
-  %i.lw = add nsw i32 %smax184, -1
+  %i.lw = add nsw i32 %i.d, -1
   %i.lx = shl nuw nsw i64 %wide.trip.count122, 2  ; 2 uses
   %i.ly = shl nsw i64 %i.lv, 2                    ; 2 uses
   %scevgep185.a = getelementptr i8, ptr %0, i64 %i.ly
@@ -617,7 +616,7 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader.lr.ph:                                 ; preds = %bb.b
   %.not = icmp eq i32 %i.lq, 31
-  %i.lt = shl i32 2, %i.lq                        ; 4 uses
+  %i.lt = shl i32 2, %i.lq                        ; 3 uses
   %i.lu = sext i32 %i.lt to i64                   ; 2 uses
   br i1 %.not, label %.loopexit, label %.preheader.preheader
 
@@ -625,8 +624,7 @@ bb.b:                                             ; preds = %bb.a
   %i.lv = sext i32 %i.lr to i64                   ; 2 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.lr, i32 1) ; 2 uses
   %wide.trip.count122 = zext nneg i32 %smax to i64 ; 4 uses
-  %smax184 = tail call i32 @llvm.smax.i32(i32 %i.d, i32 %i.lt)
-  %i.lw = add nsw i32 %smax184, -1
+  %i.lw = add nsw i32 %i.d, -1
   %i.lx = shl nuw nsw i64 %wide.trip.count122, 2  ; 2 uses
   %i.ly = shl nsw i64 %i.lv, 2                    ; 2 uses
   %scevgep185.a = getelementptr i8, ptr %0, i64 %i.ly
@@ -1029,7 +1027,7 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader.lr.ph:                                 ; preds = %bb.b
   %.not = icmp eq i32 %i.jx, 31
-  %i.ka = shl i32 2, %i.jx                        ; 4 uses
+  %i.ka = shl i32 2, %i.jx                        ; 3 uses
   %i.kb = sext i32 %i.ka to i64                   ; 2 uses
   br i1 %.not, label %.loopexit, label %.preheader.preheader
 
@@ -1037,8 +1035,7 @@ bb.b:                                             ; preds = %bb.a
   %i.kc = sext i32 %i.jy to i64                   ; 2 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.jy, i32 1) ; 2 uses
   %wide.trip.count123 = zext nneg i32 %smax to i64 ; 4 uses
-  %smax185 = tail call i32 @llvm.smax.i32(i32 %i.d, i32 %i.ka)
-  %i.kd = add nsw i32 %smax185, -1
+  %i.kd = add nsw i32 %i.d, -1
   %i.ke = shl nuw nsw i64 %wide.trip.count123, 2  ; 2 uses
   %i.kf = shl nsw i64 %i.kc, 2                    ; 2 uses
   %scevgep186.a = getelementptr i8, ptr %0, i64 %i.kf

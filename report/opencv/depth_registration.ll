@@ -205,11 +205,9 @@ bb.x:                                             ; preds = %bb.p
 .lr.ph411.preheader:                              ; preds = %bb.x
   %i.kh = getelementptr inbounds nuw i8, ptr %i.kd, i64 %i.kf ; 6 uses
   %i.ki = ptrtoaddr ptr %i.kc to i64
-  %i.kj = ptrtoaddr ptr %i.ju to i64              ; 2 uses
-  %35 = add i64 %i.kj, 8
-  %36 = call i64 @llvm.umax.i64(i64 %i.ki, i64 %35)
+  %i.kj = ptrtoaddr ptr %i.ju to i64
   %i.kk = xor i64 %i.kj, -1
-  %i.kl = add i64 %36, %i.kk                      ; 2 uses
+  %i.kl = add i64 %i.kk, %i.ki                    ; 2 uses
   %i.km = lshr i64 %i.kl, 3
   %i.kn = add nuw nsw i64 %i.km, 1                ; 2 uses
   %min.iters.check504 = icmp ult i64 %i.kl, 24
@@ -612,11 +610,9 @@ bb.x:                                             ; preds = %bb.p
 .lr.ph412.preheader:                              ; preds = %bb.x
   %i.ls = getelementptr inbounds nuw i8, ptr %i.lo, i64 %i.lq ; 6 uses
   %i.lt = ptrtoaddr ptr %i.ln to i64
-  %i.lu = ptrtoaddr ptr %i.lf to i64              ; 2 uses
-  %35 = add i64 %i.lu, 8
-  %36 = call i64 @llvm.umax.i64(i64 %i.lt, i64 %35)
+  %i.lu = ptrtoaddr ptr %i.lf to i64
   %i.lv = xor i64 %i.lu, -1
-  %i.lw = add i64 %36, %i.lv                      ; 2 uses
+  %i.lw = add i64 %i.lv, %i.lt                    ; 2 uses
   %i.lx = lshr i64 %i.lw, 3
   %i.ly = add nuw nsw i64 %i.lx, 1                ; 2 uses
   %min.iters.check502 = icmp ult i64 %i.lw, 24
@@ -1019,11 +1015,9 @@ bb.x:                                             ; preds = %bb.p
 .lr.ph412.preheader:                              ; preds = %bb.x
   %i.ki = getelementptr inbounds nuw i8, ptr %i.ke, i64 %i.kg ; 6 uses
   %i.kj = ptrtoaddr ptr %i.kd to i64
-  %i.kk = ptrtoaddr ptr %i.jv to i64              ; 2 uses
-  %35 = add i64 %i.kk, 8
-  %36 = call i64 @llvm.umax.i64(i64 %i.kj, i64 %35)
+  %i.kk = ptrtoaddr ptr %i.jv to i64
   %i.kl = xor i64 %i.kk, -1
-  %i.km = add i64 %36, %i.kl                      ; 2 uses
+  %i.km = add i64 %i.kl, %i.kj                    ; 2 uses
   %i.kn = lshr i64 %i.km, 3
   %i.ko = add nuw nsw i64 %i.kn, 1                ; 2 uses
   %min.iters.check500 = icmp ult i64 %i.km, 24
@@ -1424,9 +1418,6 @@ bb.j:                                             ; preds = %bb.i, %bb.g, %bb.d,
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #12

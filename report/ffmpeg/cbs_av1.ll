@@ -205,14 +205,13 @@ bb.i:                                             ; preds = %bb.g
   %i.bu = shl nuw i32 1, %i.bt
   %i.bv = add nsw i32 %i.z, -1                    ; 2 uses
   %i.bw = add i32 %i.bv, %i.bu
-  %i.bx = ashr i32 %i.bw, %i.bt                   ; 12 uses
+  %i.bx = ashr i32 %i.bw, %i.bt                   ; 11 uses
   %i.by = icmp sgt i32 %i.z, 0
   br i1 %i.by, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %bb.i
   %i.bz = getelementptr inbounds nuw i8, ptr %2, i64 237 ; 3 uses
-  %smax = call i32 @llvm.smax.i32(i32 %i.z, i32 %i.bx)
-  %i.ca = add nsw i32 %smax, -1
+  %i.ca = add nsw i32 %i.z, -1
   %i.cb = udiv i32 %i.ca, %i.bx                   ; 3 uses
   %i.cc = zext i32 %i.cb to i64
   %i.cd = add nuw nsw i64 %i.cc, 1                ; 5 uses
@@ -336,14 +335,13 @@ bb.k:                                             ; preds = %._crit_edge
   %i.dm = shl nuw i32 1, %i.dl
   %i.dn = add nsw i32 %i.ap, -1                   ; 2 uses
   %i.do = add i32 %i.dn, %i.dm
-  %i.dp = ashr i32 %i.do, %i.dl                   ; 12 uses
+  %i.dp = ashr i32 %i.do, %i.dl                   ; 11 uses
   %i.dq = icmp sgt i32 %i.ap, 0
   br i1 %i.dq, label %iter.check411, label %._crit_edge303
 
 iter.check411:                                    ; preds = %bb.k
   %i.dr = getelementptr inbounds nuw i8, ptr %2, i64 301 ; 3 uses
-  %smax391 = call i32 @llvm.smax.i32(i32 %i.ap, i32 %i.dp)
-  %i.ds = add nsw i32 %smax391, -1
+  %i.ds = add nsw i32 %i.ap, -1
   %i.dt = udiv i32 %i.ds, %i.dp                   ; 3 uses
   %i.du = zext i32 %i.dt to i64
   %i.dv = add nuw nsw i64 %i.du, 1                ; 5 uses
@@ -746,14 +744,13 @@ bb.h:                                             ; preds = %bb.g
   %i.bp = shl nuw i32 1, %i.bo
   %i.bq = add nsw i32 %i.s, -1                    ; 2 uses
   %i.br = add i32 %i.bq, %i.bp
-  %i.bs = ashr i32 %i.br, %i.bo                   ; 12 uses
+  %i.bs = ashr i32 %i.br, %i.bo                   ; 11 uses
   %i.bt = icmp sgt i32 %i.s, 0
   br i1 %i.bt, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %bb.h
   %i.bu = getelementptr inbounds nuw i8, ptr %2, i64 237 ; 3 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.s, i32 %i.bs)
-  %i.bv = add nsw i32 %smax, -1
+  %i.bv = add nsw i32 %i.s, -1
   %i.bw = udiv i32 %i.bv, %i.bs                   ; 3 uses
   %i.bx = zext i32 %i.bw to i64
   %i.by = add nuw nsw i64 %i.bx, 1                ; 5 uses
@@ -871,14 +868,13 @@ bb.i:                                             ; preds = %._crit_edge
   %i.di = shl nuw i32 1, %i.dh
   %i.dj = add nsw i32 %i.ai, -1                   ; 2 uses
   %i.dk = add i32 %i.dj, %i.di
-  %i.dl = ashr i32 %i.dk, %i.dh                   ; 12 uses
+  %i.dl = ashr i32 %i.dk, %i.dh                   ; 11 uses
   %i.dm = icmp sgt i32 %i.ai, 0
   br i1 %i.dm, label %iter.check433, label %._crit_edge308
 
 iter.check433:                                    ; preds = %bb.i
   %i.dn = getelementptr inbounds nuw i8, ptr %2, i64 301 ; 3 uses
-  %smax413 = tail call i32 @llvm.smax.i32(i32 %i.ai, i32 %i.dl)
-  %i.do = add nsw i32 %smax413, -1
+  %i.do = add nsw i32 %i.ai, -1
   %i.dp = udiv i32 %i.do, %i.dl                   ; 3 uses
   %i.dq = zext i32 %i.dp to i64
   %i.dr = add nuw nsw i64 %i.dq, 1                ; 5 uses

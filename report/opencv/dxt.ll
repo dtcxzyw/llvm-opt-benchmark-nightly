@@ -205,6 +205,7 @@ bb.bd:                                            ; preds = %.loopexit801, %bb.b
   %i.hc = zext nneg i32 %i.ha to i64              ; 3 uses
   %scevgep = getelementptr i8, ptr %2, i64 8      ; 3 uses
   %scevgep1100 = getelementptr i8, ptr %2, i64 -4
+  %21 = add nsw i64 %i.hc, -1
   %scevgep1103.a = getelementptr i8, ptr %2, i64 8
   %scevgep1105.a = getelementptr i8, ptr %2, i64 -4
   %scevgep1107.a = getelementptr i8, ptr %2, i64 8
@@ -255,10 +256,8 @@ bb.bd:                                            ; preds = %.loopexit801, %bb.b
 
 .lr.ph832.us.us.preheader:                        ; preds = %.lr.ph836.us
   %i.hu = sext i32 %i.ho to i64                   ; 3 uses
-  %i.hv = sext i32 %i.hn to i64                   ; 4 uses
+  %i.hv = sext i32 %i.hn to i64                   ; 3 uses
   %wide.trip.count955 = zext nneg i32 %.1634839.us to i64 ; 5 uses
-  %smax1101 = tail call i64 @llvm.smax.i64(i64 %i.hv, i64 %i.hc)
-  %21 = add nsw i64 %smax1101, -1
   %i.hw = shl nuw nsw i64 %wide.trip.count955, 3  ; 6 uses
   %i.hx = shl nuw nsw i64 %i.hq, 3                ; 5 uses
   %scevgep1104 = getelementptr i8, ptr %scevgep1103.a, i64 %i.hx ; 6 uses
@@ -661,7 +660,7 @@ bb.a:
   br i1 %i.d, label %.lr.ph.us.preheader, label %.lr.ph75.split.preheader
 
 .lr.ph75.split.preheader:                         ; preds = %.lr.ph75
-  %i.e = sext i32 %3 to i64                       ; 2 uses
+  %i.e = sext i32 %3 to i64
   %i.f = zext nneg i32 %2 to i64                  ; 4 uses
   %min.iters.check = icmp ugt i32 %2, 11
   %ident.check.not = icmp eq i32 %3, 1
@@ -669,8 +668,7 @@ bb.a:
   br i1 %or.cond, label %vector.memcheck, label %.lr.ph75.split.preheader168
 
 vector.memcheck:                                  ; preds = %.lr.ph75.split.preheader
-  %smax92 = tail call i64 @llvm.smax.i64(i64 %i.e, i64 %i.f)
-  %i.g = shl nuw nsw i64 %smax92, 3               ; 4 uses
+  %i.g = shl nuw nsw i64 %i.f, 3                  ; 4 uses
   %i.h = getelementptr i8, ptr %1, i64 %i.g
   %scevgep = getelementptr i8, ptr %i.h, i64 -4
   %i.i = getelementptr i8, ptr %1, i64 %i.g
@@ -904,7 +902,7 @@ bb.a:
   br i1 %i.f, label %.lr.ph.us.preheader, label %.lr.ph133.split.preheader
 
 .lr.ph133.split.preheader:                        ; preds = %.lr.ph133
-  %i.g = sext i32 %3 to i64                       ; 2 uses
+  %i.g = sext i32 %3 to i64
   %i.h = zext nneg i32 %2 to i64                  ; 4 uses
   %min.iters.check = icmp ugt i32 %2, 11
   %ident.check.not = icmp eq i32 %3, 1
@@ -912,8 +910,7 @@ bb.a:
   br i1 %or.cond, label %vector.memcheck, label %.lr.ph133.split.preheader309
 
 vector.memcheck:                                  ; preds = %.lr.ph133.split.preheader
-  %smax150 = tail call i64 @llvm.smax.i64(i64 %i.g, i64 %i.h)
-  %i.i = shl nuw nsw i64 %smax150, 3              ; 6 uses
+  %i.i = shl nuw nsw i64 %i.h, 3                  ; 6 uses
   %i.j = getelementptr i8, ptr %1, i64 %i.i
   %scevgep = getelementptr i8, ptr %i.j, i64 -4   ; 2 uses
   %i.k = getelementptr i8, ptr %1, i64 %i.i
@@ -1316,6 +1313,7 @@ bb.bd:                                            ; preds = %.loopexit814, %bb.b
   %i.gu = zext nneg i32 %i.gs to i64              ; 3 uses
   %scevgep = getelementptr i8, ptr %2, i64 16     ; 3 uses
   %scevgep1114 = getelementptr i8, ptr %2, i64 -8
+  %21 = add nsw i64 %i.gu, -1
   %scevgep1117.a = getelementptr i8, ptr %2, i64 16
   %scevgep1119.a = getelementptr i8, ptr %2, i64 -8
   %scevgep1121.a = getelementptr i8, ptr %2, i64 16
@@ -1366,10 +1364,8 @@ bb.bd:                                            ; preds = %.loopexit814, %bb.b
 
 .lr.ph845.us.us.preheader:                        ; preds = %.lr.ph849.us
   %i.hm = sext i32 %i.hg to i64                   ; 3 uses
-  %i.hn = sext i32 %i.hf to i64                   ; 4 uses
+  %i.hn = sext i32 %i.hf to i64                   ; 3 uses
   %wide.trip.count968 = zext nneg i32 %.1634852.us to i64 ; 6 uses
-  %smax1115 = tail call i64 @llvm.smax.i64(i64 %i.hn, i64 %i.gu)
-  %21 = add nsw i64 %smax1115, -1
   %i.ho = shl nuw nsw i64 %wide.trip.count968, 4  ; 6 uses
   %i.hp = shl nuw nsw i64 %i.hi, 4                ; 5 uses
   %scevgep1118 = getelementptr i8, ptr %scevgep1117.a, i64 %i.hp ; 6 uses
@@ -1772,7 +1768,7 @@ bb.a:
   br i1 %i.d, label %.lr.ph.us.preheader, label %.lr.ph75.split.preheader
 
 .lr.ph75.split.preheader:                         ; preds = %.lr.ph75
-  %i.e = sext i32 %3 to i64                       ; 2 uses
+  %i.e = sext i32 %3 to i64
   %i.f = zext nneg i32 %2 to i64                  ; 3 uses
   %min.iters.check = icmp ugt i32 %2, 11
   %ident.check.not = icmp eq i32 %3, 1
@@ -1783,8 +1779,7 @@ bb.a:
   br label %.lr.ph75.split
 
 vector.memcheck:                                  ; preds = %.lr.ph75.split.preheader
-  %smax92 = tail call i64 @llvm.smax.i64(i64 %i.e, i64 %i.f)
-  %i.g = shl nuw nsw i64 %smax92, 4               ; 4 uses
+  %i.g = shl nuw nsw i64 %i.f, 4                  ; 4 uses
   %i.h = getelementptr i8, ptr %1, i64 %i.g
   %scevgep = getelementptr i8, ptr %i.h, i64 -8
   %i.i = getelementptr i8, ptr %1, i64 %i.g
@@ -2006,7 +2001,7 @@ bb.a:
   br i1 %i.f, label %.lr.ph.us.preheader, label %.lr.ph133.split.preheader
 
 .lr.ph133.split.preheader:                        ; preds = %.lr.ph133
-  %i.g = sext i32 %3 to i64                       ; 2 uses
+  %i.g = sext i32 %3 to i64
   %i.h = zext nneg i32 %2 to i64                  ; 4 uses
   %min.iters.check = icmp ugt i32 %2, 9
   %ident.check.not = icmp eq i32 %3, 1
@@ -2014,8 +2009,7 @@ bb.a:
   br i1 %or.cond, label %vector.memcheck, label %.lr.ph133.split.preheader309
 
 vector.memcheck:                                  ; preds = %.lr.ph133.split.preheader
-  %smax150 = tail call i64 @llvm.smax.i64(i64 %i.g, i64 %i.h)
-  %i.i = shl nuw nsw i64 %smax150, 4              ; 6 uses
+  %i.i = shl nuw nsw i64 %i.h, 4                  ; 6 uses
   %i.j = getelementptr i8, ptr %1, i64 %i.i
   %scevgep = getelementptr i8, ptr %i.j, i64 -8   ; 2 uses
   %i.k = getelementptr i8, ptr %1, i64 %i.i
@@ -2416,9 +2410,6 @@ declare i64 @llvm.umin.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #9

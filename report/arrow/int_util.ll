@@ -205,12 +205,10 @@ _ZN5arrow8internalL17ExpandedUIntWidthEmh.exit.thread: ; preds = %_ZN5arrow8inte
 
 .lr.ph91.preheader:                               ; preds = %_ZN5arrow8internalL17ExpandedUIntWidthEmh.exit.thread
   %i.w = ptrtoaddr ptr %0 to i64
-  %4 = add i64 %.idx, %i.w
-  %i.x = ptrtoaddr ptr %.154 to i64               ; 2 uses
-  %i.y = add i64 %i.x, 8
-  %5 = tail call i64 @llvm.umax.i64(i64 %4, i64 %i.y)
+  %i.x = ptrtoaddr ptr %.154 to i64
+  %i.y = add i64 %.idx, %i.w
   %i.z = xor i64 %i.x, -1
-  %i.aa = add i64 %5, %i.z                        ; 2 uses
+  %i.aa = add i64 %i.y, %i.z                      ; 2 uses
   %i.ab = lshr i64 %i.aa, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.aa, 24
@@ -611,9 +609,6 @@ declare i64 @llvm.vector.reduce.or.v8i64(<8 x i64>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.or.v16i64(<16 x i64>) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #19

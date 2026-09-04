@@ -205,11 +205,9 @@ bb.bn:                                            ; preds = %.loopexit, %bb.bm
 
 .lr.ph219.preheader:                              ; preds = %._crit_edge
   %i.lq = ptrtoaddr ptr %i.lo to i64
-  %i.lr = ptrtoaddr ptr %i.ln to i64              ; 2 uses
-  %25 = add i64 %i.lr, 4
-  %26 = call i64 @llvm.umax.i64(i64 %i.lq, i64 %25)
+  %i.lr = ptrtoaddr ptr %i.ln to i64
   %i.ls = xor i64 %i.lr, -1
-  %i.lt = add i64 %26, %i.ls                      ; 2 uses
+  %i.lt = add i64 %i.ls, %i.lq                    ; 2 uses
   %i.lu = lshr i64 %i.lt, 2
   %i.lv = add nuw nsw i64 %i.lu, 1                ; 2 uses
   %min.iters.check327 = icmp ult i64 %i.lt, 12
@@ -612,11 +610,9 @@ bb.bv:                                            ; preds = %._crit_edge374.thre
 
 .lr.ph390.preheader:                              ; preds = %._crit_edge382
   %i.ql = ptrtoaddr ptr %i.qj to i64
-  %i.qm = ptrtoaddr ptr %i.qi to i64              ; 2 uses
-  %36 = add i64 %i.qm, 4
-  %37 = call i64 @llvm.umax.i64(i64 %i.ql, i64 %36)
+  %i.qm = ptrtoaddr ptr %i.qi to i64
   %i.qn = xor i64 %i.qm, -1
-  %i.qo = add i64 %37, %i.qn                      ; 2 uses
+  %i.qo = add i64 %i.qn, %i.ql                    ; 2 uses
   %i.qp = lshr i64 %i.qo, 2
   %i.qq = add nuw nsw i64 %i.qp, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.qo, 12
