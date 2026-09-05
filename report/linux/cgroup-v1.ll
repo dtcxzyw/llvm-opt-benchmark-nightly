@@ -204,8 +204,7 @@ bb.ba:                                            ; preds = %bb.az
   br label %bb.bh
 
 bb.bb:                                            ; preds = %.preheader90, %bb.bd
-  %i.gh = phi i64 [ 0, %.preheader90 ], [ %4, %bb.bd ]
-  %.192 = phi i32 [ 0, %.preheader90 ], [ %3, %bb.bd ]
+  %i.gh = phi i64 [ 0, %.preheader90 ], [ %indvars.iv.next, %bb.bd ] ; 2 uses
   %i.gi = getelementptr i8, ptr %i.gd, i64 %i.gh
   %i.gj = load i8, ptr %i.gi, align 1             ; 2 uses
   %i.gk = zext i8 %i.gj to i64
@@ -230,10 +229,9 @@ bb.bc:                                            ; preds = %bb.bb
   br label %bb.bh
 
 bb.bd:                                            ; preds = %bb.bb, %bb.bc, %bb.bc, %bb.bc
-  %3 = add i32 %.192, 1                           ; 2 uses
-  %4 = sext i32 %3 to i64                         ; 2 uses
-  %5 = icmp ugt i64 %i.fx, %4
-  br i1 %5, label %bb.bb, label %bb.be, !llvm.loop !51
+  %indvars.iv.next = add nuw i64 %i.gh, 1         ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.fx
+  br i1 %exitcond.not, label %bb.be, label %bb.bb, !llvm.loop !51
 
 bb.be:                                            ; preds = %bb.bd
   %i.gr = getelementptr i8, ptr %.val, i64 64     ; 2 uses

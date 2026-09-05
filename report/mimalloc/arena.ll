@@ -205,7 +205,7 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
   %.160.i.i.i = phi i32 [ %.05983.i.i.i, %bb.bk ], [ %.364.i.i.i, %bb.bl ] ; 2 uses
   %i.hn = getelementptr inbounds nuw i8, ptr %i.b, i64 %.4.i.i
   store i8 %.3.i.i.i, ptr %i.hn, align 1, !tbaa !15
-  %i.ho = add i64 %.4.i.i, 1                      ; 4 uses
+  %i.ho = add nuw nsw i64 %.4.i.i, 1              ; 4 uses
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
   %i.hp = add nsw i64 %.166.i.i.i, -1             ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, 63
@@ -215,14 +215,14 @@ mi_debug_show_page_bfield.exit.i.i:               ; preds = %bb.ar, %bb.aq
   %.5.i.i = phi i64 [ %i.ho, %bb.aq ], [ %i.fa, %bb.ar ] ; 2 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %i.b, i64 %.5.i.i
   store i8 %.3.peel.i.i.i, ptr %i.hq, align 1, !tbaa !15
-  %i.hr = add i64 %.5.i.i, 1                      ; 2 uses
+  %i.hr = add nuw nsw i64 %.5.i.i, 1              ; 2 uses
   %i.hs = add nsw i64 %.166.peel.i.i.i, -1
   %i.ht = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.hr
   %i.hu = call i32 (ptr, i64, ptr, ...) @_mi_snprintf(ptr noundef nonnull %i.ht, i64 noundef 32, ptr noundef nonnull @.str.30, i32 noundef 37) #17
   %i.hv = sext i32 %i.hu to i64
   %i.hw = add i64 %i.hr, %i.hv                    ; 2 uses
   %i.hx = add i64 %.168.peel.i.i.i, %.16135.i.i
-  %i.hy = add i64 %i.hw, 1
+  %i.hy = add nuw nsw i64 %i.hw, 1
   %i.hz = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.hw
   store i8 32, ptr %i.hz, align 1, !tbaa !15
   br label %bb.bq

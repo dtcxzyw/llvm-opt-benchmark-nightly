@@ -204,19 +204,17 @@ bb.a:
   unreachable
 
 _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.a
-  %i.k = add nsw i32 %1, 1                        ; 2 uses
-  %i.l = zext nneg i32 %i.k to i64                ; 4 uses
-  %.not.i.i.i.i = icmp ne i32 %i.k, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.k = add nuw nsw i32 %1, 1
+  %i.l = zext nneg i32 %i.k to i64                ; 3 uses
   %i.m = shl nuw nsw i64 %i.l, 2
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #19 ; 24 uses
   store i32 0, ptr %i.n, align 4, !tbaa !16
   %i.o = getelementptr i8, ptr %i.n, i64 4        ; 4 uses
-  %6 = add nsw i64 %i.l, -1                       ; 2 uses
-  %i.p = icmp eq i64 %6, 0
+  %i.p = icmp eq i32 %1, 0
   br i1 %i.p, label %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit, label %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i
 
 _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
+  %6 = zext i32 %1 to i64
   %.idx.i.i.i.i.i.i.i = shl nuw nsw i64 %6, 2     ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.o, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !16
   br label %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit

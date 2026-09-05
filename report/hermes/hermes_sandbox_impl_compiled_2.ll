@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %bb.v, %bb.t
   %.val920 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.hu = getelementptr inbounds nuw i8, ptr %.val920, i64 %i.gv
   store i32 %i.hi, ptr %i.hu, align 1
-  %i.hv = uitofp i64 %.0849 to double
+  %i.hv = uitofp nneg i64 %.0849 to double
   %.val979 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.hw = getelementptr inbounds nuw i8, ptr %.val979, i64 %i.n
   store double %i.hv, ptr %i.hw, align 1
@@ -233,7 +233,7 @@ bb.v:                                             ; preds = %bb.u
   %.val955 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ig = getelementptr inbounds nuw i8, ptr %.val955, i64 %i.if
   store i64 %.0.copyload.i1007, ptr %i.ig, align 1
-  %i.ih = add nuw i64 %.0849, 1                   ; 2 uses
+  %i.ih = add nuw nsw i64 %.0849, 1               ; 2 uses
   %.not881 = icmp eq i64 %i.ih, %.0.copyload.i987
   br i1 %.not881, label %.loopexit1025, label %bb.u
 
@@ -404,7 +404,7 @@ bb.am:                                            ; preds = %bb.al, %bb.aj, %bb.
   br i1 %i.kq, label %bb.an, label %bb.ap
 
 bb.an:                                            ; preds = %bb.am, %bb.ad, %bb.z, %bb.y
-  %i.kr = uitofp i64 %.1 to double
+  %i.kr = uitofp nneg i64 %.1 to double
   %.val978 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ks = getelementptr inbounds nuw i8, ptr %.val978, i64 %i.n
   store double %i.kr, ptr %i.ks, align 1
@@ -432,7 +432,7 @@ bb.ap:                                            ; preds = %bb.ak, %bb.ad, %bb.
   %.val953 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.kx = getelementptr inbounds nuw i8, ptr %.val953, i64 %i.kw
   store i64 %.0.copyload.i1018.sink, ptr %i.kx, align 1
-  %i.ky = add nuw i64 %.1, 1                      ; 2 uses
+  %i.ky = add nuw nsw i64 %.1, 1                  ; 2 uses
   %.not878 = icmp eq i64 %i.ky, %.0.copyload.i987
   br i1 %.not878, label %.loopexit1025, label %bb.y
 
@@ -835,9 +835,9 @@ bb.n:                                             ; preds = %bb.l, %bb.k, %bb.j,
   %i.cl = add nuw nsw i64 %i.ck, 8                ; 15 uses
   %i.cm = zext i32 %i.cg to i64                   ; 7 uses
   %.not2864 = icmp eq i32 %i.cg, 0                ; 5 uses
-  %5 = select i1 %.not2864, i32 6, i32 8
   %i.cn = icmp eq i32 %4, 0                       ; 2 uses
   %i.co = add nuw nsw i64 %i.u, 56                ; 4 uses
+  %invariant.op = select i1 %.not2864, i32 61, i32 60
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.n
@@ -1240,10 +1240,8 @@ bb.ax:                                            ; preds = %bb.at
   %i.in = add i32 %i.im, -512                     ; 7 uses
   store i32 %i.in, ptr %i.a, align 8, !tbaa !17
   %i.io = shl nuw nsw i32 %i.eo, 1                ; 5 uses
-  %6 = add nsw i32 %i.io, -2                      ; 2 uses
-  %7 = shl nsw i32 %6, 1
-  %i.ip = add nsw i32 %7, %5
-  %i.iq = icmp ult i32 %i.ip, 128
+  %i.ip = add nsw i32 %i.io, -2                   ; 2 uses
+  %i.iq = icmp ult i32 %i.ip, %invariant.op
   %i.ir = shl nuw nsw i32 %i.eo, 3
   %i.is = or disjoint i32 %i.ir, 4                ; 2 uses
   br i1 %i.iq, label %bb.ay, label %bb.ba
@@ -1408,7 +1406,7 @@ bb.bk:                                            ; preds = %bb.bj
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bj, %bb.bi
-  %.12796 = phi i32 [ %6, %bb.bi ], [ %i.io, %bb.bk ], [ %i.lm, %bb.bj ] ; 3 uses
+  %.12796 = phi i32 [ %i.ip, %bb.bi ], [ %i.io, %bb.bk ], [ %i.lm, %bb.bj ] ; 3 uses
   %i.lo = phi i1 [ false, %bb.bi ], [ false, %bb.bk ], [ true, %bb.bj ]
   %.not2879 = phi i1 [ false, %bb.bi ], [ true, %bb.bk ], [ false, %bb.bj ] ; 4 uses
   %.12786 = phi i32 [ 2, %bb.bi ], [ 0, %bb.bk ], [ 1, %bb.bj ] ; 10 uses

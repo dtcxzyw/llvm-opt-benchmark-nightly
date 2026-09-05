@@ -204,18 +204,17 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not296350, label %.backedgethread-pre-split, label %.lr.ph352
 
 bb.h:                                             ; preds = %.lr.ph352
-  %13 = add i32 %.0351, 1                         ; 2 uses
-  %14 = zext i32 %13 to i64
-  %i.u = getelementptr inbounds nuw [8 x i8], ptr @pgtypes_date_weekdays_short, i64 %14
+  %indvars.iv.next398 = add nuw i64 %indvars.iv397, 1 ; 2 uses
+  %i.u = getelementptr inbounds nuw [8 x i8], ptr @pgtypes_date_weekdays_short, i64 %indvars.iv.next398
   %i.v = load ptr, ptr %i.u, align 8              ; 2 uses
   %.not296 = icmp eq ptr %i.v, null
   br i1 %.not296, label %.backedgethread-pre-split, label %.lr.ph352, !llvm.loop !32
 
 .lr.ph352:                                        ; preds = %bb.g, %bb.h
-  %15 = phi ptr [ %i.v, %bb.h ], [ %i.t, %bb.g ]  ; 2 uses
-  %.0351 = phi i32 [ %13, %bb.h ], [ 0, %bb.g ]
-  %i.w = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %15) #15 ; 2 uses
-  %i.x = call i32 @strncmp(ptr noundef nonnull %15, ptr noundef nonnull %i.i, i64 noundef %i.w) #15
+  %indvars.iv397 = phi i64 [ %indvars.iv.next398, %bb.h ], [ 0, %bb.g ]
+  %13 = phi ptr [ %i.v, %bb.h ], [ %i.t, %bb.g ]  ; 2 uses
+  %i.w = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %13) #15 ; 2 uses
+  %i.x = call i32 @strncmp(ptr noundef nonnull %13, ptr noundef nonnull %i.i, i64 noundef %i.w) #15
   %i.y = icmp eq i32 %i.x, 0
   br i1 %i.y, label %bb.i, label %bb.h
 
@@ -231,18 +230,17 @@ bb.j:                                             ; preds = %bb.f
   br i1 %.not295347, label %.backedgethread-pre-split, label %.lr.ph349
 
 bb.k:                                             ; preds = %.lr.ph349
-  %16 = add i32 %.1348, 1                         ; 2 uses
-  %17 = zext i32 %16 to i64
-  %i.ac = getelementptr inbounds nuw [8 x i8], ptr @days, i64 %17
+  %indvars.iv.next395 = add nuw i64 %indvars.iv394, 1 ; 2 uses
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr @days, i64 %indvars.iv.next395
   %i.ad = load ptr, ptr %i.ac, align 8            ; 2 uses
   %.not295 = icmp eq ptr %i.ad, null
   br i1 %.not295, label %.backedgethread-pre-split, label %.lr.ph349, !llvm.loop !33
 
 .lr.ph349:                                        ; preds = %bb.j, %bb.k
-  %18 = phi ptr [ %i.ad, %bb.k ], [ %i.ab, %bb.j ] ; 2 uses
-  %.1348 = phi i32 [ %16, %bb.k ], [ 0, %bb.j ]
-  %i.ae = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %18) #15 ; 2 uses
-  %i.af = call i32 @strncmp(ptr noundef nonnull %18, ptr noundef nonnull %i.i, i64 noundef %i.ae) #15
+  %indvars.iv394 = phi i64 [ %indvars.iv.next395, %bb.k ], [ 0, %bb.j ]
+  %14 = phi ptr [ %i.ad, %bb.k ], [ %i.ab, %bb.j ] ; 2 uses
+  %i.ae = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %14) #15 ; 2 uses
+  %i.af = call i32 @strncmp(ptr noundef nonnull %14, ptr noundef nonnull %i.i, i64 noundef %i.ae) #15
   %i.ag = icmp eq i32 %i.af, 0
   br i1 %i.ag, label %bb.l, label %bb.k
 
@@ -258,24 +256,24 @@ bb.m:                                             ; preds = %bb.f, %bb.f
   br i1 %.not294344, label %.backedgethread-pre-split, label %.lr.ph346
 
 .lr.ph346:                                        ; preds = %bb.m, %bb.o
-  %19 = phi ptr [ %i.aq, %bb.o ], [ %i.aj, %bb.m ] ; 2 uses
-  %.2345 = phi i32 [ %20, %bb.o ], [ 0, %bb.m ]   ; 2 uses
-  %i.ak = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %19) #15 ; 2 uses
-  %i.al = call i32 @strncmp(ptr noundef nonnull %19, ptr noundef nonnull %i.i, i64 noundef %i.ak) #15
+  %indvars.iv391 = phi i64 [ %indvars.iv.next392, %bb.o ], [ 0, %bb.m ] ; 2 uses
+  %15 = phi ptr [ %i.aq, %bb.o ], [ %i.aj, %bb.m ] ; 2 uses
+  %i.ak = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %15) #15 ; 2 uses
+  %i.al = call i32 @strncmp(ptr noundef nonnull %15, ptr noundef nonnull %i.i, i64 noundef %i.ak) #15
   %i.am = icmp eq i32 %i.al, 0
   br i1 %i.am, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %.lr.ph346
+  %16 = trunc nuw i64 %indvars.iv391 to i32
   %i.an = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.ak
   store ptr %i.an, ptr %i.a, align 8
-  %i.ao = add i32 %.2345, 1
+  %i.ao = add nuw i32 %16, 1
   store i32 %i.ao, ptr %4, align 4
   br label %.backedgethread-pre-split
 
 bb.o:                                             ; preds = %.lr.ph346
-  %20 = add i32 %.2345, 1                         ; 2 uses
-  %21 = zext i32 %20 to i64
-  %i.ap = getelementptr inbounds nuw [8 x i8], ptr @months, i64 %21
+  %indvars.iv.next392 = add nuw i64 %indvars.iv391, 1 ; 2 uses
+  %i.ap = getelementptr inbounds nuw [8 x i8], ptr @months, i64 %indvars.iv.next392
   %i.aq = load ptr, ptr %i.ap, align 8            ; 2 uses
   %.not294 = icmp eq ptr %i.aq, null
   br i1 %.not294, label %.backedgethread-pre-split, label %.lr.ph346, !llvm.loop !34
@@ -287,24 +285,24 @@ bb.p:                                             ; preds = %bb.f
   br i1 %.not293341, label %.backedgethread-pre-split, label %.lr.ph343
 
 .lr.ph343:                                        ; preds = %bb.p, %bb.r
-  %22 = phi ptr [ %i.az, %bb.r ], [ %i.as, %bb.p ] ; 2 uses
-  %.3342 = phi i32 [ %23, %bb.r ], [ 0, %bb.p ]   ; 2 uses
-  %i.at = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %22) #15 ; 2 uses
-  %i.au = call i32 @strncmp(ptr noundef nonnull %22, ptr noundef nonnull %i.i, i64 noundef %i.at) #15
+  %indvars.iv388 = phi i64 [ %indvars.iv.next389, %bb.r ], [ 0, %bb.p ] ; 2 uses
+  %17 = phi ptr [ %i.az, %bb.r ], [ %i.as, %bb.p ] ; 2 uses
+  %i.at = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %17) #15 ; 2 uses
+  %i.au = call i32 @strncmp(ptr noundef nonnull %17, ptr noundef nonnull %i.i, i64 noundef %i.at) #15
   %i.av = icmp eq i32 %i.au, 0
   br i1 %i.av, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %.lr.ph343
+  %18 = trunc nuw i64 %indvars.iv388 to i32
   %i.aw = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.at
   store ptr %i.aw, ptr %i.a, align 8
-  %i.ax = add i32 %.3342, 1
+  %i.ax = add nuw i32 %18, 1
   store i32 %i.ax, ptr %4, align 4
   br label %.backedgethread-pre-split
 
 bb.r:                                             ; preds = %.lr.ph343
-  %23 = add i32 %.3342, 1                         ; 2 uses
-  %24 = zext i32 %23 to i64
-  %i.ay = getelementptr inbounds nuw [8 x i8], ptr @pgtypes_date_months, i64 %24
+  %indvars.iv.next389 = add nuw i64 %indvars.iv388, 1 ; 2 uses
+  %i.ay = getelementptr inbounds nuw [8 x i8], ptr @pgtypes_date_months, i64 %indvars.iv.next389
   %i.az = load ptr, ptr %i.ay, align 8            ; 2 uses
   %.not293 = icmp eq ptr %i.az, null
   br i1 %.not293, label %.backedgethread-pre-split, label %.lr.ph343, !llvm.loop !35

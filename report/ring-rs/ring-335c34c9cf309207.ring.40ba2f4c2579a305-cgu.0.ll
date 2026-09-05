@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %_RNvNtNtCs5yxAJGbRK
   %..i.i.i = call noundef i64 @llvm.umin.i64(i64 %i.j, i64 %i.v) ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.w, i64 %..i.i.i
   %i.r = sub nuw nsw i64 %i.v, %..i.i.i
-  %i.s = add i32 %i.u, 1
+  %i.s = add nuw i32 %i.u, 1
   %i.t = icmp eq i32 %i.u, -1
   br i1 %i.t, label %_RNvNtCs5yxAJGbRKSL_4ring6pbkdf210try_verify.exit.thread.sink.split, label %bb.g, !prof !4492
 
@@ -608,7 +608,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader, %.lr.ph.i.prol
   %.sroa.0.08.i.prol = phi i64 [ %i.bd, %.lr.ph.i.prol ], [ %.sroa.0.08.i.ph, %.lr.ph.i.preheader ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
-  %i.bd = add nuw i64 %.sroa.0.08.i.prol, 1       ; 2 uses
+  %i.bd = add nuw nsw i64 %.sroa.0.08.i.prol, 1   ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.0.03542, i64 %.sroa.0.08.i.prol ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.6.0..sroa_idx2.i, i64 %.sroa.0.08.i.prol
   %.val7.i.prol = load i8, ptr %i.bf, align 1, !noalias !4834, !noundef !15
@@ -627,28 +627,28 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
   %.sroa.0.08.i = phi i64 [ %i.bz, %.lr.ph.i ], [ %.sroa.0.08.i.unr, %.lr.ph.i.prol.loopexit ] ; 6 uses
-  %i.bk = add nuw i64 %.sroa.0.08.i, 1            ; 2 uses
+  %i.bk = add nuw nsw i64 %.sroa.0.08.i, 1        ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.0.03542, i64 %.sroa.0.08.i ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.6.0..sroa_idx2.i, i64 %.sroa.0.08.i
   %.val7.i = load i8, ptr %i.bm, align 1, !noalias !4834, !noundef !15
   %i.bn = load i8, ptr %i.bl, align 1, !alias.scope !4837, !noalias !4834, !noundef !15
   %i.bo = xor i8 %i.bn, %.val7.i
   store i8 %i.bo, ptr %i.bl, align 1, !alias.scope !4837, !noalias !4834
-  %i.bp = add nuw i64 %.sroa.0.08.i, 2            ; 2 uses
+  %i.bp = add nuw nsw i64 %.sroa.0.08.i, 2        ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %.sroa.0.03542, i64 %i.bk ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %.sroa.6.0..sroa_idx2.i, i64 %i.bk
   %.val7.i.1 = load i8, ptr %i.br, align 1, !noalias !4834, !noundef !15
   %i.bs = load i8, ptr %i.bq, align 1, !alias.scope !4837, !noalias !4834, !noundef !15
   %i.bt = xor i8 %i.bs, %.val7.i.1
   store i8 %i.bt, ptr %i.bq, align 1, !alias.scope !4837, !noalias !4834
-  %i.bu = add nuw i64 %.sroa.0.08.i, 3            ; 2 uses
+  %i.bu = add nuw nsw i64 %.sroa.0.08.i, 3        ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.0.03542, i64 %i.bp ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.6.0..sroa_idx2.i, i64 %i.bp
   %.val7.i.2 = load i8, ptr %i.bw, align 1, !noalias !4834, !noundef !15
   %i.bx = load i8, ptr %i.bv, align 1, !alias.scope !4837, !noalias !4834, !noundef !15
   %i.by = xor i8 %i.bx, %.val7.i.2
   store i8 %i.by, ptr %i.bv, align 1, !alias.scope !4837, !noalias !4834
-  %i.bz = add nuw i64 %.sroa.0.08.i, 4            ; 2 uses
+  %i.bz = add nuw nsw i64 %.sroa.0.08.i, 4        ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.0.03542, i64 %i.bu ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %.sroa.6.0..sroa_idx2.i, i64 %i.bu
   %.val7.i.3 = load i8, ptr %i.cb, align 1, !noalias !4834, !noundef !15
@@ -1051,7 +1051,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader, %.lr.ph.i.i.i
   %.sroa.0.08.i.i.i = phi i64 [ %i.bo, %.lr.ph.i.i.i ], [ %.sroa.0.08.i.i.i.ph, %.lr.ph.i.i.i.preheader ] ; 3 uses
-  %i.bo = add nuw i64 %.sroa.0.08.i.i.i, 1        ; 2 uses
+  %i.bo = add nuw nsw i64 %.sroa.0.08.i.i.i, 1    ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bb, i64 %.sroa.0.08.i.i.i ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.ba, i64 %.sroa.0.08.i.i.i
   %.val7.i.i.i = load i8, ptr %i.bq, align 1, !noalias !6502, !noundef !15

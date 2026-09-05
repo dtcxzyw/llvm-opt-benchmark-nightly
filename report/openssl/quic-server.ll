@@ -58,7 +58,7 @@ bb.a:
   %i.a = alloca [4 x ptr], align 16               ; 9 uses
   %2 = alloca %struct.timeval, align 8            ; 5 uses
   %i.b = alloca [1024 x i8], align 16             ; 4 uses
-  %i.c = alloca i32, align 4                      ; 5 uses
+  %i.c = alloca i32, align 4                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
@@ -95,7 +95,11 @@ bb.f:                                             ; preds = %bb.e
   %i.n = tail call ptr @BIO_s_dgram_mem() #7
   %i.o = tail call ptr @BIO_new(ptr noundef %i.n) #7 ; 4 uses
   %i.p = icmp eq ptr %i.o, null
-  br i1 %i.p, label %.lr.ph.preheader.sink.split, label %bb.g
+  br i1 %i.p, label %3, label %bb.g
+
+3:                                                ; preds = %bb.f
+  %4 = tail call i32 @BIO_free(ptr noundef nonnull %i.l) #7 ; 0 uses
+  br label %.lr.ph.preheader
 
 bb.g:                                             ; preds = %bb.f
   %i.q = tail call i64 @BIO_ctrl(ptr noundef nonnull %i.o, i32 noundef 87, i64 noundef 2, ptr noundef null) #7
@@ -105,7 +109,8 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.s = tail call i32 @BIO_free(ptr noundef nonnull %i.l) #7 ; 0 uses
-  br label %.lr.ph.preheader.sink.split
+  %5 = tail call i32 @BIO_free(ptr noundef nonnull %i.o) #7 ; 0 uses
+  br label %.lr.ph.preheader
 
 bb.i:                                             ; preds = %bb.g
   tail call void @SSL_set_bio(ptr noundef nonnull %i.h, ptr noundef nonnull %i.l, ptr noundef nonnull %i.o) #7
@@ -237,11 +242,15 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   %i.ay = call ptr @SSL_accept_stream(ptr noundef nonnull %i.h, i64 noundef 0) #7 ; 3 uses
-  %i.az = add i64 %.1113, 1                       ; 2 uses
+  %i.az = add nuw nsw i64 %.1113, 1               ; 2 uses
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.1113
   store ptr %i.ay, ptr %i.ba, align 8, !tbaa !14
   %i.bb = icmp eq ptr %i.ay, null
-  br i1 %i.bb, label %.loopexit, label %.thread
+  br i1 %i.bb, label %.thread204, label %.thread
+
+.thread204:                                       ; preds = %bb.aa
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
+  br label %.lr.ph.preheader
 
 bb.ab:                                            ; preds = %bb.u
   %i.bc = icmp eq i64 %.1113, 4
@@ -258,7 +267,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %.thread
 
 bb.ae:                                            ; preds = %bb.ac
-  %i.bh = add i64 %.1113, 1
+  %i.bh = add nuw nsw i64 %.1113, 1
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.1113
   store ptr %i.bd, ptr %i.bi, align 8, !tbaa !14
   br label %.thread
@@ -361,19 +370,14 @@ bb.ar:                                            ; preds = %bb.ap, %bb.aq
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
   br label %bb.j
 
-.loopexit:                                        ; preds = %bb.ao, %bb.an, %bb.ai, %.thread, %bb.aa
-  %.3115.ph = phi i64 [ %.1113, %bb.ai ], [ %i.az, %bb.aa ], [ %.2114150, %.thread ], [ %.2114150, %bb.an ], [ %.2114150, %bb.ao ] ; 2 uses
+.loopexit:                                        ; preds = %bb.ao, %bb.an, %bb.ai, %.thread
+  %.3115.ph = phi i64 [ %.1113, %bb.ai ], [ %.2114150, %.thread ], [ %.2114150, %bb.an ], [ %.2114150, %bb.ao ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
   %.not179 = icmp eq i64 %.3115.ph, 0
   br i1 %.not179, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader.sink.split:                      ; preds = %bb.f, %bb.h
-  %.sink = phi ptr [ %i.o, %bb.h ], [ %i.l, %bb.f ]
-  %3 = tail call i32 @BIO_free(ptr noundef nonnull %.sink) #7 ; 0 uses
-  br label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %.lr.ph.preheader.sink.split, %bb.d, %bb.e, %bb.c, %bb.b, %.loopexit
-  %.4116203 = phi i64 [ %.3115.ph, %.loopexit ], [ 1, %bb.b ], [ 1, %bb.c ], [ 1, %bb.e ], [ 1, %bb.d ], [ 1, %.lr.ph.preheader.sink.split ]
+.lr.ph.preheader:                                 ; preds = %bb.h, %bb.d, %3, %bb.e, %bb.c, %bb.b, %.thread204, %.loopexit
+  %.4116203 = phi i64 [ %i.az, %.thread204 ], [ %.3115.ph, %.loopexit ], [ 1, %bb.b ], [ 1, %bb.c ], [ 1, %bb.e ], [ 1, %3 ], [ 1, %bb.d ], [ 1, %bb.h ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph

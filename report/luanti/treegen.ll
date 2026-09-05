@@ -204,7 +204,7 @@ bb.ag:                                            ; preds = %_ZNK9VoxelArea8cont
 
 _ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit.thread: ; preds = %bb.ae, %bb.af, %bb.ag, %_ZNK9VoxelArea8containsEN4core8vector3dIsEE.exit
   %i.gb = add i16 %.sroa.8475.0518, 1
-  %i.gc = add nuw i16 %.0179519, 1
+  %i.gc = add nuw nsw i16 %.0179519, 1
   %exitcond.not = icmp eq i16 %.0179519, %i.fd
   br i1 %exitcond.not, label %.lr.ph.preheader, label %bb.ae, !llvm.loop !203
 
@@ -607,7 +607,7 @@ bb.bs:                                            ; preds = %._crit_edge531.2, %
   %i.mv = mul i32 %i.mu, 1103515245
   %i.mw = add i32 %i.mv, 12345                    ; 2 uses
   %i.mx = sdiv i32 %i.mw, 65536
-  %.zext.i318 = and i32 %i.mx, 1                  ; 3 uses
+  %.zext.i318 = and i32 %i.mx, 1                  ; 2 uses
   %i.my = or disjoint i32 %.zext.i318, -6
   %i.mz = mul i32 %i.mw, 1103515245
   %i.na = add i32 %i.mz, 12345                    ; 3 uses
@@ -616,10 +616,10 @@ bb.bs:                                            ; preds = %._crit_edge531.2, %
   %.lhs.trunc.i319 = and i16 %i.nc, 32767
   %i.nd = urem i16 %.lhs.trunc.i319, 6            ; 2 uses
   %.zext.i320 = zext nneg i16 %i.nd to i32
-  %i.ne = add nsw i16 %i.nd, -3                   ; 2 uses
+  %i.ne = add nsw i16 %i.nd, -3
   %spec.select510 = call i32 @llvm.smax.i32(i32 %i.my, i32 %.0193545) ; 3 uses
   %i.nf = add nsw i32 %.zext.i320, -2             ; 2 uses
-  %i.ng = sext i16 %i.ne to i32
+  %i.ng = sext i16 %i.ne to i32                   ; 3 uses
   %.not226539 = icmp slt i32 %i.nf, %i.ng
   br i1 %.not226539, label %._crit_edge543, label %.lr.ph542
 
@@ -629,9 +629,14 @@ bb.bs:                                            ; preds = %._crit_edge531.2, %
   %.lhs.trunc.i315 = and i16 %i.ni, 32767
   %i.nj = urem i16 %.lhs.trunc.i315, 6
   %.zext.i316 = zext nneg i16 %i.nj to i32        ; 2 uses
-  %.sroa.2.0.extract.trunc.i323 = or disjoint i32 %.zext.i318, 24
-  %i.nk = add nuw nsw i32 %.zext.i316, 42
-  %i.nl = add nuw nsw i32 %.zext.i316, 217
+  %9 = mul nsw i32 %i.ng, 70                      ; 2 uses
+  %10 = add nsw i32 %9, 217
+  %11 = mul nuw nsw i32 %.zext.i318, 7            ; 2 uses
+  %12 = add nuw nsw i32 %10, %11
+  %13 = add nuw nsw i32 %12, %.zext.i316
+  %14 = add nsw i32 %9, 210
+  %i.nk = add nuw nsw i32 %14, %11
+  %i.nl = add nuw nsw i32 %i.nk, %.zext.i316
   br label %bb.bt
 
 ._crit_edge543:                                   ; preds = %bb.bx, %bb.bs
@@ -640,20 +645,14 @@ bb.bs:                                            ; preds = %._crit_edge531.2, %
   br i1 %exitcond654.not, label %.lr.ph571.preheader, label %bb.bs, !llvm.loop !205
 
 bb.bt:                                            ; preds = %.lr.ph542, %bb.bx
-  %.0191540 = phi i16 [ %i.ne, %.lr.ph542 ], [ %22, %bb.bx ] ; 2 uses
-  %9 = sext i16 %.0191540 to i32
-  %10 = mul nsw i32 %9, 10                        ; 2 uses
-  %11 = add nsw i32 %.sroa.2.0.extract.trunc.i323, %10
-  %12 = mul nsw i32 %11, 7
-  %13 = add nsw i32 %i.nk, %12                    ; 2 uses
-  %14 = or disjoint i32 %10, %.zext.i318
-  %15 = mul nsw i32 %14, 7
-  %16 = add nsw i32 %i.nl, %15                    ; 2 uses
-  %i.nn = zext i32 %13 to i64
+  %indvars.iv665 = phi i32 [ %i.ng, %.lr.ph542 ], [ %indvars.iv.next666, %bb.bx ] ; 2 uses
+  %indvars.iv657 = phi i32 [ %i.nl, %.lr.ph542 ], [ %indvars.iv.next658, %bb.bx ] ; 2 uses
+  %indvars.iv653 = phi i32 [ %13, %.lr.ph542 ], [ %indvars.iv.next654, %bb.bx ] ; 2 uses
+  %15 = zext i32 %indvars.iv653 to i64            ; 2 uses
+  %i.nn = zext i32 %indvars.iv657 to i64          ; 2 uses
   %i.no = getelementptr inbounds nuw i8, ptr %i.gd, i64 %i.nn
   store i8 1, ptr %i.no, align 1, !tbaa !20
-  %17 = zext i32 %16 to i64
-  %i.np = getelementptr inbounds nuw i8, ptr %i.gd, i64 %17 ; 2 uses
+  %i.np = getelementptr inbounds nuw i8, ptr %i.gd, i64 %15 ; 2 uses
   %i.nq = load i8, ptr %i.np, align 1, !tbaa !20
   %i.nr = icmp eq i8 %i.nq, 0
   br i1 %i.nr, label %bb.bu, label %bb.bv
@@ -663,13 +662,11 @@ bb.bu:                                            ; preds = %bb.bt
   br label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu, %bb.bt
-  %18 = add nsw i32 %13, 1
-  %19 = add nsw i32 %16, 1
-  %20 = zext i32 %18 to i64
-  %i.ns = getelementptr inbounds nuw i8, ptr %i.gd, i64 %20
+  %16 = getelementptr inbounds nuw i8, ptr %i.gd, i64 %i.nn
+  %i.ns = getelementptr inbounds nuw i8, ptr %16, i64 1
   store i8 1, ptr %i.ns, align 1, !tbaa !20
-  %21 = zext i32 %19 to i64
-  %i.nt = getelementptr inbounds nuw i8, ptr %i.gd, i64 %21 ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %i.gd, i64 %15
+  %i.nt = getelementptr inbounds nuw i8, ptr %17, i64 1 ; 2 uses
   %i.nu = load i8, ptr %i.nt, align 1, !tbaa !20
   %i.nv = icmp eq i8 %i.nu, 0
   br i1 %i.nv, label %bb.bw, label %bb.bx
@@ -679,10 +676,11 @@ bb.bw:                                            ; preds = %bb.bv
   br label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw, %bb.bv
-  %22 = add i16 %.0191540, 1                      ; 2 uses
-  %23 = sext i16 %22 to i32
-  %.not226 = icmp slt i32 %i.nf, %23
-  br i1 %.not226, label %._crit_edge543, label %bb.bt, !llvm.loop !206
+  %indvars.iv.next666 = add nsw i32 %indvars.iv665, 1
+  %.not226.not = icmp sgt i32 %i.nf, %indvars.iv665
+  %indvars.iv.next654 = add nsw i32 %indvars.iv653, 70
+  %indvars.iv.next658 = add nsw i32 %indvars.iv657, 70
+  br i1 %.not226.not, label %bb.bt, label %._crit_edge543, !llvm.loop !206
 
 .preheader516:                                    ; preds = %._crit_edge561
   %i.nw = add i16 %.sroa.0.0.extract.trunc.i, -3

@@ -204,7 +204,7 @@ bb.ae:                                            ; preds = %bb.ab
   br label %_ZNSt6vectorIS_IiSaIiEESaIS1_EED2Ev.exit278
 
 bb.af:                                            ; preds = %.lr.ph, %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EED2Ev.exit
-  %.0102507 = phi i64 [ 0, %.lr.ph ], [ %i.je, %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EED2Ev.exit ] ; 9 uses
+  %.0102507 = phi i64 [ 0, %.lr.ph ], [ %i.je, %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EED2Ev.exit ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %15, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #23
@@ -607,31 +607,27 @@ bb.bs:                                            ; preds = %bb.br
 bb.bt:                                            ; preds = %bb.bs
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #23
   %i.ip = call noundef double @llvm.fabs.f64(double %i.io)
-  %34 = sdiv i64 %.0102507, 64
-  %i.iq = getelementptr inbounds [8 x i8], ptr %.sroa.0333.0, i64 %34
-  %35 = and i64 %.0102507, -9223372036854775745
-  %36 = icmp ugt i64 %35, -9223372036854775808
-  %storemerge.idx.i.i.i.i.i178 = select i1 %36, i64 -8, i64 0
-  %storemerge.i.i.i.i.i179 = getelementptr inbounds i8, ptr %i.iq, i64 %storemerge.idx.i.i.i.i.i178 ; 3 uses
+  %34 = lshr i64 %.0102507, 6
+  %i.iq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0333.0, i64 %34 ; 3 uses
   %i.ir = and i64 %.0102507, 63
   %i.is = shl nuw i64 1, %i.ir                    ; 2 uses
   %i.it = fcmp ogt double %i.ip, f0x3EB0C6F7A0B5ED8D
   br i1 %i.it, label %bb.bu, label %bb.bv
 
 bb.bu:                                            ; preds = %bb.bt
-  %i.iu = load i64, ptr %storemerge.i.i.i.i.i179, align 8, !tbaa !81
+  %i.iu = load i64, ptr %i.iq, align 8, !tbaa !81
   %i.iv = or i64 %i.iu, %i.is
   br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split
 
 bb.bv:                                            ; preds = %bb.bt
   %i.iw = xor i64 %i.is, -1
-  %i.ix = load i64, ptr %storemerge.i.i.i.i.i179, align 8, !tbaa !81
+  %i.ix = load i64, ptr %i.iq, align 8, !tbaa !81
   %i.iy = and i64 %i.ix, %i.iw
   br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split
 
 _ZNSt14_Bit_referenceaSEb.exit.sink.split:        ; preds = %bb.bu, %bb.bv
   %.sink = phi i64 [ %i.iy, %bb.bv ], [ %i.iv, %bb.bu ]
-  store i64 %.sink, ptr %storemerge.i.i.i.i.i179, align 8, !tbaa !81
+  store i64 %.sink, ptr %i.iq, align 8, !tbaa !81
   br label %_ZNSt14_Bit_referenceaSEb.exit
 
 _ZNSt14_Bit_referenceaSEb.exit:                   ; preds = %_ZNSt14_Bit_referenceaSEb.exit.sink.split, %._crit_edge.i.i.i, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEiET_S8_S8_RKT0_.exit

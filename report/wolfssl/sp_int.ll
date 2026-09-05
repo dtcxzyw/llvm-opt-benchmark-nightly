@@ -205,7 +205,7 @@ bb.ap:                                            ; preds = %bb.ao
 bb.aq:                                            ; preds = %bb.ao
   %i.hi = zext nneg i32 %.0262.i to i64
   %i.hj = shl i64 %i.gr, %i.hi
-  %i.hk = sub nsw i32 %spec.store.select.i, %.0262.i
+  %i.hk = sub nuw nsw i32 %spec.store.select.i, %.0262.i
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap
@@ -358,7 +358,7 @@ bb.bc:                                            ; preds = %bb.bb
 
 bb.bd:                                            ; preds = %bb.bb
   %i.jl = shl i64 %.5.i, %i.hw
-  %i.jm = sub nsw i32 %.5236.i, %.0262.i
+  %i.jm = sub nuw nsw i32 %.5236.i, %.0262.i
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.bd, %bb.bc, %bb.ba

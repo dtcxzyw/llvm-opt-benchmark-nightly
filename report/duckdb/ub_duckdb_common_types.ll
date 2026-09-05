@@ -205,7 +205,7 @@ _ZN6duckdb4Date22ExtractISODayOfTheWeekENS_6date_tE.exit: ; preds = %bb.e, %bb.f
   br i1 %i.bh, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_ZN6duckdb4Date22ExtractISODayOfTheWeekENS_6date_tE.exit
-  %i.bi = sub nsw i32 %i.ay, %.0
+  %i.bi = sub nuw nsw i32 %i.ay, %.0
   %i.bj = udiv i32 %i.bi, 7
   %i.bk = add nuw nsw i32 %i.bj, 1
   br label %bb.h
@@ -608,9 +608,9 @@ bb.bf:                                            ; preds = %bb.be
   %i.hh = trunc nuw nsw i64 %i.hg to i32
   %i.hi = shl i64 %.sroa.7.0.ph463483, %i.hg
   %i.hj = trunc nsw i64 %.sroa.093.0.ph464480 to i32 ; 2 uses
-  %i.hk = shl nsw i32 %i.hj, 1                    ; 2 uses
+  %i.hk = shl nsw i32 %i.hj, 1
   %i.hl = sext i32 %i.hk to i64
-  %i.hm = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %i.hl
+  %i.hm = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %i.hl ; 2 uses
   %i.hn = getelementptr i8, ptr %i.hm, i64 5472
   %i.ho = load i64, ptr %i.hn, align 16, !tbaa !245
   %i.hp = zext i64 %i.hi to i128                  ; 2 uses
@@ -624,9 +624,7 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %i.hw, label %.noexc73, label %_ZN17duckdb_fast_float29compute_product_approximationILi55EEENS_8value128Elm.exit
 
 .noexc73:                                         ; preds = %.noexc
-  %6 = sext i32 %i.hk to i64
-  %7 = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %6
-  %i.hx = getelementptr i8, ptr %7, i64 5480
+  %i.hx = getelementptr i8, ptr %i.hm, i64 5480
   %i.hy = load i64, ptr %i.hx, align 8, !tbaa !245
   %i.hz = zext i64 %i.hy to i128
   %i.ia = mul nuw i128 %i.hz, %i.hp

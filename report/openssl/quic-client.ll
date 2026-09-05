@@ -62,7 +62,7 @@ bb.a:
   %2 = alloca %struct.in_addr, align 4            ; 5 uses
   %3 = alloca %struct.timeval, align 8            ; 5 uses
   %i.b = alloca [1024 x i8], align 16             ; 4 uses
-  %i.c = alloca i32, align 4                      ; 5 uses
+  %i.c = alloca i32, align 4                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #6
@@ -90,7 +90,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not, label %.lr.ph.preheader, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.k = tail call ptr @BIO_ADDR_new() #6         ; 11 uses
+  %i.k = tail call ptr @BIO_ADDR_new() #6         ; 13 uses
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %.lr.ph.preheader, label %bb.f
 
@@ -111,7 +111,11 @@ bb.h:                                             ; preds = %bb.g
   %i.r = call ptr @BIO_s_dgram_mem() #6
   %i.s = call ptr @BIO_new(ptr noundef %i.r) #6   ; 4 uses
   %i.t = icmp eq ptr %i.s, null
-  br i1 %i.t, label %.lr.ph.preheader.sink.split, label %bb.i
+  br i1 %i.t, label %4, label %bb.i
+
+4:                                                ; preds = %bb.h
+  %5 = call i32 @BIO_free(ptr noundef nonnull %i.p) #6 ; 0 uses
+  br label %.lr.ph.preheader
 
 bb.i:                                             ; preds = %bb.h
   %i.u = call i64 @BIO_ctrl(ptr noundef nonnull %i.s, i32 noundef 87, i64 noundef 2, ptr noundef null) #6
@@ -121,7 +125,8 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.w = call i32 @BIO_free(ptr noundef nonnull %i.p) #6 ; 0 uses
-  br label %.lr.ph.preheader.sink.split
+  %6 = call i32 @BIO_free(ptr noundef nonnull %i.s) #6 ; 0 uses
+  br label %.lr.ph.preheader
 
 bb.k:                                             ; preds = %bb.i
   call void @SSL_set_bio(ptr noundef nonnull %i.h, ptr noundef nonnull %i.p, ptr noundef nonnull %i.s) #6
@@ -269,11 +274,15 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ae
   %i.be = call ptr @SSL_accept_stream(ptr noundef nonnull %i.h, i64 noundef 0) #6 ; 3 uses
-  %i.bf = add i64 %.1121, 1                       ; 2 uses
+  %i.bf = add nuw nsw i64 %.1121, 1               ; 2 uses
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.1121
   store ptr %i.be, ptr %i.bg, align 8, !tbaa !16
   %i.bh = icmp eq ptr %i.be, null
-  br i1 %i.bh, label %.loopexit, label %.thread
+  br i1 %i.bh, label %.thread225, label %.thread
+
+.thread225:                                       ; preds = %bb.af
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
+  br label %.lr.ph.preheader
 
 bb.ag:                                            ; preds = %bb.z
   %i.bi = icmp eq i64 %.1121, 4
@@ -290,7 +299,7 @@ bb.ai:                                            ; preds = %bb.ah
   br label %.thread
 
 bb.aj:                                            ; preds = %bb.ah
-  %i.bn = add i64 %.1121, 1
+  %i.bn = add nuw nsw i64 %.1121, 1
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.1121
   store ptr %i.bj, ptr %i.bo, align 8, !tbaa !16
   br label %.thread
@@ -393,20 +402,15 @@ bb.aw:                                            ; preds = %bb.au, %bb.av
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
   br label %bb.o
 
-.loopexit:                                        ; preds = %bb.at, %bb.as, %bb.an, %.thread, %bb.af
-  %.3123.ph = phi i64 [ %.1121, %bb.an ], [ %i.bf, %bb.af ], [ %.2122167, %.thread ], [ %.2122167, %bb.as ], [ %.2122167, %bb.at ] ; 2 uses
+.loopexit:                                        ; preds = %bb.at, %bb.as, %bb.an, %.thread
+  %.3123.ph = phi i64 [ %.1121, %bb.an ], [ %.2122167, %.thread ], [ %.2122167, %bb.as ], [ %.2122167, %bb.at ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
   %.not196 = icmp eq i64 %.3123.ph, 0
   br i1 %.not196, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader.sink.split:                      ; preds = %bb.h, %bb.j
-  %.sink = phi ptr [ %i.s, %bb.j ], [ %i.p, %bb.h ]
-  %4 = call i32 @BIO_free(ptr noundef nonnull %.sink) #6 ; 0 uses
-  br label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %.lr.ph.preheader.sink.split, %bb.f, %bb.m, %bb.d, %bb.l, %bb.k, %bb.g, %bb.e, %bb.c, %bb.b, %.loopexit
-  %.0119223 = phi ptr [ %i.k, %.loopexit ], [ %i.k, %bb.f ], [ null, %bb.c ], [ %i.k, %bb.m ], [ null, %bb.d ], [ %i.k, %bb.l ], [ %i.k, %bb.k ], [ null, %bb.b ], [ %i.k, %bb.g ], [ null, %bb.e ], [ %i.k, %.lr.ph.preheader.sink.split ]
-  %.4124222 = phi i64 [ %.3123.ph, %.loopexit ], [ 1, %bb.f ], [ 1, %bb.c ], [ 1, %bb.m ], [ 1, %bb.d ], [ 1, %bb.l ], [ 1, %bb.k ], [ 1, %bb.b ], [ 1, %bb.g ], [ 1, %bb.e ], [ 1, %.lr.ph.preheader.sink.split ]
+.lr.ph.preheader:                                 ; preds = %bb.f, %bb.j, %bb.m, %bb.d, %bb.l, %bb.k, %4, %bb.g, %bb.e, %bb.c, %bb.b, %.thread225, %.loopexit
+  %.0119223 = phi ptr [ %i.k, %.thread225 ], [ %i.k, %.loopexit ], [ %i.k, %bb.f ], [ %i.k, %bb.j ], [ %i.k, %bb.m ], [ null, %bb.d ], [ %i.k, %bb.l ], [ %i.k, %bb.k ], [ %i.k, %4 ], [ %i.k, %bb.g ], [ null, %bb.e ], [ null, %bb.c ], [ null, %bb.b ]
+  %.4124222 = phi i64 [ %i.bf, %.thread225 ], [ %.3123.ph, %.loopexit ], [ 1, %bb.f ], [ 1, %bb.j ], [ 1, %bb.m ], [ 1, %bb.d ], [ 1, %bb.l ], [ 1, %bb.k ], [ 1, %4 ], [ 1, %bb.g ], [ 1, %bb.e ], [ 1, %bb.c ], [ 1, %bb.b ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph

@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not83, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.j, %bb.k
-  %i.al = phi i64 [ %6, %bb.k ], [ 0, %bb.j ]     ; 4 uses
+  %i.al = phi i64 [ %i.ay, %bb.k ], [ 0, %bb.j ]  ; 4 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.al ; 3 uses
   %i.an = load i8, ptr %i.am, align 1
   %i.ao = call i32 @EVUTIL_ISALPHA_(i8 noundef signext %i.an) #19
@@ -214,7 +214,8 @@ bb.j:                                             ; preds = %bb.i
 .sink.split:                                      ; preds = %.lr.ph
   %indvars = trunc nuw i64 %i.al to i32
   %i.ap = lshr i64 %i.al, 3
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.ap
+  %6 = and i64 %i.ap, 536870911
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.c, i64 %6
   %i.ar = load i8, ptr %i.aq, align 1
   %i.as = zext i8 %i.ar to i32
   %i.at = and i32 %indvars, 7
@@ -229,10 +230,9 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %.sink.split, %.lr.ph
-  %i.ay = add nuw nsw i64 %i.al, 1
-  %6 = and i64 %i.ay, 4294967295                  ; 2 uses
-  %7 = icmp ugt i64 %i.i, %6
-  br i1 %7, label %.lr.ph, label %._crit_edge, !llvm.loop !30
+  %i.ay = add nuw i64 %i.al, 1                    ; 2 uses
+  %exitcond.not = icmp eq i64 %i.ay, %i.i
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !30
 
 ._crit_edge:                                      ; preds = %bb.k, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #19

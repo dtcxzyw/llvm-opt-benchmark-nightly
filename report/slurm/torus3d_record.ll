@@ -202,10 +202,9 @@ bb.s:                                             ; preds = %bb.s, %bb.q
   %i.bu = load ptr, ptr %i.bn, align 8
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.bu, i64 %indvars.iv.i
   store i32 -2, ptr %i.bv, align 4
-  %indvars.iv.next.i = add i64 %indvars.iv.i, 1   ; 2 uses
-  %1 = and i64 %indvars.iv.next.i, 4294967295
-  %2 = icmp samesign ugt i64 %i.ax, %1
-  br i1 %2, label %bb.s, label %bb.r, !llvm.loop !11
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.ax
+  br i1 %exitcond.not.i, label %bb.r, label %bb.s, !llvm.loop !11
 
 bb.t:                                             ; preds = %bb.r
   %i.bw = icmp sgt i32 %i.bt, 0

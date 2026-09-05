@@ -204,7 +204,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !172)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !173)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load i64, ptr %i.a, align 8, !alias.scope !174, !noundef !4 ; 6 uses
+  %i.b = load i64, ptr %i.a, align 8, !alias.scope !174, !noundef !4 ; 5 uses
   %i.c = icmp ult i64 %i.b, 3
   br i1 %i.c, label %_RNvXs_NtCscFGNKo4Sl5v_9itertools10next_arrayINtB4_12ArrayBuilderINtNtCshzWfHUSfYae_4core6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7NameRefEKj2_EINtNtB15_7convert5AsMutSB10_E6as_mutCs6oosyzwIepl_6ide_db.exit.i, label %bb.b, !prof !175
 
@@ -247,13 +247,11 @@ bb.e:                                             ; preds = %bb.d
   %i.n = icmp eq i64 %i.f, %i.b
   br i1 %i.n, label %._crit_edge14.i.i, label %.lr.ph13.i.i
 
-.lr.ph13.i.i:                                     ; preds = %bb.e, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7NameRefEECs6oosyzwIepl_6ide_db.exit9.i.i
-  %.sroa.0.111.i.i = phi i64 [ %1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7NameRefEECs6oosyzwIepl_6ide_db.exit9.i.i ], [ %i.f, %bb.e ] ; 2 uses
-  %i.o = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.111.i.i
-  %1 = add i64 %.sroa.0.111.i.i, 1                ; 2 uses
+.lr.ph13.i.i:                                     ; preds = %bb.e
+  %i.o = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.f
   %.val.i.i = load ptr, ptr %i.o, align 8, !alias.scope !177, !noundef !4 ; 3 uses
   %i.p = icmp eq ptr %.val.i.i, null
-  br i1 %i.p, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7NameRefEECs6oosyzwIepl_6ide_db.exit9.i.i, label %bb.f
+  br i1 %i.p, label %._crit_edge14.i.i, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph13.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 48 ; 2 uses
@@ -261,17 +259,13 @@ bb.f:                                             ; preds = %.lr.ph13.i.i
   %i.s = add i32 %i.r, -1                         ; 2 uses
   store i32 %i.s, ptr %i.q, align 4, !noalias !177
   %i.t = icmp eq i32 %i.s, 0
-  br i1 %i.t, label %bb.g, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7NameRefEECs6oosyzwIepl_6ide_db.exit9.i.i
+  br i1 %i.t, label %bb.g, label %._crit_edge14.i.i
 
 bb.g:                                             ; preds = %bb.f
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.val.i.i) #34
-          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7NameRefEECs6oosyzwIepl_6ide_db.exit9.i.i unwind label %bb.h, !noalias !177
+          to label %._crit_edge14.i.i unwind label %bb.h, !noalias !177
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7NameRefEECs6oosyzwIepl_6ide_db.exit9.i.i: ; preds = %bb.g, %bb.f, %.lr.ph13.i.i
-  %2 = icmp eq i64 %1, %i.b
-  br i1 %2, label %._crit_edge14.i.i, label %.lr.ph13.i.i
-
-._crit_edge14.i.i:                                ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7NameRefEECs6oosyzwIepl_6ide_db.exit9.i.i, %bb.e
+._crit_edge14.i.i:                                ; preds = %bb.g, %bb.f, %.lr.ph13.i.i, %bb.e
   resume { ptr, i32 } %i.m
 
 bb.h:                                             ; preds = %bb.g

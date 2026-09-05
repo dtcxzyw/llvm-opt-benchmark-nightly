@@ -204,7 +204,7 @@ _ZNK6icu_789ScriptSet10nextSetBitEi.exit74:       ; preds = %_ZNK6icu_789ScriptS
   br i1 %i.cs, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %_ZNK6icu_789ScriptSet10nextSetBitEi.exit74, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit89
-  %.0105 = phi i32 [ %.2.i86, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit89 ], [ %.2.i71, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit74 ]
+  %.0105 = phi i32 [ %.2.i86, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit89 ], [ %.2.i71, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit74 ] ; 2 uses
   %.015104 = phi i32 [ %.2.i78, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit89 ], [ %.2.i, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit74 ] ; 2 uses
   %or.cond.i = icmp samesign ugt i32 %.015104, 222
   br i1 %or.cond.i, label %_ZNK6icu_789ScriptSet10nextSetBitEi.exit81, label %_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.i75.preheader
@@ -232,12 +232,15 @@ _ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.thread.i79: ; preds =
 
 _ZNK6icu_789ScriptSet10nextSetBitEi.exit81:       ; preds = %_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.i75, %_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.thread.i79, %.lr.ph
   %.2.i78 = phi i32 [ -1, %.lr.ph ], [ -1, %_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.thread.i79 ], [ %.0816.i76, %_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.i75 ] ; 3 uses
-  %2 = add nsw i32 %.0105, 1                      ; 2 uses
-  %or.cond.i82 = icmp ugt i32 %2, 223
-  br i1 %or.cond.i82, label %_ZNK6icu_789ScriptSet10nextSetBitEi.exit89, label %_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.i83
+  %or.cond.i82 = icmp ugt i32 %.0105, 222
+  br i1 %or.cond.i82, label %_ZNK6icu_789ScriptSet10nextSetBitEi.exit89, label %_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.i83.preheader
 
-_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.i83: ; preds = %_ZNK6icu_789ScriptSet10nextSetBitEi.exit81, %_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.thread.i87
-  %.0816.i84 = phi i32 [ %i.dj, %_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.thread.i87 ], [ %2, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit81 ] ; 4 uses
+_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.i83.preheader: ; preds = %_ZNK6icu_789ScriptSet10nextSetBitEi.exit81
+  %2 = add nuw nsw i32 %.0105, 1
+  br label %_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.i83
+
+_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.i83: ; preds = %_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.i83.preheader, %_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.thread.i87
+  %.0816.i84 = phi i32 [ %i.dj, %_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.thread.i87 ], [ %2, %_ZNK6icu_789ScriptSet4testE11UScriptCodeR10UErrorCode.exit.i83.preheader ] ; 4 uses
   %i.dc = lshr i32 %.0816.i84, 5
   %i.dd = and i32 %.0816.i84, 31
   %i.de = zext nneg i32 %i.dc to i64

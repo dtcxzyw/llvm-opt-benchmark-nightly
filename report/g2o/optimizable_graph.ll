@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph66, %bb.f
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.aj = sub nsw i64 %i.af, %.04765              ; 2 uses
+  %i.aj = sub nuw nsw i64 %i.af, %.04765          ; 2 uses
   %i.ak = sub nsw i64 %i.aj, %i.l
   %.sroa.speculated = call i64 @llvm.smax.i64(i64 %i.ak, i64 0)
   br label %bb.d

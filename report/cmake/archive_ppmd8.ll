@@ -205,15 +205,15 @@ bb.bb:                                            ; preds = %bb.ba
   br label %.critedge226
 
 bb.bc:                                            ; preds = %bb.ba
-  %i.kw = mul nsw i32 %i.kn, 9
-  %i.kx = icmp ugt i32 %i.km, %i.kw
+  %i.kw = mul nuw nsw i32 %i.kn, 9
+  %i.kx = icmp samesign ugt i32 %i.km, %i.kw
   %i.ky = select i1 %i.kx, i32 5, i32 4
-  %i.kz = mul nsw i32 %i.kn, 12
-  %i.la = icmp ugt i32 %i.km, %i.kz
+  %i.kz = mul nuw nsw i32 %i.kn, 12
+  %i.la = icmp samesign ugt i32 %i.km, %i.kz
   %i.lb = zext i1 %i.la to i32
   %i.lc = add nuw nsw i32 %i.ky, %i.lb
-  %i.ld = mul nsw i32 %i.kn, 15
-  %i.le = icmp ugt i32 %i.km, %i.ld
+  %i.ld = mul nuw nsw i32 %i.kn, 15
+  %i.le = icmp samesign ugt i32 %i.km, %i.ld
   %i.lf = zext i1 %i.le to i32
   %i.lg = add nuw nsw i32 %i.lc, %i.lf            ; 2 uses
   %i.lh = trunc nuw nsw i32 %i.lg to i16
@@ -616,13 +616,17 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.not103136 = icmp eq i32 %i.g, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !16 ; 6 uses
-  br i1 %.not103136, label %.thread120, label %.lr.ph.a
+  br i1 %.not103136, label %.thread120, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %bb.c, %bb.l
-  %4 = phi i32 [ %i.ar, %bb.l ], [ %i.g, %bb.c ]
-  %.183138 = phi i32 [ %5, %bb.l ], [ %.082, %bb.c ] ; 4 uses
-  %.089137 = phi ptr [ null, %bb.l ], [ %2, %bb.c ] ; 2 uses
-  %i.h = zext i32 %4 to i64
+.lr.ph:                                           ; preds = %bb.c
+  %4 = zext nneg i32 %.082 to i64
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.l
+  %indvars.iv = phi i64 [ %4, %.lr.ph ], [ %indvars.iv.next, %bb.l ] ; 4 uses
+  %.183138 = phi i32 [ %i.g, %.lr.ph ], [ %i.ar, %bb.l ]
+  %.089137 = phi ptr [ %2, %.lr.ph ], [ null, %bb.l ] ; 2 uses
+  %i.h = zext i32 %.183138 to i64
   %i.i = getelementptr inbounds nuw i8, ptr %.pre, i64 %i.h ; 8 uses
   %.not104 = icmp eq ptr %.089137, null
   br i1 %.not104, label %bb.d, label %bb.j
@@ -687,24 +691,28 @@ bb.j:                                             ; preds = %.lr.ph.a, %bb.i, %b
   br i1 %.not108, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
+  %5 = trunc nuw i64 %indvars.iv to i32
   %i.am = zext i32 %i.al to i64
   %i.an = getelementptr inbounds nuw i8, ptr %.pre, i64 %i.am ; 2 uses
-  %i.ao = icmp eq i32 %.183138, 0
+  %i.ao = icmp eq i64 %indvars.iv, 0
   br i1 %i.ao, label %.thread, label %.thread120
 
 bb.l:                                             ; preds = %bb.j
-  %5 = add i32 %.183138, 1                        ; 2 uses
-  %6 = zext i32 %.183138 to i64
-  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %6
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
   store ptr %.181, ptr %i.ap, align 8, !tbaa !66
   %i.aq = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.ar = load i32, ptr %i.aq, align 1, !tbaa !37 ; 2 uses
   %.not103 = icmp eq i32 %i.ar, 0
-  br i1 %.not103, label %.thread120, label %.lr.ph.a
+  br i1 %.not103, label %.thread120.loopexit, label %.lr.ph.a
 
-.thread120:                                       ; preds = %bb.l, %bb.c, %bb.k
-  %.183133 = phi i32 [ %.183138, %bb.k ], [ %.082, %bb.c ], [ %5, %bb.l ] ; 2 uses
-  %.286 = phi ptr [ %i.an, %bb.k ], [ %3, %bb.c ], [ %i.i, %bb.l ] ; 6 uses
+.thread120.loopexit:                              ; preds = %bb.l
+  %6 = trunc nuw i64 %indvars.iv.next to i32
+  br label %.thread120
+
+.thread120:                                       ; preds = %bb.c, %.thread120.loopexit, %bb.k
+  %.183133 = phi i32 [ %5, %bb.k ], [ %6, %.thread120.loopexit ], [ %.082, %bb.c ] ; 2 uses
+  %.286 = phi ptr [ %i.an, %bb.k ], [ %i.i, %.thread120.loopexit ], [ %3, %bb.c ] ; 6 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.at = zext i32 %i.e to i64
   %i.au = getelementptr inbounds nuw i8, ptr %.pre, i64 %i.at

@@ -202,8 +202,8 @@ bb.d:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.r
   store i64 0, ptr %i.x, align 8
   %i.y = add i64 %.sroa.037.0, %.sroa.025.0       ; 2 uses
-  %i.z = lshr i64 %i.y, 1
-  %.sroa.047.0 = sub nuw i64 %i.y, %i.z           ; 3 uses
+  %i.z = lshr i64 %i.y, 1                         ; 2 uses
+  %.sroa.047.0 = sub nuw i64 %i.y, %i.z           ; 2 uses
   %i.aa = icmp ult i64 %i.k, 1152921504606846976
   tail call void @llvm.assume(i1 %i.aa)
   %.not128.not = icmp ugt i64 %i.k, %.sroa.047.0
@@ -240,6 +240,13 @@ bb.g:                                             ; preds = %bb.d
   %i.ap = add i64 %i.q, -1
   %i.aq = add i64 %.sroa.025.0, %2                ; 2 uses
   %i.ar = add i64 %.sroa.037.0, %5                ; 2 uses
+  %11 = add i64 %6, %3
+  %12 = add i64 %11, 1
+  %umin = tail call i64 @llvm.umin.i64(i64 %6, i64 %5)
+  %umin314 = tail call i64 @llvm.umin.i64(i64 %3, i64 %2)
+  %13 = add i64 %umin, %umin314
+  %14 = add i64 %13, %i.z
+  %15 = sub i64 %12, %14
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.g
@@ -247,8 +254,8 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %.lr.ph269, %._crit_edge265
-  %.sroa.048.0268 = phi i64 [ 0, %.lr.ph269 ], [ %i.as, %._crit_edge265 ] ; 9 uses
-  %i.as = add nuw nsw i64 %.sroa.048.0268, 1
+  %.sroa.048.0268 = phi i64 [ 0, %.lr.ph269 ], [ %i.as, %._crit_edge265 ] ; 8 uses
+  %i.as = add nuw i64 %.sroa.048.0268, 1          ; 2 uses
   %i.at = tail call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef %10)
   br i1 %i.at, label %._crit_edge270, label %.lr.ph248.preheader
 
@@ -321,7 +328,7 @@ bb.q:                                             ; preds = %bb.p, %bb.n
   br label %bb.s
 
 ._crit_edge265:                                   ; preds = %bb.am, %bb.n, %.lr.ph264
-  %exitcond314.not = icmp eq i64 %.sroa.048.0268, %.sroa.047.0
+  %exitcond314.not = icmp eq i64 %i.as, %15
   br i1 %exitcond314.not, label %._crit_edge270, label %bb.i
 
 bb.r:                                             ; preds = %bb.q
@@ -720,8 +727,8 @@ bb.d:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.r
   store i64 0, ptr %i.x, align 8
   %i.y = add i64 %.sroa.037.0, %.sroa.025.0       ; 2 uses
-  %i.z = lshr i64 %i.y, 1
-  %.sroa.047.0 = sub nuw i64 %i.y, %i.z           ; 3 uses
+  %i.z = lshr i64 %i.y, 1                         ; 2 uses
+  %.sroa.047.0 = sub nuw i64 %i.y, %i.z           ; 2 uses
   %i.aa = icmp ult i64 %i.k, 1152921504606846976
   tail call void @llvm.assume(i1 %i.aa)
   %.not128.not = icmp ugt i64 %i.k, %.sroa.047.0
@@ -758,6 +765,13 @@ bb.g:                                             ; preds = %bb.d
   %i.ap = add i64 %i.q, -1
   %i.aq = add i64 %.sroa.025.0, %2                ; 2 uses
   %i.ar = add i64 %.sroa.037.0, %5                ; 2 uses
+  %11 = add i64 %6, %3
+  %12 = add i64 %11, 1
+  %umin = tail call i64 @llvm.umin.i64(i64 %6, i64 %5)
+  %umin314 = tail call i64 @llvm.umin.i64(i64 %3, i64 %2)
+  %13 = add i64 %umin, %umin314
+  %14 = add i64 %13, %i.z
+  %15 = sub i64 %12, %14
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.g
@@ -765,8 +779,8 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %.lr.ph269, %._crit_edge265
-  %.sroa.048.0268 = phi i64 [ 0, %.lr.ph269 ], [ %i.as, %._crit_edge265 ] ; 9 uses
-  %i.as = add nuw nsw i64 %.sroa.048.0268, 1
+  %.sroa.048.0268 = phi i64 [ 0, %.lr.ph269 ], [ %i.as, %._crit_edge265 ] ; 8 uses
+  %i.as = add nuw i64 %.sroa.048.0268, 1          ; 2 uses
   %i.at = tail call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef %10)
   br i1 %i.at, label %._crit_edge270, label %.lr.ph248.preheader
 
@@ -839,7 +853,7 @@ bb.q:                                             ; preds = %bb.p, %bb.n
   br label %bb.s
 
 ._crit_edge265:                                   ; preds = %bb.am, %bb.n, %.lr.ph264
-  %exitcond314.not = icmp eq i64 %.sroa.048.0268, %.sroa.047.0
+  %exitcond314.not = icmp eq i64 %i.as, %15
   br i1 %exitcond314.not, label %._crit_edge270, label %bb.i
 
 bb.r:                                             ; preds = %bb.q
@@ -1238,8 +1252,8 @@ bb.d:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.r
   store i64 0, ptr %i.x, align 8
   %i.y = add i64 %.sroa.037.0, %.sroa.025.0       ; 2 uses
-  %i.z = lshr i64 %i.y, 1
-  %.sroa.047.0 = sub nuw i64 %i.y, %i.z           ; 3 uses
+  %i.z = lshr i64 %i.y, 1                         ; 2 uses
+  %.sroa.047.0 = sub nuw i64 %i.y, %i.z           ; 2 uses
   %i.aa = icmp ult i64 %i.k, 1152921504606846976
   tail call void @llvm.assume(i1 %i.aa)
   %.not128.not = icmp ugt i64 %i.k, %.sroa.047.0
@@ -1264,6 +1278,13 @@ bb.g:                                             ; preds = %bb.d
   %i.ad = add i64 %i.q, -1
   %i.ae = add i64 %.sroa.025.0, %2                ; 2 uses
   %i.af = add i64 %.sroa.037.0, %5                ; 2 uses
+  %11 = add i64 %6, %3
+  %12 = add i64 %11, 1
+  %umin = tail call i64 @llvm.umin.i64(i64 %6, i64 %5)
+  %umin277 = tail call i64 @llvm.umin.i64(i64 %3, i64 %2)
+  %13 = add i64 %umin, %umin277
+  %14 = add i64 %13, %i.z
+  %15 = sub i64 %12, %14
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.g
@@ -1271,8 +1292,8 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %.lr.ph243, %._crit_edge239
-  %.sroa.048.0242 = phi i64 [ 0, %.lr.ph243 ], [ %i.ag, %._crit_edge239 ] ; 9 uses
-  %i.ag = add nuw nsw i64 %.sroa.048.0242, 1
+  %.sroa.048.0242 = phi i64 [ 0, %.lr.ph243 ], [ %i.ag, %._crit_edge239 ] ; 8 uses
+  %i.ag = add nuw i64 %.sroa.048.0242, 1          ; 2 uses
   %i.ah = tail call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef %10)
   br i1 %i.ah, label %._crit_edge244, label %.lr.ph224.preheader
 
@@ -1345,7 +1366,7 @@ bb.q:                                             ; preds = %bb.p, %bb.n
   br label %bb.s
 
 ._crit_edge239:                                   ; preds = %bb.aj, %bb.n, %.lr.ph238
-  %exitcond277.not = icmp eq i64 %.sroa.048.0242, %.sroa.047.0
+  %exitcond277.not = icmp eq i64 %i.ag, %15
   br i1 %exitcond277.not, label %._crit_edge244, label %bb.i
 
 bb.r:                                             ; preds = %bb.q
@@ -1748,8 +1769,8 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %i.h = add i64 %i.g, %2                         ; 2 uses
   %i.i = add i64 %i.g, %5                         ; 2 uses
   %i.j = tail call noundef i64 @_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5utils17common_suffix_lenINtNtCscdodAO9FK5_5alloc3vec3VecINtB2_10UniqueItemINtB2_12OffsetLookupmEEEB13_ECshFZivb7RUAJ_8ruff_dev(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.h, i64 noundef %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.i, i64 noundef %6) ; 4 uses
-  %i.k = sub i64 %3, %i.j                         ; 10 uses
-  %i.l = sub i64 %6, %i.j                         ; 11 uses
+  %i.k = sub i64 %3, %i.j                         ; 11 uses
+  %i.l = sub i64 %6, %i.j                         ; 12 uses
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %.val50 = load ptr, ptr %i.m, align 8           ; 14 uses
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
@@ -1771,8 +1792,8 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.b
 
 bb.d:                                             ; preds = %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECshFZivb7RUAJ_8ruff_dev.exit, %bb.b
-  %.sroa.0253.0 = phi i64 [ %i.i, %bb.b ], [ %.sroa.0253.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECshFZivb7RUAJ_8ruff_dev.exit ] ; 39 uses
-  %.sroa.0.0 = phi i64 [ %i.h, %bb.b ], [ %.sroa.0.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECshFZivb7RUAJ_8ruff_dev.exit ] ; 38 uses
+  %.sroa.0253.0 = phi i64 [ %i.i, %bb.b ], [ %.sroa.0253.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECshFZivb7RUAJ_8ruff_dev.exit ] ; 40 uses
+  %.sroa.0.0 = phi i64 [ %i.h, %bb.b ], [ %.sroa.0.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1G_12OffsetLookupmEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2x_NtNtB4_7capture7CaptureEEEEECshFZivb7RUAJ_8ruff_dev.exit ] ; 39 uses
   %i.w = icmp ult i64 %.sroa.0.0, %i.k            ; 2 uses
   %i.x = icmp ult i64 %.sroa.0253.0, %i.l         ; 3 uses
   %or.cond325 = select i1 %i.w, i1 %i.x, i1 false
@@ -2175,8 +2196,8 @@ bb.go:                                            ; preds = %bb.gm
   %i.acr = getelementptr inbounds nuw [8 x i8], ptr %i.acq, i64 %i.acl
   store i64 0, ptr %i.acr, align 8, !noalias !2481
   %i.acs = add i64 %.pre, %.pre1194               ; 2 uses
-  %i.act = lshr i64 %i.acs, 1
-  %.sroa.047.0.i = sub nuw i64 %i.acs, %i.act     ; 3 uses
+  %i.act = lshr i64 %i.acs, 1                     ; 2 uses
+  %.sroa.047.0.i = sub nuw i64 %i.acs, %i.act     ; 2 uses
   %i.acu = icmp ult i64 %i.ace, 1152921504606846976
   call void @llvm.assume(i1 %i.acu)
   %.not128.not.i = icmp ugt i64 %i.ace, %.sroa.047.0.i
@@ -2199,6 +2220,11 @@ bb.gr:                                            ; preds = %bb.go
 .lr.ph136.i:                                      ; preds = %bb.gr
   %i.acw = add i64 %i.acb, -1
   %i.acx = add i64 %i.ack, -1
+  %.neg = add i64 %i.k, 1
+  %.neg334 = add i64 %.neg, %i.l
+  %11 = add i64 %.sroa.0253.0, %.sroa.0.0
+  %12 = add i64 %11, %i.act
+  %13 = sub i64 %.neg334, %12
   br label %bb.gt
 
 bb.gs:                                            ; preds = %bb.gr
@@ -2206,8 +2232,8 @@ bb.gs:                                            ; preds = %bb.gr
   unreachable
 
 bb.gt:                                            ; preds = %._crit_edge132.i, %.lr.ph136.i
-  %.sroa.048.0135.i = phi i64 [ 0, %.lr.ph136.i ], [ %i.acy, %._crit_edge132.i ] ; 11 uses
-  %i.acy = add nuw nsw i64 %.sroa.048.0135.i, 1
+  %.sroa.048.0135.i = phi i64 [ 0, %.lr.ph136.i ], [ %i.acy, %._crit_edge132.i ] ; 10 uses
+  %i.acy = add nuw i64 %.sroa.048.0135.i, 1       ; 2 uses
   %i.acz = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2481
   br i1 %i.acz, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers17find_middle_snakeINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1C_12OffsetLookupmEEEB13_ECshFZivb7RUAJ_8ruff_dev.exit, label %.lr.ph119.preheader.i
 
@@ -2277,7 +2303,7 @@ bb.hb:                                            ; preds = %bb.ha, %bb.gy
   br i1 %i.adi, label %._crit_edge222.i.a, label %bb.hc
 
 ._crit_edge132.i:                                 ; preds = %bb.hy, %bb.gy, %.lr.ph131.i
-  %exitcond218.not.i = icmp eq i64 %.sroa.048.0135.i, %.sroa.047.0.i
+  %exitcond218.not.i = icmp eq i64 %i.acy, %13
   br i1 %exitcond218.not.i, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers17find_middle_snakeINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtB1C_12OffsetLookupmEEEB13_ECshFZivb7RUAJ_8ruff_dev.exit, label %bb.gt
 
 bb.hc:                                            ; preds = %bb.hb
@@ -2680,8 +2706,8 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %i.h = add i64 %i.g, %2                         ; 2 uses
   %i.i = add i64 %i.g, %5                         ; 2 uses
   %i.j = tail call noundef i64 @_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5utils17common_suffix_lenINtNtCscdodAO9FK5_5alloc3vec3VecINtB2_10UniqueItemINtNtB6_4text12TextDiffSideeEEEB13_ECshFZivb7RUAJ_8ruff_dev(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, i64 noundef %i.h, i64 noundef %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4, i64 noundef %i.i, i64 noundef %6) ; 4 uses
-  %i.k = sub i64 %3, %i.j                         ; 10 uses
-  %i.l = sub i64 %6, %i.j                         ; 11 uses
+  %i.k = sub i64 %3, %i.j                         ; 11 uses
+  %i.l = sub i64 %6, %i.j                         ; 12 uses
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %.val50 = load ptr, ptr %i.m, align 8           ; 14 uses
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
@@ -2703,8 +2729,8 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.b
 
 bb.d:                                             ; preds = %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECshFZivb7RUAJ_8ruff_dev.exit, %bb.b
-  %.sroa.0260.0 = phi i64 [ %i.i, %bb.b ], [ %.sroa.0260.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECshFZivb7RUAJ_8ruff_dev.exit ] ; 40 uses
-  %.sroa.0.0 = phi i64 [ %i.h, %bb.b ], [ %.sroa.0.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECshFZivb7RUAJ_8ruff_dev.exit ] ; 39 uses
+  %.sroa.0260.0 = phi i64 [ %i.i, %bb.b ], [ %.sroa.0260.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECshFZivb7RUAJ_8ruff_dev.exit ] ; 41 uses
+  %.sroa.0.0 = phi i64 [ %i.h, %bb.b ], [ %.sroa.0.2, %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers21try_emit_front_anchorINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB17_INtNtB4_7replace7ReplaceINtNtB4_8patience8PatienceB23_B23_INtNtB4_7compact7CompactB23_B23_IB2D_NtNtB4_7capture7CaptureEEEEECshFZivb7RUAJ_8ruff_dev.exit ] ; 40 uses
   %i.w = icmp ult i64 %.sroa.0.0, %i.k            ; 2 uses
   %i.x = icmp ult i64 %.sroa.0260.0, %i.l         ; 3 uses
   %or.cond334 = select i1 %i.w, i1 %i.x, i1 false
@@ -3107,8 +3133,8 @@ bb.ft:                                            ; preds = %bb.fr
   %i.yf = getelementptr inbounds nuw [8 x i8], ptr %i.ye, i64 %i.xz
   store i64 0, ptr %i.yf, align 8, !noalias !2705
   %i.yg = add i64 %.pre, %.pre939                 ; 2 uses
-  %i.yh = lshr i64 %i.yg, 1
-  %.sroa.047.0.i = sub nuw i64 %i.yg, %i.yh       ; 3 uses
+  %i.yh = lshr i64 %i.yg, 1                       ; 2 uses
+  %.sroa.047.0.i = sub nuw i64 %i.yg, %i.yh       ; 2 uses
   %i.yi = icmp ult i64 %i.xs, 1152921504606846976
   call void @llvm.assume(i1 %i.yi)
   %.not128.not.i = icmp ugt i64 %i.xs, %.sroa.047.0.i
@@ -3131,6 +3157,11 @@ bb.fw:                                            ; preds = %bb.ft
 .lr.ph112.i:                                      ; preds = %bb.fw
   %i.yk = add i64 %i.xp, -1
   %i.yl = add i64 %i.xy, -1
+  %.neg343 = add i64 %i.k, 1
+  %.neg345 = add i64 %.neg343, %i.l
+  %11 = add i64 %.sroa.0260.0, %.sroa.0.0
+  %12 = add i64 %11, %i.yh
+  %13 = sub i64 %.neg345, %12
   br label %bb.fy
 
 bb.fx:                                            ; preds = %bb.fw
@@ -3138,8 +3169,8 @@ bb.fx:                                            ; preds = %bb.fw
   unreachable
 
 bb.fy:                                            ; preds = %._crit_edge108.i, %.lr.ph112.i
-  %.sroa.048.0111.i = phi i64 [ 0, %.lr.ph112.i ], [ %i.ym, %._crit_edge108.i ] ; 11 uses
-  %i.ym = add nuw nsw i64 %.sroa.048.0111.i, 1
+  %.sroa.048.0111.i = phi i64 [ 0, %.lr.ph112.i ], [ %i.ym, %._crit_edge108.i ] ; 10 uses
+  %i.ym = add nuw i64 %.sroa.048.0111.i, 1        ; 2 uses
   %i.yn = call noundef zeroext i1 @_RNvNtCsiqiOkcJdymw_7similar16deadline_support17deadline_exceeded(i64 %9, i32 noundef range(i32 -1, 1000000000) %10), !noalias !2705
   br i1 %i.yn, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers17find_middle_snakeINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB13_ECshFZivb7RUAJ_8ruff_dev.exit, label %.lr.ph94.preheader.i
 
@@ -3209,7 +3240,7 @@ bb.gg:                                            ; preds = %bb.gf, %bb.gd
   br i1 %i.yw, label %._crit_edge165.i.a, label %bb.gh
 
 ._crit_edge108.i:                                 ; preds = %bb.hb, %bb.gd, %.lr.ph107.i
-  %exitcond161.not.i = icmp eq i64 %.sroa.048.0111.i, %.sroa.047.0.i
+  %exitcond161.not.i = icmp eq i64 %i.ym, %13
   br i1 %exitcond161.not.i, label %_RINvNtNtCsiqiOkcJdymw_7similar10algorithms5myers17find_middle_snakeINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_5utils10UniqueItemINtNtB6_4text12TextDiffSideeEEEB13_ECshFZivb7RUAJ_8ruff_dev.exit, label %bb.fy
 
 bb.gh:                                            ; preds = %bb.gg

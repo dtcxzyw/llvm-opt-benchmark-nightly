@@ -202,7 +202,7 @@ bb.bl:                                            ; preds = %bytestream2_get_le1
 bytestream2_get_le16.exit212:                     ; preds = %bytestream2_get_le16.exit214, %bb.bl
   %.pre-phi377 = phi i64 [ %.pre-phi371, %bytestream2_get_le16.exit214 ], [ %.pre376, %bb.bl ]
   %.sroa.0248.9 = phi ptr [ %.sroa.76.1, %bytestream2_get_le16.exit214 ], [ %i.jv, %bb.bl ] ; 2 uses
-  %.0.i211 = phi i32 [ 0, %bytestream2_get_le16.exit214 ], [ %i.jx, %bb.bl ] ; 4 uses
+  %.0.i211 = phi i32 [ 0, %bytestream2_get_le16.exit214 ], [ %i.jx, %bb.bl ] ; 3 uses
   %i.jy = sub i64 %.pre-phi371, %.pre-phi377
   %i.jz = icmp slt i64 %i.jy, 2
   br i1 %i.jz, label %bytestream2_get_le16.exit, label %bb.bm
@@ -215,12 +215,12 @@ bb.bm:                                            ; preds = %bytestream2_get_le1
 
 bytestream2_get_le16.exit:                        ; preds = %bytestream2_get_le16.exit212, %bb.bm
   %.sroa.0248.8 = phi ptr [ %i.ka, %bb.bm ], [ %.sroa.76.1, %bytestream2_get_le16.exit212 ]
-  %.0.i = phi i32 [ %i.kc, %bb.bm ], [ 0, %bytestream2_get_le16.exit212 ] ; 5 uses
+  %.0.i = phi i32 [ %i.kc, %bb.bm ], [ 0, %bytestream2_get_le16.exit212 ] ; 4 uses
   %i.kd = icmp eq i32 %.0.i215, 0
   %or.cond = select i1 %i.jd, i1 %i.kd, i1 false
   %i.ke = icmp eq i32 %.0.i213, 0
   %or.cond11 = select i1 %or.cond, i1 %i.ke, i1 false
-  %.pre = load i32, ptr %i.je, align 8, !tbaa !53 ; 3 uses
+  %.pre = load i32, ptr %i.je, align 8, !tbaa !53 ; 2 uses
   %i.kf = icmp eq i32 %.0.i211, %.pre
   %or.cond403 = select i1 %or.cond11, i1 %i.kf, i1 false
   br i1 %or.cond403, label %bb.bn, label %bb.bo
@@ -239,17 +239,11 @@ bb.bo:                                            ; preds = %bb.bn, %bytestream2
 
 bb.bp:                                            ; preds = %bb.bo
   %i.kk = add nuw nsw i32 %.0.i, %.0.i213
-  %i.kl = load i32, ptr %i.jf, align 4, !tbaa !54 ; 3 uses
+  %i.kl = load i32, ptr %i.jf, align 4, !tbaa !54 ; 2 uses
   %i.km = icmp sgt i32 %i.kk, %i.kl
-  br i1 %i.km, label %.critedge, label %4
+  br i1 %i.km, label %.critedge, label %bb.bq
 
-4:                                                ; preds = %bb.bp
-  %5 = icmp samesign ugt i32 %.0.i211, %.pre
-  %6 = icmp samesign ugt i32 %.0.i, %i.kl
-  %or.cond210 = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond210, label %.critedge, label %bb.bq
-
-bb.bq:                                            ; preds = %4
+bb.bq:                                            ; preds = %bb.bp
   %.not206.not350.not = icmp eq i32 %.0.i, 0
   br i1 %.not206.not350.not, label %._crit_edge, label %.lr.ph
 
@@ -332,8 +326,8 @@ bb.bw:                                            ; preds = %bb.bv
   %i.lx = load i32, ptr %i.i, align 8, !tbaa !43
   br label %.critedge
 
-.critedge:                                        ; preds = %bytestream2_get_le16.exit218, %bytestream2_get_le16.exit218.1, %bytestream2_get_le16.exit218.2, %bytestream2_get_le16.exit218.3, %bytestream2_get_le16.exit218.4, %bytestream2_get_le16.exit222, %bb.bp, %bb.bo, %4, %bb.bt, %bytestream2_get_le24.exit, %bb.r, %bb.p, %bb.bv, %bb.be, %bytestream2_get_le16.exit228, %bb.bw, %bb.b
-  %.12 = phi i32 [ -542398533, %bb.b ], [ -1094995529, %bytestream2_get_le16.exit222 ], [ %i.lv, %bb.bv ], [ -1094995529, %bb.be ], [ %i.lx, %bb.bw ], [ -1094995529, %bb.bt ], [ -1094995529, %bb.bp ], [ %i.w, %bytestream2_get_le16.exit228 ], [ -1094995529, %bytestream2_get_le24.exit ], [ -542398533, %bb.r ], [ -1094995529, %bb.p ], [ -1094995529, %4 ], [ -1094995529, %bb.bo ], [ -1094995529, %bytestream2_get_le16.exit218.4 ], [ -1094995529, %bytestream2_get_le16.exit218.3 ], [ -1094995529, %bytestream2_get_le16.exit218.2 ], [ -1094995529, %bytestream2_get_le16.exit218.1 ], [ -1094995529, %bytestream2_get_le16.exit218 ]
+.critedge:                                        ; preds = %bytestream2_get_le16.exit218, %bytestream2_get_le16.exit218.1, %bytestream2_get_le16.exit218.2, %bytestream2_get_le16.exit218.3, %bytestream2_get_le16.exit218.4, %bytestream2_get_le16.exit222, %bb.bp, %bb.bo, %bb.bt, %bytestream2_get_le24.exit, %bb.r, %bb.p, %bb.bv, %bb.be, %bytestream2_get_le16.exit228, %bb.bw, %bb.b
+  %.12 = phi i32 [ -542398533, %bb.b ], [ -1094995529, %bytestream2_get_le16.exit222 ], [ %i.lv, %bb.bv ], [ -1094995529, %bb.be ], [ %i.lx, %bb.bw ], [ -1094995529, %bb.bt ], [ -1094995529, %bb.bp ], [ %i.w, %bytestream2_get_le16.exit228 ], [ -1094995529, %bytestream2_get_le24.exit ], [ -542398533, %bb.r ], [ -1094995529, %bb.p ], [ -1094995529, %bb.bo ], [ -1094995529, %bytestream2_get_le16.exit218.4 ], [ -1094995529, %bytestream2_get_le16.exit218.3 ], [ -1094995529, %bytestream2_get_le16.exit218.2 ], [ -1094995529, %bytestream2_get_le16.exit218.1 ], [ -1094995529, %bytestream2_get_le16.exit218 ]
   ret i32 %.12
 }
 

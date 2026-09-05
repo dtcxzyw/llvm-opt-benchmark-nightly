@@ -204,15 +204,13 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %.not445, label %._crit_edge440, label %.lr.ph439
 
 .lr.ph439:                                        ; preds = %bb.as, %.lr.ph439
-  %i.kl = phi i64 [ %8, %.lr.ph439 ], [ 0, %bb.as ]
-  %.1437 = phi i32 [ %7, %.lr.ph439 ], [ 0, %bb.as ]
+  %i.kl = phi i64 [ %indvars.iv.next455, %.lr.ph439 ], [ 0, %bb.as ] ; 2 uses
   %i.km = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.kl
   %i.kn = load i32, ptr %i.km, align 4, !tbaa !11
   %i.ko = call ptr (ptr, ptr, ...) @h5tools_str_append(ptr noundef nonnull %6, ptr noundef nonnull @.str.261, i32 noundef %i.kn) #12 ; 0 uses
-  %7 = add i32 %.1437, 1                          ; 2 uses
-  %8 = zext i32 %7 to i64                         ; 2 uses
+  %indvars.iv.next455 = add nuw i64 %i.kl, 1      ; 2 uses
   %i.kp = load i64, ptr %i.f, align 8, !tbaa !22
-  %i.kq = icmp ugt i64 %i.kp, %8
+  %i.kq = icmp ugt i64 %i.kp, %indvars.iv.next455
   br i1 %i.kq, label %.lr.ph439, label %._crit_edge440, !llvm.loop !169
 
 ._crit_edge440:                                   ; preds = %.lr.ph439, %bb.as

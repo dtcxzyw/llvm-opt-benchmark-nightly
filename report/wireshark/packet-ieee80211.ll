@@ -205,8 +205,7 @@ bb.vt:                                            ; preds = %.loopexit37.i.i.i.i
 
 .loopexit36.split.us.us.i.i.i.i:                  ; preds = %.split46.us.us.us.1.i.i.i.i, %.preheader.split.us.preheader.i147.i.i.i
   %.sroa.2810.9.us.i.i.i.i = phi i32 [ %.sroa.2810.6.us.us.us.1.i.i.i.i, %.split46.us.us.us.1.i.i.i.i ], [ %.sroa.2810.076.i.i.i.i, %.preheader.split.us.preheader.i147.i.i.i ]
-  %5 = add i32 %i.cyn, 2
-  %i.cyv = shl nuw i32 1, %5
+  %i.cyv = shl nuw i32 4, %i.cyn
   %i.cyw = and i32 %i.cyv, %i.cyk
   %i.cyx = icmp eq i32 %i.cyw, 0
   br i1 %i.cyx, label %.loopexit37.i.i.i.i, label %next_eht_scidx.exit112.us.us.us.peel.1141.i.i.i.i
@@ -609,8 +608,7 @@ bb.yd:                                            ; preds = %bb.yc, %bb.yb
   %.999.i.i.i.i = phi i32 [ %.09077.i.i.i.i, %.preheader.split.preheader..loopexit36.split_crit_edge.i.i.i.i ], [ %.696.1.i.i.i.i, %.split46.1.i.i.i.i ] ; 4 uses
   %.983.i.i.i.i = phi i32 [ %.07479.i.i.i.i, %.preheader.split.preheader..loopexit36.split_crit_edge.i.i.i.i ], [ %.680.1.i.i.i.i, %.split46.1.i.i.i.i ] ; 2 uses
   %.9.i146.i.i.i = phi i8 [ %.07280.i.i.i.i, %.preheader.split.preheader..loopexit36.split_crit_edge.i.i.i.i ], [ %.6.1.i142.i.i.i, %.split46.1.i.i.i.i ] ; 2 uses
-  %6 = add i32 %i.cyn, 2
-  %i.dfq = shl nuw i32 1, %6
+  %i.dfq = shl nuw i32 4, %i.cyn
   %i.dfr = and i32 %i.dfq, %i.cyk
   %i.dfs = icmp eq i32 %i.dfr, 0
   br i1 %i.dfs, label %.loopexit37.i.i.i.i, label %.split55.1.i.i.i.i

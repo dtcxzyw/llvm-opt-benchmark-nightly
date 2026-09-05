@@ -202,21 +202,19 @@ bb.a:
   %i.e = ptrtoint ptr %i.b to i64
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f
-  %i.h = trunc i64 %i.g to i32                    ; 4 uses
+  %i.h = trunc i64 %i.g to i32                    ; 3 uses
   %i.i = load i64, ptr %0, align 8                ; 2 uses
   %i.j = add i64 %i.i, 7
   %i.k = inttoptr i64 %i.j to ptr
   %i.l = load i32, ptr %i.k, align 4
-  %.fr21 = freeze i32 %i.l
-  %.not = icmp eq i32 %.fr21, %i.h
+  %.not = icmp eq i32 %i.l, %i.h
   br i1 %.not, label %.preheader, label %.critedge
 
 .preheader:                                       ; preds = %bb.a
-  %2 = icmp eq i32 %i.h, 0
   %i.m = add nsw i32 %i.h, -1
   %i.n = sdiv i32 %i.m, 6
   %i.o = add nsw i32 %i.n, 1
-  br i1 %2, label %.critedge, label %.preheader.split
+  br label %.preheader.split
 
 .preheader.split:                                 ; preds = %.preheader, %_ZN2v88internal16FeedbackMetadata11GetSlotSizeENS0_16FeedbackSlotKindE.exit
   %.016 = phi i32 [ %i.ae, %_ZN2v88internal16FeedbackMetadata11GetSlotSizeENS0_16FeedbackSlotKindE.exit ], [ 0, %.preheader ] ; 5 uses
@@ -293,8 +291,8 @@ _ZN2v88internal16FeedbackMetadata11GetSlotSizeENS0_16FeedbackSlotKindE.exit: ; p
   %i.ae = add nuw nsw i32 %.0.i, %.016
   br i1 %.not18, label %.preheader.split, label %.critedge, !llvm.loop !19
 
-.critedge:                                        ; preds = %_ZN2v88internal16FeedbackMetadata11GetSlotSizeENS0_16FeedbackSlotKindE.exit, %.preheader.split, %.preheader, %bb.a
-  %.4 = phi i1 [ true, %bb.a ], [ false, %.preheader ], [ %.not19, %.preheader.split ], [ %.not19, %_ZN2v88internal16FeedbackMetadata11GetSlotSizeENS0_16FeedbackSlotKindE.exit ]
+.critedge:                                        ; preds = %.preheader.split, %_ZN2v88internal16FeedbackMetadata11GetSlotSizeENS0_16FeedbackSlotKindE.exit, %bb.a
+  %.4 = phi i1 [ true, %bb.a ], [ %.not19, %_ZN2v88internal16FeedbackMetadata11GetSlotSizeENS0_16FeedbackSlotKindE.exit ], [ %.not19, %.preheader.split ]
   ret i1 %.4
 }
 
@@ -697,7 +695,7 @@ _ZN2v88internal16FeedbackMetadata11GetSlotSizeENS0_16FeedbackSlotKindE.exit: ; p
   %.0.i = phi i32 [ 2, %bb.c ], [ 1, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit ], [ 1, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit ], [ 1, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit ], [ 1, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit ], [ 1, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit ], [ 1, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit ], [ 1, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit ]
   %i.ar = load i64, ptr %i.r, align 8             ; 9 uses
   %i.as = load i64, ptr %i.q, align 8
-  %i.at = shl nsw i32 %.0183, 3
+  %i.at = shl nuw nsw i32 %.0183, 3
   %narrow180 = add nuw i32 %i.at, 47
   %i.au = zext i32 %narrow180 to i64
   %i.av = add i64 %i.as, %i.au
@@ -750,10 +748,11 @@ bb.i:                                             ; preds = %_ZN2v88internal16Fe
 
 .lr.ph.preheader:                                 ; preds = %bb.i
   %i.ax = load i64, ptr %i.q, align 8
-  %narrow192 = shl i32 %.0183, 3
-  %narrow181 = add i32 %narrow192, 55
-  %6 = zext i32 %narrow181 to i64
-  %i.ay = add i64 %i.ax, %6
+  %narrow193 = add nuw i32 %.0183, 1
+  %6 = zext i32 %narrow193 to i64
+  %7 = shl nuw nsw i64 %6, 3
+  %8 = add nuw nsw i64 %7, 47
+  %i.ay = add i64 %i.ax, %8
   %i.az = inttoptr i64 %i.ay to ptr
   store atomic volatile i64 %.sroa.095.0, ptr %i.az monotonic, align 8
   br label %._crit_edge
@@ -1156,7 +1155,7 @@ bb.e:                                             ; preds = %_ZNK2v88internal16F
 _ZN2v88internal24FeedbackMetadataIterator4NextEv.exit: ; preds = %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit.i, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit.i, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit.i, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit.i, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit.i, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit.i, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit.i, %bb.c
   %.0.i.i.i = phi i32 [ 2, %bb.c ], [ 1, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit.i ], [ 1, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit.i ], [ 1, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit.i ], [ 1, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit.i ], [ 1, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit.i ], [ 1, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit.i ], [ 1, %_ZNK2v88internal16FeedbackMetadata7GetKindENS0_12FeedbackSlotE.exit.i ]
   %i.aw = add nuw nsw i32 %.0.i.i.i, %.sroa.10.038 ; 2 uses
-  %i.ax = shl nsw i32 %.sroa.10.038, 3
+  %i.ax = shl nuw nsw i32 %.sroa.10.038, 3
   %.sroa.0.0.copyload.i.i.i17 = load i64, ptr %0, align 8 ; 4 uses
   %narrow33 = add nuw i32 %i.ax, 47
   %i.ay = zext i32 %narrow33 to i64

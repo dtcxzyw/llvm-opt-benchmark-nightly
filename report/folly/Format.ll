@@ -205,8 +205,8 @@ define linkonce_odr void @_ZN3fmt2v96detail6bigint6squareEv(ptr noundef nonnull 
 bb.a:
   %1 = alloca %"class.fmt::v9::basic_memory_buffer.45", align 8 ; 12 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !253  ; 10 uses
-  %i.c = trunc i64 %i.b to i32                    ; 10 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !253  ; 11 uses
+  %i.c = trunc i64 %i.b to i32                    ; 9 uses
   %i.d = shl nsw i32 %i.c, 1                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #33
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 8 uses
@@ -393,6 +393,7 @@ _ZN3fmt2v919basic_memory_bufferIjLm32ESaIjEE6resizeEm.exit: ; preds = %_ZN3fmt2v
   %i.au = load ptr, ptr %i.e, align 8             ; 6 uses
   %sext = shl i64 %i.b, 32
   %i.av = ashr exact i64 %sext, 32                ; 2 uses
+  %2 = and i64 %i.b, 4294967295
   %i.aw = add i32 %i.c, -2
   %invariant.op = sub i32 1, %i.c
   %indvars.iv85.prol = add nsw i64 %i.av, -1      ; 2 uses
@@ -514,15 +515,16 @@ bb.t:                                             ; preds = %.critedge.i
 
 bb.u:                                             ; preds = %.lr.ph61, %._crit_edge
   %indvar = phi i32 [ 0, %.lr.ph61 ], [ %indvar.next, %._crit_edge ] ; 3 uses
-  %indvars.iv81 = phi i32 [ 1, %.lr.ph61 ], [ %indvars.iv.next82, %._crit_edge ] ; 3 uses
-  %.03360 = phi i32 [ %i.c, %.lr.ph61 ], [ %3, %._crit_edge ] ; 3 uses
+  %indvars.iv91 = phi i64 [ %2, %.lr.ph61 ], [ %indvars.iv.next92, %._crit_edge ] ; 3 uses
+  %.03360 = phi i32 [ 1, %.lr.ph61 ], [ %indvars.iv.next82, %._crit_edge ] ; 3 uses
   %.259 = phi i128 [ %.037.lcssa, %.lr.ph61 ], [ %i.ed, %._crit_edge ] ; 3 uses
-  %.reass.reass = add i32 %.03360, %invariant.op
+  %3 = trunc nuw i64 %indvars.iv91 to i32
+  %.reass.reass = add i32 %3, %invariant.op
   %i.cu = icmp slt i32 %.reass.reass, %i.c
   br i1 %i.cu, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.u
-  %i.cv = sext i32 %indvars.iv81 to i64           ; 3 uses
+  %i.cv = sext i32 %.03360 to i64                 ; 3 uses
   %i.cw = sub i32 %indvar, %i.c
   %i.cx = and i32 %i.cw, 1
   %lcmp.mod152.not.not = icmp eq i32 %i.cx, 0
@@ -580,14 +582,13 @@ bb.u:                                             ; preds = %.lr.ph61, %._crit_e
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.u
   %.3.lcssa = phi i128 [ %.259, %bb.u ], [ %.lcssa146.unr, %.lr.ph.prol.loopexit ], [ %i.ea, %.lr.ph ] ; 2 uses
-  %2 = zext i32 %.03360 to i64
-  %i.eb = getelementptr inbounds nuw [4 x i8], ptr %.pre93, i64 %2
+  %i.eb = getelementptr inbounds nuw [4 x i8], ptr %.pre93, i64 %indvars.iv91
   %i.ec = trunc i128 %.3.lcssa to i32
   store i32 %i.ec, ptr %i.eb, align 4, !tbaa !78
   %i.ed = lshr i128 %.3.lcssa, 32
-  %3 = add nsw i32 %.03360, 1
-  %indvars.iv.next82 = add i32 %indvars.iv81, 1
-  %exitcond91.not = icmp eq i32 %indvars.iv81, %i.c
+  %indvars.iv.next92 = add nuw nsw i64 %indvars.iv91, 1
+  %indvars.iv.next82 = add i32 %.03360, 1
+  %exitcond91.not = icmp eq i32 %.03360, %i.c
   %indvar.next = add i32 %indvar, 1
   br i1 %exitcond91.not, label %._crit_edge62.loopexit, label %bb.u, !llvm.loop !541
 

@@ -204,8 +204,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not142.not, label %.critedge6, label %.critedge
 
 .critedge6:                                       ; preds = %bb.b, %bb.c
-  %3 = add i64 %.0117228, -41
-  %.not143 = icmp ult i64 %3, -2                  ; 3 uses
+  %.not143 = icmp samesign ult i64 %.0117228, 39  ; 3 uses
   br i1 %.not143, label %bb.d, label %.critedge6._crit_edge
 
 .critedge6._crit_edge:                            ; preds = %.critedge6
@@ -449,7 +448,7 @@ bb.an:                                            ; preds = %bb.al
   br i1 %.not154, label %.critedge160.thread, label %.critedge160
 
 bb.ao:                                            ; preds = %bb.d, %bb.k
-  %i.cp = add i64 %.0117228, 1
+  %i.cp = add nuw nsw i64 %.0117228, 1
   br label %bb.b
 
 .critedge:                                        ; preds = %bb.c

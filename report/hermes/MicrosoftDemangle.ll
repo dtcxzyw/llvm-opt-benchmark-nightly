@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ak = trunc i64 %i.aj to i32
   %i.al = load ptr, ptr %5, align 8, !tbaa !44
   %i.am = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.74, i32 noundef %i.ai, i32 noundef %i.ak, ptr noundef %i.al) ; 0 uses
-  %i.an = add nuw i64 %.01015.i, 1                ; 2 uses
+  %i.an = add nuw nsw i64 %.01015.i, 1            ; 2 uses
   %i.ao = load i64, ptr %i.h, align 8, !tbaa !42
   %i.ap = icmp ult i64 %i.an, %i.ao
   br i1 %i.ap, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !125
@@ -244,7 +244,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph18.i
   %i.bf = sub i64 %i.bd, %i.be
   %i.bg = trunc i64 %i.bf to i32
   %i.bh = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.74, i32 noundef %i.aw, i32 noundef %i.bg, ptr noundef %i.bc) ; 0 uses
-  %i.bi = add nuw i64 %.016.i, 1                  ; 2 uses
+  %i.bi = add nuw nsw i64 %.016.i, 1              ; 2 uses
   %i.bj = load i64, ptr %i.i, align 8, !tbaa !48  ; 2 uses
   %i.bk = icmp ult i64 %i.bi, %i.bj
   br i1 %i.bk, label %bb.f, label %._crit_edge19.i, !llvm.loop !126
@@ -647,8 +647,9 @@ bb.ax:                                            ; preds = %bb.r
   br label %bb.ay
 
 bb.ay:                                            ; preds = %_ZN12_GLOBAL__N_19Demangler19demangleCharLiteralER10StringView.exit, %bb.ax
-  %i.gf = phi ptr [ %i.bz, %bb.ax ], [ %i.hz, %_ZN12_GLOBAL__N_19Demangler19demangleCharLiteralER10StringView.exit ] ; 13 uses
-  %.054 = phi i32 [ 0, %bb.ax ], [ %3, %_ZN12_GLOBAL__N_19Demangler19demangleCharLiteralER10StringView.exit ] ; 6 uses
+  %i.gf = phi ptr [ %i.hz, %_ZN12_GLOBAL__N_19Demangler19demangleCharLiteralER10StringView.exit ], [ %i.bz, %bb.ax ] ; 13 uses
+  %.054 = phi i32 [ %indvars.iv.next109, %_ZN12_GLOBAL__N_19Demangler19demangleCharLiteralER10StringView.exit ], [ 0, %bb.ax ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN12_GLOBAL__N_19Demangler19demangleCharLiteralER10StringView.exit ], [ 0, %bb.ax ] ; 4 uses
   %i.gg = icmp eq ptr %i.gf, %i.ac
   br i1 %i.gg, label %_ZNK10StringView10startsWithEc.exit.thread.i, label %_ZNK10StringView10startsWithEc.exit.i65
 
@@ -761,17 +762,17 @@ bb.bj:                                            ; preds = %bb.bi
 _ZN12_GLOBAL__N_19Demangler19demangleCharLiteralER10StringView.exit: ; preds = %_ZNK10StringView10startsWithEc.exit.thread.i, %bb.bd, %bb.be, %bb.bh, %bb.bj, %.thread.i
   %i.hz = phi ptr [ %i.hy, %.thread.i ], [ %i.hc, %bb.bd ], [ %i.hk, %bb.be ], [ %i.hr, %bb.bh ], [ %i.hx, %bb.bj ], [ %i.gl, %_ZNK10StringView10startsWithEc.exit.thread.i ]
   %.1.i68 = phi i8 [ 0, %.thread.i ], [ %i.he, %bb.bd ], [ %i.hj, %bb.be ], [ %i.hq, %bb.bh ], [ %i.hw, %bb.bj ], [ %i.gm, %_ZNK10StringView10startsWithEc.exit.thread.i ]
-  %3 = add i32 %.054, 1
-  %4 = zext i32 %.054 to i64
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 %4
-  store i8 %.1.i68, ptr %5, align 1, !tbaa !15
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
+  store i8 %.1.i68, ptr %3, align 1, !tbaa !15
+  %indvars.iv.next109 = add i32 %.054, 1
   br label %bb.ay, !llvm.loop !135
 
 bb.bk:                                            ; preds = %_ZNK10StringView10startsWithEc.exit.i65
+  %4 = trunc nuw i64 %indvars.iv to i32           ; 3 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %i.gf, i64 1
   store ptr %i.ia, ptr %1, align 8, !tbaa !55
-  %6 = zext i32 %.054 to i64
-  %i.ib = icmp ugt i64 %.sroa.0.4.i, %6
+  %i.ib = icmp ugt i64 %.sroa.0.4.i, %indvars.iv
   br i1 %i.ib, label %bb.bl, label %switch.lookup
 
 bb.bl:                                            ; preds = %bb.bk
@@ -781,20 +782,22 @@ bb.bl:                                            ; preds = %bb.bk
 
 switch.lookup:                                    ; preds = %bb.bl, %bb.bk
   %i.id = trunc i64 %.sroa.0.4.i to i32
-  %i.ie = call noundef i32 @_Z17guessCharByteSizePKhjj(ptr noundef nonnull %i.a, i32 noundef %.054, i32 noundef %i.id) ; 7 uses
+  %i.ie = call noundef i32 @_Z17guessCharByteSizePKhjj(ptr noundef nonnull %i.a, i32 noundef %4, i32 noundef %i.id) ; 8 uses
   %i.if = zext nneg i32 %i.ie to i64
   %i.ig = getelementptr i8, ptr @switch.table._ZN12_GLOBAL__N_19Demangler21demangleStringLiteralER10StringView, i64 %i.if
   %switch.gep = getelementptr i8, ptr %i.ig, i64 -1
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i32
   store i32 %switch.ext, ptr %i.aa, align 4, !tbaa !139
-  %.not98 = icmp ugt i32 %i.ie, %.054
+  %.not98 = icmp ugt i32 %i.ie, %4
   br i1 %.not98, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %switch.lookup
-  %i.ih = udiv i32 %.054, %i.ie
+  %i.ih = udiv i32 %4, %i.ie
   %i.ii = getelementptr inbounds nuw i8, ptr %.sink15.i, i64 40
-  %i.ij = zext i32 %i.ih to i64                   ; 2 uses
+  %5 = zext i32 %i.ih to i64
+  %6 = udiv i32 %.054, %i.ie
+  %i.ij = zext i32 %6 to i64
   %exitcond.not.i74 = icmp eq i32 %i.ie, 1
   %exitcond.not.i74.1 = icmp eq i32 %i.ie, 2
   %exitcond.not.i74.2 = icmp eq i32 %i.ie, 3
@@ -841,7 +844,7 @@ bb.bp:                                            ; preds = %bb.bo
 _ZL19decodeMultiByteCharPKhjj.exit:               ; preds = %bb.bp, %bb.bo, %bb.bn, %bb.bm
   %.lcssa155 = phi i32 [ %i.ip, %bb.bm ], [ %i.iu, %bb.bn ], [ %i.iz, %bb.bo ], [ %i.je, %bb.bp ]
   %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.a, 1 ; 3 uses
-  %i.jf = icmp samesign ult i64 %indvars.iv.next.a, %i.ij
+  %i.jf = icmp samesign ult i64 %indvars.iv.next.a, %5
   br i1 %i.jf, label %bb.br, label %bb.bq
 
 bb.bq:                                            ; preds = %_ZL19decodeMultiByteCharPKhjj.exit

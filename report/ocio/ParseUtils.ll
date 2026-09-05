@@ -204,24 +204,24 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit.preheader: ; 
   ret void
 
 .lr.ph:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit
-  %.0122847 = phi i32 [ %2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit.preheader ]
-  %2 = add i32 %.0122847, 1                       ; 2 uses
-  %3 = zext i32 %2 to i64
-  %i.i = getelementptr inbounds nuw [40 x i8], ptr @_ZN16OpenColorIO_v2_5L4eltsE, i64 %3 ; 3 uses
+  %indvars.iv48 = phi i64 [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit.preheader ]
+  %indvars.iv.next = add nuw i64 %indvars.iv48, 1 ; 3 uses
+  %i.i = getelementptr inbounds nuw [40 x i8], ptr @_ZN16OpenColorIO_v2_5L4eltsE, i64 %indvars.iv.next
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.k = load i64, ptr %i.j, align 8, !tbaa !22   ; 2 uses
   %i.l = icmp eq i64 %i.k, 0
   br i1 %i.l, label %._crit_edge, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit, !llvm.loop !70
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit: ; preds = %.lr.ph
-  %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 32
+  %2 = getelementptr inbounds nuw [40 x i8], ptr @_ZN16OpenColorIO_v2_5L4eltsE, i64 %indvars.iv.next ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.n = load i8, ptr %i.m, align 8, !tbaa !24
   %.not = icmp eq i8 %.pre, %i.n
   br i1 %.not, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit._crit_edge, label %.lr.ph, !llvm.loop !70
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit._crit_edge: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit.preheader
   %.lcssa44 = phi i64 [ %i.f, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit.preheader ], [ %i.k, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit ] ; 2 uses
-  %.lcssa = phi ptr [ @_ZN16OpenColorIO_v2_5L4eltsE, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit.preheader ], [ %i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit ]
+  %.lcssa = phi ptr [ @_ZN16OpenColorIO_v2_5L4eltsE, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit.preheader ], [ %2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_.exit ]
   %i.o = load i64, ptr %i.b, align 8, !tbaa !22
   %i.p = sub i64 4611686018427387903, %i.o
   %i.q = icmp ult i64 %i.p, %.lcssa44
@@ -353,26 +353,25 @@ bb.a:
   br i1 %i.h, label %.thread59, label %.lr.ph
 
 bb.b:                                             ; preds = %.lr.ph
-  %6 = add i32 %.02376, 1                         ; 2 uses
-  %7 = zext i32 %6 to i64
-  %i.i = getelementptr inbounds nuw [40 x i8], ptr @_ZN16OpenColorIO_v2_5L4eltsE, i64 %7 ; 2 uses
+  %indvars.iv.next = add nuw i64 %i.m, 1          ; 2 uses
+  %i.i = getelementptr inbounds nuw [40 x i8], ptr @_ZN16OpenColorIO_v2_5L4eltsE, i64 %indvars.iv.next
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.k = load i64, ptr %i.j, align 8, !tbaa !22   ; 2 uses
   %i.l = icmp eq i64 %i.k, 0
   br i1 %i.l, label %.thread59, label %.lr.ph, !llvm.loop !72
 
 .lr.ph:                                           ; preds = %.preheader, %bb.b
-  %i.m = phi i64 [ %i.k, %bb.b ], [ %i.g, %.preheader ] ; 2 uses
-  %8 = phi ptr [ %i.i, %bb.b ], [ @_ZN16OpenColorIO_v2_5L4eltsE, %.preheader ] ; 3 uses
-  %.02376 = phi i32 [ %6, %bb.b ], [ 0, %.preheader ]
-  %i.n = load ptr, ptr %8, align 8, !tbaa !20
-  %i.o = tail call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %.sroa.049.079, ptr noundef nonnull dereferenceable(1) %i.n, i64 noundef %i.m) #27
+  %i.m = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %.preheader ] ; 2 uses
+  %6 = phi i64 [ %i.k, %bb.b ], [ %i.g, %.preheader ] ; 2 uses
+  %7 = getelementptr inbounds nuw [40 x i8], ptr @_ZN16OpenColorIO_v2_5L4eltsE, i64 %i.m ; 3 uses
+  %i.n = load ptr, ptr %7, align 8, !tbaa !20
+  %i.o = tail call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %.sroa.049.079, ptr noundef nonnull dereferenceable(1) %i.n, i64 noundef %6) #27
   %i.p = icmp eq i32 %i.o, 0
   br i1 %i.p, label %bb.c, label %bb.b
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.q = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %i.r = getelementptr inbounds nuw i8, ptr %8, i64 32
+  %i.q = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.r = getelementptr inbounds nuw i8, ptr %7, i64 32
   %i.s = load i8, ptr %i.r, align 8, !tbaa !24
   %i.t = load i64, ptr %i.b, align 8, !tbaa !22   ; 4 uses
   %i.u = add i64 %i.t, 1                          ; 3 uses
@@ -415,7 +414,7 @@ bb.f:                                             ; preds = %.noexc, %_ZNKSt7__c
   %i.ae = load ptr, ptr %0, align 8, !tbaa !20
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.u
   store i8 0, ptr %i.af, align 1, !tbaa !21
-  %i.ag = getelementptr i8, ptr %.sroa.049.079, i64 %i.m
+  %i.ag = getelementptr i8, ptr %.sroa.049.079, i64 %6
   %i.ah = getelementptr i8, ptr %i.ag, i64 -1     ; 2 uses
   %.pr = load i64, ptr %i.q, align 8, !tbaa !22
   %i.ai = icmp eq i64 %.pr, 0

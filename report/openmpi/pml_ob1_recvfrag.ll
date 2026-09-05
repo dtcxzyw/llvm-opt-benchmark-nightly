@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openmpi/original/pml_ob1_recvfrag?download=true
 inline.NumInlined: 187
 inline.NumDeleted: 76
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@mca_pml_ob1_recv_request_ack_send:bb.a
 mca_pml_ob1_add_ack_to_pending.exit:              ; preds = %mca_bml_base_btl_array_get_next.exit, %bb.n, %bb.m
   ret void
@@ -204,14 +204,14 @@ bb.l:                                             ; preds = %bb.a, %bb.b, %remov
 define void @mca_pml_ob1_recv_frag_callback_match(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
-  %i.b = alloca i64, align 8                      ; 7 uses
-  %2 = alloca [16 x %struct.iovec], align 16      ; 6 uses
+  %i.b = alloca i64, align 8                      ; 9 uses
+  %2 = alloca [16 x %struct.iovec], align 16      ; 8 uses
   %i.c = alloca i32, align 4                      ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !114  ; 12 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !114  ; 14 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !28   ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !115  ; 14 uses
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !115  ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   store i64 0, ptr %i.b, align 8, !tbaa !116
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 3 uses
@@ -614,7 +614,7 @@ bb.ai:                                            ; preds = %bb.ah, %.sink.split
 
 bb.aj:                                            ; preds = %bb.ai
   %i.fh = load i64, ptr %i.i, align 8, !tbaa !84
-  %i.fi = add i64 %i.fh, -14                      ; 4 uses
+  %i.fi = add i64 %i.fh, -14                      ; 5 uses
   store i64 %i.fi, ptr %i.b, align 8, !tbaa !116
   %i.fj = add i64 %i.h, -1
   %i.fk = add i64 %i.fj, %i.fi
@@ -641,29 +641,74 @@ bb.ak:                                            ; preds = %bb.aj
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 14
   store ptr %i.ft, ptr %2, align 16, !tbaa !217
   %i.fu = icmp ugt i64 %i.h, 1
-  br i1 %i.fu, label %.lr.ph157, label %bb.al
+  br i1 %i.fu, label %.lr.ph157.preheader, label %bb.al
 
-.lr.ph157:                                        ; preds = %bb.ak, %.lr.ph157
-  %i.fv = phi i64 [ %5, %.lr.ph157 ], [ 1, %bb.ak ] ; 2 uses
-  %3 = phi i32 [ %4, %.lr.ph157 ], [ 1, %bb.ak ]
-  %i.fw = phi i64 [ %i.ga, %.lr.ph157 ], [ %i.fi, %bb.ak ]
-  %i.fx = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %i.fv ; 2 uses
+.lr.ph157.preheader:                              ; preds = %bb.ak
+  %3 = add i64 %i.h, -1                           ; 3 uses
+  %xtraiter249 = and i64 %3, 1
+  %4 = icmp eq i64 %i.h, 2
+  br i1 %4, label %.lr.ph157.epil.preheader, label %.lr.ph157.preheader.new
+
+.lr.ph157.preheader.new:                          ; preds = %.lr.ph157.preheader
+  %unroll_iter253 = and i64 %3, -2
+  br label %.lr.ph157
+
+.lr.ph157:                                        ; preds = %.lr.ph157, %.lr.ph157.preheader.new
+  %i.fv = phi i64 [ 1, %.lr.ph157.preheader.new ], [ %indvars.iv.next.1, %.lr.ph157 ] ; 4 uses
+  %5 = phi i64 [ %i.fi, %.lr.ph157.preheader.new ], [ %i.ga, %.lr.ph157 ]
+  %i.fw = phi i64 [ 0, %.lr.ph157.preheader.new ], [ %niter254.next.1, %.lr.ph157 ]
+  %6 = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %i.fv ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %8 = load i64, ptr %7, align 8, !tbaa !84       ; 2 uses
+  %9 = add i64 %5, %8                             ; 2 uses
+  store i64 %9, ptr %i.b, align 8, !tbaa !116
+  %10 = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.fv ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 8
+  store i64 %8, ptr %11, align 8, !tbaa !216
+  %12 = load ptr, ptr %6, align 8, !tbaa !28
+  store ptr %12, ptr %10, align 16, !tbaa !217
+  %indvars.iv.next = add nuw i64 %i.fv, 1         ; 2 uses
+  %i.fx = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv.next ; 2 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 8
   %i.fz = load i64, ptr %i.fy, align 8, !tbaa !84 ; 2 uses
-  %i.ga = add i64 %i.fw, %i.fz                    ; 2 uses
+  %i.ga = add i64 %9, %i.fz                       ; 3 uses
   store i64 %i.ga, ptr %i.b, align 8, !tbaa !116
-  %i.gb = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.fv ; 2 uses
+  %i.gb = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv.next ; 2 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 8
   store i64 %i.fz, ptr %i.gc, align 8, !tbaa !216
   %i.gd = load ptr, ptr %i.fx, align 8, !tbaa !28
   store ptr %i.gd, ptr %i.gb, align 16, !tbaa !217
-  %4 = add i32 %3, 1                              ; 3 uses
-  %5 = zext i32 %4 to i64                         ; 2 uses
-  %6 = icmp ugt i64 %i.h, %5
-  br i1 %6, label %.lr.ph157, label %._crit_edge158, !llvm.loop !208
+  %indvars.iv.next.1 = add nuw i64 %i.fv, 2       ; 3 uses
+  %niter254.next.1 = add nuw i64 %i.fw, 2         ; 2 uses
+  %niter254.ncmp.1.not = icmp eq i64 %niter254.next.1, %unroll_iter253
+  br i1 %niter254.ncmp.1.not, label %._crit_edge158.unr-lcssa, label %.lr.ph157, !llvm.loop !208
 
-._crit_edge158:                                   ; preds = %.lr.ph157
-  store i32 %4, ptr %i.c, align 4, !tbaa !58
+._crit_edge158.unr-lcssa:                         ; preds = %.lr.ph157
+  %lcmp.mod250.not = icmp eq i64 %xtraiter249, 0
+  br i1 %lcmp.mod250.not, label %._crit_edge158, label %.lr.ph157.epil.preheader
+
+.lr.ph157.epil.preheader:                         ; preds = %._crit_edge158.unr-lcssa, %.lr.ph157.preheader
+  %indvars.iv.epil.init = phi i64 [ 1, %.lr.ph157.preheader ], [ %indvars.iv.next.1, %._crit_edge158.unr-lcssa ] ; 3 uses
+  %.epil.init = phi i64 [ %i.fi, %.lr.ph157.preheader ], [ %i.ga, %._crit_edge158.unr-lcssa ]
+  %lcmp.mod252 = trunc i64 %3 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod252)
+  %13 = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %indvars.iv.epil.init ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 8
+  %15 = load i64, ptr %14, align 8, !tbaa !84     ; 2 uses
+  %16 = add i64 %.epil.init, %15
+  store i64 %16, ptr %i.b, align 8, !tbaa !116
+  %17 = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv.epil.init ; 2 uses
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 8
+  store i64 %15, ptr %18, align 8, !tbaa !216
+  %19 = load ptr, ptr %13, align 8, !tbaa !28
+  store ptr %19, ptr %17, align 16, !tbaa !217
+  %indvars.iv.next.epil = add nuw i64 %indvars.iv.epil.init, 1
+  br label %._crit_edge158
+
+._crit_edge158:                                   ; preds = %._crit_edge158.unr-lcssa, %.lr.ph157.epil.preheader
+  %indvars.iv.next.lcssa = phi i64 [ %indvars.iv.next.1, %._crit_edge158.unr-lcssa ], [ %indvars.iv.next.epil, %.lr.ph157.epil.preheader ]
+  %20 = trunc nuw i64 %indvars.iv.next.lcssa to i32
+  store i32 %20, ptr %i.c, align 4, !tbaa !58
   br label %bb.al
 
 bb.al:                                            ; preds = %._crit_edge158, %bb.ak

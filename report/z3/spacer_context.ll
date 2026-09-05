@@ -205,11 +205,12 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit:
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.aj, %bb.ae, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
-  %i.dy = phi ptr [ null, %bb.ae ], [ %i.dv, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ], [ %i.et, %bb.aj ] ; 5 uses
+  %i.dy = phi ptr [ null, %bb.ae ], [ %i.dv, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ], [ %i.et, %bb.aj ] ; 4 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.bg, i64 96
   %i.ea = load i32, ptr %i.dz, align 8, !tbaa !367 ; 2 uses
   %i.eb = icmp ugt i32 %i.ea, 65534
-  br i1 %i.eb, label %bb.ak, label %bb.al
+  %9 = icmp eq ptr %i.dy, null                    ; 2 uses
+  br i1 %i.eb, label %bb.ak, label %10
 
 bb.af:                                            ; preds = %bb.ai, %.lr.ph
   %i.ec = landingpad { ptr, i32 }
@@ -269,7 +270,6 @@ bb.aj:                                            ; preds = %.noexc69, %bb.ah, %
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !895
 
 bb.ak:                                            ; preds = %._crit_edge
-  %9 = icmp eq ptr %i.dy, null
   br i1 %9, label %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE3endEv.exit.i
 
 _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE3endEv.exit.i: ; preds = %bb.ak
@@ -292,10 +292,12 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE3endEv.exit.i
   %.not.i70 = icmp eq ptr %i.fb, %i.ez
   br i1 %.not.i70, label %_ZN6spacer11prop_solver12assert_exprsERK10ref_vectorI4expr11ast_managerE.exit, label %.lr.ph.i
 
-bb.al:                                            ; preds = %._crit_edge
+10:                                               ; preds = %._crit_edge
+  br i1 %9, label %_ZN6spacer11prop_solver12assert_exprsERK10ref_vectorI4expr11ast_managerE.exit, label %bb.al
+
+bb.al:                                            ; preds = %10
   %i.fc = add nuw nsw i32 %i.ea, 1
-  %10 = icmp eq ptr %i.dy, null
-  br i1 %10, label %_ZN6spacer11prop_solver12assert_exprsERK10ref_vectorI4expr11ast_managerE.exit, label %.split
+  br label %.split
 
 bb.am:                                            ; preds = %.lr.ph.i74
   %i.fd = landingpad { ptr, i32 }
@@ -303,7 +305,7 @@ bb.am:                                            ; preds = %.lr.ph.i74
   br label %.loopexit.split-lp
 
 .split:                                           ; preds = %bb.al, %_ZN6spacer11prop_solver12assert_exprsERK10ref_vectorI4expr11ast_managerEj.exit
-  %.098 = phi i32 [ %i.fn, %_ZN6spacer11prop_solver12assert_exprsERK10ref_vectorI4expr11ast_managerEj.exit ], [ 1, %bb.al ] ; 2 uses
+  %.098 = phi i32 [ %i.fn, %_ZN6spacer11prop_solver12assert_exprsERK10ref_vectorI4expr11ast_managerEj.exit ], [ 1, %bb.al ] ; 3 uses
   %i.fe = load ptr, ptr %i.e, align 8, !tbaa !246 ; 4 uses
   %i.ff = icmp eq ptr %i.fe, null
   br i1 %i.ff, label %_ZN6spacer11prop_solver12assert_exprsERK10ref_vectorI4expr11ast_managerEj.exit, label %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE3endEv.exit.i72
@@ -329,11 +331,11 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE3endEv.exit.i
   br i1 %.not.i76, label %_ZN6spacer11prop_solver12assert_exprsERK10ref_vectorI4expr11ast_managerEj.exit, label %.lr.ph.i74
 
 _ZN6spacer11prop_solver12assert_exprsERK10ref_vectorI4expr11ast_managerEj.exit: ; preds = %.noexc77, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE3endEv.exit.i72, %.split
-  %i.fn = add i32 %.098, 1                        ; 2 uses
-  %.not37 = icmp ugt i32 %i.fn, %i.fc
-  br i1 %.not37, label %_ZN6spacer11prop_solver12assert_exprsERK10ref_vectorI4expr11ast_managerE.exit, label %.split, !llvm.loop !896
+  %i.fn = add nuw i32 %.098, 1
+  %exitcond107 = icmp eq i32 %.098, %i.fc
+  br i1 %exitcond107, label %_ZN6spacer11prop_solver12assert_exprsERK10ref_vectorI4expr11ast_managerE.exit, label %.split, !llvm.loop !896
 
-_ZN6spacer11prop_solver12assert_exprsERK10ref_vectorI4expr11ast_managerE.exit: ; preds = %_ZN6spacer11prop_solver12assert_exprsERK10ref_vectorI4expr11ast_managerEj.exit, %.noexc71, %bb.al, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE3endEv.exit.i
+_ZN6spacer11prop_solver12assert_exprsERK10ref_vectorI4expr11ast_managerE.exit: ; preds = %_ZN6spacer11prop_solver12assert_exprsERK10ref_vectorI4expr11ast_managerEj.exit, %.noexc71, %10, %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE3endEv.exit.i
   %.pr = load ptr, ptr %i.e, align 8, !tbaa !246  ; 5 uses
   %i.fo = icmp eq ptr %.pr, null
   br i1 %i.fo, label %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit, label %_ZNK6vectorIP4exprLb0EjE4sizeEv.exit.i78

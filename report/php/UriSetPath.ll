@@ -202,20 +202,14 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %.050.i = phi ptr [ %i.s, %bb.l ], [ %1, %bb.m ] ; 2 uses
   %i.u = ptrtoint ptr %2 to i64
   %i.v = ptrtoint ptr %.050.i to i64
-  %i.w = sub i64 %i.u, %i.v                       ; 3 uses
-  %5 = ashr exact i64 %i.w, 2                     ; 2 uses
-  %6 = icmp ugt i64 %5, -5
-  br i1 %6, label %uriInternalSetPathW.exit, label %7
+  %i.w = sub i64 %i.u, %i.v                       ; 4 uses
+  %5 = icmp slt i64 %i.w, 0
+  br i1 %5, label %uriInternalSetPathW.exit, label %bb.o
 
-7:                                                ; preds = %bb.n
-  %8 = add nsw i64 %5, 4                          ; 2 uses
-  %9 = icmp ugt i64 %8, 4611686018427387903
-  br i1 %9, label %uriInternalSetPathW.exit, label %bb.o
-
-bb.o:                                             ; preds = %7
+bb.o:                                             ; preds = %bb.n
   %i.x = load ptr, ptr %.0, align 8, !tbaa !18
-  %10 = shl nuw i64 %8, 2
-  %i.y = tail call ptr %i.x(ptr noundef nonnull %.0, i64 noundef %10) #5, !inline_history !44 ; 8 uses
+  %6 = add nuw i64 %i.w, 16
+  %i.y = tail call ptr %i.x(ptr noundef nonnull %.0, i64 noundef %6) #5, !inline_history !44 ; 8 uses
   %i.z = icmp eq ptr %i.y, null
   br i1 %i.z, label %uriInternalSetPathW.exit, label %bb.p
 
@@ -276,8 +270,8 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s,
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   br label %uriInternalSetPathW.exit
 
-uriInternalSetPathW.exit:                         ; preds = %bb.v, %bb.o, %7, %bb.n, %bb.m, %bb.h, %.thread, %bb.g, %bb.j, %bb.f, %bb.d, %bb.a, %bb.b
-  %.1 = phi i32 [ 2, %bb.a ], [ 10, %bb.d ], [ 1, %bb.f ], [ 2, %bb.b ], [ %i.j, %.thread ], [ %i.i, %bb.g ], [ 0, %bb.h ], [ %i.p, %bb.j ], [ 0, %bb.m ], [ 3, %bb.n ], [ 3, %7 ], [ %.1.i, %bb.v ], [ 3, %bb.o ]
+uriInternalSetPathW.exit:                         ; preds = %bb.v, %bb.o, %bb.n, %bb.m, %bb.h, %.thread, %bb.g, %bb.j, %bb.f, %bb.d, %bb.a, %bb.b
+  %.1 = phi i32 [ 2, %bb.a ], [ 10, %bb.d ], [ 1, %bb.f ], [ 2, %bb.b ], [ %i.j, %.thread ], [ %i.i, %bb.g ], [ 0, %bb.h ], [ %i.p, %bb.j ], [ 0, %bb.m ], [ 3, %bb.n ], [ 3, %bb.o ], [ %.1.i, %bb.v ]
   ret i32 %.1
 }
 

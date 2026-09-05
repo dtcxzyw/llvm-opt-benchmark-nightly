@@ -204,17 +204,15 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.i
-  %i.hu = phi i64 [ %1, %.lr.ph.i ], [ 0, %bb.h ]
-  %.876.i = phi i32 [ %0, %.lr.ph.i ], [ 0, %bb.h ]
+  %i.hu = phi i64 [ %indvars.iv.next123.i, %.lr.ph.i ], [ 0, %bb.h ] ; 2 uses
   %i.hv = getelementptr inbounds nuw i8, ptr @cbc_data, i64 %i.hu
   %i.hw = load i8, ptr %i.hv, align 1, !tbaa !18
   %i.hx = sext i8 %i.hw to i32
   %i.hy = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.24, i32 noundef %i.hx) ; 0 uses
-  %0 = add i32 %.876.i, 1                         ; 2 uses
-  %1 = zext i32 %0 to i64                         ; 2 uses
+  %indvars.iv.next123.i = add nuw nsw i64 %i.hu, 1 ; 2 uses
   %i.hz = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) @cbc_data) #9
   %i.ia = add i64 %i.hz, 1
-  %i.ib = icmp ugt i64 %i.ia, %1
+  %i.ib = icmp ugt i64 %i.ia, %indvars.iv.next123.i
   br i1 %i.ib, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !14
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.h
@@ -328,17 +326,15 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not86.i, label %._crit_edge81.i, label %.lr.ph80.i
 
 .lr.ph80.i:                                       ; preds = %._crit_edge.i, %.lr.ph80.i
-  %i.ma = phi i64 [ %3, %.lr.ph80.i ], [ 0, %._crit_edge.i ]
-  %.1078.i = phi i32 [ %2, %.lr.ph80.i ], [ 0, %._crit_edge.i ]
+  %i.ma = phi i64 [ %indvars.iv.next130.i, %.lr.ph80.i ], [ 0, %._crit_edge.i ] ; 2 uses
   %i.mb = getelementptr inbounds nuw i8, ptr @cfb64_ok, i64 %i.ma
   %i.mc = load i8, ptr %i.mb, align 1, !tbaa !18
   %i.md = zext i8 %i.mc to i32
   %i.me = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.24, i32 noundef %i.md) ; 0 uses
-  %2 = add i32 %.1078.i, 1                        ; 2 uses
-  %3 = zext i32 %2 to i64                         ; 2 uses
+  %indvars.iv.next130.i = add nuw nsw i64 %i.ma, 1 ; 2 uses
   %i.mf = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) @cbc_data) #9
   %i.mg = add i64 %i.mf, 1
-  %i.mh = icmp ugt i64 %i.mg, %3
+  %i.mh = icmp ugt i64 %i.mg, %indvars.iv.next130.i
   br i1 %i.mh, label %.lr.ph80.i, label %._crit_edge81.i, !llvm.loop !15
 
 ._crit_edge81.i:                                  ; preds = %.lr.ph80.i, %._crit_edge.i
@@ -353,17 +349,15 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not87.i, label %print_test_data.exit, label %.lr.ph84.i
 
 .lr.ph84.i:                                       ; preds = %._crit_edge81.i, %.lr.ph84.i
-  %i.mn = phi i64 [ %5, %.lr.ph84.i ], [ 0, %._crit_edge81.i ]
-  %.1182.i = phi i32 [ %4, %.lr.ph84.i ], [ 0, %._crit_edge81.i ]
+  %i.mn = phi i64 [ %indvars.iv.next133.i, %.lr.ph84.i ], [ 0, %._crit_edge81.i ] ; 2 uses
   %i.mo = getelementptr inbounds nuw i8, ptr @ofb64_ok, i64 %i.mn
   %i.mp = load i8, ptr %i.mo, align 1, !tbaa !18
   %i.mq = zext i8 %i.mp to i32
   %i.mr = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.24, i32 noundef %i.mq) ; 0 uses
-  %4 = add i32 %.1182.i, 1                        ; 2 uses
-  %5 = zext i32 %4 to i64                         ; 2 uses
+  %indvars.iv.next133.i = add nuw nsw i64 %i.mn, 1 ; 2 uses
   %i.ms = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) @cbc_data) #9
   %i.mt = add i64 %i.ms, 1
-  %i.mu = icmp ugt i64 %i.mt, %5
+  %i.mu = icmp ugt i64 %i.mt, %indvars.iv.next133.i
   br i1 %i.mu, label %.lr.ph84.i, label %print_test_data.exit, !llvm.loop !16
 
 print_test_data.exit:                             ; preds = %.lr.ph84.i, %._crit_edge81.i

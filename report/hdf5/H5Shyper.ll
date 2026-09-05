@@ -205,18 +205,17 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %bb.d
-  %.pn = phi ptr [ %i.ac, %bb.d ], [ %i.ag, %bb.e ]
-  %.0 = phi i32 [ 0, %bb.d ], [ %3, %bb.e ]       ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.e ], [ 0, %bb.d ] ; 2 uses
+  %.pn = phi ptr [ %i.ag, %bb.e ], [ %i.ac, %bb.d ]
   %.016.in = getelementptr inbounds nuw i8, ptr %.pn, i64 56
   %.016 = load ptr, ptr %.016.in, align 8, !tbaa !59 ; 2 uses
   %i.ad = load i64, ptr %.016, align 8, !tbaa !61
-  %2 = zext i32 %.0 to i64
-  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %2
+  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
   store i64 %i.ad, ptr %i.ae, align 8, !tbaa !18
   %i.af = getelementptr inbounds nuw i8, ptr %.016, i64 16
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !62 ; 2 uses
   %.not = icmp eq ptr %i.ag, null
-  %3 = add i32 %.0, 1
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1
   br i1 %.not, label %.loopexit.loopexit22, label %bb.e
 
 .loopexit.loopexit22:                             ; preds = %bb.e

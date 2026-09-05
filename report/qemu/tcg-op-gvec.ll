@@ -204,21 +204,23 @@ check_size_impl.exit:                             ; preds = %bb.j
 
 bb.k:                                             ; preds = %check_size_impl.exit
   %i.bg = tail call ptr @tcg_temp_ebb_new_i64() #9 ; 5 uses
+  %7 = zext nneg i32 %5 to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.l
-  %.0109143 = phi i32 [ 0, %bb.k ], [ %7, %bb.l ] ; 3 uses
+  %indvars.iv156 = phi i64 [ 0, %bb.k ], [ %indvars.iv.next157, %bb.l ] ; 2 uses
   %i.bh = load ptr, ptr @tcg_env, align 8
-  %i.bi = add i32 %.0109143, %3
+  %8 = trunc nuw nsw i64 %indvars.iv156 to i32    ; 2 uses
+  %i.bi = add i32 %3, %8
   %i.bj = zext i32 %i.bi to i64
   tail call void @tcg_gen_ld_i64(ptr noundef %i.bg, ptr noundef %i.bh, i64 noundef %i.bj) #9
   tail call void @tcg_gen_negsetcond_i64(i32 noundef %0, ptr noundef %i.bg, ptr noundef %i.bg, ptr noundef %4) #9
   %i.bk = load ptr, ptr @tcg_env, align 8
-  %i.bl = add i32 %.0109143, %2
+  %i.bl = add i32 %2, %8
   %i.bm = zext i32 %i.bl to i64
   tail call void @tcg_gen_st_i64(ptr noundef %i.bg, ptr noundef %i.bk, i64 noundef %i.bm) #9
-  %7 = add nuw nsw i32 %.0109143, 8               ; 2 uses
-  %i.bn = icmp samesign ult i32 %7, %5
+  %indvars.iv.next157 = add nuw nsw i64 %indvars.iv156, 8 ; 2 uses
+  %i.bn = icmp samesign ult i64 %indvars.iv.next157, %7
   br i1 %i.bn, label %bb.l, label %bb.m, !llvm.loop !64
 
 bb.m:                                             ; preds = %bb.l
@@ -242,21 +244,23 @@ check_size_impl.exit137:                          ; preds = %bb.n
   %i.bt = tail call ptr @tcg_temp_ebb_new_i32() #9 ; 5 uses
   %i.bu = tail call ptr @tcg_temp_ebb_new_i32() #9 ; 3 uses
   tail call void @tcg_gen_extrl_i64_i32(ptr noundef %i.bu, ptr noundef %4) #9
+  %9 = zext nneg i32 %5 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.0108142 = phi i32 [ %8, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 3 uses
+  %indvars.iv153 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next154, %.lr.ph ] ; 2 uses
   %i.bv = load ptr, ptr @tcg_env, align 8
-  %i.bw = add i32 %.0108142, %3
+  %10 = trunc nuw nsw i64 %indvars.iv153 to i32   ; 2 uses
+  %i.bw = add i32 %3, %10
   %i.bx = zext i32 %i.bw to i64
   tail call void @tcg_gen_ld_i32(ptr noundef %i.bt, ptr noundef %i.bv, i64 noundef %i.bx) #9
   tail call void @tcg_gen_negsetcond_i32(i32 noundef %0, ptr noundef %i.bt, ptr noundef %i.bt, ptr noundef %i.bu) #9
   %i.by = load ptr, ptr @tcg_env, align 8
-  %i.bz = add i32 %.0108142, %2
+  %i.bz = add i32 %2, %10
   %i.ca = zext i32 %i.bz to i64
   tail call void @tcg_gen_st_i32(ptr noundef %i.bt, ptr noundef %i.by, i64 noundef %i.ca) #9
-  %8 = add nuw nsw i32 %.0108142, 4               ; 2 uses
-  %i.cb = icmp samesign ult i32 %8, %5
+  %indvars.iv.next154 = add nuw nsw i64 %indvars.iv153, 4 ; 2 uses
+  %i.cb = icmp samesign ult i64 %indvars.iv.next154, %9
   br i1 %i.cb, label %.lr.ph, label %._crit_edge, !llvm.loop !65
 
 ._crit_edge:                                      ; preds = %.lr.ph

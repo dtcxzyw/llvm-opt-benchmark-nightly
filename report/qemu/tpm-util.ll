@@ -202,12 +202,11 @@ g_strdup_inline.exit34:
   br i1 %.not35, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %g_strdup_inline.exit34, %.lr.ph
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %g_strdup_inline.exit34 ]
   %4 = phi ptr [ %i.w, %.lr.ph ], [ %i.u, %g_strdup_inline.exit34 ]
-  %.02536 = phi i32 [ %5, %.lr.ph ], [ 0, %g_strdup_inline.exit34 ]
   call void @g_free(ptr noundef nonnull %4) #11
-  %5 = add i32 %.02536, 1                         ; 2 uses
-  %6 = zext i32 %5 to i64
-  %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %6
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next
   %i.w = load ptr, ptr %i.v, align 8              ; 2 uses
   %.not = icmp eq ptr %i.w, null
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !14

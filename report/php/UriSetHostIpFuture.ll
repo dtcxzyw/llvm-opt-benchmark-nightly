@@ -201,20 +201,14 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.e, %bb.d
   %i.g = ptrtoint ptr %1 to i64
   %i.h = ptrtoint ptr %0 to i64
-  %i.i = sub i64 %i.g, %i.h                       ; 4 uses
-  %4 = ashr exact i64 %i.i, 2                     ; 2 uses
-  %5 = icmp ugt i64 %4, -6
-  br i1 %5, label %bb.k, label %6
+  %i.i = sub i64 %i.g, %i.h                       ; 5 uses
+  %4 = icmp slt i64 %i.i, 0
+  br i1 %4, label %bb.k, label %bb.g
 
-6:                                                ; preds = %bb.f
-  %7 = add nsw i64 %4, 5                          ; 2 uses
-  %8 = icmp ugt i64 %7, 4611686018427387903
-  br i1 %8, label %bb.k, label %bb.g
-
-bb.g:                                             ; preds = %6
+bb.g:                                             ; preds = %bb.f
   %i.j = load ptr, ptr %.0, align 8, !tbaa !15
-  %9 = shl nuw i64 %7, 2
-  %i.k = tail call ptr %i.j(ptr noundef nonnull %.0, i64 noundef %9) #3 ; 6 uses
+  %5 = add nuw i64 %i.i, 20
+  %i.k = tail call ptr %i.j(ptr noundef nonnull %.0, i64 noundef %5) #3 ; 6 uses
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %bb.k, label %bb.h
 
@@ -242,8 +236,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #3
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.f, %bb.j, %bb.g, %6, %bb.e, %bb.c, %bb.a
-  %.3 = phi i32 [ 2, %bb.a ], [ 10, %bb.c ], [ 1, %bb.e ], [ 3, %bb.f ], [ 3, %6 ], [ %i.q, %bb.j ], [ 3, %bb.g ]
+bb.k:                                             ; preds = %bb.f, %bb.j, %bb.g, %bb.e, %bb.c, %bb.a
+  %.3 = phi i32 [ 2, %bb.a ], [ 10, %bb.c ], [ 1, %bb.e ], [ 3, %bb.f ], [ 3, %bb.g ], [ %i.q, %bb.j ]
   ret i32 %.3
 }
 
@@ -274,20 +268,14 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.c, %bb.b
   %i.e = ptrtoint ptr %1 to i64
   %i.f = ptrtoint ptr %0 to i64
-  %i.g = sub i64 %i.e, %i.f                       ; 4 uses
-  %3 = ashr exact i64 %i.g, 2                     ; 2 uses
-  %4 = icmp ugt i64 %3, -6
-  br i1 %4, label %uriIsWellFormedHostIpFutureMmW.exit, label %5
+  %i.g = sub i64 %i.e, %i.f                       ; 5 uses
+  %3 = icmp slt i64 %i.g, 0
+  br i1 %3, label %uriIsWellFormedHostIpFutureMmW.exit, label %bb.e
 
-5:                                                ; preds = %bb.d
-  %6 = add nsw i64 %3, 5                          ; 2 uses
-  %7 = icmp ugt i64 %6, 4611686018427387903
-  br i1 %7, label %uriIsWellFormedHostIpFutureMmW.exit, label %bb.e
-
-bb.e:                                             ; preds = %5
+bb.e:                                             ; preds = %bb.d
   %i.h = load ptr, ptr @defaultMemoryManager, align 8, !tbaa !15
-  %8 = shl nuw i64 %6, 2
-  %i.i = tail call ptr %i.h(ptr noundef nonnull @defaultMemoryManager, i64 noundef %8) #3, !inline_history !19 ; 6 uses
+  %4 = add nuw i64 %i.g, 20
+  %i.i = tail call ptr %i.h(ptr noundef nonnull @defaultMemoryManager, i64 noundef %4) #3, !inline_history !19 ; 6 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %uriIsWellFormedHostIpFutureMmW.exit, label %bb.f
 
@@ -314,8 +302,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #3
   br label %uriIsWellFormedHostIpFutureMmW.exit
 
-uriIsWellFormedHostIpFutureMmW.exit:              ; preds = %bb.a, %bb.c, %bb.d, %5, %bb.e, %bb.h
-  %.3.i = phi i32 [ 2, %bb.a ], [ 3, %bb.e ], [ 1, %bb.c ], [ 3, %bb.d ], [ 3, %5 ], [ %i.o, %bb.h ]
+uriIsWellFormedHostIpFutureMmW.exit:              ; preds = %bb.a, %bb.c, %bb.d, %bb.e, %bb.h
+  %.3.i = phi i32 [ 2, %bb.a ], [ %i.o, %bb.h ], [ 1, %bb.c ], [ 3, %bb.d ], [ 3, %bb.e ]
   ret i32 %.3.i
 }
 

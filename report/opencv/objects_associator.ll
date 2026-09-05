@@ -204,7 +204,7 @@ _ZNSt6vectorIfSaIfEED2Ev.exit173:                 ; preds = %bb.s, %.body159, %b
   br label %bb.bz
 
 ._crit_edge:                                      ; preds = %bb.y
-  %i.df = add nuw i64 %.0107305, 1                ; 2 uses
+  %i.df = add nuw nsw i64 %.0107305, 1            ; 2 uses
   %exitcond346.not = icmp eq i64 %i.df, %i.r
   br i1 %exitcond346.not, label %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i162, label %.preheader301, !llvm.loop !86
 
@@ -290,7 +290,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.u, %bb.x
-  %i.fj = add nuw i64 %.0106304, 1                ; 2 uses
+  %i.fj = add nuw nsw i64 %.0106304, 1            ; 2 uses
   %exitcond.not = icmp eq i64 %i.fj, %i.y
   br i1 %exitcond.not, label %._crit_edge, label %bb.t, !llvm.loop !89
 
@@ -416,12 +416,12 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.ad
-  %i.ho = add nuw i64 %.0104306.us.us, 1          ; 2 uses
+  %i.ho = add nuw nsw i64 %.0104306.us.us, 1      ; 2 uses
   %exitcond352.not = icmp eq i64 %i.ho, %i.y
   br i1 %exitcond352.not, label %._crit_edge307.split.us.us, label %bb.ad, !llvm.loop !92
 
 ._crit_edge307.split.us.us:                       ; preds = %bb.ah
-  %i.hp = add nuw i64 %.0105308.us, 1             ; 2 uses
+  %i.hp = add nuw nsw i64 %.0105308.us, 1         ; 2 uses
   %exitcond354.not = icmp eq i64 %i.hp, %i.r
   br i1 %exitcond354.not, label %._crit_edge310.split, label %.preheader300.us, !llvm.loop !93
 
@@ -489,7 +489,7 @@ _ZNSt6vectorIfSaIfEED2Ev.exit189:                 ; preds = %bb.ak, %.body182, %
   br label %bb.by
 
 ._crit_edge307.split:                             ; preds = %bb.an
-  %i.iu = add nuw i64 %.0105308, 1                ; 2 uses
+  %i.iu = add nuw nsw i64 %.0105308, 1            ; 2 uses
   %exitcond350.not = icmp eq i64 %i.iu, %i.r
   br i1 %exitcond350.not, label %._crit_edge310.split, label %.preheader300, !llvm.loop !93
 
@@ -538,7 +538,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   %sqrt.i191 = call noundef float @llvm.sqrt.f32(float %i.jx)
   %i.jy = getelementptr inbounds nuw [4 x i8], ptr %i.ht, i64 %.0104306
   store float %sqrt.i191, ptr %i.jy, align 4, !tbaa !40
-  %i.jz = add nuw i64 %.0104306, 1                ; 2 uses
+  %i.jz = add nuw nsw i64 %.0104306, 1            ; 2 uses
   %exitcond348.not = icmp eq i64 %i.jz, %i.y
   br i1 %exitcond348.not, label %._crit_edge307.split, label %bb.al, !llvm.loop !92
 
@@ -665,7 +665,7 @@ bb.at:                                            ; preds = %bb.as
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.as
-  %i.mj = add nuw i64 %.0102313.us.us, 1          ; 2 uses
+  %i.mj = add nuw nsw i64 %.0102313.us.us, 1      ; 2 uses
   %exitcond360.not = icmp eq i64 %i.mj, %umax355
   br i1 %exitcond360.not, label %._crit_edge315, label %bb.as, !llvm.loop !94
 
@@ -693,12 +693,12 @@ bb.au:                                            ; preds = %bb.at, %bb.as
   %.sink.idx.i.us = select i1 %i.lj, i64 0, i64 %i.nb
   %gep.us = getelementptr i8, ptr %invariant.gep, i64 %.sink.idx.i.us
   store float %i.my, ptr %gep.us, align 4, !tbaa !40
-  %i.nc = add nuw i64 %.0102313.us, 1             ; 2 uses
+  %i.nc = add nuw nsw i64 %.0102313.us, 1         ; 2 uses
   %exitcond358.not = icmp eq i64 %i.nc, %umax355
   br i1 %exitcond358.not, label %._crit_edge315, label %.lr.ph.split.us.split, !llvm.loop !94
 
 ._crit_edge315:                                   ; preds = %bb.ax, %.lr.ph.split.us.split, %bb.au, %bb.ar
-  %i.nd = add nuw i64 %.0103318, 1                ; 2 uses
+  %i.nd = add nuw nsw i64 %.0103318, 1            ; 2 uses
   %exitcond362.not = icmp eq i64 %i.nd, %i.y
   br i1 %exitcond362.not, label %.preheader299, label %bb.ar, !llvm.loop !95
 
@@ -753,7 +753,7 @@ bb.aw:                                            ; preds = %bb.av, %.lr.ph.spli
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw, %bb.av
-  %i.ok = add nuw i64 %.0102313, 1                ; 2 uses
+  %i.ok = add nuw nsw i64 %.0102313, 1            ; 2 uses
   %exitcond356.not = icmp eq i64 %i.ok, %umax355
   br i1 %exitcond356.not, label %._crit_edge315, label %.lr.ph.split, !llvm.loop !94
 
@@ -765,7 +765,7 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
   %.0101323.epil.init = phi i64 [ 0, %.lr.ph324 ], [ %i.pe, %._crit_edge325.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod458 = trunc i64 %i.r to i1
   call void @llvm.assume(i1 %lcmp.mod458)
-  %i.ol = add i64 %.0101323.epil.init, %i.y
+  %i.ol = add nuw i64 %.0101323.epil.init, %i.y
   %i.om = load i64, ptr %i.kn, align 8
   %sext294.epil = shl i64 %.0101323.epil.init, 32
   %i.on = ashr exact i64 %sext294.epil, 32
@@ -786,7 +786,7 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
 bb.ay:                                            ; preds = %bb.ay, %.lr.ph324.new
   %.0101323 = phi i64 [ 0, %.lr.ph324.new ], [ %i.pe, %bb.ay ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph324.new ], [ %niter.next.1, %bb.ay ]
-  %i.or = add i64 %.0101323, %i.y
+  %i.or = add nuw i64 %.0101323, %i.y
   %i.os = load i64, ptr %i.kn, align 8
   %sext294 = shl i64 %.0101323, 32
   %i.ot = ashr exact i64 %sext294, 32
@@ -798,7 +798,7 @@ bb.ay:                                            ; preds = %bb.ay, %.lr.ph324.n
   %i.ow = getelementptr inbounds i8, ptr %.sink.i196, i64 %i.ov
   store float 1.000000e+00, ptr %i.ow, align 4, !tbaa !40
   %i.ox = or disjoint i64 %.0101323, 1            ; 2 uses
-  %i.oy = add i64 %i.ox, %i.y
+  %i.oy = add nuw i64 %i.ox, %i.y
   %i.oz = load i64, ptr %i.kn, align 8
   %sext294.1 = shl i64 %i.ox, 32
   %i.pa = ashr exact i64 %sext294.1, 32
@@ -809,7 +809,7 @@ bb.ay:                                            ; preds = %bb.ay, %.lr.ph324.n
   %i.pc = ashr exact i64 %sext295.1, 30
   %i.pd = getelementptr inbounds i8, ptr %.sink.i196.1, i64 %i.pc
   store float 1.000000e+00, ptr %i.pd, align 4, !tbaa !40
-  %i.pe = add nuw i64 %.0101323, 2                ; 2 uses
+  %i.pe = add nuw nsw i64 %.0101323, 2            ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge325.loopexit.unr-lcssa, label %bb.ay, !llvm.loop !96
@@ -833,7 +833,7 @@ bb.az:                                            ; preds = %._crit_edge325
   br i1 %.not.i.i.i.i, label %._crit_edge330, label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.lr.ph, %..loopexit_crit_edge.us
-  %.0100328.us = phi i64 [ %i.qa, %..loopexit_crit_edge.us ], [ 0, %.preheader.lr.ph ] ; 6 uses
+  %.0100328.us = phi i64 [ %i.qa, %..loopexit_crit_edge.us ], [ 0, %.preheader.lr.ph ] ; 5 uses
   %i.pm = load i64, ptr %i.pk, align 8
   %sext.us = shl i64 %.0100328.us, 32
   %i.pn = ashr exact i64 %sext.us, 32
@@ -858,23 +858,19 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %bb.ba
   %i.pt = trunc i64 %.0100328.us to i32
-  %16 = sdiv i64 %.0100328.us, 64
-  %i.pu = getelementptr inbounds [8 x i8], ptr %i.pl, i64 %16
-  %17 = and i64 %.0100328.us, -9223372036854775745
-  %18 = icmp ugt i64 %17, -9223372036854775808
-  %storemerge.idx.i.i.i.i.i200.us = select i1 %18, i64 -8, i64 0
-  %storemerge.i.i.i.i.i201.us = getelementptr inbounds i8, ptr %i.pu, i64 %storemerge.idx.i.i.i.i.i200.us ; 2 uses
+  %16 = lshr i64 %.0100328.us, 6
+  %i.pu = getelementptr inbounds nuw [8 x i8], ptr %i.pl, i64 %16 ; 2 uses
   %i.pv = and i64 %.0100328.us, 63
   %i.pw = shl nuw i64 1, %i.pv
-  %i.px = load i64, ptr %storemerge.i.i.i.i.i201.us, align 8, !tbaa !79
+  %i.px = load i64, ptr %i.pu, align 8, !tbaa !79
   %i.py = or i64 %i.px, %i.pw
-  store i64 %i.py, ptr %storemerge.i.i.i.i.i201.us, align 8, !tbaa !79
+  store i64 %i.py, ptr %i.pu, align 8, !tbaa !79
   %i.pz = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0257.0289, i64 %.0326.us
   store i32 %i.pt, ptr %i.pz, align 4, !tbaa !99
   br label %..loopexit_crit_edge.us
 
 ..loopexit_crit_edge.us:                          ; preds = %bb.bb, %bb.bc
-  %i.qa = add nuw i64 %.0100328.us, 1             ; 2 uses
+  %i.qa = add nuw nsw i64 %.0100328.us, 1         ; 2 uses
   %exitcond368.not = icmp eq i64 %i.qa, %i.r
   br i1 %exitcond368.not, label %._crit_edge330, label %.preheader.us, !llvm.loop !98
 

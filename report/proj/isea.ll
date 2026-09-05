@@ -204,33 +204,25 @@ _ZL14isea_transformPN12_GLOBAL__N_112pj_isea_dataEPNS_8GeoPointEPNS_7isea_ptE.ex
   %i.eo = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.ep = load i32, ptr %i.eo, align 8, !tbaa !46 ; 2 uses
   %i.eq = icmp eq i32 %i.ep, 0
-  br i1 %i.eq, label %7, label %bb.i
+  br i1 %i.eq, label %switch.lookup, label %bb.i
 
-7:                                                ; preds = %_ZL14isea_transformPN12_GLOBAL__N_112pj_isea_dataEPNS_8GeoPointEPNS_7isea_ptE.exit.i
-  %8 = srem i32 %i.cf, 20                         ; 2 uses
-  %.lhs.trunc5.i.i.i = trunc nsw i32 %8 to i8     ; 2 uses
-  %9 = sdiv i8 %.lhs.trunc5.i.i.i, 5              ; 2 uses
-  %10 = srem i8 %.lhs.trunc5.i.i.i, 5
-  %11 = icmp ult i8 %9, 4
-  br i1 %11, label %switch.lookup, label %12
-
-12:                                               ; preds = %7
-  tail call void @exit(i32 noundef 1) #19
-  unreachable
-
-switch.lookup:                                    ; preds = %7
+switch.lookup:                                    ; preds = %_ZL14isea_transformPN12_GLOBAL__N_112pj_isea_dataEPNS_8GeoPointEPNS_7isea_ptE.exit.i
   %i.er = sdiv i32 %i.cf, 5
   %i.es = and i32 %i.er, -2147483647
   %i.et = icmp eq i32 %i.es, 1                    ; 2 uses
   %i.eu = fneg double %i.ej
+  %7 = fneg double %i.el
+  %8 = select i1 %i.et, double %7, double %i.el
   %i.ev = select i1 %i.et, double %i.eu, double %i.ej
-  %13 = fneg double %i.el
-  %14 = select i1 %i.et, double %13, double %i.el
-  %i.ew = zext nneg i8 %9 to i64
+  %9 = srem i32 %i.cf, 20                         ; 2 uses
+  %.lhs.trunc5.i.i.i = trunc nuw nsw i32 %9 to i8 ; 2 uses
+  %10 = udiv i8 %.lhs.trunc5.i.i.i, 5
+  %i.ew = zext nneg i8 %10 to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZL14isea_s_forward5PJ_LPP8PJconsts, i64 %i.ew
   %switch.load = load double, ptr %switch.gep, align 8
-  %i.ex = icmp sgt i32 %8, 9
-  %narrow.i.i.i = add nsw i8 %10, -2
+  %i.ex = icmp sgt i32 %9, 9
+  %11 = urem i8 %.lhs.trunc5.i.i.i, 5
+  %narrow.i.i.i = add nsw i8 %11, -2
   %i.ey = sitofp i8 %narrow.i.i.i to double
   %i.ez = fmul nnan double %i.ey, f0x3FE52BB3566A484C
   %i.fa = fmul nnan double %i.ez, 2.000000e+00    ; 2 uses
@@ -239,7 +231,7 @@ switch.lookup:                                    ; preds = %7
   %i.fc = fmul nnan double %.sroa.0.0.i.i.i, f0x3FED21DC1E9D1240
   %i.fd = fadd double %i.fc, %i.ev
   store double %i.fd, ptr %5, align 16, !tbaa !62
-  %i.fe = fadd double %14, %switch.load
+  %i.fe = fadd double %8, %switch.load
   store double %i.fe, ptr %i.em, align 8, !tbaa !63
   br label %bb.m
 
@@ -281,7 +273,7 @@ _ZL9isea_ptddiPN12_GLOBAL__N_17isea_ptE.exit.i:   ; preds = %bb.i
   store <2 x double> %storemerge, ptr %5, align 16, !tbaa !38
   %i.gd = sdiv i32 %i.cf, 10
   %i.ge = mul nsw i32 %i.gd, 5
-  %i.gf = add nsw i32 %i.fk, 1
+  %i.gf = add nuw nsw i32 %i.fk, 1
   %i.gg = add nsw i32 %i.gf, %i.ge
   %i.gh = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   store i32 %i.gg, ptr %i.gh, align 8, !tbaa !64

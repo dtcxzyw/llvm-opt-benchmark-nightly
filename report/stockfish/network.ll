@@ -205,16 +205,12 @@ bb.s:                                             ; preds = %bb.r
   %exitcond.not.7 = icmp eq i64 %i.bh, 1024
   br i1 %exitcond.not.7, label %bb.b, label %bb.c, !llvm.loop !361
 
-2:                                                ; preds = %bb.z
-  %.not.i = icmp eq i32 %i.bu, 0
-  br i1 %.not.i, label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm1024EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit, label %bb.t
-
-bb.t:                                             ; preds = %2
+bb.t:                                             ; preds = %bb.z
   %i.bi = zext i32 %i.bu to i64
   %i.bj = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.b, i64 noundef %i.bi) #19 ; 0 uses
   br label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm1024EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit
 
-_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm1024EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit: ; preds = %.thread, %2, %bb.t
+_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm1024EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit: ; preds = %.thread, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   ret void
 
@@ -245,7 +241,7 @@ bb.v:                                             ; preds = %_ZZN9Stockfish4Eval
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %i.bt = and i8 %i.bn, 127
-  %i.bu = add i32 %.153, 1                        ; 4 uses
+  %i.bu = add nuw i32 %.153, 1                    ; 3 uses
   %i.bv = zext i32 %.153 to i64
   %i.bw = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.bv
   store i8 %i.bt, ptr %i.bw, align 1, !tbaa !62
@@ -254,7 +250,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 
 bb.x:                                             ; preds = %bb.v, %bb.u
   %i.by = or i8 %i.bn, -128
-  %i.bz = add i32 %.153, 1                        ; 2 uses
+  %i.bz = add nuw i32 %.153, 1                    ; 2 uses
   %i.ca = zext i32 %.153 to i64
   %i.cb = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ca
   store i8 %i.by, ptr %i.cb, align 1, !tbaa !62
@@ -272,7 +268,7 @@ _ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm1024EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE
 bb.z:                                             ; preds = %bb.w
   %i.ce = add nuw nsw i64 %.02662, 1              ; 2 uses
   %exitcond64.not = icmp eq i64 %i.ce, 1024
-  br i1 %exitcond64.not, label %2, label %.backedge.backedge
+  br i1 %exitcond64.not, label %bb.t, label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %bb.z, %.thread
   %.02662.be = phi i64 [ %i.ce, %bb.z ], [ %i.cg, %.thread ]
@@ -495,16 +491,12 @@ bb.y:                                             ; preds = %bb.x
   %exitcond.not.10 = icmp eq i64 %i.cc, 23068672
   br i1 %exitcond.not.10, label %bb.b, label %bb.c, !llvm.loop !364
 
-2:                                                ; preds = %bb.af
-  %.not.i = icmp eq i32 %i.cp, 0
-  br i1 %.not.i, label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm23068672EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit, label %bb.z
-
-bb.z:                                             ; preds = %2
+bb.z:                                             ; preds = %bb.af
   %i.cd = zext i32 %i.cp to i64
   %i.ce = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.b, i64 noundef %i.cd) #19 ; 0 uses
   br label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm23068672EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit
 
-_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm23068672EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit: ; preds = %.thread, %2, %bb.z
+_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm23068672EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit: ; preds = %.thread, %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   ret void
 
@@ -535,7 +527,7 @@ bb.ab:                                            ; preds = %_ZZN9Stockfish4Eval
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.co = and i8 %i.ci, 127
-  %i.cp = add i32 %.153, 1                        ; 4 uses
+  %i.cp = add nuw i32 %.153, 1                    ; 3 uses
   %i.cq = zext i32 %.153 to i64
   %i.cr = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.cq
   store i8 %i.co, ptr %i.cr, align 1, !tbaa !62
@@ -544,7 +536,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
 
 bb.ad:                                            ; preds = %bb.ab, %bb.aa
   %i.ct = or i8 %i.ci, -128
-  %i.cu = add i32 %.153, 1                        ; 2 uses
+  %i.cu = add nuw i32 %.153, 1                    ; 2 uses
   %i.cv = zext i32 %.153 to i64
   %i.cw = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.cv
   store i8 %i.ct, ptr %i.cw, align 1, !tbaa !62
@@ -562,7 +554,7 @@ _ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm23068672EEEvRSoRKSt5arrayIT_XT0_EEENK
 bb.af:                                            ; preds = %bb.ac
   %i.cz = add nuw nsw i64 %.02662, 1              ; 2 uses
   %exitcond64.not = icmp eq i64 %i.cz, 23068672
-  br i1 %exitcond64.not, label %2, label %.backedge.backedge
+  br i1 %exitcond64.not, label %bb.z, label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %bb.af, %.thread
   %.02662.be = phi i64 [ %i.cz, %bb.af ], [ %i.db, %.thread ]
@@ -742,16 +734,12 @@ bb.u:                                             ; preds = %bb.t
   %exitcond.not.8 = icmp eq i64 %i.bf, 819072
   br i1 %exitcond.not.8, label %bb.b, label %bb.c, !llvm.loop !367
 
-2:                                                ; preds = %bb.ab
-  %.not.i = icmp eq i32 %i.br, 0
-  br i1 %.not.i, label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IiLm819072EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit, label %bb.v
-
-bb.v:                                             ; preds = %2
+bb.v:                                             ; preds = %bb.ab
   %i.bg = zext i32 %i.br to i64
   %i.bh = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.b, i64 noundef %i.bg) #19 ; 0 uses
   br label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IiLm819072EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit
 
-_ZZN9Stockfish4Eval4NNUE13write_leb_128IiLm819072EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit: ; preds = %.thread, %2, %bb.v
+_ZZN9Stockfish4Eval4NNUE13write_leb_128IiLm819072EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit: ; preds = %.thread, %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   ret void
 
@@ -781,7 +769,7 @@ bb.x:                                             ; preds = %_ZZN9Stockfish4Eval
 
 bb.y:                                             ; preds = %bb.x, %bb.w
   %i.bq = and i8 %i.bk, 127
-  %i.br = add i32 %.153, 1                        ; 4 uses
+  %i.br = add nuw i32 %.153, 1                    ; 3 uses
   %i.bs = zext i32 %.153 to i64
   %i.bt = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.bs
   store i8 %i.bq, ptr %i.bt, align 1, !tbaa !62
@@ -790,7 +778,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w
 
 bb.z:                                             ; preds = %bb.x, %bb.w
   %i.bv = or i8 %i.bk, -128
-  %i.bw = add i32 %.153, 1                        ; 2 uses
+  %i.bw = add nuw i32 %.153, 1                    ; 2 uses
   %i.bx = zext i32 %.153 to i64
   %i.by = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.bx
   store i8 %i.bv, ptr %i.by, align 1, !tbaa !62
@@ -808,7 +796,7 @@ _ZZN9Stockfish4Eval4NNUE13write_leb_128IiLm819072EEEvRSoRKSt5arrayIT_XT0_EEENKUl
 bb.ab:                                            ; preds = %bb.y
   %i.cb = add nuw nsw i64 %.02662, 1              ; 2 uses
   %exitcond64.not = icmp eq i64 %i.cb, 819072
-  br i1 %exitcond64.not, label %2, label %.backedge.backedge
+  br i1 %exitcond64.not, label %bb.v, label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %bb.ab, %.thread
   %.02662.be = phi i64 [ %i.cb, %bb.ab ], [ %i.cd, %.thread ]
@@ -1211,16 +1199,12 @@ bb.s:                                             ; preds = %bb.r
   %exitcond.not.7 = icmp eq i64 %i.bh, 128
   br i1 %exitcond.not.7, label %bb.b, label %bb.c, !llvm.loop !380
 
-2:                                                ; preds = %bb.z
-  %.not.i = icmp eq i32 %i.bu, 0
-  br i1 %.not.i, label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm128EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit, label %bb.t
-
-bb.t:                                             ; preds = %2
+bb.t:                                             ; preds = %bb.z
   %i.bi = zext i32 %i.bu to i64
   %i.bj = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.b, i64 noundef %i.bi) #19 ; 0 uses
   br label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm128EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit
 
-_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm128EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit: ; preds = %.thread, %2, %bb.t
+_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm128EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit: ; preds = %.thread, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   ret void
 
@@ -1251,7 +1235,7 @@ bb.v:                                             ; preds = %_ZZN9Stockfish4Eval
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %i.bt = and i8 %i.bn, 127
-  %i.bu = add i32 %.153, 1                        ; 4 uses
+  %i.bu = add nuw i32 %.153, 1                    ; 3 uses
   %i.bv = zext i32 %.153 to i64
   %i.bw = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.bv
   store i8 %i.bt, ptr %i.bw, align 1, !tbaa !62
@@ -1260,7 +1244,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 
 bb.x:                                             ; preds = %bb.v, %bb.u
   %i.by = or i8 %i.bn, -128
-  %i.bz = add i32 %.153, 1                        ; 2 uses
+  %i.bz = add nuw i32 %.153, 1                    ; 2 uses
   %i.ca = zext i32 %.153 to i64
   %i.cb = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ca
   store i8 %i.by, ptr %i.cb, align 1, !tbaa !62
@@ -1278,7 +1262,7 @@ _ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm128EEEvRSoRKSt5arrayIT_XT0_EEENKUlhE_
 bb.z:                                             ; preds = %bb.w
   %i.ce = add nuw nsw i64 %.02662, 1              ; 2 uses
   %exitcond64.not = icmp eq i64 %i.ce, 128
-  br i1 %exitcond64.not, label %2, label %.backedge.backedge
+  br i1 %exitcond64.not, label %bb.t, label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %bb.z, %.thread
   %.02662.be = phi i64 [ %i.ce, %bb.z ], [ %i.cg, %.thread ]
@@ -1501,16 +1485,12 @@ bb.y:                                             ; preds = %bb.x
   %exitcond.not.10 = icmp eq i64 %i.cc, 2883584
   br i1 %exitcond.not.10, label %bb.b, label %bb.c, !llvm.loop !383
 
-2:                                                ; preds = %bb.af
-  %.not.i = icmp eq i32 %i.cp, 0
-  br i1 %.not.i, label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm2883584EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit, label %bb.z
-
-bb.z:                                             ; preds = %2
+bb.z:                                             ; preds = %bb.af
   %i.cd = zext i32 %i.cp to i64
   %i.ce = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.b, i64 noundef %i.cd) #19 ; 0 uses
   br label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm2883584EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit
 
-_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm2883584EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit: ; preds = %.thread, %2, %bb.z
+_ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm2883584EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit: ; preds = %.thread, %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   ret void
 
@@ -1541,7 +1521,7 @@ bb.ab:                                            ; preds = %_ZZN9Stockfish4Eval
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.co = and i8 %i.ci, 127
-  %i.cp = add i32 %.153, 1                        ; 4 uses
+  %i.cp = add nuw i32 %.153, 1                    ; 3 uses
   %i.cq = zext i32 %.153 to i64
   %i.cr = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.cq
   store i8 %i.co, ptr %i.cr, align 1, !tbaa !62
@@ -1550,7 +1530,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
 
 bb.ad:                                            ; preds = %bb.ab, %bb.aa
   %i.ct = or i8 %i.ci, -128
-  %i.cu = add i32 %.153, 1                        ; 2 uses
+  %i.cu = add nuw i32 %.153, 1                    ; 2 uses
   %i.cv = zext i32 %.153 to i64
   %i.cw = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.cv
   store i8 %i.ct, ptr %i.cw, align 1, !tbaa !62
@@ -1568,7 +1548,7 @@ _ZZN9Stockfish4Eval4NNUE13write_leb_128IsLm2883584EEEvRSoRKSt5arrayIT_XT0_EEENKU
 bb.af:                                            ; preds = %bb.ac
   %i.cz = add nuw nsw i64 %.02662, 1              ; 2 uses
   %exitcond64.not = icmp eq i64 %i.cz, 2883584
-  br i1 %exitcond64.not, label %2, label %.backedge.backedge
+  br i1 %exitcond64.not, label %bb.z, label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %bb.af, %.thread
   %.02662.be = phi i64 [ %i.cz, %bb.af ], [ %i.db, %.thread ]
@@ -1780,16 +1760,12 @@ bb.y:                                             ; preds = %bb.x
   %exitcond.not.10 = icmp eq i64 %i.br, 180224
   br i1 %exitcond.not.10, label %bb.b, label %bb.c, !llvm.loop !386
 
-2:                                                ; preds = %bb.af
-  %.not.i = icmp eq i32 %i.cd, 0
-  br i1 %.not.i, label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IiLm180224EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit, label %bb.z
-
-bb.z:                                             ; preds = %2
+bb.z:                                             ; preds = %bb.af
   %i.bs = zext i32 %i.cd to i64
   %i.bt = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.b, i64 noundef %i.bs) #19 ; 0 uses
   br label %_ZZN9Stockfish4Eval4NNUE13write_leb_128IiLm180224EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit
 
-_ZZN9Stockfish4Eval4NNUE13write_leb_128IiLm180224EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit: ; preds = %.thread, %2, %bb.z
+_ZZN9Stockfish4Eval4NNUE13write_leb_128IiLm180224EEEvRSoRKSt5arrayIT_XT0_EEENKUlvE_clEv.exit: ; preds = %.thread, %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   ret void
 
@@ -1819,7 +1795,7 @@ bb.ab:                                            ; preds = %_ZZN9Stockfish4Eval
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.cc = and i8 %i.bw, 127
-  %i.cd = add i32 %.153, 1                        ; 4 uses
+  %i.cd = add nuw i32 %.153, 1                    ; 3 uses
   %i.ce = zext i32 %.153 to i64
   %i.cf = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ce
   store i8 %i.cc, ptr %i.cf, align 1, !tbaa !62
@@ -1828,7 +1804,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
 
 bb.ad:                                            ; preds = %bb.ab, %bb.aa
   %i.ch = or i8 %i.bw, -128
-  %i.ci = add i32 %.153, 1                        ; 2 uses
+  %i.ci = add nuw i32 %.153, 1                    ; 2 uses
   %i.cj = zext i32 %.153 to i64
   %i.ck = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.cj
   store i8 %i.ch, ptr %i.ck, align 1, !tbaa !62
@@ -1846,7 +1822,7 @@ _ZZN9Stockfish4Eval4NNUE13write_leb_128IiLm180224EEEvRSoRKSt5arrayIT_XT0_EEENKUl
 bb.af:                                            ; preds = %bb.ac
   %i.cn = add nuw nsw i64 %.02662, 1              ; 2 uses
   %exitcond64.not = icmp eq i64 %i.cn, 180224
-  br i1 %exitcond64.not, label %2, label %.backedge.backedge
+  br i1 %exitcond64.not, label %bb.z, label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %bb.af, %.thread
   %.02662.be = phi i64 [ %i.cn, %bb.af ], [ %i.cp, %.thread ]

@@ -205,8 +205,8 @@ skip_space.exit91.preheader.i:                    ; preds = %bb.z
 skip_space.exit91.i:                              ; preds = %skip_space_and_cr.exit.i, %skip_space.exit91.preheader.i
   %i.dx = phi i8 [ %i.dv, %skip_space.exit91.preheader.i ], [ %.pre.i, %skip_space_and_cr.exit.i ] ; 4 uses
   %indvars.iv198.i = phi i32 [ -2, %skip_space.exit91.preheader.i ], [ %indvars.iv.next199.i, %skip_space_and_cr.exit.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %skip_space.exit91.preheader.i ], [ %indvars.iv.next.i, %skip_space_and_cr.exit.i ] ; 6 uses
   %.lcssa162165.i = phi ptr [ %storemerge.i, %skip_space.exit91.preheader.i ], [ %i.gp, %skip_space_and_cr.exit.i ] ; 3 uses
-  %.071.i = phi i32 [ 0, %skip_space.exit91.preheader.i ], [ %11, %skip_space_and_cr.exit.i ] ; 8 uses
   switch i8 %i.dx, label %bb.ab [
     i8 13, label %.critedge.i
     i8 10, label %.critedge.i
@@ -478,33 +478,32 @@ skip_space_and_cr.exit.i:                         ; preds = %bb.at
   %.sroa.3.0.insert.ext.i.i = zext i32 %.sroa.3.0.i.i to i64
   %.sroa.3.0.insert.shift.i.i = shl nuw i64 %.sroa.3.0.insert.ext.i.i, 32
   %.sroa.040.0.insert.insert.i.i = or disjoint i64 %.sroa.3.0.insert.shift.i.i, %.011.lcssa.i.i.i
-  %10 = zext i32 %.071.i to i64
-  %i.gr = getelementptr inbounds nuw [12 x i8], ptr %8, i64 %10 ; 2 uses
+  %i.gr = getelementptr inbounds nuw [12 x i8], ptr %8, i64 %indvars.iv.i ; 2 uses
   store i64 %.sroa.040.0.insert.insert.i.i, ptr %i.gr, align 4
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.gr, i64 8
   store i32 %.sroa.5.0.i.i, ptr %.sroa.4.0..sroa_idx.i, align 4
-  %11 = add i32 %.071.i, 1
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   %indvars.iv.next199.i = add i32 %indvars.iv198.i, 1
   %.pre.i = load i8, ptr %i.gp, align 1
   br label %skip_space.exit91.i
 
 .critedge.i:                                      ; preds = %skip_space.exit91.i, %skip_space.exit91.i, %skip_space.exit91.i
+  %10 = trunc nuw i64 %indvars.iv.i to i32        ; 3 uses
   store i32 4, ptr %i.cq, align 4
   br i1 %.not.i445, label %.preheader.i, label %bb.au
 
 .preheader.i:                                     ; preds = %.critedge.i
-  %.not171.i = icmp eq i32 %.071.i, 0
+  %.not171.i = icmp eq i64 %indvars.iv.i, 0
   br i1 %.not171.i, label %._crit_edge170.i, label %.lr.ph169.i
 
 .lr.ph169.i:                                      ; preds = %.preheader.i
   %i.gs = getelementptr inbounds nuw i8, ptr %i.ch, i64 32
-  %12 = zext i32 %.071.i to i64
-  %i.gt = mul nuw nsw i64 %12, 12
+  %i.gt = mul i64 %indvars.iv.i, 12
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.gs, ptr nonnull align 16 %8, i64 %i.gt, i1 false)
   br label %._crit_edge170.i
 
 bb.au:                                            ; preds = %.critedge.i
-  %i.gu = icmp ugt i32 %.071.i, 2
+  %i.gu = icmp samesign ugt i64 %indvars.iv.i, 2
   br i1 %i.gu, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.au
@@ -551,9 +550,9 @@ bb.av:                                            ; preds = %bb.av, %.lr.ph.i
 
 ._crit_edge170.i:                                 ; preds = %.lr.ph169.i, %.preheader.i
   %i.hm = getelementptr inbounds nuw i8, ptr %i.ch, i64 224
-  store i32 %.071.i, ptr %i.hm, align 8
+  store i32 %10, ptr %i.hm, align 8
   %i.hn = getelementptr inbounds nuw i8, ptr %i.ch, i64 228
-  store i32 %.071.i, ptr %i.hn, align 4
+  store i32 %10, ptr %i.hn, align 4
   %i.ho = getelementptr inbounds nuw i8, ptr %i.ch, i64 292
   store i32 1, ptr %i.ho, align 4
   br label %bb.by
@@ -878,7 +877,7 @@ parseLine.exit:                                   ; preds = %bb.t, %bb.t, %bb.bl
 
 bb.by:                                            ; preds = %._crit_edge170.i, %._crit_edge.i
   %i.ku = phi i32 [ 1, %._crit_edge170.i ], [ %.068.lcssa.i, %._crit_edge.i ]
-  %i.kv = phi i32 [ %.071.i, %._crit_edge170.i ], [ %i.hj, %._crit_edge.i ]
+  %i.kv = phi i32 [ %10, %._crit_edge170.i ], [ %i.hj, %._crit_edge.i ]
   %.pr = load i32, ptr %i.cq, align 4             ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #54
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #54
@@ -1281,7 +1280,7 @@ bb.gs:                                            ; preds = %bb.gr, %bb.gq, %bb.
   br i1 %i.ats, label %bb.gp, label %cgltf_skip_json.exit.i.i.i
 
 cgltf_skip_json.exit.i.i.i:                       ; preds = %bb.gs
-  %i.att = trunc nsw i64 %indvars.iv.next.i.i.i.i341 to i32
+  %i.att = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i341 to i32
   br label %cgltf_skip_json.exit.thread.i.i.i
 
 cgltf_skip_json.exit.thread.i.i.i:                ; preds = %cgltf_skip_json.exit.i.i.i, %cgltf_json_to_component_type.exit.i.i.i, %cgltf_json_to_size.exit159.i.i.i, %cgltf_json_to_int.exit.i244.i.i
@@ -1450,7 +1449,7 @@ bb.he:                                            ; preds = %bb.hd, %bb.hc, %bb.
   br i1 %i.awp, label %bb.hb, label %cgltf_skip_json.exit187.i.i.i
 
 cgltf_skip_json.exit187.i.i.i:                    ; preds = %bb.he
-  %i.awq = trunc nsw i64 %indvars.iv.next.i184.i.i.i to i32
+  %i.awq = trunc nuw nsw i64 %indvars.iv.next.i184.i.i.i to i32
   br label %cgltf_skip_json.exit187.thread.i.i.i
 
 cgltf_skip_json.exit187.thread.i.i.i:             ; preds = %cgltf_skip_json.exit187.i.i.i, %cgltf_json_to_size.exit180.i.i.i, %cgltf_json_to_int.exit173.i.i.i
@@ -1498,7 +1497,7 @@ bb.hi:                                            ; preds = %bb.hh, %bb.hg, %bb.
   br i1 %i.axf, label %bb.hf, label %.split.loop.exit.i192.i.i.i
 
 .split.loop.exit.i192.i.i.i:                      ; preds = %bb.hi
-  %i.axg = trunc nsw i64 %indvars.iv.next.i191.i.i.i to i32
+  %i.axg = trunc nuw nsw i64 %indvars.iv.next.i191.i.i.i to i32
   br label %cgltf_skip_json.exit194.i.i.i
 
 cgltf_skip_json.exit194.i.i.i:                    ; preds = %.split.loop.exit.i192.i.i.i, %cgltf_json_to_size.exit.i.i.i
@@ -1901,7 +1900,7 @@ bb.oz:                                            ; preds = %bb.oy, %bb.ox, %bb.
   br i1 %i.cui, label %bb.ow, label %cgltf_skip_json.exit.i146.i
 
 cgltf_skip_json.exit.i146.i:                      ; preds = %bb.oz
-  %i.cuj = trunc nsw i64 %indvars.iv.next.i.i145.i to i32
+  %i.cuj = trunc nuw nsw i64 %indvars.iv.next.i.i145.i to i32
   br label %bb.pa
 
 bb.pa:                                            ; preds = %cgltf_skip_json.exit.i146.i, %cgltf_skip_json.exit.thread39.i151.i
@@ -2304,7 +2303,7 @@ bb.rn:                                            ; preds = %bb.rm, %bb.rl, %bb.
   br i1 %i.dlh, label %bb.rk, label %cgltf_skip_json.exit.i.i477
 
 cgltf_skip_json.exit.i.i477:                      ; preds = %bb.rn
-  %i.dli = trunc nsw i64 %indvars.iv.next.i.i.i476 to i32
+  %i.dli = trunc nuw nsw i64 %indvars.iv.next.i.i.i476 to i32
   br label %bb.ro
 
 bb.ro:                                            ; preds = %cgltf_skip_json.exit.i.i477, %cgltf_skip_json.exit.thread39.i.i
@@ -2707,7 +2706,7 @@ bb.vb:                                            ; preds = %bb.va, %bb.uz, %bb.
   br i1 %i.eeb, label %bb.uy, label %cgltf_skip_json.exit.i.i584
 
 cgltf_skip_json.exit.i.i584:                      ; preds = %bb.vb
-  %i.eec = trunc nsw i64 %indvars.iv.next.i.i.i583 to i32
+  %i.eec = trunc nuw nsw i64 %indvars.iv.next.i.i.i583 to i32
   br label %bb.vc
 
 bb.vc:                                            ; preds = %cgltf_skip_json.exit.i.i584, %cgltf_skip_json.exit.thread256.i.i
@@ -2841,7 +2840,7 @@ bb.vm:                                            ; preds = %bb.vl, %bb.vk, %bb.
   br i1 %i.egh, label %bb.vj, label %cgltf_skip_json.exit238.i.i
 
 cgltf_skip_json.exit238.i.i:                      ; preds = %bb.vm
-  %i.egi = trunc nsw i64 %indvars.iv.next.i235.i.i to i32
+  %i.egi = trunc nuw nsw i64 %indvars.iv.next.i235.i.i to i32
   br label %bb.vn
 
 bb.vn:                                            ; preds = %cgltf_skip_json.exit238.i.i, %cgltf_skip_json.exit238.thread269.i.i
@@ -3244,7 +3243,7 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bf, %bb.
   br i1 %i.tl, label %bb.be, label %cgltf_skip_json.exit.i
 
 cgltf_skip_json.exit.i:                           ; preds = %bb.bh
-  %i.tm = trunc nsw i64 %indvars.iv.next.i366.i to i32
+  %i.tm = trunc nuw nsw i64 %indvars.iv.next.i366.i to i32
   br label %bb.bi
 
 bb.bi:                                            ; preds = %cgltf_skip_json.exit.i, %cgltf_skip_json.exit.thread384.i
@@ -3647,7 +3646,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.
   br i1 %i.ip, label %bb.ad, label %cgltf_skip_json.exit.i
 
 cgltf_skip_json.exit.i:                           ; preds = %bb.ag
-  %i.iq = trunc nsw i64 %indvars.iv.next.i189.i to i32
+  %i.iq = trunc nuw nsw i64 %indvars.iv.next.i189.i to i32
   br label %cgltf_skip_json.exit.thread.i
 
 cgltf_skip_json.exit.thread.i:                    ; preds = %cgltf_skip_json.exit.i, %cgltf_json_to_float.exit186.i, %cgltf_json_to_float.exit179.i
@@ -4050,7 +4049,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u,
   br i1 %i.ga, label %bb.u, label %cgltf_skip_json.exit
 
 cgltf_skip_json.exit:                             ; preds = %bb.x
-  %i.gb = trunc nsw i64 %indvars.iv.next.i to i32
+  %i.gb = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br label %cgltf_skip_json.exit.thread
 
 cgltf_skip_json.exit.thread:                      ; preds = %cgltf_skip_json.exit, %bb.t, %cgltf_json_strcmp.exit152.thread, %cgltf_json_to_size.exit140, %cgltf_json_to_size.exit133, %cgltf_json_to_size.exit126, %cgltf_json_to_size.exit, %cgltf_json_to_int.exit
@@ -4453,7 +4452,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g,
   br i1 %i.ay, label %bb.g, label %cgltf_skip_json.exit
 
 cgltf_skip_json.exit:                             ; preds = %bb.j
-  %i.az = trunc nsw i64 %indvars.iv.next.i to i32
+  %i.az = trunc nuw nsw i64 %indvars.iv.next.i to i32
   br label %bb.k
 
 bb.k:                                             ; preds = %cgltf_skip_json.exit, %cgltf_skip_json.exit.thread38

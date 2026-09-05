@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZN6googleL14ReadFromOffsetEiPvmm.exit.us:        ; preds = %.critedge.thread33.i.us
   %i.z = urem i64 %.2.i.us, 24
-  %i.aa = udiv i64 %.2.i.us, 24                   ; 2 uses
+  %i.aa = udiv i64 %.2.i.us, 24                   ; 3 uses
   %i.ab = icmp eq i64 %i.z, 0
   br i1 %i.ab, label %bb.d, label %_ZN6googleL14ReadFromOffsetEiPvmm.exit.thread
 
@@ -213,8 +213,7 @@ bb.d:                                             ; preds = %_ZN6googleL14ReadFr
   br i1 %.not.us, label %.split26.us, label %.preheader.us
 
 .lr.ph.us:                                        ; preds = %.preheader.us, %bb.f
-  %i.ac = phi i64 [ %8, %bb.f ], [ 0, %.preheader.us ]
-  %.019.us = phi i32 [ %7, %bb.f ], [ 0, %.preheader.us ]
+  %i.ac = phi i64 [ %indvars.iv.next, %bb.f ], [ 0, %.preheader.us ] ; 2 uses
   %i.ad = getelementptr inbounds nuw [24 x i8], ptr %6, i64 %i.ac ; 4 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !51 ; 2 uses
@@ -236,9 +235,8 @@ bb.e:                                             ; preds = %.lr.ph.us
   br i1 %or.cond69.us, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %.lr.ph.us
-  %7 = add nuw i32 %.019.us, 1                    ; 3 uses
-  %8 = zext i32 %7 to i64
-  %.not67.not.us = icmp ult i32 %7, %9
+  %indvars.iv.next = add nuw nsw i64 %i.ac, 1     ; 2 uses
+  %.not67.not.us = icmp samesign ugt i64 %i.aa, %indvars.iv.next
   br i1 %.not67.not.us, label %.lr.ph.us, label %.loopexit.us, !llvm.loop !45
 
 bb.g:                                             ; preds = %bb.e
@@ -292,13 +290,14 @@ _ZN6googleL14ReadFromOffsetEiPvmm.exit80.thread.us: ; preds = %bb.i, %bb.j, %_ZN
   tail call void @llvm.memset.p0.i64(ptr align 1 %2, i8 0, i64 %3, i1 false)
   br label %.loopexit.us.thread
 
-.loopexit.us.thread:                              ; preds = %bb.j, %_ZN6googleL14ReadFromOffsetEiPvmm.exit80.thread.us
-  %.458.us.ph = phi i1 [ false, %_ZN6googleL14ReadFromOffsetEiPvmm.exit80.thread.us ], [ true, %bb.j ]
+.loopexit.us.thread:                              ; preds = %_ZN6googleL14ReadFromOffsetEiPvmm.exit80.thread.us, %bb.j
+  %.458.us.ph = phi i1 [ true, %bb.j ], [ false, %_ZN6googleL14ReadFromOffsetEiPvmm.exit80.thread.us ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   br label %.split22.us
 
 .loopexit.us:                                     ; preds = %bb.f, %.preheader.us
-  %i.be = add i32 %.052.us63, %9                  ; 2 uses
+  %7 = trunc nuw nsw i64 %i.aa to i32
+  %i.be = add i32 %.052.us63, %7                  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   %i.bf = zext i32 %i.be to i64                   ; 2 uses
   %.not68.us = icmp ugt i64 %i.e, %i.bf
@@ -306,7 +305,6 @@ _ZN6googleL14ReadFromOffsetEiPvmm.exit80.thread.us: ; preds = %bb.i, %bb.j, %_ZN
 
 .preheader.us:                                    ; preds = %bb.d
   %.not67.not18.us = icmp ugt i64 %.2.i.us, 23
-  %9 = trunc nuw nsw i64 %i.aa to i32             ; 2 uses
   br i1 %.not67.not18.us, label %.lr.ph.us, label %.loopexit.us
 
 .split:                                           ; preds = %bb.a
