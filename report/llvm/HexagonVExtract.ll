@@ -202,6 +202,9 @@ _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12Mac
   %i.hh = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.hg, i1 false)
   %i.hi = trunc nuw nsw i64 %i.hh to i8
   %i.hj = sub nsw i8 63, %i.hi                    ; 3 uses
+  %26 = trunc nuw i8 %.sroa.6190.0279 to i1
+  %27 = call i8 @llvm.umax.i8(i8 %.sroa.0189.0280, i8 %i.hj)
+  %.sroa.046.0.copyload.sroa.speculated = select i1 %26, i8 %27, i8 %i.hj ; 2 uses
   %i.hk = getelementptr inbounds nuw i8, ptr %i.hc, i64 4
   %i.hl = load i32, ptr %i.hk, align 4, !tbaa !348
   %i.hm = lshr i32 %i.hl, 3
@@ -210,9 +213,6 @@ _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12Mac
   %i.hp = call noundef ptr @_ZNK4llvm19MachineRegisterInfo10getVRegDefENS_8RegisterE(ptr noundef nonnull align 8 dereferenceable(520) %i.o, i32 %i.gi) #18 ; 3 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 8
   %i.hr = load ptr, ptr %i.hq, align 8, !tbaa !43 ; 5 uses
-  %26 = trunc nuw i8 %.sroa.6190.0279 to i1
-  %27 = call i8 @llvm.umax.i8(i8 %.sroa.0189.0280, i8 %i.hj)
-  %.sroa.046.0.copyload.sroa.speculated = select i1 %26, i8 %27, i8 %i.hj ; 2 uses
   %i.hs = getelementptr inbounds nuw i8, ptr %i.hp, i64 24
   %i.ht = load ptr, ptr %i.hs, align 8, !tbaa !349 ; 3 uses
   %i.hu = load i16, ptr %i.gx, align 4, !tbaa !345

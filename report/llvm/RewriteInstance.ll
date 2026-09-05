@@ -205,10 +205,10 @@ bb.a:
 
 _ZSt9__advanceISt17_Rb_tree_iteratorISt4pairIKmN4llvm4bolt14BinaryFunctionEEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %.lr.ph134, %bb.ac
   %.sroa.0109.0133 = phi ptr [ %i.d, %.lr.ph134 ], [ %i.gk, %bb.ac ] ; 11 uses
-  %5 = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.0109.0133) #39 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0109.0133, i64 40 ; 4 uses
-  %.not120 = icmp eq ptr %5, %i.e                 ; 3 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %5, i64 40
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0109.0133, i64 40 ; 4 uses
+  %6 = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.0109.0133) #39 ; 2 uses
+  %.not120 = icmp eq ptr %6, %i.e                 ; 3 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %6, i64 40
   %spec.select = select i1 %.not120, ptr null, ptr %i.n ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.0109.0133, i64 104 ; 3 uses
   %i.p = load i64, ptr %i.o, align 8, !tbaa !895
@@ -265,7 +265,7 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %.not39, label %bb.c, label %.thread
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph
-  %i.al = call noundef zeroext i1 @_ZNK4llvm4bolt14BinaryFunction20isSymbolValidInScopeERKNS_6object9SymbolRefEm(ptr noundef nonnull align 8 dereferenceable(1360) %6, ptr noundef nonnull align 8 dereferenceable(16) %i.ae, i64 noundef %i.aj) #35
+  %i.al = call noundef zeroext i1 @_ZNK4llvm4bolt14BinaryFunction20isSymbolValidInScopeERKNS_6object9SymbolRefEm(ptr noundef nonnull align 8 dereferenceable(1360) %5, ptr noundef nonnull align 8 dereferenceable(16) %i.ae, i64 noundef %i.aj) #35
   br i1 %i.al, label %bb.d, label %.thread
 
 bb.d:                                             ; preds = %bb.c
@@ -366,7 +366,7 @@ bb.h:                                             ; preds = %_ZN4llvm12DenseMapB
   %i.ch = load i64, ptr %i.ad, align 8, !tbaa !871
   %i.ci = load i64, ptr %i.o, align 8, !tbaa !895
   %i.cj = sub i64 %i.ch, %i.ci
-  %i.ck = call noundef ptr @_ZN4llvm4bolt14BinaryFunction21addEntryPointAtOffsetEm(ptr noundef nonnull align 8 dereferenceable(1360) %6, i64 noundef %i.cj) #35 ; 0 uses
+  %i.ck = call noundef ptr @_ZN4llvm4bolt14BinaryFunction21addEntryPointAtOffsetEm(ptr noundef nonnull align 8 dereferenceable(1360) %5, i64 noundef %i.cj) #35 ; 0 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %.critedge, %_ZNK4llvm9StringRef11starts_withES0_.exit
@@ -439,7 +439,7 @@ bb.p:                                             ; preds = %bb.n
 _ZN4llvm11raw_ostreamlsEPKc.exit:                 ; preds = %bb.o, %bb.p
   %.0.i.i = phi ptr [ %i.dn, %bb.o ], [ %i.de, %bb.p ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #35
-  call void @_ZNK4llvm4bolt14BinaryFunction12getPrintNameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %3, ptr noundef nonnull align 8 dereferenceable(1360) %6)
+  call void @_ZNK4llvm4bolt14BinaryFunction12getPrintNameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %3, ptr noundef nonnull align 8 dereferenceable(1360) %5)
   %i.dq = load ptr, ptr %3, align 8, !tbaa !185
   %i.dr = load i64, ptr %i.l, align 8, !tbaa !332
   %i.ds = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i, ptr noundef %i.dq, i64 noundef %i.dr) #35 ; 0 uses
@@ -529,7 +529,7 @@ bb.x:                                             ; preds = %bb.v
 _ZN4llvm11raw_ostreamlsEPKc.exit62:               ; preds = %bb.w, %bb.x
   %.0.i.i61 = phi ptr [ %i.fb, %bb.w ], [ %i.es, %bb.x ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #35
-  call void @_ZNK4llvm4bolt14BinaryFunction12getPrintNameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %2, ptr noundef nonnull align 8 dereferenceable(1360) %6)
+  call void @_ZNK4llvm4bolt14BinaryFunction12getPrintNameB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %2, ptr noundef nonnull align 8 dereferenceable(1360) %5)
   %i.fe = load ptr, ptr %2, align 8, !tbaa !185
   %i.ff = load i64, ptr %i.j, align 8, !tbaa !332
   %i.fg = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %.0.i.i61, ptr noundef %i.fe, i64 noundef %i.ff) #35 ; 0 uses

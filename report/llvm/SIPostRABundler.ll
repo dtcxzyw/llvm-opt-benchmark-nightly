@@ -204,7 +204,7 @@ bb.au:                                            ; preds = %bb.as, %bb.at
   %.not194 = icmp eq ptr %i.cv, %i.ar
   br i1 %.not194, label %_ZNK12_GLOBAL__N_115SIPostRABundler9canBundleERKN4llvm12MachineInstrES4_.exit.thread._crit_edge, label %.preheader, !llvm.loop !183
 
-_ZNK12_GLOBAL__N_115SIPostRABundler9canBundleERKN4llvm12MachineInstrES4_.exit.thread._crit_edge: ; preds = %bb.au, %bb.at, %_ZNK12_GLOBAL__N_115SIPostRABundler9canBundleERKN4llvm12MachineInstrES4_.exit.thread
+_ZNK12_GLOBAL__N_115SIPostRABundler9canBundleERKN4llvm12MachineInstrES4_.exit.thread._crit_edge: ; preds = %_ZNK12_GLOBAL__N_115SIPostRABundler9canBundleERKN4llvm12MachineInstrES4_.exit.thread, %bb.at, %bb.au
   %.sroa.0146.0.lcssa.ph = phi ptr [ %.sroa.0146.1, %bb.au ], [ %.sroa.0146.0216, %bb.at ], [ %.sroa.0146.0216, %_ZNK12_GLOBAL__N_115SIPostRABundler9canBundleERKN4llvm12MachineInstrES4_.exit.thread ]
   %.033.lcssa.ph = phi i32 [ %.134, %bb.au ], [ %.033217, %bb.at ], [ %.033217, %_ZNK12_GLOBAL__N_115SIPostRABundler9canBundleERKN4llvm12MachineInstrES4_.exit.thread ]
   %i.kc = icmp ugt i32 %.033.lcssa.ph, 1

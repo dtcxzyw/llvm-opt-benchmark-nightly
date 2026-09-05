@@ -205,8 +205,8 @@ _ZN4llvm16TargetSchedModelC2ERKS0_.exit.i:        ; preds = %.sink.split.i.i.i.i
   %i.yl = load ptr, ptr %i.yk, align 8, !tbaa !117
   %i.ym = getelementptr inbounds nuw i8, ptr %i.yl, i64 4
   %i.yn = load i32, ptr %i.ym, align 4, !tbaa !118
-  %16 = load ptr, ptr %i.wz, align 8, !tbaa !127  ; 2 uses
   %.fr.i = freeze i32 %i.yn                       ; 4 uses
+  %16 = load ptr, ptr %i.wz, align 8, !tbaa !127  ; 2 uses
   %.not8492.i = icmp eq ptr %16, %i.xw
   br i1 %.not8492.i, label %.thread.i101, label %.lr.ph95.i
 

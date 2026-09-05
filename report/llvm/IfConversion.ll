@@ -204,6 +204,11 @@ bb.ki:                                            ; preds = %bb.kh
   %.not.i65.i = icmp eq i16 %i.bri, 0
   br i1 %.not.i65.i, label %.preheader.preheader.i.i, label %.split.i
 
+.split.i:                                         ; preds = %bb.ki
+  %34 = and i16 %.val63.i, 64
+  %.not5.i.i = icmp eq i16 %34, 0
+  br i1 %.not5.i.i, label %_ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit.thread.i, label %_ZNK4llvm17MachineBasicBlock15hasAddressTakenEv.exit.i155
+
 .preheader.preheader.i.i:                         ; preds = %bb.ki
   %i.brj = getelementptr inbounds nuw i8, ptr %.val64.i, i64 8
   %i.brk = load ptr, ptr %i.brj, align 8, !tbaa !322 ; 2 uses
@@ -213,11 +218,6 @@ bb.ki:                                            ; preds = %bb.kh
   %i.bro = icmp eq ptr %i.brk, %i.brn
   br i1 %i.bro, label %_ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit.thread.i, label %_ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit.i
 
-.split.i:                                         ; preds = %bb.ki
-  %34 = and i16 %.val63.i, 64
-  %.not5.i.i = icmp eq i16 %34, 0
-  br i1 %.not5.i.i, label %_ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit.thread.i, label %_ZNK4llvm17MachineBasicBlock15hasAddressTakenEv.exit.i155
-
 _ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit.i: ; preds = %.preheader.preheader.i.i
   %i.brp = call noundef zeroext i1 @_ZNK4llvm17MachineBasicBlock11isSuccessorEPKS0_(ptr noundef nonnull align 8 dereferenceable(360) %.val64.i, ptr noundef nonnull %i.brk) #23
   br i1 %i.brp, label %_ZNK4llvm17MachineBasicBlock15hasAddressTakenEv.exit.i155, label %_ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit._ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit.thread_crit_edge.i
@@ -226,7 +226,7 @@ _ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit._ZNK12
   %.pre78.i = load ptr, ptr %i.brh, align 8, !tbaa !381
   br label %_ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit.thread.i
 
-_ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit.thread.i: ; preds = %_ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit._ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit.thread_crit_edge.i, %.split.i, %.preheader.preheader.i.i
+_ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit.thread.i: ; preds = %_ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit._ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit.thread_crit_edge.i, %.preheader.preheader.i.i, %.split.i
   %i.brq = phi ptr [ %.pre78.i, %_ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit._ZNK12_GLOBAL__N_111IfConverter21blockNeverFallThroughERNS0_6BBInfoE.exit.thread_crit_edge.i ], [ %.val64.i, %.preheader.preheader.i.i ], [ %.val64.i, %.split.i ] ; 3 uses
   %i.brr = getelementptr inbounds nuw i8, ptr %i.brq, i64 217
   %i.brs = load i8, ptr %i.brr, align 1, !tbaa !411, !range !36, !noundef !37
@@ -629,6 +629,11 @@ bb.a:
   %.not = icmp eq i16 %i.a, 0
   br i1 %.not, label %.preheader.preheader, label %0
 
+0:                                                ; preds = %bb.a
+  %1 = and i16 %.0.val, 64
+  %.not5 = icmp eq i16 %1, 0
+  br label %.critedge
+
 .preheader.preheader:                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %.16.val, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !322  ; 2 uses
@@ -637,11 +642,6 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 296
   %i.g = icmp eq ptr %i.c, %i.f
   br i1 %i.g, label %.critedge, label %bb.b
-
-0:                                                ; preds = %bb.a
-  %1 = and i16 %.0.val, 64
-  %.not5 = icmp eq i16 %1, 0
-  br label %.critedge
 
 bb.b:                                             ; preds = %.preheader.preheader
   %i.h = tail call noundef zeroext i1 @_ZNK4llvm17MachineBasicBlock11isSuccessorEPKS0_(ptr noundef nonnull align 8 dereferenceable(360) %.16.val, ptr noundef nonnull %i.c) #23

@@ -204,8 +204,8 @@ bb.fl:                                            ; preds = %_ZN2cv3PtrINS_3dnn1
 
 .noexc3215:                                       ; preds = %bb.fl
   %.pre.i.i.i.i.i.i.i = load i32, ptr %i.ala, align 4, !tbaa !31
-  %139 = getelementptr inbounds nuw i8, ptr %i.ale, i64 4 ; 2 uses
   store i32 %.pre.i.i.i.i.i.i.i, ptr %i.ale, align 4, !tbaa !31
+  %139 = getelementptr inbounds nuw i8, ptr %i.ale, i64 4 ; 2 uses
   %i.alf = load ptr, ptr %13, align 8, !tbaa !49  ; 3 uses
   %i.alg = load ptr, ptr %i.cb, align 8, !tbaa !99
   store ptr %i.ale, ptr %13, align 8, !tbaa !49
@@ -228,8 +228,8 @@ bb.fn:                                            ; preds = %_ZN2cv3PtrINS_3dnn1
   br i1 %i.all, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN2cv3dnn14dnn5_v202606053ArgESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.i, label %.lr.ph.i.i.i.i18.i
 
 _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN2cv3dnn14dnn5_v202606053ArgESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.i: ; preds = %bb.fn
-  %140 = getelementptr inbounds nuw i8, ptr %i.alk, i64 4
   store i32 %.pre.i.i.i.i13.i, ptr %i.alk, align 4, !tbaa !31
+  %140 = getelementptr inbounds nuw i8, ptr %i.alk, i64 4
   store ptr %140, ptr %i.bg, align 8, !tbaa !48
   br label %_ZNSt6vectorIN2cv3dnn14dnn5_v202606053ArgESaIS3_EE6assignEmRKS3_.exit
 
@@ -632,8 +632,8 @@ bb.ii:                                            ; preds = %_ZN2cv3PtrINS_3dnn1
 
 .noexc3243:                                       ; preds = %bb.ii
   %.pre.i.i.i.i.i.i.i3236 = load i32, ptr %i.axr, align 4, !tbaa !31
-  %141 = getelementptr inbounds nuw i8, ptr %i.axv, i64 4 ; 2 uses
   store i32 %.pre.i.i.i.i.i.i.i3236, ptr %i.axv, align 4, !tbaa !31
+  %141 = getelementptr inbounds nuw i8, ptr %i.axv, i64 4 ; 2 uses
   %i.axw = load ptr, ptr %13, align 8, !tbaa !49  ; 3 uses
   %i.axx = load ptr, ptr %i.cb, align 8, !tbaa !99
   store ptr %i.axv, ptr %13, align 8, !tbaa !49
@@ -656,8 +656,8 @@ bb.ik:                                            ; preds = %_ZN2cv3PtrINS_3dnn1
   br i1 %i.ayc, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN2cv3dnn14dnn5_v202606053ArgESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.i3229, label %.lr.ph.i.i.i.i18.i3217
 
 _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPN2cv3dnn14dnn5_v202606053ArgESt6vectorIS5_SaIS5_EEEES5_EvT_SB_RKT0_.exit.i3229: ; preds = %bb.ik
-  %142 = getelementptr inbounds nuw i8, ptr %i.ayb, i64 4
   store i32 %.pre.i.i.i.i13.i3230, ptr %i.ayb, align 4, !tbaa !31
+  %142 = getelementptr inbounds nuw i8, ptr %i.ayb, i64 4
   store ptr %142, ptr %i.bg, align 8, !tbaa !48
   br label %_ZNSt6vectorIN2cv3dnn14dnn5_v202606053ArgESaIS3_EE6assignEmRKS3_.exit2594
 

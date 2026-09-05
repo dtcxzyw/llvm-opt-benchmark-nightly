@@ -205,11 +205,11 @@ bb.a:
   %i.m = call noundef ptr @_ZN4mlir14StorageUniquer16getSingletonImplENS_6TypeIDE(ptr noundef nonnull align 8 dereferenceable(8) %i.l, ptr nonnull @_ZN4mlir6detail14TypeIDResolverINS_9transform9AnyOpTypeEvE2idE) #29
   %i.n = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 4 uses
   store ptr %i.n, ptr %8, align 8, !tbaa !109
+  %14 = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.o = getelementptr inbounds nuw i8, ptr %8, i64 12
   store i32 6, ptr %i.o, align 4, !tbaa !111
   %i.p = ptrtoint ptr %i.m to i64
   store i64 %i.p, ptr %i.n, align 8, !tbaa !237
-  %14 = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i32 1, ptr %14, align 8, !tbaa !110
   call void @_ZN4mlir9TypeRangeC2EN4llvm8ArrayRefINS_4TypeEEE(ptr noundef nonnull align 8 dereferenceable(16) %9, ptr nonnull %i.n, i64 1) #29
   store ptr %i.b, ptr %10, align 8, !tbaa !233
@@ -269,11 +269,11 @@ define dso_local void @_ZN4mlir9transform6FuseOp5buildERNS_9OpBuilderERNS_14Oper
   %i.c = tail call noundef ptr @_ZN4mlir14StorageUniquer16getSingletonImplENS_6TypeIDE(ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr nonnull @_ZN4mlir6detail14TypeIDResolverINS_9transform9AnyOpTypeEvE2idE) #29
   %i.d = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 4 uses
   store ptr %i.d, ptr %8, align 8, !tbaa !109
+  %11 = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %8, i64 12
   store i32 6, ptr %i.e, align 4, !tbaa !111
   %i.f = ptrtoint ptr %i.c to i64
   store i64 %i.f, ptr %i.d, align 8, !tbaa !237
-  %11 = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i32 1, ptr %11, align 8, !tbaa !110
   call void @_ZN4mlir9TypeRangeC2EN4llvm8ArrayRefINS_4TypeEEE(ptr noundef nonnull align 8 dereferenceable(16) %9, ptr nonnull %i.d, i64 1) #29
   store ptr %3, ptr %10, align 8, !tbaa !233
@@ -676,11 +676,11 @@ bb.a:
   %i.h = call noundef ptr @_ZN4mlir14StorageUniquer16getSingletonImplENS_6TypeIDE(ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr nonnull @_ZN4mlir6detail14TypeIDResolverINS_9transform9AnyOpTypeEvE2idE) #29
   %i.i = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 4 uses
   store ptr %i.i, ptr %7, align 8, !tbaa !109
+  %11 = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.j = getelementptr inbounds nuw i8, ptr %7, i64 12
   store i32 6, ptr %i.j, align 4, !tbaa !111
   %i.k = ptrtoint ptr %i.h to i64
   store i64 %i.k, ptr %i.i, align 8, !tbaa !237
-  %11 = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i32 1, ptr %11, align 8, !tbaa !110
   call void @_ZN4mlir9TypeRangeC2EN4llvm8ArrayRefINS_4TypeEEE(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr nonnull %i.i, i64 1) #29
   store ptr %i.b, ptr %9, align 8, !tbaa !233
@@ -728,11 +728,11 @@ define dso_local void @_ZN4mlir9transform14TileUsingForOp5buildERNS_9OpBuilderER
   %i.c = tail call noundef ptr @_ZN4mlir14StorageUniquer16getSingletonImplENS_6TypeIDE(ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr nonnull @_ZN4mlir6detail14TypeIDResolverINS_9transform9AnyOpTypeEvE2idE) #29
   %i.d = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 4 uses
   store ptr %i.d, ptr %7, align 8, !tbaa !109
+  %10 = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %7, i64 12
   store i32 6, ptr %i.e, align 4, !tbaa !111
   %i.f = ptrtoint ptr %i.c to i64
   store i64 %i.f, ptr %i.d, align 8, !tbaa !237
-  %10 = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i32 1, ptr %10, align 8, !tbaa !110
   call void @_ZN4mlir9TypeRangeC2EN4llvm8ArrayRefINS_4TypeEEE(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr nonnull %i.d, i64 1) #29
   store ptr %3, ptr %9, align 8, !tbaa !233
@@ -1135,11 +1135,11 @@ bb.a:
   %i.c = call noundef ptr @_ZN4mlir14StorageUniquer16getSingletonImplENS_6TypeIDE(ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr nonnull @_ZN4mlir6detail14TypeIDResolverINS_9transform9AnyOpTypeEvE2idE) #29
   %i.d = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 4 uses
   store ptr %i.d, ptr %8, align 8, !tbaa !109
+  %12 = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %8, i64 12
   store i32 6, ptr %i.e, align 4, !tbaa !111
   %i.f = ptrtoint ptr %i.c to i64
   store i64 %i.f, ptr %i.d, align 8, !tbaa !237
-  %12 = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i32 1, ptr %12, align 8, !tbaa !110
   call void @_ZN4mlir9TypeRangeC2EN4llvm8ArrayRefINS_4TypeEEE(ptr noundef nonnull align 8 dereferenceable(16) %9, ptr nonnull %i.d, i64 1) #29
   store ptr %3, ptr %10, align 8, !tbaa !233
@@ -1542,11 +1542,11 @@ bb.a:
   %i.c = call noundef ptr @_ZN4mlir14StorageUniquer16getSingletonImplENS_6TypeIDE(ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr nonnull @_ZN4mlir6detail14TypeIDResolverINS_9transform9AnyOpTypeEvE2idE) #29
   %i.d = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 4 uses
   store ptr %i.d, ptr %7, align 8, !tbaa !109
+  %11 = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %7, i64 12
   store i32 6, ptr %i.e, align 4, !tbaa !111
   %i.f = ptrtoint ptr %i.c to i64
   store i64 %i.f, ptr %i.d, align 8, !tbaa !237
-  %11 = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i32 1, ptr %11, align 8, !tbaa !110
   call void @_ZN4mlir9TypeRangeC2EN4llvm8ArrayRefINS_4TypeEEE(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr nonnull %i.d, i64 1) #29
   store ptr %3, ptr %9, align 8, !tbaa !233

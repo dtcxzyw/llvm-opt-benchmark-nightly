@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.f
   %.pre136 = load ptr, ptr %.phi.trans.insert135, align 8, !tbaa !122 ; 3 uses
   %i.ax = icmp eq ptr %.pre136, %i.q
   %or.cond = select i1 %i.aw, i1 %i.ax, i1 false
-  br i1 %or.cond, label %bb.l, label %_ZN4mlir6Region11hasOneBlockEv.exit.thread
+  br i1 %or.cond, label %bb.l, label %.preheader.preheader
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
@@ -241,22 +241,14 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit55:          ; preds = %bb.n, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   br label %bb.ad
 
-_ZN4mlir6Region11hasOneBlockEv.exit.thread:       ; preds = %bb.k
-  %19 = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %.pre136, i64 8
-  %21 = load ptr, ptr %20, align 8, !tbaa !122
-  %22 = icmp eq ptr %21, %i.q
-  br i1 %22, label %bb.p, label %.preheader.preheader
+.preheader.preheader:                             ; preds = %bb.k
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 2 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %.pre136, i64 8
+  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !122
+  %.not.i.i62.a = icmp eq ptr %i.bi, %i.q
+  br i1 %.not.i.i62.a, label %bb.p, label %.preheader
 
-.preheader.preheader:                             ; preds = %_ZN4mlir6Region11hasOneBlockEv.exit.thread
-  %i.bg = getelementptr inbounds i8, ptr %.pre136, i64 -8 ; 3 uses
-  %i.bh = getelementptr inbounds nuw i8, ptr %.pre, i64 40
-  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !122 ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %.pre, i64 32 ; 3 uses
-  %.not.i.i62.a = icmp eq ptr %i.bi, %23
-  br i1 %.not.i.i62.a, label %_ZN4mlir5spirvL16hasOneBranchOpToERNS_5BlockES2_.exit.thread, label %_ZN4llvm16hasSingleElementIRN4mlir5BlockEEEbOT_.exit.i63
-
-bb.p:                                             ; preds = %_ZN4mlir6Region11hasOneBlockEv.exit.thread
+bb.p:                                             ; preds = %.preheader.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #16
   %i.bj = getelementptr inbounds nuw i8, ptr %8, i64 32
@@ -291,14 +283,22 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit57:          ; preds = %bb.r, %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
   br label %bb.ad
 
-_ZN4llvm16hasSingleElementIRN4mlir5BlockEEEbOT_.exit.i63: ; preds = %.preheader.preheader
-  %i.br = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
+.preheader:                                       ; preds = %.preheader.preheader
+  %19 = getelementptr inbounds i8, ptr %.pre136, i64 -8 ; 3 uses
+  %20 = getelementptr inbounds nuw i8, ptr %.pre, i64 40
+  %21 = load ptr, ptr %20, align 8, !tbaa !122    ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %.pre, i64 32 ; 3 uses
+  %.not.i.i62 = icmp eq ptr %21, %22
+  br i1 %.not.i.i62, label %_ZN4mlir5spirvL16hasOneBranchOpToERNS_5BlockES2_.exit.thread, label %_ZN4llvm16hasSingleElementIRN4mlir5BlockEEEbOT_.exit.i63
+
+_ZN4llvm16hasSingleElementIRN4mlir5BlockEEEbOT_.exit.i63: ; preds = %.preheader
+  %i.br = getelementptr inbounds nuw i8, ptr %21, i64 8
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !122
-  %i.bt = icmp eq ptr %i.bs, %23
+  %i.bt = icmp eq ptr %i.bs, %22
   br i1 %i.bt, label %bb.t, label %_ZN4mlir5spirvL16hasOneBranchOpToERNS_5BlockES2_.exit.thread
 
 bb.t:                                             ; preds = %_ZN4llvm16hasSingleElementIRN4mlir5BlockEEEbOT_.exit.i63
-  %i.bu = load ptr, ptr %23, align 8, !tbaa !121
+  %i.bu = load ptr, ptr %22, align 8, !tbaa !121
   %i.bv = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEEE11getValuePtrEPNS_15ilist_node_implIS5_EE(ptr noundef %i.bu) #16 ; 3 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 48
   %.sroa.0.0.copyload.i.i.i.i.i.i.i64 = load ptr, ptr %i.bw, align 8, !tbaa !29
@@ -320,10 +320,10 @@ _ZN4mlir5spirvL16hasOneBranchOpToERNS_5BlockES2_.exit: ; preds = %bb.t
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ce, i64 %i.ch
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 88
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !80
-  %i.cl = icmp eq ptr %i.ck, %i.bg
+  %i.cl = icmp eq ptr %i.ck, %19
   br i1 %i.cl, label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsIN4mlir5BlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit68, label %_ZN4mlir5spirvL16hasOneBranchOpToERNS_5BlockES2_.exit.thread
 
-_ZN4mlir5spirvL16hasOneBranchOpToERNS_5BlockES2_.exit.thread: ; preds = %.preheader.preheader, %bb.t, %_ZN4llvm16hasSingleElementIRN4mlir5BlockEEEbOT_.exit.i63, %_ZN4mlir5spirvL16hasOneBranchOpToERNS_5BlockES2_.exit
+_ZN4mlir5spirvL16hasOneBranchOpToERNS_5BlockES2_.exit.thread: ; preds = %.preheader, %bb.t, %_ZN4llvm16hasSingleElementIRN4mlir5BlockEEEbOT_.exit.i63, %_ZN4mlir5spirvL16hasOneBranchOpToERNS_5BlockES2_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #16
   %i.cm = getelementptr inbounds nuw i8, ptr %10, i64 32
@@ -339,7 +339,7 @@ _ZN4mlir5spirvL16hasOneBranchOpToERNS_5BlockES2_.exit.thread: ; preds = %.prehea
   br label %bb.ad
 
 _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsIN4mlir5BlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit68: ; preds = %_ZN4mlir5spirvL16hasOneBranchOpToERNS_5BlockES2_.exit
-  %i.cp = load ptr, ptr %19, align 8, !tbaa !122
+  %i.cp = load ptr, ptr %i.bg, align 8, !tbaa !122
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !122
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
@@ -355,7 +355,7 @@ _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsIN4mlir5Bl
   %i.cz = getelementptr inbounds i8, ptr %i.cy, i64 -8 ; 2 uses
   %i.da = tail call noundef i32 @_ZN4mlir5Block16getNumSuccessorsEv(ptr noundef nonnull align 8 dereferenceable(80) %i.cz) #16
   %i.db = zext i32 %i.da to i64
-  %i.dc = tail call fastcc noundef zeroext i1 @"_ZN4llvm7none_ofINS_10iota_rangeIjEEZN4mlir5spirv6LoopOp13verifyRegionsEvE3$_0EEbOT_T0_"(i64 0, i64 %i.db, ptr %i.cz, ptr %i.bg)
+  %i.dc = tail call fastcc noundef zeroext i1 @"_ZN4llvm7none_ofINS_10iota_rangeIjEEZN4mlir5spirv6LoopOp13verifyRegionsEvE3$_0EEbOT_T0_"(i64 0, i64 %i.db, ptr %i.cz, ptr %19)
   br i1 %i.dc, label %bb.v, label %.lr.ph.i76.preheader
 
 bb.u:                                             ; preds = %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsIN4mlir5BlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit68
@@ -389,7 +389,7 @@ bb.v:                                             ; preds = %.lr.ph.i.preheader
   br label %bb.ad
 
 .lr.ph.i76.preheader:                             ; preds = %.lr.ph.i.preheader
-  %i.dj = load ptr, ptr %19, align 8, !tbaa !122
+  %i.dj = load ptr, ptr %i.bg, align 8, !tbaa !122
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
   %i.dl = load ptr, ptr %i.dk, align 8, !tbaa !122
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 8
@@ -416,7 +416,7 @@ bb.w:                                             ; preds = %.lr.ph
   %.sroa.088.0126 = phi i64 [ %i.dt, %bb.w ], [ 0, %.lr.ph129 ] ; 2 uses
   %i.du = trunc i64 %.sroa.088.0126 to i32
   %i.dv = tail call noundef ptr @_ZN4mlir5Block12getSuccessorEj(ptr noundef nonnull align 8 dereferenceable(80) %i.dq, i32 noundef %i.du) #16
-  %.not = icmp eq ptr %i.dv, %i.bg
+  %.not = icmp eq ptr %i.dv, %19
   br i1 %.not, label %bb.x, label %bb.w
 
 bb.x:                                             ; preds = %.lr.ph

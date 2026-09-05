@@ -202,46 +202,46 @@ _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12Mac
   %i.ba = and i64 %.0.copyload.i.i.i.i.i.i.i, -8
   %i.bb = inttoptr i64 %i.ba to ptr
   %.0.copyload.i.i.i.i.i.i29.i = load i64, ptr %i.bb, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %.sroa.067.0109.i, i64 8
-  %11 = load ptr, ptr %10, align 8, !tbaa !199    ; 5 uses
-  %12 = and i64 %.0.copyload.i.i.i.i.i.i29.i, -8
-  %13 = inttoptr i64 %12 to ptr                   ; 7 uses
-  %i.bc = icmp eq ptr %.sroa.067.0109.i, %13
-  %i.bd = icmp eq ptr %11, %.sroa.067.0109.i
+  %10 = and i64 %.0.copyload.i.i.i.i.i.i29.i, -8
+  %11 = inttoptr i64 %10 to ptr                   ; 7 uses
+  %12 = getelementptr inbounds nuw i8, ptr %.sroa.067.0109.i, i64 8
+  %13 = load ptr, ptr %12, align 8, !tbaa !199    ; 5 uses
+  %i.bc = icmp eq ptr %.sroa.067.0109.i, %11
+  %i.bd = icmp eq ptr %13, %.sroa.067.0109.i
   %or.cond.i.i.i = select i1 %i.bc, i1 true, i1 %i.bd
   br i1 %or.cond.i.i.i, label %_ZN4llvm17MachineBasicBlock6spliceENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEEPS0_S3_S3_.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i
-  call void @_ZN4llvm12ilist_traitsINS_12MachineInstrEE21transferNodesFromListERS2_NS_14ilist_iteratorINS_12ilist_detail12node_optionsIS1_Lb1ELb1EvLb0EvEELb0ELb0EEES8_(ptr noundef nonnull align 8 dereferenceable(24) %i.aq, ptr noundef nonnull align 8 dereferenceable(24) %i.aq, ptr %13, ptr nonnull %.sroa.067.0109.i) #15
+  call void @_ZN4llvm12ilist_traitsINS_12MachineInstrEE21transferNodesFromListERS2_NS_14ilist_iteratorINS_12ilist_detail12node_optionsIS1_Lb1ELb1EvLb0EvEELb0ELb0EEES8_(ptr noundef nonnull align 8 dereferenceable(24) %i.aq, ptr noundef nonnull align 8 dereferenceable(24) %i.aq, ptr %11, ptr nonnull %.sroa.067.0109.i) #15
   %.0.copyload.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %.sroa.067.0109.i, align 8
   %i.be = and i64 %.0.copyload.i.i.i.i.i.i.i.i.i.i.i, -8 ; 2 uses
   %i.bf = inttoptr i64 %i.be to ptr
-  %.0.copyload.i.i.i.i20.i.i.i.i.i.i.i = load i64, ptr %13, align 8
+  %.0.copyload.i.i.i.i20.i.i.i.i.i.i.i = load i64, ptr %11, align 8
   %i.bg = and i64 %.0.copyload.i.i.i.i20.i.i.i.i.i.i.i, -8
   %i.bh = inttoptr i64 %i.bg to ptr
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   store ptr %.sroa.067.0109.i, ptr %i.bi, align 8, !tbaa !199
-  %.0.copyload.i.i.i.i21.i.i.i.i.i.i.i = load i64, ptr %13, align 8
+  %.0.copyload.i.i.i.i21.i.i.i.i.i.i.i = load i64, ptr %11, align 8
   %i.bj = and i64 %.0.copyload.i.i.i.i21.i.i.i.i.i.i.i, -8
   %.0.copyload.i.i.i.i22.i.i.i.i.i.i.i = load i64, ptr %.sroa.067.0109.i, align 8
   %i.bk = and i64 %.0.copyload.i.i.i.i22.i.i.i.i.i.i.i, 7
   %i.bl = or disjoint i64 %i.bk, %i.bj
   store i64 %i.bl, ptr %.sroa.067.0109.i, align 8
-  %.0.copyload.i.i.i.i23.i.i.i.i.i.i.i = load i64, ptr %11, align 8
+  %.0.copyload.i.i.i.i23.i.i.i.i.i.i.i = load i64, ptr %13, align 8
   %i.bm = and i64 %.0.copyload.i.i.i.i23.i.i.i.i.i.i.i, -8 ; 2 uses
   %i.bn = inttoptr i64 %i.bm to ptr
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
-  store ptr %11, ptr %i.bo, align 8, !tbaa !199
-  %.0.copyload.i.i.i.i24.i.i.i.i.i.i.i = load i64, ptr %13, align 8
+  store ptr %13, ptr %i.bo, align 8, !tbaa !199
+  %.0.copyload.i.i.i.i24.i.i.i.i.i.i.i = load i64, ptr %11, align 8
   %i.bp = and i64 %.0.copyload.i.i.i.i24.i.i.i.i.i.i.i, 7
   %i.bq = or disjoint i64 %i.bp, %i.bm
-  store i64 %i.bq, ptr %13, align 8
+  store i64 %i.bq, ptr %11, align 8
   %i.br = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
-  store ptr %13, ptr %i.br, align 8, !tbaa !199
-  %.0.copyload.i.i.i.i25.i.i.i.i.i.i.i = load i64, ptr %11, align 8
+  store ptr %11, ptr %i.br, align 8, !tbaa !199
+  %.0.copyload.i.i.i.i25.i.i.i.i.i.i.i = load i64, ptr %13, align 8
   %i.bs = and i64 %.0.copyload.i.i.i.i25.i.i.i.i.i.i.i, 7
   %i.bt = or disjoint i64 %i.bs, %i.be
-  store i64 %i.bt, ptr %11, align 8
+  store i64 %i.bt, ptr %13, align 8
   br label %_ZN4llvm17MachineBasicBlock6spliceENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEEPS0_S3_S3_.exit.i
 
 bb.f:                                             ; preds = %bb.d

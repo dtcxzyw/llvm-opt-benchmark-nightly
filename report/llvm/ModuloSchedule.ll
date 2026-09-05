@@ -204,23 +204,23 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_17MachineBasicBlockELb1EE9push_backES2_.ex
   %i.aez = load ptr, ptr %i.aey, align 8, !tbaa !110 ; 3 uses
   %i.afa = getelementptr inbounds nuw i8, ptr %i.aez, i64 48
   %.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %i.afa, align 8
+  %.sroa.0296.0.in595 = and i64 %.0.copyload.i.i.i.i.i.i.i.i, -8 ; 2 uses
   %10 = call ptr @_ZN4llvm17MachineBasicBlock14getFirstNonPHIEv(ptr noundef nonnull align 8 dereferenceable(360) %i.aez) #19
   %.0.copyload.i.i.i.i.i.i.i596 = load i64, ptr %10, align 8
-  %11 = and i64 %.0.copyload.i.i.i.i.i.i.i596, -8
-  %.sroa.0296.0.in597 = and i64 %.0.copyload.i.i.i.i.i.i.i.i, -8 ; 2 uses
-  %.not338598 = icmp eq i64 %.sroa.0296.0.in597, %11
+  %.sroa.0296.0.in597 = and i64 %.0.copyload.i.i.i.i.i.i.i596, -8
+  %.not338598 = icmp eq i64 %.sroa.0296.0.in595, %.sroa.0296.0.in597
   br i1 %.not338598, label %.loopexit, label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb1ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit
 
 _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb1ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %.lr.ph397, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb1ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit
-  %.sroa.0296.0.in599 = phi i64 [ %.sroa.0296.0.in.a, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb1ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit ], [ %.sroa.0296.0.in597, %.lr.ph397 ]
+  %.sroa.0296.0.in599 = phi i64 [ %.sroa.0296.0.in, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb1ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit ], [ %.sroa.0296.0.in595, %.lr.ph397 ]
   %.sroa.0296.0 = inttoptr i64 %.sroa.0296.0.in599 to ptr ; 2 uses
   %.0.copyload.i.i.i.i.i.i.i214 = load i64, ptr %.sroa.0296.0, align 8
   call void @_ZN4llvm29PeelingModuloScheduleExpander13rewriteUsesOfEPNS_12MachineInstrE(ptr noundef nonnull align 8 dereferenceable(496) %0, ptr noundef nonnull %.sroa.0296.0)
+  %.sroa.0296.0.in = and i64 %.0.copyload.i.i.i.i.i.i.i214, -8 ; 2 uses
   %i.afb = call ptr @_ZN4llvm17MachineBasicBlock14getFirstNonPHIEv(ptr noundef nonnull align 8 dereferenceable(360) %i.aez) #19
   %.0.copyload.i.i.i.i.i.i.i = load i64, ptr %i.afb, align 8
-  %12 = and i64 %.0.copyload.i.i.i.i.i.i.i, -8
-  %.sroa.0296.0.in.a = and i64 %.0.copyload.i.i.i.i.i.i.i214, -8 ; 2 uses
-  %.not338 = icmp eq i64 %.sroa.0296.0.in.a, %12
+  %.sroa.0296.0.in.a = and i64 %.0.copyload.i.i.i.i.i.i.i, -8
+  %.not338 = icmp eq i64 %.sroa.0296.0.in, %.sroa.0296.0.in.a
   br i1 %.not338, label %.loopexit, label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb1ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit, !llvm.loop !1510
 
 ._crit_edge403:                                   ; preds = %bb.db, %._crit_edge398
@@ -623,9 +623,9 @@ _ZNK4llvm11SlotIndexes14getIndexBeforeERKNS_12MachineInstrE.exit: ; preds = %.sp
   %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !201
   br label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_14IndexListEntryELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit
 
-_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_14IndexListEntryELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %_ZNK4llvm11SlotIndexes14getIndexBeforeERKNS_12MachineInstrE.exit, %_ZNK4llvm11SlotIndexes13getIndexAfterERKNS_12MachineInstrE.exit
-  %.sroa.038.0 = phi ptr [ %i.bg, %_ZNK4llvm11SlotIndexes13getIndexAfterERKNS_12MachineInstrE.exit ], [ %i.dq, %_ZNK4llvm11SlotIndexes14getIndexBeforeERKNS_12MachineInstrE.exit ] ; 4 uses
-  %.sroa.039.0 = phi ptr [ %i.bh, %_ZNK4llvm11SlotIndexes13getIndexAfterERKNS_12MachineInstrE.exit ], [ %i.do, %_ZNK4llvm11SlotIndexes14getIndexBeforeERKNS_12MachineInstrE.exit ]
+_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_14IndexListEntryELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %_ZNK4llvm11SlotIndexes13getIndexAfterERKNS_12MachineInstrE.exit, %_ZNK4llvm11SlotIndexes14getIndexBeforeERKNS_12MachineInstrE.exit
+  %.sroa.038.0 = phi ptr [ %i.dq, %_ZNK4llvm11SlotIndexes14getIndexBeforeERKNS_12MachineInstrE.exit ], [ %i.bg, %_ZNK4llvm11SlotIndexes13getIndexAfterERKNS_12MachineInstrE.exit ] ; 4 uses
+  %.sroa.039.0 = phi ptr [ %i.do, %_ZNK4llvm11SlotIndexes14getIndexBeforeERKNS_12MachineInstrE.exit ], [ %i.bh, %_ZNK4llvm11SlotIndexes13getIndexAfterERKNS_12MachineInstrE.exit ]
   %i.dr = getelementptr inbounds nuw i8, ptr %.sroa.038.0, i64 24
   %i.ds = load i32, ptr %i.dr, align 8, !tbaa !266
   %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.039.0, i64 24

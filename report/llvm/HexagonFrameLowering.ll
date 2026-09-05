@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %40) #27
   br label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_17MachineBasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit
 
-_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_17MachineBasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %bb.g, %bb.f
+_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_17MachineBasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %bb.f, %bb.g
   %i.ec = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !212 ; 6 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
@@ -608,7 +608,7 @@ _ZN4llvm17MachineBasicBlock5eraseEPNS_12MachineInstrE.exit: ; preds = %.lr.ph.i.
   call void @_ZN4llvm18HexagonBlockRanges13InstrIndexMap12replaceInstrEPNS_12MachineInstrES3_(ptr noundef nonnull align 8 dereferenceable(64) %i.afq, ptr noundef nonnull %i.aim, ptr noundef %.0257) #27
   br label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader
 
-_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader: ; preds = %_ZN4llvm17MachineBasicBlock5eraseEPNS_12MachineInstrE.exit, %bb.hb
+_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader: ; preds = %bb.hb, %_ZN4llvm17MachineBasicBlock5eraseEPNS_12MachineInstrE.exit
   %i.anc = getelementptr inbounds nuw i8, ptr %i.ain, i64 8
   %i.and = load ptr, ptr %i.anc, align 8, !tbaa !295 ; 2 uses
   %.not10711188 = icmp eq ptr %i.alj, %i.and

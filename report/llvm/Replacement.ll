@@ -205,18 +205,18 @@ bb.k:                                             ; preds = %.critedge2
   %i.dh = add i32 %.val69, %.val68
   %i.di = icmp ult i32 %.val66, %i.dh
   %i.dj = select i1 %i.dg, i1 %i.di, i1 false
-  br i1 %i.dj, label %.preheader.preheader, label %bb.l
+  br i1 %i.dj, label %bb.l, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.k
-  %17 = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %i.dc) #26 ; 2 uses
-  br label %_ZSt9__advanceISt23_Rb_tree_const_iteratorIN5clang7tooling11ReplacementEElEvRT_T0_St26bidirectional_iterator_tag.exit
-
-bb.l:                                             ; preds = %bb.k
-  %18 = call { ptr, i8 } @_ZNSt8_Rb_treeIN5clang7tooling11ReplacementES2_St9_IdentityIS2_ESt4lessIS2_ESaIS2_EE16_M_insert_uniqueIRKS2_EESt4pairISt17_Rb_tree_iteratorIS2_EbEOT_(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(72) %2) ; 0 uses
+  %17 = call { ptr, i8 } @_ZNSt8_Rb_treeIN5clang7tooling11ReplacementES2_St9_IdentityIS2_ESt4lessIS2_ESaIS2_EE16_M_insert_uniqueIRKS2_EESt4pairISt17_Rb_tree_iteratorIS2_EbEOT_(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(72) %2) ; 0 uses
   br label %_ZN4llvm5ErrorD2Ev.exit116
 
-_ZSt9__advanceISt23_Rb_tree_const_iteratorIN5clang7tooling11ReplacementEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %.preheader.preheader, %bb.m
-  %.sroa.0128.0 = phi ptr [ %i.dk, %bb.m ], [ %i.dc, %.preheader.preheader ] ; 4 uses
+bb.l:                                             ; preds = %bb.k
+  %18 = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %i.dc) #26 ; 2 uses
+  br label %_ZSt9__advanceISt23_Rb_tree_const_iteratorIN5clang7tooling11ReplacementEElEvRT_T0_St26bidirectional_iterator_tag.exit
+
+_ZSt9__advanceISt23_Rb_tree_const_iteratorIN5clang7tooling11ReplacementEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %bb.l, %bb.m
+  %.sroa.0128.0 = phi ptr [ %i.dk, %bb.m ], [ %i.dc, %bb.l ] ; 4 uses
   %.not153 = icmp eq ptr %.sroa.0128.0, %i.cz
   br i1 %.not153, label %bb.n, label %bb.m
 
@@ -242,7 +242,7 @@ bb.n:                                             ; preds = %bb.m, %_ZSt9__advan
   store ptr %i.dr, ptr %i.dt, align 8, !tbaa !174
   %i.du = getelementptr inbounds nuw i8, ptr %15, i64 40
   store i64 0, ptr %i.du, align 8, !tbaa !175
-  call void @_ZNSt8_Rb_treeIN5clang7tooling11ReplacementES2_St9_IdentityIS2_ESt4lessIS2_ESaIS2_EE22_M_insert_range_uniqueISt23_Rb_tree_const_iteratorIS2_EEENSt9enable_ifIXsr17__same_value_typeIT_EE5valueEvE4typeESD_SD_(ptr noundef nonnull align 8 dereferenceable(48) %15, ptr nonnull %.sroa.0128.0, ptr %17)
+  call void @_ZNSt8_Rb_treeIN5clang7tooling11ReplacementES2_St9_IdentityIS2_ESt4lessIS2_ESaIS2_EE22_M_insert_range_uniqueISt23_Rb_tree_const_iteratorIS2_EEENSt9enable_ifIXsr17__same_value_typeIT_EE5valueEvE4typeESD_SD_(ptr noundef nonnull align 8 dereferenceable(48) %15, ptr nonnull %.sroa.0128.0, ptr %18)
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #24
   call void @_ZNK5clang7tooling12Replacements23mergeIfOrderIndependentERKNS0_11ReplacementE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Expected") align 8 %16, ptr noundef nonnull align 8 dereferenceable(48) %15, ptr noundef nonnull align 8 dereferenceable(72) %2)
   %i.dv = getelementptr inbounds nuw i8, ptr %16, i64 48 ; 2 uses
@@ -259,7 +259,7 @@ _ZNSt10unique_ptrIN4llvm13ErrorInfoBaseESt14default_deleteIS1_EED2Ev.exit.i: ; p
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  call void @_ZNSt8_Rb_treeIN5clang7tooling11ReplacementES2_St9_IdentityIS2_ESt4lessIS2_ESaIS2_EE12_M_erase_auxESt23_Rb_tree_const_iteratorIS2_ESA_(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr nonnull %.sroa.0128.0, ptr %17)
+  call void @_ZNSt8_Rb_treeIN5clang7tooling11ReplacementES2_St9_IdentityIS2_ESt4lessIS2_ESaIS2_EE12_M_erase_auxESt23_Rb_tree_const_iteratorIS2_ESA_(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr nonnull %.sroa.0128.0, ptr %18)
   %i.ea = getelementptr inbounds nuw i8, ptr %16, i64 24
   %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !161
   %i.ec = getelementptr inbounds nuw i8, ptr %16, i64 8
@@ -298,7 +298,7 @@ _ZN4llvm8ExpectedIN5clang7tooling12ReplacementsEED2Ev.exit: ; preds = %bb.q, %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #24
   br i1 %i.dx, label %bb.s, label %_ZN4llvm5ErrorD2Ev.exit116
 
-_ZN4llvm5ErrorD2Ev.exit116:                       ; preds = %bb.l, %_ZN4llvm8ExpectedIN5clang7tooling12ReplacementsEED2Ev.exit
+_ZN4llvm5ErrorD2Ev.exit116:                       ; preds = %.preheader.preheader, %_ZN4llvm8ExpectedIN5clang7tooling12ReplacementsEED2Ev.exit
   store ptr null, ptr %0, align 8, !tbaa !291
   br label %bb.s
 

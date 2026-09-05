@@ -204,7 +204,7 @@ _ZN4llvm20filter_iterator_baseIPNS_14MachineOperandEPFbRKS1_ESt26bidirectional_i
   %.not68 = icmp eq ptr %.sroa.050.1, %i.ci
   br i1 %.not68, label %._crit_edge, label %.lr.ph
 
-_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %_ZN4llvm16RegisterOperandsD2Ev.exit, %bb.e
+_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %bb.e, %_ZN4llvm16RegisterOperandsD2Ev.exit
   %i.fp = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   %i.fq = load ptr, ptr %i.fp, align 8, !tbaa !40
   %i.fr = getelementptr inbounds nuw i8, ptr %.sroa.061.078, i64 8 ; 2 uses
@@ -607,7 +607,7 @@ _ZN4llvm20filter_iterator_baseIPNS_14MachineOperandEPFbRKS1_ESt26bidirectional_i
   %.not69 = icmp eq ptr %.sroa.051.1, %i.ci
   br i1 %.not69, label %._crit_edge, label %.lr.ph
 
-_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %_ZN4llvm16RegisterOperandsD2Ev.exit, %bb.e
+_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %bb.e, %_ZN4llvm16RegisterOperandsD2Ev.exit
   %i.fp = getelementptr inbounds nuw i8, ptr %.val36, i64 8
   %i.fq = load ptr, ptr %i.fp, align 8, !tbaa !40
   %i.fr = getelementptr inbounds nuw i8, ptr %.sroa.062.079, i64 8 ; 2 uses
@@ -1010,7 +1010,7 @@ _ZN4llvm20filter_iterator_baseIPNS_14MachineOperandEPFbRKS1_ESt26bidirectional_i
   %.not69 = icmp eq ptr %.sroa.051.1, %i.cg
   br i1 %.not69, label %._crit_edge, label %.lr.ph
 
-_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %_ZN4llvm16RegisterOperandsD2Ev.exit, %bb.e
+_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %bb.e, %_ZN4llvm16RegisterOperandsD2Ev.exit
   %i.fn = getelementptr inbounds nuw i8, ptr %.val36, i64 8
   %i.fo = load ptr, ptr %i.fn, align 8, !tbaa !40
   %i.fp = getelementptr inbounds nuw i8, ptr %.sroa.062.079, i64 264 ; 2 uses

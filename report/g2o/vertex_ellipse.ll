@@ -205,32 +205,28 @@ bb.n:                                             ; preds = %bb.m
 
 .preheader:                                       ; preds = %.critedge.thread
   %i.da = load float, ptr %0, align 4, !tbaa !17  ; 3 uses
-  %i.db = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.dc = load float, ptr %i.db, align 4, !tbaa !17
-  %5 = fcmp uge float %i.dc, %i.da                ; 2 uses
+  %i.db = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
+  %i.dc = load float, ptr %i.db, align 4, !tbaa !17 ; 3 uses
+  %5 = fcmp olt float %i.dc, %i.da                ; 2 uses
   br i1 %3, label %.preheader.split.us.split, label %.preheader.split.split
 
 .preheader.split.us.split:                        ; preds = %.preheader
-  br i1 %5, label %.loopexit, label %bb.o
+  br i1 %5, label %bb.o, label %.loopexit
 
 bb.o:                                             ; preds = %.preheader.split.us.split
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %7 = load float, ptr %6, align 4, !tbaa !17
-  store float %7, ptr %0, align 4, !tbaa !17
-  store float %i.da, ptr %6, align 4, !tbaa !17
+  store float %i.dc, ptr %0, align 4, !tbaa !17
+  store float %i.da, ptr %i.db, align 4, !tbaa !17
   %i.dd = load <4 x float>, ptr %4, align 16, !tbaa !17
   %i.de = shufflevector <4 x float> %i.dd, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
   store <4 x float> %i.de, ptr %4, align 16, !tbaa !17
   br label %.loopexit
 
 .preheader.split.split:                           ; preds = %.preheader
-  br i1 %5, label %.loopexit, label %bb.p
+  br i1 %5, label %bb.p, label %.loopexit
 
 bb.p:                                             ; preds = %.preheader.split.split
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %9 = load float, ptr %8, align 4, !tbaa !17
-  store float %9, ptr %0, align 4, !tbaa !17
-  store float %i.da, ptr %8, align 4, !tbaa !17
+  store float %i.dc, ptr %0, align 4, !tbaa !17
+  store float %i.da, ptr %i.db, align 4, !tbaa !17
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader.split.us.split, %bb.o, %.preheader.split.split, %bb.p, %.critedge.thread

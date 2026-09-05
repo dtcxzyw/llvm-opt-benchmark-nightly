@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %.thread724, %.crite
   %i.fc = getelementptr inbounds nuw i8, ptr %.pre963.pre965.pre.pre.pre, i64 16
   %i.fd = load i32, ptr %i.fc, align 8, !tbaa !30
   %i.fe = icmp ne i32 %i.fd, 5
-  %.not833 = select i1 %i.fe, i1 true, i1 %i.fb
+  %.not833 = or i1 %i.fe, %i.fb
   br i1 %.not833, label %.critedge.thread, label %.lr.ph.i414
 
 .lr.ph.i414:                                      ; preds = %.lr.ph.i406.preheader
@@ -607,7 +607,7 @@ bb.ct:                                            ; preds = %bb.ct, %bb.cs
   %i.tc = getelementptr inbounds nuw i8, ptr %.pre963.pre965.pre.pre.pre, i64 16
   %i.td = load i32, ptr %i.tc, align 8, !tbaa !30
   %i.te = icmp ne i32 %i.td, 35
-  %.not840 = select i1 %i.te, i1 true, i1 %i.tb
+  %.not840 = or i1 %i.te, %i.tb
   br i1 %.not840, label %.critedge.thread, label %bb.cu
 
 bb.cu:                                            ; preds = %.lr.ph.i619.preheader

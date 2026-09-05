@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %.sink.split, %.spli
   %i.eh = call i8 @_ZN4mlir6affine22affineDataCopyGenerateEN4llvm14ilist_iteratorINS1_12ilist_detail12node_optionsINS_9OperationELb0ELb0EvLb0EvEELb0ELb0EEES7_RKNS0_17AffineCopyOptionsESt8optionalINS_5ValueEERNS1_8DenseSetIPS5_NS1_12DenseMapInfoISF_vEEEE(ptr %.sroa.053.072, ptr %i.eg, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr undef, i8 0, ptr noundef nonnull align 8 dereferenceable(24) %2) #22 ; 0 uses
   br label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit44
 
-_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit44: ; preds = %.critedge37.thread, %bb.m
+_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsIN4mlir9OperationELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit44: ; preds = %bb.m, %.critedge37.thread
   %i.ei = getelementptr inbounds nuw i8, ptr %.sroa.053.072, i64 8
   %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !67 ; 4 uses
   %.not8.i.i.i = icmp eq ptr %i.ej, %i.a

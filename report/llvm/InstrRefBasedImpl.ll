@@ -205,7 +205,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph.i.i149, %mid
   %i.ma = load i32, ptr %.0.lcssa.i.i, align 4, !tbaa !192
   %i.mb = zext i32 %i.ma to i64
   %i.mc = or disjoint i64 %i.mb, -4294967296
-  %i.md = and i64 %.promoted.i.i, %i.mc
+  %i.md = and i64 %i.mc, %.promoted.i.i
   store i64 %i.md, ptr %i.lz, align 8, !tbaa !248
   br label %_ZN4llvm9BitVector18clearBitsNotInMaskEPKjj.exit
 

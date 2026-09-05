@@ -205,7 +205,7 @@ bb.a:
 
 _ZSt9__advanceISt14_List_iteratorISt4pairIKiiEElEvRT_T0_St26bidirectional_iterator_tag.exit.i: ; preds = %.noexc
   %i.w = extractvalue { ptr, ptr } %i.s, 1
-  %.sroa.0.0.copyload.i = load ptr, ptr %i.w, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i = load ptr, ptr %i.w, align 8, !tbaa !271 ; 2 uses
   %i.x = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !tbaa !188
   br label %bb.b
 
@@ -545,7 +545,7 @@ bb.ah:                                            ; preds = %bb.ag, %.noexc107
 
 _ZSt9__advanceISt14_List_iteratorISt4pairIKiiEElEvRT_T0_St26bidirectional_iterator_tag.exit.i113: ; preds = %.noexc119
   %i.cr = extractvalue { ptr, ptr } %i.co, 1
-  %.sroa.0.0.copyload.i114 = load ptr, ptr %i.cr, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i114 = load ptr, ptr %i.cr, align 8, !tbaa !271 ; 2 uses
   %i.cs = load ptr, ptr %.sroa.0.0.copyload.i114, align 8, !tbaa !188
   br label %bb.ai
 
@@ -948,7 +948,7 @@ _ZN7testing15AssertionResultD2Ev.exit677:         ; preds = %bb.je, %_ZNKSt14def
 
 bb.jg:                                            ; preds = %.noexc681
   %i.xv = extractvalue { ptr, ptr } %i.xr, 1
-  %.sroa.0.0.copyload.i678 = load ptr, ptr %i.xv, align 8 ; 3 uses
+  %.sroa.0.0.copyload.i678 = load ptr, ptr %i.xv, align 8, !tbaa !271 ; 3 uses
   %i.xw = load ptr, ptr %.sroa.0.0.copyload.i678, align 8, !tbaa !188
   store ptr %.sroa.0.0.copyload.i678, ptr %74, align 8
   %i.xx = getelementptr inbounds nuw i8, ptr %74, i64 8
@@ -1351,7 +1351,7 @@ bb.h:                                             ; preds = %.lr.ph, %bb.v
 
 _ZSt9__advanceISt14_List_iteratorISt4pairIKiiEElEvRT_T0_St26bidirectional_iterator_tag.exit.i: ; preds = %.noexc83
   %i.am = extractvalue { ptr, ptr } %i.aj, 1
-  %.sroa.0.0.copyload.i = load ptr, ptr %i.am, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i = load ptr, ptr %i.am, align 8, !tbaa !271 ; 2 uses
   %i.an = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !tbaa !188
   br label %.preheader.i.i
 
@@ -1581,7 +1581,7 @@ bb.aa:                                            ; preds = %.lr.ph203, %bb.bk
 
 _ZSt9__advanceISt14_List_iteratorISt4pairIKiiEElEvRT_T0_St26bidirectional_iterator_tag.exit.i98: ; preds = %.noexc104
   %i.ch = extractvalue { ptr, ptr } %i.ce, 1
-  %.sroa.0.0.copyload.i99 = load ptr, ptr %i.ch, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i99 = load ptr, ptr %i.ch, align 8, !tbaa !271 ; 2 uses
   %i.ci = load ptr, ptr %.sroa.0.0.copyload.i99, align 8, !tbaa !188
   br label %.preheader.i.i107
 
@@ -1984,7 +1984,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.r
 
 _ZSt9__advanceISt14_List_iteratorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiEElEvRT_T0_St26bidirectional_iterator_tag.exit.i: ; preds = %.noexc
   %i.y = extractvalue { ptr, ptr } %i.v, 1
-  %.sroa.0.0.copyload.i = load ptr, ptr %i.y, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i = load ptr, ptr %i.y, align 8, !tbaa !271 ; 2 uses
   %i.z = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !tbaa !188
   br label %.preheader.i.i
 
@@ -2231,7 +2231,7 @@ bb.w:                                             ; preds = %.lr.ph175, %bb.bg
 
 _ZSt9__advanceISt14_List_iteratorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiEElEvRT_T0_St26bidirectional_iterator_tag.exit.i95: ; preds = %.noexc101
   %i.bv = extractvalue { ptr, ptr } %i.bs, 1
-  %.sroa.0.0.copyload.i96 = load ptr, ptr %i.bv, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i96 = load ptr, ptr %i.bv, align 8, !tbaa !271 ; 2 uses
   %i.bw = load ptr, ptr %.sroa.0.0.copyload.i96, align 8, !tbaa !188
   br label %.preheader.i.i104
 
@@ -2634,7 +2634,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.r
 
 _ZSt9__advanceISt14_List_iteratorISt4pairIKN4absl12lts_2026052618container_internal4EnumENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEElEvRT_T0_St26bidirectional_iterator_tag.exit.i: ; preds = %.noexc
   %i.y = extractvalue { ptr, ptr } %i.v, 1
-  %.sroa.0.0.copyload.i = load ptr, ptr %i.y, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i = load ptr, ptr %i.y, align 8, !tbaa !271 ; 2 uses
   %i.z = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !tbaa !188
   br label %.preheader.i.i
 
@@ -2881,7 +2881,7 @@ bb.w:                                             ; preds = %.lr.ph175, %bb.bf
 
 _ZSt9__advanceISt14_List_iteratorISt4pairIKN4absl12lts_2026052618container_internal4EnumENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEElEvRT_T0_St26bidirectional_iterator_tag.exit.i95: ; preds = %.noexc101
   %i.bv = extractvalue { ptr, ptr } %i.bs, 1
-  %.sroa.0.0.copyload.i96 = load ptr, ptr %i.bv, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i96 = load ptr, ptr %i.bv, align 8, !tbaa !271 ; 2 uses
   %i.bw = load ptr, ptr %.sroa.0.0.copyload.i96, align 8, !tbaa !188
   br label %.preheader.i.i104
 
@@ -3284,7 +3284,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.r
 
 _ZSt9__advanceISt14_List_iteratorISt4pairIKN4absl12lts_2026052618container_internal9EnumClassEiEElEvRT_T0_St26bidirectional_iterator_tag.exit.i: ; preds = %.noexc
   %i.y = extractvalue { ptr, ptr } %i.v, 1
-  %.sroa.0.0.copyload.i = load ptr, ptr %i.y, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i = load ptr, ptr %i.y, align 8, !tbaa !271 ; 2 uses
   %i.z = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !tbaa !188
   br label %.preheader.i.i
 
@@ -3531,7 +3531,7 @@ bb.w:                                             ; preds = %.lr.ph178, %bb.bg
 
 _ZSt9__advanceISt14_List_iteratorISt4pairIKN4absl12lts_2026052618container_internal9EnumClassEiEElEvRT_T0_St26bidirectional_iterator_tag.exit.i95: ; preds = %.noexc101
   %i.bv = extractvalue { ptr, ptr } %i.bs, 1
-  %.sroa.0.0.copyload.i96 = load ptr, ptr %i.bv, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i96 = load ptr, ptr %i.bv, align 8, !tbaa !271 ; 2 uses
   %i.bw = load ptr, ptr %.sroa.0.0.copyload.i96, align 8, !tbaa !188
   br label %.preheader.i.i104
 
@@ -3934,7 +3934,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.r
 
 _ZSt9__advanceISt14_List_iteratorISt4pairIKiN4absl12lts_2026052618container_internal17NonStandardLayoutEEElEvRT_T0_St26bidirectional_iterator_tag.exit.i: ; preds = %.noexc
   %i.y = extractvalue { ptr, ptr } %i.v, 1
-  %.sroa.0.0.copyload.i = load ptr, ptr %i.y, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i = load ptr, ptr %i.y, align 8, !tbaa !271 ; 2 uses
   %i.z = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !tbaa !188
   br label %.preheader.i.i
 
@@ -4181,7 +4181,7 @@ bb.w:                                             ; preds = %.lr.ph175, %bb.bf
 
 _ZSt9__advanceISt14_List_iteratorISt4pairIKiN4absl12lts_2026052618container_internal17NonStandardLayoutEEElEvRT_T0_St26bidirectional_iterator_tag.exit.i95: ; preds = %.noexc101
   %i.bv = extractvalue { ptr, ptr } %i.bs, 1
-  %.sroa.0.0.copyload.i96 = load ptr, ptr %i.bv, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i96 = load ptr, ptr %i.bv, align 8, !tbaa !271 ; 2 uses
   %i.bw = load ptr, ptr %.sroa.0.0.copyload.i96, align 8, !tbaa !188
   br label %.preheader.i.i104
 
@@ -4584,7 +4584,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.r
 
 _ZSt9__advanceISt14_List_iteratorISt4pairIKN4absl12lts_2026052618container_internal17NonStandardLayoutEiEElEvRT_T0_St26bidirectional_iterator_tag.exit.i: ; preds = %.noexc
   %i.y = extractvalue { ptr, ptr } %i.v, 1
-  %.sroa.0.0.copyload.i = load ptr, ptr %i.y, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i = load ptr, ptr %i.y, align 8, !tbaa !271 ; 2 uses
   %i.z = load ptr, ptr %.sroa.0.0.copyload.i, align 8, !tbaa !188
   br label %.preheader.i.i
 
@@ -4831,7 +4831,7 @@ bb.w:                                             ; preds = %.lr.ph175, %bb.bg
 
 _ZSt9__advanceISt14_List_iteratorISt4pairIKN4absl12lts_2026052618container_internal17NonStandardLayoutEiEElEvRT_T0_St26bidirectional_iterator_tag.exit.i95: ; preds = %.noexc101
   %i.bv = extractvalue { ptr, ptr } %i.bs, 1
-  %.sroa.0.0.copyload.i96 = load ptr, ptr %i.bv, align 8 ; 2 uses
+  %.sroa.0.0.copyload.i96 = load ptr, ptr %i.bv, align 8, !tbaa !271 ; 2 uses
   %i.bw = load ptr, ptr %.sroa.0.0.copyload.i96, align 8, !tbaa !188
   br label %.preheader.i.i104
 

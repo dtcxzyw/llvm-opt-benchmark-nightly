@@ -205,9 +205,9 @@ bb.ay:                                            ; preds = %.critedge66
   %i.hj = getelementptr inbounds nuw i8, ptr %spec.select.i.i, i64 56 ; 2 uses
   br i1 %i.hi, label %.lr.ph.split.us.i.i, label %.lr.ph.split.i.i
 
-.lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i.i, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i
-  %.02441.us.i.i = phi i32 [ %spec.select.us.i.i, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i ], [ 0, %.lr.ph.i.i ] ; 2 uses
-  %.sroa.08.040.us.i.i = phi ptr [ %i.ia, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i ], [ %i.hg, %.lr.ph.i.i ] ; 9 uses
+.lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i.i, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i
+  %.02441.us.i.i = phi i32 [ %spec.select.us.i.i, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i ], [ 0, %.lr.ph.i.i ] ; 2 uses
+  %.sroa.08.040.us.i.i = phi ptr [ %17, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i ], [ %i.hg, %.lr.ph.i.i ] ; 9 uses
   %i.hk = getelementptr inbounds i8, ptr %.sroa.08.040.us.i.i, i64 -16
   %i.hl = tail call noundef zeroext i1 @_ZNK4llvm12VPRecipeBase5isPhiEv(ptr noundef nonnull align 8 dereferenceable(89) %i.hk) #16
   br i1 %i.hl, label %bb.az, label %.critedge.i.i
@@ -221,19 +221,19 @@ bb.az:                                            ; preds = %.lr.ph.split.us.i.i
   switch i8 %i.hn, label %_ZN4llvm3isaIJNS_17VPHeaderPHIRecipeENS_16VPWidenPHIRecipeENS_5VPPhiEENS_12VPRecipeBaseEEEbRKT0_.exit.thread22.i.i [
     i8 5, label %_ZN4llvm3isaIJNS_17VPHeaderPHIRecipeENS_16VPWidenPHIRecipeENS_5VPPhiEENS_12VPRecipeBaseEEEbRKT0_.exit.us.i.i
     i8 29, label %bb.ba
-    i8 27, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i
-    i8 30, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i
-    i8 31, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i
-    i8 32, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i
-    i8 33, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i
-    i8 34, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i
+    i8 27, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i
+    i8 30, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i
+    i8 31, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i
+    i8 32, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i
+    i8 33, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i
+    i8 34, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i
   ]
 
 _ZN4llvm3isaIJNS_17VPHeaderPHIRecipeENS_16VPWidenPHIRecipeENS_5VPPhiEENS_12VPRecipeBaseEEEbRKT0_.exit.us.i.i: ; preds = %bb.az
   %i.hq = getelementptr inbounds nuw i8, ptr %.sroa.08.040.us.i.i, i64 208
   %i.hr = load i8, ptr %i.hq, align 8, !tbaa !191
   %i.hs = icmp eq i8 %i.hr, 57
-  br i1 %i.hs, label %.critedge2.us.i.i, label %_ZN4llvm3isaIJNS_17VPHeaderPHIRecipeENS_16VPWidenPHIRecipeENS_5VPPhiEENS_12VPRecipeBaseEEEbRKT0_.exit.thread22.i.i
+  br i1 %i.hs, label %.preheader30.us.preheader.i.i, label %_ZN4llvm3isaIJNS_17VPHeaderPHIRecipeENS_16VPWidenPHIRecipeENS_5VPPhiEENS_12VPRecipeBaseEEEbRKT0_.exit.thread22.i.i
 
 bb.ba:                                            ; preds = %bb.az
   %i.ht = tail call noundef ptr @_ZNK4llvm11VPBlockBase7getPlanEv(ptr noundef nonnull align 8 dereferenceable(105) %1) #16
@@ -244,41 +244,41 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %.not.us.i.i, label %bb.bc, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  br i1 %.not28.us.i.i, label %.critedge2.us.i.i, label %.split.us.i.i
+  br i1 %.not28.us.i.i, label %.preheader30.us.preheader.i.i, label %.split.us.i.i
 
 bb.bc:                                            ; preds = %bb.ba
-  br i1 %.not28.us.i.i, label %.critedge2.us.i.i, label %.preheader30.us.preheader.i.i
+  br i1 %.not28.us.i.i, label %.preheader30.us.preheader.i.i, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i
 
-.preheader30.us.preheader.i.i:                    ; preds = %bb.bc
-  %13 = getelementptr inbounds nuw i8, ptr %i.hv, i64 8
-  %14 = load ptr, ptr %13, align 8, !tbaa !734
-  %.not29.us.i.i.a = icmp eq ptr %.sroa.08.040.us.i.i, %14
-  br i1 %.not29.us.i.i.a, label %.critedge2.us.i.i, label %.split.us.i.i
+.preheader30.us.preheader.i.i:                    ; preds = %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i, %bb.bc, %bb.bb, %_ZN4llvm3isaIJNS_17VPHeaderPHIRecipeENS_16VPWidenPHIRecipeENS_5VPPhiEENS_12VPRecipeBaseEEEbRKT0_.exit.us.i.i
+  %.pr.i = load i8, ptr %i.hm, align 8, !tbaa !177
+  %.not29.us.i.i.a = icmp eq i8 %.pr.i, 4
+  br i1 %.not29.us.i.i.a, label %.critedge2.us.i.i, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i
 
-.critedge2.us.i.i:                                ; preds = %.preheader30.us.preheader.i.i, %bb.bc, %bb.bb, %_ZN4llvm3isaIJNS_17VPHeaderPHIRecipeENS_16VPWidenPHIRecipeENS_5VPPhiEENS_12VPRecipeBaseEEEbRKT0_.exit.us.i.i
-  %.pr.i.a = load i8, ptr %i.hm, align 8, !tbaa !177
-  %.not.i.i.i.i.i.i.i.us.i.i = icmp eq i8 %.pr.i.a, 4
-  br i1 %.not.i.i.i.i.i.i.i.us.i.i, label %_ZN4llvm14CastIsPossibleINS_7VPIRPhiEPKNS_12VPRecipeBaseEvE10isPossibleERKS4_.exit.i.i.us.i.i, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i
+.critedge2.us.i.i:                                ; preds = %.preheader30.us.preheader.i.i
+  %13 = getelementptr inbounds nuw i8, ptr %.sroa.08.040.us.i.i, i64 80
+  %14 = load ptr, ptr %13, align 8, !tbaa !737, !nonnull !132, !align !201
+  %.pr.i.a = load i8, ptr %14, align 8, !tbaa !264
+  %.not.i.i.i.i.i.i.i.us.i.i = icmp eq i8 %.pr.i.a, 87
+  br i1 %.not.i.i.i.i.i.i.i.us.i.i, label %_ZN4llvm14CastIsPossibleINS_7VPIRPhiEPKNS_12VPRecipeBaseEvE10isPossibleERKS4_.exit.i.i.us.i.i, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i
 
 _ZN4llvm14CastIsPossibleINS_7VPIRPhiEPKNS_12VPRecipeBaseEvE10isPossibleERKS4_.exit.i.i.us.i.i: ; preds = %.critedge2.us.i.i
-  %i.hw = getelementptr inbounds nuw i8, ptr %.sroa.08.040.us.i.i, i64 80
-  %15 = load ptr, ptr %i.hw, align 8, !tbaa !737, !nonnull !132, !align !201
-  %16 = load i8, ptr %15, align 8, !tbaa !264
-  %i.hx = icmp eq i8 %16, 87
-  br i1 %i.hx, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i
+  %i.hw = getelementptr inbounds nuw i8, ptr %.sroa.08.040.us.i.i, i64 32
+  %15 = load i32, ptr %i.hw, align 8, !tbaa !18
+  %16 = load i32, ptr %i.hj, align 8, !tbaa !18
+  %i.hx = icmp eq i32 %16, %15
+  br i1 %i.hx, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i, label %.critedge34.i.i
 
-_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i: ; preds = %_ZN4llvm14CastIsPossibleINS_7VPIRPhiEPKNS_12VPRecipeBaseEvE10isPossibleERKS4_.exit.i.i.us.i.i
-  %i.hy = getelementptr inbounds nuw i8, ptr %.sroa.08.040.us.i.i, i64 32
-  %17 = load i32, ptr %i.hy, align 8, !tbaa !18
-  %18 = load i32, ptr %i.hj, align 8, !tbaa !18
-  %.not30.us.i.i = icmp eq i32 %18, %17
-  br i1 %.not30.us.i.i, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i, label %.critedge34.i.i
+_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i: ; preds = %_ZN4llvm14CastIsPossibleINS_7VPIRPhiEPKNS_12VPRecipeBaseEvE10isPossibleERKS4_.exit.i.i.us.i.i, %.critedge2.us.i.i, %.preheader30.us.preheader.i.i, %bb.az, %bb.az, %bb.az, %bb.az, %bb.az, %bb.az
+  %i.hy = getelementptr inbounds nuw i8, ptr %.sroa.08.040.us.i.i, i64 8
+  %17 = load ptr, ptr %i.hy, align 8, !tbaa !734  ; 3 uses
+  %.not30.us.i.i = icmp eq ptr %17, %i.hh
+  br i1 %.not30.us.i.i, label %.critedge.i.i, label %.lr.ph.split.us.i.i, !llvm.loop !678
 
-_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i: ; preds = %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i, %_ZN4llvm14CastIsPossibleINS_7VPIRPhiEPKNS_12VPRecipeBaseEvE10isPossibleERKS4_.exit.i.i.us.i.i, %.critedge2.us.i.i, %bb.az, %bb.az, %bb.az, %bb.az, %bb.az, %bb.az
-  %i.hz = getelementptr inbounds nuw i8, ptr %.sroa.08.040.us.i.i, i64 8
-  %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !734 ; 3 uses
-  %.not25.us.i.i = icmp eq ptr %i.ia, %i.hh
-  br i1 %.not25.us.i.i, label %.critedge.i.i, label %.lr.ph.split.us.i.i, !llvm.loop !678
+_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i: ; preds = %bb.bc
+  %i.hz = getelementptr inbounds nuw i8, ptr %i.hv, i64 8
+  %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !734
+  %.not25.us.i.i = icmp eq ptr %.sroa.08.040.us.i.i, %i.ia
+  br i1 %.not25.us.i.i, label %.preheader30.us.preheader.i.i, label %.split.us.i.i
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.i.i, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.i.i
   %.02441.i.i = phi i32 [ %spec.select.i.i106, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.i.i ], [ 0, %.lr.ph.i.i ] ; 2 uses
@@ -343,7 +343,7 @@ bb.bh:                                            ; preds = %bb.bf
   store ptr %i.jf, ptr %i.ix, align 8, !tbaa !142
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit
 
-.split.us.i.i:                                    ; preds = %.preheader30.us.preheader.i.i, %bb.bb
+.split.us.i.i:                                    ; preds = %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i, %bb.bb
   %i.jg = tail call noundef nonnull align 8 dereferenceable(96) ptr @_ZN4llvm4errsEv() #16 ; 3 uses
   %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 24
   %i.ji = load ptr, ptr %i.jh, align 8, !tbaa !141
@@ -384,7 +384,7 @@ _ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.i.i: ; preds = %_
   %.not30.i.i = icmp eq i32 %i.jy, %i.jx
   br i1 %.not30.i.i, label %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.i.i, label %.critedge34.i.i
 
-.critedge34.i.i:                                  ; preds = %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.i.i, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i
+.critedge34.i.i:                                  ; preds = %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.i.i, %_ZN4llvm14CastIsPossibleINS_7VPIRPhiEPKNS_12VPRecipeBaseEvE10isPossibleERKS4_.exit.i.i.us.i.i
   %i.jz = tail call noundef nonnull align 8 dereferenceable(96) ptr @_ZN4llvm4errsEv() #16 ; 3 uses
   %i.ka = getelementptr inbounds nuw i8, ptr %i.jz, i64 24
   %i.kb = load ptr, ptr %i.ka, align 8, !tbaa !141
@@ -413,9 +413,9 @@ _ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.i.i: ; pre
   %.not25.i.i = icmp eq ptr %i.km, %i.hh
   br i1 %.not25.i.i, label %.critedge.i.i, label %.lr.ph.split.i.i, !llvm.loop !678
 
-.critedge.i.i:                                    ; preds = %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.i.i, %.lr.ph.split.i.i, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i, %.lr.ph.split.us.i.i, %bb.ay
-  %.sroa.08.0.lcssa.i.i = phi ptr [ %i.hg, %bb.ay ], [ %i.ia, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i ], [ %.sroa.08.040.us.i.i, %.lr.ph.split.us.i.i ], [ %i.km, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.i.i ], [ %.sroa.08.040.i.i, %.lr.ph.split.i.i ] ; 2 uses
-  %.024.lcssa.i.i = phi i32 [ 0, %bb.ay ], [ %spec.select.us.i.i, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.us.i.i ], [ %.02441.us.i.i, %.lr.ph.split.us.i.i ], [ %spec.select.i.i106, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.i.i ], [ %.02441.i.i, %.lr.ph.split.i.i ]
+.critedge.i.i:                                    ; preds = %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.i.i, %.lr.ph.split.i.i, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i, %.lr.ph.split.us.i.i, %bb.ay
+  %.sroa.08.0.lcssa.i.i = phi ptr [ %i.hg, %bb.ay ], [ %17, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i ], [ %.sroa.08.040.us.i.i, %.lr.ph.split.us.i.i ], [ %i.km, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.i.i ], [ %.sroa.08.040.i.i, %.lr.ph.split.i.i ] ; 2 uses
+  %.024.lcssa.i.i = phi i32 [ 0, %bb.ay ], [ %spec.select.us.i.i, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.us.i.i ], [ %.02441.us.i.i, %.lr.ph.split.us.i.i ], [ %spec.select.i.i106, %_ZN4llvm8dyn_castINS_7VPIRPhiEKNS_12VPRecipeBaseEEEDcPT0_.exit.thread.i.i ], [ %.02441.i.i, %.lr.ph.split.i.i ]
   %i.kn = tail call noundef ptr @_ZNK4llvm11VPBlockBase7getPlanEv(ptr noundef nonnull align 8 dereferenceable(105) %1) #16
   %i.ko = getelementptr inbounds nuw i8, ptr %i.kn, i64 136
   %i.kp = load i32, ptr %i.ko, align 8, !tbaa !18

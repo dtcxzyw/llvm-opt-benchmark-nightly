@@ -204,7 +204,7 @@ _ZN4llvm12LiveRegUnits6addRegENS_10MCRegisterE.exit.i: ; preds = %_ZNK4llvm12Liv
   %.not.i = icmp eq ptr %i.hu, %i.ga
   br i1 %.not.i, label %_ZL11toggleKillsRKN4llvm19MachineRegisterInfoERNS_12LiveRegUnitsERNS_12MachineInstrEb.exit, label %.lr.ph.split.i
 
-_ZL11toggleKillsRKN4llvm19MachineRegisterInfoERNS_12LiveRegUnitsERNS_12MachineInstrEb.exit: ; preds = %_ZN4llvm12LiveRegUnits6addRegENS_10MCRegisterE.exit.i, %bb.o, %bb.n
+_ZL11toggleKillsRKN4llvm19MachineRegisterInfoERNS_12LiveRegUnitsERNS_12MachineInstrEb.exit: ; preds = %_ZN4llvm12LiveRegUnits6addRegENS_10MCRegisterE.exit.i, %bb.n, %bb.o
   %i.hv = getelementptr inbounds nuw i8, ptr %.sroa.053.099, i64 8
   %i.hw = load ptr, ptr %i.hv, align 8, !tbaa !379 ; 3 uses
   %i.hx = getelementptr inbounds nuw i8, ptr %i.hw, i64 44

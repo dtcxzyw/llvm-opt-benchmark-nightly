@@ -204,14 +204,14 @@ bb.d:                                             ; preds = %_ZNK4llvm25OuterAna
 
 .lr.ph.i:                                         ; preds = %.lr.ph53.i, %.lr.ph.i
   %.145.i = phi i1 [ %spec.select40.i, %.lr.ph.i ], [ %.02750.i, %.lr.ph53.i ]
-  %.sroa.031.044.i = phi ptr [ %7, %.lr.ph.i ], [ %i.cx, %.lr.ph53.i ] ; 2 uses
+  %.sroa.031.044.i = phi ptr [ %8, %.lr.ph.i ], [ %i.cx, %.lr.ph53.i ] ; 2 uses
   %.sroa.035.143.i = phi ptr [ %spec.select.i, %.lr.ph.i ], [ %.sroa.035.049.i, %.lr.ph53.i ]
-  %7 = load ptr, ptr %.sroa.031.044.i, align 8, !tbaa !89 ; 2 uses
-  %8 = getelementptr inbounds i8, ptr %.sroa.031.044.i, i64 -24
-  %i.cz = call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_116AtomicExpandImpl18processAtomicInstrEPN4llvm11InstructionE(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull %8) ; 2 uses
+  %7 = getelementptr inbounds i8, ptr %.sroa.031.044.i, i64 -24
+  %8 = load ptr, ptr %.sroa.031.044.i, align 8, !tbaa !89 ; 2 uses
+  %i.cz = call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_116AtomicExpandImpl18processAtomicInstrEPN4llvm11InstructionE(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull %7) ; 2 uses
   %spec.select.i = select i1 %i.cz, ptr %i.cv, ptr %.sroa.035.143.i ; 2 uses
   %spec.select40.i = select i1 %i.cz, i1 true, i1 %.145.i ; 2 uses
-  %.not41.i = icmp eq ptr %7, %i.cw
+  %.not41.i = icmp eq ptr %8, %i.cw
   br i1 %.not41.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !2
 
 _ZN12_GLOBAL__N_116AtomicExpandImpl3runERN4llvm8FunctionERKNS1_35LibcallLoweringModuleAnalysisResultEPKNS1_13TargetMachineE.exit: ; preds = %._crit_edge.i
@@ -452,14 +452,14 @@ bb.d:                                             ; preds = %_ZN4llvm26LibcallLo
 
 .lr.ph.i:                                         ; preds = %.lr.ph53.i, %.lr.ph.i
   %.145.i = phi i1 [ %spec.select40.i, %.lr.ph.i ], [ %.02750.i, %.lr.ph53.i ]
-  %.sroa.031.044.i = phi ptr [ %3, %.lr.ph.i ], [ %i.as, %.lr.ph53.i ] ; 2 uses
+  %.sroa.031.044.i = phi ptr [ %4, %.lr.ph.i ], [ %i.as, %.lr.ph53.i ] ; 2 uses
   %.sroa.035.143.i = phi ptr [ %spec.select.i, %.lr.ph.i ], [ %.sroa.035.049.i, %.lr.ph53.i ]
-  %3 = load ptr, ptr %.sroa.031.044.i, align 8, !tbaa !89 ; 2 uses
-  %4 = getelementptr inbounds i8, ptr %.sroa.031.044.i, i64 -24
-  %i.au = call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_116AtomicExpandImpl18processAtomicInstrEPN4llvm11InstructionE(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull %4) ; 2 uses
+  %3 = getelementptr inbounds i8, ptr %.sroa.031.044.i, i64 -24
+  %4 = load ptr, ptr %.sroa.031.044.i, align 8, !tbaa !89 ; 2 uses
+  %i.au = call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_116AtomicExpandImpl18processAtomicInstrEPN4llvm11InstructionE(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull %3) ; 2 uses
   %spec.select.i = select i1 %i.au, ptr %i.aq, ptr %.sroa.035.143.i ; 2 uses
   %spec.select40.i = select i1 %i.au, i1 true, i1 %.145.i ; 2 uses
-  %.not41.i = icmp eq ptr %3, %i.ar
+  %.not41.i = icmp eq ptr %4, %i.ar
   br i1 %.not41.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !2
 
 _ZN12_GLOBAL__N_116AtomicExpandImpl3runERN4llvm8FunctionERKNS1_35LibcallLoweringModuleAnalysisResultEPKNS1_13TargetMachineE.exit: ; preds = %._crit_edge.i, %_ZN4llvm26LibcallLoweringInfoWrapper9getResultERKNS_6ModuleE.exit, %bb.d

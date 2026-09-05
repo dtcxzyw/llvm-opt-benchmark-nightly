@@ -205,16 +205,16 @@ bb.a:
   %i.f = icmp eq ptr %i.c, %i.e
   br i1 %i.f, label %3, label %.preheader.preheader
 
+3:                                                ; preds = %bb.a
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
+  br label %bb.k
+
 .preheader.preheader:                             ; preds = %bb.a
   %i.g = load ptr, ptr %i.c, align 8, !tbaa !304, !noalias !3837
   %i.h = icmp eq ptr %i.g, %i.e
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !305  ; 3 uses
   br i1 %i.h, label %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit, label %.lr.ph.i.i.i
-
-3:                                                ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
-  br label %bb.k
 
 _ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit: ; preds = %.preheader.preheader
   %i.k = icmp eq ptr %i.c, %i.j
@@ -618,16 +618,16 @@ bb.a:
   %i.f = icmp eq ptr %i.c, %i.e
   br i1 %i.f, label %3, label %.preheader.preheader
 
+3:                                                ; preds = %bb.a
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
+  br label %bb.k
+
 .preheader.preheader:                             ; preds = %bb.a
   %i.g = load ptr, ptr %i.c, align 8, !tbaa !304, !noalias !4131
   %i.h = icmp eq ptr %i.g, %i.e
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !305  ; 3 uses
   br i1 %i.h, label %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit, label %.lr.ph.i.i.i
-
-3:                                                ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
-  br label %bb.k
 
 _ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit: ; preds = %.preheader.preheader
   %i.k = icmp eq ptr %i.c, %i.j

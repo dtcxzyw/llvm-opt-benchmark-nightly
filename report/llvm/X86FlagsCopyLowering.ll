@@ -205,7 +205,7 @@ bb.cy:                                            ; preds = %_ZN4llvm9SetVectorI
   %i.ahj = getelementptr inbounds nuw i8, ptr %25, i64 8 ; 2 uses
   %i.ahk = getelementptr inbounds nuw i8, ptr %25, i64 12 ; 4 uses
   %i.ahl = getelementptr inbounds nuw i8, ptr %25, i64 16 ; 4 uses
-  %i.ahm = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 3 uses
+  %i.ahm = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 2 uses
   %i.ahn = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.aho = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.ahp = getelementptr inbounds nuw i8, ptr %6, i64 16
@@ -608,8 +608,8 @@ _ZNK4llvm15SmallPtrSetImplIPNS_17MachineBasicBlockEE5countEPKS1_.exit.thread592:
   %i.ato = getelementptr inbounds nuw i8, ptr %i.atc, i64 56
   br label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit
 
-_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %bb.ei, %_ZNK4llvm15SmallPtrSetImplIPNS_17MachineBasicBlockEE5countEPKS1_.exit, %bb.eh, %_ZNK4llvm15SmallPtrSetImplIPNS_17MachineBasicBlockEE5countEPKS1_.exit.thread592
-  %storemerge.in = phi ptr [ %i.ato, %_ZNK4llvm15SmallPtrSetImplIPNS_17MachineBasicBlockEE5countEPKS1_.exit.thread592 ], [ %i.asw, %_ZNK4llvm15SmallPtrSetImplIPNS_17MachineBasicBlockEE5countEPKS1_.exit ], [ %i.asw, %bb.eh ], [ %i.asw, %bb.ei ]
+_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %bb.ei, %bb.eh, %_ZNK4llvm15SmallPtrSetImplIPNS_17MachineBasicBlockEE5countEPKS1_.exit, %_ZNK4llvm15SmallPtrSetImplIPNS_17MachineBasicBlockEE5countEPKS1_.exit.thread592
+  %storemerge.in = phi ptr [ %i.ato, %_ZNK4llvm15SmallPtrSetImplIPNS_17MachineBasicBlockEE5countEPKS1_.exit.thread592 ], [ %i.asw, %bb.eh ], [ %i.asw, %_ZNK4llvm15SmallPtrSetImplIPNS_17MachineBasicBlockEE5countEPKS1_.exit ], [ %i.asw, %bb.ei ]
   %storemerge = load ptr, ptr %storemerge.in, align 8, !tbaa !230 ; 4 uses
   %i.atp = getelementptr inbounds nuw i8, ptr %i.atc, i64 48 ; 3 uses
   %.not608738 = icmp eq ptr %storemerge, %i.atp
@@ -730,15 +730,15 @@ bb.es:                                            ; preds = %bb.er
 bb.et:                                            ; preds = %bb.es, %bb.er
   %i.avl = call noundef i32 @_ZN4llvm3X8616getCondFromSETCCERKNS_12MachineInstrE(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.0506.07391153) #16
   %i.avm = zext i32 %i.avl to i64                 ; 2 uses
-  %i.avn = getelementptr inbounds nuw [4 x i8], ptr %23, i64 %i.avm ; 4 uses
-  %i.avo = load i32, ptr %i.avn, align 4, !tbaa !301
+  %i.avn = getelementptr inbounds nuw [4 x i8], ptr %23, i64 %i.avm ; 2 uses
+  %i.avo = load i32, ptr %i.avn, align 4, !tbaa !301 ; 2 uses
   %.not.i370 = icmp eq i32 %i.avo, 0
   br i1 %.not.i370, label %bb.eu, label %bb.ew
 
 bb.eu:                                            ; preds = %bb.et
   %i.avp = load ptr, ptr %0, align 8, !tbaa !60
   %i.avq = load ptr, ptr %i.p, align 8, !tbaa !62
-  %i.avr = call i32 @_ZN4llvm19MachineRegisterInfo21createVirtualRegisterEPKNS_15MCRegisterClassENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(520) %i.avp, ptr noundef %i.avq, ptr nonnull @.str.5, i64 0) #16 ; 2 uses
+  %i.avr = call i32 @_ZN4llvm19MachineRegisterInfo21createVirtualRegisterEPKNS_15MCRegisterClassENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(520) %i.avp, ptr noundef %i.avq, ptr nonnull @.str.5, i64 0) #16 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #16
   %.sroa.01.0.copyload.i.i = load ptr, ptr %21, align 8, !tbaa !260
   store ptr %.sroa.01.0.copyload.i.i, ptr %10, align 8, !tbaa !260
@@ -776,6 +776,7 @@ _ZN12_GLOBAL__N_124X86FlagsCopyLoweringImpl16promoteCondToRegERN4llvm17MachineBa
   br label %bb.ew
 
 bb.ew:                                            ; preds = %_ZN12_GLOBAL__N_124X86FlagsCopyLoweringImpl16promoteCondToRegERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERKNS1_8DebugLocENS1_3X868CondCodeE.exit.i, %bb.et
+  %.sroa.08.0.copyload.i = phi i32 [ %i.avr, %_ZN12_GLOBAL__N_124X86FlagsCopyLoweringImpl16promoteCondToRegERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERKNS1_8DebugLocENS1_3X868CondCodeE.exit.i ], [ %i.avo, %bb.et ] ; 2 uses
   %i.awg = load i32, ptr %i.aux, align 4, !tbaa !83
   %i.awh = add i32 %i.awg, -1
   %spec.select.i.i.i371 = icmp ult i32 %i.awh, 2
@@ -821,7 +822,6 @@ bb.ez:                                            ; preds = %_ZNK4llvm12MachineI
   %i.axd = load ptr, ptr %0, align 8, !tbaa !60
   call void @_ZNK4llvm19MachineRegisterInfo14clearKillFlagsENS_8RegisterE(ptr noundef nonnull align 8 dereferenceable(520) %i.axd, i32 %i.axc) #16
   %i.axe = load ptr, ptr %0, align 8, !tbaa !60
-  %.sroa.08.0.copyload.i = load i32, ptr %i.avn, align 4, !tbaa !30
   call void @_ZN4llvm19MachineRegisterInfo14replaceRegWithENS_8RegisterES1_(ptr noundef nonnull align 8 dereferenceable(520) %i.axe, i32 %i.axc, i32 %.sroa.08.0.copyload.i) #16
   br label %_ZN12_GLOBAL__N_124X86FlagsCopyLoweringImpl12rewriteSetCCERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERKNS1_8DebugLocERS5_RSt5arrayINS1_8RegisterELm16EE.exit
 
@@ -853,10 +853,9 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12
   %i.axy = load ptr, ptr %i.axq, align 8, !tbaa !231
   %i.axz = getelementptr inbounds nuw i8, ptr %i.axy, i64 128
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.axo, ptr noundef nonnull align 8 dereferenceable(1065) %i.axn, ptr noundef nonnull align 8 dereferenceable(32) %i.axz) #16
-  %.sroa.02.0.copyload.i = load i32, ptr %i.avn, align 4, !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #16
   store ptr null, ptr %i.aib, align 8, !tbaa !67, !alias.scope !657
-  store i32 %.sroa.02.0.copyload.i, ptr %i.aic, align 4, !tbaa !64, !alias.scope !657
+  store i32 %.sroa.08.0.copyload.i, ptr %i.aic, align 4, !tbaa !64, !alias.scope !657
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aid, i8 0, i64 16, i1 false), !alias.scope !657
   store i32 0, ptr %8, align 8, !alias.scope !657
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.axo, ptr noundef nonnull align 8 dereferenceable(1065) %i.axn, ptr noundef nonnull align 8 dereferenceable(32) %8) #16
@@ -916,14 +915,14 @@ bb.fg:                                            ; preds = %bb.ff
   br i1 %or.cond600, label %_ZL14isArithmeticOpj.exit.thread, label %bb.fj
 
 _ZL14isArithmeticOpj.exit.thread:                 ; preds = %bb.fd, %bb.fe, %bb.ff, %bb.fg
-  %i.ayr = load i32, ptr %i.ahm, align 4, !tbaa !301
+  %i.ayr = load i32, ptr %i.ahm, align 4, !tbaa !301 ; 2 uses
   %.not.i376 = icmp eq i32 %i.ayr, 0
   br i1 %.not.i376, label %bb.fh, label %_ZN12_GLOBAL__N_124X86FlagsCopyLoweringImpl17rewriteArithmeticERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERKNS1_8DebugLocERS5_RSt5arrayINS1_8RegisterELm16EE.exit
 
 bb.fh:                                            ; preds = %_ZL14isArithmeticOpj.exit.thread
   %i.ays = load ptr, ptr %0, align 8, !tbaa !60
   %i.ayt = load ptr, ptr %i.p, align 8, !tbaa !62
-  %i.ayu = call i32 @_ZN4llvm19MachineRegisterInfo21createVirtualRegisterEPKNS_15MCRegisterClassENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(520) %i.ays, ptr noundef %i.ayt, ptr nonnull @.str.5, i64 0) #16 ; 2 uses
+  %i.ayu = call i32 @_ZN4llvm19MachineRegisterInfo21createVirtualRegisterEPKNS_15MCRegisterClassENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(520) %i.ays, ptr noundef %i.ayt, ptr nonnull @.str.5, i64 0) #16 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #16
   %.sroa.01.0.copyload.i.i380 = load ptr, ptr %21, align 8, !tbaa !260
   store ptr %.sroa.01.0.copyload.i.i380, ptr %7, align 8, !tbaa !260
@@ -961,6 +960,7 @@ _ZN12_GLOBAL__N_124X86FlagsCopyLoweringImpl16promoteCondToRegERN4llvm17MachineBa
   br label %_ZN12_GLOBAL__N_124X86FlagsCopyLoweringImpl17rewriteArithmeticERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERKNS1_8DebugLocERS5_RSt5arrayINS1_8RegisterELm16EE.exit
 
 _ZN12_GLOBAL__N_124X86FlagsCopyLoweringImpl17rewriteArithmeticERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERKNS1_8DebugLocERS5_RSt5arrayINS1_8RegisterELm16EE.exit: ; preds = %_ZL14isArithmeticOpj.exit.thread, %_ZN12_GLOBAL__N_124X86FlagsCopyLoweringImpl16promoteCondToRegERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERKNS1_8DebugLocENS1_3X868CondCodeE.exit.i381
+  %.sroa.0.0.copyload.i379 = phi i32 [ %i.ayr, %_ZL14isArithmeticOpj.exit.thread ], [ %i.ayu, %_ZN12_GLOBAL__N_124X86FlagsCopyLoweringImpl16promoteCondToRegERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEERKNS1_8DebugLocENS1_3X868CondCodeE.exit.i381 ]
   %i.azj = load ptr, ptr %0, align 8, !tbaa !60
   %i.azk = load ptr, ptr %i.p, align 8, !tbaa !62
   %i.azl = call i32 @_ZN4llvm19MachineRegisterInfo21createVirtualRegisterEPKNS_15MCRegisterClassENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(520) %i.azj, ptr noundef %i.azk, ptr nonnull @.str.5, i64 0) #16
@@ -988,7 +988,6 @@ _ZN12_GLOBAL__N_124X86FlagsCopyLoweringImpl17rewriteArithmeticERN4llvm17MachineB
   store i32 83886080, ptr %5, align 8, !alias.scope !662
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.azz, ptr noundef nonnull align 8 dereferenceable(1065) %i.azy, ptr noundef nonnull align 8 dereferenceable(32) %5) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
-  %.sroa.0.0.copyload.i379 = load i32, ptr %i.ahm, align 4, !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
   store ptr null, ptr %i.aht, align 8, !tbaa !67, !alias.scope !663
   store i32 %.sroa.0.0.copyload.i379, ptr %i.ahu, align 4, !tbaa !64, !alias.scope !663

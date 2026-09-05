@@ -205,15 +205,7 @@ bb.a:
   %i.f = icmp eq i32 %i.e, 1
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !188  ; 2 uses
-  br i1 %i.f, label %.preheader.preheader, label %.preheader27.preheader
-
-.preheader27.preheader:                           ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %3 = load ptr, ptr %2, align 8, !tbaa !343
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %6 = tail call noundef zeroext i1 @_ZN4llvm22checkDebugInfoMetadataERNS_6ModuleENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_8FunctionELb0ELb0EvLb0EvEELb0ELb0EEEEER16DebugInfoPerPassNS_9StringRefESC_SC_(ptr noundef nonnull align 8 dereferenceable(1288) %i.b, ptr nonnull %i.c, ptr %i.h, ptr noundef nonnull align 8 dereferenceable(120) %3, ptr nonnull @.str.92, i64 42, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %4, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %5)
-  br label %bb.b
+  br i1 %i.f, label %.preheader.preheader, label %.preheader27
 
 .preheader.preheader:                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -228,8 +220,16 @@ bb.a:
   %i.o = tail call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_121checkDebugifyMetadataERN4llvm6ModuleENS0_14iterator_rangeINS0_14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_8FunctionELb0ELb0EvLb0EvEELb0ELb0EEEEENS0_9StringRefESB_bPNS0_9MapVectorISB_18DebugifyStatisticsNS0_8DenseMapISB_jNS0_12DenseMapInfoISB_vEENS0_6detail12DenseMapPairISB_jEEEENS0_11SmallVectorISt4pairISB_SD_ELj0EEELj0EEE(ptr noundef nonnull align 8 dereferenceable(1288) %i.b, ptr nonnull %i.c, ptr %i.h, ptr %.sroa.04.0.copyload, i64 %.sroa.25.0.copyload, ptr nonnull @.str.91, i64 21, i1 noundef zeroext %i.l, ptr noundef %i.n)
   br label %bb.b
 
-bb.b:                                             ; preds = %.preheader27.preheader, %.preheader.preheader
-  %.0.in = phi i1 [ %i.o, %.preheader.preheader ], [ %6, %.preheader27.preheader ]
+.preheader27:                                     ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %3 = load ptr, ptr %2, align 8, !tbaa !343
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %6 = tail call noundef zeroext i1 @_ZN4llvm22checkDebugInfoMetadataERNS_6ModuleENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_8FunctionELb0ELb0EvLb0EvEELb0ELb0EEEEER16DebugInfoPerPassNS_9StringRefESC_SC_(ptr noundef nonnull align 8 dereferenceable(1288) %i.b, ptr nonnull %i.c, ptr %i.h, ptr noundef nonnull align 8 dereferenceable(120) %3, ptr nonnull @.str.92, i64 42, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %4, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %5)
+  br label %bb.b
+
+bb.b:                                             ; preds = %.preheader27, %.preheader.preheader
+  %.0.in = phi i1 [ %i.o, %.preheader.preheader ], [ %6, %.preheader27 ]
   ret i1 %.0.in
 }
 
@@ -632,21 +632,21 @@ bb.c:                                             ; preds = %_ZNK4llvm3Any3isaIP
   %i.ai = icmp eq i32 %i.ah, 1
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ac, i64 72
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !188 ; 2 uses
-  br i1 %i.ai, label %.preheader.preheader.i.i, label %.preheader13.preheader.i.i
+  br i1 %i.ai, label %.preheader13.preheader.i.i, label %.preheader.preheader.i.i
 
 .preheader13.preheader.i.i:                       ; preds = %bb.c
-  %i.al = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %i.am = load ptr, ptr %i.al, align 8, !tbaa !418
-  store ptr %1, ptr %7, align 8, !tbaa !276
-  %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store i64 %2, ptr %.sroa.6.0..sroa_idx.i.i, align 8, !tbaa !215
-  %9 = call noundef zeroext i1 @_ZN4llvm22checkDebugInfoMetadataERNS_6ModuleENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_8FunctionELb0ELb0EvLb0EvEELb0ELb0EEEEER16DebugInfoPerPassNS_9StringRefESC_SC_(ptr noundef nonnull align 8 dereferenceable(1288) %i.ae, ptr nonnull %i.af, ptr %i.ak, ptr noundef nonnull align 8 dereferenceable(120) %i.am, ptr nonnull @.str.39, i64 40, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %7, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %i.c) ; 0 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.c, i64 32
+  %i.am = load ptr, ptr %i.al, align 8, !tbaa !984
+  %9 = call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_121checkDebugifyMetadataERN4llvm6ModuleENS0_14iterator_rangeINS0_14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_8FunctionELb0ELb0EvLb0EvEELb0ELb0EEEEENS0_9StringRefESB_bPNS0_9MapVectorISB_18DebugifyStatisticsNS0_8DenseMapISB_jNS0_12DenseMapInfoISB_vEENS0_6detail12DenseMapPairISB_jEEEENS0_11SmallVectorISt4pairISB_SD_ELj0EEELj0EEE(ptr noundef nonnull align 8 dereferenceable(1288) %i.ae, ptr nonnull %i.af, ptr %i.ak, ptr %1, i64 %2, ptr nonnull @.str.91, i64 21, i1 noundef zeroext true, ptr noundef %i.am) ; 0 uses
   br label %bb.d
 
 .preheader.preheader.i.i:                         ; preds = %bb.c
-  %i.an = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !984
-  %10 = call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_121checkDebugifyMetadataERN4llvm6ModuleENS0_14iterator_rangeINS0_14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_8FunctionELb0ELb0EvLb0EvEELb0ELb0EEEEENS0_9StringRefESB_bPNS0_9MapVectorISB_18DebugifyStatisticsNS0_8DenseMapISB_jNS0_12DenseMapInfoISB_vEENS0_6detail12DenseMapPairISB_jEEEENS0_11SmallVectorISt4pairISB_SD_ELj0EEELj0EEE(ptr noundef nonnull align 8 dereferenceable(1288) %i.ae, ptr nonnull %i.af, ptr %i.ak, ptr %1, i64 %2, ptr nonnull @.str.91, i64 21, i1 noundef zeroext true, ptr noundef %i.ao) ; 0 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !418
+  store ptr %1, ptr %7, align 8, !tbaa !276
+  %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %7, i64 8
+  store i64 %2, ptr %.sroa.6.0..sroa_idx.i.i, align 8, !tbaa !215
+  %10 = call noundef zeroext i1 @_ZN4llvm22checkDebugInfoMetadataERNS_6ModuleENS_14iterator_rangeINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_8FunctionELb0ELb0EvLb0EvEELb0ELb0EEEEER16DebugInfoPerPassNS_9StringRefESC_SC_(ptr noundef nonnull align 8 dereferenceable(1288) %i.ae, ptr nonnull %i.af, ptr %i.ak, ptr noundef nonnull align 8 dereferenceable(120) %i.ao, ptr nonnull @.str.39, i64 40, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %7, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %i.c) ; 0 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader.preheader.i.i, %.preheader13.preheader.i.i

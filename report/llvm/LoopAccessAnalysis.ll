@@ -205,15 +205,15 @@ _ZN4llvm15SmallPtrSetImplINS_14PointerIntPairIPNS_5ValueELj1EbNS_21PointerLikeTy
   %.not189 = icmp eq i64 %i.bz, 0
   br i1 %.not189, label %.lr.ph.i.preheader, label %5
 
+5:                                                ; preds = %_ZN4llvm15SmallPtrSetImplINS_14PointerIntPairIPNS_5ValueELj1EbNS_21PointerLikeTypeTraitsIS3_EENS_18PointerIntPairInfoIS3_Lj1ES5_EEEEE6insertES8_.exit
+  %6 = ptrtoint ptr %.sroa.0149.0221 to i64
+  br label %_ZSt9__advanceIN4llvm18EquivalenceClassesINS0_14PointerIntPairIPNS0_5ValueELj1EbNS0_21PointerLikeTypeTraitsIS4_EENS0_18PointerIntPairInfoIS4_Lj1ES6_EEEEE15member_iteratorElEvRT_T0_St18input_iterator_tag.exit
+
 .lr.ph.i.preheader:                               ; preds = %_ZN4llvm15SmallPtrSetImplINS_14PointerIntPairIPNS_5ValueELj1EbNS_21PointerLikeTypeTraitsIS3_EENS_18PointerIntPairInfoIS3_Lj1ES5_EEEEE6insertES8_.exit
   %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.0149.0221, i64 8
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !321
   %i.cc = ptrtoint ptr %i.cb to i64
   %i.cd = and i64 %i.cc, -2
-  br label %_ZSt9__advanceIN4llvm18EquivalenceClassesINS0_14PointerIntPairIPNS0_5ValueELj1EbNS0_21PointerLikeTypeTraitsIS4_EENS0_18PointerIntPairInfoIS4_Lj1ES6_EEEEE15member_iteratorElEvRT_T0_St18input_iterator_tag.exit
-
-5:                                                ; preds = %_ZN4llvm15SmallPtrSetImplINS_14PointerIntPairIPNS_5ValueELj1EbNS_21PointerLikeTypeTraitsIS3_EENS_18PointerIntPairInfoIS3_Lj1ES5_EEEEE6insertES8_.exit
-  %6 = ptrtoint ptr %.sroa.0149.0221 to i64
   br label %_ZSt9__advanceIN4llvm18EquivalenceClassesINS0_14PointerIntPairIPNS0_5ValueELj1EbNS0_21PointerLikeTypeTraitsIS4_EENS0_18PointerIntPairInfoIS4_Lj1ES6_EEEEE15member_iteratorElEvRT_T0_St18input_iterator_tag.exit
 
 _ZSt9__advanceIN4llvm18EquivalenceClassesINS0_14PointerIntPairIPNS0_5ValueELj1EbNS0_21PointerLikeTypeTraitsIS4_EENS0_18PointerIntPairInfoIS4_Lj1ES6_EEEEE15member_iteratorElEvRT_T0_St18input_iterator_tag.exit: ; preds = %.lr.ph.i.preheader, %5

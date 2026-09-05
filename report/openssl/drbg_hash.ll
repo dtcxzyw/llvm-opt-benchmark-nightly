@@ -205,15 +205,15 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ah, label %hash_gen.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.k
+  %5 = getelementptr inbounds nuw i8, ptr %.02638.i, i64 %i.af
   %i.ai = load i64, ptr %i.q, align 8, !tbaa !29
   %i.aj = getelementptr i8, ptr %i.o, i64 %i.ai   ; 2 uses
   %.030.i.i = getelementptr i8, ptr %i.aj, i64 -1 ; 2 uses
   %i.ak = load i8, ptr %.030.i.i, align 1, !tbaa !25 ; 2 uses
   %i.al = add i8 %i.ak, 1
+  %add.narrowed.overflow.not.i = icmp eq i8 %i.ak, -1
   store i8 %i.al, ptr %.030.i.i, align 1, !tbaa !25
-  %5 = getelementptr inbounds nuw i8, ptr %.02638.i, i64 %i.af
-  %.not50.i = icmp eq i8 %i.ak, -1
-  br i1 %.not50.i, label %bb.l, label %add_bytes.exit.i
+  br i1 %add.narrowed.overflow.not.i, label %bb.l, label %add_bytes.exit.i
 
 bb.l:                                             ; preds = %.lr.ph.i.i
   %i.am = load i64, ptr %i.q, align 8, !tbaa !29
@@ -225,7 +225,7 @@ bb.l:                                             ; preds = %.lr.ph.i.i
   %.0.i.i = getelementptr i8, ptr %i.aj, i64 -2
   br label %.lr.ph41.i.i
 
-.lr.ph41.i.i:                                     ; preds = %.lr.ph41.i.i.preheader, %.lr.ph41.i.i
+.lr.ph41.i.i:                                     ; preds = %.lr.ph41.i.i, %.lr.ph41.i.i.preheader
   %.139.i.i = phi ptr [ %i.ar, %.lr.ph41.i.i ], [ %.0.i.i, %.lr.ph41.i.i.preheader ] ; 3 uses
   %.12538.i.i = phi i64 [ %i.aq, %.lr.ph41.i.i ], [ %i.an, %.lr.ph41.i.i.preheader ]
   %i.ao = load i8, ptr %.139.i.i, align 1, !tbaa !25

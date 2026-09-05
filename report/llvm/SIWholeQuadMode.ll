@@ -204,12 +204,7 @@ bb.hy:                                            ; preds = %bb.hx
 
 bb.hz:                                            ; preds = %bb.hy
   %.not.i.i78 = icmp eq ptr %i.bsm, %i.bsj
-  br i1 %.not.i.i78, label %.preheader.preheader.i.i, label %bb.ia
-
-.preheader.preheader.i.i:                         ; preds = %bb.hz
-  %51 = getelementptr inbounds nuw i8, ptr %i.bsj, i64 8
-  %52 = load ptr, ptr %51, align 8, !tbaa !241
-  br label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i
+  br i1 %.not.i.i78, label %.preheader.i.i, label %bb.ia
 
 bb.ia:                                            ; preds = %bb.hz
   %i.bsq = call noundef ptr @_ZN4llvm12MachineInstr16removeFromParentEv(ptr noundef nonnull align 8 dereferenceable(80) %i.bsm) #18 ; 0 uses
@@ -239,8 +234,13 @@ bb.ib:                                            ; preds = %bb.ia
   call void @_ZN4llvm13LiveIntervals10handleMoveERNS_12MachineInstrEb(ptr noundef nonnull align 8 dereferenceable(424) %i.btb, ptr noundef nonnull align 8 dereferenceable(80) %i.bsm, i1 noundef zeroext false) #18
   br label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i
 
-_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i: ; preds = %bb.ib, %bb.ia, %.preheader.preheader.i.i, %bb.hy, %bb.hx
-  %.1.i.i = phi ptr [ %i.bsj, %bb.hx ], [ %i.bsj, %bb.ib ], [ %i.bsj, %bb.ia ], [ %i.bsj, %bb.hy ], [ %52, %.preheader.preheader.i.i ] ; 4 uses
+.preheader.i.i:                                   ; preds = %bb.hz
+  %51 = getelementptr inbounds nuw i8, ptr %i.bsj, i64 8
+  %52 = load ptr, ptr %51, align 8, !tbaa !241
+  br label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i
+
+_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i: ; preds = %.preheader.i.i, %bb.ib, %bb.ia, %bb.hy, %bb.hx
+  %.1.i.i = phi ptr [ %i.bsj, %bb.hx ], [ %i.bsj, %bb.ib ], [ %i.bsj, %bb.ia ], [ %i.bsj, %bb.hy ], [ %52, %.preheader.i.i ] ; 4 uses
   %i.btc = getelementptr inbounds nuw i8, ptr %i.bon, i64 72 ; 4 uses
   %i.btd = load ptr, ptr %0, align 8, !tbaa !198
   %i.bte = getelementptr inbounds nuw i8, ptr %i.btd, i64 384
@@ -643,9 +643,9 @@ _ZNK4llvm11SlotIndexes14getIndexBeforeERKNS_12MachineInstrE.exit: ; preds = %.sp
   %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !318
   br label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_14IndexListEntryELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit
 
-_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_14IndexListEntryELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %_ZNK4llvm11SlotIndexes14getIndexBeforeERKNS_12MachineInstrE.exit, %_ZNK4llvm11SlotIndexes13getIndexAfterERKNS_12MachineInstrE.exit
-  %.sroa.038.0 = phi ptr [ %i.bg, %_ZNK4llvm11SlotIndexes13getIndexAfterERKNS_12MachineInstrE.exit ], [ %i.dq, %_ZNK4llvm11SlotIndexes14getIndexBeforeERKNS_12MachineInstrE.exit ] ; 4 uses
-  %.sroa.039.0 = phi ptr [ %i.bh, %_ZNK4llvm11SlotIndexes13getIndexAfterERKNS_12MachineInstrE.exit ], [ %i.do, %_ZNK4llvm11SlotIndexes14getIndexBeforeERKNS_12MachineInstrE.exit ]
+_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_14IndexListEntryELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %_ZNK4llvm11SlotIndexes13getIndexAfterERKNS_12MachineInstrE.exit, %_ZNK4llvm11SlotIndexes14getIndexBeforeERKNS_12MachineInstrE.exit
+  %.sroa.038.0 = phi ptr [ %i.dq, %_ZNK4llvm11SlotIndexes14getIndexBeforeERKNS_12MachineInstrE.exit ], [ %i.bg, %_ZNK4llvm11SlotIndexes13getIndexAfterERKNS_12MachineInstrE.exit ] ; 4 uses
+  %.sroa.039.0 = phi ptr [ %i.do, %_ZNK4llvm11SlotIndexes14getIndexBeforeERKNS_12MachineInstrE.exit ], [ %i.bh, %_ZNK4llvm11SlotIndexes13getIndexAfterERKNS_12MachineInstrE.exit ]
   %i.dr = getelementptr inbounds nuw i8, ptr %.sroa.038.0, i64 24
   %i.ds = load i32, ptr %i.dr, align 8, !tbaa !434
   %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.039.0, i64 24
@@ -1048,14 +1048,7 @@ bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.p = load i64, ptr %i.o, align 8, !tbaa !299
   %i.q = icmp eq i64 %i.p, %i.k
-  br i1 %i.q, label %bb.c, label %.preheader.preheader
-
-.preheader.preheader:                             ; preds = %bb.b
-  %30 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
-  %31 = load ptr, ptr %30, align 8, !tbaa !241
-  %32 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  %33 = icmp eq ptr %31, %32
-  br i1 %33, label %bb.e, label %bb.d
+  br i1 %i.q, label %bb.c, label %.preheader
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #18
@@ -1105,7 +1098,14 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #18
   br label %bb.l
 
-bb.d:                                             ; preds = %.preheader.preheader
+.preheader:                                       ; preds = %bb.b
+  %30 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %31 = load ptr, ptr %30, align 8, !tbaa !241
+  %32 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
+  %33 = icmp eq ptr %31, %32
+  br i1 %33, label %bb.e, label %bb.d
+
+bb.d:                                             ; preds = %.preheader
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !202
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 32
@@ -1113,7 +1113,7 @@ bb.d:                                             ; preds = %.preheader.preheade
   tail call void @_ZN4llvm11SlotIndexes26removeMachineInstrFromMapsERNS_12MachineInstrEb(ptr noundef nonnull align 8 dereferenceable(416) %i.ar, ptr noundef nonnull align 8 dereferenceable(80) %1, i1 noundef zeroext false) #18
   br label %_ZN4llvm13LiveIntervals25ReplaceMachineInstrInMapsERNS_12MachineInstrES2_.exit
 
-bb.e:                                             ; preds = %.preheader.preheader
+bb.e:                                             ; preds = %.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #18
   %.sroa.043.0.copyload = load ptr, ptr %i.c, align 8, !tbaa !320
   store ptr %.sroa.043.0.copyload, ptr %20, align 8, !tbaa !320

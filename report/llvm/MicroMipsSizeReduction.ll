@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %_ZL25IsMovepDestina
   %i.ah = tail call fastcc noundef zeroext i1 @_ZL25IsMovepDestinationRegPairjj(i32 noundef %i.w, i32 noundef %i.n)
   br i1 %i.ah, label %_ZL25IsMovepDestinationRegPairjj.exit.thread, label %bb.i
 
-_ZL25IsMovepDestinationRegPairjj.exit.thread:     ; preds = %bb.g, %bb.f, %bb.h, %_ZL25IsMovepDestinationRegPairjj.exit
+_ZL25IsMovepDestinationRegPairjj.exit.thread:     ; preds = %_ZL25IsMovepDestinationRegPairjj.exit, %bb.h, %bb.f, %bb.g
   %.0.i35 = phi i1 [ true, %_ZL25IsMovepDestinationRegPairjj.exit ], [ false, %bb.h ], [ true, %bb.f ], [ true, %bb.g ]
   %i.ai = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !57

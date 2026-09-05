@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %.lr.ph.i.preheader
   %i.al = icmp eq i64 %i.z, %i.o
   br label %_ZSt9__advanceISt17_Rb_tree_iteratorISt4pairIKmmEElEvRT_T0_St26bidirectional_iterator_tag.exit26
 
-_ZSt9__advanceISt17_Rb_tree_iteratorISt4pairIKmmEElEvRT_T0_St26bidirectional_iterator_tag.exit26: ; preds = %bb.e, %_ZN8facebook5velox6memory9MmapArena10roundBytesEm.exit
+_ZSt9__advanceISt17_Rb_tree_iteratorISt4pairIKmmEElEvRT_T0_St26bidirectional_iterator_tag.exit26: ; preds = %_ZN8facebook5velox6memory9MmapArena10roundBytesEm.exit, %bb.e
   %i.am = phi i64 [ undef, %_ZN8facebook5velox6memory9MmapArena10roundBytesEm.exit ], [ %i.w, %bb.e ] ; 3 uses
   %.083 = phi i64 [ undef, %_ZN8facebook5velox6memory9MmapArena10roundBytesEm.exit ], [ %i.y, %bb.e ]
   %.0 = phi i1 [ false, %_ZN8facebook5velox6memory9MmapArena10roundBytesEm.exit ], [ %i.al, %bb.e ] ; 2 uses
@@ -605,7 +605,7 @@ bb.p:                                             ; preds = %_ZNSolsEm.exit45, %
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
   br label %bb.ai
 
-_ZSt9__advanceISt23_Rb_tree_const_iteratorISt4pairIKmmEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit46, %_ZNKSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit
+_ZSt9__advanceISt23_Rb_tree_const_iteratorISt4pairIKmmEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %_ZNKSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit46
   %.2 = phi i64 [ %i.bq, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit46 ], [ %.1, %_ZNKSt13unordered_setImSt4hashImESt8equal_toImESaImEE4findERKm.exit ] ; 3 uses
   %i.bs = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.085.0110) #27 ; 3 uses
   %i.bt = icmp eq ptr %i.bs, %i.h

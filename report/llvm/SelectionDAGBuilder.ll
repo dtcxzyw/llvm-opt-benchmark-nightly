@@ -205,21 +205,21 @@ define dso_local void @_ZN4llvm12RegsForValueC2ERKNS_11SmallVectorINS_8RegisterE
 .lr.ph.i.i.i.i.i:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store ptr %i.a, ptr %0, align 8, !tbaa !54
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 4, ptr %i.b, align 4, !tbaa !77
   store i16 %3, ptr %i.a, align 8, !tbaa !79
   %.sroa.415.0..09.i.i.i.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %4, ptr %.sroa.415.0..09.i.i.i.sroa_idx.i.i, align 8, !tbaa !81
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 1, ptr %6, align 8, !tbaa !82
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   store ptr %i.d, ptr %i.c, align 8, !tbaa !84
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store i64 4, ptr %i.e, align 8, !tbaa !85
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 88
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 96
+  store i64 4, ptr %7, align 8, !tbaa !85
   store i16 %2, ptr %i.d, align 8, !tbaa !79
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store i64 1, ptr %7, align 8, !tbaa !86
+  store i64 1, ptr %i.e, align 8, !tbaa !86
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   store ptr %i.g, ptr %i.f, align 8, !tbaa !54

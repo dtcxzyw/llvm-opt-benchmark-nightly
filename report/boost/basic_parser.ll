@@ -204,7 +204,7 @@ bb.a:                                             ; preds = %_ZNK5boost5beast19b
 
 _ZNK5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratoreqERKS7_.exit19: ; preds = %_ZNK5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratoreqERKS7_.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.e, i64 16   ; 2 uses
+  %scevgep = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
   %i.l = icmp eq ptr %scevgep, %.sroa.6.16.copyload ; 2 uses
   %i.m = select i1 %i.h, i1 %i.l, i1 false
   br i1 %i.m, label %_ZNK5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratordeEv.exit, label %bb.b
@@ -607,7 +607,7 @@ bb.a:                                             ; preds = %_ZNK5boost5beast19b
 
 _ZNK5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratoreqERKS7_.exit19: ; preds = %_ZNK5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratoreqERKS7_.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.e, i64 16   ; 2 uses
+  %scevgep = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
   %i.l = icmp eq ptr %scevgep, %.sroa.6.16.copyload ; 2 uses
   %i.m = select i1 %i.h, i1 %i.l, i1 false
   br i1 %i.m, label %_ZNK5boost5beast19buffers_prefix_viewINS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratordeEv.exit, label %bb.b
@@ -1010,16 +1010,16 @@ bb.a:
   %i.f = icmp eq ptr %i.c, %i.e
   br i1 %i.f, label %3, label %.preheader.preheader
 
+3:                                                ; preds = %bb.a
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
+  br label %bb.k
+
 .preheader.preheader:                             ; preds = %bb.a
   %i.g = load ptr, ptr %i.c, align 8, !tbaa !146, !noalias !1260
   %i.h = icmp eq ptr %i.g, %i.e
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !147  ; 3 uses
   br i1 %i.h, label %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit, label %.lr.ph.i.i.i
-
-3:                                                ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
-  br label %bb.k
 
 _ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit: ; preds = %.preheader.preheader
   %i.k = icmp eq ptr %i.c, %i.j
@@ -1233,16 +1233,16 @@ bb.a:
   %i.f = icmp eq ptr %i.c, %i.e
   br i1 %i.f, label %3, label %.preheader.preheader
 
+3:                                                ; preds = %bb.a
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
+  br label %bb.k
+
 .preheader.preheader:                             ; preds = %bb.a
   %i.g = load ptr, ptr %i.c, align 8, !tbaa !146, !noalias !1299
   %i.h = icmp eq ptr %i.g, %i.e
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !147  ; 3 uses
   br i1 %i.h, label %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit, label %.lr.ph.i.i.i
-
-3:                                                ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
-  br label %bb.k
 
 _ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb1EE14const_iteratordeEv.exit: ; preds = %.preheader.preheader
   %i.k = icmp eq ptr %i.c, %i.j
