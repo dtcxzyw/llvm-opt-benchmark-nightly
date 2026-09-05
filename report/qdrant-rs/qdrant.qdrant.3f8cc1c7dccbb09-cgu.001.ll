@@ -204,7 +204,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringEC
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtCsexYYUdYSQU6_5alloc6string6StringjEECsl8OoimOLbh_6qdrant.exit.i.i.i.i.i.i.i unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.g = add i64 %.sroa.0.1.i.i.i.i.i.i.i17, 1    ; 2 uses
+  %i.g = add nuw nsw i64 %.sroa.0.1.i.i.i.i.i.i.i17, 1 ; 2 uses
   %i.h = icmp eq i64 %i.g, 3
   br i1 %i.h, label %common.resume, label %.lr.ph
 

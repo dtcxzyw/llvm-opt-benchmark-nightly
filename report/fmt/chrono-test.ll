@@ -205,7 +205,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %exitcond.not.i245, label %._crit_edge.i246, label %scalar.ph, !llvm.loop !5712
 
 bb.an:                                            ; preds = %._crit_edge.i246
-  %i.lr = add nuw i64 %.0.i.i235, 2               ; 2 uses
+  %i.lr = add nuw nsw i64 %.0.i.i235, 2           ; 2 uses
   %.not561 = icmp samesign ult i64 %i.kp, %i.kx
   br i1 %.not561, label %_ZN3fmt3v126detail6bufferIjE9push_backERKj.exit.i248, label %bb.ao
 
@@ -608,7 +608,7 @@ bb.p:                                             ; preds = %.lr.ph58, %._crit_e
   %i.dg = getelementptr inbounds [4 x i8], ptr %.pre93, i64 %indvars.iv88
   store i32 %i.df, ptr %i.dg, align 4, !tbaa !239
   %i.dh = lshr i128 %.3.lcssa, 32
-  %indvars.iv.next89 = add nsw i64 %indvars.iv88, 1 ; 2 uses
+  %indvars.iv.next89 = add nuw nsw i64 %indvars.iv88, 1 ; 2 uses
   %indvars.iv.next79 = add i32 %indvars.iv78, 1
   %exitcond91.not = icmp eq i64 %indvars.iv.next89, %wide.trip.count
   %indvar.next = add i32 %indvar, 1

@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %.lr.ph84
   br label %_RNvMsz_NtCscgRAwXFJnXP_4core3numt16from_ascii_radix.exit, !dbg !145143
 
 bb.m:                                             ; preds = %bb.l
-  %i.bw = trunc nsw i32 %spec.select79.i to i16, !dbg !145144
+  %i.bw = trunc nuw nsw i32 %spec.select79.i to i16, !dbg !145144
   %i.bx = add i16 %i.be, %i.bw, !dbg !145145      ; 3 uses
   %i.by = icmp ult i16 %i.bx, %i.be, !dbg !145145
   br i1 %i.by, label %_RNvMsz_NtCscgRAwXFJnXP_4core3numt16from_ascii_radix.exit, label %.preheader62.split.i, !dbg !145146, !prof !2688
