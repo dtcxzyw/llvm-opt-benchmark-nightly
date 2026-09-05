@@ -1,4 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libjpeg-turbo/original/tjbench?download=true
+inline.NumInlined: 11
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@decomp:bb.a
   %i.hk = sext i32 %i.gv to i64
   %i.hl = sext i32 %.0499 to i64
@@ -199,23 +202,6 @@ bb.bv:                                            ; preds = %bb.bu, %.loopexit
   %.0501.us.us = phi double [ %.6507.ph.us.us.us, %10 ], [ %.0501.us.us.ph, %.preheader.lr.ph.us.us.outer ]
   %i.iy = tail call double @getTime() #22
   br label %.preheader.us.us.us
-
-10:                                               ; preds = %._crit_edge829.split.us.us.us
-  %11 = load double, ptr @warmup, align 8, !tbaa !15
-  %12 = fcmp ult double %i.my, %11
-  br i1 %12, label %.preheader.lr.ph.us.us, label %.preheader.lr.ph.us.us.outer.backedge
-
-13:                                               ; preds = %._crit_edge829.split.us.us.us
-  %14 = add nuw nsw i32 %.0539.us.us.ph, 1        ; 2 uses
-  %15 = load double, ptr @benchTime, align 8, !tbaa !15
-  %16 = fcmp ult double %i.my, %15
-  br i1 %16, label %.preheader.lr.ph.us.us.outer.backedge, label %.split856.us
-
-.preheader.lr.ph.us.us.outer.backedge:            ; preds = %10, %13
-  %.0539.us.us.ph.be = phi i32 [ %14, %13 ], [ 0, %10 ]
-  %.0510.us.us.ph.be = phi double [ %i.my, %13 ], [ 0.000000e+00, %10 ]
-  %.0501.us.us.ph.be = phi double [ %.6507.ph.us.us.us, %13 ], [ 0.000000e+00, %10 ]
-  br label %.preheader.lr.ph.us.us.outer
 
 .preheader.us.us.us:                              ; preds = %._crit_edge.us.us.us, %.preheader.lr.ph.us.us
   %.0828.us.us.us = phi i64 [ 0, %.preheader.lr.ph.us.us ], [ %indvars.iv.next908, %._crit_edge.us.us.us ]
@@ -469,6 +455,23 @@ bb.cx:                                            ; preds = %.thread731.us.us.us
   %i.mx = fsub double %i.mw, %i.iy
   %i.my = fadd double %.0510.us.us, %i.mx         ; 5 uses
   br i1 %i.ix, label %13, label %10
+
+10:                                               ; preds = %._crit_edge829.split.us.us.us
+  %11 = load double, ptr @warmup, align 8, !tbaa !15
+  %12 = fcmp ult double %i.my, %11
+  br i1 %12, label %.preheader.lr.ph.us.us, label %.preheader.lr.ph.us.us.outer.backedge
+
+13:                                               ; preds = %._crit_edge829.split.us.us.us
+  %14 = add nuw nsw i32 %.0539.us.us.ph, 1        ; 2 uses
+  %15 = load double, ptr @benchTime, align 8, !tbaa !15
+  %16 = fcmp ult double %i.my, %15
+  br i1 %16, label %.preheader.lr.ph.us.us.outer.backedge, label %.split856.us
+
+.preheader.lr.ph.us.us.outer.backedge:            ; preds = %10, %13
+  %.0539.us.us.ph.be = phi i32 [ %14, %13 ], [ 0, %10 ]
+  %.0510.us.us.ph.be = phi double [ %i.my, %13 ], [ 0.000000e+00, %10 ]
+  %.0501.us.us.ph.be = phi double [ %.6507.ph.us.us.us, %13 ], [ 0.000000e+00, %10 ]
+  br label %.preheader.lr.ph.us.us.outer
 
 .preheader.lr.ph.us:                              ; preds = %.preheader.lr.ph.us.outer, %bb.cy
   %.0510.us = phi double [ %i.nc, %bb.cy ], [ %.0510.us.ph, %.preheader.lr.ph.us.outer ]

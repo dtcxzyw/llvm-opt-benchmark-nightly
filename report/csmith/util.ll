@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/csmith/original/util?download=true
+inline.NumInlined: 433
+inline.NumDeleted: 206
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_Z17log_analysis_failRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:bb.a
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i7: ; preds = %bb.m
@@ -200,7 +204,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i15.i.i.preh
   br i1 %found.conflict, label %.lr.ph.i15.i.i.preheader92, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.al, 9223372036854775800     ; 4 uses
+  %n.vec = and i64 %i.al, 9223372036854775804     ; 4 uses
   %i.aw = mul i64 %n.vec, -4
   %i.ax = getelementptr i8, ptr %.ptr35.i.i, i64 %i.aw
   %i.ay = shl i64 %n.vec, 2
@@ -210,25 +214,17 @@ vector.ph:                                        ; preds = %vector.memcheck
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.ba = mul i64 %index, -4
-  %next.gep = getelementptr i8, ptr %.ptr35.i.i, i64 %i.ba ; 2 uses
+  %next.gep = getelementptr i8, ptr %.ptr35.i.i, i64 %i.ba
   %i.bb = shl i64 %index, 2
-  %next.gep84 = getelementptr i8, ptr %i.o, i64 %i.bb ; 3 uses
-  %i.bc = getelementptr i8, ptr %next.gep84, i64 16 ; 2 uses
-  %wide.load = load <4 x i32>, ptr %next.gep84, align 4, !tbaa !10, !alias.scope !78, !noalias !79
+  %i.bc = getelementptr i8, ptr %i.o, i64 %i.bb   ; 2 uses
   %wide.load85.a = load <4 x i32>, ptr %i.bc, align 4, !tbaa !10, !alias.scope !78, !noalias !79
-  %2 = getelementptr i8, ptr %next.gep, i64 -12   ; 2 uses
-  %i.bd = getelementptr i8, ptr %next.gep, i64 -28 ; 2 uses
-  %wide.load86 = load <4 x i32>, ptr %2, align 4, !tbaa !10, !alias.scope !79
+  %i.bd = getelementptr i8, ptr %next.gep, i64 -12 ; 2 uses
   %wide.load87 = load <4 x i32>, ptr %i.bd, align 4, !tbaa !10, !alias.scope !79
-  %reverse = shufflevector <4 x i32> %wide.load86, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   %reverse88 = shufflevector <4 x i32> %wide.load87, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i32> %reverse, ptr %next.gep84, align 4, !tbaa !10, !alias.scope !78, !noalias !79
   store <4 x i32> %reverse88, ptr %i.bc, align 4, !tbaa !10, !alias.scope !78, !noalias !79
-  %reverse89 = shufflevector <4 x i32> %wide.load, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   %reverse90 = shufflevector <4 x i32> %wide.load85.a, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i32> %reverse89, ptr %2, align 4, !tbaa !10, !alias.scope !79
   store <4 x i32> %reverse90, ptr %i.bd, align 4, !tbaa !10, !alias.scope !79
-  %index.next = add nuw i64 %index, 8             ; 2 uses
+  %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.be = icmp eq i64 %index.next, %n.vec
   br i1 %i.be, label %middle.block, label %vector.body, !llvm.loop !76
 

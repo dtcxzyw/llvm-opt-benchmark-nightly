@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/recastnavigation/original/RecastArea?download=true
+inline.NumInlined: 85
+inline.NumDeleted: 18
+loop-unroll.NumCompletelyUnrolled: 11
+loop-unroll.NumUnrolled: 11
 begin_hunk_0_@_Z13rcMarkBoxAreaP9rcContextPKfS2_hR20rcCompactHeightfield:bb.a
   %i.bp = and i32 %i.bl, 16777215
   %i.bq = zext nneg i32 %i.bp to i64
@@ -200,11 +204,6 @@ bb.d:                                             ; preds = %._crit_edge131.spli
   %.not141 = icmp eq i32 %i.cb, 0
   br i1 %.not141, label %._crit_edge131.split.us.us.us, label %.lr.ph130.us.us
 
-._crit_edge131.split.us.us.us:                    ; preds = %_ZL11pointInPolyiPKfS0_.exit.thread.us.us.us, %bb.d
-  %indvars.iv.next154 = add nuw nsw i64 %indvars.iv153, 1 ; 2 uses
-  %exitcond157.not = icmp eq i64 %indvars.iv.next154, %wide.trip.count156
-  br i1 %exitcond157.not, label %._crit_edge135.split.us.us, label %bb.d
-
 .lr.ph130.us.us:                                  ; preds = %bb.d
   %i.cc = and i32 %i.ca, 16777215
   %i.cd = add nuw nsw i32 %i.cc, %i.cb
@@ -297,6 +296,11 @@ _ZL11pointInPolyiPKfS0_.exit.thread.us.us.us:     ; preds = %bb.i, %_ZL11pointIn
   %indvars.iv.next151 = add nuw nsw i64 %indvars.iv150, 1 ; 2 uses
   %i.ea = icmp samesign ult i64 %indvars.iv.next151, %i.cj
   br i1 %i.ea, label %bb.e, label %._crit_edge131.split.us.us.us
+
+._crit_edge131.split.us.us.us:                    ; preds = %_ZL11pointInPolyiPKfS0_.exit.thread.us.us.us, %bb.d
+  %indvars.iv.next154 = add nuw nsw i64 %indvars.iv153, 1 ; 2 uses
+  %exitcond157.not = icmp eq i64 %indvars.iv.next154, %wide.trip.count156
+  br i1 %exitcond157.not, label %._crit_edge135.split.us.us, label %bb.d
 
 ._crit_edge135.split.us.us:                       ; preds = %._crit_edge131.split.us.us.us
   %indvars.iv.next159 = add nuw nsw i64 %indvars.iv158, 1 ; 2 uses

@@ -204,17 +204,6 @@ bb.a:
   %.not.i.not31.i.us = icmp eq i16 %i.q, 0
   br i1 %.not.i.not31.i.us, label %._crit_edge.i.us, label %.lr.ph.i.us.us
 
-._crit_edge.i.us:                                 ; preds = %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtNtCsj6eKBz9Db1c_4core3net7ip_addr6IpAddrNtNtCs9RFwvXNxPyg_16hickory_resolver16name_server_pool22ProtocolTransportStateEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1A_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1E_.exit.thread.i.us.us, %.split6.us
-  %3 = icmp eq <16 x i8> %.sroa.0.0.copyload.i25.i.us, splat (i8 -1)
-  %4 = bitcast <16 x i1> %3 to i16
-  %5 = icmp eq i16 %4, 0
-  br i1 %5, label %6, label %_RINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB6_8RawTableTNtNtNtCsj6eKBz9Db1c_4core3net7ip_addr6IpAddrNtNtCs9RFwvXNxPyg_16hickory_resolver16name_server_pool22ProtocolTransportStateEE4findNCNvMNtB8_11rustc_entryINtNtB8_3map7HashMapBQ_B1y_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0EB1C_.exit, !prof !14
-
-6:                                                ; preds = %._crit_edge.i.us
-  %7 = add i64 %.sroa.9.0.i.i.us, 16              ; 2 uses
-  %8 = add i64 %.sroa.01.0.i.i.us, %7
-  br label %.split6.us
-
 .lr.ph.i.us.us:                                   ; preds = %.split6.us, %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtNtCsj6eKBz9Db1c_4core3net7ip_addr6IpAddrNtNtCs9RFwvXNxPyg_16hickory_resolver16name_server_pool22ProtocolTransportStateEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1A_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1E_.exit.thread.i.us.us
   %.sroa.06.0.i32.i.us.us = phi i16 [ %i.ae, %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtNtCsj6eKBz9Db1c_4core3net7ip_addr6IpAddrNtNtCs9RFwvXNxPyg_16hickory_resolver16name_server_pool22ProtocolTransportStateEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1A_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1E_.exit.thread.i.us.us ], [ %i.q, %.split6.us ] ; 3 uses
   %i.r = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.06.0.i32.i.us.us, i1 true)
@@ -239,6 +228,17 @@ _RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtNtCsj6eKBz9Db1c_4co
   %i.ae = and i16 %i.ad, %.sroa.06.0.i32.i.us.us  ; 2 uses
   %.not.i.not.i.us.us = icmp eq i16 %i.ae, 0
   br i1 %.not.i.not.i.us.us, label %._crit_edge.i.us, label %.lr.ph.i.us.us
+
+._crit_edge.i.us:                                 ; preds = %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtNtCsj6eKBz9Db1c_4core3net7ip_addr6IpAddrNtNtCs9RFwvXNxPyg_16hickory_resolver16name_server_pool22ProtocolTransportStateEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1A_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1E_.exit.thread.i.us.us, %.split6.us
+  %3 = icmp eq <16 x i8> %.sroa.0.0.copyload.i25.i.us, splat (i8 -1)
+  %4 = bitcast <16 x i1> %3 to i16
+  %5 = icmp eq i16 %4, 0
+  br i1 %5, label %6, label %_RINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB6_8RawTableTNtNtNtCsj6eKBz9Db1c_4core3net7ip_addr6IpAddrNtNtCs9RFwvXNxPyg_16hickory_resolver16name_server_pool22ProtocolTransportStateEE4findNCNvMNtB8_11rustc_entryINtNtB8_3map7HashMapBQ_B1y_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0EB1C_.exit, !prof !14
+
+6:                                                ; preds = %._crit_edge.i.us
+  %7 = add i64 %.sroa.9.0.i.i.us, 16              ; 2 uses
+  %8 = add i64 %.sroa.01.0.i.i.us, %7
+  br label %.split6.us
 
 .split6:                                          ; preds = %bb.a, %bb.b
   %.sroa.9.0.i.i = phi i64 [ %i.az, %bb.b ], [ 0, %bb.a ]

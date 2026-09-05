@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llama-cpp/original/llama-kv-cache-msa?download=true
+inline.NumInlined: 595
+inline.NumDeleted: 353
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN26llama_kv_cache_msa_context5applyEv:bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !118  ; 2 uses
@@ -200,11 +204,6 @@ bb.k:                                             ; preds = %bb.j, %_ZNK14llama_
   %exitcond50.not = icmp eq i64 %i.az, %.fr46
   br i1 %exitcond50.not, label %._crit_edge.us, label %.lr.ph.split.us43, !llvm.loop !234
 
-._crit_edge.us:                                   ; preds = %bb.k, %bb.l
-  %4 = add nuw nsw i64 %.03337.us, 1              ; 2 uses
-  %exitcond52.not = icmp eq i64 %4, %i.m
-  br i1 %exitcond52.not, label %._crit_edge40, label %.lr.ph.us, !llvm.loop !235
-
 .lr.ph.split.us.us:                               ; preds = %.lr.ph.us, %bb.l
   %.036.us.us = phi i64 [ %i.bf, %bb.l ], [ 0, %.lr.ph.us ] ; 3 uses
   %i.ba = and i64 %.036.us.us, 4294967295
@@ -219,6 +218,11 @@ bb.l:                                             ; preds = %.lr.ph.split.us.us
   %i.bf = add nuw nsw i64 %.036.us.us, 1          ; 2 uses
   %exitcond51.not = icmp eq i64 %i.bf, %.fr46
   br i1 %exitcond51.not, label %._crit_edge.us, label %.lr.ph.split.us.us, !llvm.loop !234
+
+._crit_edge.us:                                   ; preds = %bb.k, %bb.l
+  %4 = add nuw nsw i64 %.03337.us, 1              ; 2 uses
+  %exitcond52.not = icmp eq i64 %4, %i.m
+  br i1 %exitcond52.not, label %._crit_edge40, label %.lr.ph.us, !llvm.loop !235
 
 ._crit_edge40:                                    ; preds = %.lr.ph39.split, %._crit_edge.us, %bb.i
   ret void

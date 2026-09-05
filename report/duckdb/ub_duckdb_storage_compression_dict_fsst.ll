@@ -204,10 +204,6 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit.us48: ; preds = %.lr.ph.split, %.c
   %.not38.us = icmp eq i64 %i.al, 0
   br i1 %.not38.us, label %4, label %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.us49
 
-4:                                                ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us48
-  store i8 1, ptr %i.g, align 8, !tbaa !26
-  br label %.critedge.us50
-
 _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.us49: ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us48
   %i.am = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %.02342.us47
   %i.an = load i32, ptr %i.am, align 8, !tbaa !51 ; 2 uses
@@ -227,7 +223,11 @@ bb.h:                                             ; preds = %bb.g, %_ZNK6duckdb2
   %i.at = icmp ult i32 %i.an, 16384
   br i1 %i.at, label %.critedge.us50, label %.loopexit
 
-.critedge.us50:                                   ; preds = %bb.h, %4
+4:                                                ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us48
+  store i8 1, ptr %i.g, align 8, !tbaa !26
+  br label %.critedge.us50
+
+.critedge.us50:                                   ; preds = %4, %bb.h
   %i.au = add nuw i64 %.02342.us47, 1             ; 2 uses
   %exitcond65.not = icmp eq i64 %i.au, %2
   br i1 %exitcond65.not, label %.critedge35, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us48, !llvm.loop !266

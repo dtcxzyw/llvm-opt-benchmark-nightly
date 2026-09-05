@@ -204,10 +204,6 @@ _ZN3gui11CGUIEditBox14getLineFromPosEi.exit.us:   ; preds = %bb.f, %._crit_edge.
     i32 34, label %bb.g
   ]
 
-5:                                                ; preds = %_ZN3gui11CGUIEditBox14getLineFromPosEi.exit.us
-  %6 = icmp slt i32 %.06.in.i.us, 2
-  br i1 %6, label %.thread.loopexit, label %bb.h
-
 bb.g:                                             ; preds = %_ZN3gui11CGUIEditBox14getLineFromPosEi.exit.us, %_ZN3gui11CGUIEditBox14getLineFromPosEi.exit.us
   %i.br = load ptr, ptr %i.aa, align 8, !tbaa !112
   %i.bs = load ptr, ptr %i.z, align 8, !tbaa !111
@@ -219,7 +215,11 @@ bb.g:                                             ; preds = %_ZN3gui11CGUIEditBo
   %.not.us95 = icmp slt i32 %.06.in.i.us, %i.bx
   br i1 %.not.us95, label %bb.h, label %.split.us
 
-bb.h:                                             ; preds = %bb.g, %5
+5:                                                ; preds = %_ZN3gui11CGUIEditBox14getLineFromPosEi.exit.us
+  %6 = icmp slt i32 %.06.in.i.us, 2
+  br i1 %6, label %.thread.loopexit, label %bb.h
+
+bb.h:                                             ; preds = %5, %bb.g
   %i.by = zext i32 %.06.i.us to i64               ; 2 uses
   %i.bz = icmp ugt i64 %i.bm, %i.by
   br i1 %i.bz, label %_ZN4core5arrayIiEixEj.exit.us96, label %.split75.us

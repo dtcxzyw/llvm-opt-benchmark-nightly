@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ng-log/original/symbolize?download=true
+inline.NumInlined: 85
+inline.NumDeleted: 33
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN5nglog5toolsL20SymbolizeAndDemangleEPvPcmNS0_16SymbolizeOptionsE:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
@@ -200,7 +204,7 @@ bb.q:                                             ; preds = %bb.n
   %.02531.i = phi ptr [ %i.ay, %bb.r ], [ %.sroa.21.0, %.lr.ph.preheader.i ] ; 3 uses
   %i.at = load i8, ptr %.02531.i, align 1, !tbaa !24
   %.fr30.i = freeze i8 %i.at                      ; 4 uses
-  %10 = sext i8 %.fr30.i to i32                   ; 2 uses
+  %10 = sext i8 %.fr30.i to i64                   ; 2 uses
   %i.au = add i8 %.fr30.i, -48
   %or.cond.i = icmp ult i8 %i.au, 10
   br i1 %or.cond.i, label %bb.r, label %switch.early.test.i
@@ -224,12 +228,11 @@ switch.early.test.i:                              ; preds = %.lr.ph.i
 bb.r:                                             ; preds = %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %.lr.ph.i
   %i.av = shl i64 %i.as, 4
   %i.aw = icmp samesign ult i8 %.fr30.i, 65
-  %11 = add nsw i32 %10, -48
-  %12 = and i32 %10, 15
-  %13 = add nuw nsw i32 %12, 9
-  %.v.i = select i1 %i.aw, i32 %11, i32 %13
-  %14 = zext nneg i32 %.v.i to i64
-  %i.ax = or i64 %i.av, %14                       ; 3 uses
+  %11 = add nsw i64 %10, -48
+  %12 = and i64 %10, 15
+  %13 = add nuw nsw i64 %12, 9
+  %.v.i = select i1 %i.aw, i64 %11, i64 %13
+  %i.ax = or i64 %.v.i, %i.av                     ; 3 uses
   store i64 %i.ax, ptr %2, align 8, !tbaa !21
   %i.ay = getelementptr inbounds nuw i8, ptr %.02531.i, i64 1 ; 2 uses
   %exitcond.not.i = icmp eq ptr %i.ay, %i.am
@@ -274,7 +277,7 @@ bb.v:                                             ; preds = %bb.t
   %.02531.i84 = phi ptr [ %i.bc, %.lr.ph.preheader.i81 ], [ %i.bl, %bb.w ] ; 3 uses
   %i.bg = load i8, ptr %.02531.i84, align 1, !tbaa !24
   %.fr30.i85 = freeze i8 %i.bg                    ; 4 uses
-  %15 = sext i8 %.fr30.i85 to i32                 ; 2 uses
+  %14 = sext i8 %.fr30.i85 to i64                 ; 2 uses
   %i.bh = add i8 %.fr30.i85, -48
   %or.cond.i86 = icmp ult i8 %i.bh, 10
   br i1 %or.cond.i86, label %bb.w, label %switch.early.test.i87
@@ -298,12 +301,11 @@ switch.early.test.i87:                            ; preds = %.lr.ph.i83
 bb.w:                                             ; preds = %switch.early.test.i87, %switch.early.test.i87, %switch.early.test.i87, %switch.early.test.i87, %switch.early.test.i87, %switch.early.test.i87, %switch.early.test.i87, %switch.early.test.i87, %switch.early.test.i87, %switch.early.test.i87, %switch.early.test.i87, %switch.early.test.i87, %.lr.ph.i83
   %i.bi = shl i64 %.1, 4
   %i.bj = icmp samesign ult i8 %.fr30.i85, 65
-  %16 = add nsw i32 %15, -48
-  %17 = and i32 %15, 15
-  %18 = add nuw nsw i32 %17, 9
-  %.v.i88 = select i1 %i.bj, i32 %16, i32 %18
-  %19 = zext nneg i32 %.v.i88 to i64
-  %i.bk = or i64 %i.bi, %19                       ; 2 uses
+  %15 = add nsw i64 %14, -48
+  %16 = and i64 %14, 15
+  %17 = add nuw nsw i64 %16, 9
+  %.v.i88 = select i1 %i.bj, i64 %15, i64 %17
+  %i.bk = or i64 %.v.i88, %i.bi                   ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.02531.i84, i64 1 ; 2 uses
   %exitcond.not.i89 = icmp eq ptr %i.bl, %i.am
   br i1 %exitcond.not.i89, label %switch.early.test._crit_edge.i78.loopexit, label %.lr.ph.i83, !llvm.loop !2

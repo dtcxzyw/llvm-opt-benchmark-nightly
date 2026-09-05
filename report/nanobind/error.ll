@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nanobind/original/error?download=true
+inline.NumInlined: 169
+inline.NumDeleted: 93
 begin_hunk_0_@PyException_SetCause
 declare void @PyException_SetCause(ptr noundef, ptr noundef) local_unnamed_addr #3
 
@@ -200,9 +202,9 @@ define linkonce_odr hidden void @_ZNSt6vectorIP6_frameN8nanobind6detail12py_allo
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
-  %i.c = load ptr, ptr %0, align 8                ; 7 uses
-  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
+  %i.c = load ptr, ptr %0, align 8                ; 5 uses
+  %i.d = ptrtoint ptr %i.b to i64
+  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNKSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE12_M_check_lenEmPKc.exit
@@ -218,16 +220,15 @@ _ZNKSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE12_M_check_lenEmPKc.
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
   %i.l = select i1 %i.j, i64 1152921504606846975, i64 %i.k ; 3 uses
-  %i.m = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.m = ptrtoint ptr %1 to i64
   %i.n = sub i64 %i.m, %i.e
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = shl nuw nsw i64 %i.l, 3
   %i.p = invoke ptr @PyMem_Malloc(i64 noundef %i.o)
-          to label %bb.c unwind label %bb.e       ; 9 uses
+          to label %bb.c unwind label %bb.e       ; 6 uses
 
 bb.c:                                             ; preds = %_ZNKSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE12_M_check_lenEmPKc.exit
-  %3 = ptrtoaddr ptr %i.p to i64
   %.not.i.i.i = icmp eq ptr %i.p, null
   br i1 %.not.i.i.i, label %bb.d, label %_ZNSt12_Vector_baseIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_M_allocateEm.exit, !prof !3
 
@@ -247,132 +248,40 @@ _ZNSt12_Vector_baseIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_M_allocateE
   %i.t = load ptr, ptr %2, align 8
   store ptr %i.t, ptr %i.s, align 8
   %.not10.i.i.i = icmp eq ptr %i.c, %1
-  br i1 %.not10.i.i.i, label %_ZNSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_S_relocateEPS1_S7_S7_RS5_.exit, label %.lr.ph.i.i.i.preheader
+  br i1 %.not10.i.i.i, label %vector.body47, label %.lr.ph.i.i.i
 
-.lr.ph.i.i.i.preheader:                           ; preds = %_ZNSt12_Vector_baseIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_M_allocateEm.exit
-  %4 = add i64 %i.m, -8
-  %5 = sub i64 %4, %i.e                           ; 2 uses
-  %6 = lshr i64 %5, 3
-  %7 = add nuw nsw i64 %6, 1                      ; 2 uses
-  %min.iters.check = icmp ult i64 %5, 72
-  %8 = sub i64 %i.e, %3
-  %diff.check = icmp ugt i64 %8, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.preheader59, label %vector.ph
-
-vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader
-  %n.vec = and i64 %7, 4611686018427387900        ; 3 uses
-  %9 = shl i64 %n.vec, 3                          ; 2 uses
-  %10 = getelementptr i8, ptr %i.p, i64 %9        ; 2 uses
-  %11 = getelementptr i8, ptr %i.c, i64 %9
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %12 = shl i64 %index, 3                         ; 2 uses
-  %next.gep = getelementptr i8, ptr %i.p, i64 %12 ; 2 uses
-  %next.gep37 = getelementptr i8, ptr %i.c, i64 %12 ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !33)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !34)
-  %13 = getelementptr i8, ptr %next.gep37, i64 16
-  %wide.load = load <2 x ptr>, ptr %next.gep37, align 8, !alias.scope !34, !noalias !33
-  %wide.load38 = load <2 x ptr>, ptr %13, align 8, !alias.scope !34, !noalias !33
-  %14 = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x ptr> %wide.load, ptr %next.gep, align 8, !alias.scope !33, !noalias !34
-  store <2 x ptr> %wide.load38, ptr %14, align 8, !alias.scope !33, !noalias !34
-  %index.next = add nuw i64 %index, 4             ; 2 uses
-  %15 = icmp eq i64 %index.next, %n.vec
-  br i1 %15, label %middle.block, label %vector.body, !llvm.loop !26
-
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %7, %n.vec
-  br i1 %cmp.n, label %_ZNSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_S_relocateEPS1_S7_S7_RS5_.exit, label %.lr.ph.i.i.i.preheader59
-
-.lr.ph.i.i.i.preheader59:                         ; preds = %.lr.ph.i.i.i.preheader, %middle.block
-  %.012.i.i.i.ph = phi ptr [ %i.p, %.lr.ph.i.i.i.preheader ], [ %10, %middle.block ]
-  %.0911.i.i.i.ph = phi ptr [ %i.c, %.lr.ph.i.i.i.preheader ], [ %11, %middle.block ]
-  br label %.lr.ph.i.i.i
-
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader59, %.lr.ph.i.i.i
-  %.012.i.i.i = phi ptr [ %i.w, %.lr.ph.i.i.i ], [ %.012.i.i.i.ph, %.lr.ph.i.i.i.preheader59 ] ; 2 uses
-  %.0911.i.i.i = phi ptr [ %i.v, %.lr.ph.i.i.i ], [ %.0911.i.i.i.ph, %.lr.ph.i.i.i.preheader59 ] ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !33)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !34)
-  %i.u = load ptr, ptr %.0911.i.i.i, align 8, !alias.scope !34, !noalias !33
-  store ptr %i.u, ptr %.012.i.i.i, align 8, !alias.scope !33, !noalias !34
+.lr.ph.i.i.i:                                     ; preds = %_ZNSt12_Vector_baseIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_M_allocateEm.exit, %.lr.ph.i.i.i
+  %.012.i.i.i = phi ptr [ %i.w, %.lr.ph.i.i.i ], [ %i.p, %_ZNSt12_Vector_baseIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_M_allocateEm.exit ] ; 2 uses
+  %.0911.i.i.i = phi ptr [ %i.v, %.lr.ph.i.i.i ], [ %i.c, %_ZNSt12_Vector_baseIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_M_allocateEm.exit ] ; 2 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !30)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !31)
+  %i.u = load ptr, ptr %.0911.i.i.i, align 8, !alias.scope !31, !noalias !30
+  store ptr %i.u, ptr %.012.i.i.i, align 8, !alias.scope !30, !noalias !31
   %i.v = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 8 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i16 = icmp eq ptr %i.v, %1
-  br i1 %.not.i.i.i16, label %_ZNSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_S_relocateEPS1_S7_S7_RS5_.exit, label %.lr.ph.i.i.i, !llvm.loop !27
+  br i1 %.not.i.i.i16, label %vector.body47, label %.lr.ph.i.i.i, !llvm.loop !26
 
-_ZNSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_S_relocateEPS1_S7_S7_RS5_.exit: ; preds = %.lr.ph.i.i.i, %middle.block, %_ZNSt12_Vector_baseIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_M_allocateEm.exit
-  %.0.lcssa.i.i.i = phi ptr [ %i.p, %_ZNSt12_Vector_baseIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_M_allocateEm.exit ], [ %10, %middle.block ], [ %i.w, %.lr.ph.i.i.i ] ; 2 uses
-  %.0.lcssa.i.i.i41 = ptrtoaddr ptr %.0.lcssa.i.i.i to i64
-  %16 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 8 ; 5 uses
-  %.not10.i.i.i17 = icmp eq ptr %1, %i.b
-  br i1 %.not10.i.i.i17, label %_ZNSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_S_relocateEPS1_S7_S7_RS5_.exit23, label %.lr.ph.i.i.i18.preheader
+vector.body47:                                    ; preds = %.lr.ph.i.i.i, %_ZNSt12_Vector_baseIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_M_allocateEm.exit
+  %.0.lcssa.i.i.i = phi ptr [ %i.p, %_ZNSt12_Vector_baseIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_M_allocateEm.exit ], [ %i.w, %.lr.ph.i.i.i ]
+  %i.x = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 8 ; 2 uses
+  %i.y = icmp eq ptr %1, %i.b
+  br i1 %i.y, label %_ZNSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_S_relocateEPS1_S7_S7_RS5_.exit23, label %.lr.ph.i.i.i18
 
-.lr.ph.i.i.i18.preheader:                         ; preds = %_ZNSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_S_relocateEPS1_S7_S7_RS5_.exit
-  %17 = add i64 %i.d, -8
-  %18 = sub i64 %17, %i.m                         ; 2 uses
-  %19 = lshr i64 %18, 3
-  %20 = add nuw nsw i64 %19, 1                    ; 2 uses
-  %min.iters.check44 = icmp ult i64 %18, 104
-  br i1 %min.iters.check44, label %.lr.ph.i.i.i18.preheader58, label %vector.memcheck40
-
-vector.memcheck40:                                ; preds = %.lr.ph.i.i.i18.preheader
-  %21 = sub i64 %.0.lcssa.i.i.i41, %i.m
-  %22 = add i64 %21, 7
-  %diff.check42 = icmp ult i64 %22, 31
-  br i1 %diff.check42, label %.lr.ph.i.i.i18.preheader58, label %vector.ph45
-
-vector.ph45:                                      ; preds = %vector.memcheck40
-  %n.vec46 = and i64 %20, 4611686018427387900     ; 3 uses
-  %23 = shl i64 %n.vec46, 3                       ; 2 uses
-  %24 = getelementptr i8, ptr %16, i64 %23        ; 2 uses
-  %25 = getelementptr i8, ptr %1, i64 %23
-  br label %vector.body47
-
-vector.body47:                                    ; preds = %vector.body47, %vector.ph45
-  %index48 = phi i64 [ 0, %vector.ph45 ], [ %index.next53, %vector.body47 ] ; 2 uses
-  %26 = shl i64 %index48, 3                       ; 2 uses
-  %next.gep49 = getelementptr i8, ptr %16, i64 %26 ; 2 uses
-  %next.gep50 = getelementptr i8, ptr %1, i64 %26 ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !37)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !38)
-  %27 = getelementptr i8, ptr %next.gep50, i64 16
-  %wide.load51 = load <2 x ptr>, ptr %next.gep50, align 8, !alias.scope !38, !noalias !37
-  %wide.load52 = load <2 x ptr>, ptr %27, align 8, !alias.scope !38, !noalias !37
-  %i.x = getelementptr i8, ptr %next.gep49, i64 16
-  store <2 x ptr> %wide.load51, ptr %next.gep49, align 8, !alias.scope !37, !noalias !38
-  store <2 x ptr> %wide.load52, ptr %i.x, align 8, !alias.scope !37, !noalias !38
-  %index.next53 = add nuw i64 %index48, 4         ; 2 uses
-  %i.y = icmp eq i64 %index.next53, %n.vec46
-  br i1 %i.y, label %middle.block54, label %vector.body47, !llvm.loop !31
-
-middle.block54:                                   ; preds = %vector.body47
-  %cmp.n55 = icmp eq i64 %20, %n.vec46
-  br i1 %cmp.n55, label %_ZNSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_S_relocateEPS1_S7_S7_RS5_.exit23, label %.lr.ph.i.i.i18.preheader58
-
-.lr.ph.i.i.i18.preheader58:                       ; preds = %vector.memcheck40, %.lr.ph.i.i.i18.preheader, %middle.block54
-  %.012.i.i.i19.ph = phi ptr [ %16, %vector.memcheck40 ], [ %16, %.lr.ph.i.i.i18.preheader ], [ %24, %middle.block54 ]
-  %.0911.i.i.i20.ph = phi ptr [ %1, %vector.memcheck40 ], [ %1, %.lr.ph.i.i.i18.preheader ], [ %25, %middle.block54 ]
-  br label %.lr.ph.i.i.i18
-
-.lr.ph.i.i.i18:                                   ; preds = %.lr.ph.i.i.i18.preheader58, %.lr.ph.i.i.i18
-  %.012.i.i.i19 = phi ptr [ %i.ab, %.lr.ph.i.i.i18 ], [ %.012.i.i.i19.ph, %.lr.ph.i.i.i18.preheader58 ] ; 2 uses
-  %.0911.i.i.i20 = phi ptr [ %i.aa, %.lr.ph.i.i.i18 ], [ %.0911.i.i.i20.ph, %.lr.ph.i.i.i18.preheader58 ] ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !37)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !38)
-  %i.z = load ptr, ptr %.0911.i.i.i20, align 8, !alias.scope !38, !noalias !37
-  store ptr %i.z, ptr %.012.i.i.i19, align 8, !alias.scope !37, !noalias !38
+.lr.ph.i.i.i18:                                   ; preds = %vector.body47, %.lr.ph.i.i.i18
+  %.012.i.i.i19 = phi ptr [ %i.ab, %.lr.ph.i.i.i18 ], [ %i.x, %vector.body47 ] ; 2 uses
+  %.0911.i.i.i20 = phi ptr [ %i.aa, %.lr.ph.i.i.i18 ], [ %1, %vector.body47 ] ; 2 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !32)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !33)
+  %i.z = load ptr, ptr %.0911.i.i.i20, align 8, !alias.scope !33, !noalias !32
+  store ptr %i.z, ptr %.012.i.i.i19, align 8, !alias.scope !32, !noalias !33
   %i.aa = getelementptr inbounds nuw i8, ptr %.0911.i.i.i20, i64 8 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.012.i.i.i19, i64 8 ; 2 uses
   %.not.i.i.i21 = icmp eq ptr %i.aa, %i.b
-  br i1 %.not.i.i.i21, label %_ZNSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_S_relocateEPS1_S7_S7_RS5_.exit23, label %.lr.ph.i.i.i18, !llvm.loop !32
+  br i1 %.not.i.i.i21, label %_ZNSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_S_relocateEPS1_S7_S7_RS5_.exit23, label %.lr.ph.i.i.i18, !llvm.loop !26
 
-_ZNSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_S_relocateEPS1_S7_S7_RS5_.exit23: ; preds = %.lr.ph.i.i.i18, %middle.block54, %_ZNSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_S_relocateEPS1_S7_S7_RS5_.exit
-  %.0.lcssa.i.i.i22 = phi ptr [ %16, %_ZNSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_S_relocateEPS1_S7_S7_RS5_.exit ], [ %24, %middle.block54 ], [ %i.ab, %.lr.ph.i.i.i18 ]
+_ZNSt6vectorIP6_frameN8nanobind6detail12py_allocatorIS1_EEE11_S_relocateEPS1_S7_S7_RS5_.exit23: ; preds = %.lr.ph.i.i.i18, %vector.body47
+  %.0.lcssa.i.i.i22 = phi ptr [ %i.x, %vector.body47 ], [ %i.ab, %.lr.ph.i.i.i18 ]
   %.not.i24 = icmp eq ptr %i.c, null
   br i1 %.not.i24, label %_ZNSt12_Vector_baseIP6_frameN8nanobind6detail12py_allocatorIS1_EEE13_M_deallocateEPS1_m.exit, label %bb.f
 
@@ -482,17 +391,12 @@ attributes #32 = { builtin nounwind }
 !23 = distinct !{!23, !"_ZSt19__relocate_object_aIP6_frameS1_N8nanobind6detail12py_allocatorIS1_EEEvPT_PT0_RT1_"}
 !24 = distinct !{!24, !23, !"_ZSt19__relocate_object_aIP6_frameS1_N8nanobind6detail12py_allocatorIS1_EEEvPT_PT0_RT1_: argument 0"}
 !25 = distinct !{!25, !23, !"_ZSt19__relocate_object_aIP6_frameS1_N8nanobind6detail12py_allocatorIS1_EEEvPT_PT0_RT1_: argument 1"}
-!26 = distinct !{!26, !4, !35, !36}
-!27 = distinct !{!27, !4, !35}
-!28 = distinct !{!28, !"_ZSt19__relocate_object_aIP6_frameS1_N8nanobind6detail12py_allocatorIS1_EEEvPT_PT0_RT1_"}
-!29 = distinct !{!29, !28, !"_ZSt19__relocate_object_aIP6_frameS1_N8nanobind6detail12py_allocatorIS1_EEEvPT_PT0_RT1_: argument 0"}
-!30 = distinct !{!30, !28, !"_ZSt19__relocate_object_aIP6_frameS1_N8nanobind6detail12py_allocatorIS1_EEEvPT_PT0_RT1_: argument 1"}
-!31 = distinct !{!31, !4, !35, !36}
-!32 = distinct !{!32, !4, !35}
-!33 = !{!24}
-!34 = !{!25}
-!35 = !{!"llvm.loop.isvectorized", i32 1}
-!36 = !{!"llvm.loop.unroll.runtime.disable"}
-!37 = !{!29}
-!38 = !{!30}
+!26 = distinct !{!26, !4}
+!27 = distinct !{!27, !"_ZSt19__relocate_object_aIP6_frameS1_N8nanobind6detail12py_allocatorIS1_EEEvPT_PT0_RT1_"}
+!28 = distinct !{!28, !27, !"_ZSt19__relocate_object_aIP6_frameS1_N8nanobind6detail12py_allocatorIS1_EEEvPT_PT0_RT1_: argument 0"}
+!29 = distinct !{!29, !27, !"_ZSt19__relocate_object_aIP6_frameS1_N8nanobind6detail12py_allocatorIS1_EEEvPT_PT0_RT1_: argument 1"}
+!30 = !{!24}
+!31 = !{!25}
+!32 = !{!28}
+!33 = !{!29}
 end_hunk_0

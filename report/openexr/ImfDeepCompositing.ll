@@ -182,6 +182,13 @@ bb.d:                                             ; preds = %bb.b
   %i.ab = fcmp ult float %i.aa, 1.000000e+00
   br i1 %i.ab, label %.preheader.us.us, label %.critedge.thread130
 
+.preheader.us.us:                                 ; preds = %.lr.ph76.split.us.split.us
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv90
+  %8 = load i32, ptr %7, align 4, !tbaa !12
+  %9 = fsub float 1.000000e+00, %i.aa             ; 3 uses
+  %10 = sext i32 %8 to i64                        ; 3 uses
+  br i1 %i.y, label %.epil.preheader, label %.preheader.us.us.new
+
 .preheader.us.us.new:                             ; preds = %.preheader.us.us, %.preheader.us.us.new
   %indvars.iv85 = phi i64 [ %indvars.iv.next86.1, %.preheader.us.us.new ], [ 0, %.preheader.us.us ] ; 4 uses
   %niter = phi i64 [ %niter.next.1, %.preheader.us.us.new ], [ 0, %.preheader.us.us ]
@@ -206,13 +213,6 @@ bb.d:                                             ; preds = %bb.b
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge73.us.us.unr-lcssa, label %.preheader.us.us.new, !llvm.loop !19
-
-.preheader.us.us:                                 ; preds = %.lr.ph76.split.us.split.us
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv90
-  %8 = load i32, ptr %7, align 4, !tbaa !12
-  %9 = fsub float 1.000000e+00, %i.aa             ; 3 uses
-  %10 = sext i32 %8 to i64                        ; 3 uses
-  br i1 %i.y, label %.epil.preheader, label %.preheader.us.us.new
 
 ._crit_edge73.us.us.unr-lcssa:                    ; preds = %.preheader.us.us.new
   br i1 %lcmp.mod.not, label %._crit_edge73.us.us, label %.epil.preheader

@@ -205,7 +205,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit146.i.thread: ; preds = 
   %.059275.ph.i.us = phi i1 [ true, %.thread.i.split.us2326 ], [ false, %.outer.i.us.preheader ]
   br label %bb.wg
 
-bb.wg:                                            ; preds = %.outer.i.us, %.critedge2333
+bb.wg:                                            ; preds = %.critedge2333, %.outer.i.us
   %.0276.i.us2316 = phi i64 [ %i.blj, %.critedge2333 ], [ %.0276.ph.i.us, %.outer.i.us ] ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ba)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bb)
@@ -608,7 +608,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit146.i1480.thread: ; pred
   %.059275.ph.i1485.us = phi i1 [ true, %.thread.i1542.split.us2308 ], [ false, %.outer.i1483.us.preheader ]
   br label %bb.avj
 
-bb.avj:                                           ; preds = %.outer.i1483.us, %.critedge2335
+bb.avj:                                           ; preds = %.critedge2335, %.outer.i1483.us
   %.0276.i1486.us2298 = phi i64 [ %i.dzy, %.critedge2335 ], [ %.0276.ph.i1484.us, %.outer.i1483.us ] ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x)
@@ -1011,7 +1011,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit146.i1631.thread: ; pred
   %.059274.ph.i.us = phi i1 [ true, %.thread.i1658.split.us2290 ], [ false, %.outer.i1633.us.preheader ]
   br label %bb.bai
 
-bb.bai:                                           ; preds = %.outer.i1633.us, %.critedge2338
+bb.bai:                                           ; preds = %.critedge2338, %.outer.i1633.us
   %.0275.i.us2280 = phi i64 [ %i.enh, %.critedge2338 ], [ %.0275.ph.i.us, %.outer.i1633.us ] ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
@@ -1414,7 +1414,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit146.i1757.thread: ; pred
   %.059274.ph.i1762.us = phi i1 [ true, %.thread.i1819.split.us2273 ], [ false, %.outer.i1760.us.preheader ]
   br label %bb.bfi
 
-bb.bfi:                                           ; preds = %.outer.i1760.us, %.critedge2341
+bb.bfi:                                           ; preds = %.critedge2341, %.outer.i1760.us
   %.0275.i1763.us2263 = phi i64 [ %i.faq, %.critedge2341 ], [ %.0275.ph.i1761.us, %.outer.i1760.us ] ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)

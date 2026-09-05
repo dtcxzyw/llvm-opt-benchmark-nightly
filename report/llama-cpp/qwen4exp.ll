@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llama-cpp/original/qwen4exp?download=true
+inline.NumInlined: 828
+inline.NumDeleted: 450
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN20llama_model_qwen4exp5graph19build_conv_state_atEP18llm_graph_input_rsP11ggml_tensorS4_lli:bb.a
   %i.ci = sub i64 %i.cg, %i.ch
   %.sroa.speculated = call i64 @llvm.smax.i64(i64 %i.ci, i64 0)
@@ -200,11 +204,15 @@ _ZNSt6vectorIlSaIlEEC2EmRKS0_.exit.us128:         ; preds = %_ZSt6fill_nIPlmlET_
   %i.ax = phi i32 [ %., %_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit.us128 ], [ %.else.val.us134, %.else.us133 ]
   %i.ay = sext i32 %i.ax to i64                   ; 2 uses
   store i64 %i.ay, ptr %.sroa.091.0.us129, align 8, !tbaa !111
-  br i1 %i.ao, label %.lr.ph112.us140, label %.preheader.us139
+  br i1 %i.ao, label %.lr.ph112.us136, label %.preheader.us139
 
-bb.g:                                             ; preds = %.lr.ph112.us140, %bb.i
-  %.068111.us136 = phi i64 [ 1, %.lr.ph112.us140 ], [ %i.bl, %bb.i ] ; 3 uses
-  %.069110.us137 = phi i1 [ false, %.lr.ph112.us140 ], [ %i.bi, %bb.i ] ; 2 uses
+.lr.ph112.us136:                                  ; preds = %.cont.us135
+  %2 = mul nuw nsw i64 %.070122.us125, %i.t
+  br label %bb.g
+
+bb.g:                                             ; preds = %bb.i, %.lr.ph112.us136
+  %.068111.us136 = phi i64 [ 1, %.lr.ph112.us136 ], [ %i.bl, %bb.i ] ; 3 uses
+  %.069110.us137 = phi i1 [ false, %.lr.ph112.us136 ], [ %i.bi, %bb.i ] ; 2 uses
   br i1 %.069110.us137, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -236,10 +244,6 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.bp = getelementptr [4 x i8], ptr %.sroa.097.0, i64 %i.bo ; 3 uses
   %i.bq = insertelement <2 x i64> <i64 poison, i64 0>, i64 %i.bn, i64 0
   br label %bb.j
-
-.lr.ph112.us140:                                  ; preds = %.cont.us135
-  %2 = mul nuw nsw i64 %.070122.us125, %i.t
-  br label %bb.g
 
 bb.j:                                             ; preds = %._crit_edge118.us.us, %.preheader.us139
   %indvar = phi i64 [ %indvar.next, %._crit_edge118.us.us ], [ 0, %.preheader.us139 ] ; 2 uses

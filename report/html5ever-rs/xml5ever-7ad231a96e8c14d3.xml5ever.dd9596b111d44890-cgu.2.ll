@@ -204,12 +204,6 @@ bb.a:
   %i.q = icmp eq i16 %i.p, 0
   br i1 %i.q, label %.split78.us.us, label %_RNvXsh_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEENtNtB7_3cmp3Ord3cmpCsj1ugBVjDER0_8xml5ever.exit.us.us
 
-4:                                                ; preds = %.split78.us.us
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.us, i64 192
-  %6 = load ptr, ptr %5, align 8, !nonnull !4, !noundef !4
-  %7 = add i64 %.sroa.3.0.us, -1
-  br label %.split.us.us
-
 _RNvXsh_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEENtNtB7_3cmp3Ord3cmpCsj1ugBVjDER0_8xml5ever.exit.us.us: ; preds = %.split.us.us
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.0.us, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !142)
@@ -220,6 +214,12 @@ _RNvXsh_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsgv7xG79AfeB_12string_cac
 .split78.us.us:                                   ; preds = %_RNvXsh_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEENtNtB7_3cmp3Ord3cmpCsj1ugBVjDER0_8xml5ever.exit.us.us, %.split.us.us
   %i.t = icmp eq i64 %.sroa.3.0.us, 0
   br i1 %i.t, label %.split84.us, label %4
+
+4:                                                ; preds = %.split78.us.us
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.us, i64 192
+  %6 = load ptr, ptr %5, align 8, !nonnull !4, !noundef !4
+  %7 = add i64 %.sroa.3.0.us, -1
+  br label %.split.us.us
 
 .split:                                           ; preds = %bb.a, %bb.p
   %.sroa.3.0 = phi i64 [ %i.bj, %bb.p ], [ %2, %bb.a ] ; 4 uses
@@ -528,6 +528,11 @@ _RNvXsh_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsgv7xG79AfeB_12string_cac
     i8 1, label %.split.split.us.i.us
   ]
 
+.loopexit.us:                                     ; preds = %.split.split.us.i.us, %_RNvXsh_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEENtNtB7_3cmp3Ord3cmpCsj1ugBVjDER0_8xml5ever.exit.us24.i.us, %.split.i.us
+  %.sroa.4.0.i.ph.ph.us = phi i64 [ %i.aa, %.split.i.us ], [ %i.aa, %.split.split.us.i.us ], [ %.sroa.8.0.us22.i.us275, %_RNvXsh_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEENtNtB7_3cmp3Ord3cmpCsj1ugBVjDER0_8xml5ever.exit.us24.i.us ] ; 3 uses
+  %4 = icmp eq i64 %.sroa.3.0.us130, 0
+  br i1 %4, label %.split127.us, label %bb.l
+
 bb.l:                                             ; preds = %.loopexit.us
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.us131, i64 192
   %i.bh = icmp samesign ult i64 %.sroa.4.0.i.ph.ph.us, 12
@@ -536,11 +541,6 @@ bb.l:                                             ; preds = %.loopexit.us
   %i.bj = load ptr, ptr %i.bi, align 8, !nonnull !4, !noundef !4
   %i.bk = add i64 %.sroa.3.0.us130, -1
   br label %.split.i.us
-
-.loopexit.us:                                     ; preds = %.split.split.us.i.us, %_RNvXsh_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEENtNtB7_3cmp3Ord3cmpCsj1ugBVjDER0_8xml5ever.exit.us24.i.us, %.split.i.us
-  %.sroa.4.0.i.ph.ph.us = phi i64 [ %i.aa, %.split.i.us ], [ %i.aa, %.split.split.us.i.us ], [ %.sroa.8.0.us22.i.us275, %_RNvXsh_NtCskKLDkoKarTP_4core6optionINtB5_6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEENtNtB7_3cmp3Ord3cmpCsj1ugBVjDER0_8xml5ever.exit.us24.i.us ] ; 3 uses
-  %4 = icmp eq i64 %.sroa.3.0.us130, 0
-  br i1 %4, label %.split127.us, label %bb.l
 
 .unreachabledefault:                              ; preds = %bb.e
   unreachable

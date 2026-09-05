@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ap = tail call noundef i32 @putc(i32 noundef 10, ptr noundef %i.ao), !inline_history !2 ; 0 uses
   br label %bb.g
 
-bb.g:                                             ; preds = %.lr.ph.us.us, %bb.g
+bb.g:                                             ; preds = %bb.g, %.lr.ph.us.us
   %.03443.us.us = phi i32 [ 0, %.lr.ph.us.us ], [ %i.as, %bb.g ]
   %i.aq = load ptr, ptr @stdout, align 8, !tbaa !48
   %i.ar = tail call noundef i32 @putc(i32 noundef 32, ptr noundef %i.aq), !inline_history !2 ; 0 uses

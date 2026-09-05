@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/entt/original/table?download=true
+inline.NumInlined: 4860
+inline.NumDeleted: 1708
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZN4entt11basic_tableIJSt6vectorIiN4test18throwing_allocatorIiEEES1_IcNS3_IcEEEEEC2INS3_IvEEEERKT_:bb.a
   store ptr null, ptr %i.at, align 8, !tbaa !86
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -200,7 +204,7 @@ iter.check:                                       ; preds = %_ZNSt12_Vector_base
   %i.bg = ptrtoaddr ptr %i.bc to i64
   %i.bh = ptrtoaddr ptr %i.be to i64              ; 3 uses
   %i.bi = sub i64 %i.bh, %i.bf                    ; 7 uses
-  %min.iters.check20 = icmp ult i64 %i.bi, 4
+  %min.iters.check20 = icmp ult i64 %i.bi, 8
   %i.bj = sub i64 %i.bf, %i.bg
   %diff.check18 = icmp ugt i64 %i.bj, -32
   %or.cond44 = or i1 %min.iters.check20, %diff.check18
@@ -211,7 +215,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check21, label %vec.epilog.ph, label %vector.ph22
 
 vector.ph22:                                      ; preds = %vector.main.loop.iter.check
-  %i.bk = and i64 %i.bi, 28
+  %i.bk = and i64 %i.bi, 24
   %n.vec23 = and i64 %i.bi, -32                   ; 5 uses
   %i.bl = getelementptr i8, ptr %i.bc, i64 %n.vec23
   %i.bm = getelementptr i8, ptr %i.bd, i64 %n.vec23
@@ -243,7 +247,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block31
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec23, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec35 = and i64 %i.bi, -4                    ; 4 uses
+  %n.vec35 = and i64 %i.bi, -8                    ; 4 uses
   %i.bq = getelementptr i8, ptr %i.bc, i64 %n.vec35
   %i.br = getelementptr i8, ptr %i.bd, i64 %n.vec35
   br label %vec.epilog.vector.body
@@ -254,9 +258,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %next.gep38 = getelementptr i8, ptr %i.bd, i64 %index36
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1304)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1305)
-  %wide.load39 = load <4 x i8>, ptr %next.gep38, align 1, !tbaa !47, !alias.scope !1305, !noalias !1304
-  store <4 x i8> %wide.load39, ptr %next.gep37, align 1, !tbaa !47, !alias.scope !1304, !noalias !1305
-  %index.next40 = add nuw i64 %index36, 4         ; 2 uses
+  %wide.load39 = load <8 x i8>, ptr %next.gep38, align 1, !tbaa !47, !alias.scope !1305, !noalias !1304
+  store <8 x i8> %wide.load39, ptr %next.gep37, align 1, !tbaa !47, !alias.scope !1304, !noalias !1305
+  %index.next40 = add nuw i64 %index36, 8         ; 2 uses
   %i.bs = icmp eq i64 %index.next40, %n.vec35
   br i1 %i.bs, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !1285
 
@@ -548,7 +552,7 @@ _ZNKSt6vectorIcN4test18throwing_allocatorIcEEE12_M_check_lenEmPKc.exit.i.i: ; pr
 
 iter.check:                                       ; preds = %_ZNKSt6vectorIcN4test18throwing_allocatorIcEEE12_M_check_lenEmPKc.exit.i.i
   %i.bl = ptrtoaddr ptr %i.bi to i64
-  %min.iters.check30 = icmp ult i64 %i.bc, 4
+  %min.iters.check30 = icmp ult i64 %i.bc, 8
   %i.bm = sub i64 %i.bb, %i.bl
   %diff.check28 = icmp ugt i64 %i.bm, -32
   %or.cond54 = or i1 %min.iters.check30, %diff.check28
@@ -559,7 +563,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check31, label %vec.epilog.ph, label %vector.ph32
 
 vector.ph32:                                      ; preds = %vector.main.loop.iter.check
-  %i.bn = and i64 %i.bc, 28
+  %i.bn = and i64 %i.bc, 24
   %n.vec33 = and i64 %i.bc, -32                   ; 5 uses
   %i.bo = getelementptr i8, ptr %i.bi, i64 %n.vec33 ; 2 uses
   %i.bp = getelementptr i8, ptr %i.az, i64 %n.vec33
@@ -591,7 +595,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block41
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec33, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec45 = and i64 %i.bc, -4                    ; 4 uses
+  %n.vec45 = and i64 %i.bc, -8                    ; 4 uses
   %i.bt = getelementptr i8, ptr %i.bi, i64 %n.vec45 ; 2 uses
   %i.bu = getelementptr i8, ptr %i.az, i64 %n.vec45
   br label %vec.epilog.vector.body
@@ -602,9 +606,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %next.gep48 = getelementptr i8, ptr %i.az, i64 %index46
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1350)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1351)
-  %wide.load49 = load <4 x i8>, ptr %next.gep48, align 1, !tbaa !47, !alias.scope !1351, !noalias !1350
-  store <4 x i8> %wide.load49, ptr %next.gep47, align 1, !tbaa !47, !alias.scope !1350, !noalias !1351
-  %index.next50 = add nuw i64 %index46, 4         ; 2 uses
+  %wide.load49 = load <8 x i8>, ptr %next.gep48, align 1, !tbaa !47, !alias.scope !1351, !noalias !1350
+  store <8 x i8> %wide.load49, ptr %next.gep47, align 1, !tbaa !47, !alias.scope !1350, !noalias !1351
+  %index.next50 = add nuw i64 %index46, 8         ; 2 uses
   %i.bv = icmp eq i64 %index.next50, %n.vec45
   br i1 %i.bv, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !1329
 
@@ -1007,7 +1011,7 @@ _ZNKSt6vectorIcN4test18throwing_allocatorIcEEE12_M_check_lenEmPKc.exit.i.i: ; pr
 
 iter.check:                                       ; preds = %_ZNKSt6vectorIcN4test18throwing_allocatorIcEEE12_M_check_lenEmPKc.exit.i.i
   %i.bh = ptrtoaddr ptr %i.bf to i64
-  %min.iters.check28 = icmp ult i64 %i.az, 4
+  %min.iters.check28 = icmp ult i64 %i.az, 8
   %i.bi = sub i64 %i.ay, %i.bh
   %diff.check26 = icmp ugt i64 %i.bi, -32
   %or.cond52 = or i1 %min.iters.check28, %diff.check26
@@ -1018,7 +1022,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check29, label %vec.epilog.ph, label %vector.ph30
 
 vector.ph30:                                      ; preds = %vector.main.loop.iter.check
-  %i.bj = and i64 %i.az, 28
+  %i.bj = and i64 %i.az, 24
   %n.vec31 = and i64 %i.az, -32                   ; 5 uses
   %i.bk = getelementptr i8, ptr %i.bf, i64 %n.vec31 ; 2 uses
   %i.bl = getelementptr i8, ptr %i.aw, i64 %n.vec31
@@ -1050,7 +1054,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block39
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec31, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec43 = and i64 %i.az, -4                    ; 4 uses
+  %n.vec43 = and i64 %i.az, -8                    ; 4 uses
   %i.bp = getelementptr i8, ptr %i.bf, i64 %n.vec43 ; 2 uses
   %i.bq = getelementptr i8, ptr %i.aw, i64 %n.vec43
   br label %vec.epilog.vector.body
@@ -1061,9 +1065,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %next.gep46 = getelementptr i8, ptr %i.aw, i64 %index44
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1409)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1410)
-  %wide.load47 = load <4 x i8>, ptr %next.gep46, align 1, !tbaa !47, !alias.scope !1410, !noalias !1409
-  store <4 x i8> %wide.load47, ptr %next.gep45, align 1, !tbaa !47, !alias.scope !1409, !noalias !1410
-  %index.next48 = add nuw i64 %index44, 4         ; 2 uses
+  %wide.load47 = load <8 x i8>, ptr %next.gep46, align 1, !tbaa !47, !alias.scope !1410, !noalias !1409
+  store <8 x i8> %wide.load47, ptr %next.gep45, align 1, !tbaa !47, !alias.scope !1409, !noalias !1410
+  %index.next48 = add nuw i64 %index44, 8         ; 2 uses
   %i.br = icmp eq i64 %index.next48, %n.vec43
   br i1 %i.br, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !1388
 
@@ -1466,7 +1470,7 @@ attributes #33 = { cold }
 !153 = !{!"llvm.loop.isvectorized", i32 1}
 !154 = !{!"llvm.loop.unroll.runtime.disable"}
 !155 = !{!147, !43, i64 16}
-!156 = !{!"branch_weights", i32 4, i32 28}
+!156 = !{!"branch_weights", i32 8, i32 24}
 !157 = !{!"llvm.loop.unroll.disable"}
 !158 = !{!"branch_weights", i32 1, i32 1048575}
 !159 = !{!"_ZTSSt17basic_string_viewIcSt11char_traitsIcEE", !26, i64 0, !43, i64 8}

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %scalar.ph
   %exitcond61.not = icmp eq i64 %indvars.iv.next58, %i.h
   br i1 %exitcond61.not, label %.critedge.us.us, label %scalar.ph, !llvm.loop !159
 
-.critedge.us.us:                                  ; preds = %scalar.ph, %bb.b
+.critedge.us.us:                                  ; preds = %bb.b, %scalar.ph
   %indvars.iv.next63 = add nuw nsw i64 %indvars.iv62, 1 ; 2 uses
   %i.aj = load i8, ptr %4, align 1, !tbaa !46
   %i.ak = zext i8 %i.aj to i64

@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %bb.j
   %.not11.i.us.us = icmp eq ptr %i.t, null
   br i1 %.not11.i.us.us, label %bdrv_all_snapshots_includes_bs.exit.thread.loopexit.us.us, label %tailrecurse.i.us.us
 
-bdrv_all_snapshots_includes_bs.exit.thread.loopexit.us.us: ; preds = %bb.g, %bb.h, %bb.i, %bb.k, %bdrv_all_snapshots_includes_bs.exit.us.us, %bb.e, %bb.d
+bdrv_all_snapshots_includes_bs.exit.thread.loopexit.us.us: ; preds = %bb.k, %bb.g, %bb.i, %bb.h, %bb.d, %bb.e, %bdrv_all_snapshots_includes_bs.exit.us.us
   %i.u = getelementptr inbounds nuw i8, ptr %.02346.us.us, i64 8
   %.023.us.us = load ptr, ptr %i.u, align 8       ; 2 uses
   %.not.us.us = icmp eq ptr %.023.us.us, null

@@ -204,7 +204,7 @@ middle.block171:                                  ; preds = %vector.body168
   %.05293.us = phi float [ %.1.us, %._crit_edge.split.us98 ], [ 0.000000e+00, %.preheader.us.preheader ] ; 2 uses
   br label %.lr.ph.i.preheader.us
 
-.lr.ph.i.preheader.us:                            ; preds = %.preheader.us, %_ZN5faiss12quantize_lut12_GLOBAL__N_17tab_maxEPKfm.exit.loopexit.us
+.lr.ph.i.preheader.us:                            ; preds = %_ZN5faiss12quantize_lut12_GLOBAL__N_17tab_maxEPKfm.exit.loopexit.us, %.preheader.us
   %.05090.us97 = phi i64 [ 0, %.preheader.us ], [ %i.bp, %_ZN5faiss12quantize_lut12_GLOBAL__N_17tab_maxEPKfm.exit.loopexit.us ] ; 2 uses
   %.08389.us = phi float [ -inf, %.preheader.us ], [ %.sroa.speculated.us, %_ZN5faiss12quantize_lut12_GLOBAL__N_17tab_maxEPKfm.exit.loopexit.us ] ; 2 uses
   %.08488.us = phi float [ +inf, %.preheader.us ], [ %.sroa.speculated72.us, %_ZN5faiss12quantize_lut12_GLOBAL__N_17tab_maxEPKfm.exit.loopexit.us ] ; 2 uses

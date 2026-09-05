@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libuv/original/fs?download=true
+inline.NumInlined: 59
+inline.NumDeleted: 41
 begin_hunk_0_@uv__fs_work:bb.a
   %i.pl = icmp eq ptr %i.pk, null
   br i1 %i.pl, label %bb.dh, label %bb.di
@@ -200,35 +202,45 @@ bb.ef:                                            ; preds = %bb.ee, %bb.ee, %bb.
   %.not121.i.i = phi i1 [ true, %.lr.ph.i.i.backedge ], [ false, %bb.ef ] ; 2 uses
   br i1 %.not121.i.i, label %.split.i.i, label %.split.us.us.i.i
 
-.split.us.us.i.i:                                 ; preds = %.lr.ph.i.i, %.outer._crit_edge.us.i.i.a
-  %.048104.us.i.i = phi i64 [ %23, %.outer._crit_edge.us.i.i.a ], [ 0, %.lr.ph.i.i ] ; 4 uses
-  %.049103.us.i.i = phi i64 [ %i.rr, %.outer._crit_edge.us.i.i.a ], [ %.049.ph118.i.i, %.lr.ph.i.i ] ; 4 uses
+.split.us.us.i.i:                                 ; preds = %.lr.ph.i.i, %bb.ek
+  %.048104.us.i.i = phi i64 [ %28, %bb.ek ], [ 0, %.lr.ph.i.i ] ; 4 uses
+  %.049103.us.i.i = phi i64 [ %27, %bb.ek ], [ %.049.ph118.i.i, %.lr.ph.i.i ] ; 4 uses
   %i.rk = sub nuw i64 %i.rg, %.048104.us.i.i
   %spec.store.select.us.i.i = call i64 @llvm.umin.i64(i64 %i.rk, i64 8192)
-  br label %25
+  br label %18
 
-.preheader.us.i.i.a:                              ; preds = %.preheader.us.i.i.backedge, %.outer.split.us.i.i
-  %18 = call i64 @write(i32 noundef %i.ri, ptr noundef nonnull %i.rt, i64 noundef %i.rs) #14 ; 2 uses
-  %cond.us.i.i.a = icmp eq i64 %18, -1
-  br i1 %cond.us.i.i.a, label %bb.eg, label %.outer.us.i.i.a
+18:                                               ; preds = %.preheader.us.i.i.a, %.split.us.us.i.i
+  %19 = call i64 @pread64(i32 noundef %i.rh, ptr noundef nonnull %i.a, i64 noundef %spec.store.select.us.i.i, i64 noundef %.049103.us.i.i) #14 ; 7 uses
+  switch i64 %19, label %bb.eg [
+    i64 -1, label %.preheader.us.i.i.a
+    i64 0, label %.loopexit.i.i
+  ]
 
-bb.eg:                                            ; preds = %.preheader.us.i.i.a
-  %19 = load i32, ptr %i.g, align 4
-  switch i32 %19, label %uv__fs_sendfile_emul.exit.i [
+.preheader.us.i.i.a:                              ; preds = %18
+  %20 = load i32, ptr %i.g, align 4               ; 2 uses
+  %cond.us.i.i.a = icmp eq i32 %20, 4
+  br i1 %cond.us.i.i.a, label %18, label %.split98.us.split.us.i.i, !llvm.loop !16
+
+bb.eg:                                            ; preds = %18
+  %21 = icmp sgt i64 %19, 0
+  br i1 %21, label %.outer.split.us.i.i, label %bb.ek
+
+.outer.us.i.i.a:                                  ; preds = %.preheader.us.i.i.backedge, %.outer.split.us.i.i
+  %22 = call i64 @write(i32 noundef %i.ri, ptr noundef nonnull %i.rt, i64 noundef %i.rs) #14 ; 2 uses
+  %cond.us.i.i = icmp eq i64 %22, -1
+  br i1 %cond.us.i.i, label %23, label %.outer._crit_edge.us.i.i.a
+
+23:                                               ; preds = %.outer.us.i.i.a
+  %24 = load i32, ptr %i.g, align 4
+  switch i32 %24, label %uv__fs_sendfile_emul.exit.i [
     i32 4, label %.preheader.us.i.i.backedge
     i32 11, label %bb.eh
   ]
 
-.preheader.us.i.i.backedge:                       ; preds = %bb.eg, %.critedge57.us.i.i
-  br label %.preheader.us.i.i.a, !llvm.loop !16
+.preheader.us.i.i.backedge:                       ; preds = %23, %.critedge57.us.i.i
+  br label %.outer.us.i.i.a, !llvm.loop !17
 
-.outer.us.i.i.a:                                  ; preds = %.preheader.us.i.i.a
-  %20 = add nsw i64 %18, %.0.ph102.us.i.i         ; 3 uses
-  %21 = icmp slt i64 %20, %26
-  %22 = sub nsw i64 %26, %20
-  br i1 %21, label %.outer.split.us.i.i, label %.outer._crit_edge.us.i.i.a, !llvm.loop !16
-
-bb.eh:                                            ; preds = %bb.eg
+bb.eh:                                            ; preds = %23
   store i32 %i.ri, ptr %5, align 4
   store i16 4, ptr %i.ax, align 4
   store i16 0, ptr %i.ay, align 2
@@ -242,7 +254,7 @@ bb.ei:                                            ; preds = %bb.ej, %bb.eh
 bb.ej:                                            ; preds = %bb.ei
   %i.rn = load i32, ptr %i.g, align 4
   %i.ro = icmp eq i32 %i.rn, 4
-  br i1 %i.ro, label %bb.ei, label %.critedge6.i.i, !llvm.loop !17
+  br i1 %i.ro, label %bb.ei, label %.critedge6.i.i, !llvm.loop !18
 
 .critedge57.us.i.i:                               ; preds = %bb.ei
   %i.rp = load i16, ptr %i.ay, align 2
@@ -250,33 +262,23 @@ bb.ej:                                            ; preds = %bb.ei
   %.not55.us.i.i = icmp eq i16 %i.rq, 0
   br i1 %.not55.us.i.i, label %.preheader.us.i.i.backedge, label %.critedge6.i.i
 
-.outer._crit_edge.us.i.i.a:                       ; preds = %.outer.us.i.i.a, %.preheader64.split.us.us.i.i
-  %i.rr = add nsw i64 %26, %.049103.us.i.i        ; 2 uses
-  %23 = add nsw i64 %26, %.048104.us.i.i          ; 3 uses
-  %24 = icmp ult i64 %23, %i.rg
-  br i1 %24, label %.split.us.us.i.i, label %.loopexit.i.i, !llvm.loop !18
+.outer._crit_edge.us.i.i.a:                       ; preds = %.outer.us.i.i.a
+  %i.rr = add nsw i64 %22, %.0.ph102.us.i.i       ; 3 uses
+  %25 = icmp slt i64 %i.rr, %19
+  %26 = sub nsw i64 %19, %i.rr
+  br i1 %25, label %.outer.split.us.i.i, label %bb.ek, !llvm.loop !17
 
-25:                                               ; preds = %bb.ek, %.split.us.us.i.i
-  %26 = call i64 @pread64(i32 noundef %i.rh, ptr noundef nonnull %i.a, i64 noundef %spec.store.select.us.i.i, i64 noundef %.049103.us.i.i) #14 ; 7 uses
-  switch i64 %26, label %.preheader64.split.us.us.i.i [
-    i64 -1, label %bb.ek
-    i64 0, label %.loopexit.i.i
-  ]
+bb.ek:                                            ; preds = %.outer._crit_edge.us.i.i.a, %bb.eg
+  %27 = add nsw i64 %19, %.049103.us.i.i          ; 2 uses
+  %28 = add nsw i64 %19, %.048104.us.i.i          ; 3 uses
+  %29 = icmp ult i64 %28, %i.rg
+  br i1 %29, label %.split.us.us.i.i, label %.loopexit.i.i, !llvm.loop !19
 
-bb.ek:                                            ; preds = %25
-  %27 = load i32, ptr %i.g, align 4               ; 2 uses
-  %28 = icmp eq i32 %27, 4
-  br i1 %28, label %25, label %.split98.us.split.us.i.i, !llvm.loop !19
-
-.preheader64.split.us.us.i.i:                     ; preds = %25
-  %29 = icmp sgt i64 %26, 0
-  br i1 %29, label %.outer.split.us.i.i, label %.outer._crit_edge.us.i.i.a
-
-.outer.split.us.i.i:                              ; preds = %.preheader64.split.us.us.i.i, %.outer.us.i.i.a
-  %i.rs = phi i64 [ %22, %.outer.us.i.i.a ], [ %26, %.preheader64.split.us.us.i.i ]
-  %.0.ph102.us.i.i = phi i64 [ %20, %.outer.us.i.i.a ], [ 0, %.preheader64.split.us.us.i.i ] ; 2 uses
+.outer.split.us.i.i:                              ; preds = %bb.eg, %.outer._crit_edge.us.i.i.a
+  %i.rs = phi i64 [ %26, %.outer._crit_edge.us.i.i.a ], [ %19, %bb.eg ]
+  %.0.ph102.us.i.i = phi i64 [ %i.rr, %.outer._crit_edge.us.i.i.a ], [ 0, %bb.eg ] ; 2 uses
   %i.rt = getelementptr inbounds i8, ptr %i.a, i64 %.0.ph102.us.i.i
-  br label %.preheader.us.i.i.a
+  br label %.outer.us.i.i.a
 
 .split.i.i:                                       ; preds = %.lr.ph.i.i, %.outer._crit_edge.i.i
   %.048104.i.i = phi i64 [ %i.sp, %.outer._crit_edge.i.i ], [ 0, %.lr.ph.i.i ] ; 4 uses
@@ -299,12 +301,12 @@ bb.el:                                            ; preds = %bb.em, %.split.i.i
 bb.em:                                            ; preds = %bb.el
   %i.rx = load i32, ptr %i.g, align 4             ; 2 uses
   %i.ry = icmp eq i32 %i.rx, 4
-  br i1 %i.ry, label %bb.el, label %.split98.us.split.us.i.i, !llvm.loop !19
+  br i1 %i.ry, label %bb.el, label %.split98.us.split.us.i.i, !llvm.loop !16
 
-.split98.us.split.us.i.i:                         ; preds = %bb.ek, %bb.em
-  %i.rz = phi i32 [ %i.rx, %bb.em ], [ %27, %bb.ek ]
-  %.us-phi99.i.i = phi i64 [ %.049103.i.i, %bb.em ], [ %.049103.us.i.i, %bb.ek ] ; 2 uses
-  %.us-phi100.i.i = phi i64 [ %.048104.i.i, %bb.em ], [ %.048104.us.i.i, %bb.ek ] ; 3 uses
+.split98.us.split.us.i.i:                         ; preds = %.preheader.us.i.i.a, %bb.em
+  %i.rz = phi i32 [ %i.rx, %bb.em ], [ %20, %.preheader.us.i.i.a ]
+  %.us-phi99.i.i = phi i64 [ %.049103.i.i, %bb.em ], [ %.049103.us.i.i, %.preheader.us.i.i.a ] ; 2 uses
+  %.us-phi100.i.i = phi i64 [ %.048104.i.i, %bb.em ], [ %.048104.us.i.i, %.preheader.us.i.i.a ] ; 3 uses
   %i.sa = icmp ne i64 %.us-phi100.i.i, 0
   %or.cond.not.i.i = or i1 %.not121.i.i, %i.sa
   br i1 %or.cond.not.i.i, label %bb.eo, label %bb.en
@@ -335,13 +337,13 @@ bb.ep:                                            ; preds = %.preheader.i.i
   ]
 
 .preheader.i.i.backedge:                          ; preds = %bb.ep, %.critedge57.i.i
-  br label %.preheader.i.i, !llvm.loop !16
+  br label %.preheader.i.i, !llvm.loop !17
 
 .outer.i.i:                                       ; preds = %.preheader.i.i
   %i.sd = add nsw i64 %i.sb, %.0.ph102.i.i        ; 3 uses
   %i.se = icmp slt i64 %i.sd, %i.rv
   %i.sf = sub nsw i64 %i.rv, %i.sd
-  br i1 %i.se, label %.outer.split.i.i, label %.outer._crit_edge.i.i, !llvm.loop !16
+  br i1 %i.se, label %.outer.split.i.i, label %.outer._crit_edge.i.i, !llvm.loop !17
 
 .outer.split.i.i:                                 ; preds = %.preheader64.split.i.i, %.outer.i.i
   %i.sg = phi i64 [ %i.sf, %.outer.i.i ], [ %i.rv, %.preheader64.split.i.i ]
@@ -363,7 +365,7 @@ bb.er:                                            ; preds = %bb.es, %bb.eq
 bb.es:                                            ; preds = %bb.er
   %i.sk = load i32, ptr %i.g, align 4
   %i.sl = icmp eq i32 %i.sk, 4
-  br i1 %i.sl, label %bb.er, label %.critedge6.i.i, !llvm.loop !17
+  br i1 %i.sl, label %bb.er, label %.critedge6.i.i, !llvm.loop !18
 
 .critedge57.i.i:                                  ; preds = %bb.er
   %i.sm = load i16, ptr %i.ay, align 2
@@ -379,11 +381,11 @@ bb.es:                                            ; preds = %bb.er
   %i.so = add nsw i64 %i.rv, %.049103.i.i         ; 2 uses
   %i.sp = add nsw i64 %i.rv, %.048104.i.i         ; 3 uses
   %i.sq = icmp ult i64 %i.sp, %i.rg
-  br i1 %i.sq, label %.split.i.i, label %.loopexit.i.i, !llvm.loop !18
+  br i1 %i.sq, label %.split.i.i, label %.loopexit.i.i, !llvm.loop !19
 
-.loopexit.i.i:                                    ; preds = %.outer._crit_edge.us.i.i.a, %.outer._crit_edge.i.i, %25, %bb.el
-  %.04993.i.i = phi i64 [ %.049103.i.i, %bb.el ], [ %.049103.us.i.i, %25 ], [ %i.so, %.outer._crit_edge.i.i ], [ %i.rr, %.outer._crit_edge.us.i.i.a ]
-  %.04885.i.i = phi i64 [ %.048104.i.i, %bb.el ], [ %.048104.us.i.i, %25 ], [ %i.sp, %.outer._crit_edge.i.i ], [ %23, %.outer._crit_edge.us.i.i.a ] ; 2 uses
+.loopexit.i.i:                                    ; preds = %bb.ek, %.outer._crit_edge.i.i, %18, %bb.el
+  %.04993.i.i = phi i64 [ %.049103.i.i, %bb.el ], [ %.049103.us.i.i, %18 ], [ %i.so, %.outer._crit_edge.i.i ], [ %27, %bb.ek ]
+  %.04885.i.i = phi i64 [ %.048104.i.i, %bb.el ], [ %.048104.us.i.i, %18 ], [ %i.sp, %.outer._crit_edge.i.i ], [ %28, %bb.ek ] ; 2 uses
   %.not56.old.i.i = icmp eq i64 %.04885.i.i, -1
   br i1 %.not56.old.i.i, label %uv__fs_sendfile_emul.exit.i, label %.loopexit.thread.i.i
 
@@ -393,8 +395,8 @@ bb.es:                                            ; preds = %bb.er
   store i64 %.04992.i.i, ptr %i.k, align 8
   br label %uv__fs_sendfile_emul.exit.i
 
-uv__fs_sendfile_emul.exit.i:                      ; preds = %bb.en, %bb.eg, %bb.ep, %.loopexit.thread.i.i, %.loopexit.i.i, %.critedge6.i.i, %bb.eo
-  %.161.i.i = phi i64 [ -1, %.loopexit.i.i ], [ %.04884.i.i, %.loopexit.thread.i.i ], [ -1, %.critedge6.i.i ], [ -1, %bb.eg ], [ -1, %bb.eo ], [ -1, %bb.ep ], [ -1, %bb.en ]
+uv__fs_sendfile_emul.exit.i:                      ; preds = %bb.en, %23, %bb.ep, %.loopexit.thread.i.i, %.loopexit.i.i, %.critedge6.i.i, %bb.eo
+  %.161.i.i = phi i64 [ -1, %.loopexit.i.i ], [ %.04884.i.i, %.loopexit.thread.i.i ], [ -1, %.critedge6.i.i ], [ -1, %23 ], [ -1, %bb.eo ], [ -1, %bb.ep ], [ -1, %bb.en ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   br label %uv__fs_sendfile.exit
@@ -797,45 +799,45 @@ bb.a:
   %.not43.i = icmp eq i32 %2, 0
   br i1 %.not43.i, label %uv__preadv_or_pwritev_emul.exit, label %.split.us.us.i
 
-.split.us.us.i:                                   ; preds = %bb.a, %bb.b
-  %.038.us.i = phi i64 [ %5, %bb.b ], [ 0, %bb.a ] ; 2 uses
-  %.02937.us.i = phi i64 [ %i.g, %bb.b ], [ 0, %bb.a ] ; 3 uses
-  %.03136.us.i = phi i64 [ %4, %bb.b ], [ %3, %bb.a ] ; 2 uses
+.split.us.us.i:                                   ; preds = %bb.a, %.critedge32.split.us.us.i
+  %.038.us.i = phi i64 [ %i.g, %.critedge32.split.us.us.i ], [ 0, %bb.a ] ; 2 uses
+  %.02937.us.i = phi i64 [ %7, %.critedge32.split.us.us.i ], [ 0, %bb.a ] ; 3 uses
+  %.03136.us.i = phi i64 [ %9, %.critedge32.split.us.us.i ], [ %3, %bb.a ] ; 2 uses
   %i.b = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %.038.us.i ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.e = load i64, ptr %i.d, align 8              ; 2 uses
-  br label %bb.c
+  br label %bb.b
 
-bb.b:                                             ; preds = %.critedge32.split.us.us.i
-  %4 = add nsw i64 %6, %.03136.us.i
-  %5 = add nuw i64 %.038.us.i, 1                  ; 2 uses
-  %exitcond53.not.i.a = icmp eq i64 %5, %i.a
-  br i1 %exitcond53.not.i.a, label %uv__preadv_or_pwritev_emul.exit, label %.split.us.us.i, !llvm.loop !1
+bb.b:                                             ; preds = %bb.c, %.split.us.us.i
+  %4 = tail call i64 @pwrite64(i32 noundef %0, ptr noundef %i.c, i64 noundef %i.e, i64 noundef %.03136.us.i) #14 ; 4 uses
+  %exitcond53.not.i.a = icmp eq i64 %4, -1
+  br i1 %exitcond53.not.i.a, label %bb.c, label %bb.d
 
-bb.c:                                             ; preds = %bb.d, %.split.us.us.i
-  %6 = tail call i64 @pwrite64(i32 noundef %0, ptr noundef %i.c, i64 noundef %i.e, i64 noundef %.03136.us.i) #14 ; 4 uses
-  %i.f = icmp eq i64 %6, -1
-  br i1 %i.f, label %bb.d, label %.critedge32.split.us.us.i
+bb.c:                                             ; preds = %bb.b
+  %5 = tail call ptr @__errno_location() #15
+  %6 = load i32, ptr %5, align 4
+  %i.f = icmp eq i32 %6, 4
+  br i1 %i.f, label %bb.b, label %.critedge.i, !llvm.loop !0
 
-bb.d:                                             ; preds = %bb.c
-  %7 = tail call ptr @__errno_location() #15
-  %8 = load i32, ptr %7, align 4
-  %9 = icmp eq i32 %8, 4
-  br i1 %9, label %bb.c, label %.critedge.i, !llvm.loop !0
+bb.d:                                             ; preds = %bb.b
+  %7 = add nsw i64 %4, %.02937.us.i               ; 3 uses
+  %8 = icmp ult i64 %4, %i.e
+  br i1 %8, label %uv__preadv_or_pwritev_emul.exit, label %.critedge32.split.us.us.i
 
-.critedge32.split.us.us.i:                        ; preds = %bb.c
-  %i.g = add nsw i64 %6, %.02937.us.i             ; 3 uses
-  %10 = icmp ult i64 %6, %i.e
-  br i1 %10, label %uv__preadv_or_pwritev_emul.exit, label %bb.b
+.critedge32.split.us.us.i:                        ; preds = %bb.d
+  %9 = add nsw i64 %4, %.03136.us.i
+  %i.g = add nuw i64 %.038.us.i, 1                ; 2 uses
+  %exitcond53.not.i = icmp eq i64 %i.g, %i.a
+  br i1 %exitcond53.not.i, label %uv__preadv_or_pwritev_emul.exit, label %.split.us.us.i, !llvm.loop !1
 
-.critedge.i:                                      ; preds = %bb.d
+.critedge.i:                                      ; preds = %bb.c
   %i.h = icmp sgt i64 %.02937.us.i, 0
   %.029..i = select i1 %i.h, i64 %.02937.us.i, i64 -1
   br label %uv__preadv_or_pwritev_emul.exit
 
-uv__preadv_or_pwritev_emul.exit:                  ; preds = %bb.b, %.critedge32.split.us.us.i, %bb.a, %.critedge.i
-  %.030.i = phi i64 [ %.029..i, %.critedge.i ], [ 0, %bb.a ], [ %i.g, %.critedge32.split.us.us.i ], [ %i.g, %bb.b ]
+uv__preadv_or_pwritev_emul.exit:                  ; preds = %bb.d, %.critedge32.split.us.us.i, %bb.a, %.critedge.i
+  %.030.i = phi i64 [ %.029..i, %.critedge.i ], [ 0, %bb.a ], [ %7, %.critedge32.split.us.us.i ], [ %7, %bb.d ]
   ret i64 %.030.i
 }
 

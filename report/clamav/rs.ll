@@ -205,6 +205,9 @@ _ZN7RSCoder6gfMultEii.exit25.us35:                ; preds = %bb.b, %.lr.ph31.spl
   %i.ax = icmp sgt i64 %indvars.iv49, 1
   br i1 %i.ax, label %.lr.ph31.split.us37, label %._crit_edge.us, !llvm.loop !19
 
+._crit_edge.us:                                   ; preds = %_ZN7RSCoder6gfMultEii.exit25.us35
+  br i1 %i.o, label %_ZN7RSCoder6gfMultEii.exit.us, label %bb.c
+
 bb.c:                                             ; preds = %._crit_edge.us
   %i.ay = load i32, ptr %i.q, align 4, !tbaa !16
   %i.az = load i32, ptr %i.ag, align 4, !tbaa !16
@@ -220,9 +223,6 @@ _ZN7RSCoder6gfMultEii.exit.us:                    ; preds = %._crit_edge.us.thre
   %indvars.iv.next57 = add nuw nsw i64 %indvars.iv56, 1 ; 2 uses
   %exitcond60.not = icmp eq i64 %indvars.iv.next57, %wide.trip.count59
   br i1 %exitcond60.not, label %.preheader, label %.lr.ph31.us, !llvm.loop !20
-
-._crit_edge.us:                                   ; preds = %_ZN7RSCoder6gfMultEii.exit25.us35
-  br i1 %i.o, label %_ZN7RSCoder6gfMultEii.exit.us, label %bb.c
 
 .lr.ph33.split:                                   ; preds = %.lr.ph33
   br i1 %i.o, label %.lr.ph33.split.split.us, label %.lr.ph33.split.split.preheader

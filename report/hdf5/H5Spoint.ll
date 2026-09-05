@@ -205,7 +205,7 @@ bb.bb:                                            ; preds = %bb.bb, %.epil.prehe
   %.0212303.us = phi ptr [ %i.kl, %._crit_edge.split.split.us311 ], [ %i.fj, %.preheader.lr.ph.split.us ]
   br label %bb.bc
 
-bb.bc:                                            ; preds = %.preheader.us, %bb.bc
+bb.bc:                                            ; preds = %bb.bc, %.preheader.us
   %.0205291.us308 = phi i32 [ 0, %.preheader.us ], [ %i.kk, %bb.bc ]
   %.4290.us309 = phi ptr [ %.3304.us, %.preheader.us ], [ %i.kj, %bb.bc ] ; 9 uses
   %.1213289.us310 = phi ptr [ %.0212303.us, %.preheader.us ], [ %i.kl, %bb.bc ] ; 2 uses
@@ -608,12 +608,7 @@ bb.e:                                             ; preds = %.lr.ph62.us
   %i.ch = getelementptr inbounds nuw i8, ptr %.04466.us68, i64 8
   br label %bb.f
 
-2:                                                ; preds = %bb.f
-  %3 = add nsw i32 %.361.us70, -1
-  %4 = icmp sgt i32 %.361.us70, 0
-  br i1 %4, label %bb.f, label %..loopexit_crit_edge.us76, !llvm.loop !72
-
-bb.f:                                             ; preds = %.preheader47.us67, %2
+bb.f:                                             ; preds = %2, %.preheader47.us67
   %.361.us70 = phi i32 [ %i.l, %.preheader47.us67 ], [ %3, %2 ] ; 3 uses
   %i.ci = zext nneg i32 %.361.us70 to i64         ; 2 uses
   %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.ch, i64 %i.ci
@@ -622,6 +617,11 @@ bb.f:                                             ; preds = %.preheader47.us67, 
   %i.cm = load i64, ptr %i.cl, align 8, !tbaa !25
   %.not.us71 = icmp eq i64 %i.ck, %i.cm
   br i1 %.not.us71, label %2, label %.loopexit46
+
+2:                                                ; preds = %bb.f
+  %3 = add nsw i32 %.361.us70, -1
+  %4 = icmp sgt i32 %.361.us70, 0
+  br i1 %4, label %bb.f, label %..loopexit_crit_edge.us76, !llvm.loop !72
 
 ..loopexit_crit_edge.us76:                        ; preds = %2
   %.043.us73 = load ptr, ptr %.04365.us69, align 8, !tbaa !29 ; 2 uses

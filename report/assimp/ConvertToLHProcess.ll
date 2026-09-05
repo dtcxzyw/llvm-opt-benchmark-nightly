@@ -204,6 +204,10 @@ bb.m:                                             ; preds = %.lr.ph116, %bb.m
   %.not90.us = icmp eq ptr %i.ei, null
   br i1 %.not90.us, label %..loopexit_crit_edge.us, label %.preheader.us
 
+.preheader.us:                                    ; preds = %.loopexit95
+  %wide.trip.count167 = zext i32 %.fr133 to i64
+  br label %bb.n
+
 bb.n:                                             ; preds = %.preheader.us, %bb.n
   %indvars.iv164 = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next165, %bb.n ] ; 3 uses
   %i.ej = load ptr, ptr %i.eh, align 8            ; 2 uses
@@ -401,10 +405,6 @@ bb.u:                                             ; preds = %bb.u, %.preheader.u
   %indvars.iv.next165.7 = add nuw nsw i64 %indvars.iv164.7, 1 ; 2 uses
   %exitcond168.7.not = icmp eq i64 %indvars.iv.next165.7, %wide.trip.count167.7
   br i1 %exitcond168.7.not, label %.split123.us, label %bb.u, !llvm.loop !31
-
-.preheader.us:                                    ; preds = %.loopexit95
-  %wide.trip.count167 = zext i32 %.fr133 to i64
-  br label %bb.n
 
 .split123.us:                                     ; preds = %bb.u, %.loopexit97, %..loopexit_crit_edge.us.6
   %indvars.iv.next174 = add nuw nsw i64 %indvars.iv173, 1 ; 2 uses

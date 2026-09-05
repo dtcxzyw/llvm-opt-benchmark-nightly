@@ -205,8 +205,8 @@ _identical_positions.exit.us.i.i:                 ; preds = %bb.bc
   br i1 %.not.i87.us.i.i, label %_add_expand_cluster.exit.us.i.i, label %.lr.ph.i86.us.i.i
 
 _add_expand_cluster.exit.us.i.i:                  ; preds = %.lr.ph.i91.us.i.i, %.lr.ph.i86.us.i.i, %_identical_positions.exit.us.i.i, %.thread.us.i.i, %_identical_positions.exit.thread.us.i.i, %bb.ba
-  %db.7.promoted134.us.i.i = phi i32 [ %i.um, %.lr.ph.i86.us.i.i ], [ %db.7.promoted135.us.i.i, %_identical_positions.exit.thread.us.i.i ], [ %i.um, %_identical_positions.exit.us.i.i ], [ %db.7.promoted135.us.i.i, %.thread.us.i.i ], [ %db.7.promoted135.us.i.i, %bb.ba ], [ %db.7.promoted135.us.i.i, %.lr.ph.i91.us.i.i ] ; 2 uses
-  %i.ur = phi i32 [ %i.um, %.lr.ph.i86.us.i.i ], [ %i.tk, %_identical_positions.exit.thread.us.i.i ], [ %i.um, %_identical_positions.exit.us.i.i ], [ %i.tk, %.thread.us.i.i ], [ %i.tk, %bb.ba ], [ %i.tk, %.lr.ph.i91.us.i.i ]
+  %db.7.promoted134.us.i.i = phi i32 [ %db.7.promoted135.us.i.i, %_identical_positions.exit.thread.us.i.i ], [ %i.um, %.lr.ph.i86.us.i.i ], [ %i.um, %_identical_positions.exit.us.i.i ], [ %db.7.promoted135.us.i.i, %.thread.us.i.i ], [ %db.7.promoted135.us.i.i, %bb.ba ], [ %db.7.promoted135.us.i.i, %.lr.ph.i91.us.i.i ] ; 2 uses
+  %i.ur = phi i32 [ %i.tk, %_identical_positions.exit.thread.us.i.i ], [ %i.um, %.lr.ph.i86.us.i.i ], [ %i.um, %_identical_positions.exit.us.i.i ], [ %i.tk, %.thread.us.i.i ], [ %i.tk, %bb.ba ], [ %i.tk, %.lr.ph.i91.us.i.i ]
   %indvars.iv.next178.i.i = add nuw nsw i64 %indvars.iv177.i.i, 1 ; 2 uses
   %exitcond180.not.i.i = icmp eq i64 %indvars.iv.next178.i.i, %wide.trip.count.i.i
   br i1 %exitcond180.not.i.i, label %..loopexit_crit_edge.us.i.i, label %.preheader102.us.i.i

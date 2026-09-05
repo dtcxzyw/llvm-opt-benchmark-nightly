@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/draco/original/symbol_bit_decoder?download=true
+inline.NumInlined: 142
+inline.NumDeleted: 84
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -114,7 +116,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheade
   br i1 %found.conflict, label %.lr.ph.i.i.preheader24, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.am, 9223372036854775800     ; 4 uses
+  %n.vec = and i64 %i.am, 9223372036854775804     ; 4 uses
   %i.ay = mul i64 %n.vec, -4
   %i.az = getelementptr i8, ptr %.sroa.0.08.i.i, i64 %i.ay
   %i.ba = shl i64 %n.vec, 2
@@ -124,25 +126,17 @@ vector.ph:                                        ; preds = %vector.memcheck
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.bc = mul i64 %index, -4
-  %next.gep = getelementptr i8, ptr %.sroa.0.08.i.i, i64 %i.bc ; 2 uses
+  %next.gep = getelementptr i8, ptr %.sroa.0.08.i.i, i64 %i.bc
   %i.bd = shl i64 %index, 2
-  %next.gep16 = getelementptr i8, ptr %i.w, i64 %i.bd ; 3 uses
-  %i.be = getelementptr i8, ptr %next.gep16, i64 16 ; 2 uses
-  %wide.load = load <4 x i32>, ptr %next.gep16, align 4, !tbaa !14, !alias.scope !30, !noalias !31
+  %i.be = getelementptr i8, ptr %i.w, i64 %i.bd   ; 2 uses
   %wide.load17.a = load <4 x i32>, ptr %i.be, align 4, !tbaa !14, !alias.scope !30, !noalias !31
-  %2 = getelementptr i8, ptr %next.gep, i64 -12   ; 2 uses
-  %i.bf = getelementptr i8, ptr %next.gep, i64 -28 ; 2 uses
-  %wide.load18 = load <4 x i32>, ptr %2, align 4, !tbaa !14, !alias.scope !31
+  %i.bf = getelementptr i8, ptr %next.gep, i64 -12 ; 2 uses
   %wide.load19 = load <4 x i32>, ptr %i.bf, align 4, !tbaa !14, !alias.scope !31
-  %reverse = shufflevector <4 x i32> %wide.load18, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   %reverse20 = shufflevector <4 x i32> %wide.load19, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i32> %reverse, ptr %next.gep16, align 4, !tbaa !14, !alias.scope !30, !noalias !31
   store <4 x i32> %reverse20, ptr %i.be, align 4, !tbaa !14, !alias.scope !30, !noalias !31
-  %reverse21 = shufflevector <4 x i32> %wide.load, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   %reverse22 = shufflevector <4 x i32> %wide.load17.a, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i32> %reverse21, ptr %2, align 4, !tbaa !14, !alias.scope !31
   store <4 x i32> %reverse22, ptr %i.bf, align 4, !tbaa !14, !alias.scope !31
-  %index.next = add nuw i64 %index, 8             ; 2 uses
+  %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bg = icmp eq i64 %index.next, %n.vec
   br i1 %i.bg, label %middle.block, label %vector.body, !llvm.loop !19
 

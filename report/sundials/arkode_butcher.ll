@@ -205,11 +205,6 @@ bb.e:                                             ; preds = %bb.e, %.preheader.u
   %exitcond180.not = icmp eq i64 %indvars.iv.next177, %wide.trip.count.i
   br i1 %exitcond180.not, label %._crit_edge.us.us, label %bb.e
 
-4:                                                ; preds = %._crit_edge.us.us
-  %indvars.iv.next182 = add nuw nsw i64 %indvars.iv181, 1 ; 2 uses
-  %exitcond185.not = icmp eq i64 %indvars.iv.next182, %wide.trip.count.i
-  br i1 %exitcond185.not, label %..critedge92_crit_edge.split.us.us, label %.preheader.us.us
-
 ._crit_edge.us.us:                                ; preds = %bb.e
   %i.da = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv181
   %i.db = load double, ptr %i.da, align 8, !tbaa !22
@@ -223,6 +218,11 @@ bb.e:                                             ; preds = %bb.e, %.preheader.u
   %i.dj = tail call double @llvm.fabs.f64(double %i.di)
   %i.dk = fcmp ogt double %i.dj, f0x3E50000000000000
   br i1 %i.dk, label %.loopexit, label %4
+
+4:                                                ; preds = %._crit_edge.us.us
+  %indvars.iv.next182 = add nuw nsw i64 %indvars.iv181, 1 ; 2 uses
+  %exitcond185.not = icmp eq i64 %indvars.iv.next182, %wide.trip.count.i
+  br i1 %exitcond185.not, label %..critedge92_crit_edge.split.us.us, label %.preheader.us.us
 
 ..critedge92_crit_edge.split.us.us:               ; preds = %4
   %i.dl = add nuw nsw i32 %.079151.us, 1          ; 2 uses

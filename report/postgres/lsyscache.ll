@@ -204,7 +204,7 @@ get_opfamily_member.exit.thread.us:               ; preds = %bb.l
   store i32 0, ptr %1, align 4
   br label %.thread.us79
 
-.thread.us79:                                     ; preds = %get_opfamily_member.exit.us, %get_opfamily_member.exit.thread.us, %bb.j, %.lr.ph.split.split.us
+.thread.us79:                                     ; preds = %get_opfamily_member.exit.thread.us, %get_opfamily_member.exit.us, %bb.j, %.lr.ph.split.split.us
   %indvars.iv.next95 = add nuw nsw i64 %indvars.iv94, 1 ; 2 uses
   %i.cm = load i32, ptr %i.c, align 8
   %i.cn = sext i32 %i.cm to i64
@@ -469,7 +469,7 @@ get_opfamily_proc.exit.thread.us:                 ; preds = %bb.h
   store i32 0, ptr %1, align 4
   br label %.thread58.us75
 
-.thread58.us75:                                   ; preds = %get_opfamily_proc.exit.us, %get_opfamily_proc.exit.thread.us, %bb.g, %.lr.ph.split.split.us
+.thread58.us75:                                   ; preds = %get_opfamily_proc.exit.thread.us, %get_opfamily_proc.exit.us, %bb.g, %.lr.ph.split.split.us
   %indvars.iv.next88 = add nuw nsw i64 %indvars.iv87, 1 ; 2 uses
   %i.bm = load i32, ptr %i.c, align 8
   %i.bn = sext i32 %i.bm to i64

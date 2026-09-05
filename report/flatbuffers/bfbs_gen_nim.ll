@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/flatbuffers/original/bfbs_gen_nim?download=true
+inline.NumInlined: 3308
+inline.NumDeleted: 842
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZNK11flatbuffers5Table11VerifyFieldIiLb0EEEbRKNS_16VerifierTemplateIXT0_EEEtm:bb.a
 bb.c:                                             ; preds = %bb.b
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -200,11 +204,6 @@ _ZNK11flatbuffers16VerifierTemplateILb0EE6VerifyIjEEbm.exit.i.i.us23: ; preds = 
   %.not33 = icmp ugt i64 %i.v, %i.h
   br i1 %.not33, label %.thread, label %bb.b
 
-2:                                                ; preds = %_ZNK11flatbuffers16VerifierTemplateILb0EE12VerifyStringEPKNS_6StringE.exit.us
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count40
-  br i1 %exitcond.not, label %.thread, label %_ZNK11flatbuffers16VerifierTemplateILb0EE6VerifyIjEEbm.exit.i.i.us23, !llvm.loop !296
-
 bb.b:                                             ; preds = %_ZNK11flatbuffers16VerifierTemplateILb0EE6VerifyIjEEbm.exit.i.i.us23
   %i.w = load i32, ptr %i.t, align 4, !tbaa !66
   %i.x = zext i32 %i.w to i64                     ; 2 uses
@@ -227,6 +226,11 @@ _ZNK11flatbuffers16VerifierTemplateILb0EE12VerifyStringEPKNS_6StringE.exit.us: ;
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !25
   %i.ag = icmp eq i8 %i.af, 0
   br i1 %i.ag, label %2, label %.thread
+
+2:                                                ; preds = %_ZNK11flatbuffers16VerifierTemplateILb0EE12VerifyStringEPKNS_6StringE.exit.us
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count40
+  br i1 %exitcond.not, label %.thread, label %_ZNK11flatbuffers16VerifierTemplateILb0EE6VerifyIjEEbm.exit.i.i.us23, !llvm.loop !296
 
 bb.c:                                             ; preds = %_ZNK11flatbuffers16VerifierTemplateILb0EE12VerifyStringEPKNS_6StringE.exit
   %indvars.iv.next38 = add nuw nsw i64 %indvars.iv37, 1 ; 2 uses

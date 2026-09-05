@@ -205,7 +205,7 @@ _ZNK4llvm8TypeSizecvmEv.exit194:                  ; preds = %_ZNK4llvm7SDValue18
   %i.cb = mul i32 %i.ca, %i.ad
   br label %bb.q
 
-bb.q:                                             ; preds = %.lr.ph.us.us, %_ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit.us.us.us304
+bb.q:                                             ; preds = %_ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit.us.us.us304, %.lr.ph.us.us
   %.0171293.us.us.us300 = phi i32 [ 0, %.lr.ph.us.us ], [ %i.cm, %_ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit.us.us.us304 ] ; 2 uses
   %i.cc = add i32 %.0171293.us.us.us300, %i.cb    ; 2 uses
   %i.cd = icmp ult i32 %i.cc, %spec.select290

@@ -205,6 +205,9 @@ bb.k:                                             ; preds = %.lr.ph271
   %.reass.i.us.i.us.i = add i64 %.sroa.04.0.i.us.i.us.i270, %invariant.op.i.i.reass.us.reass.i.reass.reass.reass
   br label %.loopexit.split.us.us.i
 
+.preheader.i.preheader.us.i:                      ; preds = %.preheader43.i.us.i.preheader, %.preheader43.i.us.i
+  br i1 %i.k, label %.split38.us.i.us.i, label %.split40.us.i.i
+
 .loopexit.split.us.us.i:                          ; preds = %bb.k, %bb.j
   %.sink98.i.us.i = phi i64 [ %i.al, %bb.j ], [ %.reass.i.us.i.us.i, %bb.k ] ; 2 uses
   %i.cy = add i64 %.sink98.i.us.i, %i.z           ; 2 uses
@@ -215,9 +218,6 @@ bb.k:                                             ; preds = %.lr.ph271
   %spec.select101 = phi i64 [ -1, %.preheader.i.us.us.i.us ], [ -1, %.preheader.i.preheader.us.i ], [ 0, %.preheader44.i.us.i ], [ -1, %.preheader.i.us.us.i.us.preheader ], [ 0, %.preheader44.i.us.i.preheader ]
   %i.da = icmp eq i64 %i.al, %i.j
   br i1 %i.da, label %_RNvYNtNtNtCshzWfHUSfYae_4core3str7pattern11StrSearcherNtB4_8Searcher11next_rejectCs6oosyzwIepl_6ide_db.exit, label %bb.b
-
-.preheader.i.preheader.us.i:                      ; preds = %.preheader43.i.us.i.preheader, %.preheader43.i.us.i
-  br i1 %i.k, label %.split38.us.i.us.i, label %.split40.us.i.i
 
 .split.i:                                         ; preds = %bb.a
   %i.db = getelementptr inbounds nuw i8, ptr %i.a, i64 26

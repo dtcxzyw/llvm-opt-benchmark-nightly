@@ -204,11 +204,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.f,
   %.not4952.us = icmp eq ptr %i.ae, %i.ag
   br i1 %.not4952.us, label %.critedge41.us, label %.lr.ph.us
 
-.critedge41.us:                                   ; preds = %.critedge39.us.us, %.critedge.preheader.split.us
-  %.0.add.us = add nuw nsw i64 %.0.idx54.us, 8    ; 2 uses
-  %.not.us.not = icmp eq i64 %.0.add.us, 336
-  br i1 %.not.us.not, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %.critedge.preheader.split.us
-
 .lr.ph.us:                                        ; preds = %.critedge.preheader.split.us, %.critedge39.us.us
   %.sroa.044.053.us.us = phi ptr [ %i.bd, %.critedge39.us.us ], [ %i.ae, %.critedge.preheader.split.us ] ; 2 uses
   %i.ah = load ptr, ptr %.sroa.044.053.us.us, align 8, !tbaa !245 ; 2 uses
@@ -262,6 +257,11 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.044.053.us.us, i64 16 ; 2 uses
   %.not49.us.us = icmp eq ptr %i.bd, %i.ag
   br i1 %.not49.us.us, label %.critedge41.us, label %.lr.ph.us
+
+.critedge41.us:                                   ; preds = %.critedge39.us.us, %.critedge.preheader.split.us
+  %.0.add.us = add nuw nsw i64 %.0.idx54.us, 8    ; 2 uses
+  %.not.us.not = icmp eq i64 %.0.add.us, 336
+  br i1 %.not.us.not, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %.critedge.preheader.split.us
 
 .critedge.preheader.split:                        ; preds = %bb.b, %.critedge41
   %.0.idx54 = phi i64 [ %.0.add, %.critedge41 ], [ 0, %bb.b ] ; 2 uses

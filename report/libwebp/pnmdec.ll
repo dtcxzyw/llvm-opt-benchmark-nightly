@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libwebp/original/pnmdec?download=true
+inline.NumInlined: 10
+inline.NumDeleted: 4
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@ReadPNM:bb.a
   %i.id = or i1 %.not, %or.cond8                  ; 2 uses
   %i.ie = select i1 %i.id, i64 3, i64 4
@@ -200,9 +204,9 @@ iter.check.preheader:                             ; preds = %.lr.ph160.split.spl
   %i.le = getelementptr inbounds nuw i8, ptr %0, i64 %.0103159.us161.us.us.us
   br label %bb.br
 
-bb.br:                                            ; preds = %.lr.ph.us.us.us.us, %bb.bt
-  %indvars.iv244 = phi i64 [ 0, %.lr.ph.us.us.us.us ], [ %indvars.iv.next245, %bb.bt ] ; 3 uses
-  %.0102152.us.us.us.us.us.us181.us = phi i32 [ 0, %.lr.ph.us.us.us.us ], [ %.1.us.us.us.us.us.us.us, %bb.bt ] ; 3 uses
+bb.br:                                            ; preds = %bb.bt, %.lr.ph.us.us.us.us
+  %indvars.iv244 = phi i64 [ %indvars.iv.next245, %bb.bt ], [ 0, %.lr.ph.us.us.us.us ] ; 3 uses
+  %.0102152.us.us.us.us.us.us181.us = phi i32 [ %.1.us.us.us.us.us.us.us, %bb.bt ], [ 0, %.lr.ph.us.us.us.us ] ; 3 uses
   %i.lf = and i64 %indvars.iv244, 3
   %i.lg = icmp eq i64 %i.lf, 3
   br i1 %i.lg, label %bb.bt, label %bb.bs

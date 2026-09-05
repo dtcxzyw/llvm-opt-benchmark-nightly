@@ -204,11 +204,6 @@ findCenterNode.exit:                              ; preds = %.lr.ph28.i, %._crit
   %.not4144.us.i.i = icmp eq ptr %i.bs, null
   br i1 %.not4144.us.i.i, label %.loopexit.us.i.i, label %streq.exit.thread.us.us.i.i
 
-.loopexit.us.i.i:                                 ; preds = %bb.o, %.lr.ph49.split.us.i.i
-  %.val43.us.i.i = load i64, ptr %i.bj, align 8, !tbaa !64
-  %.not.us.i.i = icmp eq i64 %.val43.us.i.i, 0
-  br i1 %.not.us.i.i, label %setNStepsToCenter.exit.i, label %.lr.ph49.split.us.i.i, !llvm.loop !47
-
 streq.exit.thread.us.us.i.i:                      ; preds = %.lr.ph49.split.us.i.i, %bb.o
   %.03545.us.us.i.i = phi ptr [ %i.cw, %bb.o ], [ %i.bs, %.lr.ph49.split.us.i.i ] ; 4 uses
   %i.bt = load i32, ptr %.03545.us.us.i.i, align 8
@@ -260,12 +255,17 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n, %bb.m
   %i.cw = call ptr @agnxtedge(ptr noundef %0, ptr noundef nonnull %.03545.us.us.i.i, ptr noundef %i.bk) #13 ; 2 uses
   %.not41.us.us.i.i = icmp eq ptr %i.cw, null
-  br i1 %.not41.us.us.i.i, label %.loopexit.us.i.i, label %streq.exit.thread.us.us.i.i, !llvm.loop !48
+  br i1 %.not41.us.us.i.i, label %.loopexit.us.i.i, label %streq.exit.thread.us.us.i.i, !llvm.loop !47
+
+.loopexit.us.i.i:                                 ; preds = %bb.o, %.lr.ph49.split.us.i.i
+  %.val43.us.i.i = load i64, ptr %i.bj, align 8, !tbaa !64
+  %.not.us.i.i = icmp eq i64 %.val43.us.i.i, 0
+  br i1 %.not.us.i.i, label %setNStepsToCenter.exit.i, label %.lr.ph49.split.us.i.i, !llvm.loop !48
 
 .loopexit.i.i:                                    ; preds = %bb.s, %.lr.ph49.split.i.i
   %.val43.i.i = load i64, ptr %i.bj, align 8, !tbaa !64
   %.not.i.i28 = icmp eq i64 %.val43.i.i, 0
-  br i1 %.not.i.i28, label %setNStepsToCenter.exit.i, label %.lr.ph49.split.i.i, !llvm.loop !47
+  br i1 %.not.i.i28, label %setNStepsToCenter.exit.i, label %.lr.ph49.split.i.i, !llvm.loop !48
 
 .lr.ph49.split.i.i:                               ; preds = %.lr.ph49.i.i, %.loopexit.i.i
   call void @gv_list_pop_front_(ptr noundef nonnull %2, ptr noundef nonnull %i.be, i64 noundef 8) #13
@@ -344,7 +344,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r, %bb.q, %streq.exit.i.i
   %i.eo = call ptr @agnxtedge(ptr noundef %0, ptr noundef nonnull %.03545.i.i, ptr noundef %i.cx) #13 ; 2 uses
   %.not41.i.i = icmp eq ptr %i.eo, null
-  br i1 %.not41.i.i, label %.loopexit.i.i, label %.lr.ph.i.i27, !llvm.loop !48
+  br i1 %.not41.i.i, label %.loopexit.i.i, label %.lr.ph.i.i27, !llvm.loop !47
 
 setNStepsToCenter.exit.i:                         ; preds = %.loopexit.i.i, %.loopexit.us.i.i, %findCenterNode.exit
   call void @gv_list_clear_(ptr noundef nonnull %2, i64 noundef 8) #13

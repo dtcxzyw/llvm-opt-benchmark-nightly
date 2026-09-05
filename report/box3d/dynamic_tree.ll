@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/box3d/original/dynamic_tree?download=true
+inline.NumInlined: 175
+inline.NumDeleted: 37
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@b3DynamicTree_BoxCast:bb.a
   %.val = load i16, ptr %i.dj, align 2, !tbaa !36
   %i.dk = and i16 %.val, 4
@@ -200,42 +204,6 @@ bb.d:                                             ; preds = %._crit_edge86, %bb.
   %.not5961.us = icmp eq i16 %i.ak, 0
   br i1 %.not5961.us, label %.lr.ph.us, label %._crit_edge68.split.us.us
 
-._crit_edge68.split.us.us:                        ; preds = %bb.f, %.outer.us
-  %.055.lcssa.us = phi i32 [ %.055.ph.us, %.outer.us ], [ %.1.us.us, %bb.f ] ; 2 uses
-  %.054.lcssa.us = phi i32 [ %.054.ph.us, %.outer.us ], [ %i.am, %bb.f ]
-  %.053.lcssa.us = phi ptr [ %.053.ph.us, %.outer.us ], [ %i.au, %bb.f ] ; 5 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %indvars.iv83
-  store i32 %.054.lcssa.us, ptr %3, align 4, !tbaa !38
-  %4 = getelementptr inbounds nuw [12 x i8], ptr %i.x, i64 %indvars.iv83 ; 2 uses
-  %.05358.sroa.0.0.copyload.us = load <2 x float>, ptr %.053.lcssa.us, align 8
-  %.05358.sroa.4.0..053.sroa_idx.us = getelementptr inbounds nuw i8, ptr %.053.lcssa.us, i64 8
-  %.05358.sroa.4.0.copyload.us = load float, ptr %.05358.sroa.4.0..053.sroa_idx.us, align 8
-  %.05358.sroa.5.0..053.sroa_idx.us = getelementptr inbounds nuw i8, ptr %.053.lcssa.us, i64 12
-  %.05358.sroa.5.0.copyload.us = load <2 x float>, ptr %.05358.sroa.5.0..053.sroa_idx.us, align 4
-  %.05358.sroa.6.0..053.sroa_idx.us = getelementptr inbounds nuw i8, ptr %.053.lcssa.us, i64 20
-  %.05358.sroa.6.0.copyload.us = load float, ptr %.05358.sroa.6.0..053.sroa_idx.us, align 4
-  %5 = fadd float %.05358.sroa.4.0.copyload.us, %.05358.sroa.6.0.copyload.us
-  %6 = fadd <2 x float> %.05358.sroa.0.0.copyload.us, %.05358.sroa.5.0.copyload.us
-  %7 = fmul <2 x float> %6, splat (float 5.000000e-01)
-  %8 = fmul float %5, 5.000000e-01
-  store <2 x float> %7, ptr %4, align 4
-  %.sroa.4.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store float %8, ptr %.sroa.4.0..sroa_idx.us, align 4, !tbaa !28
-  %indvars.iv.next84 = add nuw nsw i64 %indvars.iv83, 1 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %.053.lcssa.us, i64 40
-  store i32 -1, ptr %9, align 8, !tbaa !20
-  %10 = icmp eq i32 %.055.lcssa.us, 0
-  br i1 %10, label %.split75.us, label %11
-
-11:                                               ; preds = %._crit_edge68.split.us.us
-  %12 = add nsw i32 %.055.lcssa.us, -1            ; 2 uses
-  %13 = sext i32 %12 to i64
-  %14 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %13
-  %15 = load i32, ptr %14, align 4, !tbaa !38     ; 2 uses
-  %16 = sext i32 %15 to i64
-  %17 = getelementptr inbounds [48 x i8], ptr %i.ab, i64 %16
-  br label %.outer.us
-
 .lr.ph.us:                                        ; preds = %.outer.us, %bb.f
   %.05364.us.us = phi ptr [ %i.au, %bb.f ], [ %.053.ph.us, %.outer.us ] ; 2 uses
   %.05463.us.us = phi i32 [ %i.am, %bb.f ], [ %.054.ph.us, %.outer.us ] ; 2 uses
@@ -277,6 +245,42 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph.us
   %i.bg = and i16 %.053.val.us.us, 4
   %.not59.us.us = icmp eq i16 %i.bg, 0
   br i1 %.not59.us.us, label %.lr.ph.us, label %._crit_edge68.split.us.us
+
+._crit_edge68.split.us.us:                        ; preds = %bb.f, %.outer.us
+  %.055.lcssa.us = phi i32 [ %.055.ph.us, %.outer.us ], [ %.1.us.us, %bb.f ] ; 2 uses
+  %.054.lcssa.us = phi i32 [ %.054.ph.us, %.outer.us ], [ %i.am, %bb.f ]
+  %.053.lcssa.us = phi ptr [ %.053.ph.us, %.outer.us ], [ %i.au, %bb.f ] ; 5 uses
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %indvars.iv83
+  store i32 %.054.lcssa.us, ptr %3, align 4, !tbaa !38
+  %4 = getelementptr inbounds nuw [12 x i8], ptr %i.x, i64 %indvars.iv83 ; 2 uses
+  %.05358.sroa.0.0.copyload.us = load <2 x float>, ptr %.053.lcssa.us, align 8
+  %.05358.sroa.4.0..053.sroa_idx.us = getelementptr inbounds nuw i8, ptr %.053.lcssa.us, i64 8
+  %.05358.sroa.4.0.copyload.us = load float, ptr %.05358.sroa.4.0..053.sroa_idx.us, align 8
+  %.05358.sroa.5.0..053.sroa_idx.us = getelementptr inbounds nuw i8, ptr %.053.lcssa.us, i64 12
+  %.05358.sroa.5.0.copyload.us = load <2 x float>, ptr %.05358.sroa.5.0..053.sroa_idx.us, align 4
+  %.05358.sroa.6.0..053.sroa_idx.us = getelementptr inbounds nuw i8, ptr %.053.lcssa.us, i64 20
+  %.05358.sroa.6.0.copyload.us = load float, ptr %.05358.sroa.6.0..053.sroa_idx.us, align 4
+  %5 = fadd float %.05358.sroa.4.0.copyload.us, %.05358.sroa.6.0.copyload.us
+  %6 = fadd <2 x float> %.05358.sroa.0.0.copyload.us, %.05358.sroa.5.0.copyload.us
+  %7 = fmul <2 x float> %6, splat (float 5.000000e-01)
+  %8 = fmul float %5, 5.000000e-01
+  store <2 x float> %7, ptr %4, align 4
+  %.sroa.4.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store float %8, ptr %.sroa.4.0..sroa_idx.us, align 4, !tbaa !28
+  %indvars.iv.next84 = add nuw nsw i64 %indvars.iv83, 1 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %.053.lcssa.us, i64 40
+  store i32 -1, ptr %9, align 8, !tbaa !20
+  %10 = icmp eq i32 %.055.lcssa.us, 0
+  br i1 %10, label %.split75.us, label %11
+
+11:                                               ; preds = %._crit_edge68.split.us.us
+  %12 = add nsw i32 %.055.lcssa.us, -1            ; 2 uses
+  %13 = sext i32 %12 to i64
+  %14 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %13
+  %15 = load i32, ptr %14, align 4, !tbaa !38     ; 2 uses
+  %16 = sext i32 %15 to i64
+  %17 = getelementptr inbounds [48 x i8], ptr %i.ab, i64 %16
+  br label %.outer.us
 
 .outer:                                           ; preds = %bb.d, %bb.j
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ 0, %bb.d ] ; 4 uses

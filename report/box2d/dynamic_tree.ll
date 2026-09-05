@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/box2d/original/dynamic_tree?download=true
+inline.NumInlined: 146
+inline.NumDeleted: 30
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@b2DynamicTree_BoxCast:bb.a
   %i.ay = shufflevector <2 x float> %i.aw, <2 x float> %.sroa.5.0232, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.az = fcmp ule <4 x float> %i.ax, %i.ay
@@ -200,34 +204,6 @@ bb.d:                                             ; preds = %._crit_edge80, %bb.
   %i.ak = icmp eq i16 %i.aj, 0
   br i1 %i.ak, label %._crit_edge62.split.us.us, label %.lr.ph.us
 
-._crit_edge62.split.us.us:                        ; preds = %bb.f, %.outer.us
-  %.053.lcssa.us = phi i32 [ %.053.ph.us, %.outer.us ], [ %.1.us.us, %bb.f ] ; 2 uses
-  %.052.lcssa.us = phi i32 [ %.052.ph.us, %.outer.us ], [ %i.am, %bb.f ]
-  %.051.lcssa.us = phi ptr [ %.051.ph.us, %.outer.us ], [ %i.au, %bb.f ] ; 3 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %indvars.iv77
-  store i32 %.052.lcssa.us, ptr %3, align 4, !tbaa !36
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %indvars.iv77
-  %5 = load <2 x float>, ptr %.051.lcssa.us, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %.051.lcssa.us, i64 8
-  %7 = load <2 x float>, ptr %6, align 8
-  %8 = fadd <2 x float> %5, %7
-  %9 = fmul <2 x float> %8, splat (float 5.000000e-01)
-  store <2 x float> %9, ptr %4, align 4
-  %indvars.iv.next78 = add nuw nsw i64 %indvars.iv77, 1 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %.051.lcssa.us, i64 32
-  store i32 -1, ptr %10, align 8, !tbaa !19
-  %11 = icmp eq i32 %.053.lcssa.us, 0
-  br i1 %11, label %.split69.us, label %12
-
-12:                                               ; preds = %._crit_edge62.split.us.us
-  %13 = add nsw i32 %.053.lcssa.us, -1            ; 2 uses
-  %14 = sext i32 %13 to i64
-  %15 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %14
-  %16 = load i32, ptr %15, align 4, !tbaa !36     ; 2 uses
-  %17 = sext i32 %16 to i64
-  %18 = getelementptr inbounds [40 x i8], ptr %i.aa, i64 %17
-  br label %.outer.us
-
 .lr.ph.us:                                        ; preds = %.outer.us, %bb.f
   %.05159.us.us = phi ptr [ %i.au, %bb.f ], [ %.051.ph.us, %.outer.us ] ; 2 uses
   %.05258.us.us = phi i32 [ %i.am, %bb.f ], [ %.052.ph.us, %.outer.us ] ; 2 uses
@@ -268,6 +244,34 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph.us
   %i.bg = load i16, ptr %i.bf, align 4, !tbaa !33
   %i.bh = icmp eq i16 %i.bg, 0
   br i1 %i.bh, label %._crit_edge62.split.us.us, label %.lr.ph.us
+
+._crit_edge62.split.us.us:                        ; preds = %bb.f, %.outer.us
+  %.053.lcssa.us = phi i32 [ %.053.ph.us, %.outer.us ], [ %.1.us.us, %bb.f ] ; 2 uses
+  %.052.lcssa.us = phi i32 [ %.052.ph.us, %.outer.us ], [ %i.am, %bb.f ]
+  %.051.lcssa.us = phi ptr [ %.051.ph.us, %.outer.us ], [ %i.au, %bb.f ] ; 3 uses
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %indvars.iv77
+  store i32 %.052.lcssa.us, ptr %3, align 4, !tbaa !36
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %indvars.iv77
+  %5 = load <2 x float>, ptr %.051.lcssa.us, align 8
+  %6 = getelementptr inbounds nuw i8, ptr %.051.lcssa.us, i64 8
+  %7 = load <2 x float>, ptr %6, align 8
+  %8 = fadd <2 x float> %5, %7
+  %9 = fmul <2 x float> %8, splat (float 5.000000e-01)
+  store <2 x float> %9, ptr %4, align 4
+  %indvars.iv.next78 = add nuw nsw i64 %indvars.iv77, 1 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %.051.lcssa.us, i64 32
+  store i32 -1, ptr %10, align 8, !tbaa !19
+  %11 = icmp eq i32 %.053.lcssa.us, 0
+  br i1 %11, label %.split69.us, label %12
+
+12:                                               ; preds = %._crit_edge62.split.us.us
+  %13 = add nsw i32 %.053.lcssa.us, -1            ; 2 uses
+  %14 = sext i32 %13 to i64
+  %15 = getelementptr inbounds [4 x i8], ptr %i.a, i64 %14
+  %16 = load i32, ptr %15, align 4, !tbaa !36     ; 2 uses
+  %17 = sext i32 %16 to i64
+  %18 = getelementptr inbounds [40 x i8], ptr %i.aa, i64 %17
+  br label %.outer.us
 
 .outer:                                           ; preds = %bb.d, %bb.j
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ 0, %bb.d ] ; 4 uses

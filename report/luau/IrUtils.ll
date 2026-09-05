@@ -204,12 +204,6 @@ bb.o:                                             ; preds = %_ZNKSt8functionIFvm
   %exitcond134.not = icmp eq i64 %i.cs, %.us-phi.fr
   br i1 %exitcond134.not, label %..loopexit_crit_edge.us, label %.lr.ph.split.us108, !llvm.loop !89
 
-..loopexit_crit_edge.us:                          ; preds = %bb.o, %bb.s, %bb.i
-  %.1.us = phi i1 [ %.05098.us, %bb.i ], [ false, %bb.s ], [ false, %bb.o ]
-  %4 = getelementptr inbounds nuw i8, ptr %.04999.us, i64 4 ; 2 uses
-  %.not59.us = icmp eq ptr %4, %i.x
-  br i1 %.not59.us, label %.loopexit80, label %.lr.ph100.split.us
-
 .lr.ph.split.us.us:                               ; preds = %.lr.ph.us, %bb.s
   %.089.us.us = phi i64 [ %i.dl, %bb.s ], [ 0, %.lr.ph.us ] ; 8 uses
   %exitcond135 = icmp eq i64 %.089.us.us, 256
@@ -269,6 +263,12 @@ bb.s:                                             ; preds = %_ZNKSt8functionIFvm
   %i.dl = add nuw nsw i64 %.089.us.us, 1          ; 2 uses
   %exitcond136.not = icmp eq i64 %i.dl, %.us-phi.fr
   br i1 %exitcond136.not, label %..loopexit_crit_edge.us, label %.lr.ph.split.us.us, !llvm.loop !89
+
+..loopexit_crit_edge.us:                          ; preds = %bb.o, %bb.s, %bb.i
+  %.1.us = phi i1 [ %.05098.us, %bb.i ], [ false, %bb.s ], [ false, %bb.o ]
+  %4 = getelementptr inbounds nuw i8, ptr %.04999.us, i64 4 ; 2 uses
+  %.not59.us = icmp eq ptr %4, %i.x
+  br i1 %.not59.us, label %.loopexit80, label %.lr.ph100.split.us
 
 .split91.us:                                      ; preds = %.lr.ph.split.us108, %.lr.ph.split.us.us
   call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.3, i64 noundef 256, i64 noundef 256) #20

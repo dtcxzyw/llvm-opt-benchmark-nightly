@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luajit/original/buildvm_asm?download=true
+inline.NumInlined: 8
+inline.NumDeleted: 5
 begin_hunk_0
 @.str.8 = private unnamed_addr constant [12 x i8] c"\09.align %d\0A\00", align 1
 @.str.9 = private unnamed_addr constant [58 x i8] c"\0A\09.globl %s\0A\09.hidden %s\0A\09.type %s, @%s\0A\09.size %s, %d\0A%s:\0A\00", align 1
@@ -200,6 +202,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bx = zext nneg i32 %i.bv to i64
   %i.by = getelementptr inbounds nuw i8, ptr %i.bo, i64 %i.bx
   %i.bz = load i8, ptr %i.by, align 1, !tbaa !39  ; 4 uses
+  %1 = zext i8 %i.bz to i64
   switch i8 %i.bz, label %bb.p [
     i8 -24, label %bb.u
     i8 -23, label %bb.o
@@ -227,9 +230,8 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.ch, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  %1 = and i8 %i.bz, 127
-  %2 = zext nneg i8 %1 to i64
-  %3 = getelementptr inbounds nuw [8 x i8], ptr @jccnames, i64 %2
+  %2 = getelementptr [8 x i8], ptr @jccnames, i64 %1
+  %3 = getelementptr i8, ptr %2, i64 -1024
   %i.ci = load ptr, ptr %3, align 8, !tbaa !38
   %i.cj = add nsw i32 %i.bi, -2
   br label %bb.u

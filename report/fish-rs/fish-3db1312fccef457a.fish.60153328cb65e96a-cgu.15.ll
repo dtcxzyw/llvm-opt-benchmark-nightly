@@ -205,6 +205,11 @@ _RNvNtNtCs8frGy5WneL6_4fish8builtins4wait15can_wait_on_job.exit.split.us: ; pred
   %.sroa.0.3.ph.us.us = phi i1 [ %.sroa.0.3.mux.us.us, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtCs8frGy5WneL6_4fish11wait_handle10WaitHandleEEB1a_.exit.us.us ], [ %.sroa.0.245, %_RNvNtNtCs8frGy5WneL6_4fish8builtins4wait15can_wait_on_job.exit.split.us ] ; 2 uses
   br label %3
 
+3:                                                ; preds = %bb.l, %.outer.us.us
+  %.sroa.06.0.us.us = phi ptr [ %i.cb, %bb.l ], [ %.sroa.06.0.ph.us.us, %.outer.us.us ] ; 3 uses
+  %4 = icmp eq ptr %.sroa.06.0.us.us, %i.by
+  br i1 %4, label %.loopexit, label %bb.l
+
 bb.l:                                             ; preds = %3
   %i.cb = getelementptr inbounds nuw i8, ptr %.sroa.06.0.us.us, i64 224 ; 2 uses
   %i.cc = call noundef ptr @_RNvMs6_NtCs8frGy5WneL6_4fish4procNtB5_7Process16make_wait_handle(ptr noundef nonnull align 8 %.sroa.06.0.us.us, i64 noundef %i.ca) ; 5 uses
@@ -233,11 +238,6 @@ bb.n:                                             ; preds = %bb.m
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtCs8frGy5WneL6_4fish11wait_handle10WaitHandleEEB1a_.exit.us.us: ; preds = %bb.n, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %.outer.us.us
-
-3:                                                ; preds = %bb.l, %.outer.us.us
-  %.sroa.06.0.us.us = phi ptr [ %i.cb, %bb.l ], [ %.sroa.06.0.ph.us.us, %.outer.us.us ] ; 3 uses
-  %4 = icmp eq ptr %.sroa.06.0.us.us, %i.by
-  br i1 %4, label %.loopexit, label %bb.l
 
 .outer.us:                                        ; preds = %_RNvNtNtCs8frGy5WneL6_4fish8builtins4wait15can_wait_on_job.exit.split.us, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtCs8frGy5WneL6_4fish11wait_handle10WaitHandleEEB1a_.exit.us
   %.sroa.06.0.ph.us = phi ptr [ %i.cj, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtCs8frGy5WneL6_4fish11wait_handle10WaitHandleEEB1a_.exit.us ], [ %i.bz, %_RNvNtNtCs8frGy5WneL6_4fish8builtins4wait15can_wait_on_job.exit.split.us ]

@@ -204,14 +204,14 @@ bb.v:                                             ; preds = %.lr.ph.i135.us
   %exitcond.not.i138.us = icmp eq i64 %indvars.iv.next.i137.us, %wide.trip.count.i134
   br i1 %exitcond.not.i138.us, label %.loopexit189.us, label %.lr.ph.i135.us, !llvm.loop !9
 
+.loopexit189.us:                                  ; preds = %bb.v
+  call void @SDL_RemoveMouse(i32 noundef %i.fb) #9
+  br label %HasDeviceID.exit139.us
+
 HasDeviceID.exit139.us:                           ; preds = %.lr.ph.i135.us, %.loopexit189.us
   %indvars.iv.next260 = add nsw i64 %indvars.iv259, -1
   %i.ff = icmp eq i64 %indvars.iv259, 0
   br i1 %i.ff, label %._crit_edge231, label %.lr.ph.preheader.i133.us, !llvm.loop !15
-
-.loopexit189.us:                                  ; preds = %bb.v
-  call void @SDL_RemoveMouse(i32 noundef %i.fb) #9
-  br label %HasDeviceID.exit139.us
 
 HasDeviceID.exit131:                              ; preds = %HasDeviceID.exit131.preheader, %HasDeviceID.exit131
   %indvars.iv250 = phi i64 [ %i.af, %HasDeviceID.exit131.preheader ], [ %indvars.iv.next251, %HasDeviceID.exit131 ] ; 3 uses
@@ -276,14 +276,14 @@ bb.w:                                             ; preds = %.lr.ph.i143.us
   %exitcond.not.i146.us = icmp eq i64 %indvars.iv.next.i145.us, %wide.trip.count.i142
   br i1 %exitcond.not.i146.us, label %.loopexit.us, label %.lr.ph.i143.us, !llvm.loop !13
 
+.loopexit.us:                                     ; preds = %bb.w
+  call void @SDL_DelTouch(i64 noundef %i.fs) #9
+  br label %HasDeviceID64.exit147.us
+
 HasDeviceID64.exit147.us:                         ; preds = %.lr.ph.i143.us, %.loopexit.us
   %indvars.iv.next266 = add nsw i64 %indvars.iv265, -1
   %i.fw = icmp eq i64 %indvars.iv265, 0
   br i1 %i.fw, label %._crit_edge235, label %.lr.ph.preheader.i141.us, !llvm.loop !16
-
-.loopexit.us:                                     ; preds = %bb.w
-  call void @SDL_DelTouch(i64 noundef %i.fs) #9
-  br label %HasDeviceID64.exit147.us
 
 HasDeviceID.exit139:                              ; preds = %HasDeviceID.exit139.preheader, %HasDeviceID.exit139
   %indvars.iv256 = phi i64 [ %i.ey, %HasDeviceID.exit139.preheader ], [ %indvars.iv.next257, %HasDeviceID.exit139 ] ; 3 uses

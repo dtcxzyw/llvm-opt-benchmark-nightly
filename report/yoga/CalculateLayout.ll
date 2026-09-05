@@ -204,7 +204,7 @@ bb.a:
   %.not14.i.i = icmp eq i16 %i.g, 0               ; 7 uses
   %i.h = load i16, ptr %i.a, align 1
   %.fr88 = freeze i16 %i.h                        ; 6 uses
-  %i.i = and i16 %.fr88, 7                        ; 4 uses
+  %i.i = and i16 %.fr88, 7                        ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 25 ; 2 uses
   %i.k = load i16, ptr %i.j, align 1
   %i.l = and i16 %i.k, 7
@@ -282,10 +282,10 @@ _ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit1
 
 .split:                                           ; preds = %bb.a
   %.not15.i.i = icmp eq i16 %i.i, 0
-  br i1 %.not15.i.i, label %.split.split.us.preheader, label %.split.split
+  br i1 %.not15.i.i, label %.split.split.us.1.a, label %.split.split
 
-.split.split.us.1.a:                              ; preds = %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32
-  br i1 %.not.i.i.not, label %bb.h, label %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32.1
+.split.split.us.1.a:                              ; preds = %.split
+  br i1 %.not14.i.i, label %bb.h, label %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32.1
 
 bb.h:                                             ; preds = %.split.split.us.1.a
   %.sroa.0.0.pre.i11.i.us31.1 = load i16, ptr %spec.select.i.i, align 1, !tbaa !12
@@ -293,15 +293,15 @@ bb.h:                                             ; preds = %.split.split.us.1.a
   br label %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32.1
 
 _ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32.1: ; preds = %bb.h, %.split.split.us.1.a
-  %.pre-phi118.a = phi i16 [ %.pre117.a, %bb.h ], [ %i.d, %.split.split.us.1.a ]
+  %.pre-phi118.a = phi i16 [ %.pre117.a, %bb.h ], [ %i.g, %.split.split.us.1.a ]
   %i.ab = icmp eq i16 %.pre-phi118.a, 4
-  %spec.select = select i1 %.not14.i.i, i16 %i.q, i16 %i.g
+  %spec.select = select i1 %.not14.i12.i, i16 %i.q, i16 %i.n
   %i.ac = icmp eq i16 %spec.select, 4
   %or.cond154 = or i1 %i.ab, %i.ac
-  br i1 %or.cond154, label %.thread, label %.split25.us
+  br i1 %or.cond154, label %.thread, label %.split.split.us.preheader
 
-.split.split.us.preheader:                        ; preds = %.split
-  br i1 %.not14.i.i, label %bb.i, label %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32
+.split.split.us.preheader:                        ; preds = %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32.1
+  br i1 %.not.i.i.not, label %bb.i, label %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32
 
 bb.i:                                             ; preds = %.split.split.us.preheader
   %.sroa.0.0.pre.i11.i.us31 = load i16, ptr %spec.select.i.i, align 1, !tbaa !12
@@ -309,12 +309,12 @@ bb.i:                                             ; preds = %.split.split.us.pre
   br label %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32
 
 _ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32: ; preds = %bb.i, %.split.split.us.preheader
-  %.pre-phi115 = phi i16 [ %.pre114, %bb.i ], [ %i.g, %.split.split.us.preheader ]
+  %.pre-phi115 = phi i16 [ %.pre114, %bb.i ], [ %i.d, %.split.split.us.preheader ]
   %i.ad = icmp eq i16 %.pre-phi115, 4
-  %spec.select142 = select i1 %.not14.i12.i, i16 %i.q, i16 %i.n
+  %spec.select142 = select i1 %.not14.i.i, i16 %i.q, i16 %i.g
   %i.ae = icmp eq i16 %spec.select142, 4
   %or.cond156 = or i1 %i.ad, %i.ae
-  br i1 %or.cond156, label %.thread, label %.split.split.us.1.a
+  br i1 %or.cond156, label %.thread, label %.split25.us
 
 .split.split:                                     ; preds = %.split
   br i1 %.not.i.i.not, label %.split.split.split.us.preheader, label %.split.split.split
@@ -323,25 +323,17 @@ _ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.
   %.sroa.0.0.i.us46 = select i1 %.not14.i.i, i16 %.fr88, i16 %.fr90
   %i.af = and i16 %.sroa.0.0.i.us46, 7
   %i.ag = icmp eq i16 %i.af, 4
-  br i1 %i.ag, label %.thread, label %2
+  br i1 %i.ag, label %.thread, label %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47
 
-.split.split.split.us.1:                          ; preds = %2
-  %.old = icmp eq i16 %i.i, 4
-  br i1 %.old, label %.thread, label %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47.1
-
-_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47.1: ; preds = %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47, %.split.split.split.us.1
-  %spec.select143 = select i1 %.not14.i.i, i16 %i.q, i16 %i.g
-  %1 = icmp eq i16 %spec.select143, 4
-  br i1 %1, label %.thread, label %.split25.us
-
-2:                                                ; preds = %.split.split.split.us.preheader
-  br i1 %.not14.i12.i, label %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47, label %.split.split.split.us.1
-
-_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47: ; preds = %2
+_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47: ; preds = %.split.split.split.us.preheader
   %i.ah = icmp eq i16 %i.q, 4
+  %or.cond = and i1 %.not14.i12.i, %i.ah
   %i.ai = icmp eq i16 %i.i, 4
-  %or.cond.a = or i1 %i.ah, %i.ai
-  br i1 %or.cond.a, label %.thread, label %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47.1
+  %or.cond143 = or i1 %or.cond, %i.ai
+  %spec.select144 = select i1 %.not14.i.i, i16 %i.q, i16 %i.g
+  %1 = icmp eq i16 %spec.select144, 4
+  %or.cond.a = or i1 %or.cond143, %1
+  br i1 %or.cond.a, label %.thread, label %.split25.us
 
 .split.split.split:                               ; preds = %.split.split
   br i1 %.not14.i.i, label %.split.split.split.split.us.preheader, label %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit
@@ -372,11 +364,11 @@ _ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit1
   %or.cond151 = or i1 %i.aq, %i.ar
   br i1 %or.cond151, label %.thread, label %.split25.us
 
-.split25.us:                                      ; preds = %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32.1, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us60, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47.1, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us.1
+.split25.us:                                      ; preds = %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us60, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us.1
   br label %.thread
 
-.thread:                                          ; preds = %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us.1, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us.1, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32.1, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47.1, %.split.split.split.us.1, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47, %.split.split.split.us.preheader, %.split.split.split.split.us.preheader, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us60, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17, %.split25.us
-  %.not21 = phi i1 [ false, %.split25.us ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17 ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us60 ], [ true, %.split.split.split.split.us.preheader ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us.1 ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us.1 ], [ true, %.split.split.split.us.preheader ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47 ], [ true, %.split.split.split.us.1 ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47.1 ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32 ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32.1 ]
+.thread:                                          ; preds = %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us.1, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us.1, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32.1, %.split.split.split.us.preheader, %.split.split.split.split.us.preheader, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us60, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17, %.split25.us
+  %.not21 = phi i1 [ false, %.split25.us ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17 ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us60 ], [ true, %.split.split.split.split.us.preheader ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us.1 ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us ], [ true, %.split.split.split.us.preheader ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us47 ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit17.us.1 ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32.1 ], [ true, %_ZNK8facebook4yoga5Style13computeMarginENS0_12PhysicalEdgeENS0_9DirectionE.exit.us32 ]
   ret i1 %.not21
 }
 

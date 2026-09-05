@@ -205,6 +205,11 @@ _RNvXs3_NtCsioiJd4mgmsb_10num_bigint7biguintNtB5_7BigUintNtNtCs6JMX4GRUq9U_4core
     i8 1, label %.split.us.split.us.i.us.us.i
   ]
 
+.loopexit54.us.us.i:                              ; preds = %.split.us.split.us.i.us.us.i, %_RNvXs3_NtCsioiJd4mgmsb_10num_bigint7biguintNtB5_7BigUintNtNtCs6JMX4GRUq9U_4core3cmp3Ord3cmp.exit.us.us.i.us.us.i, %.split.us.i.us.us.i
+  %.sroa.4.0.i.ph.ph.us.us.i = phi i64 [ %i.o, %.split.us.i.us.us.i ], [ %i.o, %.split.us.split.us.i.us.us.i ], [ %.sroa.8.0.us.us.i.us.us.i137, %_RNvXs3_NtCsioiJd4mgmsb_10num_bigint7biguintNtB5_7BigUintNtNtCs6JMX4GRUq9U_4core3cmp3Ord3cmp.exit.us.us.i.us.us.i ] ; 3 uses
+  %3 = icmp eq i64 %.sroa.3.0.us.us.i, 0
+  br i1 %3, label %_RINvMs_NtNtNtCs7tKScEop1B6_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker3MutNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintjNtB1i_14LeafOrInternalE11search_treeB1y_ECsl8pJiQOn4hA_9coreutils.exit, label %bb.e
+
 bb.e:                                             ; preds = %.loopexit54.us.us.i
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.0.0.us.us.i, i64 368
   %i.ah = icmp samesign ult i64 %.sroa.4.0.i.ph.ph.us.us.i, 12
@@ -213,11 +218,6 @@ bb.e:                                             ; preds = %.loopexit54.us.us.i
   %i.aj = load ptr, ptr %i.ai, align 8, !noalias !35254, !nonnull !12, !noundef !12
   %i.ak = add i64 %.sroa.3.0.us.us.i, -1
   br label %.split.us.i.us.us.i
-
-.loopexit54.us.us.i:                              ; preds = %.split.us.split.us.i.us.us.i, %_RNvXs3_NtCsioiJd4mgmsb_10num_bigint7biguintNtB5_7BigUintNtNtCs6JMX4GRUq9U_4core3cmp3Ord3cmp.exit.us.us.i.us.us.i, %.split.us.i.us.us.i
-  %.sroa.4.0.i.ph.ph.us.us.i = phi i64 [ %i.o, %.split.us.i.us.us.i ], [ %i.o, %.split.us.split.us.i.us.us.i ], [ %.sroa.8.0.us.us.i.us.us.i137, %_RNvXs3_NtCsioiJd4mgmsb_10num_bigint7biguintNtB5_7BigUintNtNtCs6JMX4GRUq9U_4core3cmp3Ord3cmp.exit.us.us.i.us.us.i ] ; 3 uses
-  %3 = icmp eq i64 %.sroa.3.0.us.us.i, 0
-  br i1 %3, label %_RINvMs_NtNtNtCs7tKScEop1B6_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker3MutNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintjNtB1i_14LeafOrInternalE11search_treeB1y_ECsl8pJiQOn4hA_9coreutils.exit, label %bb.e
 
 .split.us.i.us.i:                                 ; preds = %.split.us.i, %bb.j
   %.sroa.3.0.us.i = phi i64 [ %i.az, %bb.j ], [ %i.c, %.split.us.i ] ; 4 uses

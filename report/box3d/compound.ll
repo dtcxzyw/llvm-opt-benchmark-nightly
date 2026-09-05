@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/box3d/original/compound?download=true
+inline.NumInlined: 186
+inline.NumDeleted: 66
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 12
 begin_hunk_0_@b3CompoundMoverCallback:bb.a
   %i.dk = extractelement <2 x float> %foldExtExtBinop103, i64 0
   %i.dl = fmul <2 x float> %i.dj, splat (float 2.000000e+00)
@@ -200,10 +205,10 @@ bb.a:
   %i.g = lshr i128 %i.f, 64
   %i.h = xor i128 %i.g, %i.f
   %i.i = trunc i128 %i.h to i64
-  %i.j = getelementptr i8, ptr %2, i64 16
+  %i.j = getelementptr nuw i8, ptr %2, i64 16
   %.251.val.i.1.i = load i64, ptr %i.j, align 1
   %i.k = xor i64 %.251.val.i.1.i, -8378864009470890807
-  %i.l = getelementptr i8, ptr %2, i64 24
+  %i.l = getelementptr nuw i8, ptr %2, i64 24
   %.val59.i.1.i = load i64, ptr %i.l, align 1     ; 2 uses
   %i.m = xor i64 %.val59.i.1.i, %i.i
   %i.n = zext i64 %i.k to i128
@@ -274,10 +279,10 @@ bb.d:                                             ; preds = %bb.c
   %i.bm = lshr i128 %i.bl, 64
   %i.bn = xor i128 %i.bm, %i.bl
   %i.bo = trunc i128 %i.bn to i64
-  %i.bp = getelementptr i8, ptr %i.bf, i64 16
+  %i.bp = getelementptr nuw i8, ptr %i.bf, i64 16
   %.251.val.i.1.i.i = load i64, ptr %i.bp, align 1
   %i.bq = xor i64 %.251.val.i.1.i.i, -8378864009470890807
-  %i.br = getelementptr i8, ptr %i.bf, i64 24
+  %i.br = getelementptr nuw i8, ptr %i.bf, i64 24
   %.val59.i.1.i.i = load i64, ptr %i.br, align 1  ; 2 uses
   %i.bs = xor i64 %.val59.i.1.i.i, %i.bo
   %i.bt = zext i64 %i.bq to i128

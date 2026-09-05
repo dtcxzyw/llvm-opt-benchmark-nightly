@@ -205,6 +205,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.us44: ; pred
   %i.cb = icmp samesign ugt i32 %.020.i.i.i29.us, 9999
   br i1 %i.cb, label %.lr.ph.i9.i.i28.us, label %._crit_edge.i.i.i18.loopexit.us, !llvm.loop !129
 
+._crit_edge.i.i.i18.loopexit.us:                  ; preds = %.lr.ph.i9.i.i28.us
+  %2 = icmp samesign ugt i32 %.020.i.i.i29.us, 999
+  br i1 %2, label %bb.i, label %bb.h
+
 bb.h:                                             ; preds = %._crit_edge.i.i.i18.loopexit.us
   %i.cc = trunc nuw nsw i32 %i.bp to i8
   %i.cd = or disjoint i8 %i.cc, 48
@@ -220,10 +224,6 @@ bb.i:                                             ; preds = %._crit_edge.i.i.i18
   store i8 %i.ci, ptr %i.cj, align 1, !tbaa !142
   %i.ck = load i8, ptr %i.cg, align 2, !tbaa !142
   br label %._crit_edge.loopexit60
-
-._crit_edge.i.i.i18.loopexit.us:                  ; preds = %.lr.ph.i9.i.i28.us
-  %2 = icmp samesign ugt i32 %.020.i.i.i29.us, 999
-  br i1 %2, label %bb.i, label %bb.h
 
 .split.split.us:                                  ; preds = %.lr.ph.split.split.us
   %i.cl = landingpad { ptr, i32 }

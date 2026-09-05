@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/recastnavigation/original/imgui_widgets?download=true
+inline.NumInlined: 1793
+inline.NumDeleted: 311
+loop-unroll.NumCompletelyUnrolled: 11
+loop-unroll.NumRuntimeUnrolled: 27
+loop-unroll.NumUnrolled: 38
 begin_hunk_0_@_ZN5ImGuiL12TabBarLayoutEP11ImGuiTabBar:.preheader
   %i.ae = getelementptr inbounds [44 x i8], ptr %i.n, i64 %.pre470
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(41) %i.ae, ptr noundef nonnull align 4 dereferenceable(41) %i.o, i64 41, i1 false), !tbaa.struct !582
@@ -200,8 +205,8 @@ _ZN5ImGui17TabBarFindTabByIDEP11ImGuiTabBarj.exit.i: ; preds = %bb.z
 bb.aa:                                            ; preds = %_ZN5ImGui17TabBarFindTabByIDEP11ImGuiTabBarj.exit.i
   %i.dh = trunc i64 %indvars.iv.i.i to i32
   %i.di = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.dj = load i16, ptr %i.di, align 8, !tbaa !588 ; 2 uses
-  %i.dk = sext i16 %i.dj to i32                   ; 2 uses
+  %i.dj = load i16, ptr %i.di, align 8, !tbaa !588 ; 3 uses
+  %i.dk = sext i16 %i.dj to i32
   %i.dl = add nsw i32 %i.dk, %i.dh                ; 2 uses
   %or.cond.i = icmp ult i32 %i.dl, %i.cx
   br i1 %or.cond.i, label %bb.ab, label %_ZN5ImGui20TabBarProcessReorderEP11ImGuiTabBar.exit.thread
@@ -229,8 +234,8 @@ bb.ad:                                            ; preds = %bb.ac
   %i.dv = select i1 %i.dt, ptr %i.du, ptr %i.dn
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dn, i64 44
   %i.dx = select i1 %i.dt, ptr %i.db, ptr %i.dw
-  %9 = tail call i32 @llvm.abs.i32(i32 %i.dk, i1 true)
-  %i.dy = zext nneg i32 %9 to i64
+  %9 = tail call i16 @llvm.abs.i16(i16 %i.dj, i1 false)
+  %i.dy = zext i16 %9 to i64
   %i.dz = mul nuw nsw i64 %i.dy, 44
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dx, ptr nonnull align 4 %i.dv, i64 %i.dz, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(41) %i.dn, ptr noundef nonnull align 4 dereferenceable(41) %6, i64 41, i1 false), !tbaa.struct !582
@@ -633,8 +638,8 @@ _ZN5ImGui17TabBarFindTabByIDEP11ImGuiTabBarj.exit: ; preds = %bb.c
 bb.d:                                             ; preds = %_ZN5ImGui17TabBarFindTabByIDEP11ImGuiTabBarj.exit
   %i.n = trunc i64 %indvars.iv.i to i32
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %i.p = load i16, ptr %i.o, align 8, !tbaa !588  ; 2 uses
-  %i.q = sext i16 %i.p to i32                     ; 2 uses
+  %i.p = load i16, ptr %i.o, align 8, !tbaa !588  ; 3 uses
+  %i.q = sext i16 %i.p to i32
   %i.r = add nsw i32 %i.n, %i.q                   ; 2 uses
   %or.cond = icmp ult i32 %i.r, %i.d
   br i1 %or.cond, label %bb.e, label %_ZN5ImGui17TabBarFindTabByIDEP11ImGuiTabBarj.exit.thread
@@ -662,8 +667,8 @@ bb.g:                                             ; preds = %bb.f
   %i.ab = select i1 %i.z, ptr %i.aa, ptr %i.t
   %i.ac = getelementptr inbounds nuw i8, ptr %i.t, i64 44
   %i.ad = select i1 %i.z, ptr %i.h, ptr %i.ac
-  %2 = tail call i32 @llvm.abs.i32(i32 %i.q, i1 true)
-  %i.ae = zext nneg i32 %2 to i64
+  %2 = tail call i16 @llvm.abs.i16(i16 %i.p, i1 false)
+  %i.ae = zext i16 %2 to i64
   %i.af = mul nuw nsw i64 %i.ae, 44
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.ad, ptr nonnull align 4 %i.ab, i64 %i.af, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(41) %i.t, ptr noundef nonnull align 4 dereferenceable(41) %1, i64 41, i1 false), !tbaa.struct !582
@@ -1065,6 +1070,9 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #34
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.abs.i64(i64, i1 immarg) #34
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.abs.i16(i16, i1 immarg) #34
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #4

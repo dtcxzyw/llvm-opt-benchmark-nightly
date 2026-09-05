@@ -202,23 +202,49 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.not26983209.us = icmp eq i32 %.12533.ph.us, 0
   br i1 %.not26983209.us, label %bb.dj, label %.lr.ph3212.us
 
+.lr.ph3212.us:                                    ; preds = %.outer.us
+  %13 = add nuw nsw i32 %.22607.ph.us, 1          ; 4 uses
+  %14 = sub nsw i32 %i.ay, %13
+  %15 = call i32 @llvm.smin.i32(i32 %i.bwk, i32 %14) ; 3 uses
+  store i32 %15, ptr %i.l, align 4, !tbaa !151
+  %16 = sub nsw i32 %13, %.pre3824
+  %17 = call i32 @llvm.smax.i32(i32 %16, i32 1)   ; 2 uses
+  %18 = add nsw i32 %15, %13
+  %19 = load i32, ptr %i.j, align 4, !tbaa !151
+  %20 = sub i32 %18, %19                          ; 2 uses
+  %.not2700.us = icmp slt i32 %.22607.ph.us, %i.ay
+  br i1 %.not2700.us, label %.lr.ph3212.split.us.us, label %.lr.ph3212.split.us3500
+
+.lr.ph3212.split.us3500:                          ; preds = %.lr.ph3212.us
+  %21 = icmp eq i32 %.pre3824, 0
+  br i1 %21, label %.loopexit2877, label %.lr.ph3212.split.split.us
+
+.lr.ph3212.split.us.us:                           ; preds = %.lr.ph3212.us
+  store i32 1, ptr %i.c, align 4, !tbaa !151
+  %22 = add nuw nsw i32 %.22607.ph.us, 2
+  br label %bb.dk
+
 bb.dj:                                            ; preds = %.lr.ph3212.split.split.us, %.outer.us
   %.32550.lcssa.us = phi i32 [ %i.ba, %.lr.ph3212.split.split.us ], [ %.32550.ph.us, %.outer.us ]
-  %.32545.lcssa.us = phi i32 [ %18, %.lr.ph3212.split.split.us ], [ %.32545.ph.us, %.outer.us ]
-  %.32541.lcssa.us = phi i32 [ %21, %.lr.ph3212.split.split.us ], [ %.32541.ph.us, %.outer.us ]
+  %.32545.lcssa.us = phi i32 [ %17, %.lr.ph3212.split.split.us ], [ %.32545.ph.us, %.outer.us ]
+  %.32541.lcssa.us = phi i32 [ %20, %.lr.ph3212.split.split.us ], [ %.32541.ph.us, %.outer.us ]
   %i.bwl = sub nsw i32 %.22607.ph.us, %.pre3824   ; 2 uses
   %i.bwm = icmp slt i32 %i.bwl, 2
-  br i1 %i.bwm, label %.loopexit2877, label %bb.dk
+  br i1 %i.bwm, label %.loopexit2877, label %._crit_edge3825
 
-bb.dk:                                            ; preds = %.lr.ph3212.split.us.us, %bb.dj
-  %.125332894.us = phi i32 [ 0, %bb.dj ], [ 1, %.lr.ph3212.split.us.us ]
-  %.not26982891.us = phi i1 [ true, %bb.dj ], [ false, %.lr.ph3212.split.us.us ] ; 6 uses
-  %.32608.us = phi i32 [ %i.bwl, %bb.dj ], [ %14, %.lr.ph3212.split.us.us ] ; 49 uses
-  %.42551.us = phi i32 [ %.32550.lcssa.us, %bb.dj ], [ %23, %.lr.ph3212.split.us.us ] ; 6 uses
-  %.42546.us = phi i32 [ %.32545.lcssa.us, %bb.dj ], [ %18, %.lr.ph3212.split.us.us ] ; 8 uses
-  %.4.us = phi i32 [ %.32541.lcssa.us, %bb.dj ], [ %21, %.lr.ph3212.split.us.us ] ; 2 uses
-  %13 = load i32, ptr %i.l, align 4, !tbaa !151   ; 6 uses
-  %i.bwn = sub nsw i32 %i.ay, %13
+._crit_edge3825:                                  ; preds = %bb.dj
+  %.pre3826 = load i32, ptr %i.l, align 4, !tbaa !151
+  br label %bb.dk
+
+bb.dk:                                            ; preds = %._crit_edge3825, %.lr.ph3212.split.us.us
+  %23 = phi i32 [ %.pre3826, %._crit_edge3825 ], [ %15, %.lr.ph3212.split.us.us ] ; 6 uses
+  %.125332894.us = phi i32 [ 0, %._crit_edge3825 ], [ 1, %.lr.ph3212.split.us.us ]
+  %.not26982891.us = phi i1 [ true, %._crit_edge3825 ], [ false, %.lr.ph3212.split.us.us ] ; 6 uses
+  %.32608.us = phi i32 [ %i.bwl, %._crit_edge3825 ], [ %13, %.lr.ph3212.split.us.us ] ; 49 uses
+  %.42551.us = phi i32 [ %.32550.lcssa.us, %._crit_edge3825 ], [ %22, %.lr.ph3212.split.us.us ] ; 6 uses
+  %.42546.us = phi i32 [ %.32545.lcssa.us, %._crit_edge3825 ], [ %17, %.lr.ph3212.split.us.us ] ; 8 uses
+  %.4.us = phi i32 [ %.32541.lcssa.us, %._crit_edge3825 ], [ %20, %.lr.ph3212.split.us.us ] ; 2 uses
+  %i.bwn = sub nsw i32 %i.ay, %23
   %i.bwo = icmp slt i32 %.32608.us, %i.bwn
   br i1 %i.bwo, label %bb.dm, label %bb.dl
 
@@ -332,9 +358,9 @@ vec.epilog.scalar.ph4653:                         ; preds = %vec.epilog.scalar.p
   br i1 %exitcond3733.not.3, label %._crit_edge3378.us, label %vec.epilog.scalar.ph4653, !llvm.loop !79
 
 ._crit_edge3378.us:                               ; preds = %vec.epilog.scalar.ph4653.prol.loopexit, %vec.epilog.scalar.ph4653, %middle.block4648, %vec.epilog.middle.block4664, %._crit_edge3373.us
-  %i.byz = add i32 %13, %.32608.us                ; 7 uses
+  %i.byz = add i32 %23, %.32608.us                ; 7 uses
   %i.bza = add i32 %.32608.us, 1                  ; 6 uses
-  %.not27053392.us = icmp slt i32 %13, 1
+  %.not27053392.us = icmp slt i32 %23, 1
   br i1 %.not27053392.us, label %bb.dp, label %.lr.ph3396.us
 
 bb.do:                                            ; preds = %.lr.ph3396.us, %._crit_edge3388.us
@@ -737,28 +763,6 @@ scalar.ph4497:                                    ; preds = %scalar.ph4497.prol.
   %exitcond3783.not.3 = icmp eq i64 %indvars.iv.next3780.3, %wide.trip.count3782
   br i1 %exitcond3783.not.3, label %.outer.us.backedge, label %scalar.ph4497, !llvm.loop !108
 
-.lr.ph3212.us:                                    ; preds = %.outer.us
-  %14 = add nuw nsw i32 %.22607.ph.us, 1          ; 4 uses
-  %15 = sub nsw i32 %i.ay, %14
-  %16 = call i32 @llvm.smin.i32(i32 %i.bwk, i32 %15) ; 2 uses
-  store i32 %16, ptr %i.l, align 4, !tbaa !151
-  %17 = sub nsw i32 %14, %.pre3824
-  %18 = call i32 @llvm.smax.i32(i32 %17, i32 1)   ; 2 uses
-  %19 = add nsw i32 %16, %14
-  %20 = load i32, ptr %i.j, align 4, !tbaa !151
-  %21 = sub i32 %19, %20                          ; 2 uses
-  %.not2700.us = icmp slt i32 %.22607.ph.us, %i.ay
-  br i1 %.not2700.us, label %.lr.ph3212.split.us.us, label %.lr.ph3212.split.us3500
-
-.lr.ph3212.split.us3500:                          ; preds = %.lr.ph3212.us
-  %22 = icmp eq i32 %.pre3824, 0
-  br i1 %22, label %.loopexit2877, label %.lr.ph3212.split.split.us
-
-.lr.ph3212.split.us.us:                           ; preds = %.lr.ph3212.us
-  store i32 1, ptr %i.c, align 4, !tbaa !151
-  %23 = add nuw nsw i32 %.22607.ph.us, 2
-  br label %bb.dk
-
 .lr.ph3212.split.split.us:                        ; preds = %.lr.ph3212.split.us3500
   store i32 1, ptr %i.c, align 4, !tbaa !151
   br label %bb.dj
@@ -1076,17 +1080,17 @@ vec.epilog.scalar.ph4555.prol.loopexit:           ; preds = %vec.epilog.scalar.p
   %wide.trip.count3742 = sext i32 %i.byd to i64   ; 7 uses
   %i.ddq = xor i64 %i.ddp, -1
   %i.ddr = add nsw i64 %i.ddq, %wide.trip.count3742 ; 2 uses
-  %i.dds = add nuw i32 %13, 1
+  %i.dds = add nuw i32 %23, 1
   %i.ddt = mul i32 %i.n, %i.bza                   ; 2 uses
   %i.ddu = add i32 %i.dds, %i.ddt                 ; 2 uses
-  %i.ddv = add nuw i32 %13, 2
+  %i.ddv = add nuw i32 %23, 2
   %i.ddw = mul i32 %i.n, %.32608.us
   %i.ddx = add i32 %i.ddv, %i.ddw                 ; 2 uses
   %i.ddy = mul nsw i64 %i.ddp, -8
   %scevgep4517 = getelementptr i8, ptr %5, i64 %i.ddy
   %i.ddz = add nsw i64 %i.o, %wide.trip.count3742
   %i.dea = add i32 %i.bwq, 2
-  %i.deb = add nuw i32 %13, 2
+  %i.deb = add nuw i32 %23, 2
   %i.dec = mul i32 %i.n, %.32608.us
   %i.ded = add i32 %i.deb, %i.dec
   %i.dee = sext i32 %i.ded to i64                 ; 2 uses

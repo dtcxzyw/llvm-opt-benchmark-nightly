@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libwebp/original/vp8l_enc?download=true
+inline.NumInlined: 150
+inline.NumDeleted: 50
+loop-unroll.NumCompletelyUnrolled: 15
+loop-unroll.NumRuntimeUnrolled: 10
+loop-unroll.NumUnrolled: 26
 begin_hunk_0_@EncodeStreamHook:bb.a
 .lr.ph.i.preheader:                               ; preds = %VP8LPutBits.exit31.i
   %min.iters.check = icmp ult i32 %i.ej, 8
@@ -200,20 +205,15 @@ call.0.us.us.preheader.i.i:                       ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(4096) %i.c, i8 -1, i64 4096, i1 false)
   %wide.trip.count342.i.i = zext nneg i32 %i.gp to i64 ; 3 uses
-  br label %call.0.us.us.i.i
-
-call.1.us.us.preheader.1.i.i:                     ; preds = %call.0.us.us.i.i
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(4096) %i.c, i8 -1, i64 4096, i1 false)
   br label %call.1.us.us.1.i.i.a
 
-call.1.us.us.1.i.i.a:                             ; preds = %bb.y, %call.1.us.us.preheader.1.i.i
-  %indvars.iv334.1.i.i.a = phi i64 [ 0, %call.1.us.us.preheader.1.i.i ], [ %indvars.iv.next335.1.i.i.a, %bb.y ] ; 3 uses
+call.1.us.us.1.i.i.a:                             ; preds = %bb.y, %call.0.us.us.preheader.i.i
+  %indvars.iv334.1.i.i.a = phi i64 [ 0, %call.0.us.us.preheader.i.i ], [ %indvars.iv.next335.1.i.i.a, %bb.y ] ; 3 uses
   %i.ic = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %indvars.iv334.1.i.i.a
   %i.id = load i32, ptr %i.ic, align 4, !tbaa !41
-  %7 = and i32 %i.id, 16777215
-  %8 = mul i32 %7, -72723225
-  %9 = lshr i32 %8, 21
-  %i.ie = zext nneg i32 %9 to i64
+  %7 = lshr i32 %i.id, 8
+  %8 = and i32 %7, 255
+  %i.ie = zext nneg i32 %8 to i64
   %i.if = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %i.ie ; 2 uses
   %i.ig = load i16, ptr %i.if, align 2, !tbaa !71
   %.not.us243.us.1.i.i.a = icmp eq i16 %i.ig, -1
@@ -224,7 +224,7 @@ bb.y:                                             ; preds = %call.1.us.us.1.i.i.
   store i16 %i.ih, ptr %i.if, align 2, !tbaa !71
   %indvars.iv.next335.1.i.i.a = add nuw nsw i64 %indvars.iv334.1.i.i.a, 1 ; 2 uses
   %exitcond338.1.not.i.i.a = icmp eq i64 %indvars.iv.next335.1.i.i.a, %wide.trip.count342.i.i
-  br i1 %exitcond338.1.not.i.i.a, label %bb.ah, label %call.1.us.us.1.i.i.a, !llvm.loop !112
+  br i1 %exitcond338.1.not.i.i.a, label %bb.ab, label %call.1.us.us.1.i.i.a, !llvm.loop !112
 
 call.2.us.us.preheader.2.i.i.a:                   ; preds = %call.1.us.us.1.i.i.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(4096) %i.c, i8 -1, i64 4096, i1 false)
@@ -235,41 +235,46 @@ call.2.us.us.2.i.i.a:                             ; preds = %bb.z, %call.2.us.us
   %i.ii = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %indvars.iv.2.i.i.a
   %i.ij = load i32, ptr %i.ii, align 4, !tbaa !41
   %i.ik = and i32 %i.ij, 16777215
-  %i.il = mul i32 %i.ik, 2147483647
+  %i.il = mul i32 %i.ik, -72723225
   %i.im = lshr i32 %i.il, 21
   %i.in = zext nneg i32 %i.im to i64
   %i.io = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %i.in ; 2 uses
   %i.ip = load i16, ptr %i.io, align 2, !tbaa !71
   %.not.us249.us.2.i.i.a = icmp eq i16 %i.ip, -1
-  br i1 %.not.us249.us.2.i.i.a, label %bb.z, label %bb.as
+  br i1 %.not.us249.us.2.i.i.a, label %bb.z, label %call.2.us.us.preheader.2.i.i
 
 bb.z:                                             ; preds = %call.2.us.us.2.i.i.a
   %i.iq = trunc i64 %indvars.iv.2.i.i.a to i16
   store i16 %i.iq, ptr %i.io, align 2, !tbaa !71
   %indvars.iv.next.2.i.i.a = add nuw nsw i64 %indvars.iv.2.i.i.a, 1 ; 2 uses
   %exitcond.2.not.i.i.a = icmp eq i64 %indvars.iv.next.2.i.i.a, %wide.trip.count342.i.i
-  br i1 %exitcond.2.not.i.i.a, label %.loopexit232.i.i, label %call.2.us.us.2.i.i.a, !llvm.loop !112
+  br i1 %exitcond.2.not.i.i.a, label %bb.ah, label %call.2.us.us.2.i.i.a, !llvm.loop !112
 
-call.0.us.us.i.i:                                 ; preds = %bb.aa, %call.0.us.us.preheader.i.i
-  %indvars.iv339.i.i = phi i64 [ 0, %call.0.us.us.preheader.i.i ], [ %indvars.iv.next340.i.i, %bb.aa ] ; 3 uses
+call.2.us.us.preheader.2.i.i:                     ; preds = %call.2.us.us.2.i.i.a
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(4096) %i.c, i8 -1, i64 4096, i1 false)
+  br label %call.0.us.us.i.i
+
+call.0.us.us.i.i:                                 ; preds = %bb.aa, %call.2.us.us.preheader.2.i.i
+  %indvars.iv339.i.i = phi i64 [ 0, %call.2.us.us.preheader.2.i.i ], [ %indvars.iv.next340.i.i, %bb.aa ] ; 3 uses
   %i.ir = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %indvars.iv339.i.i
   %i.is = load i32, ptr %i.ir, align 4, !tbaa !41
-  %10 = lshr i32 %i.is, 8
-  %11 = and i32 %10, 255
+  %9 = and i32 %i.is, 16777215
+  %10 = mul i32 %9, 2147483647
+  %11 = lshr i32 %10, 21
   %i.it = zext nneg i32 %11 to i64
   %i.iu = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %i.it ; 2 uses
   %i.iv = load i16, ptr %i.iu, align 2, !tbaa !71
   %.not.us.us.i.i = icmp eq i16 %i.iv, -1
-  br i1 %.not.us.us.i.i, label %bb.aa, label %call.1.us.us.preheader.1.i.i
+  br i1 %.not.us.us.i.i, label %bb.aa, label %bb.as
 
 bb.aa:                                            ; preds = %call.0.us.us.i.i
   %i.iw = trunc i64 %indvars.iv339.i.i to i16
   store i16 %i.iw, ptr %i.iu, align 2, !tbaa !71
   %indvars.iv.next340.i.i = add nuw nsw i64 %indvars.iv339.i.i, 1 ; 2 uses
   %exitcond343.not.i.i = icmp eq i64 %indvars.iv.next340.i.i, %wide.trip.count342.i.i
-  br i1 %exitcond343.not.i.i, label %bb.ab, label %call.0.us.us.i.i, !llvm.loop !112
+  br i1 %exitcond343.not.i.i, label %.loopexit232.i.i, label %call.0.us.us.i.i, !llvm.loop !112
 
-bb.ab:                                            ; preds = %bb.aa
+bb.ab:                                            ; preds = %bb.y
   %i.ix = icmp sgt i32 %i.go, 0
   br i1 %i.ix, label %.preheader226.lr.ph.i.i, label %.loopexit227.i.i
 
@@ -396,7 +401,7 @@ bb.ag:                                            ; preds = %.epil.preheader506
   %exitcond369.not.i.i = icmp eq i32 %i.kk, %i.go
   br i1 %exitcond369.not.i.i, label %.loopexit227.i.i, label %.preheader226.i.i, !llvm.loop !114
 
-bb.ah:                                            ; preds = %bb.y
+bb.ah:                                            ; preds = %bb.z
   %i.kl = icmp sgt i32 %i.go, 0
   br i1 %i.kl, label %.preheader228.lr.ph.i.i, label %.loopexit227.i.i
 
@@ -526,7 +531,7 @@ bb.am:                                            ; preds = %.epil.preheader498
   %exitcond363.not.i.i = icmp eq i32 %i.mb, %i.go
   br i1 %exitcond363.not.i.i, label %.loopexit227.i.i, label %.preheader228.i.i, !llvm.loop !116
 
-.loopexit232.i.i:                                 ; preds = %bb.z
+.loopexit232.i.i:                                 ; preds = %bb.aa
   %i.mc = icmp sgt i32 %i.go, 0
   br i1 %i.mc, label %.preheader230.lr.ph.i.i, label %.loopexit227.i.i
 
@@ -656,7 +661,7 @@ bb.ar:                                            ; preds = %.epil.preheader
   %exitcond357.not.i.i = icmp eq i32 %i.ns, %i.go
   br i1 %exitcond357.not.i.i, label %.loopexit227.i.i, label %.preheader230.i.i, !llvm.loop !118
 
-bb.as:                                            ; preds = %call.2.us.us.2.i.i.a
+bb.as:                                            ; preds = %call.0.us.us.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #7
   call void @PrepareMapToPalette(ptr noundef nonnull %i.bo, i32 noundef %i.gp, ptr noundef nonnull %i.e, ptr noundef nonnull %i.d) #7

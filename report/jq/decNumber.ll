@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jq/original/decNumber?download=true
+inline.NumInlined: 166
+inline.NumDeleted: 5
+loop-unroll.NumCompletelyUnrolled: 14
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 15
 begin_hunk_0_@decApplyRound:bb.a
   %i.e = load i16, ptr %i.d, align 2, !tbaa !21
   %i.f = urem i16 %i.e, 5                         ; 2 uses
@@ -200,7 +205,7 @@ iter.check:                                       ; preds = %bb.v
   %i.cg = add nsw i64 %.084.idx.lcssa, -11        ; 3 uses
   %i.ch = lshr i64 %i.cg, 1
   %i.ci = add nuw i64 %i.ch, 1                    ; 5 uses
-  %min.iters.check = icmp ult i64 %i.cg, 6
+  %min.iters.check = icmp ult i64 %i.cg, 14
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -208,7 +213,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check192, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.cj = and i64 %i.ci, 12
+  %i.cj = and i64 %i.ci, 8
   %n.vec = and i64 %i.ci, -16                     ; 4 uses
   %broadcast.splatinsert = insertelement <8 x i16> poison, i16 %i.cf, i64 0
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
@@ -235,13 +240,13 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.cj, 0
-  br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !33
+  br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !155
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec193 = and i64 %i.ci, -4                   ; 3 uses
-  %broadcast.splatinsert194 = insertelement <4 x i16> poison, i16 %i.cf, i64 0
-  %broadcast.splat195 = shufflevector <4 x i16> %broadcast.splatinsert194, <4 x i16> poison, <4 x i32> zeroinitializer
+  %n.vec193 = and i64 %i.ci, -8                   ; 3 uses
+  %broadcast.splatinsert194 = insertelement <8 x i16> poison, i16 %i.cf, i64 0
+  %broadcast.splat195 = shufflevector <8 x i16> %broadcast.splatinsert194, <8 x i16> poison, <8 x i32> zeroinitializer
   %i.cs = shl i64 %n.vec193, 1
   %i.ct = sub i64 %.084.idx.lcssa, %i.cs
   br label %vec.epilog.vector.body
@@ -251,9 +256,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.cu = shl i64 %index197, 1
   %i.cv = sub i64 %.084.idx.lcssa, %i.cu
   %i.cw = getelementptr i8, ptr %0, i64 %i.cv
-  %i.cx = getelementptr i8, ptr %i.cw, i64 -8
-  store <4 x i16> %broadcast.splat195, ptr %i.cx, align 2, !tbaa !21
-  %index.next198 = add nuw i64 %index197, 4       ; 2 uses
+  %i.cx = getelementptr i8, ptr %i.cw, i64 -16
+  store <8 x i16> %broadcast.splat195, ptr %i.cx, align 2, !tbaa !21
+  %index.next198 = add nuw i64 %index197, 8       ; 2 uses
   %i.cy = icmp eq i64 %index.next198, %n.vec193
   br i1 %i.cy, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !153
 
@@ -453,7 +458,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <8 x i16> splat (i16 999), ptr %i.ai, align 2, !tbaa !21
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.aj = icmp eq i64 %index.next, %n.vec
-  br i1 %i.aj, label %middle.block, label %vector.body, !llvm.loop !155
+  br i1 %i.aj, label %middle.block, label %vector.body, !llvm.loop !156
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %i.aa
@@ -480,7 +485,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <4 x i16> splat (i16 999), ptr %next.gep45, align 2, !tbaa !21
   %index.next46 = add nuw i64 %index44, 4         ; 2 uses
   %i.aq = icmp eq i64 %index.next46, %n.vec43
-  br i1 %i.aq, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !156
+  br i1 %i.aq, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !157
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
   %cmp.n47 = icmp eq i64 %n.vec43, %i.aa
@@ -498,7 +503,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ar = add nsw i32 %.015.i, -3                 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.01314.i, i64 2 ; 2 uses
   %i.at = icmp samesign ugt i32 %.015.i, 6
-  br i1 %i.at, label %.lr.ph.i, label %decSetMaxValue.exit, !llvm.loop !157
+  br i1 %i.at, label %.lr.ph.i, label %decSetMaxValue.exit, !llvm.loop !158
 
 decSetMaxValue.exit:                              ; preds = %.lr.ph.i, %middle.block, %vec.epilog.middle.block, %.critedge31
   %.013.lcssa.i = phi ptr [ %i.d, %.critedge31 ], [ %i.ao, %vec.epilog.middle.block ], [ %i.ag, %middle.block ], [ %i.as, %.lr.ph.i ]
@@ -870,7 +875,8 @@ attributes #20 = { nounwind allocsize(0) }
 !152 = distinct !{!152, !22, !31, !32}
 !153 = distinct !{!153, !22, !31, !32}
 !154 = distinct !{!154, !22, !32, !31}
-!155 = distinct !{!155, !31, !32}
+!155 = !{!"branch_weights", i32 8, i32 8}
 !156 = distinct !{!156, !31, !32}
-!157 = distinct !{!157, !32, !31}
+!157 = distinct !{!157, !31, !32}
+!158 = distinct !{!158, !32, !31}
 end_hunk_0

@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   %.04257.us = phi i32 [ %i.bh, %._crit_edge56.split.us62 ], [ 0, %.preheader.lr.ph ] ; 3 uses
   br label %bb.f
 
-bb.f:                                             ; preds = %.preheader.us, %._crit_edge.us
+bb.f:                                             ; preds = %._crit_edge.us, %.preheader.us
   %.04154.us61 = phi i32 [ 0, %.preheader.us ], [ %i.bg, %._crit_edge.us ] ; 3 uses
   %i.au = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, ptr noundef nonnull @.str.21, i64 noundef 6) ; 0 uses
   %i.av = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, i32 noundef %.04154.us61) ; 2 uses

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luajit/original/lj_strscan?download=true
+inline.NumInlined: 3
+inline.NumDeleted: 1
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@lj_strscan_scan:bb.a
   %i.fv = fneg double %i.fu
   %i.fw = select i1 %.not254, double %i.fu, double %i.fv
@@ -200,14 +204,13 @@ bb.b:                                             ; preds = %.lr.ph.epil.prehead
 .preheader.epilog-lcssa:                          ; preds = %bb.b, %.lr.ph.epil.preheader
   %.158.epil = phi ptr [ %i.e, %bb.b ], [ %.05780.epil.init, %.lr.ph.epil.preheader ]
   %.in75.epil = phi i8 [ %i.f, %bb.b ], [ %i.d, %.lr.ph.epil.preheader ] ; 2 uses
-  %7 = zext i8 %.in75.epil to i32                 ; 2 uses
+  %7 = zext i8 %.in75.epil to i64                 ; 2 uses
   %i.g = icmp ugt i8 %.in75.epil, 57
-  %8 = add nuw nsw i32 %7, 9
-  %spec.select.epil = select i1 %i.g, i32 %8, i32 %7
+  %8 = add nuw nsw i64 %7, 9
+  %spec.select.epil = select i1 %i.g, i64 %8, i64 %7
   %i.h = shl i64 %.05481.epil.init, 4
-  %9 = and i32 %spec.select.epil, 15
-  %10 = zext nneg i32 %9 to i64
-  %i.i = or disjoint i64 %i.h, %10
+  %9 = and i64 %spec.select.epil, 15
+  %i.i = or disjoint i64 %9, %i.h
   %i.j = getelementptr inbounds nuw i8, ptr %.158.epil, i64 1
   br label %.preheader
 
@@ -242,7 +245,7 @@ bb.c:                                             ; preds = %.lr.ph
 .lr.ph.1:                                         ; preds = %.lr.ph, %bb.c
   %.158 = phi ptr [ %i.o, %bb.c ], [ %.05780, %.lr.ph ] ; 3 uses
   %.in75 = phi i8 [ %i.p, %bb.c ], [ %i.n, %.lr.ph ] ; 2 uses
-  %11 = zext i8 %.in75 to i32
+  %10 = zext i8 %.in75 to i64
   %i.q = icmp ugt i8 %.in75, 57
   %i.r = getelementptr inbounds nuw i8, ptr %.158, i64 1
   %i.s = load i8, ptr %i.r, align 1, !tbaa !9     ; 2 uses
@@ -258,20 +261,18 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.1
   %i.v = phi i64 [ 2, %bb.d ], [ 1, %.lr.ph.1 ]
   %.in75.1 = phi i8 [ %i.u, %bb.d ], [ %i.s, %.lr.ph.1 ] ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.158, i64 %i.v
-  %12 = zext i8 %.in75.1 to i32                   ; 2 uses
+  %11 = zext i8 %.in75.1 to i64                   ; 2 uses
   %i.x = icmp ugt i8 %.in75.1, 57
-  %13 = add nuw nsw i32 %12, 9
-  %spec.select.1 = select i1 %i.x, i32 %13, i32 %12
+  %12 = add nuw nsw i64 %11, 9
+  %spec.select.1 = select i1 %i.x, i64 %12, i64 %11
   %i.y = shl i64 %.05481, 8
-  %14 = shl nuw nsw i32 %11, 4                    ; 2 uses
-  %15 = add nuw nsw i32 %14, 144
-  %16 = select i1 %i.q, i32 %15, i32 %14
-  %17 = and i32 %16, 240
-  %18 = zext nneg i32 %17 to i64
-  %i.z = or disjoint i64 %i.y, %18
-  %19 = and i32 %spec.select.1, 15
-  %20 = zext nneg i32 %19 to i64
-  %i.aa = or disjoint i64 %i.z, %20               ; 3 uses
+  %13 = shl nuw nsw i64 %10, 4                    ; 2 uses
+  %14 = add nuw nsw i64 %13, 144
+  %15 = select i1 %i.q, i64 %14, i64 %13
+  %16 = and i64 %15, 240
+  %i.z = or disjoint i64 %i.y, %16
+  %17 = and i64 %spec.select.1, 15
+  %i.aa = or disjoint i64 %17, %i.z               ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.w, i64 1 ; 3 uses
   %niter.next.1 = add i32 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter

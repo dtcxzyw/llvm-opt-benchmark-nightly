@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %bb.y
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str, i32 noundef %i.cu) #6
   br label %bb.aa
 
-.critedge:                                        ; preds = %bb.p, %.lr.ph1309.split.us, %.critedge7.us, %bb.u, %.lr.ph1278.us, %bb.x, %bb.v, %.critedge7, %.lr.ph1278, %bb.z, %.preheader
+.critedge:                                        ; preds = %bb.p, %.lr.ph1309.split.us, %.critedge7.us, %.lr.ph1278.us, %bb.u, %bb.x, %bb.v, %.critedge7, %.lr.ph1278, %bb.z, %.preheader
   %i.cv = load i32, ptr %.06551257, align 4, !tbaa !22 ; 2 uses
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.1, i32 noundef %i.cv) #6
   br label %bb.aa

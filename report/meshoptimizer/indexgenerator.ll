@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/meshoptimizer/original/indexgenerator?download=true
+inline.NumInlined: 95
+inline.NumDeleted: 33
+loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 12
+loop-unroll.NumUnrolled: 20
 begin_hunk_0_@_ZN7meshoptL19generateVertexRemapINS_18VertexStreamHasherEEEmPjPKjmmRKT_R17meshopt_Allocator:bb.a
   %i.br = lshr i32 %i.bq, 24
   %i.bs = xor i32 %i.br, %i.bq
@@ -200,25 +205,6 @@ bb.f:                                             ; preds = %bb.e
   %i.az = bitcast i32 %i.aa to float
   br i1 %i.aw, label %_ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread.i.us, label %.lr.ph.i.us.us
 
-_ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread.i.us: ; preds = %_ZNK7meshopt18VertexCustomHasher5equalEjj.exit.thread.i.i.us.us, %bb.f
-  %.02318.i.lcssa36.pn.i.us = phi i64 [ %i.at, %bb.f ], [ %i.bo, %_ZNK7meshopt18VertexCustomHasher5equalEjj.exit.thread.i.i.us.us ]
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %.02318.i.lcssa36.pn.i.us
-  store i32 %i.q, ptr %9, align 4, !tbaa !31
-  %10 = add i32 %.02539.i.us, 1
-  br label %.sink.split.i.us
-
-.sink.split.i.us:                                 ; preds = %_ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread.i.us, %_ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread52.i.loopexit.split.us.us
-  %.02539.sink.i.us = phi i32 [ %.02539.i.us, %_ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread.i.us ], [ %i.bt, %_ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread52.i.loopexit.split.us.us ]
-  %.2.ph.i.us = phi i32 [ %10, %_ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread.i.us ], [ %.02539.i.us, %_ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread52.i.loopexit.split.us.us ]
-  store i32 %.02539.sink.i.us, ptr %i.s, align 4, !tbaa !31
-  br label %11
-
-11:                                               ; preds = %.sink.split.i.us, %bb.e
-  %.2.i.us = phi i32 [ %.02539.i.us, %bb.e ], [ %.2.ph.i.us, %.sink.split.i.us ] ; 2 uses
-  %12 = add nuw i64 %.041.i.us, 1                 ; 2 uses
-  %exitcond.not.i.us = icmp eq i64 %12, %2
-  br i1 %exitcond.not.i.us, label %._crit_edge.loopexit.i, label %.lr.ph42.i.split.us, !llvm.loop !44
-
 .lr.ph.i.us.us:                                   ; preds = %bb.f, %_ZNK7meshopt18VertexCustomHasher5equalEjj.exit.thread.i.i.us.us
   %i.ba = phi i32 [ %i.bq, %_ZNK7meshopt18VertexCustomHasher5equalEjj.exit.thread.i.i.us.us ], [ %i.av, %bb.f ]
   %.02318.i38.i.us.us = phi i64 [ %i.bo, %_ZNK7meshopt18VertexCustomHasher5equalEjj.exit.thread.i.i.us.us ], [ %i.at, %bb.f ]
@@ -257,6 +243,25 @@ _ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.th
   %i.bs = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.bb
   %i.bt = load i32, ptr %i.bs, align 4, !tbaa !31
   br label %.sink.split.i.us
+
+_ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread.i.us: ; preds = %_ZNK7meshopt18VertexCustomHasher5equalEjj.exit.thread.i.i.us.us, %bb.f
+  %.02318.i.lcssa36.pn.i.us = phi i64 [ %i.at, %bb.f ], [ %i.bo, %_ZNK7meshopt18VertexCustomHasher5equalEjj.exit.thread.i.i.us.us ]
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %.02318.i.lcssa36.pn.i.us
+  store i32 %i.q, ptr %9, align 4, !tbaa !31
+  %10 = add i32 %.02539.i.us, 1
+  br label %.sink.split.i.us
+
+.sink.split.i.us:                                 ; preds = %_ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread.i.us, %_ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread52.i.loopexit.split.us.us
+  %.02539.sink.i.us = phi i32 [ %.02539.i.us, %_ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread.i.us ], [ %i.bt, %_ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread52.i.loopexit.split.us.us ]
+  %.2.ph.i.us = phi i32 [ %10, %_ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread.i.us ], [ %.02539.i.us, %_ZN7meshoptL10hashLookupIjNS_18VertexCustomHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.thread52.i.loopexit.split.us.us ]
+  store i32 %.02539.sink.i.us, ptr %i.s, align 4, !tbaa !31
+  br label %11
+
+11:                                               ; preds = %.sink.split.i.us, %bb.e
+  %.2.i.us = phi i32 [ %.02539.i.us, %bb.e ], [ %.2.ph.i.us, %.sink.split.i.us ] ; 2 uses
+  %12 = add nuw i64 %.041.i.us, 1                 ; 2 uses
+  %exitcond.not.i.us = icmp eq i64 %12, %2
+  br i1 %exitcond.not.i.us, label %._crit_edge.loopexit.i, label %.lr.ph42.i.split.us, !llvm.loop !44
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.o, %11
   %.us-phi = phi i32 [ %.2.i.us, %11 ], [ %.2.i, %bb.o ]

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/entt/original/meta_handle?download=true
+inline.NumInlined: 1832
+inline.NumDeleted: 886
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZNSt23_Sp_counted_ptr_inplaceIN4entt8meta_ctxESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv:bb.a
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !102
   %i.q = ptrtoint ptr %i.p to i64
@@ -200,9 +204,13 @@ bb.h:                                             ; preds = %bb.g, %.preheader.u
   %i.aw = getelementptr inbounds nuw i8, ptr %.036138.us147.i, i64 24
   %i.ax = load i64, ptr %i.aw, align 8, !tbaa !166
   %i.ay = icmp eq i64 %i.ax, 0
-  br i1 %i.ay, label %.preheader.us165.i, label %bb.j
+  br i1 %i.ay, label %.preheader.us153.i, label %bb.j
 
-bb.i:                                             ; preds = %.preheader.us165.i
+.preheader.us153.i:                               ; preds = %.lr.ph139.split.split.us.i
+  %.not54.us154.i = icmp eq ptr %.045135.us150.i, null
+  br i1 %.not54.us154.i, label %bb.j, label %bb.i
+
+bb.i:                                             ; preds = %.preheader.us153.i
   %i.az = getelementptr inbounds nuw i8, ptr %.036138.us147.i, i64 16
   %i.ba = load i32, ptr %i.az, align 8, !tbaa !165
   %i.bb = and i32 %i.ba, 1
@@ -219,15 +227,11 @@ bb.i:                                             ; preds = %.preheader.us165.i
   %not..us157.i = xor i1 %.fr, true
   br label %bb.j
 
-bb.j:                                             ; preds = %.preheader.us165.i, %bb.i, %.lr.ph139.split.split.us.i
-  %.348.us158.i = phi ptr [ %.036138.us147.i, %.preheader.us165.i ], [ %.045135.us150.i, %.lr.ph139.split.split.us.i ], [ %spec.select.us156.i, %bb.i ] ; 2 uses
-  %.340.us160.i = phi i1 [ false, %.preheader.us165.i ], [ %.037137.us148.i, %.lr.ph139.split.split.us.i ], [ %not..us157.i, %bb.i ] ; 2 uses
+bb.j:                                             ; preds = %bb.i, %.preheader.us153.i, %.lr.ph139.split.split.us.i
+  %.348.us158.i = phi ptr [ %.036138.us147.i, %.preheader.us153.i ], [ %.045135.us150.i, %.lr.ph139.split.split.us.i ], [ %spec.select.us156.i, %bb.i ] ; 2 uses
+  %.340.us160.i = phi i1 [ false, %.preheader.us153.i ], [ %.037137.us148.i, %.lr.ph139.split.split.us.i ], [ %not..us157.i, %bb.i ] ; 2 uses
   %.not.i70.us161.i = icmp eq ptr %.sroa.095.0134.us151.i, null
   br i1 %.not.i70.us161.i, label %.split.us, label %.lr.ph139.split.split.us.i, !llvm.loop !366
-
-.preheader.us165.i:                               ; preds = %.lr.ph139.split.split.us.i
-  %.not54.us153.i = icmp eq ptr %.045135.us150.i, null
-  br i1 %.not54.us153.i, label %bb.j, label %bb.i
 
 .split.us:                                        ; preds = %bb.j, %bb.h
   %.us-phi = phi ptr [ %.348.us158.i.us, %bb.h ], [ %.348.us158.i, %bb.j ] ; 2 uses

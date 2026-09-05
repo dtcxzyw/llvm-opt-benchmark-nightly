@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luajit/original/buildvm?download=true
+inline.NumInlined: 25
+inline.NumDeleted: 13
+loop-unroll.NumCompletelyUnrolled: 13
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 15
 begin_hunk_0_@dasm_encode:bb.a
 
 .lr.ph271.preheader:                              ; preds = %bb.w
@@ -200,10 +205,9 @@ bb.au:                                            ; preds = %bb.as, %bb.at
   %i.fs = sext i32 %i.fr to i64
   %i.ft = getelementptr inbounds i8, ptr %1, i64 %i.fs
   %i.fu = load ptr, ptr %i.o, align 8, !tbaa !31
-  %2 = add nuw nsw i64 %i.fm, 4294967286
-  %3 = and i64 %2, 4294967295
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.fu, i64 %3
-  store ptr %i.ft, ptr %4, align 8, !tbaa !43
+  %2 = getelementptr [8 x i8], ptr %i.fu, i64 %i.fm
+  %3 = getelementptr i8, ptr %2, i64 -80
+  store ptr %i.ft, ptr %3, align 8, !tbaa !43
   br label %.loopexit
 
 bb.av:                                            ; preds = %bb.e

@@ -205,12 +205,7 @@ bb.l:                                             ; preds = %bb.k, %.thread167.u
   %i.cw = getelementptr i8, ptr %i.cv, i64 1      ; 2 uses
   br label %bb.m
 
-3:                                                ; preds = %bb.m
-  %4 = add nuw nsw i64 %.0209.us231, 1            ; 2 uses
-  %exitcond279.not = icmp eq i64 %4, %.fr239
-  br i1 %exitcond279.not, label %.thread170, label %bb.m, !llvm.loop !170
-
-bb.m:                                             ; preds = %.preheader.us227, %3
+bb.m:                                             ; preds = %3, %.preheader.us227
   %.0209.us231 = phi i64 [ 0, %.preheader.us227 ], [ %4, %3 ] ; 3 uses
   %i.cx = getelementptr i8, ptr %i.g, i64 %.0209.us231
   %i.cy = load i8, ptr %i.cx, align 1, !tbaa !22
@@ -218,6 +213,11 @@ bb.m:                                             ; preds = %.preheader.us227, %
   %i.da = load i8, ptr %i.cz, align 1, !tbaa !22
   %.not151.us232 = icmp eq i8 %i.cy, %i.da
   br i1 %.not151.us232, label %3, label %.thread167.us233
+
+3:                                                ; preds = %bb.m
+  %4 = add nuw nsw i64 %.0209.us231, 1            ; 2 uses
+  %exitcond279.not = icmp eq i64 %4, %.fr239
+  br i1 %exitcond279.not, label %.thread170, label %bb.m, !llvm.loop !170
 
 .thread167.us233:                                 ; preds = %bb.m
   %i.db = getelementptr i8, ptr %i.cu, i64 %i.bk  ; 2 uses

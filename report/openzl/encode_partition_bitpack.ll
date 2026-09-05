@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openzl/original/encode_partition_bitpack?download=true
+inline.NumInlined: 87
+inline.NumDeleted: 39
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 10
 begin_hunk_0_@EI_partitionBitpackDynGraph:bb.a
   %i.yo = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
   %cmp.n349 = icmp eq i64 %i.yg, %n.vec340
@@ -200,13 +205,8 @@ bb.ao:                                            ; preds = %bb.an
   %i.abj = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.i, i64 %indvars.iv142.i.i.i ; 2 uses
   br i1 %.fr.i.i.i, label %.lr.ph.us.i.i.i, label %.lr.ph.i.i.i
 
-._crit_edge.split.us.us.i.i.i:                    ; preds = %PB_dpBucketCost.exit.thread.us.us.i.i.i, %bb.ap
-  %indvars.iv.next140.i.i.i = add nuw nsw i64 %indvars.iv139.i.i.i, 1
-  %exitcond39.not.i.i = icmp eq i64 %indvars.iv139.i.i.i, %umax38.i.i
-  br i1 %exitcond39.not.i.i, label %._crit_edge124.i.i.i, label %.lr.ph.us.i.i.i, !llvm.loop !33
-
-.lr.ph.us.i.i.i:                                  ; preds = %.lr.ph123.i.i.i, %._crit_edge.split.us.us.i.i.i
-  %indvars.iv139.i.i.i = phi i64 [ %indvars.iv.next140.i.i.i, %._crit_edge.split.us.us.i.i.i ], [ 1, %.lr.ph123.i.i.i ] ; 4 uses
+.lr.ph.us.i.i.i:                                  ; preds = %.lr.ph123.i.i.i, %._crit_edge119.split.us.us.i.i.i
+  %indvars.iv139.i.i.i = phi i64 [ %indvars.iv.next140.i.i.i, %._crit_edge119.split.us.us.i.i.i ], [ 1, %.lr.ph123.i.i.i ] ; 4 uses
   %i.abk = add nsw i64 %indvars.iv139.i.i.i, -1   ; 2 uses
   %i.abl = sub nuw nsw i64 %indvars.iv142.i.i.i, %i.abk
   %i.abm = trunc nuw i64 %i.abk to i32
@@ -228,7 +228,7 @@ bb.ap:                                            ; preds = %PB_dpBucketCost.exi
   %i.aby = load i64, ptr %i.abx, align 8, !tbaa !59, !noalias !57
   %i.abz = sub i64 %i.abv, %i.aby                 ; 3 uses
   %i.aca = icmp ugt i64 %i.abz, %.sroa.1867.0.i
-  br i1 %i.aca, label %._crit_edge.split.us.us.i.i.i, label %bb.aq
+  br i1 %i.aca, label %._crit_edge119.split.us.us.i.i.i, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
   %i.acb = add i32 %i.abu, %i.abn
@@ -269,9 +269,14 @@ PB_dpBucketCost.exit.thread.us.us.i.i.i:          ; preds = %bb.ar, %PB_dpBucket
   %i.acx = add i32 %.096118.us.us.i.i.i, 1        ; 2 uses
   %i.acy = zext i32 %i.acx to i64
   %.not114.us.us.i.i.i = icmp samesign ult i64 %i.abl, %i.acy
-  br i1 %.not114.us.us.i.i.i, label %._crit_edge.split.us.us.i.i.i, label %bb.ap, !llvm.loop !34
+  br i1 %.not114.us.us.i.i.i, label %._crit_edge119.split.us.us.i.i.i, label %bb.ap, !llvm.loop !33
 
-._crit_edge124.i.i.i:                             ; preds = %._crit_edge.split.i.i.i, %._crit_edge.split.us.us.i.i.i
+._crit_edge119.split.us.us.i.i.i:                 ; preds = %PB_dpBucketCost.exit.thread.us.us.i.i.i, %bb.ap
+  %indvars.iv.next140.i.i.i = add nuw nsw i64 %indvars.iv139.i.i.i, 1
+  %exitcond39.not.i.i = icmp eq i64 %indvars.iv139.i.i.i, %umax38.i.i
+  br i1 %exitcond39.not.i.i, label %._crit_edge124.i.i.i, label %.lr.ph.us.i.i.i, !llvm.loop !34
+
+._crit_edge124.i.i.i:                             ; preds = %._crit_edge.split.i.i.i, %._crit_edge119.split.us.us.i.i.i
   %indvars.iv.next143.i.i.i = add nuw nsw i64 %indvars.iv142.i.i.i, 1 ; 2 uses
   %exitcond.not.i10.i.i = icmp eq i64 %indvars.iv.next143.i.i.i, %i.ig
   br i1 %exitcond.not.i10.i.i, label %._crit_edge.i.i.i, label %.lr.ph123.i.i.i, !llvm.loop !35
@@ -340,12 +345,12 @@ PB_dpBucketCost.exit.thread.i.i.i:                ; preds = %bb.au, %PB_dpBucket
   %i.aem = shl i32 %.096118.i.i.i, 1              ; 2 uses
   %i.aen = zext i32 %i.aem to i64
   %.not114.i.i.i = icmp samesign ult i64 %i.ada, %i.aen
-  br i1 %.not114.i.i.i, label %._crit_edge.split.i.i.i, label %bb.as, !llvm.loop !34
+  br i1 %.not114.i.i.i, label %._crit_edge.split.i.i.i, label %bb.as, !llvm.loop !33
 
 ._crit_edge.split.i.i.i:                          ; preds = %PB_dpBucketCost.exit.thread.i.i.i, %bb.as
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.i.i.i, %umax38.i.i
-  br i1 %exitcond.not.i.i, label %._crit_edge124.i.i.i, label %.lr.ph.i.i.i, !llvm.loop !33
+  br i1 %exitcond.not.i.i, label %._crit_edge124.i.i.i, label %.lr.ph.i.i.i, !llvm.loop !34
 
 .lr.ph132.i.i.i:                                  ; preds = %bb.av, %.lr.ph132.i.preheader.i.i
   %.0130.i.i.i = phi i64 [ %i.aes, %bb.av ], [ %i.abf, %.lr.ph132.i.preheader.i.i ] ; 2 uses

@@ -205,15 +205,6 @@ bb.b:                                             ; preds = %bb.a
   %i.z = icmp eq i16 %i.w, 0
   br i1 %i.z, label %.split38.us.us.i, label %.lr.ph79
 
-2:                                                ; preds = %.split38.us.us.i
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.us.i, i64 104
-  %4 = icmp samesign ult i64 %.sroa.4.0.i.ph.i.us.us.i, 12
-  tail call void @llvm.assume(i1 %4)
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.sroa.4.0.i.ph.i.us.us.i
-  %6 = load ptr, ptr %5, align 8, !noalias !1079, !nonnull !7, !noundef !7
-  %7 = add i64 %.sroa.3.0.i.us.i, -1
-  br label %.split.us.us.i
-
 bb.c:                                             ; preds = %_RNvXs9_NtNtCscI6d9CVNmLh_4core3cmp5implsRNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals10table_data9TableNameNtB7_3Ord3cmpBJ_.exit.i.i.us.us.i
   %i.aa = icmp eq ptr %i.ab, %i.y
   br i1 %i.aa, label %.split38.us.us.i, label %.lr.ph79
@@ -273,6 +264,15 @@ _RNvXs9_NtNtCscI6d9CVNmLh_4core3cmp5implsRNtNtNtCs2bNgeUs5Jlc_6diesel22infer_sch
   %.sroa.4.0.i.ph.i.us.us.i = phi i64 [ %i.x, %.split.us.us.i ], [ %i.x, %bb.c ], [ %.sroa.8.0.i.i.us.us.i77, %_RNvXs9_NtNtCscI6d9CVNmLh_4core3cmp5implsRNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals10table_data9TableNameNtB7_3Ord3cmpBJ_.exit.i.i.us.us.i ] ; 3 uses
   %i.az = icmp eq i64 %.sroa.3.0.i.us.i, 0
   br i1 %i.az, label %.split46.us.i, label %2
+
+2:                                                ; preds = %.split38.us.us.i
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.us.i, i64 104
+  %4 = icmp samesign ult i64 %.sroa.4.0.i.ph.i.us.us.i, 12
+  tail call void @llvm.assume(i1 %4)
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.sroa.4.0.i.ph.i.us.us.i
+  %6 = load ptr, ptr %5, align 8, !noalias !1079, !nonnull !7, !noundef !7
+  %7 = add i64 %.sroa.3.0.i.us.i, -1
+  br label %.split.us.us.i
 
 .split.i:                                         ; preds = %bb.b, %bb.j
   %.sroa.3.0.i.i = phi i64 [ %i.ct, %bb.j ], [ %i.f, %bb.b ] ; 3 uses

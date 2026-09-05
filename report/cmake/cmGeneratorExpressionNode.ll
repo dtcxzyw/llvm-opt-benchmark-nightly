@@ -204,11 +204,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144.us: ; preds = 
   %.not197219.us = icmp eq ptr %i.gw, %i.gy
   br i1 %.not197219.us, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.us, label %.lr.ph221.us
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.us: ; preds = %bb.bb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144.us
-  %18 = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.0178.0232.us) #34 ; 2 uses
-  %.not196.us = icmp eq ptr %18, %i.al
-  br i1 %.not196.us, label %.critedge97, label %.lr.ph233.split.us
-
 .lr.ph221.us:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144.us
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gj, i64 8 ; 2 uses
   %.not199.us = icmp eq ptr %i.gq, null
@@ -311,6 +306,11 @@ bb.bb:                                            ; preds = %bb.ba, %bb.au, %bb.
   %i.hx = getelementptr inbounds nuw i8, ptr %.sroa.0172.0220.us.us, i64 32 ; 2 uses
   %.not197.us.us = icmp eq ptr %i.hx, %i.gy
   br i1 %.not197.us.us, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.us, label %bb.ap
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit.us: ; preds = %bb.bb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit144.us
+  %18 = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.0178.0232.us) #34 ; 2 uses
+  %.not196.us = icmp eq ptr %18, %i.al
+  br i1 %.not196.us, label %.critedge97, label %.lr.ph233.split.us
 
 .split235.us:                                     ; preds = %.lr.ph233.split.us
   %i.hy = landingpad { ptr, i32 }

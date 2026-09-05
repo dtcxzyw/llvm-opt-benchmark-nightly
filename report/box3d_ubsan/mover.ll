@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/box3d_ubsan/original/mover?download=true
+inline.NumInlined: 8
+inline.NumDeleted: 7
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -43,17 +45,17 @@ bb.a:
   %wide.trip.count206 = zext nneg i32 %3 to i64
   br label %.preheader.us.us
 
-.preheader.us.us:                                 ; preds = %._crit_edge, %bb.e
-  %.sroa.7.0130.us.us = phi float [ %i.an, %bb.e ], [ %1, %._crit_edge ]
-  %.sroa.028.0129.us.us = phi <2 x float> [ %i.ar, %bb.e ], [ %0, %._crit_edge ]
-  %.048128.us.us = phi i32 [ %4, %bb.e ], [ 0, %._crit_edge ] ; 2 uses
+.preheader.us.us:                                 ; preds = %._crit_edge, %._crit_edge103.us.us
+  %.sroa.7.0130.us.us = phi float [ %i.an, %._crit_edge103.us.us ], [ %1, %._crit_edge ]
+  %.sroa.028.0129.us.us = phi <2 x float> [ %i.ar, %._crit_edge103.us.us ], [ %0, %._crit_edge ]
+  %.048128.us.us = phi i32 [ %5, %._crit_edge103.us.us ], [ 0, %._crit_edge ] ; 2 uses
   br label %bb.b
 
-bb.b:                                             ; preds = %.preheader.us.us, %bb.d
-  %indvars.iv203 = phi i64 [ 0, %.preheader.us.us ], [ %indvars.iv.next204, %bb.d ] ; 3 uses
-  %.sroa.7.1101.us132.us = phi float [ %.sroa.7.0130.us.us, %.preheader.us.us ], [ %i.an, %bb.d ] ; 2 uses
-  %.sroa.028.1100.us133.us = phi <2 x float> [ %.sroa.028.0129.us.us, %.preheader.us.us ], [ %i.ar, %bb.d ] ; 2 uses
-  %.04999.us134.us = phi float [ 0.000000e+00, %.preheader.us.us ], [ %i.as, %bb.d ]
+bb.b:                                             ; preds = %bb.d, %.preheader.us.us
+  %indvars.iv203 = phi i64 [ %indvars.iv.next204, %bb.d ], [ 0, %.preheader.us.us ] ; 3 uses
+  %.sroa.7.1101.us132.us = phi float [ %i.an, %bb.d ], [ %.sroa.7.0130.us.us, %.preheader.us.us ] ; 2 uses
+  %.sroa.028.1100.us133.us = phi <2 x float> [ %i.ar, %bb.d ], [ %.sroa.028.0129.us.us, %.preheader.us.us ] ; 2 uses
+  %.04999.us134.us = phi float [ %i.as, %bb.d ], [ 0.000000e+00, %.preheader.us.us ]
   %i.i = getelementptr inbounds nuw [28 x i8], ptr %2, i64 %indvars.iv203 ; 6 uses
   %i.j = mul nuw nsw i64 %indvars.iv203, 28
   %i.k = add i64 %i.j, %i.f, !nosanitize !9       ; 2 uses
@@ -107,16 +109,16 @@ bb.d:                                             ; preds = %bb.c
   %i.ar = fadd <2 x float> %.sroa.028.1100.us133.us, %i.aq ; 3 uses
   %i.as = fadd float %.04999.us134.us, %i.al      ; 2 uses
   %exitcond207.not = icmp eq i64 %indvars.iv.next204, %wide.trip.count206
-  br i1 %exitcond207.not, label %._crit_edge103.us.us, label %bb.b, !llvm.loop !19
+  br i1 %exitcond207.not, label %bb.e, label %bb.b, !llvm.loop !19
 
-bb.e:                                             ; preds = %._crit_edge103.us.us
-  %4 = add nuw nsw i32 %.048128.us.us, 1          ; 2 uses
-  %exitcond208.not = icmp eq i32 %4, 20
+bb.e:                                             ; preds = %bb.d
+  %4 = fcmp olt float %i.as, %i.h
+  br i1 %4, label %.split150.us.loopexit, label %._crit_edge103.us.us
+
+._crit_edge103.us.us:                             ; preds = %bb.e
+  %5 = add nuw nsw i32 %.048128.us.us, 1          ; 2 uses
+  %exitcond208.not = icmp eq i32 %5, 20
   br i1 %exitcond208.not, label %.split150.us.loopexit, label %.preheader.us.us, !llvm.loop !20
-
-._crit_edge103.us.us:                             ; preds = %bb.d
-  %5 = fcmp olt float %i.as, %i.h
-  br i1 %5, label %.split150.us.loopexit, label %bb.e
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %bb.g
   %indvars.iv = phi i64 [ 0, %.lr.ph.split.preheader ], [ %indvars.iv.next, %bb.g ] ; 3 uses
@@ -157,7 +159,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable, !nosanitize !9
 
 .split150.us.loopexit:                            ; preds = %bb.e, %._crit_edge103.us.us
-  %.us-phi151.ph = phi i32 [ %.048128.us.us, %._crit_edge103.us.us ], [ 20, %bb.e ]
+  %.us-phi151.ph = phi i32 [ %.048128.us.us, %bb.e ], [ 20, %._crit_edge103.us.us ]
   %i.ba = zext nneg i32 %.us-phi151.ph to i64
   %i.bb = shl nuw nsw i64 %i.ba, 32
   br label %.split150.us

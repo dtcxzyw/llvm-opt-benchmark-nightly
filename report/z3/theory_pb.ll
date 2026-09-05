@@ -205,6 +205,10 @@ _ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit73.us: ; preds = %_ZNK6vectorIN3sat7
   %i.bk = icmp samesign ult i64 %indvars.iv160, %i.bj
   br i1 %i.bk, label %.preheader.us, label %.critedge
 
+.preheader.us:                                    ; preds = %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit73.us
+  %14 = trunc nuw i64 %indvars.iv160 to i32
+  br label %_ZN8psort_nwIN3smt9theory_pb10psort_exprEE6mk_notEN3sat7literalE.exit.us
+
 _ZN8psort_nwIN3smt9theory_pb10psort_exprEE6mk_notEN3sat7literalE.exit.us: ; preds = %.preheader.us, %.loopexit.us
   %indvars.iv = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next, %.loopexit.us ] ; 3 uses
   %i.bl = trunc nuw i64 %indvars.iv to i32
@@ -461,10 +465,6 @@ _ZN6vectorIN3sat7literalELb0EjED2Ev.exit.i.us:    ; preds = %bb.ak, %bb.aj
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond159.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond159.not, label %._crit_edge.us, label %_ZN8psort_nwIN3smt9theory_pb10psort_exprEE6mk_notEN3sat7literalE.exit.us, !llvm.loop !1072
-
-.preheader.us:                                    ; preds = %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit73.us
-  %14 = trunc nuw i64 %indvars.iv160 to i32
-  br label %_ZN8psort_nwIN3smt9theory_pb10psort_exprEE6mk_notEN3sat7literalE.exit.us
 
 ._crit_edge.us:                                   ; preds = %.loopexit.us
   %indvars.iv.next161 = add nuw nsw i64 %indvars.iv160, 1

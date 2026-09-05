@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libwebp/original/cwebp?download=true
+inline.NumInlined: 29
+inline.NumDeleted: 14
+loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@PrintExtraInfoLossy:bb.a
   %i.cw = call i64 @fwrite(ptr nonnull @.str.232, i64 18, i64 1, ptr %i.cv) #12 ; 0 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.c, i64 92
@@ -200,8 +204,8 @@ bb.f:                                             ; preds = %bb.f, %.preheader.u
   %i.be = mul nuw nsw i64 %indvars.iv104, %i.p
   br label %bb.g
 
-bb.g:                                             ; preds = %.preheader.us, %bb.g
-  %indvars.iv98 = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next99, %bb.g ] ; 2 uses
+bb.g:                                             ; preds = %bb.g, %.preheader.us
+  %indvars.iv98 = phi i64 [ %indvars.iv.next99, %bb.g ], [ 0, %.preheader.us ] ; 2 uses
   %i.bf = load ptr, ptr %i.a, align 8, !tbaa !26
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 %indvars.iv98
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.be

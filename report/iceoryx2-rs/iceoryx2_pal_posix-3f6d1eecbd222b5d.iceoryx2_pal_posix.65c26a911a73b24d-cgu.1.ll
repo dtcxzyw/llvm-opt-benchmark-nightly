@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/iceoryx2-rs/original/iceoryx2_pal_posix-3f6d1eecbd222b5d.iceoryx2_pal_posix.65c26a911a73b24d-cgu.1?download=true
+inline.NumInlined: 206
+inline.NumDeleted: 139
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6unistd10gethostpid:bb.a
   %i.dw = phi i64 [ %.promoted98.i.i, %.lr.ph219.i.i ], [ %spec.select86.i, %.split69.us.i.us.i.i ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !168)
@@ -200,6 +205,9 @@ bb.x:                                             ; preds = %.lr.ph305
   %.reass.i.us.i.us.i.i = add i64 %.sroa.04.0.i.us.i.us.i.i304, %invariant.op.i.i.us.reass.reass.i.reass.reass.i.reass.reass.reass
   br label %.loopexit.split.us.us.i.i
 
+.preheader.i.preheader.us.i.i:                    ; preds = %.preheader74.i.us.i.i.preheader, %.preheader74.i.us.i.i
+  br i1 %.not73.i.us130.i.i, label %.split69.us.i.us.i.i, label %.split71.us.i.i.i
+
 .loopexit.split.us.us.i.i:                        ; preds = %bb.x, %bb.w
   %.sink132.i.us.i.i = phi i64 [ %i.eb, %bb.w ], [ %.reass.i.us.i.us.i.i, %bb.x ] ; 2 uses
   %i.gq = add i64 %.sink132.i.us.i.i, %i.cd       ; 2 uses
@@ -210,9 +218,6 @@ bb.x:                                             ; preds = %.lr.ph305
   %spec.select86.i = phi i64 [ -1, %.preheader.i.us.us.i.us.i ], [ -1, %.preheader.i.preheader.us.i.i ], [ 0, %.preheader75.i.us.i.i ], [ -1, %.preheader.i.us.us.i.us.i.preheader ], [ 0, %.preheader75.i.us.i.i.preheader ]
   %i.gs = icmp eq i64 %i.eb, %i.bv
   br i1 %i.gs, label %_RINvMNtCs8Chj7Szqq0n_4core3stre18trim_start_matchesReECs8JF6YcdXpCX_18iceoryx2_pal_posix.exit, label %bb.o
-
-.preheader.i.preheader.us.i.i:                    ; preds = %.preheader74.i.us.i.i.preheader, %.preheader74.i.us.i.i
-  br i1 %.not73.i.us130.i.i, label %.split69.us.i.us.i.i, label %.split71.us.i.i.i
 
 default.unreachable:                              ; preds = %_RINvYNtNtNtCs8Chj7Szqq0n_4core3str4iter5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator8try_folduNCINvNvBH_4find5checkReNCNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix6unistd10gethostpid0E0INtNtNtB9_3ops12control_flow11ControlFlowB1R_EEB23_.exit.thread81
   unreachable

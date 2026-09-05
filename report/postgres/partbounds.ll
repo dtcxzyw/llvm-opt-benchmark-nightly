@@ -205,8 +205,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   store ptr %i.ck, ptr %i.cm, align 8
   br label %bb.i
 
-bb.i:                                             ; preds = %.lr.ph.us, %bb.l
-  %indvars.iv97 = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next98, %bb.l ] ; 6 uses
+bb.i:                                             ; preds = %bb.l, %.lr.ph.us
+  %indvars.iv97 = phi i64 [ %indvars.iv.next98, %bb.l ], [ 0, %.lr.ph.us ] ; 6 uses
   %i.cn = load ptr, ptr %i.be, align 8            ; 2 uses
   %i.co = icmp eq ptr %i.cn, null
   br i1 %i.co, label %bb.k, label %bb.j

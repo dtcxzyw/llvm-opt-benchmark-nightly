@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/entt/original/meta_custom?download=true
+inline.NumInlined: 2724
+inline.NumDeleted: 1171
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZNK4entt9meta_type6lookupImZNKS0_6invokeIRKN10MetaCustom5clazzEJiEEENS_8meta_anyEjOT_DpOT0_EUlvE_EEDaPNS_11meta_handleES8_bT0_:bb.a
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 4
   %.pre191 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !148
@@ -200,9 +204,13 @@ bb.al:                                            ; preds = %bb.ak, %.lr.ph139.s
   %i.fm = getelementptr inbounds nuw i8, ptr %.036138.us147, i64 24
   %i.fn = load i64, ptr %i.fm, align 8, !tbaa !229
   %i.fo = icmp eq i64 %i.fn, 0
-  br i1 %i.fo, label %.preheader.us165, label %bb.an
+  br i1 %i.fo, label %.preheader.us153, label %bb.an
 
-bb.am:                                            ; preds = %.preheader.us165
+.preheader.us153:                                 ; preds = %bb.al
+  %.not54.us154 = icmp eq ptr %.045135.us150, null
+  br i1 %.not54.us154, label %bb.an, label %bb.am
+
+bb.am:                                            ; preds = %.preheader.us153
   %i.fp = getelementptr inbounds nuw i8, ptr %.036138.us147, i64 16
   %i.fq = load i32, ptr %i.fp, align 8, !tbaa !228
   %i.fr = and i32 %i.fq, 1
@@ -218,9 +226,9 @@ bb.am:                                            ; preds = %.preheader.us165
   %not..us157 = xor i1 %i.fv, true
   br label %bb.an
 
-bb.an:                                            ; preds = %bb.am, %.preheader.us165, %bb.al, %bb.ak
-  %.348.us158 = phi ptr [ %.045135.us150, %bb.ak ], [ %.045135.us150, %bb.al ], [ %spec.select.us156, %bb.am ], [ %.036138.us147, %.preheader.us165 ] ; 2 uses
-  %.340.us160 = phi i1 [ %.037137.us148, %bb.ak ], [ %.037137.us148, %bb.al ], [ %not..us157, %bb.am ], [ false, %.preheader.us165 ] ; 2 uses
+bb.an:                                            ; preds = %bb.am, %.preheader.us153, %bb.al, %bb.ak
+  %.348.us158 = phi ptr [ %.045135.us150, %bb.ak ], [ %.045135.us150, %bb.al ], [ %spec.select.us156, %bb.am ], [ %.036138.us147, %.preheader.us153 ] ; 2 uses
+  %.340.us160 = phi i1 [ %.037137.us148, %bb.ak ], [ %.037137.us148, %bb.al ], [ %not..us157, %bb.am ], [ false, %.preheader.us153 ] ; 2 uses
   %.not.i70.us161 = icmp eq ptr %.sroa.095.0134.us151, null
   br i1 %.not.i70.us161, label %._crit_edge, label %_ZZNK4entt9meta_type6invokeIRKN10MetaCustom5clazzEJiEEENS_8meta_anyEjOT_DpOT0_ENUlvE_clEv.exit71.us162
 
@@ -228,10 +236,6 @@ _ZZNK4entt9meta_type6invokeIRKN10MetaCustom5clazzEJiEEENS_8meta_anyEjOT_DpOT0_EN
   %i.fy = getelementptr inbounds nuw i8, ptr %.sroa.095.0134.us151, i64 56
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !130
   br label %.lr.ph139.split.split.us, !llvm.loop !565
-
-.preheader.us165:                                 ; preds = %bb.al
-  %.not54.us153 = icmp eq ptr %.045135.us150, null
-  br i1 %.not54.us153, label %bb.an, label %bb.am
 
 ._crit_edge:                                      ; preds = %bb.aj, %bb.an
   %.045.lcssa = phi ptr [ %.348.us158, %bb.an ], [ %.348.us, %bb.aj ]
@@ -635,9 +639,13 @@ bb.al:                                            ; preds = %bb.ak, %.lr.ph139.s
   %i.fm = getelementptr inbounds nuw i8, ptr %.036138.us147, i64 24
   %i.fn = load i64, ptr %i.fm, align 8, !tbaa !229
   %i.fo = icmp eq i64 %i.fn, 0
-  br i1 %i.fo, label %.preheader.us165, label %bb.an
+  br i1 %i.fo, label %.preheader.us153, label %bb.an
 
-bb.am:                                            ; preds = %.preheader.us165
+.preheader.us153:                                 ; preds = %bb.al
+  %.not54.us154 = icmp eq ptr %.045135.us150, null
+  br i1 %.not54.us154, label %bb.an, label %bb.am
+
+bb.am:                                            ; preds = %.preheader.us153
   %i.fp = getelementptr inbounds nuw i8, ptr %.036138.us147, i64 16
   %i.fq = load i32, ptr %i.fp, align 8, !tbaa !228
   %i.fr = and i32 %i.fq, 1
@@ -653,9 +661,9 @@ bb.am:                                            ; preds = %.preheader.us165
   %not..us157 = xor i1 %i.fv, true
   br label %bb.an
 
-bb.an:                                            ; preds = %bb.am, %.preheader.us165, %bb.al, %bb.ak
-  %.348.us158 = phi ptr [ %.045135.us150, %bb.ak ], [ %.045135.us150, %bb.al ], [ %spec.select.us156, %bb.am ], [ %.036138.us147, %.preheader.us165 ] ; 2 uses
-  %.340.us160 = phi i1 [ %.037137.us148, %bb.ak ], [ %.037137.us148, %bb.al ], [ %not..us157, %bb.am ], [ false, %.preheader.us165 ] ; 2 uses
+bb.an:                                            ; preds = %bb.am, %.preheader.us153, %bb.al, %bb.ak
+  %.348.us158 = phi ptr [ %.045135.us150, %bb.ak ], [ %.045135.us150, %bb.al ], [ %spec.select.us156, %bb.am ], [ %.036138.us147, %.preheader.us153 ] ; 2 uses
+  %.340.us160 = phi i1 [ %.037137.us148, %bb.ak ], [ %.037137.us148, %bb.al ], [ %not..us157, %bb.am ], [ false, %.preheader.us153 ] ; 2 uses
   %.not.i70.us161 = icmp eq ptr %.sroa.095.0134.us151, null
   br i1 %.not.i70.us161, label %._crit_edge, label %_ZZNK4entt9meta_type6invokeIRNS_8meta_anyEJiEEES2_jOT_DpOT0_ENUlvE_clEv.exit71.us162
 
@@ -663,10 +671,6 @@ _ZZNK4entt9meta_type6invokeIRNS_8meta_anyEJiEEES2_jOT_DpOT0_ENUlvE_clEv.exit71.u
   %i.fy = getelementptr inbounds nuw i8, ptr %.sroa.095.0134.us151, i64 56
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !130
   br label %.lr.ph139.split.split.us, !llvm.loop !578
-
-.preheader.us165:                                 ; preds = %bb.al
-  %.not54.us153 = icmp eq ptr %.045135.us150, null
-  br i1 %.not54.us153, label %bb.an, label %bb.am
 
 ._crit_edge:                                      ; preds = %bb.aj, %bb.an
   %.045.lcssa = phi ptr [ %.348.us158, %bb.an ], [ %.348.us, %bb.aj ]
@@ -1070,9 +1074,13 @@ bb.al:                                            ; preds = %bb.ak, %.lr.ph139.s
   %i.fm = getelementptr inbounds nuw i8, ptr %.036138.us147, i64 24
   %i.fn = load i64, ptr %i.fm, align 8, !tbaa !229
   %i.fo = icmp eq i64 %i.fn, 0
-  br i1 %i.fo, label %.preheader.us165, label %bb.an
+  br i1 %i.fo, label %.preheader.us153, label %bb.an
 
-bb.am:                                            ; preds = %.preheader.us165
+.preheader.us153:                                 ; preds = %bb.al
+  %.not54.us154 = icmp eq ptr %.045135.us150, null
+  br i1 %.not54.us154, label %bb.an, label %bb.am
+
+bb.am:                                            ; preds = %.preheader.us153
   %i.fp = getelementptr inbounds nuw i8, ptr %.036138.us147, i64 16
   %i.fq = load i32, ptr %i.fp, align 8, !tbaa !228
   %i.fr = and i32 %i.fq, 1
@@ -1088,9 +1096,9 @@ bb.am:                                            ; preds = %.preheader.us165
   %not..us157 = xor i1 %i.fv, true
   br label %bb.an
 
-bb.an:                                            ; preds = %bb.am, %.preheader.us165, %bb.al, %bb.ak
-  %.348.us158 = phi ptr [ %.045135.us150, %bb.ak ], [ %.045135.us150, %bb.al ], [ %spec.select.us156, %bb.am ], [ %.036138.us147, %.preheader.us165 ] ; 2 uses
-  %.340.us160 = phi i1 [ %.037137.us148, %bb.ak ], [ %.037137.us148, %bb.al ], [ %not..us157, %bb.am ], [ false, %.preheader.us165 ] ; 2 uses
+bb.an:                                            ; preds = %bb.am, %.preheader.us153, %bb.al, %bb.ak
+  %.348.us158 = phi ptr [ %.045135.us150, %bb.ak ], [ %.045135.us150, %bb.al ], [ %spec.select.us156, %bb.am ], [ %.036138.us147, %.preheader.us153 ] ; 2 uses
+  %.340.us160 = phi i1 [ %.037137.us148, %bb.ak ], [ %.037137.us148, %bb.al ], [ %not..us157, %bb.am ], [ false, %.preheader.us153 ] ; 2 uses
   %.not.i70.us161 = icmp eq ptr %.sroa.095.0134.us151, null
   br i1 %.not.i70.us161, label %._crit_edge, label %_ZZNK4entt9meta_type6invokeIRKN10MetaCustom5clazzEJcEEENS_8meta_anyEjOT_DpOT0_ENUlvE_clEv.exit71.us162
 
@@ -1098,10 +1106,6 @@ _ZZNK4entt9meta_type6invokeIRKN10MetaCustom5clazzEJcEEENS_8meta_anyEjOT_DpOT0_EN
   %i.fy = getelementptr inbounds nuw i8, ptr %.sroa.095.0134.us151, i64 56
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !130
   br label %.lr.ph139.split.split.us, !llvm.loop !580
-
-.preheader.us165:                                 ; preds = %bb.al
-  %.not54.us153 = icmp eq ptr %.045135.us150, null
-  br i1 %.not54.us153, label %bb.an, label %bb.am
 
 ._crit_edge:                                      ; preds = %bb.aj, %bb.an
   %.045.lcssa = phi ptr [ %.348.us158, %bb.an ], [ %.348.us, %bb.aj ]
@@ -1505,9 +1509,13 @@ bb.al:                                            ; preds = %bb.ak, %.lr.ph139.s
   %i.fm = getelementptr inbounds nuw i8, ptr %.036138.us147, i64 24
   %i.fn = load i64, ptr %i.fm, align 8, !tbaa !229
   %i.fo = icmp eq i64 %i.fn, 0
-  br i1 %i.fo, label %.preheader.us165, label %bb.an
+  br i1 %i.fo, label %.preheader.us153, label %bb.an
 
-bb.am:                                            ; preds = %.preheader.us165
+.preheader.us153:                                 ; preds = %bb.al
+  %.not54.us154 = icmp eq ptr %.045135.us150, null
+  br i1 %.not54.us154, label %bb.an, label %bb.am
+
+bb.am:                                            ; preds = %.preheader.us153
   %i.fp = getelementptr inbounds nuw i8, ptr %.036138.us147, i64 16
   %i.fq = load i32, ptr %i.fp, align 8, !tbaa !228
   %i.fr = and i32 %i.fq, 1
@@ -1523,9 +1531,9 @@ bb.am:                                            ; preds = %.preheader.us165
   %not..us157 = xor i1 %i.fv, true
   br label %bb.an
 
-bb.an:                                            ; preds = %bb.am, %.preheader.us165, %bb.al, %bb.ak
-  %.348.us158 = phi ptr [ %.045135.us150, %bb.ak ], [ %.045135.us150, %bb.al ], [ %spec.select.us156, %bb.am ], [ %.036138.us147, %.preheader.us165 ] ; 2 uses
-  %.340.us160 = phi i1 [ %.037137.us148, %bb.ak ], [ %.037137.us148, %bb.al ], [ %not..us157, %bb.am ], [ false, %.preheader.us165 ] ; 2 uses
+bb.an:                                            ; preds = %bb.am, %.preheader.us153, %bb.al, %bb.ak
+  %.348.us158 = phi ptr [ %.045135.us150, %bb.ak ], [ %.045135.us150, %bb.al ], [ %spec.select.us156, %bb.am ], [ %.036138.us147, %.preheader.us153 ] ; 2 uses
+  %.340.us160 = phi i1 [ %.037137.us148, %bb.ak ], [ %.037137.us148, %bb.al ], [ %not..us157, %bb.am ], [ false, %.preheader.us153 ] ; 2 uses
   %.not.i70.us161 = icmp eq ptr %.sroa.095.0134.us151, null
   br i1 %.not.i70.us161, label %._crit_edge, label %_ZZNK4entt9meta_type6invokeIRNS_8meta_anyEJcEEES2_jOT_DpOT0_ENUlvE_clEv.exit71.us162
 
@@ -1533,10 +1541,6 @@ _ZZNK4entt9meta_type6invokeIRNS_8meta_anyEJcEEES2_jOT_DpOT0_ENUlvE_clEv.exit71.u
   %i.fy = getelementptr inbounds nuw i8, ptr %.sroa.095.0134.us151, i64 56
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !130
   br label %.lr.ph139.split.split.us, !llvm.loop !593
-
-.preheader.us165:                                 ; preds = %bb.al
-  %.not54.us153 = icmp eq ptr %.045135.us150, null
-  br i1 %.not54.us153, label %bb.an, label %bb.am
 
 ._crit_edge:                                      ; preds = %bb.aj, %bb.an
   %.045.lcssa = phi ptr [ %.348.us158, %bb.an ], [ %.348.us, %bb.aj ]

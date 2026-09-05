@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/zfp/original/testzfp?download=true
+inline.NumInlined: 3089
+inline.NumDeleted: 961
+loop-unroll.NumCompletelyUnrolled: 105
+loop-unroll.NumUnrolled: 107
 begin_hunk_0_@main:bb.a
 
 .noexc.i290:                                      ; preds = %bb.ch
@@ -200,74 +204,74 @@ bb.cv:                                            ; preds = %_ZNSt7__cxx1112basi
 .preheader364.split.us.split.preheader:           ; preds = %.preheader364.split.us
   %i.ph = and i32 %.0129.lcssa556, 1
   %.not165.us = icmp eq i32 %i.ph, 0
-  br i1 %.not165.us, label %.loopexit.split.us.split.us491, label %.preheader.us.preheader
+  br i1 %.not165.us, label %.preheader.us.3.1.a, label %.preheader.us.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader364.split.us.split.preheader
   %i.pi = and i32 %i.pd, 2
   %.not166.us.us490 = icmp eq i32 %i.pi, 0
-  br i1 %.not166.us.us490, label %.preheader.us.1, label %bb.da
+  br i1 %.not166.us.us490, label %.preheader.us.preheader.1.a, label %.loopexit.split.us.split.us491
 
-.loopexit.split.us.split.us491:                   ; preds = %.preheader.us.3, %bb.dd, %.preheader364.split.us.split.preheader
-  %.4.us = phi i32 [ 0, %.preheader364.split.us.split.preheader ], [ %i.qc, %bb.dd ], [ %.3.us.us.2, %.preheader.us.3 ] ; 3 uses
-  %13 = and i32 %.0129.lcssa556, 2
-  %.not165.us.1 = icmp eq i32 %13, 0
-  br i1 %.not165.us.1, label %.split.us, label %.preheader.us.preheader.1.a
+.loopexit.split.us.split.us491:                   ; preds = %.preheader.us.preheader
+  %13 = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 1, i32 noundef 0)
+  br label %.preheader.us.preheader.1.a
 
-.preheader.us.preheader.1.a:                      ; preds = %.loopexit.split.us.split.us491
-  %i.pj = and i32 %i.pd, 2
+.preheader.us.preheader.1.a:                      ; preds = %.loopexit.split.us.split.us491, %.preheader.us.preheader
+  %.3.us.us = phi i32 [ %13, %.loopexit.split.us.split.us491 ], [ 0, %.preheader.us.preheader ] ; 2 uses
+  %i.pj = and i32 %i.pd, 4
   %.not166.us.us490.1514 = icmp eq i32 %i.pj, 0
   br i1 %.not166.us.us490.1514, label %.preheader.us.1.1.a, label %bb.cw
 
 bb.cw:                                            ; preds = %.preheader.us.preheader.1.a
-  %i.pk = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 1, i32 noundef 1)
-  %i.pl = add i32 %i.pk, %.4.us
+  %i.pk = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 2, i32 noundef 0)
+  %i.pl = add i32 %i.pk, %.3.us.us
   br label %.preheader.us.1.1.a
 
 .preheader.us.1.1.a:                              ; preds = %bb.cw, %.preheader.us.preheader.1.a
-  %.3.us.us.1516.a = phi i32 [ %i.pl, %bb.cw ], [ %.4.us, %.preheader.us.preheader.1.a ] ; 2 uses
-  %i.pm = and i32 %i.pd, 4
+  %.3.us.us.1516.a = phi i32 [ %i.pl, %bb.cw ], [ %.3.us.us, %.preheader.us.preheader.1.a ] ; 2 uses
+  %i.pm = and i32 %i.pd, 8
   %.not166.us.us490.1.1 = icmp eq i32 %i.pm, 0
   br i1 %.not166.us.us490.1.1, label %.preheader.us.2.1.a, label %bb.cx
 
 bb.cx:                                            ; preds = %.preheader.us.1.1.a
-  %i.pn = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 2, i32 noundef 1)
+  %i.pn = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 3, i32 noundef 0)
   %i.po = add i32 %i.pn, %.3.us.us.1516.a
   br label %.preheader.us.2.1.a
 
 .preheader.us.2.1.a:                              ; preds = %bb.cx, %.preheader.us.1.1.a
   %.3.us.us.1.1.a = phi i32 [ %i.po, %bb.cx ], [ %.3.us.us.1516.a, %.preheader.us.1.1.a ] ; 2 uses
-  %i.pp = and i32 %i.pd, 8
+  %i.pp = and i32 %i.pd, 16
   %.not166.us.us490.2.1 = icmp eq i32 %i.pp, 0
   br i1 %.not166.us.us490.2.1, label %.preheader.us.3.1.a, label %bb.cy
 
 bb.cy:                                            ; preds = %.preheader.us.2.1.a
-  %i.pq = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 3, i32 noundef 1)
+  %i.pq = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 4, i32 noundef 0)
   %i.pr = add i32 %i.pq, %.3.us.us.1.1.a
   br label %.preheader.us.3.1.a
 
-.preheader.us.3.1.a:                              ; preds = %bb.cy, %.preheader.us.2.1.a
-  %.3.us.us.2.1 = phi i32 [ %i.pr, %bb.cy ], [ %.3.us.us.1.1.a, %.preheader.us.2.1.a ] ; 2 uses
-  %i.ps = and i32 %i.pd, 16
+.preheader.us.3.1.a:                              ; preds = %.preheader.us.2.1.a, %bb.cy, %.preheader364.split.us.split.preheader
+  %.4.us = phi i32 [ 0, %.preheader364.split.us.split.preheader ], [ %i.pr, %bb.cy ], [ %.3.us.us.1.1.a, %.preheader.us.2.1.a ] ; 3 uses
+  %i.ps = and i32 %.0129.lcssa556, 2
   %.not166.us.us490.3.1 = icmp eq i32 %i.ps, 0
   br i1 %.not166.us.us490.3.1, label %.split.us, label %bb.cz
 
 bb.cz:                                            ; preds = %.preheader.us.3.1.a
-  %14 = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 4, i32 noundef 1)
-  %15 = add i32 %14, %.3.us.us.2.1
-  br label %.split.us
+  %14 = and i32 %i.pd, 2
+  %.not166.us.us491.1514 = icmp eq i32 %14, 0
+  br i1 %.not166.us.us491.1514, label %.preheader.us.1, label %bb.da
 
-bb.da:                                            ; preds = %.preheader.us.preheader
-  %i.pt = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 1, i32 noundef 0)
+bb.da:                                            ; preds = %bb.cz
+  %i.pt = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 1, i32 noundef 1)
+  %15 = add i32 %i.pt, %.4.us
   br label %.preheader.us.1
 
-.preheader.us.1:                                  ; preds = %bb.da, %.preheader.us.preheader
-  %.3.us.us.a = phi i32 [ %i.pt, %bb.da ], [ 0, %.preheader.us.preheader ] ; 2 uses
+.preheader.us.1:                                  ; preds = %bb.da, %bb.cz
+  %.3.us.us.a = phi i32 [ %15, %bb.da ], [ %.4.us, %bb.cz ] ; 2 uses
   %i.pu = and i32 %i.pd, 4
   %.not166.us.us490.1 = icmp eq i32 %i.pu, 0
   br i1 %.not166.us.us490.1, label %.preheader.us.2, label %bb.db
 
 bb.db:                                            ; preds = %.preheader.us.1
-  %i.pv = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 2, i32 noundef 0)
+  %i.pv = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 2, i32 noundef 1)
   %i.pw = add i32 %i.pv, %.3.us.us.a
   br label %.preheader.us.2
 
@@ -278,7 +282,7 @@ bb.db:                                            ; preds = %.preheader.us.1
   br i1 %.not166.us.us490.2, label %.preheader.us.3, label %bb.dc
 
 bb.dc:                                            ; preds = %.preheader.us.2
-  %i.py = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 3, i32 noundef 0)
+  %i.py = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 3, i32 noundef 1)
   %i.pz = add i32 %i.py, %.3.us.us.1
   br label %.preheader.us.3
 
@@ -286,12 +290,12 @@ bb.dc:                                            ; preds = %.preheader.us.2
   %.3.us.us.2 = phi i32 [ %i.pz, %bb.dc ], [ %.3.us.us.1, %.preheader.us.2 ] ; 2 uses
   %i.qa = and i32 %i.pd, 16
   %.not166.us.us490.3 = icmp eq i32 %i.qa, 0
-  br i1 %.not166.us.us490.3, label %.loopexit.split.us.split.us491, label %bb.dd
+  br i1 %.not166.us.us490.3, label %.split.us, label %bb.dd
 
 bb.dd:                                            ; preds = %.preheader.us.3
-  %i.qb = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 4, i32 noundef 0)
+  %i.qb = call noundef i32 @_Z4testIdEjj9ArraySize(i32 noundef 4, i32 noundef 1)
   %i.qc = add i32 %i.qb, %.3.us.us.2
-  br label %.loopexit.split.us.split.us491
+  br label %.split.us
 
 .preheader364.split:                              ; preds = %.preheader364
   %i.qd = and i32 %.0129.lcssa556, 1
@@ -302,74 +306,74 @@ bb.dd:                                            ; preds = %.preheader.us.3
   br i1 %.not165.us496, label %.loopexit.split.split, label %.preheader.preheader
 
 .preheader364.split.split.us.preheader:           ; preds = %.preheader364.split
-  br i1 %.not165.us496, label %.loopexit.split.split.us.us.a, label %.preheader.us498.preheader
+  br i1 %.not165.us496, label %.preheader.us498.3.1, label %.preheader.us498.preheader
 
 .preheader.us498.preheader:                       ; preds = %.preheader364.split.split.us.preheader
   %i.qe = and i32 %i.pd, 2
   %.not166.us479.us = icmp eq i32 %i.qe, 0
-  br i1 %.not166.us479.us, label %.preheader.us498.1, label %bb.di
+  br i1 %.not166.us479.us, label %.preheader.us498.preheader.1, label %.loopexit.split.split.us.us.a
 
-.loopexit.split.split.us.us.a:                    ; preds = %.preheader.us498.3, %bb.dl, %.preheader364.split.split.us.preheader
-  %.4.us497 = phi i32 [ 0, %.preheader364.split.split.us.preheader ], [ %.3.us480.us.2, %.preheader.us498.3 ], [ %i.qy, %bb.dl ] ; 3 uses
-  %16 = and i32 %.0129.lcssa556, 2
-  %.not165.us496.1 = icmp eq i32 %16, 0
-  br i1 %.not165.us496.1, label %.split.us, label %.preheader.us498.preheader.1
+.loopexit.split.split.us.us.a:                    ; preds = %.preheader.us498.preheader
+  %16 = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 1, i32 noundef 0)
+  br label %.preheader.us498.preheader.1
 
-.preheader.us498.preheader.1:                     ; preds = %.loopexit.split.split.us.us.a
-  %i.qf = and i32 %i.pd, 2
+.preheader.us498.preheader.1:                     ; preds = %.loopexit.split.split.us.us.a, %.preheader.us498.preheader
+  %.3.us480.us = phi i32 [ 0, %.preheader.us498.preheader ], [ %16, %.loopexit.split.split.us.us.a ] ; 2 uses
+  %i.qf = and i32 %i.pd, 4
   %.not166.us479.us.1510.a = icmp eq i32 %i.qf, 0
   br i1 %.not166.us479.us.1510.a, label %.preheader.us498.1.1, label %bb.de
 
 bb.de:                                            ; preds = %.preheader.us498.preheader.1
-  %i.qg = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 1, i32 noundef 1)
-  %i.qh = add i32 %i.qg, %.4.us497
+  %i.qg = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 2, i32 noundef 0)
+  %i.qh = add i32 %i.qg, %.3.us480.us
   br label %.preheader.us498.1.1
 
 .preheader.us498.1.1:                             ; preds = %bb.de, %.preheader.us498.preheader.1
-  %.3.us480.us.1512.a = phi i32 [ %.4.us497, %.preheader.us498.preheader.1 ], [ %i.qh, %bb.de ] ; 2 uses
-  %i.qi = and i32 %i.pd, 4
+  %.3.us480.us.1512.a = phi i32 [ %.3.us480.us, %.preheader.us498.preheader.1 ], [ %i.qh, %bb.de ] ; 2 uses
+  %i.qi = and i32 %i.pd, 8
   %.not166.us479.us.1.1.a = icmp eq i32 %i.qi, 0
   br i1 %.not166.us479.us.1.1.a, label %.preheader.us498.2.1, label %bb.df
 
 bb.df:                                            ; preds = %.preheader.us498.1.1
-  %i.qj = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 2, i32 noundef 1)
+  %i.qj = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 3, i32 noundef 0)
   %i.qk = add i32 %i.qj, %.3.us480.us.1512.a
   br label %.preheader.us498.2.1
 
 .preheader.us498.2.1:                             ; preds = %bb.df, %.preheader.us498.1.1
   %.3.us480.us.1.1.a = phi i32 [ %.3.us480.us.1512.a, %.preheader.us498.1.1 ], [ %i.qk, %bb.df ] ; 2 uses
-  %i.ql = and i32 %i.pd, 8
+  %i.ql = and i32 %i.pd, 16
   %.not166.us479.us.2.1.a = icmp eq i32 %i.ql, 0
   br i1 %.not166.us479.us.2.1.a, label %.preheader.us498.3.1, label %bb.dg
 
 bb.dg:                                            ; preds = %.preheader.us498.2.1
-  %i.qm = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 3, i32 noundef 1)
+  %i.qm = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 4, i32 noundef 0)
   %i.qn = add i32 %i.qm, %.3.us480.us.1.1.a
   br label %.preheader.us498.3.1
 
-.preheader.us498.3.1:                             ; preds = %bb.dg, %.preheader.us498.2.1
-  %.3.us480.us.2.1 = phi i32 [ %.3.us480.us.1.1.a, %.preheader.us498.2.1 ], [ %i.qn, %bb.dg ] ; 2 uses
-  %i.qo = and i32 %i.pd, 16
+.preheader.us498.3.1:                             ; preds = %.preheader.us498.2.1, %bb.dg, %.preheader364.split.split.us.preheader
+  %.4.us498 = phi i32 [ 0, %.preheader364.split.split.us.preheader ], [ %.3.us480.us.1.1.a, %.preheader.us498.2.1 ], [ %i.qn, %bb.dg ] ; 3 uses
+  %i.qo = and i32 %.0129.lcssa556, 2
   %.not166.us479.us.3.1.a = icmp eq i32 %i.qo, 0
   br i1 %.not166.us479.us.3.1.a, label %.split.us, label %bb.dh
 
 bb.dh:                                            ; preds = %.preheader.us498.3.1
-  %17 = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 4, i32 noundef 1)
-  %18 = add i32 %17, %.3.us480.us.2.1
-  br label %.split.us
+  %17 = and i32 %i.pd, 2
+  %.not166.us479.us.1510 = icmp eq i32 %17, 0
+  br i1 %.not166.us479.us.1510, label %.preheader.us498.1, label %bb.di
 
-bb.di:                                            ; preds = %.preheader.us498.preheader
-  %i.qp = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 1, i32 noundef 0)
+bb.di:                                            ; preds = %bb.dh
+  %i.qp = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 1, i32 noundef 1)
+  %18 = add i32 %i.qp, %.4.us498
   br label %.preheader.us498.1
 
-.preheader.us498.1:                               ; preds = %bb.di, %.preheader.us498.preheader
-  %.3.us480.us.a = phi i32 [ 0, %.preheader.us498.preheader ], [ %i.qp, %bb.di ] ; 2 uses
+.preheader.us498.1:                               ; preds = %bb.di, %bb.dh
+  %.3.us480.us.a = phi i32 [ %.4.us498, %bb.dh ], [ %18, %bb.di ] ; 2 uses
   %i.qq = and i32 %i.pd, 4
   %.not166.us479.us.1 = icmp eq i32 %i.qq, 0
   br i1 %.not166.us479.us.1, label %.preheader.us498.2, label %bb.dj
 
 bb.dj:                                            ; preds = %.preheader.us498.1
-  %i.qr = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 2, i32 noundef 0)
+  %i.qr = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 2, i32 noundef 1)
   %i.qs = add i32 %i.qr, %.3.us480.us.a
   br label %.preheader.us498.2
 
@@ -380,7 +384,7 @@ bb.dj:                                            ; preds = %.preheader.us498.1
   br i1 %.not166.us479.us.2, label %.preheader.us498.3, label %bb.dk
 
 bb.dk:                                            ; preds = %.preheader.us498.2
-  %i.qu = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 3, i32 noundef 0)
+  %i.qu = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 3, i32 noundef 1)
   %i.qv = add i32 %i.qu, %.3.us480.us.1
   br label %.preheader.us498.3
 
@@ -388,15 +392,15 @@ bb.dk:                                            ; preds = %.preheader.us498.2
   %.3.us480.us.2 = phi i32 [ %.3.us480.us.1, %.preheader.us498.2 ], [ %i.qv, %bb.dk ] ; 2 uses
   %i.qw = and i32 %i.pd, 16
   %.not166.us479.us.3 = icmp eq i32 %i.qw, 0
-  br i1 %.not166.us479.us.3, label %.loopexit.split.split.us.us.a, label %bb.dl
+  br i1 %.not166.us479.us.3, label %.split.us, label %bb.dl
 
 bb.dl:                                            ; preds = %.preheader.us498.3
-  %i.qx = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 4, i32 noundef 0)
+  %i.qx = call noundef i32 @_Z4testIfEjj9ArraySize(i32 noundef 4, i32 noundef 1)
   %i.qy = add i32 %i.qx, %.3.us480.us.2
-  br label %.loopexit.split.split.us.us.a
+  br label %.split.us
 
-.split.us:                                        ; preds = %.loopexit.split.split, %bb.dt, %.preheader.3.1, %.loopexit.split.split.us.us.a, %bb.dh, %.preheader.us498.3.1, %.loopexit.split.us.split.us491, %bb.cz, %.preheader.us.3.1.a
-  %.us-phi493 = phi i32 [ %.3.us480.us.2.1, %.preheader.us498.3.1 ], [ %.3.us.us.2.1, %.preheader.us.3.1.a ], [ %18, %bb.dh ], [ %.4.us, %.loopexit.split.us.split.us491 ], [ %15, %bb.cz ], [ %.4.us497, %.loopexit.split.split.us.us.a ], [ %.4, %.loopexit.split.split ], [ %i.sm, %bb.dt ], [ %.3.2.1, %.preheader.3.1 ] ; 2 uses
+.split.us:                                        ; preds = %.loopexit.split.split, %bb.dt, %.preheader.3.1, %.preheader.us498.3.1, %bb.dl, %.preheader.us498.3, %.preheader.us.3.1.a, %bb.dd, %.preheader.us.3
+  %.us-phi493 = phi i32 [ %.3.us480.us.2, %.preheader.us498.3 ], [ %.3.us.us.2, %.preheader.us.3 ], [ %i.qy, %bb.dl ], [ %.4.us, %.preheader.us.3.1.a ], [ %i.qc, %bb.dd ], [ %.4.us498, %.preheader.us498.3.1 ], [ %.4, %.loopexit.split.split ], [ %i.sm, %bb.dt ], [ %.3.2.1, %.preheader.3.1 ] ; 2 uses
   %.not164.not = icmp eq i32 %.us-phi493, 0
   br i1 %.not164.not, label %.split.us.thread, label %bb.du
 
@@ -799,6 +803,13 @@ bb.a:
   %op.rdx108 = add i64 %i.ao, %op.rdx106
   br label %.split48.us.us
 
+.preheader.split.us.us:                           ; preds = %.preheader.us
+  %gep69 = getelementptr [4 x i8], ptr %invariant.gep.us52, i64 %i.q
+  %3 = load i32, ptr %gep69, align 4, !tbaa !39
+  %4 = sext i32 %3 to i64
+  %5 = shl nsw i64 %4, 8
+  br label %.split48.us.us
+
 .split48.us.us:                                   ; preds = %.split.us.us61.preheader, %.preheader.split.us.us
   %.us-phi49.us = phi i64 [ %5, %.preheader.split.us.us ], [ %op.rdx108, %.split.us.us61.preheader ]
   %i.ap = sdiv i64 %.us-phi49.us, 256
@@ -808,13 +819,6 @@ bb.a:
   %i.ar = add nuw i64 %.03658.us, 1               ; 2 uses
   %exitcond94.not = icmp eq i64 %i.ar, %i.a
   br i1 %exitcond94.not, label %.split67.us, label %.preheader.us
-
-.preheader.split.us.us:                           ; preds = %.preheader.us
-  %gep69 = getelementptr [4 x i8], ptr %invariant.gep.us52, i64 %i.q
-  %3 = load i32, ptr %gep69, align 4, !tbaa !39
-  %4 = sext i32 %3 to i64
-  %5 = shl nsw i64 %4, 8
-  br label %.split48.us.us
 
 ._crit_edge:                                      ; preds = %.split67.us, %bb.a
   ret void

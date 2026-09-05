@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libwebp/original/yuv?download=true
+inline.NumInlined: 120
+inline.NumDeleted: 23
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@ConvertBGRToY_C:bb.a
   %i.r = lshr i32 %i.q, 16
   %i.s = trunc nuw i32 %i.r to i8
@@ -200,14 +205,14 @@ bb.a:
   %i.az = tail call i32 %i.ay(ptr noundef %.089104.us121, i32 noundef %5, i32 noundef %7, i32 noundef 2, ptr noundef %.082111.us114, i32 noundef %12) #9
   %.not96.not.us = icmp eq i32 %i.az, 0
   %i.ba = getelementptr inbounds i8, ptr %.082111.us114, i64 %i.l
-  br i1 %.not96.not.us, label %bb.b, label %.thread.us122
+  br i1 %.not96.not.us, label %.thread.us122, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.split.split.us
-  tail call void @WebPAccumulateRGBA(ptr noundef %.086107.us118, ptr noundef %.087106.us119, ptr noundef %.088105.us120, ptr noundef %.089104.us121, i32 noundef %5, ptr noundef %9, i32 noundef %7)
+  tail call void @WebPAccumulateRGB(ptr noundef %.086107.us118, ptr noundef %.087106.us119, ptr noundef %.088105.us120, i32 noundef %4, i32 noundef %5, ptr noundef %9, i32 noundef %7)
   br label %bb.c
 
 .thread.us122:                                    ; preds = %.lr.ph.split.split.us
-  tail call void @WebPAccumulateRGB(ptr noundef %.086107.us118, ptr noundef %.087106.us119, ptr noundef %.088105.us120, i32 noundef %4, i32 noundef %5, ptr noundef %9, i32 noundef %7)
+  tail call void @WebPAccumulateRGBA(ptr noundef %.086107.us118, ptr noundef %.087106.us119, ptr noundef %.088105.us120, ptr noundef %.089104.us121, i32 noundef %5, ptr noundef %9, i32 noundef %7)
   br label %bb.c
 
 bb.c:                                             ; preds = %.thread.us122, %bb.b

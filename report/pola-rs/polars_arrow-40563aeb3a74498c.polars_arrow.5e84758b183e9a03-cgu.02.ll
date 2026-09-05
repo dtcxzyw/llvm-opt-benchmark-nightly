@@ -205,10 +205,14 @@ bb.e:                                             ; preds = %.lr.ph45.split.us
   %.not17.us = icmp ugt i64 %.val.us, %i.d
   %or.cond.us = or i1 %i.ae, %.not17.us
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 %.val18.us
-  br i1 %or.cond.us, label %.lr.ph.split.us, label %.lr.ph.split.us52, !prof !1363
+  br i1 %or.cond.us, label %.lr.ph.split.us, label %.lr.ph.split.us46, !prof !1363
 
-.lr.ph.split.split.us53:                          ; preds = %.lr.ph.split.us52, %_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorE6unwrapCs8774dFTUdNv_12polars_arrow.exit.us50
-  %.sroa.04.033.us46 = phi i64 [ %i.ag, %_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorE6unwrapCs8774dFTUdNv_12polars_arrow.exit.us50 ], [ 0, %.lr.ph.split.us52 ]
+.lr.ph.split.us46:                                ; preds = %.lr.ph.us
+  %.not.i22.us = icmp eq i64 %.val.us, %.val18.us
+  br i1 %.not.i22.us, label %.lr.ph.split.split.us.us, label %.lr.ph.split.split.us53
+
+.lr.ph.split.split.us53:                          ; preds = %.lr.ph.split.us46, %_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorE6unwrapCs8774dFTUdNv_12polars_arrow.exit.us50
+  %.sroa.04.033.us46 = phi i64 [ %i.ag, %_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorE6unwrapCs8774dFTUdNv_12polars_arrow.exit.us50 ], [ 0, %.lr.ph.split.us46 ]
   %i.ag = add nuw i64 %.sroa.04.033.us46, 1, !dbg !32669 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !32631), !dbg !32670
   %i.ah = load i64, ptr %i.s, align 8, !dbg !32671, !alias.scope !32631, !noalias !32632, !noundef !903 ; 4 uses
@@ -246,16 +250,8 @@ _RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11P
   %exitcond.not = icmp eq i64 %i.ag, %4, !dbg !32691
   br i1 %exitcond.not, label %..loopexit_crit_edge.us, label %.lr.ph.split.split.us53, !dbg !32692
 
-.lr.ph.split.us52:                                ; preds = %.lr.ph.us
-  %.not.i22.us = icmp eq i64 %.val.us, %.val18.us
-  br i1 %.not.i22.us, label %.lr.ph.split.split.us.us, label %.lr.ph.split.split.us53
-
-..loopexit_crit_edge.us:                          ; preds = %_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorE6unwrapCs8774dFTUdNv_12polars_arrow.exit.us50, %_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorE6unwrapCs8774dFTUdNv_12polars_arrow.exit.us43.us
-  %exitcond90.not = icmp eq i64 %i.w, %i.i, !dbg !32662
-  br i1 %exitcond90.not, label %._crit_edge, label %.lr.ph45.split.us, !dbg !32617
-
-.lr.ph.split.split.us.us:                         ; preds = %.lr.ph.split.us52, %_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorE6unwrapCs8774dFTUdNv_12polars_arrow.exit.us43.us
-  %.sroa.04.033.us39.us = phi i64 [ %i.ax, %_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorE6unwrapCs8774dFTUdNv_12polars_arrow.exit.us43.us ], [ 0, %.lr.ph.split.us52 ]
+.lr.ph.split.split.us.us:                         ; preds = %.lr.ph.split.us46, %_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorE6unwrapCs8774dFTUdNv_12polars_arrow.exit.us43.us
+  %.sroa.04.033.us39.us = phi i64 [ %i.ax, %_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorE6unwrapCs8774dFTUdNv_12polars_arrow.exit.us43.us ], [ 0, %.lr.ph.split.us46 ]
   %i.ax = add nuw i64 %.sroa.04.033.us39.us, 1, !dbg !32669 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !32631), !dbg !32670
   %i.ay = load i64, ptr %i.s, align 8, !dbg !32671, !alias.scope !32631, !noalias !32632, !noundef !903 ; 4 uses
@@ -288,6 +284,10 @@ _RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11P
   store i64 %i.bl, ptr %i.u, align 8, !dbg !32690, !alias.scope !32642
   %exitcond89.not = icmp eq i64 %i.ax, %4, !dbg !32691
   br i1 %exitcond89.not, label %..loopexit_crit_edge.us, label %.lr.ph.split.split.us.us, !dbg !32692
+
+..loopexit_crit_edge.us:                          ; preds = %_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorE6unwrapCs8774dFTUdNv_12polars_arrow.exit.us50, %_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11PolarsErrorE6unwrapCs8774dFTUdNv_12polars_arrow.exit.us43.us
+  %exitcond90.not = icmp eq i64 %i.w, %i.i, !dbg !32662
+  br i1 %exitcond90.not, label %._crit_edge, label %.lr.ph45.split.us, !dbg !32617
 
 .lr.ph45.split:                                   ; preds = %.lr.ph45
   %i.bm = load i64, ptr %i.f, align 8, !noundef !903 ; 4 uses

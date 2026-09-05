@@ -202,6 +202,10 @@ bb.g:                                             ; preds = %bb.f
   %.not80.us = icmp eq i16 %i.ak, 0
   br i1 %.not80.us, label %.loopexit.us, label %.preheader.us
 
+.preheader.us:                                    ; preds = %bb.g
+  %13 = mul nuw nsw i64 %indvars.iv119, %i.ad
+  br label %.backedge
+
 .backedge:                                        ; preds = %.backedge.backedge, %.preheader.us
   %.099.us = phi i32 [ 0, %.preheader.us ], [ %.099.us.be, %.backedge.backedge ] ; 3 uses
   %i.al = zext i32 %.099.us to i64
@@ -252,10 +256,6 @@ select.unfold86.us:                               ; preds = %bb.h, %.backedge
   %indvars.iv.next120 = add nuw nsw i64 %indvars.iv119, 1 ; 2 uses
   %exitcond123.not = icmp eq i64 %indvars.iv.next120, %wide.trip.count122
   br i1 %exitcond123.not, label %._crit_edge, label %.lr.ph103.split.us, !llvm.loop !27
-
-.preheader.us:                                    ; preds = %bb.g
-  %13 = mul nuw nsw i64 %indvars.iv119, %i.ad
-  br label %.backedge
 
 ._crit_edge:                                      ; preds = %.loopexit.us, %.lr.ph103.split.us, %.lr.ph103, %.lr.ph97, %.preheader92, %.loopexit93
   %i.bd = load i16, ptr %2, align 2

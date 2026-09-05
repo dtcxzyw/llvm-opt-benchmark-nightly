@@ -116,11 +116,6 @@ bb.g:                                             ; preds = %.lr.ph201
   %.not119.us = icmp eq i64 %i.ac, 0
   br i1 %.not119.us, label %bb.m, label %bb.i
 
-5:                                                ; preds = %bb.n
-  %6 = load ptr, ptr %i.e, align 8, !tbaa !16
-  %.not116.us178 = icmp eq ptr %6, null
-  br i1 %.not116.us178, label %bb.h, label %.critedge, !llvm.loop !88
-
 bb.h:                                             ; preds = %5
   %i.ad = tail call zeroext i1 @Curl_cwriter_is_paused(ptr noundef nonnull %0) #5
   br i1 %i.ad, label %.critedge, label %.lr.ph174.split.us, !llvm.loop !88
@@ -157,6 +152,11 @@ bb.n:                                             ; preds = %bb.m
   %i.al = sub i64 %.088157171.us, %i.x            ; 4 uses
   %.not122.not.us184 = icmp eq i64 %i.al, 0
   br i1 %.not122.not.us184, label %.thread, label %5, !llvm.loop !88
+
+5:                                                ; preds = %bb.n
+  %6 = load ptr, ptr %i.e, align 8, !tbaa !16
+  %.not116.us185 = icmp eq ptr %6, null
+  br i1 %.not116.us185, label %bb.h, label %.critedge, !llvm.loop !88
 
 .lr.ph174.split:                                  ; preds = %.lr.ph174
   %i.am = load ptr, ptr %i.j, align 8, !tbaa !18

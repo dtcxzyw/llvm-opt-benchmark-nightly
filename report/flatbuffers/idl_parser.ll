@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/flatbuffers/original/idl_parser?download=true
+inline.NumInlined: 13536
+inline.NumDeleted: 4031
+loop-unroll.NumCompletelyUnrolled: 9
+loop-unroll.NumRuntimeUnrolled: 195
+loop-unroll.NumUnrolled: 204
 begin_hunk_0_@_ZN11flatbuffers21FlatBufferBuilderImplILb0EE11PushElementIvNS_8Offset64EEEjT0_IT_E:bb.a
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.05.i.i.i
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 2
@@ -200,43 +205,43 @@ bb.a:
   %lcmp.mod134.not = icmp eq i64 %xtraiter133, 0
   br label %.lr.ph60.split.split
 
-.lr.ph60.split.us.split.us:                       ; preds = %.lr.ph60, %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.a"
-  %.tr58.us.us = phi ptr [ %.031.lcssa.us.us.a, %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.a" ], [ %0, %.lr.ph60 ] ; 3 uses
+.lr.ph60.split.us.split.us:                       ; preds = %.lr.ph60, %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit.us.us.us"
+  %.tr58.us.us = phi ptr [ %.03153.us.us.us, %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit.us.us.us" ], [ %0, %.lr.ph60 ] ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.tr58.us.us, i64 %2 ; 3 uses
   %i.l = icmp ult ptr %i.k, %1
-  br i1 %i.l, label %.lr.ph.us.us, label %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.a"
+  br i1 %i.l, label %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.loopexit.a", label %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit.us.us.us"
 
-"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.loopexit.a": ; preds = %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit.us.us.us"
-  %.pre = ptrtoint ptr %.132.us.us.us to i64
+"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.loopexit.a": ; preds = %.lr.ph60.split.us.split.us
+  %6 = getelementptr inbounds nuw i8, ptr %.tr58.us.us, i64 %i.f
   br label %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.a"
 
-"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.a": ; preds = %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.loopexit.a", %.lr.ph60.split.us.split.us
-  %.pre-phi = phi i64 [ %.pre, %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.loopexit.a" ], [ %i.a, %.lr.ph60.split.us.split.us ]
-  %.031.lcssa.us.us.a = phi ptr [ %.132.us.us.us, %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.loopexit.a" ], [ %1, %.lr.ph60.split.us.split.us ]
-  %.0.lcssa.us.us = phi ptr [ %.1.us.us.us, %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.loopexit.a" ], [ %i.k, %.lr.ph60.split.us.split.us ]
-  %i.m = getelementptr inbounds i8, ptr %.0.lcssa.us.us, i64 %i.g
-  tail call fastcc void @"_ZN11flatbuffers12_GLOBAL__N_111SimpleQsortIhZNS_6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmE3$_1ZNS2_11ParseVectorES5_S6_S8_mE3$_2EEvPT_SC_mT0_T1_"(ptr noundef %.tr58.us.us, ptr noundef %i.m, i64 noundef %2, i16 %3, ptr %4, i64 0)
-  %6 = sub i64 %i.a, %.pre-phi
-  %.not.us.us = icmp sgt i64 %6, %2
-  br i1 %.not.us.us, label %.lr.ph60.split.us.split.us, label %tailrecurse._crit_edge
-
-.lr.ph.us.us:                                     ; preds = %.lr.ph60.split.us.split.us
-  %7 = getelementptr inbounds nuw i8, ptr %.tr58.us.us, i64 %i.f
-  br label %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit.us.us.us"
-
-"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit.us.us.us": ; preds = %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit.us.us.us", %.lr.ph.us.us
-  %.054.us.us.us = phi ptr [ %i.k, %.lr.ph.us.us ], [ %.1.us.us.us, %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit.us.us.us" ] ; 2 uses
-  %.03153.us.us.us = phi ptr [ %1, %.lr.ph.us.us ], [ %.132.us.us.us, %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit.us.us.us" ]
+"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.a": ; preds = %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.a", %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.loopexit.a"
+  %.054.us.us.us = phi ptr [ %i.k, %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.loopexit.a" ], [ %.1.us.us.us, %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.a" ] ; 2 uses
+  %.031.lcssa.us.us.a = phi ptr [ %1, %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.loopexit.a" ], [ %i.m, %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.a" ]
   %.val34.val.us.us.us = load i32, ptr %i.d, align 8, !tbaa !328
   %.val34.val35.us.us.us = load ptr, ptr %i.e, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %.054.us.us.us, i64 %i.f
-  %9 = tail call fastcc noundef zeroext i1 @_ZN11flatbuffers12_GLOBAL__N_124CompareSerializedScalarsEPKhS2_RKNS_8FieldDefE(ptr noundef readonly %7, ptr noundef readonly %8, i32 %.val34.val.us.us.us, ptr %.val34.val35.us.us.us) ; 2 uses
-  %.132.us.us.us.idx = select i1 %9, i64 %i.g, i64 0
-  %.132.us.us.us = getelementptr inbounds i8, ptr %.03153.us.us.us, i64 %.132.us.us.us.idx ; 4 uses
-  %.1.us.us.us.idx = select i1 %9, i64 0, i64 %2
+  %7 = getelementptr inbounds nuw i8, ptr %.054.us.us.us, i64 %i.f
+  %8 = tail call fastcc noundef zeroext i1 @_ZN11flatbuffers12_GLOBAL__N_124CompareSerializedScalarsEPKhS2_RKNS_8FieldDefE(ptr noundef readonly %6, ptr noundef readonly %7, i32 %.val34.val.us.us.us, ptr %.val34.val35.us.us.us) ; 2 uses
+  %.132.us.us.us.idx = select i1 %8, i64 %i.g, i64 0
+  %i.m = getelementptr inbounds i8, ptr %.031.lcssa.us.us.a, i64 %.132.us.us.us.idx ; 4 uses
+  %.1.us.us.us.idx = select i1 %8, i64 0, i64 %2
   %.1.us.us.us = getelementptr inbounds nuw i8, ptr %.054.us.us.us, i64 %.1.us.us.us.idx ; 3 uses
-  %10 = icmp ult ptr %.1.us.us.us, %.132.us.us.us
-  br i1 %10, label %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit.us.us.us", label %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.loopexit.a", !llvm.loop !1570
+  %9 = icmp ult ptr %.1.us.us.us, %i.m
+  br i1 %9, label %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.a", label %.lr.ph.us.us, !llvm.loop !1570
+
+.lr.ph.us.us:                                     ; preds = %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.a"
+  %.pre = ptrtoint ptr %i.m to i64
+  br label %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit.us.us.us"
+
+"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit.us.us.us": ; preds = %.lr.ph.us.us, %.lr.ph60.split.us.split.us
+  %.pre-phi = phi i64 [ %.pre, %.lr.ph.us.us ], [ %i.a, %.lr.ph60.split.us.split.us ]
+  %.03153.us.us.us = phi ptr [ %i.m, %.lr.ph.us.us ], [ %1, %.lr.ph60.split.us.split.us ]
+  %.0.lcssa.us.us = phi ptr [ %.1.us.us.us, %.lr.ph.us.us ], [ %i.k, %.lr.ph60.split.us.split.us ]
+  %.132.us.us.us = getelementptr inbounds i8, ptr %.0.lcssa.us.us, i64 %i.g
+  tail call fastcc void @"_ZN11flatbuffers12_GLOBAL__N_111SimpleQsortIhZNS_6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmE3$_1ZNS2_11ParseVectorES5_S6_S8_mE3$_2EEvPT_SC_mT0_T1_"(ptr noundef %.tr58.us.us, ptr noundef %.132.us.us.us, i64 noundef %2, i16 %3, ptr %4, i64 0)
+  %10 = sub i64 %i.a, %.pre-phi
+  %.not.us.us = icmp sgt i64 %10, %2
+  br i1 %.not.us.us, label %.lr.ph60.split.us.split.us, label %tailrecurse._crit_edge
 
 .lr.ph60.split.split:                             ; preds = %.lr.ph60.split.split.preheader, %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.loopexit"
   %.tr58 = phi ptr [ %.031.lcssa, %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.loopexit" ], [ %0, %.lr.ph60.split.split.preheader ] ; 10 uses
@@ -470,7 +475,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.not = icmp sgt i64 %i.bt, %2
   br i1 %.not, label %.lr.ph60.split.split, label %tailrecurse._crit_edge
 
-tailrecurse._crit_edge:                           ; preds = %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.loopexit", %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.us.us.a", %bb.a
+tailrecurse._crit_edge:                           ; preds = %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit39.loopexit", %"_ZZN11flatbuffers6Parser11ParseVectorERKNS_4TypeEPjPNS_8FieldDefEmENK3$_2clEPhS8_.exit.us.us.us", %bb.a
   ret void
 }
 
@@ -873,11 +878,6 @@ _ZNK11flatbuffers16VerifierTemplateILb0EE6VerifyIjEEbm.exit.i.i.us23: ; preds = 
   %.not33 = icmp ugt i64 %i.v, %i.h
   br i1 %.not33, label %.thread, label %bb.b
 
-2:                                                ; preds = %_ZNK11flatbuffers16VerifierTemplateILb0EE12VerifyStringEPKNS_6StringE.exit.us
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count40
-  br i1 %exitcond.not, label %.thread, label %_ZNK11flatbuffers16VerifierTemplateILb0EE6VerifyIjEEbm.exit.i.i.us23, !llvm.loop !3297
-
 bb.b:                                             ; preds = %_ZNK11flatbuffers16VerifierTemplateILb0EE6VerifyIjEEbm.exit.i.i.us23
   %i.w = load i32, ptr %i.t, align 4, !tbaa !221
   %i.x = zext i32 %i.w to i64                     ; 2 uses
@@ -900,6 +900,11 @@ _ZNK11flatbuffers16VerifierTemplateILb0EE12VerifyStringEPKNS_6StringE.exit.us: ;
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !81
   %i.ag = icmp eq i8 %i.af, 0
   br i1 %i.ag, label %2, label %.thread
+
+2:                                                ; preds = %_ZNK11flatbuffers16VerifierTemplateILb0EE12VerifyStringEPKNS_6StringE.exit.us
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count40
+  br i1 %exitcond.not, label %.thread, label %_ZNK11flatbuffers16VerifierTemplateILb0EE6VerifyIjEEbm.exit.i.i.us23, !llvm.loop !3297
 
 bb.c:                                             ; preds = %_ZNK11flatbuffers16VerifierTemplateILb0EE12VerifyStringEPKNS_6StringE.exit
   %indvars.iv.next38 = add nuw nsw i64 %indvars.iv37, 1 ; 2 uses

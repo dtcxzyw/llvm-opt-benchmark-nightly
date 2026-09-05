@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/recastnavigation/original/imgui_tables?download=true
+inline.NumInlined: 682
+inline.NumDeleted: 181
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 22
+loop-unroll.NumUnrolled: 27
 begin_hunk_0_@_ZN5ImGui13GetIDWithSeedEPKcS1_j
 
 declare void @_ZN5ImGui24SetNextWindowContentSizeERK6ImVec2(ptr noundef nonnull align 4 dereferenceable(8)) local_unnamed_addr #2
@@ -200,9 +205,8 @@ _ZN5ImGui21TableGetBoundSettingsEP10ImGuiTable.exit: ; preds = %bb.f, %bb.e
   br i1 %i.bd, label %.lr.ph99, label %._crit_edge100.thread
 
 ._crit_edge100.thread:                            ; preds = %._crit_edge
-  %1 = sext i16 %i.bc to i64
-  %2 = and i64 %1, 4294967295
-  %notmask139 = shl nsw i64 -1, %2
+  %1 = zext nneg i16 %i.bc to i64
+  %notmask139 = shl nsw i64 -1, %1
   %i.be = xor i64 %notmask139, -1
   br label %bb.g
 
@@ -605,11 +609,10 @@ bb.eo:                                            ; preds = %bb.en, %bb.em, %_ZN
 bb.ep:                                            ; preds = %bb.eo
   %i.adb = zext nneg i16 %i.acz to i64
   %i.adc = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %2 = add nuw nsw i64 %i.adb, 4294967295
   %i.add = load ptr, ptr %i.adc, align 8, !tbaa !264
-  %3 = and i64 %2, 4294967295
-  %4 = getelementptr inbounds nuw [2 x i8], ptr %i.add, i64 %3
-  %i.ade = load i16, ptr %4, align 2, !tbaa !287
+  %2 = getelementptr [2 x i8], ptr %i.add, i64 %i.adb
+  %3 = getelementptr i8, ptr %2, i64 -2
+  %i.ade = load i16, ptr %3, align 2, !tbaa !287
   %i.adf = load ptr, ptr %i.za, align 8, !tbaa !262
   %i.adg = sext i16 %i.ade to i64
   %i.adh = getelementptr inbounds [116 x i8], ptr %i.adf, i64 %i.adg
@@ -1012,11 +1015,9 @@ _ZN5ImGui12TableNextRowEif.exit:                  ; preds = %bb.p, %bb.q
 bb.r:                                             ; preds = %_ZN5ImGui12TableNextRowEif.exit
   %i.ec = zext nneg i16 %i.ea to i64
   %i.ed = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  %14 = add nuw nsw i64 %i.ec, 4294967295
   %i.ee = load ptr, ptr %i.ed, align 8, !tbaa !262
-  %15 = and i64 %14, 4294967295
-  %i.ef = getelementptr inbounds nuw [116 x i8], ptr %i.ee, i64 %15
-  %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 12
+  %i.ef = getelementptr [116 x i8], ptr %i.ee, i64 %i.ec
+  %i.eg = getelementptr i8, ptr %i.ef, i64 -104
   %i.eh = load float, ptr %i.eg, align 4, !tbaa !365 ; 2 uses
   %i.ei = fcmp oge float %i.dy, %i.eh
   %i.ej = select i1 %i.ei, float %i.dy, float %i.eh

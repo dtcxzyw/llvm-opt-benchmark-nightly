@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/box3d_ubsan/original/name_cache?download=true
+inline.NumInlined: 35
+inline.NumDeleted: 12
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@b3NameMap_insert_raw:bb.a
   %i.kk = shl i64 %i.kg, 3
   %i.kl = ptrtoint ptr %i.kf to i64, !nosanitize !10 ; 4 uses
@@ -200,7 +204,7 @@ b3NameMap_metadata_offset.exit.lr.ph:             ; preds = %bb.a
   br i1 %i.j, label %b3NameMap_metadata_offset.exit.us.us, label %b3NameMap_metadata_offset.exit, !prof !49, !nosanitize !10
 
 b3NameMap_metadata_offset.exit.us.us:             ; preds = %b3NameMap_metadata_offset.exit.lr.ph, %b3NameMap_total_alloc_size.exit.us.us
-  %i.p = phi ptr [ %11, %b3NameMap_total_alloc_size.exit.us.us ], [ %i.e, %b3NameMap_metadata_offset.exit.lr.ph ] ; 3 uses
+  %i.p = phi ptr [ %14, %b3NameMap_total_alloc_size.exit.us.us ], [ %i.e, %b3NameMap_metadata_offset.exit.lr.ph ] ; 3 uses
   %.024274.us.us = phi i64 [ %i.w, %b3NameMap_total_alloc_size.exit.us.us ], [ %1, %b3NameMap_metadata_offset.exit.lr.ph ] ; 3 uses
   store ptr %i.p, ptr %i.f, align 8, !tbaa !21
   %i.q = load i64, ptr %i.a, align 8, !tbaa !20
@@ -243,30 +247,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ao = load i64, ptr %i.k, align 8, !tbaa !20  ; 2 uses
   %i.ap = add i64 %i.ao, 1
   %.not360 = icmp ult i64 %i.ap, 2
-  br i1 %.not360, label %.split.us277.us, label %.lr.ph.us330
-
-b3NameMap_total_alloc_size.exit.us.us:            ; preds = %.split.us277.us
-  %4 = load ptr, ptr %i.f, align 8, !tbaa !21
-  %5 = load i64, ptr %i.a, align 8, !tbaa !20
-  %6 = mul i64 %5, 10
-  %7 = add i64 %6, 18
-  call void @b3Free(ptr noundef %4, i64 noundef %7) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 32, i1 false)
-  %8 = add i64 %i.w, -1                           ; 2 uses
-  store i64 %8, ptr %i.a, align 8, !tbaa !20
-  %9 = mul i64 %8, 10
-  %10 = add i64 %9, 18
-  %11 = call ptr @b3Alloc(i64 noundef %10) #11    ; 2 uses
-  %.not.us.us.not = icmp eq ptr %11, null
-  br i1 %.not.us.us.not, label %.loopexit, label %b3NameMap_metadata_offset.exit.us.us, !prof !76
-
-.split.us277.us:                                  ; preds = %b3NameMap_bucket_count.exit.us.us.us.us, %bb.h, %.lr.ph.us.us
-  %12 = load i64, ptr %2, align 8, !tbaa !19
-  %13 = load i64, ptr %0, align 8, !tbaa !19
-  %14 = icmp ult i64 %12, %13
-  br i1 %14, label %b3NameMap_total_alloc_size.exit.us.us, label %.split303.us, !prof !47
+  br i1 %.not360, label %.split.us278.us, label %.lr.ph.us330
 
 .lr.ph.us330:                                     ; preds = %.lr.ph.us.us, %b3NameMap_bucket_count.exit.us.us.us.us
   %i.aq = phi i64 [ %i.cc, %b3NameMap_bucket_count.exit.us.us.us.us ], [ %i.ao, %.lr.ph.us.us ]
@@ -329,7 +310,7 @@ bb.h:                                             ; preds = %bb.g
   %.val39.us.us.us.us = load ptr, ptr %i.o, align 8, !tbaa !35
   %i.cb = icmp eq ptr %.val.us.us.us.us, %.val39.us.us.us.us
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
-  br i1 %i.cb, label %.split.us277.us, label %.b3NameMap_bucket_count.exit.us.us.us.us_crit_edge
+  br i1 %i.cb, label %.split.us278.us, label %.b3NameMap_bucket_count.exit.us.us.us.us_crit_edge
 
 .b3NameMap_bucket_count.exit.us.us.us.us_crit_edge: ; preds = %bb.h
   %.pre = load i64, ptr %i.k, align 8, !tbaa !20
@@ -342,7 +323,30 @@ b3NameMap_bucket_count.exit.us.us.us.us:          ; preds = %.b3NameMap_bucket_c
   %i.cf = zext i1 %i.ce to i64
   %i.cg = add i64 %i.cc, %i.cf
   %i.ch = icmp ult i64 %i.cd, %i.cg
-  br i1 %i.ch, label %.lr.ph.us330, label %.split.us277.us
+  br i1 %i.ch, label %.lr.ph.us330, label %.split.us278.us
+
+.split.us278.us:                                  ; preds = %b3NameMap_bucket_count.exit.us.us.us.us, %bb.h, %.lr.ph.us.us
+  %4 = load i64, ptr %2, align 8, !tbaa !19
+  %5 = load i64, ptr %0, align 8, !tbaa !19
+  %6 = icmp ult i64 %4, %5
+  br i1 %6, label %b3NameMap_total_alloc_size.exit.us.us, label %.split303.us, !prof !47
+
+b3NameMap_total_alloc_size.exit.us.us:            ; preds = %.split.us278.us
+  %7 = load ptr, ptr %i.f, align 8, !tbaa !21
+  %8 = load i64, ptr %i.a, align 8, !tbaa !20
+  %9 = mul i64 %8, 10
+  %10 = add i64 %9, 18
+  call void @b3Free(ptr noundef %7, i64 noundef %10) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 32, i1 false)
+  %11 = add i64 %i.w, -1                          ; 2 uses
+  store i64 %11, ptr %i.a, align 8, !tbaa !20
+  %12 = mul i64 %11, 10
+  %13 = add i64 %12, 18
+  %14 = call ptr @b3Alloc(i64 noundef %13) #11    ; 2 uses
+  %.not.us.us.not = icmp eq ptr %14, null
+  br i1 %.not.us.us.not, label %.loopexit, label %b3NameMap_metadata_offset.exit.us.us, !prof !76
 
 b3NameMap_metadata_offset.exit:                   ; preds = %b3NameMap_metadata_offset.exit.lr.ph
   store ptr %i.e, ptr %i.f, align 8, !tbaa !21
@@ -412,7 +416,7 @@ bb.j:                                             ; preds = %bb.i
   call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @119, i64 %i.bv) #10, !nosanitize !10
   unreachable, !nosanitize !10
 
-.split303.us:                                     ; preds = %.split.us277.us
+.split303.us:                                     ; preds = %.split.us278.us
   %i.cz = load i64, ptr %i.k, align 8, !tbaa !20  ; 2 uses
   %.not38 = icmp eq i64 %i.cz, 0
   br i1 %.not38, label %bb.k, label %b3NameMap_total_alloc_size.exit41

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ozz-animation/original/sampling_job?download=true
+inline.NumInlined: 276
+inline.NumDeleted: 92
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZNK3ozz9animation11SamplingJob3RunEv:bb.a
   %i.azg = getelementptr inbounds nuw i8, ptr %i.axi, i64 64
   %i.azh = load <4 x float>, ptr %i.azg, align 16, !tbaa !56, !noalias !110 ; 2 uses
@@ -200,7 +204,7 @@ bb.h:                                             ; preds = %.thread5, %bb.f
   br i1 %.not24.i, label %._crit_edge.i, label %iter.check
 
 iter.check:                                       ; preds = %bb.h
-  %min.iters.check = icmp samesign ult i64 %i.az, 4
+  %min.iters.check = icmp samesign ult i64 %i.az, 8
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -208,7 +212,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check36, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.ba = and i64 %i.az, 28
+  %i.ba = and i64 %i.az, 24
   %n.vec = and i64 %i.az, 4294967264              ; 4 uses
   %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %i.a, i64 0
   %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer ; 4 uses
@@ -247,23 +251,23 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
-  %n.vec37 = and i64 %i.az, 4294967292            ; 3 uses
-  %broadcast.splatinsert38 = insertelement <4 x i32> poison, i32 %i.a, i64 0
-  %broadcast.splat39 = shufflevector <4 x i32> %broadcast.splatinsert38, <4 x i32> poison, <4 x i32> zeroinitializer
+  %n.vec37 = and i64 %i.az, 4294967288            ; 3 uses
+  %broadcast.splatinsert38 = insertelement <8 x i32> poison, i32 %i.a, i64 0
+  %broadcast.splat39 = shufflevector <8 x i32> %broadcast.splatinsert38, <8 x i32> poison, <8 x i32> zeroinitializer
   %i.bh = trunc nuw i64 %vec.epilog.resume.val to i32
-  %broadcast.splatinsert40 = insertelement <4 x i32> poison, i32 %i.bh, i64 0
-  %broadcast.splat41 = shufflevector <4 x i32> %broadcast.splatinsert40, <4 x i32> poison, <4 x i32> zeroinitializer
-  %induction = or disjoint <4 x i32> %broadcast.splat41, <i32 0, i32 1, i32 2, i32 3>
+  %broadcast.splatinsert40 = insertelement <8 x i32> poison, i32 %i.bh, i64 0
+  %broadcast.splat41 = shufflevector <8 x i32> %broadcast.splatinsert40, <8 x i32> poison, <8 x i32> zeroinitializer
+  %induction = or disjoint <8 x i32> %broadcast.splat41, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index42 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next44, %vec.epilog.vector.body ] ; 2 uses
-  %vec.ind43 = phi <4 x i32> [ %induction, %vec.epilog.ph ], [ %vec.ind.next45, %vec.epilog.vector.body ] ; 2 uses
-  %7 = add <4 x i32> %broadcast.splat39, %vec.ind43
+  %vec.ind43 = phi <8 x i32> [ %induction, %vec.epilog.ph ], [ %vec.ind.next45, %vec.epilog.vector.body ] ; 2 uses
+  %7 = add <8 x i32> %broadcast.splat39, %vec.ind43
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %index42
-  store <4 x i32> %7, ptr %i.bi, align 4, !tbaa !58
-  %index.next44 = add nuw i64 %index42, 4         ; 2 uses
-  %vec.ind.next45 = add <4 x i32> %vec.ind43, splat (i32 4)
+  store <8 x i32> %7, ptr %i.bi, align 4, !tbaa !58
+  %index.next44 = add nuw i64 %index42, 8         ; 2 uses
+  %vec.ind.next45 = add <8 x i32> %vec.ind43, splat (i32 8)
   %i.bj = icmp eq i64 %index.next44, %n.vec37
   br i1 %i.bj, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !113
 
@@ -666,7 +670,7 @@ attributes #16 = { noreturn nounwind }
 !128 = !{!51, !20, i64 0}
 !129 = !{!"llvm.loop.isvectorized", i32 1}
 !130 = !{!"llvm.loop.unroll.runtime.disable"}
-!131 = !{!"branch_weights", i32 4, i32 28}
+!131 = !{!"branch_weights", i32 8, i32 24}
 !132 = !{!"llvm.loop.unroll.disable"}
 !133 = !{!52, !24, i64 0}
 !134 = !{!37, !14, i64 8}

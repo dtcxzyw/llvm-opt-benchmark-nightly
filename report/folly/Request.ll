@@ -205,16 +205,6 @@ bb.b:                                             ; preds = %bb.a
   %i.z = extractelement <16 x i8> %i.u, i64 15
   br i1 %.not72.us, label %.loopexit.split.us.us, label %.preheader.us
 
-.loopexit.split.us.us:                            ; preds = %.critedge.i.us.us, %.split.us
-  %8 = icmp eq i8 %i.z, 0
-  br i1 %8, label %.thread70, label %9, !prof !73
-
-9:                                                ; preds = %.loopexit.split.us.us
-  %10 = add i64 %.023.i88.us, -1                  ; 2 uses
-  %11 = add i64 %i.e, %.025.i87.us
-  %.not.i.us = icmp eq i64 %10, 0
-  br i1 %.not.i.us, label %.thread70, label %.split.us, !llvm.loop !1
-
 .preheader.us:                                    ; preds = %.split.us
   %i.aa = icmp ne ptr %i.t, @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance
   tail call void @llvm.assume(i1 %i.aa)
@@ -243,6 +233,16 @@ bb.c:                                             ; preds = %.critedge.i.us.us, 
   %i.ap = and i32 %i.ao, 4094
   %.not73.us.us = icmp eq i32 %i.ap, 0
   br i1 %.not73.us.us, label %.loopexit.split.us.us, label %bb.c, !llvm.loop !0
+
+.loopexit.split.us.us:                            ; preds = %.critedge.i.us.us, %.split.us
+  %8 = icmp eq i8 %i.z, 0
+  br i1 %8, label %.thread70, label %9, !prof !73
+
+9:                                                ; preds = %.loopexit.split.us.us
+  %10 = add i64 %.023.i88.us, -1                  ; 2 uses
+  %11 = add i64 %i.e, %.025.i87.us
+  %.not.i.us = icmp eq i64 %10, 0
+  br i1 %.not.i.us, label %.thread70, label %.split.us, !llvm.loop !1
 
 .split:                                           ; preds = %bb.b, %bb.e
   %.023.i88 = phi i64 [ %i.bt, %bb.e ], [ %i.j, %bb.b ]

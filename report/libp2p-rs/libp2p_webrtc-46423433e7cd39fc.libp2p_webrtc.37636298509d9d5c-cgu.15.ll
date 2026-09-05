@@ -202,6 +202,9 @@ bb.p:                                             ; preds = %.lr.ph254
   %.reass.i.us.i.us.i = add i64 %.sroa.04.0.i.us.i.us.i253, %invariant.op.i.i.us.reass.reass.i.reass.reass.reass
   br label %.loopexit.split.us.us.i
 
+.preheader.i.preheader.us.i:                      ; preds = %.preheader74.i.us.i.preheader, %.preheader74.i.us.i
+  br i1 %.not73.i.us130.i, label %.split69.us.i.us.i, label %.split71.us.i.i
+
 .loopexit.split.us.us.i:                          ; preds = %bb.p, %bb.o
   %.sink132.i.us.i = phi i64 [ %i.cl, %bb.o ], [ %.reass.i.us.i.us.i, %bb.p ] ; 2 uses
   %i.ey = add i64 %.sink132.i.us.i, %i.m          ; 2 uses
@@ -212,9 +215,6 @@ bb.p:                                             ; preds = %.lr.ph254
   %spec.select86 = phi i64 [ -1, %.preheader.i.us.us.i.us ], [ -1, %.preheader.i.preheader.us.i ], [ 0, %.preheader75.i.us.i ], [ -1, %.preheader.i.us.us.i.us.preheader ], [ 0, %.preheader75.i.us.i.preheader ]
   %i.fa = icmp eq i64 %i.cl, %i.e
   br i1 %i.fa, label %_RNvYNtNtNtCskKLDkoKarTP_4core3str7pattern11StrSearcherNtB4_8Searcher11next_rejectCs4KPtkQIfQGm_13libp2p_webrtc.exit, label %bb.g
-
-.preheader.i.preheader.us.i:                      ; preds = %.preheader74.i.us.i.preheader, %.preheader74.i.us.i
-  br i1 %.not73.i.us130.i, label %.split69.us.i.us.i, label %.split71.us.i.i
 
 default.unreachable:                              ; preds = %bb.a
   unreachable

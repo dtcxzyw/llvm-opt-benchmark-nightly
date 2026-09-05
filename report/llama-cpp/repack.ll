@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llama-cpp/original/repack?download=true
+inline.NumInlined: 423
+inline.NumDeleted: 14
+loop-unroll.NumCompletelyUnrolled: 55
+loop-unroll.NumRuntimeUnrolled: 15
+loop-unroll.NumUnrolled: 70
 begin_hunk_0_@ggml_gemm_q4_0_8x8_q8_0:bb.a
 
 .lr.ph1081.split.us.preheader.i:                  ; preds = %.lr.ph1081.i
@@ -200,7 +205,7 @@ begin_hunk_0_@ggml_gemm_q4_0_8x8_q8_0:bb.a
   %i.afn = getelementptr inbounds [144 x i8], ptr %3, i64 %i.afm
   br label %.lr.ph1075.us.i.us
 
-.lr.ph1075.us.i.us:                               ; preds = %.preheader1015.us.i.us, %bb.h
+.lr.ph1075.us.i.us:                               ; preds = %bb.h, %.preheader1015.us.i.us
   %.010051074.us.i.us = phi i64 [ %i.aoc, %bb.h ], [ 0, %.preheader1015.us.i.us ] ; 3 uses
   %i.afo = getelementptr inbounds nuw [144 x i8], ptr %i.afn, i64 %.010051074.us.i.us ; 5 uses
   %i.afp = getelementptr inbounds nuw i8, ptr %i.afo, i64 16
@@ -603,7 +608,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aal = getelementptr inbounds nuw [1152 x i8], ptr %3, i64 %i.aak
   br label %bb.f
 
-bb.f:                                             ; preds = %.preheader2268.us.us.us, %bb.h
+bb.f:                                             ; preds = %bb.h, %.preheader2268.us.us.us
   %.lcssa23042325.us.us.us = phi <16 x float> [ zeroinitializer, %.preheader2268.us.us.us ], [ %i.avx, %bb.h ]
   %.lcssa23022323.us.us.us = phi <16 x float> [ zeroinitializer, %.preheader2268.us.us.us ], [ %i.avv, %bb.h ]
   %.lcssa23002321.us.us.us = phi <16 x float> [ zeroinitializer, %.preheader2268.us.us.us ], [ %i.avt, %bb.h ]
@@ -1006,7 +1011,7 @@ bb.n:                                             ; preds = %bb.m
   %i.btg = getelementptr inbounds [1152 x i8], ptr %3, i64 %i.btf
   br label %bb.o
 
-bb.o:                                             ; preds = %.preheader2262.us.us, %bb.q
+bb.o:                                             ; preds = %bb.q, %.preheader2262.us.us
   %.lcssa23872409.us.us = phi <8 x float> [ zeroinitializer, %.preheader2262.us.us ], [ %i.ckk, %bb.q ]
   %.lcssa23852407.us.us = phi <8 x float> [ zeroinitializer, %.preheader2262.us.us ], [ %i.cki, %bb.q ]
   %.lcssa23832405.us.us = phi <8 x float> [ zeroinitializer, %.preheader2262.us.us ], [ %i.ckg, %bb.q ]
@@ -1409,7 +1414,7 @@ begin_hunk_3_@ggml_gemm_iq4_nl_8x8_q8_0:bb.a
   %i.afn = getelementptr inbounds [144 x i8], ptr %3, i64 %i.afm
   br label %.lr.ph1075.us.i.us
 
-.lr.ph1075.us.i.us:                               ; preds = %.preheader1015.us.i.us, %bb.h
+.lr.ph1075.us.i.us:                               ; preds = %bb.h, %.preheader1015.us.i.us
   %.010051074.us.i.us = phi i64 [ %i.aoc, %bb.h ], [ 0, %.preheader1015.us.i.us ] ; 3 uses
   %i.afo = getelementptr inbounds nuw [144 x i8], ptr %i.afn, i64 %.010051074.us.i.us ; 5 uses
   %i.afp = getelementptr inbounds nuw i8, ptr %i.afo, i64 16
@@ -1812,7 +1817,7 @@ begin_hunk_4_@ggml_gemm_mxfp4_8x8_q8_0:bb.a
   %i.afp = getelementptr inbounds [136 x i8], ptr %3, i64 %i.afo
   br label %.lr.ph1159.us.i.us
 
-.lr.ph1159.us.i.us:                               ; preds = %.preheader1099.us.i.us, %bb.h
+.lr.ph1159.us.i.us:                               ; preds = %bb.h, %.preheader1099.us.i.us
   %.010891158.us.i.us = phi i64 [ %i.aog, %bb.h ], [ 0, %.preheader1099.us.i.us ] ; 3 uses
   %i.afq = getelementptr inbounds nuw [136 x i8], ptr %i.afp, i64 %.010891158.us.i.us ; 5 uses
   %i.afr = getelementptr inbounds nuw i8, ptr %i.afq, i64 8
@@ -2215,7 +2220,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aqo = getelementptr inbounds nuw [672 x i8], ptr %3, i64 %i.aqn
   br label %bb.f
 
-bb.f:                                             ; preds = %.preheader4048.us.us.us, %bb.h
+bb.f:                                             ; preds = %bb.h, %.preheader4048.us.us.us
   %.lcssa40844105.us.us.us = phi <16 x float> [ zeroinitializer, %.preheader4048.us.us.us ], [ %i.ccd, %bb.h ]
   %.lcssa40824103.us.us.us = phi <16 x float> [ zeroinitializer, %.preheader4048.us.us.us ], [ %i.ccb, %bb.h ]
   %.lcssa40804101.us.us.us = phi <16 x float> [ zeroinitializer, %.preheader4048.us.us.us ], [ %i.cbz, %bb.h ]
@@ -2618,7 +2623,7 @@ bb.n:                                             ; preds = %bb.m
   %i.dqf = getelementptr inbounds [672 x i8], ptr %3, i64 %i.dqe
   br label %bb.o
 
-bb.o:                                             ; preds = %.preheader4042.us.us, %bb.q
+bb.o:                                             ; preds = %bb.q, %.preheader4042.us.us
   %.lcssa41674189.us.us = phi <8 x float> [ zeroinitializer, %.preheader4042.us.us ], [ %i.eyc, %bb.q ]
   %.lcssa41654187.us.us = phi <8 x float> [ zeroinitializer, %.preheader4042.us.us ], [ %i.eya, %bb.q ]
   %.lcssa41634185.us.us = phi <8 x float> [ zeroinitializer, %.preheader4042.us.us ], [ %i.exy, %bb.q ]

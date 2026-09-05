@@ -204,8 +204,8 @@ bb.a:
   %wide.trip.count = zext i32 %i.p to i64
   br label %thread-pre-split.i.i.i.i.i.i.i.us.us
 
-thread-pre-split.i.i.i.i.i.i.i.us.us:             ; preds = %.preheader.us106, %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS1_IdLi1ELin1ELi1ELi1ELin1EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.us
-  %indvars.iv = phi i64 [ 0, %.preheader.us106 ], [ %indvars.iv.next, %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS1_IdLi1ELin1ELi1ELi1ELin1EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.us ] ; 2 uses
+thread-pre-split.i.i.i.i.i.i.i.us.us:             ; preds = %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS1_IdLi1ELin1ELi1ELi1ELin1EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.us, %.preheader.us106
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS1_IdLi1ELin1ELi1ELi1ELin1EEEEERS3_RKNS_9DenseBaseIT_EE.exit.loopexit.us.us ], [ 0, %.preheader.us106 ] ; 2 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %.pre115, i64 %indvars.iv ; 10 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %.pre115, i64 %indvars.iv.next

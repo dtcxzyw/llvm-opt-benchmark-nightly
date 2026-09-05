@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fftw3/original/hc2hc-generic?download=true
+inline.NumInlined: 9
+inline.NumDeleted: 7
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@apply_dit:bb.a
 .preheader.lr.ph.i:                               ; preds = %bytwiddle.exit
   %i.dv = icmp sgt i64 %i.dl, 2
@@ -200,6 +204,15 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.hw = icmp slt i64 %i.hv, %i.dt
   br i1 %i.hw, label %scalar.ph, label %._crit_edge.us.us.us.i, !llvm.loop !55
 
+._crit_edge.us.us.us.i:                           ; preds = %scalar.ph, %middle.block
+  %2 = add nuw nsw i64 %.07276.us.us.us.i, 1
+  %exitcond92.not.i = icmp eq i64 %.07276.us.us.us.i, %i.ed
+  br i1 %exitcond92.not.i, label %._crit_edge78.us.us.us.i, label %.lr.ph.us.us.us.i, !llvm.loop !56
+
+._crit_edge78.us.us.us.i:                         ; preds = %._crit_edge.us.us.us.i
+  %invariant.gep.i.us.us.us.i = getelementptr [8 x i8], ptr %.080.us.us.us.i, i64 %factor.op.mul.i.reass.i ; 2 uses
+  br label %.lr.ph.i.us.us.us.i
+
 .lr.ph.i.us.us.us.i:                              ; preds = %._crit_edge78.us.us.us.i, %..loopexit_crit_edge.i.us.us.us.i
   %.036.i.us.us.us.i = phi i64 [ %i.hx, %..loopexit_crit_edge.i.us.us.us.i ], [ 0, %._crit_edge78.us.us.us.i ] ; 3 uses
   %i.hx = add nuw nsw i64 %.036.i.us.us.us.i, 1   ; 2 uses
@@ -224,7 +237,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.if = getelementptr inbounds [8 x i8], ptr %.03034.i.us.us.us.i.prol, i64 %i.dx ; 2 uses
   %prol.iter84.next = add i64 %prol.iter84, 1     ; 2 uses
   %prol.iter84.cmp.not = icmp eq i64 %prol.iter84.next, %xtraiter82
-  br i1 %prol.iter84.cmp.not, label %.prol.loopexit81, label %.prol.preheader80, !llvm.loop !56
+  br i1 %prol.iter84.cmp.not, label %.prol.loopexit81, label %.prol.preheader80, !llvm.loop !57
 
 .prol.loopexit81:                                 ; preds = %.prol.preheader80, %.lr.ph.i.us.us.us.i
   %.02935.i.us.us.us.i.unr = phi i64 [ %i.dr, %.lr.ph.i.us.us.us.i ], [ %i.id, %.prol.preheader80 ]
@@ -296,16 +309,7 @@ swapri.exit.us.us.us.i.loopexit:                  ; preds = %..loopexit_crit_edg
   %i.jn = add nuw nsw i64 %.07179.us.us.us.i, 1   ; 2 uses
   %i.jo = getelementptr inbounds [8 x i8], ptr %.080.us.us.us.i, i64 %i.dp
   %exitcond93.not.i = icmp eq i64 %i.jn, %i.do
-  br i1 %exitcond93.not.i, label %reorder_dit.exit, label %.preheader.us.us.us.i, !llvm.loop !57
-
-._crit_edge.us.us.us.i:                           ; preds = %scalar.ph, %middle.block
-  %2 = add nuw nsw i64 %.07276.us.us.us.i, 1
-  %exitcond92.not.i = icmp eq i64 %.07276.us.us.us.i, %i.ed
-  br i1 %exitcond92.not.i, label %._crit_edge78.us.us.us.i, label %.lr.ph.us.us.us.i, !llvm.loop !58
-
-._crit_edge78.us.us.us.i:                         ; preds = %._crit_edge.us.us.us.i
-  %invariant.gep.i.us.us.us.i = getelementptr [8 x i8], ptr %.080.us.us.us.i, i64 %factor.op.mul.i.reass.i ; 2 uses
-  br label %.lr.ph.i.us.us.us.i
+  br i1 %exitcond93.not.i, label %reorder_dit.exit, label %.preheader.us.us.us.i, !llvm.loop !58
 
 .preheader.lr.ph.split.i:                         ; preds = %.preheader.lr.ph.i
   %i.jp = icmp slt i64 %i.ds, 1
@@ -355,7 +359,7 @@ swapri.exit.us.us.us.i.loopexit:                  ; preds = %..loopexit_crit_edg
   %i.jz = add nuw nsw i64 %.07179.i, 1            ; 2 uses
   %i.ka = getelementptr inbounds [8 x i8], ptr %.080.i, i64 %i.dp
   %exitcond.not.i18 = icmp eq i64 %i.jz, %i.do
-  br i1 %exitcond.not.i18, label %reorder_dit.exit, label %.preheader.i, !llvm.loop !57
+  br i1 %exitcond.not.i18, label %reorder_dit.exit, label %.preheader.i, !llvm.loop !58
 
 .preheader.i.new:                                 ; preds = %.prol.loopexit, %.preheader.i.new
   %.02935.i.i = phi i64 [ %i.lf, %.preheader.i.new ], [ %.02935.i.i.unr, %.prol.loopexit ]
@@ -758,8 +762,8 @@ attributes #5 = { nounwind }
 !53 = distinct !{!53, !49}
 !54 = distinct !{!54, !37, !39, !40}
 !55 = distinct !{!55, !37, !39}
-!56 = distinct !{!56, !41}
-!57 = distinct !{!57, !37}
+!56 = distinct !{!56, !37}
+!57 = distinct !{!57, !41}
 !58 = distinct !{!58, !37}
 !59 = distinct !{!59, !41}
 !60 = !{!50}

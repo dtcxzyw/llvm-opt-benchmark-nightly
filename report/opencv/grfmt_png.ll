@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %scalar.ph
   %.2274397.us.us = phi i32 [ %i.bo, %._crit_edge.split.us431.us ], [ 0, %.preheader324.lr.ph.split.us ] ; 3 uses
   br label %bb.d
 
-bb.d:                                             ; preds = %.preheader324.us.us, %bb.f
+bb.d:                                             ; preds = %bb.f, %.preheader324.us.us
   %.1174378.us414.us = phi ptr [ %.0173407.us.us, %.preheader324.us.us ], [ %i.bm, %bb.f ] ; 2 uses
   %.1176377.us415.us = phi ptr [ %.0175406.us.us, %.preheader324.us.us ], [ %i.bl, %bb.f ] ; 3 uses
   %.1178376.us416.us = phi ptr [ %.0177405.us.us, %.preheader324.us.us ], [ %i.bk, %bb.f ] ; 3 uses

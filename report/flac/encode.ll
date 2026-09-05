@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/flac/original/encode?download=true
+inline.NumInlined: 81
+inline.NumDeleted: 18
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 13
+loop-unroll.NumUnrolled: 17
 begin_hunk_0_@flac__encode_file:bb.a
   %i.sq = load i32, ptr %i.b, align 1
   %i.sr = icmp ne i32 %i.sq, 1296912195
@@ -200,9 +205,8 @@ bb.ee:                                            ; preds = %read_bytes.exit.i47
   %i.wo = or i64 %i.wl, %i.wn                     ; 2 uses
   %i.wp = zext nneg i16 %i.vk to i64              ; 2 uses
   %i.wq = lshr i64 %i.wo, %i.wp
-  %i.wr = add nuw nsw i64 %i.wp, 4294967295
-  %15 = and i64 %i.wr, 4294967295
-  %i.ws = lshr i64 %i.wo, %15
+  %i.wr = add nsw i64 %i.wp, -1
+  %i.ws = lshr i64 %i.wo, %i.wr
   %i.wt = and i64 %i.ws, 1
   %i.wu = add nuw i64 %i.wt, %i.wq
   %i.wv = trunc i64 %i.wu to i32                  ; 2 uses

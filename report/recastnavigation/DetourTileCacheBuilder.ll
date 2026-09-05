@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/recastnavigation/original/DetourTileCacheBuilder?download=true
+inline.NumInlined: 236
+inline.NumDeleted: 63
+loop-unroll.NumCompletelyUnrolled: 13
+loop-unroll.NumRuntimeUnrolled: 13
+loop-unroll.NumUnrolled: 27
 begin_hunk_0_@_Z23dtBuildTileCacheRegionsP16dtTileCacheAllocR16dtTileCacheLayeri:bb.a
   %i.fw = getelementptr inbounds nuw [24 x i8], ptr %i.fc, i64 %indvars.iv398
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 165
@@ -200,9 +205,8 @@ bb.ak:                                            ; preds = %bb.aj
 
 bb.al:                                            ; preds = %bb.ak
   %i.iv = zext i8 %i.iu to i64                    ; 2 uses
-  %3 = add nuw nsw i64 %i.iv, 4294967295
-  %4 = and i64 %3, 4294967295
-  %i.iw = getelementptr inbounds nuw i8, ptr %i.is, i64 %4
+  %3 = getelementptr i8, ptr %i.is, i64 %i.iv
+  %i.iw = getelementptr i8, ptr %3, i64 -1
   %i.ix = load i8, ptr %i.iw, align 1, !tbaa !66
   %i.iy = icmp eq i8 %i.ix, %i.ir
   br i1 %i.iy, label %_ZL13addUniqueLastPhRhh.exit, label %._crit_edge.i
@@ -227,9 +231,8 @@ _ZL13addUniqueLastPhRhh.exit:                     ; preds = %bb.al, %._crit_edge
 
 bb.am:                                            ; preds = %_ZL13addUniqueLastPhRhh.exit
   %i.jh = zext i8 %i.jg to i64                    ; 2 uses
-  %5 = add nuw nsw i64 %i.jh, 4294967295
-  %6 = and i64 %5, 4294967295
-  %i.ji = getelementptr inbounds nuw i8, ptr %i.je, i64 %6
+  %4 = getelementptr i8, ptr %i.je, i64 %i.jh
+  %i.ji = getelementptr i8, ptr %4, i64 -1
   %i.jj = load i8, ptr %i.ji, align 1, !tbaa !66
   %i.jk = icmp eq i8 %i.jj, %i.hu
   br i1 %i.jk, label %_ZL13addUniqueLastPhRhh.exit265, label %._crit_edge.i263

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sentencepiece/original/damerau_levenshtein_distance?download=true
+inline.NumInlined: 55
+inline.NumDeleted: 16
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -42,7 +46,7 @@ iter.check:                                       ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #3
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 %i.c
   %i.j = add nuw nsw i64 %i.c, 1                  ; 5 uses
-  %min.iters.check = icmp ult i8 %4, 3
+  %min.iters.check = icmp ult i8 %4, 7
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -50,7 +54,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check126, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.k = and i64 %i.j, 28
+  %i.k = and i64 %i.j, 24
   %n.vec = and i64 %i.j, 224                      ; 6 uses
   %i.l = trunc nuw i64 %n.vec to i8               ; 2 uses
   %i.m = getelementptr i8, ptr %5, i64 %n.vec
@@ -86,21 +90,21 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %bc.resume.val = phi i8 [ %i.l, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec128 = and i64 %i.j, 252                   ; 4 uses
+  %n.vec128 = and i64 %i.j, 248                   ; 4 uses
   %i.s = trunc nuw i64 %n.vec128 to i8
   %i.t = getelementptr i8, ptr %5, i64 %n.vec128
-  %broadcast.splatinsert = insertelement <4 x i8> poison, i8 %bc.resume.val, i64 0
-  %broadcast.splat = shufflevector <4 x i8> %broadcast.splatinsert, <4 x i8> poison, <4 x i32> zeroinitializer
-  %induction = add nuw nsw <4 x i8> %broadcast.splat, <i8 0, i8 1, i8 2, i8 3>
+  %broadcast.splatinsert = insertelement <8 x i8> poison, i8 %bc.resume.val, i64 0
+  %broadcast.splat = shufflevector <8 x i8> %broadcast.splatinsert, <8 x i8> poison, <8 x i32> zeroinitializer
+  %induction = add nuw nsw <8 x i8> %broadcast.splat, <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7>
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index129 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next132, %vec.epilog.vector.body ] ; 2 uses
-  %vec.ind130 = phi <4 x i8> [ %induction, %vec.epilog.ph ], [ %vec.ind.next133, %vec.epilog.vector.body ] ; 2 uses
+  %vec.ind130 = phi <8 x i8> [ %induction, %vec.epilog.ph ], [ %vec.ind.next133, %vec.epilog.vector.body ] ; 2 uses
   %next.gep131 = getelementptr i8, ptr %5, i64 %index129
-  store <4 x i8> %vec.ind130, ptr %next.gep131, align 4, !tbaa !13
-  %index.next132 = add nuw i64 %index129, 4       ; 2 uses
-  %vec.ind.next133 = add nuw nsw <4 x i8> %vec.ind130, splat (i8 4)
+  store <8 x i8> %vec.ind130, ptr %next.gep131, align 8, !tbaa !13
+  %index.next132 = add nuw i64 %index129, 8       ; 2 uses
+  %vec.ind.next133 = add nuw nsw <8 x i8> %vec.ind130, splat (i8 8)
   %i.u = icmp eq i64 %index.next132, %n.vec128
   br i1 %i.u, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !9
 
@@ -332,7 +336,7 @@ attributes #3 = { nounwind }
 !11 = distinct !{!11, !15}
 !12 = distinct !{!12, !15}
 !13 = !{!5, !5, i64 0}
-!14 = !{!"branch_weights", i32 4, i32 28}
+!14 = !{!"branch_weights", i32 8, i32 24}
 !15 = !{!"llvm.loop.mustprogress"}
 !16 = !{!"llvm.loop.isvectorized", i32 1}
 !17 = !{!"llvm.loop.unroll.runtime.disable"}

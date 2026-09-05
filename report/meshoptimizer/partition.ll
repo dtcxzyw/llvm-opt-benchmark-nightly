@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/meshoptimizer/original/partition?download=true
+inline.NumInlined: 33
+inline.NumDeleted: 17
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@meshopt_partitionClusters:bb.a
   %i.mh = fadd <2 x float> %i.ma, %i.mg
   %i.mi = getelementptr inbounds nuw i8, ptr %i.mf, i64 8
@@ -200,16 +205,6 @@ bb.af:                                            ; preds = %._crit_edge
   %.not87.us.i = icmp eq i32 %i.qf, %i.qh
   br i1 %.not87.us.i, label %._crit_edge94.split.us.us.i, label %.lr.ph93.us.i
 
-._crit_edge94.split.us.us.i:                      ; preds = %bb.al, %.lr.ph103.split.us.i
-  %.174.lcssa.us.i = phi i32 [ %.07399.us.i, %.lr.ph103.split.us.i ], [ %.477.us.us.i, %bb.al ] ; 2 uses
-  %.169.lcssa.us.i = phi float [ %.068100.us.i, %.lr.ph103.split.us.i ], [ %.472.us.us.i, %bb.al ]
-  %.1.lcssa.us.i = phi i32 [ %.067101.us.i, %.lr.ph103.split.us.i ], [ %.4.us.us.i, %bb.al ] ; 2 uses
-  %10 = getelementptr inbounds nuw [32 x i8], ptr %i.jv, i64 %i.qd
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 4
-  %12 = load i32, ptr %11, align 4, !tbaa !21     ; 2 uses
-  %13 = icmp sgt i32 %12, -1
-  br i1 %13, label %.lr.ph103.split.us.i, label %_ZN7meshoptL16pickGroupToMergeEPKNS_12ClusterGroupEiRKNS_16ClusterAdjacencyEmbPjRj.exit, !llvm.loop !53
-
 .lr.ph93.us.i:                                    ; preds = %.lr.ph103.split.us.i, %bb.al
   %.06391.us.us.i = phi i32 [ %i.sn, %bb.al ], [ %i.qf, %.lr.ph103.split.us.i ] ; 2 uses
   %.190.us.us.i = phi i32 [ %.4.us.us.i, %bb.al ], [ %.067101.us.i, %.lr.ph103.split.us.i ] ; 4 uses
@@ -304,7 +299,17 @@ bb.al:                                            ; preds = %_ZN7meshoptL11bound
   %i.sn = add i32 %.06391.us.us.i, 1              ; 2 uses
   %i.so = load i32, ptr %i.qg, align 4, !tbaa !15
   %.not.us.us.i = icmp eq i32 %i.sn, %i.so
-  br i1 %.not.us.us.i, label %._crit_edge94.split.us.us.i, label %.lr.ph93.us.i, !llvm.loop !54
+  br i1 %.not.us.us.i, label %._crit_edge94.split.us.us.i, label %.lr.ph93.us.i, !llvm.loop !53
+
+._crit_edge94.split.us.us.i:                      ; preds = %bb.al, %.lr.ph103.split.us.i
+  %.174.lcssa.us.i = phi i32 [ %.07399.us.i, %.lr.ph103.split.us.i ], [ %.477.us.us.i, %bb.al ] ; 2 uses
+  %.169.lcssa.us.i = phi float [ %.068100.us.i, %.lr.ph103.split.us.i ], [ %.472.us.us.i, %bb.al ]
+  %.1.lcssa.us.i = phi i32 [ %.067101.us.i, %.lr.ph103.split.us.i ], [ %.4.us.us.i, %bb.al ] ; 2 uses
+  %10 = getelementptr inbounds nuw [32 x i8], ptr %i.jv, i64 %i.qd
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 4
+  %12 = load i32, ptr %11, align 4, !tbaa !21     ; 2 uses
+  %13 = icmp sgt i32 %12, -1
+  br i1 %13, label %.lr.ph103.split.us.i, label %_ZN7meshoptL16pickGroupToMergeEPKNS_12ClusterGroupEiRKNS_16ClusterAdjacencyEmbPjRj.exit, !llvm.loop !54
 
 .lr.ph86.i:                                       ; preds = %bb.af, %._crit_edge.i222
   %.06684.i = phi i32 [ %i.sw, %._crit_edge.i222 ], [ %.sroa.034.0.extract.trunc, %bb.af ]
@@ -373,7 +378,7 @@ bb.an:                                            ; preds = %bb.am, %.lr.ph.i221
   %i.tu = getelementptr inbounds nuw i8, ptr %i.tt, i64 4
   %i.tv = load i32, ptr %i.tu, align 4, !tbaa !21 ; 2 uses
   %i.tw = icmp sgt i32 %i.tv, -1
-  br i1 %i.tw, label %.lr.ph103.split.i, label %_ZN7meshoptL16pickGroupToMergeEPKNS_12ClusterGroupEiRKNS_16ClusterAdjacencyEmbPjRj.exit, !llvm.loop !53
+  br i1 %i.tw, label %.lr.ph103.split.i, label %_ZN7meshoptL16pickGroupToMergeEPKNS_12ClusterGroupEiRKNS_16ClusterAdjacencyEmbPjRj.exit, !llvm.loop !54
 
 .lr.ph93.i:                                       ; preds = %.lr.ph103.split.i, %bb.ar
   %.06391.i = phi i32 [ %i.uy, %bb.ar ], [ %i.tq, %.lr.ph103.split.i ] ; 2 uses
@@ -429,7 +434,7 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap, %bb.
   %i.uy = add i32 %.06391.i, 1                    ; 2 uses
   %i.uz = load i32, ptr %i.tr, align 4, !tbaa !15
   %.not.i224 = icmp eq i32 %i.uy, %i.uz
-  br i1 %.not.i224, label %._crit_edge94.split.i, label %.lr.ph93.i, !llvm.loop !54
+  br i1 %.not.i224, label %._crit_edge94.split.i, label %.lr.ph93.i, !llvm.loop !53
 
 _ZN7meshoptL16pickGroupToMergeEPKNS_12ClusterGroupEiRKNS_16ClusterAdjacencyEmbPjRj.exit: ; preds = %._crit_edge94.split.us.us.i, %._crit_edge94.split.i
   %.073.lcssa.i = phi i32 [ %.174.lcssa.i, %._crit_edge94.split.i ], [ %.174.lcssa.us.i, %._crit_edge94.split.us.us.i ] ; 3 uses

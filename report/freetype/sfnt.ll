@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %.0108135.us.us = phi ptr [ %.6114.us.us, %bb.l ], [ %1, %.split.us ]
   br label %bb.f
 
-bb.f:                                             ; preds = %.lr.ph.us.us, %bb.f
+bb.f:                                             ; preds = %bb.f, %.lr.ph.us.us
   %.1131.us.us = phi i32 [ %i.q, %.lr.ph.us.us ], [ %i.bj, %bb.f ] ; 4 uses
   %.198130.us.us = phi ptr [ %.0106136.us.us, %.lr.ph.us.us ], [ %i.be, %bb.f ] ; 3 uses
   %.4129.us.us = phi i16 [ %.099139.us.us, %.lr.ph.us.us ], [ %i.bi, %bb.f ]
@@ -225,6 +225,10 @@ bb.f:                                             ; preds = %.lr.ph.us.us, %bb.f
   %i.bj = add nsw i32 %.1131.us.us, -8            ; 5 uses
   %i.bk = icmp sgt i32 %.1131.us.us, 15
   br i1 %i.bk, label %bb.f, label %._crit_edge.us.us, !llvm.loop !741
+
+._crit_edge.us.us:                                ; preds = %bb.f
+  %6 = icmp sgt i32 %.1131.us.us, 8
+  br i1 %6, label %bb.g, label %bb.l
 
 bb.g:                                             ; preds = %._crit_edge.us.us
   %i.bl = icmp slt i32 %.0101138.us.us, %i.bj
@@ -277,10 +281,6 @@ bb.l:                                             ; preds = %bb.k, %bb.h, %._cri
   %i.ck = getelementptr inbounds i8, ptr %.0106136.us.us, i64 %i.ao
   %i.cl = icmp sgt i32 %.0105137.us.us, 1
   br i1 %i.cl, label %.lr.ph.us.us, label %.loopexit, !llvm.loop !742
-
-._crit_edge.us.us:                                ; preds = %bb.f
-  %6 = icmp sgt i32 %.1131.us.us, 8
-  br i1 %6, label %bb.g, label %bb.l
 
 .split.us.split:                                  ; preds = %.split.us
   %i.cm = lshr exact i32 65280, %i.q              ; 2 uses
@@ -684,8 +684,8 @@ select.unfold:                                    ; preds = %bb.i, %bb.j
   br i1 %exitcond.not, label %.thread10, label %.split, !llvm.loop !828
 
 .thread10:                                        ; preds = %.thread4.split, %select.unfold, %.thread4.split.us.split.us.us.us, %bb.d, %.split136.us.split.us
-  %.6 = phi i32 [ %.296, %select.unfold ], [ %.094104.us.us.mux, %bb.d ], [ %.094104.us.us.mux, %.thread4.split.us.split.us.us.us ], [ %.094104.us.us.mux, %.split136.us.split.us ], [ %.296, %.thread4.split ]
-  %.5 = phi i32 [ %.2, %select.unfold ], [ %spec.store.select.us.us, %bb.d ], [ 0, %.thread4.split.us.split.us.us.us ], [ 0, %.split136.us.split.us ], [ 0, %.thread4.split ] ; 2 uses
+  %.6 = phi i32 [ %.296, %select.unfold ], [ %.094104.us.us.mux, %.split136.us.split.us ], [ %.094104.us.us.mux, %.thread4.split.us.split.us.us.us ], [ %.094104.us.us.mux, %bb.d ], [ %.296, %.thread4.split ]
+  %.5 = phi i32 [ %.2, %select.unfold ], [ 0, %.split136.us.split.us ], [ 0, %.thread4.split.us.split.us.us.us ], [ %spec.store.select.us.us, %bb.d ], [ 0, %.thread4.split ] ; 2 uses
   br i1 %.not114, label %.thread14, label %.thread10.thread21
 
 .thread10.thread21:                               ; preds = %.thread, %.thread10

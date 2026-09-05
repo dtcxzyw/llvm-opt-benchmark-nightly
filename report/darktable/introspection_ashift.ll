@@ -205,11 +205,6 @@ bb.k:                                             ; preds = %bb.i
   %i.ac = zext nneg i32 %i.y to i64
   br label %.lr.ph.us.us.preheader
 
-._crit_edge143.split.us.us:                       ; preds = %._crit_edge.split.us.us.us
-  %indvars.iv.next170 = add nuw nsw i64 %indvars.iv169, 1 ; 2 uses
-  %8 = icmp samesign ult i64 %indvars.iv.next170, %i.ac
-  br i1 %8, label %.lr.ph.us.us.preheader, label %._crit_edge
-
 .lr.ph.us.us.preheader:                           ; preds = %.lr.ph156.split.us.preheader, %._crit_edge143.split.us.us
   %indvars.iv169 = phi i64 [ 0, %.lr.ph156.split.us.preheader ], [ %indvars.iv.next170, %._crit_edge143.split.us.us ] ; 2 uses
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv169 ; 2 uses
@@ -259,6 +254,11 @@ isaligned.exit.thread.us.us.us:                   ; preds = %bb.o, %bb.n, %bb.m,
   %i.av = add nsw i32 %.086139.us.us157, 1
   %.not98.us.us158 = icmp sgt i32 %.086139.us.us157, %i.ae
   br i1 %.not98.us.us158, label %._crit_edge143.split.us.us, label %.lr.ph.us.us
+
+._crit_edge143.split.us.us:                       ; preds = %._crit_edge.split.us.us.us
+  %indvars.iv.next170 = add nuw nsw i64 %indvars.iv169, 1 ; 2 uses
+  %8 = icmp samesign ult i64 %indvars.iv.next170, %i.ac
+  br i1 %8, label %.lr.ph.us.us.preheader, label %._crit_edge
 
 .lr.ph142:                                        ; preds = %._crit_edge143.split, %.lr.ph156.split.preheader
   %i.aw = phi i32 [ %i.y, %.lr.ph156.split.preheader ], [ %i.dh, %._crit_edge143.split ]

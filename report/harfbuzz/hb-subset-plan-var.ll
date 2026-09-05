@@ -205,6 +205,10 @@ _ZNK2OT13VarRegionAxis8evaluateEi.exit.thread.i144.us: ; preds = %_ZNK2OT13VarRe
   %exitcond.not.i147.us = icmp eq i64 %indvars.iv.next.i146.us, %i.da
   br i1 %exitcond.not.i147.us, label %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit68.loopexit.us, label %.lr.ph.i132.us, !llvm.loop !578
 
+_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit68.loopexit.us: ; preds = %_ZNK2OT13VarRegionAxis8evaluateEi.exit.thread.i144.us
+  %6 = fcmp une float %.121.i145.us, 0.000000e+00
+  br i1 %6, label %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit68.thread210.us, label %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit68.thread.us
+
 _ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit68.thread210.us: ; preds = %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit68.loopexit.us, %.critedge.i67.us
   %.1.i64212.us = phi float [ %.121.i145.us, %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit68.loopexit.us ], [ 1.000000e+00, %.critedge.i67.us ]
   %i.el = load i16, ptr %.052242.us, align 1, !tbaa !62
@@ -219,10 +223,6 @@ _ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit68.thread.us: 
   %indvars.iv.next276 = add nuw nsw i64 %indvars.iv275, 1 ; 2 uses
   %exitcond279.not = icmp eq i64 %indvars.iv.next276, %wide.trip.count278
   br i1 %exitcond279.not, label %.preheader, label %bb.j, !llvm.loop !580
-
-_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit68.loopexit.us: ; preds = %_ZNK2OT13VarRegionAxis8evaluateEi.exit.thread.i144.us
-  %6 = fcmp une float %.121.i145.us, 0.000000e+00
-  br i1 %6, label %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit68.thread210.us, label %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit68.thread.us
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit74.thread
   %indvars.iv = phi i64 [ 0, %.lr.ph.split.preheader ], [ %indvars.iv.next, %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit74.thread ] ; 2 uses
@@ -492,6 +492,10 @@ _ZNK2OT13VarRegionAxis8evaluateEi.exit.thread.i184.us: ; preds = %_ZNK2OT13VarRe
   %exitcond.not.i187.us = icmp eq i64 %indvars.iv.next.i186.us, %i.hr
   br i1 %exitcond.not.i187.us, label %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit.loopexit.us, label %.lr.ph.i172.us, !llvm.loop !578
 
+_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit.loopexit.us: ; preds = %_ZNK2OT13VarRegionAxis8evaluateEi.exit.thread.i184.us
+  %7 = fcmp une float %.121.i185.us, 0.000000e+00
+  br i1 %7, label %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit.thread219.us, label %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit.thread.us
+
 _ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit.thread219.us: ; preds = %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit.loopexit.us, %.critedge.i.us
   %.1.i221.us = phi float [ %.121.i185.us, %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit.loopexit.us ], [ 1.000000e+00, %.critedge.i.us ]
   %i.jc = load i8, ptr %.0253.us, align 1, !tbaa !159
@@ -505,10 +509,6 @@ _ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit.thread.us: ; 
   %indvars.iv.next286 = add nuw nsw i64 %indvars.iv285, 1 ; 2 uses
   %exitcond289.not = icmp eq i64 %indvars.iv.next286, %wide.trip.count288
   br i1 %exitcond289.not, label %.loopexit, label %bb.z, !llvm.loop !581
-
-_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit.loopexit.us: ; preds = %_ZNK2OT13VarRegionAxis8evaluateEi.exit.thread.i184.us
-  %7 = fcmp une float %.121.i185.us, 0.000000e+00
-  br i1 %7, label %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit.thread219.us, label %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit.thread.us
 
 .lr.ph244.split:                                  ; preds = %.lr.ph244.split.preheader, %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit68.thread
   %indvars.iv272 = phi i64 [ %i.cq, %.lr.ph244.split.preheader ], [ %indvars.iv.next273, %_ZNK2OT13VarRegionList8evaluateEjPKijPNS_17hb_scalar_cache_tE.exit68.thread ] ; 2 uses

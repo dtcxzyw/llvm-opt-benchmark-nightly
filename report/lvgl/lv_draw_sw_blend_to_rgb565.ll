@@ -204,9 +204,9 @@ bb.d:                                             ; preds = %bb.b
   %.1284344.us = phi ptr [ %i.cn, %._crit_edge338.split.split.us355 ], [ %i.g, %.preheader321.us.preheader ] ; 2 uses
   br label %lv_color_24_16_mix.exit.us352
 
-lv_color_24_16_mix.exit.us352:                    ; preds = %.preheader321.us, %lv_color_24_16_mix.exit.us352
-  %indvars.iv451 = phi i64 [ 0, %.preheader321.us ], [ %indvars.iv.next452, %lv_color_24_16_mix.exit.us352 ] ; 2 uses
-  %indvars.iv449 = phi i64 [ 0, %.preheader321.us ], [ %indvars.iv.next450, %lv_color_24_16_mix.exit.us352 ] ; 2 uses
+lv_color_24_16_mix.exit.us352:                    ; preds = %lv_color_24_16_mix.exit.us352, %.preheader321.us
+  %indvars.iv451 = phi i64 [ %indvars.iv.next452, %lv_color_24_16_mix.exit.us352 ], [ 0, %.preheader321.us ] ; 2 uses
+  %indvars.iv449 = phi i64 [ %indvars.iv.next450, %lv_color_24_16_mix.exit.us352 ], [ 0, %.preheader321.us ] ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.1278347.us, i64 %indvars.iv449 ; 3 uses
   %i.bg = getelementptr inbounds nuw [2 x i8], ptr %.1284344.us, i64 %indvars.iv451 ; 2 uses
   %i.bh = load i16, ptr %i.bg, align 2, !tbaa !12 ; 3 uses

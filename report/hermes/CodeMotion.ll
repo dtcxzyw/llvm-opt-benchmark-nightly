@@ -204,12 +204,6 @@ bb.x:                                             ; preds = %.lr.ph24.split.us.i
   %i.fn = icmp sgt i32 %i.fm, 0
   br i1 %i.fn, label %.lr.ph.us.i, label %.loopexit.us.i
 
-.loopexit.us.i:                                   ; preds = %bb.ac, %bb.x, %.lr.ph24.split.us.i
-  %.4.us.i = phi i1 [ %.01622.us.i, %.lr.ph24.split.us.i ], [ %.01622.us.i, %bb.x ], [ %.3.us.us.i, %bb.ac ] ; 2 uses
-  %.sroa.010.0.us.i = load ptr, ptr %.sroa.010.023.us.i, align 8, !tbaa !62 ; 2 uses
-  %.not16.us.i = icmp eq ptr %.sroa.010.0.us.i, %i.fc
-  br i1 %.not16.us.i, label %_ZL23sinkInstructionsInBlockPN6hermes10BasicBlockERKNS_13DominanceInfoERKNS_12LoopAnalysisE.exit, label %.lr.ph24.split.us.i, !llvm.loop !28
-
 .lr.ph.us.i:                                      ; preds = %bb.x, %bb.ac
   %.019.us.us.i = phi i32 [ %i.fy, %bb.ac ], [ 0, %bb.x ] ; 2 uses
   %.118.us.us.i = phi i1 [ %.3.us.us.i, %bb.ac ], [ %.01622.us.i, %bb.x ] ; 6 uses
@@ -250,7 +244,13 @@ bb.ac:                                            ; preds = %bb.ab, %switch.earl
   %.3.us.us.i = phi i1 [ %.118.us.us.i, %.lr.ph.us.i ], [ true, %bb.ab ], [ %.118.us.us.i, %switch.early.test.us.us.i ], [ %.118.us.us.i, %switch.early.test.us.us.i ], [ %.118.us.us.i, %bb.z ], [ %.118.us.us.i, %bb.y ], [ %.118.us.us.i, %bb.aa ] ; 2 uses
   %i.fy = add nuw nsw i32 %.019.us.us.i, 1        ; 2 uses
   %exitcond28.not.i = icmp eq i32 %i.fy, %i.fm
-  br i1 %exitcond28.not.i, label %.loopexit.us.i, label %.lr.ph.us.i, !llvm.loop !29
+  br i1 %exitcond28.not.i, label %.loopexit.us.i, label %.lr.ph.us.i, !llvm.loop !28
+
+.loopexit.us.i:                                   ; preds = %bb.ac, %bb.x, %.lr.ph24.split.us.i
+  %.4.us.i = phi i1 [ %.01622.us.i, %.lr.ph24.split.us.i ], [ %.01622.us.i, %bb.x ], [ %.3.us.us.i, %bb.ac ] ; 2 uses
+  %.sroa.010.0.us.i = load ptr, ptr %.sroa.010.023.us.i, align 8, !tbaa !62 ; 2 uses
+  %.not16.us.i = icmp eq ptr %.sroa.010.0.us.i, %i.fc
+  br i1 %.not16.us.i, label %_ZL23sinkInstructionsInBlockPN6hermes10BasicBlockERKNS_13DominanceInfoERKNS_12LoopAnalysisE.exit, label %.lr.ph24.split.us.i, !llvm.loop !29
 
 .lr.ph24.split.i:                                 ; preds = %.loopexit.i, %.lr.ph24.split.preheader.i
   %.sroa.010.023.i = phi ptr [ %.sroa.010.0.i, %.loopexit.i ], [ %.sroa.010.0204245.i, %.lr.ph24.split.preheader.i ] ; 5 uses
@@ -316,13 +316,13 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai, %swi
   %.3.i = phi i1 [ %.118.i, %.lr.ph.i21 ], [ true, %bb.aj ], [ %.118.i, %bb.ai ], [ %.118.i, %switch.early.test.i ], [ %.118.i, %bb.af ], [ %.118.i, %bb.ae ], [ %.118.i, %bb.ag ], [ %.118.i, %switch.early.test.i ] ; 2 uses
   %i.gr = add nuw nsw i32 %.019.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.gr, %i.gc
-  br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i21, !llvm.loop !29
+  br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i21, !llvm.loop !28
 
 .loopexit.i:                                      ; preds = %bb.ak, %bb.ad, %.lr.ph24.split.i
   %.4.i = phi i1 [ %.01622.i, %.lr.ph24.split.i ], [ %.01622.i, %bb.ad ], [ %.3.i, %bb.ak ] ; 2 uses
   %.sroa.010.0.i = load ptr, ptr %.sroa.010.023.i, align 8, !tbaa !62 ; 2 uses
   %.not16.i = icmp eq ptr %.sroa.010.0.i, %i.fi
-  br i1 %.not16.i, label %_ZL23sinkInstructionsInBlockPN6hermes10BasicBlockERKNS_13DominanceInfoERKNS_12LoopAnalysisE.exit, label %.lr.ph24.split.i, !llvm.loop !28
+  br i1 %.not16.i, label %_ZL23sinkInstructionsInBlockPN6hermes10BasicBlockERKNS_13DominanceInfoERKNS_12LoopAnalysisE.exit, label %.lr.ph24.split.i, !llvm.loop !29
 
 _ZL23sinkInstructionsInBlockPN6hermes10BasicBlockERKNS_13DominanceInfoERKNS_12LoopAnalysisE.exit: ; preds = %.loopexit.i, %.loopexit.us.i, %_ZNK6hermes12LoopAnalysis13isBlockInLoopEPKNS_10BasicBlockE.exit.i.thread, %_ZNK6hermes12LoopAnalysis13isBlockInLoopEPKNS_10BasicBlockE.exit.i, %_ZNK6hermes12LoopAnalysis13isBlockInLoopEPKNS_10BasicBlockE.exit.thread.i
   %.016.lcssa.i = phi i1 [ false, %_ZNK6hermes12LoopAnalysis13isBlockInLoopEPKNS_10BasicBlockE.exit.i ], [ false, %_ZNK6hermes12LoopAnalysis13isBlockInLoopEPKNS_10BasicBlockE.exit.thread.i ], [ false, %_ZNK6hermes12LoopAnalysis13isBlockInLoopEPKNS_10BasicBlockE.exit.i.thread ], [ %.4.us.i, %.loopexit.us.i ], [ %.4.i, %.loopexit.i ] ; 3 uses

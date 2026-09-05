@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/box3d_ubsan/original/recording_replay?download=true
+inline.NumInlined: 839
+inline.NumDeleted: 51
 begin_hunk_0_@b3RecTagLookup_insert_raw:bb.a
 bb.cf:                                            ; preds = %bb.cd
   store i64 %2, ptr %i.jz, align 8, !tbaa !246
@@ -200,7 +202,7 @@ b3RecTagLookup_metadata_offset.exit.lr.ph:        ; preds = %bb.a
   br i1 %i.j, label %b3RecTagLookup_metadata_offset.exit.us.us, label %b3RecTagLookup_metadata_offset.exit, !prof !218, !nosanitize !9
 
 b3RecTagLookup_metadata_offset.exit.us.us:        ; preds = %b3RecTagLookup_metadata_offset.exit.lr.ph, %b3RecTagLookup_total_alloc_size.exit.us.us
-  %i.p = phi ptr [ %11, %b3RecTagLookup_total_alloc_size.exit.us.us ], [ %i.e, %b3RecTagLookup_metadata_offset.exit.lr.ph ] ; 3 uses
+  %i.p = phi ptr [ %14, %b3RecTagLookup_total_alloc_size.exit.us.us ], [ %i.e, %b3RecTagLookup_metadata_offset.exit.lr.ph ] ; 3 uses
   %.024274.us.us = phi i64 [ %i.w, %b3RecTagLookup_total_alloc_size.exit.us.us ], [ %1, %b3RecTagLookup_metadata_offset.exit.lr.ph ] ; 3 uses
   store ptr %i.p, ptr %i.f, align 8, !tbaa !108
   %i.q = load i64, ptr %i.a, align 8, !tbaa !107
@@ -243,30 +245,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ao = load i64, ptr %i.k, align 8, !tbaa !107 ; 2 uses
   %i.ap = add i64 %i.ao, 1
   %.not360 = icmp ult i64 %i.ap, 2
-  br i1 %.not360, label %.split.us277.us, label %.lr.ph.us330
-
-b3RecTagLookup_total_alloc_size.exit.us.us:       ; preds = %.split.us277.us
-  %4 = load ptr, ptr %i.f, align 8, !tbaa !108
-  %5 = load i64, ptr %i.a, align 8, !tbaa !107
-  %6 = mul i64 %5, 18
-  %7 = add i64 %6, 26
-  call void @b3Free(ptr noundef %4, i64 noundef %7) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 32, i1 false)
-  %8 = add i64 %i.w, -1                           ; 2 uses
-  store i64 %8, ptr %i.a, align 8, !tbaa !107
-  %9 = mul i64 %8, 18
-  %10 = add i64 %9, 26
-  %11 = call ptr @b3Alloc(i64 noundef %10) #13    ; 2 uses
-  %.not.us.us.not = icmp eq ptr %11, null
-  br i1 %.not.us.us.not, label %.loopexit, label %b3RecTagLookup_metadata_offset.exit.us.us, !prof !617
-
-.split.us277.us:                                  ; preds = %b3RecTagLookup_bucket_count.exit.us.us.us.us, %bb.h, %.lr.ph.us.us
-  %12 = load i64, ptr %2, align 8, !tbaa !251
-  %13 = load i64, ptr %0, align 8, !tbaa !251
-  %14 = icmp ult i64 %12, %13
-  br i1 %14, label %b3RecTagLookup_total_alloc_size.exit.us.us, label %.split303.us, !prof !252
+  br i1 %.not360, label %.split.us278.us, label %.lr.ph.us330
 
 .lr.ph.us330:                                     ; preds = %.lr.ph.us.us, %b3RecTagLookup_bucket_count.exit.us.us.us.us
   %i.aq = phi i64 [ %i.cc, %b3RecTagLookup_bucket_count.exit.us.us.us.us ], [ %i.ao, %.lr.ph.us.us ]
@@ -329,7 +308,7 @@ bb.h:                                             ; preds = %bb.g
   %.val39.us.us.us.us = load ptr, ptr %i.o, align 8, !tbaa !238
   %i.cb = icmp eq ptr %.val.us.us.us.us, %.val39.us.us.us.us
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
-  br i1 %i.cb, label %.split.us277.us, label %.b3RecTagLookup_bucket_count.exit.us.us.us.us_crit_edge
+  br i1 %i.cb, label %.split.us278.us, label %.b3RecTagLookup_bucket_count.exit.us.us.us.us_crit_edge
 
 .b3RecTagLookup_bucket_count.exit.us.us.us.us_crit_edge: ; preds = %bb.h
   %.pre = load i64, ptr %i.k, align 8, !tbaa !107
@@ -342,7 +321,30 @@ b3RecTagLookup_bucket_count.exit.us.us.us.us:     ; preds = %.b3RecTagLookup_buc
   %i.cf = zext i1 %i.ce to i64
   %i.cg = add i64 %i.cc, %i.cf
   %i.ch = icmp ult i64 %i.cd, %i.cg
-  br i1 %i.ch, label %.lr.ph.us330, label %.split.us277.us
+  br i1 %i.ch, label %.lr.ph.us330, label %.split.us278.us
+
+.split.us278.us:                                  ; preds = %b3RecTagLookup_bucket_count.exit.us.us.us.us, %bb.h, %.lr.ph.us.us
+  %4 = load i64, ptr %2, align 8, !tbaa !251
+  %5 = load i64, ptr %0, align 8, !tbaa !251
+  %6 = icmp ult i64 %4, %5
+  br i1 %6, label %b3RecTagLookup_total_alloc_size.exit.us.us, label %.split303.us, !prof !252
+
+b3RecTagLookup_total_alloc_size.exit.us.us:       ; preds = %.split.us278.us
+  %7 = load ptr, ptr %i.f, align 8, !tbaa !108
+  %8 = load i64, ptr %i.a, align 8, !tbaa !107
+  %9 = mul i64 %8, 18
+  %10 = add i64 %9, 26
+  call void @b3Free(ptr noundef %7, i64 noundef %10) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 32, i1 false)
+  %11 = add i64 %i.w, -1                          ; 2 uses
+  store i64 %11, ptr %i.a, align 8, !tbaa !107
+  %12 = mul i64 %11, 18
+  %13 = add i64 %12, 26
+  %14 = call ptr @b3Alloc(i64 noundef %13) #13    ; 2 uses
+  %.not.us.us.not = icmp eq ptr %14, null
+  br i1 %.not.us.us.not, label %.loopexit, label %b3RecTagLookup_metadata_offset.exit.us.us, !prof !617
 
 b3RecTagLookup_metadata_offset.exit:              ; preds = %b3RecTagLookup_metadata_offset.exit.lr.ph
   store ptr %i.e, ptr %i.f, align 8, !tbaa !108
@@ -412,7 +414,7 @@ bb.j:                                             ; preds = %bb.i
   call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @349, i64 %i.bv) #12, !nosanitize !9
   unreachable, !nosanitize !9
 
-.split303.us:                                     ; preds = %.split.us277.us
+.split303.us:                                     ; preds = %.split.us278.us
   %i.cz = load i64, ptr %i.k, align 8, !tbaa !107 ; 2 uses
   %.not38 = icmp eq i64 %i.cz, 0
   br i1 %.not38, label %bb.k, label %b3RecTagLookup_total_alloc_size.exit41
@@ -815,6 +817,14 @@ bb.c:                                             ; preds = %bb.b
   %i.r = trunc nuw i8 %i.p to i1
   br i1 %i.r, label %.preheader.us.us, label %.thread87
 
+.preheader.us.us:                                 ; preds = %bb.c
+  %3 = icmp sgt i32 %i.k, 0
+  br i1 %3, label %.lr.ph.split.us.us, label %._crit_edge.us.us.thread
+
+._crit_edge.us.us.thread:                         ; preds = %.preheader.us.us
+  %4 = tail call zeroext i8 @b3RecR_U8(ptr noundef nonnull %1) ; 0 uses
+  br label %._crit_edge282.us.us
+
 .lr.ph.split.us.us:                               ; preds = %.preheader.us.us, %bb.f
   %.062278.us.us = phi i32 [ %i.bb, %bb.f ], [ 0, %.preheader.us.us ] ; 3 uses
   %i.s = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.0285.us.us, i32 %.062278.us.us), !nosanitize !9 ; 2 uses
@@ -953,14 +963,6 @@ bb.l:                                             ; preds = %bb.k
   %i.cq = add nuw i32 %.063284.us.us, 1           ; 2 uses
   %exitcond517.not = icmp eq i32 %i.cq, %i.a
   br i1 %exitcond517.not, label %.thread89, label %b3RecMakeShapeId.exit.us.us, !llvm.loop !807
-
-.preheader.us.us:                                 ; preds = %bb.c
-  %3 = icmp sgt i32 %i.k, 0
-  br i1 %3, label %.lr.ph.split.us.us, label %._crit_edge.us.us.thread
-
-._crit_edge.us.us.thread:                         ; preds = %.preheader.us.us
-  %4 = tail call zeroext i8 @b3RecR_U8(ptr noundef nonnull %1) ; 0 uses
-  br label %._crit_edge282.us.us
 
 .lr.ph287.split:                                  ; preds = %.lr.ph287
   %i.cr = tail call i64 @b3RecR_U64(ptr noundef nonnull %1) ; 0 uses

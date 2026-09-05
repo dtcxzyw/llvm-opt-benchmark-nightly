@@ -92,11 +92,6 @@ bb.d:                                             ; preds = %bb.c
   %i.aw = trunc nuw nsw i64 %indvars.iv79 to i32
   br label %.lr.ph63.us
 
-.loopexit.us:                                     ; preds = %.lr.ph63.us, %.lr.ph66.split.us
-  %2 = phi i32 [ %i.at, %.lr.ph66.split.us ], [ %i.bf, %.lr.ph63.us ]
-  %exitcond83.not = icmp eq i64 %indvars.iv.next80, %wide.trip.count82
-  br i1 %exitcond83.not, label %.sink.split, label %.lr.ph66.split.us, !llvm.loop !9
-
 .lr.ph63.us:                                      ; preds = %.lr.ph63.us.preheader, %.lr.ph63.us
   %indvars.iv76 = phi i64 [ %i.av, %.lr.ph63.us.preheader ], [ %indvars.iv.next77, %.lr.ph63.us ] ; 2 uses
   %i.ax = getelementptr inbounds [4 x i8], ptr %i.k, i64 %indvars.iv76
@@ -113,12 +108,17 @@ bb.d:                                             ; preds = %bb.c
   %i.bf = load i32, ptr %i.as, align 4, !tbaa !21 ; 2 uses
   %i.bg = sext i32 %i.bf to i64
   %i.bh = icmp slt i64 %indvars.iv.next77, %i.bg
-  br i1 %i.bh, label %.lr.ph63.us, label %.loopexit.us, !llvm.loop !10
+  br i1 %i.bh, label %.lr.ph63.us, label %.loopexit.us, !llvm.loop !9
+
+.loopexit.us:                                     ; preds = %.lr.ph63.us, %.lr.ph66.split.us
+  %2 = phi i32 [ %i.at, %.lr.ph66.split.us ], [ %i.bf, %.lr.ph63.us ]
+  %exitcond83.not = icmp eq i64 %indvars.iv.next80, %wide.trip.count82
+  br i1 %exitcond83.not, label %.sink.split, label %.lr.ph66.split.us, !llvm.loop !10
 
 .loopexit:                                        ; preds = %.lr.ph63, %.lr.ph66.split
   %i.bi = phi i32 [ %i.bl, %.lr.ph66.split ], [ %i.ca, %.lr.ph63 ]
   %exitcond.not = icmp eq i64 %indvars.iv.next74, %wide.trip.count82
-  br i1 %exitcond.not, label %.sink.split, label %.lr.ph66.split, !llvm.loop !9
+  br i1 %exitcond.not, label %.sink.split, label %.lr.ph66.split, !llvm.loop !10
 
 .lr.ph66.split:                                   ; preds = %.lr.ph66, %.loopexit
   %i.bj = phi i32 [ %i.bi, %.loopexit ], [ %.pre84, %.lr.ph66 ] ; 2 uses
@@ -154,7 +154,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ca = load i32, ptr %i.bk, align 4, !tbaa !21 ; 2 uses
   %i.cb = sext i32 %i.ca to i64
   %i.cc = icmp slt i64 %indvars.iv.next71, %i.cb
-  br i1 %i.cc, label %.lr.ph63, label %.loopexit, !llvm.loop !10
+  br i1 %i.cc, label %.lr.ph63, label %.loopexit, !llvm.loop !9
 
 .sink.split:                                      ; preds = %.loopexit, %.loopexit.us, %._crit_edge, %bb.c
   %.sink = phi i32 [ 0, %bb.c ], [ 1, %.loopexit.us ], [ 1, %._crit_edge ], [ 1, %.loopexit ]

@@ -204,18 +204,6 @@ reply_schedule_callback.exit.us:                  ; preds = %.lr.ph, %reply_sche
   %.not7281.us = icmp eq ptr %i.p, null
   br i1 %.not7281.us, label %._crit_edge.split.us.us, label %reply_schedule_callback.exit77.us.us
 
-._crit_edge.split.us.us.loopexit:                 ; preds = %reply_schedule_callback.exit77.us.us
-  %.pre100 = load i32, ptr %i.k, align 8
-  br label %._crit_edge.split.us.us
-
-._crit_edge.split.us.us:                          ; preds = %._crit_edge.split.us.us.loopexit, %.preheader.us
-  %2 = phi i32 [ %.pre100, %._crit_edge.split.us.us.loopexit ], [ %i.m, %.preheader.us ] ; 2 uses
-  %3 = phi ptr [ %i.z, %._crit_edge.split.us.us.loopexit ], [ %i.n, %.preheader.us ]
-  %indvars.iv.next96 = add nuw nsw i64 %indvars.iv95, 1 ; 2 uses
-  %4 = sext i32 %2 to i64
-  %5 = icmp slt i64 %indvars.iv.next96, %4
-  br i1 %5, label %.preheader.us, label %._crit_edge84, !llvm.loop !42
-
 reply_schedule_callback.exit77.us.us:             ; preds = %.preheader.us, %reply_schedule_callback.exit77.us.us
   %i.q = phi ptr [ %i.ab, %reply_schedule_callback.exit77.us.us ], [ %i.p, %.preheader.us ] ; 2 uses
   %i.r = phi ptr [ %i.z, %reply_schedule_callback.exit77.us.us ], [ %i.n, %.preheader.us ]
@@ -231,7 +219,19 @@ reply_schedule_callback.exit77.us.us:             ; preds = %.preheader.us, %rep
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %indvars.iv95
   %i.ab = load ptr, ptr %i.aa, align 8            ; 2 uses
   %.not72.us.us = icmp eq ptr %i.ab, null
-  br i1 %.not72.us.us, label %._crit_edge.split.us.us.loopexit, label %reply_schedule_callback.exit77.us.us, !llvm.loop !43
+  br i1 %.not72.us.us, label %._crit_edge.split.us.us.loopexit, label %reply_schedule_callback.exit77.us.us, !llvm.loop !42
+
+._crit_edge.split.us.us.loopexit:                 ; preds = %reply_schedule_callback.exit77.us.us
+  %.pre100 = load i32, ptr %i.k, align 8
+  br label %._crit_edge.split.us.us
+
+._crit_edge.split.us.us:                          ; preds = %._crit_edge.split.us.us.loopexit, %.preheader.us
+  %2 = phi i32 [ %.pre100, %._crit_edge.split.us.us.loopexit ], [ %i.m, %.preheader.us ] ; 2 uses
+  %3 = phi ptr [ %i.z, %._crit_edge.split.us.us.loopexit ], [ %i.n, %.preheader.us ]
+  %indvars.iv.next96 = add nuw nsw i64 %indvars.iv95, 1 ; 2 uses
+  %4 = sext i32 %2 to i64
+  %5 = icmp slt i64 %indvars.iv.next96, %4
+  br i1 %5, label %.preheader.us, label %._crit_edge84, !llvm.loop !43
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %reply_schedule_callback.exit
   %i.ac = phi ptr [ %i.bc, %reply_schedule_callback.exit ], [ %i.b, %.lr.ph ] ; 6 uses
@@ -365,7 +365,7 @@ reply_schedule_callback.exit77:                   ; preds = %bb.i, %bb.f
   %i.cr = getelementptr inbounds nuw [8 x i8], ptr %i.cq, i64 %indvars.iv
   %i.cs = load ptr, ptr %i.cr, align 8            ; 2 uses
   %.not72 = icmp eq ptr %i.cs, null
-  br i1 %.not72, label %._crit_edge.split.loopexit, label %.lr.ph82, !llvm.loop !43
+  br i1 %.not72, label %._crit_edge.split.loopexit, label %.lr.ph82, !llvm.loop !42
 
 ._crit_edge.split.loopexit:                       ; preds = %reply_schedule_callback.exit77
   %.pre98 = load i32, ptr %i.e, align 8
@@ -377,7 +377,7 @@ reply_schedule_callback.exit77:                   ; preds = %bb.i, %bb.f
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.cv = sext i32 %i.ct to i64
   %i.cw = icmp slt i64 %indvars.iv.next, %i.cv
-  br i1 %i.cw, label %.preheader, label %._crit_edge84, !llvm.loop !42
+  br i1 %i.cw, label %.preheader, label %._crit_edge84, !llvm.loop !43
 
 ._crit_edge84:                                    ; preds = %._crit_edge.split, %._crit_edge.split.us.us, %.preheader79.thread, %.preheader79
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 48

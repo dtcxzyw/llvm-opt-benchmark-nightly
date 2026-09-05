@@ -147,17 +147,6 @@ bb.b:                                             ; preds = %bb.a
   %.not.i.not33.us.i = icmp eq i16 %i.q, 0
   br i1 %.not.i.not33.us.i, label %._crit_edge.split.us.us.i, label %.lr.ph.us.i
 
-._crit_edge.split.us.us.i:                        ; preds = %_RNCINvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB8_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store3gcp7builder15GoogleConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE4findNCINvNtBa_3map14equivalent_keyBS_BS_B1T_E0E0Cs62u4JVtZyFF_13deltalake_gcp.exit.thread.us.us.i, %.split.us.i
-  %2 = icmp eq <16 x i8> %.sroa.0.0.copyload.i27.us.i, splat (i8 -1)
-  %3 = bitcast <16 x i1> %2 to i16
-  %4 = icmp eq i16 %3, 0
-  br i1 %4, label %5, label %_RINvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store3gcp7builder15GoogleConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE4findNCINvNtB8_3map14equivalent_keyBQ_BQ_B1R_E0ECs62u4JVtZyFF_13deltalake_gcp.exit, !prof !5
-
-5:                                                ; preds = %._crit_edge.split.us.us.i
-  %6 = add i64 %.sroa.9.0.i.us.i, 16              ; 2 uses
-  %7 = add i64 %.sroa.01.0.i.us.i, %6
-  br label %.split.us.i
-
 .lr.ph.us.i:                                      ; preds = %.split.us.i
   %i.r = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %i.q, i1 true)
   %i.s = zext nneg i16 %i.r to i64
@@ -194,6 +183,17 @@ _RNCINvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB8_8RawTableTNtNtNtCsjyY8HP3IvQ6_12o
   %i.am = and i16 %i.al, %.sroa.06.0.i34.us47.us.i ; 3 uses
   %.not.i.not.us.us.i = icmp eq i16 %i.am, 0
   br i1 %.not.i.not.us.us.i, label %._crit_edge.split.us.us.i, label %bb.c
+
+._crit_edge.split.us.us.i:                        ; preds = %_RNCINvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB8_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store3gcp7builder15GoogleConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE4findNCINvNtBa_3map14equivalent_keyBS_BS_B1T_E0E0Cs62u4JVtZyFF_13deltalake_gcp.exit.thread.us.us.i, %.split.us.i
+  %2 = icmp eq <16 x i8> %.sroa.0.0.copyload.i27.us.i, splat (i8 -1)
+  %3 = bitcast <16 x i1> %2 to i16
+  %4 = icmp eq i16 %3, 0
+  br i1 %4, label %5, label %_RINvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB6_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store3gcp7builder15GoogleConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE4findNCINvNtB8_3map14equivalent_keyBQ_BQ_B1R_E0ECs62u4JVtZyFF_13deltalake_gcp.exit, !prof !5
+
+5:                                                ; preds = %._crit_edge.split.us.us.i
+  %6 = add i64 %.sroa.9.0.i.us.i, 16              ; 2 uses
+  %7 = add i64 %.sroa.01.0.i.us.i, %6
+  br label %.split.us.i
 
 .split.i:                                         ; preds = %bb.b, %bb.d
   %.sroa.9.0.i.i = phi i64 [ %i.be, %bb.d ], [ 0, %bb.b ]

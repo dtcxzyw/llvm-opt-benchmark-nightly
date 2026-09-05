@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/iceoryx2-rs/original/iceoryx2_cal_conformance_tests-5a78533ee7ac47f5.iceoryx2_cal_conformance_tests.73c4e244317560e5-cgu.0?download=true
+inline.NumInlined: 60
+inline.NumDeleted: 52
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RNvXst_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix5mutexNtB5_18MutexCreationErrorNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt:bb.a
   br label %bb.j
 
@@ -200,7 +204,7 @@ bb.j:                                             ; preds = %bb.g
 
 bb.k:                                             ; preds = %bb.i
   %i.bk = call noundef i32 @_RNvNtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix7pthread18pthread_mutex_init(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_RNvNvNtNtCs9WeDvfThRIv_30iceoryx2_cal_conformance_tests19shm_allocator_trait19shm_allocator_trait22allocator_id_is_unique10MTX_HANDLE, i64 32), ptr noundef nonnull %i.ac) #13, !noalias !157
-  %i.bl = call noundef i32 @_RNvXs0_NtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix5errnolINtNtCs8Chj7Szqq0n_4core7convert4IntoNtB5_5ErrnoE4into(i32 noundef %i.bk) #13, !noalias !157 ; 3 uses
+  %i.bl = call noundef i32 @_RNvXs0_NtNtNtCs8JF6YcdXpCX_18iceoryx2_pal_posix2os5posix5errnolINtNtCs8Chj7Szqq0n_4core7convert4IntoNtB5_5ErrnoE4into(i32 noundef %i.bk) #13, !noalias !157 ; 4 uses
   switch i32 %i.bl, label %bb.m [
     i32 0, label %bb.t
     i32 1, label %bb.n
@@ -240,6 +244,7 @@ bb.m:                                             ; preds = %bb.k
   call void @_RNvCsjTb8cw1cD0P_12iceoryx2_log24___internal_print_log_msg(i8 noundef 1, ptr noundef nonnull @5, ptr noundef nonnull %i.l, ptr noundef nonnull @9, ptr noundef nonnull %i.k) #13, !noalias !157
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !150
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !150
+  %.sroa.12.sroa.12.0.extract.shift17.i.i.i.i.i = and i32 %i.bl, 2147483392
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !150
   br label %bb.q
 
@@ -286,6 +291,7 @@ bb.p:                                             ; preds = %bb.k
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.j, %bb.h, %bb.f
+  %.sroa.12.sroa.12.sroa.0.1.i.i.i.i.i = phi i32 [ %.sroa.12.sroa.12.0.extract.shift17.i.i.i.i.i, %bb.m ], [ 0, %bb.n ], [ 0, %bb.o ], [ 0, %bb.p ], [ 0, %bb.l ], [ 0, %bb.j ], [ 0, %bb.h ], [ 0, %bb.f ] ; 2 uses
   %.sroa.12.sroa.0.2.i.i.i.i.i = phi i32 [ %i.bl, %bb.m ], [ 0, %bb.n ], [ 0, %bb.o ], [ 0, %bb.p ], [ 0, %bb.l ], [ 0, %bb.j ], [ 0, %bb.h ], [ 0, %bb.f ] ; 2 uses
   %.sroa.0.2.i.i.i.i.i = phi i32 [ 7, %bb.m ], [ 2, %bb.n ], [ 1, %bb.o ], [ 0, %bb.p ], [ 6, %bb.l ], [ 5, %bb.j ], [ 4, %bb.h ], [ 3, %bb.f ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !158)
@@ -378,10 +384,13 @@ bb.w:                                             ; preds = %_RINvNtCs8Chj7Szqq0
   br label %_RNCNvNvNtNtCs9WeDvfThRIv_30iceoryx2_cal_conformance_tests19shm_allocator_trait19shm_allocator_trait22allocator_id_is_unique13ALLOCATOR_IDS0B9_.exit
 
 bb.x:                                             ; preds = %bb.r, %bb.q, %_RNCINvMsg_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix5mutexNtB8_12MutexBuilder6createINtNtNtNtCsbqH9stoieM8_5alloc11collections5btree3set8BTreeSethEE0Cs9WeDvfThRIv_30iceoryx2_cal_conformance_tests.exit.thread11.i.i.i
-  %.sroa.12.sroa.0.0.insert.insert.i.i9.i.ph.i.i = phi i32 [ 0, %_RNCINvMsg_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix5mutexNtB8_12MutexBuilder6createINtNtNtNtCsbqH9stoieM8_5alloc11collections5btree3set8BTreeSethEE0Cs9WeDvfThRIv_30iceoryx2_cal_conformance_tests.exit.thread11.i.i.i ], [ %.sroa.12.sroa.0.2.i.i.i.i.i, %bb.r ], [ %.sroa.12.sroa.0.2.i.i.i.i.i, %bb.q ]
-  %.sroa.0.1.i.i7.i.ph.i.i = phi i32 [ 0, %_RNCINvMsg_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix5mutexNtB8_12MutexBuilder6createINtNtNtNtCsbqH9stoieM8_5alloc11collections5btree3set8BTreeSethEE0Cs9WeDvfThRIv_30iceoryx2_cal_conformance_tests.exit.thread11.i.i.i ], [ %.sroa.0.2.i.i.i.i.i, %bb.r ], [ %.sroa.0.2.i.i.i.i.i, %bb.q ]
+  %.sroa.12.sroa.12.sroa.0.0.i.i.ph.i.i.i = phi i32 [ %.sroa.12.sroa.12.sroa.0.1.i.i.i.i.i, %bb.r ], [ %.sroa.12.sroa.12.sroa.0.1.i.i.i.i.i, %bb.q ], [ 0, %_RNCINvMsg_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix5mutexNtB8_12MutexBuilder6createINtNtNtNtCsbqH9stoieM8_5alloc11collections5btree3set8BTreeSethEE0Cs9WeDvfThRIv_30iceoryx2_cal_conformance_tests.exit.thread11.i.i.i ]
+  %.sroa.12.sroa.0.0.insert.insert.i.i9.i.ph.i.i = phi i32 [ %.sroa.12.sroa.0.2.i.i.i.i.i, %bb.r ], [ %.sroa.12.sroa.0.2.i.i.i.i.i, %bb.q ], [ undef, %_RNCINvMsg_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix5mutexNtB8_12MutexBuilder6createINtNtNtNtCsbqH9stoieM8_5alloc11collections5btree3set8BTreeSethEE0Cs9WeDvfThRIv_30iceoryx2_cal_conformance_tests.exit.thread11.i.i.i ]
+  %.sroa.0.1.i.i7.i.ph.i.i = phi i32 [ %.sroa.0.2.i.i.i.i.i, %bb.r ], [ %.sroa.0.2.i.i.i.i.i, %bb.q ], [ 0, %_RNCINvMsg_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix5mutexNtB8_12MutexBuilder6createINtNtNtNtCsbqH9stoieM8_5alloc11collections5btree3set8BTreeSethEE0Cs9WeDvfThRIv_30iceoryx2_cal_conformance_tests.exit.thread11.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !noalias !150
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !150
+  %.sroa.12.sroa.0.0.insert.ext.i.i4.i.i.i = and i32 %.sroa.12.sroa.0.0.insert.insert.i.i9.i.ph.i.i, 255
+  %.sroa.12.sroa.0.0.insert.insert.i.i5.i.i.i = or i32 %.sroa.12.sroa.0.0.insert.ext.i.i4.i.i.i, %.sroa.12.sroa.12.sroa.0.0.i.i.ph.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !149
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae), !noalias !149
   call fastcc void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtNtNtCsbqH9stoieM8_5alloc11collections5btree3set8BTreeSethEECs9WeDvfThRIv_30iceoryx2_cal_conformance_tests(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(24) %i.ai) #13, !noalias !169
@@ -390,7 +399,7 @@ bb.x:                                             ; preds = %bb.r, %bb.q, %_RNCI
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah), !noalias !170
   store i32 %.sroa.0.1.i.i7.i.ph.i.i, ptr %i.ah, align 4, !noalias !170
   %i.cd = getelementptr inbounds nuw i8, ptr %i.ah, i64 4
-  store i32 %.sroa.12.sroa.0.0.insert.insert.i.i9.i.ph.i.i, ptr %i.cd, align 4, !noalias !170
+  store i32 %.sroa.12.sroa.0.0.insert.insert.i.i5.i.i.i, ptr %i.cd, align 4, !noalias !170
   call void @_RNvNtCs8Chj7Szqq0n_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @28, i64 noundef 43, ptr noundef nonnull %i.ah, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @27, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #14, !noalias !170
   unreachable
 

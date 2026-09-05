@@ -205,7 +205,7 @@ odb_source_files_downcast.exit100.us:             ; preds = %.lr.ph149.split.us
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   br label %bb.r
 
-bb.r:                                             ; preds = %odb_source_files_downcast.exit100.us, %want_object_in_pack_one.exit106.thread.us159
+bb.r:                                             ; preds = %want_object_in_pack_one.exit106.thread.us159, %odb_source_files_downcast.exit100.us
   %.072.in.us151 = phi ptr [ %i.an, %odb_source_files_downcast.exit100.us ], [ %.072.us152, %want_object_in_pack_one.exit106.thread.us159 ]
   %.072.us152 = load ptr, ptr %.072.in.us151, align 8, !tbaa !411 ; 3 uses
   %.not93.us153 = icmp eq ptr %.072.us152, null

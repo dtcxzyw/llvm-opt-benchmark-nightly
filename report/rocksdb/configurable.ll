@@ -202,11 +202,6 @@ bb.b:                                             ; preds = %.lr.ph75.split.us
   %i.q = icmp eq ptr %.sroa.040.065.us, null
   br i1 %i.q, label %.loopexit.us, label %.lr.ph.split.us.us.split.us.preheader
 
-.loopexit.us:                                     ; preds = %_ZNK7rocksdb14OptionTypeInfo13ShouldPrepareEv.exit.thread.us.us.us, %bb.b, %.lr.ph75.split.us
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.044.074.us, i64 48 ; 2 uses
-  %5 = icmp eq ptr %4, %i.e
-  br i1 %5, label %.loopexit58.sink.split, label %.lr.ph75.split.us
-
 .lr.ph.split.us.us.split.us.preheader:            ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.044.074.us, i64 32
   br label %.lr.ph.split.us.us.split.us
@@ -274,6 +269,11 @@ _ZNK7rocksdb14OptionTypeInfo13ShouldPrepareEv.exit.thread.us.us.us: ; preds = %b
   store ptr null, ptr %i.a, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
   br label %_ZN7rocksdb6StatusD2Ev.exit36
+
+.loopexit.us:                                     ; preds = %_ZNK7rocksdb14OptionTypeInfo13ShouldPrepareEv.exit.thread.us.us.us, %bb.b, %.lr.ph75.split.us
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.044.074.us, i64 48 ; 2 uses
+  %5 = icmp eq ptr %4, %i.e
+  br i1 %5, label %.loopexit58.sink.split, label %.lr.ph75.split.us
 
 .lr.ph75.split:                                   ; preds = %.lr.ph75, %bb.k
   %.promoted61 = phi ptr [ %.promoted61117, %bb.k ], [ null, %.lr.ph75 ] ; 3 uses
@@ -484,11 +484,6 @@ bb.b:                                             ; preds = %.lr.ph75.split.us
   %i.q = icmp eq ptr %.sroa.040.065.us, null
   br i1 %i.q, label %.loopexit.us, label %.lr.ph.split.us.us.split.us.preheader
 
-.loopexit.us:                                     ; preds = %_ZNK7rocksdb14OptionTypeInfo14ShouldValidateEv.exit.thread48.us.us.us, %bb.b, %.lr.ph75.split.us
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.044.074.us, i64 48 ; 2 uses
-  %6 = icmp eq ptr %5, %i.e
-  br i1 %6, label %.loopexit58.sink.split, label %.lr.ph75.split.us
-
 .lr.ph.split.us.us.split.us.preheader:            ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.044.074.us, i64 32
   br label %.lr.ph.split.us.us.split.us
@@ -549,6 +544,11 @@ _ZNK7rocksdb14OptionTypeInfo14ShouldValidateEv.exit.thread48.us.us.us: ; preds =
   store ptr null, ptr %i.a, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #21
   br label %_ZN7rocksdb6StatusD2Ev.exit36
+
+.loopexit.us:                                     ; preds = %_ZNK7rocksdb14OptionTypeInfo14ShouldValidateEv.exit.thread48.us.us.us, %bb.b, %.lr.ph75.split.us
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.044.074.us, i64 48 ; 2 uses
+  %6 = icmp eq ptr %5, %i.e
+  br i1 %6, label %.loopexit58.sink.split, label %.lr.ph75.split.us
 
 .lr.ph75.split:                                   ; preds = %.lr.ph75, %bb.i
   %.promoted61 = phi ptr [ %.promoted61117, %bb.i ], [ null, %.lr.ph75 ] ; 3 uses

@@ -205,6 +205,11 @@ bb.at:                                            ; preds = %bb.ar, %bb.ar, %bb.
   %.0137.ph272.us339.us = phi i32 [ %i.jf, %.outer271.us338.us.backedge ], [ %.0137.ph.ph, %.outer.split.lr.ph ] ; 2 uses
   br label %10
 
+10:                                               ; preds = %bb.au, %.outer271.us338.us
+  %11 = call i16 @_ZN9Stockfish10MovePicker9next_moveEv(ptr noundef nonnull align 8 dereferenceable(2164) %8) #33 ; 9 uses
+  %.not268.us340.us = icmp eq i16 %11, 0
+  br i1 %.not268.us340.us, label %.loopexit, label %bb.au
+
 bb.au:                                            ; preds = %10
   %i.iu = call noundef zeroext i1 @_ZNK9Stockfish8Position5legalENS_4MoveE(ptr noundef nonnull align 8 dereferenceable(1048) %1, i16 %11) #33
   br i1 %i.iu, label %.outer271.backedge.us.us, label %10, !llvm.loop !781
@@ -228,11 +233,6 @@ bb.au:                                            ; preds = %10
 
 .outer271.us338.us.backedge:                      ; preds = %.outer271.backedge.us.us, %.loopexit270.split.us.us
   br label %.outer271.us338.us, !llvm.loop !781
-
-10:                                               ; preds = %bb.au, %.outer271.us338.us
-  %11 = call i16 @_ZN9Stockfish10MovePicker9next_moveEv(ptr noundef nonnull align 8 dereferenceable(2164) %8) #33 ; 9 uses
-  %.not268.us344.us = icmp eq i16 %11, 0
-  br i1 %.not268.us344.us, label %.loopexit, label %bb.au
 
 .loopexit270.split.us.us:                         ; preds = %.outer271.backedge.us.us
   %i.jg = call noundef zeroext i1 @_ZNK9Stockfish8Position6see_geENS_4MoveEi(ptr noundef nonnull align 8 dereferenceable(1048) %1, i16 %11, i32 noundef -80) #33
@@ -636,6 +636,11 @@ bb.ar:                                            ; preds = %bb.ap, %bb.ap, %bb.
   %.0135.ph273.us340.us = phi i32 [ %i.jn, %.outer272.us339.us.backedge ], [ %.0135.ph.ph, %.outer.split.lr.ph ] ; 2 uses
   br label %9
 
+9:                                                ; preds = %bb.as, %.outer272.us339.us
+  %10 = call i16 @_ZN9Stockfish10MovePicker9next_moveEv(ptr noundef nonnull align 8 dereferenceable(2164) %7) #33 ; 9 uses
+  %.not268.us341.us = icmp eq i16 %10, 0
+  br i1 %.not268.us341.us, label %.loopexit, label %bb.as
+
 bb.as:                                            ; preds = %9
   %i.jc = call noundef zeroext i1 @_ZNK9Stockfish8Position5legalENS_4MoveE(ptr noundef nonnull align 8 dereferenceable(1048) %1, i16 %10) #33
   br i1 %i.jc, label %.outer272.backedge.us.us, label %9, !llvm.loop !784
@@ -659,11 +664,6 @@ bb.as:                                            ; preds = %9
 
 .outer272.us339.us.backedge:                      ; preds = %.outer272.backedge.us.us, %.loopexit271.split.us.us
   br label %.outer272.us339.us, !llvm.loop !784
-
-9:                                                ; preds = %bb.as, %.outer272.us339.us
-  %10 = call i16 @_ZN9Stockfish10MovePicker9next_moveEv(ptr noundef nonnull align 8 dereferenceable(2164) %7) #33 ; 9 uses
-  %.not268.us345.us = icmp eq i16 %10, 0
-  br i1 %.not268.us345.us, label %.loopexit, label %bb.as
 
 .loopexit271.split.us.us:                         ; preds = %.outer272.backedge.us.us
   %i.jo = call noundef zeroext i1 @_ZNK9Stockfish8Position6see_geENS_4MoveEi(ptr noundef nonnull align 8 dereferenceable(1048) %1, i16 %10, i32 noundef -80) #33

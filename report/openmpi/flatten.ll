@@ -204,9 +204,9 @@ flatlist_node_grow.exit903.us.us.us:              ; preds = %.flatlist_node_grow
   %i.ahh = getelementptr i8, ptr %i.ahg, i64 -8
   br label %bb.by
 
-bb.by:                                            ; preds = %.preheader944.us, %flatlist_node_grow.exit900.us
-  %indvars.iv1170 = phi i64 [ 0, %.preheader944.us ], [ %indvars.iv.next1171, %flatlist_node_grow.exit900.us ]
-  %.221007.us1018 = phi i64 [ %.211014.us, %.preheader944.us ], [ %i.aim, %flatlist_node_grow.exit900.us ] ; 5 uses
+bb.by:                                            ; preds = %flatlist_node_grow.exit900.us, %.preheader944.us
+  %indvars.iv1170 = phi i64 [ %indvars.iv.next1171, %flatlist_node_grow.exit900.us ], [ 0, %.preheader944.us ]
+  %.221007.us1018 = phi i64 [ %i.aim, %flatlist_node_grow.exit900.us ], [ %.211014.us, %.preheader944.us ] ; 5 uses
   %sext919.us = shl i64 %.221007.us1018, 32
   %i.ahi = ashr exact i64 %sext919.us, 32
   %i.ahj = load i64, ptr %i.afr, align 8, !tbaa !16 ; 2 uses

@@ -204,10 +204,6 @@ _RNvXs2Q_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_7IterMutINtNtCsexYYUdYSQU6_5all
   %i.att = icmp eq i64 %.val27.i.us.i.i, 0
   br i1 %i.att, label %.loopexit.i.us.i.i, label %.lr.ph.i.us.us.i.i
 
-.loopexit.i.us.i.i:                               ; preds = %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionNtNtCs607s0NAIaWN_7segment5types8ShardKeyENtNtB7_5clone5Clone10clone_fromCsl8OoimOLbh_6qdrant.exit.i.us.us.i.i, %_RNvXs2Q_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_7IterMutINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs607s0NAIaWN_7segment5types11ScoredPointEENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsl8OoimOLbh_6qdrant.exit.i.us.i.i
-  %3 = icmp eq ptr %i.atp, %i.atj
-  br i1 %3, label %_RNvXs2Q_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_7IterMutINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs607s0NAIaWN_7segment5types11ScoredPointEENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsl8OoimOLbh_6qdrant.exit.thread.i.i.i, label %_RNvXs2Q_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_7IterMutINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs607s0NAIaWN_7segment5types11ScoredPointEENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsl8OoimOLbh_6qdrant.exit.i.us.i.i
-
 .lr.ph.i.us.us.i.i:                               ; preds = %_RNvXs2Q_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_7IterMutINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs607s0NAIaWN_7segment5types11ScoredPointEENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsl8OoimOLbh_6qdrant.exit.i.us.i.i, %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionNtNtCs607s0NAIaWN_7segment5types8ShardKeyENtNtB7_5clone5Clone10clone_fromCsl8OoimOLbh_6qdrant.exit.i.us.us.i.i
   %.sroa.0109.0150.i.us.us.i.i = phi ptr [ %i.atu, %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionNtNtCs607s0NAIaWN_7segment5types8ShardKeyENtNtB7_5clone5Clone10clone_fromCsl8OoimOLbh_6qdrant.exit.i.us.us.i.i ], [ %.val26.i.us.i.i, %_RNvXs2Q_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_7IterMutINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs607s0NAIaWN_7segment5types11ScoredPointEENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsl8OoimOLbh_6qdrant.exit.i.us.i.i ] ; 7 uses
   %i.atu = getelementptr inbounds nuw i8, ptr %.sroa.0109.0150.i.us.us.i.i, i64 208 ; 2 uses
@@ -246,6 +242,10 @@ _RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionNtNtCs607s0NAIaWN_7segment5type
   store i64 %.sink.i.i, ptr %.sroa.6.0..sroa_idx4.i.i.us.us.i.i, align 8, !alias.scope !5506, !noalias !5508
   %i.auc = icmp eq ptr %i.atu, %i.ats
   br i1 %i.auc, label %.loopexit.i.us.i.i, label %.lr.ph.i.us.us.i.i
+
+.loopexit.i.us.i.i:                               ; preds = %_RNvXs4_NtCskKLDkoKarTP_4core6optionINtB5_6OptionNtNtCs607s0NAIaWN_7segment5types8ShardKeyENtNtB7_5clone5Clone10clone_fromCsl8OoimOLbh_6qdrant.exit.i.us.us.i.i, %_RNvXs2Q_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_7IterMutINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs607s0NAIaWN_7segment5types11ScoredPointEENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsl8OoimOLbh_6qdrant.exit.i.us.i.i
+  %3 = icmp eq ptr %i.atp, %i.atj
+  br i1 %3, label %_RNvXs2Q_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_7IterMutINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs607s0NAIaWN_7segment5types11ScoredPointEENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsl8OoimOLbh_6qdrant.exit.thread.i.i.i, label %_RNvXs2Q_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_7IterMutINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs607s0NAIaWN_7segment5types11ScoredPointEENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsl8OoimOLbh_6qdrant.exit.i.us.i.i
 
 .split.us.split.us.i.i:                           ; preds = %bb.pk
   %i.aud = landingpad { ptr, i32 }
