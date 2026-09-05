@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jq/original/regerror?download=true
+inline.NumInlined: 9
+inline.NumDeleted: 3
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@onig_error_code_to_str:bb.a
   br label %bb.v
 
@@ -200,7 +204,7 @@ iter.check237:                                    ; preds = %.lr.ph75
   %i.bd = zext nneg i32 %i.bb to i64              ; 8 uses
   %i.be = getelementptr i8, ptr %i.a, i64 %i.bd
   %scevgep = getelementptr i8, ptr %i.be, i64 -1
-  %min.iters.check221 = icmp ult i32 %i.bb, 4
+  %min.iters.check221 = icmp ult i32 %i.bb, 8
   %i.bf = sub i64 %i.b, %.274219
   %diff.check220 = icmp ugt i64 %i.bf, -32
   %or.cond253 = select i1 %min.iters.check221, i1 true, i1 %diff.check220
@@ -211,7 +215,7 @@ vector.main.loop.iter.check222:                   ; preds = %iter.check237
   br i1 %min.iters.check223, label %vec.epilog.ph241, label %vector.ph224
 
 vector.ph224:                                     ; preds = %vector.main.loop.iter.check222
-  %i.bg = and i64 %i.bd, 28
+  %i.bg = and i64 %i.bd, 24
   %n.vec225 = and i64 %i.bd, 2147483616           ; 5 uses
   %i.bh = getelementptr i8, ptr %i.a, i64 %n.vec225
   %i.bi = getelementptr i8, ptr %.274, i64 %n.vec225 ; 2 uses
@@ -237,11 +241,11 @@ middle.block233:                                  ; preds = %vector.body226
 
 vec.epilog.iter.check239:                         ; preds = %middle.block233
   %min.epilog.iters.check240 = icmp eq i64 %i.bg, 0
-  br i1 %min.epilog.iters.check240, label %.lr.ph.preheader, label %vec.epilog.ph241, !prof !47
+  br i1 %min.epilog.iters.check240, label %.lr.ph.preheader, label %vec.epilog.ph241, !prof !48
 
 vec.epilog.ph241:                                 ; preds = %vector.main.loop.iter.check222, %vec.epilog.iter.check239
   %vec.epilog.resume.val235 = phi i64 [ %n.vec225, %vec.epilog.iter.check239 ], [ 0, %vector.main.loop.iter.check222 ]
-  %n.vec242 = and i64 %i.bd, 2147483644           ; 4 uses
+  %n.vec242 = and i64 %i.bd, 2147483640           ; 4 uses
   %i.bm = getelementptr i8, ptr %i.a, i64 %n.vec242
   %i.bn = getelementptr i8, ptr %.274, i64 %n.vec242 ; 2 uses
   br label %vec.epilog.vector.body243
@@ -250,9 +254,9 @@ vec.epilog.vector.body243:                        ; preds = %vec.epilog.vector.b
   %index244 = phi i64 [ %vec.epilog.resume.val235, %vec.epilog.ph241 ], [ %index.next248, %vec.epilog.vector.body243 ] ; 3 uses
   %next.gep245 = getelementptr i8, ptr %i.a, i64 %index244
   %next.gep246 = getelementptr i8, ptr %.274, i64 %index244
-  %wide.load247 = load <4 x i8>, ptr %next.gep245, align 1, !tbaa !16
-  store <4 x i8> %wide.load247, ptr %next.gep246, align 1, !tbaa !16
-  %index.next248 = add nuw i64 %index244, 4       ; 2 uses
+  %wide.load247 = load <8 x i8>, ptr %next.gep245, align 1, !tbaa !16
+  store <8 x i8> %wide.load247, ptr %next.gep246, align 1, !tbaa !16
+  %index.next248 = add nuw i64 %index244, 8       ; 2 uses
   %i.bo = icmp eq i64 %index.next248, %n.vec242
   br i1 %i.bo, label %vec.epilog.middle.block249, label %vec.epilog.vector.body243, !llvm.loop !34
 
@@ -440,13 +444,13 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.e
   %i.dx = zext i8 %i.cv to i32
-  %i.dy = load ptr, ptr %i.r, align 8, !tbaa !49
+  %i.dy = load ptr, ptr %i.r, align 8, !tbaa !50
   %i.dz = call i32 %i.dy(i32 noundef %i.dx, i32 noundef 7) #8
   %.not63 = icmp eq i32 %i.dz, 0
   br i1 %.not63, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h
-  %i.ea = load ptr, ptr %i.r, align 8, !tbaa !49
+  %i.ea = load ptr, ptr %i.r, align 8, !tbaa !50
   %i.eb = load i8, ptr %.05396, align 1, !tbaa !16
   %i.ec = zext i8 %i.eb to i32
   %i.ed = call i32 %i.ea(i32 noundef %i.ec, i32 noundef 9) #8
@@ -466,7 +470,7 @@ iter.check:                                       ; preds = %bb.j
   %i.ek = zext nneg i32 %i.ei to i64              ; 8 uses
   %i.el = getelementptr i8, ptr %i.a, i64 %i.ek
   %scevgep108 = getelementptr i8, ptr %i.el, i64 -1
-  %min.iters.check = icmp ult i32 %i.ei, 4
+  %min.iters.check = icmp ult i32 %i.ei, 8
   %i.em = sub i64 %i.b, %.05197131
   %diff.check = icmp ugt i64 %i.em, -32
   %or.cond255 = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -477,7 +481,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check132, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.en = and i64 %i.ek, 28
+  %i.en = and i64 %i.ek, 24
   %n.vec = and i64 %i.ek, 2147483616              ; 5 uses
   %i.eo = getelementptr i8, ptr %i.a, i64 %n.vec
   %i.ep = getelementptr i8, ptr %.05197, i64 %n.vec ; 2 uses
@@ -503,11 +507,11 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.en, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph94.preheader, label %vec.epilog.ph, !prof !47
+  br i1 %min.epilog.iters.check, label %.lr.ph94.preheader, label %vec.epilog.ph, !prof !48
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec136 = and i64 %i.ek, 2147483644           ; 4 uses
+  %n.vec136 = and i64 %i.ek, 2147483640           ; 4 uses
   %i.et = getelementptr i8, ptr %i.a, i64 %n.vec136
   %i.eu = getelementptr i8, ptr %.05197, i64 %n.vec136 ; 2 uses
   br label %vec.epilog.vector.body
@@ -516,9 +520,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %index137 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next141, %vec.epilog.vector.body ] ; 3 uses
   %next.gep138 = getelementptr i8, ptr %i.a, i64 %index137
   %next.gep139 = getelementptr i8, ptr %.05197, i64 %index137
-  %wide.load140 = load <4 x i8>, ptr %next.gep138, align 1, !tbaa !16
-  store <4 x i8> %wide.load140, ptr %next.gep139, align 1, !tbaa !16
-  %index.next141 = add nuw i64 %index137, 4       ; 2 uses
+  %wide.load140 = load <8 x i8>, ptr %next.gep138, align 1, !tbaa !16
+  store <8 x i8> %wide.load140, ptr %next.gep139, align 1, !tbaa !16
+  %index.next141 = add nuw i64 %index137, 8       ; 2 uses
   %i.ev = icmp eq i64 %index.next141, %n.vec136
   br i1 %i.ev, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !41
 
@@ -682,19 +686,20 @@ attributes #8 = { nounwind }
 !32 = distinct !{!32, !18}
 !33 = distinct !{!33, !18, !45, !46}
 !34 = distinct !{!34, !18, !45, !46}
-!35 = distinct !{!35, !48}
+!35 = distinct !{!35, !49}
 !36 = distinct !{!36, !18, !45}
 !37 = distinct !{!37, !18, !45, !46}
 !38 = distinct !{!38, !18, !45, !46}
 !39 = distinct !{!39, !18, !45}
 !40 = distinct !{!40, !18, !45, !46}
 !41 = distinct !{!41, !18, !45, !46}
-!42 = distinct !{!42, !48}
+!42 = distinct !{!42, !49}
 !43 = distinct !{!43, !18, !45}
 !44 = distinct !{!44, !18}
 !45 = !{!"llvm.loop.isvectorized", i32 1}
 !46 = !{!"llvm.loop.unroll.runtime.disable"}
 !47 = !{!"branch_weights", i32 4, i32 28}
-!48 = !{!"llvm.loop.unroll.disable"}
-!49 = !{!14, !12, i64 88}
+!48 = !{!"branch_weights", i32 8, i32 24}
+!49 = !{!"llvm.loop.unroll.disable"}
+!50 = !{!14, !12, i64 88}
 end_hunk_0

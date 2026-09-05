@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llama-cpp/original/ngram-map?download=true
+inline.NumInlined: 313
+inline.NumDeleted: 153
+loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 13
 begin_hunk_0_@_Z22common_ngram_map_draftR16common_ngram_mapRKSt6vectorIiSaIiEEiRS3_:bb.a
 
 .lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
@@ -200,6 +205,11 @@ bb.ag:                                            ; preds = %bb.af
   %i.ev = icmp ugt i64 %.0331619.us, %i.eu
   br i1 %i.ev, label %.preheader560.us, label %.critedge.thread836
 
+.preheader560.us:                                 ; preds = %.lr.ph620.split.us
+  %6 = load ptr, ptr %1, align 8, !tbaa !12
+  %7 = getelementptr [4 x i8], ptr %6, i64 %.0331619.us
+  br label %bb.ai
+
 bb.ah:                                            ; preds = %bb.ai
   %i.ew = add nuw nsw i64 %.0329615.us, 1         ; 2 uses
   %exitcond686.not = icmp eq i64 %i.ew, %i.z
@@ -218,11 +228,6 @@ bb.aj:                                            ; preds = %bb.ai
   %i.fb = add i64 %.0331619.us, -1                ; 2 uses
   %i.fc = icmp ugt i64 %i.fb, %i.dt
   br i1 %i.fc, label %.lr.ph620.split.us, label %.critedge.thread836, !llvm.loop !73
-
-.preheader560.us:                                 ; preds = %.lr.ph620.split.us
-  %6 = load ptr, ptr %1, align 8, !tbaa !12
-  %7 = getelementptr [4 x i8], ptr %6, i64 %.0331619.us
-  br label %bb.ai
 
 .lr.ph620.split:                                  ; preds = %.lr.ph620
   %i.fd = icmp ugt i64 %i.eq, %i.eu
@@ -626,6 +631,12 @@ bb.cc:                                            ; preds = %.lr.ph638, %bb.cb
 .critedge403.split.us.preheader:                  ; preds = %.critedge403
   br i1 %i.os, label %.thread540, label %.preheader551.us
 
+.preheader551.us:                                 ; preds = %.critedge403.split.us.preheader
+  %8 = load ptr, ptr %1, align 8, !tbaa !12       ; 5 uses
+  %9 = getelementptr [4 x i8], ptr %8, i64 %i.oq  ; 4 uses
+  %10 = getelementptr [4 x i8], ptr %8, i64 %i.or
+  br label %bb.ce
+
 bb.cd:                                            ; preds = %bb.ce
   %i.ot = add nuw nsw i64 %.0311640.us, 1         ; 2 uses
   %exitcond692.not = icmp eq i64 %i.ot, %i.nr
@@ -708,12 +719,6 @@ bb.ck:                                            ; preds = %bb.cj
   %i.pv = add nuw nsw i64 %.0311640.us.3, 1       ; 2 uses
   %exitcond692.3.not = icmp eq i64 %i.pv, %i.nr
   br i1 %exitcond692.3.not, label %.loopexit553.split.us.thread, label %bb.cj, !llvm.loop !86
-
-.preheader551.us:                                 ; preds = %.critedge403.split.us.preheader
-  %8 = load ptr, ptr %1, align 8, !tbaa !12       ; 5 uses
-  %9 = getelementptr [4 x i8], ptr %8, i64 %i.oq  ; 4 uses
-  %10 = getelementptr [4 x i8], ptr %8, i64 %i.or
-  br label %bb.ce
 
 .critedge403.split:                               ; preds = %.critedge403
   br i1 %i.os, label %.thread540, label %.loopexit553.split.us.thread

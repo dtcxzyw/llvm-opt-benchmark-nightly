@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/flatbuffers/original/binary_annotator?download=true
+inline.NumInlined: 3604
+inline.NumDeleted: 1081
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_ZNK11flatbuffers5Table11VerifyFieldIiLb0EEEbRKNS_16VerifierTemplateIXT0_EEEtm:bb.a
 bb.c:                                             ; preds = %bb.b
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -200,11 +205,6 @@ _ZNK11flatbuffers16VerifierTemplateILb0EE6VerifyIjEEbm.exit.i.i.us23: ; preds = 
   %.not33 = icmp ugt i64 %i.v, %i.h
   br i1 %.not33, label %.thread, label %bb.b
 
-2:                                                ; preds = %_ZNK11flatbuffers16VerifierTemplateILb0EE12VerifyStringEPKNS_6StringE.exit.us
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count40
-  br i1 %exitcond.not, label %.thread, label %_ZNK11flatbuffers16VerifierTemplateILb0EE6VerifyIjEEbm.exit.i.i.us23, !llvm.loop !579
-
 bb.b:                                             ; preds = %_ZNK11flatbuffers16VerifierTemplateILb0EE6VerifyIjEEbm.exit.i.i.us23
   %i.w = load i32, ptr %i.t, align 4, !tbaa !63
   %i.x = zext i32 %i.w to i64                     ; 2 uses
@@ -227,6 +227,11 @@ _ZNK11flatbuffers16VerifierTemplateILb0EE12VerifyStringEPKNS_6StringE.exit.us: ;
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !86
   %i.ag = icmp eq i8 %i.af, 0
   br i1 %i.ag, label %2, label %.thread
+
+2:                                                ; preds = %_ZNK11flatbuffers16VerifierTemplateILb0EE12VerifyStringEPKNS_6StringE.exit.us
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count40
+  br i1 %exitcond.not, label %.thread, label %_ZNK11flatbuffers16VerifierTemplateILb0EE6VerifyIjEEbm.exit.i.i.us23, !llvm.loop !579
 
 bb.c:                                             ; preds = %_ZNK11flatbuffers16VerifierTemplateILb0EE12VerifyStringEPKNS_6StringE.exit
   %indvars.iv.next38 = add nuw nsw i64 %indvars.iv37, 1 ; 2 uses
@@ -630,29 +635,30 @@ _ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i164: ; preds = %_ZNK
   %i.ie = getelementptr inbounds i8, ptr %i.ia, i64 %i.id ; 2 uses
   %i.if = load i16, ptr %i.ie, align 2, !tbaa !97
   %i.ig = icmp ugt i16 %i.if, 4
-  br i1 %i.ig, label %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i167, label %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit.thread
+  br i1 %i.ig, label %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i167, label %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit
 
 _ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i167: ; preds = %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i164
   %i.ih = getelementptr inbounds nuw i8, ptr %i.ie, i64 4
   %i.ii = load i16, ptr %i.ih, align 2, !tbaa !97 ; 2 uses
   %.not.i.i168 = icmp eq i16 %i.ii, 0
-  br i1 %.not.i.i168, label %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit.thread, label %_ZNK10reflection4Type9base_typeEv.exit169
+  br i1 %.not.i.i168, label %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit, label %_ZNK10reflection4Type9base_typeEv.exit169
 
 _ZNK10reflection4Type9base_typeEv.exit169:        ; preds = %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i167
   %i.ij = zext i16 %i.ii to i64
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ia, i64 %i.ij
   %i.il = load i8, ptr %i.ik, align 1, !tbaa !86  ; 2 uses
+  %41 = zext nneg i8 %i.il to i64
   %i.im = icmp ugt i8 %i.il, 19
   br i1 %i.im, label %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit.thread, label %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit
 
-_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit: ; preds = %_ZNK10reflection4Type9base_typeEv.exit169
-  %41 = zext nneg i8 %i.il to i64
-  %i.in = getelementptr inbounds nuw [8 x i8], ptr @_ZZN10reflection17EnumNamesBaseTypeEvE5names, i64 %41
+_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit: ; preds = %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i164, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i167, %_ZNK10reflection4Type9base_typeEv.exit169
+  %42 = phi i64 [ %41, %_ZNK10reflection4Type9base_typeEv.exit169 ], [ 0, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i167 ], [ 0, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i164 ]
+  %i.in = getelementptr inbounds nuw [8 x i8], ptr @_ZZN10reflection17EnumNamesBaseTypeEvE5names, i64 %42
   %i.io = load ptr, ptr %i.in, align 8, !tbaa !141
   br label %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit.thread
 
-_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit.thread: ; preds = %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i164, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i167, %_ZNK10reflection4Type9base_typeEv.exit169, %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit
-  %.0.i170703 = phi ptr [ @.str, %_ZNK10reflection4Type9base_typeEv.exit169 ], [ %i.io, %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit ], [ @.str.25, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i167 ], [ @.str.25, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i164 ] ; 3 uses
+_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit.thread: ; preds = %_ZNK10reflection4Type9base_typeEv.exit169, %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit
+  %.0.i170703 = phi ptr [ %i.io, %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit ], [ @.str, %_ZNK10reflection4Type9base_typeEv.exit169 ] ; 3 uses
   %i.ip = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 9 uses
   store ptr %i.ip, ptr %11, align 8, !tbaa !84
   %i.iq = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i170703) #30 ; 4 uses
@@ -1055,29 +1061,30 @@ _ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i453.us: ; preds = %b
   %i.anc = getelementptr inbounds i8, ptr %i.amy, i64 %i.anb ; 2 uses
   %i.and = load i16, ptr %i.anc, align 2, !tbaa !97
   %i.ane = icmp ugt i16 %i.and, 6
-  br i1 %i.ane, label %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i456.us, label %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit460.thread.us
+  br i1 %i.ane, label %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i456.us, label %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit460.us
 
 _ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i456.us: ; preds = %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i453.us
   %i.anf = getelementptr inbounds nuw i8, ptr %i.anc, i64 6
   %i.ang = load i16, ptr %i.anf, align 2, !tbaa !97 ; 2 uses
   %.not.i.i457.us = icmp eq i16 %i.ang, 0
-  br i1 %.not.i.i457.us, label %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit460.thread.us, label %_ZNK10reflection4Type7elementEv.exit458.us
+  br i1 %.not.i.i457.us, label %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit460.us, label %_ZNK10reflection4Type7elementEv.exit458.us
 
 _ZNK10reflection4Type7elementEv.exit458.us:       ; preds = %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i456.us
   %i.anh = zext i16 %i.ang to i64
   %i.ani = getelementptr inbounds nuw i8, ptr %i.amy, i64 %i.anh
   %i.anj = load i8, ptr %i.ani, align 1, !tbaa !86 ; 2 uses
+  %43 = zext nneg i8 %i.anj to i64
   %i.ank = icmp ugt i8 %i.anj, 19
   br i1 %i.ank, label %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit460.thread.us, label %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit460.us
 
-_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit460.us: ; preds = %_ZNK10reflection4Type7elementEv.exit458.us
-  %42 = zext nneg i8 %i.anj to i64
-  %i.anl = getelementptr inbounds nuw [8 x i8], ptr @_ZZN10reflection17EnumNamesBaseTypeEvE5names, i64 %42
+_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit460.us: ; preds = %_ZNK10reflection4Type7elementEv.exit458.us, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i456.us, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i453.us
+  %44 = phi i64 [ %43, %_ZNK10reflection4Type7elementEv.exit458.us ], [ 0, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i456.us ], [ 0, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i453.us ]
+  %i.anl = getelementptr inbounds nuw [8 x i8], ptr @_ZZN10reflection17EnumNamesBaseTypeEvE5names, i64 %44
   %i.anm = load ptr, ptr %i.anl, align 8, !tbaa !141
   br label %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit460.thread.us
 
-_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit460.thread.us: ; preds = %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i453.us, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i456.us, %_ZNK10reflection4Type7elementEv.exit458.us, %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit460.us
-  %.0.i459705.us = phi ptr [ @.str, %_ZNK10reflection4Type7elementEv.exit458.us ], [ %i.anm, %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit460.us ], [ @.str.25, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i456.us ], [ @.str.25, %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i453.us ] ; 3 uses
+_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit460.thread.us: ; preds = %_ZNK10reflection4Type7elementEv.exit458.us, %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit460.us
+  %.0.i459705.us = phi ptr [ %i.anm, %_ZN10reflection16EnumNameBaseTypeENS_8BaseTypeE.exit460.us ], [ @.str, %_ZNK10reflection4Type7elementEv.exit458.us ] ; 3 uses
   store ptr %i.aek, ptr %29, align 8, !tbaa !84
   %i.ann = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i459705.us) #30 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #30

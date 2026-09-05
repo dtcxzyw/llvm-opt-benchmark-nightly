@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openzl/original/decode_entropy_binding?download=true
+inline.NumInlined: 88
+inline.NumDeleted: 26
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@DI_huffman_v2:bb.a
   %i.eb = shl nuw nsw i64 %i.ea, 2
   %i.ec = tail call ptr @ZL_Decoder_getScratchSpace(ptr noundef %0, i64 noundef %i.eb) #8 ; 5 uses
@@ -200,8 +205,7 @@ bb.v:                                             ; preds = %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   %i.jb = extractelement <4 x i16> %i.gg, i64 0
   %i.jc = sext i16 %i.jb to i64
-  %3 = and i64 %i.jc, 4294967295
-  %i.jd = sub nsw i64 %i.cc, %3
+  %i.jd = sub nsw i64 %i.cc, %i.jc
   %i.je = icmp ult i64 %i.jd, 2
   br i1 %i.je, label %bb.w, label %bb.y
 

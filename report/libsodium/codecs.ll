@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libsodium/original/codecs?download=true
+inline.NumInlined: 14
+inline.NumDeleted: 9
+loop-unroll.NumCompletelyUnrolled: 12
+loop-unroll.NumUnrolled: 12
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -193,6 +197,17 @@ bb.d:                                             ; preds = %bb.c
   %i.ak = icmp eq i32 %i.aj, 0
   br i1 %i.ak, label %7, label %.split.us124.thread
 
+7:                                                ; preds = %.peel.next
+  %8 = zext i8 %i.w to i32
+  %9 = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %4, i32 noundef %8) #14
+  %.not55.us = icmp eq ptr %9, null
+  br i1 %.not55.us, label %.thread63, label %10
+
+10:                                               ; preds = %7
+  %11 = add nuw i64 %.04792.us, 1                 ; 2 uses
+  %12 = icmp ult i64 %11, %3
+  br i1 %12, label %.peel.next, label %.thread63.loopexit.split.loop.exit275, !llvm.loop !14
+
 .split.us124:                                     ; preds = %.lr.ph.us
   %i.al = and i32 %i.h, %i.f
   %i.am = and i32 %i.o, %i.k
@@ -234,18 +249,7 @@ bb.f:                                             ; preds = %bb.e
   %.1.us = phi i8 [ %i.ay, %.thread ], [ %.044.ph119.us, %bb.f ]
   %i.az = add nuw i64 %.04792.us.lcssa202206, 1   ; 3 uses
   %i.ba = icmp ult i64 %i.az, %3
-  br i1 %i.ba, label %.lr.ph.us, label %.loopexit, !llvm.loop !14
-
-7:                                                ; preds = %.peel.next
-  %8 = zext i8 %i.w to i32
-  %9 = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %4, i32 noundef %8) #14
-  %.not55.us = icmp eq ptr %9, null
-  br i1 %.not55.us, label %.thread63, label %10
-
-10:                                               ; preds = %7
-  %11 = add nuw i64 %.04792.us, 1                 ; 2 uses
-  %12 = icmp ult i64 %11, %3
-  br i1 %12, label %.peel.next, label %.thread63.loopexit.split.loop.exit275, !llvm.loop !15
+  br i1 %i.ba, label %.lr.ph.us, label %.loopexit, !llvm.loop !15
 
 .lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.outer
   %.0.ph120 = phi i8 [ %i.ca, %.outer ], [ 0, %.lr.ph.lr.ph ] ; 4 uses
@@ -307,7 +311,7 @@ bb.i:                                             ; preds = %bb.g
   %i.ca = xor i8 %.0.ph120, -1                    ; 2 uses
   %i.cb = add nuw i64 %.047.ph118, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.cb, %3
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !14
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !15
 
 .loopexit:                                        ; preds = %.outer.us, %.outer, %.lr.ph, %.split141.us
   %.049.ph91 = phi i64 [ %.us-phi142, %.split141.us ], [ %.150, %.outer ], [ %.049.ph117, %.lr.ph ], [ %.150.us, %.outer.us ]
@@ -710,27 +714,6 @@ sodium_base64_check_variant.exit.preheader:       ; preds = %bb.a
   %.082.ph136.us = phi i64 [ %16, %sodium_base64_check_variant.exit.outer.us ], [ 0, %.lr.ph.lr.ph ] ; 3 uses
   br label %bb.b
 
-8:                                                ; preds = %.split.us.us
-  %9 = add nsw i64 %.049.ph137.us, -2             ; 3 uses
-  %.not59.us = icmp ult i64 %.046.ph138.us, %1
-  br i1 %.not59.us, label %10, label %.split145.us
-
-10:                                               ; preds = %8
-  %11 = trunc nuw nsw i64 %9 to i32
-  %12 = lshr i32 %i.bd, %11
-  %13 = trunc i32 %12 to i8
-  %14 = add nuw i64 %.046.ph138.us, 1
-  %15 = getelementptr i8, ptr %0, i64 %.046.ph138.us
-  store i8 %13, ptr %15, align 1
-  br label %sodium_base64_check_variant.exit.outer.us
-
-sodium_base64_check_variant.exit.outer.us:        ; preds = %.split.us.us, %10
-  %.150.us = phi i64 [ %9, %10 ], [ %i.be, %.split.us.us ] ; 2 uses
-  %.147.us = phi i64 [ %14, %10 ], [ %.046.ph138.us, %.split.us.us ] ; 2 uses
-  %16 = add nuw i64 %.082106.us.us, 1             ; 3 uses
-  %17 = icmp ult i64 %16, %3
-  br i1 %17, label %.lr.ph.us, label %.loopexit94, !llvm.loop !26
-
 bb.b:                                             ; preds = %sodium_base64_check_variant.exit.us.us, %.lr.ph.us
   %.082106.us.us = phi i64 [ %.082.ph136.us, %.lr.ph.us ], [ %i.ba, %sodium_base64_check_variant.exit.us.us ] ; 5 uses
   %i.b = getelementptr i8, ptr %2, i64 %.082106.us.us
@@ -807,6 +790,27 @@ sodium_base64_check_variant.exit.us.us:           ; preds = %bb.d
   %i.be = add nuw nsw i64 %.049.ph137.us, 6
   %i.bf = icmp ugt i64 %.049.ph137.us, 1
   br i1 %i.bf, label %8, label %sodium_base64_check_variant.exit.outer.us
+
+8:                                                ; preds = %.split.us.us
+  %9 = add nsw i64 %.049.ph137.us, -2             ; 3 uses
+  %.not59.us = icmp ult i64 %.046.ph138.us, %1
+  br i1 %.not59.us, label %10, label %.split145.us
+
+10:                                               ; preds = %8
+  %11 = trunc nuw nsw i64 %9 to i32
+  %12 = lshr i32 %i.bd, %11
+  %13 = trunc i32 %12 to i8
+  %14 = add nuw i64 %.046.ph138.us, 1
+  %15 = getelementptr i8, ptr %0, i64 %.046.ph138.us
+  store i8 %13, ptr %15, align 1
+  br label %sodium_base64_check_variant.exit.outer.us
+
+sodium_base64_check_variant.exit.outer.us:        ; preds = %10, %.split.us.us
+  %.150.us = phi i64 [ %9, %10 ], [ %i.be, %.split.us.us ] ; 2 uses
+  %.147.us = phi i64 [ %14, %10 ], [ %.046.ph138.us, %.split.us.us ] ; 2 uses
+  %16 = add nuw i64 %.082106.us.us, 1             ; 3 uses
+  %17 = icmp ult i64 %16, %3
+  br i1 %17, label %.lr.ph.us, label %.loopexit94, !llvm.loop !26
 
 bb.e:                                             ; preds = %bb.a
   tail call void @sodium_misuse() #13
@@ -1210,8 +1214,8 @@ attributes #16 = { nounwind }
 !11 = distinct !{!11, !4, !5}
 !12 = !{!8}
 !13 = !{!9}
-!14 = distinct !{!14, !4}
-!15 = distinct !{!15, !4, !16}
+!14 = distinct !{!14, !4, !16}
+!15 = distinct !{!15, !4}
 !16 = !{!"llvm.loop.peeled.count", i32 1}
 !17 = distinct !{!17, !4}
 !18 = distinct !{!18, !4, !5, !6}

@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sentencepiece/original/strutil?download=true
+inline.NumInlined: 763
+inline.NumDeleted: 191
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_ZN6google8protobuf18safe_uint_internalIjEEbNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPT_:bb.a
   br i1 %i.v, label %_ZN6google8protobuf23safe_parse_positive_intIjEEbNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPT_.exit, label %.lr.ph.i
 
@@ -200,6 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
   %.02640.i = phi ptr [ %i.ac, %bb.h ], [ %i.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit ] ; 2 uses
   %.02739.i = phi i64 [ %i.ab, %bb.h ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit ] ; 3 uses
   %i.w = load i8, ptr %.02640.i, align 1, !tbaa !21 ; 2 uses
+  %3 = zext i8 %i.w to i64                        ; 2 uses
   %i.x = add i8 %i.w, -58
   %or.cond.i = icmp ult i8 %i.x, -10
   br i1 %or.cond.i, label %_ZN6google8protobuf23safe_parse_positive_intIlEEbNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPT_.exit, label %bb.f
@@ -210,14 +216,13 @@ bb.f:                                             ; preds = %.lr.ph.i
 
 bb.g:                                             ; preds = %bb.f
   %i.z = mul nsw i64 %.02739.i, 10                ; 2 uses
-  %3 = and i8 %i.w, 15
-  %4 = zext nneg i8 %3 to i64                     ; 2 uses
-  %5 = xor i64 %4, 9223372036854775807
-  %i.aa = icmp sgt i64 %i.z, %5
+  %4 = sub nuw i64 -9223372036854775761, %3
+  %i.aa = icmp sgt i64 %i.z, %4
   br i1 %i.aa, label %_ZN6google8protobuf23safe_parse_positive_intIlEEbNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPT_.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ab = add nsw i64 %i.z, %4                    ; 2 uses
+  %5 = add i64 %i.z, -48
+  %i.ab = add i64 %5, %3                          ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.02640.i, i64 1 ; 2 uses
   %.not.i = icmp ult ptr %i.ac, %i.u
   br i1 %.not.i, label %.lr.ph.i, label %_ZN6google8protobuf23safe_parse_positive_intIlEEbNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPT_.exit, !llvm.loop !101
@@ -252,6 +257,7 @@ bb.i:                                             ; preds = %bb.b
   %.03045.i = phi ptr [ %i.at, %bb.l ], [ %i.ai, %bb.i ] ; 2 uses
   %.03244.i = phi i64 [ %i.as, %bb.l ], [ 0, %bb.i ] ; 3 uses
   %i.an = load i8, ptr %.03045.i, align 1, !tbaa !21 ; 2 uses
+  %6 = zext i8 %i.an to i64                       ; 2 uses
   %i.ao = add i8 %i.an, -58
   %or.cond.i5 = icmp ult i8 %i.ao, -10
   br i1 %or.cond.i5, label %_ZN6google8protobuf23safe_parse_negative_intIlEEbRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPT_.exit, label %bb.j
@@ -262,14 +268,13 @@ bb.j:                                             ; preds = %.lr.ph.i4
 
 bb.k:                                             ; preds = %bb.j
   %i.aq = mul nsw i64 %.03244.i, 10               ; 2 uses
-  %6 = and i8 %i.an, 15
-  %7 = zext nneg i8 %6 to i64                     ; 2 uses
-  %8 = or disjoint i64 %7, -9223372036854775808
-  %i.ar = icmp slt i64 %i.aq, %8
+  %7 = add nuw i64 %6, 9223372036854775760
+  %i.ar = icmp slt i64 %i.aq, %7
   br i1 %i.ar, label %_ZN6google8protobuf23safe_parse_negative_intIlEEbRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPT_.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.as = sub nsw i64 %i.aq, %7                   ; 2 uses
+  %.neg38.i = add i64 %i.aq, 48
+  %i.as = sub i64 %.neg38.i, %6                   ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %.03045.i, i64 1 ; 2 uses
   %.not.i6 = icmp ult ptr %i.at, %i.al
   br i1 %.not.i6, label %.lr.ph.i4, label %_ZN6google8protobuf23safe_parse_negative_intIlEEbRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPT_.exit, !llvm.loop !102
@@ -433,6 +438,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
   %.02640.i = phi ptr [ %i.ac, %bb.g ], [ %i.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit ] ; 2 uses
   %.02739.i = phi i64 [ %i.ab, %bb.g ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit ] ; 3 uses
   %i.w = load i8, ptr %.02640.i, align 1, !tbaa !21 ; 2 uses
+  %3 = zext i8 %i.w to i64                        ; 2 uses
   %i.x = add i8 %i.w, -58
   %or.cond.i = icmp ult i8 %i.x, -10
   br i1 %or.cond.i, label %_ZN6google8protobuf23safe_parse_positive_intImEEbNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPT_.exit, label %bb.e
@@ -443,14 +449,13 @@ bb.e:                                             ; preds = %.lr.ph.i
 
 bb.f:                                             ; preds = %bb.e
   %i.z = mul nuw i64 %.02739.i, 10                ; 2 uses
-  %3 = and i8 %i.w, 15
-  %4 = zext nneg i8 %3 to i64                     ; 2 uses
-  %5 = xor i64 %4, -1
-  %i.aa = icmp ugt i64 %i.z, %5
+  %4 = sub nsw i64 47, %3
+  %i.aa = icmp ugt i64 %i.z, %4
   br i1 %i.aa, label %_ZN6google8protobuf23safe_parse_positive_intImEEbNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPT_.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ab = add i64 %i.z, %4                        ; 2 uses
+  %5 = add i64 %i.z, -48
+  %i.ab = add i64 %5, %3                          ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.02640.i, i64 1 ; 2 uses
   %.not.i = icmp ult ptr %i.ac, %i.u
   br i1 %.not.i, label %.lr.ph.i, label %_ZN6google8protobuf23safe_parse_positive_intImEEbNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPT_.exit, !llvm.loop !103

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/draco/original/file_utils?download=true
+inline.NumInlined: 300
+inline.NumDeleted: 135
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN5draco17WriteBufferToFileEPKhmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:bb.a
 
 bb.c:                                             ; preds = %bb.b
@@ -200,7 +204,7 @@ bb.a:
 
 iter.check:                                       ; preds = %._crit_edge.i.i
   %i.l = ptrtoaddr ptr %i.k to i64
-  %min.iters.check = icmp ult i64 %i.f, 4
+  %min.iters.check = icmp ult i64 %i.f, 8
   %i.m = sub i64 %i.e, %i.l
   %diff.check = icmp ugt i64 %i.m, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -211,7 +215,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check20, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.n = and i64 %i.f, 28
+  %i.n = and i64 %i.f, 24
   %n.vec = and i64 %i.f, -32                      ; 5 uses
   %i.o = getelementptr i8, ptr %i.k, i64 %n.vec
   %i.p = getelementptr i8, ptr %3, i64 %n.vec
@@ -241,7 +245,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec24 = and i64 %i.f, -4                     ; 4 uses
+  %n.vec24 = and i64 %i.f, -8                     ; 4 uses
   %i.t = getelementptr i8, ptr %i.k, i64 %n.vec24
   %i.u = getelementptr i8, ptr %3, i64 %n.vec24
   br label %vec.epilog.vector.body
@@ -250,9 +254,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %index25 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next29, %vec.epilog.vector.body ] ; 3 uses
   %next.gep26 = getelementptr i8, ptr %i.k, i64 %index25
   %next.gep27 = getelementptr i8, ptr %3, i64 %index25
-  %wide.load28 = load <4 x i8>, ptr %next.gep27, align 1, !tbaa !19
-  store <4 x i8> %wide.load28, ptr %next.gep26, align 1, !tbaa !19
-  %index.next29 = add nuw i64 %index25, 4         ; 2 uses
+  %wide.load28 = load <8 x i8>, ptr %next.gep27, align 1, !tbaa !19
+  store <8 x i8> %wide.load28, ptr %next.gep26, align 1, !tbaa !19
+  %index.next29 = add nuw i64 %index25, 8         ; 2 uses
   %i.v = icmp eq i64 %index.next29, %n.vec24
   br i1 %i.v, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !62
 
@@ -482,6 +486,6 @@ attributes #12 = { builtin nounwind }
 !65 = !{!"llvm.loop.mustprogress"}
 !66 = !{!"llvm.loop.isvectorized", i32 1}
 !67 = !{!"llvm.loop.unroll.runtime.disable"}
-!68 = !{!"branch_weights", i32 4, i32 28}
+!68 = !{!"branch_weights", i32 8, i32 24}
 !69 = !{!"llvm.loop.unroll.disable"}
 end_hunk_0

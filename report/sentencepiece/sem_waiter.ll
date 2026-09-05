@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sentencepiece/original/sem_waiter?download=true
+inline.NumInlined: 7
+inline.NumDeleted: 5
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -113,6 +115,12 @@ bb.a:
   %.not26.us.not = icmp eq i32 %i.d, 0
   br i1 %.not26.us.not, label %._crit_edge.us, label %.lr.ph.us
 
+.lr.ph.us:                                        ; preds = %.split39.us
+  %5 = add nsw i32 %i.d, -1
+  %6 = cmpxchg weak ptr %i.a, i32 %i.d, i32 %5 acquire monotonic, align 4 ; 2 uses
+  %7 = extractvalue { i32, i1 } %6, 1
+  br i1 %7, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us
+
 bb.b:                                             ; preds = %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us
   %i.e = add nsw i32 %i.i, -1
   %i.f = cmpxchg weak ptr %i.a, i32 %i.i, i32 %i.e acquire monotonic, align 4 ; 2 uses
@@ -137,12 +145,6 @@ bb.c:                                             ; preds = %._crit_edge.us
   %i.k = icmp eq i32 %i.j, 0
   br i1 %i.k, label %.split30.us.us, label %.backedge.us.lr.ph.us
 
-.lr.ph.us:                                        ; preds = %.split39.us
-  %5 = add nsw i32 %i.d, -1
-  %6 = cmpxchg weak ptr %i.a, i32 %i.d, i32 %5 acquire monotonic, align 4 ; 2 uses
-  %7 = extractvalue { i32, i1 } %6, 1
-  br i1 %7, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us
-
 bb.d:                                             ; preds = %.backedge.us.us
   %i.l = tail call i32 @sem_wait(ptr noundef nonnull %0)
   %i.m = icmp eq i32 %i.l, 0
@@ -164,11 +166,17 @@ bb.d:                                             ; preds = %.backedge.us.us
   %i.q = trunc i64 %.fr60 to i1
   br i1 %i.q, label %.split39.split.us, label %.split39.split
 
-.split39.split.us:                                ; preds = %.split39, %.split30.split.us.us
-  %.03.us42 = phi i1 [ false, %.split30.split.us.us ], [ true, %.split39 ]
+.split39.split.us:                                ; preds = %.split39, %.lr.ph38.us
+  %.03.us42 = phi i1 [ false, %.lr.ph38.us ], [ true, %.split39 ]
   %i.r = load atomic i32, ptr %i.a monotonic, align 8 ; 3 uses
   %.not26.us43.not = icmp eq i32 %i.r, 0
-  br i1 %.not26.us43.not, label %._crit_edge.us50, label %.lr.ph.us49
+  br i1 %.not26.us43.not, label %._crit_edge.us50, label %.lr.ph.us44
+
+.lr.ph.us44:                                      ; preds = %.split39.split.us
+  %8 = add nsw i32 %i.r, -1
+  %9 = cmpxchg weak ptr %i.a, i32 %i.r, i32 %8 acquire monotonic, align 4 ; 2 uses
+  %10 = extractvalue { i32, i1 } %9, 1
+  br i1 %10, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us46
 
 bb.e:                                             ; preds = %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us46
   %i.s = add nsw i32 %i.w, -1
@@ -176,8 +184,8 @@ bb.e:                                             ; preds = %_ZNSt13__atomic_bas
   %i.u = extractvalue { i32, i1 } %i.t, 1
   br i1 %i.u, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us46
 
-_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us46: ; preds = %.lr.ph.us49, %bb.e
-  %i.v = phi { i32, i1 } [ %i.t, %bb.e ], [ %9, %.lr.ph.us49 ]
+_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us46: ; preds = %.lr.ph.us44, %bb.e
+  %i.v = phi { i32, i1 } [ %i.t, %bb.e ], [ %9, %.lr.ph.us44 ]
   %i.w = extractvalue { i32, i1 } %i.v, 0         ; 3 uses
   %.not.us47.not = icmp eq i32 %i.w, 0
   br i1 %.not.us47.not, label %._crit_edge.us50, label %bb.e
@@ -202,15 +210,13 @@ bb.f:                                             ; preds = %._crit_edge.us50
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.ab = icmp eq i32 %i.aa, 0
-  br i1 %i.ab, label %.split30.split.us.us, label %.lr.ph38.us
+  br i1 %i.ab, label %.lr.ph38.us, label %.lr.ph.us49
 
-.lr.ph.us49:                                      ; preds = %.split39.split.us
-  %8 = add nsw i32 %i.r, -1
-  %9 = cmpxchg weak ptr %i.a, i32 %i.r, i32 %8 acquire monotonic, align 4 ; 2 uses
-  %10 = extractvalue { i32, i1 } %9, 1
-  br i1 %10, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread, label %_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.us46
+.lr.ph.us49:                                      ; preds = %.split.us
+  %11 = tail call ptr @__errno_location() #6
+  br label %bb.g
 
-bb.g:                                             ; preds = %.lr.ph38.us, %.backedge.us33.us
+bb.g:                                             ; preds = %.backedge.us33.us, %.lr.ph.us49
   %i.ac = load i32, ptr %11, align 4, !tbaa !9    ; 2 uses
   switch i32 %i.ac, label %.split35.us [
     i32 4, label %.backedge.us33.us
@@ -230,14 +236,10 @@ bb.g:                                             ; preds = %.lr.ph38.us, %.back
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.ah = icmp eq i32 %i.ag, 0
-  br i1 %i.ah, label %.split30.split.us.us, label %bb.g, !llvm.loop !12
+  br i1 %i.ah, label %.lr.ph38.us, label %bb.g, !llvm.loop !12
 
-.split30.split.us.us:                             ; preds = %.backedge.us33.us, %.split.us
+.lr.ph38.us:                                      ; preds = %.backedge.us33.us, %.split.us
   br label %.split39.split.us, !llvm.loop !13
-
-.lr.ph38.us:                                      ; preds = %.split.us
-  %11 = tail call ptr @__errno_location() #6
-  br label %bb.g
 
 .split39.split:                                   ; preds = %.split39, %.split30.split
   %.03 = phi i1 [ false, %.split30.split ], [ true, %.split39 ]
@@ -317,8 +319,8 @@ bb.i:                                             ; preds = %.lr.ph37, %.backedg
 .split30.split:                                   ; preds = %.backedge, %.split
   br label %.split39.split, !llvm.loop !13
 
-_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread: ; preds = %.lr.ph, %bb.i, %.lr.ph.us49, %bb.e, %bb.g, %.lr.ph.us, %bb.b
-  %.not21 = phi i1 [ true, %bb.e ], [ true, %bb.b ], [ true, %.lr.ph.us49 ], [ false, %bb.i ], [ true, %.lr.ph.us ], [ false, %bb.g ], [ true, %.lr.ph ]
+_ZNSt13__atomic_baseIiE21compare_exchange_weakERiiSt12memory_orderS2_.exit.thread: ; preds = %.lr.ph, %bb.i, %.lr.ph.us44, %bb.e, %bb.g, %.lr.ph.us, %bb.b
+  %.not21 = phi i1 [ true, %bb.e ], [ true, %bb.b ], [ true, %.lr.ph.us44 ], [ false, %bb.i ], [ true, %.lr.ph.us ], [ false, %bb.g ], [ true, %.lr.ph ]
   ret i1 %.not21
 }
 

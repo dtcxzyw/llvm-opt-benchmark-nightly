@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pocketpy/original/array2d?download=true
+inline.NumInlined: 65
+inline.NumDeleted: 13
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@array2d_like_count_neighbors:bb.a
   %i.an = load i32, ptr %i.e, align 4, !tbaa !30
   %i.ao = icmp slt i32 %i.ai, %i.an
@@ -200,12 +204,6 @@ bb.n:                                             ; preds = %bb.m
   %exitcond.not = icmp eq i32 %i.bb, %i.i
   br i1 %exitcond.not, label %._crit_edge.us.us, label %.lr.ph.split.us131.us, !llvm.loop !137
 
-._crit_edge.us.us:                                ; preds = %bb.n, %bb.o
-  %.us-phi.us.us = phi i64 [ %i.bh, %bb.o ], [ %i.ba, %bb.n ] ; 2 uses
-  %2 = add nuw nsw i32 %.073123.us.us, 1          ; 2 uses
-  %exitcond147.not = icmp eq i32 %2, %i.i
-  br i1 %exitcond147.not, label %..thread111_crit_edge.split.us.us, label %.preheader.us.us, !llvm.loop !138
-
 .lr.ph.split.us.us.us:                            ; preds = %.preheader.us.us, %bb.o
   %.072120.us.us.us = phi i32 [ %i.bi, %bb.o ], [ 0, %.preheader.us.us ] ; 2 uses
   %.175119.us.us.us = phi i64 [ %i.bh, %bb.o ], [ %.074122.us.us, %.preheader.us.us ]
@@ -221,6 +219,12 @@ bb.o:                                             ; preds = %.lr.ph.split.us.us.
   %i.bi = add nuw nsw i32 %.072120.us.us.us, 1    ; 2 uses
   %exitcond146.not = icmp eq i32 %i.bi, %i.i
   br i1 %exitcond146.not, label %._crit_edge.us.us, label %.lr.ph.split.us.us.us, !llvm.loop !137
+
+._crit_edge.us.us:                                ; preds = %bb.n, %bb.o
+  %.us-phi.us.us = phi i64 [ %i.bh, %bb.o ], [ %i.ba, %bb.n ] ; 2 uses
+  %2 = add nuw nsw i32 %.073123.us.us, 1          ; 2 uses
+  %exitcond147.not = icmp eq i32 %2, %i.i
+  br i1 %exitcond147.not, label %..thread111_crit_edge.split.us.us, label %.preheader.us.us, !llvm.loop !138
 
 ..thread111_crit_edge.split.us.us:                ; preds = %._crit_edge.us.us
   %i.bj = load ptr, ptr %i.aa, align 8, !tbaa !18

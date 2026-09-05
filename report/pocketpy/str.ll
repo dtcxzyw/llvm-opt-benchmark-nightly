@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pocketpy/original/str?download=true
+inline.NumInlined: 32
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@c11__u8_value:bb.a
   br label %.loopexit
 
@@ -200,10 +204,10 @@ c11__sveq2.exit167:                               ; preds = %c11__sveq2.exit162
   br i1 %or.cond, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %.lr.ph
-  %4 = mul nsw i64 %i.n, 10
-  %5 = and i8 %i.p, 15
-  %6 = zext nneg i8 %5 to i64
-  %i.r = add nsw i64 %4, %6                       ; 2 uses
+  %4 = zext nneg i8 %i.p to i64
+  %5 = mul nsw i64 %i.n, 10
+  %6 = add nsw i64 %4, -48
+  %i.r = add nsw i64 %6, %5                       ; 2 uses
   store i64 %i.r, ptr %2, align 8, !tbaa !59
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -255,10 +259,10 @@ c11__sveq2.exit172:                               ; preds = %c11__sveq2.exit, %.
   br i1 %or.cond12, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %.lr.ph249
-  %7 = shl i64 %i.ad, 1
-  %8 = and i8 %i.af, 1
-  %9 = zext nneg i8 %8 to i64
-  %i.ah = or disjoint i64 %7, %9                  ; 2 uses
+  %7 = zext nneg i8 %i.af to i64
+  %8 = shl i64 %i.ad, 1
+  %9 = add nsw i64 %7, -48
+  %i.ah = or disjoint i64 %8, %9                  ; 2 uses
   store i64 %i.ah, ptr %2, align 8, !tbaa !59
   %indvars.iv.next265 = add nuw nsw i64 %indvars.iv264, 1 ; 2 uses
   %exitcond268.not = icmp eq i64 %indvars.iv.next265, %wide.trip.count267
@@ -310,10 +314,10 @@ c11__sveq2.exit177:                               ; preds = %c11__sveq2.exit162,
   br i1 %or.cond15, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %.lr.ph246
-  %10 = shl i64 %i.au, 3
-  %11 = and i8 %i.aw, 7
-  %12 = zext nneg i8 %11 to i64
-  %i.ay = or disjoint i64 %10, %12                ; 2 uses
+  %10 = zext nneg i8 %i.aw to i64
+  %11 = shl i64 %i.au, 3
+  %12 = add nsw i64 %10, -48
+  %i.ay = or disjoint i64 %11, %12                ; 2 uses
   store i64 %i.ay, ptr %2, align 8, !tbaa !59
   %indvars.iv.next260 = add nuw nsw i64 %indvars.iv259, 1 ; 2 uses
   %exitcond263.not = icmp eq i64 %indvars.iv.next260, %wide.trip.count262
@@ -376,11 +380,10 @@ bb.g:                                             ; preds = %bb.f
   br i1 %or.cond24, label %bb.h, label %.critedge
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %.lr.ph243
-  %.sink286 = phi i64 [ 4294967248, %.lr.ph243 ], [ 4294967209, %bb.f ], [ 4294967241, %bb.g ]
+  %.sink286 = phi i64 [ -48, %.lr.ph243 ], [ -87, %bb.f ], [ -55, %bb.g ]
   %i.bs = shl i64 %i.bl, 4
   %i.bt = add nsw i64 %.sink286, %i.bo
-  %13 = and i64 %i.bt, 4294967295
-  %i.bu = or i64 %i.bs, %13                       ; 2 uses
+  %i.bu = or i64 %i.bs, %i.bt                     ; 2 uses
   store i64 %i.bu, ptr %2, align 8, !tbaa !59
   %indvars.iv.next255 = add nuw nsw i64 %indvars.iv254, 1 ; 2 uses
   %exitcond258.not = icmp eq i64 %indvars.iv.next255, %wide.trip.count257

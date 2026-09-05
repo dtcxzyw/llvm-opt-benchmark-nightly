@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/aws-lc/original/handshake?download=true
+inline.NumInlined: 462
+inline.NumDeleted: 318
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN4bssl22ssl_check_message_typeEP6ssl_stRKNS_10SSLMessageEi:bb.a
   %i.c = zext i8 %i.b to i32
   %.not = icmp eq i32 %2, %i.c                    ; 2 uses
@@ -200,18 +204,22 @@ bb.c:                                             ; preds = %.lr.ph66.split.us.s
 bb.d:                                             ; preds = %.lr.ph66.split.split.us
   %i.j = call i32 @CBS_get_u16_length_prefixed(ptr noundef nonnull %5, ptr noundef nonnull %6) #11
   %.not39.us73 = icmp eq i32 %i.j, 0
-  br i1 %.not39.us73, label %.split.us, label %.preheader.us75
+  br i1 %.not39.us73, label %.split.us, label %.preheader.us74
 
-bb.e:                                             ; preds = %.preheader.us75, %bb.g
-  %.060.us = phi ptr [ %2, %.preheader.us75 ], [ %i.q, %bb.g ] ; 2 uses
-  %i.k = load ptr, ptr %.060.us, align 8, !tbaa !246 ; 4 uses
-  %i.l = load i16, ptr %i.k, align 8, !tbaa !248
+.preheader.us74:                                  ; preds = %bb.d
+  %7 = load i16, ptr %i.a, align 2, !tbaa !245
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.g, %.preheader.us74
+  %.060.us = phi ptr [ %2, %.preheader.us74 ], [ %i.q, %bb.g ] ; 2 uses
+  %i.k = load ptr, ptr %.060.us, align 8, !tbaa !247 ; 4 uses
+  %i.l = load i16, ptr %i.k, align 8, !tbaa !249
   %i.m = icmp eq i16 %7, %i.l
   br i1 %i.m, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 2
-  %i.o = load i8, ptr %i.n, align 2, !tbaa !249, !range !184, !noundef !185
+  %i.o = load i8, ptr %i.n, align 2, !tbaa !250, !range !184, !noundef !185
   %i.p = trunc nuw i8 %i.o to i1
   br i1 %i.p, label %bb.h, label %bb.g
 
@@ -222,12 +230,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %bb.f
   %i.r = getelementptr inbounds nuw i8, ptr %i.k, i64 3 ; 2 uses
-  %i.s = load i8, ptr %i.r, align 1, !tbaa !250, !range !184, !noundef !185
+  %i.s = load i8, ptr %i.r, align 1, !tbaa !251, !range !184, !noundef !185
   %i.t = trunc nuw i8 %i.s to i1
   br i1 %i.t, label %.split79.us, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  store i8 1, ptr %i.r, align 1, !tbaa !250
+  store i8 1, ptr %i.r, align 1, !tbaa !251
   %i.u = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.u, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !244
   br label %._crit_edge62.us
@@ -239,15 +247,11 @@ bb.i:                                             ; preds = %bb.h
   %.not37.us74 = icmp eq i64 %i.v, 0
   br i1 %.not37.us74, label %.loopexit, label %.lr.ph66.split.split.us
 
-.preheader.us75:                                  ; preds = %bb.d
-  %7 = load i16, ptr %i.a, align 2, !tbaa !251
-  br label %bb.e
-
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.03658 = phi ptr [ %i.z, %.lr.ph ], [ %2, %bb.a ] ; 2 uses
-  %i.w = load ptr, ptr %.03658, align 8, !tbaa !246 ; 2 uses
+  %i.w = load ptr, ptr %.03658, align 8, !tbaa !247 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 3
-  store i8 0, ptr %i.x, align 1, !tbaa !250
+  store i8 0, ptr %i.x, align 1, !tbaa !251
   %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   tail call void @CBS_init(ptr noundef nonnull %i.y, ptr noundef null, i64 noundef 0) #11
   %i.z = getelementptr inbounds nuw i8, ptr %.03658, i64 8 ; 2 uses
@@ -267,7 +271,7 @@ bb.j:                                             ; preds = %.lr.ph66.split.spli
   br i1 %.not39, label %.split.us, label %.preheader
 
 .preheader:                                       ; preds = %bb.j
-  %i.ac = load i16, ptr %i.a, align 2, !tbaa !251
+  %i.ac = load i16, ptr %i.a, align 2, !tbaa !245
   br label %bb.k
 
 .split.us:                                        ; preds = %bb.j, %.lr.ph66.split.split, %bb.d, %.lr.ph66.split.split.us, %bb.b, %.lr.ph90, %.lr.ph66.split.us.split.us, %bb.c, %.lr.ph66.split.us.split
@@ -276,14 +280,14 @@ bb.j:                                             ; preds = %.lr.ph66.split.spli
 
 bb.k:                                             ; preds = %.preheader, %bb.m
   %.060 = phi ptr [ %2, %.preheader ], [ %i.aj, %bb.m ] ; 2 uses
-  %i.ad = load ptr, ptr %.060, align 8, !tbaa !246 ; 4 uses
-  %i.ae = load i16, ptr %i.ad, align 8, !tbaa !248
+  %i.ad = load ptr, ptr %.060, align 8, !tbaa !247 ; 4 uses
+  %i.ae = load i16, ptr %i.ad, align 8, !tbaa !249
   %i.af = icmp eq i16 %i.ac, %i.ae
   br i1 %i.af, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ad, i64 2
-  %i.ah = load i8, ptr %i.ag, align 2, !tbaa !249, !range !184, !noundef !185
+  %i.ah = load i8, ptr %i.ag, align 2, !tbaa !250, !range !184, !noundef !185
   %i.ai = trunc nuw i8 %i.ah to i1
   br i1 %i.ai, label %bb.n, label %bb.m
 
@@ -298,7 +302,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l
 
 bb.n:                                             ; preds = %bb.l
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ad, i64 3 ; 2 uses
-  %i.al = load i8, ptr %i.ak, align 1, !tbaa !250, !range !184, !noundef !185
+  %i.al = load i8, ptr %i.ak, align 1, !tbaa !251, !range !184, !noundef !185
   %i.am = trunc nuw i8 %i.al to i1
   br i1 %i.am, label %.split79.us, label %bb.o
 
@@ -307,7 +311,7 @@ bb.n:                                             ; preds = %bb.l
   br label %.thread50
 
 bb.o:                                             ; preds = %bb.n
-  store i8 1, ptr %i.ak, align 1, !tbaa !250
+  store i8 1, ptr %i.ak, align 1, !tbaa !251
   %i.an = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.an, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !244
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #11
@@ -710,13 +714,13 @@ begin_hunk_1_@llvm.umax.i32
 !242 = !{!143, !5, i64 192}
 !243 = distinct !{!243, !186}
 !244 = !{i64 0, i64 8, !101, i64 8, i64 8, !108}
-!245 = !{!"p1 _ZTSN4bssl12SSLExtensionE", !8, i64 0}
-!246 = !{!245, !245, i64 0}
-!247 = !{!"_ZTSN4bssl12SSLExtensionE", !12, i64 0, !94, i64 2, !94, i64 3, !104, i64 8}
-!248 = !{!247, !12, i64 0}
-!249 = !{!247, !94, i64 2}
-!250 = !{!247, !94, i64 3}
-!251 = !{!12, !12, i64 0}
+!245 = !{!12, !12, i64 0}
+!246 = !{!"p1 _ZTSN4bssl12SSLExtensionE", !8, i64 0}
+!247 = !{!246, !246, i64 0}
+!248 = !{!"_ZTSN4bssl12SSLExtensionE", !12, i64 0, !94, i64 2, !94, i64 3, !104, i64 8}
+!249 = !{!248, !12, i64 0}
+!250 = !{!248, !94, i64 2}
+!251 = !{!248, !94, i64 3}
 !252 = distinct !{!252, !186}
 !253 = distinct !{!253, !186}
 !254 = distinct !{!254, !"_ZN4bssl5UpRefERKSt10unique_ptrI16crypto_buffer_stNS_8internal7DeleterEE"}

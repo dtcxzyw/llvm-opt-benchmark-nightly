@@ -202,14 +202,17 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
   %i.av = extractvalue { ptr, i64 } %i.au, 0
   %i.aw = and i64 %.037110.us.us.i, 4294967295
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %i.aw
-  %i.ay = load i64, ptr %i.ax, align 8, !tbaa !18
-  %.not.us.us.i = icmp ne i64 %.037110.us.us.i, %i.at
-  %15 = and i64 %i.ay, 9223372036854775807
-  %i.az = icmp eq i64 %15, 0
-  %or.cond126.i = or i1 %.not.us.us.i, %i.az
-  br i1 %or.cond126.i, label %.preheader100.us.us.i, label %.split113.us.i
+  %i.ay = load i64, ptr %i.ax, align 8, !tbaa !18 ; 2 uses
+  %i.az = icmp eq i64 %i.ay, -9223372036854775808
+  br i1 %i.az, label %.preheader100.us.us.i, label %15
 
-.preheader100.us.us.i:                            ; preds = %.lr.ph111.split.us.split.us.i
+15:                                               ; preds = %.lr.ph111.split.us.split.us.i
+  %.not.us.us.i = icmp ne i64 %.037110.us.us.i, %i.at
+  %.not41.us.us.i = icmp eq i64 %i.ay, 0
+  %or.cond125.i = or i1 %.not.us.us.i, %.not41.us.us.i
+  br i1 %or.cond125.i, label %.preheader100.us.us.i, label %.split113.us.i
+
+.preheader100.us.us.i:                            ; preds = %15, %.lr.ph111.split.us.split.us.i
   %i.ba = add nuw nsw i64 %.037110.us.us.i, 1     ; 2 uses
   %exitcond139.not.i = icmp eq i64 %i.ba, %i.as
   br i1 %exitcond139.not.i, label %_ZN4mlir5spirv12_GLOBAL__N_123verifyConcatOutputShapeEPNS_9OperationENS_9TypeRangeENS0_13TensorArmTypeEi.exit, label %.lr.ph111.split.us.split.us.i, !llvm.loop !94
@@ -311,7 +314,7 @@ bb.r:                                             ; preds = %.preheader.i
   %or.cond46.i = or i1 %.not99.i, %.not41.i
   br i1 %or.cond46.i, label %..loopexit_crit_edge.i, label %.split113.us.i
 
-.split113.us.i:                                   ; preds = %._crit_edge.i, %.lr.ph111.split.us.split.us.i
+.split113.us.i:                                   ; preds = %._crit_edge.i, %15
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #9
   %i.ce = getelementptr inbounds nuw i8, ptr %14, i64 32

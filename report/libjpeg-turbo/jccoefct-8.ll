@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libjpeg-turbo/original/jccoefct-8?download=true
+inline.NumInlined: 3
+inline.NumDeleted: 1
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@compress_first_pass:bb.a
   %i.b = load i32, ptr %i.a, align 8, !tbaa !52
   %i.c = add i32 %i.b, -1                         ; 2 uses
@@ -200,7 +205,7 @@ bb.g:                                             ; preds = %._crit_edge
   tail call void @jzero_far(ptr noundef %i.ch, i64 noundef %i.ca) #5
   br label %.lr.ph104.us.us
 
-.lr.ph104.us.us:                                  ; preds = %.lr.ph110.us.us, %._crit_edge105.us.us
+.lr.ph104.us.us:                                  ; preds = %._crit_edge105.us.us, %.lr.ph110.us.us
   %.0108.us.us = phi ptr [ %i.cj, %.lr.ph110.us.us ], [ %i.ck, %._crit_edge105.us.us ]
   %.085107.us.us = phi ptr [ %i.ch, %.lr.ph110.us.us ], [ %i.cv, %._crit_edge105.us.us ] ; 6 uses
   %.093106.us.us = phi i32 [ 0, %.lr.ph110.us.us ], [ %i.cw, %._crit_edge105.us.us ]

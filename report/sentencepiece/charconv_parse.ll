@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sentencepiece/original/charconv_parse?download=true
+inline.NumInlined: 42
+inline.NumDeleted: 19
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -97,10 +99,10 @@ bb.d:                                             ; preds = %.lr.ph.split.i
   br i1 %i.aa, label %bb.e, label %.critedge2.i.loopexit
 
 bb.e:                                             ; preds = %.lr.ph54.i
-  %4 = and i8 %i.y, 15
-  %i.ab = zext nneg i8 %4 to i64
+  %i.ab = zext nneg i8 %i.y to i64
   %i.ac = mul i64 %.03952.i, 10
-  %i.ad = add i64 %i.ac, %i.ab                    ; 2 uses
+  %4 = add i64 %i.ac, -48
+  %i.ad = add i64 %4, %i.ab                       ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.153.i, i64 1 ; 2 uses
   %exitcond.not.i = icmp eq ptr %i.ae, %i.u
   br i1 %exitcond.not.i, label %.critedge2.i.loopexit, label %.lr.ph54.i, !llvm.loop !25
@@ -248,10 +250,10 @@ bb.l:                                             ; preds = %.lr.ph.split.i112
   br i1 %i.cd, label %bb.m, label %.critedge2.i116
 
 bb.m:                                             ; preds = %.lr.ph54.i133
-  %5 = and i8 %i.cb, 15
-  %i.ce = zext nneg i8 %5 to i64
+  %i.ce = zext nneg i8 %i.cb to i64
   %i.cf = mul i64 %.03952.i135, 10
-  %i.cg = add i64 %i.cf, %i.ce                    ; 2 uses
+  %5 = add i64 %i.cf, -48
+  %i.cg = add i64 %5, %i.ce                       ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %.153.i134, i64 1 ; 2 uses
   %exitcond.not.i136 = icmp eq ptr %i.ch, %i.bx
   br i1 %exitcond.not.i136, label %.critedge2.i116, label %.lr.ph54.i133, !llvm.loop !25

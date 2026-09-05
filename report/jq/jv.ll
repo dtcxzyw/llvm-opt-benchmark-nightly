@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jq/original/jv?download=true
+inline.NumInlined: 353
+inline.NumDeleted: 49
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@jvp_contains:bb.a
 bb.f:                                             ; preds = %bb.d
   %i.g = and i64 %2, 15
@@ -200,8 +205,8 @@ jv_array_length.exit187.split.us:                 ; preds = %jv_array_length.exi
   %.not55.i224.us.us.us.us.us.us = icmp sgt i32 %.sroa.21.0.extract.trunc.i.i166, 0
   br label %.lr.ph242.us.us
 
-.lr.ph242.us.us:                                  ; preds = %.lr.ph242.us.us.preheader, %bb.x
-  %indvars.iv388 = phi i64 [ 0, %.lr.ph242.us.us.preheader ], [ %indvars.iv.next389, %bb.x ] ; 2 uses
+.lr.ph242.us.us:                                  ; preds = %.lr.ph242.us.us.preheader, %bb.ad
+  %indvars.iv388 = phi i64 [ 0, %.lr.ph242.us.us.preheader ], [ %indvars.iv.next384.a, %bb.ad ] ; 2 uses
   br i1 %.not.i188, label %jvp_array_offset.exit.i.i178.us.us.us.us, label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph242.us.us
@@ -238,15 +243,13 @@ jv_copy.exit170.us.us.us.us:                      ; preds = %bb.w, %bb.v
   tail call void @jv_free(i64 %.fr, ptr %1)
   %i.bz = and i64 %.sroa.019.0.i174.us.us.us.us.fr, 128
   %.not.i151.us.us.us.us = icmp eq i64 %i.bz, 0
-  br i1 %.not.i151.us.us.us.us, label %.preheader207.us.us.us.us.us.us, label %jv_array_length.exit.split.us.split.us267.us.us.us
+  br i1 %.not.i151.us.us.us.us, label %.preheader207.us.us.us.us.us.us, label %bb.x
 
-bb.x:                                             ; preds = %.split235.us.us.us.us.us
-  %indvars.iv.next389 = add nuw nsw i64 %indvars.iv388, 1 ; 2 uses
-  %exitcond392.not = icmp eq i64 %indvars.iv.next389, %.sroa.21.0.extract.shift.i.i185
-  br i1 %exitcond392.not, label %jvp_object_contains.exit, label %.lr.ph242.us.us, !llvm.loop !85
+bb.x:                                             ; preds = %jv_copy.exit170.us.us.us.us
+  br i1 %.not55.i224.us.us261.us.us.us, label %jvp_array_offset.exit.i.i.us.us.us.us.us.us, label %.split235.us.us.us.us.us.thread
 
-jvp_array_offset.exit.i.i.us.us.us.us.us.us:      ; preds = %jv_array_length.exit.split.us.split.us267.us.us.us, %bb.aa
-  %indvars.iv378 = phi i64 [ %indvars.iv.next379, %bb.aa ], [ 0, %jv_array_length.exit.split.us.split.us267.us.us.us ] ; 2 uses
+jvp_array_offset.exit.i.i.us.us.us.us.us.us:      ; preds = %bb.x, %bb.aa
+  %indvars.iv378 = phi i64 [ %indvars.iv.next379, %bb.aa ], [ 0, %bb.x ] ; 2 uses
   %i.ca = add nuw nsw i64 %indvars.iv378, %i.bk   ; 2 uses
   %i.cb = load i32, ptr %i.bi, align 4, !tbaa !14
   %i.cc = trunc nuw i64 %i.ca to i32
@@ -273,33 +276,20 @@ jv_copy.exit154.us.us.us.us.us.us:                ; preds = %bb.z, %bb.y
   %i.cl = load i32, ptr %i.bv, align 4, !tbaa !17
   %i.cm = add nsw i32 %i.cl, 1
   store i32 %i.cm, ptr %i.bv, align 4, !tbaa !17
-  %i.cn = tail call fastcc i32 @jvp_contains(i64 %i.cf, ptr %i.ch, i64 %.sroa.019.0.i174.us.us.us.us.fr, ptr nonnull %i.bv, i32 noundef range(i32 -2147483647, 10002) %i.av), !inline_history !86 ; 2 uses
+  %i.cn = tail call fastcc i32 @jvp_contains(i64 %i.cf, ptr %i.ch, i64 %.sroa.019.0.i174.us.us.us.us.fr, ptr nonnull %i.bv, i32 noundef range(i32 -2147483647, 10002) %i.av), !inline_history !85 ; 2 uses
   %.not56.i.us.us.us.us.us.us = icmp eq i32 %i.cn, 0
   br i1 %.not56.i.us.us.us.us.us.us, label %bb.aa, label %.split235.us.us.us.us.us
 
 bb.aa:                                            ; preds = %jv_copy.exit154.us.us.us.us.us.us
   %indvars.iv.next379 = add nuw nsw i64 %indvars.iv378, 1 ; 2 uses
   %exitcond382.not = icmp eq i64 %indvars.iv.next379, %.sroa.21.0.extract.shift.i.i165
-  br i1 %exitcond382.not, label %.split235.us.us.us.us.us.thread, label %jvp_array_offset.exit.i.i.us.us.us.us.us.us, !llvm.loop !87
-
-jv_array_length.exit.split.us.split.us267.us.us.us: ; preds = %jv_copy.exit170.us.us.us.us
-  br i1 %.not55.i224.us.us261.us.us.us, label %jvp_array_offset.exit.i.i.us.us.us.us.us.us, label %.split235.us.us.us.us.us.thread
-
-.split235.us.us.us.us.us.thread:                  ; preds = %.preheader207.us.us.us.us.us.us, %jv_array_length.exit.split.us.split.us267.us.us.us, %bb.aa, %bb.ad
-  tail call void @jv_free(i64 %.sroa.019.0.i174.us.us.us.us.fr, ptr %i.bv), !inline_history !86
-  br label %jvp_object_contains.exit
-
-.split235.us.us.us.us.us:                         ; preds = %jv_copy.exit154.us.us.us.us.us.us, %jv_copy.exit154.us.us.us.us.us.us.us.us
-  %.us-phi239.us.us.us.us = phi i32 [ %i.cz, %jv_copy.exit154.us.us.us.us.us.us.us.us ], [ %i.cn, %jv_copy.exit154.us.us.us.us.us.us ] ; 2 uses
-  tail call void @jv_free(i64 %.sroa.019.0.i174.us.us.us.us.fr, ptr %i.bv), !inline_history !86
-  %5 = icmp sgt i32 %.us-phi239.us.us.us.us, 0
-  br i1 %5, label %bb.x, label %jvp_object_contains.exit
+  br i1 %exitcond382.not, label %.split235.us.us.us.us.us.thread, label %jvp_array_offset.exit.i.i.us.us.us.us.us.us, !llvm.loop !86
 
 .preheader207.us.us.us.us.us.us:                  ; preds = %jv_copy.exit170.us.us.us.us
   br i1 %.not55.i224.us.us.us.us.us.us, label %jvp_array_offset.exit.i.i.us.us.us.us.us.us.us.us, label %.split235.us.us.us.us.us.thread
 
-jvp_array_offset.exit.i.i.us.us.us.us.us.us.us.us: ; preds = %.preheader207.us.us.us.us.us.us, %bb.ad
-  %indvars.iv383 = phi i64 [ %indvars.iv.next384.a, %bb.ad ], [ 0, %.preheader207.us.us.us.us.us.us ] ; 2 uses
+jvp_array_offset.exit.i.i.us.us.us.us.us.us.us.us: ; preds = %.preheader207.us.us.us.us.us.us, %5
+  %indvars.iv383 = phi i64 [ %indvars.iv.next384, %5 ], [ 0, %.preheader207.us.us.us.us.us.us ] ; 2 uses
   %i.co = add nuw nsw i64 %indvars.iv383, %i.bk   ; 2 uses
   %i.cp = load i32, ptr %i.bi, align 4, !tbaa !14
   %i.cq = trunc nuw i64 %i.co to i32
@@ -323,14 +313,29 @@ bb.ac:                                            ; preds = %bb.ab
 
 jv_copy.exit154.us.us.us.us.us.us.us.us:          ; preds = %bb.ac, %bb.ab
   tail call void @jv_free(i64 %.fr, ptr nonnull %1)
-  %i.cz = tail call fastcc i32 @jvp_contains(i64 %i.ct, ptr %i.cv, i64 %.sroa.019.0.i174.us.us.us.us.fr, ptr %i.bv, i32 noundef range(i32 -2147483647, 10002) %i.av), !inline_history !86 ; 2 uses
+  %i.cz = tail call fastcc i32 @jvp_contains(i64 %i.ct, ptr %i.cv, i64 %.sroa.019.0.i174.us.us.us.us.fr, ptr %i.bv, i32 noundef range(i32 -2147483647, 10002) %i.av), !inline_history !85 ; 2 uses
   %.not56.i.us.us.us.us.us.us.us.us = icmp eq i32 %i.cz, 0
-  br i1 %.not56.i.us.us.us.us.us.us.us.us, label %bb.ad, label %.split235.us.us.us.us.us
+  br i1 %.not56.i.us.us.us.us.us.us.us.us, label %5, label %.split235.us.us.us.us.us
 
-bb.ad:                                            ; preds = %jv_copy.exit154.us.us.us.us.us.us.us.us
-  %indvars.iv.next384.a = add nuw nsw i64 %indvars.iv383, 1 ; 2 uses
-  %exitcond387.not.a = icmp eq i64 %indvars.iv.next384.a, %.sroa.21.0.extract.shift.i.i165
-  br i1 %exitcond387.not.a, label %.split235.us.us.us.us.us.thread, label %jvp_array_offset.exit.i.i.us.us.us.us.us.us.us.us, !llvm.loop !87
+5:                                                ; preds = %jv_copy.exit154.us.us.us.us.us.us.us.us
+  %indvars.iv.next384 = add nuw nsw i64 %indvars.iv383, 1 ; 2 uses
+  %exitcond387.not = icmp eq i64 %indvars.iv.next384, %.sroa.21.0.extract.shift.i.i165
+  br i1 %exitcond387.not, label %.split235.us.us.us.us.us.thread, label %jvp_array_offset.exit.i.i.us.us.us.us.us.us.us.us, !llvm.loop !86
+
+.split235.us.us.us.us.us.thread:                  ; preds = %.preheader207.us.us.us.us.us.us, %bb.x, %bb.aa, %5
+  tail call void @jv_free(i64 %.sroa.019.0.i174.us.us.us.us.fr, ptr %i.bv), !inline_history !85
+  br label %jvp_object_contains.exit
+
+.split235.us.us.us.us.us:                         ; preds = %jv_copy.exit154.us.us.us.us.us.us, %jv_copy.exit154.us.us.us.us.us.us.us.us
+  %.us-phi239.us.us.us.us = phi i32 [ %i.cz, %jv_copy.exit154.us.us.us.us.us.us.us.us ], [ %i.cn, %jv_copy.exit154.us.us.us.us.us.us ] ; 2 uses
+  tail call void @jv_free(i64 %.sroa.019.0.i174.us.us.us.us.fr, ptr %i.bv), !inline_history !85
+  %6 = icmp sgt i32 %.us-phi239.us.us.us.us, 0
+  br i1 %6, label %bb.ad, label %jvp_object_contains.exit
+
+bb.ad:                                            ; preds = %.split235.us.us.us.us.us
+  %indvars.iv.next384.a = add nuw nsw i64 %indvars.iv388, 1 ; 2 uses
+  %exitcond387.not.a = icmp eq i64 %indvars.iv.next384.a, %.sroa.21.0.extract.shift.i.i185
+  br i1 %exitcond387.not.a, label %jvp_object_contains.exit, label %.lr.ph242.us.us, !llvm.loop !87
 
 .preheader208.us:                                 ; preds = %jv_array_length.exit187.split.us
   br i1 %.not52.i240.us.us, label %.lr.ph242.us.preheader, label %jvp_object_contains.exit
@@ -342,8 +347,8 @@ bb.ad:                                            ; preds = %jv_copy.exit154.us.
   %.not55.i224.us255.us.us = icmp sgt i32 %.sroa.21.0.extract.trunc.i.i166, 0
   br label %.lr.ph242.us
 
-.lr.ph242.us:                                     ; preds = %.lr.ph242.us.preheader, %bb.aj
-  %indvars.iv373 = phi i64 [ 0, %.lr.ph242.us.preheader ], [ %indvars.iv.next374.a, %bb.aj ] ; 2 uses
+.lr.ph242.us:                                     ; preds = %.lr.ph242.us.preheader, %bb.am
+  %indvars.iv373 = phi i64 [ 0, %.lr.ph242.us.preheader ], [ %indvars.iv.next369.a, %bb.am ] ; 2 uses
   br i1 %.not.i188, label %jvp_array_offset.exit.i.i178.us.us320, label %bb.ae
 
 bb.ae:                                            ; preds = %.lr.ph242.us
@@ -383,10 +388,13 @@ jv_copy.exit170.us.us322:                         ; preds = %bb.ag, %bb.af
   tail call void @jv_free(i64 %.fr, ptr nonnull %1)
   %i.dr = and i64 %.sroa.019.0.i174.us.us323.fr, 128
   %.not.i151.us.us325 = icmp eq i64 %i.dr, 0
-  br i1 %.not.i151.us.us325, label %.preheader207.us252.us.us, label %jv_array_length.exit.split.us257.split.us341
+  br i1 %.not.i151.us.us325, label %.preheader207.us252.us.us, label %.preheader207.us249.us328
 
-jvp_array_offset.exit.i.i.us.us:                  ; preds = %jv_array_length.exit.split.us257.split.us341, %6
-  %indvars.iv = phi i64 [ %indvars.iv.next, %6 ], [ 0, %jv_array_length.exit.split.us257.split.us341 ] ; 2 uses
+.preheader207.us249.us328:                        ; preds = %jv_copy.exit170.us.us322
+  br i1 %.not55.i224.us255.us334, label %jvp_array_offset.exit.i.i.us.us, label %.split235.us256.us.thread
+
+jvp_array_offset.exit.i.i.us.us:                  ; preds = %.preheader207.us249.us328, %bb.aj
+  %indvars.iv = phi i64 [ %indvars.iv.next374.a, %bb.aj ], [ 0, %.preheader207.us249.us328 ] ; 2 uses
   %i.ds = load i32, ptr %1, align 4, !tbaa !17
   %i.dt = add nsw i32 %i.ds, 1
   store i32 %i.dt, ptr %1, align 4, !tbaa !17
@@ -416,38 +424,20 @@ jv_copy.exit154.us.us:                            ; preds = %bb.ai, %bb.ah
   %i.ef = load i32, ptr %i.dl, align 4, !tbaa !17
   %i.eg = add nsw i32 %i.ef, 1
   store i32 %i.eg, ptr %i.dl, align 4, !tbaa !17
-  %i.eh = tail call fastcc i32 @jvp_contains(i64 %i.dz, ptr %i.eb, i64 %.sroa.019.0.i174.us.us323.fr, ptr nonnull %i.dl, i32 noundef range(i32 -2147483647, 10002) %i.av), !inline_history !86 ; 2 uses
+  %i.eh = tail call fastcc i32 @jvp_contains(i64 %i.dz, ptr %i.eb, i64 %.sroa.019.0.i174.us.us323.fr, ptr nonnull %i.dl, i32 noundef range(i32 -2147483647, 10002) %i.av), !inline_history !85 ; 2 uses
   %.not56.i.us.us = icmp eq i32 %i.eh, 0
-  br i1 %.not56.i.us.us, label %6, label %.split235.us250.us
+  br i1 %.not56.i.us.us, label %bb.aj, label %.split235.us256.us
 
-6:                                                ; preds = %jv_copy.exit154.us.us
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %.sroa.21.0.extract.shift.i.i165
-  br i1 %exitcond.not, label %.split235.us250.us.thread, label %jvp_array_offset.exit.i.i.us.us, !llvm.loop !87
-
-bb.aj:                                            ; preds = %.split235.us250.us
-  %indvars.iv.next374.a = add nuw nsw i64 %indvars.iv373, 1 ; 2 uses
-  %exitcond377.not.a = icmp eq i64 %indvars.iv.next374.a, %.sroa.21.0.extract.shift.i.i185
-  br i1 %exitcond377.not.a, label %jvp_object_contains.exit, label %.lr.ph242.us, !llvm.loop !85
-
-jv_array_length.exit.split.us257.split.us341:     ; preds = %jv_copy.exit170.us.us322
-  br i1 %.not55.i224.us255.us334, label %jvp_array_offset.exit.i.i.us.us, label %.split235.us250.us.thread
-
-.split235.us250.us.thread:                        ; preds = %.preheader207.us252.us.us, %jv_array_length.exit.split.us257.split.us341, %6, %bb.am
-  tail call void @jv_free(i64 %.sroa.019.0.i174.us.us323.fr, ptr %i.dl), !inline_history !86
-  br label %jvp_object_contains.exit
-
-.split235.us250.us:                               ; preds = %jv_copy.exit154.us.us, %jv_copy.exit154.us.us.us304.us
-  %.us-phi312.us = phi i32 [ %i.ev, %jv_copy.exit154.us.us.us304.us ], [ %i.eh, %jv_copy.exit154.us.us ] ; 2 uses
-  tail call void @jv_free(i64 %.sroa.019.0.i174.us.us323.fr, ptr %i.dl), !inline_history !86
-  %7 = icmp sgt i32 %.us-phi312.us, 0
-  br i1 %7, label %bb.aj, label %jvp_object_contains.exit
+bb.aj:                                            ; preds = %jv_copy.exit154.us.us
+  %indvars.iv.next374.a = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond377.not.a = icmp eq i64 %indvars.iv.next374.a, %.sroa.21.0.extract.shift.i.i165
+  br i1 %exitcond377.not.a, label %.split235.us256.us.thread, label %jvp_array_offset.exit.i.i.us.us, !llvm.loop !86
 
 .preheader207.us252.us.us:                        ; preds = %jv_copy.exit170.us.us322
-  br i1 %.not55.i224.us255.us.us, label %jvp_array_offset.exit.i.i.us.us.us302.us, label %.split235.us250.us.thread
+  br i1 %.not55.i224.us255.us.us, label %jvp_array_offset.exit.i.i.us.us.us302.us, label %.split235.us256.us.thread
 
-jvp_array_offset.exit.i.i.us.us.us302.us:         ; preds = %.preheader207.us252.us.us, %bb.am
-  %indvars.iv368 = phi i64 [ %indvars.iv.next369.a, %bb.am ], [ 0, %.preheader207.us252.us.us ] ; 2 uses
+jvp_array_offset.exit.i.i.us.us.us302.us:         ; preds = %.preheader207.us252.us.us, %7
+  %indvars.iv368 = phi i64 [ %indvars.iv.next369, %7 ], [ 0, %.preheader207.us252.us.us ] ; 2 uses
   %i.ei = load i32, ptr %1, align 4, !tbaa !17
   %i.ej = add nsw i32 %i.ei, 1
   store i32 %i.ej, ptr %1, align 4, !tbaa !17
@@ -474,14 +464,29 @@ bb.al:                                            ; preds = %bb.ak
 
 jv_copy.exit154.us.us.us304.us:                   ; preds = %bb.al, %bb.ak
   tail call void @jv_free(i64 %.fr, ptr nonnull %1)
-  %i.ev = tail call fastcc i32 @jvp_contains(i64 %i.ep, ptr %i.er, i64 %.sroa.019.0.i174.us.us323.fr, ptr %i.dl, i32 noundef range(i32 -2147483647, 10002) %i.av), !inline_history !86 ; 2 uses
+  %i.ev = tail call fastcc i32 @jvp_contains(i64 %i.ep, ptr %i.er, i64 %.sroa.019.0.i174.us.us323.fr, ptr %i.dl, i32 noundef range(i32 -2147483647, 10002) %i.av), !inline_history !85 ; 2 uses
   %.not56.i.us.us.us307.us = icmp eq i32 %i.ev, 0
-  br i1 %.not56.i.us.us.us307.us, label %bb.am, label %.split235.us250.us
+  br i1 %.not56.i.us.us.us307.us, label %7, label %.split235.us256.us
 
-bb.am:                                            ; preds = %jv_copy.exit154.us.us.us304.us
-  %indvars.iv.next369.a = add nuw nsw i64 %indvars.iv368, 1 ; 2 uses
-  %exitcond372.not.a = icmp eq i64 %indvars.iv.next369.a, %.sroa.21.0.extract.shift.i.i165
-  br i1 %exitcond372.not.a, label %.split235.us250.us.thread, label %jvp_array_offset.exit.i.i.us.us.us302.us, !llvm.loop !87
+7:                                                ; preds = %jv_copy.exit154.us.us.us304.us
+  %indvars.iv.next369 = add nuw nsw i64 %indvars.iv368, 1 ; 2 uses
+  %exitcond372.not = icmp eq i64 %indvars.iv.next369, %.sroa.21.0.extract.shift.i.i165
+  br i1 %exitcond372.not, label %.split235.us256.us.thread, label %jvp_array_offset.exit.i.i.us.us.us302.us, !llvm.loop !86
+
+.split235.us256.us.thread:                        ; preds = %.preheader207.us252.us.us, %.preheader207.us249.us328, %bb.aj, %7
+  tail call void @jv_free(i64 %.sroa.019.0.i174.us.us323.fr, ptr %i.dl), !inline_history !85
+  br label %jvp_object_contains.exit
+
+.split235.us256.us:                               ; preds = %jv_copy.exit154.us.us, %jv_copy.exit154.us.us.us304.us
+  %.us-phi312.us = phi i32 [ %i.ev, %jv_copy.exit154.us.us.us304.us ], [ %i.eh, %jv_copy.exit154.us.us ] ; 2 uses
+  tail call void @jv_free(i64 %.sroa.019.0.i174.us.us323.fr, ptr %i.dl), !inline_history !85
+  %8 = icmp sgt i32 %.us-phi312.us, 0
+  br i1 %8, label %bb.am, label %jvp_object_contains.exit
+
+bb.am:                                            ; preds = %.split235.us256.us
+  %indvars.iv.next369.a = add nuw nsw i64 %indvars.iv373, 1 ; 2 uses
+  %exitcond372.not.a = icmp eq i64 %indvars.iv.next369.a, %.sroa.21.0.extract.shift.i.i185
+  br i1 %exitcond372.not.a, label %jvp_object_contains.exit, label %.lr.ph242.us, !llvm.loop !87
 
 jv_array_length.exit187.split:                    ; preds = %jv_array_length.exit187
   br i1 %.not52.i240.us.us, label %.lr.ph242.split, label %jvp_object_contains.exit
@@ -626,8 +631,8 @@ jv_copy.exit134:                                  ; preds = %jv_copy.exit130, %b
   %i.gl = tail call fastcc i32 @jvp_equal(i64 %.fr, ptr %1, i64 %2, ptr %3, i32 noundef 0)
   br label %jvp_object_contains.exit
 
-jvp_object_contains.exit:                         ; preds = %.split235.us250.us, %bb.aj, %.split235.us.us.us.us.us, %bb.x, %jvp_object_size.exit.i.i150, %jv_copy.exit140, %jv_object_iter_next.exit, %jvp_object_size.exit.i, %bb.h, %jv_copy.exit134, %bb.b, %jv_string_length_bytes.exit, %jv_string_value.exit126, %jv_array_length.exit187.split, %.preheader208.us.us, %.preheader208.us, %jv_object_iter.exit, %.split235.us.us.us.us.us.thread, %.split235.us250.us.thread, %bb.a
-  %.0 = phi i32 [ -1, %bb.a ], [ %i.gl, %jv_copy.exit134 ], [ 1, %jv_string_length_bytes.exit ], [ 1, %jv_array_length.exit187.split ], [ 0, %bb.b ], [ %i.ge, %jv_string_value.exit126 ], [ 1, %.preheader208.us ], [ 1, %jv_object_iter.exit ], [ 0, %.split235.us250.us.thread ], [ 1, %.preheader208.us.us ], [ %i.am, %jvp_object_size.exit.i ], [ 0, %.split235.us.us.us.us.us.thread ], [ 1, %bb.h ], [ %i.am, %jv_copy.exit140 ], [ 1, %bb.x ], [ 1, %jvp_object_size.exit.i.i150 ], [ %i.am, %jv_object_iter_next.exit ], [ %.us-phi239.us.us.us.us, %.split235.us.us.us.us.us ], [ %.us-phi312.us, %.split235.us250.us ], [ 1, %bb.aj ]
+jvp_object_contains.exit:                         ; preds = %bb.am, %.split235.us256.us, %bb.ad, %.split235.us.us.us.us.us, %jvp_object_size.exit.i.i150, %jv_copy.exit140, %jv_object_iter_next.exit, %jvp_object_size.exit.i, %bb.h, %jv_copy.exit134, %bb.b, %jv_string_length_bytes.exit, %jv_string_value.exit126, %jv_array_length.exit187.split, %jv_object_iter.exit, %.preheader208.us.us, %.preheader208.us, %.split235.us.us.us.us.us.thread, %.split235.us256.us.thread, %bb.a
+  %.0 = phi i32 [ -1, %bb.a ], [ %i.gl, %jv_copy.exit134 ], [ 1, %jv_string_length_bytes.exit ], [ 1, %jv_array_length.exit187.split ], [ 0, %bb.b ], [ %i.ge, %jv_string_value.exit126 ], [ 0, %.split235.us256.us.thread ], [ 1, %.preheader208.us ], [ %i.am, %jvp_object_size.exit.i ], [ 1, %jv_object_iter.exit ], [ 1, %.preheader208.us.us ], [ 0, %.split235.us.us.us.us.us.thread ], [ 1, %bb.h ], [ %i.am, %jv_copy.exit140 ], [ %.us-phi239.us.us.us.us, %.split235.us.us.us.us.us ], [ 1, %jvp_object_size.exit.i.i150 ], [ %i.am, %jv_object_iter_next.exit ], [ 1, %bb.ad ], [ %.us-phi312.us, %.split235.us256.us ], [ 1, %bb.am ]
   tail call void @jv_free(i64 %.fr, ptr %1)
   tail call void @jv_free(i64 %2, ptr %3)
   ret i32 %.0
@@ -1030,8 +1035,8 @@ attributes #23 = { nounwind allocsize(0) }
 !82 = distinct !{null}
 !83 = distinct !{null}
 !84 = distinct !{!84, !21}
-!85 = distinct !{!85, !21}
-!86 = distinct !{null}
+!85 = distinct !{null}
+!86 = distinct !{!86, !21}
 !87 = distinct !{!87, !21}
 !88 = distinct !{!88, !21}
 !89 = distinct !{!89, !21}

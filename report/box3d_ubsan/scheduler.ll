@@ -1,4 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/box3d_ubsan/original/scheduler?download=true
+inline.NumInlined: 14
+inline.NumDeleted: 5
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -197,13 +200,6 @@ bb.c:                                             ; preds = %bb.a
   %.not.us.us206 = icmp eq i32 %i.r, 0
   br i1 %.not.us.us206, label %.preheader.us.us, label %.split115.us
 
-b3SchedulerExecuteOne.exit.us.us:                 ; preds = %b3AtomicStoreInt.exit.i.us.us.us, %bb.e, %bb.h, %.preheader.us.us
-  %1 = load ptr, ptr %i.l, align 8, !tbaa !18
-  tail call void @b3WaitSemaphore(ptr noundef %1) #7
-  %2 = load atomic i32, ptr %i.m seq_cst, align 8
-  %.not.us.us = icmp eq i32 %2, 0
-  br i1 %.not.us.us, label %.preheader.us.us, label %.split115.us
-
 .preheader.us.us:                                 ; preds = %.lr.ph, %b3SchedulerExecuteOne.exit.us.us
   %i.s = load atomic i32, ptr %i.n seq_cst, align 8 ; 2 uses
   %.not2250.i.us96.us.us = icmp sgt i32 %i.s, 0
@@ -288,6 +284,13 @@ b3AtomicStoreInt.exit.i.us.us.us:                 ; preds = %bb.i, %bb.j
   %i.ar = load atomic i32, ptr %i.n seq_cst, align 8 ; 2 uses
   %.not2250.i.us.us.us = icmp sgt i32 %i.ar, 0
   br i1 %.not2250.i.us.us.us, label %.lr.ph.i.us.us.us, label %b3SchedulerExecuteOne.exit.us.us
+
+b3SchedulerExecuteOne.exit.us.us:                 ; preds = %b3AtomicStoreInt.exit.i.us.us.us, %bb.e, %bb.h, %.preheader.us.us
+  %1 = load ptr, ptr %i.l, align 8, !tbaa !18
+  tail call void @b3WaitSemaphore(ptr noundef %1) #7
+  %2 = load atomic i32, ptr %i.m seq_cst, align 8
+  %.not.us.us = icmp eq i32 %2, 0
+  br i1 %.not.us.us, label %.preheader.us.us, label %.split115.us
 
 ._crit_edge98:                                    ; preds = %bb.c
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @21, i64 %i.h) #8, !nosanitize !11

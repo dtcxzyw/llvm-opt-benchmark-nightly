@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/box3d_ubsan/original/broad_phase?download=true
+inline.NumInlined: 56
+inline.NumDeleted: 31
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@b3BroadPhase_MoveProxy:bb.a
   %i.i = add i64 %i.h, %i.b, !nosanitize !9       ; 2 uses
   %.not = icmp ult i64 %i.i, %i.b, !nosanitize !9
@@ -200,8 +204,8 @@ bb.r:                                             ; preds = %b3UpdateTreesTask.e
   %wide.trip.count452 = zext nneg i32 %i.i to i64
   br label %.lr.ph264.split.us
 
-.lr.ph264.split.us:                               ; preds = %.lr.ph264, %._crit_edge.split.us.us
-  %indvars.iv449 = phi i64 [ 0, %.lr.ph264 ], [ %indvars.iv.next450, %._crit_edge.split.us.us ] ; 3 uses
+.lr.ph264.split.us:                               ; preds = %.lr.ph264, %bb.z
+  %indvars.iv449 = phi i64 [ 0, %.lr.ph264 ], [ %indvars.iv.next450, %bb.z ] ; 3 uses
   %i.bk = load ptr, ptr %i.m, align 8, !tbaa !25  ; 3 uses
   %i.bl = getelementptr inbounds nuw [8 x i8], ptr %i.bk, i64 %indvars.iv449 ; 2 uses
   %i.bm = shl nuw nsw i64 %indvars.iv449, 3
@@ -224,15 +228,10 @@ bb.s:                                             ; preds = %.lr.ph264.split.us
 bb.t:                                             ; preds = %bb.s
   %i.by = load ptr, ptr %i.bl, align 8, !tbaa !88 ; 2 uses
   %.not76215.us = icmp eq ptr %i.by, null
-  br i1 %.not76215.us, label %._crit_edge.split.us.us, label %.lr.ph.us
+  br i1 %.not76215.us, label %bb.z, label %.lr.ph.us
 
-._crit_edge.split.us.us:                          ; preds = %bb.z, %bb.t
-  %indvars.iv.next450 = add nuw nsw i64 %indvars.iv449, 1 ; 2 uses
-  %exitcond453.not = icmp eq i64 %indvars.iv.next450, %wide.trip.count452
-  br i1 %exitcond453.not, label %.preheader, label %.lr.ph264.split.us, !llvm.loop !124
-
-.lr.ph.us:                                        ; preds = %bb.t, %bb.z
-  %.065216.us.us = phi ptr [ %i.dj, %bb.z ], [ %i.by, %bb.t ] ; 7 uses
+.lr.ph.us:                                        ; preds = %bb.t, %1
+  %.065216.us.us = phi ptr [ %i.dj, %1 ], [ %i.by, %bb.t ] ; 7 uses
   %i.bz = ptrtoint ptr %.065216.us.us to i64, !nosanitize !9 ; 2 uses
   %i.ca = and i64 %i.bz, 7, !nosanitize !9
   %i.cb = icmp eq i64 %i.ca, 0, !nosanitize !9
@@ -283,17 +282,22 @@ bb.x:                                             ; preds = %bb.w
   %i.dh = trunc nuw i8 %i.df to i1
   %i.di = getelementptr inbounds nuw i8, ptr %.065216.us.us, i64 16
   %i.dj = load ptr, ptr %i.di, align 8, !tbaa !95 ; 2 uses
-  br i1 %i.dh, label %bb.y, label %bb.z
+  br i1 %i.dh, label %bb.y, label %1
 
 bb.y:                                             ; preds = %bb.x
   tail call void @b3Free(ptr noundef nonnull %.065216.us.us, i64 noundef 32) #10
-  br label %bb.z
+  br label %1
 
-bb.z:                                             ; preds = %bb.x, %bb.y
-  %.not76.us.us.a = icmp eq ptr %i.dj, null
-  br i1 %.not76.us.us.a, label %._crit_edge.split.us.us, label %.lr.ph.us, !llvm.loop !125
+1:                                                ; preds = %bb.x, %bb.y
+  %.not76.us.us = icmp eq ptr %i.dj, null
+  br i1 %.not76.us.us, label %bb.z, label %.lr.ph.us, !llvm.loop !124
 
-.preheader:                                       ; preds = %._crit_edge.split.us.us, %bb.r
+bb.z:                                             ; preds = %1, %bb.t
+  %indvars.iv.next450 = add nuw nsw i64 %indvars.iv449, 1 ; 2 uses
+  %.not76.us.us.a = icmp eq i64 %indvars.iv.next450, %wide.trip.count452
+  br i1 %.not76.us.us.a, label %.preheader, label %.lr.ph264.split.us, !llvm.loop !125
+
+.preheader:                                       ; preds = %bb.z, %bb.r
   %i.dk = load i32, ptr %i.h, align 8, !tbaa !34  ; 2 uses
   %i.dl = icmp sgt i32 %i.dk, 0
   br i1 %i.dl, label %.lr.ph294, label %._crit_edge

@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ms-gsl/original/dyn_array_tests?download=true
+inline.NumInlined: 2502
+inline.NumDeleted: 776
+loop-unroll.NumCompletelyUnrolled: 11
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 13
 begin_hunk_0_@_ZN47dyn_array_tests_input_iterator_constructor_Test8TestBodyEv:._crit_edge.i.i
   br label %bb.cn
 
@@ -200,7 +205,7 @@ _ZNSt15__new_allocatorIcE8allocateEmPKv.exit.i:   ; preds = %bb.f
 iter.check:                                       ; preds = %_ZNSt15__new_allocatorIcE8allocateEmPKv.exit.i
   store ptr %i.ad, ptr %0, align 8
   store i64 %i.v, ptr %i.y, align 8
-  %min.iters.check = icmp ult i64 %i.v, 4
+  %min.iters.check = icmp ult i64 %i.v, 8
   %i.ae = ptrtoaddr ptr %i.ad to i64
   %i.af = sub i64 %i.u, %i.ae
   %diff.check = icmp ugt i64 %i.af, -32
@@ -212,7 +217,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check29, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.ag = and i64 %i.v, 28
+  %i.ag = and i64 %i.v, 24
   %n.vec = and i64 %i.v, 9223372036854775776      ; 5 uses
   %i.ah = getelementptr i8, ptr %i.ad, i64 %n.vec
   %i.ai = getelementptr i8, ptr %i.s, i64 %n.vec
@@ -242,7 +247,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec33 = and i64 %i.v, 9223372036854775804    ; 4 uses
+  %n.vec33 = and i64 %i.v, 9223372036854775800    ; 4 uses
   %i.am = getelementptr i8, ptr %i.ad, i64 %n.vec33
   %i.an = getelementptr i8, ptr %i.s, i64 %n.vec33
   br label %vec.epilog.vector.body
@@ -251,9 +256,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %index34 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next38, %vec.epilog.vector.body ] ; 3 uses
   %next.gep35 = getelementptr i8, ptr %i.ad, i64 %index34
   %next.gep36 = getelementptr i8, ptr %i.s, i64 %index34
-  %wide.load37 = load <4 x i8>, ptr %next.gep36, align 1
-  store <4 x i8> %wide.load37, ptr %next.gep35, align 1
-  %index.next38 = add nuw i64 %index34, 4         ; 2 uses
+  %wide.load37 = load <8 x i8>, ptr %next.gep36, align 1
+  store <8 x i8> %wide.load37, ptr %next.gep35, align 1
+  %index.next38 = add nuw i64 %index34, 8         ; 2 uses
   %i.ao = icmp eq i64 %index.next38, %n.vec33
   br i1 %i.ao, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !258
 
@@ -656,7 +661,7 @@ begin_hunk_1_@bcmp
 !258 = distinct !{!258, !11, !14, !15}
 !259 = distinct !{!259, !16}
 !260 = distinct !{!260, !11, !14}
-!261 = !{!"branch_weights", i32 4, i32 28}
+!261 = !{!"branch_weights", i32 8, i32 24}
 !262 = distinct !{null, null}
 !263 = distinct !{!263, !"_ZNK7testing18PolymorphicMatcherINS_8internal19MatchesRegexMatcherEEcvNS_7MatcherIT_EEIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEv"}
 !264 = distinct !{!264, !263, !"_ZNK7testing18PolymorphicMatcherINS_8internal19MatchesRegexMatcherEEcvNS_7MatcherIT_EEIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEv: argument 0"}

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/memcached/original/mcmc?download=true
+inline.NumInlined: 27
+inline.NumDeleted: 7
 begin_hunk_0_@mcmc_token_get_flag_arg_32:bb.a
 
 _mcmc_token.exit:                                 ; preds = %bb.b
@@ -200,9 +202,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = zext nneg i8 %2 to i64
-  %i.c = add nuw nsw i64 %i.b, 4294967231
-  %3 = and i64 %i.c, 4294967295
-  %i.d = shl nuw nsw i64 1, %3
+  %i.c = add nsw i64 %i.b, -65
+  %i.d = shl nuw nsw i64 1, %i.c
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.f = load i64, ptr %i.e, align 8, !tbaa !22
   %i.g = and i64 %i.f, %i.d

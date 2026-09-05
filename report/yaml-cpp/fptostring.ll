@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/yaml-cpp/original/fptostring?download=true
+inline.NumInlined: 309
+inline.NumDeleted: 181
 begin_hunk_0_@_ZN4YAML6detail13fp_formatting10FpToStringIfEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_i:bb.a
   %i.cg = add i8 %i.cf, 1                         ; 2 uses
   store i8 %i.cg, ptr %i.ce, align 1, !tbaa !10
@@ -200,7 +202,7 @@ iter.check:                                       ; preds = %.preheader
   %i.eo = add i64 %i.b, %i.dq
   %i.ep = sub i64 %i.eo, %.1233.pre-phi           ; 8 uses
   %scevgep234 = getelementptr i8, ptr %.1, i64 %i.ep
-  %min.iters.check = icmp ult i64 %i.ep, 4
+  %min.iters.check = icmp ult i64 %i.ep, 8
   %i.eq = sub i64 %.1268, %.8.lcssa267
   %diff.check = icmp ugt i64 %i.eq, -32
   %or.cond282 = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -211,7 +213,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check269, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.er = and i64 %i.ep, 28
+  %i.er = and i64 %i.ep, 24
   %n.vec = and i64 %i.ep, -32                     ; 5 uses
   %i.es = getelementptr i8, ptr %.1, i64 %n.vec
   %i.et = getelementptr i8, ptr %.8.lcssa, i64 %n.vec ; 2 uses
@@ -241,7 +243,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec273 = and i64 %i.ep, -4                   ; 4 uses
+  %n.vec273 = and i64 %i.ep, -8                   ; 4 uses
   %i.ex = getelementptr i8, ptr %.1, i64 %n.vec273
   %i.ey = getelementptr i8, ptr %.8.lcssa, i64 %n.vec273 ; 2 uses
   br label %vec.epilog.vector.body
@@ -250,9 +252,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %index274 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next278, %vec.epilog.vector.body ] ; 3 uses
   %next.gep275 = getelementptr i8, ptr %.1, i64 %index274
   %next.gep276 = getelementptr i8, ptr %.8.lcssa, i64 %index274
-  %wide.load277 = load <4 x i8>, ptr %next.gep275, align 1, !tbaa !10
-  store <4 x i8> %wide.load277, ptr %next.gep276, align 1, !tbaa !10
-  %index.next278 = add nuw i64 %index274, 4       ; 2 uses
+  %wide.load277 = load <8 x i8>, ptr %next.gep275, align 1, !tbaa !10
+  store <8 x i8> %wide.load277, ptr %next.gep276, align 1, !tbaa !10
+  %index.next278 = add nuw i64 %index274, 8       ; 2 uses
   %i.ez = icmp eq i64 %index.next278, %n.vec273
   br i1 %i.ez, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !39
 
@@ -655,7 +657,7 @@ iter.check:                                       ; preds = %.preheader
   %i.eq = add i64 %i.b, %i.ds
   %i.er = sub i64 %i.eq, %.1228.pre-phi           ; 8 uses
   %scevgep229 = getelementptr i8, ptr %.1, i64 %i.er
-  %min.iters.check = icmp ult i64 %i.er, 4
+  %min.iters.check = icmp ult i64 %i.er, 8
   %i.es = sub i64 %.1265, %.8.lcssa264
   %diff.check = icmp ugt i64 %i.es, -32
   %or.cond279 = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -666,7 +668,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check266, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.et = and i64 %i.er, 28
+  %i.et = and i64 %i.er, 24
   %n.vec = and i64 %i.er, -32                     ; 5 uses
   %i.eu = getelementptr i8, ptr %.1, i64 %n.vec
   %i.ev = getelementptr i8, ptr %.8.lcssa, i64 %n.vec ; 2 uses
@@ -696,7 +698,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec270 = and i64 %i.er, -4                   ; 4 uses
+  %n.vec270 = and i64 %i.er, -8                   ; 4 uses
   %i.ez = getelementptr i8, ptr %.1, i64 %n.vec270
   %i.fa = getelementptr i8, ptr %.8.lcssa, i64 %n.vec270 ; 2 uses
   br label %vec.epilog.vector.body
@@ -705,9 +707,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %index271 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next275, %vec.epilog.vector.body ] ; 3 uses
   %next.gep272 = getelementptr i8, ptr %.1, i64 %index271
   %next.gep273 = getelementptr i8, ptr %.8.lcssa, i64 %index271
-  %wide.load274 = load <4 x i8>, ptr %next.gep272, align 1, !tbaa !10
-  store <4 x i8> %wide.load274, ptr %next.gep273, align 1, !tbaa !10
-  %index.next275 = add nuw i64 %index271, 4       ; 2 uses
+  %wide.load274 = load <8 x i8>, ptr %next.gep272, align 1, !tbaa !10
+  store <8 x i8> %wide.load274, ptr %next.gep273, align 1, !tbaa !10
+  %index.next275 = add nuw i64 %index271, 8       ; 2 uses
   %i.fb = icmp eq i64 %index.next275, %n.vec270
   br i1 %i.fb, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !50
 
@@ -1110,7 +1112,7 @@ attributes #12 = { builtin nounwind }
 !28 = !{!27, !18, i64 8}
 !29 = !{!"llvm.loop.isvectorized", i32 1}
 !30 = !{!"llvm.loop.unroll.runtime.disable"}
-!31 = !{!"branch_weights", i32 4, i32 28}
+!31 = !{!"branch_weights", i32 8, i32 24}
 !32 = !{!18, !18, i64 0}
 !33 = distinct !{!33, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv"}
 !34 = distinct !{!34, !33, !"_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}

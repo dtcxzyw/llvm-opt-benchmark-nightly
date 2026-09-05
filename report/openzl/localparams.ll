@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openzl/original/localparams?download=true
+inline.NumInlined: 190
+inline.NumDeleted: 26
+loop-unroll.NumCompletelyUnrolled: 12
+loop-unroll.NumRuntimeUnrolled: 16
+loop-unroll.NumUnrolled: 28
 begin_hunk_0_@ZL_LocalParams_hash:bb.a
   %.not33.i24.1 = icmp sgt i32 %i.db, %.129.i27
   %or.cond34.i25.1 = select i1 %.not32.i23.1, i1 true, i1 %.not33.i24.1 ; 2 uses
@@ -200,17 +205,6 @@ bb.d:                                             ; preds = %bb.c, %..preheader_
   %niter172.ncmp.1 = icmp eq i64 %niter172.next.1, %unroll_iter171
   br i1 %niter172.ncmp.1, label %._crit_edge.us.us.unr-lcssa, label %..preheader_crit_edge.us.us, !llvm.loop !80
 
-2:                                                ; preds = %._crit_edge.us.us
-  %3 = getelementptr inbounds nuw i8, ptr %.5.us.us.lcssa, i64 4
-  %4 = load i32, ptr %3, align 4, !tbaa !81
-  %5 = getelementptr inbounds nuw i8, ptr %.255.us.us.lcssa, i64 4
-  %6 = load i32, ptr %5, align 4, !tbaa !81
-  %.not.us.us = icmp eq i32 %4, %6                ; 2 uses
-  %7 = icmp ne i32 %.3.us.us.lcssa, 2147483647
-  %8 = add nsw i32 %.3.us.us.lcssa, 1
-  %or.cond156.not = select i1 %.not.us.us, i1 %7, i1 false
-  br i1 %or.cond156.not, label %.lr.ph.us.us, label %.thread
-
 ._crit_edge.us.us.unr-lcssa:                      ; preds = %bb.d
   br i1 %lcmp.mod166.not, label %._crit_edge.us.us, label %..preheader_crit_edge.us.us.epil.preheader
 
@@ -244,6 +238,17 @@ bb.e:                                             ; preds = %..preheader_crit_ed
   %i.ar = icmp eq ptr %.255.us.us.lcssa, null
   %or.cond7.us.us = select i1 %i.aq, i1 true, i1 %i.ar
   br i1 %or.cond7.us.us, label %.split.us, label %2
+
+2:                                                ; preds = %._crit_edge.us.us
+  %3 = getelementptr inbounds nuw i8, ptr %.5.us.us.lcssa, i64 4
+  %4 = load i32, ptr %3, align 4, !tbaa !81
+  %5 = getelementptr inbounds nuw i8, ptr %.255.us.us.lcssa, i64 4
+  %6 = load i32, ptr %5, align 4, !tbaa !81
+  %.not.us.us = icmp eq i32 %4, %6                ; 2 uses
+  %7 = icmp ne i32 %.3.us.us.lcssa, 2147483647
+  %8 = add nsw i32 %.3.us.us.lcssa, 1
+  %or.cond156.not = select i1 %.not.us.us, i1 %7, i1 false
+  br i1 %or.cond156.not, label %.lr.ph.us.us, label %.thread
 
 .preheader.us:                                    ; preds = %.preheader.us, %.preheader.us.preheader.new
   %.05092.us = phi i64 [ 0, %.preheader.us.preheader.new ], [ %i.bd, %.preheader.us ] ; 3 uses
@@ -502,6 +507,12 @@ bb.c:                                             ; preds = %bb.b, %..preheader_
   %exitcond157.not = icmp eq i64 %i.af, %i.f
   br i1 %exitcond157.not, label %._crit_edge.us.us, label %..preheader_crit_edge.us.us, !llvm.loop !83
 
+._crit_edge.us.us:                                ; preds = %bb.c
+  %2 = icmp eq ptr %.5.us.us, null
+  %3 = icmp eq ptr %.264.us.us, null
+  %or.cond7.us.us = select i1 %2, i1 true, i1 %3
+  br i1 %or.cond7.us.us, label %.split.us, label %bb.d
+
 bb.d:                                             ; preds = %._crit_edge.us.us
   %i.ag = getelementptr inbounds nuw i8, ptr %.5.us.us, i64 16
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !23 ; 3 uses
@@ -537,12 +548,6 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.aq = icmp eq i32 %.3.us.us, 2147483647
   %i.ar = add nsw i32 %.3.us.us, 1
   br i1 %i.aq, label %.thread, label %.lr.ph.us.us
-
-._crit_edge.us.us:                                ; preds = %bb.c
-  %2 = icmp eq ptr %.5.us.us, null
-  %3 = icmp eq ptr %.264.us.us, null
-  %or.cond7.us.us = select i1 %2, i1 true, i1 %3
-  br i1 %or.cond7.us.us, label %.split.us, label %bb.d
 
 .preheader.us:                                    ; preds = %.preheader.us, %.preheader.us.preheader.new
   %.059110.us = phi i64 [ 0, %.preheader.us.preheader.new ], [ %i.bd, %.preheader.us ] ; 3 uses
@@ -801,6 +806,12 @@ bb.c:                                             ; preds = %bb.b, %..preheader_
   %exitcond135.not = icmp eq i64 %i.af, %i.f
   br i1 %exitcond135.not, label %._crit_edge.us.us, label %..preheader_crit_edge.us.us, !llvm.loop !85
 
+._crit_edge.us.us:                                ; preds = %bb.c
+  %2 = icmp eq ptr %.5.us.us, null
+  %3 = icmp eq ptr %.255.us.us, null
+  %or.cond7.us.us = select i1 %2, i1 true, i1 %3
+  br i1 %or.cond7.us.us, label %.split.us, label %bb.d
+
 bb.d:                                             ; preds = %._crit_edge.us.us
   %i.ag = getelementptr inbounds nuw i8, ptr %.5.us.us, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !24
@@ -811,12 +822,6 @@ bb.d:                                             ; preds = %._crit_edge.us.us
   %i.al = add nsw i32 %.3.us.us, 1
   %or.cond156.not = select i1 %.not.us.us, i1 %i.ak, i1 false
   br i1 %or.cond156.not, label %.lr.ph.us.us, label %.thread
-
-._crit_edge.us.us:                                ; preds = %bb.c
-  %2 = icmp eq ptr %.5.us.us, null
-  %3 = icmp eq ptr %.255.us.us, null
-  %or.cond7.us.us = select i1 %2, i1 true, i1 %3
-  br i1 %or.cond7.us.us, label %.split.us, label %bb.d
 
 .preheader.us:                                    ; preds = %.preheader.us, %.preheader.us.preheader.new
   %.05092.us = phi i64 [ 0, %.preheader.us.preheader.new ], [ %i.ax, %.preheader.us ] ; 3 uses

@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lua/original/lstrlib?download=true
+inline.NumInlined: 79
+inline.NumDeleted: 38
+loop-unroll.NumCompletelyUnrolled: 10
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 16
 begin_hunk_0_@match:bb.a
   %i.gt = getelementptr inbounds nuw i8, ptr %.1.i123, i64 2
   %spec.select21.i127 = select i1 %i.gs, ptr %i.gt, ptr %i.go
@@ -200,14 +205,14 @@ singlematch.exit152.thread.us282:                 ; preds = %singlematch.exit152
   %i.iw = sub i64 %.val351366, %.383367           ; 3 uses
   br i1 %i.iv, label %.lr.ph.i.i146.preheader.us.us, label %.lr.ph274.split.us288.split
 
-.lr.ph.i.i146.preheader.us.us:                    ; preds = %.lr.ph274.split.us288, %singlematch.exit152.thread.us292.us.a
-  %.015.i273.us289.us = phi i64 [ %3, %singlematch.exit152.thread.us292.us.a ], [ 0, %.lr.ph274.split.us288 ] ; 3 uses
+.lr.ph.i.i146.preheader.us.us:                    ; preds = %.lr.ph274.split.us288, %matchbracketclass.exit.i143.loopexit.us.us
+  %.015.i273.us289.us = phi i64 [ %3, %matchbracketclass.exit.i143.loopexit.us.us ], [ 0, %.lr.ph274.split.us288 ] ; 3 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %.383, i64 %.015.i273.us289.us
   %i.iy = load i8, ptr %i.ix, align 1, !tbaa !13  ; 4 uses
   %i.iz = zext i8 %i.iy to i32
   br label %.lr.ph.i.i146.us.us
 
-.lr.ph.i.i146.us.us:                              ; preds = %.lr.ph.i.i146.preheader.us.us, %bb.cm
+.lr.ph.i.i146.us.us:                              ; preds = %bb.cm, %.lr.ph.i.i146.preheader.us.us
   %i.ja = phi ptr [ %i.jm, %bb.cm ], [ %i.iu, %.lr.ph.i.i146.preheader.us.us ] ; 2 uses
   %.131.i.i147.us.us = phi ptr [ %.2.i.i148.us.us, %bb.cm ], [ %spec.select.i.i141.us, %.lr.ph.i.i146.preheader.us.us ] ; 2 uses
   %i.jb = load i8, ptr %i.ja, align 1, !tbaa !13  ; 3 uses
@@ -227,7 +232,7 @@ bb.ch:                                            ; preds = %bb.cg
 
 bb.ci:                                            ; preds = %bb.ch, %bb.cg
   %i.ji = icmp eq i8 %i.iy, %i.jb
-  br i1 %i.ji, label %matchbracketclass.exit.i143.loopexit.us.us, label %bb.cm
+  br i1 %i.ji, label %singlematch.exit152.thread.us292.us.a, label %bb.cm
 
 bb.cj:                                            ; preds = %bb.ch
   %.not.i.i149.us.us = icmp ult i8 %i.iy, %i.jb
@@ -236,35 +241,35 @@ bb.cj:                                            ; preds = %bb.ch
 bb.ck:                                            ; preds = %bb.cj
   %i.jj = load i8, ptr %i.jg, align 1, !tbaa !13
   %.not28.i.i150.us.us = icmp ult i8 %i.jj, %i.iy
-  br i1 %.not28.i.i150.us.us, label %bb.cm, label %matchbracketclass.exit.i143.loopexit.us.us
+  br i1 %.not28.i.i150.us.us, label %bb.cm, label %singlematch.exit152.thread.us292.us.a
 
 bb.cl:                                            ; preds = %.lr.ph.i.i146.us.us
   %i.jk = zext i8 %i.je to i32
   %i.jl = tail call fastcc i32 @match_class(i32 noundef range(i32 0, 256) %i.iz, i32 noundef %i.jk)
   %.not29.i.i151.us.us = icmp eq i32 %i.jl, 0
-  br i1 %.not29.i.i151.us.us, label %bb.cm, label %matchbracketclass.exit.i143.loopexit.us.us
+  br i1 %.not29.i.i151.us.us, label %bb.cm, label %singlematch.exit152.thread.us292.us.a
 
 bb.cm:                                            ; preds = %bb.cl, %bb.ck, %bb.cj, %bb.ci
   %.2.i.i148.us.us = phi ptr [ %i.jd, %bb.cl ], [ %i.jg, %bb.ck ], [ %i.jg, %bb.cj ], [ %i.ja, %bb.ci ] ; 2 uses
   %i.jm = getelementptr inbounds nuw i8, ptr %.2.i.i148.us.us, i64 1 ; 2 uses
   %i.jn = icmp ult ptr %i.jm, %i.ig
-  br i1 %i.jn, label %.lr.ph.i.i146.us.us, label %matchbracketclass.exit.i143.loopexit.us.us
+  br i1 %i.jn, label %.lr.ph.i.i146.us.us, label %singlematch.exit152.thread.us292.us.a
 
-singlematch.exit152.thread.us292.us.a:            ; preds = %matchbracketclass.exit.i143.loopexit.us.us
+singlematch.exit152.thread.us292.us.a:            ; preds = %bb.cm, %bb.cl, %bb.ck, %bb.ci
+  %.022.in.i.i144.ph.us.us = phi i1 [ %i.it, %bb.cm ], [ %not..i.i142.us, %bb.ck ], [ %not..i.i142.us, %bb.ci ], [ %not..i.i142.us, %bb.cl ]
+  br i1 %.022.in.i.i144.ph.us.us, label %matchbracketclass.exit.i143.loopexit.us.us, label %.critedge.preheader
+
+matchbracketclass.exit.i143.loopexit.us.us:       ; preds = %singlematch.exit152.thread.us292.us.a
   %3 = add nuw i64 %.015.i273.us289.us, 1         ; 2 uses
   %exitcond.not = icmp eq i64 %3, %i.iw
   br i1 %exitcond.not, label %.critedge.preheader, label %.lr.ph.i.i146.preheader.us.us
-
-matchbracketclass.exit.i143.loopexit.us.us:       ; preds = %bb.cm, %bb.cl, %bb.ck, %bb.ci
-  %.022.in.i.i144.ph.us.us = phi i1 [ %i.it, %bb.cm ], [ %not..i.i142.us, %bb.ck ], [ %not..i.i142.us, %bb.ci ], [ %not..i.i142.us, %bb.cl ]
-  br i1 %.022.in.i.i144.ph.us.us, label %singlematch.exit152.thread.us292.us.a, label %.critedge.preheader
 
 .lr.ph274.split.us288.split:                      ; preds = %.lr.ph274.split.us288
   %spec.select = select i1 %i.it, i64 %i.iw, i64 0
   br label %.critedge.preheader
 
-.critedge.preheader:                              ; preds = %singlematch.exit152.thread.us292.us.a, %matchbracketclass.exit.i143.loopexit.us.us, %singlematch.exit152.thread.us282, %singlematch.exit152.us280, %singlematch.exit152.thread, %singlematch.exit152, %.lr.ph274.split.us288.split, %singlematch.exit152.thread.us.preheader, %.loopexit
-  %.015.i.lcssa = phi i64 [ 0, %.loopexit ], [ %i.ih, %singlematch.exit152.thread.us.preheader ], [ %i.il, %singlematch.exit152.thread.us282 ], [ %spec.select, %.lr.ph274.split.us288.split ], [ %.015.i273, %singlematch.exit152 ], [ %i.ii, %singlematch.exit152.thread ], [ %.015.i273.us279, %singlematch.exit152.us280 ], [ %.015.i273.us289.us, %matchbracketclass.exit.i143.loopexit.us.us ], [ %i.iw, %singlematch.exit152.thread.us292.us.a ] ; 2 uses
+.critedge.preheader:                              ; preds = %matchbracketclass.exit.i143.loopexit.us.us, %singlematch.exit152.thread.us292.us.a, %singlematch.exit152.thread.us282, %singlematch.exit152.us280, %singlematch.exit152.thread, %singlematch.exit152, %.lr.ph274.split.us288.split, %singlematch.exit152.thread.us.preheader, %.loopexit
+  %.015.i.lcssa = phi i64 [ 0, %.loopexit ], [ %i.ih, %singlematch.exit152.thread.us.preheader ], [ %i.il, %singlematch.exit152.thread.us282 ], [ %spec.select, %.lr.ph274.split.us288.split ], [ %.015.i273, %singlematch.exit152 ], [ %i.ii, %singlematch.exit152.thread ], [ %.015.i273.us279, %singlematch.exit152.us280 ], [ %.015.i273.us289.us, %singlematch.exit152.thread.us292.us.a ], [ %i.iw, %matchbracketclass.exit.i143.loopexit.us.us ] ; 2 uses
   %i.jo = getelementptr inbounds nuw i8, ptr %.018.i126, i64 1
   %i.jp = icmp sgt i64 %.015.i.lcssa, -1
   br i1 %i.jp, label %.lr.ph554, label %start_capture.exit

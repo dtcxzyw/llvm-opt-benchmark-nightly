@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libdeflate/original/deflate_compress?download=true
+inline.NumInlined: 64
+inline.NumDeleted: 31
+loop-unroll.NumCompletelyUnrolled: 43
+loop-unroll.NumRuntimeUnrolled: 26
+loop-unroll.NumUnrolled: 117
 begin_hunk_0_@deflate_optimize_and_flush_block:bb.a
   %narrow39.i = select i1 %.not36.i, i8 13, i8 %i.eq
   %spec.select.i = zext i8 %narrow39.i to i32
@@ -200,7 +205,7 @@ bb.d:                                             ; preds = %middle.block226
   %i.ik = zext nneg i32 %spec.store.select.i.i to i64
   %i.il = getelementptr inbounds nuw i8, ptr @choose_min_match_len.min_lens, i64 %i.ik
   %i.im = load i8, ptr %i.il, align 1, !tbaa !30
-  %9 = zext i8 %i.im to i32                       ; 4 uses
+  %9 = zext i8 %i.im to i64                       ; 4 uses
   %i.in = icmp ult i32 %i.hh, 16
   br i1 %i.in, label %bb.e, label %choose_min_match_len.exit.i.i
 
@@ -210,7 +215,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.ip = icmp samesign ugt i32 %i.hf, 44
-  %10 = select i1 %i.ip, i32 %9, i32 4
+  %10 = select i1 %i.ip, i64 %9, i64 4
   br label %choose_min_match_len.exit.i.i
 
 bb.g:                                             ; preds = %bb.e
@@ -219,30 +224,31 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.ir = icmp samesign ugt i32 %i.hf, 15
-  %11 = select i1 %i.ir, i32 %9, i32 5
+  %11 = select i1 %i.ir, i64 %9, i64 5
   br label %choose_min_match_len.exit.i.i
 
 bb.i:                                             ; preds = %bb.g
   %i.is = icmp samesign ugt i32 %i.hf, 7
-  %12 = select i1 %i.is, i32 %9, i32 7
+  %12 = select i1 %i.is, i64 %9, i64 7
   br label %choose_min_match_len.exit.i.i
 
 choose_min_match_len.exit.i.i:                    ; preds = %bb.i, %bb.h, %bb.f, %bb.d, %middle.block226
-  %.013.i.i.i = phi i32 [ 3, %middle.block226 ], [ %10, %bb.f ], [ %11, %bb.h ], [ %12, %bb.i ], [ %9, %bb.d ] ; 5 uses
+  %.013.i.i.i = phi i64 [ 3, %middle.block226 ], [ %10, %bb.f ], [ %11, %bb.h ], [ %12, %bb.i ], [ %9, %bb.d ] ; 8 uses
   %i.it = getelementptr inbounds nuw i8, ptr %0, i64 9010648 ; 2 uses
-  %13 = zext nneg i32 %.013.i.i.i to i64          ; 4 uses
-  %14 = add i32 %.013.i.i.i, 1
-  %15 = zext i32 %14 to i64
+  %13 = trunc i64 %.013.i.i.i to i32
+  %14 = add i64 %.013.i.i.i, 1
+  %15 = and i64 %14, 4294967295
   %i.iu = sub nsw i64 260, %15                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.iu, 12
   br i1 %min.iters.check, label %scalar.ph227.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %choose_min_match_len.exit.i.i
-  %16 = add i32 %.013.i.i.i, 1
-  %17 = zext i32 %16 to i64
-  %i.iv = sub nsw i64 259, %17                    ; 2 uses
+  %16 = trunc i64 %.013.i.i.i to i32
+  %17 = add i64 %.013.i.i.i, 1
+  %18 = and i64 %17, 4294967295
+  %i.iv = sub nsw i64 259, %18                    ; 2 uses
   %i.iw = trunc i64 %i.iv to i32
-  %i.ix = sub i32 -2, %.013.i.i.i
+  %i.ix = sub i32 -2, %16
   %i.iy = icmp ult i32 %i.ix, %i.iw
   %i.iz = icmp ugt i64 %i.iv, 4294967295
   %i.ja = or i1 %i.iy, %i.iz
@@ -250,12 +256,12 @@ vector.scevcheck:                                 ; preds = %choose_min_match_le
 
 vector.ph228:                                     ; preds = %vector.scevcheck
   %n.vec = and i64 %i.iu, -8                      ; 3 uses
-  %i.jb = add nsw i64 %n.vec, %13
+  %i.jb = add i64 %.013.i.i.i, %n.vec
   %i.jc = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %3, i64 0
-  %broadcast.splatinsert229 = insertelement <4 x i32> poison, i32 %.013.i.i.i, i64 0
+  %broadcast.splatinsert229 = insertelement <4 x i32> poison, i32 %13, i64 0
   %broadcast.splat230 = shufflevector <4 x i32> %broadcast.splatinsert229, <4 x i32> poison, <4 x i32> zeroinitializer
   %induction = add <4 x i32> %broadcast.splat230, <i32 0, i32 1, i32 2, i32 3>
-  %invariant.gep = getelementptr [4 x i8], ptr %i.it, i64 %13
+  %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.it, i64 %.013.i.i.i
   br label %vector.body231
 
 vector.body231:                                   ; preds = %vector.body231, %vector.ph228
@@ -266,7 +272,7 @@ vector.body231:                                   ; preds = %vector.body231, %ve
   %vec.phi236 = phi <4 x i32> [ zeroinitializer, %vector.ph228 ], [ %i.jj, %vector.body231 ]
   %vec.ind = phi <4 x i32> [ %induction, %vector.ph228 ], [ %vec.ind.next, %vector.body231 ] ; 3 uses
   %step.add = add <4 x i32> %vec.ind, splat (i32 4)
-  %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %index232 ; 2 uses
+  %gep = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %index232 ; 2 uses
   %i.jd = getelementptr inbounds nuw i8, ptr %gep, i64 16
   %wide.load237 = load <4 x i32>, ptr %gep, align 4, !tbaa !30 ; 2 uses
   %wide.load238 = load <4 x i32>, ptr %i.jd, align 4, !tbaa !30 ; 2 uses
@@ -290,7 +296,7 @@ middle.block240:                                  ; preds = %vector.body231
   br i1 %cmp.n, label %deflate_choose_default_litlen_costs.exit.i, label %scalar.ph227.preheader
 
 scalar.ph227.preheader:                           ; preds = %vector.scevcheck, %choose_min_match_len.exit.i.i, %middle.block240
-  %indvars.iv55.i.i.ph = phi i64 [ %13, %vector.scevcheck ], [ %13, %choose_min_match_len.exit.i.i ], [ %i.jb, %middle.block240 ]
+  %indvars.iv55.i.i.ph = phi i64 [ %.013.i.i.i, %vector.scevcheck ], [ %.013.i.i.i, %choose_min_match_len.exit.i.i ], [ %i.jb, %middle.block240 ]
   %.03747.i.i.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %choose_min_match_len.exit.i.i ], [ %i.jl, %middle.block240 ]
   %.03846.i.i.ph = phi i32 [ %3, %vector.scevcheck ], [ %3, %choose_min_match_len.exit.i.i ], [ %i.jm, %middle.block240 ]
   br label %scalar.ph227

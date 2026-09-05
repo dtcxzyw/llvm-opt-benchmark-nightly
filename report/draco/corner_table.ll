@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/draco/original/corner_table?download=true
+inline.NumInlined: 1215
+inline.NumDeleted: 523
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN5draco11CornerTable21BreakNonManifoldEdgesEv:bb.a
   %i.ao = icmp ne i32 %spec.select.i2.i, %.sroa.0131.0220
   %i.ap = icmp ne i32 %spec.select.i2.i, -1
@@ -200,7 +205,7 @@ _ZNKSt6vectorISt4pairIN5draco9IndexTypeIjNS1_21VertexIndex_tag_type_EEENS2_IjNS1
   %i.dk = sub i64 %i.dj, %i.cx                    ; 2 uses
   %i.dl = lshr i64 %i.dk, 3
   %i.dm = add nuw nsw i64 %i.dl, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.dk, 72
+  %min.iters.check = icmp ult i64 %i.dk, 88
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader391, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader

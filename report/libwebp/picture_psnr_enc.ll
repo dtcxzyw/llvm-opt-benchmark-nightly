@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libwebp/original/picture_psnr_enc?download=true
+inline.NumInlined: 6
+inline.NumDeleted: 3
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@AccumulateSSE:bb.a
   %i.i = getelementptr inbounds i8, ptr %.01314, i64 %i.c
   %i.j = add nuw nsw i32 %.01116, 1               ; 2 uses
@@ -200,7 +205,7 @@ bb.a:
   br i1 %i.m, label %.lr.ph57.us.us.preheader, label %.lr.ph.split.us76.preheader
 
 .lr.ph.split.us76.preheader:                      ; preds = %.lr.ph.us
-  br i1 %i.e, label %.lr.ph.split.us76.epil.preheader, label %.lr.ph.split.us76
+  br i1 %i.e, label %.lr.ph.split.us73.epil.preheader, label %.lr.ph.split.us76
 
 .lr.ph57.us.us.preheader:                         ; preds = %.lr.ph.us
   %i.n = mul nsw i64 %indvars.iv90, %i.d
@@ -223,31 +228,9 @@ bb.a:
   %niter.ncmp.7 = icmp eq i32 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %._crit_edge.us.loopexit102.unr-lcssa, label %.lr.ph.split.us76, !llvm.loop !27
 
-._crit_edge.us.loopexit102.unr-lcssa:             ; preds = %.lr.ph.split.us76
-  br i1 %lcmp.mod.not, label %._crit_edge.us, label %.lr.ph.split.us76.epil.preheader
-
-.lr.ph.split.us76.epil.preheader:                 ; preds = %._crit_edge.us.loopexit102.unr-lcssa, %.lr.ph.split.us76.preheader
-  %.14661.us73.epil.init = phi double [ %.04568.us, %.lr.ph.split.us76.preheader ], [ %i.w, %._crit_edge.us.loopexit102.unr-lcssa ]
-  tail call void @llvm.assume(i1 %lcmp.mod105)
-  br label %.lr.ph.split.us76.epil
-
-.lr.ph.split.us76.epil:                           ; preds = %.lr.ph.split.us76.epil, %.lr.ph.split.us76.epil.preheader
-  %.14661.us73.epil = phi double [ %6, %.lr.ph.split.us76.epil ], [ %.14661.us73.epil.init, %.lr.ph.split.us76.epil.preheader ]
-  %epil.iter = phi i32 [ %epil.iter.next, %.lr.ph.split.us76.epil ], [ 0, %.lr.ph.split.us76.epil.preheader ]
-  %6 = fadd double %.14661.us73.epil, 6.502500e+04 ; 2 uses
-  %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge.us, label %.lr.ph.split.us76.epil, !llvm.loop !28
-
-._crit_edge.us:                                   ; preds = %._crit_edge.us.loopexit102.unr-lcssa, %.lr.ph.split.us76.epil, %._crit_edge58.us.us
-  %.us-phi66.us = phi double [ %7, %._crit_edge58.us.us ], [ %i.w, %._crit_edge.us.loopexit102.unr-lcssa ], [ %6, %.lr.ph.split.us76.epil ] ; 2 uses
-  %indvars.iv.next91 = add nuw nsw i64 %indvars.iv90, 1 ; 2 uses
-  %exitcond94.not = icmp eq i64 %indvars.iv.next91, %wide.trip.count93
-  br i1 %exitcond94.not, label %._crit_edge71, label %.lr.ph.us, !llvm.loop !29
-
 .lr.ph57.us.us:                                   ; preds = %.lr.ph57.us.us.preheader, %._crit_edge58.us.us
   %indvars.iv86 = phi i64 [ 0, %.lr.ph57.us.us.preheader ], [ %indvars.iv.next87, %._crit_edge58.us.us ] ; 4 uses
-  %.14661.us.us = phi double [ %.04568.us, %.lr.ph57.us.us.preheader ], [ %7, %._crit_edge58.us.us ]
+  %.14661.us.us = phi double [ %.04568.us, %.lr.ph57.us.us.preheader ], [ %6, %._crit_edge58.us.us ]
   %i.x = trunc nuw nsw i64 %indvars.iv86 to i32
   %smax = tail call i32 @llvm.smax.i32(i32 %i.x, i32 2) ; 2 uses
   %i.y = zext nneg i32 %smax to i64
@@ -265,13 +248,6 @@ bb.a:
 .lr.ph.us.us.us.preheader:                        ; preds = %.lr.ph57.us.us
   %i.ah = zext nneg i32 %i.ad to i64
   br label %.lr.ph.us.us.us
-
-._crit_edge58.us.us:                              ; preds = %._crit_edge.us.us.us, %.lr.ph57.us.us
-  %.us-phi.us.us = phi double [ 6.502500e+04, %.lr.ph57.us.us ], [ %.2.us.us.us, %._crit_edge.us.us.us ]
-  %7 = fadd double %.14661.us.us, %.us-phi.us.us  ; 2 uses
-  %indvars.iv.next87 = add nuw nsw i64 %indvars.iv86, 1 ; 2 uses
-  %exitcond89.not = icmp eq i64 %indvars.iv.next87, %wide.trip.count
-  br i1 %exitcond89.not, label %._crit_edge.us, label %.lr.ph57.us.us, !llvm.loop !27
 
 .lr.ph.us.us.us:                                  ; preds = %.lr.ph.us.us.us.preheader, %._crit_edge.us.us.us
   %indvars.iv83 = phi i64 [ %i.h, %.lr.ph.us.us.us.preheader ], [ %indvars.iv.next84, %._crit_edge.us.us.us ] ; 2 uses
@@ -292,12 +268,41 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.us.us
   %.2.us.us.us = select i1 %i.ap, double %i.ao, double %.152.us.us.us ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.aq = icmp slt i64 %indvars.iv.next, %i.ah
-  br i1 %i.aq, label %bb.b, label %._crit_edge.us.us.us, !llvm.loop !30
+  br i1 %i.aq, label %bb.b, label %._crit_edge.us.us.us, !llvm.loop !28
 
 ._crit_edge.us.us.us:                             ; preds = %bb.b
   %indvars.iv.next84 = add nuw nsw i64 %indvars.iv83, 1 ; 2 uses
   %i.ar = icmp slt i64 %indvars.iv.next84, %i.o
-  br i1 %i.ar, label %.lr.ph.us.us.us, label %._crit_edge58.us.us, !llvm.loop !31
+  br i1 %i.ar, label %.lr.ph.us.us.us, label %._crit_edge58.us.us, !llvm.loop !29
+
+._crit_edge58.us.us:                              ; preds = %._crit_edge.us.us.us, %.lr.ph57.us.us
+  %.us-phi.us.us = phi double [ 6.502500e+04, %.lr.ph57.us.us ], [ %.2.us.us.us, %._crit_edge.us.us.us ]
+  %6 = fadd double %.14661.us.us, %.us-phi.us.us  ; 2 uses
+  %indvars.iv.next87 = add nuw nsw i64 %indvars.iv86, 1 ; 2 uses
+  %exitcond89.not = icmp eq i64 %indvars.iv.next87, %wide.trip.count
+  br i1 %exitcond89.not, label %._crit_edge.us, label %.lr.ph57.us.us, !llvm.loop !27
+
+._crit_edge.us.loopexit102.unr-lcssa:             ; preds = %.lr.ph.split.us76
+  br i1 %lcmp.mod.not, label %._crit_edge.us, label %.lr.ph.split.us73.epil.preheader
+
+.lr.ph.split.us73.epil.preheader:                 ; preds = %._crit_edge.us.loopexit102.unr-lcssa, %.lr.ph.split.us76.preheader
+  %.14661.us74.epil.init = phi double [ %.04568.us, %.lr.ph.split.us76.preheader ], [ %i.w, %._crit_edge.us.loopexit102.unr-lcssa ]
+  tail call void @llvm.assume(i1 %lcmp.mod105)
+  br label %.lr.ph.split.us73.epil
+
+.lr.ph.split.us73.epil:                           ; preds = %.lr.ph.split.us73.epil, %.lr.ph.split.us73.epil.preheader
+  %.14661.us74.epil = phi double [ %7, %.lr.ph.split.us73.epil ], [ %.14661.us74.epil.init, %.lr.ph.split.us73.epil.preheader ]
+  %epil.iter = phi i32 [ %epil.iter.next, %.lr.ph.split.us73.epil ], [ 0, %.lr.ph.split.us73.epil.preheader ]
+  %7 = fadd double %.14661.us74.epil, 6.502500e+04 ; 2 uses
+  %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
+  %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
+  br i1 %epil.iter.cmp.not, label %._crit_edge.us, label %.lr.ph.split.us73.epil, !llvm.loop !30
+
+._crit_edge.us:                                   ; preds = %._crit_edge.us.loopexit102.unr-lcssa, %.lr.ph.split.us73.epil, %._crit_edge58.us.us
+  %.us-phi66.us = phi double [ %6, %._crit_edge58.us.us ], [ %i.w, %._crit_edge.us.loopexit102.unr-lcssa ], [ %7, %.lr.ph.split.us73.epil ] ; 2 uses
+  %indvars.iv.next91 = add nuw nsw i64 %indvars.iv90, 1 ; 2 uses
+  %exitcond94.not = icmp eq i64 %indvars.iv.next91, %wide.trip.count93
+  br i1 %exitcond94.not, label %._crit_edge71, label %.lr.ph.us, !llvm.loop !31
 
 ._crit_edge71:                                    ; preds = %._crit_edge.us, %bb.a
   %.045.lcssa = phi double [ 0.000000e+00, %bb.a ], [ %.us-phi66.us, %._crit_edge.us ]
@@ -596,9 +601,9 @@ attributes #7 = { nounwind }
 !25 = distinct !{!25, !9}
 !26 = distinct !{!26, !9}
 !27 = distinct !{!27, !9}
-!28 = distinct !{!28, !32}
+!28 = distinct !{!28, !9}
 !29 = distinct !{!29, !9}
-!30 = distinct !{!30, !9}
+!30 = distinct !{!30, !32}
 !31 = distinct !{!31, !9}
 !32 = !{!"llvm.loop.unroll.disable"}
 !33 = !{!"p1 omnipotent char", !12, i64 0}

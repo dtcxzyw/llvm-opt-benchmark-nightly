@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/recastnavigation/original/imgui_draw?download=true
+inline.NumInlined: 1448
+inline.NumDeleted: 384
+loop-unroll.NumCompletelyUnrolled: 298
+loop-unroll.NumRuntimeUnrolled: 51
+loop-unroll.NumUnrolled: 352
 begin_hunk_0_@_Z19ImFontAtlasBakedAddP11ImFontAtlasP6ImFontffj:bb.a
   %i.cb = load ptr, ptr %i.bk, align 8, !tbaa !275
   br label %bb.o
@@ -200,10 +205,6 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !286  ; 2 uses
   br label %.lr.ph.split.us.us
 
-4:                                                ; preds = %._crit_edge.us.a
-  %.not50.us = icmp eq ptr %.2.us.us, null
-  br i1 %.not50.us, label %.lr.ph.split.us76.1, label %.thread
-
 .lr.ph.split.us76.1:                              ; preds = %4, %bb.k
   %.061.us65.1 = phi i32 [ %i.af, %bb.k ], [ 0, %4 ] ; 3 uses
   %.03860.us66.1 = phi ptr [ %.2.us72.1, %bb.k ], [ null, %4 ] ; 6 uses
@@ -269,15 +270,11 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.g,
   %.2.us72.1 = phi ptr [ %.03860.us66.1, %bb.g ], [ %.03860.us66.1, %.lr.ph.split.us76.1 ], [ %.03860.us66.1, %bb.b ], [ %i.n, %bb.j ], [ %.03860.us66.1, %bb.i ] ; 3 uses
   %i.af = add nuw nsw i32 %.061.us65.1, 1         ; 2 uses
   %exitcond.1.not = icmp eq i32 %i.af, %i.d
-  br i1 %exitcond.1.not, label %._crit_edge.us.1, label %.lr.ph.split.us76.1, !llvm.loop !730
+  br i1 %exitcond.1.not, label %._crit_edge.us.a, label %.lr.ph.split.us76.1, !llvm.loop !730
 
-._crit_edge.us.1:                                 ; preds = %bb.k
-  %.not.us.1 = icmp eq ptr %.241.us71.1, null
-  br i1 %.not.us.1, label %.thread, label %.split78.us
-
-._crit_edge.us.a:                                 ; preds = %bb.v
-  %.not.us.a = icmp eq ptr %.241.us.us, null
-  br i1 %.not.us.a, label %4, label %.split78.us
+._crit_edge.us.a:                                 ; preds = %bb.k
+  %.not.us.a = icmp eq ptr %.241.us71.1, null
+  br i1 %.not.us.a, label %.thread, label %.split78.us
 
 .lr.ph.split.us.us:                               ; preds = %.lr.ph.split.us.us.preheader, %bb.v
   %.061.us.us = phi i32 [ %i.bh, %bb.v ], [ 0, %.lr.ph.split.us.us.preheader ] ; 3 uses
@@ -350,11 +347,19 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.r,
   %.2.us.us = phi ptr [ %.03860.us.us, %bb.m ], [ %.03860.us.us, %.lr.ph.split.us.us ], [ %.03860.us.us, %bb.l ], [ %i.am, %bb.u ], [ %.03860.us.us, %bb.t ], [ %.03860.us.us, %bb.r ] ; 4 uses
   %i.bh = add nuw nsw i32 %.061.us.us, 1          ; 2 uses
   %exitcond87.not = icmp eq i32 %i.bh, %i.d
-  br i1 %exitcond87.not, label %._crit_edge.us.a, label %.lr.ph.split.us.us, !llvm.loop !730
+  br i1 %exitcond87.not, label %._crit_edge.us, label %.lr.ph.split.us.us, !llvm.loop !730
 
-.split78.us:                                      ; preds = %._crit_edge.us.1, %._crit_edge.us.a
-  %.us-phi.us.lcssa = phi ptr [ %.241.us.us, %._crit_edge.us.a ], [ %.241.us71.1, %._crit_edge.us.1 ] ; 3 uses
-  %.us-phi63.us.lcssa = phi ptr [ %.2.us.us, %._crit_edge.us.a ], [ %.2.us72.1, %._crit_edge.us.1 ] ; 3 uses
+._crit_edge.us:                                   ; preds = %bb.v
+  %.not.us = icmp eq ptr %.241.us.us, null
+  br i1 %.not.us, label %4, label %.split78.us
+
+4:                                                ; preds = %._crit_edge.us
+  %.not50.us = icmp eq ptr %.2.us.us, null
+  br i1 %.not50.us, label %.lr.ph.split.us76.1, label %.thread
+
+.split78.us:                                      ; preds = %._crit_edge.us.a, %._crit_edge.us
+  %.us-phi.us.lcssa = phi ptr [ %.241.us.us, %._crit_edge.us ], [ %.241.us71.1, %._crit_edge.us.a ] ; 3 uses
+  %.us-phi63.us.lcssa = phi ptr [ %.2.us.us, %._crit_edge.us ], [ %.2.us72.1, %._crit_edge.us.a ] ; 3 uses
   %i.bi = icmp eq ptr %.us-phi63.us.lcssa, null
   br i1 %i.bi, label %.thread, label %bb.w
 
@@ -375,8 +380,8 @@ bb.x:                                             ; preds = %bb.w
 .thread56:                                        ; preds = %bb.x, %bb.w
   br label %.thread
 
-.thread:                                          ; preds = %._crit_edge.us.1, %4, %bb.a, %bb.x, %.split78.us, %.thread56
-  %spec.select = phi ptr [ %.us-phi.us.lcssa, %.split78.us ], [ %.us-phi.us.lcssa, %bb.x ], [ %.us-phi63.us.lcssa, %.thread56 ], [ null, %bb.a ], [ %.2.us.us, %4 ], [ %.2.us72.1, %._crit_edge.us.1 ]
+.thread:                                          ; preds = %._crit_edge.us.a, %4, %bb.a, %bb.x, %.split78.us, %.thread56
+  %spec.select = phi ptr [ %.us-phi.us.lcssa, %.split78.us ], [ %.us-phi.us.lcssa, %bb.x ], [ %.us-phi63.us.lcssa, %.thread56 ], [ null, %bb.a ], [ %.2.us.us, %4 ], [ %.2.us72.1, %._crit_edge.us.a ]
   ret ptr %spec.select
 }
 

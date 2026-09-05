@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/aws-lc/original/s3_both?download=true
+inline.NumInlined: 237
+inline.NumDeleted: 121
 begin_hunk_0_@_ZN4bsslL20read_v2_client_helloEP6ssl_stPmNS_4SpanIKhEE:bb.a
 
 bb.ao:                                            ; preds = %bb.am
@@ -200,7 +202,11 @@ bb.a:
   %.not65 = icmp eq i64 %i.g, 0
   br i1 %.not65, label %.thread42.us57, label %.lr.ph.us
 
-bb.b:                                             ; preds = %.lr.ph.us, %bb.d
+.lr.ph.us:                                        ; preds = %.preheader.us
+  %4 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
+  br label %bb.b
+
+bb.b:                                             ; preds = %bb.d, %.lr.ph.us
   %.047.us = phi i64 [ 0, %.lr.ph.us ], [ %i.m, %bb.d ] ; 2 uses
   %i.h = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %3, i64 noundef %.047.us) #7 ; 5 uses
   %.not33.us = icmp eq ptr %i.h, null
@@ -245,10 +251,6 @@ _ZNK4bssl12CipherScorer8EvaluateEPK13ssl_cipher_st.exit.us: ; preds = %bb.f
   %i.w = tail call i64 @OPENSSL_sk_num(ptr noundef %0) #7
   %i.x = icmp ult i64 %i.v, %i.w
   br i1 %i.x, label %.preheader.us, label %._crit_edge, !llvm.loop !148
-
-.lr.ph.us:                                        ; preds = %.preheader.us
-  %4 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  br label %bb.b
 
 ._crit_edge:                                      ; preds = %.thread42, %.thread42.us57, %.thread42.us, %bb.a
   %.027.lcssa = phi ptr [ null, %bb.a ], [ null, %.thread42.us ], [ %.229.us60, %.thread42.us57 ], [ %.229, %.thread42 ]

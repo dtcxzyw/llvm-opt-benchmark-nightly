@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/recastnavigation/original/DetourNavMeshQuery?download=true
+inline.NumInlined: 321
+inline.NumDeleted: 55
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 10
+loop-unroll.NumUnrolled: 11
 begin_hunk_0_@_ZNK14dtNavMeshQuery18findDistanceToWallEjPKffPK13dtQueryFilterPfS5_S5_:bb.a
   store i32 0, ptr %i.ao, align 4, !tbaa !33
   %i.ap = load ptr, ptr %i.ak, align 8, !tbaa !25
@@ -200,15 +205,13 @@ bb.l:                                             ; preds = %.lr.ph201
   br i1 %.not169, label %.critedge, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %8 = add nuw nsw i64 %i.de, 4294967295
   %i.dy = load ptr, ptr %0, align 8, !tbaa !27
   %i.dz = call noundef i32 @_ZNK9dtNavMesh14getPolyRefBaseEPK10dtMeshTile(ptr noundef nonnull align 8 dereferenceable(100) %i.dy, ptr noundef %.pre222) #15 ; 0 uses
   %i.ea = load ptr, ptr %i.c, align 8, !tbaa !55  ; 2 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 16
   %i.ec = load ptr, ptr %i.eb, align 8, !tbaa !47
-  %9 = and i64 %8, 4294967295
-  %i.ed = getelementptr inbounds nuw [32 x i8], ptr %i.ec, i64 %9
-  %i.ee = getelementptr inbounds nuw i8, ptr %i.ed, i64 28
+  %i.ed = getelementptr [32 x i8], ptr %i.ec, i64 %i.de
+  %i.ee = getelementptr i8, ptr %i.ed, i64 -4
   %i.ef = load i16, ptr %i.ee, align 4, !tbaa !50 ; 2 uses
   %i.eg = load i16, ptr %i.bl, align 4, !tbaa !13
   %i.eh = and i16 %i.eg, %i.ef

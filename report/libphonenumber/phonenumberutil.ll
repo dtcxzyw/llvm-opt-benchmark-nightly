@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libphonenumber/original/phonenumberutil?download=true
+inline.NumInlined: 4537
+inline.NumDeleted: 1449
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_ZN4i18n12phonenumbers13LoggerHandlerlsIA33_cEERS1_RKT_:bb.a
   br label %_ZN4i18n12phonenumbers15ConvertToStringIA33_cE6DoWorkB5cxx11ERA33_Kc.exit
 
@@ -200,17 +205,6 @@ bb.a:
   %i.af = zext i16 %i.ae to i32
   br label %.lr.ph.i.us.us
 
-._crit_edge.i.us:                                 ; preds = %_ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEEvE5applyINS1_12raw_hash_setISD_NS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE12EqualElementIS9_EEJRSL_ESD_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSS_DpOST_.exit.thread26.i.us.us, %.split.us
-  %2 = icmp eq <16 x i8> %i.ac, splat (i8 -128)
-  %3 = bitcast <16 x i1> %2 to i16
-  %.not43.i.us = icmp eq i16 %3, 0
-  br i1 %.not43.i.us, label %4, label %_ZN4absl7debian318container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE4findIS9_EENSK_8iteratorERKT_m.exit, !prof !168
-
-4:                                                ; preds = %._crit_edge.i.us
-  %5 = add i64 %.sroa.12.0.i.us, 16               ; 2 uses
-  %6 = add i64 %5, %.sroa.6.0.i.us
-  br label %.split.us, !llvm.loop !322
-
 .lr.ph.i.us.us:                                   ; preds = %_ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEEvE5applyINS1_12raw_hash_setISD_NS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE12EqualElementIS9_EEJRSL_ESD_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSS_DpOST_.exit.thread26.i.us.us, %.lr.ph.preheader.i.us
   %.sroa.014.048.i.us.us = phi i32 [ %i.aq, %_ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEEvE5applyINS1_12raw_hash_setISD_NS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE12EqualElementIS9_EEJRSL_ESD_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSS_DpOST_.exit.thread26.i.us.us ], [ %i.af, %.lr.ph.preheader.i.us ] ; 3 uses
   %i.ag = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.sroa.014.048.i.us.us, i1 true)
@@ -229,6 +223,17 @@ _ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashMapPolicy
   %i.aq = and i32 %i.ap, %.sroa.014.048.i.us.us   ; 2 uses
   %.not.i.us.us = icmp eq i32 %i.aq, 0
   br i1 %.not.i.us.us, label %._crit_edge.i.us, label %.lr.ph.i.us.us
+
+._crit_edge.i.us:                                 ; preds = %_ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEEvE5applyINS1_12raw_hash_setISD_NS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE12EqualElementIS9_EEJRSL_ESD_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSS_DpOST_.exit.thread26.i.us.us, %.split.us
+  %2 = icmp eq <16 x i8> %i.ac, splat (i8 -128)
+  %3 = bitcast <16 x i1> %2 to i16
+  %.not43.i.us = icmp eq i16 %3, 0
+  br i1 %.not43.i.us, label %4, label %_ZN4absl7debian318container_internal12raw_hash_setINS1_17NodeHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4i18n12phonenumbers13PhoneMetadataEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SC_EEE4findIS9_EENSK_8iteratorERKT_m.exit, !prof !168
+
+4:                                                ; preds = %._crit_edge.i.us
+  %5 = add i64 %.sroa.12.0.i.us, 16               ; 2 uses
+  %6 = add i64 %5, %.sroa.6.0.i.us
+  br label %.split.us, !llvm.loop !322
 
 .split:                                           ; preds = %bb.a, %bb.b
   %.pn.i = phi i64 [ %i.bo, %bb.b ], [ %i.r, %bb.a ]
@@ -632,17 +637,6 @@ bb.a:
   %i.af = zext i16 %i.ae to i32
   br label %.lr.ph.i.us.us
 
-._crit_edge.i.us:                                 ; preds = %_ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvE5applyINS1_12raw_hash_setISA_NS1_10StringHashENS1_8StringEqESaIS9_EE12EqualElementIS9_EEJRS9_ESA_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSM_DpOSN_.exit.thread26.i.us.us, %.split.us
-  %2 = icmp eq <16 x i8> %i.ac, splat (i8 -128)
-  %3 = bitcast <16 x i1> %2 to i16
-  %.not43.i.us = icmp eq i16 %3, 0
-  br i1 %.not43.i.us, label %4, label %_ZN4absl7debian318container_internal12raw_hash_setINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS1_10StringHashENS1_8StringEqESaIS9_EE4findIS9_EENSE_8iteratorERKT_m.exit, !prof !168
-
-4:                                                ; preds = %._crit_edge.i.us
-  %5 = add i64 %.sroa.12.0.i.us, 16               ; 2 uses
-  %6 = add i64 %5, %.sroa.6.0.i.us
-  br label %.split.us, !llvm.loop !362
-
 .lr.ph.i.us.us:                                   ; preds = %_ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvE5applyINS1_12raw_hash_setISA_NS1_10StringHashENS1_8StringEqESaIS9_EE12EqualElementIS9_EEJRS9_ESA_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSM_DpOSN_.exit.thread26.i.us.us, %.lr.ph.preheader.i.us
   %.sroa.014.048.i.us.us = phi i32 [ %i.aq, %_ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvE5applyINS1_12raw_hash_setISA_NS1_10StringHashENS1_8StringEqESaIS9_EE12EqualElementIS9_EEJRS9_ESA_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSM_DpOSN_.exit.thread26.i.us.us ], [ %i.af, %.lr.ph.preheader.i.us ] ; 3 uses
   %i.ag = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.sroa.014.048.i.us.us, i1 true)
@@ -661,6 +655,17 @@ _ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashSetPolicy
   %i.aq = and i32 %i.ap, %.sroa.014.048.i.us.us   ; 2 uses
   %.not.i.us.us = icmp eq i32 %i.aq, 0
   br i1 %.not.i.us.us, label %._crit_edge.i.us, label %.lr.ph.i.us.us
+
+._crit_edge.i.us:                                 ; preds = %_ZN4absl7debian318container_internal18hash_policy_traitsINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvE5applyINS1_12raw_hash_setISA_NS1_10StringHashENS1_8StringEqESaIS9_EE12EqualElementIS9_EEJRS9_ESA_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSM_DpOSN_.exit.thread26.i.us.us, %.split.us
+  %2 = icmp eq <16 x i8> %i.ac, splat (i8 -128)
+  %3 = bitcast <16 x i1> %2 to i16
+  %.not43.i.us = icmp eq i16 %3, 0
+  br i1 %.not43.i.us, label %4, label %_ZN4absl7debian318container_internal12raw_hash_setINS1_17NodeHashSetPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS1_10StringHashENS1_8StringEqESaIS9_EE4findIS9_EENSE_8iteratorERKT_m.exit, !prof !168
+
+4:                                                ; preds = %._crit_edge.i.us
+  %5 = add i64 %.sroa.12.0.i.us, 16               ; 2 uses
+  %6 = add i64 %5, %.sroa.6.0.i.us
+  br label %.split.us, !llvm.loop !362
 
 .split:                                           ; preds = %bb.a, %bb.b
   %.pn.i = phi i64 [ %i.bo, %bb.b ], [ %i.r, %bb.a ]

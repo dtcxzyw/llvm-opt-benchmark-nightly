@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/meshoptimizer/original/vertexfilter?download=true
+inline.NumInlined: 39
+inline.NumDeleted: 12
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@meshopt_encodeFilterExp
 define dso_local void @meshopt_encodeFilterExp(ptr nofree noundef writeonly captures(none) %0, i64 noundef %1, i64 noundef %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5) local_unnamed_addr #1 {
 bb.a:
@@ -200,22 +204,6 @@ middle.block246:                                  ; preds = %vector.body240
   %exitcond135.not = icmp eq i64 %i.bf, %i.b
   br i1 %exitcond135.not, label %.loopexit.us.us, label %.lr.ph112.us.us, !llvm.loop !31
 
-scalar.ph220:                                     ; preds = %scalar.ph220.preheader, %scalar.ph220
-  %.0113.us.us = phi i64 [ %15, %scalar.ph220 ], [ %.0113.us.us.ph, %scalar.ph220.preheader ] ; 3 uses
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.al, i64 %.0113.us.us
-  %7 = load float, ptr %6, align 4, !tbaa !12     ; 2 uses
-  %8 = fcmp oge float %7, 0.000000e+00
-  %9 = select i1 %8, float 5.000000e-01, float -5.000000e-01
-  %10 = tail call float @llvm.fmuladd.f32(float %7, float %i.bj, float %9)
-  %11 = fptosi float %10 to i32
-  %12 = and i32 %11, 16777215
-  %13 = or disjoint i32 %12, %i.bk
-  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %.0113.us.us
-  store i32 %13, ptr %14, align 4, !tbaa !41
-  %15 = add nuw nsw i64 %.0113.us.us, 1           ; 2 uses
-  %exitcond136.not = icmp eq i64 %15, %i.b
-  br i1 %exitcond136.not, label %._crit_edge116.us.us, label %scalar.ph220, !llvm.loop !32
-
 .loopexit.us.us:                                  ; preds = %.lr.ph112.us.us, %middle.block246
   %.lcssa = phi i32 [ %i.ay, %middle.block246 ], [ %i.be, %.lr.ph112.us.us ]
   %i.bg = add i32 %.neg92, %.lcssa                ; 2 uses
@@ -256,7 +244,7 @@ vector.body228:                                   ; preds = %vector.body228, %ve
   store <4 x i32> %i.by, ptr %i.ca, align 4, !tbaa !41
   %index.next232 = add nuw i64 %index229, 8       ; 2 uses
   %i.cb = icmp eq i64 %index.next232, %n.vec223
-  br i1 %i.cb, label %middle.block233, label %vector.body228, !llvm.loop !33
+  br i1 %i.cb, label %middle.block233, label %vector.body228, !llvm.loop !32
 
 middle.block233:                                  ; preds = %vector.body228
   br i1 %cmp.n234, label %._crit_edge116.us.us, label %scalar.ph220.preheader
@@ -264,6 +252,22 @@ middle.block233:                                  ; preds = %vector.body228
 scalar.ph220.preheader:                           ; preds = %.loopexit.us.us, %middle.block233
   %.0113.us.us.ph = phi i64 [ 0, %.loopexit.us.us ], [ %n.vec223, %middle.block233 ]
   br label %scalar.ph220
+
+scalar.ph220:                                     ; preds = %scalar.ph220.preheader, %scalar.ph220
+  %.0113.us.us = phi i64 [ %15, %scalar.ph220 ], [ %.0113.us.us.ph, %scalar.ph220.preheader ] ; 3 uses
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.al, i64 %.0113.us.us
+  %7 = load float, ptr %6, align 4, !tbaa !12     ; 2 uses
+  %8 = fcmp oge float %7, 0.000000e+00
+  %9 = select i1 %8, float 5.000000e-01, float -5.000000e-01
+  %10 = tail call float @llvm.fmuladd.f32(float %7, float %i.bj, float %9)
+  %11 = fptosi float %10 to i32
+  %12 = and i32 %11, 16777215
+  %13 = or disjoint i32 %12, %i.bk
+  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %.0113.us.us
+  store i32 %13, ptr %14, align 4, !tbaa !41
+  %15 = add nuw nsw i64 %.0113.us.us, 1           ; 2 uses
+  %exitcond136.not = icmp eq i64 %15, %i.b
+  br i1 %exitcond136.not, label %._crit_edge116.us.us, label %scalar.ph220, !llvm.loop !33
 
 ._crit_edge116.us.us:                             ; preds = %scalar.ph220, %middle.block233
   %i.cc = add nuw i64 %.085117.us.us, 1           ; 2 uses
@@ -667,8 +671,8 @@ attributes #7 = { nounwind }
 !29 = distinct !{!29, !10, !43, !42}
 !30 = distinct !{!30, !10, !42, !43}
 !31 = distinct !{!31, !10, !43, !42}
-!32 = distinct !{!32, !10, !43, !42}
-!33 = distinct !{!33, !10, !42, !43}
+!32 = distinct !{!32, !10, !42, !43}
+!33 = distinct !{!33, !10, !43, !42}
 !34 = distinct !{!34, !10}
 !35 = distinct !{!35, !10, !42, !43}
 !36 = distinct !{!36, !10, !42, !43}

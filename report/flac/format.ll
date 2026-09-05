@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/flac/original/format?download=true
+inline.NumInlined: 4
+inline.NumDeleted: 1
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@utf8len_:bb.a
 bb.s:                                             ; preds = %bb.r
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 2
@@ -200,8 +204,8 @@ bb.i:                                             ; preds = %bb.h
   %wide.trip.count149 = zext i32 %i.f to i64
   br label %.split102.us.split
 
-.split102.us.split:                               ; preds = %.split102.us.split.preheader, %._crit_edge.split.us.us.a
-  %indvars.iv146 = phi i64 [ 0, %.split102.us.split.preheader ], [ %indvars.iv.next147, %._crit_edge.split.us.us.a ] ; 3 uses
+.split102.us.split:                               ; preds = %.split102.us.split.preheader, %bb.n
+  %indvars.iv146 = phi i64 [ 0, %.split102.us.split.preheader ], [ %indvars.iv.next138.a, %bb.n ] ; 3 uses
   %i.t = getelementptr inbounds nuw [32 x i8], ptr %.pre, i64 %indvars.iv146 ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.v = load i8, ptr %i.u, align 8, !tbaa !46
@@ -213,7 +217,7 @@ bb.j:                                             ; preds = %.split102.us.split
   %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 23
   %i.z = load i8, ptr %i.y, align 1, !tbaa !47    ; 3 uses
   %i.aa = icmp eq i8 %i.z, 0                      ; 2 uses
-  br i1 %i.x, label %bb.k, label %3
+  br i1 %i.x, label %bb.k, label %._crit_edge.split.us.us.a
 
 bb.k:                                             ; preds = %bb.j
   br i1 %i.aa, label %.split110.us, label %bb.l
@@ -226,26 +230,21 @@ bb.l:                                             ; preds = %bb.k
   %i.af = icmp ugt i8 %i.ae, 1
   br i1 %i.af, label %.split112.us, label %.thread171
 
-3:                                                ; preds = %bb.j
-  br i1 %i.aa, label %._crit_edge.split.us.us.a, label %.thread171
+._crit_edge.split.us.us.a:                        ; preds = %bb.j
+  br i1 %i.aa, label %bb.n, label %.thread171
 
-._crit_edge.split.us.us.a:                        ; preds = %bb.n, %.thread171, %3
-  %indvars.iv.next147 = add nuw nsw i64 %indvars.iv146, 1 ; 2 uses
-  %exitcond150.not = icmp eq i64 %indvars.iv.next147, %wide.trip.count149
-  br i1 %exitcond150.not, label %.loopexit, label %.split102.us.split, !llvm.loop !38
-
-.thread171:                                       ; preds = %bb.l, %3
+.thread171:                                       ; preds = %bb.l, %._crit_edge.split.us.us.a
   %wide.trip.count140 = zext i8 %i.z to i64
   %exitcond141.peel.not = icmp eq i8 %i.z, 1
-  br i1 %exitcond141.peel.not, label %._crit_edge.split.us.us.a, label %.peel.next143
+  br i1 %exitcond141.peel.not, label %bb.n, label %.peel.next143
 
 .peel.next143:                                    ; preds = %.thread171
   %i.ag = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !48
   br label %bb.m
 
-bb.m:                                             ; preds = %.peel.next143, %bb.n
-  %indvars.iv137 = phi i64 [ %indvars.iv.next138.a, %bb.n ], [ 1, %.peel.next143 ] ; 2 uses
+bb.m:                                             ; preds = %.peel.next143, %3
+  %indvars.iv137 = phi i64 [ %indvars.iv.next138, %3 ], [ 1, %.peel.next143 ] ; 2 uses
   %i.ai = getelementptr inbounds nuw [16 x i8], ptr %i.ah, i64 %indvars.iv137 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
   %i.ak = load i8, ptr %i.aj, align 8, !tbaa !50
@@ -255,12 +254,17 @@ bb.m:                                             ; preds = %.peel.next143, %bb.
   %i.ao = zext i8 %i.an to i32
   %i.ap = add nuw nsw i32 %i.ao, 1
   %.not80.us.us = icmp eq i32 %i.ap, %i.al
-  br i1 %.not80.us.us, label %bb.n, label %.split.us
+  br i1 %.not80.us.us, label %3, label %.split.us
 
-bb.n:                                             ; preds = %bb.m
-  %indvars.iv.next138.a = add nuw nsw i64 %indvars.iv137, 1 ; 2 uses
-  %exitcond141.not.a = icmp eq i64 %indvars.iv.next138.a, %wide.trip.count140
-  br i1 %exitcond141.not.a, label %._crit_edge.split.us.us.a, label %bb.m, !llvm.loop !39
+3:                                                ; preds = %bb.m
+  %indvars.iv.next138 = add nuw nsw i64 %indvars.iv137, 1 ; 2 uses
+  %exitcond141.not = icmp eq i64 %indvars.iv.next138, %wide.trip.count140
+  br i1 %exitcond141.not, label %bb.n, label %bb.m, !llvm.loop !38
+
+bb.n:                                             ; preds = %3, %.thread171, %._crit_edge.split.us.us.a
+  %indvars.iv.next138.a = add nuw nsw i64 %indvars.iv146, 1 ; 2 uses
+  %exitcond141.not.a = icmp eq i64 %indvars.iv.next138.a, %wide.trip.count149
+  br i1 %exitcond141.not.a, label %.loopexit, label %.split102.us.split, !llvm.loop !39
 
 .split102:                                        ; preds = %.split102.preheader, %._crit_edge.split
   %indvars.iv132 = phi i64 [ 0, %.split102.preheader ], [ %indvars.iv.next133, %._crit_edge.split ] ; 4 uses
@@ -377,15 +381,15 @@ bb.w:                                             ; preds = %bb.v
 ._crit_edge.split:                                ; preds = %bb.w, %bb.u, %bb.t
   %indvars.iv.next133 = add nuw nsw i64 %indvars.iv132, 1 ; 2 uses
   %exitcond136.not = icmp eq i64 %indvars.iv.next133, %wide.trip.count135
-  br i1 %exitcond136.not, label %.loopexit, label %.split102, !llvm.loop !38
+  br i1 %exitcond136.not, label %.loopexit, label %.split102, !llvm.loop !39
 
 .loopexit.sink.split:                             ; preds = %.split.us, %.loopexit129, %.split112.us, %.split110.us, %bb.p, %.split106, %.split104.us, %bb.i, %bb.g, %bb.e, %bb.c
   %.str.53.sink = phi ptr [ @.str.52, %.loopexit129 ], [ @.str.51, %.split112.us ], [ @.str.50, %.split110.us ], [ @.str.42, %bb.c ], [ @.str.47, %.split106 ], [ %.str.48..str.49, %bb.p ], [ @.str.46, %.split104.us ], [ @.str.45, %bb.i ], [ @.str.44, %bb.g ], [ @.str.43, %bb.e ], [ @.str.53, %.split.us ]
   store ptr %.str.53.sink, ptr %2, align 8, !tbaa !19
   br label %.loopexit
 
-.loopexit:                                        ; preds = %._crit_edge.split, %._crit_edge.split.us.us.a, %.loopexit.sink.split, %.split.us, %.loopexit129, %.split112.us, %.split110.us, %.split108, %.split106, %.split104.us, %bb.i, %bb.g, %bb.e, %bb.c
-  %.069 = phi i32 [ 0, %.split.us ], [ 0, %bb.c ], [ 0, %bb.e ], [ 0, %bb.g ], [ 0, %bb.i ], [ 0, %.split106 ], [ 0, %.split108 ], [ 0, %.split110.us ], [ 0, %.split112.us ], [ 0, %.loopexit129 ], [ 0, %.split104.us ], [ 0, %.loopexit.sink.split ], [ 1, %._crit_edge.split.us.us.a ], [ 1, %._crit_edge.split ]
+.loopexit:                                        ; preds = %._crit_edge.split, %bb.n, %.loopexit.sink.split, %.split.us, %.loopexit129, %.split112.us, %.split110.us, %.split108, %.split106, %.split104.us, %bb.i, %bb.g, %bb.e, %bb.c
+  %.069 = phi i32 [ 0, %.split.us ], [ 0, %bb.c ], [ 0, %bb.e ], [ 0, %bb.g ], [ 0, %bb.i ], [ 0, %.split106 ], [ 0, %.split108 ], [ 0, %.split110.us ], [ 0, %.split112.us ], [ 0, %.loopexit129 ], [ 0, %.split104.us ], [ 0, %.loopexit.sink.split ], [ 1, %bb.n ], [ 1, %._crit_edge.split ]
   ret i32 %.069
 }
 
@@ -655,8 +659,8 @@ attributes #17 = { nounwind allocsize(1) }
 !35 = distinct !{!35, !15}
 !36 = distinct !{!36, !15}
 !37 = distinct !{!37, !15}
-!38 = distinct !{!38, !15}
-!39 = distinct !{!39, !15, !16}
+!38 = distinct !{!38, !15, !16}
+!39 = distinct !{!39, !15}
 !40 = distinct !{!40, !15, !16}
 !41 = !{!"", !4, i64 0, !12, i64 136, !5, i64 144, !5, i64 148, !8, i64 152}
 !42 = !{!41, !12, i64 136}

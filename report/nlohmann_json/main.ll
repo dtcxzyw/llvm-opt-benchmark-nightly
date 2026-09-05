@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nlohmann_json/original/main?download=true
+inline.NumInlined: 4107
+inline.NumDeleted: 1182
+loop-unroll.NumCompletelyUnrolled: 12
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 13
 begin_hunk_0_@_ZN7doctest6detail18checkIfShouldThrowENS_10assertType4EnumE:bb.a
   %i.v = load atomic i32, ptr %.010.ptr.us18.12.i.i seq_cst, align 4
   %.010.ptr.us18.13.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 3064
@@ -200,7 +205,7 @@ _ZN7doctest12_GLOBAL__N_17wildcmpEPKcS2_b.exit.thread.loopexit.us: ; preds = %bb
   %spec.select.i.i.us39 = select i1 %i.m, ptr %i.l, ptr %.sroa.01.037.us38 ; 2 uses
   br label %.lr.ph.split.us.i.us
 
-.lr.ph.split.us.i.us:                             ; preds = %.lr.ph.i.us, %bb.d
+.lr.ph.split.us.i.us:                             ; preds = %bb.d, %.lr.ph.i.us
   %i.n = phi i8 [ %i.r, %bb.d ], [ %i.b, %.lr.ph.i.us ] ; 2 uses
   %.03358.us.i.us = phi ptr [ %i.p, %bb.d ], [ %spec.select.i.i.us39, %.lr.ph.i.us ] ; 3 uses
   %.03557.us.i.us = phi ptr [ %i.q, %bb.d ], [ %0, %.lr.ph.i.us ] ; 2 uses
