@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %.loopexit.2.i.us, %
 
 .lr.ph87.i.i.us:                                  ; preds = %bb.k
   %i.hv = shl nuw nsw i64 %i.gf, 2                ; 2 uses
-  %i.hw = shl nuw nsw i64 %i.gg, 3                ; 2 uses
+  %i.hw = shl nuw nsw i64 %i.gg, 3
   %i.hx = shl nuw nsw i64 %i.gg, 2
   %trunc = trunc nuw i64 %i.gg to i8
   switch i8 %trunc, label %.lr.ph.i.i.us [
@@ -216,46 +216,34 @@ bb.k:                                             ; preds = %.loopexit.2.i.us, %
 .lr.ph.us.i.i.us.preheader:                       ; preds = %.lr.ph87.i.i.us
   %i.hy = load <2 x float>, ptr %i.a, align 16
   %i.hz = load <2 x float>, ptr %i.di, align 8
-  br label %.lr.ph.us.i.i.us
-
-.lr.ph.us.i.i.us:                                 ; preds = %.lr.ph.us.i.i.us.preheader, %._crit_edge.split.us.us.i.i.us
-  %.07585.us.i.i.us = phi i64 [ %23, %._crit_edge.split.us.us.i.i.us ], [ 0, %.lr.ph.us.i.i.us.preheader ] ; 3 uses
-  %.not79.us.i.i.us = icmp samesign ult i64 %.07585.us.i.i.us, %i.hv
-  %10 = shl nuw nsw i64 %.07585.us.i.i.us, 3      ; 3 uses
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.ho, i64 %10
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.gu, i64 %10
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %10
-  %14 = insertelement <2 x i1> poison, i1 %.not79.us.i.i.us, i64 0
-  %15 = shufflevector <2 x i1> %14, <2 x i1> poison, <2 x i32> zeroinitializer
-  %16 = select <2 x i1> %15, <2 x float> %i.hy, <2 x float> %i.hz
-  %17 = shufflevector <2 x float> %16, <2 x float> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1>
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.l, %.lr.ph.us.i.i.us
-  %.07684.us.us.i.i.us = phi i64 [ 0, %.lr.ph.us.i.i.us ], [ %i.ik, %bb.l ] ; 4 uses
-  %i.ia = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %.07684.us.us.i.i.us
-  %18 = load <8 x float>, ptr %i.ia, align 32, !tbaa !57, !noalias !987
-  %19 = fmul <8 x float> %i.ht, %18
-  %20 = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %.07684.us.us.i.i.us
-  %i.ib = load <8 x float>, ptr %20, align 32, !tbaa !57, !alias.scope !988, !noalias !989
-  %i.ic = fmul <8 x float> %19, %i.ib             ; 2 uses
+bb.l:                                             ; preds = %.lr.ph.us.i.i.us.preheader, %bb.l
+  %.07684.us.us.i.i.us = phi i64 [ %i.ik, %bb.l ], [ 0, %.lr.ph.us.i.i.us.preheader ] ; 3 uses
+  %.not79.us.i.i.us = icmp samesign ult i64 %.07684.us.us.i.i.us, %i.hv
+  %10 = shl nuw nsw i64 %.07684.us.us.i.i.us, 3   ; 3 uses
+  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.ho, i64 %10
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.gu, i64 %10
+  %i.ia = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %10
+  %13 = insertelement <2 x i1> poison, i1 %.not79.us.i.i.us, i64 0
+  %14 = shufflevector <2 x i1> %13, <2 x i1> poison, <2 x i32> zeroinitializer
+  %15 = select <2 x i1> %14, <2 x float> %i.hy, <2 x float> %i.hz
+  %16 = shufflevector <2 x float> %15, <2 x float> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1>
+  %17 = load <8 x float>, ptr %11, align 32, !tbaa !57, !noalias !987
+  %18 = fmul <8 x float> %i.ht, %17
+  %i.ib = load <8 x float>, ptr %12, align 32, !tbaa !57, !alias.scope !988, !noalias !989
+  %i.ic = fmul <8 x float> %18, %i.ib             ; 2 uses
   %i.id = call <8 x float> @llvm.fabs.v8f32(<8 x float> %i.ic)
-  %i.ie = fcmp oge <8 x float> %i.id, %17
+  %i.ie = fcmp oge <8 x float> %i.id, %16
   %i.if = call <8 x float> @llvm.roundeven.v8f32(<8 x float> %i.ic)
   %i.ig = select <8 x i1> %i.ie, <8 x float> %i.if, <8 x float> zeroinitializer ; 2 uses
   %i.ih = fcmp oge <8 x float> %i.ig, splat (float f0x4F000000)
   %i.ii = call <8 x i32> @llvm.x86.avx.cvtt.ps2dq.256(<8 x float> %i.ig)
   %i.ij = select <8 x i1> %i.ih, <8 x i32> splat (i32 2147483647), <8 x i32> %i.ii
-  %21 = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %.07684.us.us.i.i.us
-  store <8 x i32> %i.ij, ptr %21, align 32, !tbaa !57, !alias.scope !990, !noalias !991
-  %i.ik = add nuw nsw i64 %.07684.us.us.i.i.us, 8 ; 2 uses
-  %22 = icmp samesign ult i64 %i.ik, %i.hw
-  br i1 %22, label %bb.l, label %._crit_edge.split.us.us.i.i.us, !llvm.loop !4
-
-._crit_edge.split.us.us.i.i.us:                   ; preds = %bb.l
-  %23 = add nuw nsw i64 %.07585.us.i.i.us, 1      ; 2 uses
-  %exitcond95.not.i.i.us = icmp eq i64 %23, %i.hu
-  br i1 %exitcond95.not.i.i.us, label %_ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPKiPi.exit.i.us, label %.lr.ph.us.i.i.us, !llvm.loop !5
+  store <8 x i32> %i.ij, ptr %i.ia, align 32, !tbaa !57, !alias.scope !990, !noalias !991
+  %i.ik = add nuw nsw i64 %.07684.us.us.i.i.us, 1 ; 2 uses
+  %exitcond95.not.i.i.us = icmp eq i64 %i.ik, %i.hu
+  br i1 %exitcond95.not.i.i.us, label %_ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPKiPi.exit.i.us, label %bb.l, !llvm.loop !5
 
 .lr.ph.i.i.us:                                    ; preds = %.lr.ph87.i.i.us, %._crit_edge.split.i.i.us
   %.07585.i.i.us = phi i64 [ %i.jm, %._crit_edge.split.i.i.us ], [ 0, %.lr.ph87.i.i.us ] ; 3 uses
@@ -300,7 +288,7 @@ bb.m:                                             ; preds = %bb.m, %.lr.ph.i.i.u
   %exitcond.not.i.i.us = icmp eq i64 %i.jm, %i.hu
   br i1 %exitcond.not.i.i.us, label %_ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPKiPi.exit.i.us, label %.lr.ph.i.i.us, !llvm.loop !5
 
-_ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPKiPi.exit.i.us: ; preds = %._crit_edge.split.us.us.i.i.us, %._crit_edge.split.i.i.us, %.lr.ph87.i.i.us
+_ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPKiPi.exit.i.us: ; preds = %bb.l, %._crit_edge.split.i.i.us, %.lr.ph87.i.i.us
   %i.jn = getelementptr inbounds nuw i8, ptr %i.hh, i64 32
   %i.jo = load ptr, ptr %i.jn, align 8, !tbaa !167, !noalias !983
   %i.jp = getelementptr inbounds nuw [4 x i8], ptr %i.jo, i64 %i.hn
@@ -378,46 +366,34 @@ bb.n:                                             ; preds = %.lr.ph.us, %bb.n
 .lr.ph.us.i.us.preheader:                         ; preds = %.lr.ph87.i.us
   %i.lg = load <2 x float>, ptr %i.f, align 16
   %i.lh = load <2 x float>, ptr %i.dp, align 8
-  br label %.lr.ph.us.i.us
-
-.lr.ph.us.i.us:                                   ; preds = %.lr.ph.us.i.us.preheader, %._crit_edge.split.us.us.i.us
-  %.07585.us.i.us = phi i64 [ %37, %._crit_edge.split.us.us.i.us ], [ 0, %.lr.ph.us.i.us.preheader ] ; 3 uses
-  %.not79.us.i.us = icmp samesign ult i64 %.07585.us.i.us, %i.ra
-  %24 = shl nuw nsw i64 %.07585.us.i.us, 3        ; 3 uses
-  %25 = getelementptr inbounds nuw [4 x i8], ptr %i.rk, i64 %24
-  %26 = getelementptr inbounds nuw [4 x i8], ptr %i.cm, i64 %24
-  %27 = getelementptr inbounds nuw [4 x i8], ptr %i.co, i64 %24
-  %28 = insertelement <2 x i1> poison, i1 %.not79.us.i.us, i64 0
-  %29 = shufflevector <2 x i1> %28, <2 x i1> poison, <2 x i32> zeroinitializer
-  %30 = select <2 x i1> %29, <2 x float> %i.lg, <2 x float> %i.lh
-  %31 = shufflevector <2 x float> %30, <2 x float> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1>
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.o, %.lr.ph.us.i.us
-  %.07684.us.us.i.us = phi i64 [ 0, %.lr.ph.us.i.us ], [ %i.ls, %bb.o ] ; 4 uses
-  %i.li = getelementptr inbounds nuw [4 x i8], ptr %25, i64 %.07684.us.us.i.us
-  %32 = load <8 x float>, ptr %i.li, align 32, !tbaa !57, !noalias !994
-  %33 = fmul <8 x float> %i.lf, %32
-  %34 = getelementptr inbounds nuw [4 x i8], ptr %26, i64 %.07684.us.us.i.us
-  %i.lj = load <8 x float>, ptr %34, align 32, !tbaa !57, !alias.scope !995, !noalias !996
-  %i.lk = fmul <8 x float> %33, %i.lj             ; 2 uses
+bb.o:                                             ; preds = %.lr.ph.us.i.us.preheader, %bb.o
+  %.07684.us.us.i.us = phi i64 [ %i.ls, %bb.o ], [ 0, %.lr.ph.us.i.us.preheader ] ; 3 uses
+  %.not79.us.i.us = icmp samesign ult i64 %.07684.us.us.i.us, %i.ra
+  %19 = shl nuw nsw i64 %.07684.us.us.i.us, 3     ; 3 uses
+  %20 = getelementptr inbounds nuw [4 x i8], ptr %i.rk, i64 %19
+  %21 = getelementptr inbounds nuw [4 x i8], ptr %i.cm, i64 %19
+  %i.li = getelementptr inbounds nuw [4 x i8], ptr %i.co, i64 %19
+  %22 = insertelement <2 x i1> poison, i1 %.not79.us.i.us, i64 0
+  %23 = shufflevector <2 x i1> %22, <2 x i1> poison, <2 x i32> zeroinitializer
+  %24 = select <2 x i1> %23, <2 x float> %i.lg, <2 x float> %i.lh
+  %25 = shufflevector <2 x float> %24, <2 x float> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1>
+  %26 = load <8 x float>, ptr %20, align 32, !tbaa !57, !noalias !994
+  %27 = fmul <8 x float> %i.lf, %26
+  %i.lj = load <8 x float>, ptr %21, align 32, !tbaa !57, !alias.scope !995, !noalias !996
+  %i.lk = fmul <8 x float> %27, %i.lj             ; 2 uses
   %i.ll = call <8 x float> @llvm.fabs.v8f32(<8 x float> %i.lk)
-  %i.lm = fcmp oge <8 x float> %i.ll, %31
+  %i.lm = fcmp oge <8 x float> %i.ll, %25
   %i.ln = call <8 x float> @llvm.roundeven.v8f32(<8 x float> %i.lk)
   %i.lo = select <8 x i1> %i.lm, <8 x float> %i.ln, <8 x float> zeroinitializer ; 2 uses
   %i.lp = fcmp oge <8 x float> %i.lo, splat (float f0x4F000000)
   %i.lq = call <8 x i32> @llvm.x86.avx.cvtt.ps2dq.256(<8 x float> %i.lo)
   %i.lr = select <8 x i1> %i.lp, <8 x i32> splat (i32 2147483647), <8 x i32> %i.lq
-  %35 = getelementptr inbounds nuw [4 x i8], ptr %27, i64 %.07684.us.us.i.us
-  store <8 x i32> %i.lr, ptr %35, align 32, !tbaa !57, !alias.scope !996, !noalias !995
-  %i.ls = add nuw nsw i64 %.07684.us.us.i.us, 8   ; 2 uses
-  %36 = icmp samesign ult i64 %i.ls, %i.rb
-  br i1 %36, label %bb.o, label %._crit_edge.split.us.us.i.us, !llvm.loop !4
-
-._crit_edge.split.us.us.i.us:                     ; preds = %bb.o
-  %37 = add nuw nsw i64 %.07585.us.i.us, 1        ; 2 uses
-  %exitcond95.not.i.us = icmp eq i64 %37, %i.hu
-  br i1 %exitcond95.not.i.us, label %_ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPKiPi.exit.us, label %.lr.ph.us.i.us, !llvm.loop !5
+  store <8 x i32> %i.lr, ptr %i.li, align 32, !tbaa !57, !alias.scope !996, !noalias !995
+  %i.ls = add nuw nsw i64 %.07684.us.us.i.us, 1   ; 2 uses
+  %exitcond95.not.i.us = icmp eq i64 %i.ls, %i.hu
+  br i1 %exitcond95.not.i.us, label %_ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPKiPi.exit.us, label %bb.o, !llvm.loop !5
 
 .lr.ph.i202.us:                                   ; preds = %.lr.ph87.i.us, %._crit_edge.split.i.us
   %.07585.i.us = phi i64 [ %i.mu, %._crit_edge.split.i.us ], [ 0, %.lr.ph87.i.us ] ; 3 uses
@@ -462,7 +438,7 @@ bb.p:                                             ; preds = %bb.p, %.lr.ph.i202.
   %exitcond.not.i.us = icmp eq i64 %i.mu, %i.hu
   br i1 %exitcond.not.i.us, label %_ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPKiPi.exit.us, label %.lr.ph.i202.us, !llvm.loop !5
 
-_ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPKiPi.exit.us: ; preds = %._crit_edge.split.us.us.i.us, %._crit_edge.split.i.us, %.lr.ph87.i.us, %.loopexit.i.us
+_ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPKiPi.exit.us: ; preds = %bb.o, %._crit_edge.split.i.us, %.lr.ph87.i.us, %.loopexit.i.us
   %i.mv = getelementptr inbounds nuw [4 x i8], ptr %i.ff, i64 %.0184280.us
   call fastcc void @_ZN3jxl6N_AVX212_GLOBAL__N_123DCFromLowestFrequenciesENS_14AcStrategyTypeEPKfPfmS5_(i32 noundef %i.gw, ptr noundef %i.cm, ptr noundef %i.mv, i64 noundef %i.an, ptr noundef nonnull %i.bd) #48
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #47
@@ -516,46 +492,34 @@ _ZN3jxl6N_AVX215QuantizeBlockACERKNS_9QuantizerEbmfNS_14AcStrategyTypeEmmPfPKfPK
 .lr.ph.us.i.us.preheader.1:                       ; preds = %.lr.ph87.i.us.1
   %i.nw = load <2 x float>, ptr %i.f, align 16
   %i.nx = load <2 x float>, ptr %i.dp, align 8
-  br label %.lr.ph.us.i.us.1
-
-.lr.ph.us.i.us.1:                                 ; preds = %._crit_edge.split.us.us.i.us.1, %.lr.ph.us.i.us.preheader.1
-  %.07585.us.i.us.1 = phi i64 [ %51, %._crit_edge.split.us.us.i.us.1 ], [ 0, %.lr.ph.us.i.us.preheader.1 ] ; 3 uses
-  %.not79.us.i.us.1 = icmp samesign ult i64 %.07585.us.i.us.1, %i.ra
-  %38 = shl nuw nsw i64 %.07585.us.i.us.1, 3      ; 3 uses
-  %39 = getelementptr inbounds nuw [4 x i8], ptr %i.ni, i64 %38
-  %40 = getelementptr inbounds nuw [4 x i8], ptr %i.mz, i64 %38
-  %41 = getelementptr inbounds nuw [4 x i8], ptr %i.na, i64 %38
-  %42 = insertelement <2 x i1> poison, i1 %.not79.us.i.us.1, i64 0
-  %43 = shufflevector <2 x i1> %42, <2 x i1> poison, <2 x i32> zeroinitializer
-  %44 = select <2 x i1> %43, <2 x float> %i.nw, <2 x float> %i.nx
-  %45 = shufflevector <2 x float> %44, <2 x float> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1>
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.q, %.lr.ph.us.i.us.1
-  %.07684.us.us.i.us.1 = phi i64 [ 0, %.lr.ph.us.i.us.1 ], [ %i.oi, %bb.q ] ; 4 uses
-  %i.ny = getelementptr inbounds nuw [4 x i8], ptr %39, i64 %.07684.us.us.i.us.1
-  %46 = load <8 x float>, ptr %i.ny, align 32, !tbaa !57, !noalias !999
-  %47 = fmul <8 x float> %i.nv, %46
-  %48 = getelementptr inbounds nuw [4 x i8], ptr %40, i64 %.07684.us.us.i.us.1
-  %i.nz = load <8 x float>, ptr %48, align 32, !tbaa !57, !alias.scope !997, !noalias !998
-  %i.oa = fmul <8 x float> %47, %i.nz             ; 2 uses
+bb.q:                                             ; preds = %bb.q, %.lr.ph.us.i.us.preheader.1
+  %.07684.us.us.i.us.1 = phi i64 [ %i.oi, %bb.q ], [ 0, %.lr.ph.us.i.us.preheader.1 ] ; 3 uses
+  %.not79.us.i.us.1 = icmp samesign ult i64 %.07684.us.us.i.us.1, %i.ra
+  %28 = shl nuw nsw i64 %.07684.us.us.i.us.1, 3   ; 3 uses
+  %29 = getelementptr inbounds nuw [4 x i8], ptr %i.ni, i64 %28
+  %30 = getelementptr inbounds nuw [4 x i8], ptr %i.mz, i64 %28
+  %i.ny = getelementptr inbounds nuw [4 x i8], ptr %i.na, i64 %28
+  %31 = insertelement <2 x i1> poison, i1 %.not79.us.i.us.1, i64 0
+  %32 = shufflevector <2 x i1> %31, <2 x i1> poison, <2 x i32> zeroinitializer
+  %33 = select <2 x i1> %32, <2 x float> %i.nw, <2 x float> %i.nx
+  %34 = shufflevector <2 x float> %33, <2 x float> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1>
+  %35 = load <8 x float>, ptr %29, align 32, !tbaa !57, !noalias !999
+  %36 = fmul <8 x float> %i.nv, %35
+  %i.nz = load <8 x float>, ptr %30, align 32, !tbaa !57, !alias.scope !997, !noalias !998
+  %i.oa = fmul <8 x float> %36, %i.nz             ; 2 uses
   %i.ob = call <8 x float> @llvm.fabs.v8f32(<8 x float> %i.oa)
-  %i.oc = fcmp oge <8 x float> %i.ob, %45
+  %i.oc = fcmp oge <8 x float> %i.ob, %34
   %i.od = call <8 x float> @llvm.roundeven.v8f32(<8 x float> %i.oa)
   %i.oe = select <8 x i1> %i.oc, <8 x float> %i.od, <8 x float> zeroinitializer ; 2 uses
   %i.of = fcmp oge <8 x float> %i.oe, splat (float f0x4F000000)
   %i.og = call <8 x i32> @llvm.x86.avx.cvtt.ps2dq.256(<8 x float> %i.oe)
   %i.oh = select <8 x i1> %i.of, <8 x i32> splat (i32 2147483647), <8 x i32> %i.og
-  %49 = getelementptr inbounds nuw [4 x i8], ptr %41, i64 %.07684.us.us.i.us.1
-  store <8 x i32> %i.oh, ptr %49, align 32, !tbaa !57, !alias.scope !998, !noalias !997
-  %i.oi = add nuw nsw i64 %.07684.us.us.i.us.1, 8 ; 2 uses
-  %50 = icmp samesign ult i64 %i.oi, %i.rb
-  br i1 %50, label %bb.q, label %._crit_edge.split.us.us.i.us.1, !llvm.loop !4
-
-._crit_edge.split.us.us.i.us.1:                   ; preds = %bb.q
-  %51 = add nuw nsw i64 %.07585.us.i.us.1, 1      ; 2 uses
-  %exitcond95.not.i.us.1 = icmp eq i64 %51, %i.hu
-  br i1 %exitcond95.not.i.us.1, label %iter.check440, label %.lr.ph.us.i.us.1, !llvm.loop !5
+  store <8 x i32> %i.oh, ptr %i.ny, align 32, !tbaa !57, !alias.scope !998, !noalias !997
+  %i.oi = add nuw nsw i64 %.07684.us.us.i.us.1, 1 ; 2 uses
+  %exitcond95.not.i.us.1 = icmp eq i64 %i.oi, %i.hu
+  br i1 %exitcond95.not.i.us.1, label %iter.check440, label %bb.q, !llvm.loop !5
 
 .lr.ph.i202.us.1:                                 ; preds = %.lr.ph87.i.us.1, %._crit_edge.split.i.us.1
   %.07585.i.us.1 = phi i64 [ %i.pk, %._crit_edge.split.i.us.1 ], [ 0, %.lr.ph87.i.us.1 ] ; 3 uses
@@ -600,7 +564,7 @@ bb.r:                                             ; preds = %bb.r, %.lr.ph.i202.
   %exitcond.not.i.us.1 = icmp eq i64 %i.pk, %i.hu
   br i1 %exitcond.not.i.us.1, label %iter.check440, label %.lr.ph.i202.us.1, !llvm.loop !5
 
-iter.check440:                                    ; preds = %._crit_edge.split.us.us.i.us.1, %._crit_edge.split.i.us.1, %.lr.ph87.i.us.1, %.loopexit.i.us.1
+iter.check440:                                    ; preds = %bb.q, %._crit_edge.split.i.us.1, %.lr.ph87.i.us.1, %.loopexit.i.us.1
   %i.pl = getelementptr inbounds nuw [4 x i8], ptr %i.fl, i64 %.0184280.us
   call fastcc void @_ZN3jxl6N_AVX212_GLOBAL__N_123DCFromLowestFrequenciesENS_14AcStrategyTypeEPKfPfmS5_(i32 noundef %i.mx, ptr noundef %i.mz, ptr noundef %i.pl, i64 noundef %i.an, ptr noundef nonnull %i.bd) #48
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #47
@@ -829,7 +793,7 @@ bb.s:                                             ; preds = %.loopexit, %bb.f
   %i.qy = uitofp nneg i64 %i.gf to float          ; 2 uses
   %i.qz = fmul nnan float %i.qx, -7.440000e-03    ; 2 uses
   %i.ra = shl nuw nsw i64 %i.gf, 2                ; 4 uses
-  %i.rb = shl nuw nsw i64 %i.gg, 3                ; 4 uses
+  %i.rb = shl nuw nsw i64 %i.gg, 3                ; 2 uses
   %i.rc = shl nuw nsw i64 %i.gg, 2                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #47
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.f, ptr noundef nonnull align 16 dereferenceable(16) @__const._ZN3jxl6N_SSE219ComputeCoefficientsEmPNS_18PassesEncoderStateERKNS_6Image3IfEERKNS_5RectTImEEPS4_.thres, i64 16, i1 false)
