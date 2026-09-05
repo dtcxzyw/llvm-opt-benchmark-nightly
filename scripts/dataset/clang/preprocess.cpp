@@ -23,7 +23,7 @@
 using namespace llvm;
 namespace fs = std::filesystem;
 
-class DumpPass : public PassInfoMixin<DumpPass> {
+class DumpPass : public RequiredPassInfoMixin<DumpPass> {
 public:
   PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
     const char *Prefix = getenv("DUMP_PREFIX");
