@@ -205,7 +205,7 @@ vector.body:                                      ; preds = %pred.store.continue
   %i.cu = and <8 x i32> %i.ct, splat (i32 7168)
   %i.cv = icmp ne <8 x i32> %i.cu, zeroinitializer ; 8 uses
   %i.cw = extractelement <8 x i1> %i.cv, i64 0
-  br i1 %i.cw, label %pred.store.if, label %pred.store.continue
+  br i1 %i.cw, label %pred.store.if, label %pred.store.continue, !prof !523
 
 pred.store.if:                                    ; preds = %vector.body
   %i.cx = and i16 %i.cb, 255
@@ -215,7 +215,7 @@ pred.store.if:                                    ; preds = %vector.body
 
 pred.store.continue:                              ; preds = %pred.store.if, %vector.body
   %i.cz = extractelement <8 x i1> %i.cv, i64 1
-  br i1 %i.cz, label %pred.store.if147, label %pred.store.continue148
+  br i1 %i.cz, label %pred.store.if147, label %pred.store.continue148, !prof !523
 
 pred.store.if147:                                 ; preds = %pred.store.continue
   %i.da = and i16 %i.cc, 255
@@ -225,7 +225,7 @@ pred.store.if147:                                 ; preds = %pred.store.continue
 
 pred.store.continue148:                           ; preds = %pred.store.if147, %pred.store.continue
   %i.dc = extractelement <8 x i1> %i.cv, i64 2
-  br i1 %i.dc, label %pred.store.if149, label %pred.store.continue150
+  br i1 %i.dc, label %pred.store.if149, label %pred.store.continue150, !prof !523
 
 pred.store.if149:                                 ; preds = %pred.store.continue148
   %i.dd = and i16 %i.cd, 255
@@ -235,7 +235,7 @@ pred.store.if149:                                 ; preds = %pred.store.continue
 
 pred.store.continue150:                           ; preds = %pred.store.if149, %pred.store.continue148
   %i.df = extractelement <8 x i1> %i.cv, i64 3
-  br i1 %i.df, label %pred.store.if151, label %pred.store.continue152
+  br i1 %i.df, label %pred.store.if151, label %pred.store.continue152, !prof !523
 
 pred.store.if151:                                 ; preds = %pred.store.continue150
   %i.dg = and i16 %i.ce, 255
@@ -245,7 +245,7 @@ pred.store.if151:                                 ; preds = %pred.store.continue
 
 pred.store.continue152:                           ; preds = %pred.store.if151, %pred.store.continue150
   %i.di = extractelement <8 x i1> %i.cv, i64 4
-  br i1 %i.di, label %pred.store.if153, label %pred.store.continue154
+  br i1 %i.di, label %pred.store.if153, label %pred.store.continue154, !prof !523
 
 pred.store.if153:                                 ; preds = %pred.store.continue152
   %i.dj = and i16 %i.cf, 255
@@ -255,7 +255,7 @@ pred.store.if153:                                 ; preds = %pred.store.continue
 
 pred.store.continue154:                           ; preds = %pred.store.if153, %pred.store.continue152
   %i.dl = extractelement <8 x i1> %i.cv, i64 5
-  br i1 %i.dl, label %pred.store.if155, label %pred.store.continue156
+  br i1 %i.dl, label %pred.store.if155, label %pred.store.continue156, !prof !523
 
 pred.store.if155:                                 ; preds = %pred.store.continue154
   %i.dm = and i16 %i.cg, 255
@@ -265,7 +265,7 @@ pred.store.if155:                                 ; preds = %pred.store.continue
 
 pred.store.continue156:                           ; preds = %pred.store.if155, %pred.store.continue154
   %i.do = extractelement <8 x i1> %i.cv, i64 6
-  br i1 %i.do, label %pred.store.if157, label %pred.store.continue158
+  br i1 %i.do, label %pred.store.if157, label %pred.store.continue158, !prof !523
 
 pred.store.if157:                                 ; preds = %pred.store.continue156
   %i.dp = and i16 %i.ch, 255
@@ -275,7 +275,7 @@ pred.store.if157:                                 ; preds = %pred.store.continue
 
 pred.store.continue158:                           ; preds = %pred.store.if157, %pred.store.continue156
   %i.dr = extractelement <8 x i1> %i.cv, i64 7
-  br i1 %i.dr, label %pred.store.if159, label %pred.store.continue160
+  br i1 %i.dr, label %pred.store.if159, label %pred.store.continue160, !prof !523
 
 pred.store.if159:                                 ; preds = %pred.store.continue158
   %i.ds = and i16 %i.ci, 255
@@ -534,7 +534,7 @@ vector.body165:                                   ; preds = %pred.store.continue
   %i.hs = and <8 x i32> %i.hr, splat (i32 7168)
   %i.ht = icmp ne <8 x i32> %i.hs, zeroinitializer ; 8 uses
   %i.hu = extractelement <8 x i1> %i.ht, i64 0
-  br i1 %i.hu, label %pred.store.if167, label %pred.store.continue168
+  br i1 %i.hu, label %pred.store.if167, label %pred.store.continue168, !prof !523
 
 pred.store.if167:                                 ; preds = %vector.body165
   %i.hv = and i16 %i.gz, 255
@@ -544,7 +544,7 @@ pred.store.if167:                                 ; preds = %vector.body165
 
 pred.store.continue168:                           ; preds = %pred.store.if167, %vector.body165
   %i.hx = extractelement <8 x i1> %i.ht, i64 1
-  br i1 %i.hx, label %pred.store.if169, label %pred.store.continue170
+  br i1 %i.hx, label %pred.store.if169, label %pred.store.continue170, !prof !523
 
 pred.store.if169:                                 ; preds = %pred.store.continue168
   %i.hy = and i16 %i.ha, 255
@@ -554,7 +554,7 @@ pred.store.if169:                                 ; preds = %pred.store.continue
 
 pred.store.continue170:                           ; preds = %pred.store.if169, %pred.store.continue168
   %i.ia = extractelement <8 x i1> %i.ht, i64 2
-  br i1 %i.ia, label %pred.store.if171, label %pred.store.continue172
+  br i1 %i.ia, label %pred.store.if171, label %pred.store.continue172, !prof !523
 
 pred.store.if171:                                 ; preds = %pred.store.continue170
   %i.ib = and i16 %i.hb, 255
@@ -564,7 +564,7 @@ pred.store.if171:                                 ; preds = %pred.store.continue
 
 pred.store.continue172:                           ; preds = %pred.store.if171, %pred.store.continue170
   %i.id = extractelement <8 x i1> %i.ht, i64 3
-  br i1 %i.id, label %pred.store.if173, label %pred.store.continue174
+  br i1 %i.id, label %pred.store.if173, label %pred.store.continue174, !prof !523
 
 pred.store.if173:                                 ; preds = %pred.store.continue172
   %i.ie = and i16 %i.hc, 255
@@ -574,7 +574,7 @@ pred.store.if173:                                 ; preds = %pred.store.continue
 
 pred.store.continue174:                           ; preds = %pred.store.if173, %pred.store.continue172
   %i.ig = extractelement <8 x i1> %i.ht, i64 4
-  br i1 %i.ig, label %pred.store.if175, label %pred.store.continue176
+  br i1 %i.ig, label %pred.store.if175, label %pred.store.continue176, !prof !523
 
 pred.store.if175:                                 ; preds = %pred.store.continue174
   %i.ih = and i16 %i.hd, 255
@@ -584,7 +584,7 @@ pred.store.if175:                                 ; preds = %pred.store.continue
 
 pred.store.continue176:                           ; preds = %pred.store.if175, %pred.store.continue174
   %i.ij = extractelement <8 x i1> %i.ht, i64 5
-  br i1 %i.ij, label %pred.store.if177, label %pred.store.continue178
+  br i1 %i.ij, label %pred.store.if177, label %pred.store.continue178, !prof !523
 
 pred.store.if177:                                 ; preds = %pred.store.continue176
   %i.ik = and i16 %i.he, 255
@@ -594,7 +594,7 @@ pred.store.if177:                                 ; preds = %pred.store.continue
 
 pred.store.continue178:                           ; preds = %pred.store.if177, %pred.store.continue176
   %i.im = extractelement <8 x i1> %i.ht, i64 6
-  br i1 %i.im, label %pred.store.if179, label %pred.store.continue180
+  br i1 %i.im, label %pred.store.if179, label %pred.store.continue180, !prof !523
 
 pred.store.if179:                                 ; preds = %pred.store.continue178
   %i.in = and i16 %i.hf, 255
@@ -604,7 +604,7 @@ pred.store.if179:                                 ; preds = %pred.store.continue
 
 pred.store.continue180:                           ; preds = %pred.store.if179, %pred.store.continue178
   %i.ip = extractelement <8 x i1> %i.ht, i64 7
-  br i1 %i.ip, label %pred.store.if181, label %pred.store.continue182
+  br i1 %i.ip, label %pred.store.if181, label %pred.store.continue182, !prof !523
 
 pred.store.if181:                                 ; preds = %pred.store.continue180
   %i.iq = and i16 %i.hg, 255
