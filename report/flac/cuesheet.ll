@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/flac/original/cuesheet?download=true
+inline.NumInlined: 20
+inline.NumDeleted: 3
 begin_hunk_0_@grabbag__cuesheet_parse:bb.a
   %memchr42.not.i3851012.i = select i1 %memchr.bounds.i3831010.i, i1 true, i1 %memchr.bits.i3841011.i
   br i1 %memchr42.not.i3851012.i, label %.lr.ph53.i392.preheader.i, label %.lr.ph1013.i
@@ -200,10 +202,8 @@ bb.ab:                                            ; preds = %local__parse_int_.e
   %i.et = zext i8 %i.eq to i64
   %i.eu = getelementptr inbounds nuw i8, ptr %i.eo, i64 24
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !26
-  %6 = add nuw nsw i64 %i.et, 4294967295
-  %7 = and i64 %6, 4294967295
-  %i.ew = getelementptr inbounds nuw [16 x i8], ptr %i.ev, i64 %7
-  %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 8
+  %i.ew = getelementptr [16 x i8], ptr %i.ev, i64 %i.et
+  %i.ex = getelementptr i8, ptr %i.ew, i64 -8
   %i.ey = load i8, ptr %i.ex, align 8, !tbaa !28
   %i.ez = zext i8 %i.ey to i32
   %i.fa = add nuw nsw i32 %i.ez, 1
@@ -354,10 +354,9 @@ bb.an:                                            ; preds = %bb.am
   %i.gt = zext i8 %i.gs to i64
   %i.gu = getelementptr inbounds nuw i8, ptr %i.eo, i64 24
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !26
-  %8 = add nuw nsw i64 %i.gt, 4294967295
-  %9 = and i64 %8, 4294967295
-  %10 = getelementptr inbounds nuw [16 x i8], ptr %i.gv, i64 %9
-  %i.gw = load i64, ptr %10, align 8, !tbaa !29
+  %6 = getelementptr [16 x i8], ptr %i.gv, i64 %i.gt
+  %7 = getelementptr i8, ptr %6, i64 -16
+  %i.gw = load i64, ptr %7, align 8, !tbaa !29
   %.not338.i = icmp ugt i64 %.0246.i, %i.gw
   br i1 %.not338.i, label %.critedge349.i, label %.loopexit
 
@@ -760,11 +759,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond, label %bb.c, label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
-  %3 = and i8 %i.b, 15
-  %4 = zext nneg i8 %3 to i64                     ; 2 uses
+  %2 = zext nneg i8 %i.b to i64
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
+  %4 = add nsw i64 %2, -48                        ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
-  %i.e = load i8, ptr %2, align 1, !tbaa !20      ; 2 uses
+  %i.e = load i8, ptr %3, align 1, !tbaa !20      ; 2 uses
   %.not105 = icmp eq i8 %i.e, 58
   br i1 %.not105, label %._crit_edge, label %.lr.ph
 
@@ -788,7 +787,7 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !37
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.c
-  %.078.lcssa = phi ptr [ %2, %bb.c ], [ %i.g, %bb.d ] ; 3 uses
+  %.078.lcssa = phi ptr [ %3, %bb.c ], [ %i.g, %bb.d ] ; 3 uses
   %.073.lcssa = phi i64 [ %4, %bb.c ], [ %i.l, %bb.d ] ; 2 uses
   %.lcssa = phi ptr [ %i.d, %bb.c ], [ %i.m, %bb.d ]
   %i.o = mul i32 %1, 60
@@ -807,11 +806,11 @@ bb.e:                                             ; preds = %._crit_edge
   br i1 %or.cond9, label %bb.f, label %.loopexit
 
 bb.f:                                             ; preds = %bb.e
-  %5 = getelementptr inbounds nuw i8, ptr %.078.lcssa, i64 2
-  %6 = and i8 %i.u, 15
-  %7 = zext nneg i8 %6 to i64                     ; 2 uses
+  %5 = zext nneg i8 %i.u to i64
+  %6 = getelementptr inbounds nuw i8, ptr %.078.lcssa, i64 2
+  %7 = add nsw i64 %5, -48                        ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.078.lcssa, i64 3 ; 2 uses
-  %i.x = load i8, ptr %5, align 1, !tbaa !20      ; 2 uses
+  %i.x = load i8, ptr %6, align 1, !tbaa !20      ; 2 uses
   %.not88 = icmp eq i8 %i.x, 58
   br i1 %.not88, label %.thread, label %bb.g
 
@@ -846,11 +845,11 @@ bb.i:                                             ; preds = %.thread
   br i1 %or.cond15, label %bb.j, label %.loopexit
 
 bb.j:                                             ; preds = %bb.i
-  %8 = getelementptr inbounds nuw i8, ptr %.17999, i64 1
-  %9 = and i8 %i.ah, 15
-  %10 = zext nneg i8 %9 to i64                    ; 2 uses
+  %8 = zext nneg i8 %i.ah to i64
+  %9 = getelementptr inbounds nuw i8, ptr %.17999, i64 1
+  %10 = add nsw i64 %8, -48                       ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.17999, i64 2
-  %i.ak = load i8, ptr %8, align 1, !tbaa !20     ; 2 uses
+  %i.ak = load i8, ptr %9, align 1, !tbaa !20     ; 2 uses
   %.not91 = icmp eq i8 %i.ak, 0
   br i1 %.not91, label %bb.m, label %bb.k
 
@@ -901,11 +900,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond, label %bb.c, label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %3 = and i8 %i.c, 15
-  %4 = zext nneg i8 %3 to i64                     ; 2 uses
+  %2 = zext nneg i8 %i.c to i64
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %4 = add nsw i64 %2, -48                        ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
-  %i.f = load i8, ptr %2, align 1, !tbaa !20      ; 2 uses
+  %i.f = load i8, ptr %3, align 1, !tbaa !20      ; 2 uses
   %.not45 = icmp eq i8 %i.f, 58
   br i1 %.not45, label %._crit_edge, label %.lr.ph
 
