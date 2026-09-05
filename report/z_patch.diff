@@ -1,0 +1,154 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index c4bc584028e83..59755409c06dc 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -1098,7 +1098,8 @@ void State::addInfoForInductions(BasicBlock &BB) {
+   // an original PN + Step != B condition results in a PN < B constraint in the
+   // header, which also holds for the next loop iteration. This would no longer
+   // be correct if the post-inc handling would inject a more precise PN + Step <
+-  // B constraint instead.
++  // B constraint instead. Note that for single-block loops the header is also
++  // the latch, so the restriction applies there as well.
+   if (&BB == Latch && !IncStep)
+     return;
+ 
+@@ -1109,7 +1110,10 @@ void State::addInfoForInductions(BasicBlock &BB) {
+   BasicBlock *InLoopSucc = cast<CondBrInst>(BB.getTerminator())
+                                ->getSuccessor(ContinueOnTrue ? 0 : 1);
+ 
+-  if (!L->contains(InLoopSucc) || !L->isLoopExiting(&BB) || InLoopSucc == &BB)
++  // For a single-block loop, InLoopSucc is BB itself; the facts then get added
++  // to the header, which is also the latch, and are guarded by the post-inc
++  // restriction above.
++  if (!L->contains(InLoopSucc) || !L->isLoopExiting(&BB))
+     return;
+ 
+   BasicBlock *LoopPred = L->getLoopPredecessor();
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+index 1fa5344c9911d..5ca6f01f64f80 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+@@ -711,6 +711,45 @@ exit:
+   ret void
+ }
+ 
++; Same as @latch_postdec_negative_step_folds, but the loop is a single block,
++; i.e. the header is also the latch.
++define void @latch_postdec_negative_step_header_is_latch() {
++; CHECK-LABEL: define void @latch_postdec_negative_step_header_is_latch() {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 5, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    [[IV_NEXT]] = add i8 [[IV]], -1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i8 [[IV_NEXT]], 2
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT:.*]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i8 [ 5, %entry ], [ %iv.next, %loop ]
++  %ugt = icmp ugt i8 %iv, 2
++  call void @use(i1 %ugt)
++  %ule = icmp ule i8 %iv, 5
++  call void @use(i1 %ule)
++  %sgt = icmp sgt i8 %iv, 2
++  call void @use(i1 %sgt)
++  %sle = icmp sle i8 %iv, 5
++  call void @use(i1 %sle)
++  %iv.next = add i8 %iv, -1
++  %ec = icmp eq i8 %iv.next, 2
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}
++
+ ; B == StartValue for a latch post-decrement compare: %iv never reaches
+ ; B + 1 == 6 before wrapping around the whole range, so nothing must be folded.
+ ; The first iteration alone already has %iv == B.
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-relational-predicate-latch.ll b/llvm/test/Transforms/ConstraintElimination/induction-relational-predicate-latch.ll
+index abb3648b34ed6..803679831b988 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-relational-predicate-latch.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-relational-predicate-latch.ll
+@@ -128,8 +128,7 @@ define void @stride2_slt_header_is_latch(i64 %n) {
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
+-; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[IV]], [[N]]
+-; CHECK-NEXT:    call void @use(i1 [[C]])
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 2
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp slt i64 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP]], label %[[EXIT:.*]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll b/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll
+index d509e95fe8bcb..6574e52adcc36 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-symbolic-start-postinc.ll
+@@ -544,7 +544,6 @@ exit:
+   ret void
+ }
+ 
+-; TODO: Header == Latch form not supported yet.
+ define void @postinc_symbolic_start_header_is_latch(i32 %start, i32 %n) {
+ ; CHECK-LABEL: define void @postinc_symbolic_start_header_is_latch(
+ ; CHECK-SAME: i32 [[START:%.*]], i32 [[N:%.*]]) {
+@@ -554,8 +553,7 @@ define void @postinc_symbolic_start_header_is_latch(i32 %start, i32 %n) {
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[START]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
+-; CHECK-NEXT:    [[T:%.*]] = icmp ult i32 [[IV]], [[N]]
+-; CHECK-NEXT:    call void @use(i1 [[T]])
++; CHECK-NEXT:    call void @use(i1 true)
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT:.*]], label %[[LOOP]]
+@@ -624,3 +622,41 @@ loop:
+ exit:
+   ret void
+ }
++
++; The facts derived from the latch also hold in the exit block, which the
++; single-block loop dominates.
++define void @postinc_symbolic_start_header_is_latch_exit_block(i32 %start, i32 %n) {
++; CHECK-LABEL: define void @postinc_symbolic_start_header_is_latch_exit_block(
++; CHECK-SAME: i32 [[START:%.*]], i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[PRE:%.*]] = icmp ult i32 [[START]], [[N]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[START]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT:.*]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    ret void
++;
++entry:
++  %pre = icmp ult i32 %start, %n
++  call void @llvm.assume(i1 %pre)
++  br label %loop
++
++loop:
++  %iv = phi i32 [ %start, %entry ], [ %iv.next, %loop ]
++  %iv.next = add i32 %iv, 1
++  %ec = icmp eq i32 %iv.next, %n
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  %t = icmp ult i32 %iv, %n
++  call void @use(i1 %t)
++  %c.1 = icmp ule i32 %iv.next, %n
++  call void @use(i1 %c.1)
++  ret void
++}
