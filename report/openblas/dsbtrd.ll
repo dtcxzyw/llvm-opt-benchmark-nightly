@@ -202,7 +202,7 @@ bb.av:                                            ; preds = %bb.at
   %.in.us = select i1 %i.tf, i1 %i.th, i1 %i.ti
   br i1 %.in.us, label %.lr.ph786.us, label %.loopexit721.us, !llvm.loop !26
 
-.loopexit721.us:                                  ; preds = %.lr.ph783.us, %.lr.ph786.us, %bb.au, %bb.av, %bb.as
+.loopexit721.us:                                  ; preds = %.lr.ph783.us, %.lr.ph786.us, %bb.av, %bb.au, %bb.as
   %i.tj = icmp eq i64 %indvars.iv870, 2           ; 2 uses
   br i1 %i.tj, label %thread-pre-split710.us, label %bb.aw
 
@@ -495,8 +495,8 @@ bb.bl:                                            ; preds = %bb.bj
   %.in677.us = select i1 %i.zn, i1 %i.zp, i1 %i.zq
   br i1 %.in677.us, label %.lr.ph800.us, label %.loopexit717.us, !llvm.loop !30
 
-.loopexit717.us:                                  ; preds = %.lr.ph797.us, %.lr.ph800.us, %bb.bk, %bb.bl, %.loopexit720.us
-  %.5625.us = phi i32 [ %.4624806.us, %bb.bl ], [ %.4624806.us, %.loopexit720.us ], [ %.4624806.us, %.lr.ph800.us ], [ %i.xf, %bb.bk ], [ %i.xf, %.lr.ph797.us ] ; 2 uses
+.loopexit717.us:                                  ; preds = %.lr.ph797.us, %.lr.ph800.us, %bb.bl, %bb.bk, %.loopexit720.us
+  %.5625.us = phi i32 [ %i.xf, %bb.bk ], [ %.4624806.us, %.loopexit720.us ], [ %.4624806.us, %bb.bl ], [ %.4624806.us, %.lr.ph800.us ], [ %i.xf, %.lr.ph797.us ] ; 2 uses
   %i.zr = add nsw i32 %i.rh, %.
   %i.zs = load i32, ptr %2, align 4, !tbaa !42    ; 2 uses
   %i.zt = icmp sgt i32 %i.zr, %i.zs

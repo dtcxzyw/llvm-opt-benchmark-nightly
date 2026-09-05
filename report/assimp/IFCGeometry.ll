@@ -204,6 +204,10 @@ bb.s:                                             ; preds = %.lr.ph494.us, %bb.s
   %exitcond541.not = icmp eq i64 %indvars.iv.next, %i.ad
   br i1 %exitcond541.not, label %.preheader.us, label %bb.s, !llvm.loop !84
 
+.preheader.us:                                    ; preds = %bb.s
+  %4 = getelementptr [24 x i8], ptr %.sroa.0353.1.lcssa601, i64 %i.ky ; 2 uses
+  br label %bb.t
+
 bb.t:                                             ; preds = %.preheader.us, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit.us
   %indvars.iv542 = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next543, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit.us ] ; 3 uses
   %i.do = getelementptr [24 x i8], ptr %i.kr, i64 %indvars.iv542 ; 2 uses
@@ -605,10 +609,6 @@ _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS
 _ZNSt6vectorIjSaIjEE9push_backEOj.exit.us:        ; preds = %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i.us, %bb.aj
   %exitcond546.not = icmp eq i64 %indvars.iv.next543, %i.ad
   br i1 %exitcond546.not, label %._crit_edge498.us, label %bb.t, !llvm.loop !103
-
-.preheader.us:                                    ; preds = %bb.s
-  %4 = getelementptr [24 x i8], ptr %.sroa.0353.1.lcssa601, i64 %i.ky ; 2 uses
-  br label %bb.t
 
 .lr.ph494.us:                                     ; preds = %.lr.ph500, %._crit_edge498.us
   %.0131499.us = phi i64 [ %i.kx, %._crit_edge498.us ], [ 0, %.lr.ph500 ] ; 3 uses

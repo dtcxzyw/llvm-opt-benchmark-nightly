@@ -205,11 +205,6 @@ bb.n:                                             ; preds = %bb.n, %.epil.prehea
   %i.ho = icmp sgt i32 %i.hn, 0
   br i1 %i.ho, label %.lr.ph113.us, label %._crit_edge114.split.us.us
 
-._crit_edge114.split.us.us:                       ; preds = %scalar.ph, %middle.block, %.preheader.us
-  %indvars.iv.next168 = add nuw nsw i64 %indvars.iv167, 1 ; 2 uses
-  %exitcond171.not = icmp eq i64 %indvars.iv.next168, %wide.trip.count170
-  br i1 %exitcond171.not, label %._crit_edge116, label %.preheader.us, !llvm.loop !628
-
 .lr.ph113.us:                                     ; preds = %.preheader.us
   %i.hp = getelementptr inbounds nuw i8, ptr %i.hl, i64 40 ; 2 uses
   %wide.trip.count165 = zext nneg i32 %i.hn to i64 ; 3 uses
@@ -234,7 +229,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x ptr> %wide.gep191, ptr %i.hr, align 8, !tbaa !316
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.hu = icmp eq i64 %index.next, %n.vec
-  br i1 %i.hu, label %middle.block, label %vector.body, !llvm.loop !629
+  br i1 %i.hu, label %middle.block, label %vector.body, !llvm.loop !628
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count165
@@ -253,7 +248,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store ptr %i.hy, ptr %i.hv, align 8, !tbaa !316
   %indvars.iv.next163 = add nuw nsw i64 %indvars.iv162, 1 ; 2 uses
   %exitcond166.not = icmp eq i64 %indvars.iv.next163, %wide.trip.count165
-  br i1 %exitcond166.not, label %._crit_edge114.split.us.us, label %scalar.ph, !llvm.loop !630
+  br i1 %exitcond166.not, label %._crit_edge114.split.us.us, label %scalar.ph, !llvm.loop !629
+
+._crit_edge114.split.us.us:                       ; preds = %scalar.ph, %middle.block, %.preheader.us
+  %indvars.iv.next168 = add nuw nsw i64 %indvars.iv167, 1 ; 2 uses
+  %exitcond171.not = icmp eq i64 %indvars.iv.next168, %wide.trip.count170
+  br i1 %exitcond171.not, label %._crit_edge116, label %.preheader.us, !llvm.loop !630
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge114.split
   %indvars.iv157 = phi i64 [ %indvars.iv.next158, %._crit_edge114.split ], [ 0, %.preheader.lr.ph ] ; 2 uses
@@ -303,7 +303,7 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
 ._crit_edge114.split:                             ; preds = %._crit_edge114.split.loopexit.unr-lcssa, %bb.o, %.preheader
   %indvars.iv.next158 = add nuw nsw i64 %indvars.iv157, 1 ; 2 uses
   %exitcond161.not = icmp eq i64 %indvars.iv.next158, %wide.trip.count170
-  br i1 %exitcond161.not, label %._crit_edge116, label %.preheader, !llvm.loop !628
+  br i1 %exitcond161.not, label %._crit_edge116, label %.preheader, !llvm.loop !630
 
 bb.p:                                             ; preds = %bb.p, %.lr.ph113.new
   %indvars.iv152 = phi i64 [ 0, %.lr.ph113.new ], [ %indvars.iv.next153.3, %bb.p ] ; 5 uses
@@ -706,9 +706,9 @@ begin_hunk_1_@llvm.fabs.v2f32
 !625 = distinct !{!625, !261}
 !626 = distinct !{!626, !261}
 !627 = distinct !{!627, !264}
-!628 = distinct !{!628, !261}
-!629 = distinct !{!629, !261, !296, !297}
-!630 = distinct !{!630, !261, !297, !296}
+!628 = distinct !{!628, !261, !296, !297}
+!629 = distinct !{!629, !261, !297, !296}
+!630 = distinct !{!630, !261}
 !631 = distinct !{!631, !264}
 !632 = distinct !{!632, !261}
 !633 = distinct !{!633, !261}

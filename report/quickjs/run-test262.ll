@@ -204,6 +204,10 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load i8, ptr %i.h, align 1, !tbaa !27    ; 4 uses
   br i1 %i.g, label %.preheader.us.us, label %._crit_edge97
 
+.preheader.us.us:                                 ; preds = %.lr.ph51.split.us.split.us
+  %.not3741.us.us = icmp eq i8 %i.i, 0
+  br i1 %.not3741.us.us, label %.critedge.us.us, label %.lr.ph.us.us
+
 .lr.ph.us.us:                                     ; preds = %.preheader.us.us, %bb.c
   %indvars.iv93 = phi i64 [ %indvars.iv.next94, %bb.c ], [ 1, %.preheader.us.us ] ; 4 uses
   %i.j = phi i8 [ %i.p, %bb.c ], [ %i.i, %.preheader.us.us ]
@@ -242,10 +246,6 @@ bb.d:                                             ; preds = %.critedge.us.us
   %i.u = getelementptr inbounds nuw i8, ptr %.050.us.us, i64 1
   %.not36.us.us = icmp eq i8 %i.i, 0
   br i1 %.not36.us.us, label %.loopexit, label %.lr.ph51.split.us.split.us, !llvm.loop !9
-
-.preheader.us.us:                                 ; preds = %.lr.ph51.split.us.split.us
-  %.not3741.us.us = icmp eq i8 %i.i, 0
-  br i1 %.not3741.us.us, label %.critedge.us.us, label %.lr.ph.us.us
 
 .lr.ph51.split.us.split:                          ; preds = %.lr.ph51.split.us, %bb.g
   %i.v = phi i8 [ %i.an, %bb.g ], [ %i.d, %.lr.ph51.split.us ] ; 3 uses
@@ -320,12 +320,18 @@ bb.g:                                             ; preds = %._crit_edge95, %.cr
   %.02849.us57 = phi i32 [ %.1.us65, %bb.j ], [ 0, %.lr.ph51.split ] ; 3 uses
   %i.ar = load i8, ptr %1, align 1, !tbaa !27
   %i.as = icmp eq i8 %i.aq, %i.ar
-  br i1 %i.as, label %.preheader.us68, label %bb.j
+  br i1 %i.as, label %.preheader.us59, label %bb.j
 
-.lr.ph.us70:                                      ; preds = %.preheader.us68, %bb.h
-  %indvars.iv89 = phi i64 [ %indvars.iv.next90, %bb.h ], [ 1, %.preheader.us68 ] ; 4 uses
-  %i.at = phi i8 [ %i.az, %bb.h ], [ %7, %.preheader.us68 ]
-  %.02942.us59 = phi i32 [ %i.ax, %bb.h ], [ 1, %.preheader.us68 ]
+.preheader.us59:                                  ; preds = %.lr.ph51.split.split.us
+  %6 = getelementptr inbounds nuw i8, ptr %.050.us56, i64 1
+  %7 = load i8, ptr %6, align 1, !tbaa !27        ; 2 uses
+  %.not3741.us60 = icmp eq i8 %7, 0
+  br i1 %.not3741.us60, label %.critedge.us61, label %.lr.ph.us70
+
+.lr.ph.us70:                                      ; preds = %.preheader.us59, %bb.h
+  %indvars.iv89 = phi i64 [ %indvars.iv.next90, %bb.h ], [ 1, %.preheader.us59 ] ; 4 uses
+  %i.at = phi i8 [ %i.az, %bb.h ], [ %7, %.preheader.us59 ]
+  %.02942.us59 = phi i32 [ %i.ax, %bb.h ], [ 1, %.preheader.us59 ]
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv89
   %i.av = load i8, ptr %i.au, align 1, !tbaa !27
   %i.aw = icmp eq i8 %i.at, %i.av
@@ -343,9 +349,9 @@ bb.h:                                             ; preds = %.lr.ph.us70
   %i.ba = trunc nuw nsw i64 %indvars.iv89 to i32
   br label %.critedge.us61
 
-.critedge.us61:                                   ; preds = %bb.h, %.critedge.us61.loopexit.split.loop.exit128, %.preheader.us68
-  %.029.lcssa.us62 = phi i32 [ 1, %.preheader.us68 ], [ %i.ba, %.critedge.us61.loopexit.split.loop.exit128 ], [ %i.ax, %bb.h ] ; 3 uses
-  %.lcssa.us63 = phi i64 [ 1, %.preheader.us68 ], [ %indvars.iv89, %.critedge.us61.loopexit.split.loop.exit128 ], [ %indvars.iv.next90, %bb.h ]
+.critedge.us61:                                   ; preds = %bb.h, %.critedge.us61.loopexit.split.loop.exit128, %.preheader.us59
+  %.029.lcssa.us62 = phi i32 [ 1, %.preheader.us59 ], [ %i.ba, %.critedge.us61.loopexit.split.loop.exit128 ], [ %i.ax, %bb.h ] ; 3 uses
+  %.lcssa.us63 = phi i64 [ 1, %.preheader.us59 ], [ %indvars.iv89, %.critedge.us61.loopexit.split.loop.exit128 ], [ %indvars.iv.next90, %bb.h ]
   %i.bb = icmp sgt i32 %.029.lcssa.us62, %.02849.us57
   br i1 %i.bb, label %bb.i, label %bb.j
 
@@ -365,12 +371,6 @@ bb.j:                                             ; preds = %bb.i, %.critedge.us
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !27  ; 2 uses
   %.not36.us67 = icmp eq i8 %i.bi, 0
   br i1 %.not36.us67, label %.loopexit, label %.lr.ph51.split.split.us, !llvm.loop !9
-
-.preheader.us68:                                  ; preds = %.lr.ph51.split.split.us
-  %6 = getelementptr inbounds nuw i8, ptr %.050.us56, i64 1
-  %7 = load i8, ptr %6, align 1, !tbaa !27        ; 2 uses
-  %.not3741.us69 = icmp eq i8 %7, 0
-  br i1 %.not3741.us69, label %.critedge.us61, label %.lr.ph.us70
 
 .lr.ph51.split.split:                             ; preds = %.lr.ph51.split, %bb.m
   %i.bj = phi i8 [ %i.cg, %bb.m ], [ %i.d, %.lr.ph51.split ] ; 3 uses

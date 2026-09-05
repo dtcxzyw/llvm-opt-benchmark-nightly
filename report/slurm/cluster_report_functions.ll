@@ -156,7 +156,7 @@ bb.f:                                             ; preds = %bb.e
   %i.an = getelementptr inbounds nuw i8, ptr %i.ah, i64 32
   br label %.lr.ph.split.us.i.us.us
 
-.lr.ph.split.us.i.us.us:                          ; preds = %.lr.ph.i.us.us, %.backedge.us.i.us.us
+.lr.ph.split.us.i.us.us:                          ; preds = %.backedge.us.i.us.us, %.lr.ph.i.us.us
   %i.ao = phi ptr [ %i.by, %.backedge.us.i.us.us ], [ %i.am, %.lr.ph.i.us.us ] ; 6 uses
   %i.ap = load ptr, ptr %i.ao, align 8            ; 2 uses
   %.not16.us.i.us.us = icmp eq ptr %i.ap, null
@@ -454,7 +454,7 @@ bb.z:                                             ; preds = %bb.y
   %i.er = getelementptr inbounds nuw i8, ptr %i.el, i64 32
   br label %.lr.ph.split.us.i118.us
 
-.lr.ph.split.us.i118.us:                          ; preds = %.lr.ph.i111.us, %.backedge.us.i123.us
+.lr.ph.split.us.i118.us:                          ; preds = %.backedge.us.i123.us, %.lr.ph.i111.us
   %i.es = phi ptr [ %i.fq, %.backedge.us.i123.us ], [ %i.eq, %.lr.ph.i111.us ] ; 5 uses
   %i.et = load ptr, ptr %i.es, align 8            ; 2 uses
   %.not16.us.i119.us = icmp eq ptr %i.et, null

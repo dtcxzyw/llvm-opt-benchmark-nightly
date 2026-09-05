@@ -204,8 +204,8 @@ middle.block:                                     ; preds = %vector.body
   %i.am = trunc nuw nsw i64 %indvars.iv123 to i32
   br label %.lr.ph84.us101
 
-.lr.ph84.us101:                                   ; preds = %.preheader.us, %._crit_edge85.split.us
-  %indvars.iv119 = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next120, %._crit_edge85.split.us ] ; 3 uses
+.lr.ph84.us101:                                   ; preds = %._crit_edge85.split.us, %.preheader.us
+  %indvars.iv119 = phi i64 [ %indvars.iv.next120, %._crit_edge85.split.us ], [ 0, %.preheader.us ] ; 3 uses
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %._crit_edge.us, %.lr.ph84.us101

@@ -204,8 +204,8 @@ bb.as:                                            ; preds = %bb.j
   %i.ke = getelementptr i8, ptr %i.jo, i64 20     ; 2 uses
   br i1 %i.kb, label %.lr.ph20.i.us.i245, label %.lr.ph.split.i243
 
-.lr.ph20.i.us.i245:                               ; preds = %.lr.ph.i242, %.split56.us61.i
-  %.04357.us.i = phi ptr [ %.us-phi.us.i, %.split56.us61.i ], [ %.2, %.lr.ph.i242 ] ; 7 uses
+.lr.ph20.i.us.i245:                               ; preds = %.lr.ph.i242, %.split56.us62.i
+  %.04357.us.i = phi ptr [ %.us-phi.us.i, %.split56.us62.i ], [ %.2, %.lr.ph.i242 ] ; 7 uses
   %i.kf = getelementptr i8, ptr %.04357.us.i, i64 %i.jt
   %i.kg = getelementptr i8, ptr %i.kf, i64 1      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -291,12 +291,7 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
   %i.ll = icmp slt i64 %i.lk, %i.kw
   %i.lm = icmp ult ptr %i.li, %.0.i240
   %i.ln = and i1 %i.lm, %i.ll
-  br i1 %i.ln, label %.split.us63.i, label %.split56.us61.i, !llvm.loop !156
-
-.split56.us61.i:                                  ; preds = %bb.az, %bb.ba
-  %.us-phi.us.i = phi ptr [ %i.lr, %bb.ba ], [ %i.li, %bb.az ] ; 2 uses
-  %8 = icmp ult ptr %.us-phi.us.i, %.0.i240
-  br i1 %8, label %.lr.ph20.i.us.i245, label %slow_search.exit.thread, !llvm.loop !157
+  br i1 %i.ln, label %.split.us63.i, label %.split56.us62.i, !llvm.loop !156
 
 .split.us.us.i:                                   ; preds = %bb.aw
   %i.lo = sext i32 %i.ky to i64
@@ -312,7 +307,12 @@ bb.ba:                                            ; preds = %bb.ba, %.split.us.u
   %i.lu = icmp slt i64 %i.lt, %i.kw
   %i.lv = icmp ult ptr %i.lr, %.0.i240
   %i.lw = and i1 %i.lv, %i.lu
-  br i1 %i.lw, label %bb.ba, label %.split56.us61.i, !llvm.loop !158
+  br i1 %i.lw, label %bb.ba, label %.split56.us62.i, !llvm.loop !157
+
+.split56.us62.i:                                  ; preds = %bb.az, %bb.ba
+  %.us-phi.us.i = phi ptr [ %i.lr, %bb.ba ], [ %i.li, %bb.az ] ; 2 uses
+  %8 = icmp ult ptr %.us-phi.us.i, %.0.i240
+  br i1 %8, label %.lr.ph20.i.us.i245, label %slow_search.exit.thread, !llvm.loop !158
 
 .lr.ph.split.i243:                                ; preds = %.lr.ph.i242
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -585,8 +585,8 @@ slow_search.exit.thread.sink.split:               ; preds = %bb.ch, %bb.bx, %.si
   store ptr %.3.lcssa.sink, ptr %6, align 8, !tbaa !23
   br label %slow_search.exit.thread
 
-slow_search.exit.thread:                          ; preds = %bb.bb, %bb.as, %bb.an, %bb.ag, %bb.ae, %bb.x, %.preheader.i, %.preheader61.i, %slow_search.exit, %bb.bg, %bb.av, %.split56.us61.i, %bb.aq, %bb.ar, %._crit_edge.i217, %.split55.us.i, %._crit_edge.i, %bb.af, %bb.ad, %bb.w, %bb.o, %bb.r, %bb.p, %slow_search.exit.thread.sink.split, %bb.c, %bb.a
-  %.0177 = phi i32 [ 0, %bb.w ], [ 0, %bb.a ], [ 0, %bb.c ], [ 0, %bb.ad ], [ 0, %bb.r ], [ 0, %bb.aq ], [ 0, %._crit_edge.i ], [ 0, %bb.o ], [ 0, %bb.bg ], [ 0, %bb.p ], [ 0, %._crit_edge.i217 ], [ 0, %bb.av ], [ 1, %slow_search.exit.thread.sink.split ], [ 0, %bb.af ], [ 0, %.split55.us.i ], [ 0, %bb.ar ], [ 0, %.split56.us61.i ], [ 0, %slow_search.exit ], [ 0, %.preheader61.i ], [ 0, %.preheader.i ], [ 0, %bb.x ], [ 0, %bb.ae ], [ 0, %bb.ag ], [ 0, %bb.an ], [ 0, %bb.as ], [ 0, %bb.bb ]
+slow_search.exit.thread:                          ; preds = %bb.bb, %bb.as, %bb.an, %bb.ag, %bb.ae, %bb.x, %.preheader.i, %.preheader61.i, %slow_search.exit, %bb.bg, %bb.av, %.split56.us62.i, %bb.aq, %bb.ar, %._crit_edge.i217, %.split55.us.i, %._crit_edge.i, %bb.af, %bb.ad, %bb.w, %bb.o, %bb.r, %bb.p, %slow_search.exit.thread.sink.split, %bb.c, %bb.a
+  %.0177 = phi i32 [ 0, %bb.w ], [ 0, %bb.a ], [ 0, %bb.c ], [ 0, %bb.ad ], [ 0, %bb.r ], [ 0, %bb.aq ], [ 0, %._crit_edge.i ], [ 0, %bb.o ], [ 0, %bb.bg ], [ 0, %bb.p ], [ 0, %._crit_edge.i217 ], [ 0, %bb.av ], [ 1, %slow_search.exit.thread.sink.split ], [ 0, %bb.af ], [ 0, %.split55.us.i ], [ 0, %bb.ar ], [ 0, %.split56.us62.i ], [ 0, %slow_search.exit ], [ 0, %.preheader61.i ], [ 0, %.preheader.i ], [ 0, %bb.x ], [ 0, %bb.ae ], [ 0, %bb.ag ], [ 0, %bb.an ], [ 0, %bb.as ], [ 0, %bb.bb ]
   ret i32 %.0177
 }
 

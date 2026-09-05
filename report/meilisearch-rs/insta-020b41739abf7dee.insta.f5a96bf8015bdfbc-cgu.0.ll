@@ -205,17 +205,6 @@ _ZN4core4hash11BuildHasher8hash_one17he739ad583b9a31c5E.exit: ; preds = %bb.b, %
   %.not.i.not33.us.i = icmp eq i16 %i.cd, 0
   br i1 %.not.i.not33.us.i, label %._crit_edge.split.us.us.i, label %.lr.ph.us.i
 
-._crit_edge.split.us.us.i:                        ; preds = %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$4find28_$u7b$$u7b$closure$u7d$$u7d$17h976b2aae2fd20704E.exit.thread.us.us.i", %.split.us.i
-  %4 = icmp eq <16 x i8> %.sroa.0.0.copyload.i27.us.i, splat (i8 -1)
-  %5 = bitcast <16 x i1> %4 to i16
-  %6 = icmp eq i16 %5, 0
-  br i1 %6, label %7, label %.loopexit10, !prof !22
-
-7:                                                ; preds = %._crit_edge.split.us.us.i
-  %8 = add i64 %.sroa.9.0.i.us.i, 16              ; 2 uses
-  %9 = add i64 %.sroa.01.0.i.us.i, %8
-  br label %.split.us.i
-
 .lr.ph.us.i:                                      ; preds = %.split.us.i, %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$4find28_$u7b$$u7b$closure$u7d$$u7d$17h976b2aae2fd20704E.exit.thread.us.us.i"
   %.sroa.06.0.i34.us.us.i = phi i16 [ %i.cr, %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$4find28_$u7b$$u7b$closure$u7d$$u7d$17h976b2aae2fd20704E.exit.thread.us.us.i" ], [ %i.cd, %.split.us.i ] ; 3 uses
   %i.ce = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.06.0.i34.us.us.i, i1 true)
@@ -249,6 +238,17 @@ _ZN4core4hash11BuildHasher8hash_one17he739ad583b9a31c5E.exit: ; preds = %bb.b, %
   %i.cr = and i16 %i.cq, %.sroa.06.0.i34.us.us.i  ; 2 uses
   %.not.i.not.us.us.i = icmp eq i16 %i.cr, 0
   br i1 %.not.i.not.us.us.i, label %._crit_edge.split.us.us.i, label %.lr.ph.us.i
+
+._crit_edge.split.us.us.i:                        ; preds = %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$4find28_$u7b$$u7b$closure$u7d$$u7d$17h976b2aae2fd20704E.exit.thread.us.us.i", %.split.us.i
+  %4 = icmp eq <16 x i8> %.sroa.0.0.copyload.i27.us.i, splat (i8 -1)
+  %5 = bitcast <16 x i1> %4 to i16
+  %6 = icmp eq i16 %5, 0
+  br i1 %6, label %7, label %.loopexit10, !prof !22
+
+7:                                                ; preds = %._crit_edge.split.us.us.i
+  %8 = add i64 %.sroa.9.0.i.us.i, 16              ; 2 uses
+  %9 = add i64 %.sroa.01.0.i.us.i, %8
+  br label %.split.us.i
 
 .split.i:                                         ; preds = %_ZN4core4hash11BuildHasher8hash_one17he739ad583b9a31c5E.exit, %bb.d
   %.sroa.9.0.i.i = phi i64 [ %i.dj, %bb.d ], [ 0, %_ZN4core4hash11BuildHasher8hash_one17he739ad583b9a31c5E.exit ]

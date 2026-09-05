@@ -204,16 +204,16 @@ bb.e:                                             ; preds = %._crit_edge.i.i.us9
   store i64 %i.br, ptr %i.bm, align 8, !tbaa !73
   br label %_ZSt10__pop_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEENS1_5__ops15_Iter_less_iterEEvT_SB_SB_RT0_.exit.loopexit.us18.us
 
-6:                                                ; preds = %_ZSt10__pop_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEENS1_5__ops15_Iter_less_iterEEvT_SB_SB_RT0_.exit.loopexit.us18.us, %.lr.ph.split.split.us.split.us
-  %7 = icmp ult ptr %.sroa.0.0.copyload.i.i, %i.bn
-  br i1 %7, label %.lr.ph.split.split.us.split.us, label %._crit_edge, !llvm.loop !442
-
 _ZSt10__pop_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEENS1_5__ops15_Iter_less_iterEEvT_SB_SB_RT0_.exit.loopexit.us18.us: ; preds = %bb.e, %._crit_edge.i.i.us9.us
   %.09.lcssa.i.i.i.ph.us19.us.neg = phi i64 [ -1, %._crit_edge.i.i.us9.us ], [ 0, %bb.e ]
   %i.bt = getelementptr inbounds [8 x i8], ptr %i.g, i64 %.09.lcssa.i.i.i.ph.us19.us.neg
   %i.bu = getelementptr inbounds i8, ptr %i.bt, i64 -8
   store i64 %i.bo, ptr %i.bu, align 8, !tbaa !73
   br label %6
+
+6:                                                ; preds = %_ZSt10__pop_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEENS1_5__ops15_Iter_less_iterEEvT_SB_SB_RT0_.exit.loopexit.us18.us, %.lr.ph.split.split.us.split.us
+  %7 = icmp ult ptr %.sroa.0.0.copyload.i.i, %i.bn
+  br i1 %7, label %.lr.ph.split.split.us.split.us, label %._crit_edge, !llvm.loop !442
 
 .lr.ph.split.split.us.split:                      ; preds = %.lr.ph.split.split.us
   %.pre27 = load i64, ptr %i.h, align 8, !tbaa !73

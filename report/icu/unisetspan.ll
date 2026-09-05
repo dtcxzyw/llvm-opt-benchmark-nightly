@@ -202,12 +202,6 @@ _ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit.thread.us85: ; preds = %.preheader95, 
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge.us, label %.lr.ph.split.us88, !llvm.loop !60
 
-._crit_edge.us:                                   ; preds = %_ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit.thread.us85, %_ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit.thread.us.us
-  %3 = sub i32 %i.n, %.0.i.us
-  %4 = add nsw i32 %.0.i.us, %i.o                 ; 2 uses
-  %.not52.us = icmp eq i32 %4, 0
-  br i1 %.not52.us, label %.thread64, label %.split.us, !llvm.loop !61
-
 .lr.ph.split.us.us:                               ; preds = %_ZN6icu_78L7spanOneERKNS_10UnicodeSetEPKDsi.exit.us, %_ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit.thread.us.us
   %indvars.iv103 = phi i64 [ %indvars.iv.next104, %_ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit.thread.us.us ], [ 0, %_ZN6icu_78L7spanOneERKNS_10UnicodeSetEPKDsi.exit.us ] ; 3 uses
   %i.br = load ptr, ptr %i.h, align 8, !tbaa !42
@@ -302,6 +296,12 @@ _ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit.thread.us.us: ; preds = %.preheader, %
   %indvars.iv.next104 = add nuw nsw i64 %indvars.iv103, 1 ; 2 uses
   %exitcond107.not = icmp eq i64 %indvars.iv.next104, %wide.trip.count106
   br i1 %exitcond107.not, label %._crit_edge.us, label %.lr.ph.split.us.us, !llvm.loop !60
+
+._crit_edge.us:                                   ; preds = %_ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit.thread.us85, %_ZN6icu_78L12matches16CPBEPKDsiiS1_i.exit.thread.us.us
+  %3 = sub i32 %i.n, %.0.i.us
+  %4 = add nsw i32 %.0.i.us, %i.o                 ; 2 uses
+  %.not52.us = icmp eq i32 %4, 0
+  br i1 %.not52.us, label %.thread64, label %.split.us, !llvm.loop !61
 
 .split:                                           ; preds = %bb.a, %_ZN6icu_78L7spanOneERKNS_10UnicodeSetEPKDsi.exit
   %.044 = phi i32 [ %i.ed, %_ZN6icu_78L7spanOneERKNS_10UnicodeSetEPKDsi.exit ], [ 0, %bb.a ] ; 2 uses

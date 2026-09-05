@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %.preheader.us, %bb.
   %i.ao = tail call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.w, ptr noundef %1, i32 noundef %.0637.us10, i32 noundef 256, i32 noundef %i.an, ptr noundef null, ptr noundef nonnull @.str.2333, ptr noundef %i.r, i32 noundef %.0618.us9)
   br label %bb.h
 
-bb.h:                                             ; preds = %.preheader1.us, %bb.h
+bb.h:                                             ; preds = %bb.h, %.preheader1.us
   %.14.us = phi i32 [ 0, %.preheader1.us ], [ %i.as, %bb.h ] ; 2 uses
   %.23.us = phi i32 [ %.0637.us10, %.preheader1.us ], [ %i.ar, %bb.h ] ; 3 uses
   %i.ap = load i32, ptr @hf_opa_VLArbitrationTable_Matrix, align 4

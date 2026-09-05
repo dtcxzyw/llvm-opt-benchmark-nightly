@@ -202,7 +202,7 @@ _ZNK7AstNode10widthWordsEv.exit.us99:             ; preds = %_ZNK7AstNode10width
   %i.fc = load ptr, ptr %i.dm, align 8, !tbaa !123
   br label %bb.ah
 
-bb.ah:                                            ; preds = %.lr.ph.us, %_ZN5AstOrC2EP8FileLineP11AstNodeExprS3_.exit.us
+bb.ah:                                            ; preds = %_ZN5AstOrC2EP8FileLineP11AstNodeExprS3_.exit.us, %.lr.ph.us
   %.095.us = phi i32 [ 1, %.lr.ph.us ], [ %i.fn, %_ZN5AstOrC2EP8FileLineP11AstNodeExprS3_.exit.us ] ; 2 uses
   %.03594.us = phi ptr [ %i.fb, %.lr.ph.us ], [ %i.fd, %_ZN5AstOrC2EP8FileLineP11AstNodeExprS3_.exit.us ]
   %i.fd = call noalias noundef nonnull dereferenceable(160) ptr @_Znwm(i64 noundef 160) #26 ; 10 uses

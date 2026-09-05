@@ -1,4 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nuttx/original/lib_libvsprintf?download=true
+inline.NumInlined: 1
 begin_hunk_0_@vsprintf_internal:bb.a
   %i.fl = zext i8 %.3 to i32
   %i.fm = sub nsw i32 0, %.4451.fr
@@ -200,9 +201,8 @@ bb.cl:                                            ; preds = %bb.ck, %bb.cj
   %.17107 = phi i32 [ %.16, %.lr.ph108.preheader ], [ %i.ic, %.lr.ph108 ]
   %i.ic = add nsw i32 %.17107, 1                  ; 2 uses
   %i.id = load ptr, ptr %i.a, align 8
-  %4 = add nuw nsw i64 %indvars.iv170, 4294967295
-  %5 = and i64 %4, 4294967295
-  %i.ie = getelementptr inbounds nuw i8, ptr %3, i64 %5
+  %4 = getelementptr i8, ptr %3, i64 %indvars.iv170
+  %i.ie = getelementptr i8, ptr %4, i64 -1
   %i.if = load i8, ptr %i.ie, align 1
   %i.ig = sext i8 %i.if to i32
   call void %i.id(ptr noundef nonnull %0, i32 noundef %i.ig) #11

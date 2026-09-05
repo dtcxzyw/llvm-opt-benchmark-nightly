@@ -204,7 +204,7 @@ bb.af:                                            ; preds = %.lr.ph96.us, %bb.af
   %.198.us102 = phi i32 [ %i.fn, %._crit_edge93.us107 ], [ 0, %.lr.ph100 ] ; 2 uses
   br label %bb.ag
 
-bb.ag:                                            ; preds = %.lr.ph92.us106, %bb.ag
+bb.ag:                                            ; preds = %bb.ag, %.lr.ph92.us106
   %.04990.us103 = phi i32 [ 0, %.lr.ph92.us106 ], [ %i.fm, %bb.ag ] ; 2 uses
   %i.fj = lshr i32 %.198.us102, %.04990.us103
   %i.fk = and i32 %i.fj, 1

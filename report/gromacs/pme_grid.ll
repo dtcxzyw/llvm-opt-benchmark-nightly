@@ -205,7 +205,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %invariant.op268.us.us = add i32 %invariant.op259.us, %i.iu
   br label %iter.check400
 
-iter.check400:                                    ; preds = %.preheader231.us.us, %._crit_edge252.split.us263.us.us
+iter.check400:                                    ; preds = %._crit_edge252.split.us263.us.us, %.preheader231.us.us
   %.4255.us.us279.us = phi i64 [ %.3273.us.us, %.preheader231.us.us ], [ %indvars.iv.next306.lcssa, %._crit_edge252.split.us263.us.us ] ; 8 uses
   %.1204254.us.us280.us = phi i32 [ 0, %.preheader231.us.us ], [ %i.li, %._crit_edge252.split.us263.us.us ] ; 3 uses
   %i.iv = mul i32 %i.ex, %.1204254.us.us280.us

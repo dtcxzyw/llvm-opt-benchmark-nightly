@@ -205,11 +205,11 @@ bb.a:
   %i.ac = sext i16 %.063347.us to i64
   br label %.lr.ph.us
 
-.lr.ph.us:                                        ; preds = %.preheader.us, %..loopexit_crit_edge.us
-  %indvars.iv = phi i64 [ %i.aa, %.preheader.us ], [ %indvars.iv.next, %..loopexit_crit_edge.us ] ; 10 uses
-  %.1334.us = phi i1 [ %.0346.us, %.preheader.us ], [ %.3.us, %..loopexit_crit_edge.us ]
-  %.148333.us = phi i8 [ %.047345.us, %.preheader.us ], [ %.350.us, %..loopexit_crit_edge.us ]
-  %.158332.us = phi i16 [ %.057344.us, %.preheader.us ], [ %i.bm, %..loopexit_crit_edge.us ]
+.lr.ph.us:                                        ; preds = %..loopexit_crit_edge.us, %.preheader.us
+  %indvars.iv = phi i64 [ %indvars.iv.next, %..loopexit_crit_edge.us ], [ %i.aa, %.preheader.us ] ; 10 uses
+  %.1334.us = phi i1 [ %.3.us, %..loopexit_crit_edge.us ], [ %.0346.us, %.preheader.us ]
+  %.148333.us = phi i8 [ %.350.us, %..loopexit_crit_edge.us ], [ %.047345.us, %.preheader.us ]
+  %.158332.us = phi i16 [ %i.bm, %..loopexit_crit_edge.us ], [ %.057344.us, %.preheader.us ]
   %i.ad = load ptr, ptr %i.a, align 8, !tbaa !92  ; 5 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 12

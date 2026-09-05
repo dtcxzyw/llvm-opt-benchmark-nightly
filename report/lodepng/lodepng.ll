@@ -205,6 +205,12 @@ _ZL22setBitOfReversedStreamPmPhh.exit.us.i.6:     ; preds = %bb.ac, %bb.ab
   %.not112.i = icmp eq i32 %i.ho, 0
   br i1 %.not112.i, label %._crit_edge101.split.us.i, label %.preheader.lr.ph.us.i
 
+.preheader.us.i:                                  ; preds = %.preheader.lr.ph.split.us.i, %._crit_edge99.us.i
+  %.069100.us.i = phi i32 [ 0, %.preheader.lr.ph.split.us.i ], [ %i.sa, %._crit_edge99.us.i ] ; 3 uses
+  %7 = mul i32 %.069100.us.i, %3                  ; 3 uses
+  %8 = mul i32 %.069100.us.i, %i.sb               ; 3 uses
+  br i1 %i.se, label %.lr.ph.us104.i.epil.preheader, label %.lr.ph.us104.i
+
 .lr.ph.us104.i:                                   ; preds = %.preheader.us.i, %.lr.ph.us104.i
   %indvars.iv131.i = phi i64 [ %indvars.iv.next132.i.1, %.lr.ph.us104.i ], [ 0, %.preheader.us.i ] ; 3 uses
   %niter = phi i64 [ %niter.next.1, %.lr.ph.us104.i ], [ 0, %.preheader.us.i ]
@@ -606,12 +612,6 @@ begin_hunk_1_@_ZL19preProcessScanlinesPPhPmPKhjjPK11LodePNGInfoPK22LodePNGEncode
   %i.rr = add nuw i32 %.069100.us.6.i, 1          ; 2 uses
   %exitcond136.6.not.i = icmp eq i32 %i.rr, %i.qe
   br i1 %exitcond136.6.not.i, label %_ZL15Adam7_interlacePhPKhjjj.exit, label %.preheader.us.6.i, !llvm.loop !644
-
-.preheader.us.i:                                  ; preds = %.preheader.lr.ph.split.us.i, %._crit_edge99.us.i
-  %.069100.us.i = phi i32 [ 0, %.preheader.lr.ph.split.us.i ], [ %i.sa, %._crit_edge99.us.i ] ; 3 uses
-  %7 = mul i32 %.069100.us.i, %3                  ; 3 uses
-  %8 = mul i32 %.069100.us.i, %i.sb               ; 3 uses
-  br i1 %i.se, label %.lr.ph.us104.i.epil.preheader, label %.lr.ph.us104.i
 
 ._crit_edge99.us.i.unr-lcssa:                     ; preds = %.lr.ph.us104.i
   br i1 %lcmp.mod.not, label %._crit_edge99.us.i, label %.lr.ph.us104.i.epil.preheader

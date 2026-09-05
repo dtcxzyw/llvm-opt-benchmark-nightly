@@ -202,15 +202,6 @@ bb.n:                                             ; preds = %bb.i
   %.not6167.i.us = icmp eq i16 %i.db, 0
   br i1 %.not6167.i.us, label %._crit_edge.i.us, label %.lr.ph.i35.us.us
 
-._crit_edge.i.us:                                 ; preds = %"_ZZN4absl12lts_2025051218container_internal4CopyERNS1_12CommonFieldsERKNS1_15PolicyFunctionsERKS2_NS0_11FunctionRefIFvPvPKvEEEENK3$_0clEPKNS1_6ctrl_tESA_.exit49.i.us.us", %.lr.ph75.i.split.us
-  %.1.lcssa.i.us = phi i64 [ %.073.i.us, %.lr.ph75.i.split.us ], [ %i.eq, %"_ZZN4absl12lts_2025051218container_internal4CopyERNS1_12CommonFieldsERKNS1_15PolicyFunctionsERKS2_NS0_11FunctionRefIFvPvPKvEEEENK3$_0clEPKNS1_6ctrl_tESA_.exit49.i.us.us" ] ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.03072.i.us, i64 16
-  %6 = ptrtoint ptr %.03171.i.us to i64
-  %7 = add i64 %i.cw, %6
-  %8 = inttoptr i64 %7 to ptr
-  %.not.i36.us = icmp eq i64 %.1.lcssa.i.us, 0
-  br i1 %.not.i36.us, label %"_ZN4absl12lts_2025051218container_internal12_GLOBAL__N_124IterateOverFullSlotsImplIZNS1_4CopyERNS1_12CommonFieldsERKNS1_15PolicyFunctionsERKS4_NS0_11FunctionRefIFvPvPKvEEEE3$_0EEvSA_mT_.exit", label %.lr.ph75.i.split.us, !llvm.loop !123
-
 .lr.ph.i35.us.us:                                 ; preds = %.lr.ph75.i.split.us, %"_ZZN4absl12lts_2025051218container_internal4CopyERNS1_12CommonFieldsERKNS1_15PolicyFunctionsERKS2_NS0_11FunctionRefIFvPvPKvEEEENK3$_0clEPKNS1_6ctrl_tESA_.exit49.i.us.us"
   %.169.i.us.us = phi i64 [ %i.eq, %"_ZZN4absl12lts_2025051218container_internal4CopyERNS1_12CommonFieldsERKNS1_15PolicyFunctionsERKS2_NS0_11FunctionRefIFvPvPKvEEEENK3$_0clEPKNS1_6ctrl_tESA_.exit49.i.us.us" ], [ %.073.i.us, %.lr.ph75.i.split.us ]
   %.sroa.050.068.i.us.us = phi i16 [ %i.es, %"_ZZN4absl12lts_2025051218container_internal4CopyERNS1_12CommonFieldsERKNS1_15PolicyFunctionsERKS2_NS0_11FunctionRefIFvPvPKvEEEENK3$_0clEPKNS1_6ctrl_tESA_.exit49.i.us.us" ], [ %i.db, %.lr.ph75.i.split.us ] ; 3 uses
@@ -281,6 +272,15 @@ bb.n:                                             ; preds = %bb.i
   %i.es = and i16 %i.er, %.sroa.050.068.i.us.us   ; 2 uses
   %.not61.i.us.us = icmp eq i16 %i.es, 0
   br i1 %.not61.i.us.us, label %._crit_edge.i.us, label %.lr.ph.i35.us.us
+
+._crit_edge.i.us:                                 ; preds = %"_ZZN4absl12lts_2025051218container_internal4CopyERNS1_12CommonFieldsERKNS1_15PolicyFunctionsERKS2_NS0_11FunctionRefIFvPvPKvEEEENK3$_0clEPKNS1_6ctrl_tESA_.exit49.i.us.us", %.lr.ph75.i.split.us
+  %.1.lcssa.i.us = phi i64 [ %.073.i.us, %.lr.ph75.i.split.us ], [ %i.eq, %"_ZZN4absl12lts_2025051218container_internal4CopyERNS1_12CommonFieldsERKNS1_15PolicyFunctionsERKS2_NS0_11FunctionRefIFvPvPKvEEEENK3$_0clEPKNS1_6ctrl_tESA_.exit49.i.us.us" ] ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %.03072.i.us, i64 16
+  %6 = ptrtoint ptr %.03171.i.us to i64
+  %7 = add i64 %i.cw, %6
+  %8 = inttoptr i64 %7 to ptr
+  %.not.i36.us = icmp eq i64 %.1.lcssa.i.us, 0
+  br i1 %.not.i36.us, label %"_ZN4absl12lts_2025051218container_internal12_GLOBAL__N_124IterateOverFullSlotsImplIZNS1_4CopyERNS1_12CommonFieldsERKNS1_15PolicyFunctionsERKS4_NS0_11FunctionRefIFvPvPKvEEEE3$_0EEvSA_mT_.exit", label %.lr.ph75.i.split.us, !llvm.loop !123
 
 .lr.ph75.i.split:                                 ; preds = %.lr.ph75.i, %._crit_edge.i
   %.0 = phi i64 [ %.2, %._crit_edge.i ], [ %i.x, %.lr.ph75.i ] ; 2 uses

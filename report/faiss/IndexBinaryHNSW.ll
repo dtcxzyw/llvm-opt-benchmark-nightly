@@ -205,12 +205,6 @@ bb.f:                                             ; preds = %bb.e
   %i.v = icmp ult i64 %i.s, %i.u
   br i1 %i.v, label %.lr.ph.us, label %.loopexit.us
 
-.loopexit.us:                                     ; preds = %bb.j, %.lr.ph55.split.us
-  %.1.lcssa.us = phi i64 [ %.04154.us, %.lr.ph55.split.us ], [ %.2.us.us, %bb.j ]
-  %14 = call i32 @__kmpc_dispatch_next_8u(ptr nonnull @4, i32 %.pre, ptr nonnull %i.d, ptr nonnull %i.a, ptr nonnull %i.b, ptr nonnull %i.c)
-  %.not.us = icmp eq i32 %14, 0
-  br i1 %.not.us, label %._crit_edge, label %.lr.ph55.split.us
-
 .lr.ph.us:                                        ; preds = %.lr.ph55.split.us, %bb.j
   %.051.us.us = phi i64 [ %i.ay, %bb.j ], [ %i.s, %.lr.ph55.split.us ] ; 2 uses
   %.150.us.us = phi i64 [ %.2.us.us, %bb.j ], [ %.04154.us, %.lr.ph55.split.us ] ; 2 uses
@@ -263,6 +257,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.ba = add i64 %i.az, 1
   %i.bb = icmp ult i64 %i.ay, %i.ba
   br i1 %i.bb, label %.lr.ph.us, label %.loopexit.us, !llvm.loop !228
+
+.loopexit.us:                                     ; preds = %bb.j, %.lr.ph55.split.us
+  %.1.lcssa.us = phi i64 [ %.04154.us, %.lr.ph55.split.us ], [ %.2.us.us, %bb.j ]
+  %14 = call i32 @__kmpc_dispatch_next_8u(ptr nonnull @4, i32 %.pre, ptr nonnull %i.d, ptr nonnull %i.a, ptr nonnull %i.b, ptr nonnull %i.c)
+  %.not.us = icmp eq i32 %14, 0
+  br i1 %.not.us, label %._crit_edge, label %.lr.ph55.split.us
 
 .loopexit48.split.us.split.us:                    ; preds = %bb.g, %.lr.ph.us
   %lpad.loopexit.us.us = landingpad { ptr, i32 }

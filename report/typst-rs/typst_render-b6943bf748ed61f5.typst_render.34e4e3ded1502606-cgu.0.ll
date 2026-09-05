@@ -204,7 +204,7 @@ _RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit69.us.i: ; preds 
   br label %bb.fl
 
 bb.fl:                                            ; preds = %.backedge.us108.i, %_RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit69.us.i
-  %indvars.iv167.i = phi i64 [ %i.alv, %_RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit69.us.i ], [ %indvars.iv.next168.i, %.backedge.us108.i ] ; 2 uses
+  %indvars.iv167.i = phi i64 [ %indvars.iv.next168.i, %.backedge.us108.i ], [ %i.alv, %_RNvXs1d_NtNtCs3oUPovFnLWP_4core3cmp5implslNtB8_3Ord5clamp.exit69.us.i ] ; 2 uses
   %indvars.iv.next168.i = add nuw nsw i64 %indvars.iv167.i, 1 ; 2 uses
   %i.aly = trunc i64 %indvars.iv167.i to i32      ; 2 uses
   %i.alz = sub i32 %i.aly, %i.akl

@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %.lr.ph310, %bb.i
   %wide.trip.count49.i.us.us = zext nneg i32 %i.jh to i64
   br label %.lr.ph.split.us.split.us.i.us.us
 
-.lr.ph.split.us.split.us.i.us.us:                 ; preds = %.lr.ph.i.us.us, %bb.k
+.lr.ph.split.us.split.us.i.us.us:                 ; preds = %bb.k, %.lr.ph.i.us.us
   %indvars.iv46.i.us.us = phi i64 [ %indvars.iv.next47.i.us.us, %bb.k ], [ 0, %.lr.ph.i.us.us ] ; 5 uses
   %i.jk = trunc nuw nsw i64 %indvars.iv46.i.us.us to i32
   %i.jl = or i32 %.0242316.us.us, %i.jk

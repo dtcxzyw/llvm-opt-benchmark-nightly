@@ -205,7 +205,18 @@ _ZN7xgboost7RegTree4FVec4FillERKNS_6common4SpanIKNS_5EntryELm1844674407370955161
   %i.ev = icmp eq i32 %i.eu, -1
   br i1 %i.ev, label %_ZNK7xgboost4tree10TreePruner12LeafPositionILb1EEEiRKNS_7RegTreeERKNS3_4FVecE.exit.us.us, label %.lr.ph.i68.preheader.us.us
 
-.lr.ph.i68.us.us:                                 ; preds = %.lr.ph.i68.preheader.us.us, %_ZN7xgboost9predictor11GetNextNodeILb1ELb1ENS_4tree14ScalarTreeViewEEEiRKT1_ifbRKNS_7RegTree22CategoricalSplitMatrixE.exit.i.us.us
+.lr.ph.i68.preheader.us.us:                       ; preds = %.noexc70.us.us
+  %.sroa.02.0.copyload.i.us.us = load i64, ptr %5, align 8 ; 2 uses
+  %.sroa.23.0.copyload.i.us.us = load ptr, ptr %.sroa.23.0..sroa_idx.i, align 8
+  %12 = icmp eq i64 %.sroa.02.0.copyload.i.us.us, 0
+  %13 = load i64, ptr %i.bs, align 8
+  %14 = load ptr, ptr %i.bt, align 8
+  %15 = load i64, ptr %i.br, align 8              ; 3 uses
+  %16 = load ptr, ptr %.in.i.i, align 8           ; 2 uses
+  %17 = icmp ne ptr %16, null
+  br label %.lr.ph.i68.us.us
+
+.lr.ph.i68.us.us:                                 ; preds = %_ZN7xgboost9predictor11GetNextNodeILb1ELb1ENS_4tree14ScalarTreeViewEEEiRKT1_ifbRKNS_7RegTree22CategoricalSplitMatrixE.exit.i.us.us, %.lr.ph.i68.preheader.us.us
   %i.ew = phi i32 [ %i.gx, %_ZN7xgboost9predictor11GetNextNodeILb1ELb1ENS_4tree14ScalarTreeViewEEEiRKT1_ifbRKNS_7RegTree22CategoricalSplitMatrixE.exit.i.us.us ], [ %i.eu, %.lr.ph.i68.preheader.us.us ]
   %i.ex = phi ptr [ %i.gv, %_ZN7xgboost9predictor11GetNextNodeILb1ELb1ENS_4tree14ScalarTreeViewEEEiRKT1_ifbRKNS_7RegTree22CategoricalSplitMatrixE.exit.i.us.us ], [ %i.es, %.lr.ph.i68.preheader.us.us ] ; 2 uses
   %.08.i.us.us = phi i32 [ %.0.i.i.us.us, %_ZN7xgboost9predictor11GetNextNodeILb1ELb1ENS_4tree14ScalarTreeViewEEEiRKT1_ifbRKNS_7RegTree22CategoricalSplitMatrixE.exit.i.us.us ], [ 0, %.lr.ph.i68.preheader.us.us ] ; 3 uses
@@ -361,17 +372,6 @@ middle.block191:                                  ; preds = %vector.body187
 _ZN7xgboost7RegTree4FVec4DropEv.exit.us.us:       ; preds = %.lr.ph.i.i.i.i.i.i.us.us, %middle.block191, %_ZNK7xgboost4tree10TreePruner12LeafPositionILb1EEEiRKNS_7RegTreeERKNS3_4FVecE.exit.us.us
   %i.hh = add i64 %.0.us.us, 1
   br label %bb.x, !llvm.loop !354
-
-.lr.ph.i68.preheader.us.us:                       ; preds = %.noexc70.us.us
-  %.sroa.02.0.copyload.i.us.us = load i64, ptr %5, align 8 ; 2 uses
-  %.sroa.23.0.copyload.i.us.us = load ptr, ptr %.sroa.23.0..sroa_idx.i, align 8
-  %12 = icmp eq i64 %.sroa.02.0.copyload.i.us.us, 0
-  %13 = load i64, ptr %i.bs, align 8
-  %14 = load ptr, ptr %i.bt, align 8
-  %15 = load i64, ptr %i.br, align 8              ; 3 uses
-  %16 = load ptr, ptr %.in.i.i, align 8           ; 2 uses
-  %17 = icmp ne ptr %16, null
-  br label %.lr.ph.i68.us.us
 
 .critedge.split.us.us:                            ; preds = %.noexc67.us.us, %.noexc66.us.us
   %i.hi = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN7xgboost13BatchIteratorINS_10SparsePageEEppEv(ptr noundef nonnull align 8 dereferenceable(16) %10)

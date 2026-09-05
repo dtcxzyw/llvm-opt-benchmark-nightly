@@ -204,7 +204,7 @@ begin_hunk_0_@_ZN4ncnn39transpose_pack_B_tile_fp32_to_int8_avx2ERKNS_3MatERS0_ii
   %i.ij = getelementptr inbounds [4 x i8], ptr %i.ig, i64 %i.ii
   br label %.lr.ph598.i.us
 
-.lr.ph598.i.us:                                   ; preds = %.loopexit556.i.us, %.lr.ph598.i.us
+.lr.ph598.i.us:                                   ; preds = %.lr.ph598.i.us, %.loopexit556.i.us
   %.11597.i.us = phi ptr [ %i.js, %.lr.ph598.i.us ], [ %.8614.i.us, %.loopexit556.i.us ] ; 2 uses
   %.2399596.i.us = phi ptr [ %i.jt, %.lr.ph598.i.us ], [ %i.ij, %.loopexit556.i.us ] ; 5 uses
   %.0407595.i.us = phi i32 [ %i.ju, %.lr.ph598.i.us ], [ 0, %.loopexit556.i.us ]
@@ -579,7 +579,7 @@ begin_hunk_0_@_ZN4ncnn39transpose_pack_B_tile_fp32_to_int8_avx2ERKNS_3MatERS0_ii
   %i.sg = getelementptr inbounds [4 x i8], ptr %i.oq, i64 %i.sf
   br label %.lr.ph627.i.us
 
-.lr.ph627.i.us:                                   ; preds = %.loopexit551.i.us, %.lr.ph627.i.us
+.lr.ph627.i.us:                                   ; preds = %.lr.ph627.i.us, %.loopexit551.i.us
   %.19626.i.us = phi ptr [ %i.ta, %.lr.ph627.i.us ], [ %.16650.i.us, %.loopexit551.i.us ] ; 2 uses
   %.0408625.i.us = phi i32 [ %i.tc, %.lr.ph627.i.us ], [ 0, %.loopexit551.i.us ]
   %.2414624.i.us = phi ptr [ %i.tb, %.lr.ph627.i.us ], [ %i.sg, %.loopexit551.i.us ] ; 3 uses

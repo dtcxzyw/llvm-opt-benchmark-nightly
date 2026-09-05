@@ -204,6 +204,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.not = icmp eq ptr %i.m, null                  ; 2 uses
   br i1 %.not96, label %.preheader, label %..loopexit_crit_edge.us.us
 
+..loopexit_crit_edge.us.us:                       ; preds = %bb.c
+  br i1 %.not, label %..loopexit_crit_edge.us.us.1, label %.split81.us
+
 ..loopexit_crit_edge.us.us.1:                     ; preds = %..loopexit_crit_edge.us.us
   store i8 95, ptr %i.h, align 1, !tbaa !15
   store i8 0, ptr %i.i, align 1, !tbaa !15
@@ -262,9 +265,6 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.ai = tail call ptr @dlsym(ptr noundef %i.ah, ptr noundef nonnull %i.g) #13 ; 2 uses
   %.not.us.us.5 = icmp eq ptr %i.ai, null
   br i1 %.not.us.us.5, label %.split79.us, label %.split81.us
-
-..loopexit_crit_edge.us.us:                       ; preds = %bb.c
-  br i1 %.not, label %..loopexit_crit_edge.us.us.1, label %.split81.us
 
 .preheader.1:                                     ; preds = %.preheader
   store i8 95, ptr %i.h, align 1, !tbaa !15

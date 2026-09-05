@@ -205,7 +205,7 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.split:      ; preds = %.noexc
   %.sroa.0124.1135.us141 = phi i64 [ %i.bj, %_ZN4absl12lts_2026052625uniform_real_distributionIeEclINS0_15random_internal10pcg_engineINS4_13pcg128_paramsILm2549297995355413924ELm4865540595714422341ELm6364136223846793005ELm1442695040888963407EEENS4_17pcg_xsl_rr_128_64EEEEEeRT_.exit.loopexit.us ], [ %.sroa.0124.0150, %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.split ]
   br label %.split.i.i.us
 
-.split.i.i.us:                                    ; preds = %.split.i.preheader.i.us, %_ZN4absl12lts_2026052615random_internal20GenerateRealFromBitsIdNS1_19GeneratePositiveTagELb1EEET_mi.exit.i.i.us
+.split.i.i.us:                                    ; preds = %_ZN4absl12lts_2026052615random_internal20GenerateRealFromBitsIdNS1_19GeneratePositiveTagELb1EEET_mi.exit.i.i.us, %.split.i.preheader.i.us
   %.narrow.i.i.i.i.i20.i.i.us = phi i64 [ %.narrow.i.i.i.i.i.i.i.us, %_ZN4absl12lts_2026052615random_internal20GenerateRealFromBitsIdNS1_19GeneratePositiveTagELb1EEET_mi.exit.i.i.us ], [ %.sroa.6125.1136.us140, %.split.i.preheader.i.us ]
   %i.bc = phi i64 [ %i.bj, %_ZN4absl12lts_2026052615random_internal20GenerateRealFromBitsIdNS1_19GeneratePositiveTagELb1EEET_mi.exit.i.i.us ], [ %.sroa.0124.1135.us141, %.split.i.preheader.i.us ]
   %i.bd = zext i64 %.narrow.i.i.i.i.i20.i.i.us to i128

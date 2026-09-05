@@ -204,11 +204,6 @@ lean_obj_tag.exit.i.i.us27:                       ; preds = %.lr.ph.split, %4
   %i.z = icmp eq i32 %i.y, 1
   br i1 %i.z, label %bb.h, label %bb.g, !prof !13
 
-4:                                                ; preds = %l_Lean_Meta_SimpTheorems_isDeclToUnfold.exit.us30
-  %5 = add i64 %.01624.us28, 1                    ; 2 uses
-  %.not.us29 = icmp eq i64 %5, %3
-  br i1 %.not.us29, label %l_Lean_Meta_SimpTheorems_isDeclToUnfold.exit._crit_edge, label %lean_obj_tag.exit.i.i.us27
-
 bb.g:                                             ; preds = %lean_obj_tag.exit.i.i.us27
   %i.aa = tail call i64 @lean_uint64_once_cold(ptr noundef nonnull @l_Lean_Meta_instHashableOrigin___lam__0___closed__0, ptr noundef nonnull @l_Lean_Meta_instHashableOrigin___lam__0___closed__0_once, ptr noundef nonnull @_init_l_Lean_Meta_instHashableOrigin___lam__0___closed__0) #8
   br label %l_Lean_Meta_SimpTheorems_isDeclToUnfold.exit.us30
@@ -222,6 +217,11 @@ l_Lean_Meta_SimpTheorems_isDeclToUnfold.exit.us30: ; preds = %bb.h, %bb.g
   %i.ac = tail call zeroext i8 @l_Lean_PersistentHashMap_containsAux___at___00Lean_PersistentHashMap_contains___at___00Lean_Meta_SimpTheorems_isDeclToUnfold_spec__0_spec__0___redArg(ptr noundef %i.x, i64 noundef %.012.i.i.us31, ptr noundef %0) ; 2 uses
   %i.ad = icmp eq i8 %i.ac, 0
   br i1 %i.ad, label %4, label %l_Lean_Meta_SimpTheorems_isDeclToUnfold.exit._crit_edge
+
+4:                                                ; preds = %l_Lean_Meta_SimpTheorems_isDeclToUnfold.exit.us30
+  %5 = add i64 %.01624.us28, 1                    ; 2 uses
+  %.not.us31 = icmp eq i64 %5, %3
+  br i1 %.not.us31, label %l_Lean_Meta_SimpTheorems_isDeclToUnfold.exit._crit_edge, label %lean_obj_tag.exit.i.i.us27
 
 bb.i:                                             ; preds = %lean_obj_tag.exit.i.i
   %i.ae = add i64 %.01624, 1                      ; 2 uses
@@ -487,11 +487,6 @@ lean_obj_tag.exit.i.i.us27:                       ; preds = %.lr.ph.split, %4
   %i.z = icmp eq i32 %i.y, 1
   br i1 %i.z, label %bb.h, label %bb.g, !prof !13
 
-4:                                                ; preds = %l_Lean_Meta_SimpTheorems_isLetDeclToUnfold.exit.us30
-  %5 = add i64 %.01624.us28, 1                    ; 2 uses
-  %.not.us29 = icmp eq i64 %5, %3
-  br i1 %.not.us29, label %l_Lean_Meta_SimpTheorems_isLetDeclToUnfold.exit._crit_edge, label %lean_obj_tag.exit.i.i.us27
-
 bb.g:                                             ; preds = %lean_obj_tag.exit.i.i.us27
   %i.aa = tail call i64 @lean_uint64_once_cold(ptr noundef nonnull @l_Lean_Meta_instHashableOrigin___lam__0___closed__0, ptr noundef nonnull @l_Lean_Meta_instHashableOrigin___lam__0___closed__0_once, ptr noundef nonnull @_init_l_Lean_Meta_instHashableOrigin___lam__0___closed__0) #8
   br label %l_Lean_Meta_SimpTheorems_isLetDeclToUnfold.exit.us30
@@ -505,6 +500,11 @@ l_Lean_Meta_SimpTheorems_isLetDeclToUnfold.exit.us30: ; preds = %bb.h, %bb.g
   %i.ac = tail call zeroext i8 @l_Lean_PersistentHashMap_containsAux___at___00Lean_PersistentHashMap_contains___at___00Lean_Meta_SimpTheorems_isDeclToUnfold_spec__0_spec__0___redArg(ptr noundef %i.x, i64 noundef %.012.i.i.us31, ptr noundef %0) ; 2 uses
   %i.ad = icmp eq i8 %i.ac, 0
   br i1 %i.ad, label %4, label %l_Lean_Meta_SimpTheorems_isLetDeclToUnfold.exit._crit_edge
+
+4:                                                ; preds = %l_Lean_Meta_SimpTheorems_isLetDeclToUnfold.exit.us30
+  %5 = add i64 %.01624.us28, 1                    ; 2 uses
+  %.not.us31 = icmp eq i64 %5, %3
+  br i1 %.not.us31, label %l_Lean_Meta_SimpTheorems_isLetDeclToUnfold.exit._crit_edge, label %lean_obj_tag.exit.i.i.us27
 
 bb.i:                                             ; preds = %lean_obj_tag.exit.i.i
   %i.ae = add i64 %.01624, 1                      ; 2 uses

@@ -205,12 +205,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.c,
   %.not108115.us = icmp eq ptr %i.y, %i.aa
   br i1 %.not108115.us, label %._crit_edge.split.us.us, label %.lr.ph.us
 
-._crit_edge.split.us.us:                          ; preds = %bb.h, %.lr.ph129.split.us
-  %.1.lcssa.us = phi i32 [ %.0128.us, %.lr.ph129.split.us ], [ %i.as, %bb.h ] ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0103.0126.us, i64 8 ; 2 uses
-  %.not107.us = icmp eq ptr %5, %i.t
-  br i1 %.not107.us, label %._crit_edge130, label %.lr.ph129.split.us
-
 .lr.ph.us:                                        ; preds = %.lr.ph129.split.us
   %i.ab = getelementptr i8, ptr %i.u, i64 16
   br label %bb.d
@@ -264,6 +258,12 @@ bb.h:                                             ; preds = %bb.g
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.099.0116.us.us, i64 8 ; 2 uses
   %.not108.us.us = icmp eq ptr %i.ay, %i.aa
   br i1 %.not108.us.us, label %._crit_edge.split.us.us, label %bb.d
+
+._crit_edge.split.us.us:                          ; preds = %bb.h, %.lr.ph129.split.us
+  %.1.lcssa.us = phi i32 [ %.0128.us, %.lr.ph129.split.us ], [ %i.as, %bb.h ] ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0103.0126.us, i64 8 ; 2 uses
+  %.not107.us = icmp eq ptr %5, %i.t
+  br i1 %.not107.us, label %._crit_edge130, label %.lr.ph129.split.us
 
 .split.us.split.us:                               ; preds = %bb.f, %bb.d
   %i.az = landingpad { ptr, i32 }

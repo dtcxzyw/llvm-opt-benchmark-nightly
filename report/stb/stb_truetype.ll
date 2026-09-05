@@ -204,12 +204,6 @@ middle.block:                                     ; preds = %vector.body
   %.pre140 = load float, ptr %.phi.trans.insert139, align 4, !tbaa !112
   br label %.lr.ph98.us
 
-._crit_edge99.split.us.us:                        ; preds = %.lr.ph98.us._crit_edge, %.lr.ph104.split.us
-  %.2.lcssa.us = phi i32 [ %.188101.us, %.lr.ph104.split.us ], [ %.3.us.us, %.lr.ph98.us._crit_edge ] ; 2 uses
-  %indvars.iv.next131 = add nuw nsw i64 %indvars.iv130, 1 ; 2 uses
-  %exitcond134.not = icmp eq i64 %indvars.iv.next131, %wide.trip.count133
-  br i1 %exitcond134.not, label %._crit_edge105, label %.lr.ph104.split.us, !llvm.loop !199
-
 .lr.ph98.us:                                      ; preds = %.lr.ph98.us.preheader, %.lr.ph98.us._crit_edge
   %i.am = phi float [ %.pre140, %.lr.ph98.us.preheader ], [ %i.ap, %.lr.ph98.us._crit_edge ] ; 2 uses
   %indvars.iv125 = phi i64 [ 0, %.lr.ph98.us.preheader ], [ %indvars.iv.next126, %.lr.ph98.us._crit_edge ] ; 5 uses
@@ -247,7 +241,13 @@ bb.b:                                             ; preds = %.lr.ph98.us
   %.pre-phi = trunc i64 %indvars.iv125 to i32
   %indvars.iv.next126 = add nuw nsw i64 %indvars.iv125, 1 ; 2 uses
   %exitcond129.not = icmp eq i64 %indvars.iv.next126, %wide.trip.count128
-  br i1 %exitcond129.not, label %._crit_edge99.split.us.us, label %.lr.ph98.us, !llvm.loop !200
+  br i1 %exitcond129.not, label %._crit_edge99.split.us.us, label %.lr.ph98.us, !llvm.loop !199
+
+._crit_edge99.split.us.us:                        ; preds = %.lr.ph98.us._crit_edge, %.lr.ph104.split.us
+  %.2.lcssa.us = phi i32 [ %.188101.us, %.lr.ph104.split.us ], [ %.3.us.us, %.lr.ph98.us._crit_edge ] ; 2 uses
+  %indvars.iv.next131 = add nuw nsw i64 %indvars.iv130, 1 ; 2 uses
+  %exitcond134.not = icmp eq i64 %indvars.iv.next131, %wide.trip.count133
+  br i1 %exitcond134.not, label %._crit_edge105, label %.lr.ph104.split.us, !llvm.loop !200
 
 .lr.ph104.split:                                  ; preds = %.lr.ph104.split.preheader, %._crit_edge99.split
   %indvars.iv120 = phi i64 [ %indvars.iv.next121, %._crit_edge99.split ], [ 0, %.lr.ph104.split.preheader ] ; 2 uses
@@ -307,13 +307,13 @@ bb.c:                                             ; preds = %.lr.ph98
   %.pre-phi143 = trunc i64 %indvars.iv115 to i32
   %indvars.iv.next116 = add nuw nsw i64 %indvars.iv115, 1 ; 2 uses
   %exitcond119.not = icmp eq i64 %indvars.iv.next116, %wide.trip.count118
-  br i1 %exitcond119.not, label %._crit_edge99.split, label %.lr.ph98, !llvm.loop !200
+  br i1 %exitcond119.not, label %._crit_edge99.split, label %.lr.ph98, !llvm.loop !199
 
 ._crit_edge99.split:                              ; preds = %.lr.ph98._crit_edge, %.lr.ph104.split
   %.2.lcssa = phi i32 [ %.188101, %.lr.ph104.split ], [ %.3, %.lr.ph98._crit_edge ] ; 2 uses
   %indvars.iv.next121 = add nuw nsw i64 %indvars.iv120, 1 ; 2 uses
   %exitcond124.not = icmp eq i64 %indvars.iv.next121, %wide.trip.count133
-  br i1 %exitcond124.not, label %._crit_edge105, label %.lr.ph104.split, !llvm.loop !199
+  br i1 %exitcond124.not, label %._crit_edge105, label %.lr.ph104.split, !llvm.loop !200
 
 ._crit_edge105.thread:                            ; preds = %._crit_edge.thread
   tail call void @stbtt__sort_edges_quicksort(ptr noundef nonnull %i.r, i32 noundef 0)
@@ -716,13 +716,21 @@ bb.ap:                                            ; preds = %bb.ao
   %exitcond535.not = icmp eq i64 %indvars.iv.next532, %wide.trip.count534
   br i1 %exitcond535.not, label %._crit_edge.us.us, label %bb.q, !llvm.loop !240
 
+._crit_edge.us.us:                                ; preds = %.thread.us.us
+  %12 = icmp eq i32 %i.cb, 0
+  %13 = fneg float %.9.us.us
+  %.10.us.us = select i1 %12, float %13, float %.9.us.us
+  %14 = call float @llvm.fmuladd.f32(float %5, float %.10.us.us, float %i.bn) ; 3 uses
+  %15 = fcmp olt float %14, 0.000000e+00
+  br i1 %15, label %bb.ar, label %bb.aq
+
 bb.aq:                                            ; preds = %._crit_edge.us.us
   %i.mr = fcmp ogt float %14, 2.550000e+02
   %spec.store.select.us.us = select i1 %i.mr, float 2.550000e+02, float %14
   %i.ms = fptoui float %spec.store.select.us.us to i8
   br label %bb.ar
 
-bb.ar:                                            ; preds = %._crit_edge.us.us, %bb.aq
+bb.ar:                                            ; preds = %bb.aq, %._crit_edge.us.us
   %.0431.us.us = phi i8 [ %i.ms, %bb.aq ], [ 0, %._crit_edge.us.us ]
   %i.mt = add i32 %i.bw, %i.bx
   %i.mu = sext i32 %i.mt to i64
@@ -731,14 +739,6 @@ bb.ar:                                            ; preds = %._crit_edge.us.us, 
   %indvars.iv.next537 = add nsw i64 %indvars.iv536, 1 ; 2 uses
   %i.mw = icmp slt i64 %indvars.iv.next537, %i.bp
   br i1 %i.mw, label %.lr.ph519.us.us, label %._crit_edge522.split.us.us, !llvm.loop !241
-
-._crit_edge.us.us:                                ; preds = %.thread.us.us
-  %12 = icmp eq i32 %i.cb, 0
-  %13 = fneg float %.9.us.us
-  %.10.us.us = select i1 %12, float %13, float %.9.us.us
-  %14 = call float @llvm.fmuladd.f32(float %5, float %.10.us.us, float %i.bn) ; 3 uses
-  %15 = fcmp olt float %14, 0.000000e+00
-  br i1 %15, label %bb.ar, label %bb.aq
 
 ._crit_edge522.split.us.us:                       ; preds = %bb.ar
   %i.mx = add nsw i32 %.0435523.us, 1             ; 2 uses

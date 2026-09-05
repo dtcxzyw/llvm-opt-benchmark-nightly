@@ -205,10 +205,6 @@ bb.co:                                            ; preds = %bb.cn
   %.not218233.us = icmp eq ptr %i.ha, %i.hb
   br i1 %.not218233.us, label %.critedge123.us, label %.lr.ph236.us
 
-.critedge123.us:                                  ; preds = %bb.cr, %bb.co
-  %18 = getelementptr inbounds nuw i8, ptr %.sroa.0162.0.us, i64 8
-  br label %.preheader.split.us, !llvm.loop !569
-
 .lr.ph236.us:                                     ; preds = %bb.co, %bb.cr
   %.sroa.0158.0234.us.us = phi ptr [ %i.hi, %bb.cr ], [ %i.ha, %bb.co ] ; 2 uses
   %i.hc = load ptr, ptr %.sroa.0158.0234.us.us, align 8, !tbaa !65
@@ -229,6 +225,10 @@ bb.cr:                                            ; preds = %bb.cq, %bb.cp
   %i.hi = getelementptr inbounds nuw i8, ptr %.sroa.0158.0234.us.us, i64 8 ; 2 uses
   %.not218.us.us = icmp eq ptr %i.hi, %i.hb
   br i1 %.not218.us.us, label %.critedge123.us, label %.lr.ph236.us
+
+.critedge123.us:                                  ; preds = %bb.cr, %bb.co
+  %18 = getelementptr inbounds nuw i8, ptr %.sroa.0162.0.us, i64 8
+  br label %.preheader.split.us, !llvm.loop !569
 
 .split238.us:                                     ; preds = %.preheader.split.us
   %i.hj = landingpad { ptr, i32 }

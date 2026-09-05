@@ -204,7 +204,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.ep = icmp slt i32 %i.eo, 0
   br i1 %i.ep, label %.thread183, label %.preheader193.us295
 
-.preheader193.us295:                              ; preds = %bb.ak, %.lr.ph261.split.split.us
+.preheader193.us295:                              ; preds = %.lr.ph261.split.split.us, %bb.ak
   %storemerge.in = load i64, ptr %3, align 8
   %storemerge = add i64 %storemerge.in, 1
   store i64 %storemerge, ptr %3, align 8

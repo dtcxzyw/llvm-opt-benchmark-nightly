@@ -202,19 +202,19 @@ bb.b:                                             ; preds = %bb.a
   %.not20.us.i = icmp eq ptr %i.j, null
   br i1 %.not20.us.i, label %.loopexit.us.i, label %.lr.ph.us.i
 
-.loopexit.us.i:                                   ; preds = %.lr.ph.us.i, %.lr.ph24.split.us.i
-  %indvars.iv.next28.i = add nsw i64 %indvars.iv27.i, -1
-  %2 = icmp sgt i64 %indvars.iv27.i, 0
-  br i1 %2, label %.lr.ph24.split.us.i, label %doall_util_fn.exit, !llvm.loop !4
-
 .lr.ph.us.i:                                      ; preds = %.lr.ph24.split.us.i, %.lr.ph.us.i
   %.021.us.us.i = phi ptr [ %i.l, %.lr.ph.us.i ], [ %i.j, %.lr.ph24.split.us.i ] ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.021.us.us.i, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !37   ; 2 uses
   %i.m = load ptr, ptr %.021.us.us.i, align 8, !tbaa !42
-  tail call void %i.c(ptr noundef %i.m, ptr noundef %1) #7, !inline_history !5
+  tail call void %i.c(ptr noundef %i.m, ptr noundef %1) #7, !inline_history !4
   %.not.us.us.i = icmp eq ptr %i.l, null
-  br i1 %.not.us.us.i, label %.loopexit.us.i, label %.lr.ph.us.i, !llvm.loop !6
+  br i1 %.not.us.us.i, label %.loopexit.us.i, label %.lr.ph.us.i, !llvm.loop !5
+
+.loopexit.us.i:                                   ; preds = %.lr.ph.us.i, %.lr.ph24.split.us.i
+  %indvars.iv.next28.i = add nsw i64 %indvars.iv27.i, -1
+  %2 = icmp sgt i64 %indvars.iv27.i, 0
+  br i1 %2, label %.lr.ph24.split.us.i, label %doall_util_fn.exit, !llvm.loop !6
 
 doall_util_fn.exit:                               ; preds = %.loopexit.us.i, %bb.b, %bb.a
   ret void
@@ -242,7 +242,7 @@ bb.b:                                             ; preds = %bb.a
 .loopexit.i:                                      ; preds = %.lr.ph.i, %.lr.ph24.split.i
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
   %i.h = icmp sgt i64 %indvars.iv.i, 0
-  br i1 %i.h, label %.lr.ph24.split.i, label %doall_util_fn.exit, !llvm.loop !4
+  br i1 %i.h, label %.lr.ph24.split.i, label %doall_util_fn.exit, !llvm.loop !6
 
 .lr.ph24.split.i:                                 ; preds = %.loopexit.i, %.lr.ph24.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.loopexit.i ], [ %i.g, %.lr.ph24.i ] ; 3 uses
@@ -257,9 +257,9 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %.021.i, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !37   ; 2 uses
   %i.n = load ptr, ptr %.021.i, align 8, !tbaa !42
-  tail call void %i.c(ptr noundef %i.n, ptr noundef %2, ptr noundef %1) #7, !inline_history !5
+  tail call void %i.c(ptr noundef %i.n, ptr noundef %2, ptr noundef %1) #7, !inline_history !4
   %.not.i = icmp eq ptr %i.m, null
-  br i1 %.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !6
+  br i1 %.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !5
 
 doall_util_fn.exit:                               ; preds = %.loopexit.i, %bb.b, %bb.a
   ret void
@@ -285,7 +285,7 @@ bb.b:                                             ; preds = %bb.a
 .loopexit.i:                                      ; preds = %.lr.ph.i, %.lr.ph24.split.i
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
   %i.f = icmp sgt i64 %indvars.iv.i, 0
-  br i1 %i.f, label %.lr.ph24.split.i, label %doall_util_fn.exit, !llvm.loop !4
+  br i1 %i.f, label %.lr.ph24.split.i, label %doall_util_fn.exit, !llvm.loop !6
 
 .lr.ph24.split.i:                                 ; preds = %.loopexit.i, %.lr.ph24.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.loopexit.i ], [ %i.e, %.lr.ph24.i ] ; 3 uses
@@ -300,9 +300,9 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %.021.i, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !37   ; 2 uses
   %i.l = load ptr, ptr %.021.i, align 8, !tbaa !42
-  tail call void %1(ptr noundef %i.l, ptr noundef %3, ptr noundef %2) #7, !inline_history !5
+  tail call void %1(ptr noundef %i.l, ptr noundef %3, ptr noundef %2) #7, !inline_history !4
   %.not.i = icmp eq ptr %i.k, null
-  br i1 %.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !6
+  br i1 %.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !5
 
 doall_util_fn.exit:                               ; preds = %.loopexit.i, %bb.a, %bb.b
   ret void
@@ -415,8 +415,8 @@ attributes #7 = { nounwind }
 !1 = distinct !{!1, !33}
 !2 = distinct !{null}
 !3 = distinct !{!3, !33}
-!4 = distinct !{!4, !33}
-!5 = distinct !{null}
+!4 = distinct !{null}
+!5 = distinct !{!5, !33}
 !6 = distinct !{!6, !33}
 !7 = !{i32 8, !"PIC Level", i32 2}
 !8 = !{i32 7, !"uwtable", i32 2}

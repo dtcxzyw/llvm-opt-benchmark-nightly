@@ -205,6 +205,11 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.bs = icmp eq i64 %.sroa.12.3.us.us.i, 0
   br i1 %i.bs, label %.lr.ph.i.i.i.i.i.us.us.i, label %.loopexit9.i.i.i.i.loopexit.us.us.i
 
+.loopexit9.i.i.i.i.loopexit.us.us.i:              ; preds = %bb.f
+  %.idx.i.i.i.i.i.le.us.us.i = shl nuw nsw i64 %.sroa.12.3.us.us.i, 7
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.08.025.i.i.i.i.i.us.us.i, i64 %.idx.i.i.i.i.i.le.us.us.i
+  br label %.loopexit9.i.i.i.i.us.us.i
+
 .loopexit9.i.i.i.i.us.us.i:                       ; preds = %.loopexit9.i.i.i.i.loopexit.us.us.i, %bb.c
   %.sroa.14.2.us.us.i = phi ptr [ %.sroa.14.1.us.us.i, %bb.c ], [ %.sroa.510.i.i.i.i.i.sroa.4.0.us.us.i, %.loopexit9.i.i.i.i.loopexit.us.us.i ] ; 2 uses
   %.sroa.12.2.us.us.i = phi i64 [ %.sroa.12.1.us.us.i, %bb.c ], [ %.sroa.510.i.i.i.i.i.sroa.0.0.us.us.i, %.loopexit9.i.i.i.i.loopexit.us.us.i ] ; 2 uses
@@ -287,11 +292,6 @@ bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bf)
   store i8 2, ptr %i.bf, align 16
   br label %bb.de
-
-.loopexit9.i.i.i.i.loopexit.us.us.i:              ; preds = %bb.f
-  %.idx.i.i.i.i.i.le.us.us.i = shl nuw nsw i64 %.sroa.12.3.us.us.i, 7
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.08.025.i.i.i.i.i.us.us.i, i64 %.idx.i.i.i.i.i.le.us.us.i
-  br label %.loopexit9.i.i.i.i.us.us.i
 
 .loopexit.split.us.split.us.split.i:              ; preds = %bb.m, %bb.l, %bb.h
   %lpad.loopexit.us.us.i = landingpad { ptr, i32 }

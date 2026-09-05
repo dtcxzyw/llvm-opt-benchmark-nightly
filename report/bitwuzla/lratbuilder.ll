@@ -205,11 +205,6 @@ bb.a:
   %.not2223.us = icmp eq ptr %i.l, null
   br i1 %.not2223.us, label %._crit_edge.split.us.us, label %.lr.ph.i.preheader.us.us
 
-._crit_edge.split.us.us:                          ; preds = %_ZN7CaDiCaL11LratBuilder11reduce_hashEmm.exit.loopexit.us.us, %.lr.ph27.split.us
-  %1 = add nuw i64 %.01925.us, 1                  ; 2 uses
-  %exitcond31.not = icmp eq i64 %1, %i.h
-  br i1 %exitcond31.not, label %._crit_edge28, label %.lr.ph27.split.us, !llvm.loop !261
-
 .lr.ph.i.preheader.us.us:                         ; preds = %.lr.ph27.split.us, %_ZN7CaDiCaL11LratBuilder11reduce_hashEmm.exit.loopexit.us.us
   %.024.us.us = phi ptr [ %i.m, %_ZN7CaDiCaL11LratBuilder11reduce_hashEmm.exit.loopexit.us.us ], [ %i.l, %.lr.ph27.split.us ] ; 4 uses
   %i.m = load ptr, ptr %.024.us.us, align 8, !tbaa !29 ; 2 uses
@@ -236,7 +231,12 @@ _ZN7CaDiCaL11LratBuilder11reduce_hashEmm.exit.loopexit.us.us: ; preds = %.lr.ph.
   store ptr %i.x, ptr %.024.us.us, align 8, !tbaa !29
   store ptr %.024.us.us, ptr %i.w, align 8, !tbaa !72
   %.not22.us.us = icmp eq ptr %i.m, null
-  br i1 %.not22.us.us, label %._crit_edge.split.us.us, label %.lr.ph.i.preheader.us.us, !llvm.loop !262
+  br i1 %.not22.us.us, label %._crit_edge.split.us.us, label %.lr.ph.i.preheader.us.us, !llvm.loop !261
+
+._crit_edge.split.us.us:                          ; preds = %_ZN7CaDiCaL11LratBuilder11reduce_hashEmm.exit.loopexit.us.us, %.lr.ph27.split.us
+  %1 = add nuw i64 %.01925.us, 1                  ; 2 uses
+  %exitcond31.not = icmp eq i64 %1, %i.h
+  br i1 %exitcond31.not, label %._crit_edge28, label %.lr.ph27.split.us, !llvm.loop !262
 
 ._crit_edge28:                                    ; preds = %._crit_edge.split.us.us, %bb.a
   %i.y = icmp eq ptr %.pre, null
@@ -252,7 +252,7 @@ _ZN7CaDiCaL11LratBuilder11reduce_hashEmm.exit.loopexit.us.us: ; preds = %.lr.ph.
 ._crit_edge.split:                                ; preds = %_ZN7CaDiCaL11LratBuilder11reduce_hashEmm.exit, %.lr.ph27.split
   %i.ab = add nuw i64 %.01925, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.ab, %i.h
-  br i1 %exitcond.not, label %._crit_edge28.thread, label %.lr.ph27.split, !llvm.loop !261
+  br i1 %exitcond.not, label %._crit_edge28.thread, label %.lr.ph27.split, !llvm.loop !262
 
 _ZN7CaDiCaL11LratBuilder11reduce_hashEmm.exit:    ; preds = %.lr.ph27.split, %_ZN7CaDiCaL11LratBuilder11reduce_hashEmm.exit
   %.024 = phi ptr [ %i.ac, %_ZN7CaDiCaL11LratBuilder11reduce_hashEmm.exit ], [ %i.aa, %.lr.ph27.split ] ; 4 uses
@@ -265,7 +265,7 @@ _ZN7CaDiCaL11LratBuilder11reduce_hashEmm.exit:    ; preds = %.lr.ph27.split, %_Z
   store ptr %i.ah, ptr %.024, align 8, !tbaa !29
   store ptr %.024, ptr %i.ag, align 8, !tbaa !72
   %.not22 = icmp eq ptr %i.ac, null
-  br i1 %.not22, label %._crit_edge.split, label %_ZN7CaDiCaL11LratBuilder11reduce_hashEmm.exit, !llvm.loop !262
+  br i1 %.not22, label %._crit_edge.split, label %_ZN7CaDiCaL11LratBuilder11reduce_hashEmm.exit, !llvm.loop !261
 
 ._crit_edge28.thread:                             ; preds = %._crit_edge.split, %._crit_edge28
   tail call void @_ZdaPv(ptr noundef nonnull %.pre) #23

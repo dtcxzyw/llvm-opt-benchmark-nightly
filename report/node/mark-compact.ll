@@ -205,11 +205,6 @@ bb.a:
   %i.r = icmp sgt i32 %i.q, 0
   br i1 %i.r, label %.lr.ph.us, label %._crit_edge.split.us.us
 
-._crit_edge.split.us.us:                          ; preds = %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectIfWeakEPNS0_6TaggedINS0_10HeapObjectEEE.exit.us.us, %.lr.ph158.split.us
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.083.0156.us, i64 8 ; 2 uses
-  %3 = icmp eq ptr %2, %i.g
-  br i1 %3, label %._crit_edge159thread-pre-split, label %.lr.ph158.split.us
-
 .lr.ph.us:                                        ; preds = %.lr.ph158.split.us
   %i.s = add i64 %i.l, 31
   %invariant.op177 = add i64 %i.l, 23
@@ -255,6 +250,11 @@ _ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectI
   %i.an = ashr i64 %i.am, 32
   %i.ao = icmp slt i64 %indvars.iv.next164, %i.an
   br i1 %i.ao, label %bb.b, label %._crit_edge.split.us.us, !llvm.loop !392
+
+._crit_edge.split.us.us:                          ; preds = %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectIfWeakEPNS0_6TaggedINS0_10HeapObjectEEE.exit.us.us, %.lr.ph158.split.us
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.083.0156.us, i64 8 ; 2 uses
+  %3 = icmp eq ptr %2, %i.g
+  br i1 %3, label %._crit_edge159thread-pre-split, label %.lr.ph158.split.us
 
 ._crit_edge159thread-pre-split:                   ; preds = %._crit_edge.split, %._crit_edge.split.us.us
   %.pr = load ptr, ptr %1, align 8

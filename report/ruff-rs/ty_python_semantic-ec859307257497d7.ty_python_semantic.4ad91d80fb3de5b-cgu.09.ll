@@ -204,7 +204,7 @@ _RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type21same_divergent_mar
   %i.es = icmp eq ptr %i.eh, %i.ef
   br i1 %i.es, label %.critedge, label %.lr.ph.us
 
-.loopexit.split.us:                               ; preds = %.lr.ph.us, %_RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type21same_divergent_marker.exit93.thread.us
+.loopexit.split.us:                               ; preds = %_RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type21same_divergent_marker.exit93.thread.us, %.lr.ph.us
   %lpad.loopexit.us = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit

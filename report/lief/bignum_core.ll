@@ -205,7 +205,7 @@ bb.a:
   %i.i = load i64, ptr %i.h, align 8, !tbaa !21
   br label %.lr.ph53.i.us.us
 
-.lr.ph53.i.us.us:                                 ; preds = %.preheader40.i.us.us, %.lr.ph53.i.us.us
+.lr.ph53.i.us.us:                                 ; preds = %.lr.ph53.i.us.us, %.preheader40.i.us.us
   %.052.i.us.us = phi i64 [ %i.j, %.lr.ph53.i.us.us ], [ %i.f, %.preheader40.i.us.us ]
   %.151.i.us.us = phi i64 [ %i.l, %.lr.ph53.i.us.us ], [ 0, %.preheader40.i.us.us ]
   %.13150.i.us.us = phi ptr [ %i.m, %.lr.ph53.i.us.us ], [ %i.g, %.preheader40.i.us.us ] ; 3 uses
@@ -303,7 +303,7 @@ mbedtls_mpi_core_mla.exit.loopexit.us.us:         ; preds = %.lr.ph60.i.us.us
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !21
   br label %.lr.ph53.i.us22
 
-.lr.ph53.i.us22:                                  ; preds = %.preheader40.i.us18, %.lr.ph53.i.us22
+.lr.ph53.i.us22:                                  ; preds = %.lr.ph53.i.us22, %.preheader40.i.us18
   %.052.i.us23 = phi i64 [ %i.aq, %.lr.ph53.i.us22 ], [ %i.f, %.preheader40.i.us18 ]
   %.151.i.us24 = phi i64 [ %i.as, %.lr.ph53.i.us22 ], [ 0, %.preheader40.i.us18 ]
   %.13150.i.us25 = phi ptr [ %i.at, %.lr.ph53.i.us22 ], [ %i.an, %.preheader40.i.us18 ] ; 3 uses

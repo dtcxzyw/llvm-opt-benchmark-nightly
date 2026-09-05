@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a
   %.promoted7981.us = phi i8 [ %i.af, %.outer.us ], [ %i.l, %.lr.ph.lr.ph ]
   br label %bb.d
 
-bb.d:                                             ; preds = %.lr.ph.us, %bb.g
+bb.d:                                             ; preds = %bb.g, %.lr.ph.us
   %i.n = phi i32 [ 3, %.lr.ph.us ], [ %i.aa, %bb.g ]
   %.03961.us85 = phi i32 [ 11, %.lr.ph.us ], [ %i.z, %bb.g ] ; 4 uses
   %i.o = phi i8 [ %.promoted7981.us, %.lr.ph.us ], [ %i.y, %bb.g ] ; 3 uses

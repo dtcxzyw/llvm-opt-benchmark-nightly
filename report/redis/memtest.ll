@@ -204,7 +204,7 @@ bb.a:
   %i.i = mul nuw nsw i64 %.03743.us, %i.b
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph.us, %bb.d
+bb.b:                                             ; preds = %bb.d, %.lr.ph.us
   %.142.us45 = phi i64 [ %.044.us, %.lr.ph.us ], [ %i.o, %bb.d ] ; 2 uses
   %.03441.us46 = phi ptr [ %i.h, %.lr.ph.us ], [ %i.r, %bb.d ] ; 2 uses
   %.03540.us47 = phi ptr [ %i.g, %.lr.ph.us ], [ %i.q, %bb.d ] ; 2 uses
@@ -377,7 +377,7 @@ bb.a:
   %i.q = mul nuw nsw i64 %.03641.us, %i.b
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph.us, %bb.d
+bb.b:                                             ; preds = %bb.d, %.lr.ph.us
   %.040.us42 = phi ptr [ %i.h, %.lr.ph.us ], [ %i.s, %bb.d ] ; 2 uses
   %.03439.us43 = phi ptr [ %i.g, %.lr.ph.us ], [ %i.r, %bb.d ] ; 2 uses
   %.03538.us44 = phi i64 [ 0, %.lr.ph.us ], [ %i.ag, %bb.d ] ; 3 uses

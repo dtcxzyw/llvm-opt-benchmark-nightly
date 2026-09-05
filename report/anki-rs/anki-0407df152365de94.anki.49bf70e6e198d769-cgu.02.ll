@@ -205,17 +205,6 @@ bb.m:                                             ; preds = %bb.l
   %.not.i.not33.us.i.i.i = icmp eq i16 %i.im, 0
   br i1 %.not.i.not33.us.i.i.i, label %._crit_edge.split.us.us.i.i.i, label %.lr.ph.us.i.i.i
 
-._crit_edge.split.us.us.i.i.i:                    ; preds = %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$4find28_$u7b$$u7b$closure$u7d$$u7d$17h3de96602e7bad486E.exit.thread.us.us.i.i.i", %.split.us44.i.i.i
-  %8 = icmp eq <16 x i8> %.sroa.0.0.copyload.i27.us.i.i.i, splat (i8 -1)
-  %9 = bitcast <16 x i1> %8 to i16
-  %10 = icmp eq i16 %9, 0
-  br i1 %10, label %11, label %select.unfold.i, !prof !19
-
-11:                                               ; preds = %._crit_edge.split.us.us.i.i.i
-  %12 = add i64 %.sroa.9.0.i.us.i.i.i, 16         ; 2 uses
-  %13 = add i64 %.sroa.01.0.i.us.i.i.i, %12
-  br label %.split.us44.i.i.i
-
 .lr.ph.us.i.i.i:                                  ; preds = %.split.us44.i.i.i, %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$4find28_$u7b$$u7b$closure$u7d$$u7d$17h3de96602e7bad486E.exit.thread.us.us.i.i.i"
   %.sroa.06.0.i34.us.us.i.i.i = phi i16 [ %i.iz, %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$4find28_$u7b$$u7b$closure$u7d$$u7d$17h3de96602e7bad486E.exit.thread.us.us.i.i.i" ], [ %i.im, %.split.us44.i.i.i ] ; 3 uses
   %i.in = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.06.0.i34.us.us.i.i.i, i1 true)
@@ -250,6 +239,17 @@ bb.n:                                             ; preds = %.lr.ph.us.i.i.i
   %i.iz = and i16 %i.iy, %.sroa.06.0.i34.us.us.i.i.i ; 2 uses
   %.not.i.not.us.us.i.i.i = icmp eq i16 %i.iz, 0
   br i1 %.not.i.not.us.us.i.i.i, label %._crit_edge.split.us.us.i.i.i, label %.lr.ph.us.i.i.i
+
+._crit_edge.split.us.us.i.i.i:                    ; preds = %"_ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$4find28_$u7b$$u7b$closure$u7d$$u7d$17h3de96602e7bad486E.exit.thread.us.us.i.i.i", %.split.us44.i.i.i
+  %8 = icmp eq <16 x i8> %.sroa.0.0.copyload.i27.us.i.i.i, splat (i8 -1)
+  %9 = bitcast <16 x i1> %8 to i16
+  %10 = icmp eq i16 %9, 0
+  br i1 %10, label %11, label %select.unfold.i, !prof !19
+
+11:                                               ; preds = %._crit_edge.split.us.us.i.i.i
+  %12 = add i64 %.sroa.9.0.i.us.i.i.i, 16         ; 2 uses
+  %13 = add i64 %.sroa.01.0.i.us.i.i.i, %12
+  br label %.split.us44.i.i.i
 
 .split.i.i.i:                                     ; preds = %.noexc, %bb.o
   %.sroa.9.0.i.i.i.i = phi i64 [ %i.ju, %bb.o ], [ 0, %.noexc ]

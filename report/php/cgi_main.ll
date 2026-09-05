@@ -202,7 +202,7 @@ bb.p:                                             ; preds = %bb.n, %bb.o, %.thre
   %.148.ph105.us = phi ptr [ %i.bk, %.outer.us ], [ %i.aw, %.lr.ph98.lr.ph ]
   br label %bb.q
 
-bb.q:                                             ; preds = %.lr.ph98.us, %bb.v
+bb.q:                                             ; preds = %bb.v, %.lr.ph98.us
   %.14897.us = phi ptr [ %.148.ph105.us, %.lr.ph98.us ], [ %i.bh, %bb.v ] ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.14897.us, i64 8
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !44 ; 4 uses

@@ -202,8 +202,8 @@ bb.d:                                             ; preds = %.lr.ph.us
   %.not54 = icmp eq i64 %i.aa, 0
   br i1 %.not54, label %.critedge.us43, label %.lr.ph.us, !llvm.loop !102
 
-.critedge.us43:                                   ; preds = %.lr.ph.us, %bb.d, %.split.split.us
-  %.0.lcssa.us44 = phi i64 [ 0, %.split.split.us ], [ 0, %bb.d ], [ %.033.us, %.lr.ph.us ]
+.critedge.us43:                                   ; preds = %bb.d, %.lr.ph.us, %.split.split.us
+  %.0.lcssa.us44 = phi i64 [ 0, %.split.split.us ], [ %.033.us, %.lr.ph.us ], [ 0, %bb.d ]
   %i.ab = tail call ptr @xmemdupz(ptr noundef nonnull %i.v, i64 noundef %.0.lcssa.us44) #13 ; 3 uses
   br i1 %.not30, label %bb.f, label %bb.e
 

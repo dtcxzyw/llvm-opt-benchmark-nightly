@@ -205,7 +205,7 @@ bb.yy:                                            ; preds = %bb.yw
   %.sroa.01497.0.ph2717.us = phi ptr [ %i.bml, %.outer.us ], [ %i.bmg, %bb.yy ]
   br label %bb.yz
 
-bb.yz:                                            ; preds = %.lr.ph2712.us, %5
+bb.yz:                                            ; preds = %5, %.lr.ph2712.us
   %.sroa.01497.02711.us2720 = phi ptr [ %.sroa.01497.0.ph2717.us, %.lr.ph2712.us ], [ %i.bml, %5 ] ; 7 uses
   %i.bml = getelementptr inbounds nuw i8, ptr %.sroa.01497.02711.us2720, i64 120 ; 4 uses
   %i.bmm = getelementptr inbounds nuw i8, ptr %.sroa.01497.02711.us2720, i64 16
@@ -226,6 +226,10 @@ bb.zb:                                            ; preds = %bb.za
   %i.bmu = load i8, ptr %i.bmt, align 2, !range !20, !noundef !3
   %i.bmv = icmp eq i8 %i.bmu, 1
   br i1 %i.bmv, label %5, label %bb.zc
+
+5:                                                ; preds = %bb.zb, %bb.za, %bb.yz
+  %6 = icmp eq ptr %i.bml, %i.bmj
+  br i1 %6, label %.outer._crit_edge, label %bb.yz
 
 bb.zc:                                            ; preds = %bb.zb
   %i.bmw = getelementptr inbounds nuw i8, ptr %.sroa.01497.02711.us2720, i64 96 ; 2 uses
@@ -266,10 +270,6 @@ bb.zg:                                            ; preds = %bb.zf, %bb.ze
   %.sroa.0247.1.us = phi ptr [ null, %bb.zd ], [ %.sroa.0247.0.ph2719.us, %bb.zg ], [ %i.bmw, %bb.zc ]
   %i.bnd = icmp eq ptr %i.bml, %i.bmj
   br i1 %i.bnd, label %.outer._crit_edge, label %.lr.ph2712.us
-
-5:                                                ; preds = %bb.zb, %bb.za, %bb.yz
-  %6 = icmp eq ptr %i.bml, %i.bmj
-  br i1 %6, label %.outer._crit_edge, label %bb.yz
 
 .thread1816.loopexit.split.us:                    ; preds = %bb.zf
   %lpad.loopexit1954.us = landingpad { ptr, i32 }
