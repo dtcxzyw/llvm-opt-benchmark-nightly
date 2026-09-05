@@ -206,21 +206,21 @@ bb.z:                                             ; preds = %_ZN4llvm26CodeExtra
   %i.hb = load ptr, ptr %i.ha, align 8, !tbaa !174
   %i.hc = getelementptr inbounds i8, ptr %i.hb, i64 -24
   %i.hd = call { ptr, i64 } @_ZNK4llvm10BasicBlock16getFirstNonPHIItEv(ptr noundef nonnull align 8 dereferenceable(80) %i.hc) #26 ; 2 uses
-  %12 = load ptr, ptr %i.ha, align 8, !tbaa !174
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 8
-  %14 = load ptr, ptr %13, align 8, !tbaa !174    ; 2 uses
   %.fca.0.extract1.i.i = extractvalue { ptr, i64 } %i.hd, 0 ; 2 uses
   %.fca.1.extract2.i.i = extractvalue { ptr, i64 } %i.hd, 1
   %.not.i.i.i = icmp eq ptr %.fca.0.extract1.i.i, null
-  %15 = and i64 %.fca.1.extract2.i.i, 65280
-  %16 = or disjoint i64 %15, 1
-  %.sroa.2.8.insert.ext.i.i = select i1 %.not.i.i.i, i64 1, i64 %16
+  %12 = and i64 %.fca.1.extract2.i.i, 65280
+  %13 = or disjoint i64 %12, 1
+  %.sroa.2.8.insert.ext.i.i = select i1 %.not.i.i.i, i64 1, i64 %13
+  %14 = load ptr, ptr %i.ha, align 8, !tbaa !174
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 8
+  %16 = load ptr, ptr %15, align 8, !tbaa !174    ; 2 uses
   %i.he = getelementptr inbounds nuw i8, ptr %i.gz, i64 80 ; 2 uses
-  %.not2024.i = icmp eq ptr %14, %i.he
+  %.not2024.i = icmp eq ptr %16, %i.he
   br i1 %.not2024.i, label %_ZL40raiseUserConstantDataAllocasToEntryBlockRN4llvm13IRBuilderBaseEPNS_8FunctionE.exit, label %.lr.ph26.i
 
 .lr.ph26.i:                                       ; preds = %.lr.ph156, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_10BasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i
-  %.sroa.016.025.i = phi ptr [ %i.hj, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_10BasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i ], [ %14, %.lr.ph156 ] ; 3 uses
+  %.sroa.016.025.i = phi ptr [ %i.hj, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_10BasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i ], [ %16, %.lr.ph156 ] ; 3 uses
   %i.hf = getelementptr inbounds nuw i8, ptr %.sroa.016.025.i, i64 32
   %i.hg = load ptr, ptr %i.hf, align 8, !tbaa !131 ; 2 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %.sroa.016.025.i, i64 24 ; 2 uses
@@ -623,10 +623,10 @@ bb.a:
   %10 = alloca %"class.llvm::Twine", align 8      ; 4 uses
   %i.a = icmp ne ptr %3, null
   %or.cond = and i1 %i.a, %5
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 592 ; 4 uses
   br i1 %or.cond, label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_10BasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 592
   %i.b = load <2 x ptr>, ptr %11, align 8, !noalias !2785
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 608
   %.sroa.2.0.copyload.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !noalias !2785
@@ -635,7 +635,8 @@ bb.b:                                             ; preds = %bb.a
 
 _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_10BasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 584 ; 5 uses
-  %i.d = load ptr, ptr %11, align 8, !tbaa !146   ; 3 uses
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 592 ; 3 uses
+  %i.d = load ptr, ptr %12, align 8, !tbaa !146   ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #26
   %i.e = getelementptr inbounds nuw i8, ptr %7, i64 32
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -702,7 +703,7 @@ _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_10Bas
   %i.ap = getelementptr inbounds nuw i8, ptr %i.p, i64 24
   %i.aq = getelementptr inbounds nuw i8, ptr %i.p, i64 40
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !148
-  store ptr %i.ar, ptr %11, align 8, !tbaa !146
+  store ptr %i.ar, ptr %12, align 8, !tbaa !146
   store ptr %i.ap, ptr %i.al, align 8
   store i16 0, ptr %.sroa.2.0..sroa_idx.i.i27, align 8
   %i.as = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK4llvm11Instruction17getStableDebugLocEv(ptr noundef nonnull align 8 dereferenceable(72) %i.p) #26
@@ -726,7 +727,7 @@ _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_10Bas
   %i.bc = getelementptr inbounds i8, ptr %i.bb, i64 -24
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !148
-  store ptr %i.be, ptr %11, align 8, !tbaa !146
+  store ptr %i.be, ptr %12, align 8, !tbaa !146
   store ptr %i.bb, ptr %i.al, align 8
   store i16 0, ptr %.sroa.2.0..sroa_idx.i.i27, align 8
   %i.bf = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK4llvm11Instruction17getStableDebugLocEv(ptr noundef nonnull align 8 dereferenceable(72) %i.bc) #26

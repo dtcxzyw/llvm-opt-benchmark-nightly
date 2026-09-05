@@ -205,8 +205,7 @@ bb.dh:                                            ; preds = %bb.dh, %.lr.ph66.i
   br i1 %.not52.i, label %._crit_edge67.i, label %bb.dh
 
 .preheader.i:                                     ; preds = %._crit_edge67.i, %bb.dp
-  %.sroa.039.070.i = phi ptr [ %.sroa.039.0.i, %bb.dp ], [ %.sroa.039.068.i, %._crit_edge67.i ] ; 7 uses
-  %27 = getelementptr inbounds nuw i8, ptr %.sroa.039.070.i, i64 8 ; 2 uses
+  %.sroa.039.070.i = phi ptr [ %.sroa.039.0.i, %bb.dp ], [ %.sroa.039.068.i, %._crit_edge67.i ] ; 8 uses
   %i.atu = getelementptr inbounds nuw i8, ptr %.sroa.039.070.i, i64 24
   %i.atv = load i32, ptr %i.atu, align 8, !tbaa !334
   %i.atw = sext i32 %i.atv to i64
@@ -258,6 +257,7 @@ _ZN4llvm11SmallVectorIPNS_17MachineBasicBlockELj4EED2Ev.exit.i: ; preds = %bb.dk
   br label %_ZN12_GLOBAL__N_121MachineBlockPlacement16assignBlockOrderERKSt6vectorIPKN4llvm17MachineBasicBlockESaIS5_EE.exit
 
 bb.dl:                                            ; preds = %.preheader.i
+  %27 = getelementptr inbounds nuw i8, ptr %.sroa.039.070.i, i64 8
   %i.aun = load ptr, ptr %27, align 8, !tbaa !244 ; 2 uses
   %i.auo = getelementptr inbounds nuw i8, ptr %.sroa.039.070.i, i64 32
   %i.aup = load ptr, ptr %i.auo, align 8, !tbaa !335
@@ -297,7 +297,8 @@ bb.do:                                            ; preds = %bb.dn
 bb.dp:                                            ; preds = %bb.do, %bb.dn
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #25
-  %.sroa.039.0.i = load ptr, ptr %27, align 8, !tbaa !244 ; 2 uses
+  %28 = getelementptr inbounds nuw i8, ptr %.sroa.039.070.i, i64 8
+  %.sroa.039.0.i = load ptr, ptr %28, align 8, !tbaa !244 ; 2 uses
   %.not53.i = icmp eq ptr %.sroa.039.0.i, %i.atn
   br i1 %.not53.i, label %._crit_edge71.i, label %.preheader.i
 
