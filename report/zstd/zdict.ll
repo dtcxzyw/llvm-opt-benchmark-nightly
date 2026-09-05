@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.aw, %.lr.ph152.i
   br i1 %.not109.i.i, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.ga = add i32 %.095150.i.i, 1
+  %i.ga = add nuw i32 %.095150.i.i, 1
   br label %bb.aw, !llvm.loop !63
 
 bb.q:                                             ; preds = %bb.o
@@ -608,21 +608,24 @@ begin_hunk_1_@ZDICT_trainFromBuffer_legacy:bb.a
   br label %bb.ah
 
 bb.ah:                                            ; preds = %.preheader312.56.i.i.i, %.preheader312.55.i.i.i, %.preheader312.54.i.i.i, %.preheader312.53.i.i.i, %.preheader312.52.i.i.i, %.preheader312.51.i.i.i, %.preheader312.50.i.i.i, %.preheader312.49.i.i.i, %.preheader312.48.i.i.i, %.preheader312.47.i.i.i, %.preheader312.46.i.i.i, %.preheader312.45.i.i.i, %.preheader312.44.i.i.i, %.preheader312.43.i.i.i, %.preheader312.42.i.i.i, %.preheader312.41.i.i.i, %.preheader312.40.i.i.i, %.preheader312.39.i.i.i, %.preheader312.38.i.i.i, %.preheader312.37.i.i.i, %.preheader312.36.i.i.i, %.preheader312.35.i.i.i, %.preheader312.34.i.i.i, %.preheader312.33.i.i.i, %.preheader312.32.i.i.i, %.preheader312.31.i.i.i, %.preheader312.30.i.i.i, %.preheader312.29.i.i.i, %.preheader312.28.i.i.i, %.preheader312.27.i.i.i, %.preheader312.26.i.i.i, %.preheader312.25.i.i.i, %.preheader312.24.i.i.i, %.preheader312.23.i.i.i, %.preheader312.22.i.i.i, %.preheader312.21.i.i.i, %.preheader312.20.i.i.i, %.preheader312.19.i.i.i, %.preheader312.18.i.i.i, %.preheader312.17.i.i.i, %.preheader312.16.i.i.i, %.preheader312.15.i.i.i, %.preheader312.14.i.i.i, %.preheader312.13.i.i.i, %.preheader312.12.i.i.i, %.preheader312.11.i.i.i, %.preheader312.10.i.i.i, %.preheader312.9.i.i.i, %.preheader312.8.i.i.i, %.preheader312.7.i.i.i, %.preheader312.6.i.i.i, %.preheader312.5.i.i.i, %.preheader312.4.i.i.i, %.preheader312.3.i.i.i, %.preheader312.2.i.i.i, %.preheader312.1.i.i.i, %.preheader312.preheader.i.i.i
-  %.0203.lcssa.i.i.i = phi i32 [ 63, %.preheader312.preheader.i.i.i ], [ 24, %.preheader312.39.i.i.i ], [ 62, %.preheader312.1.i.i.i ], [ %spec.select.i.i.i, %.preheader312.56.i.i.i ], [ 61, %.preheader312.2.i.i.i ], [ 34, %.preheader312.29.i.i.i ], [ 60, %.preheader312.3.i.i.i ], [ 8, %.preheader312.55.i.i.i ], [ 59, %.preheader312.4.i.i.i ], [ 21, %.preheader312.42.i.i.i ], [ 58, %.preheader312.5.i.i.i ], [ 9, %.preheader312.54.i.i.i ], [ 57, %.preheader312.6.i.i.i ], [ 33, %.preheader312.30.i.i.i ], [ 56, %.preheader312.7.i.i.i ], [ 10, %.preheader312.53.i.i.i ], [ 55, %.preheader312.8.i.i.i ], [ 27, %.preheader312.36.i.i.i ], [ 54, %.preheader312.9.i.i.i ], [ 11, %.preheader312.52.i.i.i ], [ 53, %.preheader312.10.i.i.i ], [ 32, %.preheader312.31.i.i.i ], [ 52, %.preheader312.11.i.i.i ], [ 12, %.preheader312.51.i.i.i ], [ 51, %.preheader312.12.i.i.i ], [ 22, %.preheader312.41.i.i.i ], [ 50, %.preheader312.13.i.i.i ], [ 13, %.preheader312.50.i.i.i ], [ 49, %.preheader312.14.i.i.i ], [ 31, %.preheader312.32.i.i.i ], [ 48, %.preheader312.15.i.i.i ], [ 14, %.preheader312.49.i.i.i ], [ 47, %.preheader312.16.i.i.i ], [ 25, %.preheader312.38.i.i.i ], [ 46, %.preheader312.17.i.i.i ], [ 15, %.preheader312.48.i.i.i ], [ 45, %.preheader312.18.i.i.i ], [ 30, %.preheader312.33.i.i.i ], [ 44, %.preheader312.19.i.i.i ], [ 16, %.preheader312.47.i.i.i ], [ 43, %.preheader312.20.i.i.i ], [ 23, %.preheader312.40.i.i.i ], [ 42, %.preheader312.21.i.i.i ], [ 17, %.preheader312.46.i.i.i ], [ 41, %.preheader312.22.i.i.i ], [ 29, %.preheader312.34.i.i.i ], [ 40, %.preheader312.23.i.i.i ], [ 18, %.preheader312.45.i.i.i ], [ 39, %.preheader312.24.i.i.i ], [ 26, %.preheader312.37.i.i.i ], [ 38, %.preheader312.25.i.i.i ], [ 19, %.preheader312.44.i.i.i ], [ 37, %.preheader312.26.i.i.i ], [ 28, %.preheader312.35.i.i.i ], [ 36, %.preheader312.27.i.i.i ], [ 20, %.preheader312.43.i.i.i ], [ 35, %.preheader312.28.i.i.i ] ; 2 uses
+  %.0203.lcssa.i.i.i = phi i32 [ 63, %.preheader312.preheader.i.i.i ], [ 24, %.preheader312.39.i.i.i ], [ 62, %.preheader312.1.i.i.i ], [ %spec.select.i.i.i, %.preheader312.56.i.i.i ], [ 61, %.preheader312.2.i.i.i ], [ 34, %.preheader312.29.i.i.i ], [ 60, %.preheader312.3.i.i.i ], [ 8, %.preheader312.55.i.i.i ], [ 59, %.preheader312.4.i.i.i ], [ 21, %.preheader312.42.i.i.i ], [ 58, %.preheader312.5.i.i.i ], [ 9, %.preheader312.54.i.i.i ], [ 57, %.preheader312.6.i.i.i ], [ 33, %.preheader312.30.i.i.i ], [ 56, %.preheader312.7.i.i.i ], [ 10, %.preheader312.53.i.i.i ], [ 55, %.preheader312.8.i.i.i ], [ 27, %.preheader312.36.i.i.i ], [ 54, %.preheader312.9.i.i.i ], [ 11, %.preheader312.52.i.i.i ], [ 53, %.preheader312.10.i.i.i ], [ 32, %.preheader312.31.i.i.i ], [ 52, %.preheader312.11.i.i.i ], [ 12, %.preheader312.51.i.i.i ], [ 51, %.preheader312.12.i.i.i ], [ 22, %.preheader312.41.i.i.i ], [ 50, %.preheader312.13.i.i.i ], [ 13, %.preheader312.50.i.i.i ], [ 49, %.preheader312.14.i.i.i ], [ 31, %.preheader312.32.i.i.i ], [ 48, %.preheader312.15.i.i.i ], [ 14, %.preheader312.49.i.i.i ], [ 47, %.preheader312.16.i.i.i ], [ 25, %.preheader312.38.i.i.i ], [ 46, %.preheader312.17.i.i.i ], [ 15, %.preheader312.48.i.i.i ], [ 45, %.preheader312.18.i.i.i ], [ 30, %.preheader312.33.i.i.i ], [ 44, %.preheader312.19.i.i.i ], [ 16, %.preheader312.47.i.i.i ], [ 43, %.preheader312.20.i.i.i ], [ 23, %.preheader312.40.i.i.i ], [ 42, %.preheader312.21.i.i.i ], [ 17, %.preheader312.46.i.i.i ], [ 41, %.preheader312.22.i.i.i ], [ 29, %.preheader312.34.i.i.i ], [ 40, %.preheader312.23.i.i.i ], [ 18, %.preheader312.45.i.i.i ], [ 39, %.preheader312.24.i.i.i ], [ 26, %.preheader312.37.i.i.i ], [ 38, %.preheader312.25.i.i.i ], [ 19, %.preheader312.44.i.i.i ], [ 37, %.preheader312.26.i.i.i ], [ 28, %.preheader312.35.i.i.i ], [ 36, %.preheader312.27.i.i.i ], [ 20, %.preheader312.43.i.i.i ], [ 35, %.preheader312.28.i.i.i ] ; 3 uses
   %i.pp = zext nneg i32 %.0203.lcssa.i.i.i to i64
   %i.pq = getelementptr i8, ptr %i.lk, i64 %i.pp
   %i.pr = getelementptr i8, ptr %i.pq, i64 -1
   %i.ps = load i8, ptr %i.pr, align 1, !tbaa !21
+  %7 = add nuw nsw i32 %.0203.lcssa.i.i.i, 1
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ai, %bb.ah
-  %.0202.i.i.i = phi i32 [ %.0203.lcssa.i.i.i, %bb.ah ], [ %i.py, %bb.ai ] ; 10 uses
-  %i.pt = zext i32 %.0202.i.i.i to i64            ; 6 uses
+  %indvars.iv376.i.i.i = phi i32 [ %i.py, %bb.ai ], [ %7, %bb.ah ] ; 3 uses
+  %.0202.i.i.i = phi i32 [ %8, %bb.ai ], [ %.0203.lcssa.i.i.i, %bb.ah ] ; 8 uses
+  %i.pt = zext i32 %.0202.i.i.i to i64            ; 4 uses
   %i.pu = getelementptr i8, ptr %i.lk, i64 %i.pt
   %i.pv = getelementptr i8, ptr %i.pu, i64 -2
   %i.pw = load i8, ptr %i.pv, align 1, !tbaa !21
   %i.px = icmp eq i8 %i.pw, %i.ps
-  %i.py = add i32 %.0202.i.i.i, -1
+  %8 = add i32 %.0202.i.i.i, -1
+  %i.py = add i32 %indvars.iv376.i.i.i, -1
   br i1 %i.px, label %bb.ai, label %bb.aj, !llvm.loop !73
 
 bb.aj:                                            ; preds = %bb.ai
@@ -631,22 +634,22 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj
   store i32 0, ptr %i.fu, align 4, !tbaa !8
-  %xtraiter181 = and i64 %i.pt, 1
-  %i.qa = icmp eq i32 %.0202.i.i.i, 7
+  %9 = add i32 %indvars.iv376.i.i.i, -7           ; 3 uses
+  %xtraiter180 = and i32 %9, 1
+  %i.qa = icmp eq i32 %indvars.iv376.i.i.i, 8
   br i1 %i.qa, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.ak
-  %7 = and i64 %i.pt, 4294967294
-  %8 = add nsw i64 %7, -8
+  %unroll_iter184 = and i32 %9, -2
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.al, %.new
   %i.qb = phi i32 [ 0, %.new ], [ %i.qo, %bb.al ]
   %indvars.iv373.i.i.i = phi i64 [ 7, %.new ], [ %indvars.iv.next374.i.i.i.1, %bb.al ] ; 5 uses
-  %niter186 = phi i64 [ 0, %.new ], [ %niter186.next.1, %bb.al ] ; 2 uses
+  %niter185 = phi i32 [ 0, %.new ], [ %niter185.next.1, %bb.al ]
   %i.qc = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv373.i.i.i
   %i.qd = load i32, ptr %i.qc, align 4, !tbaa !8
-  %i.qe = trunc nuw i64 %indvars.iv373.i.i.i to i32
+  %i.qe = trunc i64 %indvars.iv373.i.i.i to i32
   %i.qf = add i32 %i.qe, -3
   %i.qg = mul i32 %i.qf, %i.qd
   %i.qh = add i32 %i.qg, %i.qb                    ; 2 uses
@@ -655,29 +658,29 @@ bb.al:                                            ; preds = %bb.al, %.new
   %indvars.iv.next374.i.i.i = add nuw nsw i64 %indvars.iv373.i.i.i, 1 ; 3 uses
   %i.qj = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next374.i.i.i
   %i.qk = load i32, ptr %i.qj, align 4, !tbaa !8
-  %i.ql = trunc nuw i64 %indvars.iv.next374.i.i.i to i32
+  %i.ql = trunc i64 %indvars.iv.next374.i.i.i to i32
   %i.qm = add i32 %i.ql, -3
   %i.qn = mul i32 %i.qm, %i.qk
   %i.qo = add i32 %i.qn, %i.qh                    ; 3 uses
   %i.qp = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv.next374.i.i.i
   store i32 %i.qo, ptr %i.qp, align 4, !tbaa !8
   %indvars.iv.next374.i.i.i.1 = add nuw nsw i64 %indvars.iv373.i.i.i, 2 ; 2 uses
-  %niter186.next.1 = add i64 %niter186, 2
-  %niter186.ncmp.1 = icmp eq i64 %niter186, %8
+  %niter185.next.1 = add i32 %niter185, 2         ; 2 uses
+  %niter186.ncmp.1 = icmp eq i32 %niter185.next.1, %unroll_iter184
   br i1 %niter186.ncmp.1, label %.unr-lcssa, label %bb.al, !llvm.loop !74
 
 .unr-lcssa:                                       ; preds = %bb.al
-  %lcmp.mod183.not = icmp eq i64 %xtraiter181, 0
+  %lcmp.mod183.not = icmp eq i32 %xtraiter180, 0
   br i1 %lcmp.mod183.not, label %bb.am, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %bb.ak
   %.epil.init = phi i32 [ 0, %bb.ak ], [ %i.qo, %.unr-lcssa ]
   %indvars.iv373.i.i.i.epil.init = phi i64 [ 7, %bb.ak ], [ %indvars.iv.next374.i.i.i.1, %.unr-lcssa ] ; 3 uses
-  %lcmp.mod184 = trunc i32 %.0202.i.i.i to i1
+  %lcmp.mod184 = trunc i32 %9 to i1
   tail call void @llvm.assume(i1 %lcmp.mod184)
   %i.qq = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv373.i.i.i.epil.init
   %i.qr = load i32, ptr %i.qq, align 4, !tbaa !8
-  %i.qs = trunc nuw i64 %indvars.iv373.i.i.i.epil.init to i32
+  %i.qs = trunc i64 %indvars.iv373.i.i.i.epil.init to i32
   %i.qt = add i32 %i.qs, -3
   %i.qu = mul i32 %i.qt, %i.qr
   %i.qv = add i32 %i.qu, %.epil.init
@@ -777,7 +780,7 @@ ZDICT_analyzePos.exit.thread.i.i:                 ; preds = %.lr.ph354.i.i.i.pro
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
-  %i.sd = add i32 %.095150.i.i, 1
+  %i.sd = add nuw i32 %.095150.i.i, 1
   br label %bb.aw, !llvm.loop !63
 
 ZDICT_analyzePos.exit.i.i:                        ; preds = %._crit_edge348.i.i.i, %bb.ao

@@ -204,10 +204,14 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph116, %._crit_edge
-  %.0102114.a = phi i32 [ 0, %.lr.ph116 ], [ %i.at, %._crit_edge ] ; 2 uses
-  %4 = mul i32 %.0102114.a, 2560
-  %i.af = sext i32 %4 to i64                      ; 3 uses
+  %.0102114.a = phi i32 [ 0, %.lr.ph116 ], [ %indvars.iv.next122, %._crit_edge ] ; 2 uses
+  %.0102114 = phi i32 [ 0, %.lr.ph116 ], [ %i.at, %._crit_edge ] ; 2 uses
+  %i.af = sext i32 %.0102114.a to i64
   %i.ag = sub nsw i64 %i.ad, %i.af
+  %4 = call i64 @llvm.umax.i64(i64 %i.ag, i64 1)
+  %umax = call i64 @llvm.umin.i64(i64 %4, i64 2560)
+  %5 = mul i32 %.0102114, 2560
+  %6 = sext i32 %5 to i64                         ; 2 uses
   call fastcc void @ide_wait_intr(ptr noundef %i.l)
   %i.ah = call fastcc zeroext i8 @ide_wait_clear(ptr noundef %i.l, i8 noundef zeroext -128)
   %i.ai = zext i8 %i.ah to i32                    ; 2 uses
@@ -231,28 +235,26 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %bb.j
-  %5 = call i64 @llvm.umin.i64(i64 %i.ag, i64 2560)
-  %.not119 = icmp eq i64 %i.ad, %i.af
+  %.not119 = icmp eq i64 %i.ad, %6
   br i1 %.not119, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.k
-  %i.ap = getelementptr [2 x i8], ptr %i.d, i64 %i.af
+  %i.ap = getelementptr [2 x i8], ptr %i.d, i64 %6
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph, %bb.l
-  %i.aq = phi i64 [ 0, %.lr.ph ], [ %7, %bb.l ]
-  %.0101113 = phi i32 [ 0, %.lr.ph ], [ %6, %bb.l ]
+  %i.aq = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.l ] ; 2 uses
   %i.ar = call zeroext i16 @qpci_io_readw(ptr noundef nonnull %i.m, i64 %i.n, i8 %i.p, i64 noundef 0) #14
   %i.as = getelementptr [2 x i8], ptr %i.ap, i64 %i.aq
   store i16 %i.ar, ptr %i.as, align 2
-  %6 = add i32 %.0101113, 1                       ; 2 uses
-  %7 = sext i32 %6 to i64                         ; 2 uses
-  %8 = icmp ugt i64 %5, %7
-  br i1 %8, label %bb.l, label %._crit_edge, !llvm.loop !19
+  %indvars.iv.next = add nuw nsw i64 %i.aq, 1     ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %umax
+  br i1 %exitcond.not, label %._crit_edge, label %bb.l, !llvm.loop !19
 
 ._crit_edge:                                      ; preds = %bb.l, %bb.k
-  %i.at = add i32 %.0102114.a, 1                  ; 2 uses
+  %i.at = add i32 %.0102114, 1                    ; 2 uses
   %i.au = icmp ult i32 %i.at, %i.ae
+  %indvars.iv.next122 = add i32 %.0102114.a, 2560
   br i1 %i.au, label %bb.g, label %._crit_edge117, !llvm.loop !20
 
 ._crit_edge117:                                   ; preds = %._crit_edge
@@ -489,6 +491,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i16> @llvm.bswap.v4i16(<4 x i16>) #10

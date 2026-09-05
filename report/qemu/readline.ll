@@ -204,13 +204,13 @@ bb.f:                                             ; preds = %bb.e
 
 .loopexit49:                                      ; preds = %.loopexit49.loopexit, %bb.c
   %.038 = phi ptr [ %i.h, %bb.c ], [ %i.m, %.loopexit49.loopexit ] ; 4 uses
-  %.1 = phi i32 [ %i.d, %bb.c ], [ %i.q, %.loopexit49.loopexit ] ; 8 uses
+  %.1 = phi i32 [ %i.d, %bb.c ], [ %i.q, %.loopexit49.loopexit ] ; 7 uses
   %i.r = icmp eq i32 %.1, 63
   br i1 %i.r, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %.loopexit49
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8216 ; 3 uses
-  %i.t = sext i32 %.1 to i64
+  %i.t = sext i32 %.1 to i64                      ; 2 uses
   %i.u = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.t
   %i.v = add nuw i32 %.1, 1
   %i.w = sext i32 %i.v to i64
@@ -225,16 +225,15 @@ bb.g:                                             ; preds = %.loopexit49
   br i1 %i.ac, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.g, %bb.h
-  %.255 = phi i32 [ %3, %bb.h ], [ %.1, %bb.g ]   ; 3 uses
-  %2 = sext i32 %.255 to i64
-  %i.ad = getelementptr inbounds [8 x i8], ptr %i.s, i64 %2
+  %indvars.iv65 = phi i64 [ %indvars.iv.next66, %bb.h ], [ %i.t, %bb.g ] ; 3 uses
+  %i.ad = getelementptr inbounds [8 x i8], ptr %i.s, i64 %indvars.iv65
   %i.ae = load ptr, ptr %i.ad, align 8
   %i.af = icmp eq ptr %i.ae, null
-  br i1 %i.af, label %.thread, label %bb.h
+  br i1 %i.af, label %.thread.loopexit, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph
-  %3 = add nsw i32 %.255, 1                       ; 2 uses
-  %exitcond65.not = icmp eq i32 %3, 64
+  %indvars.iv.next66 = add nsw i64 %indvars.iv65, 1 ; 2 uses
+  %exitcond65.not = icmp eq i64 %indvars.iv.next66, 64
   br i1 %exitcond65.not, label %.loopexit.thread, label %.lr.ph, !llvm.loop !21
 
 bb.i:                                             ; preds = %bb.f
@@ -257,9 +256,13 @@ bb.i:                                             ; preds = %bb.f
   store ptr null, ptr %i.ak, align 8
   br label %.thread
 
-.thread:                                          ; preds = %.lr.ph, %.loopexit.thread
-  %.03643 = phi ptr [ %.03670, %.loopexit.thread ], [ %.038, %.lr.ph ] ; 2 uses
-  %.4 = phi i32 [ 63, %.loopexit.thread ], [ %.255, %.lr.ph ] ; 2 uses
+.thread.loopexit:                                 ; preds = %.lr.ph
+  %2 = trunc nsw i64 %indvars.iv65 to i32
+  br label %.thread
+
+.thread:                                          ; preds = %.thread.loopexit, %.loopexit.thread
+  %.03643 = phi ptr [ %.03670, %.loopexit.thread ], [ %.038, %.thread.loopexit ] ; 2 uses
+  %.4 = phi i32 [ 63, %.loopexit.thread ], [ %2, %.thread.loopexit ] ; 2 uses
   %i.al = icmp eq ptr %.03643, null
   br i1 %i.al, label %.thread.thread, label %g_strdup_inline.exit
 

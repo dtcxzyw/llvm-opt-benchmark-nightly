@@ -205,23 +205,24 @@ bb.ak:                                            ; preds = %bb.ah, %bb.aj
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.aw
-  %i.fm = phi i64 [ %i.fh, %.preheader.lr.ph ], [ %i.hs, %bb.aw ] ; 2 uses
+  %i.fm = phi i64 [ %i.fh, %.preheader.lr.ph ], [ %i.hs, %bb.aw ] ; 3 uses
   %.0179692 = phi i32 [ 0, %.preheader.lr.ph ], [ %i.gc, %bb.aw ]
-  br label %bb.al
+  %19 = zext i32 %.0179692 to i64                 ; 3 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.fm, i64 %19) ; 3 uses
+  %exitcond.not857.not = icmp ugt i64 %i.fm, %19
+  br i1 %exitcond.not857.not, label %bb.am, label %.critedge
 
-bb.al:                                            ; preds = %.preheader, %bb.am
-  %.1180 = phi i32 [ %21, %bb.am ], [ %.0179692, %.preheader ] ; 3 uses
-  %19 = zext i32 %.1180 to i64                    ; 5 uses
-  %20 = icmp ugt i64 %i.fm, %19
-  br i1 %20, label %bb.am, label %.critedge
+bb.al:                                            ; preds = %bb.am
+  %exitcond.not = icmp eq i64 %indvars.iv.next743, %umax
+  br i1 %exitcond.not, label %.critedge, label %bb.am, !llvm.loop !101
 
-bb.am:                                            ; preds = %bb.al
-  %i.fn = getelementptr inbounds nuw i8, ptr %i.dk, i64 %19
+bb.am:                                            ; preds = %.preheader, %bb.al
+  %indvars.iv742858 = phi i64 [ %indvars.iv.next743, %bb.al ], [ %19, %.preheader ] ; 3 uses
+  %i.fn = getelementptr inbounds nuw i8, ptr %i.dk, i64 %indvars.iv742858
   %i.fo = load i8, ptr %i.fn, align 1, !tbaa !18
   %i.fp = zext i8 %i.fo to i64
-  %21 = add i32 %.1180, 1                         ; 2 uses
-  %22 = zext i32 %21 to i64
-  %i.fq = getelementptr inbounds nuw i8, ptr %i.dk, i64 %22
+  %indvars.iv.next743 = add i64 %indvars.iv742858, 1 ; 3 uses
+  %i.fq = getelementptr inbounds nuw i8, ptr %i.dk, i64 %indvars.iv.next743
   %i.fr = load i8, ptr %i.fq, align 1, !tbaa !18
   %i.fs = zext i8 %i.fr to i64
   %i.ft = shl nuw nsw i64 %i.fs, 8
@@ -229,17 +230,22 @@ bb.am:                                            ; preds = %bb.al
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fu, i64 %i.fp
   %i.fw = load i8, ptr %i.fv, align 1, !tbaa !18
   %i.fx = icmp eq i8 %i.fw, -1
-  br i1 %i.fx, label %bb.al, label %.critedge, !llvm.loop !101
+  br i1 %i.fx, label %bb.al, label %..critedge_crit_edge860, !llvm.loop !101
 
-.critedge:                                        ; preds = %bb.al, %bb.am
-  %i.fy = icmp eq i64 %i.fm, %19
+..critedge_crit_edge860:                          ; preds = %bb.am
+  br label %.critedge, !llvm.loop !101
+
+.critedge:                                        ; preds = %bb.al, %..critedge_crit_edge860, %.preheader
+  %.lcssa728 = phi i64 [ %umax, %.preheader ], [ %indvars.iv742858, %..critedge_crit_edge860 ], [ %umax, %bb.al ] ; 4 uses
+  %i.fy = icmp eq i64 %i.fm, %.lcssa728
   br i1 %i.fy, label %.critedge._crit_edge.loopexit, label %bb.an
 
 bb.an:                                            ; preds = %.critedge
-  %i.fz = getelementptr inbounds nuw i8, ptr %i.dk, i64 %19 ; 2 uses
+  %.1180.lcssa = trunc i64 %.lcssa728 to i32
+  %i.fz = getelementptr inbounds nuw i8, ptr %i.dk, i64 %.lcssa728 ; 2 uses
   %i.ga = load i8, ptr %i.fz, align 1, !tbaa !18
   %i.gb = zext i8 %i.ga to i64
-  %i.gc = add i32 %.1180, 1                       ; 2 uses
+  %i.gc = add nuw i32 %.1180.lcssa, 1             ; 2 uses
   %i.gd = zext i32 %i.gc to i64                   ; 2 uses
   %i.ge = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.gd
   %i.gf = load i8, ptr %i.ge, align 1, !tbaa !18
@@ -267,7 +273,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.av
   br i1 %.not280, label %_ZL13TestSignaturePKhS0_m.exit, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.gv = add i64 %i.gu, %19
+  %i.gv = add i64 %i.gu, %.lcssa728
   %i.gw = load i64, ptr %i.a, align 8, !tbaa !134
   %i.gx = add i64 %i.gw, 1
   %.not281 = icmp ugt i64 %i.gv, %i.gx
@@ -668,6 +674,9 @@ declare i64 @wcslen(ptr captures(none)) local_unnamed_addr #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #14

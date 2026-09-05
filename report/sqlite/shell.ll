@@ -206,7 +206,7 @@ bb.ao:                                            ; preds = %bb.an
 
 .critedge2.i:                                     ; preds = %bb.ao, %bb.an
   %indvars.iv.next.i29 = add nuw nsw i64 %indvars.iv.i28, 1 ; 2 uses
-  %i.hn = trunc nsw i64 %indvars.iv.next.i29 to i32
+  %i.hn = trunc nuw nsw i64 %indvars.iv.next.i29 to i32
   store i32 %i.hn, ptr %i.ha, align 8, !tbaa !157
   %exitcond.not = icmp eq i64 %indvars.iv.i28, %smax
   br i1 %exitcond.not, label %sqlite3re_match.exit, label %bb.an, !llvm.loop !773
@@ -609,8 +609,8 @@ bb.a:
   call void @llvm.va_start.p0(ptr nonnull %2)
   %i.b = call ptr @sqlite3_vsnprintf(i32 noundef 50, ptr noundef nonnull %i.a, ptr noundef %1, ptr noundef nonnull %2) #45 ; 0 uses
   call void @llvm.va_end.p0(ptr nonnull %2)
-  %i.c = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #46
-  %i.d = trunc i64 %i.c to i32                    ; 4 uses
+  %i.c = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #46 ; 2 uses
+  %i.d = trunc i64 %i.c to i32                    ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1604 ; 7 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !131  ; 3 uses
   %i.g = and i32 %i.f, 7
@@ -621,15 +621,15 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 1600
+  %3 = and i64 %i.c, 4294967295
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
-  %3 = phi i32 [ %i.f, %.lr.ph.i ], [ %i.u, %bb.d ]
-  %.030.i = phi i32 [ 0, %.lr.ph.i ], [ %5, %bb.d ] ; 2 uses
-  %4 = zext i32 %.030.i to i64
-  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 %4
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.d ], [ 0, %.lr.ph.i ] ; 2 uses
+  %.030.i = phi i32 [ %i.u, %bb.d ], [ %i.f, %.lr.ph.i ]
+  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.l = load i64, ptr %i.k, align 8, !tbaa !130
-  %i.m = lshr i32 %3, 3
+  %i.m = lshr i32 %.030.i, 3
   %i.n = zext nneg i32 %i.m to i64
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.n ; 2 uses
   %i.p = load i64, ptr %i.o, align 8, !tbaa !52
@@ -649,14 +649,18 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.u = phi i32 [ %i.s, %bb.b ], [ 0, %bb.c ]    ; 2 uses
-  %5 = add i32 %.030.i, 8                         ; 3 uses
-  %6 = or disjoint i32 %5, 7
-  %i.v = icmp ult i32 %6, %i.d
-  br i1 %i.v, label %bb.b, label %.loopexit29.i, !llvm.loop !8
+  %indvars.iv.next = add nuw i64 %indvars.iv, 8   ; 3 uses
+  %4 = or disjoint i64 %indvars.iv.next, 7
+  %i.v = icmp ult i64 %4, %3
+  br i1 %i.v, label %bb.b, label %.loopexit29.i.loopexit, !llvm.loop !8
 
-.loopexit29.i:                                    ; preds = %bb.d, %bb.a
-  %i.w = phi i32 [ %i.f, %bb.a ], [ %i.u, %bb.d ]
-  %.1.i = phi i32 [ 0, %bb.a ], [ %5, %bb.d ]     ; 2 uses
+.loopexit29.i.loopexit:                           ; preds = %bb.d
+  %5 = trunc nuw i64 %indvars.iv.next to i32
+  br label %.loopexit29.i
+
+.loopexit29.i:                                    ; preds = %.loopexit29.i.loopexit, %bb.a
+  %i.w = phi i32 [ %i.f, %bb.a ], [ %i.u, %.loopexit29.i.loopexit ]
+  %.1.i = phi i32 [ 0, %bb.a ], [ %5, %.loopexit29.i.loopexit ] ; 2 uses
   %i.x = icmp ult i32 %.1.i, %i.d
   br i1 %i.x, label %.lr.ph32.i, label %SHA3Update.exit
 
@@ -691,7 +695,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.al = phi i32 [ %i.ai, %bb.e ], [ 0, %bb.f ]
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next.i to i32
-  %exitcond = icmp eq i32 %lftr.wideiv, %i.d
+  %exitcond = icmp eq i32 %i.d, %lftr.wideiv
   br i1 %exitcond, label %SHA3Update.exit, label %bb.e, !llvm.loop !9
 
 SHA3Update.exit:                                  ; preds = %bb.g, %.loopexit29.i

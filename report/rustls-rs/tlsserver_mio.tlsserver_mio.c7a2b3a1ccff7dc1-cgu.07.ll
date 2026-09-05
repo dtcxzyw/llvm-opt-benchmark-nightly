@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.d
 
 ._crit_edge:                                      ; preds = %bb.ah, %.outer
   %.sroa.027.2.lcssa = phi i64 [ %.sroa.027.2.ph, %.outer ], [ %i.eb, %bb.ah ]
-  %.lcssa102 = phi i64 [ %i.dp, %.outer ], [ %i.eb, %bb.ah ] ; 3 uses
+  %.lcssa102 = phi i64 [ %i.dp, %.outer ], [ %i.eb, %bb.ah ] ; 4 uses
   %.lcssa99 = phi i64 [ %i.dq, %.outer ], [ %i.ee, %bb.ah ] ; 3 uses
   %.lcssa = phi i1 [ %i.ds, %.outer ], [ %i.eg, %bb.ah ]
   br i1 %.lcssa, label %bb.h, label %bb.g
@@ -235,7 +235,7 @@ bb.h:                                             ; preds = %._crit_edge
 bb.i:                                             ; preds = %bb.h
   %i.al = add nuw i64 %.lcssa102, 32
   %i.am = shl nuw i64 %.lcssa99, 1
-  %..i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.al, i64 range(i64 0, -1) %i.am) ; 4 uses
+  %..i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.al, i64 range(i64 0, -1) %i.am) ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !99
   %.val13.i.i = load ptr, ptr %i.q, align 8, !alias.scope !99
   call fastcc void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner11finish_growCsh8EDedVkTYb_13tlsserver_mio(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.b, i64 %.lcssa99, ptr %.val13.i.i, i64 noundef %..i.i.i, i64 noundef range(i64 1, -9223372036854775807) 1, i64 noundef 1), !noalias !99
@@ -254,6 +254,9 @@ bb.k:                                             ; preds = %bb.i
   %i.aq = icmp sgt i64 %..i.i.i, -1
   call void @llvm.assume(i1 %i.aq)
   store i64 %..i.i.i, ptr %1, align 8, !alias.scope !99
+  %.pre12.i = sub nuw i64 %..i.i.i, %.lcssa102
+  %4 = icmp samesign ugt i64 %.pre12.i, 31
+  call void @llvm.assume(i1 %4)
   %i.ar = load i64, ptr %i.c, align 8, !noundef !7 ; 3 uses
   %i.as = icmp sgt i64 %i.ar, -1
   call void @llvm.assume(i1 %i.as)
@@ -656,7 +659,7 @@ bb.f:                                             ; preds = %bb.d
 
 ._crit_edge:                                      ; preds = %bb.af, %.outer
   %.sroa.027.2.lcssa = phi i64 [ %.sroa.027.2.ph, %.outer ], [ %i.cv, %bb.af ]
-  %.lcssa93 = phi i64 [ %i.ci, %.outer ], [ %i.cv, %bb.af ] ; 3 uses
+  %.lcssa93 = phi i64 [ %i.ci, %.outer ], [ %i.cv, %bb.af ] ; 4 uses
   %.lcssa90 = phi i64 [ %i.cj, %.outer ], [ %i.cy, %bb.af ] ; 3 uses
   %.lcssa = phi i1 [ %i.cl, %.outer ], [ %i.da, %bb.af ]
   br i1 %.lcssa, label %bb.h, label %bb.g
@@ -687,7 +690,7 @@ bb.h:                                             ; preds = %._crit_edge
 bb.i:                                             ; preds = %bb.h
   %i.an = add nuw i64 %.lcssa93, 32
   %i.ao = shl nuw i64 %.lcssa90, 1
-  %..i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.an, i64 range(i64 0, -1) %i.ao) ; 4 uses
+  %..i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.an, i64 range(i64 0, -1) %i.ao) ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !112
   %.val13.i.i = load ptr, ptr %i.r, align 8, !alias.scope !112
   call fastcc void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner11finish_growCsh8EDedVkTYb_13tlsserver_mio(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.b, i64 %.lcssa90, ptr %.val13.i.i, i64 noundef %..i.i.i, i64 noundef range(i64 1, -9223372036854775807) 1, i64 noundef 1), !noalias !112
@@ -706,6 +709,9 @@ bb.k:                                             ; preds = %bb.i
   %i.as = icmp sgt i64 %..i.i.i, -1
   call void @llvm.assume(i1 %i.as)
   store i64 %..i.i.i, ptr %1, align 8, !alias.scope !112
+  %.pre12.i = sub nuw i64 %..i.i.i, %.lcssa93
+  %4 = icmp samesign ugt i64 %.pre12.i, 31
+  call void @llvm.assume(i1 %4)
   %i.at = load i64, ptr %i.d, align 8, !noundef !7 ; 3 uses
   %i.au = icmp sgt i64 %i.at, -1
   call void @llvm.assume(i1 %i.au)
