@@ -204,17 +204,7 @@ _ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.e
   %i.cb = getelementptr inbounds nuw [8 x i8], ptr %i.ca, i64 %i.by
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !579
   %.not = icmp eq ptr %i.cc, null
-  br i1 %.not, label %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit.thread, label %.preheader.preheader
-
-.preheader.preheader:                             ; preds = %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %12 = load ptr, ptr %11, align 8, !tbaa !155    ; 3 uses
-  %13 = getelementptr inbounds i8, ptr %12, i64 -24
-  %14 = getelementptr inbounds nuw i8, ptr %12, i64 16
-  %15 = load ptr, ptr %14, align 8, !tbaa !96     ; 2 uses
-  %16 = load i8, ptr %13, align 8, !tbaa !127
-  %17 = icmp eq i8 %16, 87
-  br i1 %17, label %bb.l, label %bb.m
+  br i1 %.not, label %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit.thread, label %.preheader
 
 _ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit.thread: ; preds = %bb.i, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit
   %i.cd = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -278,7 +268,17 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE28reserveForParamAndGetAddress
   store i32 %i.dg, ptr %i.cp, align 8, !tbaa !42
   br label %_ZN12_GLOBAL__N_19ScattererC2EPN4llvm10BasicBlockENS1_21ilist_iterator_w_bitsINS1_12ilist_detail12node_optionsINS1_11InstructionELb0ELb0EvLb1ES2_EELb0ELb0EEEPNS1_5ValueERKNS_11VectorSplitEPNS1_11SmallVectorISB_Lj8EEE.exit122
 
-bb.l:                                             ; preds = %.preheader.preheader
+.preheader:                                       ; preds = %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit
+  %11 = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %12 = load ptr, ptr %11, align 8, !tbaa !155    ; 3 uses
+  %13 = getelementptr inbounds i8, ptr %12, i64 -24
+  %14 = getelementptr inbounds nuw i8, ptr %12, i64 16
+  %15 = load ptr, ptr %14, align 8, !tbaa !96     ; 2 uses
+  %16 = load i8, ptr %13, align 8, !tbaa !127
+  %17 = icmp eq i8 %16, 87
+  br i1 %17, label %bb.l, label %bb.m
+
+bb.l:                                             ; preds = %.preheader
   %i.dh = tail call { ptr, i64 } @_ZNK4llvm10BasicBlock19getFirstInsertionPtEv(ptr noundef nonnull align 8 dereferenceable(80) %15) #15 ; 2 uses
   %.fca.0.extract1.i.i = extractvalue { ptr, i64 } %i.dh, 0 ; 2 uses
   %.fca.1.extract2.i.i = extractvalue { ptr, i64 } %i.dh, 1
@@ -287,9 +287,9 @@ bb.l:                                             ; preds = %.preheader.preheade
   %.sroa.211.0.extract.trunc.i = select i1 %.not.i.i.i, i16 0, i16 %i.di
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.l, %.preheader.preheader
-  %.sroa.019.0.i = phi ptr [ %.fca.0.extract1.i.i, %bb.l ], [ %12, %.preheader.preheader ] ; 3 uses
-  %.sroa.8.0.i = phi i16 [ %.sroa.211.0.extract.trunc.i, %bb.l ], [ 0, %.preheader.preheader ] ; 2 uses
+bb.m:                                             ; preds = %bb.l, %.preheader
+  %.sroa.019.0.i = phi ptr [ %.fca.0.extract1.i.i, %bb.l ], [ %12, %.preheader ] ; 3 uses
+  %.sroa.8.0.i = phi i16 [ %.sroa.211.0.extract.trunc.i, %bb.l ], [ 0, %.preheader ] ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %15, i64 48
   %.not.i = icmp eq ptr %.sroa.019.0.i, %i.dj
   br i1 %.not.i, label %_ZL22skipPastPhiNodesAndDbgN4llvm21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEE.exit, label %bb.n

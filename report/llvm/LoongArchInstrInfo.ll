@@ -202,13 +202,13 @@ _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12Mac
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !285
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 32
   %.val166 = load i32, ptr %i.cl, align 8         ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %5 = load ptr, ptr %4, align 8, !tbaa !111      ; 6 uses
   %i.cm = and i32 %.val166, 255
   %i.cn = icmp eq i32 %i.cm, 0
   %i.co = lshr i32 %.val166, 8
   %i.cp = and i32 %i.co, 63
   %i.cq = select i1 %i.cn, i32 0, i32 %i.cp       ; 3 uses
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %5 = load ptr, ptr %4, align 8, !tbaa !111      ; 6 uses
   %i.cr = icmp eq i32 %i.cq, 23
   %i.cs = icmp eq ptr %5, %i.n                    ; 2 uses
   br i1 %i.cr, label %bb.l, label %bb.p

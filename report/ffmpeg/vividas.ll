@@ -204,10 +204,10 @@ bb.c:                                             ; preds = %bb.b
 .thread:                                          ; preds = %..thread_crit_edge, %bb.c
   %.pre-phi = phi i64 [ %.pre55, %..thread_crit_edge ], [ 0, %bb.c ]
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 %.pre-phi ; 2 uses
-  %5 = add i32 %.pre, %2
   %i.p = load i32, ptr %i.o, align 1, !tbaa !28
   %i.q = xor i32 %i.p, %.pre
   store i32 %i.q, ptr %i.o, align 1, !tbaa !28
+  %5 = add i32 %.pre, %2
   store i32 %5, ptr %3, align 4, !tbaa !27
   br label %bb.d
 
@@ -216,10 +216,10 @@ bb.c:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.k ; 2 uses
   %i.t = zext nneg i32 %i.r to i64                ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.b, ptr noundef nonnull readonly align 1 dereferenceable(1) %i.s, i64 %i.t, i1 false)
-  %6 = add i32 %.pre, %2
   %i.u = load i32, ptr %i.b, align 4, !tbaa !28
   %i.v = xor i32 %i.u, %.pre
   store i32 %i.v, ptr %i.b, align 4, !tbaa !28
+  %6 = add i32 %.pre, %2
   store i32 %6, ptr %3, align 4, !tbaa !27
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.s, ptr noundef nonnull align 4 dereferenceable(1) %i.b, i64 %i.t, i1 false)
   br label %bb.d
@@ -407,10 +407,10 @@ bb.o:                                             ; preds = %xor_block.exit51.i4
   %i.cj = zext nneg i32 %.139.i33 to i64          ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.a, ptr nonnull readonly align 1 %i.ci, i64 %i.cj, i1 false)
   %i.ck = load i32, ptr %3, align 4, !tbaa !27    ; 2 uses
-  %7 = add i32 %i.ck, %2
   %i.cl = load i32, ptr %i.a, align 4, !tbaa !28
   %i.cm = xor i32 %i.cl, %i.ck
   store i32 %i.cm, ptr %i.a, align 4, !tbaa !28
+  %7 = add i32 %i.ck, %2
   store i32 %7, ptr %3, align 4, !tbaa !27
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ci, ptr nonnull align 4 %i.a, i64 %i.cj, i1 false)
   br label %decode_block.exit43

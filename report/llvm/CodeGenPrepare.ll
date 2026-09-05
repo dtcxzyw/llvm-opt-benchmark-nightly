@@ -205,15 +205,10 @@ _ZNK4llvm4Type22getPointerAddressSpaceEv.exit:    ; preds = %bb.a, %bb.b
 bb.c:                                             ; preds = %_ZNK4llvm4Type22getPointerAddressSpaceEv.exit
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !301  ; 4 uses
-  switch i8 %i.r, label %.preheader.preheader [
+  switch i8 %i.r, label %.preheader [
     i8 87, label %bb.d
     i8 36, label %bb.e
   ]
-
-.preheader.preheader:                             ; preds = %bb.c
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %11 = load ptr, ptr %10, align 8, !tbaa !270
-  br label %_ZSt9__advanceIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.v = tail call { ptr, i64 } @_ZNK4llvm10BasicBlock19getFirstInsertionPtEv(ptr noundef nonnull align 8 dereferenceable(80) %i.u) #27 ; 2 uses
@@ -243,6 +238,11 @@ bb.e:                                             ; preds = %bb.c
   %.sroa.8.8.insert.ext77 = select i1 %.not.i.i59, i64 0, i64 %.fca.1.extract2.i58
   br label %_ZSt9__advanceIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit
 
+.preheader:                                       ; preds = %bb.c
+  %10 = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %11 = load ptr, ptr %10, align 8, !tbaa !270
+  br label %_ZSt9__advanceIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit
+
 bb.f:                                             ; preds = %_ZNK4llvm4Type22getPointerAddressSpaceEv.exit
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !2723, !nonnull !72, !align !362
@@ -258,10 +258,10 @@ bb.f:                                             ; preds = %_ZNK4llvm4Type22get
   %.sroa.8.8.insert.ext = select i1 %.not.i.i66, i64 0, i64 %.fca.1.extract2.i65
   br label %_ZSt9__advanceIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit
 
-_ZSt9__advanceIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %.preheader.preheader, %bb.e, %bb.d, %bb.f
-  %.sroa.8.0 = phi i64 [ %.sroa.8.8.insert.ext, %bb.f ], [ %.sroa.8.8.insert.ext81, %bb.d ], [ %.sroa.8.8.insert.ext77, %bb.e ], [ 0, %.preheader.preheader ]
-  %.sroa.0.0 = phi ptr [ %.fca.0.extract1.i64, %bb.f ], [ %.fca.0.extract1.i, %bb.d ], [ %.fca.0.extract1.i57, %bb.e ], [ %11, %.preheader.preheader ] ; 3 uses
-  %.1 = phi ptr [ %i.al, %bb.f ], [ %i.u, %bb.d ], [ %i.ad, %bb.e ], [ %i.u, %.preheader.preheader ] ; 3 uses
+_ZSt9__advanceIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %.preheader, %bb.e, %bb.d, %bb.f
+  %.sroa.8.0 = phi i64 [ %.sroa.8.8.insert.ext, %bb.f ], [ %.sroa.8.8.insert.ext81, %bb.d ], [ %.sroa.8.8.insert.ext77, %bb.e ], [ 0, %.preheader ]
+  %.sroa.0.0 = phi ptr [ %.fca.0.extract1.i64, %bb.f ], [ %.fca.0.extract1.i, %bb.d ], [ %.fca.0.extract1.i57, %bb.e ], [ %11, %.preheader ] ; 3 uses
+  %.1 = phi ptr [ %i.al, %bb.f ], [ %i.u, %bb.d ], [ %i.ad, %bb.e ], [ %i.u, %.preheader ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #27
   %i.an = getelementptr inbounds nuw i8, ptr %5, i64 72
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.an, i8 0, i64 16, i1 false)

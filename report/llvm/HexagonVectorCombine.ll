@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ae = call noundef zeroext i1 @_ZNK4llvm11Instruction11comesBeforeEPKS0_(ptr noundef nonnull align 8 dereferenceable(72) %i.ad, ptr noundef nonnull %1) #20
   br i1 %i.ae, label %_ZSt9__advanceIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb1EEElEvRT_T0_St26bidirectional_iterator_tag.exit, label %.critedge58
 
-.critedge58:                                      ; preds = %bb.i, %bb.j
+.critedge58:                                      ; preds = %bb.j, %bb.i
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !406
   br label %_ZSt9__advanceIN4llvm21ilist_iterator_w_bitsINS0_12ilist_detail12node_optionsINS0_11InstructionELb0ELb0EvLb1ENS0_10BasicBlockEEELb0ELb1EEElEvRT_T0_St26bidirectional_iterator_tag.exit

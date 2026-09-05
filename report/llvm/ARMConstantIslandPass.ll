@@ -205,34 +205,34 @@ _ZNK4llvm12MachineInstr12isPredicableENS0_9QueryTypeE.exit.i99: ; preds = %bb.bm
   %i.va = getelementptr inbounds nuw i8, ptr %i.uz, i64 8
   %i.vb = load ptr, ptr %i.va, align 8, !tbaa !309
   %i.vc = load ptr, ptr %i.uz, align 8, !tbaa !109
-  %45 = load ptr, ptr %i.s, align 8, !tbaa !112
-  %46 = call noundef ptr @_ZN4llvm15MachineFunction23CreateMachineBasicBlockEPKNS_10BasicBlockESt8optionalINS_10UniqueBBIDEE(ptr noundef nonnull align 8 dereferenceable(1065) %45, ptr noundef null, i64 undef, i8 0) #19 ; 8 uses
-  %47 = load ptr, ptr %i.s, align 8, !tbaa !112
-  %48 = getelementptr inbounds nuw i8, ptr %.sroa.076.094.i, i64 8
-  %i.vd = load ptr, ptr %48, align 8, !tbaa !225  ; 3 uses
-  %49 = ptrtoint ptr %i.vb to i64
-  %50 = ptrtoint ptr %i.vc to i64
-  %51 = sub i64 %49, %50
-  %52 = lshr exact i64 %51, 1
-  %i.ve = getelementptr inbounds nuw i8, ptr %47, i64 296
-  call void @_ZN4llvm21ilist_callback_traitsINS_17MachineBasicBlockEE13addNodeToListEPS1_(ptr noundef nonnull align 8 dereferenceable(16) %i.ve, ptr noundef %46) #19
-  %i.vf = load ptr, ptr %i.vd, align 8, !tbaa !294 ; 2 uses
-  %i.vg = getelementptr inbounds nuw i8, ptr %46, i64 8
-  store ptr %i.vd, ptr %i.vg, align 8, !tbaa !225
-  store ptr %i.vf, ptr %46, align 8, !tbaa !294
+  %45 = ptrtoint ptr %i.vb to i64
+  %46 = ptrtoint ptr %i.vc to i64
+  %47 = sub i64 %45, %46
+  %48 = lshr exact i64 %47, 1
+  %i.vd = load ptr, ptr %i.s, align 8, !tbaa !112
+  %49 = call noundef ptr @_ZN4llvm15MachineFunction23CreateMachineBasicBlockEPKNS_10BasicBlockESt8optionalINS_10UniqueBBIDEE(ptr noundef nonnull align 8 dereferenceable(1065) %i.vd, ptr noundef null, i64 undef, i8 0) #19 ; 8 uses
+  %50 = load ptr, ptr %i.s, align 8, !tbaa !112
+  %51 = getelementptr inbounds nuw i8, ptr %.sroa.076.094.i, i64 8
+  %52 = load ptr, ptr %51, align 8, !tbaa !225    ; 3 uses
+  %i.ve = getelementptr inbounds nuw i8, ptr %50, i64 296
+  call void @_ZN4llvm21ilist_callback_traitsINS_17MachineBasicBlockEE13addNodeToListEPS1_(ptr noundef nonnull align 8 dereferenceable(16) %i.ve, ptr noundef %49) #19
+  %i.vf = load ptr, ptr %52, align 8, !tbaa !294  ; 2 uses
+  %i.vg = getelementptr inbounds nuw i8, ptr %49, i64 8
+  store ptr %52, ptr %i.vg, align 8, !tbaa !225
+  store ptr %i.vf, ptr %49, align 8, !tbaa !294
   %i.vh = getelementptr inbounds nuw i8, ptr %i.vf, i64 8
-  store ptr %46, ptr %i.vh, align 8, !tbaa !225
-  store ptr %46, ptr %i.vd, align 8, !tbaa !294
-  %i.vi = getelementptr inbounds nuw i8, ptr %46, i64 56
+  store ptr %49, ptr %i.vh, align 8, !tbaa !225
+  store ptr %49, ptr %52, align 8, !tbaa !294
+  %i.vi = getelementptr inbounds nuw i8, ptr %49, i64 56
   %i.vj = load ptr, ptr %i.vi, align 8, !tbaa !230 ; 4 uses
   %i.vk = load ptr, ptr %i.bb, align 8, !tbaa !221
   %i.vl = getelementptr inbounds nuw i8, ptr %i.vk, i64 8
   %i.vm = load ptr, ptr %i.vl, align 8, !tbaa !299
   %i.vn = getelementptr inbounds [32 x i8], ptr %i.vm, i64 %.028.neg.i
-  %i.vo = getelementptr inbounds nuw i8, ptr %46, i64 32
+  %i.vo = getelementptr inbounds nuw i8, ptr %49, i64 32
   %i.vp = load ptr, ptr %i.vo, align 8, !tbaa !300 ; 4 uses
   %i.vq = call noundef ptr @_ZN4llvm15MachineFunction18CreateMachineInstrERKNS_11MCInstrDescENS_8DebugLocEb(ptr noundef nonnull align 8 dereferenceable(1065) %i.vp, ptr noundef nonnull align 8 dereferenceable(32) %i.vn, ptr null, i1 noundef zeroext false) #19 ; 12 uses
-  %i.vr = getelementptr inbounds nuw i8, ptr %46, i64 40
+  %i.vr = getelementptr inbounds nuw i8, ptr %49, i64 40
   call void @_ZN4llvm12ilist_traitsINS_12MachineInstrEE13addNodeToListEPS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.vr, ptr noundef %i.vq) #19
   %.0.copyload.i.i.i.i.i.i.i.i.i.i.i102 = load i64, ptr %i.vj, align 8
   %i.vs = and i64 %.0.copyload.i.i.i.i.i.i.i.i.i.i.i102, -8 ; 2 uses
@@ -264,7 +264,7 @@ _ZNK4llvm12MachineInstr12isPredicableENS0_9QueryTypeE.exit.i99: ; preds = %bb.bm
   store i32 8, ptr %30, align 8, !alias.scope !794
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.vq, ptr noundef nonnull align 8 dereferenceable(1065) %i.vp, ptr noundef nonnull align 8 dereferenceable(32) %30) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #19
-  %i.wd = and i64 %52, 4294967292
+  %i.wd = and i64 %48, 4294967292
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #19
   store i32 1, ptr %29, align 8, !alias.scope !795
   store ptr null, ptr %i.te, align 8, !tbaa !306, !alias.scope !795

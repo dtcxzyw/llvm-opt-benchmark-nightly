@@ -205,12 +205,12 @@ _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12Mac
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
+  %8 = ptrtoint ptr %2 to i64
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !396
   %.0.copyload.i.i.i.i.i.i.i = load i64, ptr %1, align 8
   %i.q = and i64 %.0.copyload.i.i.i.i.i.i.i, -8
   %i.r = inttoptr i64 %i.q to ptr
-  %8 = ptrtoint ptr %2 to i64
   store ptr @"_ZN4llvm12function_refIFbRKNS_12MachineInstrEiEE11callback_fnIZNS_19GCNHazardRecognizer22fixLdsDirectVALUHazardEPS1_E3$_1EEblS3_i", ptr %6, align 8, !tbaa !544
   %i.s = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.t = ptrtoint ptr %3 to i64
@@ -613,7 +613,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ce = tail call fastcc noundef zeroext i1 @_ZL18ensureEntrySetPrioPN4llvm15MachineFunctionEiRKNS_11SIInstrInfoE(ptr %.val, ptr %.val55)
   br label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit59
 
-_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit59: ; preds = %bb.n, %bb.n, %bb.o
+_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit59: ; preds = %bb.o, %bb.n, %bb.n
   %.052 = phi i1 [ %i.ce, %bb.o ], [ false, %bb.n ], [ false, %bb.n ] ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !372 ; 9 uses
@@ -989,12 +989,12 @@ bb.f:                                             ; preds = %bb.e
   %i.aj = getelementptr inbounds nuw i8, ptr %11, i64 16
   store ptr %i.af, ptr %i.aj, align 8, !tbaa !1128
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #25
+  %16 = ptrtoint ptr %10 to i64
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !396
   %.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %1, align 8
   %i.am = and i64 %.0.copyload.i.i.i.i.i.i.i.i, -8
   %i.an = inttoptr i64 %i.am to ptr
-  %16 = ptrtoint ptr %10 to i64
   store ptr @"_ZN4llvm12function_refIFbRKNS_12MachineInstrEiEE11callback_fnIZZNS_19GCNHazardRecognizer30fixScratchBaseForwardingHazardEPS1_ENK3$_0clENS_8RegisterEEUlS3_iE_EEblS3_i", ptr %13, align 8, !tbaa !544
   %i.ao = getelementptr inbounds nuw i8, ptr %13, i64 8
   %i.ap = ptrtoint ptr %12 to i64
@@ -1056,12 +1056,12 @@ bb.i:                                             ; preds = %.thread40
   %i.bj = getelementptr inbounds nuw i8, ptr %5, i64 16
   store ptr %i.bf, ptr %i.bj, align 8, !tbaa !1128
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
+  %17 = ptrtoint ptr %4 to i64
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !396
   %.0.copyload.i.i.i.i.i.i.i.i8 = load i64, ptr %1, align 8
   %i.bm = and i64 %.0.copyload.i.i.i.i.i.i.i.i8, -8
   %i.bn = inttoptr i64 %i.bm to ptr
-  %17 = ptrtoint ptr %4 to i64
   store ptr @"_ZN4llvm12function_refIFbRKNS_12MachineInstrEiEE11callback_fnIZZNS_19GCNHazardRecognizer30fixScratchBaseForwardingHazardEPS1_ENK3$_0clENS_8RegisterEEUlS3_iE_EEblS3_i", ptr %7, align 8, !tbaa !544
   %i.bo = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.bp = ptrtoint ptr %6 to i64

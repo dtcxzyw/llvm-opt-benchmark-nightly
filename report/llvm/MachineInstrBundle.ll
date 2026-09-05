@@ -204,14 +204,14 @@ declare void @_ZN4llvm12MachineInstr18cloneMergedMemRefsERNS_15MachineFunctionEN
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local ptr @_ZN4llvm14finalizeBundleERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEE(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr %1) local_unnamed_addr #0 {
 _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader:
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %2 = load ptr, ptr %i.a, align 8, !tbaa !30     ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %.not11 = icmp eq ptr %2, %3
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %3 = load ptr, ptr %2, align 8, !tbaa !30       ; 3 uses
+  %.not11 = icmp eq ptr %3, %i.a
   br i1 %.not11, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit
-  %.sroa.05.012 = phi ptr [ %i.f, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit ], [ %2, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader ] ; 3 uses
+  %.sroa.05.012 = phi ptr [ %i.f, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit ], [ %3, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader ] ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.05.012, i64 44
   %i.c = load i32, ptr %i.b, align 4, !tbaa !45
   %i.d = and i32 %i.c, 4
@@ -221,11 +221,11 @@ _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12Mac
 _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %.lr.ph
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.05.012, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !30   ; 3 uses
-  %.not = icmp eq ptr %i.f, %3
+  %.not = icmp eq ptr %i.f, %i.a
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !3
 
 .critedge:                                        ; preds = %.lr.ph, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader
-  %.sroa.05.0.lcssa = phi ptr [ %2, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader ], [ %i.f, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit ], [ %.sroa.05.012, %.lr.ph ] ; 2 uses
+  %.sroa.05.0.lcssa = phi ptr [ %3, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader ], [ %i.f, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit ], [ %.sroa.05.012, %.lr.ph ] ; 2 uses
   tail call void @_ZN4llvm14finalizeBundleERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEES7_(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr %1, ptr %.sroa.05.0.lcssa)
   ret ptr %.sroa.05.0.lcssa
 }

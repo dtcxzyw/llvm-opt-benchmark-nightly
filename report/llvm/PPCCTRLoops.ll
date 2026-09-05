@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %"_ZZN12_GLOBAL__N_1
 bb.e:                                             ; preds = %bb.d, %"_ZZN12_GLOBAL__N_111PPCCTRLoops11processLoopEPN4llvm11MachineLoopEENK3$_1clEPNS1_17MachineBasicBlockE.exit"
   br label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb1ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader
 
-_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb1ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader: ; preds = %bb.e, %bb.d
+_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb1ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader: ; preds = %bb.d, %bb.e
   %.045 = phi i8 [ 1, %bb.e ], [ 0, %bb.d ]       ; 2 uses
   %.0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.01.07.i, align 8
   %i.z = and i64 %.0.copyload.i.i.i.i.i.i.i, -8
@@ -228,7 +228,7 @@ _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12Mac
   %.not111 = icmp eq ptr %i.k, %i.ae
   br i1 %.not111, label %_ZNK12_GLOBAL__N_111PPCCTRLoops12isCTRClobberEPN4llvm12MachineInstrEb.exit.thread, label %.lr.ph128, !llvm.loop !249
 
-_ZNK12_GLOBAL__N_111PPCCTRLoops12isCTRClobberEPN4llvm12MachineInstrEb.exit.thread: ; preds = %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb1ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit, %_ZNK12_GLOBAL__N_111PPCCTRLoops12isCTRClobberEPN4llvm12MachineInstrEb.exit, %.lr.ph128, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb1ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader
+_ZNK12_GLOBAL__N_111PPCCTRLoops12isCTRClobberEPN4llvm12MachineInstrEb.exit.thread: ; preds = %.lr.ph128, %_ZNK12_GLOBAL__N_111PPCCTRLoops12isCTRClobberEPN4llvm12MachineInstrEb.exit, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb1ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb1ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader
   %.146 = phi i8 [ %.045, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb1ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.preheader ], [ 1, %_ZNK12_GLOBAL__N_111PPCCTRLoops12isCTRClobberEPN4llvm12MachineInstrEb.exit ], [ 1, %.lr.ph128 ], [ %.045, %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb1ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit ] ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.01.07.i, i64 8
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !158 ; 2 uses

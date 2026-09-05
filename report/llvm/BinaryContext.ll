@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_ZNSt8_Rb_treeImSt4
   %spec.select.i.i = select i1 %i.l, ptr %i.e, ptr %.19.i.i.i
   br label %_ZNSt3mapImPN4llvm4bolt10BinaryDataESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit
 
-_ZNSt3mapImPN4llvm4bolt10BinaryDataESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit: ; preds = %bb.a, %_ZNSt8_Rb_treeImSt4pairIKmPN4llvm4bolt10BinaryDataEESt10_Select1stIS6_ESt4lessImESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_EPSt18_Rb_tree_node_baseRS1_.exit.i.i, %bb.b
+_ZNSt3mapImPN4llvm4bolt10BinaryDataESt4lessImESaISt4pairIKmS3_EEE4findERS7_.exit: ; preds = %bb.b, %_ZNSt8_Rb_treeImSt4pairIKmPN4llvm4bolt10BinaryDataEESt10_Select1stIS6_ESt4lessImESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_EPSt18_Rb_tree_node_baseRS1_.exit.i.i, %bb.a
   %.sroa.0.0.i.i = phi ptr [ %i.e, %bb.a ], [ %i.e, %_ZNSt8_Rb_treeImSt4pairIKmPN4llvm4bolt10BinaryDataEESt10_Select1stIS6_ESt4lessImESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_EPSt18_Rb_tree_node_baseRS1_.exit.i.i ], [ %spec.select.i.i, %bb.b ]
   %i.m = tail call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.0.0.i.i) #35 ; 4 uses
   %.not11 = icmp eq ptr %i.m, %i.e

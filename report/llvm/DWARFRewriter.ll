@@ -204,6 +204,7 @@ _ZSt9__advanceIN4llvm12DIEValueList14value_iteratorElEvRT_T0_St18input_iterator_
 .lr.ph683:                                        ; preds = %_ZSt9__advanceIN4llvm12DIEValueList14value_iteratorElEvRT_T0_St18input_iterator_tag.exit, %.lr.ph683
   %.0191682 = phi i32 [ %72, %.lr.ph683 ], [ %i.ama, %_ZSt9__advanceIN4llvm12DIEValueList14value_iteratorElEvRT_T0_St18input_iterator_tag.exit ]
   %.sroa.0482.0681 = phi ptr [ %i.amj, %.lr.ph683 ], [ %.sroa.0482.1, %_ZSt9__advanceIN4llvm12DIEValueList14value_iteratorElEvRT_T0_St18input_iterator_tag.exit ] ; 2 uses
+  %72 = add i32 %.0191682, -1                     ; 2 uses
   %i.amc = getelementptr inbounds nuw i8, ptr %.sroa.0482.0681, i64 8
   %i.amd = load ptr, ptr %2, align 8, !tbaa !257
   %i.ame = getelementptr inbounds nuw i8, ptr %i.amd, i64 216
@@ -211,7 +212,6 @@ _ZSt9__advanceIN4llvm12DIEValueList14value_iteratorElEvRT_T0_St18input_iterator_
   %.0.copyload.i.i.i.i.i.i.i390 = load i64, ptr %.sroa.0482.0681, align 8 ; 2 uses
   %i.amg = and i64 %.0.copyload.i.i.i.i.i.i.i390, -8
   %i.amh = inttoptr i64 %i.amg to ptr
-  %72 = add i32 %.0191682, -1                     ; 2 uses
   %i.ami = and i64 %.0.copyload.i.i.i.i.i.i.i390, 4
   %.not.i.i.i.i391 = icmp eq i64 %i.ami, 0
   %i.amj = select i1 %.not.i.i.i.i391, ptr %i.amh, ptr null

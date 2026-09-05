@@ -204,11 +204,7 @@ bb.bq:                                            ; preds = %_ZN4llvm13SmallDens
   store ptr %i.ue, ptr %i.b, align 8, !tbaa !286, !noalias !583
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #19, !noalias !583
   %.not42.i = icmp eq ptr %i.ue, null
-  br i1 %.not42.i, label %.preheader.preheader.i, label %bb.br
-
-.preheader.preheader.i:                           ; preds = %bb.bq
-  %43 = getelementptr inbounds nuw i8, ptr %i.ub, i64 8
-  br label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_17MachineBasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i
+  br i1 %.not42.i, label %.preheader.i141, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
   %i.uf = getelementptr inbounds nuw i8, ptr %i.ue, i64 52
@@ -229,8 +225,12 @@ bb.bs:                                            ; preds = %bb.br
   %i.uk = getelementptr inbounds nuw i8, ptr %i.uj, i64 16
   br label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_17MachineBasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i
 
-_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_17MachineBasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i: ; preds = %bb.bs, %.preheader.preheader.i
-  %.in.i = phi ptr [ %i.uk, %bb.bs ], [ %43, %.preheader.preheader.i ]
+.preheader.i141:                                  ; preds = %bb.bq
+  %43 = getelementptr inbounds nuw i8, ptr %i.ub, i64 8
+  br label %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_17MachineBasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i
+
+_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_17MachineBasicBlockELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i: ; preds = %.preheader.i141, %bb.bs
+  %.in.i = phi ptr [ %i.uk, %bb.bs ], [ %43, %.preheader.i141 ]
   %i.ul = load ptr, ptr %.in.i, align 8, !tbaa !273 ; 2 uses
   store ptr %i.ul, ptr %i.c, align 8, !tbaa !211, !noalias !583
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #19, !noalias !583

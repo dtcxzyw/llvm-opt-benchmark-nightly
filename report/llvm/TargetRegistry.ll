@@ -202,10 +202,7 @@ bb.c:                                             ; preds = %bb.a
   %i.j = tail call noundef zeroext i1 %.val1.i.i.i.i.i(i32 noundef %i.h) #17, !inline_history !84
   %i.k = load ptr, ptr %.sroa.03.06.i.i.i.i, align 8, !tbaa !26 ; 3 uses
   %.not5.i.i.i = icmp eq ptr %i.k, null           ; 2 uses
-  br i1 %i.j, label %.lr.ph.i.preheader, label %bb.d
-
-.lr.ph.i.preheader:                               ; preds = %.lr.ph.i.i.i.i
-  br i1 %.not5.i.i.i, label %.loopexit, label %.lr.ph.i.i.i
+  br i1 %i.j, label %.lr.ph.i, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.i.i.i.i
   br i1 %.not5.i.i.i, label %bb.e, label %.lr.ph.i.i.i.i, !llvm.loop !85
@@ -386,8 +383,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26: ; preds = %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17
   br label %.loopexit
 
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.preheader, %bb.o
-  %.sroa.03.06.i.i.i = phi ptr [ %i.bp, %bb.o ], [ %i.k, %.lr.ph.i.preheader ] ; 3 uses
+.lr.ph.i:                                         ; preds = %.lr.ph.i.i.i.i
+  br i1 %.not5.i.i.i, label %.loopexit, label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i, %bb.o
+  %.sroa.03.06.i.i.i = phi ptr [ %i.bp, %bb.o ], [ %i.k, %.lr.ph.i ] ; 3 uses
   %i.bn = getelementptr i8, ptr %.sroa.03.06.i.i.i, i64 8
   %.val1.i.i.i.i = load ptr, ptr %i.bn, align 8, !tbaa !32
   %i.bo = tail call noundef zeroext i1 %.val1.i.i.i.i(i32 noundef %i.h) #17, !inline_history !92
@@ -733,8 +733,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit76: ; preds = %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.o, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26, %.lr.ph.i.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit76, %bb.b
-  %.2 = phi ptr [ null, %bb.b ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26 ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit76 ], [ %.sroa.03.06.i.i.i.i, %.lr.ph.i.preheader ], [ %.sroa.03.06.i.i.i.i, %bb.o ]
+.loopexit:                                        ; preds = %bb.o, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26, %.lr.ph.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit76, %bb.b
+  %.2 = phi ptr [ null, %bb.b ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26 ], [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit76 ], [ %.sroa.03.06.i.i.i.i, %.lr.ph.i ], [ %.sroa.03.06.i.i.i.i, %bb.o ]
   ret ptr %.2
 }
 

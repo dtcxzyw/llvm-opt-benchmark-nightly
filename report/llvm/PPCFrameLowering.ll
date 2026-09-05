@@ -204,7 +204,7 @@ bb.af:                                            ; preds = %bb.ae
   call fastcc void @"_ZZNK4llvm16PPCFrameLowering16inlineStackProbeERNS_15MachineFunctionERNS_17MachineBasicBlockEENK3$_4clES4_NS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEElRNS_8RegisterE"(ptr noundef nonnull align 8 dereferenceable(24) %55, ptr noundef nonnull align 8 dereferenceable(360) %2, ptr nonnull %.sroa.02.0.lcssa.i.i.i.i, i64 noundef %i.be, i32 %i.bl)
   br label %_ZN4llvm7BuildMIEPNS_17MachineBasicBlockERKNS_10MIMetadataERKNS_11MCInstrDescE.exit
 
-_ZN4llvm7BuildMIEPNS_17MachineBasicBlockERKNS_10MIMetadataERKNS_11MCInstrDescE.exit: ; preds = %bb.af, %bb.ae
+_ZN4llvm7BuildMIEPNS_17MachineBasicBlockERKNS_10MIMetadataERKNS_11MCInstrDescE.exit: ; preds = %bb.ae, %bb.af
   %i.ou = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ov = load ptr, ptr %i.ou, align 8, !tbaa !351 ; 6 uses
   %i.ow = call noundef ptr @_ZN4llvm15MachineFunction23CreateMachineBasicBlockEPKNS_10BasicBlockESt8optionalINS_10UniqueBBIDEE(ptr noundef nonnull align 8 dereferenceable(1065) %1, ptr noundef %i.aw, i64 undef, i8 0) #19 ; 15 uses

@@ -205,7 +205,7 @@ put_ebml_id.exit:                                 ; preds = %.lr.ph.i
 .lr.ph.i.i.i:                                     ; preds = %put_ebml_id.exit, %.lr.ph.i.i.i
   %.05.i.i.i = phi i32 [ %i.bq, %.lr.ph.i.i.i ], [ %i.bp, %put_ebml_id.exit ]
   %i.bq = add nsw i32 %.05.i.i.i, -1              ; 3 uses
-  %i.br = shl nsw i32 %i.bq, 3
+  %i.br = shl nuw nsw i32 %i.bq, 3
   %i.bs = lshr i32 236, %i.br
   tail call void @avio_w8(ptr noundef %i.i, i32 noundef %i.bs) #14
   %.not.i.i.i = icmp eq i32 %i.bq, 0
@@ -254,7 +254,7 @@ bb.j:                                             ; preds = %bb.i
 .lr.ph.i.i.i.i:                                   ; preds = %bb.j, %.lr.ph.i.i.i.i
   %.05.i.i.i.i = phi i32 [ %i.ca, %.lr.ph.i.i.i.i ], [ %i.bp, %bb.j ]
   %i.ca = add nsw i32 %.05.i.i.i.i, -1            ; 3 uses
-  %i.cb = shl nsw i32 %i.ca, 3
+  %i.cb = shl nuw nsw i32 %i.ca, 3
   %i.cc = lshr i32 236, %i.cb
   tail call void @avio_w8(ptr noundef %.pre126.i, i32 noundef %i.cc) #14
   %.not.i.i.i.i = icmp eq i32 %i.ca, 0
@@ -277,7 +277,7 @@ bb.k:                                             ; preds = %.lr.ph.i.i7.i.i, %b
 .lr.ph.i.i.i99:                                   ; preds = %.lr.ph.i.i.i99, %bb.k
   %.05.i.i.i100 = phi i32 [ %i.ci, %.lr.ph.i.i.i99 ], [ %i.ch, %bb.k ]
   %i.ci = add nsw i32 %.05.i.i.i100, -1           ; 3 uses
-  %i.cj = shl nsw i32 %i.ci, 3
+  %i.cj = shl nuw nsw i32 %i.ci, 3
   %i.ck = lshr i32 2807729, %i.cj
   %i.cl = and i32 %i.ck, 255
   tail call void @avio_w8(ptr noundef %i.cd, i32 noundef %i.cl) #14
@@ -308,7 +308,7 @@ bb.l:                                             ; preds = %.lr.ph.i.i151
 .lr.ph.i.i.i60.i:                                 ; preds = %.lr.ph.i.i.i60.i, %bb.l
   %.05.i.i.i61.i = phi i32 [ %i.cw, %.lr.ph.i.i.i60.i ], [ %i.cv, %bb.l ]
   %i.cw = add nsw i32 %.05.i.i.i61.i, -1          ; 3 uses
-  %i.cx = shl nsw i32 %i.cw, 3
+  %i.cx = shl nuw nsw i32 %i.cw, 3
   %i.cy = lshr i32 31657, %i.cx
   %i.cz = and i32 %i.cy, 251
   tail call void @avio_w8(ptr noundef %i.cd, i32 noundef %i.cz) #14
@@ -337,7 +337,7 @@ bb.m:                                             ; preds = %put_ebml_string.exi
 .lr.ph.i.i.i64.i:                                 ; preds = %bb.m, %.lr.ph.i.i.i64.i
   %.05.i.i.i65.i = phi i32 [ %i.dj, %.lr.ph.i.i.i64.i ], [ %i.di, %bb.m ]
   %i.dj = add nsw i32 %.05.i.i.i65.i, -1          ; 3 uses
-  %i.dk = shl nsw i32 %i.dj, 3
+  %i.dk = shl nuw nsw i32 %i.dj, 3
   %i.dl = lshr i32 19840, %i.dk
   %i.dm = and i32 %i.dl, 205
   tail call void @avio_w8(ptr noundef %i.cd, i32 noundef %i.dm) #14
@@ -365,7 +365,7 @@ bb.n:                                             ; preds = %.lr.ph.i.i143
 .lr.ph.i.i.i70.i:                                 ; preds = %.lr.ph.i.i.i70.i, %bb.n
   %.05.i.i.i71.i = phi i32 [ %i.dw, %.lr.ph.i.i.i70.i ], [ %i.dv, %bb.n ]
   %i.dw = add nsw i32 %.05.i.i.i71.i, -1          ; 3 uses
-  %i.dx = shl nsw i32 %i.dw, 3
+  %i.dx = shl nuw nsw i32 %i.dw, 3
   %i.dy = lshr i32 22337, %i.dx
   %i.dz = and i32 %i.dy, 87
   tail call void @avio_w8(ptr noundef %i.cd, i32 noundef %i.dz) #14
@@ -390,7 +390,7 @@ bb.o:                                             ; preds = %.lr.ph.i.i143
 .lr.ph.i.i.i76.i:                                 ; preds = %.lr.ph.i.i.i76.i, %bb.o
   %.05.i.i.i77.i = phi i32 [ %i.eg, %.lr.ph.i.i.i76.i ], [ %i.ef, %bb.o ]
   %i.eg = add nsw i32 %.05.i.i.i77.i, -1          ; 3 uses
-  %i.eh = shl nsw i32 %i.eg, 3
+  %i.eh = shl nuw nsw i32 %i.eg, 3
   %i.ei = lshr i32 22337, %i.eh
   %i.ej = and i32 %i.ei, 87
   tail call void @avio_w8(ptr noundef %i.cd, i32 noundef %i.ej) #14
@@ -418,7 +418,7 @@ bb.q:                                             ; preds = %bb.p
 .lr.ph.i.i81.i:                                   ; preds = %.lr.ph.i.i81.i, %bb.q
   %.05.i.i82.i = phi i32 [ %i.er, %.lr.ph.i.i81.i ], [ %i.eq, %bb.q ]
   %i.er = add nsw i32 %.05.i.i82.i, -1            ; 3 uses
-  %i.es = shl nsw i32 %i.er, 3
+  %i.es = shl nuw nsw i32 %i.er, 3
   %i.et = lshr i32 29604, %i.es
   %i.eu = and i32 %i.et, 247
   tail call void @avio_w8(ptr noundef %i.cd, i32 noundef %i.eu) #14
@@ -434,7 +434,7 @@ bb.q:                                             ; preds = %bb.p
 .lr.ph.i.i.i86.i:                                 ; preds = %bb.m, %.lr.ph.i.i.i86.i
   %.05.i.i.i87.i = phi i32 [ %i.ew, %.lr.ph.i.i.i86.i ], [ %i.di, %bb.m ]
   %i.ew = add nsw i32 %.05.i.i.i87.i, -1          ; 3 uses
-  %i.ex = shl nsw i32 %i.ew, 3
+  %i.ex = shl nuw nsw i32 %i.ew, 3
   %i.ey = lshr i32 19840, %i.ex
   %i.ez = and i32 %i.ey, 205
   tail call void @avio_w8(ptr noundef %i.cd, i32 noundef %i.ez) #14
@@ -453,7 +453,7 @@ bb.q:                                             ; preds = %bb.p
 .lr.ph.i.i.i92.i:                                 ; preds = %.lr.ph.i.i.i92.i, %.lr.ph.i.i127
   %.05.i.i.i93.i = phi i32 [ %i.fe, %.lr.ph.i.i.i92.i ], [ %i.fd, %.lr.ph.i.i127 ]
   %i.fe = add nsw i32 %.05.i.i.i93.i, -1          ; 3 uses
-  %i.ff = shl nsw i32 %i.fe, 3
+  %i.ff = shl nuw nsw i32 %i.fe, 3
   %i.fg = lshr i32 22337, %i.ff
   %i.fh = and i32 %i.fg, 87
   tail call void @avio_w8(ptr noundef %i.cd, i32 noundef %i.fh) #14
@@ -486,7 +486,7 @@ bb.s:                                             ; preds = %bb.r
 .lr.ph.i.i97.i:                                   ; preds = %.lr.ph.i.i97.i, %bb.s
   %.05.i.i98.i = phi i32 [ %i.fs, %.lr.ph.i.i97.i ], [ %i.fr, %bb.s ]
   %i.fs = add nsw i32 %.05.i.i98.i, -1            ; 3 uses
-  %i.ft = shl nsw i32 %i.fs, 3
+  %i.ft = shl nuw nsw i32 %i.fs, 3
   %i.fu = lshr i32 17505, %i.ft
   %i.fv = and i32 %i.fu, 101
   call void @avio_w8(ptr noundef %i.cd, i32 noundef %i.fv) #14
@@ -598,7 +598,7 @@ bb.ac:                                            ; preds = %get_metadata_durati
 .lr.ph.i.i105.i:                                  ; preds = %.lr.ph.i.i105.i, %bb.ac
   %.05.i.i106.i = phi i32 [ %i.hi, %.lr.ph.i.i105.i ], [ %i.hh, %bb.ac ]
   %i.hi = add nsw i32 %.05.i.i106.i, -1           ; 3 uses
-  %i.hj = shl nsw i32 %i.hi, 3
+  %i.hj = shl nuw nsw i32 %i.hi, 3
   %i.hk = lshr i32 17545, %i.hj
   %i.hl = and i32 %i.hk, 205
   call void @avio_w8(ptr noundef %i.cd, i32 noundef %i.hl) #14
@@ -628,7 +628,7 @@ bb.ae:                                            ; preds = %bb.ad
 .lr.ph.i.i109.i:                                  ; preds = %.lr.ph.i.i109.i, %bb.ae
   %.05.i.i110.i = phi i32 [ %i.hu, %.lr.ph.i.i109.i ], [ %i.ht, %bb.ae ]
   %i.hu = add nsw i32 %.05.i.i110.i, -1           ; 3 uses
-  %i.hv = shl nsw i32 %i.hu, 3
+  %i.hv = shl nuw nsw i32 %i.hu, 3
   %i.hw = lshr i32 17545, %i.hv
   %i.hx = and i32 %i.hw, 205
   call void @avio_w8(ptr noundef %i.cd, i32 noundef %i.hx) #14
@@ -751,7 +751,7 @@ bb.as:                                            ; preds = %bb.ar
 .lr.ph.i.i.i.i106:                                ; preds = %bb.as, %.lr.ph.i.i.i.i106
   %.05.i.i.i.i107 = phi i32 [ %i.jp, %.lr.ph.i.i.i.i106 ], [ %i.bp, %bb.as ]
   %i.jp = add nsw i32 %.05.i.i.i.i107, -1         ; 3 uses
-  %i.jq = shl nsw i32 %i.jp, 3
+  %i.jq = shl nuw nsw i32 %i.jp, 3
   %i.jr = lshr i32 236, %i.jq
   call void @avio_w8(ptr noundef %i.jo, i32 noundef %i.jr) #14
   %.not.i.i.i.i108 = icmp eq i32 %i.jp, 0
@@ -1154,7 +1154,7 @@ bb.p:                                             ; preds = %bb.o
 .lr.ph.i.i.i.i:                                   ; preds = %bb.p, %.lr.ph.i.i.i.i
   %.05.i.i.i.i = phi i32 [ %i.cr, %.lr.ph.i.i.i.i ], [ %i.cq, %bb.p ]
   %i.cr = add nsw i32 %.05.i.i.i.i, -1            ; 3 uses
-  %i.cs = shl nsw i32 %i.cr, 3
+  %i.cs = shl nuw nsw i32 %i.cr, 3
   %i.ct = lshr i32 181, %i.cs
   call void @avio_w8(ptr noundef %i.ck, i32 noundef %i.ct) #14
   %.not.i.i.i.i = icmp eq i32 %i.cr, 0
@@ -1174,7 +1174,7 @@ put_ebml_float.exit.i.i:                          ; preds = %.lr.ph.i.i.i.i, %bb
 .lr.ph.i.i81.i.i:                                 ; preds = %.lr.ph.i.i81.i.i, %put_ebml_float.exit.i.i
   %.05.i.i82.i.i = phi i32 [ %i.da, %.lr.ph.i.i81.i.i ], [ %i.cz, %put_ebml_float.exit.i.i ]
   %i.da = add nsw i32 %.05.i.i82.i.i, -1          ; 3 uses
-  %i.db = shl nsw i32 %i.da, 3
+  %i.db = shl nuw nsw i32 %i.da, 3
   %i.dc = lshr i32 30901, %i.db
   %i.dd = and i32 %i.dc, 253
   call void @avio_w8(ptr noundef %i.cv, i32 noundef %i.dd) #14
@@ -1577,7 +1577,7 @@ bb.o:                                             ; preds = %bb.n
 .lr.ph.i.i.i:                                     ; preds = %bb.o, %.lr.ph.i.i.i
   %.05.i.i.i = phi i32 [ %i.bx, %.lr.ph.i.i.i ], [ %i.al, %bb.o ]
   %i.bx = add nsw i32 %.05.i.i.i, -1              ; 3 uses
-  %i.by = shl nsw i32 %i.bx, 3
+  %i.by = shl nuw nsw i32 %i.bx, 3
   %i.bz = lshr i32 236, %i.by
   call void @avio_w8(ptr noundef %.pre368, i32 noundef %i.bz) #14
   %.not.i.i.i = icmp eq i32 %i.bx, 0
@@ -1634,7 +1634,7 @@ bb.s:                                             ; preds = %bb.r
 .lr.ph.i.i.i224:                                  ; preds = %bb.s, %.lr.ph.i.i.i224
   %.05.i.i.i225 = phi i32 [ %i.cn, %.lr.ph.i.i.i224 ], [ %i.at, %bb.s ]
   %i.cn = add nsw i32 %.05.i.i.i225, -1           ; 3 uses
-  %i.co = shl nsw i32 %i.cn, 3
+  %i.co = shl nuw nsw i32 %i.cn, 3
   %i.cp = lshr i32 179, %i.co
   call void @avio_w8(ptr noundef %i.cc, i32 noundef %i.cp) #14
   %.not.i.i.i226 = icmp eq i32 %i.cn, 0
@@ -1754,7 +1754,7 @@ ebml_length_size.exit.i.i:                        ; preds = %bb.w, %bb.v
 .lr.ph.i.i63.i:                                   ; preds = %ebml_length_size.exit.i.i, %.lr.ph.i.i63.i
   %.05.i.i64.i = phi i32 [ %i.eb, %.lr.ph.i.i63.i ], [ %i.ax, %ebml_length_size.exit.i.i ]
   %i.eb = add nsw i32 %.05.i.i64.i, -1            ; 3 uses
-  %i.ec = shl nsw i32 %i.eb, 3
+  %i.ec = shl nuw nsw i32 %i.eb, 3
   %i.ed = lshr i32 183, %i.ec
   call void @avio_w8(ptr noundef %i.cc, i32 noundef %i.ed) #14
   %.not.i.i65.i = icmp eq i32 %i.eb, 0
@@ -1785,7 +1785,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x, %put_e
 .lr.ph.i.i73.i:                                   ; preds = %bb.z, %.lr.ph.i.i73.i
   %.05.i.i74.i = phi i32 [ %i.ei, %.lr.ph.i.i73.i ], [ %i.bb, %bb.z ]
   %i.ei = add nsw i32 %.05.i.i74.i, -1            ; 3 uses
-  %i.ej = shl nsw i32 %i.ei, 3
+  %i.ej = shl nuw nsw i32 %i.ei, 3
   %i.ek = lshr i32 247, %i.ej
   call void @avio_w8(ptr noundef %i.cc, i32 noundef %i.ek) #14
   %.not.i.i75.i = icmp eq i32 %i.ei, 0
@@ -1844,7 +1844,7 @@ bb.ab:                                            ; preds = %bb.aa
 .lr.ph.i.i86.i:                                   ; preds = %bb.ab, %.lr.ph.i.i86.i
   %.05.i.i87.i = phi i32 [ %i.ff, %.lr.ph.i.i86.i ], [ %i.bf, %bb.ab ]
   %i.ff = add nsw i32 %.05.i.i87.i, -1            ; 3 uses
-  %i.fg = shl nsw i32 %i.ff, 3
+  %i.fg = shl nuw nsw i32 %i.ff, 3
   %i.fh = lshr i32 241, %i.fg
   call void @avio_w8(ptr noundef %i.cc, i32 noundef %i.fh) #14
   %.not.i.i88.i = icmp eq i32 %i.ff, 0
@@ -1902,7 +1902,7 @@ bb.ad:                                            ; preds = %bb.ac
 .lr.ph.i.i99.i:                                   ; preds = %bb.ad, %.lr.ph.i.i99.i
   %.05.i.i100.i = phi i32 [ %i.gb, %.lr.ph.i.i99.i ], [ %i.bj, %bb.ad ]
   %i.gb = add nsw i32 %.05.i.i100.i, -1           ; 3 uses
-  %i.gc = shl nsw i32 %i.gb, 3
+  %i.gc = shl nuw nsw i32 %i.gb, 3
   %i.gd = lshr i32 240, %i.gc
   call void @avio_w8(ptr noundef %i.cc, i32 noundef %i.gd) #14
   %.not.i.i101.i = icmp eq i32 %i.gb, 0
@@ -1961,7 +1961,7 @@ bb.ae:                                            ; preds = %.preheader.i
 .lr.ph.i.i112.i:                                  ; preds = %bb.ae, %.lr.ph.i.i112.i
   %.05.i.i113.i = phi i32 [ %i.gy, %.lr.ph.i.i112.i ], [ %i.bn, %bb.ae ]
   %i.gy = add nsw i32 %.05.i.i113.i, -1           ; 3 uses
-  %i.gz = shl nsw i32 %i.gy, 3
+  %i.gz = shl nuw nsw i32 %i.gy, 3
   %i.ha = lshr i32 178, %i.gz
   call void @avio_w8(ptr noundef %i.cc, i32 noundef %i.ha) #14
   %.not.i.i114.i = icmp eq i32 %i.gy, 0
@@ -2069,7 +2069,7 @@ bb.al:                                            ; preds = %.critedge.i
 .lr.ph.i.i120.i:                                  ; preds = %bb.al, %.lr.ph.i.i120.i
   %.05.i.i121.i = phi i32 [ %i.im, %.lr.ph.i.i120.i ], [ %i.br, %bb.al ]
   %i.im = add nsw i32 %.05.i.i121.i, -1           ; 3 uses
-  %i.in = shl nsw i32 %i.im, 3
+  %i.in = shl nuw nsw i32 %i.im, 3
   %i.io = lshr i32 187, %i.in
   call void @avio_w8(ptr noundef %i.ca, i32 noundef %i.io) #14
   %.not.i.i122.i = icmp eq i32 %i.im, 0
@@ -2348,7 +2348,7 @@ bb.br:                                            ; preds = %bb.br, %bb.bq
 .lr.ph.i.i:                                       ; preds = %bb.br, %.lr.ph.i.i
   %.05.i.i = phi i32 [ %i.mk, %.lr.ph.i.i ], [ %i.lq, %bb.br ]
   %i.mk = add nsw i32 %.05.i.i, -1                ; 3 uses
-  %i.ml = shl nsw i32 %i.mk, 3
+  %i.ml = shl nuw nsw i32 %i.mk, 3
   %i.mm = lshr i32 21998, %i.ml
   %i.mn = and i32 %i.mm, 255
   call void @avio_w8(ptr noundef nonnull %i.lj, i32 noundef %i.mn) #14
@@ -2383,7 +2383,7 @@ bb.bt:                                            ; preds = %put_ebml_uint.exit
 .lr.ph.i.i240:                                    ; preds = %bb.bt, %.lr.ph.i.i240
   %.05.i.i241 = phi i32 [ %i.mx, %.lr.ph.i.i240 ], [ %i.lu, %bb.bt ]
   %i.mx = add nsw i32 %.05.i.i241, -1             ; 3 uses
-  %i.my = shl nsw i32 %i.mx, 3
+  %i.my = shl nuw nsw i32 %i.mx, 3
   %i.mz = lshr i32 16871, %i.my
   %i.na = and i32 %i.mz, 231
   call void @avio_w8(ptr noundef nonnull %i.lj, i32 noundef %i.na) #14
@@ -2398,7 +2398,7 @@ put_ebml_id.exit.i243:                            ; preds = %.lr.ph.i.i240
 .lr.ph.i.i252:                                    ; preds = %put_ebml_id.exit.i243, %.lr.ph.i.i252
   %.05.i.i253 = phi i32 [ %i.nb, %.lr.ph.i.i252 ], [ %i.lu, %put_ebml_id.exit.i243 ]
   %i.nb = add nsw i32 %.05.i.i253, -1             ; 3 uses
-  %i.nc = shl nsw i32 %i.nb, 3
+  %i.nc = shl nuw nsw i32 %i.nb, 3
   %i.nd = lshr i32 16880, %i.nc
   %i.ne = and i32 %i.nd, 241
   call void @avio_w8(ptr noundef nonnull %i.lj, i32 noundef %i.ne) #14
@@ -2486,7 +2486,7 @@ bb.bx:                                            ; preds = %bb.bw
 .lr.ph.i.i.i260:                                  ; preds = %bb.bx, %.lr.ph.i.i.i260
   %.05.i.i.i261 = phi i32 [ %i.ox, %.lr.ph.i.i.i260 ], [ %i.oa, %bb.bx ]
   %i.ox = add nsw i32 %.05.i.i.i261, -1           ; 3 uses
-  %i.oy = shl nsw i32 %i.ox, 3
+  %i.oy = shl nuw nsw i32 %i.ox, 3
   %i.oz = lshr i32 17827, %i.oy
   %i.pa = and i32 %i.oz, 231
   call void @avio_w8(ptr noundef nonnull %i.ns, i32 noundef %i.pa) #14
@@ -2515,7 +2515,7 @@ put_ebml_string.exit:                             ; preds = %.lr.ph.i.i.i260
 .lr.ph.i.i263:                                    ; preds = %put_ebml_string.exit, %.lr.ph.i.i263
   %.05.i.i264 = phi i32 [ %i.pm, %.lr.ph.i.i263 ], [ %i.oe, %put_ebml_string.exit ]
   %i.pm = add nsw i32 %.05.i.i264, -1             ; 3 uses
-  %i.pn = shl nsw i32 %i.pm, 3
+  %i.pn = shl nuw nsw i32 %i.pm, 3
   %i.po = lshr i32 17543, %i.pn
   %i.pp = and i32 %i.po, 199
   call void @avio_w8(ptr noundef nonnull %i.ns, i32 noundef %i.pp) #14
@@ -2918,7 +2918,7 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph.i.i.i:                                     ; preds = %bb.e, %.lr.ph.i.i.i
   %.05.i.i.i = phi i32 [ %i.ac, %.lr.ph.i.i.i ], [ %i.ab, %bb.e ]
   %i.ac = add nsw i32 %.05.i.i.i, -1              ; 3 uses
-  %i.ad = shl nsw i32 %i.ac, 3
+  %i.ad = shl nuw nsw i32 %i.ac, 3
   %i.ae = lshr i32 236, %i.ad
   tail call void @avio_w8(ptr noundef %i.x, i32 noundef %i.ae) #14
   %.not.i.i.i = icmp eq i32 %i.ac, 0
@@ -3203,7 +3203,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
 .lr.ph.i.i.i91:                                   ; preds = %bb.r, %.lr.ph.i.i.i91
   %.05.i.i.i92 = phi i32 [ %i.gl, %.lr.ph.i.i.i91 ], [ %i.bo, %bb.r ]
   %i.gl = add nsw i32 %.05.i.i.i92, -1            ; 3 uses
-  %i.gm = shl nsw i32 %i.gl, 3
+  %i.gm = shl nuw nsw i32 %i.gl, 3
   %i.gn = lshr i32 215, %i.gm
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.gn) #14
   %.not.i.i.i93 = icmp eq i32 %i.gl, 0
@@ -3233,7 +3233,7 @@ put_ebml_uint.exit.i:                             ; preds = %bb.s
 .lr.ph.i.i278.i:                                  ; preds = %.lr.ph.i.i278.i, %put_ebml_uint.exit.i
   %.05.i.i279.i = phi i32 [ %i.gw, %.lr.ph.i.i278.i ], [ %i.bs, %put_ebml_uint.exit.i ]
   %i.gw = add nsw i32 %.05.i.i279.i, -1           ; 3 uses
-  %i.gx = shl nsw i32 %i.gw, 3
+  %i.gx = shl nuw nsw i32 %i.gw, 3
   %i.gy = lshr i32 29637, %i.gx
   %i.gz = and i32 %i.gy, 247
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.gz) #14
@@ -3248,7 +3248,7 @@ put_ebml_uid.exit.i:                              ; preds = %.lr.ph.i.i278.i
 .lr.ph.i.i287.i:                                  ; preds = %put_ebml_uid.exit.i, %.lr.ph.i.i287.i
   %.05.i.i288.i = phi i32 [ %i.ha, %.lr.ph.i.i287.i ], [ %i.bw, %put_ebml_uid.exit.i ]
   %i.ha = add nsw i32 %.05.i.i288.i, -1           ; 3 uses
-  %i.hb = shl nsw i32 %i.ha, 3
+  %i.hb = shl nuw nsw i32 %i.ha, 3
   %i.hc = lshr i32 156, %i.hb
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.hc) #14
   %.not.i.i289.i = icmp eq i32 %i.ha, 0
@@ -3272,7 +3272,7 @@ bb.t:                                             ; preds = %.lr.ph.i.i215
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i, %bb.t
   %.05.i.i.i.i = phi i32 [ %i.hj, %.lr.ph.i.i.i.i ], [ %i.ca, %bb.t ]
   %i.hj = add nsw i32 %.05.i.i.i.i, -1            ; 3 uses
-  %i.hk = shl nsw i32 %i.hj, 3
+  %i.hk = shl nuw nsw i32 %i.hj, 3
   %i.hl = lshr i32 21358, %i.hk
   %i.hm = and i32 %i.hl, 127
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.hm) #14
@@ -3309,7 +3309,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 .lr.ph.i.i.i294.i:                                ; preds = %.lr.ph.i.i.i294.i, %bb.w
   %.05.i.i.i295.i = phi i32 [ %i.hw, %.lr.ph.i.i.i294.i ], [ %i.ce, %bb.w ]
   %i.hw = add nsw i32 %.05.i.i.i295.i, -1         ; 3 uses
-  %i.hx = shl nsw i32 %i.hw, 3
+  %i.hx = shl nuw nsw i32 %i.hw, 3
   %i.hy = lshr i32 2274716, %i.hx
   %i.hz = and i32 %i.hy, 191
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.hz) #14
@@ -3330,7 +3330,7 @@ bb.x:                                             ; preds = %put_ebml_string.exi
 .lr.ph.i.i305.i:                                  ; preds = %bb.x, %.lr.ph.i.i305.i
   %.05.i.i306.i = phi i32 [ %i.ic, %.lr.ph.i.i305.i ], [ %i.ci, %bb.x ]
   %i.ic = add nsw i32 %.05.i.i306.i, -1           ; 3 uses
-  %i.id = shl nsw i32 %i.ic, 3
+  %i.id = shl nuw nsw i32 %i.ic, 3
   %i.ie = lshr i32 136, %i.id
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.ie) #14
   %.not.i.i307.i = icmp eq i32 %i.ic, 0
@@ -3350,7 +3350,7 @@ put_ebml_uint.exit311.i:                          ; preds = %.lr.ph.i.i206, %put
 .lr.ph.i.i318.i:                                  ; preds = %put_ebml_uint.exit311.i, %.lr.ph.i.i318.i
   %.05.i.i319.i = phi i32 [ %i.ih, %.lr.ph.i.i318.i ], [ %i.cm, %put_ebml_uint.exit311.i ]
   %i.ih = add nsw i32 %.05.i.i319.i, -1           ; 3 uses
-  %i.ii = shl nsw i32 %i.ih, 3
+  %i.ii = shl nuw nsw i32 %i.ih, 3
   %i.ij = lshr i32 21930, %i.ii
   %i.ik = and i32 %i.ij, 255
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.ik) #14
@@ -3427,7 +3427,7 @@ bb.ac:                                            ; preds = %bb.ab
 .lr.ph.i.i.i325.i:                                ; preds = %.loopexit626.i, %.lr.ph.i.i.i325.i
   %.05.i.i.i326.i = phi i32 [ %i.jb, %.lr.ph.i.i.i325.i ], [ %i.cs, %.loopexit626.i ]
   %i.jb = add nsw i32 %.05.i.i.i326.i, -1         ; 3 uses
-  %i.jc = shl nsw i32 %i.jb, 3
+  %i.jc = shl nuw nsw i32 %i.jb, 3
   %i.jd = lshr i32 134, %i.jc
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.jd) #14
   %.not.i.i.i327.i = icmp eq i32 %i.jb, 0
@@ -3442,7 +3442,7 @@ bb.ad:                                            ; preds = %put_ebml_uint.exit3
 .lr.ph.i.i336.i:                                  ; preds = %bb.ad, %.lr.ph.i.i336.i
   %.05.i.i337.i = phi i32 [ %i.jg, %.lr.ph.i.i336.i ], [ %i.cm, %bb.ad ]
   %i.jg = add nsw i32 %.05.i.i337.i, -1           ; 3 uses
-  %i.jh = shl nsw i32 %i.jg, 3
+  %i.jh = shl nuw nsw i32 %i.jg, 3
   %i.ji = lshr i32 21935, %i.jh
   %i.jj = and i32 %i.ji, 255
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.jj) #14
@@ -3464,7 +3464,7 @@ put_ebml_uint.exit342.i:                          ; preds = %.lr.ph.i.i188, %bb.
 .lr.ph.i.i349.i:                                  ; preds = %put_ebml_uint.exit342.i, %.lr.ph.i.i349.i
   %.05.i.i350.i = phi i32 [ %i.jm, %.lr.ph.i.i349.i ], [ %i.cm, %put_ebml_uint.exit342.i ]
   %i.jm = add nsw i32 %.05.i.i350.i, -1           ; 3 uses
-  %i.jn = shl nsw i32 %i.jm, 3
+  %i.jn = shl nuw nsw i32 %i.jm, 3
   %i.jo = lshr i32 21931, %i.jn
   %i.jp = and i32 %i.jo, 255
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.jp) #14
@@ -3486,7 +3486,7 @@ put_ebml_uint.exit355.i:                          ; preds = %.lr.ph.i.i179, %put
 .lr.ph.i.i362.i:                                  ; preds = %put_ebml_uint.exit355.i, %.lr.ph.i.i362.i
   %.05.i.i363.i = phi i32 [ %i.js, %.lr.ph.i.i362.i ], [ %i.cm, %put_ebml_uint.exit355.i ]
   %i.js = add nsw i32 %.05.i.i363.i, -1           ; 3 uses
-  %i.jt = shl nsw i32 %i.js, 3
+  %i.jt = shl nuw nsw i32 %i.js, 3
   %i.ju = lshr i32 21932, %i.jt
   %i.jv = and i32 %i.ju, 253
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.jv) #14
@@ -3509,7 +3509,7 @@ put_ebml_uint.exit368.i:                          ; preds = %.lr.ph.i.i170, %put
 .lr.ph.i.i375.i:                                  ; preds = %put_ebml_uint.exit368.i, %.lr.ph.i.i375.i
   %.05.i.i376.i = phi i32 [ %i.jy, %.lr.ph.i.i375.i ], [ %i.cm, %put_ebml_uint.exit368.i ]
   %i.jy = add nsw i32 %.05.i.i376.i, -1           ; 3 uses
-  %i.jz = shl nsw i32 %i.jy, 3
+  %i.jz = shl nuw nsw i32 %i.jy, 3
   %i.ka = lshr i32 21934, %i.jz
   %i.kb = and i32 %i.ka, 255
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.kb) #14
@@ -3564,7 +3564,7 @@ bb.ah:                                            ; preds = %.lr.ph.i
 .lr.ph.i.i.i383.i:                                ; preds = %bb.ah, %.lr.ph.i.i.i383.i
   %.05.i.i.i384.i = phi i32 [ %i.kp, %.lr.ph.i.i.i383.i ], [ %i.cs, %bb.ah ]
   %i.kp = add nsw i32 %.05.i.i.i384.i, -1         ; 3 uses
-  %i.kq = shl nsw i32 %i.kp, 3
+  %i.kq = shl nuw nsw i32 %i.kp, 3
   %i.kr = lshr i32 134, %i.kq
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.kr) #14
   %.not.i.i.i385.i = icmp eq i32 %i.kp, 0
@@ -3606,7 +3606,7 @@ bb.ak:                                            ; preds = %.loopexit627.i
 .lr.ph.i.i394.i:                                  ; preds = %bb.ak, %.lr.ph.i.i394.i
   %.05.i.i395.i = phi i32 [ %i.kw, %.lr.ph.i.i394.i ], [ %i.cw, %bb.ak ]
   %i.kw = add nsw i32 %.05.i.i395.i, -1           ; 3 uses
-  %i.kx = shl nsw i32 %i.kw, 3
+  %i.kx = shl nuw nsw i32 %i.kw, 3
   %i.ky = lshr i32 131, %i.kx
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.ky) #14
   %.not.i.i396.i = icmp eq i32 %i.kw, 0
@@ -3663,7 +3663,7 @@ bb.ao:                                            ; preds = %bb.ao, %select.unfo
 .lr.ph.i.i.i403.i:                                ; preds = %bb.ao, %.lr.ph.i.i.i403.i
   %.05.i.i.i404.i = phi i32 [ %i.lp, %.lr.ph.i.i.i403.i ], [ %i.dh, %bb.ao ]
   %i.lp = add nsw i32 %.05.i.i.i404.i, -1         ; 3 uses
-  %i.lq = shl nsw i32 %i.lp, 3
+  %i.lq = shl nuw nsw i32 %i.lp, 3
   %i.lr = lshr i32 2352003, %i.lq
   %i.ls = and i32 %i.lr, 227
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.ls) #14
@@ -3734,7 +3734,7 @@ bb.av:                                            ; preds = %bb.au, %bb.au, %bb.
 .lr.ph.i.i.i407.i:                                ; preds = %bb.av, %.lr.ph.i.i.i407.i
   %.05.i.i.i408.i = phi i32 [ %i.mn, %.lr.ph.i.i.i407.i ], [ %i.cs, %bb.av ]
   %i.mn = add nsw i32 %.05.i.i.i408.i, -1         ; 3 uses
-  %i.mo = shl nsw i32 %i.mn, 3
+  %i.mo = shl nuw nsw i32 %i.mn, 3
   %i.mp = lshr i32 134, %i.mo
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.mp) #14
   %.not.i.i.i409.i = icmp eq i32 %i.mn, 0
@@ -3751,7 +3751,7 @@ bb.av:                                            ; preds = %bb.au, %bb.au, %bb.
 .lr.ph.i.i.i135:                                  ; preds = %.thread589.i, %.lr.ph.i.i.i135
   %.05.i.i.i136 = phi i32 [ %i.mq, %.lr.ph.i.i.i135 ], [ %i.cs, %.thread589.i ]
   %i.mq = add nsw i32 %.05.i.i.i136, -1           ; 3 uses
-  %i.mr = shl nsw i32 %i.mq, 3
+  %i.mr = shl nuw nsw i32 %i.mq, 3
   %i.ms = lshr i32 134, %i.mr
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.ms) #14
   %.not.i.i.i137 = icmp eq i32 %i.mq, 0
@@ -4154,7 +4154,7 @@ bb.ew:                                            ; preds = %bb.ev
 .lr.ph.i.i421.i:                                  ; preds = %.preheader624.i, %.lr.ph.i.i421.i
   %.05.i.i422.i = phi i32 [ %i.agp, %.lr.ph.i.i421.i ], [ %i.da, %.preheader624.i ]
   %i.agp = add nsw i32 %.05.i.i422.i, -1          ; 3 uses
-  %i.agq = shl nsw i32 %i.agp, 3
+  %i.agq = shl nuw nsw i32 %i.agp, 3
   %i.agr = lshr i32 22186, %i.agq
   %i.ags = and i32 %i.agr, 254
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.ags) #14
@@ -4209,7 +4209,7 @@ bb.ez:                                            ; preds = %.thread599.i, %bb.e
 .lr.ph.i.i434.i:                                  ; preds = %bb.ez, %.lr.ph.i.i434.i
   %.05.i.i435.i = phi i32 [ %i.ahk, %.lr.ph.i.i434.i ], [ %i.da, %bb.ez ]
   %i.ahk = add nsw i32 %.05.i.i435.i, -1          ; 3 uses
-  %i.ahl = shl nsw i32 %i.ahk, 3
+  %i.ahl = shl nuw nsw i32 %i.ahk, 3
   %i.ahm = lshr i32 22203, %i.ahl
   %i.ahn = and i32 %i.ahm, 255
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.ahn) #14
@@ -4275,7 +4275,7 @@ put_ebml_uint.exit440.i:                          ; preds = %get_aac_sample_rate
 .lr.ph.i.i450.i:                                  ; preds = %put_ebml_uint.exit440.i, %.lr.ph.i.i450.i
   %.05.i.i451.i = phi i32 [ %i.aib, %.lr.ph.i.i450.i ], [ %i.cw, %put_ebml_uint.exit440.i ]
   %i.aib = add nsw i32 %.05.i.i451.i, -1          ; 3 uses
-  %i.aic = shl nsw i32 %i.aib, 3
+  %i.aic = shl nuw nsw i32 %i.aib, 3
   %i.aid = lshr i32 131, %i.aic
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.aid) #14
   %.not.i.i452.i = icmp eq i32 %i.aib, 0
@@ -4314,7 +4314,7 @@ bb.ff:                                            ; preds = %bb.ff, %.thread603.
 .lr.ph.i.i.i462.i:                                ; preds = %bb.ff, %.lr.ph.i.i.i462.i
   %.05.i.i.i463.i = phi i32 [ %i.ain, %.lr.ph.i.i.i462.i ], [ %i.dh, %bb.ff ]
   %i.ain = add nsw i32 %.05.i.i.i463.i, -1        ; 3 uses
-  %i.aio = shl nsw i32 %i.ain, 3
+  %i.aio = shl nuw nsw i32 %i.ain, 3
   %i.aip = lshr i32 2352003, %i.aio
   %i.aiq = and i32 %i.aip, 227
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.aiq) #14
@@ -4360,7 +4360,7 @@ bb.fi:                                            ; preds = %bb.fh
 .lr.ph.i.i.i470.i:                                ; preds = %bb.fi, %.lr.ph.i.i.i470.i
   %.05.i.i.i471.i = phi i32 [ %i.ajf, %.lr.ph.i.i.i470.i ], [ %i.cs, %bb.fi ]
   %i.ajf = add nsw i32 %.05.i.i.i471.i, -1        ; 3 uses
-  %i.ajg = shl nsw i32 %i.ajf, 3
+  %i.ajg = shl nuw nsw i32 %i.ajf, 3
   %i.ajh = lshr i32 134, %i.ajg
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.ajh) #14
   %.not.i.i.i472.i = icmp eq i32 %i.ajf, 0
@@ -4394,7 +4394,7 @@ bb.fl:                                            ; preds = %bb.fk
 .lr.ph.i.i481.i:                                  ; preds = %bb.fl, %.lr.ph.i.i481.i
   %.05.i.i482.i = phi i32 [ %i.ajp, %.lr.ph.i.i481.i ], [ %i.dl, %bb.fl ]
   %i.ajp = add nsw i32 %.05.i.i482.i, -1          ; 3 uses
-  %i.ajq = shl nsw i32 %i.ajp, 3
+  %i.ajq = shl nuw nsw i32 %i.ajp, 3
   %i.ajr = lshr i32 159, %i.ajq
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.ajr) #14
   %.not.i.i483.i = icmp eq i32 %i.ajp, 0
@@ -4426,7 +4426,7 @@ put_ebml_uint.exit487.i:                          ; preds = %bb.fm
 .lr.ph.i.i489.i:                                  ; preds = %put_ebml_uint.exit487.i, %.lr.ph.i.i489.i
   %.05.i.i490.i = phi i32 [ %i.akb, %.lr.ph.i.i489.i ], [ %i.dp, %put_ebml_uint.exit487.i ]
   %i.akb = add nsw i32 %.05.i.i490.i, -1          ; 3 uses
-  %i.akc = shl nsw i32 %i.akb, 3
+  %i.akc = shl nuw nsw i32 %i.akb, 3
   %i.akd = lshr i32 181, %i.akc
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.akd) #14
   %.not.i.i491.i = icmp eq i32 %i.akb, 0
@@ -4442,7 +4442,7 @@ put_ebml_float.exit.i:                            ; preds = %.lr.ph.i.i489.i, %p
 .lr.ph.i.i494.i:                                  ; preds = %put_ebml_float.exit.i, %.lr.ph.i.i494.i
   %.05.i.i495.i = phi i32 [ %i.akf, %.lr.ph.i.i494.i ], [ %i.dt, %put_ebml_float.exit.i ]
   %i.akf = add nsw i32 %.05.i.i495.i, -1          ; 3 uses
-  %i.akg = shl nsw i32 %i.akf, 3
+  %i.akg = shl nuw nsw i32 %i.akf, 3
   %i.akh = lshr i32 30901, %i.akg
   %i.aki = and i32 %i.akh, 253
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.aki) #14
@@ -4503,7 +4503,7 @@ bb.fr:                                            ; preds = %bb.fr, %.thread615.
 .lr.ph.i.i505.i:                                  ; preds = %bb.fr, %.lr.ph.i.i505.i
   %.05.i.i506.i = phi i32 [ %i.aky, %.lr.ph.i.i505.i ], [ %i.dx, %bb.fr ]
   %i.aky = add nsw i32 %.05.i.i506.i, -1          ; 3 uses
-  %i.akz = shl nsw i32 %i.aky, 3
+  %i.akz = shl nuw nsw i32 %i.aky, 3
   %i.ala = lshr i32 25188, %i.akz
   %i.alb = and i32 %i.ala, 102
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.alb) #14
@@ -4566,7 +4566,7 @@ bb.fx:                                            ; preds = %bb.fw
 .lr.ph.i.i105:                                    ; preds = %bb.fx, %.lr.ph.i.i105
   %.05.i.i = phi i32 [ %i.alx, %.lr.ph.i.i105 ], [ %i.cm, %bb.fx ]
   %i.alx = add nsw i32 %.05.i.i, -1               ; 3 uses
-  %i.aly = shl nsw i32 %i.alx, 3
+  %i.aly = shl nuw nsw i32 %i.alx, 3
   %i.alz = lshr i32 21933, %i.aly
   %i.ama = and i32 %i.alz, 253
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.ama) #14
@@ -4596,7 +4596,7 @@ bb.fy:                                            ; preds = %.thread.i, %.thread
 .lr.ph.i.i518.i:                                  ; preds = %bb.fy, %.lr.ph.i.i518.i
   %.05.i.i519.i = phi i32 [ %i.ame, %.lr.ph.i.i518.i ], [ %i.cw, %bb.fy ]
   %i.ame = add nsw i32 %.05.i.i519.i, -1          ; 3 uses
-  %i.amf = shl nsw i32 %i.ame, 3
+  %i.amf = shl nuw nsw i32 %i.ame, 3
   %i.amg = lshr i32 131, %i.amf
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.amg) #14
   %.not.i.i520.i = icmp eq i32 %i.ame, 0
@@ -4635,7 +4635,7 @@ bb.gb:                                            ; preds = %bb.ga
 .lr.ph.i.i.i527.i:                                ; preds = %.lr.ph.i.i.i527.i, %bb.gb
   %.05.i.i.i528.i = phi i32 [ %i.amo, %.lr.ph.i.i.i527.i ], [ %i.cm, %bb.gb ]
   %i.amo = add nsw i32 %.05.i.i.i528.i, -1        ; 3 uses
-  %i.amp = shl nsw i32 %i.amo, 3
+  %i.amp = shl nuw nsw i32 %i.amo, 3
   %i.amq = lshr i32 21998, %i.amp
   %i.amr = and i32 %i.amq, 255
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.amr) #14
@@ -4655,7 +4655,7 @@ bb.gc:                                            ; preds = %.lr.ph.i.i564.i
 .lr.ph.i.i51.i.i:                                 ; preds = %bb.gc, %.lr.ph.i.i51.i.i
   %.05.i.i52.i.i = phi i32 [ %i.amu, %.lr.ph.i.i51.i.i ], [ %i.fi, %bb.gc ]
   %i.amu = add nsw i32 %.05.i.i52.i.i, -1         ; 3 uses
-  %i.amv = shl nsw i32 %i.amu, 3
+  %i.amv = shl nuw nsw i32 %i.amu, 3
   %i.amw = lshr i32 236, %i.amv
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.amw) #14
   %.not.i.i53.i.i = icmp eq i32 %i.amu, 0
@@ -4698,7 +4698,7 @@ bb.gf:                                            ; preds = %bb.ge
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i, %bb.gf
   %.05.i.i.i.i.i = phi i32 [ %i.anh, %.lr.ph.i.i.i.i.i ], [ %i.fm, %bb.gf ]
   %i.anh = add nsw i32 %.05.i.i.i.i.i, -1         ; 3 uses
-  %i.ani = shl nsw i32 %i.anh, 3
+  %i.ani = shl nuw nsw i32 %i.anh, 3
   %i.anj = lshr i32 16804, %i.ani
   %i.ank = and i32 %i.anj, 229
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.ank) #14
@@ -4715,7 +4715,7 @@ put_ebml_string.exit.i.i:                         ; preds = %.lr.ph.i.i.i.i.i
 .lr.ph.i.i61.i.i:                                 ; preds = %put_ebml_string.exit.i.i, %.lr.ph.i.i61.i.i
   %.05.i.i62.i.i = phi i32 [ %i.anm, %.lr.ph.i.i61.i.i ], [ %i.fm, %put_ebml_string.exit.i.i ]
   %i.anm = add nsw i32 %.05.i.i62.i.i, -1         ; 3 uses
-  %i.ann = shl nsw i32 %i.anm, 3
+  %i.ann = shl nuw nsw i32 %i.anm, 3
   %i.ano = lshr i32 16871, %i.ann
   %i.anp = and i32 %i.ano, 231
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.anp) #14
@@ -4740,7 +4740,7 @@ bb.gg:                                            ; preds = %bb.gg, %put_ebml_id
 .lr.ph.i.i69.i.i:                                 ; preds = %bb.gg, %.lr.ph.i.i69.i.i
   %.05.i.i70.i.i = phi i32 [ %i.anv, %.lr.ph.i.i69.i.i ], [ %i.fm, %bb.gg ]
   %i.anv = add nsw i32 %.05.i.i70.i.i, -1         ; 3 uses
-  %i.anw = shl nsw i32 %i.anv, 3
+  %i.anw = shl nuw nsw i32 %i.anv, 3
   %i.anx = lshr i32 16877, %i.anw
   %i.any = and i32 %i.anx, 237
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.any) #14
@@ -4801,7 +4801,7 @@ ebml_length_size.exit.i.i:                        ; preds = %bb.gk
 .lr.ph.i.i.i74.i.i:                               ; preds = %.lr.ph.i.i.i74.i.i, %ebml_length_size.exit.i.i
   %.05.i.i.i75.i.i = phi i32 [ %i.aov, %.lr.ph.i.i.i74.i.i ], [ %i.fm, %ebml_length_size.exit.i.i ]
   %i.aov = add nsw i32 %.05.i.i.i75.i.i, -1       ; 3 uses
-  %i.aow = shl nsw i32 %i.aov, 3
+  %i.aow = shl nuw nsw i32 %i.aov, 3
   %i.aox = lshr i32 16804, %i.aow
   %i.aoy = and i32 %i.aox, 229
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.aoy) #14
@@ -4816,7 +4816,7 @@ ebml_length_size.exit.i.i:                        ; preds = %bb.gk
 .lr.ph.i.i85.i.i:                                 ; preds = %.lr.ph.i.i85.i.i, %.lr.ph.i.i546.i
   %.05.i.i86.i.i = phi i32 [ %i.aoz, %.lr.ph.i.i85.i.i ], [ %i.fm, %.lr.ph.i.i546.i ]
   %i.aoz = add nsw i32 %.05.i.i86.i.i, -1         ; 3 uses
-  %i.apa = shl nsw i32 %i.aoz, 3
+  %i.apa = shl nuw nsw i32 %i.aoz, 3
   %i.apb = lshr i32 16871, %i.apa
   %i.apc = and i32 %i.apb, 231
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.apc) #14
@@ -4836,7 +4836,7 @@ ebml_length_size.exit.i.i:                        ; preds = %bb.gk
 .lr.ph.i.i93.i.i:                                 ; preds = %.lr.ph.i.i93.i.i, %.lr.ph.i.i538.i
   %.05.i.i94.i.i = phi i32 [ %i.apf, %.lr.ph.i.i93.i.i ], [ %i.fm, %.lr.ph.i.i538.i ]
   %i.apf = add nsw i32 %.05.i.i94.i.i, -1         ; 3 uses
-  %i.apg = shl nsw i32 %i.apf, 3
+  %i.apg = shl nuw nsw i32 %i.apf, 3
   %i.aph = lshr i32 16877, %i.apg
   %i.api = and i32 %i.aph, 237
   call void @avio_w8(ptr noundef %i.fy, i32 noundef %i.api) #14
@@ -5002,7 +5002,7 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph.i.i.i:                                     ; preds = %bb.e, %.lr.ph.i.i.i
   %.05.i.i.i = phi i32 [ %i.t, %.lr.ph.i.i.i ], [ %i.s, %bb.e ]
   %i.t = add nsw i32 %.05.i.i.i, -1               ; 3 uses
-  %i.u = shl nsw i32 %i.t, 3
+  %i.u = shl nuw nsw i32 %i.t, 3
   %i.v = lshr i32 236, %i.u
   call void @avio_w8(ptr noundef %i.o, i32 noundef %i.v) #14
   %.not.i.i.i = icmp eq i32 %i.t, 0
@@ -5034,7 +5034,7 @@ bb.g:                                             ; preds = %bb.f
 .lr.ph.i.i:                                       ; preds = %bb.g, %.lr.ph.i.i
   %.05.i.i = phi i32 [ %i.ai, %.lr.ph.i.i ], [ %i.ah, %bb.g ]
   %i.ai = add nsw i32 %.05.i.i, -1                ; 3 uses
-  %i.aj = shl nsw i32 %i.ai, 3
+  %i.aj = shl nuw nsw i32 %i.ai, 3
   %i.ak = lshr i32 17883, %i.aj
   %i.al = and i32 %i.ak, 223
   call void @avio_w8(ptr noundef %i.ad, i32 noundef %i.al) #14
@@ -5307,7 +5307,7 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph.i.i.i:                                     ; preds = %bb.e, %.lr.ph.i.i.i
   %.05.i.i.i = phi i32 [ %i.q, %.lr.ph.i.i.i ], [ %i.p, %bb.e ]
   %i.q = add nsw i32 %.05.i.i.i, -1               ; 3 uses
-  %i.r = shl nsw i32 %i.q, 3
+  %i.r = shl nuw nsw i32 %i.q, 3
   %i.s = lshr i32 236, %i.r
   call void @avio_w8(ptr noundef %i.l, i32 noundef %i.s) #14
   %.not.i.i.i = icmp eq i32 %i.q, 0
@@ -5394,7 +5394,7 @@ put_ebml_id.exit:                                 ; preds = %.lr.ph.i
 .lr.ph.i35:                                       ; preds = %put_ebml_id.exit, %.lr.ph.i35
   %.05.i36 = phi i32 [ %i.bj, %.lr.ph.i35 ], [ %i.bi, %put_ebml_id.exit ]
   %i.bj = add nsw i32 %.05.i36, -1                ; 3 uses
-  %i.bk = shl nsw i32 %i.bj, 3
+  %i.bk = shl nuw nsw i32 %i.bj, 3
   %i.bl = lshr i32 %i.ay, %i.bk
   %i.bm = and i32 %i.bl, 255
   call void @avio_w8(ptr noundef %i.ax, i32 noundef %i.bm) #14
@@ -5422,7 +5422,7 @@ bb.g:                                             ; preds = %bb.g, %put_ebml_id.
 .lr.ph.i.i:                                       ; preds = %bb.g, %.lr.ph.i.i
   %.05.i.i = phi i32 [ %i.br, %.lr.ph.i.i ], [ %i.aa, %bb.g ]
   %i.br = add nsw i32 %.05.i.i, -1                ; 3 uses
-  %i.bs = shl nsw i32 %i.br, 3
+  %i.bs = shl nuw nsw i32 %i.br, 3
   %i.bt = lshr i32 21420, %i.bs
   %i.bu = and i32 %i.bt, 255
   call void @avio_w8(ptr noundef %i.bn, i32 noundef %i.bu) #14
@@ -5515,7 +5515,7 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.i
   %.05.i = phi i32 [ %i.f, %.lr.ph.i ], [ %i.e, %bb.c ]
   %i.f = add nsw i32 %.05.i, -1                   ; 3 uses
-  %i.g = shl nsw i32 %i.f, 3
+  %i.g = shl nuw nsw i32 %i.f, 3
   %i.h = lshr i32 236, %i.g
   tail call void @avio_w8(ptr noundef %0, i32 noundef %i.h) #14
   %.not.i = icmp eq i32 %i.f, 0
@@ -5779,7 +5779,7 @@ bb.a:
 .lr.ph.i:                                         ; preds = %bb.a, %.lr.ph.i
   %.05.i = phi i32 [ %i.m, %.lr.ph.i ], [ %i.l, %bb.a ]
   %i.m = add nsw i32 %.05.i, -1                   ; 3 uses
-  %i.n = shl nsw i32 %i.m, 3
+  %i.n = shl nuw nsw i32 %i.m, 3
   %i.o = lshr i32 %i.b, %i.n
   %i.p = and i32 %i.o, 255
   tail call void @avio_w8(ptr noundef %1, i32 noundef %i.p) #14
@@ -5999,7 +5999,7 @@ bb.a:
 .lr.ph.i:                                         ; preds = %bb.a, %.lr.ph.i
   %.05.i = phi i32 [ %i.i, %.lr.ph.i ], [ %i.h, %bb.a ]
   %i.i = add nsw i32 %.05.i, -1                   ; 3 uses
-  %i.j = shl nsw i32 %i.i, 3
+  %i.j = shl nuw nsw i32 %i.i, 3
   %i.k = lshr i32 %1, %i.j
   %i.l = and i32 %i.k, 255
   tail call void @avio_w8(ptr noundef %0, i32 noundef %i.l) #14
@@ -6240,7 +6240,7 @@ bb.e:                                             ; preds = %put_ebml_id.exit
 .lr.ph.i.i:                                       ; preds = %bb.e, %.lr.ph.i.i
   %.05.i.i = phi i32 [ %i.as, %.lr.ph.i.i ], [ %i.ar, %bb.e ]
   %i.as = add nsw i32 %.05.i.i, -1                ; 3 uses
-  %i.at = shl nsw i32 %i.as, 3
+  %i.at = shl nuw nsw i32 %i.as, 3
   %i.au = lshr i32 191, %i.at
   call void @avio_w8(ptr noundef %0, i32 noundef %i.au) #14
   %.not.i.i = icmp eq i32 %i.as, 0
@@ -6324,7 +6324,7 @@ ebml_length_size.exit:                            ; preds = %bb.c, %bb.a
 .lr.ph.i:                                         ; preds = %ebml_length_size.exit, %.lr.ph.i
   %.05.i = phi i32 [ %i.m, %.lr.ph.i ], [ %i.l, %ebml_length_size.exit ]
   %i.m = add nsw i32 %.05.i, -1                   ; 3 uses
-  %i.n = shl nsw i32 %i.m, 3
+  %i.n = shl nuw nsw i32 %i.m, 3
   %i.o = lshr i32 %1, %i.n
   %i.p = and i32 %i.o, 255
   tail call void @avio_w8(ptr noundef %0, i32 noundef %i.p) #14
@@ -6727,7 +6727,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i.i:                                     ; preds = %bb.b, %.lr.ph.i.i.i
   %.05.i.i.i = phi i32 [ %i.n, %.lr.ph.i.i.i ], [ %i.m, %bb.b ]
   %i.n = add nsw i32 %.05.i.i.i, -1               ; 3 uses
-  %i.o = shl nsw i32 %i.n, 3
+  %i.o = shl nuw nsw i32 %i.n, 3
   %i.p = lshr i32 %4, %i.o
   %i.q = and i32 %i.p, 255
   tail call void @avio_w8(ptr noundef %i.d, i32 noundef %i.q) #14
@@ -6973,7 +6973,7 @@ bb.ac:                                            ; preds = %bb.ab
 .lr.ph.i.i.i46:                                   ; preds = %bb.ac, %.lr.ph.i.i.i46
   %.05.i.i.i47 = phi i32 [ %i.bx, %.lr.ph.i.i.i46 ], [ %i.bw, %bb.ac ]
   %i.bx = add nsw i32 %.05.i.i.i47, -1            ; 3 uses
-  %i.by = shl nsw i32 %i.bx, 3
+  %i.by = shl nuw nsw i32 %i.bx, 3
   %i.bz = lshr i32 236, %i.by
   call void @avio_w8(ptr noundef %.pre63, i32 noundef %i.bz) #14
   %.not.i.i.i48 = icmp eq i32 %i.bx, 0
@@ -6997,7 +6997,7 @@ start_ebml_master_crc32.exit.thread:              ; preds = %bb.ab, %.lr.ph.i.i7
 .lr.ph.i.i:                                       ; preds = %start_ebml_master_crc32.exit.thread, %.lr.ph.i.i
   %.05.i.i = phi i32 [ %i.cg, %.lr.ph.i.i ], [ %i.cf, %start_ebml_master_crc32.exit.thread ]
   %i.cg = add nsw i32 %.05.i.i, -1                ; 3 uses
-  %i.ch = shl nsw i32 %i.cg, 3
+  %i.ch = shl nuw nsw i32 %i.cg, 3
   %i.ci = lshr i32 29555, %i.ch
   %i.cj = and i32 %i.ci, 115
   call void @avio_w8(ptr noundef %i.ca, i32 noundef %i.cj) #14
@@ -7233,7 +7233,7 @@ bb.m:                                             ; preds = %bb.l
 .lr.ph.i.i.i:                                     ; preds = %bb.m, %.lr.ph.i.i.i
   %.05.i.i.i = phi i32 [ %i.ch, %.lr.ph.i.i.i ], [ %i.cg, %bb.m ]
   %i.ch = add nsw i32 %.05.i.i.i, -1              ; 3 uses
-  %i.ci = shl nsw i32 %i.ch, 3
+  %i.ci = shl nuw nsw i32 %i.ch, 3
   %i.cj = lshr i32 236, %i.ci
   tail call void @avio_w8(ptr noundef %.pre129, i32 noundef %i.cj) #14
   %.not.i.i.i = icmp eq i32 %i.ch, 0
@@ -7276,7 +7276,7 @@ bb.p:                                             ; preds = %bb.o
 .lr.ph.i.i:                                       ; preds = %bb.p, %.lr.ph.i.i
   %.05.i.i = phi i32 [ %i.cw, %.lr.ph.i.i ], [ %i.cv, %bb.p ]
   %i.cw = add nsw i32 %.05.i.i, -1                ; 3 uses
-  %i.cx = shl nsw i32 %i.cw, 3
+  %i.cx = shl nuw nsw i32 %i.cw, 3
   %i.cy = lshr i32 231, %i.cx
   tail call void @avio_w8(ptr noundef %i.cp, i32 noundef %i.cy) #14
   %.not.i.i = icmp eq i32 %i.cw, 0

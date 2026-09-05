@@ -205,6 +205,7 @@ bb.g:                                             ; preds = %bb.f, %bb.f
   %i.ci = call noundef ptr %i.ch(ptr noundef nonnull align 8 dereferenceable(519768) %i.ce) #19, !inline_history !1076 ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ce, i64 656
   %i.ck = load i8, ptr %i.cj, align 8, !tbaa !440, !range !311, !noundef !288
+  %20 = trunc nuw i8 %i.ck to i1
   %i.cl = load ptr, ptr %i.ce, align 8, !tbaa !173
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 136
   %i.cn = load ptr, ptr %i.cm, align 8
@@ -216,33 +217,32 @@ bb.g:                                             ; preds = %bb.f, %bb.f
   %i.cs = load ptr, ptr %i.cr, align 8
   %i.ct = call noundef ptr %i.cs(ptr noundef nonnull align 8 dereferenceable(519768) %i.ce) #19, !inline_history !1076
   %i.cu = call noundef i32 @_ZNK4llvm19RISCVTargetLowering17getStackProbeSizeERKNS_15MachineFunctionENS_5AlignE(ptr noundef nonnull align 8 dereferenceable(518448) %i.ct, ptr noundef nonnull align 8 dereferenceable(1065) %i.cc, i8 %.sroa.0.0.copyload.i100.i) #19
-  %20 = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
-  %21 = load ptr, ptr %20, align 8, !tbaa !528    ; 6 uses
-  %22 = trunc nuw i8 %i.ck to i1
-  %23 = zext i32 %i.cu to i64
+  %21 = zext i32 %i.cu to i64
+  %22 = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
+  %23 = load ptr, ptr %22, align 8, !tbaa !528    ; 6 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ca, i64 16 ; 2 uses
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !1105
   %i.cx = call noundef ptr @_ZN4llvm15MachineFunction23CreateMachineBasicBlockEPKNS_10BasicBlockESt8optionalINS_10UniqueBBIDEE(ptr noundef nonnull align 8 dereferenceable(1065) %i.cc, ptr noundef %i.cw, i64 undef, i8 0) #19 ; 17 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cc, i64 296 ; 2 uses
   call void @_ZN4llvm21ilist_callback_traitsINS_17MachineBasicBlockEE13addNodeToListEPS1_(ptr noundef nonnull align 8 dereferenceable(16) %i.cy, ptr noundef %i.cx) #19
-  %i.cz = load ptr, ptr %21, align 8, !tbaa !1106 ; 2 uses
+  %i.cz = load ptr, ptr %23, align 8, !tbaa !1106 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
-  store ptr %21, ptr %i.da, align 8, !tbaa !528
+  store ptr %23, ptr %i.da, align 8, !tbaa !528
   store ptr %i.cz, ptr %i.cx, align 8, !tbaa !1106
   %i.db = getelementptr inbounds nuw i8, ptr %i.cz, i64 8
   store ptr %i.cx, ptr %i.db, align 8, !tbaa !528
-  store ptr %i.cx, ptr %21, align 8, !tbaa !1106
+  store ptr %i.cx, ptr %23, align 8, !tbaa !1106
   %i.dc = load ptr, ptr %i.cv, align 8, !tbaa !1105
   %i.dd = call noundef ptr @_ZN4llvm15MachineFunction23CreateMachineBasicBlockEPKNS_10BasicBlockESt8optionalINS_10UniqueBBIDEE(ptr noundef nonnull align 8 dereferenceable(1065) %i.cc, ptr noundef %i.dc, i64 undef, i8 0) #19 ; 11 uses
   call void @_ZN4llvm21ilist_callback_traitsINS_17MachineBasicBlockEE13addNodeToListEPS1_(ptr noundef nonnull align 8 dereferenceable(16) %i.cy, ptr noundef %i.dd) #19
-  %i.de = load ptr, ptr %21, align 8, !tbaa !1106 ; 2 uses
+  %i.de = load ptr, ptr %23, align 8, !tbaa !1106 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
-  store ptr %21, ptr %i.df, align 8, !tbaa !528
+  store ptr %23, ptr %i.df, align 8, !tbaa !528
   store ptr %i.de, ptr %i.dd, align 8, !tbaa !1106
   %i.dg = getelementptr inbounds nuw i8, ptr %i.de, i64 8
   store ptr %i.dd, ptr %i.dg, align 8, !tbaa !528
-  store ptr %i.dd, ptr %21, align 8, !tbaa !1106
-  call void @_ZNK4llvm14RISCVInstrInfo6movImmERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_8DebugLocENS_8RegisterEmNS4_6MIFlagEbb(ptr noundef nonnull align 8 dereferenceable(440) %i.ci, ptr noundef nonnull align 8 dereferenceable(360) %i.ca, ptr nonnull %i.bp, ptr noundef nonnull align 8 dereferenceable(8) %16, i32 75, i64 noundef %23, i32 noundef 1, i1 noundef zeroext false, i1 noundef zeroext false) #19
+  store ptr %i.dd, ptr %23, align 8, !tbaa !1106
+  call void @_ZNK4llvm14RISCVInstrInfo6movImmERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_8DebugLocENS_8RegisterEmNS4_6MIFlagEbb(ptr noundef nonnull align 8 dereferenceable(440) %i.ci, ptr noundef nonnull align 8 dereferenceable(360) %i.ca, ptr nonnull %i.bp, ptr noundef nonnull align 8 dereferenceable(8) %16, i32 75, i64 noundef %21, i32 noundef 1, i1 noundef zeroext false, i1 noundef zeroext false) #19
   %i.dh = getelementptr inbounds nuw i8, ptr %i.cx, i64 48 ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #19
   %.sroa.023.0.copyload.i = load ptr, ptr %16, align 8, !tbaa !336
@@ -276,7 +276,7 @@ bb.g:                                             ; preds = %bb.f, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #19
   %.sroa.020.0.copyload.i = load ptr, ptr %16, align 8, !tbaa !336
   %i.ds = load ptr, ptr %i.di, align 8, !tbaa !337
-  %.neg.i = select i1 %22, i64 -15778, i64 -15949
+  %.neg.i = select i1 %20, i64 -15778, i64 -15949
   %i.dt = getelementptr inbounds [32 x i8], ptr %i.ds, i64 %.neg.i
   %i.du = getelementptr inbounds nuw i8, ptr %i.cx, i64 32 ; 3 uses
   %i.dv = load ptr, ptr %i.du, align 8, !tbaa !396 ; 4 uses

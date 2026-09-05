@@ -202,21 +202,21 @@ _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12Mac
   %i.px = load i32, ptr %i.pw, align 4, !tbaa !195 ; 3 uses
   %i.py = getelementptr inbounds nuw i8, ptr %i.pt, i64 80
   %i.pz = load i64, ptr %i.py, align 8, !tbaa !195 ; 2 uses
-  %102 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 10 uses
-  %103 = load ptr, ptr %102, align 8, !tbaa !210, !nonnull !181, !align !182 ; 2 uses
-  %104 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %105 = load ptr, ptr %104, align 8, !tbaa !224
-  %106 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %107 = load ptr, ptr %106, align 8, !tbaa !225
   %.not.i = icmp eq i64 %i.pz, 0
-  %108 = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.pz, i1 false)
-  %109 = trunc nuw nsw i64 %108 to i8
-  %110 = sub nuw nsw i8 63, %109
-  %.sroa.0.0.i425 = select i1 %.not.i, i8 0, i8 %110 ; 2 uses
-  %i.qa = getelementptr inbounds nuw i8, ptr %103, i64 64
-  store ptr %105, ptr %i.qa, align 8, !tbaa !226
-  %i.qb = getelementptr inbounds nuw i8, ptr %103, i64 72
-  store ptr %107, ptr %i.qb, align 8
+  %102 = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.pz, i1 false)
+  %103 = trunc nuw nsw i64 %102 to i8
+  %104 = sub nuw nsw i8 63, %103
+  %.sroa.0.0.i425 = select i1 %.not.i, i8 0, i8 %104 ; 2 uses
+  %105 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 10 uses
+  %106 = load ptr, ptr %105, align 8, !tbaa !210, !nonnull !181, !align !182 ; 2 uses
+  %107 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %108 = load ptr, ptr %107, align 8, !tbaa !224
+  %109 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %110 = load ptr, ptr %109, align 8, !tbaa !225
+  %i.qa = getelementptr inbounds nuw i8, ptr %106, i64 64
+  store ptr %108, ptr %i.qa, align 8, !tbaa !226
+  %i.qb = getelementptr inbounds nuw i8, ptr %106, i64 72
+  store ptr %110, ptr %i.qb, align 8
   %i.qc = tail call ptr @_ZN4llvm12MachineInstr15eraseFromParentEv(ptr noundef nonnull align 8 dereferenceable(80) %1) #17 ; 0 uses
   %i.qd = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.qe = load ptr, ptr %i.qd, align 8, !tbaa !197, !nonnull !181, !align !182 ; 2 uses
@@ -234,7 +234,7 @@ _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12Mac
   br i1 %.not403, label %bb.bc, label %bb.bb
 
 bb.bb:                                            ; preds = %_ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit
-  %i.qo = load ptr, ptr %102, align 8, !tbaa !210, !nonnull !181, !align !182
+  %i.qo = load ptr, ptr %105, align 8, !tbaa !210, !nonnull !181, !align !182
   call void @llvm.lifetime.start.p0(ptr nonnull %69) #17
   %i.qp = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.qq = load <2 x i64>, ptr %i.qp, align 8
@@ -331,7 +331,7 @@ _ZNK4llvm12GCNSubtarget21hasFlatScratchEnabledEv.exit: ; preds = %bb.bf
 
 bb.bg:                                            ; preds = %_ZNK4llvm12GCNSubtarget21hasFlatScratchEnabledEv.exit.thread778, %_ZNK4llvm12GCNSubtarget21hasFlatScratchEnabledEv.exit
   %i.sl = phi i32 [ %i.se, %_ZNK4llvm12GCNSubtarget21hasFlatScratchEnabledEv.exit.thread778 ], [ %i.sk, %_ZNK4llvm12GCNSubtarget21hasFlatScratchEnabledEv.exit ] ; 2 uses
-  %i.sm = load ptr, ptr %102, align 8, !tbaa !210, !nonnull !181, !align !182
+  %i.sm = load ptr, ptr %105, align 8, !tbaa !210, !nonnull !181, !align !182
   call void @llvm.lifetime.start.p0(ptr nonnull %70) #17
   %i.sn = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
   %i.so = load <2 x i64>, ptr %i.sn, align 8
@@ -343,7 +343,7 @@ bb.bg:                                            ; preds = %_ZNK4llvm12GCNSubta
   %i.ss = extractvalue { ptr, ptr } %i.sr, 0
   %i.st = extractvalue { ptr, ptr } %i.sr, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %70) #17
-  %i.su = load ptr, ptr %102, align 8, !tbaa !210, !nonnull !181, !align !182 ; 2 uses
+  %i.su = load ptr, ptr %105, align 8, !tbaa !210, !nonnull !181, !align !182 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #17
   %i.sv = load <2 x i64>, ptr %i.sn, align 8
   store <2 x i64> %i.sv, ptr %11, align 16
@@ -387,7 +387,7 @@ bb.bi:                                            ; preds = %bb.bh
   %i.tm = zext i32 %i.tg to i64
   %i.tn = select i1 %i.th, i64 0, i64 %i.tm
   %i.to = shl i64 %i.tl, %i.tn                    ; 2 uses
-  %i.tp = load ptr, ptr %102, align 8, !tbaa !210, !nonnull !181, !align !182
+  %i.tp = load ptr, ptr %105, align 8, !tbaa !210, !nonnull !181, !align !182
   call void @llvm.lifetime.start.p0(ptr nonnull %71) #17
   %i.tq = load ptr, ptr %i.qm, align 8, !tbaa !190
   %i.tr = ptrtoint ptr %i.tq to i64
@@ -406,7 +406,7 @@ bb.bi:                                            ; preds = %bb.bh
   %i.ty = extractvalue { ptr, ptr } %i.tw, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %72) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %71) #17
-  %i.tz = load ptr, ptr %102, align 8, !tbaa !210, !nonnull !181, !align !182 ; 2 uses
+  %i.tz = load ptr, ptr %105, align 8, !tbaa !210, !nonnull !181, !align !182 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %73) #17
   %i.ua = load ptr, ptr %i.qm, align 8, !tbaa !190
   %i.ub = ptrtoint ptr %i.ua to i64
@@ -449,7 +449,7 @@ bb.bi:                                            ; preds = %bb.bh
   %i.us = icmp eq i64 %i.ur, 63
   %i.ut = ashr exact i64 -9223372036854775808, %i.ur
   %i.uu = select i1 %i.us, i64 -1, i64 %i.ut
-  %i.uv = load ptr, ptr %102, align 8, !tbaa !210, !nonnull !181, !align !182 ; 3 uses
+  %i.uv = load ptr, ptr %105, align 8, !tbaa !210, !nonnull !181, !align !182 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %77) #17
   %i.uw = load <2 x i64>, ptr %i.ug, align 8
   store <2 x i64> %i.uw, ptr %77, align 16
@@ -484,7 +484,7 @@ bb.bi:                                            ; preds = %bb.bh
   br label %bb.bk
 
 bb.bj:                                            ; preds = %bb.bh
-  %i.vg = load ptr, ptr %102, align 8, !tbaa !210, !nonnull !181, !align !182
+  %i.vg = load ptr, ptr %105, align 8, !tbaa !210, !nonnull !181, !align !182
   call void @llvm.lifetime.start.p0(ptr nonnull %78) #17
   store i32 %i.pv, ptr %78, align 8, !tbaa !209
   %i.vh = getelementptr inbounds nuw i8, ptr %78, i64 16
@@ -499,7 +499,7 @@ bb.bj:                                            ; preds = %bb.bh
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj, %bb.bi
-  %i.vk = load ptr, ptr %102, align 8, !tbaa !210, !nonnull !181, !align !182
+  %i.vk = load ptr, ptr %105, align 8, !tbaa !210, !nonnull !181, !align !182
   call void @llvm.lifetime.start.p0(ptr nonnull %80) #17
   %i.vl = load ptr, ptr %i.qm, align 8, !tbaa !190
   %i.vm = ptrtoint ptr %i.vl to i64
@@ -523,7 +523,7 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   call void @llvm.lifetime.end.p0(ptr nonnull %82) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %81) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %80) #17
-  %i.vv = load ptr, ptr %102, align 8, !tbaa !210, !nonnull !181, !align !182
+  %i.vv = load ptr, ptr %105, align 8, !tbaa !210, !nonnull !181, !align !182
   call void @llvm.lifetime.start.p0(ptr nonnull %83) #17
   store i32 %.sroa.0.0.copyload.i430, ptr %83, align 8, !tbaa !209
   %i.vw = getelementptr inbounds nuw i8, ptr %83, i64 16

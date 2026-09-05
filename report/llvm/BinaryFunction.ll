@@ -205,7 +205,7 @@ bb.an:                                            ; preds = %"_ZZN4llvm4bolt14Bi
   call void @_ZNSt6vectorIN4llvm6MCInstESaIS1_EE17_M_realloc_insertIJRS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(192) %.3, ptr %i.iy, ptr noundef nonnull align 8 dereferenceable(128) %i.aj)
   br label %_ZN4llvm4bolt16BinaryBasicBlock14addInstructionEONS_6MCInstE.exit
 
-_ZN4llvm4bolt16BinaryBasicBlock14addInstructionEONS_6MCInstE.exit: ; preds = %_ZN4llvm6MCInstC2ERKS0_.exit.i.i, %bb.an
+_ZN4llvm4bolt16BinaryBasicBlock14addInstructionEONS_6MCInstE.exit: ; preds = %bb.an, %_ZN4llvm6MCInstC2ERKS0_.exit.i.i
   %i.jr = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.0225.0283) #35 ; 2 uses
   %.not271 = icmp eq ptr %i.jr, %i.m
   br i1 %.not271, label %bb.ap, label %bb.ao

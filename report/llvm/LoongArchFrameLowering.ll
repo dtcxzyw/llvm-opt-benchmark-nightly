@@ -202,6 +202,7 @@ bb.f:                                             ; preds = %.lr.ph32, %_ZL20emi
   %i.bq = call noundef ptr %i.bp(ptr noundef nonnull align 8 dereferenceable(519320) %i.bm) #14, !inline_history !554 ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bm, i64 354
   %i.bs = load i8, ptr %i.br, align 2, !tbaa !267, !range !161, !noundef !136
+  %14 = trunc nuw i8 %i.bs to i1                  ; 2 uses
   %i.bt = load ptr, ptr %i.bm, align 8, !tbaa !139
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 136
   %i.bv = load ptr, ptr %i.bu, align 8
@@ -213,33 +214,32 @@ bb.f:                                             ; preds = %.lr.ph32, %_ZL20emi
   %i.ca = load ptr, ptr %i.bz, align 8
   %i.cb = call noundef ptr %i.ca(ptr noundef nonnull align 8 dereferenceable(519320) %i.bm) #14, !inline_history !554
   %i.cc = call noundef i32 @_ZNK4llvm23LoongArchTargetLowering17getStackProbeSizeERKNS_15MachineFunctionENS_5AlignE(ptr noundef nonnull align 8 dereferenceable(518448) %i.cb, ptr noundef nonnull align 8 dereferenceable(1065) %i.bk, i8 %.sroa.0.0.copyload.i79.i) #14
-  %14 = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
-  %15 = load ptr, ptr %14, align 8, !tbaa !343    ; 6 uses
-  %16 = trunc nuw i8 %i.bs to i1                  ; 2 uses
-  %17 = zext i32 %i.cc to i64
+  %15 = zext i32 %i.cc to i64
+  %16 = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
+  %17 = load ptr, ptr %16, align 8, !tbaa !343    ; 6 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bi, i64 16 ; 2 uses
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !573
   %i.cf = call noundef ptr @_ZN4llvm15MachineFunction23CreateMachineBasicBlockEPKNS_10BasicBlockESt8optionalINS_10UniqueBBIDEE(ptr noundef nonnull align 8 dereferenceable(1065) %i.bk, ptr noundef %i.ce, i64 undef, i8 0) #14 ; 15 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bk, i64 296 ; 2 uses
   call void @_ZN4llvm21ilist_callback_traitsINS_17MachineBasicBlockEE13addNodeToListEPS1_(ptr noundef nonnull align 8 dereferenceable(16) %i.cg, ptr noundef %i.cf) #14
-  %i.ch = load ptr, ptr %15, align 8, !tbaa !574  ; 2 uses
+  %i.ch = load ptr, ptr %17, align 8, !tbaa !574  ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
-  store ptr %15, ptr %i.ci, align 8, !tbaa !343
+  store ptr %17, ptr %i.ci, align 8, !tbaa !343
   store ptr %i.ch, ptr %i.cf, align 8, !tbaa !574
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 8
   store ptr %i.cf, ptr %i.cj, align 8, !tbaa !343
-  store ptr %i.cf, ptr %15, align 8, !tbaa !574
+  store ptr %i.cf, ptr %17, align 8, !tbaa !574
   %i.ck = load ptr, ptr %i.cd, align 8, !tbaa !573
   %i.cl = call noundef ptr @_ZN4llvm15MachineFunction23CreateMachineBasicBlockEPKNS_10BasicBlockESt8optionalINS_10UniqueBBIDEE(ptr noundef nonnull align 8 dereferenceable(1065) %i.bk, ptr noundef %i.ck, i64 undef, i8 0) #14 ; 11 uses
   call void @_ZN4llvm21ilist_callback_traitsINS_17MachineBasicBlockEE13addNodeToListEPS1_(ptr noundef nonnull align 8 dereferenceable(16) %i.cg, ptr noundef %i.cl) #14
-  %i.cm = load ptr, ptr %15, align 8, !tbaa !574  ; 2 uses
+  %i.cm = load ptr, ptr %17, align 8, !tbaa !574  ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cl, i64 8
-  store ptr %15, ptr %i.cn, align 8, !tbaa !343
+  store ptr %17, ptr %i.cn, align 8, !tbaa !343
   store ptr %i.cm, ptr %i.cl, align 8, !tbaa !574
   %i.co = getelementptr inbounds nuw i8, ptr %i.cm, i64 8
   store ptr %i.cl, ptr %i.co, align 8, !tbaa !343
-  store ptr %i.cl, ptr %15, align 8, !tbaa !574
-  call void @_ZNK4llvm18LoongArchInstrInfo6movImmERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_8DebugLocENS_8RegisterEmNS4_6MIFlagE(ptr noundef nonnull align 8 dereferenceable(440) %i.bq, ptr noundef nonnull align 8 dereferenceable(360) %i.bi, ptr nonnull %i.bb, ptr noundef nonnull align 8 dereferenceable(8) %11, i32 59, i64 noundef %17, i32 noundef 1) #14
+  store ptr %i.cl, ptr %17, align 8, !tbaa !574
+  call void @_ZNK4llvm18LoongArchInstrInfo6movImmERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_8DebugLocENS_8RegisterEmNS4_6MIFlagE(ptr noundef nonnull align 8 dereferenceable(440) %i.bq, ptr noundef nonnull align 8 dereferenceable(360) %i.bi, ptr nonnull %i.bb, ptr noundef nonnull align 8 dereferenceable(8) %11, i32 59, i64 noundef %15, i32 noundef 1) #14
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cf, i64 48 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #14
   %.sroa.018.0.copyload.i = load ptr, ptr %11, align 8, !tbaa !269
@@ -247,7 +247,7 @@ bb.f:                                             ; preds = %.lr.ph32, %_ZL20emi
   %i.cq = getelementptr inbounds nuw i8, ptr %i.bq, i64 8 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i8 0, i64 24, i1 false)
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !270
-  %.neg.i = select i1 %16, i64 -922, i64 -923
+  %.neg.i = select i1 %14, i64 -922, i64 -923
   %i.cs = getelementptr inbounds [32 x i8], ptr %i.cr, i64 %.neg.i
   %i.ct = call { ptr, ptr } @_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE(ptr noundef nonnull align 8 dereferenceable(360) %i.cf, ptr nonnull %i.cp, ptr noundef nonnull align 8 dereferenceable(32) %12, ptr noundef nonnull align 8 dereferenceable(32) %i.cs, i32 48) ; 2 uses
   %i.cu = extractvalue { ptr, ptr } %i.ct, 0      ; 2 uses
@@ -273,7 +273,7 @@ bb.f:                                             ; preds = %.lr.ph32, %_ZL20emi
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #14
   %.sroa.013.0.copyload.i = load ptr, ptr %11, align 8, !tbaa !269
   %i.cz = load ptr, ptr %i.cq, align 8, !tbaa !270
-  %.neg129.i = select i1 %16, i64 -919, i64 -921
+  %.neg129.i = select i1 %14, i64 -919, i64 -921
   %i.da = getelementptr inbounds [32 x i8], ptr %i.cz, i64 %.neg129.i
   %i.db = getelementptr inbounds nuw i8, ptr %i.cf, i64 32 ; 2 uses
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !333 ; 4 uses

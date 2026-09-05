@@ -205,26 +205,26 @@ bb.hg:                                            ; preds = %bb.hf, %bb.he
 
 _ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit246.i.i: ; preds = %bb.hg, %_ZN4llvm8ValueMapIPKNS_5ValueENS_14WeakTrackingVHENS_14ValueMapConfigIS3_NS_3sys10SmartMutexILb0EEEEEEixERKS3_.exit243.i.i, %bb.hc, %_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit238.i.i
   %.not359389.i.i = icmp eq ptr %.sroa.0288.0393.i.i, %.sroa.0272.0394.i.i
-  br i1 %.not359389.i.i, label %.preheader360.i.i.a, label %.lr.ph391.i.i
+  br i1 %.not359389.i.i, label %.lr.ph391.i.i, label %.preheader360.i.i.a
 
-.preheader360.i.i.a:                              ; preds = %.lr.ph391.i.i, %_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit246.i.i
-  %i.akn = getelementptr inbounds nuw i8, ptr %.sroa.0272.0394.i.i, i64 8
-  %57 = load ptr, ptr %i.akn, align 8, !tbaa !130 ; 6 uses
-  %58 = call { ptr, ptr } @_ZN4llvm11Instruction18cloneDebugInfoFromEPKS0_St8optionalINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_9DbgRecordELb0ELb0EvLb0EvEELb0ELb0EEEEb(ptr noundef nonnull align 8 dereferenceable(72) %i.ajl, ptr noundef nonnull %i.aip, ptr undef, i8 0, i1 noundef zeroext false) #27 ; 0 uses
-  %59 = load i8, ptr %i.ajl, align 8, !tbaa !107
-  %i.ako = icmp eq i8 %59, 88
-  br i1 %i.ako, label %bb.hh, label %_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit230.thread.i.i
+.preheader360.i.i.a:                              ; preds = %_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit246.i.i, %.preheader360.i.i.a
+  %.sroa.0288.1390.i.i = phi ptr [ %59, %.preheader360.i.i.a ], [ %.sroa.0288.0393.i.i, %_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit246.i.i ] ; 2 uses
+  %i.akn = getelementptr inbounds i8, ptr %.sroa.0288.1390.i.i, i64 -24
+  %57 = call { ptr, ptr } @_ZN4llvm11Instruction18cloneDebugInfoFromEPKS0_St8optionalINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_9DbgRecordELb0ELb0EvLb0EvEELb0ELb0EEEEb(ptr noundef nonnull align 8 dereferenceable(72) %i.ajl, ptr noundef nonnull %i.akn, ptr undef, i8 0, i1 noundef zeroext false) #27 ; 0 uses
+  %58 = getelementptr inbounds nuw i8, ptr %.sroa.0288.1390.i.i, i64 8
+  %59 = load ptr, ptr %58, align 8, !tbaa !130    ; 2 uses
+  %i.ako = icmp eq ptr %59, %.sroa.0272.0394.i.i
+  br i1 %i.ako, label %.lr.ph391.i.i, label %.preheader360.i.i.a, !llvm.loop !926
 
-.lr.ph391.i.i:                                    ; preds = %_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit246.i.i, %.lr.ph391.i.i
-  %.sroa.0288.1390.i.i = phi ptr [ %62, %.lr.ph391.i.i ], [ %.sroa.0288.0393.i.i, %_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit246.i.i ] ; 2 uses
-  %i.akp = getelementptr inbounds i8, ptr %.sroa.0288.1390.i.i, i64 -24
-  %60 = call { ptr, ptr } @_ZN4llvm11Instruction18cloneDebugInfoFromEPKS0_St8optionalINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_9DbgRecordELb0ELb0EvLb0EvEELb0ELb0EEEEb(ptr noundef nonnull align 8 dereferenceable(72) %i.ajl, ptr noundef nonnull %i.akp, ptr undef, i8 0, i1 noundef zeroext false) #27 ; 0 uses
-  %61 = getelementptr inbounds nuw i8, ptr %.sroa.0288.1390.i.i, i64 8
-  %62 = load ptr, ptr %61, align 8, !tbaa !130    ; 2 uses
-  %.not359.i.i = icmp eq ptr %62, %.sroa.0272.0394.i.i
-  br i1 %.not359.i.i, label %.preheader360.i.i.a, label %.lr.ph391.i.i, !llvm.loop !926
+.lr.ph391.i.i:                                    ; preds = %.preheader360.i.i.a, %_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit246.i.i
+  %i.akp = getelementptr inbounds nuw i8, ptr %.sroa.0272.0394.i.i, i64 8
+  %60 = load ptr, ptr %i.akp, align 8, !tbaa !130 ; 6 uses
+  %61 = call { ptr, ptr } @_ZN4llvm11Instruction18cloneDebugInfoFromEPKS0_St8optionalINS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_9DbgRecordELb0ELb0EvLb0EvEELb0ELb0EEEEb(ptr noundef nonnull align 8 dereferenceable(72) %i.ajl, ptr noundef nonnull %i.aip, ptr undef, i8 0, i1 noundef zeroext false) #27 ; 0 uses
+  %62 = load i8, ptr %i.ajl, align 8, !tbaa !107
+  %.not359.i.i = icmp eq i8 %62, 88
+  br i1 %.not359.i.i, label %bb.hh, label %_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit230.thread.i.i
 
-bb.hh:                                            ; preds = %.preheader360.i.i.a
+bb.hh:                                            ; preds = %.lr.ph391.i.i
   %i.akq = getelementptr inbounds i8, ptr %i.ajl, i64 -32
   %i.akr = load ptr, ptr %i.akq, align 8, !tbaa !106 ; 4 uses
   %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.akr, null
@@ -253,8 +253,8 @@ bb.hj:                                            ; preds = %_ZN4llvm8dyn_castIN
   call void @_ZN4llvm15AssumptionCache18registerAssumptionEPNS_10AssumeInstE(ptr noundef nonnull align 8 dereferenceable(153) %i.zm, ptr noundef nonnull %i.ajl) #27
   br label %_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit230.thread.i.i
 
-_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit230.thread.i.i: ; preds = %bb.hj, %_ZN4llvm8dyn_castINS_10AssumeInstENS_11InstructionEEEDcPT0_.exit.i.i, %_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i, %bb.hi, %bb.hh, %.preheader360.i.i.a, %_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit246.thread.i.i, %bb.gs, %bb.gr, %_ZN4llvm8ValueMapIPKNS_5ValueENS_14WeakTrackingVHENS_14ValueMapConfigIS3_NS_3sys10SmartMutexILb0EEEEEEixERKS3_.exit227.i.i
-  %.sroa.0288.2.i.i = phi ptr [ %.sroa.0288.0393.i.i, %_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit246.thread.i.i ], [ %57, %bb.hj ], [ %57, %_ZN4llvm8dyn_castINS_10AssumeInstENS_11InstructionEEEDcPT0_.exit.i.i ], [ %.sroa.0288.0393.i.i, %bb.gs ], [ %.sroa.0288.0393.i.i, %_ZN4llvm8ValueMapIPKNS_5ValueENS_14WeakTrackingVHENS_14ValueMapConfigIS3_NS_3sys10SmartMutexILb0EEEEEEixERKS3_.exit227.i.i ], [ %.sroa.0288.0393.i.i, %bb.gr ], [ %57, %bb.hh ], [ %57, %_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i ], [ %57, %.preheader360.i.i.a ], [ %57, %bb.hi ] ; 2 uses
+_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit230.thread.i.i: ; preds = %bb.hj, %_ZN4llvm8dyn_castINS_10AssumeInstENS_11InstructionEEEDcPT0_.exit.i.i, %_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i, %bb.hi, %bb.hh, %.lr.ph391.i.i, %_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit246.thread.i.i, %bb.gs, %bb.gr, %_ZN4llvm8ValueMapIPKNS_5ValueENS_14WeakTrackingVHENS_14ValueMapConfigIS3_NS_3sys10SmartMutexILb0EEEEEEixERKS3_.exit227.i.i
+  %.sroa.0288.2.i.i = phi ptr [ %.sroa.0288.0393.i.i, %_ZN4llvm14WeakTrackingVHaSEPNS_5ValueE.exit246.thread.i.i ], [ %60, %bb.hj ], [ %60, %_ZN4llvm8dyn_castINS_10AssumeInstENS_11InstructionEEEDcPT0_.exit.i.i ], [ %.sroa.0288.0393.i.i, %bb.gs ], [ %.sroa.0288.0393.i.i, %_ZN4llvm8ValueMapIPKNS_5ValueENS_14WeakTrackingVHENS_14ValueMapConfigIS3_NS_3sys10SmartMutexILb0EEEEEEixERKS3_.exit227.i.i ], [ %.sroa.0288.0393.i.i, %bb.gr ], [ %60, %bb.hh ], [ %60, %_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i ], [ %60, %.lr.ph391.i.i ], [ %60, %bb.hi ] ; 2 uses
   %i.ala = getelementptr inbounds nuw i8, ptr %.sroa.0272.0394.i.i, i64 8
   %i.alb = load ptr, ptr %i.ala, align 8, !tbaa !130 ; 2 uses
   %i.alc = getelementptr inbounds i8, ptr %i.alb, i64 -24 ; 2 uses

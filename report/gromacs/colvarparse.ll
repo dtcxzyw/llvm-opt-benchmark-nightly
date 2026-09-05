@@ -205,8 +205,8 @@ bb.n:                                             ; preds = %bb.i
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %bb.n
   %i.ai = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.ah, i64 24 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ah, i8 0, i64 24, i1 false)
+  %18 = getelementptr inbounds nuw i8, ptr %i.ah, i64 24 ; 2 uses
   %i.aj = load ptr, ptr %9, align 8, !tbaa !135   ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.al = load ptr, ptr %i.ai, align 8, !tbaa !136
@@ -609,8 +609,8 @@ bb.n:                                             ; preds = %bb.i
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %bb.n
   %i.ai = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.ah, i64 32 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ah, i8 0, i64 32, i1 false)
+  %18 = getelementptr inbounds nuw i8, ptr %i.ah, i64 32 ; 2 uses
   %i.aj = load ptr, ptr %9, align 8, !tbaa !140   ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.al = load ptr, ptr %i.ai, align 8, !tbaa !141

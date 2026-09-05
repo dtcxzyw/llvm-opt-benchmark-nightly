@@ -205,7 +205,7 @@ _ZN4llvm14CastIsPossibleINS_22ConvergenceControlInstEPNS_11InstructionEvE10isPos
   %i.o = icmp eq i32 %i.n, 152
   br i1 %i.o, label %.split.loop.exit30.loopexit.split.loop.exit, label %_ZN4llvm8dyn_castINS_22ConvergenceControlInstENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEEEEDcRT0_.exit.thread
 
-_ZN4llvm8dyn_castINS_22ConvergenceControlInstENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEEEEDcRT0_.exit.thread: ; preds = %bb.c, %.lr.ph, %_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i, %_ZN4llvm14CastIsPossibleINS_22ConvergenceControlInstEPNS_11InstructionEvE10isPossibleERKS3_.exit.i.i.i, %bb.b
+_ZN4llvm8dyn_castINS_22ConvergenceControlInstENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEEEEDcRT0_.exit.thread: ; preds = %bb.b, %_ZN4llvm14CastIsPossibleINS_22ConvergenceControlInstEPNS_11InstructionEvE10isPossibleERKS3_.exit.i.i.i, %_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i, %.lr.ph, %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.021.033, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !81   ; 2 uses
   %.not = icmp eq ptr %i.q, %i.b

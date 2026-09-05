@@ -205,14 +205,14 @@ bb.at:                                            ; preds = %bb.as
 _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_12VPRecipeBaseELb0ELb0EvLb0EvEELb0ELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit187: ; preds = %bb.at
   %i.ui = getelementptr inbounds nuw i8, ptr %i.et, i64 72
   %i.uj = load i8, ptr %i.ui, align 8, !tbaa !2662, !range !76, !noundef !77
+  %28 = trunc nuw i8 %i.uj to i1
+  %29 = select i1 %28, i32 41, i32 40             ; 2 uses
   %i.uk = call noundef ptr @_ZN4llvm7VPValue17getDefiningRecipeEv(ptr noundef nonnull align 8 dereferenceable(48) %i.gm) #28
   %i.ul = getelementptr inbounds nuw i8, ptr %i.uk, i64 72
   %i.um = load ptr, ptr %i.ul, align 8, !tbaa !995
   %i.un = call noundef ptr @_ZN4llvm7VPValue17getDefiningRecipeEv(ptr noundef nonnull align 8 dereferenceable(48) %i.gm) #28
   %i.uo = getelementptr inbounds nuw i8, ptr %i.un, i64 24
   %i.up = load ptr, ptr %i.uo, align 8, !tbaa !652
-  %28 = trunc nuw i8 %i.uj to i1
-  %29 = select i1 %28, i32 41, i32 40             ; 2 uses
   store ptr %i.um, ptr %i.aa, align 8, !tbaa !996
   store ptr %i.up, ptr %i.ad, align 8
   %i.uq = call noundef ptr @_ZN4llvm9VPBuilder15createWidenCastENS_11Instruction7CastOpsEPNS_7VPValueEPNS_4TypeE(ptr noundef nonnull align 8 dereferenceable(16) %i.aa, i32 noundef 39, ptr noundef nonnull %i.gm, ptr noundef %i.uh) ; 2 uses

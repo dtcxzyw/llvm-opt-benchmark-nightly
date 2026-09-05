@@ -205,12 +205,7 @@ _ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i.
   %i.oc = icmp eq ptr %i.nz, %i.ob
   %i.od = getelementptr inbounds nuw i8, ptr %i.nx, i64 32
   %i.oe = load ptr, ptr %i.od, align 8, !tbaa !229 ; 4 uses
-  br i1 %i.oc, label %.preheader.preheader.i.i.i.i, label %.preheader127.preheader.i.i.i.i
-
-.preheader127.preheader.i.i.i.i:                  ; preds = %_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i.i.i
-  %44 = getelementptr inbounds nuw i8, ptr %i.nz, i64 48 ; 2 uses
-  %.not29.not.i86.i.i.i.i = icmp eq ptr %i.oe, %44
-  br i1 %.not29.not.i86.i.i.i.i, label %_ZL22hasCallsInBlockBetweenN4llvm14iterator_rangeINS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEEEE.exit95.i.i.i.i, label %.lr.ph.i87.i.i.i.i
+  br i1 %i.oc, label %.preheader.preheader.i.i.i.i, label %.preheader127.i.i.i.i
 
 .preheader.preheader.i.i.i.i:                     ; preds = %_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i.i.i
   %.not29.not.i.i.i.i.i = icmp eq ptr %i.oe, %.pn.i.i.i
@@ -250,8 +245,13 @@ bb.ar:                                            ; preds = %_ZN4llvm3isaIJNS_13
   %.not.not.i.i.i.i.i = icmp eq ptr %.sroa.017.0.i.i.i.i.i, %.pn.i.i.i
   br i1 %.not.not.i.i.i.i.i, label %_ZL15hasCallsBetweenPN4llvm11InstructionES1_.exit.thread73.i.i.i, label %.lr.ph.i.i.i.i.i
 
-.lr.ph.i87.i.i.i.i:                               ; preds = %.preheader127.preheader.i.i.i.i, %bb.au
-  %.sroa.017.030.i88.i.i.i.i = phi ptr [ %.sroa.017.0.i93.i.i.i.i, %bb.au ], [ %i.oe, %.preheader127.preheader.i.i.i.i ] ; 3 uses
+.preheader127.i.i.i.i:                            ; preds = %_ZN4llvm3isaIJNS_13IntrinsicInstEEPKNS_5ValueEEEbRKT0_.exit.i.i.i.i.i.i.i.i.i.i.i.i
+  %44 = getelementptr inbounds nuw i8, ptr %i.nz, i64 48 ; 2 uses
+  %.not29.not.i86.i.i.i.i = icmp eq ptr %i.oe, %44
+  br i1 %.not29.not.i86.i.i.i.i, label %_ZL22hasCallsInBlockBetweenN4llvm14iterator_rangeINS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEEEE.exit95.i.i.i.i, label %.lr.ph.i87.i.i.i.i
+
+.lr.ph.i87.i.i.i.i:                               ; preds = %.preheader127.i.i.i.i, %bb.au
+  %.sroa.017.030.i88.i.i.i.i = phi ptr [ %.sroa.017.0.i93.i.i.i.i, %bb.au ], [ %i.oe, %.preheader127.i.i.i.i ] ; 3 uses
   %i.op = getelementptr inbounds i8, ptr %.sroa.017.030.i88.i.i.i.i, i64 -24
   %i.oq = load i8, ptr %i.op, align 8, !tbaa !209
   switch i8 %i.oq, label %bb.au [
@@ -284,7 +284,7 @@ bb.au:                                            ; preds = %_ZN4llvm3isaIJNS_13
   %.not.not.i94.i.i.i.i = icmp eq ptr %.sroa.017.0.i93.i.i.i.i, %44
   br i1 %.not.not.i94.i.i.i.i, label %_ZL22hasCallsInBlockBetweenN4llvm14iterator_rangeINS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEEEE.exit95.i.i.i.i, label %.lr.ph.i87.i.i.i.i
 
-_ZL22hasCallsInBlockBetweenN4llvm14iterator_rangeINS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEEEE.exit95.i.i.i.i: ; preds = %bb.au, %.preheader127.preheader.i.i.i.i
+_ZL22hasCallsInBlockBetweenN4llvm14iterator_rangeINS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEEEE.exit95.i.i.i.i: ; preds = %bb.au, %.preheader127.i.i.i.i
   %i.oz = call { ptr, i64 } @_ZNK4llvm10BasicBlock16getFirstNonPHIItEv(ptr noundef nonnull align 8 dereferenceable(80) %i.ob) #18
   %.fca.0.extract.i.i.i.i = extractvalue { ptr, i64 } %i.oz, 0 ; 2 uses
   %.not29.not.i101.i.i.i.i = icmp eq ptr %.fca.0.extract.i.i.i.i, %.pn.i.i.i

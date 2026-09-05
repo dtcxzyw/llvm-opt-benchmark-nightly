@@ -205,18 +205,18 @@ bb.u:                                             ; preds = %bb.t
   %.sroa.0113.0.copyload = load ptr, ptr %i.cg, align 8, !tbaa !423 ; 3 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cg, i64 8
   %.sroa.9.0.copyload = load i32, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !165 ; 3 uses
-  br i1 %i.ca, label %_ZN4llvm16SmallSetIteratorINS_7SDValueELj4ESt4lessIS1_EEppEv.exit.us.preheader.i, label %_ZN4llvm16SmallSetIteratorINS_7SDValueELj4ESt4lessIS1_EEppEv.exit.i.preheader
+  br i1 %i.ca, label %_ZN4llvm16SmallSetIteratorINS_7SDValueELj4ESt4lessIS1_EEppEv.exit.i.preheader, label %_ZN4llvm16SmallSetIteratorINS_7SDValueELj4ESt4lessIS1_EEppEv.exit.us.preheader.i
 
 _ZN4llvm16SmallSetIteratorINS_7SDValueELj4ESt4lessIS1_EEppEv.exit.i.preheader: ; preds = %bb.u
-  %17 = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.val159) #28, !noalias !1376
-  br label %_ZSt9__advanceIN4llvm16SmallSetIteratorINS0_7SDValueELj4ESt4lessIS2_EEElEvRT_T0_St18input_iterator_tag.exit
-
-_ZN4llvm16SmallSetIteratorINS_7SDValueELj4ESt4lessIS1_EEppEv.exit.us.preheader.i: ; preds = %bb.u
   %scevgep.i = getelementptr i8, ptr %.val, i64 16
   br label %_ZSt9__advanceIN4llvm16SmallSetIteratorINS0_7SDValueELj4ESt4lessIS2_EEElEvRT_T0_St18input_iterator_tag.exit
 
-_ZSt9__advanceIN4llvm16SmallSetIteratorINS0_7SDValueELj4ESt4lessIS2_EEElEvRT_T0_St18input_iterator_tag.exit: ; preds = %_ZN4llvm16SmallSetIteratorINS_7SDValueELj4ESt4lessIS1_EEppEv.exit.i.preheader, %_ZN4llvm16SmallSetIteratorINS_7SDValueELj4ESt4lessIS1_EEppEv.exit.us.preheader.i
-  %.sroa.099.0 = phi ptr [ %scevgep.i, %_ZN4llvm16SmallSetIteratorINS_7SDValueELj4ESt4lessIS1_EEppEv.exit.us.preheader.i ], [ %17, %_ZN4llvm16SmallSetIteratorINS_7SDValueELj4ESt4lessIS1_EEppEv.exit.i.preheader ]
+_ZN4llvm16SmallSetIteratorINS_7SDValueELj4ESt4lessIS1_EEppEv.exit.us.preheader.i: ; preds = %bb.u
+  %17 = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.val159) #28, !noalias !1376
+  br label %_ZSt9__advanceIN4llvm16SmallSetIteratorINS0_7SDValueELj4ESt4lessIS2_EEElEvRT_T0_St18input_iterator_tag.exit
+
+_ZSt9__advanceIN4llvm16SmallSetIteratorINS0_7SDValueELj4ESt4lessIS2_EEElEvRT_T0_St18input_iterator_tag.exit: ; preds = %_ZN4llvm16SmallSetIteratorINS_7SDValueELj4ESt4lessIS1_EEppEv.exit.us.preheader.i, %_ZN4llvm16SmallSetIteratorINS_7SDValueELj4ESt4lessIS1_EEppEv.exit.i.preheader
+  %.sroa.099.0 = phi ptr [ %scevgep.i, %_ZN4llvm16SmallSetIteratorINS_7SDValueELj4ESt4lessIS1_EEppEv.exit.i.preheader ], [ %17, %_ZN4llvm16SmallSetIteratorINS_7SDValueELj4ESt4lessIS1_EEppEv.exit.us.preheader.i ]
   %i.ch = getelementptr inbounds nuw i8, ptr %.sroa.099.0, i64 %.idx.i90 ; 2 uses
   %.sroa.0103.0.copyload = load ptr, ptr %i.ch, align 8, !tbaa !423 ; 3 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ch, i64 8

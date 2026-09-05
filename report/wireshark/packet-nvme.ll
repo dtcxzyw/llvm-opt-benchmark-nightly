@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
   %i.cu = tail call ptr @proto_tree_add_item(ptr noundef %i.d, i32 noundef %i.ct, ptr noundef %1, i32 noundef %2, i32 noundef 8, i32 noundef -2147483648) ; 0 uses
   br label %add_group_mask_entry.exit
 
-.critedge:                                        ; preds = %.critedge.loopexit51, %.critedge.loopexit50, %.critedge.loopexit49, %.critedge.loopexit, %bb.c
+.critedge:                                        ; preds = %.critedge.loopexit50, %.critedge.loopexit49, %.critedge.loopexit, %.critedge.loopexit51, %bb.c
   %i.cv = load i32, ptr @hf_nvmeof_prop_get_set_data_4B_rsvd, align 4
   %i.cw = add i32 %2, 4
   %i.cx = tail call ptr @proto_tree_add_item(ptr noundef %i.d, i32 noundef %i.cv, ptr noundef %1, i32 noundef %i.cw, i32 noundef 4, i32 noundef -2147483648) ; 0 uses

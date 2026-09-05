@@ -56,7 +56,7 @@ _PyUnicode_DATA.exit.i:                           ; preds = %bb.f, %bb.e
   br i1 %i.i, label %.preheader.i, label %bb.h
 
 .preheader.i:                                     ; preds = %_PyUnicode_DATA.exit.i, %.preheader.i
-  %i.j = phi i64 [ %i.z, %.preheader.i ], [ 16, %_PyUnicode_DATA.exit.i ] ; 4 uses
+  %i.j = phi i64 [ %i.z, %.preheader.i ], [ 16, %_PyUnicode_DATA.exit.i ] ; 5 uses
   %.038.i.i = phi ptr [ %i.y, %.preheader.i ], [ %.0112.i, %_PyUnicode_DATA.exit.i ] ; 3 uses
   %.03437.i.i = phi i64 [ %i.j, %.preheader.i ], [ 0, %_PyUnicode_DATA.exit.i ]
   %i.k = getelementptr i8, ptr %0, i64 %.03437.i.i
@@ -83,9 +83,9 @@ _PyUnicode_DATA.exit.i:                           ; preds = %bb.f, %bb.e
 
 bb.g:                                             ; preds = %.preheader.i
   %i.aa = getelementptr i8, ptr %0, i64 %i.j
-  %i.ab = sub nsw i64 %1, %i.j                    ; 2 uses
-  %2 = icmp sgt i64 %i.ab, 0
-  br i1 %2, label %.lr.ph.i.i.i, label %_Py_strhex_impl.exit
+  %i.ab = sub nuw nsw i64 %1, %i.j
+  %.not239.i = icmp eq i64 %1, %i.j
+  br i1 %.not239.i, label %_Py_strhex_impl.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.g, %.lr.ph.i.i.i
   %.010.i.i.i = phi ptr [ %i.aq, %.lr.ph.i.i.i ], [ %i.y, %bb.g ] ; 3 uses
@@ -369,7 +369,7 @@ bb.z:                                             ; preds = %_PyUnicode_DATA.exi
   br i1 %i.ao, label %.preheader, label %bb.ab
 
 .preheader:                                       ; preds = %bb.z, %.preheader
-  %i.ap = phi i64 [ %i.bf, %.preheader ], [ 16, %bb.z ] ; 4 uses
+  %i.ap = phi i64 [ %i.bf, %.preheader ], [ 16, %bb.z ] ; 5 uses
   %.038.i = phi ptr [ %i.be, %.preheader ], [ %.0112, %bb.z ] ; 3 uses
   %.03437.i = phi i64 [ %i.ap, %.preheader ], [ 0, %bb.z ]
   %i.aq = getelementptr i8, ptr %0, i64 %.03437.i
@@ -396,9 +396,9 @@ bb.z:                                             ; preds = %_PyUnicode_DATA.exi
 
 bb.aa:                                            ; preds = %.preheader
   %i.bg = getelementptr i8, ptr %0, i64 %i.ap
-  %i.bh = sub nsw i64 %1, %i.ap                   ; 2 uses
-  %5 = icmp sgt i64 %i.bh, 0
-  br i1 %5, label %.lr.ph.i.i, label %.critedge
+  %i.bh = sub nuw nsw i64 %1, %i.ap
+  %.not239 = icmp eq i64 %1, %i.ap
+  br i1 %.not239, label %.critedge, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.aa, %.lr.ph.i.i
   %.010.i.i = phi ptr [ %i.bw, %.lr.ph.i.i ], [ %i.be, %bb.aa ] ; 3 uses
@@ -801,7 +801,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.f, label %.preheader.i, label %bb.f
 
 .preheader.i:                                     ; preds = %bb.d, %.preheader.i
-  %i.g = phi i64 [ %i.w, %.preheader.i ], [ 16, %bb.d ] ; 4 uses
+  %i.g = phi i64 [ %i.w, %.preheader.i ], [ 16, %bb.d ] ; 5 uses
   %.038.i.i = phi ptr [ %i.v, %.preheader.i ], [ %i.e, %bb.d ] ; 3 uses
   %.03437.i.i = phi i64 [ %i.g, %.preheader.i ], [ 0, %bb.d ]
   %i.h = getelementptr i8, ptr %0, i64 %.03437.i.i
@@ -828,9 +828,9 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.preheader.i
   %i.x = getelementptr i8, ptr %0, i64 %i.g
-  %i.y = sub nsw i64 %1, %i.g                     ; 2 uses
-  %2 = icmp sgt i64 %i.y, 0
-  br i1 %2, label %.lr.ph.i.i.i, label %_Py_strhex_impl.exit
+  %i.y = sub nuw nsw i64 %1, %i.g
+  %.not239.i = icmp eq i64 %1, %i.g
+  br i1 %.not239.i, label %_Py_strhex_impl.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.e, %.lr.ph.i.i.i
   %.010.i.i.i = phi ptr [ %i.an, %.lr.ph.i.i.i ], [ %i.v, %bb.e ] ; 3 uses

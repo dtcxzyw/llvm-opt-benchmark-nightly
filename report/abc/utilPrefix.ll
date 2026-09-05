@@ -205,35 +205,7 @@ bb.av:                                            ; preds = %.lr.ph1121, %bb.dz
   %i.nv = load i32, ptr %i.nu, align 4, !tbaa !40
   %i.nw = load i32, ptr %i.cg, align 4, !tbaa !40
   %i.nx = icmp eq i32 %i.nv, %i.nw
-  br i1 %i.nx, label %bb.aw, label %.preheader1028.preheader
-
-.preheader1028.preheader:                         ; preds = %bb.av
-  %8 = load ptr, ptr %.sroa.0927.01118, align 8, !tbaa !65
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #23
-  %9 = getelementptr inbounds nuw i8, ptr %.sroa.0927.01118, i64 16 ; 2 uses
-  store i32 2147483647, ptr %i.h, align 4, !tbaa !50
-  store i32 0, ptr %i.i, align 8, !tbaa !84
-  store ptr null, ptr %i.j, align 8, !tbaa !78
-  store <2 x ptr> %i.aj, ptr %i.k, align 8, !tbaa !75
-  store i64 0, ptr %i.l, align 8, !tbaa !68
-  store i8 0, ptr %i.m, align 8, !tbaa !72
-  store ptr %9, ptr %i.n, align 8, !tbaa !52
-  store ptr %i.nt, ptr %i.o, align 8, !tbaa !53
-  %10 = load i32, ptr %9, align 8, !tbaa !48
-  %11 = load i32, ptr %i.nt, align 4, !tbaa !48
-  %12 = call i32 @llvm.smax.i32(i32 %10, i32 %11)
-  %13 = add nsw i32 %12, 1
-  store i32 %13, ptr %7, align 8, !tbaa !67
-  %14 = getelementptr inbounds nuw i8, ptr %.sroa.0927.01118, i64 72
-  %15 = load i32, ptr %14, align 8, !tbaa !45
-  store i32 %15, ptr %i.p, align 8, !tbaa !45
-  %16 = load i32, ptr %i.nu, align 4, !tbaa !40
-  store i32 %16, ptr %i.q, align 4, !tbaa !40
-  %17 = getelementptr inbounds nuw i8, ptr %.sroa.0927.01118, i64 40
-  %18 = getelementptr inbounds nuw i8, ptr %.sroa.0927.01118, i64 32 ; 3 uses
-  %.02022.i.i.i.i676 = load ptr, ptr %17, align 8, !tbaa !75 ; 2 uses
-  %.not23.i.i.i.i677 = icmp eq ptr %.02022.i.i.i.i676, null
-  br i1 %.not23.i.i.i.i677, label %._crit_edge.thread.i.i.i.i708, label %.lr.ph.i.i.i.i678
+  br i1 %i.nx, label %bb.aw, label %.preheader1028
 
 bb.aw:                                            ; preds = %bb.av
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23
@@ -636,8 +608,36 @@ _ZN4NodeD2Ev.exit:                                ; preds = %.lr.ph.i2.i628, %.c
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
   br label %bb.dz
 
-.lr.ph.i.i.i.i678:                                ; preds = %.preheader1028.preheader, %.lr.ph.i.i.i.i678
-  %.02024.i.i.i.i679 = phi ptr [ %.020.i.i.i.i682, %.lr.ph.i.i.i.i678 ], [ %.02022.i.i.i.i676, %.preheader1028.preheader ] ; 4 uses
+.preheader1028:                                   ; preds = %bb.av
+  %8 = load ptr, ptr %.sroa.0927.01118, align 8, !tbaa !65
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #23
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.0927.01118, i64 16 ; 2 uses
+  store i32 2147483647, ptr %i.h, align 4, !tbaa !50
+  store i32 0, ptr %i.i, align 8, !tbaa !84
+  store ptr null, ptr %i.j, align 8, !tbaa !78
+  store <2 x ptr> %i.aj, ptr %i.k, align 8, !tbaa !75
+  store i64 0, ptr %i.l, align 8, !tbaa !68
+  store i8 0, ptr %i.m, align 8, !tbaa !72
+  store ptr %9, ptr %i.n, align 8, !tbaa !52
+  store ptr %i.nt, ptr %i.o, align 8, !tbaa !53
+  %10 = load i32, ptr %9, align 8, !tbaa !48
+  %11 = load i32, ptr %i.nt, align 4, !tbaa !48
+  %12 = call i32 @llvm.smax.i32(i32 %10, i32 %11)
+  %13 = add nsw i32 %12, 1
+  store i32 %13, ptr %7, align 8, !tbaa !67
+  %14 = getelementptr inbounds nuw i8, ptr %.sroa.0927.01118, i64 72
+  %15 = load i32, ptr %14, align 8, !tbaa !45
+  store i32 %15, ptr %i.p, align 8, !tbaa !45
+  %16 = load i32, ptr %i.nu, align 4, !tbaa !40
+  store i32 %16, ptr %i.q, align 4, !tbaa !40
+  %17 = getelementptr inbounds nuw i8, ptr %.sroa.0927.01118, i64 40
+  %18 = getelementptr inbounds nuw i8, ptr %.sroa.0927.01118, i64 32 ; 3 uses
+  %.02022.i.i.i.i676 = load ptr, ptr %17, align 8, !tbaa !75 ; 2 uses
+  %.not23.i.i.i.i677 = icmp eq ptr %.02022.i.i.i.i676, null
+  br i1 %.not23.i.i.i.i677, label %._crit_edge.thread.i.i.i.i708, label %.lr.ph.i.i.i.i678
+
+.lr.ph.i.i.i.i678:                                ; preds = %.preheader1028, %.lr.ph.i.i.i.i678
+  %.02024.i.i.i.i679 = phi ptr [ %.020.i.i.i.i682, %.lr.ph.i.i.i.i678 ], [ %.02022.i.i.i.i676, %.preheader1028 ] ; 4 uses
   %i.ym = getelementptr inbounds nuw i8, ptr %.02024.i.i.i.i679, i64 32
   %i.yn = load ptr, ptr %i.ym, align 8, !tbaa !51 ; 2 uses
   %i.yo = icmp ult ptr %7, %i.yn                  ; 2 uses
@@ -650,8 +650,8 @@ _ZN4NodeD2Ev.exit:                                ; preds = %.lr.ph.i2.i628, %.c
 ._crit_edge.i.i.i.i684:                           ; preds = %.lr.ph.i.i.i.i678
   br i1 %i.yo, label %._crit_edge.thread.i.i.i.i708, label %bb.cr
 
-._crit_edge.thread.i.i.i.i708:                    ; preds = %._crit_edge.i.i.i.i684, %.preheader1028.preheader
-  %.019.lcssa29.i.i.i.i709 = phi ptr [ %.02024.i.i.i.i679, %._crit_edge.i.i.i.i684 ], [ %18, %.preheader1028.preheader ] ; 4 uses
+._crit_edge.thread.i.i.i.i708:                    ; preds = %._crit_edge.i.i.i.i684, %.preheader1028
+  %.019.lcssa29.i.i.i.i709 = phi ptr [ %.02024.i.i.i.i679, %._crit_edge.i.i.i.i684 ], [ %18, %.preheader1028 ] ; 4 uses
   %i.yp = getelementptr inbounds nuw i8, ptr %.sroa.0927.01118, i64 48
   %i.yq = load ptr, ptr %i.yp, align 8, !tbaa !49
   %i.yr = icmp eq ptr %.019.lcssa29.i.i.i.i709, %i.yq

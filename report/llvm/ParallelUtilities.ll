@@ -204,7 +204,7 @@ bb.an:                                            ; preds = %_ZN9__gnu_cxx27__ex
   tail call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.eg) #18
   br label %_ZNSt14__basic_futureIvED2Ev.exit43
 
-_ZNSt14__basic_futureIvED2Ev.exit43:              ; preds = %.preheader.preheader, %bb.aj, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i41, %bb.an
+_ZNSt14__basic_futureIvED2Ev.exit43:              ; preds = %bb.an, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i41, %bb.aj, %.preheader.preheader
   %i.ew = tail call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.050.071) #21
   br label %_ZSt9__advanceISt17_Rb_tree_iteratorISt4pairIKmN4llvm4bolt14BinaryFunctionEEElEvRT_T0_St26bidirectional_iterator_tag.exit47
 
@@ -607,7 +607,7 @@ bb.bb:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.gl = call noundef zeroext i16 @_ZN4llvm4bolt13MCPlusBuilder32initializeNewAnnotationAllocatorEv(ptr noundef nonnull align 8 dereferenceable(536) %.val30.val) ; 0 uses
   br label %"_ZZN4llvm4bolt17ParallelUtilities34runOnEachFunctionWithUniqueAllocIdERNS0_13BinaryContextENS1_16SchedulingPolicyESt8functionIFvRNS0_14BinaryFunctionEtEES5_IFbRKS6_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEbjENK3$_1clEj.exit68"
 
-"_ZZN4llvm4bolt17ParallelUtilities34runOnEachFunctionWithUniqueAllocIdERNS0_13BinaryContextENS1_16SchedulingPolicyESt8functionIFvRNS0_14BinaryFunctionEtEES5_IFbRKS6_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEbjENK3$_1clEj.exit68": ; preds = %bb.ba, %bb.ax, %bb.az, %.loopexit.i64
+"_ZZN4llvm4bolt17ParallelUtilities34runOnEachFunctionWithUniqueAllocIdERNS0_13BinaryContextENS1_16SchedulingPolicyESt8functionIFvRNS0_14BinaryFunctionEtEES5_IFbRKS6_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEbjENK3$_1clEj.exit68": ; preds = %bb.ba, %bb.ax, %.loopexit.i64, %bb.az
   %i.gm = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.082.0124) #21
   %i.gn = ptrtoint ptr %.sroa.085.0123 to i64
   %i.go = ptrtoint ptr %i.gm to i64
@@ -661,13 +661,13 @@ bb.bh:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZNSt14__basic_futureIvED2Ev.exit74
 
 _ZNSt14__basic_futureIvED2Ev.exit74:              ; preds = %"_ZZN4llvm4bolt17ParallelUtilities34runOnEachFunctionWithUniqueAllocIdERNS0_13BinaryContextENS1_16SchedulingPolicyESt8functionIFvRNS0_14BinaryFunctionEtEES5_IFbRKS6_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEbjENK3$_1clEj.exit68", %bb.bd, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i72, %bb.bh
-  %11 = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.082.0124) #21
-  %12 = add i32 %.0104122, 1
+  %11 = add i32 %.0104122, 1
+  %12 = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.082.0124) #21
   br label %_ZSt9__advanceISt17_Rb_tree_iteratorISt4pairIKmN4llvm4bolt14BinaryFunctionEEElEvRT_T0_St26bidirectional_iterator_tag.exit79
 
 _ZSt9__advanceISt17_Rb_tree_iteratorISt4pairIKmN4llvm4bolt14BinaryFunctionEEElEvRT_T0_St26bidirectional_iterator_tag.exit79: ; preds = %_ZNSt14__basic_futureIvED2Ev.exit74, %_ZN4llvm4bolt17ParallelUtilities12_GLOBAL__N_114computeCostForERKNS0_14BinaryFunctionERKSt8functionIFbS5_EERKNS1_16SchedulingPolicyE.exit
-  %.1105 = phi i32 [ %.0104122, %_ZN4llvm4bolt17ParallelUtilities12_GLOBAL__N_114computeCostForERKNS0_14BinaryFunctionERKSt8functionIFbS5_EERKNS1_16SchedulingPolicyE.exit ], [ %12, %_ZNSt14__basic_futureIvED2Ev.exit74 ] ; 2 uses
-  %.sroa.085.1 = phi ptr [ %.sroa.085.0123, %_ZN4llvm4bolt17ParallelUtilities12_GLOBAL__N_114computeCostForERKNS0_14BinaryFunctionERKSt8functionIFbS5_EERKNS1_16SchedulingPolicyE.exit ], [ %11, %_ZNSt14__basic_futureIvED2Ev.exit74 ] ; 2 uses
+  %.1105 = phi i32 [ %.0104122, %_ZN4llvm4bolt17ParallelUtilities12_GLOBAL__N_114computeCostForERKNS0_14BinaryFunctionERKSt8functionIFbS5_EERKNS1_16SchedulingPolicyE.exit ], [ %11, %_ZNSt14__basic_futureIvED2Ev.exit74 ] ; 2 uses
+  %.sroa.085.1 = phi ptr [ %.sroa.085.0123, %_ZN4llvm4bolt17ParallelUtilities12_GLOBAL__N_114computeCostForERKNS0_14BinaryFunctionERKSt8functionIFbS5_EERKNS1_16SchedulingPolicyE.exit ], [ %12, %_ZNSt14__basic_futureIvED2Ev.exit74 ] ; 2 uses
   %.1 = phi i32 [ %i.fl, %_ZN4llvm4bolt17ParallelUtilities12_GLOBAL__N_114computeCostForERKNS0_14BinaryFunctionERKSt8functionIFbS5_EERKNS1_16SchedulingPolicyE.exit ], [ 0, %_ZNSt14__basic_futureIvED2Ev.exit74 ]
   %i.hf = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.082.0124) #21 ; 2 uses
   %.not108 = icmp eq ptr %i.hf, %i.cr

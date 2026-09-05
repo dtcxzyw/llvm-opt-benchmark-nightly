@@ -204,7 +204,7 @@ bb.a:                                             ; preds = %_ZNK5boost5beast19b
 
 _ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratoreqERKS9_.exit19: ; preds = %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratoreqERKS9_.exit
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.g, i64 16   ; 2 uses
+  %scevgep = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
   %i.n = icmp eq ptr %scevgep, %.sroa.6.16.copyload ; 2 uses
   %i.o = select i1 %i.j, i1 %i.n, i1 false
   br i1 %i.o, label %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratordeEv.exit, label %bb.b
