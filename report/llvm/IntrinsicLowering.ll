@@ -204,12 +204,11 @@ _ZN4llvm13IRBuilderBase9CreateAddEPNS_5ValueES2_RKNS_5TwineEbb.exit: ; preds = %
   br i1 %i.ba, label %bb.i, label %bb.k
 
 bb.d:                                             ; preds = %.lr.ph, %_ZN4llvm13IRBuilderBase9CreateAddEPNS_5ValueES2_RKNS_5TwineEbb.exit55
-  %.0333 = phi i32 [ 0, %.lr.ph ], [ %16, %_ZN4llvm13IRBuilderBase9CreateAddEPNS_5ValueES2_RKNS_5TwineEbb.exit55 ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN4llvm13IRBuilderBase9CreateAddEPNS_5ValueES2_RKNS_5TwineEbb.exit55 ] ; 2 uses
   %.0342 = phi i32 [ 1, %.lr.ph ], [ %i.dg, %_ZN4llvm13IRBuilderBase9CreateAddEPNS_5ValueES2_RKNS_5TwineEbb.exit55 ] ; 2 uses
   %.0351 = phi ptr [ %.07, %.lr.ph ], [ %.1.i51, %_ZN4llvm13IRBuilderBase9CreateAddEPNS_5ValueES2_RKNS_5TwineEbb.exit55 ] ; 4 uses
   %i.bl = load ptr, ptr %i.az, align 8, !tbaa !15
-  %15 = zext i32 %.0333 to i64
-  %i.bm = getelementptr inbounds nuw [8 x i8], ptr @_ZZL10LowerCTPOPRN4llvm11LLVMContextEPNS_5ValueEPNS_11InstructionEE10MaskValues, i64 %15
+  %i.bm = getelementptr inbounds nuw [8 x i8], ptr @_ZZL10LowerCTPOPRN4llvm11LLVMContextEPNS_5ValueEPNS_11InstructionEE10MaskValues, i64 %indvars.iv
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !77
   %i.bo = call noundef ptr @_ZN4llvm11ConstantInt3getEPNS_4TypeEmbb(ptr noundef %i.bl, i64 noundef %i.bn, i1 noundef zeroext false, i1 noundef zeroext false) #15 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #15
@@ -337,7 +336,7 @@ _ZN4llvm13IRBuilderBase9CreateAddEPNS_5ValueES2_RKNS_5TwineEbb.exit55: ; preds =
   %.1.i51 = phi ptr [ %i.da, %_ZN4llvm13IRBuilderBase9CreateAndEPNS_5ValueES2_RKNS_5TwineE.exit49 ], [ %i.db, %bb.h ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #15
   %i.dg = shl nuw nsw i32 %.0342, 1               ; 2 uses
-  %16 = add i32 %.0333, 1
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1
   %i.dh = icmp samesign ult i32 %i.dg, %i.ax
   br i1 %i.dh, label %bb.d, label %._crit_edge, !llvm.loop !147
 

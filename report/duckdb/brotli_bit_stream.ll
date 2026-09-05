@@ -83,7 +83,7 @@ bb.a:
   %i.m = load i32, ptr %i.l, align 4, !tbaa !9
   %i.n = add i32 %i.m, 1
   store i32 %i.n, ptr %i.l, align 4, !tbaa !9
-  %i.o = add nuw i64 %.02029.epil, 1
+  %i.o = add nuw nsw i64 %.02029.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.preheader, label %.lr.ph.epil, !llvm.loop !67
@@ -136,7 +136,7 @@ bb.a:
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !9
   %i.at = add i32 %i.as, 1
   store i32 %i.at, ptr %i.ar, align 4, !tbaa !9
-  %i.au = add nuw i64 %.02029, 4                  ; 2 uses
+  %i.au = add nuw nsw i64 %.02029, 4              ; 2 uses
   %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.preheader.unr-lcssa, label %.lr.ph, !llvm.loop !68
@@ -539,7 +539,7 @@ bb.t:                                             ; preds = %.lr.ph.i23
 
 bb.u:                                             ; preds = %.sink.split.i, %.lr.ph.i23
   %i.jw = phi i64 [ %i.jk, %.lr.ph.i23 ], [ %i.jv, %.sink.split.i ] ; 2 uses
-  %i.jx = add nuw i64 %.019.i, 1                  ; 2 uses
+  %i.jx = add nuw nsw i64 %.019.i, 1              ; 2 uses
   %exitcond.not.i24 = icmp eq i64 %i.jx, %i.is
   br i1 %exitcond.not.i24, label %._crit_edge.i, label %.lr.ph.i23, !llvm.loop !84
 
@@ -942,8 +942,8 @@ bb.b:                                             ; preds = %bb.a
   store i64 %i.an, ptr %i.ai, align 1, !noalias !515
   %i.ao = add i64 %i.af, %i.o
   store i64 %i.ao, ptr %6, align 8, !tbaa !11, !noalias !16
-  %i.ap = shl i64 %3, 2                           ; 2 uses
-  %i.aq = tail call noundef ptr @_ZN13duckdb_brotli14BrotliAllocateEPNS_13MemoryManagerEm(ptr noundef %0, i64 noundef %i.ap) ; 15 uses
+  %i.ap = shl i64 %3, 2
+  %i.aq = tail call noundef ptr @_ZN13duckdb_brotli14BrotliAllocateEPNS_13MemoryManagerEm(ptr noundef %0, i64 noundef %i.ap) ; 14 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !516)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11, !noalias !516
   %i.ar = load i32, ptr %2, align 4, !tbaa !9, !alias.scope !516 ; 3 uses
@@ -1072,16 +1072,11 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %exitcond45.not.i, label %.loopexit, label %vec.epilog.scalar.ph, !llvm.loop !479
 
 .loopexit:                                        ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block134
-  %i.br = add i32 %.025.lcssa.i, 1                ; 3 uses
+  %i.br = add nuw i32 %.025.lcssa.i, 1            ; 2 uses
   %i.bs = zext i32 %i.br to i64                   ; 3 uses
-  %.not.i.i = icmp eq i32 %i.br, 0
   %i.bt = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.bs
   %scevgep.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  br i1 %.not.i.i, label %.split.us.i, label %.lr.ph.i.preheader.i
-
-.split.us.i:                                      ; preds = %.loopexit
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.aq, i8 0, i64 %i.ap, i1 false), !tbaa !9, !noalias !516
-  br label %_ZL20MoveToFrontTransformPKjmPj.exit
+  br label %.lr.ph.i.preheader.i
 
 .lr.ph.i.preheader.i:                             ; preds = %.loopexit, %_ZL11MoveToFrontPhm.exit.i
   %.239.i = phi i64 [ %i.ch, %_ZL11MoveToFrontPhm.exit.i ], [ 0, %.loopexit ] ; 4 uses
@@ -1128,7 +1123,7 @@ _ZL11MoveToFrontPhm.exit.i:                       ; preds = %.lr.ph.preheader.i.
   %exitcond46.not.i = icmp eq i64 %i.ch, %3
   br i1 %exitcond46.not.i, label %_ZL20MoveToFrontTransformPKjmPj.exit, label %.lr.ph.i.preheader.i, !llvm.loop !481
 
-_ZL20MoveToFrontTransformPKjmPj.exit:             ; preds = %_ZL11MoveToFrontPhm.exit.i, %.split.us.i
+_ZL20MoveToFrontTransformPKjmPj.exit:             ; preds = %_ZL11MoveToFrontPhm.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11, !noalias !516
   %i.ci = trunc i64 %3 to i32                     ; 2 uses
   br label %.preheader78.i

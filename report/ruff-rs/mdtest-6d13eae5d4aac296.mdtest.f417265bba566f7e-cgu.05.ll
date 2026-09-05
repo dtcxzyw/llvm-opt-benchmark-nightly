@@ -202,7 +202,7 @@ define hidden void @_RNvXsw_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCs56aZGHL
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.c = load i64, ptr %i.b, align 8, !noundef !4 ; 6 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !4 ; 5 uses
   %i.d = icmp ugt i64 %i.c, 2
   br i1 %i.d, label %bb.g, label %bb.b
 
@@ -233,33 +233,27 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10
 
 bb.d:                                             ; preds = %bb.c
   %i.l = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
+          cleanup                                 ; 3 uses
   %i.m = icmp eq i64 %i.g, %i.c
   br i1 %i.m, label %common.resume, label %.lr.ph12.i
 
-.lr.ph12.i:                                       ; preds = %bb.d, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticECskXhPDodhyTq_6mdtest.exit8.i
-  %.sroa.0.110.i = phi i64 [ %1, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticECskXhPDodhyTq_6mdtest.exit8.i ], [ %i.g, %bb.d ] ; 2 uses
-  %i.n = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.110.i ; 2 uses
-  %1 = add i64 %.sroa.0.110.i, 1                  ; 2 uses
+.lr.ph12.i:                                       ; preds = %bb.d
+  %i.n = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.g ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !312)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !313)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !314)
   %i.o = load ptr, ptr %i.n, align 8, !alias.scope !315, !nonnull !4, !noundef !4
   %i.p = atomicrmw sub ptr %i.o, i64 1 release, align 8, !noalias !316
   %i.q = icmp eq i64 %i.p, 1
-  br i1 %i.q, label %bb.e, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticECskXhPDodhyTq_6mdtest.exit8.i
+  br i1 %i.q, label %bb.e, label %common.resume
 
 bb.e:                                             ; preds = %.lr.ph12.i
   fence acquire
   invoke void @_RNvMsn_NtCscdodAO9FK5_5alloc4syncINtB5_3ArcNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic15DiagnosticInnerE9drop_slowBJ_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.n)
-          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticECskXhPDodhyTq_6mdtest.exit8.i unwind label %bb.f
+          to label %common.resume unwind label %bb.f
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticECskXhPDodhyTq_6mdtest.exit8.i: ; preds = %bb.e, %.lr.ph12.i
-  %2 = icmp eq i64 %1, %i.c
-  br i1 %2, label %common.resume, label %.lr.ph12.i
-
-common.resume:                                    ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticECskXhPDodhyTq_6mdtest.exit8.i, %bb.h, %bb.d
-  %common.resume.op = phi { ptr, i32 } [ %i.l, %bb.d ], [ %i.x, %bb.h ], [ %i.l, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticECskXhPDodhyTq_6mdtest.exit8.i ]
+common.resume:                                    ; preds = %bb.e, %.lr.ph12.i, %bb.h, %bb.d
+  %common.resume.op = phi { ptr, i32 } [ %i.l, %bb.d ], [ %i.x, %bb.h ], [ %i.l, %.lr.ph12.i ], [ %i.l, %bb.e ]
   resume { ptr, i32 } %common.resume.op
 
 bb.f:                                             ; preds = %bb.e

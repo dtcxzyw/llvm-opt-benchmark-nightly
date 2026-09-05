@@ -205,7 +205,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.val7.i) #36
           to label %._crit_edge.i unwind label %bb.b, !noalias !160
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i.preheader, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7TypeArgECslLuZgPVt6hg_3ide.exit.sink.split.i10.i
+._crit_edge.i:                                    ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7TypeArgECslLuZgPVt6hg_3ide.exit.sink.split.i10.i, %.lr.ph.i.preheader
   resume { ptr, i32 } %i.k
 
 bb.b:                                             ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7TypeArgECslLuZgPVt6hg_3ide.exit.sink.split.i10.i
@@ -265,7 +265,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.val7.i) #36
           to label %._crit_edge.i unwind label %bb.b, !noalias !163
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i.preheader, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9TypeParamECslLuZgPVt6hg_3ide.exit.sink.split.i10.i
+._crit_edge.i:                                    ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9TypeParamECslLuZgPVt6hg_3ide.exit.sink.split.i10.i, %.lr.ph.i.preheader
   resume { ptr, i32 } %i.k
 
 bb.b:                                             ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9TypeParamECslLuZgPVt6hg_3ide.exit.sink.split.i10.i
@@ -325,7 +325,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.val7.i) #36
           to label %._crit_edge17.i unwind label %bb.a, !noalias !166
 
-._crit_edge17.i:                                  ; preds = %.lr.ph16.i.preheader, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECslLuZgPVt6hg_3ide.exit.sink.split.i10.i
+._crit_edge17.i:                                  ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECslLuZgPVt6hg_3ide.exit.sink.split.i10.i, %.lr.ph16.i.preheader
   resume { ptr, i32 } %i.k
 
 bb.a:                                             ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECslLuZgPVt6hg_3ide.exit.sink.split.i10.i
@@ -384,7 +384,7 @@ bb.c:                                             ; preds = %.lr.ph13.i.preheade
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.val.i) #36
           to label %._crit_edge14.i unwind label %bb.d, !noalias !169
 
-._crit_edge14.i:                                  ; preds = %.lr.ph13.i.preheader, %bb.c
+._crit_edge14.i:                                  ; preds = %bb.c, %.lr.ph13.i.preheader
   resume { ptr, i32 } %i.j
 
 bb.d:                                             ; preds = %bb.c
@@ -443,7 +443,7 @@ bb.d:                                             ; preds = %.lr.ph.i.preheader
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.val.i) #36
           to label %._crit_edge.i unwind label %bb.e, !noalias !172
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i.preheader, %bb.d
+._crit_edge.i:                                    ; preds = %bb.d, %.lr.ph.i.preheader
   resume { ptr, i32 } %i.j
 
 bb.e:                                             ; preds = %bb.d
@@ -846,7 +846,7 @@ _RNvXs9_NtCs474hSbRjvii_8arrayvec8arrayvecINtB5_8IntoIterNtNtCslLuZgPVt6hg_3ide1
 _RNvXs9_NtCs474hSbRjvii_8arrayvec8arrayvecINtB5_8IntoIterNtNtCslLuZgPVt6hg_3ide17navigation_target16NavigationTargetKj2_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextBW_.exit.i.i.i.i.i.i.i.i: ; preds = %bb.bq, %_RNvXs9_NtCs474hSbRjvii_8arrayvec8arrayvecINtB5_8IntoIterNtNtCslLuZgPVt6hg_3ide17navigation_target16NavigationTargetKj2_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextBW_.exit.i.lr.ph.i.i.i.i.i.i.i
   %i.ek = phi i64 [ %i.ec, %_RNvXs9_NtCs474hSbRjvii_8arrayvec8arrayvecINtB5_8IntoIterNtNtCslLuZgPVt6hg_3ide17navigation_target16NavigationTargetKj2_ENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextBW_.exit.i.lr.ph.i.i.i.i.i.i.i ], [ %i.el, %bb.bq ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1730)
-  %i.el = add i64 %i.ek, 1                        ; 4 uses
+  %i.el = add nuw nsw i64 %i.ek, 1                ; 4 uses
   %i.em = getelementptr inbounds nuw [80 x i8], ptr %i.eg, i64 %i.ek ; 2 uses
   %.sroa.0.0.copyload2.i.i.i.i.i.i.i.i = load i64, ptr %i.em, align 8, !alias.scope !1731, !noalias !1732 ; 2 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq i64 %.sroa.0.0.copyload2.i.i.i.i.i.i.i.i, -2
@@ -1249,7 +1249,7 @@ bb.e:                                             ; preds = %.body.i.i
   unreachable
 
 bb.f:                                             ; preds = %.lr.ph36
-  %i.k = add i64 %.sroa.0.1.i35, 1                ; 2 uses
+  %i.k = add nuw nsw i64 %.sroa.0.1.i35, 1        ; 2 uses
   %i.l = icmp eq i64 %i.k, %i.b
   br i1 %i.l, label %common.resume, label %.lr.ph36
 
@@ -1652,7 +1652,7 @@ define hidden void @_RNvXsw_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecATINtNtCs9GitH
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.c = load i64, ptr %i.b, align 8, !noundef !26 ; 6 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !26 ; 5 uses
   %i.d = icmp ugt i64 %i.c, 2
   br i1 %i.d, label %bb.g, label %bb.b
 
@@ -1683,32 +1683,26 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueTINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTo
 
 bb.d:                                             ; preds = %bb.c
   %i.m = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
+          cleanup                                 ; 3 uses
   %i.n = icmp eq i64 %i.g, %i.c
   br i1 %i.n, label %common.resume, label %.lr.ph13.i
 
-.lr.ph13.i:                                       ; preds = %bb.d, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueTINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageENtNtCsdovh4xi6v3I_4span7hygiene13SyntaxContextEECslLuZgPVt6hg_3ide.exit9.i
-  %.sroa.0.111.i = phi i64 [ %1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueTINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageENtNtCsdovh4xi6v3I_4span7hygiene13SyntaxContextEECslLuZgPVt6hg_3ide.exit9.i ], [ %i.g, %bb.d ] ; 2 uses
-  %i.o = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.0.111.i
-  %1 = add i64 %.sroa.0.111.i, 1                  ; 2 uses
+.lr.ph13.i:                                       ; preds = %bb.d
+  %i.o = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.g
   %.val.i2 = load ptr, ptr %i.o, align 8, !alias.scope !2565, !nonnull !26, !noundef !26 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.val.i2, i64 48 ; 2 uses
   %i.q = load i32, ptr %i.p, align 4, !noalias !2565, !noundef !26
   %i.r = add i32 %i.q, -1                         ; 2 uses
   store i32 %i.r, ptr %i.p, align 4, !noalias !2565
   %i.s = icmp eq i32 %i.r, 0
-  br i1 %i.s, label %bb.e, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueTINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageENtNtCsdovh4xi6v3I_4span7hygiene13SyntaxContextEECslLuZgPVt6hg_3ide.exit9.i
+  br i1 %i.s, label %bb.e, label %common.resume
 
 bb.e:                                             ; preds = %.lr.ph13.i
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.val.i2) #36
-          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueTINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageENtNtCsdovh4xi6v3I_4span7hygiene13SyntaxContextEECslLuZgPVt6hg_3ide.exit9.i unwind label %bb.f, !noalias !2565
+          to label %common.resume unwind label %bb.f, !noalias !2565
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueTINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageENtNtCsdovh4xi6v3I_4span7hygiene13SyntaxContextEECslLuZgPVt6hg_3ide.exit9.i: ; preds = %bb.e, %.lr.ph13.i
-  %2 = icmp eq i64 %1, %i.c
-  br i1 %2, label %common.resume, label %.lr.ph13.i
-
-common.resume:                                    ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueTINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageENtNtCsdovh4xi6v3I_4span7hygiene13SyntaxContextEECslLuZgPVt6hg_3ide.exit9.i, %bb.h, %bb.d
-  %common.resume.op = phi { ptr, i32 } [ %i.m, %bb.d ], [ %i.z, %bb.h ], [ %i.m, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueTINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageENtNtCsdovh4xi6v3I_4span7hygiene13SyntaxContextEECslLuZgPVt6hg_3ide.exit9.i ]
+common.resume:                                    ; preds = %bb.e, %.lr.ph13.i, %bb.h, %bb.d
+  %common.resume.op = phi { ptr, i32 } [ %i.m, %bb.d ], [ %i.z, %bb.h ], [ %i.m, %.lr.ph13.i ], [ %i.m, %bb.e ]
   resume { ptr, i32 } %common.resume.op
 
 bb.f:                                             ; preds = %bb.e
@@ -1793,7 +1787,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtNtB4
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueTNtNtCs33K2ylI4knu_10hir_expand5attrs6AttrIdNtBG_11MacroCallIdINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtNtB4_6option6OptionINtCs83ee1IJTiSq_6either6EitherB1j_NtCsileJQcQObtj_7hir_def19BuiltinDeriveImplIdEEEEECslLuZgPVt6hg_3ide.exit.i unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph16
-  %i.l = add i64 %.sroa.0.1.i15, 1                ; 2 uses
+  %i.l = add nuw nsw i64 %.sroa.0.1.i15, 1        ; 2 uses
   %i.m = icmp eq i64 %i.l, %i.c
   br i1 %i.m, label %common.resume, label %.lr.ph16
 

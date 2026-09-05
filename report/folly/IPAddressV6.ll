@@ -205,24 +205,24 @@ bb.l:                                             ; preds = %_ZN5folly5splitIcNS
 bb.m:                                             ; preds = %bb.l, %bb.p
   %.086 = phi i64 [ 1, %bb.l ], [ %i.bd, %bb.p ]  ; 2 uses
   %.01685 = phi i32 [ 0, %bb.l ], [ %.1, %bb.p ]
-  %.01784 = phi i64 [ 0, %bb.l ], [ %.118, %bb.p ] ; 3 uses
+  %.01784 = phi i64 [ 0, %bb.l ], [ %.118, %bb.p ] ; 4 uses
   %i.as = sub nuw i64 %i.ah, %.086
   %i.at = getelementptr inbounds nuw [16 x i8], ptr %i.ad, i64 %i.as
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !60
   %i.av = load i8, ptr %i.au, align 1, !tbaa !28
   %i.aw = getelementptr inbounds nuw i8, ptr %8, i64 %.01784
   store i8 %i.av, ptr %i.aw, align 1, !tbaa !28
-  %i.ax = add i64 %.01784, 1                      ; 4 uses
+  %i.ax = add nuw nsw i64 %.01784, 1              ; 3 uses
   %i.ay = add nsw i32 %.01685, 1                  ; 2 uses
   %i.az = icmp eq i32 %i.ay, 4
   br i1 %i.az, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %bb.m
-  %i.ba = icmp ult i64 %i.ax, 39
+  %i.ba = icmp ult i64 %.01784, 38
   br i1 %i.ba, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %i.bb = add nsw i64 %.01784, 2
+  %i.bb = add nuw nsw i64 %.01784, 2
   %i.bc = getelementptr inbounds nuw i8, ptr %8, i64 %i.ax
   store i8 58, ptr %i.bc, align 1, !tbaa !28
   br label %bb.p
@@ -625,23 +625,21 @@ bb.f:                                             ; preds = %bb.a
   br i1 %i.o, label %.lr.ph81, label %.critedge
 
 .lr.ph:                                           ; preds = %.lr.ph81
-  %8 = zext i8 %9 to i64                          ; 3 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 %8
+  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv.next
   %i.q = load i8, ptr %i.p, align 1, !tbaa !28    ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 %8
+  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv.next
   %i.s = load i8, ptr %i.r, align 1, !tbaa !28
   %i.t = icmp eq i8 %i.q, %i.s
   br i1 %i.t, label %.lr.ph81, label %.critedge, !llvm.loop !330
 
 .lr.ph81:                                         ; preds = %.lr.ph.preheader, %.lr.ph
   %i.u = phi i8 [ %i.q, %.lr.ph ], [ %i.m, %.lr.ph.preheader ]
-  %i.v = phi i64 [ %8, %.lr.ph ], [ 0, %.lr.ph.preheader ]
-  %.0276280 = phi i8 [ %9, %.lr.ph ], [ 0, %.lr.ph.preheader ]
+  %i.v = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %7, i64 %i.v
   store i8 %i.u, ptr %i.w, align 1, !tbaa !28
-  %9 = add i8 %.0276280, 1                        ; 3 uses
-  %10 = zext i8 %9 to i32
-  %i.x = shl nuw nsw i32 %10, 3                   ; 3 uses
+  %indvars.iv.next = add nuw i64 %i.v, 1          ; 4 uses
+  %8 = trunc nuw i64 %indvars.iv.next to i32
+  %i.x = shl nuw nsw i32 %8, 3                    ; 3 uses
   %i.y = icmp samesign ult i32 %i.x, %i.l
   br i1 %i.y, label %.lr.ph, label %..critedge_crit_edge, !llvm.loop !330
 

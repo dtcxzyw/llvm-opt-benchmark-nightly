@@ -205,13 +205,13 @@ gv_calloc.exit196.i:                              ; preds = %gv_calloc.exit196.i
   %i.ir = load <2 x double>, ptr %gep209.i, align 8, !tbaa !110
   %i.is = fadd <2 x double> %i.ct, %i.ir
   store <2 x double> %i.is, ptr %i.iq, align 8, !tbaa !110
-  %i.it = add nuw i64 %.0210.i, 1                 ; 2 uses
+  %i.it = add nuw nsw i64 %.0210.i, 1             ; 2 uses
   %gep209.i.1 = getelementptr [16 x i8], ptr %invariant.gep208.i, i64 %i.it
   %i.iu = getelementptr inbounds nuw [16 x i8], ptr %i.hm, i64 %i.it
   %i.iv = load <2 x double>, ptr %gep209.i.1, align 8, !tbaa !110
   %i.iw = fadd <2 x double> %i.ct, %i.iv
   store <2 x double> %i.iw, ptr %i.iu, align 8, !tbaa !110
-  %i.ix = add nuw i64 %.0210.i, 2                 ; 2 uses
+  %i.ix = add nuw nsw i64 %.0210.i, 2             ; 2 uses
   %exitcond215.not.i.1 = icmp eq i64 %i.ix, %spec.select190.i
   br i1 %exitcond215.not.i.1, label %.loopexit.i, label %gv_calloc.exit196.i, !llvm.loop !318
 
@@ -614,7 +614,7 @@ mkSegPts.exit.i.i:                                ; preds = %bb.hb, %bb.ha, %bb.
   store <2 x double> %i.xb, ptr %i.vv, align 16, !tbaa !110
   %i.xc = fsub <2 x double> %i.vx, %i.xa
   store <2 x double> %i.xc, ptr %i.vw, align 16, !tbaa !110
-  %i.xd = add i64 %.03451.i.i, 1                  ; 5 uses
+  %i.xd = add nuw nsw i64 %.03451.i.i, 1          ; 4 uses
   %.val41.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8, !tbaa !109 ; 2 uses
   %i.xe = icmp eq i64 %i.vn, %.val41.i.i
   %i.xf = icmp eq i64 %i.xd, 50
@@ -622,22 +622,21 @@ mkSegPts.exit.i.i:                                ; preds = %bb.hb, %bb.ha, %bb.
   br i1 %or.cond.i.i, label %bb.hc, label %bb.he
 
 bb.hc:                                            ; preds = %mkSegPts.exit.i.i
-  %i.xg = shl i64 %i.xd, 1
+  %i.xg = shl nuw nsw i64 %i.xd, 1
   store i64 %i.xg, ptr %i.uo, align 8, !tbaa !393
   %i.xh = call i64 @gv_list_append_slot_(ptr noundef nonnull %16, i64 noundef 8) #27
   %i.xi = load i64, ptr %i.uo, align 8, !tbaa !393
   %i.xj = load ptr, ptr %16, align 8, !tbaa !14
   %i.xk = getelementptr inbounds nuw [8 x i8], ptr %i.xj, i64 %i.xh
   store i64 %i.xi, ptr %i.xk, align 8, !tbaa !200
-  %.not.i44.i.i = icmp eq i64 %i.xd, 0
-  br i1 %.not.i44.i.i, label %map_bspline_poly.exit.i.i, label %.lr.ph.i.i414.i
+  br label %.lr.ph.i.i414.i
 
 .lr.ph31.i.i.i:                                   ; preds = %.lr.ph.i.i414.i
   %i.xl = getelementptr [16 x i8], ptr %13, i64 %i.xd
   br label %bb.hd
 
-.lr.ph.i.i414.i:                                  ; preds = %bb.hc, %.lr.ph.i.i414.i
-  %.02729.i.i.i = phi i64 [ %i.xq, %.lr.ph.i.i414.i ], [ 0, %bb.hc ] ; 3 uses
+.lr.ph.i.i414.i:                                  ; preds = %.lr.ph.i.i414.i, %bb.hc
+  %.02729.i.i.i = phi i64 [ 0, %bb.hc ], [ %i.xq, %.lr.ph.i.i414.i ] ; 3 uses
   %i.xm = getelementptr inbounds nuw [16 x i8], ptr %12, i64 %.02729.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.up, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.xm, i64 16, i1 false), !tbaa.struct !120
   %i.xn = call i64 @gv_list_append_slot_(ptr noundef nonnull %15, i64 noundef 16) #27
@@ -661,7 +660,7 @@ bb.hd:                                            ; preds = %bb.hd, %.lr.ph31.i.
   %exitcond33.not.i.i.i = icmp eq i64 %.030.i.i.i, %.03451.i.i
   br i1 %exitcond33.not.i.i.i, label %map_bspline_poly.exit.i.i, label %bb.hd, !llvm.loop !343
 
-map_bspline_poly.exit.i.i:                        ; preds = %bb.hd, %bb.hc
+map_bspline_poly.exit.i.i:                        ; preds = %bb.hd
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %12, ptr noundef nonnull align 16 dereferenceable(16) %i.vv, i64 16, i1 false), !tbaa.struct !120
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %13, ptr noundef nonnull align 16 dereferenceable(16) %i.vw, i64 16, i1 false), !tbaa.struct !120
   %.val43.pre.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8, !tbaa !109
@@ -1064,7 +1063,7 @@ agxbputc.exit:                                    ; preds = %bb.k, %bb.l
   %.not.i29 = icmp eq i8 %.val.i, -1
   %i.aa = zext i8 %.val.i to i64
   %.0.i30 = select i1 %.not.i29, i64 %i.z, i64 %i.aa
-  %i.ab = add i64 %.022.ph, 1
+  %i.ab = add nuw nsw i64 %.022.ph, 1
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.022.ph
   store i64 %.0.i30, ptr %i.ac, align 8, !tbaa !200
   br label %bb.m
@@ -1284,7 +1283,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bt, i64 %i.cb
   %i.cd = getelementptr inbounds nuw [8 x i8], ptr @parse_style.parse, i64 %.077
   store ptr %i.cc, ptr %i.cd, align 8, !tbaa !105
-  %i.ce = add nuw i64 %.077, 1                    ; 2 uses
+  %i.ce = add nuw nsw i64 %.077, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.ce, %.022.ph
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !411
 

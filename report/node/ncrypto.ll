@@ -205,10 +205,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit: ; pre
   %i.af = zext nneg i8 %i.ae to i64
   %i.ag = getelementptr inbounds nuw i8, ptr @_ZZNK7ncrypto8X509View14getFingerprintB5cxx11ERKNS_6DigestEE3hex, i64 %i.af
   %i.ah = load i8, ptr %i.ag, align 1
-  %4 = add nuw nsw i64 %i.u, 1
-  %5 = and i64 %4, 4294967295
-  %6 = load ptr, ptr %3, align 8
-  %i.ai = getelementptr inbounds nuw i8, ptr %6, i64 %5
+  %4 = load ptr, ptr %3, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 %i.u
+  %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 1
   store i8 %i.ah, ptr %i.ai, align 1
   %i.aj = load i32, ptr %i.a, align 4
   %i.ak = add i32 %i.aj, -1
@@ -217,10 +216,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit: ; pre
   br i1 %.not12, label %.critedge, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph
-  %7 = add nuw nsw i64 %i.u, 2
-  %8 = and i64 %7, 4294967295
-  %9 = load ptr, ptr %3, align 8
-  %i.am = getelementptr inbounds nuw i8, ptr %9, i64 %8
+  %6 = load ptr, ptr %3, align 8
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 %i.u
+  %i.am = getelementptr inbounds nuw i8, ptr %7, i64 2
   store i8 58, ptr %i.am, align 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.an = load i32, ptr %i.a, align 4

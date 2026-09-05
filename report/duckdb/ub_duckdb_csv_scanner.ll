@@ -205,7 +205,7 @@ _ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataIsEELb1ELb1E
   %i.ax = sub i16 %i.av, %i.aw                    ; 2 uses
   %i.ay = select i1 %i.au, i16 %i.ax, i16 %i.ad   ; 3 uses
   %i.az = zext i1 %i.au to i8
-  %i.ba = add i8 %i.ag, %i.az                     ; 2 uses
+  %i.ba = add nuw i8 %i.ag, %i.az                 ; 2 uses
   %i.bb = select i1 %i.au, i16 %i.ax, i16 %i.ah
   %i.bc = add nuw i64 %.185132.i.i, 1             ; 3 uses
   %.not103.i.i = icmp eq i64 %i.bc, %.035153.i
@@ -608,7 +608,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   br i1 %i.gu, label %_ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataIsEELb0ELb1EEEbRT_h.exit.i.i, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.gv = add i8 %i.ge, 1
+  %i.gv = add nuw i8 %i.ge, 1
   %i.gw = mul i16 %i.gf, 10
   %i.gx = zext nneg i8 %i.gi to i16
   %i.gy = add i16 %i.gw, %i.gx                    ; 3 uses
@@ -1011,7 +1011,7 @@ _ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataIiEELb1ELb1E
   %i.ax = sub nsw i32 %i.av, %i.aw                ; 2 uses
   %i.ay = select i1 %i.au, i32 %i.ax, i32 %i.ad   ; 3 uses
   %i.az = zext i1 %i.au to i8
-  %i.ba = add i8 %i.ag, %i.az                     ; 2 uses
+  %i.ba = add nuw i8 %i.ag, %i.az                 ; 2 uses
   %i.bb = select i1 %i.au, i32 %i.ax, i32 %i.ah
   %i.bc = add nuw i64 %.185132.i.i, 1             ; 3 uses
   %.not103.i.i = icmp eq i64 %i.bc, %.035153.i
@@ -1414,7 +1414,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   br i1 %i.gl, label %_ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataIiEELb0ELb1EEEbRT_h.exit.i.i, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.gm = add i8 %i.fv, 1
+  %i.gm = add nuw i8 %i.fv, 1
   %i.gn = mul nsw i32 %i.fw, 10
   %i.go = zext nneg i8 %i.fz to i32
   %i.gp = add nsw i32 %i.gn, %i.go                ; 3 uses
@@ -1817,7 +1817,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.at, label %_ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataIlEELb1ELb1EEEbRT_h.exit.i.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.au = add i8 %i.af, 1
+  %i.au = add nuw i8 %i.af, 1
   %i.av = mul nsw i64 %i.ag, 10
   %i.aw = zext nneg i8 %i.aj to i64
   %i.ax = sub nsw i64 %i.av, %i.aw                ; 2 uses
@@ -2218,7 +2218,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   br i1 %i.gf, label %_ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataIlEELb0ELb1EEEbRT_h.exit.i.i, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %i.gg = add i8 %i.fp, 1
+  %i.gg = add nuw i8 %i.fp, 1
   %i.gh = mul nsw i64 %i.fq, 10
   %i.gi = zext nneg i8 %i.ft to i64
   %i.gj = add nsw i64 %i.gh, %i.gi                ; 3 uses
@@ -2621,7 +2621,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %i.al, label %_ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataINS_9hugeint_tEEELb1ELb1EEEbRT_h.exit.i.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.am = add i8 %i.aa, 1
+  %i.am = add nuw i8 %i.aa, 1
   store i8 %i.am, ptr %i.d, align 1, !tbaa !826
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #33
@@ -2896,7 +2896,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   br i1 %i.dw, label %_ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataINS_9hugeint_tEEELb0ELb1EEEbRT_h.exit.i.i, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %i.dx = add i8 %i.dl, 1
+  %i.dx = add nuw i8 %i.dl, 1
   store i8 %i.dx, ptr %i.d, align 1, !tbaa !826
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #33
@@ -3200,7 +3200,7 @@ _ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataIsEELb1ELb1E
   %i.ax = sub i16 %i.av, %i.aw                    ; 2 uses
   %i.ay = select i1 %i.au, i16 %i.ax, i16 %i.ad   ; 3 uses
   %i.az = zext i1 %i.au to i8
-  %i.ba = add i8 %i.ag, %i.az                     ; 2 uses
+  %i.ba = add nuw i8 %i.ag, %i.az                 ; 2 uses
   %i.bb = select i1 %i.au, i16 %i.ax, i16 %i.ah
   %i.bc = add nuw i64 %.185132.i.i, 1             ; 3 uses
   %.not103.i.i = icmp eq i64 %i.bc, %.035153.i
@@ -3603,7 +3603,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   br i1 %i.gu, label %_ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataIsEELb0ELb1EEEbRT_h.exit.i.i, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.gv = add i8 %i.ge, 1
+  %i.gv = add nuw i8 %i.ge, 1
   %i.gw = mul i16 %i.gf, 10
   %i.gx = zext nneg i8 %i.gi to i16
   %i.gy = add i16 %i.gw, %i.gx                    ; 3 uses
@@ -4006,7 +4006,7 @@ _ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataIiEELb1ELb1E
   %i.ax = sub nsw i32 %i.av, %i.aw                ; 2 uses
   %i.ay = select i1 %i.au, i32 %i.ax, i32 %i.ad   ; 3 uses
   %i.az = zext i1 %i.au to i8
-  %i.ba = add i8 %i.ag, %i.az                     ; 2 uses
+  %i.ba = add nuw i8 %i.ag, %i.az                 ; 2 uses
   %i.bb = select i1 %i.au, i32 %i.ax, i32 %i.ah
   %i.bc = add nuw i64 %.185132.i.i, 1             ; 3 uses
   %.not103.i.i = icmp eq i64 %i.bc, %.035153.i
@@ -4409,7 +4409,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   br i1 %i.gl, label %_ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataIiEELb0ELb1EEEbRT_h.exit.i.i, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.gm = add i8 %i.fv, 1
+  %i.gm = add nuw i8 %i.fv, 1
   %i.gn = mul nsw i32 %i.fw, 10
   %i.go = zext nneg i8 %i.fz to i32
   %i.gp = add nsw i32 %i.gn, %i.go                ; 3 uses
@@ -4812,7 +4812,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.at, label %_ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataIlEELb1ELb1EEEbRT_h.exit.i.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.au = add i8 %i.af, 1
+  %i.au = add nuw i8 %i.af, 1
   %i.av = mul nsw i64 %i.ag, 10
   %i.aw = zext nneg i8 %i.aj to i64
   %i.ax = sub nsw i64 %i.av, %i.aw                ; 2 uses
@@ -5213,7 +5213,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   br i1 %i.gf, label %_ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataIlEELb0ELb1EEEbRT_h.exit.i.i, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %i.gg = add i8 %i.fp, 1
+  %i.gg = add nuw i8 %i.fp, 1
   %i.gh = mul nsw i64 %i.fq, 10
   %i.gi = zext nneg i8 %i.ft to i64
   %i.gj = add nsw i64 %i.gh, %i.gi                ; 3 uses
@@ -5616,7 +5616,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %i.al, label %_ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataINS_9hugeint_tEEELb1ELb1EEEbRT_h.exit.i.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.am = add i8 %i.aa, 1
+  %i.am = add nuw i8 %i.aa, 1
   store i8 %i.am, ptr %i.d, align 1, !tbaa !826
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #33
@@ -5891,7 +5891,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   br i1 %i.dw, label %_ZN6duckdb20DecimalCastOperation13HandleDecimalINS_15DecimalCastDataINS_9hugeint_tEEELb0ELb1EEEbRT_h.exit.i.i, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
-  %i.dx = add i8 %i.dl, 1
+  %i.dx = add nuw i8 %i.dl, 1
   store i8 %i.dx, ptr %i.d, align 1, !tbaa !826
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #33
@@ -6294,9 +6294,9 @@ bb.bf:                                            ; preds = %bb.be
   %i.hh = trunc nuw nsw i64 %i.hg to i32
   %i.hi = shl i64 %.sroa.7.0.ph463483, %i.hg
   %i.hj = trunc nsw i64 %.sroa.093.0.ph464480 to i32 ; 2 uses
-  %i.hk = shl nsw i32 %i.hj, 1                    ; 2 uses
+  %i.hk = shl nsw i32 %i.hj, 1
   %i.hl = sext i32 %i.hk to i64
-  %i.hm = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %i.hl
+  %i.hm = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %i.hl ; 2 uses
   %i.hn = getelementptr i8, ptr %i.hm, i64 5472
   %i.ho = load i64, ptr %i.hn, align 16, !tbaa !137
   %i.hp = zext i64 %i.hi to i128                  ; 2 uses
@@ -6310,9 +6310,7 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %i.hw, label %.noexc73, label %_ZN17duckdb_fast_float29compute_product_approximationILi55EEENS_8value128Elm.exit
 
 .noexc73:                                         ; preds = %.noexc
-  %6 = sext i32 %i.hk to i64
-  %7 = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %6
-  %i.hx = getelementptr i8, ptr %7, i64 5480
+  %i.hx = getelementptr i8, ptr %i.hm, i64 5480
   %i.hy = load i64, ptr %i.hx, align 8, !tbaa !137
   %i.hz = zext i64 %i.hy to i128
   %i.ia = mul nuw i128 %i.hz, %i.hp
@@ -6715,9 +6713,9 @@ bb.bg:                                            ; preds = %bb.bf
   %i.hh = trunc nuw nsw i64 %i.hg to i32
   %i.hi = shl i64 %.sroa.7.0.ph456476, %i.hg
   %i.hj = trunc nsw i64 %.sroa.086.0.ph457473 to i32 ; 2 uses
-  %i.hk = shl nsw i32 %i.hj, 1                    ; 2 uses
+  %i.hk = shl nsw i32 %i.hj, 1
   %i.hl = sext i32 %i.hk to i64
-  %i.hm = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %i.hl
+  %i.hm = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %i.hl ; 2 uses
   %i.hn = getelementptr i8, ptr %i.hm, i64 5472
   %i.ho = load i64, ptr %i.hn, align 16, !tbaa !137
   %i.hp = zext i64 %i.hi to i128                  ; 2 uses
@@ -6731,9 +6729,7 @@ bb.bg:                                            ; preds = %bb.bf
   br i1 %i.hw, label %bb.bh, label %_ZN17duckdb_fast_float29compute_product_approximationILi26EEENS_8value128Elm.exit
 
 bb.bh:                                            ; preds = %bb.bg
-  %6 = sext i32 %i.hk to i64
-  %7 = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %6
-  %i.hx = getelementptr i8, ptr %7, i64 5480
+  %i.hx = getelementptr i8, ptr %i.hm, i64 5480
   %i.hy = load i64, ptr %i.hx, align 8, !tbaa !137
   %i.hz = zext i64 %i.hy to i128
   %i.ia = mul nuw i128 %i.hz, %i.hp

@@ -56,10 +56,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %bb.a
-  %2 = phi i32 [ 0, %bb.a ], [ %i.o, %bb.d ]      ; 3 uses
-  %.0.i = phi i32 [ 0, %bb.a ], [ %4, %bb.d ]     ; 2 uses
-  %3 = zext i32 %.0.i to i64
-  %i.l = getelementptr inbounds nuw i8, ptr @.str.5, i64 %3
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.d ], [ 0, %bb.a ] ; 2 uses
+  %.0.i = phi i32 [ %i.o, %bb.d ], [ 0, %bb.a ]   ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr @.str.5, i64 %indvars.iv
   %i.m = load i8, ptr %i.l, align 1, !tbaa !26
   switch i8 %i.m, label %bb.d [
     i8 0, label %bb.e
@@ -67,17 +66,17 @@ bb.b:                                             ; preds = %bb.d, %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = add i32 %2, 1                            ; 2 uses
+  %i.n = add i32 %.0.i, 1                         ; 2 uses
   store i32 %i.n, ptr %i.i, align 8, !tbaa !27
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.o = phi i32 [ %2, %bb.b ], [ %i.n, %bb.c ]
-  %4 = add i32 %.0.i, 1
+  %i.o = phi i32 [ %.0.i, %bb.b ], [ %i.n, %bb.c ]
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1
   br label %bb.b, !llvm.loop !0
 
 bb.e:                                             ; preds = %bb.b
-  %i.p = add i32 %2, 1
+  %i.p = add i32 %.0.i, 1
   store i32 %i.p, ptr %i.i, align 8, !tbaa !27
   store i32 0, ptr %i.g, align 4, !tbaa !29
   store i32 0, ptr %i.h, align 8, !tbaa !30

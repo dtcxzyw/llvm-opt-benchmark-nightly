@@ -205,16 +205,15 @@ bb.p:                                             ; preds = %bb.o, %.lr.ph.i.i13
 .preheader.lr.ph.i.i:                             ; preds = %.lr.ph.split.split.split.i
   %i.ku = add nsw i64 %indvars.iv.i126, -6        ; 2 uses
   %i.kv = icmp eq i64 %i.ku, 31
-  %i.kw = trunc nsw i64 %i.ku to i32              ; 2 uses
+  %i.kw = trunc nuw nsw i64 %i.ku to i32          ; 2 uses
   %i.kx = shl i32 2, %i.kw
   %i.ky = sext i32 %i.kx to i64
   br i1 %i.kv, label %Abc_TtHasVar.exit.thread.i, label %.preheader.us.preheader.i.i
 
 .preheader.us.preheader.i.i:                      ; preds = %.preheader.lr.ph.i.i
-  %i.kz = shl nuw i32 1, %i.kw                    ; 2 uses
-  %8 = sext i32 %i.kz to i64
-  %smax.i.i = call i32 @llvm.smax.i32(i32 %i.kz, i32 1)
-  %wide.trip.count.i.i127 = zext nneg i32 %smax.i.i to i64
+  %i.kz = shl nuw nsw i32 1, %i.kw                ; 2 uses
+  %8 = zext nneg i32 %i.kz to i64
+  %wide.trip.count.i.i127 = zext nneg i32 %i.kz to i64
   br label %.preheader.us.i.i
 
 .preheader.us.i.i:                                ; preds = %._crit_edge.us.i.i, %.preheader.us.preheader.i.i

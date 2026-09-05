@@ -204,9 +204,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %.not4755, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d, %bb.f
-  %4 = phi i32 [ %i.s, %bb.f ], [ %i.h, %bb.d ]   ; 2 uses
-  %i.i = phi i64 [ %6, %bb.f ], [ 0, %bb.d ]      ; 3 uses
-  %.03557 = phi i32 [ %5, %bb.f ], [ 0, %bb.d ]
+  %i.i = phi i64 [ %indvars.iv.next, %bb.f ], [ 0, %bb.d ] ; 4 uses
+  %.03557 = phi i32 [ %i.s, %bb.f ], [ %i.h, %bb.d ] ; 2 uses
   %.13756 = phi i64 [ %.2, %bb.f ], [ %.036, %bb.d ] ; 4 uses
   %i.j = load i64, ptr %i.g, align 8, !tbaa !31
   %i.k = icmp ugt i64 %i.j, %i.i
@@ -216,7 +215,7 @@ bb.e:                                             ; preds = %.lr.ph
   %i.l = load ptr, ptr %2, align 8, !tbaa !32
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.i
   %i.n = load i32, ptr %i.m, align 4, !tbaa !10
-  %i.o = icmp eq i32 %4, %i.n
+  %i.o = icmp eq i32 %.03557, %i.n
   br i1 %i.o, label %bb.f, label %.critedge
 
 .critedge:                                        ; preds = %bb.e, %bb.f, %.lr.ph, %bb.d
@@ -225,12 +224,11 @@ bb.e:                                             ; preds = %.lr.ph
   br i1 %.not48, label %.loopexit, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.p = call noundef zeroext i1 @_Z9IsPathDivi(i32 noundef %4)
+  %i.p = call noundef zeroext i1 @_Z9IsPathDivi(i32 noundef %.03557)
   %i.q = call i64 @llvm.umax.i64(i64 %.13756, i64 %i.i)
   %.2 = select i1 %i.p, i64 %i.q, i64 %.13756     ; 2 uses
-  %5 = add i32 %.03557, 1                         ; 2 uses
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %6
+  %indvars.iv.next = add nuw i64 %i.i, 1          ; 2 uses
+  %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next
   %i.s = load i32, ptr %i.r, align 4, !tbaa !10   ; 2 uses
   %.not47 = icmp eq i32 %i.s, 0
   br i1 %.not47, label %.critedge, label %.lr.ph, !llvm.loop !26

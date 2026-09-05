@@ -203,9 +203,8 @@ bb.i:                                             ; preds = %.preheader.us, %bb.
 
 bb.j:                                             ; preds = %.lr.ph111.us, %bb.l
   %indvars.iv144 = phi i64 [ %i.k, %.lr.ph111.us ], [ %indvars.iv.next145, %bb.l ] ; 2 uses
-  %i.cz = shl i64 %indvars.iv144, 2
-  %5 = and i64 %i.cz, 4294967292                  ; 2 uses
-  %i.da = getelementptr inbounds nuw i8, ptr %i.eb, i64 %5
+  %i.cz = shl nuw nsw i64 %indvars.iv144, 2       ; 2 uses
+  %i.da = getelementptr inbounds nuw i8, ptr %i.eb, i64 %i.cz
   %i.db = load i8, ptr %i.da, align 1, !tbaa !7   ; 2 uses
   %.not101.us = icmp eq i8 %i.db, -1
   br i1 %.not101.us, label %bb.l, label %bb.k
@@ -213,7 +212,7 @@ bb.j:                                             ; preds = %.lr.ph111.us, %bb.l
 bb.k:                                             ; preds = %bb.j
   %i.dc = zext i8 %i.db to i32
   %i.dd = mul nuw nsw i32 %i.dc, 32897            ; 3 uses
-  %i.de = getelementptr inbounds nuw i8, ptr %i.ec, i64 %5 ; 4 uses
+  %i.de = getelementptr inbounds nuw i8, ptr %i.ec, i64 %i.cz ; 4 uses
   %i.df = load i8, ptr %i.de, align 1, !tbaa !7
   %i.dg = zext i8 %i.df to i32
   %i.dh = mul nuw nsw i32 %i.dd, %i.dg
@@ -432,9 +431,8 @@ bb.t:                                             ; preds = %.preheader102, %bb.
 
 bb.u:                                             ; preds = %.lr.ph111, %bb.w
   %indvars.iv131 = phi i64 [ %i.ei, %.lr.ph111 ], [ %indvars.iv.next132, %bb.w ] ; 2 uses
-  %i.hz = shl i64 %indvars.iv131, 2
-  %6 = and i64 %i.hz, 4294967292                  ; 2 uses
-  %i.ia = getelementptr inbounds nuw i8, ptr %i.hx, i64 %6
+  %i.hz = shl nuw nsw i64 %indvars.iv131, 2       ; 2 uses
+  %i.ia = getelementptr inbounds nuw i8, ptr %i.hx, i64 %i.hz
   %i.ib = load i8, ptr %i.ia, align 1, !tbaa !7   ; 2 uses
   %.not101 = icmp eq i8 %i.ib, -1
   br i1 %.not101, label %bb.w, label %bb.v
@@ -442,7 +440,7 @@ bb.u:                                             ; preds = %.lr.ph111, %bb.w
 bb.v:                                             ; preds = %bb.u
   %i.ic = zext i8 %i.ib to i32
   %i.id = mul nuw nsw i32 %i.ic, 32897            ; 3 uses
-  %i.ie = getelementptr inbounds nuw i8, ptr %i.hy, i64 %6 ; 4 uses
+  %i.ie = getelementptr inbounds nuw i8, ptr %i.hy, i64 %i.hz ; 4 uses
   %i.if = load i8, ptr %i.ie, align 1, !tbaa !7
   %i.ig = zext i8 %i.if to i32
   %i.ih = mul nuw nsw i32 %i.id, %i.ig

@@ -205,9 +205,8 @@ FSE_decompress.exit.i.i.i.i:                      ; preds = %FSE_reloadDStream.e
   br label %.lr.ph188.i.i.i.i
 
 .lr.ph188.i.i.i.i:                                ; preds = %bb.cr, %.lr.ph188.preheader.i.i.i.i
-  %i.wx = phi i64 [ %8, %bb.cr ], [ 0, %.lr.ph188.preheader.i.i.i.i ]
-  %.183187.i.i.i.i = phi i32 [ %i.xi, %bb.cr ], [ 0, %.lr.ph188.preheader.i.i.i.i ]
-  %.086186.i.i.i.i = phi i32 [ %7, %bb.cr ], [ 0, %.lr.ph188.preheader.i.i.i.i ]
+  %i.wx = phi i64 [ 0, %.lr.ph188.preheader.i.i.i.i ], [ %indvars.iv.next277.i.i.i.i, %bb.cr ] ; 2 uses
+  %.086186.i.i.i.i = phi i32 [ 0, %.lr.ph188.preheader.i.i.i.i ], [ %i.xi, %bb.cr ]
   %i.wy = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.wx
   %i.wz = load i8, ptr %i.wy, align 1, !tbaa !13  ; 3 uses
   %i.xa = icmp ugt i8 %i.wz, 15
@@ -222,18 +221,17 @@ bb.cr:                                            ; preds = %.lr.ph188.i.i.i.i
   %i.xf = zext nneg i8 %i.wz to i32
   %i.xg = shl nuw nsw i32 1, %i.xf
   %i.xh = lshr i32 %i.xg, 1
-  %7 = add i32 %i.xh, %.086186.i.i.i.i            ; 4 uses
-  %i.xi = add i32 %.183187.i.i.i.i, 1             ; 2 uses
-  %8 = zext i32 %i.xi to i64                      ; 2 uses
-  %9 = icmp ugt i64 %.084338.i.i.i.i, %8
-  br i1 %9, label %.lr.ph188.i.i.i.i, label %._crit_edge.i.i.i.i, !llvm.loop !40
+  %i.xi = add i32 %i.xh, %.086186.i.i.i.i         ; 4 uses
+  %indvars.iv.next277.i.i.i.i = add nuw nsw i64 %i.wx, 1 ; 2 uses
+  %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next277.i.i.i.i, %.084338.i.i.i.i
+  br i1 %exitcond.not.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph188.i.i.i.i, !llvm.loop !40
 
 ._crit_edge.i.i.i.i:                              ; preds = %bb.cr
-  %i.xj = icmp eq i32 %7, 0
+  %i.xj = icmp eq i32 %i.xi, 0
   br i1 %i.xj, label %HUF_readDTable.exit.thread.i.i.i, label %bb.cs
 
 bb.cs:                                            ; preds = %._crit_edge.i.i.i.i
-  %i.xk = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %7, i1 true) ; 4 uses
+  %i.xk = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.xi, i1 true) ; 4 uses
   %i.xl = xor i32 %i.xk, 31                       ; 3 uses
   %.not100.i.i.i.i = icmp samesign ult i32 %i.xl, 12
   br i1 %.not100.i.i.i.i, label %bb.ct, label %HUF_readDTable.exit.thread.i.i.i
@@ -243,7 +241,7 @@ bb.ct:                                            ; preds = %bb.cs
   %i.xn = sub nuw nsw i16 32, %i.xm               ; 2 uses
   store i16 %i.xn, ptr %i.r, align 16, !tbaa !19
   %i.xo = shl nuw nsw i32 2, %i.xl
-  %i.xp = sub i32 %i.xo, %7                       ; 2 uses
+  %i.xp = sub i32 %i.xo, %i.xi                    ; 2 uses
   %i.xq = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.xp, i1 true) ; 2 uses
   %i.xr = lshr exact i32 -2147483648, %i.xq
   %.not101.i.i.i.i = icmp eq i32 %i.xr, %i.xp
@@ -322,7 +320,7 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %niter698.ncmp.1, label %.preheader.i.i.i.i.unr-lcssa, label %.preheader109.i.i.i.i, !llvm.loop !41
 
 bb.cv:                                            ; preds = %._crit_edge194.i.i.i.i, %.preheader.i.i.i.i
-  %indvars.iv283.i.i.i.i = phi i64 [ 0, %.preheader.i.i.i.i ], [ %indvars.iv.next284.i.i.i.i, %._crit_edge194.i.i.i.i ] ; 3 uses
+  %indvars.iv283.i.i.i.i = phi i64 [ 0, %.preheader.i.i.i.i ], [ %indvars.iv.next284.i.i.i.i, %._crit_edge194.i.i.i.i ] ; 4 uses
   %i.yv = getelementptr inbounds nuw i8, ptr %i.p, i64 %indvars.iv283.i.i.i.i
   %i.yw = load i8, ptr %i.yv, align 1, !tbaa !13  ; 3 uses
   %i.yx = zext nneg i8 %i.yw to i32
@@ -415,10 +413,9 @@ vec.epilog.middle.block559:                       ; preds = %vec.epilog.vector.b
 
 ._crit_edge194.i.i.i.i:                           ; preds = %.lr.ph193.i.i.i.i, %middle.block542, %vec.epilog.middle.block559, %bb.cv
   store i32 %i.zf, ptr %i.zd, align 4, !tbaa !14
-  %indvars.iv.next284.i.i.i.i = add i64 %indvars.iv283.i.i.i.i, 1 ; 2 uses
-  %10 = and i64 %indvars.iv.next284.i.i.i.i, 4294967295
-  %.not104.i.i.i.i = icmp ult i64 %.084338.i.i.i.i, %10
-  br i1 %.not104.i.i.i.i, label %HUF_readDTable.exit.i.i.i, label %bb.cv, !llvm.loop !45
+  %indvars.iv.next284.i.i.i.i = add nuw nsw i64 %indvars.iv283.i.i.i.i, 1
+  %exitcond198.not.i.i.i = icmp eq i64 %indvars.iv283.i.i.i.i, %.084338.i.i.i.i
+  br i1 %exitcond198.not.i.i.i, label %HUF_readDTable.exit.i.i.i, label %bb.cv, !llvm.loop !45
 
 HUF_readDTable.exit.thread.i.i.i:                 ; preds = %.lr.ph188.i.i.i.i, %bb.cu, %bb.ct, %bb.cs, %._crit_edge.i.i.i.i, %.loopexit.i.i.i.i, %FSE_decompress.exit.i.i.i.i, %FSE_decompress.exit.thread.i.i.i.i, %bb.p, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #16

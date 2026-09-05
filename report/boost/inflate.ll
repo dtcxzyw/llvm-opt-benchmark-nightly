@@ -205,8 +205,7 @@ bb.em:                                            ; preds = %._crit_edge1772
   %.2910842976 = phi ptr [ %.281083.lcssa, %.split.thread ], [ %.01055, %.split ]
   %i.td = phi i32 [ %i.sx, %.split.thread ], [ %.pre2854, %.split ] ; 2 uses
   %.promoted2975 = phi i32 [ 0, %.split.thread ], [ %.promoted.pre, %.split ]
-  %2 = zext i32 %.promoted2975 to i64
-  %wide.trip.count = zext i32 %i.td to i64
+  %wide.trip.count = zext i32 %.promoted2975 to i64
   br label %.preheader1283
 
 .preheader1312:                                   ; preds = %bb.en, %.split
@@ -223,7 +222,7 @@ bb.em:                                            ; preds = %._crit_edge1772
   br label %.lr.ph1941
 
 .preheader1283:                                   ; preds = %.preheader1283.preheader, %bb.en
-  %indvars.iv2785 = phi i64 [ %2, %.preheader1283.preheader ], [ %indvars.iv.next2786, %bb.en ] ; 2 uses
+  %indvars.iv2785 = phi i64 [ %wide.trip.count, %.preheader1283.preheader ], [ %indvars.iv.next2786, %bb.en ] ; 2 uses
   %.261934 = phi i32 [ %.252979, %.preheader1283.preheader ], [ %i.ty, %bb.en ] ; 5 uses
   %.269541933 = phi i64 [ %.259532978, %.preheader1283.preheader ], [ %i.tx, %bb.en ] ; 3 uses
   %.3010211932 = phi i32 [ %.2910202977, %.preheader1283.preheader ], [ %.311022.lcssa, %bb.en ] ; 3 uses
@@ -253,8 +252,8 @@ bb.en:                                            ; preds = %._crit_edge1782, %.
   %.27.lcssa = phi i32 [ %i.ti, %._crit_edge1782 ], [ %.261934, %.preheader1283 ]
   %i.tq = trunc i64 %.27955.lcssa to i16
   %i.tr = and i16 %i.tq, 7
-  %indvars.iv.next2786 = add nuw nsw i64 %indvars.iv2785, 1 ; 3 uses
-  %i.ts = trunc nuw i64 %indvars.iv.next2786 to i32
+  %indvars.iv.next2786 = add nuw nsw i64 %indvars.iv2785, 1 ; 2 uses
+  %i.ts = trunc i64 %indvars.iv.next2786 to i32   ; 2 uses
   store i32 %i.ts, ptr %i.ar, align 4, !tbaa !80
   %i.tt = getelementptr inbounds nuw [2 x i8], ptr @inflate.order, i64 %indvars.iv2785
   %i.tu = load i16, ptr %i.tt, align 2, !tbaa !100
@@ -263,7 +262,7 @@ bb.en:                                            ; preds = %._crit_edge1782, %.
   store i16 %i.tr, ptr %i.tw, align 2, !tbaa !100
   %i.tx = lshr i64 %.27955.lcssa, 3               ; 2 uses
   %i.ty = add i32 %.27.lcssa, -3                  ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next2786, %wide.trip.count
+  %exitcond.not = icmp eq i32 %i.td, %i.ts
   br i1 %exitcond.not, label %.preheader1312, label %.preheader1283, !llvm.loop !61
 
 .lr.ph1941:                                       ; preds = %.lr.ph1941.preheader, %.lr.ph1941

@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.h
   %i.o = load i64, ptr %i.m, align 8, !tbaa !39   ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.o
   store i8 32, ptr %i.p, align 1
-  %i.q = add i64 %i.o, 1
+  %i.q = add nuw nsw i64 %i.o, 1
   br label %phpdbg_command_name.exit
 
 phpdbg_command_name.exit:                         ; preds = %bb.h, %bb.i
@@ -357,7 +357,7 @@ bb.q:                                             ; preds = %bb.p
   %i.av = load i64, ptr %i.at, align 8, !tbaa !39 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.av
   store i8 32, ptr %i.aw, align 1
-  %i.ax = add i64 %i.av, 1
+  %i.ax = add nuw nsw i64 %i.av, 1
   br label %phpdbg_command_name.exit140
 
 phpdbg_command_name.exit140:                      ; preds = %bb.p, %bb.q
@@ -399,7 +399,7 @@ bb.s:                                             ; preds = %bb.r
   %i.bm = load i64, ptr %i.bk, align 8, !tbaa !39 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.bm
   store i8 32, ptr %i.bn, align 1
-  %i.bo = add i64 %i.bm, 1
+  %i.bo = add nuw nsw i64 %i.bm, 1
   br label %phpdbg_command_name.exit143
 
 phpdbg_command_name.exit143:                      ; preds = %bb.r, %bb.s
@@ -439,7 +439,7 @@ bb.v:                                             ; preds = %bb.u
   %i.ce = load i64, ptr %i.cc, align 8, !tbaa !39 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ce
   store i8 32, ptr %i.cf, align 1
-  %i.cg = add i64 %i.ce, 1
+  %i.cg = add nuw nsw i64 %i.ce, 1
   br label %phpdbg_command_name.exit146
 
 phpdbg_command_name.exit146:                      ; preds = %bb.u, %bb.v
@@ -481,7 +481,7 @@ bb.x:                                             ; preds = %bb.w
   %i.cv = load i64, ptr %i.ct, align 8, !tbaa !39 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.cv
   store i8 32, ptr %i.cw, align 1
-  %i.cx = add i64 %i.cv, 1
+  %i.cx = add nuw nsw i64 %i.cv, 1
   br label %phpdbg_command_name.exit149
 
 phpdbg_command_name.exit149:                      ; preds = %bb.w, %bb.x
@@ -521,7 +521,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.dn = load i64, ptr %i.dl, align 8, !tbaa !39 ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.dn
   store i8 32, ptr %i.do, align 1
-  %i.dp = add i64 %i.dn, 1
+  %i.dp = add nuw nsw i64 %i.dn, 1
   br label %phpdbg_command_name.exit152
 
 phpdbg_command_name.exit152:                      ; preds = %bb.z, %bb.aa
@@ -563,7 +563,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.ee = load i64, ptr %i.ec, align 8, !tbaa !39 ; 2 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ee
   store i8 32, ptr %i.ef, align 1
-  %i.eg = add i64 %i.ee, 1
+  %i.eg = add nuw nsw i64 %i.ee, 1
   br label %phpdbg_command_name.exit155
 
 phpdbg_command_name.exit155:                      ; preds = %bb.ab, %bb.ac
@@ -603,7 +603,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.ew = load i64, ptr %i.eu, align 8, !tbaa !39 ; 2 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ew
   store i8 32, ptr %i.ex, align 1
-  %i.ey = add i64 %i.ew, 1
+  %i.ey = add nuw nsw i64 %i.ew, 1
   br label %phpdbg_command_name.exit158
 
 phpdbg_command_name.exit158:                      ; preds = %bb.ae, %bb.af
@@ -645,7 +645,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.fn = load i64, ptr %i.fl, align 8, !tbaa !39 ; 2 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.fn
   store i8 32, ptr %i.fo, align 1
-  %i.fp = add i64 %i.fn, 1
+  %i.fp = add nuw nsw i64 %i.fn, 1
   br label %phpdbg_command_name.exit161
 
 phpdbg_command_name.exit161:                      ; preds = %bb.ag, %bb.ah
@@ -685,7 +685,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.gf = load i64, ptr %i.gd, align 8, !tbaa !39 ; 2 uses
   %i.gg = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.gf
   store i8 32, ptr %i.gg, align 1
-  %i.gh = add i64 %i.gf, 1
+  %i.gh = add nuw nsw i64 %i.gf, 1
   br label %phpdbg_command_name.exit164
 
 phpdbg_command_name.exit164:                      ; preds = %bb.aj, %bb.ak
@@ -727,7 +727,7 @@ bb.am:                                            ; preds = %bb.al
   %i.gw = load i64, ptr %i.gu, align 8, !tbaa !39 ; 2 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.gw
   store i8 32, ptr %i.gx, align 1
-  %i.gy = add i64 %i.gw, 1
+  %i.gy = add nuw nsw i64 %i.gw, 1
   br label %phpdbg_command_name.exit167
 
 phpdbg_command_name.exit167:                      ; preds = %bb.al, %bb.am
@@ -767,7 +767,7 @@ bb.ap:                                            ; preds = %bb.ao
   %i.ho = load i64, ptr %i.hm, align 8, !tbaa !39 ; 2 uses
   %i.hp = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ho
   store i8 32, ptr %i.hp, align 1
-  %i.hq = add i64 %i.ho, 1
+  %i.hq = add nuw nsw i64 %i.ho, 1
   br label %phpdbg_command_name.exit170
 
 phpdbg_command_name.exit170:                      ; preds = %bb.ao, %bb.ap
@@ -809,7 +809,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.if = load i64, ptr %i.id, align 8, !tbaa !39 ; 2 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.if
   store i8 32, ptr %i.ig, align 1
-  %i.ih = add i64 %i.if, 1
+  %i.ih = add nuw nsw i64 %i.if, 1
   br label %phpdbg_command_name.exit173
 
 phpdbg_command_name.exit173:                      ; preds = %bb.aq, %bb.ar
@@ -849,7 +849,7 @@ bb.au:                                            ; preds = %bb.at
   %i.ix = load i64, ptr %i.iv, align 8, !tbaa !39 ; 2 uses
   %i.iy = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ix
   store i8 32, ptr %i.iy, align 1
-  %i.iz = add i64 %i.ix, 1
+  %i.iz = add nuw nsw i64 %i.ix, 1
   br label %phpdbg_command_name.exit176
 
 phpdbg_command_name.exit176:                      ; preds = %bb.at, %bb.au
@@ -891,7 +891,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.jo = load i64, ptr %i.jm, align 8, !tbaa !39 ; 2 uses
   %i.jp = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.jo
   store i8 32, ptr %i.jp, align 1
-  %i.jq = add i64 %i.jo, 1
+  %i.jq = add nuw nsw i64 %i.jo, 1
   br label %phpdbg_command_name.exit179
 
 phpdbg_command_name.exit179:                      ; preds = %bb.av, %bb.aw
@@ -931,7 +931,7 @@ bb.az:                                            ; preds = %bb.ay
   %i.kg = load i64, ptr %i.ke, align 8, !tbaa !39 ; 2 uses
   %i.kh = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.kg
   store i8 32, ptr %i.kh, align 1
-  %i.ki = add i64 %i.kg, 1
+  %i.ki = add nuw nsw i64 %i.kg, 1
   br label %phpdbg_command_name.exit182
 
 phpdbg_command_name.exit182:                      ; preds = %bb.ay, %bb.az
@@ -973,7 +973,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.kx = load i64, ptr %i.kv, align 8, !tbaa !39 ; 2 uses
   %i.ky = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.kx
   store i8 32, ptr %i.ky, align 1
-  %i.kz = add i64 %i.kx, 1
+  %i.kz = add nuw nsw i64 %i.kx, 1
   br label %phpdbg_command_name.exit185
 
 phpdbg_command_name.exit185:                      ; preds = %bb.ba, %bb.bb
@@ -1013,7 +1013,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.lp = load i64, ptr %i.ln, align 8, !tbaa !39 ; 2 uses
   %i.lq = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.lp
   store i8 32, ptr %i.lq, align 1
-  %i.lr = add i64 %i.lp, 1
+  %i.lr = add nuw nsw i64 %i.lp, 1
   br label %phpdbg_command_name.exit188
 
 phpdbg_command_name.exit188:                      ; preds = %bb.bd, %bb.be
@@ -1055,7 +1055,7 @@ bb.bg:                                            ; preds = %bb.bf
   %i.mg = load i64, ptr %i.me, align 8, !tbaa !39 ; 2 uses
   %i.mh = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.mg
   store i8 32, ptr %i.mh, align 1
-  %i.mi = add i64 %i.mg, 1
+  %i.mi = add nuw nsw i64 %i.mg, 1
   br label %phpdbg_command_name.exit191
 
 phpdbg_command_name.exit191:                      ; preds = %bb.bf, %bb.bg
@@ -1112,7 +1112,7 @@ bb.bi:                                            ; preds = %bb.bh
   %i.nb = load i64, ptr %i.mz, align 8, !tbaa !39 ; 2 uses
   %i.nc = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.nb
   store i8 32, ptr %i.nc, align 1
-  %i.nd = add i64 %i.nb, 1
+  %i.nd = add nuw nsw i64 %i.nb, 1
   br label %phpdbg_command_name.exit194
 
 phpdbg_command_name.exit194:                      ; preds = %bb.bh, %bb.bi
@@ -1227,7 +1227,7 @@ bb.h:                                             ; preds = %bb.g
 .thread206.sink.split:                            ; preds = %bb.h, %bb.e
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.0179213244
   store ptr %.0181212245, ptr %i.aa, align 8, !tbaa !55
-  %i.ab = add i64 %.0179213244, 1
+  %i.ab = add nuw nsw i64 %.0179213244, 1
   br label %.thread206
 
 .thread206:                                       ; preds = %.thread206.sink.split, %bb.h, %bb.e, %.thread203, %bb.c
@@ -1275,18 +1275,16 @@ bb.k:                                             ; preds = %.critedge
   br i1 %or.cond, label %bb.r, label %bb.p
 
 .lr.ph223:                                        ; preds = %.critedge, %bb.o
-  %i.ar = phi i64 [ %4, %bb.o ], [ 0, %.critedge ]
+  %i.ar = phi i64 [ %3, %bb.o ], [ 0, %.critedge ] ; 2 uses
   %.0222 = phi i64 [ %i.bn, %bb.o ], [ 0, %.critedge ] ; 3 uses
-  %.0176221 = phi i32 [ %3, %bb.o ], [ 0, %.critedge ]
   %.0177220 = phi ptr [ %.1178, %bb.o ], [ null, %.critedge ] ; 2 uses
   %.not199 = icmp eq ptr %.0177220, null
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ar
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !55 ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   %i.av = load i64, ptr %i.au, align 8, !tbaa !39 ; 2 uses
-  %3 = add i32 %.0176221, 1                       ; 2 uses
-  %4 = zext i32 %3 to i64                         ; 3 uses
-  %i.aw = icmp ugt i64 %.3, %4                    ; 2 uses
+  %3 = add nuw i64 %i.ar, 1                       ; 3 uses
+  %i.aw = icmp ugt i64 %.3, %3                    ; 2 uses
   br i1 %.not199, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %.lr.ph223
@@ -1312,7 +1310,7 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bf, ptr align 1 %i.bg, i64 %i.bi, i1 false)
   %i.bj = load i64, ptr %i.bh, align 8, !tbaa !39
   %i.bk = add i64 %i.bj, %.0222                   ; 2 uses
-  %i.bl = icmp ugt i64 %.3, %4
+  %i.bl = icmp ugt i64 %.3, %3
   %i.bm = getelementptr inbounds nuw i8, ptr %.1178, i64 %i.bk ; 2 uses
   br i1 %i.bl, label %bb.o, label %._crit_edge
 

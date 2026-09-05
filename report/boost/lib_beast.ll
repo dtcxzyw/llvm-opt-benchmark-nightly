@@ -205,17 +205,16 @@ bb.an:                                            ; preds = %bb.d
   br i1 %i.gi, label %.lr.ph, label %.preheader
 
 .lr.ph:                                           ; preds = %.thread575, %bb.an
-  %i.gj = phi i32 [ %i.fx, %.thread575 ], [ %.pre477, %bb.an ]
+  %i.gj = phi i32 [ %i.fx, %.thread575 ], [ %.pre477, %bb.an ] ; 2 uses
   %.promoted577 = phi i32 [ 0, %.thread575 ], [ %.promoted.pre, %bb.an ]
   %.promoted435 = load ptr, ptr %i.g, align 8
   %i.gk = load ptr, ptr %i.f, align 8
   %.promoted436 = load i32, ptr %i.y, align 4, !tbaa !403
-  %8 = zext i32 %.promoted577 to i64
-  %wide.trip.count = zext i32 %i.gj to i64
+  %wide.trip.count = zext i32 %.promoted577 to i64
   br label %bb.ao
 
 .preheader:                                       ; preds = %bb.aq, %bb.an
-  %i.gl = phi i32 [ %.promoted.pre, %bb.an ], [ %i.hq, %bb.aq ] ; 4 uses
+  %i.gl = phi i32 [ %.promoted.pre, %bb.an ], [ %i.gj, %bb.aq ] ; 4 uses
   %i.gm = icmp ult i32 %i.gl, 19
   br i1 %i.gm, label %.lr.ph437.preheader, label %._crit_edge
 
@@ -250,7 +249,7 @@ bb.an:                                            ; preds = %bb.d
   br i1 %i.gv, label %._crit_edge.loopexit, label %.lr.ph437
 
 bb.ao:                                            ; preds = %.lr.ph, %bb.aq
-  %indvars.iv = phi i64 [ %8, %.lr.ph ], [ %indvars.iv.next, %bb.aq ] ; 2 uses
+  %indvars.iv = phi i64 [ %wide.trip.count, %.lr.ph ], [ %indvars.iv.next, %bb.aq ] ; 2 uses
   %i.gw = phi i32 [ %.promoted436, %.lr.ph ], [ %i.hp, %bb.aq ] ; 4 uses
   %i.gx = phi ptr [ %.promoted435, %.lr.ph ], [ %i.hh, %bb.aq ] ; 4 uses
   %.not.i188 = icmp ult i32 %i.gw, 3
@@ -296,10 +295,10 @@ bb.aq:                                            ; preds = %._crit_edge479, %bb
   store i32 %i.ho, ptr %0, align 8, !tbaa !404
   %i.hp = add i32 %i.hg, -3                       ; 2 uses
   store i32 %i.hp, ptr %i.y, align 4, !tbaa !403
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %i.hq = trunc nuw i64 %indvars.iv.next to i32   ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.hq = trunc i64 %indvars.iv.next to i32       ; 2 uses
   store i32 %i.hq, ptr %i.ac, align 8, !tbaa !1198
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i32 %i.gj, %i.hq
   br i1 %exitcond.not, label %.preheader, label %bb.ao, !llvm.loop !1168
 
 .lr.ph437:                                        ; preds = %.lr.ph437.prol.loopexit, %.lr.ph437

@@ -205,7 +205,7 @@ tg3__memcpy.exit.i136.i:                          ; preds = %.lr.ph.i83.i.i.prol
   ]
 
 bb.dh:                                            ; preds = %tg3__memcpy.exit.i136.i
-  %i.agk = add i32 %i.aek, 1
+  %i.agk = add nuw i32 %i.aek, 1
   %i.agl = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.ael
   store i8 47, ptr %i.agl, align 1, !tbaa !23
   br label %bb.di
@@ -608,7 +608,7 @@ tg3json__buf_putc.exit.thread:                    ; preds = %bb.b, %.lr.ph, %tg3
 define internal fastcc nonnull ptr @tg3json__format_decimal_digits(ptr nofree noundef nonnull writeonly captures(ret: address, provenance) %0, ptr nofree noundef nonnull readonly captures(none) %1, i32 noundef %2, i32 noundef range(i32 -2147483647, -2147483648) %3, i32 noundef range(i32 0, 2) %4) unnamed_addr #14 {
 bb.a:
   %i.a = ptrtoaddr ptr %1 to i64                  ; 5 uses
-  %i.b = alloca [32 x i8], align 16               ; 8 uses
+  %i.b = alloca [32 x i8], align 16               ; 7 uses
   %i.c = alloca [16 x i8], align 16               ; 13 uses
   %i.d = ptrtoaddr ptr %i.c to i64
   %i.e = add i32 %3, %2                           ; 11 uses
@@ -799,24 +799,33 @@ bb.e:                                             ; preds = %.loopexit
 
 .preheader19.i.preheader.i:                       ; preds = %bb.e, %.thread.i
   %.024.i = phi i32 [ %i.bp, %.thread.i ], [ %i.f, %bb.e ]
-  %.0823.i = phi ptr [ %i.bo, %.thread.i ], [ %i.bm, %bb.e ] ; 4 uses
+  %.0823.i = phi ptr [ %i.bo, %.thread.i ], [ %i.bm, %bb.e ] ; 3 uses
   %i.br = zext nneg i32 %.024.i to i64
-  br label %.preheader19.i.i
+  br label %.preheader.i.i.a
 
 bb.f:                                             ; preds = %bb.e
   store i8 48, ptr %i.c, align 16, !tbaa !23
   br label %iter.check412
 
-.preheader.i.i.a:                                 ; preds = %.preheader19.i.i
-  %.not1822.i.i = icmp eq i64 %8, 0
-  br i1 %.not1822.i.i, label %tg3json__utoa.exit.thread.i, label %iter.check377
+.preheader.i.i.a:                                 ; preds = %.preheader.i.i.a, %.preheader19.i.preheader.i
+  %.01421.i.i = phi i64 [ %8, %.preheader.i.i.a ], [ 0, %.preheader19.i.preheader.i ] ; 6 uses
+  %.01620.i.i = phi i64 [ %10, %.preheader.i.i.a ], [ %i.br, %.preheader19.i.preheader.i ] ; 3 uses
+  %5 = urem i64 %.01620.i.i, 10
+  %6 = trunc nuw nsw i64 %5 to i8
+  %7 = or disjoint i8 %6, 48
+  %8 = add nuw i64 %.01421.i.i, 1                 ; 9 uses
+  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.01421.i.i
+  store i8 %7, ptr %9, align 1, !tbaa !23
+  %10 = udiv i64 %.01620.i.i, 10
+  %.not.i.i = icmp samesign ult i64 %.01620.i.i, 10
+  br i1 %.not.i.i, label %iter.check377, label %.preheader.i.i.a, !llvm.loop !922
 
 iter.check377:                                    ; preds = %.preheader.i.i.a
-  %min.iters.check363 = icmp ult i64 %8, 8
+  %min.iters.check363 = icmp ult i64 %.01421.i.i, 7
   br i1 %min.iters.check363, label %.lr.ph.i.i.preheader.a, label %vector.main.loop.iter.check364
 
 vector.main.loop.iter.check364:                   ; preds = %iter.check377
-  %min.iters.check365 = icmp ult i64 %8, 32
+  %min.iters.check365 = icmp ult i64 %.01421.i.i, 31
   br i1 %min.iters.check365, label %vec.epilog.ph381, label %vector.ph366
 
 vector.ph366:                                     ; preds = %vector.main.loop.iter.check364
@@ -841,7 +850,7 @@ vector.body368:                                   ; preds = %vector.body368, %ve
   store <16 x i8> %reverse372, ptr %i.bz, align 16, !tbaa !23
   %index.next373 = add nuw i64 %index369, 32      ; 2 uses
   %i.ca = icmp eq i64 %index.next373, %n.vec367
-  br i1 %i.ca, label %middle.block374, label %vector.body368, !llvm.loop !922
+  br i1 %i.ca, label %middle.block374, label %vector.body368, !llvm.loop !923
 
 middle.block374:                                  ; preds = %vector.body368
   %cmp.n375 = icmp eq i64 %8, %n.vec367
@@ -868,7 +877,7 @@ vec.epilog.vector.body383:                        ; preds = %vec.epilog.vector.b
   store <8 x i8> %reverse386, ptr %i.cf, align 8, !tbaa !23
   %index.next387 = add nuw i64 %index384, 8       ; 2 uses
   %i.cg = icmp eq i64 %index.next387, %n.vec382
-  br i1 %i.cg, label %vec.epilog.middle.block388, label %vec.epilog.vector.body383, !llvm.loop !923
+  br i1 %i.cg, label %vec.epilog.middle.block388, label %vec.epilog.vector.body383, !llvm.loop !924
 
 vec.epilog.middle.block388:                       ; preds = %vec.epilog.vector.body383
   %cmp.n389 = icmp eq i64 %8, %n.vec382
@@ -879,38 +888,21 @@ vec.epilog.middle.block388:                       ; preds = %vec.epilog.vector.b
   %.123.i.i.ph = phi i64 [ %8, %iter.check377 ], [ %i.bt, %vec.epilog.iter.check379 ], [ %i.cb, %vec.epilog.middle.block388 ]
   br label %.lr.ph.i.i.a
 
-tg3json__utoa.exit.thread.i:                      ; preds = %.preheader.i.i.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
-  br label %tg3json__write_exp.exit
-
-.preheader19.i.i:                                 ; preds = %.preheader19.i.i, %.preheader19.i.preheader.i
-  %.01421.i.i = phi i64 [ %8, %.preheader19.i.i ], [ 0, %.preheader19.i.preheader.i ] ; 4 uses
-  %.01620.i.i = phi i64 [ %10, %.preheader19.i.i ], [ %i.br, %.preheader19.i.preheader.i ] ; 3 uses
-  %5 = urem i64 %.01620.i.i, 10
-  %6 = trunc nuw nsw i64 %5 to i8
-  %7 = or disjoint i8 %6, 48
-  %8 = add i64 %.01421.i.i, 1                     ; 12 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.01421.i.i
-  store i8 %7, ptr %9, align 1, !tbaa !23
-  %10 = udiv i64 %.01620.i.i, 10
-  %.not.i.i = icmp samesign ult i64 %.01620.i.i, 10
-  br i1 %.not.i.i, label %.preheader.i.i.a, label %.preheader19.i.i, !llvm.loop !924
-
 .lr.ph.i.i.a:                                     ; preds = %.lr.ph.i.i.preheader.a, %.lr.ph.i.i.a
   %.024.i.i = phi i64 [ %i.ck, %.lr.ph.i.i.a ], [ %.024.i.i.ph, %.lr.ph.i.i.preheader.a ] ; 2 uses
   %.123.i.i = phi i64 [ %i.ch, %.lr.ph.i.i.a ], [ %.123.i.i.ph, %.lr.ph.i.i.preheader.a ]
   %i.ch = add i64 %.123.i.i, -1                   ; 3 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ch
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !23
-  %i.ck = add nuw i64 %.024.i.i, 1                ; 2 uses
+  %i.ck = add nuw nsw i64 %.024.i.i, 1            ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.c, i64 %.024.i.i
   store i8 %i.cj, ptr %i.cl, align 1, !tbaa !23
   %.not18.i.i = icmp eq i64 %i.ch, 0
   br i1 %.not18.i.i, label %iter.check412, label %.lr.ph.i.i.a, !llvm.loop !925
 
 iter.check412:                                    ; preds = %.lr.ph.i.i.a, %middle.block374, %vec.epilog.middle.block388, %bb.f
-  %.0822.i = phi ptr [ %i.bm, %bb.f ], [ %.0823.i, %middle.block374 ], [ %.0823.i, %vec.epilog.middle.block388 ], [ %.0823.i, %.lr.ph.i.i.a ] ; 10 uses
-  %.0.lcssa.sink.i.i = phi i64 [ 1, %bb.f ], [ %n.vec367, %middle.block374 ], [ %n.vec382, %vec.epilog.middle.block388 ], [ %i.ck, %.lr.ph.i.i.a ] ; 15 uses
+  %.0822.i = phi ptr [ %i.bm, %bb.f ], [ %.0823.i, %middle.block374 ], [ %.0823.i, %vec.epilog.middle.block388 ], [ %.0823.i, %.lr.ph.i.i.a ] ; 7 uses
+  %.0.lcssa.sink.i.i = phi i64 [ 1, %bb.f ], [ %n.vec367, %middle.block374 ], [ %n.vec382, %vec.epilog.middle.block388 ], [ %i.ck, %.lr.ph.i.i.a ] ; 12 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.c, i64 %.0.lcssa.sink.i.i
   store i8 0, ptr %i.cm, align 1, !tbaa !23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
@@ -1047,10 +1039,8 @@ vec.epilog.middle.block424:                       ; preds = %vec.epilog.vector.b
   %.not.i11.i.7 = icmp eq i64 %i.ea, 0
   br i1 %.not.i11.i.7, label %tg3json__write_exp.exit, label %.lr.ph.i10.i, !llvm.loop !929
 
-tg3json__write_exp.exit:                          ; preds = %.lr.ph.i10.i.prol.loopexit, %.lr.ph.i10.i, %middle.block407, %vec.epilog.middle.block424, %tg3json__utoa.exit.thread.i
-  %.0821.i = phi ptr [ %.0823.i, %tg3json__utoa.exit.thread.i ], [ %.0822.i, %middle.block407 ], [ %.0822.i, %vec.epilog.middle.block424 ], [ %.0822.i, %.lr.ph.i10.i ], [ %.0822.i, %.lr.ph.i10.i.prol.loopexit ]
-  %.0.lcssa.sink.i14.i = phi i64 [ 0, %tg3json__utoa.exit.thread.i ], [ %.0.lcssa.sink.i.i, %middle.block407 ], [ %.0.lcssa.sink.i.i, %vec.epilog.middle.block424 ], [ %.0.lcssa.sink.i.i, %.lr.ph.i10.i ], [ %.0.lcssa.sink.i.i, %.lr.ph.i10.i.prol.loopexit ]
-  %i.ee = getelementptr inbounds nuw i8, ptr %.0821.i, i64 %.0.lcssa.sink.i14.i
+tg3json__write_exp.exit:                          ; preds = %.lr.ph.i10.i.prol.loopexit, %.lr.ph.i10.i, %vec.epilog.middle.block424, %middle.block407
+  %i.ee = getelementptr inbounds nuw i8, ptr %.0822.i, i64 %.0.lcssa.sink.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #19
   br label %.loopexit76
 
@@ -1453,9 +1443,9 @@ begin_hunk_2_@llvm.vector.reduce.umax.v4i32
 !919 = distinct !{!919, !40, !43, !44}
 !920 = distinct !{!920, !46}
 !921 = distinct !{!921, !40, !43}
-!922 = distinct !{!922, !40, !43, !44}
+!922 = distinct !{!922, !40}
 !923 = distinct !{!923, !40, !43, !44}
-!924 = distinct !{!924, !40}
+!924 = distinct !{!924, !40, !43, !44}
 !925 = distinct !{!925, !40, !44, !43}
 !926 = distinct !{!926, !40, !43, !44}
 !927 = distinct !{!927, !40, !43, !44}

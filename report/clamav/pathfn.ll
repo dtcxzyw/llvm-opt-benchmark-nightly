@@ -202,10 +202,9 @@ bb.v:                                             ; preds = %bb.t, %bb.u, %bb.s
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.ac, %bb.v
-  %.2131 = phi i1 [ false, %bb.v ], [ %.3132, %bb.ac ]
-  %.0116 = phi i32 [ 0, %bb.v ], [ %7, %bb.ac ]   ; 2 uses
-  %6 = zext i32 %.0116 to i64
-  %i.dt = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %6
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ac ], [ 0, %bb.v ] ; 2 uses
+  %.2131 = phi i1 [ %.3132, %bb.ac ], [ false, %bb.v ]
+  %i.dt = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !11 ; 3 uses
   switch i32 %i.du, label %bb.z [
     i32 0, label %bb.x
@@ -244,7 +243,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.aa, %bb.ab, %bb.z, %bb.y
   %.3132 = phi i1 [ %i.dw, %bb.y ], [ true, %bb.z ], [ false, %bb.ab ], [ false, %bb.aa ]
-  %7 = add i32 %.0116, 1
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1
   br label %bb.w, !llvm.loop !39
 
 ._crit_edge:                                      ; preds = %bb.an, %bb.x
@@ -301,7 +300,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.fa, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.fb = add i64 %.0111168, 2                    ; 2 uses
+  %i.fb = add nuw nsw i64 %.0111168, 2            ; 2 uses
   %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.fb
   %i.fd = load i32, ptr %i.fc, align 4, !tbaa !11
   %i.fe = call noundef i32 @_Z8toupperwi(i32 noundef %i.fd)

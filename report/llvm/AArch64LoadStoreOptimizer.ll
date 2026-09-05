@@ -202,7 +202,7 @@ bb.fd:                                            ; preds = %bb.fc
   ]
 
 _ZL10isTagStoreRKN4llvm12MachineInstrE.exit.i.i:  ; preds = %bb.fd
-  %43 = select i1 %i.bby, i32 2, i32 1
+  %43 = select i1 %i.bby, i64 2, i64 1
   br label %bb.fe
 
 bb.fe:                                            ; preds = %.loopexit166.i.i, %_ZL10isTagStoreRKN4llvm12MachineInstrE.exit.i.i
@@ -250,8 +250,7 @@ _ZN4llvm18MCSuperRegIteratorppEv.exit.i.i.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i
 
 .loopexit166.i.i:                                 ; preds = %_ZN4llvm18MCSuperRegIteratorppEv.exit.i.i.i.i.i.i.i.i, %bb.ff
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next.i.i to i32
-  %exitcond = icmp eq i32 %43, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next.i.i, %43
   br i1 %exitcond, label %_ZL10isTagStoreRKN4llvm12MachineInstrE.exit.thread.i.i, label %bb.fe, !llvm.loop !667
 
 _ZL10isTagStoreRKN4llvm12MachineInstrE.exit.thread.i.i: ; preds = %.loopexit166.i.i, %bb.fd, %bb.fd, %bb.fd, %bb.fd

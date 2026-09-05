@@ -204,37 +204,32 @@ bb.a:
 
 _RNvMs3_NtNtCsfqhPXF3e39f_4spin5mutex4spinINtB5_9SpinMutexuE4lockCsefoF4u9kbII_5wasmi.exit: ; preds = %.loopexit10, %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
-  %i.i = load atomic i64, ptr %i.h monotonic, align 8, !noalias !1441 ; 5 uses
+  %i.i = load atomic i64, ptr %i.h monotonic, align 8, !noalias !1441 ; 4 uses
   %i.j = add i64 %i.i, %1                         ; 5 uses
   %i.k = icmp uge i64 %i.j, %i.i
   %i.l = icmp ult i64 %i.j, 100000001
   %narrow.i = and i1 %i.k, %i.l
-  br i1 %narrow.i, label %2, label %4, !prof !16
+  br i1 %narrow.i, label %bb.b, label %5, !prof !16
 
-2:                                                ; preds = %_RNvMs3_NtNtCsfqhPXF3e39f_4spin5mutex4spinINtB5_9SpinMutexuE4lockCsefoF4u9kbII_5wasmi.exit
-  %3 = icmp eq i64 %i.i, 0
-  br i1 %3, label %bb.b, label %5
+bb.b:                                             ; preds = %_RNvMs3_NtNtCsfqhPXF3e39f_4spin5mutex4spinINtB5_9SpinMutexuE4lockCsefoF4u9kbII_5wasmi.exit
+  %2 = add nuw nsw i64 %i.i, 31
+  %3 = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %2, i1 true) ; 2 uses
+  %i.m = add nuw nsw i64 %i.j, 31
+  %i.n = tail call range(i64 36, 65) i64 @llvm.ctlz.i64(i64 %i.m, i1 true) ; 2 uses
+  %i.o = sub nuw nsw i64 59, %i.n
+  %i.p = icmp samesign ult i64 %i.n, %3
+  br i1 %i.p, label %.lr.ph.i.preheader, label %._crit_edge.i
 
-4:                                                ; preds = %_RNvMs3_NtNtCsfqhPXF3e39f_4spin5mutex4spinINtB5_9SpinMutexuE4lockCsefoF4u9kbII_5wasmi.exit
+.lr.ph.i.preheader:                               ; preds = %bb.b
+  %4 = sub nuw nsw i64 59, %3
+  br label %.lr.ph.i
+
+5:                                                ; preds = %_RNvMs3_NtNtCsfqhPXF3e39f_4spin5mutex4spinINtB5_9SpinMutexuE4lockCsefoF4u9kbII_5wasmi.exit
   invoke void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @25) #38
           to label %.noexc unwind label %.loopexit.split-lp
 
-.noexc:                                           ; preds = %4
+.noexc:                                           ; preds = %5
   unreachable
-
-5:                                                ; preds = %2
-  %6 = add i64 %i.i, 31
-  %7 = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %6, i1 false)
-  %8 = sub nsw i64 59, %7
-  br label %bb.b
-
-bb.b:                                             ; preds = %5, %2
-  %.sroa.06.0.i = phi i64 [ %8, %5 ], [ 0, %2 ]   ; 2 uses
-  %i.m = add nuw nsw i64 %i.j, 31
-  %i.n = tail call range(i64 36, 65) i64 @llvm.ctlz.i64(i64 %i.m, i1 true)
-  %i.o = sub nuw nsw i64 59, %i.n                 ; 2 uses
-  %i.p = icmp ult i64 %.sroa.06.0.i, %i.o
-  br i1 %i.p, label %.lr.ph.i, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.noexc7, %bb.b
   store atomic i64 %i.j, ptr %i.h release, align 8, !noalias !1441
@@ -250,8 +245,8 @@ bb.c:                                             ; preds = %._crit_edge.i
 .noexc6:                                          ; preds = %bb.c
   unreachable
 
-.lr.ph.i:                                         ; preds = %bb.b, %.noexc7
-  %.sroa.06.112.i = phi i64 [ %i.w, %.noexc7 ], [ %.sroa.06.0.i, %bb.b ] ; 3 uses
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.noexc7
+  %.sroa.06.112.i = phi i64 [ %i.w, %.noexc7 ], [ %4, %.lr.ph.i.preheader ] ; 3 uses
   %i.s = add i64 %.sroa.06.112.i, 5
   %i.t = and i64 %i.s, 63
   %i.u = shl nuw i64 1, %i.t
@@ -278,7 +273,7 @@ bb.d:                                             ; preds = %._crit_edge.i
           cleanup
   br label %bb.e
 
-.loopexit.split-lp:                               ; preds = %bb.c, %4
+.loopexit.split-lp:                               ; preds = %bb.c, %5
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.e

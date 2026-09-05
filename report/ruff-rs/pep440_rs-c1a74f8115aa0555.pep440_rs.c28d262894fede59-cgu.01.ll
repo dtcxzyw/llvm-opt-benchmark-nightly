@@ -202,7 +202,7 @@ bb.a:
   %i.d = load i64, ptr %i.c, align 8, !noundef !3 ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !418)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.f = load i64, ptr %i.e, align 8, !alias.scope !418, !noundef !3 ; 10 uses
+  %i.f = load i64, ptr %i.e, align 8, !alias.scope !418, !noundef !3 ; 7 uses
   %i.g = icmp ugt i64 %i.d, %i.f
   br i1 %i.g, label %bb.c, label %bb.b, !prof !10
 
@@ -311,21 +311,13 @@ _RNvMsm_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_6Parser5reset.exit: ; preds = %bb
   br label %bb.t
 
 bb.m:                                             ; preds = %bb.k
-  %i.al = add nuw i64 %i.r, 3                     ; 6 uses
+  %i.al = add nuw i64 %i.r, 3                     ; 4 uses
   store i64 %i.al, ptr %i.c, align 8, !alias.scope !419, !noalias !420
   call void @llvm.experimental.noalias.scope.decl(metadata !426)
-  %1 = icmp ugt i64 %i.al, %i.f
-  br i1 %1, label %3, label %2, !prof !10
-
-2:                                                ; preds = %bb.m
   %.not.i8 = icmp eq i64 %i.f, %i.al
   br i1 %.not.i8, label %_RNvMsm_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_6Parser16bump_if_byte_set.exit11, label %bb.n
 
-3:                                                ; preds = %bb.m
-  call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %i.al, i64 noundef %i.f, i64 noundef %i.f, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @33) #21, !noalias !426
-  unreachable
-
-bb.n:                                             ; preds = %2
+bb.n:                                             ; preds = %bb.m
   %i.am = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.al
   %i.an = load i8, ptr %i.am, align 1, !noalias !426, !noundef !3
   %i.ao = zext i8 %i.an to i64
@@ -347,7 +339,7 @@ bb.q:                                             ; preds = %bb.o
   call void @_RNvNtCs4NRVxsYgnAr_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @31, i64 noundef 30, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @32) #21, !noalias !426
   unreachable
 
-_RNvMsm_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_6Parser16bump_if_byte_set.exit11: ; preds = %2, %bb.n, %bb.p
+_RNvMsm_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_6Parser16bump_if_byte_set.exit11: ; preds = %bb.m, %bb.n, %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call fastcc void @_RNvMsm_NtCsgHAIXRTqFF5_9pep440_rs7versionNtB5_6Parser12parse_number(ptr noalias noundef align 8 captures(none) dereferenceable(16) %i.b, ptr noalias noundef align 8 dereferenceable(160) %0)
   %i.au = load i64, ptr %i.b, align 8, !range !5, !noundef !3 ; 2 uses

@@ -205,7 +205,7 @@ _ZNK7rocksdb10trie_index9Bitvector10NextSetBitEm.exit613: ; preds = %.preheader.
   %i.ub = trunc nuw i64 %spec.select392 to i32
   %i.uc = getelementptr inbounds nuw [4 x i8], ptr %i.rl, i64 %.02761493
   store i32 %i.ub, ptr %i.uc, align 4, !tbaa !70
-  %i.ud = add nuw i64 %.02761493, 1               ; 2 uses
+  %i.ud = add nuw nsw i64 %.02761493, 1           ; 2 uses
   %exitcond1636.not = icmp eq i64 %i.ud, %i.kc
   br i1 %exitcond1636.not, label %_ZNSt6vectorIjSaIjEE17_S_check_init_lenEmRKS0_.exit.i614.thread, label %bb.dn, !llvm.loop !244
 
@@ -608,7 +608,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.not364 = icmp ne i16 %i.aex, 0
   %i.aey = zext i1 %.not364 to i64
   %spec.select395 = add i64 %.02631509, %i.aey    ; 2 uses
-  %i.aez = add nuw i64 %.02621510, 1              ; 2 uses
+  %i.aez = add nuw nsw i64 %.02621510, 1          ; 2 uses
   %exitcond1638.not = icmp eq i64 %i.aez, %i.kc
   br i1 %exitcond1638.not, label %._crit_edge1512, label %.lr.ph1511, !llvm.loop !248
 
@@ -741,7 +741,7 @@ vec.epilog.middle.block2062:                      ; preds = %vec.epilog.vector.b
   %i.aha = add nuw nsw i64 %i.agz, 10
   %i.ahb = select i1 %.not339, i64 0, i64 %i.aha
   %.1259 = add i64 %i.ahb, %.02581518             ; 2 uses
-  %i.ahc = add nuw i64 %.02571519, 1              ; 2 uses
+  %i.ahc = add nuw nsw i64 %.02571519, 1          ; 2 uses
   %exitcond1639.not = icmp eq i64 %i.ahc, %i.kc
   br i1 %exitcond1639.not, label %._crit_edge1522, label %.lr.ph1521, !llvm.loop !251
 
@@ -1144,22 +1144,18 @@ bb.gr:                                            ; preds = %_ZNSt7__cxx1112basi
   br label %.lr.ph1544
 
 .lr.ph1540:                                       ; preds = %._crit_edge1537, %.critedge.thread
-  %.02501538 = phi i64 [ %i.amq, %.critedge.thread ], [ 0, %._crit_edge1537 ] ; 8 uses
+  %.02501538 = phi i64 [ %i.amq, %.critedge.thread ], [ 0, %._crit_edge1537 ] ; 7 uses
   %i.all = getelementptr inbounds nuw [2 x i8], ptr %.sroa.01068.01200, i64 %.02501538 ; 2 uses
   %i.alm = load i16, ptr %i.all, align 2, !tbaa !78 ; 3 uses
   %.not329 = icmp eq i16 %i.alm, 0
   br i1 %.not329, label %.critedge.thread, label %bb.gs
 
 bb.gs:                                            ; preds = %.lr.ph1540
-  %14 = sdiv i64 %.02501538, 64
-  %i.aln = getelementptr inbounds [8 x i8], ptr %i.ajw, i64 %14
-  %15 = and i64 %.02501538, -9223372036854775745
-  %16 = icmp ugt i64 %15, -9223372036854775808
-  %storemerge.idx.i.i.i.i.i716 = select i1 %16, i64 -8, i64 0
-  %storemerge.i.i.i.i.i717 = getelementptr inbounds i8, ptr %i.aln, i64 %storemerge.idx.i.i.i.i.i716
+  %14 = lshr i64 %.02501538, 6
+  %i.aln = getelementptr inbounds nuw [8 x i8], ptr %i.ajw, i64 %14
   %i.alo = and i64 %.02501538, 63
   %i.alp = shl nuw i64 1, %i.alo
-  %i.alq = load i64, ptr %storemerge.i.i.i.i.i717, align 8, !tbaa !65
+  %i.alq = load i64, ptr %i.aln, align 8, !tbaa !65
   %i.alr = and i64 %i.alq, %i.alp
   %.not1350 = icmp eq i64 %i.alr, 0
   br i1 %.not1350, label %bb.gt, label %.critedge

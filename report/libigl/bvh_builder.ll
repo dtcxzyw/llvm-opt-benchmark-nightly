@@ -205,7 +205,7 @@ _ZN6embree4sse224HeuristicArrayBinningSAHINS_7PrimRefELm32EE5splitERKNS0_8BinSpl
   %i.nr = getelementptr inbounds nuw i8, ptr %33, i64 48 ; 2 uses
   br label %.lr.ph362
 
-.lr.ph362:                                        ; preds = %bb.aw, %.preheader291.lr.ph
+.lr.ph362:                                        ; preds = %.preheader291.lr.ph, %bb.aw
   %.065408 = phi i64 [ 2, %.preheader291.lr.ph ], [ %i.vs, %bb.aw ] ; 4 uses
   %i.ns = load i64, ptr %i.dg, align 8
   br label %bb.ag
@@ -248,7 +248,7 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %bb.ah, %bb.ai, %bb.ag
   %.164 = phi float [ %.063359, %bb.ag ], [ %i.oh, %bb.ai ], [ %.063359, %bb.ah ]
   %.1 = phi i64 [ %.062360, %bb.ag ], [ %.061361, %bb.ai ], [ %.062360, %bb.ah ] ; 3 uses
-  %i.oj = add nuw i64 %.061361, 1                 ; 2 uses
+  %i.oj = add nuw nsw i64 %.061361, 1             ; 2 uses
   %exitcond.not = icmp eq i64 %i.oj, %.065408
   br i1 %exitcond.not, label %._crit_edge, label %bb.ag, !llvm.loop !98
 
@@ -651,7 +651,7 @@ bb.aw:                                            ; preds = %_ZN6embree4sse224He
   store <4 x float> %i.vb, ptr %i.vq, align 16
   %i.vr = getelementptr inbounds nuw i8, ptr %i.vm, i64 80
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.vr, ptr noundef nonnull align 16 dereferenceable(16) %i.ne, i64 16, i1 false)
-  %i.vs = add nuw i64 %.065408, 1                 ; 3 uses
+  %i.vs = add nuw nsw i64 %.065408, 1             ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %33) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %31) #5
@@ -697,7 +697,7 @@ bb.aw:                                            ; preds = %_ZN6embree4sse224He
   %i.wr = getelementptr inbounds nuw i8, ptr %i.wk, i64 104
   %i.ws = zext i1 %i.wq to i8
   store i8 %i.ws, ptr %i.wr, align 8
-  %i.wt = add nuw i64 %.059412, 2                 ; 2 uses
+  %i.wt = add nuw nsw i64 %.059412, 2             ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph413, !llvm.loop !141
@@ -1033,7 +1033,7 @@ bb.bu:                                            ; preds = %bb.bt, %bb.bs, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
   br label %_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.preheader433
 
-_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.preheader433: ; preds = %bb.bu, %bb.bo, %bb.bm
+_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.preheader433: ; preds = %bb.bm, %bb.bo, %bb.bu
   %.1.i96 = phi ptr [ %i.abb, %bb.bm ], [ %i.abg, %bb.bo ], [ %.0.i97, %bb.bu ] ; 20 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.aca = getelementptr inbounds nuw i8, ptr %.1.i96, i64 96 ; 2 uses
@@ -1076,7 +1076,7 @@ _ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit: ; preds = %_ZN6
   %.sroa.6.24.vec.extract = extractelement <4 x float> %i.ack, i64 2
   %i.acq = getelementptr inbounds nuw [4 x i8], ptr %i.acd, i64 %.0.i415
   store float %.sroa.6.24.vec.extract, ptr %i.acq, align 4
-  %i.acr = add nuw i64 %.0.i415, 1                ; 2 uses
+  %i.acr = add nuw nsw i64 %.0.i415, 1            ; 2 uses
   %exitcond500.not = icmp eq i64 %i.acr, %.065.lcssa
   br i1 %exitcond500.not, label %_ZNK6embree10AABBNode_tINS_10NodeRefPtrILi4EEELi4EE7Create2clINS_4sse217GeneralBVHBuilder12BuildRecordTINS6_13PrimInfoRangeENS6_8BinSplitILm32EEEEEEES2_PT_mRKNS_13FastAllocator15CachedAllocatorE.exit, label %_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit, !llvm.loop !5
 
@@ -1198,7 +1198,7 @@ middle.block773:                                  ; preds = %vector.body768
   %i.adn = getelementptr inbounds nuw [8 x i8], ptr %.1.i96, i64 %.0.i78424.prol
   %i.ado = load i64, ptr %i.adm, align 8
   store i64 %i.ado, ptr %i.adn, align 8
-  %i.adp = add nuw i64 %.0.i78424.prol, 1         ; 2 uses
+  %i.adp = add nuw nsw i64 %.0.i78424.prol, 1     ; 2 uses
   %prol.iter870.next = add i64 %prol.iter870, 1   ; 2 uses
   %prol.iter870.cmp.not = icmp eq i64 %prol.iter870.next, %xtraiter868
   br i1 %prol.iter870.cmp.not, label %.lr.ph425.prol.loopexit, label %.lr.ph425.prol, !llvm.loop !143
@@ -1221,22 +1221,22 @@ middle.block773:                                  ; preds = %vector.body768
   %i.adw = getelementptr inbounds nuw [8 x i8], ptr %.1.i96, i64 %.0.i78424
   %i.adx = load i64, ptr %i.adv, align 8
   store i64 %i.adx, ptr %i.adw, align 8
-  %i.ady = add nuw i64 %.0.i78424, 1              ; 2 uses
+  %i.ady = add nuw nsw i64 %.0.i78424, 1          ; 2 uses
   %i.adz = getelementptr inbounds nuw [8 x i8], ptr %29, i64 %i.ady
   %i.aea = getelementptr inbounds nuw [8 x i8], ptr %.1.i96, i64 %i.ady
   %i.aeb = load i64, ptr %i.adz, align 8
   store i64 %i.aeb, ptr %i.aea, align 8
-  %i.aec = add nuw i64 %.0.i78424, 2              ; 2 uses
+  %i.aec = add nuw nsw i64 %.0.i78424, 2          ; 2 uses
   %i.aed = getelementptr inbounds nuw [8 x i8], ptr %29, i64 %i.aec
   %i.aee = getelementptr inbounds nuw [8 x i8], ptr %.1.i96, i64 %i.aec
   %i.aef = load i64, ptr %i.aed, align 8
   store i64 %i.aef, ptr %i.aee, align 8
-  %i.aeg = add nuw i64 %.0.i78424, 3              ; 2 uses
+  %i.aeg = add nuw nsw i64 %.0.i78424, 3          ; 2 uses
   %i.aeh = getelementptr inbounds nuw [8 x i8], ptr %29, i64 %i.aeg
   %i.aei = getelementptr inbounds nuw [8 x i8], ptr %.1.i96, i64 %i.aeg
   %i.aej = load i64, ptr %i.aeh, align 8
   store i64 %i.aej, ptr %i.aei, align 8
-  %i.aek = add nuw i64 %.0.i78424, 4              ; 2 uses
+  %i.aek = add nuw nsw i64 %.0.i78424, 4          ; 2 uses
   %exitcond503.not.3 = icmp eq i64 %i.aek, %.065.lcssa
   br i1 %exitcond503.not.3, label %._crit_edge426, label %.lr.ph425, !llvm.loop !144
 
@@ -1284,7 +1284,7 @@ middle.block759:                                  ; preds = %vector.body754
   %i.aeu = getelementptr inbounds nuw [8 x i8], ptr %.1.i96, i64 %.0.i77420.prol
   %i.aev = load i64, ptr %i.aet, align 8
   store i64 %i.aev, ptr %i.aeu, align 8
-  %i.aew = add nuw i64 %.0.i77420.prol, 1         ; 2 uses
+  %i.aew = add nuw nsw i64 %.0.i77420.prol, 1     ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter866
   br i1 %prol.iter.cmp.not, label %.lr.ph422.prol.loopexit, label %.lr.ph422.prol, !llvm.loop !146
@@ -1307,22 +1307,22 @@ middle.block759:                                  ; preds = %vector.body754
   %i.afd = getelementptr inbounds nuw [8 x i8], ptr %.1.i96, i64 %.0.i77420
   %i.afe = load i64, ptr %i.afc, align 8
   store i64 %i.afe, ptr %i.afd, align 8
-  %i.aff = add nuw i64 %.0.i77420, 1              ; 2 uses
+  %i.aff = add nuw nsw i64 %.0.i77420, 1          ; 2 uses
   %i.afg = getelementptr inbounds nuw [8 x i8], ptr %29, i64 %i.aff
   %i.afh = getelementptr inbounds nuw [8 x i8], ptr %.1.i96, i64 %i.aff
   %i.afi = load i64, ptr %i.afg, align 8
   store i64 %i.afi, ptr %i.afh, align 8
-  %i.afj = add nuw i64 %.0.i77420, 2              ; 2 uses
+  %i.afj = add nuw nsw i64 %.0.i77420, 2          ; 2 uses
   %i.afk = getelementptr inbounds nuw [8 x i8], ptr %29, i64 %i.afj
   %i.afl = getelementptr inbounds nuw [8 x i8], ptr %.1.i96, i64 %i.afj
   %i.afm = load i64, ptr %i.afk, align 8
   store i64 %i.afm, ptr %i.afl, align 8
-  %i.afn = add nuw i64 %.0.i77420, 3              ; 2 uses
+  %i.afn = add nuw nsw i64 %.0.i77420, 3          ; 2 uses
   %i.afo = getelementptr inbounds nuw [8 x i8], ptr %29, i64 %i.afn
   %i.afp = getelementptr inbounds nuw [8 x i8], ptr %.1.i96, i64 %i.afn
   %i.afq = load i64, ptr %i.afo, align 8
   store i64 %i.afq, ptr %i.afp, align 8
-  %i.afr = add nuw i64 %.0.i77420, 4              ; 2 uses
+  %i.afr = add nuw nsw i64 %.0.i77420, 4          ; 2 uses
   %exitcond502.not.3 = icmp eq i64 %i.afr, %.065.lcssa
   br i1 %exitcond502.not.3, label %._crit_edge423, label %.lr.ph422, !llvm.loop !147
 
@@ -1725,7 +1725,7 @@ _ZN6embree15parallel_reduceImNS_4sse28BinInfoTILm32ENS_7PrimRefENS_4BBoxINS_6Vec
   %.sroa.10.1378 = phi <4 x float> [ %i.ps, %.lr.ph386 ], [ splat (float -inf), %._crit_edge ]
   %.sroa.096.1377 = phi <4 x float> [ %i.pp, %.lr.ph386 ], [ splat (float +inf), %._crit_edge ]
   %i.ou = phi <4 x i32> [ %i.qz, %.lr.ph386 ], [ splat (i32 1), %._crit_edge ] ; 2 uses
-  %i.ov = add i64 %.048.i384, -1                  ; 2 uses
+  %i.ov = add nsw i64 %.048.i384, -1              ; 2 uses
   %i.ow = getelementptr inbounds nuw [16 x i8], ptr %i.lc, i64 %i.ov
   %i.ox = load <4 x i32>, ptr %i.ow, align 16, !noalias !373
   %i.oy = add <4 x i32> %i.ox, %i.ot              ; 2 uses
@@ -1783,7 +1783,7 @@ _ZN6embree15parallel_reduceImNS_4sse28BinInfoTILm32ENS_7PrimRefENS_4BBoxINS_6Vec
   %i.qw = fcmp uge <4 x float> %i.qv, %.sroa.066.0.load91383 ; 2 uses
   %i.qx = select <4 x i1> %i.qw, <4 x i32> %i.os, <4 x i32> %i.ou ; 2 uses
   %.v = select <4 x i1> %i.qw, <4 x float> %.sroa.066.0.load91383, <4 x float> %i.qv ; 2 uses
-  %i.qy = add nuw i64 %.048.i384, 1               ; 2 uses
+  %i.qy = add nuw nsw i64 %.048.i384, 1           ; 2 uses
   %i.qz = add <4 x i32> %i.ou, splat (i32 1)
   %exitcond431.not = icmp eq i64 %i.qy, %i.mt
   br i1 %exitcond431.not, label %.preheader363, label %.lr.ph386, !llvm.loop !281
@@ -2115,7 +2115,7 @@ bb.h:                                             ; preds = %.lr.ph.1
 bb.i:                                             ; preds = %bb.h, %.lr.ph.1
   %.153.1 = phi i64 [ %spec.select.1, %bb.h ], [ %.153, %.lr.ph.1 ] ; 3 uses
   %.1.1 = phi i64 [ %spec.select120.1, %bb.h ], [ %.1, %.lr.ph.1 ] ; 2 uses
-  %i.bv = add nuw i64 %.050134, 2                 ; 2 uses
+  %i.bv = add nuw nsw i64 %.050134, 2             ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.lr.ph, !llvm.loop !382
@@ -2361,7 +2361,7 @@ bb.k:                                             ; preds = %._crit_edge, %.loop
   %i.gk = getelementptr inbounds nuw i8, ptr %i.gd, i64 104
   %i.gl = zext i1 %i.gj to i8
   store i8 %i.gl, ptr %i.gk, align 8
-  %i.gm = add nuw i64 %.048135, 2                 ; 2 uses
+  %i.gm = add nuw nsw i64 %.048135, 2             ; 2 uses
   %niter219.next.1 = add nuw i64 %niter219, 2     ; 2 uses
   %niter219.ncmp.1 = icmp eq i64 %niter219.next.1, %unroll_iter218
   br i1 %niter219.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph136, !llvm.loop !396
@@ -2736,7 +2736,7 @@ _ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit: ; preds = %_ZN6
   %.sroa.6.24.vec.extract = extractelement <4 x float> %i.lx, i64 2
   %i.md = getelementptr inbounds nuw [4 x i8], ptr %i.lq, i64 %.0.i138
   store float %.sroa.6.24.vec.extract, ptr %i.md, align 4
-  %i.me = add nuw i64 %.0.i138, 1                 ; 2 uses
+  %i.me = add nuw nsw i64 %.0.i138, 1             ; 2 uses
   %exitcond162.not = icmp eq i64 %i.me, %.155117
   br i1 %exitcond162.not, label %.lr.ph141.preheader, label %_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit, !llvm.loop !5
 
@@ -2788,7 +2788,7 @@ middle.block:                                     ; preds = %vector.body
   %i.mp = getelementptr inbounds nuw [8 x i8], ptr %.1.i, i64 %.0.i66143.prol
   %i.mq = load i64, ptr %i.mo, align 8
   store i64 %i.mq, ptr %i.mp, align 8
-  %i.mr = add nuw i64 %.0.i66143.prol, 1          ; 2 uses
+  %i.mr = add nuw nsw i64 %.0.i66143.prol, 1      ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter220
   br i1 %prol.iter.cmp.not, label %.lr.ph145.prol.loopexit, label %.lr.ph145.prol, !llvm.loop !398
@@ -2811,22 +2811,22 @@ middle.block:                                     ; preds = %vector.body
   %i.my = getelementptr inbounds nuw [8 x i8], ptr %.1.i, i64 %.0.i66143
   %i.mz = load i64, ptr %i.mx, align 8
   store i64 %i.mz, ptr %i.my, align 8
-  %i.na = add nuw i64 %.0.i66143, 1               ; 2 uses
+  %i.na = add nuw nsw i64 %.0.i66143, 1           ; 2 uses
   %i.nb = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.na
   %i.nc = getelementptr inbounds nuw [8 x i8], ptr %.1.i, i64 %i.na
   %i.nd = load i64, ptr %i.nb, align 8
   store i64 %i.nd, ptr %i.nc, align 8
-  %i.ne = add nuw i64 %.0.i66143, 2               ; 2 uses
+  %i.ne = add nuw nsw i64 %.0.i66143, 2           ; 2 uses
   %i.nf = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.ne
   %i.ng = getelementptr inbounds nuw [8 x i8], ptr %.1.i, i64 %i.ne
   %i.nh = load i64, ptr %i.nf, align 8
   store i64 %i.nh, ptr %i.ng, align 8
-  %i.ni = add nuw i64 %.0.i66143, 3               ; 2 uses
+  %i.ni = add nuw nsw i64 %.0.i66143, 3           ; 2 uses
   %i.nj = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.ni
   %i.nk = getelementptr inbounds nuw [8 x i8], ptr %.1.i, i64 %i.ni
   %i.nl = load i64, ptr %i.nj, align 8
   store i64 %i.nl, ptr %i.nk, align 8
-  %i.nm = add nuw i64 %.0.i66143, 4               ; 2 uses
+  %i.nm = add nuw nsw i64 %.0.i66143, 4           ; 2 uses
   %exitcond164.not.3 = icmp eq i64 %i.nm, %.155117
   br i1 %exitcond164.not.3, label %._crit_edge146, label %.lr.ph145, !llvm.loop !399
 
@@ -3229,7 +3229,7 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph.i
   %i.je = load <4 x float>, ptr %i.jc, align 16, !noalias !533
   %i.jf = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %i.jd, <4 x float> %i.je)
   store <4 x float> %i.jf, ptr %i.jb, align 16, !alias.scope !519
-  %i.jg = add nuw i64 %.0.i9.i, 1                 ; 2 uses
+  %i.jg = add nuw nsw i64 %.0.i9.i, 1             ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.jg, %i.hv
   br i1 %exitcond.not.i, label %.preheader18.i.preheader, label %bb.q, !llvm.loop !517
 
@@ -3632,7 +3632,7 @@ bb.a:
   %5 = alloca %"class.std::__exception_ptr::exception_ptr", align 8 ; 7 uses
   %6 = alloca %"class.embree::Lock", align 8      ; 6 uses
   %7 = alloca %"class.embree::Lock", align 8      ; 7 uses
-  %i.a = alloca i64, align 8                      ; 7 uses
+  %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 8 uses
   %8 = alloca %"struct.embree::AABBNode_t", align 64 ; 9 uses
   %9 = alloca %"class.embree::CentGeom", align 16 ; 8 uses
@@ -4035,7 +4035,7 @@ _ZN6embree4sse224HeuristicArrayBinningSAHINS_7PrimRefELm32EE5splitERKNS0_8BinSpl
   %i.nr = getelementptr inbounds nuw i8, ptr %34, i64 48 ; 2 uses
   br label %.lr.ph597
 
-.lr.ph597:                                        ; preds = %bb.aw, %.preheader526.lr.ph
+.lr.ph597:                                        ; preds = %.preheader526.lr.ph, %bb.aw
   %.065643 = phi i64 [ 2, %.preheader526.lr.ph ], [ %i.vs, %bb.aw ] ; 4 uses
   %i.ns = load i64, ptr %i.dg, align 8
   br label %bb.ag
@@ -4078,7 +4078,7 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %bb.ah, %bb.ai, %bb.ag
   %.164 = phi float [ %.063594, %bb.ag ], [ %i.oh, %bb.ai ], [ %.063594, %bb.ah ]
   %.1 = phi i64 [ %.062595, %bb.ag ], [ %.061596, %bb.ai ], [ %.062595, %bb.ah ] ; 3 uses
-  %i.oj = add nuw i64 %.061596, 1                 ; 2 uses
+  %i.oj = add nuw nsw i64 %.061596, 1             ; 2 uses
   %exitcond.not = icmp eq i64 %i.oj, %.065643
   br i1 %exitcond.not, label %._crit_edge, label %bb.ag, !llvm.loop !833
 
@@ -4481,7 +4481,7 @@ bb.aw:                                            ; preds = %_ZN6embree4sse224He
   store <4 x float> %i.vb, ptr %i.vq, align 16
   %i.vr = getelementptr inbounds nuw i8, ptr %i.vm, i64 80
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.vr, ptr noundef nonnull align 16 dereferenceable(16) %i.ne, i64 16, i1 false)
-  %i.vs = add nuw i64 %.065643, 1                 ; 3 uses
+  %i.vs = add nuw nsw i64 %.065643, 1             ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %34) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %33) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #5
@@ -4527,7 +4527,7 @@ bb.aw:                                            ; preds = %_ZN6embree4sse224He
   %i.wr = getelementptr inbounds nuw i8, ptr %i.wk, i64 104
   %i.ws = zext i1 %i.wq to i8
   store i8 %i.ws, ptr %i.wr, align 8
-  %i.wt = add nuw i64 %.059647, 2                 ; 2 uses
+  %i.wt = add nuw nsw i64 %.059647, 2             ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.i.preheader674.loopexit.unr-lcssa, label %.lr.ph648, !llvm.loop !876
@@ -4784,7 +4784,7 @@ _ZN6embree4LockINS_8MutexSysEED2Ev.exit162:       ; preds = %_ZN6embree4LockINS_
   br label %_ZN6embree13FastAllocator12ThreadLocal24bindEPS0_.exit.i
 
 _ZN6embree13FastAllocator12ThreadLocal24bindEPS0_.exit.i: ; preds = %_ZN6embree4LockINS_8MutexSysEED2Ev.exit162, %_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.i._crit_edge
-  %i.aap = load i64, ptr %i.a, align 8            ; 4 uses
+  %i.aap = load i64, ptr %i.a, align 8            ; 8 uses
   %i.aaq = getelementptr inbounds nuw i8, ptr %i.xo, i64 40 ; 2 uses
   %i.aar = load i64, ptr %i.aaq, align 8
   %i.aas = add i64 %i.aar, %i.aap
@@ -4839,9 +4839,8 @@ bb.bo:                                            ; preds = %bb.bm
   store i64 %i.abu, ptr %i.abs, align 16
   %i.abv = load i64, ptr %i.b, align 8            ; 2 uses
   store i64 %i.abv, ptr %i.aaz, align 8
-  %36 = load i64, ptr %i.a, align 8               ; 2 uses
-  store i64 %36, ptr %i.aat, align 16
-  %.not23.i.i = icmp ugt i64 %36, %i.abv
+  store i64 %i.aap, ptr %i.aat, align 16
+  %.not23.i.i = icmp ugt i64 %i.aap, %i.abv
   br i1 %.not23.i.i, label %bb.bq, label %bb.bp, !prof !29
 
 bb.bp:                                            ; preds = %bb.bo
@@ -4862,9 +4861,8 @@ bb.bq:                                            ; preds = %bb.bo
   store i64 %i.acc, ptr %i.abs, align 16
   %i.acd = load i64, ptr %i.b, align 8            ; 2 uses
   store i64 %i.acd, ptr %i.aaz, align 8
-  %37 = load i64, ptr %i.a, align 8               ; 2 uses
-  store i64 %37, ptr %i.aat, align 16
-  %.not24.i.i = icmp ugt i64 %37, %i.acd
+  store i64 %i.aap, ptr %i.aat, align 16
+  %.not24.i.i = icmp ugt i64 %i.aap, %i.acd
   br i1 %.not24.i.i, label %bb.bs, label %bb.br, !prof !29
 
 bb.br:                                            ; preds = %bb.bq
@@ -4905,7 +4903,7 @@ _ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.i: ; preds = %_Z
   %.sroa.6.24.vec.extract = extractelement <4 x float> %i.aci, i64 2
   %i.aco = getelementptr inbounds nuw [4 x i8], ptr %i.xk, i64 %.0.i90650
   store float %.sroa.6.24.vec.extract, ptr %i.aco, align 4
-  %i.acp = add nuw i64 %.0.i90650, 1              ; 2 uses
+  %i.acp = add nuw nsw i64 %.0.i90650, 1          ; 2 uses
   %exitcond741.not = icmp eq i64 %i.acp, %.065.lcssa
   br i1 %exitcond741.not, label %_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.i._crit_edge, label %_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.i, !llvm.loop !16
 
@@ -5296,7 +5294,7 @@ middle.block1038:                                 ; preds = %vector.body1033
   %i.alk = getelementptr inbounds nuw [8 x i8], ptr %i.alc, i64 %.0.i92665.prol
   %i.all = load i64, ptr %i.alj, align 8
   store i64 %i.all, ptr %i.alk, align 8
-  %i.alm = add nuw i64 %.0.i92665.prol, 1         ; 2 uses
+  %i.alm = add nuw nsw i64 %.0.i92665.prol, 1     ; 2 uses
   %prol.iter1218.next = add i64 %prol.iter1218, 1 ; 2 uses
   %prol.iter1218.cmp.not = icmp eq i64 %prol.iter1218.next, %xtraiter1216
   br i1 %prol.iter1218.cmp.not, label %.lr.ph666.prol.loopexit, label %.lr.ph666.prol, !llvm.loop !896
@@ -5313,22 +5311,22 @@ middle.block1038:                                 ; preds = %vector.body1033
   %i.alq = getelementptr inbounds nuw [8 x i8], ptr %i.alc, i64 %.0.i92665
   %i.alr = load i64, ptr %i.alp, align 8
   store i64 %i.alr, ptr %i.alq, align 8
-  %i.als = add nuw i64 %.0.i92665, 1              ; 2 uses
+  %i.als = add nuw nsw i64 %.0.i92665, 1          ; 2 uses
   %i.alt = getelementptr inbounds nuw [8 x i8], ptr %30, i64 %i.als
   %i.alu = getelementptr inbounds nuw [8 x i8], ptr %i.alc, i64 %i.als
   %i.alv = load i64, ptr %i.alt, align 8
   store i64 %i.alv, ptr %i.alu, align 8
-  %i.alw = add nuw i64 %.0.i92665, 2              ; 2 uses
+  %i.alw = add nuw nsw i64 %.0.i92665, 2          ; 2 uses
   %i.alx = getelementptr inbounds nuw [8 x i8], ptr %30, i64 %i.alw
   %i.aly = getelementptr inbounds nuw [8 x i8], ptr %i.alc, i64 %i.alw
   %i.alz = load i64, ptr %i.alx, align 8
   store i64 %i.alz, ptr %i.aly, align 8
-  %i.ama = add nuw i64 %.0.i92665, 3              ; 2 uses
+  %i.ama = add nuw nsw i64 %.0.i92665, 3          ; 2 uses
   %i.amb = getelementptr inbounds nuw [8 x i8], ptr %30, i64 %i.ama
   %i.amc = getelementptr inbounds nuw [8 x i8], ptr %i.alc, i64 %i.ama
   %i.amd = load i64, ptr %i.amb, align 8
   store i64 %i.amd, ptr %i.amc, align 8
-  %i.ame = add nuw i64 %.0.i92665, 4              ; 2 uses
+  %i.ame = add nuw nsw i64 %.0.i92665, 4          ; 2 uses
   %exitcond751.not.3 = icmp eq i64 %i.ame, %.065.lcssa
   br i1 %exitcond751.not.3, label %_ZNK6embree15QuantizedNode_tINS_10NodeRefPtrILi4EEELi4EE4Set2clINS_4sse217GeneralBVHBuilder12BuildRecordTINS6_13PrimInfoRangeENS6_8BinSplitILm32EEEEEEES2_RKT_PSE_S2_PS2_m.exit94, label %.lr.ph666, !llvm.loop !897
 
@@ -5376,7 +5374,7 @@ middle.block1024:                                 ; preds = %vector.body1019
   %i.amo = getelementptr inbounds nuw [8 x i8], ptr %i.amg, i64 %.0.i91662.prol
   %i.amp = load i64, ptr %i.amn, align 8
   store i64 %i.amp, ptr %i.amo, align 8
-  %i.amq = add nuw i64 %.0.i91662.prol, 1         ; 2 uses
+  %i.amq = add nuw nsw i64 %.0.i91662.prol, 1     ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter1214
   br i1 %prol.iter.cmp.not, label %.lr.ph664.prol.loopexit, label %.lr.ph664.prol, !llvm.loop !899
@@ -5393,22 +5391,22 @@ middle.block1024:                                 ; preds = %vector.body1019
   %i.amu = getelementptr inbounds nuw [8 x i8], ptr %i.amg, i64 %.0.i91662
   %i.amv = load i64, ptr %i.amt, align 8
   store i64 %i.amv, ptr %i.amu, align 8
-  %i.amw = add nuw i64 %.0.i91662, 1              ; 2 uses
+  %i.amw = add nuw nsw i64 %.0.i91662, 1          ; 2 uses
   %i.amx = getelementptr inbounds nuw [8 x i8], ptr %30, i64 %i.amw
   %i.amy = getelementptr inbounds nuw [8 x i8], ptr %i.amg, i64 %i.amw
   %i.amz = load i64, ptr %i.amx, align 8
   store i64 %i.amz, ptr %i.amy, align 8
-  %i.ana = add nuw i64 %.0.i91662, 2              ; 2 uses
+  %i.ana = add nuw nsw i64 %.0.i91662, 2          ; 2 uses
   %i.anb = getelementptr inbounds nuw [8 x i8], ptr %30, i64 %i.ana
   %i.anc = getelementptr inbounds nuw [8 x i8], ptr %i.amg, i64 %i.ana
   %i.and = load i64, ptr %i.anb, align 8
   store i64 %i.and, ptr %i.anc, align 8
-  %i.ane = add nuw i64 %.0.i91662, 3              ; 2 uses
+  %i.ane = add nuw nsw i64 %.0.i91662, 3          ; 2 uses
   %i.anf = getelementptr inbounds nuw [8 x i8], ptr %30, i64 %i.ane
   %i.ang = getelementptr inbounds nuw [8 x i8], ptr %i.amg, i64 %i.ane
   %i.anh = load i64, ptr %i.anf, align 8
   store i64 %i.anh, ptr %i.ang, align 8
-  %i.ani = add nuw i64 %.0.i91662, 4              ; 2 uses
+  %i.ani = add nuw nsw i64 %.0.i91662, 4          ; 2 uses
   %exitcond750.not.3 = icmp eq i64 %i.ani, %.065.lcssa
   br i1 %exitcond750.not.3, label %_ZNK6embree15QuantizedNode_tINS_10NodeRefPtrILi4EEELi4EE4Set2clINS_4sse217GeneralBVHBuilder12BuildRecordTINS6_13PrimInfoRangeENS6_8BinSplitILm32EEEEEEES2_RKT_PSE_S2_PS2_m.exit94, label %.lr.ph664, !llvm.loop !900
 
@@ -5644,7 +5642,7 @@ bb.h:                                             ; preds = %.lr.ph.1
 bb.i:                                             ; preds = %bb.h, %.lr.ph.1
   %.153.1 = phi i64 [ %spec.select.1, %bb.h ], [ %.153, %.lr.ph.1 ] ; 3 uses
   %.1.1 = phi i64 [ %spec.select351.1, %bb.h ], [ %.1, %.lr.ph.1 ] ; 2 uses
-  %i.bu = add nuw i64 %.050368, 2                 ; 2 uses
+  %i.bu = add nuw nsw i64 %.050368, 2             ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.lr.ph, !llvm.loop !949
@@ -5890,7 +5888,7 @@ bb.k:                                             ; preds = %._crit_edge, %.loop
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gc, i64 104
   %i.gk = zext i1 %i.gi to i8
   store i8 %i.gk, ptr %i.gj, align 8
-  %i.gl = add nuw i64 %.048369, 2                 ; 2 uses
+  %i.gl = add nuw nsw i64 %.048369, 2             ; 2 uses
   %niter568.next.1 = add nuw i64 %niter568, 2     ; 2 uses
   %niter568.ncmp.1 = icmp eq i64 %niter568.next.1, %unroll_iter567
   br i1 %niter568.ncmp.1, label %_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.i.preheader392.loopexit.unr-lcssa, label %.lr.ph370, !llvm.loop !963
@@ -6264,7 +6262,7 @@ _ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.i: ; preds = %_Z
   %.sroa.6.24.vec.extract = extractelement <4 x float> %i.lw, i64 2
   %i.mc = getelementptr inbounds nuw [4 x i8], ptr %i.gy, i64 %.0.i372
   store float %.sroa.6.24.vec.extract, ptr %i.mc, align 4
-  %i.md = add nuw i64 %.0.i372, 1                 ; 2 uses
+  %i.md = add nuw nsw i64 %.0.i372, 1             ; 2 uses
   %exitcond402.not = icmp eq i64 %i.md, %.155348
   br i1 %exitcond402.not, label %_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.i._crit_edge, label %_ZN6embree10BaseNode_tINS_10NodeRefPtrILi4EEELi4EE5clearEv.exit.i, !llvm.loop !16
 
@@ -6667,7 +6665,7 @@ bb.a:
   %6 = alloca %"class.std::__exception_ptr::exception_ptr", align 8 ; 7 uses
   %7 = alloca %"class.embree::Lock", align 8      ; 6 uses
   %8 = alloca %"class.embree::Lock", align 8      ; 7 uses
-  %i.a = alloca i64, align 8                      ; 7 uses
+  %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 8 uses
   %9 = alloca %"class.embree::CentGeom", align 16 ; 8 uses
   %10 = alloca %"class.embree::CentGeom", align 16 ; 8 uses
@@ -7070,7 +7068,7 @@ _ZN6embree4sse224HeuristicArrayBinningSAHINS_7PrimRefELm32EE5splitERKNS0_8BinSpl
   %i.np = getelementptr inbounds nuw i8, ptr %34, i64 48 ; 2 uses
   br label %.lr.ph523
 
-.lr.ph523:                                        ; preds = %bb.aw, %.preheader452.lr.ph
+.lr.ph523:                                        ; preds = %.preheader452.lr.ph, %bb.aw
   %.063569 = phi i64 [ 2, %.preheader452.lr.ph ], [ %i.vq, %bb.aw ] ; 4 uses
   %i.nq = load i64, ptr %i.df, align 8
   br label %bb.ag
@@ -7113,7 +7111,7 @@ bb.ai:                                            ; preds = %bb.ah
 bb.aj:                                            ; preds = %bb.ah, %bb.ai, %bb.ag
   %.162 = phi float [ %.061520, %bb.ag ], [ %i.of, %bb.ai ], [ %.061520, %bb.ah ]
   %.1 = phi i64 [ %.060521, %bb.ag ], [ %.059522, %bb.ai ], [ %.060521, %bb.ah ] ; 3 uses
-  %i.oh = add nuw i64 %.059522, 1                 ; 2 uses
+  %i.oh = add nuw nsw i64 %.059522, 1             ; 2 uses
   %exitcond.not = icmp eq i64 %i.oh, %.063569
   br i1 %exitcond.not, label %._crit_edge, label %bb.ag, !llvm.loop !1058
 
@@ -7516,7 +7514,7 @@ bb.aw:                                            ; preds = %_ZN6embree4sse224He
   store <4 x float> %i.uz, ptr %i.vo, align 16
   %i.vp = getelementptr inbounds nuw i8, ptr %i.vk, i64 80
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.vp, ptr noundef nonnull align 16 dereferenceable(16) %i.nc, i64 16, i1 false)
-  %i.vq = add nuw i64 %.063569, 1                 ; 3 uses
+  %i.vq = add nuw nsw i64 %.063569, 1             ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %34) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %33) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #5
@@ -7562,7 +7560,7 @@ bb.aw:                                            ; preds = %_ZN6embree4sse224He
   %i.wp = getelementptr inbounds nuw i8, ptr %i.wi, i64 104
   %i.wq = zext i1 %i.wo to i8
   store i8 %i.wq, ptr %i.wp, align 8
-  %i.wr = add nuw i64 %.057573, 2                 ; 2 uses
+  %i.wr = add nuw nsw i64 %.057573, 2             ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph574, !llvm.loop !1101
@@ -7802,7 +7800,7 @@ _ZN6embree4LockINS_8MutexSysEED2Ev.exit147:       ; preds = %_ZN6embree4LockINS_
   br label %_ZN6embree13FastAllocator12ThreadLocal24bindEPS0_.exit.i
 
 _ZN6embree13FastAllocator12ThreadLocal24bindEPS0_.exit.i: ; preds = %_ZN6embree4LockINS_8MutexSysEED2Ev.exit147, %.loopexit
-  %i.aah = load i64, ptr %i.a, align 8            ; 4 uses
+  %i.aah = load i64, ptr %i.a, align 8            ; 8 uses
   %i.aai = getelementptr inbounds nuw i8, ptr %i.xg, i64 40 ; 2 uses
   %i.aaj = load i64, ptr %i.aai, align 8
   %i.aak = add i64 %i.aaj, %i.aah
@@ -7857,9 +7855,8 @@ bb.bo:                                            ; preds = %bb.bm
   store i64 %i.abm, ptr %i.abk, align 16
   %i.abn = load i64, ptr %i.b, align 8            ; 2 uses
   store i64 %i.abn, ptr %i.aar, align 8
-  %37 = load i64, ptr %i.a, align 8               ; 2 uses
-  store i64 %37, ptr %i.aal, align 16
-  %.not23.i.i = icmp ugt i64 %37, %i.abn
+  store i64 %i.aah, ptr %i.aal, align 16
+  %.not23.i.i = icmp ugt i64 %i.aah, %i.abn
   br i1 %.not23.i.i, label %bb.bq, label %bb.bp, !prof !29
 
 bb.bp:                                            ; preds = %bb.bo
@@ -7880,9 +7877,8 @@ bb.bq:                                            ; preds = %bb.bo
   store i64 %i.abu, ptr %i.abk, align 16
   %i.abv = load i64, ptr %i.b, align 8            ; 2 uses
   store i64 %i.abv, ptr %i.aar, align 8
-  %38 = load i64, ptr %i.a, align 8               ; 2 uses
-  store i64 %38, ptr %i.aal, align 16
-  %.not24.i.i = icmp ugt i64 %38, %i.abv
+  store i64 %i.aah, ptr %i.aal, align 16
+  %.not24.i.i = icmp ugt i64 %i.aah, %i.abv
   br i1 %.not24.i.i, label %bb.bs, label %bb.br, !prof !29
 
 bb.br:                                            ; preds = %bb.bq
@@ -8125,7 +8121,7 @@ bb.cb:                                            ; preds = %.lr.ph595, %bb.cb
   %i.agg = call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %.sroa.10263.0592, <4 x float> %i.agf) ; 2 uses
   %i.agh = load <4 x float>, ptr %i.aee, align 16, !noalias !1212
   %i.agi = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %.sroa.14265.0593, <4 x float> %i.agh) ; 2 uses
-  %i.agj = add nuw i64 %.0.i89594, 1              ; 2 uses
+  %i.agj = add nuw nsw i64 %.0.i89594, 1          ; 2 uses
   %exitcond681.not = icmp eq i64 %i.agj, %.063.lcssa
   br i1 %exitcond681.not, label %_ZNK6embree12AABBNodeMB_tINS_10NodeRefPtrILi4EEELi4EE12SetTimeRangeclINS_4sse217GeneralBVHBuilder12BuildRecordTINS6_13PrimInfoRangeENS6_8BinSplitILm32EEEEEEENS_15BVHNodeRecordMBIS2_EERKT_PSG_S2_PSE_m.exit92, label %bb.cb, !llvm.loop !17
 
@@ -8253,7 +8249,7 @@ bb.cc:                                            ; preds = %.lr.ph585, %bb.cc
   %i.ajs = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %.sroa.6.0580, <4 x float> %i.ahx) ; 2 uses
   %i.ajt = call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %.sroa.10.0581, <4 x float> %i.ahm) ; 2 uses
   %i.aju = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %.sroa.14255.0582, <4 x float> %i.ahv) ; 2 uses
-  %i.ajv = add nuw i64 %.0.i88583, 1              ; 2 uses
+  %i.ajv = add nuw nsw i64 %.0.i88583, 1          ; 2 uses
   %exitcond680.not = icmp eq i64 %i.ajv, %.063.lcssa
   br i1 %exitcond680.not, label %_ZNK6embree12AABBNodeMB_tINS_10NodeRefPtrILi4EEELi4EE12SetTimeRangeclINS_4sse217GeneralBVHBuilder12BuildRecordTINS6_13PrimInfoRangeENS6_8BinSplitILm32EEEEEEENS_15BVHNodeRecordMBIS2_EERKT_PSG_S2_PSE_m.exit92, label %bb.cc, !llvm.loop !17
 
@@ -8516,7 +8512,7 @@ bb.h:                                             ; preds = %.lr.ph.1
 bb.i:                                             ; preds = %bb.h, %.lr.ph.1
   %.151.1 = phi i64 [ %spec.select.1, %bb.h ], [ %.151, %.lr.ph.1 ] ; 3 uses
   %.1.1 = phi i64 [ %spec.select197.1, %bb.h ], [ %.1, %.lr.ph.1 ] ; 2 uses
-  %i.bt = add nuw i64 %.048209, 2                 ; 2 uses
+  %i.bt = add nuw nsw i64 %.048209, 2             ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.lr.ph, !llvm.loop !1222
@@ -8762,7 +8758,7 @@ bb.k:                                             ; preds = %._crit_edge, %.loop
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gb, i64 104
   %i.gj = zext i1 %i.gh to i8
   store i8 %i.gj, ptr %i.gi, align 8
-  %i.gk = add nuw i64 %.046210, 2                 ; 2 uses
+  %i.gk = add nuw nsw i64 %.046210, 2             ; 2 uses
   %niter310.next.1 = add nuw i64 %niter310, 2     ; 2 uses
   %niter310.ncmp.1 = icmp eq i64 %niter310.next.1, %unroll_iter309
   br i1 %niter310.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph211, !llvm.loop !1236
@@ -9165,7 +9161,7 @@ bb.ai:                                            ; preds = %.lr.ph222, %bb.ai
   %i.pg = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %.sroa.6.0217, <4 x float> %i.nl) ; 2 uses
   %i.ph = call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %.sroa.10.0218, <4 x float> %i.na) ; 2 uses
   %i.pi = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %.sroa.1493.0219, <4 x float> %i.nj) ; 2 uses
-  %i.pj = add nuw i64 %.0.i220, 1                 ; 2 uses
+  %i.pj = add nuw nsw i64 %.0.i220, 1             ; 2 uses
   %exitcond245.not = icmp eq i64 %i.pj, %.153194
   br i1 %exitcond245.not, label %_ZNK6embree12AABBNodeMB_tINS_10NodeRefPtrILi4EEELi4EE12SetTimeRangeclINS_4sse217GeneralBVHBuilder12BuildRecordTINS6_13PrimInfoRangeENS6_8BinSplitILm32EEEEEEENS_15BVHNodeRecordMBIS2_EERKT_PSG_S2_PSE_m.exit, label %bb.ai, !llvm.loop !17
 

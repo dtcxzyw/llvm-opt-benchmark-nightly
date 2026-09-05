@@ -205,7 +205,7 @@ bb.a:
   tail call void @_Z9InitCRC32Pj(ptr noundef nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   call void @_Z8strncpyzPcPKcm(ptr noundef nonnull %i.a, ptr noundef %1, i64 noundef 512)
-  %i.c = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #17 ; 8 uses
+  %i.c = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #17 ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2488
   store <4 x i32> <i32 -744245127, i32 1064112887, i32 1964352053, i32 -1528303325>, ptr %i.d, align 8, !tbaa !16
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2232 ; 3 uses
@@ -226,10 +226,8 @@ bb.a:
 .loopexit.thread61:                               ; preds = %.split48
   %i.g = or i64 %i.c, 15
   %scevgep = getelementptr i8, ptr %i.a, i64 %i.c
-  %2 = add i64 %i.c, 1
   %i.h = add i64 %i.g, 1
-  %umax = call i64 @llvm.umax.i64(i64 %2, i64 %i.h)
-  %i.i = sub i64 %umax, %i.c
+  %i.i = sub i64 %i.h, %i.c
   call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 %i.i, i1 false), !tbaa !12
   br label %.lr.ph52.preheader
 
@@ -632,7 +630,7 @@ bb.n:                                             ; preds = %.critedge
   %i.bv = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.bs
   %i.bw = load i64, ptr %4, align 1
   store i64 %i.bw, ptr %i.bv, align 2
-  %i.bx = add i64 %i.bs, 8
+  %i.bx = add nuw nsw i64 %i.bs, 8
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %.critedge
@@ -840,7 +838,7 @@ define void @_Z6pbkdf2PKhmS0_mPhS1_S1_j(ptr noundef %0, i64 noundef %1, ptr nofr
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
   store <4 x i8> <i8 0, i8 0, i8 0, i8 1>, ptr %i.h, align 1, !tbaa !12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
-  %i.i = add i64 %3, 4
+  %i.i = add nuw nsw i64 %3, 4
   call fastcc void @_ZL11hmac_sha256PKhmS0_mPhP14sha256_contextPbS3_S4_(ptr noundef %0, i64 noundef %1, ptr noundef nonnull %i.a, i64 noundef %i.i, ptr noundef %i.b, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef null)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #18
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.c, ptr noundef nonnull align 16 dereferenceable(32) %i.b, i64 32, i1 false)
@@ -1242,9 +1240,6 @@ declare i32 @llvm.fshl.i32(i32, i32, i32) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #16
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #16
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

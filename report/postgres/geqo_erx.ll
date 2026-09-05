@@ -204,9 +204,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %edge_failure.exit
-  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %edge_failure.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %edge_failure.exit ] ; 2 uses
   %.073 = phi i32 [ 0, %.lr.ph ], [ %.1, %edge_failure.exit ] ; 2 uses
-  %i.h = getelementptr [4 x i8], ptr %2, i64 %indvars.iv
+  %i.h = getelementptr [4 x i8], ptr %2, i64 %indvars.iv ; 2 uses
   %i.i = getelementptr i8, ptr %i.h, i64 -4       ; 3 uses
   %i.j = load i32, ptr %i.i, align 4              ; 3 uses
   %i.k = sext i32 %i.j to i64                     ; 2 uses
@@ -577,8 +577,7 @@ bb.ac:                                            ; preds = %.sink.split.i, %._c
 edge_failure.exit:                                ; preds = %bb.u, %bb.z, %.lr.ph96.i, %gimme_gene.exit
   %.057.i.sink = phi i32 [ %.031.i, %gimme_gene.exit ], [ %.25589.i, %bb.z ], [ %.35695.i, %.lr.ph96.i ], [ %.15483.i, %bb.u ]
   %.1 = phi i32 [ %.073, %gimme_gene.exit ], [ %i.cn, %bb.z ], [ %i.cn, %.lr.ph96.i ], [ %i.cn, %bb.u ] ; 2 uses
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv
-  store i32 %.057.i.sink, ptr %6, align 4
+  store i32 %.057.i.sink, ptr %i.h, align 4
   %i.dv = load i32, ptr %i.i, align 4
   %i.dw = sext i32 %i.dv to i64
   %i.dx = getelementptr inbounds [24 x i8], ptr %1, i64 %i.dw

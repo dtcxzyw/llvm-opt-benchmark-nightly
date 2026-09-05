@@ -205,13 +205,13 @@ bb.ah:                                            ; preds = %_ZN2v88internal6Obj
   %i.hr = getelementptr inbounds nuw i8, ptr %0, i64 55448
   %i.hs = getelementptr inbounds nuw i8, ptr %0, i64 64088
   %i.ht = getelementptr inbounds nuw i8, ptr %0, i64 64080
+  %wide.trip.count = zext nneg i32 %.0 to i64
   br label %bb.ai
 
 bb.ai:                                            ; preds = %.lr.ph, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit
-  %.051131 = phi i32 [ 0, %.lr.ph ], [ %9, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
-  %7 = zext i32 %.051131 to i64
-  call void @_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEEmSG_NS1_13ConfigurationE(ptr noundef nonnull align 8 dereferenceable(88) %4, ptr noundef nonnull %0, ptr nonnull %1, ptr null, i64 noundef %7, ptr nonnull %1, i32 noundef 3)
+  call void @_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEEmSG_NS1_13ConfigurationE(ptr noundef nonnull align 8 dereferenceable(88) %4, ptr noundef nonnull %0, ptr nonnull %1, ptr null, i64 noundef %indvars.iv, ptr nonnull %1, i32 noundef 3)
   %i.hu = load i32, ptr %i.hp, align 4
   %.not.i = icmp eq i32 %i.hu, 0
   br i1 %.not.i, label %_ZN2v88internal10JSReceiver10GetElementEPNS0_7IsolateENS0_12DirectHandleIS1_EEj.exit.thread, label %_ZN2v88internal10JSReceiver10GetElementEPNS0_7IsolateENS0_12DirectHandleIS1_EEj.exit
@@ -299,8 +299,7 @@ _ZN2v88internal7Factory15InternalizeNameINS0_4NameEQsr3stdE16is_convertible_vINS
   %i.iz = inttoptr i64 %i.iy to ptr
   %i.ja = load i64, ptr %.sroa.066.0, align 8     ; 5 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %i.iz, i64 16
-  %8 = sext i32 %.051131 to i64
-  %i.jc = getelementptr inbounds [8 x i8], ptr %i.jb, i64 %8 ; 2 uses
+  %i.jc = getelementptr inbounds nuw [8 x i8], ptr %i.jb, i64 %indvars.iv ; 2 uses
   store atomic volatile i64 %i.ja, ptr %i.jc monotonic, align 8
   %i.jd = trunc i64 %i.ja to i1
   br i1 %i.jd, label %bb.ap, label %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit
@@ -337,8 +336,8 @@ bb.at:                                            ; preds = %bb.as
   br label %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit
 
 _ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit: ; preds = %_ZN2v88internal7Factory15InternalizeNameINS0_4NameEQsr3stdE16is_convertible_vINS0_12DirectHandleIT_EENS4_IS3_EEEEES7_S6_.exit, %bb.as, %bb.at
-  %9 = add nuw i32 %.051131, 1                    ; 2 uses
-  %exitcond.not = icmp eq i32 %9, %.0
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit55, label %bb.ai, !llvm.loop !281
 
 _ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit55.sink.split: ; preds = %_ZN2v88internal11FactoryBaseINS0_7FactoryEE25NewStringFromAsciiCheckedEPKcNS0_14AllocationTypeE.exit, %_ZN2v88internal6Object8ToUint32ENS0_6TaggedIS1_EEPj.exit.thread, %_ZN2v88internal6IsNameENS0_6TaggedINS0_6ObjectEEE.exit.thread

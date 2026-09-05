@@ -205,7 +205,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1069)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1070)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176
-  %i.b = load i64, ptr %i.a, align 8, !alias.scope !1071, !noundef !5 ; 6 uses
+  %i.b = load i64, ptr %i.a, align 8, !alias.scope !1071, !noundef !5 ; 5 uses
   %i.c = icmp ult i64 %i.b, 3
   br i1 %i.c, label %_RNvXs_NtCscFGNKo4Sl5v_9itertools10next_arrayINtB4_12ArrayBuilderNtNtCs4dcH4YgJDq_2tt4iter9TtElementKj2_EINtNtCshzWfHUSfYae_4core7convert5AsMutSB10_E6as_mutCs33K2ylI4knu_10hir_expand.exit.i, label %bb.b, !prof !16
 
@@ -244,13 +244,11 @@ bb.d:                                             ; preds = %bb.c
   %i.m = icmp eq i64 %i.f, %i.b
   br i1 %i.m, label %._crit_edge15.i.i, label %.lr.ph14.i.i
 
-.lr.ph14.i.i:                                     ; preds = %bb.d, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECs33K2ylI4knu_10hir_expand.exit10.i.i
-  %.sroa.0.112.i.i = phi i64 [ %1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECs33K2ylI4knu_10hir_expand.exit10.i.i ], [ %i.f, %bb.d ] ; 2 uses
-  %i.n = getelementptr inbounds nuw [88 x i8], ptr %0, i64 %.sroa.0.112.i.i ; 3 uses
-  %1 = add i64 %.sroa.0.112.i.i, 1                ; 2 uses
+.lr.ph14.i.i:                                     ; preds = %bb.d
+  %i.n = getelementptr inbounds nuw [88 x i8], ptr %0, i64 %i.f ; 3 uses
   %i.o = load i64, ptr %i.n, align 8, !range !14, !alias.scope !1075, !noundef !5
   %i.p = icmp eq i64 %i.o, -1
-  br i1 %i.p, label %bb.e, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECs33K2ylI4knu_10hir_expand.exit10.i.i
+  br i1 %i.p, label %bb.e, label %._crit_edge15.i.i
 
 bb.e:                                             ; preds = %.lr.ph14.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 8
@@ -258,13 +256,9 @@ bb.e:                                             ; preds = %.lr.ph14.i.i
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %.val1.i8.i.i = load ptr, ptr %i.r, align 8, !alias.scope !1075
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtCs4dcH4YgJDq_2tt4LeafECs33K2ylI4knu_10hir_expand(i32 %.val.i7.i.i, ptr %.val1.i8.i.i)
-          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECs33K2ylI4knu_10hir_expand.exit10.i.i unwind label %bb.f, !noalias !1074
+          to label %._crit_edge15.i.i unwind label %bb.f, !noalias !1074
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECs33K2ylI4knu_10hir_expand.exit10.i.i: ; preds = %bb.e, %.lr.ph14.i.i
-  %2 = icmp eq i64 %1, %i.b
-  br i1 %2, label %._crit_edge15.i.i, label %.lr.ph14.i.i
-
-._crit_edge15.i.i:                                ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs4dcH4YgJDq_2tt4iter9TtElementECs33K2ylI4knu_10hir_expand.exit10.i.i, %bb.d
+._crit_edge15.i.i:                                ; preds = %bb.e, %.lr.ph14.i.i, %bb.d
   resume { ptr, i32 } %i.l
 
 bb.f:                                             ; preds = %bb.e

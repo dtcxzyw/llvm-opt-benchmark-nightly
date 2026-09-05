@@ -204,7 +204,7 @@ bb.a:
   %.promoted = load ptr, ptr %0, align 8, !tbaa !15 ; 4 uses
   %i.a = load i8, ptr %.promoted, align 1, !tbaa !21 ; 2 uses
   %i.b = icmp eq i8 %i.a, 48
-  %i.c = zext i16 %3 to i32                       ; 6 uses
+  %i.c = zext i16 %3 to i32                       ; 5 uses
   br i1 %i.b, label %.lr.ph, label %.preheader358
 
 .lr.ph:                                           ; preds = %bb.a
@@ -232,7 +232,7 @@ bb.a:
 .preheader358:                                    ; preds = %.backedge360, %.backedge360.us, %bb.a
   %i.l = phi i8 [ %i.j, %.backedge360.us ], [ %i.a, %bb.a ], [ %i.r, %.backedge360 ]
   %.promoted385 = phi ptr [ %i.i, %.backedge360.us ], [ %.promoted, %bb.a ], [ %i.s, %.backedge360 ]
-  %i.m = icmp eq i16 %3, 0                        ; 5 uses
+  %i.m = icmp eq i16 %3, 0                        ; 4 uses
   %i.n = select i1 %7, i64 53, i64 24             ; 2 uses
   br label %bb.e
 
@@ -302,13 +302,13 @@ _ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit.thread: ; p
 
 bb.e:                                             ; preds = %.preheader358, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175
   %i.af = phi i8 [ %.pre, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175 ], [ %i.l, %.preheader358 ] ; 13 uses
-  %.promoted389 = phi ptr [ %24, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175 ], [ %.promoted385, %.preheader358 ] ; 10 uses
-  %.0134 = phi i64 [ %.5139, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175 ], [ 0, %.preheader358 ] ; 22 uses
-  %.0128 = phi i32 [ %.7, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175 ], [ 0, %.preheader358 ] ; 23 uses
+  %.promoted389 = phi ptr [ %9, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175 ], [ %.promoted385, %.preheader358 ] ; 9 uses
+  %.0134 = phi i64 [ %.5139, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175 ], [ 0, %.preheader358 ] ; 5 uses
+  %.0128 = phi i32 [ %.7, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175 ], [ 0, %.preheader358 ] ; 6 uses
   %.0123 = phi i8 [ %.5, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175 ], [ 0, %.preheader358 ] ; 20 uses
   %i.ag = sext i8 %i.af to i32
   %i.ah = add nsw i32 %i.ag, -48
-  %or.cond.i160 = icmp ult i32 %i.ah, 10          ; 3 uses
+  %or.cond.i160 = icmp ult i32 %i.ah, 10          ; 2 uses
   %i.ai = icmp slt i8 %i.af, 64
   %i.aj = and i1 %i.ai, %or.cond.i160
   br i1 %i.aj, label %bb.f, label %bb.g
@@ -346,57 +346,14 @@ _ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit162.th
 
 bb.k:                                             ; preds = %_ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit162.thread282
   switch i8 %i.af, label %.critedge [
-    i8 46, label %9
+    i8 46, label %bb.l
     i8 112, label %.thread317
     i8 80, label %.thread317
   ]
 
-9:                                                ; preds = %bb.k
-  %10 = getelementptr inbounds nuw i8, ptr %.promoted389, i64 1 ; 8 uses
-  br i1 %i.m, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split, label %11, !llvm.loop !57
-
-11:                                               ; preds = %9
-  store ptr %10, ptr %0, align 8, !tbaa !15
-  %12 = icmp ne ptr %10, %1
-  %or.cond512.not = select i1 %or.cond.i160, i1 %12, i1 false
-  br i1 %or.cond512.not, label %bb.l, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175, !llvm.loop !57
-
-bb.l:                                             ; preds = %11
-  %i.as = getelementptr inbounds nuw i8, ptr %.promoted389, i64 2 ; 15 uses
-  %13 = icmp eq ptr %i.as, %1
-  br i1 %13, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175, label %14, !llvm.loop !57
-
-14:                                               ; preds = %bb.l
-  %15 = load i8, ptr %10, align 1, !tbaa !21
-  %16 = sext i8 %15 to i32
-  %17 = icmp eq i32 %i.c, %16
-  br i1 %17, label %18, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175, !llvm.loop !57
-
-18:                                               ; preds = %14
-  %19 = load i8, ptr %i.as, align 1, !tbaa !21    ; 3 uses
-  %20 = sext i8 %19 to i32
-  %21 = add nsw i32 %20, -48
-  %or.cond.i25.i170 = icmp ult i32 %21, 10
-  %22 = icmp ult i8 %19, 64
-  %or.cond19.i26.i171 = and i1 %22, %or.cond.i25.i170
-  %23 = freeze i1 %or.cond19.i26.i171
-  br i1 %23, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split, label %switch.early.test349, !llvm.loop !57
-
-switch.early.test349:                             ; preds = %18
-  switch i8 %19, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175 [
-    i8 102, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split
-    i8 101, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split
-    i8 100, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split
-    i8 99, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split
-    i8 98, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split
-    i8 97, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split
-    i8 70, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split
-    i8 69, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split
-    i8 68, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split
-    i8 67, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split
-    i8 66, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split
-    i8 65, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split
-  ], !llvm.loop !57
+bb.l:                                             ; preds = %bb.k
+  %i.as = getelementptr inbounds nuw i8, ptr %.promoted389, i64 1
+  br label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split, !llvm.loop !57
 
 .critedge:                                        ; preds = %bb.k, %_ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit162.thread282
   %.not6.not.i = icmp eq ptr %.promoted389, %1
@@ -719,20 +676,20 @@ switch.early.test353:                             ; preds = %bb.ae
 _ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit224: ; preds = %bb.ab
   br i1 %i.dw, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit.thread, label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175
 
-_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split: ; preds = %bb.ae, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %18, %switch.early.test349, %switch.early.test349, %switch.early.test349, %switch.early.test349, %switch.early.test349, %switch.early.test349, %switch.early.test349, %switch.early.test349, %switch.early.test349, %switch.early.test349, %switch.early.test349, %switch.early.test349, %9
-  %.sink = phi ptr [ %i.as, %18 ], [ %10, %9 ], [ %i.as, %switch.early.test349 ], [ %i.as, %switch.early.test349 ], [ %i.as, %switch.early.test349 ], [ %i.as, %switch.early.test349 ], [ %i.as, %switch.early.test349 ], [ %i.as, %switch.early.test349 ], [ %i.as, %switch.early.test349 ], [ %i.as, %switch.early.test349 ], [ %i.as, %switch.early.test349 ], [ %i.as, %switch.early.test349 ], [ %i.as, %switch.early.test349 ], [ %i.as, %switch.early.test349 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %bb.ae ] ; 2 uses
-  %.5139.ph516 = phi i64 [ %.0134, %18 ], [ %.0134, %9 ], [ %.0134, %switch.early.test349 ], [ %.0134, %switch.early.test349 ], [ %.0134, %switch.early.test349 ], [ %.0134, %switch.early.test349 ], [ %.0134, %switch.early.test349 ], [ %.0134, %switch.early.test349 ], [ %.0134, %switch.early.test349 ], [ %.0134, %switch.early.test349 ], [ %.0134, %switch.early.test349 ], [ %.0134, %switch.early.test349 ], [ %.0134, %switch.early.test349 ], [ %.0134, %switch.early.test349 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %bb.ae ]
-  %.7.ph517 = phi i32 [ %.0128, %18 ], [ %.0128, %9 ], [ %.0128, %switch.early.test349 ], [ %.0128, %switch.early.test349 ], [ %.0128, %switch.early.test349 ], [ %.0128, %switch.early.test349 ], [ %.0128, %switch.early.test349 ], [ %.0128, %switch.early.test349 ], [ %.0128, %switch.early.test349 ], [ %.0128, %switch.early.test349 ], [ %.0128, %switch.early.test349 ], [ %.0128, %switch.early.test349 ], [ %.0128, %switch.early.test349 ], [ %.0128, %switch.early.test349 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %bb.ae ]
-  %.5.ph = phi i8 [ 1, %18 ], [ 1, %9 ], [ 1, %switch.early.test349 ], [ 1, %switch.early.test349 ], [ 1, %switch.early.test349 ], [ 1, %switch.early.test349 ], [ 1, %switch.early.test349 ], [ 1, %switch.early.test349 ], [ 1, %switch.early.test349 ], [ 1, %switch.early.test349 ], [ 1, %switch.early.test349 ], [ 1, %switch.early.test349 ], [ 1, %switch.early.test349 ], [ 1, %switch.early.test349 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %bb.ae ]
+_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split: ; preds = %bb.ae, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %switch.early.test353, %bb.l
+  %.sink = phi ptr [ %i.as, %bb.l ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %switch.early.test353 ], [ %i.dx, %bb.ae ] ; 2 uses
+  %.5139.ph511 = phi i64 [ %.0134, %bb.l ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %switch.early.test353 ], [ %i.bb, %bb.ae ]
+  %.7.ph512 = phi i32 [ %.0128, %bb.l ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %bb.ae ]
+  %.5.ph = phi i8 [ 1, %bb.l ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %switch.early.test353 ], [ %.0123, %bb.ae ]
   store ptr %.sink, ptr %0, align 8, !tbaa !15
   br label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175
 
-_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175: ; preds = %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split, %11, %switch.early.test353, %switch.early.test349, %bb.ad, %bb.ac, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit224, %.split299, %14, %bb.l
-  %24 = phi ptr [ %10, %14 ], [ %10, %switch.early.test349 ], [ %i.dv, %bb.ac ], [ %i.dq, %.split299 ], [ %i.dv, %bb.ad ], [ %i.dv, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit224 ], [ %10, %11 ], [ %10, %bb.l ], [ %i.dv, %switch.early.test353 ], [ %.sink, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split ] ; 2 uses
-  %.5139 = phi i64 [ %.0134, %14 ], [ %.0134, %switch.early.test349 ], [ %i.bb, %bb.ac ], [ %i.bb, %.split299 ], [ %i.bb, %bb.ad ], [ %i.bb, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit224 ], [ %.0134, %11 ], [ %.0134, %bb.l ], [ %i.bb, %switch.early.test353 ], [ %.5139.ph516, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split ]
-  %.7 = phi i32 [ %.0128, %14 ], [ %.0128, %switch.early.test349 ], [ %spec.select148, %bb.ac ], [ %spec.select148, %.split299 ], [ %spec.select148, %bb.ad ], [ %spec.select148, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit224 ], [ %.0128, %11 ], [ %.0128, %bb.l ], [ %spec.select148, %switch.early.test353 ], [ %.7.ph517, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split ]
-  %.5 = phi i8 [ 1, %14 ], [ 1, %switch.early.test349 ], [ %.0123, %bb.ac ], [ %.0123, %.split299 ], [ %.0123, %bb.ad ], [ %.0123, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit224 ], [ 1, %11 ], [ 1, %bb.l ], [ %.0123, %switch.early.test353 ], [ %.5.ph, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split ]
-  %.pre = load i8, ptr %24, align 1, !tbaa !21
+_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175: ; preds = %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split, %switch.early.test353, %bb.ad, %bb.ac, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit224, %.split299
+  %9 = phi ptr [ %i.dv, %switch.early.test353 ], [ %i.dv, %bb.ac ], [ %i.dv, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit224 ], [ %i.dq, %.split299 ], [ %i.dv, %bb.ad ], [ %.sink, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split ] ; 2 uses
+  %.5139 = phi i64 [ %i.bb, %switch.early.test353 ], [ %i.bb, %bb.ac ], [ %i.bb, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit224 ], [ %i.bb, %.split299 ], [ %i.bb, %bb.ad ], [ %.5139.ph511, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split ]
+  %.7 = phi i32 [ %spec.select148, %switch.early.test353 ], [ %spec.select148, %bb.ac ], [ %spec.select148, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit224 ], [ %spec.select148, %.split299 ], [ %spec.select148, %bb.ad ], [ %.7.ph512, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split ]
+  %.5 = phi i8 [ %.0123, %switch.early.test353 ], [ %.0123, %bb.ac ], [ %.0123, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit224 ], [ %.0123, %.split299 ], [ %.0123, %bb.ad ], [ %.5.ph, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.sink.split ]
+  %.pre = load i8, ptr %9, align 1, !tbaa !21
   br label %bb.e
 
 .thread317:                                       ; preds = %bb.k, %bb.k
