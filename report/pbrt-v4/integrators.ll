@@ -205,18 +205,19 @@ _ZNSt12shared_mutex11lock_sharedEv.exit.preheader: ; preds = %bb.c
   %i.t = load ptr, ptr %i.g, align 8, !tbaa !211  ; 2 uses
   %i.u = ptrtoint ptr %i.s to i64
   %i.v = ptrtoint ptr %i.t to i64
-  %i.w = sub i64 %i.u, %i.v
-  %i.x = sdiv exact i64 %i.w, 192                 ; 6 uses
+  %i.w = sub i64 %i.u, %i.v                       ; 2 uses
+  %i.x = sdiv exact i64 %i.w, 192                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #38
   store i32 1, ptr %i.a, align 4, !tbaa !49
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #38
   store i64 %i.x, ptr %i.b, align 8, !tbaa !145
-  %i.y = icmp ugt i64 %i.x, 1
+  %i.y = icmp ugt i64 %i.w, 192
   br i1 %i.y, label %.lr.ph, label %_ZNSt12shared_mutex11lock_sharedEv.exit._crit_edge
 
 .lr.ph:                                           ; preds = %_ZNSt12shared_mutex11lock_sharedEv.exit.preheader
   %.sroa.0.0.copyload = load i64, ptr %1, align 8
   %.rhs.trunc = trunc nuw i64 %i.x to i32
+  %umax = call i64 @llvm.umax.i64(i64 %i.x, i64 2)
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -459,7 +460,7 @@ _ZNSt12shared_mutex11lock_sharedEv.exit:          ; preds = %bb.s, %bb.r
   store i32 %i.de, ptr %i.a, align 4, !tbaa !49
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #38
   store i64 %i.x, ptr %i.b, align 8, !tbaa !145
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.x
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %umax
   br i1 %exitcond.not, label %_ZNSt12shared_mutex11lock_sharedEv.exit._crit_edge, label %bb.e, !llvm.loop !2711
 
 bb.t:                                             ; preds = %bb.p, %_ZN4pstd8optionalIN4pbrt11ThreadLocalINS1_13ScratchBufferEE5EntryEEptEv.exit37
@@ -515,18 +516,19 @@ _ZNSt12shared_mutex11lock_sharedEv.exit.preheader: ; preds = %bb.c
   %i.t = load ptr, ptr %i.g, align 8, !tbaa !207  ; 2 uses
   %i.u = ptrtoint ptr %i.s to i64
   %i.v = ptrtoint ptr %i.t to i64
-  %i.w = sub i64 %i.u, %i.v
-  %i.x = sdiv exact i64 %i.w, 24                  ; 6 uses
+  %i.w = sub i64 %i.u, %i.v                       ; 2 uses
+  %i.x = sdiv exact i64 %i.w, 24                  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #38
   store i32 1, ptr %i.a, align 4, !tbaa !49
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #38
   store i64 %i.x, ptr %i.b, align 8, !tbaa !145
-  %i.y = icmp ugt i64 %i.x, 1
+  %i.y = icmp ugt i64 %i.w, 24
   br i1 %i.y, label %.lr.ph, label %_ZNSt12shared_mutex11lock_sharedEv.exit._crit_edge
 
 .lr.ph:                                           ; preds = %_ZNSt12shared_mutex11lock_sharedEv.exit.preheader
   %.sroa.0.0.copyload = load i64, ptr %1, align 8
   %.rhs.trunc = trunc nuw i64 %i.x to i32
+  %umax = call i64 @llvm.umax.i64(i64 %i.x, i64 2)
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -656,7 +658,7 @@ _ZNSt12shared_mutex11lock_sharedEv.exit:          ; preds = %bb.m, %bb.l
   store i32 %i.bp, ptr %i.a, align 4, !tbaa !49
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #38
   store i64 %i.x, ptr %i.b, align 8, !tbaa !145
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.x
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %umax
   br i1 %exitcond.not, label %_ZNSt12shared_mutex11lock_sharedEv.exit._crit_edge, label %bb.e, !llvm.loop !2717
 
 bb.n:                                             ; preds = %_ZN4pstd8optionalIN4pbrt11ThreadLocalINS1_7SamplerEE5EntryEEptEv.exit32, %_ZN4pstd8optionalIN4pbrt11ThreadLocalINS1_7SamplerEE5EntryEEptEv.exit31

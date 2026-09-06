@@ -204,9 +204,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit155: ; preds = %._
   %.val82 = load ptr, ptr %i.hr, align 8, !tbaa !50 ; 2 uses
   %i.mq = ptrtoint ptr %.val82 to i64
   %i.mr = ptrtoint ptr %.val to i64
-  %i.ms = sub i64 %i.mq, %i.mr
-  %i.mt = sdiv exact i64 %i.ms, 96                ; 4 uses
-  %i.mu = icmp ugt i64 %i.mt, 72057594037927935
+  %i.ms = sub i64 %i.mq, %i.mr                    ; 2 uses
+  %i.mt = sdiv exact i64 %i.ms, 96                ; 3 uses
+  %i.mu = icmp ugt i64 %i.ms, 6917529027641081760
   br i1 %i.mu, label %bb.bq, label %bb.br
 
 bb.bq:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit155
@@ -609,9 +609,9 @@ bb.a:
   %i.f = ptrtoint ptr %.val19 to i64
   %i.g = ptrtoint ptr %.val to i64
   %i.h = sub i64 %i.f, %i.g
-  %.fr = freeze i64 %i.h                          ; 2 uses
-  %i.i = sdiv i64 %.fr, 96                        ; 4 uses
-  %3 = icmp ugt i64 %i.i, 1152921504606846975
+  %.fr = freeze i64 %i.h                          ; 3 uses
+  %i.i = sdiv i64 %.fr, 96                        ; 3 uses
+  %3 = icmp slt i64 %.fr, 0
   br i1 %3, label %.noexc, label %_ZNSt6vectorImSaImEE17_S_check_init_lenEmRKS0_.exit.i
 
 .noexc:                                           ; preds = %bb.a
@@ -641,8 +641,7 @@ _ZNSt6vectorImSaImEEC2EmRKS0_.exit:               ; preds = %.noexc21
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.m, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !27
   %i.q = getelementptr i8, ptr %i.m, i64 %.idx.i.i.i.i.i.i.i ; 2 uses
   %i.r = ptrtoint ptr %i.k to i64                 ; 2 uses
-  %.fr.off = add i64 %.fr, 95
-  %.not = icmp ult i64 %.fr.off, 191
+  %.not = icmp ult i64 %.fr, 96
   br i1 %.not, label %.split.us.preheader, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZNSt6vectorImSaImEEC2EmRKS0_.exit.thread73, %_ZNSt6vectorImSaImEEC2EmRKS0_.exit

@@ -204,8 +204,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 24
-  %i.g = icmp ugt i64 %2, 384307168202282325
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN5arrow5DatumEE8allocateEmPKv.exit.i.i.i.i, !prof !94
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -608,8 +607,7 @@ bb.b:                                             ; preds = %.lr.ph.i
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = sub i64 %i.h, %i.i
-  %6 = sdiv exact i64 %i.j, 24
-  %i.k = icmp ugt i64 %6, 1
+  %i.k = icmp ugt i64 %i.j, 24
   br i1 %i.k, label %_ZN5arrow7compute6detail12_GLOBAL__N_116HaveChunkedArrayERKSt6vectorINS_5DatumESaIS4_EE.exit, label %bb.k
 
 _ZN5arrow7compute6detail12_GLOBAL__N_116HaveChunkedArrayERKSt6vectorINS_5DatumESaIS4_EE.exit: ; preds = %.lr.ph.i, %.loopexit
@@ -1012,9 +1010,9 @@ bb.a:
   %i.c = load ptr, ptr %1, align 8, !tbaa !68     ; 3 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 24                  ; 3 uses
-  %6 = icmp ugt i64 %i.g, 576460752303423487
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv exact i64 %i.f, 24                  ; 2 uses
+  %6 = icmp slt i64 %i.f, 0
   br i1 %6, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -1417,8 +1415,7 @@ bb.c:                                             ; preds = %.lr.ph.i
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = sub i64 %i.m, %i.n
-  %8 = sdiv exact i64 %i.o, 24
-  %i.p = icmp ugt i64 %8, 1
+  %i.p = icmp ugt i64 %i.o, 24
   br i1 %i.p, label %_ZN5arrow7compute6detail12_GLOBAL__N_116HaveChunkedArrayERKSt6vectorINS_5DatumESaIS4_EE.exit, label %bb.ae
 
 _ZN5arrow7compute6detail12_GLOBAL__N_116HaveChunkedArrayERKSt6vectorINS_5DatumESaIS4_EE.exit: ; preds = %.lr.ph.i, %.loopexit

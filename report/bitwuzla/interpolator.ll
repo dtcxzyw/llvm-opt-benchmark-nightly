@@ -205,9 +205,8 @@ bb.a:
   %i.h = load ptr, ptr %2, align 8, !tbaa !585    ; 2 uses
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = ptrtoint ptr %i.h to i64
-  %i.k = sub i64 %i.i, %i.j
-  %7 = sdiv exact i64 %i.k, 56                    ; 2 uses
-  %i.l = icmp ugt i64 %7, 1
+  %i.k = sub i64 %i.i, %i.j                       ; 2 uses
+  %i.l = icmp ugt i64 %i.k, 56
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 305
   %i.n = zext i1 %i.l to i8
   store i8 %i.n, ptr %i.m, align 1, !tbaa !83
@@ -217,6 +216,7 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
+  %7 = sdiv exact i64 %i.k, 56
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %bb.c

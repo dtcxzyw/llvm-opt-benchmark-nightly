@@ -205,9 +205,8 @@ _ZNSt3__16vectorIjNS_9allocatorIjEEEC2ERKS3_.exit: ; preds = %_ZNSt3__112basic_s
   br i1 %.not.i.i16, label %_ZNSt3__16vectorIN3jxl12BlendingInfoENS_9allocatorIS2_EEEC2ERKS5_.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt3__16vectorIjNS_9allocatorIjEEEC2ERKS3_.exit
-  %2 = sdiv exact i64 %i.aw, 40
-  %3 = icmp ugt i64 %2, 461168601842738790
-  br i1 %3, label %bb.g, label %_ZNSt3__16vectorIN3jxl12BlendingInfoENS_9allocatorIS2_EEE11__vallocateB8nn180100Em.exit.i.i
+  %2 = icmp slt i64 %i.aw, 0
+  br i1 %2, label %bb.g, label %_ZNSt3__16vectorIN3jxl12BlendingInfoENS_9allocatorIS2_EEE11__vallocateB8nn180100Em.exit.i.i
 
 bb.g:                                             ; preds = %bb.f
   tail call void @_ZNKSt3__16vectorIN3jxl12BlendingInfoENS_9allocatorIS2_EEE20__throw_length_errorB8nn180100Ev(ptr noundef nonnull align 8 dereferenceable(24) %i.an) #27

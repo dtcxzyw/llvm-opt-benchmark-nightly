@@ -205,8 +205,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.c to i64
   %i.e = ptrtoint ptr %i.a to i64
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
-  %1 = sdiv exact i64 %i.f, 56
-  %i.g = icmp ugt i64 %1, 164703072086692425
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNSt6vectorI6personSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i
 
 bb.b:                                             ; preds = %bb.a
@@ -609,8 +608,7 @@ bb.a:
   %i.e = ptrtoint ptr %i.a to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e
   %reass.sub.fr.i = freeze i64 %i.f               ; 5 uses
-  %1 = sdiv exact i64 %reass.sub.fr.i, 40
-  %i.g = icmp ugt i64 %1, 230584300921369395
+  %i.g = icmp ugt i64 %reass.sub.fr.i, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNSt6vectorI9zc_personSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i
 
 bb.b:                                             ; preds = %bb.a
@@ -634,10 +632,10 @@ _ZNSt12_Vector_baseI9zc_personSaIS0_EE11_M_allocateEm.exit.thread.i.i: ; preds =
 
 .noexc5.i:                                        ; preds = %.lr.ph.i.i.i.i.preheader.i.i
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 %reass.sub.fr.i
-  %i.k = add i64 %reass.sub.fr.i, -40             ; 2 uses
+  %i.k = add nsw i64 %reass.sub.fr.i, -40         ; 2 uses
   %i.l = urem i64 %i.k, 40
-  %i.m = sub nuw i64 %i.k, %i.l
-  %i.n = add i64 %i.m, 40                         ; 2 uses
+  %i.m = sub nuw nsw i64 %i.k, %i.l
+  %i.n = add nsw i64 %i.m, 40                     ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.i, ptr align 8 %i.a, i64 %i.n, i1 false)
   %scevgep.i.i = getelementptr i8, ptr %i.i, i64 %i.n
   br label %_ZNSt6vectorI9zc_personSaIS0_EEC2ISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPS0_S2_EEEvEET_SA_RKS1_.exit
@@ -1040,8 +1038,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.c to i64
   %i.e = ptrtoint ptr %i.a to i64
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
-  %1 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %1, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNSt6vectorI6WeaponSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i
 
 bb.b:                                             ; preds = %bb.a
@@ -1444,8 +1441,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.c to i64
   %i.e = ptrtoint ptr %i.a to i64
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
-  %1 = sdiv exact i64 %i.f, 176
-  %i.g = icmp ugt i64 %1, 52405522936674862
+  %i.g = icmp ugt i64 %i.f, 9223372036854775712
   br i1 %i.g, label %bb.b, label %_ZNSt6vectorI7MonsterSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i
 
 bb.b:                                             ; preds = %bb.a
@@ -1848,8 +1844,7 @@ bb.a:
   %i.e = ptrtoint ptr %i.a to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e
   %reass.sub.fr.i = freeze i64 %i.f               ; 5 uses
-  %1 = sdiv exact i64 %reass.sub.fr.i, 24
-  %i.g = icmp ugt i64 %1, 384307168202282325
+  %i.g = icmp ugt i64 %reass.sub.fr.i, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNSt6vectorI9zc_WeaponSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i
 
 bb.b:                                             ; preds = %bb.a
@@ -1873,10 +1868,10 @@ _ZNSt12_Vector_baseI9zc_WeaponSaIS0_EE11_M_allocateEm.exit.thread.i.i: ; preds =
 
 .noexc5.i:                                        ; preds = %.lr.ph.i.i.i.i.preheader.i.i
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 %reass.sub.fr.i
-  %i.k = add i64 %reass.sub.fr.i, -24             ; 2 uses
+  %i.k = add nsw i64 %reass.sub.fr.i, -24         ; 2 uses
   %i.l = urem i64 %i.k, 24
-  %i.m = sub nuw i64 %i.k, %i.l
-  %i.n = add i64 %i.m, 24                         ; 2 uses
+  %i.m = sub nuw nsw i64 %i.k, %i.l
+  %i.n = add nsw i64 %i.m, 24                     ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.i, ptr align 8 %i.a, i64 %i.n, i1 false)
   %scevgep.i.i = getelementptr i8, ptr %i.i, i64 %i.n
   br label %_ZNSt6vectorI9zc_WeaponSaIS0_EEC2ISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPS0_S2_EEEvEET_SA_RKS1_.exit
@@ -1928,8 +1923,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.c to i64
   %i.e = ptrtoint ptr %i.a to i64
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
-  %1 = sdiv exact i64 %i.f, 120
-  %i.g = icmp ugt i64 %1, 76861433640456465
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNSt6vectorI10zc_MonsterSaIS0_EE17_S_check_init_lenEmRKS1_.exit.i.i
 
 bb.b:                                             ; preds = %bb.a
@@ -2332,8 +2326,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %._cri
   br i1 %.not.i.i.i.i, label %.noexc23, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %2 = sdiv exact i64 %i.ao, 40
-  %i.ap = icmp ugt i64 %2, 230584300921369395
+  %i.ap = icmp ugt i64 %i.ao, 9223372036854775800
   br i1 %i.ap, label %.noexc.i.i, label %_ZNSt15__new_allocatorI6WeaponE8allocateEmPKv.exit.i.i.i.i, !prof !169
 
 .noexc.i.i:                                       ; preds = %bb.k
@@ -2457,8 +2450,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %._cri
   br i1 %.not.i.i.i.i28, label %.noexc31, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %3 = sdiv exact i64 %i.cd, 12
-  %i.ce = icmp ugt i64 %3, 768614336404564650
+  %i.ce = icmp ugt i64 %i.cd, 9223372036854775800
   br i1 %i.ce, label %.noexc.i.i29, label %_ZNSt15__new_allocatorI4Vec3E8allocateEmPKv.exit.i.i.i.i, !prof !169
 
 .noexc.i.i29:                                     ; preds = %bb.t
@@ -2861,8 +2853,7 @@ bb.d:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i, label %.noexc16, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %3 = sdiv exact i64 %i.i, 56
-  %i.j = icmp ugt i64 %3, 164703072086692425
+  %i.j = icmp ugt i64 %i.i, 9223372036854775800
   br i1 %i.j, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN9pb_sample6WeaponEE8allocateEmPKv.exit.i.i.i.i, !prof !169
 
 .noexc.i.i:                                       ; preds = %bb.e
@@ -2994,8 +2985,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.noexc3, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.g, 56
-  %i.h = icmp ugt i64 %2, 164703072086692425
+  %i.h = icmp ugt i64 %i.g, 9223372036854775800
   br i1 %i.h, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN9pb_sample6WeaponEE8allocateEmPKv.exit.i.i.i.i, !prof !169
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -3398,8 +3388,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %._cri
   br i1 %.not.i.i.i.i, label %.noexc30, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %2 = sdiv exact i64 %i.ba, 56
-  %i.bb = icmp ugt i64 %2, 164703072086692425
+  %i.bb = icmp ugt i64 %i.ba, 9223372036854775800
   br i1 %i.bb, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN9pb_sample6WeaponEE8allocateEmPKv.exit.i.i.i.i, !prof !169
 
 .noexc.i.i:                                       ; preds = %bb.l
@@ -3802,8 +3791,7 @@ bb.d:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i, label %.noexc16, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %3 = sdiv exact i64 %i.i, 72
-  %i.j = icmp ugt i64 %3, 128102389400760775
+  %i.j = icmp ugt i64 %i.i, 9223372036854775800
   br i1 %i.j, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN9pb_sample6personEE8allocateEmPKv.exit.i.i.i.i, !prof !169
 
 .noexc.i.i:                                       ; preds = %bb.e
@@ -3935,8 +3923,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.noexc3, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.g, 72
-  %i.h = icmp ugt i64 %2, 128102389400760775
+  %i.h = icmp ugt i64 %i.g, 9223372036854775800
   br i1 %i.h, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN9pb_sample6personEE8allocateEmPKv.exit.i.i.i.i, !prof !169
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -4157,8 +4144,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.noexc4, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.k, 72
-  %i.l = icmp ugt i64 %2, 128102389400760775
+  %i.l = icmp ugt i64 %i.k, 9223372036854775800
   br i1 %i.l, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN9pb_sample6personEE8allocateEmPKv.exit.i.i.i.i, !prof !169
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -4561,8 +4547,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 232
-  %i.g = icmp ugt i64 %2, 39755913951960240
+  %i.g = icmp ugt i64 %i.f, 9223372036854775680
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN9pb_sample7MonsterEE8allocateEmPKv.exit.i.i.i, !prof !169
 
 .noexc.i:                                         ; preds = %bb.b

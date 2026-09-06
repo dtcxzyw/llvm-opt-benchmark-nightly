@@ -204,14 +204,18 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit38: ; preds = %_ZNSo
   %i.eo = load ptr, ptr %7, align 8, !tbaa !49    ; 2 uses
   %i.ep = ptrtoint ptr %i.en to i64
   %i.eq = ptrtoint ptr %i.eo to i64
-  %i.er = sub i64 %i.ep, %i.eq
-  %8 = sdiv exact i64 %i.er, 40                   ; 2 uses
-  %.not.i.i39 = icmp ugt i64 %8, 1
-  br i1 %.not.i.i39, label %bb.ag, label %.invoke150
+  %i.er = sub i64 %i.ep, %i.eq                    ; 2 uses
+  %.not.i.i39 = icmp ugt i64 %i.er, 40
+  br i1 %.not.i.i39, label %bb.ag, label %8
 
-.invoke150:                                       ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit38, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
-  %i.es = phi i64 [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit ], [ 1, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit38 ]
-  %i.et = phi i64 [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit ], [ %8, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit38 ]
+8:                                                ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit38
+  %.cmp = icmp eq i64 %i.er, 40
+  %9 = zext i1 %.cmp to i64
+  br label %.invoke150
+
+.invoke150:                                       ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %8
+  %i.es = phi i64 [ 1, %8 ], [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit ]
+  %i.et = phi i64 [ %9, %8 ], [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit ]
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.64, i64 noundef %i.es, i64 noundef %i.et) #28
           to label %.cont151 unwind label %bb.as
 

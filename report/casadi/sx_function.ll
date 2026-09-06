@@ -205,8 +205,7 @@ bb.co:                                            ; preds = %bb.cn, %.lr.ph1698.
   %i.qt = ptrtoint ptr %i.qr to i64
   %i.qu = ptrtoint ptr %i.qs to i64
   %i.qv = sub i64 %i.qt, %i.qu
-  %129 = sdiv exact i64 %i.qv, 40
-  %.not398 = icmp ugt i64 %129, 2147483647
+  %.not398 = icmp ugt i64 %i.qv, 85899345880
   br i1 %.not398, label %bb.dm, label %.preheader1412
 
 .preheader1412:                                   ; preds = %._crit_edge1703
@@ -609,8 +608,7 @@ bb.mh:                                            ; preds = %bb.mg, %.lr.ph1754.
   %i.bfp = ptrtoint ptr %i.bfn to i64
   %i.bfq = ptrtoint ptr %i.bfo to i64
   %i.bfr = sub i64 %i.bfp, %i.bfq
-  %130 = sdiv exact i64 %i.bfr, 40
-  %.not420 = icmp ugt i64 %130, 2147483647
+  %.not420 = icmp ugt i64 %i.bfr, 85899345880
   br i1 %.not420, label %bb.mi, label %.preheader
 
 .preheader:                                       ; preds = %._crit_edge1758
@@ -1013,9 +1011,9 @@ bb.bi:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.ja = load ptr, ptr %i.ix, align 8, !tbaa !160 ; 2 uses
   %i.jb = ptrtoint ptr %i.iz to i64
   %i.jc = ptrtoint ptr %i.ja to i64
-  %i.jd = sub i64 %i.jb, %i.jc
-  %i.je = sdiv exact i64 %i.jd, 40                ; 3 uses
-  %106 = icmp ugt i64 %i.je, 384307168202282325
+  %i.jd = sub i64 %i.jb, %i.jc                    ; 2 uses
+  %i.je = sdiv exact i64 %i.jd, 40                ; 2 uses
+  %106 = icmp slt i64 %i.jd, 0
   br i1 %106, label %bb.bj, label %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
 
 bb.bj:                                            ; preds = %bb.bi
@@ -1072,9 +1070,9 @@ bb.bk:                                            ; preds = %.lr.ph.preheader.i.
   %i.jx = load ptr, ptr %i.gj, align 8, !tbaa !160 ; 2 uses
   %i.jy = ptrtoint ptr %i.jw to i64
   %i.jz = ptrtoint ptr %i.jx to i64
-  %i.ka = sub i64 %i.jy, %i.jz
-  %i.kb = sdiv exact i64 %i.ka, 40                ; 3 uses
-  %107 = icmp ugt i64 %i.kb, 384307168202282325
+  %i.ka = sub i64 %i.jy, %i.jz                    ; 2 uses
+  %i.kb = sdiv exact i64 %i.ka, 40                ; 2 uses
+  %107 = icmp slt i64 %i.ka, 0
   br i1 %107, label %bb.bl, label %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i400
 
 bb.bl:                                            ; preds = %._crit_edge
@@ -1477,8 +1475,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
-  %5 = sdiv exact i64 %i.f, 24
-  %i.g = icmp ugt i64 %5, 384307168202282325
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc, label %_ZNSt6vectorIS_IN6casadi6MatrixINS0_6SXElemEEESaIS3_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i
 
 .noexc:                                           ; preds = %bb.a
@@ -1668,8 +1665,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 24
-  %i.g = icmp ugt i64 %2, 384307168202282325
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorISt6vectorIN6casadi6MatrixINS1_6SXElemEEESaIS4_EEE8allocateEmPKv.exit.i.i.i, !prof !331
 
 .noexc.i:                                         ; preds = %bb.b
@@ -2072,8 +2068,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
-  %5 = sdiv exact i64 %i.f, 24
-  %i.g = icmp ugt i64 %5, 384307168202282325
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc, label %_ZNSt6vectorIS_IN6casadi6MatrixINS0_6SXElemEEESaIS3_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i
 
 .noexc:                                           ; preds = %bb.a
@@ -2476,8 +2471,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN6casadi6MatrixINS0_6SXElemEEEE8allocateEmPKv.exit.i.i.i, !prof !331
 
 .noexc.i:                                         ; preds = %bb.b
@@ -2880,9 +2874,9 @@ _ZN6casadi9horzsplitERKNS_6MatrixINS_6SXElemEEEx.exit: ; preds = %_ZNK6casadi13G
   %i.ls = load ptr, ptr %52, align 8, !tbaa !160  ; 2 uses
   %i.lt = ptrtoint ptr %i.lr to i64
   %i.lu = ptrtoint ptr %i.ls to i64
-  %i.lv = sub i64 %i.lt, %i.lu
-  %i.lw = sdiv exact i64 %i.lv, 40                ; 3 uses
-  %76 = icmp ugt i64 %i.lw, 384307168202282325
+  %i.lv = sub i64 %i.lt, %i.lu                    ; 2 uses
+  %i.lw = sdiv exact i64 %i.lv, 40                ; 2 uses
+  %76 = icmp slt i64 %i.lv, 0
   br i1 %76, label %bb.cx, label %_ZNSt6vectorIS_IN6casadi6MatrixINS0_6SXElemEEESaIS3_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i
 
 bb.cx:                                            ; preds = %_ZN6casadi9horzsplitERKNS_6MatrixINS_6SXElemEEEx.exit
@@ -3285,8 +3279,8 @@ define linkonce_odr hidden void @_ZNSt6vectorIN6casadi6MatrixINS0_6SXElemEEESaIS
 bb.a:
   %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.a, %i.b                       ; 6 uses
-  %3 = sdiv exact i64 %i.c, 40                    ; 2 uses
+  %i.c = sub i64 %i.a, %i.b                       ; 7 uses
+  %3 = udiv exact i64 %i.c, 40
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !309
   %i.f = load ptr, ptr %0, align 8, !tbaa !160    ; 4 uses
@@ -3297,7 +3291,7 @@ bb.a:
   br i1 %i.j, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = icmp ugt i64 %3, 230584300921369395
+  %i.k = icmp ugt i64 %i.c, 9223372036854775800
   br i1 %i.k, label %bb.c, label %_ZNSt6vectorIN6casadi6MatrixINS0_6SXElemEEESaIS3_EE17_S_check_init_lenEmRKS4_.exit
 
 bb.c:                                             ; preds = %bb.b

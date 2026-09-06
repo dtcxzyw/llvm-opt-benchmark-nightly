@@ -204,9 +204,9 @@ _ZN5vcpkg9ExpectedTISt6vectorISt3mapINSt7__cxx1112basic_stringIcSt11char_traitsI
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %i.p = ptrtoint ptr %i.l to i64
   %i.q = ptrtoint ptr %i.i to i64                 ; 2 uses
-  %i.r = sub i64 %i.p, %i.q
-  %i.s = sdiv exact i64 %i.r, 48                  ; 3 uses
-  %8 = icmp ugt i64 %i.s, 1152921504606846975
+  %i.r = sub i64 %i.p, %i.q                       ; 2 uses
+  %i.s = sdiv exact i64 %i.r, 48                  ; 2 uses
+  %8 = icmp slt i64 %i.r, 0
   br i1 %8, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZN5vcpkg9ExpectedTISt6vectorISt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIS8_NS_10TextRowColEESt4lessIvESaIS9_IKS8_SB_EEESaISH_EENS_15LocalizedStringEED2Ev.exit
@@ -609,8 +609,7 @@ bb.u:                                             ; preds = %.noexc44
   br i1 %.not.i.i.i.i48, label %.noexc52, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %2 = sdiv exact i64 %i.dz, 40
-  %i.ea = icmp ugt i64 %2, 230584300921369395
+  %i.ea = icmp ugt i64 %i.dz, 9223372036854775800
   br i1 %i.ea, label %.noexc.i.i50, label %_ZNSt15__new_allocatorIN5vcpkg11PackageSpecEE8allocateEmPKv.exit.i.i.i.i, !prof !101
 
 .noexc.i.i50:                                     ; preds = %bb.v

@@ -204,20 +204,18 @@ _ZNSt6vectorISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEESaIS6_EE5clearEv.e
   store float 1.000000e+00, ptr %i.bb, align 8, !tbaa !47
   %i.bc = getelementptr inbounds nuw i8, ptr %9, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bc, i8 0, i64 16, i1 false)
-  %11 = ptrtoint ptr %i.aw to i64
-  %12 = ptrtoint ptr %i.av to i64
-  %13 = sub i64 %11, %12
-  %14 = sdiv exact i64 %13, 56                    ; 2 uses
   %i.bd = icmp eq ptr %i.aw, %i.av
   br i1 %i.bd, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %_ZNSt6vectorISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEESaIS6_EE5clearEv.exit
-  %15 = sub nuw nsw i64 1, %14
-  invoke void @_ZNSt6vectorISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEESaIS6_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS6_S8_EEmRKS6_(ptr noundef nonnull align 8 dereferenceable(24) %i.ae, ptr %i.aw, i64 noundef %15, ptr noundef nonnull align 8 dereferenceable(56) %9)
+  invoke void @_ZNSt6vectorISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEESaIS6_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS6_S8_EEmRKS6_(ptr noundef nonnull align 8 dereferenceable(24) %i.ae, ptr %i.aw, i64 noundef 1, ptr noundef nonnull align 8 dereferenceable(56) %9)
           to label %_ZNSt6vectorISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEESaIS6_EE6resizeEmRKS6_.exit unwind label %bb.z
 
 bb.j:                                             ; preds = %_ZNSt6vectorISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEESaIS6_EE5clearEv.exit
-  %i.be = icmp ugt i64 %14, 1
+  %11 = ptrtoint ptr %i.aw to i64
+  %12 = ptrtoint ptr %i.av to i64
+  %13 = sub i64 %11, %12
+  %i.be = icmp ugt i64 %13, 56
   br i1 %i.be, label %bb.k, label %_ZNSt6vectorISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEESaIS6_EE6resizeEmRKS6_.exit
 
 bb.k:                                             ; preds = %bb.j
@@ -453,20 +451,18 @@ _ZNSt6vectorISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEESaIS6_EE5clearEv.e
   store float 1.000000e+00, ptr %i.dw, align 8, !tbaa !47
   %i.dx = getelementptr inbounds nuw i8, ptr %10, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dx, i8 0, i64 16, i1 false)
-  %16 = ptrtoint ptr %i.dr to i64
-  %17 = ptrtoint ptr %i.dq to i64
-  %18 = sub i64 %16, %17
-  %19 = sdiv exact i64 %18, 56                    ; 2 uses
   %i.dy = icmp eq ptr %i.dr, %i.dq
   br i1 %i.dy, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %_ZNSt6vectorISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEESaIS6_EE5clearEv.exit52
-  %20 = sub nuw nsw i64 1, %19
-  invoke void @_ZNSt6vectorISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEESaIS6_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS6_S8_EEmRKS6_(ptr noundef nonnull align 8 dereferenceable(24) %i.cz, ptr %i.dr, i64 noundef %20, ptr noundef nonnull align 8 dereferenceable(56) %10)
+  invoke void @_ZNSt6vectorISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEESaIS6_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS6_S8_EEmRKS6_(ptr noundef nonnull align 8 dereferenceable(24) %i.cz, ptr %i.dr, i64 noundef 1, ptr noundef nonnull align 8 dereferenceable(56) %10)
           to label %_ZNSt6vectorISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEESaIS6_EE6resizeEmRKS6_.exit65 unwind label %bb.ah
 
 bb.w:                                             ; preds = %_ZNSt6vectorISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEESaIS6_EE5clearEv.exit52
-  %i.dz = icmp ugt i64 %19, 1
+  %14 = ptrtoint ptr %i.dr to i64
+  %15 = ptrtoint ptr %i.dq to i64
+  %16 = sub i64 %14, %15
+  %i.dz = icmp ugt i64 %16, 56
   br i1 %i.dz, label %bb.x, label %_ZNSt6vectorISt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEESaIS6_EE6resizeEmRKS6_.exit65
 
 bb.x:                                             ; preds = %bb.w

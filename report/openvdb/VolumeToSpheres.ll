@@ -205,8 +205,8 @@ _ZNSt6vectorIN7openvdb5v13_04math4Vec3IdEESaIS4_EE9push_backERKS4_.exit209: ; pr
   %.sroa.94.12 = phi ptr [ %.sroa.94.11, %_ZNSt6vectorIN7openvdb5v13_04math4Vec3IdEESaIS4_EE9push_backERKS4_.exit199 ], [ %i.iu, %_ZNSt6vectorIN7openvdb5v13_04math4Vec3IdEESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i206 ], [ %.sroa.94.11, %bb.aq ] ; 4 uses
   %i.iv = ptrtoint ptr %.sroa.39.11 to i64
   %i.iw = ptrtoint ptr %.sroa.0393.12 to i64      ; 5 uses
-  %i.ix = sub i64 %i.iv, %i.iw                    ; 2 uses
-  %i.iy = sdiv exact i64 %i.ix, 24                ; 6 uses
+  %i.ix = sub i64 %i.iv, %i.iw                    ; 3 uses
+  %i.iy = sdiv exact i64 %i.ix, 24                ; 5 uses
   %i.iz = icmp eq i64 %i.ix, 24
   br i1 %i.iz, label %.thread486, label %bb.au
 
@@ -215,7 +215,7 @@ _ZNSt6vectorIN7openvdb5v13_04math4Vec3IdEESaIS4_EE9push_backERKS4_.exit209: ; pr
   br label %_ZNSt6vectorIN7openvdb5v13_04math4Vec3IdEESaIS4_EED2Ev.exit
 
 bb.au:                                            ; preds = %_ZNSt6vectorIN7openvdb5v13_04math4Vec3IdEESaIS4_EE9push_backERKS4_.exit209
-  %6 = icmp ugt i64 %i.iy, 1152921504606846975
+  %6 = icmp slt i64 %i.ix, 0
   br i1 %6, label %bb.av, label %_ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i
 
 bb.av:                                            ; preds = %bb.au
@@ -474,7 +474,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph537.preheader:                              ; preds = %.preheader
   %xtraiter609 = and i64 %i.iy, 1
-  %unroll_iter615 = and i64 %i.iy, 1152921504606846974
+  %unroll_iter615 = and i64 %i.iy, 576460752303423486
   br label %.lr.ph537
 
 .lr.ph531:                                        ; preds = %.lr.ph531, %.lr.ph531.preheader.new

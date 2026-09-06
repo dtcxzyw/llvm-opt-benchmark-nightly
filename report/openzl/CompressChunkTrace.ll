@@ -202,8 +202,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit25: ; preds = %bb.i, %
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !271 ; 2 uses
   %i.bv = ptrtoint ptr %i.bu to i64
   %i.bw = ptrtoint ptr %i.bs to i64
-  %i.bx = sub i64 %i.bv, %i.bw
-  %i.by = sdiv exact i64 %i.bx, 24                ; 2 uses
+  %i.bx = sub i64 %i.bv, %i.bw                    ; 2 uses
+  %i.by = sdiv exact i64 %i.bx, 24
   %.not15 = icmp eq ptr %i.bu, %i.bs
   br i1 %.not15, label %.loopexit67, label %bb.k
 
@@ -258,11 +258,15 @@ bb.o:                                             ; preds = %_ZStlsISt11char_tra
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit33: ; preds = %bb.n, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
-  %i.cw = icmp ugt i64 %i.by, 1
-  br i1 %i.cw, label %.lr.ph71, label %.loopexit67
+  %i.cw = icmp ugt i64 %i.bx, 24
+  br i1 %i.cw, label %.lr.ph71.preheader, label %.loopexit67
 
-.lr.ph71:                                         ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit33, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit39
-  %.01370 = phi i64 [ %i.dv, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit39 ], [ 1, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit33 ] ; 2 uses
+.lr.ph71.preheader:                               ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit33
+  %umax = call i64 @llvm.umax.i64(i64 %i.by, i64 2)
+  br label %.lr.ph71
+
+.lr.ph71:                                         ; preds = %.lr.ph71.preheader, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit39
+  %.01370 = phi i64 [ %i.dv, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit39 ], [ 1, %.lr.ph71.preheader ] ; 2 uses
   %i.cx = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, ptr noundef nonnull @.str.51, i64 noundef 2) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store i8 40, ptr %i.f, align 1, !tbaa !99
@@ -315,7 +319,7 @@ bb.s:                                             ; preds = %_ZStlsISt11char_tra
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit39: ; preds = %bb.r, %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   %i.dv = add nuw i64 %.01370, 1                  ; 2 uses
-  %exitcond74.not = icmp eq i64 %i.dv, %i.by
+  %exitcond74.not = icmp eq i64 %i.dv, %umax
   br i1 %exitcond74.not, label %.loopexit67, label %.lr.ph71, !llvm.loop !265
 
 .loopexit67:                                      ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit39, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit33, %.loopexit68
@@ -325,8 +329,8 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit39: ; preds = %bb.r, %
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !275 ; 2 uses
   %i.ea = ptrtoint ptr %i.dz to i64
   %i.eb = ptrtoint ptr %i.dx to i64
-  %i.ec = sub i64 %i.ea, %i.eb
-  %i.ed = sdiv exact i64 %i.ec, 24                ; 2 uses
+  %i.ec = sub i64 %i.ea, %i.eb                    ; 2 uses
+  %i.ed = sdiv exact i64 %i.ec, 24
   %.not16 = icmp eq ptr %i.dz, %i.dx
   br i1 %.not16, label %.loopexit, label %bb.t
 
@@ -377,11 +381,15 @@ bb.x:                                             ; preds = %_ZStlsISt11char_tra
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit47: ; preds = %bb.w, %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %i.ex = icmp ugt i64 %i.ed, 1
-  br i1 %i.ex, label %.lr.ph73, label %.loopexit
+  %i.ex = icmp ugt i64 %i.ec, 24
+  br i1 %i.ex, label %.lr.ph73.preheader, label %.loopexit
 
-.lr.ph73:                                         ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit47, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit53
-  %.072 = phi i64 [ %i.fs, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit53 ], [ 1, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit47 ] ; 2 uses
+.lr.ph73.preheader:                               ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit47
+  %umax75 = call i64 @llvm.umax.i64(i64 %i.ed, i64 2)
+  br label %.lr.ph73
+
+.lr.ph73:                                         ; preds = %.lr.ph73.preheader, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit53
+  %.072 = phi i64 [ %i.fs, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit53 ], [ 1, %.lr.ph73.preheader ] ; 2 uses
   %i.ey = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, ptr noundef nonnull @.str.51, i64 noundef 2) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i8 40, ptr %i.b, align 1, !tbaa !99
@@ -430,7 +438,7 @@ bb.ab:                                            ; preds = %_ZStlsISt11char_tra
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit53: ; preds = %bb.aa, %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.fs = add nuw i64 %.072, 1                    ; 2 uses
-  %exitcond75.not = icmp eq i64 %i.fs, %i.ed
+  %exitcond75.not = icmp eq i64 %i.fs, %umax75
   br i1 %exitcond75.not, label %.loopexit, label %.lr.ph73, !llvm.loop !266
 
 .loopexit:                                        ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit53, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit47, %.loopexit67

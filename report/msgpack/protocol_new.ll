@@ -204,9 +204,8 @@ bb.a:
   %i.g = load ptr, ptr %2, align 8, !tbaa !91
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
-  %i.j = sub i64 %i.h, %i.i
-  %5 = sdiv exact i64 %i.j, 40                    ; 6 uses
-  %i.k = icmp ugt i64 %5, 4294967295
+  %i.j = sub i64 %i.h, %i.i                       ; 4 uses
+  %i.k = icmp ugt i64 %i.j, 171798691800
   br i1 %i.k, label %bb.b, label %_ZN7msgpack2v126checked_get_container_sizeImEEjT_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -225,13 +224,14 @@ bb.d:                                             ; preds = %bb.b
   resume { ptr, i32 } %i.m
 
 _ZN7msgpack2v126checked_get_container_sizeImEEjT_.exit: ; preds = %bb.a
+  %5 = udiv exact i64 %i.j, 40                    ; 3 uses
   %i.n = trunc nuw i64 %5 to i32
-  %i.o = icmp samesign ult i64 %5, 16
+  %i.o = icmp samesign ult i64 %i.j, 640
   br i1 %i.o, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZN7msgpack2v126checked_get_container_sizeImEEjT_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
-  %i.p = trunc nuw nsw i64 %5 to i8
+  %i.p = trunc nuw i64 %5 to i8
   %i.q = or disjoint i8 %i.p, -112
   store i8 %i.q, ptr %i.b, align 1, !tbaa !22
   %i.r = load ptr, ptr %1, align 8, !tbaa !159, !nonnull !115, !align !133
@@ -241,13 +241,13 @@ bb.e:                                             ; preds = %_ZN7msgpack2v126che
   br label %_ZN7msgpack2v16packerINSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEEE10pack_arrayEj.exit
 
 bb.f:                                             ; preds = %_ZN7msgpack2v126checked_get_container_sizeImEEjT_.exit
-  %i.u = icmp samesign ult i64 %5, 65536
+  %i.u = icmp samesign ult i64 %i.j, 2621440
   br i1 %i.u, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #21
   store i8 -36, ptr %i.c, align 1, !tbaa !22
-  %i.v = trunc nuw i64 %5 to i16
+  %i.v = trunc i64 %5 to i16
   %rev.i.i = tail call noundef i16 @llvm.bswap.i16(i16 %i.v)
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   store i16 %rev.i.i, ptr %i.w, align 1

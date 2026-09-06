@@ -205,8 +205,7 @@ bb.a:
   br label %_ZN4asio6detail16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS2_14basic_endpointIS3_EESaIS7_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSB_13async_connectIS9_EEN12async_simple4coro4LazyISD_EERNS_19basic_stream_socketIS3_S4_EERKT_EUlOSM_E0_SK_EENSH_ISM_EET0_RT1_ENKUlSM_E_clINSB_21callback_awaitor_baseISD_NSB_16callback_awaitorISD_EEE15awaitor_handlerEEEDaSM_EUlDpOT_E_EC2ERNS_12basic_socketIS3_S4_EERKS9_RKSA_RS15_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %5 = sdiv exact i64 %i.h, 28
-  %i.l = icmp ugt i64 %5, 329406144173384850
+  %i.l = icmp ugt i64 %i.h, 9223372036854775800
   br i1 %i.l, label %.noexc.i.i.i, label %bb.c, !prof !243
 
 .noexc.i.i.i:                                     ; preds = %bb.b
@@ -432,8 +431,7 @@ _ZN4asio12basic_socketINS_2ip3tcpENS_15any_io_executorEE12get_executorEv.exit: ;
   br label %.loopexit
 
 bb.j:                                             ; preds = %_ZN4asio12basic_socketINS_2ip3tcpENS_15any_io_executorEE12get_executorEv.exit
-  %12 = sdiv exact i64 %i.bc, 28
-  %i.bf = icmp ugt i64 %12, 329406144173384850
+  %i.bf = icmp ugt i64 %i.bc, 9223372036854775800
   br i1 %i.bf, label %.noexc.i.i.i.i.i, label %bb.k, !prof !243
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.j
@@ -697,8 +695,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN4asio6detail12bind_handlerINS0_16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS3_14basic_endpointIS4_EESaIS8_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSC_13async_connectISA_EEN12async_simple4coro4LazyISE_EERNS_19basic_stream_socketIS4_S5_EERKT_EUlOSN_E0_SL_EENSI_ISN_EET0_RT1_ENKUlSN_E_clINSC_21callback_awaitor_baseISE_NSC_16callback_awaitorISE_EEE15awaitor_handlerEEEDaSN_EUlDpOT_E_EESE_EENS0_7binder1INSt5decayISN_E4typeEST_EESQ_RKST_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %6 = sdiv exact i64 %i.l, 28
-  %i.o = icmp ugt i64 %6, 329406144173384850
+  %i.o = icmp ugt i64 %i.l, 9223372036854775800
   br i1 %i.o, label %.noexc.i.i.i.i.i, label %bb.d, !prof !243
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.c
@@ -901,8 +898,7 @@ _ZN4asio6detail26reactive_socket_connect_opINS0_16range_connect_opINS_2ip3tcpENS
   br i1 %.not.i.i.i.i.i.i, label %.noexc6.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4asio6detail26reactive_socket_connect_opINS0_16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS3_14basic_endpointIS4_EESaIS8_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSC_13async_connectISA_EEN12async_simple4coro4LazyISE_EERNS_19basic_stream_socketIS4_S5_EERKT_EUlOSN_E0_SL_EENSI_ISN_EET0_RT1_ENKUlSN_E_clINSC_21callback_awaitor_baseISE_NSC_16callback_awaitorISE_EEE15awaitor_handlerEEEDaSN_EUlDpOT_E_EES5_E3ptr8allocateERS17_.exit
-  %6 = sdiv exact i64 %i.aa, 28
-  %i.ab = icmp ugt i64 %6, 329406144173384850
+  %i.ab = icmp ugt i64 %i.aa, 9223372036854775800
   br i1 %i.ab, label %.noexc.i.i.i.i, label %_ZNSt15__new_allocatorIN4asio2ip14basic_endpointINS1_3tcpEEEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !243
 
 .noexc.i.i.i.i:                                   ; preds = %bb.c
@@ -1132,8 +1128,7 @@ _ZN4asio6detail12handler_workINS0_16range_connect_opINS_2ip3tcpENS_15any_io_exec
   br label %.loopexit
 
 bb.c:                                             ; preds = %_ZN4asio6detail12handler_workINS0_16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS3_14basic_endpointIS4_EESaIS8_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSC_13async_connectISA_EEN12async_simple4coro4LazyISE_EERNS_19basic_stream_socketIS4_S5_EERKT_EUlOSN_E0_SL_EENSI_ISN_EET0_RT1_ENKUlSN_E_clINSC_21callback_awaitor_baseISE_NSC_16callback_awaitorISE_EEE15awaitor_handlerEEEDaSN_EUlDpOT_E_EES5_vEC2EOS18_.exit
-  %7 = sdiv exact i64 %i.ab, 28
-  %i.af = icmp ugt i64 %7, 329406144173384850
+  %i.af = icmp ugt i64 %i.ab, 9223372036854775800
   br i1 %i.af, label %.noexc.i.i.i.i, label %_ZNSt15__new_allocatorIN4asio2ip14basic_endpointINS1_3tcpEEEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !243
 
 .noexc.i.i.i.i:                                   ; preds = %bb.c
@@ -1501,8 +1496,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN4asio6detail7binder1INS0_16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS3_14basic_endpointIS4_EESaIS8_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSC_13async_connectISA_EEN12async_simple4coro4LazyISE_EERNS_19basic_stream_socketIS4_S5_EERKT_EUlOSN_E0_SL_EENSI_ISN_EET0_RT1_ENKUlSN_E_clINSC_21callback_awaitor_baseISE_NSC_16callback_awaitorISE_EEE15awaitor_handlerEEEDaSN_EUlDpOT_E_EESE_EC2EOS18_.exit
 
 bb.d:                                             ; preds = %bb.c
-  %5 = sdiv exact i64 %i.o, 28
-  %i.s = icmp ugt i64 %5, 329406144173384850
+  %i.s = icmp ugt i64 %i.o, 9223372036854775800
   br i1 %i.s, label %.noexc.i.i.i.i, label %bb.e, !prof !243
 
 .noexc.i.i.i.i:                                   ; preds = %bb.d
@@ -1677,8 +1671,7 @@ _ZN4asio6detail17executor_function4implINS0_7binder1INS0_16range_connect_opINS_2
   br i1 %.not.i.i.i.i.i.i.i, label %.noexc5, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4asio6detail17executor_function4implINS0_7binder1INS0_16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS5_14basic_endpointIS6_EESaISA_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSE_13async_connectISC_EEN12async_simple4coro4LazyISG_EERNS_19basic_stream_socketIS6_S7_EERKT_EUlOSP_E0_SN_EENSK_ISP_EET0_RT1_ENKUlSP_E_clINSE_21callback_awaitor_baseISG_NSE_16callback_awaitorISG_EEE15awaitor_handlerEEEDaSP_EUlDpOT_E_EESG_EESaIvEE3ptr8allocateERKS1B_.exit
-  %4 = sdiv exact i64 %i.r, 28
-  %i.s = icmp ugt i64 %4, 329406144173384850
+  %i.s = icmp ugt i64 %i.r, 9223372036854775800
   br i1 %i.s, label %.noexc.i.i.i.i.i, label %_ZNSt15__new_allocatorIN4asio2ip14basic_endpointINS1_3tcpEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i, !prof !243
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.c
@@ -1872,8 +1865,7 @@ bb.a:
   br label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
-  %5 = sdiv exact i64 %i.l, 28
-  %i.p = icmp ugt i64 %5, 329406144173384850
+  %i.p = icmp ugt i64 %i.l, 9223372036854775800
   br i1 %i.p, label %.noexc.i.i.i.i, label %_ZNSt15__new_allocatorIN4asio2ip14basic_endpointINS1_3tcpEEEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !243
 
 .noexc.i.i.i.i:                                   ; preds = %bb.b
@@ -2198,8 +2190,7 @@ bb.e:                                             ; preds = %bb.d
   br label %.loopexit
 
 bb.f:                                             ; preds = %bb.e
-  %9 = sdiv exact i64 %i.aj, 28
-  %i.am = icmp ugt i64 %9, 329406144173384850
+  %i.am = icmp ugt i64 %i.aj, 9223372036854775800
   br i1 %i.am, label %.noexc.i.i.i.i.i.i, label %bb.g, !prof !243
 
 .noexc.i.i.i.i.i.i:                               ; preds = %bb.f
@@ -2406,8 +2397,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN4asio6detail7binder0INS0_7binder1INS0_16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS4_14basic_endpointIS5_EESaIS9_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSD_13async_connectISB_EEN12async_simple4coro4LazyISF_EERNS_19basic_stream_socketIS5_S6_EERKT_EUlOSO_E0_SM_EENSJ_ISO_EET0_RT1_ENKUlSO_E_clINSD_21callback_awaitor_baseISF_NSD_16callback_awaitorISF_EEE15awaitor_handlerEEEDaSO_EUlDpOT_E_EESF_EEEC2EOS1A_.exit
 
 bb.d:                                             ; preds = %bb.c
-  %5 = sdiv exact i64 %i.o, 28
-  %i.s = icmp ugt i64 %5, 329406144173384850
+  %i.s = icmp ugt i64 %i.o, 9223372036854775800
   br i1 %i.s, label %.noexc.i.i.i.i.i, label %bb.e, !prof !243
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.d
@@ -2582,8 +2572,7 @@ _ZN4asio6detail17executor_function4implINS0_7binder0INS0_7binder1INS0_16range_co
   br i1 %.not.i.i.i.i.i.i.i.i, label %.noexc5, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4asio6detail17executor_function4implINS0_7binder0INS0_7binder1INS0_16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS6_14basic_endpointIS7_EESaISB_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSF_13async_connectISD_EEN12async_simple4coro4LazyISH_EERNS_19basic_stream_socketIS7_S8_EERKT_EUlOSQ_E0_SO_EENSL_ISQ_EET0_RT1_ENKUlSQ_E_clINSF_21callback_awaitor_baseISH_NSF_16callback_awaitorISH_EEE15awaitor_handlerEEEDaSQ_EUlDpOT_E_EESH_EEEESaIvEE3ptr8allocateERKS1D_.exit
-  %4 = sdiv exact i64 %i.r, 28
-  %i.s = icmp ugt i64 %4, 329406144173384850
+  %i.s = icmp ugt i64 %i.r, 9223372036854775800
   br i1 %i.s, label %.noexc.i.i.i.i.i.i, label %_ZNSt15__new_allocatorIN4asio2ip14basic_endpointINS1_3tcpEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i, !prof !243
 
 .noexc.i.i.i.i.i.i:                               ; preds = %bb.c
@@ -2777,8 +2766,7 @@ bb.a:
   br label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
-  %5 = sdiv exact i64 %i.l, 28
-  %i.p = icmp ugt i64 %5, 329406144173384850
+  %i.p = icmp ugt i64 %i.l, 9223372036854775800
   br i1 %i.p, label %.noexc.i.i.i.i.i, label %_ZNSt15__new_allocatorIN4asio2ip14basic_endpointINS1_3tcpEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i, !prof !243
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.b
@@ -3181,8 +3169,7 @@ bb.a:
   br label %_ZN4asio6detail16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS2_14basic_endpointIS3_EESaIS7_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSB_13async_connectIS9_EEN12async_simple4coro4LazyISD_EERNS_19basic_stream_socketIS3_S4_EERKT_EUlOSM_E0_SK_EENSH_ISM_EET0_RT1_ENUlSM_E0_clINSB_21callback_awaitor_baseISD_NSB_16callback_awaitorISD_EEE15awaitor_handlerEEEDaSM_EUlDpOT_E_EC2ERNS_12basic_socketIS3_S4_EERKS9_RKSA_RS15_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %5 = sdiv exact i64 %i.h, 28
-  %i.l = icmp ugt i64 %5, 329406144173384850
+  %i.l = icmp ugt i64 %i.h, 9223372036854775800
   br i1 %i.l, label %.noexc.i.i.i, label %bb.c, !prof !243
 
 .noexc.i.i.i:                                     ; preds = %bb.b
@@ -3407,8 +3394,7 @@ _ZN4asio12basic_socketINS_2ip3tcpENS_15any_io_executorEE12get_executorEv.exit: ;
   br label %.loopexit
 
 bb.j:                                             ; preds = %_ZN4asio12basic_socketINS_2ip3tcpENS_15any_io_executorEE12get_executorEv.exit
-  %12 = sdiv exact i64 %i.bc, 28
-  %i.bf = icmp ugt i64 %12, 329406144173384850
+  %i.bf = icmp ugt i64 %i.bc, 9223372036854775800
   br i1 %i.bf, label %.noexc.i.i.i.i.i, label %bb.k, !prof !243
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.j
@@ -3675,8 +3661,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN4asio6detail12bind_handlerINS0_16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS3_14basic_endpointIS4_EESaIS8_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSC_13async_connectISA_EEN12async_simple4coro4LazyISE_EERNS_19basic_stream_socketIS4_S5_EERKT_EUlOSN_E0_SL_EENSI_ISN_EET0_RT1_ENUlSN_E0_clINSC_21callback_awaitor_baseISE_NSC_16callback_awaitorISE_EEE15awaitor_handlerEEEDaSN_EUlDpOT_E_EESE_EENS0_7binder1INSt5decayISN_E4typeEST_EESQ_RKST_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %6 = sdiv exact i64 %i.l, 28
-  %i.o = icmp ugt i64 %6, 329406144173384850
+  %i.o = icmp ugt i64 %i.l, 9223372036854775800
   br i1 %i.o, label %.noexc.i.i.i.i.i, label %bb.d, !prof !243
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.c
@@ -3878,8 +3863,7 @@ _ZN4asio6detail26reactive_socket_connect_opINS0_16range_connect_opINS_2ip3tcpENS
   br i1 %.not.i.i.i.i.i.i, label %.noexc6.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4asio6detail26reactive_socket_connect_opINS0_16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS3_14basic_endpointIS4_EESaIS8_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSC_13async_connectISA_EEN12async_simple4coro4LazyISE_EERNS_19basic_stream_socketIS4_S5_EERKT_EUlOSN_E0_SL_EENSI_ISN_EET0_RT1_ENUlSN_E0_clINSC_21callback_awaitor_baseISE_NSC_16callback_awaitorISE_EEE15awaitor_handlerEEEDaSN_EUlDpOT_E_EES5_E3ptr8allocateERS17_.exit
-  %6 = sdiv exact i64 %i.aa, 28
-  %i.ab = icmp ugt i64 %6, 329406144173384850
+  %i.ab = icmp ugt i64 %i.aa, 9223372036854775800
   br i1 %i.ab, label %.noexc.i.i.i.i, label %_ZNSt15__new_allocatorIN4asio2ip14basic_endpointINS1_3tcpEEEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !243
 
 .noexc.i.i.i.i:                                   ; preds = %bb.c
@@ -4108,8 +4092,7 @@ _ZN4asio6detail12handler_workINS0_16range_connect_opINS_2ip3tcpENS_15any_io_exec
   br label %.loopexit
 
 bb.c:                                             ; preds = %_ZN4asio6detail12handler_workINS0_16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS3_14basic_endpointIS4_EESaIS8_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSC_13async_connectISA_EEN12async_simple4coro4LazyISE_EERNS_19basic_stream_socketIS4_S5_EERKT_EUlOSN_E0_SL_EENSI_ISN_EET0_RT1_ENUlSN_E0_clINSC_21callback_awaitor_baseISE_NSC_16callback_awaitorISE_EEE15awaitor_handlerEEEDaSN_EUlDpOT_E_EES5_vEC2EOS18_.exit
-  %7 = sdiv exact i64 %i.ab, 28
-  %i.af = icmp ugt i64 %7, 329406144173384850
+  %i.af = icmp ugt i64 %i.ab, 9223372036854775800
   br i1 %i.af, label %.noexc.i.i.i.i, label %_ZNSt15__new_allocatorIN4asio2ip14basic_endpointINS1_3tcpEEEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !243
 
 .noexc.i.i.i.i:                                   ; preds = %bb.c
@@ -4476,8 +4459,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN4asio6detail7binder1INS0_16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS3_14basic_endpointIS4_EESaIS8_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSC_13async_connectISA_EEN12async_simple4coro4LazyISE_EERNS_19basic_stream_socketIS4_S5_EERKT_EUlOSN_E0_SL_EENSI_ISN_EET0_RT1_ENUlSN_E0_clINSC_21callback_awaitor_baseISE_NSC_16callback_awaitorISE_EEE15awaitor_handlerEEEDaSN_EUlDpOT_E_EESE_EC2EOS18_.exit
 
 bb.d:                                             ; preds = %bb.c
-  %5 = sdiv exact i64 %i.o, 28
-  %i.s = icmp ugt i64 %5, 329406144173384850
+  %i.s = icmp ugt i64 %i.o, 9223372036854775800
   br i1 %i.s, label %.noexc.i.i.i.i, label %bb.e, !prof !243
 
 .noexc.i.i.i.i:                                   ; preds = %bb.d
@@ -4651,8 +4633,7 @@ _ZN4asio6detail17executor_function4implINS0_7binder1INS0_16range_connect_opINS_2
   br i1 %.not.i.i.i.i.i.i.i, label %.noexc5, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4asio6detail17executor_function4implINS0_7binder1INS0_16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS5_14basic_endpointIS6_EESaISA_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSE_13async_connectISC_EEN12async_simple4coro4LazyISG_EERNS_19basic_stream_socketIS6_S7_EERKT_EUlOSP_E0_SN_EENSK_ISP_EET0_RT1_ENUlSP_E0_clINSE_21callback_awaitor_baseISG_NSE_16callback_awaitorISG_EEE15awaitor_handlerEEEDaSP_EUlDpOT_E_EESG_EESaIvEE3ptr8allocateERKS1B_.exit
-  %4 = sdiv exact i64 %i.r, 28
-  %i.s = icmp ugt i64 %4, 329406144173384850
+  %i.s = icmp ugt i64 %i.r, 9223372036854775800
   br i1 %i.s, label %.noexc.i.i.i.i.i, label %_ZNSt15__new_allocatorIN4asio2ip14basic_endpointINS1_3tcpEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i, !prof !243
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.c
@@ -4845,8 +4826,7 @@ bb.a:
   br label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
-  %5 = sdiv exact i64 %i.l, 28
-  %i.p = icmp ugt i64 %5, 329406144173384850
+  %i.p = icmp ugt i64 %i.l, 9223372036854775800
   br i1 %i.p, label %.noexc.i.i.i.i, label %_ZNSt15__new_allocatorIN4asio2ip14basic_endpointINS1_3tcpEEEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !243
 
 .noexc.i.i.i.i:                                   ; preds = %bb.b
@@ -5170,8 +5150,7 @@ bb.e:                                             ; preds = %bb.d
   br label %.loopexit
 
 bb.f:                                             ; preds = %bb.e
-  %9 = sdiv exact i64 %i.aj, 28
-  %i.am = icmp ugt i64 %9, 329406144173384850
+  %i.am = icmp ugt i64 %i.aj, 9223372036854775800
   br i1 %i.am, label %.noexc.i.i.i.i.i.i, label %bb.g, !prof !243
 
 .noexc.i.i.i.i.i.i:                               ; preds = %bb.f
@@ -5377,8 +5356,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN4asio6detail7binder0INS0_7binder1INS0_16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS4_14basic_endpointIS5_EESaIS9_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSD_13async_connectISB_EEN12async_simple4coro4LazyISF_EERNS_19basic_stream_socketIS5_S6_EERKT_EUlOSO_E0_SM_EENSJ_ISO_EET0_RT1_ENUlSO_E0_clINSD_21callback_awaitor_baseISF_NSD_16callback_awaitorISF_EEE15awaitor_handlerEEEDaSO_EUlDpOT_E_EESF_EEEC2EOS1A_.exit
 
 bb.d:                                             ; preds = %bb.c
-  %5 = sdiv exact i64 %i.o, 28
-  %i.s = icmp ugt i64 %5, 329406144173384850
+  %i.s = icmp ugt i64 %i.o, 9223372036854775800
   br i1 %i.s, label %.noexc.i.i.i.i.i, label %bb.e, !prof !243
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.d
@@ -5552,8 +5530,7 @@ _ZN4asio6detail17executor_function4implINS0_7binder0INS0_7binder1INS0_16range_co
   br i1 %.not.i.i.i.i.i.i.i.i, label %.noexc5, label %bb.c
 
 bb.c:                                             ; preds = %_ZN4asio6detail17executor_function4implINS0_7binder0INS0_7binder1INS0_16range_connect_opINS_2ip3tcpENS_15any_io_executorESt6vectorINS6_14basic_endpointIS7_EESaISB_EENS0_25default_connect_conditionEZZN7coro_io8async_ioISt10error_codeZNSF_13async_connectISD_EEN12async_simple4coro4LazyISH_EERNS_19basic_stream_socketIS7_S8_EERKT_EUlOSQ_E0_SO_EENSL_ISQ_EET0_RT1_ENUlSQ_E0_clINSF_21callback_awaitor_baseISH_NSF_16callback_awaitorISH_EEE15awaitor_handlerEEEDaSQ_EUlDpOT_E_EESH_EEEESaIvEE3ptr8allocateERKS1D_.exit
-  %4 = sdiv exact i64 %i.r, 28
-  %i.s = icmp ugt i64 %4, 329406144173384850
+  %i.s = icmp ugt i64 %i.r, 9223372036854775800
   br i1 %i.s, label %.noexc.i.i.i.i.i.i, label %_ZNSt15__new_allocatorIN4asio2ip14basic_endpointINS1_3tcpEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i, !prof !243
 
 .noexc.i.i.i.i.i.i:                               ; preds = %bb.c
@@ -5746,8 +5723,7 @@ bb.a:
   br label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
-  %5 = sdiv exact i64 %i.l, 28
-  %i.p = icmp ugt i64 %5, 329406144173384850
+  %i.p = icmp ugt i64 %i.l, 9223372036854775800
   br i1 %i.p, label %.noexc.i.i.i.i.i, label %_ZNSt15__new_allocatorIN4asio2ip14basic_endpointINS1_3tcpEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i, !prof !243
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.b

@@ -204,7 +204,6 @@ $_ZZN13V3MutexConfig1sEvE1s = comdat any
 @.str.70 = private unnamed_addr constant [21 x i8] c"basic_string::append\00", align 1
 @.str.72 = private unnamed_addr constant [27 x i8] c"basic_string::basic_string\00", align 1
 @_ZZN13V3MutexConfig1sEvE1s = linkonce_odr dso_local global %class.V3MutexConfig zeroinitializer, comdat, align 1
-@.str.73 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
 @"_ZTIZN17FileLineSingleton11msgEnSetBitEtNS_11MsgEnBitSet6SubsetE11V3ErrorCodebE3$_0" = internal constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @"_ZTSZN17FileLineSingleton11msgEnSetBitEtNS_11MsgEnBitSet6SubsetE11V3ErrorCodebE3$_0" }, align 8
 @_ZTVN10__cxxabiv117__class_type_infoE = external global [0 x ptr]
 @"_ZTSZN17FileLineSingleton11msgEnSetBitEtNS_11MsgEnBitSet6SubsetE11V3ErrorCodebE3$_0" = internal constant [80 x i8] c"ZN17FileLineSingleton11msgEnSetBitEtNS_11MsgEnBitSet6SubsetE11V3ErrorCodebE3$_0\00", align 1
@@ -607,9 +606,9 @@ bb.d:                                             ; preds = %_ZNSt13unordered_ma
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = ptrtoint ptr %i.r to i64                 ; 2 uses
   %i.u = sub i64 %i.s, %i.t                       ; 3 uses
-  %i.v = sdiv exact i64 %i.u, 48                  ; 5 uses
+  %i.v = sdiv exact i64 %i.u, 48                  ; 4 uses
   store i64 %i.v, ptr %i.b, align 8, !tbaa !22
-  %.not = icmp ugt i64 %i.v, 65535
+  %.not = icmp ugt i64 %i.u, 3145680
   br i1 %.not, label %bb.e, label %bb.r, !prof !35
 
 bb.e:                                             ; preds = %bb.d
@@ -655,7 +654,7 @@ bb.l:                                             ; preds = %_ZN14V3LockGuardImp
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   br label %bb.x
 
-bb.m:                                             ; preds = %_ZNKSt6vectorIN17FileLineSingleton11MsgEnBitSetESaIS1_EE12_M_check_lenEmPKc.exit.i.i, %7, %bb.f, %bb.e
+bb.m:                                             ; preds = %_ZNKSt6vectorIN17FileLineSingleton11MsgEnBitSetESaIS1_EE12_M_check_lenEmPKc.exit.i.i, %bb.f, %bb.e
   %i.ad = landingpad { ptr, i32 }
           cleanup
   br label %bb.u
@@ -728,7 +727,7 @@ bb.r:                                             ; preds = %bb.d
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 3 uses
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !86
   %.not.i = icmp eq ptr %i.q, %i.az
-  br i1 %.not.i, label %5, label %bb.s
+  br i1 %.not.i, label %_ZNKSt6vectorIN17FileLineSingleton11MsgEnBitSetESaIS1_EE12_M_check_lenEmPKc.exit.i.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.q, ptr noundef nonnull align 8 dereferenceable(48) %1, i64 48, i1 false)
@@ -737,18 +736,7 @@ bb.s:                                             ; preds = %bb.r
   store ptr %i.bb, ptr %i.p, align 8, !tbaa !84
   br label %_ZNSt6vectorIN17FileLineSingleton11MsgEnBitSetESaIS1_EE9push_backERKS1_.exit
 
-5:                                                ; preds = %bb.r
-  %6 = icmp eq i64 %i.u, 9223372036854775776
-  br i1 %6, label %7, label %_ZNKSt6vectorIN17FileLineSingleton11MsgEnBitSetESaIS1_EE12_M_check_lenEmPKc.exit.i.i
-
-7:                                                ; preds = %5
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.73) #25
-          to label %.noexc unwind label %bb.m
-
-.noexc:                                           ; preds = %7
-  unreachable
-
-_ZNKSt6vectorIN17FileLineSingleton11MsgEnBitSetESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %5
+_ZNKSt6vectorIN17FileLineSingleton11MsgEnBitSetESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.r
   %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.v, i64 1)
   %i.bc = add nuw nsw i64 %.sroa.speculated.i.i.i, %i.v ; 2 uses
   %i.bd = mul nuw nsw i64 %i.bc, 48

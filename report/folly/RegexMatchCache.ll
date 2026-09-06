@@ -205,24 +205,24 @@ bb.a:
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !20228
   %i.w = ptrtoint ptr %i.v to i64
   %i.x = ptrtoint ptr %i.m to i64
-  %i.y = sub i64 %i.w, %i.x
-  %1 = sdiv exact i64 %i.y, 24                    ; 3 uses
-  %i.z = icmp ugt i64 %1, 3
+  %i.y = sub i64 %i.w, %i.x                       ; 2 uses
+  %i.z = icmp ugt i64 %i.y, 72
   br i1 %i.z, label %.lr.ph.i, label %_ZN5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE9set_firstES2_.exit
 
 .lr.ph.i:                                         ; preds = %bb.a
+  %1 = sdiv exact i64 %i.y, 24                    ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.m, i64 8
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %1, i64 4)
   %.pre.i = load ptr, ptr %i.aa, align 8, !tbaa !20226
   %i.ab = insertelement <2 x ptr> poison, ptr %.pre.i, i64 0
   %i.ac = shufflevector <2 x ptr> %i.ab, <2 x ptr> poison, <2 x i32> zeroinitializer ; 5 uses
-  %2 = add nsw i64 %1, -3                         ; 2 uses
-  %i.ad = add nsw i64 %1, -4
-  %xtraiter = and i64 %2, 3                       ; 3 uses
-  %i.ae = icmp ult i64 %i.ad, 3
+  %i.ad = add i64 %umax.i, -3                     ; 2 uses
+  %xtraiter = and i64 %i.ad, 3                    ; 3 uses
+  %i.ae = icmp ult i64 %1, 7
   br i1 %i.ae, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i
-  %unroll_iter = and i64 %2, -4
+  %unroll_iter = and i64 %i.ad, -4
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
@@ -625,8 +625,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
-  %2 = sdiv exact i64 %i.f, 24
-  %i.n = icmp ugt i64 %2, 384307168202282325
+  %i.n = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.n, label %bb.d, label %_ZNSt12_Vector_baseIN5boost9sub_matchIPKcEESaIS4_EE11_M_allocateEm.exit.i, !prof !19683
 
 bb.d:                                             ; preds = %bb.c
@@ -1029,11 +1028,11 @@ bb.a:
 
 _ZNK5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE6suffixEv.exit: ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !20228
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !20228 ; 2 uses
   %i.f = load ptr, ptr %0, align 8, !tbaa !20173  ; 4 uses
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
-  %i.i = sub i64 %i.g, %i.h
+  %i.i = sub i64 %i.g, %i.h                       ; 2 uses
   %i.j = sdiv exact i64 %i.i, 24                  ; 3 uses
   %i.k = trunc i64 %i.j to i32                    ; 3 uses
   %i.l = icmp sgt i32 %i.k, 0
@@ -1046,18 +1045,19 @@ _ZNK5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE6suffixEv.exit: ; preds = %
   br i1 %.not144, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNK5boost13match_resultsIPKcSaINS_9sub_matchIS2_EEEE6suffixEv.exit
-  %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 48 ; 3 uses
+  %2 = icmp ugt i64 %i.i, 48
+  %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 48 ; 2 uses
+  %spec.select.i = select i1 %2, ptr %i.p, ptr %i.e ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !20228 ; 2 uses
   %i.s = ptrtoint ptr %i.r to i64
   %i.t = load ptr, ptr %1, align 8, !tbaa !20173  ; 2 uses
   %i.u = ptrtoint ptr %i.t to i64
   %i.v = sub i64 %i.s, %i.u
-  %2 = sdiv exact i64 %i.v, 24
-  %i.w = icmp ugt i64 %2, 2
+  %i.w = icmp ugt i64 %i.v, 48
   %i.x = getelementptr inbounds nuw i8, ptr %i.t, i64 48
   %spec.select.i43 = select i1 %i.w, ptr %i.x, ptr %i.r
-  %i.y = load ptr, ptr %i.p, align 8, !tbaa !20225
+  %i.y = load ptr, ptr %spec.select.i, align 8, !tbaa !20225
   %i.z = icmp eq ptr %i.y, %i.o
   %i.aa = icmp sgt i32 %i.k, 1
   %i.ab = getelementptr inbounds nuw i8, ptr %i.f, i64 24
@@ -1076,7 +1076,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.n
   %.02897 = phi i64 [ 0, %.lr.ph ], [ %.129, %bb.n ] ; 4 uses
   %.03196 = phi i64 [ 0, %.lr.ph ], [ %.132, %bb.n ] ; 4 uses
   %.sroa.0.095 = phi ptr [ %spec.select.i43, %.lr.ph ], [ %i.bm, %bb.n ] ; 6 uses
-  %.sroa.060.094 = phi ptr [ %i.p, %.lr.ph ], [ %i.bl, %bb.n ] ; 6 uses
+  %.sroa.060.094 = phi ptr [ %spec.select.i, %.lr.ph ], [ %i.bl, %bb.n ] ; 6 uses
   %i.af = load ptr, ptr %.sroa.060.094, align 8, !tbaa !20225 ; 2 uses
   %i.ag = icmp eq ptr %i.af, %i.o
   %i.ah = load ptr, ptr %.sroa.0.095, align 8, !tbaa !20225 ; 2 uses
@@ -1479,8 +1479,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 24
-  %i.g = icmp ugt i64 %2, 384307168202282325
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN5boost9sub_matchIPKcEEE8allocateEmPKv.exit.i.i.i.i, !prof !19683
 
 .noexc.i.i:                                       ; preds = %bb.b

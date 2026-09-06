@@ -205,8 +205,7 @@ bb.a:
   %i.e = ptrtoint ptr %i.a to i64
   %i.f = sub i64 %i.d, %i.e
   %reass.sub.fr.i = freeze i64 %i.f               ; 5 uses
-  %1 = sdiv exact i64 %reass.sub.fr.i, 24
-  %i.g = icmp ugt i64 %1, 384307168202282325
+  %i.g = icmp ugt i64 %reass.sub.fr.i, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNSt6vectorIN5folly18threadlocal_detail14ThreadEntrySet7ElementESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i
 
 bb.b:                                             ; preds = %bb.a
@@ -230,10 +229,10 @@ _ZNSt12_Vector_baseIN5folly18threadlocal_detail14ThreadEntrySet7ElementESaIS3_EE
 
 .noexc5.i:                                        ; preds = %.lr.ph.i.i.i.i.preheader.i.i
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 %reass.sub.fr.i
-  %i.k = add i64 %reass.sub.fr.i, -24             ; 2 uses
+  %i.k = add nsw i64 %reass.sub.fr.i, -24         ; 2 uses
   %i.l = urem i64 %i.k, 24
-  %i.m = sub nuw i64 %i.k, %i.l
-  %i.n = add i64 %i.m, 24                         ; 2 uses
+  %i.m = sub nuw nsw i64 %i.k, %i.l
+  %i.n = add nsw i64 %i.m, 24                     ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.i, ptr align 8 %i.a, i64 %i.n, i1 false)
   %scevgep.i.i = getelementptr i8, ptr %i.i, i64 %i.n
   %.pre = load ptr, ptr %0, align 8, !tbaa !58

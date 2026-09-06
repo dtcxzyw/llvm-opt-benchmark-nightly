@@ -205,8 +205,7 @@ bb.a:
   br i1 %.not.i.i.i, label %_ZNSt12_Vector_baseIN4llvm6TripleESaIS1_EEC2EmRKS2_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.g, 56
-  %i.h = icmp ugt i64 %2, 164703072086692425
+  %i.h = icmp ugt i64 %i.g, 9223372036854775800
   br i1 %i.h, label %bb.c, label %_ZNSt15__new_allocatorIN4llvm6TripleEE8allocateEmPKv.exit.i.i.i, !prof !851
 
 bb.c:                                             ; preds = %bb.b

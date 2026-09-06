@@ -205,9 +205,10 @@ bb.b:                                             ; preds = %bb.a
   %i.j = icmp eq i8 %i.i, 0                       ; 5 uses
   %i.k = ptrtoint ptr %i.d to i64
   %i.l = ptrtoint ptr %i.b to i64
-  %i.m = sub i64 %i.k, %i.l
-  %18 = sdiv exact i64 %i.m, 24                   ; 2 uses
-  %i.n = icmp ugt i64 %18, 1
+  %i.m = sub i64 %i.k, %i.l                       ; 2 uses
+  %.cmp = icmp ugt i64 %i.m, 23
+  %18 = zext i1 %.cmp to i64
+  %i.n = icmp ugt i64 %i.m, 24
   br i1 %i.n, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.b
@@ -610,8 +611,7 @@ _ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE12emplace_backIJP9DfgVertexRjR
   %i.x = ptrtoint ptr %i.u to i64
   %i.y = ptrtoint ptr %i.w to i64
   %i.z = sub i64 %i.x, %i.y                       ; 2 uses
-  %4 = sdiv exact i64 %i.z, 24
-  %i.aa = icmp ugt i64 %4, 1
+  %i.aa = icmp ugt i64 %i.z, 24
   br i1 %i.aa, label %bb.d, label %_ZZN18AstToDfgSynthesize13gatherDriversEP15DfgVertexSpliceENKUlR9DfgVertexjP8FileLineE_clES3_jS5_.exit
 
 bb.d:                                             ; preds = %_ZNSt6vectorIN18AstToDfgSynthesize6DriverESaIS1_EE12emplace_backIJP9DfgVertexRjRP8FileLineEEERS1_DpOT_.exit.i
@@ -1014,9 +1014,10 @@ bb.c:                                             ; preds = %bb.a
 .preheader:                                       ; preds = %bb.c
   %i.m = ptrtoint ptr %i.c to i64
   %i.n = ptrtoint ptr %i.a to i64
-  %i.o = sub i64 %i.m, %i.n
-  %2 = sdiv exact i64 %i.o, 24                    ; 2 uses
-  %i.p = icmp ugt i64 %2, 1
+  %i.o = sub i64 %i.m, %i.n                       ; 2 uses
+  %.cmp = icmp ugt i64 %i.o, 23
+  %2 = zext i1 %.cmp to i64
+  %i.p = icmp ugt i64 %i.o, 24
   br i1 %i.p, label %.lr.ph, label %._crit_edge
 
 bb.d:                                             ; preds = %bb.c

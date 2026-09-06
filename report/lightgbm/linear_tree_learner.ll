@@ -205,8 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = sdiv exact i64 %i.j, 24
-  %i.k = icmp ugt i64 %2, 384307168202282325
+  %i.k = icmp ugt i64 %i.j, 9223372036854775800
   br i1 %i.k, label %.noexc.i.i, label %_ZNSt15__new_allocatorISt6vectorIdSaIdEEE8allocateEmPKv.exit.i.i.i.i, !prof !220
 
 .noexc.i.i:                                       ; preds = %bb.c
@@ -450,8 +449,7 @@ _ZNKSt6vectorIS_IS_IdSaIdEESaIS1_EESaIS3_EE12_M_check_lenEmPKc.exit: ; preds = %
   br i1 %.not.i.i.i.i, label %.noexc26, label %bb.c
 
 bb.c:                                             ; preds = %_ZNKSt6vectorIS_IS_IdSaIdEESaIS1_EESaIS3_EE12_M_check_lenEmPKc.exit
-  %3 = sdiv exact i64 %i.w, 24
-  %i.x = icmp ugt i64 %3, 384307168202282325
+  %i.x = icmp ugt i64 %i.w, 9223372036854775800
   br i1 %i.x, label %.noexc.i.i, label %_ZNSt15__new_allocatorISt6vectorIdSaIdEEE8allocateEmPKv.exit.i.i.i.i, !prof !220
 
 .noexc.i.i:                                       ; preds = %bb.c

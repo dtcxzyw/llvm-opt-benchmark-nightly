@@ -205,8 +205,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7openvdb5v13_05tools11TreeToMergeINS1_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeINS1_9ValueMaskELj3EEELj4EEELj5EEEEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !800
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -609,8 +608,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7openvdb5v13_05tools11TreeToMergeINS1_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIbLj3EEELj4EEELj5EEEEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !800
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -1013,8 +1011,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7openvdb5v13_05tools11TreeToMergeINS1_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !800
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -1417,8 +1414,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7openvdb5v13_05tools11TreeToMergeINS1_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !800
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -1821,8 +1817,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7openvdb5v13_05tools11TreeToMergeINS1_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIiLj3EEELj4EEELj5EEEEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !800
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -2225,8 +2220,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7openvdb5v13_05tools11TreeToMergeINS1_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIlLj3EEELj4EEELj5EEEEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !800
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -2629,8 +2623,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7openvdb5v13_05tools11TreeToMergeINS1_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeINS1_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !800
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -3033,8 +3026,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7openvdb5v13_05tools11TreeToMergeINS1_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeINS1_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !800
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -3437,8 +3429,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7openvdb5v13_05tools11TreeToMergeINS1_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeINS1_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !800
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -3841,8 +3832,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7openvdb5v13_05tools11TreeToMergeINS1_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !800
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -4245,8 +4235,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7openvdb5v13_05tools11TreeToMergeINS1_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !800
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -4649,8 +4638,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7openvdb5v13_05tools11TreeToMergeINS1_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !800
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -5053,8 +5041,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7openvdb5v13_05tools11TreeToMergeINS1_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !800
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -5457,8 +5444,8 @@ bb.d:                                             ; preds = %_ZNSt10unique_ptrIA
   %i.r = load ptr, ptr %13, align 8, !tbaa !2046  ; 3 uses
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = ptrtoint ptr %i.r to i64
-  %i.u = sub i64 %i.s, %i.t
-  %i.v = sdiv exact i64 %i.u, 12                  ; 11 uses
+  %i.u = sub i64 %i.s, %i.t                       ; 2 uses
+  %i.v = sdiv exact i64 %i.u, 12                  ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #24
   store i64 %i.v, ptr %16, align 8, !tbaa !1779
   %i.w = getelementptr inbounds nuw i8, ptr %16, i64 8
@@ -5466,7 +5453,7 @@ bb.d:                                             ; preds = %_ZNSt10unique_ptrIA
   %i.x = getelementptr inbounds nuw i8, ptr %16, i64 16
   store i64 1, ptr %i.x, align 8, !tbaa !1781
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #24
-  %23 = icmp ugt i64 %i.v, 2305843009213693951    ; 2 uses
+  %23 = icmp slt i64 %i.u, 0                      ; 2 uses
   %i.y = shl nsw i64 %i.v, 3                      ; 4 uses
   %i.z = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.y, i64 8) ; 2 uses
   %i.aa = extractvalue { i64, i1 } %i.z, 1
@@ -5798,11 +5785,11 @@ _ZNSt10unique_ptrIA_jSt14default_deleteIS0_EE5resetIPjvEEvT_.exit: ; preds = %bb
   %i.dv = load ptr, ptr %i.ds, align 8, !tbaa !1791
   %i.dw = ptrtoint ptr %i.du to i64
   %i.dx = ptrtoint ptr %i.dv to i64
-  %i.dy = sub i64 %i.dw, %i.dx
-  %i.dz = sdiv exact i64 %i.dy, 12                ; 2 uses
-  %24 = icmp ugt i64 %i.dz, 4611686018427387903
-  %25 = shl nsw i64 %i.dz, 2
-  %i.ea = select i1 %24, i64 -1, i64 %25
+  %i.dy = sub i64 %i.dw, %i.dx                    ; 2 uses
+  %i.dz = sdiv exact i64 %i.dy, 12
+  %24 = shl nsw i64 %i.dz, 2
+  %.inv156 = icmp sgt i64 %i.dy, -1
+  %i.ea = select i1 %.inv156, i64 %24, i64 -1
   %i.eb = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ea) #30
           to label %bb.ac unwind label %bb.ad
 
@@ -6205,9 +6192,9 @@ _ZNSt3setIN7openvdb5v13_04math5CoordESt4lessIS3_ESaIS3_EE5clearEv.exit: ; preds 
   %i.en = load ptr, ptr %4, align 8, !tbaa !2046  ; 2 uses
   %i.eo = ptrtoint ptr %i.em to i64
   %i.ep = ptrtoint ptr %i.en to i64
-  %i.eq = sub i64 %i.eo, %i.ep
-  %i.er = sdiv exact i64 %i.eq, 12                ; 5 uses
-  %18 = icmp ugt i64 %i.er, 2305843009213693951
+  %i.eq = sub i64 %i.eo, %i.ep                    ; 2 uses
+  %i.er = sdiv exact i64 %i.eq, 12                ; 4 uses
+  %18 = icmp slt i64 %i.eq, 0
   %i.es = shl nsw i64 %i.er, 3                    ; 3 uses
   %i.et = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.es, i64 8) ; 2 uses
   %i.eu = extractvalue { i64, i1 } %i.et, 1

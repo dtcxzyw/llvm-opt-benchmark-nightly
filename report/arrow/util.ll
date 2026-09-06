@@ -205,16 +205,25 @@ bb.a:
   %i.c = load ptr, ptr %1, align 8, !tbaa !204    ; 7 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e                       ; 10 uses
-  %i.g = sdiv exact i64 %i.f, 24                  ; 3 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 13 uses
+  %i.g = sdiv exact i64 %i.f, 24
   %i.h = icmp ult i64 %i.g, 2
   br i1 %i.h, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %.not.i.i.i.i = icmp eq ptr %i.b, %i.c
-  br i1 %.not.i.i.i.i, label %bb.c, label %_ZNSt15__new_allocatorISt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS4_EEE8allocateEmPKv.exit.i.i.i.i
+  br i1 %.not.i.i.i.i, label %bb.c, label %3
 
-_ZNSt15__new_allocatorISt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS4_EEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.b
+3:                                                ; preds = %bb.b
+  %4 = icmp ugt i64 %i.f, 9223372036854775800
+  br i1 %4, label %.noexc.i.i, label %_ZNSt15__new_allocatorISt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS4_EEE8allocateEmPKv.exit.i.i.i.i, !prof !118
+
+.noexc.i.i:                                       ; preds = %3
+  tail call void @_ZSt28__throw_bad_array_new_lengthv() #23
+  unreachable
+
+_ZNSt15__new_allocatorISt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS4_EEE8allocateEmPKv.exit.i.i.i.i: ; preds = %3
   %i.i = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #20
   %.pre254 = load ptr, ptr %1, align 8, !tbaa !1449
   %.pre255 = load ptr, ptr %i.a, align 8, !tbaa !1449
@@ -281,7 +290,7 @@ bb.f:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i60, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge.thread
-  %i.ae = icmp ugt i64 %i.g, 384307168202282325
+  %i.ae = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.ae, label %.noexc.i.i64, label %_ZNSt15__new_allocatorISt6vectorISt10shared_ptrIN5arrow5ArrayEESaIS4_EEE8allocateEmPKv.exit.i.i.i.i61, !prof !118
 
 .noexc.i.i64:                                     ; preds = %bb.g
@@ -322,7 +331,7 @@ _ZNSt6vectorIS_ISt10shared_ptrIN5arrow5ArrayEESaIS3_EESaIS5_EEC2ERKS7_.exit65: ;
   br label %_ZNSt6vectorIN9__gnu_cxx17__normal_iteratorIPKSt10shared_ptrIN5arrow5ArrayEES_IS5_SaIS5_EEEESaISA_EED2Ev.exit
 
 bb.k:                                             ; preds = %._crit_edge
-  %i.ao = icmp ugt i64 %i.g, 384307168202282325
+  %i.ao = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.ao, label %.noexc, label %.lr.ph.preheader.i.i.i.i.i
 
 .noexc:                                           ; preds = %bb.k

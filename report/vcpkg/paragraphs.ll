@@ -205,8 +205,7 @@ bb.e:                                             ; preds = %bb.b
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = ptrtoint ptr %i.r to i64
   %i.x = sub i64 %i.v, %i.w
-  %9 = sdiv exact i64 %i.x, 48
-  %i.y = icmp ugt i64 %9, 1
+  %i.y = icmp ugt i64 %i.x, 48
   br i1 %i.y, label %.lr.ph8.i.i, label %._crit_edge9.i.i
 
 .lr.ph8.i.i:                                      ; preds = %.preheader.i.i
@@ -609,8 +608,8 @@ bb.o:                                             ; preds = %bb.f
   %i.ax = load ptr, ptr %10, align 8, !tbaa !144
   %i.ay = ptrtoint ptr %i.aw to i64
   %i.az = ptrtoint ptr %i.ax to i64
-  %i.ba = sub i64 %i.ay, %i.az
-  %i.bb = sdiv exact i64 %i.ba, 48                ; 2 uses
+  %i.ba = sub i64 %i.ay, %i.az                    ; 2 uses
+  %i.bb = sdiv exact i64 %i.ba, 48
   %i.bc = add nsw i64 %i.bb, -1                   ; 4 uses
   %i.bd = icmp ugt i64 %i.bc, 38430716820228232
   br i1 %i.bd, label %bb.p, label %bb.q
@@ -686,12 +685,11 @@ _ZNSt12_Vector_baseIN5vcpkg15BinaryParagraphESaIS1_EE13_M_deallocateEPS1_m.exit.
   %.pre76 = ptrtoint ptr %.pre62 to i64
   %.pre77 = ptrtoint ptr %.pre63 to i64
   %.pre79 = sub i64 %.pre76, %.pre77
-  %.pre81 = sdiv exact i64 %.pre79, 48
   br label %_ZNSt6vectorIN5vcpkg15BinaryParagraphESaIS1_EE7reserveEm.exit
 
 _ZNSt6vectorIN5vcpkg15BinaryParagraphESaIS1_EE7reserveEm.exit: ; preds = %bb.q, %_ZNSt12_Vector_baseIN5vcpkg15BinaryParagraphESaIS1_EE13_M_deallocateEPS1_m.exit.i
-  %.pre-phi82 = phi i64 [ %i.bb, %bb.q ], [ %.pre81, %_ZNSt12_Vector_baseIN5vcpkg15BinaryParagraphESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
-  %i.cd = icmp ugt i64 %.pre-phi82, 1
+  %.pre-phi82 = phi i64 [ %i.ba, %bb.q ], [ %.pre79, %_ZNSt12_Vector_baseIN5vcpkg15BinaryParagraphESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
+  %i.cd = icmp ugt i64 %.pre-phi82, 48
   br i1 %i.cd, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN5vcpkg15BinaryParagraphESaIS1_EE7reserveEm.exit

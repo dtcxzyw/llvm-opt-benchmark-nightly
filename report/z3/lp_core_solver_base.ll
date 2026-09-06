@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load ptr, ptr %i.g, align 8, !tbaa !137  ; 8 uses
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = ptrtoint ptr %i.j to i64
-  %i.m = sub i64 %i.k, %i.l
-  %i.n = sdiv exact i64 %i.m, 12                  ; 2 uses
+  %i.m = sub i64 %i.k, %i.l                       ; 2 uses
+  %i.n = sdiv exact i64 %i.m, 12
   %.not46 = icmp eq ptr %i.i, %i.j
   br i1 %.not46, label %.thread, label %.lr.ph
 
@@ -272,13 +272,12 @@ bb.f:                                             ; preds = %bb.e
   %.pre48 = ptrtoint ptr %.pre to i64
   %.pre49 = ptrtoint ptr %i.af to i64
   %.pre51 = sub i64 %.pre48, %.pre49
-  %.pre53 = sdiv exact i64 %.pre51, 12
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %.pre-phi54 = phi i64 [ %.pre53, %bb.f ], [ %i.n, %bb.e ]
+  %.pre-phi54 = phi i64 [ %.pre51, %bb.f ], [ %i.m, %bb.e ]
   %i.as = phi ptr [ %.pre, %bb.f ], [ %i.i, %bb.e ]
-  %i.at = icmp ugt i64 %.pre-phi54, 1
+  %i.at = icmp ugt i64 %.pre-phi54, 12
   br i1 %i.at, label %.lr.ph45, label %._crit_edge
 
 .lr.ph45:                                         ; preds = %bb.g
@@ -334,8 +333,7 @@ _ZN16indexed_uint_set6insertEj.exit:              ; preds = %_ZNK16indexed_uint_
   %i.bt = ptrtoint ptr %i.br to i64
   %i.bu = ptrtoint ptr %i.bs to i64
   %i.bv = sub i64 %i.bt, %i.bu
-  %3 = sdiv exact i64 %i.bv, 12
-  %i.bw = icmp ugt i64 %3, 1
+  %i.bw = icmp ugt i64 %i.bv, 12
   br i1 %i.bw, label %bb.h, label %._crit_edge, !llvm.loop !199
 
 ._crit_edge:                                      ; preds = %_ZN16indexed_uint_set6insertEj.exit, %bb.g
@@ -738,8 +736,8 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load ptr, ptr %i.g, align 8, !tbaa !137  ; 8 uses
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = ptrtoint ptr %i.j to i64
-  %i.m = sub i64 %i.k, %i.l
-  %i.n = sdiv exact i64 %i.m, 12                  ; 2 uses
+  %i.m = sub i64 %i.k, %i.l                       ; 2 uses
+  %i.n = sdiv exact i64 %i.m, 12
   %.not46 = icmp eq ptr %i.i, %i.j
   br i1 %.not46, label %.thread, label %.lr.ph
 
@@ -806,13 +804,12 @@ bb.f:                                             ; preds = %bb.e
   %.pre48 = ptrtoint ptr %.pre to i64
   %.pre49 = ptrtoint ptr %i.af to i64
   %.pre51 = sub i64 %.pre48, %.pre49
-  %.pre53 = sdiv exact i64 %.pre51, 12
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %.pre-phi54 = phi i64 [ %.pre53, %bb.f ], [ %i.n, %bb.e ]
+  %.pre-phi54 = phi i64 [ %.pre51, %bb.f ], [ %i.m, %bb.e ]
   %i.as = phi ptr [ %.pre, %bb.f ], [ %i.i, %bb.e ]
-  %i.at = icmp ugt i64 %.pre-phi54, 1
+  %i.at = icmp ugt i64 %.pre-phi54, 12
   br i1 %i.at, label %.lr.ph45, label %._crit_edge
 
 .lr.ph45:                                         ; preds = %bb.g
@@ -868,8 +865,7 @@ _ZN16indexed_uint_set6insertEj.exit:              ; preds = %_ZNK16indexed_uint_
   %i.bt = ptrtoint ptr %i.br to i64
   %i.bu = ptrtoint ptr %i.bs to i64
   %i.bv = sub i64 %i.bt, %i.bu
-  %3 = sdiv exact i64 %i.bv, 12
-  %i.bw = icmp ugt i64 %3, 1
+  %i.bw = icmp ugt i64 %i.bv, 12
   br i1 %i.bw, label %bb.h, label %._crit_edge, !llvm.loop !210
 
 ._crit_edge:                                      ; preds = %_ZN16indexed_uint_set6insertEj.exit, %bb.g

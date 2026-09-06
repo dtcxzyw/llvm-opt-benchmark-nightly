@@ -205,7 +205,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 7 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !86   ; 2 uses
   %.not.i.i = icmp eq ptr %i.d, %i.b
-  br i1 %.not.i.i, label %_ZNSt6vectorIN9Stockfish24SystemWideSharedConstantINS0_4Eval4NNUE8NetworksEEESaIS5_EE5clearEv.exit, label %.lr.ph.i.i.i.i
+  br i1 %.not.i.i, label %_ZNK9Stockfish10NumaConfig27requires_memory_replicationEv.exit, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.a, %_ZSt8_DestroyIN9Stockfish24SystemWideSharedConstantINS0_4Eval4NNUE8NetworksEEEEvPT_.exit.i.i.i.i
   %.05.i.i.i.i = phi ptr [ %i.g, %_ZSt8_DestroyIN9Stockfish24SystemWideSharedConstantINS0_4Eval4NNUE8NetworksEEEEvPT_.exit.i.i.i.i ], [ %i.b, %bb.a ] ; 3 uses
@@ -227,28 +227,25 @@ _ZSt8_DestroyIN9Stockfish24SystemWideSharedConstantINS0_4Eval4NNUE8NetworksEEEEv
 
 _ZSt8_DestroyIPN9Stockfish24SystemWideSharedConstantINS0_4Eval4NNUE8NetworksEEEEvT_S7_.exit.i.i: ; preds = %_ZSt8_DestroyIN9Stockfish24SystemWideSharedConstantINS0_4Eval4NNUE8NetworksEEEEvPT_.exit.i.i.i.i
   store ptr %i.b, ptr %i.c, align 8, !tbaa !86
-  br label %_ZNSt6vectorIN9Stockfish24SystemWideSharedConstantINS0_4Eval4NNUE8NetworksEEESaIS5_EE5clearEv.exit
+  br label %_ZNK9Stockfish10NumaConfig27requires_memory_replicationEv.exit
 
-_ZNSt6vectorIN9Stockfish24SystemWideSharedConstantINS0_4Eval4NNUE8NetworksEEESaIS5_EE5clearEv.exit: ; preds = %bb.a, %_ZSt8_DestroyIPN9Stockfish24SystemWideSharedConstantINS0_4Eval4NNUE8NetworksEEEEvT_S7_.exit.i.i
+_ZNK9Stockfish10NumaConfig27requires_memory_replicationEv.exit: ; preds = %bb.a, %_ZSt8_DestroyIPN9Stockfish24SystemWideSharedConstantINS0_4Eval4NNUE8NetworksEEEEvT_S7_.exit.i.i
   %9 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %10 = load ptr, ptr %9, align 8, !tbaa !71      ; 6 uses
+  %10 = load ptr, ptr %9, align 8, !tbaa !71      ; 5 uses
   %11 = getelementptr inbounds nuw i8, ptr %10, i64 80
   %12 = load i8, ptr %11, align 8, !tbaa !147, !range !121, !noundef !122
   %13 = trunc nuw i8 %12 to i1
-  br i1 %13, label %_ZNK9Stockfish10NumaConfig27requires_memory_replicationEv.exit.thread, label %_ZNK9Stockfish10NumaConfig27requires_memory_replicationEv.exit
-
-_ZNK9Stockfish10NumaConfig27requires_memory_replicationEv.exit: ; preds = %_ZNSt6vectorIN9Stockfish24SystemWideSharedConstantINS0_4Eval4NNUE8NetworksEEESaIS5_EE5clearEv.exit
-  %i.h = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !107
-  %i.j = load ptr, ptr %10, align 8, !tbaa !106
+  %i.h = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
+  %i.i = load ptr, ptr %i.h, align 8
+  %i.j = load ptr, ptr %10, align 8
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = ptrtoint ptr %i.j to i64
   %i.m = sub i64 %i.k, %i.l
-  %14 = sdiv exact i64 %i.m, 48
-  %15 = icmp ugt i64 %14, 1
+  %14 = icmp ugt i64 %i.m, 48
+  %15 = select i1 %13, i1 true, i1 %14
   br i1 %15, label %_ZNK9Stockfish10NumaConfig27requires_memory_replicationEv.exit.thread, label %bb.h
 
-_ZNK9Stockfish10NumaConfig27requires_memory_replicationEv.exit.thread: ; preds = %_ZNSt6vectorIN9Stockfish24SystemWideSharedConstantINS0_4Eval4NNUE8NetworksEEESaIS5_EE5clearEv.exit, %_ZNK9Stockfish10NumaConfig27requires_memory_replicationEv.exit
+_ZNK9Stockfish10NumaConfig27requires_memory_replicationEv.exit.thread: ; preds = %_ZNK9Stockfish10NumaConfig27requires_memory_replicationEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
   store ptr %0, ptr %7, align 8, !tbaa !151
   %i.n = getelementptr inbounds nuw i8, ptr %7, i64 8
@@ -291,8 +288,7 @@ bb.c:                                             ; preds = %_ZNSt6threadC2IZNK9
 _ZNK9Stockfish10NumaConfig20execute_on_numa_nodeIZNS_28LazyNumaReplicatedSystemWideINS_4Eval4NNUE8NetworksEE22prepare_replicate_fromEOSt10unique_ptrIS5_St14default_deleteIS5_EEEUlvE_EEvmOT_.exit: ; preds = %_ZNSt6threadC2IZNK9Stockfish10NumaConfig20execute_on_numa_nodeIZNS1_28LazyNumaReplicatedSystemWideINS1_4Eval4NNUE8NetworksEE22prepare_replicate_fromEOSt10unique_ptrIS7_St14default_deleteIS7_EEEUlvE_EEvmOT_EUlvE_JEvEESG_DpOT0_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
-  %16 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %i.u = load ptr, ptr %16, align 8, !tbaa !107
+  %i.u = load ptr, ptr %i.h, align 8, !tbaa !107
   %i.v = load ptr, ptr %10, align 8, !tbaa !106
   %i.w = ptrtoint ptr %i.u to i64
   %i.x = ptrtoint ptr %i.v to i64
@@ -695,8 +691,7 @@ bb.i:                                             ; preds = %._crit_edge106, %bb
   %i.bg = ptrtoint ptr %i.bf to i64
   %i.bh = ptrtoint ptr %i.be to i64
   %i.bi = sub i64 %i.bg, %i.bh
-  %6 = sdiv exact i64 %i.bi, 56
-  %i.bj = icmp ugt i64 %6, 1
+  %i.bj = icmp ugt i64 %i.bi, 56
   br i1 %i.bj, label %.lr.ph105, label %.preheader
 
 ._crit_edge106:                                   ; preds = %bb.r

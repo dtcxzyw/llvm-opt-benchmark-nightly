@@ -205,8 +205,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 152
-  %i.g = icmp ugt i64 %2, 60680079189834051
+  %i.g = icmp ugt i64 %i.f, 9223372036854775752
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN8tinygltf5ValueEE8allocateEmPKv.exit.i.i.i, !prof !470
 
 .noexc.i:                                         ; preds = %bb.b
@@ -609,8 +608,7 @@ bb.ag:                                            ; preds = %bb.s
   %i.dk = ptrtoint ptr %i.cd to i64
   %i.dl = ptrtoint ptr %i.cb to i64
   %i.dm = sub i64 %i.dk, %i.dl
-  %11 = sdiv exact i64 %i.dm, 328
-  %i.dn = icmp ugt i64 %11, 1
+  %i.dn = icmp ugt i64 %i.dm, 328
   br i1 %i.dn, label %bb.ah, label %bb.ap
 
 bb.ah:                                            ; preds = %bb.ag
@@ -1013,9 +1011,9 @@ bb.a:
   %i.e = load ptr, ptr %i.b, align 8, !tbaa !319  ; 2 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
-  %i.h = sub i64 %i.f, %i.g
-  %i.i = sdiv exact i64 %i.h, 488                 ; 3 uses
-  %4 = icmp ugt i64 %i.i, 2305843009213693951
+  %i.h = sub i64 %i.f, %i.g                       ; 2 uses
+  %i.i = sdiv exact i64 %i.h, 488                 ; 2 uses
+  %4 = icmp slt i64 %i.h, 0
   br i1 %4, label %bb.b, label %_ZNSt6vectorIiN3ozz12StdAllocatorIiEEE17_S_check_init_lenEmRKS2_.exit.i
 
 bb.b:                                             ; preds = %bb.a
@@ -1418,9 +1416,9 @@ bb.a:
   %3 = alloca %"class.nlohmann::json_abi_v3_11_3::basic_json", align 8 ; 5 uses
   %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.a, %i.b
-  %i.d = sdiv exact i64 %i.c, 24                  ; 4 uses
-  %4 = icmp ugt i64 %i.d, 576460752303423487
+  %i.c = sub i64 %i.a, %i.b                       ; 2 uses
+  %i.d = sdiv exact i64 %i.c, 24                  ; 3 uses
+  %4 = icmp slt i64 %i.c, 0
   br i1 %4, label %bb.b, label %_ZNSt6vectorIN8nlohmann16json_abi_v3_11_310basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE17_S_check_init_lenEmRKSE_.exit
 
 bb.b:                                             ; preds = %bb.a

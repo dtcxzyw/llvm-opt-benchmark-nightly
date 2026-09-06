@@ -204,8 +204,7 @@ _ZNSt6vectorIN12_GLOBAL__N_110FsmSenDescESaIS1_EEC2ERKS3_.exit: ; preds = %.lr.p
   br i1 %.not.i.i.i.i10, label %.noexc17, label %bb.d
 
 bb.d:                                             ; preds = %_ZNSt6vectorIN12_GLOBAL__N_110FsmSenDescESaIS1_EEC2ERKS3_.exit
-  %2 = sdiv exact i64 %i.w, 104
-  %i.x = icmp ugt i64 %2, 88686269585142075
+  %i.x = icmp ugt i64 %i.w, 9223372036854775800
   br i1 %i.x, label %.noexc.i.i16, label %_ZNSt15__new_allocatorIN12_GLOBAL__N_115FsmResetArcDescEE8allocateEmPKv.exit.i.i.i.i, !prof !34
 
 .noexc.i.i16:                                     ; preds = %bb.d
@@ -608,8 +607,7 @@ bb.am:                                            ; preds = %bb.al
   %i.gy = ptrtoint ptr %.val9.i.i to i64
   %i.gz = ptrtoint ptr %.val.i.i to i64
   %i.ha = sub i64 %i.gy, %i.gz
-  %28 = sdiv exact i64 %i.ha, 120
-  %i.hb = icmp ugt i64 %28, 1
+  %i.hb = icmp ugt i64 %i.ha, 120
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #26
   br i1 %i.hb, label %bb.an, label %.loopexit288
 
@@ -1012,8 +1010,7 @@ bb.db:                                            ; preds = %_ZN12_GLOBAL__N_118
   %i.ry = ptrtoint ptr %.val49 to i64
   %i.rz = ptrtoint ptr %.val to i64
   %i.sa = sub i64 %i.ry, %i.rz
-  %8 = sdiv exact i64 %i.sa, 120
-  %i.sb = icmp ugt i64 %8, 1
+  %i.sb = icmp ugt i64 %i.sa, 120
   br label %.loopexit107
 
 .loopexit107:                                     ; preds = %_ZN12_GLOBAL__N_118FsmStateComparisonD2Ev.exit, %bb.db
@@ -1416,8 +1413,7 @@ _ZZN12_GLOBAL__N_116FsmDetectVisitor17collectStateSpaceERKNS_19FsmIfChainCandida
   %i.gj = ptrtoint ptr %.val9.i.i to i64
   %i.gk = ptrtoint ptr %.val.i.i to i64
   %i.gl = sub i64 %i.gj, %i.gk
-  %25 = sdiv exact i64 %i.gl, 120
-  %i.gm = icmp ugt i64 %25, 1
+  %i.gm = icmp ugt i64 %i.gl, 120
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #26
   br i1 %i.gm, label %bb.ar, label %bb.gr
 
@@ -1820,8 +1816,7 @@ select.unfold2:                                   ; preds = %bb.d, %bb.b
   %i.ak = ptrtoint ptr %.val39 to i64
   %i.al = ptrtoint ptr %.val to i64
   %i.am = sub i64 %i.ak, %i.al
-  %5 = sdiv exact i64 %i.am, 120
-  %i.an = icmp ugt i64 %5, 1
+  %i.an = icmp ugt i64 %i.am, 120
   br label %bb.be
 
 _ZN7AstNode2asI11AstEnumItemS_EEPT_PT0_.exit:     ; preds = %bb.ax, %.lr.ph

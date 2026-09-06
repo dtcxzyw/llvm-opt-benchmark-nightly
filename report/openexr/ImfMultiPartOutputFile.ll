@@ -202,8 +202,8 @@ bb.a:
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !30   ; 4 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
-  %i.g = sub i64 %i.e, %i.f                       ; 2 uses
-  %i.h = sdiv exact i64 %i.g, 56                  ; 3 uses
+  %i.g = sub i64 %i.e, %i.f                       ; 3 uses
+  %i.h = sdiv exact i64 %i.g, 56
   %i.i = icmp eq ptr %i.c, %i.d
   br i1 %i.i, label %bb.b, label %bb.e
 
@@ -232,12 +232,13 @@ bb.e:                                             ; preds = %bb.a
 bb.f:                                             ; preds = %bb.e
   %i.o = tail call noundef i32 @_ZN7Imf_3_423getChunkOffsetTableSizeERKNS_6HeaderE(ptr noundef nonnull align 8 dereferenceable(49) %i.n)
   tail call void @_ZN7Imf_3_46Header13setChunkCountEi(ptr noundef nonnull align 8 dereferenceable(49) %i.n, i32 noundef %i.o)
-  %i.p = icmp ugt i64 %i.h, 1
+  %i.p = icmp ugt i64 %i.g, 56
   br i1 %i.p, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.f
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %umax102 = tail call i64 @llvm.umax.i64(i64 %i.h, i64 2) ; 2 uses
   br i1 %1, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.g
@@ -260,7 +261,7 @@ bb.g:                                             ; preds = %.lr.ph.split.us
   %i.ac = getelementptr inbounds nuw [56 x i8], ptr %i.ab, i64 %.02393.us
   tail call void @_ZN7Imf_3_419MultiPartOutputFile4Data30overrideSharedAttributesValuesERKNS_6HeaderERS2_(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(49) %i.ab, ptr noundef nonnull align 8 dereferenceable(49) %i.ac)
   %i.ad = add nuw i64 %.02393.us, 1               ; 2 uses
-  %exitcond102.not = icmp eq i64 %i.ad, %i.h
+  %exitcond102.not = icmp eq i64 %i.ad, %umax102
   br i1 %exitcond102.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !99
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit, %bb.g, %bb.f
@@ -663,7 +664,7 @@ bb.aj:                                            ; preds = %_ZSt8_DestroyIPNSt7
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit: ; preds = %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i, %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #26
   %i.ep = add nuw i64 %.02393, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ep, %i.h
+  %exitcond.not = icmp eq i64 %i.ep, %umax102
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !99
 
 bb.ak:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit64, %bb.o

@@ -205,10 +205,14 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE11setConstantE
   %i.cd = load ptr, ptr %5, align 8, !tbaa !23    ; 4 uses
   %i.ce = ptrtoint ptr %i.cc to i64
   %i.cf = ptrtoint ptr %i.cd to i64               ; 2 uses
-  %i.cg = sub i64 %i.ce, %i.cf
-  %7 = sdiv exact i64 %i.cg, 20                   ; 2 uses
-  %i.ch = icmp ugt i64 %7, 1
-  br i1 %i.ch, label %.lr.ph, label %._crit_edge
+  %i.cg = sub i64 %i.ce, %i.cf                    ; 2 uses
+  %i.ch = icmp ugt i64 %i.cg, 20
+  br i1 %i.ch, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE11setConstantEllRKi.exit59
+  %7 = sdiv exact i64 %i.cg, 20
+  %umax = call i64 @llvm.umax.i64(i64 %7, i64 2)
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE11setConstantEllRKi.exit59
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #20
@@ -242,8 +246,8 @@ bb.r:                                             ; preds = %_ZN5Eigen15PlainObj
           cleanup
   br label %bb.w
 
-.lr.ph:                                           ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE11setConstantEllRKi.exit59, %bb.v
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.v ], [ 1, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE11setConstantEllRKi.exit59 ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.v
+  %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.v ] ; 2 uses
   %i.cp = getelementptr [20 x i8], ptr %i.cd, i64 %indvars.iv ; 10 uses
   %i.cq = getelementptr i8, ptr %i.cp, i64 -20
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !30
@@ -312,7 +316,7 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s, %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %7
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %umax
   br i1 %exitcond.not, label %._crit_edge.thread, label %.lr.ph, !llvm.loop !60
 
 ._crit_edge.thread:                               ; preds = %bb.v

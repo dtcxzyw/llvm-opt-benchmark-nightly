@@ -204,9 +204,8 @@ bb.a:
   br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIN5boost6cobalt2io8endpointENSt3pmr21polymorphic_allocatorIS3_EEEC2EmRKS6_.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %5 = sdiv exact i64 %i.i, 144
-  %6 = icmp ugt i64 %5, 128102389400760775
-  br i1 %6, label %bb.c, label %_ZNSt16allocator_traitsINSt3pmr21polymorphic_allocatorIN5boost6cobalt2io8endpointEEEE8allocateERS6_m.exit.i.i.i.i
+  %5 = icmp slt i64 %i.i, 0
+  br i1 %5, label %bb.c, label %_ZNSt16allocator_traitsINSt3pmr21polymorphic_allocatorIN5boost6cobalt2io8endpointEEEE8allocateERS6_m.exit.i.i.i.i
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #35
@@ -609,9 +608,8 @@ bb.a:
   br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIN5boost6cobalt2io8endpointENSt3pmr21polymorphic_allocatorIS3_EEEC2EmRKS6_.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.l, 144
-  %3 = icmp ugt i64 %2, 128102389400760775
-  br i1 %3, label %bb.c, label %_ZNSt16allocator_traitsINSt3pmr21polymorphic_allocatorIN5boost6cobalt2io8endpointEEEE8allocateERS6_m.exit.i.i.i.i
+  %2 = icmp slt i64 %i.l, 0
+  br i1 %2, label %bb.c, label %_ZNSt16allocator_traitsINSt3pmr21polymorphic_allocatorIN5boost6cobalt2io8endpointEEEE8allocateERS6_m.exit.i.i.i.i
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_ZSt28__throw_bad_array_new_lengthv() #35

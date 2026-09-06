@@ -204,8 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.c, label %bb.g
 
 bb.c:                                             ; preds = %bb.b
-  %2 = sdiv exact i64 %i.f, 24
-  %i.n = icmp ugt i64 %2, 384307168202282325
+  %i.n = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.n, label %bb.d, label %_ZNSt12_Vector_baseIN6hermes2vm16SamplingProfiler10StackFrameESaIS3_EE11_M_allocateEm.exit.i, !prof !69
 
 bb.d:                                             ; preds = %bb.c
@@ -214,8 +213,8 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNSt12_Vector_baseIN6hermes2vm16SamplingProfiler10StackFrameESaIS3_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #17 ; 3 uses
-  %3 = icmp sgt i64 %i.f, 24
-  br i1 %3, label %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKN6hermes2vm16SamplingProfiler10StackFrameESt6vectorIS5_SaIS5_EEEEPS5_S5_ET0_T_SE_SD_RSaIT1_E.exit.sink.split.i, label %bb.e, !prof !70
+  %2 = icmp samesign ugt i64 %i.f, 24
+  br i1 %2, label %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKN6hermes2vm16SamplingProfiler10StackFrameESt6vectorIS5_SaIS5_EEEEPS5_S5_ET0_T_SE_SD_RSaIT1_E.exit.sink.split.i, label %bb.e, !prof !70
 
 bb.e:                                             ; preds = %_ZNSt12_Vector_baseIN6hermes2vm16SamplingProfiler10StackFrameESaIS3_EE11_M_allocateEm.exit.i
   %i.p = icmp eq i64 %i.f, 24
@@ -618,8 +617,7 @@ _ZNKSt6vectorIN6hermes2vm16SamplingProfiler10StackTraceESaIS3_EE12_M_check_lenEm
   %i.u = ptrtoint ptr %.sroa.0.0.copyload.i to i64
   %i.v = ptrtoint ptr %.sroa.01.0.copyload.i to i64
   %i.w = sub i64 %i.u, %i.v                       ; 7 uses
-  %6 = sdiv exact i64 %i.w, 24
-  %i.x = icmp ugt i64 %6, 384307168202282325
+  %i.x = icmp ugt i64 %i.w, 9223372036854775800
   br i1 %i.x, label %bb.c, label %_ZNSt6vectorIN6hermes2vm16SamplingProfiler10StackFrameESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i.i
 
 bb.c:                                             ; preds = %_ZNKSt6vectorIN6hermes2vm16SamplingProfiler10StackTraceESaIS3_EE12_M_check_lenEmPKc.exit
@@ -631,7 +629,7 @@ _ZNSt6vectorIN6hermes2vm16SamplingProfiler10StackFrameESaIS3_EE17_S_check_init_l
   br i1 %.not.i.i.i.i, label %.thread.i.i.i, label %_ZNSt12_Vector_baseIN6hermes2vm16SamplingProfiler10StackFrameESaIS3_EE11_M_allocateEm.exit.i.i.i
 
 .thread.i.i.i:                                    ; preds = %_ZNSt6vectorIN6hermes2vm16SamplingProfiler10StackFrameESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i.i
-  %i.y = getelementptr inbounds i8, ptr null, i64 %i.w ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr null, i64 %i.w ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.q, i64 32
   store ptr %i.y, ptr %i.z, align 8, !tbaa !15
   br label %_ZN6hermes2vm16SamplingProfiler10StackTraceC2EmNSt6chrono10time_pointINS3_3_V212steady_clockENS3_8durationIlSt5ratioILl1ELl1000000000EEEEEEN9__gnu_cxx17__normal_iteratorIPNS1_10StackFrameESt6vectorISE_SaISE_EEEESJ_.exit
@@ -639,11 +637,11 @@ _ZNSt6vectorIN6hermes2vm16SamplingProfiler10StackFrameESaIS3_EE17_S_check_init_l
 _ZNSt12_Vector_baseIN6hermes2vm16SamplingProfiler10StackFrameESaIS3_EE11_M_allocateEm.exit.i.i.i: ; preds = %_ZNSt6vectorIN6hermes2vm16SamplingProfiler10StackFrameESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i.i
   %i.aa = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #17 ; 4 uses
   store ptr %i.aa, ptr %i.t, align 8, !tbaa !14
-  %i.ab = getelementptr inbounds i8, ptr %i.aa, i64 %i.w ; 4 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.w ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.q, i64 32
   store ptr %i.ab, ptr %i.ac, align 8, !tbaa !15
-  %7 = icmp sgt i64 %i.w, 24
-  br i1 %7, label %bb.d, label %bb.e, !prof !140
+  %6 = icmp samesign ugt i64 %i.w, 24
+  br i1 %6, label %bb.d, label %bb.e, !prof !140
 
 bb.d:                                             ; preds = %_ZNSt12_Vector_baseIN6hermes2vm16SamplingProfiler10StackFrameESaIS3_EE11_M_allocateEm.exit.i.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aa, ptr align 8 %.sroa.01.0.copyload.i, i64 %i.w, i1 false)

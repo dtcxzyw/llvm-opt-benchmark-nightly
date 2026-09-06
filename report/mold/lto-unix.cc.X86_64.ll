@@ -205,8 +205,8 @@ _ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev.exit: ; preds =
   call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.a) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   %i.al = sext i32 %1 to i64
-  %.idx = mul nuw nsw i64 %i.al, 48               ; 4 uses
-  %4 = icmp slt i32 %1, 0
+  %.idx = mul nsw i64 %i.al, 48                   ; 6 uses
+  %4 = icmp ugt i64 %.idx, 9223372036854775776
   br i1 %4, label %bb.b, label %_ZNSt6vectorIN4mold12PluginSymbolESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i
 
 bb.b:                                             ; preds = %_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev.exit
@@ -224,8 +224,8 @@ _ZNSt6vectorIN4mold12PluginSymbolESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i: ;
 _ZNSt12_Vector_baseIN4mold12PluginSymbolESaIS1_EE11_M_allocateEm.exit.i.i: ; preds = %_ZNSt6vectorIN4mold12PluginSymbolESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i
   %i.an = call noalias noundef nonnull ptr @_Znwm(i64 noundef %.idx) #28 ; 5 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 %.idx ; 2 uses
-  %.not = icmp eq i32 %1, 1
-  br i1 %.not, label %bb.d, label %bb.c, !prof !817
+  %5 = icmp samesign ugt i64 %.idx, 48
+  br i1 %5, label %bb.c, label %bb.d, !prof !817
 
 bb.c:                                             ; preds = %_ZNSt12_Vector_baseIN4mold12PluginSymbolESaIS1_EE11_M_allocateEm.exit.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.an, ptr align 8 %2, i64 %.idx, i1 false)
@@ -628,7 +628,7 @@ begin_hunk_1_@llvm.umax.i8
 !814 = distinct !{!814, !"_ZN3tbb6detail2d117concurrent_vectorISt10unique_ptrIA_hSt14default_deleteIS4_EENS1_23cache_aligned_allocatorIS7_EEE21internal_emplace_backIJRPhEEENS1_15vector_iteratorISA_S7_EEDpOT_"}
 !815 = distinct !{!815, !814, !"_ZN3tbb6detail2d117concurrent_vectorISt10unique_ptrIA_hSt14default_deleteIS4_EENS1_23cache_aligned_allocatorIS7_EEE21internal_emplace_backIJRPhEEENS1_15vector_iteratorISA_S7_EEDpOT_: argument 0"}
 !816 = !{!815, !813}
-!817 = !{!"branch_weights", !"expected", i32 0, i32 -2147483648}
+!817 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
 !818 = !{i64 0, i64 8, !206, i64 8, i64 8, !206, i64 16, i64 1, !29, i64 17, i64 1, !29, i64 18, i64 1, !29, i64 19, i64 1, !29, i64 20, i64 4, !195, i64 24, i64 8, !207, i64 32, i64 8, !206, i64 40, i64 4, !195}
 !819 = distinct !{!819, !"_ZN3tbb6detail2d117concurrent_vectorISt10unique_ptrIN4mold10ObjectFileINS4_6X86_64EEENS4_18ArenaObjectDeleterIS7_EEENS1_23cache_aligned_allocatorISA_EEE12emplace_backIJRPS7_EEENS1_15vector_iteratorISD_SA_EEDpOT_"}
 !820 = distinct !{!820, !819, !"_ZN3tbb6detail2d117concurrent_vectorISt10unique_ptrIN4mold10ObjectFileINS4_6X86_64EEENS4_18ArenaObjectDeleterIS7_EEENS1_23cache_aligned_allocatorISA_EEE12emplace_backIJRPS7_EEENS1_15vector_iteratorISD_SA_EEDpOT_: argument 0"}

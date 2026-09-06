@@ -205,8 +205,7 @@ _ZN7testing15AssertionResultD2Ev.exit:            ; preds = %_ZNSt7__cxx1111basi
   %i.bi = ptrtoint ptr %i.bg to i64
   %i.bj = ptrtoint ptr %i.bh to i64
   %i.bk = sub i64 %i.bi, %i.bj
-  %48 = sdiv exact i64 %i.bk, 56
-  %i.bl = icmp ugt i64 %48, 3                     ; 2 uses
+  %i.bl = icmp ugt i64 %i.bk, 168                 ; 2 uses
   %i.bm = zext i1 %i.bl to i8
   store i8 %i.bm, ptr %11, align 8
   %i.bn = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
@@ -609,8 +608,7 @@ _ZN7testing15AssertionResultD2Ev.exit207:         ; preds = %_ZNSt7__cxx1111basi
   %i.jt = ptrtoint ptr %i.jr to i64
   %i.ju = ptrtoint ptr %i.js to i64
   %i.jv = sub i64 %i.jt, %i.ju
-  %49 = sdiv exact i64 %i.jv, 56
-  %i.jw = icmp ugt i64 %49, 3                     ; 2 uses
+  %i.jw = icmp ugt i64 %i.jv, 168                 ; 2 uses
   %i.jx = zext i1 %i.jw to i8
   store i8 %i.jx, ptr %32, align 8
   %i.jy = getelementptr inbounds nuw i8, ptr %32, i64 8 ; 2 uses
@@ -1013,9 +1011,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.at = load ptr, ptr %i.ab, align 8
   %i.au = ptrtoint ptr %i.as to i64
   %i.av = ptrtoint ptr %i.at to i64
-  %i.aw = sub i64 %i.au, %i.av
-  %3 = sdiv exact i64 %i.aw, 48                   ; 2 uses
-  %i.ax = icmp ugt i64 %3, 100000
+  %i.aw = sub i64 %i.au, %i.av                    ; 2 uses
+  %i.ax = icmp ugt i64 %i.aw, 4800000
   br i1 %i.ax, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -1071,7 +1068,10 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit5:               ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.p, %bb.q
-  %i.bn = add nsw i64 %3, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.aw to i32
+  %3 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %3 to i64
+  %i.bn = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #32
   ret i64 %i.bn
 
@@ -1393,9 +1393,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.y = load ptr, ptr %i.g, align 8
   %i.z = ptrtoint ptr %i.x to i64
   %i.aa = ptrtoint ptr %i.y to i64
-  %i.ab = sub i64 %i.z, %i.aa
-  %3 = sdiv exact i64 %i.ab, 48                   ; 2 uses
-  %i.ac = icmp ugt i64 %3, 100000
+  %i.ab = sub i64 %i.z, %i.aa                     ; 2 uses
+  %i.ac = icmp ugt i64 %i.ab, 4800000
   br i1 %i.ac, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -1451,7 +1450,10 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit4:               ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.j, %bb.k
-  %i.as = add nsw i64 %3, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.ab to i32
+  %3 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %3 to i64
+  %i.as = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #32
   ret i64 %i.as
 
@@ -1499,9 +1501,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.i = load ptr, ptr %i.b, align 8
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = sub i64 %i.j, %i.k
-  %2 = sdiv exact i64 %i.l, 48                    ; 2 uses
-  %i.m = icmp ugt i64 %2, 100000
+  %i.l = sub i64 %i.j, %i.k                       ; 2 uses
+  %i.m = icmp ugt i64 %i.l, 4800000
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -1535,7 +1536,10 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit:                ; preds = %bb.d, %bb.e, %bb.f
-  %i.v = add nsw i64 %2, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.l to i32
+  %2 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %2 to i64
+  %i.v = add nsw i64 %.zext.i, -1
   ret i64 %i.v
 
 bb.h:                                             ; preds = %bb.c, %bb.b
@@ -1938,9 +1942,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.i = load ptr, ptr %i.b, align 8
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = sub i64 %i.j, %i.k
-  %2 = sdiv exact i64 %i.l, 48                    ; 2 uses
-  %i.m = icmp ugt i64 %2, 100000
+  %i.l = sub i64 %i.j, %i.k                       ; 2 uses
+  %i.m = icmp ugt i64 %i.l, 4800000
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -1974,7 +1977,10 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit:                ; preds = %bb.d, %bb.e, %bb.f
-  %i.v = add nsw i64 %2, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.l to i32
+  %2 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %2 to i64
+  %i.v = add nsw i64 %.zext.i, -1
   ret i64 %i.v
 
 bb.h:                                             ; preds = %bb.c, %bb.b
@@ -2049,9 +2055,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.u = load ptr, ptr %i.c, align 8
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = ptrtoint ptr %i.u to i64
-  %i.x = sub i64 %i.v, %i.w
-  %6 = sdiv exact i64 %i.x, 48                    ; 2 uses
-  %i.y = icmp ugt i64 %6, 100000
+  %i.x = sub i64 %i.v, %i.w                       ; 2 uses
+  %i.y = icmp ugt i64 %i.x, 4800000
   br i1 %i.y, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -2107,7 +2112,10 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit6:               ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.j, %bb.k
-  %i.ao = add nsw i64 %6, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.x to i32
+  %6 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %6 to i64
+  %i.ao = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #32
   ret i64 %i.ao
 
@@ -2510,9 +2518,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.i = load ptr, ptr %i.b, align 8
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = sub i64 %i.j, %i.k
-  %2 = sdiv exact i64 %i.l, 48                    ; 2 uses
-  %i.m = icmp ugt i64 %2, 100000
+  %i.l = sub i64 %i.j, %i.k                       ; 2 uses
+  %i.m = icmp ugt i64 %i.l, 4800000
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -2546,7 +2553,10 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit:                ; preds = %bb.d, %bb.e, %bb.f
-  %i.v = add nsw i64 %2, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.l to i32
+  %2 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %2 to i64
+  %i.v = add nsw i64 %.zext.i, -1
   ret i64 %i.v
 
 bb.h:                                             ; preds = %bb.c, %bb.b
@@ -2591,9 +2601,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.i = load ptr, ptr %i.b, align 8
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = sub i64 %i.j, %i.k
-  %2 = sdiv exact i64 %i.l, 48                    ; 2 uses
-  %i.m = icmp ugt i64 %2, 100000
+  %i.l = sub i64 %i.j, %i.k                       ; 2 uses
+  %i.m = icmp ugt i64 %i.l, 4800000
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -2627,7 +2636,10 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit:                ; preds = %bb.d, %bb.e, %bb.f
-  %i.v = add nsw i64 %2, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.l to i32
+  %2 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %2 to i64
+  %i.v = add nsw i64 %.zext.i, -1
   ret i64 %i.v
 
 bb.h:                                             ; preds = %bb.c, %bb.b
@@ -2703,9 +2715,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.v = load ptr, ptr %i.d, align 8
   %i.w = ptrtoint ptr %i.u to i64
   %i.x = ptrtoint ptr %i.v to i64
-  %i.y = sub i64 %i.w, %i.x
-  %4 = sdiv exact i64 %i.y, 48                    ; 2 uses
-  %i.z = icmp ugt i64 %4, 100000
+  %i.y = sub i64 %i.w, %i.x                       ; 2 uses
+  %i.z = icmp ugt i64 %i.y, 4800000
   br i1 %i.z, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -2762,7 +2773,10 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit5:               ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.j, %bb.k
-  %i.aq = add nsw i64 %4, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.y to i32
+  %4 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %4 to i64
+  %i.aq = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #32
   ret i64 %i.aq
 
@@ -2843,9 +2857,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.w = load ptr, ptr %i.e, align 8
   %i.x = ptrtoint ptr %i.v to i64
   %i.y = ptrtoint ptr %i.w to i64
-  %i.z = sub i64 %i.x, %i.y
-  %5 = sdiv exact i64 %i.z, 48                    ; 2 uses
-  %i.aa = icmp ugt i64 %5, 100000
+  %i.z = sub i64 %i.x, %i.y                       ; 2 uses
+  %i.aa = icmp ugt i64 %i.z, 4800000
   br i1 %i.aa, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -2901,7 +2914,10 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit6:               ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.j, %bb.k
-  %i.aq = add nsw i64 %5, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.z to i32
+  %5 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %5 to i64
+  %i.aq = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #32
   ret i64 %i.aq
 
@@ -3304,9 +3320,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.ae = load ptr, ptr %i.m, align 8
   %i.af = ptrtoint ptr %i.ad to i64
   %i.ag = ptrtoint ptr %i.ae to i64
-  %i.ah = sub i64 %i.af, %i.ag
-  %4 = sdiv exact i64 %i.ah, 48                   ; 2 uses
-  %i.ai = icmp ugt i64 %4, 100000
+  %i.ah = sub i64 %i.af, %i.ag                    ; 2 uses
+  %i.ai = icmp ugt i64 %i.ah, 4800000
   br i1 %i.ai, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -3372,7 +3387,10 @@ bb.s:                                             ; preds = %bb.r
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit11:              ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.q, %bb.r
-  %i.ba = add nsw i64 %4, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.ah to i32
+  %4 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %4 to i64
+  %i.ba = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #32
   ret i64 %i.ba
 
@@ -3775,9 +3793,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.ad = load ptr, ptr %i.l, align 8
   %i.ae = ptrtoint ptr %i.ac to i64
   %i.af = ptrtoint ptr %i.ad to i64
-  %i.ag = sub i64 %i.ae, %i.af
-  %5 = sdiv exact i64 %i.ag, 48                   ; 2 uses
-  %i.ah = icmp ugt i64 %5, 100000
+  %i.ag = sub i64 %i.ae, %i.af                    ; 2 uses
+  %i.ah = icmp ugt i64 %i.ag, 4800000
   br i1 %i.ah, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -3832,7 +3849,10 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit7:               ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.n, %bb.o
-  %i.aw = add nsw i64 %5, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.ag to i32
+  %5 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %5 to i64
+  %i.aw = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #32
   ret i64 %i.aw
 
@@ -4235,9 +4255,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.w = load ptr, ptr %i.e, align 8
   %i.x = ptrtoint ptr %i.v to i64
   %i.y = ptrtoint ptr %i.w to i64
-  %i.z = sub i64 %i.x, %i.y
-  %6 = sdiv exact i64 %i.z, 48                    ; 2 uses
-  %i.aa = icmp ugt i64 %6, 100000
+  %i.z = sub i64 %i.x, %i.y                       ; 2 uses
+  %i.aa = icmp ugt i64 %i.z, 4800000
   br i1 %i.aa, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -4293,7 +4312,10 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit7:               ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.j, %bb.k
-  %i.aq = add nsw i64 %6, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.z to i32
+  %6 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %6 to i64
+  %i.aq = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #32
   ret i64 %i.aq
 
@@ -4534,9 +4556,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.cg = load ptr, ptr %i.bq, align 8
   %i.ch = ptrtoint ptr %i.cf to i64
   %i.ci = ptrtoint ptr %i.cg to i64
-  %i.cj = sub i64 %i.ch, %i.ci
-  %6 = sdiv exact i64 %i.cj, 48                   ; 2 uses
-  %i.ck = icmp ugt i64 %6, 100000
+  %i.cj = sub i64 %i.ch, %i.ci                    ; 2 uses
+  %i.ck = icmp ugt i64 %i.cj, 4800000
   br i1 %i.ck, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -4547,7 +4568,10 @@ bb.s:                                             ; preds = %_ZNSt6vectorINSt8__
   unreachable
 
 bb.t:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
-  %i.cl = add nsw i64 %6, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.cj to i32
+  %6 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %6 to i64
+  %i.cl = add nsw i64 %.zext.i, -1
   %i.cm = load i32, ptr %5, align 8
   %i.cn = icmp eq i32 %i.cm, 11
   br i1 %i.cn, label %bb.u, label %_ZNSt8__detail6_StateIcED2Ev.exit
@@ -4950,9 +4974,9 @@ bb.u:                                             ; preds = %bb.d, %bb.c
   %i.cd = load ptr, ptr %i.ca, align 8            ; 2 uses
   %i.ce = ptrtoint ptr %i.cc to i64
   %i.cf = ptrtoint ptr %i.cd to i64
-  %i.cg = sub i64 %i.ce, %i.cf
-  %i.ch = sdiv exact i64 %i.cg, 48                ; 7 uses
-  %11 = icmp ugt i64 %i.ch, 288230376151711743
+  %i.cg = sub i64 %i.ce, %i.cf                    ; 3 uses
+  %i.ch = sdiv exact i64 %i.cg, 48                ; 5 uses
+  %11 = icmp slt i64 %i.cg, 0
   br i1 %11, label %.noexc.i, label %_ZNSt6vectorISt4pairIN3gsl7details13span_iteratorIcEEiESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i.i
 
 .noexc.i:                                         ; preds = %bb.u
@@ -4990,7 +5014,7 @@ _ZNSt12_Vector_baseISt4pairIN3gsl7details13span_iteratorIcEEiESaIS5_EEC2EmRKS6_.
   %.lcssa.unr = phi ptr [ poison, %_ZNSt12_Vector_baseISt4pairIN3gsl7details13span_iteratorIcEEiESaIS5_EEC2EmRKS6_.exit.i.i ], [ %i.cn, %.lr.ph.i.i.i.i.i.i.prol ]
   %.013.i.i.i.i.i.i.unr = phi ptr [ %i.cj, %_ZNSt12_Vector_baseISt4pairIN3gsl7details13span_iteratorIcEEiESaIS5_EEC2EmRKS6_.exit.i.i ], [ %i.cn, %.lr.ph.i.i.i.i.i.i.prol ]
   %.01012.i.i.i.i.i.i.unr = phi i64 [ %i.ch, %_ZNSt12_Vector_baseISt4pairIN3gsl7details13span_iteratorIcEEiESaIS5_EEC2EmRKS6_.exit.i.i ], [ %i.cm, %.lr.ph.i.i.i.i.i.i.prol ]
-  %i.co = icmp ult i64 %i.ch, 8
+  %i.co = icmp ult i64 %i.cg, 384
   br i1 %i.co, label %.loopexit.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i
@@ -5248,9 +5272,9 @@ bb.a:
   %i.l = load ptr, ptr %i.i, align 8              ; 2 uses
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = ptrtoint ptr %i.l to i64
-  %i.o = sub i64 %i.m, %i.n
-  %i.p = sdiv exact i64 %i.o, 48                  ; 7 uses
-  %6 = icmp ugt i64 %i.p, 288230376151711743
+  %i.o = sub i64 %i.m, %i.n                       ; 3 uses
+  %i.p = sdiv exact i64 %i.o, 48                  ; 5 uses
+  %6 = icmp slt i64 %i.o, 0
   br i1 %6, label %bb.b, label %_ZNSt6vectorISt4pairIN3gsl7details13span_iteratorIcEEiESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i
 
 bb.b:                                             ; preds = %bb.a
@@ -5294,7 +5318,7 @@ _ZNSt12_Vector_baseISt4pairIN3gsl7details13span_iteratorIcEEiESaIS5_EEC2EmRKS6_.
   %.lcssa.unr = phi ptr [ poison, %.noexc10 ], [ %i.v, %.lr.ph.i.i.i.i.i.prol ]
   %.013.i.i.i.i.i.unr = phi ptr [ %i.r, %.noexc10 ], [ %i.v, %.lr.ph.i.i.i.i.i.prol ]
   %.01012.i.i.i.i.i.unr = phi i64 [ %i.p, %.noexc10 ], [ %i.u, %.lr.ph.i.i.i.i.i.prol ]
-  %i.w = icmp ult i64 %i.p, 8
+  %i.w = icmp ult i64 %i.o, 384
   br i1 %i.w, label %.loopexit, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i
@@ -5697,8 +5721,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = sdiv exact i64 %i.q, 56
-  %i.r = icmp ugt i64 %3, 164703072086692425
+  %i.r = icmp ugt i64 %i.q, 9223372036854775800
   br i1 %i.r, label %.noexc.i.i.i.i.i, label %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i, !prof !36
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.c
@@ -6101,8 +6124,7 @@ _ZNKSt6vectorISt4pairIlS_INSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEE
   br label %.loopexit
 
 bb.c:                                             ; preds = %_ZNKSt6vectorISt4pairIlS_INSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEEEESaIS7_EEESaISA_EE12_M_check_lenEmPKc.exit
-  %4 = sdiv exact i64 %i.y, 56
-  %i.ac = icmp ugt i64 %4, 164703072086692425
+  %i.ac = icmp ugt i64 %i.y, 9223372036854775800
   br i1 %i.ac, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEEEEE8allocateEmPKv.exit.i.i.i.i.i, !prof !36
 
 .noexc.i.i.i:                                     ; preds = %bb.c
@@ -6328,8 +6350,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not.i.i.i.i.i.i.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %3 = sdiv exact i64 %i.aq, 56
-  %i.ar = icmp ugt i64 %3, 164703072086692425
+  %i.ar = icmp ugt i64 %i.aq, 9223372036854775800
   br i1 %i.ar, label %.noexc.i.i.i.i.i, label %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i, !prof !36
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.h
@@ -6732,8 +6753,7 @@ bb.a:
   br label %_ZNSt6vectorINSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEEEESaIS6_EEC2ERKS8_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %4 = sdiv exact i64 %i.f, 56
-  %i.j = icmp ugt i64 %4, 164703072086692425
+  %i.j = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.j, label %.noexc.i.i, label %bb.c, !prof !36
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -7136,8 +7156,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
-  %2 = sdiv exact i64 %i.f, 56
-  %i.n = icmp ugt i64 %2, 164703072086692425
+  %i.n = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.n, label %bb.d, label %_ZNSt12_Vector_baseINSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEEEESaIS6_EE11_M_allocateEm.exit.i, !prof !36
 
 bb.d:                                             ; preds = %bb.c
@@ -7540,8 +7559,7 @@ bb.a:
   br label %_ZNSt6vectorINSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEEEESaIS6_EEC2ERKS8_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %4 = sdiv exact i64 %i.f, 56
-  %i.j = icmp ugt i64 %4, 164703072086692425
+  %i.j = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.j, label %.noexc.i.i, label %bb.c, !prof !36
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -7599,10 +7617,10 @@ _ZNSt6vectorINSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEEEESaIS6_EEC2E
   %i.aj = load ptr, ptr %i.ag, align 8            ; 2 uses
   %i.ak = ptrtoint ptr %i.ai to i64
   %i.al = ptrtoint ptr %i.aj to i64
-  %i.am = sub i64 %i.ak, %i.al
-  %i.an = sdiv exact i64 %i.am, 48                ; 7 uses
-  %5 = icmp ugt i64 %i.an, 288230376151711743
-  br i1 %5, label %bb.d, label %_ZNSt6vectorISt4pairIN3gsl7details13span_iteratorIcEEiESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i.i
+  %i.am = sub i64 %i.ak, %i.al                    ; 3 uses
+  %i.an = sdiv exact i64 %i.am, 48                ; 5 uses
+  %4 = icmp slt i64 %i.am, 0
+  br i1 %4, label %bb.d, label %_ZNSt6vectorISt4pairIN3gsl7details13span_iteratorIcEEiESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i.i
 
 bb.d:                                             ; preds = %_ZNSt6vectorINSt7__cxx119sub_matchIN3gsl7details13span_iteratorIcEEEESaIS6_EEC2ERKS8_.exit
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.291) #37
@@ -7645,7 +7663,7 @@ _ZNSt12_Vector_baseISt4pairIN3gsl7details13span_iteratorIcEEiESaIS5_EEC2EmRKS6_.
   %.lcssa.unr = phi ptr [ poison, %.noexc8.i ], [ %i.at, %.lr.ph.i.i.i.i.i.i.prol ]
   %.013.i.i.i.i.i.i.unr = phi ptr [ %i.ap, %.noexc8.i ], [ %i.at, %.lr.ph.i.i.i.i.i.i.prol ]
   %.01012.i.i.i.i.i.i.unr = phi i64 [ %i.an, %.noexc8.i ], [ %i.as, %.lr.ph.i.i.i.i.i.i.prol ]
-  %i.au = icmp ult i64 %i.an, 8
+  %i.au = icmp ult i64 %i.am, 384
   br i1 %i.au, label %.loopexit.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i

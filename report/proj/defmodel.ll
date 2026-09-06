@@ -204,10 +204,14 @@ bb.b:                                             ; preds = %bb.a
 .preheader:                                       ; preds = %bb.b
   %i.i = ptrtoint ptr %i.d to i64
   %i.j = ptrtoint ptr %i.b to i64
-  %i.k = sub i64 %i.i, %i.j                       ; 4 uses
-  %2 = sdiv exact i64 %i.k, 48                    ; 2 uses
-  %.not77 = icmp ugt i64 %2, 1
-  br i1 %.not77, label %.lr.ph, label %._crit_edge
+  %i.k = sub i64 %i.i, %i.j                       ; 5 uses
+  %.not77 = icmp ugt i64 %i.k, 48
+  br i1 %.not77, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %2 = sdiv exact i64 %i.k, 48
+  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 2)
+  br label %.lr.ph
 
 bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -270,8 +274,8 @@ bb.e:                                             ; preds = %bb.d
   %i.aq = fdiv double %i.ao, %i.ap
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
 
-.lr.ph:                                           ; preds = %.preheader, %bb.f
-  %.04678 = phi i64 [ %i.bh, %bb.f ], [ 1, %.preheader ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
+  %.04678 = phi i64 [ %i.bh, %bb.f ], [ 1, %.lr.ph.preheader ] ; 2 uses
   %i.ar = getelementptr [48 x i8], ptr %i.b, i64 %.04678 ; 4 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 32
   %i.at = load double, ptr %i.as, align 8, !tbaa !33 ; 3 uses
@@ -295,7 +299,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %.lr.ph
   %i.bh = add nuw i64 %.04678, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bh, %2
+  %exitcond.not = icmp eq i64 %i.bh, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !397
 
 ._crit_edge:                                      ; preds = %bb.f, %.preheader
@@ -698,9 +702,9 @@ bb.ao:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.ds = load ptr, ptr %i.dp, align 8, !tbaa !164 ; 3 uses
   %i.dt = ptrtoint ptr %i.dr to i64
   %i.du = ptrtoint ptr %i.ds to i64
-  %i.dv = sub i64 %i.dt, %i.du
-  %i.dw = sdiv exact i64 %i.dv, 312               ; 3 uses
-  %11 = icmp ugt i64 %i.dw, 1152921504606846975
+  %i.dv = sub i64 %i.dt, %i.du                    ; 2 uses
+  %i.dw = sdiv exact i64 %i.dv, 312               ; 2 uses
+  %11 = icmp slt i64 %i.dv, 0
   br i1 %11, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %.thread.i

@@ -202,8 +202,7 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.u
 
 bb.q:                                             ; preds = %bb.p
-  %2 = sdiv exact i64 %i.aq, 28
-  %i.at = icmp ugt i64 %2, 329406144173384850
+  %i.at = icmp ugt i64 %i.aq, 9223372036854775800
   br i1 %i.at, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorIN8WasmEdge3AST11Instruction15CatchDescriptorEE8allocateEmPKv.exit.i.i.i.i.i, !prof !74
 
 .noexc.i.i.i:                                     ; preds = %bb.q
@@ -219,11 +218,11 @@ _ZNSt15__new_allocatorIN8WasmEdge3AST11Instruction15CatchDescriptorEE8allocateEm
 
 .noexc14:                                         ; preds = %_ZNSt15__new_allocatorIN8WasmEdge3AST11Instruction15CatchDescriptorEE8allocateEmPKv.exit.i.i.i.i.i
   store ptr %i.au, ptr %i.aj, align 8, !tbaa !69
-  %i.av = getelementptr inbounds i8, ptr %i.au, i64 %i.aq ; 4 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.aq ; 4 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.ah, i64 32
   store ptr %i.av, ptr %i.aw, align 8, !tbaa !70
-  %3 = icmp sgt i64 %i.aq, 28
-  br i1 %3, label %bb.r, label %bb.s, !prof !281
+  %2 = icmp samesign ugt i64 %i.aq, 28
+  br i1 %2, label %bb.r, label %bb.s, !prof !281
 
 bb.r:                                             ; preds = %.noexc14
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.au, ptr align 4 %i.an, i64 %i.aq, i1 false)

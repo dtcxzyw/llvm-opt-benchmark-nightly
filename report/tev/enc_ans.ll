@@ -205,8 +205,8 @@ bb.a:
   %i.aa = load ptr, ptr %5, align 8, !tbaa !143   ; 3 uses
   %i.ab = ptrtoint ptr %i.z to i64
   %i.ac = ptrtoint ptr %i.aa to i64
-  %i.ad = sub i64 %i.ab, %i.ac
-  %i.ae = sdiv exact i64 %i.ad, 40                ; 4 uses
+  %i.ad = sub i64 %i.ab, %i.ac                    ; 3 uses
+  %i.ae = sdiv exact i64 %i.ad, 40                ; 2 uses
   %i.af = add i64 %i.ae, %i.x                     ; 3 uses
   %i.ag = icmp ult i64 %i.x, %i.af
   br i1 %i.ag, label %bb.b, label %bb.c
@@ -218,7 +218,6 @@ bb.b:                                             ; preds = %._crit_edge
   %.pre229 = ptrtoint ptr %.pre to i64
   %.pre230 = ptrtoint ptr %.pre225 to i64
   %.pre232 = sub i64 %.pre229, %.pre230
-  %.pre234 = sdiv exact i64 %.pre232, 40
   br label %_ZNSt3__16vectorIhNS_9allocatorIhEEE6resizeEm.exit
 
 bb.c:                                             ; preds = %._crit_edge
@@ -231,9 +230,9 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNSt3__16vectorIhNS_9allocatorIhEEE6resizeEm.exit
 
 _ZNSt3__16vectorIhNS_9allocatorIhEEE6resizeEm.exit: ; preds = %bb.b, %bb.c, %bb.d
-  %.pre-phi235 = phi i64 [ %.pre234, %bb.b ], [ %i.ae, %bb.c ], [ %i.ae, %bb.d ]
+  %.pre-phi235 = phi i64 [ %.pre232, %bb.b ], [ %i.ad, %bb.c ], [ %i.ad, %bb.d ]
   %i.aj = phi ptr [ %.pre225, %bb.b ], [ %i.aa, %bb.c ], [ %i.aa, %bb.d ] ; 4 uses
-  %i.ak = icmp ugt i64 %.pre-phi235, 1
+  %i.ak = icmp ugt i64 %.pre-phi235, 40
   br i1 %i.ak, label %bb.h, label %bb.n
 
 bb.e:                                             ; preds = %.lr.ph, %_ZN3jxl9HistogramD2Ev.exit

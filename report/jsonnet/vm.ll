@@ -204,9 +204,9 @@ _ZN7jsonnet8internal12_GLOBAL__N_15Stack14getSelfBindingERPNS1_10HeapObjectERj.e
   %i.nu = load ptr, ptr %i.nr, align 8, !tbaa !629 ; 4 uses
   %i.nv = ptrtoint ptr %i.nt to i64
   %i.nw = ptrtoint ptr %i.nu to i64
-  %i.nx = sub i64 %i.nv, %i.nw
-  %i.ny = sdiv exact i64 %i.nx, 88                ; 3 uses
-  %181 = icmp ugt i64 %i.ny, 576460752303423487
+  %i.nx = sub i64 %i.nv, %i.nw                    ; 2 uses
+  %i.ny = sdiv exact i64 %i.nx, 88                ; 2 uses
+  %181 = icmp slt i64 %i.nx, 0
   br i1 %181, label %bb.ar, label %bb.as
 
 bb.ar:                                            ; preds = %_ZN7jsonnet8internal12_GLOBAL__N_15Stack14getSelfBindingERPNS1_10HeapObjectERj.exit1950
@@ -609,8 +609,7 @@ _ZN7jsonnet8internal13LocationRangeC2ERKS1_.exit: ; preds = %._crit_edge.i.i.i, 
   br i1 %.not.i.i.i.i, label %.noexc6, label %bb.d
 
 bb.d:                                             ; preds = %_ZN7jsonnet8internal13LocationRangeC2ERKS1_.exit
-  %4 = sdiv exact i64 %i.y, 40
-  %i.z = icmp ugt i64 %4, 230584300921369395
+  %i.z = icmp ugt i64 %i.y, 9223372036854775800
   br i1 %i.z, label %.noexc.i.i5, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !268
 
 .noexc.i.i5:                                      ; preds = %bb.d
@@ -1013,8 +1012,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 96
-  %i.g = icmp ugt i64 %2, 96076792050570581
+  %i.g = icmp ugt i64 %i.f, 9223372036854775776
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal10TraceFrameEE8allocateEmPKv.exit.i.i.i, !prof !268
 
 .noexc.i:                                         ; preds = %bb.b

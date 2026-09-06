@@ -202,8 +202,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %7 = sdiv exact i64 %i.f, 24
-  %i.g = icmp ugt i64 %7, 384307168202282325
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN5arrow5DatumEE8allocateEmPKv.exit.i.i.i.i, !prof !64
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -350,8 +349,7 @@ bb.c:                                             ; preds = %bb.a
   br label %.loopexit
 
 bb.d:                                             ; preds = %bb.c
-  %13 = sdiv exact i64 %i.l, 24
-  %i.p = icmp ugt i64 %13, 384307168202282325
+  %i.p = icmp ugt i64 %i.l, 9223372036854775800
   br i1 %i.p, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN5arrow10TypeHolderEE8allocateEmPKv.exit.i.i.i.i, !prof !64
 
 .noexc.i.i:                                       ; preds = %bb.d
@@ -754,8 +752,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %7 = sdiv exact i64 %i.f, 24
-  %i.g = icmp ugt i64 %7, 384307168202282325
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN5arrow5DatumEE8allocateEmPKv.exit.i.i.i.i, !prof !64
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -1158,7 +1155,7 @@ bb.a:
   %i.t = ptrtoint ptr %i.r to i64
   %i.u = ptrtoint ptr %i.s to i64
   %i.v = sub i64 %i.t, %i.u                       ; 2 uses
-  %i.w = sdiv exact i64 %i.v, 24                  ; 3 uses
+  %i.w = sdiv exact i64 %i.v, 24                  ; 2 uses
   %.not = icmp eq i64 %i.p, %i.w
   br i1 %.not, label %bb.h, label %bb.b
 
@@ -1300,19 +1297,17 @@ _ZN5arrow6StatusD2Ev.exit109:                     ; preds = %_ZN5arrow6StatusD2E
   %.pre179 = load ptr, ptr %2, align 8, !tbaa !126 ; 2 uses
   %.pre186 = ptrtoint ptr %.pre to i64
   %.pre187 = ptrtoint ptr %.pre179 to i64
-  %.pre189 = sub i64 %.pre186, %.pre187           ; 2 uses
-  %.pre191 = sdiv exact i64 %.pre189, 24
+  %.pre189 = sub i64 %.pre186, %.pre187
   br label %bb.o
 
 bb.o:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit109, %bb.h
-  %.pre-phi192 = phi i64 [ %.pre191, %_ZN5arrow6StatusD2Ev.exit109 ], [ %i.w, %bb.h ]
-  %.pre-phi190 = phi i64 [ %.pre189, %_ZN5arrow6StatusD2Ev.exit109 ], [ %i.v, %bb.h ] ; 3 uses
+  %.pre-phi190 = phi i64 [ %.pre189, %_ZN5arrow6StatusD2Ev.exit109 ], [ %i.v, %bb.h ] ; 4 uses
   %i.bb = phi ptr [ %.pre179, %_ZN5arrow6StatusD2Ev.exit109 ], [ %i.s, %bb.h ]
   %i.bc = phi ptr [ %.pre, %_ZN5arrow6StatusD2Ev.exit109 ], [ %i.r, %bb.h ]
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !251
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #21
-  %i.bf = icmp ugt i64 %.pre-phi192, 384307168202282325
+  %i.bf = icmp ugt i64 %.pre-phi190, 9223372036854775800
   br i1 %i.bf, label %bb.p, label %_ZNSt6vectorIN5arrow5DatumESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
 
 bb.p:                                             ; preds = %bb.o
