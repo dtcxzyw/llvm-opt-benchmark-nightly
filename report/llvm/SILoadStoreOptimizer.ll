@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load i32, ptr %i.f, align 8, !tbaa !439  ; 9 uses
   %i.h = urem i32 %i.b, %i.g
-  %i.i = udiv i32 %i.b, %i.g                      ; 10 uses
+  %i.i = udiv exact i32 %i.b, %i.g                ; 11 uses
   %.not = icmp eq i32 %i.h, 0
   br i1 %.not, label %bb.c, label %bb.ae
 
 bb.c:                                             ; preds = %bb.b
   %i.j = urem i32 %i.d, %i.g
-  %i.k = udiv i32 %i.d, %i.g                      ; 10 uses
+  %i.k = udiv exact i32 %i.d, %i.g                ; 11 uses
   %.not108 = icmp eq i32 %i.j, 0
   br i1 %.not108, label %bb.d, label %bb.ae
 
@@ -261,7 +261,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.al, label %bb.ae, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.am = udiv i32 %i.b, %i.g                     ; 2 uses
+  %i.am = udiv exact i32 %i.b, %i.g               ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ao = load i32, ptr %i.an, align 8, !tbaa !439
   %i.ap = udiv i32 %i.d, %i.ao                    ; 2 uses
@@ -335,7 +335,7 @@ bb.q:                                             ; preds = %bb.n, %bb.o, %bb.p
   br label %bb.ae
 
 bb.r:                                             ; preds = %bb.j
-  %i.bn = or i32 %i.k, %i.i                       ; 2 uses
+  %i.bn = or i32 %i.k, %i.i
   %i.bo = and i32 %i.bn, 63
   %or.cond171 = icmp eq i32 %i.bo, 0
   br i1 %or.cond171, label %bb.s, label %bb.w
@@ -343,12 +343,12 @@ bb.r:                                             ; preds = %bb.j
 bb.s:                                             ; preds = %bb.r
   %i.bp = lshr exact i32 %i.i, 6
   %i.bq = icmp ult i32 %i.i, 16384
-  br i1 %i.bq, label %bb.t, label %bb.w
+  br i1 %i.bq, label %bb.t, label %bb.z
 
 bb.t:                                             ; preds = %bb.s
   %i.br = lshr i32 %i.k, 6
   %i.bs = icmp ult i32 %i.k, 16384
-  br i1 %i.bs, label %bb.u, label %bb.w
+  br i1 %i.bs, label %bb.u, label %bb.z
 
 bb.u:                                             ; preds = %bb.t
   br i1 %3, label %bb.v, label %bb.ae
@@ -359,9 +359,11 @@ bb.v:                                             ; preds = %bb.u
   store i8 1, ptr %i.av, align 8, !tbaa !454
   br label %bb.ae
 
-bb.w:                                             ; preds = %bb.t, %bb.s, %bb.r
-  %or.cond173.a = icmp ult i32 %i.bn, 256
-  br i1 %or.cond173.a, label %bb.x, label %bb.z
+bb.w:                                             ; preds = %bb.r
+  %4 = icmp ult i32 %i.i, 256
+  %or.cond173.a = icmp ult i32 %i.k, 256
+  %or.cond173 = select i1 %4, i1 %or.cond173.a, i1 false
+  br i1 %or.cond173, label %bb.x, label %bb.z
 
 bb.x:                                             ; preds = %bb.w
   br i1 %3, label %bb.y, label %bb.ae
@@ -371,7 +373,7 @@ bb.y:                                             ; preds = %bb.x
   store i32 %i.k, ptr %i.c, align 4, !tbaa !435
   br label %bb.ae
 
-bb.z:                                             ; preds = %bb.w
+bb.z:                                             ; preds = %bb.t, %bb.s, %bb.w
   %.sroa.speculated141 = tail call i32 @llvm.umin.i32(i32 %i.k, i32 %i.i) ; 5 uses
   %.sroa.speculated = tail call i32 @llvm.umax.i32(i32 %i.i, i32 %i.k) ; 3 uses
   %i.bt = sub nuw i32 %.sroa.speculated, %.sroa.speculated141 ; 2 uses

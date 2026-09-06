@@ -205,11 +205,12 @@ bb.e:                                             ; preds = %bb.c
 define hidden { ptr, i64 } @_RNvMNtNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read11deserialize5utils12array_chunksINtB2_11ArrayChunksNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes17Bytes12Alignment4E3newBc_(ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef range(i64 0, -9223372036854775808) %1) unnamed_addr #3 !dbg !42726 {
 bb.a:
   %i.a = urem i64 %1, 12, !dbg !42729
-  %i.b = icmp eq i64 %i.a, 0, !dbg !42729
-  %i.c = udiv i64 %1, 12, !dbg !42730
+  %i.b = icmp eq i64 %i.a, 0, !dbg !42729         ; 2 uses
+  %i.c = udiv exact i64 %1, 12, !dbg !42730
+  %.sroa.3.0 = select i1 %i.b, i64 %i.c, i64 undef, !dbg !42730
   %.sroa.0.0 = select i1 %i.b, ptr %0, ptr null, !dbg !42730
   %i.d = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0, 0, !dbg !42731
-  %i.e = insertvalue { ptr, i64 } %i.d, i64 %i.c, 1, !dbg !42731
+  %i.e = insertvalue { ptr, i64 } %i.d, i64 %.sroa.3.0, 1, !dbg !42731
   ret { ptr, i64 } %i.e, !dbg !42731
 }
 

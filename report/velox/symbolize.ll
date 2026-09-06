@@ -204,13 +204,13 @@ bb.c:                                             ; preds = %bb.b
 
 _ZN6googleL14ReadFromOffsetEiPvmm.exit.us:        ; preds = %.critedge.thread33.i.us
   %i.z = urem i64 %.2.i.us, 24
-  %i.aa = udiv i64 %.2.i.us, 24                   ; 2 uses
+  %i.aa = udiv exact i64 %.2.i.us, 24             ; 2 uses
   %i.ab = icmp eq i64 %i.z, 0
   br i1 %i.ab, label %bb.d, label %_ZN6googleL14ReadFromOffsetEiPvmm.exit.thread
 
 bb.d:                                             ; preds = %_ZN6googleL14ReadFromOffsetEiPvmm.exit.us
   %.not.us = icmp samesign ugt i64 %i.aa, %.sroa.speculated.us
-  br i1 %.not.us, label %.split26.us, label %.preheader.us.a
+  br i1 %.not.us, label %.split26.us, label %.preheader.us
 
 .lr.ph.us:                                        ; preds = %.preheader.us.a, %bb.f
   %i.ac = phi i64 [ %i.ao, %bb.f ], [ 0, %.preheader.us.a ]
@@ -297,17 +297,21 @@ _ZN6googleL14ReadFromOffsetEiPvmm.exit80.thread.us: ; preds = %bb.i, %bb.j, %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   br label %.split22.us
 
-.loopexit.us:                                     ; preds = %bb.f, %.preheader.us.a
-  %i.bg = add i32 %.052.us63, %i.bi               ; 2 uses
+.loopexit.us:                                     ; preds = %bb.f, %.preheader.us
+  %.pre-phi = phi i32 [ 0, %.preheader.us ], [ %i.bi, %bb.f ]
+  %i.bg = add i32 %.052.us63, %.pre-phi           ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   %i.bh = zext i32 %i.bg to i64                   ; 2 uses
   %.not68.us = icmp ugt i64 %i.e, %i.bh
   br i1 %.not68.us, label %.critedge.i.preheader.us, label %.split22.us, !llvm.loop !46
 
-.preheader.us.a:                                  ; preds = %bb.d
-  %.not67.not18.us = icmp ugt i64 %.2.i.us, 23
+.preheader.us:                                    ; preds = %bb.d
+  %.not67.not18.us.not = icmp eq i64 %.2.i.us, 0
+  br i1 %.not67.not18.us.not, label %.loopexit.us, label %.preheader.us.a
+
+.preheader.us.a:                                  ; preds = %.preheader.us
   %i.bi = trunc nuw nsw i64 %i.aa to i32          ; 2 uses
-  br i1 %.not67.not18.us, label %.lr.ph.us, label %.loopexit.us
+  br label %.lr.ph.us
 
 .split:                                           ; preds = %bb.a
   br i1 %.not68.us62.not, label %.split22.us, label %bb.k
