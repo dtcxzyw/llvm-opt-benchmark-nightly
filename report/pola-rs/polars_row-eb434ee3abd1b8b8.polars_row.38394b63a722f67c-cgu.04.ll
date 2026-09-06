@@ -204,11 +204,10 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cm), !dbg !5900
   %i.cu = getelementptr i8, ptr %3, i64 16, !dbg !5900
   %.val133 = load i8, ptr %i.cu, align 8, !dbg !5900, !range !1099, !noundef !902
-  %5 = trunc nuw i8 %.val133 to i1, !dbg !5901
   %i.cv = and i8 %2, 4
-  %.not.i = icmp ne i8 %i.cv, 0
-  %or.cond.not.i = or i1 %.not.i, %5, !dbg !5901
-  br i1 %or.cond.not.i, label %bb.h, label %bb.i, !dbg !5901
+  %5 = or disjoint i8 %.val133, %i.cv, !dbg !5901
+  %or.cond.not.not.i = icmp eq i8 %5, 0, !dbg !5901
+  br i1 %or.cond.not.not.i, label %bb.i, label %bb.h, !dbg !5901
 
 bb.h:                                             ; preds = %bb.g
   call void @_RINvNtNtCs4PheDXcg4wa_10polars_row5fixed7numeric16decode_primitivehEB6_(ptr noalias noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %i.cm, ptr noalias noundef nonnull align 8 %0, i64 noundef range(i64 0, 576460752303423488) %1, i8 noundef %2), !dbg !5902
@@ -270,11 +269,10 @@ bb.o:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cl), !dbg !5927
   %i.dr = getelementptr i8, ptr %3, i64 16, !dbg !5927
   %.val135 = load i8, ptr %i.dr, align 8, !dbg !5927, !range !1099, !noundef !902
-  %6 = trunc nuw i8 %.val135 to i1, !dbg !5928
   %i.ds = and i8 %2, 4
-  %.not.i151 = icmp ne i8 %i.ds, 0
-  %or.cond.not.i152 = or i1 %.not.i151, %6, !dbg !5928
-  br i1 %or.cond.not.i152, label %bb.p, label %bb.q, !dbg !5928
+  %6 = or disjoint i8 %.val135, %i.ds, !dbg !5928
+  %or.cond.not.not.i150 = icmp eq i8 %6, 0, !dbg !5928
+  br i1 %or.cond.not.not.i150, label %bb.q, label %bb.p, !dbg !5928
 
 bb.p:                                             ; preds = %bb.o
   call void @_RINvNtNtCs4PheDXcg4wa_10polars_row5fixed7numeric16decode_primitivetEB6_(ptr noalias noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %i.cl, ptr noalias noundef nonnull align 8 %0, i64 noundef range(i64 0, 576460752303423488) %1, i8 noundef %2), !dbg !5929
@@ -336,11 +334,10 @@ bb.w:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ck), !dbg !5954
   %i.eo = getelementptr i8, ptr %3, i64 16, !dbg !5954
   %.val137 = load i8, ptr %i.eo, align 8, !dbg !5954, !range !1099, !noundef !902
-  %7 = trunc nuw i8 %.val137 to i1, !dbg !5955
   %i.ep = and i8 %2, 4
-  %.not.i163 = icmp ne i8 %i.ep, 0
-  %or.cond.not.i164 = or i1 %.not.i163, %7, !dbg !5955
-  br i1 %or.cond.not.i164, label %bb.x, label %bb.y, !dbg !5955
+  %7 = or disjoint i8 %.val137, %i.ep, !dbg !5955
+  %or.cond.not.not.i161 = icmp eq i8 %7, 0, !dbg !5955
+  br i1 %or.cond.not.not.i161, label %bb.y, label %bb.x, !dbg !5955
 
 bb.x:                                             ; preds = %bb.w
   call void @_RINvNtNtCs4PheDXcg4wa_10polars_row5fixed7numeric16decode_primitivemEB6_(ptr noalias noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %i.ck, ptr noalias noundef nonnull align 8 %0, i64 noundef range(i64 0, 576460752303423488) %1, i8 noundef %2), !dbg !5956

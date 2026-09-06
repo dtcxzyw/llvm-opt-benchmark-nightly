@@ -205,10 +205,9 @@ bb.bbh:                                           ; preds = %bb.bbf
   br label %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules4ruff5rules17unnecessary_round17unnecessary_round.exit
 
 bb.bbi:                                           ; preds = %bb.bbg
-  %2 = trunc nuw i8 %i.fwb to i1
-  %3 = icmp ne i8 %i.fvu, 0
-  %or.cond.not.i = or i1 %3, %2
-  br i1 %or.cond.not.i, label %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules4ruff5rules17unnecessary_round17unnecessary_round.exit, label %switch.lookup3191
+  %2 = or i8 %i.fwb, %i.fvu
+  %or.cond.not.not.i = icmp eq i8 %2, 0
+  br i1 %or.cond.not.not.i, label %switch.lookup3191, label %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules4ruff5rules17unnecessary_round17unnecessary_round.exit
 
 bb.bbj:                                           ; preds = %bb.bbg
   %.old.i = icmp eq i8 %i.fvu, 0

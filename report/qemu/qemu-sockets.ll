@@ -202,8 +202,8 @@ define internal fastcc range(i32 -1, -2147483648) i32 @unix_listen_saddr(ptr nof
 bb.a:
   %3 = alloca %struct.sockaddr_un, align 2        ; 10 uses
   %i.a = getelementptr i8, ptr %0, i64 9
-  %.val = load i8, ptr %i.a, align 1, !range !8, !noundef !9
-  %i.b = trunc nuw i8 %.val to i1                 ; 4 uses
+  %.val = load i8, ptr %i.a, align 1, !range !8, !noundef !9 ; 2 uses
+  %i.b = trunc nuw i8 %.val to i1                 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(110) %3, i8 0, i64 110, i1 false), !annotation !7
   %i.c = tail call i32 @qemu_socket(i32 noundef 1, i32 noundef 1, i32 noundef 0) #13 ; 5 uses
@@ -219,9 +219,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %0, align 8                ; 2 uses
   %i.h = load i8, ptr %i.g, align 1
-  %4 = icmp ne i8 %i.h, 0
-  %or.cond = or i1 %4, %i.b
-  br i1 %or.cond, label %bb.e, label %bb.d
+  %4 = or i8 %i.h, %.val
+  %or.cond.not = icmp eq i8 %4, 0
+  br i1 %or.cond.not, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.i = tail call ptr @g_get_tmp_dir() #13

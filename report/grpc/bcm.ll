@@ -205,10 +205,9 @@ bn_mul_add_words.exit:                            ; preds = %.lr.ph69.i.prol.loo
   %i.ll = load i64, ptr %i.lk, align 8, !tbaa !96 ; 2 uses
   %i.lm = add i64 %.0.i117, %.04453.i             ; 2 uses
   %i.ln = add i64 %i.lm, %i.ll                    ; 2 uses
-  %6 = icmp ne i64 %i.lm, 0
   %.not47.i = icmp ule i64 %i.ln, %i.ll
-  %.044.tr.i = trunc nuw i64 %.04453.i to i1
-  %.narrow.i = or i1 %6, %.044.tr.i
+  %6 = or i64 %i.lm, %.04453.i
+  %.narrow.i = icmp ne i64 %6, 0
   %narrow.i = select i1 %.not47.i, i1 %.narrow.i, i1 false
   %i.lo = zext i1 %narrow.i to i64                ; 2 uses
   store i64 %i.ln, ptr %i.lk, align 8, !tbaa !96
@@ -611,10 +610,9 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.ds = load i64, ptr %i.dr, align 8, !tbaa !96 ; 2 uses
   %i.dt = add i64 %i.dq, %.04453                  ; 2 uses
   %i.du = add i64 %i.dt, %i.ds                    ; 2 uses
-  %5 = icmp ne i64 %i.dt, 0
   %.not47 = icmp ule i64 %i.du, %i.ds
-  %.044.tr = trunc nuw i64 %.04453 to i1
-  %.narrow = or i1 %5, %.044.tr
+  %5 = or i64 %i.dt, %.04453
+  %.narrow = icmp ne i64 %5, 0
   %narrow = select i1 %.not47, i1 %.narrow, i1 false
   %i.dv = zext i1 %narrow to i64                  ; 2 uses
   store i64 %i.du, ptr %i.dr, align 8, !tbaa !96

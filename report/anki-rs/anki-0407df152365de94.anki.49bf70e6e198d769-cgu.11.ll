@@ -205,11 +205,10 @@ bb.d:                                             ; preds = %bb.c
   %i.i = extractelement <8 x i8> %i.c, i64 2
   %i.j = extractelement <8 x i8> %i.c, i64 3
   %i.k = or i8 %i.j, %i.i
-  %or.cond = icmp ne i8 %i.k, 0
-  %2 = trunc nuw i8 %i.h to i1
-  %or.cond3 = or i1 %or.cond, %2
+  %2 = or i8 %i.k, %i.h
+  %or.cond3.not = icmp eq i8 %2, 0
   %i.l = extractelement <8 x i8> %i.c, i64 5
-  %.sroa.0.0 = select i1 %or.cond3, i8 1, i8 %i.l
+  %.sroa.0.0 = select i1 %or.cond3.not, i8 %i.l, i8 1
   store <8 x i8> %i.c, ptr %0, align 1
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.n = zext i1 %i.e to i8

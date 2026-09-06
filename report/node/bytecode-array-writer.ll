@@ -202,8 +202,8 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b,
 _ZN2v88internal11interpreter19BytecodeArrayWriter21UpdateExitSeenInBlockENS1_8BytecodeE.exit: ; preds = %bb.b, %bb.c
   %i.e = phi i8 [ %i.d, %bb.b ], [ %.pre, %bb.c ] ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %i.g = load i8, ptr %i.f, align 4               ; 2 uses
-  %i.h = icmp ne i8 %i.g, 0                       ; 4 uses
+  %i.g = load i8, ptr %i.f, align 4               ; 3 uses
+  %i.h = icmp ne i8 %i.g, 0                       ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 137
   %i.j = load i8, ptr %i.i, align 1, !range !5, !noundef !6
   %i.k = trunc nuw i8 %i.j to i1
@@ -268,8 +268,8 @@ _ZN2v88internal10ZoneVectorIhE14EnsureCapacityEm.exit.i.i: ; preds = %bb.h, %bb.
 _ZN2v88internal10ZoneVectorIhE6resizeEm.exit.i:   ; preds = %.lr.ph.preheader.i.i, %_ZN2v88internal10ZoneVectorIhE14EnsureCapacityEm.exit.i.i
   store ptr %i.ah, ptr %i.ai, align 8
   %i.ap = load i8, ptr %i.t, align 8, !range !5, !noundef !6
-  %2 = trunc nuw i8 %i.ap to i1
-  %3 = or i1 %i.h, %2
+  %2 = or i8 %i.ap, %i.g
+  %3 = icmp ne i8 %2, 0
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZN2v88internal10ZoneVectorIhE6resizeEm.exit.i, %bb.f, %bb.e, %bb.d
@@ -672,8 +672,8 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b,
 _ZN2v88internal11interpreter19BytecodeArrayWriter21UpdateExitSeenInBlockENS1_8BytecodeE.exit: ; preds = %bb.b, %bb.c
   %i.e = phi i8 [ %i.d, %bb.b ], [ %.pre, %bb.c ] ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %i.g = load i8, ptr %i.f, align 4               ; 2 uses
-  %i.h = icmp ne i8 %i.g, 0                       ; 4 uses
+  %i.g = load i8, ptr %i.f, align 4               ; 3 uses
+  %i.h = icmp ne i8 %i.g, 0                       ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 137
   %i.j = load i8, ptr %i.i, align 1, !range !5, !noundef !6
   %i.k = trunc nuw i8 %i.j to i1
@@ -738,8 +738,8 @@ _ZN2v88internal10ZoneVectorIhE14EnsureCapacityEm.exit.i.i: ; preds = %bb.h, %bb.
 _ZN2v88internal10ZoneVectorIhE6resizeEm.exit.i:   ; preds = %.lr.ph.preheader.i.i, %_ZN2v88internal10ZoneVectorIhE14EnsureCapacityEm.exit.i.i
   store ptr %i.ah, ptr %i.ai, align 8
   %i.ap = load i8, ptr %i.t, align 8, !range !5, !noundef !6
-  %3 = trunc nuw i8 %i.ap to i1
-  %4 = or i1 %i.h, %3
+  %3 = or i8 %i.ap, %i.g
+  %4 = icmp ne i8 %3, 0
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZN2v88internal10ZoneVectorIhE6resizeEm.exit.i, %bb.f, %bb.e, %bb.d
@@ -934,8 +934,8 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b,
 _ZN2v88internal11interpreter19BytecodeArrayWriter21UpdateExitSeenInBlockENS1_8BytecodeE.exit: ; preds = %bb.b, %bb.c
   %i.e = phi i8 [ %i.d, %bb.b ], [ %.pre, %bb.c ] ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %i.g = load i8, ptr %i.f, align 4               ; 2 uses
-  %i.h = icmp ne i8 %i.g, 0                       ; 4 uses
+  %i.g = load i8, ptr %i.f, align 4               ; 3 uses
+  %i.h = icmp ne i8 %i.g, 0                       ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 137
   %i.j = load i8, ptr %i.i, align 1, !range !5, !noundef !6
   %i.k = trunc nuw i8 %i.j to i1
@@ -1000,8 +1000,8 @@ _ZN2v88internal10ZoneVectorIhE14EnsureCapacityEm.exit.i.i: ; preds = %bb.h, %bb.
 _ZN2v88internal10ZoneVectorIhE6resizeEm.exit.i:   ; preds = %.lr.ph.preheader.i.i, %_ZN2v88internal10ZoneVectorIhE14EnsureCapacityEm.exit.i.i
   store ptr %i.ah, ptr %i.ai, align 8
   %i.ap = load i8, ptr %i.t, align 8, !range !5, !noundef !6
-  %3 = trunc nuw i8 %i.ap to i1
-  %4 = or i1 %i.h, %3
+  %3 = or i8 %i.ap, %i.g
+  %4 = icmp ne i8 %3, 0
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZN2v88internal10ZoneVectorIhE6resizeEm.exit.i, %bb.f, %bb.e, %bb.d
@@ -1221,8 +1221,8 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b,
 _ZN2v88internal11interpreter19BytecodeArrayWriter21UpdateExitSeenInBlockENS1_8BytecodeE.exit: ; preds = %bb.b, %bb.c
   %i.e = phi i8 [ %i.d, %bb.b ], [ %.pre, %bb.c ] ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %i.g = load i8, ptr %i.f, align 4               ; 2 uses
-  %i.h = icmp ne i8 %i.g, 0                       ; 4 uses
+  %i.g = load i8, ptr %i.f, align 4               ; 3 uses
+  %i.h = icmp ne i8 %i.g, 0                       ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 137
   %i.j = load i8, ptr %i.i, align 1, !range !5, !noundef !6
   %i.k = trunc nuw i8 %i.j to i1
@@ -1287,8 +1287,8 @@ _ZN2v88internal10ZoneVectorIhE14EnsureCapacityEm.exit.i.i: ; preds = %bb.h, %bb.
 _ZN2v88internal10ZoneVectorIhE6resizeEm.exit.i:   ; preds = %.lr.ph.preheader.i.i, %_ZN2v88internal10ZoneVectorIhE14EnsureCapacityEm.exit.i.i
   store ptr %i.ah, ptr %i.ai, align 8
   %i.ap = load i8, ptr %i.t, align 8, !range !5, !noundef !6
-  %3 = trunc nuw i8 %i.ap to i1
-  %4 = or i1 %i.h, %3
+  %3 = or i8 %i.ap, %i.g
+  %4 = icmp ne i8 %3, 0
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZN2v88internal10ZoneVectorIhE6resizeEm.exit.i, %bb.f, %bb.e, %bb.d

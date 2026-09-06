@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.a
           to label %bb.k unwind label %bb.j, !noalias !8512
 
 .thread72.i:                                      ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCsoTR8nlGN3X_18ty_python_semantic11suppression18InvalidSuppressionEEB1b_.exit.i, %bb.z, %bb.j
-  %.pn.pn.i = phi { ptr, i32 } [ %i.ap, %bb.j ], [ %.pn24.i.i, %bb.z ], [ %.pn71.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCsoTR8nlGN3X_18ty_python_semantic11suppression18InvalidSuppressionEEB1b_.exit.i ] ; 2 uses
+  %.pn.pn.i = phi { ptr, i32 } [ %.pn71.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCsoTR8nlGN3X_18ty_python_semantic11suppression18InvalidSuppressionEEB1b_.exit.i ], [ %.pn24.i.i, %bb.z ], [ %i.ap, %bb.j ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !8529)
   call void @llvm.experimental.noalias.scope.decl(metadata !8530)
   call void @llvm.experimental.noalias.scope.decl(metadata !8531)
@@ -225,8 +225,7 @@ bb.j:                                             ; preds = %bb.n, %bb.h
 
 bb.k:                                             ; preds = %bb.h
   %i.aq = getelementptr inbounds nuw i8, ptr %i.al, i64 98
-  %i.ar = load i8, ptr %i.aq, align 2, !range !17, !noalias !8512, !noundef !9
-  %5 = trunc nuw i8 %i.ar to i1                   ; 2 uses
+  %i.ar = load i8, ptr %i.aq, align 2, !range !17, !noalias !8512, !noundef !9 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !8514
   %i.as = load ptr, ptr %i.n, align 8, !noalias !8514, !nonnull !9, !noundef !9 ; 3 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 48
@@ -587,11 +586,11 @@ bb.at:                                            ; preds = %bb.ar
   br label %bb.ab
 
 bb.au:                                            ; preds = %bb.as
-  %switch.i = icmp ugt i8 %.sroa.6.sroa.6.0.copyload.i, 1
-  %6 = icmp ne i8 %.sroa.6.sroa.7.0.copyload.i, 0
-  %brmerge2.i = or i1 %6, %5
-  %or.cond332.i = select i1 %switch.i, i1 %brmerge2.i, i1 false
-  br i1 %or.cond332.i, label %bb.de, label %.backedge.i.backedge
+  %switch.i = icmp ult i8 %.sroa.6.sroa.6.0.copyload.i, 2
+  %5 = or i8 %.sroa.6.sroa.7.0.copyload.i, %i.ar
+  %brmerge2.not.i = icmp eq i8 %5, 0
+  %or.cond332.i = select i1 %switch.i, i1 true, i1 %brmerge2.not.i
+  br i1 %or.cond332.i, label %.backedge.i.backedge, label %bb.de
 
 bb.av:                                            ; preds = %bb.as
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !8514
@@ -602,9 +601,9 @@ bb.av:                                            ; preds = %bb.as
   store i16 %.sroa.6.sroa.8.0.copyload.i, ptr %.sroa.6.sroa.8.0..sroa.6.0..sroa_idx10.sroa_idx.i, align 2, !noalias !8514
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.7.0..sroa_idx11.i, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.7.0..sroa_idx.i, i64 28, i1 false), !noalias !8514
   %i.eq = load i8, ptr %i.bu, align 8, !range !17, !noalias !8514, !noundef !9
-  %7 = icmp ne i8 %i.eq, 0
-  %brmerge.i = or i1 %7, %5
-  br i1 %brmerge.i, label %bb.ay, label %bb.aw
+  %6 = or i8 %i.eq, %i.ar
+  %brmerge.not.i = icmp eq i8 %6, 0
+  br i1 %brmerge.not.i, label %bb.aw, label %bb.ay
 
 bb.aw:                                            ; preds = %bb.av
   %i.er = icmp eq i64 %i.eo, 0
@@ -1007,7 +1006,7 @@ bb.dd:                                            ; preds = %_RINvNtCs4NRVxsYgnA
           filter [0 x ptr] zeroinitializer        ; 0 uses
   br label %.body.i
 
-.body.i:                                          ; preds = %.body5.i, %bb.dw, %bb.dd, %bb.d, %bb.c
+.body.i:                                          ; preds = %bb.dw, %.body5.i, %bb.dd, %bb.d, %bb.c
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #40, !noalias !8512
   unreachable
 
@@ -1215,7 +1214,7 @@ bb.dx:                                            ; preds = %bb.dw
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCsoTR8nlGN3X_18ty_python_semantic11suppression18InvalidSuppressionEEB1b_.exit.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCsoTR8nlGN3X_18ty_python_semantic11suppression18UnknownSuppressionEEB1b_.exit.i
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtCsoTR8nlGN3X_18ty_python_semantic11suppression18InvalidSuppressionENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBP_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.bk)
-          to label %.thread72.i unwind label %bb.dd
+          to label %.thread72.i unwind label %bb.dd, !noalias !8512
 
 bb.dy:                                            ; preds = %.body5.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtCsheqz6YZvxwl_8smallvec8SmallVecANtNtCsoTR8nlGN3X_18ty_python_semantic11suppression11Suppressionj1_EEB1f_.exit.i, %.body.i1
   %i.me = landingpad { ptr, i32 }

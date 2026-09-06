@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %.thread145, %bb.g
   %.sroa.6129.1 = phi i8 [ 0, %bb.g ], [ 1, %.thread145 ] ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 504
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !115 ; 2 uses
-  %4 = icmp ne i64 %i.af, 0                       ; 5 uses
-  br i1 %4, label %bb.k, label %.thread151
+  %4 = icmp eq i64 %i.af, 0                       ; 2 uses
+  br i1 %4, label %.thread151, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 496
@@ -228,11 +228,12 @@ bb.m:                                             ; preds = %bb.k
   br label %.thread151
 
 .thread151:                                       ; preds = %bb.m, %bb.j
+  %.sroa.6.1155 = phi i8 [ 0, %bb.j ], [ 1, %bb.m ] ; 3 uses
   %.sroa.0121.1154 = phi i8 [ undef, %bb.j ], [ %.sroa.0102.0.insert.ext, %bb.m ] ; 3 uses
   %i.al = trunc nuw i8 %.sroa.6135.1 to i1        ; 3 uses
   %i.am = or i8 %.sroa.6129.1, %.sroa.6135.1
-  %or.cond = icmp ne i8 %i.am, 0
-  %.not75 = or i1 %or.cond, %4                    ; 3 uses
+  %5 = or i8 %i.am, %.sroa.6.1155                 ; 2 uses
+  %.not75 = icmp ne i8 %5, 0                      ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 560 ; 2 uses
   %i.ao = load i8, ptr %i.an, align 8, !tbaa !1120, !range !229, !noundef !230
   %i.ap = trunc nuw i8 %i.ao to i1
@@ -253,8 +254,8 @@ bb.o:                                             ; preds = %.thread151
   %i.aw = lshr exact i64 %i.av, 4
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
-  %.not170 = icmp ne ptr %i.g, null               ; 2 uses
-  br i1 %.not170, label %bb.p, label %_ZNSt10shared_ptrIN12lldb_private11UnixSignalsEEaSERKS2_.exit
+  %.not170 = icmp eq ptr %i.g, null               ; 2 uses
+  br i1 %.not170, label %_ZNSt10shared_ptrIN12lldb_private11UnixSignalsEEaSERKS2_.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.ax = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN12lldb_private7Process14GetUnixSignalsEv(ptr noundef nonnull align 8 dereferenceable(3224) %i.g) #19 ; 2 uses
@@ -380,12 +381,13 @@ bb.ad:                                            ; preds = %bb.ac
   %i.cj = trunc nuw i8 %.sroa.6129.1 to i1
   %i.ck = trunc nuw i8 %.sroa.0127.1 to i1
   %i.cl = xor i1 %i.ck, true
+  %6 = trunc nuw i8 %.sroa.6.1155 to i1
   %i.cm = trunc nuw i8 %.sroa.0121.1154 to i1
   %i.cn = trunc i64 %i.aw to i32
   %i.co = zext i8 %.sroa.0127.1 to i32
   %.0.i = select i1 %i.y, i32 -1, i32 %i.co
   %i.cp = zext i8 %.sroa.0121.1154 to i32
-  %.0.i83 = select i1 %4, i32 %i.cp, i32 -1
+  %.0.i83 = select i1 %4, i32 -1, i32 %i.cp
   %i.cq = zext i8 %.sroa.0133.1 to i32
   %.0.i85 = select i1 %i.q, i32 -1, i32 %i.cq
   %.pre = load ptr, ptr %3, align 8, !tbaa !550
@@ -423,7 +425,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
   %i.cz = phi ptr [ %i.cx, %bb.aj ], [ %i.cw, %bb.ai ]
-  br i1 %4, label %bb.al, label %bb.am
+  br i1 %6, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
   %i.da = load ptr, ptr %3, align 8, !tbaa !550   ; 2 uses
@@ -496,8 +498,10 @@ bb.au:                                            ; preds = %.thread156, %_ZNK12
   br i1 %.not171, label %.loopexit, label %bb.ae
 
 bb.av:                                            ; preds = %bb.ac
-  %brmerge169.not = and i1 %.not170, %.not75
-  br i1 %brmerge169.not, label %bb.aw, label %.loopexit
+  %7 = trunc nuw i8 %.sroa.6.1155 to i1
+  %or.cond167.not173 = icmp eq i8 %5, 0
+  %brmerge169 = or i1 %.not170, %or.cond167.not173
+  br i1 %brmerge169, label %.loopexit, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -517,7 +521,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.dv = trunc nuw i8 %.sroa.6129.1 to i1        ; 3 uses
   %i.dw = trunc nuw i8 %.sroa.0127.1 to i1
   %i.dx = xor i1 %i.dw, true                      ; 3 uses
-  br i1 %4, label %.lr.ph181.split.us, label %.lr.ph181.split
+  br i1 %7, label %.lr.ph181.split.us, label %.lr.ph181.split
 
 .lr.ph181.split.us:                               ; preds = %.lr.ph181, %bb.bb
   %.0180.us = phi i32 [ %i.eb, %bb.bb ], [ %i.ds, %.lr.ph181 ] ; 4 uses

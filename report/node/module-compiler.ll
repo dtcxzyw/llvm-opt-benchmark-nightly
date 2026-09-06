@@ -205,16 +205,16 @@ _ZN2v84base11OwnedVectorIhED2Ev.exit.i:           ; preds = %_ZNKSt14default_del
   call void @_ZN2v84base14RecursiveMutex4LockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bt) #29
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bs, i64 448
   %i.bv = load i8, ptr %i.bu, align 8, !range !57, !noundef !58
-  %10 = trunc nuw i8 %i.bv to i1
   call void @_ZN2v84base14RecursiveMutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bt) #29
   %i.bw = getelementptr i8, ptr %i.bs, i64 216
   %.val30.i = load ptr, ptr %i.bw, align 8
   %i.bx = getelementptr inbounds nuw i8, ptr %.val30.i, i64 704
-  %i.by = load i8, ptr %i.bx, align 8
-  %11 = icmp ne i8 %i.by, 0                       ; 2 uses
-  %brmerge.i.i = or i1 %11, %10
-  %.mux.i.i = select i1 %11, i16 514, i16 257
-  br i1 %brmerge.i.i, label %_ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModuleENS1_10DebugStateEb.exit.i, label %bb.i
+  %i.by = load i8, ptr %i.bx, align 8             ; 2 uses
+  %.not59.i = icmp eq i8 %i.by, 0
+  %10 = or i8 %i.by, %i.bv
+  %brmerge.i.not.i = icmp eq i8 %10, 0
+  %.mux.i.i = select i1 %.not59.i, i16 257, i16 514
+  br i1 %brmerge.i.not.i, label %bb.i, label %_ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModuleENS1_10DebugStateEb.exit.i
 
 bb.i:                                             ; preds = %._crit_edge.i
   %i.bz = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 784), align 16, !range !57, !noundef !58
@@ -617,16 +617,15 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %i.k, i64 296 ; 2 uses
   tail call void @_ZN2v84base14RecursiveMutex4LockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.u) #29
   %i.v = getelementptr inbounds nuw i8, ptr %i.k, i64 448
-  %i.w = load i8, ptr %i.v, align 8, !range !57, !noundef !58 ; 2 uses
-  %11 = trunc nuw i8 %i.w to i1                   ; 2 uses
+  %i.w = load i8, ptr %i.v, align 8, !range !57, !noundef !58 ; 3 uses
   tail call void @_ZN2v84base14RecursiveMutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.u) #29
   %i.x = getelementptr i8, ptr %i.k, i64 216      ; 2 uses
   %.val.i = load ptr, ptr %i.x, align 8           ; 6 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.val.i, i64 704
-  %i.z = load i8, ptr %i.y, align 8
-  %12 = icmp ne i8 %i.z, 0                        ; 2 uses
-  %brmerge.i.i = or i1 %12, %11
-  br i1 %brmerge.i.i, label %_ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModuleENS1_10DebugStateEb.exit.i, label %_ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModuleENS1_10DebugStateEb.exit.i.thread
+  %i.z = load i8, ptr %i.y, align 8               ; 2 uses
+  %11 = or i8 %i.z, %i.w
+  %brmerge.i.i.not = icmp eq i8 %11, 0
+  br i1 %brmerge.i.i.not, label %_ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModuleENS1_10DebugStateEb.exit.i.thread, label %_ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModuleENS1_10DebugStateEb.exit.i
 
 _ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModuleENS1_10DebugStateEb.exit.i.thread: ; preds = %bb.c
   %i.aa = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 784), align 16, !range !57, !noundef !58
@@ -645,10 +644,12 @@ _ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModule
   br label %bb.d
 
 _ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModuleENS1_10DebugStateEb.exit.i: ; preds = %bb.c
-  %.mux.i.i = select i1 %12, i16 514, i16 257     ; 3 uses
+  %.not = icmp eq i8 %i.z, 0
+  %.mux.i.i = select i1 %.not, i16 257, i16 514   ; 3 uses
+  %12 = trunc nuw i8 %i.w to i1
   %.sroa.06.0.extract.trunc.i = trunc i16 %.mux.i.i to i8 ; 2 uses
   %.sroa.5.0.extract.shift.i = lshr i16 %.mux.i.i, 8 ; 2 uses
-  br i1 %11, label %_ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModuleENS1_10DebugStateEb.exit.i._ZN2v88internal4wasm12_GLOBAL__N_123GetLazyCompilationTiersEPNS1_12NativeModuleEjNS1_10DebugStateE.exit_crit_edge, label %bb.d
+  br i1 %12, label %_ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModuleENS1_10DebugStateEb.exit.i._ZN2v88internal4wasm12_GLOBAL__N_123GetLazyCompilationTiersEPNS1_12NativeModuleEjNS1_10DebugStateE.exit_crit_edge, label %bb.d
 
 _ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModuleENS1_10DebugStateEb.exit.i._ZN2v88internal4wasm12_GLOBAL__N_123GetLazyCompilationTiersEPNS1_12NativeModuleEjNS1_10DebugStateE.exit_crit_edge: ; preds = %_ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModuleENS1_10DebugStateEb.exit.i
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.k, i64 168
@@ -1051,7 +1052,6 @@ bb.a:
   tail call void @_ZN2v84base14RecursiveMutex4LockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.e) #29
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 448
   %i.g = load i8, ptr %i.f, align 8, !range !57, !noundef !58
-  %2 = trunc nuw i8 %i.g to i1
   tail call void @_ZN2v84base14RecursiveMutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.e) #29
   %i.h = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 922), align 2, !range !57, !noundef !58
   %i.i = trunc nuw i8 %i.h to i1
@@ -1071,11 +1071,12 @@ _ZN2v88internal4wasm12_GLOBAL__N_112IsLazyModuleEPKNS1_10WasmModuleE.exit: ; pre
 _ZN2v88internal4wasm12_GLOBAL__N_112IsLazyModuleEPKNS1_10WasmModuleE.exit.thread29: ; preds = %bb.b, %_ZN2v88internal4wasm12_GLOBAL__N_112IsLazyModuleEPKNS1_10WasmModuleE.exit
   %.val31 = load ptr, ptr %i.c, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %.val31, i64 704
-  %i.o = load i8, ptr %i.n, align 8
-  %3 = icmp ne i8 %i.o, 0                         ; 2 uses
-  %brmerge.i = or i1 %3, %2
-  %.mux.i = select i1 %3, i16 514, i16 257
-  br i1 %brmerge.i, label %_ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModuleENS1_10DebugStateEb.exit, label %bb.c
+  %i.o = load i8, ptr %i.n, align 8               ; 2 uses
+  %.not33 = icmp eq i8 %i.o, 0
+  %2 = or i8 %i.o, %i.g
+  %brmerge.i.not = icmp eq i8 %2, 0
+  %.mux.i = select i1 %.not33, i16 257, i16 514
+  br i1 %brmerge.i.not, label %bb.c, label %_ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModuleENS1_10DebugStateEb.exit
 
 bb.c:                                             ; preds = %_ZN2v88internal4wasm12_GLOBAL__N_112IsLazyModuleEPKNS1_10WasmModuleE.exit.thread29
   %i.p = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 784), align 16, !range !57, !noundef !58

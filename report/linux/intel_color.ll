@@ -205,11 +205,10 @@ bb.i:                                             ; preds = %bb.f
 bb.j:                                             ; preds = %bb.i
   %i.ah = getelementptr i8, ptr %i.l, i64 844
   %.val3.i = load i8, ptr %i.ah, align 4, !range !15, !noundef !16
-  %2 = trunc nuw i8 %.val3.i to i1
   %i.ai = and i8 %i.af, 14
-  %3 = icmp ne i8 %i.ai, 0
-  %or.cond = or i1 %3, %2
-  br i1 %or.cond, label %intel_crtc_needs_color_update.exit.thread, label %bb.k
+  %2 = or disjoint i8 %.val3.i, %i.ai
+  %or.cond.not = icmp eq i8 %2, 0
+  br i1 %or.cond.not, label %bb.k, label %intel_crtc_needs_color_update.exit.thread
 
 intel_crtc_needs_color_update.exit.thread:        ; preds = %bb.i, %bb.j
   %i.aj = getelementptr i8, ptr %i.d, i64 696
@@ -612,15 +611,15 @@ define internal void @ilk_read_luts(ptr nofree noundef captures(none) %0) #2 ali
 bb.a:
   %i.a = load ptr, ptr %0, align 8                ; 3 uses
   %i.b = getelementptr i8, ptr %0, i64 3948
-  %i.c = load i8, ptr %i.b, align 4
+  %i.c = load i8, ptr %i.b, align 4               ; 2 uses
   %.not.i.not = icmp eq i8 %i.c, 0
+  %1 = getelementptr i8, ptr %0, i64 4400
+  %2 = load i8, ptr %1, align 8, !range !15       ; 2 uses
   br i1 %.not.i.not, label %bb.b, label %.ilk_has_post_csc_lut.exit.thread_crit_edge
 
 bb.b:                                             ; preds = %bb.a
-  %1 = getelementptr i8, ptr %0, i64 4400
-  %2 = load i8, ptr %1, align 8, !range !15, !noundef !16
   %i.d = trunc nuw i8 %2 to i1
-  br i1 %i.d, label %ilk_has_post_csc_lut.exit, label %ilk_has_post_csc_lut.exit.thread24
+  br i1 %i.d, label %ilk_has_post_csc_lut.exit, label %.ilk_has_post_csc_lut.exit.thread_crit_edge
 
 ilk_has_post_csc_lut.exit:                        ; preds = %bb.b
   %i.e = getelementptr i8, ptr %0, i64 3940
@@ -631,22 +630,28 @@ ilk_has_post_csc_lut.exit:                        ; preds = %bb.b
   %spec.select = select i1 %.not, i64 752, i64 760
   br label %.ilk_has_post_csc_lut.exit.thread_crit_edge
 
-.ilk_has_post_csc_lut.exit.thread_crit_edge:      ; preds = %ilk_has_post_csc_lut.exit, %bb.a
-  %.ph = phi i64 [ 760, %bb.a ], [ %spec.select, %ilk_has_post_csc_lut.exit ]
-  %i.h = getelementptr i8, ptr %0, i64 %.ph       ; 2 uses
-  %3 = getelementptr i8, ptr %0, i64 3936         ; 2 uses
-  %4 = load i32, ptr %3, align 8
-  switch i32 %4, label %bb.m [
+.ilk_has_post_csc_lut.exit.thread_crit_edge:      ; preds = %ilk_has_post_csc_lut.exit, %bb.a, %bb.b
+  %3 = phi i8 [ 0, %bb.b ], [ 1, %ilk_has_post_csc_lut.exit ], [ %2, %bb.a ]
+  %4 = phi i64 [ 752, %bb.b ], [ %spec.select, %ilk_has_post_csc_lut.exit ], [ 760, %bb.a ]
+  %i.h = getelementptr i8, ptr %0, i64 %4         ; 2 uses
+  %5 = or i8 %3, %i.c
+  %brmerge.not = icmp eq i8 %5, 0
+  br i1 %brmerge.not, label %ilk_has_post_csc_lut.exit.thread24, label %6
+
+6:                                                ; preds = %.ilk_has_post_csc_lut.exit.thread_crit_edge
+  %7 = getelementptr i8, ptr %0, i64 3936         ; 2 uses
+  %8 = load i32, ptr %7, align 8
+  switch i32 %8, label %bb.m [
     i32 0, label %bb.c
     i32 1, label %bb.d
   ]
 
-bb.c:                                             ; preds = %.ilk_has_post_csc_lut.exit.thread_crit_edge
+bb.c:                                             ; preds = %6
   %i.i = tail call fastcc ptr @ilk_read_lut_8(ptr noundef %i.a) #14, !srcloc !242
   store ptr %i.i, ptr %i.h, align 8
   br label %ilk_has_post_csc_lut.exit.thread24
 
-bb.d:                                             ; preds = %.ilk_has_post_csc_lut.exit.thread_crit_edge
+bb.d:                                             ; preds = %6
   %i.j = load ptr, ptr %i.a, align 8              ; 2 uses
   %.not.i20 = icmp eq ptr %i.j, null
   br i1 %.not.i20, label %bb.f, label %bb.e
@@ -770,15 +775,15 @@ ilk_read_lut_10.exit:                             ; preds = %intel_de_read_fw.ex
   store ptr %.0.i21, ptr %i.h, align 8
   br label %ilk_has_post_csc_lut.exit.thread24
 
-bb.m:                                             ; preds = %.ilk_has_post_csc_lut.exit.thread_crit_edge
+bb.m:                                             ; preds = %6
   %i.bu = tail call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.17, ptr nonnull @.str.3, i32 3592, i32 2321, i64 16) #12, !srcloc !243
-  %i.bv = load i32, ptr %3, align 8
+  %i.bv = load i32, ptr %7, align 8
   %i.bw = zext i32 %i.bv to i64
   tail call void (ptr, ...) @__SCT__WARN_trap(ptr noundef %i.bu, ptr noundef nonnull @.str.18, i64 noundef %i.bw) #11
   tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !244
   br label %ilk_has_post_csc_lut.exit.thread24
 
-ilk_has_post_csc_lut.exit.thread24:               ; preds = %bb.b, %bb.c, %ilk_read_lut_10.exit, %bb.m
+ilk_has_post_csc_lut.exit.thread24:               ; preds = %.ilk_has_post_csc_lut.exit.thread_crit_edge, %bb.c, %ilk_read_lut_10.exit, %bb.m
   ret void
 }
 

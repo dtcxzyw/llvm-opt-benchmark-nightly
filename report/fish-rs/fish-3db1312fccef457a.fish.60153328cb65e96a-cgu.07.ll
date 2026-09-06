@@ -205,10 +205,9 @@ bb.hr:                                            ; preds = %bb.hq
   call void @llvm.assume(i1 %i.ub)
   %i.uc = icmp ne i64 %i.ua, 0
   %i.ud = or i8 %.sroa.6.0, %.sroa.020.0
-  %4 = icmp ne i8 %i.ud, 0
-  %or.cond9 = or i1 %i.uc, %4
-  %5 = trunc nuw i8 %.sroa.9.0 to i1
-  %or.cond12 = or i1 %or.cond9, %5
+  %4 = or i8 %.sroa.9.0, %i.ud
+  %5 = icmp ne i8 %4, 0
+  %or.cond12 = or i1 %i.uc, %5
   br i1 %or.cond12, label %.thread, label %bb.hs
 
 bb.hs:                                            ; preds = %bb.hr
@@ -611,10 +610,10 @@ bb.b:                                             ; preds = %bb.a
   %i.k = load ptr, ptr %4, align 8, !nonnull !10, !align !12, !noundef !10
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.m = load i64, ptr %i.l, align 8, !noundef !10
-  %i.n = load i64, ptr %0, align 8, !range !18, !noundef !10 ; 2 uses
+  %i.n = load i64, ptr %0, align 8, !range !18, !noundef !10 ; 3 uses
   %.not51 = icmp eq i64 %i.n, 0
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.p = load i64, ptr %i.o, align 8              ; 4 uses
+  %i.p = load i64, ptr %i.o, align 8              ; 5 uses
   %.not52 = icmp eq i64 %i.p, 0                   ; 2 uses
   %or.cond = select i1 %.not51, i1 true, i1 %.not52
   br i1 %or.cond, label %bb.d, label %bb.f
@@ -639,8 +638,10 @@ bb.d:                                             ; preds = %bb.b
   %i.z = load i8, ptr %i.y, align 8, !range !13
   %.fr116 = freeze i8 %i.z
   %i.aa = trunc i8 %.fr116 to i1
-  %6 = load i64, ptr %i.q, align 8
+  %6 = or i64 %i.p, %i.n
+  %spec.select70.not = icmp eq i64 %6, 0
   %i.ab = trunc nuw i64 %i.n to i1
+  %7 = load i64, ptr %i.q, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   br i1 %i.aa, label %.split.us, label %.split.preheader
@@ -761,8 +762,9 @@ _RNCNvXNtNtNtCs8frGy5WneL6_4fish8builtins6string3subNtB4_3SubNtB6_16StringSubCom
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.h, %_RNCNvXNtNtNtCs8frGy5WneL6_4fish8builtins6string3subNtB4_3SubNtB6_16StringSubCommand6handle0Ba_.exit
-  %spec.select.a = phi i64 [ %i.as, %_RNCNvXNtNtNtCs8frGy5WneL6_4fish8builtins6string3subNtB4_3SubNtB6_16StringSubCommand6handle0Ba_.exit ], [ %.pre, %bb.h ]
-  %.sroa.029.0 = select i1 %i.ab, i64 %6, i64 %spec.select.a
+  %spec.select.a = phi i64 [ %i.as, %_RNCNvXNtNtNtCs8frGy5WneL6_4fish8builtins6string3subNtB4_3SubNtB6_16StringSubCommand6handle0Ba_.exit ], [ undef, %bb.h ]
+  %spec.select = select i1 %i.ab, i64 %7, i64 %spec.select.a
+  %.sroa.029.0 = select i1 %spec.select70.not, i64 %.pre, i64 %spec.select
   %i.at = add i64 %.sroa.029.0, %.sroa.0.0.i      ; 2 uses
   %i.au = icmp ult i64 %i.at, %.sroa.0.0.i
   br i1 %i.au, label %.invoke, label %bb.m

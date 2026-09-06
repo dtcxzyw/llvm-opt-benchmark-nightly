@@ -205,12 +205,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i61
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit63: ; preds = %bb.ac, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i61
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #30
-  %i.bl = load i8, ptr %i.k, align 8, !tbaa !211, !range !80, !noundef !81 ; 2 uses
-  %6 = trunc nuw i8 %i.bl to i1                   ; 2 uses
+  %i.bl = load i8, ptr %i.k, align 8, !tbaa !211, !range !80, !noundef !81 ; 3 uses
   %i.bm = load i8, ptr %i.m, align 8, !tbaa !211, !range !80, !noundef !81
-  %7 = trunc nuw i8 %i.bm to i1                   ; 2 uses
-  %8 = xor i1 %6, %7
-  br i1 %8, label %bb.ad, label %_ZN10tiniergltfL5checkEb.exit
+  %.not = icmp eq i8 %i.bl, %i.bm
+  br i1 %.not, label %_ZN10tiniergltfL5checkEb.exit, label %bb.ad
 
 bb.ad:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit63
   %i.bn = call ptr @__cxa_allocate_exception(i64 16) #30 ; 3 uses
@@ -224,6 +222,7 @@ bb.ae:                                            ; preds = %bb.ad
   br label %.body65
 
 _ZN10tiniergltfL5checkEb.exit:                    ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit63
+  %6 = trunc nuw i8 %i.bl to i1
   br i1 %6, label %bb.af, label %_ZN10tiniergltfL5checkEb.exit70
 
 bb.af:                                            ; preds = %_ZN10tiniergltfL5checkEb.exit
@@ -343,10 +342,9 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.ao
   %i.dg = load i8, ptr %i.i, align 8, !tbaa !211, !range !80, !noundef !81
-  %i.dh = or i8 %i.dg, %i.bl
-  %brmerge = icmp ne i8 %i.dh, 0
-  %brmerge99 = or i1 %brmerge, %7
-  br i1 %brmerge99, label %_ZN10tiniergltfL5checkEb.exit86, label %bb.aq
+  %i.dh = or i8 %i.bl, %i.dg
+  %brmerge99.not = icmp eq i8 %i.dh, 0
+  br i1 %brmerge99.not, label %bb.aq, label %_ZN10tiniergltfL5checkEb.exit86
 
 bb.aq:                                            ; preds = %bb.ap
   %i.di = call ptr @__cxa_allocate_exception(i64 16) #30 ; 3 uses

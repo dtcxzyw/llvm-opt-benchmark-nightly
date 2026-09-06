@@ -204,26 +204,27 @@ bb.bx:                                            ; preds = %bb.bo, %bb.bw
   br i1 %i.pw, label %.loopexit, label %.lr.ph358
 
 bb.by:                                            ; preds = %.lr.ph354, %_RNvMs6_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7Checker24visit_cast_type_argument.exit
-  %i.px = phi i64 [ %i.or, %.lr.ph354 ], [ %i.qk, %_RNvMs6_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7Checker24visit_cast_type_argument.exit ]
+  %i.px = phi i64 [ %i.or, %.lr.ph354 ], [ %i.qk, %_RNvMs6_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7Checker24visit_cast_type_argument.exit ] ; 2 uses
   %i.py = phi { i64, ptr } [ %i.oq, %.lr.ph354 ], [ %i.qj, %_RNvMs6_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7Checker24visit_cast_type_argument.exit ]
-  %i.pz = extractvalue { i64, ptr } %i.py, 1      ; 8 uses
+  %i.pz = extractvalue { i64, ptr } %i.py, 1      ; 9 uses
   %i.qa = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !7488, !noalias !7484, !noundef !5 ; 2 uses
   %i.qb = add i64 %i.qa, 1
   store i64 %i.qb, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !7488, !noalias !7484
-  %2 = icmp ne i64 %i.qa, 0
-  %3 = trunc nuw i64 %i.px to i1                  ; 2 uses
-  %or.cond186 = select i1 %2, i1 true, i1 %3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pz) ]
-  br i1 %or.cond186, label %bb.bz, label %bb.ca
+  %2 = or i64 %i.qa, %i.px
+  %or.cond186.not = icmp eq i64 %2, 0
+  br i1 %or.cond186.not, label %bb.ca, label %bb.bz
 
 ._crit_edge355:                                   ; preds = %_RNvMs6_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7Checker24visit_cast_type_argument.exit, %bb.bp
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
   br label %.loopexit
 
 bb.bz:                                            ; preds = %bb.by
+  %3 = trunc nuw i64 %i.px to i1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pz) ]
   br i1 %3, label %bb.cd, label %bb.ce
 
 bb.ca:                                            ; preds = %bb.by
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pz) ]
   %i.qc = load i32, ptr %i.ai, align 8, !alias.scope !7489, !noundef !5 ; 2 uses
   %i.qd = or i32 %i.qc, 8
   store i32 %i.qd, ptr %i.ai, align 8, !alias.scope !7489

@@ -205,11 +205,10 @@ bb.bt:                                            ; preds = %bb.bs, %bb.br
 bb.bu:                                            ; preds = %bb.bt
   %i.gh = getelementptr i8, ptr %i.fg, i64 844
   %.val3.i.i = load i8, ptr %i.gh, align 4, !range !34, !noundef !35
-  %2 = trunc nuw i8 %.val3.i.i to i1
   %i.gi = and i8 %i.gf, 14
-  %3 = icmp ne i8 %i.gi, 0
-  %or.cond.i = or i1 %3, %2
-  br i1 %or.cond.i, label %intel_crtc_needs_color_update.exit.thread.i341, label %bb.bv
+  %2 = or disjoint i8 %.val3.i.i, %i.gi
+  %or.cond.not.i = icmp eq i8 %2, 0
+  br i1 %or.cond.not.i, label %bb.bv, label %intel_crtc_needs_color_update.exit.thread.i341
 
 intel_crtc_needs_color_update.exit.thread.i341:   ; preds = %bb.bu, %bb.bt
   %i.gj = load ptr, ptr %i.fw, align 8
@@ -239,11 +238,10 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bv
 bb.by:                                            ; preds = %bb.bx
   %i.gr = getelementptr i8, ptr %i.fg, i64 844
   %.val3.i82.i = load i8, ptr %i.gr, align 4, !range !34, !noundef !35
-  %4 = trunc nuw i8 %.val3.i82.i to i1
   %i.gs = and i8 %i.gp, 14
-  %5 = icmp ne i8 %i.gs, 0
-  %or.cond88.i = or i1 %5, %4
-  br i1 %or.cond88.i, label %intel_crtc_needs_color_update.exit83.thread.i, label %bb.bz
+  %3 = or disjoint i8 %.val3.i82.i, %i.gs
+  %or.cond88.not.i = icmp eq i8 %3, 0
+  br i1 %or.cond88.not.i, label %bb.bz, label %intel_crtc_needs_color_update.exit83.thread.i
 
 intel_crtc_needs_color_update.exit83.thread.i:    ; preds = %bb.by, %bb.bx
   %i.gt = load ptr, ptr %i.fw, align 8
@@ -646,11 +644,10 @@ needs_cursorclk_wa.exit.i:                        ; preds = %needs_cursorclk_wa.
 bb.jv:                                            ; preds = %needs_cursorclk_wa.exit.i
   %i.aem = getelementptr i8, ptr %i.yr, i64 844
   %.val3.i.i382 = load i8, ptr %i.aem, align 4, !range !34, !noundef !35
-  %6 = trunc nuw i8 %.val3.i.i382 to i1
   %i.aen = and i8 %i.aek, 14
-  %7 = icmp ne i8 %i.aen, 0
-  %or.cond105.i = or i1 %7, %6
-  br i1 %or.cond105.i, label %intel_crtc_needs_color_update.exit.thread.i377, label %bb.jw
+  %4 = or disjoint i8 %.val3.i.i382, %i.aen
+  %or.cond105.not.i = icmp eq i8 %4, 0
+  br i1 %or.cond105.not.i, label %bb.jw, label %intel_crtc_needs_color_update.exit.thread.i377
 
 intel_crtc_needs_color_update.exit.thread.i377:   ; preds = %bb.jv, %needs_cursorclk_wa.exit.i
   call void @intel_color_post_update(ptr noundef %i.yr) #24
@@ -1053,11 +1050,10 @@ bb.g:                                             ; preds = %.thread
 bb.h:                                             ; preds = %bb.g
   %i.aa = getelementptr i8, ptr %i.l, i64 844
   %.val3.i = load i8, ptr %i.aa, align 4, !range !34, !noundef !35
-  %2 = trunc nuw i8 %.val3.i to i1
   %i.ab = and i8 %i.y, 14
-  %3 = icmp ne i8 %i.ab, 0
-  %or.cond = or i1 %3, %2
-  br i1 %or.cond, label %intel_crtc_needs_color_update.exit.thread, label %bb.i
+  %2 = or disjoint i8 %.val3.i, %i.ab
+  %or.cond.not = icmp eq i8 %2, 0
+  br i1 %or.cond.not, label %bb.i, label %intel_crtc_needs_color_update.exit.thread
 
 intel_crtc_needs_color_update.exit.thread:        ; preds = %bb.g, %bb.h
   tail call void @intel_color_load_luts(ptr noundef %i.l) #24
@@ -1283,11 +1279,10 @@ bb.af:                                            ; preds = %bb.ae
 bb.ag:                                            ; preds = %bb.af
   %i.dj = getelementptr i8, ptr %i.l, i64 844
   %.val3.i73 = load i8, ptr %i.dj, align 4, !range !34, !noundef !35
-  %4 = trunc nuw i8 %.val3.i73 to i1
   %i.dk = and i8 %i.dh, 14
-  %5 = icmp ne i8 %i.dk, 0
-  %or.cond77 = or i1 %5, %4
-  br i1 %or.cond77, label %intel_crtc_needs_color_update.exit74.thread, label %bb.aj
+  %3 = or disjoint i8 %.val3.i73, %i.dk
+  %or.cond77.not = icmp eq i8 %3, 0
+  br i1 %or.cond77.not, label %bb.aj, label %intel_crtc_needs_color_update.exit74.thread
 
 intel_crtc_needs_color_update.exit74.thread:      ; preds = %bb.af, %bb.ag
   %i.dl = getelementptr i8, ptr %i.l, i64 4616
@@ -1482,11 +1477,10 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   %i.bh = getelementptr i8, ptr %i.af, i64 844
   %.val3.i.i = load i8, ptr %i.bh, align 4, !range !34, !noundef !35
-  %2 = trunc nuw i8 %.val3.i.i to i1
   %i.bi = and i8 %i.bf, 14
-  %3 = icmp ne i8 %i.bi, 0
-  %or.cond.i = or i1 %3, %2
-  br i1 %or.cond.i, label %intel_crtc_needs_color_update.exit.thread.i, label %bb.r
+  %2 = or disjoint i8 %.val3.i.i, %i.bi
+  %or.cond.not.i = icmp eq i8 %2, 0
+  br i1 %or.cond.not.i, label %bb.r, label %intel_crtc_needs_color_update.exit.thread.i
 
 intel_crtc_needs_color_update.exit.thread.i:      ; preds = %bb.q, %bb.p
   tail call void @intel_color_commit_arm(ptr noundef null, ptr noundef %i.af) #24
@@ -1889,11 +1883,10 @@ bb.bk:                                            ; preds = %bb.bj, %.thread.i
 bb.bl:                                            ; preds = %bb.bk
   %i.kh = getelementptr i8, ptr %i.jb, i64 844
   %.val3.i.i53 = load i8, ptr %i.kh, align 4, !range !34, !noundef !35
-  %4 = trunc nuw i8 %.val3.i.i53 to i1
   %i.ki = and i8 %i.kf, 14
-  %5 = icmp ne i8 %i.ki, 0
-  %or.cond51.i = or i1 %5, %4
-  br i1 %or.cond51.i, label %intel_crtc_needs_color_update.exit.thread.i49, label %bb.bo
+  %3 = or disjoint i8 %.val3.i.i53, %i.ki
+  %or.cond51.not.i = icmp eq i8 %3, 0
+  br i1 %or.cond51.not.i, label %bb.bo, label %intel_crtc_needs_color_update.exit.thread.i49
 
 intel_crtc_needs_color_update.exit.thread.i49:    ; preds = %bb.bl, %bb.bk
   %i.kj = tail call zeroext i1 @intel_color_uses_dsb(ptr noundef %i.jb) #24
