@@ -204,13 +204,14 @@ _RNvMNtCshovLROGBtMy_11quinn_proto10connectionNtB2_10Connection16reset_keep_aliv
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 6212, !dbg !52403
   store i8 1, ptr %i.t, align 4, !dbg !52403
     #dbg_value(ptr undef, !52337, !DIExpression(), !52343)
-  %9 = icmp ne i8 %4, 0, !dbg !52404              ; 2 uses
+  %.not13 = icmp eq i8 %4, 0, !dbg !52404
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 6214, !dbg !52405 ; 2 uses
   %i.v = load i8, ptr %i.u, align 2, !dbg !52405, !range !6644, !noundef !2226
-  %10 = zext i1 %9 to i8, !dbg !52405
-  %11 = or i8 %i.v, %10, !dbg !52405
+  %9 = or i8 %i.v, %4, !dbg !52405
+  %10 = icmp ne i8 %9, 0, !dbg !52405
+  %11 = zext i1 %10 to i8, !dbg !52405
   store i8 %11, ptr %i.u, align 2, !dbg !52405
-  br i1 %9, label %bb.c, label %_RNvXsh_NtCshovLROGBtMy_11quinn_proto5frameNtB5_9EcnCountsINtNtNtCskKLDkoKarTP_4core3ops5arith9AddAssignNtNtB7_6shared12EcnCodepointE10add_assign.exit.thread, !dbg !52406
+  br i1 %.not13, label %_RNvXsh_NtCshovLROGBtMy_11quinn_proto5frameNtB5_9EcnCountsINtNtNtCskKLDkoKarTP_4core3ops5arith9AddAssignNtNtB7_6shared12EcnCodepointE10add_assign.exit.thread, label %bb.c, !dbg !52406
 
 bb.c:                                             ; preds = %_RNvMNtCshovLROGBtMy_11quinn_proto10connectionNtB2_10Connection16reset_keep_alive.exit
     #dbg_value(i8 %4, !52330, !DIExpression(), !52352)
