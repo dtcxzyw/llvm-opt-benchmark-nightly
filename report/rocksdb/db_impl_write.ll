@@ -205,8 +205,8 @@ bb.s:                                             ; preds = %_ZN7rocksdb6DBImpl1
 
 bb.t:                                             ; preds = %_ZN7rocksdb6DBImpl14UnpublishedWALD2Ev.exit, %bb.p, %bb.s
   %i.bb = phi ptr [ %i.ao, %bb.p ], [ %i.z, %bb.s ], [ %i.z, %_ZN7rocksdb6DBImpl14UnpublishedWALD2Ev.exit ]
-  %i.bc = phi i8 [ 1, %bb.p ], [ 0, %bb.s ], [ 0, %_ZN7rocksdb6DBImpl14UnpublishedWALD2Ev.exit ]
-  %i.bd = phi i1 [ true, %bb.p ], [ false, %bb.s ], [ false, %_ZN7rocksdb6DBImpl14UnpublishedWALD2Ev.exit ] ; 3 uses
+  %i.bc = phi i8 [ 1, %bb.p ], [ 0, %bb.s ], [ 0, %_ZN7rocksdb6DBImpl14UnpublishedWALD2Ev.exit ] ; 2 uses
+  %i.bd = phi i1 [ true, %bb.p ], [ false, %bb.s ], [ false, %_ZN7rocksdb6DBImpl14UnpublishedWALD2Ev.exit ] ; 2 uses
   %i.be = phi ptr [ %i.ap, %bb.p ], [ %i.ar, %bb.s ], [ %i.ar, %_ZN7rocksdb6DBImpl14UnpublishedWALD2Ev.exit ] ; 9 uses
   %.090346 = phi i64 [ 0, %bb.p ], [ %.090.ph, %bb.s ], [ %.090.ph, %_ZN7rocksdb6DBImpl14UnpublishedWALD2Ev.exit ] ; 2 uses
   %.089 = phi i64 [ %i.aq, %bb.p ], [ %i.ba, %bb.s ], [ %i.as, %_ZN7rocksdb6DBImpl14UnpublishedWALD2Ev.exit ] ; 5 uses
@@ -609,9 +609,9 @@ _ZNSt5dequeImSaImEE9pop_frontEv.exit:             ; preds = %bb.cb, %bb.cc
 
 bb.cd:                                            ; preds = %bb.bz, %_ZNSt5dequeImSaImEE9pop_frontEv.exit
   %i.jh = load i8, ptr %0, align 8, !tbaa !61     ; 2 uses
-  %28 = icmp ne i8 %i.jh, 0
-  %or.cond.not = or i1 %28, %i.bd
-  br i1 %or.cond.not, label %bb.db, label %bb.ce
+  %28 = or i8 %i.jh, %i.bc
+  %or.cond.not.not = icmp eq i8 %28, 0
+  br i1 %or.cond.not.not, label %bb.ce, label %bb.db
 
 bb.ce:                                            ; preds = %bb.cd
   %i.ji = getelementptr inbounds nuw i8, ptr %1, i64 3040 ; 3 uses

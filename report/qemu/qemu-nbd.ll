@@ -204,7 +204,7 @@ bb.bj:                                            ; preds = %bb.bh
   %or.cond18 = or i1 %or.cond16, %i.cz
   %i.da = or i8 %.0243, %.0257
   %i.db = or i8 %.0241, %i.da
-  %i.dc = or i8 %i.db, %.0239
+  %i.dc = or i8 %.0239, %i.db
   %i.dd = icmp ne i8 %i.dc, 0
   %or.cond26 = or i1 %or.cond18, %i.dd
   br i1 %or.cond26, label %bb.bk, label %bb.bl

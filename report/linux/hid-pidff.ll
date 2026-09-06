@@ -205,14 +205,14 @@ bb.fl:                                            ; preds = %bb.fk
   %i.aal = tail call i8 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btrq  $2, $0", "=*m,={@ccc},Ir,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.aai, i64 85, ptr elementtype(i64) %i.aai) #12, !srcloc !29 ; 2 uses
   %i.aam = icmp ult i8 %i.aal, 2
   tail call void @llvm.assume(i1 %i.aam)
+  %2 = or i8 %i.aal, %i.aaj
   %i.aan = tail call i8 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btrq  $2, $0", "=*m,={@ccc},Ir,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.aai, i64 84, ptr elementtype(i64) %i.aai) #12, !srcloc !29 ; 2 uses
   %i.aao = icmp ult i8 %i.aan, 2
   tail call void @llvm.assume(i1 %i.aao)
+  %3 = or i8 %2, %i.aan
   %i.aap = tail call i8 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock  btrq  $2, $0", "=*m,={@ccc},Ir,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.aai, i64 86, ptr elementtype(i64) %i.aai) #12, !srcloc !29 ; 2 uses
   %i.aaq = icmp ult i8 %i.aap, 2
   tail call void @llvm.assume(i1 %i.aaq)
-  %2 = or i8 %i.aal, %i.aaj
-  %3 = or i8 %2, %i.aan
   %i.aar = or i8 %3, %i.aap
   %.not81.i = icmp eq i8 %i.aar, 0
   br i1 %.not81.i, label %bb.fn, label %bb.fm

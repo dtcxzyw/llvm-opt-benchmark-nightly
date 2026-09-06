@@ -205,7 +205,7 @@ bb.bu:                                            ; preds = %bb.bt, %bb.bs, %bb.
   %.0124.i = phi ptr [ %i.it, %bb.bs ], [ null, %bb.bq ], [ %i.it, %bb.bt ], [ null, %bb.bp ] ; 2 uses
   %.0123.i = phi i1 [ true, %bb.bs ], [ false, %bb.bq ], [ false, %bb.bt ], [ false, %bb.bp ] ; 3 uses
   %.0121.i = phi i8 [ %i.je, %bb.bs ], [ 0, %bb.bq ], [ 0, %bb.bt ], [ 0, %bb.bp ] ; 6 uses
-  %.0120.i = phi i8 [ %i.ja, %bb.bs ], [ 0, %bb.bq ], [ 0, %bb.bt ], [ 0, %bb.bp ] ; 4 uses
+  %.0120.i = phi i8 [ %i.ja, %bb.bs ], [ 0, %bb.bq ], [ 0, %bb.bt ], [ 0, %bb.bp ] ; 5 uses
   %i.jf = tail call i32 @tvb_captured_length(ptr noundef %0)
   %i.jg = icmp ult i32 %i.jf, 6
   br i1 %i.jg, label %bb.dd, label %bb.bv
@@ -232,7 +232,6 @@ bb.bx:                                            ; preds = %bb.bw
 bb.by:                                            ; preds = %bb.bx
   %i.jo = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 3)
   %i.jp = and i8 %i.jo, 31                        ; 3 uses
-  %4 = icmp ne i8 %i.jp, 0
   %i.jq = icmp ne i8 %i.jp, 1                     ; 2 uses
   %or.cond6.i = icmp samesign ugt i8 %i.jp, 1
   br i1 %or.cond6.i, label %bb.dd, label %bb.bz
@@ -253,9 +252,9 @@ bb.cb:                                            ; preds = %bb.ca
   br i1 %.not140.i, label %bb.cu, label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cb
-  %5 = trunc nuw i8 %.0120.i to i1                ; 2 uses
-  %or.cond8.i = or i1 %4, %5
-  br i1 %or.cond8.i, label %bb.cn, label %bb.cd
+  %4 = or i8 %i.jp, %.0120.i
+  %or.cond8.not.i = icmp eq i8 %4, 0
+  br i1 %or.cond8.not.i, label %bb.cd, label %bb.cn
 
 bb.cd:                                            ; preds = %bb.cc
   %i.jw = trunc i32 %i.jt to i8
@@ -313,6 +312,7 @@ bb.cm:                                            ; preds = %bb.cl, %bb.ck
   br label %bb.db
 
 bb.cn:                                            ; preds = %bb.cc
+  %5 = trunc nuw i8 %.0120.i to i1
   %i.kg = trunc nuw i8 %.0121.i to i1
   %or.cond12.i = select i1 %i.jq, i1 true, i1 %i.kg
   %or.cond12.not.i = xor i1 %or.cond12.i, true

@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %_RNvXs5_NtCsileJQcQ
   %i.ch = getelementptr inbounds nuw i8, ptr %i.z, i64 12
   %i.ci = load i32, ptr %i.ch, align 4
   %i.cj = getelementptr inbounds nuw i8, ptr %i.z, i64 16
-  %i.ck = load i32, ptr %i.cj, align 16, !range !36, !noundef !10 ; 2 uses
+  %i.ck = load i32, ptr %i.cj, align 16, !range !36, !noundef !10 ; 3 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.z, i64 20
   %i.cm = load i32, ptr %i.cl, align 4
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1989)
@@ -228,19 +228,20 @@ bb.k:                                             ; preds = %bb.j
 
 _RNvMs0_NtNtCsileJQcQObtj_7hir_def10expr_store5scopeNtB5_10ExprScopes15new_block_scope.exit128: ; preds = %bb.j, %bb.k
   %i.cv = trunc i64 %i.cr to i32                  ; 2 uses
-  %.not.i114 = icmp ne i32 %i.by, 0               ; 3 uses
-  %.sroa.7.0.i115 = select i1 %.not.i114, i32 %i.ca, i32 undef
+  %.not.not.i113 = icmp eq i32 %i.by, 0           ; 3 uses
+  %.sroa.7.0.i115 = select i1 %.not.not.i113, i32 undef, i32 %i.ca
   %.sroa.8.4.insert.ext.i116 = zext i32 %.sroa.7.0.i115 to i64
   %.sroa.8.4.insert.shift.i117 = shl nuw i64 %.sroa.8.4.insert.ext.i116, 32
   %.sroa.8.0.insert.ext.i118 = zext i32 %i.by to i64 ; 2 uses
   %.sroa.8.4.insert.insert.i119 = or disjoint i64 %.sroa.8.4.insert.shift.i117, %.sroa.8.0.insert.ext.i118
   %i.cw = inttoptr i64 %.sroa.8.4.insert.insert.i119 to ptr
   %i.cx = trunc i64 %i.co to i32                  ; 2 uses
-  %i.cy = trunc nuw i32 %i.ck to i1               ; 2 uses
-  %.not12.i = or i1 %.not.i114, %i.cy
-  %.sroa.4.0.i = select i1 %.not12.i, i32 %i.cm, i32 undef
+  %i.cy = trunc nuw i32 %i.ck to i1
+  %5 = or i32 %i.ck, %i.by
+  %.not12.not.i119 = icmp eq i32 %5, 0
+  %.sroa.4.0.i = select i1 %.not12.not.i119, i32 undef, i32 %i.cm
   %..i120 = select i1 %i.cy, i32 4, i32 2
-  %.sroa.08.0.i121 = select i1 %.not.i114, i32 %i.ck, i32 %..i120
+  %.sroa.08.0.i121 = select i1 %.not.not.i113, i32 %..i120, i32 %i.ck
   %i.cz = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.da = load ptr, ptr %i.cz, align 8, !alias.scope !1993, !noalias !1994, !nonnull !10, !noundef !10
   %i.db = getelementptr inbounds nuw [32 x i8], ptr %i.da, i64 %i.cr ; 7 uses
@@ -261,9 +262,8 @@ _RNvMs0_NtNtCsileJQcQObtj_7hir_def10expr_store5scopeNtB5_10ExprScopes15new_block
   store i64 %i.dc, ptr %i.cq, align 8, !alias.scope !1993, !noalias !1994
   store i32 %i.cv, ptr %i.h, align 4, !noalias !1990
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !1990
-  %.not.i86 = icmp eq i32 %i.by, 0
   %i.dd = load i32, ptr %4, align 4, !alias.scope !1989, !noalias !1995, !noundef !10 ; 2 uses
-  br i1 %.not.i86, label %_RNCNvNtNtCsileJQcQObtj_7hir_def10expr_store5scope19compute_expr_scopess_0B7_.exit, label %bb.l
+  br i1 %.not.not.i113, label %_RNCNvNtNtCsileJQcQObtj_7hir_def10expr_store5scope19compute_expr_scopess_0B7_.exit, label %bb.l
 
 bb.l:                                             ; preds = %_RNvMs0_NtNtCsileJQcQObtj_7hir_def10expr_store5scopeNtB5_10ExprScopes15new_block_scope.exit128
   %i.de = load i64, ptr %i.cn, align 8, !alias.scope !1996, !noalias !1992, !noundef !10 ; 2 uses

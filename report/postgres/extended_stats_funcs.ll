@@ -204,7 +204,6 @@ bb.en:                                            ; preds = %bb.em
   br label %import_pg_statistic.exit.thread.i.i
 
 bb.eo:                                            ; preds = %bb.el, %bb.ek
-  %6 = trunc nuw i8 %.sroa.25.0.i.i.i to i1
   br i1 %or.cond5.not.i.i.i, label %bb.es, label %bb.ep
 
 bb.ep:                                            ; preds = %bb.eo
@@ -478,6 +477,7 @@ bb.fs:                                            ; preds = %bb.fr
   br label %import_pg_statistic.exit.thread.i.i
 
 bb.ft:                                            ; preds = %.thread180.i.i.i, %bb.fq
+  %6 = trunc nuw i8 %.sroa.25.0.i.i.i to i1
   br i1 %6, label %bb.fu, label %bb.gb
 
 bb.fu:                                            ; preds = %bb.ft
