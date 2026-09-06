@@ -204,7 +204,8 @@ begin_hunk_0
 @.str.1462 = private unnamed_addr constant [10 x i8] c": TraceID\00", align 1
 @.str.1463 = private unnamed_addr constant [18 x i8] c": FedAuthRequired\00", align 1
 @.str.1464 = private unnamed_addr constant [11 x i8] c": NonceOpt\00", align 1
-@switch.table.dissect_tds_resp = private unnamed_addr constant [253 x ptr] [ptr @hf_tds_curclose, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_curfetch, ptr @hf_tds_curinfo, ptr @hf_tds_curopen, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_curdeclare, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_colname, ptr @hf_tds_colfmt, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_order, ptr @hf_tds_error, ptr @hf_tds_info, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_loginack, ptr @hf_tds_control, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_row, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_params, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_capability, ptr @hf_tds_envchg, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_eed, ptr @hf_tds_dbrpc, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_paramfmt, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_rowfmt, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_done, ptr @hf_tds_doneproc, ptr @hf_tds_doneinproc, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_paramfmt2, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_rowfmt2, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_msg, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_logout, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_offset, ptr @hf_tds_returnstatus, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_procid], align 8
+@switch.table.dissect_tds_resp = private unnamed_addr constant [224 x ptr] [ptr @hf_tds_paramfmt2, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_rowfmt2, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_msg, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_logout, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_offset, ptr @hf_tds_returnstatus, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_procid, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_curclose, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_curfetch, ptr @hf_tds_curinfo, ptr @hf_tds_curopen, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_curdeclare, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_colname, ptr @hf_tds_colfmt, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_order, ptr @hf_tds_error, ptr @hf_tds_info, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_loginack, ptr @hf_tds_control, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_row, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_params, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_capability, ptr @hf_tds_envchg, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_eed, ptr @hf_tds_dbrpc, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_paramfmt, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_rowfmt, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_done, ptr @hf_tds_doneproc, ptr @hf_tds_doneinproc], align 8
+@switch.table.dissect_tds_resp.17 = private unnamed_addr constant [136 x ptr] [ptr @hf_tds_offset, ptr @hf_tds_returnstatus, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_colmetadata, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_colfmt, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_order, ptr @hf_tds_error, ptr @hf_tds_info, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_loginack, ptr @hf_tds_featureextack, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_row, ptr @hf_tds_nbcrow, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_capability, ptr @hf_tds_envchg, ptr @hf_tds_sessionstate, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_sspi, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_unknown_tds_token, ptr @hf_tds_done, ptr @hf_tds_doneproc, ptr @hf_tds_doneinproc], align 8
 @switch.table.get_size_by_coltype = private unnamed_addr constant [92 x i32] [i32 16, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 1, i32 -1, i32 1, i32 -1, i32 2, i32 -1, i32 -1, i32 -1, i32 4, i32 -1, i32 4, i32 4, i32 8, i32 8, i32 8, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 4, i32 -1, i32 -1, i32 -1, i32 -1, i32 8], align 4
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
@@ -607,7 +608,7 @@ dissect_tds_prelogin_response.exit:               ; preds = %bb.e, %bb.f, %bb.g,
 
 bb.i:                                             ; preds = %.lr.ph, %bb.gk
   %.0208339 = phi i32 [ 0, %.lr.ph ], [ %.1209, %bb.gk ] ; 75 uses
-  %i.bz = call zeroext i8 @tvb_get_uint8(ptr noundef nonnull %0, i32 noundef %.0208339) ; 4 uses
+  %i.bz = call zeroext i8 @tvb_get_uint8(ptr noundef nonnull %0, i32 noundef %.0208339) ; 6 uses
   %i.ca = load i32, ptr @tds_protocol_type, align 4 ; 2 uses
   %i.cb = icmp eq i32 %i.ca, 65535
   br i1 %i.cb, label %bb.j, label %bb.k
@@ -615,18 +616,18 @@ bb.i:                                             ; preds = %.lr.ph, %bb.gk
 bb.j:                                             ; preds = %bb.i
   %i.cc = load i32, ptr %i.bt, align 8
   %i.cd = icmp slt i32 %i.cc, 28673
-  br i1 %i.cd, label %bb.l, label %6
+  br i1 %i.cd, label %bb.l, label %bb.cv
 
 bb.k:                                             ; preds = %bb.i
   %i.ce = icmp slt i32 %i.ca, 28673
-  br i1 %i.ce, label %bb.l, label %6
+  br i1 %i.ce, label %bb.l, label %bb.cv
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %switch.tableidx = xor i8 %i.bz, -128           ; 2 uses
-  %5 = icmp ult i8 %switch.tableidx, -3
+  %5 = icmp ugt i8 %i.bz, 31
   br i1 %5, label %switch.lookup, label %tds45_token_to_idx.exit
 
 switch.lookup:                                    ; preds = %bb.l
+  %switch.tableidx = add i8 %i.bz, -32
   %i.cf = zext i8 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.dissect_tds_resp, i64 %i.cf
   %switch.load = load ptr, ptr %switch.gep, align 8
@@ -1029,84 +1030,19 @@ bb.cu:                                            ; preds = %dissect_tds_rowfmt2
   call void @proto_item_set_len(ptr noundef %i.ch, i32 noundef %.0307)
   br label %bb.gk
 
-6:                                                ; preds = %bb.k, %bb.j
-  switch i8 %i.bz, label %bb.cw [
-    i8 -30, label %tds7_token_to_idx.exit
-    i8 -95, label %7
-    i8 -127, label %8
-    i8 -3, label %9
-    i8 -2, label %10
-    i8 -1, label %11
-    i8 -29, label %12
-    i8 -86, label %13
-    i8 -82, label %14
-    i8 -85, label %15
-    i8 -83, label %16
-    i8 -46, label %17
-    i8 120, label %18
-    i8 -87, label %19
-    i8 121, label %20
-    i8 -47, label %21
-    i8 -28, label %22
-    i8 -19, label %bb.cv
-  ]
+bb.cv:                                            ; preds = %bb.k, %bb.j
+  %6 = icmp ugt i8 %i.bz, 119
+  br i1 %6, label %bb.cw, label %tds7_token_to_idx.exit
 
-7:                                                ; preds = %6
+bb.cw:                                            ; preds = %bb.cv
+  %switch.tableidx450 = add i8 %i.bz, -120
+  %7 = zext i8 %switch.tableidx450 to i64
+  %switch.gep452 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.dissect_tds_resp.17, i64 %7
+  %switch.load453 = load ptr, ptr %switch.gep452, align 8
   br label %tds7_token_to_idx.exit
 
-8:                                                ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-9:                                                ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-10:                                               ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-11:                                               ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-12:                                               ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-13:                                               ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-14:                                               ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-15:                                               ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-16:                                               ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-17:                                               ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-18:                                               ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-19:                                               ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-20:                                               ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-21:                                               ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-22:                                               ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-bb.cv:                                            ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-bb.cw:                                            ; preds = %6
-  br label %tds7_token_to_idx.exit
-
-tds7_token_to_idx.exit:                           ; preds = %6, %7, %8, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %bb.cv, %bb.cw
-  %.0.in.i277 = phi ptr [ @hf_tds_unknown_tds_token, %bb.cw ], [ @hf_tds_sspi, %bb.cv ], [ @hf_tds_colfmt, %7 ], [ @hf_tds_colmetadata, %8 ], [ @hf_tds_done, %9 ], [ @hf_tds_doneproc, %10 ], [ @hf_tds_doneinproc, %11 ], [ @hf_tds_envchg, %12 ], [ @hf_tds_error, %13 ], [ @hf_tds_featureextack, %14 ], [ @hf_tds_info, %15 ], [ @hf_tds_loginack, %16 ], [ @hf_tds_nbcrow, %17 ], [ @hf_tds_offset, %18 ], [ @hf_tds_order, %19 ], [ @hf_tds_returnstatus, %20 ], [ @hf_tds_row, %21 ], [ @hf_tds_sessionstate, %22 ], [ @hf_tds_capability, %6 ]
+tds7_token_to_idx.exit:                           ; preds = %bb.cv, %bb.cw
+  %.0.in.i277 = phi ptr [ %switch.load453, %bb.cw ], [ @hf_tds_unknown_tds_token, %bb.cv ]
   %.0.i278 = load i32, ptr %.0.in.i277, align 4
   %i.xm = call i32 @tvb_reported_length_remaining(ptr noundef nonnull %0, i32 noundef %.0208339)
   %i.xn = call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %.0.i278, ptr noundef nonnull %0, i32 noundef %.0208339, i32 noundef %i.xm, i32 noundef 0) ; 2 uses

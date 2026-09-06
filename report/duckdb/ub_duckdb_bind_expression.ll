@@ -204,6 +204,8 @@ begin_hunk_0
 @_ZN6duckdb29AggregateFunctionCatalogEntry4NameE = external constant ptr, align 8
 @_ZTIN6duckdb16CatalogExceptionE = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN6duckdb16CatalogExceptionE, ptr @_ZTIN6duckdb9ExceptionE }, comdat, align 8
 @_ZTSN6duckdb16CatalogExceptionE = linkonce_odr constant [28 x i8] c"N6duckdb16CatalogExceptionE\00", comdat, align 1
+@switch.table._ZN6duckdb16BaseSelectBinder10BindWindowERNS_16WindowExpressionEm = private unnamed_addr constant [16 x i8] [i8 0, i8 0, i8 1, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 1, i8 1, i8 1, i8 1, i8 2, i8 1], align 8
+@switch.table._ZN6duckdb16BaseSelectBinder10BindWindowERNS_16WindowExpressionEm.44 = private unnamed_addr constant [16 x ptr] [ptr @.str.175, ptr @.str.175, ptr @.str.4, ptr @.str.175, ptr @.str.175, ptr @.str.175, ptr poison, ptr poison, ptr poison, ptr poison, ptr @.str.4, ptr @.str.4, ptr @.str.4, ptr @.str.4, ptr @.str.175, ptr @.str.4], align 8
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb16BaseSelectBinder13BindAggregateERNS_18FunctionExpressionERNS_29AggregateFunctionCatalogEntryEm(ptr dead_on_unwind noalias writable sret(%"struct.duckdb::BindResult") align 8 %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(128) initializes((105, 106)) %1, ptr noundef nonnull align 8 dereferenceable(209) %2, ptr noundef nonnull align 8 dereferenceable(424) %3, i64 noundef %4) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
@@ -606,28 +608,11 @@ bb.hj:                                            ; preds = %bb.hi, %bb.eo
 bb.hk:                                            ; preds = %bb.dx
   call void @llvm.lifetime.start.p0(ptr nonnull %61) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23, !noalias !1591
-  switch i8 %i.pu, label %bb.hl [
-    i8 120, label %bb.hq
-    i8 121, label %bb.hq
-    i8 125, label %bb.hq
-    i8 123, label %bb.hq
-    i8 124, label %bb.hq
-    i8 122, label %94
-    i8 -126, label %94
-    i8 -125, label %94
-    i8 -124, label %94
-    i8 -123, label %94
-    i8 -121, label %94
-    i8 -122, label %95
-  ]
+  %switch.tableidx = add i8 %i.pu, -120           ; 4 uses
+  %94 = icmp ult i8 %switch.tableidx, 16
+  br i1 %94, label %switch.hole_check, label %bb.hl
 
-94:                                               ; preds = %bb.hk, %bb.hk, %bb.hk, %bb.hk, %bb.hk, %bb.hk
-  br label %bb.hq
-
-95:                                               ; preds = %bb.hk
-  br label %bb.hq
-
-bb.hl:                                            ; preds = %bb.hk
+bb.hl:                                            ; preds = %switch.hole_check, %bb.hk
   %i.zo = call ptr @__cxa_allocate_exception(i64 16) #23, !noalias !1591 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23, !noalias !1591
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #23, !noalias !1591
@@ -699,10 +684,21 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit43.i: ; preds = %_
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23, !noalias !1591
   br label %.sink.split
 
-bb.hq:                                            ; preds = %95, %94, %bb.hk, %bb.hk, %bb.hk, %bb.hk, %bb.hk
-  %.sink.i = phi i64 [ 2, %95 ], [ 1, %94 ], [ 0, %bb.hk ], [ 0, %bb.hk ], [ 0, %bb.hk ], [ 0, %bb.hk ], [ 0, %bb.hk ] ; 2 uses
-  %96 = phi ptr [ @.str.175, %95 ], [ @.str.4, %94 ], [ @.str.175, %bb.hk ], [ @.str.175, %bb.hk ], [ @.str.175, %bb.hk ], [ @.str.175, %bb.hk ], [ @.str.175, %bb.hk ]
-  store i64 %.sink.i, ptr %i.a, align 8, !tbaa !64, !noalias !1591
+switch.hole_check:                                ; preds = %bb.hk
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i16
+  %switch.shifted = lshr i16 -961, %switch.maskindex
+  %switch.lobit = trunc i16 %switch.shifted to i1
+  br i1 %switch.lobit, label %bb.hq, label %bb.hl
+
+bb.hq:                                            ; preds = %switch.hole_check
+  %95 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN6duckdb16BaseSelectBinder10BindWindowERNS_16WindowExpressionEm, i64 %95
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64       ; 2 uses
+  %96 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep1403 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6duckdb16BaseSelectBinder10BindWindowERNS_16WindowExpressionEm.44, i64 %96
+  %switch.load1404 = load ptr, ptr %switch.gep1403, align 8
+  store i64 %switch.ext, ptr %i.a, align 8, !tbaa !64, !noalias !1591
   %i.aab = getelementptr inbounds nuw i8, ptr %34, i64 8 ; 2 uses
   %i.aac = load ptr, ptr %i.aab, align 8, !tbaa !174, !noalias !1591 ; 3 uses
   %i.aad = load ptr, ptr %34, align 8, !tbaa !318, !noalias !1591 ; 3 uses
@@ -710,7 +706,7 @@ bb.hq:                                            ; preds = %95, %94, %bb.hk, %b
   %i.aaf = ptrtoint ptr %i.aad to i64
   %i.aag = sub i64 %i.aae, %i.aaf
   %i.aah = sdiv exact i64 %i.aag, 24
-  %.not.i528 = icmp eq i64 %i.aah, %.sink.i
+  %.not.i528 = icmp eq i64 %i.aah, %switch.ext
   br i1 %.not.i528, label %.preheader.i, label %bb.hr
 
 .preheader.i:                                     ; preds = %bb.hq
@@ -731,7 +727,7 @@ bb.hs:                                            ; preds = %bb.hr
 
 bb.ht:                                            ; preds = %bb.hs
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23, !noalias !1591
-  store ptr %96, ptr %i.b, align 8, !tbaa !552, !noalias !1591
+  store ptr %switch.load1404, ptr %i.b, align 8, !tbaa !552, !noalias !1591
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #23, !noalias !1591
   %i.aaj = load ptr, ptr %i.aab, align 8, !tbaa !174, !noalias !1591
   %i.aak = load ptr, ptr %34, align 8, !tbaa !318, !noalias !1591

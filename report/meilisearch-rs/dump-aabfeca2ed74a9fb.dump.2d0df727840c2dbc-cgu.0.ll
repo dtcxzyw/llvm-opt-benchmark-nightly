@@ -206,7 +206,6 @@ begin_hunk_0
 @"switch.table._ZN4dump6reader6compat8v5_to_v612CompatV5ToV64keys28_$u7b$$u7b$closure$u7d$$u7d$17h9b6531e7a8288159E" = private unnamed_addr constant [27 x i8] c"\00\01\02\03\04\05\06\07\08\09\0A\0C\0F\10\11\12\13\14\15\16\17\18\1B\1C\1D\1E\1F", align 1
 @switch.table._ZN4dump6writer29ChatCompletionsSettingsWriter13push_settings17ha22433ccec9c7d92E = private unnamed_addr constant [4 x ptr] [ptr @709, ptr @710, ptr @711, ptr @712], align 8
 @switch.table._ZN4dump6writer29ChatCompletionsSettingsWriter13push_settings17ha22433ccec9c7d92E.4701 = private unnamed_addr constant [4 x i8] c"\06\0B\07\04", align 8
-@"switch.table._ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17hbbca3428cd9ac104E" = private unnamed_addr constant [256 x i8] [i8 -128, i8 -127, i8 -126, i8 -125, i8 -124, i8 -123, i8 -122, i8 -121, i8 -120, i8 -119, i8 -118, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15, i8 16, i8 17, i8 18, i8 19, i8 20, i8 21, i8 22, i8 23, i8 24, i8 25, i8 26, i8 27, i8 28, i8 29, i8 30, i8 31, i8 32, i8 33, i8 34, i8 35, i8 36, i8 37, i8 38, i8 39, i8 40, i8 41, i8 42, i8 43, i8 44, i8 45, i8 46, i8 47, i8 48, i8 49, i8 50, i8 51, i8 52, i8 53, i8 54, i8 55, i8 56, i8 57, i8 58, i8 59, i8 60, i8 61, i8 62, i8 63, i8 64, i8 65, i8 66, i8 67, i8 68, i8 69, i8 70, i8 71, i8 72, i8 73, i8 74, i8 75, i8 76, i8 77, i8 78, i8 79, i8 80, i8 81, i8 82, i8 83, i8 84, i8 85, i8 86, i8 87, i8 88, i8 89, i8 90, i8 91, i8 92, i8 93, i8 94, i8 95, i8 96, i8 97, i8 98, i8 99, i8 100, i8 101, i8 102, i8 103, i8 104, i8 105, i8 106, i8 107, i8 108, i8 109, i8 110, i8 111, i8 112, i8 113, i8 114, i8 115, i8 116, i8 117, i8 118, i8 119, i8 120, i8 121, i8 122, i8 123, i8 124, i8 125, i8 126, i8 127], align 1
 
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc noundef align 8 ptr @"_ZN100_$LT$$RF$mut$u20$serde_json..ser..Serializer$LT$W$C$F$GT$$u20$as$u20$serde_core..ser..Serializer$GT$13serialize_str17h178f89ae18fbdcc8E"(ptr %.0.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -609,10 +608,6 @@ bb.ar:                                            ; preds = %.noexc20.i.i.i, %bb
 switch.lookup:                                    ; preds = %.noexc19.i.i.i
   %i.eu = load i8, ptr %i.bt, align 1, !range !110, !noalias !90354, !noundef !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !noalias !90354
-  %switch.tableidx = xor i8 %i.eu, -128
-  %2 = zext i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @"switch.table._ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17hbbca3428cd9ac104E", i64 %2
-  %switch.load = load i8, ptr %switch.gep, align 1
   br label %.thread.i38.i.i
 
 default.unreachable:                              ; preds = %.noexc33.i.i.i
@@ -1015,7 +1010,7 @@ bb.mr:                                            ; preds = %.loopexit.split-lp.
   br label %common.resume.i.i
 
 _ZN10serde_core2de9SeqAccess12next_element17h9786859d739e1520E.exit.i.i.i.a: ; preds = %bb.me, %bb.md, %.noexc40.i.i.i, %.noexc38.i.i.i, %.noexc37.i.i.i, %.noexc34.i.i.i, %bb.ar, %.noexc11.i.i.i, %.noexc10.i.i.i, %.noexc9.i.i.i, %bb.q
-  %.sroa.1243.0.i.i.i = phi ptr [ %i.cc, %bb.q ], [ %i.dd, %.noexc10.i.i.i ], [ %i.da, %.noexc9.i.i.i ], [ %i.dg, %.noexc11.i.i.i ], [ %.sroa.121.0.ph.i.i.i.i.i.i.i.i.i.i.i, %bb.ar ], [ %i.ic, %.noexc40.i.i.i ], [ %i.gy, %.noexc34.i.i.i ], [ %i.hq, %.noexc37.i.i.i ], [ %i.ht, %.noexc38.i.i.i ], [ %.sroa.1459.0.i.i.i.i.i.i.i.i, %bb.md ], [ %.sroa.1459.0.i.i.i.i.i.i.i.i, %bb.me ] ; 2 uses
+  %.sroa.1243.0.i.i.i = phi ptr [ %i.dd, %.noexc10.i.i.i ], [ %i.gy, %.noexc34.i.i.i ], [ %.sroa.121.0.ph.i.i.i.i.i.i.i.i.i.i.i, %bb.ar ], [ %i.ht, %.noexc38.i.i.i ], [ %i.hq, %.noexc37.i.i.i ], [ %i.da, %.noexc9.i.i.i ], [ %i.ic, %.noexc40.i.i.i ], [ %i.cc, %bb.q ], [ %i.dg, %.noexc11.i.i.i ], [ %.sroa.1459.0.i.i.i.i.i.i.i.i, %bb.md ], [ %.sroa.1459.0.i.i.i.i.i.i.i.i, %bb.me ] ; 2 uses
   %.val.i.i.i = load i64, ptr %i.u, align 8, !noalias !90312 ; 2 uses
   %i.ie = icmp eq i64 %.val.i.i.i, 0
   br i1 %i.ie, label %"_ZN182_$LT$serde_core..de..impls..$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$alloc..vec..Vec$LT$T$GT$$GT$..deserialize..VecVisitor$LT$T$GT$$u20$as$u20$serde_core..de..Visitor$GT$9visit_seq17h7a887634caef27caE.exit.i.i", label %bb.ms
@@ -1025,8 +1020,8 @@ bb.ms:                                            ; preds = %_ZN10serde_core2de9
   call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %.val4.i.i.i, i64 noundef %.val.i.i.i, i64 noundef range(i64 1, -9223372036854775807) 1) #42, !noalias !90316
   br label %"_ZN182_$LT$serde_core..de..impls..$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$alloc..vec..Vec$LT$T$GT$$GT$..deserialize..VecVisitor$LT$T$GT$$u20$as$u20$serde_core..de..Visitor$GT$9visit_seq17h7a887634caef27caE.exit.i.i"
 
-.thread.i38.i.i:                                  ; preds = %switch.lookup, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h6569782c65035c47E.exit.i45.i.i.i.i.i.i.i.i", %bb.mn
-  %.sroa.9.0.ph50.i.i.i = phi i8 [ %switch.load, %switch.lookup ], [ %.sroa.5.0.i.i.i.i.i.i.i.i, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h6569782c65035c47E.exit.i45.i.i.i.i.i.i.i.i" ], [ %.sroa.5.0.i.i.i.i.i.i.i.i, %bb.mn ]
+.thread.i38.i.i:                                  ; preds = %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h6569782c65035c47E.exit.i45.i.i.i.i.i.i.i.i", %bb.mn, %switch.lookup
+  %.sroa.9.0.ph50.i.i.i = phi i8 [ %i.eu, %switch.lookup ], [ %.sroa.5.0.i.i.i.i.i.i.i.i, %bb.mn ], [ %.sroa.5.0.i.i.i.i.i.i.i.i, %"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17h6569782c65035c47E.exit.i45.i.i.i.i.i.i.i.i" ]
   call void @llvm.experimental.noalias.scope.decl(metadata !90412)
   %i.if = load i64, ptr %i.bo, align 8, !alias.scope !90412, !noalias !90312, !noundef !21 ; 3 uses
   %i.ig = load i64, ptr %i.u, align 8, !range !23, !alias.scope !90412, !noalias !90312, !noundef !21
@@ -1429,10 +1424,6 @@ bb.u:                                             ; preds = %.noexc13.i.i.i, %bb
 switch.lookup:                                    ; preds = %.noexc12.i.i.i
   %i.ck = load i8, ptr %i.av, align 1, !range !110, !noalias !124173, !noundef !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !124173
-  %switch.tableidx = xor i8 %i.ck, -128
-  %2 = zext i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @"switch.table._ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17hbbca3428cd9ac104E", i64 %2
-  %switch.load = load i8, ptr %switch.gep, align 1
   br label %.thread.i.i.i
 
 default.unreachable:                              ; preds = %.noexc22.i.i.i
@@ -1835,7 +1826,7 @@ bb.lh:                                            ; preds = %bb.lg
   br label %common.resume.i.i
 
 _ZN10serde_core2de9SeqAccess12next_element17h20cb0ca7ed4e4ad0E.exit.i.i.i.a: ; preds = %bb.lb, %bb.la, %.noexc25.i.i.i, %.noexc24.i.i.i, %.noexc23.i.i.i, %bb.u, %.noexc8.i.i.i, %.noexc7.i.i.i, %bb.i
-  %.sroa.1228.0.i.i.i = phi ptr [ %i.bb, %bb.i ], [ %i.ef, %.noexc24.i.i.i ], [ %i.du, %.noexc23.i.i.i ], [ %i.bq, %.noexc8.i.i.i ], [ %i.bp, %.noexc7.i.i.i ], [ %.sroa.121.0.ph.i.i.i.i.i.i.i.i.i.i.i, %bb.u ], [ %i.eg, %.noexc25.i.i.i ], [ %.sroa.1458.0.i.i.i.i.i.i.i.i, %bb.la ], [ %.sroa.1458.0.i.i.i.i.i.i.i.i, %bb.lb ] ; 2 uses
+  %.sroa.1228.0.i.i.i = phi ptr [ %i.du, %.noexc23.i.i.i ], [ %.sroa.121.0.ph.i.i.i.i.i.i.i.i.i.i.i, %bb.u ], [ %i.ef, %.noexc24.i.i.i ], [ %i.eg, %.noexc25.i.i.i ], [ %i.bb, %bb.i ], [ %i.bp, %.noexc7.i.i.i ], [ %i.bq, %.noexc8.i.i.i ], [ %.sroa.1458.0.i.i.i.i.i.i.i.i, %bb.la ], [ %.sroa.1458.0.i.i.i.i.i.i.i.i, %bb.lb ] ; 2 uses
   %.val.i.i.i = load i64, ptr %i.r, align 8, !noalias !124140 ; 2 uses
   %i.ei = icmp eq i64 %.val.i.i.i, 0
   br i1 %i.ei, label %"_ZN182_$LT$serde_core..de..impls..$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$alloc..vec..Vec$LT$T$GT$$GT$..deserialize..VecVisitor$LT$T$GT$$u20$as$u20$serde_core..de..Visitor$GT$9visit_seq17hd8338cebe1f8be48E.exit.i.i", label %bb.li
@@ -1850,8 +1841,8 @@ bb.lj:                                            ; preds = %bb.ld
   store i64 %i.ej, ptr %i.bf, align 8, !alias.scope !124216, !noalias !124161
   br label %.thread.i.i.i
 
-.thread.i.i.i:                                    ; preds = %switch.lookup, %bb.lj
-  %.sroa.9.0.ph35.i.i.i = phi i8 [ %.sroa.5.0.i.i.i.i.i.i.i.i, %bb.lj ], [ %switch.load, %switch.lookup ]
+.thread.i.i.i:                                    ; preds = %bb.lj, %switch.lookup
+  %.sroa.9.0.ph35.i.i.i = phi i8 [ %i.ck, %switch.lookup ], [ %.sroa.5.0.i.i.i.i.i.i.i.i, %bb.lj ]
   call void @llvm.experimental.noalias.scope.decl(metadata !124217)
   %i.ek = load i64, ptr %i.r, align 8, !range !23, !alias.scope !124217, !noalias !124140, !noundef !21
   %i.el = icmp eq i64 %storemerge.i.i.i, %i.ek
