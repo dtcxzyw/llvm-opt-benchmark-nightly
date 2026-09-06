@@ -205,94 +205,94 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ad = fadd <2 x double> %i.ac, %i.r, !dbg !25150
   %i.ae = fmul <2 x double> %i.aa, %i.p, !dbg !25151
   %i.af = fadd <2 x double> %i.ae, %i.t, !dbg !25152
-  %2 = getelementptr [8 x i8], ptr %i.u, i64 %index, !dbg !25153
-  %3 = shufflevector <2 x double> %i.ad, <2 x double> %i.af, <4 x i32> <i32 0, i32 2, i32 1, i32 3>, !dbg !25154
-  %4 = tail call <4 x double> @llvm.ceil.v4f64(<4 x double> %3), !dbg !25154
-  %interleaved.vec = tail call <4 x i32> @llvm.fptosi.sat.v4i32.v4f64(<4 x double> %4), !dbg !25154
-  store <4 x i32> %interleaved.vec, ptr %2, align 4, !dbg !25154, !alias.scope !25079, !noalias !25080
+  %2 = shufflevector <2 x double> %i.ad, <2 x double> %i.af, <4 x i32> <i32 0, i32 2, i32 1, i32 3>, !dbg !25153
+  %3 = tail call <4 x double> @llvm.ceil.v4f64(<4 x double> %2), !dbg !25152
+  %4 = getelementptr [8 x i8], ptr %i.u, i64 %index, !dbg !25154
+  %interleaved.vec = tail call <4 x i32> @llvm.fptosi.sat.v4i32.v4f64(<4 x double> %3), !dbg !25155
+  store <4 x i32> %interleaved.vec, ptr %4, align 4, !dbg !25155, !alias.scope !25084, !noalias !25085
   %index.next = add nuw i64 %index, 2, !dbg !25137 ; 2 uses
-  %i.ag = icmp eq i64 %index.next, %n.vec, !dbg !25155
-  br i1 %i.ag, label %middle.block, label %vector.body, !dbg !25155, !llvm.loop !24904
+  %i.ag = icmp eq i64 %index.next, %n.vec, !dbg !25156
+  br i1 %i.ag, label %middle.block, label %vector.body, !dbg !25156, !llvm.loop !24908
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.i, %n.vec, !dbg !25155
-  br i1 %cmp.n, label %_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB1y_14TriangleMarkerTdlElEINtB1A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIBO_INtNtNtBa_7sources4once4OnceRB2B_ENCINvMs6_NtNtB1C_7drawing4areaINtB4J_11DrawingAreaB2X_INtNtNtNtB1C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB5z_8ranged1d5types7numeric14RangedCoordf64NtB6j_14RangedCoordi32EE4drawB2e_NtB1A_16BackendCoordOnlyE0EE0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_folddTllEuNCB1r_s_0NCINvNvB87_8for_each4callB93_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB9T_3VecB93_E14extend_trustedIBO_BN_B98_EE0E0E0ECsaTqK2fWTXJW_11qlog_dancer.exit, label %scalar.ph.preheader, !dbg !25155
+  %cmp.n = icmp eq i64 %i.i, %n.vec, !dbg !25156
+  br i1 %cmp.n, label %_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB1y_14TriangleMarkerTdlElEINtB1A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIBO_INtNtNtBa_7sources4once4OnceRB2B_ENCINvMs6_NtNtB1C_7drawing4areaINtB4J_11DrawingAreaB2X_INtNtNtNtB1C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB5z_8ranged1d5types7numeric14RangedCoordf64NtB6j_14RangedCoordi32EE4drawB2e_NtB1A_16BackendCoordOnlyE0EE0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_folddTllEuNCB1r_s_0NCINvNvB87_8for_each4callB93_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB9T_3VecB93_E14extend_trustedIBO_BN_B98_EE0E0E0ECsaTqK2fWTXJW_11qlog_dancer.exit, label %scalar.ph.preheader, !dbg !25156
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.b, %middle.block
   %.ph = phi i64 [ %.sroa.4.0.copyload, %vector.memcheck ], [ %.sroa.4.0.copyload, %bb.b ], [ %i.n, %middle.block ]
   %.sroa.01.0.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.b ], [ %n.vec, %middle.block ]
-  br label %scalar.ph, !dbg !25155
+  br label %scalar.ph, !dbg !25156
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %i.ah = phi i64 [ %i.bc, %scalar.ph ], [ %.ph, %scalar.ph.preheader ], !dbg !25144 ; 2 uses
   %.sroa.01.0.i.i = phi i64 [ %i.bd, %scalar.ph ], [ %.sroa.01.0.i.i.ph, %scalar.ph.preheader ], !dbg !25137 ; 2 uses
     #dbg_value(i64 %.sroa.01.0.i.i, !24998, !DIExpression(), !25000)
     #dbg_value(i64 %.sroa.01.0.i.i, !24976, !DIExpression(), !25007)
-    #dbg_value(ptr %i.a, !25046, !DIExpression(), !25081)
-    #dbg_value(i64 %.sroa.01.0.i.i, !25047, !DIExpression(), !25081)
+    #dbg_value(ptr %i.a, !25046, !DIExpression(), !25086)
+    #dbg_value(i64 %.sroa.01.0.i.i, !25047, !DIExpression(), !25086)
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.sroa.01.0.i.i, !dbg !25144
   %.val27.i.i = load i32, ptr %i.ai, align 4, !dbg !25145, !noalias !25050, !noundef !3744
-    #dbg_value(ptr poison, !25036, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25082)
-    #dbg_declare(ptr poison, !25034, !DIExpression(), !25083)
-    #dbg_value(ptr poison, !25035, !DIExpression(), !25082)
-    #dbg_value(ptr poison, !25057, !DIExpression(), !25084)
-    #dbg_value(ptr poison, !25056, !DIExpression(), !25084)
-    #dbg_value(i32 %.val27.i.i, !25051, !DIExpression(), !25085)
+    #dbg_value(ptr poison, !25036, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25087)
+    #dbg_declare(ptr poison, !25034, !DIExpression(), !25088)
+    #dbg_value(ptr poison, !25035, !DIExpression(), !25087)
+    #dbg_value(ptr poison, !25057, !DIExpression(), !25089)
+    #dbg_value(ptr poison, !25056, !DIExpression(), !25089)
+    #dbg_value(i32 %.val27.i.i, !25051, !DIExpression(), !25090)
   %i.aj = sitofp i32 %.val27.i.i to double, !dbg !25146
   %i.ak = fmul nnan double %i.aj, f0x400921FB54442D18, !dbg !25147
   %i.al = fdiv double %i.ak, 1.800000e+02, !dbg !25147
-    #dbg_value(ptr poison, !25028, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25086)
-    #dbg_value(ptr poison, !25029, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 24, DW_OP_LLVM_fragment, 0, 64), !25086)
-    #dbg_declare(ptr poison, !25026, !DIExpression(), !25087)
-    #dbg_value(double %i.al, !25027, !DIExpression(), !25086)
+    #dbg_value(ptr poison, !25028, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25091)
+    #dbg_value(ptr poison, !25029, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 24, DW_OP_LLVM_fragment, 0, 64), !25091)
+    #dbg_declare(ptr poison, !25026, !DIExpression(), !25092)
+    #dbg_value(double %i.al, !25027, !DIExpression(), !25091)
   %sincos.i.i.i.i.i = tail call { double, double } @llvm.sincos.f64(double %i.al), !dbg !25148 ; 2 uses
   %sin.i.i.i.i.i = extractvalue { double, double } %sincos.i.i.i.i.i, 0, !dbg !25148
   %cos.i.i.i.i.i = extractvalue { double, double } %sincos.i.i.i.i.i, 1, !dbg !25148
-    #dbg_value(ptr poison, !25019, !DIExpression(DW_OP_deref, DW_OP_deref), !25088)
-    #dbg_value(ptr poison, !25020, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 8, DW_OP_deref), !25088)
-    #dbg_value(ptr poison, !25021, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16, DW_OP_deref), !25088)
-    #dbg_value(double %i.al, !25018, !DIExpression(), !25088)
-    #dbg_value(double %i.al, !25059, !DIExpression(), !25089)
+    #dbg_value(ptr poison, !25019, !DIExpression(DW_OP_deref, DW_OP_deref), !25093)
+    #dbg_value(ptr poison, !25020, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 8, DW_OP_deref), !25093)
+    #dbg_value(ptr poison, !25021, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16, DW_OP_deref), !25093)
+    #dbg_value(double %i.al, !25018, !DIExpression(), !25093)
+    #dbg_value(double %i.al, !25059, !DIExpression(), !25094)
   %i.am = load i32, ptr %.sroa.01.0.copyload, align 4, !dbg !25138, !noalias !25014, !noundef !3744
-    #dbg_value(i32 %i.am, !25042, !DIExpression(), !25090)
+    #dbg_value(i32 %i.am, !25042, !DIExpression(), !25095)
   %i.an = sitofp i32 %i.am to double, !dbg !25139 ; 2 uses
   %i.ao = fmul double %cos.i.i.i.i.i, %i.an, !dbg !25149
   %i.ap = load i32, ptr %.sroa.42.0.copyload, align 4, !dbg !25140, !noalias !25014, !noundef !3744
-    #dbg_value(i32 %i.ap, !25042, !DIExpression(), !25091)
+    #dbg_value(i32 %i.ap, !25042, !DIExpression(), !25096)
   %i.aq = sitofp i32 %i.ap to double, !dbg !25141
   %i.ar = fadd double %i.ao, %i.aq, !dbg !25150
-    #dbg_value(double %i.ar, !25092, !DIExpression(), !25094)
-    #dbg_value(double %i.ar, !25095, !DIExpression(), !25097)
-  %i.as = tail call double @llvm.ceil.f64(double %i.ar), !dbg !25156
+    #dbg_value(double %i.ar, !25064, !DIExpression(), !25097)
+    #dbg_value(double %i.ar, !25061, !DIExpression(), !25098)
+  %i.as = tail call double @llvm.ceil.f64(double %i.ar), !dbg !25157
   %i.at = tail call i32 @llvm.fptosi.sat.i32.f64(double %i.as), !dbg !25150
-    #dbg_value(i32 %i.am, !25042, !DIExpression(), !25098)
+    #dbg_value(i32 %i.am, !25042, !DIExpression(), !25099)
   %i.au = fmul double %sin.i.i.i.i.i, %i.an, !dbg !25151
   %i.av = load i32, ptr %.sroa.53.0.copyload, align 4, !dbg !25142, !noalias !25014, !noundef !3744
-    #dbg_value(i32 %i.av, !25042, !DIExpression(), !25099)
+    #dbg_value(i32 %i.av, !25042, !DIExpression(), !25100)
   %i.aw = sitofp i32 %i.av to double, !dbg !25143
   %i.ax = fadd double %i.au, %i.aw, !dbg !25152
-    #dbg_value(double %i.ax, !25092, !DIExpression(), !25100)
-    #dbg_value(double %i.ax, !25095, !DIExpression(), !25101)
-  %i.ay = tail call double @llvm.ceil.f64(double %i.ax), !dbg !25157
+    #dbg_value(double %i.ax, !25064, !DIExpression(), !25101)
+    #dbg_value(double %i.ax, !25061, !DIExpression(), !25102)
+  %i.ay = tail call double @llvm.ceil.f64(double %i.ax), !dbg !25153
   %i.az = tail call i32 @llvm.fptosi.sat.i32.f64(double %i.ay), !dbg !25152
-    #dbg_value(ptr poison, !25074, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25103)
-    #dbg_declare(ptr poison, !25075, !DIExpression(), !25104)
-    #dbg_value(i32 %i.at, !25073, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !25103)
-    #dbg_value(i32 %i.az, !25073, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !25103)
-    #dbg_value(ptr poison, !25065, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16), !25105)
-    #dbg_value(ptr poison, !25066, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25105)
-    #dbg_value(i32 %i.at, !25064, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !25105)
-    #dbg_value(i32 %i.az, !25064, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !25105)
-  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %.sroa.5.0.copyload, i64 %i.ah, !dbg !25153 ; 2 uses
-  store i32 %i.at, ptr %i.ba, align 4, !dbg !25154, !noalias !25080
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 4, !dbg !25154
-  store i32 %i.az, ptr %i.bb, align 4, !dbg !25154, !noalias !25080
+    #dbg_value(ptr poison, !25079, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25103)
+    #dbg_declare(ptr poison, !25080, !DIExpression(), !25104)
+    #dbg_value(i32 %i.at, !25078, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !25103)
+    #dbg_value(i32 %i.az, !25078, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !25103)
+    #dbg_value(ptr poison, !25070, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16), !25105)
+    #dbg_value(ptr poison, !25071, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25105)
+    #dbg_value(i32 %i.at, !25069, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !25105)
+    #dbg_value(i32 %i.az, !25069, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !25105)
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %.sroa.5.0.copyload, i64 %i.ah, !dbg !25154 ; 2 uses
+  store i32 %i.at, ptr %i.ba, align 4, !dbg !25155, !noalias !25085
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 4, !dbg !25155
+  store i32 %i.az, ptr %i.bb, align 4, !dbg !25155, !noalias !25085
   %i.bc = add i64 %i.ah, 1, !dbg !25158           ; 2 uses
   %i.bd = add nuw i64 %.sroa.01.0.i.i, 1, !dbg !25159 ; 2 uses
     #dbg_value(i64 %i.bd, !24976, !DIExpression(), !25007)
     #dbg_value(i64 %i.bd, !24998, !DIExpression(), !25000)
-  %i.be = icmp eq i64 %i.bd, %i.i, !dbg !25155
-  br i1 %i.be, label %_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB1y_14TriangleMarkerTdlElEINtB1A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIBO_INtNtNtBa_7sources4once4OnceRB2B_ENCINvMs6_NtNtB1C_7drawing4areaINtB4J_11DrawingAreaB2X_INtNtNtNtB1C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB5z_8ranged1d5types7numeric14RangedCoordf64NtB6j_14RangedCoordi32EE4drawB2e_NtB1A_16BackendCoordOnlyE0EE0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_folddTllEuNCB1r_s_0NCINvNvB87_8for_each4callB93_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB9T_3VecB93_E14extend_trustedIBO_BN_B98_EE0E0E0ECsaTqK2fWTXJW_11qlog_dancer.exit, label %scalar.ph, !dbg !25155, !llvm.loop !24914
+  %i.be = icmp eq i64 %i.bd, %i.i, !dbg !25156
+  br i1 %i.be, label %_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB1y_14TriangleMarkerTdlElEINtB1A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIBO_INtNtNtBa_7sources4once4OnceRB2B_ENCINvMs6_NtNtB1C_7drawing4areaINtB4J_11DrawingAreaB2X_INtNtNtNtB1C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB5z_8ranged1d5types7numeric14RangedCoordf64NtB6j_14RangedCoordi32EE4drawB2e_NtB1A_16BackendCoordOnlyE0EE0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_folddTllEuNCB1r_s_0NCINvNvB87_8for_each4callB93_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB9T_3VecB93_E14extend_trustedIBO_BN_B98_EE0E0E0ECsaTqK2fWTXJW_11qlog_dancer.exit, label %scalar.ph, !dbg !25156, !llvm.loop !24914
 
 _RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB1y_14TriangleMarkerTdlElEINtB1A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIBO_INtNtNtBa_7sources4once4OnceRB2B_ENCINvMs6_NtNtB1C_7drawing4areaINtB4J_11DrawingAreaB2X_INtNtNtNtB1C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB5z_8ranged1d5types7numeric14RangedCoordf64NtB6j_14RangedCoordi32EE4drawB2e_NtB1A_16BackendCoordOnlyE0EE0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_folddTllEuNCB1r_s_0NCINvNvB87_8for_each4callB93_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB9T_3VecB93_E14extend_trustedIBO_BN_B98_EE0E0E0ECsaTqK2fWTXJW_11qlog_dancer.exit: ; preds = %scalar.ph, %middle.block, %bb.a
   %storemerge.i = phi i64 [ %.sroa.4.0.copyload, %bb.a ], [ %i.n, %middle.block ], [ %i.bc, %scalar.ph ], !dbg !25160
@@ -433,94 +433,94 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ad = fadd <2 x double> %i.ac, %i.r, !dbg !25482
   %i.ae = fmul <2 x double> %i.aa, %i.p, !dbg !25483
   %i.af = fadd <2 x double> %i.ae, %i.t, !dbg !25484
-  %2 = getelementptr [8 x i8], ptr %i.u, i64 %index, !dbg !25485
-  %3 = shufflevector <2 x double> %i.ad, <2 x double> %i.af, <4 x i32> <i32 0, i32 2, i32 1, i32 3>, !dbg !25486
-  %4 = tail call <4 x double> @llvm.ceil.v4f64(<4 x double> %3), !dbg !25486
-  %interleaved.vec = tail call <4 x i32> @llvm.fptosi.sat.v4i32.v4f64(<4 x double> %4), !dbg !25486
-  store <4 x i32> %interleaved.vec, ptr %2, align 4, !dbg !25486, !alias.scope !25411, !noalias !25412
+  %2 = shufflevector <2 x double> %i.ad, <2 x double> %i.af, <4 x i32> <i32 0, i32 2, i32 1, i32 3>, !dbg !25485
+  %3 = tail call <4 x double> @llvm.ceil.v4f64(<4 x double> %2), !dbg !25484
+  %4 = getelementptr [8 x i8], ptr %i.u, i64 %index, !dbg !25486
+  %interleaved.vec = tail call <4 x i32> @llvm.fptosi.sat.v4i32.v4f64(<4 x double> %3), !dbg !25487
+  store <4 x i32> %interleaved.vec, ptr %4, align 4, !dbg !25487, !alias.scope !25416, !noalias !25417
   %index.next = add nuw i64 %index, 2, !dbg !25469 ; 2 uses
-  %i.ag = icmp eq i64 %index.next, %n.vec, !dbg !25487
-  br i1 %i.ag, label %middle.block, label %vector.body, !dbg !25487, !llvm.loop !25236
+  %i.ag = icmp eq i64 %index.next, %n.vec, !dbg !25488
+  br i1 %i.ag, label %middle.block, label %vector.body, !dbg !25488, !llvm.loop !25240
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.i, %n.vec, !dbg !25487
-  br i1 %cmp.n, label %_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB1y_14TriangleMarkerTdyElEINtB1A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIBO_INtNtNtBa_7sources4once4OnceRB2B_ENCINvMs6_NtNtB1C_7drawing4areaINtB4J_11DrawingAreaB2X_INtNtNtNtB1C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB5z_8ranged1d5types7numeric14RangedCoordf64NtB6j_14RangedCoordu64EE4drawB2e_NtB1A_16BackendCoordOnlyE0EE0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_folddTllEuNCB1r_s_0NCINvNvB87_8for_each4callB93_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB9T_3VecB93_E14extend_trustedIBO_BN_B98_EE0E0E0ECsaTqK2fWTXJW_11qlog_dancer.exit, label %scalar.ph.preheader, !dbg !25487
+  %cmp.n = icmp eq i64 %i.i, %n.vec, !dbg !25488
+  br i1 %cmp.n, label %_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB1y_14TriangleMarkerTdyElEINtB1A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIBO_INtNtNtBa_7sources4once4OnceRB2B_ENCINvMs6_NtNtB1C_7drawing4areaINtB4J_11DrawingAreaB2X_INtNtNtNtB1C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB5z_8ranged1d5types7numeric14RangedCoordf64NtB6j_14RangedCoordu64EE4drawB2e_NtB1A_16BackendCoordOnlyE0EE0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_folddTllEuNCB1r_s_0NCINvNvB87_8for_each4callB93_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB9T_3VecB93_E14extend_trustedIBO_BN_B98_EE0E0E0ECsaTqK2fWTXJW_11qlog_dancer.exit, label %scalar.ph.preheader, !dbg !25488
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.b, %middle.block
   %.ph = phi i64 [ %.sroa.4.0.copyload, %vector.memcheck ], [ %.sroa.4.0.copyload, %bb.b ], [ %i.n, %middle.block ]
   %.sroa.01.0.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.b ], [ %n.vec, %middle.block ]
-  br label %scalar.ph, !dbg !25487
+  br label %scalar.ph, !dbg !25488
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %i.ah = phi i64 [ %i.bc, %scalar.ph ], [ %.ph, %scalar.ph.preheader ], !dbg !25476 ; 2 uses
   %.sroa.01.0.i.i = phi i64 [ %i.bd, %scalar.ph ], [ %.sroa.01.0.i.i.ph, %scalar.ph.preheader ], !dbg !25469 ; 2 uses
     #dbg_value(i64 %.sroa.01.0.i.i, !25330, !DIExpression(), !25332)
     #dbg_value(i64 %.sroa.01.0.i.i, !25308, !DIExpression(), !25339)
-    #dbg_value(ptr %i.a, !25378, !DIExpression(), !25413)
-    #dbg_value(i64 %.sroa.01.0.i.i, !25379, !DIExpression(), !25413)
+    #dbg_value(ptr %i.a, !25378, !DIExpression(), !25418)
+    #dbg_value(i64 %.sroa.01.0.i.i, !25379, !DIExpression(), !25418)
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.sroa.01.0.i.i, !dbg !25476
   %.val27.i.i = load i32, ptr %i.ai, align 4, !dbg !25477, !noalias !25382, !noundef !3744
-    #dbg_value(ptr poison, !25368, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25414)
-    #dbg_declare(ptr poison, !25366, !DIExpression(), !25415)
-    #dbg_value(ptr poison, !25367, !DIExpression(), !25414)
-    #dbg_value(ptr poison, !25389, !DIExpression(), !25416)
-    #dbg_value(ptr poison, !25388, !DIExpression(), !25416)
-    #dbg_value(i32 %.val27.i.i, !25383, !DIExpression(), !25417)
+    #dbg_value(ptr poison, !25368, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25419)
+    #dbg_declare(ptr poison, !25366, !DIExpression(), !25420)
+    #dbg_value(ptr poison, !25367, !DIExpression(), !25419)
+    #dbg_value(ptr poison, !25389, !DIExpression(), !25421)
+    #dbg_value(ptr poison, !25388, !DIExpression(), !25421)
+    #dbg_value(i32 %.val27.i.i, !25383, !DIExpression(), !25422)
   %i.aj = sitofp i32 %.val27.i.i to double, !dbg !25478
   %i.ak = fmul nnan double %i.aj, f0x400921FB54442D18, !dbg !25479
   %i.al = fdiv double %i.ak, 1.800000e+02, !dbg !25479
-    #dbg_value(ptr poison, !25360, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25418)
-    #dbg_value(ptr poison, !25361, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 24, DW_OP_LLVM_fragment, 0, 64), !25418)
-    #dbg_declare(ptr poison, !25358, !DIExpression(), !25419)
-    #dbg_value(double %i.al, !25359, !DIExpression(), !25418)
+    #dbg_value(ptr poison, !25360, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25423)
+    #dbg_value(ptr poison, !25361, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 24, DW_OP_LLVM_fragment, 0, 64), !25423)
+    #dbg_declare(ptr poison, !25358, !DIExpression(), !25424)
+    #dbg_value(double %i.al, !25359, !DIExpression(), !25423)
   %sincos.i.i.i.i.i = tail call { double, double } @llvm.sincos.f64(double %i.al), !dbg !25480 ; 2 uses
   %sin.i.i.i.i.i = extractvalue { double, double } %sincos.i.i.i.i.i, 0, !dbg !25480
   %cos.i.i.i.i.i = extractvalue { double, double } %sincos.i.i.i.i.i, 1, !dbg !25480
-    #dbg_value(ptr poison, !25351, !DIExpression(DW_OP_deref, DW_OP_deref), !25420)
-    #dbg_value(ptr poison, !25352, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 8, DW_OP_deref), !25420)
-    #dbg_value(ptr poison, !25353, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16, DW_OP_deref), !25420)
-    #dbg_value(double %i.al, !25350, !DIExpression(), !25420)
-    #dbg_value(double %i.al, !25391, !DIExpression(), !25421)
+    #dbg_value(ptr poison, !25351, !DIExpression(DW_OP_deref, DW_OP_deref), !25425)
+    #dbg_value(ptr poison, !25352, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 8, DW_OP_deref), !25425)
+    #dbg_value(ptr poison, !25353, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16, DW_OP_deref), !25425)
+    #dbg_value(double %i.al, !25350, !DIExpression(), !25425)
+    #dbg_value(double %i.al, !25391, !DIExpression(), !25426)
   %i.am = load i32, ptr %.sroa.01.0.copyload, align 4, !dbg !25470, !noalias !25346, !noundef !3744
-    #dbg_value(i32 %i.am, !25374, !DIExpression(), !25422)
+    #dbg_value(i32 %i.am, !25374, !DIExpression(), !25427)
   %i.an = sitofp i32 %i.am to double, !dbg !25471 ; 2 uses
   %i.ao = fmul double %cos.i.i.i.i.i, %i.an, !dbg !25481
   %i.ap = load i32, ptr %.sroa.42.0.copyload, align 4, !dbg !25472, !noalias !25346, !noundef !3744
-    #dbg_value(i32 %i.ap, !25374, !DIExpression(), !25423)
+    #dbg_value(i32 %i.ap, !25374, !DIExpression(), !25428)
   %i.aq = sitofp i32 %i.ap to double, !dbg !25473
   %i.ar = fadd double %i.ao, %i.aq, !dbg !25482
-    #dbg_value(double %i.ar, !25424, !DIExpression(), !25426)
-    #dbg_value(double %i.ar, !25427, !DIExpression(), !25429)
-  %i.as = tail call double @llvm.ceil.f64(double %i.ar), !dbg !25488
+    #dbg_value(double %i.ar, !25396, !DIExpression(), !25429)
+    #dbg_value(double %i.ar, !25393, !DIExpression(), !25430)
+  %i.as = tail call double @llvm.ceil.f64(double %i.ar), !dbg !25489
   %i.at = tail call i32 @llvm.fptosi.sat.i32.f64(double %i.as), !dbg !25482
-    #dbg_value(i32 %i.am, !25374, !DIExpression(), !25430)
+    #dbg_value(i32 %i.am, !25374, !DIExpression(), !25431)
   %i.au = fmul double %sin.i.i.i.i.i, %i.an, !dbg !25483
   %i.av = load i32, ptr %.sroa.53.0.copyload, align 4, !dbg !25474, !noalias !25346, !noundef !3744
-    #dbg_value(i32 %i.av, !25374, !DIExpression(), !25431)
+    #dbg_value(i32 %i.av, !25374, !DIExpression(), !25432)
   %i.aw = sitofp i32 %i.av to double, !dbg !25475
   %i.ax = fadd double %i.au, %i.aw, !dbg !25484
-    #dbg_value(double %i.ax, !25424, !DIExpression(), !25432)
-    #dbg_value(double %i.ax, !25427, !DIExpression(), !25433)
-  %i.ay = tail call double @llvm.ceil.f64(double %i.ax), !dbg !25489
+    #dbg_value(double %i.ax, !25396, !DIExpression(), !25433)
+    #dbg_value(double %i.ax, !25393, !DIExpression(), !25434)
+  %i.ay = tail call double @llvm.ceil.f64(double %i.ax), !dbg !25485
   %i.az = tail call i32 @llvm.fptosi.sat.i32.f64(double %i.ay), !dbg !25484
-    #dbg_value(ptr poison, !25406, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25435)
-    #dbg_declare(ptr poison, !25407, !DIExpression(), !25436)
-    #dbg_value(i32 %i.at, !25405, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !25435)
-    #dbg_value(i32 %i.az, !25405, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !25435)
-    #dbg_value(ptr poison, !25397, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16), !25437)
-    #dbg_value(ptr poison, !25398, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25437)
-    #dbg_value(i32 %i.at, !25396, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !25437)
-    #dbg_value(i32 %i.az, !25396, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !25437)
-  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %.sroa.5.0.copyload, i64 %i.ah, !dbg !25485 ; 2 uses
-  store i32 %i.at, ptr %i.ba, align 4, !dbg !25486, !noalias !25412
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 4, !dbg !25486
-  store i32 %i.az, ptr %i.bb, align 4, !dbg !25486, !noalias !25412
+    #dbg_value(ptr poison, !25411, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25435)
+    #dbg_declare(ptr poison, !25412, !DIExpression(), !25436)
+    #dbg_value(i32 %i.at, !25410, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !25435)
+    #dbg_value(i32 %i.az, !25410, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !25435)
+    #dbg_value(ptr poison, !25402, !DIExpression(DW_OP_deref, DW_OP_plus_uconst, 16), !25437)
+    #dbg_value(ptr poison, !25403, !DIExpression(DW_OP_deref, DW_OP_LLVM_fragment, 0, 64), !25437)
+    #dbg_value(i32 %i.at, !25401, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !25437)
+    #dbg_value(i32 %i.az, !25401, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !25437)
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %.sroa.5.0.copyload, i64 %i.ah, !dbg !25486 ; 2 uses
+  store i32 %i.at, ptr %i.ba, align 4, !dbg !25487, !noalias !25417
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 4, !dbg !25487
+  store i32 %i.az, ptr %i.bb, align 4, !dbg !25487, !noalias !25417
   %i.bc = add i64 %i.ah, 1, !dbg !25490           ; 2 uses
   %i.bd = add nuw i64 %.sroa.01.0.i.i, 1, !dbg !25491 ; 2 uses
     #dbg_value(i64 %i.bd, !25308, !DIExpression(), !25339)
     #dbg_value(i64 %i.bd, !25330, !DIExpression(), !25332)
-  %i.be = icmp eq i64 %i.bd, %i.i, !dbg !25487
-  br i1 %i.be, label %_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB1y_14TriangleMarkerTdyElEINtB1A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIBO_INtNtNtBa_7sources4once4OnceRB2B_ENCINvMs6_NtNtB1C_7drawing4areaINtB4J_11DrawingAreaB2X_INtNtNtNtB1C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB5z_8ranged1d5types7numeric14RangedCoordf64NtB6j_14RangedCoordu64EE4drawB2e_NtB1A_16BackendCoordOnlyE0EE0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_folddTllEuNCB1r_s_0NCINvNvB87_8for_each4callB93_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB9T_3VecB93_E14extend_trustedIBO_BN_B98_EE0E0E0ECsaTqK2fWTXJW_11qlog_dancer.exit, label %scalar.ph, !dbg !25487, !llvm.loop !25246
+  %i.be = icmp eq i64 %i.bd, %i.i, !dbg !25488
+  br i1 %i.be, label %_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB1y_14TriangleMarkerTdyElEINtB1A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIBO_INtNtNtBa_7sources4once4OnceRB2B_ENCINvMs6_NtNtB1C_7drawing4areaINtB4J_11DrawingAreaB2X_INtNtNtNtB1C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB5z_8ranged1d5types7numeric14RangedCoordf64NtB6j_14RangedCoordu64EE4drawB2e_NtB1A_16BackendCoordOnlyE0EE0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_folddTllEuNCB1r_s_0NCINvNvB87_8for_each4callB93_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB9T_3VecB93_E14extend_trustedIBO_BN_B98_EE0E0E0ECsaTqK2fWTXJW_11qlog_dancer.exit, label %scalar.ph, !dbg !25488, !llvm.loop !25246
 
 _RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB1y_14TriangleMarkerTdyElEINtB1A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIBO_INtNtNtBa_7sources4once4OnceRB2B_ENCINvMs6_NtNtB1C_7drawing4areaINtB4J_11DrawingAreaB2X_INtNtNtNtB1C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB5z_8ranged1d5types7numeric14RangedCoordf64NtB6j_14RangedCoordu64EE4drawB2e_NtB1A_16BackendCoordOnlyE0EE0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_folddTllEuNCB1r_s_0NCINvNvB87_8for_each4callB93_NCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB9T_3VecB93_E14extend_trustedIBO_BN_B98_EE0E0E0ECsaTqK2fWTXJW_11qlog_dancer.exit: ; preds = %scalar.ph, %middle.block, %bb.a
   %storemerge.i = phi i64 [ %.sroa.4.0.copyload, %bb.a ], [ %i.n, %middle.block ], [ %i.bc, %scalar.ph ], !dbg !25492
@@ -923,29 +923,29 @@ begin_hunk_1_@llvm.ceil.v4f64
 !24888 = distinct !DILocation(line: 119, column: 28, scope: !24886, inlinedAt: !24887)
 !24889 = distinct !DISubprogram(name: "cos", linkageName: "_RNvMNtCsG258MDvU3F_3std3f64d3cos", scope: !10436, file: !10434, line: 725, type: !10438, scopeLine: 725, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !3744, retainedNodes: !25060)
 !24890 = distinct !DILocation(line: 122, column: 30, scope: !24870, inlinedAt: !24875)
-!24891 = distinct !DISubprogram(name: "add<(i32, i32)>", linkageName: "_RNvMNtNtCskKLDkoKarTP_4core3ptr7mut_ptrOTllE3addCsaTqK2fWTXJW_11qlog_dancer", scope: !6792, file: !6790, line: 937, type: !11063, scopeLine: 937, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !4448)
-!24892 = distinct !DISubprogram(name: "{closure#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>>", linkageName: "_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecTllEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapIB14_INtNtNtB1c_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB2y_14TriangleMarkerTdlElEINtB2A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB14_INtNtNtB1a_7sources4once4OnceRB3B_ENCINvMs6_NtNtB2C_7drawing4areaINtB5L_11DrawingAreaB3X_INtNtNtNtB2C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB6B_8ranged1d5types7numeric14RangedCoordf64NtB7l_14RangedCoordi32EE4drawB3e_NtB2A_16BackendCoordOnlyE0EE0ENCB2r_s_0EE0CsaTqK2fWTXJW_11qlog_dancer", scope: !10613, file: !4841, line: 4134, type: !25063, scopeLine: 4134, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !25069, retainedNodes: !25067)
-!24893 = distinct !DISubprogram(name: "{closure#0}<(i32, i32), alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>>>", linkageName: "_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callTllENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB1s_3VecB1f_E14extend_trustedINtNtNtBc_8adapters3map3MapIB2p_INtNtNtBe_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB3v_14TriangleMarkerTdlElEINtB3x_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB2p_INtNtNtBc_7sources4once4OnceRB4y_ENCINvMs6_NtNtB3z_7drawing4areaINtB6H_11DrawingAreaB4U_INtNtNtNtB3z_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB7x_8ranged1d5types7numeric14RangedCoordf64NtB8h_14RangedCoordi32EE4drawB4b_NtB3x_16BackendCoordOnlyE0EE0ENCB3o_s_0EE0E0CsaTqK2fWTXJW_11qlog_dancer", scope: !10611, file: !10604, line: 884, type: !25072, scopeLine: 884, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !25078, retainedNodes: !25076)
-!24894 = distinct !DILocation(line: 88, column: 21, scope: !24871, inlinedAt: !24874)
-!24895 = distinct !DILocation(line: 884, column: 29, scope: !24893, inlinedAt: !24894)
-!24896 = distinct !DILocation(line: 4135, column: 36, scope: !24892, inlinedAt: !24895)
-!24897 = distinct !DISubprogram(name: "write<(i32, i32)>", linkageName: "_RINvNtCskKLDkoKarTP_4core3ptr5writeTllEECsaTqK2fWTXJW_11qlog_dancer", scope: !3755, file: !4869, line: 1941, type: !11065, scopeLine: 1941, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !4448)
-!24898 = distinct !DILocation(line: 4135, column: 21, scope: !24892, inlinedAt: !24895)
-!24899 = distinct !{!24899, !24858}
-!24900 = distinct !{!24900, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callTllENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB1s_3VecB1f_E14extend_trustedINtNtNtBc_8adapters3map3MapIB2p_INtNtNtBe_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB3v_14TriangleMarkerTdlElEINtB3x_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB2p_INtNtNtBc_7sources4once4OnceRB4y_ENCINvMs6_NtNtB3z_7drawing4areaINtB6H_11DrawingAreaB4U_INtNtNtNtB3z_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB7x_8ranged1d5types7numeric14RangedCoordf64NtB8h_14RangedCoordi32EE4drawB4b_NtB3x_16BackendCoordOnlyE0EE0ENCB3o_s_0EE0E0CsaTqK2fWTXJW_11qlog_dancer"}
-!24901 = distinct !{!24901, !24900, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callTllENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB1s_3VecB1f_E14extend_trustedINtNtNtBc_8adapters3map3MapIB2p_INtNtNtBe_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB3v_14TriangleMarkerTdlElEINtB3x_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB2p_INtNtNtBc_7sources4once4OnceRB4y_ENCINvMs6_NtNtB3z_7drawing4areaINtB6H_11DrawingAreaB4U_INtNtNtNtB3z_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB7x_8ranged1d5types7numeric14RangedCoordf64NtB8h_14RangedCoordi32EE4drawB4b_NtB3x_16BackendCoordOnlyE0EE0ENCB3o_s_0EE0E0CsaTqK2fWTXJW_11qlog_dancer: argument 0"}
-!24902 = distinct !{!24902, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecTllEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapIB14_INtNtNtB1c_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB2y_14TriangleMarkerTdlElEINtB2A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB14_INtNtNtB1a_7sources4once4OnceRB3B_ENCINvMs6_NtNtB2C_7drawing4areaINtB5L_11DrawingAreaB3X_INtNtNtNtB2C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB6B_8ranged1d5types7numeric14RangedCoordf64NtB7l_14RangedCoordi32EE4drawB3e_NtB2A_16BackendCoordOnlyE0EE0ENCB2r_s_0EE0CsaTqK2fWTXJW_11qlog_dancer"}
-!24903 = distinct !{!24903, !24902, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecTllEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapIB14_INtNtNtB1c_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB2y_14TriangleMarkerTdlElEINtB2A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB14_INtNtNtB1a_7sources4once4OnceRB3B_ENCINvMs6_NtNtB2C_7drawing4areaINtB5L_11DrawingAreaB3X_INtNtNtNtB2C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB6B_8ranged1d5types7numeric14RangedCoordf64NtB7l_14RangedCoordi32EE4drawB3e_NtB2A_16BackendCoordOnlyE0EE0ENCB2r_s_0EE0CsaTqK2fWTXJW_11qlog_dancer: argument 0"}
-!24904 = distinct !{!24904, !11066, !11067}
-!24905 = distinct !DISubprogram(name: "ceil", linkageName: "_RNvMNtCsG258MDvU3F_3std3f64d4ceil", scope: !10436, file: !10434, line: 74, type: !10438, scopeLine: 74, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !3744, retainedNodes: !25093)
-!24906 = distinct !DILocation(line: 122, column: 70, scope: !24870, inlinedAt: !24875)
-!24907 = distinct !DISubprogram(name: "ceil", linkageName: "_RNvNtNtCskKLDkoKarTP_4core3f644math4ceil", scope: !10441, file: !10439, line: 1913, type: !10438, scopeLine: 1913, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !3744, retainedNodes: !25096)
-!24908 = distinct !DILocation(line: 75, column: 9, scope: !24905, inlinedAt: !24906)
-!24909 = distinct !DILocation(line: 123, column: 38, scope: !24870, inlinedAt: !24875)
-!24910 = distinct !DILocation(line: 123, column: 70, scope: !24870, inlinedAt: !24875)
-!24911 = distinct !DILocation(line: 75, column: 9, scope: !25102, inlinedAt: !24910)
+!24891 = distinct !DISubprogram(name: "ceil", linkageName: "_RNvNtNtCskKLDkoKarTP_4core3f644math4ceil", scope: !10441, file: !10439, line: 1913, type: !10438, scopeLine: 1913, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !3744, retainedNodes: !25062)
+!24892 = distinct !DISubprogram(name: "ceil", linkageName: "_RNvMNtCsG258MDvU3F_3std3f64d4ceil", scope: !10436, file: !10434, line: 74, type: !10438, scopeLine: 74, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !3744, retainedNodes: !25065)
+!24893 = distinct !DILocation(line: 123, column: 70, scope: !24870, inlinedAt: !24875)
+!24894 = distinct !DILocation(line: 75, column: 9, scope: !25063, inlinedAt: !24893)
+!24895 = distinct !DISubprogram(name: "add<(i32, i32)>", linkageName: "_RNvMNtNtCskKLDkoKarTP_4core3ptr7mut_ptrOTllE3addCsaTqK2fWTXJW_11qlog_dancer", scope: !6792, file: !6790, line: 937, type: !11063, scopeLine: 937, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !4448)
+!24896 = distinct !DISubprogram(name: "{closure#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>>", linkageName: "_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecTllEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapIB14_INtNtNtB1c_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB2y_14TriangleMarkerTdlElEINtB2A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB14_INtNtNtB1a_7sources4once4OnceRB3B_ENCINvMs6_NtNtB2C_7drawing4areaINtB5L_11DrawingAreaB3X_INtNtNtNtB2C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB6B_8ranged1d5types7numeric14RangedCoordf64NtB7l_14RangedCoordi32EE4drawB3e_NtB2A_16BackendCoordOnlyE0EE0ENCB2r_s_0EE0CsaTqK2fWTXJW_11qlog_dancer", scope: !10613, file: !4841, line: 4134, type: !25068, scopeLine: 4134, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !25074, retainedNodes: !25072)
+!24897 = distinct !DISubprogram(name: "{closure#0}<(i32, i32), alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>>>", linkageName: "_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callTllENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB1s_3VecB1f_E14extend_trustedINtNtNtBc_8adapters3map3MapIB2p_INtNtNtBe_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB3v_14TriangleMarkerTdlElEINtB3x_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB2p_INtNtNtBc_7sources4once4OnceRB4y_ENCINvMs6_NtNtB3z_7drawing4areaINtB6H_11DrawingAreaB4U_INtNtNtNtB3z_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB7x_8ranged1d5types7numeric14RangedCoordf64NtB8h_14RangedCoordi32EE4drawB4b_NtB3x_16BackendCoordOnlyE0EE0ENCB3o_s_0EE0E0CsaTqK2fWTXJW_11qlog_dancer", scope: !10611, file: !10604, line: 884, type: !25077, scopeLine: 884, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !25083, retainedNodes: !25081)
+!24898 = distinct !DILocation(line: 88, column: 21, scope: !24871, inlinedAt: !24874)
+!24899 = distinct !DILocation(line: 884, column: 29, scope: !24897, inlinedAt: !24898)
+!24900 = distinct !DILocation(line: 4135, column: 36, scope: !24896, inlinedAt: !24899)
+!24901 = distinct !DISubprogram(name: "write<(i32, i32)>", linkageName: "_RINvNtCskKLDkoKarTP_4core3ptr5writeTllEECsaTqK2fWTXJW_11qlog_dancer", scope: !3755, file: !4869, line: 1941, type: !11065, scopeLine: 1941, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !4448)
+!24902 = distinct !DILocation(line: 4135, column: 21, scope: !24896, inlinedAt: !24899)
+!24903 = distinct !{!24903, !24858}
+!24904 = distinct !{!24904, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callTllENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB1s_3VecB1f_E14extend_trustedINtNtNtBc_8adapters3map3MapIB2p_INtNtNtBe_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB3v_14TriangleMarkerTdlElEINtB3x_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB2p_INtNtNtBc_7sources4once4OnceRB4y_ENCINvMs6_NtNtB3z_7drawing4areaINtB6H_11DrawingAreaB4U_INtNtNtNtB3z_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB7x_8ranged1d5types7numeric14RangedCoordf64NtB8h_14RangedCoordi32EE4drawB4b_NtB3x_16BackendCoordOnlyE0EE0ENCB3o_s_0EE0E0CsaTqK2fWTXJW_11qlog_dancer"}
+!24905 = distinct !{!24905, !24904, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callTllENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB1s_3VecB1f_E14extend_trustedINtNtNtBc_8adapters3map3MapIB2p_INtNtNtBe_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB3v_14TriangleMarkerTdlElEINtB3x_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB2p_INtNtNtBc_7sources4once4OnceRB4y_ENCINvMs6_NtNtB3z_7drawing4areaINtB6H_11DrawingAreaB4U_INtNtNtNtB3z_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB7x_8ranged1d5types7numeric14RangedCoordf64NtB8h_14RangedCoordi32EE4drawB4b_NtB3x_16BackendCoordOnlyE0EE0ENCB3o_s_0EE0E0CsaTqK2fWTXJW_11qlog_dancer: argument 0"}
+!24906 = distinct !{!24906, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecTllEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapIB14_INtNtNtB1c_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB2y_14TriangleMarkerTdlElEINtB2A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB14_INtNtNtB1a_7sources4once4OnceRB3B_ENCINvMs6_NtNtB2C_7drawing4areaINtB5L_11DrawingAreaB3X_INtNtNtNtB2C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB6B_8ranged1d5types7numeric14RangedCoordf64NtB7l_14RangedCoordi32EE4drawB3e_NtB2A_16BackendCoordOnlyE0EE0ENCB2r_s_0EE0CsaTqK2fWTXJW_11qlog_dancer"}
+!24907 = distinct !{!24907, !24906, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecTllEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapIB14_INtNtNtB1c_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB2y_14TriangleMarkerTdlElEINtB2A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB14_INtNtNtB1a_7sources4once4OnceRB3B_ENCINvMs6_NtNtB2C_7drawing4areaINtB5L_11DrawingAreaB3X_INtNtNtNtB2C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB6B_8ranged1d5types7numeric14RangedCoordf64NtB7l_14RangedCoordi32EE4drawB3e_NtB2A_16BackendCoordOnlyE0EE0ENCB2r_s_0EE0CsaTqK2fWTXJW_11qlog_dancer: argument 0"}
+!24908 = distinct !{!24908, !11066, !11067}
+!24909 = distinct !DILocation(line: 122, column: 70, scope: !24870, inlinedAt: !24875)
+!24910 = distinct !DILocation(line: 75, column: 9, scope: !24892, inlinedAt: !24909)
+!24911 = distinct !DILocation(line: 123, column: 38, scope: !24870, inlinedAt: !24875)
 !24912 = distinct !DISubprogram(name: "increment_len", linkageName: "_RNvMNtNtCsexYYUdYSQU6_5alloc3vec15set_len_on_dropNtB2_12SetLenOnDrop13increment_len", scope: !1958, file: !10705, line: 18, type: !10708, scopeLine: 18, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !3744, declaration: !10709)
-!24913 = distinct !DILocation(line: 4139, column: 31, scope: !24892, inlinedAt: !24895)
+!24913 = distinct !DILocation(line: 4139, column: 31, scope: !24896, inlinedAt: !24899)
 !24914 = distinct !{!24914, !11066}
 !24915 = distinct !DISubprogram(name: "drop_glue<alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>>>", linkageName: "_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtBK_3VecTllEE14extend_trustedINtNtNtNtB4_4iter8adapters3map3MapIB1G_INtNtNtB4_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB2T_14TriangleMarkerTdlElEINtB2V_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB1G_INtNtNtB1M_7sources4once4OnceRB3W_ENCINvMs6_NtNtB2X_7drawing4areaINtB66_11DrawingAreaB4i_INtNtNtNtB2X_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB6W_8ranged1d5types7numeric14RangedCoordf64NtB7G_14RangedCoordi32EE4drawB3z_NtB2V_16BackendCoordOnlyE0EE0ENCB2M_s_0EE0ECsaTqK2fWTXJW_11qlog_dancer", scope: !3755, file: !4869, line: 848, type: !25107, scopeLine: 848, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !25111, retainedNodes: !25109)
 !24916 = distinct !DISubprogram(name: "drop_glue<core::iter::traits::iterator::Iterator::for_each::call::{closure_env#0}<(i32, i32), alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>>>>", linkageName: "_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvNvNtNtNtNtB4_4iter6traits8iterator8Iterator8for_each4callTllENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB1O_3VecB1B_E14extend_trustedINtNtNtBO_8adapters3map3MapIB2L_INtNtNtB4_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB3R_14TriangleMarkerTdlElEINtB3T_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB2L_INtNtNtBO_7sources4once4OnceRB4U_ENCINvMs6_NtNtB3V_7drawing4areaINtB73_11DrawingAreaB5g_INtNtNtNtB3V_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB7T_8ranged1d5types7numeric14RangedCoordf64NtB8D_14RangedCoordi32EE4drawB4x_NtB3T_16BackendCoordOnlyE0EE0ENCB3K_s_0EE0E0ECsaTqK2fWTXJW_11qlog_dancer", scope: !3755, file: !4869, line: 848, type: !25113, scopeLine: 848, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !25117, retainedNodes: !25115)
@@ -1093,60 +1093,60 @@ begin_hunk_1_@llvm.ceil.v4f64
 !25058 = !{!25056, !25057}
 !25059 = !DILocalVariable(name: "self", arg: 1, scope: !24889, file: !10434, line: 725, type: !4240)
 !25060 = !{!25059}
-!25061 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&mut alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>>", baseType: !24830, size: 64, align: 64, dwarfAddressSpace: 0)
-!25062 = !{null, !25061, !185}
-!25063 = !DISubroutineType(types: !25062)
-!25064 = !DILocalVariable(name: "element", arg: 2, scope: !24892, file: !4841, line: 4134, type: !185)
-!25065 = !DILocalVariable(name: "ptr", scope: !24892, file: !4841, line: 4132, type: !11013, align: 64)
-!25066 = !DILocalVariable(name: "local_len", scope: !24892, file: !4841, line: 4133, type: !1958, align: 64)
-!25067 = !{!25064, !25065, !25066}
-!25068 = !DITemplateTypeParameter(name: "impl iter::TrustedLen<Item = T>", type: !2045)
-!25069 = !{!4447, !3764, !25068}
-!25070 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&mut core::iter::traits::iterator::Iterator::for_each::call::{closure_env#0}<(i32, i32), alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>>>", baseType: !24831, size: 64, align: 64, dwarfAddressSpace: 0)
-!25071 = !{null, !25070, !3714, !185}
-!25072 = !DISubroutineType(types: !25071)
-!25073 = !DILocalVariable(name: "item", arg: 3, scope: !24893, file: !10604, line: 884, type: !185)
-!25074 = !DILocalVariable(name: "f", scope: !24893, file: !10604, line: 883, type: !24830, align: 64)
-!25075 = !DILocalVariable(arg: 2, scope: !24893, file: !10604, line: 884, type: !3714)
-!25076 = !{!25073, !25074, !25075}
-!25077 = !DITemplateTypeParameter(name: "impl FnMut(T)", type: !24830)
-!25078 = !{!4447, !25077}
-!25079 = !{!24899}
-!25080 = !{!24903, !24901, !24867, !24865, !24863, !24861}
-!25081 = !DILocation(line: 0, scope: !24882, inlinedAt: !24883)
-!25082 = !DILocation(line: 0, scope: !24872, inlinedAt: !24873)
-!25083 = !DILocation(line: 88, column: 11, scope: !24872, inlinedAt: !24873)
-!25084 = !DILocation(line: 0, scope: !24886, inlinedAt: !24887)
-!25085 = !DILocation(line: 0, scope: !24885, inlinedAt: !24888)
-!25086 = !DILocation(line: 0, scope: !24871, inlinedAt: !24874)
-!25087 = !DILocation(line: 88, column: 11, scope: !24871, inlinedAt: !24874)
-!25088 = !DILocation(line: 0, scope: !24870, inlinedAt: !24875)
-!25089 = !DILocation(line: 0, scope: !24889, inlinedAt: !24890)
-!25090 = !DILocation(line: 0, scope: !24876, inlinedAt: !24877)
-!25091 = !DILocation(line: 0, scope: !24876, inlinedAt: !24879)
-!25092 = !DILocalVariable(name: "self", arg: 1, scope: !24905, file: !10434, line: 74, type: !4240)
-!25093 = !{!25092}
-!25094 = !DILocation(line: 0, scope: !24905, inlinedAt: !24906)
-!25095 = !DILocalVariable(name: "x", arg: 1, scope: !24907, file: !10439, line: 1913, type: !4240)
-!25096 = !{!25095}
-!25097 = !DILocation(line: 0, scope: !24907, inlinedAt: !24908)
-!25098 = !DILocation(line: 0, scope: !24876, inlinedAt: !24909)
-!25099 = !DILocation(line: 0, scope: !24876, inlinedAt: !24881)
-!25100 = !DILocation(line: 0, scope: !24905, inlinedAt: !24910)
-!25101 = !DILocation(line: 0, scope: !24907, inlinedAt: !24911)
-!25102 = !DILexicalBlockFile(scope: !24905, file: !10434, discriminator: 2)
-!25103 = !DILocation(line: 0, scope: !24893, inlinedAt: !24894)
-!25104 = !DILocation(line: 884, column: 19, scope: !24893, inlinedAt: !24894)
-!25105 = !DILocation(line: 0, scope: !24892, inlinedAt: !24895)
-!25106 = !{null, !25061}
+!25061 = !DILocalVariable(name: "x", arg: 1, scope: !24891, file: !10439, line: 1913, type: !4240)
+!25062 = !{!25061}
+!25063 = !DILexicalBlockFile(scope: !24892, file: !10434, discriminator: 2)
+!25064 = !DILocalVariable(name: "self", arg: 1, scope: !24892, file: !10434, line: 74, type: !4240)
+!25065 = !{!25064}
+!25066 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&mut alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>>", baseType: !24830, size: 64, align: 64, dwarfAddressSpace: 0)
+!25067 = !{null, !25066, !185}
+!25068 = !DISubroutineType(types: !25067)
+!25069 = !DILocalVariable(name: "element", arg: 2, scope: !24896, file: !4841, line: 4134, type: !185)
+!25070 = !DILocalVariable(name: "ptr", scope: !24896, file: !4841, line: 4132, type: !11013, align: 64)
+!25071 = !DILocalVariable(name: "local_len", scope: !24896, file: !4841, line: 4133, type: !1958, align: 64)
+!25072 = !{!25069, !25070, !25071}
+!25073 = !DITemplateTypeParameter(name: "impl iter::TrustedLen<Item = T>", type: !2045)
+!25074 = !{!4447, !3764, !25073}
+!25075 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&mut core::iter::traits::iterator::Iterator::for_each::call::{closure_env#0}<(i32, i32), alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, i32), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, i32)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordi32>, plotters::element::points::TriangleMarker<(f64, i32), i32>, plotters::element::BackendCoordOnly>>>>>>", baseType: !24831, size: 64, align: 64, dwarfAddressSpace: 0)
+!25076 = !{null, !25075, !3714, !185}
+!25077 = !DISubroutineType(types: !25076)
+!25078 = !DILocalVariable(name: "item", arg: 3, scope: !24897, file: !10604, line: 884, type: !185)
+!25079 = !DILocalVariable(name: "f", scope: !24897, file: !10604, line: 883, type: !24830, align: 64)
+!25080 = !DILocalVariable(arg: 2, scope: !24897, file: !10604, line: 884, type: !3714)
+!25081 = !{!25078, !25079, !25080}
+!25082 = !DITemplateTypeParameter(name: "impl FnMut(T)", type: !24830)
+!25083 = !{!4447, !25082}
+!25084 = !{!24903}
+!25085 = !{!24907, !24905, !24867, !24865, !24863, !24861}
+!25086 = !DILocation(line: 0, scope: !24882, inlinedAt: !24883)
+!25087 = !DILocation(line: 0, scope: !24872, inlinedAt: !24873)
+!25088 = !DILocation(line: 88, column: 11, scope: !24872, inlinedAt: !24873)
+!25089 = !DILocation(line: 0, scope: !24886, inlinedAt: !24887)
+!25090 = !DILocation(line: 0, scope: !24885, inlinedAt: !24888)
+!25091 = !DILocation(line: 0, scope: !24871, inlinedAt: !24874)
+!25092 = !DILocation(line: 88, column: 11, scope: !24871, inlinedAt: !24874)
+!25093 = !DILocation(line: 0, scope: !24870, inlinedAt: !24875)
+!25094 = !DILocation(line: 0, scope: !24889, inlinedAt: !24890)
+!25095 = !DILocation(line: 0, scope: !24876, inlinedAt: !24877)
+!25096 = !DILocation(line: 0, scope: !24876, inlinedAt: !24879)
+!25097 = !DILocation(line: 0, scope: !24892, inlinedAt: !24909)
+!25098 = !DILocation(line: 0, scope: !24891, inlinedAt: !24910)
+!25099 = !DILocation(line: 0, scope: !24876, inlinedAt: !24911)
+!25100 = !DILocation(line: 0, scope: !24876, inlinedAt: !24881)
+!25101 = !DILocation(line: 0, scope: !24892, inlinedAt: !24893)
+!25102 = !DILocation(line: 0, scope: !24891, inlinedAt: !24894)
+!25103 = !DILocation(line: 0, scope: !24897, inlinedAt: !24898)
+!25104 = !DILocation(line: 884, column: 19, scope: !24897, inlinedAt: !24898)
+!25105 = !DILocation(line: 0, scope: !24896, inlinedAt: !24899)
+!25106 = !{null, !25066}
 !25107 = !DISubroutineType(cc: DW_CC_nocall, types: !25106)
-!25108 = !DILocalVariable(arg: 1, scope: !24915, file: !4869, line: 848, type: !25061)
+!25108 = !DILocalVariable(arg: 1, scope: !24915, file: !4869, line: 848, type: !25066)
 !25109 = !{!25108}
 !25110 = !DITemplateTypeParameter(name: "T", type: !24830)
 !25111 = !{!25110}
-!25112 = !{null, !25070}
+!25112 = !{null, !25075}
 !25113 = !DISubroutineType(cc: DW_CC_nocall, types: !25112)
-!25114 = !DILocalVariable(arg: 1, scope: !24916, file: !4869, line: 848, type: !25070)
+!25114 = !DILocalVariable(arg: 1, scope: !24916, file: !4869, line: 848, type: !25075)
 !25115 = !{!25114}
 !25116 = !DITemplateTypeParameter(name: "T", type: !24831)
 !25117 = !{!25116}
@@ -1185,11 +1185,11 @@ begin_hunk_1_@llvm.ceil.v4f64
 !25150 = !DILocation(line: 122, column: 25, scope: !24870, inlinedAt: !24875)
 !25151 = !DILocation(line: 123, column: 26, scope: !24870, inlinedAt: !24875)
 !25152 = !DILocation(line: 123, column: 25, scope: !24870, inlinedAt: !24875)
-!25153 = !DILocation(line: 971, column: 18, scope: !24891, inlinedAt: !24896)
-!25154 = !DILocation(line: 1964, column: 41, scope: !24897, inlinedAt: !24898)
-!25155 = !DILocation(line: 279, column: 24, scope: !24840, inlinedAt: !24846)
-!25156 = !DILocation(line: 1914, column: 9, scope: !24907, inlinedAt: !24908)
-!25157 = !DILocation(line: 1914, column: 9, scope: !24907, inlinedAt: !24911)
+!25153 = !DILocation(line: 1914, column: 9, scope: !24891, inlinedAt: !24894)
+!25154 = !DILocation(line: 971, column: 18, scope: !24895, inlinedAt: !24900)
+!25155 = !DILocation(line: 1964, column: 41, scope: !24901, inlinedAt: !24902)
+!25156 = !DILocation(line: 279, column: 24, scope: !24840, inlinedAt: !24846)
+!25157 = !DILocation(line: 1914, column: 9, scope: !24891, inlinedAt: !24910)
 !25158 = !DILocation(line: 19, column: 9, scope: !24912, inlinedAt: !24913)
 !25159 = !DILocation(line: 1043, column: 17, scope: !24854, inlinedAt: !24855)
 !25160 = !DILocation(line: 31, column: 9, scope: !1974, inlinedAt: !24924)
@@ -1255,29 +1255,29 @@ begin_hunk_1_@llvm.ceil.v4f64
 !25220 = distinct !DILocation(line: 119, column: 28, scope: !25218, inlinedAt: !25219)
 !25221 = distinct !DISubprogram(name: "cos", linkageName: "_RNvMNtCsG258MDvU3F_3std3f64d3cos", scope: !10436, file: !10434, line: 725, type: !10438, scopeLine: 725, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !3744, retainedNodes: !25392)
 !25222 = distinct !DILocation(line: 122, column: 30, scope: !25202, inlinedAt: !25207)
-!25223 = distinct !DISubprogram(name: "add<(i32, i32)>", linkageName: "_RNvMNtNtCskKLDkoKarTP_4core3ptr7mut_ptrOTllE3addCsaTqK2fWTXJW_11qlog_dancer", scope: !6792, file: !6790, line: 937, type: !11063, scopeLine: 937, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !4448)
-!25224 = distinct !DISubprogram(name: "{closure#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>>", linkageName: "_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecTllEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapIB14_INtNtNtB1c_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB2y_14TriangleMarkerTdyElEINtB2A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB14_INtNtNtB1a_7sources4once4OnceRB3B_ENCINvMs6_NtNtB2C_7drawing4areaINtB5L_11DrawingAreaB3X_INtNtNtNtB2C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB6B_8ranged1d5types7numeric14RangedCoordf64NtB7l_14RangedCoordu64EE4drawB3e_NtB2A_16BackendCoordOnlyE0EE0ENCB2r_s_0EE0CsaTqK2fWTXJW_11qlog_dancer", scope: !10613, file: !4841, line: 4134, type: !25395, scopeLine: 4134, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !25401, retainedNodes: !25399)
-!25225 = distinct !DISubprogram(name: "{closure#0}<(i32, i32), alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>>>", linkageName: "_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callTllENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB1s_3VecB1f_E14extend_trustedINtNtNtBc_8adapters3map3MapIB2p_INtNtNtBe_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB3v_14TriangleMarkerTdyElEINtB3x_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB2p_INtNtNtBc_7sources4once4OnceRB4y_ENCINvMs6_NtNtB3z_7drawing4areaINtB6H_11DrawingAreaB4U_INtNtNtNtB3z_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB7x_8ranged1d5types7numeric14RangedCoordf64NtB8h_14RangedCoordu64EE4drawB4b_NtB3x_16BackendCoordOnlyE0EE0ENCB3o_s_0EE0E0CsaTqK2fWTXJW_11qlog_dancer", scope: !10611, file: !10604, line: 884, type: !25404, scopeLine: 884, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !25410, retainedNodes: !25408)
-!25226 = distinct !DILocation(line: 88, column: 21, scope: !25203, inlinedAt: !25206)
-!25227 = distinct !DILocation(line: 884, column: 29, scope: !25225, inlinedAt: !25226)
-!25228 = distinct !DILocation(line: 4135, column: 36, scope: !25224, inlinedAt: !25227)
-!25229 = distinct !DISubprogram(name: "write<(i32, i32)>", linkageName: "_RINvNtCskKLDkoKarTP_4core3ptr5writeTllEECsaTqK2fWTXJW_11qlog_dancer", scope: !3755, file: !4869, line: 1941, type: !11065, scopeLine: 1941, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !4448)
-!25230 = distinct !DILocation(line: 4135, column: 21, scope: !25224, inlinedAt: !25227)
-!25231 = distinct !{!25231, !25190}
-!25232 = distinct !{!25232, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callTllENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB1s_3VecB1f_E14extend_trustedINtNtNtBc_8adapters3map3MapIB2p_INtNtNtBe_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB3v_14TriangleMarkerTdyElEINtB3x_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB2p_INtNtNtBc_7sources4once4OnceRB4y_ENCINvMs6_NtNtB3z_7drawing4areaINtB6H_11DrawingAreaB4U_INtNtNtNtB3z_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB7x_8ranged1d5types7numeric14RangedCoordf64NtB8h_14RangedCoordu64EE4drawB4b_NtB3x_16BackendCoordOnlyE0EE0ENCB3o_s_0EE0E0CsaTqK2fWTXJW_11qlog_dancer"}
-!25233 = distinct !{!25233, !25232, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callTllENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB1s_3VecB1f_E14extend_trustedINtNtNtBc_8adapters3map3MapIB2p_INtNtNtBe_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB3v_14TriangleMarkerTdyElEINtB3x_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB2p_INtNtNtBc_7sources4once4OnceRB4y_ENCINvMs6_NtNtB3z_7drawing4areaINtB6H_11DrawingAreaB4U_INtNtNtNtB3z_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB7x_8ranged1d5types7numeric14RangedCoordf64NtB8h_14RangedCoordu64EE4drawB4b_NtB3x_16BackendCoordOnlyE0EE0ENCB3o_s_0EE0E0CsaTqK2fWTXJW_11qlog_dancer: argument 0"}
-!25234 = distinct !{!25234, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecTllEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapIB14_INtNtNtB1c_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB2y_14TriangleMarkerTdyElEINtB2A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB14_INtNtNtB1a_7sources4once4OnceRB3B_ENCINvMs6_NtNtB2C_7drawing4areaINtB5L_11DrawingAreaB3X_INtNtNtNtB2C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB6B_8ranged1d5types7numeric14RangedCoordf64NtB7l_14RangedCoordu64EE4drawB3e_NtB2A_16BackendCoordOnlyE0EE0ENCB2r_s_0EE0CsaTqK2fWTXJW_11qlog_dancer"}
-!25235 = distinct !{!25235, !25234, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecTllEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapIB14_INtNtNtB1c_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB2y_14TriangleMarkerTdyElEINtB2A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB14_INtNtNtB1a_7sources4once4OnceRB3B_ENCINvMs6_NtNtB2C_7drawing4areaINtB5L_11DrawingAreaB3X_INtNtNtNtB2C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB6B_8ranged1d5types7numeric14RangedCoordf64NtB7l_14RangedCoordu64EE4drawB3e_NtB2A_16BackendCoordOnlyE0EE0ENCB2r_s_0EE0CsaTqK2fWTXJW_11qlog_dancer: argument 0"}
-!25236 = distinct !{!25236, !11066, !11067}
-!25237 = distinct !DISubprogram(name: "ceil", linkageName: "_RNvMNtCsG258MDvU3F_3std3f64d4ceil", scope: !10436, file: !10434, line: 74, type: !10438, scopeLine: 74, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !3744, retainedNodes: !25425)
-!25238 = distinct !DILocation(line: 122, column: 70, scope: !25202, inlinedAt: !25207)
-!25239 = distinct !DISubprogram(name: "ceil", linkageName: "_RNvNtNtCskKLDkoKarTP_4core3f644math4ceil", scope: !10441, file: !10439, line: 1913, type: !10438, scopeLine: 1913, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !3744, retainedNodes: !25428)
-!25240 = distinct !DILocation(line: 75, column: 9, scope: !25237, inlinedAt: !25238)
-!25241 = distinct !DILocation(line: 123, column: 38, scope: !25202, inlinedAt: !25207)
-!25242 = distinct !DILocation(line: 123, column: 70, scope: !25202, inlinedAt: !25207)
-!25243 = distinct !DILocation(line: 75, column: 9, scope: !25434, inlinedAt: !25242)
+!25223 = distinct !DISubprogram(name: "ceil", linkageName: "_RNvNtNtCskKLDkoKarTP_4core3f644math4ceil", scope: !10441, file: !10439, line: 1913, type: !10438, scopeLine: 1913, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !3744, retainedNodes: !25394)
+!25224 = distinct !DISubprogram(name: "ceil", linkageName: "_RNvMNtCsG258MDvU3F_3std3f64d4ceil", scope: !10436, file: !10434, line: 74, type: !10438, scopeLine: 74, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !3744, retainedNodes: !25397)
+!25225 = distinct !DILocation(line: 123, column: 70, scope: !25202, inlinedAt: !25207)
+!25226 = distinct !DILocation(line: 75, column: 9, scope: !25395, inlinedAt: !25225)
+!25227 = distinct !DISubprogram(name: "add<(i32, i32)>", linkageName: "_RNvMNtNtCskKLDkoKarTP_4core3ptr7mut_ptrOTllE3addCsaTqK2fWTXJW_11qlog_dancer", scope: !6792, file: !6790, line: 937, type: !11063, scopeLine: 937, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !4448)
+!25228 = distinct !DISubprogram(name: "{closure#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>>", linkageName: "_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecTllEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapIB14_INtNtNtB1c_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB2y_14TriangleMarkerTdyElEINtB2A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB14_INtNtNtB1a_7sources4once4OnceRB3B_ENCINvMs6_NtNtB2C_7drawing4areaINtB5L_11DrawingAreaB3X_INtNtNtNtB2C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB6B_8ranged1d5types7numeric14RangedCoordf64NtB7l_14RangedCoordu64EE4drawB3e_NtB2A_16BackendCoordOnlyE0EE0ENCB2r_s_0EE0CsaTqK2fWTXJW_11qlog_dancer", scope: !10613, file: !4841, line: 4134, type: !25400, scopeLine: 4134, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !25406, retainedNodes: !25404)
+!25229 = distinct !DISubprogram(name: "{closure#0}<(i32, i32), alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>>>", linkageName: "_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callTllENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB1s_3VecB1f_E14extend_trustedINtNtNtBc_8adapters3map3MapIB2p_INtNtNtBe_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB3v_14TriangleMarkerTdyElEINtB3x_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB2p_INtNtNtBc_7sources4once4OnceRB4y_ENCINvMs6_NtNtB3z_7drawing4areaINtB6H_11DrawingAreaB4U_INtNtNtNtB3z_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB7x_8ranged1d5types7numeric14RangedCoordf64NtB8h_14RangedCoordu64EE4drawB4b_NtB3x_16BackendCoordOnlyE0EE0ENCB3o_s_0EE0E0CsaTqK2fWTXJW_11qlog_dancer", scope: !10611, file: !10604, line: 884, type: !25409, scopeLine: 884, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !25415, retainedNodes: !25413)
+!25230 = distinct !DILocation(line: 88, column: 21, scope: !25203, inlinedAt: !25206)
+!25231 = distinct !DILocation(line: 884, column: 29, scope: !25229, inlinedAt: !25230)
+!25232 = distinct !DILocation(line: 4135, column: 36, scope: !25228, inlinedAt: !25231)
+!25233 = distinct !DISubprogram(name: "write<(i32, i32)>", linkageName: "_RINvNtCskKLDkoKarTP_4core3ptr5writeTllEECsaTqK2fWTXJW_11qlog_dancer", scope: !3755, file: !4869, line: 1941, type: !11065, scopeLine: 1941, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !4448)
+!25234 = distinct !DILocation(line: 4135, column: 21, scope: !25228, inlinedAt: !25231)
+!25235 = distinct !{!25235, !25190}
+!25236 = distinct !{!25236, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callTllENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB1s_3VecB1f_E14extend_trustedINtNtNtBc_8adapters3map3MapIB2p_INtNtNtBe_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB3v_14TriangleMarkerTdyElEINtB3x_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB2p_INtNtNtBc_7sources4once4OnceRB4y_ENCINvMs6_NtNtB3z_7drawing4areaINtB6H_11DrawingAreaB4U_INtNtNtNtB3z_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB7x_8ranged1d5types7numeric14RangedCoordf64NtB8h_14RangedCoordu64EE4drawB4b_NtB3x_16BackendCoordOnlyE0EE0ENCB3o_s_0EE0E0CsaTqK2fWTXJW_11qlog_dancer"}
+!25237 = distinct !{!25237, !25236, !"_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8for_each4callTllENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB1s_3VecB1f_E14extend_trustedINtNtNtBc_8adapters3map3MapIB2p_INtNtNtBe_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB3v_14TriangleMarkerTdyElEINtB3x_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB2p_INtNtNtBc_7sources4once4OnceRB4y_ENCINvMs6_NtNtB3z_7drawing4areaINtB6H_11DrawingAreaB4U_INtNtNtNtB3z_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB7x_8ranged1d5types7numeric14RangedCoordf64NtB8h_14RangedCoordu64EE4drawB4b_NtB3x_16BackendCoordOnlyE0EE0ENCB3o_s_0EE0E0CsaTqK2fWTXJW_11qlog_dancer: argument 0"}
+!25238 = distinct !{!25238, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecTllEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapIB14_INtNtNtB1c_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB2y_14TriangleMarkerTdyElEINtB2A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB14_INtNtNtB1a_7sources4once4OnceRB3B_ENCINvMs6_NtNtB2C_7drawing4areaINtB5L_11DrawingAreaB3X_INtNtNtNtB2C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB6B_8ranged1d5types7numeric14RangedCoordf64NtB7l_14RangedCoordu64EE4drawB3e_NtB2A_16BackendCoordOnlyE0EE0ENCB2r_s_0EE0CsaTqK2fWTXJW_11qlog_dancer"}
+!25239 = distinct !{!25239, !25238, !"_RNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB8_3VecTllEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapIB14_INtNtNtB1c_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB2y_14TriangleMarkerTdyElEINtB2A_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB14_INtNtNtB1a_7sources4once4OnceRB3B_ENCINvMs6_NtNtB2C_7drawing4areaINtB5L_11DrawingAreaB3X_INtNtNtNtB2C_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB6B_8ranged1d5types7numeric14RangedCoordf64NtB7l_14RangedCoordu64EE4drawB3e_NtB2A_16BackendCoordOnlyE0EE0ENCB2r_s_0EE0CsaTqK2fWTXJW_11qlog_dancer: argument 0"}
+!25240 = distinct !{!25240, !11066, !11067}
+!25241 = distinct !DILocation(line: 122, column: 70, scope: !25202, inlinedAt: !25207)
+!25242 = distinct !DILocation(line: 75, column: 9, scope: !25224, inlinedAt: !25241)
+!25243 = distinct !DILocation(line: 123, column: 38, scope: !25202, inlinedAt: !25207)
 !25244 = distinct !DISubprogram(name: "increment_len", linkageName: "_RNvMNtNtCsexYYUdYSQU6_5alloc3vec15set_len_on_dropNtB2_12SetLenOnDrop13increment_len", scope: !1958, file: !10705, line: 18, type: !10708, scopeLine: 18, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !3744, declaration: !10709)
-!25245 = distinct !DILocation(line: 4139, column: 31, scope: !25224, inlinedAt: !25227)
+!25245 = distinct !DILocation(line: 4139, column: 31, scope: !25228, inlinedAt: !25231)
 !25246 = distinct !{!25246, !11066}
 !25247 = distinct !DISubprogram(name: "drop_glue<alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>>>", linkageName: "_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtBK_3VecTllEE14extend_trustedINtNtNtNtB4_4iter8adapters3map3MapIB1G_INtNtNtB4_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB2T_14TriangleMarkerTdyElEINtB2V_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB1G_INtNtNtB1M_7sources4once4OnceRB3W_ENCINvMs6_NtNtB2X_7drawing4areaINtB66_11DrawingAreaB4i_INtNtNtNtB2X_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB6W_8ranged1d5types7numeric14RangedCoordf64NtB7G_14RangedCoordu64EE4drawB3z_NtB2V_16BackendCoordOnlyE0EE0ENCB2M_s_0EE0ECsaTqK2fWTXJW_11qlog_dancer", scope: !3755, file: !4869, line: 848, type: !25439, scopeLine: 848, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !25443, retainedNodes: !25441)
 !25248 = distinct !DISubprogram(name: "drop_glue<core::iter::traits::iterator::Iterator::for_each::call::{closure_env#0}<(i32, i32), alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>>>>", linkageName: "_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvNvNtNtNtNtB4_4iter6traits8iterator8Iterator8for_each4callTllENCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB1O_3VecB1B_E14extend_trustedINtNtNtBO_8adapters3map3MapIB2L_INtNtNtB4_5slice4iter4IterlENCINvXs3_NtNtCs4bweDUTR8gt_8plotters7element6pointsINtB3R_14TriangleMarkerTdyElEINtB3T_8DrawableNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendE4drawIB2L_INtNtNtBO_7sources4once4OnceRB4U_ENCINvMs6_NtNtB3V_7drawing4areaINtB73_11DrawingAreaB5g_INtNtNtNtB3V_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB7T_8ranged1d5types7numeric14RangedCoordf64NtB8D_14RangedCoordu64EE4drawB4x_NtB3T_16BackendCoordOnlyE0EE0ENCB3K_s_0EE0E0ECsaTqK2fWTXJW_11qlog_dancer", scope: !3755, file: !4869, line: 848, type: !25445, scopeLine: 848, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !280, templateParams: !25449, retainedNodes: !25447)
@@ -1425,60 +1425,60 @@ begin_hunk_1_@llvm.ceil.v4f64
 !25390 = !{!25388, !25389}
 !25391 = !DILocalVariable(name: "self", arg: 1, scope: !25221, file: !10434, line: 725, type: !4240)
 !25392 = !{!25391}
-!25393 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&mut alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>>", baseType: !25162, size: 64, align: 64, dwarfAddressSpace: 0)
-!25394 = !{null, !25393, !185}
-!25395 = !DISubroutineType(types: !25394)
-!25396 = !DILocalVariable(name: "element", arg: 2, scope: !25224, file: !4841, line: 4134, type: !185)
-!25397 = !DILocalVariable(name: "ptr", scope: !25224, file: !4841, line: 4132, type: !11013, align: 64)
-!25398 = !DILocalVariable(name: "local_len", scope: !25224, file: !4841, line: 4133, type: !1958, align: 64)
-!25399 = !{!25396, !25397, !25398}
-!25400 = !DITemplateTypeParameter(name: "impl iter::TrustedLen<Item = T>", type: !2058)
-!25401 = !{!4447, !3764, !25400}
-!25402 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&mut core::iter::traits::iterator::Iterator::for_each::call::{closure_env#0}<(i32, i32), alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>>>", baseType: !25163, size: 64, align: 64, dwarfAddressSpace: 0)
-!25403 = !{null, !25402, !3714, !185}
-!25404 = !DISubroutineType(types: !25403)
-!25405 = !DILocalVariable(name: "item", arg: 3, scope: !25225, file: !10604, line: 884, type: !185)
-!25406 = !DILocalVariable(name: "f", scope: !25225, file: !10604, line: 883, type: !25162, align: 64)
-!25407 = !DILocalVariable(arg: 2, scope: !25225, file: !10604, line: 884, type: !3714)
-!25408 = !{!25405, !25406, !25407}
-!25409 = !DITemplateTypeParameter(name: "impl FnMut(T)", type: !25162)
-!25410 = !{!4447, !25409}
-!25411 = !{!25231}
-!25412 = !{!25235, !25233, !25199, !25197, !25195, !25193}
-!25413 = !DILocation(line: 0, scope: !25214, inlinedAt: !25215)
-!25414 = !DILocation(line: 0, scope: !25204, inlinedAt: !25205)
-!25415 = !DILocation(line: 88, column: 11, scope: !25204, inlinedAt: !25205)
-!25416 = !DILocation(line: 0, scope: !25218, inlinedAt: !25219)
-!25417 = !DILocation(line: 0, scope: !25217, inlinedAt: !25220)
-!25418 = !DILocation(line: 0, scope: !25203, inlinedAt: !25206)
-!25419 = !DILocation(line: 88, column: 11, scope: !25203, inlinedAt: !25206)
-!25420 = !DILocation(line: 0, scope: !25202, inlinedAt: !25207)
-!25421 = !DILocation(line: 0, scope: !25221, inlinedAt: !25222)
-!25422 = !DILocation(line: 0, scope: !25208, inlinedAt: !25209)
-!25423 = !DILocation(line: 0, scope: !25208, inlinedAt: !25211)
-!25424 = !DILocalVariable(name: "self", arg: 1, scope: !25237, file: !10434, line: 74, type: !4240)
-!25425 = !{!25424}
-!25426 = !DILocation(line: 0, scope: !25237, inlinedAt: !25238)
-!25427 = !DILocalVariable(name: "x", arg: 1, scope: !25239, file: !10439, line: 1913, type: !4240)
-!25428 = !{!25427}
-!25429 = !DILocation(line: 0, scope: !25239, inlinedAt: !25240)
-!25430 = !DILocation(line: 0, scope: !25208, inlinedAt: !25241)
-!25431 = !DILocation(line: 0, scope: !25208, inlinedAt: !25213)
-!25432 = !DILocation(line: 0, scope: !25237, inlinedAt: !25242)
-!25433 = !DILocation(line: 0, scope: !25239, inlinedAt: !25243)
-!25434 = !DILexicalBlockFile(scope: !25237, file: !10434, discriminator: 2)
-!25435 = !DILocation(line: 0, scope: !25225, inlinedAt: !25226)
-!25436 = !DILocation(line: 884, column: 19, scope: !25225, inlinedAt: !25226)
-!25437 = !DILocation(line: 0, scope: !25224, inlinedAt: !25227)
-!25438 = !{null, !25393}
+!25393 = !DILocalVariable(name: "x", arg: 1, scope: !25223, file: !10439, line: 1913, type: !4240)
+!25394 = !{!25393}
+!25395 = !DILexicalBlockFile(scope: !25224, file: !10434, discriminator: 2)
+!25396 = !DILocalVariable(name: "self", arg: 1, scope: !25224, file: !10434, line: 74, type: !4240)
+!25397 = !{!25396}
+!25398 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&mut alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>>", baseType: !25162, size: 64, align: 64, dwarfAddressSpace: 0)
+!25399 = !{null, !25398, !185}
+!25400 = !DISubroutineType(types: !25399)
+!25401 = !DILocalVariable(name: "element", arg: 2, scope: !25228, file: !4841, line: 4134, type: !185)
+!25402 = !DILocalVariable(name: "ptr", scope: !25228, file: !4841, line: 4132, type: !11013, align: 64)
+!25403 = !DILocalVariable(name: "local_len", scope: !25228, file: !4841, line: 4133, type: !1958, align: 64)
+!25404 = !{!25401, !25402, !25403}
+!25405 = !DITemplateTypeParameter(name: "impl iter::TrustedLen<Item = T>", type: !2058)
+!25406 = !{!4447, !3764, !25405}
+!25407 = !DIDerivedType(tag: DW_TAG_pointer_type, name: "&mut core::iter::traits::iterator::Iterator::for_each::call::{closure_env#0}<(i32, i32), alloc::vec::{impl#22}::extend_trusted::{closure_env#0}<(i32, i32), alloc::alloc::Global, core::iter::adapters::map::Map<core::iter::adapters::map::Map<core::slice::iter::Iter<i32>, plotters::element::points::{impl#5}::draw::{closure_env#0}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>, plotters::element::points::{impl#5}::draw::{closure_env#1}<(f64, u64), plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, i32, core::iter::adapters::map::Map<core::iter::sources::once::Once<&(f64, u64)>, plotters::drawing::area::{impl#8}::draw::{closure_env#0}<plotters_bitmap::bitmap::BitMapBackend<plotters_bitmap::bitmap_pixel::rgb::RGBPixel>, plotters::coord::ranged2d::cartesian::Cartesian2d<plotters::coord::ranged1d::types::numeric::RangedCoordf64, plotters::coord::ranged1d::types::numeric::RangedCoordu64>, plotters::element::points::TriangleMarker<(f64, u64), i32>, plotters::element::BackendCoordOnly>>>>>>", baseType: !25163, size: 64, align: 64, dwarfAddressSpace: 0)
+!25408 = !{null, !25407, !3714, !185}
+!25409 = !DISubroutineType(types: !25408)
+!25410 = !DILocalVariable(name: "item", arg: 3, scope: !25229, file: !10604, line: 884, type: !185)
+!25411 = !DILocalVariable(name: "f", scope: !25229, file: !10604, line: 883, type: !25162, align: 64)
+!25412 = !DILocalVariable(arg: 2, scope: !25229, file: !10604, line: 884, type: !3714)
+!25413 = !{!25410, !25411, !25412}
+!25414 = !DITemplateTypeParameter(name: "impl FnMut(T)", type: !25162)
+!25415 = !{!4447, !25414}
+!25416 = !{!25235}
+!25417 = !{!25239, !25237, !25199, !25197, !25195, !25193}
+!25418 = !DILocation(line: 0, scope: !25214, inlinedAt: !25215)
+!25419 = !DILocation(line: 0, scope: !25204, inlinedAt: !25205)
+!25420 = !DILocation(line: 88, column: 11, scope: !25204, inlinedAt: !25205)
+!25421 = !DILocation(line: 0, scope: !25218, inlinedAt: !25219)
+!25422 = !DILocation(line: 0, scope: !25217, inlinedAt: !25220)
+!25423 = !DILocation(line: 0, scope: !25203, inlinedAt: !25206)
+!25424 = !DILocation(line: 88, column: 11, scope: !25203, inlinedAt: !25206)
+!25425 = !DILocation(line: 0, scope: !25202, inlinedAt: !25207)
+!25426 = !DILocation(line: 0, scope: !25221, inlinedAt: !25222)
+!25427 = !DILocation(line: 0, scope: !25208, inlinedAt: !25209)
+!25428 = !DILocation(line: 0, scope: !25208, inlinedAt: !25211)
+!25429 = !DILocation(line: 0, scope: !25224, inlinedAt: !25241)
+!25430 = !DILocation(line: 0, scope: !25223, inlinedAt: !25242)
+!25431 = !DILocation(line: 0, scope: !25208, inlinedAt: !25243)
+!25432 = !DILocation(line: 0, scope: !25208, inlinedAt: !25213)
+!25433 = !DILocation(line: 0, scope: !25224, inlinedAt: !25225)
+!25434 = !DILocation(line: 0, scope: !25223, inlinedAt: !25226)
+!25435 = !DILocation(line: 0, scope: !25229, inlinedAt: !25230)
+!25436 = !DILocation(line: 884, column: 19, scope: !25229, inlinedAt: !25230)
+!25437 = !DILocation(line: 0, scope: !25228, inlinedAt: !25231)
+!25438 = !{null, !25398}
 !25439 = !DISubroutineType(cc: DW_CC_nocall, types: !25438)
-!25440 = !DILocalVariable(arg: 1, scope: !25247, file: !4869, line: 848, type: !25393)
+!25440 = !DILocalVariable(arg: 1, scope: !25247, file: !4869, line: 848, type: !25398)
 !25441 = !{!25440}
 !25442 = !DITemplateTypeParameter(name: "T", type: !25162)
 !25443 = !{!25442}
-!25444 = !{null, !25402}
+!25444 = !{null, !25407}
 !25445 = !DISubroutineType(cc: DW_CC_nocall, types: !25444)
-!25446 = !DILocalVariable(arg: 1, scope: !25248, file: !4869, line: 848, type: !25402)
+!25446 = !DILocalVariable(arg: 1, scope: !25248, file: !4869, line: 848, type: !25407)
 !25447 = !{!25446}
 !25448 = !DITemplateTypeParameter(name: "T", type: !25163)
 !25449 = !{!25448}
@@ -1517,11 +1517,11 @@ begin_hunk_1_@llvm.ceil.v4f64
 !25482 = !DILocation(line: 122, column: 25, scope: !25202, inlinedAt: !25207)
 !25483 = !DILocation(line: 123, column: 26, scope: !25202, inlinedAt: !25207)
 !25484 = !DILocation(line: 123, column: 25, scope: !25202, inlinedAt: !25207)
-!25485 = !DILocation(line: 971, column: 18, scope: !25223, inlinedAt: !25228)
-!25486 = !DILocation(line: 1964, column: 41, scope: !25229, inlinedAt: !25230)
-!25487 = !DILocation(line: 279, column: 24, scope: !25172, inlinedAt: !25178)
-!25488 = !DILocation(line: 1914, column: 9, scope: !25239, inlinedAt: !25240)
-!25489 = !DILocation(line: 1914, column: 9, scope: !25239, inlinedAt: !25243)
+!25485 = !DILocation(line: 1914, column: 9, scope: !25223, inlinedAt: !25226)
+!25486 = !DILocation(line: 971, column: 18, scope: !25227, inlinedAt: !25232)
+!25487 = !DILocation(line: 1964, column: 41, scope: !25233, inlinedAt: !25234)
+!25488 = !DILocation(line: 279, column: 24, scope: !25172, inlinedAt: !25178)
+!25489 = !DILocation(line: 1914, column: 9, scope: !25223, inlinedAt: !25242)
 !25490 = !DILocation(line: 19, column: 9, scope: !25244, inlinedAt: !25245)
 !25491 = !DILocation(line: 1043, column: 17, scope: !25186, inlinedAt: !25187)
 !25492 = !DILocation(line: 31, column: 9, scope: !1974, inlinedAt: !25256)

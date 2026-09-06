@@ -205,16 +205,16 @@ vector.ph:                                        ; preds = %vector.memcheck
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.jv, i64 0
   %i.jw = load float, ptr %i.if, align 8, !tbaa !24, !alias.scope !63
   %broadcast.splatinsert802 = insertelement <4 x float> poison, float %i.jw, i64 0
+  %3 = shufflevector <4 x float> %broadcast.splatinsert798, <4 x float> %broadcast.splatinsert802, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
   %i.jx = load float, ptr %i.jr, align 4, !tbaa !53, !alias.scope !63
   %broadcast.splatinsert800 = insertelement <4 x float> poison, float %i.jx, i64 0
+  %4 = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> %broadcast.splatinsert800, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
   %i.jy = load float, ptr %i.ii, align 4, !tbaa !24, !alias.scope !63
   %broadcast.splatinsert806 = insertelement <4 x float> poison, float %i.jy, i64 0
   %broadcast.splat807 = shufflevector <4 x float> %broadcast.splatinsert806, <4 x float> poison, <4 x i32> zeroinitializer
   %i.jz = load float, ptr %i.iy, align 8, !tbaa !39, !alias.scope !63
   %broadcast.splatinsert804 = insertelement <4 x float> poison, float %i.jz, i64 0
   %broadcast.splat805 = shufflevector <4 x float> %broadcast.splatinsert804, <4 x float> poison, <4 x i32> zeroinitializer
-  %3 = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> %broadcast.splatinsert800, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
-  %4 = shufflevector <4 x float> %broadcast.splatinsert798, <4 x float> %broadcast.splatinsert802, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -253,6 +253,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.lc = insertelement <4 x i16> %i.lb, i16 %i.ky, i64 2
   %i.ld = insertelement <4 x i16> %i.lc, i16 %i.kz, i64 3
   %i.le = uitofp <4 x i16> %i.ld to <4 x float>
+  %5 = shufflevector <4 x float> %i.kr, <4 x float> %i.le, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.lf = getelementptr inbounds nuw i8, ptr %i.kb, i64 4
   %i.lg = getelementptr inbounds nuw i8, ptr %i.kc, i64 10
   %i.lh = getelementptr inbounds nuw i8, ptr %i.ke, i64 16
@@ -267,8 +268,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.lq = insertelement <4 x i16> %i.lp, i16 %i.lm, i64 3
   %i.lr = uitofp <4 x i16> %i.lq to <4 x float>
   %i.ls = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.lr, <4 x float> %broadcast.splat805, <4 x float> %broadcast.splat807)
-  %5 = shufflevector <4 x float> %i.kr, <4 x float> %i.le, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.lt = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %5, <8 x float> %3, <8 x float> %4)
+  %i.lt = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %5, <8 x float> %4, <8 x float> %3)
   %i.lu = shufflevector <4 x float> %i.ls, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec = shufflevector <8 x float> %i.lt, <8 x float> %i.lu, <12 x i32> <i32 0, i32 4, i32 8, i32 1, i32 5, i32 9, i32 2, i32 6, i32 10, i32 3, i32 7, i32 11>
   store <12 x float> %interleaved.vec, ptr %i.ki, align 4, !tbaa !24, !alias.scope !64, !noalias !63

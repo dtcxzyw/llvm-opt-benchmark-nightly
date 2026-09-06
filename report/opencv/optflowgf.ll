@@ -205,9 +205,9 @@ vector.memcheck576:                               ; preds = %.lr.ph245.i
 vector.ph591:                                     ; preds = %vector.memcheck576
   %broadcast.splatinsert593 = insertelement <4 x float> poison, float %i.uu, i64 0
   %broadcast.splatinsert595 = insertelement <4 x float> poison, float %i.uw, i64 0
+  %52 = shufflevector <4 x float> %broadcast.splatinsert593, <4 x float> %broadcast.splatinsert595, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
   %broadcast.splatinsert597 = insertelement <4 x float> poison, float %i.uy, i64 0
   %broadcast.splat598 = shufflevector <4 x float> %broadcast.splatinsert597, <4 x float> poison, <4 x i32> zeroinitializer
-  %52 = shufflevector <4 x float> %broadcast.splatinsert593, <4 x float> %broadcast.splatinsert595, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
   br label %vector.body599
 
 vector.body599:                                   ; preds = %vector.body599, %vector.ph591
@@ -248,7 +248,9 @@ vector.body599:                                   ; preds = %vector.body599, %ve
   %i.wv = insertelement <4 x float> %i.wu, float %i.wr, i64 1
   %i.ww = insertelement <4 x float> %i.wv, float %i.ws, i64 2
   %i.wx = insertelement <4 x float> %i.ww, float %i.wt, i64 3
+  %53 = shufflevector <4 x float> %i.wl, <4 x float> %i.wx, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.wy = fsub <4 x float> %wide.load602, %wide.load601
+  %54 = shufflevector <4 x float> %i.vs, <4 x float> %i.wy, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.wz = getelementptr inbounds nuw i8, ptr %i.vx, i64 8
   %i.xa = getelementptr inbounds nuw i8, ptr %i.vy, i64 20
   %i.xb = getelementptr inbounds nuw i8, ptr %i.wa, i64 32
@@ -262,9 +264,7 @@ vector.body599:                                   ; preds = %vector.body599, %ve
   %i.xj = insertelement <4 x float> %i.xi, float %i.xf, i64 2
   %i.xk = insertelement <4 x float> %i.xj, float %i.xg, i64 3
   %i.xl = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %broadcast.splat598, <4 x float> %i.vs, <4 x float> %i.xk)
-  %53 = shufflevector <4 x float> %i.vs, <4 x float> %i.wy, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %54 = shufflevector <4 x float> %i.wl, <4 x float> %i.wx, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.xm = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %52, <8 x float> %53, <8 x float> %54)
+  %i.xm = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %52, <8 x float> %54, <8 x float> %53)
   %i.xn = shufflevector <4 x float> %i.xl, <4 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %interleaved.vec603 = shufflevector <8 x float> %i.xm, <8 x float> %i.xn, <12 x i32> <i32 0, i32 4, i32 8, i32 1, i32 5, i32 9, i32 2, i32 6, i32 10, i32 3, i32 7, i32 11>
   store <12 x float> %interleaved.vec603, ptr %i.vx, align 4, !tbaa !58, !alias.scope !186, !noalias !187

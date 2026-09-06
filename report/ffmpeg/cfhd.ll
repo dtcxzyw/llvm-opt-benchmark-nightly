@@ -205,16 +205,16 @@ vector.body:                                      ; preds = %.preheader, %vector
   %i.bi = add nsw <4 x i32> %i.bh, %i.as
   %i.bj = shl <4 x i32> %i.bd, %broadcast.splat120
   %i.bk = shl <4 x i32> %i.be, %broadcast.splat120
+  %2 = shufflevector <4 x i32> %i.bj, <4 x i32> %i.bk, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %3 = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %2, <8 x i32> zeroinitializer)
   %i.bl = shl <4 x i32> %i.bf, %broadcast.splat120
   %i.bm = shl <4 x i32> %i.bi, %broadcast.splat120
-  %i.bn = shufflevector <4 x i32> %i.bj, <4 x i32> %i.bk, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %i.bn = shufflevector <4 x i32> %i.bl, <4 x i32> %i.bm, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   %i.bo = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %i.bn, <8 x i32> zeroinitializer)
-  %i.bp = tail call <8 x i32> @llvm.umin.v8i32(<8 x i32> %i.bo, <8 x i32> splat (i32 65535))
+  %i.bp = tail call <8 x i32> @llvm.umin.v8i32(<8 x i32> %3, <8 x i32> splat (i32 65535))
   %interleaved.vec = trunc nuw <8 x i32> %i.bp to <8 x i16>
   store <8 x i16> %interleaved.vec, ptr %i.ao, align 2, !tbaa !66
-  %2 = shufflevector <4 x i32> %i.bl, <4 x i32> %i.bm, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  %3 = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %2, <8 x i32> zeroinitializer)
-  %i.bq = tail call <8 x i32> @llvm.umin.v8i32(<8 x i32> %3, <8 x i32> splat (i32 65535))
+  %i.bq = tail call <8 x i32> @llvm.umin.v8i32(<8 x i32> %i.bo, <8 x i32> splat (i32 65535))
   %interleaved.vec125 = trunc nuw <8 x i32> %i.bq to <8 x i16>
   store <8 x i16> %interleaved.vec125, ptr %i.au, align 2, !tbaa !66
   %index.next = add nuw i64 %index, 4             ; 2 uses
