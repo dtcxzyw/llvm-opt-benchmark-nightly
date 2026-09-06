@@ -202,17 +202,13 @@ bb.c:                                             ; preds = %bb.a
   %i.o = getelementptr i8, ptr %1, i64 %2         ; 6 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.p = icmp eq i64 %2, 1
-  br i1 %i.p, label %.thread, label %.lr.ph.lr.ph
+  br i1 %i.p, label %.thread, label %.lr.ph
 
-.lr.ph.lr.ph:                                     ; preds = %bb.c
-  %4 = icmp ne i8 %3, 0
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.outer
-  %i.q = phi i64 [ 0, %.lr.ph.lr.ph ], [ %storemerge, %.outer ]
-  %.sroa.02.0.ph68 = phi i8 [ 0, %.lr.ph.lr.ph ], [ %.sroa.02.1, %.outer ] ; 2 uses
-  %.sroa.0.0.ph67 = phi ptr [ %i.n, %.lr.ph.lr.ph ], [ %.sroa.0.1, %.outer ]
-  %.sroa.11.0.ph66 = phi i64 [ 0, %.lr.ph.lr.ph ], [ %i.be, %.outer ]
+.lr.ph:                                           ; preds = %bb.c, %.outer
+  %i.q = phi i64 [ %storemerge, %.outer ], [ 0, %bb.c ]
+  %.sroa.02.0.ph68 = phi i8 [ %.sroa.02.1, %.outer ], [ 0, %bb.c ] ; 2 uses
+  %.sroa.0.0.ph67 = phi ptr [ %.sroa.0.1, %.outer ], [ %i.n, %bb.c ]
+  %.sroa.11.0.ph66 = phi i64 [ %i.be, %.outer ], [ 0, %bb.c ]
   br label %bb.e
 
 bb.d:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECsdjunURa2XPj_19ruff_python_literal.exit31, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECsdjunURa2XPj_19ruff_python_literal.exit, %bb.b
@@ -336,9 +332,9 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs
   br label %bb.d
 
 bb.j:                                             ; preds = %bb.g
-  %5 = trunc nuw i8 %.sroa.02.0.ph68 to i1
-  %or.cond = or i1 %4, %5
-  br i1 %or.cond, label %bb.k, label %bb.l
+  %4 = or i8 %.sroa.02.0.ph68, %3
+  %or.cond.not = icmp eq i8 %4, 0
+  br i1 %or.cond.not, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 8

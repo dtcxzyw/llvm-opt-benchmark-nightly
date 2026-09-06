@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ab = trunc nuw i8 %i.aa to i1
   call void @_RNvMss_NtCseHTIzroA4w0_6object5machoINtB5_10RelocationNtNtB7_6endian10EndiannessE4infoCs8aoZCP6pRcV_7objdump(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.a, i64 noundef %.sroa.06.0.copyload, i1 noundef zeroext %i.ab)
   %i.ac = load i8, ptr %i.i, align 1, !noundef !5 ; 12 uses
-  %i.ad = load i8, ptr %i.j, align 2, !range !11, !noundef !5 ; 9 uses
+  %i.ad = load i8, ptr %i.j, align 2, !range !11, !noundef !5 ; 11 uses
   %i.ae = load i8, ptr %i.k, align 4, !noundef !5 ; 20 uses
   switch i32 %i.r, label %.loopexit.split.loop.exit [
     i32 12, label %.split428
@@ -214,14 +214,12 @@ bb.d:                                             ; preds = %bb.c
   ]
 
 .split428:                                        ; preds = %bb.d
-  %2 = trunc nuw i8 %i.ad to i1
   %i.af = and i8 %i.ae, 7
   %i.ag = shl i8 8, %i.af
-  %3 = icmp ne i8 %i.ac, 0
-  %brmerge = or i1 %3, %2                         ; 2 uses
-  %. = select i1 %brmerge, i8 0, i8 2
-  %not.brmerge = xor i1 %brmerge, true
-  %.37 = zext i1 %not.brmerge to i8
+  %2 = or i8 %i.ad, %i.ac
+  %brmerge.not = icmp eq i8 %2, 0                 ; 2 uses
+  %. = select i1 %brmerge.not, i8 2, i8 0
+  %.37 = zext i1 %brmerge.not to i8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 11
   %i.ai = load i8, ptr %i.ah, align 1, !range !11, !noundef !5
   %i.aj = trunc nuw i8 %i.ai to i1
@@ -243,14 +241,13 @@ bb.e:                                             ; preds = %bb.d, %bb.d
   ]
 
 .split436:                                        ; preds = %bb.d
-  %i.an = trunc nuw i8 %i.ad to i1                ; 2 uses
+  %i.an = trunc nuw i8 %i.ad to i1
   %i.ao = and i8 %i.ae, 7
   %i.ap = shl i8 8, %i.ao                         ; 2 uses
-  %4 = icmp ne i8 %i.ac, 0
-  %brmerge2 = or i1 %4, %i.an                     ; 2 uses
-  %.38 = select i1 %brmerge2, i8 0, i8 2
-  %not.brmerge2 = xor i1 %brmerge2, true
-  %.39 = zext i1 %not.brmerge2 to i8              ; 2 uses
+  %3 = or i8 %i.ad, %i.ac
+  %brmerge2.not = icmp eq i8 %3, 0                ; 2 uses
+  %.38 = select i1 %brmerge2.not, i8 2, i8 0      ; 2 uses
+  %.39 = zext i1 %brmerge2.not to i8              ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.a, i64 11
   %i.ar = load i8, ptr %i.aq, align 1, !range !11, !noundef !5
   %i.as = trunc nuw i8 %i.ar to i1
@@ -308,14 +305,13 @@ bb.e:                                             ; preds = %bb.d, %bb.d
   br i1 %i.bo, label %.thread445, label %.thread456
 
 .loopexit:                                        ; preds = %bb.d, %bb.d
-  %i.bx = trunc nuw i8 %i.ad to i1                ; 2 uses
+  %i.bx = trunc nuw i8 %i.ad to i1
   %i.by = and i8 %i.ae, 7
   %i.bz = shl i8 8, %i.by                         ; 2 uses
-  %5 = icmp ne i8 %i.ac, 0
-  %brmerge4 = or i1 %5, %i.bx                     ; 2 uses
-  %.40 = select i1 %brmerge4, i8 0, i8 2
-  %not.brmerge4 = xor i1 %brmerge4, true
-  %.41 = zext i1 %not.brmerge4 to i8              ; 2 uses
+  %4 = or i8 %i.ad, %i.ac
+  %brmerge4.not = icmp eq i8 %4, 0                ; 2 uses
+  %.40 = select i1 %brmerge4.not, i8 2, i8 0      ; 2 uses
+  %.41 = zext i1 %brmerge4.not to i8              ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.a, i64 11
   %i.cb = load i8, ptr %i.ca, align 1, !range !11, !noundef !5
   %i.cc = trunc nuw i8 %i.cb to i1
@@ -528,14 +524,14 @@ bb.k:                                             ; preds = %bb.c, %bb.i
   %.sroa.419.0342 = phi i64 [ %.sroa.419.0395, %.split389 ], [ %.sroa.419.0, %.loopexit ], [ %.sroa.419.0403, %.split397 ], [ %.sroa.419.0364, %.loopexit.split.loop.exit162 ], [ %.sroa.419.0387, %.loopexit.split.loop.exit ], [ %.sroa.419.0333, %bb.f ] ; 3 uses
   %.sroa.09.0340 = phi i8 [ %i.ci, %.split389 ], [ %i.bz, %.loopexit ], [ %i.da, %.split397 ], [ %i.bh, %.loopexit.split.loop.exit162 ], [ %i.ay, %.loopexit.split.loop.exit ], [ 26, %bb.f ] ; 3 uses
   %.sroa.029.0338 = phi i8 [ 0, %.split389 ], [ %.41, %.loopexit ], [ 1, %.split397 ], [ 0, %.loopexit.split.loop.exit162 ], [ 0, %.loopexit.split.loop.exit ], [ 7, %bb.f ] ; 3 uses
-  %.sroa.028.0336 = phi i8 [ 0, %.split389 ], [ 0, %.loopexit ], [ 5, %.split397 ], [ 0, %.loopexit.split.loop.exit162 ], [ 0, %.loopexit.split.loop.exit ], [ 8, %bb.f ] ; 3 uses
+  %.sroa.028.0336 = phi i8 [ 0, %.split389 ], [ %.40, %.loopexit ], [ 5, %.split397 ], [ 0, %.loopexit.split.loop.exit162 ], [ 0, %.loopexit.split.loop.exit ], [ 8, %bb.f ] ; 3 uses
   switch i32 %i.r, label %.thread456 [
     i32 7, label %.thread462
     i32 16777223, label %.thread445
   ]
 
 .thread462:                                       ; preds = %.split436, %.loopexit.thread
-  %.sroa.028.0336472 = phi i8 [ %.sroa.028.0336, %.loopexit.thread ], [ 0, %.split436 ]
+  %.sroa.028.0336472 = phi i8 [ %.sroa.028.0336, %.loopexit.thread ], [ %.38, %.split436 ]
   %.sroa.029.0338471 = phi i8 [ %.sroa.029.0338, %.loopexit.thread ], [ %.39, %.split436 ]
   %.sroa.09.0340470 = phi i8 [ %.sroa.09.0340, %.loopexit.thread ], [ %i.ap, %.split436 ]
   %.sroa.419.0342469 = phi i64 [ %.sroa.419.0342, %.loopexit.thread ], [ %.sroa.419.0442, %.split436 ]
@@ -667,7 +663,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ab = trunc nuw i8 %i.aa to i1
   call void @_RNvMss_NtCseHTIzroA4w0_6object5machoINtB5_10RelocationNtNtB7_6endian10EndiannessE4infoCs8aoZCP6pRcV_7objdump(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.a, i64 noundef %.sroa.06.0.copyload, i1 noundef zeroext %i.ab)
   %i.ac = load i8, ptr %i.i, align 1, !noundef !5 ; 12 uses
-  %i.ad = load i8, ptr %i.j, align 2, !range !11, !noundef !5 ; 9 uses
+  %i.ad = load i8, ptr %i.j, align 2, !range !11, !noundef !5 ; 11 uses
   %i.ae = load i8, ptr %i.k, align 4, !noundef !5 ; 20 uses
   switch i32 %i.r, label %.loopexit.split.loop.exit [
     i32 12, label %.split428
@@ -679,14 +675,12 @@ bb.d:                                             ; preds = %bb.c
   ]
 
 .split428:                                        ; preds = %bb.d
-  %2 = trunc nuw i8 %i.ad to i1
   %i.af = and i8 %i.ae, 7
   %i.ag = shl i8 8, %i.af
-  %3 = icmp ne i8 %i.ac, 0
-  %brmerge = or i1 %3, %2                         ; 2 uses
-  %. = select i1 %brmerge, i8 0, i8 2
-  %not.brmerge = xor i1 %brmerge, true
-  %.37 = zext i1 %not.brmerge to i8
+  %2 = or i8 %i.ad, %i.ac
+  %brmerge.not = icmp eq i8 %2, 0                 ; 2 uses
+  %. = select i1 %brmerge.not, i8 2, i8 0
+  %.37 = zext i1 %brmerge.not to i8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 11
   %i.ai = load i8, ptr %i.ah, align 1, !range !11, !noundef !5
   %i.aj = trunc nuw i8 %i.ai to i1
@@ -708,14 +702,13 @@ bb.e:                                             ; preds = %bb.d, %bb.d
   ]
 
 .split436:                                        ; preds = %bb.d
-  %i.an = trunc nuw i8 %i.ad to i1                ; 2 uses
+  %i.an = trunc nuw i8 %i.ad to i1
   %i.ao = and i8 %i.ae, 7
   %i.ap = shl i8 8, %i.ao                         ; 2 uses
-  %4 = icmp ne i8 %i.ac, 0
-  %brmerge2 = or i1 %4, %i.an                     ; 2 uses
-  %.38 = select i1 %brmerge2, i8 0, i8 2
-  %not.brmerge2 = xor i1 %brmerge2, true
-  %.39 = zext i1 %not.brmerge2 to i8              ; 2 uses
+  %3 = or i8 %i.ad, %i.ac
+  %brmerge2.not = icmp eq i8 %3, 0                ; 2 uses
+  %.38 = select i1 %brmerge2.not, i8 2, i8 0      ; 2 uses
+  %.39 = zext i1 %brmerge2.not to i8              ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.a, i64 11
   %i.ar = load i8, ptr %i.aq, align 1, !range !11, !noundef !5
   %i.as = trunc nuw i8 %i.ar to i1
@@ -773,14 +766,13 @@ bb.e:                                             ; preds = %bb.d, %bb.d
   br i1 %i.bo, label %.thread445, label %.thread456
 
 .loopexit:                                        ; preds = %bb.d, %bb.d
-  %i.bx = trunc nuw i8 %i.ad to i1                ; 2 uses
+  %i.bx = trunc nuw i8 %i.ad to i1
   %i.by = and i8 %i.ae, 7
   %i.bz = shl i8 8, %i.by                         ; 2 uses
-  %5 = icmp ne i8 %i.ac, 0
-  %brmerge4 = or i1 %5, %i.bx                     ; 2 uses
-  %.40 = select i1 %brmerge4, i8 0, i8 2
-  %not.brmerge4 = xor i1 %brmerge4, true
-  %.41 = zext i1 %not.brmerge4 to i8              ; 2 uses
+  %4 = or i8 %i.ad, %i.ac
+  %brmerge4.not = icmp eq i8 %4, 0                ; 2 uses
+  %.40 = select i1 %brmerge4.not, i8 2, i8 0      ; 2 uses
+  %.41 = zext i1 %brmerge4.not to i8              ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.a, i64 11
   %i.cb = load i8, ptr %i.ca, align 1, !range !11, !noundef !5
   %i.cc = trunc nuw i8 %i.cb to i1
@@ -993,14 +985,14 @@ bb.k:                                             ; preds = %bb.c, %bb.i
   %.sroa.419.0342 = phi i64 [ %.sroa.419.0395, %.split389 ], [ %.sroa.419.0, %.loopexit ], [ %.sroa.419.0403, %.split397 ], [ %.sroa.419.0364, %.loopexit.split.loop.exit162 ], [ %.sroa.419.0387, %.loopexit.split.loop.exit ], [ %.sroa.419.0333, %bb.f ] ; 3 uses
   %.sroa.09.0340 = phi i8 [ %i.ci, %.split389 ], [ %i.bz, %.loopexit ], [ %i.da, %.split397 ], [ %i.bh, %.loopexit.split.loop.exit162 ], [ %i.ay, %.loopexit.split.loop.exit ], [ 26, %bb.f ] ; 3 uses
   %.sroa.029.0338 = phi i8 [ 0, %.split389 ], [ %.41, %.loopexit ], [ 1, %.split397 ], [ 0, %.loopexit.split.loop.exit162 ], [ 0, %.loopexit.split.loop.exit ], [ 7, %bb.f ] ; 3 uses
-  %.sroa.028.0336 = phi i8 [ 0, %.split389 ], [ 0, %.loopexit ], [ 5, %.split397 ], [ 0, %.loopexit.split.loop.exit162 ], [ 0, %.loopexit.split.loop.exit ], [ 8, %bb.f ] ; 3 uses
+  %.sroa.028.0336 = phi i8 [ 0, %.split389 ], [ %.40, %.loopexit ], [ 5, %.split397 ], [ 0, %.loopexit.split.loop.exit162 ], [ 0, %.loopexit.split.loop.exit ], [ 8, %bb.f ] ; 3 uses
   switch i32 %i.r, label %.thread456 [
     i32 7, label %.thread462
     i32 16777223, label %.thread445
   ]
 
 .thread462:                                       ; preds = %.split436, %.loopexit.thread
-  %.sroa.028.0336472 = phi i8 [ %.sroa.028.0336, %.loopexit.thread ], [ 0, %.split436 ]
+  %.sroa.028.0336472 = phi i8 [ %.sroa.028.0336, %.loopexit.thread ], [ %.38, %.split436 ]
   %.sroa.029.0338471 = phi i8 [ %.sroa.029.0338, %.loopexit.thread ], [ %.39, %.split436 ]
   %.sroa.09.0340470 = phi i8 [ %.sroa.09.0340, %.loopexit.thread ], [ %i.ap, %.split436 ]
   %.sroa.419.0342469 = phi i64 [ %.sroa.419.0342, %.loopexit.thread ], [ %.sroa.419.0442, %.split436 ]

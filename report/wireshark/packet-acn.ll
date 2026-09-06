@@ -204,11 +204,7 @@ bb.v:                                             ; preds = %bb.ac, %.lr.ph.i.i
 bb.w:                                             ; preds = %bb.v
   %i.mt = add i8 %i.mq, -1
   %or.cond10.i.i = icmp ult i8 %i.mt, 2
-  br i1 %or.cond10.i.i, label %.preheader45.i125.i.i.preheader, label %bb.x
-
-.preheader45.i125.i.i.preheader:                  ; preds = %bb.y, %bb.w
-  %.043.i127.i.i.ph = phi i8 [ 1, %bb.w ], [ %.0108.i.i, %bb.y ]
-  br label %.preheader45.i125.i.i
+  br i1 %or.cond10.i.i, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   %i.mu = zext i8 %i.mq to i16
@@ -217,13 +213,12 @@ bb.x:                                             ; preds = %bb.w
   %i.mx = trunc nuw nsw i16 %i.mw to i8
   br label %bb.y
 
-bb.y:                                             ; preds = %bb.x, %bb.v
-  %.0108.i.i = phi i8 [ %i.mq, %bb.v ], [ %i.mx, %bb.x ] ; 2 uses
+bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v
+  %.0108.i.i = phi i8 [ %i.mq, %bb.v ], [ %i.mx, %bb.x ], [ 1, %bb.w ] ; 2 uses
   %i.my = load i8, ptr @global_acn_dmx_display_zeros, align 1, !range !7, !noundef !8
-  %15 = trunc nuw i8 %i.my to i1
-  %16 = icmp ne i8 %.0108.i.i, 0
-  %or.cond4.i.i.i = or i1 %16, %15
-  br i1 %or.cond4.i.i.i, label %.preheader45.i125.i.i.preheader, label %.preheader46.preheader.i.i.i
+  %15 = or i8 %i.my, %.0108.i.i
+  %or.cond4.i.not.i.i = icmp eq i8 %15, 0
+  br i1 %or.cond4.i.not.i.i, label %.preheader46.preheader.i.i.i, label %.preheader45.i125.i.i
 
 .preheader46.preheader.i.i.i:                     ; preds = %bb.y
   call void @llvm.memset.p0.i64(ptr noundef align 1 %.2175.i.i, i8 46, i64 %i.mn, i1 false)
@@ -231,9 +226,9 @@ bb.y:                                             ; preds = %bb.x, %bb.v
   store i8 32, ptr %i.mz, align 1
   br label %ltos.exit140.i.i
 
-.preheader45.i125.i.i:                            ; preds = %.preheader45.i125.i.i.preheader, %.preheader45.i125.i.i
-  %.043.i127.i.i = phi i8 [ %i.nh, %.preheader45.i125.i.i ], [ %.043.i127.i.i.ph, %.preheader45.i125.i.i.preheader ] ; 3 uses
-  %.1.i128.i.i = phi i8 [ %i.ne, %.preheader45.i125.i.i ], [ 0, %.preheader45.i125.i.i.preheader ] ; 3 uses
+.preheader45.i125.i.i:                            ; preds = %bb.y, %.preheader45.i125.i.i
+  %.043.i127.i.i = phi i8 [ %i.nh, %.preheader45.i125.i.i ], [ %.0108.i.i, %bb.y ] ; 3 uses
+  %.1.i128.i.i = phi i8 [ %i.ne, %.preheader45.i125.i.i ], [ 0, %bb.y ] ; 3 uses
   %i.na = urem i8 %.043.i127.i.i, %.0106.i.i
   %i.nb = zext nneg i8 %i.na to i64
   %i.nc = getelementptr i8, ptr @.str.789, i64 %i.nb

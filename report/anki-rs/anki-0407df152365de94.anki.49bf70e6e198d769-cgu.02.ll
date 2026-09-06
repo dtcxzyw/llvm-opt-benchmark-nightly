@@ -205,18 +205,17 @@ bb.c:                                             ; preds = %bb.a
   %i.i = trunc nuw i8 %i.h to i1
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 2401
   %i.k = load i8, ptr %i.j, align 1, !range !38, !noalias !3326, !noundef !14
-  %2 = trunc nuw i8 %i.k to i1
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1856
   %i.m = tail call noundef range(i8 0, 3) i8 @"_ZN104_$LT$tracing_subscriber..registry..sharded..Registry$u20$as$u20$tracing_core..subscriber..Subscriber$GT$17register_callsite17h8ef2bac54d0b96fdE"(ptr noundef nonnull align 8 %i.l, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1) ; 3 uses
-  %3 = icmp ne i8 %i.m, 0
-  %or.cond.not.i.i.i.i.i.i.i = or i1 %3, %2       ; 2 uses
+  %2 = or i8 %i.m, %i.k
+  %or.cond.not.not.i.i.i.i.i.i.i = icmp eq i8 %2, 0 ; 2 uses
   br i1 %i.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  br i1 %or.cond.not.i.i.i.i.i.i.i, label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17h3d341a9e125f1b70E.exit", label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17h04c23b529da82a60E.exit.sink.split.i.i.i"
+  br i1 %or.cond.not.not.i.i.i.i.i.i.i, label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17h04c23b529da82a60E.exit.sink.split.i.i.i", label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17h3d341a9e125f1b70E.exit"
 
 bb.e:                                             ; preds = %bb.c
-  br i1 %or.cond.not.i.i.i.i.i.i.i, label %"_ZN113_$LT$tracing_subscriber..layer..layered..Layered$LT$L$C$S$GT$$u20$as$u20$tracing_core..subscriber..Subscriber$GT$17register_callsite28_$u7b$$u7b$closure$u7d$$u7d$17hf45b47097536b92aE.exit9.i.i.i.i", label %bb.f
+  br i1 %or.cond.not.not.i.i.i.i.i.i.i, label %bb.f, label %"_ZN113_$LT$tracing_subscriber..layer..layered..Layered$LT$L$C$S$GT$$u20$as$u20$tracing_core..subscriber..Subscriber$GT$17register_callsite28_$u7b$$u7b$closure$u7d$$u7d$17hf45b47097536b92aE.exit9.i.i.i.i"
 
 bb.f:                                             ; preds = %bb.e
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 2402
@@ -245,18 +244,17 @@ bb.h:                                             ; preds = %bb.b
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 2401
   %i.y = load i8, ptr %i.x, align 1, !range !38, !noalias !3328, !noundef !14
-  %4 = trunc nuw i8 %i.y to i1
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 1856
   %i.aa = tail call noundef range(i8 0, 3) i8 @"_ZN104_$LT$tracing_subscriber..registry..sharded..Registry$u20$as$u20$tracing_core..subscriber..Subscriber$GT$17register_callsite17h8ef2bac54d0b96fdE"(ptr noundef nonnull align 8 %i.z, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1) ; 3 uses
-  %5 = icmp ne i8 %i.aa, 0
-  %or.cond.not.i.i.i.i.i.i7.i = or i1 %5, %4      ; 2 uses
+  %3 = or i8 %i.aa, %i.y
+  %or.cond.not.not.i.i.i.i.i.i7.i = icmp eq i8 %3, 0 ; 2 uses
   br i1 %i.w, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  br i1 %or.cond.not.i.i.i.i.i.i7.i, label %"_ZN113_$LT$tracing_subscriber..layer..layered..Layered$LT$L$C$S$GT$$u20$as$u20$tracing_core..subscriber..Subscriber$GT$17register_callsite28_$u7b$$u7b$closure$u7d$$u7d$17heaf07d3d3b54be88E.exit13.i", label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17h04c23b529da82a60E.exit.sink.split.i.i11.i"
+  br i1 %or.cond.not.not.i.i.i.i.i.i7.i, label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17h04c23b529da82a60E.exit.sink.split.i.i11.i", label %"_ZN113_$LT$tracing_subscriber..layer..layered..Layered$LT$L$C$S$GT$$u20$as$u20$tracing_core..subscriber..Subscriber$GT$17register_callsite28_$u7b$$u7b$closure$u7d$$u7d$17heaf07d3d3b54be88E.exit13.i"
 
 bb.j:                                             ; preds = %bb.h
-  br i1 %or.cond.not.i.i.i.i.i.i7.i, label %"_ZN113_$LT$tracing_subscriber..layer..layered..Layered$LT$L$C$S$GT$$u20$as$u20$tracing_core..subscriber..Subscriber$GT$17register_callsite28_$u7b$$u7b$closure$u7d$$u7d$17hf45b47097536b92aE.exit9.i.i.i8.i", label %bb.k
+  br i1 %or.cond.not.not.i.i.i.i.i.i7.i, label %bb.k, label %"_ZN113_$LT$tracing_subscriber..layer..layered..Layered$LT$L$C$S$GT$$u20$as$u20$tracing_core..subscriber..Subscriber$GT$17register_callsite28_$u7b$$u7b$closure$u7d$$u7d$17hf45b47097536b92aE.exit9.i.i.i8.i"
 
 bb.k:                                             ; preds = %bb.j
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 2402
@@ -301,18 +299,17 @@ bb.a:
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 617
   %i.e = load i8, ptr %i.d, align 1, !range !38, !noalias !14, !noundef !14
-  %2 = trunc nuw i8 %i.e to i1
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.g = tail call noundef range(i8 0, 3) i8 @"_ZN104_$LT$tracing_subscriber..registry..sharded..Registry$u20$as$u20$tracing_core..subscriber..Subscriber$GT$17register_callsite17h8ef2bac54d0b96fdE"(ptr noundef nonnull align 8 %i.f, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1) ; 3 uses
-  %3 = icmp ne i8 %i.g, 0
-  %or.cond.not.i.i.i.i = or i1 %3, %2             ; 2 uses
+  %2 = or i8 %i.g, %i.e
+  %or.cond.not.not.i.i.i.i = icmp eq i8 %2, 0     ; 2 uses
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  br i1 %or.cond.not.i.i.i.i, label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17h04c23b529da82a60E.exit", label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17h04c23b529da82a60E.exit.sink.split"
+  br i1 %or.cond.not.not.i.i.i.i, label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17h04c23b529da82a60E.exit.sink.split", label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17h04c23b529da82a60E.exit"
 
 bb.c:                                             ; preds = %bb.a
-  br i1 %or.cond.not.i.i.i.i, label %"_ZN113_$LT$tracing_subscriber..layer..layered..Layered$LT$L$C$S$GT$$u20$as$u20$tracing_core..subscriber..Subscriber$GT$17register_callsite28_$u7b$$u7b$closure$u7d$$u7d$17hf45b47097536b92aE.exit9.i", label %bb.d
+  br i1 %or.cond.not.not.i.i.i.i, label %bb.d, label %"_ZN113_$LT$tracing_subscriber..layer..layered..Layered$LT$L$C$S$GT$$u20$as$u20$tracing_core..subscriber..Subscriber$GT$17register_callsite28_$u7b$$u7b$closure$u7d$$u7d$17hf45b47097536b92aE.exit9.i"
 
 bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 618
@@ -340,12 +337,11 @@ define hidden noundef range(i8 0, 3) i8 @"_ZN113_$LT$tracing_subscriber..layer..
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 569
   %i.b = load i8, ptr %i.a, align 1, !range !38, !noundef !14
-  %2 = trunc nuw i8 %i.b to i1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = tail call noundef range(i8 0, 3) i8 @"_ZN104_$LT$tracing_subscriber..registry..sharded..Registry$u20$as$u20$tracing_core..subscriber..Subscriber$GT$17register_callsite17h8ef2bac54d0b96fdE"(ptr noundef nonnull align 8 %i.c, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1) ; 2 uses
-  %3 = icmp ne i8 %i.d, 0
-  %or.cond.not.i = or i1 %3, %2
-  br i1 %or.cond.not.i, label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17he09b140e35934824E.exit", label %bb.b
+  %2 = or i8 %i.d, %i.b
+  %or.cond.not.not.i = icmp eq i8 %2, 0
+  br i1 %or.cond.not.not.i, label %bb.b, label %"_ZN18tracing_subscriber5layer7layered24Layered$LT$A$C$B$C$S$GT$13pick_interest17he09b140e35934824E.exit"
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 570

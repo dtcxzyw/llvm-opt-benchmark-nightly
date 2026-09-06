@@ -204,11 +204,10 @@ bb.fa:                                            ; preds = %bb.ex
   br i1 %i.vu, label %bb.fc, label %bb.fd
 
 bb.fb:                                            ; preds = %bb.ex
-  %3 = trunc nuw i8 %i.vl to i1
   %i.vv = and i8 %i.vj, %.sroa.7.022.i.i.i
-  %brmerge2.demorgan.i.i.i.i.i = icmp ne i8 %i.vv, 0
-  %or.cond.i.i.i.i.i = or i1 %brmerge2.demorgan.i.i.i.i.i, %3
-  br i1 %or.cond.i.i.i.i.i, label %bb.fd, label %bb.fe
+  %3 = or i8 %i.vv, %i.vl
+  %or.cond.i.i.not.i.i.i = icmp eq i8 %3, 0
+  br i1 %or.cond.i.i.not.i.i.i, label %bb.fe, label %bb.fd
 
 bb.fc:                                            ; preds = %bb.fa
   %i.vw = or i8 %i.vl, %.sroa.7.022.i.i.i
@@ -611,10 +610,9 @@ bb.it:                                            ; preds = %.thread.i.i
 
 bb.iu:                                            ; preds = %.thread.i.i
   %i.aji = and i8 %i.aix, %.sroa.0.058.i.i.i
-  %4 = icmp ne i8 %i.aji, 0
-  %5 = trunc nuw i8 %i.aiz to i1
-  %6 = or i1 %4, %5
-  br i1 %6, label %_RNvNtCs1mQHuhqOwPS_6uu_fmt9linebreak14slice_if_fresh.exit.peel.i.i.i.i, label %bb.iv
+  %4 = or i8 %i.aji, %i.aiz
+  %5 = icmp eq i8 %4, 0
+  br i1 %5, label %bb.iv, label %_RNvNtCs1mQHuhqOwPS_6uu_fmt9linebreak14slice_if_fresh.exit.peel.i.i.i.i
 
 bb.iv:                                            ; preds = %bb.iu, %bb.it
   br label %_RNvNtCs1mQHuhqOwPS_6uu_fmt9linebreak14slice_if_fresh.exit.peel.i.i.i.i
@@ -660,11 +658,10 @@ _RNvNtCs1mQHuhqOwPS_6uu_fmt9linebreak14slice_if_fresh.exit.i.i.us.i.i: ; preds =
   %i.ajz = load i8, ptr %i.ajy, align 2, !range !15, !noalias !786, !noundef !4
   %i.aka = getelementptr inbounds nuw i8, ptr %.sroa.0.257.us.i.i, i64 56
   %i.akb = load i8, ptr %i.aka, align 8, !range !15, !noalias !786, !noundef !4
-  %7 = trunc nuw i8 %i.akb to i1
   %i.akc = and i8 %i.ajz, %.sroa.08.0.i.i.us.i.i
-  %brmerge2.demorgan.i.i.i.us.i.i = icmp ne i8 %i.akc, 0
-  %or.cond.i.i.i.us.i.i = or i1 %brmerge2.demorgan.i.i.i.us.i.i, %7
-  %spec.select.i.i = select i1 %or.cond.i.i.i.us.i.i, i64 2, i64 1 ; 2 uses
+  %6 = or i8 %i.akc, %i.akb
+  %or.cond.i.not.i.i.us.i.i = icmp eq i8 %6, 0
+  %spec.select.i.i = select i1 %or.cond.i.not.i.i.us.i.i, i64 1, i64 2 ; 2 uses
   %i.akd = getelementptr inbounds nuw i8, ptr %.sroa.0.257.us.i.i, i64 57
   %i.ake = load i8, ptr %i.akd, align 1, !range !15, !noalias !786, !noundef !4 ; 2 uses
   %i.akf = icmp eq ptr %.sroa.0.257.us.i.i, %.val.i24.i.i
@@ -930,11 +927,10 @@ bb.jq:                                            ; preds = %bb.jn, %_RNvXs2J_Nt
   %i.aoe = phi ptr [ %i.anf, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterNtNtCs1mQHuhqOwPS_6uu_fmt9parasplit8WordInfoENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBT_.exit.peel.thread.i.i ], [ %i.ano, %bb.jn ] ; 2 uses
   %.sroa.6.0285289297.i.i = phi i8 [ 0, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterNtNtCs1mQHuhqOwPS_6uu_fmt9parasplit8WordInfoENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBT_.exit.peel.thread.i.i ], [ %.sroa.4.0.i.i.i, %bb.jn ]
   %.sroa.0.6283290296.i.i = phi ptr [ %i.tb, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterNtNtCs1mQHuhqOwPS_6uu_fmt9parasplit8WordInfoENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBT_.exit.peel.thread.i.i ], [ %.sroa.0.4.i.i, %bb.jn ] ; 2 uses
-  %8 = trunc nuw i8 %i.aob to i1
   %i.aof = and i8 %.sroa.6.0285289297.i.i, %i.aoc
-  %brmerge2.demorgan.i.peel.i.i = icmp ne i8 %i.aof, 0
-  %or.cond.i31.peel.i.i = or i1 %brmerge2.demorgan.i.peel.i.i, %8
-  br i1 %or.cond.i31.peel.i.i, label %_RNvNtCs1mQHuhqOwPS_6uu_fmt9linebreak14slice_if_fresh.exit.peel.i.i, label %bb.jr
+  %7 = or i8 %i.aof, %i.aob
+  %or.cond.i31.not.peel.i.i = icmp eq i8 %7, 0
+  br i1 %or.cond.i31.not.peel.i.i, label %bb.jr, label %_RNvNtCs1mQHuhqOwPS_6uu_fmt9linebreak14slice_if_fresh.exit.peel.i.i
 
 bb.jr:                                            ; preds = %bb.jq, %bb.jp
   %i.aog = phi i64 [ %i.aod, %bb.jq ], [ %i.anx, %bb.jp ]
@@ -1075,11 +1071,10 @@ bb.kb:                                            ; preds = %_RNvXs2J_NtNtCs6JMX
   br i1 %i.aqi, label %bb.kd, label %_RNvNtCs1mQHuhqOwPS_6uu_fmt9linebreak14slice_if_fresh.exit.i.i
 
 bb.kc:                                            ; preds = %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterNtNtCs1mQHuhqOwPS_6uu_fmt9parasplit8WordInfoENtNtNtNtBa_4iter6traits8iterator8Iterator4nextBT_.exit.i.i
-  %9 = trunc nuw i8 %i.aqh to i1
   %i.aqj = and i8 %i.aqf, %.sroa.011.0.i.i
-  %brmerge2.demorgan.i.i.i = icmp ne i8 %i.aqj, 0
-  %or.cond.i31.i.i = or i1 %brmerge2.demorgan.i.i.i, %9
-  br i1 %or.cond.i31.i.i, label %_RNvNtCs1mQHuhqOwPS_6uu_fmt9linebreak14slice_if_fresh.exit.i.i, label %bb.ke
+  %8 = or i8 %i.aqj, %i.aqh
+  %or.cond.i31.not.i.i = icmp eq i8 %8, 0
+  br i1 %or.cond.i31.not.i.i, label %bb.ke, label %_RNvNtCs1mQHuhqOwPS_6uu_fmt9linebreak14slice_if_fresh.exit.i.i
 
 bb.kd:                                            ; preds = %bb.kb
   %i.aqk = or i8 %i.aqh, %.sroa.011.0.i.i

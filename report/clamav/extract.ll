@@ -204,9 +204,9 @@ bb.do:                                            ; preds = %.thread377
   br label %bb.dp
 
 bb.dp:                                            ; preds = %bb.do, %.thread377
-  %i.me = trunc nuw i8 %.1293.ph to i1            ; 6 uses
-  %i.mf = or i8 %i.mc, %.1293.ph
-  %i.mg = icmp ne i8 %i.mf, 0                     ; 5 uses
+  %i.me = trunc nuw i8 %.1293.ph to i1            ; 5 uses
+  %i.mf = or i8 %i.mc, %.1293.ph                  ; 2 uses
+  %i.mg = icmp ne i8 %i.mf, 0                     ; 4 uses
   br i1 %i.me, label %bb.dx, label %bb.dq
 
 bb.dq:                                            ; preds = %bb.dp
@@ -364,10 +364,9 @@ bb.en:                                            ; preds = %bb.el, %bb.ej, %bb.
   %i.oj = xor i8 %i.oi, 1
   %i.ok = getelementptr inbounds nuw i8, ptr %9, i64 33
   store i8 %i.oj, ptr %i.ok, align 1, !tbaa !197
-  %or.cond27 = or i1 %i.mg, %i.me
+  %or.cond27.not = icmp eq i8 %i.mf, 0
   %i.ol = icmp ne i32 %i.l, 80
-  %not.or.cond27 = xor i1 %or.cond27, true
-  %i.om = select i1 %not.or.cond27, i1 %i.ol, i1 false ; 4 uses
+  %i.om = select i1 %or.cond27.not, i1 %i.ol, i1 false ; 4 uses
   br i1 %.not337, label %bb.fh, label %bb.eo
 
 bb.eo:                                            ; preds = %bb.en

@@ -205,11 +205,10 @@ bb.aj:                                            ; preds = %bb.ai
   %i.ed = getelementptr inbounds nuw i8, ptr %1, i64 1449
   %i.ee = load i8, ptr %i.ed, align 1, !range !10, !noundef !5
   %i.ef = or i8 %i.ee, %i.ec
-  %2 = icmp ne i8 %i.ef, 0
   %i.eg = load i8, ptr %i.ea, align 8, !range !10, !noundef !5
-  %3 = trunc nuw i8 %i.eg to i1
-  %4 = or i1 %2, %3
-  br i1 %4, label %bb.al, label %bb.am
+  %2 = or i8 %i.ef, %i.eg
+  %.not79 = icmp eq i8 %2, 0
+  br i1 %.not79, label %bb.am, label %bb.al
 
 bb.ak:                                            ; preds = %bb.ai
   store i32 2, ptr %i.dm, align 8
@@ -612,11 +611,10 @@ bb.aj:                                            ; preds = %bb.ai
   %i.ed = getelementptr inbounds nuw i8, ptr %1, i64 1441
   %i.ee = load i8, ptr %i.ed, align 1, !range !10, !noundef !5
   %i.ef = or i8 %i.ee, %i.ec
-  %2 = icmp ne i8 %i.ef, 0
   %i.eg = load i8, ptr %i.ea, align 8, !range !10, !noundef !5
-  %3 = trunc nuw i8 %i.eg to i1
-  %4 = or i1 %2, %3
-  br i1 %4, label %bb.al, label %bb.am
+  %2 = or i8 %i.ef, %i.eg
+  %.not79 = icmp eq i8 %2, 0
+  br i1 %.not79, label %bb.am, label %bb.al
 
 bb.ak:                                            ; preds = %bb.ai
   store i32 2, ptr %i.dm, align 8

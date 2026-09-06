@@ -204,10 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.u = load i64, ptr %i.s, align 8, !range !29, !noundef !25
   store <2 x i64> %i.t, ptr %i.r, align 8
   %i.v = or i64 %i.q, %i.m
-  %or.cond.i = icmp ne i64 %i.v, 0
-  %3 = trunc nuw i64 %i.u to i1
-  %4 = or i1 %or.cond.i, %3
-  br i1 %4, label %bb.c, label %bb.ah
+  %3 = or i64 %i.v, %i.u
+  %.not = icmp eq i64 %3, 0
+  br i1 %.not, label %bb.ah, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 64
