@@ -205,9 +205,9 @@ bb.gq:                                            ; preds = %bb.gp, %bb.go
   br label %bb.gr
 
 bb.gr:                                            ; preds = %.lr.ph3379, %bb.gu
-  %i.ami = phi i32 [ 0, %.lr.ph3379 ], [ %i.amt, %bb.gu ] ; 2 uses
+  %i.ami = phi i32 [ 0, %.lr.ph3379 ], [ %i.amt, %bb.gu ]
   %.024073378 = phi i32 [ %i.all, %.lr.ph3379 ], [ %spec.select, %bb.gu ] ; 4 uses
-  %.129043377 = phi i16 [ 0, %.lr.ph3379 ], [ %.narrow2577, %bb.gu ]
+  %.129043377 = phi i16 [ 0, %.lr.ph3379 ], [ %.narrow2577, %bb.gu ] ; 2 uses
   %i.amj = icmp ult i32 %.024073378, %i.ame
   br i1 %i.amj, label %bb.gs, label %bb.gt
 
@@ -220,15 +220,15 @@ bb.gs:                                            ; preds = %bb.gr
   br label %bb.gt
 
 bb.gt:                                            ; preds = %bb.gs, %bb.gr
-  %.pre-phi3692 = phi i32 [ %.pre3691, %bb.gs ], [ %i.amd, %bb.gr ] ; 2 uses
-  %.02370 = phi i16 [ %spec.select3396, %bb.gs ], [ %i.amc, %bb.gr ] ; 2 uses
+  %.pre-phi3692 = phi i32 [ %.pre3691, %bb.gs ], [ %i.amd, %bb.gr ]
+  %.02370 = phi i16 [ %spec.select3396, %bb.gs ], [ %i.amc, %bb.gr ] ; 3 uses
   %i.amm = add nuw nsw i32 %.024073378, %.pre-phi3692 ; 3 uses
   %i.amn = icmp ugt i32 %i.amm, 65535
-  %11 = add nuw nsw i32 %i.ami, %.pre-phi3692
-  %i.amo = icmp samesign ugt i32 %11, 65535
-  %or.cond3043 = select i1 %i.amn, i1 true, i1 %i.amo
+  %11 = xor i16 %.129043377, -1
+  %i.amo = icmp ugt i16 %.02370, %11
+  %or.cond3042 = or i1 %i.amo, %i.amn
   %i.amp = load ptr, ptr %i.p, align 8            ; 2 uses
-  br i1 %or.cond3043, label %.thread, label %bb.gu
+  br i1 %or.cond3042, label %.thread, label %bb.gu
 
 .thread:                                          ; preds = %bb.gt
   call void @gcry_md_close(ptr noundef %i.amp)
