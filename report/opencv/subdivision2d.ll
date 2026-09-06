@@ -205,17 +205,14 @@ bb.ah:                                            ; preds = %bb.ag
   %i.hp = sub i64 %i.hn, %i.ho
   %sh.diff = lshr i64 %i.hp, 3
   %tr.sh.diff = trunc i64 %sh.diff to i32         ; 2 uses
+  %11 = and i32 %tr.sh.diff, -4
   %i.hq = icmp sgt i32 %tr.sh.diff, 3
-  br i1 %i.hq, label %.lr.ph.preheader, label %.loopexit
+  br i1 %i.hq, label %.lr.ph, label %.loopexit
 
-.lr.ph.preheader:                                 ; preds = %bb.ah
-  %11 = and i32 %tr.sh.diff, 2147483644
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ao
-  %i.hr = phi ptr [ %i.mp, %bb.ao ], [ %i.gs, %.lr.ph.preheader ] ; 4 uses
-  %.04491 = phi i32 [ %i.mq, %bb.ao ], [ 0, %.lr.ph.preheader ]
-  %storemerge8990 = phi i32 [ %storemerge, %bb.ao ], [ %i.hc, %.lr.ph.preheader ] ; 4 uses
+.lr.ph:                                           ; preds = %bb.ah, %bb.ao
+  %i.hr = phi ptr [ %i.mp, %bb.ao ], [ %i.gs, %bb.ah ] ; 4 uses
+  %.04491 = phi i32 [ %i.mq, %bb.ao ], [ 0, %bb.ah ]
+  %storemerge8990 = phi i32 [ %storemerge, %bb.ao ], [ %i.hc, %bb.ah ] ; 4 uses
   %i.hs = ashr i32 %storemerge8990, 2
   %i.ht = sext i32 %i.hs to i64                   ; 2 uses
   %i.hu = getelementptr inbounds nuw [32 x i8], ptr %i.hr, i64 %i.ht ; 3 uses
