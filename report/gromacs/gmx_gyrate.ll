@@ -205,14 +205,14 @@ bb.t:                                             ; preds = %_ZNSt10filesystem7_
           to label %bb.u unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.u:                                             ; preds = %bb.t
-  %i.cz = load i32, ptr @_ZZ10gmx_gyrateiPPcE4nmol, align 4, !tbaa !42 ; 3 uses
-  %i.da = load i32, ptr %i.m, align 4, !tbaa !42  ; 3 uses
+  %i.cz = load i32, ptr @_ZZ10gmx_gyrateiPPcE4nmol, align 4, !tbaa !42 ; 4 uses
+  %i.da = load i32, ptr %i.m, align 4, !tbaa !42  ; 4 uses
   %i.db = icmp sgt i32 %i.cz, %i.da
   br i1 %i.db, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.dc = srem i32 %i.da, %i.cz
-  %i.dd = sdiv i32 %i.da, %i.cz                   ; 8 uses
+  %i.dd = sdiv exact i32 %i.da, %i.cz             ; 7 uses
   %.not = icmp eq i32 %i.dc, 0
   br i1 %.not, label %bb.af, label %bb.w
 
@@ -615,7 +615,7 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp
   %lcmp.mod612.not = icmp eq i64 %xtraiter610, 0
   %lcmp.mod615 = icmp ne i64 %xtraiter610, 0
   %xtraiter618 = and i64 %wide.trip.count92.i, 1
-  %i.jk = icmp eq i32 %i.dd, 1
+  %i.jk = icmp eq i32 %i.da, %i.cz
   %unroll_iter626 = and i64 %wide.trip.count92.i, 2147483646
   %lcmp.mod622.not = icmp eq i64 %xtraiter618, 0
   %lcmp.mod625 = trunc i32 %i.dd to i1

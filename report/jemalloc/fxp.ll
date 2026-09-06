@@ -204,8 +204,8 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.136 = phi i64 [ %i.ad, %.lr.ph ], [ %i.aa, %bb.a ] ; 2 uses
-  %i.ad = udiv i64 %.136, 10                      ; 3 uses
-  %.not = icmp samesign ugt i64 %.136, 9
+  %i.ad = udiv exact i64 %.136, 10                ; 3 uses
+  %.not = icmp ne i64 %.136, 0
   %i.ae = urem i64 %i.ad, 10
   %i.af = icmp eq i64 %i.ae, 0
   %or.cond30 = and i1 %.not, %i.af

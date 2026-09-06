@@ -180,11 +180,9 @@ bb.o:                                             ; preds = %bb.n
 _ZN8rawspeed19roundUpDivisionSafeEmm.exit:        ; preds = %bb.m
   %i.ac = zext nneg i32 %i.t to i64
   %i.ad = zext nneg i32 %i.w to i64
-  %i.ae = mul nuw nsw i64 %i.ad, %i.ac            ; 2 uses
-  %i.af = sext i32 %i.aa to i64                   ; 2 uses
-  %i.ag = udiv i64 %i.ae, %i.af
-  %4 = icmp uge i64 %i.ae, %i.af
-  tail call void @llvm.assume(i1 %4)
+  %i.ae = mul nuw nsw i64 %i.ad, %i.ac
+  %i.af = sext i32 %i.aa to i64
+  %i.ag = udiv exact i64 %i.ae, %i.af
   %i.ah = add nsw i64 %i.ag, -1
   %i.ai = lshr i64 %i.ah, 10                      ; 2 uses
   %i.aj = add nuw nsw i64 %i.ai, 1                ; 2 uses

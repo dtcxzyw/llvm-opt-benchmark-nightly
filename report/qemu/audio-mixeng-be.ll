@@ -202,8 +202,8 @@ bb.bs:                                            ; preds = %bb.br, %audio_pcm_h
   br label %bb.bt
 
 bb.bt:                                            ; preds = %.loopexit.i.i21, %.lr.ph.i.i18
-  %.02338.i.i = phi i64 [ 0, %.lr.ph.i.i18 ], [ %5, %.loopexit.i.i21 ] ; 2 uses
-  %.02437.i.i = phi i64 [ %i.lm, %.lr.ph.i.i18 ], [ %4, %.loopexit.i.i21 ] ; 2 uses
+  %.02338.i.i = phi i64 [ 0, %.lr.ph.i.i18 ], [ %3, %.loopexit.i.i21 ] ; 2 uses
+  %.02437.i.i = phi i64 [ %i.lm, %.lr.ph.i.i18 ], [ %2, %.loopexit.i.i21 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   %i.ly = load i32, ptr %i.ls, align 4
   %i.lz = sext i32 %i.ly to i64
@@ -211,11 +211,11 @@ bb.bt:                                            ; preds = %.loopexit.i.i21, %.
   store i64 %i.ma, ptr %i.a, align 8
   %i.mb = load ptr, ptr %i.lt, align 8
   %i.mc = call ptr %i.mb(ptr noundef nonnull %i.kt, ptr noundef nonnull %i.a) #15, !inline_history !34 ; 2 uses
-  %i.md = load i64, ptr %i.a, align 8             ; 4 uses
+  %i.md = load i64, ptr %i.a, align 8             ; 3 uses
   %i.me = load i32, ptr %i.ls, align 4
-  %i.mf = sext i32 %i.me to i64                   ; 3 uses
+  %i.mf = sext i32 %i.me to i64                   ; 2 uses
   %i.mg = urem i64 %i.md, %i.mf
-  %i.mh = udiv i64 %i.md, %i.mf
+  %i.mh = udiv exact i64 %i.md, %i.mf
   %i.mi = icmp eq i64 %i.mg, 0
   br i1 %i.mi, label %bb.bv, label %bb.bu
 
@@ -225,17 +225,13 @@ bb.bu:                                            ; preds = %bb.bt
 
 bb.bv:                                            ; preds = %bb.bt
   %i.mj = icmp eq i64 %i.md, 0
-  br i1 %i.mj, label %.thread.i.i27, label %2
+  br i1 %i.mj, label %.thread.i.i27, label %.lr.ph.i.i73.i
 
 .thread.i.i27:                                    ; preds = %bb.bv
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   br label %audio_pcm_hw_run_in.exit.i
 
-2:                                                ; preds = %bb.bv
-  %.not27.i.i.i = icmp ult i64 %i.md, %i.mf
-  br i1 %.not27.i.i.i, label %.loopexit.i.i21, label %.lr.ph.i.i73.i
-
-.lr.ph.i.i73.i:                                   ; preds = %2
+.lr.ph.i.i73.i:                                   ; preds = %bb.bv
   %.pre.i.i.i19 = load i64, ptr %i.ky, align 8
   %.pre30.i.i.i = load i64, ptr %i.lu, align 8
   br label %bb.bw
@@ -262,29 +258,24 @@ bb.bw:                                            ; preds = %bb.bw, %.lr.ph.i.i7
   %i.mz = urem i64 %i.mx, %i.my                   ; 2 uses
   store i64 %i.mz, ptr %i.lu, align 8
   %i.na = sub nuw i64 %.029.i.i.i, %i.mr          ; 2 uses
-  %i.nb = add i64 %i.mr, %.02628.i.i.i            ; 3 uses
+  %i.nb = add i64 %i.mr, %.02628.i.i.i            ; 4 uses
   %.not.i.i74.i = icmp eq i64 %i.na, 0
-  br i1 %.not.i.i74.i, label %.loopexit.loopexit.i.i, label %bb.bw, !llvm.loop !36
+  br i1 %.not.i.i74.i, label %.loopexit.i.i21, label %bb.bw, !llvm.loop !36
 
-.loopexit.loopexit.i.i:                           ; preds = %bb.bw
-  %.pre.i.i20 = load i32, ptr %i.ls, align 4
-  %.pre42.i.i = sext i32 %.pre.i.i20 to i64
-  %3 = mul i64 %i.nb, %.pre42.i.i
-  br label %.loopexit.i.i21
-
-.loopexit.i.i21:                                  ; preds = %.loopexit.loopexit.i.i, %2
-  %.pre-phi.i.i22 = phi i64 [ %3, %.loopexit.loopexit.i.i ], [ 0, %2 ]
-  %.026.lcssa.i.i.i = phi i64 [ %i.nb, %.loopexit.loopexit.i.i ], [ 0, %2 ] ; 2 uses
-  %4 = sub i64 %.02437.i.i, %.026.lcssa.i.i.i     ; 2 uses
-  %5 = add i64 %.026.lcssa.i.i.i, %.02338.i.i     ; 2 uses
-  %6 = load ptr, ptr %i.lx, align 8
-  call void %6(ptr noundef nonnull %i.kt, ptr noundef %i.mc, i64 noundef %.pre-phi.i.i22) #15, !inline_history !34
+.loopexit.i.i21:                                  ; preds = %bb.bw
+  %2 = sub i64 %.02437.i.i, %i.nb                 ; 2 uses
+  %3 = add i64 %i.nb, %.02338.i.i                 ; 2 uses
+  %4 = load ptr, ptr %i.lx, align 8
+  %5 = load i32, ptr %i.ls, align 4
+  %6 = sext i32 %5 to i64
+  %7 = mul i64 %i.nb, %6
+  call void %4(ptr noundef nonnull %i.kt, ptr noundef %i.mc, i64 noundef %7) #15, !inline_history !34
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
-  %.not28.i.i = icmp eq i64 %4, 0
+  %.not28.i.i = icmp eq i64 %2, 0
   br i1 %.not28.i.i, label %audio_pcm_hw_run_in.exit.i, label %bb.bt
 
 audio_pcm_hw_run_in.exit.i:                       ; preds = %.loopexit.i.i21, %.thread.i.i27, %bb.bs
-  %.02335.i.i = phi i64 [ %.02338.i.i, %.thread.i.i27 ], [ 0, %bb.bs ], [ %5, %.loopexit.i.i21 ]
+  %.02335.i.i = phi i64 [ %.02338.i.i, %.thread.i.i27 ], [ 0, %bb.bs ], [ %3, %.loopexit.i.i21 ]
   store i64 %.02335.i.i, ptr %i.b, align 8
   br label %bb.bx
 

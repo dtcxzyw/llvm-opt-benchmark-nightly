@@ -204,7 +204,7 @@ define internal fastcc range(i32 0, 2) i32 @_reduce_aligners(ptr nofree noundef 
   br i1 %i.n, label %bb.a, label %.critedge
 
 bb.a:                                             ; preds = %.lr.ph
-  %i.o = udiv <2 x i32> %i.k, splat (i32 7)       ; 3 uses
+  %i.o = udiv exact <2 x i32> %i.k, splat (i32 7) ; 3 uses
   %i.p = extractelement <2 x i32> %i.o, i64 1
   %i.q = urem i32 %i.p, 7
   %i.r = icmp eq i32 %i.q, 0
@@ -230,7 +230,7 @@ bb.a:                                             ; preds = %.lr.ph
   br i1 %i.ab, label %bb.b, label %.critedge.1.loopexit.split.loop.exit36
 
 bb.b:                                             ; preds = %.lr.ph.1
-  %i.ac = udiv <2 x i32> %i.y, splat (i32 6)      ; 3 uses
+  %i.ac = udiv exact <2 x i32> %i.y, splat (i32 6) ; 3 uses
   %i.ad = extractelement <2 x i32> %i.ac, i64 0   ; 2 uses
   %i.ae = urem i32 %i.ad, 6
   %i.af = icmp eq i32 %i.ae, 0
@@ -255,12 +255,12 @@ bb.b:                                             ; preds = %.lr.ph.1
   %.128.2 = phi i32 [ %i.al, %bb.c ], [ %.1.lcssa.1, %.critedge.1 ] ; 3 uses
   %.12427.2 = phi i32 [ %i.an, %bb.c ], [ %.124.lcssa.1, %.critedge.1 ] ; 2 uses
   %i.ak = urem i32 %.128.2, 5
-  %i.al = udiv i32 %.128.2, 5                     ; 2 uses
+  %i.al = udiv exact i32 %.128.2, 5               ; 2 uses
   %i.am = icmp eq i32 %i.ak, 0
   br i1 %i.am, label %bb.c, label %.critedge.2
 
 bb.c:                                             ; preds = %.lr.ph.2
-  %i.an = udiv i32 %.12427.2, 5                   ; 3 uses
+  %i.an = udiv exact i32 %.12427.2, 5             ; 3 uses
   %i.ao = urem i32 %i.an, 5
   %i.ap = icmp eq i32 %i.ao, 0
   br i1 %i.ap, label %.lr.ph.2, label %.critedge.2
@@ -280,7 +280,7 @@ bb.c:                                             ; preds = %.lr.ph.2
   br i1 %i.at, label %bb.d, label %.critedge.3
 
 bb.d:                                             ; preds = %.lr.ph.3
-  %i.au = lshr i32 %.12427.3, 2                   ; 2 uses
+  %i.au = lshr exact i32 %.12427.3, 2             ; 2 uses
   %i.av = lshr exact i32 %.128.3, 2               ; 2 uses
   %i.aw = and i32 %.12427.3, 12
   %i.ax = icmp eq i32 %i.aw, 0
@@ -297,12 +297,12 @@ bb.d:                                             ; preds = %.lr.ph.3
   %.128.4 = phi i32 [ %i.bb, %bb.e ], [ %.1.lcssa.3, %.critedge.3 ] ; 3 uses
   %.12427.4 = phi i32 [ %i.bd, %bb.e ], [ %.124.lcssa.3, %.critedge.3 ] ; 2 uses
   %i.ba = urem i32 %.128.4, 3
-  %i.bb = udiv i32 %.128.4, 3                     ; 2 uses
+  %i.bb = udiv exact i32 %.128.4, 3               ; 2 uses
   %i.bc = icmp eq i32 %i.ba, 0
   br i1 %i.bc, label %bb.e, label %.critedge.4
 
 bb.e:                                             ; preds = %.lr.ph.4
-  %i.bd = udiv i32 %.12427.4, 3                   ; 3 uses
+  %i.bd = udiv exact i32 %.12427.4, 3             ; 3 uses
   %i.be = urem i32 %i.bd, 3
   %i.bf = icmp eq i32 %i.be, 0
   br i1 %i.bf, label %.lr.ph.4, label %.critedge.4
@@ -322,7 +322,7 @@ bb.e:                                             ; preds = %.lr.ph.4
   br i1 %i.bj, label %bb.f, label %.critedge.5
 
 bb.f:                                             ; preds = %.lr.ph.5
-  %i.bk = lshr i32 %.12427.5, 1                   ; 2 uses
+  %i.bk = lshr exact i32 %.12427.5, 1             ; 2 uses
   %i.bl = lshr exact i32 %.128.5, 1               ; 2 uses
   %i.bm = and i32 %.12427.5, 2
   %i.bn = icmp eq i32 %i.bm, 0

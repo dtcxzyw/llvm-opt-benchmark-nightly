@@ -205,7 +205,7 @@ _ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1307: 
   br label %_ZN12_GLOBAL__N_115ARMDAGToDAGISel20SelectT2AddrModeImm7ILj0EEEbN4llvm7SDValueERS3_S4_.exit
 
 _ZN12_GLOBAL__N_115ARMDAGToDAGISel20SelectT2AddrModeImm7ILj0EEEbN4llvm7SDValueERS3_S4_.exit: ; preds = %.lr.ph.i.i.i1191, %.lr.ph.i.i.i887, %bb.il, %.thread.i1245, %bb.ky, %bb.kp, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.i1227, %bb.km, %bb.kl, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1224, %bb.kg, %bb.kf, %bb.ke, %bb.jy, %_ZNK4llvm7SDValue9hasOneUseEv.exit.i1200, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1188, %.thread.i1151, %bb.jo, %bb.iz, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i1107, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1104, %bb.im, %switch.lookup, %switch.lookup, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1071, %bb.ig, %bb.if, %bb.ib, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i1052, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i1048, %bb.ia, %bb.hz, %bb.hy, %_ZN4llvm16MachineFrameInfo18setObjectAlignmentEiNS_5AlignE.exit.i, %bb.hq, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i1028, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1027, %bb.hi, %_ZNK4llvm8TypeSizecvmEv.exit.i, %bb.he, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1010, %.thread.i984, %bb.gz, %bb.gs, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i964, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit963, %bb.gn, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i945, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit944, %bb.fw, %_ZNK4llvm7SDValue9hasOneUseEv.exit.i894, %bb.fu, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit882, %.thread.i847, %bb.fl, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.thread.i832, %.critedge.i831, %bb.ez, %bb.ev, %_ZNK4llvm7SDValue9hasOneUseEv.exit149.thread.i, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i774, %thread-pre-split.thread.i, %.critedge105.i, %.thread.i729, %bb.dk, %.thread.i701, %bb.db, %.thread.i688, %bb.cs, %bb.cr, %_ZL23shouldUseZeroOffsetLdStN4llvm7SDValueE.exit.i, %_ZNK4llvm7SDValue9hasOneUseEv.exit.thread.i, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.i659, %bb.bt, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.thread.i, %bb.bo, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.i, %bb.bj, %bb.bh, %bb.bf, %bb.au, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i.i, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit620, %.thread.i, %bb.ai, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1307, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1296, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1285, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1274, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1177, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1139, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1128, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1093, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1082, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit933, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit922, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit911, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit871, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit758, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit675, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit631, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit609, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit587, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit576, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit565, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit554, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit543, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit
-  %.0 = phi i1 [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit543 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit554 ], [ %i.ch, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit565 ], [ %i.dc, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit576 ], [ %i.dx, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit587 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1307 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit609 ], [ true, %.thread.i ], [ %i.kc, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit631 ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit620 ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.i ], [ %i.uw, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit675 ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.i659 ], [ false, %bb.cr ], [ true, %.thread.i701 ], [ %i.adv, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit758 ], [ true, %.thread.i729 ], [ false, %thread-pre-split.thread.i ], [ true, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.thread.i832 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit871 ], [ true, %.thread.i847 ], [ %i.awv, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit911 ], [ %i.axq, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit922 ], [ %i.ayl, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit933 ], [ true, %.thread.i1245 ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit944 ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit963 ], [ true, %.thread.i984 ], [ true, %bb.hi ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1027 ], [ false, %bb.ia ], [ %i.bom, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1082 ], [ %i.bph, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1093 ], [ false, %switch.lookup ], [ %i.brt, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1128 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1139 ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1104 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1177 ], [ true, %.thread.i1151 ], [ false, %.lr.ph.i.i.i887 ], [ false, %bb.ke ], [ true, %bb.kp ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1274 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1285 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1296 ], [ true, %bb.ai ], [ true, %bb.au ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i.i ], [ true, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.thread.i ], [ false, %bb.bh ], [ true, %bb.bf ], [ true, %bb.bj ], [ true, %bb.bo ], [ true, %_ZNK4llvm7SDValue9hasOneUseEv.exit.thread.i ], [ false, %bb.bt ], [ false, %_ZL23shouldUseZeroOffsetLdStN4llvm7SDValueE.exit.i ], [ true, %.thread.i688 ], [ true, %bb.cs ], [ true, %bb.db ], [ true, %bb.dk ], [ true, %_ZNK4llvm7SDValue9hasOneUseEv.exit149.thread.i ], [ false, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i774 ], [ true, %.critedge105.i ], [ true, %bb.ev ], [ true, %bb.ez ], [ true, %.critedge.i831 ], [ true, %bb.fl ], [ true, %bb.fw ], [ false, %_ZNK4llvm7SDValue9hasOneUseEv.exit.i894 ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit882 ], [ false, %bb.fu ], [ true, %bb.gn ], [ false, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i945 ], [ true, %bb.gs ], [ false, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i964 ], [ true, %bb.gz ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1010 ], [ true, %bb.he ], [ true, %_ZNK4llvm8TypeSizecvmEv.exit.i ], [ true, %bb.hq ], [ false, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i1028 ], [ true, %_ZN4llvm16MachineFrameInfo18setObjectAlignmentEiNS_5AlignE.exit.i ], [ false, %bb.hy ], [ true, %bb.ig ], [ false, %bb.hz ], [ false, %bb.if ], [ false, %bb.ib ], [ false, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i1052 ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i1048 ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1071 ], [ false, %switch.lookup ], [ false, %bb.il ], [ true, %bb.im ], [ true, %bb.iz ], [ false, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i1107 ], [ true, %bb.jo ], [ %i.bwu, %bb.jy ], [ false, %_ZNK4llvm7SDValue9hasOneUseEv.exit.i1200 ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1188 ], [ true, %bb.kg ], [ true, %bb.kf ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1224 ], [ true, %bb.kl ], [ true, %bb.km ], [ true, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.i1227 ], [ true, %bb.ky ], [ false, %.lr.ph.i.i.i1191 ]
+  %.0 = phi i1 [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit543 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit554 ], [ %i.ch, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit565 ], [ %i.dc, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit576 ], [ %i.dx, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit587 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1307 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit609 ], [ true, %.thread.i ], [ %i.kc, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit631 ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i.i ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.i ], [ %i.uw, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit675 ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.i659 ], [ false, %bb.cr ], [ true, %.thread.i701 ], [ %i.adv, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit758 ], [ true, %.thread.i729 ], [ false, %thread-pre-split.thread.i ], [ true, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.thread.i832 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit871 ], [ true, %.thread.i847 ], [ %i.awv, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit911 ], [ %i.axq, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit922 ], [ %i.ayl, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit933 ], [ true, %.thread.i1245 ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit944 ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit963 ], [ true, %.thread.i984 ], [ true, %bb.hi ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1027 ], [ false, %bb.ia ], [ %i.bom, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1082 ], [ %i.bph, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1093 ], [ false, %switch.lookup ], [ %i.brt, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1128 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1139 ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1104 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1177 ], [ true, %.thread.i1151 ], [ false, %.lr.ph.i.i.i887 ], [ false, %bb.ke ], [ true, %bb.kp ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1274 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1285 ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1296 ], [ true, %bb.ai ], [ true, %bb.au ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit620 ], [ true, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.thread.i ], [ false, %bb.bh ], [ true, %bb.bf ], [ true, %bb.bj ], [ true, %bb.bo ], [ true, %_ZNK4llvm7SDValue9hasOneUseEv.exit.thread.i ], [ false, %bb.bt ], [ false, %_ZL23shouldUseZeroOffsetLdStN4llvm7SDValueE.exit.i ], [ true, %.thread.i688 ], [ true, %bb.cs ], [ true, %bb.db ], [ true, %bb.dk ], [ true, %_ZNK4llvm7SDValue9hasOneUseEv.exit149.thread.i ], [ false, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i774 ], [ true, %.critedge105.i ], [ true, %bb.ev ], [ true, %bb.ez ], [ true, %.critedge.i831 ], [ true, %bb.fl ], [ true, %bb.fw ], [ false, %_ZNK4llvm7SDValue9hasOneUseEv.exit.i894 ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit882 ], [ false, %bb.fu ], [ true, %bb.gn ], [ false, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i945 ], [ true, %bb.gs ], [ false, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i964 ], [ true, %bb.gz ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1010 ], [ true, %bb.he ], [ true, %_ZNK4llvm8TypeSizecvmEv.exit.i ], [ true, %bb.hq ], [ false, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i1028 ], [ true, %_ZN4llvm16MachineFrameInfo18setObjectAlignmentEiNS_5AlignE.exit.i ], [ false, %bb.hy ], [ true, %bb.ig ], [ false, %bb.hz ], [ false, %bb.if ], [ false, %bb.ib ], [ false, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i1052 ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i1048 ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1071 ], [ false, %switch.lookup ], [ false, %bb.il ], [ true, %bb.im ], [ true, %bb.iz ], [ false, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.i1107 ], [ true, %bb.jo ], [ %i.bwu, %bb.jy ], [ false, %_ZNK4llvm7SDValue9hasOneUseEv.exit.i1200 ], [ false, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1188 ], [ true, %bb.kg ], [ true, %bb.kf ], [ true, %_ZN4llvm15SmallVectorImplISt4pairINS_7SDValueEPNS_6SDNodeEEE6resizeEm.exit1224 ], [ true, %bb.kl ], [ true, %bb.km ], [ true, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.i1227 ], [ true, %bb.ky ], [ false, %.lr.ph.i.i.i1191 ]
   ret i1 %.0
 }
 
@@ -608,11 +608,11 @@ bb.af:                                            ; preds = %bb.ad
   %i.ei = select i1 %.397.ph.in, i32 1277, i32 1276
   br label %bb.ay
 
-_ZN12_GLOBAL__N_115ARMDAGToDAGISel26SelectT2AddrModeImm7OffsetEPN4llvm6SDNodeENS1_7SDValueERS4_j.exit159.thread: ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i130, %bb.s, %bb.z, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i147, %_ZN12_GLOBAL__N_115ARMDAGToDAGISel26SelectT2AddrModeImm7OffsetEPN4llvm6SDNodeENS1_7SDValueERS4_j.exit142.thread
+_ZN12_GLOBAL__N_115ARMDAGToDAGISel26SelectT2AddrModeImm7OffsetEPN4llvm6SDNodeENS1_7SDValueERS4_j.exit159.thread: ; preds = %bb.s, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i130, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i147, %bb.z, %_ZN12_GLOBAL__N_115ARMDAGToDAGISel26SelectT2AddrModeImm7OffsetEPN4llvm6SDNodeENS1_7SDValueERS4_j.exit142.thread
   %i.ej = icmp ugt i8 %.sroa.0289.3.ph, 1
   br i1 %i.ej, label %bb.ag, label %bb.an
 
-_ZN12_GLOBAL__N_115ARMDAGToDAGISel26SelectT2AddrModeImm7OffsetEPN4llvm6SDNodeENS1_7SDValueERS4_j.exit159.thread.thread: ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i, %bb.l
+_ZN12_GLOBAL__N_115ARMDAGToDAGISel26SelectT2AddrModeImm7OffsetEPN4llvm6SDNodeENS1_7SDValueERS4_j.exit159.thread.thread: ; preds = %bb.l, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i
   %.not416 = icmp eq i8 %.sroa.0289.3.ph, 1
   br i1 %.not416, label %.thread387, label %bb.ag
 
@@ -695,8 +695,8 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
 bb.an:                                            ; preds = %_ZN12_GLOBAL__N_115ARMDAGToDAGISel26SelectT2AddrModeImm7OffsetEPN4llvm6SDNodeENS1_7SDValueERS4_j.exit159.thread
   br i1 %.not398, label %_ZN12_GLOBAL__N_115ARMDAGToDAGISel26SelectT2AddrModeImm7OffsetEPN4llvm6SDNodeENS1_7SDValueERS4_j.exit197.thread, label %.thread387
 
-.thread387:                                       ; preds = %_ZN12_GLOBAL__N_115ARMDAGToDAGISel26SelectT2AddrModeImm7OffsetEPN4llvm6SDNodeENS1_7SDValueERS4_j.exit159.thread.thread, %bb.ai, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i166, %bb.an
-  %i.fn = phi i1 [ %i.ek, %bb.ai ], [ %i.ek, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i166 ], [ %i.ce, %bb.an ], [ true, %_ZN12_GLOBAL__N_115ARMDAGToDAGISel26SelectT2AddrModeImm7OffsetEPN4llvm6SDNodeENS1_7SDValueERS4_j.exit159.thread.thread ] ; 2 uses
+.thread387:                                       ; preds = %_ZN12_GLOBAL__N_115ARMDAGToDAGISel26SelectT2AddrModeImm7OffsetEPN4llvm6SDNodeENS1_7SDValueERS4_j.exit159.thread.thread, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i166, %bb.ai, %bb.an
+  %i.fn = phi i1 [ %i.ek, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i166 ], [ %i.ek, %bb.ai ], [ %i.ce, %bb.an ], [ true, %_ZN12_GLOBAL__N_115ARMDAGToDAGISel26SelectT2AddrModeImm7OffsetEPN4llvm6SDNodeENS1_7SDValueERS4_j.exit159.thread.thread ] ; 2 uses
   br i1 %i.ba, label %bb.ao, label %.thread387.thread
 
 .thread387.thread:                                ; preds = %bb.ah, %.thread387
@@ -773,8 +773,8 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq
   %i.gr = select i1 %.397.ph.in, i32 1294, i32 1293
   br label %bb.ay
 
-_ZN12_GLOBAL__N_115ARMDAGToDAGISel26SelectT2AddrModeImm7OffsetEPN4llvm6SDNodeENS1_7SDValueERS4_j.exit197.thread: ; preds = %bb.ao, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i185, %bb.an
-  %i.gs = phi i1 [ %i.fq, %bb.ao ], [ %i.fq, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i185 ], [ %i.ce, %bb.an ]
+_ZN12_GLOBAL__N_115ARMDAGToDAGISel26SelectT2AddrModeImm7OffsetEPN4llvm6SDNodeENS1_7SDValueERS4_j.exit197.thread: ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i185, %bb.ao, %bb.an
+  %i.gs = phi i1 [ %i.fq, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i185 ], [ %i.fq, %bb.ao ], [ %i.ce, %bb.an ]
   br i1 %i.ba, label %bb.at, label %.thread392
 
 .thread392:                                       ; preds = %.thread387.thread, %_ZN12_GLOBAL__N_115ARMDAGToDAGISel26SelectT2AddrModeImm7OffsetEPN4llvm6SDNodeENS1_7SDValueERS4_j.exit197.thread
@@ -941,8 +941,8 @@ bb.ay:                                            ; preds = %bb.y, %bb.x, %bb.am
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #24
   br label %.thread
 
-.thread:                                          ; preds = %bb.at, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i202, %.split320, %_ZNK4llvm3EVT8isVectorEv.exit123, %bb.e, %.split, %_ZNK4llvm3EVT8isVectorEv.exit, %bb.b, %bb.ay, %.thread392
-  %.5 = phi i1 [ false, %.thread392 ], [ false, %.split ], [ true, %bb.ay ], [ false, %.split320 ], [ false, %bb.b ], [ false, %_ZNK4llvm3EVT8isVectorEv.exit ], [ false, %bb.e ], [ false, %_ZNK4llvm3EVT8isVectorEv.exit123 ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i202 ], [ false, %bb.at ]
+.thread:                                          ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i202, %bb.at, %.split320, %_ZNK4llvm3EVT8isVectorEv.exit123, %bb.e, %.split, %_ZNK4llvm3EVT8isVectorEv.exit, %bb.b, %bb.ay, %.thread392
+  %.5 = phi i1 [ false, %.thread392 ], [ false, %.split ], [ true, %bb.ay ], [ false, %.split320 ], [ false, %bb.b ], [ false, %_ZNK4llvm3EVT8isVectorEv.exit ], [ false, %bb.e ], [ false, %_ZNK4llvm3EVT8isVectorEv.exit123 ], [ false, %bb.at ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i.i202 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #24
   ret i1 %.5
 }
@@ -1345,7 +1345,6 @@ bb.a:
   %5 = alloca %"class.llvm::SDLoc", align 8       ; 5 uses
   %.032.in.in.in.in = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.032.in.in.in = load i16, ptr %.032.in.in.in.in, align 8
-  %6 = shl nuw nsw i32 1, %3                      ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.b = load i32, ptr %i.a, align 8, !tbaa !326
   switch i32 %i.b, label %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.thread [
@@ -1362,28 +1361,26 @@ _ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i: ; preds = %bb
   %i.h = icmp ult i32 %i.g, 65
   %i.i = load ptr, ptr %i.e, align 8
   %spec.select.i.i.i.i = select i1 %i.h, ptr %i.e, ptr %i.i
-  %.0.i.i.i15.i = load i64, ptr %spec.select.i.i.i.i, align 8, !tbaa !343
+  %.0.i.i.i15.i = load i64, ptr %spec.select.i.i.i.i, align 8, !tbaa !343 ; 3 uses
   %i.j = trunc i64 %.0.i.i.i15.i to i32           ; 2 uses
-  %7 = add nsw i32 %6, -1
-  %i.k = and i32 %7, %i.j
+  %notmask = shl nsw i32 -1, %3
+  %6 = xor i32 %notmask, -1
+  %i.k = and i32 %i.j, %6
   %.not13.i = icmp eq i32 %i.k, 0
-  br i1 %.not13.i, label %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit, label %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.thread
+  %7 = ashr exact i32 %i.j, %3
+  %spec.select.i = icmp ult i32 %7, 128
+  %or.cond7 = select i1 %.not13.i, i1 %spec.select.i, i1 false
+  br i1 %or.cond7, label %bb.b, label %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.thread
 
-_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit: ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i
-  %8 = sdiv i32 %i.j, %6                          ; 2 uses
-  %spec.select.i = icmp ult i32 %8, 128
-  br i1 %spec.select.i, label %bb.b, label %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.thread
-
-bb.b:                                             ; preds = %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit
+bb.b:                                             ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #24
   %i.l = and i16 %.032.in.in.in, 640
   %or.cond = icmp eq i16 %i.l, 128
-  %9 = shl nuw nsw i32 %8, %3                     ; 2 uses
   br i1 %or.cond, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %10 = zext nneg i32 %9 to i64
+  %8 = and i64 %.0.i.i.i15.i, 4294967295
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.n = load i64, ptr %i.m, align 8, !tbaa !353
   store i64 %i.n, ptr %4, align 8, !tbaa !353
@@ -1391,12 +1388,12 @@ bb.c:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 68
   %i.q = load i32, ptr %i.p, align 4, !tbaa !354
   store i32 %i.q, ptr %i.o, align 8, !tbaa !356
-  %i.r = call { ptr, i32 } @_ZN4llvm12SelectionDAG17getSignedConstantElRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %.72.val, i64 noundef %10, ptr noundef nonnull align 8 dereferenceable(12) %4, i16 7, ptr null, i1 noundef zeroext true, i1 noundef zeroext false) #24
+  %i.r = call { ptr, i32 } @_ZN4llvm12SelectionDAG17getSignedConstantElRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %.72.val, i64 noundef %8, ptr noundef nonnull align 8 dereferenceable(12) %4, i16 7, ptr null, i1 noundef zeroext true, i1 noundef zeroext false) #24
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  %11 = sub nsw i32 0, %9
-  %12 = sext i32 %11 to i64
+  %.neg = mul i64 %.0.i.i.i15.i, -4294967296
+  %9 = ashr exact i64 %.neg, 32
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.t = load i64, ptr %i.s, align 8, !tbaa !353
   store i64 %i.t, ptr %5, align 8, !tbaa !353
@@ -1404,7 +1401,7 @@ bb.d:                                             ; preds = %bb.b
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 68
   %i.w = load i32, ptr %i.v, align 4, !tbaa !354
   store i32 %i.w, ptr %i.u, align 8, !tbaa !356
-  %i.x = call { ptr, i32 } @_ZN4llvm12SelectionDAG17getSignedConstantElRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %.72.val, i64 noundef %12, ptr noundef nonnull align 8 dereferenceable(12) %5, i16 7, ptr null, i1 noundef zeroext true, i1 noundef zeroext false) #24
+  %i.x = call { ptr, i32 } @_ZN4llvm12SelectionDAG17getSignedConstantElRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %.72.val, i64 noundef %9, ptr noundef nonnull align 8 dereferenceable(12) %5, i16 7, ptr null, i1 noundef zeroext true, i1 noundef zeroext false) #24
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -1418,8 +1415,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   br label %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.thread
 
-_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.thread: ; preds = %bb.a, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit, %bb.e
-  %.0.i6 = phi i1 [ true, %bb.e ], [ false, %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i ], [ false, %bb.a ]
+_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.thread: ; preds = %bb.a, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i, %bb.e
+  %.0.i6 = phi i1 [ true, %bb.e ], [ false, %bb.a ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i ]
   ret i1 %.0.i6
 }
 
@@ -1822,7 +1819,7 @@ _ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i: ; preds = %bb
   br i1 %.not13.i, label %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit, label %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.thread
 
 _ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit: ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i
-  %i.au = sdiv i32 %i.ar, %i.ae                   ; 3 uses
+  %i.au = sdiv exact i32 %i.ar, %i.ae             ; 3 uses
   %i.av = add nsw i32 %i.au, 255
   %spec.select.i = icmp ult i32 %i.av, 511
   br i1 %spec.select.i, label %bb.h, label %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.thread
@@ -2101,10 +2098,10 @@ _ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i: ; preds = %bb
   %.0.i.i.i15.i = load i64, ptr %spec.select.i.i.i.i, align 8, !tbaa !343
   %i.bj = trunc i64 %.0.i.i.i15.i to i32          ; 2 uses
   %i.bk = srem i32 %i.bj, %3
-  %i.bl = sdiv i32 %i.bj, %3                      ; 2 uses
+  %i.bl = sdiv exact i32 %i.bj, %3                ; 2 uses
   %.not13.i = icmp eq i32 %i.bk, 0
   %spec.select.i = icmp ult i32 %i.bl, 32
-  %or.cond = and i1 %.not13.i, %spec.select.i
+  %or.cond = select i1 %.not13.i, i1 %spec.select.i, i1 false
   br i1 %or.cond, label %bb.m, label %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.thread
 
 bb.m:                                             ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i

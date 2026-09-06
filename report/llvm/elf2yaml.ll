@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.a
   %.0.copyload.i.i.i66 = load i32, ptr %i.bg, align 1 ; 5 uses
   %i.bh = zext i32 %.0.copyload.i.i.i66 to i64    ; 3 uses
   %i.bi = urem i32 %.0.copyload.i.i.i66, 12
-  %i.bj = udiv i32 %.0.copyload.i.i.i66, 12
+  %i.bj = udiv exact i32 %.0.copyload.i.i.i66, 12
   %.not23 = icmp eq i32 %i.bi, 0
   br i1 %.not23, label %bb.k, label %bb.g
 
@@ -608,7 +608,7 @@ _ZNSt10unique_ptrIN4llvm13ErrorInfoBaseESt14default_deleteIS1_EED2Ev.exit.i.i.i.
 bb.b:                                             ; preds = %_ZN4llvm5ErrorD2Ev.exit24.i.i.i.i
   %.sroa.064.0.copyload.i.i.i.i = load ptr, ptr %7, align 8, !tbaa !174, !noalias !3453 ; 3 uses
   %.sroa.665.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %.sroa.665.0.copyload.i.i.i.i = load i64, ptr %.sroa.665.0..sroa_idx.i.i.i.i, align 8, !tbaa !143, !noalias !3453 ; 7 uses
+  %.sroa.665.0.copyload.i.i.i.i = load i64, ptr %.sroa.665.0..sroa_idx.i.i.i.i, align 8, !tbaa !143, !noalias !3453 ; 6 uses
   %i.aa = load ptr, ptr %i.t, align 8, !tbaa !135, !noalias !3453, !nonnull !136, !align !137
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !138, !noalias !3453
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 18
@@ -670,13 +670,13 @@ _ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i:      ; preds = %bb.g
   br label %_ZN4llvm7ELFYAML19getDefaultShEntSizeINS_6object7ELFTypeILNS_10endiannessE1ELb0EEEEEjjNS0_7ELF_SHTENS_9StringRefE.exit.i.i.i.i
 
 _ZN4llvm7ELFYAML19getDefaultShEntSizeINS_6object7ELFTypeILNS_10endiannessE1ELb0EEEEEjjNS0_7ELF_SHTENS_9StringRefE.exit.i.i.i.i: ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %.critedge.i.i.i.i.i, %.critedge.i.i.i.i.i, %bb.b
-  %.0.i.i.i.i.i = phi i64 [ 2, %bb.f ], [ 16, %.critedge.i.i.i.i.i ], [ 16, %.critedge.i.i.i.i.i ], [ 24, %bb.b ], [ 4, %bb.c ], [ 8, %bb.d ], [ 12, %bb.e ], [ 0, %bb.g ], [ %i.aq, %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i ] ; 3 uses
+  %.0.i.i.i.i.i = phi i64 [ 2, %bb.f ], [ 16, %.critedge.i.i.i.i.i ], [ 16, %.critedge.i.i.i.i.i ], [ 24, %bb.b ], [ 4, %bb.c ], [ 8, %bb.d ], [ 12, %bb.e ], [ 0, %bb.g ], [ %i.aq, %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i ] ; 2 uses
   %i.ar = icmp eq i64 %.sroa.665.0.copyload.i.i.i.i, 0
   br i1 %i.ar, label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EED2Ev.exit.i.i.i.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZN4llvm7ELFYAML19getDefaultShEntSizeINS_6object7ELFTypeILNS_10endiannessE1ELb0EEEEEjjNS0_7ELF_SHTENS_9StringRefE.exit.i.i.i.i
   %i.as = urem i64 %.sroa.665.0.copyload.i.i.i.i, %.0.i.i.i.i.i
-  %i.at = udiv i64 %.sroa.665.0.copyload.i.i.i.i, %.0.i.i.i.i.i ; 4 uses
+  %i.at = udiv exact i64 %.sroa.665.0.copyload.i.i.i.i, %.0.i.i.i.i.i ; 4 uses
   %.not.i.i.i.i = icmp eq i64 %i.as, 0
   br i1 %.not.i.i.i.i, label %bb.k, label %bb.i
 
@@ -697,20 +697,16 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.h
   %i.ax = icmp ugt i64 %i.at, 1152921504606846975
-  br i1 %i.ax, label %bb.l, label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i
+  br i1 %i.ax, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.27) #26, !noalias !3453
   unreachable
 
-_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i: ; preds = %bb.k
-  %.not.i.i.i.i.i.i.i.i = icmp ugt i64 %.0.i.i.i.i.i, %.sroa.665.0.copyload.i.i.i.i
-  br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i, label %bb.m
-
-bb.m:                                             ; preds = %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i
+bb.m:                                             ; preds = %bb.k
   %i.ay = shl nuw nsw i64 %i.at, 3
-  %i.az = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ay) #24, !noalias !3453 ; 5 uses
-  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.at ; 2 uses
+  %i.az = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ay) #24, !noalias !3453 ; 8 uses
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.at ; 3 uses
   store i64 0, ptr %i.az, align 8, !noalias !3453
   %i.bb = getelementptr i8, ptr %i.az, i64 8      ; 3 uses
   %i.bc = add nsw i64 %i.at, -1                   ; 2 uses
@@ -723,10 +719,8 @@ bb.m:                                             ; preds = %_ZNSt6vectorIN4llvm
   %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 %.idx.i.i.i.i.i.i.i.i.i.i.i
   br label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i
 
-_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.m, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i
-  %.sroa.046.1.i.i.i.i = phi ptr [ %i.az, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.az, %bb.m ], [ null, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i ] ; 5 uses
-  %.sroa.15.1.i.i.i.i = phi ptr [ %i.ba, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.ba, %bb.m ], [ null, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i ] ; 3 uses
-  %.0.i.i.i.i.i.i.i.i.i = phi ptr [ %i.be, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bb, %bb.m ], [ null, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i ] ; 4 uses
+_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.m
+  %.0.i.i.i.i.i.i.i.i.i = phi ptr [ %i.be, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bb, %bb.m ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #22, !noalias !3453
   %i.bf = load ptr, ptr %i.t, align 8, !tbaa !135, !noalias !3453, !nonnull !136, !align !137
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !138, !noalias !3453
@@ -741,7 +735,7 @@ _ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i
   store i8 %i.bk, ptr %i.bm, align 8, !tbaa !196, !noalias !3453
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #22, !noalias !3453
   %i.bn = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 4 uses
-  %.not8990.i.i.i.i = icmp eq ptr %.sroa.046.1.i.i.i.i, %.0.i.i.i.i.i.i.i.i.i
+  %.not8990.i.i.i.i = icmp eq ptr %i.az, %.0.i.i.i.i.i.i.i.i.i
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, i8 0, i64 16, i1 false), !noalias !3453
   br i1 %.not8990.i.i.i.i, label %.critedge22.i.i.i.i, label %.critedge20.i.i.i.i
 
@@ -751,7 +745,7 @@ bb.n:                                             ; preds = %.critedge20.i.i.i.i
   br i1 %.not89.i.i.i.i, label %.critedge22.i.i.i.i, label %.critedge20.i.i.i.i
 
 .critedge20.i.i.i.i:                              ; preds = %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i, %bb.n
-  %.sroa.041.091.i.i.i.i = phi ptr [ %i.bo, %bb.n ], [ %.sroa.046.1.i.i.i.i, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i ] ; 2 uses
+  %.sroa.041.091.i.i.i.i = phi ptr [ %i.bo, %bb.n ], [ %i.az, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i ] ; 2 uses
   %i.bp = call noundef i64 @_ZNK4llvm13DataExtractor6getU64EPmPNS_5ErrorE(ptr noundef nonnull align 8 dereferenceable(17) %8, ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull %i.bn) #22, !noalias !3453
   store i64 %i.bp, ptr %.sroa.041.091.i.i.i.i, align 8, !tbaa !599, !noalias !3453
   %i.bq = load ptr, ptr %i.bn, align 8, !tbaa !165, !noalias !3453 ; 2 uses
@@ -795,7 +789,7 @@ _ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_I
   store i64 %.sroa.665.0.copyload.i.i.i.i, ptr %i.bz, align 8, !tbaa !143, !noalias !3453
   %i.ca = getelementptr inbounds nuw i8, ptr %i.a, i64 152
   store i8 0, ptr %i.ca, align 8, !tbaa !199, !noalias !3453
-  %i.cb = ptrtoint ptr %.sroa.15.1.i.i.i.i to i64
+  %i.cb = ptrtoint ptr %i.ba to i64
   br label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i
 
 .critedge22.i.i.i.i:                              ; preds = %bb.n, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i
@@ -809,9 +803,9 @@ bb.s:                                             ; preds = %.critedge22.i.i.i.i
   %i.cg = load ptr, ptr %i.cc, align 8, !tbaa !602, !noalias !3453 ; 3 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.a, i64 296 ; 2 uses
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !603, !noalias !3453
-  store ptr %.sroa.046.1.i.i.i.i, ptr %i.cc, align 8, !tbaa !602, !noalias !3453
+  store ptr %i.az, ptr %i.cc, align 8, !tbaa !602, !noalias !3453
   store ptr %.0.i.i.i.i.i.i.i.i.i, ptr %i.cf, align 8, !tbaa !604, !noalias !3453
-  store ptr %.sroa.15.1.i.i.i.i, ptr %i.ch, align 8, !tbaa !603, !noalias !3453
+  store ptr %i.ba, ptr %i.ch, align 8, !tbaa !603, !noalias !3453
   %.not.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.cg, null
   br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i, label %bb.t
 
@@ -823,15 +817,15 @@ bb.t:                                             ; preds = %bb.s
   br label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i
 
 bb.u:                                             ; preds = %.critedge22.i.i.i.i
-  store ptr %.sroa.046.1.i.i.i.i, ptr %i.cc, align 8, !tbaa !602, !noalias !3453
+  store ptr %i.az, ptr %i.cc, align 8, !tbaa !602, !noalias !3453
   store ptr %.0.i.i.i.i.i.i.i.i.i, ptr %i.cf, align 8, !tbaa !604, !noalias !3453
   %i.cm = getelementptr inbounds nuw i8, ptr %i.a, i64 296
-  store ptr %.sroa.15.1.i.i.i.i, ptr %i.cm, align 8, !tbaa !603, !noalias !3453
+  store ptr %i.ba, ptr %i.cm, align 8, !tbaa !603, !noalias !3453
   store i8 1, ptr %i.r, align 8, !tbaa !597, !noalias !3453
   br label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i
 
 _ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i: ; preds = %bb.u, %bb.t, %bb.s, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i
-  %.sroa.046.0.i.i.i.i = phi ptr [ %.sroa.046.1.i.i.i.i, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i ], [ null, %bb.u ], [ null, %bb.t ], [ null, %bb.s ] ; 3 uses
+  %.sroa.046.0.i.i.i.i = phi ptr [ %i.az, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i ], [ null, %bb.u ], [ null, %bb.t ], [ null, %bb.s ] ; 3 uses
   %.sroa.15.0.i.i.i.i = phi i64 [ %i.cb, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %bb.s ]
   %i.cn = load ptr, ptr %i.bn, align 8, !tbaa !165, !noalias !3453 ; 3 uses
   %i.co = icmp eq ptr %i.cn, null
@@ -1234,7 +1228,7 @@ bb.f:                                             ; preds = %bb.a
   %i.bj = tail call noundef i32 @llvm.bswap.i32(i32 %.0.copyload.i.i.i66) ; 5 uses
   %i.bk = zext i32 %i.bj to i64                   ; 3 uses
   %i.bl = urem i32 %i.bj, 12
-  %i.bm = udiv i32 %i.bj, 12
+  %i.bm = udiv exact i32 %i.bj, 12
   %.not23 = icmp eq i32 %i.bl, 0
   br i1 %.not23, label %bb.k, label %bb.g
 
@@ -1637,7 +1631,7 @@ _ZNSt10unique_ptrIN4llvm13ErrorInfoBaseESt14default_deleteIS1_EED2Ev.exit.i.i.i.
 bb.b:                                             ; preds = %_ZN4llvm5ErrorD2Ev.exit24.i.i.i.i
   %.sroa.064.0.copyload.i.i.i.i = load ptr, ptr %7, align 8, !tbaa !174, !noalias !5455 ; 3 uses
   %.sroa.665.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %.sroa.665.0.copyload.i.i.i.i = load i64, ptr %.sroa.665.0..sroa_idx.i.i.i.i, align 8, !tbaa !143, !noalias !5455 ; 7 uses
+  %.sroa.665.0.copyload.i.i.i.i = load i64, ptr %.sroa.665.0..sroa_idx.i.i.i.i, align 8, !tbaa !143, !noalias !5455 ; 6 uses
   %i.aa = load ptr, ptr %i.t, align 8, !tbaa !357, !noalias !5455, !nonnull !136, !align !137
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !138, !noalias !5455
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 18
@@ -1699,13 +1693,13 @@ _ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i:      ; preds = %bb.g
   br label %_ZN4llvm7ELFYAML19getDefaultShEntSizeINS_6object7ELFTypeILNS_10endiannessE0ELb0EEEEEjjNS0_7ELF_SHTENS_9StringRefE.exit.i.i.i.i
 
 _ZN4llvm7ELFYAML19getDefaultShEntSizeINS_6object7ELFTypeILNS_10endiannessE0ELb0EEEEEjjNS0_7ELF_SHTENS_9StringRefE.exit.i.i.i.i: ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %.critedge.i.i.i.i.i, %.critedge.i.i.i.i.i, %bb.b
-  %.0.i.i.i.i.i = phi i64 [ 2, %bb.f ], [ 16, %.critedge.i.i.i.i.i ], [ 16, %.critedge.i.i.i.i.i ], [ 24, %bb.b ], [ 4, %bb.c ], [ 8, %bb.d ], [ 12, %bb.e ], [ 0, %bb.g ], [ %i.aq, %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i ] ; 3 uses
+  %.0.i.i.i.i.i = phi i64 [ 2, %bb.f ], [ 16, %.critedge.i.i.i.i.i ], [ 16, %.critedge.i.i.i.i.i ], [ 24, %bb.b ], [ 4, %bb.c ], [ 8, %bb.d ], [ 12, %bb.e ], [ 0, %bb.g ], [ %i.aq, %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i ] ; 2 uses
   %i.ar = icmp eq i64 %.sroa.665.0.copyload.i.i.i.i, 0
   br i1 %i.ar, label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EED2Ev.exit.i.i.i.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZN4llvm7ELFYAML19getDefaultShEntSizeINS_6object7ELFTypeILNS_10endiannessE0ELb0EEEEEjjNS0_7ELF_SHTENS_9StringRefE.exit.i.i.i.i
   %i.as = urem i64 %.sroa.665.0.copyload.i.i.i.i, %.0.i.i.i.i.i
-  %i.at = udiv i64 %.sroa.665.0.copyload.i.i.i.i, %.0.i.i.i.i.i ; 4 uses
+  %i.at = udiv exact i64 %.sroa.665.0.copyload.i.i.i.i, %.0.i.i.i.i.i ; 4 uses
   %.not.i.i.i.i = icmp eq i64 %i.as, 0
   br i1 %.not.i.i.i.i, label %bb.k, label %bb.i
 
@@ -1726,20 +1720,16 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.h
   %i.ax = icmp ugt i64 %i.at, 1152921504606846975
-  br i1 %i.ax, label %bb.l, label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i
+  br i1 %i.ax, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.27) #26, !noalias !5455
   unreachable
 
-_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i: ; preds = %bb.k
-  %.not.i.i.i.i.i.i.i.i = icmp ugt i64 %.0.i.i.i.i.i, %.sroa.665.0.copyload.i.i.i.i
-  br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i, label %bb.m
-
-bb.m:                                             ; preds = %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i
+bb.m:                                             ; preds = %bb.k
   %i.ay = shl nuw nsw i64 %i.at, 3
-  %i.az = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ay) #24, !noalias !5455 ; 5 uses
-  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.at ; 2 uses
+  %i.az = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ay) #24, !noalias !5455 ; 8 uses
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.at ; 3 uses
   store i64 0, ptr %i.az, align 8, !noalias !5455
   %i.bb = getelementptr i8, ptr %i.az, i64 8      ; 3 uses
   %i.bc = add nsw i64 %i.at, -1                   ; 2 uses
@@ -1752,10 +1742,8 @@ bb.m:                                             ; preds = %_ZNSt6vectorIN4llvm
   %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 %.idx.i.i.i.i.i.i.i.i.i.i.i
   br label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i
 
-_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.m, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i
-  %.sroa.046.1.i.i.i.i = phi ptr [ %i.az, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.az, %bb.m ], [ null, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i ] ; 5 uses
-  %.sroa.15.1.i.i.i.i = phi ptr [ %i.ba, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.ba, %bb.m ], [ null, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i ] ; 3 uses
-  %.0.i.i.i.i.i.i.i.i.i = phi ptr [ %i.be, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bb, %bb.m ], [ null, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i ] ; 4 uses
+_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.m
+  %.0.i.i.i.i.i.i.i.i.i = phi ptr [ %i.be, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bb, %bb.m ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #22, !noalias !5455
   %i.bf = load ptr, ptr %i.t, align 8, !tbaa !357, !noalias !5455, !nonnull !136, !align !137
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !138, !noalias !5455
@@ -1770,7 +1758,7 @@ _ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i
   store i8 %i.bk, ptr %i.bm, align 8, !tbaa !196, !noalias !5455
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #22, !noalias !5455
   %i.bn = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 4 uses
-  %.not8990.i.i.i.i = icmp eq ptr %.sroa.046.1.i.i.i.i, %.0.i.i.i.i.i.i.i.i.i
+  %.not8990.i.i.i.i = icmp eq ptr %i.az, %.0.i.i.i.i.i.i.i.i.i
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, i8 0, i64 16, i1 false), !noalias !5455
   br i1 %.not8990.i.i.i.i, label %.critedge22.i.i.i.i, label %.critedge20.i.i.i.i
 
@@ -1780,7 +1768,7 @@ bb.n:                                             ; preds = %.critedge20.i.i.i.i
   br i1 %.not89.i.i.i.i, label %.critedge22.i.i.i.i, label %.critedge20.i.i.i.i
 
 .critedge20.i.i.i.i:                              ; preds = %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i, %bb.n
-  %.sroa.041.091.i.i.i.i = phi ptr [ %i.bo, %bb.n ], [ %.sroa.046.1.i.i.i.i, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i ] ; 2 uses
+  %.sroa.041.091.i.i.i.i = phi ptr [ %i.bo, %bb.n ], [ %i.az, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i ] ; 2 uses
   %i.bp = call noundef i64 @_ZNK4llvm13DataExtractor6getU64EPmPNS_5ErrorE(ptr noundef nonnull align 8 dereferenceable(17) %8, ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull %i.bn) #22, !noalias !5455
   store i64 %i.bp, ptr %.sroa.041.091.i.i.i.i, align 8, !tbaa !599, !noalias !5455
   %i.bq = load ptr, ptr %i.bn, align 8, !tbaa !165, !noalias !5455 ; 2 uses
@@ -1824,7 +1812,7 @@ _ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_I
   store i64 %.sroa.665.0.copyload.i.i.i.i, ptr %i.bz, align 8, !tbaa !143, !noalias !5455
   %i.ca = getelementptr inbounds nuw i8, ptr %i.a, i64 152
   store i8 0, ptr %i.ca, align 8, !tbaa !199, !noalias !5455
-  %i.cb = ptrtoint ptr %.sroa.15.1.i.i.i.i to i64
+  %i.cb = ptrtoint ptr %i.ba to i64
   br label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i
 
 .critedge22.i.i.i.i:                              ; preds = %bb.n, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i
@@ -1838,9 +1826,9 @@ bb.s:                                             ; preds = %.critedge22.i.i.i.i
   %i.cg = load ptr, ptr %i.cc, align 8, !tbaa !602, !noalias !5455 ; 3 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.a, i64 296 ; 2 uses
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !603, !noalias !5455
-  store ptr %.sroa.046.1.i.i.i.i, ptr %i.cc, align 8, !tbaa !602, !noalias !5455
+  store ptr %i.az, ptr %i.cc, align 8, !tbaa !602, !noalias !5455
   store ptr %.0.i.i.i.i.i.i.i.i.i, ptr %i.cf, align 8, !tbaa !604, !noalias !5455
-  store ptr %.sroa.15.1.i.i.i.i, ptr %i.ch, align 8, !tbaa !603, !noalias !5455
+  store ptr %i.ba, ptr %i.ch, align 8, !tbaa !603, !noalias !5455
   %.not.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.cg, null
   br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i, label %bb.t
 
@@ -1852,15 +1840,15 @@ bb.t:                                             ; preds = %bb.s
   br label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i
 
 bb.u:                                             ; preds = %.critedge22.i.i.i.i
-  store ptr %.sroa.046.1.i.i.i.i, ptr %i.cc, align 8, !tbaa !602, !noalias !5455
+  store ptr %i.az, ptr %i.cc, align 8, !tbaa !602, !noalias !5455
   store ptr %.0.i.i.i.i.i.i.i.i.i, ptr %i.cf, align 8, !tbaa !604, !noalias !5455
   %i.cm = getelementptr inbounds nuw i8, ptr %i.a, i64 296
-  store ptr %.sroa.15.1.i.i.i.i, ptr %i.cm, align 8, !tbaa !603, !noalias !5455
+  store ptr %i.ba, ptr %i.cm, align 8, !tbaa !603, !noalias !5455
   store i8 1, ptr %i.r, align 8, !tbaa !597, !noalias !5455
   br label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i
 
 _ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i: ; preds = %bb.u, %bb.t, %bb.s, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i
-  %.sroa.046.0.i.i.i.i = phi ptr [ %.sroa.046.1.i.i.i.i, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i ], [ null, %bb.u ], [ null, %bb.t ], [ null, %bb.s ] ; 3 uses
+  %.sroa.046.0.i.i.i.i = phi ptr [ %i.az, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i ], [ null, %bb.u ], [ null, %bb.t ], [ null, %bb.s ] ; 3 uses
   %.sroa.15.0.i.i.i.i = phi i64 [ %i.cb, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %bb.s ]
   %i.cn = load ptr, ptr %i.bn, align 8, !tbaa !165, !noalias !5455 ; 3 uses
   %i.co = icmp eq ptr %i.cn, null
@@ -2263,7 +2251,7 @@ bb.f:                                             ; preds = %bb.a
   %i.bg = getelementptr inbounds nuw i8, ptr %2, i64 32
   %.0.copyload.i.i.i66 = load i64, ptr %i.bg, align 1 ; 7 uses
   %i.bh = urem i64 %.0.copyload.i.i.i66, 24
-  %i.bi = udiv i64 %.0.copyload.i.i.i66, 24
+  %i.bi = udiv exact i64 %.0.copyload.i.i.i66, 24
   %.not23 = icmp eq i64 %i.bh, 0
   br i1 %.not23, label %bb.k, label %bb.g
 
@@ -2666,7 +2654,7 @@ bb.f:                                             ; preds = %bb.a
   %i.bg = getelementptr inbounds nuw i8, ptr %2, i64 32
   %.0.copyload.i.i.i66 = load i64, ptr %i.bg, align 1 ; 7 uses
   %i.bh = urem i64 %.0.copyload.i.i.i66, 24
-  %i.bi = udiv i64 %.0.copyload.i.i.i66, 24
+  %i.bi = udiv exact i64 %.0.copyload.i.i.i66, 24
   %.not23 = icmp eq i64 %i.bh, 0
   br i1 %.not23, label %bb.k, label %bb.g
 
@@ -3069,7 +3057,7 @@ _ZNSt10unique_ptrIN4llvm13ErrorInfoBaseESt14default_deleteIS1_EED2Ev.exit.i.i.i.
 bb.b:                                             ; preds = %_ZN4llvm5ErrorD2Ev.exit24.i.i.i.i
   %.sroa.064.0.copyload.i.i.i.i = load ptr, ptr %7, align 8, !tbaa !174, !noalias !7330 ; 3 uses
   %.sroa.665.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %.sroa.665.0.copyload.i.i.i.i = load i64, ptr %.sroa.665.0..sroa_idx.i.i.i.i, align 8, !tbaa !143, !noalias !7330 ; 7 uses
+  %.sroa.665.0.copyload.i.i.i.i = load i64, ptr %.sroa.665.0..sroa_idx.i.i.i.i, align 8, !tbaa !143, !noalias !7330 ; 6 uses
   %i.aa = load ptr, ptr %i.t, align 8, !tbaa !376, !noalias !7330, !nonnull !136, !align !137
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !138, !noalias !7330
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 18
@@ -3131,13 +3119,13 @@ _ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i:      ; preds = %bb.g
   br label %_ZN4llvm7ELFYAML19getDefaultShEntSizeINS_6object7ELFTypeILNS_10endiannessE1ELb1EEEEEjjNS0_7ELF_SHTENS_9StringRefE.exit.i.i.i.i
 
 _ZN4llvm7ELFYAML19getDefaultShEntSizeINS_6object7ELFTypeILNS_10endiannessE1ELb1EEEEEjjNS0_7ELF_SHTENS_9StringRefE.exit.i.i.i.i: ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %.critedge.i.i.i.i.i, %.critedge.i.i.i.i.i, %.critedge.i.i.i.i.i, %bb.b
-  %.0.i.i.i.i.i = phi i64 [ 2, %bb.f ], [ 24, %.critedge.i.i.i.i.i ], [ 24, %.critedge.i.i.i.i.i ], [ 24, %bb.b ], [ 4, %bb.c ], [ 16, %bb.d ], [ 24, %.critedge.i.i.i.i.i ], [ 8, %bb.e ], [ 0, %bb.g ], [ %i.aq, %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i ] ; 3 uses
+  %.0.i.i.i.i.i = phi i64 [ 2, %bb.f ], [ 24, %.critedge.i.i.i.i.i ], [ 24, %.critedge.i.i.i.i.i ], [ 24, %bb.b ], [ 4, %bb.c ], [ 16, %bb.d ], [ 24, %.critedge.i.i.i.i.i ], [ 8, %bb.e ], [ 0, %bb.g ], [ %i.aq, %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i ] ; 2 uses
   %i.ar = icmp eq i64 %.sroa.665.0.copyload.i.i.i.i, 0
   br i1 %i.ar, label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EED2Ev.exit.i.i.i.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZN4llvm7ELFYAML19getDefaultShEntSizeINS_6object7ELFTypeILNS_10endiannessE1ELb1EEEEEjjNS0_7ELF_SHTENS_9StringRefE.exit.i.i.i.i
   %i.as = urem i64 %.sroa.665.0.copyload.i.i.i.i, %.0.i.i.i.i.i
-  %i.at = udiv i64 %.sroa.665.0.copyload.i.i.i.i, %.0.i.i.i.i.i ; 4 uses
+  %i.at = udiv exact i64 %.sroa.665.0.copyload.i.i.i.i, %.0.i.i.i.i.i ; 4 uses
   %.not.i.i.i.i = icmp eq i64 %i.as, 0
   br i1 %.not.i.i.i.i, label %bb.k, label %bb.i
 
@@ -3158,20 +3146,16 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.h
   %i.ax = icmp ugt i64 %i.at, 1152921504606846975
-  br i1 %i.ax, label %bb.l, label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i
+  br i1 %i.ax, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.27) #26, !noalias !7330
   unreachable
 
-_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i: ; preds = %bb.k
-  %.not.i.i.i.i.i.i.i.i = icmp ugt i64 %.0.i.i.i.i.i, %.sroa.665.0.copyload.i.i.i.i
-  br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i, label %bb.m
-
-bb.m:                                             ; preds = %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i
+bb.m:                                             ; preds = %bb.k
   %i.ay = shl nuw nsw i64 %i.at, 3
-  %i.az = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ay) #24, !noalias !7330 ; 5 uses
-  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.at ; 2 uses
+  %i.az = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ay) #24, !noalias !7330 ; 8 uses
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.at ; 3 uses
   store i64 0, ptr %i.az, align 8, !noalias !7330
   %i.bb = getelementptr i8, ptr %i.az, i64 8      ; 3 uses
   %i.bc = add nsw i64 %i.at, -1                   ; 2 uses
@@ -3184,10 +3168,8 @@ bb.m:                                             ; preds = %_ZNSt6vectorIN4llvm
   %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 %.idx.i.i.i.i.i.i.i.i.i.i.i
   br label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i
 
-_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.m, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i
-  %.sroa.046.1.i.i.i.i = phi ptr [ %i.az, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.az, %bb.m ], [ null, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i ] ; 5 uses
-  %.sroa.15.1.i.i.i.i = phi ptr [ %i.ba, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.ba, %bb.m ], [ null, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i ] ; 3 uses
-  %.0.i.i.i.i.i.i.i.i.i = phi ptr [ %i.be, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bb, %bb.m ], [ null, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i ] ; 4 uses
+_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.m
+  %.0.i.i.i.i.i.i.i.i.i = phi ptr [ %i.be, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bb, %bb.m ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #22, !noalias !7330
   %i.bf = load ptr, ptr %i.t, align 8, !tbaa !376, !noalias !7330, !nonnull !136, !align !137
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !138, !noalias !7330
@@ -3202,7 +3184,7 @@ _ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i
   store i8 %i.bk, ptr %i.bm, align 8, !tbaa !196, !noalias !7330
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #22, !noalias !7330
   %i.bn = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 4 uses
-  %.not8990.i.i.i.i = icmp eq ptr %.sroa.046.1.i.i.i.i, %.0.i.i.i.i.i.i.i.i.i
+  %.not8990.i.i.i.i = icmp eq ptr %i.az, %.0.i.i.i.i.i.i.i.i.i
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, i8 0, i64 16, i1 false), !noalias !7330
   br i1 %.not8990.i.i.i.i, label %.critedge22.i.i.i.i, label %.critedge20.i.i.i.i
 
@@ -3212,7 +3194,7 @@ bb.n:                                             ; preds = %.critedge20.i.i.i.i
   br i1 %.not89.i.i.i.i, label %.critedge22.i.i.i.i, label %.critedge20.i.i.i.i
 
 .critedge20.i.i.i.i:                              ; preds = %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i, %bb.n
-  %.sroa.041.091.i.i.i.i = phi ptr [ %i.bo, %bb.n ], [ %.sroa.046.1.i.i.i.i, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i ] ; 2 uses
+  %.sroa.041.091.i.i.i.i = phi ptr [ %i.bo, %bb.n ], [ %i.az, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i ] ; 2 uses
   %i.bp = call noundef i64 @_ZNK4llvm13DataExtractor6getU64EPmPNS_5ErrorE(ptr noundef nonnull align 8 dereferenceable(17) %8, ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull %i.bn) #22, !noalias !7330
   store i64 %i.bp, ptr %.sroa.041.091.i.i.i.i, align 8, !tbaa !599, !noalias !7330
   %i.bq = load ptr, ptr %i.bn, align 8, !tbaa !165, !noalias !7330 ; 2 uses
@@ -3256,7 +3238,7 @@ _ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_I
   store i64 %.sroa.665.0.copyload.i.i.i.i, ptr %i.bz, align 8, !tbaa !143, !noalias !7330
   %i.ca = getelementptr inbounds nuw i8, ptr %i.a, i64 152
   store i8 0, ptr %i.ca, align 8, !tbaa !199, !noalias !7330
-  %i.cb = ptrtoint ptr %.sroa.15.1.i.i.i.i to i64
+  %i.cb = ptrtoint ptr %i.ba to i64
   br label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i
 
 .critedge22.i.i.i.i:                              ; preds = %bb.n, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i
@@ -3270,9 +3252,9 @@ bb.s:                                             ; preds = %.critedge22.i.i.i.i
   %i.cg = load ptr, ptr %i.cc, align 8, !tbaa !602, !noalias !7330 ; 3 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.a, i64 296 ; 2 uses
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !603, !noalias !7330
-  store ptr %.sroa.046.1.i.i.i.i, ptr %i.cc, align 8, !tbaa !602, !noalias !7330
+  store ptr %i.az, ptr %i.cc, align 8, !tbaa !602, !noalias !7330
   store ptr %.0.i.i.i.i.i.i.i.i.i, ptr %i.cf, align 8, !tbaa !604, !noalias !7330
-  store ptr %.sroa.15.1.i.i.i.i, ptr %i.ch, align 8, !tbaa !603, !noalias !7330
+  store ptr %i.ba, ptr %i.ch, align 8, !tbaa !603, !noalias !7330
   %.not.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.cg, null
   br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i, label %bb.t
 
@@ -3284,15 +3266,15 @@ bb.t:                                             ; preds = %bb.s
   br label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i
 
 bb.u:                                             ; preds = %.critedge22.i.i.i.i
-  store ptr %.sroa.046.1.i.i.i.i, ptr %i.cc, align 8, !tbaa !602, !noalias !7330
+  store ptr %i.az, ptr %i.cc, align 8, !tbaa !602, !noalias !7330
   store ptr %.0.i.i.i.i.i.i.i.i.i, ptr %i.cf, align 8, !tbaa !604, !noalias !7330
   %i.cm = getelementptr inbounds nuw i8, ptr %i.a, i64 296
-  store ptr %.sroa.15.1.i.i.i.i, ptr %i.cm, align 8, !tbaa !603, !noalias !7330
+  store ptr %i.ba, ptr %i.cm, align 8, !tbaa !603, !noalias !7330
   store i8 1, ptr %i.r, align 8, !tbaa !597, !noalias !7330
   br label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i
 
 _ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i: ; preds = %bb.u, %bb.t, %bb.s, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i
-  %.sroa.046.0.i.i.i.i = phi ptr [ %.sroa.046.1.i.i.i.i, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i ], [ null, %bb.u ], [ null, %bb.t ], [ null, %bb.s ] ; 3 uses
+  %.sroa.046.0.i.i.i.i = phi ptr [ %i.az, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i ], [ null, %bb.u ], [ null, %bb.t ], [ null, %bb.s ] ; 3 uses
   %.sroa.15.0.i.i.i.i = phi i64 [ %i.cb, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %bb.s ]
   %i.cn = load ptr, ptr %i.bn, align 8, !tbaa !165, !noalias !7330 ; 3 uses
   %i.co = icmp eq ptr %i.cn, null
@@ -3695,7 +3677,7 @@ bb.f:                                             ; preds = %bb.a
   %.0.copyload.i.i.i66 = load i64, ptr %i.bi, align 1
   %i.bj = tail call noundef i64 @llvm.bswap.i64(i64 %.0.copyload.i.i.i66) ; 7 uses
   %i.bk = urem i64 %i.bj, 24
-  %i.bl = udiv i64 %i.bj, 24
+  %i.bl = udiv exact i64 %i.bj, 24
   %.not23 = icmp eq i64 %i.bk, 0
   br i1 %.not23, label %bb.k, label %bb.g
 
@@ -4098,7 +4080,7 @@ bb.f:                                             ; preds = %bb.a
   %.0.copyload.i.i.i66 = load i64, ptr %i.bi, align 1
   %i.bj = tail call noundef i64 @llvm.bswap.i64(i64 %.0.copyload.i.i.i66) ; 7 uses
   %i.bk = urem i64 %i.bj, 24
-  %i.bl = udiv i64 %i.bj, 24
+  %i.bl = udiv exact i64 %i.bj, 24
   %.not23 = icmp eq i64 %i.bk, 0
   br i1 %.not23, label %bb.k, label %bb.g
 
@@ -4501,7 +4483,7 @@ _ZNSt10unique_ptrIN4llvm13ErrorInfoBaseESt14default_deleteIS1_EED2Ev.exit.i.i.i.
 bb.b:                                             ; preds = %_ZN4llvm5ErrorD2Ev.exit24.i.i.i.i
   %.sroa.064.0.copyload.i.i.i.i = load ptr, ptr %7, align 8, !tbaa !174, !noalias !9205 ; 3 uses
   %.sroa.665.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %.sroa.665.0.copyload.i.i.i.i = load i64, ptr %.sroa.665.0..sroa_idx.i.i.i.i, align 8, !tbaa !143, !noalias !9205 ; 7 uses
+  %.sroa.665.0.copyload.i.i.i.i = load i64, ptr %.sroa.665.0..sroa_idx.i.i.i.i, align 8, !tbaa !143, !noalias !9205 ; 6 uses
   %i.aa = load ptr, ptr %i.t, align 8, !tbaa !391, !noalias !9205, !nonnull !136, !align !137
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !138, !noalias !9205
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 18
@@ -4563,13 +4545,13 @@ _ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i:      ; preds = %bb.g
   br label %_ZN4llvm7ELFYAML19getDefaultShEntSizeINS_6object7ELFTypeILNS_10endiannessE0ELb1EEEEEjjNS0_7ELF_SHTENS_9StringRefE.exit.i.i.i.i
 
 _ZN4llvm7ELFYAML19getDefaultShEntSizeINS_6object7ELFTypeILNS_10endiannessE0ELb1EEEEEjjNS0_7ELF_SHTENS_9StringRefE.exit.i.i.i.i: ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %.critedge.i.i.i.i.i, %.critedge.i.i.i.i.i, %.critedge.i.i.i.i.i, %bb.b
-  %.0.i.i.i.i.i = phi i64 [ 2, %bb.f ], [ 24, %.critedge.i.i.i.i.i ], [ 24, %.critedge.i.i.i.i.i ], [ 24, %bb.b ], [ 4, %bb.c ], [ 16, %bb.d ], [ 24, %.critedge.i.i.i.i.i ], [ 8, %bb.e ], [ 0, %bb.g ], [ %i.aq, %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i ] ; 3 uses
+  %.0.i.i.i.i.i = phi i64 [ 2, %bb.f ], [ 24, %.critedge.i.i.i.i.i ], [ 24, %.critedge.i.i.i.i.i ], [ 24, %bb.b ], [ 4, %bb.c ], [ 16, %bb.d ], [ 24, %.critedge.i.i.i.i.i ], [ 8, %bb.e ], [ 0, %bb.g ], [ %i.aq, %_ZN4llvmeqENS_9StringRefES0_.exit.i.i.i.i.i ] ; 2 uses
   %i.ar = icmp eq i64 %.sroa.665.0.copyload.i.i.i.i, 0
   br i1 %i.ar, label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EED2Ev.exit.i.i.i.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZN4llvm7ELFYAML19getDefaultShEntSizeINS_6object7ELFTypeILNS_10endiannessE0ELb1EEEEEjjNS0_7ELF_SHTENS_9StringRefE.exit.i.i.i.i
   %i.as = urem i64 %.sroa.665.0.copyload.i.i.i.i, %.0.i.i.i.i.i
-  %i.at = udiv i64 %.sroa.665.0.copyload.i.i.i.i, %.0.i.i.i.i.i ; 4 uses
+  %i.at = udiv exact i64 %.sroa.665.0.copyload.i.i.i.i, %.0.i.i.i.i.i ; 4 uses
   %.not.i.i.i.i = icmp eq i64 %i.as, 0
   br i1 %.not.i.i.i.i, label %bb.k, label %bb.i
 
@@ -4590,20 +4572,16 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.h
   %i.ax = icmp ugt i64 %i.at, 1152921504606846975
-  br i1 %i.ax, label %bb.l, label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i
+  br i1 %i.ax, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.27) #26, !noalias !9205
   unreachable
 
-_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i: ; preds = %bb.k
-  %.not.i.i.i.i.i.i.i.i = icmp ugt i64 %.0.i.i.i.i.i, %.sroa.665.0.copyload.i.i.i.i
-  br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i, label %bb.m
-
-bb.m:                                             ; preds = %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i
+bb.m:                                             ; preds = %bb.k
   %i.ay = shl nuw nsw i64 %i.at, 3
-  %i.az = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ay) #24, !noalias !9205 ; 5 uses
-  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.at ; 2 uses
+  %i.az = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ay) #24, !noalias !9205 ; 8 uses
+  %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.at ; 3 uses
   store i64 0, ptr %i.az, align 8, !noalias !9205
   %i.bb = getelementptr i8, ptr %i.az, i64 8      ; 3 uses
   %i.bc = add nsw i64 %i.at, -1                   ; 2 uses
@@ -4616,10 +4594,8 @@ bb.m:                                             ; preds = %_ZNSt6vectorIN4llvm
   %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 %.idx.i.i.i.i.i.i.i.i.i.i.i
   br label %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i
 
-_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.m, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i
-  %.sroa.046.1.i.i.i.i = phi ptr [ %i.az, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.az, %bb.m ], [ null, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i ] ; 5 uses
-  %.sroa.15.1.i.i.i.i = phi ptr [ %i.ba, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.ba, %bb.m ], [ null, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i ] ; 3 uses
-  %.0.i.i.i.i.i.i.i.i.i = phi ptr [ %i.be, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bb, %bb.m ], [ null, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.i.i.i.i ] ; 4 uses
+_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i: ; preds = %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.m
+  %.0.i.i.i.i.i.i.i.i.i = phi ptr [ %i.be, %.lr.ph.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.bb, %bb.m ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #22, !noalias !9205
   %i.bf = load ptr, ptr %i.t, align 8, !tbaa !391, !noalias !9205, !nonnull !136, !align !137
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !138, !noalias !9205
@@ -4634,7 +4610,7 @@ _ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i
   store i8 %i.bk, ptr %i.bm, align 8, !tbaa !196, !noalias !9205
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #22, !noalias !9205
   %i.bn = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 4 uses
-  %.not8990.i.i.i.i = icmp eq ptr %.sroa.046.1.i.i.i.i, %.0.i.i.i.i.i.i.i.i.i
+  %.not8990.i.i.i.i = icmp eq ptr %i.az, %.0.i.i.i.i.i.i.i.i.i
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, i8 0, i64 16, i1 false), !noalias !9205
   br i1 %.not8990.i.i.i.i, label %.critedge22.i.i.i.i, label %.critedge20.i.i.i.i
 
@@ -4644,7 +4620,7 @@ bb.n:                                             ; preds = %.critedge20.i.i.i.i
   br i1 %.not89.i.i.i.i, label %.critedge22.i.i.i.i, label %.critedge20.i.i.i.i
 
 .critedge20.i.i.i.i:                              ; preds = %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i, %bb.n
-  %.sroa.041.091.i.i.i.i = phi ptr [ %i.bo, %bb.n ], [ %.sroa.046.1.i.i.i.i, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i ] ; 2 uses
+  %.sroa.041.091.i.i.i.i = phi ptr [ %i.bo, %bb.n ], [ %i.az, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i ] ; 2 uses
   %i.bp = call noundef i64 @_ZNK4llvm13DataExtractor6getU64EPmPNS_5ErrorE(ptr noundef nonnull align 8 dereferenceable(17) %8, ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull %i.bn) #22, !noalias !9205
   store i64 %i.bp, ptr %.sroa.041.091.i.i.i.i, align 8, !tbaa !599, !noalias !9205
   %i.bq = load ptr, ptr %i.bn, align 8, !tbaa !165, !noalias !9205 ; 2 uses
@@ -4688,7 +4664,7 @@ _ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_I
   store i64 %.sroa.665.0.copyload.i.i.i.i, ptr %i.bz, align 8, !tbaa !143, !noalias !9205
   %i.ca = getelementptr inbounds nuw i8, ptr %i.a, i64 152
   store i8 0, ptr %i.ca, align 8, !tbaa !199, !noalias !9205
-  %i.cb = ptrtoint ptr %.sroa.15.1.i.i.i.i to i64
+  %i.cb = ptrtoint ptr %i.ba to i64
   br label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i
 
 .critedge22.i.i.i.i:                              ; preds = %bb.n, %_ZNSt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS2_EEC2EmRKS3_.exit.i.i.i.i
@@ -4702,9 +4678,9 @@ bb.s:                                             ; preds = %.critedge22.i.i.i.i
   %i.cg = load ptr, ptr %i.cc, align 8, !tbaa !602, !noalias !9205 ; 3 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.a, i64 296 ; 2 uses
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !603, !noalias !9205
-  store ptr %.sroa.046.1.i.i.i.i, ptr %i.cc, align 8, !tbaa !602, !noalias !9205
+  store ptr %i.az, ptr %i.cc, align 8, !tbaa !602, !noalias !9205
   store ptr %.0.i.i.i.i.i.i.i.i.i, ptr %i.cf, align 8, !tbaa !604, !noalias !9205
-  store ptr %.sroa.15.1.i.i.i.i, ptr %i.ch, align 8, !tbaa !603, !noalias !9205
+  store ptr %i.ba, ptr %i.ch, align 8, !tbaa !603, !noalias !9205
   %.not.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.cg, null
   br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i, label %bb.t
 
@@ -4716,15 +4692,15 @@ bb.t:                                             ; preds = %bb.s
   br label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i
 
 bb.u:                                             ; preds = %.critedge22.i.i.i.i
-  store ptr %.sroa.046.1.i.i.i.i, ptr %i.cc, align 8, !tbaa !602, !noalias !9205
+  store ptr %i.az, ptr %i.cc, align 8, !tbaa !602, !noalias !9205
   store ptr %.0.i.i.i.i.i.i.i.i.i, ptr %i.cf, align 8, !tbaa !604, !noalias !9205
   %i.cm = getelementptr inbounds nuw i8, ptr %i.a, i64 296
-  store ptr %.sroa.15.1.i.i.i.i, ptr %i.cm, align 8, !tbaa !603, !noalias !9205
+  store ptr %i.ba, ptr %i.cm, align 8, !tbaa !603, !noalias !9205
   store i8 1, ptr %i.r, align 8, !tbaa !597, !noalias !9205
   br label %_ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i
 
 _ZNSt8optionalISt6vectorIN4llvm7ELFYAML20CallGraphEntryWeightESaIS3_EEEaSIS5_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS6_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS5_ESA_IS5_NSt5decayISD_E4typeEEEEESt16is_constructibleIS5_JSD_EESt13is_assignableIRS5_SD_EEERS6_E4typeEOSD_.exit.i.i.i.i: ; preds = %bb.u, %bb.t, %bb.s, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i
-  %.sroa.046.0.i.i.i.i = phi ptr [ %.sroa.046.1.i.i.i.i, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i ], [ null, %bb.u ], [ null, %bb.t ], [ null, %bb.s ] ; 3 uses
+  %.sroa.046.0.i.i.i.i = phi ptr [ %i.az, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i ], [ null, %bb.u ], [ null, %bb.t ], [ null, %bb.s ] ; 3 uses
   %.sroa.15.0.i.i.i.i = phi i64 [ %i.cb, %_ZNSt8optionalIN4llvm4yaml9BinaryRefEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit29.i.i.i.i ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %bb.s ]
   %i.cn = load ptr, ptr %i.bn, align 8, !tbaa !165, !noalias !9205 ; 3 uses
   %i.co = icmp eq ptr %i.cn, null

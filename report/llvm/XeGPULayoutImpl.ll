@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.preheader.us, %bb.
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %.035.us
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !85 ; 2 uses
   %i.ag = srem i64 %i.ad, %i.af
-  %i.ah = sdiv i64 %i.ad, %i.af
+  %i.ah = sdiv exact i64 %i.ad, %i.af
   %.not25.us = icmp eq i64 %i.ag, 0
   br i1 %.not25.us, label %bb.f, label %.thread.us
 
@@ -608,7 +608,7 @@ _ZN4llvm23SmallVectorTemplateBaseIlLb1EE9push_backEl.exit: ; preds = %bb.aa, %bb
 _ZN4llvm12is_containedIRNS_8ArrayRefIiEEiEEbOT_RKT0_.exit.thread: ; preds = %._crit_edge._crit_edge52.i.i.i.i, %._crit_edge.i.i.i.i, %_ZN4llvm12is_containedIRNS_8ArrayRefIiEEiEEbOT_RKT0_.exit
   %i.gr = sext i32 %i.ev to i64                   ; 2 uses
   %i.gs = srem i64 %i.cl, %i.gr
-  %i.gt = sdiv i64 %i.cl, %i.gr
+  %i.gt = sdiv exact i64 %i.cl, %i.gr
   %i.gu = icmp eq i64 %i.gs, 0
   %i.gv = sext i32 %i.dq to i64
   %i.gw = icmp slt i64 %i.gt, %i.gv
@@ -1011,7 +1011,7 @@ bb.i:                                             ; preds = %._crit_edge.i.i.i.i
 .lr.ph.i.i.i.i:                                   ; preds = %bb.h, %_ZN4llvm23SmallVectorTemplateBaseIlLb1EE9push_backEl.exit16.i.i.i.i
   %.02.i.i.i.i = phi i64 [ %i.bw, %_ZN4llvm23SmallVectorTemplateBaseIlLb1EE9push_backEl.exit16.i.i.i.i ], [ 1, %bb.h ] ; 6 uses
   %i.bf = urem i64 %.val4, %.02.i.i.i.i
-  %i.bg = udiv i64 %.val4, %.02.i.i.i.i           ; 3 uses
+  %i.bg = udiv exact i64 %.val4, %.02.i.i.i.i     ; 3 uses
   %i.bh = icmp eq i64 %i.bf, 0
   br i1 %i.bh, label %bb.j, label %_ZN4llvm23SmallVectorTemplateBaseIlLb1EE9push_backEl.exit16.i.i.i.i
 

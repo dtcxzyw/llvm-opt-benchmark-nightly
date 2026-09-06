@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %.lr.ph267, %.loopex
 bb.g:                                             ; preds = %bb.f
   %i.hk = load i32, ptr %i.v, align 8, !tbaa !71  ; 2 uses
   %i.hl = srem i32 %.reass270, %i.hk
-  %i.hm = sdiv i32 %.reass270, %i.hk              ; 2 uses
+  %i.hm = sdiv exact i32 %.reass270, %i.hk        ; 2 uses
   %.not64 = icmp eq i32 %i.hl, 0
   br i1 %.not64, label %bb.h, label %.loopexit
 
@@ -242,7 +242,7 @@ bb.i:                                             ; preds = %.lr.ph, %bb.m
 bb.j:                                             ; preds = %bb.i
   %i.hz = load i32, ptr %i.y, align 4, !tbaa !70  ; 2 uses
   %i.ia = srem i32 %.reass, %i.hz
-  %i.ib = sdiv i32 %.reass, %i.hz                 ; 2 uses
+  %i.ib = sdiv exact i32 %.reass, %i.hz           ; 2 uses
   %.not66 = icmp eq i32 %i.ia, 0
   br i1 %.not66, label %bb.k, label %bb.m
 
@@ -645,7 +645,7 @@ bb.h:                                             ; preds = %.lr.ph221, %.loopex
 bb.i:                                             ; preds = %bb.h
   %i.hq = load i32, ptr %i.v, align 8, !tbaa !71  ; 2 uses
   %i.hr = srem i32 %.reass224, %i.hq
-  %i.hs = sdiv i32 %.reass224, %i.hq              ; 2 uses
+  %i.hs = sdiv exact i32 %.reass224, %i.hq        ; 2 uses
   %.not64 = icmp eq i32 %i.hr, 0
   br i1 %.not64, label %bb.j, label %.loopexit
 
@@ -682,7 +682,7 @@ bb.k:                                             ; preds = %.lr.ph, %bb.o
 bb.l:                                             ; preds = %bb.k
   %i.if = load i32, ptr %i.y, align 4, !tbaa !70  ; 2 uses
   %i.ig = srem i32 %.reass, %i.if
-  %i.ih = sdiv i32 %.reass, %i.if                 ; 2 uses
+  %i.ih = sdiv exact i32 %.reass, %i.if           ; 2 uses
   %.not66 = icmp eq i32 %i.ig, 0
   br i1 %.not66, label %bb.m, label %bb.o
 
@@ -948,7 +948,7 @@ bb.n:                                             ; preds = %.lr.ph122, %.loopex
 bb.o:                                             ; preds = %bb.n
   %i.co = load i32, ptr %i.ah, align 8, !tbaa !71 ; 2 uses
   %i.cp = srem i32 %.reass125, %i.co
-  %i.cq = sdiv i32 %.reass125, %i.co              ; 2 uses
+  %i.cq = sdiv exact i32 %.reass125, %i.co        ; 2 uses
   %.not72 = icmp eq i32 %i.cp, 0
   br i1 %.not72, label %bb.p, label %.loopexit
 
@@ -987,7 +987,7 @@ bb.r:                                             ; preds = %.lr.ph, %bb.v
 bb.s:                                             ; preds = %bb.r
   %i.de = load i32, ptr %i.al, align 4, !tbaa !70 ; 2 uses
   %i.df = srem i32 %.reass, %i.de
-  %i.dg = sdiv i32 %.reass, %i.de                 ; 2 uses
+  %i.dg = sdiv exact i32 %.reass, %i.de           ; 2 uses
   %.not74 = icmp eq i32 %i.df, 0
   br i1 %.not74, label %bb.t, label %bb.v
 

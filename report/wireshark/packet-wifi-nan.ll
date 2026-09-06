@@ -204,21 +204,17 @@ bb.d:                                             ; preds = %bb.c, %bb.d
 define internal fastcc void @dissect_attr_service_id_list(ptr noundef %0, ptr noundef %1, i32 noundef %2, i16 noundef zeroext %3, ptr noundef %4) unnamed_addr #0 {
 bb.a:
   %i.a = urem i16 %3, 6
-  %i.b = udiv i16 %3, 6
+  %i.b = udiv exact i16 %3, 6
   %i.c = icmp ne i16 %i.a, 0
   %i.d = icmp eq i16 %3, 0
   %or.cond = or i1 %i.d, %i.c
-  br i1 %or.cond, label %bb.b, label %5
+  br i1 %or.cond, label %bb.b, label %.lr.ph.preheader
 
 bb.b:                                             ; preds = %bb.a
   %i.e = tail call ptr (ptr, ptr, ptr, ptr, ...) @expert_add_info_format(ptr noundef %4, ptr noundef %0, ptr noundef nonnull @ei_nan_elem_len_invalid, ptr noundef nonnull @.str.742) ; 0 uses
   br label %.loopexit
 
-5:                                                ; preds = %bb.a
-  %.not18 = icmp ult i16 %3, 6
-  br i1 %.not18, label %.loopexit, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %5
+.lr.ph.preheader:                                 ; preds = %bb.a
   %i.f = add i32 %2, 3
   %narrow = add nuw nsw i16 %i.b, 1
   %i.g = zext nneg i16 %narrow to i32
@@ -234,7 +230,7 @@ bb.b:                                             ; preds = %bb.a
   %exitcond.not = icmp eq i32 %i.k, %i.g
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !22
 
-.loopexit:                                        ; preds = %.lr.ph, %5, %bb.b
+.loopexit:                                        ; preds = %.lr.ph, %bb.b
   ret void
 }
 

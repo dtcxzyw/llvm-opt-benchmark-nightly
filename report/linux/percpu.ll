@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph106, %._crit_
   %i.aq = getelementptr [24 x i8], ptr %i.an, i64 %indvars.iv112 ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 8            ; 2 uses
   %i.as = srem i32 %i.ar, %i.q
-  %i.at = sdiv i32 %i.ar, %i.q
+  %i.at = sdiv exact i32 %i.ar, %i.q
   %.not76 = icmp eq i32 %i.as, 0
   br i1 %.not76, label %bb.d, label %bb.c, !prof !19
 
@@ -607,11 +607,11 @@ bb.b:                                             ; preds = %.critedge, %bb.a
   %.0150 = phi i32 [ %i.k, %bb.a ], [ %i.p, %.critedge ] ; 4 uses
   %i.l = sext i32 %.0150 to i64                   ; 2 uses
   %i.m = urem i64 %i.i, %i.l
-  %i.n = udiv i64 %i.i, %i.l
+  %i.n = udiv exact i64 %i.i, %i.l
   %.not = icmp eq i64 %i.m, 0
   %i.o = and i64 %i.n, 4095
   %.not167 = icmp eq i64 %i.o, 0
-  %or.cond = and i1 %.not, %.not167
+  %or.cond = select i1 %.not, i1 %.not167, i1 false
   br i1 %or.cond, label %bb.c, label %.critedge
 
 .critedge:                                        ; preds = %bb.b
@@ -717,11 +717,11 @@ bb.i:                                             ; preds = %.lr.ph211, %bb.k
   %.0153208 = phi i32 [ 2147483647, %.lr.ph211 ], [ %.1154.ph, %bb.k ] ; 3 uses
   %i.ax = sext i32 %.1210 to i64                  ; 2 uses
   %i.ay = urem i64 %i.i, %i.ax
-  %i.az = udiv i64 %i.i, %i.ax
+  %i.az = udiv exact i64 %i.i, %i.ax
   %.not169 = icmp eq i64 %i.ay, 0
   %i.ba = and i64 %i.az, 4095
   %.not170 = icmp eq i64 %i.ba, 0
-  %or.cond300 = and i1 %.not169, %.not170
+  %or.cond300 = select i1 %.not169, i1 %.not170, i1 false
   br i1 %or.cond300, label %.preheader197, label %bb.k
 
 .preheader197:                                    ; preds = %bb.i

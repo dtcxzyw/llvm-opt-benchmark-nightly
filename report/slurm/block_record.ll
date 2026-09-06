@@ -202,7 +202,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.bk = phi i16 [ %i.bj, %bb.s ], [ %i.bi, %bb.r ]
   %i.bl = zext i16 %i.bk to i32                   ; 2 uses
   %i.bm = urem i32 %i.bg, %i.bl
-  %i.bn = udiv i32 %i.bg, %i.bl
+  %i.bn = udiv exact i32 %i.bg, %i.bl
   %.not40.i = icmp eq i32 %i.bm, 0
   br i1 %.not40.i, label %bb.u, label %.thread45.i
 
@@ -605,7 +605,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.g = phi i32 [ %.pre, %bb.c ], [ %i.a, %bb.b ] ; 2 uses
   %i.h = zext i16 %i.f to i32                     ; 2 uses
   %i.i = srem i32 %i.g, %i.h
-  %i.j = sdiv i32 %i.g, %i.h
+  %i.j = sdiv exact i32 %i.g, %i.h
   %.not20 = icmp eq i32 %i.i, 0
   br i1 %.not20, label %bb.e, label %bb.h
 

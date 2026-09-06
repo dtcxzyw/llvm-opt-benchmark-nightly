@@ -204,8 +204,8 @@ bb.p:                                             ; preds = %._crit_edge78, %bb.
   %i.bi = load i32, ptr %i.ax, align 8, !tbaa !127 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.bk = load i32, ptr %i.bj, align 8, !tbaa !125
-  %i.bl = mul i32 %i.bk, %i.e                     ; 2 uses
-  %i.bm = sext i32 %i.bl to i64                   ; 8 uses
+  %i.bl = mul i32 %i.bk, %i.e                     ; 3 uses
+  %i.bm = sext i32 %i.bl to i64                   ; 7 uses
   %i.bn = icmp slt i32 %i.bi, 9
   br i1 %i.bn, label %bb.q, label %bb.v
 
@@ -252,20 +252,20 @@ bb.r:                                             ; preds = %bb.q
   %i.cm = urem i64 %i.bm, 3
   %i.cn = icmp eq i64 %i.cm, 0
   %i.co = sext i32 %i.cl to i64                   ; 2 uses
-  %i.cp = udiv i64 %i.bm, 3                       ; 3 uses
+  %i.cp = udiv i64 %i.bm, 3
   br i1 %i.cn, label %.lr.ph73.split, label %bb.s
 
 .lr.ph73.split:                                   ; preds = %.lr.ph73
-  %.not75 = icmp ult i32 %i.bl, 3
+  %.not75 = icmp eq i32 %i.bl, 0
   br i1 %.not75, label %.lr.ph73.split.split, label %.lr.ph70.us.preheader
 
 .lr.ph70.us.preheader:                            ; preds = %.lr.ph73.split
-  %xtraiter = and i64 %i.cp, 1
-  %.off = add nsw i64 %i.bm, -3
-  %i.cq = icmp ult i64 %.off, 3
-  %unroll_iter = and i64 %i.cp, 9223372036854775806
+  %umax = call i64 @llvm.umax.i64(i64 %i.cp, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax, 1
+  %i.cq = icmp ult i32 %i.bl, 6
+  %unroll_iter = and i64 %umax, 9223372036854775806
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %lcmp.mod112 = trunc i64 %i.cp to i1
+  %lcmp.mod112 = trunc i64 %umax to i1
   br label %.lr.ph70.us
 
 .lr.ph70.us:                                      ; preds = %.lr.ph70.us.preheader, %._crit_edge71.us
@@ -667,6 +667,9 @@ declare i64 @llvm.smin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #24

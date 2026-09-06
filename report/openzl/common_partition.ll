@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %.thread179
   %i.ai = lshr i32 %i.l, 6
   %narrow = add nuw nsw i32 %i.ai, 3
-  %i.aj = zext nneg i32 %narrow to i64            ; 6 uses
+  %i.aj = zext nneg i32 %narrow to i64            ; 5 uses
   %i.ak = load ptr, ptr %i.b, align 8, !tbaa !25  ; 16 uses
   %.not153 = icmp eq ptr %i.ak, %i.i
   br i1 %.not153, label %.thread182, label %bb.h, !prof !52
@@ -236,14 +236,14 @@ bb.i:                                             ; preds = %bb.h
   %i.aw = tail call range(i32 24, 32) i32 @llvm.ctlz.i32(i32 range(i32 0, 256) %i.av, i1 true)
   %i.ax = xor i32 %i.aw, 31
   %narrow155 = sub nuw nsw i32 8, %i.ax
-  %i.ay = zext nneg i32 %narrow155 to i64
+  %i.ay = zext nneg i32 %narrow155 to i64         ; 2 uses
   %i.az = ptrtoint ptr %i.i to i64
   %i.ba = ptrtoint ptr %i.ak to i64               ; 2 uses
   %i.bb = sub i64 %i.az, %i.ba                    ; 6 uses
-  %i.bc = shl i64 %i.bb, 3                        ; 2 uses
-  %i.bd = sub i64 %i.bc, %i.ay                    ; 3 uses
+  %i.bc = shl i64 %i.bb, 3                        ; 3 uses
+  %i.bd = sub i64 %i.bc, %i.ay                    ; 2 uses
   %i.be = urem i64 %i.bd, %i.aj                   ; 2 uses
-  %i.bf = udiv i64 %i.bd, %i.aj                   ; 3 uses
+  %i.bf = udiv exact i64 %i.bd, %i.aj             ; 3 uses
   %.not156 = icmp eq i64 %i.be, 0
   br i1 %.not156, label %bb.k, label %bb.j, !prof !26
 
@@ -384,7 +384,7 @@ ZS_BitDStreamFF_init.exit:                        ; preds = %bb.n, %ZS_BitDStrea
   store ptr %.sink.i, ptr %i.dq, align 8, !tbaa !30, !alias.scope !55
   %i.dr = getelementptr inbounds nuw i8, ptr %6, i64 40
   store ptr %i.ak, ptr %i.dr, align 8, !tbaa !31, !alias.scope !55
-  %.not219 = icmp ult i64 %i.bd, %i.aj
+  %.not219 = icmp eq i64 %i.bc, %i.ay
   br i1 %.not219, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %ZS_BitDStreamFF_init.exit

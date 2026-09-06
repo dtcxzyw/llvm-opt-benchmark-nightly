@@ -205,7 +205,7 @@ _ZNK4llvm14HexagonTTIImpl19getRegisterBitWidthENS_19TargetTransformInfo12Registe
 
 bb.k:                                             ; preds = %_ZNK4llvm14HexagonTTIImpl19getRegisterBitWidthENS_19TargetTransformInfo12RegisterKindE.exit
   %i.am = tail call range(i32 5, 33) i32 @llvm.cttz.i32(i32 %i.ai, i1 true)
-  %i.an = lshr i32 %i.j, %i.am
+  %i.an = lshr exact i32 %i.j, %i.am
   %i.ao = zext nneg i32 %i.an to i64
   %i.ap = shl nuw nsw i64 %i.ao, 2
   br label %bb.p

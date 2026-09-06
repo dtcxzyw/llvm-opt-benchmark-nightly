@@ -205,7 +205,7 @@ declare noundef ptr @_ZN4llvm10ConstantFP3getERNS_11LLVMContextERKNS_7APFloatE(p
 define internal fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_119foldMixesPoisonBitsEPN4llvm8ConstantEjj(ptr noundef %0, i32 noundef %1, i32 noundef %2) unnamed_addr #3 {
 bb.a:
   %i.a = urem i32 %1, %2
-  %i.b = udiv i32 %1, %2                          ; 2 uses
+  %i.b = udiv exact i32 %1, %2                    ; 2 uses
   %.not = icmp eq i32 %i.a, 0
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -214,8 +214,8 @@ bb.b:                                             ; preds = %bb.a
   br label %.critedge
 
 bb.c:                                             ; preds = %bb.a
-  %.not4051 = icmp ugt i32 %2, %1
-  br i1 %.not4051, label %.critedge, label %.preheader
+  %.not39.not56 = icmp eq i32 %1, 0
+  br i1 %.not39.not56, label %.critedge, label %.preheader
 
 .preheader:                                       ; preds = %bb.c, %._crit_edge
   %.03457 = phi i32 [ %i.i, %._crit_edge ], [ 0, %bb.c ] ; 2 uses
@@ -236,7 +236,7 @@ bb.e:                                             ; preds = %bb.d
   %..026 = select i1 %i.g, i1 true, i1 %.02652    ; 2 uses
   %not. = xor i1 %i.g, true
   %.025. = select i1 %not., i1 true, i1 %.02553   ; 2 uses
-  %i.h = add nuw i32 %.054, 1                     ; 2 uses
+  %i.h = add i32 %.054, 1                         ; 2 uses
   %.not40 = icmp eq i32 %i.h, %i.b
   br i1 %.not40, label %._crit_edge, label %bb.d, !llvm.loop !335
 
@@ -244,11 +244,11 @@ bb.e:                                             ; preds = %bb.d
   %or.cond = select i1 %..026, i1 %.025., i1 false ; 2 uses
   %i.i = add i32 %.03457, %i.b                    ; 2 uses
   %.not39.not = icmp eq i32 %i.i, %1
-  %or.cond71 = or i1 %or.cond, %.not39.not
-  br i1 %or.cond71, label %.critedge, label %.preheader, !llvm.loop !336
+  %or.cond70 = select i1 %or.cond, i1 true, i1 %.not39.not
+  br i1 %or.cond70, label %.critedge, label %.preheader, !llvm.loop !336
 
 .critedge:                                        ; preds = %._crit_edge, %bb.d, %bb.c, %bb.b
-  %.7 = phi i1 [ %i.c, %bb.b ], [ false, %bb.c ], [ true, %bb.d ], [ %or.cond, %._crit_edge ]
+  %.7 = phi i1 [ %i.c, %bb.b ], [ true, %bb.d ], [ false, %bb.c ], [ %or.cond, %._crit_edge ]
   ret i1 %.7
 }
 
@@ -422,13 +422,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = urem i32 %1, %2
-  %i.c = udiv i32 %1, %2                          ; 2 uses
+  %i.c = udiv exact i32 %1, %2                    ; 2 uses
   %.not = icmp eq i32 %i.b, 0
   br i1 %.not, label %.preheader, label %bb.c
 
 .thread:                                          ; preds = %bb.a
   %i.d = urem i32 %2, %1
-  %i.e = udiv i32 %2, %1                          ; 2 uses
+  %i.e = udiv exact i32 %2, %1                    ; 2 uses
   %.not70 = icmp eq i32 %i.d, 0
   br i1 %.not70, label %.thread71, label %bb.c
 
@@ -444,7 +444,7 @@ bb.c:                                             ; preds = %.thread, %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %_ZN4llvm14SmallBitVector9referenceaSEb.exit
-  %i.j = add nuw i32 %.04886, 1                   ; 2 uses
+  %i.j = add i32 %.04886, 1                       ; 2 uses
   %.not67 = icmp eq i32 %i.j, %i.c
   br i1 %.not67, label %.thread74, label %bb.e, !llvm.loop !340
 
@@ -526,7 +526,7 @@ bb.k:                                             ; preds = %._crit_edge, %bb.j
   br i1 %.not64.not, label %.critedge, label %.thread71, !llvm.loop !342
 
 .critedge:                                        ; preds = %bb.k, %.thread71, %.thread74, %bb.e, %bb.c
-  %.8 = phi i1 [ %i.g, %bb.c ], [ true, %.thread74 ], [ false, %bb.e ], [ %.not65.not.not.not, %.thread71 ], [ %.not65.not.not.not, %bb.k ]
+  %.8 = phi i1 [ %i.g, %bb.c ], [ false, %bb.e ], [ true, %.thread74 ], [ %.not65.not.not.not, %.thread71 ], [ %.not65.not.not.not, %bb.k ]
   ret i1 %.8
 }
 

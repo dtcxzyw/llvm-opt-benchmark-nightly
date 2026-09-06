@@ -204,9 +204,9 @@ bb.a:
   %i.b = icmp eq i32 %1, 0
   br i1 %i.b, label %common.ret40, label %.lr.ph35
 
-common.ret40:                                     ; preds = %.lr.ph.preheader, %tailrecurse.backedge, %bb.e, %tailrecurse._crit_edge
-  %common.ret40.op = phi double [ %i.p, %bb.e ], [ %i.e, %tailrecurse._crit_edge ], [ 1.000000e+00, %tailrecurse.backedge ], [ 1.000000e+00, %.lr.ph.preheader ]
-  ret double %common.ret40.op
+common.ret40:                                     ; preds = %.lr.ph.preheader, %bb.e, %tailrecurse._crit_edge
+  %common.ret36.op = phi double [ %i.p, %bb.e ], [ %i.e, %tailrecurse._crit_edge ], [ 1.000000e+00, %.lr.ph.preheader ]
+  ret double %common.ret36.op
 
 tailrecurse._crit_edge:                           ; preds = %bb.a
   %i.c = sub nsw i32 0, %1
@@ -227,14 +227,13 @@ bb.b:                                             ; preds = %.lr.ph35
 
 tailrecurse.backedge:                             ; preds = %bb.b, %bb.d
   %.tr22.pn = phi i32 [ %.tr2234, %bb.b ], [ %i.l, %bb.d ]
-  %.tr17.be = phi i32 [ %i.h, %bb.b ], [ %i.j, %bb.d ] ; 2 uses
+  %.tr17.be = phi i32 [ %i.h, %bb.b ], [ %i.j, %bb.d ]
   %.tr.be = mul nuw nsw i32 %.tr22.pn, %.tr2234
-  %2 = icmp eq i32 %.tr17.be, 0
-  br i1 %2, label %common.ret40, label %.lr.ph35
+  br label %.lr.ph35
 
 bb.c:                                             ; preds = %.lr.ph35
   %i.i = urem i32 %.tr172333, 3
-  %i.j = udiv i32 %.tr172333, 3
+  %i.j = udiv exact i32 %.tr172333, 3
   %i.k = icmp eq i32 %i.i, 0
   br i1 %i.k, label %bb.d, label %bb.e
 
@@ -637,9 +636,9 @@ bb.a:
   %i.b = icmp eq i32 %1, 0
   br i1 %i.b, label %common.ret40, label %.lr.ph35
 
-common.ret40:                                     ; preds = %.lr.ph.preheader, %tailrecurse.backedge, %bb.e, %tailrecurse._crit_edge
-  %common.ret40.op = phi double [ %i.o, %bb.e ], [ %i.e, %tailrecurse._crit_edge ], [ 1.000000e+00, %tailrecurse.backedge ], [ 1.000000e+00, %.lr.ph.preheader ]
-  ret double %common.ret40.op
+common.ret40:                                     ; preds = %.lr.ph.preheader, %bb.e, %tailrecurse._crit_edge
+  %common.ret36.op = phi double [ %i.o, %bb.e ], [ %i.e, %tailrecurse._crit_edge ], [ 1.000000e+00, %.lr.ph.preheader ]
+  ret double %common.ret36.op
 
 tailrecurse._crit_edge:                           ; preds = %bb.a
   %i.c = sub nsw i32 0, %1
@@ -660,14 +659,13 @@ bb.b:                                             ; preds = %.lr.ph35
 
 tailrecurse.backedge:                             ; preds = %bb.b, %bb.d
   %.tr22.pn = phi double [ %.tr2234, %bb.b ], [ %i.l, %bb.d ]
-  %.tr17.be = phi i32 [ %i.h, %bb.b ], [ %i.j, %bb.d ] ; 2 uses
+  %.tr17.be = phi i32 [ %i.h, %bb.b ], [ %i.j, %bb.d ]
   %.tr.be = fmul double %.tr2234, %.tr22.pn
-  %2 = icmp eq i32 %.tr17.be, 0
-  br i1 %2, label %common.ret40, label %.lr.ph35
+  br label %.lr.ph35
 
 bb.c:                                             ; preds = %.lr.ph35
   %i.i = urem i32 %.tr172333, 3
-  %i.j = udiv i32 %.tr172333, 3
+  %i.j = udiv exact i32 %.tr172333, 3
   %i.k = icmp eq i32 %i.i, 0
   br i1 %i.k, label %bb.d, label %bb.e
 

@@ -202,7 +202,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %bb.a
   %.038.i = phi i32 [ %.sroa.speculated20.i, %bb.a ], [ %i.x, %bb.b ] ; 5 uses
   %i.v = srem i32 %i.l, %.038.i
-  %i.w = sdiv i32 %i.l, %.038.i
+  %i.w = sdiv exact i32 %i.l, %.038.i
   %.not.i = icmp eq i32 %i.v, 0
   %i.x = add nsw i32 %.038.i, -1
   br i1 %.not.i, label %bb.c, label %bb.b, !llvm.loop !0
@@ -216,7 +216,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.d, %bb.c
   %.0.i = phi i32 [ %i.aa, %bb.c ], [ %i.ad, %bb.d ] ; 5 uses
   %i.ab = srem i32 %i.l, %.0.i
-  %i.ac = sdiv i32 %i.l, %.0.i
+  %i.ac = sdiv exact i32 %i.l, %.0.i
   %.not11.i = icmp eq i32 %i.ab, 0
   %i.ad = add nsw i32 %.0.i, 1
   br i1 %.not11.i, label %bb.e, label %bb.d, !llvm.loop !1
@@ -359,7 +359,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %bb.a
   %.038 = phi i32 [ %.sroa.speculated20, %bb.a ], [ %i.w, %bb.b ] ; 5 uses
   %i.u = srem i32 %i.k, %.038
-  %i.v = sdiv i32 %i.k, %.038
+  %i.v = sdiv exact i32 %i.k, %.038
   %.not = icmp eq i32 %i.u, 0
   %i.w = add nsw i32 %.038, -1
   br i1 %.not, label %bb.c, label %bb.b, !llvm.loop !0
@@ -373,7 +373,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.d, %bb.c
   %.0 = phi i32 [ %i.z, %bb.c ], [ %i.ac, %bb.d ] ; 5 uses
   %i.aa = srem i32 %i.k, %.0
-  %i.ab = sdiv i32 %i.k, %.0
+  %i.ab = sdiv exact i32 %i.k, %.0
   %.not11 = icmp eq i32 %i.aa, 0
   %i.ac = add nsw i32 %.0, 1
   br i1 %.not11, label %bb.e, label %bb.d, !llvm.loop !1

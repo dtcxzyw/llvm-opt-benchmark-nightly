@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %.thread, %.thread.t
 .lr.ph105:                                        ; preds = %.thread, %.thread.thread
   %.066.lcssa133138 = phi i32 [ %.066.lcssa.ph, %.thread ], [ 2, %.thread.thread ] ; 4 uses
   %i.w = phi i32 [ %i.r, %.thread ], [ %i.t, %.thread.thread ] ; 2 uses
-  %i.x = sdiv i32 %i.w, 3                         ; 2 uses
+  %i.x = sdiv exact i32 %i.w, 3                   ; 2 uses
   %i.y = shl nsw i32 %i.x, 1
   %i.z = add nsw i32 %i.y, %.066.lcssa133138      ; 4 uses
   %i.aa = sext i32 %i.z to i64
@@ -218,7 +218,7 @@ bb.f:                                             ; preds = %.thread, %.thread.t
   br label %bb.g
 
 .preheader:                                       ; preds = %bb.g
-  %i.af = icmp sgt i32 %i.w, 2
+  %i.af = icmp sgt i32 %i.w, 0
   br i1 %i.af, label %.lr.ph107, label %._crit_edge
 
 .lr.ph107:                                        ; preds = %.preheader

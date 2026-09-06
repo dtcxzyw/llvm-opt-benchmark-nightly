@@ -204,7 +204,7 @@ bb.a:
   %i.m = mul nuw nsw i64 %.sroa.speculated, 24
   %i.n = call fastcc noundef i64 @_ZN5nglog5toolsL14ReadFromOffsetEiPvmm(i32 noundef %1, ptr noundef nonnull %6, i64 noundef %i.m, i64 noundef %i.k) ; 3 uses
   %i.o = urem i64 %i.n, 24
-  %i.p = udiv i64 %i.n, 24                        ; 3 uses
+  %i.p = udiv exact i64 %i.n, 24                  ; 3 uses
   %i.q = icmp eq i64 %i.o, 0
   br i1 %i.q, label %bb.c, label %bb.b
 
@@ -217,8 +217,8 @@ bb.c:                                             ; preds = %.lr.ph40
   br i1 %.not, label %bb.d, label %.preheader
 
 .preheader:                                       ; preds = %bb.c
-  %.not66.not14 = icmp ugt i64 %i.n, 23
-  br i1 %.not66.not14, label %.lr.ph, label %.loopexit
+  %.not66.not14.not = icmp eq i64 %i.n, 0
+  br i1 %.not66.not14.not, label %.loopexit, label %.lr.ph
 
 bb.d:                                             ; preds = %bb.c
   tail call void @abort() #20

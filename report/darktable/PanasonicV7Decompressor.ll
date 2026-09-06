@@ -204,7 +204,7 @@ bb.a:
   %i.e = load i32, ptr %i.d, align 8, !tbaa !92, !noalias !136
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 608
   %i.g = load i32, ptr %i.f, align 8, !tbaa !137, !noalias !136
-  %i.h = mul nsw i32 %i.g, %i.e                   ; 6 uses
+  %i.h = mul nsw i32 %i.g, %i.e                   ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 612
   %i.j = load i32, ptr %i.i, align 4, !tbaa !138, !noalias !136
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 48
@@ -221,7 +221,7 @@ bb.a:
   %i.r = mul i32 %i.m, %1
   %i.s = zext i32 %i.r to i64                     ; 2 uses
   %i.t = getelementptr [2 x i8], ptr %i.c, i64 %i.s ; 18 uses
-  %i.u = udiv i32 %i.h, 9                         ; 3 uses
+  %i.u = udiv exact i32 %i.h, 9                   ; 3 uses
   %i.v = shl nuw nsw i32 %i.u, 4                  ; 3 uses
   %i.w = mul nuw nsw i32 %i.v, %1                 ; 2 uses
   %i.x = zext nneg i32 %i.w to i64                ; 3 uses
@@ -242,25 +242,21 @@ _ZNK8rawspeed10ByteStream12getSubStreamEjj.exit:  ; preds = %bb.a
   %i.ah = icmp samesign ule i32 %i.ag, %i.ab
   tail call void @llvm.assume(i1 %i.ah)
   %i.ai = getelementptr i8, ptr %i.ae, i64 %i.x   ; 3 uses
-  %.not = icmp samesign ult i32 %i.h, 9
-  br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %_ZNK8rawspeed10ByteStream12getSubStreamEjj.exit
   %2 = zext nneg i32 %i.h to i64
   %wide.trip.count = zext nneg i32 %i.u to i64    ; 5 uses
   %wide.trip.count69 = zext nneg i32 %i.u to i64
   %3 = add nsw i64 %wide.trip.count, -1
   %4 = tail call i64 @llvm.umin.i64(i64 %wide.trip.count, i64 %3) ; 2 uses
   %5 = add nuw nsw i64 %4, 1                      ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %4, 8
-  br i1 %min.iters.check, label %.lr.ph.preheader86, label %vector.memcheck
+  %.not = icmp samesign ult i64 %4, 8
+  br i1 %.not, label %.lr.ph.preheader86, label %vector.memcheck
 
-.lr.ph.preheader86:                               ; preds = %vector.body, %vector.memcheck, %.lr.ph.preheader
-  %indvars.iv64.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %i.au, %vector.body ]
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %vector.body ]
+.lr.ph.preheader86:                               ; preds = %vector.body, %vector.memcheck, %_ZNK8rawspeed10ByteStream12getSubStreamEjj.exit
+  %indvars.iv64.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %_ZNK8rawspeed10ByteStream12getSubStreamEjj.exit ], [ %i.au, %vector.body ]
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %_ZNK8rawspeed10ByteStream12getSubStreamEjj.exit ], [ %n.vec, %vector.body ]
   br label %.lr.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph.preheader
+vector.memcheck:                                  ; preds = %_ZNK8rawspeed10ByteStream12getSubStreamEjj.exit
   %i.aj = add nsw i64 %wide.trip.count, -1
   %umin = tail call i64 @llvm.umin.i64(i64 %wide.trip.count, i64 %i.aj) ; 2 uses
   %i.ak = mul nuw nsw i64 %umin, 18
@@ -552,7 +548,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.hv = icmp eq i64 %index.next, %n.vec
   br i1 %i.hv, label %.lr.ph.preheader86, label %vector.body, !llvm.loop !133
 
-._crit_edge:                                      ; preds = %_ZN8rawspeed14BitStreamerLSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.8, %_ZNK8rawspeed10ByteStream12getSubStreamEjj.exit
+._crit_edge:                                      ; preds = %_ZN8rawspeed14BitStreamerLSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.8
   ret void
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader86, %_ZN8rawspeed14BitStreamerLSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequentialReplenisherIS0_EEEEENS_10Array1DRefIKSt4byteEE.exit.8

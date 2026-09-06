@@ -205,10 +205,10 @@ _ZNK4llvm3EVT21getVectorElementCountEv.exit136._ZNK4llvm7details23FixedOrScalabl
   br label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE20hasKnownScalarFactorERKS3_.exit139.thread
 
 _ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE20hasKnownScalarFactorERKS3_.exit: ; preds = %_ZNK4llvm3EVT21getVectorElementCountEv.exit136
-  %.sroa.0187.0.extract.trunc = trunc i64 %.sroa.0.0.in.i134 to i32 ; 5 uses
-  %.sroa.0197.0.extract.trunc = trunc i64 %.sroa.0.0.in.i to i32 ; 5 uses
+  %.sroa.0187.0.extract.trunc = trunc i64 %.sroa.0.0.in.i134 to i32 ; 6 uses
+  %.sroa.0197.0.extract.trunc = trunc i64 %.sroa.0.0.in.i to i32 ; 6 uses
   %i.y = urem i32 %.sroa.0187.0.extract.trunc, %.sroa.0197.0.extract.trunc
-  %i.z = udiv i32 %.sroa.0187.0.extract.trunc, %.sroa.0197.0.extract.trunc ; 7 uses
+  %i.z = udiv exact i32 %.sroa.0187.0.extract.trunc, %.sroa.0197.0.extract.trunc ; 6 uses
   %i.aa = icmp eq i32 %i.y, 0
   br i1 %i.aa, label %bb.g, label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE20hasKnownScalarFactorERKS3_.exit139
 
@@ -288,7 +288,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   store ptr %1, ptr %i.as, align 8, !tbaa !44
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   store i32 %2, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !45
-  %.not220 = icmp eq i32 %i.z, 1
+  %.not220 = icmp eq i32 %.sroa.0187.0.extract.trunc, %.sroa.0197.0.extract.trunc
   br i1 %.not220, label %._crit_edge224, label %.lr.ph223.preheader
 
 .lr.ph223.preheader:                              ; preds = %bb.k
@@ -691,7 +691,7 @@ _ZNK4llvm3EVT19getScalarSizeInBitsEv.exit:        ; preds = %bb.ag, %bb.ah
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
   %i.eg = trunc i64 %.pn.i.i260 to i32            ; 2 uses
   %i.eh = urem i32 %i.dc, %i.eg
-  %i.ei = udiv i32 %i.dc, %i.eg
+  %i.ei = udiv exact i32 %i.dc, %i.eg
   %i.ej = icmp eq i32 %i.eh, 0
   br i1 %i.ej, label %bb.ai, label %.thread375
 
@@ -1094,9 +1094,9 @@ bb.f:                                             ; preds = %_ZNK4llvm3EVT23getV
 
 _ZNK4llvm3EVT23getVectorMinNumElementsEv.exit178: ; preds = %bb.e, %bb.f
   %.sroa.0.0.in.i.i176 = phi i64 [ %.sroa.0.0.insert.insert.i.i.i.i175, %bb.e ], [ %i.aw, %bb.f ]
-  %.sroa.0.0.extract.trunc.i177 = trunc i64 %.sroa.0.0.in.i.i176 to i32 ; 3 uses
+  %.sroa.0.0.extract.trunc.i177 = trunc i64 %.sroa.0.0.in.i.i176 to i32 ; 2 uses
   %i.ax = urem i32 %.sroa.0.0.extract.trunc.i, %.sroa.0.0.extract.trunc.i177
-  %i.ay = udiv i32 %.sroa.0.0.extract.trunc.i, %.sroa.0.0.extract.trunc.i177 ; 8 uses
+  %i.ay = udiv exact i32 %.sroa.0.0.extract.trunc.i, %.sroa.0.0.extract.trunc.i177 ; 8 uses
   %.not170 = icmp eq i32 %i.ax, 0
   br i1 %.not170, label %bb.g, label %thread-pre-split
 
@@ -1116,7 +1116,7 @@ bb.g:                                             ; preds = %_ZNK4llvm3EVT23getV
   store i32 0, ptr %i.bd, align 8, !tbaa !204
   %i.be = getelementptr inbounds nuw i8, ptr %11, i64 12
   store i32 16, ptr %i.be, align 4, !tbaa !205
-  %17 = icmp ugt i32 %.sroa.0.0.extract.trunc.i177, %.sroa.0.0.extract.trunc.i
+  %17 = icmp eq i32 %.sroa.0.0.extract.trunc.i, 0
   br i1 %17, label %_ZN4llvm11SmallVectorINS_7SDValueELj16EEC2Em.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -1519,7 +1519,7 @@ bb.bi:                                            ; preds = %_ZNK4llvm18TargetLo
 
 _ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit: ; preds = %bb.bi
   %i.ji = urem i32 %.sroa.0.0.extract.trunc.i.i, %.sroa.0461.0.extract.trunc467
-  %i.jj = udiv i32 %.sroa.0.0.extract.trunc.i.i, %.sroa.0461.0.extract.trunc467 ; 4 uses
+  %i.jj = udiv exact i32 %.sroa.0.0.extract.trunc.i.i, %.sroa.0461.0.extract.trunc467 ; 4 uses
   %i.jk = icmp eq i32 %i.ji, 0
   br i1 %i.jk, label %bb.bj, label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit367
 
@@ -1922,6 +1922,7 @@ bb.g:                                             ; preds = %_ZNK4llvm8TypeSizec
   %i.ag = getelementptr inbounds nuw i8, ptr %13, i64 8
   %i.ah = and i64 %.fca.0.extract56, 4294967295
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 80
+  %.not.i.i = icmp eq i32 %i.x, 0
   %i.aj = add i32 %7, %3
   %invariant.umin = call i32 @llvm.umin.i32(i32 %i.ad, i32 %i.aj) ; 3 uses
   %invariant.umax = call i32 @llvm.umax.i32(i32 %3, i32 %invariant.umin)
@@ -1973,7 +1974,7 @@ bb.l:                                             ; preds = %_ZNK4llvm3EVT13getS
 _ZNK4llvm3EVT13getSizeInBitsEv.exit135:           ; preds = %bb.k, %bb.l
   %.in = phi i64 [ %.sroa.0.0.copyload.i.i120, %bb.k ], [ %.fca.0.extract36, %bb.l ]
   %.pn.i134 = phi { i64, i8 } [ %.fca.1.insert.i.i133, %bb.k ], [ %i.am, %bb.l ] ; 2 uses
-  %i.ar = trunc i64 %.in to i32                   ; 5 uses
+  %i.ar = trunc i64 %.in to i32                   ; 4 uses
   %.fca.1.extract33 = extractvalue { i64, i8 } %.pn.i134, 1
   %i.as = trunc nuw i8 %.fca.1.extract33 to i1
   br i1 %i.as, label %bb.m, label %_ZNK4llvm8TypeSizecvmEv.exit136
@@ -1998,18 +1999,17 @@ bb.n:                                             ; preds = %_ZNK4llvm8TypeSizec
 
 bb.o:                                             ; preds = %bb.n
   %i.av = urem i32 %i.x, %i.ar
-  %i.aw = udiv i32 %i.x, %i.ar
+  %i.aw = udiv exact i32 %i.x, %i.ar
   %i.ax = icmp eq i32 %i.av, 0
   br i1 %i.ax, label %bb.p, label %_ZN4llvm13isPowerOf2_32Ej.exit.thread
 
 bb.p:                                             ; preds = %bb.o
-  %.not.i.i = icmp ugt i32 %i.ar, %i.x
   %i.ay = call range(i32 1, 33) i32 @llvm.ctpop.i32(i32 %i.aw)
   %i.az = icmp samesign ugt i32 %i.ay, 1
   %or.cond207.not245 = select i1 %.not.i.i, i1 true, i1 %i.az
   %or.cond218 = icmp ult i32 %invariant.umax, %i.ar
-  %or.cond242 = or i1 %or.cond207.not245, %or.cond218
-  br i1 %or.cond242, label %_ZN4llvm13isPowerOf2_32Ej.exit.thread, label %bb.q
+  %or.cond240 = select i1 %or.cond207.not245, i1 true, i1 %or.cond218
+  br i1 %or.cond240, label %_ZN4llvm13isPowerOf2_32Ej.exit.thread, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.ba = icmp eq i32 %i.ar, %i.x
@@ -2040,6 +2040,7 @@ bb.s:                                             ; preds = %bb.q
   %invariant.umin217.pre-phi = phi i32 [ %.pre224, %_ZNK4llvm8TypeSizecvmEv.exit..thread195_crit_edge ], [ %invariant.umin, %.thread199 ], [ %invariant.umin, %_ZN4llvm13isPowerOf2_32Ej.exit.thread ]
   %i.bd = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 80
+  %.not.i.i156 = icmp eq i32 %i.x, 0
   %invariant.umax241 = call i32 @llvm.umax.i32(i32 %3, i32 %invariant.umin217.pre-phi)
   br label %bb.t
 
@@ -2076,7 +2077,7 @@ bb.u:                                             ; preds = %_ZNK4llvm3EVT16isSc
 
 _ZNK4llvm3EVT13getSizeInBitsEv.exit151:           ; preds = %.thread202, %bb.u
   %.pn.i150 = phi i64 [ %.sroa.0.0.copyload.i.i145, %.thread202 ], [ %i.bn, %bb.u ] ; 2 uses
-  %i.bo = trunc i64 %.pn.i150 to i32              ; 4 uses
+  %i.bo = trunc i64 %.pn.i150 to i32              ; 3 uses
   %i.bp = load ptr, ptr %i.be, align 8, !tbaa !158
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #14
   call void @_ZNK4llvm18TargetLoweringBase17getTypeConversionERNS_11LLVMContextENS_3EVTE(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.382") align 8 %8, ptr noundef nonnull align 8 dereferenceable(518435) %2, ptr noundef nonnull align 8 dereferenceable(8) %i.bp, i16 %i.bf, ptr null) #14
@@ -2116,18 +2117,17 @@ _ZNK4llvm3EVT20getVectorElementTypeEv.exit154:    ; preds = %bb.w, %bb.x
 
 bb.y:                                             ; preds = %_ZNK4llvm3EVT20getVectorElementTypeEv.exit154
   %i.ce = urem i32 %i.x, %i.bo
-  %i.cf = udiv i32 %i.x, %i.bo
+  %i.cf = udiv exact i32 %i.x, %i.bo
   %i.cg = icmp eq i32 %i.ce, 0
   br i1 %i.cg, label %bb.z, label %_ZN4llvm13isPowerOf2_32Ej.exit157.thread
 
 bb.z:                                             ; preds = %bb.y
-  %.not.i.i156 = icmp ugt i32 %i.bo, %i.x
   %i.ch = call range(i32 1, 33) i32 @llvm.ctpop.i32(i32 %i.cf)
   %i.ci = icmp samesign ugt i32 %i.ch, 1
   %or.cond209.not247 = select i1 %.not.i.i156, i1 true, i1 %i.ci
   %or.cond219 = icmp ult i32 %invariant.umax241, %i.bo
-  %or.cond243 = or i1 %or.cond209.not247, %or.cond219
-  br i1 %or.cond243, label %_ZN4llvm13isPowerOf2_32Ej.exit157.thread, label %bb.aa
+  %or.cond241 = select i1 %or.cond209.not247, i1 true, i1 %or.cond219
+  br i1 %or.cond241, label %_ZN4llvm13isPowerOf2_32Ej.exit157.thread, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.cj = load i16, ptr %12, align 8, !tbaa !207  ; 2 uses
@@ -2530,7 +2530,7 @@ bb.e:                                             ; preds = %.thread, %bb.d
 
 _ZNK4llvm7details23FixedOrScalableQuantityINS_8TypeSizeEmE20hasKnownScalarFactorERKS3_.exit: ; preds = %bb.e
   %i.ac = urem i64 %.fca.0.extract76, %.fca.0.extract72150155159
-  %i.ad = udiv i64 %.fca.0.extract76, %.fca.0.extract72150155159
+  %i.ad = udiv exact i64 %.fca.0.extract76, %.fca.0.extract72150155159
   %i.ae = icmp eq i64 %i.ac, 0
   br i1 %i.ae, label %bb.f, label %_ZNK4llvm7details23FixedOrScalableQuantityINS_8TypeSizeEmE20hasKnownScalarFactorERKS3_.exit.thread
 

@@ -205,7 +205,7 @@ bb.ahd:                                           ; preds = %.split5766, %_ZNK4l
   %i.dqs = getelementptr inbounds nuw i8, ptr %296, i64 8
   store ptr %.sroa.21.0.copyload.i.i4913, ptr %i.dqs, align 8
   %i.dqt = call noundef i64 @_ZNK4llvm3EVT19getScalarSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(16) %296)
-  %i.dqu = trunc i64 %i.dqt to i32                ; 11 uses
+  %i.dqu = trunc i64 %i.dqt to i32                ; 10 uses
   %i.dqv = getelementptr inbounds nuw i8, ptr %6, i64 9
   %i.dqw = load i8, ptr %i.dqv, align 1, !tbaa !400, !range !297, !noundef !55
   %i.dqx = trunc nuw i8 %i.dqw to i1
@@ -390,7 +390,7 @@ _ZNK4llvm3EVT8isVectorEv.exit4934:                ; preds = %_ZNK4llvm3EVT8isVec
   %.not.i49325812 = phi i1 [ false, %.split5774 ], [ true, %_ZNK4llvm3EVT8isVectorEv.exit4934 ], [ false, %.split5768 ]
   %i.dsr = phi i16 [ %.pr5809, %.split5774 ], [ 0, %_ZNK4llvm3EVT8isVectorEv.exit4934 ], [ %i.drb, %.split5768 ]
   %i.dss = urem i32 %i.c, %i.dqu
-  %i.dst = udiv i32 %i.c, %i.dqu                  ; 2 uses
+  %i.dst = udiv exact i32 %i.c, %i.dqu            ; 2 uses
   %i.dsu = icmp eq i32 %i.dss, 0
   br i1 %i.dsu, label %bb.ahq, label %bb.aih
 
@@ -411,7 +411,7 @@ bb.ahs:                                           ; preds = %bb.ahq
   br label %_ZN4llvm5APInt7getZeroEj.exit
 
 _ZN4llvm5APInt7getZeroEj.exit:                    ; preds = %bb.ahr, %bb.ahs
-  %.not39485922 = icmp ult i32 %i.c, %i.dqu
+  %.not39485922 = icmp eq i32 %i.c, 0
   br i1 %.not39485922, label %._crit_edge5925, label %.lr.ph5924
 
 .lr.ph5924:                                       ; preds = %_ZN4llvm5APInt7getZeroEj.exit
@@ -472,7 +472,7 @@ bb.ahx:                                           ; preds = %bb.ahw
 
 _ZN4llvm5APIntD2Ev.exit4936:                      ; preds = %_ZN4llvm5APIntoRERKS0_.exit4935, %bb.ahw, %bb.ahx
   call void @llvm.lifetime.end.p0(ptr nonnull %302) #28
-  %i.dtq = add nuw i32 %.038905923, 1             ; 2 uses
+  %i.dtq = add i32 %.038905923, 1                 ; 2 uses
   %.not3948 = icmp eq i32 %i.dtq, %i.dst
   br i1 %.not3948, label %._crit_edge5925, label %bb.aht, !llvm.loop !690
 
@@ -558,7 +558,7 @@ bb.aih:                                           ; preds = %.split5774, %.split
 
 bb.aii:                                           ; preds = %bb.aih
   %i.dun = urem i32 %i.dqu, %i.c
-  %i.duo = udiv i32 %i.dqu, %i.c                  ; 2 uses
+  %i.duo = udiv exact i32 %i.dqu, %i.c            ; 2 uses
   %i.dup = icmp eq i32 %i.dun, 0
   br i1 %i.dup, label %bb.aij, label %bb.ajj
 
@@ -961,7 +961,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.bc = call noundef i64 @_ZNK4llvm3EVT19getScalarSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(16) %13)
-  %i.bd = trunc i64 %i.bc to i32                  ; 14 uses
+  %i.bd = trunc i64 %i.bc to i32                  ; 13 uses
   %i.be = call noundef i64 @_ZNK4llvm3EVT19getScalarSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(16) %14)
   %i.bf = trunc i64 %i.be to i32                  ; 7 uses
   %i.bg = icmp eq i32 %i.bd, %i.bf
@@ -1002,7 +1002,7 @@ _ZNK4llvm3EVT8isVectorEv.exit:                    ; preds = %.critedge363
 
 bb.l:                                             ; preds = %.split595, %_ZNK4llvm3EVT8isVectorEv.exit
   %i.bn = urem i32 %i.bf, %i.bd
-  %i.bo = udiv i32 %i.bf, %i.bd                   ; 3 uses
+  %i.bo = udiv exact i32 %i.bf, %i.bd             ; 3 uses
   %i.bp = icmp eq i32 %i.bn, 0
   br i1 %i.bp, label %bb.m, label %bb.ag
 
@@ -1023,7 +1023,7 @@ bb.o:                                             ; preds = %bb.m
   br label %_ZN4llvm5APInt7getZeroEj.exit
 
 _ZN4llvm5APInt7getZeroEj.exit:                    ; preds = %bb.n, %bb.o
-  %.not360619 = icmp ugt i32 %i.bd, %i.bf
+  %.not360619 = icmp eq i32 %i.bf, 0
   br i1 %.not360619, label %._crit_edge622, label %.lr.ph621
 
 .lr.ph621:                                        ; preds = %_ZN4llvm5APInt7getZeroEj.exit
@@ -1068,7 +1068,7 @@ bb.s:                                             ; preds = %bb.r
 
 _ZN4llvm5APIntD2Ev.exit.us:                       ; preds = %bb.s, %bb.r, %_ZN4llvm5APIntoRERKS0_.exit.us
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #28
-  %i.cg = add nuw i32 %.0337620.us, 1             ; 2 uses
+  %i.cg = add i32 %.0337620.us, 1                 ; 2 uses
   %.not360.us = icmp eq i32 %i.cg, %i.bo
   br i1 %.not360.us, label %._crit_edge622, label %.lr.ph621.split.us, !llvm.loop !703
 
@@ -1117,7 +1117,7 @@ bb.w:                                             ; preds = %bb.v
 
 _ZN4llvm5APIntD2Ev.exit:                          ; preds = %_ZN4llvm5APIntoRERKS0_.exit, %bb.v, %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #28
-  %i.ct = add nuw i32 %.0337620, 1                ; 2 uses
+  %i.ct = add i32 %.0337620, 1                    ; 2 uses
   %.not360 = icmp eq i32 %i.ct, %i.bo
   br i1 %.not360, label %._crit_edge622, label %.lr.ph621.split, !llvm.loop !703
 
@@ -1203,7 +1203,7 @@ bb.ag:                                            ; preds = %.split595, %_ZN4llv
 
 bb.ah:                                            ; preds = %bb.ag
   %i.dn = urem i32 %i.bd, %i.bf
-  %i.do = udiv i32 %i.bd, %i.bf                   ; 2 uses
+  %i.do = udiv exact i32 %i.bd, %i.bf             ; 2 uses
   %i.dp = icmp eq i32 %i.dn, 0
   br i1 %i.dp, label %bb.ai, label %bb.bb
 
@@ -1606,7 +1606,7 @@ bb.c:                                             ; preds = %_ZN4llvm5APIntC2ERK
 
 _ZN4llvm5APInt7getZeroEj.exit:                    ; preds = %bb.b, %bb.c
   %i.t = phi i1 [ true, %bb.b ], [ false, %bb.c ]
-  %i.u = phi i32 [ %i.s, %bb.b ], [ %.pr, %bb.c ] ; 36 uses
+  %i.u = phi i32 [ %i.s, %bb.b ], [ %.pr, %bb.c ] ; 35 uses
   %i.v = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 21 uses
   %i.w = load i32, ptr %i.v, align 8, !tbaa !384
   %i.x = icmp ult i32 %i.w, 65
@@ -2009,7 +2009,7 @@ bb.ax:                                            ; preds = %.lr.ph1619, %bb.aw
   br label %_ZN4llvm5APInt12clearAllBitsEv.exit1418
 
 bb.ay:                                            ; preds = %.split1509, %_ZNK4llvm3EVT8isVectorEv.exit
-  %i.id = call noundef i32 @_ZNK4llvm3EVT20getVectorNumElementsEv(ptr noundef nonnull align 8 dereferenceable(16) %26) ; 11 uses
+  %i.id = call noundef i32 @_ZNK4llvm3EVT20getVectorNumElementsEv(ptr noundef nonnull align 8 dereferenceable(16) %26) ; 10 uses
   %i.ie = icmp eq i32 %i.id, %i.u
   br i1 %i.ie, label %bb.az, label %bb.ba
 
@@ -2033,7 +2033,7 @@ bb.ba:                                            ; preds = %bb.ay
   store i32 1, ptr %i.ik, align 8, !tbaa !384
   store i64 0, ptr %31, align 8, !tbaa !361
   %i.il = urem i32 %i.u, %i.id
-  %i.im = udiv i32 %i.u, %i.id                    ; 8 uses
+  %i.im = udiv exact i32 %i.u, %i.id              ; 8 uses
   %i.in = icmp eq i32 %i.il, 0
   br i1 %i.in, label %bb.bb, label %.loopexit
 
@@ -2086,7 +2086,7 @@ bb.bh:                                            ; preds = %bb.bf
   br label %_ZN4llvm5APInt7getZeroEj.exit1178
 
 _ZN4llvm5APInt7getZeroEj.exit1178:                ; preds = %bb.bg, %bb.bh
-  %.not11151621 = icmp eq i32 %i.u, 0
+  %.not11151621 = icmp eq i32 %i.u, 0             ; 2 uses
   br i1 %.not11151621, label %._crit_edge1624, label %.lr.ph1623.preheader
 
 .lr.ph1623.preheader:                             ; preds = %_ZN4llvm5APInt7getZeroEj.exit1178
@@ -2108,8 +2108,7 @@ _ZN4llvm5APInt7getZeroEj.exit1178:                ; preds = %bb.bg, %bb.bh
   br i1 %i.jh, label %.critedge1121, label %.preheader1576
 
 .preheader1576:                                   ; preds = %._crit_edge1624
-  %.not11161626 = icmp ugt i32 %i.id, %i.u
-  br i1 %.not11161626, label %._crit_edge1630, label %.lr.ph1629
+  br i1 %.not11151621, label %._crit_edge1630, label %.lr.ph1629
 
 .lr.ph1629:                                       ; preds = %.preheader1576
   %i.ji = getelementptr inbounds nuw i8, ptr %35, i64 8
@@ -2268,7 +2267,7 @@ _ZN4llvm5APInt6setBitEj.exit:                     ; preds = %bb.bs, %bb.br, %.pr
   br i1 %.not1117, label %.loopexit1575, label %.preheader1574.split, !llvm.loop !766
 
 .loopexit1575:                                    ; preds = %_ZN4llvm5APInt6setBitEj.exit, %_ZN4llvm5APInt6setBitEj.exit.us, %_ZN4llvm5APIntD2Ev.exit1180
-  %i.lx = add nuw i32 %.010751627, 1              ; 2 uses
+  %i.lx = add i32 %.010751627, 1                  ; 2 uses
   %.not1116 = icmp eq i32 %i.lx, %i.im
   br i1 %.not1116, label %._crit_edge1630, label %bb.bk, !llvm.loop !767
 
@@ -2375,7 +2374,7 @@ _ZN4llvm5APIntD2Ev.exit1186:                      ; preds = %.critedge1121, %bb.
 
 .loopexit:                                        ; preds = %bb.ca, %bb.ba
   %i.nk = urem i32 %i.id, %i.u
-  %i.nl = udiv i32 %i.id, %i.u                    ; 3 uses
+  %i.nl = udiv exact i32 %i.id, %i.u              ; 3 uses
   %i.nm = icmp eq i32 %i.nk, 0
   br i1 %i.nm, label %bb.cd, label %.critedge1123
 

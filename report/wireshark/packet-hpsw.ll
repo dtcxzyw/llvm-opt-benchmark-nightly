@@ -161,7 +161,7 @@ bb.b:                                             ; preds = %.lr.ph, %.loopexit
   %.04954 = phi i32 [ 2, %.lr.ph ], [ %i.cn, %.loopexit ] ; 6 uses
   %i.p = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.04954) ; 2 uses
   %i.q = add i32 %.04954, 1                       ; 2 uses
-  %i.r = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.q) ; 14 uses
+  %i.r = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.q) ; 13 uses
   %i.s = zext i8 %i.r to i32                      ; 20 uses
   %i.t = icmp eq i8 %i.r, 0
   br i1 %i.t, label %.thread, label %bb.c
@@ -300,7 +300,7 @@ bb.z:                                             ; preds = %bb.x
 
 bb.aa:                                            ; preds = %bb.d
   %i.bn = urem i8 %i.r, 6
-  %i.bo = udiv i8 %i.r, 6
+  %i.bo = udiv exact i8 %i.r, 6
   %.not.i = icmp eq i8 %i.bn, 0
   br i1 %.not.i, label %bb.ab, label %bb.ac
 
@@ -308,12 +308,11 @@ bb.ab:                                            ; preds = %bb.aa
   %.zext128.i = zext nneg i8 %i.bo to i32         ; 2 uses
   %i.bp = tail call ptr @proto_tree_get_parent(ptr noundef %i.ac)
   tail call void (ptr, ptr, ...) @proto_item_set_text(ptr noundef %i.bp, ptr noundef nonnull @.str.58, i32 noundef %.zext128.i)
-  %.not126129.i = icmp ult i8 %i.r, 6
-  br i1 %.not126129.i, label %.loopexit, label %.lr.ph.i
+  br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.ab, %.lr.ph.i
-  %.0131.i = phi i32 [ %i.bt, %.lr.ph.i ], [ %.zext128.i, %bb.ab ]
-  %.0124130.i = phi i32 [ %i.bs, %.lr.ph.i ], [ %i.u, %bb.ab ] ; 2 uses
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %bb.ab
+  %.0131.i = phi i32 [ %.zext128.i, %bb.ab ], [ %i.bt, %.lr.ph.i ]
+  %.0124130.i = phi i32 [ %i.u, %bb.ab ], [ %i.bs, %.lr.ph.i ] ; 2 uses
   %i.bq = load i32, ptr @hf_hpsw_neighbor_mac_addr, align 4
   %i.br = tail call ptr @proto_tree_add_item(ptr noundef %i.ac, i32 noundef %i.bq, ptr noundef %0, i32 noundef %.0124130.i, i32 noundef 6, i32 noundef 0) ; 0 uses
   %i.bs = add i32 %.0124130.i, 6
@@ -373,7 +372,7 @@ bb.am:                                            ; preds = %bb.d
   %i.cm = tail call ptr @proto_tree_add_item(ptr noundef %i.ac, i32 noundef %i.cl, ptr noundef %0, i32 noundef %i.u, i32 noundef range(i32 1, 256) %i.s, i32 noundef 0) ; 0 uses
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph.i, %bb.am, %bb.al, %bb.ak, %bb.ai, %bb.ah, %bb.af, %bb.ae, %bb.ac, %bb.ab, %bb.z, %bb.y, %bb.w, %bb.v, %bb.t, %bb.s, %bb.q, %bb.p, %bb.o, %bb.m, %bb.l, %bb.j, %bb.i, %bb.g, %bb.f, %bb.e
+.loopexit:                                        ; preds = %.lr.ph.i, %bb.am, %bb.al, %bb.ak, %bb.ai, %bb.ah, %bb.af, %bb.ae, %bb.ac, %bb.z, %bb.y, %bb.w, %bb.v, %bb.t, %bb.s, %bb.q, %bb.p, %bb.o, %bb.m, %bb.l, %bb.j, %bb.i, %bb.g, %bb.f, %bb.e
   %i.cn = add i32 %i.u, %i.s                      ; 2 uses
   %i.co = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %i.cn)
   %.not = icmp eq i32 %i.co, 0

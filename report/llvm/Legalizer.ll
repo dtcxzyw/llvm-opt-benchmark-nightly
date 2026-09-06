@@ -204,7 +204,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.b = load i24, ptr %i.a, align 8              ; 2 uses
   %i.c = zext i24 %i.b to i32
-  %i.d = add nsw i32 %i.c, -1                     ; 15 uses
+  %i.d = add nsw i32 %i.c, -1                     ; 14 uses
   %i.e = zext i24 %i.b to i64
   %i.f = add nuw nsw i64 %i.e, 4294967295
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 7 uses
@@ -548,13 +548,13 @@ bb.w:                                             ; preds = %_ZN4llvm28Legalizat
   %i.ew = getelementptr inbounds nuw i8, ptr %.0196275, i64 40
   %i.ex = load i24, ptr %i.ew, align 8
   %i.ey = zext i24 %i.ex to i32
-  %i.ez = add nsw i32 %i.ey, -1                   ; 9 uses
+  %i.ez = add nsw i32 %i.ey, -1                   ; 8 uses
   %i.fa = icmp ult i32 %i.ez, %i.d
   br i1 %i.fa, label %bb.x, label %bb.ak
 
 bb.x:                                             ; preds = %bb.w
   %i.fb = urem i32 %i.d, %i.ez
-  %i.fc = udiv i32 %i.d, %i.ez                    ; 2 uses
+  %i.fc = udiv exact i32 %i.d, %i.ez              ; 2 uses
   %.not218 = icmp eq i32 %i.fb, 0
   br i1 %.not218, label %bb.y, label %.thread
 
@@ -564,7 +564,6 @@ bb.y:                                             ; preds = %bb.x
   %i.fe = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 2 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 7 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %13, i64 12 ; 2 uses
-  %.not315 = icmp ugt i32 %i.ez, %i.d
   %.not219 = icmp eq i32 %.0197274, 0
   %i.fh = getelementptr inbounds nuw i8, ptr %15, i64 16
   %i.fi = getelementptr inbounds nuw i8, ptr %.0196275, i64 32 ; 2 uses
@@ -583,19 +582,16 @@ bb.z:                                             ; preds = %bb.y, %_ZN4llvm11Sm
   store ptr %i.fe, ptr %13, align 8, !tbaa !26
   store i32 0, ptr %i.ff, align 8, !tbaa !38
   store i32 8, ptr %i.fg, align 4, !tbaa !40
-  br i1 %.not315, label %._crit_edge305, label %.lr.ph304.preheader
-
-.lr.ph304.preheader:                              ; preds = %bb.z
   %24 = trunc nuw i64 %indvars.iv328 to i32
   %25 = mul i32 %i.fc, %24
   br label %.lr.ph304
 
-._crit_edge305:                                   ; preds = %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit, %bb.z
+._crit_edge305:                                   ; preds = %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit
   br i1 %.not219, label %bb.af, label %bb.ac
 
-.lr.ph304:                                        ; preds = %.lr.ph304.preheader, %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit
-  %.0201302 = phi i32 [ %i.gb, %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit ], [ 0, %.lr.ph304.preheader ]
-  %.0202301 = phi i32 [ %i.gc, %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit ], [ %25, %.lr.ph304.preheader ] ; 2 uses
+.lr.ph304:                                        ; preds = %bb.z, %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit
+  %.0201302 = phi i32 [ 0, %bb.z ], [ %i.gb, %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit ]
+  %.0202301 = phi i32 [ %25, %bb.z ], [ %i.gc, %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit ] ; 2 uses
   %i.fp = load ptr, ptr %i.g, align 8, !tbaa !221
   %i.fq = zext i32 %.0202301 to i64
   %i.fr = getelementptr inbounds nuw [32 x i8], ptr %i.fp, i64 %i.fq
@@ -760,7 +756,7 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %bb.al
   %i.ij = urem i32 %i.ez, %i.d
-  %i.ik = udiv i32 %i.ez, %i.d                    ; 2 uses
+  %i.ik = udiv exact i32 %i.ez, %i.d              ; 2 uses
   %.not217 = icmp eq i32 %i.ij, 0
   br i1 %.not217, label %bb.an, label %.thread
 
@@ -777,7 +773,7 @@ bb.an:                                            ; preds = %bb.am
   %wide.trip.count326 = zext nneg i32 %i.d to i64
   br label %.lr.ph298.preheader
 
-.lr.ph298.preheader:                              ; preds = %_ZN4llvm11SmallVectorINS_8RegisterELj8EED2Ev.exit234, %bb.an
+.lr.ph298.preheader:                              ; preds = %bb.an, %_ZN4llvm11SmallVectorINS_8RegisterELj8EED2Ev.exit234
   %indvars.iv323 = phi i64 [ 0, %bb.an ], [ %indvars.iv.next324, %_ZN4llvm11SmallVectorINS_8RegisterELj8EED2Ev.exit234 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #25
   store ptr %i.im, ptr %19, align 8, !tbaa !26
@@ -788,8 +784,6 @@ bb.an:                                            ; preds = %bb.am
   br label %.lr.ph298
 
 ._crit_edge299:                                   ; preds = %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit236
-  %.pre338 = load i32, ptr %i.in, align 8, !tbaa !38
-  %.pre337 = load ptr, ptr %19, align 8, !tbaa !26
   %i.iv = load ptr, ptr %i.g, align 8, !tbaa !221
   %i.iw = getelementptr inbounds nuw [32 x i8], ptr %i.iv, i64 %indvars.iv323
   %i.ix = getelementptr inbounds nuw i8, ptr %i.iw, i64 4
@@ -798,8 +792,10 @@ bb.an:                                            ; preds = %bb.am
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #25
   store i32 %i.iy, ptr %20, align 8, !tbaa !164
   store i32 1, ptr %i.iq, align 8, !tbaa !300
-  %i.ja = zext i32 %.pre338 to i64
-  %i.jb = call { ptr, ptr } @_ZN4llvm16MachineIRBuilder19buildMergeLikeInstrERKNS_5DstOpENS_8ArrayRefINS_8RegisterEEE(ptr noundef nonnull align 8 dereferenceable(96) %i.iz, ptr noundef nonnull align 8 dereferenceable(20) %20, ptr %.pre337, i64 %i.ja) #25 ; 0 uses
+  %26 = load ptr, ptr %19, align 8, !tbaa !26
+  %27 = load i32, ptr %i.in, align 8, !tbaa !38
+  %i.ja = zext i32 %27 to i64
+  %i.jb = call { ptr, ptr } @_ZN4llvm16MachineIRBuilder19buildMergeLikeInstrERKNS_5DstOpENS_8ArrayRefINS_8RegisterEEE(ptr noundef nonnull align 8 dereferenceable(96) %i.iz, ptr noundef nonnull align 8 dereferenceable(20) %20, ptr %26, i64 %i.ja) #25 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #25
   %i.jc = load i32, ptr %i.ir, align 8, !tbaa !38 ; 2 uses
   %i.jd = load i32, ptr %i.is, align 4, !tbaa !40
@@ -836,8 +832,8 @@ _ZN4llvm11SmallVectorINS_8RegisterELj8EED2Ev.exit234: ; preds = %_ZN4llvm23Small
   br i1 %exitcond327.not, label %.loopexit, label %.lr.ph298.preheader, !llvm.loop !585
 
 .lr.ph298:                                        ; preds = %.lr.ph298.preheader, %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit236
-  %.0203.in296 = phi i32 [ %.0203, %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit236 ], [ %i.iu, %.lr.ph298.preheader ]
-  %.0204295 = phi i32 [ %i.jx, %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit236 ], [ 0, %.lr.ph298.preheader ]
+  %.0203.in296 = phi i32 [ %i.iu, %.lr.ph298.preheader ], [ %.0203, %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit236 ]
+  %.0204295 = phi i32 [ 0, %.lr.ph298.preheader ], [ %i.jx, %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit236 ]
   %.0203 = add i32 %.0203.in296, 1                ; 2 uses
   %i.jl = load ptr, ptr %i.ip, align 8, !tbaa !221
   %i.jm = zext i32 %.0203 to i64
@@ -1240,7 +1236,7 @@ bb.s:                                             ; preds = %_ZNK4llvm3LLT13getS
   unreachable
 
 _ZNK4llvm8TypeSizecvmEv.exit144:                  ; preds = %_ZNK4llvm3LLT13getSizeInBitsEv.exit143.thread, %_ZNK4llvm3LLT13getSizeInBitsEv.exit143
-  %.sroa.05.0.i138231 = phi i64 [ %i.cz, %_ZNK4llvm3LLT13getSizeInBitsEv.exit143.thread ], [ %i.dg, %_ZNK4llvm3LLT13getSizeInBitsEv.exit143 ] ; 3 uses
+  %.sroa.05.0.i138231 = phi i64 [ %i.cz, %_ZNK4llvm3LLT13getSizeInBitsEv.exit143.thread ], [ %i.dg, %_ZNK4llvm3LLT13getSizeInBitsEv.exit143 ] ; 4 uses
   %i.di = trunc nuw i64 %.sroa.05.0.i138231 to i32 ; 2 uses
   %.mask.i.i145 = and i64 %.sroa.04.0.i130, -1152921504606846976
   %i.dj = icmp eq i64 %.mask.i.i145, 4611686018427387904 ; 2 uses
@@ -1368,7 +1364,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ab
   %i.fd = urem i32 %i.di, %i.dz
-  %i.fe = udiv i32 %i.di, %i.dz                   ; 2 uses
+  %i.fe = udiv exact i32 %i.di, %i.dz             ; 2 uses
   %i.ff = icmp eq i32 %i.fd, 0
   br i1 %i.ff, label %bb.ae, label %.thread
 
@@ -1399,25 +1395,28 @@ bb.ae:                                            ; preds = %bb.ad
 
 .lr.ph.a:                                         ; preds = %bb.ae
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #25
-  %i.fq = zext i32 %i.fe to i64                   ; 2 uses
+  %i.fq = zext i32 %i.fe to i64                   ; 3 uses
   call void @_ZN4llvm11SmallVectorINS_8RegisterELj8EEC2Em(ptr noundef nonnull align 8 dereferenceable(48) %16, i64 noundef %i.fq)
-  %22 = load ptr, ptr %i.cd, align 8, !tbaa !221  ; 5 uses
+  %.not253 = icmp eq i64 %.sroa.05.0.i138231, 0
   %i.fr = load ptr, ptr %16, align 8, !tbaa !26   ; 6 uses
-  %umax = call i64 @llvm.umax.i64(i64 %i.fq, i64 1) ; 2 uses
-  %xtraiter = and i64 %umax, 3                    ; 3 uses
+  br i1 %.not253, label %._crit_edge, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.a
+  %22 = load ptr, ptr %i.cd, align 8, !tbaa !221  ; 5 uses
+  %xtraiter = and i64 %i.fq, 3                    ; 3 uses
   %23 = icmp ult i32 %i.fe, 4
   br i1 %23, label %.epil.preheader, label %.lr.ph.new
 
-.lr.ph.new:                                       ; preds = %.lr.ph.a
-  %unroll_iter = and i64 %umax, 4294967292
+.lr.ph.new:                                       ; preds = %.lr.ph
+  %unroll_iter = and i64 %i.fq, 4294967292
   br label %bb.ah
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.ah
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph.a
-  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.a ], [ %indvars.iv.next.3, %._crit_edge.unr-lcssa ]
+.epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
+  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.3, %._crit_edge.unr-lcssa ]
   %lcmp.mod276 = icmp ne i64 %xtraiter, 0
   call void @llvm.assume(i1 %lcmp.mod276)
   br label %bb.af
@@ -1435,7 +1434,7 @@ bb.af:                                            ; preds = %bb.af, %.epil.prehe
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %._crit_edge, label %bb.af, !llvm.loop !592
 
-._crit_edge:                                      ; preds = %bb.af, %._crit_edge.unr-lcssa
+._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %bb.af, %.lr.ph.a
   %i.fw = load ptr, ptr %0, align 8, !tbaa !296, !nonnull !23, !align !204
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #25
   store i32 %i.e, ptr %17, align 8, !tbaa !164
@@ -1444,7 +1443,7 @@ bb.af:                                            ; preds = %bb.af, %.epil.prehe
   %i.fy = getelementptr inbounds nuw i8, ptr %16, i64 8
   %i.fz = load i32, ptr %i.fy, align 8, !tbaa !38
   %i.ga = zext i32 %i.fz to i64
-  %i.gb = call { ptr, ptr } @_ZN4llvm16MachineIRBuilder16buildMergeValuesERKNS_5DstOpENS_8ArrayRefINS_8RegisterEEE(ptr noundef nonnull align 8 dereferenceable(96) %i.fw, ptr noundef nonnull align 8 dereferenceable(20) %17, ptr nonnull %i.fr, i64 %i.ga) #25 ; 0 uses
+  %i.gb = call { ptr, ptr } @_ZN4llvm16MachineIRBuilder16buildMergeValuesERKNS_5DstOpENS_8ArrayRefINS_8RegisterEEE(ptr noundef nonnull align 8 dereferenceable(96) %i.fw, ptr noundef nonnull align 8 dereferenceable(20) %17, ptr %i.fr, i64 %i.ga) #25 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #25
   call void @_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_(ptr noundef nonnull align 8 dereferenceable(16) %3, i32 %i.e)
   %i.gc = load ptr, ptr %16, align 8, !tbaa !26   ; 2 uses
@@ -1847,8 +1846,7 @@ _ZNK4llvm3LLT13getSizeInBitsEv.exit101.thread:    ; preds = %_ZNK4llvm8TypeSizec
   %i.bu = lshr i64 %.sroa.04.0.i86, 44
   %i.bv = and i64 %i.bu, 65535
   %i.bw = lshr i64 %.sroa.04.0.i86, 28
-  %20 = and i64 %i.bw, 4294967295
-  %i.bx = select i1 %spec.select.i.i.i100, i64 %i.bv, i64 %20
+  %i.bx = select i1 %spec.select.i.i.i100, i64 %i.bv, i64 %i.bw
   br label %_ZNK4llvm8TypeSizecvmEv.exit102
 
 _ZNK4llvm3LLT13getSizeInBitsEv.exit101:           ; preds = %bb.k
@@ -1860,7 +1858,6 @@ _ZNK4llvm3LLT13getSizeInBitsEv.exit101:           ; preds = %bb.k
   %i.cc = lshr i64 %.sroa.04.0.i86, 28
   %.0.in.i3.i94 = select i1 %i.bz, i64 %i.cb, i64 %i.cc
   %i.cd = mul nuw nsw i64 %.0.in.i3.i94, %.sroa.0.0.insert.ext.i.i.i93
-  %21 = and i64 %i.cd, 4294967295
   %i.ce = trunc i64 %.sroa.04.0.i86 to i1
   br i1 %i.ce, label %bb.l, label %_ZNK4llvm8TypeSizecvmEv.exit102
 
@@ -1869,8 +1866,8 @@ bb.l:                                             ; preds = %_ZNK4llvm3LLT13getS
   unreachable
 
 _ZNK4llvm8TypeSizecvmEv.exit102:                  ; preds = %_ZNK4llvm3LLT13getSizeInBitsEv.exit101.thread, %_ZNK4llvm3LLT13getSizeInBitsEv.exit101
-  %.sroa.05.0.i96153 = phi i64 [ %i.bx, %_ZNK4llvm3LLT13getSizeInBitsEv.exit101.thread ], [ %21, %_ZNK4llvm3LLT13getSizeInBitsEv.exit101 ] ; 2 uses
-  %i.cf = trunc nuw i64 %.sroa.05.0.i96153 to i32 ; 2 uses
+  %.sroa.05.0.i96153 = phi i64 [ %i.bx, %_ZNK4llvm3LLT13getSizeInBitsEv.exit101.thread ], [ %i.cd, %_ZNK4llvm3LLT13getSizeInBitsEv.exit101 ]
+  %i.cf = trunc i64 %.sroa.05.0.i96153 to i32     ; 2 uses
   %i.cg = icmp eq i32 %i.b, 144
   br i1 %i.cg, label %bb.m, label %bb.at
 
@@ -2185,7 +2182,7 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %bb.al
   %i.gr = urem i32 %i.bq, %i.cf
-  %i.gs = udiv i32 %i.bq, %i.cf
+  %i.gs = udiv exact i32 %i.bq, %i.cf
   %.not = icmp eq i32 %i.gr, 0
   br i1 %.not, label %bb.an, label %bb.at
 
@@ -2218,7 +2215,7 @@ bb.ao:                                            ; preds = %bb.an
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #25
   %i.hd = zext i32 %i.gs to i64                   ; 3 uses
   call void @_ZN4llvm11SmallVectorINS_8RegisterELj8EEC2Em(ptr noundef nonnull align 8 dereferenceable(48) %18, i64 noundef %i.hd)
-  %.not161 = icmp samesign ugt i64 %.sroa.05.0.i96153, %.sroa.05.0.i148
+  %.not161 = icmp eq i64 %.sroa.05.0.i148, 0
   br i1 %.not161, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.as, %bb.ao
@@ -2621,7 +2618,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   %i.al = urem i32 %3, %i.ad
-  %i.am = udiv i32 %3, %i.ad                      ; 3 uses
+  %i.am = udiv exact i32 %3, %i.ad                ; 3 uses
   %.not47 = icmp eq i32 %i.al, 0
   br i1 %.not47, label %bb.k, label %bb.j
 
@@ -3023,9 +3020,6 @@ declare i32 @llvm.umax.i32(i32, i32) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #24
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #24
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

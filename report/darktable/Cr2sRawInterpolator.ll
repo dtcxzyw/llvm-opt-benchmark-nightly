@@ -150,7 +150,7 @@ bb.a:
   tail call void @llvm.assume(i1 %i.p)
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %i.s = load i32, ptr %i.r, align 4, !tbaa !102  ; 6 uses
+  %i.s = load i32, ptr %i.r, align 4, !tbaa !102  ; 7 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.u = load i32, ptr %i.t, align 8, !tbaa !103  ; 4 uses
   %i.v = icmp sgt i32 %i.u, -1
@@ -162,7 +162,7 @@ bb.a:
   %i.z = icmp ne i32 %i.u, 0
   tail call void @llvm.assume(i1 %i.z)
   %i.aa = udiv i32 %i.s, 6                        ; 2 uses
-  %i.ab = icmp samesign ugt i32 %i.s, 11
+  %i.ab = icmp samesign ugt i32 %i.s, 6
   tail call void @llvm.assume(i1 %i.ab)
   %.sroa.0116.0.copyload = load ptr, ptr %i.q, align 8, !tbaa !105 ; 3 uses
   %i.ac = icmp samesign ugt i32 %i.u, 1
@@ -181,7 +181,7 @@ bb.a:
 
 .lr.ph232:                                        ; preds = %.lr.ph, %bb.a
   %.051.lcssa = phi i32 [ 0, %bb.a ], [ %i.ad, %.lr.ph ] ; 4 uses
-  %i.ai = add nsw i32 %i.aa, -1                   ; 3 uses
+  %i.ai = add nsw i32 %i.aa, -1                   ; 2 uses
   %i.aj = icmp samesign ult i32 %.051.lcssa, %i.u
   tail call void @llvm.assume(i1 %i.aj), !noalias !131
   %i.ak = mul i32 %.051.lcssa, %i.x
@@ -584,7 +584,7 @@ begin_hunk_1_@_ZN8rawspeed19Cr2sRawInterpolator15interpolate_420ILi1EEEvv:bb.a
 ._crit_edge233:                                   ; preds = %.preheader217
   %i.kd = zext nneg i32 %i.s to i64
   %i.ke = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0116.0.copyload, i64 %i.al ; 5 uses
-  %1 = mul nuw nsw i32 %i.ai, 6                   ; 3 uses
+  %1 = add nsw i32 %i.s, -6
   %i.kf = zext nneg i32 %1 to i64                 ; 7 uses
   %i.kg = getelementptr inbounds nuw [2 x i8], ptr %i.ke, i64 %i.kf
   %i.kh = getelementptr inbounds nuw [2 x i8], ptr %i.ke, i64 %i.kf
@@ -595,12 +595,9 @@ begin_hunk_1_@_ZN8rawspeed19Cr2sRawInterpolator15interpolate_420ILi1EEEvv:bb.a
   %i.km = icmp samesign ult i64 %i.kl, %i.kd
   tail call void @llvm.assume(i1 %i.km), !noalias !133
   %i.kn = getelementptr inbounds nuw [2 x i8], ptr %i.ke, i64 %i.kl
-  %2 = add nuw nsw i32 %1, 6
-  %3 = icmp samesign ule i32 %2, %i.s
-  tail call void @llvm.assume(i1 %3), !noalias !133
-  %i.ko = zext nneg i32 %1 to i64
-  %i.kp = getelementptr inbounds nuw [2 x i8], ptr %i.ke, i64 %i.ko
-  %i.kq = getelementptr inbounds nuw i8, ptr %i.kp, i64 8
+  %i.ko = zext nneg i32 %i.s to i64
+  %i.kp = getelementptr [2 x i8], ptr %i.ke, i64 %i.ko
+  %i.kq = getelementptr i8, ptr %i.kp, i64 -4
   %i.kr = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.ks = load i32, ptr %i.kr, align 4, !tbaa !106
   %i.kt = add i32 %i.ks, -16384
@@ -704,7 +701,7 @@ bb.a:
   tail call void @llvm.assume(i1 %i.p)
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %i.s = load i32, ptr %i.r, align 4, !tbaa !102  ; 6 uses
+  %i.s = load i32, ptr %i.r, align 4, !tbaa !102  ; 7 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.u = load i32, ptr %i.t, align 8, !tbaa !103  ; 4 uses
   %i.v = icmp sgt i32 %i.u, -1
@@ -716,7 +713,7 @@ bb.a:
   %i.z = icmp ne i32 %i.u, 0
   tail call void @llvm.assume(i1 %i.z)
   %i.aa = udiv i32 %i.s, 6                        ; 2 uses
-  %i.ab = icmp samesign ugt i32 %i.s, 11
+  %i.ab = icmp samesign ugt i32 %i.s, 6
   tail call void @llvm.assume(i1 %i.ab)
   %.sroa.0114.0.copyload = load ptr, ptr %i.q, align 8, !tbaa !105 ; 3 uses
   %i.ac = icmp samesign ugt i32 %i.u, 1
@@ -735,7 +732,7 @@ bb.a:
 
 .lr.ph230:                                        ; preds = %.lr.ph, %bb.a
   %.051.lcssa = phi i32 [ 0, %bb.a ], [ %i.ad, %.lr.ph ] ; 4 uses
-  %i.ai = add nsw i32 %i.aa, -1                   ; 3 uses
+  %i.ai = add nsw i32 %i.aa, -1                   ; 2 uses
   %i.aj = icmp samesign ult i32 %.051.lcssa, %i.u
   tail call void @llvm.assume(i1 %i.aj), !noalias !146
   %i.ak = mul i32 %.051.lcssa, %i.x
@@ -1138,7 +1135,7 @@ begin_hunk_2_@_ZN8rawspeed19Cr2sRawInterpolator15interpolate_420ILi2EEEvv:bb.a
 ._crit_edge231:                                   ; preds = %.preheader215
   %i.jz = zext nneg i32 %i.s to i64
   %i.ka = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0114.0.copyload, i64 %i.al ; 5 uses
-  %1 = mul nuw nsw i32 %i.ai, 6                   ; 3 uses
+  %1 = add nsw i32 %i.s, -6
   %i.kb = zext nneg i32 %1 to i64                 ; 7 uses
   %i.kc = getelementptr inbounds nuw [2 x i8], ptr %i.ka, i64 %i.kb
   %i.kd = getelementptr inbounds nuw [2 x i8], ptr %i.ka, i64 %i.kb
@@ -1149,15 +1146,12 @@ begin_hunk_2_@_ZN8rawspeed19Cr2sRawInterpolator15interpolate_420ILi2EEEvv:bb.a
   %i.ki = icmp samesign ult i64 %i.kh, %i.jz
   tail call void @llvm.assume(i1 %i.ki), !noalias !148
   %i.kj = getelementptr inbounds nuw [2 x i8], ptr %i.ka, i64 %i.kh
-  %2 = add nuw nsw i32 %1, 6
-  %3 = icmp samesign ule i32 %2, %i.s
-  tail call void @llvm.assume(i1 %3), !noalias !148
-  %i.kk = zext nneg i32 %1 to i64
-  %i.kl = getelementptr inbounds nuw [2 x i8], ptr %i.ka, i64 %i.kk ; 2 uses
-  %i.km = getelementptr inbounds nuw i8, ptr %i.kl, i64 8
+  %i.kk = zext nneg i32 %i.s to i64
+  %i.kl = getelementptr [2 x i8], ptr %i.ka, i64 %i.kk ; 2 uses
+  %i.km = getelementptr i8, ptr %i.kl, i64 -4
   %i.kn = load i16, ptr %i.km, align 2, !tbaa !109, !noalias !148
   %i.ko = zext i16 %i.kn to i32
-  %i.kp = getelementptr inbounds nuw i8, ptr %i.kl, i64 10
+  %i.kp = getelementptr i8, ptr %i.kl, i64 -2
   %i.kq = load i16, ptr %i.kp, align 2, !tbaa !109, !noalias !148
   %i.kr = zext i16 %i.kq to i32
   %i.ks = getelementptr inbounds nuw i8, ptr %0, i64 52
@@ -1560,20 +1554,20 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   tail call void @llvm.assume(i1 %i.p)
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %i.s = load i32, ptr %i.r, align 4, !tbaa !102  ; 6 uses
+  %i.s = load i32, ptr %i.r, align 4, !tbaa !102  ; 7 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.u = load i32, ptr %i.t, align 8, !tbaa !103  ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.w = load i32, ptr %i.v, align 8, !tbaa !104  ; 2 uses
   %i.x = icmp sge i32 %i.w, %i.s
   tail call void @llvm.assume(i1 %i.x)
-  %2 = udiv i32 %i.s, 6
-  %i.y = icmp samesign ugt i32 %i.s, 11
+  %i.y = icmp samesign ugt i32 %i.s, 6
   tail call void @llvm.assume(i1 %i.y)
   %.sroa.0114.0.copyload = load ptr, ptr %i.q, align 8, !tbaa !105 ; 7 uses
   %i.z = icmp slt i32 %1, %i.u
   tail call void @llvm.assume(i1 %i.z)
-  %i.aa = add nsw i32 %2, -1                      ; 3 uses
+  %2 = udiv i32 %i.s, 6
+  %i.aa = add nsw i32 %2, -1                      ; 2 uses
   %invariant.op = add nsw i32 %i.s, -6
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !106
@@ -1976,13 +1970,10 @@ begin_hunk_4_@_ZN8rawspeed19Cr2sRawInterpolator19interpolate_420_rowILi1EEEvi:.l
 
 ._crit_edge:                                      ; preds = %.preheader215
   %i.nk = zext nneg i32 %i.s to i64
-  %3 = mul nuw nsw i32 %i.aa, 6                   ; 3 uses
-  %i.nl = add nuw nsw i32 %3, 4
-  %i.nm = add nuw nsw i32 %3, 6
-  %4 = icmp samesign ule i32 %i.nm, %i.s
-  tail call void @llvm.assume(i1 %4), !noalias !212
-  %i.nn = zext nneg i32 %i.nl to i64              ; 2 uses
-  %i.no = zext nneg i32 %3 to i64                 ; 7 uses
+  %i.nl = add nsw i32 %i.s, -6
+  %i.nm = add nsw i32 %i.s, -2
+  %i.nn = zext nneg i32 %i.nm to i64              ; 2 uses
+  %i.no = zext nneg i32 %i.nl to i64              ; 7 uses
   %i.np = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0114.0.copyload, i64 %i.ar ; 5 uses
   %i.nq = getelementptr inbounds nuw [2 x i8], ptr %i.np, i64 %i.no
   %i.nr = getelementptr inbounds nuw [2 x i8], ptr %i.np, i64 %i.no
@@ -2110,20 +2101,20 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   tail call void @llvm.assume(i1 %i.p)
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 28
-  %i.s = load i32, ptr %i.r, align 4, !tbaa !102  ; 6 uses
+  %i.s = load i32, ptr %i.r, align 4, !tbaa !102  ; 7 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.u = load i32, ptr %i.t, align 8, !tbaa !103  ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.w = load i32, ptr %i.v, align 8, !tbaa !104  ; 2 uses
   %i.x = icmp sge i32 %i.w, %i.s
   tail call void @llvm.assume(i1 %i.x)
-  %2 = udiv i32 %i.s, 6
-  %i.y = icmp samesign ugt i32 %i.s, 11
+  %i.y = icmp samesign ugt i32 %i.s, 6
   tail call void @llvm.assume(i1 %i.y)
   %.sroa.0112.0.copyload = load ptr, ptr %i.q, align 8, !tbaa !105 ; 7 uses
   %i.z = icmp slt i32 %1, %i.u
   tail call void @llvm.assume(i1 %i.z)
-  %i.aa = add nsw i32 %2, -1                      ; 3 uses
+  %2 = udiv i32 %i.s, 6
+  %i.aa = add nsw i32 %2, -1                      ; 2 uses
   %invariant.op = add nsw i32 %i.s, -6
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !106
@@ -2526,13 +2517,10 @@ begin_hunk_5_@_ZN8rawspeed19Cr2sRawInterpolator19interpolate_420_rowILi2EEEvi:.l
 
 ._crit_edge:                                      ; preds = %.preheader213
   %i.mg = zext nneg i32 %i.s to i64
-  %3 = mul nuw nsw i32 %i.aa, 6                   ; 3 uses
-  %i.mh = add nuw nsw i32 %3, 4
-  %i.mi = add nuw nsw i32 %3, 6
-  %4 = icmp samesign ule i32 %i.mi, %i.s
-  tail call void @llvm.assume(i1 %4), !noalias !228
-  %i.mj = zext nneg i32 %i.mh to i64              ; 2 uses
-  %i.mk = zext nneg i32 %3 to i64                 ; 7 uses
+  %i.mh = add nsw i32 %i.s, -6
+  %i.mi = add nsw i32 %i.s, -2
+  %i.mj = zext nneg i32 %i.mi to i64              ; 2 uses
+  %i.mk = zext nneg i32 %i.mh to i64              ; 7 uses
   %i.ml = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0112.0.copyload, i64 %i.ar ; 5 uses
   %i.mm = getelementptr inbounds nuw [2 x i8], ptr %i.ml, i64 %i.mk
   %i.mn = getelementptr inbounds nuw [2 x i8], ptr %i.ml, i64 %i.mk

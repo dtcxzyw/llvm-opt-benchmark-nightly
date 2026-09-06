@@ -205,22 +205,21 @@ bb.gn:                                            ; preds = %bb.t
   br i1 %or.cond.i404, label %.thread530, label %bb.go
 
 bb.go:                                            ; preds = %bb.gn
-  %.lhs.trunc = trunc nuw i32 %.0.i362529 to i16
-  %7 = udiv i16 %.lhs.trunc, 3                    ; 2 uses
-  %.zext = zext nneg i16 %7 to i64
-  %8 = icmp samesign ugt i32 %.0.i362529, 2
-  br i1 %8, label %.lr.ph.i, label %.lr.ph3.i
+  %.not586 = icmp eq i32 %.0.i362529, 0
+  br i1 %.not586, label %.lr.ph3.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.go
-  %wide.trip.count.i = zext nneg i16 %7 to i64
+  %.lhs.trunc.i = trunc nuw nsw i32 %.0.i362529 to i16
+  %7 = udiv exact i16 %.lhs.trunc.i, 3
+  %wide.trip.count.i = zext nneg i16 %7 to i64    ; 2 uses
   br label %bb.gp
 
 .preheader.i:                                     ; preds = %bytestream2_get_byte.exit.i407
   %i.acq = icmp samesign ult i32 %.0.i362529, 768
   br i1 %i.acq, label %.lr.ph3.i, label %._crit_edge.i
 
-.lr.ph3.i:                                        ; preds = %bb.go, %.preheader.i
-  %.0.lcssa12.i = phi i64 [ %.zext, %.preheader.i ], [ 0, %bb.go ] ; 4 uses
+.lr.ph3.i:                                        ; preds = %.preheader.i, %bb.go
+  %.0.lcssa12.i = phi i64 [ %wide.trip.count.i, %.preheader.i ], [ 0, %bb.go ] ; 4 uses
   %i.acr = sub nsw i64 256, %.0.lcssa12.i         ; 3 uses
   %min.iters.check = icmp ult i64 %i.acr, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph

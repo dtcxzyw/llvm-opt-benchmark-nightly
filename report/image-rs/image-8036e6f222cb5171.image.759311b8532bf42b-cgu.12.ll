@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_RNvMs3_NtCsltZrX1n
 
 bb.c:                                             ; preds = %bb.b
   %i.au = urem i64 %3, 3
-  %i.av = udiv i64 %3, 3
+  %i.av = udiv exact i64 %3, 3
   %i.aw = icmp eq i64 %i.au, 0                    ; 2 uses
   br i1 %i.at, label %bb.e, label %bb.x, !prof !1012
 
@@ -228,11 +228,11 @@ bb.e:                                             ; preds = %bb.c
 .preheader.i.i.i.i.i:                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w), !noalias !1014
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(768) %i.w, i8 0, i64 768, i1 false), !noalias !1014
-  %.not125.i.i.i.i.i = icmp samesign ult i64 %3, 3
+  %.not125.i.i.i.i.i = icmp eq i64 %3, 0
   br i1 %.not125.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.preheader.i.i.i.i.i
-  %i.az = udiv i64 %3, 3
+  %i.az = udiv exact i64 %3, 3
   %i.ba = getelementptr inbounds nuw i8, ptr %i.u, i64 1
   %i.bb = getelementptr inbounds nuw i8, ptr %i.u, i64 2
   br label %bb.f
@@ -254,7 +254,7 @@ bb.f:                                             ; preds = %.backedge.i.i.i.i.i
   %.sroa.16.0127.i.i.i.i.i = phi i8 [ 0, %.lr.ph.i.i.i.i.i ], [ %.sroa.16.0.be.i.i.i.i.i, %.backedge.i.i.i.i.i ] ; 8 uses
   %.sroa.21.0126.i.i.i.i.i = phi i8 [ 0, %.lr.ph.i.i.i.i.i ], [ %.sroa.21.0.be.i.i.i.i.i, %.backedge.i.i.i.i.i ] ; 8 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.09.0130.i.i.i.i.i, i64 3 ; 5 uses
-  %i.be = add nsw i64 %.sroa.8.0129.i.i.i.i.i, -1 ; 3 uses
+  %i.be = add i64 %.sroa.8.0129.i.i.i.i.i, -1     ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !1014
   store i8 0, ptr %i.v, align 1, !noalias !1014
   %i.bf = invoke noundef ptr @_RNvXNtNtCs4wP2HXfJTCR_5alloc2io6cursorINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShENtNtB4_4read4Read10read_exactCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.z, ptr noalias nofree noundef nonnull %i.v, i64 noundef 1)
@@ -500,7 +500,7 @@ bb.x:                                             ; preds = %bb.c
 .preheader.i1.i.i.i.i:                            ; preds = %bb.x
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !1019
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(768) %i.r, i8 0, i64 768, i1 false), !noalias !1019
-  %.not135.i.i.i.i.i = icmp samesign ult i64 %3, 3
+  %.not135.i.i.i.i.i = icmp eq i64 %3, 0
   br i1 %.not135.i.i.i.i.i, label %._crit_edge.i13.i.i.i.i, label %.lr.ph.i2.i.i.i.i
 
 .lr.ph.i2.i.i.i.i:                                ; preds = %.preheader.i1.i.i.i.i
@@ -527,7 +527,7 @@ bb.y:                                             ; preds = %.backedge.i9.i.i.i.
   %.sroa.17.0137.i.i.i.i.i = phi i8 [ 0, %.lr.ph.i2.i.i.i.i ], [ %.sroa.17.0.be.i.i.i.i.i, %.backedge.i9.i.i.i.i ] ; 7 uses
   %.sroa.23.0136.i.i.i.i.i = phi i8 [ 0, %.lr.ph.i2.i.i.i.i ], [ %.sroa.23.0.be.i.i.i.i.i, %.backedge.i9.i.i.i.i ] ; 7 uses
   %i.du = getelementptr inbounds nuw i8, ptr %.sroa.012.0140.i.i.i.i.i, i64 3 ; 5 uses
-  %i.dv = add nsw i64 %.sroa.8.0139.i.i.i.i.i, -1 ; 3 uses
+  %i.dv = add i64 %.sroa.8.0139.i.i.i.i.i, -1     ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !1019
   store i8 0, ptr %i.q, align 1, !noalias !1019
   %i.dw = invoke noundef ptr @_RNvXNtNtCs4wP2HXfJTCR_5alloc2io6cursorINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShENtNtB4_4read4Read10read_exactCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.z, ptr noalias nofree noundef nonnull %i.q, i64 noundef 1)

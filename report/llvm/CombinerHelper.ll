@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %_ZNK4llvm19MachineR
   %i.az = zext i24 %i.ay to i32
   %i.ba = add nsw i32 %i.az, -1                   ; 2 uses
   %i.bb = urem i32 %i.ba, %i.av
-  %i.bc = udiv i32 %i.ba, %i.av
+  %i.bc = udiv exact i32 %i.ba, %i.av
   %.not46 = icmp eq i32 %i.bb, 0
   br i1 %.not46, label %bb.h, label %.critedge53
 
@@ -608,7 +608,7 @@ bb.r:                                             ; preds = %bb.p
 
 bb.s:                                             ; preds = %bb.m
   %i.dm = urem i32 %i.cr, %i.cd
-  %i.dn = udiv i32 %i.cr, %i.cd                   ; 2 uses
+  %i.dn = udiv exact i32 %i.cr, %i.cd             ; 2 uses
   %i.do = icmp eq i32 %i.dm, 0
   br i1 %i.do, label %.preheader120, label %.loopexit
 
@@ -1011,9 +1011,9 @@ _ZNK4llvm3LLT14getNumElementsEv.exit69:           ; preds = %_ZNK4llvm3LLT14getN
 
 bb.h:                                             ; preds = %_ZNK4llvm3LLT14getNumElementsEv.exit69
   %.lhs.trunc = trunc i32 %i.ae to i16            ; 3 uses
-  %.rhs.trunc = trunc i32 %i.ai to i16            ; 3 uses
+  %.rhs.trunc = trunc i32 %i.ai to i16            ; 2 uses
   %i.am = urem i16 %.lhs.trunc, %.rhs.trunc
-  %i.an = udiv i16 %.lhs.trunc, %.rhs.trunc       ; 3 uses
+  %i.an = udiv exact i16 %.lhs.trunc, %.rhs.trunc ; 3 uses
   %.not = icmp eq i16 %i.am, 0
   br i1 %.not, label %bb.i, label %bb.ad
 
@@ -1074,7 +1074,7 @@ middle.block130:                                  ; preds = %vector.body126
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %_ZN4llvm11SmallVectorIiLj8EEC2EmRKi.exit.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i, !llvm.loop !677
 
 _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.i.i:          ; preds = %bb.i
-  %.not.i = icmp ugt i16 %.rhs.trunc, %.lhs.trunc
+  %.not.i = icmp eq i16 %.lhs.trunc, 0
   br i1 %.not.i, label %_ZN4llvm11SmallVectorIiLj8EEC2EmRKi.exit, label %bb.k
 
 bb.k:                                             ; preds = %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.i.i
@@ -1477,7 +1477,7 @@ _ZN4llvm14MIPatternMatch8mi_matchINS_8RegisterENS0_18OneNonDBGUse_matchINS0_14Bi
   %.sroa.0.0.i = phi i32 [ %spec.select.i, %bb.f ], [ %.sroa.015.0.copyload, %bb.b ], [ %.sroa.015.0.copyload, %bb.c ], [ %.sroa.015.0.copyload, %bb.d ], [ %.sroa.015.0.copyload, %bb.e ]
   %.0.i = phi i64 [ %spec.select30.i, %bb.f ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.e ] ; 2 uses
   %i.aq = srem i64 %.0.i, %i.v
-  %i.ar = sdiv i64 %.0.i, %i.v
+  %i.ar = sdiv exact i64 %.0.i, %i.v
   %.not.i = icmp eq i64 %i.aq, 0
   br i1 %.not.i, label %bb.g, label %.thread
 

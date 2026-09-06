@@ -206,7 +206,7 @@ bb.m:                                             ; preds = %bb.l
   %i.dg = add nuw i64 %i.dc, 1                    ; 3 uses
   store i64 %i.dg, ptr %i.e, align 8, !alias.scope !81505, !noalias !81504
   %i.dh = urem i32 %.val226.i, 10
-  %i.di = udiv i32 %.val226.i, 10                 ; 2 uses
+  %i.di = udiv exact i32 %.val226.i, 10           ; 2 uses
   %i.dj = icmp eq i32 %i.dh, 0
   br i1 %i.dj, label %bb.n, label %bb.o
 
