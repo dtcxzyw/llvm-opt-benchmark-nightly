@@ -204,14 +204,18 @@ bb.o:                                             ; preds = %"_ZSt25__unguarded_
   %i.aw = load ptr, ptr %i.a, align 8, !tbaa !99  ; 4 uses
   %i.ax = ptrtoint ptr %i.av to i64
   %i.ay = ptrtoint ptr %i.aw to i64
-  %i.az = sub i64 %i.ax, %i.ay
-  %3 = sdiv exact i64 %i.az, 24                   ; 2 uses
-  %i.ba = icmp ugt i64 %3, 1
-  br i1 %i.ba, label %.lr.ph, label %._crit_edge
+  %i.az = sub i64 %i.ax, %i.ay                    ; 2 uses
+  %i.ba = icmp ugt i64 %i.az, 24
+  br i1 %i.ba, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4lean11region_viewESt6vectorIS3_SaIS3_EEEEZNS2_13region_reader29sort_and_validate_dep_regionsEvE3$_0EvT_SB_T0_.exit"
+  %3 = sdiv exact i64 %i.az, 24
+  %umax = tail call i64 @llvm.umax.i64(i64 %3, i64 2)
+  br label %.lr.ph
 
 bb.p:                                             ; preds = %.lr.ph
   %i.bb = add nuw i64 %.02130, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bb, %3
+  %exitcond.not = icmp eq i64 %i.bb, %umax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !178
 
 ._crit_edge:                                      ; preds = %bb.p, %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4lean11region_viewESt6vectorIS3_SaIS3_EEEEZNS2_13region_reader29sort_and_validate_dep_regionsEvE3$_0EvT_SB_T0_.exit"
@@ -223,8 +227,8 @@ bb.p:                                             ; preds = %.lr.ph
   %i.bh = icmp eq ptr %i.aw, %i.av
   br i1 %i.bh, label %._crit_edge35, label %.lr.ph34
 
-.lr.ph:                                           ; preds = %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4lean11region_viewESt6vectorIS3_SaIS3_EEEEZNS2_13region_reader29sort_and_validate_dep_regionsEvE3$_0EvT_SB_T0_.exit", %bb.p
-  %.02130 = phi i64 [ %i.bb, %bb.p ], [ 1, %"_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN4lean11region_viewESt6vectorIS3_SaIS3_EEEEZNS2_13region_reader29sort_and_validate_dep_regionsEvE3$_0EvT_SB_T0_.exit" ] ; 2 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.p
+  %.02130 = phi i64 [ %i.bb, %bb.p ], [ 1, %.lr.ph.preheader ] ; 2 uses
   %i.bi = getelementptr [24 x i8], ptr %i.aw, i64 %.02130 ; 3 uses
   %i.bj = getelementptr i8, ptr %i.bi, i64 -8
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !117

@@ -204,9 +204,9 @@ _ZNSt6vectorImSaImEE5clearEv.exit.i:              ; preds = %bb.ap, %bb.aq
   %i.hc = load float, ptr %i.hb, align 4, !tbaa !43
   %i.hd = ptrtoint ptr %i.fi to i64
   %i.he = ptrtoint ptr %.pre to i64
-  %i.hf = sub i64 %i.hd, %i.he                    ; 2 uses
-  %8 = sdiv exact i64 %i.hf, 20                   ; 11 uses
-  %9 = icmp ugt i64 %8, 2305843009213693951
+  %i.hf = sub i64 %i.hd, %i.he                    ; 3 uses
+  %8 = udiv i64 %i.hf, 20                         ; 10 uses
+  %9 = icmp slt i64 %i.hf, 0
   br i1 %9, label %.noexc.i, label %.noexc44.i
 
 .noexc.i:                                         ; preds = %_ZNSt6vectorImSaImEE5clearEv.exit.i
@@ -234,14 +234,15 @@ _ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i: ; preds = %.noexc118
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i, %.noexc118
-  %min.iters.check = icmp ult i64 %8, 5
+  %min.iters.check = icmp ult i64 %i.hf, 180
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
   %i.hl = shl nuw nsw i64 %8, 2
   %scevgep = getelementptr i8, ptr %i.hh, i64 %i.hl
-  %i.hm = getelementptr i8, ptr %.pre, i64 %i.hf
-  %scevgep531 = getelementptr i8, ptr %i.hm, i64 -4
+  %i.hm = getelementptr i8, ptr %.pre, i64 -4
+  %10 = mul nuw i64 %8, 20
+  %scevgep531 = getelementptr i8, ptr %i.hm, i64 %10
   %bound0 = icmp ult ptr %i.hh, %scevgep531
   %bound1 = icmp ult ptr %.pre, %scevgep
   %found.conflict = and i1 %bound0, %bound1

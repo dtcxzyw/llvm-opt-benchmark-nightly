@@ -205,8 +205,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 192
-  %i.g = icmp ugt i64 %2, 48038396025285290
+  %i.g = icmp ugt i64 %i.f, 9223372036854775680
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN16OpenColorIO_v2_54ViewEE8allocateEmPKv.exit.i.i.i, !prof !93
 
 .noexc.i:                                         ; preds = %bb.b
@@ -609,9 +608,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.av = load ptr, ptr %i.ad, align 8, !tbaa !423
   %i.aw = ptrtoint ptr %i.au to i64
   %i.ax = ptrtoint ptr %i.av to i64
-  %i.ay = sub i64 %i.aw, %i.ax
-  %3 = sdiv exact i64 %i.ay, 48                   ; 2 uses
-  %i.az = icmp ugt i64 %3, 100000
+  %i.ay = sub i64 %i.aw, %i.ax                    ; 2 uses
+  %i.az = icmp ugt i64 %i.ay, 4800000
   br i1 %i.az, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -667,7 +665,10 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit5:               ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.p, %bb.q
-  %i.bp = add nsw i64 %3, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.ay to i32
+  %3 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %3 to i64
+  %i.bp = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #31
   ret i64 %i.bp
 
@@ -989,9 +990,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.y = load ptr, ptr %i.g, align 8, !tbaa !423
   %i.z = ptrtoint ptr %i.x to i64
   %i.aa = ptrtoint ptr %i.y to i64
-  %i.ab = sub i64 %i.z, %i.aa
-  %3 = sdiv exact i64 %i.ab, 48                   ; 2 uses
-  %i.ac = icmp ugt i64 %3, 100000
+  %i.ab = sub i64 %i.z, %i.aa                     ; 2 uses
+  %i.ac = icmp ugt i64 %i.ab, 4800000
   br i1 %i.ac, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -1047,7 +1047,10 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit4:               ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.j, %bb.k
-  %i.as = add nsw i64 %3, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.ab to i32
+  %3 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %3 to i64
+  %i.as = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #31
   ret i64 %i.as
 
@@ -1095,9 +1098,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.i = load ptr, ptr %i.b, align 8, !tbaa !423
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = sub i64 %i.j, %i.k
-  %2 = sdiv exact i64 %i.l, 48                    ; 2 uses
-  %i.m = icmp ugt i64 %2, 100000
+  %i.l = sub i64 %i.j, %i.k                       ; 2 uses
+  %i.m = icmp ugt i64 %i.l, 4800000
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -1131,7 +1133,10 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit:                ; preds = %bb.d, %bb.e, %bb.f
-  %i.v = add nsw i64 %2, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.l to i32
+  %2 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %2 to i64
+  %i.v = add nsw i64 %.zext.i, -1
   ret i64 %i.v
 
 bb.h:                                             ; preds = %bb.c, %bb.b
@@ -1534,9 +1539,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.i = load ptr, ptr %i.b, align 8, !tbaa !423
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = sub i64 %i.j, %i.k
-  %2 = sdiv exact i64 %i.l, 48                    ; 2 uses
-  %i.m = icmp ugt i64 %2, 100000
+  %i.l = sub i64 %i.j, %i.k                       ; 2 uses
+  %i.m = icmp ugt i64 %i.l, 4800000
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -1570,7 +1574,10 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit:                ; preds = %bb.d, %bb.e, %bb.f
-  %i.v = add nsw i64 %2, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.l to i32
+  %2 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %2 to i64
+  %i.v = add nsw i64 %.zext.i, -1
   ret i64 %i.v
 
 bb.h:                                             ; preds = %bb.c, %bb.b
@@ -1645,9 +1652,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.u = load ptr, ptr %i.c, align 8, !tbaa !423
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = ptrtoint ptr %i.u to i64
-  %i.x = sub i64 %i.v, %i.w
-  %6 = sdiv exact i64 %i.x, 48                    ; 2 uses
-  %i.y = icmp ugt i64 %6, 100000
+  %i.x = sub i64 %i.v, %i.w                       ; 2 uses
+  %i.y = icmp ugt i64 %i.x, 4800000
   br i1 %i.y, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -1703,7 +1709,10 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit6:               ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.j, %bb.k
-  %i.ao = add nsw i64 %6, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.x to i32
+  %6 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %6 to i64
+  %i.ao = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #31
   ret i64 %i.ao
 
@@ -2106,9 +2115,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.i = load ptr, ptr %i.b, align 8, !tbaa !423
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = sub i64 %i.j, %i.k
-  %2 = sdiv exact i64 %i.l, 48                    ; 2 uses
-  %i.m = icmp ugt i64 %2, 100000
+  %i.l = sub i64 %i.j, %i.k                       ; 2 uses
+  %i.m = icmp ugt i64 %i.l, 4800000
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -2142,7 +2150,10 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit:                ; preds = %bb.d, %bb.e, %bb.f
-  %i.v = add nsw i64 %2, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.l to i32
+  %2 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %2 to i64
+  %i.v = add nsw i64 %.zext.i, -1
   ret i64 %i.v
 
 bb.h:                                             ; preds = %bb.c, %bb.b
@@ -2187,9 +2198,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.i = load ptr, ptr %i.b, align 8, !tbaa !423
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
-  %i.l = sub i64 %i.j, %i.k
-  %2 = sdiv exact i64 %i.l, 48                    ; 2 uses
-  %i.m = icmp ugt i64 %2, 100000
+  %i.l = sub i64 %i.j, %i.k                       ; 2 uses
+  %i.m = icmp ugt i64 %i.l, 4800000
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -2223,7 +2233,10 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit:                ; preds = %bb.d, %bb.e, %bb.f
-  %i.v = add nsw i64 %2, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.l to i32
+  %2 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %2 to i64
+  %i.v = add nsw i64 %.zext.i, -1
   ret i64 %i.v
 
 bb.h:                                             ; preds = %bb.c, %bb.b
@@ -2299,9 +2312,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.v = load ptr, ptr %i.d, align 8, !tbaa !423
   %i.w = ptrtoint ptr %i.u to i64
   %i.x = ptrtoint ptr %i.v to i64
-  %i.y = sub i64 %i.w, %i.x
-  %4 = sdiv exact i64 %i.y, 48                    ; 2 uses
-  %i.z = icmp ugt i64 %4, 100000
+  %i.y = sub i64 %i.w, %i.x                       ; 2 uses
+  %i.z = icmp ugt i64 %i.y, 4800000
   br i1 %i.z, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -2358,7 +2370,10 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit5:               ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.j, %bb.k
-  %i.aq = add nsw i64 %4, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.y to i32
+  %4 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %4 to i64
+  %i.aq = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
   ret i64 %i.aq
 
@@ -2439,9 +2454,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.w = load ptr, ptr %i.e, align 8, !tbaa !423
   %i.x = ptrtoint ptr %i.v to i64
   %i.y = ptrtoint ptr %i.w to i64
-  %i.z = sub i64 %i.x, %i.y
-  %5 = sdiv exact i64 %i.z, 48                    ; 2 uses
-  %i.aa = icmp ugt i64 %5, 100000
+  %i.z = sub i64 %i.x, %i.y                       ; 2 uses
+  %i.aa = icmp ugt i64 %i.z, 4800000
   br i1 %i.aa, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -2497,7 +2511,10 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit6:               ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.j, %bb.k
-  %i.aq = add nsw i64 %5, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.z to i32
+  %5 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %5 to i64
+  %i.aq = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #31
   ret i64 %i.aq
 
@@ -2900,9 +2917,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.ae = load ptr, ptr %i.m, align 8, !tbaa !423
   %i.af = ptrtoint ptr %i.ad to i64
   %i.ag = ptrtoint ptr %i.ae to i64
-  %i.ah = sub i64 %i.af, %i.ag
-  %4 = sdiv exact i64 %i.ah, 48                   ; 2 uses
-  %i.ai = icmp ugt i64 %4, 100000
+  %i.ah = sub i64 %i.af, %i.ag                    ; 2 uses
+  %i.ai = icmp ugt i64 %i.ah, 4800000
   br i1 %i.ai, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -2968,7 +2984,10 @@ bb.s:                                             ; preds = %bb.r
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit11:              ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.q, %bb.r
-  %i.ba = add nsw i64 %4, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.ah to i32
+  %4 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %4 to i64
+  %i.ba = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
   ret i64 %i.ba
 
@@ -3371,9 +3390,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.ad = load ptr, ptr %i.l, align 8, !tbaa !423
   %i.ae = ptrtoint ptr %i.ac to i64
   %i.af = ptrtoint ptr %i.ad to i64
-  %i.ag = sub i64 %i.ae, %i.af
-  %5 = sdiv exact i64 %i.ag, 48                   ; 2 uses
-  %i.ah = icmp ugt i64 %5, 100000
+  %i.ag = sub i64 %i.ae, %i.af                    ; 2 uses
+  %i.ah = icmp ugt i64 %i.ag, 4800000
   br i1 %i.ah, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -3428,7 +3446,10 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit7:               ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.n, %bb.o
-  %i.aw = add nsw i64 %5, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.ag to i32
+  %5 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %5 to i64
+  %i.aw = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #31
   ret i64 %i.aw
 
@@ -3831,9 +3852,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.w = load ptr, ptr %i.e, align 8, !tbaa !423
   %i.x = ptrtoint ptr %i.v to i64
   %i.y = ptrtoint ptr %i.w to i64
-  %i.z = sub i64 %i.x, %i.y
-  %6 = sdiv exact i64 %i.z, 48                    ; 2 uses
-  %i.aa = icmp ugt i64 %6, 100000
+  %i.z = sub i64 %i.x, %i.y                       ; 2 uses
+  %i.aa = icmp ugt i64 %i.z, 4800000
   br i1 %i.aa, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -3889,7 +3909,10 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZNSt8__detail6_StateIcED2Ev.exit7:               ; preds = %_ZNSt8__detail6_StateIcED2Ev.exit, %bb.j, %bb.k
-  %i.aq = add nsw i64 %6, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.z to i32
+  %6 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %6 to i64
+  %i.aq = add nsw i64 %.zext.i, -1
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #31
   ret i64 %i.aq
 
@@ -4126,9 +4149,8 @@ _ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i: ; preds = %.
   %i.cd = load ptr, ptr %i.bn, align 8, !tbaa !423
   %i.ce = ptrtoint ptr %i.cc to i64
   %i.cf = ptrtoint ptr %i.cd to i64
-  %i.cg = sub i64 %i.ce, %i.cf
-  %6 = sdiv exact i64 %i.cg, 48                   ; 2 uses
-  %i.ch = icmp ugt i64 %6, 100000
+  %i.cg = sub i64 %i.ce, %i.cf                    ; 2 uses
+  %i.ch = icmp ugt i64 %i.cg, 4800000
   br i1 %i.ch, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
@@ -4139,7 +4161,10 @@ bb.s:                                             ; preds = %_ZNSt6vectorINSt8__
   unreachable
 
 bb.t:                                             ; preds = %_ZNSt6vectorINSt8__detail6_StateIcEESaIS2_EE9push_backEOS2_.exit.i
-  %i.ci = add nsw i64 %6, -1
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.cg to i32
+  %6 = udiv exact i32 %.lhs.trunc.i, 48
+  %.zext.i = zext nneg i32 %6 to i64
+  %i.ci = add nsw i64 %.zext.i, -1
   %i.cj = load i32, ptr %5, align 8, !tbaa !438
   %i.ck = icmp eq i32 %i.cj, 11
   br i1 %i.ck, label %bb.u, label %_ZNSt8__detail6_StateIcED2Ev.exit
@@ -4542,9 +4567,9 @@ bb.s:                                             ; preds = %bb.d, %bb.c
   %i.bs = load ptr, ptr %i.bp, align 8, !tbaa !423 ; 2 uses
   %i.bt = ptrtoint ptr %i.br to i64
   %i.bu = ptrtoint ptr %i.bs to i64
-  %i.bv = sub i64 %i.bt, %i.bu
-  %i.bw = sdiv exact i64 %i.bv, 48                ; 7 uses
-  %11 = icmp ugt i64 %i.bw, 576460752303423487
+  %i.bv = sub i64 %i.bt, %i.bu                    ; 3 uses
+  %i.bw = sdiv exact i64 %i.bv, 48                ; 5 uses
+  %11 = icmp slt i64 %i.bv, 0
   %i.bx = ptrtoint ptr %0 to i64
   br i1 %11, label %.noexc.i, label %_ZNSt6vectorISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEiESaISC_EE17_S_check_init_lenEmRKSD_.exit.i.i
 
@@ -4585,7 +4610,7 @@ _ZNSt12_Vector_baseISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic
   %.lcssa.unr = phi ptr [ poison, %_ZNSt12_Vector_baseISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEiESaISC_EEC2EmRKSD_.exit.i.i ], [ %i.ce, %.lr.ph.i.i.i.i.i.i.prol ]
   %.013.i.i.i.i.i.i.unr = phi ptr [ %i.bz, %_ZNSt12_Vector_baseISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEiESaISC_EEC2EmRKSD_.exit.i.i ], [ %i.ce, %.lr.ph.i.i.i.i.i.i.prol ]
   %.01012.i.i.i.i.i.i.unr = phi i64 [ %i.bw, %_ZNSt12_Vector_baseISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEiESaISC_EEC2EmRKSD_.exit.i.i ], [ %i.cd, %.lr.ph.i.i.i.i.i.i.prol ]
-  %i.cf = icmp ult i64 %i.bw, 8
+  %i.cf = icmp ult i64 %i.bv, 384
   br i1 %i.cf, label %.loopexit.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i
@@ -4825,9 +4850,9 @@ bb.a:
   %i.l = load ptr, ptr %i.i, align 8, !tbaa !423  ; 2 uses
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = ptrtoint ptr %i.l to i64
-  %i.o = sub i64 %i.m, %i.n
-  %i.p = sdiv exact i64 %i.o, 48                  ; 7 uses
-  %6 = icmp ugt i64 %i.p, 576460752303423487
+  %i.o = sub i64 %i.m, %i.n                       ; 3 uses
+  %i.p = sdiv exact i64 %i.o, 48                  ; 5 uses
+  %6 = icmp slt i64 %i.o, 0
   br i1 %6, label %bb.b, label %_ZNSt6vectorISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEiESaISC_EE17_S_check_init_lenEmRKSD_.exit.i
 
 bb.b:                                             ; preds = %bb.a
@@ -4873,7 +4898,7 @@ _ZNSt12_Vector_baseISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic
   %.lcssa.unr = phi ptr [ poison, %.noexc11 ], [ %i.w, %.lr.ph.i.i.i.i.i.prol ]
   %.013.i.i.i.i.i.unr = phi ptr [ %i.r, %.noexc11 ], [ %i.w, %.lr.ph.i.i.i.i.i.prol ]
   %.01012.i.i.i.i.i.unr = phi i64 [ %i.p, %.noexc11 ], [ %i.v, %.lr.ph.i.i.i.i.i.prol ]
-  %i.x = icmp ult i64 %i.p, 8
+  %i.x = icmp ult i64 %i.o, 384
   br i1 %i.x, label %.loopexit.loopexit, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i
@@ -5276,8 +5301,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = sdiv exact i64 %i.q, 24
-  %i.r = icmp ugt i64 %3, 384307168202282325
+  %i.r = icmp ugt i64 %i.q, 9223372036854775800
   br i1 %i.r, label %.noexc.i.i.i.i.i, label %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i, !prof !93
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.c
@@ -5680,8 +5704,7 @@ _ZNKSt6vectorISt4pairIlS_INSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIP
   br i1 %.not.i.i.i.i.i, label %.noexc27, label %bb.c
 
 bb.c:                                             ; preds = %_ZNKSt6vectorISt4pairIlS_INSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS1_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISD_EEESaISG_EE12_M_check_lenEmS6_.exit
-  %4 = sdiv exact i64 %i.y, 24
-  %i.z = icmp ugt i64 %4, 384307168202282325
+  %i.z = icmp ugt i64 %i.y, 9223372036854775800
   br i1 %i.z, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i.i, !prof !93
 
 .noexc.i.i.i:                                     ; preds = %bb.c
@@ -5889,8 +5912,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i.i.i.i.i.i.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %3 = sdiv exact i64 %i.af, 24
-  %i.ag = icmp ugt i64 %3, 384307168202282325
+  %i.ag = icmp ugt i64 %i.af, 9223372036854775800
   br i1 %i.ag, label %.noexc.i.i.i.i.i, label %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i, !prof !93
 
 .noexc.i.i.i.i.i:                                 ; preds = %bb.f
@@ -6293,8 +6315,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %4 = sdiv exact i64 %i.f, 24
-  %i.g = icmp ugt i64 %4, 384307168202282325
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !93
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -6697,8 +6718,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
-  %2 = sdiv exact i64 %i.f, 24
-  %i.n = icmp ugt i64 %2, 384307168202282325
+  %i.n = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.n, label %bb.d, label %_ZNSt12_Vector_baseINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EE11_M_allocateEm.exit.i, !prof !93
 
 bb.d:                                             ; preds = %bb.c
@@ -7101,8 +7121,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %4 = sdiv exact i64 %i.f, 24
-  %i.g = icmp ugt i64 %4, 384307168202282325
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !93
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -7166,11 +7185,11 @@ _ZNSt6vectorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic
   %i.ah = load ptr, ptr %i.ae, align 8, !tbaa !423 ; 2 uses
   %i.ai = ptrtoint ptr %i.ag to i64
   %i.aj = ptrtoint ptr %i.ah to i64
-  %i.ak = sub i64 %i.ai, %i.aj
-  %i.al = sdiv exact i64 %i.ak, 48                ; 7 uses
-  %5 = icmp ugt i64 %i.al, 576460752303423487
+  %i.ak = sub i64 %i.ai, %i.aj                    ; 3 uses
+  %i.al = sdiv exact i64 %i.ak, 48                ; 5 uses
+  %4 = icmp slt i64 %i.ak, 0
   %i.am = ptrtoint ptr %.sroa.06.0.copyload to i64
-  br i1 %5, label %bb.d, label %_ZNSt6vectorISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEiESaISC_EE17_S_check_init_lenEmRKSD_.exit.i.i
+  br i1 %4, label %bb.d, label %_ZNSt6vectorISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEiESaISC_EE17_S_check_init_lenEmRKSD_.exit.i.i
 
 bb.d:                                             ; preds = %_ZNSt6vectorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESaISC_EEC2ERKSE_.exit
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.310) #32
@@ -7215,7 +7234,7 @@ _ZNSt12_Vector_baseISt4pairIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic
   %.lcssa.unr = phi ptr [ poison, %.noexc9.i ], [ %i.at, %.lr.ph.i.i.i.i.i.i.prol ]
   %.013.i.i.i.i.i.i.unr = phi ptr [ %i.ao, %.noexc9.i ], [ %i.at, %.lr.ph.i.i.i.i.i.i.prol ]
   %.01012.i.i.i.i.i.i.unr = phi i64 [ %i.al, %.noexc9.i ], [ %i.as, %.lr.ph.i.i.i.i.i.i.prol ]
-  %i.au = icmp ult i64 %i.al, 8
+  %i.au = icmp ult i64 %i.ak, 384
   br i1 %i.au, label %.loopexit.i, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i

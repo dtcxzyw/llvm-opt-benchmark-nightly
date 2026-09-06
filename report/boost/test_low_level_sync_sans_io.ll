@@ -204,12 +204,13 @@ _ZNR5boost6system6resultISt6vectorISt8optionalINSt7__cxx1112basic_stringIcSt11ch
   %i.xh = load ptr, ptr %15, align 8, !tbaa !95   ; 2 uses
   %i.xi = ptrtoint ptr %i.xg to i64
   %i.xj = ptrtoint ptr %i.xh to i64
-  %i.xk = sub i64 %i.xi, %i.xj
-  %95 = sdiv exact i64 %i.xk, 40                  ; 2 uses
-  %.not.i.i14.i = icmp ugt i64 %95, 1
+  %i.xk = sub i64 %i.xi, %i.xj                    ; 2 uses
+  %.not.i.i14.i = icmp ugt i64 %i.xk, 40
   br i1 %.not.i.i14.i, label %bb.hj, label %bb.hi
 
 bb.hi:                                            ; preds = %_ZNR5boost6system6resultISt6vectorISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESaISA_EENS_5redis7adapter5errorEE5valueERKNS_15source_locationE.exit13.i
+  %.cmp.i = icmp eq i64 %i.xk, 40
+  %95 = zext i1 %.cmp.i to i64
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.62, i64 noundef 1, i64 noundef %95) #30
           to label %.noexc15.i unwind label %bb.hx
 
@@ -250,13 +251,15 @@ _ZNR5boost6system6resultISt6vectorISt8optionalINSt7__cxx1112basic_stringIcSt11ch
   %i.xw = load ptr, ptr %15, align 8, !tbaa !95   ; 3 uses
   %i.xx = ptrtoint ptr %i.xv to i64
   %i.xy = ptrtoint ptr %i.xw to i64
-  %i.xz = sub i64 %i.xx, %i.xy
-  %96 = sdiv exact i64 %i.xz, 40                  ; 2 uses
-  %.not.i.i19.i = icmp ugt i64 %96, 2
+  %i.xz = sub i64 %i.xx, %i.xy                    ; 2 uses
+  %.not.i.i19.i = icmp ugt i64 %i.xz, 80
   br i1 %.not.i.i19.i, label %bb.hn, label %bb.hm
 
 bb.hm:                                            ; preds = %_ZNR5boost6system6resultISt6vectorISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESaISA_EENS_5redis7adapter5errorEE5valueERKNS_15source_locationE.exit18.i
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.62, i64 noundef 2, i64 noundef %96) #30
+  %.lhs.trunc.i = trunc nuw nsw i64 %i.xz to i8
+  %96 = udiv exact i8 %.lhs.trunc.i, 40
+  %.zext.i = zext nneg i8 %96 to i64
+  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.62, i64 noundef 2, i64 noundef %.zext.i) #30
           to label %.noexc20.i unwind label %bb.hy
 
 .noexc20.i:                                       ; preds = %bb.hm
@@ -544,12 +547,13 @@ _ZNRSt8optionalISt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE
   %i.aat = load ptr, ptr %7, align 8, !tbaa !95   ; 2 uses
   %i.aau = ptrtoint ptr %i.aas to i64
   %i.aav = ptrtoint ptr %i.aat to i64
-  %i.aaw = sub i64 %i.aau, %i.aav
-  %97 = sdiv exact i64 %i.aaw, 40                 ; 2 uses
-  %.not.i.i17.i = icmp ugt i64 %97, 1
+  %i.aaw = sub i64 %i.aau, %i.aav                 ; 2 uses
+  %.not.i.i17.i = icmp ugt i64 %i.aaw, 40
   br i1 %.not.i.i17.i, label %bb.im, label %bb.il
 
 bb.il:                                            ; preds = %_ZNRSt8optionalISt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESaIS7_EEE5valueEv.exit16.i
+  %.cmp.i164 = icmp eq i64 %i.aaw, 40
+  %97 = zext i1 %.cmp.i164 to i64
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.62, i64 noundef 1, i64 noundef %97) #30
           to label %.noexc18.i unwind label %bb.ja
 
@@ -595,13 +599,15 @@ _ZNRSt8optionalISt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE
   %i.abk = load ptr, ptr %7, align 8, !tbaa !95   ; 3 uses
   %i.abl = ptrtoint ptr %i.abj to i64
   %i.abm = ptrtoint ptr %i.abk to i64
-  %i.abn = sub i64 %i.abl, %i.abm
-  %98 = sdiv exact i64 %i.abn, 40                 ; 2 uses
-  %.not.i.i24.i = icmp ugt i64 %98, 2
+  %i.abn = sub i64 %i.abl, %i.abm                 ; 2 uses
+  %.not.i.i24.i = icmp ugt i64 %i.abn, 80
   br i1 %.not.i.i24.i, label %bb.iq, label %bb.ip
 
 bb.ip:                                            ; preds = %_ZNRSt8optionalISt6vectorIS_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESaIS7_EEE5valueEv.exit23.i
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.62, i64 noundef 2, i64 noundef %98) #30
+  %.lhs.trunc.i166 = trunc nuw nsw i64 %i.abn to i8
+  %98 = udiv exact i8 %.lhs.trunc.i166, 40
+  %.zext.i167 = zext nneg i8 %98 to i64
+  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.62, i64 noundef 2, i64 noundef %.zext.i167) #30
           to label %.noexc25.i165 unwind label %bb.jb
 
 .noexc25.i165:                                    ; preds = %bb.ip

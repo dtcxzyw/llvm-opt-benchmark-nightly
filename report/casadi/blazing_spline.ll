@@ -205,8 +205,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.noexc58, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %24 = sdiv exact i64 %i.h, 24
-  %i.i = icmp ugt i64 %24, 384307168202282325
+  %i.i = icmp ugt i64 %i.h, 9223372036854775800
   br i1 %i.i, label %.noexc.i.i, label %_ZNSt15__new_allocatorISt6vectorIdSaIdEEE8allocateEmPKv.exit.i.i.i.i, !prof !116
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -609,8 +608,8 @@ define void @_ZNK6casadi21BlazingSplineFunction12get_jacobianERKNSt7__cxx1112bas
   %i.f = load ptr, ptr %i.c, align 8, !tbaa !100  ; 3 uses
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
-  %i.i = sub i64 %i.g, %i.h                       ; 8 uses
-  %i.j = sdiv exact i64 %i.i, 24                  ; 14 uses
+  %i.i = sub i64 %i.g, %i.h                       ; 10 uses
+  %i.j = sdiv exact i64 %i.i, 24                  ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #26
   %i.k = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 6 uses
@@ -787,7 +786,7 @@ _ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i: ; preds = %_ZSt6fill_nIPxmxE
 
 .unr-lcssa.a:                                     ; preds = %bb.n
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %bb.j, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %.unr-lcssa.a, %.lr.ph
   %.0180783.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.de, %.unr-lcssa.a ] ; 2 uses
@@ -805,10 +804,21 @@ _ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i: ; preds = %_ZSt6fill_nIPxmxE
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %.0180783.epil.init
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
   store i64 %i.be, ptr %i.bg, align 8, !tbaa !129
-  br label %bb.j
+  br label %._crit_edge
 
-bb.j:                                             ; preds = %.unr-lcssa.a, %.epil.preheader
+._crit_edge:                                      ; preds = %.unr-lcssa.a, %.epil.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #26
+  %83 = icmp slt i64 %i.i, 0
+  br i1 %83, label %84, label %bb.j
+
+84:                                               ; preds = %._crit_edge
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.55) #27
+          to label %.noexc313 unwind label %bb.p
+
+.noexc313:                                        ; preds = %84
+  unreachable
+
+bb.j:                                             ; preds = %._crit_edge
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %15, i8 0, i64 24, i1 false)
   %i.bh = shl nuw nsw i64 %i.j, 3                 ; 3 uses
   %i.bi = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bh) #24
@@ -944,7 +954,7 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph.new
   %i.dg = getelementptr inbounds nuw i8, ptr %15, i64 8
   store ptr %i.bl, ptr %i.dg, align 8, !tbaa !130
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #26
-  %i.dh = icmp samesign ugt i64 %i.j, 384307168202282325
+  %i.dh = icmp samesign ugt i64 %i.i, 9223372036854775800
   br i1 %i.dh, label %bb.o, label %.lr.ph.preheader.i.i.i.i.i
 
 bb.o:                                             ; preds = %.unr-lcssa1008
@@ -1012,7 +1022,7 @@ bb.o:                                             ; preds = %.unr-lcssa1008
   invoke void @_ZN6casadi2MX7vertcatERKSt6vectorIS0_SaIS0_EE(ptr dead_on_unwind nonnull writable sret(%"class.casadi::MX") align 8 %20, ptr noundef nonnull align 8 dereferenceable(24) %18)
           to label %_ZN6casadi7vertcatERKSt6vectorINS_2MXESaIS1_EE.exit unwind label %bb.au
 
-bb.p:                                             ; preds = %bb.j
+bb.p:                                             ; preds = %bb.j, %84
   %i.ee = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt6vectorIxSaIxEED2Ev.exit694

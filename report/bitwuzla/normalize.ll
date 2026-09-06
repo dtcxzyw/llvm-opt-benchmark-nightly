@@ -204,8 +204,7 @@ bb.v:                                             ; preds = %bb.u
   %i.ao = ptrtoint ptr %i.am to i64
   %i.ap = ptrtoint ptr %i.an to i64
   %i.aq = sub i64 %i.ao, %i.ap
-  %64 = sdiv exact i64 %i.aq, 24
-  %i.ar = icmp ult i64 %64, 2
+  %i.ar = icmp ult i64 %i.aq, 25
   %.not9081097 = icmp eq ptr %i.an, %i.am
   %or.cond1113 = or i1 %i.ar, %.not9081097
   br i1 %or.cond1113, label %.loopexit931, label %.lr.ph1099
@@ -608,14 +607,18 @@ bb.jo:                                            ; preds = %bb.jh, %bb.je
   %i.wo = load ptr, ptr %38, align 8, !tbaa !161
   %i.wp = ptrtoint ptr %i.wn to i64
   %i.wq = ptrtoint ptr %i.wo to i64
-  %i.wr = sub i64 %i.wp, %i.wq
-  %65 = sdiv exact i64 %i.wr, 24                  ; 2 uses
-  %i.ws = icmp ugt i64 %65, 2
-  br i1 %i.ws, label %.lr.ph1083, label %.critedge7
+  %i.wr = sub i64 %i.wp, %i.wq                    ; 2 uses
+  %i.ws = icmp ugt i64 %i.wr, 48
+  br i1 %i.ws, label %.lr.ph1083.preheader, label %.critedge7
 
-.lr.ph1083:                                       ; preds = %bb.jo, %_ZSt4swapIN4bzla4NodeENS0_4util7IntegerEENSt9enable_ifIXsr6__and_ISt14__is_swappableIT_ES5_IT0_EEE5valueEvE4typeERSt4pairIS6_S8_ESE_.exit
-  %.02801081 = phi i64 [ %i.xi, %_ZSt4swapIN4bzla4NodeENS0_4util7IntegerEENSt9enable_ifIXsr6__and_ISt14__is_swappableIT_ES5_IT0_EEE5valueEvE4typeERSt4pairIS6_S8_ESE_.exit ], [ 2, %bb.jo ] ; 3 uses
-  %.02811080 = phi i64 [ %i.xh, %_ZSt4swapIN4bzla4NodeENS0_4util7IntegerEENSt9enable_ifIXsr6__and_ISt14__is_swappableIT_ES5_IT0_EEE5valueEvE4typeERSt4pairIS6_S8_ESE_.exit ], [ 1, %bb.jo ] ; 3 uses
+.lr.ph1083.preheader:                             ; preds = %bb.jo
+  %64 = sdiv exact i64 %i.wr, 24
+  %umax = call i64 @llvm.umax.i64(i64 %64, i64 3)
+  br label %.lr.ph1083
+
+.lr.ph1083:                                       ; preds = %.lr.ph1083.preheader, %_ZSt4swapIN4bzla4NodeENS0_4util7IntegerEENSt9enable_ifIXsr6__and_ISt14__is_swappableIT_ES5_IT0_EEE5valueEvE4typeERSt4pairIS6_S8_ESE_.exit
+  %.02801081 = phi i64 [ %i.xi, %_ZSt4swapIN4bzla4NodeENS0_4util7IntegerEENSt9enable_ifIXsr6__and_ISt14__is_swappableIT_ES5_IT0_EEE5valueEvE4typeERSt4pairIS6_S8_ESE_.exit ], [ 2, %.lr.ph1083.preheader ] ; 3 uses
+  %.02811080 = phi i64 [ %i.xh, %_ZSt4swapIN4bzla4NodeENS0_4util7IntegerEENSt9enable_ifIXsr6__and_ISt14__is_swappableIT_ES5_IT0_EEE5valueEvE4typeERSt4pairIS6_S8_ESE_.exit ], [ 1, %.lr.ph1083.preheader ] ; 3 uses
   %i.wt = load ptr, ptr %38, align 8, !tbaa !161  ; 2 uses
   %i.wu = getelementptr inbounds nuw [24 x i8], ptr %i.wt, i64 %.02811080 ; 2 uses
   %i.wv = getelementptr inbounds nuw [24 x i8], ptr %i.wt, i64 %.02801081 ; 2 uses
@@ -661,7 +664,7 @@ bb.jr:                                            ; preds = %"_ZZN4bzla10preproc
 _ZSt4swapIN4bzla4NodeENS0_4util7IntegerEENSt9enable_ifIXsr6__and_ISt14__is_swappableIT_ES5_IT0_EEE5valueEvE4typeERSt4pairIS6_S8_ESE_.exit: ; preds = %"_ZZN4bzla10preprocess4pass13PassNormalize7mk_nodeENS_4node4KindERKSt3mapINS_4NodeENS_4util7IntegerESt4lessIS6_ESaISt4pairIKS6_S8_EEEENK3$_0clISB_IS6_S8_ESK_EEDaRKT_RKT0_.exit.thread898"
   %i.xh = add nuw i64 %.02811080, 1
   %i.xi = add nuw i64 %.02801081, 1               ; 2 uses
-  %exitcond.not = icmp eq i64 %i.xi, %65
+  %exitcond.not = icmp eq i64 %i.xi, %umax
   br i1 %exitcond.not, label %.critedge7, label %.lr.ph1083, !llvm.loop !520
 
 .critedge7:                                       ; preds = %_ZSt4swapIN4bzla4NodeENS0_4util7IntegerEENSt9enable_ifIXsr6__and_ISt14__is_swappableIT_ES5_IT0_EEE5valueEvE4typeERSt4pairIS6_S8_ESE_.exit, %"_ZZN4bzla10preprocess4pass13PassNormalize7mk_nodeENS_4node4KindERKSt3mapINS_4NodeENS_4util7IntegerESt4lessIS6_ESaISt4pairIKS6_S8_EEEENK3$_0clISB_IS6_S8_ESK_EEDaRKT_RKT0_.exit", %.noexc659, %bb.jo, %bb.io
@@ -669,13 +672,13 @@ _ZSt4swapIN4bzla4NodeENS0_4util7IntegerEENSt9enable_ifIXsr6__and_ISt14__is_swapp
   %i.xk = load ptr, ptr %38, align 8, !tbaa !161  ; 2 uses
   %i.xl = ptrtoint ptr %i.xj to i64
   %i.xm = ptrtoint ptr %i.xk to i64
-  %i.xn = sub i64 %i.xl, %i.xm
-  %66 = sdiv exact i64 %i.xn, 24                  ; 2 uses
-  %i.xo = icmp ugt i64 %66, 1
+  %i.xn = sub i64 %i.xl, %i.xm                    ; 2 uses
+  %i.xo = icmp ugt i64 %i.xn, 24
   br i1 %i.xo, label %.lr.ph1086.preheader, label %.critedge9.backedge
 
 .lr.ph1086.preheader:                             ; preds = %.critedge7
-  %67 = add nsw i64 %66, -2
+  %65 = sdiv exact i64 %i.xn, 24
+  %66 = call i64 @llvm.usub.sat.i64(i64 %65, i64 2)
   br label %.lr.ph1086
 
 .lr.ph1086:                                       ; preds = %.lr.ph1086.preheader, %bb.jz
@@ -778,7 +781,7 @@ bb.jz:                                            ; preds = %bb.jx
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   %i.yl = add nuw i64 %.02791084, 1
   %i.ym = add nuw i64 %.02781085, 1
-  %exitcond1178.not = icmp eq i64 %.02791084, %67
+  %exitcond1178.not = icmp eq i64 %.02791084, %66
   br i1 %exitcond1178.not, label %.critedge9.loopexit, label %.lr.ph1086, !llvm.loop !522
 
 bb.ka:                                            ; preds = %bb.gv
@@ -1180,6 +1183,9 @@ declare i64 @llvm.smax.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.usub.sat.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #22

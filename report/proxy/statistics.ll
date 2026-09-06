@@ -204,8 +204,8 @@ bb.a:
   %.0.lcssa.i.i = phi i64 [ 0, %bb.a ], [ %spec.select.i.i, %.lr.ph.i.i ]
   %i.i = ptrtoint ptr %i.e to i64
   %i.j = ptrtoint ptr %i.c to i64
-  %i.k = sub i64 %i.i, %i.j
-  %i.l = sdiv exact i64 %i.k, 592                 ; 4 uses
+  %i.k = sub i64 %i.i, %i.j                       ; 2 uses
+  %i.l = sdiv exact i64 %i.k, 592                 ; 3 uses
   %i.m = sub i64 %i.l, %.0.lcssa.i.i
   %i.n = icmp ult i64 %i.m, 2
   br i1 %i.n, label %bb.ck, label %bb.b
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %"_ZSt8count_ifIN9__
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
-  %10 = icmp ugt i64 %i.l, 1152921504606846975
+  %10 = icmp slt i64 %i.k, 0
   br i1 %10, label %.invoke, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -266,9 +266,9 @@ _ZNSt6vectorIdSaIdEE7reserveEm.exit:              ; preds = %_ZNSt6vectorIdSaIdE
   %.pre365 = load ptr, ptr %1, align 8, !tbaa !51 ; 2 uses
   %.pre373 = ptrtoint ptr %.pre to i64
   %.pre374 = ptrtoint ptr %.pre365 to i64
-  %.pre376 = sub i64 %.pre373, %.pre374
-  %.pre378 = sdiv exact i64 %.pre376, 592         ; 4 uses
-  %11 = icmp ugt i64 %.pre378, 1152921504606846975
+  %.pre376 = sub i64 %.pre373, %.pre374           ; 2 uses
+  %.pre378472 = udiv exact i64 %.pre376, 592      ; 3 uses
+  %11 = icmp slt i64 %.pre376, 0
   br i1 %11, label %.invoke, label %bb.f
 
 .invoke:                                          ; preds = %_ZNSt6vectorIdSaIdEE7reserveEm.exit, %bb.b
@@ -286,7 +286,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIdSaIdE
   %i.ah = ptrtoint ptr %i.af to i64               ; 2 uses
   %i.ai = sub i64 %i.ag, %i.ah
   %i.aj = ashr exact i64 %i.ai, 3
-  %i.ak = icmp ult i64 %i.aj, %.pre378
+  %i.ak = icmp ult i64 %i.aj, %.pre378472
   br i1 %i.ak, label %_ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i107, label %_ZNSt6vectorIdSaIdEE7reserveEm.exit113
 
 _ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i107: ; preds = %bb.f
@@ -294,7 +294,7 @@ _ZNSt12_Vector_baseIdSaIdEE11_M_allocateEm.exit.i107: ; preds = %bb.f
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !21
   %i.an = ptrtoint ptr %i.am to i64
   %i.ao = sub i64 %i.an, %i.ah
-  %i.ap = shl nuw nsw i64 %.pre378, 3
+  %i.ap = shl nuw nsw i64 %.pre378472, 3
   %i.aq = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ap) #26
           to label %.noexc112 unwind label %bb.i  ; 4 uses
 
@@ -326,7 +326,7 @@ _ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit.i110: ; preds = %bb.h, %_ZNS
   store ptr %i.aq, ptr %6, align 8, !tbaa !22
   %i.ba = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.ao
   store ptr %i.ba, ptr %i.al, align 8, !tbaa !21
-  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.aq, i64 %.pre378
+  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.aq, i64 %.pre378472
   store ptr %i.bb, ptr %i.ad, align 8, !tbaa !94
   %.pre366 = load ptr, ptr %1, align 8, !tbaa !93
   %.pre367 = load ptr, ptr %i.d, align 8, !tbaa !93
@@ -692,9 +692,9 @@ _ZZN9benchmark12ComputeStatsERKSt6vectorINS_17BenchmarkReporter3RunESaIS2_EEEN11
   %i.eu = load ptr, ptr %1, align 8, !tbaa !51
   %i.ev = ptrtoint ptr %i.et to i64
   %i.ew = ptrtoint ptr %i.eu to i64
-  %i.ex = sub i64 %i.ev, %i.ew
-  %i.ey = sdiv exact i64 %i.ex, 592               ; 4 uses
-  %12 = icmp ugt i64 %i.ey, 1152921504606846975
+  %i.ex = sub i64 %i.ev, %i.ew                    ; 2 uses
+  %i.ey = sdiv exact i64 %i.ex, 592               ; 3 uses
+  %12 = icmp slt i64 %i.ex, 0
   br i1 %12, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %_ZZN9benchmark12ComputeStatsERKSt6vectorINS_17BenchmarkReporter3RunESaIS2_EEEN11CounterStatD2Ev.exit
@@ -852,14 +852,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
   %i.gt = load ptr, ptr %1, align 8, !tbaa !51    ; 4 uses
   %i.gu = ptrtoint ptr %i.gs to i64
   %i.gv = ptrtoint ptr %i.gt to i64
-  %i.gw = sub i64 %i.gu, %i.gv
-  %i.gx = sdiv exact i64 %i.gw, 592               ; 4 uses
-  %i.gy = icmp ugt i64 %i.gx, 1
+  %i.gw = sub i64 %i.gu, %i.gv                    ; 2 uses
+  %i.gx = sdiv exact i64 %i.gw, 592               ; 3 uses
+  %i.gy = icmp ugt i64 %i.gw, 592
   br i1 %i.gy, label %.lr.ph341, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit
 
 .lr.ph341:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
   %i.gz = load i64, ptr %i.gp, align 8, !tbaa !63 ; 4 uses
   %i.ha = load ptr, ptr %8, align 8
+  %umax = call i64 @llvm.umax.i64(i64 %i.gx, i64 2)
   %i.hb = icmp eq i64 %i.gz, 0
   br label %bb.bb
 
@@ -1262,7 +1263,7 @@ bb.bd:                                            ; preds = %_ZStneIcSt11char_tr
 
 _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread293: ; preds = %bb.bc, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
   %i.ls = add nuw i64 %.0340, 1                   ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ls, %i.gx
+  %exitcond.not = icmp eq i64 %i.ls, %umax
   br i1 %exitcond.not, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit, label %bb.bb, !llvm.loop !91
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit: ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread293, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit_crit_edge, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit

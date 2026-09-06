@@ -205,10 +205,14 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN7CaDiCaL13CompactBinaryESt6vectorIS3_
   %i.gz = load ptr, ptr %i.ae, align 8, !tbaa !303 ; 2 uses
   %i.ha = ptrtoint ptr %i.gy to i64
   %i.hb = ptrtoint ptr %i.gz to i64
-  %i.hc = sub i64 %i.ha, %i.hb
-  %i.hd = sdiv exact i64 %i.hc, 24                ; 3 uses
-  %i.he = icmp ugt i64 %i.hd, 1
-  br i1 %i.he, label %.lr.ph167, label %._crit_edge168.thread
+  %i.hc = sub i64 %i.ha, %i.hb                    ; 2 uses
+  %i.hd = sdiv exact i64 %i.hc, 24                ; 2 uses
+  %i.he = icmp ugt i64 %i.hc, 24
+  br i1 %i.he, label %.lr.ph167.preheader, label %._crit_edge168.thread
+
+.lr.ph167.preheader:                              ; preds = %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN7CaDiCaL13CompactBinaryESt6vectorIS3_SaIS3_EEEENS2_20compact_binary_orderEEvT_SA_T0_.exit117
+  %umax173 = call i64 @llvm.umax.i64(i64 %i.hd, i64 2)
+  br label %.lr.ph167
 
 ._crit_edge168:                                   ; preds = %bb.bc
   %.pre177 = load ptr, ptr %i.af, align 8, !tbaa !301 ; 2 uses
@@ -254,9 +258,9 @@ bb.ay:                                            ; preds = %_ZNSt6vectorIN7CaDi
   store ptr %i.hm, ptr %i.af, align 8, !tbaa !301
   br label %_ZNSt6vectorIN7CaDiCaL13CompactBinaryESaIS1_EE5clearEv.exit
 
-.lr.ph167:                                        ; preds = %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN7CaDiCaL13CompactBinaryESt6vectorIS3_SaIS3_EEEENS2_20compact_binary_orderEEvT_SA_T0_.exit117, %bb.bc
-  %.0166 = phi i64 [ %i.ie, %bb.bc ], [ 1, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN7CaDiCaL13CompactBinaryESt6vectorIS3_SaIS3_EEEENS2_20compact_binary_orderEEvT_SA_T0_.exit117 ] ; 2 uses
-  %.084165 = phi i64 [ %.1, %bb.bc ], [ 0, %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPN7CaDiCaL13CompactBinaryESt6vectorIS3_SaIS3_EEEENS2_20compact_binary_orderEEvT_SA_T0_.exit117 ] ; 3 uses
+.lr.ph167:                                        ; preds = %.lr.ph167.preheader, %bb.bc
+  %.0166 = phi i64 [ %i.ie, %bb.bc ], [ 1, %.lr.ph167.preheader ] ; 2 uses
+  %.084165 = phi i64 [ %.1, %bb.bc ], [ 0, %.lr.ph167.preheader ] ; 3 uses
   %i.hn = load ptr, ptr %i.ae, align 8, !tbaa !303 ; 3 uses
   %i.ho = getelementptr inbounds nuw [24 x i8], ptr %i.hn, i64 %.084165 ; 3 uses
   %i.hp = getelementptr inbounds nuw i8, ptr %i.ho, i64 16
@@ -290,7 +294,7 @@ bb.bb:                                            ; preds = %bb.az, %.lr.ph167
 bb.bc:                                            ; preds = %bb.ba, %bb.bb
   %.1 = phi i64 [ %.084165, %bb.ba ], [ %i.ic, %bb.bb ] ; 4 uses
   %i.ie = add nuw i64 %.0166, 1                   ; 2 uses
-  %exitcond173.not = icmp eq i64 %i.ie, %i.hd
+  %exitcond173.not = icmp eq i64 %i.ie, %umax173
   br i1 %exitcond173.not, label %._crit_edge168, label %.lr.ph167, !llvm.loop !445
 
 _ZNSt6vectorIN7CaDiCaL13CompactBinaryESaIS1_EE5clearEv.exit: ; preds = %bb.ay, %_ZNSt6vectorIN7CaDiCaL13CompactBinaryESaIS1_EE6resizeEm.exit, %bb.a
@@ -303,14 +307,14 @@ bb.a:
   %i.a = alloca [256 x i64], align 16             ; 10 uses
   %i.b = ptrtoint ptr %1 to i64
   %i.c = ptrtoint ptr %0 to i64
-  %i.d = sub i64 %i.b, %i.c                       ; 5 uses
-  %i.e = sdiv exact i64 %i.d, 24                  ; 8 uses
+  %i.d = sub i64 %i.b, %i.c                       ; 6 uses
+  %i.e = sdiv exact i64 %i.d, 24                  ; 7 uses
   %i.f = icmp ult i64 %i.e, 2
   br i1 %i.f, label %bb.q, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
-  %i.g = icmp ugt i64 %i.e, 384307168202282325
+  %i.g = icmp ugt i64 %i.d, 9223372036854775800
   %.not114122 = icmp eq ptr %1, %0
   br label %bb.d
 
@@ -713,14 +717,14 @@ bb.a:
   %i.a = alloca [256 x i64], align 16             ; 10 uses
   %i.b = ptrtoint ptr %1 to i64
   %i.c = ptrtoint ptr %0 to i64
-  %i.d = sub i64 %i.b, %i.c                       ; 5 uses
-  %i.e = sdiv exact i64 %i.d, 24                  ; 8 uses
+  %i.d = sub i64 %i.b, %i.c                       ; 6 uses
+  %i.e = sdiv exact i64 %i.d, 24                  ; 7 uses
   %i.f = icmp ult i64 %i.e, 2
   br i1 %i.f, label %bb.q, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
-  %i.g = icmp ugt i64 %i.e, 384307168202282325
+  %i.g = icmp ugt i64 %i.d, 9223372036854775800
   %.not114122 = icmp eq ptr %1, %0
   br label %bb.d
 

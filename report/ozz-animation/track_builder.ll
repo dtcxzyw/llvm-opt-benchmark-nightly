@@ -202,9 +202,8 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %i.cu = load ptr, ptr %i.bw, align 8, !tbaa !72
   %i.cv = ptrtoint ptr %i.cu to i64
   %i.cw = ptrtoint ptr %i.by to i64
-  %i.cx = sub i64 %i.cv, %i.cw
-  %7 = sdiv exact i64 %i.cx, 24                   ; 2 uses
-  %i.cy = icmp ugt i64 %7, 1
+  %i.cx = sub i64 %i.cv, %i.cw                    ; 2 uses
+  %i.cy = icmp ugt i64 %i.cx, 24
   br i1 %i.cy, label %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit.i, label %_ZN3ozz9animation7offline12_GLOBAL__N_15FixupISt6vectorINS1_16RawTrackKeyframeINS_4math10QuaternionEEENS_12StdAllocatorIS8_EEEEEvPT_.exit
 
 _ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit.i: ; preds = %bb.w, %bb.aa
@@ -245,7 +244,7 @@ bb.y:                                             ; preds = %bb.x, %_ZNSt6vector
   %i.du = load ptr, ptr %6, align 8, !tbaa !73    ; 3 uses
   %i.dv = ptrtoint ptr %i.dt to i64
   %i.dw = ptrtoint ptr %i.du to i64
-  %i.dx = sub i64 %i.dv, %i.dw
+  %i.dx = sub i64 %i.dv, %i.dw                    ; 2 uses
   %i.dy = sdiv exact i64 %i.dx, 24                ; 3 uses
   %.not.i.i42.i = icmp ult i64 %i.ds, %i.dy
   br i1 %.not.i.i42.i, label %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit43.i, label %.loopexit.i
@@ -287,24 +286,26 @@ bb.z:                                             ; preds = %_ZNSt6vectorIN3ozz9
   %.pre39 = load ptr, ptr %6, align 8, !tbaa !73  ; 2 uses
   %.pre41 = ptrtoint ptr %.pre to i64
   %.pre42 = ptrtoint ptr %.pre39 to i64
-  %.pre44 = sub i64 %.pre41, %.pre42
+  %.pre44 = sub i64 %.pre41, %.pre42              ; 2 uses
   %.pre46 = sdiv exact i64 %.pre44, 24
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit43.i
-  %.pre-phi47 = phi i64 [ %.pre46, %bb.z ], [ %i.dy, %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit43.i ] ; 2 uses
+  %.pre-phi47 = phi i64 [ %.pre46, %bb.z ], [ %i.dy, %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit43.i ]
+  %.pre-phi45 = phi i64 [ %.pre44, %bb.z ], [ %i.dx, %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit43.i ]
   %i.et = phi ptr [ %.pre39, %bb.z ], [ %i.du, %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit43.i ]
   %i.eu = add nuw i64 %.059.i, 1                  ; 2 uses
   %i.ev = icmp ult i64 %i.eu, %.pre-phi47
   br i1 %i.ev, label %_ZNSt6vectorIN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEENS0_12StdAllocatorIS6_EEE2atEm.exit.i, label %_ZN3ozz9animation7offline12_GLOBAL__N_15FixupISt6vectorINS1_16RawTrackKeyframeINS_4math10QuaternionEEENS_12StdAllocatorIS8_EEEEEvPT_.exit, !llvm.loop !149
 
 _ZN3ozz9animation7offline12_GLOBAL__N_15FixupISt6vectorINS1_16RawTrackKeyframeINS_4math10QuaternionEEENS_12StdAllocatorIS8_EEEEEvPT_.exit: ; preds = %bb.aa, %_ZN3ozz9animation7offline12_GLOBAL__N_117PatchBeginEndKeysINS1_18RawQuaternionTrackEEEvRKT_PNS5_9KeyframesE.exit, %bb.w
-  %.pre-phi54 = phi i64 [ %7, %bb.w ], [ 0, %_ZN3ozz9animation7offline12_GLOBAL__N_117PatchBeginEndKeysINS1_18RawQuaternionTrackEEEvRKT_PNS5_9KeyframesE.exit ], [ %.pre-phi47, %bb.aa ]
+  %.pre-phi54 = phi i64 [ %i.cx, %bb.w ], [ 0, %_ZN3ozz9animation7offline12_GLOBAL__N_117PatchBeginEndKeysINS1_18RawQuaternionTrackEEEvRKT_PNS5_9KeyframesE.exit ], [ %.pre-phi45, %bb.aa ]
   %i.ew = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.ex = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.ey = load i64, ptr %i.ex, align 8, !tbaa !34 ; 2 uses
   %i.ez = load ptr, ptr %0, align 8, !tbaa !69    ; 6 uses
-  invoke void @_ZN3ozz9animation8internal5TrackINS_4math10QuaternionEE8AllocateEmm(ptr noundef nonnull align 8 dereferenceable(64) %i.ez, i64 noundef %.pre-phi54, i64 noundef %i.ey)
+  %7 = sdiv exact i64 %.pre-phi54, 24
+  invoke void @_ZN3ozz9animation8internal5TrackINS_4math10QuaternionEE8AllocateEmm(ptr noundef nonnull align 8 dereferenceable(64) %i.ez, i64 noundef %7, i64 noundef %i.ey)
           to label %bb.ab unwind label %bb.ac
 
 bb.ab:                                            ; preds = %_ZN3ozz9animation7offline12_GLOBAL__N_15FixupISt6vectorINS1_16RawTrackKeyframeINS_4math10QuaternionEEENS_12StdAllocatorIS8_EEEEEvPT_.exit

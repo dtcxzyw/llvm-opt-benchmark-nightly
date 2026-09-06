@@ -204,12 +204,13 @@ _ZN5Catch16AssertionHandlerD2Ev.exit119:          ; preds = %bb.bl, %bb.bm
   %i.gp = load ptr, ptr %11, align 8, !tbaa !56   ; 6 uses
   %i.gq = ptrtoint ptr %i.go to i64
   %i.gr = ptrtoint ptr %i.gp to i64
-  %i.gs = sub i64 %i.gq, %i.gr
-  %77 = sdiv exact i64 %i.gs, 144                 ; 2 uses
-  %.not.i.i120 = icmp ugt i64 %77, 1
+  %i.gs = sub i64 %i.gq, %i.gr                    ; 2 uses
+  %.not.i.i120 = icmp ugt i64 %i.gs, 144
   br i1 %.not.i.i120, label %bb.bp, label %bb.bo
 
 bb.bo:                                            ; preds = %_ZN5Catch16AssertionHandlerD2Ev.exit119
+  %.cmp = icmp eq i64 %i.gs, 144
+  %77 = zext i1 %.cmp to i64
   invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.25, i64 noundef 1, i64 noundef %77) #22
           to label %.noexc121 unwind label %bb.by
 

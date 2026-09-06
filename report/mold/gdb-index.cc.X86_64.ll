@@ -205,9 +205,9 @@ _ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #13
   %i.fh = ptrtoint ptr %i.fg to i64
   %i.fi = ptrtoint ptr %i.ff to i64
-  %i.fj = sub i64 %i.fh, %i.fi
-  %i.fk = sdiv exact i64 %i.fj, 80                ; 4 uses
-  %13 = icmp ugt i64 %i.fk, 1152921504606846975
+  %i.fj = sub i64 %i.fh, %i.fi                    ; 2 uses
+  %i.fk = sdiv exact i64 %i.fj, 80                ; 3 uses
+  %13 = icmp slt i64 %i.fj, 0
   br i1 %13, label %bb.o, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
 
 bb.o:                                             ; preds = %._crit_edge168
@@ -251,15 +251,16 @@ _ZNSt6vectorIlSaIlEEC2EmRKS0_.exit:               ; preds = %_ZNSt12_Vector_base
   %i.fx = ptrtoint ptr %i.fv to i64
   %i.fy = ptrtoint ptr %i.fw to i64
   %i.fz = sub i64 %i.fx, %i.fy                    ; 2 uses
-  %14 = sdiv exact i64 %i.fz, 80                  ; 2 uses
-  %i.ga = icmp ugt i64 %14, 1
+  %i.ga = icmp ugt i64 %i.fz, 80
   br i1 %i.ga, label %.lr.ph170, label %._crit_edge171
 
 .lr.ph170:                                        ; preds = %_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit
+  %14 = sdiv exact i64 %i.fz, 80                  ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %14, i64 2)
   %.pre174 = load i64, ptr %i.ft, align 8, !tbaa !95 ; 2 uses
-  %i.gb = add nsw i64 %14, -1                     ; 3 uses
+  %i.gb = add i64 %umax, -1                       ; 3 uses
   %xtraiter = and i64 %i.gb, 1
-  %15 = icmp eq i64 %i.fz, 160
+  %15 = icmp ult i64 %14, 3
   br i1 %15, label %.epil.preheader, label %.lr.ph170.new
 
 .lr.ph170.new:                                    ; preds = %.lr.ph170
