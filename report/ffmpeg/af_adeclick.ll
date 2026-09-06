@@ -204,13 +204,12 @@ autocorrelation.exit.i:                           ; preds = %._crit_edge.i.i, %b
   br i1 %exitcond103.not.i, label %._crit_edge.i, label %.preheader71.i, !llvm.loop !150
 
 .preheader71.i:                                   ; preds = %.loopexit.i, %.preheader71.preheader.i
-  %indvar = phi i64 [ %indvar.next, %.loopexit.i ], [ 0, %.preheader71.preheader.i ] ; 3 uses
+  %indvar = phi i64 [ %indvar.next, %.loopexit.i ], [ 0, %.preheader71.preheader.i ] ; 2 uses
   %indvars.iv97.i = phi i64 [ %indvars.iv.next98.i, %.loopexit.i ], [ 2, %.preheader71.preheader.i ] ; 6 uses
-  %indvars.iv85.i = phi i64 [ %indvars.iv.next86.i, %.loopexit.i ], [ 1, %.preheader71.preheader.i ] ; 18 uses
+  %indvars.iv85.i = phi i64 [ %indvars.iv.next86.i, %.loopexit.i ], [ 1, %.preheader71.preheader.i ] ; 19 uses
   %.06876.i = phi double [ %i.de, %.loopexit.i ], [ %i.cy, %.preheader71.preheader.i ] ; 2 uses
-  %i.df = shl nuw nsw i64 %indvar, 3
-  %4 = getelementptr i8, ptr %i.ay, i64 %i.df
-  %scevgep = getelementptr i8, ptr %4, i64 8
+  %i.df = shl nuw nsw i64 %indvars.iv85.i, 3
+  %scevgep = getelementptr i8, ptr %i.ay, i64 %i.df
   %xtraiter329 = and i64 %indvars.iv85.i, 3       ; 3 uses
   %i.dg = icmp ult i64 %indvar, 3
   br i1 %i.dg, label %.epil.preheader, label %.preheader71.i.new

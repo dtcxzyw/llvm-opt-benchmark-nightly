@@ -205,7 +205,7 @@ _ZN4llvm11SmallVectorIiLj12EED2Ev.exit:           ; preds = %._crit_edge43, %bb.
 
 bb.d:                                             ; preds = %.lr.ph42, %._crit_edge
   %.sroa.031.041 = phi i64 [ 0, %.lr.ph42 ], [ %i.ar, %._crit_edge ] ; 4 uses
-  %i.y = shl i64 %.sroa.031.041, 2
+  %i.y = shl nuw nsw i64 %.sroa.031.041, 2
   %i.z = trunc i64 %.sroa.031.041 to i32
   %i.aa = mul i32 %0, %i.z
   %i.ab = zext i32 %i.aa to i64

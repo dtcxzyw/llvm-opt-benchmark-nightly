@@ -205,7 +205,7 @@ bb.bf:                                            ; preds = %_ZN5o3dgcltERKNS_13
   br i1 %i.mn, label %.lr.ph47.preheader.i, label %_ZN5o3dgc6InsertENS_13SC3DMCTripletERmPNS_15SC3DMCPredictorE.exit
 
 .lr.ph47.preheader.i:                             ; preds = %bb.bf
-  %i.mo = mul i64 %.02543.i, 280
+  %i.mo = mul nuw i64 %.02543.i, 280
   %i.mp = getelementptr i8, ptr %i.ie, i64 %i.mo  ; 2 uses
   %scevgep.i = getelementptr i8, ptr %i.mp, i64 280
   %i.mq = xor i64 %.02543.i, -1
@@ -411,7 +411,7 @@ bb.bj:                                            ; preds = %_ZN5o3dgcltERKNS_13
   br i1 %i.qc, label %.lr.ph47.preheader.i392, label %_ZN5o3dgc6InsertENS_13SC3DMCTripletERmPNS_15SC3DMCPredictorE.exit398
 
 .lr.ph47.preheader.i392:                          ; preds = %bb.bj
-  %i.qd = mul i64 %.02543.i382, 280
+  %i.qd = mul nuw i64 %.02543.i382, 280
   %i.qe = getelementptr i8, ptr %i.ie, i64 %i.qd  ; 2 uses
   %scevgep.i393 = getelementptr i8, ptr %i.qe, i64 280
   %i.qf = xor i64 %.02543.i382, -1
@@ -589,7 +589,7 @@ bb.bo:                                            ; preds = %.split31.i397.1, %_
   br i1 %i.st, label %.lr.ph47.preheader.i392.1, label %_ZN5o3dgc6InsertENS_13SC3DMCTripletERmPNS_15SC3DMCPredictorE.exit398.1
 
 .lr.ph47.preheader.i392.1:                        ; preds = %bb.bo
-  %i.su = mul i64 %.02543.i382.1, 280
+  %i.su = mul nuw i64 %.02543.i382.1, 280
   %i.sv = getelementptr i8, ptr %i.ie, i64 %i.su  ; 2 uses
   %scevgep.i393.1 = getelementptr i8, ptr %i.sv, i64 280
   %i.sw = xor i64 %.02543.i382.1, -1
@@ -758,7 +758,7 @@ bb.bs:                                            ; preds = %.split31.i397.2, %_
   br i1 %i.vi, label %.lr.ph47.preheader.i392.2, label %_ZN5o3dgc6InsertENS_13SC3DMCTripletERmPNS_15SC3DMCPredictorE.exit398.2
 
 .lr.ph47.preheader.i392.2:                        ; preds = %bb.bs
-  %i.vj = mul i64 %.02543.i382.2, 280
+  %i.vj = mul nuw i64 %.02543.i382.2, 280
   %i.vk = getelementptr i8, ptr %i.ie, i64 %i.vj  ; 2 uses
   %scevgep.i393.2 = getelementptr i8, ptr %i.vk, i64 280
   %i.vl = xor i64 %.02543.i382.2, -1
@@ -1161,7 +1161,7 @@ bb.ac:                                            ; preds = %_ZN5o3dgcltERKNS_13
   br i1 %i.do, label %.lr.ph47.preheader.i, label %_ZN5o3dgc6InsertENS_13SC3DMCTripletERmPNS_15SC3DMCPredictorE.exit
 
 .lr.ph47.preheader.i:                             ; preds = %bb.ac
-  %i.dp = mul i64 %.02543.i, 280
+  %i.dp = mul nuw i64 %.02543.i, 280
   %i.dq = getelementptr i8, ptr %i.bo, i64 %i.dp  ; 2 uses
   %scevgep.i = getelementptr i8, ptr %i.dq, i64 280
   %i.dr = xor i64 %.02543.i, -1
@@ -1337,7 +1337,7 @@ bb.ah:                                            ; preds = %.split31.i.1, %_ZN5
   br i1 %i.gd, label %.lr.ph47.preheader.i.1, label %_ZN5o3dgc6InsertENS_13SC3DMCTripletERmPNS_15SC3DMCPredictorE.exit.1
 
 .lr.ph47.preheader.i.1:                           ; preds = %bb.ah
-  %i.ge = mul i64 %.02543.i.1, 280
+  %i.ge = mul nuw i64 %.02543.i.1, 280
   %i.gf = getelementptr i8, ptr %i.bo, i64 %i.ge  ; 2 uses
   %scevgep.i.1 = getelementptr i8, ptr %i.gf, i64 280
   %i.gg = xor i64 %.02543.i.1, -1
@@ -1504,7 +1504,7 @@ bb.al:                                            ; preds = %.split31.i.2, %_ZN5
   br i1 %i.iq, label %.lr.ph47.preheader.i.2, label %_ZN5o3dgc6InsertENS_13SC3DMCTripletERmPNS_15SC3DMCPredictorE.exit.2
 
 .lr.ph47.preheader.i.2:                           ; preds = %bb.al
-  %i.ir = mul i64 %.02543.i.2, 280
+  %i.ir = mul nuw i64 %.02543.i.2, 280
   %i.is = getelementptr i8, ptr %i.bo, i64 %i.ir  ; 2 uses
   %scevgep.i.2 = getelementptr i8, ptr %i.is, i64 280
   %i.it = xor i64 %.02543.i.2, -1

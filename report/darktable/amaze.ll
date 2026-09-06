@@ -205,12 +205,10 @@ bb.cy:                                            ; preds = %bb.cx, %.lr.ph4105
   br label %bb.ei
 
 bb.cz:                                            ; preds = %.lr.ph4116, %._crit_edge4114
-  %indvar4879 = phi i32 [ 0, %.lr.ph4116 ], [ %indvar.next4880, %._crit_edge4114 ] ; 2 uses
   %indvars.iv4351 = phi i32 [ 1932, %.lr.ph4116 ], [ %indvars.iv.next4352, %._crit_edge4114 ] ; 6 uses
-  %.031634115 = phi i32 [ 12, %.lr.ph4116 ], [ %i.iiv, %._crit_edge4114 ] ; 2 uses
-  %i.hzh = mul i32 %indvar4879, 160
-  %6 = add i32 %i.hzh, 1920
-  %i.hzi = zext i32 %6 to i64
+  %.031634115 = phi i32 [ 12, %.lr.ph4116 ], [ %i.iiv, %._crit_edge4114 ] ; 3 uses
+  %i.hzh = mul i32 %.031634115, 160
+  %i.hzi = zext i32 %i.hzh to i64
   %i.hzj = shl nuw nsw i64 %i.hzi, 1              ; 7 uses
   %scevgep4881.a = getelementptr i8, ptr %scevgep4878, i64 %i.hzj ; 2 uses
   %scevgep4885.a = getelementptr i8, ptr %scevgep4884.a, i64 %i.hzj ; 2 uses
@@ -613,7 +611,6 @@ middle.block5127:                                 ; preds = %vector.body5082
   %i.iiv = add nuw nsw i32 %.031634115, 1         ; 2 uses
   %i.iiw = icmp slt i32 %i.iiv, %i.dd
   %indvars.iv.next4352 = add i32 %indvars.iv4351, 160
-  %indvar.next4880 = add i32 %indvar4879, 1
   br i1 %i.iiw, label %bb.cz, label %.preheader3915, !llvm.loop !303
 
 .lr.ph4113:                                       ; preds = %.lr.ph4113.preheader7464, %bb.eh

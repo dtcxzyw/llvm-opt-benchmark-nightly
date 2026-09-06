@@ -205,7 +205,7 @@ _ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIfLi4ELi4ELi0ELi4ELi4EEEE4rankEv.exit:
 _ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIfLi4ELi4ELi0ELi4ELi4EEEE4rankEv.exit.thread: ; preds = %_ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIfLi4ELi4ELi0ELi4ELi4EEEE4rankEv.exit
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 224
-  %i.bf = add nsw i64 %.lcssa177, -1              ; 6 uses
+  %i.bf = add nsw i64 %.lcssa177, -1              ; 4 uses
   %.not164 = icmp eq i64 %.lcssa177, 0
   br i1 %.not164, label %.loopexit, label %.lr.ph
 
@@ -243,10 +243,9 @@ _ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIfLi4ELi4ELi0ELi4ELi4EEEE4rankEv.exit.
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIfLi4ELi4ELi0ELi4ELi4EEELi4ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit49
-  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIfLi4ELi4ELi0ELi4ELi4EEELi4ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit49 ] ; 9 uses
-  %.0163 = phi i64 [ %i.bf, %.lr.ph ], [ %i.ft, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIfLi4ELi4ELi0ELi4ELi4EEELi4ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit49 ] ; 20 uses
-  %3 = sub i64 %i.bf, %indvar
-  %i.bt = shl i64 %3, 4
+  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIfLi4ELi4ELi0ELi4ELi4EEELi4ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit49 ] ; 7 uses
+  %.0163 = phi i64 [ %i.bf, %.lr.ph ], [ %i.ft, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIfLi4ELi4ELi0ELi4ELi4EEELi4ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit49 ] ; 22 uses
+  %i.bt = shl i64 %.0163, 4
   %scevgep198 = getelementptr i8, ptr %0, i64 %i.bt
   %i.bu = sub i64 %.lcssa177, %indvar
   %i.bv = shl i64 %i.bu, 2
@@ -258,8 +257,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN5Eigen9
   %i.by = shl i64 %indvar, 2
   %i.bz = sub i64 %i.bq, %i.by
   %scevgep203 = getelementptr i8, ptr %0, i64 %i.bz
-  %4 = sub i64 %i.bf, %indvar
-  %i.ca = shl i64 %4, 4
+  %i.ca = shl i64 %.0163, 4
   %scevgep = getelementptr i8, ptr %0, i64 %i.ca
   %i.cb = sub i64 %.lcssa177, %indvar
   %i.cc = shl i64 %i.cb, 2
@@ -662,9 +660,9 @@ _ZN5Eigen8internal13first_alignedILi16EflEET1_PKT0_S2_.exit: ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph54, %._crit_edge
   %.03453 = phi i64 [ 0, %.lr.ph54 ], [ %i.ft, %._crit_edge ] ; 10 uses
   %.03552 = phi i64 [ %i.bq, %.lr.ph54 ], [ %.sroa.speculated, %._crit_edge ] ; 14 uses
-  %i.bt = shl i64 %.03453, 2
+  %i.bt = shl nuw nsw i64 %.03453, 2
   %i.bu = shl i64 %.03453, 4
-  %i.bv = shl i64 %.03453, 2
+  %i.bv = shl nuw nsw i64 %.03453, 2
   %i.bw = sub i64 %i.bj, %.03552                  ; 3 uses
   %i.bx = and i64 %i.bw, -4                       ; 2 uses
   %i.by = add nsw i64 %i.bx, %.03552              ; 6 uses
@@ -1067,9 +1065,9 @@ _ZN5Eigen8internal13first_alignedILi16EflEET1_PKT0_S2_.exit: ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph54, %._crit_edge
   %.03453 = phi i64 [ 0, %.lr.ph54 ], [ %i.ft, %._crit_edge ] ; 10 uses
   %.03552 = phi i64 [ %i.bq, %.lr.ph54 ], [ %.sroa.speculated, %._crit_edge ] ; 14 uses
-  %i.bt = shl i64 %.03453, 2
+  %i.bt = shl nuw nsw i64 %.03453, 2
   %i.bu = shl i64 %.03453, 4
-  %i.bv = shl i64 %.03453, 2
+  %i.bv = shl nuw nsw i64 %.03453, 2
   %i.bw = sub i64 %i.bj, %.03552                  ; 3 uses
   %i.bx = and i64 %i.bw, -4                       ; 2 uses
   %i.by = add nsw i64 %i.bx, %.03552              ; 6 uses

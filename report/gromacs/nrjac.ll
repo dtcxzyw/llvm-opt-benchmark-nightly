@@ -205,9 +205,6 @@ bb.b:                                             ; preds = %._crit_edge.i.us
   %indvars.iv273.i.us = phi i64 [ 2, %bb.b ], [ %indvars.iv.next274.i.us, %.loopexit.i.us ] ; 2 uses
   %indvars.iv266.i.us = phi i64 [ 1, %bb.b ], [ %indvars.iv.next267.i.us, %.loopexit.i.us ] ; 6 uses
   %.1169232.i.us = phi i32 [ %.0168239.i.us, %bb.b ], [ %.3171.i.us, %.loopexit.i.us ]
-  %6 = shl i64 %indvars.iv292.i.us, 3             ; 2 uses
-  %7 = add i64 %6, 16
-  %8 = add i64 %6, 24
   %indvars.iv.next293.i.us = add nuw nsw i64 %indvars.iv292.i.us, 1 ; 3 uses
   %i.cz = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv292.i.us
   %i.da = load ptr, ptr %i.cz, align 8, !tbaa !11 ; 12 uses
@@ -227,15 +224,16 @@ bb.b:                                             ; preds = %._crit_edge.i.us
 bb.c:                                             ; preds = %bb.l, %.lr.ph229.i.us
   %indvar = phi i64 [ %indvar.next, %bb.l ], [ 0, %.lr.ph229.i.us ] ; 6 uses
   %indvars.iv286.i.us = phi i64 [ %indvars.iv.next287.i.us, %bb.l ], [ %indvars.iv266.i.us, %.lr.ph229.i.us ] ; 18 uses
-  %indvars.iv275.i.us = phi i64 [ %indvars.iv.next276.i.us, %bb.l ], [ %indvars.iv273.i.us, %.lr.ph229.i.us ] ; 5 uses
+  %indvars.iv275.i.us = phi i64 [ %indvars.iv.next276.i.us, %bb.l ], [ %indvars.iv273.i.us, %.lr.ph229.i.us ] ; 6 uses
   %.2170227.i.us = phi i32 [ %.3171.i.us, %bb.l ], [ %.1169232.i.us, %.lr.ph229.i.us ] ; 3 uses
   %i.dg = add i64 %indvars.iv292.i.us, %indvar
   %i.dh = trunc i64 %i.dg to i32
   %i.di = sub i32 %i.av, %i.dh                    ; 2 uses
-  %i.dj = shl i64 %indvar, 3                      ; 2 uses
-  %i.dk = add i64 %7, %i.dj                       ; 2 uses
-  %scevgep31 = getelementptr i8, ptr %i.da, i64 %i.dk
-  %i.dl = add i64 %8, %i.dj                       ; 2 uses
+  %i.dj = shl i64 %indvars.iv275.i.us, 3          ; 2 uses
+  %scevgep31 = getelementptr i8, ptr %i.da, i64 %i.dj
+  %i.dk = add i64 %indvars.iv292.i.us, %indvar
+  %6 = shl i64 %i.dk, 3
+  %i.dl = add i64 %6, 24                          ; 2 uses
   %scevgep32 = getelementptr i8, ptr %i.da, i64 %i.dl
   %i.dm = add i64 %indvars.iv292.i.us, %indvar
   %i.dn = trunc i64 %i.dm to i32
@@ -462,7 +460,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %min.iters.check40, label %scalar.ph39.preheader, label %vector.memcheck30
 
 vector.memcheck30:                                ; preds = %.lr.ph221.i.us
-  %scevgep34 = getelementptr nuw i8, ptr %i.if, i64 %i.dk
+  %scevgep34 = getelementptr nuw i8, ptr %i.if, i64 %i.dj
   %i.ij = getelementptr i8, ptr %i.if, i64 %i.dl
   %scevgep35 = getelementptr i8, ptr %i.ij, i64 %i.dq
   %bound036 = icmp ult ptr %scevgep31, %scevgep35
@@ -472,7 +470,7 @@ vector.memcheck30:                                ; preds = %.lr.ph221.i.us
 
 vector.ph41:                                      ; preds = %vector.memcheck30
   %n.vec42 = and i64 %i.ii, 8589934584            ; 3 uses
-  %i.ik = add nuw i64 %indvars.iv275.i.us, %n.vec42
+  %i.ik = add i64 %indvars.iv275.i.us, %n.vec42
   %broadcast.splatinsert = insertelement <4 x double> poison, double %i.ig, i64 0
   %broadcast.splat = shufflevector <4 x double> %broadcast.splatinsert, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert43 = insertelement <4 x double> poison, double %i.ez, i64 0
@@ -647,14 +645,14 @@ bb.k:                                             ; preds = %bb.e
 bb.l:                                             ; preds = %._crit_edge224.i.loopexit.us, %bb.k, %bb.f
   %.3171.i.us = phi i32 [ %.2170227.i.us, %bb.k ], [ %i.nv, %._crit_edge224.i.loopexit.us ], [ %.2170227.i.us, %bb.f ] ; 3 uses
   %indvars.iv.next287.i.us = add nuw nsw i64 %indvars.iv286.i.us, 1 ; 2 uses
-  %indvars.iv.next276.i.us = add nuw nsw i64 %indvars.iv275.i.us, 1
+  %indvars.iv.next276.i.us = add nuw i64 %indvars.iv275.i.us, 1
   %exitcond291.not.i.us = icmp eq i64 %indvars.iv.next287.i.us, %i.e
   %indvar.next = add i64 %indvar, 1
   br i1 %exitcond291.not.i.us, label %.loopexit.i.us, label %bb.c, !llvm.loop !41
 
 .loopexit.i.us:                                   ; preds = %bb.l
   %indvars.iv.next267.i.us = add nuw nsw i64 %indvars.iv266.i.us, 1
-  %indvars.iv.next274.i.us = add nuw nsw i64 %indvars.iv273.i.us, 1
+  %indvars.iv.next274.i.us = add nuw i64 %indvars.iv273.i.us, 1
   %exitcond296.not.i.us = icmp eq i64 %indvars.iv.next293.i.us, %wide.trip.count259.i
   br i1 %exitcond296.not.i.us, label %.preheader197.i.us, label %.lr.ph229.i.us, !llvm.loop !42
 

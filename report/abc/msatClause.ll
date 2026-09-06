@@ -203,7 +203,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   br i1 %i.n, label %.lr.ph.preheader.i, label %Msat_ClauseRemoveWatch.exit
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
-  %i.o = shl i64 %indvars.iv.i, 3
+  %i.o = shl nuw nsw i64 %indvars.iv.i, 3
   %scevgep.i = getelementptr nuw i8, ptr %i.i, i64 %i.o ; 2 uses
   %scevgep15.i = getelementptr i8, ptr %scevgep.i, i64 8
   %i.p = add i32 %i.h, -2
@@ -241,7 +241,7 @@ bb.d:                                             ; preds = %bb.d, %Msat_ClauseR
   br i1 %i.ah, label %.lr.ph.preheader.i16, label %Msat_ClauseRemoveWatch.exit19
 
 .lr.ph.preheader.i16:                             ; preds = %.preheader.i15
-  %i.ai = shl i64 %indvars.iv.i12, 3
+  %i.ai = shl nuw nsw i64 %indvars.iv.i12, 3
   %scevgep.i17 = getelementptr nuw i8, ptr %i.ac, i64 %i.ai ; 2 uses
   %scevgep15.i18 = getelementptr i8, ptr %scevgep.i17, i64 8
   %i.aj = add i32 %i.ab, -2
@@ -287,7 +287,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   br i1 %i.g, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %i.h = shl i64 %indvars.iv, 3                   ; 2 uses
+  %i.h = shl nuw nsw i64 %indvars.iv, 3           ; 2 uses
   %scevgep = getelementptr nuw i8, ptr %i.b, i64 %i.h
   %i.i = getelementptr i8, ptr %i.b, i64 %i.h
   %scevgep15 = getelementptr i8, ptr %i.i, i64 8

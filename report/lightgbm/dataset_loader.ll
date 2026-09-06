@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 60
   %i.al = ashr exact i64 %i.w, 2                  ; 2 uses
   %umax = call i64 @llvm.umax.i64(i64 %i.al, i64 1) ; 3 uses
-  %i.am = sext i32 %i.ad to i64                   ; 2 uses
+  %i.am = sext i32 %i.ad to i64
   %xtraiter361 = and i64 %umax, 1
   %i.an = icmp ult i64 %i.al, 2
   %unroll_iter = and i64 %umax, -2
@@ -214,10 +214,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph219, %_ZNSt6vectorIdSaIdEED2Ev.exit
-  %indvar = phi i64 [ 0, %.lr.ph219 ], [ %indvar.next, %_ZNSt6vectorIdSaIdEED2Ev.exit ] ; 2 uses
-  %indvars.iv244 = phi i64 [ %i.am, %.lr.ph219 ], [ %indvars.iv.next245, %_ZNSt6vectorIdSaIdEED2Ev.exit ] ; 13 uses
-  %11 = add i64 %indvar, %i.am
-  %i.ao = shl i64 %11, 3
+  %indvars.iv244 = phi i64 [ %i.am, %.lr.ph219 ], [ %indvars.iv.next245, %_ZNSt6vectorIdSaIdEED2Ev.exit ] ; 14 uses
+  %i.ao = shl nsw i64 %indvars.iv244, 3
   %i.ap = call i32 @omp_get_thread_num()          ; 2 uses
   %i.aq = load ptr, ptr %10, align 8, !tbaa !238  ; 2 uses
   %i.ar = load ptr, ptr %i.ae, align 8, !tbaa !239
@@ -620,7 +618,6 @@ _ZNSt6vectorIdSaIdEED2Ev.exit:                    ; preds = %.invoke315, %bb.bx,
   %i.qn = load i32, ptr %i.d, align 4, !tbaa !134
   %i.qo = sext i32 %i.qn to i64
   %.not.not = icmp slt i64 %indvars.iv244, %i.qo
-  %indvar.next = add i64 %indvar, 1
   br i1 %.not.not, label %bb.h, label %._crit_edge220
 
 ._crit_edge220:                                   ; preds = %_ZNSt6vectorIdSaIdEED2Ev.exit, %bb.g
