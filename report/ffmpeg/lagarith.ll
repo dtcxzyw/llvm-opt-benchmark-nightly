@@ -205,7 +205,11 @@ bb.h:                                             ; preds = %.loopexit137.i, %bb
 
 bb.i:                                             ; preds = %bb.h
   %i.aw = icmp eq i16 %i.ar, 0
-  br i1 %i.aw, label %.thread128.i, label %bb.j
+  br i1 %i.aw, label %.thread129.i, label %bb.j
+
+.thread129.i:                                     ; preds = %bb.i
+  store i32 0, ptr %i.ad, align 4, !tbaa !35
+  br label %bb.p
 
 bb.j:                                             ; preds = %bb.i
   %i.ax = icmp samesign ult i16 %i.ar, 26
@@ -256,24 +260,18 @@ bb.n:                                             ; preds = %bb.l, %bb.k
   %i.cb = or i32 %.0.i.i.i, %i.ca
   %i.cc = add i32 %i.cb, -1                       ; 4 uses
   store i32 %i.cc, ptr %i.ad, align 4, !tbaa !35
-  %9 = zext i32 %.084149.i to i64
-  %10 = zext i32 %i.cc to i64
-  %11 = add nuw nsw i64 %10, %9
-  %i.cd = icmp samesign ugt i64 %11, 4294967295
+  %9 = xor i32 %.084149.i, -1
+  %i.cd = icmp ugt i32 %i.cc, %9
   br i1 %i.cd, label %.critedge.sink.split.i, label %bb.o
-
-.thread128.i:                                     ; preds = %bb.i
-  store i32 0, ptr %i.ad, align 4, !tbaa !35
-  br label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %i.ce = add i32 %i.cc, %.084149.i               ; 2 uses
   %.not103.i = icmp eq i32 %i.cc, 0
   br i1 %.not103.i, label %bb.p, label %bb.u
 
-bb.p:                                             ; preds = %bb.o, %.thread128.i
-  %i.cf = phi i32 [ %i.au, %.thread128.i ], [ %.sink.i.i, %bb.o ] ; 3 uses
-  %i.cg = phi i32 [ %.084149.i, %.thread128.i ], [ %i.ce, %bb.o ] ; 3 uses
+bb.p:                                             ; preds = %bb.o, %.thread129.i
+  %i.cf = phi i32 [ %i.au, %.thread129.i ], [ %.sink.i.i, %bb.o ] ; 3 uses
+  %i.cg = phi i32 [ %.084149.i, %.thread129.i ], [ %i.ce, %bb.o ] ; 3 uses
   %i.ch = lshr i32 %i.cf, 3
   %i.ci = zext nneg i32 %i.ch to i64
   %i.cj = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.ci

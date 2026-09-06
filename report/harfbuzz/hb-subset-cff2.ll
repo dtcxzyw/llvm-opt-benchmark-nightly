@@ -205,13 +205,11 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ac, label %bb.h, label %.critedge
 
 bb.h:                                             ; preds = %bb.g
-  %1 = zext i8 %i.y to i32
   %i.ad = getelementptr inbounds nuw i8, ptr %i.p, i64 12
   %i.ae = load i8, ptr %i.ad, align 4, !tbaa !243 ; 2 uses
-  %2 = zext i8 %i.ae to i32
-  %3 = add nuw nsw i32 %2, %1
-  %4 = icmp samesign ult i32 %3, 256
-  br i1 %4, label %bb.i, label %.critedge
+  %1 = xor i8 %i.y, -1
+  %not.add.overflow.not = icmp ugt i8 %i.ae, %1
+  br i1 %not.add.overflow.not, label %.critedge, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.af = add i8 %i.ae, %i.y
@@ -614,13 +612,11 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.bd, label %bb.k, label %.critedge.i
 
 bb.k:                                             ; preds = %bb.j
-  %1 = zext i8 %i.az to i32
   %i.be = getelementptr inbounds nuw i8, ptr %i.aq, i64 12
   %i.bf = load i8, ptr %i.be, align 4, !tbaa !243 ; 2 uses
-  %2 = zext i8 %i.bf to i32
-  %3 = add nuw nsw i32 %2, %1
-  %4 = icmp samesign ult i32 %3, 256
-  br i1 %4, label %bb.l, label %.critedge.i
+  %1 = xor i8 %i.az, -1
+  %not.add.overflow.not.i = icmp ugt i8 %i.bf, %1
+  br i1 %not.add.overflow.not.i, label %.critedge.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.bg = add i8 %i.bf, %i.az

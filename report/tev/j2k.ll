@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.m
 bb.p:                                             ; preds = %._crit_edge13.i, %.lr.ph21.i
   %indvars.iv33.i = phi i64 [ 0, %.lr.ph21.i ], [ %indvars.iv.next34.i, %._crit_edge13.i ] ; 2 uses
   %.05218.i = phi ptr [ %i.al, %.lr.ph21.i ], [ %.153.i, %._crit_edge13.i ] ; 2 uses
-  %.05417.i = phi i16 [ 3, %.lr.ph21.i ], [ %i.bw, %._crit_edge13.i ] ; 2 uses
+  %.05417.i = phi i16 [ 3, %.lr.ph21.i ], [ %i.bw, %._crit_edge13.i ] ; 3 uses
   %.05716.i = phi i8 [ 0, %.lr.ph21.i ], [ %.158.i, %._crit_edge13.i ] ; 3 uses
   %.06315.i = phi ptr [ %i.an, %.lr.ph21.i ], [ %i.bu, %._crit_edge13.i ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
@@ -250,12 +250,12 @@ bb.p:                                             ; preds = %._crit_edge13.i, %.
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %bb.p
-  %.050.lcssa.i = phi i8 [ 1, %bb.p ], [ 2, %.lr.ph.i ], [ 3, %.lr.ph.i.1 ], [ 4, %.lr.ph.i.2 ], [ 5, %.lr.ph.i.3 ] ; 3 uses
-  %i.bi = zext i16 %.05417.i to i32               ; 2 uses
-  %6 = zext i8 %.050.lcssa.i to i32
-  %7 = add nuw nsw i32 %6, %i.bi
-  %8 = icmp samesign ugt i32 %7, 65535
-  br i1 %8, label %bb.q, label %.lr.ph12.preheader.i
+  %.050.lcssa.i = phi i8 [ 1, %bb.p ], [ 2, %.lr.ph.i ], [ 3, %.lr.ph.i.1 ], [ 4, %.lr.ph.i.2 ], [ 5, %.lr.ph.i.3 ] ; 2 uses
+  %i.bi = zext i16 %.05417.i to i32
+  %6 = zext i8 %.050.lcssa.i to i16               ; 2 uses
+  %7 = xor i16 %.05417.i, -1
+  %add.overflow.i = icmp ult i16 %7, %6
+  br i1 %add.overflow.i, label %bb.q, label %.lr.ph12.preheader.i
 
 bb.q:                                             ; preds = %._crit_edge.i
   %i.bj = icmp eq i8 %.05716.i, -1
@@ -295,8 +295,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not67.i, label %._crit_edge13.i, label %.lr.ph12.i, !llvm.loop !497
 
 ._crit_edge13.i:                                  ; preds = %.lr.ph12.i
-  %9 = zext i8 %.050.lcssa.i to i16
-  %i.bw = add i16 %.155.i, %9                     ; 2 uses
+  %i.bw = add i16 %.155.i, %6                     ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   %indvars.iv.next34.i = add nuw nsw i64 %indvars.iv33.i, 1 ; 2 uses
   %i.bx = load i32, ptr %i.ao, align 4, !tbaa !503
