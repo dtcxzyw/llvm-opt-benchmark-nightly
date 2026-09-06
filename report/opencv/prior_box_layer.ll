@@ -205,7 +205,6 @@ _ZN2cv3dnn17PriorBoxLayerImpl8addPriorEffffffbPf.exit.us.us.us.us.us.us.us.us.us
   %.077176.us.us = phi ptr [ %.lcssa278, %._crit_edge.split.us.split.us.split.us187.us ], [ %i.au, %.preheader148.us.us.preheader ]
   %i.ed = uitofp i64 %.076177.us.us to float      ; 2 uses
   %broadcast.splatinsert297 = insertelement <4 x float> poison, float %i.ed, i64 0
-  %broadcast.splat298 = shufflevector <4 x float> %broadcast.splatinsert297, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ee = insertelement <2 x float> poison, float %i.ed, i64 1
   br label %.preheader147.us.us.us184.us
 
@@ -214,7 +213,7 @@ _ZN2cv3dnn17PriorBoxLayerImpl8addPriorEffffffbPf.exit.us.us.us.us.us.us.us.us.us
   %.178163.us.us.us186.us = phi ptr [ %.077176.us.us, %.preheader148.us.us ], [ %.lcssa278, %._crit_edge154.split.us.split.us172.us.us.us ]
   %i.ef = uitofp i64 %.075164.us.us.us185.us to float ; 2 uses
   %broadcast.splatinsert295 = insertelement <4 x float> poison, float %i.ef, i64 0
-  %broadcast.splat296 = shufflevector <4 x float> %broadcast.splatinsert295, <4 x float> poison, <4 x i32> zeroinitializer
+  %18 = shufflevector <4 x float> %broadcast.splatinsert295, <4 x float> %broadcast.splatinsert297, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
   %i.eg = insertelement <2 x float> %i.ee, float %i.ef, i64 0
   br label %.lr.ph.us.us169.us.us.us
 
@@ -249,14 +248,13 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.eo = getelementptr i8, ptr %.279151.us.us171.us.us.us, i64 %i.cc ; 2 uses
   %i.ep = load float, ptr %i.bc, align 8, !tbaa !71, !alias.scope !175
   %broadcast.splatinsert299 = insertelement <4 x float> poison, float %i.ep, i64 0
-  %broadcast.splat300 = shufflevector <4 x float> %broadcast.splatinsert299, <4 x float> poison, <4 x i32> zeroinitializer
   %i.eq = load float, ptr %i.be, align 4, !tbaa !70, !alias.scope !175
   %broadcast.splatinsert302 = insertelement <4 x float> poison, float %i.eq, i64 0
-  %broadcast.splat303 = shufflevector <4 x float> %broadcast.splatinsert302, <4 x float> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.ei, i64 0
   %broadcast.splatinsert289 = insertelement <4 x float> poison, float %i.ek, i64 0
+  %19 = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> %broadcast.splatinsert289, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
   %i.er = shufflevector <2 x float> %i.en, <2 x float> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1>
-  %i.es = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> %broadcast.splatinsert289, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
+  %i.es = shufflevector <4 x float> %broadcast.splatinsert299, <4 x float> %broadcast.splatinsert302, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -265,16 +263,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep = getelementptr i8, ptr %.279151.us.us171.us.us.us, i64 %i.et
   %i.eu = getelementptr inbounds nuw [4 x i8], ptr %i.bt, i64 %index
   %wide.load = load <4 x float>, ptr %i.eu, align 4, !tbaa !67, !alias.scope !176
-  %18 = fadd <4 x float> %wide.load, %broadcast.splat296
-  %19 = fmul <4 x float> %18, %broadcast.splat300 ; 2 uses
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %index
   %wide.load301 = load <4 x float>, ptr %i.ev, align 4, !tbaa !67, !alias.scope !177
-  %20 = fadd <4 x float> %wide.load301, %broadcast.splat298
-  %21 = fmul <4 x float> %20, %broadcast.splat303 ; 2 uses
-  %22 = shufflevector <4 x float> %19, <4 x float> %21, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %20 = shufflevector <4 x float> %wide.load, <4 x float> %wide.load301, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %21 = fadd <8 x float> %20, %18
+  %22 = fmul <8 x float> %21, %i.es               ; 2 uses
   %i.ew = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.er, <8 x float> splat (float 5.000000e-01), <8 x float> %22)
-  %23 = shufflevector <4 x float> %19, <4 x float> %21, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.ex = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.es, <8 x float> splat (float 5.000000e-01), <8 x float> %23)
+  %i.ex = call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %19, <8 x float> splat (float 5.000000e-01), <8 x float> %22)
   %i.ey = fadd <8 x float> %i.ex, splat (float -1.000000e+00)
   %interleaved.vec = shufflevector <8 x float> %i.ew, <8 x float> %i.ey, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
   store <16 x float> %interleaved.vec, ptr %next.gep, align 4, !tbaa !67, !alias.scope !178, !noalias !179
