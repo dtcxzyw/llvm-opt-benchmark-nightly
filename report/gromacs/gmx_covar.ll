@@ -205,7 +205,7 @@ _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit.epil:     ; preds = %bb.ai, %.peel.next.
   %i.if = load i32, ptr %i.l, align 4, !tbaa !10
   %i.ig = sext i32 %i.if to i64
   %i.ih = invoke noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.55, ptr noundef nonnull @.str.50, i32 noundef 260, i64 noundef range(i64 -4611686016279904256, 4611686018427387905) %i.ig, i64 noundef 4)
-          to label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit532.preheader unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 25 uses
+          to label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit532.preheader unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 26 uses
 
 _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit532.preheader: ; preds = %.loopexit868
   %i.ii = load i32, ptr %i.l, align 4, !tbaa !10  ; 8 uses
@@ -608,7 +608,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
   %i.ou = load i32, ptr %i.l, align 4, !tbaa !10
   %i.ov = sext i32 %i.ou to i64
   %i.ow = invoke noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.58, ptr noundef nonnull @.str.50, i32 noundef 313, i64 noundef range(i64 -2147483648, 2147483648) %i.ov, i64 noundef 12)
-          to label %_ZL13gmx_snew_implIA3_fEvPKcS2_iRPT_m.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 21 uses
+          to label %_ZL13gmx_snew_implIA3_fEvPKcS2_iRPT_m.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 22 uses
 
 _ZL13gmx_snew_implIA3_fEvPKcS2_iRPT_m.exit:       ; preds = %bb.bb
   %i.ox = load i32, ptr %i.l, align 4, !tbaa !10
@@ -1011,7 +1011,7 @@ bb.dh:                                            ; preds = %bb.dh, %.lr.ph909.n
   br label %.preheader856
 
 .preheader856:                                    ; preds = %.preheader856.preheader, %._crit_edge914.2
-  %.0392916 = phi i64 [ %i.agi, %._crit_edge914.2 ], [ 0, %.preheader856.preheader ] ; 31 uses
+  %.0392916 = phi i64 [ %i.agi, %._crit_edge914.2 ], [ 0, %.preheader856.preheader ] ; 32 uses
   %i.aby = add nuw i64 %.0392916, 1
   %i.abz = mul i64 %i.ww, %.0392916               ; 2 uses
   %scevgep1350 = getelementptr i8, ptr %i.wy, i64 %i.abz
@@ -1022,10 +1022,10 @@ bb.dh:                                            ; preds = %bb.dh, %.lr.ph909.n
   %i.acc = add i64 %smax1352, %i.acb
   %i.acd = mul i64 %i.acc, 12                     ; 2 uses
   %scevgep1353 = getelementptr i8, ptr %scevgep1351, i64 %i.acd
-  %i.ace = mul i64 %.0392916, 12
+  %i.ace = mul nuw nsw i64 %.0392916, 12
   %i.acf = getelementptr i8, ptr %i.ow, i64 %i.ace
   %scevgep1354 = getelementptr i8, ptr %i.acf, i64 12
-  %scevgep1355 = getelementptr i8, ptr %scevgep1354, i64 %i.acd ; 2 uses
+  %scevgep1355 = getelementptr i8, ptr %scevgep1354, i64 %i.acd
   %i.acg = add nuw i64 %.0392916, 1
   %i.ach = mul i64 %i.ww, %.0392916               ; 2 uses
   %scevgep = getelementptr i8, ptr %i.xb, i64 %i.ach
@@ -1036,7 +1036,7 @@ bb.dh:                                            ; preds = %bb.dh, %.lr.ph909.n
   %i.ack = add i64 %smax, %i.acj
   %i.acl = mul i64 %i.ack, 12                     ; 2 uses
   %scevgep1331 = getelementptr i8, ptr %scevgep1330, i64 %i.acl
-  %i.acm = mul i64 %.0392916, 12
+  %i.acm = mul nuw nsw i64 %.0392916, 12
   %i.acn = getelementptr i8, ptr %i.ow, i64 %i.acm
   %scevgep1332 = getelementptr i8, ptr %i.acn, i64 12
   %scevgep1333 = getelementptr i8, ptr %scevgep1332, i64 %i.acl
@@ -1050,17 +1050,21 @@ bb.dh:                                            ; preds = %bb.dh, %.lr.ph909.n
   br i1 %min.iters.check1389, label %.preheader855.preheader, label %vector.memcheck1380
 
 vector.memcheck1380:                              ; preds = %.preheader856
-  %i.acu = mul i64 %i.ww, %.0392916               ; 2 uses
-  %i.acv = getelementptr i8, ptr %i.ph, i64 %i.acu
+  %i.acu = mul nuw nsw i64 %.0392916, 12
+  %i.acv = getelementptr i8, ptr %i.ow, i64 %i.acu
   %scevgep1382.a = getelementptr i8, ptr %i.acv, i64 12
   %i.acw = add nuw i64 %.0392916, 1
   %smax1383 = call i64 @llvm.smax.i64(i64 %i.acw, i64 %i.xx)
   %i.acx = xor i64 %.0392916, -1
   %i.acy = add i64 %smax1383, %i.acx
-  %i.acz = mul i64 %i.acy, 12
-  %scevgep1384 = getelementptr i8, ptr %scevgep1382.a, i64 %i.acz
-  %scevgep1381 = getelementptr i8, ptr %i.ph, i64 %i.acu
-  %bound01385 = icmp ult ptr %scevgep1381, %scevgep1355
+  %42 = mul i64 %i.acy, 12                        ; 2 uses
+  %scevgep1386 = getelementptr i8, ptr %scevgep1382.a, i64 %42
+  %i.acz = mul i64 %i.ww, %.0392916               ; 2 uses
+  %43 = getelementptr i8, ptr %i.ph, i64 %i.acz
+  %scevgep1382 = getelementptr i8, ptr %43, i64 12
+  %scevgep1384 = getelementptr i8, ptr %scevgep1382, i64 %42
+  %scevgep1381 = getelementptr i8, ptr %i.ph, i64 %i.acz
+  %bound01385 = icmp ult ptr %scevgep1381, %scevgep1386
   %bound11386 = icmp ult ptr %i.acp, %scevgep1384
   %found.conflict1387 = and i1 %bound01385, %bound11386
   br i1 %found.conflict1387, label %.preheader855.preheader, label %vector.ph1390
@@ -1456,7 +1460,7 @@ _ZL13gmx_snew_implIA3_fEvPKcS2_iRPT_m.exit575.epil: ; preds = %_ZL13gmx_snew_imp
   br label %.preheader853
 
 .preheader853:                                    ; preds = %.preheader853.preheader, %._crit_edge923.2
-  %.1393926 = phi i64 [ %i.aqm, %._crit_edge923.2 ], [ 0, %.preheader853.preheader ] ; 31 uses
+  %.1393926 = phi i64 [ %i.aqm, %._crit_edge923.2 ], [ 0, %.preheader853.preheader ] ; 32 uses
   %i.akc = add nuw i64 %.1393926, 1
   %i.akd = mul i64 %i.ww, %.1393926               ; 2 uses
   %scevgep1448 = getelementptr i8, ptr %i.ajw, i64 %i.akd ; 2 uses
@@ -1467,11 +1471,11 @@ _ZL13gmx_snew_implIA3_fEvPKcS2_iRPT_m.exit575.epil: ; preds = %_ZL13gmx_snew_imp
   %i.akg = add i64 %smax1450, %i.akf              ; 2 uses
   %i.akh = mul i64 %i.akg, 12
   %scevgep1451 = getelementptr i8, ptr %scevgep1449, i64 %i.akh ; 2 uses
-  %i.aki = shl i64 %.1393926, 2
+  %i.aki = shl nuw nsw i64 %.1393926, 2
   %i.akj = getelementptr i8, ptr %i.ih, i64 %i.aki
   %scevgep1452 = getelementptr i8, ptr %i.akj, i64 4
   %i.akk = shl i64 %i.akg, 2
-  %scevgep1453 = getelementptr i8, ptr %scevgep1452, i64 %i.akk ; 2 uses
+  %scevgep1453 = getelementptr i8, ptr %scevgep1452, i64 %i.akk
   %i.akl = add nuw i64 %.1393926, 1
   %i.akm = mul i64 %i.ww, %.1393926               ; 2 uses
   %scevgep1410 = getelementptr i8, ptr %i.ajz, i64 %i.akm ; 2 uses
@@ -1482,7 +1486,7 @@ _ZL13gmx_snew_implIA3_fEvPKcS2_iRPT_m.exit575.epil: ; preds = %_ZL13gmx_snew_imp
   %i.akp = add i64 %smax1412, %i.ako              ; 2 uses
   %i.akq = mul i64 %i.akp, 12
   %scevgep1413 = getelementptr i8, ptr %scevgep1411, i64 %i.akq ; 2 uses
-  %i.akr = shl i64 %.1393926, 2
+  %i.akr = shl nuw nsw i64 %.1393926, 2
   %i.aks = getelementptr i8, ptr %i.ih, i64 %i.akr
   %scevgep1415 = getelementptr i8, ptr %i.aks, i64 4
   %i.akt = shl i64 %i.akp, 2
@@ -1496,20 +1500,25 @@ _ZL13gmx_snew_implIA3_fEvPKcS2_iRPT_m.exit575.epil: ; preds = %_ZL13gmx_snew_imp
   br i1 %min.iters.check1498, label %scalar.ph1497.preheader, label %vector.memcheck1485
 
 vector.memcheck1485:                              ; preds = %.preheader853
-  %42 = mul i64 %i.ww, %.1393926                  ; 2 uses
-  %i.akz = getelementptr i8, ptr %i.ph, i64 %42
-  %scevgep1487 = getelementptr i8, ptr %i.akz, i64 12
+  %44 = shl nuw nsw i64 %.1393926, 2
+  %i.akz = getelementptr i8, ptr %i.ih, i64 %44
+  %scevgep1487 = getelementptr i8, ptr %i.akz, i64 4
   %i.ala = add nuw i64 %.1393926, 1
   %smax1488 = call i64 @llvm.smax.i64(i64 %.pre-phi10571252, i64 %i.ala)
   %i.alb = xor i64 %.1393926, -1
-  %i.alc = add i64 %smax1488, %i.alb
+  %i.alc = add i64 %smax1488, %i.alb              ; 2 uses
+  %45 = shl i64 %i.alc, 2
+  %scevgep1493 = getelementptr i8, ptr %scevgep1487, i64 %45
+  %46 = mul i64 %i.ww, %.1393926                  ; 2 uses
+  %47 = getelementptr i8, ptr %i.ph, i64 %46
+  %scevgep1489 = getelementptr i8, ptr %47, i64 12
   %i.ald = mul i64 %i.alc, 12
-  %scevgep1489.a = getelementptr i8, ptr %scevgep1487, i64 %i.ald ; 2 uses
-  %scevgep1486 = getelementptr i8, ptr %i.ph, i64 %42 ; 2 uses
+  %scevgep1489.a = getelementptr i8, ptr %scevgep1489, i64 %i.ald ; 2 uses
+  %scevgep1486 = getelementptr i8, ptr %i.ph, i64 %46 ; 2 uses
   %bound01490 = icmp ult ptr %scevgep1486, %scevgep1414
   %bound11491 = icmp ult ptr %i.ih, %scevgep1489.a
   %found.conflict1492 = and i1 %bound01490, %bound11491
-  %bound01493 = icmp ult ptr %scevgep1486, %scevgep1453
+  %bound01493 = icmp ult ptr %scevgep1486, %scevgep1493
   %bound11494 = icmp ult ptr %i.akv, %scevgep1489.a
   %found.conflict1495 = and i1 %bound01493, %bound11494
   %conflict.rdx1496 = or i1 %found.conflict1492, %found.conflict1495
