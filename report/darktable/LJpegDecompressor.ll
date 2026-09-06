@@ -204,15 +204,14 @@ _ZN8rawspeed19roundUpDivisionSafeEmm.exit:
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !111 ; 8 uses
   %i.al = ptrtoaddr ptr %i.ak to i64
   %i.am = load ptr, ptr %i.ak, align 8, !tbaa !115, !nonnull !116, !align !117 ; 7 uses
+  %4 = sext i32 %i.z to i64                       ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.ao = load i32, ptr %i.an, align 8, !tbaa !36 ; 3 uses
-  %4 = sext i32 %i.z to i64                       ; 2 uses
   %i.ap = sext i32 %i.ao to i64                   ; 2 uses
   %i.aq = add nsw i64 %4, -1
   %i.ar = udiv i64 %i.aq, %i.ap                   ; 2 uses
-  %5 = trunc i64 %i.ar to i32
-  %6 = add nsw i32 %5, 1                          ; 2 uses
-  %i.as = icmp ne i32 %6, 0
+  %5 = and i64 %i.ar, 4294967295
+  %i.as = icmp ne i64 %5, 4294967295
   tail call void @llvm.assume(i1 %i.as)
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.021.0.copyload = load ptr, ptr %i.at, align 8, !tbaa !21 ; 3 uses
@@ -241,8 +240,7 @@ _ZN8rawspeed19roundUpDivisionSafeEmm.exit:
   %i.bl = zext i32 %i.x to i64
   %i.bm = zext nneg i32 %i.n to i64
   %i.bn = zext i32 %i.ao to i64
-  %i.bo = and i64 %i.ar, 4294967295
-  %7 = zext nneg i32 %6 to i64
+  %i.bo = and i64 %i.ar, 4294967295               ; 2 uses
   %i.bp = add i64 %i.ax, -16
   %i.bq = sub i64 %i.bp, %i.al                    ; 3 uses
   %i.br = lshr i64 %i.bq, 4
@@ -272,7 +270,7 @@ bb.a:                                             ; preds = %_ZN8rawspeed10ByteS
   ret i32 %i.qj
 
 bb.b:                                             ; preds = %_ZN8rawspeed19roundUpDivisionSafeEmm.exit, %_ZN8rawspeed10ByteStream9skipBytesEj.exit120
-  %indvars.iv732 = phi i64 [ 0, %_ZN8rawspeed19roundUpDivisionSafeEmm.exit ], [ %indvars.iv.next733, %_ZN8rawspeed10ByteStream9skipBytesEj.exit120 ] ; 5 uses
+  %indvars.iv732 = phi i64 [ 0, %_ZN8rawspeed19roundUpDivisionSafeEmm.exit ], [ %indvars.iv.next733, %_ZN8rawspeed10ByteStream9skipBytesEj.exit120 ] ; 6 uses
   %.sroa.10322.0701 = phi i32 [ 0, %_ZN8rawspeed19roundUpDivisionSafeEmm.exit ], [ %i.qj, %_ZN8rawspeed10ByteStream9skipBytesEj.exit120 ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
@@ -675,8 +673,8 @@ _ZN8rawspeed10ByteStream9skipBytesEj.exit120:     ; preds = %.loopexit580.thread
   %i.ql = icmp sgt i32 %i.qg, -1
   tail call void @llvm.assume(i1 %i.ql)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  %indvars.iv.next733 = add nuw nsw i64 %indvars.iv732, 1 ; 2 uses
-  %.not = icmp eq i64 %indvars.iv.next733, %7
+  %indvars.iv.next733 = add nuw nsw i64 %indvars.iv732, 1
+  %.not = icmp eq i64 %indvars.iv732, %i.bo
   br i1 %.not, label %bb.a, label %bb.b, !llvm.loop !187
 }
 
@@ -739,15 +737,14 @@ _ZN8rawspeed19roundUpDivisionSafeEmm.exit:
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !111 ; 8 uses
   %i.am = ptrtoaddr ptr %i.al to i64
   %i.an = tail call <3 x ptr> @llvm.masked.load.v3p0.p0(ptr align 8 %i.al, <3 x i1> <i1 true, i1 false, i1 true>, <3 x ptr> poison), !tbaa !115 ; 6 uses
+  %6 = sext i32 %i.z to i64                       ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.ap = load i32, ptr %i.ao, align 8, !tbaa !36 ; 3 uses
-  %6 = sext i32 %i.z to i64                       ; 3 uses
   %i.aq = sext i32 %i.ap to i64                   ; 2 uses
   %i.ar = add nsw i64 %6, -1
   %i.as = udiv i64 %i.ar, %i.aq                   ; 2 uses
-  %7 = trunc i64 %i.as to i32
-  %8 = add nsw i32 %7, 1                          ; 2 uses
-  %i.at = icmp ne i32 %8, 0
+  %7 = and i64 %i.as, 4294967295
+  %i.at = icmp ne i64 %7, 4294967295
   tail call void @llvm.assume(i1 %i.at)
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.022.0.copyload = load ptr, ptr %i.au, align 8, !tbaa !21 ; 3 uses
@@ -773,8 +770,7 @@ _ZN8rawspeed19roundUpDivisionSafeEmm.exit:
   %i.bj = zext i32 %i.x to i64
   %i.bk = zext nneg i32 %i.n to i64
   %i.bl = zext i32 %i.ap to i64
-  %i.bm = and i64 %i.as, 4294967295
-  %9 = zext nneg i32 %8 to i64
+  %i.bm = and i64 %i.as, 4294967295               ; 2 uses
   %i.bn = add i64 %i.ay, -16
   %i.bo = sub i64 %i.bn, %i.am                    ; 3 uses
   %i.bp = lshr i64 %i.bo, 4
@@ -810,7 +806,7 @@ bb.a:                                             ; preds = %_ZN8rawspeed10ByteS
   ret i32 %i.xv
 
 bb.b:                                             ; preds = %_ZN8rawspeed19roundUpDivisionSafeEmm.exit, %_ZN8rawspeed10ByteStream9skipBytesEj.exit168
-  %indvars.iv967 = phi i64 [ 0, %_ZN8rawspeed19roundUpDivisionSafeEmm.exit ], [ %indvars.iv.next968, %_ZN8rawspeed10ByteStream9skipBytesEj.exit168 ] ; 5 uses
+  %indvars.iv967 = phi i64 [ 0, %_ZN8rawspeed19roundUpDivisionSafeEmm.exit ], [ %indvars.iv.next968, %_ZN8rawspeed10ByteStream9skipBytesEj.exit168 ] ; 6 uses
   %.sroa.10429.0917 = phi i32 [ 0, %_ZN8rawspeed19roundUpDivisionSafeEmm.exit ], [ %i.xv, %_ZN8rawspeed10ByteStream9skipBytesEj.exit168 ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
@@ -1213,8 +1209,8 @@ _ZN8rawspeed10ByteStream9skipBytesEj.exit168:     ; preds = %.loopexit756.thread
   %i.xx = icmp sgt i32 %i.xs, -1
   tail call void @llvm.assume(i1 %i.xx)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
-  %indvars.iv.next968 = add nuw nsw i64 %indvars.iv967, 1 ; 2 uses
-  %.not = icmp eq i64 %indvars.iv.next968, %9
+  %indvars.iv.next968 = add nuw nsw i64 %indvars.iv967, 1
+  %.not = icmp eq i64 %indvars.iv967, %i.bm
   br i1 %.not, label %bb.a, label %bb.b, !llvm.loop !200
 }
 
@@ -1281,15 +1277,14 @@ _ZN8rawspeed19roundUpDivisionSafeEmm.exit:
   %i.ao = shufflevector <3 x ptr> %i.an, <3 x ptr> poison, <2 x i32> <i32 0, i32 2>
   %i.ap = getelementptr inbounds nuw i8, ptr %i.al, i64 32
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !115, !noalias !219, !nonnull !116, !align !117
+  %7 = sext i32 %i.z to i64                       ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.as = load i32, ptr %i.ar, align 8, !tbaa !36 ; 3 uses
-  %7 = sext i32 %i.z to i64                       ; 3 uses
   %i.at = sext i32 %i.as to i64                   ; 2 uses
   %i.au = add nsw i64 %7, -1
   %i.av = udiv i64 %i.au, %i.at                   ; 2 uses
-  %8 = trunc i64 %i.av to i32
-  %9 = add nsw i32 %8, 1                          ; 2 uses
-  %i.aw = icmp ne i32 %9, 0
+  %8 = and i64 %i.av, 4294967295
+  %i.aw = icmp ne i64 %8, 4294967295
   tail call void @llvm.assume(i1 %i.aw)
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.020.0.copyload = load ptr, ptr %i.ax, align 8, !tbaa !21 ; 3 uses
@@ -1316,8 +1311,7 @@ _ZN8rawspeed19roundUpDivisionSafeEmm.exit:
   %i.bm = zext i32 %i.x to i64
   %i.bn = zext nneg i32 %i.n to i64
   %i.bo = zext i32 %i.as to i64
-  %i.bp = and i64 %i.av, 4294967295
-  %10 = zext nneg i32 %9 to i64
+  %i.bp = and i64 %i.av, 4294967295               ; 2 uses
   %i.bq = add i64 %i.bb, -16
   %i.br = sub i64 %i.bq, %i.am                    ; 3 uses
   %i.bs = lshr i64 %i.br, 4
@@ -1347,7 +1341,7 @@ bb.a:                                             ; preds = %_ZN8rawspeed10ByteS
   ret i32 %i.yd
 
 bb.b:                                             ; preds = %_ZN8rawspeed19roundUpDivisionSafeEmm.exit, %_ZN8rawspeed10ByteStream9skipBytesEj.exit163
-  %indvars.iv966 = phi i64 [ 0, %_ZN8rawspeed19roundUpDivisionSafeEmm.exit ], [ %indvars.iv.next967, %_ZN8rawspeed10ByteStream9skipBytesEj.exit163 ] ; 5 uses
+  %indvars.iv966 = phi i64 [ 0, %_ZN8rawspeed19roundUpDivisionSafeEmm.exit ], [ %indvars.iv.next967, %_ZN8rawspeed10ByteStream9skipBytesEj.exit163 ] ; 6 uses
   %.sroa.10425.0916 = phi i32 [ 0, %_ZN8rawspeed19roundUpDivisionSafeEmm.exit ], [ %i.yd, %_ZN8rawspeed10ByteStream9skipBytesEj.exit163 ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
@@ -1750,8 +1744,8 @@ _ZN8rawspeed10ByteStream9skipBytesEj.exit163:     ; preds = %.loopexit755.thread
   %i.yf = icmp sgt i32 %i.ya, -1
   tail call void @llvm.assume(i1 %i.yf)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #20
-  %indvars.iv.next967 = add nuw nsw i64 %indvars.iv966, 1 ; 2 uses
-  %.not = icmp eq i64 %indvars.iv.next967, %10
+  %indvars.iv.next967 = add nuw nsw i64 %indvars.iv966, 1
+  %.not = icmp eq i64 %indvars.iv966, %i.bp
   br i1 %.not, label %bb.a, label %bb.b, !llvm.loop !217
 }
 
@@ -1817,15 +1811,14 @@ _ZN8rawspeed19roundUpDivisionSafeEmm.exit:
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 32
   %i.ao = tail call <3 x ptr> @llvm.masked.load.v3p0.p0(ptr align 8 %i.al, <3 x i1> <i1 true, i1 false, i1 true>, <3 x ptr> poison), !tbaa !115, !noalias !237
   %i.ap = tail call <3 x ptr> @llvm.masked.load.v3p0.p0(ptr nonnull align 8 %i.an, <3 x i1> <i1 true, i1 false, i1 true>, <3 x ptr> poison), !tbaa !115, !noalias !237
+  %7 = sext i32 %i.z to i64                       ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.ar = load i32, ptr %i.aq, align 8, !tbaa !36 ; 3 uses
-  %7 = sext i32 %i.z to i64                       ; 3 uses
   %i.as = sext i32 %i.ar to i64                   ; 2 uses
   %i.at = add nsw i64 %7, -1
   %i.au = udiv i64 %i.at, %i.as                   ; 2 uses
-  %8 = trunc i64 %i.au to i32
-  %9 = add nsw i32 %8, 1                          ; 2 uses
-  %i.av = icmp ne i32 %9, 0
+  %8 = and i64 %i.au, 4294967295
+  %i.av = icmp ne i64 %8, 4294967295
   tail call void @llvm.assume(i1 %i.av)
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.020.0.copyload = load ptr, ptr %i.aw, align 8, !tbaa !21 ; 3 uses
@@ -1851,8 +1844,7 @@ _ZN8rawspeed19roundUpDivisionSafeEmm.exit:
   %i.bl = zext i32 %i.x to i64
   %i.bm = zext nneg i32 %i.n to i64
   %i.bn = zext i32 %i.ar to i64
-  %i.bo = and i64 %i.au, 4294967295
-  %10 = zext nneg i32 %9 to i64
+  %i.bo = and i64 %i.au, 4294967295               ; 2 uses
   %i.bp = add i64 %i.ba, -16
   %i.bq = sub i64 %i.bp, %i.am                    ; 3 uses
   %i.br = lshr i64 %i.bq, 4
@@ -1883,7 +1875,7 @@ bb.a:                                             ; preds = %_ZN8rawspeed10ByteS
   ret i32 %i.ye
 
 bb.b:                                             ; preds = %_ZN8rawspeed19roundUpDivisionSafeEmm.exit, %_ZN8rawspeed10ByteStream9skipBytesEj.exit163
-  %indvars.iv967 = phi i64 [ 0, %_ZN8rawspeed19roundUpDivisionSafeEmm.exit ], [ %indvars.iv.next968, %_ZN8rawspeed10ByteStream9skipBytesEj.exit163 ] ; 5 uses
+  %indvars.iv967 = phi i64 [ 0, %_ZN8rawspeed19roundUpDivisionSafeEmm.exit ], [ %indvars.iv.next968, %_ZN8rawspeed10ByteStream9skipBytesEj.exit163 ] ; 6 uses
   %.sroa.10425.0917 = phi i32 [ 0, %_ZN8rawspeed19roundUpDivisionSafeEmm.exit ], [ %i.ye, %_ZN8rawspeed10ByteStream9skipBytesEj.exit163 ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
@@ -2286,8 +2278,8 @@ _ZN8rawspeed10ByteStream9skipBytesEj.exit163:     ; preds = %.loopexit756.thread
   %i.yg = icmp sgt i32 %i.yb, -1
   tail call void @llvm.assume(i1 %i.yg)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #20
-  %indvars.iv.next968 = add nuw nsw i64 %indvars.iv967, 1 ; 2 uses
-  %.not = icmp eq i64 %indvars.iv.next968, %10
+  %indvars.iv.next968 = add nuw nsw i64 %indvars.iv967, 1
+  %.not = icmp eq i64 %indvars.iv967, %i.bo
   br i1 %.not, label %bb.a, label %bb.b, !llvm.loop !235
 }
 
@@ -2356,18 +2348,15 @@ _ZN8rawspeed19roundUpDivisionSafeEmm.exit:
   %i.aq = and i32 %i.z, 1
   %i.ar = icmp eq i32 %i.aq, 0
   tail call void @llvm.assume(i1 %i.ar)
+  %7 = ashr exact i32 %i.z, 1
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.at = load i32, ptr %i.as, align 8, !tbaa !36 ; 3 uses
-  %7 = ashr exact i32 %i.z, 1
   %i.au = sext i32 %i.at to i64                   ; 2 uses
   %narrow = add nsw i32 %7, -1
   %i.av = sext i32 %narrow to i64
   %i.aw = udiv i64 %i.av, %i.au                   ; 2 uses
-  %8 = trunc i64 %i.aw to i32
-  %9 = add i32 %8, 1                              ; 3 uses
-  %10 = icmp sgt i32 %9, -1
-  tail call void @llvm.assume(i1 %10)
-  %i.ax = icmp ne i32 %9, 0
+  %8 = and i64 %i.aw, 4294967295
+  %i.ax = icmp ne i64 %8, 4294967295
   tail call void @llvm.assume(i1 %i.ax)
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.020.0.copyload = load ptr, ptr %i.ay, align 8, !tbaa !21 ; 3 uses
@@ -2397,8 +2386,7 @@ _ZN8rawspeed19roundUpDivisionSafeEmm.exit:
   %i.br = sext i32 %i.z to i64                    ; 2 uses
   %i.bs = zext nneg i32 %i.n to i64
   %i.bt = zext i32 %i.at to i64
-  %i.bu = and i64 %i.aw, 4294967295
-  %11 = zext nneg i32 %9 to i64
+  %i.bu = and i64 %i.aw, 4294967295               ; 2 uses
   %i.bv = add i64 %i.bc, -16
   %i.bw = sub i64 %i.bv, %i.am                    ; 3 uses
   %i.bx = lshr i64 %i.bw, 4
@@ -2429,7 +2417,7 @@ bb.a:                                             ; preds = %_ZN8rawspeed10ByteS
   ret i32 %i.yt
 
 bb.b:                                             ; preds = %_ZN8rawspeed19roundUpDivisionSafeEmm.exit, %_ZN8rawspeed10ByteStream9skipBytesEj.exit163
-  %indvars.iv983 = phi i64 [ 0, %_ZN8rawspeed19roundUpDivisionSafeEmm.exit ], [ %indvars.iv.next984, %_ZN8rawspeed10ByteStream9skipBytesEj.exit163 ] ; 5 uses
+  %indvars.iv983 = phi i64 [ 0, %_ZN8rawspeed19roundUpDivisionSafeEmm.exit ], [ %indvars.iv.next984, %_ZN8rawspeed10ByteStream9skipBytesEj.exit163 ] ; 6 uses
   %.sroa.10425.0927 = phi i32 [ 0, %_ZN8rawspeed19roundUpDivisionSafeEmm.exit ], [ %i.yt, %_ZN8rawspeed10ByteStream9skipBytesEj.exit163 ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
@@ -2832,8 +2820,8 @@ _ZN8rawspeed10ByteStream9skipBytesEj.exit163:     ; preds = %.loopexit.thread
   %i.yv = icmp sgt i32 %i.yq, -1
   tail call void @llvm.assume(i1 %i.yv)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #20
-  %indvars.iv.next984 = add nuw nsw i64 %indvars.iv983, 1 ; 2 uses
-  %.not = icmp eq i64 %indvars.iv.next984, %11
+  %indvars.iv.next984 = add nuw nsw i64 %indvars.iv983, 1
+  %.not = icmp eq i64 %indvars.iv983, %i.bu
   br i1 %.not, label %bb.a, label %bb.b, !llvm.loop !255
 }
 

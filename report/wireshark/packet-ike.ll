@@ -204,7 +204,7 @@ bb.hd:                                            ; preds = %bb.hc, %bb.hb
   call fastcc void @dissect_attribute_header(ptr noundef %0, ptr noundef %6, ptr noundef %i.cn, i32 noundef %.146.i, ptr noundef nonnull byval(%struct._attribute_common_fields) align 8 @hf_isakmp_cfg_attr, ptr noundef nonnull %vs_v2_cfgattr.sink.i.i, ptr noundef nonnull %i.h, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %i.k, ptr noundef nonnull %i.l)
   %i.ajm = load i32, ptr %i.h, align 4            ; 4 uses
   %i.ajn = add i32 %i.ajm, %.146.i                ; 40 uses
-  %i.ajo = load i32, ptr %i.i, align 4            ; 49 uses
+  %i.ajo = load i32, ptr %i.i, align 4            ; 46 uses
   %i.ajp = icmp eq i32 %i.ajo, 0
   br i1 %i.ajp, label %bb.he, label %bb.hg
 
@@ -366,17 +366,13 @@ bb.hs:                                            ; preds = %bb.hg
   br i1 %i.alm, label %.preheader186.i.i, label %.loopexit.i.i
 
 .preheader186.i.i:                                ; preds = %bb.hs
-  %i.aln = udiv i32 %i.ajo, 17
-  %.not253.i.i = icmp ult i32 %i.ajo, 17
-  br i1 %.not253.i.i, label %.loopexit.i.i, label %.lr.ph234.i.i
-
-.lr.ph234.i.i:                                    ; preds = %.preheader186.i.i
+  %i.aln = udiv exact i32 %i.ajo, 17
   %12 = load ptr, ptr %i.l, align 8               ; 2 uses
   br label %bb.ht
 
-bb.ht:                                            ; preds = %bb.ht, %.lr.ph234.i.i
-  %.4233.i.i = phi i32 [ 0, %.lr.ph234.i.i ], [ %i.alu, %bb.ht ]
-  %.4166232.i.i = phi i32 [ %i.ajn, %.lr.ph234.i.i ], [ %i.alt, %bb.ht ] ; 3 uses
+bb.ht:                                            ; preds = %bb.ht, %.preheader186.i.i
+  %.4233.i.i = phi i32 [ 0, %.preheader186.i.i ], [ %i.alu, %bb.ht ]
+  %.4166232.i.i = phi i32 [ %i.ajn, %.preheader186.i.i ], [ %i.alt, %bb.ht ] ; 3 uses
   %i.alo = load i32, ptr @hf_isakmp_cfg_attr_internal_ip6_address_ip, align 4
   %i.alp = call ptr @proto_tree_add_item(ptr noundef %12, i32 noundef %i.alo, ptr noundef %0, i32 noundef %.4166232.i.i, i32 noundef 16, i32 noundef 0) ; 0 uses
   %i.alq = add i32 %.4166232.i.i, 16
@@ -502,17 +498,13 @@ bb.if:                                            ; preds = %bb.hg
   br i1 %i.anq, label %.preheader198.i.i, label %.loopexit.i.i
 
 .preheader198.i.i:                                ; preds = %bb.if
-  %i.anr = udiv i32 %i.ajo, 17
-  %.not247.i.i = icmp ult i32 %i.ajo, 17
-  br i1 %.not247.i.i, label %.loopexit.i.i, label %.lr.ph216.i.i
-
-.lr.ph216.i.i:                                    ; preds = %.preheader198.i.i
+  %i.anr = udiv exact i32 %i.ajo, 17
   %13 = load ptr, ptr %i.l, align 8               ; 2 uses
   br label %bb.ig
 
-bb.ig:                                            ; preds = %bb.ig, %.lr.ph216.i.i
-  %.10215.i.i = phi i32 [ 0, %.lr.ph216.i.i ], [ %i.any, %bb.ig ]
-  %.10172214.i.i = phi i32 [ %i.ajn, %.lr.ph216.i.i ], [ %i.anx, %bb.ig ] ; 3 uses
+bb.ig:                                            ; preds = %bb.ig, %.preheader198.i.i
+  %.10215.i.i = phi i32 [ 0, %.preheader198.i.i ], [ %i.any, %bb.ig ]
+  %.10172214.i.i = phi i32 [ %i.ajn, %.preheader198.i.i ], [ %i.anx, %bb.ig ] ; 3 uses
   %i.ans = load i32, ptr @hf_isakmp_cfg_attr_internal_ip6_subnet_ip, align 4
   %i.ant = call ptr @proto_tree_add_item(ptr noundef %13, i32 noundef %i.ans, ptr noundef %0, i32 noundef %.10172214.i.i, i32 noundef 16, i32 noundef 0) ; 0 uses
   %i.anu = add i32 %.10172214.i.i, 16
@@ -535,11 +527,9 @@ bb.ih:                                            ; preds = %bb.hg
 
 bb.ii:                                            ; preds = %bb.hg
   %i.aog = urem i32 %i.ajo, 17
-  %i.aoh = udiv i32 %i.ajo, 17
-  %14 = icmp ne i32 %i.aog, 0
-  %.not.i.i179 = icmp ult i32 %i.ajo, 17
-  %or.cond = or i1 %14, %.not.i.i179
-  br i1 %or.cond, label %.loopexit.i.i, label %.lr.ph213.i.i
+  %i.aoh = udiv exact i32 %i.ajo, 17
+  %14 = icmp eq i32 %i.aog, 0
+  br i1 %14, label %.lr.ph213.i.i, label %.loopexit.i.i
 
 .lr.ph213.i.i:                                    ; preds = %bb.ii
   %i.aoi = load ptr, ptr %i.l, align 8            ; 2 uses
@@ -766,7 +756,7 @@ bb.jf:                                            ; preds = %bb.hg
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.ata, ptr noundef nonnull @.str.885, ptr noundef %i.atb)
   br label %.loopexit.i.i
 
-.loopexit.i.i:                                    ; preds = %bb.in, %bb.il, %bb.ij, %bb.ig, %bb.ie, %bb.ic, %bb.ia, %bb.hy, %bb.hw, %bb.ht, %bb.hq, %bb.hn, %bb.hl, %bb.hi, %bb.jf, %bb.je, %bb.jd, %bb.jc, %bb.jb, %bb.ja, %bb.iz, %bb.iy, %bb.ix, %bb.iw, %bb.iv, %bb.iu, %bb.it, %bb.is, %bb.ir, %bb.iq, %bb.ip, %bb.io, %bb.im, %bb.ik, %bb.ii, %bb.ih, %.preheader198.i.i, %bb.if, %bb.id, %bb.ib, %bb.hz, %bb.hx, %bb.hv, %bb.hu, %.preheader186.i.i, %bb.hs, %bb.hr, %bb.hp, %bb.ho, %bb.hm, %bb.hk, %bb.hj, %bb.hh, %bb.hg
+.loopexit.i.i:                                    ; preds = %bb.in, %bb.il, %bb.ij, %bb.ig, %bb.ie, %bb.ic, %bb.ia, %bb.hy, %bb.hw, %bb.ht, %bb.hq, %bb.hn, %bb.hl, %bb.hi, %bb.jf, %bb.je, %bb.jd, %bb.jc, %bb.jb, %bb.ja, %bb.iz, %bb.iy, %bb.ix, %bb.iw, %bb.iv, %bb.iu, %bb.it, %bb.is, %bb.ir, %bb.iq, %bb.ip, %bb.io, %bb.im, %bb.ik, %bb.ii, %bb.ih, %bb.if, %bb.id, %bb.ib, %bb.hz, %bb.hx, %bb.hv, %bb.hu, %bb.hs, %bb.hr, %bb.hp, %bb.ho, %bb.hm, %bb.hk, %bb.hj, %bb.hh, %bb.hg
   %i.atc = add i32 %i.ajo, %i.ajm
   br label %dissect_config_attribute.exit.i
 

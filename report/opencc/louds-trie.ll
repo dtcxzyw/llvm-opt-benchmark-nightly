@@ -205,9 +205,9 @@ declare void @_ZN6marisa8grimoire2io6Mapper4seekEm(ptr noundef nonnull align 8 d
 define linkonce_odr void @_ZN6marisa8grimoire6vector6VectorINS1_9RankIndexEE4map_ERNS0_2io6MapperE(ptr noundef nonnull align 8 dereferenceable(41) %0, ptr noundef nonnull align 8 dereferenceable(36) %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = tail call noundef ptr @_ZN6marisa8grimoire2io6Mapper8map_dataEm(ptr noundef nonnull align 8 dereferenceable(36) %1, i64 noundef 8)
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !54   ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !54   ; 4 uses
   %i.c = urem i64 %i.b, 12
-  %i.d = udiv i64 %i.b, 12                        ; 2 uses
+  %i.d = udiv exact i64 %i.b, 12
   %.not = icmp eq i64 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.b
 
@@ -222,8 +222,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %2 = mul nuw i64 %i.d, 12
-  %i.g = tail call noundef ptr @_ZN6marisa8grimoire2io6Mapper8map_dataEm(ptr noundef nonnull align 8 dereferenceable(36) %1, i64 noundef %2)
+  %i.g = tail call noundef ptr @_ZN6marisa8grimoire2io6Mapper8map_dataEm(ptr noundef nonnull align 8 dereferenceable(36) %1, i64 noundef %i.b)
   store ptr %i.g, ptr %i.f, align 8, !tbaa !145
   %i.h = sub i64 0, %i.b
   %i.i = and i64 %i.h, 7
@@ -626,7 +625,7 @@ bb.a:
   call void @_ZN6marisa8grimoire2io6Reader9read_dataEPvm(ptr noundef nonnull align 8 dereferenceable(25) %1, ptr noundef nonnull %i.a, i64 noundef 8)
   %i.b = load i64, ptr %i.a, align 8, !tbaa !54   ; 2 uses
   %i.c = urem i64 %i.b, 12
-  %i.d = udiv i64 %i.b, 12                        ; 7 uses
+  %i.d = udiv exact i64 %i.b, 12                  ; 7 uses
   %.not = icmp eq i64 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.b
 
@@ -1029,9 +1028,9 @@ _ZN6marisa8grimoire6vector6VectorIhE3fixEv.exit:  ; preds = %bb.a
 define linkonce_odr void @_ZN6marisa8grimoire6vector6VectorINS0_4trie5CacheEE4map_ERNS0_2io6MapperE(ptr noundef nonnull align 8 dereferenceable(41) %0, ptr noundef nonnull align 8 dereferenceable(36) %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = tail call noundef ptr @_ZN6marisa8grimoire2io6Mapper8map_dataEm(ptr noundef nonnull align 8 dereferenceable(36) %1, i64 noundef 8)
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !54   ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !54   ; 4 uses
   %i.c = urem i64 %i.b, 12
-  %i.d = udiv i64 %i.b, 12                        ; 2 uses
+  %i.d = udiv exact i64 %i.b, 12
   %.not = icmp eq i64 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.b
 
@@ -1046,8 +1045,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %2 = mul nuw i64 %i.d, 12
-  %i.g = tail call noundef ptr @_ZN6marisa8grimoire2io6Mapper8map_dataEm(ptr noundef nonnull align 8 dereferenceable(36) %1, i64 noundef %2)
+  %i.g = tail call noundef ptr @_ZN6marisa8grimoire2io6Mapper8map_dataEm(ptr noundef nonnull align 8 dereferenceable(36) %1, i64 noundef %i.b)
   store ptr %i.g, ptr %i.f, align 8, !tbaa !96
   %i.h = sub i64 0, %i.b
   %i.i = and i64 %i.h, 7
@@ -1176,7 +1174,7 @@ bb.a:
   call void @_ZN6marisa8grimoire2io6Reader9read_dataEPvm(ptr noundef nonnull align 8 dereferenceable(25) %1, ptr noundef nonnull %i.a, i64 noundef 8)
   %i.b = load i64, ptr %i.a, align 8, !tbaa !54   ; 2 uses
   %i.c = urem i64 %i.b, 12
-  %i.d = udiv i64 %i.b, 12                        ; 9 uses
+  %i.d = udiv exact i64 %i.b, 12                  ; 9 uses
   %.not = icmp eq i64 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.b
 

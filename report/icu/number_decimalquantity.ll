@@ -205,20 +205,17 @@ _ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit.us.i49: ; preds = %
   %i.hu = icmp eq i64 %.013.lcssa.i42, 0
   br i1 %i.hu, label %_ZNK6icu_786number4impl15DecimalQuantity14toFractionLongEb.exit51, label %.preheader.i
 
-.preheader.i:                                     ; preds = %._crit_edge.i41, %2
-  %.1.i = phi i64 [ %i.hw, %2 ], [ %.013.lcssa.i42, %._crit_edge.i41 ] ; 4 uses
+.preheader.i:                                     ; preds = %._crit_edge.i41, %.preheader.i
+  %.1.i = phi i64 [ %i.hw, %.preheader.i ], [ %.013.lcssa.i42, %._crit_edge.i41 ] ; 4 uses
   %i.hv = urem i64 %.1.i, 10
-  %i.hw = udiv i64 %.1.i, 10
-  %i.hx = icmp eq i64 %i.hv, 0
-  br i1 %i.hx, label %2, label %_ZNK6icu_786number4impl15DecimalQuantity14toFractionLongEb.exit51.loopexit
+  %2 = icmp ne i64 %i.hv, 0
+  %i.hw = udiv exact i64 %.1.i, 10
+  %i.hx = icmp eq i64 %.1.i, 0
+  %or.cond = or i1 %2, %i.hx
+  br i1 %or.cond, label %_ZNK6icu_786number4impl15DecimalQuantity14toFractionLongEb.exit51.loopexit, label %.preheader.i
 
-2:                                                ; preds = %.preheader.i
-  %.old1.not.i = icmp ult i64 %.1.i, 10
-  br i1 %.old1.not.i, label %_ZNK6icu_786number4impl15DecimalQuantity14toFractionLongEb.exit51.loopexit, label %.preheader.i
-
-_ZNK6icu_786number4impl15DecimalQuantity14toFractionLongEb.exit51.loopexit: ; preds = %2, %.preheader.i
-  %.2.i43.ph = phi i64 [ 0, %2 ], [ %.1.i, %.preheader.i ]
-  %i.hy = uitofp i64 %.2.i43.ph to double
+_ZNK6icu_786number4impl15DecimalQuantity14toFractionLongEb.exit51.loopexit: ; preds = %.preheader.i
+  %i.hy = uitofp i64 %.1.i to double
   br label %_ZNK6icu_786number4impl15DecimalQuantity14toFractionLongEb.exit51
 
 bb.o:                                             ; preds = %bb.a
@@ -539,12 +536,12 @@ _ZNK6icu_786number4impl15DecimalQuantity11getDigitPosEi.exit.us: ; preds = %bb.b
 .preheader:                                       ; preds = %._crit_edge, %bb.c
   %.1 = phi i64 [ %i.ao, %bb.c ], [ %.013.lcssa, %._crit_edge ] ; 4 uses
   %i.an = urem i64 %.1, 10
-  %i.ao = udiv i64 %.1, 10
+  %i.ao = udiv exact i64 %.1, 10
   %i.ap = icmp eq i64 %i.an, 0
   br i1 %i.ap, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %.preheader
-  %.old1.not = icmp ult i64 %.1, 10
+  %.old1.not = icmp eq i64 %.1, 0
   br i1 %.old1.not, label %.critedge, label %.preheader
 
 .critedge:                                        ; preds = %.preheader, %bb.c, %bb.a, %._crit_edge

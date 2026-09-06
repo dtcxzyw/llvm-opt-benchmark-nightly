@@ -160,11 +160,9 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.ag = zext nneg i32 %i.v to i64
   %i.ah = zext nneg i32 %i.y to i64
-  %i.ai = mul nuw nsw i64 %i.ah, %i.ag            ; 2 uses
-  %i.aj = udiv i64 %i.ai, 14                      ; 2 uses
+  %i.ai = mul nuw nsw i64 %i.ah, %i.ag
+  %i.aj = udiv exact i64 %i.ai, 14                ; 2 uses
   %i.ak = shl nuw nsw i64 %i.aj, 4                ; 3 uses
-  %5 = icmp samesign ugt i64 %i.ai, 13
-  tail call void @llvm.assume(i1 %5)
   %i.al = icmp eq i32 %4, 0
   br i1 %i.al, label %_ZN8rawspeed7roundUpEmm.exit, label %bb.j
 

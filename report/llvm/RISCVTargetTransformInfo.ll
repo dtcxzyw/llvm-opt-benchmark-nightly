@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %_ZNK4llvm16BasicTTI
 
 _ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit222: ; preds = %bb.y
   %i.dp = urem i32 %i.dl, %3
-  %i.dq = udiv i32 %i.dl, %3
+  %i.dq = udiv exact i32 %i.dl, %3
   %i.dr = icmp eq i32 %i.dp, 0
   br i1 %i.dr, label %bb.z, label %.critedge158
 
@@ -608,7 +608,7 @@ bb.h:                                             ; preds = %"_ZN4llvm6all_ofINS
 
 _ZNK4llvm8TypeSizecvmEv.exit:                     ; preds = %"_ZN4llvm6all_ofINS_14iterator_rangeINS_5Value18user_iterator_implINS_4UserEEEEEZNKS_12RISCVTTIImpl20instCombineIntrinsicERNS_12InstCombinerERNS_13IntrinsicInstEE3$_0EEbOT_T0_.exit.thread"
   %.fca.0.extract24 = extractvalue { i64, i8 } %i.be, 0
-  %i.bg = trunc i64 %.fca.0.extract24 to i32      ; 3 uses
+  %i.bg = trunc i64 %.fca.0.extract24 to i32      ; 6 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bb, i64 24
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !217
   %i.bj = call { i64, i8 } @_ZNK4llvm10DataLayout17getTypeSizeInBitsEPNS_4TypeE(ptr noundef nonnull align 8 dereferenceable(912) %i.e, ptr noundef %i.bi) ; 2 uses
@@ -622,9 +622,9 @@ bb.i:                                             ; preds = %_ZNK4llvm8TypeSizec
 
 _ZNK4llvm8TypeSizecvmEv.exit62:                   ; preds = %_ZNK4llvm8TypeSizecvmEv.exit
   %.fca.0.extract = extractvalue { i64, i8 } %i.bj, 0
-  %i.bl = trunc i64 %.fca.0.extract to i32        ; 4 uses
+  %i.bl = trunc i64 %.fca.0.extract to i32        ; 3 uses
   %i.bm = urem i32 %i.bg, %i.bl
-  %i.bn = udiv i32 %i.bg, %i.bl                   ; 5 uses
+  %i.bn = udiv exact i32 %i.bg, %i.bl             ; 3 uses
   %.not59 = icmp eq i32 %i.bm, 0
   br i1 %.not59, label %bb.j, label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit.thread
 
@@ -633,7 +633,7 @@ bb.j:                                             ; preds = %_ZNK4llvm8TypeSizec
   %i.bp = zext i32 %i.bn to i64                   ; 2 uses
   %i.bq = urem i64 %i.bo, %i.bp
   %i.br = icmp ne i64 %i.bq, 0
-  %i.bs = icmp eq i32 %i.bn, 1
+  %i.bs = icmp eq i32 %i.bg, %i.bl
   %or.cond = or i1 %i.bs, %i.br
   br i1 %or.cond, label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit.thread, label %bb.k
 
@@ -653,17 +653,12 @@ bb.k:                                             ; preds = %bb.j
   %i.cf = load i32, ptr %i.ce, align 8
   %i.cg = and i32 %i.cf, 255
   %i.ch = icmp eq i32 %i.cg, 19
-  %9 = mul i32 %i.bn, %i.bl                       ; 3 uses
-  %.not.i = icmp ugt i32 %i.bl, %i.bg
-  br i1 %.not.i, label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit.thread, label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit
+  %9 = urem i32 %i.cd, %i.bn
+  %10 = udiv exact i32 %i.cd, %i.bn
+  %11 = icmp eq i32 %9, 0
+  br i1 %11, label %bb.l, label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit.thread
 
-_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit: ; preds = %bb.k
-  %10 = urem i32 %i.cd, %i.bn
-  %11 = udiv i32 %i.cd, %i.bn
-  %12 = icmp eq i32 %10, 0
-  br i1 %12, label %bb.l, label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit.thread
-
-bb.l:                                             ; preds = %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit
+bb.l:                                             ; preds = %bb.k
   %i.ci = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !472 ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.e, i64 40
@@ -681,13 +676,13 @@ bb.m:                                             ; preds = %.lr.ph.i
   %.01117.i = phi ptr [ %i.cn, %bb.m ], [ %i.cj, %bb.l ] ; 2 uses
   %i.co = load i8, ptr %.01117.i, align 1, !tbaa !193
   %i.cp = zext i8 %i.co to i32
-  %.not14.not.i = icmp ugt i32 %9, %i.cp
+  %.not14.not.i = icmp ugt i32 %i.bg, %i.cp
   br i1 %.not14.not.i, label %bb.m, label %_ZNK4llvm10DataLayout18fitsInLegalIntegerEj.exit
 
 _ZNK4llvm10DataLayout18fitsInLegalIntegerEj.exit: ; preds = %.lr.ph.i
   %i.cq = load ptr, ptr %i.ba, align 8, !tbaa !207
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !198, !nonnull !26, !align !190
-  %i.cs = call noundef ptr @_ZN4llvm11IntegerType3getERNS_11LLVMContextEj(ptr noundef nonnull align 8 dereferenceable(8) %i.cr, i32 noundef %9) #24 ; 3 uses
+  %i.cs = call noundef ptr @_ZN4llvm11IntegerType3getERNS_11LLVMContextEj(ptr noundef nonnull align 8 dereferenceable(8) %i.cr, i32 noundef %i.bg) #24 ; 3 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !37 ; 2 uses
   %i.cv = call { i16, ptr } @_ZNK4llvm18TargetLoweringBase12getValueTypeERKNS_10DataLayoutEPNS_4TypeEb(ptr noundef nonnull align 8 dereferenceable(518435) %i.cu, ptr noundef nonnull align 8 dereferenceable(912) %i.e, ptr noundef %i.cs, i1 noundef zeroext false) ; 2 uses
@@ -698,12 +693,12 @@ _ZNK4llvm10DataLayout18fitsInLegalIntegerEj.exit: ; preds = %.lr.ph.i
 
 bb.n:                                             ; preds = %_ZNK4llvm10DataLayout18fitsInLegalIntegerEj.exit
   %.sroa.2.0.insert.shift.i.i63 = select i1 %i.ch, i64 4294967296, i64 0
-  %.sroa.0.0.insert.ext.i.i64 = zext nneg i32 %11 to i64
+  %.sroa.0.0.insert.ext.i.i64 = zext i32 %10 to i64
   %.sroa.0.0.insert.insert.i.i65 = or disjoint i64 %.sroa.2.0.insert.shift.i.i63, %.sroa.0.0.insert.ext.i.i64
   %i.cz = call noundef ptr @_ZN4llvm10VectorType3getEPNS_4TypeENS_12ElementCountE(ptr noundef %i.cs, i64 %.sroa.0.0.insert.insert.i.i65) #24 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
   %i.da = load ptr, ptr %i.a, align 8, !tbaa !475
-  call void @_ZN4llvm5APInt8getSplatEjRKS0_(ptr dead_on_unwind nonnull writable sret(%"class.llvm::APInt") align 8 %4, i32 noundef %9, ptr noundef nonnull align 8 dereferenceable(12) %i.da) #24
+  call void @_ZN4llvm5APInt8getSplatEjRKS0_(ptr dead_on_unwind nonnull writable sret(%"class.llvm::APInt") align 8 %4, i32 noundef %i.bg, ptr noundef nonnull align 8 dereferenceable(12) %i.da) #24
   %i.db = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #24
   %i.dc = call noundef ptr @_ZN4llvm11PoisonValue3getEPNS_4TypeE(ptr noundef %i.cz) #24
@@ -752,9 +747,9 @@ _ZN4llvm5APIntD2Ev.exit:                          ; preds = %bb.n, %bb.o, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   br label %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit.thread
 
-_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit.thread: ; preds = %bb.m, %bb.l, %bb.k, %_ZN4llvm5APIntD2Ev.exit, %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit, %_ZNK4llvm10DataLayout18fitsInLegalIntegerEj.exit, %bb.j, %_ZNK4llvm8TypeSizecvmEv.exit62, %.critedge, %"_ZN4llvm6all_ofINS_14iterator_rangeINS_5Value18user_iterator_implINS_4UserEEEEEZNKS_12RISCVTTIImpl20instCombineIntrinsicERNS_12InstCombinerERNS_13IntrinsicInstEE3$_0EEbOT_T0_.exit.thread85"
-  %.sroa.082.1 = phi ptr [ undef, %_ZNK4llvm8TypeSizecvmEv.exit62 ], [ undef, %bb.j ], [ undef, %.critedge ], [ undef, %"_ZN4llvm6all_ofINS_14iterator_rangeINS_5Value18user_iterator_implINS_4UserEEEEEZNKS_12RISCVTTIImpl20instCombineIntrinsicERNS_12InstCombinerERNS_13IntrinsicInstEE3$_0EEbOT_T0_.exit.thread85" ], [ %i.dp, %_ZN4llvm5APIntD2Ev.exit ], [ undef, %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit ], [ undef, %bb.k ], [ undef, %_ZNK4llvm10DataLayout18fitsInLegalIntegerEj.exit ], [ undef, %bb.l ], [ undef, %bb.m ]
-  %.sroa.283.1 = phi i8 [ 0, %_ZNK4llvm8TypeSizecvmEv.exit62 ], [ 0, %bb.j ], [ 0, %.critedge ], [ 0, %"_ZN4llvm6all_ofINS_14iterator_rangeINS_5Value18user_iterator_implINS_4UserEEEEEZNKS_12RISCVTTIImpl20instCombineIntrinsicERNS_12InstCombinerERNS_13IntrinsicInstEE3$_0EEbOT_T0_.exit.thread85" ], [ 1, %_ZN4llvm5APIntD2Ev.exit ], [ 0, %_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit ], [ 0, %bb.k ], [ 0, %_ZNK4llvm10DataLayout18fitsInLegalIntegerEj.exit ], [ 0, %bb.l ], [ 0, %bb.m ]
+_ZNK4llvm7details23FixedOrScalableQuantityINS_12ElementCountEjE17isKnownMultipleOfEj.exit.thread: ; preds = %bb.m, %bb.l, %_ZN4llvm5APIntD2Ev.exit, %bb.k, %_ZNK4llvm10DataLayout18fitsInLegalIntegerEj.exit, %bb.j, %_ZNK4llvm8TypeSizecvmEv.exit62, %.critedge, %"_ZN4llvm6all_ofINS_14iterator_rangeINS_5Value18user_iterator_implINS_4UserEEEEEZNKS_12RISCVTTIImpl20instCombineIntrinsicERNS_12InstCombinerERNS_13IntrinsicInstEE3$_0EEbOT_T0_.exit.thread85"
+  %.sroa.082.1 = phi ptr [ undef, %_ZNK4llvm8TypeSizecvmEv.exit62 ], [ undef, %bb.j ], [ undef, %.critedge ], [ undef, %"_ZN4llvm6all_ofINS_14iterator_rangeINS_5Value18user_iterator_implINS_4UserEEEEEZNKS_12RISCVTTIImpl20instCombineIntrinsicERNS_12InstCombinerERNS_13IntrinsicInstEE3$_0EEbOT_T0_.exit.thread85" ], [ %i.dp, %_ZN4llvm5APIntD2Ev.exit ], [ undef, %bb.k ], [ undef, %bb.l ], [ undef, %_ZNK4llvm10DataLayout18fitsInLegalIntegerEj.exit ], [ undef, %bb.m ]
+  %.sroa.283.1 = phi i8 [ 0, %_ZNK4llvm8TypeSizecvmEv.exit62 ], [ 0, %bb.j ], [ 0, %.critedge ], [ 0, %"_ZN4llvm6all_ofINS_14iterator_rangeINS_5Value18user_iterator_implINS_4UserEEEEEZNKS_12RISCVTTIImpl20instCombineIntrinsicERNS_12InstCombinerERNS_13IntrinsicInstEE3$_0EEbOT_T0_.exit.thread85" ], [ 1, %_ZN4llvm5APIntD2Ev.exit ], [ 0, %bb.k ], [ 0, %bb.l ], [ 0, %_ZNK4llvm10DataLayout18fitsInLegalIntegerEj.exit ], [ 0, %bb.m ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   br label %bb.q

@@ -202,11 +202,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
 _ZN6Assimp3FBX12_GLOBAL__N_123ReadBinaryDataArrayHeadERPKcS3_RcRjRKNS0_7ElementE.exit: ; preds = %bb.h
   %i.ah = load i8, ptr %i.u, align 1              ; 4 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.u, i64 1
-  %.val.i = load i32, ptr %i.ai, align 1          ; 7 uses
+  %.val.i = load i32, ptr %i.ai, align 1          ; 5 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.u, i64 5
   store ptr %i.aj, ptr %i.a, align 8
   %i.ak = urem i32 %.val.i, 3
-  %i.al = udiv i32 %.val.i, 3                     ; 3 uses
+  %i.al = udiv exact i32 %.val.i, 3               ; 3 uses
   %.not71 = icmp eq i32 %i.ak, 0
   br i1 %.not71, label %bb.q, label %bb.l
 
@@ -415,15 +415,11 @@ _ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EE13_M_deallocateEPS1_m.exit.i: ; preds
 
 _ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit: ; preds = %_ZNSt12_Vector_baseI10aiVector3tIfESaIS1_EE13_M_deallocateEPS1_m.exit.i, %bb.af
   switch i8 %i.ah, label %.loopexit [
-    i8 100, label %18
-    i8 102, label %19
+    i8 100, label %.lr.ph200.preheader
+    i8 102, label %.lr.ph197.preheader
   ]
 
-18:                                               ; preds = %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit
-  %.not202 = icmp ult i32 %.val.i, 3
-  br i1 %.not202, label %.loopexit, label %.lr.ph200.preheader
-
-.lr.ph200.preheader:                              ; preds = %18
+.lr.ph200.preheader:                              ; preds = %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit
   %i.cr = load ptr, ptr %12, align 8
   %.pre207 = load ptr, ptr %i.b, align 8
   br label %.lr.ph200
@@ -434,9 +430,9 @@ bb.ah:                                            ; preds = %_ZNSt12_Vector_base
   br label %bb.ar
 
 .lr.ph200:                                        ; preds = %.lr.ph200.preheader, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJfffEEERS1_DpOT_.exit
-  %i.ct = phi ptr [ %i.dy, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJfffEEERS1_DpOT_.exit ], [ %.pre207, %.lr.ph200.preheader ] ; 6 uses
-  %.051199 = phi i32 [ %i.dz, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJfffEEERS1_DpOT_.exit ], [ 0, %.lr.ph200.preheader ]
-  %.052198 = phi ptr [ %i.ea, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJfffEEERS1_DpOT_.exit ], [ %i.cr, %.lr.ph200.preheader ] ; 3 uses
+  %i.ct = phi ptr [ %.pre207, %.lr.ph200.preheader ], [ %i.dy, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJfffEEERS1_DpOT_.exit ] ; 6 uses
+  %.051199 = phi i32 [ 0, %.lr.ph200.preheader ], [ %i.dz, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJfffEEERS1_DpOT_.exit ]
+  %.052198 = phi ptr [ %i.cr, %.lr.ph200.preheader ], [ %i.ea, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJfffEEERS1_DpOT_.exit ] ; 3 uses
   %i.cu = load <2 x double>, ptr %.052198, align 8
   %i.cv = getelementptr inbounds nuw i8, ptr %.052198, i64 16
   %i.cw = load double, ptr %i.cv, align 8
@@ -537,19 +533,15 @@ _ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJfffEEERS1_DpOT_.exit: ; pred
           cleanup
   br label %bb.ar
 
-19:                                               ; preds = %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit
-  %.not201 = icmp ult i32 %.val.i, 3
-  br i1 %.not201, label %.loopexit, label %.lr.ph197.preheader
-
-.lr.ph197.preheader:                              ; preds = %19
+.lr.ph197.preheader:                              ; preds = %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit
   %i.eb = load ptr, ptr %12, align 8
   %.pre = load ptr, ptr %i.b, align 8
   br label %.lr.ph197
 
 .lr.ph197:                                        ; preds = %.lr.ph197.preheader, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJRKfS6_S6_EEERS1_DpOT_.exit
-  %i.ec = phi ptr [ %i.ff, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJRKfS6_S6_EEERS1_DpOT_.exit ], [ %.pre, %.lr.ph197.preheader ] ; 6 uses
-  %.0196 = phi i32 [ %i.fg, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJRKfS6_S6_EEERS1_DpOT_.exit ], [ 0, %.lr.ph197.preheader ]
-  %.050195 = phi ptr [ %i.fh, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJRKfS6_S6_EEERS1_DpOT_.exit ], [ %i.eb, %.lr.ph197.preheader ] ; 3 uses
+  %i.ec = phi ptr [ %.pre, %.lr.ph197.preheader ], [ %i.ff, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJRKfS6_S6_EEERS1_DpOT_.exit ] ; 6 uses
+  %.0196 = phi i32 [ 0, %.lr.ph197.preheader ], [ %i.fg, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJRKfS6_S6_EEERS1_DpOT_.exit ]
+  %.050195 = phi ptr [ %i.eb, %.lr.ph197.preheader ], [ %i.fh, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJRKfS6_S6_EEERS1_DpOT_.exit ] ; 3 uses
   %i.ed = load <2 x float>, ptr %.050195, align 4 ; 2 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %.050195, i64 8
   %i.ef = load float, ptr %i.ee, align 4          ; 2 uses
@@ -648,7 +640,7 @@ _ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJRKfS6_S6_EEERS1_DpOT_.exit: 
           cleanup
   br label %bb.ar
 
-.loopexit:                                        ; preds = %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJRKfS6_S6_EEERS1_DpOT_.exit, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJfffEEERS1_DpOT_.exit, %19, %18, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit
+.loopexit:                                        ; preds = %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJRKfS6_S6_EEERS1_DpOT_.exit, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE12emplace_backIJfffEEERS1_DpOT_.exit, %_ZNSt6vectorI10aiVector3tIfESaIS1_EE7reserveEm.exit
   %i.fi = load ptr, ptr %12, align 8              ; 3 uses
   %.not.i.i.i113 = icmp eq ptr %i.fi, null
   br i1 %.not.i.i.i113, label %_ZNSt6vectorIcSaIcEED2Ev.exit, label %bb.aq

@@ -204,7 +204,7 @@ _ZSteqIJiiiEJiiiEEbRKSt5tupleIJDpT_EERKS0_IJDpT0_EE.exit60.thread: ; preds = %_Z
 
 bb.l:                                             ; preds = %_ZSteqIJiiiEJiiiEEbRKSt5tupleIJDpT_EERKS0_IJDpT0_EE.exit60.thread
   %i.bf = urem i32 %i.az, %i.aw
-  %i.bg = udiv i32 %i.az, %i.aw                   ; 6 uses
+  %i.bg = udiv exact i32 %i.az, %i.aw             ; 6 uses
   %.not43 = icmp eq i32 %i.bf, 0
   br i1 %.not43, label %bb.n, label %.invoke
 
@@ -237,10 +237,10 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.bs = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.sroa.2.0.copyload261, i1 true)
-  %i.bt = lshr i32 %i.bi, %i.bs                   ; 2 uses
+  %i.bt = lshr exact i32 %i.bi, %i.bs             ; 2 uses
   store i32 %i.bt, ptr %i.n, align 4, !tbaa !120
   %i.bu = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.sroa.0149.0.copyload263, i1 true)
-  %i.bv = lshr i32 %i.bl, %i.bu                   ; 9 uses
+  %i.bv = lshr exact i32 %i.bl, %i.bu             ; 9 uses
   store i32 %i.bv, ptr %i.bk, align 8, !tbaa !217
   %i.bw = load i32, ptr %i.ax, align 8, !tbaa !218 ; 2 uses
   %i.bx = icmp sgt i32 %i.bw, 19440
@@ -319,7 +319,7 @@ bb.x:                                             ; preds = %.lr.ph
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.cs = load i32, ptr %i.cr, align 8, !tbaa !19 ; 3 uses
   %i.ct = srem i32 %i.cs, %i.au
-  %i.cu = sdiv i32 %i.cs, %i.au
+  %i.cu = sdiv exact i32 %i.cs, %i.au
   %.not53 = icmp eq i32 %i.ct, 0
   br i1 %.not53, label %bb.ae, label %bb.ab
 
@@ -359,7 +359,7 @@ bb.ae:                                            ; preds = %._crit_edge
   store i32 %i.cu, ptr %i.cr, align 8, !tbaa !19
   %i.da = load i32, ptr %.sroa.223.0..sroa_idx, align 4, !tbaa !19 ; 3 uses
   %i.db = srem i32 %i.da, %i.au
-  %i.dc = sdiv i32 %i.da, %i.au
+  %i.dc = sdiv exact i32 %i.da, %i.au
   %.not53.1 = icmp eq i32 %i.db, 0
   br i1 %.not53.1, label %bb.af, label %bb.ab
 
@@ -403,25 +403,24 @@ _ZN8rawspeed12_GLOBAL__N_124evaluateConsecutiveTilesERKNS_12iRectangle2DES3_.exi
 _ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.peel: ; preds = %_ZN8rawspeed12_GLOBAL__N_124evaluateConsecutiveTilesERKNS_12iRectangle2DES3_.exit.thread.peel
   %i.dn = icmp sle i32 %.sroa.speculated.i.peel, %i.bv
   tail call void @llvm.assume(i1 %i.dn)
-  %.not256.a = icmp ule i32 %i.bv, %i.bc          ; 2 uses
-  %spec.select.peel = select i1 %.not256.a, i32 0, i32 %.sroa.speculated.i.peel ; 2 uses
+  %.not256.a = icmp ule i32 %i.bv, %i.bc          ; 3 uses
   %spec.select194.peel = zext i1 %.not256.a to i32 ; 2 uses
-  %8 = icmp eq i32 %i.bz, %spec.select194.peel
-  %i.do = icmp eq i32 %spec.select.peel, 0
-  %i.dp = and i1 %8, %i.do
+  %i.do = icmp eq i32 %i.bz, %spec.select194.peel
+  %i.dp = and i1 %i.do, %.not256.a
   br i1 %i.dp, label %.loopexit.thread, label %.lr.ph219.peel.next
 
 .lr.ph219.peel.next:                              ; preds = %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit.peel
   %.not257 = icmp ult i32 %i.bv, %i.bc            ; 2 uses
-  %i.dq = select i1 %.not257, i32 0, i32 %.0.i.i.i.i.peel
-  %.sroa.17106.sroa.8.1.peel = select i1 %.not257, i32 %.sroa.speculated.i.peel, i32 0
+  %8 = select i1 %.not257, i32 0, i32 %.0.i.i.i.i.peel
+  %i.dq = select i1 %.not257, i32 %.sroa.speculated.i.peel, i32 0
+  %.sroa.17106.sroa.8.1.peel = select i1 %.not256.a, i32 0, i32 %.sroa.speculated.i.peel
   br label %bb.ah
 
 bb.ah:                                            ; preds = %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit, %.lr.ph219.peel.next
   %.sroa.13.0217 = phi i32 [ %spec.select194, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit ], [ %spec.select194.peel, %.lr.ph219.peel.next ] ; 3 uses
-  %.sroa.22.0216 = phi i32 [ %spec.select, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit ], [ %spec.select.peel, %.lr.ph219.peel.next ] ; 2 uses
-  %.sroa.17106.sroa.0.0215 = phi i32 [ %.sroa.17106.sroa.0.1, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit ], [ %i.dq, %.lr.ph219.peel.next ] ; 6 uses
-  %.sroa.17106.sroa.8.0214 = phi i32 [ %.sroa.17106.sroa.8.1, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit ], [ %.sroa.17106.sroa.8.1.peel, %.lr.ph219.peel.next ] ; 6 uses
+  %.sroa.22.0216 = phi i32 [ %spec.select, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit ], [ %.sroa.17106.sroa.8.1.peel, %.lr.ph219.peel.next ] ; 2 uses
+  %.sroa.17106.sroa.0.0215 = phi i32 [ %.sroa.17106.sroa.0.1, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit ], [ %8, %.lr.ph219.peel.next ] ; 6 uses
+  %.sroa.17106.sroa.8.0214 = phi i32 [ %.sroa.17106.sroa.8.1, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit ], [ %i.dq, %.lr.ph219.peel.next ] ; 6 uses
   %.sroa.0126.0213 = phi i64 [ %.sroa.073.sroa.0.0.insert.insert81, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit ], [ 0, %.lr.ph219.peel.next ] ; 3 uses
   %.sroa.8.0212 = phi i64 [ %.sroa.3.8.insert.insert.i, %_ZN8rawspeed21Cr2OutputTileIteratorppEv.exit ], [ %.sroa.3.8.insert.insert.i.peel, %.lr.ph219.peel.next ] ; 3 uses
   %i.dr = icmp slt i32 %.sroa.13.0217, %i.bz
@@ -476,16 +475,15 @@ _ZN8rawspeed12_GLOBAL__N_124evaluateConsecutiveTilesERKNS_12iRectangle2DES3_.exi
 
 .loopexit236:                                     ; preds = %_ZN8rawspeed12_GLOBAL__N_124evaluateConsecutiveTilesERKNS_12iRectangle2DES3_.exit.thread
   %i.ei = icmp slt i32 %.sroa.17106.sroa.8.0214, %i.bc
+  %9 = icmp slt i32 %.sroa.17106.sroa.0.0215, %i.bg
+  %10 = and i1 %9, %i.ei
   br label %bb.aj
 
 bb.aj:                                            ; preds = %.loopexit236, %_ZN8rawspeed12_GLOBAL__N_124evaluateConsecutiveTilesERKNS_12iRectangle2DES3_.exit.thread.peel
-  %.sroa.17106.sroa.0.0215.lcssa232 = phi i32 [ 0, %_ZN8rawspeed12_GLOBAL__N_124evaluateConsecutiveTilesERKNS_12iRectangle2DES3_.exit.thread.peel ], [ %.sroa.17106.sroa.0.0215, %.loopexit236 ]
-  %.sroa.17106.sroa.8.0214.lcssa230 = phi i1 [ true, %_ZN8rawspeed12_GLOBAL__N_124evaluateConsecutiveTilesERKNS_12iRectangle2DES3_.exit.thread.peel ], [ %i.ei, %.loopexit236 ]
   %.sroa.0126.0213.lcssa228 = phi i64 [ undef, %_ZN8rawspeed12_GLOBAL__N_124evaluateConsecutiveTilesERKNS_12iRectangle2DES3_.exit.thread.peel ], [ %.sroa.0126.0213, %.loopexit236 ]
   %.sroa.8.0212.lcssa226 = phi i64 [ undef, %_ZN8rawspeed12_GLOBAL__N_124evaluateConsecutiveTilesERKNS_12iRectangle2DES3_.exit.thread.peel ], [ %.sroa.8.0212, %.loopexit236 ]
-  %9 = icmp slt i32 %.sroa.17106.sroa.0.0215.lcssa232, %i.bg
-  %10 = and i1 %9, %.sroa.17106.sroa.8.0214.lcssa230
-  br i1 %10, label %.invoke281, label %.loopexit
+  %11 = phi i1 [ true, %_ZN8rawspeed12_GLOBAL__N_124evaluateConsecutiveTilesERKNS_12iRectangle2DES3_.exit.thread.peel ], [ %10, %.loopexit236 ]
+  br i1 %11, label %.invoke281, label %.loopexit
 
 .invoke281:                                       ; preds = %.critedge.i, %bb.aj
   %i.ej = phi ptr [ @.str.14, %bb.aj ], [ @.str.13, %.critedge.i ]

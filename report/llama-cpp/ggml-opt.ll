@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.j = load i64, ptr %i.i, align 8, !tbaa !22   ; 2 uses
   %i.k = srem i64 %2, %i.j
-  %i.l = sdiv i64 %2, %i.j
+  %i.l = sdiv exact i64 %2, %i.j
   %i.m = icmp eq i64 %i.k, 0
   br i1 %i.m, label %bb.g, label %bb.f
 
@@ -606,7 +606,7 @@ bb.n:                                             ; preds = %bb.l, %bb.k
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.q = load i64, ptr %i.p, align 8, !tbaa !29   ; 2 uses
   %i.r = urem i64 %i.o, %i.q
-  %i.s = udiv i64 %i.o, %i.q                      ; 6 uses
+  %i.s = udiv exact i64 %i.o, %i.q                ; 6 uses
   %i.t = icmp eq i64 %i.r, 0
   br i1 %i.t, label %bb.p, label %bb.o
 
@@ -724,9 +724,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 5 uses
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !29   ; 2 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !29   ; 3 uses
   %i.h = urem i64 %2, %i.g
-  %i.i = udiv i64 %2, %i.g                        ; 8 uses
+  %i.i = udiv exact i64 %2, %i.g                  ; 7 uses
   %i.j = icmp eq i64 %i.h, 0
   br i1 %i.j, label %bb.e, label %bb.d
 
@@ -760,7 +760,7 @@ bb.e:                                             ; preds = %bb.c
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %xtraiter = and i64 %i.i, 1
-  %i.y = icmp eq i64 %i.i, 1
+  %i.y = icmp eq i64 %2, %i.g
   br i1 %i.y, label %.lr.ph.split.us.epil.preheader, label %.lr.ph.split.us.preheader.new
 
 .lr.ph.split.us.preheader.new:                    ; preds = %.lr.ph.split.us.preheader
@@ -1163,7 +1163,7 @@ bb.e:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.r = load i64, ptr %i.q, align 8, !tbaa !23   ; 4 uses
   %i.s = srem i64 %i.p, %i.r
-  %i.t = sdiv i64 %i.p, %i.r                      ; 4 uses
+  %i.t = sdiv exact i64 %i.p, %i.r                ; 4 uses
   %i.u = icmp eq i64 %i.s, 0
   br i1 %i.u, label %bb.g, label %bb.f
 
@@ -1175,7 +1175,7 @@ bb.g:                                             ; preds = %bb.e
   %i.v = icmp slt i64 %4, 0
   %i.w = select i1 %i.v, i64 %i.p, i64 %4         ; 2 uses
   %i.x = srem i64 %i.w, %i.r
-  %i.y = sdiv i64 %i.w, %i.r                      ; 8 uses
+  %i.y = sdiv exact i64 %i.w, %i.r                ; 8 uses
   %i.z = icmp eq i64 %i.x, 0
   br i1 %i.z, label %bb.i, label %bb.h
 
@@ -1530,9 +1530,9 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.f = load i64, ptr %i.e, align 8, !tbaa !23   ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !23   ; 3 uses
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !23   ; 2 uses
   %i.i = srem i64 %i.f, %9
-  %i.j = sdiv i64 %i.f, %9
+  %i.j = sdiv exact i64 %i.f, %9
   %i.k = icmp eq i64 %i.i, 0
   br i1 %i.k, label %bb.c, label %bb.b
 
@@ -1542,7 +1542,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.l = srem i64 %9, %i.h
-  %i.m = sdiv i64 %9, %i.h                        ; 2 uses
+  %i.m = sdiv exact i64 %9, %i.h
   %i.n = icmp eq i64 %i.l, 0
   br i1 %i.n, label %bb.e, label %bb.d
 
@@ -1571,8 +1571,7 @@ bb.i:                                             ; preds = %bb.g
   %i.r = sitofp i64 %i.j to float
   %i.s = fmul float %i.q, %i.r
   %i.t = fptosi float %i.s to i64
-  %13 = mul i64 %i.m, %i.h
-  %i.u = mul i64 %13, %i.t                        ; 7 uses
+  %i.u = mul i64 %9, %i.t                         ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   store i64 1, ptr %i.a, align 8, !tbaa !23
   %i.v = trunc i64 %i.m to i32
@@ -1679,7 +1678,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.p
   %i.bg = load i64, ptr %i.ap, align 8, !tbaa !22 ; 2 uses
   %i.bh = srem i64 %i.u, %i.bg
-  %i.bi = sdiv i64 %i.u, %i.bg
+  %i.bi = sdiv exact i64 %i.u, %i.bg
   %i.bj = icmp eq i64 %i.bh, 0
   br i1 %i.bj, label %bb.t, label %bb.s
 

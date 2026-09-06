@@ -205,15 +205,16 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !320  ; 2 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !320  ; 3 uses
   %i.e = urem i32 %4, %i.d
-  %i.f = udiv i32 %4, %i.d                        ; 7 uses
+  %i.f = udiv exact i32 %4, %i.d                  ; 6 uses
   %.not = icmp eq i32 %i.e, 0
   br i1 %.not, label %bb.c, label %bb.m
 
 bb.c:                                             ; preds = %bb.b
-  %6 = add nsw i32 %i.f, -3
-  %or.cond = icmp ult i32 %6, -2
+  %6 = icmp ne i32 %4, %i.d
+  %7 = icmp ne i32 %i.f, 2
+  %or.cond = select i1 %6, i1 %7, i1 false
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = icmp eq ptr %2, %i.h
@@ -456,7 +457,7 @@ _ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit._crit
 
 .preheader104:                                    ; preds = %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit._crit_edge
   %i.dy = icmp ult i32 %.359, %i.f
-  br i1 %i.dy, label %.lr.ph116, label %.preheader
+  br i1 %i.dy, label %.lr.ph116, label %.lr.ph118
 
 .lr.ph116:                                        ; preds = %.preheader104
   %i.dz = load i32, ptr %i.a, align 4, !tbaa !325 ; 2 uses
@@ -486,17 +487,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.ec, %n.vec
-  br i1 %cmp.n, label %.preheader, label %scalar.ph.preheader
+  br i1 %cmp.n, label %.lr.ph118, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph116, %middle.block
   %indvars.iv.ph = phi i64 [ %i.ea, %.lr.ph116 ], [ %i.ed, %middle.block ]
   br label %scalar.ph
 
-.preheader:                                       ; preds = %scalar.ph, %middle.block, %.preheader104
-  %7 = icmp sgt i32 %i.f, 0
-  br i1 %7, label %.lr.ph118, label %.loopexit
-
-.lr.ph118:                                        ; preds = %.preheader
+.lr.ph118:                                        ; preds = %scalar.ph, %middle.block, %.preheader104
   %i.eg = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.eh = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -509,7 +506,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ek = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv
   store i32 %i.dz, ptr %i.ek, align 4, !tbaa !325
   %i.el = icmp samesign ult i64 %indvars.iv.next, %i.eb
-  br i1 %i.el, label %scalar.ph, label %.preheader, !llvm.loop !2187
+  br i1 %i.el, label %scalar.ph, label %.lr.ph118, !llvm.loop !2187
 
 bb.l:                                             ; preds = %.lr.ph118, %bb.l
   %indvars.iv122 = phi i64 [ 0, %.lr.ph118 ], [ %indvars.iv.next123, %bb.l ] ; 2 uses
@@ -534,8 +531,8 @@ bb.l:                                             ; preds = %.lr.ph118, %bb.l
   %i.ex = icmp samesign ult i64 %indvars.iv.next123, %i.ej
   br i1 %i.ex, label %bb.l, label %.loopexit, !llvm.loop !2188
 
-.loopexit:                                        ; preds = %bb.l, %bb.e, %.preheader, %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit._crit_edge
-  %8 = phi i1 [ false, %bb.e ], [ false, %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit._crit_edge ], [ true, %.preheader ], [ true, %bb.l ]
+.loopexit:                                        ; preds = %bb.l, %bb.e, %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit._crit_edge
+  %8 = phi i1 [ false, %bb.e ], [ false, %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit._crit_edge ], [ true, %bb.l ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   br label %bb.m
 

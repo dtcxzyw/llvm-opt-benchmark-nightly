@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = add i16 %i.e, -6
   %or.cond22 = icmp ult i16 %i.f, 12283
   %i.g = urem i16 %i.e, 6
-  %i.h = udiv i16 %i.e, 6
+  %i.h = udiv exact i16 %i.e, 6
   %.not10 = icmp eq i16 %i.g, 0
   %or.cond23 = and i1 %or.cond22, %.not10
   br i1 %or.cond23, label %bb.c, label %bb.j
@@ -234,7 +234,7 @@ bb.e:                                             ; preds = %bb.d
   %i.t = icmp samesign ult i16 %i.o, 768
   %or.cond26.not45.not48 = or i1 %i.t, %.not12
   %i.u = urem i16 %i.o, 768
-  %i.v = udiv i16 %i.o, 768                       ; 2 uses
+  %i.v = udiv exact i16 %i.o, 768                 ; 2 uses
   %.not13 = icmp ne i16 %i.u, 0
   %or.cond27.not46 = or i1 %.not13, %or.cond26.not45.not48
   %i.w = sub nsw i32 %i.q, %i.k
@@ -249,7 +249,7 @@ bb.f:                                             ; preds = %bb.e
   %or.cond30 = icmp ult i8 %i.aa, 16
   %i.ab = zext i8 %i.z to i16
   %.not14 = icmp eq i16 %i.v, %i.ab
-  %or.cond31 = and i1 %or.cond30, %.not14
+  %or.cond31 = select i1 %or.cond30, i1 %.not14, i1 false
   br i1 %or.cond31, label %_ZN8rawspeed19roundUpDivisionSafeEmm.exit, label %bb.j
 
 _ZN8rawspeed19roundUpDivisionSafeEmm.exit:        ; preds = %bb.f
@@ -265,7 +265,7 @@ bb.g:                                             ; preds = %_ZN8rawspeed19round
   %i.af = add i16 %i.ae, -1
   %or.cond32 = icmp ult i16 %i.af, 2048
   %.not16 = icmp eq i16 %i.h, %i.ae
-  %or.cond33 = and i1 %.not16, %or.cond32
+  %or.cond33 = select i1 %or.cond32, i1 %.not16, i1 false
   br i1 %or.cond33, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
@@ -668,12 +668,11 @@ bb.ej:                                            ; preds = %bb.ei
 
 _ZNK8rawspeed12_GLOBAL__N_19FujiStrip7numMCUsENS_8iPoint2DE.exit.i.i.i.i.i: ; preds = %bb.ej, %bb.ei
   %.0.i.i.i.i141.i.i.i = phi i32 [ %i.bxf, %bb.ej ], [ %i.bwz, %bb.ei ] ; 2 uses
-  %.0.i.i.off.i.i.i.i.i = add nsw i32 %.0.i.i.i.i141.i.i.i, 5
-  %.not70.i.i.i.i.i = icmp ult i32 %.0.i.i.off.i.i.i.i.i, 11
+  %.not70.i.i.i.i.i = icmp eq i32 %.0.i.i.i.i141.i.i.i, 0
   br i1 %.not70.i.i.i.i.i, label %_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block19copy_line_to_xtransERKNS0_9FujiStripEi.exit.i.i.i, label %.preheader66.lr.ph.i.i.i.i.i
 
 .preheader66.lr.ph.i.i.i.i.i:                     ; preds = %_ZNK8rawspeed12_GLOBAL__N_19FujiStrip7numMCUsENS_8iPoint2DE.exit.i.i.i.i.i
-  %i.bxg = sdiv i32 %.0.i.i.i.i141.i.i.i, 6
+  %i.bxg = sdiv exact i32 %.0.i.i.i.i141.i.i.i, 6
   %.sroa.060.0.copyload.i.i.i.i.i = load ptr, ptr %7, align 8, !tbaa !229 ; 6 uses
   %.sroa.462.0.copyload.i.i.i.i.i = load i32, ptr %.sroa.659.0..sroa_idx.i.i, align 8, !tbaa !94 ; 3 uses
   %.sroa.563.0.copyload.i.i.i.i.i = load i32, ptr %.sroa.760.0..sroa_idx.i.i, align 4, !tbaa !94 ; 3 uses
