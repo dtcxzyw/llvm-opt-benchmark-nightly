@@ -1,0 +1,357 @@
+diff --git a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+index 963e6e1076eec..cb65df5606c96 100644
+--- a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
++++ b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+@@ -40,6 +40,7 @@
+ #include <optional>
+ #include <queue>
+ #include <set>
++#include <tuple>
+ 
+ #define DEBUG_TYPE "vector-combine"
+ #include "llvm/Transforms/Utils/InstructionWorklist.h"
+@@ -104,6 +105,19 @@ class VectorCombine {
+   /// RecursivelyDeleteTriviallyDeadInstructions.
+   Instruction *NextInst;
+ 
++  /// Cache for deduplicating shuffle instructions with identical operands and
++  /// masks. Maps {operand0, operand1, mask} -> existing shuffle instruction,
++  /// prevents creating duplicate shuffles when merging parallel intrinsic
++  /// chains.
++  DenseMap<std::tuple<Value *, Value *, SmallVector<int>>, Value *>
++      ShuffleCache;
++
++  /// Get an existing shuffle or create a new one at the earliest safe insertion
++  /// point, deduplicates shuffles with identical operands and masks across the
++  /// function.
++  Value *getOrCreateShuffle(Value *V0, Value *V1, ArrayRef<int> Mask);
++  Instruction *findEarliestInsertionPoint(Value *V0, Value *V1);
++
+   // TODO: Direct calls from the top-level "run" loop use a plain "Instruction"
+   //       parameter. That should be updated to specific sub-classes because the
+   //       run loop was changed to dispatch on opcode.
+@@ -3323,25 +3337,15 @@ bool VectorCombine::foldShuffleOfIntrinsics(Instruction &I) {
+     return false;
+ 
+   SmallVector<Value *> NewArgs;
+-  SmallDenseMap<std::pair<Value *, Value *>, Value *> ShuffleCache;
+-  for (unsigned I = 0, E = II0->arg_size(); I != E; ++I)
++  for (unsigned I = 0, E = II0->arg_size(); I != E; ++I) {
+     if (isVectorIntrinsicWithScalarOpAtArg(IID, I, &TTI)) {
+       NewArgs.push_back(II0->getArgOperand(I));
+     } else {
+-      std::pair<Value *, Value *> OperandPair =
+-          std::make_pair(II0->getArgOperand(I), II1->getArgOperand(I));
+-      auto It = ShuffleCache.find(OperandPair);
+-      if (It != ShuffleCache.end()) {
+-        // Reuse previously created shuffle for this operand pair.
+-        NewArgs.push_back(It->second);
+-        continue;
+-      }
+-      Value *Shuf = Builder.CreateShuffleVector(II0->getArgOperand(I),
+-                                                II1->getArgOperand(I), OldMask);
+-      ShuffleCache[OperandPair] = Shuf;
++      Value *Shuf = getOrCreateShuffle(II0->getArgOperand(I),
++                                       II1->getArgOperand(I), OldMask);
+       NewArgs.push_back(Shuf);
+-      Worklist.pushValue(Shuf);
+     }
++  }
+   Value *NewIntrinsic = Builder.CreateIntrinsic(ShuffleDstTy, IID, NewArgs);
+ 
+   // Intersect flags from the old intrinsics.
+@@ -5620,9 +5624,91 @@ bool VectorCombine::shrinkPhiOfShuffles(Instruction &I) {
+   return true;
+ }
+ 
++/// Find the earliest point where both V0 and V1 are available
++/// This ensures the created shuffle will dominate all its uses
++Instruction *VectorCombine::findEarliestInsertionPoint(Value *V0, Value *V1) {
++  Instruction *I0 = dyn_cast<Instruction>(V0);
++  Instruction *I1 = dyn_cast<Instruction>(V1);
++
++  // Not an instruction = available from entry
++  // (includes constants, arguments, globals, functions)
++  if (!I0 && !I1) {
++    return &*F.getEntryBlock().getFirstInsertionPt();
++  }
++
++  if (!I0) { // V0 is not instruction, V1 is instruction
++    BasicBlock::iterator It(I1);
++    return &*(++It);
++  }
++
++  if (!I1) { // V1 is not instruction, V0 is instruction
++    BasicBlock::iterator It(I0);
++    return &*(++It);
++  }
++
++  // Both are instructions, same block
++  if (I0->getParent() == I1->getParent()) {
++    Instruction *Later = I0->comesBefore(I1) ? I1 : I0;
++    BasicBlock::iterator It(Later);
++    return &*(++It);
++  }
++
++  // Different blocks, fallback to current insertion point
++  return &*Builder.GetInsertPoint();
++}
++
++Value *VectorCombine::getOrCreateShuffle(Value *V0, Value *V1,
++                                         ArrayRef<int> Mask) {
++  SmallVector<int, 8> MaskVec(Mask.begin(), Mask.end());
++  std::tuple<Value *, Value *, SmallVector<int>> Key =
++      std::make_tuple(V0, V1, MaskVec);
++
++  // Safe to cache when at least one operand is a constant,
++  // or when both operands are instructions in the same block
++  Instruction *I0 = dyn_cast<Instruction>(V0);
++  Instruction *I1 = dyn_cast<Instruction>(V1);
++  bool SafeToCache = !I0 || !I1 || I0->getParent() == I1->getParent();
++
++  if (SafeToCache) {
++    auto It = ShuffleCache.find(Key);
++    if (It != ShuffleCache.end()) {
++      Value *Cached = It->second;
++      auto *CachedInst = dyn_cast<Instruction>(Cached);
++      // Return cached value if it's a constant or a live instruction
++      if (!CachedInst || CachedInst->getParent()) {
++        return Cached;
++      }
++      // Cached instruction was deleted, remove from cache
++      ShuffleCache.erase(It);
++    }
++  }
++
++  // Find earliest safe insertion point
++  Instruction *InsertPt = findEarliestInsertionPoint(V0, V1);
++
++  // Save and restore Builder insertion point
++  IRBuilder<>::InsertPointGuard Guard(Builder);
++  Builder.SetInsertPoint(InsertPt);
++
++  // Create shuffle at earliest position
++  Value *Shuf = Builder.CreateShuffleVector(V0, V1, Mask);
++
++  LLVM_DEBUG(dbgs() << "VectorCombine: Created shuffle: " << *Shuf << '\n');
++
++  if (SafeToCache) {
++    ShuffleCache[Key] = Shuf;
++  }
++  Worklist.pushValue(Shuf);
++
++  return Shuf;
++}
++
+ /// This is the entry point for all transforms. Pass manager differences are
+ /// handled in the callers of this function.
+ bool VectorCombine::run() {
++  // Clear shuffle cache
++  ShuffleCache.clear();
++
+   if (DisableVectorCombine)
+     return false;
+ 
+diff --git a/llvm/test/Transforms/VectorCombine/AArch64/shuffle-of-intrinscis.ll b/llvm/test/Transforms/VectorCombine/AArch64/shuffle-of-intrinscis.ll
+index c2b783439444a..8e7517a296b5a 100644
+--- a/llvm/test/Transforms/VectorCombine/AArch64/shuffle-of-intrinscis.ll
++++ b/llvm/test/Transforms/VectorCombine/AArch64/shuffle-of-intrinscis.ll
+@@ -35,7 +35,7 @@ define <8 x i32> @test3(<4 x i32> %0, <4 x i32> %1, <4 x i32> %2, <4 x i32> %3)
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[TMP4:%.*]] = shufflevector <4 x i32> [[TMP0:%.*]], <4 x i32> [[TMP2:%.*]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+ ; CHECK-NEXT:    [[TMP5:%.*]] = shufflevector <4 x i32> [[TMP1:%.*]], <4 x i32> [[TMP3:%.*]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+-; CHECK-NEXT:    [[TMP6:%.*]] = call <8 x i32> @llvm.smax.v8i32(<8 x i32> [[TMP4]], <8 x i32> [[TMP5]])
++; CHECK-NEXT:    [[TMP6:%.*]] = call <8 x i32> @llvm.smax.v8i32(<8 x i32> [[TMP5]], <8 x i32> [[TMP4]])
+ ; CHECK-NEXT:    ret <8 x i32> [[TMP6]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/VectorCombine/X86/fma-shuffle-dedup.ll b/llvm/test/Transforms/VectorCombine/X86/fma-shuffle-dedup.ll
+new file mode 100644
+index 0000000000000..6bff2d0815b90
+--- /dev/null
++++ b/llvm/test/Transforms/VectorCombine/X86/fma-shuffle-dedup.ll
+@@ -0,0 +1,139 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 5
++; RUN: opt < %s -passes=vector-combine -mtriple=x86_64-- -mcpu=x86-64-v3 -S | FileCheck %s
++
++; Test that VectorCombine deduplicates shuffle instructions when merging
++; parallel FMA chains. Before the fix, this would create 6 identical shuffles.
++; After the fix, only 1 shuffle is created and reused.
++
++define <8 x float> @fma_parallel_chains(<4 x float> %a0, <4 x float> %a1) {
++; CHECK-LABEL: define <8 x float> @fma_parallel_chains(
++; CHECK-SAME: <4 x float> [[A0:%.*]], <4 x float> [[A1:%.*]]) #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:    [[D0:%.*]] = fadd <4 x float> [[A0]], splat (float -1.000000e+00)
++; CHECK-NEXT:    [[D1:%.*]] = fadd <4 x float> [[A1]], splat (float -1.000000e+00)
++; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <4 x float> [[D0]], <4 x float> [[D1]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; CHECK-NEXT:    [[TMP2:%.*]] = call <8 x float> @llvm.fma.v8f32(<8 x float> [[TMP1]], <8 x float> splat (float 0x3F8DE8D040000000), <8 x float> splat (float 0xBFB3715EE0000000))
++; CHECK-NEXT:    [[TMP3:%.*]] = call <8 x float> @llvm.fma.v8f32(<8 x float> [[TMP2]], <8 x float> [[TMP1]], <8 x float> splat (float 0x3FC82778A0000000))
++; CHECK-NEXT:    [[TMP4:%.*]] = call <8 x float> @llvm.fma.v8f32(<8 x float> [[TMP3]], <8 x float> [[TMP1]], <8 x float> splat (float 0xBFD493F7E0000000))
++; CHECK-NEXT:    [[TMP5:%.*]] = call <8 x float> @llvm.fma.v8f32(<8 x float> [[TMP4]], <8 x float> [[TMP1]], <8 x float> splat (float 0x3FDE311220000000))
++; CHECK-NEXT:    [[TMP6:%.*]] = call <8 x float> @llvm.fma.v8f32(<8 x float> [[TMP5]], <8 x float> [[TMP1]], <8 x float> splat (float 0xBFE70BF2A0000000))
++; CHECK-NEXT:    [[RES:%.*]] = call <8 x float> @llvm.fma.v8f32(<8 x float> [[TMP6]], <8 x float> [[TMP1]], <8 x float> splat (float 0x3FF71507C0000000))
++; CHECK-NEXT:    ret <8 x float> [[RES]]
++;
++  ; First chain operating on %a0
++  %d0 = fadd <4 x float> %a0, splat (float -1.000000e+00)
++  %l0 = call <4 x float> @llvm.fma.v4f32(<4 x float> %d0, <4 x float> splat (float 0x3F8DE8D040000000), <4 x float> splat (float 0xBFB3715EE0000000))
++  %l1 = call <4 x float> @llvm.fma.v4f32(<4 x float> %l0, <4 x float> %d0, <4 x float> splat (float 0x3FC82778A0000000))
++  %l2 = call <4 x float> @llvm.fma.v4f32(<4 x float> %l1, <4 x float> %d0, <4 x float> splat (float 0xBFD493F7E0000000))
++  %l3 = call <4 x float> @llvm.fma.v4f32(<4 x float> %l2, <4 x float> %d0, <4 x float> splat (float 0x3FDE311220000000))
++  %l4 = call <4 x float> @llvm.fma.v4f32(<4 x float> %l3, <4 x float> %d0, <4 x float> splat (float 0xBFE70BF2A0000000))
++  %l5 = call <4 x float> @llvm.fma.v4f32(<4 x float> %l4, <4 x float> %d0, <4 x float> splat (float 0x3FF71507C0000000))
++
++  ; Second chain operating on %a1 (parallel to first)
++  %d1 = fadd <4 x float> %a1, splat (float -1.000000e+00)
++  %h0 = call <4 x float> @llvm.fma.v4f32(<4 x float> %d1, <4 x float> splat (float 0x3F8DE8D040000000), <4 x float> splat (float 0xBFB3715EE0000000))
++  %h1 = call <4 x float> @llvm.fma.v4f32(<4 x float> %h0, <4 x float> %d1, <4 x float> splat (float 0x3FC82778A0000000))
++  %h2 = call <4 x float> @llvm.fma.v4f32(<4 x float> %h1, <4 x float> %d1, <4 x float> splat (float 0xBFD493F7E0000000))
++  %h3 = call <4 x float> @llvm.fma.v4f32(<4 x float> %h2, <4 x float> %d1, <4 x float> splat (float 0x3FDE311220000000))
++  %h4 = call <4 x float> @llvm.fma.v4f32(<4 x float> %h3, <4 x float> %d1, <4 x float> splat (float 0xBFE70BF2A0000000))
++  %h5 = call <4 x float> @llvm.fma.v4f32(<4 x float> %h4, <4 x float> %d1, <4 x float> splat (float 0x3FF71507C0000000))
++
++  ; Concatenate results
++  %res = shufflevector <4 x float> %l5, <4 x float> %h5, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++  ret <8 x float> %res
++}
++
++; Verify that shuffle deduplication does not reuse shuffles across parallel
++; blocks (block3 and block4), which would create dominance violations.
++define <8 x i32> @no_shuffle_reuse_across_parallel_blocks(<4 x i32> %0, <4 x i32> %1, <4 x i32> %2, <4 x i32> %3) {
++; CHECK-LABEL: define <8 x i32> @no_shuffle_reuse_across_parallel_blocks(
++; CHECK-SAME: <4 x i32> [[TMP0:%.*]], <4 x i32> [[TMP1:%.*]], <4 x i32> [[TMP2:%.*]], <4 x i32> [[TMP3:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[V0:%.*]] = add <4 x i32> [[TMP0]], [[TMP1]]
++; CHECK-NEXT:    br label %[[BLOCK2:.*]]
++; CHECK:       [[BLOCK2]]:
++; CHECK-NEXT:    [[V1:%.*]] = add <4 x i32> [[TMP2]], [[TMP3]]
++; CHECK-NEXT:    br i1 true, label %[[BLOCK3:.*]], label %[[BLOCK4:.*]]
++; CHECK:       [[BLOCK3]]:
++; CHECK-NEXT:    [[TMP4:%.*]] = shufflevector <4 x i32> [[V0]], <4 x i32> [[V1]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; CHECK-NEXT:    [[TMP5:%.*]] = shufflevector <4 x i32> [[V1]], <4 x i32> [[V0]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; CHECK-NEXT:    [[TMP6:%.*]] = call <8 x i32> @llvm.smax.v8i32(<8 x i32> [[TMP4]], <8 x i32> [[TMP5]])
++; CHECK-NEXT:    br label %[[END:.*]]
++; CHECK:       [[BLOCK4]]:
++; CHECK-NEXT:    [[TMP7:%.*]] = shufflevector <4 x i32> [[V0]], <4 x i32> [[V1]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; CHECK-NEXT:    [[TMP8:%.*]] = shufflevector <4 x i32> [[V1]], <4 x i32> [[V0]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; CHECK-NEXT:    [[TMP9:%.*]] = call <8 x i32> @llvm.smax.v8i32(<8 x i32> [[TMP7]], <8 x i32> [[TMP8]])
++; CHECK-NEXT:    br label %[[END]]
++; CHECK:       [[END]]:
++; CHECK-NEXT:    [[RES:%.*]] = phi <8 x i32> [ [[TMP6]], %[[BLOCK3]] ], [ [[TMP9]], %[[BLOCK4]] ]
++; CHECK-NEXT:    ret <8 x i32> [[RES]]
++;
++entry:
++  %v0 = add <4 x i32> %0, %1
++  br label %block2
++
++block2:
++  %v1 = add <4 x i32> %2, %3
++  br i1 true, label %block3, label %block4
++
++block3:
++  %4 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %v0, <4 x i32> %v1)
++  %5 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %v1, <4 x i32> %v0)
++  %6 = shufflevector <4 x i32> %4, <4 x i32> %5, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++  br label %end
++
++block4:
++  %7 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %v0, <4 x i32> %v1)
++  %8 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %v1, <4 x i32> %v0)
++  %9 = shufflevector <4 x i32> %7, <4 x i32> %8, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++  br label %end
++
++end:
++  %res = phi <8 x i32> [ %6, %block3 ], [ %9, %block4 ]
++  ret <8 x i32> %res
++}
++
++; Verify that shuffle deduplication works when operands are in the same block
++; and the shuffle can be hoisted to dominate multiple uses.
++define <8 x i32> @shuffle_reuse_same_block_different_use(<4 x i32> %arg0, <4 x i32> %arg1, <4 x i32> %arg2, <4 x i32> %arg3) {
++; CHECK-LABEL: define <8 x i32> @shuffle_reuse_same_block_different_use(
++; CHECK-SAME: <4 x i32> [[ARG0:%.*]], <4 x i32> [[ARG1:%.*]], <4 x i32> [[ARG2:%.*]], <4 x i32> [[ARG3:%.*]]) #[[ATTR0]] {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[V0:%.*]] = add <4 x i32> [[ARG0]], [[ARG1]]
++; CHECK-NEXT:    [[V1:%.*]] = add <4 x i32> [[ARG2]], [[ARG3]]
++; CHECK-NEXT:    [[SHUFFLE1:%.*]] = shufflevector <4 x i32> [[V1]], <4 x i32> [[V0]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; CHECK-NEXT:    [[SHUFFLE2:%.*]] = shufflevector <4 x i32> [[V0]], <4 x i32> [[V1]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; CHECK-NEXT:    br i1 true, label %[[BLOCK2:.*]], label %[[BLOCK3:.*]]
++; CHECK:       [[BLOCK2]]:
++; CHECK-NEXT:    [[MERGED1:%.*]] = call <8 x i32> @llvm.smax.v8i32(<8 x i32> [[SHUFFLE2]], <8 x i32> [[SHUFFLE1]])
++; CHECK-NEXT:    br label %[[END:.*]]
++; CHECK:       [[BLOCK3]]:
++; CHECK-NEXT:    [[MERGED2:%.*]] = call <8 x i32> @llvm.smax.v8i32(<8 x i32> [[SHUFFLE2]], <8 x i32> [[SHUFFLE1]])
++; CHECK-NEXT:    br label %[[END]]
++; CHECK:       [[END]]:
++; CHECK-NEXT:    [[RES:%.*]] = phi <8 x i32> [ [[MERGED1]], %[[BLOCK2]] ], [ [[MERGED2]], %[[BLOCK3]] ]
++; CHECK-NEXT:    ret <8 x i32> [[RES]]
++;
++entry:
++  %v0 = add <4 x i32> %arg0, %arg1
++  %v1 = add <4 x i32> %arg2, %arg3
++  br i1 true, label %block2, label %block3
++
++block2:
++  %4 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %v0, <4 x i32> %v1)
++  %5 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %v1, <4 x i32> %v0)
++  %6 = shufflevector <4 x i32> %4, <4 x i32> %5, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++  br label %end
++
++block3:
++  %7 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %v0, <4 x i32> %v1)
++  %8 = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %v1, <4 x i32> %v0)
++  %9 = shufflevector <4 x i32> %7, <4 x i32> %8, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++  br label %end
++
++end:
++  %res = phi <8 x i32> [ %6, %block2 ], [ %9, %block3 ]
++  ret <8 x i32> %res
++}
++
++declare <4 x float> @llvm.fma.v4f32(<4 x float>, <4 x float>, <4 x float>)
++declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>)
+diff --git a/llvm/test/Transforms/VectorCombine/X86/shuffle-of-intrinsics.ll b/llvm/test/Transforms/VectorCombine/X86/shuffle-of-intrinsics.ll
+index 1596614ef9584..4585538c93fce 100644
+--- a/llvm/test/Transforms/VectorCombine/X86/shuffle-of-intrinsics.ll
++++ b/llvm/test/Transforms/VectorCombine/X86/shuffle-of-intrinsics.ll
+@@ -38,7 +38,7 @@ define <8 x i32> @test3(<4 x i32> %0, <4 x i32> %1, <4 x i32> %2, <4 x i32> %3)
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[TMP4:%.*]] = shufflevector <4 x i32> [[TMP0:%.*]], <4 x i32> [[TMP2:%.*]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+ ; CHECK-NEXT:    [[TMP5:%.*]] = shufflevector <4 x i32> [[TMP1:%.*]], <4 x i32> [[TMP3:%.*]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+-; CHECK-NEXT:    [[TMP6:%.*]] = call <8 x i32> @llvm.smax.v8i32(<8 x i32> [[TMP4]], <8 x i32> [[TMP5]])
++; CHECK-NEXT:    [[TMP6:%.*]] = call <8 x i32> @llvm.smax.v8i32(<8 x i32> [[TMP5]], <8 x i32> [[TMP4]])
+ ; CHECK-NEXT:    ret <8 x i32> [[TMP6]]
+ ;
+ entry:
+@@ -103,7 +103,7 @@ define <2 x float> @test6(<4 x float> %a1, <4 x float> %b1, <4 x float> %c1, <4
+ ; SSE-NEXT:    [[TMP1:%.*]] = shufflevector <4 x float> [[A1:%.*]], <4 x float> [[A2:%.*]], <2 x i32> <i32 0, i32 4>
+ ; SSE-NEXT:    [[TMP2:%.*]] = shufflevector <4 x float> [[B1:%.*]], <4 x float> [[B2:%.*]], <2 x i32> <i32 0, i32 4>
+ ; SSE-NEXT:    [[TMP3:%.*]] = shufflevector <4 x float> [[C1:%.*]], <4 x float> [[C2:%.*]], <2 x i32> <i32 0, i32 4>
+-; SSE-NEXT:    [[S:%.*]] = call <2 x float> @llvm.fma.v2f32(<2 x float> [[TMP1]], <2 x float> [[TMP2]], <2 x float> [[TMP3]])
++; SSE-NEXT:    [[S:%.*]] = call <2 x float> @llvm.fma.v2f32(<2 x float> [[TMP3]], <2 x float> [[TMP2]], <2 x float> [[TMP1]])
+ ; SSE-NEXT:    ret <2 x float> [[S]]
+ ;
+ ; AVX-LABEL: @test6(
+@@ -131,8 +131,8 @@ define <8 x float> @test7(<4 x float> %x0, <4 x float> %x1, <4 x float> %y0, <4
+ ; AVX-LABEL: @test7(
+ ; AVX-NEXT:    [[TMP1:%.*]] = shufflevector <4 x float> [[X1:%.*]], <4 x float> [[Y1:%.*]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+ ; AVX-NEXT:    [[TMP2:%.*]] = shufflevector <4 x float> [[X0:%.*]], <4 x float> [[Y0:%.*]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+-; AVX-NEXT:    [[TMP3:%.*]] = call <8 x float> @llvm.fma.v8f32(<8 x float> [[TMP2]], <8 x float> [[TMP2]], <8 x float> zeroinitializer)
+-; AVX-NEXT:    [[RES:%.*]] = call <8 x float> @llvm.fma.v8f32(<8 x float> [[TMP1]], <8 x float> [[TMP1]], <8 x float> [[TMP3]])
++; AVX-NEXT:    [[TMP3:%.*]] = call <8 x float> @llvm.fma.v8f32(<8 x float> [[TMP1]], <8 x float> [[TMP1]], <8 x float> zeroinitializer)
++; AVX-NEXT:    [[RES:%.*]] = call <8 x float> @llvm.fma.v8f32(<8 x float> [[TMP2]], <8 x float> [[TMP2]], <8 x float> [[TMP3]])
+ ; AVX-NEXT:    ret <8 x float> [[RES]]
+ ;
+   %l0 = call <4 x float> @llvm.fma.v4f32(<4 x float> %x0, <4 x float> %x0, <4 x float> zeroinitializer)
+@@ -164,9 +164,9 @@ define <8 x i32> @test_multiuse_one_side(<4 x i32> %0, <4 x i32> %1) {
+ ;
+ ; AVX-LABEL: @test_multiuse_one_side(
+ ; AVX-NEXT:  entry:
+-; AVX-NEXT:    [[A:%.*]] = call <4 x i32> @llvm.abs.v4i32(<4 x i32> [[TMP0:%.*]], i1 false)
++; AVX-NEXT:    [[TMP2:%.*]] = shufflevector <4 x i32> [[TMP0:%.*]], <4 x i32> [[TMP1:%.*]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
++; AVX-NEXT:    [[A:%.*]] = call <4 x i32> @llvm.abs.v4i32(<4 x i32> [[TMP0]], i1 false)
+ ; AVX-NEXT:    [[EXTRA_USE:%.*]] = extractelement <4 x i32> [[A]], i32 0
+-; AVX-NEXT:    [[TMP2:%.*]] = shufflevector <4 x i32> [[TMP0]], <4 x i32> [[TMP1:%.*]], <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+ ; AVX-NEXT:    [[R:%.*]] = call <8 x i32> @llvm.abs.v8i32(<8 x i32> [[TMP2]], i1 false)
+ ; AVX-NEXT:    [[RES:%.*]] = add i32 [[EXTRA_USE]], 1
+ ; AVX-NEXT:    ret <8 x i32> [[R]]
