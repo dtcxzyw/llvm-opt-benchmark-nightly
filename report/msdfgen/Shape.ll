@@ -204,9 +204,9 @@ bb.a:
   %i.e = load ptr, ptr %0, align 8, !tbaa !21     ; 2 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
-  %i.h = sub i64 %i.f, %i.g
-  %i.i = sdiv exact i64 %i.h, 24                  ; 4 uses
-  %1 = icmp ugt i64 %i.i, 2305843009213693951
+  %i.h = sub i64 %i.f, %i.g                       ; 2 uses
+  %i.i = sdiv exact i64 %i.h, 24                  ; 3 uses
+  %1 = icmp slt i64 %i.h, 0
   br i1 %1, label %.noexc, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
 
 .noexc:                                           ; preds = %bb.a

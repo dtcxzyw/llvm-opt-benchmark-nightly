@@ -205,9 +205,9 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit10:             ; preds = %_ZNSt6vectorIhSaIhE
   %i.am = load ptr, ptr %i.a, align 8, !tbaa !93  ; 2 uses
   %i.an = ptrtoint ptr %i.al to i64
   %i.ao = ptrtoint ptr %i.am to i64
-  %i.ap = sub i64 %i.an, %i.ao
-  %i.aq = sdiv exact i64 %i.ap, 24                ; 3 uses
-  %2 = icmp ugt i64 %i.aq, 576460752303423487
+  %i.ap = sub i64 %i.an, %i.ao                    ; 2 uses
+  %i.aq = sdiv exact i64 %i.ap, 24                ; 2 uses
+  %2 = icmp slt i64 %i.ap, 0
   br i1 %2, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit10
@@ -503,12 +503,12 @@ bb.a:
   %i.g = load ptr, ptr %i.d, align 8, !tbaa !93   ; 2 uses
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
-  %i.j = sub i64 %i.h, %i.i
-  %2 = sdiv exact i64 %i.j, 24                    ; 2 uses
-  %i.k = icmp ugt i64 %2, 1
+  %i.j = sub i64 %i.h, %i.i                       ; 2 uses
+  %i.k = icmp ugt i64 %i.j, 24
   br i1 %i.k, label %bb.b, label %_ZN4llvh15SmallVectorImplIPSt6vectorIPN6hermes5regex4NodeESaIS5_EEE7reserveEm.exit
 
 bb.b:                                             ; preds = %bb.a
+  %2 = sdiv exact i64 %i.j, 24
   tail call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.a, i64 noundef %2, i64 noundef 8) #15
   %.pre = load ptr, ptr %i.d, align 8, !tbaa !94
   %.pre10 = load ptr, ptr %i.e, align 8, !tbaa !94
