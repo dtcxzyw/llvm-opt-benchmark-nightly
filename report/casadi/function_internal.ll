@@ -205,8 +205,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 5 uses
-  %5 = sdiv exact i64 %i.f, 24
-  %i.g = icmp ugt i64 %5, 384307168202282325
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc, label %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
 
 .noexc:                                           ; preds = %bb.a
@@ -232,7 +231,7 @@ _ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i: ;
   store ptr %i.i, ptr %i.j, align 8, !tbaa !307
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
-  %6 = sdiv exact i64 %i.f, 24
+  %5 = udiv exact i64 %i.f, 24
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN6casadi2MXESaIS1_EED2Ev.exit
@@ -309,7 +308,7 @@ bb.e:                                             ; preds = %_ZSt8_DestroyIPN6ca
 _ZNSt6vectorIN6casadi2MXESaIS1_EED2Ev.exit:       ; preds = %_ZSt8_DestroyIPN6casadi2MXES1_EvT_S3_RSaIT0_E.exit.i, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #38
   %i.aj = add nuw nsw i64 %.014, 1                ; 2 uses
-  %i.ak = icmp ult i64 %i.aj, %6
+  %i.ak = icmp samesign ult i64 %i.aj, %5
   br i1 %i.ak, label %bb.b, label %._crit_edge, !llvm.loop !1945
 
 bb.f:                                             ; preds = %bb.b
@@ -712,8 +711,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 5 uses
-  %5 = sdiv exact i64 %i.f, 24
-  %i.g = icmp ugt i64 %5, 384307168202282325
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc, label %_ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
 
 .noexc:                                           ; preds = %bb.a
@@ -739,7 +737,7 @@ _ZNSt6vectorIS_IN6casadi2MXESaIS1_EESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i: ;
   store ptr %i.i, ptr %i.j, align 8, !tbaa !307
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
-  %6 = sdiv exact i64 %i.f, 24
+  %5 = udiv exact i64 %i.f, 24
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN6casadi2MXESaIS1_EED2Ev.exit
@@ -816,7 +814,7 @@ bb.e:                                             ; preds = %_ZSt8_DestroyIPN6ca
 _ZNSt6vectorIN6casadi2MXESaIS1_EED2Ev.exit:       ; preds = %_ZSt8_DestroyIPN6casadi2MXES1_EvT_S3_RSaIT0_E.exit.i, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #38
   %i.aj = add nuw nsw i64 %.014, 1                ; 2 uses
-  %i.ak = icmp ult i64 %i.aj, %6
+  %i.ak = icmp samesign ult i64 %i.aj, %5
   br i1 %i.ak, label %bb.b, label %._crit_edge, !llvm.loop !1989
 
 bb.f:                                             ; preds = %bb.b
@@ -1219,8 +1217,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN6casadi6MatrixIdEEE8allocateEmPKv.exit.i.i.i, !prof !206
 
 .noexc.i:                                         ; preds = %bb.b

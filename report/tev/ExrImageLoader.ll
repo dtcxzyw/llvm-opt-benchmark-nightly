@@ -205,8 +205,7 @@ _ZNSt3__1lsB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEERNS_13basic_ostrea
   %i.ad = ptrtoint ptr %i.ab to i64
   %i.ae = ptrtoint ptr %i.ac to i64
   %i.af = sub i64 %i.ad, %i.ae
-  %5 = sdiv exact i64 %i.af, 24
-  %i.ag = icmp ugt i64 %5, 1
+  %i.ag = icmp ugt i64 %i.af, 24
   br i1 %i.ag, label %.lr.ph.peel.next, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %_ZNSt3__1lsB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEERNS_13basic_ostreamIT_T0_EES9_RKNS_12basic_stringIS6_S7_T1_EE.exit, %_ZNSt3__1lsB8ne180100IcNS_11char_traitsIcEENS_9allocatorIcEEEERNS_13basic_ostreamIT_T0_EES9_RKNS_12basic_stringIS6_S7_T1_EE.exit.peel, %_ZNSt3__119basic_ostringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEC1B8ne180100Ev.exit
@@ -609,9 +608,8 @@ bb.g:                                             ; preds = %_ZNSt3__112basic_st
   br i1 %.not.i, label %_ZNSt3__16vectorIN3tev13AttributeNodeENS_9allocatorIS2_EEEC2ERKS5_.exit, label %bb.h
 
 bb.h:                                             ; preds = %.noexc13
-  %3 = sdiv exact i64 %i.ad, 96
-  %4 = icmp ugt i64 %3, 192153584101141162
-  br i1 %4, label %bb.i, label %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorIN3tev13AttributeNodeEEEEEDaRT_m.exit.i.i
+  %3 = icmp slt i64 %i.ad, 0
+  br i1 %3, label %bb.i, label %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorIN3tev13AttributeNodeEEEEEDaRT_m.exit.i.i
 
 bb.i:                                             ; preds = %bb.h
   invoke void @_ZNKSt3__16vectorIN3tev13AttributeNodeENS_9allocatorIS2_EEE20__throw_length_errorB8ne180100Ev(ptr noundef nonnull align 8 dereferenceable(24) %i.w) #35

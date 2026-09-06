@@ -205,8 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.peel: ; preds = %
   %i.u = ptrtoint ptr %i.s to i64
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = sub i64 %i.u, %i.v
-  %5 = sdiv exact i64 %i.w, 24
-  %i.x = icmp ugt i64 %5, 1
+  %i.x = icmp ugt i64 %i.w, 24
   br i1 %i.x, label %.peel.next, label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit._crit_edge
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit._crit_edge: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.peel, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.preheader
@@ -609,9 +608,9 @@ bb.a:
   %i.c = load ptr, ptr %2, align 8, !tbaa !320    ; 3 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 24                  ; 3 uses
-  %8 = icmp ugt i64 %i.g, 576460752303423487
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv exact i64 %i.f, 24                  ; 2 uses
+  %8 = icmp slt i64 %i.f, 0
   br i1 %8, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -1014,8 +1013,7 @@ _ZNSt6vectorIN5arrow9FieldPathESaIS1_EED2Ev.exit.i: ; preds = %bb.aw, %_ZSt8_Des
   br i1 %.not.i.i.i.i.i17, label %.noexc23.i, label %bb.ax
 
 bb.ax:                                            ; preds = %._crit_edge47
-  %14 = sdiv exact i64 %i.go, 24
-  %i.gp = icmp ugt i64 %14, 384307168202282325
+  %i.gp = icmp ugt i64 %i.go, 9223372036854775800
   br i1 %i.gp, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorIN5arrow9FieldPathEE8allocateEmPKv.exit.i.i.i.i.i, !prof !133
 
 .noexc.i.i.i:                                     ; preds = %bb.ax

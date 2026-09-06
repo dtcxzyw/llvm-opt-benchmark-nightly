@@ -205,8 +205,7 @@ bb.c:                                             ; preds = %._crit_edge, %bb.a
   br i1 %.not.i.i.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %6 = sdiv exact i64 %i.s, 96
-  %i.t = icmp ugt i64 %6, 96076792050570581
+  %i.t = icmp ugt i64 %i.s, 9223372036854775776
   br i1 %i.t, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN6google8protobuf4util18MessageDifferencer13SpecificFieldEE8allocateEmPKv.exit.i.i.i.i, !prof !108
 
 .noexc.i.i:                                       ; preds = %bb.d
@@ -257,8 +256,7 @@ _ZNSt6vectorIN6google8protobuf4util18MessageDifferencer13SpecificFieldESaIS4_EEC
   br i1 %.not.i.i.i.i20, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %.critedge
-  %7 = sdiv exact i64 %i.ai, 96
-  %i.aj = icmp ugt i64 %7, 96076792050570581
+  %i.aj = icmp ugt i64 %i.ai, 9223372036854775776
   br i1 %i.aj, label %.noexc.i.i28, label %_ZNSt15__new_allocatorIN6google8protobuf4util18MessageDifferencer13SpecificFieldEE8allocateEmPKv.exit.i.i.i.i21, !prof !108
 
 .noexc.i.i28:                                     ; preds = %bb.f
@@ -487,8 +485,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 96
-  %i.g = icmp ugt i64 %2, 96076792050570581
+  %i.g = icmp ugt i64 %i.f, 9223372036854775776
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN6google8protobuf4util18MessageDifferencer13SpecificFieldEE8allocateEmPKv.exit.i.i.i, !prof !108
 
 .noexc.i:                                         ; preds = %bb.b
@@ -891,8 +888,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.noexc27, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %5 = sdiv exact i64 %i.h, 24
-  %i.i = icmp ugt i64 %5, 384307168202282325
+  %i.i = icmp ugt i64 %i.h, 9223372036854775800
   br i1 %i.i, label %.noexc.i.i, label %_ZNSt15__new_allocatorISt6vectorIPKN6google8protobuf15FieldDescriptorESaIS5_EEE8allocateEmPKv.exit.i.i.i.i, !prof !108
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -1295,8 +1291,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %11 = sdiv exact i64 %i.f, 96
-  %i.g = icmp ugt i64 %11, 96076792050570581
+  %i.g = icmp ugt i64 %i.f, 9223372036854775776
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN6google8protobuf4util18MessageDifferencer13SpecificFieldEE8allocateEmPKv.exit.i.i.i.i, !prof !108
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -1699,8 +1694,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %8 = sdiv exact i64 %i.j, 96
-  %i.k = icmp ugt i64 %8, 96076792050570581
+  %i.k = icmp ugt i64 %i.j, 9223372036854775776
   br i1 %i.k, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN6google8protobuf4util18MessageDifferencer13SpecificFieldEE8allocateEmPKv.exit.i.i.i.i, !prof !108
 
 .noexc.i.i:                                       ; preds = %bb.b

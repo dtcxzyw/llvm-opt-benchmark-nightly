@@ -205,8 +205,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN6casadi6MatrixINS0_6SXElemEEEE8allocateEmPKv.exit.i.i.i, !prof !58
 
 .noexc.i:                                         ; preds = %bb.b
@@ -609,9 +608,9 @@ _ZN6casadi9horzsplitERKNS_6MatrixINS_6SXElemEEEx.exit: ; preds = %_ZNK6casadi13G
   %i.kx = load ptr, ptr %52, align 8, !tbaa !125  ; 2 uses
   %i.ky = ptrtoint ptr %i.kw to i64
   %i.kz = ptrtoint ptr %i.kx to i64
-  %i.la = sub i64 %i.ky, %i.kz
-  %i.lb = sdiv exact i64 %i.la, 40                ; 3 uses
-  %76 = icmp ugt i64 %i.lb, 384307168202282325
+  %i.la = sub i64 %i.ky, %i.kz                    ; 2 uses
+  %i.lb = sdiv exact i64 %i.la, 40                ; 2 uses
+  %76 = icmp slt i64 %i.la, 0
   br i1 %76, label %bb.cx, label %_ZNSt6vectorIS_IN6casadi6MatrixINS0_6SXElemEEESaIS3_EESaIS5_EE17_S_check_init_lenEmRKS6_.exit.i
 
 bb.cx:                                            ; preds = %_ZN6casadi9horzsplitERKNS_6MatrixINS_6SXElemEEEx.exit
@@ -1014,8 +1013,8 @@ define linkonce_odr void @_ZNSt6vectorIN6casadi6MatrixINS0_6SXElemEEESaIS3_EE13_
 bb.a:
   %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.a, %i.b                       ; 6 uses
-  %3 = sdiv exact i64 %i.c, 40                    ; 2 uses
+  %i.c = sub i64 %i.a, %i.b                       ; 7 uses
+  %3 = udiv exact i64 %i.c, 40
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !124
   %i.f = load ptr, ptr %0, align 8, !tbaa !125    ; 4 uses
@@ -1026,7 +1025,7 @@ bb.a:
   br i1 %i.j, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = icmp ugt i64 %3, 230584300921369395
+  %i.k = icmp ugt i64 %i.c, 9223372036854775800
   br i1 %i.k, label %bb.c, label %_ZNSt6vectorIN6casadi6MatrixINS0_6SXElemEEESaIS3_EE17_S_check_init_lenEmRKS4_.exit
 
 bb.c:                                             ; preds = %bb.b

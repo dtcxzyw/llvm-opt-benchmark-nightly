@@ -204,8 +204,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.noexc4, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = sdiv exact i64 %i.h, 40
-  %i.i = icmp ugt i64 %3, 230584300921369395
+  %i.i = icmp ugt i64 %i.h, 9223372036854775800
   br i1 %i.i, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -608,8 +607,7 @@ _ZN7jsonnet8internal9Desugarer4makeINS0_13LiteralNumberEJRKNS0_13LocationRangeER
   br i1 %.not.i.i.i.i.i, label %.noexc98, label %bb.e
 
 bb.e:                                             ; preds = %_ZN7jsonnet8internal9Desugarer4makeINS0_13LiteralNumberEJRKNS0_13LocationRangeERKSt6vectorINS0_13FodderElementESaIS8_EERA4_KcEEEPT_DpOT0_.exit
-  %14 = sdiv exact i64 %i.bg, 40
-  %i.bh = icmp ugt i64 %14, 230584300921369395
+  %i.bh = icmp ugt i64 %i.bg, 9223372036854775800
   br i1 %i.bh, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i.i, !prof !190
 
 .noexc.i.i.i:                                     ; preds = %bb.e
@@ -1012,8 +1010,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.noexc8, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %7 = sdiv exact i64 %i.h, 40
-  %i.i = icmp ugt i64 %7, 230584300921369395
+  %i.i = icmp ugt i64 %i.h, 9223372036854775800
   br i1 %i.i, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -1138,8 +1135,7 @@ _ZN7jsonnet8internal13LocationRangeC2ERKS1_.exit: ; preds = %._crit_edge.i.i.i, 
   br i1 %.not.i.i.i.i, label %.noexc6, label %bb.d
 
 bb.d:                                             ; preds = %_ZN7jsonnet8internal13LocationRangeC2ERKS1_.exit
-  %4 = sdiv exact i64 %i.y, 40
-  %i.z = icmp ugt i64 %4, 230584300921369395
+  %i.z = icmp ugt i64 %i.y, 9223372036854775800
   br i1 %i.z, label %.noexc.i.i5, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i5:                                      ; preds = %bb.d
@@ -1542,8 +1538,7 @@ bb.a:
   br i1 %.not.i.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %4 = sdiv exact i64 %i.g, 40
-  %i.h = icmp ugt i64 %4, 230584300921369395
+  %i.h = icmp ugt i64 %i.g, 9223372036854775800
   br i1 %i.h, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i.i, !prof !190
 
 .noexc.i.i.i:                                     ; preds = %bb.b
@@ -1747,8 +1742,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %4 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %4, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -1809,8 +1803,7 @@ _ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit: ; preds = 
   br i1 %.not.i.i.i.i5, label %.noexc10, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit
-  %5 = sdiv exact i64 %i.ad, 40
-  %i.ae = icmp ugt i64 %5, 230584300921369395
+  %i.ae = icmp ugt i64 %i.ad, 9223372036854775800
   br i1 %i.ae, label %.noexc.i.i9, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i6, !prof !190
 
 .noexc.i.i9:                                      ; preds = %bb.f
@@ -2213,8 +2206,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.noexc17, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %10 = sdiv exact i64 %i.i, 40
-  %i.j = icmp ugt i64 %10, 230584300921369395
+  %i.j = icmp ugt i64 %i.i, 9223372036854775800
   br i1 %i.j, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -2277,8 +2269,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i.i.i.i18, label %.noexc24, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %11 = sdiv exact i64 %i.ag, 40
-  %i.ah = icmp ugt i64 %11, 230584300921369395
+  %i.ah = icmp ugt i64 %i.ag, 9223372036854775800
   br i1 %i.ah, label %.noexc.i.i22, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i19, !prof !190
 
 .noexc.i.i22:                                     ; preds = %bb.g
@@ -2334,8 +2325,7 @@ bb.j:                                             ; preds = %.noexc24
   br i1 %.not.i.i.i.i28, label %.noexc34, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %12 = sdiv exact i64 %i.bc, 40
-  %i.bd = icmp ugt i64 %12, 230584300921369395
+  %i.bd = icmp ugt i64 %i.bc, 9223372036854775800
   br i1 %i.bd, label %.noexc.i.i32, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i29, !prof !190
 
 .noexc.i.i32:                                     ; preds = %bb.k
@@ -2439,8 +2429,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 88
-  %i.g = icmp ugt i64 %2, 104811045873349725
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal8ArgParamEE8allocateEmPKv.exit.i.i.i, !prof !190
 
 .noexc.i:                                         ; preds = %bb.b
@@ -2824,8 +2813,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -2887,8 +2875,7 @@ _ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit: ; preds = 
   br i1 %.not.i.i.i.i9, label %.noexc14, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit
-  %3 = sdiv exact i64 %i.af, 40
-  %i.ag = icmp ugt i64 %3, 230584300921369395
+  %i.ag = icmp ugt i64 %i.af, 9223372036854775800
   br i1 %i.ag, label %.noexc.i.i13, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i10, !prof !190
 
 .noexc.i.i13:                                     ; preds = %bb.f
@@ -2949,8 +2936,7 @@ bb.i:                                             ; preds = %.noexc14
   br i1 %.not.i.i.i.i16, label %.noexc22, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %4 = sdiv exact i64 %i.bf, 40
-  %i.bg = icmp ugt i64 %4, 230584300921369395
+  %i.bg = icmp ugt i64 %i.bf, 9223372036854775800
   br i1 %i.bg, label %.noexc.i.i20, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i17, !prof !190
 
 .noexc.i.i20:                                     ; preds = %bb.j
@@ -3175,8 +3161,7 @@ bb.e:                                             ; preds = %.noexc9
   br i1 %.not.i.i.i.i10, label %.noexc14, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %6 = sdiv exact i64 %i.ae, 40
-  %i.af = icmp ugt i64 %6, 230584300921369395
+  %i.af = icmp ugt i64 %i.ae, 9223372036854775800
   br i1 %i.af, label %.noexc.i.i12, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i12:                                     ; preds = %bb.f
@@ -3440,8 +3425,7 @@ bb.a:
   br i1 %.not.i.i.i.i.i.i, label %.noexc8, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %3 = sdiv exact i64 %i.i, 40
-  %i.j = icmp ugt i64 %3, 230584300921369395
+  %i.j = icmp ugt i64 %i.i, 9223372036854775800
   br i1 %i.j, label %.noexc.i.i.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !190
 
 .noexc.i.i.i.i:                                   ; preds = %bb.b
@@ -3652,8 +3636,7 @@ bb.a:
   br i1 %.not.i.i.i.i.i.i, label %.noexc13, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %3 = sdiv exact i64 %i.i, 40
-  %i.j = icmp ugt i64 %3, 230584300921369395
+  %i.j = icmp ugt i64 %i.i, 9223372036854775800
   br i1 %i.j, label %.noexc.i.i.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !190
 
 .noexc.i.i.i.i:                                   ; preds = %bb.b
@@ -3767,8 +3750,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.noexc11, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %8 = sdiv exact i64 %i.h, 40
-  %i.i = icmp ugt i64 %8, 230584300921369395
+  %i.i = icmp ugt i64 %i.h, 9223372036854775800
   br i1 %i.i, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -3826,8 +3808,7 @@ bb.e:                                             ; preds = %.noexc11
   br i1 %.not.i.i.i.i12, label %.noexc18, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %9 = sdiv exact i64 %i.ae, 40
-  %i.af = icmp ugt i64 %9, 230584300921369395
+  %i.af = icmp ugt i64 %i.ae, 9223372036854775800
   br i1 %i.af, label %.noexc.i.i16, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i13, !prof !190
 
 .noexc.i.i16:                                     ; preds = %bb.f
@@ -4123,8 +4104,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 176
-  %i.g = icmp ugt i64 %2, 52405522936674862
+  %i.g = icmp ugt i64 %i.f, 9223372036854775712
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal5Local4BindEE8allocateEmPKv.exit.i.i.i, !prof !190
 
 .noexc.i:                                         ; preds = %bb.b
@@ -4314,8 +4294,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -4377,8 +4356,7 @@ _ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit: ; preds = 
   br i1 %.not.i.i.i.i19, label %.noexc24, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit
-  %3 = sdiv exact i64 %i.af, 40
-  %i.ag = icmp ugt i64 %3, 230584300921369395
+  %i.ag = icmp ugt i64 %i.af, 9223372036854775800
   br i1 %i.ag, label %.noexc.i.i23, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i20, !prof !190
 
 .noexc.i.i23:                                     ; preds = %bb.f
@@ -4438,8 +4416,7 @@ bb.i:                                             ; preds = %.noexc24
   br i1 %.not.i.i.i.i26, label %.noexc32, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %4 = sdiv exact i64 %i.be, 40
-  %i.bf = icmp ugt i64 %4, 230584300921369395
+  %i.bf = icmp ugt i64 %i.be, 9223372036854775800
   br i1 %i.bf, label %.noexc.i.i30, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i27, !prof !190
 
 .noexc.i.i30:                                     ; preds = %bb.j
@@ -4506,8 +4483,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not.i.i.i.i36, label %.noexc42, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %5 = sdiv exact i64 %i.cg, 40
-  %i.ch = icmp ugt i64 %5, 230584300921369395
+  %i.ch = icmp ugt i64 %i.cg, 9223372036854775800
   br i1 %i.ch, label %.noexc.i.i40, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i37, !prof !190
 
 .noexc.i.i40:                                     ; preds = %bb.o
@@ -4564,8 +4540,7 @@ bb.r:                                             ; preds = %.noexc42
   br i1 %.not.i.i.i.i46, label %.noexc52, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %6 = sdiv exact i64 %i.dd, 40
-  %i.de = icmp ugt i64 %6, 230584300921369395
+  %i.de = icmp ugt i64 %i.dd, 9223372036854775800
   br i1 %i.de, label %.noexc.i.i50, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i47, !prof !190
 
 .noexc.i.i50:                                     ; preds = %bb.s
@@ -4677,8 +4652,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %11 = sdiv exact i64 %i.g, 40
-  %i.h = icmp ugt i64 %11, 230584300921369395
+  %i.h = icmp ugt i64 %i.g, 9223372036854775800
   br i1 %i.h, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -4737,8 +4711,7 @@ _ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit: ; preds = 
   br i1 %.not.i.i.i.i20, label %.noexc25, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit
-  %12 = sdiv exact i64 %i.ad, 40
-  %i.ae = icmp ugt i64 %12, 230584300921369395
+  %i.ae = icmp ugt i64 %i.ad, 9223372036854775800
   br i1 %i.ae, label %.noexc.i.i24, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i21, !prof !190
 
 .noexc.i.i24:                                     ; preds = %bb.f
@@ -4799,8 +4772,7 @@ bb.i:                                             ; preds = %.noexc25
   br i1 %.not.i.i.i.i27, label %.noexc33, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %13 = sdiv exact i64 %i.bc, 40
-  %i.bd = icmp ugt i64 %13, 230584300921369395
+  %i.bd = icmp ugt i64 %i.bc, 9223372036854775800
   br i1 %i.bd, label %.noexc.i.i31, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i28, !prof !190
 
 .noexc.i.i31:                                     ; preds = %bb.j
@@ -4863,8 +4835,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not.i.i.i.i37, label %.noexc43, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %14 = sdiv exact i64 %i.ca, 40
-  %i.cb = icmp ugt i64 %14, 230584300921369395
+  %i.cb = icmp ugt i64 %i.ca, 9223372036854775800
   br i1 %i.cb, label %.noexc.i.i41, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i38, !prof !190
 
 .noexc.i.i41:                                     ; preds = %bb.o
@@ -4920,8 +4891,7 @@ bb.r:                                             ; preds = %.noexc43
   br i1 %.not.i.i.i.i47, label %.noexc53, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %15 = sdiv exact i64 %i.cw, 40
-  %i.cx = icmp ugt i64 %15, 230584300921369395
+  %i.cx = icmp ugt i64 %i.cw, 9223372036854775800
   br i1 %i.cx, label %.noexc.i.i51, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i48, !prof !190
 
 .noexc.i.i51:                                     ; preds = %bb.s
@@ -5036,8 +5006,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.noexc13, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %8 = sdiv exact i64 %i.h, 40
-  %i.i = icmp ugt i64 %8, 230584300921369395
+  %i.i = icmp ugt i64 %i.h, 9223372036854775800
   br i1 %i.i, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -5100,8 +5069,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i.i.i.i14, label %.noexc20, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %9 = sdiv exact i64 %i.af, 40
-  %i.ag = icmp ugt i64 %9, 230584300921369395
+  %i.ag = icmp ugt i64 %i.af, 9223372036854775800
   br i1 %i.ag, label %.noexc.i.i18, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i15, !prof !190
 
 .noexc.i.i18:                                     ; preds = %bb.g
@@ -5504,8 +5472,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.noexc19, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %12 = sdiv exact i64 %i.h, 40
-  %i.i = icmp ugt i64 %12, 230584300921369395
+  %i.i = icmp ugt i64 %i.h, 9223372036854775800
   br i1 %i.i, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -5566,8 +5533,7 @@ bb.e:                                             ; preds = %.noexc19
   br i1 %.not.i.i.i.i20, label %.noexc26, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %13 = sdiv exact i64 %i.ag, 40
-  %i.ah = icmp ugt i64 %13, 230584300921369395
+  %i.ah = icmp ugt i64 %i.ag, 9223372036854775800
   br i1 %i.ah, label %.noexc.i.i24, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i21, !prof !190
 
 .noexc.i.i24:                                     ; preds = %bb.f
@@ -5625,8 +5591,7 @@ bb.i:                                             ; preds = %.noexc26
   br i1 %.not.i.i.i.i30, label %.noexc36, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %14 = sdiv exact i64 %i.bd, 40
-  %i.be = icmp ugt i64 %14, 230584300921369395
+  %i.be = icmp ugt i64 %i.bd, 9223372036854775800
   br i1 %i.be, label %.noexc.i.i34, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i31, !prof !190
 
 .noexc.i.i34:                                     ; preds = %bb.j
@@ -5684,8 +5649,7 @@ bb.m:                                             ; preds = %.noexc36
   br i1 %.not.i.i.i.i40, label %.noexc46, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %15 = sdiv exact i64 %i.ca, 40
-  %i.cb = icmp ugt i64 %15, 230584300921369395
+  %i.cb = icmp ugt i64 %i.ca, 9223372036854775800
   br i1 %i.cb, label %.noexc.i.i44, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i41, !prof !190
 
 .noexc.i.i44:                                     ; preds = %bb.n
@@ -6088,8 +6052,7 @@ bb.a:
   %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 4 uses
-  %3 = sdiv exact i64 %i.c, 176
-  %i.d = icmp ugt i64 %3, 52405522936674862
+  %i.d = icmp ugt i64 %i.c, 9223372036854775712
   br i1 %i.d, label %bb.b, label %_ZNSt6vectorIN7jsonnet8internal5Local4BindESaIS3_EE17_S_check_init_lenEmRKS4_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -6492,8 +6455,7 @@ bb.a:
   %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 4 uses
-  %3 = sdiv exact i64 %i.c, 88
-  %i.d = icmp ugt i64 %3, 104811045873349725
+  %i.d = icmp ugt i64 %i.c, 9223372036854775800
   br i1 %i.d, label %bb.b, label %_ZNSt6vectorIN7jsonnet8internal8ArgParamESaIS2_EE17_S_check_init_lenEmRKS3_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -6896,8 +6858,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %18 = sdiv exact i64 %i.k, 40
-  %i.l = icmp ugt i64 %18, 230584300921369395
+  %i.l = icmp ugt i64 %i.k, 9223372036854775800
   br i1 %i.l, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -6954,8 +6915,7 @@ _ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit: ; preds = 
   br i1 %.not.i.i.i.i31, label %.noexc36, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit
-  %19 = sdiv exact i64 %i.ag, 40
-  %i.ah = icmp ugt i64 %19, 230584300921369395
+  %i.ah = icmp ugt i64 %i.ag, 9223372036854775800
   br i1 %i.ah, label %.noexc.i.i35, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i32, !prof !190
 
 .noexc.i.i35:                                     ; preds = %bb.f
@@ -7011,8 +6971,7 @@ bb.i:                                             ; preds = %.noexc36
   br i1 %.not.i.i.i.i38, label %.noexc44, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %20 = sdiv exact i64 %i.bc, 40
-  %i.bd = icmp ugt i64 %20, 230584300921369395
+  %i.bd = icmp ugt i64 %i.bc, 9223372036854775800
   br i1 %i.bd, label %.noexc.i.i42, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i39, !prof !190
 
 .noexc.i.i42:                                     ; preds = %bb.j
@@ -7068,8 +7027,7 @@ bb.m:                                             ; preds = %.noexc44
   br i1 %.not.i.i.i.i48, label %.noexc54, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %21 = sdiv exact i64 %i.by, 40
-  %i.bz = icmp ugt i64 %21, 230584300921369395
+  %i.bz = icmp ugt i64 %i.by, 9223372036854775800
   br i1 %i.bz, label %.noexc.i.i52, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i49, !prof !190
 
 .noexc.i.i52:                                     ; preds = %bb.n
@@ -7190,8 +7148,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not.i.i.i.i60, label %.noexc66, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %22 = sdiv exact i64 %i.dr, 40
-  %i.ds = icmp ugt i64 %22, 230584300921369395
+  %i.ds = icmp ugt i64 %i.dr, 9223372036854775800
   br i1 %i.ds, label %.noexc.i.i64, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i61, !prof !190
 
 .noexc.i.i64:                                     ; preds = %bb.v
@@ -7251,8 +7208,7 @@ bb.y:                                             ; preds = %.noexc66
   br i1 %.not.i.i.i.i70, label %.noexc76, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %23 = sdiv exact i64 %i.ep, 40
-  %i.eq = icmp ugt i64 %23, 230584300921369395
+  %i.eq = icmp ugt i64 %i.ep, 9223372036854775800
   br i1 %i.eq, label %.noexc.i.i74, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i71, !prof !190
 
 .noexc.i.i74:                                     ; preds = %bb.z
@@ -7390,8 +7346,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 288
-  %i.g = icmp ugt i64 %2, 32025597350190193
+  %i.g = icmp ugt i64 %i.f, 9223372036854775584
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal11ObjectFieldEE8allocateEmPKv.exit.i.i.i, !prof !190
 
 .noexc.i:                                         ; preds = %bb.b
@@ -7551,8 +7506,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.j, 40
-  %i.k = icmp ugt i64 %2, 230584300921369395
+  %i.k = icmp ugt i64 %i.j, 9223372036854775800
   br i1 %i.k, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -7610,8 +7564,7 @@ _ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit: ; preds = 
   br i1 %.not.i.i.i.i26, label %.noexc31, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit
-  %3 = sdiv exact i64 %i.ag, 40
-  %i.ah = icmp ugt i64 %3, 230584300921369395
+  %i.ah = icmp ugt i64 %i.ag, 9223372036854775800
   br i1 %i.ah, label %.noexc.i.i30, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i27, !prof !190
 
 .noexc.i.i30:                                     ; preds = %bb.f
@@ -7668,8 +7621,7 @@ bb.i:                                             ; preds = %.noexc31
   br i1 %.not.i.i.i.i33, label %.noexc39, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %4 = sdiv exact i64 %i.bd, 40
-  %i.be = icmp ugt i64 %4, 230584300921369395
+  %i.be = icmp ugt i64 %i.bd, 9223372036854775800
   br i1 %i.be, label %.noexc.i.i37, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i34, !prof !190
 
 .noexc.i.i37:                                     ; preds = %bb.j
@@ -7726,8 +7678,7 @@ bb.m:                                             ; preds = %.noexc39
   br i1 %.not.i.i.i.i43, label %.noexc49, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %5 = sdiv exact i64 %i.ca, 40
-  %i.cb = icmp ugt i64 %5, 230584300921369395
+  %i.cb = icmp ugt i64 %i.ca, 9223372036854775800
   br i1 %i.cb, label %.noexc.i.i47, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i44, !prof !190
 
 .noexc.i.i47:                                     ; preds = %bb.n
@@ -7846,8 +7797,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not.i.i.i.i55, label %.noexc61, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %6 = sdiv exact i64 %i.dv, 40
-  %i.dw = icmp ugt i64 %6, 230584300921369395
+  %i.dw = icmp ugt i64 %i.dv, 9223372036854775800
   br i1 %i.dw, label %.noexc.i.i59, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i56, !prof !190
 
 .noexc.i.i59:                                     ; preds = %bb.v
@@ -7907,8 +7857,7 @@ bb.y:                                             ; preds = %.noexc61
   br i1 %.not.i.i.i.i65, label %.noexc71, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %7 = sdiv exact i64 %i.eu, 40
-  %i.ev = icmp ugt i64 %7, 230584300921369395
+  %i.ev = icmp ugt i64 %i.eu, 9223372036854775800
   br i1 %i.ev, label %.noexc.i.i69, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i66, !prof !190
 
 .noexc.i.i69:                                     ; preds = %bb.z
@@ -8311,8 +8260,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.noexc9, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %6 = sdiv exact i64 %i.h, 40
-  %i.i = icmp ugt i64 %6, 230584300921369395
+  %i.i = icmp ugt i64 %i.h, 9223372036854775800
   br i1 %i.i, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -8368,8 +8316,7 @@ bb.e:                                             ; preds = %.noexc9
   br i1 %.not.i.i.i.i10, label %.noexc16, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %7 = sdiv exact i64 %i.ad, 40
-  %i.ae = icmp ugt i64 %7, 230584300921369395
+  %i.ae = icmp ugt i64 %i.ad, 9223372036854775800
   br i1 %i.ae, label %.noexc.i.i14, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i11, !prof !190
 
 .noexc.i.i14:                                     ; preds = %bb.f
@@ -8621,8 +8568,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.noexc10, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %7 = sdiv exact i64 %i.g, 40
-  %i.h = icmp ugt i64 %7, 230584300921369395
+  %i.h = icmp ugt i64 %i.g, 9223372036854775800
   br i1 %i.h, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -8680,8 +8626,7 @@ bb.e:                                             ; preds = %.noexc10
   br i1 %.not.i.i.i.i11, label %.noexc17, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %8 = sdiv exact i64 %i.ad, 40
-  %i.ae = icmp ugt i64 %8, 230584300921369395
+  %i.ae = icmp ugt i64 %i.ad, 9223372036854775800
   br i1 %i.ae, label %.noexc.i.i15, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i12, !prof !190
 
 .noexc.i.i15:                                     ; preds = %bb.f
@@ -9060,8 +9005,7 @@ _ZNSt7__cxx114listIPN7jsonnet8internal3ASTESaIS4_EEC2ERKS6_.exit: ; preds = %.no
   br i1 %.not.i.i.i.i, label %.noexc11, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt7__cxx114listIPN7jsonnet8internal3ASTESaIS4_EEC2ERKS6_.exit
-  %5 = sdiv exact i64 %i.au, 24
-  %i.av = icmp ugt i64 %5, 384307168202282325
+  %i.av = icmp ugt i64 %i.au, 9223372036854775800
   br i1 %i.av, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal15DesugaredObject5FieldEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.f
@@ -9464,8 +9408,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = sdiv exact i64 %i.l, 40
-  %i.m = icmp ugt i64 %3, 230584300921369395
+  %i.m = icmp ugt i64 %i.l, 9223372036854775800
   br i1 %i.m, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i.i, !prof !190
 
 .noexc.i.i.i:                                     ; preds = %bb.c
@@ -9569,8 +9512,7 @@ _ZNKSt6vectorIN7jsonnet8internal5Array7ElementESaIS3_EE12_M_check_lenEmPKc.exit:
   br i1 %.not.i.i.i.i.i, label %.noexc27, label %bb.c
 
 bb.c:                                             ; preds = %_ZNKSt6vectorIN7jsonnet8internal5Array7ElementESaIS3_EE12_M_check_lenEmPKc.exit
-  %4 = sdiv exact i64 %i.y, 40
-  %i.z = icmp ugt i64 %4, 230584300921369395
+  %i.z = icmp ugt i64 %i.y, 9223372036854775800
   br i1 %i.z, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i.i, !prof !190
 
 .noexc.i.i.i:                                     ; preds = %bb.c
@@ -9729,8 +9671,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.noexc13, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %8 = sdiv exact i64 %i.h, 40
-  %i.i = icmp ugt i64 %8, 230584300921369395
+  %i.i = icmp ugt i64 %i.h, 9223372036854775800
   br i1 %i.i, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -9794,8 +9735,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i.i.i.i14, label %.noexc20, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %9 = sdiv exact i64 %i.ag, 40
-  %i.ah = icmp ugt i64 %9, 230584300921369395
+  %i.ah = icmp ugt i64 %i.ag, 9223372036854775800
   br i1 %i.ah, label %.noexc.i.i18, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i15, !prof !190
 
 .noexc.i.i18:                                     ; preds = %bb.g
@@ -9886,8 +9826,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 96
-  %i.g = icmp ugt i64 %2, 96076792050570581
+  %i.g = icmp ugt i64 %i.f, 9223372036854775776
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal17ComprehensionSpecEE8allocateEmPKv.exit.i.i.i, !prof !190
 
 .noexc.i:                                         ; preds = %bb.b
@@ -10237,8 +10176,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.i, 40
-  %i.j = icmp ugt i64 %2, 230584300921369395
+  %i.j = icmp ugt i64 %i.i, 9223372036854775800
   br i1 %i.j, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -10296,8 +10234,7 @@ _ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit: ; preds = 
   br i1 %.not.i.i.i.i10, label %.noexc15, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit
-  %3 = sdiv exact i64 %i.af, 40
-  %i.ag = icmp ugt i64 %3, 230584300921369395
+  %i.ag = icmp ugt i64 %i.af, 9223372036854775800
   br i1 %i.ag, label %.noexc.i.i14, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i11, !prof !190
 
 .noexc.i.i14:                                     ; preds = %bb.f
@@ -10358,8 +10295,7 @@ bb.i:                                             ; preds = %.noexc15
   br i1 %.not.i.i.i.i17, label %.noexc23, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %4 = sdiv exact i64 %i.bf, 40
-  %i.bg = icmp ugt i64 %4, 230584300921369395
+  %i.bg = icmp ugt i64 %i.bf, 9223372036854775800
   br i1 %i.bg, label %.noexc.i.i21, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i18, !prof !190
 
 .noexc.i.i21:                                     ; preds = %bb.j
@@ -10762,8 +10698,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %6 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %6, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i, !prof !190
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -10822,8 +10757,7 @@ _ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit: ; preds = 
   br i1 %.not.i.i.i.i9, label %.noexc14, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIN7jsonnet8internal13FodderElementESaIS2_EEC2ERKS4_.exit
-  %7 = sdiv exact i64 %i.ac, 40
-  %i.ad = icmp ugt i64 %7, 230584300921369395
+  %i.ad = icmp ugt i64 %i.ac, 9223372036854775800
   br i1 %i.ad, label %.noexc.i.i13, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i10, !prof !190
 
 .noexc.i.i13:                                     ; preds = %bb.f
@@ -10881,8 +10815,7 @@ bb.i:                                             ; preds = %.noexc14
   br i1 %.not.i.i.i.i16, label %.noexc22, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %8 = sdiv exact i64 %i.az, 40
-  %i.ba = icmp ugt i64 %8, 230584300921369395
+  %i.ba = icmp ugt i64 %i.az, 9223372036854775800
   br i1 %i.ba, label %.noexc.i.i20, label %_ZNSt15__new_allocatorIN7jsonnet8internal13FodderElementEE8allocateEmPKv.exit.i.i.i.i17, !prof !190
 
 .noexc.i.i20:                                     ; preds = %bb.j

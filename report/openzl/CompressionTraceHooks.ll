@@ -202,8 +202,8 @@ define linkonce_odr void @_ZNSt6vectorIS_IN6openzl10visualizer15StreamdumpEntryE
 bb.a:
   %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.a, %i.b                       ; 6 uses
-  %3 = sdiv exact i64 %i.c, 24                    ; 2 uses
+  %i.c = sub i64 %i.a, %i.b                       ; 7 uses
+  %3 = udiv exact i64 %i.c, 24
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !37
   %i.f = load ptr, ptr %0, align 8, !tbaa !46     ; 4 uses
@@ -214,7 +214,7 @@ bb.a:
   br i1 %i.j, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = icmp ugt i64 %3, 384307168202282325
+  %i.k = icmp ugt i64 %i.c, 9223372036854775800
   br i1 %i.k, label %bb.c, label %_ZNSt6vectorIS_IN6openzl10visualizer15StreamdumpEntryESaIS2_EESaIS4_EE17_S_check_init_lenEmRKS5_.exit
 
 bb.c:                                             ; preds = %bb.b
@@ -617,8 +617,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 72
-  %i.g = icmp ugt i64 %2, 128102389400760775
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN6openzl10visualizer15StreamdumpEntryEE8allocateEmPKv.exit.i.i.i, !prof !70
 
 .noexc.i:                                         ; preds = %bb.b

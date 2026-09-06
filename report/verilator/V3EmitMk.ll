@@ -204,8 +204,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 56
-  %i.g = icmp ugt i64 %2, 164703072086692425
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN9EmitGroup27FileOrConcatenatedFilesListEE8allocateEmPKv.exit.i.i.i, !prof !17
 
 .noexc.i:                                         ; preds = %bb.b
@@ -608,9 +607,9 @@ bb.a:
   %i.g = load ptr, ptr %0, align 8, !tbaa !130    ; 3 uses
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
-  %i.j = sub i64 %i.h, %i.i
-  %i.k = sdiv exact i64 %i.j, 40                  ; 3 uses
-  %5 = icmp ugt i64 %i.k, 1152921504606846975
+  %i.j = sub i64 %i.h, %i.i                       ; 2 uses
+  %i.k = sdiv exact i64 %i.j, 40                  ; 2 uses
+  %5 = icmp slt i64 %i.j, 0
   br i1 %5, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a

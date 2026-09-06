@@ -205,9 +205,9 @@ bb.a:
   %i.g = load ptr, ptr %5, align 8, !tbaa !391    ; 2 uses
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
-  %i.j = sub i64 %i.h, %i.i
-  %i.k = sdiv exact i64 %i.j, 88                  ; 3 uses
-  %15 = icmp ugt i64 %i.k, 576460752303423487
+  %i.j = sub i64 %i.h, %i.i                       ; 2 uses
+  %i.k = sdiv exact i64 %i.j, 88                  ; 2 uses
+  %15 = icmp slt i64 %i.j, 0
   br i1 %15, label %.noexc, label %_ZNSt6vectorISt10shared_ptrIN7xgboost16HostDeviceVectorIjEEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i
 
 .noexc:                                           ; preds = %bb.a
@@ -610,20 +610,18 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !447  ; 3 uses
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !189  ; 3 uses
-  %2 = ptrtoint ptr %i.c to i64
-  %3 = ptrtoint ptr %i.d to i64
-  %4 = sub i64 %2, %3
-  %5 = sdiv exact i64 %4, 24                      ; 2 uses
   %i.e = icmp eq ptr %i.c, %i.d
   br i1 %i.e, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %6 = sub nuw nsw i64 1, %5
-  tail call void @_ZNSt6vectorIN7xgboost4tree13HistEvaluator9NodeEntryESaIS3_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef %6)
+  tail call void @_ZNSt6vectorIN7xgboost4tree13HistEvaluator9NodeEntryESaIS3_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef 1)
   br label %_ZNSt6vectorIN7xgboost4tree13HistEvaluator9NodeEntryESaIS3_EE6resizeEm.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.f = icmp ugt i64 %5, 1
+  %2 = ptrtoint ptr %i.c to i64
+  %3 = ptrtoint ptr %i.d to i64
+  %4 = sub i64 %2, %3
+  %i.f = icmp ugt i64 %4, 24
   br i1 %i.f, label %bb.d, label %_ZNSt6vectorIN7xgboost4tree13HistEvaluator9NodeEntryESaIS3_EE6resizeEm.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -1026,8 +1024,8 @@ bb.a:
   %i.c = load ptr, ptr %4, align 8, !tbaa !391    ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 88                  ; 6 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv exact i64 %i.f, 88                  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 40
@@ -1042,7 +1040,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %13 = icmp ugt i64 %i.g, 2305843009213693951
+  %13 = icmp slt i64 %i.f, 0
   br i1 %13, label %bb.d, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i
 
 bb.d:                                             ; preds = %bb.c
@@ -1445,8 +1443,8 @@ bb.a:
   %i.c = load ptr, ptr %4, align 8, !tbaa !391    ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 88                  ; 6 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv exact i64 %i.f, 88                  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 40
@@ -1461,7 +1459,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %13 = icmp ugt i64 %i.g, 2305843009213693951
+  %13 = icmp slt i64 %i.f, 0
   br i1 %13, label %bb.d, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i
 
 bb.d:                                             ; preds = %bb.c
@@ -1864,8 +1862,8 @@ bb.a:
   %i.c = load ptr, ptr %4, align 8, !tbaa !391    ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 88                  ; 6 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv exact i64 %i.f, 88                  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 40
@@ -1880,7 +1878,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %13 = icmp ugt i64 %i.g, 2305843009213693951
+  %13 = icmp slt i64 %i.f, 0
   br i1 %13, label %bb.d, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i
 
 bb.d:                                             ; preds = %bb.c
@@ -2283,8 +2281,8 @@ bb.a:
   %i.c = load ptr, ptr %4, align 8, !tbaa !391    ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 88                  ; 6 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv exact i64 %i.f, 88                  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 40
@@ -2299,7 +2297,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %13 = icmp ugt i64 %i.g, 2305843009213693951
+  %13 = icmp slt i64 %i.f, 0
   br i1 %13, label %bb.d, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i
 
 bb.d:                                             ; preds = %bb.c
@@ -2702,8 +2700,8 @@ bb.a:
   %i.c = load ptr, ptr %4, align 8, !tbaa !391    ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 88                  ; 6 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv exact i64 %i.f, 88                  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 40
@@ -2718,7 +2716,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %13 = icmp ugt i64 %i.g, 2305843009213693951
+  %13 = icmp slt i64 %i.f, 0
   br i1 %13, label %bb.d, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i
 
 bb.d:                                             ; preds = %bb.c
@@ -3121,8 +3119,8 @@ bb.a:
   %i.c = load ptr, ptr %4, align 8, !tbaa !391    ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 88                  ; 6 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv exact i64 %i.f, 88                  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 40
@@ -3137,7 +3135,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %13 = icmp ugt i64 %i.g, 2305843009213693951
+  %13 = icmp slt i64 %i.f, 0
   br i1 %13, label %bb.d, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i
 
 bb.d:                                             ; preds = %bb.c
@@ -3540,8 +3538,8 @@ bb.a:
   %i.c = load ptr, ptr %4, align 8, !tbaa !391    ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 88                  ; 6 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv exact i64 %i.f, 88                  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 40
@@ -3556,7 +3554,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %13 = icmp ugt i64 %i.g, 2305843009213693951
+  %13 = icmp slt i64 %i.f, 0
   br i1 %13, label %bb.d, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i
 
 bb.d:                                             ; preds = %bb.c
@@ -3959,8 +3957,8 @@ bb.a:
   %i.c = load ptr, ptr %4, align 8, !tbaa !391    ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 88                  ; 6 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv exact i64 %i.f, 88                  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 40
@@ -3975,7 +3973,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %13 = icmp ugt i64 %i.g, 2305843009213693951
+  %13 = icmp slt i64 %i.f, 0
   br i1 %13, label %bb.d, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i
 
 bb.d:                                             ; preds = %bb.c
@@ -4378,8 +4376,8 @@ bb.a:
   %i.c = load ptr, ptr %4, align 8, !tbaa !391    ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 88                  ; 6 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv exact i64 %i.f, 88                  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 40
@@ -4394,7 +4392,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %13 = icmp ugt i64 %i.g, 2305843009213693951
+  %13 = icmp slt i64 %i.f, 0
   br i1 %13, label %bb.d, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i
 
 bb.d:                                             ; preds = %bb.c
@@ -4797,8 +4795,8 @@ bb.a:
   %i.c = load ptr, ptr %4, align 8, !tbaa !391    ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 88                  ; 6 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv exact i64 %i.f, 88                  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 40
@@ -4813,7 +4811,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %13 = icmp ugt i64 %i.g, 2305843009213693951
+  %13 = icmp slt i64 %i.f, 0
   br i1 %13, label %bb.d, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i
 
 bb.d:                                             ; preds = %bb.c
@@ -5216,8 +5214,8 @@ bb.a:
   %i.c = load ptr, ptr %4, align 8, !tbaa !391    ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 88                  ; 6 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv exact i64 %i.f, 88                  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 40
@@ -5232,7 +5230,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %13 = icmp ugt i64 %i.g, 2305843009213693951
+  %13 = icmp slt i64 %i.f, 0
   br i1 %13, label %bb.d, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i
 
 bb.d:                                             ; preds = %bb.c
@@ -5635,8 +5633,8 @@ bb.a:
   %i.c = load ptr, ptr %4, align 8, !tbaa !391    ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 88                  ; 6 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv exact i64 %i.f, 88                  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 40
@@ -5651,7 +5649,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %13 = icmp ugt i64 %i.g, 2305843009213693951
+  %13 = icmp slt i64 %i.f, 0
   br i1 %13, label %bb.d, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i
 
 bb.d:                                             ; preds = %bb.c
@@ -6054,9 +6052,9 @@ bb.a:
   %i.h = load ptr, ptr %5, align 8, !tbaa !391    ; 2 uses
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = ptrtoint ptr %i.h to i64
-  %i.k = sub i64 %i.i, %i.j
-  %i.l = sdiv exact i64 %i.k, 88                  ; 4 uses
-  %22 = icmp ugt i64 %i.l, 2305843009213693951
+  %i.k = sub i64 %i.i, %i.j                       ; 2 uses
+  %i.l = sdiv exact i64 %i.k, 88                  ; 3 uses
+  %22 = icmp slt i64 %i.k, 0
   br i1 %22, label %.noexc82, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
 
 .noexc82:                                         ; preds = %bb.a
@@ -6099,9 +6097,9 @@ bb.b:                                             ; preds = %_ZSt6fill_nIPimiET_
   %i.w = load ptr, ptr %5, align 8, !tbaa !391    ; 2 uses
   %i.x = ptrtoint ptr %i.v to i64
   %i.y = ptrtoint ptr %i.w to i64
-  %i.z = sub i64 %i.x, %i.y
-  %i.aa = sdiv exact i64 %i.z, 88                 ; 4 uses
-  %23 = icmp ugt i64 %i.aa, 2305843009213693951
+  %i.z = sub i64 %i.x, %i.y                       ; 2 uses
+  %i.aa = sdiv exact i64 %i.z, 88                 ; 3 uses
+  %23 = icmp slt i64 %i.z, 0
   br i1 %23, label %bb.c, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i84
 
 bb.c:                                             ; preds = %bb.b
@@ -6433,8 +6431,7 @@ _ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14defaul
   %i.ds = ptrtoint ptr %i.dq to i64
   %i.dt = ptrtoint ptr %i.dr to i64
   %i.du = sub i64 %i.ds, %i.dt
-  %24 = sdiv exact i64 %i.du, 456
-  %i.dv = icmp ugt i64 %24, 1
+  %i.dv = icmp ugt i64 %i.du, 456
   br i1 %i.dv, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.aa, %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit120

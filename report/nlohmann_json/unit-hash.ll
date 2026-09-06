@@ -205,9 +205,9 @@ bb.a:
   %3 = alloca %"class.nlohmann::json_abi_v3_12_0::basic_json", align 8 ; 5 uses
   %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.a, %i.b
-  %i.d = sdiv exact i64 %i.c, 24                  ; 4 uses
-  %4 = icmp ugt i64 %i.d, 576460752303423487
+  %i.c = sub i64 %i.a, %i.b                       ; 2 uses
+  %i.d = sdiv exact i64 %i.c, 24                  ; 3 uses
+  %4 = icmp slt i64 %i.c, 0
   br i1 %4, label %bb.b, label %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE17_S_check_init_lenEmRKSE_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -610,7 +610,7 @@ bb.d:                                             ; preds = %bb.c
   %i.l = load ptr, ptr %i.b, align 8, !tbaa !332  ; 7 uses
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = ptrtoint ptr %i.l to i64
-  %i.o = sub i64 %i.m, %i.n                       ; 5 uses
+  %i.o = sub i64 %i.m, %i.n                       ; 6 uses
   br i1 %i.d, label %bb.e, label %bb.k
 
 bb.e:                                             ; preds = %bb.d
@@ -749,8 +749,8 @@ _ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonINS1_11ordered_mapES_NSt7__
   br label %bb.ai
 
 bb.k:                                             ; preds = %bb.d
-  %i.bb = sdiv exact i64 %i.o, 48                 ; 3 uses
-  %4 = icmp ugt i64 %i.bb, 576460752303423487
+  %i.bb = sdiv exact i64 %i.o, 48                 ; 2 uses
+  %4 = icmp slt i64 %i.o, 0
   br i1 %4, label %.invoke, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -1153,8 +1153,7 @@ _ZNSt15__new_allocatorIN8nlohmann16json_abi_v3_12_011ordered_mapINSt7__cxx1112ba
   br i1 %.not.i.i.i.i, label %.noexc46, label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt15__new_allocatorIN8nlohmann16json_abi_v3_12_011ordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_10basic_jsonIS2_St6vectorS8_blmdSaNS1_14adl_serializerESA_IhSaIhEEvEESt4lessIS8_ESaISt4pairIKS8_SE_EEEEE8allocateEmPKv.exit.i
-  %2 = sdiv exact i64 %i.l, 48
-  %i.m = icmp ugt i64 %2, 192153584101141162
+  %i.m = icmp ugt i64 %i.l, 9223372036854775776
   br i1 %i.m, label %.noexc.i.i44, label %_ZNSt15__new_allocatorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8nlohmann16json_abi_v3_12_010basic_jsonINS9_11ordered_mapESt6vectorS6_blmdSaNS9_14adl_serializerESC_IhSaIhEEvEEEE8allocateEmPKv.exit.i.i.i.i, !prof !97
 
 .noexc.i.i44:                                     ; preds = %bb.c
@@ -1557,9 +1556,9 @@ bb.a:
   %3 = alloca %"class.nlohmann::json_abi_v3_12_0::basic_json.160", align 8 ; 5 uses
   %i.a = ptrtoint ptr %2 to i64
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.a, %i.b
-  %i.d = sdiv exact i64 %i.c, 24                  ; 4 uses
-  %4 = icmp ugt i64 %i.d, 576460752303423487
+  %i.c = sub i64 %i.a, %i.b                       ; 2 uses
+  %i.d = sdiv exact i64 %i.c, 24                  ; 3 uses
+  %4 = icmp slt i64 %i.c, 0
   br i1 %4, label %bb.b, label %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonINS1_11ordered_mapES_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE17_S_check_init_lenEmRKSE_.exit
 
 bb.b:                                             ; preds = %bb.a

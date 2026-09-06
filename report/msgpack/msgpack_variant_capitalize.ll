@@ -202,8 +202,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN7msgpack2v14type13basic_variantINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIcS8_ENS2_3extEEEE8allocateEmPKv.exit.i.i.i, !prof !99
 
 .noexc.i:                                         ; preds = %bb.b
@@ -606,9 +605,8 @@ bb.a:
   %i.f = load ptr, ptr %2, align 8, !tbaa !176
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
-  %i.i = sub i64 %i.g, %i.h
-  %4 = sdiv exact i64 %i.i, 40                    ; 6 uses
-  %i.j = icmp ugt i64 %4, 4294967295
+  %i.i = sub i64 %i.g, %i.h                       ; 4 uses
+  %i.j = icmp ugt i64 %i.i, 171798691800
   br i1 %i.j, label %bb.b, label %_ZN7msgpack2v126checked_get_container_sizeImEEjT_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -627,13 +625,14 @@ bb.d:                                             ; preds = %bb.b
   resume { ptr, i32 } %i.l
 
 _ZN7msgpack2v126checked_get_container_sizeImEEjT_.exit: ; preds = %bb.a
+  %4 = udiv exact i64 %i.i, 40                    ; 3 uses
   %i.m = trunc nuw i64 %4 to i32
-  %i.n = icmp samesign ult i64 %4, 16
+  %i.n = icmp samesign ult i64 %i.i, 640
   br i1 %i.n, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZN7msgpack2v126checked_get_container_sizeImEEjT_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
-  %i.o = trunc nuw nsw i64 %4 to i8
+  %i.o = trunc nuw i64 %4 to i8
   %i.p = or disjoint i8 %i.o, -112
   store i8 %i.p, ptr %i.a, align 1, !tbaa !55
   %i.q = load ptr, ptr %1, align 8, !tbaa !194, !nonnull !59, !align !139
@@ -643,13 +642,13 @@ bb.e:                                             ; preds = %_ZN7msgpack2v126che
   br label %_ZN7msgpack2v16packerINSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEEE10pack_arrayEj.exit
 
 bb.f:                                             ; preds = %_ZN7msgpack2v126checked_get_container_sizeImEEjT_.exit
-  %i.t = icmp samesign ult i64 %4, 65536
+  %i.t = icmp samesign ult i64 %i.i, 2621440
   br i1 %i.t, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
   store i8 -36, ptr %i.b, align 1, !tbaa !55
-  %i.u = trunc nuw i64 %4 to i16
+  %i.u = trunc i64 %4 to i16
   %rev.i.i = tail call noundef i16 @llvm.bswap.i16(i16 %i.u)
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i16 %rev.i.i, ptr %i.v, align 1

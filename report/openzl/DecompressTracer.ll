@@ -184,9 +184,9 @@ bb.a:
   %i.e = load ptr, ptr %i.b, align 8, !tbaa !20   ; 2 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
-  %i.h = sub i64 %i.f, %i.g
-  %i.i = sdiv exact i64 %i.h, 152                 ; 4 uses
-  %5 = icmp ugt i64 %i.i, 384307168202282325
+  %i.h = sub i64 %i.f, %i.g                       ; 2 uses
+  %i.i = sdiv exact i64 %i.h, 152                 ; 3 uses
+  %5 = icmp slt i64 %i.h, 0
   br i1 %5, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -589,9 +589,8 @@ bb.a:
   %i.f = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.b, %bb.a ]
   %i.g = ptrtoint ptr %i.f to i64
   %i.h = ptrtoint ptr %i.e to i64
-  %i.i = sub i64 %i.g, %i.h
-  %9 = sdiv exact i64 %i.i, 152                   ; 2 uses
-  %i.j = icmp ugt i64 %9, 1
+  %i.i = sub i64 %i.g, %i.h                       ; 2 uses
+  %i.j = icmp ugt i64 %i.i, 152
   br i1 %i.j, label %bb.b, label %bb.z
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
@@ -602,6 +601,7 @@ bb.a:
   br i1 %.not49, label %._crit_edge.loopexit, label %.lr.ph
 
 bb.b:                                             ; preds = %._crit_edge
+  %9 = sdiv exact i64 %i.i, 152
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.m = load i8, ptr %i.l, align 8, !tbaa !132, !range !69, !noundef !70
@@ -1004,8 +1004,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 360
-  %i.g = icmp ugt i64 %2, 25620477880152155
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN6openzl10visualizer5CodecEE8allocateEmPKv.exit.i.i.i, !prof !99
 
 .noexc.i:                                         ; preds = %bb.b

@@ -205,12 +205,12 @@ bb.a:
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !141  ; 17 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
-  %i.g = sub i64 %i.e, %i.f                       ; 2 uses
-  %1 = sdiv exact i64 %i.g, 24                    ; 4 uses
+  %i.g = sub i64 %i.e, %i.f                       ; 3 uses
   %.not = icmp eq ptr %i.c, %i.d
   br i1 %.not, label %._crit_edge32.sink.split, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %1 = sdiv exact i64 %i.g, 24                    ; 3 uses
   %xtraiter = and i64 %1, 1
   %i.h = icmp eq i64 %i.g, 24
   br i1 %i.h, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
@@ -306,14 +306,13 @@ _ZNSt12_Vector_baseISt4pairIihESaIS1_EE13_M_deallocateEPS1_m.exit.i: ; preds = %
   %.pre36 = ptrtoint ptr %.pre to i64
   %.pre37 = ptrtoint ptr %.pre33 to i64
   %.pre39 = sub i64 %.pre36, %.pre37
-  %.pre41 = sdiv exact i64 %.pre39, 24
   br label %_ZNSt6vectorISt4pairIihESaIS1_EE7reserveEm.exit
 
 _ZNSt6vectorISt4pairIihESaIS1_EE7reserveEm.exit:  ; preds = %bb.c, %_ZNSt12_Vector_baseISt4pairIihESaIS1_EE13_M_deallocateEPS1_m.exit.i
-  %.pre-phi42 = phi i64 [ %1, %bb.c ], [ %.pre41, %_ZNSt12_Vector_baseISt4pairIihESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
+  %.pre-phi42 = phi i64 [ %i.g, %bb.c ], [ %.pre39, %_ZNSt12_Vector_baseISt4pairIihESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
   %i.ar = phi ptr [ %i.u, %bb.c ], [ %i.af, %_ZNSt12_Vector_baseISt4pairIihESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
   %i.as = phi ptr [ %i.d, %bb.c ], [ %.pre33, %_ZNSt12_Vector_baseISt4pairIihESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
-  %i.at = icmp ugt i64 %.pre-phi42, 1
+  %i.at = icmp ugt i64 %.pre-phi42, 24
   br i1 %i.at, label %.lr.ph31, label %._crit_edge32
 
 .lr.ph31:                                         ; preds = %_ZNSt6vectorISt4pairIihESaIS1_EE7reserveEm.exit
@@ -716,12 +715,12 @@ bb.a:
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !179  ; 17 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
-  %i.g = sub i64 %i.e, %i.f                       ; 2 uses
-  %1 = sdiv exact i64 %i.g, 24                    ; 4 uses
+  %i.g = sub i64 %i.e, %i.f                       ; 3 uses
   %.not = icmp eq ptr %i.c, %i.d
   br i1 %.not, label %._crit_edge32.sink.split, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %1 = sdiv exact i64 %i.g, 24                    ; 3 uses
   %xtraiter = and i64 %1, 1
   %i.h = icmp eq i64 %i.g, 24
   br i1 %i.h, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
@@ -817,14 +816,13 @@ _ZNSt12_Vector_baseISt4pairIitESaIS1_EE13_M_deallocateEPS1_m.exit.i: ; preds = %
   %.pre36 = ptrtoint ptr %.pre to i64
   %.pre37 = ptrtoint ptr %.pre33 to i64
   %.pre39 = sub i64 %.pre36, %.pre37
-  %.pre41 = sdiv exact i64 %.pre39, 24
   br label %_ZNSt6vectorISt4pairIitESaIS1_EE7reserveEm.exit
 
 _ZNSt6vectorISt4pairIitESaIS1_EE7reserveEm.exit:  ; preds = %bb.c, %_ZNSt12_Vector_baseISt4pairIitESaIS1_EE13_M_deallocateEPS1_m.exit.i
-  %.pre-phi42 = phi i64 [ %1, %bb.c ], [ %.pre41, %_ZNSt12_Vector_baseISt4pairIitESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
+  %.pre-phi42 = phi i64 [ %i.g, %bb.c ], [ %.pre39, %_ZNSt12_Vector_baseISt4pairIitESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
   %i.ar = phi ptr [ %i.u, %bb.c ], [ %i.af, %_ZNSt12_Vector_baseISt4pairIitESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
   %i.as = phi ptr [ %i.d, %bb.c ], [ %.pre33, %_ZNSt12_Vector_baseISt4pairIitESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
-  %i.at = icmp ugt i64 %.pre-phi42, 1
+  %i.at = icmp ugt i64 %.pre-phi42, 24
   br i1 %i.at, label %.lr.ph31, label %._crit_edge32
 
 .lr.ph31:                                         ; preds = %_ZNSt6vectorISt4pairIitESaIS1_EE7reserveEm.exit
@@ -1227,12 +1225,12 @@ bb.a:
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !207  ; 17 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64
-  %i.g = sub i64 %i.e, %i.f                       ; 2 uses
-  %1 = sdiv exact i64 %i.g, 24                    ; 4 uses
+  %i.g = sub i64 %i.e, %i.f                       ; 3 uses
   %.not = icmp eq ptr %i.c, %i.d
   br i1 %.not, label %._crit_edge32.sink.split, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %1 = sdiv exact i64 %i.g, 24                    ; 3 uses
   %xtraiter = and i64 %1, 1
   %i.h = icmp eq i64 %i.g, 24
   br i1 %i.h, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
@@ -1328,14 +1326,13 @@ _ZNSt12_Vector_baseISt4pairIijESaIS1_EE13_M_deallocateEPS1_m.exit.i: ; preds = %
   %.pre36 = ptrtoint ptr %.pre to i64
   %.pre37 = ptrtoint ptr %.pre33 to i64
   %.pre39 = sub i64 %.pre36, %.pre37
-  %.pre41 = sdiv exact i64 %.pre39, 24
   br label %_ZNSt6vectorISt4pairIijESaIS1_EE7reserveEm.exit
 
 _ZNSt6vectorISt4pairIijESaIS1_EE7reserveEm.exit:  ; preds = %bb.c, %_ZNSt12_Vector_baseISt4pairIijESaIS1_EE13_M_deallocateEPS1_m.exit.i
-  %.pre-phi42 = phi i64 [ %1, %bb.c ], [ %.pre41, %_ZNSt12_Vector_baseISt4pairIijESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
+  %.pre-phi42 = phi i64 [ %i.g, %bb.c ], [ %.pre39, %_ZNSt12_Vector_baseISt4pairIijESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
   %i.ar = phi ptr [ %i.u, %bb.c ], [ %i.af, %_ZNSt12_Vector_baseISt4pairIijESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
   %i.as = phi ptr [ %i.d, %bb.c ], [ %.pre33, %_ZNSt12_Vector_baseISt4pairIijESaIS1_EE13_M_deallocateEPS1_m.exit.i ]
-  %i.at = icmp ugt i64 %.pre-phi42, 1
+  %i.at = icmp ugt i64 %.pre-phi42, 24
   br i1 %i.at, label %.lr.ph31, label %._crit_edge32
 
 .lr.ph31:                                         ; preds = %_ZNSt6vectorISt4pairIijESaIS1_EE7reserveEm.exit
@@ -1738,8 +1735,7 @@ vec.epilog.middle.block96:                        ; preds = %vec.epilog.vector.b
   br i1 %.not.i.i.i.i25, label %.noexc26, label %bb.f
 
 bb.f:                                             ; preds = %.loopexit34
-  %2 = sdiv exact i64 %i.ef, 24
-  %i.eg = icmp ugt i64 %2, 384307168202282325
+  %i.eg = icmp ugt i64 %i.ef, 9223372036854775800
   br i1 %i.eg, label %.noexc.i.i, label %_ZNSt15__new_allocatorISt6vectorISt4pairIihESaIS2_EEE8allocateEmPKv.exit.i.i.i.i, !prof !262
 
 .noexc.i.i:                                       ; preds = %bb.f
@@ -2142,8 +2138,7 @@ vec.epilog.middle.block94:                        ; preds = %vec.epilog.vector.b
   br i1 %.not.i.i.i.i24, label %.noexc25, label %bb.f
 
 bb.f:                                             ; preds = %.loopexit32
-  %2 = sdiv exact i64 %i.dl, 24
-  %i.dm = icmp ugt i64 %2, 384307168202282325
+  %i.dm = icmp ugt i64 %i.dl, 9223372036854775800
   br i1 %i.dm, label %.noexc.i.i, label %_ZNSt15__new_allocatorISt6vectorISt4pairIitESaIS2_EEE8allocateEmPKv.exit.i.i.i.i, !prof !262
 
 .noexc.i.i:                                       ; preds = %bb.f
@@ -2546,8 +2541,7 @@ middle.block76:                                   ; preds = %vector.body69
   br i1 %.not.i.i.i.i24, label %.noexc25, label %bb.f
 
 bb.f:                                             ; preds = %.loopexit32
-  %2 = sdiv exact i64 %i.df, 24
-  %i.dg = icmp ugt i64 %2, 384307168202282325
+  %i.dg = icmp ugt i64 %i.df, 9223372036854775800
   br i1 %i.dg, label %.noexc.i.i, label %_ZNSt15__new_allocatorISt6vectorISt4pairIijESaIS2_EEE8allocateEmPKv.exit.i.i.i.i, !prof !262
 
 .noexc.i.i:                                       ; preds = %bb.f
@@ -2950,8 +2944,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.c to i64
   %i.e = ptrtoint ptr %i.a to i64
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
-  %1 = sdiv exact i64 %i.f, 24
-  %i.g = icmp ugt i64 %1, 384307168202282325
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNSt6vectorIS_IhN8LightGBM6Common18AlignmentAllocatorIhLm32EEEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i.i
 
 bb.b:                                             ; preds = %bb.a
@@ -3354,8 +3347,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.c to i64
   %i.e = ptrtoint ptr %i.a to i64
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
-  %1 = sdiv exact i64 %i.f, 24
-  %i.g = icmp ugt i64 %1, 384307168202282325
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNSt6vectorIS_ItN8LightGBM6Common18AlignmentAllocatorItLm32EEEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i.i
 
 bb.b:                                             ; preds = %bb.a
@@ -3758,8 +3750,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.c to i64
   %i.e = ptrtoint ptr %i.a to i64
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
-  %1 = sdiv exact i64 %i.f, 24
-  %i.g = icmp ugt i64 %1, 384307168202282325
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %bb.b, label %_ZNSt6vectorIS_IjN8LightGBM6Common18AlignmentAllocatorIjLm32EEEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i.i
 
 bb.b:                                             ; preds = %bb.a

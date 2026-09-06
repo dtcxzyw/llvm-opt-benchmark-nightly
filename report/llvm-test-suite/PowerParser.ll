@@ -205,8 +205,7 @@ bb.ck:                                            ; preds = %._crit_edge456
   br i1 %.not.i.i.i.i183, label %.noexc187, label %bb.cl
 
 bb.cl:                                            ; preds = %bb.ck
-  %20 = sdiv exact i64 %i.qw, 24
-  %i.qx = icmp ugt i64 %20, 384307168202282325
+  %i.qx = icmp ugt i64 %i.qw, 9223372036854775800
   br i1 %i.qx, label %.noexc.i.i185, label %_ZNSt15__new_allocatorISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EEE8allocateEmPKv.exit.i.i.i.i, !prof !275
 
 .noexc.i.i185:                                    ; preds = %bb.cl
@@ -609,8 +608,7 @@ bb.dt:                                            ; preds = %bb.ds
   br i1 %.not.i.i.i.i323, label %.noexc327, label %bb.du
 
 bb.du:                                            ; preds = %bb.dt
-  %27 = sdiv exact i64 %i.adc, 24
-  %i.add = icmp ugt i64 %27, 384307168202282325
+  %i.add = icmp ugt i64 %i.adc, 9223372036854775800
   br i1 %i.add, label %.noexc.i.i325, label %_ZNSt15__new_allocatorISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EEE8allocateEmPKv.exit.i.i.i.i, !prof !275
 
 .noexc.i.i325:                                    ; preds = %bb.du
@@ -1013,8 +1011,7 @@ bb.bm:                                            ; preds = %._crit_edge270
   br i1 %.not.i.i.i.i, label %.noexc159, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
-  %18 = sdiv exact i64 %i.ls, 24
-  %i.lt = icmp ugt i64 %18, 384307168202282325
+  %i.lt = icmp ugt i64 %i.ls, 9223372036854775800
   br i1 %i.lt, label %.noexc.i.i157, label %_ZNSt15__new_allocatorISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EEE8allocateEmPKv.exit.i.i.i.i, !prof !275
 
 .noexc.i.i157:                                    ; preds = %bb.bn

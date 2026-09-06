@@ -204,8 +204,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %.noexc4, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.i, 48
-  %i.j = icmp ugt i64 %2, 192153584101141162
+  %i.j = icmp ugt i64 %i.i, 9223372036854775776
   br i1 %i.j, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN5arrow7compute7SortKeyEE8allocateEmPKv.exit.i.i.i.i, !prof !91
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -608,8 +607,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %3, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN5arrow8FieldRefEE8allocateEmPKv.exit.i.i.i, !prof !91
 
 .noexc.i:                                         ; preds = %bb.b
@@ -1012,8 +1010,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = sdiv exact i64 %i.l, 48
-  %i.m = icmp ugt i64 %3, 192153584101141162
+  %i.m = icmp ugt i64 %i.l, 9223372036854775776
   br i1 %i.m, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN5arrow7compute7SortKeyEE8allocateEmPKv.exit.i.i.i.i, !prof !91
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -1416,9 +1413,9 @@ _ZN5arrow7compute8internalL20GenericTypeSingletonINS0_7SortKeyEEENSt9enable_ifIX
   %i.dw = load ptr, ptr %1, align 8, !tbaa !90    ; 2 uses
   %i.dx = ptrtoint ptr %i.dv to i64
   %i.dy = ptrtoint ptr %i.dw to i64
-  %i.dz = sub i64 %i.dx, %i.dy
-  %i.ea = sdiv exact i64 %i.dz, 48                ; 3 uses
-  %36 = icmp ugt i64 %i.ea, 576460752303423487
+  %i.dz = sub i64 %i.dx, %i.dy                    ; 2 uses
+  %i.ea = sdiv exact i64 %i.dz, 48                ; 2 uses
+  %36 = icmp slt i64 %i.dz, 0
   br i1 %36, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %_ZN5arrow7compute8internalL20GenericTypeSingletonINS0_7SortKeyEEENSt9enable_ifIXsr3std7is_sameIT_S3_EE5valueESt10shared_ptrINS_8DataTypeEEE4typeEv.exit
@@ -1821,8 +1818,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = sdiv exact i64 %i.l, 48
-  %i.m = icmp ugt i64 %3, 192153584101141162
+  %i.m = icmp ugt i64 %i.l, 9223372036854775776
   br i1 %i.m, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN5arrow7compute7SortKeyEE8allocateEmPKv.exit.i.i.i.i, !prof !91
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -2225,8 +2221,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = sdiv exact i64 %i.l, 48
-  %i.m = icmp ugt i64 %3, 192153584101141162
+  %i.m = icmp ugt i64 %i.l, 9223372036854775776
   br i1 %i.m, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN5arrow7compute7SortKeyEE8allocateEmPKv.exit.i.i.i.i, !prof !91
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -2629,8 +2624,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = sdiv exact i64 %i.l, 48
-  %i.m = icmp ugt i64 %3, 192153584101141162
+  %i.m = icmp ugt i64 %i.l, 9223372036854775776
   br i1 %i.m, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN5arrow7compute7SortKeyEE8allocateEmPKv.exit.i.i.i.i, !prof !91
 
 .noexc.i.i:                                       ; preds = %bb.b

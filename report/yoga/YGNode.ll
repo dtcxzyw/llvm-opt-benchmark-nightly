@@ -205,8 +205,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.h, 28
-  %i.i = icmp ugt i64 %2, 329406144173384850
+  %i.i = icmp ugt i64 %i.h, 9223372036854775800
   br i1 %i.i, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN8facebook4yoga13GridTrackSizeEE8allocateEmPKv.exit.i.i.i.i, !prof !20
 
 .noexc.i.i:                                       ; preds = %bb.b
@@ -255,8 +254,7 @@ _ZNSt6vectorIN8facebook4yoga13GridTrackSizeESaIS2_EEC2ERKS4_.exit: ; preds = %.l
   br i1 %.not.i.i.i.i15, label %.noexc22, label %bb.d
 
 bb.d:                                             ; preds = %_ZNSt6vectorIN8facebook4yoga13GridTrackSizeESaIS2_EEC2ERKS4_.exit
-  %3 = sdiv exact i64 %i.ab, 28
-  %i.ac = icmp ugt i64 %3, 329406144173384850
+  %i.ac = icmp ugt i64 %i.ab, 9223372036854775800
   br i1 %i.ac, label %.noexc.i.i21, label %_ZNSt15__new_allocatorIN8facebook4yoga13GridTrackSizeEE8allocateEmPKv.exit.i.i.i.i16, !prof !20
 
 .noexc.i.i21:                                     ; preds = %bb.d
@@ -308,8 +306,7 @@ _ZNSt15__new_allocatorIN8facebook4yoga13GridTrackSizeEE8allocateEmPKv.exit.i.i.i
   br i1 %.not.i.i.i.i24, label %.noexc32, label %bb.e
 
 bb.e:                                             ; preds = %.loopexit51
-  %4 = sdiv exact i64 %i.av, 28
-  %i.aw = icmp ugt i64 %4, 329406144173384850
+  %i.aw = icmp ugt i64 %i.av, 9223372036854775800
   br i1 %i.aw, label %.noexc.i.i30, label %_ZNSt15__new_allocatorIN8facebook4yoga13GridTrackSizeEE8allocateEmPKv.exit.i.i.i.i25, !prof !20
 
 .noexc.i.i30:                                     ; preds = %bb.e
@@ -361,8 +358,7 @@ _ZNSt15__new_allocatorIN8facebook4yoga13GridTrackSizeEE8allocateEmPKv.exit.i.i.i
   br i1 %.not.i.i.i.i34, label %.noexc42, label %bb.f
 
 bb.f:                                             ; preds = %.loopexit50
-  %5 = sdiv exact i64 %i.bp, 28
-  %i.bq = icmp ugt i64 %5, 329406144173384850
+  %i.bq = icmp ugt i64 %i.bp, 9223372036854775800
   br i1 %i.bq, label %.noexc.i.i40, label %_ZNSt15__new_allocatorIN8facebook4yoga13GridTrackSizeEE8allocateEmPKv.exit.i.i.i.i35, !prof !20
 
 .noexc.i.i40:                                     ; preds = %bb.f

@@ -137,8 +137,7 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit:               ; preds = %bb.f, %bb.g, %bb.h,
   br label %_ZNSt6vectorI13IndexedBoundsSaIS0_EEC2ERKS2_.exit
 
 bb.j:                                             ; preds = %_ZNSt6vectorIiSaIiEE6resizeEm.exit
-  %7 = sdiv exact i64 %i.aq, 20
-  %i.au = icmp ugt i64 %7, 461168601842738790
+  %i.au = icmp ugt i64 %i.aq, 9223372036854775800
   br i1 %i.au, label %bb.k, label %_ZNSt12_Vector_baseI13IndexedBoundsSaIS0_EEC2EmRKS1_.exit.i, !prof !27
 
 bb.k:                                             ; preds = %bb.j
@@ -149,11 +148,11 @@ _ZNSt12_Vector_baseI13IndexedBoundsSaIS0_EEC2EmRKS1_.exit.i: ; preds = %bb.j
   %i.av = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aq) #12 ; 7 uses
   store ptr %i.av, ptr %6, align 8, !tbaa !15
   %i.aw = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
-  %i.ax = getelementptr inbounds i8, ptr %i.av, i64 %i.aq ; 4 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.av, i64 %i.aq ; 4 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %6, i64 16
   store ptr %i.ax, ptr %i.ay, align 8, !tbaa !26
-  %8 = icmp sgt i64 %i.aq, 20
-  br i1 %8, label %bb.l, label %bb.m, !prof !28
+  %7 = icmp samesign ugt i64 %i.aq, 20
+  br i1 %7, label %bb.l, label %bb.m, !prof !28
 
 bb.l:                                             ; preds = %_ZNSt12_Vector_baseI13IndexedBoundsSaIS0_EEC2EmRKS1_.exit.i
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.av, ptr align 4 %i.an, i64 %i.aq, i1 false)
@@ -337,8 +336,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = sub i64 %i.i, %i.j                       ; 11 uses
   %.not.i.i.i.i73 = icmp ne ptr %i.g, %i.h
   tail call void @llvm.assume(i1 %.not.i.i.i.i73)
-  %12 = sdiv exact i64 %i.k, 20
-  %i.l = icmp ugt i64 %12, 461168601842738790     ; 2 uses
+  %i.l = icmp ugt i64 %i.k, 9223372036854775800   ; 2 uses
   br i1 %.not71, label %bb.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -350,8 +348,8 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNSt12_Vector_baseI13IndexedBoundsSaIS0_EEC2EmRKS1_.exit.i: ; preds = %bb.c
   %i.m = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.k) #12 ; 7 uses
-  %13 = icmp sgt i64 %i.k, 20
-  br i1 %13, label %bb.e, label %bb.f, !prof !28
+  %12 = icmp samesign ugt i64 %i.k, 20
+  br i1 %12, label %bb.e, label %bb.f, !prof !28
 
 bb.e:                                             ; preds = %_ZNSt12_Vector_baseI13IndexedBoundsSaIS0_EEC2EmRKS1_.exit.i
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.m, ptr align 4 %i.h, i64 %i.k, i1 false)
@@ -477,8 +475,8 @@ bb.j:                                             ; preds = %bb.i
 
 _ZNSt12_Vector_baseI13IndexedBoundsSaIS0_EEC2EmRKS1_.exit.i75: ; preds = %bb.i
   %i.bo = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.k) #12 ; 7 uses
-  %14 = icmp sgt i64 %i.k, 20
-  br i1 %14, label %bb.k, label %bb.l, !prof !28
+  %13 = icmp samesign ugt i64 %i.k, 20
+  br i1 %13, label %bb.k, label %bb.l, !prof !28
 
 bb.k:                                             ; preds = %_ZNSt12_Vector_baseI13IndexedBoundsSaIS0_EEC2EmRKS1_.exit.i75
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.bo, ptr align 4 %i.h, i64 %i.k, i1 false)
@@ -578,8 +576,7 @@ _ZNSt6vectorI13IndexedBoundsSaIS0_EED2Ev.exit88:  ; preds = %_ZNSt6vectorI13Inde
   br i1 %.not.i.i.i.i89, label %_ZNSt6vectorI13IndexedBoundsSaIS0_EEC2ERKS2_.exit92, label %bb.n
 
 bb.n:                                             ; preds = %_ZNSt6vectorI13IndexedBoundsSaIS0_EED2Ev.exit88
-  %15 = sdiv exact i64 %i.dj, 20
-  %i.dk = icmp ugt i64 %15, 461168601842738790
+  %i.dk = icmp ugt i64 %i.dj, 9223372036854775800
   br i1 %i.dk, label %bb.o, label %_ZNSt12_Vector_baseI13IndexedBoundsSaIS0_EEC2EmRKS1_.exit.i91, !prof !27
 
 bb.o:                                             ; preds = %bb.n
@@ -590,11 +587,11 @@ _ZNSt12_Vector_baseI13IndexedBoundsSaIS0_EEC2EmRKS1_.exit.i91: ; preds = %bb.n
   %i.dl = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dj) #12 ; 5 uses
   store ptr %i.dl, ptr %10, align 8, !tbaa !15
   %i.dm = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %i.dn = getelementptr inbounds i8, ptr %i.dl, i64 %i.dj ; 2 uses
+  %i.dn = getelementptr inbounds nuw i8, ptr %i.dl, i64 %i.dj ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %10, i64 16
   store ptr %i.dn, ptr %i.do, align 8, !tbaa !26
-  %16 = icmp sgt i64 %i.dj, 20
-  br i1 %16, label %bb.p, label %bb.q, !prof !28
+  %14 = icmp samesign ugt i64 %i.dj, 20
+  br i1 %14, label %bb.p, label %bb.q, !prof !28
 
 bb.p:                                             ; preds = %_ZNSt12_Vector_baseI13IndexedBoundsSaIS0_EEC2EmRKS1_.exit.i91
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dl, ptr align 4 %i.dg, i64 %i.dj, i1 false)
@@ -635,8 +632,7 @@ _ZNSt6vectorI13IndexedBoundsSaIS0_EED2Ev.exit94:  ; preds = %_ZNSt6vectorI13Inde
   br i1 %.not.i.i.i.i95, label %_ZNSt6vectorI13IndexedBoundsSaIS0_EEC2ERKS2_.exit98, label %bb.t
 
 bb.t:                                             ; preds = %_ZNSt6vectorI13IndexedBoundsSaIS0_EED2Ev.exit94
-  %17 = sdiv exact i64 %i.dx, 20
-  %i.dy = icmp ugt i64 %17, 461168601842738790
+  %i.dy = icmp ugt i64 %i.dx, 9223372036854775800
   br i1 %i.dy, label %bb.u, label %_ZNSt12_Vector_baseI13IndexedBoundsSaIS0_EEC2EmRKS1_.exit.i97, !prof !27
 
 bb.u:                                             ; preds = %bb.t
@@ -647,11 +643,11 @@ _ZNSt12_Vector_baseI13IndexedBoundsSaIS0_EEC2EmRKS1_.exit.i97: ; preds = %bb.t
   %i.dz = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dx) #12 ; 5 uses
   store ptr %i.dz, ptr %11, align 8, !tbaa !15
   %i.ea = getelementptr inbounds nuw i8, ptr %11, i64 8
-  %i.eb = getelementptr inbounds i8, ptr %i.dz, i64 %i.dx ; 2 uses
+  %i.eb = getelementptr inbounds nuw i8, ptr %i.dz, i64 %i.dx ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %11, i64 16
   store ptr %i.eb, ptr %i.ec, align 8, !tbaa !26
-  %18 = icmp sgt i64 %i.dx, 20
-  br i1 %18, label %bb.v, label %bb.w, !prof !28
+  %15 = icmp samesign ugt i64 %i.dx, 20
+  br i1 %15, label %bb.v, label %bb.w, !prof !28
 
 bb.v:                                             ; preds = %_ZNSt12_Vector_baseI13IndexedBoundsSaIS0_EEC2EmRKS1_.exit.i97
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.dz, ptr align 4 %i.du, i64 %i.dx, i1 false)

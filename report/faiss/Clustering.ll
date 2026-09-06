@@ -204,8 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.c, label %bb.g
 
 bb.c:                                             ; preds = %bb.b
-  %2 = sdiv exact i64 %i.f, 40
-  %i.n = icmp ugt i64 %2, 230584300921369395
+  %i.n = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.n, label %bb.d, label %_ZNSt12_Vector_baseIN5faiss24ClusteringIterationStatsESaIS1_EE11_M_allocateEm.exit.i, !prof !77
 
 bb.d:                                             ; preds = %bb.c
@@ -214,8 +213,8 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNSt12_Vector_baseIN5faiss24ClusteringIterationStatsESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #20 ; 3 uses
-  %3 = icmp sgt i64 %i.f, 40
-  br i1 %3, label %_ZNSt6vectorIN5faiss24ClusteringIterationStatsESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit.sink.split, label %bb.e, !prof !78
+  %2 = icmp samesign ugt i64 %i.f, 40
+  br i1 %2, label %_ZNSt6vectorIN5faiss24ClusteringIterationStatsESaIS1_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEPS1_mT_SB_.exit.sink.split, label %bb.e, !prof !78
 
 bb.e:                                             ; preds = %_ZNSt12_Vector_baseIN5faiss24ClusteringIterationStatsESaIS1_EE11_M_allocateEm.exit.i
   %i.p = icmp eq i64 %i.f, 40

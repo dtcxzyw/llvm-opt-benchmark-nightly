@@ -205,8 +205,7 @@ _ZN4entt15compressed_pairISt6vectorImSaImEESt8identityEC2ERKS5_.exit: ; preds = 
   br i1 %.not.i.i.i.i.i.i5, label %.noexc7, label %bb.g
 
 bb.g:                                             ; preds = %_ZN4entt15compressed_pairISt6vectorImSaImEESt8identityEC2ERKS5_.exit
-  %2 = sdiv exact i64 %i.ac, 24
-  %i.ad = icmp ugt i64 %2, 384307168202282325
+  %i.ad = icmp ugt i64 %i.ac, 9223372036854775800
   br i1 %i.ad, label %.noexc.i.i.i.i6, label %_ZNSt15__new_allocatorIN4entt8internal14dense_map_nodeImmEEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !118
 
 .noexc.i.i.i.i6:                                  ; preds = %bb.g
@@ -609,9 +608,8 @@ _ZN4entt15compressed_pairISt6vectorImNSt3pmr21polymorphic_allocatorImEEESt4hashI
   br i1 %.not.i.i.i.i.i.i9, label %_ZNSt12_Vector_baseIN4entt8internal14dense_map_nodeINSt7__cxx1112basic_stringIcSt11char_traitsIcENSt3pmr21polymorphic_allocatorIcEEEEiEENS8_ISB_EEEC2EmRKSC_.exit.i.i.i, label %bb.d
 
 bb.d:                                             ; preds = %_ZN4entt15compressed_pairISt6vectorImNSt3pmr21polymorphic_allocatorImEEESt4hashINSt7__cxx1112basic_stringIcSt11char_traitsIcENS3_IcEEEEEEC2IJRKS5_RKNS3_ISt4pairIKSC_iEEEEJRKSD_EEESt21piecewise_construct_tSt5tupleIJDpT_EESR_IJDpT0_EE.exit
-  %3 = sdiv exact i64 %i.ai, 56
-  %4 = icmp ugt i64 %3, 329406144173384850
-  br i1 %4, label %bb.e, label %_ZNSt16allocator_traitsINSt3pmr21polymorphic_allocatorIN4entt8internal14dense_map_nodeINSt7__cxx1112basic_stringIcSt11char_traitsIcENS1_IcEEEEiEEEEE8allocateERSC_m.exit.i.i.i.i.i.i
+  %3 = icmp slt i64 %i.ai, 0
+  br i1 %3, label %bb.e, label %_ZNSt16allocator_traitsINSt3pmr21polymorphic_allocatorIN4entt8internal14dense_map_nodeINSt7__cxx1112basic_stringIcSt11char_traitsIcENS1_IcEEEEiEEEEE8allocateERSC_m.exit.i.i.i.i.i.i
 
 bb.e:                                             ; preds = %bb.d
   invoke void @_ZSt28__throw_bad_array_new_lengthv() #30
@@ -1014,8 +1012,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
-  %2 = sdiv exact i64 %i.f, 24
-  %i.n = icmp ugt i64 %2, 384307168202282325
+  %i.n = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.n, label %bb.d, label %_ZNSt12_Vector_baseIN4entt8internal14dense_map_nodeImmEESaIS3_EE11_M_allocateEm.exit.i, !prof !118
 
 bb.d:                                             ; preds = %bb.c
@@ -1418,9 +1415,8 @@ bb.c:                                             ; preds = %bb.b
   %i.v = ptrtoint ptr %i.t to i64
   %i.w = ptrtoint ptr %i.r to i64
   %i.x = sub i64 %i.v, %i.w                       ; 3 uses
-  %4 = sdiv exact i64 %i.x, 56
-  %5 = icmp ugt i64 %4, 329406144173384850
-  br i1 %5, label %bb.d, label %_ZNSt16allocator_traitsINSt3pmr21polymorphic_allocatorIN4entt8internal14dense_map_nodeIiNSt7__cxx1112basic_stringIcSt11char_traitsIcENS1_IcEEEEEEEEE8allocateERSC_m.exit.i.i
+  %4 = icmp slt i64 %i.x, 0
+  br i1 %4, label %bb.d, label %_ZNSt16allocator_traitsINSt3pmr21polymorphic_allocatorIN4entt8internal14dense_map_nodeIiNSt7__cxx1112basic_stringIcSt11char_traitsIcENS1_IcEEEEEEEEE8allocateERSC_m.exit.i.i
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_ZSt28__throw_bad_array_new_lengthv() #30

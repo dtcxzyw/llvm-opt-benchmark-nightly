@@ -205,21 +205,19 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !19   ; 5 uses
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !20   ; 3 uses
-  %3 = ptrtoint ptr %i.c to i64
-  %4 = ptrtoint ptr %i.d to i64
-  %5 = sub i64 %3, %4
-  %6 = sdiv exact i64 %5, 48                      ; 2 uses
   %i.e = icmp eq ptr %i.c, %i.d
   br i1 %i.e, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %7 = sub nuw nsw i64 1, %6
-  tail call void @_ZNSt6vectorIN4absl12lts_2025051213time_internal4cctz14TransitionTypeESaIS4_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef %7)
+  tail call void @_ZNSt6vectorIN4absl12lts_2025051213time_internal4cctz14TransitionTypeESaIS4_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 noundef 1)
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !68
   br label %_ZNSt6vectorIN4absl12lts_2025051213time_internal4cctz14TransitionTypeESaIS4_EE6resizeEm.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.f = icmp ugt i64 %6, 1
+  %3 = ptrtoint ptr %i.c to i64
+  %4 = ptrtoint ptr %i.d to i64
+  %5 = sub i64 %3, %4
+  %i.f = icmp ugt i64 %5, 48
   br i1 %i.f, label %bb.d, label %_ZNSt6vectorIN4absl12lts_2025051213time_internal4cctz14TransitionTypeESaIS4_EE6resizeEm.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -622,8 +620,7 @@ bb.a:
   %i.e = ptrtoint ptr %i.a to i64
   %i.f = sub i64 %i.d, %i.e
   %reass.sub.fr.i = freeze i64 %i.f               ; 5 uses
-  %1 = sdiv exact i64 %reass.sub.fr.i, 48
-  %i.g = icmp ugt i64 %1, 192153584101141162
+  %i.g = icmp ugt i64 %reass.sub.fr.i, 9223372036854775776
   br i1 %i.g, label %bb.b, label %_ZNSt6vectorIN4absl12lts_2025051213time_internal4cctz10TransitionESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i.i
 
 bb.b:                                             ; preds = %bb.a
@@ -647,10 +644,10 @@ _ZNSt12_Vector_baseIN4absl12lts_2025051213time_internal4cctz10TransitionESaIS4_E
 
 .noexc5.i:                                        ; preds = %.lr.ph.i.i.i.i.preheader.i.i
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 %reass.sub.fr.i
-  %i.k = add i64 %reass.sub.fr.i, -48             ; 2 uses
+  %i.k = add nsw i64 %reass.sub.fr.i, -48         ; 2 uses
   %i.l = urem i64 %i.k, 48
-  %i.m = sub nuw i64 %i.k, %i.l
-  %i.n = add i64 %i.m, 48                         ; 2 uses
+  %i.m = sub nuw nsw i64 %i.k, %i.l
+  %i.n = add nsw i64 %i.m, 48                     ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.i, ptr align 8 %i.a, i64 %i.n, i1 false)
   %scevgep.i.i = getelementptr i8, ptr %i.i, i64 %i.n
   %.pre = load ptr, ptr %0, align 8, !tbaa !55

@@ -202,9 +202,8 @@ _kzalloc_noprof.exit:                             ; preds = %._crit_edge165
   %i.bc = load ptr, ptr %i.aq, align 8
   %i.bd = load ptr, ptr %i.bc, align 8
   %i.be = ptrtoint ptr %i.bd to i64
-  %i.bf = sub i64 %i.aw, %i.be
-  %3 = sdiv exact i64 %i.bf, 24                   ; 2 uses
-  %i.bg = icmp ugt i64 %3, 255
+  %i.bf = sub i64 %i.aw, %i.be                    ; 2 uses
+  %i.bg = icmp ugt i64 %i.bf, 6120
   br i1 %i.bg, label %bb.c, label %bb.h, !prof !38
 
 bb.c:                                             ; preds = %.lr.ph173
@@ -261,12 +260,12 @@ dev_name.exit124:                                 ; preds = %__drm_to_dev.exit12
   %.pre194 = load ptr, ptr %.pre, align 8
   %.pre197 = ptrtoint ptr %.pre194 to i64
   %.pre198 = sub i64 %i.aw, %.pre197
-  %.pre200 = sdiv exact i64 %.pre198, 24
   br label %bb.h
 
 bb.h:                                             ; preds = %dev_name.exit124, %.lr.ph173
-  %.pre-phi201 = phi i64 [ %.pre200, %dev_name.exit124 ], [ %3, %.lr.ph173 ]
-  %i.by = trunc i64 %.pre-phi201 to i8
+  %.pre-phi201 = phi i64 [ %.pre198, %dev_name.exit124 ], [ %i.bf, %.lr.ph173 ]
+  %3 = sdiv exact i64 %.pre-phi201, 24
+  %i.by = trunc i64 %3 to i8
   %i.bz = getelementptr i8, ptr %i.az, i64 29
   store i8 %i.by, ptr %i.bz, align 1
   %i.ca = getelementptr i8, ptr %.1102170, i64 8  ; 2 uses

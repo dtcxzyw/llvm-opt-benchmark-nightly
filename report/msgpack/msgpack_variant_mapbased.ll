@@ -202,8 +202,7 @@ bb.a:
   br i1 %.not.i.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.f, 40
-  %i.g = icmp ugt i64 %2, 230584300921369395
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i, label %_ZNSt15__new_allocatorIN7msgpack2v14type13basic_variantIN5boost16basic_string_refIcSt11char_traitsIcEEENS2_7raw_refENS2_7ext_refEEEE8allocateEmPKv.exit.i.i.i, !prof !100
 
 .noexc.i:                                         ; preds = %bb.b
@@ -606,9 +605,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.g = ptrtoint ptr %i.c to i64
   %i.h = ptrtoint ptr %i.a to i64
-  %i.i = sub i64 %i.g, %i.h
-  %i.j = sdiv exact i64 %i.i, 40                  ; 4 uses
-  %i.k = icmp ugt i64 %i.j, 4294967295
+  %i.i = sub i64 %i.g, %i.h                       ; 2 uses
+  %i.j = sdiv exact i64 %i.i, 40                  ; 3 uses
+  %i.k = icmp ugt i64 %i.i, 171798691800
   br i1 %i.k, label %bb.d, label %_ZN7msgpack2v126checked_get_container_sizeImEEjT_.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -656,7 +655,7 @@ bb.h:                                             ; preds = %bb.i, %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %.not.i.i = icmp sgt i64 %.022.i.i, 0
-  %i.af = shl nuw nsw i64 %.022.i.i, 1
+  %i.af = shl nuw i64 %.022.i.i, 1
   br i1 %.not.i.i, label %bb.h, label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h

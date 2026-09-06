@@ -205,8 +205,7 @@ _ZNK4crow4json6wvalue4sizeEv.exit:                ; preds = %bb.j
   %i.bb = load ptr, ptr %i.ax, align 8, !tbaa !515 ; 2 uses
   %i.bc = ptrtoint ptr %i.bb to i64
   %i.bd = sub i64 %i.ba, %i.bc                    ; 3 uses
-  %5 = sdiv exact i64 %i.bd, 136
-  %i.be = icmp ugt i64 %5, 67818912035696880
+  %i.be = icmp ugt i64 %i.bd, 9223372036854775680
   br i1 %i.be, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %_ZNK4crow4json6wvalue4sizeEv.exit
@@ -609,9 +608,9 @@ _ZNSt10unique_ptrISt6vectorIN4crow4json6wvalueESaIS3_EESt14default_deleteIS5_EED
   %i.al = load ptr, ptr %1, align 8, !tbaa !515   ; 2 uses
   %i.am = ptrtoint ptr %i.ak to i64
   %i.an = ptrtoint ptr %i.al to i64
-  %i.ao = sub i64 %i.am, %i.an                    ; 2 uses
-  %3 = sdiv exact i64 %i.ao, 136                  ; 2 uses
-  %i.ap = icmp ugt i64 %3, 67818912035696880
+  %i.ao = sub i64 %i.am, %i.an                    ; 3 uses
+  %3 = udiv exact i64 %i.ao, 136
+  %i.ap = icmp ugt i64 %i.ao, 9223372036854775680
   br i1 %i.ap, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %_ZNSt10unique_ptrISt6vectorIN4crow4json6wvalueESaIS3_EESt14default_deleteIS5_EED2Ev.exit

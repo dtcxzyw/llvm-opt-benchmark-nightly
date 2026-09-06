@@ -205,9 +205,9 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt4pairISt17basic_string_viewIcSt11cha
   %i.ai = load ptr, ptr %1, align 8, !tbaa !208   ; 5 uses
   %i.aj = ptrtoint ptr %i.ah to i64
   %i.ak = ptrtoint ptr %i.ai to i64
-  %i.al = sub i64 %i.aj, %i.ak                    ; 2 uses
-  %i.am = sdiv exact i64 %i.al, 24                ; 10 uses
-  %6 = icmp ugt i64 %i.am, 1152921504606846975
+  %i.al = sub i64 %i.aj, %i.ak                    ; 3 uses
+  %i.am = sdiv exact i64 %i.al, 24                ; 9 uses
+  %6 = icmp slt i64 %i.al, 0
   br i1 %6, label %.noexc, label %_ZNSt6vectorIPKcSaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
 
 .noexc:                                           ; preds = %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt4pairISt17basic_string_viewIcSt11char_traitsIcEEiESt6vectorIS7_SaIS7_EEEEEvT_SD_.exit
@@ -266,7 +266,7 @@ bb.l:                                             ; preds = %.noexc53, %_ZSt6fil
   br i1 %i.ba, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %i.am, 1152921504606846974
+  %unroll_iter = and i64 %i.am, 576460752303423486
   br label %.lr.ph
 
 _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc58
@@ -669,8 +669,7 @@ bb.ad:                                            ; preds = %._crit_edge
   br i1 %.not.i.i.i.i.i.i63, label %.noexc65, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %12 = sdiv exact i64 %i.dj, 24
-  %i.dk = icmp ugt i64 %12, 384307168202282325
+  %i.dk = icmp ugt i64 %i.dj, 9223372036854775800
   br i1 %i.dk, label %.noexc.i.i.i.i, label %_ZNSt15__new_allocatorISt4pairISt17basic_string_viewIcSt11char_traitsIcEEiEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !88
 
 .noexc.i.i.i.i:                                   ; preds = %bb.ae
@@ -1073,8 +1072,7 @@ bb.u:                                             ; preds = %._crit_edge
   br i1 %.not.i.i.i.i.i.i, label %.noexc117, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %23 = sdiv exact i64 %i.bc, 24
-  %i.bd = icmp ugt i64 %23, 384307168202282325
+  %i.bd = icmp ugt i64 %i.bc, 9223372036854775800
   br i1 %i.bd, label %.noexc.i.i.i.i, label %_ZNSt15__new_allocatorISt4pairISt17basic_string_viewIcSt11char_traitsIcEEiEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !88
 
 .noexc.i.i.i.i:                                   ; preds = %bb.v
@@ -1477,8 +1475,7 @@ bb.bp:                                            ; preds = %._crit_edge321
   br i1 %.not.i.i.i.i.i.i145, label %.noexc156, label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp
-  %24 = sdiv exact i64 %i.ir, 24
-  %i.is = icmp ugt i64 %24, 384307168202282325
+  %i.is = icmp ugt i64 %i.ir, 9223372036854775800
   br i1 %i.is, label %.noexc.i.i.i.i153, label %_ZNSt15__new_allocatorISt4pairISt17basic_string_viewIcSt11char_traitsIcEEiEE8allocateEmPKv.exit.i.i.i.i.i.i146, !prof !88
 
 .noexc.i.i.i.i153:                                ; preds = %bb.bq
@@ -1848,8 +1845,7 @@ bb.co:                                            ; preds = %._crit_edge310
   br i1 %.not.i.i.i.i.i.i185, label %.noexc197, label %bb.cp
 
 bb.cp:                                            ; preds = %bb.co
-  %25 = sdiv exact i64 %i.ms, 24
-  %i.mt = icmp ugt i64 %25, 384307168202282325
+  %i.mt = icmp ugt i64 %i.ms, 9223372036854775800
   br i1 %i.mt, label %.noexc.i.i.i.i194, label %_ZNSt15__new_allocatorISt4pairISt17basic_string_viewIcSt11char_traitsIcEEiEE8allocateEmPKv.exit.i.i.i.i.i.i186, !prof !88
 
 .noexc.i.i.i.i194:                                ; preds = %bb.cp
@@ -2252,8 +2248,7 @@ bb.a:
   br i1 %.not.i.i.i.i.i.i, label %.noexc13, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %3 = sdiv exact i64 %i.f, 24
-  %i.g = icmp ugt i64 %3, 384307168202282325
+  %i.g = icmp ugt i64 %i.f, 9223372036854775800
   br i1 %i.g, label %.noexc.i.i.i.i, label %_ZNSt15__new_allocatorISt4pairISt17basic_string_viewIcSt11char_traitsIcEEiEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !88
 
 .noexc.i.i.i.i:                                   ; preds = %bb.b
@@ -2656,8 +2651,7 @@ _ZNKSt6vectorISt4pairIS_IS0_ISt17basic_string_viewIcSt11char_traitsIcEEiESaIS5_E
   br label %.loopexit
 
 bb.c:                                             ; preds = %_ZNKSt6vectorISt4pairIS_IS0_ISt17basic_string_viewIcSt11char_traitsIcEEiESaIS5_EEfESaIS8_EE12_M_check_lenEmPKc.exit
-  %4 = sdiv exact i64 %i.w, 24
-  %i.aa = icmp ugt i64 %4, 384307168202282325
+  %i.aa = icmp ugt i64 %i.w, 9223372036854775800
   br i1 %i.aa, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorISt4pairISt17basic_string_viewIcSt11char_traitsIcEEiEE8allocateEmPKv.exit.i.i.i.i.i, !prof !88
 
 .noexc.i.i.i:                                     ; preds = %bb.c
@@ -2845,8 +2839,7 @@ _ZNKSt6vectorISt4pairIS_IS0_ISt17basic_string_viewIcSt11char_traitsIcEEiESaIS5_E
   br label %.loopexit
 
 bb.c:                                             ; preds = %_ZNKSt6vectorISt4pairIS_IS0_ISt17basic_string_viewIcSt11char_traitsIcEEiESaIS5_EEfESaIS8_EE12_M_check_lenEmPKc.exit
-  %4 = sdiv exact i64 %i.w, 24
-  %i.aa = icmp ugt i64 %4, 384307168202282325
+  %i.aa = icmp ugt i64 %i.w, 9223372036854775800
   br i1 %i.aa, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorISt4pairISt17basic_string_viewIcSt11char_traitsIcEEiEE8allocateEmPKv.exit.i.i.i.i.i, !prof !88
 
 .noexc.i.i.i:                                     ; preds = %bb.c
@@ -3249,8 +3242,7 @@ _ZNKSt6vectorISt4pairIS_IS0_ISt17basic_string_viewIcSt11char_traitsIcEEiESaIS5_E
   br label %.loopexit
 
 bb.c:                                             ; preds = %_ZNKSt6vectorISt4pairIS_IS0_ISt17basic_string_viewIcSt11char_traitsIcEEiESaIS5_EEfESaIS8_EE12_M_check_lenEmPKc.exit
-  %4 = sdiv exact i64 %i.w, 24
-  %i.aa = icmp ugt i64 %4, 384307168202282325
+  %i.aa = icmp ugt i64 %i.w, 9223372036854775800
   br i1 %i.aa, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorISt4pairISt17basic_string_viewIcSt11char_traitsIcEEiEE8allocateEmPKv.exit.i.i.i.i.i, !prof !88
 
 .noexc.i.i.i:                                     ; preds = %bb.c

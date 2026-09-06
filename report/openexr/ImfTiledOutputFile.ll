@@ -204,8 +204,7 @@ _ZN7Imf_3_411FrameBufferaSERKS0_.exit:            ; preds = %bb.al
   br i1 %i.dw, label %bb.bc, label %bb.bf
 
 bb.bc:                                            ; preds = %_ZN7Imf_3_411FrameBufferaSERKS0_.exit
-  %4 = sdiv exact i64 %reass.sub.fr.i, 48
-  %i.dx = icmp ugt i64 %4, 192153584101141162
+  %i.dx = icmp ugt i64 %reass.sub.fr.i, 9223372036854775776
   br i1 %i.dx, label %bb.bd, label %_ZNSt12_Vector_baseIN7Imf_3_412_GLOBAL__N_113TOutSliceInfoESaIS2_EE11_M_allocateEm.exit.i.i, !prof !215
 
 bb.bd:                                            ; preds = %bb.bc
@@ -224,9 +223,9 @@ _ZNSt12_Vector_baseIN7Imf_3_412_GLOBAL__N_113TOutSliceInfoESaIS2_EE11_M_allocate
   br i1 %.not7.i.i.i.i.i.i, label %_ZNSt6vectorIN7Imf_3_412_GLOBAL__N_113TOutSliceInfoESaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEEEPS2_mT_SC_.exit.i, label %.lr.ph.i.i.i.i.preheader.i.i
 
 .lr.ph.i.i.i.i.preheader.i.i:                     ; preds = %.noexc61
-  %i.dz = add i64 %reass.sub.fr.i, -48
+  %i.dz = add nsw i64 %reass.sub.fr.i, -48
   %i.ea = urem i64 %i.dz, 48
-  %i.eb = sub i64 %reass.sub.fr.i, %i.ea
+  %i.eb = sub nsw i64 %reass.sub.fr.i, %i.ea
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dy, ptr readonly align 8 %i.aw, i64 %i.eb, i1 false)
   br label %_ZNSt6vectorIN7Imf_3_412_GLOBAL__N_113TOutSliceInfoESaIS2_EE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEEEPS2_mT_SC_.exit.i
 

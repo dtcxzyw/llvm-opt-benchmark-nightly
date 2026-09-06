@@ -205,8 +205,8 @@ bb.lu:                                            ; preds = %bb.jt, %.loopexit12
   br label %bb.lv
 
 ._crit_edge.i568:                                 ; preds = %_ZNSt6vectorIfN3ozz12StdAllocatorIfEEE9push_backERKf.exit.i, %bb.lu
-  %.val27.i = load ptr, ptr %59, align 8, !tbaa !220, !noalias !239 ; 5 uses
-  %.val25.i = load ptr, ptr %i.rm, align 8, !tbaa !220, !noalias !239 ; 4 uses
+  %.val27.i = load ptr, ptr %59, align 8, !tbaa !220, !noalias !239 ; 4 uses
+  %.val25.i = load ptr, ptr %i.rm, align 8, !tbaa !220, !noalias !239 ; 3 uses
   %.not1217.i = icmp eq ptr %.val27.i, %.val25.i  ; 2 uses
   br i1 %.not1217.i, label %._crit_edge21.i, label %.lr.ph20.i
 
@@ -410,7 +410,7 @@ _ZN3ozz9animation7offline12_GLOBAL__N_115BuildTimePointsERSt6vectorINS2_10Sortin
   %i.bcp = ptrtoint ptr %i.bcn to i64
   %i.bcq = sub i64 %i.bco, %i.bcp
   %i.bcr = icmp ugt i64 %i.bcq, 262140
-  br i1 %i.bcr, label %bb.mn, label %66
+  br i1 %i.bcr, label %bb.mn, label %bb.mr
 
 bb.mn:                                            ; preds = %_ZN3ozz9animation7offline12_GLOBAL__N_115BuildTimePointsERSt6vectorINS2_10SortingKeyINS1_12RawAnimation14TranslationKeyEEENS_12StdAllocatorIS7_EEERS3_INS4_INS5_11RotationKeyEEENS8_ISD_EEERS3_INS4_INS5_8ScaleKeyEEENS8_ISI_EEE.exit
   store ptr null, ptr %0, align 8, !tbaa !177
@@ -431,35 +431,29 @@ bb.mq:                                            ; preds = %bb.iy
           cleanup
   br label %.body
 
-66:                                               ; preds = %_ZN3ozz9animation7offline12_GLOBAL__N_115BuildTimePointsERSt6vectorINS2_10SortingKeyINS1_12RawAnimation14TranslationKeyEEENS_12StdAllocatorIS7_EEERS3_INS4_INS5_11RotationKeyEEENS8_ISD_EEERS3_INS4_INS5_8ScaleKeyEEENS8_ISI_EEE.exit
-  %67 = ptrtoint ptr %.val142 to i64
-  %68 = ptrtoint ptr %.val141 to i64
-  %69 = sub i64 %67, %68
-  %70 = sdiv exact i64 %69, 24                    ; 2 uses
-  %71 = icmp ugt i64 %70, 4294967295
-  br i1 %71, label %72, label %bb.mt
-
-72:                                               ; preds = %66
-  %73 = ptrtoint ptr %.val25.i to i64
-  %74 = ptrtoint ptr %.val27.i to i64
-  %75 = sub i64 %73, %74
-  %76 = sdiv exact i64 %75, 28
-  %77 = icmp ugt i64 %76, 4294967295
-  br i1 %77, label %bb.mr, label %bb.mt
-
-bb.mr:                                            ; preds = %72
+bb.mr:                                            ; preds = %_ZN3ozz9animation7offline12_GLOBAL__N_115BuildTimePointsERSt6vectorINS2_10SortingKeyINS1_12RawAnimation14TranslationKeyEEENS_12StdAllocatorIS7_EEERS3_INS4_INS5_11RotationKeyEEENS8_ISD_EEERS3_INS4_INS5_8ScaleKeyEEENS8_ISI_EEE.exit
+  %66 = ptrtoint ptr %.val142 to i64
+  %67 = ptrtoint ptr %.val141 to i64
+  %68 = sub i64 %66, %67                          ; 2 uses
+  %69 = sdiv exact i64 %68, 24
+  %70 = icmp ugt i64 %68, 103079215080
+  %71 = ptrtoint ptr %.val25.i to i64
+  %72 = ptrtoint ptr %.val27.i to i64
+  %73 = sub i64 %71, %72                          ; 2 uses
+  %74 = icmp ugt i64 %73, 120259084260
+  %or.cond = and i1 %70, %74
   %i.bcv = ptrtoint ptr %.val55.i4341198 to i64
   %i.bcw = ptrtoint ptr %.val.i433 to i64
   %i.bcx = sub i64 %i.bcv, %i.bcw
-  %78 = sdiv exact i64 %i.bcx, 24
-  %79 = icmp ugt i64 %78, 4294967295
-  br i1 %79, label %bb.ms, label %bb.mt
+  %75 = icmp ugt i64 %i.bcx, 103079215080
+  %or.cond1020 = and i1 %75, %or.cond
+  br i1 %or.cond1020, label %bb.ms, label %bb.mt
 
 bb.ms:                                            ; preds = %bb.mr
   store ptr null, ptr %0, align 8, !tbaa !177
   br label %bb.uf
 
-bb.mt:                                            ; preds = %66, %72, %bb.mr
+bb.mt:                                            ; preds = %bb.mr
   call void @llvm.lifetime.start.p0(ptr nonnull %62) #20
   %i.bcy = load float, ptr %1, align 4, !tbaa !242 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !243)
@@ -573,7 +567,7 @@ bb.na:                                            ; preds = %.lr.ph.i.i
   store i32 %i.bet, ptr %i.bew, align 4, !tbaa !93, !noalias !253
   store i64 %.044.i.i, ptr %i.bdj, align 8, !tbaa !256, !alias.scope !253, !noalias !243
   %i.bex = add nuw i64 %.044.i.i, 1               ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %i.bex, %70
+  %exitcond.not.i.i = icmp eq i64 %i.bex, %69
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !154
 
 ._crit_edge.i.i:                                  ; preds = %bb.na, %.lr.ph.i.i, %bb.mz
@@ -834,10 +828,7 @@ bb.of:                                            ; preds = %bb.oe, %bb.od, %bb.
 bb.og:                                            ; preds = %bb.mt, %bb.mv
   %i.bhl = phi float [ %i.bcy, %bb.mt ], [ %.pre1280, %bb.mv ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #20
-  %80 = ptrtoint ptr %.val25.i to i64
-  %81 = ptrtoint ptr %.val27.i to i64
-  %82 = sub i64 %80, %81
-  %i.bhm = sdiv exact i64 %82, 28
+  %i.bhm = sdiv exact i64 %73, 28
   call void @llvm.experimental.noalias.scope.decl(metadata !258)
   %i.bhn = getelementptr inbounds nuw i8, ptr %63, i64 48 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %63, i8 0, i64 48, i1 false), !alias.scope !258

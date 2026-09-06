@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !135  ; 2 uses
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = ptrtoint ptr %i.p to i64
-  %i.s = sub i64 %i.q, %i.r
-  %i.t = sdiv exact i64 %i.s, 72                  ; 3 uses
-  %12 = icmp ugt i64 %i.t, 164703072086692425
+  %i.s = sub i64 %i.q, %i.r                       ; 2 uses
+  %i.t = sdiv exact i64 %i.s, 72                  ; 2 uses
+  %12 = icmp slt i64 %i.s, 0
   br i1 %12, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -610,9 +610,9 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !135  ; 2 uses
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = ptrtoint ptr %i.p to i64
-  %i.s = sub i64 %i.q, %i.r
-  %i.t = sdiv exact i64 %i.s, 72                  ; 3 uses
-  %12 = icmp ugt i64 %i.t, 164703072086692425
+  %i.s = sub i64 %i.q, %i.r                       ; 2 uses
+  %i.t = sdiv exact i64 %i.s, 72                  ; 2 uses
+  %12 = icmp slt i64 %i.s, 0
   br i1 %12, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -1015,9 +1015,9 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !135  ; 2 uses
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = ptrtoint ptr %i.p to i64
-  %i.s = sub i64 %i.q, %i.r
-  %i.t = sdiv exact i64 %i.s, 72                  ; 3 uses
-  %12 = icmp ugt i64 %i.t, 164703072086692425
+  %i.s = sub i64 %i.q, %i.r                       ; 2 uses
+  %i.t = sdiv exact i64 %i.s, 72                  ; 2 uses
+  %12 = icmp slt i64 %i.s, 0
   br i1 %12, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -1420,9 +1420,9 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !135  ; 2 uses
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = ptrtoint ptr %i.p to i64
-  %i.s = sub i64 %i.q, %i.r
-  %i.t = sdiv exact i64 %i.s, 72                  ; 3 uses
-  %12 = icmp ugt i64 %i.t, 164703072086692425
+  %i.s = sub i64 %i.q, %i.r                       ; 2 uses
+  %i.t = sdiv exact i64 %i.s, 72                  ; 2 uses
+  %12 = icmp slt i64 %i.s, 0
   br i1 %12, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -1825,9 +1825,9 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !135  ; 2 uses
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = ptrtoint ptr %i.p to i64
-  %i.s = sub i64 %i.q, %i.r
-  %i.t = sdiv exact i64 %i.s, 72                  ; 3 uses
-  %12 = icmp ugt i64 %i.t, 164703072086692425
+  %i.s = sub i64 %i.q, %i.r                       ; 2 uses
+  %i.t = sdiv exact i64 %i.s, 72                  ; 2 uses
+  %12 = icmp slt i64 %i.s, 0
   br i1 %12, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -2230,9 +2230,9 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !135  ; 2 uses
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = ptrtoint ptr %i.p to i64
-  %i.s = sub i64 %i.q, %i.r
-  %i.t = sdiv exact i64 %i.s, 72                  ; 3 uses
-  %12 = icmp ugt i64 %i.t, 164703072086692425
+  %i.s = sub i64 %i.q, %i.r                       ; 2 uses
+  %i.t = sdiv exact i64 %i.s, 72                  ; 2 uses
+  %12 = icmp slt i64 %i.s, 0
   br i1 %12, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -2635,9 +2635,9 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !135  ; 2 uses
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = ptrtoint ptr %i.p to i64
-  %i.s = sub i64 %i.q, %i.r
-  %i.t = sdiv exact i64 %i.s, 72                  ; 3 uses
-  %12 = icmp ugt i64 %i.t, 164703072086692425
+  %i.s = sub i64 %i.q, %i.r                       ; 2 uses
+  %i.t = sdiv exact i64 %i.s, 72                  ; 2 uses
+  %12 = icmp slt i64 %i.s, 0
   br i1 %12, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -3040,9 +3040,9 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !135  ; 2 uses
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = ptrtoint ptr %i.p to i64
-  %i.s = sub i64 %i.q, %i.r
-  %i.t = sdiv exact i64 %i.s, 72                  ; 3 uses
-  %12 = icmp ugt i64 %i.t, 164703072086692425
+  %i.s = sub i64 %i.q, %i.r                       ; 2 uses
+  %i.t = sdiv exact i64 %i.s, 72                  ; 2 uses
+  %12 = icmp slt i64 %i.s, 0
   br i1 %12, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -3445,9 +3445,9 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !135  ; 2 uses
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = ptrtoint ptr %i.p to i64
-  %i.s = sub i64 %i.q, %i.r
-  %i.t = sdiv exact i64 %i.s, 72                  ; 3 uses
-  %12 = icmp ugt i64 %i.t, 164703072086692425
+  %i.s = sub i64 %i.q, %i.r                       ; 2 uses
+  %i.t = sdiv exact i64 %i.s, 72                  ; 2 uses
+  %12 = icmp slt i64 %i.s, 0
   br i1 %12, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -3850,9 +3850,9 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !135  ; 2 uses
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = ptrtoint ptr %i.p to i64
-  %i.s = sub i64 %i.q, %i.r
-  %i.t = sdiv exact i64 %i.s, 72                  ; 3 uses
-  %12 = icmp ugt i64 %i.t, 164703072086692425
+  %i.s = sub i64 %i.q, %i.r                       ; 2 uses
+  %i.t = sdiv exact i64 %i.s, 72                  ; 2 uses
+  %12 = icmp slt i64 %i.s, 0
   br i1 %12, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -4255,8 +4255,7 @@ bb.a:
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
   %reass.sub.fr.i = freeze i64 %i.c               ; 5 uses
-  %6 = sdiv exact i64 %reass.sub.fr.i, 56
-  %i.d = icmp ugt i64 %6, 164703072086692425
+  %i.d = icmp ugt i64 %reass.sub.fr.i, 9223372036854775800
   br i1 %i.d, label %.noexc.i, label %_ZNSt6vectorIN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS0_10Triangle_3INS0_5EpickEEES_IS7_SaIS7_EEEENS1_14ID_FROM_HANDLEEEESaISD_EE17_S_check_init_lenEmRKSE_.exit.i.i
 
 .noexc.i:                                         ; preds = %bb.a
@@ -4274,10 +4273,10 @@ _ZNSt12_Vector_baseIN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_c
 .lr.ph.i.i.i.i.preheader.i.i:                     ; preds = %_ZNSt6vectorIN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS0_10Triangle_3INS0_5EpickEEES_IS7_SaIS7_EEEENS1_14ID_FROM_HANDLEEEESaISD_EE17_S_check_init_lenEmRKSE_.exit.i.i
   %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %reass.sub.fr.i) #44 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 %reass.sub.fr.i
-  %i.h = add i64 %reass.sub.fr.i, -56             ; 2 uses
+  %i.h = add nsw i64 %reass.sub.fr.i, -56         ; 2 uses
   %i.i = urem i64 %i.h, 56
-  %i.j = sub nuw i64 %i.h, %i.i
-  %i.k = add i64 %i.j, 56                         ; 2 uses
+  %i.j = sub nuw nsw i64 %i.h, %i.i
+  %i.k = add nsw i64 %i.j, 56                     ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.f, ptr align 8 %0, i64 %i.k, i1 false)
   %scevgep.i.i = getelementptr i8, ptr %i.f, i64 %i.k
   br label %_ZNSt6vectorIN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS0_10Triangle_3INS0_5EpickEEES_IS7_SaIS7_EEEENS1_14ID_FROM_HANDLEEEESaISD_EEC2INS4_IPSD_SF_EEvEET_SJ_RKSE_.exit
@@ -4680,8 +4679,7 @@ bb.a:
   br i1 %i.j, label %bb.b, label %bb.n
 
 bb.b:                                             ; preds = %bb.a
-  %3 = sdiv exact i64 %i.c, 24
-  %i.k = icmp ugt i64 %3, 384307168202282325
+  %i.k = icmp ugt i64 %i.c, 9223372036854775800
   br i1 %i.k, label %bb.c, label %_ZNSt12_Vector_baseISt4pairIlN4CGAL6ObjectEESaIS3_EE11_M_allocateEm.exit.i
 
 bb.c:                                             ; preds = %bb.b
@@ -5084,8 +5082,7 @@ bb.a:
   br i1 %.not.i.i.i.i.i.i, label %.noexc3.i.i, label %bb.b
 
 bb.b:                                             ; preds = %.noexc
-  %2 = sdiv exact i64 %i.i, 24
-  %i.j = icmp ugt i64 %2, 384307168202282325
+  %i.j = icmp ugt i64 %i.i, 9223372036854775800
   br i1 %i.j, label %.noexc.i.i.i.i, label %_ZNSt15__new_allocatorIN4CGAL7Point_3INS0_5EpickEEEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !331
 
 .noexc.i.i.i.i:                                   ; preds = %bb.b
@@ -5216,8 +5213,7 @@ bb.a:
   br i1 %.not.i.i.i.i.i, label %.noexc3.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = sdiv exact i64 %i.i, 24
-  %i.j = icmp ugt i64 %1, 384307168202282325
+  %i.j = icmp ugt i64 %i.i, 9223372036854775800
   br i1 %i.j, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorIN4CGAL7Point_3INS0_5EpickEEEE8allocateEmPKv.exit.i.i.i.i.i, !prof !331
 
 .noexc.i.i.i:                                     ; preds = %bb.b
@@ -5620,8 +5616,7 @@ bb.a:
   %i.b = ptrtoint ptr %0 to i64
   %i.c = sub i64 %i.a, %i.b
   %reass.sub.fr.i = freeze i64 %i.c               ; 5 uses
-  %6 = sdiv exact i64 %reass.sub.fr.i, 56
-  %i.d = icmp ugt i64 %6, 164703072086692425
+  %i.d = icmp ugt i64 %reass.sub.fr.i, 9223372036854775800
   br i1 %i.d, label %.noexc.i, label %_ZNSt6vectorIN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS0_10Triangle_3INS0_5EpeckEEES_IS7_SaIS7_EEEENS1_14ID_FROM_HANDLEEEESaISD_EE17_S_check_init_lenEmRKSE_.exit.i.i
 
 .noexc.i:                                         ; preds = %bb.a
@@ -5639,10 +5634,10 @@ _ZNSt12_Vector_baseIN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_c
 .lr.ph.i.i.i.i.preheader.i.i:                     ; preds = %_ZNSt6vectorIN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS0_10Triangle_3INS0_5EpeckEEES_IS7_SaIS7_EEEENS1_14ID_FROM_HANDLEEEESaISD_EE17_S_check_init_lenEmRKSE_.exit.i.i
   %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %reass.sub.fr.i) #44 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 %reass.sub.fr.i
-  %i.h = add i64 %reass.sub.fr.i, -56             ; 2 uses
+  %i.h = add nsw i64 %reass.sub.fr.i, -56         ; 2 uses
   %i.i = urem i64 %i.h, 56
-  %i.j = sub nuw i64 %i.h, %i.i
-  %i.k = add i64 %i.j, 56                         ; 2 uses
+  %i.j = sub nuw nsw i64 %i.h, %i.i
+  %i.k = add nsw i64 %i.j, 56                     ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.f, ptr align 8 %0, i64 %i.k, i1 false)
   %scevgep.i.i = getelementptr i8, ptr %i.f, i64 %i.k
   br label %_ZNSt6vectorIN4CGAL18Box_intersection_d17Box_with_handle_dIdLi3EN9__gnu_cxx17__normal_iteratorIPNS0_10Triangle_3INS0_5EpeckEEES_IS7_SaIS7_EEEENS1_14ID_FROM_HANDLEEEESaISD_EEC2INS4_IPSD_SF_EEvEET_SJ_RKSE_.exit
@@ -6045,9 +6040,9 @@ bb.a:
   %i.c = load ptr, ptr %1, align 8, !tbaa !668    ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
-  %i.f = sub i64 %i.d, %i.e
-  %i.g = sdiv exact i64 %i.f, 192                 ; 3 uses
-  %6 = icmp ugt i64 %i.g, 192153584101141162
+  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.g = sdiv exact i64 %i.f, 192                 ; 2 uses
+  %6 = icmp slt i64 %i.f, 0
   br i1 %6, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -6117,8 +6112,7 @@ bb.e:                                             ; preds = %._crit_edge
   br label %_ZNSt19_Optional_base_implISt7variantIJN4CGAL7Point_3INS1_16Simple_cartesianINS1_11Interval_ntILb0EEEEEEENS1_9Segment_3IS6_EENS1_10Triangle_3IS6_EESt6vectorIS7_SaIS7_EEEESt14_Optional_baseISF_Lb0ELb0EEE12_M_constructIJRSE_EEEvDpOT_.exit.i
 
 bb.f:                                             ; preds = %bb.e
-  %7 = sdiv exact i64 %i.y, 48
-  %i.ac = icmp ugt i64 %7, 192153584101141162
+  %i.ac = icmp ugt i64 %i.y, 9223372036854775776
   br i1 %i.ac, label %.noexc.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZNSt15__new_allocatorIN4CGAL7Point_3INS0_16Simple_cartesianINS0_11Interval_ntILb0EEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !prof !331
 
 .noexc.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i:     ; preds = %bb.f
@@ -6358,8 +6352,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = sdiv exact i64 %i.j, 48
-  %i.k = icmp ugt i64 %2, 192153584101141162
+  %i.k = icmp ugt i64 %i.j, 9223372036854775776
   br i1 %i.k, label %.noexc.i.i, label %_ZNSt15__new_allocatorIN4CGAL7Point_3INS0_16Simple_cartesianINS0_11Interval_ntILb0EEEEEEEE8allocateEmPKv.exit.i.i.i.i, !prof !331
 
 .noexc.i.i:                                       ; preds = %bb.c
@@ -6445,8 +6438,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
-  %2 = sdiv exact i64 %i.f, 48
-  %i.n = icmp ugt i64 %2, 192153584101141162
+  %i.n = icmp ugt i64 %i.f, 9223372036854775776
   br i1 %i.n, label %bb.d, label %_ZNSt12_Vector_baseIN4CGAL7Point_3INS0_16Simple_cartesianINS0_11Interval_ntILb0EEEEEEESaIS6_EE11_M_allocateEm.exit.i, !prof !331
 
 bb.d:                                             ; preds = %bb.c
@@ -6849,8 +6841,7 @@ bb.f:                                             ; preds = %bb.b
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.noexc4.i.i.i.i.i.i.i.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %3 = sdiv exact i64 %i.m, 48
-  %i.n = icmp ugt i64 %3, 192153584101141162
+  %i.n = icmp ugt i64 %i.m, 9223372036854775776
   br i1 %i.n, label %.noexc.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %_ZNSt15__new_allocatorIN4CGAL7Point_3INS0_16Simple_cartesianINS0_11Interval_ntILb0EEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !prof !331
 
 .noexc.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.g
@@ -7253,8 +7244,7 @@ bb.a:
   br i1 %.not.i.i.i.i.i.i, label %.noexc3.i.i, label %bb.b
 
 bb.b:                                             ; preds = %.noexc
-  %2 = sdiv exact i64 %i.i, 48
-  %i.j = icmp ugt i64 %2, 192153584101141162
+  %i.j = icmp ugt i64 %i.i, 9223372036854775776
   br i1 %i.j, label %.noexc.i.i.i.i, label %_ZNSt15__new_allocatorIN4CGAL7Point_3INS0_16Simple_cartesianINS0_11Interval_ntILb0EEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !331
 
 .noexc.i.i.i.i:                                   ; preds = %bb.b
@@ -7385,8 +7375,7 @@ bb.a:
   br i1 %.not.i.i.i.i.i, label %.noexc3.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = sdiv exact i64 %i.i, 48
-  %i.j = icmp ugt i64 %1, 192153584101141162
+  %i.j = icmp ugt i64 %i.i, 9223372036854775776
   br i1 %i.j, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorIN4CGAL7Point_3INS0_16Simple_cartesianINS0_11Interval_ntILb0EEEEEEEE8allocateEmPKv.exit.i.i.i.i.i, !prof !331
 
 .noexc.i.i.i:                                     ; preds = %bb.b
@@ -7789,8 +7778,7 @@ bb.a:
   br i1 %.not.i.i.i.i.i, label %.noexc3.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = sdiv exact i64 %i.h, 192
-  %i.i = icmp ugt i64 %2, 48038396025285290
+  %i.i = icmp ugt i64 %i.h, 9223372036854775680
   br i1 %i.i, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorIN4CGAL7Point_3INS0_16Simple_cartesianIN5boost14multiprecision6numberINS4_8backends16rational_adaptorINS6_15cpp_int_backendILm0ELm0ELNS4_16cpp_integer_typeE1ELNS4_18cpp_int_check_typeE0ESaIyEEEEELNS4_26expression_template_optionE1EEEEEEEE8allocateEmPKv.exit.i.i.i.i.i, !prof !331
 
 .noexc.i.i.i:                                     ; preds = %bb.b
@@ -7956,8 +7944,7 @@ bb.a:
   br i1 %.not.i.i.i.i.i, label %.noexc3.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = sdiv exact i64 %i.i, 192
-  %i.j = icmp ugt i64 %1, 48038396025285290
+  %i.j = icmp ugt i64 %i.i, 9223372036854775680
   br i1 %i.j, label %.noexc.i.i.i, label %_ZNSt15__new_allocatorIN4CGAL7Point_3INS0_16Simple_cartesianIN5boost14multiprecision6numberINS4_8backends16rational_adaptorINS6_15cpp_int_backendILm0ELm0ELNS4_16cpp_integer_typeE1ELNS4_18cpp_int_check_typeE0ESaIyEEEEELNS4_26expression_template_optionE1EEEEEEEE8allocateEmPKv.exit.i.i.i.i.i, !prof !331
 
 .noexc.i.i.i:                                     ; preds = %bb.b
@@ -8360,9 +8347,9 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !135  ; 2 uses
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = ptrtoint ptr %i.p to i64
-  %i.s = sub i64 %i.q, %i.r
-  %i.t = sdiv exact i64 %i.s, 72                  ; 3 uses
-  %12 = icmp ugt i64 %i.t, 164703072086692425
+  %i.s = sub i64 %i.q, %i.r                       ; 2 uses
+  %i.t = sdiv exact i64 %i.s, 72                  ; 2 uses
+  %12 = icmp slt i64 %i.s, 0
   br i1 %12, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
