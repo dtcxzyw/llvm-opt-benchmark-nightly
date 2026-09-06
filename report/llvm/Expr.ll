@@ -205,8 +205,8 @@ begin_hunk_0
 @switch.table._ZN5clang14BinaryOperator12getOpcodeStrENS_18BinaryOperatorKindE = private unnamed_addr constant [33 x i8] c"\02\03\01\01\01\01\01\02\02\03\01\01\02\02\02\02\01\01\01\02\02\01\02\02\02\02\02\03\03\02\02\02\01", align 8
 @switch.table._ZN5clang14BinaryOperator12getOpcodeStrENS_18BinaryOperatorKindE.141 = private unnamed_addr constant [33 x ptr] [ptr @.str.125, ptr @.str.126, ptr @.str.46, ptr @.str.127, ptr @.str.128, ptr @.str.47, ptr @.str.48, ptr @.str.129, ptr @.str.130, ptr @.str.131, ptr @.str.132, ptr @.str.133, ptr @.str.134, ptr @.str.135, ptr @.str.136, ptr @.str.137, ptr @.str.45, ptr @.str.138, ptr @.str.139, ptr @.str.140, ptr @.str.141, ptr @.str.142, ptr @.str.143, ptr @.str.144, ptr @.str.145, ptr @.str.146, ptr @.str.147, ptr @.str.148, ptr @.str.149, ptr @.str.150, ptr @.str.151, ptr @.str.152, ptr @.str.153], align 8
 @switch.table._ZN5clang14BinaryOperator19getOverloadedOpcodeENS_22OverloadedOperatorKindE = private unnamed_addr constant [36 x i8] [i8 5, i8 6, i8 2, i8 3, i8 4, i8 17, i8 16, i8 18, i8 poison, i8 poison, i8 21, i8 10, i8 11, i8 25, i8 26, i8 22, i8 23, i8 24, i8 30, i8 29, i8 31, i8 7, i8 8, i8 27, i8 28, i8 14, i8 15, i8 12, i8 13, i8 9, i8 19, i8 20, i8 poison, i8 poison, i8 32, i8 1], align 4
-@switch.table._ZNK5clang13SourceLocExpr13getBuiltinStrEv = private unnamed_addr constant [8 x i8] [i8 14, i8 16, i8 25, i8 poison, i8 18, i8 17, i8 14, i8 19], align 8
-@switch.table._ZNK5clang13SourceLocExpr13getBuiltinStrEv.142 = private unnamed_addr constant [8 x ptr] [ptr @.str.158, ptr @.str.159, ptr @.str.160, ptr poison, ptr @.str.156, ptr @.str.157, ptr @.str.154, ptr @.str.155], align 8
+@switch.table._ZNK5clang13SourceLocExpr13getBuiltinStrEv = private unnamed_addr constant [7 x i8] c"\12\11\0E\13\0E\10\19", align 8
+@switch.table._ZNK5clang13SourceLocExpr13getBuiltinStrEv.142 = private unnamed_addr constant [7 x ptr] [ptr @.str.156, ptr @.str.157, ptr @.str.154, ptr @.str.155, ptr @.str.158, ptr @.str.159, ptr @.str.160], align 8
 @switch.table._ZNK5clang8CastExpr21getFPFeaturesInEffectERKNS_11LangOptionsE = private unnamed_addr constant [9 x i8] [i8 24, i8 poison, i8 48, i8 poison, i8 poison, i8 poison, i8 poison, i8 40, i8 40], align 8
 @switch.table._ZNK5clang20ExtVectorElementExpr23getEncodedElementAccessERN4llvm15SmallVectorImplIjEE = private unnamed_addr constant [26 x i32] [i32 3, i32 2, i32 -1, i32 -1, i32 -1, i32 -1, i32 1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 0, i32 -1, i32 -1, i32 -1, i32 -1, i32 3, i32 0, i32 1, i32 2], align 4
 @switch.table._ZN5clang10AtomicExpr14getNumSubExprsENS0_8AtomicOpE = private unnamed_addr constant [101 x i8] c"\03\03\02\06\06\04\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\03\02\03\03\03\03\03\03\03\02\03\05\05\03\03\03\03\03\03\03\03\03\02\02\03\06\06\04\04\04\04\04\04\04\04\03\04\06\06\04\04\04\04\04\04\04\04\02\03\04\04\04\07\07\05\04\04\04\04\04\04\04\04\04\04\04\04\04\04\03\04\04\04\04\04\04\04\04\04\04", align 4
@@ -609,14 +609,14 @@ declare noundef zeroext i1 @_ZNK5clang11DeclContext18isDependentContextEv(ptr no
 define dso_local { ptr, i64 } @_ZNK5clang13SourceLocExpr13getBuiltinStrEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0) local_unnamed_addr #5 align 2 {
 switch.lookup:
   %i.a = load i24, ptr %0, align 8
-  %i.b = lshr i24 %i.a, 19
-  %trunc = trunc i24 %i.b to i3
-  %switch.tableidx = xor i3 %trunc, -4            ; 2 uses
-  %i.c = zext i3 %switch.tableidx to i64
+  %i.b = lshr i24 %i.a, 19                        ; 2 uses
+  %trunc.mask = and i24 %i.b, 7
+  %i.c = zext nneg i24 %trunc.mask to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK5clang13SourceLocExpr13getBuiltinStrEv, i64 %i.c
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
-  %i.d = zext i3 %switch.tableidx to i64
+  %1 = and i24 %i.b, 7
+  %i.d = zext nneg i24 %1 to i64
   %switch.gep1 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK5clang13SourceLocExpr13getBuiltinStrEv.142, i64 %i.d
   %switch.load2 = load ptr, ptr %switch.gep1, align 8
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %switch.load2, 0
