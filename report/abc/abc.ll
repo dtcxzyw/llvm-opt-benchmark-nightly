@@ -205,16 +205,16 @@ bb.fu:                                            ; preds = %bb.fs, %bb.fr
   br label %.preheader556
 
 .preheader556:                                    ; preds = %.preheader556.lr.ph, %.loopexit656
-  %indvars.iv570 = phi i64 [ 0, %.preheader556.lr.ph ], [ %indvars.iv.next571, %.loopexit656 ] ; 4 uses
-  %indvars.iv568 = phi i64 [ 1, %.preheader556.lr.ph ], [ %indvars.iv.next569, %.loopexit656 ] ; 6 uses
+  %indvars.iv570 = phi i64 [ 0, %.preheader556.lr.ph ], [ %indvars.iv.next571, %.loopexit656 ] ; 3 uses
+  %indvars.iv568 = phi i64 [ 1, %.preheader556.lr.ph ], [ %indvars.iv.next569, %.loopexit656 ] ; 7 uses
   %i.oj = getelementptr inbounds nuw [132 x i8], ptr %i.oh, i64 %indvars.iv570 ; 7 uses
   %min.iters.check = icmp samesign ult i64 %indvars.iv568, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader556
-  %i.ok = mul nuw nsw i64 %indvars.iv570, 136
+  %i.ok = mul nuw nsw i64 %indvars.iv568, 136
   %i.ol = getelementptr i8, ptr %i.oe, i64 %i.ok
-  %scevgep = getelementptr i8, ptr %i.ol, i64 152
+  %scevgep = getelementptr i8, ptr %i.ol, i64 16
   %bound0 = icmp ult ptr %i.oj, %scevgep633
   %bound1 = icmp ult ptr %i.an, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -327,16 +327,16 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.loopexit655
-  %indvars.iv585 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next586, %.loopexit655 ] ; 4 uses
-  %indvars.iv583 = phi i64 [ 1, %.preheader.lr.ph ], [ %indvars.iv.next584, %.loopexit655 ] ; 6 uses
+  %indvars.iv585 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next586, %.loopexit655 ] ; 3 uses
+  %indvars.iv583 = phi i64 [ 1, %.preheader.lr.ph ], [ %indvars.iv.next584, %.loopexit655 ] ; 7 uses
   %i.pz = getelementptr inbounds nuw [132 x i8], ptr %i.px, i64 %indvars.iv585 ; 7 uses
   %min.iters.check642 = icmp samesign ult i64 %indvars.iv583, 8
   br i1 %min.iters.check642, label %scalar.ph641.preheader, label %vector.memcheck635
 
 vector.memcheck635:                               ; preds = %.preheader
-  %i.qa = mul nuw nsw i64 %indvars.iv585, 136
+  %i.qa = mul nuw nsw i64 %indvars.iv583, 136
   %i.qb = getelementptr i8, ptr %i.pu, i64 %i.qa
-  %scevgep636 = getelementptr i8, ptr %i.qb, i64 152
+  %scevgep636 = getelementptr i8, ptr %i.qb, i64 16
   %bound0638 = icmp ult ptr %i.pz, %scevgep637
   %bound1639 = icmp ult ptr %i.an, %scevgep636
   %found.conflict640 = and i1 %bound0638, %bound1639

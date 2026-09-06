@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .lr.ph93.split.us.us:                             ; preds = %.lr.ph93.split.us.us.preheader, %..loopexit_crit_edge.us.us
   %indvars.iv144 = phi i64 [ 0, %.lr.ph93.split.us.us.preheader ], [ %indvars.iv.next145, %..loopexit_crit_edge.us.us ] ; 7 uses
-  %i.cb = shl i64 %indvars.iv144, 3
-  %i.cc = add i64 %i.cb, 8                        ; 2 uses
+  %i.cb = shl nuw nsw i64 %indvars.iv144, 3
+  %i.cc = add nuw i64 %i.cb, 8                    ; 2 uses
   %i.cd = icmp eq i64 %indvars.iv154, %indvars.iv144
   br i1 %i.cd, label %..loopexit_crit_edge.us.us, label %.lr.ph.i.us.us.preheader
 
