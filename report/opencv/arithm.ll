@@ -204,7 +204,7 @@ bb.bf:                                            ; preds = %bb.be
   br label %_ZN2cv10AutoBufferIhLm1032EEC2Em.exit
 
 _ZN2cv10AutoBufferIhLm1032EEC2Em.exit:            ; preds = %.noexc279, %bb.be
-  %i.dp = phi ptr [ %i.do, %.noexc279 ], [ %i.dm, %bb.be ] ; 48 uses
+  %i.dp = phi ptr [ %i.do, %.noexc279 ], [ %i.dm, %bb.be ] ; 45 uses
   %i.dq = mul nuw nsw i64 %.sroa.speculated, %i.df
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dp, i64 %i.dq
   %i.ds = ptrtoint ptr %i.dr to i64
@@ -450,6 +450,7 @@ bb.cm:                                            ; preds = %bb.cl
   br i1 %i.gn, label %.critedge.split.us.split.us, label %.critedge.split.us.split.preheader
 
 .critedge.split.us.split.preheader:               ; preds = %.critedge.split.us
+  %scevgep398 = getelementptr i8, ptr %i.dp, i64 1
   %invariant.gep = getelementptr i8, ptr %i.dp, i64 %i.df
   %invariant.gep441 = getelementptr i8, ptr %i.dp, i64 %i.df
   br label %.critedge.split.us.split
@@ -807,14 +808,9 @@ vector.memcheck:                                  ; preds = %iter.check
   %scevgep = getelementptr i8, ptr %i.jf, i64 %i.iw
   %i.lx = add nsw i64 %i.iw, -1
   %i.ly = mul nsw i64 %i.lx, %i.df
-  %scevgep398 = getelementptr i8, ptr %i.dp, i64 %i.ly ; 4 uses
-  %23 = icmp ult ptr %i.dp, %scevgep398
-  %umin = select i1 %23, ptr %i.dp, ptr %scevgep398
-  %24 = icmp ugt ptr %i.dp, %scevgep398
-  %umax.sroa.sel.v = select i1 %24, ptr %i.dp, ptr %scevgep398
-  %umax.sroa.sel = getelementptr i8, ptr %umax.sroa.sel.v, i64 1
+  %umax.sroa.sel = getelementptr i8, ptr %scevgep398, i64 %i.ly
   %bound0 = icmp ult ptr %i.jf, %umax.sroa.sel
-  %bound1 = icmp ult ptr %umin, %scevgep
+  %bound1 = icmp ult ptr %i.dp, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph96.i.us.preheader, label %vector.main.loop.iter.check
 

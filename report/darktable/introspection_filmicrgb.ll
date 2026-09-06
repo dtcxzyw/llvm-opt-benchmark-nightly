@@ -205,10 +205,11 @@ bb.a:
 .lr.ph.preheader.i9.preheader:                    ; preds = %.loopexit.i
   %i.y = shl nuw nsw i64 %i.g, 3                  ; 4 uses
   %scevgep50 = getelementptr i8, ptr %1, i64 %i.y
+  %3 = add nuw nsw i64 %i.y, 8
   %i.z = add nsw i64 %i.y, -8
   %i.aa = mul nuw nsw i64 %i.z, %i.g
-  %3 = add nuw nsw i64 %i.y, 8
-  %i.ab = getelementptr i8, ptr %0, i64 %i.aa
+  %4 = getelementptr i8, ptr %0, i64 %i.aa
+  %i.ab = getelementptr i8, ptr %4, i64 8
   %i.ac = getelementptr i8, ptr %0, i64 %i.y
   %broadcast.splatinsert63 = insertelement <4 x i64> poison, i64 %i.g, i64 0
   %broadcast.splat64 = shufflevector <4 x i64> %broadcast.splatinsert63, <4 x i64> poison, <4 x i32> zeroinitializer
@@ -611,18 +612,13 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 
 vector.memcheck48:                                ; preds = %.lr.ph.preheader.i9
   %i.hw = shl nuw nsw i64 %indvars.iv63.i, 3      ; 2 uses
-  %scevgep51.a = getelementptr i8, ptr %i.ab, i64 %i.hw ; 4 uses
+  %scevgep51.a = getelementptr i8, ptr %i.ab, i64 %i.hw
   %i.hx = mul i64 %3, %indvars.iv63.i
-  %scevgep52 = getelementptr i8, ptr %i.ac, i64 %i.hx ; 4 uses
-  %4 = icmp ugt ptr %scevgep51.a, %scevgep52
-  %umax = select i1 %4, ptr %scevgep51.a, ptr %scevgep52
-  %scevgep53 = getelementptr i8, ptr %umax, i64 8
-  %5 = icmp ult ptr %scevgep51.a, %scevgep52
-  %umin = select i1 %5, ptr %scevgep51.a, ptr %scevgep52
+  %scevgep53 = getelementptr i8, ptr %i.ac, i64 %i.hx
   %i.hy = getelementptr nuw i8, ptr %1, i64 %i.hw
   %scevgep49 = getelementptr nuw i8, ptr %i.hy, i64 8
-  %bound054 = icmp ult ptr %scevgep49, %scevgep53
-  %bound155 = icmp ult ptr %umin, %scevgep50
+  %bound054 = icmp ult ptr %scevgep49, %scevgep51.a
+  %bound155 = icmp ult ptr %scevgep53, %scevgep50
   %found.conflict56 = and i1 %bound054, %bound155
   br i1 %found.conflict56, label %.lr.ph.i12.preheader, label %vector.ph59
 

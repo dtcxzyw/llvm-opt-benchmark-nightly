@@ -205,11 +205,11 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit563:            ; preds = %.noexc562, %bb.n
   %.not5002092 = icmp ugt i32 %i.ex, %i.ez
   %i.hf = sext i32 %i.ft to i64
   %i.hg = icmp sgt i32 %i.ft, 0
+  %30 = zext i8 %i.hc to i64                      ; 2 uses
   %i.hh = icmp eq i8 %i.hc, 0
   br i1 %i.hh, label %._crit_edge3044, label %.lr.ph3043
 
 .lr.ph3043:                                       ; preds = %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit563
-  %30 = zext i8 %i.hc to i64
   %i.hi = zext i32 %i.ez to i64
   %i.hj = shl i64 %indvar, 6
   %i.hk = sub i64 %i.hi, %i.hj
@@ -224,6 +224,7 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit563:            ; preds = %.noexc562, %bb.n
 
 bb.p:                                             ; preds = %_ZNSt6vectorIhSaIhEED2Ev.exit
   %i.hs = icmp slt i64 %indvars.iv.next24353041.in, 2
+  %indvar.next3064 = add i64 %indvar3063, 1
   br i1 %i.hs, label %._crit_edge3044, label %bb.t, !llvm.loop !310
 
 bb.q:                                             ; preds = %bb.k
@@ -242,9 +243,11 @@ bb.s:                                             ; preds = %_ZNKSt6vectorIhSaIh
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit580
 
 bb.t:                                             ; preds = %.lr.ph3043, %bb.p
+  %indvar3063 = phi i64 [ 0, %.lr.ph3043 ], [ %indvar.next3064, %bb.p ] ; 2 uses
   %indvars.iv.next24353041.in = phi i64 [ %30, %.lr.ph3043 ], [ %indvars.iv.next24353041, %bb.p ] ; 2 uses
   %.03223040 = phi i32 [ 0, %.lr.ph3043 ], [ %.1323, %bb.p ] ; 3 uses
-  %indvars.iv.next24353041 = add nsw i64 %indvars.iv.next24353041.in, -1 ; 4 uses
+  %indvars.iv.next24353041 = add nsw i64 %indvars.iv.next24353041.in, -1 ; 3 uses
+  %31 = sub i64 %30, %indvar3063
   br i1 %.not.i.i.i.i564, label %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit568, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
@@ -294,7 +297,7 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit568:            ; preds = %bb.v, %.noexc567, %
 .lr.ph2096.preheader:                             ; preds = %.lr.ph2104
   %scevgep3058 = getelementptr i8, ptr %.sroa.01380.0, i64 1
   %scevgep3061 = getelementptr i8, ptr %i.ic, i64 %indvars.iv.next24353041
-  %scevgep3063 = getelementptr i8, ptr %i.ic, i64 %indvars.iv.next24353041
+  %scevgep3063 = getelementptr i8, ptr %i.ic, i64 %31
   br label %.lr.ph2096
 
 bb.w:                                             ; preds = %bb.u
@@ -309,7 +312,7 @@ bb.w:                                             ; preds = %bb.u
   %i.is = mul nuw i64 %i.ie, %i.ir                ; 2 uses
   %i.it = add i64 %i.ev, %i.is
   %i.iu = mul i64 %i.ip, %i.it
-  %scevgep3064 = getelementptr i8, ptr %scevgep3063, i64 %i.iu ; 4 uses
+  %scevgep3064 = getelementptr i8, ptr %scevgep3061, i64 %i.iu
   %i.iv = zext i32 %storemerge4972101 to i64
   %.reass2108 = mul i64 %factor.op.mul2107, %i.iv
   %gep2110 = getelementptr i8, ptr %invariant.gep2109, i64 %.reass2108 ; 17 uses
@@ -323,7 +326,7 @@ bb.w:                                             ; preds = %bb.u
   %i.iy = freeze i64 %i.ix
   %i.iz = call i64 @llvm.umin.i64(i64 %i.iy, i64 %i.hq)
   %i.ja = add i64 %i.iz, 1                        ; 3 uses
-  %min.iters.check3072 = icmp ult i64 %i.ja, 33
+  %min.iters.check3072 = icmp ult i64 %i.ja, 17
   br i1 %min.iters.check3072, label %scalar.ph3071.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph3033
@@ -348,14 +351,9 @@ vector.memcheck3056:                              ; preds = %vector.scevcheck
   %i.jm = add i64 %i.ev, %umin3059
   %i.jn = add i64 %i.jm, %i.is
   %i.jo = mul i64 %i.ip, %i.jn
-  %scevgep3062 = getelementptr i8, ptr %scevgep3061, i64 %i.jo ; 4 uses
-  %31 = icmp ult ptr %scevgep3062, %scevgep3064
-  %umin3065 = select i1 %31, ptr %scevgep3062, ptr %scevgep3064
-  %32 = icmp ugt ptr %scevgep3062, %scevgep3064
-  %umax3066 = select i1 %32, ptr %scevgep3062, ptr %scevgep3064
-  %scevgep3067 = getelementptr i8, ptr %umax3066, i64 1
+  %scevgep3067 = getelementptr i8, ptr %scevgep3063, i64 %i.jo
   %bound03068 = icmp ult ptr %scevgep3057, %scevgep3067
-  %bound13069 = icmp ult ptr %umin3065, %scevgep3060
+  %bound13069 = icmp ult ptr %scevgep3064, %scevgep3060
   %found.conflict3070 = and i1 %bound03068, %bound13069
   br i1 %found.conflict3070, label %scalar.ph3071.preheader, label %vector.ph3073
 
@@ -758,7 +756,8 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit634:            ; preds = %bb.cj, %.noexc633, 
 .lr.ph2063.preheader:                             ; preds = %.lr.ph2068
   %scevgep3085 = getelementptr i8, ptr %.sroa.01319.0, i64 1
   %scevgep3088.a = getelementptr i8, ptr %i.yb, i64 %i.yp
-  %scevgep3090 = getelementptr i8, ptr %i.yb, i64 %i.yp
+  %scevgep3089 = getelementptr i8, ptr %i.yb, i64 1
+  %scevgep3090 = getelementptr i8, ptr %scevgep3089, i64 %i.yp
   br label %.lr.ph2063
 
 bb.ck:                                            ; preds = %bb.ci
@@ -773,7 +772,7 @@ bb.ck:                                            ; preds = %bb.ci
   %i.ys = mul nuw i64 %i.yd, %i.yr                ; 2 uses
   %i.yt = add i64 %i.et, %i.ys
   %i.yu = mul i64 %i.yo, %i.yt
-  %scevgep3091.a = getelementptr i8, ptr %scevgep3090, i64 %i.yu ; 4 uses
+  %scevgep3091.a = getelementptr i8, ptr %scevgep3088.a, i64 %i.yu
   %i.yv = zext i32 %storemerge2065 to i64
   %.reass = mul i64 %factor.op.mul, %i.yv
   %gep2072 = getelementptr i8, ptr %invariant.gep2071, i64 %.reass ; 17 uses
@@ -787,7 +786,7 @@ bb.ck:                                            ; preds = %bb.ci
   %i.yy = freeze i64 %i.yx
   %i.yz = call i64 @llvm.umin.i64(i64 %i.yy, i64 %i.xm)
   %i.za = add i64 %i.yz, 1                        ; 3 uses
-  %min.iters.check3099 = icmp ult i64 %i.za, 33
+  %min.iters.check3099 = icmp ult i64 %i.za, 17
   br i1 %min.iters.check3099, label %scalar.ph3098.preheader, label %vector.scevcheck3081
 
 vector.scevcheck3081:                             ; preds = %.lr.ph3020
@@ -812,14 +811,9 @@ vector.memcheck3083:                              ; preds = %vector.scevcheck308
   %i.zm = add i64 %i.et, %umin3086
   %i.zn = add i64 %i.zm, %i.ys
   %i.zo = mul i64 %i.yo, %i.zn
-  %scevgep3089 = getelementptr i8, ptr %scevgep3088.a, i64 %i.zo ; 4 uses
-  %33 = icmp ult ptr %scevgep3089, %scevgep3091.a
-  %umin3092 = select i1 %33, ptr %scevgep3089, ptr %scevgep3091.a
-  %34 = icmp ugt ptr %scevgep3089, %scevgep3091.a
-  %umax3093 = select i1 %34, ptr %scevgep3089, ptr %scevgep3091.a
-  %scevgep3094 = getelementptr i8, ptr %umax3093, i64 1
+  %scevgep3094 = getelementptr i8, ptr %scevgep3090, i64 %i.zo
   %bound03095 = icmp ult ptr %scevgep3084, %scevgep3094
-  %bound13096 = icmp ult ptr %umin3092, %scevgep3087
+  %bound13096 = icmp ult ptr %scevgep3091.a, %scevgep3087
   %found.conflict3097 = and i1 %bound03095, %bound13096
   br i1 %found.conflict3097, label %scalar.ph3098.preheader, label %vector.ph3100
 
