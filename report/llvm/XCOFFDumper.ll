@@ -204,10 +204,12 @@ $_ZN4llvm13ScopedPrinter11printNumberINS_7support6detail31packed_endian_specific
 @switch.table._ZN12_GLOBAL__N_111XCOFFDumper19printSectionHeadersEv.32 = private unnamed_addr constant [11 x ptr] [ptr @_ZL29DWARFSectionSubtypeFlagsNames, ptr getelementptr inbounds nuw (i8, ptr @_ZL29DWARFSectionSubtypeFlagsNames, i64 8), ptr getelementptr inbounds nuw (i8, ptr @_ZL29DWARFSectionSubtypeFlagsNames, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL29DWARFSectionSubtypeFlagsNames, i64 24), ptr getelementptr inbounds nuw (i8, ptr @_ZL29DWARFSectionSubtypeFlagsNames, i64 32), ptr getelementptr inbounds nuw (i8, ptr @_ZL29DWARFSectionSubtypeFlagsNames, i64 40), ptr getelementptr inbounds nuw (i8, ptr @_ZL29DWARFSectionSubtypeFlagsNames, i64 48), ptr getelementptr inbounds nuw (i8, ptr @_ZL29DWARFSectionSubtypeFlagsNames, i64 56), ptr getelementptr inbounds nuw (i8, ptr @_ZL29DWARFSectionSubtypeFlagsNames, i64 64), ptr getelementptr inbounds nuw (i8, ptr @_ZL29DWARFSectionSubtypeFlagsNames, i64 72), ptr getelementptr inbounds nuw (i8, ptr @_ZL29DWARFSectionSubtypeFlagsNames, i64 80)], align 8
 @switch.table._ZN12_GLOBAL__N_111XCOFFDumper18printLoaderSectionEbbb.35 = private unnamed_addr constant [5 x ptr] [ptr @.str.118, ptr @.str.119, ptr @.str.120, ptr @.str.121, ptr @.str.122], align 8
 @switch.table._ZN12_GLOBAL__N_111XCOFFDumper18printLoaderSectionEbbb.36 = private unnamed_addr constant [50 x ptr] [ptr @_ZL23RelocationTypeNameclass, ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 12), ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 20), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 32), ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 36), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 44), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 48), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 4), ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 8), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 40), ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 24), ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 28), ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 52), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 56), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 60), ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 64), ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 68), ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 72), ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 76), ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 80), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 84), ptr getelementptr inbounds nuw (i8, ptr @_ZL23RelocationTypeNameclass, i64 88)], align 8
-@switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb = private unnamed_addr constant [60 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 80), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @_ZL15CFileCpuIdClass, ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 4), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 8), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 12), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 20), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 24), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 28), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 32), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 36), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 40), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 48), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 44), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 52), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 56), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 60), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 64), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 68), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 72), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 76)], align 8
-@switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.40 = private unnamed_addr constant [4 x ptr] [ptr @_ZL20CsectSymbolTypeClass, ptr getelementptr inbounds nuw (i8, ptr @_ZL20CsectSymbolTypeClass, i64 4), ptr getelementptr inbounds nuw (i8, ptr @_ZL20CsectSymbolTypeClass, i64 8), ptr getelementptr inbounds nuw (i8, ptr @_ZL20CsectSymbolTypeClass, i64 12)], align 8
-@switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.41 = private unnamed_addr constant [23 x ptr] [ptr @_ZL24CsectStorageMappingClass, ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 4), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 8), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 48), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 60), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 40), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 12), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 20), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 64), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 56), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 68), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 32), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 36), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 44), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 52), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 24), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 28), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 72), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 76), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 80)], align 8
-@switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.42 = private unnamed_addr constant [6 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZL10SymAuxType, i64 20), ptr getelementptr inbounds nuw (i8, ptr @_ZL10SymAuxType, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL10SymAuxType, i64 12), ptr getelementptr inbounds nuw (i8, ptr @_ZL10SymAuxType, i64 8), ptr getelementptr inbounds nuw (i8, ptr @_ZL10SymAuxType, i64 4), ptr @_ZL10SymAuxType], align 8
+@switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb = private unnamed_addr constant [142 x i8] c"\1A\1A\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\1A\1A\05\18\05\05\05\1A\14\14\1E\1A\15\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\05\1D\1D\16\16\15\05\05\19\05\05\05\05\05\15\18", align 8
+@switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.37 = private unnamed_addr constant [142 x ptr] [ptr @.str.131, ptr @.str.131, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.131, ptr @.str.131, ptr @.str.140, ptr @.str.132, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.131, ptr @.str.135, ptr @.str.135, ptr @.str.136, ptr @.str.131, ptr @.str.133, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.137, ptr @.str.137, ptr @.str.138, ptr @.str.138, ptr @.str.134, ptr @.str.140, ptr @.str.140, ptr @.str.139, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.140, ptr @.str.134, ptr @.str.132], align 8
+@switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.38 = private unnamed_addr constant [60 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 80), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr @_ZL15CFileCpuIdClass, ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 4), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 8), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 12), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 20), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 24), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 28), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 32), ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 36), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 40), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 48), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 44), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 52), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 56), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 60), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 64), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 68), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 72), ptr getelementptr inbounds nuw (i8, ptr @_ZL15CFileCpuIdClass, i64 76)], align 8
+@switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.42 = private unnamed_addr constant [4 x ptr] [ptr @_ZL20CsectSymbolTypeClass, ptr getelementptr inbounds nuw (i8, ptr @_ZL20CsectSymbolTypeClass, i64 4), ptr getelementptr inbounds nuw (i8, ptr @_ZL20CsectSymbolTypeClass, i64 8), ptr getelementptr inbounds nuw (i8, ptr @_ZL20CsectSymbolTypeClass, i64 12)], align 8
+@switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.43 = private unnamed_addr constant [23 x ptr] [ptr @_ZL24CsectStorageMappingClass, ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 4), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 8), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 48), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 60), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 40), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 12), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 20), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 64), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 56), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 68), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 32), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 36), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 44), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 52), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 24), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 28), ptr poison, ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 72), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 76), ptr getelementptr inbounds nuw (i8, ptr @_ZL24CsectStorageMappingClass, i64 80)], align 8
+@switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.44 = private unnamed_addr constant [6 x ptr] [ptr getelementptr inbounds nuw (i8, ptr @_ZL10SymAuxType, i64 20), ptr getelementptr inbounds nuw (i8, ptr @_ZL10SymAuxType, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL10SymAuxType, i64 12), ptr getelementptr inbounds nuw (i8, ptr @_ZL10SymAuxType, i64 8), ptr getelementptr inbounds nuw (i8, ptr @_ZL10SymAuxType, i64 4), ptr @_ZL10SymAuxType], align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN4llvm17createXCOFFDumperERKNS_6object15XCOFFObjectFileERNS_13ScopedPrinterE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) initializes((0, 8)) %0, ptr noundef nonnull align 8 dereferenceable(96) %1, ptr noundef nonnull align 8 dereferenceable(44) %2) local_unnamed_addr #0 {
@@ -610,58 +612,23 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
 
 .critedge.i:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %bb.c
   %i.bx = load ptr, ptr %i.a, align 8, !tbaa !27, !nonnull !28, !align !29 ; 2 uses
-  switch i8 %i.bd, label %bb.e [
-    i8 2, label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
-    i8 111, label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
-    i8 107, label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
-    i8 3, label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
-    i8 101, label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
-    i8 100, label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
-    i8 103, label %16
-    i8 -113, label %16
-    i8 112, label %17
-    i8 -114, label %18
-    i8 -123, label %18
-    i8 108, label %19
-    i8 109, label %19
-    i8 110, label %20
-    i8 -127, label %21
-    i8 -126, label %21
-    i8 -124, label %22
-    i8 -125, label %22
-    i8 -120, label %23
-  ]
-
-16:                                               ; preds = %.critedge.i, %.critedge.i
-  br label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
-
-17:                                               ; preds = %.critedge.i
-  br label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
-
-18:                                               ; preds = %.critedge.i, %.critedge.i
-  br label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
-
-19:                                               ; preds = %.critedge.i, %.critedge.i
-  br label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
-
-20:                                               ; preds = %.critedge.i
-  br label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
-
-21:                                               ; preds = %.critedge.i, %.critedge.i
-  br label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
-
-22:                                               ; preds = %.critedge.i, %.critedge.i
-  br label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
-
-23:                                               ; preds = %.critedge.i
-  br label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
+  %switch.tableidx = add i8 %i.bd, -2             ; 3 uses
+  %16 = icmp ult i8 %switch.tableidx, -114
+  br i1 %16, label %bb.e, label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
 
 bb.e:                                             ; preds = %.critedge.i
+  %17 = zext i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb, i64 %17
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %18 = zext i8 %switch.tableidx to i64
+  %switch.gep64 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.37, i64 %18
+  %switch.load65 = load ptr, ptr %switch.gep64, align 8
   br label %_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i
 
-_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i: ; preds = %bb.e, %23, %22, %21, %20, %19, %18, %17, %16, %.critedge.i, %.critedge.i, %.critedge.i, %.critedge.i, %.critedge.i, %.critedge.i
-  %.sroa.11.0.i.i = phi i64 [ 5, %bb.e ], [ 25, %23 ], [ 24, %16 ], [ 21, %17 ], [ 21, %18 ], [ 20, %19 ], [ 30, %20 ], [ 29, %21 ], [ 22, %22 ], [ 26, %.critedge.i ], [ 26, %.critedge.i ], [ 26, %.critedge.i ], [ 26, %.critedge.i ], [ 26, %.critedge.i ], [ 26, %.critedge.i ]
-  %.sroa.0.0.i.i = phi ptr [ @.str.140, %bb.e ], [ @.str.139, %23 ], [ @.str.132, %16 ], [ @.str.133, %17 ], [ @.str.134, %18 ], [ @.str.135, %19 ], [ @.str.136, %20 ], [ @.str.137, %21 ], [ @.str.138, %22 ], [ @.str.131, %.critedge.i ], [ @.str.131, %.critedge.i ], [ @.str.131, %.critedge.i ], [ @.str.131, %.critedge.i ], [ @.str.131, %.critedge.i ], [ @.str.131, %.critedge.i ]
+_ZL18GetSymbolValueNameN4llvm5XCOFF12StorageClassE.exit.i: ; preds = %.critedge.i, %bb.e
+  %.sroa.11.0.i.i = phi i64 [ %switch.ext, %bb.e ], [ 5, %.critedge.i ]
+  %.sroa.0.0.i.i = phi ptr [ %switch.load65, %bb.e ], [ @.str.140, %.critedge.i ]
   %i.by = load ptr, ptr %i.j, align 8, !tbaa !534 ; 2 uses
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !15
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 64
@@ -796,7 +763,7 @@ switch.hole_check:                                ; preds = %_ZN4llvm13ScopedPri
 
 switch.lookup:                                    ; preds = %switch.hole_check
   %i.ee = zext nneg i8 %switch.tableidx.a to i64
-  %switch.gep.a = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb, i64 %i.ee
+  %switch.gep.a = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.38, i64 %i.ee
   %switch.load.a = load ptr, ptr %switch.gep.a, align 8 ; 3 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %switch.load.a, i64 2
   %i.eg = load i8, ptr %i.ef, align 1, !tbaa !40  ; 2 uses
@@ -1199,7 +1166,7 @@ _ZN4llvm13ScopedPrinter9printEnumIhNS_5XCOFF15CFileStringTypeELj1EEEvNS_9StringR
 
 switch.lookup65:                                  ; preds = %.lr.ph.i.i9.i.i
   %i.ih = sext i8 %i.if to i64
-  %i.ii = getelementptr [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.42, i64 %i.ih
+  %i.ii = getelementptr [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.44, i64 %i.ih
   %switch.gep66 = getelementptr i8, ptr %i.ii, i64 48
   %switch.load67 = load ptr, ptr %switch.gep66, align 8 ; 3 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %switch.load67, i64 2
@@ -1321,7 +1288,7 @@ bb.v:                                             ; preds = %bb.u
 
 switch.lookup69:                                  ; preds = %bb.v
   %i.ky = sext i8 %i.kw to i64
-  %i.kz = getelementptr [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.42, i64 %i.ky
+  %i.kz = getelementptr [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.44, i64 %i.ky
   %switch.gep70 = getelementptr i8, ptr %i.kz, i64 48
   %switch.load71 = load ptr, ptr %switch.gep70, align 8 ; 3 uses
   %i.la = getelementptr inbounds nuw i8, ptr %switch.load71, i64 2
@@ -1404,7 +1371,7 @@ bb.x:                                             ; preds = %bb.u
 
 switch.lookup73:                                  ; preds = %bb.x
   %i.mz = sext i8 %i.mx to i64
-  %i.na = getelementptr [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.42, i64 %i.mz
+  %i.na = getelementptr [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.44, i64 %i.mz
   %switch.gep74 = getelementptr i8, ptr %i.na, i64 48
   %switch.load75 = load ptr, ptr %switch.gep74, align 8 ; 3 uses
   %i.nb = getelementptr inbounds nuw i8, ptr %switch.load75, i64 2
@@ -1605,7 +1572,7 @@ _ZNK4llvm6object16XCOFFCsectAuxRef18getSectionOrLengthEv.exit.i.i: ; preds = %bb
 
 switch.lookup76:                                  ; preds = %_ZNK4llvm6object16XCOFFCsectAuxRef18getSectionOrLengthEv.exit.i.i
   %i.rr = zext nneg i8 %i.rp to i64
-  %switch.gep77 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.40, i64 %i.rr
+  %switch.gep77 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.42, i64 %i.rr
   %switch.load78 = load ptr, ptr %switch.gep77, align 8 ; 3 uses
   %i.rs = getelementptr inbounds nuw i8, ptr %switch.load78, i64 2
   %i.rt = load i8, ptr %i.rs, align 1, !tbaa !40  ; 2 uses
@@ -1645,7 +1612,7 @@ _ZN4llvm13ScopedPrinter9printEnumIhNS_5XCOFF10SymbolTypeELj1EEEvNS_9StringRefET_
 
 switch.lookup81:                                  ; preds = %_ZN4llvm13ScopedPrinter9printEnumIhNS_5XCOFF10SymbolTypeELj1EEEvNS_9StringRefET_NS_11EnumStringsIT0_XT1_EEE.exit.i.i
   %i.sk = zext nneg i8 %i.si to i64
-  %switch.gep85 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.41, i64 %i.sk
+  %switch.gep85 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.43, i64 %i.sk
   %switch.load86 = load ptr, ptr %switch.gep85, align 8 ; 3 uses
   %i.sl = getelementptr inbounds nuw i8, ptr %switch.load86, i64 2
   %i.sm = load i8, ptr %i.sl, align 1, !tbaa !40  ; 2 uses
@@ -1931,7 +1898,7 @@ bb.ar:                                            ; preds = %bb.aq
 
 switch.lookup88:                                  ; preds = %bb.ar
   %i.yx = sext i8 %i.yv to i64
-  %i.yy = getelementptr [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.42, i64 %i.yx
+  %i.yy = getelementptr [8 x i8], ptr @switch.table._ZN12_GLOBAL__N_111XCOFFDumper12printSymbolsEb.44, i64 %i.yx
   %switch.gep89 = getelementptr i8, ptr %i.yy, i64 48
   %switch.load90 = load ptr, ptr %switch.gep89, align 8 ; 3 uses
   %i.yz = getelementptr inbounds nuw i8, ptr %switch.load90, i64 2

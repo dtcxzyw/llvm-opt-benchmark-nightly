@@ -40,6 +40,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.2 = private unnamed_addr constant [61 x i8] c"Possible integer overflow in zend_arena_calloc() (%zu * %zu)\00", align 1
 @zend_ce_generator = external local_unnamed_addr global ptr, align 8
 @switch.table.zend_infer_types_ex = private unnamed_addr constant [3 x i8] c"\02\04\08", align 4
+@switch.table.zend_infer_types_ex.11 = private unnamed_addr constant [96 x i32] [i32 -486539266, i32 -486539266, i32 -486539266, i32 -486539266, i32 -486539266, i32 -486539266, i32 -520093698, i32 -520093698, i32 -520093698, i32 -486539266, i32 -486539266, i32 -486539266, i32 -486539266, i32 -486539266, i32 -486539266, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -520093698, i32 -486539266, i32 -486539266, i32 -520093698, i32 -486539266, i32 -486539266], align 4
 
 ; Function Attrs: nounwind uwtable
 define dso_local void @zend_ssa_find_sccs(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) initializes((44, 48)) %1) local_unnamed_addr #0 {
@@ -442,30 +443,18 @@ bb.azm:                                           ; preds = %.thread582
 
 bb.azn:                                           ; preds = %bb.azm
   %i.gpk = load i8, ptr %i.np, align 4, !tbaa !55
-  switch i8 %i.gpk, label %bb.azp [
-    i8 83, label %bb.azo
-    i8 86, label %bb.azo
-    i8 92, label %bb.azo
-    i8 95, label %bb.azo
-    i8 84, label %bb.azo
-    i8 87, label %bb.azo
-    i8 93, label %bb.azo
-    i8 96, label %bb.azo
-    i8 85, label %bb.azo
-    i8 88, label %bb.azo
-    i8 94, label %bb.azo
-    i8 97, label %bb.azo
-    i8 -82, label %bb.azo
-    i8 -81, label %bb.azo
-    i8 -79, label %bb.azo
-    i8 -78, label %bb.azo
-  ]
+  %switch.tableidx = add i8 %i.gpk, -83           ; 2 uses
+  %7 = icmp ult i8 %switch.tableidx, 96
+  br i1 %7, label %bb.azo, label %bb.azp
 
-bb.azo:                                           ; preds = %bb.azn, %bb.azn, %bb.azn, %bb.azn, %bb.azn, %bb.azn, %bb.azn, %bb.azn, %bb.azn, %bb.azn, %bb.azn, %bb.azn, %bb.azn, %bb.azn, %bb.azn, %bb.azn
+bb.azo:                                           ; preds = %bb.azn
+  %8 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep1716 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.zend_infer_types_ex.11, i64 %8
+  %switch.load1717 = load i32, ptr %switch.gep1716, align 4
   br label %bb.azp
 
-bb.azp:                                           ; preds = %bb.azm, %bb.azm, %bb.azn, %bb.azo
-  %.1178502.i = phi i32 [ -486539266, %bb.azo ], [ -520094722, %bb.azm ], [ -520093698, %bb.azn ], [ -520094722, %bb.azm ] ; 3 uses
+bb.azp:                                           ; preds = %bb.azo, %bb.azn, %bb.azm, %bb.azm
+  %.1178502.i = phi i32 [ %switch.load1717, %bb.azo ], [ -520094722, %bb.azm ], [ -520093698, %bb.azn ], [ -520094722, %bb.azm ] ; 3 uses
   %i.gpl = zext nneg i32 %i.gpg to i64            ; 2 uses
   %i.gpm = getelementptr inbounds nuw [48 x i8], ptr %i.g, i64 %i.gpl ; 2 uses
   %i.gpn = load i32, ptr %i.gpm, align 8, !tbaa !119
@@ -868,30 +857,18 @@ bb.ask:                                           ; preds = %.thread1513
 
 bb.asl:                                           ; preds = %bb.ask
   %i.hwh = load i8, ptr %i.zh, align 4, !tbaa !55
-  switch i8 %i.hwh, label %bb.asn [
-    i8 83, label %bb.asm
-    i8 86, label %bb.asm
-    i8 92, label %bb.asm
-    i8 95, label %bb.asm
-    i8 84, label %bb.asm
-    i8 87, label %bb.asm
-    i8 93, label %bb.asm
-    i8 96, label %bb.asm
-    i8 85, label %bb.asm
-    i8 88, label %bb.asm
-    i8 94, label %bb.asm
-    i8 97, label %bb.asm
-    i8 -82, label %bb.asm
-    i8 -81, label %bb.asm
-    i8 -79, label %bb.asm
-    i8 -78, label %bb.asm
-  ]
+  %switch.tableidx = add i8 %i.hwh, -83           ; 2 uses
+  %5 = icmp ult i8 %switch.tableidx, 96
+  br i1 %5, label %bb.asm, label %bb.asn
 
-bb.asm:                                           ; preds = %bb.asl, %bb.asl, %bb.asl, %bb.asl, %bb.asl, %bb.asl, %bb.asl, %bb.asl, %bb.asl, %bb.asl, %bb.asl, %bb.asl, %bb.asl, %bb.asl, %bb.asl, %bb.asl
+bb.asm:                                           ; preds = %bb.asl
+  %6 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep4412 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.zend_infer_types_ex.11, i64 %6
+  %switch.load4413 = load i32, ptr %switch.gep4412, align 4
   br label %bb.asn
 
-bb.asn:                                           ; preds = %bb.ask, %bb.ask, %bb.asl, %bb.asm
-  %.1178502.i = phi i32 [ -486539266, %bb.asm ], [ -520094722, %bb.ask ], [ -520093698, %bb.asl ], [ -520094722, %bb.ask ] ; 3 uses
+bb.asn:                                           ; preds = %bb.asm, %bb.asl, %bb.ask, %bb.ask
+  %.1178502.i = phi i32 [ %switch.load4413, %bb.asm ], [ -520094722, %bb.ask ], [ -520093698, %bb.asl ], [ -520094722, %bb.ask ] ; 3 uses
   %i.hwi = zext nneg i32 %i.hwd to i64            ; 3 uses
   %i.hwj = getelementptr inbounds nuw [48 x i8], ptr %i.lf, i64 %i.hwi ; 2 uses
   %i.hwk = load i32, ptr %i.hwj, align 8, !tbaa !119

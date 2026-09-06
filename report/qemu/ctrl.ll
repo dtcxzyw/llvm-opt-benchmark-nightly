@@ -205,6 +205,7 @@ begin_hunk_0
 @.str.567 = private unnamed_addr constant [19 x i8] c"coroutine_mixed_fn\00", section "llvm.metadata"
 @.str.568 = private unnamed_addr constant [60 x i8] c"/opt-bench/work/qemu/qemu/include/system/block-backend-io.h\00", section "llvm.metadata"
 @llvm.global.annotations = appending global [4 x { ptr, ptr, ptr, i32, ptr }] [{ ptr, ptr, ptr, i32, ptr } { ptr @bdrv_block_status, ptr @.str.565, ptr @.str.566, i32 136, ptr null }, { ptr, ptr, ptr, i32, ptr } { ptr @bdrv_block_status, ptr @.str.567, ptr @.str.566, i32 136, ptr null }, { ptr, ptr, ptr, i32, ptr } { ptr @blk_flush, ptr @.str.565, ptr @.str.568, i32 225, ptr null }, { ptr, ptr, ptr, i32, ptr } { ptr @blk_flush, ptr @.str.567, ptr @.str.568, i32 225, ptr null }], section "llvm.metadata"
+@switch.table.nvme_process_sq = private unnamed_addr constant [131 x ptr] [ptr @.str.210, ptr @.str.211, ptr @.str.212, ptr @.str.228, ptr @.str.213, ptr @.str.214, ptr @.str.215, ptr @.str.228, ptr @.str.216, ptr @.str.217, ptr @.str.218, ptr @.str.228, ptr @.str.219, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.220, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.221, ptr @.str.223, ptr @.str.228, ptr @.str.222, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.224, ptr @.str.228, ptr @.str.228, ptr @.str.228, ptr @.str.225, ptr @.str.226, ptr @.str.227], align 8
 
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local zeroext range(i16 0, 16404) i16 @nvme_map_dptr(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #0 {
@@ -607,84 +608,18 @@ nvme_cid.exit.i:                                  ; preds = %bb.ah
   %.val.i88 = load ptr, ptr %i.eu, align 8
   %i.vo = getelementptr i8, ptr %.val.i88, i64 8
   %.val.val.i89 = load i16, ptr %i.vo, align 8
-  %i.vp = load i8, ptr %i.fl, align 8             ; 5 uses
-  switch i8 %i.vp, label %bb.ga [
-    i8 0, label %nvme_adm_opc_str.exit.i
-    i8 1, label %2
-    i8 2, label %3
-    i8 4, label %4
-    i8 5, label %5
-    i8 6, label %6
-    i8 8, label %7
-    i8 9, label %8
-    i8 10, label %9
-    i8 12, label %10
-    i8 21, label %11
-    i8 25, label %12
-    i8 28, label %13
-    i8 26, label %14
-    i8 124, label %15
-    i8 -128, label %16
-    i8 -127, label %17
-    i8 -126, label %18
-  ]
-
-2:                                                ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-3:                                                ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-4:                                                ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-5:                                                ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-6:                                                ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-7:                                                ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-8:                                                ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-9:                                                ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-10:                                               ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-11:                                               ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-12:                                               ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-13:                                               ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-14:                                               ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-15:                                               ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-16:                                               ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-17:                                               ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
-
-18:                                               ; preds = %nvme_cid.exit.i
-  br label %nvme_adm_opc_str.exit.i
+  %i.vp = load i8, ptr %i.fl, align 8             ; 6 uses
+  %2 = icmp ult i8 %i.vp, -125
+  br i1 %2, label %bb.ga, label %nvme_adm_opc_str.exit.i
 
 bb.ga:                                            ; preds = %nvme_cid.exit.i
+  %3 = zext i8 %i.vp to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.nvme_process_sq, i64 %3
+  %switch.load = load ptr, ptr %switch.gep, align 8
   br label %nvme_adm_opc_str.exit.i
 
-nvme_adm_opc_str.exit.i:                          ; preds = %bb.ga, %18, %17, %16, %15, %14, %13, %12, %11, %10, %9, %8, %7, %6, %5, %4, %3, %2, %nvme_cid.exit.i
-  %.0.i50.i = phi ptr [ @.str.228, %bb.ga ], [ @.str.227, %18 ], [ @.str.211, %2 ], [ @.str.212, %3 ], [ @.str.213, %4 ], [ @.str.214, %5 ], [ @.str.215, %6 ], [ @.str.216, %7 ], [ @.str.217, %8 ], [ @.str.218, %9 ], [ @.str.219, %10 ], [ @.str.220, %11 ], [ @.str.221, %12 ], [ @.str.222, %13 ], [ @.str.223, %14 ], [ @.str.224, %15 ], [ @.str.225, %16 ], [ @.str.226, %17 ], [ @.str.210, %nvme_cid.exit.i ]
+nvme_adm_opc_str.exit.i:                          ; preds = %nvme_cid.exit.i, %bb.ga
+  %.0.i50.i = phi ptr [ %switch.load, %bb.ga ], [ @.str.228, %nvme_cid.exit.i ]
   %i.vq = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i51.i = icmp eq i32 %i.vq, 0
   br i1 %.not.i51.i, label %trace_pci_nvme_admin_cmd.exit.i, label %bb.gb, !prof !17

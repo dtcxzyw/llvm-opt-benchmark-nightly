@@ -152,6 +152,7 @@ module asm
 @.str.44 = private unnamed_addr constant [32 x i8] c"\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\00\00\00\00\00\00\00\00\02\02\02\02\03\03\04\00", align 1
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init, ptr @_ZN3fmt3v1212format_facetISt6localeE2idE }]
 @llvm.used = appending global [1 x ptr] [ptr @_ZN3fmt3v1212format_facetISt6localeE2idE], section "llvm.metadata"
+@switch.table._ZNK3dpx13GenericHeader26ImageElementComponentCountEi = private unnamed_addr constant [107 x i8] c"\03\04\04\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\02\03\03\04\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\02\03\04\05\06\07\08", align 4
 @switch.table._ZNK3dpx13GenericHeader17ComponentDataSizeEi = private unnamed_addr constant [25 x i8] c"\00\04\01\04\01\04\04\04\01\04\04\04\04\04\04\04\04\04\04\04\04\04\04\04\03", align 4
 @switch.table._ZNK3dpx13GenericHeader18ComponentByteCountEi = private unnamed_addr constant [25 x i8] c"\01\08\02\08\02\08\08\08\02\08\08\08\08\08\08\08\08\08\08\08\08\08\08\08\04", align 4
 @switch.table._ZN3dpx13GenericHeader17DataSizeByteCountENS_8DataSizeE = private unnamed_addr constant [4 x i8] c"\01\02\04\04", align 4
@@ -554,46 +555,19 @@ bb.a:
   %i.b = getelementptr [72 x i8], ptr %0, i64 %i.a
   %i.c = getelementptr i8, ptr %i.b, i64 800
   %i.d = load i8, ptr %i.c, align 4, !tbaa !79
-  switch i8 %i.d, label %bb.c [
-    i8 -100, label %bb.b
-    i8 -101, label %7
-    i8 -102, label %6
-    i8 -103, label %5
-    i8 -104, label %3
-    i8 -105, label %2
-    i8 -106, label %4
-    i8 103, label %3
-    i8 102, label %2
-    i8 50, label %2
-    i8 51, label %3
-    i8 52, label %3
-    i8 100, label %4
-    i8 101, label %2
-  ]
-
-2:                                                ; preds = %bb.a, %bb.a, %bb.a, %bb.a
-  br label %bb.c
-
-3:                                                ; preds = %bb.a, %bb.a, %bb.a, %bb.a
-  br label %bb.c
-
-4:                                                ; preds = %bb.a, %bb.a
-  br label %bb.c
-
-5:                                                ; preds = %bb.a
-  br label %bb.c
-
-6:                                                ; preds = %bb.a
-  br label %bb.c
-
-7:                                                ; preds = %bb.a
-  br label %bb.c
+  %switch.tableidx = add i8 %i.d, -50             ; 2 uses
+  %2 = icmp ult i8 %switch.tableidx, 107
+  br i1 %2, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %3 = zext nneg i8 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK3dpx13GenericHeader26ImageElementComponentCountEi, i64 %3
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %7, %6, %5, %4, %3, %2, %bb.a
-  %.0 = phi i32 [ 7, %7 ], [ 8, %bb.b ], [ 6, %6 ], [ 3, %2 ], [ 4, %3 ], [ 2, %4 ], [ 5, %5 ], [ 1, %bb.a ]
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %.0 = phi i32 [ %switch.ext, %bb.b ], [ 1, %bb.a ]
   ret i32 %.0
 }
 

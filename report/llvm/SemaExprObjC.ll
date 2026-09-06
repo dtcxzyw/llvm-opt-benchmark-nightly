@@ -205,7 +205,7 @@ $_ZTVN5clang4Sema18BoundTypeDiagnoserIJNS_11SourceRangeEEEE = comdat any
 @_ZTVN5clang13DeclFilterCCCINS_16ObjCPropertyDeclEEE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZN5clang27CorrectionCandidateCallbackD2Ev, ptr @_ZN5clang13DeclFilterCCCINS_16ObjCPropertyDeclEED0Ev, ptr @_ZN5clang13DeclFilterCCCINS_16ObjCPropertyDeclEE17ValidateCandidateERKNS_14TypoCorrectionE, ptr @_ZN5clang27CorrectionCandidateCallback13RankCandidateERKNS_14TypoCorrectionE, ptr @_ZN5clang13DeclFilterCCCINS_16ObjCPropertyDeclEE5cloneEv] }, comdat, align 8
 @_ZTVN5clang4Sema18BoundTypeDiagnoserIJNS_15DeclarationNameEPNS_4ExprEEEE = linkonce_odr unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr null, ptr @_ZN5clang4Sema18BoundTypeDiagnoserIJNS_15DeclarationNameEPNS_4ExprEEE8diagnoseERS0_NS_14SourceLocationENS_8QualTypeE, ptr @_ZN5clang4Sema13TypeDiagnoserD2Ev, ptr @_ZN5clang4Sema18BoundTypeDiagnoserIJNS_15DeclarationNameEPNS_4ExprEEED0Ev] }, comdat, align 8
 @_ZTVN5clang4Sema18BoundTypeDiagnoserIJNS_11SourceRangeEEEE = linkonce_odr unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr null, ptr @_ZN5clang4Sema18BoundTypeDiagnoserIJNS_11SourceRangeEEE8diagnoseERS0_NS_14SourceLocationENS_8QualTypeE, ptr @_ZN5clang4Sema13TypeDiagnoserD2Ev, ptr @_ZN5clang4Sema18BoundTypeDiagnoserIJNS_11SourceRangeEEED0Ev] }, comdat, align 8
-@switch.table._ZN5clang8SemaObjC18BuildObjCBoxedExprENS_11SourceRangeEPNS_4ExprE = private unnamed_addr constant [8 x i16] [i16 18960, i16 poison, i16 poison, i16 poison, i16 18912, i16 18928, i16 18912, i16 18952], align 8
+@switch.table._ZN5clang8SemaObjC18BuildObjCBoxedExprENS_11SourceRangeEPNS_4ExprE = private unnamed_addr constant [5 x i16] [i16 18912, i16 18928, i16 18912, i16 18952, i16 18960], align 8
 @switch.table._ZL33LookupObjCInterfaceDeclForLiteralRN5clang4SemaENS_14SourceLocationENS_8SemaObjC15ObjCLiteralKindE.71 = private unnamed_addr constant [5 x i8] c"\02\04\06\09\01", align 4
 @switch.table._ZN5clang15StmtVisitorBaseISt11add_pointerN12_GLOBAL__N_114ARCCastCheckerENS2_9ACCResultEJEE5VisitEPNS_4StmtE.74 = private unnamed_addr constant [4 x i8] c"\01\00\01\01", align 4
 @switch.table._ZN12_GLOBAL__N_114ARCCastChecker17checkCallToMethodEPN5clang14ObjCMethodDeclE = private unnamed_addr constant [5 x i8] c"\03\03\02\03\03", align 4
@@ -608,16 +608,14 @@ bb.a:
 
 switch.hole_check:                                ; preds = %bb.a
   %i.e = load i24, ptr %2, align 8
-  %i.f = lshr i24 %i.e, 19
+  %i.f = lshr i24 %i.e, 19                        ; 2 uses
   %trunc = trunc i24 %i.f to i3
-  %switch.tableidx = xor i3 %trunc, -4            ; 2 uses
-  %switch.maskindex = zext i3 %switch.tableidx to i8
-  %switch.shifted = lshr i8 -15, %switch.maskindex
-  %switch.lobit = trunc i8 %switch.shifted to i1
-  br i1 %switch.lobit, label %switch.lookup, label %bb.b
+  %4 = icmp ult i3 %trunc, -3
+  br i1 %4, label %switch.lookup, label %bb.b
 
 switch.lookup:                                    ; preds = %switch.hole_check
-  %i.g = zext i3 %switch.tableidx to i64
+  %trunc.mask = and i24 %i.f, 7
+  %i.g = zext nneg i24 %trunc.mask to i64
   %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5clang8SemaObjC18BuildObjCBoxedExprENS_11SourceRangeEPNS_4ExprE, i64 %i.g
   %switch.load = load i16, ptr %switch.gep, align 2
   %switch.ext = zext i16 %switch.load to i64
@@ -1020,16 +1018,14 @@ bb.z:                                             ; preds = %_ZNK5clang4Type5get
 
 switch.hole_check:                                ; preds = %bb.z
   %i.fx = load i24, ptr %i.fu, align 8
-  %i.fy = lshr i24 %i.fx, 19
+  %i.fy = lshr i24 %i.fx, 19                      ; 2 uses
   %trunc = trunc i24 %i.fy to i3
-  %switch.tableidx = xor i3 %trunc, -4            ; 2 uses
-  %switch.maskindex = zext i3 %switch.tableidx to i8
-  %switch.shifted = lshr i8 -15, %switch.maskindex
-  %switch.lobit = trunc i8 %switch.shifted to i1
-  br i1 %switch.lobit, label %switch.lookup, label %bb.aa
+  %16 = icmp ult i3 %trunc, -3
+  br i1 %16, label %switch.lookup, label %bb.aa
 
 switch.lookup:                                    ; preds = %switch.hole_check
-  %i.fz = zext i3 %switch.tableidx to i64
+  %trunc.mask = and i24 %i.fy, 7
+  %i.fz = zext nneg i24 %trunc.mask to i64
   %switch.gep = getelementptr inbounds nuw [2 x i8], ptr @switch.table._ZN5clang8SemaObjC18BuildObjCBoxedExprENS_11SourceRangeEPNS_4ExprE, i64 %i.fz
   %switch.load = load i16, ptr %switch.gep, align 2
   %switch.ext = zext i16 %switch.load to i64

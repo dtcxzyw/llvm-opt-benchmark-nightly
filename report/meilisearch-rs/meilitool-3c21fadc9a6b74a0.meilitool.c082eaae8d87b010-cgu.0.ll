@@ -206,7 +206,6 @@ begin_hunk_0
 @"switch.table._ZN76_$LT$milli..vector..settings..EmbedderSource$u20$as$u20$core..fmt..Debug$GT$3fmt17h6f1cd8c94d335d98E.3093" = private unnamed_addr constant [6 x ptr] [ptr @757, ptr @756, ptr @758, ptr @759, ptr @760, ptr @2406], align 8
 @"switch.table._ZN76_$LT$milli..vector..settings..NestingContext$u20$as$u20$core..fmt..Debug$GT$3fmt17h4e1de01cfa3d1cc8E" = private unnamed_addr constant [3 x i8] c"\09\06\08", align 8
 @"switch.table._ZN76_$LT$milli..vector..settings..NestingContext$u20$as$u20$core..fmt..Debug$GT$3fmt17h4e1de01cfa3d1cc8E.3094" = private unnamed_addr constant [3 x ptr] [ptr @2407, ptr @2408, ptr @2409], align 8
-@"switch.table._ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h89d0e226ebff6aeeE" = private unnamed_addr constant [256 x i8] [i8 -128, i8 -127, i8 -126, i8 -125, i8 -124, i8 -123, i8 -122, i8 -121, i8 -120, i8 -119, i8 -118, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15, i8 16, i8 17, i8 18, i8 19, i8 20, i8 21, i8 22, i8 23, i8 24, i8 25, i8 26, i8 27, i8 28, i8 29, i8 30, i8 31, i8 32, i8 33, i8 34, i8 35, i8 36, i8 37, i8 38, i8 39, i8 40, i8 41, i8 42, i8 43, i8 44, i8 45, i8 46, i8 47, i8 48, i8 49, i8 50, i8 51, i8 52, i8 53, i8 54, i8 55, i8 56, i8 57, i8 58, i8 59, i8 60, i8 61, i8 62, i8 63, i8 64, i8 65, i8 66, i8 67, i8 68, i8 69, i8 70, i8 71, i8 72, i8 73, i8 74, i8 75, i8 76, i8 77, i8 78, i8 79, i8 80, i8 81, i8 82, i8 83, i8 84, i8 85, i8 86, i8 87, i8 88, i8 89, i8 90, i8 91, i8 92, i8 93, i8 94, i8 95, i8 96, i8 97, i8 98, i8 99, i8 100, i8 101, i8 102, i8 103, i8 104, i8 105, i8 106, i8 107, i8 108, i8 109, i8 110, i8 111, i8 112, i8 113, i8 114, i8 115, i8 116, i8 117, i8 118, i8 119, i8 120, i8 121, i8 122, i8 123, i8 124, i8 125, i8 126, i8 127], align 1
 @"switch.table._ZN88_$LT$meilitool..upgrade..v1_9..LegacyDateTime$u20$as$u20$serde_core..de..Deserialize$GT$11deserialize17h709b2cb294eff23fE" = private unnamed_addr constant [7 x i8] c"\01\02\03\04\05\06\00", align 2
 @"switch.table._ZN88_$LT$meilitool..upgrade..v1_9..LegacyDateTime$u20$as$u20$serde_core..de..Deserialize$GT$11deserialize17h709b2cb294eff23fE.3096" = private unnamed_addr constant [13 x i16] [i16 -1, i16 -2, i16 -3, i16 -4, i16 -5, i16 -6, i16 -7, i16 -1, i16 -2, i16 -3, i16 -4, i16 -5, i16 -6], align 2
 
@@ -609,10 +608,6 @@ bb.u:                                             ; preds = %.noexc13.i.i.i, %bb
 switch.lookup:                                    ; preds = %.noexc12.i.i.i
   %i.ck = load i8, ptr %i.av, align 1, !range !85, !noalias !63269, !noundef !23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !63269
-  %switch.tableidx = xor i8 %i.ck, -128
-  %2 = zext i8 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw i8, ptr @"switch.table._ZN86_$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$11deserialize17h89d0e226ebff6aeeE", i64 %2
-  %switch.load = load i8, ptr %switch.gep, align 1
   br label %.thread.i.i.i
 
 default.unreachable:                              ; preds = %.noexc22.i.i.i
@@ -1015,7 +1010,7 @@ bb.lh:                                            ; preds = %bb.lg
   br label %common.resume.i.i
 
 _ZN10serde_core2de9SeqAccess12next_element17hf143a02275451800E.exit.i.i.i.a: ; preds = %bb.lb, %bb.la, %.noexc25.i.i.i, %.noexc24.i.i.i, %.noexc23.i.i.i, %bb.u, %.noexc8.i.i.i, %.noexc7.i.i.i, %bb.i
-  %.sroa.1228.0.i.i.i = phi ptr [ %i.bb, %bb.i ], [ %i.ef, %.noexc24.i.i.i ], [ %i.du, %.noexc23.i.i.i ], [ %i.bq, %.noexc8.i.i.i ], [ %i.bp, %.noexc7.i.i.i ], [ %.sroa.121.0.ph.i.i.i.i.i.i.i.i.i.i.i, %bb.u ], [ %i.eg, %.noexc25.i.i.i ], [ %.sroa.1458.0.i.i.i.i.i.i.i.i, %bb.la ], [ %.sroa.1458.0.i.i.i.i.i.i.i.i, %bb.lb ] ; 2 uses
+  %.sroa.1228.0.i.i.i = phi ptr [ %i.du, %.noexc23.i.i.i ], [ %.sroa.121.0.ph.i.i.i.i.i.i.i.i.i.i.i, %bb.u ], [ %i.ef, %.noexc24.i.i.i ], [ %i.eg, %.noexc25.i.i.i ], [ %i.bb, %bb.i ], [ %i.bp, %.noexc7.i.i.i ], [ %i.bq, %.noexc8.i.i.i ], [ %.sroa.1458.0.i.i.i.i.i.i.i.i, %bb.la ], [ %.sroa.1458.0.i.i.i.i.i.i.i.i, %bb.lb ] ; 2 uses
   %.val.i.i.i = load i64, ptr %i.r, align 8, !noalias !63237 ; 2 uses
   %i.ei = icmp eq i64 %.val.i.i.i, 0
   br i1 %i.ei, label %"_ZN182_$LT$serde_core..de..impls..$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$alloc..vec..Vec$LT$T$GT$$GT$..deserialize..VecVisitor$LT$T$GT$$u20$as$u20$serde_core..de..Visitor$GT$9visit_seq17hca9437b5000a953eE.exit.i.i", label %bb.li
@@ -1030,8 +1025,8 @@ bb.lj:                                            ; preds = %bb.ld
   store i64 %i.ej, ptr %i.bf, align 8, !alias.scope !63310, !noalias !63257
   br label %.thread.i.i.i
 
-.thread.i.i.i:                                    ; preds = %switch.lookup, %bb.lj
-  %.sroa.9.0.ph35.i.i.i = phi i8 [ %.sroa.5.0.i.i.i.i.i.i.i.i, %bb.lj ], [ %switch.load, %switch.lookup ]
+.thread.i.i.i:                                    ; preds = %bb.lj, %switch.lookup
+  %.sroa.9.0.ph35.i.i.i = phi i8 [ %i.ck, %switch.lookup ], [ %.sroa.5.0.i.i.i.i.i.i.i.i, %bb.lj ]
   %i.ek = load i64, ptr %i.as, align 8, !alias.scope !63311, !noalias !63237, !noundef !23 ; 3 uses
   %i.el = load i64, ptr %i.r, align 8, !range !22, !alias.scope !63311, !noalias !63237, !noundef !23
   %i.em = icmp eq i64 %i.ek, %i.el
