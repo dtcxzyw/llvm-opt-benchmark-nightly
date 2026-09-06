@@ -205,7 +205,7 @@ bb.fy:                                            ; preds = %_ZN5ImGui9IsKeyDown
   store i8 1, ptr %i.bax, align 8, !tbaa !975
   br label %_ZN5ImGui8SameLineEff.exit657
 
-_ZN5ImGui8SameLineEff.exit657:                    ; preds = %_ZN5ImGui9IsKeyDownE8ImGuiKey.exit.thread, %bb.fy
+_ZN5ImGui8SameLineEff.exit657:                    ; preds = %bb.fy, %_ZN5ImGui9IsKeyDownE8ImGuiKey.exit.thread
   %i.bay = getelementptr [8 x i8], ptr @_ZL9GKeyNames, i64 %indvars.iv1090
   %i.baz = getelementptr i8, ptr %i.bay, i64 -4096
   %i.bba = load ptr, ptr %i.baz, align 8, !tbaa !276
@@ -396,7 +396,7 @@ bb.gh:                                            ; preds = %_ZN5ImGui13IsKeyRel
   store i8 1, ptr %i.bfe, align 8, !tbaa !975
   br label %_ZN5ImGui8SameLineEff.exit690
 
-_ZN5ImGui8SameLineEff.exit690:                    ; preds = %_ZN5ImGui13IsKeyReleasedE8ImGuiKey.exit.thread, %bb.gh
+_ZN5ImGui8SameLineEff.exit690:                    ; preds = %bb.gh, %_ZN5ImGui13IsKeyReleasedE8ImGuiKey.exit.thread
   %i.bff = getelementptr [8 x i8], ptr @_ZL9GKeyNames, i64 %indvars.iv1098
   %i.bfg = getelementptr i8, ptr %i.bff, i64 -4096
   %i.bfh = load ptr, ptr %i.bfg, align 8, !tbaa !276
