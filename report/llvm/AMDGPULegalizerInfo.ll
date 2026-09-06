@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %_ZNK4llvm3LLT14getE
   br label %_ZL19maxSizeForAddrSpaceRKN4llvm12GCNSubtargetEjbb.exit.i.i.i
 
 _ZL19maxSizeForAddrSpaceRKN4llvm12GCNSubtargetEjbb.exit.i.i.i: ; preds = %bb.m, %bb.l, %bb.k, %_ZNK4llvm12GCNSubtarget21hasFlatScratchEnabledEv.exit.thread.i.i.i.i, %bb.j
-  %.0.i.i.i.i = phi i32 [ %i.bp, %bb.m ], [ %i.bh, %bb.l ], [ %i.bd, %bb.k ], [ 128, %_ZNK4llvm12GCNSubtarget21hasFlatScratchEnabledEv.exit.thread.i.i.i.i ], [ 32, %bb.j ] ; 4 uses
+  %.0.i.i.i.i = phi i32 [ %i.bp, %bb.m ], [ %i.bh, %bb.l ], [ %i.bd, %bb.k ], [ 128, %_ZNK4llvm12GCNSubtarget21hasFlatScratchEnabledEv.exit.thread.i.i.i.i ], [ 32, %bb.j ] ; 5 uses
   %i.bq = load i64, ptr %i.am, align 8            ; 10 uses
   %.mask.i.i50.i.i.i = and i64 %i.bq, -1152921504606846976
   %i.br = icmp eq i64 %.mask.i.i50.i.i.i, 4611686018427387904 ; 2 uses
@@ -266,14 +266,14 @@ _ZNK4llvm3LLT14getNumElementsEv.exit.i.i.i:       ; preds = %bb.p
   %i.co = and i64 %i.cn, 65535
   %i.cp = lshr i64 %.sroa.0.0.i.i.i.i, 28
   %i.cq = select i1 %i.cm, i64 %i.co, i64 %i.cp
-  %i.cr = trunc i64 %i.cq to i32                  ; 2 uses
+  %i.cr = trunc i64 %i.cq to i32                  ; 3 uses
   %i.cs = urem i32 %.0.i.i.i.i, %i.cr
-  %i.ct = udiv i32 %.0.i.i.i.i, %i.cr             ; 2 uses
+  %i.ct = udiv exact i32 %.0.i.i.i.i, %i.cr
   %i.cu = icmp eq i32 %i.cs, 0
   br i1 %i.cu, label %bb.r, label %bb.t
 
 bb.r:                                             ; preds = %_ZNK4llvm3LLT14getNumElementsEv.exit.i.i.i
-  %.not4.not.i.i.i.i = icmp eq i32 %i.ct, 1
+  %.not4.not.i.i.i.i = icmp eq i32 %.0.i.i.i.i, %i.cr
   br i1 %.not4.not.i.i.i.i, label %"_ZSt10__invoke_rISt4pairIjN4llvm3LLTEERZNS1_19AMDGPULegalizerInfoC1ERKNS1_12GCNSubtargetERKNS1_16GCNTargetMachineEE4$_11JRKNS1_13LegalityQueryEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESH_E4typeEOSI_DpOSJ_.exit", label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -293,7 +293,7 @@ bb.u:                                             ; preds = %bb.t
   %.lhs.trunc.i.i.i = trunc i32 %i.cl to i16      ; 2 uses
   %.rhs.trunc.i.i.i = trunc nuw i32 %i.cx to i16  ; 2 uses
   %i.cz = urem i16 %.lhs.trunc.i.i.i, %.rhs.trunc.i.i.i
-  %i.da = udiv i16 %.lhs.trunc.i.i.i, %.rhs.trunc.i.i.i
+  %i.da = udiv exact i16 %.lhs.trunc.i.i.i, %.rhs.trunc.i.i.i
   %.not49.i.i.i = icmp eq i16 %i.cz, 0
   br i1 %.not49.i.i.i, label %bb.v, label %"_ZSt10__invoke_rISt4pairIjN4llvm3LLTEERZNS1_19AMDGPULegalizerInfoC1ERKNS1_12GCNSubtargetERKNS1_16GCNTargetMachineEE4$_11JRKNS1_13LegalityQueryEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESH_E4typeEOSI_DpOSJ_.exit"
 

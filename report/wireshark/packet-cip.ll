@@ -205,11 +205,11 @@ bb.b:                                             ; preds = %bb.a
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.a
-  %6 = udiv i32 %5, 3
-  %i.c = icmp sgt i32 %5, 2
+  %i.c = icmp sgt i32 %5, 0
   br i1 %i.c, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.c
+  %6 = udiv exact i32 %5, 3
   %i.d = getelementptr i8, ptr %0, i64 416
   br label %bb.d
 

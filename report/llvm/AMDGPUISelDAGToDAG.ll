@@ -205,18 +205,18 @@ declare { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SD
 define dso_local noundef zeroext i1 @_ZNK4llvm18AMDGPUDAGToDAGISel16isDSOffset2LegalENS_7SDValueEjjj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(965) %0, ptr %1, i32 %2, i32 noundef %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = urem i32 %3, %5
-  %i.b = udiv i32 %3, %5
+  %i.b = udiv exact i32 %3, %5
   %.not = icmp eq i32 %i.a, 0
   br i1 %.not, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
   %i.c = urem i32 %4, %5
-  %i.d = udiv i32 %4, %5
+  %i.d = udiv exact i32 %4, %5
   %.not9 = icmp eq i32 %i.c, 0
   %i.e = icmp ult i32 %i.b, 256
-  %or.cond = and i1 %.not9, %i.e
+  %or.cond = select i1 %.not9, i1 %i.e, i1 false
   %i.f = icmp ult i32 %i.d, 256
-  %or.cond12 = and i1 %or.cond, %i.f
+  %or.cond12 = select i1 %or.cond, i1 %i.f, i1 false
   br i1 %or.cond12, label %bb.c, label %bb.g
 
 bb.c:                                             ; preds = %bb.b
@@ -538,18 +538,18 @@ bb.b:                                             ; preds = %bb.a
   %i.s = trunc i64 %.0.i.i.i to i32               ; 3 uses
   %i.t = add i32 %6, %i.s                         ; 2 uses
   %i.u = urem i32 %i.s, %6
-  %i.v = udiv i32 %i.s, %6                        ; 2 uses
+  %i.v = udiv exact i32 %i.s, %6                  ; 2 uses
   %.not.i = icmp eq i32 %i.u, 0
   br i1 %.not.i, label %bb.c, label %.critedge177
 
 bb.c:                                             ; preds = %bb.b
   %i.w = urem i32 %i.t, %6
-  %i.x = udiv i32 %i.t, %6                        ; 2 uses
+  %i.x = udiv exact i32 %i.t, %6                  ; 2 uses
   %.not9.i = icmp eq i32 %i.w, 0
   %i.y = icmp ult i32 %i.v, 256
-  %or.cond = and i1 %.not9.i, %i.y
+  %or.cond = select i1 %.not9.i, i1 %i.y, i1 false
   %i.z = icmp ult i32 %i.x, 256
-  %or.cond281 = and i1 %or.cond, %i.z
+  %or.cond281 = select i1 %or.cond, i1 %i.z, i1 false
   br i1 %or.cond281, label %bb.d, label %.critedge177
 
 bb.d:                                             ; preds = %bb.c
@@ -630,18 +630,18 @@ _ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit: ; preds = %bb.
   %i.be = trunc i64 %.0.i.i.i186 to i32           ; 3 uses
   %i.bf = add i32 %6, %i.be                       ; 2 uses
   %i.bg = urem i32 %i.be, %6
-  %i.bh = udiv i32 %i.be, %6                      ; 2 uses
+  %i.bh = udiv exact i32 %i.be, %6                ; 2 uses
   %.not.i187 = icmp eq i32 %i.bg, 0
   br i1 %.not.i187, label %bb.i, label %.critedge177
 
 bb.i:                                             ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit
   %i.bi = urem i32 %i.bf, %6
-  %i.bj = udiv i32 %i.bf, %6                      ; 2 uses
+  %i.bj = udiv exact i32 %i.bf, %6                ; 2 uses
   %.not9.i189 = icmp eq i32 %i.bi, 0
   %i.bk = icmp ult i32 %i.bh, 256
-  %or.cond282 = and i1 %.not9.i189, %i.bk
+  %or.cond282 = select i1 %.not9.i189, i1 %i.bk, i1 false
   %i.bl = icmp ult i32 %i.bj, 256
-  %or.cond283 = and i1 %or.cond282, %i.bl
+  %or.cond283 = select i1 %or.cond282, i1 %i.bl, i1 false
   br i1 %or.cond283, label %bb.j, label %.critedge177
 
 bb.j:                                             ; preds = %bb.i
@@ -801,18 +801,18 @@ _ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit: ; preds = %bb.g
   %i.dn = trunc i64 %.0.i.i.i202 to i32           ; 3 uses
   %i.do = add i32 %6, %i.dn                       ; 2 uses
   %i.dp = urem i32 %i.dn, %6
-  %i.dq = udiv i32 %i.dn, %6                      ; 2 uses
+  %i.dq = udiv exact i32 %i.dn, %6                ; 2 uses
   %.not.i203 = icmp eq i32 %i.dp, 0
   br i1 %.not.i203, label %bb.p, label %.critedge177
 
 bb.p:                                             ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit
   %i.dr = urem i32 %i.do, %6
-  %i.ds = udiv i32 %i.do, %6                      ; 2 uses
+  %i.ds = udiv exact i32 %i.do, %6                ; 2 uses
   %.not9.i205 = icmp eq i32 %i.dr, 0
   %i.dt = icmp ult i32 %i.dq, 256
-  %or.cond284 = and i1 %.not9.i205, %i.dt
+  %or.cond284 = select i1 %.not9.i205, i1 %i.dt, i1 false
   %i.du = icmp ult i32 %i.ds, 256
-  %or.cond285 = and i1 %or.cond284, %i.du
+  %or.cond285 = select i1 %or.cond284, i1 %i.du, i1 false
   br i1 %or.cond285, label %_ZNK4llvm18AMDGPUDAGToDAGISel16isDSOffset2LegalENS_7SDValueEjjj.exit206, label %.critedge177
 
 _ZNK4llvm18AMDGPUDAGToDAGISel16isDSOffset2LegalENS_7SDValueEjjj.exit206: ; preds = %bb.p

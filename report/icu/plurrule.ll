@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %.lr.ph.i
   %.018.i = phi i64 [ %i.af, %.lr.ph.i ], [ %3, %.preheader.i ]
-  %i.af = sdiv i64 %.018.i, 10                    ; 3 uses
+  %i.af = sdiv exact i64 %.018.i, 10              ; 3 uses
   %i.ag = srem i64 %i.af, 10
   %i.ah = icmp eq i64 %i.ag, 0
   br i1 %i.ah, label %.lr.ph.i, label %.loopexit, !llvm.loop !10
@@ -290,7 +290,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
   %.018 = phi i64 [ %i.ae, %.lr.ph ], [ %3, %.preheader ]
-  %i.ae = sdiv i64 %.018, 10                      ; 3 uses
+  %i.ae = sdiv exact i64 %.018, 10                ; 3 uses
   %i.af = srem i64 %i.ae, 10
   %i.ag = icmp eq i64 %i.af, 0
   br i1 %i.ag, label %.lr.ph, label %._crit_edge, !llvm.loop !10
@@ -379,7 +379,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i.i:                                       ; preds = %.preheader.i.i, %.lr.ph.i.i
   %.018.i.i = phi i64 [ %i.ae, %.lr.ph.i.i ], [ %3, %.preheader.i.i ]
-  %i.ae = sdiv i64 %.018.i.i, 10                  ; 3 uses
+  %i.ae = sdiv exact i64 %.018.i.i, 10            ; 3 uses
   %i.af = srem i64 %i.ae, 10
   %i.ag = icmp eq i64 %i.af, 0
   br i1 %i.ag, label %.lr.ph.i.i, label %.loopexit, !llvm.loop !10
@@ -463,7 +463,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %.lr.ph.i
   %.018.i = phi i64 [ %i.ad, %.lr.ph.i ], [ %3, %.preheader.i ]
-  %i.ad = sdiv i64 %.018.i, 10                    ; 3 uses
+  %i.ad = sdiv exact i64 %.018.i, 10              ; 3 uses
   %i.ae = srem i64 %i.ad, 10
   %i.af = icmp eq i64 %i.ae, 0
   br i1 %i.af, label %.lr.ph.i, label %_ZN6icu_7812FixedDecimal4initEdilii.exit, !llvm.loop !10
@@ -549,7 +549,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i, %.lr.ph.i.i.i
   %.018.i.i.i = phi i64 [ %i.ae, %.lr.ph.i.i.i ], [ %3, %.preheader.i.i.i ]
-  %i.ae = sdiv i64 %.018.i.i.i, 10                ; 3 uses
+  %i.ae = sdiv exact i64 %.018.i.i.i, 10          ; 3 uses
   %i.af = srem i64 %i.ae, 10
   %i.ag = icmp eq i64 %i.af, 0
   br i1 %i.ag, label %.lr.ph.i.i.i, label %.loopexit, !llvm.loop !10
@@ -633,7 +633,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i.i:                                       ; preds = %.preheader.i.i, %.lr.ph.i.i
   %.018.i.i = phi i64 [ %i.ad, %.lr.ph.i.i ], [ %3, %.preheader.i.i ]
-  %i.ad = sdiv i64 %.018.i.i, 10                  ; 3 uses
+  %i.ad = sdiv exact i64 %.018.i.i, 10            ; 3 uses
   %i.ae = srem i64 %i.ad, 10
   %i.af = icmp eq i64 %i.ae, 0
   br i1 %i.af, label %.lr.ph.i.i, label %_ZN6icu_7812FixedDecimal4initEdili.exit, !llvm.loop !10
@@ -778,7 +778,7 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i, %.lr.ph.i.i.i
   %.018.i.i.i = phi i64 [ %i.ay, %.lr.ph.i.i.i ], [ %.2.i, %.preheader.i.i.i ]
-  %i.ay = sdiv i64 %.018.i.i.i, 10                ; 3 uses
+  %i.ay = sdiv exact i64 %.018.i.i.i, 10          ; 3 uses
   %i.az = srem i64 %i.ay, 10
   %i.ba = icmp eq i64 %i.az, 0
   br i1 %i.ba, label %.lr.ph.i.i.i, label %.loopexit, !llvm.loop !10
@@ -1047,7 +1047,7 @@ bb.n:                                             ; preds = %bb.m
 
 .lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i, %.lr.ph.i.i.i
   %.018.i.i.i = phi i64 [ %i.bs, %.lr.ph.i.i.i ], [ %.2.i, %.preheader.i.i.i ]
-  %i.bs = sdiv i64 %.018.i.i.i, 10                ; 3 uses
+  %i.bs = sdiv exact i64 %.018.i.i.i, 10          ; 3 uses
   %i.bt = srem i64 %i.bs, 10
   %i.bu = icmp eq i64 %i.bt, 0
   br i1 %i.bu, label %.lr.ph.i.i.i, label %_ZN6icu_7812FixedDecimal4initEdil.exit, !llvm.loop !10
@@ -1450,7 +1450,7 @@ bb.ay:                                            ; preds = %bb.ax
 
 .lr.ph.i.i:                                       ; preds = %.preheader.i.i, %.lr.ph.i.i
   %.018.i.i = phi i64 [ %i.fj, %.lr.ph.i.i ], [ %.2.i, %.preheader.i.i ]
-  %i.fj = sdiv i64 %.018.i.i, 10                  ; 3 uses
+  %i.fj = sdiv exact i64 %.018.i.i, 10            ; 3 uses
   %i.fk = srem i64 %i.fj, 10
   %i.fl = icmp eq i64 %i.fk, 0
   br i1 %i.fl, label %.lr.ph.i.i, label %_ZN6icu_7812FixedDecimal4initEdili.exit89, !llvm.loop !10
@@ -1853,7 +1853,7 @@ bb.n:                                             ; preds = %bb.m
 
 .lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i, %.lr.ph.i.i.i
   %.018.i.i.i = phi i64 [ %i.bd, %.lr.ph.i.i.i ], [ %.2.i, %.preheader.i.i.i ]
-  %i.bd = sdiv i64 %.018.i.i.i, 10                ; 3 uses
+  %i.bd = sdiv exact i64 %.018.i.i.i, 10          ; 3 uses
   %i.be = srem i64 %i.bd, 10
   %i.bf = icmp eq i64 %i.be, 0
   br i1 %i.bf, label %.lr.ph.i.i.i, label %_ZN6icu_7812FixedDecimal4initEdil.exit, !llvm.loop !10

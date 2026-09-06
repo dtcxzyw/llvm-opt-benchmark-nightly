@@ -205,9 +205,9 @@ bb.a:
   %i.cd = urem i32 %i.bv, 1000
   %i.ce = icmp eq i32 %i.cd, 0
   %.sroa.494.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
-  %i.cf = udiv i32 %i.bv, 1000
+  %i.cf = udiv exact i32 %i.bv, 1000
   %.sroa.490.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
-  %i.cg = udiv i32 %i.bv, 1000000
+  %i.cg = udiv exact i32 %i.bv, 1000000
   %.sroa.486.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   %i.ch = icmp ugt i32 %.sroa.10.0.copyload.i.i, 43199 ; 3 uses
   %.146.i.i = select i1 %i.ch, ptr @90, ptr @89
@@ -286,9 +286,9 @@ bb.a:
   %i.en = urem i32 %storemerge.i.i, 1000
   %i.eo = icmp eq i32 %i.en, 0
   %.sroa.429.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %i.ep = udiv i32 %storemerge.i.i, 1000
+  %i.ep = udiv exact i32 %storemerge.i.i, 1000
   %.sroa.425.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %i.eq = udiv i32 %storemerge.i.i, 1000000
+  %i.eq = udiv exact i32 %storemerge.i.i, 1000000
   %.sroa.421.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.er = urem i16 %.lhs.trunc.i96.i, 100
   %i.es = trunc nuw nsw i16 %i.er to i8           ; 2 uses

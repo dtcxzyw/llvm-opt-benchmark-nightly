@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i, %bb.i, %bb.i
   %i.y = getelementptr i8, ptr %i.x, i64 56
   %i.z = load i64, ptr %i.y, align 8, !tbaa !77   ; 4 uses
   %i.aa = urem i64 %4, %i.z
-  %i.ab = udiv i64 %4, %i.z
+  %i.ab = udiv exact i64 %4, %i.z
   %i.ac = icmp eq i64 %i.aa, 0
   br i1 %i.ac, label %bb.l, label %bb.k
 
@@ -372,7 +372,7 @@ bb.j:                                             ; preds = %bb.i, %bb.i, %bb.i
   %i.y = getelementptr i8, ptr %i.x, i64 56
   %i.z = load i64, ptr %i.y, align 8, !tbaa !77   ; 4 uses
   %i.aa = urem i64 %4, %i.z
-  %i.ab = udiv i64 %4, %i.z
+  %i.ab = udiv exact i64 %4, %i.z
   %i.ac = icmp eq i64 %i.aa, 0
   br i1 %i.ac, label %bb.l, label %bb.k
 
@@ -775,7 +775,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 bb.hp:                                            ; preds = %._crit_edge
   %i.my = mul nsw i64 %.pre996, %i.ka             ; 2 uses
   %i.mz = srem i64 %i.lq, %i.my
-  %i.na = sdiv i64 %i.lq, %i.my
+  %i.na = sdiv exact i64 %i.lq, %i.my
   %i.nb = icmp eq i64 %i.mz, 0
   br i1 %i.nb, label %bb.ht, label %bb.hq
 
@@ -1178,7 +1178,7 @@ bb.l:                                             ; preds = %bb.w, %bb.u, %bb.s,
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2128) %0, i8 0, i64 2128, i1 false)
   store i32 %.062.lcssa.wide, ptr %0, align 8, !tbaa !162
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 2056
-  %i.cw = sdiv i64 %.lcssa, %.145
+  %i.cw = sdiv exact i64 %.lcssa, %.145
   %i.cx = trunc i64 %i.cw to i32
   store i32 %i.cx, ptr %i.cv, align 8, !tbaa !161
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 2120
@@ -1581,7 +1581,7 @@ bb.m:                                             ; preds = %bb.k
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.am = load i64, ptr %i.al, align 8, !tbaa !77 ; 4 uses
   %i.an = urem i64 %3, %i.am
-  %i.ao = udiv i64 %3, %i.am                      ; 2 uses
+  %i.ao = udiv exact i64 %3, %i.am                ; 2 uses
   %i.ap = icmp eq i64 %i.an, 0
   br i1 %i.ap, label %bb.o, label %.invoke309
 
@@ -1592,7 +1592,7 @@ bb.n:                                             ; preds = %.invoke309
 
 bb.o:                                             ; preds = %bb.m
   %i.ar = urem i64 %4, %i.am
-  %i.as = udiv i64 %4, %i.am                      ; 3 uses
+  %i.as = udiv exact i64 %4, %i.am                ; 3 uses
   %i.at = icmp eq i64 %i.ar, 0
   br i1 %i.at, label %bb.p, label %.invoke309
 
@@ -1765,7 +1765,7 @@ _ZL38ggml_backend_meta_buffer_simple_tensorPK11ggml_tensorm.exit.us: ; preds = %
   %i.da = getelementptr [8 x i8], ptr %i.dx, i64 %.0141252.us
   %i.db = load i64, ptr %i.da, align 8, !tbaa !77 ; 2 uses
   %i.dc = srem i64 %i.db, %i.bb
-  %i.dd = sdiv i64 %i.db, %i.bb
+  %i.dd = sdiv exact i64 %i.db, %i.bb
   %i.de = icmp eq i64 %i.dc, 0
   br i1 %i.de, label %bb.y, label %.split.us259.invoke
 
@@ -1855,7 +1855,7 @@ bb.ad:                                            ; preds = %_ZNSt6vectorImSaImE
   %i.ef = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.eg = load i64, ptr %i.ef, align 8, !tbaa !77 ; 4 uses
   %i.eh = urem i64 %3, %i.eg
-  %i.ei = udiv i64 %3, %i.eg                      ; 2 uses
+  %i.ei = udiv exact i64 %3, %i.eg                ; 2 uses
   %i.ej = icmp eq i64 %i.eh, 0
   br i1 %i.ej, label %bb.af, label %.invoke311
 
@@ -1866,7 +1866,7 @@ bb.ae:                                            ; preds = %.invoke311
 
 bb.af:                                            ; preds = %bb.ad
   %i.el = urem i64 %4, %i.eg
-  %i.em = udiv i64 %4, %i.eg                      ; 3 uses
+  %i.em = udiv exact i64 %4, %i.eg                ; 3 uses
   %i.en = icmp eq i64 %i.el, 0
   br i1 %i.en, label %bb.ag, label %.invoke311
 
@@ -2143,7 +2143,7 @@ bb.au:                                            ; preds = %bb.at, %bb.at, %bb.
   %i.hy = getelementptr i8, ptr %i.hx, i64 56
   %i.hz = load i64, ptr %i.hy, align 8, !tbaa !77 ; 4 uses
   %i.ia = urem i64 %3, %i.hz
-  %i.ib = udiv i64 %3, %i.hz                      ; 2 uses
+  %i.ib = udiv exact i64 %3, %i.hz                ; 2 uses
   %i.ic = icmp eq i64 %i.ia, 0
   br i1 %i.ic, label %bb.aw, label %bb.av
 
@@ -2353,7 +2353,7 @@ bb.m:                                             ; preds = %bb.k
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.an = load i64, ptr %i.am, align 8, !tbaa !77 ; 4 uses
   %i.ao = urem i64 %3, %i.an
-  %i.ap = udiv i64 %3, %i.an                      ; 2 uses
+  %i.ap = udiv exact i64 %3, %i.an                ; 2 uses
   %i.aq = icmp eq i64 %i.ao, 0
   br i1 %i.aq, label %bb.o, label %.invoke497
 
@@ -2364,7 +2364,7 @@ bb.n:                                             ; preds = %.invoke497
 
 bb.o:                                             ; preds = %bb.m
   %i.as = urem i64 %4, %i.an
-  %i.at = udiv i64 %4, %i.an                      ; 3 uses
+  %i.at = udiv exact i64 %4, %i.an                ; 3 uses
   %i.au = icmp eq i64 %i.as, 0
   br i1 %i.au, label %bb.p, label %.invoke497
 
@@ -2539,7 +2539,7 @@ _ZL38ggml_backend_meta_buffer_simple_tensorPK11ggml_tensorm.exit.us: ; preds = %
   %i.db = getelementptr [8 x i8], ptr %i.bk, i64 %.0194382.us
   %i.dc = load i64, ptr %i.db, align 8, !tbaa !77 ; 2 uses
   %i.dd = srem i64 %i.dc, %i.bc
-  %i.de = sdiv i64 %i.dc, %i.bc
+  %i.de = sdiv exact i64 %i.dc, %i.bc
   %i.df = icmp eq i64 %i.dd, 0
   br i1 %i.df, label %bb.y, label %.split392.us.invoke
 
@@ -2630,7 +2630,7 @@ bb.ae:                                            ; preds = %_ZNSt6vectorImSaImE
   %i.ef = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %i.eg = load i64, ptr %i.ef, align 8, !tbaa !77 ; 4 uses
   %i.eh = urem i64 %3, %i.eg
-  %i.ei = udiv i64 %3, %i.eg                      ; 2 uses
+  %i.ei = udiv exact i64 %3, %i.eg                ; 2 uses
   %i.ej = icmp eq i64 %i.eh, 0
   br i1 %i.ej, label %bb.ag, label %.invoke499
 
@@ -2641,7 +2641,7 @@ bb.af:                                            ; preds = %.invoke499
 
 bb.ag:                                            ; preds = %bb.ae
   %i.el = urem i64 %4, %i.eg
-  %i.em = udiv i64 %4, %i.eg                      ; 3 uses
+  %i.em = udiv exact i64 %4, %i.eg                ; 3 uses
   %i.en = icmp eq i64 %i.el, 0
   br i1 %i.en, label %bb.ah, label %.invoke499
 
@@ -2911,7 +2911,7 @@ bb.as:                                            ; preds = %bb.ar, %bb.ar, %bb.
   %i.ia = getelementptr i8, ptr %i.hz, i64 56
   %i.ib = load i64, ptr %i.ia, align 8, !tbaa !77 ; 6 uses
   %i.ic = urem i64 %3, %i.ib
-  %i.id = udiv i64 %3, %i.ib                      ; 2 uses
+  %i.id = udiv exact i64 %3, %i.ib                ; 2 uses
   %i.ie = icmp eq i64 %i.ic, 0
   br i1 %i.ie, label %bb.au, label %bb.at
 
@@ -3314,7 +3314,7 @@ bb.m:                                             ; preds = %bb.k
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.am = load i64, ptr %i.al, align 8, !tbaa !77 ; 4 uses
   %i.an = urem i64 %3, %i.am
-  %i.ao = udiv i64 %3, %i.am                      ; 2 uses
+  %i.ao = udiv exact i64 %3, %i.am                ; 2 uses
   %i.ap = icmp eq i64 %i.an, 0
   br i1 %i.ap, label %bb.o, label %.invoke340
 
@@ -3325,7 +3325,7 @@ bb.n:                                             ; preds = %.invoke340
 
 bb.o:                                             ; preds = %bb.m
   %i.ar = urem i64 %4, %i.am
-  %i.as = udiv i64 %4, %i.am                      ; 3 uses
+  %i.as = udiv exact i64 %4, %i.am                ; 3 uses
   %i.at = icmp eq i64 %i.ar, 0
   br i1 %i.at, label %bb.p, label %.invoke340
 
@@ -3505,7 +3505,7 @@ _ZL38ggml_backend_meta_buffer_simple_tensorPK11ggml_tensorm.exit.us.us: ; preds 
   %i.db = getelementptr [8 x i8], ptr %i.bk, i64 %.0151285.us.us
   %i.dc = load i64, ptr %i.db, align 8, !tbaa !77 ; 2 uses
   %i.dd = srem i64 %i.dc, %i.bb
-  %i.de = sdiv i64 %i.dc, %i.bb
+  %i.de = sdiv exact i64 %i.dc, %i.bb
   %i.df = icmp eq i64 %i.dd, 0
   br i1 %i.df, label %bb.y, label %.split.us294.invoke
 
@@ -3596,7 +3596,7 @@ bb.ae:                                            ; preds = %_ZNSt6vectorImSaImE
   %i.ef = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %i.eg = load i64, ptr %i.ef, align 8, !tbaa !77 ; 4 uses
   %i.eh = urem i64 %3, %i.eg
-  %i.ei = udiv i64 %3, %i.eg                      ; 2 uses
+  %i.ei = udiv exact i64 %3, %i.eg                ; 2 uses
   %i.ej = icmp eq i64 %i.eh, 0
   br i1 %i.ej, label %bb.ag, label %.invoke342
 
@@ -3607,7 +3607,7 @@ bb.af:                                            ; preds = %.invoke342
 
 bb.ag:                                            ; preds = %bb.ae
   %i.el = urem i64 %4, %i.eg
-  %i.em = udiv i64 %4, %i.eg                      ; 3 uses
+  %i.em = udiv exact i64 %4, %i.eg                ; 3 uses
   %i.en = icmp eq i64 %i.el, 0
   br i1 %i.en, label %bb.ah, label %.invoke342
 
@@ -3877,7 +3877,7 @@ bb.as:                                            ; preds = %bb.ar, %bb.ar, %bb.
   %i.ia = getelementptr i8, ptr %i.hz, i64 56
   %i.ib = load i64, ptr %i.ia, align 8, !tbaa !77 ; 6 uses
   %i.ic = urem i64 %3, %i.ib
-  %i.id = udiv i64 %3, %i.ib                      ; 2 uses
+  %i.id = udiv exact i64 %3, %i.ib                ; 2 uses
   %i.ie = icmp eq i64 %i.ic, 0
   br i1 %i.ie, label %bb.au, label %bb.at
 

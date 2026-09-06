@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.ce
 
 bb.c:                                             ; preds = %bb.a
   %i.ad = urem i64 %3, %1, !dbg !44982            ; 2 uses
-  %i.ae = udiv i64 %3, %1, !dbg !44983            ; 2 uses
+  %i.ae = udiv exact i64 %3, %1, !dbg !44983      ; 2 uses
   store i64 %i.ad, ptr %i.aa, align 8, !dbg !44982
   %i.af = icmp eq i64 %i.ad, 0, !dbg !44984
   br i1 %i.af, label %bb.d, label %.invoke606, !dbg !44984, !prof !2217
@@ -280,7 +280,7 @@ bb.m:                                             ; preds = %bb.d
   br i1 %6, label %bb.be, label %._crit_edge553, !dbg !45003
 
 ._crit_edge553:                                   ; preds = %bb.m
-  %.pre = udiv i64 %3, %1, !dbg !45004
+  %.pre = udiv exact i64 %3, %1, !dbg !45004
   br label %bb.bd, !dbg !45003
 
 bb.n:                                             ; preds = %bb.f
@@ -683,7 +683,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.c
   %.sroa.0.0.i = phi i64 [ %i.v, %bb.k ], [ 2, %bb.e ], [ 4, %bb.f ], [ 8, %bb.g ], [ 12, %bb.h ], [ 16, %bb.i ], [ 32, %bb.j ], [ 1, %bb.c ], !dbg !47873 ; 8 uses
   %i.y = urem i64 %i.p, %.sroa.0.0.i, !dbg !47874 ; 2 uses
-  %i.z = udiv i64 %i.p, %.sroa.0.0.i, !dbg !47875 ; 2 uses
+  %i.z = udiv exact i64 %i.p, %.sroa.0.0.i, !dbg !47875 ; 2 uses
   store i64 %i.y, ptr %i.a, align 8, !dbg !47874, !noalias !47808
   %i.aa = icmp eq i64 %i.y, 0, !dbg !47876
   br i1 %i.aa, label %bb.n, label %bb.o, !dbg !47876, !prof !2217
@@ -729,7 +729,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
 
 bb.r:                                             ; preds = %bb.n
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !47890
-  %i.ak = udiv i64 %i.p, %.sroa.0.0.i, !dbg !47891 ; 2 uses
+  %i.ak = udiv exact i64 %i.p, %.sroa.0.0.i, !dbg !47891 ; 2 uses
   call void @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes16Bytes1Alignment1E7reserveCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.aj, i64 noundef %i.ak), !dbg !47892, !noalias !47806
   %i.al = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !47893
   %i.am = load ptr, ptr %i.al, align 8, !dbg !47893, !alias.scope !47805, !noalias !47806, !nonnull !1984, !noundef !1984
@@ -748,7 +748,7 @@ bb.r:                                             ; preds = %bb.n
 
 bb.s:                                             ; preds = %bb.n
   %i.au = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !47905
-  %i.av = udiv i64 %i.p, %.sroa.0.0.i, !dbg !47906 ; 2 uses
+  %i.av = udiv exact i64 %i.p, %.sroa.0.0.i, !dbg !47906 ; 2 uses
   call void @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes16Bytes2Alignment2E7reserveCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.au, i64 noundef %i.av), !dbg !47907, !noalias !47806
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !47908
   %i.ax = load ptr, ptr %i.aw, align 8, !dbg !47908, !alias.scope !47805, !noalias !47806, !nonnull !1984, !noundef !1984
@@ -767,7 +767,7 @@ bb.s:                                             ; preds = %bb.n
 
 bb.t:                                             ; preds = %bb.n
   %i.bf = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !47920
-  %i.bg = udiv i64 %i.p, %.sroa.0.0.i, !dbg !47921 ; 2 uses
+  %i.bg = udiv exact i64 %i.p, %.sroa.0.0.i, !dbg !47921 ; 2 uses
   call void @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes16Bytes4Alignment4E7reserveCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.bf, i64 noundef %i.bg), !dbg !47922, !noalias !47806
   %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !47923
   %i.bi = load ptr, ptr %i.bh, align 8, !dbg !47923, !alias.scope !47805, !noalias !47806, !nonnull !1984, !noundef !1984
@@ -786,7 +786,7 @@ bb.t:                                             ; preds = %bb.n
 
 bb.u:                                             ; preds = %bb.n
   %i.bq = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !47935
-  %i.br = udiv i64 %i.p, %.sroa.0.0.i, !dbg !47936 ; 2 uses
+  %i.br = udiv exact i64 %i.p, %.sroa.0.0.i, !dbg !47936 ; 2 uses
   call void @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes16Bytes8Alignment8E7reserveCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.bq, i64 noundef %i.br), !dbg !47937, !noalias !47806
   %i.bs = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !47938
   %i.bt = load ptr, ptr %i.bs, align 8, !dbg !47938, !alias.scope !47805, !noalias !47806, !nonnull !1984, !noundef !1984
@@ -805,7 +805,7 @@ bb.u:                                             ; preds = %bb.n
 
 bb.v:                                             ; preds = %bb.n
   %i.cb = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !47950
-  %i.cc = udiv i64 %i.p, %.sroa.0.0.i, !dbg !47951 ; 2 uses
+  %i.cc = udiv exact i64 %i.p, %.sroa.0.0.i, !dbg !47951 ; 2 uses
   call void @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes17Bytes12Alignment4E7reserveCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.cb, i64 noundef %i.cc), !dbg !47952, !noalias !47806
   %i.cd = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !47953
   %i.ce = load ptr, ptr %i.cd, align 8, !dbg !47953, !alias.scope !47805, !noalias !47806, !nonnull !1984, !noundef !1984
@@ -824,7 +824,7 @@ bb.v:                                             ; preds = %bb.n
 
 bb.w:                                             ; preds = %bb.n
   %i.cm = getelementptr inbounds nuw i8, ptr %2, i64 8, !dbg !47965
-  %i.cn = udiv i64 %i.p, %.sroa.0.0.i, !dbg !47966 ; 2 uses
+  %i.cn = udiv exact i64 %i.p, %.sroa.0.0.i, !dbg !47966 ; 2 uses
   call void @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes18Bytes16Alignment16E7reserveCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.cm, i64 noundef %i.cn), !dbg !47967, !noalias !47806
   %i.co = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !47968
   %i.cp = load ptr, ptr %i.co, align 8, !dbg !47968, !alias.scope !47805, !noalias !47806, !nonnull !1984, !noundef !1984
@@ -1227,7 +1227,7 @@ bb.u:                                             ; preds = %bb.k
 
 bb.v:                                             ; preds = %bb.u
   %i.dl = urem i64 %i.dh, 12, !dbg !49354
-  %i.dm = udiv i64 %i.dh, 12, !dbg !49355         ; 2 uses
+  %i.dm = udiv exact i64 %i.dh, 12, !dbg !49355   ; 2 uses
   %i.dn = icmp eq i64 %i.dl, 0, !dbg !49354
   br i1 %i.dn, label %_RINvNtCs6TExLLFF6W4_8bytemuck8internal14try_cast_slicehNtNtNtCs8774dFTUdNv_12polars_arrow5types13aligned_bytes17Bytes12Alignment4ECsfISxE4fmY1Y_14polars_parquet.exit.i, label %.invoke.i, !dbg !49354
 

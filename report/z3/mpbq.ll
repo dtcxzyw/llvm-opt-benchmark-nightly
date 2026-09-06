@@ -202,9 +202,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.l, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  %i.m = udiv i32 %i.i, %2
+  %i.m = udiv exact i32 %i.i, %2
   store i32 %i.m, ptr %i.h, align 8, !tbaa !16
-  %4 = icmp ugt i32 %2, %i.i
+  %4 = icmp eq i32 %i.i, 0
   br i1 %4, label %_ZN12mpbq_manager9normalizeER4mpbq.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -270,9 +270,9 @@ bb.a:
   br i1 %i.g, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = udiv i32 %i.d, %2
+  %i.h = udiv exact i32 %i.d, %2
   store i32 %i.h, ptr %i.c, align 8, !tbaa !16
-  %3 = icmp ugt i32 %2, %i.d
+  %3 = icmp eq i32 %i.d, 0
   br i1 %3, label %_ZN12mpbq_manager9normalizeER4mpbq.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b

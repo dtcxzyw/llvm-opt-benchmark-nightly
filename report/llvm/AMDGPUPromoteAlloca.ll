@@ -205,7 +205,7 @@ bb.dr:                                            ; preds = %.lr.ph.i.i81
 
 ._crit_edge.i.i:                                  ; preds = %bb.dr, %_ZN4llvm5APIntC2Ejmbb.exit.i.i
   %i.aew = call { i64, i8 } @_ZNK4llvm10DataLayout16getTypeAllocSizeEPNS_4TypeE(ptr noundef nonnull align 8 dereferenceable(912) %i.aeg, ptr noundef %i.aau) #20, !noalias !659 ; 2 uses
-  %.fca.0.extract.i.i = extractvalue { i64, i8 } %i.aew, 0 ; 7 uses
+  %.fca.0.extract.i.i = extractvalue { i64, i8 } %i.aew, 0 ; 8 uses
   %.fca.1.extract.i.i = extractvalue { i64, i8 } %i.aew, 1
   %i.aex = trunc nuw i8 %.fca.1.extract.i.i to i1
   br i1 %i.aex, label %bb.ds, label %_ZNK4llvm8TypeSizecvmEv.exit.i163.i
@@ -328,7 +328,7 @@ _ZNK4llvm5APInt13getActiveBitsEv.exit.i.i.i:      ; preds = %bb.ef, %bb.ee
 bb.eg:                                            ; preds = %_ZNK4llvm5APInt13getActiveBitsEv.exit.i.i.i
   %i.agc = load ptr, ptr %i.afr, align 8, !noalias !659
   %spec.select.i.i56.i.i = select i1 %i.afu, ptr %i.afr, ptr %i.agc
-  %.0.i.i.i.i = load i64, ptr %spec.select.i.i56.i.i, align 8, !tbaa !111, !noalias !659 ; 6 uses
+  %.0.i.i.i.i = load i64, ptr %spec.select.i.i56.i.i, align 8, !tbaa !111, !noalias !659 ; 7 uses
   %i.agd = icmp eq i64 %.0.i.i.i.i, 0
   br i1 %i.agd, label %_ZNK4llvm5APInt12tryZExtValueEv.exit.i.i, label %bb.eh
 
@@ -379,7 +379,7 @@ bb.em:                                            ; preds = %_ZN4llvm14WeakTrack
 
 bb.en:                                            ; preds = %bb.em
   %i.ago = urem i64 %.0.i.i.i.i, %.fca.0.extract.i.i
-  %i.agp = udiv i64 %.0.i.i.i.i, %.fca.0.extract.i.i ; 3 uses
+  %i.agp = udiv exact i64 %.0.i.i.i.i, %.fca.0.extract.i.i ; 2 uses
   %.not54.i.i = icmp eq i64 %i.ago, 0
   br i1 %.not54.i.i, label %bb.ep, label %bb.eo
 
@@ -388,7 +388,7 @@ bb.eo:                                            ; preds = %bb.en
   br label %bb.fj
 
 bb.ep:                                            ; preds = %bb.en
-  %.not55.i.i = icmp eq i64 %i.agp, 1
+  %.not55.i.i = icmp eq i64 %.0.i.i.i.i, %.fca.0.extract.i.i
   br i1 %.not55.i.i, label %bb.fh, label %bb.eq
 
 bb.eq:                                            ; preds = %bb.ep
@@ -426,7 +426,7 @@ _ZN4llvm5APIntD2Ev.exit59.i.i:                    ; preds = %bb.eu, %bb.et, %_ZN
 
 bb.ev:                                            ; preds = %bb.em
   %i.agv = urem i64 %.fca.0.extract.i.i, %.0.i.i.i.i
-  %i.agw = udiv i64 %.fca.0.extract.i.i, %.0.i.i.i.i ; 2 uses
+  %i.agw = udiv exact i64 %.fca.0.extract.i.i, %.0.i.i.i.i ; 2 uses
   %.not53.i.i = icmp eq i64 %i.agv, 0
   br i1 %.not53.i.i, label %bb.ex, label %bb.ew
 
@@ -464,9 +464,9 @@ bb.fa:                                            ; preds = %bb.ey
 
 _ZNK4llvm9KnownBits21countMinTrailingZerosEv.exit.i.i: ; preds = %bb.fa, %bb.ez
   %.0.i.i61.i.i = phi i32 [ %i.ahf, %bb.ez ], [ %i.ahg, %bb.fa ]
-  %i.ahh = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.agw, i1 false)
+  %i.ahh = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.agw, i1 true)
   %i.ahi = trunc nuw nsw i64 %i.ahh to i32
-  %71 = sub nuw nsw i32 63, %i.ahi                ; 2 uses
+  %71 = xor i32 %i.ahi, 63                        ; 2 uses
   %.not17.i.i = icmp ult i32 %.0.i.i61.i.i, %71
   br i1 %.not17.i.i, label %bb.fg, label %bb.fb
 

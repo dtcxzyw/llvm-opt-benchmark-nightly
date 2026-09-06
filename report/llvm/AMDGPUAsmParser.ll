@@ -206,7 +206,7 @@ bb.c:                                             ; preds = %_ZN4llvm8bit_ceilIj
 
 bb.d:                                             ; preds = %_ZN4llvm8bit_ceilIjEET_S1_.exit.thread
   %i.n = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.0, i1 true)
-  %i.o = lshr i32 %2, %i.n                        ; 4 uses
+  %i.o = lshr exact i32 %2, %i.n                  ; 4 uses
   switch i32 %1, label %_ZL11getRegClassN12_GLOBAL__N_112RegisterKindEj.exit [
     i32 1, label %bb.e
     i32 4, label %bb.f
@@ -308,7 +308,7 @@ bb.i:                                             ; preds = %switch.lookup66, %s
 bb.j:                                             ; preds = %bb.i
   %i.as = icmp eq i32 %1, 1                       ; 2 uses
   %i.at = icmp samesign ugt i32 %i.o, 255
-  %or.cond3 = and i1 %i.as, %i.at
+  %or.cond3 = select i1 %i.as, i1 %i.at, i1 false
   br i1 %or.cond3, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j, %bb.i

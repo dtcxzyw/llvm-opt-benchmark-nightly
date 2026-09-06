@@ -205,7 +205,7 @@ _ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83: ; preds = %bb.i, %bb.j
 bb.k:                                             ; preds = %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83
   %i.cm = zext nneg i32 %i.cl to i64              ; 2 uses
   %i.cn = srem i64 %.0.i.i.i81, %i.cm
-  %i.co = sdiv i64 %.0.i.i.i81, %i.cm
+  %i.co = sdiv exact i64 %.0.i.i.i81, %i.cm
   %.not78 = icmp eq i64 %i.cn, 0
   br i1 %.not78, label %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit, label %.critedge
 
@@ -229,7 +229,7 @@ _ZNK4llvm3EVT13getSizeInBitsEv.exit:              ; preds = %bb.l, %bb.m
   %.pn.i = phi i64 [ %.sroa.0.0.copyload.i.i, %bb.l ], [ %i.ct, %bb.m ]
   %i.cu = sdiv i64 %.pn.i, 8                      ; 2 uses
   %i.cv = srem i64 %.272, %i.cu
-  %i.cw = sdiv i64 %.272, %i.cu                   ; 2 uses
+  %i.cw = sdiv exact i64 %.272, %i.cu             ; 2 uses
   %.not79 = icmp eq i64 %i.cv, 0
   %i.cx = add i64 %i.cw, 8
   %or.cond = icmp ult i64 %i.cx, 16
@@ -632,7 +632,7 @@ bb.d:                                             ; preds = %_ZNK4llvm14Constant
   %.lhs.trunc88 = trunc nuw nsw i64 %.0.i.i.i13.i to i8 ; 2 uses
   %.rhs.trunc89 = trunc nuw nsw i32 %6 to i8      ; 2 uses
   %i.s = urem i8 %.lhs.trunc88, %.rhs.trunc89
-  %i.t = udiv i8 %.lhs.trunc88, %.rhs.trunc89
+  %i.t = udiv exact i8 %.lhs.trunc88, %.rhs.trunc89
   %i.u = icmp eq i8 %i.s, 0
   br i1 %i.u, label %"_ZZN12_GLOBAL__N_119AArch64DAGToDAGISel18SelectSMETileSliceEN4llvm7SDValueEjRS2_S3_jENK3$_0clES2_.exit", label %.critedge
 
@@ -750,7 +750,7 @@ bb.i:                                             ; preds = %_ZNK4llvm14Constant
   %.lhs.trunc = trunc nuw nsw i64 %.0.i.i.i13.i46 to i8 ; 2 uses
   %.rhs.trunc = trunc nuw nsw i32 %6 to i8        ; 2 uses
   %i.bo = urem i8 %.lhs.trunc, %.rhs.trunc
-  %i.bp = udiv i8 %.lhs.trunc, %.rhs.trunc
+  %i.bp = udiv exact i8 %.lhs.trunc, %.rhs.trunc
   %i.bq = icmp eq i8 %i.bo, 0
   br i1 %i.bq, label %"_ZZN12_GLOBAL__N_119AArch64DAGToDAGISel18SelectSMETileSliceEN4llvm7SDValueEjRS2_S3_jENK3$_0clES2_.exit57", label %.critedge43
 
@@ -1153,7 +1153,7 @@ _ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83: ; preds = %bb.i, %bb.j
 bb.k:                                             ; preds = %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83
   %i.cm = zext nneg i32 %i.cl to i64              ; 2 uses
   %i.cn = srem i64 %.0.i.i.i81, %i.cm
-  %i.co = sdiv i64 %.0.i.i.i81, %i.cm
+  %i.co = sdiv exact i64 %.0.i.i.i81, %i.cm
   %.not78 = icmp eq i64 %i.cn, 0
   br i1 %.not78, label %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit, label %.critedge
 
@@ -1177,7 +1177,7 @@ _ZNK4llvm3EVT13getSizeInBitsEv.exit:              ; preds = %bb.l, %bb.m
   %.pn.i = phi i64 [ %.sroa.0.0.copyload.i.i, %bb.l ], [ %i.ct, %bb.m ]
   %i.cu = sdiv i64 %.pn.i, 8                      ; 2 uses
   %i.cv = srem i64 %.272, %i.cu
-  %i.cw = sdiv i64 %.272, %i.cu                   ; 2 uses
+  %i.cw = sdiv exact i64 %.272, %i.cu             ; 2 uses
   %.not79 = icmp eq i64 %i.cv, 0
   %i.cx = add i64 %i.cw, 256
   %or.cond = icmp ult i64 %i.cx, 512
@@ -1580,7 +1580,7 @@ _ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83: ; preds = %bb.i, %bb.j
 bb.k:                                             ; preds = %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83
   %i.cm = zext nneg i32 %i.cl to i64              ; 2 uses
   %i.cn = srem i64 %.0.i.i.i81, %i.cm
-  %i.co = sdiv i64 %.0.i.i.i81, %i.cm
+  %i.co = sdiv exact i64 %.0.i.i.i81, %i.cm
   %.not78 = icmp eq i64 %i.cn, 0
   br i1 %.not78, label %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit, label %.critedge
 
@@ -1604,7 +1604,7 @@ _ZNK4llvm3EVT13getSizeInBitsEv.exit:              ; preds = %bb.l, %bb.m
   %.pn.i = phi i64 [ %.sroa.0.0.copyload.i.i, %bb.l ], [ %i.ct, %bb.m ]
   %i.cu = sdiv i64 %.pn.i, 8                      ; 2 uses
   %i.cv = srem i64 %.272, %i.cu
-  %i.cw = sdiv i64 %.272, %i.cu                   ; 2 uses
+  %i.cw = sdiv exact i64 %.272, %i.cu             ; 2 uses
   %.not79 = icmp eq i64 %i.cv, 0
   %i.cx = add i64 %i.cw, 32
   %or.cond = icmp ult i64 %i.cx, 64

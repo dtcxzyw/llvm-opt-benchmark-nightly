@@ -203,7 +203,6 @@ bb.aa:                                            ; preds = %.lr.ph367, %._crit_
 
 bb.ab:                                            ; preds = %.preheader
   %i.lg = srem i32 %i.le, 2                       ; 2 uses
-  %14 = sdiv i32 %i.le, 2
   %i.lh = add nsw i32 %i.lg, 2
   store i32 %i.lh, ptr %i.i, align 4, !tbaa !39
   %i.li = icmp eq i32 %i.lg, 0
@@ -211,6 +210,7 @@ bb.ab:                                            ; preds = %.preheader
   br i1 %i.li, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
+  %14 = ashr exact i32 %i.le, 1
   %i.lj = mul nsw i32 %.pre426, %14
   %i.lk = add nsw i32 %i.lj, %i.lb                ; 3 uses
   %reass.sub = sub i32 %i.lk, %.pre426
@@ -269,7 +269,6 @@ bb.ad:                                            ; preds = %.thread323, %bb.ab
 
 bb.ae:                                            ; preds = %.preheader.1
   %i.mf = srem i32 %i.md, 2                       ; 2 uses
-  %15 = sdiv i32 %i.md, 2
   %i.mg = add nsw i32 %i.mf, 2
   store i32 %i.mg, ptr %i.i, align 4, !tbaa !39
   %i.mh = icmp eq i32 %i.mf, 0
@@ -277,6 +276,7 @@ bb.ae:                                            ; preds = %.preheader.1
   br i1 %i.mh, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
+  %15 = ashr exact i32 %i.md, 1
   %i.mi = mul nsw i32 %.pre426.1, %15
   %i.mj = add nsw i32 %i.mi, %i.ma                ; 3 uses
   %reass.sub.1 = sub i32 %i.mj, %.pre426.1
@@ -342,7 +342,6 @@ bb.ag:                                            ; preds = %.thread323.1, %bb.a
 
 bb.ah:                                            ; preds = %.preheader.2
   %i.nf = srem i32 %i.nd, 2                       ; 2 uses
-  %16 = sdiv i32 %i.nd, 2
   %i.ng = add nsw i32 %i.nf, 2
   store i32 %i.ng, ptr %i.i, align 4, !tbaa !39
   %i.nh = icmp eq i32 %i.nf, 0
@@ -350,6 +349,7 @@ bb.ah:                                            ; preds = %.preheader.2
   br i1 %i.nh, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
+  %16 = ashr exact i32 %i.nd, 1
   %i.ni = mul nsw i32 %.pre426.2, %16
   %i.nj = add nsw i32 %i.ni, %i.na                ; 3 uses
   %reass.sub.2 = sub i32 %i.nj, %.pre426.2

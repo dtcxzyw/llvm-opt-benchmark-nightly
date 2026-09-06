@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.d
   %i.r = lshr i32 %i.m, 5
   %i.s = and i32 %i.r, 2
   %i.t = add nuw nsw i32 %i.s, 2                  ; 4 uses
-  %i.u = add nuw nsw i32 %i.t, %i.o               ; 3 uses
+  %i.u = add nuw nsw i32 %i.t, %i.o               ; 2 uses
   %i.v = urem i32 %i.h, %i.u
-  %i.w = udiv i32 %i.h, %i.u                      ; 4 uses
+  %i.w = udiv exact i32 %i.h, %i.u                ; 4 uses
   %.not70 = icmp eq i32 %i.v, 0
   br i1 %.not70, label %bb.h, label %bb.g
 
@@ -217,7 +217,7 @@ bb.g:                                             ; preds = %bb.f
   br label %.loopexit
 
 bb.h:                                             ; preds = %bb.f
-  %4 = icmp ugt i32 %i.u, %i.h
+  %4 = icmp eq i32 %i.h, 0
   br i1 %4, label %.loopexit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h

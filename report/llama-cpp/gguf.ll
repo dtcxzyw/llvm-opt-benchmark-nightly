@@ -205,7 +205,7 @@ bb.et:                                            ; preds = %_ZNK11gguf_reader4r
 bb.eu:                                            ; preds = %bb.et
   %i.va = load i64, ptr %i.pc, align 8, !tbaa !81 ; 2 uses
   %i.vb = srem i64 %i.va, %i.uy
-  %i.vc = sdiv i64 %i.va, %i.uy
+  %i.vc = sdiv exact i64 %i.va, %i.uy
   %.not414 = icmp eq i64 %i.vb, 0
   br i1 %.not414, label %bb.ew, label %bb.ev
 
@@ -608,7 +608,7 @@ _ZNKSt8_Rb_treeI9gguf_typeSt4pairIKS0_mESt10_Select1stIS3_ESt4lessIS0_ESaIS3_EE1
   %i.al = ptrtoint ptr %i.aj to i64
   %i.am = sub i64 %i.ak, %i.al                    ; 2 uses
   %i.an = urem i64 %i.am, %i.af
-  %i.ao = udiv i64 %i.am, %i.af
+  %i.ao = udiv exact i64 %i.am, %i.af
   %i.ap = icmp eq i64 %i.an, 0
   br i1 %i.ap, label %bb.h, label %bb.g
 
@@ -768,16 +768,16 @@ _ZNKSt8_Rb_treeI9gguf_typeSt4pairIKS0_mESt10_Select1stIS3_ESt4lessIS0_ESaIS3_EE1
   %i.w = icmp sge i32 %i.b, %i.v
   tail call void @llvm.assume(i1 %i.w)
   %i.x = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 40
-  %i.y = load i64, ptr %i.x, align 8, !tbaa !50   ; 2 uses
+  %i.y = load i64, ptr %i.x, align 8, !tbaa !50   ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !167
   %i.ac = load ptr, ptr %i.z, align 8, !tbaa !120
   %i.ad = ptrtoint ptr %i.ab to i64
   %i.ae = ptrtoint ptr %i.ac to i64
-  %i.af = sub i64 %i.ad, %i.ae                    ; 2 uses
+  %i.af = sub i64 %i.ad, %i.ae                    ; 3 uses
   %i.ag = urem i64 %i.af, %i.y
-  %i.ah = udiv i64 %i.af, %i.y                    ; 2 uses
+  %i.ah = udiv exact i64 %i.af, %i.y
   %i.ai = icmp eq i64 %i.ag, 0
   br i1 %i.ai, label %bb.f, label %bb.e
 
@@ -789,7 +789,7 @@ bb.f:                                             ; preds = %_ZNKSt8_Rb_treeI9gg
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ak = load i8, ptr %i.aj, align 8, !tbaa !99, !range !100, !noundef !101
   %i.al = trunc nuw i8 %i.ak to i1
-  %i.am = icmp eq i64 %i.ah, 1
+  %i.am = icmp eq i64 %i.af, %i.y
   %or.cond3 = or i1 %i.am, %i.al
   br i1 %or.cond3, label %bb.h, label %bb.g
 
@@ -1192,7 +1192,7 @@ gguf_find_tensor.exit:                            ; preds = %gguf_get_tensor_nam
   %i.q = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.r = load i64, ptr %i.q, align 8, !tbaa !81   ; 2 uses
   %i.s = srem i64 %i.r, %i.p
-  %i.t = sdiv i64 %i.r, %i.p
+  %i.t = sdiv exact i64 %i.r, %i.p
   %i.u = icmp eq i64 %i.s, 0
   br i1 %i.u, label %bb.d, label %bb.c
 

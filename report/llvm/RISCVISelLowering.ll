@@ -205,10 +205,10 @@ bb.k:                                             ; preds = %_ZN4llvm23SmallVect
   %spec.select.i.i.i.i26 = select i1 %i.br, ptr %i.bo, ptr %i.bs
   %.0.i.i.i.i = load i64, ptr %spec.select.i.i.i.i26, align 8, !tbaa !261 ; 2 uses
   %i.bt = urem i64 %.0.i.i.i.i, %i.av
-  %i.bu = udiv i64 %.0.i.i.i.i, %i.av             ; 4 uses
+  %i.bu = udiv exact i64 %.0.i.i.i.i, %i.av       ; 4 uses
   %.not = icmp eq i64 %i.bt, 0
   %.not21 = icmp ult i64 %i.bu, %i.aw
-  %or.cond = and i1 %.not, %.not21
+  %or.cond = select i1 %.not, i1 %.not21, i1 false
   br i1 %or.cond, label %.critedge, label %_ZNK4llvm9BitVector3allEv.exit
 
 .critedge:                                        ; preds = %.lr.ph6
@@ -611,7 +611,7 @@ _ZNK4llvm8TypeSizecvmEv.exit:                     ; preds = %bb.c
   %i.k = load ptr, ptr %0, align 8, !tbaa !2593, !nonnull !51, !align !2594
   %i.l = load i32, ptr %i.k, align 4, !tbaa !222  ; 2 uses
   %i.m = urem i32 %i.l, %i.j
-  %i.n = udiv i32 %i.l, %i.j                      ; 2 uses
+  %i.n = udiv exact i32 %i.l, %i.j                ; 2 uses
   %.not = icmp eq i32 %i.m, 0
   br i1 %.not, label %bb.e, label %.critedge
 

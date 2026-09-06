@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph.i.preheader
   %.lhs.trunc = trunc nuw nsw i32 %i.bm to i16    ; 3 uses
   %i.bz = urem i16 %.lhs.trunc, 6
-  %i.ca = udiv i16 %.lhs.trunc, 6
+  %i.ca = udiv exact i16 %.lhs.trunc, 6
   %i.cb = icmp ne i16 %i.bz, 0
   %i.cc = icmp eq i32 %i.ba, 0
   %or.cond7 = or i1 %i.cb, %i.cc
@@ -251,7 +251,7 @@ bb.f:                                             ; preds = %bb.e
   %or.cond23.not113 = and i1 %i.cr, %i.ct
   %.zext110 = zext nneg i16 %i.ca to i32
   %.not76 = icmp eq i32 %i.aw, %.zext110
-  %or.cond79 = and i1 %.not76, %or.cond23.not113
+  %or.cond79 = select i1 %or.cond23.not113, i1 %.not76, i1 false
   br i1 %or.cond79, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.f

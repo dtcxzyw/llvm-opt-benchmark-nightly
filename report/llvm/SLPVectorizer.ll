@@ -205,7 +205,7 @@ _ZL29getFullVectorNumberOfElementsRKN4llvm19TargetTransformInfoEPNS_4TypeEj.exit
 
 bb.n:                                             ; preds = %_ZL29getFullVectorNumberOfElementsRKN4llvm19TargetTransformInfoEPNS_4TypeEj.exit
   %i.am = urem i32 %.1.i31, %i.e
-  %i.an = udiv i32 %.1.i31, %i.e                  ; 3 uses
+  %i.an = udiv exact i32 %.1.i31, %i.e            ; 3 uses
   %.not28 = icmp eq i32 %i.am, 0
   br i1 %.not28, label %bb.o, label %bb.r
 
@@ -608,7 +608,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.ai = urem i64 %i.y, %6
-  %i.aj = udiv i64 %i.y, %6
+  %i.aj = udiv exact i64 %i.y, %6
   %i.ak = icmp eq i64 %i.ai, 0
   br i1 %i.ak, label %_ZN4llvm14has_single_bitImvEEbT_.exit, label %bb.q
 
@@ -750,7 +750,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 
 bb.f:                                             ; preds = %._crit_edge
   %i.ao = urem i64 %2, %i.w
-  %i.ap = udiv i64 %2, %i.w                       ; 2 uses
+  %i.ap = udiv exact i64 %2, %i.w                 ; 2 uses
   %.not81 = icmp eq i64 %i.ao, 0
   %.not82 = icmp eq i64 %i.t, 1
   %or.cond = select i1 %.not81, i1 %.not82, i1 false
@@ -1153,7 +1153,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 
 bb.o:                                             ; preds = %.critedge131
   %i.bv = urem i32 %i.bt, %i.bs
-  %i.bw = udiv i32 %i.bt, %i.bs                   ; 2 uses
+  %i.bw = udiv exact i32 %i.bt, %i.bs             ; 2 uses
   %.not = icmp eq i32 %i.bv, 0
   br i1 %.not, label %bb.p, label %bb.aq
 
@@ -1556,7 +1556,7 @@ bb.ak:                                            ; preds = %bb.aj
   %spec.select.i304 = select i1 %i.fm, ptr %i.ew, ptr %i.fn
   %.0.i = load i64, ptr %spec.select.i304, align 8, !tbaa !571 ; 2 uses
   %i.fo = urem i64 %.0.i, %i.dq
-  %i.fp = udiv i64 %.0.i, %i.dq                   ; 4 uses
+  %i.fp = udiv exact i64 %.0.i, %i.dq             ; 4 uses
   %.not274 = icmp eq i64 %i.fo, 0
   br i1 %.not274, label %bb.al, label %.thread478
 
@@ -1959,11 +1959,11 @@ _ZN4llvm6all_ofIRNS_8ArrayRefIPNS_5ValueEEENS_6detail17IsaCheckPredicateIJNS_17S
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 32
   %i.as = load i32, ptr %i.ar, align 8, !tbaa !751 ; 3 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.am, i64 80
-  %i.au = load i32, ptr %i.at, align 8, !tbaa !371 ; 10 uses
+  %i.au = load i32, ptr %i.at, align 8, !tbaa !371 ; 9 uses
   %i.av = urem i32 %i.as, %i.au
-  %i.aw = udiv i32 %i.as, %i.au                   ; 4 uses
+  %i.aw = udiv exact i32 %i.as, %i.au             ; 4 uses
   %.not = icmp ne i32 %i.av, 0
-  %2 = icmp ult i32 %i.as, %i.au
+  %2 = icmp eq i32 %i.as, 0
   %or.cond = or i1 %.not, %2
   br i1 %or.cond, label %.loopexit, label %bb.l
 
@@ -2366,7 +2366,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.h = srem i32 %i.b, %.32.val
-  %i.i = sdiv i32 %i.b, %.32.val
+  %i.i = sdiv exact i32 %i.b, %.32.val
   %i.j = icmp eq i32 %i.h, 0
   br i1 %i.j, label %bb.f, label %.critedge
 

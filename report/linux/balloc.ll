@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.lr.ph.i
   %i.s = urem i32 %.0911.i, 3
   %.not.i = icmp ne i32 %i.s, 0
-  %i.t = udiv i32 %.0911.i, 3
+  %i.t = udiv exact i32 %.0911.i, 3
   %i.u = icmp ult i32 %.0911.i, 9
   %or.cond38 = or i1 %i.u, %.not.i
   br i1 %or.cond38, label %bb.i, label %.lr.ph.i
@@ -219,7 +219,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %.lr.ph.i20
   %i.x = urem i32 %.0911.i21, 5
   %.not.i22 = icmp ne i32 %i.x, 0
-  %i.y = udiv i32 %.0911.i21, 5
+  %i.y = udiv exact i32 %.0911.i21, 5
   %i.z = icmp ult i32 %.0911.i21, 25
   %or.cond40 = or i1 %i.z, %.not.i22
   br i1 %or.cond40, label %bb.k, label %.lr.ph.i20
@@ -236,7 +236,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %.lr.ph.i25
   %i.ac = urem i32 %.0911.i26, 7
   %.not.i27 = icmp ne i32 %i.ac, 0
-  %i.ad = udiv i32 %.0911.i26, 7
+  %i.ad = udiv exact i32 %.0911.i26, 7
   %i.ae = icmp ult i32 %.0911.i26, 49
   %or.cond42 = or i1 %i.ae, %.not.i27
   br i1 %or.cond42, label %test_root.exit, label %.lr.ph.i25
@@ -313,7 +313,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %.lr.ph.i.i.i
   %i.aa = urem i32 %.0911.i.i.i, 3
   %.not.i.i.i = icmp ne i32 %i.aa, 0
-  %i.ab = udiv i32 %.0911.i.i.i, 3
+  %i.ab = udiv exact i32 %.0911.i.i.i, 3
   %i.ac = icmp ult i32 %.0911.i.i.i, 9
   %or.cond38.i.i = or i1 %i.ac, %.not.i.i.i
   br i1 %or.cond38.i.i, label %bb.j, label %.lr.ph.i.i.i
@@ -330,7 +330,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %.lr.ph.i20.i.i
   %i.af = urem i32 %.0911.i21.i.i, 5
   %.not.i22.i.i = icmp ne i32 %i.af, 0
-  %i.ag = udiv i32 %.0911.i21.i.i, 5
+  %i.ag = udiv exact i32 %.0911.i21.i.i, 5
   %i.ah = icmp ult i32 %.0911.i21.i.i, 25
   %or.cond40.i.i = or i1 %i.ah, %.not.i22.i.i
   br i1 %or.cond40.i.i, label %bb.l, label %.lr.ph.i20.i.i
@@ -347,7 +347,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %.lr.ph.i25.i.i
   %i.ak = urem i32 %.0911.i26.i.i, 7
   %.not.i27.i.i = icmp ne i32 %i.ak, 0
-  %i.al = udiv i32 %.0911.i26.i.i, 7
+  %i.al = udiv exact i32 %.0911.i26.i.i, 7
   %i.am = icmp ult i32 %.0911.i26.i.i, 49
   %or.cond42.i.i = or i1 %i.am, %.not.i27.i.i
   br i1 %or.cond42.i.i, label %ext4_bg_num_gdb_nometa.exit, label %.lr.ph.i25.i.i
@@ -445,7 +445,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.lr.ph.i.i
   %i.s = urem i32 %.0911.i.i, 3
   %.not.i.i = icmp ne i32 %i.s, 0
-  %i.t = udiv i32 %.0911.i.i, 3
+  %i.t = udiv exact i32 %.0911.i.i, 3
   %i.u = icmp ult i32 %.0911.i.i, 9
   %or.cond38.i = or i1 %i.u, %.not.i.i
   br i1 %or.cond38.i, label %bb.i, label %.lr.ph.i.i
@@ -462,7 +462,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %.lr.ph.i20.i
   %i.x = urem i32 %.0911.i21.i, 5
   %.not.i22.i = icmp ne i32 %i.x, 0
-  %i.y = udiv i32 %.0911.i21.i, 5
+  %i.y = udiv exact i32 %.0911.i21.i, 5
   %i.z = icmp ult i32 %.0911.i21.i, 25
   %or.cond40.i = or i1 %i.z, %.not.i22.i
   br i1 %or.cond40.i, label %bb.k, label %.lr.ph.i20.i
@@ -479,7 +479,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %.lr.ph.i25.i
   %i.ac = urem i32 %.0911.i26.i, 7
   %.not.i27.i = icmp ne i32 %i.ac, 0
-  %i.ad = udiv i32 %.0911.i26.i, 7
+  %i.ad = udiv exact i32 %.0911.i26.i, 7
   %i.ae = icmp ult i32 %.0911.i26.i, 49
   %or.cond42.i = or i1 %i.ae, %.not.i27.i
   br i1 %or.cond42.i, label %ext4_bg_has_super.exit, label %.lr.ph.i25.i
@@ -548,7 +548,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %.lr.ph.i.i.i
   %i.ba = urem i32 %.0911.i.i.i, 3
   %.not.i.i.i = icmp ne i32 %i.ba, 0
-  %i.bb = udiv i32 %.0911.i.i.i, 3
+  %i.bb = udiv exact i32 %.0911.i.i.i, 3
   %i.bc = icmp ult i32 %.0911.i.i.i, 9
   %or.cond38.i.i = or i1 %i.bc, %.not.i.i.i
   br i1 %or.cond38.i.i, label %bb.v, label %.lr.ph.i.i.i
@@ -565,7 +565,7 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %.lr.ph.i20.i.i
   %i.bf = urem i32 %.0911.i21.i.i, 5
   %.not.i22.i.i = icmp ne i32 %i.bf, 0
-  %i.bg = udiv i32 %.0911.i21.i.i, 5
+  %i.bg = udiv exact i32 %.0911.i21.i.i, 5
   %i.bh = icmp ult i32 %.0911.i21.i.i, 25
   %or.cond40.i.i = or i1 %i.bh, %.not.i22.i.i
   br i1 %or.cond40.i.i, label %bb.x, label %.lr.ph.i20.i.i
@@ -582,7 +582,7 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %.lr.ph.i25.i.i
   %i.bk = urem i32 %.0911.i26.i.i, 7
   %.not.i27.i.i = icmp ne i32 %i.bk, 0
-  %i.bl = udiv i32 %.0911.i26.i.i, 7
+  %i.bl = udiv exact i32 %.0911.i26.i.i, 7
   %i.bm = icmp ult i32 %.0911.i26.i.i, 49
   %or.cond42.i.i = or i1 %i.bm, %.not.i27.i.i
   br i1 %or.cond42.i.i, label %ext4_bg_num_gdb_nometa.exit, label %.lr.ph.i25.i.i

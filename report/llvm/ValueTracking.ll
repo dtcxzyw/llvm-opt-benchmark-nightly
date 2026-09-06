@@ -205,7 +205,7 @@ _ZNK4llvm5APInt15getLimitedValueEm.exit:          ; preds = %bb.h, %_ZNK4llvm5AP
 bb.i:                                             ; preds = %_ZNK4llvm5APInt15getLimitedValueEm.exit
   %i.y = zext nneg i32 %i.a to i64                ; 3 uses
   %i.z = urem i64 %.0.i.i.i, %i.y
-  %i.aa = udiv i64 %.0.i.i.i, %i.y
+  %i.aa = udiv exact i64 %.0.i.i.i, %i.y
   %.not68 = icmp eq i64 %i.z, 0
   br i1 %.not68, label %bb.j, label %_ZNK4llvm5APInt15getLimitedValueEm.exit.thread
 
@@ -608,10 +608,10 @@ bb.ey:                                            ; preds = %_ZNK4llvm4Type18isI
   %i.zf = load ptr, ptr %3, align 8, !tbaa !60, !nonnull !21, !align !61
   %i.zg = load i8, ptr %i.zf, align 8, !tbaa !1380, !range !20, !noundef !21
   %i.zh = trunc nuw i8 %i.zg to i1                ; 2 uses
-  %i.zi = call noundef i32 @_ZNK4llvm4Type19getScalarSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(24) %i.te) #29 ; 8 uses
+  %i.zi = call noundef i32 @_ZNK4llvm4Type19getScalarSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(24) %i.te) #29 ; 7 uses
   %i.zj = load i32, ptr %i.a, align 4, !tbaa !102 ; 4 uses
   %i.zk = urem i32 %i.zj, %i.zi
-  %i.zl = udiv i32 %i.zj, %i.zi                   ; 5 uses
+  %i.zl = udiv exact i32 %i.zj, %i.zi             ; 5 uses
   %i.zm = icmp eq i32 %i.zk, 0
   br i1 %i.zm, label %bb.ez, label %bb.fm
 
@@ -681,7 +681,7 @@ _ZN4llvm5APInt6setBitEj.exit.us:                  ; preds = %bb.fd, %bb.fc
 ._crit_edge:                                      ; preds = %_ZN4llvm5APInt6setBitEj.exit, %_ZN4llvm5APInt6setBitEj.exit.us, %_ZN4llvm5APInt7getZeroEj.exit794
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #27
   call void @_ZN4llvm9KnownBitsC2Ej(ptr noundef nonnull align 8 dereferenceable(32) %31, i32 noundef %i.zi)
-  %.not6771676 = icmp ugt i32 %i.zi, %i.zj
+  %.not6771676 = icmp eq i32 %i.zj, 0
   br i1 %.not6771676, label %._crit_edge1680, label %.lr.ph1679
 
 .lr.ph1679:                                       ; preds = %._crit_edge
@@ -789,14 +789,14 @@ _ZN4llvm5APIntD2Ev.exit798:                       ; preds = %_ZNK4llvm4User10get
   %i.acb = select i1 %i.zh, i32 %i.aca, i32 %.06411677
   %i.acc = mul i32 %i.acb, %i.zi
   call void @_ZN4llvm9KnownBits10insertBitsERKS0_j(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %31, i32 noundef %i.acc)
-  %i.acd = add nuw i32 %.06411677, 1              ; 2 uses
+  %i.acd = add i32 %.06411677, 1                  ; 2 uses
   %.not677 = icmp eq i32 %i.acd, %i.zl
   br i1 %.not677, label %._crit_edge1680, label %bb.fh, !llvm.loop !1325
 
 bb.fm:                                            ; preds = %_ZN4llvm5APIntD2Ev.exit795, %bb.ey
   %i.ace = phi i32 [ %.pre1693, %_ZN4llvm5APIntD2Ev.exit795 ], [ %i.zj, %bb.ey ] ; 2 uses
   %i.acf = urem i32 %i.zi, %i.ace
-  %i.acg = udiv i32 %i.zi, %i.ace                 ; 2 uses
+  %i.acg = udiv exact i32 %i.zi, %i.ace           ; 2 uses
   %i.ach = icmp eq i32 %i.acf, 0
   br i1 %i.ach, label %bb.fn, label %.critedge702
 

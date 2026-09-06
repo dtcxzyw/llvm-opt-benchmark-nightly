@@ -204,7 +204,7 @@ Io_MvSplitIntoTokensMv.exit:                      ; preds = %bb.i
   %.069 = add i32 %.val82, %i.cc                  ; 2 uses
   %i.cd = add nsw i32 %.272, %.275                ; 3 uses
   %i.ce = srem i32 %.069, %i.cd
-  %i.cf = sdiv i32 %.069, %i.cd
+  %i.cf = sdiv exact i32 %.069, %i.cd
   %.not = icmp eq i32 %i.ce, 0
   br i1 %.not, label %bb.m, label %bb.j
 
@@ -248,7 +248,7 @@ Io_MvGetLine.exit103:                             ; preds = %bb.l, %bb.j, %.crit
 bb.m:                                             ; preds = %Io_MvSplitIntoTokensMv.exit
   %i.cs = icmp eq i32 %.275, 0
   %i.ct = icmp sgt i32 %i.cf, 1
-  %or.cond3 = and i1 %i.cs, %i.ct
+  %or.cond3 = select i1 %i.cs, i1 %i.ct, i1 false
   br i1 %or.cond3, label %.preheader, label %.preheader115
 
 .preheader115:                                    ; preds = %bb.m

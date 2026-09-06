@@ -205,7 +205,7 @@ bb.a:
   %trunc.i = trunc nuw i8 %4 to i1                ; 4 uses
   %..i = select i1 %trunc.i, i64 4, i64 3         ; 2 uses
   %i.t = urem i64 %2, %..i
-  %i.u = udiv i64 %2, %..i
+  %i.u = udiv exact i64 %2, %..i
   %i.v = icmp eq i64 %i.t, 0
   br i1 %i.v, label %switch.lookup, label %bb.b, !prof !6
 
@@ -608,7 +608,7 @@ bb.a:
   %trunc.i = trunc nuw i8 %4 to i1                ; 4 uses
   %..i = select i1 %trunc.i, i64 4, i64 3         ; 2 uses
   %i.t = urem i64 %2, %..i
-  %i.u = udiv i64 %2, %..i
+  %i.u = udiv exact i64 %2, %..i
   %i.v = icmp eq i64 %i.t, 0
   br i1 %i.v, label %switch.lookup, label %bb.b, !prof !6
 
@@ -1011,7 +1011,7 @@ bb.a:
   %trunc.i = trunc nuw i8 %4 to i1                ; 4 uses
   %..i = select i1 %trunc.i, i64 4, i64 3         ; 2 uses
   %i.t = urem i64 %2, %..i
-  %i.u = udiv i64 %2, %..i
+  %i.u = udiv exact i64 %2, %..i
   %i.v = icmp eq i64 %i.t, 0
   br i1 %i.v, label %switch.lookup, label %bb.b, !prof !6
 

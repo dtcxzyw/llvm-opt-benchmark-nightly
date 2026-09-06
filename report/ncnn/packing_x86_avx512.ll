@@ -202,7 +202,7 @@ _ZN4ncnn3Mat7releaseEv.exit245:                   ; preds = %bb.ah, %bb.ag, %bb.
 bb.ai:                                            ; preds = %bb.x
   %i.dq = mul nsw i32 %i.ce, %i.i                 ; 2 uses
   %i.dr = srem i32 %i.dq, %i.w
-  %i.ds = sdiv i32 %i.dq, %i.w                    ; 2 uses
+  %i.ds = sdiv exact i32 %i.dq, %i.w              ; 2 uses
   %.not230 = icmp eq i32 %i.dr, 0
   br i1 %.not230, label %.thread363.thread392, label %bb.aj
 
@@ -605,7 +605,7 @@ _ZN4ncnn3Mat7releaseEv.exit109:                   ; preds = %bb.y, %bb.x, %bb.t,
 bb.z:                                             ; preds = %bb.o
   %i.cq = mul nsw i32 %i.be, %i.n                 ; 2 uses
   %i.cr = srem i32 %i.cq, %i.p
-  %i.cs = sdiv i32 %i.cq, %i.p                    ; 2 uses
+  %i.cs = sdiv exact i32 %i.cq, %i.p              ; 2 uses
   %.not95 = icmp eq i32 %i.cr, 0
   br i1 %.not95, label %.thread.thread129, label %bb.aa
 
@@ -1008,7 +1008,7 @@ _ZN4ncnn3Mat7releaseEv.exit229:                   ; preds = %bb.ad, %bb.ac, %bb.
 bb.ae:                                            ; preds = %bb.t
   %i.dj = mul nsw i32 %i.bx, %i.n                 ; 2 uses
   %i.dk = srem i32 %i.dj, %i.p
-  %i.dl = sdiv i32 %i.dj, %i.p                    ; 2 uses
+  %i.dl = sdiv exact i32 %i.dj, %i.p              ; 2 uses
   %.not215 = icmp eq i32 %i.dk, 0
   br i1 %.not215, label %.thread343.thread372, label %bb.af
 
