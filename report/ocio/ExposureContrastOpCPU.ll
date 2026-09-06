@@ -204,9 +204,9 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.aj = getelementptr i8, ptr %1, i64 %i.ah
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.z, i64 0 ; 2 uses
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer
+  %4 = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert29 = insertelement <4 x float> poison, float %i.ae, i64 0 ; 2 uses
   %broadcast.splat30 = shufflevector <4 x float> %broadcast.splatinsert29, <4 x float> poison, <4 x i32> zeroinitializer
-  %4 = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <8 x i32> zeroinitializer
   %i.ak = shufflevector <4 x float> %broadcast.splatinsert29, <4 x float> poison, <8 x i32> zeroinitializer
   br label %vector.body
 
@@ -241,6 +241,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bg = insertelement <4 x float> %i.bf, float %i.bc, i64 1
   %i.bh = insertelement <4 x float> %i.bg, float %i.bd, i64 2
   %i.bi = insertelement <4 x float> %i.bh, float %i.be, i64 3
+  %5 = shufflevector <4 x float> %i.aw, <4 x float> %i.bi, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.bj = getelementptr inbounds nuw i8, ptr %next.gep31, i64 8
   %i.bk = getelementptr i8, ptr %i.am, i64 24
   %i.bl = getelementptr i8, ptr %i.an, i64 40
@@ -266,7 +267,6 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cf = insertelement <4 x float> %i.ce, float %i.cb, i64 1
   %i.cg = insertelement <4 x float> %i.cf, float %i.cc, i64 2
   %i.ch = insertelement <4 x float> %i.cg, float %i.cd, i64 3
-  %5 = shufflevector <4 x float> %i.aw, <4 x float> %i.bi, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.ci = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %5, <8 x float> %4, <8 x float> %i.ak)
   %i.cj = shufflevector <4 x float> %i.bv, <4 x float> %i.ch, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %interleaved.vec = shufflevector <8 x float> %i.ci, <8 x float> %i.cj, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>

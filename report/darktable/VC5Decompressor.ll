@@ -205,14 +205,14 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.fn = ashr <4 x i32> %i.fm, splat (i32 3)
   %i.fo = sub nsw <4 x i32> %i.fn, %i.ev
   %i.fp = shl <4 x i32> %i.fo, %broadcast.splat132
+  %6 = shufflevector <4 x i32> %i.fj, <4 x i32> %i.fp, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %7 = ashr <8 x i32> %6, splat (i32 1)
+  %8 = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %7, <8 x i32> zeroinitializer)
   %.idx220 = shl nuw nsw i64 %i.es, 2
-  %6 = getelementptr inbounds nuw i8, ptr %i.db, i64 %.idx220
-  %7 = shufflevector <4 x i32> %i.fj, <4 x i32> %i.fp, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  %8 = ashr <8 x i32> %7, splat (i32 1)
-  %9 = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %8, <8 x i32> zeroinitializer)
-  %i.fq = tail call <8 x i32> @llvm.umin.v8i32(<8 x i32> %9, <8 x i32> splat (i32 16383))
+  %9 = getelementptr inbounds nuw i8, ptr %i.db, i64 %.idx220
+  %i.fq = tail call <8 x i32> @llvm.umin.v8i32(<8 x i32> %8, <8 x i32> splat (i32 16383))
   %interleaved.vec143 = trunc nuw nsw <8 x i32> %i.fq to <8 x i16>
-  store <8 x i16> %interleaved.vec143, ptr %6, align 2, !tbaa !290, !alias.scope !6916, !noalias !6917
+  store <8 x i16> %interleaved.vec143, ptr %9, align 2, !tbaa !290, !alias.scope !6916, !noalias !6917
   %index.next144 = add nuw i64 %index137, 4       ; 2 uses
   %i.fr = add nuw nsw i64 %i.es, 4
   %i.fs = icmp eq i64 %index.next144, %n.vec126

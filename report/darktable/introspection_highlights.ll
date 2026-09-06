@@ -205,10 +205,10 @@ begin_hunk_0_@process:bb.a
   %i.akb = shl i64 %i.adq, 4
   %i.akc = getelementptr inbounds nuw i8, ptr %i.abu, i64 %i.akb
   %i.akd = fmul reassoc nsz arcp contract afn <8 x float> %predphi558, %i.aca
-  %7 = fmul reassoc nsz arcp contract afn <8 x float> %predphi561, %i.acb
-  %8 = shufflevector <8 x float> %i.aka, <8 x float> %i.akd, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %i.ake = shufflevector <8 x float> %7, <8 x float> %i.ajp, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %i.akf = shufflevector <16 x float> %8, <16 x float> %i.ake, <32 x i32> <i32 0, i32 8, i32 16, i32 24, i32 1, i32 9, i32 17, i32 25, i32 2, i32 10, i32 18, i32 26, i32 3, i32 11, i32 19, i32 27, i32 4, i32 12, i32 20, i32 28, i32 5, i32 13, i32 21, i32 29, i32 6, i32 14, i32 22, i32 30, i32 7, i32 15, i32 23, i32 31>
+  %7 = shufflevector <8 x float> %i.aka, <8 x float> %i.akd, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %8 = fmul reassoc nsz arcp contract afn <8 x float> %predphi561, %i.acb
+  %i.ake = shufflevector <8 x float> %8, <8 x float> %i.ajp, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %i.akf = shufflevector <16 x float> %7, <16 x float> %i.ake, <32 x i32> <i32 0, i32 8, i32 16, i32 24, i32 1, i32 9, i32 17, i32 25, i32 2, i32 10, i32 18, i32 26, i32 3, i32 11, i32 19, i32 27, i32 4, i32 12, i32 20, i32 28, i32 5, i32 13, i32 21, i32 29, i32 6, i32 14, i32 22, i32 30, i32 7, i32 15, i32 23, i32 31>
   %interleaved.vec570 = call reassoc nsz arcp contract afn <32 x float> @llvm.maxnum.v32f32(<32 x float> %i.akf, <32 x float> zeroinitializer)
   store <32 x float> %interleaved.vec570, ptr %i.akc, align 4, !tbaa !12, !alias.scope !426, !noalias !432
   %index.next = add nuw i64 %index, 8             ; 2 uses

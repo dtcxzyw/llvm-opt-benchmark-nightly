@@ -205,15 +205,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load = load <4 x i32>, ptr %i.c, align 4, !tbaa !16
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %wide.load31 = load <4 x i32>, ptr %i.d, align 4, !tbaa !16
-  %6 = shl nuw nsw i64 %index, 2
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 %6
-  %8 = shufflevector <4 x i32> %wide.load, <4 x i32> %wide.load31, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  %9 = add nsw <8 x i32> %8, %i.b
-  %10 = ashr <8 x i32> %9, splat (i32 10)
-  %i.e = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %10, <8 x i32> splat (i32 -32768))
+  %6 = shufflevector <4 x i32> %wide.load, <4 x i32> %wide.load31, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %7 = add nsw <8 x i32> %6, %i.b
+  %8 = ashr <8 x i32> %7, splat (i32 10)
+  %9 = shl nuw nsw i64 %index, 2
+  %10 = getelementptr inbounds nuw i8, ptr %2, i64 %9
+  %i.e = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %8, <8 x i32> splat (i32 -32768))
   %i.f = tail call <8 x i32> @llvm.smin.v8i32(<8 x i32> %i.e, <8 x i32> splat (i32 32767))
   %interleaved.vec = trunc nsw <8 x i32> %i.f to <8 x i16>
-  store <8 x i16> %interleaved.vec, ptr %7, align 2, !tbaa !56
+  store <8 x i16> %interleaved.vec, ptr %10, align 2, !tbaa !56
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.g = icmp eq i64 %index.next, %n.vec
   br i1 %i.g, label %middle.block, label %vector.body, !llvm.loop !1870
@@ -616,15 +616,15 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load = load <4 x i32>, ptr %i.cx, align 4, !tbaa !16
   %i.cy = getelementptr inbounds nuw [4 x i8], ptr %i.ce, i64 %index
   %wide.load160 = load <4 x i32>, ptr %i.cy, align 4, !tbaa !16
-  %17 = shl nuw nsw i64 %index, 2
-  %18 = getelementptr inbounds nuw i8, ptr %i.cj, i64 %17
-  %19 = shufflevector <4 x i32> %wide.load, <4 x i32> %wide.load160, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  %20 = add nsw <8 x i32> %19, %i.cw
-  %21 = ashr <8 x i32> %20, splat (i32 10)
-  %i.cz = call <8 x i32> @llvm.smax.v8i32(<8 x i32> %21, <8 x i32> splat (i32 -32768))
+  %17 = shufflevector <4 x i32> %wide.load, <4 x i32> %wide.load160, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %18 = add nsw <8 x i32> %17, %i.cw
+  %19 = ashr <8 x i32> %18, splat (i32 10)
+  %20 = shl nuw nsw i64 %index, 2
+  %21 = getelementptr inbounds nuw i8, ptr %i.cj, i64 %20
+  %i.cz = call <8 x i32> @llvm.smax.v8i32(<8 x i32> %19, <8 x i32> splat (i32 -32768))
   %i.da = call <8 x i32> @llvm.smin.v8i32(<8 x i32> %i.cz, <8 x i32> splat (i32 32767))
   %interleaved.vec = trunc nsw <8 x i32> %i.da to <8 x i16>
-  store <8 x i16> %interleaved.vec, ptr %18, align 2, !tbaa !56
+  store <8 x i16> %interleaved.vec, ptr %21, align 2, !tbaa !56
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.db = icmp eq i64 %index.next, %n.vec
   br i1 %i.db, label %middle.block, label %vector.body, !llvm.loop !1966
