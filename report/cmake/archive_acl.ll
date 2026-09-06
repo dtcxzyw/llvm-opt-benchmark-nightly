@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.a, %bb.a, %bb.b,
   br label %.preheader333
 
 .preheader333:                                    ; preds = %.preheader333.preheader, %bb.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.i ], [ 0, %.preheader333.preheader ] ; 6 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.i ], [ 0, %.preheader333.preheader ] ; 5 uses
   %.1234 = phi ptr [ %.6239, %bb.i ], [ %.0233341408, %.preheader333.preheader ]
   br label %bb.e
 
@@ -290,7 +290,7 @@ bb.h:                                             ; preds = %.critedge6.i
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %.critedge6.i
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.q = icmp eq i32 %i.m, 58
   br i1 %i.q, label %.preheader333, label %.preheader332, !llvm.loop !51
 
@@ -301,9 +301,8 @@ bb.i:                                             ; preds = %bb.h, %.critedge6.i
   br i1 %i.t, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader332
-  %i.u = shl i64 %indvars.iv, 4
-  %4 = getelementptr i8, ptr %3, i64 %i.u
-  %scevgep = getelementptr i8, ptr %4, i64 16
+  %i.u = shl i64 %indvars.iv.next, 4
+  %scevgep = getelementptr i8, ptr %3, i64 %i.u
   %i.v = sub nsw i64 %i.c, %indvars.iv
   %i.w = shl i64 %i.v, 4
   %i.x = and i64 %i.w, 68719476720
@@ -706,7 +705,7 @@ bb.e:                                             ; preds = %.lr.ph411, %is_nfs4
   br i1 %.not, label %.critedge, label %.preheader386
 
 .preheader386:                                    ; preds = %bb.e, %bb.j
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ 0, %bb.e ] ; 6 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ 0, %bb.e ] ; 5 uses
   %.1272 = phi ptr [ %.12283, %bb.j ], [ %.0271404, %bb.e ] ; 5 uses
   %.1259 = phi i64 [ %.12270, %bb.j ], [ %.0258405, %bb.e ] ; 3 uses
   %.not69.i = icmp eq i64 %.1259, 0
@@ -826,7 +825,7 @@ bb.i:                                             ; preds = %next_field.exit
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %next_field.exit
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.w = icmp eq i8 %.0246, 58
   br i1 %i.w, label %.preheader386, label %.preheader385, !llvm.loop !64
 
@@ -837,9 +836,8 @@ bb.j:                                             ; preds = %bb.i, %next_field.e
   br i1 %i.z, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader385
-  %i.aa = shl i64 %indvars.iv, 4
-  %6 = getelementptr i8, ptr %5, i64 %i.aa
-  %scevgep437 = getelementptr i8, ptr %6, i64 16
+  %i.aa = shl i64 %indvars.iv.next, 4
+  %scevgep437 = getelementptr i8, ptr %5, i64 %i.aa
   %i.ab = sub nsw i64 %i.e, %indvars.iv
   %i.ac = shl i64 %i.ab, 4
   %i.ad = and i64 %i.ac, 68719476720

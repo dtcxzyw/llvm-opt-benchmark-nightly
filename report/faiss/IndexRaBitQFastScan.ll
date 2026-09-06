@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load i64, ptr %i.b, align 8, !tbaa !68
   %i.j = call i64 @llvm.smin.i64(i64 %i.i, i64 %i.g) ; 2 uses
   store i64 %i.j, ptr %i.b, align 8, !tbaa !68
-  %i.k = load i64, ptr %i.a, align 8, !tbaa !68   ; 4 uses
+  %i.k = load i64, ptr %i.a, align 8, !tbaa !68   ; 2 uses
   %.not56 = icmp sgt i64 %i.k, %i.j
   br i1 %.not56, label %._crit_edge60, label %.lr.ph59
 
@@ -217,12 +217,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph59, %_ZNSt6vectorIfSaIfEED2Ev.exit
-  %indvar = phi i64 [ 0, %.lr.ph59 ], [ %indvar.next, %_ZNSt6vectorIfSaIfEED2Ev.exit ] ; 3 uses
-  %.057 = phi i64 [ %i.k, %.lr.ph59 ], [ %i.ex, %_ZNSt6vectorIfSaIfEED2Ev.exit ] ; 4 uses
-  %11 = add i64 %i.k, %indvar
-  %i.p = shl i64 %11, 2
-  %12 = add i64 %i.k, %indvar
-  %i.q = shl i64 %12, 2
+  %.057 = phi i64 [ %i.k, %.lr.ph59 ], [ %i.ex, %_ZNSt6vectorIfSaIfEED2Ev.exit ] ; 6 uses
+  %i.p = shl i64 %.057, 2
+  %i.q = shl i64 %.057, 2
   %i.r = load ptr, ptr %3, align 8, !tbaa !44
   %i.s = load i64, ptr %i.l, align 8, !tbaa !43
   %i.t = mul i64 %i.s, %.057
@@ -556,10 +553,9 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit
 
 _ZNSt6vectorIfSaIfEED2Ev.exit:                    ; preds = %bb.l, %bb.m
-  %i.ex = add nsw i64 %.057, 1
+  %i.ex = add i64 %.057, 1
   %i.ey = load i64, ptr %i.b, align 8, !tbaa !68
   %.not.not = icmp slt i64 %.057, %i.ey
-  %indvar.next = add i64 %indvar, 1
   br i1 %.not.not, label %bb.c, label %._crit_edge60
 
 ._crit_edge60:                                    ; preds = %_ZNSt6vectorIfSaIfEED2Ev.exit, %bb.b

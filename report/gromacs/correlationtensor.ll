@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %.loopexit102
-  %indvars.iv49 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next50, %.loopexit102 ] ; 5 uses
-  %indvars.iv47 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next48, %.loopexit102 ] ; 6 uses
+  %indvars.iv49 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next50, %.loopexit102 ] ; 3 uses
+  %indvars.iv47 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next48, %.loopexit102 ] ; 8 uses
   %.036 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.lcssa, %.loopexit102 ] ; 5 uses
   %i.p = getelementptr inbounds nuw [16 x i8], ptr %i.f, i64 %indvars.iv49 ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8 ; 4 uses
@@ -213,12 +213,10 @@ bb.c:                                             ; preds = %.lr.ph, %.loopexit1
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.c
-  %i.r = shl i64 %indvars.iv49, 4
-  %1 = getelementptr i8, ptr %i.f, i64 %i.r
-  %scevgep65 = getelementptr i8, ptr %1, i64 16
-  %i.s = shl i64 %indvars.iv49, 3
-  %2 = getelementptr i8, ptr %i.n, i64 %i.s
-  %scevgep62 = getelementptr i8, ptr %2, i64 8
+  %i.r = shl i64 %indvars.iv47, 4
+  %scevgep65 = getelementptr i8, ptr %i.f, i64 %i.r
+  %i.s = shl i64 %indvars.iv47, 3
+  %scevgep62 = getelementptr i8, ptr %i.n, i64 %i.s
   %i.t = shl i64 %.036, 3                         ; 2 uses
   %scevgep = getelementptr nuw i8, ptr %i.n, i64 %i.t ; 3 uses
   %scevgep63 = getelementptr i8, ptr %scevgep62, i64 %i.t ; 3 uses

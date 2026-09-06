@@ -204,15 +204,14 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 408 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 412 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 40
-  %i.o = sext i32 %i.k to i64                     ; 3 uses
+  %i.o = sext i32 %i.k to i64                     ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph53, %_ZNSt6vectorIdSaIdEED2Ev.exit36
-  %indvar = phi i64 [ 0, %.lr.ph53 ], [ %indvar.next, %_ZNSt6vectorIdSaIdEED2Ev.exit36 ] ; 3 uses
-  %indvars.iv61 = phi i64 [ %i.o, %.lr.ph53 ], [ %indvars.iv.next62, %_ZNSt6vectorIdSaIdEED2Ev.exit36 ] ; 4 uses
-  %6 = add i64 %indvar, %i.o
+  %indvar = phi i64 [ 0, %.lr.ph53 ], [ %indvar.next, %_ZNSt6vectorIdSaIdEED2Ev.exit36 ] ; 2 uses
+  %indvars.iv61 = phi i64 [ %i.o, %.lr.ph53 ], [ %indvars.iv.next62, %_ZNSt6vectorIdSaIdEED2Ev.exit36 ] ; 5 uses
   %i.p = add i64 %indvar, %i.o
-  %i.q = shl i64 %i.p, 3
+  %i.q = shl nsw i64 %indvars.iv61, 3
   %i.r = load i32, ptr %i.l, align 8, !tbaa !207  ; 3 uses
   %i.s = sext i32 %i.r to i64                     ; 3 uses
   %i.t = icmp slt i32 %i.r, 0
@@ -266,7 +265,7 @@ _ZNSt6vectorIdSaIdEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPdmdET_
 
 vector.memcheck82:                                ; preds = %.lr.ph
   %i.af = ptrtoaddr ptr %i.ac to i64
-  %i.ag = shl i64 %6, 3
+  %i.ag = shl i64 %i.p, 3
   %i.ah = add i64 %i.ag, %i.af
   %i.ai = sub i64 %i.ah, %i.w
   %diff.check83 = icmp ugt i64 %i.ai, -32

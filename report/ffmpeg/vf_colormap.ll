@@ -205,14 +205,13 @@ bb.a:
   br i1 %exitcond156.not, label %.critedge, label %.lr.ph125, !llvm.loop !128
 
 .lr.ph125:                                        ; preds = %.lr.ph125.preheader, %.loopexit
-  %indvars.iv152 = phi i64 [ 0, %.lr.ph125.preheader ], [ %indvars.iv.next153, %.loopexit ] ; 21 uses
-  %indvars.iv = phi i64 [ 1, %.lr.ph125.preheader ], [ %indvars.iv.next, %.loopexit ] ; 15 uses
+  %indvars.iv152 = phi i64 [ 0, %.lr.ph125.preheader ], [ %indvars.iv.next153, %.loopexit ] ; 20 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph125.preheader ], [ %indvars.iv.next, %.loopexit ] ; 17 uses
   %i.z = sub i64 %i.n, %indvars.iv152             ; 2 uses
   %i.aa = sub i64 %i.r, %indvars.iv152
   %i.ab = sub i64 %i.n, %indvars.iv152            ; 3 uses
-  %i.ac = shl nuw nsw i64 %indvars.iv152, 3
-  %3 = getelementptr i8, ptr %0, i64 %i.ac
-  %scevgep187 = getelementptr i8, ptr %3, i64 8
+  %i.ac = shl nuw nsw i64 %indvars.iv, 3
+  %scevgep187 = getelementptr i8, ptr %0, i64 %i.ac
   %i.ad = mul i64 %i.p, %indvars.iv152
   %i.ae = getelementptr i8, ptr %0, i64 %i.ad
   %scevgep191 = getelementptr i8, ptr %i.ae, i64 8
@@ -222,10 +221,10 @@ bb.a:
   %i.ah = mul i64 %i.i, %indvars.iv152            ; 2 uses
   %scevgep = getelementptr i8, ptr %i.t, i64 %i.ah ; 2 uses
   %scevgep174 = getelementptr i8, ptr %i.u, i64 %i.ah
-  %i.ai = shl nuw nsw i64 %indvars.iv152, 3       ; 2 uses
+  %i.ai = shl nuw nsw i64 %indvars.iv152, 3
   %scevgep175 = getelementptr i8, ptr %i.w, i64 %i.ai
-  %4 = getelementptr i8, ptr %0, i64 %i.ai
-  %scevgep176 = getelementptr i8, ptr %4, i64 8
+  %3 = shl nuw nsw i64 %indvars.iv, 3
+  %scevgep176 = getelementptr i8, ptr %0, i64 %3
   %i.aj = trunc i64 %indvars.iv152 to i32
   %i.ak = mul i32 %2, %i.aj
   %i.al = zext i32 %i.ak to i64
