@@ -205,22 +205,20 @@ bb.cc:                                            ; preds = %_ZNKSt6vectorIS_ItS
   br label %.body
 
 .lr.ph206:                                        ; preds = %.lr.ph206.preheader, %bb.cd
-  %.0205 = phi i16 [ %16, %bb.cd ], [ 0, %.lr.ph206.preheader ] ; 2 uses
-  %15 = zext i16 %.0205 to i64                    ; 2 uses
+  %indvars.iv217 = phi i64 [ 0, %.lr.ph206.preheader ], [ %indvars.iv.next218, %bb.cd ] ; 3 uses
   %i.sd = load ptr, ptr %14, align 8, !tbaa !167
-  %i.se = getelementptr inbounds nuw [24 x i8], ptr %i.sd, i64 %15 ; 4 uses
+  %i.se = getelementptr inbounds nuw [24 x i8], ptr %i.sd, i64 %indvars.iv217 ; 4 uses
   %i.sf = getelementptr inbounds nuw i8, ptr %i.se, i64 8 ; 3 uses
   %i.sg = getelementptr inbounds nuw i8, ptr %i.se, i64 16 ; 3 uses
   br label %bb.ce
 
 bb.cd:                                            ; preds = %_ZNSt6vectorItSaItEE9push_backERKt.exit
-  %16 = add i16 %.0205, 1                         ; 2 uses
-  %17 = zext i16 %16 to i64
-  %i.sh = icmp samesign ugt i64 %i.ge, %17
+  %indvars.iv.next218 = add nuw i64 %indvars.iv217, 1 ; 2 uses
+  %i.sh = icmp ugt i64 %i.ge, %indvars.iv.next218
   br i1 %i.sh, label %.lr.ph206, label %._crit_edge207.loopexit, !llvm.loop !384
 
 bb.ce:                                            ; preds = %.lr.ph206, %_ZNSt6vectorItSaItEE9push_backERKt.exit
-  %storemerge204 = phi i16 [ 0, %.lr.ph206 ], [ %19, %_ZNSt6vectorItSaItEE9push_backERKt.exit ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph206 ], [ %indvars.iv.next, %_ZNSt6vectorItSaItEE9push_backERKt.exit ] ; 4 uses
   %i.si = load ptr, ptr %13, align 8, !tbaa !112
   %i.sj = load ptr, ptr %12, align 8, !tbaa !112
   %i.sk = load ptr, ptr %2, align 8, !tbaa !36
@@ -229,9 +227,8 @@ bb.ce:                                            ; preds = %.lr.ph206, %_ZNSt6v
           to label %_ZN8IGameDef4idefEv.exit unwind label %.loopexit, !inline_history !1
 
 _ZN8IGameDef4idefEv.exit:                         ; preds = %bb.ce
-  %18 = zext i16 %storemerge204 to i64
-  %i.sn = getelementptr inbounds nuw [32 x i8], ptr %i.sj, i64 %18
-  %i.so = getelementptr inbounds nuw [32 x i8], ptr %i.si, i64 %15
+  %i.sn = getelementptr inbounds nuw [32 x i8], ptr %i.sj, i64 %indvars.iv
+  %i.so = getelementptr inbounds nuw [32 x i8], ptr %i.si, i64 %indvars.iv217
   %i.sp = invoke fastcc noundef zeroext i1 @_ZL22inputItemMatchesRecipeRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_P15IItemDefManager(ptr noundef nonnull align 8 dereferenceable(32) %i.so, ptr noundef nonnull align 8 dereferenceable(32) %i.sn, ptr noundef %i.sm)
           to label %bb.cf unwind label %.loopexit
 
@@ -245,7 +242,8 @@ bb.cg:                                            ; preds = %bb.cf
   br i1 %.not.i93, label %bb.ci, label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg
-  store i16 %storemerge204, ptr %i.sq, align 2, !tbaa !123
+  %15 = trunc nuw i64 %indvars.iv to i16
+  store i16 %15, ptr %i.sq, align 2, !tbaa !123
   %i.ss = getelementptr inbounds nuw i8, ptr %i.sq, i64 2
   store ptr %i.ss, ptr %i.sf, align 8, !tbaa !397
   br label %_ZNSt6vectorItSaItEE9push_backERKt.exit
@@ -280,7 +278,8 @@ _ZNKSt6vectorItSaItEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.ci
 
 .noexc96:                                         ; preds = %_ZNKSt6vectorItSaItEE12_M_check_lenEmPKc.exit.i.i
   %i.tf = getelementptr inbounds i8, ptr %i.te, i64 %i.sw ; 2 uses
-  store i16 %storemerge204, ptr %i.tf, align 2, !tbaa !123
+  %16 = trunc nuw i64 %indvars.iv to i16
+  store i16 %16, ptr %i.tf, align 2, !tbaa !123
   %i.tg = icmp sgt i64 %i.sw, 0
   br i1 %i.tg, label %bb.ck, label %_ZNSt6vectorItSaItEE11_S_relocateEPtS2_S2_RS0_.exit16.i.i
 
@@ -318,9 +317,8 @@ _ZNSt6vectorItSaItEE17_M_realloc_insertIJRKtEEEvN9__gnu_cxx17__normal_iteratorIP
   br label %.body
 
 _ZNSt6vectorItSaItEE9push_backERKt.exit:          ; preds = %_ZNSt6vectorItSaItEE17_M_realloc_insertIJRKtEEEvN9__gnu_cxx17__normal_iteratorIPtS1_EEDpOT_.exit.i, %bb.ch, %bb.cf
-  %19 = add i16 %storemerge204, 1                 ; 2 uses
-  %20 = zext i16 %19 to i64
-  %i.tm = icmp ugt i64 %i.ge, %20
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %i.tm = icmp ugt i64 %i.ge, %indvars.iv.next
   br i1 %i.tm, label %bb.ce, label %bb.cd, !llvm.loop !385
 
 bb.cm:                                            ; preds = %_ZNKSt14default_deleteIA_tEclItEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i39.i, %_ZNSt10unique_ptrIA_tSt14default_deleteIS0_EED2Ev.exit37.i

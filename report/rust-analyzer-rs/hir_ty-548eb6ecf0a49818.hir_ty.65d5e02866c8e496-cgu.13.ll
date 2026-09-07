@@ -205,7 +205,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir
   br i1 %i.l, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueSINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir8outlives9ComponentNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerEEB1F_.exit, label %.lr.ph.i
 
 bb.f:                                             ; preds = %.lr.ph
-  %i.m = add i64 %.sroa.0.1.i19, 1                ; 2 uses
+  %i.m = add nuw nsw i64 %.sroa.0.1.i19, 1        ; 2 uses
   %i.n = icmp eq i64 %i.m, %i.c
   br i1 %i.n, label %common.resume, label %.lr.ph
 
@@ -349,7 +349,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtNtCs
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueSINtNtCs87KLmgHaecV_28ra_ap_rustc_pattern_analysis10usefulness12WitnessStackNtNtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysis13MatchCheckCtxEEB1X_.exit unwind label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph16
-  %i.h = add i64 %.sroa.0.1.i15, 1                ; 2 uses
+  %i.h = add nuw nsw i64 %.sroa.0.1.i15, 1        ; 2 uses
   %i.i = icmp eq i64 %i.h, %i.b
   br i1 %i.i, label %common.resume, label %.lr.ph16
 
@@ -631,7 +631,7 @@ bb.d:                                             ; preds = %bb.b
   unreachable
 
 bb.e:                                             ; preds = %.lr.ph16
-  %i.h = add i64 %.sroa.0.1.i15, 1                ; 2 uses
+  %i.h = add nuw nsw i64 %.sroa.0.1.i15, 1        ; 2 uses
   %i.i = icmp eq i64 %i.h, %i.b
   br i1 %i.i, label %common.resume, label %.lr.ph16
 
@@ -729,7 +729,7 @@ bb.d:                                             ; preds = %bb.b
   unreachable
 
 bb.e:                                             ; preds = %.lr.ph16
-  %i.h = add i64 %.sroa.0.1.i15, 1                ; 2 uses
+  %i.h = add nuw nsw i64 %.sroa.0.1.i15, 1        ; 2 uses
   %i.i = icmp eq i64 %i.h, %i.b
   br i1 %i.i, label %common.resume, label %.lr.ph16
 
@@ -1086,7 +1086,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5infer10Adjustm
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentEBF_.exit.i unwind label %bb.b
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5infer10AdjustmentEBF_.exit7.i: ; preds = %.lr.ph4
-  %i.i = add i64 %.sroa.0.1.i3, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i3, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.c
   br i1 %i.j, label %common.resume, label %.lr.ph4
 
@@ -1171,7 +1171,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5infer13PatAdju
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5infer13PatAdjustmentEBF_.exit.i unwind label %bb.b
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5infer13PatAdjustmentEBF_.exit7.i: ; preds = %.lr.ph4
-  %i.i = add i64 %.sroa.0.1.i3, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i3, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.c
   br i1 %i.j, label %common.resume, label %.lr.ph4
 
@@ -1236,7 +1236,7 @@ define hidden void @_RNvXsw_Csjpcu9PwIgok_8smallvecINtB5_8SmallVecANtNtCs8K4cjrc
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.c = load i64, ptr %i.b, align 8, !noundef !5 ; 6 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !5 ; 5 uses
   %i.d = icmp ugt i64 %i.c, 2
   br i1 %i.d, label %bb.i, label %bb.b
 
@@ -1268,34 +1268,28 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5infer18Capture
 
 bb.e:                                             ; preds = %bb.d
   %i.m = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
+          cleanup                                 ; 4 uses
   %i.n = icmp eq i64 %i.g, %i.c
   br i1 %i.n, label %common.resume, label %.lr.ph13.i
 
-.lr.ph13.i:                                       ; preds = %bb.e, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5infer18CaptureSourceStackEBF_.exit9.i
-  %.sroa.0.111.i = phi i64 [ %1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5infer18CaptureSourceStackEBF_.exit9.i ], [ %i.g, %bb.e ] ; 2 uses
-  %i.o = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.0.111.i ; 2 uses
-  %1 = add i64 %.sroa.0.111.i, 1                  ; 2 uses
+.lr.ph13.i:                                       ; preds = %bb.e
+  %i.o = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.g ; 2 uses
   %i.p = load i32, ptr %i.o, align 8, !range !34, !alias.scope !12906, !noundef !5
   %switch.i.i7.i = icmp samesign ult i32 %i.p, 2
-  br i1 %switch.i.i7.i, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5infer18CaptureSourceStackEBF_.exit9.i, label %bb.f
+  br i1 %switch.i.i7.i, label %common.resume, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph13.i
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !alias.scope !12907, !nonnull !5, !noundef !5
   %i.s = icmp eq ptr %i.r, @_RNvCsbdtVtHYmo6x_8thin_vec12EMPTY_HEADER
-  br i1 %i.s, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5infer18CaptureSourceStackEBF_.exit9.i, label %bb.g, !prof !6
+  br i1 %i.s, label %common.resume, label %bb.g, !prof !6
 
 bb.g:                                             ; preds = %bb.f
   invoke void @_RINvNvXs6_CsbdtVtHYmo6x_8thin_vecINtB8_7ThinVecpENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4drop18drop_non_singletonNtNtCsileJQcQObtj_7hir_def3hir17ExprOrPatIdPackedECs8K4cjrcxBsw_6hir_ty(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.q) #36
-          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5infer18CaptureSourceStackEBF_.exit9.i unwind label %bb.h
+          to label %common.resume unwind label %bb.h
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5infer18CaptureSourceStackEBF_.exit9.i: ; preds = %bb.g, %bb.f, %.lr.ph13.i
-  %2 = icmp eq i64 %1, %i.c
-  br i1 %2, label %common.resume, label %.lr.ph13.i
-
-common.resume:                                    ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5infer18CaptureSourceStackEBF_.exit9.i, %bb.j, %bb.e
-  %common.resume.op = phi { ptr, i32 } [ %i.m, %bb.e ], [ %i.z, %bb.j ], [ %i.m, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs8K4cjrcxBsw_6hir_ty5infer18CaptureSourceStackEBF_.exit9.i ]
+common.resume:                                    ; preds = %bb.g, %bb.f, %.lr.ph13.i, %bb.j, %bb.e
+  %common.resume.op = phi { ptr, i32 } [ %i.m, %bb.e ], [ %i.z, %bb.j ], [ %i.m, %.lr.ph13.i ], [ %i.m, %bb.f ], [ %i.m, %bb.g ]
   resume { ptr, i32 } %common.resume.op
 
 bb.h:                                             ; preds = %bb.g
@@ -1593,7 +1587,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCs8K4cjrcxBsw_6hir_ty17method_reso
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe13CandidateStepEBH_.exit.i unwind label %bb.b
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe13CandidateStepEBH_.exit7.i: ; preds = %.lr.ph4
-  %i.i = add i64 %.sroa.0.1.i3, 1                 ; 2 uses
+  %i.i = add nuw nsw i64 %.sroa.0.1.i3, 1         ; 2 uses
   %i.j = icmp eq i64 %i.i, %i.b
   br i1 %i.j, label %common.resume, label %.lr.ph4
 

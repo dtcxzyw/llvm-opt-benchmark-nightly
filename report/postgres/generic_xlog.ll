@@ -204,9 +204,8 @@ bb.h:                                             ; preds = %bb.d, %applyPageRed
 
 .lr.ph36:                                         ; preds = %.preheader, %bb.j
   %i.bd = phi ptr [ %i.bg, %bb.j ], [ %i.ba, %.preheader ]
-  %.135 = phi i8 [ %2, %bb.j ], [ 0, %.preheader ] ; 2 uses
-  %1 = zext i8 %.135 to i64
-  %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %1
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ 0, %.preheader ] ; 2 uses
+  %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv
   %i.bf = load i32, ptr %i.be, align 4            ; 2 uses
   %.not31 = icmp eq i32 %i.bf, 0
   br i1 %.not31, label %bb.j, label %bb.i
@@ -218,11 +217,11 @@ bb.i:                                             ; preds = %.lr.ph36
 
 bb.j:                                             ; preds = %.lr.ph36, %bb.i
   %i.bg = phi ptr [ %i.bd, %.lr.ph36 ], [ %.pre, %bb.i ] ; 2 uses
-  %2 = add i8 %.135, 1                            ; 2 uses
-  %3 = zext i8 %2 to i32
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %1 = trunc nuw i64 %indvars.iv.next to i32
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 84
   %i.bi = load i32, ptr %i.bh, align 4
-  %.not30 = icmp slt i32 %i.bi, %3
+  %.not30 = icmp slt i32 %i.bi, %1
   br i1 %.not30, label %._crit_edge, label %.lr.ph36, !llvm.loop !13
 
 ._crit_edge:                                      ; preds = %bb.j, %bb.a, %.preheader

@@ -205,14 +205,12 @@ bb.h:                                             ; preds = %bb.c, %bb.a
   br label %bb.w
 
 bb.i:                                             ; preds = %.lr.ph
-  %8 = add i32 %.0317899, 1                       ; 2 uses
-  %9 = zext i32 %8 to i64                         ; 2 uses
-  %.not398.not = icmp ugt i64 %i.r, %9
+  %indvars.iv.next = add nuw i64 %i.ar, 1         ; 2 uses
+  %.not398.not = icmp ugt i64 %i.r, %indvars.iv.next
   br i1 %.not398.not, label %.lr.ph, label %.critedge429.thread, !llvm.loop !212
 
 .lr.ph:                                           ; preds = %.preheader715, %bb.i
-  %i.ar = phi i64 [ %9, %bb.i ], [ 0, %.preheader715 ] ; 2 uses
-  %.0317899 = phi i32 [ %8, %bb.i ], [ 0, %.preheader715 ]
+  %i.ar = phi i64 [ %indvars.iv.next, %bb.i ], [ 0, %.preheader715 ] ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.ar
   %i.at = load i8, ptr %i.as, align 1, !tbaa !80
   %i.au = getelementptr inbounds nuw i8, ptr @.str.19, i64 %i.ar
@@ -615,7 +613,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.ie = load ptr, ptr %i.id, align 8, !tbaa !86
   %i.if = getelementptr inbounds nuw [8 x i8], ptr %i.hv, i64 %.0176.prol
   store ptr %i.ie, ptr %i.if, align 8, !tbaa !173
-  %i.ig = add nuw i64 %.0176.prol, 1              ; 2 uses
+  %i.ig = add nuw nsw i64 %.0176.prol, 1          ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol, !llvm.loop !741
@@ -686,22 +684,22 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.jj = load ptr, ptr %i.ji, align 8, !tbaa !86
   %i.jk = getelementptr inbounds nuw [8 x i8], ptr %i.hv, i64 %.0176
   store ptr %i.jj, ptr %i.jk, align 8, !tbaa !173
-  %i.jl = add nuw i64 %.0176, 1                   ; 2 uses
+  %i.jl = add nuw nsw i64 %.0176, 1               ; 2 uses
   %i.jm = getelementptr inbounds nuw [32 x i8], ptr %i.ib, i64 %i.jl
   %i.jn = load ptr, ptr %i.jm, align 8, !tbaa !86
   %i.jo = getelementptr inbounds nuw [8 x i8], ptr %i.hv, i64 %i.jl
   store ptr %i.jn, ptr %i.jo, align 8, !tbaa !173
-  %i.jp = add nuw i64 %.0176, 2                   ; 2 uses
+  %i.jp = add nuw nsw i64 %.0176, 2               ; 2 uses
   %i.jq = getelementptr inbounds nuw [32 x i8], ptr %i.ib, i64 %i.jp
   %i.jr = load ptr, ptr %i.jq, align 8, !tbaa !86
   %i.js = getelementptr inbounds nuw [8 x i8], ptr %i.hv, i64 %i.jp
   store ptr %i.jr, ptr %i.js, align 8, !tbaa !173
-  %i.jt = add nuw i64 %.0176, 3                   ; 2 uses
+  %i.jt = add nuw nsw i64 %.0176, 3               ; 2 uses
   %i.ju = getelementptr inbounds nuw [32 x i8], ptr %i.ib, i64 %i.jt
   %i.jv = load ptr, ptr %i.ju, align 8, !tbaa !86
   %i.jw = getelementptr inbounds nuw [8 x i8], ptr %i.hv, i64 %i.jt
   store ptr %i.jv, ptr %i.jw, align 8, !tbaa !173
-  %i.jx = add nuw i64 %.0176, 4                   ; 2 uses
+  %i.jx = add nuw nsw i64 %.0176, 4               ; 2 uses
   %exitcond.not.3 = icmp eq i64 %i.jx, %i.hn
   br i1 %exitcond.not.3, label %._crit_edge.loopexit, label %scalar.ph, !llvm.loop !746
 

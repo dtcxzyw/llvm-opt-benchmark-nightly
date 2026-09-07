@@ -205,7 +205,7 @@ bb.a:
   %13 = alloca %"struct.spdlog::source_loc", align 8 ; 4 uses
   %14 = alloca %"struct.WasmEdge::ErrInfo::InfoProposal", align 1 ; 4 uses
   %15 = alloca %"struct.WasmEdge::ErrInfo::InfoAST", align 1 ; 4 uses
-  %i.a = alloca [5 x i8], align 1                 ; 6 uses
+  %i.a = alloca [5 x i8], align 1                 ; 5 uses
   %16 = alloca %"struct.spdlog::source_loc", align 8 ; 4 uses
   %17 = alloca %"struct.spdlog::source_loc", align 8 ; 4 uses
   %18 = alloca %"struct.spdlog::source_loc", align 8 ; 4 uses
@@ -608,16 +608,13 @@ bb.aj:                                            ; preds = %_ZNK8WasmEdge9Confi
   br label %.lr.ph
 
 .thread.i.i:                                      ; preds = %.lr.ph, %bb.aj
-  %.01520.i.i.lcssa = phi i32 [ 0, %bb.aj ], [ %41, %.lr.ph ] ; 2 uses
+  %indvars.iv.i.i.lcssa = phi i64 [ 0, %bb.aj ], [ %indvars.iv.next.i.i, %.lr.ph ]
   %.lcssa = phi i8 [ %i.cm, %bb.aj ], [ %i.dc, %.lr.ph ]
-  %37 = zext i32 %.01520.i.i.lcssa to i64
-  %i.cq = getelementptr inbounds nuw i8, ptr %i.a, i64 %37
+  %i.cq = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i.i.lcssa ; 2 uses
   store i8 %.lcssa, ptr %i.cq, align 1, !tbaa !16
-  %38 = add i32 %.01520.i.i.lcssa, 1
   %i.cr = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !40
-  %39 = zext i32 %38 to i64
-  %i.ct = getelementptr inbounds nuw i8, ptr %i.a, i64 %39
+  %i.ct = getelementptr inbounds nuw i8, ptr %i.cq, i64 1
   %i.cu = load ptr, ptr %4, align 8, !tbaa !40    ; 2 uses
   %i.cv = ptrtoint ptr %i.cs to i64
   %i.cw = ptrtoint ptr %i.cu to i64
@@ -629,12 +626,11 @@ bb.aj:                                            ; preds = %_ZNK8WasmEdge9Confi
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %i.cz = phi i64 [ %i.dd, %.lr.ph ], [ %i.cp, %.lr.ph.preheader ] ; 3 uses
   %i.da = phi i8 [ %i.dc, %.lr.ph ], [ %i.cm, %.lr.ph.preheader ]
-  %.01520.i.i79 = phi i32 [ %41, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
+  %indvars.iv.i.i79 = phi i64 [ %indvars.iv.next.i.i, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %spec.select19.i.i = or i8 %i.da, -128
-  %40 = zext i32 %.01520.i.i79 to i64
-  %i.db = getelementptr inbounds nuw i8, ptr %i.a, i64 %40
+  %i.db = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i.i79
   store i8 %spec.select19.i.i, ptr %i.db, align 1, !tbaa !16
-  %41 = add i32 %.01520.i.i79, 1                  ; 2 uses
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i79, 1 ; 2 uses
   %i.dc = trunc i64 %i.cz to i8                   ; 2 uses
   %i.dd = lshr i64 %i.cz, 7                       ; 2 uses
   %i.de = icmp eq i64 %i.dd, 0
@@ -1037,7 +1033,7 @@ _ZSt9__advanceIN8WasmEdge12SpareEnumMapILm160ENS0_7ErrCode5ValueESt17basic_strin
   %i.i = getelementptr inbounds nuw [24 x i8], ptr @_ZN8WasmEdgeL10ErrCodeStrE, i64 %.sroa.5.0.i.i.i.i
   %i.j = load i32, ptr %i.i, align 8, !tbaa !309
   %i.k = icmp ult i32 %i.j, %spec.select.i        ; 2 uses
-  %i.l = add i64 %.sroa.5.0.i.i.i.i, 1
+  %i.l = add nsw i64 %.sroa.5.0.i.i.i.i, 1
   %i.m = xor i64 %i.h, -1
   %i.n = add nsw i64 %.030.i.i.i.i, %i.m
   %.sroa.4.1.i.i.i.i = select i1 %i.k, i64 %i.l, i64 %.sroa.4.029.i.i.i.i ; 3 uses

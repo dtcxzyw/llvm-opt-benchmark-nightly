@@ -61,7 +61,6 @@ $_ZTVN5cppgc8internal28ProcessHeapStatisticsUpdater22AllocationObserverImplE = c
 @.str.5 = private unnamed_addr constant [43 x i8] c"0u == weak_persistent_region_.NodesInUse()\00", align 1
 @.str.6 = private unnamed_addr constant [58 x i8] c"0u == strong_cross_thread_persistent_region_.NodesInUse()\00", align 1
 @.str.7 = private unnamed_addr constant [56 x i8] c"0u == weak_cross_thread_persistent_region_.NodesInUse()\00", align 1
-@.str.8 = private unnamed_addr constant [31 x i8] c"gc_count <= kMaxTerminationGCs\00", align 1
 @_ZTVN5cppgc8internal28ProcessHeapStatisticsUpdater22AllocationObserverImplE = linkonce_odr hidden unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZN5cppgc8internal28ProcessHeapStatisticsUpdater22AllocationObserverImpl28AllocatedObjectSizeIncreasedEm, ptr @_ZN5cppgc8internal28ProcessHeapStatisticsUpdater22AllocationObserverImpl28AllocatedObjectSizeDecreasedEm, ptr @_ZN5cppgc8internal28ProcessHeapStatisticsUpdater22AllocationObserverImpl24ResetAllocatedObjectSizeEm, ptr @_ZN5cppgc8internal28ProcessHeapStatisticsUpdater22AllocationObserverImpl22AllocatedSizeIncreasedEm, ptr @_ZN5cppgc8internal28ProcessHeapStatisticsUpdater22AllocationObserverImpl22AllocatedSizeDecreasedEm] }, comdat, align 8
 @_ZN5cppgc21ProcessHeapStatistics28total_allocated_object_size_E = external global %"struct.std::atomic.91", align 8
 @_ZN5cppgc21ProcessHeapStatistics22total_allocated_space_E = external global %"struct.std::atomic.91", align 8
@@ -464,7 +463,7 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.l, %bb.g
-  %.0 = phi i64 [ 0, %bb.g ], [ %i.af, %bb.l ]    ; 3 uses
+  %.0 = phi i64 [ 0, %bb.g ], [ %i.af, %bb.l ]    ; 2 uses
   call void @_ZN5cppgc8internal20PersistentRegionBase17ClearAllUsedNodesEv(ptr noundef nonnull align 8 dereferenceable(48) %i.j) #18
   call void @_ZN5cppgc8internal20PersistentRegionBase17ClearAllUsedNodesEv(ptr noundef nonnull align 8 dereferenceable(48) %i.k) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
@@ -557,23 +556,15 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.q
   %i.ao = call noundef i64 @_ZNK5cppgc8internal27CrossThreadPersistentRegion10NodesInUseEv(ptr noundef nonnull align 8 dereferenceable(48) %i.m) #18
   %i.ap = icmp eq i64 %i.ao, 0
-  br i1 %i.ap, label %5, label %bb.t, !prof !5
+  br i1 %i.ap, label %bb.u, label %bb.t, !prof !5
 
 bb.t:                                             ; preds = %bb.s
   call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.7) #21
   unreachable
 
-5:                                                ; preds = %bb.s
+bb.u:                                             ; preds = %bb.s
   call void @_ZN5cppgc8internal20PersistentRegionLockD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %4) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  %6 = icmp samesign ult i64 %.0, 20
-  br i1 %6, label %bb.u, label %7, !prof !5
-
-7:                                                ; preds = %5
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.8) #21
-  unreachable
-
-bb.u:                                             ; preds = %5
   call void @_ZN5cppgc8internal15ObjectAllocator28ResetLinearAllocationBuffersEv(ptr noundef nonnull align 8 dereferenceable(48) %i.p) #18
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 464 ; 2 uses
   %i.ar = load i64, ptr %i.aq, align 8

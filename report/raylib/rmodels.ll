@@ -205,8 +205,8 @@ skip_space.exit91.preheader.i:                    ; preds = %bb.z
 skip_space.exit91.i:                              ; preds = %skip_space_and_cr.exit.i, %skip_space.exit91.preheader.i
   %i.dx = phi i8 [ %i.dv, %skip_space.exit91.preheader.i ], [ %.pre.i, %skip_space_and_cr.exit.i ] ; 4 uses
   %indvars.iv198.i = phi i32 [ -2, %skip_space.exit91.preheader.i ], [ %indvars.iv.next199.i, %skip_space_and_cr.exit.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %skip_space.exit91.preheader.i ], [ %indvars.iv.next.i, %skip_space_and_cr.exit.i ] ; 6 uses
   %.lcssa162165.i = phi ptr [ %storemerge.i, %skip_space.exit91.preheader.i ], [ %i.gp, %skip_space_and_cr.exit.i ] ; 3 uses
-  %.071.i = phi i32 [ 0, %skip_space.exit91.preheader.i ], [ %11, %skip_space_and_cr.exit.i ] ; 8 uses
   switch i8 %i.dx, label %bb.ab [
     i8 13, label %.critedge.i
     i8 10, label %.critedge.i
@@ -478,33 +478,32 @@ skip_space_and_cr.exit.i:                         ; preds = %bb.at
   %.sroa.3.0.insert.ext.i.i = zext i32 %.sroa.3.0.i.i to i64
   %.sroa.3.0.insert.shift.i.i = shl nuw i64 %.sroa.3.0.insert.ext.i.i, 32
   %.sroa.040.0.insert.insert.i.i = or disjoint i64 %.sroa.3.0.insert.shift.i.i, %.011.lcssa.i.i.i
-  %10 = zext i32 %.071.i to i64
-  %i.gr = getelementptr inbounds nuw [12 x i8], ptr %8, i64 %10 ; 2 uses
+  %i.gr = getelementptr inbounds nuw [12 x i8], ptr %8, i64 %indvars.iv.i ; 2 uses
   store i64 %.sroa.040.0.insert.insert.i.i, ptr %i.gr, align 4
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.gr, i64 8
   store i32 %.sroa.5.0.i.i, ptr %.sroa.4.0..sroa_idx.i, align 4
-  %11 = add i32 %.071.i, 1
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   %indvars.iv.next199.i = add i32 %indvars.iv198.i, 1
   %.pre.i = load i8, ptr %i.gp, align 1
   br label %skip_space.exit91.i
 
 .critedge.i:                                      ; preds = %skip_space.exit91.i, %skip_space.exit91.i, %skip_space.exit91.i
+  %10 = trunc nuw i64 %indvars.iv.i to i32        ; 3 uses
   store i32 4, ptr %i.cq, align 4
   br i1 %.not.i445, label %.preheader.i, label %bb.au
 
 .preheader.i:                                     ; preds = %.critedge.i
-  %.not171.i = icmp eq i32 %.071.i, 0
+  %.not171.i = icmp eq i64 %indvars.iv.i, 0
   br i1 %.not171.i, label %._crit_edge170.i, label %.lr.ph169.i
 
 .lr.ph169.i:                                      ; preds = %.preheader.i
   %i.gs = getelementptr inbounds nuw i8, ptr %i.ch, i64 32
-  %12 = zext i32 %.071.i to i64
-  %i.gt = mul nuw nsw i64 %12, 12
+  %i.gt = mul i64 %indvars.iv.i, 12
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.gs, ptr nonnull align 16 %8, i64 %i.gt, i1 false)
   br label %._crit_edge170.i
 
 bb.au:                                            ; preds = %.critedge.i
-  %i.gu = icmp ugt i32 %.071.i, 2
+  %i.gu = icmp samesign ugt i64 %indvars.iv.i, 2
   br i1 %i.gu, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.au
@@ -551,9 +550,9 @@ bb.av:                                            ; preds = %bb.av, %.lr.ph.i
 
 ._crit_edge170.i:                                 ; preds = %.lr.ph169.i, %.preheader.i
   %i.hm = getelementptr inbounds nuw i8, ptr %i.ch, i64 224
-  store i32 %.071.i, ptr %i.hm, align 8
+  store i32 %10, ptr %i.hm, align 8
   %i.hn = getelementptr inbounds nuw i8, ptr %i.ch, i64 228
-  store i32 %.071.i, ptr %i.hn, align 4
+  store i32 %10, ptr %i.hn, align 4
   %i.ho = getelementptr inbounds nuw i8, ptr %i.ch, i64 292
   store i32 1, ptr %i.ho, align 4
   br label %bb.by
@@ -878,7 +877,7 @@ parseLine.exit:                                   ; preds = %bb.t, %bb.t, %bb.bl
 
 bb.by:                                            ; preds = %._crit_edge170.i, %._crit_edge.i
   %i.ku = phi i32 [ 1, %._crit_edge170.i ], [ %.068.lcssa.i, %._crit_edge.i ]
-  %i.kv = phi i32 [ %.071.i, %._crit_edge170.i ], [ %i.hj, %._crit_edge.i ]
+  %i.kv = phi i32 [ %10, %._crit_edge170.i ], [ %i.hj, %._crit_edge.i ]
   %.pr = load i32, ptr %i.cq, align 4             ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #54
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #54
