@@ -205,10 +205,8 @@ bb.u:                                             ; preds = %bb.t
   %.053.ph97.i = phi i64 [ %.053.ph.be.i, %.outer.backedge.i ], [ %.5213, %bb.u ]
   br label %bb.v
 
-.loopexit.thread.i:                               ; preds = %.loopexit.i, %.preheader.i
-  %.1135.i = phi i64 [ %.1.i, %.loopexit.i ], [ 0, %.preheader.i ]
-  %.4134.i = phi i64 [ %.4.i, %.loopexit.i ], [ %i.eb, %.preheader.i ]
-  %i.dd = add i64 %.4134.i, %.1135.i              ; 2 uses
+.loopexit.thread.i:                               ; preds = %.loopexit.i
+  %i.dd = add i64 %.1.i, %.4.i                    ; 2 uses
   %i.de = sub i64 %.4187, %i.dd
   %i.df = icmp ult i64 %i.de, 2
   br i1 %i.df, label %asn1_find_indefinite_length.exit.thread, label %bb.v, !prof !20
@@ -266,7 +264,7 @@ bb.y:                                             ; preds = %bb.v
 
 .loopexit65.i:                                    ; preds = %.lr.ph625, %bb.y
   %.2.i = phi i64 [ %i.dg, %bb.y ], [ %i.dy, %.lr.ph625 ] ; 9 uses
-  %i.eb = add i64 %.2.i, 1                        ; 5 uses
+  %i.eb = add i64 %.2.i, 1                        ; 4 uses
   %i.ec = getelementptr i8, ptr %2, i64 %.2.i
   %i.ed = load i8, ptr %i.ec, align 1             ; 10 uses
   %i.ee = zext i8 %i.ed to i64                    ; 3 uses
@@ -291,16 +289,12 @@ bb.ac:                                            ; preds = %bb.z
   br i1 %i.ek, label %asn1_find_indefinite_length.exit.thread, label %bb.ad, !prof !15
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.el = add nsw i64 %i.ee, -128                 ; 2 uses
+  %i.el = add nsw i64 %i.ee, -128
   %i.em = sub i64 %.4187, %i.eb
   %i.en = icmp ugt i64 %i.el, %i.em
-  br i1 %i.en, label %asn1_find_indefinite_length.exit.thread, label %.preheader.i, !prof !15
+  br i1 %i.en, label %asn1_find_indefinite_length.exit.thread, label %.lr.ph.i, !prof !15
 
-.preheader.i:                                     ; preds = %bb.ad
-  %.not6188.i = icmp eq i64 %i.el, 0
-  br i1 %.not6188.i, label %.loopexit.thread.i, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %.preheader.i
+.lr.ph.i:                                         ; preds = %bb.ad
   %i.eo = getelementptr i8, ptr %2, i64 %i.eb
   %i.ep = load i8, ptr %i.eo, align 1
   %i.eq = zext i8 %i.ep to i64                    ; 2 uses

@@ -204,19 +204,14 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
-  %wide.trip.count = zext nneg i32 %i.ci to i64   ; 5 uses
-  %4 = add nsw i64 %wide.trip.count, -1           ; 2 uses
+  %wide.trip.count = zext nneg i32 %i.ci to i64   ; 4 uses
   %xtraiter = and i64 %wide.trip.count, 1
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %.epil.preheader, label %.new
-
-.new:                                             ; preds = %bb.o
   %unroll_iter = and i64 %wide.trip.count, 2147483646
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.p, %.new
-  %indvars.iv = phi i64 [ 0, %.new ], [ %indvars.iv.next.1, %bb.p ] ; 4 uses
-  %niter = phi i64 [ 0, %.new ], [ %niter.next.1, %bb.p ]
+bb.p:                                             ; preds = %bb.p, %bb.o
+  %indvars.iv = phi i64 [ 0, %bb.o ], [ %indvars.iv.next.1, %bb.p ] ; 4 uses
+  %niter = phi i64 [ 0, %bb.o ], [ %niter.next.1, %bb.p ]
   %.idx = mul nuw nsw i64 %indvars.iv, 12
   %i.cl = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx ; 3 uses
   %i.cm = getelementptr inbounds nuw [4 x i8], ptr %i.ck, i64 %indvars.iv
@@ -252,7 +247,7 @@ bb.p:                                             ; preds = %bb.p, %.new
   %i.dj = load float, ptr %i.di, align 4, !tbaa !46
   %i.dk = getelementptr inbounds nuw i8, ptr %i.cy, i64 8
   store float %i.dj, ptr %i.dk, align 4, !tbaa !46
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
   %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.lr.ph.preheader.unr-lcssa, label %bb.p, !llvm.loop !706
@@ -261,13 +256,12 @@ bb.p:                                             ; preds = %bb.p, %.new
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.preheader, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %.lr.ph.preheader.unr-lcssa, %bb.o
-  %indvars.iv.epil.init = phi i64 [ 0, %bb.o ], [ %indvars.iv.next.1, %.lr.ph.preheader.unr-lcssa ] ; 2 uses
+.epil.preheader:                                  ; preds = %.lr.ph.preheader.unr-lcssa
   %lcmp.mod130 = trunc i32 %i.ci to i1
   tail call void @llvm.assume(i1 %lcmp.mod130)
-  %.idx.epil = mul nuw nsw i64 %indvars.iv.epil.init, 12
+  %.idx.epil = mul nuw nsw i64 %indvars.iv.next.1, 12
   %i.dl = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx.epil ; 3 uses
-  %i.dm = getelementptr inbounds nuw [4 x i8], ptr %i.ck, i64 %indvars.iv.epil.init
+  %i.dm = getelementptr inbounds nuw [4 x i8], ptr %i.ck, i64 %indvars.iv.next.1
   %i.dn = load i32, ptr %i.dm, align 4, !tbaa !698
   %i.do = mul nsw i32 %i.dn, 3
   %i.dp = sext i32 %i.do to i64
@@ -286,10 +280,6 @@ bb.p:                                             ; preds = %bb.p, %.new
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph.preheader.unr-lcssa, %.epil.preheader
   %xtraiter131 = and i64 %wide.trip.count, 1
-  %6 = icmp eq i64 %4, 0
-  br i1 %6, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
-
-.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
   %unroll_iter135 = and i64 %wide.trip.count, 2147483646
   br label %.lr.ph
 
@@ -297,17 +287,15 @@ bb.p:                                             ; preds = %bb.p, %.new
   %lcmp.mod132.not = icmp eq i64 %xtraiter131, 0
   br i1 %lcmp.mod132.not, label %._crit_edge, label %.lr.ph.epil.preheader
 
-.lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa, %.lr.ph.preheader
-  %indvars.iv89.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next90.1, %._crit_edge.unr-lcssa ]
-  %.04379.epil.init = phi float [ f0x7F7FFFFF, %.lr.ph.preheader ], [ %i.ew, %._crit_edge.unr-lcssa ] ; 2 uses
+.lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa
   %lcmp.mod134 = trunc i32 %i.ci to i1
   tail call void @llvm.assume(i1 %lcmp.mod134)
-  %.idx124.epil = mul nuw nsw i64 %indvars.iv89.epil.init, 12
+  %.idx124.epil = mul nuw nsw i64 %indvars.iv.next90.1, 12
   %i.dy = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx124.epil
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 4
   %i.ea = load float, ptr %i.dz, align 4, !tbaa !46 ; 2 uses
-  %i.eb = fcmp olt float %.04379.epil.init, %i.ea
-  %i.ec = select i1 %i.eb, float %.04379.epil.init, float %i.ea
+  %i.eb = fcmp olt float %i.ew, %i.ea
+  %i.ec = select i1 %i.eb, float %i.ew, float %i.ea
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.lr.ph.epil.preheader
@@ -323,10 +311,10 @@ bb.p:                                             ; preds = %bb.p, %.new
   %i.el = fcmp ogt float %i.ek, f0x3C23D70A
   br i1 %i.el, label %bb.q, label %bb.t
 
-.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %indvars.iv89 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next90.1, %.lr.ph ] ; 3 uses
-  %.04379 = phi float [ f0x7F7FFFFF, %.lr.ph.preheader.new ], [ %i.ew, %.lr.ph ] ; 2 uses
-  %niter136 = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter136.next.1, %.lr.ph ]
+.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader
+  %indvars.iv89 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next90.1, %.lr.ph ] ; 3 uses
+  %.04379 = phi float [ f0x7F7FFFFF, %.lr.ph.preheader ], [ %i.ew, %.lr.ph ] ; 2 uses
+  %niter136 = phi i64 [ 0, %.lr.ph.preheader ], [ %niter136.next.1, %.lr.ph ]
   %.idx124 = mul nuw nsw i64 %indvars.iv89, 12
   %i.em = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx124
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 4
@@ -338,7 +326,7 @@ bb.p:                                             ; preds = %bb.p, %.new
   %i.et = getelementptr inbounds nuw i8, ptr %i.es, i64 16
   %i.eu = load float, ptr %i.et, align 8, !tbaa !46 ; 2 uses
   %i.ev = fcmp olt float %i.eq, %i.eu
-  %i.ew = select i1 %i.ev, float %i.eq, float %i.eu ; 3 uses
+  %i.ew = select i1 %i.ev, float %i.eq, float %i.eu ; 4 uses
   %indvars.iv.next90.1 = add nuw nsw i64 %indvars.iv89, 2 ; 2 uses
   %niter136.next.1 = add i64 %niter136, 2         ; 2 uses
   %niter136.ncmp.1 = icmp eq i64 %niter136.next.1, %unroll_iter135

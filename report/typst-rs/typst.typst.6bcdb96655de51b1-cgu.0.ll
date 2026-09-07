@@ -205,17 +205,16 @@ _RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typ
   br i1 %i.m, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9fPPV5zPXBl_5typst.exit.thread.i
-  %i.n = add i64 %i.f, -1                         ; 4 uses
+  %i.n = add i64 %i.f, -1                         ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 88 ; 2 uses
-  %1 = icmp eq i64 %i.n, 0
-  br i1 %1, label %.loopexit, label %.lr.ph
+  br label %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph
   %i.p = icmp eq i64 %i.r, %i.n
   br i1 %i.p, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %bb.d
-  %.sroa.0.0.i.i.i.i.i.i.i4.i5 = phi i64 [ %i.r, %bb.d ], [ 0, %bb.c ] ; 2 uses
+  %.sroa.0.0.i.i.i.i.i.i.i4.i5 = phi i64 [ 0, %bb.c ], [ %i.r, %bb.d ] ; 2 uses
   %i.q = getelementptr inbounds nuw [72 x i8], ptr %i.o, i64 %.sroa.0.0.i.i.i.i.i.i.i4.i5
   %i.r = add nuw nsw i64 %.sroa.0.0.i.i.i.i.i.i.i4.i5, 1 ; 4 uses
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticECs9fPPV5zPXBl_5typst(ptr noalias nofree noundef readonly align 8 dereferenceable(72) %i.q)
@@ -263,7 +262,7 @@ bb.i:                                             ; preds = %bb.a
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticEECs9fPPV5zPXBl_5typst(ptr nonnull %.val, i64 %.val3) #62
           to label %bb.k unwind label %bb.j
 
-.loopexit:                                        ; preds = %bb.d, %bb.c, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9fPPV5zPXBl_5typst.exit.thread.i, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9fPPV5zPXBl_5typst.exit.lr.ph.split.i, %bb.b
+.loopexit:                                        ; preds = %bb.d, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9fPPV5zPXBl_5typst.exit.thread.i, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9fPPV5zPXBl_5typst.exit.lr.ph.split.i, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !52225
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !52225
   %i.aa = load ptr, ptr %i.c, align 8, !nonnull !28, !noundef !28

@@ -204,13 +204,9 @@ bb.s:                                             ; preds = %thread-pre-split.i
 
 bb.t:                                             ; preds = %thread-pre-split.i
   %i.bj = getelementptr inbounds nuw i8, ptr %i.ag, i64 1 ; 2 uses
-  %i.bk = add nsw i64 %i.ae, -1                   ; 3 uses
+  %i.bk = add nsw i64 %i.ae, -1                   ; 2 uses
   %i.bl = icmp samesign ult i64 %i.ae, 17
-  br i1 %i.bl, label %.preheader114.i, label %.lr.ph.i
-
-.preheader114.i:                                  ; preds = %bb.t
-  %.not103137.i = icmp eq i64 %i.bk, 0
-  br i1 %.not103137.i, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE10insert_mutCskBwnbTnIhiv_6uu_cat.exit.i, label %.lr.ph141.i
+  br i1 %i.bl, label %.lr.ph141.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.t, %bb.w
   %.sroa.0.1136.i = phi ptr [ %i.bm, %bb.w ], [ %i.bj, %bb.t ] ; 2 uses
@@ -241,10 +237,10 @@ bb.w:                                             ; preds = %bb.v
   %.not102.i = icmp eq i64 %i.bn, 0
   br i1 %.not102.i, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE10insert_mutCskBwnbTnIhiv_6uu_cat.exit.i, label %.lr.ph.i
 
-.lr.ph141.i:                                      ; preds = %.preheader114.i, %bb.x
-  %.sroa.0.2140.i = phi ptr [ %i.cf, %bb.x ], [ %i.bj, %.preheader114.i ] ; 2 uses
-  %.sroa.26.2139.i = phi i64 [ %i.ce, %bb.x ], [ %i.bk, %.preheader114.i ]
-  %.sroa.084.2138.i = phi i64 [ %i.ch, %bb.x ], [ 0, %.preheader114.i ]
+.lr.ph141.i:                                      ; preds = %bb.t, %bb.x
+  %.sroa.0.2140.i = phi ptr [ %i.cf, %bb.x ], [ %i.bj, %bb.t ] ; 2 uses
+  %.sroa.26.2139.i = phi i64 [ %i.ce, %bb.x ], [ %i.bk, %bb.t ]
+  %.sroa.084.2138.i = phi i64 [ %i.ch, %bb.x ], [ 0, %bb.t ]
   %i.bz = load i8, ptr %.sroa.0.2140.i, align 1, !alias.scope !970, !noalias !971, !noundef !8
   %i.ca = zext i8 %i.bz to i32
   %i.cb = add nsw i32 %i.ca, -48                  ; 2 uses
@@ -326,8 +322,8 @@ bb.ac:                                            ; preds = %.lr.ph150.i
   %i.dg = trunc nuw i8 %i.df to i1
   br i1 %i.dg, label %bb.ae, label %bb.an
 
-_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE10insert_mutCskBwnbTnIhiv_6uu_cat.exit.i: ; preds = %bb.w, %bb.x, %bb.ab, %bb.ac, %.preheader.i, %.preheader114.i
-  %.sroa.15187.0 = phi i64 [ %i.ch, %bb.x ], [ 0, %.preheader114.i ], [ %i.de, %bb.ac ], [ 0, %.preheader.i ], [ %i.cv, %bb.ab ], [ %i.by, %bb.w ]
+_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE10insert_mutCskBwnbTnIhiv_6uu_cat.exit.i: ; preds = %bb.w, %bb.x, %bb.ab, %bb.ac, %.preheader.i
+  %.sroa.15187.0 = phi i64 [ %i.cv, %bb.ab ], [ %i.ch, %bb.x ], [ %i.de, %bb.ac ], [ 0, %.preheader.i ], [ %i.by, %bb.w ]
   %i.dh = sitofp i64 %.sroa.15187.0 to double
   call void @_RNvMs4_NtCs7tKScEop1B6_5alloc7raw_vecINtB5_6RawVecTINtNtB7_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE8grow_oneCsh036I4OHgIr_6uucore(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.l) #22, !noalias !972
   %.pre.i = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !973, !noalias !972 ; 11 uses

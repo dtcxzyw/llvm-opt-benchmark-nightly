@@ -145,17 +145,15 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond228.not, label %._crit_edge194, label %.lr.ph193, !llvm.loop !18
 
 ._crit_edge194:                                   ; preds = %.lr.ph193, %middle.block
-  %i.bf = add nsw i32 %3, -1                      ; 6 uses
+  %i.bf = add nsw i32 %3, -1                      ; 5 uses
   %.not319 = icmp eq i32 %3, 1
   br i1 %.not319, label %.preheader.split.preheader, label %.lr.ph197.preheader
 
 .lr.ph197.preheader:                              ; preds = %._crit_edge194
   %i.bg = zext i32 %i.bf to i64                   ; 4 uses
-  %4 = icmp ne i32 %i.bf, 0
-  %.neg = sext i1 %4 to i64
   %i.bh = zext nneg i32 %3 to i64
-  %i.bi = add nsw i64 %.neg, %i.bh                ; 3 uses
-  %min.iters.check337 = icmp ult i64 %i.bi, 12
+  %i.bi = add nsw i64 %i.bh, -1                   ; 2 uses
+  %min.iters.check337 = icmp ult i32 %3, 13
   br i1 %min.iters.check337, label %.lr.ph197.preheader371, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph197.preheader

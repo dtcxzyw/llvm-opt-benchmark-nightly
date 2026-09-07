@@ -205,19 +205,14 @@ _RNvXs3_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11CharIndicesNtNtNtNtB9_4iter6trait
   br i1 %i.lc, label %._crit_edge, label %bb.bp
 
 ._crit_edge:                                      ; preds = %_RNvXs3_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11CharIndicesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit209, %bb.f
-  %i.ld = add i64 %i.f, -1                        ; 6 uses
+  %i.ld = add i64 %i.f, -1                        ; 5 uses
   %i.le = shl nuw i64 %i.ld, 3                    ; 2 uses
   %.not.i.i.i.i = icmp samesign ugt i64 %i.ld, 1152921504606846975
   br i1 %.not.i.i.i.i, label %bb.bv, label %bb.bu, !prof !61
 
 bb.bu:                                            ; preds = %._crit_edge
   %.not.i.i.not = icmp eq i64 %i.f, 1
-  br i1 %.not.i.i.not, label %.thread, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i
-
-.thread:                                          ; preds = %bb.bu
-  %1 = icmp eq i64 %i.ld, 0
-  tail call void @llvm.assume(i1 %1)
-  br label %_RNvXNtNtCs1xwejQucwHj_5alloc3vec14spec_from_iterINtB4_3VecjEINtB2_12SpecFromIterjINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB1m_4skip4SkipINtNtNtB1q_5slice4iter4IterjEENCNvXs4_NtCselBS6QMlFOX_13icu_segmenter4lineINtB30_17LineBreakIteratorNtNtB32_14rule_segmenter4Utf8ENtNtNtB1o_6traits8iterator8Iterator4next0EE9from_iterCs7tN9tvpkfrg_12typst_layout.exit
+  br i1 %.not.i.i.not, label %_RNvXNtNtCs1xwejQucwHj_5alloc3vec14spec_from_iterINtB4_3VecjEINtB2_12SpecFromIterjINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB1m_4skip4SkipINtNtNtB1q_5slice4iter4IterjEENCNvXs4_NtCselBS6QMlFOX_13icu_segmenter4lineINtB30_17LineBreakIteratorNtNtB32_14rule_segmenter4Utf8ENtNtNtB1o_6traits8iterator8Iterator4next0EE9from_iterCs7tN9tvpkfrg_12typst_layout.exit, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i: ; preds = %bb.bu
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #56, !noalias !49965
@@ -325,10 +320,10 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.ms = icmp eq i64 %i.mr, %i.lk
   br i1 %i.ms, label %_RNvXNtNtCs1xwejQucwHj_5alloc3vec14spec_from_iterINtB4_3VecjEINtB2_12SpecFromIterjINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB1m_4skip4SkipINtNtNtB1q_5slice4iter4IterjEENCNvXs4_NtCselBS6QMlFOX_13icu_segmenter4lineINtB30_17LineBreakIteratorNtNtB32_14rule_segmenter4Utf8ENtNtNtB1o_6traits8iterator8Iterator4next0EE9from_iterCs7tN9tvpkfrg_12typst_layout.exit, label %scalar.ph, !llvm.loop !49932
 
-_RNvXNtNtCs1xwejQucwHj_5alloc3vec14spec_from_iterINtB4_3VecjEINtB2_12SpecFromIterjINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB1m_4skip4SkipINtNtNtB1q_5slice4iter4IterjEENCNvXs4_NtCselBS6QMlFOX_13icu_segmenter4lineINtB30_17LineBreakIteratorNtNtB32_14rule_segmenter4Utf8ENtNtNtB1o_6traits8iterator8Iterator4next0EE9from_iterCs7tN9tvpkfrg_12typst_layout.exit: ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %.thread
-  %.sroa.4.0.i.i.i402 = phi i64 [ 0, %.thread ], [ %i.ld, %middle.block ], [ %i.ld, %scalar.ph ], [ %i.ld, %scalar.ph.prol.loopexit ]
-  %.sroa.10.0.i.i.i401 = phi ptr [ inttoptr (i64 8 to ptr), %.thread ], [ %i.lf, %middle.block ], [ %i.lf, %scalar.ph ], [ %i.lf, %scalar.ph.prol.loopexit ]
-  %.sroa.5.0.copyload.sink.i.i.i.i.i.i = phi i64 [ 0, %.thread ], [ %i.lk, %middle.block ], [ %i.lk, %scalar.ph ], [ %i.lk, %scalar.ph.prol.loopexit ]
+_RNvXNtNtCs1xwejQucwHj_5alloc3vec14spec_from_iterINtB4_3VecjEINtB2_12SpecFromIterjINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB1m_4skip4SkipINtNtNtB1q_5slice4iter4IterjEENCNvXs4_NtCselBS6QMlFOX_13icu_segmenter4lineINtB30_17LineBreakIteratorNtNtB32_14rule_segmenter4Utf8ENtNtNtB1o_6traits8iterator8Iterator4next0EE9from_iterCs7tN9tvpkfrg_12typst_layout.exit: ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %bb.bu
+  %.sroa.4.0.i.i.i402 = phi i64 [ 0, %bb.bu ], [ %i.ld, %middle.block ], [ %i.ld, %scalar.ph ], [ %i.ld, %scalar.ph.prol.loopexit ]
+  %.sroa.10.0.i.i.i401 = phi ptr [ inttoptr (i64 8 to ptr), %bb.bu ], [ %i.lf, %middle.block ], [ %i.lf, %scalar.ph ], [ %i.lf, %scalar.ph.prol.loopexit ]
+  %.sroa.5.0.copyload.sink.i.i.i.i.i.i = phi i64 [ 0, %bb.bu ], [ %i.lk, %middle.block ], [ %i.lk, %scalar.ph ], [ %i.lk, %scalar.ph.prol.loopexit ]
   %.val = load i64, ptr %i.d, align 8             ; 2 uses
   %i.mt = icmp eq i64 %.val, 0
   br i1 %i.mt, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecjEECs7tN9tvpkfrg_12typst_layout.exit, label %bb.bx
@@ -731,17 +726,16 @@ _RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typ
   br i1 %i.m, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs7tN9tvpkfrg_12typst_layout.exit.thread.i
-  %i.n = add i64 %i.f, -1                         ; 4 uses
+  %i.n = add i64 %i.f, -1                         ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 88 ; 2 uses
-  %1 = icmp eq i64 %i.n, 0
-  br i1 %1, label %.loopexit, label %.lr.ph
+  br label %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph
   %i.p = icmp eq i64 %i.r, %i.n
   br i1 %i.p, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %bb.d
-  %.sroa.0.0.i.i.i.i.i.i.i4.i5 = phi i64 [ %i.r, %bb.d ], [ 0, %bb.c ] ; 2 uses
+  %.sroa.0.0.i.i.i.i.i.i.i4.i5 = phi i64 [ 0, %bb.c ], [ %i.r, %bb.d ] ; 2 uses
   %i.q = getelementptr inbounds nuw [72 x i8], ptr %i.o, i64 %.sroa.0.0.i.i.i.i.i.i.i4.i5
   %i.r = add nuw nsw i64 %.sroa.0.0.i.i.i.i.i.i.i4.i5, 1 ; 4 uses
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticECs7tN9tvpkfrg_12typst_layout(ptr noalias nofree noundef readonly align 8 dereferenceable(72) %i.q)
@@ -789,7 +783,7 @@ bb.i:                                             ; preds = %bb.a
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticEECs7tN9tvpkfrg_12typst_layout(ptr nonnull %.val, i64 %.val3) #54
           to label %bb.k unwind label %bb.j
 
-.loopexit:                                        ; preds = %bb.d, %bb.c, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs7tN9tvpkfrg_12typst_layout.exit.thread.i, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs7tN9tvpkfrg_12typst_layout.exit.lr.ph.split.i, %bb.b
+.loopexit:                                        ; preds = %bb.d, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs7tN9tvpkfrg_12typst_layout.exit.thread.i, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs7tN9tvpkfrg_12typst_layout.exit.lr.ph.split.i, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !52819
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !52819
   %i.aa = load ptr, ptr %i.c, align 8, !nonnull !41, !noundef !41

@@ -204,9 +204,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not3741, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %i.f = add i32 %i.a, -2                         ; 2 uses
-  %.not3845 = icmp eq i32 %i.f, 0
-  br i1 %.not3845, label %.critedge.thread, label %.lr.ph47
+  %i.f = add i32 %i.a, -2
+  br label %.lr.ph47
 
 .lr.ph:                                           ; preds = %.lr.ph47
   %i.g = add i32 %i.h, -1                         ; 2 uses
@@ -214,8 +213,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not38, label %.critedge.thread, label %.lr.ph47, !llvm.loop !12
 
 .lr.ph47:                                         ; preds = %.lr.ph.preheader, %.lr.ph
-  %i.h = phi i32 [ %i.g, %.lr.ph ], [ %i.f, %.lr.ph.preheader ]
-  %.0334246 = phi i32 [ %i.i, %.lr.ph ], [ %i.d, %.lr.ph.preheader ]
+  %i.h = phi i32 [ %i.f, %.lr.ph.preheader ], [ %i.g, %.lr.ph ]
+  %.0334246 = phi i32 [ %i.d, %.lr.ph.preheader ], [ %i.i, %.lr.ph ]
   %i.i = add i32 %.0334246, 1                     ; 3 uses
   %i.j = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.i)
   %.not37 = icmp eq i8 %i.j, 101
@@ -235,8 +234,8 @@ bb.c:                                             ; preds = %bb.b
   %i.s = add i32 %.033.lcssa, 1
   br label %.critedge.thread
 
-.critedge.thread:                                 ; preds = %.lr.ph, %.lr.ph.preheader, %bb.b, %bb.a, %.critedge
-  %.032 = phi i32 [ %i.s, %.critedge ], [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %.lr.ph.preheader ], [ 0, %.lr.ph ]
+.critedge.thread:                                 ; preds = %.lr.ph, %bb.b, %bb.a, %.critedge
+  %.032 = phi i32 [ %i.s, %.critedge ], [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %.lr.ph ]
   ret i32 %.032
 }
 

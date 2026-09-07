@@ -205,18 +205,14 @@ bb.h:                                             ; preds = %bb.e, %bb.g
   br i1 %i.u, label %.thread60, label %bb.d
 
 bb.i:                                             ; preds = %bb.j
-  %.031.in90.add = add nuw nsw i64 %.031.in90.idx, 1 ; 4 uses
+  %.031.in90.add = add nuw nsw i64 %.031.in90.idx, 1 ; 3 uses
   %.ptr119 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.031.in90.add ; 2 uses
   store ptr %.ptr119, ptr %i.b, align 8, !tbaa !55
   %.031 = load i8, ptr %.ptr119, align 1, !tbaa !72 ; 2 uses
   %i.v = icmp eq i8 %.031, 59
-  br i1 %i.v, label %._crit_edge, label %.lr.ph, !llvm.loop !288
+  br i1 %i.v, label %.critedge46, label %.lr.ph, !llvm.loop !288
 
-._crit_edge:                                      ; preds = %bb.i
-  %.not = icmp eq i64 %.031.in90.add, 2
-  br i1 %.not, label %.thread60, label %.critedge46
-
-.critedge46:                                      ; preds = %._crit_edge
+.critedge46:                                      ; preds = %bb.i
   %.ptr = getelementptr inbounds nuw i8, ptr %i.c, i64 %.031.in90.add
   %i.w = getelementptr inbounds nuw i8, ptr %.ptr, i64 1
   store ptr %i.w, ptr %i.b, align 8, !tbaa !55
@@ -442,7 +438,7 @@ bb.ag:                                            ; preds = %_ZNK4llvh12DenseMap
   %i.cz = load i32, ptr %i.cy, align 4, !tbaa !12
   br label %bb.ah
 
-.thread60:                                        ; preds = %.lr.ph, %bb.j, %bb.h, %bb.f, %bb.c, %.preheader, %bb.o, %bb.q, %bb.s, %bb.u, %bb.w, %bb.y, %bb.aa, %bb.ac, %bb.ae, %bb.af, %_ZNK4llvh12DenseMapBaseINS_8DenseMapINS_9StringRefEjNS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_jEEEES2_jS4_S7_E4findERKS2_.exit, %._crit_edge, %._crit_edge99
+.thread60:                                        ; preds = %.lr.ph, %bb.j, %bb.h, %bb.f, %bb.c, %.preheader, %bb.o, %bb.q, %bb.s, %bb.u, %bb.w, %bb.y, %bb.aa, %bb.ac, %bb.ae, %bb.af, %_ZNK4llvh12DenseMapBaseINS_8DenseMapINS_9StringRefEjNS_12DenseMapInfoIS2_EENS_6detail12DenseMapPairIS2_jEEEES2_jS4_S7_E4findERKS2_.exit, %._crit_edge99
   store ptr %i.c, ptr %i.b, align 8, !tbaa !55
   br label %bb.ah
 

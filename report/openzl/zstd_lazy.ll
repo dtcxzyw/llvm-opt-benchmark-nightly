@@ -33,8 +33,7 @@ bb.a:
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 268
   %i.u = load i32, ptr %i.t, align 4, !tbaa !42
   %i.v = shl nuw i32 1, %i.u
-  %i.w = add i32 %i.v, -3                         ; 2 uses
-  %2 = tail call i32 @llvm.umin.i32(i32 %i.w, i32 255) ; 3 uses
+  %i.w = add i32 %i.v, -3
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 264
   %i.y = load i32, ptr %i.x, align 8, !tbaa !43   ; 5 uses
   %i.z = add i32 %i.y, -2                         ; 6 uses
@@ -60,7 +59,8 @@ bb.a:
 
 .preheader164:                                    ; preds = %ZSTD_hashPtr.exit141._crit_edge, %bb.a
   %i.ap = shl nuw i32 1, %i.z                     ; 4 uses
-  %.not197 = icmp eq i32 %i.w, 0
+  %2 = tail call i32 @llvm.umax.i32(i32 %i.w, i32 1)
+  %umax = tail call i32 @llvm.umin.i32(i32 %2, i32 255) ; 2 uses
   %wide.trip.count = zext i32 %i.ap to i64
   br label %bb.i
 
@@ -130,7 +130,7 @@ ZSTD_hashPtr.exit141._crit_edge:                  ; preds = %ZSTD_hashPtr.exit14
 
 bb.i:                                             ; preds = %.preheader164, %.thread
   %indvars.iv205 = phi i64 [ 0, %.preheader164 ], [ %indvars.iv.next206, %.thread ] ; 2 uses
-  %.0122189 = phi i32 [ 0, %.preheader164 ], [ %.2124155, %.thread ] ; 5 uses
+  %.0122189 = phi i32 [ 0, %.preheader164 ], [ %.2124155, %.thread ] ; 4 uses
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv205 ; 2 uses
   %.0116170 = load i32, ptr %i.bk, align 4, !tbaa !45 ; 3 uses
   %.not198 = icmp ult i32 %.0116170, %i.ag
@@ -165,13 +165,13 @@ bb.i:                                             ; preds = %.preheader164, %.th
   %i.by = zext i32 %i.bx to i64
   %i.bz = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %i.by
   %.0116.2 = load i32, ptr %i.bz, align 4, !tbaa !45
-  br i1 %.not197, label %.thread, label %.lr.ph181
+  br label %.lr.ph181
 
 .lr.ph181:                                        ; preds = %.lr.ph174.2, %bb.l
   %.1180 = phi i32 [ %i.co, %bb.l ], [ %.0116.2, %.lr.ph174.2 ] ; 5 uses
   %.2179 = phi i32 [ %.3, %bb.l ], [ %spec.select.2, %.lr.ph174.2 ] ; 2 uses
-  %.1120178 = phi i32 [ %i.cg, %bb.l ], [ 0, %.lr.ph174.2 ] ; 5 uses
-  %.1123177 = phi i32 [ %i.cd, %bb.l ], [ %.0122189, %.lr.ph174.2 ] ; 5 uses
+  %.1120178 = phi i32 [ %i.cg, %bb.l ], [ 0, %.lr.ph174.2 ] ; 3 uses
+  %.1123177 = phi i32 [ %i.cd, %bb.l ], [ %.0122189, %.lr.ph174.2 ] ; 4 uses
   %i.ca = icmp ult i32 %.1180, %i.s
   br i1 %i.ca, label %bb.j, label %bb.k
 
@@ -184,11 +184,11 @@ bb.j:                                             ; preds = %.lr.ph181
 
 bb.k:                                             ; preds = %bb.j, %.lr.ph181
   %.3 = phi i32 [ %i.cb, %bb.j ], [ %.2179, %.lr.ph181 ]
-  %i.cd = add i32 %.1123177, 1                    ; 4 uses
+  %i.cd = add i32 %.1123177, 1                    ; 3 uses
   %i.ce = zext i32 %.1123177 to i64
   %i.cf = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.ce
   store i32 %.1180, ptr %i.cf, align 4, !tbaa !45
-  %i.cg = add i32 %.1120178, 1                    ; 3 uses
+  %i.cg = add nuw nsw i32 %.1120178, 1            ; 3 uses
   %i.ch = icmp ult i32 %.1180, %i.ag
   br i1 %i.ch, label %.thread157, label %bb.l
 
@@ -203,27 +203,23 @@ bb.l:                                             ; preds = %bb.k
   %i.cm = zext i32 %i.cl to i64
   %i.cn = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %i.cm
   %i.co = load i32, ptr %i.cn, align 4, !tbaa !45
-  %exitcond.not = icmp eq i32 %i.cg, %2
-  br i1 %exitcond.not, label %._crit_edge182.thread241, label %.lr.ph181, !llvm.loop !88
+  %exitcond.not = icmp eq i32 %i.cg, %umax
+  br i1 %exitcond.not, label %._crit_edge182, label %.lr.ph181, !llvm.loop !88
 
-._crit_edge182.thread241:                         ; preds = %bb.l
-  %3 = sub i32 %i.cd, %2
-  %4 = shl i32 %3, 8
-  %5 = or disjoint i32 %4, %2
-  br label %.thread
-
-._crit_edge182:                                   ; preds = %bb.j
-  %.not137 = icmp eq i32 %.1120178, 0
-  %i.cp = sub i32 %.1123177, %.1120178
+._crit_edge182:                                   ; preds = %bb.j, %bb.l
+  %.1123.lcssa.ph = phi i32 [ %.1123177, %bb.j ], [ %i.cd, %bb.l ] ; 2 uses
+  %.1120.lcssa.ph = phi i32 [ %.1120178, %bb.j ], [ %umax, %bb.l ] ; 3 uses
+  %.not137 = icmp eq i32 %.1120.lcssa.ph, 0
+  %i.cp = sub i32 %.1123.lcssa.ph, %.1120.lcssa.ph
   %i.cq = shl i32 %i.cp, 8
-  %i.cr = add i32 %i.cq, %.1120178
+  %i.cr = add i32 %i.cq, %.1120.lcssa.ph
   %spec.select255 = select i1 %.not137, i32 0, i32 %i.cr
   br label %.thread
 
-.thread:                                          ; preds = %.lr.ph174, %.lr.ph174.1, %._crit_edge182, %.lr.ph174.2, %bb.i, %._crit_edge182.thread241, %.thread157
-  %.2124155 = phi i32 [ %i.cd, %.thread157 ], [ %.0122189, %bb.i ], [ %.0122189, %.lr.ph174.2 ], [ %i.cd, %._crit_edge182.thread241 ], [ %.1123177, %._crit_edge182 ], [ %.0122189, %.lr.ph174.1 ], [ %.0122189, %.lr.ph174 ]
-  %6 = phi i32 [ %i.ck, %.thread157 ], [ 0, %bb.i ], [ 0, %.lr.ph174.2 ], [ %5, %._crit_edge182.thread241 ], [ %spec.select255, %._crit_edge182 ], [ 0, %.lr.ph174.1 ], [ 0, %.lr.ph174 ]
-  store i32 %6, ptr %i.bk, align 4, !tbaa !45
+.thread:                                          ; preds = %.lr.ph174, %.lr.ph174.1, %bb.i, %._crit_edge182, %.thread157
+  %.2124155 = phi i32 [ %i.cd, %.thread157 ], [ %.1123.lcssa.ph, %._crit_edge182 ], [ %.0122189, %bb.i ], [ %.0122189, %.lr.ph174.1 ], [ %.0122189, %.lr.ph174 ]
+  %3 = phi i32 [ %i.ck, %.thread157 ], [ %spec.select255, %._crit_edge182 ], [ 0, %bb.i ], [ 0, %.lr.ph174.1 ], [ 0, %.lr.ph174 ]
+  store i32 %3, ptr %i.bk, align 4, !tbaa !45
   %indvars.iv.next206 = add nuw nsw i64 %indvars.iv205, 1 ; 2 uses
   %exitcond208.not = icmp eq i64 %indvars.iv.next206, %wide.trip.count
   br i1 %exitcond208.not, label %.preheader.preheader, label %bb.i, !llvm.loop !89

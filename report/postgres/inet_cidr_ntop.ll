@@ -12,8 +12,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local noundef ptr @pg_inet_cidr_ntop(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [16 x i8], align 16               ; 16 uses
-  %i.b = alloca [50 x i8], align 16               ; 26 uses
+  %i.a = alloca [16 x i8], align 16               ; 15 uses
+  %i.b = alloca [50 x i8], align 16               ; 23 uses
   switch i32 %0, label %bb.bg [
     i32 2, label %bb.b
     i32 3, label %bb.m
@@ -280,12 +280,7 @@ bb.z:                                             ; preds = %bb.x
 
 .lr.ph149.split.us.split.preheader.i:             ; preds = %bb.y, %bb.z, %.lr.ph149.split.us.i
   %i.cj = phi i32 [ %i.ci, %.lr.ph149.split.us.i ], [ 7, %bb.z ], [ 5, %bb.y ] ; 2 uses
-  %i.ck = add nsw i32 %spec.store.select.i, -1    ; 2 uses
-  %.not250.i = icmp eq i32 %i.ck, 0
-  br i1 %.not250.i, label %.loopexit.loopexit168.peel.begin.i, label %.lr.ph149.split.us.split.preheader.split.i
-
-.lr.ph149.split.us.split.preheader.split.i:       ; preds = %.lr.ph149.split.us.split.preheader.i
-  %5 = add nsw i32 %spec.store.select.i, -2
+  %i.ck = add nsw i32 %spec.store.select.i, -2
   br label %.lr.ph149.split.us.split.i
 
 .lr.ph149.split.us.split.us.i:                    ; preds = %.lr.ph149.split.us.i, %bb.ab
@@ -317,10 +312,10 @@ bb.ab:                                            ; preds = %bb.aa, %.lr.ph149.s
   %exitcond172.not.i = icmp eq i32 %i.cx, %spec.store.select.i
   br i1 %exitcond172.not.i, label %.loopexit.i13, label %.lr.ph149.split.us.split.us.i, !llvm.loop !5
 
-.lr.ph149.split.us.split.i:                       ; preds = %bb.ah, %.lr.ph149.split.us.split.preheader.split.i
-  %.0147.us.i = phi ptr [ %.1.us.i, %bb.ah ], [ %i.a, %.lr.ph149.split.us.split.preheader.split.i ] ; 3 uses
-  %.097146.us.i = phi ptr [ %.4.us.i, %bb.ah ], [ %i.b, %.lr.ph149.split.us.split.preheader.split.i ] ; 6 uses
-  %.0112145.us.i = phi i32 [ %i.dn, %bb.ah ], [ 0, %.lr.ph149.split.us.split.preheader.split.i ] ; 5 uses
+.lr.ph149.split.us.split.i:                       ; preds = %bb.ah, %.lr.ph149.split.us.split.preheader.i
+  %.0147.us.i = phi ptr [ %.1.us.i, %bb.ah ], [ %i.a, %.lr.ph149.split.us.split.preheader.i ] ; 4 uses
+  %.097146.us.i = phi ptr [ %.4.us.i, %bb.ah ], [ %i.b, %.lr.ph149.split.us.split.preheader.i ] ; 6 uses
+  %.0112145.us.i = phi i32 [ %i.dn, %bb.ah ], [ 0, %.lr.ph149.split.us.split.preheader.i ] ; 5 uses
   %.not120.us.i = icmp sge i32 %.0112145.us.i, %.2111.i
   %i.cy = icmp slt i32 %.0112145.us.i, %i.cj
   %i.cz = and i1 %.not120.us.i, %i.cy
@@ -359,23 +354,19 @@ bb.ag:                                            ; preds = %bb.af
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af, %bb.ae
-  %.4.us.i = phi ptr [ %i.dk, %bb.ae ], [ %i.dm, %bb.ag ], [ %.097146.us.i, %bb.af ] ; 2 uses
+  %.4.us.i = phi ptr [ %i.dk, %bb.ae ], [ %i.dm, %bb.ag ], [ %.097146.us.i, %bb.af ] ; 7 uses
   %.1.us.i = getelementptr inbounds nuw i8, ptr %.0147.us.i, i64 2 ; 2 uses
   %i.dn = add nuw nsw i32 %.0112145.us.i, 1
-  %exitcond.not.i = icmp eq i32 %.0112145.us.i, %5
+  %exitcond.not.i = icmp eq i32 %.0112145.us.i, %i.ck
   br i1 %exitcond.not.i, label %.loopexit.loopexit168.peel.begin.i, label %.lr.ph149.split.us.split.i, !llvm.loop !6
 
 .lr.ph149.split.split.preheader.i:                ; preds = %bb.z, %bb.y, %bb.x
   %i.do = icmp sgt i32 %2, 120                    ; 2 uses
-  %i.dp = add nsw i32 %spec.store.select.i, -1    ; 5 uses
-  %.not251.i = icmp eq i32 %i.dp, 0
-  br i1 %.not251.i, label %7, label %.lr.ph149.split.split.i.peel
+  %i.dp = add nsw i32 %spec.store.select.i, -1    ; 4 uses
+  %5 = icmp sgt i32 %.2108.fr.i, 0
+  br i1 %5, label %bb.aj, label %bb.ai
 
-.lr.ph149.split.split.i.peel:                     ; preds = %.lr.ph149.split.split.preheader.i
-  %6 = icmp sgt i32 %.2108.fr.i, 0
-  br i1 %6, label %bb.aj, label %bb.ai
-
-bb.ai:                                            ; preds = %.lr.ph149.split.split.i.peel
+bb.ai:                                            ; preds = %.lr.ph149.split.split.preheader.i
   %i.dq = load i8, ptr %i.a, align 16
   %i.dr = zext i8 %i.dq to i32
   %i.ds = shl nuw nsw i32 %i.dr, 8
@@ -389,7 +380,7 @@ bb.ai:                                            ; preds = %.lr.ph149.split.spl
   %i.ea = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   br label %bb.ak
 
-bb.aj:                                            ; preds = %.lr.ph149.split.split.i.peel
+bb.aj:                                            ; preds = %.lr.ph149.split.split.preheader.i
   %i.eb = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 58, ptr %i.b, align 16
   %i.ec = getelementptr inbounds nuw i8, ptr %i.a, i64 2
@@ -474,7 +465,7 @@ bb.as:                                            ; preds = %bb.ar, %bb.ao, %bb.
   br i1 %exitcond173.not.i, label %.loopexit.loopexit166.peel.begin.i, label %.lr.ph149.split.split.i, !llvm.loop !7
 
 .loopexit.loopexit166.peel.begin.i:               ; preds = %bb.as, %bb.ak
-  %.4.i15.lcssa = phi ptr [ %.4.i15.peel, %bb.ak ], [ %.4.i15, %bb.as ] ; 6 uses
+  %.4.i15.lcssa = phi ptr [ %.4.i15.peel, %bb.ak ], [ %.4.i15, %bb.as ] ; 7 uses
   %.1.i.lcssa = phi ptr [ %.1.i.peel, %bb.ak ], [ %.1.i, %bb.as ] ; 4 uses
   %.not = icmp sgt i32 %spec.store.select.i, %.2108.fr.i
   br i1 %.not, label %bb.at, label %.loopexit.loopexit166.peel.begin.thread.i
@@ -531,40 +522,32 @@ bb.ax:                                            ; preds = %bb.aw
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gg, i64 %i.gk
   br label %.loopexit.i13
 
-7:                                                ; preds = %.lr.ph149.split.split.preheader.i
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  store i8 58, ptr %i.b, align 16
-  br label %.loopexit.loopexit166.peel.begin.thread.i
-
-.loopexit.loopexit166.peel.begin.thread.i:        ; preds = %.loopexit.loopexit166.peel.begin.i, %7
-  %.198.peel.i = phi ptr [ %8, %7 ], [ %.4.i15.lcssa, %.loopexit.loopexit166.peel.begin.i ] ; 2 uses
-  %i.gm = getelementptr inbounds nuw i8, ptr %.198.peel.i, i64 1
-  store i8 58, ptr %.198.peel.i, align 1
+.loopexit.loopexit166.peel.begin.thread.i:        ; preds = %.loopexit.loopexit166.peel.begin.i
+  %i.gm = getelementptr inbounds nuw i8, ptr %.4.i15.lcssa, i64 1
+  store i8 58, ptr %.4.i15.lcssa, align 1
   br label %.loopexit.i13
 
-.loopexit.loopexit168.peel.begin.i:               ; preds = %bb.ah, %.lr.ph149.split.us.split.preheader.i
-  %9 = phi ptr [ %i.a, %.lr.ph149.split.us.split.preheader.i ], [ %.1.us.i, %bb.ah ] ; 2 uses
-  %10 = phi ptr [ %i.b, %.lr.ph149.split.us.split.preheader.i ], [ %.4.us.i, %bb.ah ] ; 6 uses
+.loopexit.loopexit168.peel.begin.i:               ; preds = %bb.ah
   %.not120.us.peel.i = icmp sgt i32 %spec.store.select.i, %.2111.i
   %i.gn = icmp sle i32 %spec.store.select.i, %i.cj
   %i.go = and i1 %.not120.us.peel.i, %i.gn
   br i1 %i.go, label %bb.bb, label %bb.ay
 
 bb.ay:                                            ; preds = %.loopexit.loopexit168.peel.begin.i
-  %.not121.us.peel.i = icmp eq ptr %10, %i.b
+  %.not121.us.peel.i = icmp eq ptr %.4.us.i, %i.b
   br i1 %.not121.us.peel.i, label %bb.ba, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  %i.gp = getelementptr inbounds nuw i8, ptr %10, i64 1
-  store i8 58, ptr %10, align 1
+  %i.gp = getelementptr inbounds nuw i8, ptr %.4.us.i, i64 1
+  store i8 58, ptr %.4.us.i, align 1
   br label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az, %bb.ay
   %.3.us.peel.i = phi ptr [ %i.gp, %bb.az ], [ %i.b, %bb.ay ] ; 2 uses
-  %i.gq = load i8, ptr %9, align 1
+  %i.gq = load i8, ptr %.1.us.i, align 1
   %i.gr = zext i8 %i.gq to i32
   %i.gs = shl nuw nsw i32 %i.gr, 8
-  %i.gt = getelementptr inbounds nuw i8, ptr %9, i64 1
+  %i.gt = getelementptr inbounds nuw i8, ptr %.0147.us.i, i64 3
   %i.gu = load i8, ptr %i.gt, align 1
   %i.gv = zext i8 %i.gu to i32
   %i.gw = or disjoint i32 %i.gs, %i.gv
@@ -574,23 +557,24 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
   br label %.loopexit.i13
 
 bb.bb:                                            ; preds = %.loopexit.loopexit168.peel.begin.i
-  %i.ha = icmp eq i32 %i.ck, %.2111.i
+  %6 = add nsw i32 %spec.store.select.i, -1
+  %i.ha = icmp eq i32 %6, %.2111.i
   br i1 %i.ha, label %bb.bc, label %bb.bd
 
 bb.bc:                                            ; preds = %bb.bb
-  %i.hb = getelementptr inbounds nuw i8, ptr %10, i64 1
-  store i8 58, ptr %10, align 1
+  %i.hb = getelementptr inbounds nuw i8, ptr %.4.us.i, i64 1
+  store i8 58, ptr %.4.us.i, align 1
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bb, %bb.bc
-  %.198.us.peel.i = phi ptr [ %i.hb, %bb.bc ], [ %10, %bb.bb ] ; 2 uses
+  %.198.us.peel.i = phi ptr [ %i.hb, %bb.bc ], [ %.4.us.i, %bb.bb ] ; 2 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %.198.us.peel.i, i64 1
   store i8 58, ptr %.198.us.peel.i, align 1
   br label %.loopexit.i13
 
 .loopexit.i13:                                    ; preds = %bb.ab, %bb.bd, %bb.ba, %.loopexit.loopexit166.peel.begin.thread.i, %bb.ax, %bb.aw, %.thread256.i, %bb.p
-  %.5.i = phi ptr [ %i.at, %bb.p ], [ %i.gz, %bb.ba ], [ %i.hc, %bb.bd ], [ %i.fv, %.thread256.i ], [ %i.gl, %bb.ax ], [ %i.gd, %bb.aw ], [ %i.gm, %.loopexit.loopexit166.peel.begin.thread.i ], [ %i.cv, %bb.ab ]
-  %i.hd = call i32 (ptr, ptr, ...) @pg_sprintf(ptr noundef %.5.i, ptr noundef nonnull @.str.1, i32 noundef %2) #8 ; 0 uses
+  %.5.i = phi ptr [ %i.at, %bb.p ], [ %i.hc, %bb.bd ], [ %i.gz, %bb.ba ], [ %i.fv, %.thread256.i ], [ %i.gl, %bb.ax ], [ %i.gd, %bb.aw ], [ %i.gm, %.loopexit.loopexit166.peel.begin.thread.i ], [ %i.cv, %bb.ab ]
+  %i.hd = call i32 (ptr, ptr, ...) @pg_sprintf(ptr noundef nonnull %.5.i, ptr noundef nonnull @.str.1, i32 noundef %2) #8 ; 0 uses
   %i.he = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.b) #9
   %i.hf = add i64 %i.he, 1
   %i.hg = icmp ugt i64 %i.hf, %4

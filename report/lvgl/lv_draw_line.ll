@@ -202,18 +202,14 @@ bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 80
   store ptr null, ptr %i.h, align 8, !tbaa !24
   store i32 0, ptr %i.d, align 8, !tbaa !26
-  %i.i = add nsw i64 %i.g, -1                     ; 2 uses
-  %.not = icmp eq i64 %i.i, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %bb.d
+  %i.i = add nsw i64 %i.g, -1
   %4 = getelementptr inbounds nuw i8, ptr %3, i64 64
   %5 = getelementptr inbounds nuw i8, ptr %3, i64 72
   br label %bb.e
 
-bb.e:                                             ; preds = %.lr.ph, %bb.j
-  %i.j = phi i64 [ 0, %.lr.ph ], [ %i.ab, %bb.j ]
-  %.02428 = phi i32 [ 0, %.lr.ph ], [ %i.aa, %bb.j ] ; 2 uses
+bb.e:                                             ; preds = %bb.d, %bb.j
+  %i.j = phi i64 [ 0, %bb.d ], [ %i.ab, %bb.j ]
+  %.02428 = phi i32 [ 0, %bb.d ], [ %i.aa, %bb.j ] ; 2 uses
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.j ; 3 uses
   %i.l = load i32, ptr %i.k, align 4, !tbaa !27
   %i.m = icmp eq i32 %i.l, 2147483647
@@ -253,7 +249,7 @@ bb.j:                                             ; preds = %bb.g, %bb.h, %bb.e,
   %i.ac = icmp ugt i64 %i.i, %i.ab
   br i1 %i.ac, label %bb.e, label %._crit_edge, !llvm.loop !45
 
-._crit_edge:                                      ; preds = %bb.j, %bb.d
+._crit_edge:                                      ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
   br label %bb.k
 

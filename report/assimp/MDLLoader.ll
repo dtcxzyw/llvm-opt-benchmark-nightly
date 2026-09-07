@@ -205,17 +205,13 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.bj = zext i16 %i.bf to i32
-  %i.bk = add nsw i32 %i.bj, -16                  ; 3 uses
+  %i.bk = add nsw i32 %i.bj, -16                  ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 2 uses
-  %.not74 = icmp eq i32 %i.bk, 0
-  br i1 %.not74, label %._crit_edge, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %bb.g
   %wide.trip.count = zext i32 %i.bk to i64
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.h
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.h ] ; 3 uses
+.lr.ph:                                           ; preds = %bb.g, %bb.h
+  %indvars.iv = phi i64 [ 0, %bb.g ], [ %indvars.iv.next, %bb.h ] ; 3 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 %indvars.iv
   %i.bn = load i8, ptr %i.bm, align 1
   %.not62 = icmp eq i8 %i.bn, 0
@@ -230,11 +226,11 @@ bb.h:                                             ; preds = %.lr.ph
   %i.bo = trunc nuw i64 %indvars.iv to i32
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.h, %._crit_edge.loopexit.split.loop.exit, %bb.g
-  %.055 = phi i32 [ 0, %bb.g ], [ %i.bo, %._crit_edge.loopexit.split.loop.exit ], [ %i.bk, %bb.h ] ; 2 uses
-  store i32 %.055, ptr %i.v, align 8
+._crit_edge:                                      ; preds = %bb.h, %._crit_edge.loopexit.split.loop.exit
+  %.055.ph = phi i32 [ %i.bo, %._crit_edge.loopexit.split.loop.exit ], [ %i.bk, %bb.h ] ; 2 uses
+  store i32 %.055.ph, ptr %i.v, align 8
   %i.bp = getelementptr inbounds nuw i8, ptr %i.v, i64 4 ; 2 uses
-  %i.bq = zext i32 %.055 to i64                   ; 2 uses
+  %i.bq = zext i32 %.055.ph to i64                ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.bp, ptr nonnull align 1 %i.bl, i64 %i.bq, i1 false)
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bq
   store i8 0, ptr %i.br, align 1

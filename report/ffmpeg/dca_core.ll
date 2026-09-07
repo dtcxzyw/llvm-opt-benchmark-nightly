@@ -205,7 +205,7 @@ ff_dca_check_crc.exit.thread245.i:                ; preds = %ff_dca_check_crc.ex
   %i.cr = add i32 %i.bs, 3
   %i.cs = tail call i32 @llvm.umin.i32(i32 %i.bh, i32 %i.cr) ; 6 uses
   store i32 %i.cs, ptr %i.d, align 16, !tbaa !32
-  %i.ct = add nuw nsw i32 %i.cq, 1                ; 6 uses
+  %i.ct = add nuw nsw i32 %i.cq, 1                ; 5 uses
   %i.cu = icmp ugt i32 %i.cp, 1073741823
   br i1 %i.cu, label %bb.k, label %bb.l
 
@@ -402,7 +402,7 @@ bb.v:                                             ; preds = %bb.t
   %i.hm = shl i32 %i.hk, %i.hl                    ; 2 uses
   br i1 %i.gy, label %bb.w, label %bb.x
 
-.preheader263.i:                                  ; preds = %bb.av, %3, %bb.ac, %bb.y
+.preheader263.i:                                  ; preds = %bb.av, %bb.ac, %bb.y
   %i.hn = icmp sgt i32 %i.df, 0
   br i1 %i.hn, label %.preheader262.i, label %.loopexit.i
 
@@ -540,15 +540,11 @@ get_bits_long.exit241.i.2:                        ; preds = %bb.af, %bb.ae
   store i32 %.sink.i.2, ptr %i.d, align 16, !tbaa !32
   %i.ki = and i32 %.0.i240.i.2, %i.fe
   %.not224.i.2 = icmp eq i32 %i.ki, %.0.i240.i.2
-  br i1 %.not224.i.2, label %3, label %.split269.i
+  br i1 %.not224.i.2, label %bb.ag, label %.split269.i
 
-3:                                                ; preds = %get_bits_long.exit241.i.2
-  %4 = getelementptr i8, ptr %0, i64 9664
-  store i32 %.0.i240.i.2, ptr %4, align 16, !tbaa !34
-  %exitcond.not.i.2 = icmp eq i32 %i.ct, 3
-  br i1 %exitcond.not.i.2, label %.preheader263.i, label %bb.ag
-
-bb.ag:                                            ; preds = %3
+bb.ag:                                            ; preds = %get_bits_long.exit241.i.2
+  %3 = getelementptr i8, ptr %0, i64 9664
+  store i32 %.0.i240.i.2, ptr %3, align 16, !tbaa !34
   %i.kj = lshr i32 %.sink.i.2, 3
   %i.kk = zext nneg i32 %i.kj to i64
   %i.kl = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.kk

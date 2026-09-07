@@ -205,9 +205,9 @@ _ZN7rocksdb10autovectorIPNS_16ColumnFamilyDataELm8EED2Ev.exit896: ; preds = %_ZN
 
 bb.ks:                                            ; preds = %.thread1364
   %i.bgz = sext i32 %i.bgx to i64
-  %i.bha = add nsw i64 %i.bgz, -8                 ; 3 uses
+  %i.bha = add nsw i64 %i.bgz, -8                 ; 2 uses
   %i.bhb = icmp slt i32 %i.bgx, 8
-  br i1 %i.bhb, label %bb.kt, label %72
+  br i1 %i.bhb, label %bb.kt, label %_ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit.thread
 
 bb.kt:                                            ; preds = %bb.ks
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.135) #35
@@ -216,27 +216,15 @@ bb.kt:                                            ; preds = %bb.ks
 .noexc897:                                        ; preds = %bb.kt
   unreachable
 
-72:                                               ; preds = %bb.ks
-  %73 = getelementptr inbounds nuw i8, ptr %60, i64 40 ; 2 uses
-  %.not2133 = icmp eq i64 %i.bha, 0
-  br i1 %.not2133, label %_ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit.thread, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i
-
-_ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit.thread: ; preds = %72
-  %i.bhc = getelementptr inbounds nuw i8, ptr %1, i64 1232
-  %74 = load ptr, ptr %i.bhc, align 16, !tbaa !780
-  %i.bhd = getelementptr inbounds nuw i8, ptr %1, i64 1240
-  %75 = load ptr, ptr %i.bhd, align 8, !tbaa !780
-  %76 = icmp ne ptr %74, %75
-  br label %.lr.ph1607
-
-_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i: ; preds = %72
-  %77 = getelementptr inbounds nuw i8, ptr %60, i64 32 ; 2 uses
-  %78 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bha) #36
+_ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit.thread: ; preds = %bb.ks
+  %i.bhc = getelementptr inbounds nuw i8, ptr %60, i64 40 ; 2 uses
+  %i.bhd = getelementptr inbounds nuw i8, ptr %60, i64 32 ; 2 uses
+  %72 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bha) #36
           to label %.noexc898 unwind label %bb.kz ; 4 uses
 
-.noexc898:                                        ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i
+.noexc898:                                        ; preds = %_ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit.thread
   %i.bhe = load ptr, ptr %i.bgw, align 8, !tbaa !1787 ; 4 uses
-  %i.bhf = load ptr, ptr %77, align 8, !tbaa !1788
+  %i.bhf = load ptr, ptr %i.bhd, align 8, !tbaa !1788
   %i.bhg = ptrtoint ptr %i.bhf to i64
   %i.bhh = ptrtoint ptr %i.bhe to i64             ; 2 uses
   %i.bhi = sub i64 %i.bhg, %i.bhh                 ; 2 uses
@@ -244,7 +232,7 @@ _ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i: ; preds = %72
   br i1 %i.bhj, label %bb.ku, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit.i.i
 
 bb.ku:                                            ; preds = %.noexc898
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %78, ptr align 1 %i.bhe, i64 %i.bhi, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %72, ptr align 1 %i.bhe, i64 %i.bhi, i1 false)
   br label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit.i.i
 
 _ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit.i.i: ; preds = %bb.ku, %.noexc898
@@ -252,17 +240,17 @@ _ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit.i.i: ; preds = %bb.ku, %.noe
   br i1 %.not.i8.i.i, label %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit.i.i, label %bb.kv
 
 bb.kv:                                            ; preds = %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit.i.i
-  %i.bhk = load ptr, ptr %73, align 8, !tbaa !1789
+  %i.bhk = load ptr, ptr %i.bhc, align 8, !tbaa !1789
   %i.bhl = ptrtoint ptr %i.bhk to i64
   %i.bhm = sub i64 %i.bhl, %i.bhh
   call void @_ZdlPvm(ptr noundef nonnull %i.bhe, i64 noundef %i.bhm) #33
   br label %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit.i.i
 
 _ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit.i.i: ; preds = %bb.kv, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit.i.i
-  store ptr %78, ptr %i.bgw, align 8, !tbaa !1787
-  store ptr %78, ptr %77, align 8, !tbaa !1788
-  %i.bhn = getelementptr inbounds nuw i8, ptr %78, i64 %i.bha
-  store ptr %i.bhn, ptr %73, align 8, !tbaa !1789
+  store ptr %72, ptr %i.bgw, align 8, !tbaa !1787
+  store ptr %72, ptr %i.bhd, align 8, !tbaa !1788
+  %i.bhn = getelementptr inbounds nuw i8, ptr %72, i64 %i.bha
+  store ptr %i.bhn, ptr %i.bhc, align 8, !tbaa !1789
   %.pre1806 = load i32, ptr %i.a, align 4, !tbaa !669
   br label %_ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit
 
@@ -276,8 +264,7 @@ _ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit:    ; preds = %_ZNSt12_Vector_base
   %.not3651605 = icmp eq i32 %i.bho, 0
   br i1 %.not3651605, label %._crit_edge1608, label %.lr.ph1607
 
-.lr.ph1607:                                       ; preds = %_ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit.thread, %_ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit
-  %79 = phi i1 [ %76, %_ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit.thread ], [ %i.bht, %_ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit ]
+.lr.ph1607:                                       ; preds = %_ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit
   %i.bhu = getelementptr inbounds nuw i8, ptr %34, i64 16
   %i.bhv = getelementptr inbounds nuw i8, ptr %34, i64 24
   %i.bhw = getelementptr inbounds nuw i8, ptr %60, i64 32 ; 4 uses
@@ -310,7 +297,7 @@ bb.ky:                                            ; preds = %bb.kx
   call void @__clang_call_terminate(ptr %i.bie) #37
   unreachable
 
-bb.kz:                                            ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i, %bb.kt
+bb.kz:                                            ; preds = %_ZN7rocksdb10autovectorIhLm8EE7reserveEm.exit.thread, %bb.kt
   %i.bif = landingpad { ptr, i32 }
           cleanup
   br label %bb.qa
@@ -319,7 +306,7 @@ bb.la:                                            ; preds = %.lr.ph1607, %_ZN7ro
   %indvars.iv1700 = phi i64 [ 0, %.lr.ph1607 ], [ %indvars.iv.next1701, %_ZN7rocksdb10autovectorIhLm8EE9push_backEOh.exit ] ; 7 uses
   %i.big = load i8, ptr %0, align 8, !tbaa !694
   %i.bih = icmp eq i8 %i.big, 0
-  %or.cond = and i1 %79, %i.bih
+  %or.cond = and i1 %i.bht, %i.bih
   br i1 %or.cond, label %bb.lb, label %.thread1366
 
 bb.lb:                                            ; preds = %bb.la

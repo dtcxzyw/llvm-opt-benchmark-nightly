@@ -204,7 +204,7 @@ define internal fastcc noundef range(i32 -2147483645, -2147483648) i32 @_ZN11duc
   %5 = alloca [64 x %struct.anon.1], align 16     ; 30 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1024) %2, i8 0, i64 1024, i1 false), !tbaa !7
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(262144) %3, i8 0, i64 262144, i1 false), !tbaa !7
-  %i.a = add nsw i32 %4, -1                       ; 4 uses
+  %i.a = add nsw i32 %4, -1                       ; 3 uses
   %i.b = zext nneg i32 %i.a to i64
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %i.b ; 2 uses
   %i.d = load i8, ptr %i.c, align 1, !tbaa !8     ; 2 uses
@@ -213,10 +213,6 @@ define internal fastcc noundef range(i32 -2147483645, -2147483648) i32 @_ZN11duc
   %i.g = load i32, ptr %i.f, align 4, !tbaa !7
   %i.h = add nsw i32 %i.g, 1
   store i32 %i.h, ptr %i.f, align 4, !tbaa !7
-  %.not32197102 = icmp eq i32 %i.a, 0
-  br i1 %.not32197102, label %.loopexit825, label %.lr.ph100.lr.ph
-
-.lr.ph100.lr.ph:                                  ; preds = %.preheader339.preheader
   %6 = zext i8 %i.d to i32
   br label %.lr.ph100
 
@@ -229,10 +225,10 @@ define internal fastcc noundef range(i32 -2147483645, -2147483648) i32 @_ZN11duc
   %.not32197 = icmp eq i32 %.4261418, 0
   br i1 %.not32197, label %.loopexit825, label %.lr.ph100, !llvm.loop !17
 
-.lr.ph100:                                        ; preds = %.lr.ph100.lr.ph, %.preheader337.loopexit
-  %.in = phi i32 [ %i.a, %.lr.ph100.lr.ph ], [ %.4261418, %.preheader337.loopexit ]
-  %.0246425104 = phi i32 [ %4, %.lr.ph100.lr.ph ], [ %i.ad, %.preheader337.loopexit ] ; 2 uses
-  %.0240426103 = phi i32 [ %6, %.lr.ph100.lr.ph ], [ %i.al, %.preheader337.loopexit ]
+.lr.ph100:                                        ; preds = %.preheader339.preheader, %.preheader337.loopexit
+  %.in = phi i32 [ %i.a, %.preheader339.preheader ], [ %.4261418, %.preheader337.loopexit ]
+  %.0246425104 = phi i32 [ %4, %.preheader339.preheader ], [ %i.ad, %.preheader337.loopexit ] ; 2 uses
+  %.0240426103 = phi i32 [ %6, %.preheader339.preheader ], [ %i.al, %.preheader337.loopexit ]
   %i.m = zext i32 %.in to i64
   br label %bb.b
 
@@ -298,8 +294,8 @@ bb.d:                                             ; preds = %.lr.ph
   %i.at = icmp sgt i32 %.4261418, 0
   br i1 %i.at, label %.lr.ph, label %.loopexit825, !llvm.loop !19
 
-.loopexit825:                                     ; preds = %bb.c, %.preheader337.loopexit, %bb.a, %bb.d, %.preheader339.preheader
-  %.1247.ph = phi i32 [ %.0246425104, %bb.a ], [ %4, %.preheader339.preheader ], [ %i.ad, %bb.d ], [ %i.ad, %.preheader337.loopexit ], [ %i.ad, %bb.c ]
+.loopexit825:                                     ; preds = %bb.c, %.preheader337.loopexit, %bb.a, %bb.d
+  %.1247.ph = phi i32 [ %.0246425104, %bb.a ], [ %i.ad, %bb.d ], [ %i.ad, %.preheader337.loopexit ], [ %i.ad, %bb.c ]
   br label %bb.e
 
 .loopexit336:                                     ; preds = %.lr.ph430.prol.loopexit, %.lr.ph430, %bb.e

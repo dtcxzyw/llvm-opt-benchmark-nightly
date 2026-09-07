@@ -205,7 +205,6 @@ bb.o:                                             ; preds = %bb.k
   %i.at = shl nuw nsw i32 %i.as, 2
   %i.au = or disjoint i32 %i.at, %i.ap
   %i.av = or disjoint i32 %i.au, 2048
-  %6 = and i32 %.lcssa, 3
   br label %.thread
 
 bb.p:                                             ; preds = %bb.j
@@ -236,7 +235,6 @@ bb.t:                                             ; preds = %bb.p
   %i.be = zext i8 %i.bd to i32
   %i.bf = shl nuw nsw i32 %i.be, 2
   %i.bg = or disjoint i32 %i.bf, %i.bb
-  %7 = and i32 %.lcssa, 3
   br label %.thread
 
 bb.u:                                             ; preds = %.loopexit929
@@ -441,7 +439,6 @@ bb.ar:                                            ; preds = %bb.an
   %i.dr = zext i8 %i.dq to i32
   %i.ds = shl nuw nsw i32 %i.dr, 3
   %i.dt = or disjoint i32 %i.ds, %i.do
-  %8 = and i32 %.lcssa, 3
   br label %.thread
 
 bb.as:                                            ; preds = %bb.am
@@ -539,17 +536,16 @@ bb.ay:                                            ; preds = %bb.al, %bb.ad
   %.4232.in = phi i32 [ %.3231, %bb.al ], [ %.1229, %bb.ad ]
   %.1227 = phi i32 [ %i.df, %bb.al ], [ %i.ch, %bb.ad ]
   %.2225.in = phi i32 [ %i.de, %bb.al ], [ %i.cd, %bb.ad ]
-  %.11 = phi ptr [ %i.cw, %bb.al ], [ %i.bv, %bb.ad ] ; 2 uses
-  %.2225 = and i32 %.2225.in, 3                   ; 2 uses
-  %.4232 = add nsw i32 %.4232.in, 2               ; 2 uses
-  %.not292 = icmp eq i32 %.4232, 0
-  br i1 %.not292, label %.thread331, label %.thread
+  %.11 = phi ptr [ %i.cw, %bb.al ], [ %i.bv, %bb.ad ]
+  %.4232 = add nsw i32 %.4232.in, 2
+  br label %.thread
 
-.thread:                                          ; preds = %bb.ar, %bb.t, %bb.o, %bb.ay
+.thread:                                          ; preds = %bb.ay, %bb.ar, %bb.t, %bb.o
   %.11326 = phi ptr [ %.11, %bb.ay ], [ %i.dp, %bb.ar ], [ %i.bc, %bb.t ], [ %i.aq, %bb.o ] ; 14 uses
-  %.2225324.a = phi i32 [ %.2225, %bb.ay ], [ %8, %bb.ar ], [ %7, %bb.t ], [ %6, %bb.o ] ; 13 uses
+  %.2225324.a = phi i32 [ %.2225.in, %bb.ay ], [ %.lcssa, %bb.ar ], [ %.lcssa, %bb.t ], [ %.lcssa, %bb.o ]
   %.1227323 = phi i32 [ %.1227, %bb.ay ], [ %i.dt, %bb.ar ], [ %i.bg, %bb.t ], [ %i.av, %bb.o ] ; 3 uses
   %.4232322 = phi i32 [ %.4232, %bb.ay ], [ %i.dm, %bb.ar ], [ 2, %bb.t ], [ 3, %bb.o ] ; 3 uses
+  %.2225324 = and i32 %.2225324.a, 3              ; 13 uses
   %i.et = add nuw nsw i32 %.1227323, 1
   %i.eu = zext nneg i32 %i.et to i64              ; 3 uses
   %i.ev = sub nsw i64 0, %i.eu
@@ -952,10 +948,10 @@ vec.epilog.middle.block817:                       ; preds = %vec.epilog.vector.b
   %i.le = icmp ult ptr %i.ld, %i.ez
   br i1 %i.le, label %.lr.ph434, label %.thread331, !llvm.loop !43
 
-.thread331:                                       ; preds = %.lr.ph431.prol.loopexit, %.lr.ph431, %.lr.ph434, %.lr.ph437, %middle.block801, %vec.epilog.middle.block817, %middle.block764, %vec.epilog.middle.block780, %middle.block726, %vec.epilog.middle.block742, %.preheader351, %.preheader349, %.preheader348, %bb.v, %bb.i, %bb.ay
-  %.11327 = phi ptr [ %.11, %bb.ay ], [ %.11326, %.preheader348 ], [ %.11326, %.preheader349 ], [ %.4216, %bb.i ], [ %.lcssa876, %bb.v ], [ %.11326, %.preheader351 ], [ %.11326, %middle.block764 ], [ %.11326, %middle.block726 ], [ %.11326, %middle.block801 ], [ %.11326, %vec.epilog.middle.block742 ], [ %.11326, %.lr.ph434 ], [ %.11326, %vec.epilog.middle.block780 ], [ %.11326, %.lr.ph437 ], [ %.11326, %vec.epilog.middle.block817 ], [ %.11326, %.lr.ph431 ], [ %.11326, %.lr.ph431.prol.loopexit ] ; 9 uses
-  %.2225325 = phi i32 [ %.2225, %bb.ay ], [ %.2225324.a, %.preheader348 ], [ %.2225324.a, %.preheader349 ], [ %i.ai, %bb.i ], [ %i.bh, %bb.v ], [ %.2225324.a, %.preheader351 ], [ %.2225324.a, %middle.block764 ], [ %.2225324.a, %middle.block726 ], [ %.2225324.a, %middle.block801 ], [ %.2225324.a, %vec.epilog.middle.block742 ], [ %.2225324.a, %.lr.ph434 ], [ %.2225324.a, %vec.epilog.middle.block780 ], [ %.2225324.a, %.lr.ph437 ], [ %.2225324.a, %vec.epilog.middle.block817 ], [ %.2225324.a, %.lr.ph431 ], [ %.2225324.a, %.lr.ph431.prol.loopexit ] ; 2 uses
-  %.7255 = phi ptr [ %.1249449.ph, %bb.ay ], [ %i.ez, %.preheader348 ], [ %i.ez, %.preheader349 ], [ %.1249449.ph, %bb.i ], [ %.1249449.ph, %bb.v ], [ %i.ez, %.preheader351 ], [ %i.ez, %middle.block764 ], [ %i.ez, %middle.block726 ], [ %i.ez, %middle.block801 ], [ %i.ez, %vec.epilog.middle.block742 ], [ %i.ez, %.lr.ph434 ], [ %i.ez, %vec.epilog.middle.block780 ], [ %i.ez, %.lr.ph437 ], [ %i.ez, %vec.epilog.middle.block817 ], [ %i.ez, %.lr.ph431 ], [ %i.ez, %.lr.ph431.prol.loopexit ] ; 8 uses
+.thread331:                                       ; preds = %.lr.ph431.prol.loopexit, %.lr.ph431, %.lr.ph434, %.lr.ph437, %middle.block801, %vec.epilog.middle.block817, %middle.block764, %vec.epilog.middle.block780, %middle.block726, %vec.epilog.middle.block742, %.preheader351, %.preheader349, %.preheader348, %bb.v, %bb.i
+  %.11327 = phi ptr [ %.4216, %bb.i ], [ %.11326, %.preheader348 ], [ %.11326, %.preheader349 ], [ %.lcssa876, %bb.v ], [ %.11326, %.preheader351 ], [ %.11326, %middle.block764 ], [ %.11326, %middle.block726 ], [ %.11326, %middle.block801 ], [ %.11326, %vec.epilog.middle.block742 ], [ %.11326, %.lr.ph434 ], [ %.11326, %vec.epilog.middle.block780 ], [ %.11326, %.lr.ph437 ], [ %.11326, %vec.epilog.middle.block817 ], [ %.11326, %.lr.ph431 ], [ %.11326, %.lr.ph431.prol.loopexit ] ; 9 uses
+  %.2225325 = phi i32 [ %i.ai, %bb.i ], [ %.2225324, %.preheader348 ], [ %.2225324, %.preheader349 ], [ %i.bh, %bb.v ], [ %.2225324, %.preheader351 ], [ %.2225324, %middle.block764 ], [ %.2225324, %middle.block726 ], [ %.2225324, %middle.block801 ], [ %.2225324, %vec.epilog.middle.block742 ], [ %.2225324, %.lr.ph434 ], [ %.2225324, %vec.epilog.middle.block780 ], [ %.2225324, %.lr.ph437 ], [ %.2225324, %vec.epilog.middle.block817 ], [ %.2225324, %.lr.ph431 ], [ %.2225324, %.lr.ph431.prol.loopexit ] ; 2 uses
+  %.7255 = phi ptr [ %.1249449.ph, %bb.i ], [ %i.ez, %.preheader348 ], [ %i.ez, %.preheader349 ], [ %.1249449.ph, %bb.v ], [ %i.ez, %.preheader351 ], [ %i.ez, %middle.block764 ], [ %i.ez, %middle.block726 ], [ %i.ez, %middle.block801 ], [ %i.ez, %vec.epilog.middle.block742 ], [ %i.ez, %.lr.ph434 ], [ %i.ez, %vec.epilog.middle.block780 ], [ %i.ez, %.lr.ph437 ], [ %i.ez, %vec.epilog.middle.block817 ], [ %i.ez, %.lr.ph431 ], [ %i.ez, %.lr.ph431.prol.loopexit ] ; 8 uses
   %i.lf = zext i32 %.2225325 to i64               ; 4 uses
   %i.lg = getelementptr inbounds nuw i8, ptr %.7255, i64 %i.lf ; 5 uses
   %i.lh = icmp ugt ptr %i.lg, %i.d
@@ -1105,7 +1101,7 @@ bb.bn:                                            ; preds = %bb.bm, %.loopexit
   %.1213452.ph = phi ptr [ %0, %.preheader356.lr.ph ], [ %.14, %bb.bn ] ; 4 uses
   %.0244451.ph = phi i32 [ 0, %.preheader356.lr.ph ], [ %.2225325, %bb.bn ]
   %.0246450.ph = phi i1 [ true, %.preheader356.lr.ph ], [ false, %bb.bn ]
-  %.1249449.ph = phi ptr [ %2, %.preheader356.lr.ph ], [ %i.lg, %bb.bn ] ; 21 uses
+  %.1249449.ph = phi ptr [ %2, %.preheader356.lr.ph ], [ %i.lg, %bb.bn ] ; 20 uses
   %i.mv = getelementptr inbounds nuw i8, ptr %.1213452.ph, i64 1 ; 3 uses
   %i.mw = load i8, ptr %.1213452.ph, align 1, !tbaa !10 ; 2 uses
   %i.mx = icmp eq i8 %i.mw, 17

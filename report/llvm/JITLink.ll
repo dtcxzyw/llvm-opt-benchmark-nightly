@@ -202,7 +202,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPN4llvm7jitlink4EdgeES3_SaIS2_EET0_T_S6
   %.09.i.i.i.i59.i.ptr = getelementptr inbounds nuw i8, ptr %i.zu, i64 %.09.i.i.i.i59.i.idx ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.09.i.i.i.i59.i.ptr, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.04.08.i.i.i.i60.i, i64 32, i1 false), !tbaa.struct !136
   %i.zv = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i60.i, i64 32 ; 2 uses
-  %.09.i.i.i.i59.i.add = add nuw nsw i64 %.09.i.i.i.i59.i.idx, 32 ; 4 uses
+  %.09.i.i.i.i59.i.add = add nuw nsw i64 %.09.i.i.i.i59.i.idx, 32 ; 3 uses
   %.not.i.i.i.i61.i = icmp eq ptr %i.zv, %i.zp
   br i1 %.not.i.i.i.i61.i, label %_ZNSt6vectorIN4llvm7jitlink4EdgeESaIS2_EE15_M_range_insertIN9__gnu_cxx17__normal_iteratorIPS2_S4_EEEEvS9_T_SA_St20forward_iterator_tag.exit.thread575, label %.lr.ph.i.i.i.i58.i, !llvm.loop !441
 
@@ -284,13 +284,9 @@ bb.cu:                                            ; preds = %bb.cq
 bb.cv:                                            ; preds = %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4llvm7jitlink4EdgeESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIZNS3_9LinkGraph4dumpERNS2_11raw_ostreamEE3$_3EEEvT_T0_.exit.i.i.i.i.i.i", %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4llvm7jitlink4EdgeESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i.i.i.i.i.i
   %.sroa.0.019.i.add.i.i.i.i.i184 = add nuw nsw i64 %.sroa.0.019.i.idx.i.i.i.i.i179, 32 ; 2 uses
   %.not.i.i.i.i.i.i185 = icmp eq i64 %.sroa.0.019.i.add.i.i.i.i.i184, 512
-  br i1 %.not.i.i.i.i.i.i185, label %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4llvm7jitlink4EdgeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_9LinkGraph4dumpERNS2_11raw_ostreamEE3$_3EEEvT_SH_T0_.exit.i.i.i.i.i", label %bb.cq, !llvm.loop !443
+  br i1 %.not.i.i.i.i.i.i185, label %.lr.ph.i13.i.i.i.i.i.preheader, label %bb.cq, !llvm.loop !443
 
-"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4llvm7jitlink4EdgeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_9LinkGraph4dumpERNS2_11raw_ostreamEE3$_3EEEvT_SH_T0_.exit.i.i.i.i.i": ; preds = %bb.cv
-  %.not6.i.i.i.i.i.i186 = icmp eq i64 %.09.i.i.i.i59.i.add, 512
-  br i1 %.not6.i.i.i.i.i.i186, label %.lr.ph686.preheader, label %.lr.ph.i13.i.i.i.i.i.preheader
-
-.lr.ph.i13.i.i.i.i.i.preheader:                   ; preds = %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4llvm7jitlink4EdgeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_9LinkGraph4dumpERNS2_11raw_ostreamEE3$_3EEEvT_SH_T0_.exit.i.i.i.i.i"
+.lr.ph.i13.i.i.i.i.i.preheader:                   ; preds = %bb.cv
   %i.aal = getelementptr inbounds nuw i8, ptr %i.zu, i64 512
   br label %.lr.ph.i13.i.i.i.i.i
 
@@ -332,7 +328,7 @@ bb.cv:                                            ; preds = %"_ZSt25__unguarded_
   %.not17.i29.i.i.i.i.i = icmp samesign eq i64 %.09.i.i.i.i59.i.idx, 0
   br i1 %.not17.i29.i.i.i.i.i, label %.lr.ph686.preheader, label %.lr.ph.i30.i.i.i.i.i
 
-.lr.ph686.preheader:                              ; preds = %bb.dc, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4llvm7jitlink4EdgeESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIZNS3_9LinkGraph4dumpERNS2_11raw_ostreamEE3$_3EEEvT_T0_.exit.i17.i.i.i.i.i", %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4llvm7jitlink4EdgeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_9LinkGraph4dumpERNS2_11raw_ostreamEE3$_3EEEvT_SH_T0_.exit.i.i.i.i.i", %.preheader.i27.i.i.i.i.i
+.lr.ph686.preheader:                              ; preds = %bb.dc, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4llvm7jitlink4EdgeESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIZNS3_9LinkGraph4dumpERNS2_11raw_ostreamEE3$_3EEEvT_T0_.exit.i17.i.i.i.i.i", %.preheader.i27.i.i.i.i.i
   br label %.lr.ph686
 
 .lr.ph.i30.i.i.i.i.i:                             ; preds = %.preheader.i27.i.i.i.i.i

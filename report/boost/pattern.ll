@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.peel.next.peel
 
 _ZN5boost4urls7grammar12hexdig_valueEc.exit.thread.thread.peel: ; preds = %.lr.ph.peel, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d
   %.0286411.peel = phi i32 [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 8, %.lr.ph.peel ] ; 2 uses
-  %.073297410.peel = phi i32 [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ -1, %.lr.ph.peel ] ; 3 uses
+  %.073297410.peel = phi i32 [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ 7, %bb.d ], [ -1, %.lr.ph.peel ] ; 2 uses
   %i.k = phi ptr [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.h, %bb.d ], [ %i.a, %.lr.ph.peel ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #22
   call void @_ZNK5boost4urls6detail10h16_rule_t5parseERPKcS4_(ptr dead_on_unwind nonnull writable sret(%"class.boost::system::result.181") align 8 %9, ptr noundef nonnull align 1 dereferenceable(1) @_ZN5boost4urls6detailL8h16_ruleE, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %3) #22
@@ -228,20 +228,16 @@ bb.e:                                             ; preds = %_ZN5boost4urls7gram
   %i.r = sext i32 %i.q to i64
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 %i.r
   store i8 %.sroa.0345.sroa.9.0.extract.trunc365.peel, ptr %i.s, align 1, !tbaa !17
-  %i.t = add nsw i32 %.0286411.peel, -1           ; 3 uses
-  %i.u = icmp eq i32 %i.t, 0
-  br i1 %i.u, label %.thread209, label %.outer.backedge.peel
-
-.outer.backedge.peel:                             ; preds = %bb.e
+  %i.t = add nsw i32 %.0286411.peel, -1           ; 2 uses
   %.promoted.pre.peel = load ptr, ptr %2, align 8, !tbaa !16 ; 2 uses
-  %10 = icmp eq ptr %.promoted.pre.peel, %3
-  br i1 %10, label %.loopexit, label %.lr.ph
+  %i.u = icmp eq ptr %.promoted.pre.peel, %3
+  br i1 %i.u, label %.loopexit, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.outer.backedge.peel, %.outer.backedge
-  %.0.ph539 = phi i32 [ %.0.ph.be, %.outer.backedge ], [ %i.t, %.outer.backedge.peel ] ; 5 uses
-  %.073.ph538 = phi i32 [ %.073298, %.outer.backedge ], [ %.073297410.peel, %.outer.backedge.peel ] ; 6 uses
-  %.077.ph536 = phi ptr [ %.077.ph.be, %.outer.backedge ], [ %i.k, %.outer.backedge.peel ]
-  %.promoted535 = phi ptr [ %.promoted.pre, %.outer.backedge ], [ %.promoted.pre.peel, %.outer.backedge.peel ] ; 4 uses
+.lr.ph:                                           ; preds = %bb.e, %.outer.backedge
+  %.0.ph539 = phi i32 [ %.0.ph.be, %.outer.backedge ], [ %i.t, %bb.e ] ; 5 uses
+  %.073.ph538 = phi i32 [ %.073298, %.outer.backedge ], [ %.073297410.peel, %bb.e ] ; 6 uses
+  %.077.ph536 = phi ptr [ %.077.ph.be, %.outer.backedge ], [ %i.k, %bb.e ]
+  %.promoted535 = phi ptr [ %.promoted.pre, %.outer.backedge ], [ %.promoted.pre.peel, %bb.e ] ; 4 uses
   %i.v = load i8, ptr %.promoted535, align 1, !tbaa !17
   switch i8 %i.v, label %_ZN5boost4urls7grammar12hexdig_valueEc.exit [
     i8 58, label %bb.f
@@ -296,9 +292,9 @@ bb.i:                                             ; preds = %bb.h
   %i.ae = icmp eq ptr %i.ab, %3
   br i1 %i.ae, label %.thread215.thread, label %bb.k
 
-.loopexit:                                        ; preds = %.outer.backedge.peel, %.outer.backedge, %bb.a
-  %.073.ph.lcssa = phi i32 [ -1, %bb.a ], [ %.073297410.peel, %.outer.backedge.peel ], [ %.073298, %.outer.backedge ] ; 2 uses
-  %.0.ph.lcssa = phi i32 [ 8, %bb.a ], [ %i.t, %.outer.backedge.peel ], [ %.0.ph.be, %.outer.backedge ]
+.loopexit:                                        ; preds = %bb.e, %.outer.backedge, %bb.a
+  %.073.ph.lcssa = phi i32 [ -1, %bb.a ], [ %.073297410.peel, %bb.e ], [ %.073298, %.outer.backedge ] ; 2 uses
+  %.0.ph.lcssa = phi i32 [ 8, %bb.a ], [ %i.t, %bb.e ], [ %.0.ph.be, %.outer.backedge ]
   %.not = icmp eq i32 %.073.ph.lcssa, -1
   br i1 %.not, label %bb.j, label %.thread215
 
@@ -701,9 +697,9 @@ _ZN5boost6system10error_codeC2ERKS1_PKNS_15source_locationE.exit141: ; preds = %
   store i8 2, ptr %i.fl, align 8, !tbaa !85
   br label %.thread203
 
-.thread209:                                       ; preds = %bb.e, %bb.ab, %bb.o, %.thread
-  %.073295 = phi i32 [ %.073.ph538.lcssa, %.thread ], [ %.073297410.peel, %bb.e ], [ %.073.ph538, %bb.o ], [ %i.ac, %bb.ab ] ; 2 uses
-  %.3 = phi i32 [ %i.ep, %.thread ], [ 0, %bb.o ], [ 0, %bb.ab ], [ 0, %bb.e ]
+.thread209:                                       ; preds = %bb.ab, %bb.o, %.thread
+  %.073295 = phi i32 [ %.073.ph538.lcssa, %.thread ], [ %.073.ph538, %bb.o ], [ %i.ac, %bb.ab ] ; 2 uses
+  %.3 = phi i32 [ %i.ep, %.thread ], [ 0, %bb.o ], [ 0, %bb.ab ]
   %i.fm = icmp eq i32 %.073295, -1
   br i1 %i.fm, label %bb.ac, label %.thread215
 

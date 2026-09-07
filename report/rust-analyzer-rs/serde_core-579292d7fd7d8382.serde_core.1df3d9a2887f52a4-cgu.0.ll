@@ -197,7 +197,7 @@ bb.f:                                             ; preds = %_RNvNtNtCshzWfHUSfY
   %i.ac = icmp eq i64 %.sroa.0.0.i85.i, %1
   br i1 %i.ac, label %bb.ax, label %_RNvXst_NtNtCshzWfHUSfYae_4core3str7patternReNtB5_7Pattern15is_contained_inCs2zr4xB4Ewz8_10serde_core.exit.i
 
-.preheader.i.3:                                   ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2zr4xB4Ewz8_10serde_core.exit.i.i.i.i.3, %.preheader.i.2, %.preheader.i.1, %.preheader.i
+.preheader.i.3:                                   ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2zr4xB4Ewz8_10serde_core.exit.i.i.i.i.3, %.preheader.i.2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @_RNvMsu_NtNtCshzWfHUSfYae_4core3str7patternNtB5_11StrSearcher3new(ptr nonnull sret([104 x i8]) align 8 %i.b, ptr %0, i64 %1, ptr nonnull %i.c, i64 range(i64 2, 5) %.sroa.0.0.i.i)
   %i.ad = load i64, ptr %i.b, align 8, !noalias !9
@@ -572,28 +572,20 @@ bb.an:                                            ; preds = %.lr.ph130
 _RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2zr4xB4Ewz8_10serde_core.exit.i.i.i.i: ; preds = %_RNvNtNtCshzWfHUSfYae_4core4char7methods15encode_utf8_rawCs2zr4xB4Ewz8_10serde_core.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.fp = add nsw i64 %.sroa.0.0.i.i, -1
-  %i.fq = add nsw i64 %.sroa.0.0.i.i, -1          ; 3 uses
+  %i.fq = add nsw i64 %.sroa.0.0.i.i, -1          ; 2 uses
   %i.fr = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.fq
   %i.fs = load i8, ptr %i.fr, align 1             ; 2 uses
   %.not.i.not.i.i.i.i = icmp eq i8 %i.fs, %.sink47
-  br i1 %.not.i.not.i.i.i.i, label %.preheader.i, label %bb.ao
+  br i1 %.not.i.not.i.i.i.i, label %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2zr4xB4Ewz8_10serde_core.exit.i.i.i.i.1, label %bb.ao
 
-.preheader.i:                                     ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2zr4xB4Ewz8_10serde_core.exit.i.i.i.i
-  %.not.i.i = icmp eq i64 %i.fq, 0
-  br i1 %.not.i.i, label %.preheader.i.3, label %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2zr4xB4Ewz8_10serde_core.exit.i.i.i.i.1
-
-_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2zr4xB4Ewz8_10serde_core.exit.i.i.i.i.1: ; preds = %.preheader.i
-  %i.ft = add nsw i64 %.sroa.0.0.i.i, -2          ; 3 uses
+_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2zr4xB4Ewz8_10serde_core.exit.i.i.i.i.1: ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2zr4xB4Ewz8_10serde_core.exit.i.i.i.i
+  %i.ft = add nsw i64 %.sroa.0.0.i.i, -2          ; 2 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.ft
   %i.fv = load i8, ptr %i.fu, align 1             ; 2 uses
   %.not.i.not.i.i.i.i.1 = icmp eq i8 %i.fv, %.sink47
-  br i1 %.not.i.not.i.i.i.i.1, label %.preheader.i.1, label %bb.ao
+  br i1 %.not.i.not.i.i.i.i.1, label %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2zr4xB4Ewz8_10serde_core.exit.i.i.i.i.2, label %bb.ao
 
-.preheader.i.1:                                   ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2zr4xB4Ewz8_10serde_core.exit.i.i.i.i.1
-  %.not.i.i.1 = icmp eq i64 %i.ft, 0
-  br i1 %.not.i.i.1, label %.preheader.i.3, label %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2zr4xB4Ewz8_10serde_core.exit.i.i.i.i.2
-
-_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2zr4xB4Ewz8_10serde_core.exit.i.i.i.i.2: ; preds = %.preheader.i.1
+_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2zr4xB4Ewz8_10serde_core.exit.i.i.i.i.2: ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs2zr4xB4Ewz8_10serde_core.exit.i.i.i.i.1
   %i.fw = add nsw i64 %.sroa.0.0.i.i, -3          ; 3 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.fw
   %i.fy = load i8, ptr %i.fx, align 1             ; 2 uses

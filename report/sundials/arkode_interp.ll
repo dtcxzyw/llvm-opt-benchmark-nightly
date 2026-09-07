@@ -203,7 +203,7 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !20     ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.c = load i32, ptr %i.b, align 8, !tbaa !60   ; 4 uses
-  %i.d = load i32, ptr %i.a, align 8, !tbaa !55   ; 4 uses
+  %i.d = load i32, ptr %i.a, align 8, !tbaa !55   ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !61   ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -283,7 +283,7 @@ bb.a:
   br i1 %i.aq, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %._crit_edge
-  %i.ar = add nsw i32 %i.d, -1                    ; 3 uses
+  %i.ar = add nsw i32 %i.d, -1                    ; 2 uses
   %i.as = sext i32 %i.ar to i64
   %i.at = getelementptr inbounds [8 x i8], ptr %i.h, i64 %i.as
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !50 ; 2 uses
@@ -292,11 +292,9 @@ bb.b:                                             ; preds = %._crit_edge
 
 .lr.ph55.preheader:                               ; preds = %bb.b
   %i.aw = zext i32 %i.ar to i64                   ; 3 uses
-  %3 = icmp ne i32 %i.ar, 0
-  %.neg = sext i1 %3 to i64
   %i.ax = zext nneg i32 %i.d to i64
-  %i.ay = add nsw i64 %.neg, %i.ax                ; 3 uses
-  %min.iters.check = icmp ult i64 %i.ay, 4
+  %i.ay = add nsw i64 %i.ax, -1                   ; 2 uses
+  %min.iters.check = icmp ult i32 %i.d, 5
   br i1 %min.iters.check, label %.lr.ph55.preheader64, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph55.preheader

@@ -205,7 +205,7 @@ g_strchr.exit.i:                                  ; preds = %bb.ab
   br i1 %.not.i103, label %.preheader.i104, label %.critedge.thread163
 
 .preheader.i104:                                  ; preds = %g_strchr.exit.i
-  %gepdiff = add nsw i64 %.04.i.i.idx, -2         ; 24 uses
+  %gepdiff = add nsw i64 %.04.i.i.idx, -2         ; 23 uses
   %i.bw = ashr exact i64 %gepdiff, 1              ; 12 uses
   %.not.i26.i281 = icmp eq i64 %.04.i.i.idx, 2
   br i1 %.not.i26.i281, label %g_strncmp.exit.thread.i, label %.lr.ph284
@@ -257,7 +257,7 @@ bb.af:                                            ; preds = %bb.ag
   %i.cj = load i8, ptr %.06.i.1.i288, align 1, !tbaa !25
   %i.ck = zext i8 %i.cj to i16
   %.not10.i.1.i = icmp eq i16 %i.ci, %i.ck
-  br i1 %.not10.i.1.i, label %bb.ag, label %g_strncmp.exit.1.i
+  br i1 %.not10.i.1.i, label %bb.ag, label %.lr.ph294.preheader
 
 bb.ag:                                            ; preds = %.lr.ph289
   %i.cl = icmp eq i16 %i.ci, 0
@@ -272,11 +272,7 @@ g_strncmp.exit.thread.1.i:                        ; preds = %bb.af, %.g_strncmp.
     i64 0, label %.loopexit
   ]
 
-g_strncmp.exit.1.i:                               ; preds = %.lr.ph289
-  %cond = icmp eq i64 %gepdiff, 0
-  br i1 %cond, label %.loopexit, label %.lr.ph294.preheader
-
-.lr.ph294.preheader:                              ; preds = %g_strncmp.exit.thread.1.i, %g_strncmp.exit.1.i
+.lr.ph294.preheader:                              ; preds = %.lr.ph289, %g_strncmp.exit.thread.1.i
   br label %.lr.ph294
 
 bb.ah:                                            ; preds = %bb.ai
@@ -664,7 +660,7 @@ bb.bb:                                            ; preds = %.fold.split
   %i.fq = icmp eq i16 %i.fp, 58
   br i1 %i.fq, label %.preheader169, label %.critedge.thread163, !llvm.loop !56
 
-.loopexit:                                        ; preds = %g_strncmp.exit.10.i, %g_strncmp.exit.9.i, %g_strncmp.exit.8.i, %g_strncmp.exit.7.i, %g_strncmp.exit.6.i, %g_strncmp.exit.5.i, %g_strncmp.exit.4.i, %g_strncmp.exit.3.i, %g_strncmp.exit.2.i, %g_strncmp.exit.1.i, %g_strncmp.exit.thread.11.i, %g_strncmp.exit.thread.10.i, %g_strncmp.exit.thread.9.i, %g_strncmp.exit.thread.8.i, %g_strncmp.exit.thread.7.i, %g_strncmp.exit.thread.6.i, %g_strncmp.exit.thread.5.i, %g_strncmp.exit.thread.4.i, %g_strncmp.exit.thread.3.i, %g_strncmp.exit.thread.2.i, %g_strncmp.exit.thread.1.i, %.lr.ph339
+.loopexit:                                        ; preds = %g_strncmp.exit.10.i, %g_strncmp.exit.9.i, %g_strncmp.exit.8.i, %g_strncmp.exit.7.i, %g_strncmp.exit.6.i, %g_strncmp.exit.5.i, %g_strncmp.exit.4.i, %g_strncmp.exit.3.i, %g_strncmp.exit.2.i, %g_strncmp.exit.thread.11.i, %g_strncmp.exit.thread.10.i, %g_strncmp.exit.thread.9.i, %g_strncmp.exit.thread.8.i, %g_strncmp.exit.thread.7.i, %g_strncmp.exit.thread.6.i, %g_strncmp.exit.thread.5.i, %g_strncmp.exit.thread.4.i, %g_strncmp.exit.thread.3.i, %g_strncmp.exit.thread.2.i, %g_strncmp.exit.thread.1.i, %.lr.ph339
   %i.fr = load i32, ptr %i.ay, align 8, !tbaa !22
   %i.fs = and i32 %i.fr, 16
   %.not97 = icmp eq i32 %i.fs, 0

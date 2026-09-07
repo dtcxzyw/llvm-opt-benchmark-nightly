@@ -204,10 +204,9 @@ bb.r:                                             ; preds = %.thread130, %bb.q, 
   %i.bh = phi ptr [ %i.au, %.thread130 ], [ %i.ay, %bb.q ], [ %i.ay, %bb.p ] ; 2 uses
   %i.bi = sub nuw nsw i32 -2, %.093136
   %i.bj = zext i32 %i.bi to i64
-  %scevgep = getelementptr i8, ptr %i.bh, i64 %i.bj ; 4 uses
-  %.0986 = add nsw i32 %.093136, 1                ; 2 uses
-  %.not7 = icmp eq i32 %.0986, -1
-  br i1 %.not7, label %.critedge20, label %.lr.ph
+  %scevgep = getelementptr i8, ptr %i.bh, i64 %i.bj ; 2 uses
+  %.0986 = add nsw i32 %.093136, 1
+  br label %.lr.ph
 
 bb.s:                                             ; preds = %bb.t
   %.098 = add i32 %.0989, 1                       ; 2 uses
@@ -215,8 +214,8 @@ bb.s:                                             ; preds = %bb.t
   br i1 %.not, label %.critedge20, label %.lr.ph, !llvm.loop !62
 
 .lr.ph:                                           ; preds = %bb.r, %bb.s
-  %.0989 = phi i32 [ %.098, %bb.s ], [ %.0986, %bb.r ] ; 3 uses
-  %.01018 = phi ptr [ %i.bl, %bb.s ], [ %i.bh, %bb.r ] ; 3 uses
+  %.0989 = phi i32 [ %.0986, %bb.r ], [ %.098, %bb.s ] ; 3 uses
+  %.01018 = phi ptr [ %i.bh, %bb.r ], [ %i.bl, %bb.s ] ; 3 uses
   %i.bk = load i8, ptr %.01018, align 1, !tbaa !33 ; 2 uses
   %.not118 = icmp eq i8 %i.bk, 0
   br i1 %.not118, label %.lr.ph143.preheader, label %bb.t
@@ -249,10 +248,10 @@ bb.u:                                             ; preds = %.lr.ph143
   %.not120 = icmp eq i32 %i.bp, -1
   br i1 %.not120, label %.critedge20, label %.lr.ph143, !llvm.loop !63
 
-.critedge20:                                      ; preds = %bb.s, %.lr.ph143, %.lr.ph143, %bb.u, %bb.r
-  %.2103180 = phi ptr [ %scevgep, %bb.r ], [ %.2103179, %.lr.ph143 ], [ %.2103179, %bb.u ], [ %.2103179, %.lr.ph143 ], [ %scevgep, %bb.s ] ; 2 uses
-  %.3104.lcssa = phi ptr [ %scevgep, %bb.r ], [ %.3104140, %.lr.ph143 ], [ %.3104140, %.lr.ph143 ], [ %scevgep155, %bb.u ], [ %scevgep, %bb.s ] ; 3 uses
-  %.2100.lcssa = phi i32 [ -1, %bb.r ], [ %.2100141, %.lr.ph143 ], [ %.2100141, %.lr.ph143 ], [ -1, %bb.u ], [ -1, %bb.s ]
+.critedge20:                                      ; preds = %bb.s, %.lr.ph143, %.lr.ph143, %bb.u
+  %.2103180 = phi ptr [ %.2103179, %.lr.ph143 ], [ %.2103179, %bb.u ], [ %.2103179, %.lr.ph143 ], [ %scevgep, %bb.s ] ; 2 uses
+  %.3104.lcssa = phi ptr [ %.3104140, %.lr.ph143 ], [ %.3104140, %.lr.ph143 ], [ %scevgep155, %bb.u ], [ %scevgep, %bb.s ] ; 3 uses
+  %.2100.lcssa = phi i32 [ %.2100141, %.lr.ph143 ], [ %.2100141, %.lr.ph143 ], [ -1, %bb.u ], [ -1, %bb.s ]
   store ptr %.2103180, ptr %1, align 8, !tbaa !24
   %i.bq = ptrtoint ptr %.3104.lcssa to i64
   %i.br = ptrtoint ptr %.2103180 to i64
