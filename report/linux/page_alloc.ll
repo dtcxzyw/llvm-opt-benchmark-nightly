@@ -205,7 +205,8 @@ bb.h:                                             ; preds = %bb.g
 
 .loopexit:                                        ; preds = %.preheader.us.2, %.lr.ph.split.us
   %indvars.iv.next66 = add nsw i64 %indvars.iv65, 1 ; 2 uses
-  %exitcond68.not = icmp eq i64 %indvars.iv.next66, 11
+  %6 = and i64 %indvars.iv.next66, 4294967295
+  %exitcond68.not = icmp eq i64 %6, 11
   br i1 %exitcond68.not, label %.thread, label %.lr.ph.split.us, !llvm.loop !176
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.j
@@ -241,7 +242,8 @@ bb.i:                                             ; preds = %.preheader.2
 
 bb.j:                                             ; preds = %bb.i, %.lr.ph.split
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 11
+  %7 = and i64 %indvars.iv.next, 4294967295
+  %exitcond.not = icmp eq i64 %7, 11
   br i1 %exitcond.not, label %.thread, label %.lr.ph.split, !llvm.loop !176
 
 .thread:                                          ; preds = %bb.j, %bb.i, %.preheader.preheader, %.preheader.1, %.preheader.2, %.loopexit, %.preheader.us.preheader, %.preheader.us.1, %.preheader.us.2, %.preheader50, %bb.h, %bb.g

@@ -27,7 +27,7 @@ define internal fastcc ptr @lj_strfmt_wfnum(ptr noundef %0, i32 noundef %1, doub
 bb.a:
   %i.a = alloca [9 x i8], align 1                 ; 14 uses
   %i.b = alloca [9 x i8], align 1                 ; 14 uses
-  %i.c = alloca [64 x i32], align 16              ; 44 uses
+  %i.c = alloca [64 x i32], align 16              ; 46 uses
   %i.d = alloca [9 x i8], align 1                 ; 13 uses
   %i.e = alloca [9 x i8], align 1                 ; 13 uses
   %i.f = lshr i32 %1, 16
@@ -430,7 +430,8 @@ bb.aq:                                            ; preds = %.thread854, %bb.ap
   %.2443 = phi i32 [ %i.hi, %bb.an ], [ %i.hq, %bb.aq ] ; 7 uses
   %.2440 = phi i32 [ %.0438, %bb.an ], [ 0, %bb.aq ] ; 4 uses
   %.sroa.0.0.extract.trunc162 = trunc i64 %.sroa.0.6 to i32
-  %i.hs = tail call i32 @llvm.fshl.i32(i32 %i.hr, i32 %.sroa.0.0.extract.trunc162, i32 3)
+  %i.hs = tail call i32 @llvm.fshl.i32(i32 %i.hr, i32 %.sroa.0.0.extract.trunc162, i32 3) ; 2 uses
+  store i32 %i.hs, ptr %i.c, align 16, !tbaa !17
   %i.ht = and i64 %.sroa.0.6, 536870911
   %i.hu = zext i32 %i.hs to i64
   %i.hv = shl nuw nsw i64 %i.hu, 29
@@ -439,14 +440,14 @@ bb.aq:                                            ; preds = %.thread854, %bb.ap
   %i.hy = trunc nuw i64 %i.hx to i32              ; 2 uses
   %i.hz = trunc i64 %i.hw to i32
   %.neg59.i = mul i32 %i.hy, -1000000000
-  %i.ia = add i32 %.neg59.i, %i.hz                ; 2 uses
+  %i.ia = add i32 %.neg59.i, %i.hz
   store i32 %i.ia, ptr %i.c, align 16, !tbaa !17
   %.not58.i = icmp samesign ult i64 %i.hw, 1000000000
   br i1 %.not58.i, label %nd_mul2k.exit, label %nd_mul2k.exit.thread1144
 
 nd_mul2k.exit:                                    ; preds = %._crit_edge.i
   %i.ib = icmp sgt i32 %.2443, -1
-  br i1 %i.ib, label %bb.ar, label %.thread768
+  br i1 %i.ib, label %bb.ar, label %._crit_edge1098
 
 nd_mul2k.exit.thread1144:                         ; preds = %._crit_edge.i
   %i.ic = getelementptr inbounds nuw i8, ptr %i.c, i64 4
@@ -482,39 +483,43 @@ bb.ar:                                            ; preds = %nd_mul2k.exit.threa
   br label %.preheader60.i645
 
 .preheader60.i645:                                ; preds = %._crit_edge.i658.thread, %.preheader60.preheader.i
-  %.068.i646 = phi i32 [ %.1.i664, %._crit_edge.i658.thread ], [ %.2458761, %.preheader60.preheader.i ] ; 5 uses
+  %.068.i646 = phi i32 [ %.1.i664, %._crit_edge.i658.thread ], [ %.2458761, %.preheader60.preheader.i ] ; 4 uses
   %.04367.i647 = phi i32 [ %i.ja, %._crit_edge.i658.thread ], [ %.3444764, %.preheader60.preheader.i ]
   %.14566.i648 = phi i32 [ %.246.i663, %._crit_edge.i658.thread ], [ %.044.i, %.preheader60.preheader.i ] ; 4 uses
   %.04765.i649 = phi i32 [ %.148.i662, %._crit_edge.i658.thread ], [ 0, %.preheader60.preheader.i ] ; 6 uses
   %.not5761.i651 = icmp ugt i32 %.04765.i649, %.068.i646
-  br i1 %.not5761.i651, label %._crit_edge.i658.thread, label %.lr.ph.i653
+  br i1 %.not5761.i651, label %._crit_edge.i658.thread, label %.lr.ph.i653.preheader
 
-.lr.ph.i653:                                      ; preds = %.preheader60.i645, %.lr.ph.i653
-  %.04963.i654 = phi i32 [ %5, %.lr.ph.i653 ], [ %.04765.i649, %.preheader60.i645 ] ; 2 uses
-  %.15262.i655.a = phi i64 [ %i.ir, %.lr.ph.i653 ], [ 0, %.preheader60.i645 ]
-  %4 = zext i32 %.04963.i654 to i64
-  %i.im = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %4 ; 2 uses
+.lr.ph.i653.preheader:                            ; preds = %.preheader60.i645
+  %4 = zext i32 %.04765.i649 to i64
+  %5 = add i32 %.068.i646, 1                      ; 3 uses
+  br label %.lr.ph.i653
+
+.lr.ph.i653:                                      ; preds = %.lr.ph.i653.preheader, %.lr.ph.i653
+  %.15262.i655.a = phi i64 [ %4, %.lr.ph.i653.preheader ], [ %indvars.iv.next1070, %.lr.ph.i653 ] ; 2 uses
+  %.15262.i655 = phi i64 [ 0, %.lr.ph.i653.preheader ], [ %i.ir, %.lr.ph.i653 ]
+  %i.im = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.15262.i655.a ; 2 uses
   %i.in = load i32, ptr %i.im, align 4, !tbaa !17
   %i.io = zext i32 %i.in to i64
   %i.ip = shl nuw nsw i64 %i.io, 29
-  %i.iq = or i64 %i.ip, %.15262.i655.a            ; 3 uses
+  %i.iq = or i64 %i.ip, %.15262.i655              ; 3 uses
   %i.ir = udiv i64 %i.iq, 1000000000              ; 2 uses
   %i.is = trunc nuw i64 %i.ir to i32              ; 2 uses
   %i.it = trunc i64 %i.iq to i32
   %.neg59.i656 = mul i32 %i.is, -1000000000
   %i.iu = add i32 %.neg59.i656, %i.it
   store i32 %i.iu, ptr %i.im, align 4, !tbaa !17
-  %5 = add i32 %.04963.i654, 1                    ; 2 uses
-  %.not57.i657 = icmp ugt i32 %5, %.068.i646
-  br i1 %.not57.i657, label %._crit_edge.i658, label %.lr.ph.i653, !llvm.loop !22
+  %indvars.iv.next1070 = add nuw nsw i64 %.15262.i655.a, 1 ; 2 uses
+  %lftr.wideiv1072 = trunc i64 %indvars.iv.next1070 to i32
+  %exitcond1073.not = icmp eq i32 %5, %lftr.wideiv1072
+  br i1 %exitcond1073.not, label %._crit_edge.i658, label %.lr.ph.i653, !llvm.loop !22
 
 ._crit_edge.i658:                                 ; preds = %.lr.ph.i653
   %.not58.i660 = icmp samesign ult i64 %i.iq, 1000000000
   br i1 %.not58.i660, label %._crit_edge.i658.thread, label %bb.as
 
 bb.as:                                            ; preds = %._crit_edge.i658
-  %6 = add nuw i32 %.068.i646, 1                  ; 2 uses
-  %i.iv = zext i32 %6 to i64
+  %i.iv = zext i32 %5 to i64
   %i.iw = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.iv
   store i32 %i.is, ptr %i.iw, align 4, !tbaa !17
   %i.ix = add i32 %.14566.i648, 1
@@ -526,7 +531,7 @@ bb.as:                                            ; preds = %._crit_edge.i658
 ._crit_edge.i658.thread:                          ; preds = %.preheader60.i645, %bb.as, %._crit_edge.i658
   %.148.i662 = phi i32 [ %.04765.i649, %._crit_edge.i658 ], [ %spec.select.i661, %bb.as ], [ %.04765.i649, %.preheader60.i645 ] ; 2 uses
   %.246.i663 = phi i32 [ %.14566.i648, %._crit_edge.i658 ], [ %i.ix, %bb.as ], [ %.14566.i648, %.preheader60.i645 ]
-  %.1.i664 = phi i32 [ %.068.i646, %._crit_edge.i658 ], [ %6, %bb.as ], [ %.068.i646, %.preheader60.i645 ] ; 2 uses
+  %.1.i664 = phi i32 [ %.068.i646, %._crit_edge.i658 ], [ %5, %bb.as ], [ %.068.i646, %.preheader60.i645 ] ; 2 uses
   %i.ja = add nsw i32 %.04367.i647, -29           ; 3 uses
   %i.jb = icmp ugt i32 %i.ja, 28
   br i1 %i.jb, label %.preheader60.i645, label %._crit_edge69.i631, !llvm.loop !23
@@ -534,7 +539,7 @@ bb.as:                                            ; preds = %._crit_edge.i658
 ._crit_edge69.i631:                               ; preds = %._crit_edge.i658.thread, %bb.ar
   %.047.lcssa.i = phi i32 [ 0, %bb.ar ], [ %.148.i662, %._crit_edge.i658.thread ] ; 2 uses
   %.043.lcssa.i = phi i32 [ %.3444764, %bb.ar ], [ %i.ja, %._crit_edge.i658.thread ] ; 2 uses
-  %.0.lcssa.i = phi i32 [ %.2458761, %bb.ar ], [ %.1.i664, %._crit_edge.i658.thread ] ; 5 uses
+  %.0.lcssa.i = phi i32 [ %.2458761, %bb.ar ], [ %.1.i664, %._crit_edge.i658.thread ] ; 4 uses
   %.not54.i632 = icmp eq i32 %.043.lcssa.i, 0
   %.not5574.i634 = icmp ugt i32 %.047.lcssa.i, %.0.lcssa.i
   %or.cond864 = select i1 %.not54.i632, i1 true, i1 %.not5574.i634
@@ -542,60 +547,65 @@ bb.as:                                            ; preds = %._crit_edge.i658
 
 .lr.ph77.i635:                                    ; preds = %._crit_edge69.i631
   %i.jc = zext nneg i32 %.043.lcssa.i to i64
+  %6 = zext i32 %.047.lcssa.i to i64
+  %7 = add i32 %.0.lcssa.i, 1                     ; 3 uses
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.at, %.lr.ph77.i635
-  %.15076.i636 = phi i32 [ %.047.lcssa.i, %.lr.ph77.i635 ], [ %8, %bb.at ] ; 2 uses
-  %.375.i637.a = phi i64 [ 0, %.lr.ph77.i635 ], [ %i.ji, %bb.at ]
-  %7 = zext i32 %.15076.i636 to i64
-  %i.jd = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %7 ; 2 uses
+  %.375.i637.a = phi i64 [ %indvars.iv.next1075, %bb.at ], [ %6, %.lr.ph77.i635 ] ; 2 uses
+  %.375.i637 = phi i64 [ %i.ji, %bb.at ], [ 0, %.lr.ph77.i635 ]
+  %i.jd = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.375.i637.a ; 2 uses
   %i.je = load i32, ptr %i.jd, align 4, !tbaa !17
   %i.jf = zext i32 %i.je to i64
   %i.jg = shl nuw nsw i64 %i.jf, %i.jc
-  %i.jh = or i64 %i.jg, %.375.i637.a              ; 3 uses
+  %i.jh = or i64 %i.jg, %.375.i637                ; 3 uses
   %i.ji = udiv i64 %i.jh, 1000000000              ; 2 uses
   %i.jj = trunc nuw nsw i64 %i.ji to i32          ; 2 uses
   %i.jk = trunc i64 %i.jh to i32
   %.neg.i638 = mul i32 %i.jj, -1000000000
   %i.jl = add i32 %.neg.i638, %i.jk
   store i32 %i.jl, ptr %i.jd, align 4, !tbaa !17
-  %8 = add i32 %.15076.i636, 1                    ; 2 uses
-  %.not55.i639 = icmp ugt i32 %8, %.0.lcssa.i
-  br i1 %.not55.i639, label %._crit_edge78.i640, label %bb.at, !llvm.loop !24
+  %indvars.iv.next1075 = add nuw nsw i64 %.375.i637.a, 1 ; 2 uses
+  %lftr.wideiv1077 = trunc i64 %indvars.iv.next1075 to i32
+  %exitcond1078.not = icmp eq i32 %7, %lftr.wideiv1077
+  br i1 %exitcond1078.not, label %._crit_edge78.i640, label %bb.at, !llvm.loop !24
 
 ._crit_edge78.i640:                               ; preds = %bb.at
   %.not56.i642 = icmp samesign ult i64 %i.jh, 1000000000
   br i1 %.not56.i642, label %nd_mul2k.exit665, label %bb.au
 
 bb.au:                                            ; preds = %._crit_edge78.i640
-  %9 = add nuw i32 %.0.lcssa.i, 1                 ; 2 uses
-  %i.jm = zext i32 %9 to i64
+  %i.jm = zext i32 %7 to i64
   %i.jn = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.jm
   store i32 %i.jj, ptr %i.jn, align 4, !tbaa !17
   br label %nd_mul2k.exit665
 
-.thread768:                                       ; preds = %nd_mul2k.exit, %nd_mul2k.exit.thread, %.thread854
-  %.2443.sink = phi i32 [ -1042, %.thread854 ], [ %i.hm, %nd_mul2k.exit.thread ], [ %.2443, %nd_mul2k.exit ] ; 4 uses
-  %10 = phi i32 [ %i.hj, %.thread854 ], [ %i.hl, %nd_mul2k.exit.thread ], [ %i.ia, %nd_mul2k.exit ] ; 4 uses
-  %.sroa.0.7758789 = phi i64 [ %i.j, %.thread854 ], [ %i.j, %nd_mul2k.exit.thread ], [ %.sroa.0.6, %nd_mul2k.exit ] ; 3 uses
-  %.3766780 = phi i32 [ 0, %.thread854 ], [ 0, %nd_mul2k.exit.thread ], [ %.2440, %nd_mul2k.exit ] ; 3 uses
-  %i.jo = sub nsw i32 0, %.2443.sink              ; 3 uses
-  %.not116.i = icmp eq i32 %10, 0
+._crit_edge1098:                                  ; preds = %nd_mul2k.exit
+  %.pre = load i32, ptr %i.c, align 16, !tbaa !17
+  br label %.thread768
+
+.thread768:                                       ; preds = %nd_mul2k.exit.thread, %.thread854, %._crit_edge1098
+  %.2443.sink = phi i32 [ %.pre, %._crit_edge1098 ], [ %i.hl, %nd_mul2k.exit.thread ], [ %i.hj, %.thread854 ] ; 4 uses
+  %.sroa.0.7758789 = phi i64 [ %.sroa.0.6, %._crit_edge1098 ], [ %i.j, %nd_mul2k.exit.thread ], [ %i.j, %.thread854 ] ; 3 uses
+  %.3444763783 = phi i32 [ %.2443, %._crit_edge1098 ], [ %i.hm, %nd_mul2k.exit.thread ], [ -1042, %.thread854 ] ; 4 uses
+  %.3766780 = phi i32 [ %.2440, %._crit_edge1098 ], [ 0, %nd_mul2k.exit.thread ], [ 0, %.thread854 ] ; 3 uses
+  %i.jo = sub nsw i32 0, %.3444763783             ; 3 uses
+  %.not116.i = icmp eq i32 %.2443.sink, 0
   br i1 %.not116.i, label %nd_mul2k.exit665, label %bb.av
 
 bb.av:                                            ; preds = %.thread768
-  %i.jp = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %10, i1 true) ; 3 uses
+  %i.jp = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.2443.sink, i1 true) ; 3 uses
   %.not117.i = icmp samesign ult i32 %i.jp, %i.jo
   br i1 %.not117.i, label %.thread.i, label %bb.aw
 
 .thread.i:                                        ; preds = %bb.av
-  %i.jq = lshr exact i32 %10, %i.jp
+  %i.jq = lshr exact i32 %.2443.sink, %i.jp
   store i32 %i.jq, ptr %i.c, align 16, !tbaa !17
   %i.jr = sub nuw nsw i32 %i.jo, %i.jp
   br label %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
-  %i.js = lshr i32 %10, %i.jo
+  %i.js = lshr i32 %.2443.sink, %i.jo
   store i32 %i.js, ptr %i.c, align 16, !tbaa !17
   br label %nd_mul2k.exit665
 
@@ -603,7 +613,7 @@ bb.ax:                                            ; preds = %.thread1146, %.thre
   %.not.i666803 = phi i1 [ false, %.thread1146 ], [ true, %.thread.i ] ; 2 uses
   %.sroa.0.7758788 = phi i64 [ %.sroa.0.6, %.thread1146 ], [ %.sroa.0.7758789, %.thread.i ] ; 3 uses
   %.2458760785 = phi i32 [ 1, %.thread1146 ], [ 0, %.thread.i ] ; 7 uses
-  %.3444763782 = phi i32 [ %.2443, %.thread1146 ], [ %.2443.sink, %.thread.i ] ; 3 uses
+  %.3444763782 = phi i32 [ %.2443, %.thread1146 ], [ %.3444763783, %.thread.i ] ; 3 uses
   %.3766779 = phi i32 [ %.2440, %.thread1146 ], [ %.3766780, %.thread.i ] ; 3 uses
   %.1107.i = phi i32 [ %i.ie, %.thread1146 ], [ %i.jr, %.thread.i ] ; 5 uses
   %i.jt = icmp samesign ult i32 %.1107.i, 19
@@ -780,9 +790,9 @@ bb.bm:                                            ; preds = %.split815, %nd_div2
 
 nd_mul2k.exit665:                                 ; preds = %bb.aw, %.thread768, %.split815, %bb.au, %._crit_edge78.i640, %._crit_edge69.i631, %bb.bm, %nd_div2k.exit
   %.3765 = phi i32 [ %.3766779, %nd_div2k.exit ], [ %.3766779, %bb.bm ], [ %.3767, %bb.au ], [ %.3767, %._crit_edge78.i640 ], [ %.3767, %._crit_edge69.i631 ], [ %.3766779, %.split815 ], [ %.3766780, %bb.aw ], [ %.3766780, %.thread768 ] ; 2 uses
-  %.3444762 = phi i32 [ %.3444763782, %nd_div2k.exit ], [ %.3444763782, %bb.bm ], [ %.3444764, %bb.au ], [ %.3444764, %._crit_edge78.i640 ], [ %.3444764, %._crit_edge69.i631 ], [ %.3444763782, %.split815 ], [ %.2443.sink, %bb.aw ], [ %.2443.sink, %.thread768 ]
+  %.3444762 = phi i32 [ %.3444763782, %nd_div2k.exit ], [ %.3444763782, %bb.bm ], [ %.3444764, %bb.au ], [ %.3444764, %._crit_edge78.i640 ], [ %.3444764, %._crit_edge69.i631 ], [ %.3444763782, %.split815 ], [ %.3444763783, %bb.aw ], [ %.3444763783, %.thread768 ]
   %.sroa.0.7757 = phi i64 [ %.sroa.0.7758788, %nd_div2k.exit ], [ %.sroa.0.7758788, %bb.bm ], [ %.sroa.0.7759, %bb.au ], [ %.sroa.0.7759, %._crit_edge78.i640 ], [ %.sroa.0.7759, %._crit_edge69.i631 ], [ %.sroa.0.7758788, %.split815 ], [ %.sroa.0.7758789, %bb.aw ], [ %.sroa.0.7758789, %.thread768 ]
-  %.3459 = phi i32 [ 0, %nd_div2k.exit ], [ %spec.select619, %bb.bm ], [ %9, %bb.au ], [ %.0.lcssa.i, %._crit_edge78.i640 ], [ %.0.lcssa.i, %._crit_edge69.i631 ], [ 0, %.split815 ], [ 0, %bb.aw ], [ 0, %.thread768 ] ; 4 uses
+  %.3459 = phi i32 [ 0, %nd_div2k.exit ], [ %spec.select619, %bb.bm ], [ %7, %bb.au ], [ %.0.lcssa.i, %._crit_edge78.i640 ], [ %.0.lcssa.i, %._crit_edge69.i631 ], [ 0, %.split815 ], [ 0, %bb.aw ], [ 0, %.thread768 ] ; 4 uses
   %.0449 = phi i32 [ %.4.i, %nd_div2k.exit ], [ %.4.i824, %bb.bm ], [ 0, %bb.au ], [ 0, %._crit_edge78.i640 ], [ 0, %._crit_edge69.i631 ], [ %i.mc, %.split815 ], [ 0, %bb.aw ], [ 0, %.thread768 ] ; 14 uses
   br i1 %i.gp, label %bb.bn, label %bb.cv
 
@@ -839,14 +849,14 @@ bb.bo:                                            ; preds = %.loopexit888
   %i.nk = getelementptr inbounds i8, ptr @four_ulp_m_e, i64 %i.nj ; 2 uses
   %i.nl = getelementptr inbounds nuw i8, ptr %i.c, i64 132 ; 3 uses
   store i32 %i.mn, ptr %i.nl, align 4, !tbaa !17
-  %i.nm = add i32 %.5461, 63
+  %i.nm = add nuw i32 %.5461, 63
   %i.nn = and i32 %i.nm, 63
   %i.no = zext nneg i32 %i.nn to i64              ; 2 uses
   %i.np = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.no ; 2 uses
   %i.nq = load i32, ptr %i.np, align 4, !tbaa !17
   %i.nr = getelementptr inbounds nuw i8, ptr %i.c, i64 128 ; 3 uses
   store i32 %i.nq, ptr %i.nr, align 16, !tbaa !17
-  %i.ns = add i32 %.5461, 62
+  %i.ns = add nuw i32 %.5461, 62
   %i.nt = and i32 %i.ns, 63
   %i.nu = zext nneg i32 %i.nt to i64              ; 2 uses
   %i.nv = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.nu

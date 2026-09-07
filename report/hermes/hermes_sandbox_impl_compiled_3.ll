@@ -202,21 +202,25 @@ bb.b:                                             ; preds = %bb.a
   %.0.copyload.i70 = load i32, ptr %i.m, align 1  ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i70) #8, !srcloc !13
   %i.n = icmp ult i32 %.0.copyload.i70, 5
-  br i1 %i.n, label %.preheader, label %.loopexit
+  br i1 %i.n, label %.preheader.preheader, label %.loopexit
 
-.preheader:                                       ; preds = %._crit_edge, %.preheader
-  %.0 = phi i32 [ %5, %.preheader ], [ %.0.copyload.i70, %._crit_edge ] ; 2 uses
-  %2 = shl nuw nsw i32 %.0, 2                     ; 2 uses
-  %3 = add nuw i32 %2, 271472
-  %4 = zext i32 %3 to i64
+.preheader.preheader:                             ; preds = %._crit_edge
+  %2 = zext nneg i32 %.0.copyload.i70 to i64
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.preheader, %.preheader
+  %indvars.iv = phi i64 [ %2, %.preheader.preheader ], [ %indvars.iv.next, %.preheader ] ; 2 uses
+  %3 = shl nuw nsw i64 %indvars.iv, 2             ; 2 uses
   %.val = load ptr, ptr %i.b, align 8, !tbaa !12
-  %i.o = getelementptr inbounds nuw i8, ptr %.val, i64 %4
+  %4 = getelementptr inbounds nuw i8, ptr %.val, i64 %3
+  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 271472
   %.0.copyload.i71 = load i32, ptr %i.o, align 1  ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i71) #8, !srcloc !13
-  %i.p = add nuw i32 %2, 20
+  %5 = trunc i64 %3 to i32
+  %i.p = add i32 %5, 20
   tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AMetadata0x3A0x3ABuilder0x3A0x3AaddField0x28char0x20const0x2A0x2C0x20hermes0x3A0x3Avm0x3A0x3AGCHermesValueBase0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue320x3E0x20const0x2A0x29(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %.0.copyload.i71, i32 noundef %i.p) #8
-  %5 = add i32 %.0, 1                             ; 2 uses
-  %.not64 = icmp eq i32 %5, 5
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %.not64 = icmp eq i64 %indvars.iv.next, 5
   br i1 %.not64, label %.loopexit, label %.preheader
 
 .loopexit:                                        ; preds = %.preheader, %._crit_edge
@@ -619,7 +623,7 @@ bb.bf:                                            ; preds = %bb.be, %bb.av, %bb.
   br i1 %.not4361, label %.loopexit5285, label %bb.bi
 
 bb.bg:                                            ; preds = %bb.be, %bb.av, %bb.ar, %bb.aq
-  %i.mi = uitofp i64 %.04115 to double
+  %i.mi = uitofp nneg i64 %.04115 to double
   %.val4917 = load ptr, ptr %i.d, align 8, !tbaa !12
   %i.mj = getelementptr inbounds nuw i8, ptr %.val4917, i64 %i.gg
   store double %i.mi, ptr %i.mj, align 1
@@ -642,7 +646,7 @@ bb.bh:                                            ; preds = %bb.bg
   br i1 %.not4363, label %.loopexit5285, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh, %bb.bf
-  %i.mo = add nuw i64 %.04115, 1                  ; 2 uses
+  %i.mo = add nuw nsw i64 %.04115, 1              ; 2 uses
   %.not4364 = icmp eq i64 %i.mo, %.0.copyload.i4957
   br i1 %.not4364, label %.loopexit5286, label %bb.aq
 
@@ -663,7 +667,7 @@ bb.bj:                                            ; preds = %.preheader5284, %bb
   %.val4789 = load ptr, ptr %i.d, align 8, !tbaa !12
   %i.mt = getelementptr inbounds nuw i8, ptr %.val4789, i64 %i.jd
   store i32 %i.jq, ptr %i.mt, align 1
-  %i.mu = uitofp i64 %.14116 to double
+  %i.mu = uitofp nneg i64 %.14116 to double
   %.val4916 = load ptr, ptr %i.d, align 8, !tbaa !12
   %i.mv = getelementptr inbounds nuw i8, ptr %.val4916, i64 %i.gg
   store double %i.mu, ptr %i.mv, align 1
@@ -690,7 +694,7 @@ bb.bk:                                            ; preds = %bb.bj
   br i1 %.not4367, label %.loopexit5285, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
-  %i.nc = add nuw i64 %.14116, 1                  ; 2 uses
+  %i.nc = add nuw nsw i64 %.14116, 1              ; 2 uses
   %.not4368 = icmp eq i64 %.0.copyload.i4957, %i.nc
   br i1 %.not4368, label %.loopexit5286, label %bb.bj
 

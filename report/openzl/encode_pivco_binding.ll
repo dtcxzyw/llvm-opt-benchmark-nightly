@@ -192,6 +192,7 @@ bb.k:                                             ; preds = %bb.j
 
 .preheader.i:                                     ; preds = %.thread103.i
   %i.aq = add nuw nsw i32 %.1.i, 1
+  %8 = add i32 %i.w, 1
   br label %bb.m
 
 .thread107.i:                                     ; preds = %.thread103.i
@@ -207,18 +208,19 @@ bb.l:                                             ; preds = %bb.m
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.m, %.preheader.i
-  %.0110.i = phi i32 [ 0, %.preheader.i ], [ %10, %bb.m ] ; 3 uses
-  %i.aw = call i32 @ZS_HUF_getNbBitsFromCTable(ptr noundef nonnull %.181.i, i32 noundef %.0110.i) #5 ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.m ], [ 0, %.preheader.i ] ; 3 uses
+  %9 = trunc nuw i64 %indvars.iv to i32
+  %i.aw = call i32 @ZS_HUF_getNbBitsFromCTable(ptr noundef nonnull %.181.i, i32 noundef %9) #5 ; 2 uses
   %i.ax = icmp eq i32 %i.aw, 0
   %i.ay = sub i32 %i.aq, %i.aw
   %i.az = trunc i32 %i.ay to i8
   %i.ba = select i1 %i.ax, i8 0, i8 %i.az
-  %8 = zext i32 %.0110.i to i64
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 %8
-  store i8 %i.ba, ptr %9, align 1, !tbaa !30
-  %10 = add i32 %.0110.i, 1                       ; 2 uses
-  %.not95.i = icmp ugt i32 %10, %i.w
-  br i1 %.not95.i, label %bb.l, label %bb.m, !llvm.loop !11
+  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv
+  store i8 %i.ba, ptr %10, align 1, !tbaa !30
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond.not = icmp eq i32 %8, %lftr.wideiv
+  br i1 %exitcond.not, label %bb.l, label %bb.m, !llvm.loop !11
 
 bb.n:                                             ; preds = %bb.l, %.thread107.i, %bb.k
   %.sroa.078.8.i = phi i32 [ 0, %bb.l ], [ %i.as, %.thread107.i ], [ %i.al, %bb.k ]
