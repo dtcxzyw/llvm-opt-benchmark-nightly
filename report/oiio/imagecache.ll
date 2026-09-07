@@ -205,14 +205,15 @@ bb.b:                                             ; preds = %bb.a
   %i.m = mul i64 %i.l, %i.k
   %i.n = trunc i64 %i.m to i32
   %i.o = mul i32 %narrow.i, %i.n
-  %1 = zext nneg i32 %i.d to i64
-  %2 = zext i32 %i.o to i64
-  %3 = mul nuw nsw i64 %2, %1
-  %4 = tail call i64 @llvm.umin.i64(i64 %3, i64 4294967295)
+  %umul.i = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.d, i32 %i.o) ; 2 uses
+  %umul.value.i = extractvalue { i32, i1 } %umul.i, 0
+  %umul.overflow.i = extractvalue { i32, i1 } %umul.i, 1
+  %1 = zext i32 %umul.value.i to i64
+  %2 = select i1 %umul.overflow.i, i64 4294967295, i64 %1
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.0 = phi i64 [ %4, %bb.b ], [ 0, %bb.a ]
+  %.0 = phi i64 [ %2, %bb.b ], [ 0, %bb.a ]
   ret i64 %.0
 }
 
@@ -260,7 +261,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_tile_pixelsEi.exit
 
 _ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_tile_pixelsEi.exit: ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e
-  %.011.i = phi i64 [ 0, %bb.a ], [ 0, %bb.c ], [ 0, %bb.b ], [ %spec.select.i20.i, %bb.e ], [ %mul.i22.i, %bb.d ]
+  %.011.i = phi i64 [ 0, %bb.a ], [ 0, %bb.c ], [ 0, %bb.b ], [ %spec.select.i20.i, %bb.e ], [ %mul.i22.i, %bb.d ] ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.f, i64 60
   %i.u = load i32, ptr %i.t, align 4, !tbaa !387  ; 2 uses
   %i.v = icmp slt i32 %i.u, 1
@@ -278,24 +279,34 @@ _ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a: 
   %i.ad = mul i64 %i.ac, %i.ab
   %i.ae = trunc i64 %i.ad to i32
   %i.af = mul i32 %narrow.i.i, %i.ae
-  %.fr = freeze i32 %i.af                         ; 2 uses
-  %2 = zext nneg i32 %i.u to i64
-  %3 = zext i32 %.fr to i64
-  %4 = mul nuw nsw i64 %3, %2
-  %5 = tail call i64 @llvm.umin.i64(i64 %4, i64 4294967295)
-  %mul.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %5, i64 %.011.i) ; 2 uses
-  %mul.val.i = extractvalue { i64, i1 } %mul.i, 0
-  %.not.i1 = icmp eq i32 %.fr, 0
-  %mul.ov.i.a = extractvalue { i64, i1 } %mul.i, 1
-  %spec.select.i = select i1 %mul.ov.i.a, i64 -1, i64 %mul.val.i
-  br i1 %.not.i1, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread, label %bb.f
+  %umul.i.i = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.u, i32 %i.af)
+  %umul.i.i.fr = freeze { i32, i1 } %umul.i.i     ; 2 uses
+  %mul.ov.i.a = extractvalue { i32, i1 } %umul.i.i.fr, 1
+  br i1 %mul.ov.i.a, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread10, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit
 
-_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_tile_pixelsEi.exit, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread10: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a
+  %mul.i12 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.011.i, i64 4294967295) ; 2 uses
+  %mul.val.i13 = extractvalue { i64, i1 } %mul.i12, 0
+  %mul.ov.i15 = extractvalue { i64, i1 } %mul.i12, 1
+  %spec.select.i16 = select i1 %mul.ov.i15, i64 -1, i64 %mul.val.i13
   br label %bb.f
 
-bb.f:                                             ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread
-  %6 = phi i64 [ 0, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread ], [ %spec.select.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a ]
-  ret i64 %6
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a
+  %umul.value.i.i = extractvalue { i32, i1 } %umul.i.i.fr, 0 ; 2 uses
+  %2 = zext i32 %umul.value.i.i to i64
+  %mul.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %.011.i) ; 2 uses
+  %mul.val.i = extractvalue { i64, i1 } %mul.i, 0
+  %.not.i1 = icmp eq i32 %umul.value.i.i, 0
+  %mul.ov.i = extractvalue { i64, i1 } %mul.i, 1
+  %spec.select.i = select i1 %mul.ov.i, i64 -1, i64 %mul.val.i
+  br i1 %.not.i1, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread, label %bb.f
+
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_tile_pixelsEi.exit, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit
+  br label %bb.f
+
+bb.f:                                             ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread10, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread
+  %3 = phi i64 [ 0, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread ], [ %spec.select.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit ], [ %spec.select.i16, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread10 ]
+  ret i64 %3
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -315,13 +326,13 @@ bb.a:
   br i1 %i.j, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %2 = zext nneg i32 %i.i to i64                  ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 60
   %i.l = load i32, ptr %i.k, align 4, !tbaa !387  ; 2 uses
   %i.m = icmp slt i32 %i.l, 1
   br i1 %i.m, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a
 
 _ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a: ; preds = %bb.b
-  %2 = zext nneg i32 %i.i to i64
   %i.n = getelementptr inbounds nuw i8, ptr %i.f, i64 64
   %i.o = getelementptr inbounds nuw i8, ptr %i.f, i64 68
   %i.p = load i32, ptr %i.o, align 4, !tbaa !386
@@ -333,20 +344,27 @@ _ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a: 
   %i.u = mul i64 %i.t, %i.s
   %i.v = trunc i64 %i.u to i32
   %i.w = mul i32 %narrow.i.i, %i.v
-  %.fr = freeze i32 %i.w                          ; 2 uses
-  %3 = zext nneg i32 %i.l to i64
-  %4 = zext i32 %.fr to i64
-  %5 = mul nuw nsw i64 %4, %3
-  %6 = tail call i64 @llvm.umin.i64(i64 %5, i64 4294967295)
-  %mul.i14 = mul nuw nsw i64 %6, %2
-  %.not.i5 = icmp eq i32 %.fr, 0
-  br i1 %.not.i5, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread, label %bb.c
+  %umul.i.i = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.l, i32 %i.w)
+  %umul.i.i.fr = freeze { i32, i1 } %umul.i.i     ; 2 uses
+  %umul.overflow.i.i = extractvalue { i32, i1 } %umul.i.i.fr, 1
+  br i1 %umul.overflow.i.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread14, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit
 
-_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread: ; preds = %bb.b, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread14: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a
+  %mul.i1622 = mul nuw nsw i64 %2, 4294967295
   br label %bb.c
 
-bb.c:                                             ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a, %bb.a
-  %.0 = phi i64 [ 0, %bb.a ], [ 0, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread ], [ %mul.i14, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a ]
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a
+  %umul.value.i.i = extractvalue { i32, i1 } %umul.i.i.fr, 0 ; 2 uses
+  %3 = zext i32 %umul.value.i.i to i64
+  %mul.i23 = mul nuw nsw i64 %3, %2
+  %.not.i5 = icmp eq i32 %umul.value.i.i, 0
+  br i1 %.not.i5, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread, label %bb.c
+
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread: ; preds = %bb.b, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit
+  br label %bb.c
+
+bb.c:                                             ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread14, %bb.a
+  %.0 = phi i64 [ 0, %bb.a ], [ 0, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread ], [ %mul.i23, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit ], [ %mul.i1622, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread14 ]
   ret i64 %.0
 }
 
@@ -446,7 +464,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo16get_image_pixelsEi.exit
 
 _ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo16get_image_pixelsEi.exit: ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e
-  %.011.i = phi i64 [ 0, %bb.a ], [ 0, %bb.c ], [ 0, %bb.b ], [ %spec.select.i20.i, %bb.e ], [ %.0.i.i, %bb.d ]
+  %.011.i = phi i64 [ 0, %bb.a ], [ 0, %bb.c ], [ 0, %bb.b ], [ %spec.select.i20.i, %bb.e ], [ %.0.i.i, %bb.d ] ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.f, i64 60
   %i.v = load i32, ptr %i.u, align 4, !tbaa !387  ; 2 uses
   %i.w = icmp slt i32 %i.v, 1
@@ -464,24 +482,34 @@ _ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a: 
   %i.ae = mul i64 %i.ad, %i.ac
   %i.af = trunc i64 %i.ae to i32
   %i.ag = mul i32 %narrow.i.i, %i.af
-  %.fr = freeze i32 %i.ag                         ; 2 uses
-  %2 = zext nneg i32 %i.v to i64
-  %3 = zext i32 %.fr to i64
-  %4 = mul nuw nsw i64 %3, %2
-  %5 = tail call i64 @llvm.umin.i64(i64 %4, i64 4294967295)
-  %mul.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %5, i64 %.011.i) ; 2 uses
-  %mul.val.i = extractvalue { i64, i1 } %mul.i, 0
-  %.not.i = icmp eq i32 %.fr, 0
-  %mul.ov.i.a = extractvalue { i64, i1 } %mul.i, 1
-  %spec.select.i = select i1 %mul.ov.i.a, i64 -1, i64 %mul.val.i
-  br i1 %.not.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread, label %bb.f
+  %umul.i.i = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.v, i32 %i.ag)
+  %umul.i.i.fr = freeze { i32, i1 } %umul.i.i     ; 2 uses
+  %mul.ov.i.a = extractvalue { i32, i1 } %umul.i.i.fr, 1
+  br i1 %mul.ov.i.a, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread9, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit
 
-_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo16get_image_pixelsEi.exit, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread9: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a
+  %mul.i11 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.011.i, i64 4294967295) ; 2 uses
+  %mul.val.i12 = extractvalue { i64, i1 } %mul.i11, 0
+  %mul.ov.i14 = extractvalue { i64, i1 } %mul.i11, 1
+  %spec.select.i15 = select i1 %mul.ov.i14, i64 -1, i64 %mul.val.i12
   br label %bb.f
 
-bb.f:                                             ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread
-  %6 = phi i64 [ 0, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread ], [ %spec.select.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a ]
-  ret i64 %6
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.a
+  %umul.value.i.i = extractvalue { i32, i1 } %umul.i.i.fr, 0 ; 2 uses
+  %2 = zext i32 %umul.value.i.i to i64
+  %mul.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %.011.i) ; 2 uses
+  %mul.val.i = extractvalue { i64, i1 } %mul.i, 0
+  %.not.i = icmp eq i32 %umul.value.i.i, 0
+  %mul.ov.i = extractvalue { i64, i1 } %mul.i, 1
+  %spec.select.i = select i1 %mul.ov.i, i64 -1, i64 %mul.val.i
+  br i1 %.not.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread, label %bb.f
+
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo16get_image_pixelsEi.exit, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit
+  br label %bb.f
+
+bb.f:                                             ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread9, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread
+  %3 = phi i64 [ 0, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread ], [ %spec.select.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit ], [ %spec.select.i15, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread9 ]
+  ret i64 %3
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -884,7 +912,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_tile_pixelsEi.exit.i
 
 _ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_tile_pixelsEi.exit.i: ; preds = %bb.aj, %bb.ai, %bb.ah, %bb.ag, %.critedge105
-  %.011.i.i = phi i64 [ 0, %.critedge105 ], [ 0, %bb.ah ], [ 0, %bb.ag ], [ %spec.select.i20.i.i, %bb.aj ], [ %mul.i22.i.i, %bb.ai ]
+  %.011.i.i = phi i64 [ 0, %.critedge105 ], [ 0, %bb.ah ], [ 0, %bb.ag ], [ %spec.select.i20.i.i, %bb.aj ], [ %mul.i22.i.i, %bb.ai ] ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.dz, i64 60
   %i.eo = load i32, ptr %i.en, align 4, !tbaa !387 ; 2 uses
   %i.ep = icmp slt i32 %i.eo, 1
@@ -902,30 +930,40 @@ _ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a
   %i.ex = mul i64 %i.ew, %i.ev
   %i.ey = trunc i64 %i.ex to i32
   %i.ez = mul i32 %narrow.i.i.i, %i.ey
-  %.fr.i = freeze i32 %i.ez                       ; 2 uses
-  %16 = zext nneg i32 %i.eo to i64
-  %17 = zext i32 %.fr.i to i64
-  %18 = mul nuw nsw i64 %17, %16
-  %19 = call i64 @llvm.umin.i64(i64 %18, i64 4294967295)
-  %mul.i.i = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %19, i64 %.011.i.i) ; 2 uses
-  %mul.val.i.i = extractvalue { i64, i1 } %mul.i.i, 0
-  %.not.i1.i = icmp eq i32 %.fr.i, 0
-  %mul.ov.i.i.a = extractvalue { i64, i1 } %mul.i.i, 1
-  %spec.select.i.i = select i1 %mul.ov.i.i.a, i64 -1, i64 %mul.val.i.i
-  br i1 %.not.i1.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo14get_tile_bytesEi.exit
+  %umul.i.i.i = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.eo, i32 %i.ez)
+  %umul.i.i.fr.i = freeze { i32, i1 } %umul.i.i.i ; 2 uses
+  %mul.ov.i.i.a = extractvalue { i32, i1 } %umul.i.i.fr.i, 1
+  br i1 %mul.ov.i.i.a, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread10.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i
 
-_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_tile_pixelsEi.exit.i
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread10.i: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a
+  %mul.i12.i = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.011.i.i, i64 4294967295) ; 2 uses
+  %mul.val.i13.i = extractvalue { i64, i1 } %mul.i12.i, 0
+  %mul.ov.i15.i = extractvalue { i64, i1 } %mul.i12.i, 1
+  %spec.select.i16.i = select i1 %mul.ov.i15.i, i64 -1, i64 %mul.val.i13.i
   br label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo14get_tile_bytesEi.exit
 
-_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo14get_tile_bytesEi.exit: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a
-  %20 = phi i64 [ 0, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i ], [ %spec.select.i.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a ] ; 2 uses
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a
+  %umul.value.i.i.i = extractvalue { i32, i1 } %umul.i.i.fr.i, 0 ; 2 uses
+  %16 = zext i32 %umul.value.i.i.i to i64
+  %mul.i.i = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %16, i64 %.011.i.i) ; 2 uses
+  %mul.val.i.i = extractvalue { i64, i1 } %mul.i.i, 0
+  %.not.i1.i = icmp eq i32 %umul.value.i.i.i, 0
+  %mul.ov.i.i = extractvalue { i64, i1 } %mul.i.i, 1
+  %spec.select.i.i = select i1 %mul.ov.i.i, i64 -1, i64 %mul.val.i.i
+  br i1 %.not.i1.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo14get_tile_bytesEi.exit
+
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_tile_pixelsEi.exit.i
+  br label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo14get_tile_bytesEi.exit
+
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo14get_tile_bytesEi.exit: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread10.i
+  %17 = phi i64 [ 0, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i ], [ %spec.select.i.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i ], [ %spec.select.i16.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread10.i ] ; 2 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %1, i64 144 ; 2 uses
   %i.fb = load i64, ptr %i.fa, align 8, !tbaa !513
-  %i.fc = add i64 %i.fb, %20
+  %i.fc = add i64 %i.fb, %17
   store i64 %i.fc, ptr %i.fa, align 8, !tbaa !513
   %i.fd = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
   %i.fe = load <2 x i64>, ptr %i.fd, align 8, !tbaa !288
-  %i.ff = insertelement <2 x i64> <i64 1, i64 poison>, i64 %20, i64 1
+  %i.ff = insertelement <2 x i64> <i64 1, i64 poison>, i64 %17, i64 1
   %i.fg = add <2 x i64> %i.fe, %i.ff
   store <2 x i64> %i.fg, ptr %i.fd, align 8, !tbaa !288
   %i.fh = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
@@ -1328,13 +1366,13 @@ bb.k:                                             ; preds = %_ZNSt7__cxx1112basi
   br i1 %i.dn, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo18get_scanline_bytesEi.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
+  %13 = zext nneg i32 %i.dm to i64                ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dj, i64 60
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !387 ; 2 uses
   %i.dq = icmp slt i32 %i.dp, 1
   br i1 %i.dq, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a
 
 _ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a: ; preds = %bb.l
-  %13 = zext nneg i32 %i.dm to i64
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dj, i64 64
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dj, i64 68
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !386
@@ -1346,20 +1384,27 @@ _ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a
   %i.dy = mul i64 %i.dx, %i.dw
   %i.dz = trunc i64 %i.dy to i32
   %i.ea = mul i32 %narrow.i.i.i, %i.dz
-  %.fr.i = freeze i32 %i.ea                       ; 2 uses
-  %14 = zext nneg i32 %i.dp to i64
-  %15 = zext i32 %.fr.i to i64
-  %16 = mul nuw nsw i64 %15, %14
-  %17 = call i64 @llvm.umin.i64(i64 %16, i64 4294967295)
-  %mul.i14.i = mul nuw nsw i64 %17, %13
-  %.not.i5.i = icmp eq i32 %.fr.i, 0
-  br i1 %.not.i5.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo18get_scanline_bytesEi.exit
+  %umul.i.i.i = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.dp, i32 %i.ea)
+  %umul.i.i.fr.i = freeze { i32, i1 } %umul.i.i.i ; 2 uses
+  %umul.overflow.i.i.i = extractvalue { i32, i1 } %umul.i.i.fr.i, 1
+  br i1 %umul.overflow.i.i.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread14.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i
 
-_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a, %bb.l
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread14.i: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a
+  %mul.i1622.i = mul nuw nsw i64 %13, 4294967295
   br label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo18get_scanline_bytesEi.exit
 
-_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo18get_scanline_bytesEi.exit: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a, %bb.k
-  %.0.i = phi i64 [ 0, %bb.k ], [ 0, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i ], [ %mul.i14.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a ]
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a
+  %umul.value.i.i.i = extractvalue { i32, i1 } %umul.i.i.fr.i, 0 ; 2 uses
+  %14 = zext i32 %umul.value.i.i.i to i64
+  %mul.i23.i = mul nuw nsw i64 %14, %13
+  %.not.i5.i = icmp eq i32 %umul.value.i.i.i, 0
+  br i1 %.not.i5.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo18get_scanline_bytesEi.exit
+
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i, %bb.l
+  br label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo18get_scanline_bytesEi.exit
+
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo18get_scanline_bytesEi.exit: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread14.i, %bb.k
+  %.0.i = phi i64 [ 0, %bb.k ], [ 0, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i ], [ %mul.i23.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i ], [ %mul.i1622.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread14.i ]
   %i.eb = sub i32 %i.cc, %i.by
   %i.ec = sext i32 %i.eb to i64
   %i.ed = mul i64 %.0.i, %i.ec                    ; 2 uses
@@ -1750,7 +1795,7 @@ bb.av:                                            ; preds = %bb.au
   br label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo16get_image_pixelsEi.exit.i
 
 _ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo16get_image_pixelsEi.exit.i: ; preds = %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar
-  %.011.i.i = phi i64 [ 0, %bb.ar ], [ 0, %bb.at ], [ 0, %bb.as ], [ %spec.select.i20.i.i, %bb.av ], [ %.0.i.i.i171, %bb.au ]
+  %.011.i.i = phi i64 [ 0, %bb.ar ], [ 0, %bb.at ], [ 0, %bb.as ], [ %spec.select.i20.i.i, %bb.av ], [ %.0.i.i.i171, %bb.au ] ; 2 uses
   %i.jy = getelementptr inbounds nuw i8, ptr %i.jj, i64 60
   %i.jz = load i32, ptr %i.jy, align 4, !tbaa !387 ; 2 uses
   %i.ka = icmp slt i32 %i.jz, 1
@@ -1768,30 +1813,40 @@ _ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i17
   %i.ki = mul i64 %i.kh, %i.kg
   %i.kj = trunc i64 %i.ki to i32
   %i.kk = mul i32 %narrow.i.i.i173, %i.kj
-  %.fr.i174 = freeze i32 %i.kk                    ; 2 uses
-  %18 = zext nneg i32 %i.jz to i64
-  %19 = zext i32 %.fr.i174 to i64
-  %20 = mul nuw nsw i64 %19, %18
-  %21 = call i64 @llvm.umin.i64(i64 %20, i64 4294967295)
-  %mul.i.i = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %21, i64 %.011.i.i) ; 2 uses
-  %mul.val.i.i = extractvalue { i64, i1 } %mul.i.i, 0
-  %.not.i.i175 = icmp eq i32 %.fr.i174, 0
-  %mul.ov.i.i.a = extractvalue { i64, i1 } %mul.i.i, 1
-  %spec.select.i.i176 = select i1 %mul.ov.i.i.a, i64 -1, i64 %mul.val.i.i
-  br i1 %.not.i.i175, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i177, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_image_bytesEi.exit
+  %umul.i.i.i173 = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.jz, i32 %i.kk)
+  %umul.i.i.fr.i174 = freeze { i32, i1 } %umul.i.i.i173 ; 2 uses
+  %mul.ov.i.i.a = extractvalue { i32, i1 } %umul.i.i.fr.i174, 1
+  br i1 %mul.ov.i.i.a, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread9.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i176
 
-_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i177: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i172, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo16get_image_pixelsEi.exit.i
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread9.i: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i172
+  %mul.i11.i = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.011.i.i, i64 4294967295) ; 2 uses
+  %mul.val.i12.i = extractvalue { i64, i1 } %mul.i11.i, 0
+  %mul.ov.i14.i = extractvalue { i64, i1 } %mul.i11.i, 1
+  %spec.select.i15.i = select i1 %mul.ov.i14.i, i64 -1, i64 %mul.val.i12.i
   br label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_image_bytesEi.exit
 
-_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_image_bytesEi.exit: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i172, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i177
-  %22 = phi i64 [ 0, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i177 ], [ %spec.select.i.i176, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i172 ] ; 2 uses
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i176: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i172
+  %umul.value.i.i.i177 = extractvalue { i32, i1 } %umul.i.i.fr.i174, 0 ; 2 uses
+  %15 = zext i32 %umul.value.i.i.i177 to i64
+  %mul.i.i = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %15, i64 %.011.i.i) ; 2 uses
+  %mul.val.i.i = extractvalue { i64, i1 } %mul.i.i, 0
+  %.not.i.i178 = icmp eq i32 %umul.value.i.i.i177, 0
+  %mul.ov.i.i = extractvalue { i64, i1 } %mul.i.i, 1
+  %spec.select.i.i179 = select i1 %mul.ov.i.i, i64 -1, i64 %mul.val.i.i
+  br i1 %.not.i.i178, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i177, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_image_bytesEi.exit
+
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i177: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i176, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo16get_image_pixelsEi.exit.i
+  br label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_image_bytesEi.exit
+
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_image_bytesEi.exit: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread9.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i176, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i177
+  %16 = phi i64 [ 0, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i177 ], [ %spec.select.i.i179, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i176 ], [ %spec.select.i15.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread9.i ] ; 2 uses
   %i.kl = getelementptr inbounds nuw i8, ptr %1, i64 144 ; 2 uses
   %i.km = load i64, ptr %i.kl, align 8, !tbaa !513
-  %i.kn = add i64 %i.km, %22
+  %i.kn = add i64 %i.km, %16
   store i64 %i.kn, ptr %i.kl, align 8, !tbaa !513
   %i.ko = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
   %i.kp = load <2 x i64>, ptr %i.ko, align 8, !tbaa !288
-  %i.kq = insertelement <2 x i64> <i64 1, i64 poison>, i64 %22, i64 1
+  %i.kq = insertelement <2 x i64> <i64 1, i64 poison>, i64 %16, i64 1
   %i.kr = add <2 x i64> %i.kp, %i.kq
   store <2 x i64> %i.kr, ptr %i.ko, align 8, !tbaa !288
   %i.ks = getelementptr inbounds nuw i8, ptr %0, i64 88
@@ -2194,7 +2249,7 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_tile_pixelsEi.exit.i
 
 _ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_tile_pixelsEi.exit.i: ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i
-  %.011.i.i45 = phi i64 [ 0, %bb.i ], [ 0, %bb.k ], [ 0, %bb.j ], [ %spec.select.i20.i.i44, %bb.m ], [ %mul.i22.i.i39, %bb.l ]
+  %.011.i.i45 = phi i64 [ 0, %bb.i ], [ 0, %bb.k ], [ 0, %bb.j ], [ %spec.select.i20.i.i44, %bb.m ], [ %mul.i22.i.i39, %bb.l ] ; 2 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %i.el, i64 60
   %i.fa = load i32, ptr %i.ez, align 4, !tbaa !387 ; 2 uses
   %i.fb = icmp slt i32 %i.fa, 1
@@ -2212,27 +2267,37 @@ _ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a
   %i.fj = mul i64 %i.fi, %i.fh
   %i.fk = trunc i64 %i.fj to i32
   %i.fl = mul i32 %narrow.i.i.i, %i.fk
-  %.fr.i = freeze i32 %i.fl                       ; 2 uses
-  %6 = zext nneg i32 %i.fa to i64
-  %7 = zext i32 %.fr.i to i64
-  %8 = mul nuw nsw i64 %7, %6
-  %9 = call i64 @llvm.umin.i64(i64 %8, i64 4294967295)
-  %mul.i.i = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %9, i64 %.011.i.i45) ; 2 uses
-  %mul.val.i.i = extractvalue { i64, i1 } %mul.i.i, 0
-  %.not.i1.i = icmp eq i32 %.fr.i, 0
-  %mul.ov.i.i.a = extractvalue { i64, i1 } %mul.i.i, 1
-  %spec.select.i.i = select i1 %mul.ov.i.i.a, i64 -1, i64 %mul.val.i.i
-  br i1 %.not.i1.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo14get_tile_bytesEi.exit
+  %umul.i.i.i = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.fa, i32 %i.fl)
+  %umul.i.i.fr.i = freeze { i32, i1 } %umul.i.i.i ; 2 uses
+  %mul.ov.i.i.a = extractvalue { i32, i1 } %umul.i.i.fr.i, 1
+  br i1 %mul.ov.i.i.a, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread10.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i
 
-_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_tile_pixelsEi.exit.i
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread10.i: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a
+  %mul.i12.i = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.011.i.i45, i64 4294967295) ; 2 uses
+  %mul.val.i13.i = extractvalue { i64, i1 } %mul.i12.i, 0
+  %mul.ov.i15.i = extractvalue { i64, i1 } %mul.i12.i, 1
+  %spec.select.i16.i = select i1 %mul.ov.i15.i, i64 -1, i64 %mul.val.i13.i
   br label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo14get_tile_bytesEi.exit
 
-_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo14get_tile_bytesEi.exit: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i
-  %10 = phi i64 [ 0, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i ], [ %spec.select.i.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a ]
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i.a
+  %umul.value.i.i.i = extractvalue { i32, i1 } %umul.i.i.fr.i, 0 ; 2 uses
+  %6 = zext i32 %umul.value.i.i.i to i64
+  %mul.i.i = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %6, i64 %.011.i.i45) ; 2 uses
+  %mul.val.i.i = extractvalue { i64, i1 } %mul.i.i, 0
+  %.not.i1.i = icmp eq i32 %umul.value.i.i.i, 0
+  %mul.ov.i.i = extractvalue { i64, i1 } %mul.i.i, 1
+  %spec.select.i.i = select i1 %mul.ov.i.i, i64 -1, i64 %mul.val.i.i
+  br i1 %.not.i1.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i, label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo14get_tile_bytesEi.exit
+
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_tile_pixelsEi.exit.i
+  br label %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo14get_tile_bytesEi.exit
+
+_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo14get_tile_bytesEi.exit: ; preds = %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread10.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i
+  %7 = phi i64 [ 0, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread.i ], [ %spec.select.i.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.i ], [ %spec.select.i16.i, %_ZNK11OpenImageIO4v3_114ImageCacheFile12SubimageInfo15get_pixel_bytesEv.exit.thread10.i ]
   %i.fm = getelementptr inbounds nuw i8, ptr %i.h, i64 200
   %i.fn = atomicrmw add ptr %i.fm, i64 1 seq_cst, align 8 ; 0 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %i.h, i64 208
-  %i.fp = atomicrmw add ptr %i.fo, i64 %10 seq_cst, align 8 ; 0 uses
+  %i.fp = atomicrmw add ptr %i.fo, i64 %7 seq_cst, align 8 ; 0 uses
   br label %bb.r
 
 bb.n:                                             ; preds = %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EE5resetIPcvEEvT_.exit
@@ -2634,6 +2699,9 @@ declare nonnull ptr @llvm.threadlocal.address.p0(ptr nonnull) #38
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #44
