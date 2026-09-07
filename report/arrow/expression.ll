@@ -205,10 +205,10 @@ _ZN5arrow7compute10ExpressionaSEOS1_.exit.i.i.i.i.i: ; preds = %bb.v, %_ZN9__gnu
 
 _ZSt4moveIPN5arrow7compute10ExpressionEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit: ; preds = %_ZN5arrow7compute10ExpressionaSEOS1_.exit.i.i.i.i.i, %._crit_edge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa, %._crit_edge ], [ %i.cj, %_ZN5arrow7compute10ExpressionaSEOS1_.exit.i.i.i.i.i ]
-  %i.cm = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.cm = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.cn = ptrtoint ptr %.sroa.0.0.lcssa to i64
   %i.co = sub i64 %i.cm, %i.cn
-  %i.cp = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.co ; 2 uses
+  %i.cp = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.co ; 3 uses
   %i.cq = ptrtoint ptr %3 to i64
   %i.cr = ptrtoint ptr %.016.lcssa to i64
   %i.cs = sub i64 %i.cq, %i.cr
@@ -277,15 +277,12 @@ _ZN5arrow7compute10ExpressionaSEOS1_.exit.i.i.i.i.i34: ; preds = %bb.ab, %_ZN9__
   %i.do = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i28, i64 16 ; 2 uses
   %i.dp = add nsw i64 %.012.i.i.i.i.i27, -1
   %i.dq = icmp sgt i64 %.012.i.i.i.i.i27, 1
-  br i1 %i.dq, label %.lr.ph.i.i.i.i.i26, label %_ZSt4moveIPN5arrow7compute10ExpressionEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit35.loopexit, !llvm.loop !47
+  br i1 %i.dq, label %.lr.ph.i.i.i.i.i26, label %_ZSt4moveIPN5arrow7compute10ExpressionEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit35, !llvm.loop !47
 
-_ZSt4moveIPN5arrow7compute10ExpressionEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit35.loopexit: ; preds = %_ZN5arrow7compute10ExpressionaSEOS1_.exit.i.i.i.i.i34
-  %5 = ptrtoint ptr %i.do to i64
-  br label %_ZSt4moveIPN5arrow7compute10ExpressionEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit35
-
-_ZSt4moveIPN5arrow7compute10ExpressionEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit35: ; preds = %_ZSt4moveIPN5arrow7compute10ExpressionEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit35.loopexit, %_ZSt4moveIPN5arrow7compute10ExpressionEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit
-  %.08.lcssa.i.i.i.i.i25 = phi i64 [ %i.cm, %_ZSt4moveIPN5arrow7compute10ExpressionEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit ], [ %5, %_ZSt4moveIPN5arrow7compute10ExpressionEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit35.loopexit ]
-  %i.dr = sub i64 %.08.lcssa.i.i.i.i.i25, %i.cm
+_ZSt4moveIPN5arrow7compute10ExpressionEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit35: ; preds = %_ZN5arrow7compute10ExpressionaSEOS1_.exit.i.i.i.i.i34, %_ZSt4moveIPN5arrow7compute10ExpressionEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit
+  %.08.lcssa.i.i.i.i.i25 = phi ptr [ %i.cp, %_ZSt4moveIPN5arrow7compute10ExpressionEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit ], [ %i.do, %_ZN5arrow7compute10ExpressionaSEOS1_.exit.i.i.i.i.i34 ]
+  %5 = ptrtoint ptr %.08.lcssa.i.i.i.i.i25 to i64
+  %i.dr = sub i64 %5, %i.cm
   %i.ds = getelementptr inbounds i8, ptr %i.cp, i64 %i.dr
   ret ptr %i.ds
 }

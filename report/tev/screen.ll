@@ -205,10 +205,10 @@ bb.b:                                             ; preds = %.lr.ph.i
   br i1 %.not21, label %"_ZNSt3__17find_ifB8ne180100INS_11__wrap_iterIPNS_4pairIP10GLFWwindowPN7nanogui6ScreenEEEEEZNS6_D1EvE3$_0EET_SC_SC_T0_.exit.thread", label %bb.c
 
 bb.c:                                             ; preds = %"_ZNSt3__17find_ifB8ne180100INS_11__wrap_iterIPNS_4pairIP10GLFWwindowPN7nanogui6ScreenEEEEEZNS6_D1EvE3$_0EET_SC_SC_T0_.exit"
-  %i.g = ptrtoint ptr %.sroa.03.0.lcssa.i to i64  ; 3 uses
+  %i.g = ptrtoint ptr %.sroa.03.0.lcssa.i to i64  ; 2 uses
   %i.h = ptrtoint ptr %i.a to i64
   %i.i = sub i64 %i.g, %i.h
-  %i.j = getelementptr inbounds i8, ptr %i.a, i64 %i.i ; 3 uses
+  %i.j = getelementptr inbounds i8, ptr %i.a, i64 %i.i ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
   %.not7.i.i.i.i.i.i = icmp eq ptr %i.k, %i.b
   br i1 %.not7.i.i.i.i.i.i, label %_ZNSt3__16vectorINS_4pairIP10GLFWwindowPN7nanogui6ScreenEEENS_9allocatorIS7_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS7_EE.exit, label %.lr.ph.i.i.i.i.i.i
@@ -221,15 +221,12 @@ bb.c:                                             ; preds = %"_ZNSt3__17find_ifB
   %i.m = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 16 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 16 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.m, %i.b
-  br i1 %.not.i.i.i.i.i.i, label %_ZNSt3__14moveB8ne180100IPNS_4pairIP10GLFWwindowPN7nanogui6ScreenEEES8_EET0_T_SA_S9_.exit.loopexit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !284
+  br i1 %.not.i.i.i.i.i.i, label %_ZNSt3__16vectorINS_4pairIP10GLFWwindowPN7nanogui6ScreenEEENS_9allocatorIS7_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS7_EE.exit, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !284
 
-_ZNSt3__14moveB8ne180100IPNS_4pairIP10GLFWwindowPN7nanogui6ScreenEEES8_EET0_T_SA_S9_.exit.loopexit.i: ; preds = %.lr.ph.i.i.i.i.i.i
-  %1 = ptrtoint ptr %i.n to i64
-  br label %_ZNSt3__16vectorINS_4pairIP10GLFWwindowPN7nanogui6ScreenEEENS_9allocatorIS7_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS7_EE.exit
-
-_ZNSt3__16vectorINS_4pairIP10GLFWwindowPN7nanogui6ScreenEEENS_9allocatorIS7_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS7_EE.exit: ; preds = %bb.c, %_ZNSt3__14moveB8ne180100IPNS_4pairIP10GLFWwindowPN7nanogui6ScreenEEES8_EET0_T_SA_S9_.exit.loopexit.i
-  %storemerge.lcssa.i.i.i.i.i.i = phi i64 [ %i.g, %bb.c ], [ %1, %_ZNSt3__14moveB8ne180100IPNS_4pairIP10GLFWwindowPN7nanogui6ScreenEEES8_EET0_T_SA_S9_.exit.loopexit.i ]
-  %i.o = sub i64 %storemerge.lcssa.i.i.i.i.i.i, %i.g
+_ZNSt3__16vectorINS_4pairIP10GLFWwindowPN7nanogui6ScreenEEENS_9allocatorIS7_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS7_EE.exit: ; preds = %.lr.ph.i.i.i.i.i.i, %bb.c
+  %storemerge.lcssa.i.i.i.i.i.i = phi ptr [ %i.j, %bb.c ], [ %i.n, %.lr.ph.i.i.i.i.i.i ]
+  %1 = ptrtoint ptr %storemerge.lcssa.i.i.i.i.i.i to i64
+  %i.o = sub i64 %1, %i.g
   %i.p = getelementptr inbounds i8, ptr %i.j, i64 %i.o
   store ptr %i.p, ptr getelementptr inbounds nuw (i8, ptr @_ZN7nanogui17__nanogui_screensE, i64 8), align 8, !tbaa !106
   br label %bb.d
@@ -632,13 +629,13 @@ _ZNSt3__14findB8ne180100INS_11__wrap_iterIPPN7nanogui6WidgetEEEPNS2_6WindowEEET_
   br label %_ZNSt3__16removeB8ne180100INS_11__wrap_iterIPPN7nanogui6WidgetEEEPNS2_6WindowEEET_S9_S9_RKT0_.exit
 
 _ZNSt3__14findB8ne180100INS_11__wrap_iterIPPN7nanogui6WidgetEEEPNS2_6WindowEEET_S9_S9_RKT0_.exit.i: ; preds = %.lr.ph.i.i.i, %bb.a
-  %.0.lcssa.i.i.i = phi ptr [ %i.b, %bb.a ], [ %.08.i.i.i, %.lr.ph.i.i.i ] ; 3 uses
+  %.0.lcssa.i.i.i = phi ptr [ %i.b, %bb.a ], [ %.08.i.i.i, %.lr.ph.i.i.i ] ; 2 uses
   %i.l = ptrtoint ptr %.0.lcssa.i.i.i to i64
   %i.m = ptrtoint ptr %i.b to i64                 ; 3 uses
   %i.n = sub i64 %i.l, %i.m
-  %i.o = getelementptr inbounds i8, ptr %i.b, i64 %i.n ; 2 uses
+  %i.o = getelementptr inbounds i8, ptr %i.b, i64 %i.n ; 3 uses
   %.not.i = icmp eq ptr %.0.lcssa.i.i.i, %i.d
-  %i.p = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 8 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
   %.not1314.i = icmp eq ptr %i.p, %i.d
   %or.cond39 = select i1 %.not.i, i1 true, i1 %.not1314.i
   br i1 %or.cond39, label %_ZNSt3__16removeB8ne180100INS_11__wrap_iterIPPN7nanogui6WidgetEEEPNS2_6WindowEEET_S9_S9_RKT0_.exit, label %.lr.ph.i

@@ -171,10 +171,10 @@ is_http_whitespace.exit67.thread:                 ; preds = %.lr.ph132, %.lr.ph1
 
 collect_a_sequence_of_code_points.exit59:         ; preds = %is_http_whitespace.exit67.thread, %.lr.ph132, %bb.e
   %.0.i58.lcssa = phi ptr [ %i.ag, %bb.e ], [ %.0.i58131, %.lr.ph132 ], [ %scevgep186, %is_http_whitespace.exit67.thread ] ; 2 uses
-  %i.al = ptrtoint ptr %.0.i58.lcssa to i64       ; 3 uses
+  %i.al = ptrtoint ptr %.0.i58.lcssa to i64       ; 2 uses
   %i.am = ptrtoint ptr %i.ag to i64
   %i.an = sub i64 %i.al, %i.am
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.an ; 3 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.an ; 4 uses
   %i.ap = icmp ult ptr %.0.i58.lcssa, %.043.lcssa
   br i1 %i.ap, label %.lr.ph137, label %collect_a_sequence_of_code_points.exit57
 
@@ -182,23 +182,19 @@ collect_a_sequence_of_code_points.exit59:         ; preds = %is_http_whitespace.
   %.0.i56136 = phi ptr [ %i.ar, %bb.f ], [ %i.ao, %collect_a_sequence_of_code_points.exit59 ] ; 4 uses
   %i.aq = load i8, ptr %.0.i56136, align 1, !tbaa !12
   switch i8 %i.aq, label %bb.f [
-    i8 61, label %collect_a_sequence_of_code_points.exit57.loopexit
-    i8 59, label %collect_a_sequence_of_code_points.exit57.loopexit
+    i8 61, label %collect_a_sequence_of_code_points.exit57
+    i8 59, label %collect_a_sequence_of_code_points.exit57
   ]
 
 bb.f:                                             ; preds = %.lr.ph137
   %i.ar = getelementptr inbounds nuw i8, ptr %.0.i56136, i64 1 ; 3 uses
   %i.as = icmp ult ptr %i.ar, %.043.lcssa
-  br i1 %i.as, label %.lr.ph137, label %collect_a_sequence_of_code_points.exit57.loopexit, !llvm.loop !20
+  br i1 %i.as, label %.lr.ph137, label %collect_a_sequence_of_code_points.exit57, !llvm.loop !20
 
-collect_a_sequence_of_code_points.exit57.loopexit: ; preds = %.lr.ph137, %.lr.ph137, %bb.f
-  %.0.i56.lcssa.ph = phi ptr [ %i.ar, %bb.f ], [ %.0.i56136, %.lr.ph137 ], [ %.0.i56136, %.lr.ph137 ]
-  %2 = ptrtoint ptr %.0.i56.lcssa.ph to i64
-  br label %collect_a_sequence_of_code_points.exit57
-
-collect_a_sequence_of_code_points.exit57:         ; preds = %collect_a_sequence_of_code_points.exit57.loopexit, %collect_a_sequence_of_code_points.exit59
-  %.0.i56.lcssa = phi i64 [ %i.al, %collect_a_sequence_of_code_points.exit59 ], [ %2, %collect_a_sequence_of_code_points.exit57.loopexit ]
-  %i.at = sub i64 %.0.i56.lcssa, %i.al            ; 2 uses
+collect_a_sequence_of_code_points.exit57:         ; preds = %bb.f, %.lr.ph137, %.lr.ph137, %collect_a_sequence_of_code_points.exit59
+  %.0.i56.lcssa = phi ptr [ %i.ao, %collect_a_sequence_of_code_points.exit59 ], [ %.0.i56136, %.lr.ph137 ], [ %.0.i56136, %.lr.ph137 ], [ %i.ar, %bb.f ]
+  %2 = ptrtoint ptr %.0.i56.lcssa to i64
+  %i.at = sub i64 %2, %i.al                       ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.at ; 5 uses
   %i.av = icmp ult ptr %i.au, %.043.lcssa
   br i1 %i.av, label %bb.g, label %zend_string_release_ex.exit.thread92

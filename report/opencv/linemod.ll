@@ -205,7 +205,7 @@ _ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_S
   %.sroa.08.023.i = getelementptr inbounds nuw i8, ptr %.sroa.08.0.in.sroa.speculated.i.i.i, i64 56 ; 2 uses
   %.not24.i = icmp eq ptr %.sroa.08.023.i, %.sroa.15.3501
   %or.cond.i = select i1 %i.ov, i1 true, i1 %.not24.i
-  br i1 %or.cond.i, label %_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEENS3_14MatchPredicateEET_SB_SB_T0_.exit, label %.lr.ph.i265
+  br i1 %or.cond.i, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i, label %.lr.ph.i265
 
 .lr.ph.i265:                                      ; preds = %_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEENS0_5__ops10_Iter_predINS3_14MatchPredicateEEEET_SE_SE_T0_.exit.i, %bb.ay
   %.sroa.08.027.i = phi ptr [ %.sroa.08.0.i, %bb.ay ], [ %.sroa.08.023.i, %_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEENS0_5__ops10_Iter_predINS3_14MatchPredicateEEEET_SE_SE_T0_.exit.i ] ; 4 uses
@@ -314,7 +314,7 @@ bb.ay:                                            ; preds = %_ZN2cv7linemod5Matc
   %.sroa.014.1.i = phi ptr [ %.sroa.014.026.i, %.lr.ph.i265 ], [ %i.qd, %_ZN2cv7linemod5MatchaSEOS1_.exit.i ] ; 2 uses
   %.sroa.08.0.i = getelementptr inbounds nuw i8, ptr %.sroa.08.027.i, i64 56 ; 2 uses
   %.not.i268 = icmp eq ptr %.sroa.08.0.i, %.sroa.15.3501
-  br i1 %.not.i268, label %_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEENS3_14MatchPredicateEET_SB_SB_T0_.exit, label %.lr.ph.i265, !llvm.loop !412
+  br i1 %.not.i268, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i, label %.lr.ph.i265, !llvm.loop !412
 
 .loopexit347:                                     ; preds = %_ZNSt12_Vector_baseIN2cv3MatESaIS1_EEC2EmRKS2_.exit.i174
   %lpad.loopexit349 = landingpad { ptr, i32 }
@@ -717,16 +717,13 @@ bb.bi:                                            ; preds = %._crit_edge470
           cleanup
   br label %.body209
 
-_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEENS3_14MatchPredicateEET_SB_SB_T0_.exit: ; preds = %bb.ay, %_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEENS0_5__ops10_Iter_predINS3_14MatchPredicateEEEET_SE_SE_T0_.exit.i
+_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i: ; preds = %bb.ay, %_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEENS0_5__ops10_Iter_predINS3_14MatchPredicateEEEET_SE_SE_T0_.exit.i
   %.sroa.014.2.i = phi ptr [ %.sroa.08.0.in.sroa.speculated.i.i.i, %_ZSt9__find_ifIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEENS0_5__ops10_Iter_predINS3_14MatchPredicateEEEET_SE_SE_T0_.exit.i ], [ %.sroa.014.1.i, %bb.ay ] ; 2 uses
-  %.not.i272 = icmp eq ptr %.sroa.014.2.i, %.sroa.15.3501
-  br i1 %.not.i272, label %_ZNSt6vectorIN2cv7linemod5MatchESaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EES9_.exit, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i
-
-_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i: ; preds = %_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEENS3_14MatchPredicateEET_SB_SB_T0_.exit
   %i.ze = ptrtoint ptr %.sroa.014.2.i to i64
   %i.zf = sub i64 %i.ze, %i.hp
   %i.zg = getelementptr inbounds i8, ptr %.sroa.0320.0.lcssa, i64 %i.zf ; 2 uses
-  br label %.lr.ph.i.i.i.i274
+  %.not.i272 = icmp eq ptr %.sroa.014.2.i, %.sroa.15.3501
+  br i1 %.not.i272, label %_ZNSt6vectorIN2cv7linemod5MatchESaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EES9_.exit, label %.lr.ph.i.i.i.i274
 
 .lr.ph.i.i.i.i274:                                ; preds = %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i, %_ZSt8_DestroyIN2cv7linemod5MatchEEvPT_.exit.i.i.i.i
   %.05.i.i.i.i = phi ptr [ %i.zn, %_ZSt8_DestroyIN2cv7linemod5MatchEEvPT_.exit.i.i.i.i ], [ %i.zg, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i ] ; 3 uses
@@ -747,8 +744,8 @@ _ZSt8_DestroyIN2cv7linemod5MatchEEvPT_.exit.i.i.i.i: ; preds = %.lr.ph.i.i.i.i27
   %.not.i.i.i.i275 = icmp eq ptr %i.zn, %.sroa.15.3501
   br i1 %.not.i.i.i.i275, label %_ZNSt6vectorIN2cv7linemod5MatchESaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EES9_.exit, label %.lr.ph.i.i.i.i274, !llvm.loop !6
 
-_ZNSt6vectorIN2cv7linemod5MatchESaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EES9_.exit: ; preds = %_ZSt8_DestroyIN2cv7linemod5MatchEEvPT_.exit.i.i.i.i, %._crit_edge.i.i.i264, %_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEENS3_14MatchPredicateEET_SB_SB_T0_.exit
-  %.sroa.15.6 = phi ptr [ %.sroa.15.3501, %_ZSt9remove_ifIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEENS3_14MatchPredicateEET_SB_SB_T0_.exit ], [ %.sroa.15.3501, %._crit_edge.i.i.i264 ], [ %i.zg, %_ZSt8_DestroyIN2cv7linemod5MatchEEvPT_.exit.i.i.i.i ] ; 2 uses
+_ZNSt6vectorIN2cv7linemod5MatchESaIS2_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS2_S4_EES9_.exit: ; preds = %_ZSt8_DestroyIN2cv7linemod5MatchEEvPT_.exit.i.i.i.i, %._crit_edge.i.i.i264, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i
+  %.sroa.15.6 = phi ptr [ %.sroa.15.3501, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN2cv7linemod5MatchESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i ], [ %.sroa.15.3501, %._crit_edge.i.i.i264 ], [ %i.zg, %_ZSt8_DestroyIN2cv7linemod5MatchEEvPT_.exit.i.i.i.i ] ; 2 uses
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %16) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #28
   %i.zo = load ptr, ptr %15, align 8, !tbaa !199  ; 5 uses

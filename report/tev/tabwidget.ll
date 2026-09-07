@@ -204,7 +204,7 @@ _ZNK7nanogui13TabWidgetBase9tab_indexEi.exit:     ; preds = %.lr.ph.i
   %i.v = load ptr, ptr %i.u, align 16, !tbaa !78
   %sext = shl i64 %.0914.i, 32
   %i.w = ashr exact i64 %sext, 32                 ; 2 uses
-  %i.x = getelementptr inbounds [24 x i8], ptr %i.v, i64 %i.w ; 4 uses
+  %i.x = getelementptr inbounds [24 x i8], ptr %i.v, i64 %i.w ; 5 uses
   %i.y = ptrtoint ptr %i.x to i64                 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 24 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 3 uses
@@ -233,7 +233,7 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSB8ne180100EOS5_
   %i.ai = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 1
   store i8 0, ptr %i.ai, align 1, !tbaa !18
   %i.aj = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 24 ; 2 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 24 ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 24 ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.aj, %i.ab
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !3
 
@@ -243,11 +243,12 @@ _ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIc
   br label %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.i
 
 _ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.i: ; preds = %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit.i, %_ZNK7nanogui13TabWidgetBase9tab_indexEi.exit
-  %i.am = phi ptr [ %i.ab, %_ZNK7nanogui13TabWidgetBase9tab_indexEi.exit ], [ %.pre.i, %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit.i ] ; 2 uses
-  %storemerge.lcssa.i.i.i.i.i.i = phi i64 [ %i.y, %_ZNK7nanogui13TabWidgetBase9tab_indexEi.exit ], [ %i.al, %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit.i ]
-  %i.an = sub i64 %storemerge.lcssa.i.i.i.i.i.i, %i.y
-  %i.ao = getelementptr inbounds i8, ptr %i.x, i64 %i.an ; 3 uses
-  %.not6.i.i.i = icmp eq ptr %i.ao, %i.am
+  %.pre-phi = phi i64 [ %i.al, %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit.i ], [ %i.y, %_ZNK7nanogui13TabWidgetBase9tab_indexEi.exit ]
+  %i.am = phi ptr [ %.pre.i, %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit.i ], [ %i.ab, %_ZNK7nanogui13TabWidgetBase9tab_indexEi.exit ] ; 2 uses
+  %storemerge.lcssa.i.i.i.i.i.i = phi ptr [ %i.ak, %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.loopexit.i ], [ %i.x, %_ZNK7nanogui13TabWidgetBase9tab_indexEi.exit ] ; 2 uses
+  %i.an = sub i64 %.pre-phi, %i.y
+  %i.ao = getelementptr inbounds i8, ptr %i.x, i64 %i.an
+  %.not6.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.am
   br i1 %.not6.i.i.i, label %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS6_EE.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.i, %_ZNSt3__116allocator_traitsINS_9allocatorINS_12basic_stringIcNS_11char_traitsIcEENS1_IcEEEEEEE7destroyB8ne180100IS6_vEEvRS7_PT_.exit.i.i.i
@@ -266,7 +267,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i
   br label %_ZNSt3__116allocator_traitsINS_9allocatorINS_12basic_stringIcNS_11char_traitsIcEENS1_IcEEEEEEE7destroyB8ne180100IS6_vEEvRS7_PT_.exit.i.i.i
 
 _ZNSt3__116allocator_traitsINS_9allocatorINS_12basic_stringIcNS_11char_traitsIcEENS1_IcEEEEEEE7destroyB8ne180100IS6_vEEvRS7_PT_.exit.i.i.i: ; preds = %bb.f, %.lr.ph.i.i.i
-  %.not.i.i.i = icmp eq ptr %i.ao, %i.ap
+  %.not.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.ap
   br i1 %.not.i.i.i, label %_ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS6_EE.exit, label %.lr.ph.i.i.i
 
 _ZNSt3__16vectorINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEENS4_IS6_EEE5eraseB8ne180100ENS_11__wrap_iterIPKS6_EE.exit: ; preds = %_ZNSt3__116allocator_traitsINS_9allocatorINS_12basic_stringIcNS_11char_traitsIcEENS1_IcEEEEEEE7destroyB8ne180100IS6_vEEvRS7_PT_.exit.i.i.i, %_ZNSt3__14moveB8ne180100IPNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEES7_EET0_T_S9_S8_.exit.i
@@ -669,10 +670,10 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.05.019, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !143  ; 2 uses
-  %i.i = ptrtoint ptr %.sroa.05.019 to i64        ; 3 uses
+  %i.i = ptrtoint ptr %.sroa.05.019 to i64        ; 2 uses
   %i.j = ptrtoint ptr %i.b to i64
   %i.k = sub i64 %i.i, %i.j
-  %i.l = getelementptr inbounds i8, ptr %i.b, i64 %i.k ; 3 uses
+  %i.l = getelementptr inbounds i8, ptr %i.b, i64 %i.k ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16 ; 2 uses
   %.not7.i.i.i.i.i.i = icmp eq ptr %i.m, %i.d
   br i1 %.not7.i.i.i.i.i.i, label %bb.d, label %.lr.ph.i.i.i.i.i.i
@@ -689,20 +690,17 @@ bb.b:                                             ; preds = %.lr.ph
   %i.r = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 16 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 16 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.r, %i.d
-  br i1 %.not.i.i.i.i.i.i, label %_ZNSt3__14moveB8ne180100IPNS_4pairIiPN7nanogui6WidgetEEES6_EET0_T_S8_S7_.exit.loopexit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !225
-
-_ZNSt3__14moveB8ne180100IPNS_4pairIiPN7nanogui6WidgetEEES6_EET0_T_S8_S7_.exit.loopexit.i: ; preds = %.lr.ph.i.i.i.i.i.i
-  %2 = ptrtoint ptr %i.s to i64
-  br label %bb.d
+  br i1 %.not.i.i.i.i.i.i, label %bb.d, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !225
 
 bb.c:                                             ; preds = %.lr.ph
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.05.019, i64 16 ; 2 uses
   %.not12 = icmp eq ptr %i.t, %i.d
   br i1 %.not12, label %.thread, label %.lr.ph, !llvm.loop !226
 
-bb.d:                                             ; preds = %_ZNSt3__14moveB8ne180100IPNS_4pairIiPN7nanogui6WidgetEEES6_EET0_T_S8_S7_.exit.loopexit.i, %bb.b
-  %storemerge.lcssa.i.i.i.i.i.i = phi i64 [ %i.i, %bb.b ], [ %2, %_ZNSt3__14moveB8ne180100IPNS_4pairIiPN7nanogui6WidgetEEES6_EET0_T_S8_S7_.exit.loopexit.i ]
-  %i.u = sub i64 %storemerge.lcssa.i.i.i.i.i.i, %i.i
+bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i.i, %bb.b
+  %storemerge.lcssa.i.i.i.i.i.i = phi ptr [ %i.l, %bb.b ], [ %i.s, %.lr.ph.i.i.i.i.i.i ]
+  %2 = ptrtoint ptr %storemerge.lcssa.i.i.i.i.i.i to i64
+  %i.u = sub i64 %2, %i.i
   %i.v = getelementptr inbounds i8, ptr %i.l, i64 %i.u
   store ptr %i.v, ptr %i.c, align 8, !tbaa !139
   %.not = icmp eq ptr %i.h, null

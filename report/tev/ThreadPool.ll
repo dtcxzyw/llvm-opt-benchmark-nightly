@@ -205,10 +205,10 @@ bb.y:                                             ; preds = %.lr.ph.i.i.i.i.i.i
 
 .loopexit38.i.i.i:                                ; preds = %.lr.ph.i.i.i.i.i.i, %.noexc
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ %.val.i.i.i, %.noexc ], [ %.03.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
-  %i.db = ptrtoint ptr %.0.lcssa.i.i.i.i.i.i to i64 ; 3 uses
+  %i.db = ptrtoint ptr %.0.lcssa.i.i.i.i.i.i to i64 ; 2 uses
   %i.dc = ptrtoint ptr %.val.i.i.i to i64
   %i.dd = sub i64 %i.db, %i.dc
-  %i.de = getelementptr inbounds i8, ptr %.val.i.i.i, i64 %i.dd ; 5 uses
+  %i.de = getelementptr inbounds i8, ptr %.val.i.i.i, i64 %i.dd ; 6 uses
   %.not.i.i.i = icmp eq ptr %.0.lcssa.i.i.i.i.i.i, %.val29.i.i.i
   br i1 %.not.i.i.i, label %_ZNKSt3__115source_location13function_nameB8ne180100Ev.exit53.i.i.i, label %bb.ad, !prof !316
 
@@ -294,15 +294,12 @@ _ZNSt3__16threadaSB8ne180100EOS0_.exit.i.i.i.i.i.i.i.i.i: ; preds = %bb.ad, %.lr
   %i.dv = getelementptr inbounds nuw i8, ptr %.010.i.i.i.i.i.i64.i.i.i, i64 8 ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %storemerge11.i.i.i.i.i.i63.i.i.i, i64 8 ; 3 uses
   %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.dv, %.val29.i.i.i
-  br i1 %.not.i.i.i.i.i.i.i.i.i, label %_ZNSt3__14moveB8ne180100IPNS_6threadES2_EET0_T_S4_S3_.exit.loopexit.i.i.i.i, label %.lr.ph.i.i.i.i.i.ithread-pre-split.i.i.i, !llvm.loop !312
+  br i1 %.not.i.i.i.i.i.i.i.i.i, label %_ZNSt3__14moveB8ne180100IPNS_6threadES2_EET0_T_S4_S3_.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i.ithread-pre-split.i.i.i, !llvm.loop !312
 
-_ZNSt3__14moveB8ne180100IPNS_6threadES2_EET0_T_S4_S3_.exit.loopexit.i.i.i.i: ; preds = %_ZNSt3__16threadaSB8ne180100EOS0_.exit.i.i.i.i.i.i.i.i.i
-  %9 = ptrtoint ptr %i.dw to i64
-  br label %_ZNSt3__14moveB8ne180100IPNS_6threadES2_EET0_T_S4_S3_.exit.i.i.i.i
-
-_ZNSt3__14moveB8ne180100IPNS_6threadES2_EET0_T_S4_S3_.exit.i.i.i.i: ; preds = %_ZNSt3__14moveB8ne180100IPNS_6threadES2_EET0_T_S4_S3_.exit.loopexit.i.i.i.i, %bb.ad
-  %storemerge.lcssa.i.i.i.i.i.i.i.i.i = phi i64 [ %i.db, %bb.ad ], [ %9, %_ZNSt3__14moveB8ne180100IPNS_6threadES2_EET0_T_S4_S3_.exit.loopexit.i.i.i.i ]
-  %i.dx = sub i64 %storemerge.lcssa.i.i.i.i.i.i.i.i.i, %i.db
+_ZNSt3__14moveB8ne180100IPNS_6threadES2_EET0_T_S4_S3_.exit.i.i.i.i: ; preds = %_ZNSt3__16threadaSB8ne180100EOS0_.exit.i.i.i.i.i.i.i.i.i, %bb.ad
+  %storemerge.lcssa.i.i.i.i.i.i.i.i.i = phi ptr [ %i.de, %bb.ad ], [ %i.dw, %_ZNSt3__16threadaSB8ne180100EOS0_.exit.i.i.i.i.i.i.i.i.i ]
+  %9 = ptrtoint ptr %storemerge.lcssa.i.i.i.i.i.i.i.i.i to i64
+  %i.dx = sub i64 %9, %i.db
   %i.dy = getelementptr inbounds i8, ptr %i.de, i64 %i.dx ; 3 uses
   %.not6.i.i.i.i.i.i = icmp eq ptr %i.dy, %.val29.i.i.i
   br i1 %.not6.i.i.i.i.i.i, label %.loopexit.i.i.i, label %.lr.ph.i.i.i55.i.i.i

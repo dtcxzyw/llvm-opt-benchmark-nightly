@@ -205,18 +205,16 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   br i1 %exitcond.not.i.i, label %_ZNK2c415basic_substringIKcE11begins_withEc.exit.thread, label %.lr.ph.i.i, !llvm.loop !23
 
 _ZNK2c415basic_substringIcE12first_not_ofEc.exit.i: ; preds = %.lr.ph.i.i
-  %.not.not.i = icmp eq i64 %.0710.i.i, -1        ; 2 uses
-  %spec.select.idx.i = select i1 %.not.not.i, i64 0, i64 %.0710.i.i
-  %spec.select.i = getelementptr inbounds nuw i8, ptr %i.i, i64 %spec.select.idx.i ; 3 uses
+  %.not.not.i = icmp eq i64 %.0710.i.i, -1
   br i1 %.not.not.i, label %_ZNK2c415basic_substringIKcE11begins_withEc.exit.thread, label %_ZNK2c415basic_substringIKcE11begins_withEc.exit
 
 _ZNK2c415basic_substringIKcE11begins_withEc.exit: ; preds = %_ZNK2c415basic_substringIcE12first_not_ofEc.exit.i
+  %spec.select.i = getelementptr inbounds nuw i8, ptr %i.i, i64 %.0710.i.i ; 3 uses
   %i.o = load i8, ptr %spec.select.i, align 1, !tbaa !87
   %i.p = icmp eq i8 %i.o, 35
   br i1 %i.p, label %bb.c, label %_ZNK2c415basic_substringIKcE11begins_withEc.exit.thread
 
 bb.c:                                             ; preds = %_ZNK2c415basic_substringIKcE11begins_withEc.exit
-  %2 = ptrtoint ptr %spec.select.i to i64
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 56 ; 3 uses
   %i.r = load i64, ptr %i.q, align 8, !tbaa !211  ; 2 uses
   %i.s = add i64 %i.r, %.0710.i.i
@@ -241,6 +239,7 @@ _ZNK2c415basic_substringIKcE11begins_withEc.exit.i: ; preds = %bb.c
   br i1 %i.z, label %_ZN2c43yml11ParseEngineINS0_16EventHandlerTreeEE13_skip_commentEv.exit, label %_ZNK2c415basic_substringIKcE11begins_withEc.exit.thread.i
 
 _ZNK2c415basic_substringIKcE11begins_withEc.exit.thread.i: ; preds = %_ZNK2c415basic_substringIKcE11begins_withEc.exit.i, %bb.c
+  %2 = ptrtoint ptr %spec.select.i to i64
   %i.aa = getelementptr i8, ptr inttoptr (i64 -1 to ptr), i64 %2
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !87
   switch i8 %i.ab, label %bb.d [

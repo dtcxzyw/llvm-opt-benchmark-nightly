@@ -205,10 +205,10 @@ _ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i.i33: ; preds 
 
 _ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i: ; preds = %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i.i33, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i27 = phi ptr [ %.sroa.0.0.lcssa.i, %._crit_edge.i ], [ %i.ei, %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i.i33 ]
-  %i.el = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i27 to i64 ; 3 uses
+  %i.el = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i27 to i64 ; 2 uses
   %i.em = ptrtoint ptr %.sroa.0.0.lcssa.i to i64
   %i.en = sub i64 %i.el, %i.em
-  %i.eo = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.en ; 2 uses
+  %i.eo = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.en ; 3 uses
   %i.ep = ptrtoint ptr %i.cl to i64               ; 2 uses
   %i.eq = ptrtoint ptr %.016.lcssa.i to i64
   %i.er = sub i64 %i.ep, %i.eq
@@ -248,15 +248,12 @@ _ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26.i: ; preds 
   %i.fh = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i23.i, i64 32 ; 2 uses
   %i.fi = add nsw i64 %.012.i.i.i.i.i22.i, -1
   %i.fj = icmp sgt i64 %.012.i.i.i.i.i22.i, 1
-  br i1 %i.fj, label %.lr.ph.i.i.i.i.i21.i, label %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit.i, !llvm.loop !4
+  br i1 %i.fj, label %.lr.ph.i.i.i.i.i21.i, label %_ZSt12__move_mergeIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_less_iterEET0_T_SF_SF_SF_SE_T1_.exit, !llvm.loop !4
 
-_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit.i: ; preds = %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26.i
-  %3 = ptrtoint ptr %i.fh to i64
-  br label %_ZSt12__move_mergeIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_less_iterEET0_T_SF_SF_SF_SE_T1_.exit
-
-_ZSt12__move_mergeIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_less_iterEET0_T_SF_SF_SF_SE_T1_.exit: ; preds = %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit.i
-  %.08.lcssa.i.i.i.i.i20.i = phi i64 [ %i.el, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i ], [ %3, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit.i ]
-  %i.fk = sub i64 %.08.lcssa.i.i.i.i.i20.i, %i.el
+_ZSt12__move_mergeIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_less_iterEET0_T_SF_SF_SF_SE_T1_.exit: ; preds = %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26.i, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i
+  %.08.lcssa.i.i.i.i.i20.i = phi ptr [ %i.eo, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i ], [ %i.fh, %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26.i ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i20.i to i64
+  %i.fk = sub i64 %3, %i.el
   %i.fl = getelementptr inbounds i8, ptr %i.eo, i64 %i.fk ; 2 uses
   %i.fm = sub i64 %i.i, %i.ep
   %i.fn = ashr exact i64 %i.fm, 5                 ; 2 uses
@@ -659,10 +656,10 @@ _ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i: ; preds = %b
 
 _ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit: ; preds = %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i, %._crit_edge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa, %._crit_edge ], [ %i.az, %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i ]
-  %i.bc = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.bc = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.bd = ptrtoint ptr %.sroa.0.0.lcssa to i64
   %i.be = sub i64 %i.bc, %i.bd
-  %i.bf = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.be ; 2 uses
+  %i.bf = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.be ; 3 uses
   %i.bg = ptrtoint ptr %3 to i64
   %i.bh = ptrtoint ptr %.016.lcssa to i64
   %i.bi = sub i64 %i.bg, %i.bh
@@ -702,15 +699,12 @@ _ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26: ; preds = 
   %i.by = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i23, i64 32 ; 2 uses
   %i.bz = add nsw i64 %.012.i.i.i.i.i22, -1
   %i.ca = icmp sgt i64 %.012.i.i.i.i.i22, 1
-  br i1 %i.ca, label %.lr.ph.i.i.i.i.i21, label %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit, !llvm.loop !4
+  br i1 %i.ca, label %.lr.ph.i.i.i.i.i21, label %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27, !llvm.loop !4
 
-_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit: ; preds = %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26
-  %5 = ptrtoint ptr %i.by to i64
-  br label %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27
-
-_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27: ; preds = %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit
-  %.08.lcssa.i.i.i.i.i20 = phi i64 [ %i.bc, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit ], [ %5, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit ]
-  %i.cb = sub i64 %.08.lcssa.i.i.i.i.i20, %i.bc
+_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27: ; preds = %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit
+  %.08.lcssa.i.i.i.i.i20 = phi ptr [ %i.bf, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit ], [ %i.by, %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26 ]
+  %5 = ptrtoint ptr %.08.lcssa.i.i.i.i.i20 to i64
+  %i.cb = sub i64 %5, %i.bc
   %i.cc = getelementptr inbounds i8, ptr %i.bf, i64 %i.cb
   ret ptr %i.cc
 }
@@ -1113,10 +1107,10 @@ _ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i.i38: ; preds 
 
 _ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i: ; preds = %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i.i38, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i32 = phi ptr [ %.sroa.0.0.lcssa.i, %._crit_edge.i ], [ %i.ek, %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i.i38 ]
-  %i.en = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i32 to i64 ; 3 uses
+  %i.en = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i32 to i64 ; 2 uses
   %i.eo = ptrtoint ptr %.sroa.0.0.lcssa.i to i64
   %i.ep = sub i64 %i.en, %i.eo
-  %i.eq = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.ep ; 2 uses
+  %i.eq = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.ep ; 3 uses
   %i.er = ptrtoint ptr %i.cn to i64               ; 2 uses
   %i.es = ptrtoint ptr %.016.lcssa.i to i64
   %i.et = sub i64 %i.er, %i.es
@@ -1156,15 +1150,12 @@ _ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26.i: ; preds 
   %i.fj = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i23.i, i64 32 ; 2 uses
   %i.fk = add nsw i64 %.012.i.i.i.i.i22.i, -1
   %i.fl = icmp sgt i64 %.012.i.i.i.i.i22.i, 1
-  br i1 %i.fl, label %.lr.ph.i.i.i.i.i21.i, label %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit.i, !llvm.loop !4
+  br i1 %i.fl, label %.lr.ph.i.i.i.i.i21.i, label %"_ZSt12__move_mergeIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZNS3_19MessageLayoutHelper24FillPaddingFromPartitionERSA_SF_mE3$_0EEET0_T_SJ_SJ_SJ_SI_T1_.exit", !llvm.loop !4
 
-_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit.i: ; preds = %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26.i
-  %3 = ptrtoint ptr %i.fj to i64
-  br label %"_ZSt12__move_mergeIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZNS3_19MessageLayoutHelper24FillPaddingFromPartitionERSA_SF_mE3$_0EEET0_T_SJ_SJ_SJ_SI_T1_.exit"
-
-"_ZSt12__move_mergeIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZNS3_19MessageLayoutHelper24FillPaddingFromPartitionERSA_SF_mE3$_0EEET0_T_SJ_SJ_SJ_SI_T1_.exit": ; preds = %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit.i
-  %.08.lcssa.i.i.i.i.i20.i = phi i64 [ %i.en, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i ], [ %3, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit.i ]
-  %i.fm = sub i64 %.08.lcssa.i.i.i.i.i20.i, %i.en
+"_ZSt12__move_mergeIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZNS3_19MessageLayoutHelper24FillPaddingFromPartitionERSA_SF_mE3$_0EEET0_T_SJ_SJ_SJ_SI_T1_.exit": ; preds = %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26.i, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i
+  %.08.lcssa.i.i.i.i.i20.i = phi ptr [ %i.eq, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i ], [ %i.fj, %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26.i ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i20.i to i64
+  %i.fm = sub i64 %3, %i.en
   %i.fn = getelementptr inbounds i8, ptr %i.eq, i64 %i.fm ; 2 uses
   %i.fo = sub i64 %i.l, %i.er
   %i.fp = ashr exact i64 %i.fo, 5                 ; 2 uses
@@ -1567,10 +1558,10 @@ _ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i.i38: ; preds 
 
 _ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i: ; preds = %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i.i38, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i32 = phi ptr [ %.sroa.0.0.lcssa.i, %._crit_edge.i ], [ %i.ek, %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i.i38 ]
-  %i.en = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i32 to i64 ; 3 uses
+  %i.en = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i32 to i64 ; 2 uses
   %i.eo = ptrtoint ptr %.sroa.0.0.lcssa.i to i64
   %i.ep = sub i64 %i.en, %i.eo
-  %i.eq = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.ep ; 2 uses
+  %i.eq = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa.i, i64 %i.ep ; 3 uses
   %i.er = ptrtoint ptr %i.cn to i64               ; 2 uses
   %i.es = ptrtoint ptr %.016.lcssa.i to i64
   %i.et = sub i64 %i.er, %i.es
@@ -1610,15 +1601,12 @@ _ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26.i: ; preds 
   %i.fj = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i23.i, i64 32 ; 2 uses
   %i.fk = add nsw i64 %.012.i.i.i.i.i22.i, -1
   %i.fl = icmp sgt i64 %.012.i.i.i.i.i22.i, 1
-  br i1 %i.fl, label %.lr.ph.i.i.i.i.i21.i, label %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit.i, !llvm.loop !4
+  br i1 %i.fl, label %.lr.ph.i.i.i.i.i21.i, label %"_ZSt12__move_mergeIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZNS3_19MessageLayoutHelper24FillPaddingFromPartitionERSA_SF_mE3$_1EEET0_T_SJ_SJ_SJ_SI_T1_.exit", !llvm.loop !4
 
-_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit.i: ; preds = %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26.i
-  %3 = ptrtoint ptr %i.fj to i64
-  br label %"_ZSt12__move_mergeIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZNS3_19MessageLayoutHelper24FillPaddingFromPartitionERSA_SF_mE3$_1EEET0_T_SJ_SJ_SJ_SI_T1_.exit"
-
-"_ZSt12__move_mergeIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZNS3_19MessageLayoutHelper24FillPaddingFromPartitionERSA_SF_mE3$_1EEET0_T_SJ_SJ_SJ_SI_T1_.exit": ; preds = %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit.i
-  %.08.lcssa.i.i.i.i.i20.i = phi i64 [ %i.en, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i ], [ %3, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit27.loopexit.i ]
-  %i.fm = sub i64 %.08.lcssa.i.i.i.i.i20.i, %i.en
+"_ZSt12__move_mergeIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEENS6_5__ops15_Iter_comp_iterIZNS3_19MessageLayoutHelper24FillPaddingFromPartitionERSA_SF_mE3$_1EEET0_T_SJ_SJ_SJ_SI_T1_.exit": ; preds = %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26.i, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i
+  %.08.lcssa.i.i.i.i.i20.i = phi ptr [ %i.eq, %_ZSt4moveIPN6google8protobuf8compiler3cpp10FieldGroupEN9__gnu_cxx17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEET0_T_SD_SC_.exit.i ], [ %i.fj, %_ZN6google8protobuf8compiler3cpp10FieldGroupaSEOS3_.exit.i.i.i.i.i26.i ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i20.i to i64
+  %i.fm = sub i64 %3, %i.en
   %i.fn = getelementptr inbounds i8, ptr %i.eq, i64 %i.fm ; 2 uses
   %i.fo = sub i64 %i.l, %i.er
   %i.fp = ashr exact i64 %i.fo, 5                 ; 2 uses

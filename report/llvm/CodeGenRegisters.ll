@@ -205,10 +205,10 @@ _ZN4llvm15SmallVectorImplImEaSEOS1_.exit114:      ; preds = %.lr.ph.i.i.i.i.i.i3
 
 _ZSt4moveIPSt4pairIPN4llvm20CodeGenRegisterClassENS1_9BitVectorEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i: ; preds = %_ZN4llvm15SmallVectorImplImEaSEOS1_.exit114, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i29 = phi ptr [ %i.jl, %._crit_edge.i ], [ %i.li, %_ZN4llvm15SmallVectorImplImEaSEOS1_.exit114 ]
-  %i.ll = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i29 to i64 ; 3 uses
+  %i.ll = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i29 to i64 ; 2 uses
   %i.lm = ptrtoint ptr %i.jl to i64
   %i.ln = sub i64 %i.ll, %i.lm
-  %i.lo = getelementptr inbounds i8, ptr %i.jl, i64 %i.ln ; 2 uses
+  %i.lo = getelementptr inbounds i8, ptr %i.jl, i64 %i.ln ; 3 uses
   %i.lp = ptrtoint ptr %i.gn to i64               ; 2 uses
   %i.lq = ptrtoint ptr %.117.i to i64
   %i.lr = sub i64 %i.lp, %i.lq                    ; 2 uses
@@ -355,15 +355,12 @@ _ZN4llvm15SmallVectorImplImEaSEOS1_.exit99:       ; preds = %.lr.ph.i.i.i.i.i20.
   %i.ni = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22.i, i64 80 ; 2 uses
   %i.nj = add nsw i64 %.012.i.i.i.i.i21.i, -1
   %i.nk = icmp samesign ugt i64 %.012.i.i.i.i.i21.i, 1
-  br i1 %i.nk, label %.lr.ph.i.i.i.i.i20.i, label %_ZSt4moveIPSt4pairIPN4llvm20CodeGenRegisterClassENS1_9BitVectorEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i, !llvm.loop !46
+  br i1 %i.nk, label %.lr.ph.i.i.i.i.i20.i, label %"_ZSt12__move_mergeIPSt4pairIPN4llvm20CodeGenRegisterClassENS1_9BitVectorEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZNKS2_30getMatchingSubClassWithSubRegsERNS1_14CodeGenRegBankEPKNS1_18CodeGenSubRegIndexEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit", !llvm.loop !46
 
-_ZSt4moveIPSt4pairIPN4llvm20CodeGenRegisterClassENS1_9BitVectorEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i: ; preds = %_ZN4llvm15SmallVectorImplImEaSEOS1_.exit99
-  %4 = ptrtoint ptr %i.ni to i64
-  br label %"_ZSt12__move_mergeIPSt4pairIPN4llvm20CodeGenRegisterClassENS1_9BitVectorEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZNKS2_30getMatchingSubClassWithSubRegsERNS1_14CodeGenRegBankEPKNS1_18CodeGenSubRegIndexEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit"
-
-"_ZSt12__move_mergeIPSt4pairIPN4llvm20CodeGenRegisterClassENS1_9BitVectorEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZNKS2_30getMatchingSubClassWithSubRegsERNS1_14CodeGenRegBankEPKNS1_18CodeGenSubRegIndexEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit": ; preds = %_ZSt4moveIPSt4pairIPN4llvm20CodeGenRegisterClassENS1_9BitVectorEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i, %_ZSt4moveIPSt4pairIPN4llvm20CodeGenRegisterClassENS1_9BitVectorEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i
-  %.08.lcssa.i.i.i.i.i18.i = phi i64 [ %i.ll, %_ZSt4moveIPSt4pairIPN4llvm20CodeGenRegisterClassENS1_9BitVectorEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i ], [ %4, %_ZSt4moveIPSt4pairIPN4llvm20CodeGenRegisterClassENS1_9BitVectorEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i ]
-  %i.nl = sub i64 %.08.lcssa.i.i.i.i.i18.i, %i.ll
+"_ZSt12__move_mergeIPSt4pairIPN4llvm20CodeGenRegisterClassENS1_9BitVectorEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZNKS2_30getMatchingSubClassWithSubRegsERNS1_14CodeGenRegBankEPKNS1_18CodeGenSubRegIndexEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit": ; preds = %_ZN4llvm15SmallVectorImplImEaSEOS1_.exit99, %_ZSt4moveIPSt4pairIPN4llvm20CodeGenRegisterClassENS1_9BitVectorEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i
+  %.08.lcssa.i.i.i.i.i18.i = phi ptr [ %i.lo, %_ZSt4moveIPSt4pairIPN4llvm20CodeGenRegisterClassENS1_9BitVectorEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i ], [ %i.ni, %_ZN4llvm15SmallVectorImplImEaSEOS1_.exit99 ]
+  %4 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i to i64
+  %i.nl = sub i64 %4, %i.ll
   %i.nm = getelementptr inbounds i8, ptr %i.lo, i64 %i.nl ; 2 uses
   %i.nn = sub i64 %i.l, %i.lp
   %i.no = sdiv exact i64 %i.nn, 80                ; 2 uses

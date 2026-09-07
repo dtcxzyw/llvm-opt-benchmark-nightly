@@ -205,10 +205,10 @@ bb.y:                                             ; preds = %"_ZSt12__move_merge
 
 _ZSt4moveIPSt4pairIjN4llvm3pdb14StatCollection4StatEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i39, %._crit_edge.i.i
   %.08.lcssa.i.i.i.i.i.i.i33 = phi ptr [ %i.jl, %._crit_edge.i.i ], [ %i.jz, %.lr.ph.i.i.i.i.i.i.i39 ]
-  %i.kc = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i33 to i64 ; 3 uses
+  %i.kc = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i.i33 to i64 ; 2 uses
   %i.kd = ptrtoint ptr %i.jl to i64
   %i.ke = sub i64 %i.kc, %i.kd
-  %i.kf = getelementptr inbounds i8, ptr %i.jl, i64 %i.ke ; 2 uses
+  %i.kf = getelementptr inbounds i8, ptr %i.jl, i64 %i.ke ; 3 uses
   %i.kg = ptrtoint ptr %i.jg to i64               ; 2 uses
   %i.kh = ptrtoint ptr %.117.i.i to i64
   %i.ki = sub i64 %i.kg, %i.kh                    ; 2 uses
@@ -233,15 +233,12 @@ _ZSt4moveIPSt4pairIjN4llvm3pdb14StatCollection4StatEEN9__gnu_cxx17__normal_itera
   %i.kq = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22.i.i, i64 12 ; 2 uses
   %i.kr = add nsw i64 %.012.i.i.i.i.i21.i.i, -1
   %i.ks = icmp samesign ugt i64 %.012.i.i.i.i.i21.i.i, 1
-  br i1 %i.ks, label %.lr.ph.i.i.i.i.i20.i.i, label %_ZSt4moveIPSt4pairIjN4llvm3pdb14StatCollection4StatEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i.i, !llvm.loop !45
+  br i1 %i.ks, label %.lr.ph.i.i.i.i.i20.i.i, label %"_ZSt12__move_mergeIPSt4pairIjN4llvm3pdb14StatCollection4StatEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZNKS3_20getStatsSortedBySizeEvE3$_0EEET0_T_SI_SI_SI_SH_T1_.exit.i", !llvm.loop !45
 
-_ZSt4moveIPSt4pairIjN4llvm3pdb14StatCollection4StatEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i.i: ; preds = %.lr.ph.i.i.i.i.i20.i.i
-  %3 = ptrtoint ptr %i.kq to i64
-  br label %"_ZSt12__move_mergeIPSt4pairIjN4llvm3pdb14StatCollection4StatEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZNKS3_20getStatsSortedBySizeEvE3$_0EEET0_T_SI_SI_SI_SH_T1_.exit.i"
-
-"_ZSt12__move_mergeIPSt4pairIjN4llvm3pdb14StatCollection4StatEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZNKS3_20getStatsSortedBySizeEvE3$_0EEET0_T_SI_SI_SI_SH_T1_.exit.i": ; preds = %_ZSt4moveIPSt4pairIjN4llvm3pdb14StatCollection4StatEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i.i, %_ZSt4moveIPSt4pairIjN4llvm3pdb14StatCollection4StatEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i
-  %.08.lcssa.i.i.i.i.i18.i.i = phi i64 [ %i.kc, %_ZSt4moveIPSt4pairIjN4llvm3pdb14StatCollection4StatEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i ], [ %3, %_ZSt4moveIPSt4pairIjN4llvm3pdb14StatCollection4StatEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit24.loopexit.i.i ]
-  %i.kt = sub i64 %.08.lcssa.i.i.i.i.i18.i.i, %i.kc
+"_ZSt12__move_mergeIPSt4pairIjN4llvm3pdb14StatCollection4StatEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEENS7_5__ops15_Iter_comp_iterIZNKS3_20getStatsSortedBySizeEvE3$_0EEET0_T_SI_SI_SI_SH_T1_.exit.i": ; preds = %.lr.ph.i.i.i.i.i20.i.i, %_ZSt4moveIPSt4pairIjN4llvm3pdb14StatCollection4StatEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i
+  %.08.lcssa.i.i.i.i.i18.i.i = phi ptr [ %i.kf, %_ZSt4moveIPSt4pairIjN4llvm3pdb14StatCollection4StatEEN9__gnu_cxx17__normal_iteratorIS6_St6vectorIS5_SaIS5_EEEEET0_T_SE_SD_.exit.i.i ], [ %i.kq, %.lr.ph.i.i.i.i.i20.i.i ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18.i.i to i64
+  %i.kt = sub i64 %3, %i.kc
   %i.ku = getelementptr inbounds i8, ptr %i.kf, i64 %i.kt ; 2 uses
   %i.kv = sub i64 %i.gh, %i.kg
   %i.kw = sdiv exact i64 %i.kv, 12                ; 2 uses

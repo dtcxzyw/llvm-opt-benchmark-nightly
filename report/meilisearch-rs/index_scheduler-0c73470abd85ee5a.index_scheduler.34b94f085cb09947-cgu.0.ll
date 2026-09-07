@@ -206,18 +206,17 @@ bb.c:                                             ; preds = %.backedge.i.i.i.i, 
   %i.q = add nuw i64 %.sroa.01.01.i.i.i.i, 1
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %.sroa.01.01.i.i.i.i
   %i.s = load ptr, ptr %i.r, align 8, !noundef !57 ; 2 uses
-  %i.t = ptrtoint ptr %i.s to i64                 ; 3 uses
-  %i.u = and i64 %i.t, -8                         ; 2 uses
-  %i.v = sub i64 %i.u, %i.t
+  %i.t = ptrtoint ptr %i.s to i64                 ; 2 uses
+  %i.u = and i64 %i.t, 7
+  %i.v = sub nsw i64 0, %i.u
   %i.w = getelementptr i8, ptr %i.s, i64 %i.v     ; 4 uses
-  %i.x = icmp ne i64 %i.u, 0
+  %i.x = icmp ne ptr %i.w, null
   %i.y = and i64 %i.t, 1
   %i.z = icmp eq i64 %i.y, 0
-  %or.cond.i.i.i.i = and i1 %i.x, %i.z
+  %or.cond.i.i.i.i = and i1 %i.z, %i.x
   br i1 %or.cond.i.i.i.i, label %bb.d, label %.backedge.i.i.i.i
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %.val.i.i.i.i.i = load i64, ptr %i.w, align 8, !range !56, !alias.scope !123236, !noundef !57 ; 2 uses
   %i.aa = icmp eq i64 %.val.i.i.i.i.i, 0
   br i1 %i.aa, label %"_ZN4core3ptr138drop_in_place$LT$alloc..boxed..Box$LT$papaya..raw..Entry$LT$alloc..string..String$C$meilisearch_types..network..Unavailability$GT$$GT$$GT$17h1228736b6e66186eE.exit.i.i.i.i", label %bb.e

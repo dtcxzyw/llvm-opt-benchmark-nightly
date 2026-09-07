@@ -204,10 +204,10 @@ _ZN5arrow2io8internal15RangeCacheEntryaSERKS2_.exit.i.i.i.i.i: ; preds = %_ZNSt1
 
 _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN5arrow2io8internal15RangeCacheEntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit: ; preds = %_ZN5arrow2io8internal15RangeCacheEntryaSERKS2_.exit.i.i.i.i.i, %.critedge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa, %.critedge ], [ %i.cu, %_ZN5arrow2io8internal15RangeCacheEntryaSERKS2_.exit.i.i.i.i.i ]
-  %i.cx = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.cx = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.cy = ptrtoint ptr %.sroa.0.0.lcssa to i64
   %i.cz = sub i64 %i.cx, %i.cy
-  %i.da = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.cz ; 2 uses
+  %i.da = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.cz ; 3 uses
   %i.db = ptrtoint ptr %3 to i64
   %i.dc = ptrtoint ptr %.sroa.040.0.lcssa to i64
   %i.dd = sub i64 %i.db, %i.dc
@@ -310,15 +310,12 @@ _ZN5arrow2io8internal15RangeCacheEntryaSERKS2_.exit.i.i.i.i.i34: ; preds = %_ZNS
   %i.ej = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i23, i64 32 ; 2 uses
   %i.ek = add nsw i64 %.012.i.i.i.i.i22, -1
   %i.el = icmp sgt i64 %.012.i.i.i.i.i22, 1
-  br i1 %i.el, label %.lr.ph.i.i.i.i.i21, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN5arrow2io8internal15RangeCacheEntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit36.loopexit, !llvm.loop !237
+  br i1 %i.el, label %.lr.ph.i.i.i.i.i21, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN5arrow2io8internal15RangeCacheEntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit36, !llvm.loop !237
 
-_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN5arrow2io8internal15RangeCacheEntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit36.loopexit: ; preds = %_ZN5arrow2io8internal15RangeCacheEntryaSERKS2_.exit.i.i.i.i.i34
-  %5 = ptrtoint ptr %i.ej to i64
-  br label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN5arrow2io8internal15RangeCacheEntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit36
-
-_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN5arrow2io8internal15RangeCacheEntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit36: ; preds = %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN5arrow2io8internal15RangeCacheEntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit36.loopexit, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN5arrow2io8internal15RangeCacheEntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit
-  %.08.lcssa.i.i.i.i.i20 = phi i64 [ %i.cx, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN5arrow2io8internal15RangeCacheEntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit ], [ %5, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN5arrow2io8internal15RangeCacheEntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit36.loopexit ]
-  %i.em = sub i64 %.08.lcssa.i.i.i.i.i20, %i.cx
+_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN5arrow2io8internal15RangeCacheEntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit36: ; preds = %_ZN5arrow2io8internal15RangeCacheEntryaSERKS2_.exit.i.i.i.i.i34, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN5arrow2io8internal15RangeCacheEntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit
+  %.08.lcssa.i.i.i.i.i20 = phi ptr [ %i.da, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN5arrow2io8internal15RangeCacheEntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit ], [ %i.ej, %_ZN5arrow2io8internal15RangeCacheEntryaSERKS2_.exit.i.i.i.i.i34 ]
+  %5 = ptrtoint ptr %.08.lcssa.i.i.i.i.i20 to i64
+  %i.em = sub i64 %5, %i.cx
   %i.en = getelementptr inbounds i8, ptr %i.da, i64 %i.em
   ret ptr %i.en
 }

@@ -205,39 +205,33 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   call void @_ZdlPvm(ptr noundef nonnull %i.rd, i64 noundef 32) #28
   br label %bb.fi
 
-bb.fi:                                            ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i936, %.critedge643
+bb.fi:                                            ; preds = %.critedge643, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i936
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #27
   %i.rj = load ptr, ptr %i.ds, align 8, !tbaa !142 ; 2 uses
-  %i.rk = load ptr, ptr %i.dt, align 8, !tbaa !144 ; 3 uses
+  %i.rk = load ptr, ptr %i.dt, align 8, !tbaa !144 ; 2 uses
   %i.rl = ptrtoint ptr %i.rk to i64
-  %i.rm = ptrtoint ptr %i.rj to i64               ; 2 uses
-  %i.rn = sub i64 %i.rl, %i.rm
-  %172 = getelementptr inbounds i8, ptr %i.rk, i64 -72
-  %173 = ptrtoint ptr %172 to i64
-  %174 = sub i64 %173, %i.rm
-  %i.ro = sdiv exact i64 %174, 24                 ; 2 uses
-  %i.rp = sdiv exact i64 %i.rn, 24                ; 2 uses
-  %.not15.i = icmp eq i64 %i.rp, %i.ro
+  %i.rm = ptrtoint ptr %i.rj to i64
+  %i.rn = sub i64 %i.rl, %i.rm                    ; 2 uses
+  %172 = add i64 %i.rn, -72
+  %i.ro = sdiv exact i64 %172, 24
+  %i.rp = sdiv exact i64 %i.rn, 24
   %.pre = load ptr, ptr %i.cf, align 8, !tbaa !107
   %.pre1837 = load ptr, ptr %1, align 8, !tbaa !81 ; 3 uses
-  %.pre1838 = ptrtoint ptr %.pre to i64
-  %.pre1839 = ptrtoint ptr %.pre1837 to i64
-  %.pre1841 = sub i64 %.pre1838, %.pre1839        ; 2 uses
-  %.pre1843 = ashr exact i64 %.pre1841, 3         ; 2 uses
-  br i1 %.not15.i, label %_ZN4entt9dense_mapImmSt8identitySt8equal_toIvESaISt4pairIKmmEEE5eraseENS_8internal18dense_map_iteratorIPKNS9_14dense_map_nodeImmEEEESF_.exit, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %bb.fi
-  %175 = add nsw i64 %.pre1843, -1                ; 2 uses
+  %.pre1838 = ptrtoint ptr %.pre to i64           ; 2 uses
+  %.pre1839 = ptrtoint ptr %.pre1837 to i64       ; 2 uses
+  %.pre1841 = sub i64 %.pre1838, %.pre1839
+  %.pre1843 = ashr exact i64 %.pre1841, 3
+  %173 = add nsw i64 %.pre1843, -1                ; 2 uses
   br label %bb.fj
 
-bb.fj:                                            ; preds = %_ZN4entt9dense_mapImmSt8identitySt8equal_toIvESaISt4pairIKmmEEE5eraseERS5_.exit.i, %.lr.ph.i
-  %i.rq = phi ptr [ %i.rk, %.lr.ph.i ], [ %i.sz, %_ZN4entt9dense_mapImmSt8identitySt8equal_toIvESaISt4pairIKmmEEE5eraseERS5_.exit.i ] ; 6 uses
-  %.016.i = phi i64 [ %i.rp, %.lr.ph.i ], [ %i.rr, %_ZN4entt9dense_mapImmSt8identitySt8equal_toIvESaISt4pairIKmmEEE5eraseERS5_.exit.i ]
+bb.fj:                                            ; preds = %_ZN4entt9dense_mapImmSt8identitySt8equal_toIvESaISt4pairIKmmEEE5eraseERS5_.exit.i, %bb.fi
+  %i.rq = phi ptr [ %i.rk, %bb.fi ], [ %i.sz, %_ZN4entt9dense_mapImmSt8identitySt8equal_toIvESaISt4pairIKmmEEE5eraseERS5_.exit.i ] ; 6 uses
+  %.016.i = phi i64 [ %i.rp, %bb.fi ], [ %i.rr, %_ZN4entt9dense_mapImmSt8identitySt8equal_toIvESaISt4pairIKmmEEE5eraseERS5_.exit.i ]
   %i.rr = add i64 %.016.i, -1                     ; 3 uses
   %i.rs = getelementptr inbounds nuw [24 x i8], ptr %i.rj, i64 %i.rr
   %i.rt = getelementptr inbounds nuw i8, ptr %i.rs, i64 8
   %i.ru = load i64, ptr %i.rt, align 8, !tbaa !110 ; 2 uses
-  %i.rv = and i64 %i.ru, %175
+  %i.rv = and i64 %i.ru, %173
   %i.rw = getelementptr inbounds nuw [8 x i8], ptr %.pre1837, i64 %i.rv
   %i.rx = load ptr, ptr %i.ds, align 8            ; 3 uses
   br label %bb.fk
@@ -271,7 +265,7 @@ bb.fn:                                            ; preds = %bb.fm
   %i.sk = getelementptr inbounds i8, ptr %i.rq, i64 -24
   %i.sl = getelementptr inbounds i8, ptr %i.rq, i64 -16 ; 2 uses
   %i.sm = load i64, ptr %i.sl, align 8, !tbaa !110
-  %i.sn = and i64 %i.sm, %175
+  %i.sn = and i64 %i.sm, %173
   %i.so = getelementptr inbounds nuw [8 x i8], ptr %.pre1837, i64 %i.sn ; 2 uses
   %i.sp = load i64, ptr %i.sk, align 8, !tbaa !147
   store i64 %i.sp, ptr %i.rz, align 8, !tbaa !147
@@ -307,13 +301,15 @@ _ZN4entt9dense_mapImmSt8identitySt8equal_toIvESaISt4pairIKmmEEE5eraseERS5_.exit.
   %.not.i = icmp eq i64 %i.rr, %i.ro
   br i1 %.not.i, label %_ZN4entt9dense_mapImmSt8identitySt8equal_toIvESaISt4pairIKmmEEE5eraseENS_8internal18dense_map_iteratorIPKNS9_14dense_map_nodeImmEEEESF_.exit, label %bb.fj, !llvm.loop !15
 
-_ZN4entt9dense_mapImmSt8identitySt8equal_toIvESaISt4pairIKmmEEE5eraseENS_8internal18dense_map_iteratorIPKNS9_14dense_map_nodeImmEEEESF_.exit: ; preds = %_ZN4entt9dense_mapImmSt8identitySt8equal_toIvESaISt4pairIKmmEEE5eraseERS5_.exit.i, %bb.fi
+_ZN4entt9dense_mapImmSt8identitySt8equal_toIvESaISt4pairIKmmEEE5eraseENS_8internal18dense_map_iteratorIPKNS9_14dense_map_nodeImmEEEESF_.exit: ; preds = %_ZN4entt9dense_mapImmSt8identitySt8equal_toIvESaISt4pairIKmmEEE5eraseERS5_.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u) #27
-  store i64 %.pre1843, ptr %i.u, align 8, !tbaa !110
+  %174 = sub i64 %.pre1838, %.pre1839             ; 2 uses
+  %175 = ashr exact i64 %174, 3
+  store i64 %175, ptr %i.u, align 8, !tbaa !110
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v) #27
   store i64 16, ptr %i.v, align 8, !tbaa !110
-  %i.ta = icmp eq i64 %.pre1841, 128
+  %i.ta = icmp eq i64 %174, 128
   br i1 %i.ta, label %bb.fp, label %bb.fq
 
 bb.fp:                                            ; preds = %_ZN4entt9dense_mapImmSt8identitySt8equal_toIvESaISt4pairIKmmEEE5eraseENS_8internal18dense_map_iteratorIPKNS9_14dense_map_nodeImmEEEESF_.exit

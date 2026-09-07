@@ -205,10 +205,10 @@ _ZN12_GLOBAL__N_110SpecToTestaSEOS0_.exit.i.i.i.i.i: ; preds = %bb.v, %bb.u, %_Z
 
 _ZSt4moveIPN12_GLOBAL__N_110SpecToTestEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit: ; preds = %_ZN12_GLOBAL__N_110SpecToTestaSEOS0_.exit.i.i.i.i.i, %._crit_edge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa, %._crit_edge ], [ %i.du, %_ZN12_GLOBAL__N_110SpecToTestaSEOS0_.exit.i.i.i.i.i ]
-  %i.dx = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.dx = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.dy = ptrtoint ptr %.sroa.0.0.lcssa to i64
   %i.dz = sub i64 %i.dx, %i.dy
-  %i.ea = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.dz ; 2 uses
+  %i.ea = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.dz ; 3 uses
   %i.eb = ptrtoint ptr %3 to i64
   %i.ec = ptrtoint ptr %.016.lcssa to i64
   %i.ed = sub i64 %i.eb, %i.ec                    ; 2 uses
@@ -320,15 +320,12 @@ _ZN12_GLOBAL__N_110SpecToTestaSEOS0_.exit.i.i.i.i.i39: ; preds = %bb.ab, %bb.aa,
   %i.fp = getelementptr inbounds nuw i8, ptr %.0812.i.i.i.i.i34, i64 224 ; 2 uses
   %i.fq = add nsw i64 %.014.i.i.i.i.i33, -1
   %i.fr = icmp sgt i64 %.014.i.i.i.i.i33, 1
-  br i1 %i.fr, label %.lr.ph.i.i.i.i.i32, label %_ZSt4moveIPN12_GLOBAL__N_110SpecToTestEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit45.loopexit, !llvm.loop !24
+  br i1 %i.fr, label %.lr.ph.i.i.i.i.i32, label %_ZSt4moveIPN12_GLOBAL__N_110SpecToTestEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit45, !llvm.loop !24
 
-_ZSt4moveIPN12_GLOBAL__N_110SpecToTestEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit45.loopexit: ; preds = %_ZN12_GLOBAL__N_110SpecToTestaSEOS0_.exit.i.i.i.i.i39
-  %5 = ptrtoint ptr %i.fp to i64
-  br label %_ZSt4moveIPN12_GLOBAL__N_110SpecToTestEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit45
-
-_ZSt4moveIPN12_GLOBAL__N_110SpecToTestEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit45: ; preds = %_ZSt4moveIPN12_GLOBAL__N_110SpecToTestEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit45.loopexit, %_ZSt4moveIPN12_GLOBAL__N_110SpecToTestEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit
-  %.08.lcssa.i.i.i.i.i30 = phi i64 [ %i.dx, %_ZSt4moveIPN12_GLOBAL__N_110SpecToTestEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit ], [ %5, %_ZSt4moveIPN12_GLOBAL__N_110SpecToTestEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit45.loopexit ]
-  %i.fs = sub i64 %.08.lcssa.i.i.i.i.i30, %i.dx
+_ZSt4moveIPN12_GLOBAL__N_110SpecToTestEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit45: ; preds = %_ZN12_GLOBAL__N_110SpecToTestaSEOS0_.exit.i.i.i.i.i39, %_ZSt4moveIPN12_GLOBAL__N_110SpecToTestEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit
+  %.08.lcssa.i.i.i.i.i30 = phi ptr [ %i.ea, %_ZSt4moveIPN12_GLOBAL__N_110SpecToTestEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit ], [ %i.fp, %_ZN12_GLOBAL__N_110SpecToTestaSEOS0_.exit.i.i.i.i.i39 ]
+  %5 = ptrtoint ptr %.08.lcssa.i.i.i.i.i30 to i64
+  %i.fs = sub i64 %5, %i.dx
   %i.ft = getelementptr inbounds i8, ptr %i.ea, i64 %i.fs
   ret ptr %i.ft
 }
@@ -731,10 +728,10 @@ _ZN12_GLOBAL__N_114SpecDiagnosticaSEOS0_.exit.i.i.i.i.i: ; preds = %bb.v, %bb.u,
 
 _ZSt4moveIPN12_GLOBAL__N_114SpecDiagnosticEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit: ; preds = %_ZN12_GLOBAL__N_114SpecDiagnosticaSEOS0_.exit.i.i.i.i.i, %._crit_edge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa, %._crit_edge ], [ %i.ds, %_ZN12_GLOBAL__N_114SpecDiagnosticaSEOS0_.exit.i.i.i.i.i ]
-  %i.dv = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.dv = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.dw = ptrtoint ptr %.sroa.0.0.lcssa to i64
   %i.dx = sub i64 %i.dv, %i.dw
-  %i.dy = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.dx ; 2 uses
+  %i.dy = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.dx ; 3 uses
   %i.dz = ptrtoint ptr %3 to i64
   %i.ea = ptrtoint ptr %.016.lcssa to i64
   %i.eb = sub i64 %i.dz, %i.ea                    ; 2 uses
@@ -851,15 +848,12 @@ _ZN12_GLOBAL__N_114SpecDiagnosticaSEOS0_.exit.i.i.i.i.i37: ; preds = %bb.ab, %bb
   %i.fq = getelementptr inbounds nuw i8, ptr %.0812.i.i.i.i.i32, i64 96 ; 2 uses
   %i.fr = add nsw i64 %.014.i.i.i.i.i31, -1
   %i.fs = icmp sgt i64 %.014.i.i.i.i.i31, 1
-  br i1 %i.fs, label %.lr.ph.i.i.i.i.i30, label %_ZSt4moveIPN12_GLOBAL__N_114SpecDiagnosticEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit43.loopexit, !llvm.loop !32
+  br i1 %i.fs, label %.lr.ph.i.i.i.i.i30, label %_ZSt4moveIPN12_GLOBAL__N_114SpecDiagnosticEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit43, !llvm.loop !32
 
-_ZSt4moveIPN12_GLOBAL__N_114SpecDiagnosticEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit43.loopexit: ; preds = %_ZN12_GLOBAL__N_114SpecDiagnosticaSEOS0_.exit.i.i.i.i.i37
-  %5 = ptrtoint ptr %i.fq to i64
-  br label %_ZSt4moveIPN12_GLOBAL__N_114SpecDiagnosticEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit43
-
-_ZSt4moveIPN12_GLOBAL__N_114SpecDiagnosticEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit43: ; preds = %_ZSt4moveIPN12_GLOBAL__N_114SpecDiagnosticEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit43.loopexit, %_ZSt4moveIPN12_GLOBAL__N_114SpecDiagnosticEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit
-  %.08.lcssa.i.i.i.i.i28 = phi i64 [ %i.dv, %_ZSt4moveIPN12_GLOBAL__N_114SpecDiagnosticEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit ], [ %5, %_ZSt4moveIPN12_GLOBAL__N_114SpecDiagnosticEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit43.loopexit ]
-  %i.ft = sub i64 %.08.lcssa.i.i.i.i.i28, %i.dv
+_ZSt4moveIPN12_GLOBAL__N_114SpecDiagnosticEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit43: ; preds = %_ZN12_GLOBAL__N_114SpecDiagnosticaSEOS0_.exit.i.i.i.i.i37, %_ZSt4moveIPN12_GLOBAL__N_114SpecDiagnosticEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit
+  %.08.lcssa.i.i.i.i.i28 = phi ptr [ %i.dy, %_ZSt4moveIPN12_GLOBAL__N_114SpecDiagnosticEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEEET0_T_SA_S9_.exit ], [ %i.fq, %_ZN12_GLOBAL__N_114SpecDiagnosticaSEOS0_.exit.i.i.i.i.i37 ]
+  %5 = ptrtoint ptr %.08.lcssa.i.i.i.i.i28 to i64
+  %i.ft = sub i64 %5, %i.dv
   %i.fu = getelementptr inbounds i8, ptr %i.dy, i64 %i.ft
   ret ptr %i.fu
 }
