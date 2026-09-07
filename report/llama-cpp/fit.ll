@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
-  %i.aa = phi i32 [ %.sroa.speculated1166, %bb.f ], [ 1, %bb.e ] ; 4 uses
+  %i.aa = phi i32 [ %.sroa.speculated1166, %bb.f ], [ 1, %bb.e ] ; 5 uses
   %i.ab = load i32, ptr %i.u, align 8, !tbaa !86
   %i.ac = icmp eq i32 %i.ab, 0                    ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #24
@@ -255,20 +255,19 @@ bb.l:                                             ; preds = %bb.j, %bb.h
 
 bb.m:                                             ; preds = %bb.l
   %i.aq = load i32, ptr %i.k, align 4, !tbaa !53
-  %42 = zext i32 %i.aq to i64
-  %43 = zext i32 %i.aa to i64                     ; 2 uses
-  %44 = mul nuw i64 %42, %43
-  %.sroa.speculated1159 = call i64 @llvm.umin.i64(i64 %44, i64 4294967295) ; 3 uses
-  %45 = trunc nuw i64 %.sroa.speculated1159 to i32 ; 7 uses
-  %46 = zext i32 %6 to i64
-  %47 = mul nuw i64 %43, %46                      ; 2 uses
-  %.sroa.speculated1145 = call i64 @llvm.umin.i64(i64 %47, i64 4294967295) ; 2 uses
-  %48 = trunc nuw i64 %.sroa.speculated1145 to i32 ; 3 uses
+  %umul = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.aq, i32 %i.aa) ; 2 uses
+  %umul.value = extractvalue { i32, i1 } %umul, 0
+  %umul.overflow = extractvalue { i32, i1 } %umul, 1
+  %42 = select i1 %umul.overflow, i32 -1, i32 %umul.value ; 9 uses
+  %umul1229 = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %6, i32 %i.aa) ; 2 uses
+  %umul.value1230 = extractvalue { i32, i1 } %umul1229, 0
+  %umul.overflow1231 = extractvalue { i32, i1 } %umul1229, 1
+  %43 = select i1 %umul.overflow1231, i32 -1, i32 %umul.value1230 ; 5 uses
   br i1 %i.ac, label %bb.n, label %bb.y
 
 bb.n:                                             ; preds = %bb.m
   %i.ar = load ptr, ptr %i.e, align 8, !tbaa !70
-  store i32 %45, ptr %i.ar, align 8, !tbaa !86
+  store i32 %42, ptr %i.ar, align 8, !tbaa !86
   %i.as = icmp ugt i32 %i.aa, 1
   br i1 %i.as, label %bb.o, label %bb.y
 
@@ -285,7 +284,7 @@ bb.q:                                             ; preds = %bb.p
           to label %bb.r unwind label %bb.t
 
 bb.r:                                             ; preds = %bb.q
-  invoke void (ptr, i32, ptr, ...) @_Z14common_log_addP10common_log14ggml_log_levelPKcz(ptr noundef %i.av, i32 noundef 2, ptr noundef nonnull @.str.40, ptr noundef nonnull @__func__._ZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_level, i32 noundef %45, i32 noundef %i.aa)
+  invoke void (ptr, i32, ptr, ...) @_Z14common_log_addP10common_log14ggml_log_levelPKcz(ptr noundef %i.av, i32 noundef 2, ptr noundef nonnull @.str.40, ptr noundef nonnull @__func__._ZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_level, i32 noundef %42, i32 noundef %i.aa)
           to label %bb.u unwind label %bb.t
 
 bb.s:                                             ; preds = %bb.l
@@ -688,7 +687,7 @@ bb.cv:                                            ; preds = %bb.cs, %bb.cu, %bb.
   br i1 %i.ac, label %bb.cw, label %bb.el
 
 bb.cw:                                            ; preds = %bb.cv
-  %i.lj = icmp ult i64 %47, %.sroa.speculated1159
+  %i.lj = icmp ult i32 %43, %42
   br i1 %i.lj, label %bb.cx, label %bb.ed
 
 bb.cx:                                            ; preds = %bb.cw
@@ -772,7 +771,7 @@ bb.cz:                                            ; preds = %.thread1196, %bb.cy
   %i.ml = phi ptr [ %.pre1699, %bb.cy ], [ %.pre1699, %.loopexit2311 ], [ %.pre1698, %.thread1196 ]
   %.2388 = phi i64 [ %i.mk, %bb.cy ], [ %.lcssa2275, %.loopexit2311 ], [ %i.lu, %.thread1196 ] ; 2 uses
   %i.mm = load ptr, ptr %i.e, align 8, !tbaa !70  ; 2 uses
-  store i32 %48, ptr %i.mm, align 8, !tbaa !86
+  store i32 %43, ptr %i.mm, align 8, !tbaa !86
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #24
   %i.mn = load ptr, ptr %i.c, align 8, !tbaa !66
   %i.mo = load i32, ptr %i.i, align 4, !tbaa !75
@@ -877,10 +876,10 @@ bb.df:                                            ; preds = %bb.df, %.preheader1
   br i1 %i.ok, label %bb.dg, label %bb.du
 
 bb.dg:                                            ; preds = %.loopexit1298
-  %49 = sub nsw i64 %.sroa.speculated1159, %.sroa.speculated1145
-  %50 = and i64 %49, 4294967295                   ; 2 uses
+  %44 = sub nuw i32 %42, %43
+  %45 = zext i32 %44 to i64                       ; 2 uses
   %i.ol = sub nsw i64 %.2388, %.1383
-  %i.om = mul nuw nsw i64 %i.ol, %50
+  %i.om = mul nuw nsw i64 %i.ol, %45
   %i.on = sub nsw i64 %.14032041, %.1383          ; 2 uses
   %i.oo = sdiv i64 %i.om, %i.on
   %i.op = load ptr, ptr %i.e, align 8, !tbaa !70  ; 2 uses
@@ -890,10 +889,10 @@ bb.dg:                                            ; preds = %.loopexit1298
   %i.ot = shl i32 %i.aa, 8
   %i.ou = urem i32 %i.os, %i.ot
   %i.ov = sub i32 %i.os, %i.ou
-  %.sroa.speculated1073 = call i32 @llvm.umax.i32(i32 %i.ov, i32 %48) ; 2 uses
+  %.sroa.speculated1073 = call i32 @llvm.umax.i32(i32 %i.ov, i32 %43) ; 2 uses
   store i32 %.sroa.speculated1073, ptr %i.op, align 8, !tbaa !86
-  %i.ow = sdiv i64 %i.on, %50
-  %i.ox = sub i32 %45, %.sroa.speculated1073
+  %i.ow = sdiv i64 %i.on, %45
+  %i.ox = sub i32 %42, %.sroa.speculated1073
   %i.oy = zext i32 %i.ox to i64
   %i.oz = mul nsw i64 %i.ow, %i.oy
   %i.pa = invoke noundef i32 @_Z30common_log_get_verbosity_tholdv()
@@ -911,7 +910,7 @@ bb.dj:                                            ; preds = %bb.di
   %i.pd = load ptr, ptr %i.e, align 8, !tbaa !70
   %i.pe = load i32, ptr %i.pd, align 8, !tbaa !86
   %i.pf = sdiv i64 %i.oz, 1048576
-  invoke void (ptr, i32, ptr, ...) @_Z14common_log_addP10common_log14ggml_log_levelPKcz(ptr noundef %i.pc, i32 noundef 2, ptr noundef nonnull @.str.50, ptr noundef nonnull @__func__._ZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_level, i32 noundef %45, i32 noundef %i.pe, i64 noundef %i.pf)
+  invoke void (ptr, i32, ptr, ...) @_Z14common_log_addP10common_log14ggml_log_levelPKcz(ptr noundef %i.pc, i32 noundef 2, ptr noundef nonnull @.str.50, ptr noundef nonnull @__func__._ZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_level, i32 noundef %42, i32 noundef %i.pe, i64 noundef %i.pf)
           to label %bb.dl unwind label %bb.dk
 
 bb.dk:                                            ; preds = %bb.dt, %bb.ds, %bb.dq, %bb.dp, %bb.do, %bb.dm, %bb.dj, %bb.di, %bb.dg
@@ -973,7 +972,7 @@ bb.dx:                                            ; preds = %bb.dw
   %i.pt = load ptr, ptr %i.e, align 8, !tbaa !70
   %i.pu = load i32, ptr %i.pt, align 8, !tbaa !86
   %i.pv = sdiv i64 %i.pp, 1048576
-  invoke void (ptr, i32, ptr, ...) @_Z14common_log_addP10common_log14ggml_log_levelPKcz(ptr noundef %i.ps, i32 noundef 2, ptr noundef nonnull @.str.50, ptr noundef nonnull @__func__._ZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_level, i32 noundef %45, i32 noundef %i.pu, i64 noundef %i.pv)
+  invoke void (ptr, i32, ptr, ...) @_Z14common_log_addP10common_log14ggml_log_levelPKcz(ptr noundef %i.ps, i32 noundef 2, ptr noundef nonnull @.str.50, ptr noundef nonnull @__func__._ZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_level, i32 noundef %42, i32 noundef %i.pu, i64 noundef %i.pv)
           to label %.critedge500 unwind label %bb.dy
 
 bb.dy:                                            ; preds = %bb.dx, %bb.dw, %bb.du
@@ -1066,7 +1065,7 @@ bb.ej:                                            ; preds = %bb.ei
           to label %bb.ek unwind label %bb.cq
 
 bb.ek:                                            ; preds = %bb.ej
-  invoke void (ptr, i32, ptr, ...) @_Z14common_log_addP10common_log14ggml_log_levelPKcz(ptr noundef %i.qv, i32 noundef 2, ptr noundef nonnull @.str.54, ptr noundef nonnull @__func__._ZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_level, i32 noundef %45, i32 noundef %48)
+  invoke void (ptr, i32, ptr, ...) @_Z14common_log_addP10common_log14ggml_log_levelPKcz(ptr noundef %i.qv, i32 noundef 2, ptr noundef nonnull @.str.54, ptr noundef nonnull @__func__._ZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_level, i32 noundef %42, i32 noundef %43)
           to label %bb.ep unwind label %bb.cq
 
 bb.el:                                            ; preds = %bb.cv
@@ -1089,7 +1088,7 @@ bb.eo:                                            ; preds = %bb.en
 .invoke2205:                                      ; preds = %bb.eg, %bb.eo
   %i.rb = phi ptr [ %i.qy, %bb.eo ], [ %i.qs, %bb.eg ]
   %i.rc = phi ptr [ @.str.55, %bb.eo ], [ @.str.53, %bb.eg ]
-  %i.rd = phi i32 [ %i.ra, %bb.eo ], [ %45, %bb.eg ]
+  %i.rd = phi i32 [ %i.ra, %bb.eo ], [ %42, %bb.eg ]
   invoke void (ptr, i32, ptr, ...) @_Z14common_log_addP10common_log14ggml_log_levelPKcz(ptr noundef %i.rb, i32 noundef 2, ptr noundef nonnull %i.rc, ptr noundef nonnull @__func__._ZL22common_params_fit_implPKcP18llama_model_paramsP20llama_context_paramsPfP32llama_model_tensor_buft_overridePmjPK22common_fit_extra_model14ggml_log_level, i32 noundef %i.rd)
           to label %bb.ep unwind label %bb.cq
 
@@ -1490,6 +1489,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #22
