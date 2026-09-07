@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not44.i.i.i, label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal256EPjRb.exit.i, label %.lr.ph.i.i.i, !llvm.loop !38
 
 _ZN5arrowL11FillInArrayERKNS_15BasicDecimal256EPjRb.exit.i: ; preds = %.lr.ph.i.i.i, %middle.block, %bb.g, %.loopexit.i.thread.i.i
-  %.120.lcssa.i.i.i = phi i64 [ 1, %.loopexit.i.thread.i.i ], [ 0, %bb.g ], [ %i.am, %middle.block ], [ %i.bj, %.lr.ph.i.i.i ] ; 27 uses
+  %.120.lcssa.i.i.i = phi i64 [ 1, %.loopexit.i.thread.i.i ], [ 0, %bb.g ], [ %i.am, %middle.block ], [ %i.bj, %.lr.ph.i.i.i ] ; 28 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #10
   %i.bm = add i64 %.120.lcssa.i.i.i, 1            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
@@ -375,17 +375,20 @@ bb.o:                                             ; preds = %_ZN5arrowL11FillInA
 
 ._crit_edge.i.i:                                  ; preds = %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  %9 = add i64 %.120.lcssa.i.i.i, -8              ; 2 uses
-  %i.dw = icmp sgt i64 %9, -1
-  br i1 %i.dw, label %.lr.ph.i.i.i.i, label %.lr.ph37.i.i.i.i
+  %i.dw = icmp sgt i64 %.120.lcssa.i.i.i, 7
+  br i1 %i.dw, label %.lr.ph.i.i.i.preheader.i, label %.lr.ph37.i.i.i.i
+
+.lr.ph.i.i.i.preheader.i:                         ; preds = %._crit_edge.i.i
+  %9 = add nsw i64 %.120.lcssa.i.i.i, -8
+  br label %.lr.ph.i.i.i.i
 
 bb.p:                                             ; preds = %.lr.ph.i.i.i.i
   %i.dx = add nsw i64 %.02533.i.i.i.i, -1
   %i.dy = icmp sgt i64 %.02533.i.i.i.i, 0
   br i1 %i.dy, label %.lr.ph.i.i.i.i, label %.lr.ph37.i.i.i.i, !llvm.loop !41
 
-.lr.ph.i.i.i.i:                                   ; preds = %._crit_edge.i.i, %bb.p
-  %.02533.i.i.i.i = phi i64 [ %i.dx, %bb.p ], [ %9, %._crit_edge.i.i ] ; 3 uses
+.lr.ph.i.i.i.i:                                   ; preds = %bb.p, %.lr.ph.i.i.i.preheader.i
+  %.02533.i.i.i.i = phi i64 [ %i.dx, %bb.p ], [ %9, %.lr.ph.i.i.i.preheader.i ] ; 3 uses
   %i.dz = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.02533.i.i.i.i
   %i.ea = load i32, ptr %i.dz, align 4, !tbaa !6
   %.not.i.i.i.i = icmp eq i32 %i.ea, 0
@@ -575,7 +578,7 @@ _ZN5arrowL12SingleDivideINS_15BasicDecimal256EEENS_13DecimalStatusEPKjljPT_bbS6_
   br label %_ZN5arrowL13DecimalDivideINS_15BasicDecimal256EEENS_13DecimalStatusERKT_S5_PS3_S6_.exit
 
 bb.z:                                             ; preds = %bb.o
-  %i.hs = sub i64 %i.bm, %.120.lcssa.i.i111.i     ; 7 uses
+  %i.hs = sub i64 %i.bm, %.120.lcssa.i.i111.i     ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #10
   %i.ht = load i32, ptr %i.c, align 16, !tbaa !6  ; 3 uses
   %i.hu = tail call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.ht, i1 false) ; 13 uses
@@ -829,17 +832,20 @@ scalar.ph138:                                     ; preds = %scalar.ph138.prehea
 
 _ZN5arrowL15ShiftArrayRightEPjll.exit.i:          ; preds = %._crit_edge.i132.i, %._crit_edge186.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  %10 = add i64 %i.hs, -9                         ; 2 uses
-  %i.lk = icmp sgt i64 %10, -1
-  br i1 %i.lk, label %.lr.ph.i.i135.i, label %.lr.ph37.preheader.i.i.i
+  %i.lk = icmp sgt i64 %i.hs, 8
+  br i1 %i.lk, label %.lr.ph.i.i135.preheader.i, label %.lr.ph37.preheader.i.i.i
+
+.lr.ph.i.i135.preheader.i:                        ; preds = %_ZN5arrowL15ShiftArrayRightEPjll.exit.i
+  %10 = add nsw i64 %i.hs, -9
+  br label %.lr.ph.i.i135.i
 
 bb.aa:                                            ; preds = %.lr.ph.i.i135.i
   %i.ll = add nsw i64 %.02533.i.i.i, -1
   %i.lm = icmp sgt i64 %.02533.i.i.i, 0
   br i1 %i.lm, label %.lr.ph.i.i135.i, label %.lr.ph37.preheader.i.i.i, !llvm.loop !41
 
-.lr.ph.i.i135.i:                                  ; preds = %_ZN5arrowL15ShiftArrayRightEPjll.exit.i, %bb.aa
-  %.02533.i.i.i = phi i64 [ %i.ll, %bb.aa ], [ %10, %_ZN5arrowL15ShiftArrayRightEPjll.exit.i ] ; 3 uses
+.lr.ph.i.i135.i:                                  ; preds = %bb.aa, %.lr.ph.i.i135.preheader.i
+  %.02533.i.i.i = phi i64 [ %i.ll, %bb.aa ], [ %10, %.lr.ph.i.i135.preheader.i ] ; 3 uses
   %i.ln = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.02533.i.i.i
   %i.lo = load i32, ptr %i.ln, align 4, !tbaa !6
   %.not.i.i136.i = icmp eq i32 %i.lo, 0

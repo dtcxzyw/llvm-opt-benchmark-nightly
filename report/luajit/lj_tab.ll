@@ -204,34 +204,35 @@ countint.exit:                                    ; preds = %counthash.exit, %bb
   br i1 %.not28.i, label %bestasize.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %countint.exit, %bb.w
-  %3 = phi i32 [ %i.dz, %bb.w ], [ 1, %countint.exit ]
-  %.026.i.a = phi i32 [ %.1.i, %bb.w ], [ 0, %countint.exit ] ; 2 uses
-  %.01625.i.a = phi i32 [ %.117.i, %bb.w ], [ 0, %countint.exit ] ; 2 uses
-  %.01824.i.a = phi i32 [ %.119.i, %bb.w ], [ 0, %countint.exit ] ; 2 uses
-  %.02023.i = phi i32 [ %5, %bb.w ], [ 0, %countint.exit ] ; 3 uses
-  %4 = zext i32 %.02023.i to i64
-  %i.ds = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %4
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.w ], [ 0, %countint.exit ] ; 4 uses
+  %.026.i.a = phi i32 [ %i.dz, %bb.w ], [ 1, %countint.exit ]
+  %.01625.i.a = phi i32 [ %.1.i, %bb.w ], [ 0, %countint.exit ] ; 2 uses
+  %.01824.i.a = phi i32 [ %.117.i, %bb.w ], [ 0, %countint.exit ] ; 2 uses
+  %.02023.i = phi i32 [ %.119.i, %bb.w ], [ 0, %countint.exit ] ; 2 uses
+  %i.ds = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !81 ; 2 uses
   %.not.i122 = icmp eq i32 %i.dt, 0
   br i1 %.not.i122, label %bb.w, label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph.i
-  %i.du = add i32 %i.dt, %.01824.i.a              ; 4 uses
+  %i.du = add i32 %i.dt, %.02023.i                ; 4 uses
   %i.dv = shl i32 %i.du, 1
-  %i.dw = icmp ugt i32 %i.dv, %3
+  %i.dw = icmp ugt i32 %i.dv, %.026.i.a
   br i1 %i.dw, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %i.dx = shl i32 2, %.02023.i
+  %3 = trunc nuw i64 %indvars.iv to i32
+  %i.dx = shl i32 2, %3
   %i.dy = or disjoint i32 %i.dx, 1
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u, %.lr.ph.i
-  %.119.i = phi i32 [ %i.du, %bb.v ], [ %i.du, %bb.u ], [ %.01824.i.a, %.lr.ph.i ] ; 2 uses
-  %.117.i = phi i32 [ %i.du, %bb.v ], [ %.01625.i.a, %bb.u ], [ %.01625.i.a, %.lr.ph.i ] ; 2 uses
-  %.1.i = phi i32 [ %i.dy, %bb.v ], [ %.026.i.a, %bb.u ], [ %.026.i.a, %.lr.ph.i ] ; 2 uses
-  %5 = add i32 %.02023.i, 1                       ; 2 uses
-  %i.dz = shl nuw i32 1, %5                       ; 2 uses
+  %.119.i = phi i32 [ %i.du, %bb.v ], [ %i.du, %bb.u ], [ %.02023.i, %.lr.ph.i ] ; 2 uses
+  %.117.i = phi i32 [ %i.du, %bb.v ], [ %.01824.i.a, %bb.u ], [ %.01824.i.a, %.lr.ph.i ] ; 2 uses
+  %.1.i = phi i32 [ %i.dy, %bb.v ], [ %.01625.i.a, %bb.u ], [ %.01625.i.a, %.lr.ph.i ] ; 2 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1
+  %4 = trunc nuw i64 %indvars.iv to i32
+  %i.dz = shl nuw i32 2, %4                       ; 2 uses
   %i.ea = icmp ugt i32 %i.dr, %i.dz
   %i.eb = icmp ne i32 %.119.i, %i.dq
   %i.ec = select i1 %i.ea, i1 %i.eb, i1 false

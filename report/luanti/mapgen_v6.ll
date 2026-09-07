@@ -204,7 +204,8 @@ bb.a:
   %i.u = phi ptr [ %i.ab, %._crit_edge154 ], [ %i.b, %bb.a ] ; 3 uses
   %i.v = phi i16 [ %i.ac, %._crit_edge154 ], [ %i.r, %bb.a ] ; 5 uses
   %i.w = phi i16 [ %i.ad, %._crit_edge154 ], [ %i.r, %bb.a ] ; 2 uses
-  %i.x = phi i1 [ true, %._crit_edge154 ], [ false, %bb.a ] ; 2 uses
+  %i.x = phi i1 [ true, %._crit_edge154 ], [ false, %bb.a ]
+  %3 = phi i1 [ false, %._crit_edge154 ], [ true, %bb.a ]
   %i.y = load i16, ptr %1, align 2, !tbaa !76     ; 3 uses
   %.not150 = icmp sgt i16 %i.y, %i.w
   br i1 %.not150, label %._crit_edge154, label %.lr.ph153
@@ -218,7 +219,7 @@ bb.a:
   %i.ab = phi ptr [ %i.u, %.lr.ph153 ], [ %i.u, %.split ], [ %i.aj, %._crit_edge149 ]
   %i.ac = phi i16 [ %i.v, %.lr.ph153 ], [ %i.v, %.split ], [ %i.ai, %._crit_edge149 ]
   %i.ad = phi i16 [ %i.v, %.lr.ph153 ], [ %i.w, %.split ], [ %i.ai, %._crit_edge149 ]
-  br i1 %i.x, label %.split157.us, label %.split, !llvm.loop !284
+  br i1 %3, label %.split, label %.split157.us, !llvm.loop !284
 
 .lr.ph153.split:                                  ; preds = %.lr.ph153, %._crit_edge149
   %i.ae = phi i16 [ %i.ai, %._crit_edge149 ], [ %i.t, %.lr.ph153 ] ; 2 uses

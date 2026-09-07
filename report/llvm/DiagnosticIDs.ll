@@ -204,12 +204,15 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load i32, ptr %i.h, align 4, !tbaa !53, !noalias !157 ; 2 uses
   %i.j = and i32 %i.i, -3
   %.not7.i = icmp eq i32 %i.j, 0
-  br i1 %.not7.i, label %_ZNK12_GLOBAL__N_117StaticDiagInfoRec18getLegacyStableIDsEv.exit.thread4, label %.lr.ph.i
+  br i1 %.not7.i, label %_ZNK12_GLOBAL__N_117StaticDiagInfoRec18getLegacyStableIDsEv.exit.thread4, label %.lr.ph.preheader.i
 
-.lr.ph.i:                                         ; preds = %bb.b, %_ZN4llvm23SmallVectorTemplateBaseINS_9StringRefELb1EE9push_backES1_.exit.i
-  %.08.i = phi i32 [ %4, %_ZN4llvm23SmallVectorTemplateBaseINS_9StringRefELb1EE9push_backES1_.exit.i ], [ %i.i, %bb.b ] ; 2 uses
-  %3 = zext i32 %.08.i to i64
-  %i.k = getelementptr inbounds nuw [4 x i8], ptr @_ZN12_GLOBAL__N_119DiagLegacyStableIDsE, i64 %3
+.lr.ph.preheader.i:                               ; preds = %bb.b
+  %3 = zext i32 %i.i to i64
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %_ZN4llvm23SmallVectorTemplateBaseINS_9StringRefELb1EE9push_backES1_.exit.i, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %3, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %_ZN4llvm23SmallVectorTemplateBaseINS_9StringRefELb1EE9push_backES1_.exit.i ] ; 2 uses
+  %i.k = getelementptr inbounds nuw [4 x i8], ptr @_ZN12_GLOBAL__N_119DiagLegacyStableIDsE, i64 %indvars.iv.i
   %i.l = load i32, ptr %i.k, align 4, !tbaa !53, !noalias !157
   %i.m = zext i32 %i.l to i64
   %i.n = getelementptr inbounds nuw i8, ptr @_ZN12_GLOBAL__N_120DiagStableIDsStorageE, i64 %i.m ; 3 uses
@@ -236,9 +239,9 @@ bb.d:                                             ; preds = %.lr.ph.i
   br label %_ZN4llvm23SmallVectorTemplateBaseINS_9StringRefELb1EE9push_backES1_.exit.i
 
 _ZN4llvm23SmallVectorTemplateBaseINS_9StringRefELb1EE9push_backES1_.exit.i: ; preds = %bb.d, %bb.c
-  %4 = add i32 %.08.i, 1                          ; 2 uses
-  %5 = and i32 %4, -3
-  %.not.i = icmp eq i32 %5, 0
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %4 = and i64 %indvars.iv.next.i, 4294967293
+  %.not.i = icmp eq i64 %4, 0
   br i1 %.not.i, label %_ZNK12_GLOBAL__N_117StaticDiagInfoRec18getLegacyStableIDsEv.exit.thread4, label %.lr.ph.i, !llvm.loop !156
 
 _ZNK12_GLOBAL__N_117StaticDiagInfoRec18getLegacyStableIDsEv.exit.thread: ; preds = %bb.a
