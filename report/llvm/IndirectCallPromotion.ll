@@ -205,7 +205,7 @@ _ZNK9__gnu_cxx5__ops14_Iter_less_valclISt16reverse_iteratorINS_17__normal_iterat
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt4pairImmESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_less_valEEvT_T0_SE_T1_RT2_.exit: ; preds = %bb.g, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclISt16reverse_iteratorINS_17__normal_iteratorIPSt4pairImmESt6vectorIS6_SaIS6_EEEEES6_EEbT_RT0_.exit.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclISt16reverse_iteratorINS_17__normal_iteratorIPSt4pairImmESt6vectorIS6_SaIS6_EEEEES6_EEbT_RT0_.exit.thread.i, %bb.f
   %.09.lcssa.i = phi i64 [ %.1, %bb.f ], [ %.0919.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclISt16reverse_iteratorINS_17__normal_iteratorIPSt4pairImmESt6vectorIS6_SaIS6_EEEEES6_EEbT_RT0_.exit.i ], [ %.020.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclISt16reverse_iteratorINS_17__normal_iteratorIPSt4pairImmESt6vectorIS6_SaIS6_EEEEES6_EEbT_RT0_.exit.thread.i ], [ %.0919.i, %bb.g ]
-  %i.bm = sub i64 0, %.09.lcssa.i
+  %i.bm = sub nsw i64 0, %.09.lcssa.i
   %i.bn = getelementptr inbounds [16 x i8], ptr %i.av, i64 %i.bm ; 2 uses
   %i.bo = getelementptr inbounds i8, ptr %i.bn, i64 -16
   store i64 %3, ptr %i.bo, align 8, !tbaa !394
@@ -608,7 +608,7 @@ _ZNK9__gnu_cxx5__ops14_Iter_less_valclISt16reverse_iteratorINS_17__normal_iterat
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt5tupleIJmPN4llvm6MCInstEPNS4_4bolt14BinaryFunctionEEESt6vectorISA_SaISA_EEEEElSA_NS1_5__ops14_Iter_less_valEEvT_T0_SK_T1_RT2_.exit: ; preds = %bb.i, %bb.k, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclISt16reverse_iteratorINS_17__normal_iteratorIPSt5tupleIJmPN4llvm6MCInstEPNS6_4bolt14BinaryFunctionEEESt6vectorISC_SaISC_EEEEESC_EEbT_RT0_.exit.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclISt16reverse_iteratorINS_17__normal_iteratorIPSt5tupleIJmPN4llvm6MCInstEPNS6_4bolt14BinaryFunctionEEESt6vectorISC_SaISC_EEEEESC_EEbT_RT0_.exit.thread.i, %bb.h
   %.09.lcssa.i = phi i64 [ %.121, %bb.h ], [ %.0917.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclISt16reverse_iteratorINS_17__normal_iteratorIPSt5tupleIJmPN4llvm6MCInstEPNS6_4bolt14BinaryFunctionEEESt6vectorISC_SaISC_EEEEESC_EEbT_RT0_.exit.i ], [ %.018.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclISt16reverse_iteratorINS_17__normal_iteratorIPSt5tupleIJmPN4llvm6MCInstEPNS6_4bolt14BinaryFunctionEEESt6vectorISC_SaISC_EEEEESC_EEbT_RT0_.exit.thread.i ], [ %.0917.i, %bb.k ], [ %.0917.i, %bb.i ]
-  %i.cl = sub i64 0, %.09.lcssa.i
+  %i.cl = sub nsw i64 0, %.09.lcssa.i
   %i.cm = getelementptr inbounds [24 x i8], ptr %i.bh, i64 %i.cl ; 3 uses
   %i.cn = getelementptr inbounds i8, ptr %i.cm, i64 -24
   %i.co = getelementptr inbounds i8, ptr %i.cm, i64 -8

@@ -24,7 +24,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXNtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB3_7UnaryOpINtNtB7_9primitive3RegdENtNtB7_5index4SlotENtB5_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB20_2Ip6decode9IpDecoderEB28_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXNtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB3_7UnaryOpINtNtB7_9primitive3RegdENtNtB7_5index4SlotENtB5_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB20_2Ip6decode9IpDecoderEB28_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -86,7 +86,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXNtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB3_7UnaryOpINtNtB7_9primitive3RegfENtNtB7_5index4SlotENtB5_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB20_2Ip6decode9IpDecoderEB28_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXNtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB3_7UnaryOpINtNtB7_9primitive3RegfENtNtB7_5index4SlotENtB5_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB20_2Ip6decode9IpDecoderEB28_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -98,7 +98,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXNtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB3_7UnaryOpINtNtB7_9primitive3RegfEfENtB5_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1J_2Ip6decode9IpDecoderEB1R_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXNtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB3_7UnaryOpINtNtB7_9primitive3RegfEfENtB5_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1J_2Ip6decode9IpDecoderEB1R_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXst_NtCs6kx5fqqPdgs_8wasmi_ir6decodefNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -128,7 +128,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXNtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB3_7UnaryOpINtNtB7_9primitive3RegxENtNtB7_5index4SlotENtB5_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB20_2Ip6decode9IpDecoderEB28_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXNtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB3_7UnaryOpINtNtB7_9primitive3RegxENtNtB7_5index4SlotENtB5_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB20_2Ip6decode9IpDecoderEB28_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -140,7 +140,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXNtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB3_7UnaryOpINtNtB7_9primitive3RegxEmENtB5_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1J_2Ip6decode9IpDecoderEB1R_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXNtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB3_7UnaryOpINtNtB7_9primitive3RegxEmENtB5_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1J_2Ip6decode9IpDecoderEB1R_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -543,7 +543,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegdEIBX_xEBW_NtNtBa_5index4SlotENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2d_2Ip6decode9IpDecoderEB2l_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegdEIBX_xEBW_NtNtBa_5index4SlotENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2d_2Ip6decode9IpDecoderEB2l_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -630,7 +630,7 @@ bb.f:                                             ; preds = %bb.d, %bb.b, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegdEIBX_xENtNtBa_5index4SlotBW_ENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2d_2Ip6decode9IpDecoderEB2l_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegdEIBX_xENtNtBa_5index4SlotBW_ENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2d_2Ip6decode9IpDecoderEB2l_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.619.0.extract.shift = and i64 %i.a, -4294967296
@@ -1033,7 +1033,7 @@ bb.h:                                             ; preds = %bb.b, %bb.d, %bb.f,
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegfEIBX_xEBW_NtNtBa_5index4SlotENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2d_2Ip6decode9IpDecoderEB2l_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegfEIBX_xEBW_NtNtBa_5index4SlotENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2d_2Ip6decode9IpDecoderEB2l_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -1045,7 +1045,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegfEIBX_xEBW_fENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1W_2Ip6decode9IpDecoderEB24_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegfEIBX_xEBW_fENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1W_2Ip6decode9IpDecoderEB24_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXst_NtCs6kx5fqqPdgs_8wasmi_ir6decodefNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -1100,7 +1100,7 @@ bb.f:                                             ; preds = %bb.d, %bb.b, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegfEIBX_xENtNtBa_5index4SlotBW_ENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2d_2Ip6decode9IpDecoderEB2l_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegfEIBX_xENtNtBa_5index4SlotBW_ENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2d_2Ip6decode9IpDecoderEB2l_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.619.0.extract.shift = and i64 %i.a, -4294967296
@@ -1155,7 +1155,7 @@ bb.f:                                             ; preds = %bb.d, %bb.b, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegfEIBX_xEfBW_ENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1W_2Ip6decode9IpDecoderEB24_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegfEIBX_xEfBW_ENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1W_2Ip6decode9IpDecoderEB24_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXst_NtCs6kx5fqqPdgs_8wasmi_ir6decodefNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.619.0.extract.shift = and i64 %i.a, -4294967296
@@ -1558,7 +1558,7 @@ bb.h:                                             ; preds = %bb.b, %bb.d, %bb.f,
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegxEBW_BW_NtNtBa_5index4SlotENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2a_2Ip6decode9IpDecoderEB2i_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegxEBW_BW_NtNtBa_5index4SlotENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2a_2Ip6decode9IpDecoderEB2i_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -1570,7 +1570,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegxEBW_BW_mENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1T_2Ip6decode9IpDecoderEB21_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegxEBW_BW_mENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1T_2Ip6decode9IpDecoderEB21_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -1657,7 +1657,7 @@ bb.f:                                             ; preds = %bb.d, %bb.b, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegxEBW_NtNtBa_5index4SlotBW_ENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2a_2Ip6decode9IpDecoderEB2i_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegxEBW_NtNtBa_5index4SlotBW_ENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2a_2Ip6decode9IpDecoderEB2i_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.619.0.extract.shift = and i64 %i.a, -4294967296
@@ -1760,7 +1760,7 @@ bb.f:                                             ; preds = %bb.d, %bb.b, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegxEBW_mBW_ENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1T_2Ip6decode9IpDecoderEB21_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs3_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8SelectOpINtNtBa_9primitive3RegxEBW_mBW_ENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1T_2Ip6decode9IpDecoderEB21_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.619.0.extract.shift = and i64 %i.a, -4294967296
@@ -2163,7 +2163,7 @@ bb.h:                                             ; preds = %bb.b, %bb.f, %bb.d,
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden i32 @_RINvXs6_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_18LoadOpMem0Offset16INtNtBa_9primitive3RegdEIB18_xEENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB24_2Ip6decode9IpDecoderEB2c_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i32 0, -254) i32 @_RINvXs6_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_18LoadOpMem0Offset16INtNtBa_9primitive3RegdEIB18_xEENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB24_2Ip6decode9IpDecoderEB2c_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i32 @_RINvXsw_NtCs6kx5fqqPdgs_8wasmi_ir6decodeNtNtB8_9primitive8Offset16NtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1t_2Ip6decode9IpDecoderEB1B_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i32 %i.a to i1
@@ -2218,7 +2218,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden i32 @_RINvXs6_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_18LoadOpMem0Offset16INtNtBa_9primitive3RegfEIB18_xEENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB24_2Ip6decode9IpDecoderEB2c_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i32 0, -254) i32 @_RINvXs6_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_18LoadOpMem0Offset16INtNtBa_9primitive3RegfEIB18_xEENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB24_2Ip6decode9IpDecoderEB2c_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i32 @_RINvXsw_NtCs6kx5fqqPdgs_8wasmi_ir6decodeNtNtB8_9primitive8Offset16NtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1t_2Ip6decode9IpDecoderEB1B_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i32 %i.a to i1
@@ -2273,7 +2273,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden i32 @_RINvXs6_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_18LoadOpMem0Offset16INtNtBa_9primitive3RegxEB17_ENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB21_2Ip6decode9IpDecoderEB29_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i32 0, -254) i32 @_RINvXs6_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_18LoadOpMem0Offset16INtNtBa_9primitive3RegxEB17_ENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB21_2Ip6decode9IpDecoderEB29_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i32 @_RINvXsw_NtCs6kx5fqqPdgs_8wasmi_ir6decodeNtNtB8_9primitive8Offset16NtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1t_2Ip6decode9IpDecoderEB1B_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i32 %i.a to i1
@@ -2676,7 +2676,7 @@ bb.h:                                             ; preds = %bb.b, %bb.f, %bb.d,
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden i32 @_RINvXs9_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_19StoreOpMem0Offset16INtNtBa_9primitive3RegxEIB19_dEENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB25_2Ip6decode9IpDecoderEB2d_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i32 0, -254) i32 @_RINvXs9_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_19StoreOpMem0Offset16INtNtBa_9primitive3RegxEIB19_dEENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB25_2Ip6decode9IpDecoderEB2d_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i32 @_RINvXsw_NtCs6kx5fqqPdgs_8wasmi_ir6decodeNtNtB8_9primitive8Offset16NtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1t_2Ip6decode9IpDecoderEB1B_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.512.0.extract.shift = and i32 %i.a, -65536
@@ -2688,7 +2688,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden i32 @_RINvXs9_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_19StoreOpMem0Offset16INtNtBa_9primitive3RegxEIB19_fEENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB25_2Ip6decode9IpDecoderEB2d_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i32 0, -254) i32 @_RINvXs9_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_19StoreOpMem0Offset16INtNtBa_9primitive3RegxEIB19_fEENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB25_2Ip6decode9IpDecoderEB2d_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i32 @_RINvXsw_NtCs6kx5fqqPdgs_8wasmi_ir6decodeNtNtB8_9primitive8Offset16NtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1t_2Ip6decode9IpDecoderEB1B_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.512.0.extract.shift = and i32 %i.a, -65536
@@ -2743,7 +2743,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i48 0, 1099511627776) i48 @_RINvXs9_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_19StoreOpMem0Offset16INtNtBa_9primitive3RegxEaENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1Z_2Ip6decode9IpDecoderEB27_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i48 0, 1099511627522) i48 @_RINvXs9_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_19StoreOpMem0Offset16INtNtBa_9primitive3RegxEaENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1Z_2Ip6decode9IpDecoderEB27_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i32 @_RINvXsw_NtCs6kx5fqqPdgs_8wasmi_ir6decodeNtNtB8_9primitive8Offset16NtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1t_2Ip6decode9IpDecoderEB1B_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i32 %i.a to i1
@@ -2870,7 +2870,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden i48 @_RINvXs9_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_19StoreOpMem0Offset16INtNtBa_9primitive3RegxEsENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1Z_2Ip6decode9IpDecoderEB27_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i48 0, -254) i48 @_RINvXs9_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_19StoreOpMem0Offset16INtNtBa_9primitive3RegxEsENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1Z_2Ip6decode9IpDecoderEB27_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i32 @_RINvXsw_NtCs6kx5fqqPdgs_8wasmi_ir6decodeNtNtB8_9primitive8Offset16NtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1t_2Ip6decode9IpDecoderEB1B_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.515.0.extract.shift = lshr i32 %i.a, 16
@@ -3273,7 +3273,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegdEBV_NtNtB9_5index4SlotENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB26_2Ip6decode9IpDecoderEB2e_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegdEBV_NtNtB9_5index4SlotENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB26_2Ip6decode9IpDecoderEB2e_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -3360,7 +3360,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegdENtNtB9_5index4SlotBV_ENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB26_2Ip6decode9IpDecoderEB2e_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegdENtNtB9_5index4SlotBV_ENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB26_2Ip6decode9IpDecoderEB2e_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.616.0.extract.shift = and i64 %i.a, -4294967296
@@ -3506,7 +3506,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegfEBV_NtNtB9_5index4SlotENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB26_2Ip6decode9IpDecoderEB2e_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegfEBV_NtNtB9_5index4SlotENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB26_2Ip6decode9IpDecoderEB2e_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -3518,7 +3518,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegfEBV_fENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1P_2Ip6decode9IpDecoderEB1X_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegfEBV_fENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1P_2Ip6decode9IpDecoderEB1X_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXst_NtCs6kx5fqqPdgs_8wasmi_ir6decodefNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -3573,7 +3573,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegfENtNtB9_5index4SlotBV_ENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB26_2Ip6decode9IpDecoderEB2e_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegfENtNtB9_5index4SlotBV_ENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB26_2Ip6decode9IpDecoderEB2e_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.616.0.extract.shift = and i64 %i.a, -4294967296
@@ -3628,7 +3628,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegfEfBV_ENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1P_2Ip6decode9IpDecoderEB1X_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegfEfBV_ENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1P_2Ip6decode9IpDecoderEB1X_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXst_NtCs6kx5fqqPdgs_8wasmi_ir6decodefNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.616.0.extract.shift = and i64 %i.a, -4294967296
@@ -3689,7 +3689,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEBV_INtNtNtCskKLDkoKarTP_4core3num7nonzero7NonZerolEENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2A_2Ip6decode9IpDecoderEB2I_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEBV_INtNtNtCskKLDkoKarTP_4core3num7nonzero7NonZerolEENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2A_2Ip6decode9IpDecoderEB2I_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsp_NtCs6kx5fqqPdgs_8wasmi_ir6decodelNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 4 uses
   %i.b = trunc i64 %i.a to i1                     ; 2 uses
@@ -3706,7 +3706,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEBV_INtNtNtCskKLDkoKarTP_4core3num7nonzero7NonZeromEENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2A_2Ip6decode9IpDecoderEB2I_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEBV_INtNtNtCskKLDkoKarTP_4core3num7nonzero7NonZeromEENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB2A_2Ip6decode9IpDecoderEB2I_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 4 uses
   %i.b = trunc i64 %i.a to i1                     ; 2 uses
@@ -3803,7 +3803,7 @@ bb.e:                                             ; preds = %bb.d, %_RINvXsP_NtC
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEBV_NtNtB9_5index4SlotENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB26_2Ip6decode9IpDecoderEB2e_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEBV_NtNtB9_5index4SlotENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB26_2Ip6decode9IpDecoderEB2e_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -3822,7 +3822,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEBV_lENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1P_2Ip6decode9IpDecoderEB1X_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEBV_lENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1P_2Ip6decode9IpDecoderEB1X_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsp_NtCs6kx5fqqPdgs_8wasmi_ir6decodelNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -3834,7 +3834,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEBV_mENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1P_2Ip6decode9IpDecoderEB1X_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEBV_mENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1P_2Ip6decode9IpDecoderEB1X_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -3910,7 +3910,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEIBW_dENtNtB9_5index4SlotENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB29_2Ip6decode9IpDecoderEB2h_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEIBW_dENtNtB9_5index4SlotENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB29_2Ip6decode9IpDecoderEB2h_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -3954,7 +3954,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEIBW_fENtNtB9_5index4SlotENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB29_2Ip6decode9IpDecoderEB2h_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEIBW_fENtNtB9_5index4SlotENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB29_2Ip6decode9IpDecoderEB2h_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -3966,7 +3966,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEIBW_fEfENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1S_2Ip6decode9IpDecoderEB20_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEIBW_fEfENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1S_2Ip6decode9IpDecoderEB20_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXst_NtCs6kx5fqqPdgs_8wasmi_ir6decodefNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -4021,7 +4021,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxENtNtB9_5index4SlotBV_ENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB26_2Ip6decode9IpDecoderEB2e_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxENtNtB9_5index4SlotBV_ENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB26_2Ip6decode9IpDecoderEB2e_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.616.0.extract.shift = and i64 %i.a, -4294967296
@@ -4033,7 +4033,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxENtNtB9_5index4SlotIBW_dEENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB29_2Ip6decode9IpDecoderEB2h_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxENtNtB9_5index4SlotIBW_dEENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB29_2Ip6decode9IpDecoderEB2h_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.616.0.extract.shift = and i64 %i.a, -4294967296
@@ -4045,7 +4045,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxENtNtB9_5index4SlotIBW_fEENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB29_2Ip6decode9IpDecoderEB2h_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxENtNtB9_5index4SlotIBW_fEENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB29_2Ip6decode9IpDecoderEB2h_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.616.0.extract.shift = and i64 %i.a, -4294967296
@@ -4448,7 +4448,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEfIBW_fEENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1S_2Ip6decode9IpDecoderEB20_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEfIBW_fEENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1S_2Ip6decode9IpDecoderEB20_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXst_NtCs6kx5fqqPdgs_8wasmi_ir6decodefNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.616.0.extract.shift = and i64 %i.a, -4294967296
@@ -4503,7 +4503,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxElBV_ENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1P_2Ip6decode9IpDecoderEB1X_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxElBV_ENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1P_2Ip6decode9IpDecoderEB1X_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsp_NtCs6kx5fqqPdgs_8wasmi_ir6decodelNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.616.0.extract.shift = and i64 %i.a, -4294967296
@@ -4558,7 +4558,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEmBV_ENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1P_2Ip6decode9IpDecoderEB1X_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB5_8BinaryOpINtNtB9_9primitive3RegxEmBV_ENtB7_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1P_2Ip6decode9IpDecoderEB1X_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsj_NtCs6kx5fqqPdgs_8wasmi_ir6decodemNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB14_2Ip6decode9IpDecoderEB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %.sroa.616.0.extract.shift = and i64 %i.a, -4294967296
@@ -4961,7 +4961,7 @@ bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXse_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8TableGetINtNtBa_9primitive3RegxEENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1M_2Ip6decode9IpDecoderEB1U_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXse_NtNtCs6kx5fqqPdgs_8wasmi_ir6decode2opINtB6_8TableGetINtNtBa_9primitive3RegxEENtB8_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1M_2Ip6decode9IpDecoderEB1U_(ptr noalias nofree noundef align 8 dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @_RINvXsF_NtCs6kx5fqqPdgs_8wasmi_ir6decodeNtNtB8_5index9TableAddrNtB6_6Decode6decodeNtNvMsd_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB1q_2Ip6decode9IpDecoderEB1y_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %0) ; 3 uses
   %i.b = trunc i64 %i.a to i1

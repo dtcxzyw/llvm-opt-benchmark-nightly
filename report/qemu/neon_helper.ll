@@ -204,7 +204,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local i32 @helper_neon_tst_u8(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
+define dso_local range(i32 -16777216, 16777216) i32 @helper_neon_tst_u8(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = and i32 %1, %0                           ; 4 uses
   %i.b = and i32 %i.a, 255
@@ -247,7 +247,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i32 0, 135266304) i32 @helper_neon_clz_u8(i32 noundef %0) local_unnamed_addr #0 {
+define dso_local range(i32 0, 134744073) i32 @helper_neon_clz_u8(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %.sroa.03.0.extract.trunc = trunc i32 %0 to i8
   %.sroa.54.0.extract.shift = lshr i32 %0, 8
@@ -274,7 +274,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i32 0, 1048608) i32 @helper_neon_clz_u16(i32 noundef %0) local_unnamed_addr #0 {
+define dso_local range(i32 0, 1048593) i32 @helper_neon_clz_u16(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %.sroa.03.0.extract.trunc = trunc i32 %0 to i16
   %.sroa.54.0.extract.shift = lshr i32 %0, 16
@@ -289,7 +289,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local i32 @helper_neon_cls_s8(i32 noundef %0) local_unnamed_addr #0 {
+define dso_local range(i32 -16777216, 134217728) i32 @helper_neon_cls_s8(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %sext = shl i32 %0, 24
   %.lobit = ashr i32 %sext, 31
@@ -692,7 +692,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i64 0, 71777218572845056) i64 @helper_neon_widen_u8(i32 noundef %0) local_unnamed_addr #0 {
+define dso_local range(i64 0, 71777214294589696) i64 @helper_neon_widen_u8(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = and i32 %0, 255
   %i.b = shl i32 %0, 8
@@ -751,7 +751,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local i64 @helper_neon_widen_s16(i32 noundef %0) local_unnamed_addr #0 {
+define dso_local range(i64 -140737488355328, 140741783322623) i64 @helper_neon_widen_s16(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = lshr i32 %0, 16
   %i.b = zext nneg i32 %i.a to i64
@@ -784,7 +784,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local i64 @helper_neon_addlp_s16(i64 noundef %0) local_unnamed_addr #0 {
+define dso_local range(i64 -281474976710656, 281470681743360) i64 @helper_neon_addlp_s16(i64 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %sext = shl i64 %0, 48
   %i.a = ashr exact i64 %sext, 48
@@ -875,7 +875,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i64 0, 71777218572845056) i64 @helper_neon_abdl_u16(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
+define dso_local range(i64 0, 71777214294589696) i64 @helper_neon_abdl_u16(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = and i32 %0, 255                          ; 3 uses
   %i.b = and i32 %1, 255                          ; 3 uses
@@ -1022,7 +1022,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i64 0, -143552238122434560) i64 @helper_neon_mull_u8(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
+define dso_local range(i64 0, -143554428589179390) i64 @helper_neon_mull_u8(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = and i32 %0, 255
   %i.b = and i32 %1, 255
@@ -1088,7 +1088,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local range(i64 0, -562941363486720) i64 @helper_neon_mull_u16(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
+define dso_local range(i64 0, -562941363617790) i64 @helper_neon_mull_u16(i32 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = and i32 %0, 65535
   %i.b = and i32 %1, 65535

@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 declare void @PyErr_SetString(ptr noundef, ptr noundef) local_unnamed_addr #5
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc range(i32 65536, 131072) i32 @_ZL13GetDLPackTypemi(i64 noundef %0, i32 noundef %1) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define internal fastcc range(i32 65536, 129031) i32 @_ZL13GetDLPackTypemi(i64 noundef %0, i32 noundef %1) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %3 = alloca %"class.std::allocator", align 1    ; 3 uses

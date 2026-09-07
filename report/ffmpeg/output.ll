@@ -204,7 +204,7 @@ yuv2rgb_write_full.exit:                          ; preds = %bb.d, %bb.e, %bb.f,
   %i.ji = shl nsw i32 %.0225.i, 3
   %i.jj = or disjoint i32 %i.jh, %i.ji
   %i.jk = add nsw i32 %i.jj, %.0.i11
-  %i.jl = trunc i32 %i.jk to i8
+  %i.jl = trunc nsw i32 %i.jk to i8
   store i8 %i.jl, ptr %.079.i39, align 1, !tbaa !108
   %i.jm = getelementptr inbounds nuw i8, ptr %.079.i39, i64 1
   %indvars.iv.next55 = add nuw nsw i64 %indvars.iv54, 1 ; 2 uses
@@ -514,7 +514,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f,
   %i.gv = shl nsw i32 %.0225.i.i, 3
   %i.gw = or disjoint i32 %i.gu, %i.gv
   %i.gx = add nsw i32 %i.gw, %.0.i74.i
-  %i.gy = trunc i32 %i.gx to i8
+  %i.gy = trunc nsw i32 %i.gx to i8
   store i8 %i.gy, ptr %.072.i22, align 1, !tbaa !108
   %i.gz = getelementptr inbounds nuw i8, ptr %.072.i22, i64 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -801,7 +801,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f,
   %i.fv = shl nsw i32 %.0225.i119.i, 3
   %i.fw = or disjoint i32 %i.fu, %i.fv
   %i.fx = add nsw i32 %i.fw, %.0.i121.i
-  %i.fy = trunc i32 %i.fx to i8
+  %i.fy = trunc nsw i32 %i.fx to i8
   store i8 %i.fy, ptr %.087.i40, align 1, !tbaa !108
   %i.fz = getelementptr inbounds nuw i8, ptr %.087.i40, i64 1
   %indvars.iv.next51 = add nuw nsw i64 %indvars.iv50, 1 ; 2 uses
@@ -1073,7 +1073,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o,
   %i.nj = shl nsw i32 %.0225.i.i, 3
   %i.nk = or disjoint i32 %i.ni, %i.nj
   %i.nl = add nsw i32 %i.nk, %.0.i95.i
-  %i.nm = trunc i32 %i.nl to i8
+  %i.nm = trunc nsw i32 %i.nl to i8
   store i8 %i.nm, ptr %.188.i32, align 1, !tbaa !108
   %i.nn = getelementptr inbounds nuw i8, ptr %.188.i32, i64 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses

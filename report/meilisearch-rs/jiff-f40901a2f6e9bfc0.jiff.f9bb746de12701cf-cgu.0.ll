@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g, %switch.looku
 }
 
 ; Function Attrs: cold noinline nonlazybind uwtable
-define range(i64 1536, 4785070309115904) i64 @"_ZN4jiff3fmt7strtime7printer18Formatter$LT$L$GT$20utf8_decode_and_bump17hc14e020fee076472E"(ptr noalias nofree noundef align 8 captures(none) dereferenceable(40) %0) unnamed_addr #2 {
+define range(i64 1536, 4785070309115395) i64 @"_ZN4jiff3fmt7strtime7printer18Formatter$LT$L$GT$20utf8_decode_and_bump17hc14e020fee076472E"(ptr noalias nofree noundef align 8 captures(none) dereferenceable(40) %0) unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !nonnull !11, !align !13, !noundef !11 ; 2 uses
@@ -608,7 +608,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i64 6400, -4294959104) i64 @_ZN4jiff4util1b10SpanMonths11checked_add17hb891e4cd14f7afcdE(i32 noundef %0, i32 noundef %1) unnamed_addr #10 {
+define range(i64 6400, -4294960894) i64 @_ZN4jiff4util1b10SpanMonths11checked_add17hb891e4cd14f7afcdE(i32 noundef %0, i32 noundef %1) unnamed_addr #10 {
 bb.a:
   %i.a = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %0, i32 %1) ; 2 uses
   %i.b = extractvalue { i32, i1 } %i.a, 1
@@ -631,7 +631,7 @@ _ZN4jiff4util1b6Bounds11checked_add17hc125ea3836743cdfE.exit: ; preds = %bb.a, %
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i64 6400, -4294959104) i64 @_ZN4jiff4util1b10SpanMonths11checked_mul17hee0889978bf91a30E(i32 noundef %0, i32 noundef %1) unnamed_addr #10 {
+define range(i64 6400, -4294960894) i64 @_ZN4jiff4util1b10SpanMonths11checked_mul17hee0889978bf91a30E(i32 noundef %0, i32 noundef %1) unnamed_addr #10 {
 bb.a:
   %i.a = tail call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %0, i32 %1) ; 2 uses
   %i.b = extractvalue { i32, i1 } %i.a, 1
@@ -756,7 +756,7 @@ _ZN4jiff4util1b6Bounds11checked_add17hec9854c1106d8c5aE.exit: ; preds = %bb.c, %
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i64 9472, -4294950912) i64 @_ZN4jiff4util1b13UnixEpochDays11checked_add17h8a2bbf09dbbcde82E(i32 noundef %0, i32 noundef %1) unnamed_addr #10 {
+define range(i64 9472, -4294957822) i64 @_ZN4jiff4util1b13UnixEpochDays11checked_add17h8a2bbf09dbbcde82E(i32 noundef %0, i32 noundef %1) unnamed_addr #10 {
 bb.a:
   %i.a = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %0, i32 %1) ; 2 uses
   %i.b = extractvalue { i32, i1 } %i.a, 1
@@ -779,7 +779,7 @@ _ZN4jiff4util1b6Bounds11checked_add17ha5d51641ae2c33a7E.exit: ; preds = %bb.a, %
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i64 9472, -4294950912) i64 @_ZN4jiff4util1b13UnixEpochDays11checked_sub17hb21b2a799e3f9535E(i32 noundef %0, i32 noundef %1) unnamed_addr #10 {
+define range(i64 9472, -4294957822) i64 @_ZN4jiff4util1b13UnixEpochDays11checked_sub17hb21b2a799e3f9535E(i32 noundef %0, i32 noundef %1) unnamed_addr #10 {
 bb.a:
   %i.a = tail call { i32, i1 } @llvm.ssub.with.overflow.i32(i32 %0, i32 %1) ; 2 uses
   %i.b = extractvalue { i32, i1 } %i.a, 1
@@ -945,7 +945,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i32 11776, -49152) i32 @_ZN4jiff4util1b4Year11checked_add17h9fb00f33f2a92d1cE(i16 noundef %0, i16 noundef %1) unnamed_addr #10 {
+define range(i32 11776, -53758) i32 @_ZN4jiff4util1b4Year11checked_add17h9fb00f33f2a92d1cE(i16 noundef %0, i16 noundef %1) unnamed_addr #10 {
 bb.a:
   %i.a = tail call { i16, i1 } @llvm.sadd.with.overflow.i16(i16 %0, i16 %1) ; 2 uses
   %i.b = extractvalue { i16, i1 } %i.a, 1
@@ -968,7 +968,7 @@ _ZN4jiff4util1b6Bounds11checked_add17h26828f30f8f67341E.exit: ; preds = %bb.a, %
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i32 11776, -49152) i32 @_ZN4jiff4util1b4Year11checked_sub17hadbc62a0b4ade9fdE(i16 noundef %0, i16 noundef %1) unnamed_addr #10 {
+define range(i32 11776, -53758) i32 @_ZN4jiff4util1b4Year11checked_sub17hadbc62a0b4ade9fdE(i16 noundef %0, i16 noundef %1) unnamed_addr #10 {
 bb.a:
   %i.a = tail call { i16, i1 } @llvm.ssub.with.overflow.i16(i16 %0, i16 %1) ; 2 uses
   %i.b = extractvalue { i16, i1 } %i.a, 1
@@ -991,7 +991,7 @@ _ZN4jiff4util1b6Bounds11checked_sub17h40cd997af5fc04e0E.exit: ; preds = %bb.a, %
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i64 6912, -4294959104) i64 @_ZN4jiff4util1b8SpanDays11checked_mul17h23b56108a19042e1E(i32 noundef %0, i32 noundef %1) unnamed_addr #10 {
+define range(i64 6912, -4294960382) i64 @_ZN4jiff4util1b8SpanDays11checked_mul17h23b56108a19042e1E(i32 noundef %0, i32 noundef %1) unnamed_addr #10 {
 bb.a:
   %i.a = tail call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %0, i32 %1) ; 2 uses
   %i.b = extractvalue { i32, i1 } %i.a, 1
@@ -1014,7 +1014,7 @@ _ZN4jiff4util1b6Bounds11checked_mul17ha0eb687cb9b4aafaE.exit: ; preds = %bb.a, %
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i64 7168, -4294959104) i64 @_ZN4jiff4util1b9SpanHours11checked_mul17hd1c7d916c0c27292E(i32 noundef %0, i32 noundef %1) unnamed_addr #10 {
+define range(i64 7168, -4294960126) i64 @_ZN4jiff4util1b9SpanHours11checked_mul17hd1c7d916c0c27292E(i32 noundef %0, i32 noundef %1) unnamed_addr #10 {
 bb.a:
   %i.a = tail call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %0, i32 %1) ; 2 uses
   %i.b = extractvalue { i32, i1 } %i.a, 1
@@ -1037,7 +1037,7 @@ _ZN4jiff4util1b6Bounds11checked_mul17h01f7ae15151cecc6E.exit: ; preds = %bb.a, %
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i64 6656, -4294959104) i64 @_ZN4jiff4util1b9SpanWeeks11checked_mul17h218987d5d21ad98bE(i32 noundef %0, i32 noundef %1) unnamed_addr #10 {
+define range(i64 6656, -4294960638) i64 @_ZN4jiff4util1b9SpanWeeks11checked_mul17h218987d5d21ad98bE(i32 noundef %0, i32 noundef %1) unnamed_addr #10 {
 bb.a:
   %i.a = tail call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %0, i32 %1) ; 2 uses
   %i.b = extractvalue { i32, i1 } %i.a, 1
@@ -1060,7 +1060,7 @@ _ZN4jiff4util1b6Bounds11checked_mul17he76e0694188e44d2E.exit: ; preds = %bb.a, %
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i32 6144, -57344) i32 @_ZN4jiff4util1b9SpanYears11checked_mul17hcb6e2bdbbf72b03eE(i16 noundef %0, i16 noundef %1) unnamed_addr #10 {
+define range(i32 6144, -59390) i32 @_ZN4jiff4util1b9SpanYears11checked_mul17hcb6e2bdbbf72b03eE(i16 noundef %0, i16 noundef %1) unnamed_addr #10 {
 bb.a:
   %i.a = tail call { i16, i1 } @llvm.smul.with.overflow.i16(i16 %0, i16 %1) ; 2 uses
   %i.b = extractvalue { i16, i1 } %i.a, 1
@@ -1083,7 +1083,7 @@ _ZN4jiff4util1b6Bounds11checked_mul17hc000025fd6d4c56dE.exit: ; preds = %bb.a, %
 }
 
 ; Function Attrs: nonlazybind uwtable
-define range(i64 0, 4785070309113860) i64 @_ZN4jiff4util4utf86decode17h97ece18b6d229b67E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define range(i64 0, 4785070309113859) i64 @_ZN4jiff4util4utf86decode17h97ece18b6d229b67E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
@@ -1486,7 +1486,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc range(i32 16777216, 239075328) i32 @_ZN4jiff5civil4date4Date13iso_week_date17h9b3eef013f4844cdE(i32 %0) unnamed_addr #5 personality ptr @rust_eh_personality {
+define internal fastcc range(i32 16777216, 238419968) i32 @_ZN4jiff5civil4date4Date13iso_week_date17h9b3eef013f4844cdE(i32 %0) unnamed_addr #5 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [8 x i8], align 8                 ; 5 uses
@@ -1889,7 +1889,7 @@ _ZN4jiff6shared4util5itime9IEpochDay11checked_add17h784528d60a7c525aE.exit: ; pr
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define internal fastcc range(i48 131072, -65534) i48 @_ZN4jiff6shared4util5itime5IDate20nth_weekday_of_month17h606984929501b6ceE(i16 %.0.val, i8 %.2.val, i8 noundef range(i8 6, 5) %0, i8 noundef range(i8 1, 8) %1) unnamed_addr #16 {
+define internal fastcc range(i48 131072, -16646142) i48 @_ZN4jiff6shared4util5itime5IDate20nth_weekday_of_month17h606984929501b6ceE(i16 %.0.val, i8 %.2.val, i8 noundef range(i8 6, 5) %0, i8 noundef range(i8 1, 8) %1) unnamed_addr #16 {
 bb.a:
   %i.a = icmp ne i8 %0, 0
   %i.b = add i8 %0, 5

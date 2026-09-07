@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %"_ZZN12_GLOBAL__N_1
   %.sroa.0.0.insert.ext.i.i = add nuw nsw i64 %i.dw, 1
   %.sroa.2.0.insert.shift.i.i = shl nuw nsw i64 %i.dw, 32
   %.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.2.0.insert.shift.i.i, %.sroa.0.0.insert.ext.i.i
-  %i.dx = call fastcc range(i64 0, 1705102017024) i64 @"_ZZN12_GLOBAL__N_116HexagonAsmParser18processInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEENS1_5SMLocEENK3$_0clESt4pairIjjE"(ptr noundef nonnull readonly align 8 dereferenceable(40) %i.ae, i64 %.sroa.0.0.insert.insert.i.i) ; 2 uses
+  %i.dx = call fastcc range(i64 0, 1705102016910) i64 @"_ZZN12_GLOBAL__N_116HexagonAsmParser18processInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEENS1_5SMLocEENK3$_0clESt4pairIjjE"(ptr noundef nonnull readonly align 8 dereferenceable(40) %i.ae, i64 %.sroa.0.0.insert.insert.i.i) ; 2 uses
   %.sroa.0380.0.extract.trunc = trunc i64 %i.dx to i32
   %.sroa.4381.0.extract.shift = lshr i64 %i.dx, 32
   store i32 %.sroa.0380.0.extract.trunc, ptr %i.dp, align 8, !tbaa !92
@@ -227,7 +227,7 @@ bb.o:                                             ; preds = %"_ZZN12_GLOBAL__N_1
   %.sroa.0.0.insert.ext.i.i674 = add nuw nsw i64 %i.eh, 1
   %.sroa.2.0.insert.shift.i.i675 = shl nuw nsw i64 %i.eh, 32
   %.sroa.0.0.insert.insert.i.i676 = or disjoint i64 %.sroa.2.0.insert.shift.i.i675, %.sroa.0.0.insert.ext.i.i674
-  %i.ei = call fastcc range(i64 0, 1705102017024) i64 @"_ZZN12_GLOBAL__N_116HexagonAsmParser18processInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEENS1_5SMLocEENK3$_0clESt4pairIjjE"(ptr noundef nonnull readonly align 8 dereferenceable(40) %i.ae, i64 %.sroa.0.0.insert.insert.i.i676) ; 2 uses
+  %i.ei = call fastcc range(i64 0, 1705102016910) i64 @"_ZZN12_GLOBAL__N_116HexagonAsmParser18processInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEENS1_5SMLocEENK3$_0clESt4pairIjjE"(ptr noundef nonnull readonly align 8 dereferenceable(40) %i.ae, i64 %.sroa.0.0.insert.insert.i.i676) ; 2 uses
   %.sroa.0371.0.extract.trunc = trunc i64 %i.ei to i32
   %.sroa.4372.0.extract.shift = lshr i64 %i.ei, 32 ; 2 uses
   store i32 %.sroa.0371.0.extract.trunc, ptr %i.ea, align 8, !tbaa !92
@@ -275,7 +275,7 @@ bb.r:                                             ; preds = %"_ZZN12_GLOBAL__N_1
   %.sroa.0.0.insert.ext.i.i678 = add nuw nsw i64 %i.fe, 1
   %.sroa.2.0.insert.shift.i.i679 = shl nuw nsw i64 %i.fe, 32
   %.sroa.0.0.insert.insert.i.i680 = or disjoint i64 %.sroa.2.0.insert.shift.i.i679, %.sroa.0.0.insert.ext.i.i678
-  %i.ff = call fastcc range(i64 0, 1705102017024) i64 @"_ZZN12_GLOBAL__N_116HexagonAsmParser18processInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEENS1_5SMLocEENK3$_0clESt4pairIjjE"(ptr noundef nonnull readonly align 8 dereferenceable(40) %i.ae, i64 %.sroa.0.0.insert.insert.i.i680) ; 2 uses
+  %i.ff = call fastcc range(i64 0, 1705102016910) i64 @"_ZZN12_GLOBAL__N_116HexagonAsmParser18processInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEENS1_5SMLocEENK3$_0clESt4pairIjjE"(ptr noundef nonnull readonly align 8 dereferenceable(40) %i.ae, i64 %.sroa.0.0.insert.insert.i.i680) ; 2 uses
   %.sroa.0362.0.extract.trunc = trunc i64 %i.ff to i32
   %.sroa.4363.0.extract.shift = lshr i64 %i.ff, 32 ; 2 uses
   store i32 %.sroa.0362.0.extract.trunc, ptr %i.ex, align 8, !tbaa !92
@@ -315,7 +315,7 @@ bb.u:                                             ; preds = %"_ZZN12_GLOBAL__N_1
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 24 ; 2 uses
   %i.fv = load i32, ptr %i.fu, align 8, !tbaa !92
   %i.fw = call i64 @_ZN4llvm18HexagonMCInstrInfo20GetVecRegPairIndicesENS_10MCRegisterE(i32 %i.fv) #22
-  %i.fx = call fastcc range(i64 0, 1705102017024) i64 @"_ZZN12_GLOBAL__N_116HexagonAsmParser18processInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEENS1_5SMLocEENK3$_0clESt4pairIjjE"(ptr noundef nonnull readonly align 8 dereferenceable(40) %10, i64 %i.fw) ; 2 uses
+  %i.fx = call fastcc range(i64 0, 1705102016910) i64 @"_ZZN12_GLOBAL__N_116HexagonAsmParser18processInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEENS1_5SMLocEENK3$_0clESt4pairIjjE"(ptr noundef nonnull readonly align 8 dereferenceable(40) %10, i64 %i.fw) ; 2 uses
   %.sroa.0354.0.extract.trunc = trunc i64 %i.fx to i32
   %.sroa.4.0.extract.shift = lshr i64 %i.fx, 32
   store i32 %.sroa.0354.0.extract.trunc, ptr %i.fu, align 8, !tbaa !92
@@ -718,7 +718,7 @@ bb.g:                                             ; preds = %_ZNSt7__cxx1112basi
 }
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
-define internal fastcc range(i64 0, 1705102017024) i64 @"_ZZN12_GLOBAL__N_116HexagonAsmParser18processInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEENS1_5SMLocEENK3$_0clESt4pairIjjE"(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0, i64 %1) unnamed_addr #1 align 2 {
+define internal fastcc range(i64 0, 1705102016910) i64 @"_ZZN12_GLOBAL__N_116HexagonAsmParser18processInstructionERN4llvm6MCInstERKNS1_15SmallVectorImplISt10unique_ptrINS1_18MCParsedAsmOperandESt14default_deleteIS6_EEEENS1_5SMLocEENK3$_0clESt4pairIjjE"(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0, i64 %1) unnamed_addr #1 align 2 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca [21 x i8], align 16               ; 4 uses

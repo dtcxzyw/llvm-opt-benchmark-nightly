@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %bb.y
   %i.fj = add nsw i64 %.neg.i36, %i.fd
   %i.fk = shl nsw i64 %i.fj, 8
   %i.fl = or disjoint i64 %i.fk, %i.fi
-  %i.fm = trunc i64 %i.fl to i32
+  %i.fm = trunc nsw i64 %i.fl to i32
   store i32 %i.fm, ptr %.289, align 4, !tbaa !19
   %i.fn = getelementptr inbounds nuw i8, ptr %.188, i64 12
   store i32 64, ptr %i.fn, align 4, !tbaa !19
@@ -398,7 +398,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.iv = add nsw i64 %.neg.i46, %i.ip
   %i.iw = shl nsw i64 %i.iv, 8
   %i.ix = or disjoint i64 %i.iw, %i.iu
-  %i.iy = trunc i64 %i.ix to i32
+  %i.iy = trunc nsw i64 %i.ix to i32
   br label %EmitCopyLen.exit
 
 bb.ak:                                            ; preds = %bb.ai
@@ -801,7 +801,7 @@ bb.z:                                             ; preds = %bb.y
   %i.fj = add nsw i64 %.neg.i36, %i.fd
   %i.fk = shl nsw i64 %i.fj, 8
   %i.fl = or disjoint i64 %i.fk, %i.fi
-  %i.fm = trunc i64 %i.fl to i32
+  %i.fm = trunc nsw i64 %i.fl to i32
   store i32 %i.fm, ptr %.289, align 4, !tbaa !19
   %i.fn = getelementptr inbounds nuw i8, ptr %.188, i64 12
   store i32 64, ptr %i.fn, align 4, !tbaa !19
@@ -994,7 +994,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.iv = add nsw i64 %.neg.i46, %i.ip
   %i.iw = shl nsw i64 %i.iv, 8
   %i.ix = or disjoint i64 %i.iw, %i.iu
-  %i.iy = trunc i64 %i.ix to i32
+  %i.iy = trunc nsw i64 %i.ix to i32
   br label %EmitCopyLen.exit
 
 bb.ak:                                            ; preds = %bb.ai
@@ -1397,7 +1397,7 @@ bb.z:                                             ; preds = %bb.y
   %i.fj = add nsw i64 %.neg.i36, %i.fd
   %i.fk = shl nsw i64 %i.fj, 8
   %i.fl = or disjoint i64 %i.fk, %i.fi
-  %i.fm = trunc i64 %i.fl to i32
+  %i.fm = trunc nsw i64 %i.fl to i32
   store i32 %i.fm, ptr %.289, align 4, !tbaa !19
   %i.fn = getelementptr inbounds nuw i8, ptr %.188, i64 12
   store i32 64, ptr %i.fn, align 4, !tbaa !19
@@ -1590,7 +1590,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.iv = add nsw i64 %.neg.i46, %i.ip
   %i.iw = shl nsw i64 %i.iv, 8
   %i.ix = or disjoint i64 %i.iw, %i.iu
-  %i.iy = trunc i64 %i.ix to i32
+  %i.iy = trunc nsw i64 %i.ix to i32
   br label %EmitCopyLen.exit
 
 bb.ak:                                            ; preds = %bb.ai
@@ -1993,7 +1993,7 @@ bb.z:                                             ; preds = %bb.y
   %i.fj = add nsw i64 %.neg.i36, %i.fd
   %i.fk = shl nsw i64 %i.fj, 8
   %i.fl = or disjoint i64 %i.fk, %i.fi
-  %i.fm = trunc i64 %i.fl to i32
+  %i.fm = trunc nsw i64 %i.fl to i32
   store i32 %i.fm, ptr %.289, align 4, !tbaa !19
   %i.fn = getelementptr inbounds nuw i8, ptr %.188, i64 12
   store i32 64, ptr %i.fn, align 4, !tbaa !19
@@ -2186,7 +2186,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.iv = add nsw i64 %.neg.i46, %i.ip
   %i.iw = shl nsw i64 %i.iv, 8
   %i.ix = or disjoint i64 %i.iw, %i.iu
-  %i.iy = trunc i64 %i.ix to i32
+  %i.iy = trunc nsw i64 %i.ix to i32
   br label %EmitCopyLen.exit
 
 bb.ak:                                            ; preds = %bb.ai
@@ -2589,7 +2589,7 @@ bb.z:                                             ; preds = %bb.y
   %i.fj = add nsw i64 %.neg.i36, %i.fd
   %i.fk = shl nsw i64 %i.fj, 8
   %i.fl = or disjoint i64 %i.fk, %i.fi
-  %i.fm = trunc i64 %i.fl to i32
+  %i.fm = trunc nsw i64 %i.fl to i32
   store i32 %i.fm, ptr %.289, align 4, !tbaa !19
   %i.fn = getelementptr inbounds nuw i8, ptr %.188, i64 12
   store i32 64, ptr %i.fn, align 4, !tbaa !19
@@ -2782,7 +2782,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.iv = add nsw i64 %.neg.i46, %i.ip
   %i.iw = shl nsw i64 %i.iv, 8
   %i.ix = or disjoint i64 %i.iw, %i.iu
-  %i.iy = trunc i64 %i.ix to i32
+  %i.iy = trunc nsw i64 %i.ix to i32
   br label %EmitCopyLen.exit
 
 bb.ak:                                            ; preds = %bb.ai
@@ -3185,7 +3185,7 @@ bb.z:                                             ; preds = %bb.y
   %i.fj = add nsw i64 %.neg.i36, %i.fd
   %i.fk = shl nsw i64 %i.fj, 8
   %i.fl = or disjoint i64 %i.fk, %i.fi
-  %i.fm = trunc i64 %i.fl to i32
+  %i.fm = trunc nsw i64 %i.fl to i32
   store i32 %i.fm, ptr %.289, align 4, !tbaa !19
   %i.fn = getelementptr inbounds nuw i8, ptr %.188, i64 12
   store i32 64, ptr %i.fn, align 4, !tbaa !19
@@ -3378,7 +3378,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.iv = add nsw i64 %.neg.i46, %i.ip
   %i.iw = shl nsw i64 %i.iv, 8
   %i.ix = or disjoint i64 %i.iw, %i.iu
-  %i.iy = trunc i64 %i.ix to i32
+  %i.iy = trunc nsw i64 %i.ix to i32
   br label %EmitCopyLen.exit
 
 bb.ak:                                            ; preds = %bb.ai
@@ -3781,7 +3781,7 @@ bb.z:                                             ; preds = %bb.y
   %i.fj = add nsw i64 %.neg.i36, %i.fd
   %i.fk = shl nsw i64 %i.fj, 8
   %i.fl = or disjoint i64 %i.fk, %i.fi
-  %i.fm = trunc i64 %i.fl to i32
+  %i.fm = trunc nsw i64 %i.fl to i32
   store i32 %i.fm, ptr %.289, align 4, !tbaa !19
   %i.fn = getelementptr inbounds nuw i8, ptr %.188, i64 12
   store i32 64, ptr %i.fn, align 4, !tbaa !19
@@ -3974,7 +3974,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.iv = add nsw i64 %.neg.i46, %i.ip
   %i.iw = shl nsw i64 %i.iv, 8
   %i.ix = or disjoint i64 %i.iw, %i.iu
-  %i.iy = trunc i64 %i.ix to i32
+  %i.iy = trunc nsw i64 %i.ix to i32
   br label %EmitCopyLen.exit
 
 bb.ak:                                            ; preds = %bb.ai
@@ -4377,7 +4377,7 @@ bb.z:                                             ; preds = %bb.y
   %i.fj = add nsw i64 %.neg.i36, %i.fd
   %i.fk = shl nsw i64 %i.fj, 8
   %i.fl = or disjoint i64 %i.fk, %i.fi
-  %i.fm = trunc i64 %i.fl to i32
+  %i.fm = trunc nsw i64 %i.fl to i32
   store i32 %i.fm, ptr %.289, align 4, !tbaa !19
   %i.fn = getelementptr inbounds nuw i8, ptr %.188, i64 12
   store i32 64, ptr %i.fn, align 4, !tbaa !19
@@ -4570,7 +4570,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.iv = add nsw i64 %.neg.i46, %i.ip
   %i.iw = shl nsw i64 %i.iv, 8
   %i.ix = or disjoint i64 %i.iw, %i.iu
-  %i.iy = trunc i64 %i.ix to i32
+  %i.iy = trunc nsw i64 %i.ix to i32
   br label %EmitCopyLen.exit
 
 bb.ak:                                            ; preds = %bb.ai
@@ -4973,7 +4973,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.gs = add nsw i64 %.neg.i36, %i.gm
   %i.gt = shl nsw i64 %i.gs, 8
   %i.gu = or disjoint i64 %i.gt, %i.gr
-  %i.gv = trunc i64 %i.gu to i32
+  %i.gv = trunc nsw i64 %i.gu to i32
   store i32 %i.gv, ptr %.291, align 4, !tbaa !19
   %i.gw = getelementptr inbounds nuw i8, ptr %.190, i64 12
   store i32 64, ptr %i.gw, align 4, !tbaa !19
@@ -5200,7 +5200,7 @@ bb.am:                                            ; preds = %bb.al
   %i.kz = add nsw i64 %.neg.i48, %i.kt
   %i.la = shl nsw i64 %i.kz, 8
   %i.lb = or disjoint i64 %i.la, %i.ky
-  %i.lc = trunc i64 %i.lb to i32
+  %i.lc = trunc nsw i64 %i.lb to i32
   br label %EmitCopyLen.exit
 
 bb.an:                                            ; preds = %bb.al
@@ -5603,7 +5603,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.gs = add nsw i64 %.neg.i36, %i.gm
   %i.gt = shl nsw i64 %i.gs, 8
   %i.gu = or disjoint i64 %i.gt, %i.gr
-  %i.gv = trunc i64 %i.gu to i32
+  %i.gv = trunc nsw i64 %i.gu to i32
   store i32 %i.gv, ptr %.291, align 4, !tbaa !19
   %i.gw = getelementptr inbounds nuw i8, ptr %.190, i64 12
   store i32 64, ptr %i.gw, align 4, !tbaa !19
@@ -5830,7 +5830,7 @@ bb.am:                                            ; preds = %bb.al
   %i.kz = add nsw i64 %.neg.i48, %i.kt
   %i.la = shl nsw i64 %i.kz, 8
   %i.lb = or disjoint i64 %i.la, %i.ky
-  %i.lc = trunc i64 %i.lb to i32
+  %i.lc = trunc nsw i64 %i.lb to i32
   br label %EmitCopyLen.exit
 
 bb.an:                                            ; preds = %bb.al

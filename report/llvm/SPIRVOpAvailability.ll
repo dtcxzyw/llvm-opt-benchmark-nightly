@@ -202,7 +202,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 declare void @_ZN4mlir5spirv13getExtensionsENS0_13ExecutionModeE(ptr dead_on_unwind writable sret(%"class.std::optional.34") align 8, i32 noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv17ExecutionModeIdOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967298, 8589934592) i64 @_ZN4mlir5spirv17ExecutionModeIdOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv17ExecutionModeIdOp16getExecutionModeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_13ExecutionModeE(i32 noundef %i.a) #7 ; 2 uses
@@ -605,7 +605,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv25GroupNonUniformAllEqualOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv25GroupNonUniformAllEqualOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv25GroupNonUniformAllEqualOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -686,7 +686,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv20GroupNonUniformAllOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv20GroupNonUniformAllOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv20GroupNonUniformAllOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -767,7 +767,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv20GroupNonUniformAnyOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv20GroupNonUniformAnyOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv20GroupNonUniformAnyOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -912,7 +912,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv31GroupNonUniformBallotBitCountOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv31GroupNonUniformBallotBitCountOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv31GroupNonUniformBallotBitCountOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -1000,7 +1000,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv30GroupNonUniformBallotFindLSBOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv30GroupNonUniformBallotFindLSBOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv30GroupNonUniformBallotFindLSBOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -1081,7 +1081,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv30GroupNonUniformBallotFindMSBOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv30GroupNonUniformBallotFindMSBOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv30GroupNonUniformBallotFindMSBOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -1162,7 +1162,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv23GroupNonUniformBallotOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv23GroupNonUniformBallotOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv23GroupNonUniformBallotOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -1307,7 +1307,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv27GroupNonUniformBitwiseAndOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv27GroupNonUniformBitwiseAndOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv27GroupNonUniformBitwiseAndOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -1459,7 +1459,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv26GroupNonUniformBitwiseOrOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv26GroupNonUniformBitwiseOrOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv26GroupNonUniformBitwiseOrOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -1611,7 +1611,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv27GroupNonUniformBitwiseXorOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv27GroupNonUniformBitwiseXorOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv27GroupNonUniformBitwiseXorOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -1699,7 +1699,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv31GroupNonUniformBroadcastFirstOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv31GroupNonUniformBroadcastFirstOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv31GroupNonUniformBroadcastFirstOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -1780,7 +1780,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv26GroupNonUniformBroadcastOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv26GroupNonUniformBroadcastOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv26GroupNonUniformBroadcastOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -1861,7 +1861,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv22GroupNonUniformElectOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv22GroupNonUniformElectOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv22GroupNonUniformElectOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -2006,7 +2006,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformFAddOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformFAddOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv21GroupNonUniformFAddOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -2158,7 +2158,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformFMaxOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformFMaxOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv21GroupNonUniformFMaxOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -2310,7 +2310,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformFMinOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformFMinOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv21GroupNonUniformFMinOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -2462,7 +2462,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformFMulOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformFMulOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv21GroupNonUniformFMulOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -2614,7 +2614,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformIAddOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformIAddOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv21GroupNonUniformIAddOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -2766,7 +2766,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformIMulOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformIMulOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv21GroupNonUniformIMulOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -2918,7 +2918,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv27GroupNonUniformLogicalAndOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv27GroupNonUniformLogicalAndOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv27GroupNonUniformLogicalAndOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -3070,7 +3070,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv26GroupNonUniformLogicalOrOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv26GroupNonUniformLogicalOrOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv26GroupNonUniformLogicalOrOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -3222,7 +3222,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv27GroupNonUniformLogicalXorOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv27GroupNonUniformLogicalXorOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv27GroupNonUniformLogicalXorOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -3310,7 +3310,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv25GroupNonUniformQuadSwapOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv25GroupNonUniformQuadSwapOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv25GroupNonUniformQuadSwapOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -3391,7 +3391,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv26GroupNonUniformRotateKHROp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv26GroupNonUniformRotateKHROp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv26GroupNonUniformRotateKHROp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -3536,7 +3536,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformSMaxOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformSMaxOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv21GroupNonUniformSMaxOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -3688,7 +3688,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformSMinOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformSMinOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv21GroupNonUniformSMinOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -3776,7 +3776,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv28GroupNonUniformShuffleDownOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv28GroupNonUniformShuffleDownOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv28GroupNonUniformShuffleDownOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -3857,7 +3857,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv24GroupNonUniformShuffleOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv24GroupNonUniformShuffleOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv24GroupNonUniformShuffleOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -3938,7 +3938,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv26GroupNonUniformShuffleUpOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv26GroupNonUniformShuffleUpOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv26GroupNonUniformShuffleUpOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -4019,7 +4019,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv27GroupNonUniformShuffleXorOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv27GroupNonUniformShuffleXorOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv27GroupNonUniformShuffleXorOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -4164,7 +4164,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformUMaxOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformUMaxOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv21GroupNonUniformUMaxOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
@@ -4316,7 +4316,7 @@ _ZN4llvm15SmallVectorImplINS_8ArrayRefIN4mlir5spirv9ExtensionEEEE12emplace_backI
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 4294967296, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformUMinOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 4294967299, 8589934592) i64 @_ZN4mlir5spirv21GroupNonUniformUMinOp13getMinVersionEv(ptr noundef nonnull align 8 dereferenceable(8) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call noundef i32 @_ZN4mlir5spirv21GroupNonUniformUMinOp17getExecutionScopeEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #7
   %i.b = tail call i64 @_ZN4mlir5spirv13getMinVersionENS0_5ScopeE(i32 noundef %i.a) #7 ; 2 uses
