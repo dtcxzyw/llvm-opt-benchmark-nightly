@@ -97,12 +97,11 @@ arch_test_bit.exit.i:                             ; preds = %.lr.ph.i, %select.u
 
 bb.c:                                             ; preds = %arch_test_bit.exit.i
   %i.ae = load i32, ptr %i.m, align 8             ; 2 uses
-  %i.af = sdiv i32 %1, %i.ae                      ; 2 uses
+  %i.af = sdiv i32 %1, %i.ae
   %i.ag = srem i32 %1, %i.ae
-  %i.ah = icmp slt i32 %.04977.i, %i.ag           ; 2 uses
-  %.neg = sext i1 %i.ah to i32
+  %i.ah = icmp slt i32 %.04977.i, %i.ag
   %i.ai = zext i1 %i.ah to i32
-  %spec.select.i = add i32 %i.af, %i.ai           ; 6 uses
+  %spec.select.i = add i32 %i.af, %i.ai           ; 7 uses
   %i.aj = add i32 %.04977.i, 1                    ; 4 uses
   %i.ak = load i32, ptr %i.n, align 4             ; 2 uses
   %i.al = sext i32 %i.ak to i64
@@ -172,9 +171,8 @@ bb.e:                                             ; preds = %.thread.i, %bb.d
   br i1 %.not.i.i, label %.lr.ph.split.us.i.i.preheader, label %.lr.ph.split.i.i
 
 .lr.ph.split.us.i.i.preheader:                    ; preds = %.lr.ph.i.i
-  %7 = add i32 %i.af, -1
   %xtraiter = and i32 %spec.select.i, 1
-  %i.by = icmp eq i32 %7, %.neg
+  %i.by = icmp eq i32 %spec.select.i, 1
   br i1 %i.by, label %.lr.ph.split.us.i.i.epil.preheader, label %.lr.ph.split.us.i.i.preheader.new
 
 .lr.ph.split.us.i.i.preheader.new:                ; preds = %.lr.ph.split.us.i.i.preheader

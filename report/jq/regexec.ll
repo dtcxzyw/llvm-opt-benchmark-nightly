@@ -205,18 +205,17 @@ history_root_free.exit.i:                         ; preds = %bb.l, %bb.k
   br label %onig_region_free.exit
 
 onig_region_free.exit:                            ; preds = %bb.d, %history_root_free.exit.i
-  %i.s = phi i32 [ %i.c, %bb.d ], [ %.pre, %history_root_free.exit.i ] ; 4 uses
-  %i.t = add nsw i32 %i.s, -1                     ; 6 uses
+  %i.s = phi i32 [ %i.c, %bb.d ], [ %.pre, %history_root_free.exit.i ] ; 3 uses
+  %i.t = add nsw i32 %i.s, -1                     ; 7 uses
   %i.u = icmp slt i32 %1, %i.t
   br i1 %i.u, label %.lr.ph, label %bb.p
 
 .lr.ph:                                           ; preds = %onig_region_free.exit
   %i.v = load ptr, ptr %0, align 8, !tbaa !68     ; 10 uses
-  %3 = xor i32 %1, -1
-  %4 = add i32 %i.s, %3
+  %3 = sub i32 %i.t, %1
   %i.w = add i32 %i.s, -2
   %i.x = sub i32 %i.w, %1
-  %xtraiter = and i32 %4, 3                       ; 2 uses
+  %xtraiter = and i32 %3, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
 

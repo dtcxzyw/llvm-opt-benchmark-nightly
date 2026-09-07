@@ -205,14 +205,13 @@ bb.bd:                                            ; preds = %bb.bc
   %i.rm = load i32, ptr %i.aj, align 32, !tbaa !21
   %i.rn = add i32 %.pre-phi315, 257               ; 2 uses
   %i.ro = icmp ult i32 %i.rn, 300258
-  %narrow.i = select i1 %i.ro, i32 %i.rn, i32 300257 ; 4 uses
+  %narrow.i = select i1 %i.ro, i32 %i.rn, i32 300257 ; 3 uses
   %.not35.i = icmp ult i32 %narrow.i, %.pre-phi315
   br i1 %.not35.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.critedge
   %i.rp = and i64 %.pre-phi313, 4294967295        ; 2 uses
-  %6 = add nuw nsw i32 %narrow.i, 1
-  %i.rq = add i32 %narrow.i, 1
+  %i.rq = add nuw nsw i32 %narrow.i, 1            ; 2 uses
   %i.rr = trunc i64 %.pre-phi313 to i32           ; 2 uses
   %i.rs = sub i32 %i.rq, %i.rr
   %i.rt = sub i32 %narrow.i, %i.rr
@@ -262,7 +261,7 @@ bb.bd:                                            ; preds = %bb.bc
   store i32 -2147483648, ptr %i.sk, align 4, !tbaa !21
   %indvars.iv.next.i.7 = add nuw nsw i64 %indvars.iv.i, 8 ; 2 uses
   %lftr.wideiv.i.7 = trunc i64 %indvars.iv.next.i.7 to i32
-  %exitcond.not.i.7 = icmp eq i32 %6, %lftr.wideiv.i.7
+  %exitcond.not.i.7 = icmp eq i32 %i.rq, %lftr.wideiv.i.7
   br i1 %exitcond.not.i.7, label %._crit_edge.i, label %.lr.ph.i.new
 
 ._crit_edge.i:                                    ; preds = %.prol.loopexit, %.lr.ph.i.new, %.critedge

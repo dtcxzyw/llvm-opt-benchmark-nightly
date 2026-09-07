@@ -204,8 +204,8 @@ bb.t:                                             ; preds = %bb.s, %._crit_edge5
   br i1 %i.dm, label %bb.u, label %bb.at
 
 bb.u:                                             ; preds = %bb.t
-  %i.dn = shl nuw nsw i32 %i.dl, 1                ; 2 uses
-  %i.do = add nsw i32 %i.dn, %1                   ; 8 uses
+  %i.dn = shl nuw nsw i32 %i.dl, 1
+  %i.do = add nsw i32 %i.dn, %1                   ; 10 uses
   %i.dp = add nsw i32 %i.do, -1                   ; 3 uses
   %i.dq = mul nsw i32 %i.dp, %i.do
   %i.dr = sdiv i32 %i.dq, 2
@@ -249,9 +249,8 @@ gv_calloc.exit:                                   ; preds = %.thread.i, %bb.x
   %i.ee = fcmp ule float %.0415.lcssa, f0x3C23D70A ; 2 uses
   %i.ef = fdiv float 1.000000e+00, %.0415.lcssa   ; 2 uses
   %.mux.peel = select i1 %i.ee, float %.0415.lcssa, float %i.ef
-  %8 = add i32 %1, %i.dn                          ; 2 uses
-  %i.eg = add i32 %8, -2
-  %i.eh = add i32 %8, -3                          ; 2 uses
+  %i.eg = add nsw i32 %i.do, -2
+  %i.eh = add nsw i32 %i.do, -3                   ; 2 uses
   br label %.preheader546
 
 .preheader546:                                    ; preds = %.preheader546.lr.ph, %._crit_edge589

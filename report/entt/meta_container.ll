@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 define linkonce_odr dso_local void @_ZNSt7__cxx114listIiSaIiEE6resizeEm(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !350  ; 8 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !350  ; 7 uses
   %i.c = icmp ult i64 %1, %i.b
   br i1 %i.c, label %bb.b, label %_ZNKSt7__cxx114listIiSaIiEE13_M_resize_posERm.exit
 
@@ -257,7 +257,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not6.i.i.7, label %.loopexit, label %.preheader.i.i, !llvm.loop !48
 
 bb.d:                                             ; preds = %bb.b
-  %.neg.i = sub i64 %1, %i.b                      ; 7 uses
+  %.neg.i = sub i64 %1, %i.b                      ; 8 uses
   %i.t = icmp sgt i64 %.neg.i, 0
   br i1 %i.t, label %.preheader.i23.i.preheader, label %.preheader7.i14.i
 
@@ -280,9 +280,8 @@ bb.d:                                             ; preds = %bb.b
   %.lcssa.unr = phi ptr [ poison, %.preheader.i23.i.preheader ], [ %i.w, %.preheader.i23.i.prol ]
   %.013.i25.i.unr = phi i64 [ %.neg.i, %.preheader.i23.i.preheader ], [ %i.v, %.preheader.i23.i.prol ]
   %.unr41 = phi ptr [ %0, %.preheader.i23.i.preheader ], [ %i.w, %.preheader.i23.i.prol ]
-  %2 = sub i64 %i.b, %1
-  %3 = icmp ugt i64 %2, -8
-  br i1 %3, label %.loopexit, label %.preheader.i23.i
+  %2 = icmp ult i64 %.neg.i, 8
+  br i1 %2, label %.loopexit, label %.preheader.i23.i
 
 .preheader7.i14.i:                                ; preds = %bb.d
   %.not9.i15.i = icmp eq i64 %.neg.i, 0

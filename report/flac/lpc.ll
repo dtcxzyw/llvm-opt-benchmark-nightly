@@ -204,17 +204,17 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %4 = sub i32 %1, %2                             ; 2 uses
   %.not = icmp eq i32 %2, 0
   br i1 %.not, label %.preheader149.split.preheader, label %.lr.ph185.us.preheader
 
 .lr.ph185.us.preheader:                           ; preds = %bb.b
-  %4 = sub i32 %1, %2
   %i.c = zext i32 %2 to i64
   %i.d = shl nuw nsw i64 %i.c, 3
   tail call void @llvm.memset.p0.i64(ptr align 8 %3, i8 0, i64 %i.d, i1 false), !tbaa !17
   %i.e = zext i32 %4 to i64
-  %wide.trip.count272 = zext i32 %2 to i64        ; 6 uses
-  %i.f = add nsw i64 %wide.trip.count272, -1      ; 2 uses
+  %wide.trip.count272 = zext i32 %2 to i64        ; 5 uses
+  %i.f = add nsw i64 %wide.trip.count272, -1      ; 3 uses
   %min.iters.check491 = icmp ult i32 %2, 4
   %i.g = trunc i64 %i.f to i32
   %i.h = icmp ugt i64 %i.f, 4294967295
@@ -222,11 +222,10 @@ bb.b:                                             ; preds = %bb.a
   %cmp.n502 = icmp eq i64 %n.vec493, %wide.trip.count272
   %xtraiter = and i64 %wide.trip.count272, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %5 = add nsw i64 %wide.trip.count272, -1
   br label %.lr.ph185.us
 
 .preheader149.split.preheader:                    ; preds = %bb.b
-  %i.i = add i32 %1, 1
+  %i.i = add i32 %4, 1
   %umax = tail call i32 @llvm.umax.i32(i32 %i.i, i32 1)
   br label %.preheader
 
@@ -293,7 +292,7 @@ scalar.ph490.prol:                                ; preds = %scalar.ph490.prehea
 
 scalar.ph490.prol.loopexit:                       ; preds = %scalar.ph490.prol, %scalar.ph490.preheader
   %indvars.iv269.unr = phi i64 [ %indvars.iv269.ph, %scalar.ph490.preheader ], [ %indvars.iv.next270.prol, %scalar.ph490.prol ]
-  %i.aj = icmp eq i64 %indvars.iv269.ph, %5
+  %i.aj = icmp eq i64 %i.f, %indvars.iv269.ph
   br i1 %i.aj, label %._crit_edge.us, label %scalar.ph490
 
 scalar.ph490:                                     ; preds = %scalar.ph490.prol.loopexit, %scalar.ph490

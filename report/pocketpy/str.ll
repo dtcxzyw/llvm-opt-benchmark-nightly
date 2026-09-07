@@ -204,10 +204,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
   call void @c11_sbuf__ctor(ptr noundef nonnull %6) #26
   %i.a = icmp eq i32 %3, 0
-  %i.b = sub nsw i32 %1, %3                       ; 2 uses
+  %i.b = sub nsw i32 %1, %3                       ; 3 uses
   %i.c = sext i32 %3 to i64
-  %i.d = add i32 %1, 1
-  %7 = sub i32 %i.d, %3
+  %i.d = add i32 %i.b, 1
   br i1 %i.a, label %c11_sv__index2.exit.us.peel.next, label %.split
 
 c11_sv__index2.exit.us.peel.next:                 ; preds = %bb.a
@@ -242,7 +241,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i
 bb.c:                                             ; preds = %bb.b
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
   %lftr.wideiv.i = trunc i64 %indvars.iv.next.i to i32
-  %exitcond.not.i = icmp eq i32 %7, %lftr.wideiv.i
+  %exitcond.not.i = icmp eq i32 %i.d, %lftr.wideiv.i
   br i1 %exitcond.not.i, label %c11_sv__index2.exit.thread, label %bb.b, !llvm.loop !0
 
 .loopexit.loopexit.split.loop.exit.i:             ; preds = %bb.b
@@ -285,15 +284,14 @@ bb.a:
   br i1 %i.a, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = sub nsw i32 %1, %3
+  %i.b = sub nsw i32 %1, %3                       ; 2 uses
   %.not21 = icmp sgt i32 %4, %i.b
   br i1 %.not21, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
   %i.c = sext i32 %3 to i64
   %i.d = sext i32 %4 to i64
-  %i.e = add i32 %1, 1
-  %5 = sub i32 %i.e, %3
+  %i.e = add i32 %i.b, 1
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.d
@@ -306,7 +304,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.d
 bb.d:                                             ; preds = %bb.c
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %5, %lftr.wideiv
+  %exitcond.not = icmp eq i32 %i.e, %lftr.wideiv
   br i1 %exitcond.not, label %.loopexit, label %bb.c, !llvm.loop !0
 
 .loopexit.loopexit.split.loop.exit:               ; preds = %bb.c
@@ -709,27 +707,25 @@ c11_sv__u8_length.exit:                           ; preds = %.lr.ph.i.i, %middle
   %spec.select.i.i.lcssa = phi i32 [ %i.k, %middle.block ], [ %spec.select.i.i, %.lr.ph.i.i ] ; 7 uses
   %i.o = icmp ne i32 %spec.select.i.i.lcssa, 0
   %or.cond = select i1 %4, i1 %i.o, i1 false
-  br i1 %or.cond, label %.lr.ph, label %c11_sv__index2.exit.thread
+  br i1 %or.cond, label %bb.b, label %c11_sv__index2.exit.thread
 
-.lr.ph:                                           ; preds = %c11_sv__u8_length.exit
-  %6 = add i32 %3, 1
-  br label %bb.b
-
-bb.b:                                             ; preds = %.lr.ph, %c11_sv__index2.exit
-  %.072 = phi i32 [ 0, %.lr.ph ], [ %i.v, %c11_sv__index2.exit ] ; 4 uses
+bb.b:                                             ; preds = %c11_sv__u8_length.exit, %c11_sv__index2.exit
+  %.072 = phi i32 [ %i.v, %c11_sv__index2.exit ], [ 0, %c11_sv__u8_length.exit ] ; 4 uses
   %i.p = tail call { ptr, i32 } @c11_sv__u8_getitem(ptr %0, i32 %1, i32 noundef %.072) ; 2 uses
   %i.q = extractvalue { ptr, i32 } %i.p, 0
-  %i.r = extractvalue { ptr, i32 } %i.p, 1        ; 4 uses
+  %i.r = extractvalue { ptr, i32 } %i.p, 1        ; 3 uses
   %i.s = icmp eq i32 %i.r, 0
   br i1 %i.s, label %c11_sv__index2.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.not21.i = icmp slt i32 %3, %i.r
+  %6 = sub nsw i32 %3, %i.r                       ; 2 uses
+  %.not21.i = icmp slt i32 %6, 0
   br i1 %.not21.i, label %c11_sv__index2.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c
   %i.t = sext i32 %i.r to i64
-  %7 = sub i32 %6, %i.r
+  %7 = add nuw i32 %6, 1
+  %zext = zext i32 %7 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %.lr.ph.i
@@ -741,8 +737,7 @@ bb.d:                                             ; preds = %bb.e, %.lr.ph.i
 
 bb.e:                                             ; preds = %bb.d
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next.i to i32
-  %exitcond = icmp eq i32 %7, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next.i, %zext
   br i1 %exitcond, label %c11_sv__index2.exit.thread, label %bb.d, !llvm.loop !0
 
 c11_sv__index2.exit:                              ; preds = %bb.d, %bb.b
@@ -754,28 +749,26 @@ c11_sv__index2.exit.thread:                       ; preds = %bb.c, %bb.e, %c11_s
   %.2 = phi i32 [ 0, %c11_sv__u8_length.exit ], [ %.072, %bb.e ], [ %.072, %bb.c ] ; 7 uses
   %i.w = icmp samesign ult i32 %.2, %spec.select.i.i.lcssa
   %or.cond80 = select i1 %5, i1 %i.w, i1 false
-  br i1 %or.cond80, label %.lr.ph76, label %c11_sv__index2.exit50.thread
+  br i1 %or.cond80, label %bb.f, label %c11_sv__index2.exit50.thread
 
-.lr.ph76:                                         ; preds = %c11_sv__index2.exit.thread
-  %8 = add i32 %3, 1
-  br label %bb.f
-
-bb.f:                                             ; preds = %.lr.ph76, %c11_sv__index2.exit50
-  %.03475 = phi i32 [ %spec.select.i.i.lcssa, %.lr.ph76 ], [ %i.x, %c11_sv__index2.exit50 ] ; 3 uses
+bb.f:                                             ; preds = %c11_sv__index2.exit.thread, %c11_sv__index2.exit50
+  %.03475 = phi i32 [ %i.x, %c11_sv__index2.exit50 ], [ %spec.select.i.i.lcssa, %c11_sv__index2.exit.thread ] ; 3 uses
   %i.x = add nsw i32 %.03475, -1                  ; 3 uses
   %i.y = tail call { ptr, i32 } @c11_sv__u8_getitem(ptr %0, i32 %1, i32 noundef %i.x) ; 2 uses
   %i.z = extractvalue { ptr, i32 } %i.y, 0
-  %i.aa = extractvalue { ptr, i32 } %i.y, 1       ; 4 uses
+  %i.aa = extractvalue { ptr, i32 } %i.y, 1       ; 3 uses
   %i.ab = icmp eq i32 %i.aa, 0
   br i1 %i.ab, label %c11_sv__index2.exit50, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %.not21.i40 = icmp slt i32 %3, %i.aa
+  %8 = sub nsw i32 %3, %i.aa                      ; 2 uses
+  %.not21.i40 = icmp slt i32 %8, 0
   br i1 %.not21.i40, label %c11_sv__index2.exit50.thread, label %.lr.ph.i41
 
 .lr.ph.i41:                                       ; preds = %bb.g
   %i.ac = sext i32 %i.aa to i64
-  %9 = sub i32 %8, %i.aa
+  %9 = add nuw i32 %8, 1
+  %zext85 = zext i32 %9 to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.i, %.lr.ph.i41
@@ -787,8 +780,7 @@ bb.h:                                             ; preds = %bb.i, %.lr.ph.i41
 
 bb.i:                                             ; preds = %bb.h
   %indvars.iv.next.i45 = add nuw nsw i64 %indvars.iv.i42, 1 ; 2 uses
-  %lftr.wideiv87 = trunc i64 %indvars.iv.next.i45 to i32
-  %exitcond88 = icmp eq i32 %9, %lftr.wideiv87
+  %exitcond88 = icmp eq i64 %indvars.iv.next.i45, %zext85
   br i1 %exitcond88, label %c11_sv__index2.exit50.thread, label %bb.h, !llvm.loop !0
 
 c11_sv__index2.exit50:                            ; preds = %bb.h, %bb.f
@@ -1048,10 +1040,9 @@ bb.a:
   br i1 %i.a, label %bb.b, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %i.b = sub nsw i32 %1, %3
+  %i.b = sub nsw i32 %1, %3                       ; 2 uses
   %i.c = sext i32 %3 to i64
-  %i.d = add i32 %1, 1
-  %4 = sub i32 %i.d, %3
+  %i.d = add i32 %i.b, 1
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -1078,7 +1069,7 @@ bb.d:                                             ; preds = %bb.e, %.lr.ph.i
 bb.e:                                             ; preds = %bb.d
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
   %lftr.wideiv.i = trunc i64 %indvars.iv.next.i to i32
-  %exitcond.not.i = icmp eq i32 %4, %lftr.wideiv.i
+  %exitcond.not.i = icmp eq i32 %i.d, %lftr.wideiv.i
   br i1 %exitcond.not.i, label %c11_sv__index2.exit.thread, label %bb.d, !llvm.loop !0
 
 c11_sv__index2.exit:                              ; preds = %bb.d
@@ -1481,10 +1472,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   tail call void @c11_vector__ctor(ptr noundef %0, i32 noundef 16) #26
   %i.c = icmp eq i32 %4, 0
-  %i.d = sub nsw i32 %2, %4                       ; 2 uses
+  %i.d = sub nsw i32 %2, %4                       ; 3 uses
   %i.e = sext i32 %4 to i64
-  %i.f = add i32 %2, 1
-  %5 = sub i32 %i.f, %4
+  %i.f = add i32 %i.d, 1
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 12 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 4 uses
   br i1 %i.c, label %.split.us.preheader, label %.split
@@ -1541,7 +1531,7 @@ bb.d:                                             ; preds = %bb.e, %.lr.ph.i
 bb.e:                                             ; preds = %bb.d
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
   %lftr.wideiv.i = trunc i64 %indvars.iv.next.i to i32
-  %exitcond.not.i = icmp eq i32 %5, %lftr.wideiv.i
+  %exitcond.not.i = icmp eq i32 %i.f, %lftr.wideiv.i
   br i1 %exitcond.not.i, label %c11_sv__index2.exit.thread, label %bb.d, !llvm.loop !0
 
 .loopexit.loopexit.split.loop.exit.i:             ; preds = %bb.d

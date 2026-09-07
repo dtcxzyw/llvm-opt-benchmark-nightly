@@ -205,7 +205,7 @@ _ZNSt6vectorISt10shared_ptrIN5arrow6BufferEESaIS3_EE16_Temporary_valueC2IJRKS3_E
   %i.r = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.s = sub i64 %i.q, %i.r
   %.fr193 = freeze i64 %i.s                       ; 3 uses
-  %i.t = ashr i64 %.fr193, 4                      ; 3 uses
+  %i.t = ashr i64 %.fr193, 4                      ; 2 uses
   %i.u = icmp ugt i64 %i.t, %2
   br i1 %i.u, label %bb.g, label %bb.y
 
@@ -452,7 +452,7 @@ _ZNSt10shared_ptrIN5arrow6BufferEEaSERKS2_.exit.i.i.i: ; preds = %_ZNSt16_Sp_cou
   br i1 %.not.i.i.i, label %_ZSt4fillIPSt10shared_ptrIN5arrow6BufferEES3_EvT_S5_RKT0_.exit, label %bb.n, !llvm.loop !2275
 
 bb.y:                                             ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow6BufferEESaIS3_EE16_Temporary_valueC2IJRKS3_EEEPS5_DpOT_.exit
-  %i.db = sub nuw i64 %2, %i.t                    ; 8 uses
+  %i.db = sub nuw i64 %2, %i.t                    ; 9 uses
   %.not7.i.i.i.i = icmp eq i64 %i.db, 0
   br i1 %.not7.i.i.i.i, label %_ZSt24__uninitialized_fill_n_aIPSt10shared_ptrIN5arrow6BufferEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i
 
@@ -517,9 +517,8 @@ _ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.
   %.lcssa182.unr = phi ptr [ poison, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us.preheader ], [ %i.dm, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us.prol ]
   %.09.i.i.i.i.us.unr = phi ptr [ %i.p, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us.preheader ], [ %i.dm, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us.prol ]
   %.068.i.i.i.i.us.unr = phi i64 [ %i.db, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us.preheader ], [ %i.dl, %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us.prol ]
-  %4 = sub i64 %i.t, %2
-  %5 = icmp ugt i64 %4, -8
-  br i1 %5, label %_ZSt24__uninitialized_fill_n_aIPSt10shared_ptrIN5arrow6BufferEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit, label %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us.preheader.new
+  %4 = icmp ult i64 %i.db, 8
+  br i1 %4, label %_ZSt24__uninitialized_fill_n_aIPSt10shared_ptrIN5arrow6BufferEEmS3_S3_ET_S5_T0_RKT1_RSaIT2_E.exit, label %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us.preheader.new
 
 _ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us.preheader.new: ; preds = %_ZSt10_ConstructISt10shared_ptrIN5arrow6BufferEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i.us.prol.loopexit
   %i.dn = insertelement <2 x ptr> %i.i, ptr null, i64 1

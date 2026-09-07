@@ -204,9 +204,9 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !54
 
 bb.b:                                             ; preds = %._crit_edge
-  %i.q = ptrtoint ptr %.0.lcssa.i.i.i.i.i84 to i64 ; 2 uses
-  %i.r = ptrtoint ptr %.sroa.050.076 to i64       ; 3 uses
-  %i.s = sub i64 %i.q, %i.r                       ; 4 uses
+  %i.q = ptrtoint ptr %.0.lcssa.i.i.i.i.i84 to i64
+  %i.r = ptrtoint ptr %.sroa.050.076 to i64       ; 2 uses
+  %i.s = sub i64 %i.q, %i.r                       ; 5 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   %.not.i.i.i.i29 = icmp eq ptr %.0.lcssa.i.i.i.i.i84, %.sroa.050.076
   br i1 %.not.i.i.i.i29, label %.noexc32.thread, label %bb.c
@@ -241,12 +241,9 @@ _ZNSt15__new_allocatorISt7complexIdEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.s
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   store ptr %i.z, ptr %i.aa, align 8, !tbaa !29
-  %7 = add i64 %i.q, -16
-  %8 = sub i64 %7, %i.r
-  %i.ab = and i64 %8, -16
-  %9 = add i64 %i.ab, 16                          ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.x, ptr align 8 %.sroa.050.076, i64 %9, i1 false)
-  %scevgep = getelementptr i8, ptr %i.x, i64 %9
+  %i.ab = and i64 %i.s, 9223372036854775792       ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.x, ptr align 8 %.sroa.050.076, i64 %i.ab, i1 false)
+  %scevgep = getelementptr i8, ptr %i.x, i64 %i.ab
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.noexc32, %.noexc32.thread

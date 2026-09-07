@@ -205,9 +205,9 @@ jv_string.exit:                                   ; preds = %jvp_string_new.exit
   br label %bb.m
 
 jvp_array_offset.exit:                            ; preds = %bb.d, %bb.c
-  %.0175 = phi i32 [ %i.d, %bb.d ], [ %2, %bb.c ] ; 6 uses
+  %.0175 = phi i32 [ %i.d, %bb.d ], [ %2, %bb.c ] ; 5 uses
   %i.r = trunc i64 %0 to i32
-  %i.s = lshr i32 %i.r, 16                        ; 3 uses
+  %i.s = lshr i32 %i.r, 16                        ; 2 uses
   %i.t = xor i32 %i.s, 536870911
   %i.u = icmp samesign ugt i32 %.0175, %i.t
   br i1 %i.u, label %bb.g, label %jvp_array_offset.exit.i
@@ -250,7 +250,7 @@ jv_string.exit18:                                 ; preds = %jvp_string_new.exit
   br label %bb.m
 
 jvp_array_offset.exit.i:                          ; preds = %jvp_array_offset.exit
-  %i.ah = add nuw nsw i32 %.0175, %i.s            ; 5 uses
+  %i.ah = add nuw nsw i32 %.0175, %i.s            ; 6 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.aj = load i32, ptr %i.ai, align 8, !tbaa !14
   %i.ak = icmp slt i32 %i.ah, %i.aj
@@ -282,11 +282,9 @@ bb.k:                                             ; preds = %jvp_refcnt_unshared
 .lr.ph66.i:                                       ; preds = %bb.k
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
   %i.ap = sext i32 %i.an to i64                   ; 2 uses
-  %i.aq = add nuw nsw i32 %i.ah, 1                ; 2 uses
-  %5 = add nuw i32 %.0175, %i.s                   ; 2 uses
-  %6 = add i32 %5, 1
-  %i.ar = sub i32 %6, %i.an
-  %i.as = sub i32 %5, %i.an
+  %i.aq = add nuw nsw i32 %i.ah, 1                ; 3 uses
+  %i.ar = sub i32 %i.aq, %i.an
+  %i.as = sub i32 %i.ah, %i.an
   %xtraiter185 = and i32 %i.ar, 3                 ; 2 uses
   %lcmp.mod186.not = icmp eq i32 %xtraiter185, 0
   br i1 %lcmp.mod186.not, label %.prol.loopexit184, label %.prol.preheader183

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_ZN6casadi13Generic
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   %i.i = invoke noundef i64 @_ZNK6casadi8Sparsity3sccERSt6vectorIxSaIxEES4_(ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %1)
-          to label %.noexc.i unwind label %bb.t   ; 21 uses
+          to label %.noexc.i unwind label %bb.t   ; 20 uses
 
 .noexc.i:                                         ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #32
@@ -608,7 +608,7 @@ _ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i468: ; preds = %.noexc473
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %63, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %64) #32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %64, i8 0, i64 24, i1 false)
-  %i.nz = add nsw i64 %i.i, -1
+  %i.nz = add nsw i64 %i.i, -1                    ; 2 uses
   %i.oa = getelementptr inbounds nuw i8, ptr %62, i64 8 ; 3 uses
   %i.ob = getelementptr inbounds nuw i8, ptr %62, i64 16 ; 5 uses
   %i.oc = getelementptr inbounds nuw i8, ptr %63, i64 8 ; 3 uses
@@ -1011,7 +1011,6 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph748, %middle.block
   %.ph = phi i64 [ %.promoted, %vector.memcheck ], [ %.promoted, %.lr.ph748 ], [ %i.xd, %middle.block ] ; 2 uses
   %.0747.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph748 ], [ %n.vec, %middle.block ] ; 4 uses
-  %.neg = or disjoint i64 %.0747.ph, 1
   %xtraiter = and i64 %i.i, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
@@ -1030,7 +1029,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
 scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
   %.unr = phi i64 [ %.ph, %scalar.ph.preheader ], [ %.sroa.speculated.prol, %scalar.ph.prol ]
   %.0747.unr = phi i64 [ %.0747.ph, %scalar.ph.preheader ], [ %i.xe, %scalar.ph.prol ]
-  %i.xk = icmp eq i64 %i.i, %.neg
+  %i.xk = icmp eq i64 %i.nz, %.0747.ph
   br i1 %i.xk, label %._crit_edge749, label %scalar.ph
 
 bb.gg:                                            ; preds = %bb.fm

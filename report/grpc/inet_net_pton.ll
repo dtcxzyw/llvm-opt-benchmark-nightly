@@ -204,8 +204,8 @@ bb.t:                                             ; preds = %.thread124.i.i
 iter.check:                                       ; preds = %.preheader.i.i
   %i.bc = and i64 %i.az, 2147483647               ; 7 uses
   %i.bd = add nuw nsw i64 %i.az, 1
-  %wide.trip.count.i.i = and i64 %i.bd, 4294967295 ; 5 uses
-  %i.be = add nsw i64 %wide.trip.count.i.i, -1    ; 7 uses
+  %wide.trip.count.i.i = and i64 %i.bd, 4294967295 ; 4 uses
+  %i.be = add nsw i64 %wide.trip.count.i.i, -1    ; 8 uses
   %min.iters.check = icmp ult i64 %i.be, 8
   br i1 %min.iters.check, label %.lr.ph161.i.i.preheader, label %vector.memcheck
 
@@ -288,7 +288,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph161.i.i.preheader:                          ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.i.i.ph = phi i64 [ 1, %iter.check ], [ 1, %vector.memcheck ], [ %i.bj, %vec.epilog.iter.check ], [ %i.bt, %vec.epilog.middle.block ] ; 5 uses
-  %.neg232 = add nsw i64 %indvars.iv.i.i.ph, 1
   %xtraiter = and i64 %i.az, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph161.i.i.prol.loopexit, label %.lr.ph161.i.i.prol
@@ -306,7 +305,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph161.i.i.prol.loopexit:                      ; preds = %.lr.ph161.i.i.prol, %.lr.ph161.i.i.preheader
   %indvars.iv.i.i.unr = phi i64 [ %indvars.iv.i.i.ph, %.lr.ph161.i.i.preheader ], [ %indvars.iv.next.i.i.prol, %.lr.ph161.i.i.prol ]
-  %i.cg = icmp eq i64 %wide.trip.count.i.i, %.neg232
+  %i.cg = icmp eq i64 %i.be, %indvars.iv.i.i.ph
   br i1 %i.cg, label %.loopexit45.i, label %.lr.ph161.i.i.preheader.new
 
 .lr.ph161.i.i.preheader.new:                      ; preds = %.lr.ph161.i.i.prol.loopexit

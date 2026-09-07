@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %.not91, label %.loopexit, label %bb.v
 
 .loopexit:                                        ; preds = %bb.e, %.thread, %bb.i
-  %.081110 = phi i32 [ %i.m, %bb.i ], [ 0, %.thread ], [ %i.g, %bb.e ] ; 8 uses
+  %.081110 = phi i32 [ %i.m, %bb.i ], [ 0, %.thread ], [ %i.g, %bb.e ] ; 7 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !351  ; 3 uses
   %i.v = getelementptr i8, ptr %i.u, i64 24
@@ -278,7 +278,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.bf, label %bb.v, label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
-  %i.bg = load i32, ptr %i.f, align 8, !tbaa !414 ; 8 uses
+  %i.bg = load i32, ptr %i.f, align 8, !tbaa !414 ; 7 uses
   %i.bh = icmp ult i32 %.081110, %i.bg
   br i1 %i.bh, label %bb.q, label %bb.t
 
@@ -304,7 +304,7 @@ bb.s:                                             ; preds = %bb.q
 bb.t:                                             ; preds = %bb.r, %bb.s, %bb.p
   %i.bs = add i32 %i.bg, 1                        ; 2 uses
   %i.bt = select i1 %.not88105, i32 %i.bg, i32 %i.bs ; 4 uses
-  %i.bu = sub i32 %i.bg, %.081110                 ; 4 uses
+  %i.bu = sub i32 %i.bg, %.081110                 ; 5 uses
   %i.bv = icmp ugt i32 %i.bt, 191
   br i1 %i.bv, label %bb.v, label %.preheader
 
@@ -314,7 +314,6 @@ bb.t:                                             ; preds = %bb.r, %bb.s, %bb.p
 
 .lr.ph116:                                        ; preds = %.preheader
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 6 uses
-  %.neg = add i32 %.081110, 1
   %xtraiter = and i32 %i.bu, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
@@ -334,7 +333,7 @@ bb.t:                                             ; preds = %bb.r, %bb.s, %bb.p
   %.0115.unr = phi i32 [ %i.bu, %.lr.ph116 ], [ %i.bx, %.prol.loopexit.unr-lcssa ]
   %.079114.unr = phi i32 [ %i.bt, %.lr.ph116 ], [ %i.by, %.prol.loopexit.unr-lcssa ]
   %.080.in113.unr = phi i32 [ %i.bg, %.lr.ph116 ], [ %.080.prol, %.prol.loopexit.unr-lcssa ]
-  %i.cd = icmp eq i32 %i.bg, %.neg
+  %i.cd = icmp eq i32 %i.bu, 1
   br i1 %i.cd, label %._crit_edge, label %.lr.ph116.new
 
 .lr.ph116.new:                                    ; preds = %.prol.loopexit, %.lr.ph116.new

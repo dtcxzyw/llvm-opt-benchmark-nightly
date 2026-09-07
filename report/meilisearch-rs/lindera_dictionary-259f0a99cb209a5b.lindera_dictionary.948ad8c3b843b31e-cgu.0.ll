@@ -205,14 +205,14 @@ bb.q:                                             ; preds = %.noexc34, %bb.o
 define internal fastcc void @"_ZN5alloc3vec16Vec$LT$T$C$A$GT$6resize17h3e8ac0e446ecdc5fE"(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(24) %0, i64 noundef %1, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %2) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  %i.b = load i64, ptr %i.a, align 8, !noundef !6 ; 10 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !6 ; 8 uses
   %i.c = icmp ult i64 %i.b, 384307168202282326
   tail call void @llvm.assume(i1 %i.c)
   %.not = icmp ugt i64 %1, %i.b
   br i1 %.not, label %bb.b, label %bb.i
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = sub nuw i64 %1, %i.b                     ; 6 uses
+  %i.d = sub nuw i64 %1, %i.b                     ; 8 uses
   %.sroa.0.0.copyload = load i64, ptr %2, align 8 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx, align 8 ; 5 uses
@@ -267,12 +267,10 @@ _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.preheader.i
 .lr.ph.split.split.us.i:                          ; preds = %.lr.ph.split.i
   %i.u = icmp eq i64 %.sroa.9.0.copyload, 0
   tail call void @llvm.assume(i1 %i.u)
-  %3 = xor i64 %i.b, -1
-  %i.v = add i64 %1, %3                           ; 2 uses
-  %i.w = add i64 %1, -2
-  %4 = sub i64 %i.w, %i.b
+  %i.v = add i64 %i.d, -1                         ; 2 uses
+  %i.w = add i64 %i.d, -2
   %xtraiter = and i64 %i.v, 3                     ; 3 uses
-  %i.x = icmp ult i64 %4, 3
+  %i.x = icmp ult i64 %i.w, 3
   br i1 %i.x, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.us.i.epil.preheader, label %.lr.ph.split.split.us.i.new
 
 .lr.ph.split.split.us.i.new:                      ; preds = %.lr.ph.split.split.us.i

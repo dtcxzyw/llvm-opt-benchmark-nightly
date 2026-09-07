@@ -205,7 +205,7 @@ bb.ai:                                            ; preds = %bb.w, %bb.ah
   br i1 %.not260, label %GetASN_UTF8String.exit, label %.lr.ph47.i
 
 .lr.ph47.i:                                       ; preds = %bb.ai, %._crit_edge.i194
-  %.02645.i = phi i32 [ %.127.lcssa.i, %._crit_edge.i194 ], [ 0, %bb.ai ] ; 6 uses
+  %.02645.i = phi i32 [ %.127.lcssa.i, %._crit_edge.i194 ], [ 0, %bb.ai ] ; 5 uses
   %i.fh = add i32 %.02645.i, %.2.i
   %i.fi = zext i32 %i.fh to i64
   %i.fj = getelementptr inbounds nuw i8, ptr %4, i64 %i.fi
@@ -216,7 +216,7 @@ bb.ai:                                            ; preds = %bb.w, %bb.ah
 
 bb.aj:                                            ; preds = %.lr.ph47.i
   %i.fn = and i32 %i.fl, 224
-  %.not621 = icmp eq i32 %i.fn, 192               ; 2 uses
+  %.not621 = icmp eq i32 %i.fn, 192
   br i1 %.not621, label %.lr.ph.preheader.i195, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
@@ -234,23 +234,23 @@ bb.am:                                            ; preds = %.lr.ph47.i
   br label %._crit_edge.i194
 
 .lr.ph.preheader.i195:                            ; preds = %bb.al, %bb.ak, %bb.aj
-  %7 = phi i1 [ true, %bb.al ], [ false, %bb.aj ], [ false, %bb.ak ]
-  %.025.ph.i = phi i32 [ 4, %bb.al ], [ 2, %bb.aj ], [ 3, %bb.ak ]
-  %i.fs = add i32 %.025.ph.i, %.02645.i           ; 3 uses
-  %.12737.i = add i32 %.02645.i, 1                ; 2 uses
-  %i.ft = icmp eq i32 %.12737.i, %.240.i
+  %.025.ph.i = phi i32 [ 3, %bb.al ], [ 1, %bb.aj ], [ 2, %bb.ak ]
+  %i.fs = add nsw i32 %.02645.i, 1                ; 3 uses
+  %.12737.i = add i32 %i.fs, %.025.ph.i           ; 5 uses
+  %i.ft = icmp eq i32 %i.fs, %.240.i
   br i1 %i.ft, label %GetLength_ex.exit.thread, label %bb.ar
 
 bb.an:                                            ; preds = %bb.ar
-  br i1 %.not621, label %._crit_edge.i194, label %.lr.ph.i196.1
+  %.127.i = add i32 %.02645.i, 2                  ; 3 uses
+  %exitcond.not = icmp eq i32 %.127.i, %.12737.i
+  br i1 %exitcond.not, label %._crit_edge.i194, label %.lr.ph.i196.1
 
 .lr.ph.i196.1:                                    ; preds = %bb.an
-  %.12737.i.1 = add i32 %.02645.i, 2              ; 2 uses
-  %i.fu = icmp eq i32 %.12737.i.1, %.240.i
+  %i.fu = icmp eq i32 %.127.i, %.240.i
   br i1 %i.fu, label %GetLength_ex.exit.thread, label %bb.ao
 
 bb.ao:                                            ; preds = %.lr.ph.i196.1
-  %i.fv = add i32 %.12737.i.1, %.2.i
+  %i.fv = add i32 %.127.i, %.2.i
   %i.fw = zext i32 %i.fv to i64
   %i.fx = getelementptr inbounds nuw i8, ptr %4, i64 %i.fw
   %i.fy = load i8, ptr %i.fx, align 1, !tbaa !15
@@ -258,15 +258,16 @@ bb.ao:                                            ; preds = %.lr.ph.i196.1
   br i1 %.not.not.i.1, label %GetLength_ex.exit.thread, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  br i1 %7, label %.lr.ph.i196.2, label %._crit_edge.i194
+  %.127.i.1 = add i32 %.02645.i, 3                ; 3 uses
+  %exitcond.not.1 = icmp eq i32 %.127.i.1, %.12737.i
+  br i1 %exitcond.not.1, label %._crit_edge.i194, label %.lr.ph.i196.2
 
 .lr.ph.i196.2:                                    ; preds = %bb.ap
-  %.12737.i.2 = add i32 %.02645.i, 3              ; 2 uses
-  %i.fz = icmp eq i32 %.12737.i.2, %.240.i
+  %i.fz = icmp eq i32 %.127.i.1, %.240.i
   br i1 %i.fz, label %GetLength_ex.exit.thread, label %bb.aq
 
 bb.aq:                                            ; preds = %.lr.ph.i196.2
-  %i.ga = add i32 %.12737.i.2, %.2.i
+  %i.ga = add i32 %.127.i.1, %.2.i
   %i.gb = zext i32 %i.ga to i64
   %i.gc = getelementptr inbounds nuw i8, ptr %4, i64 %i.gb
   %i.gd = load i8, ptr %i.gc, align 1, !tbaa !15
@@ -274,7 +275,7 @@ bb.aq:                                            ; preds = %.lr.ph.i196.2
   br i1 %.not.not.i.2, label %GetLength_ex.exit.thread, label %._crit_edge.i194
 
 bb.ar:                                            ; preds = %.lr.ph.preheader.i195
-  %i.ge = add i32 %.12737.i, %.2.i
+  %i.ge = add i32 %i.fs, %.2.i
   %i.gf = zext i32 %i.ge to i64
   %i.gg = getelementptr inbounds nuw i8, ptr %4, i64 %i.gf
   %i.gh = load i8, ptr %i.gg, align 1, !tbaa !15
@@ -282,7 +283,7 @@ bb.ar:                                            ; preds = %.lr.ph.preheader.i1
   br i1 %.not.not.i, label %GetLength_ex.exit.thread, label %bb.an
 
 ._crit_edge.i194:                                 ; preds = %bb.an, %bb.ap, %bb.aq, %bb.am
-  %.127.lcssa.i = phi i32 [ %.12735.i, %bb.am ], [ %i.fs, %bb.aq ], [ %i.fs, %bb.ap ], [ %i.fs, %bb.an ] ; 2 uses
+  %.127.lcssa.i = phi i32 [ %.12735.i, %bb.am ], [ %.12737.i, %bb.aq ], [ %.12737.i, %bb.ap ], [ %.12737.i, %bb.an ] ; 2 uses
   %i.gi = icmp slt i32 %.127.lcssa.i, %.240.i
   br i1 %i.gi, label %.lr.ph47.i, label %GetASN_UTF8String.exit
 

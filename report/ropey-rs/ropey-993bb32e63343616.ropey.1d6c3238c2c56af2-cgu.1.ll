@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %.lr.ph1000
   br i1 %i.cm, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit, label %bb.j
 
 _RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit: ; preds = %.lr.ph, %bb.i, %.lr.ph903, %.lr.ph1000, %bb.j, %bb.d, %bb.h
-  %.sroa.0.0.i98 = phi i64 [ %2, %bb.h ], [ %2, %bb.j ], [ %.sroa.013.3.i900, %.lr.ph903 ], [ %2, %bb.d ], [ %.sroa.8573.0996, %.lr.ph1000 ], [ %2, %bb.i ], [ %.sroa.013.0.i882, %.lr.ph ] ; 20 uses
+  %.sroa.0.0.i98 = phi i64 [ %2, %bb.h ], [ %2, %bb.j ], [ %.sroa.013.3.i900, %.lr.ph903 ], [ %2, %bb.d ], [ %.sroa.8573.0996, %.lr.ph1000 ], [ %2, %bb.i ], [ %.sroa.013.0.i882, %.lr.ph ] ; 19 uses
   %i.cn = icmp eq i64 %.sroa.0.0.i98, 0           ; 2 uses
   br i1 %i.cn, label %bb.m, label %bb.k
 
@@ -224,7 +224,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.cr, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %bb.l, %.split.i, %_RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit
-  %i.cs = sub nuw i64 %2, %.sroa.0.0.i98          ; 5 uses
+  %i.cs = sub nuw i64 %2, %.sroa.0.0.i98          ; 6 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.0.0.i98 ; 7 uses
   %i.cu = icmp samesign ult i64 %i.cs, 16
   br i1 %i.cu, label %bb.o, label %bb.n
@@ -313,9 +313,8 @@ bb.o:                                             ; preds = %bb.m
 
 .preheader978.preheader:                          ; preds = %bb.o
   %xtraiter1105 = and i64 %i.cs, 3                ; 3 uses
-  %4 = sub i64 %.sroa.0.0.i98, %2
-  %5 = icmp ugt i64 %4, -4
-  br i1 %5, label %.preheader978.epil.preheader, label %.preheader978.preheader.new
+  %4 = icmp ult i64 %i.cs, 4
+  br i1 %4, label %.preheader978.epil.preheader, label %.preheader978.preheader.new
 
 .preheader978.preheader.new:                      ; preds = %.preheader978.preheader
   %unroll_iter = and i64 %i.cs, 12
@@ -718,9 +717,9 @@ bb.aq:                                            ; preds = %bb.ao
   unreachable
 
 bb.ar:                                            ; preds = %bb.au, %bb.ap
-  %i.sx = phi i64 [ %i.sv, %bb.ap ], [ %i.tk, %bb.au ] ; 7 uses
+  %i.sx = phi i64 [ %i.sv, %bb.ap ], [ %i.tk, %bb.au ] ; 6 uses
   %i.sy = phi ptr [ %i.su, %bb.ap ], [ %i.tj, %bb.au ] ; 3 uses
-  %.sroa.070.0 = phi i64 [ %i.sw, %bb.ap ], [ %spec.select, %bb.au ] ; 10 uses
+  %.sroa.070.0 = phi i64 [ %i.sw, %bb.ap ], [ %spec.select, %bb.au ] ; 9 uses
   %i.sz = icmp eq i64 %.sroa.070.0, 0
   br i1 %i.sz, label %bb.aw, label %bb.as
 
@@ -760,7 +759,7 @@ bb.av:                                            ; preds = %bb.am
   unreachable
 
 bb.aw:                                            ; preds = %bb.at, %.split.i436, %bb.ar
-  %i.to = sub nuw i64 %i.sx, %.sroa.070.0         ; 10 uses
+  %i.to = sub nuw i64 %i.sx, %.sroa.070.0         ; 11 uses
   %i.tp = getelementptr inbounds nuw i8, ptr %i.sy, i64 %.sroa.070.0 ; 8 uses
   %i.tq = sub i64 %i.nk, %i.to
   store i64 %i.tq, ptr %i.bv, align 8
@@ -850,9 +849,8 @@ bb.ay:                                            ; preds = %bb.aw
 
 .preheader1672.preheader:                         ; preds = %bb.ay
   %xtraiter2138 = and i64 %i.to, 3                ; 3 uses
-  %2 = sub i64 %.sroa.070.0, %i.sx
-  %3 = icmp ugt i64 %2, -4
-  br i1 %3, label %.preheader1672.epil.preheader, label %.preheader1672.preheader.new
+  %2 = icmp ult i64 %i.to, 4
+  br i1 %2, label %.preheader1672.epil.preheader, label %.preheader1672.preheader.new
 
 .preheader1672.preheader.new:                     ; preds = %.preheader1672.preheader
   %unroll_iter2143 = and i64 %i.to, 12
@@ -1255,7 +1253,7 @@ _RNvNtCs2wCc12Mnjqg_5ropey9str_utils20ends_with_line_break.exit485.thread1037: ;
   %i.adj = phi i64 [ %.pre1452, %._RNvNtCs2wCc12Mnjqg_5ropey9str_utils20ends_with_line_break.exit485.thread1037_crit_edge ], [ %i.adh, %.split10.i473 ], [ %i.adh, %.split1040 ], [ %i.adh, %.split1039 ], [ %i.adh, %_RNvNtCs2wCc12Mnjqg_5ropey9str_utils20ends_with_line_break.exit485 ] ; 7 uses
   %i.adk = phi ptr [ %.pre1450, %._RNvNtCs2wCc12Mnjqg_5ropey9str_utils20ends_with_line_break.exit485.thread1037_crit_edge ], [ %i.adt, %.split10.i473 ], [ %i.adt, %.split1040 ], [ %i.adt, %.split1039 ], [ %i.adt, %_RNvNtCs2wCc12Mnjqg_5ropey9str_utils20ends_with_line_break.exit485 ] ; 7 uses
   %i.adl = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
-  %i.adm = load i64, ptr %i.adl, align 8, !noundef !5 ; 14 uses
+  %i.adm = load i64, ptr %i.adl, align 8, !noundef !5 ; 13 uses
   %i.adn = icmp eq i64 %i.adm, 0
   br i1 %i.adn, label %bb.bl, label %bb.bi
 
@@ -1367,7 +1365,7 @@ bb.bl:                                            ; preds = %bb.bj, %.split.i463
   %i.afg = tail call fastcc { ptr, i64 } @_RNvNtCs2wCc12Mnjqg_5ropey9str_utils15trim_line_break(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.adk, i64 noundef %i.adm) #18 ; 2 uses
   %i.afh = extractvalue { ptr, i64 } %i.afg, 0
   %i.afi = extractvalue { ptr, i64 } %i.afg, 1
-  %i.afj = tail call noundef i64 @_RNvNtCs2wCc12Mnjqg_5ropey9str_utils24last_line_start_byte_idx(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.afh, i64 noundef %i.afi) ; 10 uses
+  %i.afj = tail call noundef i64 @_RNvNtCs2wCc12Mnjqg_5ropey9str_utils24last_line_start_byte_idx(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.afh, i64 noundef %i.afi) ; 9 uses
   store i64 %i.afj, ptr %i.adl, align 8
   %i.afk = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %i.afl = load i64, ptr %i.afk, align 8, !noundef !5
@@ -1411,7 +1409,7 @@ _RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit.thread1043: ; preds = %
   unreachable
 
 _RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit.thread: ; preds = %bb.bo, %bb.bm, %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit
-  %i.afy = sub nuw i64 %i.adm, %i.afj             ; 8 uses
+  %i.afy = sub nuw i64 %i.adm, %i.afj             ; 9 uses
   %i.afz = getelementptr inbounds nuw i8, ptr %i.adk, i64 %i.afj ; 8 uses
   %i.aga = icmp samesign ult i64 %i.afy, 16
   br i1 %i.aga, label %bb.bs, label %bb.br
@@ -1497,9 +1495,8 @@ bb.bs:                                            ; preds = %_RNvNtNtCskKLDkoKar
 
 .preheader1671.preheader:                         ; preds = %bb.bs
   %xtraiter2153 = and i64 %i.afy, 3               ; 3 uses
-  %4 = sub i64 %i.afj, %i.adm
-  %5 = icmp ugt i64 %4, -4
-  br i1 %5, label %.preheader1671.epil.preheader, label %.preheader1671.preheader.new
+  %3 = icmp ult i64 %i.afy, 4
+  br i1 %3, label %.preheader1671.epil.preheader, label %.preheader1671.preheader.new
 
 .preheader1671.preheader.new:                     ; preds = %.preheader1671.preheader
   %unroll_iter2158 = and i64 %i.afy, 12

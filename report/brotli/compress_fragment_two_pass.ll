@@ -205,7 +205,7 @@ begin_hunk_0_@StoreCommands:bb.a
   %i.fz = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.26476
   %i.ga = load i32, ptr %i.fz, align 4, !tbaa !19 ; 2 uses
   %i.gb = and i32 %i.ga, 255                      ; 2 uses
-  %i.gc = lshr i32 %i.ga, 8                       ; 3 uses
+  %i.gc = lshr i32 %i.ga, 8                       ; 2 uses
   %i.gd = zext nneg i32 %i.gb to i64              ; 4 uses
   %i.ge = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.gd
   %i.gf = load i8, ptr %i.ge, align 1, !tbaa !15
@@ -246,16 +246,14 @@ begin_hunk_0_@StoreCommands:bb.a
 
 bb.b:                                             ; preds = %.lr.ph79
   %i.hf = getelementptr inbounds nuw [4 x i8], ptr @StoreCommands.kInsertOffset, i64 %i.gd
-  %i.hg = load i32, ptr %i.hf, align 4, !tbaa !19 ; 2 uses
-  %i.hh = add i32 %i.hg, %i.gc                    ; 4 uses
+  %i.hg = load i32, ptr %i.hf, align 4, !tbaa !19
+  %i.hh = add i32 %i.hg, %i.gc                    ; 5 uses
   %.not83 = icmp eq i32 %i.hh, 0
   br i1 %.not83, label %.loopexit, label %.lr.ph75.preheader
 
 .lr.ph75.preheader:                               ; preds = %bb.b
-  %7 = add i32 %i.hg, -1
   %xtraiter100 = and i32 %i.hh, 1
-  %8 = sub nsw i32 0, %i.gc
-  %i.hi = icmp eq i32 %7, %8
+  %i.hi = icmp eq i32 %i.hh, 1
   br i1 %i.hi, label %.lr.ph75.epil.preheader, label %.lr.ph75.preheader.new
 
 .lr.ph75.preheader.new:                           ; preds = %.lr.ph75.preheader

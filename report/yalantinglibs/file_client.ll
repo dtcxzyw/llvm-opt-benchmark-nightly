@@ -205,9 +205,9 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ab
   %i.cb = load ptr, ptr %i.a, align 8, !tbaa !252 ; 10 uses
-  %i.cc = ptrtoint ptr %i.bx to i64               ; 3 uses
-  %i.cd = ptrtoint ptr %i.cb to i64               ; 3 uses
-  %i.ce = sub i64 %i.cc, %i.cd                    ; 4 uses
+  %i.cc = ptrtoint ptr %i.bx to i64               ; 2 uses
+  %i.cd = ptrtoint ptr %i.cb to i64               ; 2 uses
+  %i.ce = sub i64 %i.cc, %i.cd                    ; 5 uses
   %i.cf = icmp eq i64 %i.ce, 9223372036854775800
   br i1 %i.cf, label %bb.ae, label %_ZNKSt6vectorISt10unique_ptrIN7coro_io15ExecutorWrapperIN4asio10io_context19basic_executor_typeISaIvELm0EEEEESt14default_deleteIS8_EESaISB_EE12_M_check_lenEmPKc.exit.i
 
@@ -243,19 +243,15 @@ _ZNKSt6vectorISt10unique_ptrIN7coro_io15ExecutorWrapperIN4asio10io_context19basi
   %i.cq = sub i64 %i.cp, %i.cd                    ; 2 uses
   %i.cr = lshr i64 %i.cq, 3
   %i.cs = add nuw nsw i64 %i.cr, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.cq, 56
+  %min.iters.check = icmp ult i64 %i.cq, 40
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader153, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
-  %scevgep = getelementptr i8, ptr %i.cm, i64 8
-  %5 = add i64 %i.cc, -8
-  %6 = sub i64 %5, %i.cd
-  %i.ct = and i64 %6, -8                          ; 2 uses
-  %scevgep147 = getelementptr i8, ptr %scevgep, i64 %i.ct
-  %scevgep148 = getelementptr i8, ptr %i.cb, i64 8
-  %scevgep149 = getelementptr i8, ptr %scevgep148, i64 %i.ct
+  %i.ct = and i64 %i.ce, -8                       ; 2 uses
+  %scevgep148 = getelementptr i8, ptr %i.cm, i64 %i.ct
+  %scevgep149 = getelementptr i8, ptr %i.cb, i64 %i.ct
   %bound0 = icmp ult ptr %i.cm, %scevgep149
-  %bound1 = icmp ult ptr %i.cb, %scevgep147
+  %bound1 = icmp ult ptr %i.cb, %scevgep148
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i.i.i.preheader153, label %vector.ph
 
@@ -658,11 +654,11 @@ bb.a:
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 80
   store ptr null, ptr %i.ar, align 8, !tbaa !1261
   store atomic ptr %i.k, ptr %i.d monotonic, align 8
-  %i.as = lshr i64 %1, 5                          ; 2 uses
+  %i.as = lshr i64 %1, 5
   %i.at = and i64 %1, 31
   %i.au = icmp ne i64 %i.at, 0
-  %i.av = zext i1 %i.au to i64                    ; 2 uses
-  %i.aw = add nuw nsw i64 %i.as, %i.av            ; 6 uses
+  %i.av = zext i1 %i.au to i64
+  %i.aw = add nuw nsw i64 %i.as, %i.av            ; 8 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %i.aw, ptr %i.ax, align 8, !tbaa !1271
   %i.ay = icmp eq i64 %1, 0
@@ -680,9 +676,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.bc, label %.thread.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.c
-  %2 = add nuw nsw i64 %i.as, %i.av               ; 2 uses
   %xtraiter = and i64 %i.aw, 3                    ; 3 uses
-  %i.bd = icmp samesign ult i64 %2, 4
+  %i.bd = icmp samesign ult i64 %i.aw, 4
   br i1 %i.bd, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
@@ -759,7 +754,7 @@ bb.c:                                             ; preds = %bb.a
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.bb, ptr %i.cb, align 8, !tbaa !1272
   %xtraiter4 = and i64 %i.aw, 7                   ; 3 uses
-  %i.cc = icmp samesign ult i64 %2, 8
+  %i.cc = icmp samesign ult i64 %i.aw, 8
   br i1 %i.cc, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
@@ -1162,11 +1157,11 @@ bb.a:
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 80
   store ptr null, ptr %i.ar, align 8, !tbaa !1060
   store atomic ptr %i.k, ptr %i.d monotonic, align 8
-  %i.as = lshr i64 %1, 5                          ; 2 uses
+  %i.as = lshr i64 %1, 5
   %i.at = and i64 %1, 31
   %i.au = icmp ne i64 %i.at, 0
-  %i.av = zext i1 %i.au to i64                    ; 2 uses
-  %i.aw = add nuw nsw i64 %i.as, %i.av            ; 6 uses
+  %i.av = zext i1 %i.au to i64
+  %i.aw = add nuw nsw i64 %i.as, %i.av            ; 8 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %i.aw, ptr %i.ax, align 8, !tbaa !1080
   %i.ay = icmp eq i64 %1, 0
@@ -1184,9 +1179,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.bc, label %.thread.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.c
-  %2 = add nuw nsw i64 %i.as, %i.av               ; 2 uses
   %xtraiter = and i64 %i.aw, 3                    ; 3 uses
-  %i.bd = icmp samesign ult i64 %2, 4
+  %i.bd = icmp samesign ult i64 %i.aw, 4
   br i1 %i.bd, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
@@ -1263,7 +1257,7 @@ bb.c:                                             ; preds = %bb.a
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.bb, ptr %i.cb, align 8, !tbaa !1081
   %xtraiter4 = and i64 %i.aw, 7                   ; 3 uses
-  %i.cc = icmp samesign ult i64 %2, 8
+  %i.cc = icmp samesign ult i64 %i.aw, 8
   br i1 %i.cc, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i

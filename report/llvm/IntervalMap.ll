@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph38
 define dso_local void @_ZN4llvm15IntervalMapImpl4Path9moveRightEj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(80) %0, i32 noundef %1) local_unnamed_addr #4 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8                ; 5 uses
-  %.046 = add i32 %1, -1                          ; 2 uses
+  %.046 = add i32 %1, -1                          ; 3 uses
   %.not47 = icmp eq i32 %.046, 0
   br i1 %.not47, label %..critedge_crit_edge, label %.lr.ph51
 
@@ -260,7 +260,6 @@ bb.c:                                             ; preds = %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.c
   %i.t = sub i32 %1, %.0.in44
-  %.neg = add i32 %.0.in44, 1
   %xtraiter = and i32 %i.t, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -287,7 +286,7 @@ bb.c:                                             ; preds = %.critedge
   %.sroa.019.0.lcssa52.unr = phi i64 [ poison, %.lr.ph.preheader ], [ %.sroa.019.0.prol, %.lr.ph.prol ]
   %.sroa.019.025.unr = phi i64 [ %.sroa.019.022, %.lr.ph.preheader ], [ %.sroa.019.0.prol, %.lr.ph.prol ]
   %.124.unr = phi i32 [ %.0.in44, %.lr.ph.preheader ], [ %i.ac, %.lr.ph.prol ]
-  %i.ad = icmp eq i32 %1, %.neg
+  %i.ad = icmp eq i32 %.046, %.0.in44
   br i1 %i.ad, label %._crit_edge.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph

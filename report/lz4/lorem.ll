@@ -204,15 +204,15 @@ bb.bi:                                            ; preds = %generateSentence.ex
   %i.lw = zext i32 %i.lv to i64
   %i.lx = mul nuw nsw i64 %i.lw, 11
   %i.ly = lshr i64 %i.lx, 32
-  %i.lz = trunc nuw nsw i64 %i.ly to i32          ; 2 uses
+  %i.lz = trunc nuw nsw i64 %i.ly to i32
   %i.ma = mul i32 %i.lv, -1640531535
   %i.mb = xor i32 %i.ma, -2048144777              ; 2 uses
   %i.mc = tail call i32 @llvm.fshl.i32(i32 %i.mb, i32 %i.mb, i32 13) ; 2 uses
   %i.md = zext i32 %i.mc to i64
   %i.me = mul nuw nsw i64 %i.md, 11
   %i.mf = lshr i64 %i.me, 32
-  %i.mg = trunc nuw nsw i64 %i.mf to i32          ; 2 uses
-  %i.mh = add nuw nsw i32 %i.mg, %i.lz            ; 4 uses
+  %i.mg = trunc nuw nsw i64 %i.mf to i32
+  %i.mh = add nuw nsw i32 %i.mg, %i.lz            ; 5 uses
   %i.mi = mul i32 %i.mc, -1640531535
   %i.mj = xor i32 %i.mi, -2048144777              ; 2 uses
   %i.mk = tail call i32 @llvm.fshl.i32(i32 %i.mj, i32 %i.mj, i32 13) ; 2 uses
@@ -348,16 +348,12 @@ generateWord.exit.peel.i.i:                       ; preds = %bb.bj, %bb.bn, %bb.
   %i.pq = phi i64 [ %i.lq, %bb.bo ], [ %1, %bb.bl ], [ %i.ou, %bb.bj ], [ %1, %writeLastCharacters.exit.sink.split.sink.split.i.i.peel.i.i ], [ %1, %bb.bn ], [ %1, %bb.bq ] ; 3 uses
   %i.pr = phi i64 [ %i.lr, %bb.bo ], [ %1, %bb.bl ], [ %i.ou, %bb.bj ], [ %1, %writeLastCharacters.exit.sink.split.sink.split.i.i.peel.i.i ], [ %1, %bb.bn ], [ %1, %bb.bq ] ; 3 uses
   %i.ps = phi i64 [ %1, %bb.bo ], [ %1, %bb.bl ], [ %i.ou, %bb.bj ], [ %1, %writeLastCharacters.exit.sink.split.sink.split.i.i.peel.i.i ], [ %1, %bb.bn ], [ %1, %bb.bq ] ; 5 uses
-  %exitcond.peel.not.i.i = icmp eq i32 %i.mh, 0
-  br i1 %exitcond.peel.not.i.i, label %generateSentence.exit.i, label %.peel.next.i.preheader.i
+  switch i32 %i.mh, label %.peel.next.i.preheader.split.i [
+    i32 0, label %generateSentence.exit.i
+    i32 1, label %generateSentence.exit.loopexit.peel.begin.i
+  ]
 
-.peel.next.i.preheader.i:                         ; preds = %generateWord.exit.peel.i.i
-  %5 = add nsw i32 %i.mg, -1
-  %6 = sub nsw i32 0, %i.lz
-  %.not.i13 = icmp eq i32 %5, %6
-  br i1 %.not.i13, label %generateSentence.exit.loopexit.peel.begin.i, label %.peel.next.i.preheader.split.i
-
-.peel.next.i.preheader.split.i:                   ; preds = %.peel.next.i.preheader.i
+.peel.next.i.preheader.split.i:                   ; preds = %generateWord.exit.peel.i.i
   %i.pt = add nsw i32 %i.mh, -1
   br label %.peel.next.i.i
 
@@ -464,14 +460,14 @@ generateWord.exit.i.i:                            ; preds = %bb.bu, %bb.bx, %wri
   %exitcond.not.i.i14 = icmp eq i32 %.01922.i.i, %i.pt
   br i1 %exitcond.not.i.i14, label %generateSentence.exit.loopexit.peel.begin.i, label %.peel.next.i.i, !llvm.loop !16
 
-generateSentence.exit.loopexit.peel.begin.i:      ; preds = %generateWord.exit.i.i, %.peel.next.i.preheader.i
-  %i.rx = phi i64 [ %i.pp, %.peel.next.i.preheader.i ], [ %i.rr, %generateWord.exit.i.i ]
-  %i.ry = phi i64 [ %i.pq, %.peel.next.i.preheader.i ], [ %i.rs, %generateWord.exit.i.i ]
-  %i.rz = phi i64 [ %i.pr, %.peel.next.i.preheader.i ], [ %i.rt, %generateWord.exit.i.i ]
-  %i.sa = phi i64 [ %i.ps, %.peel.next.i.preheader.i ], [ %i.ru, %generateWord.exit.i.i ]
-  %i.sb = phi i32 [ 1, %.peel.next.i.preheader.i ], [ %i.rw, %generateWord.exit.i.i ] ; 3 uses
-  %i.sc = phi i32 [ %i.nx, %.peel.next.i.preheader.i ], [ %i.qc, %generateWord.exit.i.i ]
-  %i.sd = phi i64 [ %i.ps, %.peel.next.i.preheader.i ], [ %i.rv, %generateWord.exit.i.i ] ; 9 uses
+generateSentence.exit.loopexit.peel.begin.i:      ; preds = %generateWord.exit.i.i, %generateWord.exit.peel.i.i
+  %i.rx = phi i64 [ %i.pp, %generateWord.exit.peel.i.i ], [ %i.rr, %generateWord.exit.i.i ]
+  %i.ry = phi i64 [ %i.pq, %generateWord.exit.peel.i.i ], [ %i.rs, %generateWord.exit.i.i ]
+  %i.rz = phi i64 [ %i.pr, %generateWord.exit.peel.i.i ], [ %i.rt, %generateWord.exit.i.i ]
+  %i.sa = phi i64 [ %i.ps, %generateWord.exit.peel.i.i ], [ %i.ru, %generateWord.exit.i.i ]
+  %i.sb = phi i32 [ %i.mh, %generateWord.exit.peel.i.i ], [ %i.rw, %generateWord.exit.i.i ] ; 3 uses
+  %i.sc = phi i32 [ %i.nx, %generateWord.exit.peel.i.i ], [ %i.qc, %generateWord.exit.i.i ]
+  %i.sd = phi i64 [ %i.ps, %generateWord.exit.peel.i.i ], [ %i.rv, %generateWord.exit.i.i ] ; 9 uses
   %i.se = mul i32 %i.sc, -1640531535
   %i.sf = xor i32 %i.se, -2048144777              ; 2 uses
   %i.sg = tail call i32 @llvm.fshl.i32(i32 %i.sf, i32 %i.sf, i32 13) ; 7 uses

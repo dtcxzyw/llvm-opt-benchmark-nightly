@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.i, label %.lr.ph.us.preheader, label %.lr.ph78.split
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph78
-  %i.m = add nsw i64 %3, -1                       ; 2 uses
+  %i.m = add nsw i64 %3, -1                       ; 3 uses
   %i.n = shl i64 %6, 5                            ; 3 uses
   %i.o = getelementptr i8, ptr %1, i64 %i.n
   %scevgep = getelementptr i8, ptr %i.o, i64 8
@@ -343,7 +343,6 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph.us, %middle.block
   %.04974.us.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph.us ], [ %n.vec, %middle.block ] ; 7 uses
   %.173.us.ph = phi i64 [ %i.ao, %vector.memcheck ], [ %i.ao, %vector.scevcheck ], [ %i.ao, %.lr.ph.us ], [ %i.bm, %middle.block ] ; 3 uses
-  %.neg = or disjoint i64 %.04974.us.ph, 1
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
@@ -371,7 +370,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   %.lcssa149.unr = phi i64 [ poison, %scalar.ph.preheader ], [ %i.ci, %scalar.ph.prol ]
   %.04974.us.unr = phi i64 [ %.04974.us.ph, %scalar.ph.preheader ], [ %i.cj, %scalar.ph.prol ]
   %.173.us.unr = phi i64 [ %.173.us.ph, %scalar.ph.preheader ], [ %i.ci, %scalar.ph.prol ]
-  %i.ck = icmp eq i64 %3, %.neg
+  %i.ck = icmp eq i64 %i.m, %.04974.us.ph
   br i1 %i.ck, label %._crit_edge.us, label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
@@ -428,15 +427,12 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %smax = tail call i64 @llvm.smax.i64(i64 %i.c, i64 4)
   %i.dq = add nsw i64 %smax, -4
   %i.dr = lshr exact i64 %i.dq, 2
-  %7 = mul i64 %i.dr, %invariant.op
-  %8 = shl i64 %5, 2
-  %i.ds = add i64 %7, %8
-  %9 = shl i64 %3, 2
-  %10 = sub i64 %i.ds, %9
+  %i.ds = add nuw nsw i64 %i.dr, 1
+  %7 = mul i64 %invariant.op, %i.ds
   br label %.preheader
 
 .preheader:                                       ; preds = %._crit_edge.us, %.lr.ph78.split, %bb.a
-  %.051.lcssa = phi i64 [ 0, %bb.a ], [ %10, %.lr.ph78.split ], [ %i.dn, %._crit_edge.us ]
+  %.051.lcssa = phi i64 [ 0, %bb.a ], [ %7, %.lr.ph78.split ], [ %i.dn, %._crit_edge.us ]
   %i.dt = icmp slt i64 %i.c, %4
   br i1 %i.dt, label %.lr.ph84, label %._crit_edge85.split
 

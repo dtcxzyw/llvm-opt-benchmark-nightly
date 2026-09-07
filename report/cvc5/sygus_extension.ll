@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s
 
 _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit: ; preds = %bb.t, %bb.s, %bb.r
   %i.dh = invoke noundef i32 @_ZN4cvc58internal6theory9datatypes14SygusExtension22getSearchSizeForAnchorENS0_12NodeTemplateILb1EEE(ptr noundef nonnull align 8 dereferenceable(1264) %0, ptr noundef nonnull align 8 %23)
-          to label %bb.u unwind label %bb.z       ; 2 uses
+          to label %bb.u unwind label %bb.z
 
 bb.u:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit
   %i.di = load i64, ptr %i.cu, align 8            ; 3 uses
@@ -233,8 +233,9 @@ bb.x:                                             ; preds = %bb.w
   unreachable
 
 _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit:   ; preds = %bb.u, %bb.v, %bb.w
+  %29 = sub i32 %i.dh, %3                         ; 2 uses
   %i.dr = call noundef ptr @_ZNK4cvc58internal6EnvObj11nodeManagerEv(ptr noundef nonnull align 8 dereferenceable(16) %0) ; 0 uses
-  %.not183 = icmp slt i32 %i.dh, %3
+  %.not183 = icmp slt i32 %29, 0
   br i1 %.not183, label %._crit_edge, label %.lr.ph185
 
 .lr.ph185:                                        ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
@@ -247,8 +248,6 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit:   ; preds = %bb.u, %bb.v, %bb.w
   %i.dy = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.dz = getelementptr inbounds nuw i8, ptr %8, i64 40
   %i.ea = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %29 = add i32 %i.dh, 1
-  %30 = sub i32 %29, %3
   br label %bb.aa
 
 ._crit_edge:                                      ; preds = %.loopexit, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
@@ -268,7 +267,7 @@ bb.z:                                             ; preds = %_ZN4cvc58internal12
   br label %bb.cr
 
 bb.aa:                                            ; preds = %.lr.ph185, %.loopexit
-  %.0184 = phi i32 [ 0, %.lr.ph185 ], [ %i.mk, %.loopexit ] ; 3 uses
+  %.0184 = phi i32 [ 0, %.lr.ph185 ], [ %i.mk, %.loopexit ] ; 4 uses
   %i.ed = load ptr, ptr %i.ds, align 8, !tbaa !131 ; 2 uses
   %.not10.i.i.i.i85 = icmp eq ptr %i.ed, null
   br i1 %.not10.i.i.i.i85, label %.critedge.i95, label %.lr.ph.i.i.i.i86
@@ -671,8 +670,8 @@ _ZNK4cvc57context9CDHashSetINS_8internal12NodeTemplateILb1EEESt4hashIS4_EE4findE
   br i1 %.not178, label %.loopexit, label %.lr.ph
 
 .loopexit:                                        ; preds = %_ZNK4cvc57context9CDHashSetINS_8internal12NodeTemplateILb1EEESt4hashIS4_EE4findERKS4_.exit.thread, %bb.ai, %bb.ah
-  %i.mk = add nuw i32 %.0184, 1                   ; 2 uses
-  %exitcond.not = icmp eq i32 %i.mk, %30
+  %i.mk = add nuw i32 %.0184, 1
+  %exitcond.not = icmp eq i32 %.0184, %29
   br i1 %exitcond.not, label %._crit_edge, label %bb.aa, !llvm.loop !913
 
 bb.cr:                                            ; preds = %bb.z, %.body, %bb.y

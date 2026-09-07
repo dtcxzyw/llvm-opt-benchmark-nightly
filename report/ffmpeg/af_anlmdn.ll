@@ -135,7 +135,7 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @compute_cache_c(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, i64 noundef %5) #2 {
 bb.a:
-  %i.a = add nsw i64 %5, %2                       ; 3 uses
+  %i.a = add nsw i64 %5, %2                       ; 4 uses
   %sext = shl i64 %5, 32                          ; 2 uses
   %i.b = ashr exact i64 %sext, 32                 ; 6 uses
   %i.c = icmp sgt i64 %i.a, %i.b
@@ -161,8 +161,7 @@ vector.memcheck:                                  ; preds = %.lr.ph
   %i.o = shl i64 %3, 2                            ; 5 uses
   %i.p = getelementptr i8, ptr %1, i64 %i.o
   %scevgep29 = getelementptr i8, ptr %i.p, i64 %i.m
-  %6 = add i64 %5, %3
-  %i.q = add i64 %6, %2
+  %i.q = add i64 %i.a, %3
   %i.r = shl i64 %i.q, 2
   %scevgep30 = getelementptr i8, ptr %1, i64 %i.r
   %i.s = shl i64 %4, 2                            ; 2 uses

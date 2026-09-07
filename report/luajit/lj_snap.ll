@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph
 ._crit_edge:                                      ; preds = %._crit_edge.backedge, %._crit_edge.preheader
   %.0166 = phi ptr [ %2, %._crit_edge.preheader ], [ %.3169, %._crit_edge.backedge ] ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.0166, i64 4 ; 8 uses
-  %i.r = load i32, ptr %.0166, align 4, !tbaa !12 ; 26 uses
+  %i.r = load i32, ptr %.0166, align 4, !tbaa !12 ; 25 uses
   %i.s = and i32 %i.r, 255                        ; 8 uses
   %i.t = zext nneg i32 %i.s to i64
   %i.u = getelementptr inbounds nuw [2 x i8], ptr @lj_bc_mode, i64 %i.t
@@ -246,7 +246,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.ak = lshr i32 %i.r, 24                       ; 3 uses
-  %i.al = lshr i32 %i.r, 16                       ; 2 uses
+  %i.al = lshr i32 %i.r, 16
   %i.am = and i32 %i.al, 255                      ; 2 uses
   %.not179224 = icmp samesign ugt i32 %i.ak, %i.am
   br i1 %.not179224, label %.preheader196, label %iter.check519
@@ -257,10 +257,7 @@ iter.check519:                                    ; preds = %bb.g
   %i.ap = add nuw nsw i32 %i.am, 1
   %i.aq = add nuw nsw i32 %i.ap, %i.an
   %i.ar = sub nsw i32 %i.aq, %i.ak                ; 4 uses
-  %wide.trip.count = zext i32 %i.ar to i64
-  %4 = and i32 %i.al, 255
-  %narrow664 = add nuw nsw i32 %4, 1
-  %i.as = zext nneg i32 %narrow664 to i64
+  %i.as = zext i32 %i.ar to i64                   ; 2 uses
   %i.at = sub nsw i64 %i.as, %i.ao                ; 7 uses
   %min.iters.check506 = icmp ult i64 %i.at, 8
   br i1 %min.iters.check506, label %.lr.ph227.preheader, label %vector.main.loop.iter.check507
@@ -399,7 +396,7 @@ vec.epilog.middle.block503:                       ; preds = %vec.epilog.vector.b
   %i.br = and i8 %i.bq, -2
   store i8 %i.br, ptr %i.bp, align 1, !tbaa !40
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.as
   br i1 %exitcond.not, label %.preheader196, label %.lr.ph227, !llvm.loop !94
 
 .lr.ph229:                                        ; preds = %.lr.ph229.preheader, %.lr.ph229
@@ -802,10 +799,7 @@ iter.check441:                                    ; preds = %bb.z
   %i.kg = and i32 %i.kd, 255
   %i.kh = zext nneg i32 %i.kg to i64              ; 6 uses
   %i.ki = add nuw nsw i32 %i.kf, 1
-  %wide.trip.count301 = zext nneg i32 %i.ki to i64
-  %5 = lshr i32 %i.r, 16
-  %narrow665 = add nuw nsw i32 %5, 1
-  %i.kj = zext nneg i32 %narrow665 to i64
+  %i.kj = zext nneg i32 %i.ki to i64              ; 2 uses
   %i.kk = sub nsw i64 %i.kj, %i.kh                ; 7 uses
   %min.iters.check428 = icmp ult i64 %i.kk, 8
   br i1 %min.iters.check428, label %.lr.ph236.preheader, label %vector.main.loop.iter.check429
@@ -875,7 +869,7 @@ vec.epilog.middle.block451:                       ; preds = %vec.epilog.vector.b
   %i.kw = mul i8 %i.kv, 3
   store i8 %i.kw, ptr %i.ku, align 1, !tbaa !40
   %indvars.iv.next299 = add nuw nsw i64 %indvars.iv298, 1 ; 2 uses
-  %exitcond302.not = icmp eq i64 %indvars.iv.next299, %wide.trip.count301
+  %exitcond302.not = icmp eq i64 %indvars.iv.next299, %i.kj
   br i1 %exitcond302.not, label %._crit_edge.backedge, label %.lr.ph236, !llvm.loop !117
 
 bb.aa:                                            ; preds = %bb.y

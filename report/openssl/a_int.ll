@@ -205,8 +205,8 @@ bb.k:                                             ; preds = %.thread50
   br label %twos_complement.exit
 
 .thread:                                          ; preds = %bb.j, %.thread50, %._crit_edge
-  %.149.neg = phi i64 [ 0, %._crit_edge ], [ -1, %.thread50 ], [ 0, %bb.j ] ; 2 uses
-  %i.ac = add i64 %.149.neg, %3                   ; 7 uses
+  %.149.neg = phi i64 [ 0, %._crit_edge ], [ -1, %.thread50 ], [ 0, %bb.j ]
+  %i.ac = add i64 %.149.neg, %3                   ; 8 uses
   %.not43 = icmp eq ptr %0, null
   br i1 %.not43, label %twos_complement.exit, label %.lr.ph.preheader.i
 
@@ -216,7 +216,6 @@ bb.k:                                             ; preds = %.thread50
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 %i.ac ; 2 uses
   %i.af = lshr i8 %i.b, 7
   %i.ag = zext nneg i8 %i.af to i32               ; 2 uses
-  %4 = add i64 %.149.neg, %3
   %xtraiter = and i64 %i.ac, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
@@ -239,7 +238,7 @@ bb.k:                                             ; preds = %.thread50
   %.120.i.unr = phi ptr [ %i.ae, %.lr.ph.preheader.i ], [ %i.ao, %.lr.ph.i.prol ]
   %.01219.i.unr = phi i64 [ %i.ac, %.lr.ph.preheader.i ], [ %i.ah, %.lr.ph.i.prol ]
   %.11418.i.unr = phi ptr [ %i.ad, %.lr.ph.preheader.i ], [ %i.ai, %.lr.ph.i.prol ]
-  %i.aq = icmp eq i64 %4, 1
+  %i.aq = icmp eq i64 %i.ac, 1
   br i1 %i.aq, label %twos_complement.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i

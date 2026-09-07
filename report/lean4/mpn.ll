@@ -204,12 +204,12 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 _ZN4leanL5div_1ERNS_10mpn_bufferEjPj.exit:        ; preds = %.loopexit.i, %bb.p, %.noexc82, %bb.k
   %.val78 = load ptr, ptr %6, align 8             ; 18 uses
   %.val78174 = ptrtoaddr ptr %.val78 to i64
-  %.val79 = load i64, ptr %i.br, align 8          ; 13 uses
+  %.val79 = load i64, ptr %i.br, align 8          ; 12 uses
   %i.la = icmp eq i64 %i.bz, 0
   br i1 %i.la, label %.preheader.i, label %.preheader1.i
 
 .preheader1.i:                                    ; preds = %_ZN4leanL5div_1ERNS_10mpn_bufferEjPj.exit
-  %i.lb = add i64 %.val79, -1                     ; 6 uses
+  %i.lb = add i64 %.val79, -1                     ; 7 uses
   %.not.i84 = icmp eq i64 %i.lb, 0
   %.pre.i85 = trunc i64 %i.bz to i32              ; 6 uses
   br i1 %.not.i84, label %._crit_edge.i, label %.lr.ph.i86
@@ -279,9 +279,9 @@ middle.block169:                                  ; preds = %vector.body162
 scalar.ph156.preheader:                           ; preds = %vector.memcheck154, %vector.scevcheck153, %.lr.ph.i86, %middle.block169
   %.02.i.ph = phi i64 [ 0, %vector.memcheck154 ], [ 0, %vector.scevcheck153 ], [ 0, %.lr.ph.i86 ], [ %n.vec159, %middle.block169 ] ; 5 uses
   %i.ma = add i64 %.val79, -2
-  %i.mb = and i64 %.val79, 1
+  %i.mb = and i64 %i.lb, 1
   %lcmp.mod221.not.not = icmp eq i64 %i.mb, 0
-  br i1 %lcmp.mod221.not.not, label %scalar.ph156.prol, label %scalar.ph156.prol.loopexit
+  br i1 %lcmp.mod221.not.not, label %scalar.ph156.prol.loopexit, label %scalar.ph156.prol
 
 scalar.ph156.prol:                                ; preds = %scalar.ph156.preheader
   %i.mc = and i64 %.02.i.ph, 4294967288
@@ -684,17 +684,15 @@ bb.aa:                                            ; preds = %.loopexit.split-lp,
   %i.fg = getelementptr inbounds nuw i8, ptr %2, i64 %.034
   store i8 0, ptr %i.fg, align 1, !tbaa !29
   %i.fh = add i64 %.034, -1                       ; 5 uses
-  %i.fi = lshr i64 %i.fh, 1                       ; 2 uses
-  %i.fj = and i64 %i.fh, 1                        ; 2 uses
-  %i.fk = add nuw i64 %i.fi, %i.fj                ; 4 uses
+  %i.fi = lshr i64 %i.fh, 1
+  %i.fj = and i64 %i.fh, 1
+  %i.fk = add nuw i64 %i.fi, %i.fj                ; 5 uses
   %.not121 = icmp eq i64 %i.fk, 0
   br i1 %.not121, label %._crit_edge, label %.lr.ph119.preheader
 
 .lr.ph119.preheader:                              ; preds = %.critedge
-  %7 = add nsw i64 %i.fi, -1
   %xtraiter = and i64 %i.fk, 1
-  %8 = sub nsw i64 0, %i.fj
-  %i.fl = icmp eq i64 %7, %8
+  %i.fl = icmp eq i64 %i.fk, 1
   br i1 %i.fl, label %.lr.ph119.epil.preheader, label %.lr.ph119.preheader.new
 
 .lr.ph119.preheader.new:                          ; preds = %.lr.ph119.preheader

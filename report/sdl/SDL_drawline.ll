@@ -204,19 +204,17 @@ bb.m:                                             ; preds = %bb.k
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %.0188 = phi i32 [ %i.cg, %bb.l ], [ %i.bo, %bb.m ] ; 2 uses
+  %.0188 = phi i32 [ %i.cg, %bb.l ], [ %i.bo, %bb.m ]
   %.2187 = phi i32 [ %.0185, %bb.l ], [ %.1186, %bb.m ]
   %.1183 = phi ptr [ %i.cf, %bb.l ], [ %.0182, %bb.m ] ; 2 uses
-  %i.cn = zext i1 %6 to i32                       ; 2 uses
-  %spec.select226 = add nuw nsw i32 %.0188, %i.cn ; 4 uses
+  %i.cn = zext i1 %6 to i32
+  %spec.select226 = add nuw nsw i32 %.0188, %i.cn ; 5 uses
   %.not222238 = icmp eq i32 %spec.select226, 0
   br i1 %.not222238, label %.loopexit, label %.lr.ph241
 
 .lr.ph241:                                        ; preds = %bb.n
   %i.co = trunc i32 %5 to i8                      ; 9 uses
   %i.cp = sext i32 %.2187 to i64                  ; 9 uses
-  %7 = add nuw i32 %.0188, %i.cn
-  %8 = add i32 %7, -1
   %xtraiter = and i32 %spec.select226, 7          ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
@@ -235,7 +233,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph241
   %.2184240.unr = phi ptr [ %.1183, %.lr.ph241 ], [ %i.cr, %.prol.preheader ]
   %.2190239.unr = phi i32 [ %spec.select226, %.lr.ph241 ], [ %i.cq, %.prol.preheader ]
-  %i.cs = icmp ult i32 %8, 7
+  %i.cs = icmp samesign ult i32 %spec.select226, 8
   br i1 %i.cs, label %.loopexit, label %.lr.ph241.new
 
 .lr.ph241.new:                                    ; preds = %.prol.loopexit, %.lr.ph241.new
@@ -604,19 +602,17 @@ bb.m:                                             ; preds = %bb.k
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %.0353 = phi i32 [ %i.dc, %bb.l ], [ %i.ck, %bb.m ] ; 2 uses
+  %.0353 = phi i32 [ %i.dc, %bb.l ], [ %i.ck, %bb.m ]
   %.2352 = phi i32 [ %.0350, %bb.l ], [ %.1351, %bb.m ]
   %.1348 = phi ptr [ %i.db, %bb.l ], [ %.0347, %bb.m ] ; 2 uses
-  %i.dj = zext i1 %6 to i32                       ; 2 uses
-  %spec.select413 = add nuw nsw i32 %.0353, %i.dj ; 4 uses
+  %i.dj = zext i1 %6 to i32
+  %spec.select413 = add nuw nsw i32 %.0353, %i.dj ; 5 uses
   %.not408442 = icmp eq i32 %spec.select413, 0
   br i1 %.not408442, label %.loopexit, label %.lr.ph445
 
 .lr.ph445:                                        ; preds = %bb.n
   %i.dk = trunc i32 %5 to i16                     ; 9 uses
   %i.dl = sext i32 %.2352 to i64                  ; 9 uses
-  %7 = add nuw i32 %.0353, %i.dj
-  %8 = add i32 %7, -1
   %xtraiter = and i32 %spec.select413, 7          ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
@@ -635,7 +631,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph445
   %.2349444.unr = phi ptr [ %.1348, %.lr.ph445 ], [ %i.dn, %.prol.preheader ]
   %.2355443.unr = phi i32 [ %spec.select413, %.lr.ph445 ], [ %i.dm, %.prol.preheader ]
-  %i.do = icmp ult i32 %8, 7
+  %i.do = icmp samesign ult i32 %spec.select413, 8
   br i1 %i.do, label %.loopexit, label %.lr.ph445.new
 
 .lr.ph445.new:                                    ; preds = %.prol.loopexit, %.lr.ph445.new
@@ -1038,18 +1034,16 @@ bb.m:                                             ; preds = %bb.k
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %.0353 = phi i32 [ %i.ct, %bb.l ], [ %i.cb, %bb.m ] ; 2 uses
+  %.0353 = phi i32 [ %i.ct, %bb.l ], [ %i.cb, %bb.m ]
   %.2352 = phi i32 [ %.0350, %bb.l ], [ %.1351, %bb.m ]
   %.1348 = phi ptr [ %i.cs, %bb.l ], [ %.0347, %bb.m ] ; 2 uses
-  %i.da = zext i1 %6 to i32                       ; 2 uses
-  %spec.select413 = add nuw nsw i32 %.0353, %i.da ; 4 uses
+  %i.da = zext i1 %6 to i32
+  %spec.select413 = add nuw nsw i32 %.0353, %i.da ; 5 uses
   %.not408442 = icmp eq i32 %spec.select413, 0
   br i1 %.not408442, label %.loopexit, label %.lr.ph445
 
 .lr.ph445:                                        ; preds = %bb.n
   %i.db = sext i32 %.2352 to i64                  ; 9 uses
-  %7 = add nuw i32 %.0353, %i.da
-  %8 = add i32 %7, -1
   %xtraiter = and i32 %spec.select413, 7          ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
@@ -1068,7 +1062,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph445
   %.2349444.unr = phi ptr [ %.1348, %.lr.ph445 ], [ %i.dd, %.prol.preheader ]
   %.2355443.unr = phi i32 [ %spec.select413, %.lr.ph445 ], [ %i.dc, %.prol.preheader ]
-  %i.de = icmp ult i32 %8, 7
+  %i.de = icmp samesign ult i32 %spec.select413, 8
   br i1 %i.de, label %.loopexit, label %.lr.ph445.new
 
 .lr.ph445.new:                                    ; preds = %.prol.loopexit, %.lr.ph445.new

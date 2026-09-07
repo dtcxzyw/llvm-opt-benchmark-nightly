@@ -204,13 +204,13 @@ bb.a:
   br i1 %or.cond, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i64 @lv_strlen(ptr noundef nonnull %0) #11 ; 2 uses
-  %i.d = tail call i64 @lv_strlen(ptr noundef nonnull %2) #11 ; 10 uses
+  %i.c = tail call i64 @lv_strlen(ptr noundef nonnull %0) #11
+  %i.d = tail call i64 @lv_strlen(ptr noundef nonnull %2) #11 ; 8 uses
   %i.e = icmp eq i64 %i.d, 0
   br i1 %i.e, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = add i64 %i.d, %i.c                       ; 6 uses
+  %i.f = add i64 %i.d, %i.c                       ; 8 uses
   %.not16.i = icmp eq i32 %1, 0
   br i1 %.not16.i, label %lv_text_utf8_get_byte_id.exit, label %.lr.ph.i
 
@@ -257,18 +257,16 @@ lv_text_utf8_get_byte_id.exit.loopexit:           ; preds = %lv_text_utf8_size.e
   br label %lv_text_utf8_get_byte_id.exit
 
 lv_text_utf8_get_byte_id.exit:                    ; preds = %lv_text_utf8_get_byte_id.exit.loopexit, %bb.c
-  %.010.lcssa.i = phi i64 [ 0, %bb.c ], [ %i.u, %lv_text_utf8_get_byte_id.exit.loopexit ] ; 3 uses
-  %i.v = add i64 %i.d, %.010.lcssa.i              ; 2 uses
+  %.010.lcssa.i = phi i64 [ 0, %bb.c ], [ %i.u, %lv_text_utf8_get_byte_id.exit.loopexit ] ; 2 uses
+  %i.v = add i64 %i.d, %.010.lcssa.i              ; 3 uses
   %.not26 = icmp ult i64 %i.f, %i.v
   br i1 %.not26, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %lv_text_utf8_get_byte_id.exit
-  %3 = add i64 %i.d, %i.c                         ; 2 uses
-  %4 = add i64 %3, -1
-  %i.w = add i64 %i.d, %.010.lcssa.i
-  %i.x = add i64 %i.w, -1
-  %umin = tail call i64 @llvm.umin.i64(i64 %4, i64 %i.x)
-  %i.y = sub i64 %3, %umin                        ; 7 uses
+  %i.w = add i64 %i.f, -1
+  %i.x = add i64 %i.v, -1
+  %umin = tail call i64 @llvm.umin.i64(i64 %i.w, i64 %i.x)
+  %i.y = sub i64 %i.f, %umin                      ; 7 uses
   %min.iters.check = icmp ult i64 %i.y, 8
   %diff.check = icmp ugt i64 %i.d, -32
   %or.cond44 = or i1 %min.iters.check, %diff.check
@@ -369,7 +367,7 @@ bb.a:
   br i1 %i.a, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @lv_strlen(ptr noundef nonnull %0) #11 ; 3 uses
+  %i.b = tail call i64 @lv_strlen(ptr noundef nonnull %0) #11
   %.not16.i = icmp eq i32 %1, 0
   br i1 %.not16.i, label %lv_text_utf8_get_byte_id.exit, label %.lr.ph.i
 
@@ -456,28 +454,26 @@ lv_text_utf8_size.exit.i23:                       ; preds = %bb.j, %bb.i, %bb.h,
 
 lv_text_utf8_get_byte_id.exit27:                  ; preds = %.lr.ph.i19, %lv_text_utf8_size.exit.i23, %lv_text_utf8_get_byte_id.exit
   %.010.lcssa.i26 = phi i32 [ 0, %lv_text_utf8_get_byte_id.exit ], [ %.01012.i21, %.lr.ph.i19 ], [ %i.ae, %lv_text_utf8_size.exit.i23 ] ; 6 uses
-  %i.ag = zext i32 %.010.lcssa.i26 to i64         ; 3 uses
-  %i.ah = sub i64 %i.b, %i.ag                     ; 2 uses
+  %i.ag = zext i32 %.010.lcssa.i26 to i64
+  %i.ah = sub i64 %i.b, %i.ag                     ; 4 uses
   %.not28 = icmp ult i64 %i.ah, %i.q
   br i1 %.not28, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %lv_text_utf8_get_byte_id.exit27
-  %i.ai = add i64 %i.b, 1
-  %3 = sub i64 %i.ai, %i.ag
+  %i.ai = add i64 %i.ah, 1
   %i.aj = add i32 %.010.lcssa.i, 1
   %i.ak = zext i32 %i.aj to i64                   ; 2 uses
-  %umax38 = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.ak)
+  %umax38 = tail call i64 @llvm.umax.i64(i64 %i.ai, i64 %i.ak)
   %i.al = add i64 %umax38, 1
   %i.am = sub i64 %i.al, %i.ak                    ; 7 uses
   %min.iters.check = icmp ult i64 %i.am, 8
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
-  %i.an = add i64 %i.b, 1
-  %4 = sub i64 %i.an, %i.ag
+  %i.an = add i64 %i.ah, 1
   %i.ao = add i32 %.010.lcssa.i, 1
   %i.ap = zext i32 %i.ao to i64
-  %i.aq = tail call i64 @llvm.usub.sat.i64(i64 %4, i64 %i.ap) ; 2 uses
+  %i.aq = tail call i64 @llvm.usub.sat.i64(i64 %i.an, i64 %i.ap) ; 2 uses
   %i.ar = trunc i64 %i.aq to i32                  ; 3 uses
   %i.as = sub i32 -2, %.010.lcssa.i
   %i.at = icmp ult i32 %i.as, %i.ar

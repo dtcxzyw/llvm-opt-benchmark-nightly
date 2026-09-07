@@ -205,11 +205,11 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = ptrtoint ptr %2 to i64                   ; 2 uses
-  %i.d = ptrtoint ptr %0 to i64                   ; 4 uses
+  %i.d = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.e = sub i64 %i.c, %i.d
   %i.f = ashr exact i64 %i.e, 3                   ; 2 uses
-  %i.g = ptrtoint ptr %1 to i64                   ; 4 uses
-  %i.h = sub i64 %i.g, %i.d
+  %i.g = ptrtoint ptr %1 to i64                   ; 3 uses
+  %i.h = sub i64 %i.g, %i.d                       ; 2 uses
   %i.i = ashr exact i64 %i.h, 3                   ; 3 uses
   %i.j = sub nsw i64 %i.f, %i.i
   %i.k = icmp eq i64 %i.i, %i.j
@@ -220,16 +220,13 @@ bb.c:                                             ; preds = %bb.b
   %i.m = sub i64 %i.l, %i.d                       ; 2 uses
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
-  %min.iters.check164 = icmp ult i64 %i.m, 104
+  %min.iters.check164 = icmp ult i64 %i.m, 88
   br i1 %min.iters.check164, label %.lr.ph.i.preheader180, label %vector.memcheck157
 
 vector.memcheck157:                               ; preds = %.lr.ph.i.preheader
-  %3 = add i64 %i.g, -8
-  %4 = sub i64 %3, %i.d
-  %i.p = and i64 %4, -8
-  %5 = add i64 %i.p, 8                            ; 2 uses
-  %scevgep158 = getelementptr i8, ptr %0, i64 %5
-  %scevgep159 = getelementptr i8, ptr %1, i64 %5
+  %i.p = and i64 %i.h, -8                         ; 2 uses
+  %scevgep158 = getelementptr i8, ptr %0, i64 %i.p
+  %scevgep159 = getelementptr i8, ptr %1, i64 %i.p
   %bound0160 = icmp ult ptr %0, %scevgep159
   %bound1161 = icmp ult ptr %1, %scevgep158
   %found.conflict162 = and i1 %bound0160, %bound1161
@@ -289,9 +286,9 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.backedge, %bb.d
   %.sroa.041.0 = phi ptr [ %0, %bb.d ], [ %.sroa.041.0.be, %.backedge ] ; 22 uses
-  %.084 = phi i64 [ %i.i, %bb.d ], [ %.084.be, %.backedge ] ; 18 uses
-  %.0 = phi i64 [ %i.f, %bb.d ], [ %.0.be, %.backedge ] ; 11 uses
-  %i.ae = sub nsw i64 %.0, %.084                  ; 10 uses
+  %.084 = phi i64 [ %i.i, %bb.d ], [ %.084.be, %.backedge ] ; 17 uses
+  %.0 = phi i64 [ %i.f, %bb.d ], [ %.0.be, %.backedge ] ; 10 uses
+  %i.ae = sub nsw i64 %.0, %.084                  ; 11 uses
   %i.af = icmp slt i64 %.084, %i.ae
   br i1 %i.af, label %bb.f, label %bb.i
 
@@ -364,8 +361,7 @@ middle.block:                                     ; preds = %vector.body
   %.02897.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph99.preheader ], [ %n.vec, %middle.block ] ; 3 uses
   %.sroa.038.096.ph = phi ptr [ %i.am, %vector.memcheck ], [ %i.am, %.lr.ph99.preheader ], [ %i.ar, %middle.block ] ; 2 uses
   %.sroa.041.195.ph = phi ptr [ %.sroa.041.0, %vector.memcheck ], [ %.sroa.041.0, %.lr.ph99.preheader ], [ %i.as, %middle.block ] ; 2 uses
-  %6 = sub i64 %.0, %.084
-  %xtraiter189 = and i64 %6, 3                    ; 2 uses
+  %xtraiter189 = and i64 %i.ae, 3                 ; 2 uses
   %lcmp.mod190.not = icmp eq i64 %xtraiter189, 0
   br i1 %lcmp.mod190.not, label %.lr.ph99.prol.loopexit, label %.lr.ph99.prol
 

@@ -204,9 +204,9 @@ bb.er:                                            ; preds = %bb.eq
 
 bb.es:                                            ; preds = %bb.eq
   %i.ajj = load ptr, ptr %i.fd, align 8, !tbaa !214 ; 10 uses
-  %i.ajk = ptrtoint ptr %i.ajg to i64             ; 3 uses
-  %i.ajl = ptrtoint ptr %i.ajj to i64             ; 3 uses
-  %i.ajm = sub i64 %i.ajk, %i.ajl                 ; 4 uses
+  %i.ajk = ptrtoint ptr %i.ajg to i64             ; 2 uses
+  %i.ajl = ptrtoint ptr %i.ajj to i64             ; 2 uses
+  %i.ajm = sub i64 %i.ajk, %i.ajl                 ; 5 uses
   %i.ajn = icmp eq i64 %i.ajm, 9223372036854775800
   br i1 %i.ajn, label %bb.et, label %_ZNKSt6vectorISt10unique_ptrIN7jsonnet8internal10IdentifierESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -241,19 +241,15 @@ _ZNKSt6vectorISt10unique_ptrIN7jsonnet8internal10IdentifierESt14default_deleteIS
   %i.ajx = sub i64 %i.ajw, %i.ajl                 ; 2 uses
   %i.ajy = lshr i64 %i.ajx, 3
   %i.ajz = add nuw nsw i64 %i.ajy, 1              ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ajx, 56
+  %min.iters.check = icmp ult i64 %i.ajx, 40
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader1176, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %scevgep = getelementptr i8, ptr %i.aju, i64 8
-  %64 = add i64 %i.ajk, -8
-  %65 = sub i64 %64, %i.ajl
-  %i.aka = and i64 %65, -8                        ; 2 uses
-  %scevgep1168 = getelementptr i8, ptr %scevgep, i64 %i.aka
-  %scevgep1169 = getelementptr i8, ptr %i.ajj, i64 8
-  %scevgep1170 = getelementptr i8, ptr %scevgep1169, i64 %i.aka
+  %i.aka = and i64 %i.ajm, -8                     ; 2 uses
+  %scevgep1169 = getelementptr i8, ptr %i.aju, i64 %i.aka
+  %scevgep1170 = getelementptr i8, ptr %i.ajj, i64 %i.aka
   %bound0 = icmp ult ptr %i.aju, %scevgep1170
-  %bound1 = icmp ult ptr %i.ajj, %scevgep1168
+  %bound1 = icmp ult ptr %i.ajj, %scevgep1169
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i.i.i.i.i.preheader1176, label %vector.ph
 
@@ -656,25 +652,24 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   %.val36 = load ptr, ptr %2, align 8, !tbaa !282 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.val36, i64 8
   %i.m = load double, ptr %i.l, align 8, !tbaa !67
-  %i.n = fptosi double %i.m to i64                ; 3 uses
+  %i.n = fptosi double %i.m to i64                ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.val36, i64 24
   %i.p = load double, ptr %i.o, align 8, !tbaa !67
-  %i.q = fptosi double %i.p to i64                ; 2 uses
+  %i.q = fptosi double %i.p to i64
+  %5 = sub i64 %i.q, %i.n                         ; 2 uses
   %i.r = call fastcc ptr @_ZN7jsonnet8internal12_GLOBAL__N_111Interpreter9makeArrayERKSt6vectorIPNS1_9HeapThunkESaIS5_EE(ptr noundef nonnull align 8 dereferenceable(480) %0, ptr null, ptr null) ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i32 16, ptr %i.s, align 8, !tbaa !67
   %.sroa.53.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
   store ptr %i.r, ptr %.sroa.53.0..sroa_idx, align 8, !tbaa !67
-  %.not = icmp slt i64 %i.q, %i.n
-  br i1 %.not, label %.loopexit, label %bb.a
+  %6 = icmp sgt i64 %5, -1
+  br i1 %6, label %bb.a, label %.loopexit
 
 bb.a:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 24 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 32 ; 2 uses
-  %5 = add i64 %i.q, 1
-  %6 = sub i64 %5, %i.n
   br label %bb.c
 
 bb.b:                                             ; preds = %._crit_edge.i.i
@@ -696,7 +691,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47: ; preds = %bb.
   resume { ptr, i32 } %i.x
 
 bb.c:                                             ; preds = %bb.a, %_ZNSt6vectorIPN7jsonnet8internal12_GLOBAL__N_19HeapThunkESaIS4_EE9push_backERKS4_.exit
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %_ZNSt6vectorIPN7jsonnet8internal12_GLOBAL__N_19HeapThunkESaIS4_EE9push_backERKS4_.exit ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %_ZNSt6vectorIPN7jsonnet8internal12_GLOBAL__N_19HeapThunkESaIS4_EE9push_backERKS4_.exit ] ; 3 uses
   %.val33 = load ptr, ptr %i.u, align 8
   %i.ab = call fastcc noundef ptr @_ZN7jsonnet8internal12_GLOBAL__N_111Interpreter8makeHeapINS1_9HeapThunkEJRPKNS0_10IdentifierEDniDnEEEPT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(480) %0, ptr %.val33, i32 0) ; 11 uses
   %i.ac = load ptr, ptr %i.v, align 8, !tbaa !236 ; 4 uses
@@ -782,8 +777,8 @@ _ZNSt6vectorIPN7jsonnet8internal12_GLOBAL__N_19HeapThunkESaIS4_EE9push_backERKS4
   store ptr %i.bc, ptr %i.be, align 8, !tbaa !167
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ab, i64 80
   store i64 0, ptr %i.bf, align 8, !tbaa !168
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
-  %exitcond = icmp eq i64 %indvars.iv.next, %6
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1
+  %exitcond = icmp eq i64 %indvars.iv, %5
   br i1 %exitcond, label %.loopexit, label %bb.c, !llvm.loop !774
 
 .loopexit:                                        ; preds = %_ZNSt6vectorIPN7jsonnet8internal12_GLOBAL__N_19HeapThunkESaIS4_EE9push_backERKS4_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit

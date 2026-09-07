@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.outer._crit_edge
 
 .lr.ph267:                                        ; preds = %.lr.ph, %bb.b
   %.sroa.025.0112266 = phi i32 [ %i.f, %bb.b ], [ %.sroa.025.0.ph118, %.lr.ph ]
-  %.sroa.16.0113265 = phi i64 [ %.sroa.27.2.lcssa.i, %bb.b ], [ %.sroa.16.0.ph119, %.lr.ph ] ; 21 uses
+  %.sroa.16.0113265 = phi i64 [ %.sroa.27.2.lcssa.i, %bb.b ], [ %.sroa.16.0.ph119, %.lr.ph ] ; 19 uses
   %i.f = add i32 %.sroa.025.0112266, -1, !dbg !1506 ; 4 uses
   %i.g = lshr i64 %.sroa.16.0113265, 3, !dbg !1507 ; 3 uses
   %.idx.i = shl nuw nsw i64 %i.g, 6, !dbg !1508
@@ -361,7 +361,7 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph.i
 
 ._crit_edge39.i:                                  ; preds = %.lr.ph38.i, %._crit_edge.i
   %.sroa.43.2.lcssa.i = phi ptr [ %.sroa.43.1.lcssa.i, %._crit_edge.i ], [ %i.cm, %.lr.ph38.i ], !dbg !1547
-  %.sroa.27.2.lcssa.i = phi i64 [ %.sroa.27.1.lcssa.i, %._crit_edge.i ], [ %i.cp, %.lr.ph38.i ], !dbg !1547 ; 14 uses
+  %.sroa.27.2.lcssa.i = phi i64 [ %.sroa.27.1.lcssa.i, %._crit_edge.i ], [ %i.cp, %.lr.ph38.i ], !dbg !1547 ; 13 uses
   %.sroa.9.2.lcssa.i = phi ptr [ %.sroa.9.1.lcssa.i, %._crit_edge.i ], [ %i.cq, %.lr.ph38.i ], !dbg !1547 ; 2 uses
   %i.ce = icmp eq i64 %.sroa.0.0.i37, %.sroa.16.0113265, !dbg !1602
   br i1 %i.ce, label %bb.m, label %bb.l, !dbg !1602
@@ -400,15 +400,14 @@ bb.m:                                             ; preds = %._crit_edge39.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.06.0.i, ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i64 16, i1 false), !dbg !1622, !alias.scope !1478
   %i.cv = shl nuw nsw i64 %.sroa.27.2.lcssa.i, 4, !dbg !1623
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.0.ph120, ptr nonnull align 8 %2, i64 %i.cv, i1 false), !dbg !1623, !alias.scope !1478
-  %i.cw = sub i64 %.sroa.16.0113265, %.sroa.27.2.lcssa.i, !dbg !1624 ; 4 uses
+  %i.cw = sub i64 %.sroa.16.0113265, %.sroa.27.2.lcssa.i, !dbg !1624 ; 5 uses
   %.not47.i = icmp eq i64 %.sroa.16.0113265, %.sroa.27.2.lcssa.i, !dbg !1625
   br i1 %.not47.i, label %.loopexit, label %.lr.ph45.i, !dbg !1626
 
 .lr.ph45.i:                                       ; preds = %bb.m
   %i.cx = getelementptr [16 x i8], ptr %.sroa.0.0.ph120, i64 %.sroa.27.2.lcssa.i ; 3 uses
-  %.neg = add i64 %.sroa.27.2.lcssa.i, 1, !dbg !1626
   %xtraiter = and i64 %i.cw, 1, !dbg !1626
-  %i.cy = icmp eq i64 %.sroa.16.0113265, %.neg, !dbg !1626
+  %i.cy = icmp eq i64 %i.cw, 1, !dbg !1626
   br i1 %i.cy, label %.epil.preheader, label %.lr.ph45.i.new, !dbg !1626
 
 .lr.ph45.i.new:                                   ; preds = %.lr.ph45.i
@@ -561,7 +560,7 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph.i65
 
 ._crit_edge39.i50:                                ; preds = %.lr.ph38.i58, %._crit_edge.i46
   %.sroa.43.2.lcssa.i51 = phi ptr [ %.sroa.43.1.lcssa.i47, %._crit_edge.i46 ], [ %i.fp, %.lr.ph38.i58 ], !dbg !1643
-  %.sroa.27.2.lcssa.i52 = phi i64 [ %.sroa.27.1.lcssa.i48, %._crit_edge.i46 ], [ %i.fs, %.lr.ph38.i58 ], !dbg !1643 ; 10 uses
+  %.sroa.27.2.lcssa.i52 = phi i64 [ %.sroa.27.1.lcssa.i48, %._crit_edge.i46 ], [ %i.fs, %.lr.ph38.i58 ], !dbg !1643 ; 9 uses
   %.sroa.9.2.lcssa.i53 = phi ptr [ %.sroa.9.1.lcssa.i49, %._crit_edge.i46 ], [ %i.ft, %.lr.ph38.i58 ], !dbg !1643 ; 2 uses
   %i.fh = icmp eq i64 %.sroa.0.0.i45, %.sroa.16.0113265, !dbg !1698
   br i1 %i.fh, label %bb.v, label %bb.u, !dbg !1698
@@ -601,15 +600,14 @@ bb.v:                                             ; preds = %._crit_edge39.i50
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.06.0.i44, ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i64 16, i1 false), !dbg !1719, !alias.scope !1489
   %i.fz = shl nuw nsw i64 %.sroa.27.2.lcssa.i52, 4, !dbg !1720
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.0.ph120, ptr nonnull align 8 %2, i64 %i.fz, i1 false), !dbg !1720, !alias.scope !1489
-  %i.ga = sub i64 %.sroa.16.0113265, %.sroa.27.2.lcssa.i52, !dbg !1721 ; 6 uses
+  %i.ga = sub i64 %.sroa.16.0113265, %.sroa.27.2.lcssa.i52, !dbg !1721 ; 7 uses
   %.not47.i54 = icmp eq i64 %.sroa.16.0113265, %.sroa.27.2.lcssa.i52, !dbg !1722
   br i1 %.not47.i54, label %_RINvXNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsortTdINtNtNtBb_4sync6atomic6AtomicyEENtB3_23StableSmallSortTypeImpl10small_sortNCINvMNtCs1xwejQucwHj_5alloc5sliceSBW_7sort_byNCINvMsb_NtNtCsim2LhUzKY4R_19foundations_metrics7metrics9histogramNtB33_13TimeHistogram3newINtNtNtNtBb_4iter8adapters6copied6CopiedINtNtB9_4iter4IterdEEEs_0E0EB37_.exit, label %.lr.ph45.i55, !dbg !1723
 
 .lr.ph45.i55:                                     ; preds = %bb.v
   %i.gb = getelementptr [16 x i8], ptr %.sroa.0.0.ph120, i64 %.sroa.27.2.lcssa.i52 ; 3 uses
-  %.neg344 = add i64 %.sroa.27.2.lcssa.i52, 1, !dbg !1723
   %xtraiter339 = and i64 %i.ga, 1, !dbg !1723
-  %i.gc = icmp eq i64 %.sroa.16.0113265, %.neg344, !dbg !1723
+  %i.gc = icmp eq i64 %i.ga, 1, !dbg !1723
   br i1 %i.gc, label %.epil.preheader332, label %.lr.ph45.i55.new, !dbg !1723
 
 .lr.ph45.i55.new:                                 ; preds = %.lr.ph45.i55
@@ -699,7 +697,7 @@ bb.b:                                             ; preds = %_RNvMNtCs3oUPovFnLW
 
 .lr.ph264:                                        ; preds = %.lr.ph, %bb.b
   %.sroa.025.0111263 = phi i32 [ %i.g, %bb.b ], [ %.sroa.025.0.ph117, %.lr.ph ]
-  %.sroa.16.0112262 = phi i64 [ %.sroa.27.2.lcssa.i, %bb.b ], [ %.sroa.16.0.ph118, %.lr.ph ] ; 21 uses
+  %.sroa.16.0112262 = phi i64 [ %.sroa.27.2.lcssa.i, %bb.b ], [ %.sroa.16.0.ph118, %.lr.ph ] ; 19 uses
   %i.g = add i32 %.sroa.025.0111263, -1, !dbg !2052 ; 4 uses
   %i.h = lshr i64 %.sroa.16.0112262, 3, !dbg !2053 ; 3 uses
   %.idx.i = shl nuw nsw i64 %i.h, 6, !dbg !2054
@@ -861,7 +859,7 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph.i
 
 ._crit_edge39.i:                                  ; preds = %.lr.ph38.i, %._crit_edge.i
   %.sroa.43.2.lcssa.i = phi ptr [ %.sroa.43.1.lcssa.i, %._crit_edge.i ], [ %i.cr, %.lr.ph38.i ], !dbg !2095
-  %.sroa.27.2.lcssa.i = phi i64 [ %.sroa.27.1.lcssa.i, %._crit_edge.i ], [ %i.cu, %.lr.ph38.i ], !dbg !2095 ; 14 uses
+  %.sroa.27.2.lcssa.i = phi i64 [ %.sroa.27.1.lcssa.i, %._crit_edge.i ], [ %i.cu, %.lr.ph38.i ], !dbg !2095 ; 13 uses
   %.sroa.9.2.lcssa.i = phi ptr [ %.sroa.9.1.lcssa.i, %._crit_edge.i ], [ %i.cv, %.lr.ph38.i ], !dbg !2095 ; 2 uses
   %i.cj = icmp eq i64 %.sroa.0.0.i37, %.sroa.16.0112262, !dbg !2149
   br i1 %i.cj, label %bb.m, label %bb.l, !dbg !2149
@@ -899,15 +897,14 @@ bb.l:                                             ; preds = %._crit_edge39.i
 bb.m:                                             ; preds = %._crit_edge39.i
   %i.da = shl nuw nsw i64 %.sroa.27.2.lcssa.i, 4, !dbg !2169
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.0.ph119, ptr nonnull align 8 %2, i64 %i.da, i1 false), !dbg !2169, !alias.scope !2025
-  %i.db = sub i64 %.sroa.16.0112262, %.sroa.27.2.lcssa.i, !dbg !2170 ; 4 uses
+  %i.db = sub i64 %.sroa.16.0112262, %.sroa.27.2.lcssa.i, !dbg !2170 ; 5 uses
   %.not47.i = icmp eq i64 %.sroa.16.0112262, %.sroa.27.2.lcssa.i, !dbg !2171
   br i1 %.not47.i, label %.loopexit, label %.lr.ph45.i, !dbg !2172
 
 .lr.ph45.i:                                       ; preds = %bb.m
   %i.dc = getelementptr [16 x i8], ptr %.sroa.0.0.ph119, i64 %.sroa.27.2.lcssa.i ; 3 uses
-  %.neg = add i64 %.sroa.27.2.lcssa.i, 1, !dbg !2172
   %xtraiter = and i64 %i.db, 1, !dbg !2172
-  %i.dd = icmp eq i64 %.sroa.16.0112262, %.neg, !dbg !2172
+  %i.dd = icmp eq i64 %i.db, 1, !dbg !2172
   br i1 %i.dd, label %.epil.preheader, label %.lr.ph45.i.new, !dbg !2172
 
 .lr.ph45.i.new:                                   ; preds = %.lr.ph45.i
@@ -1060,7 +1057,7 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph.i64
 
 ._crit_edge39.i49:                                ; preds = %.lr.ph38.i57, %._crit_edge.i45
   %.sroa.43.2.lcssa.i50 = phi ptr [ %.sroa.43.1.lcssa.i46, %._crit_edge.i45 ], [ %i.fu, %.lr.ph38.i57 ], !dbg !2190
-  %.sroa.27.2.lcssa.i51 = phi i64 [ %.sroa.27.1.lcssa.i47, %._crit_edge.i45 ], [ %i.fx, %.lr.ph38.i57 ], !dbg !2190 ; 10 uses
+  %.sroa.27.2.lcssa.i51 = phi i64 [ %.sroa.27.1.lcssa.i47, %._crit_edge.i45 ], [ %i.fx, %.lr.ph38.i57 ], !dbg !2190 ; 9 uses
   %.sroa.9.2.lcssa.i52 = phi ptr [ %.sroa.9.1.lcssa.i48, %._crit_edge.i45 ], [ %i.fy, %.lr.ph38.i57 ], !dbg !2190 ; 2 uses
   %i.fm = icmp eq i64 %.sroa.0.0.i44, %.sroa.16.0112262, !dbg !2244
   br i1 %i.fm, label %bb.v, label %bb.u, !dbg !2244
@@ -1099,15 +1096,14 @@ bb.u:                                             ; preds = %._crit_edge39.i49
 bb.v:                                             ; preds = %._crit_edge39.i49
   %i.ge = shl nuw nsw i64 %.sroa.27.2.lcssa.i51, 4, !dbg !2265
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.0.ph119, ptr nonnull align 8 %2, i64 %i.ge, i1 false), !dbg !2265, !alias.scope !2036
-  %i.gf = sub i64 %.sroa.16.0112262, %.sroa.27.2.lcssa.i51, !dbg !2266 ; 6 uses
+  %i.gf = sub i64 %.sroa.16.0112262, %.sroa.27.2.lcssa.i51, !dbg !2266 ; 7 uses
   %.not47.i53 = icmp eq i64 %.sroa.16.0112262, %.sroa.27.2.lcssa.i51, !dbg !2267
   %i.gg = getelementptr [16 x i8], ptr %.sroa.0.0.ph119, i64 %.sroa.27.2.lcssa.i51 ; 4 uses
   br i1 %.not47.i53, label %.outer.thread, label %.lr.ph45.i54.preheader, !dbg !2268
 
 .lr.ph45.i54.preheader:                           ; preds = %bb.v
-  %.neg343 = add i64 %.sroa.27.2.lcssa.i51, 1, !dbg !2268
   %xtraiter338 = and i64 %i.gf, 1, !dbg !2268
-  %i.gh = icmp eq i64 %.sroa.16.0112262, %.neg343, !dbg !2268
+  %i.gh = icmp eq i64 %i.gf, 1, !dbg !2268
   br i1 %i.gh, label %.lr.ph45.i54.epil.preheader, label %.lr.ph45.i54.preheader.new, !dbg !2268
 
 .lr.ph45.i54.preheader.new:                       ; preds = %.lr.ph45.i54.preheader

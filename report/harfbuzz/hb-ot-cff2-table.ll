@@ -205,7 +205,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !105  ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 3 uses
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !148  ; 3 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !148  ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.e, 0
   br i1 %.not.i.i.i, label %bb.c, label %bb.b, !prof !127
 
@@ -226,7 +226,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN3CFF11cff_stack_tINS_8number_tELi513EE3popEv.exit.i.i
 
 _ZN3CFF11cff_stack_tINS_8number_tELi513EE3popEv.exit.i.i: ; preds = %bb.c, %bb.b
-  %i.l = phi i32 [ %i.g, %bb.b ], [ 0, %bb.c ]    ; 4 uses
+  %i.l = phi i32 [ %i.g, %bb.b ], [ 0, %bb.c ]    ; 5 uses
   %i.m = phi double [ %.pre.i.i, %bb.b ], [ %i.k, %bb.c ] ; 3 uses
   %i.n = fcmp ult double %i.m, f0xC1E0000000000000
   %i.o = fcmp ugt double %i.m, f0x41DFFFFFFFC00000
@@ -465,9 +465,8 @@ _ZN3CFF15cff2_cs_opset_tI23cff2_cs_opset_extents_t20cff2_extents_param_tNS_8numb
   br i1 %.not38, label %_ZN3CFF15cff2_cs_opset_tI23cff2_cs_opset_extents_t20cff2_extents_param_tNS_8number_tE25cff2_path_procs_extents_tE17process_arg_blendIS3_TnPN12hb_enable_ifIXntsr10hb_is_sameIT_NS_11blend_arg_tEEE5valueEvE4typeELPv0EEEvRNS_20cff2_cs_interp_env_tIS3_EERS3_10hb_array_tIKS3_Ejj.exit.us.us35.preheader, label %.lr.ph.split.us.split.split.preheader
 
 .lr.ph.split.us.split.split.preheader:            ; preds = %.lr.ph.split.us.split
-  %2 = tail call i32 @llvm.usub.sat.i32(i32 %i.e, i32 1)
   %i.cz = mul i32 %.0.i, %i.b
-  %i.da = sub i32 %2, %i.cz
+  %i.da = sub i32 %i.l, %i.cz
   br label %.lr.ph.split.us.split.split
 
 _ZN3CFF15cff2_cs_opset_tI23cff2_cs_opset_extents_t20cff2_extents_param_tNS_8number_tE25cff2_path_procs_extents_tE17process_arg_blendIS3_TnPN12hb_enable_ifIXntsr10hb_is_sameIT_NS_11blend_arg_tEEE5valueEvE4typeELPv0EEEvRNS_20cff2_cs_interp_env_tIS3_EERS3_10hb_array_tIKS3_Ejj.exit.us.us35.preheader: ; preds = %.lr.ph.split.us.split
@@ -870,7 +869,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !105  ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 3 uses
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !148  ; 3 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !148  ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.e, 0
   br i1 %.not.i.i.i, label %bb.c, label %bb.b, !prof !127
 
@@ -891,7 +890,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN3CFF11cff_stack_tINS_8number_tELi513EE3popEv.exit.i.i
 
 _ZN3CFF11cff_stack_tINS_8number_tELi513EE3popEv.exit.i.i: ; preds = %bb.c, %bb.b
-  %i.l = phi i32 [ %i.g, %bb.b ], [ 0, %bb.c ]    ; 4 uses
+  %i.l = phi i32 [ %i.g, %bb.b ], [ 0, %bb.c ]    ; 5 uses
   %i.m = phi double [ %.pre.i.i, %bb.b ], [ %i.k, %bb.c ] ; 3 uses
   %i.n = fcmp ult double %i.m, f0xC1E0000000000000
   %i.o = fcmp ugt double %i.m, f0x41DFFFFFFFC00000
@@ -1130,9 +1129,8 @@ _ZN3CFF15cff2_cs_opset_tI20cff2_cs_opset_path_t17cff2_path_param_tNS_8number_tE2
   br i1 %.not38, label %_ZN3CFF15cff2_cs_opset_tI20cff2_cs_opset_path_t17cff2_path_param_tNS_8number_tE22cff2_path_procs_path_tE17process_arg_blendIS3_TnPN12hb_enable_ifIXntsr10hb_is_sameIT_NS_11blend_arg_tEEE5valueEvE4typeELPv0EEEvRNS_20cff2_cs_interp_env_tIS3_EERS3_10hb_array_tIKS3_Ejj.exit.us.us35.preheader, label %.lr.ph.split.us.split.split.preheader
 
 .lr.ph.split.us.split.split.preheader:            ; preds = %.lr.ph.split.us.split
-  %2 = tail call i32 @llvm.usub.sat.i32(i32 %i.e, i32 1)
   %i.cz = mul i32 %.0.i, %i.b
-  %i.da = sub i32 %2, %i.cz
+  %i.da = sub i32 %i.l, %i.cz
   br label %.lr.ph.split.us.split.split
 
 _ZN3CFF15cff2_cs_opset_tI20cff2_cs_opset_path_t17cff2_path_param_tNS_8number_tE22cff2_path_procs_path_tE17process_arg_blendIS3_TnPN12hb_enable_ifIXntsr10hb_is_sameIT_NS_11blend_arg_tEEE5valueEvE4typeELPv0EEEvRNS_20cff2_cs_interp_env_tIS3_EERS3_10hb_array_tIKS3_Ejj.exit.us.us35.preheader: ; preds = %.lr.ph.split.us.split

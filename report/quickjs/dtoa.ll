@@ -205,8 +205,8 @@ bb.bc:                                            ; preds = %bb.bb
   br label %bb.ay
 
 mpb_cmp.exit:                                     ; preds = %bb.bc, %bb.ay, %bb.ar, %bb.k, %bb.l
-  %.2220 = phi i32 [ 1, %bb.l ], [ %.1208, %bb.ar ], [ 1, %bb.k ], [ %.1219, %bb.ay ], [ %.1219, %bb.bc ] ; 9 uses
-  %.3217 = phi i32 [ %.0214, %bb.l ], [ %.1206, %bb.ar ], [ %.0214, %bb.k ], [ %3, %bb.ay ], [ %3, %bb.bc ] ; 7 uses
+  %.2220 = phi i32 [ 1, %bb.l ], [ %.1208, %bb.ar ], [ 1, %bb.k ], [ %.1219, %bb.ay ], [ %.1219, %bb.bc ] ; 8 uses
+  %.3217 = phi i32 [ %.0214, %bb.l ], [ %.1206, %bb.ar ], [ %.0214, %bb.k ], [ %3, %bb.ay ], [ %3, %bb.bc ] ; 6 uses
   %.2 = phi ptr [ %i.t, %bb.l ], [ %.1210, %bb.ar ], [ %0, %bb.k ], [ %.1210, %bb.ay ], [ %.1210, %bb.bc ] ; 9 uses
   %i.ii = icmp eq i32 %i.c, 1
   br i1 %i.ii, label %bb.be, label %bb.bd
@@ -318,19 +318,16 @@ bb.bm:                                            ; preds = %bb.bk
   %i.jv = tail call fastcc i32 @output_digits(ptr noundef %.2, ptr noundef nonnull %5, i32 noundef %2, i32 noundef %.3217, i32 noundef %..i257)
   %i.jw = sext i32 %i.jv to i64                   ; 2 uses
   %i.jx = getelementptr i8, ptr %.2, i64 %i.jw    ; 2 uses
-  %i.jy = sub nsw i32 %.2220, %.3217              ; 2 uses
+  %i.jy = sub nsw i32 %.2220, %.3217              ; 3 uses
   %i.jz = icmp sgt i32 %i.jy, 0
   br i1 %i.jz, label %.lr.ph274.preheader, label %.loopexit
 
 .lr.ph274.preheader:                              ; preds = %bb.bm
   %i.ka = zext nneg i32 %i.jy to i64
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.jx, i8 48, i64 %i.ka, i1 false), !tbaa !15
-  %6 = xor i32 %.3217, -1
-  %7 = add i32 %.2220, %6
-  %8 = zext i32 %7 to i64
   %i.kb = getelementptr i8, ptr %.2, i64 %i.jw
-  %9 = getelementptr i8, ptr %i.kb, i64 %8
-  %scevgep = getelementptr i8, ptr %9, i64 1
+  %6 = zext nneg i32 %i.jy to i64
+  %scevgep = getelementptr i8, ptr %i.kb, i64 %6
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph274.preheader, %bb.bm, %bb.aw, %u32toa.exit, %._crit_edge280, %bb.e, %bb.f, %u64toa_radix.exit

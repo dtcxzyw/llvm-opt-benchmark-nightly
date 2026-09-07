@@ -204,7 +204,7 @@ loadCode.exit.preheader:                          ; preds = %getaddr_.exit.i, %l
 
 loadCode.exit:                                    ; preds = %loadCode.exit.preheader, %bb.ah
   %i.ej = phi i64 [ %i.ew, %bb.ah ], [ %.ph235, %loadCode.exit.preheader ]
-  %.0.i.i.i40 = phi i64 [ %i.fb, %bb.ah ], [ 0, %loadCode.exit.preheader ] ; 3 uses
+  %.0.i.i.i40 = phi i64 [ %i.fb, %bb.ah ], [ 0, %loadCode.exit.preheader ] ; 2 uses
   %i.ek = load ptr, ptr %i.d, align 8, !tbaa !20  ; 4 uses
   %i.el = load i64, ptr %i.ek, align 8, !tbaa !24 ; 2 uses
   %i.em = add i64 %i.el, -1
@@ -236,7 +236,7 @@ bb.af:                                            ; preds = %bb.ae
 
 loadByte.exit.i.i.i43:                            ; preds = %.loadByte.exit.i.i.i43_crit_edge, %.thread.i.i.i.i42
   %i.eu = phi i64 [ %i.ej, %.thread.i.i.i.i42 ], [ %.pre141, %.loadByte.exit.i.i.i43_crit_edge ]
-  %i.ev = phi i8 [ %i.eq, %.thread.i.i.i.i42 ], [ %i.et, %.loadByte.exit.i.i.i43_crit_edge ] ; 3 uses
+  %i.ev = phi i8 [ %i.eq, %.thread.i.i.i.i42 ], [ %i.et, %.loadByte.exit.i.i.i43_crit_edge ] ; 2 uses
   %i.ew = add i64 %i.eu, 1                        ; 2 uses
   store i64 %i.ew, ptr %i.e, align 8, !tbaa !22
   %i.ex = icmp ugt i64 %.0.i.i.i40, 16777215
@@ -250,7 +250,7 @@ bb.ah:                                            ; preds = %loadByte.exit.i.i.i
   %i.ey = shl nuw nsw i64 %.0.i.i.i40, 7
   %i.ez = and i8 %i.ev, 127
   %i.fa = zext nneg i8 %i.ez to i64               ; 2 uses
-  %i.fb = or disjoint i64 %i.ey, %i.fa            ; 6 uses
+  %i.fb = or disjoint i64 %i.ey, %i.fa            ; 7 uses
   %.not.i.i.i44 = icmp sgt i8 %i.ev, -1
   br i1 %.not.i.i.i44, label %loadInt.exit.i45, label %loadCode.exit
 
@@ -267,16 +267,12 @@ loadInt.exit.i45:                                 ; preds = %bb.ah
   br i1 %.not.i46, label %loadConstants.exit.preheader, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %loadInt.exit.i45
-  %2 = shl nuw nsw i64 %.0.i.i.i40, 7
-  %3 = add nsw i64 %2, -1
-  %4 = zext nneg i8 %i.ev to i64
-  %5 = add nsw i64 %3, %4
   %xtraiter = and i64 %i.fa, 7                    ; 4 uses
-  %i.fi = icmp ult i64 %5, 7
+  %i.fi = icmp samesign ult i64 %i.fb, 8
   br i1 %i.fi, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
 
 .lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
-  %unroll_iter = sub nsw i64 %i.fb, %xtraiter
+  %unroll_iter = sub nuw nsw i64 %i.fb, %xtraiter
   br label %.lr.ph.i
 
 .lr.ph54.i.unr-lcssa:                             ; preds = %.lr.ph.i
@@ -513,7 +509,7 @@ loadConstants.exit.preheader:                     ; preds = %bb.ay, %loadInt.exi
   br label %loadConstants.exit
 
 loadConstants.exit:                               ; preds = %loadConstants.exit.preheader, %bb.bc
-  %.0.i.i.i49 = phi i64 [ %i.iv, %bb.bc ], [ 0, %loadConstants.exit.preheader ] ; 3 uses
+  %.0.i.i.i49 = phi i64 [ %i.iv, %bb.bc ], [ 0, %loadConstants.exit.preheader ] ; 2 uses
   %i.id = load ptr, ptr %i.d, align 8, !tbaa !20  ; 4 uses
   %i.ie = load i64, ptr %i.id, align 8, !tbaa !24 ; 2 uses
   %i.if = add i64 %i.ie, -1
@@ -540,7 +536,7 @@ bb.ba:                                            ; preds = %bb.az
   unreachable
 
 loadByte.exit.i.i.i52:                            ; preds = %bb.az, %.thread.i.i.i.i51
-  %i.in = phi i32 [ %i.ik, %.thread.i.i.i.i51 ], [ %i.il, %bb.az ] ; 2 uses
+  %i.in = phi i32 [ %i.ik, %.thread.i.i.i.i51 ], [ %i.il, %bb.az ]
   %i.io = load i64, ptr %i.e, align 8, !tbaa !22
   %i.ip = add i64 %i.io, 1
   store i64 %i.ip, ptr %i.e, align 8, !tbaa !22
@@ -556,7 +552,7 @@ bb.bc:                                            ; preds = %loadByte.exit.i.i.i
   %i.is = shl nuw nsw i64 %.0.i.i.i49, 7
   %i.it = and i8 %i.ir, 127
   %i.iu = zext nneg i8 %i.it to i64               ; 2 uses
-  %i.iv = or disjoint i64 %i.is, %i.iu            ; 6 uses
+  %i.iv = or disjoint i64 %i.is, %i.iu            ; 7 uses
   %.not.i.i.i53 = icmp sgt i8 %i.ir, -1
   br i1 %.not.i.i.i53, label %loadInt.exit.i54, label %loadConstants.exit
 
@@ -573,17 +569,12 @@ loadInt.exit.i54:                                 ; preds = %bb.bc
   br i1 %.not.i55, label %loadUpvalues.exit.preheader, label %.lr.ph.i56.preheader
 
 .lr.ph.i56.preheader:                             ; preds = %loadInt.exit.i54
-  %6 = shl nuw nsw i64 %.0.i.i.i49, 7
-  %7 = add nsw i64 %6, -1
-  %8 = and i32 %i.in, 127
-  %9 = zext nneg i32 %8 to i64
-  %10 = add nsw i64 %7, %9
   %xtraiter255 = and i64 %i.iu, 3                 ; 4 uses
-  %i.jc = icmp ult i64 %10, 3
+  %i.jc = icmp samesign ult i64 %i.iv, 4
   br i1 %i.jc, label %.lr.ph.i56.epil.preheader, label %.lr.ph.i56.preheader.new
 
 .lr.ph.i56.preheader.new:                         ; preds = %.lr.ph.i56.preheader
-  %unroll_iter259 = sub nsw i64 %i.iv, %xtraiter255
+  %unroll_iter259 = sub nuw nsw i64 %i.iv, %xtraiter255
   br label %.lr.ph.i56
 
 .lr.ph.i56:                                       ; preds = %.lr.ph.i56, %.lr.ph.i56.preheader.new
@@ -986,7 +977,7 @@ loadBlock.exit81.i:                               ; preds = %bb.ck
 
 bb.cm:                                            ; preds = %.preheader, %bb.cq
   %i.pz = phi i64 [ %i.qm, %bb.cq ], [ %.ph, %.preheader ]
-  %.0.i.i82.i = phi i64 [ %i.qr, %bb.cq ], [ 0, %.preheader ] ; 3 uses
+  %.0.i.i82.i = phi i64 [ %i.qr, %bb.cq ], [ 0, %.preheader ] ; 2 uses
   %i.qa = load ptr, ptr %i.d, align 8, !tbaa !20  ; 4 uses
   %i.qb = load i64, ptr %i.qa, align 8, !tbaa !24 ; 2 uses
   %i.qc = add i64 %i.qb, -1
@@ -1018,7 +1009,7 @@ bb.co:                                            ; preds = %bb.cn
 
 loadByte.exit.i.i85.i:                            ; preds = %.loadByte.exit.i.i85_crit_edge.i, %.thread.i.i.i84.i
   %i.qk = phi i64 [ %i.pz, %.thread.i.i.i84.i ], [ %.pre141.i, %.loadByte.exit.i.i85_crit_edge.i ]
-  %i.ql = phi i8 [ %i.qg, %.thread.i.i.i84.i ], [ %i.qj, %.loadByte.exit.i.i85_crit_edge.i ] ; 3 uses
+  %i.ql = phi i8 [ %i.qg, %.thread.i.i.i84.i ], [ %i.qj, %.loadByte.exit.i.i85_crit_edge.i ] ; 2 uses
   %i.qm = add i64 %i.qk, 1                        ; 2 uses
   store i64 %i.qm, ptr %i.e, align 8, !tbaa !22
   %i.qn = icmp ugt i64 %.0.i.i82.i, 16777215
@@ -1032,7 +1023,7 @@ bb.cq:                                            ; preds = %loadByte.exit.i.i85
   %i.qo = shl nuw nsw i64 %.0.i.i82.i, 7
   %i.qp = and i8 %i.ql, 127
   %i.qq = zext nneg i8 %i.qp to i64               ; 2 uses
-  %i.qr = or disjoint i64 %i.qo, %i.qq            ; 6 uses
+  %i.qr = or disjoint i64 %i.qo, %i.qq            ; 7 uses
   %.not.i.i86.i = icmp sgt i8 %i.ql, -1
   br i1 %.not.i.i86.i, label %loadInt.exit87.i, label %bb.cm
 
@@ -1049,16 +1040,12 @@ loadInt.exit87.i:                                 ; preds = %bb.cq
   br i1 %.not120.i, label %.preheader.i79.preheader, label %.lr.ph.i75.preheader
 
 .lr.ph.i75.preheader:                             ; preds = %loadInt.exit87.i
-  %11 = shl nuw nsw i64 %.0.i.i82.i, 7
-  %12 = add nsw i64 %11, -1
-  %13 = zext nneg i8 %i.ql to i64
-  %14 = add nsw i64 %12, %13
   %xtraiter265 = and i64 %i.qq, 3                 ; 4 uses
-  %i.qy = icmp ult i64 %14, 3
+  %i.qy = icmp samesign ult i64 %i.qr, 4
   br i1 %i.qy, label %.lr.ph.i75.epil.preheader, label %.lr.ph.i75.preheader.new
 
 .lr.ph.i75.preheader.new:                         ; preds = %.lr.ph.i75.preheader
-  %unroll_iter269 = sub nsw i64 %i.qr, %xtraiter265
+  %unroll_iter269 = sub nuw nsw i64 %i.qr, %xtraiter265
   br label %.lr.ph.i75
 
 .lr.ph.i75:                                       ; preds = %.lr.ph.i75, %.lr.ph.i75.preheader.new

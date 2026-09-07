@@ -205,11 +205,11 @@ bb.ac:                                            ; preds = %bb.t, %bb.t, %bb.t
   %i.fl = getelementptr inbounds nuw i8, ptr %.0103115.i, i64 3
   %i.fm = load i8, ptr %i.fl, align 1, !tbaa !97
   %i.fn = zext i8 %i.fm to i32
-  %i.fo = shl nuw nsw i32 %i.fn, 8                ; 2 uses
+  %i.fo = shl nuw nsw i32 %i.fn, 8
   %i.fp = getelementptr inbounds nuw i8, ptr %.0103115.i, i64 4
   %i.fq = load i8, ptr %i.fp, align 1, !tbaa !97
-  %i.fr = zext i8 %i.fq to i32                    ; 3 uses
-  %i.fs = or disjoint i32 %i.fo, %i.fr            ; 3 uses
+  %i.fr = zext i8 %i.fq to i32                    ; 2 uses
+  %i.fs = or disjoint i32 %i.fo, %i.fr            ; 4 uses
   %.not.i = icmp eq i32 %i.fs, 0
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.preheader.i
 
@@ -226,7 +226,6 @@ bb.ac:                                            ; preds = %bb.t, %bb.t, %bb.t
   %i.gc = load i64, ptr %i.bq, align 8, !tbaa !92
   %i.gd = mul nsw i64 %i.gb, %i.gc
   %i.ge = getelementptr inbounds i8, ptr %i.ft, i64 %i.gd ; 4 uses
-  %5 = add nsw i32 %i.fo, -1
   %xtraiter = and i32 %i.fr, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
@@ -250,8 +249,7 @@ bb.ac:                                            ; preds = %bb.t, %bb.t, %bb.t
 .lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.preheader.i
   %.0100114.i.unr = phi ptr [ %i.ge, %.lr.ph.preheader.i ], [ %i.gq, %.lr.ph.i.prol ]
   %.0101113.i.unr = phi i32 [ %i.fs, %.lr.ph.preheader.i ], [ %i.gf, %.lr.ph.i.prol ]
-  %6 = sub nsw i32 0, %i.fr
-  %i.gr = icmp eq i32 %5, %6
+  %i.gr = icmp eq i32 %i.fs, 1
   br i1 %i.gr, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i

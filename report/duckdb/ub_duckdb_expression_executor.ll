@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %bb.o
 .lr.ph266.split:                                  ; preds = %.lr.ph266.split.preheader, %bb.ac
   %.087264 = phi i64 [ %i.do, %bb.ac ], [ 0, %.lr.ph266.split.preheader ] ; 3 uses
   %.097263 = phi i64 [ %.299, %bb.ac ], [ 0, %.lr.ph266.split.preheader ] ; 9 uses
-  %.0100262 = phi i64 [ %i.bb, %bb.ac ], [ %4, %.lr.ph266.split.preheader ] ; 5 uses
+  %.0100262 = phi i64 [ %i.bb, %bb.ac ], [ %4, %.lr.ph266.split.preheader ] ; 4 uses
   %.0102261 = phi ptr [ %spec.select, %bb.ac ], [ %3, %.lr.ph266.split.preheader ] ; 2 uses
   %i.ar = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_14AdaptiveFilterESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.f)
           to label %bb.q unwind label %.split272
@@ -238,10 +238,10 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !25
   %i.bb = invoke noundef i64 @_ZN6duckdb18ExpressionExecutor6SelectERKNS_10ExpressionEPNS_15ExpressionStateEPKNS_15SelectionVectorEmPS6_S9_(ptr noundef nonnull align 8 dereferenceable(65) %0, ptr noundef nonnull align 8 dereferenceable(88) %i.av, ptr noundef %i.ba, ptr noundef %.0102261, i64 noundef %.0100262, ptr noundef nonnull %.084, ptr noundef %i.m)
-          to label %bb.x unwind label %.split272  ; 8 uses
+          to label %bb.x unwind label %.split272  ; 7 uses
 
 bb.x:                                             ; preds = %bb.w
-  %i.bc = sub i64 %.0100262, %i.bb                ; 7 uses
+  %i.bc = sub i64 %.0100262, %i.bb                ; 8 uses
   %.not281 = icmp eq i64 %.0100262, %i.bb
   br i1 %.not281, label %.loopexit, label %.lr.ph258
 
@@ -294,8 +294,7 @@ middle.block375:                                  ; preds = %vector.body370
 _ZNK6duckdb10unique_ptrINS_15SelectionVectorESt14default_deleteIS1_ELb1EEptEv.exit.preheader380: ; preds = %vector.memcheck364, %_ZNK6duckdb10unique_ptrINS_15SelectionVectorESt14default_deleteIS1_ELb1EEptEv.exit.preheader, %middle.block375
   %.085257.ph = phi i64 [ 0, %vector.memcheck364 ], [ 0, %_ZNK6duckdb10unique_ptrINS_15SelectionVectorESt14default_deleteIS1_ELb1EEptEv.exit.preheader ], [ %n.vec369, %middle.block375 ] ; 3 uses
   %.198256.ph = phi i64 [ %.097263, %vector.memcheck364 ], [ %.097263, %_ZNK6duckdb10unique_ptrINS_15SelectionVectorESt14default_deleteIS1_ELb1EEptEv.exit.preheader ], [ %i.bk, %middle.block375 ] ; 2 uses
-  %13 = sub i64 %.0100262, %i.bb
-  %xtraiter391 = and i64 %13, 3                   ; 2 uses
+  %xtraiter391 = and i64 %i.bc, 3                 ; 2 uses
   %lcmp.mod392.not = icmp eq i64 %xtraiter391, 0
   br i1 %lcmp.mod392.not, label %_ZNK6duckdb10unique_ptrINS_15SelectionVectorESt14default_deleteIS1_ELb1EEptEv.exit.prol.loopexit, label %_ZNK6duckdb10unique_ptrINS_15SelectionVectorESt14default_deleteIS1_ELb1EEptEv.exit.prol
 

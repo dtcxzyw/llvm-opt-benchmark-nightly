@@ -205,22 +205,21 @@ bb.y:                                             ; preds = %.noexc66.us.us
 bb.z:                                             ; preds = %.noexc67.us.us
   %i.cz = getelementptr inbounds nuw [8 x i8], ptr %i.co, i64 %.0.us.us ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 8
-  %i.db = load i64, ptr %i.da, align 8, !tbaa !43 ; 3 uses
-  %i.dc = load i64, ptr %i.cz, align 8, !tbaa !43 ; 4 uses
+  %i.db = load i64, ptr %i.da, align 8, !tbaa !43 ; 2 uses
+  %i.dc = load i64, ptr %i.cz, align 8, !tbaa !43 ; 3 uses
   %i.dd = icmp eq i64 %i.db, %i.dc                ; 2 uses
   %i.de = or i1 %i.cs, %i.dd
   br i1 %i.de, label %bb.aa, label %.split122.us, !prof !66
 
 bb.aa:                                            ; preds = %bb.z
-  %i.df = sub i64 %i.db, %i.dc                    ; 2 uses
+  %i.df = sub i64 %i.db, %i.dc                    ; 3 uses
   %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.cr, i64 %i.dc ; 5 uses
   br i1 %i.dd, label %_ZN7xgboost7RegTree4FVec4FillERKNS_6common4SpanIKNS_5EntryELm18446744073709551615EEE.exit.us.us, label %.lr.ph.i.us.us.preheader
 
 .lr.ph.i.us.us.preheader:                         ; preds = %bb.aa
   %xtraiter200 = and i64 %i.df, 3                 ; 3 uses
-  %12 = sub i64 %i.dc, %i.db
-  %13 = icmp ugt i64 %12, -4
-  br i1 %13, label %.lr.ph.i.us.us.epil.preheader, label %.lr.ph.i.us.us.preheader.new
+  %12 = icmp ult i64 %i.df, 4
+  br i1 %12, label %.lr.ph.i.us.us.epil.preheader, label %.lr.ph.i.us.us.preheader.new
 
 .lr.ph.i.us.us.preheader.new:                     ; preds = %.lr.ph.i.us.us.preheader
   %unroll_iter204 = and i64 %i.df, -4
@@ -623,8 +622,8 @@ bb.bk:                                            ; preds = %.noexc66
 bb.bl:                                            ; preds = %.noexc67
   %i.ko = getelementptr inbounds nuw [8 x i8], ptr %i.jz, i64 %.0 ; 2 uses
   %i.kp = getelementptr inbounds nuw i8, ptr %i.ko, i64 8
-  %i.kq = load i64, ptr %i.kp, align 8, !tbaa !43 ; 3 uses
-  %i.kr = load i64, ptr %i.ko, align 8, !tbaa !43 ; 4 uses
+  %i.kq = load i64, ptr %i.kp, align 8, !tbaa !43 ; 2 uses
+  %i.kr = load i64, ptr %i.ko, align 8, !tbaa !43 ; 3 uses
   %i.ks = icmp eq i64 %i.kq, %i.kr                ; 2 uses
   %i.kt = or i1 %i.kd, %i.ks
   br i1 %i.kt, label %bb.bm, label %.split122.us, !prof !66
@@ -634,15 +633,14 @@ bb.bl:                                            ; preds = %.noexc67
   unreachable
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.ku = sub i64 %i.kq, %i.kr                    ; 2 uses
+  %i.ku = sub i64 %i.kq, %i.kr                    ; 3 uses
   %i.kv = getelementptr inbounds nuw [8 x i8], ptr %i.kc, i64 %i.kr ; 5 uses
   br i1 %i.ks, label %_ZN7xgboost7RegTree4FVec4FillERKNS_6common4SpanIKNS_5EntryELm18446744073709551615EEE.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.bm
   %xtraiter = and i64 %i.ku, 3                    ; 3 uses
-  %14 = sub i64 %i.kr, %i.kq
-  %15 = icmp ugt i64 %14, -4
-  br i1 %15, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
+  %13 = icmp ult i64 %i.ku, 4
+  br i1 %13, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
 
 .lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
   %unroll_iter = and i64 %i.ku, -4

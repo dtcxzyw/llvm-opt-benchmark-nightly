@@ -205,7 +205,7 @@ declare void @cairo_save(ptr noundef) local_unnamed_addr #1
 ; Function Attrs: inlinehint nounwind uwtable
 define internal fastcc void @dt_focuspeaking(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noalias nofree noundef readonly captures(none) %3) unnamed_addr #10 {
 bb.a:
-  %i.a = sext i32 %1 to i64                       ; 24 uses
+  %i.a = sext i32 %1 to i64                       ; 23 uses
   %i.b = sext i32 %2 to i64                       ; 8 uses
   %i.c = mul nsw i64 %i.b, %i.a                   ; 6 uses
   %i.d = shl i64 %i.c, 2                          ; 2 uses
@@ -608,7 +608,7 @@ vec.epilog.scalar.ph349:                          ; preds = %vec.epilog.scalar.p
   br i1 %or.cond235, label %.preheader188.preheader, label %._crit_edge234.split
 
 .preheader188.preheader:                          ; preds = %._crit_edge222
-  %i.hu = add nsw i64 %i.a, -1                    ; 2 uses
+  %i.hu = add nsw i64 %i.a, -1                    ; 3 uses
   %i.hv = sext i32 %1 to i64
   %i.hw = mul nsw i64 %i.b, %i.a
   %i.hx = shl i64 %i.hw, 2
@@ -640,7 +640,6 @@ vec.epilog.scalar.ph349:                          ; preds = %vec.epilog.scalar.p
   %cmp.n407 = icmp eq i64 %n.vec395, %i.a
   %i.id = and i32 %1, 1
   %lcmp.mod.not = icmp eq i32 %i.id, 0
-  %4 = add nsw i64 %i.a, -1
   br label %iter.check390
 
 iter.check390:                                    ; preds = %.preheader188.preheader, %._crit_edge232
@@ -831,7 +830,7 @@ bb.f:                                             ; preds = %bb.e
 
 vec.epilog.scalar.ph391.prol.loopexit:            ; preds = %.loopexit.prol, %vec.epilog.scalar.ph391.preheader
   %.0154230.unr = phi i64 [ %.0154230.ph, %vec.epilog.scalar.ph391.preheader ], [ %i.ln, %.loopexit.prol ]
-  %i.lo = icmp eq i64 %.0154230.ph, %4
+  %i.lo = icmp eq i64 %i.hu, %.0154230.ph
   br i1 %i.lo, label %._crit_edge232, label %vec.epilog.scalar.ph391.preheader.new
 
 vec.epilog.scalar.ph391.preheader.new:            ; preds = %vec.epilog.scalar.ph391.prol.loopexit

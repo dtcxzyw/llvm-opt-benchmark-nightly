@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.h, label %.lr.ph.us.preheader, label %.preheader
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph62
-  %i.i = add nsw i64 %3, -1                       ; 2 uses
+  %i.i = add nsw i64 %3, -1                       ; 3 uses
   %scevgep = getelementptr i8, ptr %1, i64 8
   %scevgep81 = getelementptr i8, ptr %1, i64 16
   %scevgep83 = getelementptr i8, ptr %1, i64 24
@@ -337,7 +337,6 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph.us, %middle.block
   %.04358.us.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph.us ], [ %n.vec, %middle.block ] ; 7 uses
   %.157.us.ph = phi i64 [ %.04559.us, %vector.memcheck ], [ %.04559.us, %vector.scevcheck ], [ %.04559.us, %.lr.ph.us ], [ %i.br, %middle.block ] ; 3 uses
-  %.neg = or disjoint i64 %.04358.us.ph, 1
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
@@ -365,7 +364,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   %.lcssa128.unr = phi i64 [ poison, %scalar.ph.preheader ], [ %i.cn, %scalar.ph.prol ]
   %.04358.us.unr = phi i64 [ %.04358.us.ph, %scalar.ph.preheader ], [ %i.co, %scalar.ph.prol ]
   %.157.us.unr = phi i64 [ %.157.us.ph, %scalar.ph.preheader ], [ %i.cn, %scalar.ph.prol ]
-  %i.cp = icmp eq i64 %3, %.neg
+  %i.cp = icmp eq i64 %i.i, %.04358.us.ph
   br i1 %i.cp, label %._crit_edge.us, label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph

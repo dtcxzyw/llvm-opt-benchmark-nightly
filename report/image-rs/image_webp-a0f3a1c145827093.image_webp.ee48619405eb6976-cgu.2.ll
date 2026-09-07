@@ -205,9 +205,9 @@ bb.k:                                             ; preds = %bb.h
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 %2
   call void @_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E3newCsksn9slvsHfS_10image_webp(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.a, ptr noundef nonnull %i.ac, ptr noundef nonnull %i.ad, ptr noundef nonnull readonly %i.p, ptr noundef nonnull readonly %i.e)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !157)
-  %.val.i = load i64, ptr %i.q, align 8, !alias.scope !157, !noalias !158, !noundef !4 ; 9 uses
-  %.val6.i = load i64, ptr %i.r, align 8, !alias.scope !157, !noalias !158, !noundef !4 ; 4 uses
-  %i.ae = sub i64 %.val6.i, %.val.i               ; 8 uses
+  %.val.i = load i64, ptr %i.q, align 8, !alias.scope !157, !noalias !158, !noundef !4 ; 8 uses
+  %.val6.i = load i64, ptr %i.r, align 8, !alias.scope !157, !noalias !158, !noundef !4 ; 3 uses
+  %i.ae = sub i64 %.val6.i, %.val.i               ; 9 uses
   %.not.i14 = icmp eq i64 %.val6.i, %.val.i
   br i1 %.not.i14, label %_RINvXs2_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4iter7IterMuthEINtB10_4IterhEEINtB6_7ZipImplBX_B1s_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQhRhENCNvNtCsksn9slvsHfS_10image_webp3vp814predict_tmpred0E0EB3e_.exit, label %iter.check
 
@@ -286,10 +286,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.010.i.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec46, %vec.epilog.middle.block ] ; 4 uses
-  %6 = sub i64 %.val6.i, %.val.i
   %i.az = xor i64 %.sroa.0.010.i.ph, -1
   %i.ba = add i64 %.val6.i, %i.az
-  %xtraiter = and i64 %6, 1
+  %xtraiter = and i64 %i.ae, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 

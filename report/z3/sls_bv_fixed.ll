@@ -204,14 +204,14 @@ bb.am:                                            ; preds = %.preheader323, %bb.
   br i1 %exitcond459.not, label %.loopexit324, label %bb.am, !llvm.loop !136
 
 .loopexit324:                                     ; preds = %bb.am, %bb.ab, %._crit_edge398
-  %.0253.lcssa545559578 = phi i32 [ %.0253.lcssa545559, %._crit_edge398 ], [ 0, %bb.ab ], [ %.0253.lcssa545559, %bb.am ] ; 3 uses
-  %.0254.lcssa530542562577 = phi i32 [ %.0254.lcssa537, %._crit_edge398 ], [ 0, %bb.ab ], [ %.0254.lcssa537, %bb.am ] ; 3 uses
+  %.0253.lcssa545559578 = phi i32 [ %.0253.lcssa545559, %._crit_edge398 ], [ 0, %bb.ab ], [ %.0253.lcssa545559, %bb.am ] ; 2 uses
+  %.0254.lcssa530542562577 = phi i32 [ %.0254.lcssa537, %._crit_edge398 ], [ 0, %bb.ab ], [ %.0254.lcssa537, %bb.am ] ; 2 uses
   %i.ox = or i32 %.0253.lcssa545559578, %.0254.lcssa530542562577
   %or.cond6.not = icmp eq i32 %i.ox, 0
   br i1 %or.cond6.not, label %_ZNK3app13get_decl_kindEv.exit.thread, label %.preheader321
 
 .preheader321:                                    ; preds = %.loopexit324
-  %i.oy = add i32 %.0253.lcssa545559578, %.0254.lcssa530542562577 ; 4 uses
+  %i.oy = add i32 %.0253.lcssa545559578, %.0254.lcssa530542562577 ; 5 uses
   %.not435 = icmp eq i32 %i.oy, 0
   br i1 %.not435, label %_ZNK3app13get_decl_kindEv.exit.thread, label %.lr.ph403
 
@@ -220,9 +220,8 @@ bb.am:                                            ; preds = %.preheader323, %bb.
   %i.pa = load ptr, ptr %i.oz, align 8, !tbaa !64 ; 3 uses
   %i.pb = getelementptr inbounds nuw i8, ptr %i.cj, i64 96
   %i.pc = load ptr, ptr %i.pb, align 8, !tbaa !64 ; 3 uses
-  %2 = add i32 %.0253.lcssa545559578, %.0254.lcssa530542562577
   %xtraiter = and i32 %i.oy, 1
-  %i.pd = icmp eq i32 %2, 1
+  %i.pd = icmp eq i32 %i.oy, 1
   br i1 %i.pd, label %.epil.preheader, label %.lr.ph403.new
 
 .lr.ph403.new:                                    ; preds = %.lr.ph403

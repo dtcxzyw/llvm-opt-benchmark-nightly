@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %can_sja_dual_filter
 
 bb.n:                                             ; preds = %can_sja_dual_filter.exit64.i, %.split, %can_sja_accept_filter.exit.thread, %can_sja_accept_filter.exit
   %i.gz = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.ha = load i8, ptr %i.gz, align 4             ; 14 uses
+  %i.ha = load i8, ptr %i.gz, align 4             ; 13 uses
   %i.hb = zext i8 %i.ha to i32
   %i.hc = load i32, ptr %1, align 8
   %i.hd = and i32 %i.hc, 536870912
@@ -387,8 +387,8 @@ frame2buff_pel.exit:                              ; preds = %bb.n
   br label %bb.aj
 
 ._crit_edge.i:                                    ; preds = %vec.epilog.scalar.ph, %vec.epilog.scalar.ph140, %vec.epilog.middle.block, %vec.epilog.middle.block149, %bb.s, %bb.r
-  %.sink = phi i32 [ 5, %bb.r ], [ 3, %vec.epilog.middle.block149 ], [ 3, %bb.s ], [ 5, %vec.epilog.middle.block ], [ 3, %vec.epilog.scalar.ph140 ], [ 5, %vec.epilog.scalar.ph ] ; 2 uses
-  %i.jc = add nuw nsw i32 %.sink, %i.hb           ; 4 uses
+  %.sink = phi i32 [ 5, %bb.r ], [ 3, %vec.epilog.middle.block149 ], [ 3, %bb.s ], [ 5, %vec.epilog.middle.block ], [ 3, %vec.epilog.scalar.ph140 ], [ 5, %vec.epilog.scalar.ph ]
+  %i.jc = add nuw nsw i32 %.sink, %i.hb           ; 5 uses
   %i.jd = getelementptr inbounds i8, ptr %0, i64 -56 ; 2 uses
   %i.je = load i32, ptr %i.jd, align 8
   %i.jf = add i32 %i.je, %i.jc                    ; 2 uses
@@ -425,11 +425,8 @@ bb.u:                                             ; preds = %._crit_edge.i
   %i.jx = getelementptr inbounds i8, ptr %0, i64 -60 ; 4 uses
   %.promoted = load i32, ptr %i.jx, align 4       ; 2 uses
   %wide.trip.count = zext nneg i32 %i.jc to i64   ; 2 uses
-  %4 = zext nneg i32 %.sink to i64
-  %5 = zext nneg i8 %i.ha to i64
-  %6 = add nuw nsw i64 %4, %5
   %xtraiter = and i64 %wide.trip.count, 1
-  %i.jy = icmp eq i64 %6, 1
+  %i.jy = icmp eq i32 %i.jc, 1
   br i1 %i.jy, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.u

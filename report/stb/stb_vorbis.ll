@@ -205,7 +205,7 @@ define i32 @stb_vorbis_get_samples_float_interleaved(ptr noundef %0, i32 noundef
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
-  %i.b = sdiv i32 %3, %1                          ; 16 uses
+  %i.b = sdiv i32 %3, %1                          ; 15 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.d = load i32, ptr %i.c, align 4, !tbaa !101
   %.fr = freeze i32 %i.d                          ; 2 uses
@@ -373,7 +373,7 @@ bb.d:                                             ; preds = %._crit_edge62.split
 
 .split.split.us:                                  ; preds = %.split.split.us.preheader, %bb.f
   %.044.us76 = phi ptr [ %.145.lcssa.us81, %bb.f ], [ %2, %.split.split.us.preheader ] ; 3 uses
-  %.042.us77 = phi i32 [ %i.cj, %bb.f ], [ 0, %.split.split.us.preheader ] ; 6 uses
+  %.042.us77 = phi i32 [ %i.cj, %bb.f ], [ 0, %.split.split.us.preheader ] ; 5 uses
   %i.bx = icmp slt i32 %.042.us77, %i.b
   br i1 %i.bx, label %bb.e, label %.thread
 
@@ -381,10 +381,10 @@ bb.e:                                             ; preds = %.split.split.us
   %i.by = load i32, ptr %i.e, align 8, !tbaa !116
   %i.bz = load i32, ptr %i.f, align 4, !tbaa !117 ; 2 uses
   %i.ca = sub nsw i32 %i.by, %i.bz                ; 2 uses
-  %i.cb = add nsw i32 %i.ca, %.042.us77           ; 2 uses
+  %i.cb = add nsw i32 %i.ca, %.042.us77
   %.not.us78 = icmp slt i32 %i.cb, %i.b
   %i.cc = sub nsw i32 %i.b, %.042.us77
-  %spec.select50.us79 = select i1 %.not.us78, i32 %i.ca, i32 %i.cc ; 4 uses
+  %spec.select50.us79 = select i1 %.not.us78, i32 %i.ca, i32 %i.cc ; 5 uses
   %i.cd = icmp sgt i32 %spec.select50.us79, 0
   br i1 %i.cd, label %.preheader52.us64.us.preheader, label %._crit_edge62.split.split.us.us
 
@@ -393,11 +393,9 @@ bb.e:                                             ; preds = %.split.split.us
   %i.cf = mul nuw i64 %i.bs, %i.ce
   call void @llvm.memset.p0.i64(ptr align 4 %.044.us76, i8 0, i64 %i.cf, i1 false), !tbaa !63
   %scevgep91 = getelementptr i8, ptr %.044.us76, i64 %i.bw
-  %smin = call i32 @llvm.smin.i32(i32 %i.b, i32 %i.cb)
-  %4 = xor i32 %.042.us77, -1
-  %i.cg = add i32 %smin, %4
-  %i.ch = zext i32 %i.cg to i64
-  %i.ci = mul i64 %i.bw, %i.ch
+  %i.cg = add nsw i32 %spec.select50.us79, -1
+  %i.ch = zext nneg i32 %i.cg to i64
+  %i.ci = mul nuw i64 %i.bw, %i.ch
   %scevgep92 = getelementptr i8, ptr %scevgep91, i64 %i.ci
   br label %._crit_edge62.split.split.us.us
 

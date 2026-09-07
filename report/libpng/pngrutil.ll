@@ -205,10 +205,10 @@ bb.a:
   %i.b = load i8, ptr %i.a, align 1, !tbaa !53    ; 3 uses
   %i.c = zext i8 %i.b to i64
   %i.d = add nuw nsw i64 %i.c, 7                  ; 2 uses
-  %i.e = lshr i64 %i.d, 3                         ; 16 uses
+  %i.e = lshr i64 %i.d, 3                         ; 15 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !54   ; 5 uses
-  %i.h = sub i64 %i.g, %i.e                       ; 10 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !54   ; 4 uses
+  %i.h = sub i64 %i.g, %i.e                       ; 11 uses
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %.preheader, label %iter.check
 
@@ -430,10 +430,9 @@ vec.epilog.scalar.ph88.preheader:                 ; preds = %vector.memcheck56, 
   %.133.ph = phi ptr [ %.0.lcssa, %iter.check87 ], [ %.0.lcssa, %vector.memcheck56 ], [ %i.ah, %vec.epilog.iter.check89 ], [ %i.ba, %vec.epilog.middle.block101 ] ; 3 uses
   %.12132.ph = phi ptr [ %.020.lcssa, %iter.check87 ], [ %.020.lcssa, %vector.memcheck56 ], [ %i.ai, %vec.epilog.iter.check89 ], [ %i.bb, %vec.epilog.middle.block101 ] ; 5 uses
   %.12331.ph = phi i64 [ 0, %iter.check87 ], [ 0, %vector.memcheck56 ], [ %n.vec71, %vec.epilog.iter.check89 ], [ %n.vec92, %vec.epilog.middle.block101 ] ; 3 uses
-  %3 = sub i64 %i.g, %i.e
   %i.bk = xor i64 %.12331.ph, -1
   %i.bl = add i64 %i.g, %i.bk
-  %xtraiter107 = and i64 %3, 1
+  %xtraiter107 = and i64 %i.h, 1
   %lcmp.mod108.not = icmp eq i64 %xtraiter107, 0
   br i1 %lcmp.mod108.not, label %vec.epilog.scalar.ph88.prol.loopexit, label %vec.epilog.scalar.ph88.prol
 
@@ -591,7 +590,7 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @png_read_filter_row_paeth_multibyte_pixel(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(address) %1, ptr nofree noundef readonly captures(none) %2) #5 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 9 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 19
   %i.c = load i8, ptr %i.b, align 1, !tbaa !53
   %i.d = zext i8 %i.c to i64
@@ -705,11 +704,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.046.lcssa64.pre-phi = phi i64 [ %.pre, %._crit_edge.loopexit ], [ %i.a, %bb.a ] ; 2 uses
+  %.046.lcssa64.pre-phi = phi i64 [ %.pre, %._crit_edge.loopexit ], [ %i.a, %bb.a ]
   %.048.lcssa = phi ptr [ %.lcssa67, %._crit_edge.loopexit ], [ %2, %bb.a ] ; 10 uses
   %.046.lcssa = phi ptr [ %.lcssa, %._crit_edge.loopexit ], [ %1, %bb.a ] ; 13 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.ag = load i64, ptr %i.af, align 8, !tbaa !54 ; 3 uses
+  %i.ag = load i64, ptr %i.af, align 8, !tbaa !54 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 %i.ag
   %i.ai = icmp ult ptr %.046.lcssa, %i.ah
   br i1 %i.ai, label %iter.check121, label %._crit_edge62
@@ -717,7 +716,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 iter.check121:                                    ; preds = %._crit_edge
   %i.aj = sub nsw i64 0, %i.f                     ; 8 uses
   %i.ak = add i64 %i.ag, %i.a
-  %i.al = sub i64 %i.ak, %.046.lcssa64.pre-phi    ; 9 uses
+  %i.al = sub i64 %i.ak, %.046.lcssa64.pre-phi    ; 10 uses
   %scevgep = getelementptr i8, ptr %.046.lcssa, i64 %i.al ; 4 uses
   %min.iters.check103 = icmp ult i64 %i.al, 4
   br i1 %min.iters.check103, label %vec.epilog.scalar.ph122.preheader, label %vector.memcheck87
@@ -725,9 +724,7 @@ iter.check121:                                    ; preds = %._crit_edge
 vector.memcheck87:                                ; preds = %iter.check121
   %scevgep88 = getelementptr i8, ptr %.048.lcssa, i64 %i.al
   %scevgep89 = getelementptr i8, ptr %.048.lcssa, i64 %i.aj
-  %3 = add i64 %i.ag, %i.a
-  %4 = add i64 %.046.lcssa64.pre-phi, %i.f
-  %i.am = sub i64 %3, %4                          ; 2 uses
+  %i.am = sub i64 %i.al, %i.f                     ; 2 uses
   %scevgep90 = getelementptr i8, ptr %.048.lcssa, i64 %i.am
   %scevgep91 = getelementptr i8, ptr %.046.lcssa, i64 %i.aj
   %scevgep92 = getelementptr i8, ptr %.046.lcssa, i64 %i.am

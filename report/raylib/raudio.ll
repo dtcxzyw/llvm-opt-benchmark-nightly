@@ -205,13 +205,13 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not469, label %.preheader370, label %.preheader370.us.preheader
 
 .preheader370.us.preheader:                       ; preds = %.preheader370.lr.ph
-  %wide.trip.count554 = zext nneg i32 %2 to i64   ; 10 uses
+  %wide.trip.count554 = zext nneg i32 %2 to i64   ; 8 uses
   %wide.trip.count = zext i32 %5 to i64
   %wide.trip.count534 = zext i32 %5 to i64
   %exitcond535.peel.not = icmp eq i32 %5, 1
   %wide.trip.count559 = zext nneg i32 %2 to i64
   %wide.trip.count564 = zext nneg i32 %2 to i64
-  %i.mn = add nsw i64 %wide.trip.count554, -1     ; 4 uses
+  %i.mn = add nsw i64 %wide.trip.count554, -1     ; 6 uses
   %cond = icmp eq i32 %5, 1
   %spec.select = select i1 %cond, i64 1, i64 2
   %i.mo = getelementptr inbounds nuw [24 x i8], ptr @g_maChannelPlaneRatios, i64 %spec.select ; 5 uses
@@ -288,6 +288,7 @@ middle.block89:                                   ; preds = %vector.body86
 
 ma_channel_map_get_channel.exit350.us409.preheader189: ; preds = %vector.scevcheck81, %ma_channel_map_get_channel.exit350.us409.preheader, %middle.block89
   %indvars.iv556.ph = phi i64 [ 0, %vector.scevcheck81 ], [ 0, %ma_channel_map_get_channel.exit350.us409.preheader ], [ %n.vec85, %middle.block89 ] ; 3 uses
+  %7 = sub nsw i64 %i.mn, %indvars.iv556.ph
   br i1 %lcmp.mod328.not, label %ma_channel_map_get_channel.exit350.us409.prol.loopexit, label %ma_channel_map_get_channel.exit350.us409.prol
 
 ma_channel_map_get_channel.exit350.us409.prol:    ; preds = %ma_channel_map_get_channel.exit350.us409.preheader189, %ma_channel_map_get_channel.exit350.us409.prol
@@ -305,8 +306,7 @@ ma_channel_map_get_channel.exit350.us409.prol:    ; preds = %ma_channel_map_get_
 
 ma_channel_map_get_channel.exit350.us409.prol.loopexit: ; preds = %ma_channel_map_get_channel.exit350.us409.prol, %ma_channel_map_get_channel.exit350.us409.preheader189
   %indvars.iv556.unr = phi i64 [ %indvars.iv556.ph, %ma_channel_map_get_channel.exit350.us409.preheader189 ], [ %indvars.iv.next557.prol, %ma_channel_map_get_channel.exit350.us409.prol ]
-  %7 = sub nsw i64 %indvars.iv556.ph, %wide.trip.count554
-  %8 = icmp ugt i64 %7, -4
+  %8 = icmp ult i64 %7, 3
   br i1 %8, label %._crit_edge397.us, label %ma_channel_map_get_channel.exit350.us409.preheader189.new
 
 ma_channel_map_get_channel.exit350.us409.preheader189.new: ; preds = %ma_channel_map_get_channel.exit350.us409.prol.loopexit
@@ -342,6 +342,7 @@ middle.block78:                                   ; preds = %vector.body75
 
 ma_channel_map_get_channel.exit350.us405.us.preheader188: ; preds = %vector.scevcheck, %ma_channel_map_get_channel.exit350.us405.us.preheader, %middle.block78
   %indvars.iv561.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %ma_channel_map_get_channel.exit350.us405.us.preheader ], [ %n.vec74, %middle.block78 ] ; 3 uses
+  %9 = sub nsw i64 %i.mn, %indvars.iv561.ph
   br i1 %lcmp.mod330.not, label %ma_channel_map_get_channel.exit350.us405.us.prol.loopexit, label %ma_channel_map_get_channel.exit350.us405.us.prol
 
 ma_channel_map_get_channel.exit350.us405.us.prol: ; preds = %ma_channel_map_get_channel.exit350.us405.us.preheader188, %ma_channel_map_get_channel.exit350.us405.us.prol
@@ -359,8 +360,7 @@ ma_channel_map_get_channel.exit350.us405.us.prol: ; preds = %ma_channel_map_get_
 
 ma_channel_map_get_channel.exit350.us405.us.prol.loopexit: ; preds = %ma_channel_map_get_channel.exit350.us405.us.prol, %ma_channel_map_get_channel.exit350.us405.us.preheader188
   %indvars.iv561.unr = phi i64 [ %indvars.iv561.ph, %ma_channel_map_get_channel.exit350.us405.us.preheader188 ], [ %indvars.iv.next562.prol, %ma_channel_map_get_channel.exit350.us405.us.prol ]
-  %9 = sub nsw i64 %indvars.iv561.ph, %wide.trip.count554
-  %10 = icmp ugt i64 %9, -4
+  %10 = icmp ult i64 %9, 3
   br i1 %10, label %._crit_edge397.us, label %ma_channel_map_get_channel.exit350.us405.us.preheader188.new
 
 ma_channel_map_get_channel.exit350.us405.us.preheader188.new: ; preds = %ma_channel_map_get_channel.exit350.us405.us.prol.loopexit
@@ -726,7 +726,7 @@ ma_channel_map_get_channel.exit353.us.us.us:      ; preds = %switch.lookup165, %
   %i.vj = icmp eq ptr %1, null
   %.not472 = icmp eq i32 %5, 0
   %i.vk = icmp eq ptr %4, null
-  %wide.trip.count579 = zext nneg i32 %2 to i64   ; 6 uses
+  %wide.trip.count579 = zext nneg i32 %2 to i64   ; 5 uses
   %wide.trip.count569 = zext nneg i32 %5 to i64   ; 3 uses
   %wide.trip.count574 = zext nneg i32 %5 to i64
   br label %bb.y
@@ -1129,7 +1129,7 @@ bb.ad:                                            ; preds = %.lr.ph424, %bb.ad
   %.not479 = icmp eq i32 %5, 0
   %wide.trip.count599 = zext nneg i32 %2 to i64
   %wide.trip.count604 = zext nneg i32 %2 to i64
-  %i.afg = add nsw i64 %wide.trip.count579, -1    ; 2 uses
+  %i.afg = add nsw i64 %wide.trip.count579, -1    ; 3 uses
   %xtraiter333 = and i64 %wide.trip.count569, 3   ; 3 uses
   %i.afh = add nsw i32 %5, -1
   %i.afi = icmp ult i32 %i.afh, 3
@@ -1178,6 +1178,7 @@ middle.block146:                                  ; preds = %vector.body143
 
 .preheader.us466.preheader171:                    ; preds = %vector.scevcheck138, %.preheader.us466.preheader, %middle.block146
   %indvars.iv601.ph = phi i64 [ 0, %vector.scevcheck138 ], [ 0, %.preheader.us466.preheader ], [ %n.vec142, %middle.block146 ] ; 3 uses
+  %11 = sub nsw i64 %i.afg, %indvars.iv601.ph
   br i1 %lcmp.mod341.not, label %.preheader.us466.prol.loopexit, label %.preheader.us466.prol
 
 .preheader.us466.prol:                            ; preds = %.preheader.us466.preheader171, %.preheader.us466.prol
@@ -1195,8 +1196,7 @@ middle.block146:                                  ; preds = %vector.body143
 
 .preheader.us466.prol.loopexit:                   ; preds = %.preheader.us466.prol, %.preheader.us466.preheader171
   %indvars.iv601.unr = phi i64 [ %indvars.iv601.ph, %.preheader.us466.preheader171 ], [ %indvars.iv.next602.prol, %.preheader.us466.prol ]
-  %11 = sub nsw i64 %indvars.iv601.ph, %wide.trip.count579
-  %12 = icmp ugt i64 %11, -4
+  %12 = icmp ult i64 %11, 3
   br i1 %12, label %._crit_edge463.us, label %.preheader.us466.preheader171.new
 
 .preheader.us466.preheader171.new:                ; preds = %.preheader.us466.prol.loopexit
@@ -1599,7 +1599,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 5 uses
   %i.c = alloca i32, align 4                      ; 5 uses
-  %i.d = sdiv i32 %3, %1                          ; 6 uses
+  %i.d = sdiv i32 %3, %1                          ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4              ; 2 uses
   %spec.select = tail call i32 @llvm.smin.i32(i32 %i.f, i32 %1) ; 7 uses
@@ -1638,7 +1638,7 @@ bb.a:
 
 bb.b:                                             ; preds = %stb_vorbis_get_frame_float.exit, %bb.a
   %.044 = phi ptr [ %2, %bb.a ], [ %.145.lcssa, %stb_vorbis_get_frame_float.exit ] ; 5 uses
-  %.042 = phi i32 [ 0, %bb.a ], [ %i.bt, %stb_vorbis_get_frame_float.exit ] ; 6 uses
+  %.042 = phi i32 [ 0, %bb.a ], [ %i.bt, %stb_vorbis_get_frame_float.exit ] ; 5 uses
   %i.af = icmp slt i32 %.042, %i.d
   br i1 %i.af, label %bb.c, label %.thread
 
@@ -1646,10 +1646,10 @@ bb.c:                                             ; preds = %bb.b
   %i.ag = load i32, ptr %i.g, align 8
   %i.ah = load i32, ptr %i.h, align 4
   %i.ai = sub nsw i32 %i.ag, %i.ah                ; 2 uses
-  %i.aj = add nsw i32 %i.ai, %.042                ; 2 uses
+  %i.aj = add nsw i32 %i.ai, %.042
   %.not = icmp slt i32 %i.aj, %i.d
   %i.ak = sub nsw i32 %i.d, %.042
-  %spec.select50 = select i1 %.not, i32 %i.ai, i32 %i.ak ; 5 uses
+  %spec.select50 = select i1 %.not, i32 %i.ai, i32 %i.ak ; 6 uses
   %i.al = icmp sgt i32 %spec.select50, 0
   br i1 %i.al, label %.preheader55.lr.ph, label %._crit_edge70
 
@@ -1731,10 +1731,8 @@ bb.c:                                             ; preds = %bb.b
   %i.bp = mul nuw i64 %i.o, %i.bo
   tail call void @llvm.memset.p0.i64(ptr align 4 %.044, i8 0, i64 %i.bp, i1 false)
   %scevgep90 = getelementptr i8, ptr %.044, i64 %i.s
-  %smin = tail call i32 @llvm.smin.i32(i32 %i.d, i32 %i.aj)
-  %4 = xor i32 %.042, -1
-  %i.bq = add i32 %smin, %4
-  %i.br = zext i32 %i.bq to i64
+  %i.bq = add nsw i32 %spec.select50, -1
+  %i.br = zext nneg i32 %i.bq to i64
   %i.bs = mul i64 %i.s, %i.br
   %scevgep91 = getelementptr i8, ptr %scevgep90, i64 %i.bs
   br label %._crit_edge70

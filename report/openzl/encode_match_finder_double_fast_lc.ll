@@ -59,7 +59,6 @@ ZS_fastLzMatchFinderCtx_releaseInternal.exit:     ; preds = %bb.a, %bb.b
 ; Function Attrs: nounwind uwtable
 define internal void @ZS_fastLzMatchFinder_parse(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr noundef %2, i64 noundef %3) #3 {
 bb.a:
-  %4 = ptrtoaddr ptr %2 to i64
   %i.a = getelementptr i8, ptr %2, i64 %3         ; 13 uses
   %i.b = getelementptr inbounds i8, ptr %i.a, i64 -16 ; 2 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !27     ; 2 uses
@@ -462,8 +461,8 @@ bb.ck:                                            ; preds = %bb.cj, %bb.ci
 ._crit_edge:                                      ; preds = %.thread, %bb.a
   %.0166.lcssa = phi ptr [ %2, %bb.a ], [ %.4170, %.thread ] ; 6 uses
   %i.oz = ptrtoint ptr %i.a to i64
-  %i.pa = ptrtoint ptr %.0166.lcssa to i64        ; 3 uses
-  %i.pb = sub i64 %i.oz, %i.pa                    ; 8 uses
+  %i.pa = ptrtoint ptr %.0166.lcssa to i64        ; 2 uses
+  %i.pb = sub i64 %i.oz, %i.pa                    ; 9 uses
   %i.pc = load i32, ptr @ZL_g_logLevel, align 4, !tbaa !11
   %i.pd = icmp sgt i32 %i.pc, 8191
   br i1 %i.pd, label %bb.cl, label %bb.cm
@@ -489,11 +488,9 @@ bb.cn:                                            ; preds = %bb.cm
 
 .lr.ph.i352:                                      ; preds = %bb.cn
   %i.pl = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
-  %5 = add i64 %3, %4
   %xtraiter493 = and i64 %i.pb, 3                 ; 3 uses
-  %6 = sub i64 %i.pa, %5
-  %7 = icmp ugt i64 %6, -4
-  br i1 %7, label %.epil.preheader492, label %.lr.ph.i352.new
+  %4 = icmp ult i64 %i.pb, 4
+  br i1 %4, label %.epil.preheader492, label %.lr.ph.i352.new
 
 .lr.ph.i352.new:                                  ; preds = %.lr.ph.i352
   %unroll_iter497 = and i64 %i.pb, -4

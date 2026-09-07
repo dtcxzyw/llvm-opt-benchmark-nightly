@@ -204,11 +204,11 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %pmix_bfrops_base_tma_argv_join.exit
 
 .preheader.i:                                     ; preds = %bb.b, %.preheader.i
-  %.0272.i = phi i64 [ %i.h, %.preheader.i ], [ 0, %bb.b ] ; 2 uses
+  %.0272.i = phi i64 [ %i.h, %.preheader.i ], [ 0, %bb.b ]
   %.0291.i = phi ptr [ %i.i, %.preheader.i ], [ %0, %bb.b ]
   %i.e = phi ptr [ %.pr.i, %.preheader.i ], [ %i.b, %bb.b ]
-  %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.e) #38 ; 2 uses
-  %i.g = add i64 %i.f, %.0272.i                   ; 6 uses
+  %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.e) #38
+  %i.g = add i64 %i.f, %.0272.i                   ; 7 uses
   %i.h = add i64 %i.g, 1                          ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.0291.i, i64 8 ; 2 uses
   %.pr.i = load ptr, ptr %i.i, align 8, !tbaa !42 ; 2 uses
@@ -228,10 +228,8 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph.i:                                         ; preds = %bb.e
   %i.m = trunc i32 %1 to i8                       ; 3 uses
-  %2 = add i64 %i.f, -1
   %xtraiter = and i64 %i.g, 1
-  %3 = sub i64 0, %.0272.i
-  %i.n = icmp eq i64 %2, %3
+  %i.n = icmp eq i64 %i.g, 1
   br i1 %i.n, label %.epil.preheader, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i

@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.q, %bb.f
   br i1 %i.bd, label %bb.h, label %.loopexit173.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.be = lshr i32 %.1140.i, 4                    ; 3 uses
+  %i.be = lshr i32 %.1140.i, 4                    ; 2 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.k, %bb.h
@@ -390,8 +390,8 @@ bb.k:                                             ; preds = %bb.i
 .loopexit174.i:                                   ; preds = %bb.k, %bb.j
   %.promoted202.i459563 = phi ptr [ %i.bg, %bb.j ], [ %i.fi, %bb.k ] ; 2 uses
   %i.gj = phi ptr [ %i.bf, %bb.j ], [ %i.gf, %bb.k ] ; 3 uses
-  %.1.i = phi i32 [ %.0134.i, %bb.j ], [ 0, %bb.k ] ; 2 uses
-  %i.gk = sub i32 %i.be, %.1.i                    ; 5 uses
+  %.1.i = phi i32 [ %.0134.i, %bb.j ], [ 0, %bb.k ]
+  %i.gk = sub i32 %i.be, %.1.i                    ; 6 uses
   %i.gl = shl nsw i32 %i.gk, 4                    ; 2 uses
   %i.gm = sub nsw i32 %.1140.i, %i.gl             ; 3 uses
   %i.gn = load ptr, ptr %i.f, align 8, !tbaa !47  ; 7 uses
@@ -405,7 +405,6 @@ bb.l:                                             ; preds = %.loopexit174.i
   br i1 %i.gq, label %.lr.ph.i.preheader, label %.loopexit173.i
 
 .lr.ph.i.preheader:                               ; preds = %bb.l
-  %.neg = add i32 %.1.i, 1
   %xtraiter = and i32 %i.gk, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
@@ -435,7 +434,7 @@ bb.l:                                             ; preds = %.loopexit174.i
   %.1136196.i.unr = phi i32 [ %.0135.i, %.lr.ph.i.preheader ], [ %i.ha, %.lr.ph.i.prol ]
   %.lcssa934.unr = phi i32 [ poison, %.lr.ph.i.preheader ], [ %i.ha, %.lr.ph.i.prol ]
   %.lcssa933.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %i.hb, %.lr.ph.i.prol ]
-  %i.hd = icmp eq i32 %i.be, %.neg
+  %i.hd = icmp eq i32 %i.gk, 1
   br i1 %i.hd, label %..loopexit173_crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i

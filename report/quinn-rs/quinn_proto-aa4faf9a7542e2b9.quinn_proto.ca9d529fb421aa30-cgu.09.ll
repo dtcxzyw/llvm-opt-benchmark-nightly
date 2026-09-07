@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
     #dbg_value(ptr %0, !13975, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !14031)
     #dbg_value(ptr %0, !14032, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !14036)
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !14237 ; 8 uses
-  %i.m = load i16, ptr %i.l, align 8, !dbg !14237, !noundef !1053 ; 4 uses
+  %i.m = load i16, ptr %i.l, align 8, !dbg !14237, !noundef !1053 ; 3 uses
   %i.n = zext i16 %i.m to i64, !dbg !14237        ; 3 uses
     #dbg_value(i64 %1, !13963, !DIExpression(), !13971)
     #dbg_value(i64 %1, !13926, !DIExpression(), !13962)
@@ -321,7 +321,7 @@ _RNvXs2_NtCslrs821VbQCb_7tinyvec8arrayvecINtB5_8ArrayVecAINtNtNtCskKLDkoKarTP_4c
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !14261
     #dbg_value(ptr %i.ae, !14116, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14120)
     #dbg_value(ptr %i.ae, !14113, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14119)
-  %i.af = sub nuw nsw i64 %i.ad, %1, !dbg !14262
+  %i.af = sub nuw nsw i64 %i.ad, %1, !dbg !14262  ; 2 uses
     #dbg_value(i64 %i.af, !14114, !DIExpression(), !14136)
     #dbg_value(i64 %i.af, !14109, !DIExpression(), !14111)
     #dbg_value(ptr %i.ae, !14108, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14111)
@@ -339,9 +339,8 @@ _RNvXs2_NtCslrs821VbQCb_7tinyvec8arrayvecINtB5_8ArrayVecAINtNtNtCskKLDkoKarTP_4c
     #dbg_value(ptr undef, !14095, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !14139)
   %i.ah = insertelement <2 x i64> poison, i64 %2, i64 0
   %i.ai = insertelement <2 x i64> %i.ah, i64 %3, i64 1 ; 2 uses
-  %4 = zext nneg i16 %i.m to i64, !dbg !14264
-  %5 = sub i64 %4, %1, !dbg !14264
-  %i.aj = icmp ult i64 %5, 3, !dbg !14264
+  %4 = add nsw i64 %i.af, -1, !dbg !14264
+  %i.aj = icmp ult i64 %4, 3, !dbg !14264
   br i1 %i.aj, label %.lr.ph.i.epil.preheader, label %.lr.ph.i, !dbg !14264
 
 .lr.ph.i:                                         ; preds = %_RNvXs2_NtCslrs821VbQCb_7tinyvec8arrayvecINtB5_8ArrayVecAINtNtNtCskKLDkoKarTP_4core3ops5range5RangeyEj2_ENtNtBX_5deref8DerefMut9deref_mutCshovLROGBtMy_11quinn_proto.exit.i, %.lr.ph.i

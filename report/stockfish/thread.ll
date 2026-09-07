@@ -204,9 +204,9 @@ bb.d:                                             ; preds = %_ZSt11make_uniqueIN
 
 bb.e:                                             ; preds = %_ZSt11make_uniqueIN9Stockfish6ThreadEJRNS0_6Search11SharedStateESt10unique_ptrINS2_14ISearchManagerESt14default_deleteIS6_EERKmmRmRNS0_30OptionalThreadToNumaNodeBinderEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit
   %i.av = load ptr, ptr %i.t, align 8, !tbaa !114 ; 12 uses
-  %i.aw = ptrtoint ptr %i.aq to i64               ; 3 uses
-  %i.ax = ptrtoint ptr %i.av to i64               ; 4 uses
-  %i.ay = sub i64 %i.aw, %i.ax                    ; 3 uses
+  %i.aw = ptrtoint ptr %i.aq to i64
+  %i.ax = ptrtoint ptr %i.av to i64               ; 2 uses
+  %i.ay = sub i64 %i.aw, %i.ax                    ; 5 uses
   %i.az = icmp eq i64 %i.ay, 9223372036854775800
   br i1 %i.az, label %bb.f, label %_ZNKSt6vectorISt10unique_ptrIN9Stockfish6ThreadESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
 
@@ -232,27 +232,23 @@ _ZNKSt6vectorISt10unique_ptrIN9Stockfish6ThreadESt14default_deleteIS2_EESaIS5_EE
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN9Stockfish6ThreadESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZNKSt6vectorISt10unique_ptrIN9Stockfish6ThreadESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i
-  %i.bj = add i64 %i.aw, -8
-  %3 = sub i64 %i.bj, %i.ax                       ; 3 uses
-  %i.bk = lshr i64 %3, 3
+  %i.bj = add i64 %i.ay, -8                       ; 3 uses
+  %i.bk = lshr i64 %i.bj, 3
   %i.bl = add nuw nsw i64 %i.bk, 1                ; 5 uses
-  %min.iters.check = icmp ult i64 %3, 56
+  %min.iters.check = icmp ult i64 %i.bj, 56
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %4 = add i64 %i.aw, -8
-  %5 = sub i64 %4, %i.ax
-  %i.bm = and i64 %5, -8
-  %6 = add i64 %i.bm, 8                           ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.bg, i64 %6
-  %scevgep30 = getelementptr i8, ptr %i.av, i64 %6
+  %i.bm = and i64 %i.ay, -8                       ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.bg, i64 %i.bm
+  %scevgep30 = getelementptr i8, ptr %i.av, i64 %i.bm
   %bound0 = icmp ult ptr %i.bg, %scevgep30
   %bound1 = icmp ult ptr %i.av, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check31 = icmp ult i64 %3, 248
+  %min.iters.check31 = icmp ult i64 %i.bj, 248
   br i1 %min.iters.check31, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -655,7 +651,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !118  ; 17 uses
   %i.e = ptrtoint ptr %i.b to i64
-  %i.f = ptrtoint ptr %i.d to i64                 ; 5 uses
+  %i.f = ptrtoint ptr %i.d to i64                 ; 4 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = ashr exact i64 %i.g, 3
   %.not49 = icmp ult i64 %i.h, %2
@@ -663,7 +659,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = load i64, ptr %3, align 8, !tbaa !37     ; 9 uses
-  %i.j = ptrtoint ptr %1 to i64                   ; 3 uses
+  %i.j = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.k = sub i64 %i.f, %i.j                       ; 6 uses
   %i.l = ashr exact i64 %i.k, 3                   ; 3 uses
   %i.m = icmp ugt i64 %i.l, %2
@@ -800,18 +796,16 @@ bb.k:                                             ; preds = %bb.c
 
 iter.check:                                       ; preds = %bb.k
   %i.av = sub nuw i64 %2, %i.l
-  %.idx.i.i.i.i.i = shl nuw nsw i64 %i.av, 3
+  %.idx.i.i.i.i.i = shl nuw nsw i64 %i.av, 3      ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx.i.i.i.i.i ; 4 uses
-  %4 = shl i64 %2, 3
-  %i.ax = add i64 %4, -8
-  %5 = sub i64 %i.ax, %i.k                        ; 3 uses
-  %i.ay = lshr i64 %5, 3
+  %i.ax = add nsw i64 %.idx.i.i.i.i.i, -8         ; 3 uses
+  %i.ay = lshr exact i64 %i.ax, 3
   %i.az = add nuw nsw i64 %i.ay, 1                ; 5 uses
-  %min.iters.check = icmp ult i64 %5, 56
+  %min.iters.check = icmp ult i64 %i.ax, 56
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check91 = icmp ult i64 %5, 248
+  %min.iters.check91 = icmp ult i64 %i.ax, 248
   br i1 %min.iters.check91, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -907,15 +901,14 @@ _ZSt22__uninitialized_move_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit50: ; preds = %bb.l,
   br i1 %.not5.i.i.i51, label %_ZSt4fillIPmmEvT_S1_RKT0_.exit, label %iter.check114
 
 iter.check114:                                    ; preds = %_ZSt22__uninitialized_move_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit50
-  %i.bs = add i64 %i.f, -8
-  %6 = sub i64 %i.bs, %i.j                        ; 3 uses
-  %i.bt = lshr i64 %6, 3
+  %i.bs = add i64 %i.k, -8                        ; 3 uses
+  %i.bt = lshr i64 %i.bs, 3
   %i.bu = add nuw nsw i64 %i.bt, 1                ; 5 uses
-  %min.iters.check100 = icmp ult i64 %6, 56
+  %min.iters.check100 = icmp ult i64 %i.bs, 56
   br i1 %min.iters.check100, label %.lr.ph.i.i.i52.preheader, label %vector.main.loop.iter.check101
 
 vector.main.loop.iter.check101:                   ; preds = %iter.check114
-  %min.iters.check102 = icmp ult i64 %6, 248
+  %min.iters.check102 = icmp ult i64 %i.bs, 248
   br i1 %min.iters.check102, label %vec.epilog.ph118, label %vector.ph103
 
 vector.ph103:                                     ; preds = %vector.main.loop.iter.check101

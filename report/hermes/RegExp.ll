@@ -205,10 +205,10 @@ _ZN6hermes2vm10StringView14const_iteratorppEi.exit.us: ; preds = %_ZNK6hermes2vm
 
 _ZNK6hermes2vm10StringView5beginEv.exit.split.split.us: ; preds = %bb.ac
   %i.ig = and i64 %i.de, 1073741823               ; 2 uses
-  %.idx = shl nuw nsw i64 %i.ig, 1                ; 6 uses
-  %.sroa.7.12.extract.shift = lshr i64 %i.de, 31  ; 2 uses
+  %.idx = shl nuw nsw i64 %i.ig, 1                ; 5 uses
+  %.sroa.7.12.extract.shift = lshr i64 %i.de, 31
   %.idx237 = shl nuw nsw i64 %i.ig, 1
-  %i.ih = add nuw nsw i64 %.idx237, %.sroa.7.12.extract.shift ; 3 uses
+  %i.ih = add nuw nsw i64 %.idx237, %.sroa.7.12.extract.shift ; 4 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %i.dc, i64 %i.ih
   %.not239 = icmp samesign ult i64 %.idx, %i.ih
   br i1 %.not239, label %_ZN6hermes2vm10StringView14const_iteratorppEi.exit.us126.peel, label %.split113.us
@@ -224,8 +224,7 @@ _ZN6hermes2vm10StringView14const_iteratorppEi.exit.us126.peel: ; preds = %_ZNK6h
   br i1 %.not218252, label %iter.check321, label %.split113.us
 
 iter.check321:                                    ; preds = %_ZN6hermes2vm10StringView14const_iteratorppEi.exit.us126.peel
-  %5 = add i64 %.sroa.7.12.extract.shift, %i.dd
-  %i.io = add i64 %5, %.idx
+  %i.io = add i64 %i.ih, %i.dd
   %i.ip = add i64 %.idx, %i.dd
   %i.iq = add i64 %i.ip, 4
   %umax296 = call i64 @llvm.umax.i64(i64 %i.io, i64 %i.iq)

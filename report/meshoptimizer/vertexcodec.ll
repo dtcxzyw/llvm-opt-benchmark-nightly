@@ -205,15 +205,15 @@ _ZN7meshoptL15estimateChannelEPKhmmmmmii.exit:    ; preds = %.preheader.i.1, %.p
 
 bb.s:                                             ; preds = %_ZN7meshoptL17encodeVertexBlockEPhS0_PKhmmS0_S2_ii.exit, %.loopexit145
   %.093 = phi ptr [ %i.r, %.loopexit145 ], [ %.26095.i, %_ZN7meshoptL17encodeVertexBlockEPhS0_PKhmmS0_S2_ii.exit ] ; 11 uses
-  %.0 = phi i64 [ 0, %.loopexit145 ], [ %i.bfd, %_ZN7meshoptL17encodeVertexBlockEPhS0_PKhmmS0_S2_ii.exit ] ; 6 uses
+  %.0 = phi i64 [ 0, %.loopexit145 ], [ %i.bfd, %_ZN7meshoptL17encodeVertexBlockEPhS0_PKhmmS0_S2_ii.exit ] ; 5 uses
   %i.zn = icmp ult i64 %.0, %3
   br i1 %i.zn, label %bb.t, label %bb.au
 
 bb.t:                                             ; preds = %bb.s
-  %i.zo = add i64 %.0, %i.z                       ; 2 uses
+  %i.zo = add i64 %.0, %i.z
   %i.zp = icmp ult i64 %i.zo, %3
   %i.zq = sub nuw i64 %3, %.0
-  %i.zr = select i1 %i.zp, i64 %i.z, i64 %i.zq    ; 19 uses
+  %i.zr = select i1 %i.zp, i64 %i.z, i64 %i.zq    ; 20 uses
   %i.zs = mul i64 %.0, %4
   %i.zt = getelementptr inbounds nuw i8, ptr %2, i64 %i.zs ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
@@ -233,9 +233,7 @@ bb.t:                                             ; preds = %bb.s
   %i.aab = lshr i64 %i.zu, 4
   %i.aac = add nuw nsw i64 %i.aab, 3
   %i.aad = lshr i64 %i.aac, 2                     ; 6 uses
-  %umin373 = tail call i64 @llvm.umin.i64(i64 %3, i64 %i.zo)
-  %7 = xor i64 %.0, -1
-  %i.aae = add i64 %umin373, %7                   ; 3 uses
+  %i.aae = add i64 %i.zr, -1                      ; 3 uses
   %xtraiter374 = and i64 %i.zr, 1
   %i.aaf = icmp eq i64 %i.aae, 0
   %unroll_iter378 = and i64 %i.zr, -2

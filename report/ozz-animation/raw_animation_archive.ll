@@ -204,19 +204,19 @@ _ZN3ozz2io8IArchiversIKNS0_8internal5ArrayINS_9animation7offline12RawAnimation14
   %.sroa.0.0.insert.insert.i.i12 = call i32 @llvm.bswap.i32(i32 %i.cm)
   %i.cn = select i1 %i.cl, i32 %.sroa.0.0.insert.insert.i.i12, i32 %i.cm ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #12
-  %i.co = zext i32 %i.cn to i64                   ; 7 uses
+  %i.co = zext i32 %i.cn to i64                   ; 5 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.o, i64 32 ; 4 uses
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !38 ; 6 uses
   %i.cr = load ptr, ptr %i.ce, align 8, !tbaa !39 ; 6 uses
   %i.cs = ptrtoint ptr %i.cq to i64               ; 2 uses
   %i.ct = ptrtoint ptr %i.cr to i64
   %i.cu = sub i64 %i.cs, %i.ct                    ; 2 uses
-  %i.cv = sdiv exact i64 %i.cu, 20                ; 8 uses
+  %i.cv = sdiv exact i64 %i.cu, 20                ; 6 uses
   %i.cw = icmp ult i64 %i.cv, %i.co
   br i1 %i.cw, label %bb.n, label %bb.t
 
 bb.n:                                             ; preds = %_ZN3ozz2io8IArchiversIKNS0_8internal5ArrayINS_9animation7offline12RawAnimation14TranslationKeyEEEEEvRT_.exit.i
-  %i.cx = sub nuw nsw i64 %i.co, %i.cv            ; 9 uses
+  %i.cx = sub nuw nsw i64 %i.co, %i.cv            ; 11 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.o, i64 40 ; 2 uses
   %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !46
   %i.da = ptrtoint ptr %i.cz to i64
@@ -229,6 +229,7 @@ bb.n:                                             ; preds = %_ZN3ozz2io8IArchive
   br i1 %.not37.i35, label %_ZNKSt6vectorIN3ozz9animation7offline12RawAnimation11RotationKeyENS0_12StdAllocatorIS4_EEE12_M_check_lenEmPKc.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.n
+  %4 = add nsw i64 %i.cx, -1
   %xtraiter = and i64 %i.cx, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol
@@ -250,8 +251,7 @@ bb.n:                                             ; preds = %_ZN3ozz2io8IArchive
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.i.i.preheader ], [ %i.dh, %.lr.ph.i.i.prol ]
   %.015.i.i.unr = phi ptr [ %i.cq, %.lr.ph.i.i.preheader ], [ %i.dh, %.lr.ph.i.i.prol ]
   %.01214.i.i.unr = phi i64 [ %i.cx, %.lr.ph.i.i.preheader ], [ %i.dg, %.lr.ph.i.i.prol ]
-  %4 = sub nsw i64 %i.cv, %i.co
-  %5 = icmp ugt i64 %4, -8
+  %5 = icmp ult i64 %4, 7
   br i1 %5, label %_ZSt27__uninitialized_default_n_aIPN3ozz9animation7offline12RawAnimation11RotationKeyEmNS0_12StdAllocatorIS4_EEET_S8_T0_RT1_.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i
@@ -341,9 +341,8 @@ _ZNSt12_Vector_baseIN3ozz9animation7offline12RawAnimation11RotationKeyENS0_12Std
 .lr.ph.i41.i.prol.loopexit:                       ; preds = %.lr.ph.i41.i.prol, %_ZNSt12_Vector_baseIN3ozz9animation7offline12RawAnimation11RotationKeyENS0_12StdAllocatorIS4_EEE11_M_allocateEm.exit.i
   %.015.i42.i.unr = phi ptr [ %i.ei, %_ZNSt12_Vector_baseIN3ozz9animation7offline12RawAnimation11RotationKeyENS0_12StdAllocatorIS4_EEE11_M_allocateEm.exit.i ], [ %i.el, %.lr.ph.i41.i.prol ]
   %.01214.i43.i.unr = phi i64 [ %i.cx, %_ZNSt12_Vector_baseIN3ozz9animation7offline12RawAnimation11RotationKeyENS0_12StdAllocatorIS4_EEE11_M_allocateEm.exit.i ], [ %i.ek, %.lr.ph.i41.i.prol ]
-  %6 = sub nsw i64 %i.cv, %i.co
-  %7 = icmp ugt i64 %6, -8
-  br i1 %7, label %_ZSt27__uninitialized_default_n_aIPN3ozz9animation7offline12RawAnimation11RotationKeyEmNS0_12StdAllocatorIS4_EEET_S8_T0_RT1_.exit46.i, label %.lr.ph.i41.i
+  %6 = icmp samesign ult i64 %i.cx, 8
+  br i1 %6, label %_ZSt27__uninitialized_default_n_aIPN3ozz9animation7offline12RawAnimation11RotationKeyEmNS0_12StdAllocatorIS4_EEET_S8_T0_RT1_.exit46.i, label %.lr.ph.i41.i
 
 .lr.ph.i41.i:                                     ; preds = %.lr.ph.i41.i.prol.loopexit, %.lr.ph.i41.i
   %.015.i42.i = phi ptr [ %i.fc, %.lr.ph.i41.i ], [ %.015.i42.i.unr, %.lr.ph.i41.i.prol.loopexit ] ; 17 uses

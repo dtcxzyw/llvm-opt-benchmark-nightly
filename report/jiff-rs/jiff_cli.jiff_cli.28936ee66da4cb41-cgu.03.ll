@@ -204,9 +204,9 @@ bb.a:
   br i1 %i.a, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvMs_NtCs1xwejQucwHj_5alloc5sliceSh18to_ascii_lowercase0NCINvNvBS_8for_each4callhNCINvMsk_NtB2o_3vecINtB3J_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs3tZ2SXJA1qv_8jiff_cli.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %i.b = ptrtoint ptr %1 to i64                   ; 3 uses
-  %i.c = ptrtoint ptr %0 to i64                   ; 4 uses
-  %i.d = sub nuw i64 %i.b, %i.c                   ; 8 uses
+  %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.c = ptrtoint ptr %0 to i64                   ; 3 uses
+  %i.d = sub nuw i64 %i.b, %i.c                   ; 9 uses
   %min.iters.check = icmp ult i64 %i.d, 8
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
@@ -285,10 +285,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.ph = phi i64 [ %.sroa.5.0.copyload, %iter.check ], [ %.sroa.5.0.copyload, %vector.memcheck ], [ %i.h, %vec.epilog.iter.check ], [ %i.w, %vec.epilog.middle.block ] ; 3 uses
   %.sroa.01.0.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec5, %vec.epilog.middle.block ] ; 4 uses
-  %3 = sub i64 %i.b, %i.c
   %i.af = xor i64 %.sroa.01.0.i.ph, -1
   %i.ag = add i64 %i.af, %i.b
-  %xtraiter = and i64 %3, 1
+  %xtraiter = and i64 %i.d, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -364,12 +363,11 @@ bb.a:
   br i1 %i.h, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCs1xwejQucwHj_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsk_NtB2l_3vecINtB3x_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs3tZ2SXJA1qv_8jiff_cli.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = ptrtoint ptr %i.c to i64                 ; 2 uses
-  %i.j = ptrtoint ptr %i.a to i64                 ; 2 uses
-  %i.k = sub i64 %i.i, %i.j                       ; 3 uses
+  %i.i = ptrtoint ptr %i.c to i64
+  %i.j = ptrtoint ptr %i.a to i64
+  %i.k = sub i64 %i.i, %i.j                       ; 4 uses
   %xtraiter = and i64 %i.k, 1
-  %2 = add i64 %i.i, -1
-  %i.l = icmp eq i64 %2, %i.j
+  %i.l = icmp eq i64 %i.k, 1
   br i1 %i.l, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.b

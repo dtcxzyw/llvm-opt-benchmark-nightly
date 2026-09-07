@@ -205,10 +205,10 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.backedge, %bb.d
-  %.070 = phi i64 [ %i.f, %bb.d ], [ %.070.be, %.backedge ] ; 5 uses
-  %.066 = phi i64 [ %i.i, %bb.d ], [ %.066.be, %.backedge ] ; 12 uses
+  %.070 = phi i64 [ %i.f, %bb.d ], [ %.070.be, %.backedge ] ; 4 uses
+  %.066 = phi i64 [ %i.i, %bb.d ], [ %.066.be, %.backedge ] ; 11 uses
   %.041 = phi ptr [ %0, %bb.d ], [ %.041.be, %.backedge ] ; 7 uses
-  %i.v = sub nsw i64 %.070, %.066                 ; 8 uses
+  %i.v = sub nsw i64 %.070, %.066                 ; 9 uses
   %i.w = icmp slt i64 %.066, %i.v
   br i1 %i.w, label %bb.f, label %bb.h
 
@@ -218,9 +218,8 @@ bb.f:                                             ; preds = %bb.e
 
 .lr.ph89.preheader:                               ; preds = %bb.f
   %i.y = getelementptr inbounds [16 x i8], ptr %.041, i64 %.066 ; 2 uses
-  %.neg = add i64 %.066, 1
   %xtraiter105 = and i64 %i.v, 1
-  %i.z = icmp eq i64 %.070, %.neg
+  %i.z = icmp eq i64 %i.v, 1
   br i1 %i.z, label %.lr.ph89.epil.preheader, label %.lr.ph89.preheader.new
 
 .lr.ph89.preheader.new:                           ; preds = %.lr.ph89.preheader

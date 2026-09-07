@@ -133,14 +133,14 @@ buffer_push_rlw.exit._crit_edge:                  ; preds = %buffer_push_rlw.exi
   %i.ad = lshr i64 %.val48, 1
   %i.ae = and i64 %i.ad, 4294967295               ; 2 uses
   %i.af = xor i64 %i.ae, 4294967295
-  %i.ag = tail call noundef i64 @llvm.umin.i64(i64 %2, i64 range(i64 -2147483648, 4294967296) %i.af) ; 3 uses
+  %i.ag = tail call noundef i64 @llvm.umin.i64(i64 %2, i64 range(i64 -2147483648, 4294967296) %i.af) ; 2 uses
   %i.ah = add nuw nsw i64 %i.ag, %i.ae
   %i.ai = or i64 %.val48, 8589934590
   %i.aj = shl nuw nsw i64 %i.ah, 1
   %i.ak = or i64 %i.aj, -8589934591
   %i.al = and i64 %i.ak, %i.ai
   store i64 %i.al, ptr %i.ac, align 8, !tbaa !18
-  %i.am = sub nuw i64 %2, %i.ag                   ; 4 uses
+  %i.am = sub nuw i64 %2, %i.ag                   ; 5 uses
   %i.an = icmp ugt i64 %i.am, 4294967294
   br i1 %i.an, label %.lr.ph, label %._crit_edge
 
@@ -148,9 +148,8 @@ buffer_push_rlw.exit._crit_edge:                  ; preds = %buffer_push_rlw.exi
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %.not46 = icmp eq i32 %1, 0
-  %i.aq = add i64 %2, -4294967295
-  %3 = sub i64 %i.aq, %i.ag
-  %i.ar = udiv i64 %3, 4294967295
+  %i.aq = add i64 %i.am, -4294967295
+  %i.ar = udiv i64 %i.aq, 4294967295
   %i.as = add nuw nsw i64 %.0, %i.ar              ; 3 uses
   %i.at = add nuw nsw i64 %i.as, 1                ; 2 uses
   %.pre90 = load ptr, ptr %0, align 8, !tbaa !20  ; 2 uses

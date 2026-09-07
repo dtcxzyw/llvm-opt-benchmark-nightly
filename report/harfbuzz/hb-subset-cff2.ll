@@ -205,7 +205,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !223  ; 9 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 3 uses
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !502  ; 3 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !502  ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.e, 0
   br i1 %.not.i.i.i, label %bb.c, label %bb.b, !prof !99
 
@@ -226,7 +226,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN3CFF11cff_stack_tINS_8number_tELi513EE3popEv.exit.i.i
 
 _ZN3CFF11cff_stack_tINS_8number_tELi513EE3popEv.exit.i.i: ; preds = %bb.c, %bb.b
-  %i.l = phi i32 [ %i.g, %bb.b ], [ 0, %bb.c ]    ; 6 uses
+  %i.l = phi i32 [ %i.g, %bb.b ], [ 0, %bb.c ]    ; 7 uses
   %i.m = phi double [ %.pre.i.i, %bb.b ], [ %i.k, %bb.c ] ; 3 uses
   %i.n = fcmp ult double %i.m, f0xC1E0000000000000
   %i.o = fcmp ugt double %i.m, f0x41DFFFFFFFC00000
@@ -282,9 +282,8 @@ bb.e:                                             ; preds = %_ZN3CFF11arg_stack_
   br i1 %.not43, label %.lr.ph.split.us, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
-  %2 = tail call i32 @llvm.usub.sat.i32(i32 %i.e, i32 1)
   %i.ai = mul i32 %.0.i, %i.b
-  %i.aj = sub i32 %2, %i.ai
+  %i.aj = sub i32 %i.l, %i.ai
   br label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %_ZN3CFF11cff_stack_tINS_8number_tELi513EEixEj.exit.us

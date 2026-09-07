@@ -21,10 +21,9 @@ bb.a:
   %i.g = zext i32 %i.f to i64
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.g ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !35   ; 4 uses
-  %2 = ptrtoaddr ptr %i.j to i64
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !35   ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.l = load i32, ptr %i.k, align 8, !tbaa !36   ; 5 uses
+  %i.l = load i32, ptr %i.k, align 8, !tbaa !36   ; 2 uses
   %i.m = sub i32 %1, %i.l
   %i.n = zext i32 %i.m to i64
   %i.o = sub nsw i64 0, %i.n
@@ -37,7 +36,7 @@ bb.a:
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 64
   %i.w = load i32, ptr %i.v, align 8, !tbaa !41
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 68
-  %i.y = load i32, ptr %i.x, align 4, !tbaa !42   ; 14 uses
+  %i.y = load i32, ptr %i.x, align 4, !tbaa !42   ; 13 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !43  ; 10 uses
   %i.ab = ptrtoaddr ptr %i.aa to i64              ; 4 uses
@@ -62,19 +61,8 @@ bb.a:
   %i.as = ptrtoint ptr %i.p to i64
   %i.at = getelementptr inbounds nuw i8, ptr %i.b, i64 7144
   %i.au = icmp eq i32 %i.y, 0
-  %3 = add i32 %i.y, %i.u
-  %4 = trunc i64 %2 to i32                        ; 3 uses
-  %5 = add i32 %i.l, %4
-  %6 = xor i32 %1, -1
-  %i.av = add i32 %5, %6
+  %i.av = add i32 %i.y, %i.u
   %i.aw = zext i32 %i.y to i64                    ; 5 uses
-  %7 = add i32 %i.l, %4
-  %8 = xor i32 %i.y, -1
-  %9 = add i32 %7, %8
-  %10 = sub i32 %9, %1
-  %11 = add i32 %i.l, %4
-  %12 = xor i32 %1, -1
-  %13 = add i32 %11, %12
   %min.iters.check549 = icmp ult i32 %i.y, 4
   %min.iters.check551 = icmp ult i32 %i.y, 32
   %i.ax = and i64 %i.aw, 28
@@ -239,7 +227,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %.lcssa = phi i32 [ %i.ec, %bb.k ], [ %i.qv, %bb.ad ]
   %i.ee = getelementptr inbounds nuw i8, ptr %.1248.lcssa, i64 2
   %i.ef = load i16, ptr %i.ee, align 2, !tbaa !55
-  %i.eg = zext i16 %i.ef to i32                   ; 4 uses
+  %i.eg = zext i16 %i.ef to i32
   %i.eh = and i32 %.lcssa, 15                     ; 5 uses
   %i.ei = icmp ult i32 %.lcssa339, %i.eh
   br i1 %i.ei, label %bb.l, label %bb.n
@@ -272,19 +260,19 @@ bb.n:                                             ; preds = %bb.l, %bb.m, %._cri
   %i.ey = trunc i64 %.7263 to i32
   %notmask317 = shl nsw i32 -1, %i.eh
   %i.ez = xor i32 %notmask317, -1
-  %i.fa = and i32 %i.ey, %i.ez                    ; 4 uses
+  %i.fa = and i32 %i.ey, %i.ez
   %i.fb = add nuw nsw i32 %i.fa, %i.eg            ; 6 uses
   %i.fc = zext nneg i32 %i.eh to i64
   %i.fd = lshr i64 %.7263, %i.fc                  ; 7 uses
   %i.fe = sub i32 %.7, %i.eh                      ; 7 uses
-  %i.ff = ptrtoint ptr %.0266 to i64              ; 7 uses
+  %i.ff = ptrtoint ptr %.0266 to i64              ; 4 uses
   %i.fg = sub i64 %i.ff, %i.as
   %i.fh = trunc i64 %i.fg to i32                  ; 2 uses
   %i.fi = icmp ugt i32 %i.fb, %i.fh
   br i1 %i.fi, label %bb.o, label %bb.y
 
 bb.o:                                             ; preds = %bb.n
-  %i.fj = sub nuw nsw i32 %i.fb, %i.fh            ; 18 uses
+  %i.fj = sub nuw nsw i32 %i.fb, %i.fh            ; 20 uses
   %i.fk = icmp ugt i32 %i.fj, %i.w
   br i1 %i.fk, label %bb.p, label %bb.q
 
@@ -304,13 +292,10 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.fp, label %iter.check, label %bb.v
 
 iter.check:                                       ; preds = %bb.r
-  %14 = add i32 %i.av, %i.fa
-  %i.fq = add i32 %14, %i.eg
-  %15 = trunc i64 %i.ff to i32
-  %16 = sub i32 %i.fq, %15                        ; 3 uses
-  %i.fr = zext i32 %16 to i64
+  %i.fq = add nsw i32 %i.fj, -1                   ; 3 uses
+  %i.fr = zext i32 %i.fq to i64
   %i.fs = add nuw nsw i64 %i.fr, 1                ; 5 uses
-  %min.iters.check = icmp ult i32 %16, 3
+  %min.iters.check = icmp ult i32 %i.fq, 3
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -320,7 +305,7 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check532 = icmp ult i32 %16, 31
+  %min.iters.check532 = icmp ult i32 %i.fq, 31
   br i1 %min.iters.check532, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -461,21 +446,18 @@ bb.s:                                             ; preds = %bb.q
   br i1 %i.hr, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  %i.hs = sub i32 %3, %i.fj
+  %i.hs = sub i32 %i.av, %i.fj
   %i.ht = zext i32 %i.hs to i64                   ; 2 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ht ; 7 uses
-  %i.hv = sub nuw nsw i32 %i.fj, %i.y             ; 6 uses
+  %i.hv = sub nuw nsw i32 %i.fj, %i.y             ; 7 uses
   %i.hw = icmp ult i32 %i.hv, %.0239
   br i1 %i.hw, label %iter.check602, label %bb.v
 
 iter.check602:                                    ; preds = %bb.t
-  %17 = add i32 %10, %i.fa
-  %i.hx = add i32 %17, %i.eg
-  %18 = trunc i64 %i.ff to i32
-  %19 = sub i32 %i.hx, %18                        ; 3 uses
-  %i.hy = zext i32 %19 to i64
+  %i.hx = add nsw i32 %i.hv, -1                   ; 3 uses
+  %i.hy = zext i32 %i.hx to i64
   %i.hz = add nuw nsw i64 %i.hy, 1                ; 5 uses
-  %min.iters.check585 = icmp ult i32 %19, 3
+  %min.iters.check585 = icmp ult i32 %i.hx, 3
   br i1 %min.iters.check585, label %vec.epilog.scalar.ph603.preheader, label %vector.memcheck583
 
 vector.memcheck583:                               ; preds = %iter.check602
@@ -485,7 +467,7 @@ vector.memcheck583:                               ; preds = %iter.check602
   br i1 %diff.check584, label %vec.epilog.scalar.ph603.preheader, label %vector.main.loop.iter.check586
 
 vector.main.loop.iter.check586:                   ; preds = %vector.memcheck583
-  %min.iters.check587 = icmp ult i32 %19, 31
+  %min.iters.check587 = icmp ult i32 %i.hx, 31
   br i1 %min.iters.check587, label %vec.epilog.ph606, label %vector.ph588
 
 vector.ph588:                                     ; preds = %vector.main.loop.iter.check586
@@ -758,13 +740,10 @@ bb.u:                                             ; preds = %bb.s
   br i1 %i.lq, label %iter.check638, label %bb.v
 
 iter.check638:                                    ; preds = %bb.u
-  %20 = add i32 %13, %i.fa
-  %i.lr = add i32 %20, %i.eg
-  %21 = trunc i64 %i.ff to i32
-  %22 = sub i32 %i.lr, %21                        ; 3 uses
-  %i.ls = zext i32 %22 to i64
+  %i.lr = add nsw i32 %i.fj, -1                   ; 3 uses
+  %i.ls = zext i32 %i.lr to i64
   %i.lt = add nuw nsw i64 %i.ls, 1                ; 5 uses
-  %min.iters.check621 = icmp ult i32 %22, 3
+  %min.iters.check621 = icmp ult i32 %i.lr, 3
   br i1 %min.iters.check621, label %vec.epilog.scalar.ph639.preheader, label %vector.memcheck619
 
 vector.memcheck619:                               ; preds = %iter.check638
@@ -774,7 +753,7 @@ vector.memcheck619:                               ; preds = %iter.check638
   br i1 %diff.check620, label %vec.epilog.scalar.ph639.preheader, label %vector.main.loop.iter.check622
 
 vector.main.loop.iter.check622:                   ; preds = %vector.memcheck619
-  %min.iters.check623 = icmp ult i32 %22, 31
+  %min.iters.check623 = icmp ult i32 %i.lr, 31
   br i1 %min.iters.check623, label %vec.epilog.ph642, label %vector.ph624
 
 vector.ph624:                                     ; preds = %vector.main.loop.iter.check622

@@ -205,8 +205,8 @@ bb.am:                                            ; preds = %bb.aj
 
 bb.an:                                            ; preds = %.sink.split.i.i, %bb.ak
   %i.gz = phi i32 [ %i.cr, %bb.ak ], [ %.sink.i.i, %.sink.split.i.i ] ; 4 uses
-  %.076.i.i = phi i32 [ %i.gw, %bb.ak ], [ %.sink.i.i, %.sink.split.i.i ] ; 5 uses
-  %.neg.i.i = xor i32 %.076.i.i, -1               ; 6 uses
+  %.076.i.i = phi i32 [ %i.gw, %bb.ak ], [ %.sink.i.i, %.sink.split.i.i ] ; 4 uses
+  %.neg.i.i = xor i32 %.076.i.i, -1               ; 7 uses
   %or.cond96.i.i = icmp uge i32 %.076.i.i, %.074.ph.i21.i
   %i.ha = sub nuw i32 %i.cd, %.074.ph.i21.i
   %i.hb = icmp ugt i32 %.178.i.i, %i.ha
@@ -228,8 +228,7 @@ vector.scevcheck:                                 ; preds = %iter.check
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.hi = zext i32 %.074.ph.i21.i to i64
-  %9 = xor i32 %.076.i.i, -1
-  %i.hj = add i32 %.074.ph.i21.i, %9
+  %i.hj = add i32 %.074.ph.i21.i, %.neg.i.i
   %i.hk = zext i32 %i.hj to i64
   %i.hl = sub nsw i64 %i.hk, %i.hi
   %diff.check = icmp ugt i64 %i.hl, -32

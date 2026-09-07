@@ -205,7 +205,7 @@ bb.cs:                                            ; preds = %bb.cn, %bb.ch, %bb.
   %.sroa.0119.0174.i = phi ptr [ %.sroa.0119.3300.i, %.lr.ph179.preheader.i ], [ %.sroa.0119.4.i, %_ZN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer9RangeTree12updateRangesEm.exit.i ] ; 25 uses
   %.val47.i.i = load ptr, ptr %i.fi, align 8, !tbaa !61 ; 4 uses
   %i.yd = getelementptr inbounds nuw [112 x i8], ptr %.val47.i.i, i64 %indvars.iv.i ; 3 uses
-  %i.ye = load i64, ptr %i.yd, align 8, !tbaa !223 ; 12 uses
+  %i.ye = load i64, ptr %i.yd, align 8, !tbaa !223 ; 11 uses
   %i.yf = getelementptr inbounds nuw i8, ptr %i.yd, i64 64 ; 2 uses
   %i.yg = getelementptr inbounds nuw i8, ptr %i.yd, i64 72 ; 2 uses
   %i.yh = load ptr, ptr %i.yg, align 8, !tbaa !69 ; 2 uses
@@ -330,7 +330,7 @@ bb.cz:                                            ; preds = %.lr.ph.i96.i.epil.p
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i.loopexit.unr-lcssa, %bb.cz, %.lr.ph.i96.i.epil.preheader, %_ZNSt6vectorImSaImEE6resizeEm.exit50.i.i
-  %i.aae = add i64 %i.ye, -1                      ; 7 uses
+  %i.aae = add i64 %i.ye, -1                      ; 8 uses
   %.not.i93.i = icmp eq i64 %i.aae, 0
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %i.zn, i64 88
   %.pre.i94.i = load ptr, ptr %.phi.trans.insert.i.i, align 8, !tbaa !59 ; 9 uses
@@ -381,10 +381,9 @@ middle.block299:                                  ; preds = %vector.body292
 
 .lr.ph54.i.i.preheader303:                        ; preds = %vector.memcheck285, %.lr.ph54.i.i.preheader, %middle.block299
   %.053.i.i.ph = phi i64 [ 0, %vector.memcheck285 ], [ 0, %.lr.ph54.i.i.preheader ], [ %n.vec291, %middle.block299 ] ; 3 uses
-  %5 = add i64 %i.ye, 3
   %i.aaq = add i64 %i.ye, -2
   %i.aar = sub i64 %i.aaq, %.053.i.i.ph
-  %xtraiter355 = and i64 %5, 3                    ; 2 uses
+  %xtraiter355 = and i64 %i.aae, 3                ; 2 uses
   %lcmp.mod356.not = icmp eq i64 %xtraiter355, 0
   br i1 %lcmp.mod356.not, label %.lr.ph54.i.i.prol.loopexit, label %.lr.ph54.i.i.prol
 

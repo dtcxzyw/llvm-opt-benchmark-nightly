@@ -84,7 +84,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not220, label %._crit_edge206, label %.preheader184.preheader
 
 .preheader184.preheader:                          ; preds = %gv_calloc.exit176.preheader, %._crit_edge
-  %i.u = phi i64 [ %i.t, %._crit_edge ], [ -1, %gv_calloc.exit176.preheader ] ; 3 uses
+  %i.u = phi i64 [ %i.t, %._crit_edge ], [ -1, %gv_calloc.exit176.preheader ] ; 5 uses
   %.not219238241 = phi i1 [ %.not219, %._crit_edge ], [ true, %gv_calloc.exit176.preheader ]
   %i.v = shl nuw i64 %3, 3                        ; 3 uses
   %i.w = add i64 %i.v, 8
@@ -199,7 +199,6 @@ middle.block268:                                  ; preds = %vector.body261
 scalar.ph257.preheader:                           ; preds = %vector.memcheck251, %.lr.ph197, %middle.block268
   %.0161196.ph = phi i64 [ %.0168205, %vector.memcheck251 ], [ %.0168205, %.lr.ph197 ], [ %i.au, %middle.block268 ] ; 6 uses
   %i.bd = sub i64 %3, %.0161196.ph
-  %.neg = add i64 %.0161196.ph, 1
   %xtraiter275 = and i64 %i.bd, 1
   %lcmp.mod276.not = icmp eq i64 %xtraiter275, 0
   br i1 %lcmp.mod276.not, label %scalar.ph257.prol.loopexit, label %scalar.ph257.prol
@@ -216,7 +215,7 @@ scalar.ph257.prol:                                ; preds = %scalar.ph257.prehea
 
 scalar.ph257.prol.loopexit:                       ; preds = %scalar.ph257.prol, %scalar.ph257.preheader
   %.0161196.unr = phi i64 [ %.0161196.ph, %scalar.ph257.preheader ], [ %i.bh, %scalar.ph257.prol ]
-  %i.bi = icmp eq i64 %3, %.neg
+  %i.bi = icmp eq i64 %i.u, %.0161196.ph
   br i1 %i.bi, label %._crit_edge198, label %scalar.ph257
 
 .lr.ph193:                                        ; preds = %.lr.ph193, %.lr.ph193.preheader.new
@@ -329,7 +328,6 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %bb.h, %middle.block
   %.0159199.ph = phi i64 [ 0, %bb.h ], [ %n.vec, %middle.block ] ; 5 uses
-  %.neg281 = or disjoint i64 %.0159199.ph, 1
   br i1 %lcmp.mod278.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
@@ -344,7 +342,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
 
 scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
   %.0159199.unr = phi i64 [ %.0159199.ph, %scalar.ph.preheader ], [ %i.df, %scalar.ph.prol ]
-  %i.dg = icmp eq i64 %3, %.neg281
+  %i.dg = icmp eq i64 %i.u, %.0159199.ph
   br i1 %i.dg, label %.loopexit, label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph

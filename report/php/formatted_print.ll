@@ -204,8 +204,8 @@ define internal fastcc void @php_sprintf_appendstring(ptr nofree noundef nonnull
 bb.a:
   %.not = icmp eq i32 %9, 0
   %i.a = tail call i64 @llvm.umin.i64(i64 %4, i64 %7)
-  %i.b = select i1 %.not, i64 %7, i64 %i.a        ; 7 uses
-  %i.c = tail call i64 @llvm.usub.sat.i64(i64 %3, i64 %i.b) ; 4 uses
+  %i.b = select i1 %.not, i64 %7, i64 %i.a        ; 6 uses
+  %i.c = tail call i64 @llvm.usub.sat.i64(i64 %3, i64 %i.b) ; 5 uses
   %i.d = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.b) ; 3 uses
   %i.e = load i64, ptr %1, align 8, !tbaa !24     ; 2 uses
   %i.f = sub i64 2147483646, %i.e
@@ -332,7 +332,6 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   br i1 %.not6874.not, label %.lr.ph.preheader, label %.loopexit70
 
 .lr.ph.preheader:                                 ; preds = %bb.m
-  %.neg = add i64 %i.b, 1
   %xtraiter = and i64 %i.c, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -350,7 +349,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l
 
 .lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
   %.05975.unr = phi i64 [ %i.c, %.lr.ph.preheader ], [ %i.bd, %.lr.ph.prol ]
-  %i.bj = icmp eq i64 %3, %.neg
+  %i.bj = icmp eq i64 %i.c, 1
   br i1 %i.bj, label %.loopexit70, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph

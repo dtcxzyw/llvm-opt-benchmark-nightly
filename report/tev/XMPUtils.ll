@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 4 uses
   %3 = alloca %struct.tm, align 8                 ; 7 uses
   %4 = alloca %struct.tm, align 8                 ; 7 uses
-  %i.c = load i32, ptr %0, align 4, !tbaa !29     ; 4 uses
+  %i.c = load i32, ptr %0, align 4, !tbaa !29     ; 3 uses
   %.not.i = icmp eq i32 %i.c, 0                   ; 2 uses
   br i1 %.not.i, label %bb.b, label %bb.d
 
@@ -337,14 +337,13 @@ bb.s:                                             ; preds = %bb.q
 
 ._crit_edge:                                      ; preds = %bb.o, %bb.p
   %i.ap = phi i32 [ %i.ae, %bb.o ], [ 0, %bb.p ]
-  %i.aq = add i32 %i.c, -1900
+  %i.aq = add i32 %i.c, -1900                     ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 20
   %smax = tail call i32 @llvm.smax.i32(i32 %i.aq, i32 70)
   %i.as = add nuw i32 %smax, 1903
   %i.at = sub i32 %i.as, %i.c
   %i.au = and i32 %i.at, -4
-  %5 = add i32 %i.c, %i.au
-  %i.av = add i32 %5, -1900
+  %i.av = add i32 %i.aq, %i.au
   store i32 %i.av, ptr %i.ar, align 4, !tbaa !140
   %i.aw = add nsw i32 %i.ap, -1
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 16

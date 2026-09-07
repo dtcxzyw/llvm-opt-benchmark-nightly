@@ -164,7 +164,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !25   ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !29   ; 46 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !29   ; 45 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 12
   %i.n = load i32, ptr %i.m, align 4, !tbaa !28
   %.off = add i32 %i.n, -5
@@ -192,12 +192,12 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br i1 %.not96, label %.loopexit, label %.lr.ph91
 
 .lr.ph91:                                         ; preds = %.preheader79
-  %i.s = add i64 %i.l, -2                         ; 9 uses
+  %i.s = add i64 %i.l, -2                         ; 10 uses
   %i.t = getelementptr i8, ptr %1, i64 %i.l       ; 10 uses
   %i.u = add i64 %i.l, -1                         ; 2 uses
   %i.v = lshr i64 %i.u, 1
   %i.w = add nuw i64 %i.v, 1                      ; 2 uses
-  %min.iters.check198 = icmp ult i64 %i.u, 46
+  %min.iters.check198 = icmp ult i64 %i.u, 30
   br i1 %min.iters.check198, label %scalar.ph.preheader, label %vector.memcheck192
 
 vector.memcheck192:                               ; preds = %.lr.ph91
@@ -205,8 +205,7 @@ vector.memcheck192:                               ; preds = %.lr.ph91
   %i.y = and i64 %i.x, -2                         ; 2 uses
   %i.z = getelementptr i8, ptr %0, i64 %i.y
   %scevgep193 = getelementptr i8, ptr %i.z, i64 2
-  %3 = add i64 %i.l, -2
-  %i.aa = sub i64 %3, %i.y
+  %i.aa = sub i64 %i.s, %i.y
   %scevgep194 = getelementptr i8, ptr %1, i64 %i.aa
   %bound0195 = icmp ult ptr %0, %i.t
   %bound1196 = icmp ult ptr %scevgep194, %scevgep193

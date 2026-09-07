@@ -1,0 +1,318 @@
+diff --git a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+index f01a674609325..c386d613bf7ac 100644
+--- a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
++++ b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+@@ -547,12 +547,38 @@ Value *SCEVExpander::visitAddExpr(SCEVUseT<const SCEVAddExpr *> S) {
+                                    {LHS, RHS});
+   }
+ 
++  // Look for an existing value computing all but one operand and
++  // seed the sum with it.
++  SmallVector<SCEVUse, 8> RemainingOps(S->operands());
++  Value *ReusedSum = nullptr;
++  if (RemainingOps.size() > 2 &&
++      none_of(RemainingOps,
++              [](SCEVUse Op) { return Op->getType()->isPointerTy(); })) {
++    for (unsigned Idx = 0, E = RemainingOps.size(); Idx != E; ++Idx) {
++      SmallVector<SCEVUse, 8> SubOps(RemainingOps);
++      SCEVUse Dropped = SubOps[Idx];
++      SubOps.erase(SubOps.begin() + Idx);
++      SCEVUse Sub = SE.getAddExpr(SubOps);
++      // Only a sub-add that kept all its operands is a real subset; folding
++      // may have produced an expression unrelated to the operands dropped.
++      if (Sub->getSCEVType() != scAddExpr ||
++          cast<SCEVAddExpr>(Sub)->getNumOperands() != SubOps.size())
++        continue;
++      ReusedSum = findExistingExpansionAndDropPoisonFlags(
++          Sub, &*Builder.GetInsertPoint());
++      if (ReusedSum) {
++        RemainingOps = {Dropped};
++        break;
++      }
++    }
++  }
++
+   // Collect all the add operands in a loop, along with their associated loops.
+   // Iterate in reverse so that constants are emitted last, all else equal, and
+   // so that pointer operands are inserted first, which the code below relies on
+   // to form more involved GEPs.
+   SmallVector<std::pair<const Loop *, const SCEV *>, 8> OpsAndLoops;
+-  for (const SCEV *Op : reverse(S->operands()))
++  for (SCEVUse Op : reverse(RemainingOps))
+     OpsAndLoops.push_back(std::make_pair(getRelevantLoop(Op), Op));
+ 
+   // Sort by loop. Use a stable sort so that constants follow non-constants and
+@@ -561,7 +587,7 @@ Value *SCEVExpander::visitAddExpr(SCEVUseT<const SCEVAddExpr *> S) {
+ 
+   // Emit instructions to add all the operands. Hoist as much as possible
+   // out of loops, and form meaningful getelementptrs where possible.
+-  Value *Sum = nullptr;
++  Value *Sum = ReusedSum;
+   for (auto I = OpsAndLoops.begin(), E = OpsAndLoops.end(); I != E;) {
+     const Loop *CurLoop = I->first;
+     const SCEV *Op = I->second;
+diff --git a/llvm/test/Transforms/IRCE/stride_more_than_1.ll b/llvm/test/Transforms/IRCE/stride_more_than_1.ll
+index 749c17d118205..022a82b6a3aae 100644
+--- a/llvm/test/Transforms/IRCE/stride_more_than_1.ll
++++ b/llvm/test/Transforms/IRCE/stride_more_than_1.ll
+@@ -61,7 +61,7 @@ define void @test_01(ptr %arr, ptr %a_len_ptr) {
+ ; CHECK-NEXT:    [[ADDR_POSTLOOP:%.*]] = getelementptr i32, ptr [[ARR]], i32 [[IDX_POSTLOOP]]
+ ; CHECK-NEXT:    store i32 0, ptr [[ADDR_POSTLOOP]], align 4
+ ; CHECK-NEXT:    [[NEXT_POSTLOOP:%.*]] = icmp slt i32 [[IDX_NEXT_POSTLOOP]], 100
+-; CHECK-NEXT:    br i1 [[NEXT_POSTLOOP]], label [[LOOP_POSTLOOP]], label [[EXIT_LOOPEXIT:%.*]], !llvm.loop [[LOOP1:![0-9]+]], !loop_constrainer.loop.clone !6
++; CHECK-NEXT:    br i1 [[NEXT_POSTLOOP]], label [[LOOP_POSTLOOP]], label [[EXIT_LOOPEXIT:%.*]], !llvm.loop [[LOOP1:![0-9]+]], !loop_constrainer.loop.clone [[META6:![0-9]+]]
+ ;
+ 
+ entry:
+@@ -137,7 +137,7 @@ define void @test_02(ptr %arr, ptr %a_len_ptr) {
+ ; CHECK-NEXT:    [[ADDR_POSTLOOP:%.*]] = getelementptr i32, ptr [[ARR]], i32 [[IDX_POSTLOOP]]
+ ; CHECK-NEXT:    store i32 0, ptr [[ADDR_POSTLOOP]], align 4
+ ; CHECK-NEXT:    [[NEXT_POSTLOOP:%.*]] = icmp slt i32 [[IDX_NEXT_POSTLOOP]], 2147483640
+-; CHECK-NEXT:    br i1 [[NEXT_POSTLOOP]], label [[LOOP_POSTLOOP]], label [[EXIT_LOOPEXIT:%.*]], !llvm.loop [[LOOP7:![0-9]+]], !loop_constrainer.loop.clone !6
++; CHECK-NEXT:    br i1 [[NEXT_POSTLOOP]], label [[LOOP_POSTLOOP]], label [[EXIT_LOOPEXIT:%.*]], !llvm.loop [[LOOP7:![0-9]+]], !loop_constrainer.loop.clone [[META6]]
+ ;
+ 
+ entry:
+@@ -214,7 +214,7 @@ define void @test_03(ptr %arr, ptr %a_len_ptr) {
+ ; CHECK-NEXT:    [[ADDR_POSTLOOP:%.*]] = getelementptr i32, ptr [[ARR]], i32 [[IDX_POSTLOOP]]
+ ; CHECK-NEXT:    store i32 0, ptr [[ADDR_POSTLOOP]], align 4
+ ; CHECK-NEXT:    [[NEXT_POSTLOOP:%.*]] = icmp slt i32 [[IDX_NEXT_POSTLOOP]], 2147483647
+-; CHECK-NEXT:    br i1 [[NEXT_POSTLOOP]], label [[LOOP_POSTLOOP]], label [[EXIT_LOOPEXIT:%.*]], !llvm.loop [[LOOP9:![0-9]+]], !loop_constrainer.loop.clone !6
++; CHECK-NEXT:    br i1 [[NEXT_POSTLOOP]], label [[LOOP_POSTLOOP]], label [[EXIT_LOOPEXIT:%.*]], !llvm.loop [[LOOP9:![0-9]+]], !loop_constrainer.loop.clone [[META6]]
+ ;
+ 
+ entry:
+@@ -292,7 +292,7 @@ define void @test_04(ptr %arr, ptr %a_len_ptr) {
+ ; CHECK-NEXT:    [[ADDR_POSTLOOP:%.*]] = getelementptr i32, ptr [[ARR]], i32 [[IDX_POSTLOOP]]
+ ; CHECK-NEXT:    store i32 0, ptr [[ADDR_POSTLOOP]], align 4
+ ; CHECK-NEXT:    [[NEXT_POSTLOOP:%.*]] = icmp slt i32 [[IDX_NEXT_POSTLOOP]], 2147483647
+-; CHECK-NEXT:    br i1 [[NEXT_POSTLOOP]], label [[LOOP_POSTLOOP]], label [[EXIT_LOOPEXIT:%.*]], !llvm.loop [[LOOP11:![0-9]+]], !loop_constrainer.loop.clone !6
++; CHECK-NEXT:    br i1 [[NEXT_POSTLOOP]], label [[LOOP_POSTLOOP]], label [[EXIT_LOOPEXIT:%.*]], !llvm.loop [[LOOP11:![0-9]+]], !loop_constrainer.loop.clone [[META6]]
+ ;
+ 
+ 
+@@ -363,7 +363,7 @@ define void @test_05(ptr %arr, ptr %a_len_ptr) {
+ ; CHECK-NEXT:    store i32 0, ptr [[ADDR_PRELOOP]], align 4
+ ; CHECK-NEXT:    [[NEXT_PRELOOP:%.*]] = icmp sgt i32 [[IDX_NEXT_PRELOOP]], -1
+ ; CHECK-NEXT:    [[TMP1:%.*]] = icmp sgt i32 [[IDX_NEXT_PRELOOP]], [[EXIT_PRELOOP_AT]]
+-; CHECK-NEXT:    br i1 [[TMP1]], label [[LOOP_PRELOOP]], label [[PRELOOP_EXIT_SELECTOR:%.*]], !llvm.loop [[LOOP12:![0-9]+]], !loop_constrainer.loop.clone !6
++; CHECK-NEXT:    br i1 [[TMP1]], label [[LOOP_PRELOOP]], label [[PRELOOP_EXIT_SELECTOR:%.*]], !llvm.loop [[LOOP12:![0-9]+]], !loop_constrainer.loop.clone [[META6]]
+ ; CHECK:       preloop.exit.selector:
+ ; CHECK-NEXT:    [[IDX_NEXT_PRELOOP_LCSSA:%.*]] = phi i32 [ [[IDX_NEXT_PRELOOP]], [[IN_BOUNDS_PRELOOP]] ]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = icmp sgt i32 [[IDX_NEXT_PRELOOP_LCSSA]], -1
+@@ -440,7 +440,7 @@ define void @test_06(ptr %arr, ptr %a_len_ptr) {
+ ; CHECK-NEXT:    store i32 0, ptr [[ADDR_PRELOOP]], align 4
+ ; CHECK-NEXT:    [[NEXT_PRELOOP:%.*]] = icmp ugt i32 [[IDX_NEXT_PRELOOP]], 6
+ ; CHECK-NEXT:    [[TMP1:%.*]] = icmp ugt i32 [[IDX_NEXT_PRELOOP]], [[EXIT_PRELOOP_AT]]
+-; CHECK-NEXT:    br i1 [[TMP1]], label [[LOOP_PRELOOP]], label [[PRELOOP_EXIT_SELECTOR:%.*]], !llvm.loop [[LOOP14:![0-9]+]], !loop_constrainer.loop.clone !6
++; CHECK-NEXT:    br i1 [[TMP1]], label [[LOOP_PRELOOP]], label [[PRELOOP_EXIT_SELECTOR:%.*]], !llvm.loop [[LOOP14:![0-9]+]], !loop_constrainer.loop.clone [[META6]]
+ ; CHECK:       preloop.exit.selector:
+ ; CHECK-NEXT:    [[IDX_NEXT_PRELOOP_LCSSA:%.*]] = phi i32 [ [[IDX_NEXT_PRELOOP]], [[IN_BOUNDS_PRELOOP]] ]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = icmp ugt i32 [[IDX_NEXT_PRELOOP_LCSSA]], 6
+@@ -564,7 +564,7 @@ define void @test_08(ptr %arr, ptr %a_len_ptr) {
+ ; CHECK-NEXT:    store i32 0, ptr [[ADDR_PRELOOP]], align 4
+ ; CHECK-NEXT:    [[NEXT_PRELOOP:%.*]] = icmp ugt i32 [[IDX_NEXT_PRELOOP]], 6
+ ; CHECK-NEXT:    [[TMP1:%.*]] = icmp ugt i32 [[IDX_NEXT_PRELOOP]], [[EXIT_PRELOOP_AT]]
+-; CHECK-NEXT:    br i1 [[TMP1]], label [[LOOP_PRELOOP]], label [[PRELOOP_EXIT_SELECTOR:%.*]], !llvm.loop [[LOOP15:![0-9]+]], !loop_constrainer.loop.clone !6
++; CHECK-NEXT:    br i1 [[TMP1]], label [[LOOP_PRELOOP]], label [[PRELOOP_EXIT_SELECTOR:%.*]], !llvm.loop [[LOOP15:![0-9]+]], !loop_constrainer.loop.clone [[META6]]
+ ; CHECK:       preloop.exit.selector:
+ ; CHECK-NEXT:    [[IDX_NEXT_PRELOOP_LCSSA:%.*]] = phi i32 [ [[IDX_NEXT_PRELOOP]], [[IN_BOUNDS_PRELOOP]] ]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = icmp ugt i32 [[IDX_NEXT_PRELOOP_LCSSA]], 6
+@@ -614,18 +614,17 @@ define i32 @test_09(ptr %p, ptr %capacity_p, ptr %num_elements_p) {
+ ; CHECK-NEXT:    [[CAPACITY:%.*]] = load i32, ptr [[CAPACITY_P]], align 4, !range [[RNG16:![0-9]+]]
+ ; CHECK-NEXT:    [[NUM_ELEMENTS:%.*]] = load i32, ptr [[NUM_ELEMENTS_P]], align 4, !range [[RNG16]]
+ ; CHECK-NEXT:    [[LIMIT:%.*]] = sub i32 [[CAPACITY]], 3
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[CAPACITY]], -3
+-; CHECK-NEXT:    [[TMP1:%.*]] = add nuw i32 [[CAPACITY]], 2147483646
+-; CHECK-NEXT:    [[SMAX:%.*]] = call i32 @llvm.smax.i32(i32 [[TMP1]], i32 0)
+-; CHECK-NEXT:    [[TMP2:%.*]] = sub i32 [[TMP0]], [[SMAX]]
++; CHECK-NEXT:    [[TMP0:%.*]] = add nuw i32 [[CAPACITY]], 2147483646
++; CHECK-NEXT:    [[SMAX:%.*]] = call i32 @llvm.smax.i32(i32 [[TMP0]], i32 0)
++; CHECK-NEXT:    [[TMP1:%.*]] = sub i32 [[LIMIT]], [[SMAX]]
+ ; CHECK-NEXT:    [[SMIN:%.*]] = call i32 @llvm.smin.i32(i32 [[LIMIT]], i32 0)
+ ; CHECK-NEXT:    [[SMAX2:%.*]] = call i32 @llvm.smax.i32(i32 [[SMIN]], i32 -1)
+-; CHECK-NEXT:    [[TMP3:%.*]] = add nsw i32 [[SMAX2]], 1
+-; CHECK-NEXT:    [[TMP4:%.*]] = mul i32 [[TMP2]], [[TMP3]]
+-; CHECK-NEXT:    [[SMIN3:%.*]] = call i32 @llvm.smin.i32(i32 [[NUM_ELEMENTS]], i32 [[TMP4]])
++; CHECK-NEXT:    [[TMP2:%.*]] = add nsw i32 [[SMAX2]], 1
++; CHECK-NEXT:    [[TMP3:%.*]] = mul i32 [[TMP1]], [[TMP2]]
++; CHECK-NEXT:    [[SMIN3:%.*]] = call i32 @llvm.smin.i32(i32 [[NUM_ELEMENTS]], i32 [[TMP3]])
+ ; CHECK-NEXT:    [[EXIT_MAINLOOP_AT:%.*]] = call i32 @llvm.smax.i32(i32 [[SMIN3]], i32 0)
+-; CHECK-NEXT:    [[TMP5:%.*]] = icmp slt i32 0, [[EXIT_MAINLOOP_AT]]
+-; CHECK-NEXT:    br i1 [[TMP5]], label [[LOOP_PREHEADER:%.*]], label [[MAIN_PSEUDO_EXIT:%.*]]
++; CHECK-NEXT:    [[TMP4:%.*]] = icmp slt i32 0, [[EXIT_MAINLOOP_AT]]
++; CHECK-NEXT:    br i1 [[TMP4]], label [[LOOP_PREHEADER:%.*]], label [[MAIN_PSEUDO_EXIT:%.*]]
+ ; CHECK:       loop.preheader:
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+@@ -638,13 +637,13 @@ define i32 @test_09(ptr %p, ptr %capacity_p, ptr %num_elements_p) {
+ ; CHECK-NEXT:    store i32 1, ptr [[EL_PTR]], align 4
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i32 [[IV]], 4
+ ; CHECK-NEXT:    [[LOOP_COND:%.*]] = icmp slt i32 [[IV_NEXT]], [[NUM_ELEMENTS]]
+-; CHECK-NEXT:    [[TMP6:%.*]] = icmp slt i32 [[IV_NEXT]], [[EXIT_MAINLOOP_AT]]
+-; CHECK-NEXT:    br i1 [[TMP6]], label [[LOOP]], label [[MAIN_EXIT_SELECTOR:%.*]]
++; CHECK-NEXT:    [[TMP5:%.*]] = icmp slt i32 [[IV_NEXT]], [[EXIT_MAINLOOP_AT]]
++; CHECK-NEXT:    br i1 [[TMP5]], label [[LOOP]], label [[MAIN_EXIT_SELECTOR:%.*]]
+ ; CHECK:       main.exit.selector:
+ ; CHECK-NEXT:    [[IV_NEXT_LCSSA:%.*]] = phi i32 [ [[IV_NEXT]], [[BACKEDGE]] ]
+ ; CHECK-NEXT:    [[IV_LCSSA:%.*]] = phi i32 [ [[IV]], [[BACKEDGE]] ]
+-; CHECK-NEXT:    [[TMP7:%.*]] = icmp slt i32 [[IV_NEXT_LCSSA]], [[NUM_ELEMENTS]]
+-; CHECK-NEXT:    br i1 [[TMP7]], label [[MAIN_PSEUDO_EXIT]], label [[EXIT:%.*]]
++; CHECK-NEXT:    [[TMP6:%.*]] = icmp slt i32 [[IV_NEXT_LCSSA]], [[NUM_ELEMENTS]]
++; CHECK-NEXT:    br i1 [[TMP6]], label [[MAIN_PSEUDO_EXIT]], label [[EXIT:%.*]]
+ ; CHECK:       main.pseudo.exit:
+ ; CHECK-NEXT:    [[IV_COPY:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT_LCSSA]], [[MAIN_EXIT_SELECTOR]] ]
+ ; CHECK-NEXT:    [[INDVAR_END:%.*]] = phi i32 [ 0, [[ENTRY]] ], [ [[IV_NEXT_LCSSA]], [[MAIN_EXIT_SELECTOR]] ]
+@@ -673,7 +672,7 @@ define i32 @test_09(ptr %p, ptr %capacity_p, ptr %num_elements_p) {
+ ; CHECK-NEXT:    store i32 1, ptr [[EL_PTR_POSTLOOP]], align 4
+ ; CHECK-NEXT:    [[IV_NEXT_POSTLOOP]] = add nuw nsw i32 [[IV_POSTLOOP]], 4
+ ; CHECK-NEXT:    [[LOOP_COND_POSTLOOP:%.*]] = icmp slt i32 [[IV_NEXT_POSTLOOP]], [[NUM_ELEMENTS]]
+-; CHECK-NEXT:    br i1 [[LOOP_COND_POSTLOOP]], label [[LOOP_POSTLOOP]], label [[EXIT_LOOPEXIT]], !llvm.loop [[LOOP18:![0-9]+]], !loop_constrainer.loop.clone !6
++; CHECK-NEXT:    br i1 [[LOOP_COND_POSTLOOP]], label [[LOOP_POSTLOOP]], label [[EXIT_LOOPEXIT]], !llvm.loop [[LOOP18:![0-9]+]], !loop_constrainer.loop.clone [[META6]]
+ ;
+ entry:
+   %capacity = load i32, ptr %capacity_p, !range !4
+@@ -710,18 +709,17 @@ define i32 @test_10(ptr %p, ptr %capacity_p, ptr %num_elements_p) {
+ ; CHECK-NEXT:    [[CAPACITY:%.*]] = load i32, ptr [[CAPACITY_P]], align 4, !range [[RNG16]]
+ ; CHECK-NEXT:    [[NUM_ELEMENTS:%.*]] = load i32, ptr [[NUM_ELEMENTS_P]], align 4, !range [[RNG16]]
+ ; CHECK-NEXT:    [[LIMIT:%.*]] = sub i32 [[CAPACITY]], 3
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[CAPACITY]], -3
+-; CHECK-NEXT:    [[TMP1:%.*]] = add nuw i32 [[CAPACITY]], 2147483646
+-; CHECK-NEXT:    [[SMAX:%.*]] = call i32 @llvm.smax.i32(i32 [[TMP1]], i32 0)
+-; CHECK-NEXT:    [[TMP2:%.*]] = sub i32 [[TMP0]], [[SMAX]]
++; CHECK-NEXT:    [[TMP0:%.*]] = add nuw i32 [[CAPACITY]], 2147483646
++; CHECK-NEXT:    [[SMAX:%.*]] = call i32 @llvm.smax.i32(i32 [[TMP0]], i32 0)
++; CHECK-NEXT:    [[TMP1:%.*]] = sub i32 [[LIMIT]], [[SMAX]]
+ ; CHECK-NEXT:    [[SMIN:%.*]] = call i32 @llvm.smin.i32(i32 [[LIMIT]], i32 0)
+ ; CHECK-NEXT:    [[SMAX2:%.*]] = call i32 @llvm.smax.i32(i32 [[SMIN]], i32 -1)
+-; CHECK-NEXT:    [[TMP3:%.*]] = add nsw i32 [[SMAX2]], 1
+-; CHECK-NEXT:    [[TMP4:%.*]] = mul i32 [[TMP2]], [[TMP3]]
+-; CHECK-NEXT:    [[SMIN3:%.*]] = call i32 @llvm.smin.i32(i32 [[NUM_ELEMENTS]], i32 [[TMP4]])
++; CHECK-NEXT:    [[TMP2:%.*]] = add nsw i32 [[SMAX2]], 1
++; CHECK-NEXT:    [[TMP3:%.*]] = mul i32 [[TMP1]], [[TMP2]]
++; CHECK-NEXT:    [[SMIN3:%.*]] = call i32 @llvm.smin.i32(i32 [[NUM_ELEMENTS]], i32 [[TMP3]])
+ ; CHECK-NEXT:    [[EXIT_MAINLOOP_AT:%.*]] = call i32 @llvm.smax.i32(i32 [[SMIN3]], i32 0)
+-; CHECK-NEXT:    [[TMP5:%.*]] = icmp slt i32 0, [[EXIT_MAINLOOP_AT]]
+-; CHECK-NEXT:    br i1 [[TMP5]], label [[LOOP_PREHEADER:%.*]], label [[MAIN_PSEUDO_EXIT:%.*]]
++; CHECK-NEXT:    [[TMP4:%.*]] = icmp slt i32 0, [[EXIT_MAINLOOP_AT]]
++; CHECK-NEXT:    br i1 [[TMP4]], label [[LOOP_PREHEADER:%.*]], label [[MAIN_PSEUDO_EXIT:%.*]]
+ ; CHECK:       loop.preheader:
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+@@ -734,13 +732,13 @@ define i32 @test_10(ptr %p, ptr %capacity_p, ptr %num_elements_p) {
+ ; CHECK-NEXT:    store i32 1, ptr [[EL_PTR]], align 4
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i32 [[IV]], 4
+ ; CHECK-NEXT:    [[LOOP_COND:%.*]] = icmp slt i32 [[IV_NEXT]], [[NUM_ELEMENTS]]
+-; CHECK-NEXT:    [[TMP6:%.*]] = icmp slt i32 [[IV_NEXT]], [[EXIT_MAINLOOP_AT]]
+-; CHECK-NEXT:    br i1 [[TMP6]], label [[LOOP]], label [[MAIN_EXIT_SELECTOR:%.*]]
++; CHECK-NEXT:    [[TMP5:%.*]] = icmp slt i32 [[IV_NEXT]], [[EXIT_MAINLOOP_AT]]
++; CHECK-NEXT:    br i1 [[TMP5]], label [[LOOP]], label [[MAIN_EXIT_SELECTOR:%.*]]
+ ; CHECK:       main.exit.selector:
+ ; CHECK-NEXT:    [[IV_NEXT_LCSSA:%.*]] = phi i32 [ [[IV_NEXT]], [[BACKEDGE]] ]
+ ; CHECK-NEXT:    [[IV_LCSSA:%.*]] = phi i32 [ [[IV]], [[BACKEDGE]] ]
+-; CHECK-NEXT:    [[TMP7:%.*]] = icmp slt i32 [[IV_NEXT_LCSSA]], [[NUM_ELEMENTS]]
+-; CHECK-NEXT:    br i1 [[TMP7]], label [[MAIN_PSEUDO_EXIT]], label [[EXIT:%.*]]
++; CHECK-NEXT:    [[TMP6:%.*]] = icmp slt i32 [[IV_NEXT_LCSSA]], [[NUM_ELEMENTS]]
++; CHECK-NEXT:    br i1 [[TMP6]], label [[MAIN_PSEUDO_EXIT]], label [[EXIT:%.*]]
+ ; CHECK:       main.pseudo.exit:
+ ; CHECK-NEXT:    [[IV_COPY:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT_LCSSA]], [[MAIN_EXIT_SELECTOR]] ]
+ ; CHECK-NEXT:    [[INDVAR_END:%.*]] = phi i32 [ 0, [[ENTRY]] ], [ [[IV_NEXT_LCSSA]], [[MAIN_EXIT_SELECTOR]] ]
+@@ -769,7 +767,7 @@ define i32 @test_10(ptr %p, ptr %capacity_p, ptr %num_elements_p) {
+ ; CHECK-NEXT:    store i32 1, ptr [[EL_PTR_POSTLOOP]], align 4
+ ; CHECK-NEXT:    [[IV_NEXT_POSTLOOP]] = add nuw nsw i32 [[IV_POSTLOOP]], 4
+ ; CHECK-NEXT:    [[LOOP_COND_POSTLOOP:%.*]] = icmp slt i32 [[IV_NEXT_POSTLOOP]], [[NUM_ELEMENTS]]
+-; CHECK-NEXT:    br i1 [[LOOP_COND_POSTLOOP]], label [[LOOP_POSTLOOP]], label [[EXIT_LOOPEXIT]], !llvm.loop [[LOOP19:![0-9]+]], !loop_constrainer.loop.clone !6
++; CHECK-NEXT:    br i1 [[LOOP_COND_POSTLOOP]], label [[LOOP_POSTLOOP]], label [[EXIT_LOOPEXIT]], !llvm.loop [[LOOP19:![0-9]+]], !loop_constrainer.loop.clone [[META6]]
+ ;
+ entry:
+   %capacity = load i32, ptr %capacity_p, !range !4
+@@ -866,7 +864,7 @@ define i32 @test_11(ptr %p, ptr %capacity_p, ptr %num_elements_p) {
+ ; CHECK-NEXT:    store i32 1, ptr [[EL_PTR_POSTLOOP]], align 4
+ ; CHECK-NEXT:    [[IV_NEXT_POSTLOOP]] = add nuw nsw i32 [[IV_POSTLOOP]], 4
+ ; CHECK-NEXT:    [[LOOP_COND_POSTLOOP:%.*]] = icmp slt i32 [[IV_NEXT_POSTLOOP]], [[NUM_ELEMENTS]]
+-; CHECK-NEXT:    br i1 [[LOOP_COND_POSTLOOP]], label [[LOOP_POSTLOOP]], label [[EXIT_LOOPEXIT]], !llvm.loop [[LOOP20:![0-9]+]], !loop_constrainer.loop.clone !6
++; CHECK-NEXT:    br i1 [[LOOP_COND_POSTLOOP]], label [[LOOP_POSTLOOP]], label [[EXIT_LOOPEXIT]], !llvm.loop [[LOOP20:![0-9]+]], !loop_constrainer.loop.clone [[META6]]
+ ;
+ entry:
+   %capacity = load i32, ptr %capacity_p, !range !4
+@@ -953,7 +951,7 @@ define i32 @binop_or_is_iv_base(ptr %p, i32 %end) {
+ ; CHECK-NEXT:    [[IV_ADD_POSTLOOP]] = add i32 [[IV_POSTLOOP]], 8
+ ; CHECK-NEXT:    [[IV_OR_POSTLOOP:%.*]] = or disjoint i32 [[IV_ADD_POSTLOOP]], 7
+ ; CHECK-NEXT:    [[CMP_POSTLOOP:%.*]] = icmp slt i32 [[IV_OR_POSTLOOP]], [[END]]
+-; CHECK-NEXT:    br i1 [[CMP_POSTLOOP]], label [[LOOP_HEADER_POSTLOOP]], label [[COMMON_RET_LOOPEXIT_LOOPEXIT:%.*]], !llvm.loop [[LOOP21:![0-9]+]], !loop_constrainer.loop.clone !6
++; CHECK-NEXT:    br i1 [[CMP_POSTLOOP]], label [[LOOP_HEADER_POSTLOOP]], label [[COMMON_RET_LOOPEXIT_LOOPEXIT:%.*]], !llvm.loop [[LOOP21:![0-9]+]], !loop_constrainer.loop.clone [[META6]]
+ ;
+ entry:
+   %n = load atomic i32, ptr %p unordered, align 8, !range !1
+diff --git a/llvm/test/Transforms/IndVarSimplify/2011-11-01-lftrptr.ll b/llvm/test/Transforms/IndVarSimplify/2011-11-01-lftrptr.ll
+index 259ee322bdc00..72461270bd3f0 100644
+--- a/llvm/test/Transforms/IndVarSimplify/2011-11-01-lftrptr.ll
++++ b/llvm/test/Transforms/IndVarSimplify/2011-11-01-lftrptr.ll
+@@ -158,8 +158,7 @@ define i8 @testnullptrint(ptr %buf, ptr %end) nounwind {
+ ; PTR64-NEXT:    [[GUARD:%.*]] = icmp ult i32 0, [[CNT]]
+ ; PTR64-NEXT:    br i1 [[GUARD]], label [[PREHEADER:%.*]], label [[EXIT:%.*]]
+ ; PTR64:       preheader:
+-; PTR64-NEXT:    [[TMP1:%.*]] = add i32 [[EI]], -1
+-; PTR64-NEXT:    [[TMP2:%.*]] = sub i32 [[TMP1]], [[BI]]
++; PTR64-NEXT:    [[TMP2:%.*]] = add i32 [[CNT]], -1
+ ; PTR64-NEXT:    [[TMP3:%.*]] = zext i32 [[TMP2]] to i64
+ ; PTR64-NEXT:    [[TMP4:%.*]] = add nuw nsw i64 [[TMP3]], 1
+ ; PTR64-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr null, i64 [[TMP4]]
+diff --git a/llvm/test/Transforms/IndVarSimplify/exit-value-nowrap-flags.ll b/llvm/test/Transforms/IndVarSimplify/exit-value-nowrap-flags.ll
+index c2470b2298c2a..9dcb2f3f02f12 100644
+--- a/llvm/test/Transforms/IndVarSimplify/exit-value-nowrap-flags.ll
++++ b/llvm/test/Transforms/IndVarSimplify/exit-value-nowrap-flags.ll
+@@ -140,14 +140,14 @@ define i32 @nuw_dropped_sum_flattened(i32 %a, i32 %b, i32 %n) {
+ ; CHECK-LABEL: define i32 @nuw_dropped_sum_flattened(
+ ; CHECK-SAME: i32 [[A:%.*]], i32 [[B:%.*]], i32 [[N:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[START:%.*]] = add i32 [[A]], [[B]]
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    br i1 true, label %[[EXIT:.*]], label %[[LATCH:.*]]
+ ; CHECK:       [[LATCH]]:
+ ; CHECK-NEXT:    br label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[N]], [[B]]
+-; CHECK-NEXT:    [[TMP1:%.*]] = add i32 [[TMP0]], [[A]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i32 [[START]], [[N]]
+ ; CHECK-NEXT:    ret i32 [[TMP1]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/icmp-zero-offset-overflow.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/icmp-zero-offset-overflow.ll
+index 9006fa5849853..98f4aefbfcf0f 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/icmp-zero-offset-overflow.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/icmp-zero-offset-overflow.ll
+@@ -49,7 +49,7 @@ define i16 @test2(i16 %arg1, i16 %arg2) {
+ ; CHECK-LABEL: define i16 @test2(
+ ; CHECK-SAME: i16 [[ARG1:%.*]], i16 [[ARG2:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i16 [[ARG2]], [[ARG1]]
++; CHECK-NEXT:    [[TMP0:%.*]] = add i16 [[ARG1]], [[ARG2]]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = add i16 [[TMP0]], -1
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/depth-limit-overrun.ll b/llvm/test/Transforms/LoopStrengthReduce/depth-limit-overrun.ll
+index a46d75ae537ab..496193c362e9e 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/depth-limit-overrun.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/depth-limit-overrun.ll
+@@ -23,8 +23,7 @@ define void @test(i32 %A, i32 %B, i32 %C) {
+ ; DEFAULT-NEXT:    [[I15:%.*]] = shl i32 [[B]], 1
+ ; DEFAULT-NEXT:    [[TMP1:%.*]] = mul i32 [[PHI2]], -1
+ ; DEFAULT-NEXT:    [[TMP3:%.*]] = sub i32 [[PHI4]], [[PHI2]]
+-; DEFAULT-NEXT:    [[TMP4:%.*]] = add i32 [[B]], [[PHI4]]
+-; DEFAULT-NEXT:    [[TMP5:%.*]] = sub i32 [[TMP4]], [[PHI2]]
++; DEFAULT-NEXT:    [[TMP5:%.*]] = add i32 [[TMP3]], [[B]]
+ ; DEFAULT-NEXT:    [[TMP6:%.*]] = sub i32 14, [[TMP5]]
+ ; DEFAULT-NEXT:    [[TMP7:%.*]] = add i32 [[TMP0]], [[PHI2]]
+ ; DEFAULT-NEXT:    br label [[INNER_LOOP:%.*]]
+@@ -87,8 +86,7 @@ define void @test(i32 %A, i32 %B, i32 %C) {
+ ; LIMIT-NEXT:    [[I15:%.*]] = shl i32 [[B]], 1
+ ; LIMIT-NEXT:    [[TMP1:%.*]] = mul i32 [[PHI2]], -1
+ ; LIMIT-NEXT:    [[TMP3:%.*]] = sub i32 [[PHI4]], [[PHI2]]
+-; LIMIT-NEXT:    [[TMP4:%.*]] = add i32 [[B]], [[PHI4]]
+-; LIMIT-NEXT:    [[TMP5:%.*]] = sub i32 [[TMP4]], [[PHI2]]
++; LIMIT-NEXT:    [[TMP5:%.*]] = add i32 [[TMP3]], [[B]]
+ ; LIMIT-NEXT:    [[TMP6:%.*]] = sub i32 14, [[TMP5]]
+ ; LIMIT-NEXT:    [[TMP7:%.*]] = add i32 [[TMP0]], [[PHI2]]
+ ; LIMIT-NEXT:    br label [[INNER_LOOP:%.*]]

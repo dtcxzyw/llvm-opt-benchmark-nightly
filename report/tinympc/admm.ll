@@ -204,14 +204,14 @@ define void @project_soc(ptr dead_on_unwind noalias nofree writable writeonly sr
 bb.a:
   %3 = alloca %"class.Eigen::Matrix.130", align 16 ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !77   ; 17 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !77   ; 16 uses
   %i.c = load ptr, ptr %1, align 8, !tbaa !63     ; 4 uses
   %i.d = getelementptr [8 x i8], ptr %i.c, i64 %i.b
   %i.e = getelementptr i8, ptr %i.d, i64 -8
   %i.f = load double, ptr %i.e, align 8, !tbaa !46
   %i.g = fpext float %2 to double
   %i.h = fmul double %i.f, %i.g                   ; 4 uses
-  %i.i = add i64 %i.b, -1                         ; 11 uses
+  %i.i = add i64 %i.b, -1                         ; 12 uses
   %.not = icmp eq i64 %i.i, 0
   %or.cond = icmp sgt i64 %i.b, 1
   br i1 %or.cond, label %bb.b, label %.thread
@@ -326,11 +326,10 @@ bb.h:                                             ; preds = %bb.g, %._crit_edge.
   br i1 %i.u, label %.lr.ph85.i.i.i.i.i.preheader, label %.loopexit75
 
 .lr.ph85.i.i.i.i.i.preheader:                     ; preds = %bb.h
-  %4 = xor i64 %i.t, -1
-  %5 = add i64 %i.b, %4
+  %4 = sub i64 %i.i, %i.t
   %i.ay = add i64 %i.b, -2
   %i.az = sub i64 %i.ay, %i.t
-  %xtraiter = and i64 %5, 3                       ; 2 uses
+  %xtraiter = and i64 %4, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph85.i.i.i.i.i.prol.loopexit, label %.lr.ph85.i.i.i.i.i.prol
 

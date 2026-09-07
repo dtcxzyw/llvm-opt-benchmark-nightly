@@ -120,9 +120,9 @@ bb.b:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.t = load ptr, ptr %i.s, align 8, !alias.scope !125, !noalias !126, !nonnull !4, !noundef !4 ; 6 uses
   %i.u = load ptr, ptr %i.r, align 8, !alias.scope !125, !noalias !126, !nonnull !4, !noundef !4 ; 11 uses
-  %i.v = ptrtoint ptr %i.t to i64                 ; 4 uses
-  %i.w = ptrtoint ptr %i.u to i64                 ; 4 uses
-  %i.x = sub nuw i64 %i.v, %i.w                   ; 2 uses
+  %i.v = ptrtoint ptr %i.t to i64                 ; 3 uses
+  %i.w = ptrtoint ptr %i.u to i64                 ; 3 uses
+  %i.x = sub i64 %i.v, %i.w                       ; 3 uses
   br i1 %i.q, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -258,9 +258,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph
   br i1 %ident.check.not, label %vector.memcheck, label %scalar.ph.preheader, !prof !131
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %i.bh = add i64 %i.v, -8
-  %4 = sub i64 %i.bh, %i.w
-  %i.bi = lshr i64 %4, 3
+  %i.bh = add i64 %i.x, -8
+  %i.bi = lshr i64 %i.bh, 3
   %i.bj = add nsw i64 %.sroa.0.0.i.i, -1
   %umin = tail call i64 @llvm.umin.i64(i64 %i.bi, i64 %i.bj)
   %i.bk = shl nuw i64 %umin, 3                    ; 2 uses
@@ -618,9 +617,9 @@ bb.ad:                                            ; preds = %bb.a
   %i.ee = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ef = load ptr, ptr %i.ee, align 8, !alias.scope !159, !noalias !160, !nonnull !4, !noundef !4 ; 6 uses
   %i.eg = load ptr, ptr %i.ed, align 8, !alias.scope !159, !noalias !160, !nonnull !4, !noundef !4 ; 11 uses
-  %i.eh = ptrtoint ptr %i.ef to i64               ; 4 uses
-  %i.ei = ptrtoint ptr %i.eg to i64               ; 4 uses
-  %i.ej = sub nuw i64 %i.eh, %i.ei                ; 2 uses
+  %i.eh = ptrtoint ptr %i.ef to i64               ; 3 uses
+  %i.ei = ptrtoint ptr %i.eg to i64               ; 3 uses
+  %i.ej = sub i64 %i.eh, %i.ei                    ; 3 uses
   br i1 %i.ec, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
@@ -723,7 +722,7 @@ _RNvMse_NtCsC8CapfvpQ1_5salsa11zalsa_localINtB5_15SliceWithHeaderuNtB5_15PackedQ
   %i.fj = add nsw i64 %.sroa.0.0.i.i3, -1
   %i.fk = tail call i64 @llvm.umin.i64(i64 %i.fi, i64 %i.fj) ; 2 uses
   %i.fl = add nuw nsw i64 %i.fk, 1                ; 2 uses
-  %min.iters.check243 = icmp samesign ult i64 %i.fk, 20
+  %min.iters.check243 = icmp samesign ult i64 %i.fk, 18
   br i1 %min.iters.check243, label %scalar.ph242.preheader, label %vector.scevcheck233, !prof !130
 
 scalar.ph242.preheader:                           ; preds = %vector.body246, %vector.memcheck235, %vector.scevcheck233, %.lr.ph218
@@ -738,9 +737,8 @@ vector.scevcheck233:                              ; preds = %.lr.ph218
   br i1 %ident.check234.not, label %vector.memcheck235, label %scalar.ph242.preheader, !prof !131
 
 vector.memcheck235:                               ; preds = %vector.scevcheck233
-  %i.fo = add i64 %i.eh, -8
-  %5 = sub i64 %i.fo, %i.ei
-  %i.fp = lshr i64 %5, 3
+  %i.fo = add i64 %i.ej, -8
+  %i.fp = lshr i64 %i.fo, 3
   %i.fq = add nsw i64 %.sroa.0.0.i.i3, -1
   %umin236 = tail call i64 @llvm.umin.i64(i64 %i.fp, i64 %i.fq)
   %i.fr = shl nuw i64 %umin236, 3

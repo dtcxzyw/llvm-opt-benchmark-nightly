@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %.loopexit196
   %i.bn = load i32, ptr %i.bm, align 8, !tbaa !245
   %i.bo = mul nsw i32 %i.bn, 3
   %i.bp = sdiv i32 %i.bo, 2
-  %..i = tail call noundef i32 @llvm.smax.i32(i32 %i.bp, i32 711) ; 8 uses
+  %..i = tail call noundef i32 @llvm.smax.i32(i32 %i.bp, i32 711) ; 7 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 1104 ; 3 uses
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !297
   %i.bs = zext nneg i32 %..i to i64
@@ -337,14 +337,13 @@ bb.x:                                             ; preds = %bb.o
 
 .lr.ph202:                                        ; preds = %.thread, %bb.x
   %.0127222 = phi i32 [ 1, %.thread ], [ %i.bv, %bb.x ]
-  %i.eb = add nsw i32 %..i, -1                    ; 2 uses
+  %i.eb = add nsw i32 %..i, -1                    ; 3 uses
   %i.ec = tail call i32 @llvm.umax.i32(i32 %i.bv, i32 1) ; 5 uses
   %umax = zext i32 %i.ec to i64                   ; 3 uses
   %i.ed = zext nneg i32 %i.eb to i64              ; 2 uses
   %i.ee = add i32 %..i, %i.ec
   %i.ef = sub i32 %i.ee, %.0127222
   %i.eg = sub i32 %..i, %i.ec
-  %.neg = add i32 %i.ec, 1
   %xtraiter = and i32 %i.eg, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
@@ -363,7 +362,7 @@ bb.x:                                             ; preds = %bb.o
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph202
   %indvars.iv.unr = phi i64 [ %umax, %.lr.ph202 ], [ %indvars.iv.next.prol, %.prol.loopexit.unr-lcssa ]
-  %i.eo = icmp eq i32 %..i, %.neg
+  %i.eo = icmp eq i32 %i.eb, %i.ec
   br i1 %i.eo, label %.loopexit, label %.lr.ph202.new
 
 .lr.ph202.new:                                    ; preds = %.prol.loopexit, %.lr.ph202.new
@@ -766,11 +765,11 @@ js_dup.exit73:                                    ; preds = %.lr.ph78, %bb.l
 
 .lr.ph81.preheader:                               ; preds = %._crit_edge
   %i.dm = sext i32 %6 to i64                      ; 5 uses
-  %wide.trip.count87 = zext nneg i32 %i.dk to i64
+  %wide.trip.count87 = zext nneg i32 %i.dk to i64 ; 2 uses
+  %8 = sub nsw i64 %wide.trip.count87, %i.dm
   %i.dn = zext i16 %i.di to i64
   %i.do = zext nneg i32 %..i to i64
-  %i.dp = add nuw nsw i64 %i.dn, %i.do            ; 2 uses
-  %8 = sub nsw i64 %i.dp, %i.dm
+  %i.dp = add nuw nsw i64 %i.dn, %i.do
   %.neg = add nsw i64 %i.dm, 1
   %xtraiter = and i64 %8, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0

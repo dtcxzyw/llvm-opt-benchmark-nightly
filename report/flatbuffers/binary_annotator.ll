@@ -205,10 +205,10 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %.backedge, %bb.i
-  %.056.i.i = phi i64 [ %i.aw, %bb.i ], [ %.056.i.i.be, %.backedge ] ; 5 uses
-  %.0.i.i = phi i64 [ %i.az, %bb.i ], [ %.0.i.i.be, %.backedge ] ; 12 uses
+  %.056.i.i = phi i64 [ %i.aw, %bb.i ], [ %.056.i.i.be, %.backedge ] ; 4 uses
+  %.0.i.i = phi i64 [ %i.az, %bb.i ], [ %.0.i.i.be, %.backedge ] ; 11 uses
   %.sroa.026.0.i.i = phi ptr [ %.sroa.065.0, %bb.i ], [ %.sroa.026.0.i.i.be, %.backedge ] ; 7 uses
-  %i.bg = sub nsw i64 %.056.i.i, %.0.i.i          ; 8 uses
+  %i.bg = sub nsw i64 %.056.i.i, %.0.i.i          ; 9 uses
   %i.bh = icmp slt i64 %.0.i.i, %i.bg
   br i1 %i.bh, label %bb.k, label %bb.m
 
@@ -218,9 +218,8 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph66.preheader.i.i:                           ; preds = %bb.k
   %i.bj = getelementptr inbounds [16 x i8], ptr %.sroa.026.0.i.i, i64 %.0.i.i ; 2 uses
-  %.neg = add i64 %.0.i.i, 1
   %xtraiter115 = and i64 %i.bg, 1
-  %i.bk = icmp eq i64 %.056.i.i, %.neg
+  %i.bk = icmp eq i64 %i.bg, 1
   br i1 %i.bk, label %.lr.ph66.i.i.epil.preheader, label %.lr.ph66.preheader.i.i.new
 
 .lr.ph66.preheader.i.i.new:                       ; preds = %.lr.ph66.preheader.i.i
@@ -623,10 +622,10 @@ bb.ab:                                            ; preds = %bb.aa
   br label %bb.ac
 
 bb.ac:                                            ; preds = %.backedge, %bb.ab
-  %.056.i.i = phi i64 [ %i.am, %bb.ab ], [ %.056.i.i.be, %.backedge ] ; 5 uses
-  %.0.i.i = phi i64 [ %i.ap, %bb.ab ], [ %.0.i.i.be, %.backedge ] ; 12 uses
+  %.056.i.i = phi i64 [ %i.am, %bb.ab ], [ %.056.i.i.be, %.backedge ] ; 4 uses
+  %.0.i.i = phi i64 [ %i.ap, %bb.ab ], [ %.0.i.i.be, %.backedge ] ; 11 uses
   %.sroa.026.0.i.i = phi ptr [ %0, %bb.ab ], [ %.sroa.026.0.i.i.be, %.backedge ] ; 7 uses
-  %i.aw = sub nsw i64 %.056.i.i, %.0.i.i          ; 8 uses
+  %i.aw = sub nsw i64 %.056.i.i, %.0.i.i          ; 9 uses
   %i.ax = icmp slt i64 %.0.i.i, %i.aw
   br i1 %i.ax, label %bb.ad, label %bb.af
 
@@ -636,9 +635,8 @@ bb.ad:                                            ; preds = %bb.ac
 
 .lr.ph66.preheader.i.i:                           ; preds = %bb.ad
   %i.az = getelementptr inbounds [16 x i8], ptr %.sroa.026.0.i.i, i64 %.0.i.i ; 2 uses
-  %.neg = add i64 %.0.i.i, 1
   %xtraiter60 = and i64 %i.aw, 1
-  %i.ba = icmp eq i64 %.056.i.i, %.neg
+  %i.ba = icmp eq i64 %i.aw, 1
   br i1 %i.ba, label %.lr.ph66.i.i.epil.preheader, label %.lr.ph66.preheader.i.i.new
 
 .lr.ph66.preheader.i.i.new:                       ; preds = %.lr.ph66.preheader.i.i

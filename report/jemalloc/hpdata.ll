@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %fb_urange_iter.exit
 bb.e:                                             ; preds = %fb_urange_iter.exit
   %i.al = lshr i64 %.293, 6                       ; 7 uses
   %i.am = and i64 %.293, 63                       ; 4 uses
-  %i.an = add nuw nsw i64 %i.am, %i.a             ; 8 uses
+  %i.an = add nuw nsw i64 %i.am, %i.a             ; 4 uses
   %i.ao = icmp samesign ugt i64 %i.an, 64
   %i.ap = sub nuw nsw i64 64, %i.am
   %i.aq = select i1 %i.ao, i64 %i.ap, i64 %i.a    ; 2 uses
@@ -215,7 +215,7 @@ bb.e:                                             ; preds = %fb_urange_iter.exit
   %i.av = load i64, ptr %i.au, align 8, !tbaa !41
   %i.aw = or i64 %i.av, %i.at
   store i64 %i.aw, ptr %i.au, align 8, !tbaa !41
-  %i.ax = sub nsw i64 %i.a, %i.aq                 ; 8 uses
+  %i.ax = sub nsw i64 %i.a, %i.aq                 ; 10 uses
   %.0.i9.i = add nuw nsw i64 %i.al, 1             ; 7 uses
   %i.ay = icmp ugt i64 %i.ax, 64                  ; 3 uses
   br i1 %i.ay, label %fb_assign_visitor.exit.preheader.i, label %._crit_edge.i42
@@ -224,17 +224,15 @@ fb_assign_visitor.exit.preheader.i:               ; preds = %bb.e
   %i.az = shl nuw nsw i64 %i.al, 3
   %i.ba = getelementptr i8, ptr %i.b, i64 %i.az
   %scevgep.i = getelementptr i8, ptr %i.ba, i64 8
-  %i.bb = add nsw i64 %i.an, -65
-  %umin.i = tail call i64 @llvm.umin.i64(i64 %i.an, i64 64) ; 2 uses
-  %2 = sub nsw i64 %i.bb, %umin.i                 ; 2 uses
-  %i.bc = lshr i64 %2, 6                          ; 2 uses
+  %i.bb = add nsw i64 %i.ax, -65                  ; 2 uses
+  %i.bc = lshr i64 %i.bb, 6                       ; 2 uses
   %i.bd = shl nuw nsw i64 %i.bc, 3
   %i.be = add nuw nsw i64 %i.bd, 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, i8 -1, i64 %i.be, i1 false), !tbaa !41
-  %3 = and i64 %2, -64
-  %.neg111 = add nsw i64 %i.an, -64
-  %4 = add nsw i64 %umin.i, %3
-  %i.bf = sub nsw i64 %.neg111, %4
+  %2 = tail call i64 @llvm.usub.sat.i64(i64 %i.an, i64 64)
+  %.neg111 = add nsw i64 %2, -64
+  %3 = and i64 %i.bb, -64
+  %i.bf = sub nsw i64 %.neg111, %3
   %i.bg = add nuw nsw i64 %i.al, 2
   %i.bh = add nuw nsw i64 %i.bg, %i.bc
   br label %._crit_edge.i42
@@ -354,17 +352,15 @@ fb_assign_visitor.exit.preheader.i50:             ; preds = %fb_scount.exit
   %i.dd = shl nuw nsw i64 %i.al, 3
   %i.de = getelementptr i8, ptr %i.bq, i64 %i.dd
   %scevgep.i51 = getelementptr i8, ptr %i.de, i64 8
-  %i.df = add nsw i64 %i.an, -65
-  %umin.i52 = tail call i64 @llvm.umin.i64(i64 %i.an, i64 64) ; 2 uses
-  %5 = sub nsw i64 %i.df, %umin.i52               ; 2 uses
-  %i.dg = lshr i64 %5, 6                          ; 2 uses
+  %i.df = add nsw i64 %i.ax, -65                  ; 2 uses
+  %i.dg = lshr i64 %i.df, 6                       ; 2 uses
   %i.dh = shl nuw nsw i64 %i.dg, 3
   %i.di = add nuw nsw i64 %i.dh, 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i51, i8 -1, i64 %i.di, i1 false), !tbaa !41
-  %6 = and i64 %5, -64
-  %.neg113 = add nsw i64 %i.an, -64
-  %7 = add nsw i64 %umin.i52, %6
-  %i.dj = sub nsw i64 %.neg113, %7
+  %4 = tail call i64 @llvm.usub.sat.i64(i64 %i.an, i64 64)
+  %.neg113 = add nsw i64 %4, -64
+  %5 = and i64 %i.df, -64
+  %i.dj = sub nsw i64 %.neg113, %5
   %i.dk = add nuw nsw i64 %i.al, 2
   %i.dl = add nuw nsw i64 %i.dk, %i.dg
   br label %._crit_edge.i45
@@ -515,7 +511,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 6 uses
   %i.h = lshr i64 %i.c, 18                        ; 7 uses
   %i.i = and i64 %i.d, 63                         ; 4 uses
-  %i.j = add nuw nsw i64 %i.i, %i.e               ; 4 uses
+  %i.j = add nuw nsw i64 %i.i, %i.e               ; 2 uses
   %i.k = icmp samesign ugt i64 %i.j, 64
   %i.l = sub nuw nsw i64 64, %i.i
   %i.m = select i1 %i.k, i64 %i.l, i64 %i.e       ; 2 uses
@@ -527,7 +523,7 @@ bb.a:
   %i.s = load i64, ptr %i.q, align 8, !tbaa !41
   %i.t = and i64 %i.s, %i.r                       ; 2 uses
   store i64 %i.t, ptr %i.q, align 8, !tbaa !41
-  %i.u = sub nsw i64 %i.e, %i.m                   ; 2 uses
+  %i.u = sub nsw i64 %i.e, %i.m                   ; 3 uses
   %.0.i9.i = add nuw nsw i64 %i.h, 1
   %i.v = icmp ugt i64 %i.u, 64
   br i1 %i.v, label %fb_assign_visitor.exit.preheader.i, label %._crit_edge.i
@@ -536,17 +532,15 @@ fb_assign_visitor.exit.preheader.i:               ; preds = %bb.a
   %i.w = shl nuw nsw i64 %i.h, 3
   %i.x = getelementptr i8, ptr %i.g, i64 %i.w
   %scevgep.i = getelementptr i8, ptr %i.x, i64 8
-  %i.y = add nsw i64 %i.j, -65
-  %umin.i = tail call i64 @llvm.umin.i64(i64 %i.j, i64 64) ; 2 uses
-  %3 = sub nsw i64 %i.y, %umin.i                  ; 2 uses
-  %i.z = lshr i64 %3, 6                           ; 2 uses
+  %i.y = add nsw i64 %i.u, -65                    ; 2 uses
+  %i.z = lshr i64 %i.y, 6                         ; 2 uses
   %i.aa = shl nuw nsw i64 %i.z, 3
   %i.ab = add nuw nsw i64 %i.aa, 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, i8 0, i64 %i.ab, i1 false), !tbaa !41
-  %4 = and i64 %3, -64
-  %.neg28 = add nsw i64 %i.j, -64
-  %5 = add nsw i64 %umin.i, %4
-  %i.ac = sub nsw i64 %.neg28, %5
+  %3 = tail call i64 @llvm.usub.sat.i64(i64 %i.j, i64 64)
+  %.neg28 = add nsw i64 %3, -64
+  %4 = and i64 %i.y, -64
+  %i.ac = sub nsw i64 %.neg28, %4
   %i.ad = add nuw nsw i64 %i.h, 2
   %i.ae = add nuw nsw i64 %i.ad, %i.z
   br label %._crit_edge.i
@@ -874,7 +868,7 @@ fb_fls.exit:                                      ; preds = %.lr.ph.i39, %.lr.ph
   %.141.i.i38 = phi i64 [ %i.dc, %._crit_edge.i35 ], [ -1, %.lr.ph.i39.preheader ], [ -1, %.lr.ph.i39 ]
   %i.dd = sub i64 %.141.i.i38, %i.bu
   %i.de = add i64 %i.dd, 1                        ; 3 uses
-  %i.df = add i64 %i.de, %i.bs                    ; 4 uses
+  %i.df = add i64 %i.de, %i.bs                    ; 2 uses
   %i.dg = icmp ugt i64 %i.df, 64
   %i.dh = sub nuw nsw i64 64, %i.bs
   %i.di = select i1 %i.dg, i64 %i.dh, i64 %i.de   ; 2 uses
@@ -885,7 +879,7 @@ fb_fls.exit:                                      ; preds = %.lr.ph.i39, %.lr.ph
   %i.dn = load i64, ptr %i.dm, align 8, !tbaa !41
   %i.do = or i64 %i.dl, %i.dn
   store i64 %i.do, ptr %i.dm, align 8, !tbaa !41
-  %i.dp = sub i64 %i.de, %i.di                    ; 2 uses
+  %i.dp = sub i64 %i.de, %i.di                    ; 3 uses
   %.0.i9.i = add nuw nsw i64 %i.bw, 1
   %i.dq = icmp ugt i64 %i.dp, 64
   br i1 %i.dq, label %fb_assign_visitor.exit.preheader.i, label %._crit_edge.i41
@@ -894,17 +888,15 @@ fb_assign_visitor.exit.preheader.i:               ; preds = %fb_fls.exit
   %i.dr = shl nuw nsw i64 %i.bw, 3
   %i.ds = getelementptr i8, ptr %i.ad, i64 %i.dr
   %scevgep.i = getelementptr i8, ptr %i.ds, i64 8
-  %i.dt = add i64 %i.df, -65
-  %umin.i = tail call i64 @llvm.umin.i64(i64 %i.df, i64 64) ; 2 uses
-  %3 = sub i64 %i.dt, %umin.i                     ; 2 uses
-  %i.du = lshr i64 %3, 6                          ; 2 uses
+  %i.dt = add i64 %i.dp, -65                      ; 2 uses
+  %i.du = lshr i64 %i.dt, 6                       ; 2 uses
   %i.dv = shl nuw nsw i64 %i.du, 3
   %i.dw = add nuw nsw i64 %i.dv, 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, i8 -1, i64 %i.dw, i1 false), !tbaa !41
-  %4 = and i64 %3, -64
-  %.neg45 = add i64 %i.df, -64
-  %5 = add i64 %umin.i, %4
-  %i.dx = sub i64 %.neg45, %5
+  %3 = tail call i64 @llvm.usub.sat.i64(i64 %i.df, i64 64)
+  %.neg45 = add i64 %3, -64
+  %4 = and i64 %i.dt, -64
+  %i.dx = sub i64 %.neg45, %4
   %i.dy = add nuw nsw i64 %i.bw, 2
   %i.dz = add nuw nsw i64 %i.dy, %i.du
   br label %._crit_edge.i41
@@ -1160,6 +1152,9 @@ declare i64 @llvm.ctpop.i64(i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.usub.sat.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #14

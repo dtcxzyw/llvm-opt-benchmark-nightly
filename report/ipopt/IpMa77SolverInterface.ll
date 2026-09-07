@@ -204,8 +204,8 @@ _ZN5Ipopt9TimedTask5StartEv.exit:                 ; preds = %bb.c, %bb.b, %bb.a
   store i32 %i.ar, ptr %i.as, align 4, !tbaa !55
   %indvars.iv.next83 = add nuw nsw i64 %indvars.iv82, 1 ; 3 uses
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.next83
-  %i.au = load i32, ptr %i.at, align 4, !tbaa !55 ; 5 uses
-  %i.av = add i32 %i.au, -1
+  %i.au = load i32, ptr %i.at, align 4, !tbaa !55 ; 4 uses
+  %i.av = add i32 %i.au, -1                       ; 2 uses
   %i.aw = icmp slt i32 %i.aq, %i.au
   br i1 %i.aw, label %.lr.ph.preheader, label %.loopexit
 
@@ -213,7 +213,6 @@ _ZN5Ipopt9TimedTask5StartEv.exit:                 ; preds = %bb.c, %bb.b, %bb.a
   %i.ax = add i32 %i.aq, -1
   %i.ay = sext i32 %i.ax to i64                   ; 3 uses
   %i.az = sub i32 %i.au, %i.aq
-  %.neg = add i32 %i.aq, 1
   %xtraiter = and i32 %i.az, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -241,7 +240,7 @@ bb.d:                                             ; preds = %.lr.ph.prol
   %.2.lcssa.unr = phi i32 [ poison, %.lr.ph.preheader ], [ %.2.prol, %.lr.ph.prol.loopexit.unr-lcssa ]
   %indvars.iv.unr = phi i64 [ %i.ay, %.lr.ph.preheader ], [ %indvars.iv.next.prol, %.lr.ph.prol.loopexit.unr-lcssa ]
   %.174.unr = phi i32 [ %.06477, %.lr.ph.preheader ], [ %.2.prol, %.lr.ph.prol.loopexit.unr-lcssa ]
-  %i.bg = icmp eq i32 %i.au, %.neg
+  %i.bg = icmp eq i32 %i.av, %i.aq
   br i1 %i.bg, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %bb.g

@@ -205,13 +205,13 @@ bb.f:                                             ; preds = %.loopexit131
 
 RSTRING_PTR.exit:                                 ; preds = %.loopexit131, %bb.f
   %i.al = phi ptr [ %i.ak, %bb.f ], [ %i.aj, %.loopexit131 ] ; 15 uses
-  %i.am = ptrtoaddr ptr %i.al to i64              ; 3 uses
+  %i.am = ptrtoaddr ptr %i.al to i64
   %.not93 = icmp eq ptr %i.al, null
   br i1 %.not93, label %bb.av, label %bb.g
 
 bb.g:                                             ; preds = %RSTRING_PTR.exit
   %i.an = getelementptr i8, ptr %i.ag, i64 16     ; 4 uses
-  %i.ao = load i64, ptr %i.an, align 8, !tbaa !38 ; 5 uses
+  %i.ao = load i64, ptr %i.an, align 8, !tbaa !38 ; 3 uses
   %i.ap = icmp eq i64 %i.ao, 0
   br i1 %i.ap, label %bb.av, label %bb.h
 
@@ -224,7 +224,7 @@ bb.i:                                             ; preds = %bb.h
 
 RSTRING_END.exit:                                 ; preds = %bb.h, %bb.i
   %i.ar = phi ptr [ %i.aq, %bb.i ], [ %i.aj, %bb.h ] ; 2 uses
-  %i.as = ptrtoaddr ptr %i.ar to i64              ; 3 uses
+  %i.as = ptrtoaddr ptr %i.ar to i64
   %i.at = getelementptr i8, ptr %i.ar, i64 %i.ao  ; 3 uses
   %i.au = getelementptr i8, ptr %.184, i64 20
   %.val.i = load i32, ptr %i.au, align 4, !tbaa !42
@@ -248,25 +248,22 @@ rb_enc_asciicompat.exit:                          ; preds = %RSTRING_END.exit, %
 .lr.ph138:                                        ; preds = %.preheader128
   %i.ax = icmp sgt i32 %0, 0
   %i.ay = add i64 %i.ao, %i.as
-  %i.az = sub i64 %i.ay, %i.am                    ; 5 uses
+  %i.az = sub i64 %i.ay, %i.am                    ; 7 uses
   br i1 %i.ax, label %.lr.ph138.split.us.preheader, label %.lr.ph138.split.preheader
 
 .lr.ph138.split.preheader:                        ; preds = %.lr.ph138
-  %i.ba = add i64 %i.ao, %i.as
+  %i.ba = add i64 %i.az, -1
   %xtraiter = and i64 %i.az, 3                    ; 3 uses
-  %3 = sub i64 %i.am, %i.ba
-  %4 = icmp ugt i64 %3, -4
-  br i1 %4, label %.lr.ph138.split.epil.preheader, label %.lr.ph138.split.preheader.new
+  %3 = icmp ult i64 %i.ba, 3
+  br i1 %3, label %.lr.ph138.split.epil.preheader, label %.lr.ph138.split.preheader.new
 
 .lr.ph138.split.preheader.new:                    ; preds = %.lr.ph138.split.preheader
   %unroll_iter = and i64 %i.az, -4
   br label %.lr.ph138.split
 
 .lr.ph138.split.us.preheader:                     ; preds = %.lr.ph138
-  %5 = add i64 %i.ao, %i.as
-  %.neg = add i64 %i.am, 1
   %xtraiter175 = and i64 %i.az, 1
-  %i.bb = icmp eq i64 %5, %.neg
+  %i.bb = icmp eq i64 %i.az, 1
   br i1 %i.bb, label %.lr.ph138.split.us.epil.preheader, label %.lr.ph138.split.us.preheader.new
 
 .lr.ph138.split.us.preheader.new:                 ; preds = %.lr.ph138.split.us.preheader

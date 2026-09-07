@@ -204,14 +204,14 @@ bb.a:
   %i.m = icmp ne ptr %i.f, null
   %.neg.i.i = sext i1 %i.m to i64
   %i.n = add nsw i64 %i.l, %.neg.i.i
-  %i.o = shl nsw i64 %i.n, 5                      ; 2 uses
+  %i.o = shl nsw i64 %i.n, 5
   %i.p = load ptr, ptr %i.c, align 8, !tbaa !2546
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !2547
   %i.s = ptrtoint ptr %i.p to i64
   %i.t = ptrtoint ptr %i.r to i64
   %i.u = sub i64 %i.s, %i.t
-  %i.v = ashr exact i64 %i.u, 4                   ; 2 uses
+  %i.v = ashr exact i64 %i.u, 4
   %i.w = add nsw i64 %i.o, %i.v
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !2548
@@ -219,8 +219,8 @@ bb.a:
   %i.aa = ptrtoint ptr %i.y to i64
   %i.ab = ptrtoint ptr %i.z to i64
   %i.ac = sub i64 %i.aa, %i.ab
-  %i.ad = ashr exact i64 %i.ac, 4                 ; 2 uses
-  %i.ae = add nsw i64 %i.w, %i.ad                 ; 10 uses
+  %i.ad = ashr exact i64 %i.ac, 4
+  %i.ae = add nsw i64 %i.w, %i.ad                 ; 11 uses
   %i.af = icmp ugt i64 %i.ae, 1152921504606846975
   br i1 %i.af, label %.noexc, label %_ZNSt6vectorIPKcSaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
 
@@ -271,10 +271,8 @@ _ZSt6fill_nIPmmmET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc31
   %i.au = ptrtoint ptr %i.ar to i64
   %i.av = sub i64 %i.at, %i.au
   %i.aw = ashr exact i64 %i.av, 4                 ; 3 uses
-  %5 = add nsw i64 %i.v, %i.ad
-  %6 = add i64 %5, %i.o
   %xtraiter = and i64 %i.ae, 1
-  %i.ax = icmp eq i64 %6, 1
+  %i.ax = icmp eq i64 %i.ae, 1
   br i1 %i.ax, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph

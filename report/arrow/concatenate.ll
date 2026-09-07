@@ -204,12 +204,12 @@ bb.a:
   %i.b = ptrtoint ptr %.val8 to i64               ; 2 uses
   %i.c = ptrtoint ptr %.val7 to i64               ; 2 uses
   %i.d = sub i64 %i.b, %i.c                       ; 2 uses
-  %i.e = ashr exact i64 %i.d, 4                   ; 9 uses
+  %i.e = ashr exact i64 %i.d, 4                   ; 7 uses
   %i.f = icmp ugt i64 %1, %i.e
   br i1 %i.f, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = sub nuw i64 %1, %i.e                     ; 10 uses
+  %i.g = sub nuw i64 %1, %i.e                     ; 12 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !169
   %i.j = ptrtoint ptr %i.i to i64
@@ -224,6 +224,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not28.i, label %bb.c, label %.preheader.i.preheader
 
 .preheader.i.preheader:                           ; preds = %bb.b
+  %2 = add i64 %i.g, -1
   %xtraiter = and i64 %i.g, 7                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.preheader.i.prol.loopexit, label %.preheader.i.prol
@@ -245,8 +246,7 @@ bb.b:                                             ; preds = %bb.a
   %.lcssa.unr = phi ptr [ poison, %.preheader.i.preheader ], [ %i.r, %.preheader.i.prol ]
   %.07.i.i.i.i.unr = phi ptr [ %.val8, %.preheader.i.preheader ], [ %i.r, %.preheader.i.prol ]
   %.056.i.i.i.i.unr = phi i64 [ %i.g, %.preheader.i.preheader ], [ %i.q, %.preheader.i.prol ]
-  %2 = sub i64 %i.e, %1
-  %3 = icmp ugt i64 %2, -8
+  %3 = icmp ult i64 %2, 7
   br i1 %3, label %_ZSt27__uninitialized_default_n_aIPN5arrow12_GLOBAL__N_15RangeEmS2_ET_S4_T0_RSaIT1_E.exit.i, label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i.prol.loopexit, %.preheader.i
@@ -328,9 +328,8 @@ _ZNKSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE12_M_check_lenEmPKc.exit.i: ; 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %_ZNKSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE12_M_check_lenEmPKc.exit.i
   %.07.i.i.i32.i.unr = phi ptr [ %i.ao, %_ZNKSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE12_M_check_lenEmPKc.exit.i ], [ %i.ar, %.prol.preheader ]
   %.056.i.i.i33.i.unr = phi i64 [ %i.g, %_ZNKSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE12_M_check_lenEmPKc.exit.i ], [ %i.aq, %.prol.preheader ]
-  %4 = sub i64 %i.e, %1
-  %5 = icmp ugt i64 %4, -8
-  br i1 %5, label %_ZSt27__uninitialized_default_n_aIPN5arrow12_GLOBAL__N_15RangeEmS2_ET_S4_T0_RSaIT1_E.exit35.i, label %_ZNKSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE12_M_check_lenEmPKc.exit.i.new
+  %4 = icmp ult i64 %i.g, 8
+  br i1 %4, label %_ZSt27__uninitialized_default_n_aIPN5arrow12_GLOBAL__N_15RangeEmS2_ET_S4_T0_RSaIT1_E.exit35.i, label %_ZNKSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE12_M_check_lenEmPKc.exit.i.new
 
 _ZNKSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE12_M_check_lenEmPKc.exit.i.new: ; preds = %.prol.loopexit, %_ZNKSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE12_M_check_lenEmPKc.exit.i.new
   %.07.i.i.i32.i = phi ptr [ %i.bi, %_ZNKSt6vectorIN5arrow12_GLOBAL__N_15RangeESaIS2_EE12_M_check_lenEmPKc.exit.i.new ], [ %.07.i.i.i32.i.unr, %.prol.loopexit ] ; 17 uses

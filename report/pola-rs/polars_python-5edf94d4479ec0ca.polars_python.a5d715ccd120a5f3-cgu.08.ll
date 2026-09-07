@@ -205,10 +205,10 @@ bb.a:
   call void @_RNvXs3_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterjEBW_EINtB5_7ZipImplBW_BW_E3newCseeLknQCOKOd_13polars_python(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.a, ptr noundef nonnull %0, ptr noundef nonnull %i.b, ptr noundef nonnull readonly align 8 %1, ptr noundef nonnull readonly %i.c), !dbg !27040
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27031), !dbg !27041
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 32, !dbg !27042
-  %.val.i = load i64, ptr %i.d, align 8, !dbg !27042, !alias.scope !27031, !noundef !4872 ; 6 uses
+  %.val.i = load i64, ptr %i.d, align 8, !dbg !27042, !alias.scope !27031, !noundef !4872 ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 40, !dbg !27042
-  %.val13.i = load i64, ptr %i.e, align 8, !dbg !27042, !alias.scope !27031, !noundef !4872 ; 3 uses
-  %i.f = sub i64 %.val13.i, %.val.i, !dbg !27043  ; 3 uses
+  %.val13.i = load i64, ptr %i.e, align 8, !dbg !27042, !alias.scope !27031, !noundef !4872 ; 2 uses
+  %i.f = sub i64 %.val13.i, %.val.i, !dbg !27043  ; 4 uses
   %.not.i = icmp eq i64 %.val13.i, %.val.i, !dbg !27044
   br i1 %.not.i, label %_RINvXs2_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4iter4IterjEBX_EINtB6_7ZipImplBX_BX_E4foldiNCINvNtCs39HECPMKlmJ_7ndarray9dimension39offset_from_low_addr_ptr_to_logical_ptrINtNtB1Z_3dim3DimAjj2_EE0ECseeLknQCOKOd_13polars_python.exit, label %.lr.ph.i, !dbg !27045
 
@@ -216,9 +216,8 @@ bb.a:
   %.val1.i.i = load ptr, ptr %i.a, align 8, !alias.scope !27035, !nonnull !4872, !noundef !4872 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.val.i.i = load ptr, ptr %i.g, align 8, !alias.scope !27035, !nonnull !4872, !noundef !4872 ; 3 uses
-  %.neg = add i64 %.val.i, 1, !dbg !27045
   %xtraiter = and i64 %i.f, 1, !dbg !27045
-  %i.h = icmp eq i64 %.val13.i, %.neg, !dbg !27045
+  %i.h = icmp eq i64 %i.f, 1, !dbg !27045
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new, !dbg !27045
 
 .lr.ph.i.new:                                     ; preds = %.lr.ph.i

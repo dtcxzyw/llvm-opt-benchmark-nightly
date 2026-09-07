@@ -79,8 +79,7 @@ bb.f:                                             ; preds = %bb.e
   %scevgep517 = getelementptr i8, ptr %i.l, i64 %i.w
   %scevgep519 = getelementptr i8, ptr %i.l, i64 %i.w
   %i.x = add nsw i32 %1, -2
-  %3 = zext nneg i32 %2 to i64
-  %i.y = zext nneg i32 %2 to i64
+  %i.y = zext nneg i32 %2 to i64                  ; 2 uses
   %min.iters.check525 = icmp ult i32 %2, 3
   %n.vec527 = and i64 %i.i, 2147483644            ; 3 uses
   %cmp.n536 = icmp eq i64 %n.vec527, %i.i
@@ -239,7 +238,7 @@ scalar.ph524.prol:                                ; preds = %scalar.ph524.prehea
 
 scalar.ph524.prol.loopexit:                       ; preds = %scalar.ph524.prol, %scalar.ph524.preheader
   %indvars.iv.i.unr = phi i64 [ %indvars.iv.i.ph, %scalar.ph524.preheader ], [ %indvars.iv.next.i.prol, %scalar.ph524.prol ]
-  %i.bp = icmp eq i64 %indvars.iv.i.ph, %3
+  %i.bp = icmp eq i64 %indvars.iv.i.ph, %i.y
   br i1 %i.bp, label %swap_rows.exit.loopexit, label %scalar.ph524
 
 scalar.ph524:                                     ; preds = %scalar.ph524.prol.loopexit, %scalar.ph524
