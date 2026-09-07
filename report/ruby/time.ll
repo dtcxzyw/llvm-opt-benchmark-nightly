@@ -204,10 +204,12 @@ bb.am:                                            ; preds = %cmp.exit.thread.i, 
   %.val75 = load i64, ptr %2, align 8, !tbaa !59
   %i.fs = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   %.val76 = load i64, ptr %i.fs, align 8
-  %i.ft = call fastcc i64 @small_vtm_sub(ptr noundef nonnull %0, i64 %.val75, i64 %.val76) ; 5 uses
+  %i.ft = call fastcc i64 @small_vtm_sub(ptr noundef nonnull %0, i64 %.val75, i64 %.val76) ; 6 uses
+  %4 = icmp eq i64 %i.ft, 0
   %i.fu = and i64 %i.ft, 7
-  %.not140 = icmp eq i64 %i.fu, 0
-  br i1 %.not140, label %rbimpl_RB_TYPE_P_fastpath.exit.i93, label %v2w.exit97
+  %5 = icmp ne i64 %i.fu, 0
+  %6 = or i1 %4, %5
+  br i1 %6, label %v2w.exit97, label %rbimpl_RB_TYPE_P_fastpath.exit.i93
 
 rbimpl_RB_TYPE_P_fastpath.exit.i93:               ; preds = %bb.am
   %i.fv = inttoptr i64 %i.ft to ptr               ; 3 uses
@@ -234,10 +236,12 @@ v2w.exit97:                                       ; preds = %bb.am, %rbimpl_RB_T
   %.val = load i64, ptr %3, align 8, !tbaa !59
   %i.gf = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
   %.val74 = load i64, ptr %i.gf, align 8
-  %i.gg = call fastcc i64 @small_vtm_sub(ptr noundef nonnull %0, i64 %.val, i64 %.val74) ; 5 uses
+  %i.gg = call fastcc i64 @small_vtm_sub(ptr noundef nonnull %0, i64 %.val, i64 %.val74) ; 6 uses
+  %7 = icmp eq i64 %i.gg, 0
   %i.gh = and i64 %i.gg, 7
-  %.not141 = icmp eq i64 %i.gh, 0
-  br i1 %.not141, label %rbimpl_RB_TYPE_P_fastpath.exit.i98, label %v2w.exit102
+  %8 = icmp ne i64 %i.gh, 0
+  %9 = or i1 %7, %8
+  br i1 %9, label %v2w.exit102, label %rbimpl_RB_TYPE_P_fastpath.exit.i98
 
 rbimpl_RB_TYPE_P_fastpath.exit.i98:               ; preds = %v2w.exit97
   %i.gi = inttoptr i64 %i.gg to ptr               ; 3 uses
@@ -342,7 +346,7 @@ bb.ba:                                            ; preds = %.split, %bb.aw, %bb
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc range(i64 1, 0) i64 @small_vtm_sub(ptr nofree noundef readonly captures(none) %0, i64 %.0.val, i64 %.32.val) unnamed_addr #1 {
+define internal fastcc range(i64 -403685, 403688) i64 @small_vtm_sub(ptr nofree noundef readonly captures(none) %0, i64 %.0.val, i64 %.32.val) unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 32         ; 2 uses
   %i.b = load i64, ptr %i.a, align 8              ; 2 uses
