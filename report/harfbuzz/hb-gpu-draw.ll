@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.u
   %i.fi = insertelement <2 x i32> poison, i32 %.sroa.speculated793, i64 0
   %i.fj = shufflevector <2 x i32> %i.fi, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.fk = select <2 x i1> %i.fh, <2 x i32> %i.fj, <2 x i32> splat (i32 1) ; 5 uses
-  %i.fl = extractelement <2 x i32> %i.fk, i64 1   ; 18 uses
+  %i.fl = extractelement <2 x i32> %i.fk, i64 1   ; 17 uses
   %i.fm = uitofp nneg <2 x i32> %i.fk to <2 x double>
   %i.fn = fdiv <2 x double> %i.fg, %i.fm          ; 2 uses
   %i.fo = tail call noundef zeroext i1 @_ZN11hb_vector_tIjLb0EE5allocEjb(ptr noundef nonnull align 8 dereferenceable(16) %i.bc, i32 noundef %i.fl, i1 noundef zeroext false)
@@ -296,7 +296,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w, %bb.v
   store i32 %i.fl, ptr %i.hg, align 4, !tbaa !49
-  %i.hq = extractelement <2 x i32> %i.fk, i64 0   ; 17 uses
+  %i.hq = extractelement <2 x i32> %i.fk, i64 0   ; 16 uses
   %i.hr = tail call noundef zeroext i1 @_ZN11hb_vector_tIjLb0EE5allocEjb(ptr noundef nonnull align 8 dereferenceable(16) %i.bh, i32 noundef %i.hq, i1 noundef zeroext false)
   br i1 %i.hr, label %bb.y, label %.critedge501
 
@@ -505,8 +505,9 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.ls = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 4 uses
   %i.lt = load ptr, ptr %i.ls, align 8, !tbaa !143 ; 3 uses
   %i.lu = load ptr, ptr %i.ic, align 8, !tbaa !135 ; 3 uses
+  %2 = add nsw i64 %i.ie, -1                      ; 2 uses
   %xtraiter = and i64 %i.ie, 1
-  %i.lv = icmp eq i32 %i.fl, 1
+  %i.lv = icmp eq i64 %2, 0
   br i1 %i.lv, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.ap
@@ -539,8 +540,9 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.mc = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 4 uses
   %i.md = load ptr, ptr %i.mc, align 8, !tbaa !144 ; 3 uses
   %i.me = load ptr, ptr %i.ig, align 8, !tbaa !136 ; 3 uses
+  %3 = add nsw i64 %i.ii, -1                      ; 2 uses
   %xtraiter1213 = and i64 %i.ii, 1
-  %i.mf = icmp eq i32 %i.hq, 1
+  %i.mf = icmp eq i64 %3, 0
   br i1 %i.mf, label %.epil.preheader1212, label %.critedge505.preheader.new
 
 .critedge505.preheader.new:                       ; preds = %.critedge505.preheader
@@ -837,6 +839,7 @@ middle.block:                                     ; preds = %vector.body.2, %vec
 
 scalar.ph.preheader:                              ; preds = %_ZN11hb_vector_tIjLb0EE6resizeEi.exit585, %middle.block
   %indvars.iv997.ph = phi i64 [ 0, %_ZN11hb_vector_tIjLb0EE6resizeEi.exit585 ], [ %n.vec, %middle.block ] ; 3 uses
+  %4 = sub nsw i64 %2, %indvars.iv997.ph
   %xtraiter1219 = and i64 %i.ie, 3                ; 2 uses
   %lcmp.mod1220.not = icmp eq i64 %xtraiter1219, 0
   br i1 %lcmp.mod1220.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
@@ -855,9 +858,8 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
 
 scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
   %indvars.iv997.unr = phi i64 [ %indvars.iv997.ph, %scalar.ph.preheader ], [ %indvars.iv.next998.prol, %scalar.ph.prol ]
-  %2 = sub nsw i64 %indvars.iv997.ph, %i.ie
-  %3 = icmp ugt i64 %2, -4
-  br i1 %3, label %.preheader859, label %scalar.ph
+  %5 = icmp ult i64 %4, 3
+  br i1 %5, label %.preheader859, label %scalar.ph
 
 .preheader859:                                    ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %i.qv = load ptr, ptr %i.mc, align 8, !tbaa !144 ; 12 uses
@@ -911,6 +913,7 @@ middle.block1186:                                 ; preds = %vector.body1181.2, 
 
 scalar.ph1177.preheader:                          ; preds = %.preheader859, %middle.block1186
   %indvars.iv1002.ph = phi i64 [ 0, %.preheader859 ], [ %n.vec1180, %middle.block1186 ] ; 3 uses
+  %6 = sub nsw i64 %3, %indvars.iv1002.ph
   %xtraiter1221 = and i64 %i.ii, 3                ; 2 uses
   %lcmp.mod1222.not = icmp eq i64 %xtraiter1221, 0
   br i1 %lcmp.mod1222.not, label %scalar.ph1177.prol.loopexit, label %scalar.ph1177.prol
@@ -929,9 +932,8 @@ scalar.ph1177.prol:                               ; preds = %scalar.ph1177.prehe
 
 scalar.ph1177.prol.loopexit:                      ; preds = %scalar.ph1177.prol, %scalar.ph1177.preheader
   %indvars.iv1002.unr = phi i64 [ %indvars.iv1002.ph, %scalar.ph1177.preheader ], [ %indvars.iv.next1003.prol, %scalar.ph1177.prol ]
-  %4 = sub nsw i64 %indvars.iv1002.ph, %i.ii
-  %5 = icmp ugt i64 %4, -4
-  br i1 %5, label %.preheader858, label %scalar.ph1177
+  %7 = icmp ult i64 %6, 3
+  br i1 %7, label %.preheader858, label %scalar.ph1177
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv997 = phi i64 [ %indvars.iv.next998.3, %scalar.ph ], [ %indvars.iv997.unr, %scalar.ph.prol.loopexit ] ; 6 uses

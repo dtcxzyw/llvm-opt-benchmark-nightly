@@ -205,11 +205,12 @@ bb.a:
   %i.c = icmp ult i64 %i.b, 288230376151711744
   tail call void @llvm.assume(i1 %i.c)
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.e = load i64, ptr %i.d, align 8, !noundef !19 ; 10 uses
-  %i.f = sub i64 %i.b, %i.e                       ; 9 uses
+  %i.e = load i64, ptr %i.d, align 8, !noundef !19 ; 9 uses
+  %i.f = sub i64 %i.b, %i.e                       ; 10 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !19 ; 3 uses
-  %.first_iter = icmp ugt i64 %i.b, %i.e
+  %1 = add i64 %i.f, -1
+  %.first_iter = icmp ult i64 %1, %i.b
   %.not44 = icmp eq i64 %i.f, 0
   br i1 %.not44, label %._crit_edge, label %.lr.ph
 

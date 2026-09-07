@@ -205,14 +205,19 @@ bb.c:                                             ; preds = %bb.a
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.ax
   %i.az = load float, ptr %i.ay, align 4, !tbaa !27 ; 4 uses
   %invariant.gep.i = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.ax ; 3 uses
+  %6 = add i64 %4, -1                             ; 2 uses
   %xtraiter = and i64 %4, 1
+  %7 = icmp eq i64 %6, 0
+  br i1 %7, label %.epil.preheader, label %.lr.ph.i91.new
+
+.lr.ph.i91.new:                                   ; preds = %.lr.ph.i91
   %unroll_iter = and i64 %4, -2
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.d, %.lr.ph.i91
-  %.022.i = phi i64 [ 0, %.lr.ph.i91 ], [ %i.bs, %bb.d ] ; 2 uses
-  %.02021.i = phi i64 [ 0, %.lr.ph.i91 ], [ %i.bt, %bb.d ] ; 3 uses
-  %niter = phi i64 [ 0, %.lr.ph.i91 ], [ %niter.next.1, %bb.d ]
+bb.d:                                             ; preds = %bb.d, %.lr.ph.i91.new
+  %.022.i = phi i64 [ 0, %.lr.ph.i91.new ], [ %i.bs, %bb.d ] ; 2 uses
+  %.02021.i = phi i64 [ 0, %.lr.ph.i91.new ], [ %i.bt, %bb.d ] ; 3 uses
+  %niter = phi i64 [ 0, %.lr.ph.i91.new ], [ %niter.next.1, %bb.d ]
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.02021.i ; 2 uses
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !21 ; 2 uses
   %i.bc = zext i32 %i.bb to i64
@@ -239,7 +244,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i91
   store i32 %i.bp, ptr %i.bk, align 4, !tbaa !21
   %i.bq = fcmp olt float %i.bn, %i.az
   %i.br = zext i1 %i.bq to i64
-  %i.bs = add i64 %i.bi, %i.br                    ; 4 uses
+  %i.bs = add i64 %i.bi, %i.br                    ; 3 uses
   %i.bt = add nuw i64 %.02021.i, 2                ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -249,22 +254,24 @@ _ZN7meshoptL15kdtreePartitionEPjmPKfmif.exit.unr-lcssa: ; preds = %bb.d
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %_ZN7meshoptL15kdtreePartitionEPjmPKfmif.exit, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %_ZN7meshoptL15kdtreePartitionEPjmPKfmif.exit.unr-lcssa
+.epil.preheader:                                  ; preds = %_ZN7meshoptL15kdtreePartitionEPjmPKfmif.exit.unr-lcssa, %.lr.ph.i91
+  %.022.i.epil.init = phi i64 [ 0, %.lr.ph.i91 ], [ %i.bs, %_ZN7meshoptL15kdtreePartitionEPjmPKfmif.exit.unr-lcssa ] ; 2 uses
+  %.02021.i.epil.init = phi i64 [ 0, %.lr.ph.i91 ], [ %i.bt, %_ZN7meshoptL15kdtreePartitionEPjmPKfmif.exit.unr-lcssa ]
   %lcmp.mod19 = trunc i64 %4 to i1
   tail call void @llvm.assume(i1 %lcmp.mod19)
-  %i.bu = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.bt ; 2 uses
+  %i.bu = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.02021.i.epil.init ; 2 uses
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !21 ; 2 uses
   %i.bw = zext i32 %i.bv to i64
   %.idx.i.epil = mul nuw nsw i64 %i.bw, 24
   %gep.i.epil = getelementptr inbounds nuw i8, ptr %invariant.gep.i, i64 %.idx.i.epil
   %i.bx = load float, ptr %gep.i.epil, align 4, !tbaa !27
-  %i.by = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.bs ; 2 uses
+  %i.by = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.022.i.epil.init ; 2 uses
   %i.bz = load i32, ptr %i.by, align 4, !tbaa !21
   store i32 %i.bv, ptr %i.by, align 4, !tbaa !21
   store i32 %i.bz, ptr %i.bu, align 4, !tbaa !21
   %i.ca = fcmp olt float %i.bx, %i.az
   %i.cb = zext i1 %i.ca to i64
-  %i.cc = add i64 %i.bs, %i.cb
+  %i.cc = add i64 %.022.i.epil.init, %i.cb
   br label %_ZN7meshoptL15kdtreePartitionEPjmPKfmif.exit
 
 _ZN7meshoptL15kdtreePartitionEPjmPKfmif.exit:     ; preds = %_ZN7meshoptL15kdtreePartitionEPjmPKfmif.exit.unr-lcssa, %.epil.preheader
@@ -385,8 +392,9 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i93.preheader:                             ; preds = %vector.memcheck, %vector.scevcheck, %bb.g, %middle.block
   %.020.i94.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %vector.scevcheck ], [ 1, %bb.g ], [ %i.ea, %middle.block ] ; 4 uses
-  %i.ei = sub i64 %4, %.020.i94.ph
-  %xtraiter20 = and i64 %i.ei, 3                  ; 2 uses
+  %8 = sub i64 %4, %.020.i94.ph
+  %i.ei = sub i64 %6, %.020.i94.ph
+  %xtraiter20 = and i64 %8, 3                     ; 2 uses
   %lcmp.mod21.not = icmp eq i64 %xtraiter20, 0
   br i1 %lcmp.mod21.not, label %.lr.ph.i93.prol.loopexit, label %.lr.ph.i93.prol
 
@@ -406,9 +414,8 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i93.prol.loopexit:                         ; preds = %.lr.ph.i93.prol, %.lr.ph.i93.preheader
   %.020.i94.unr = phi i64 [ %.020.i94.ph, %.lr.ph.i93.preheader ], [ %i.en, %.lr.ph.i93.prol ]
-  %6 = sub i64 %.020.i94.ph, %4
-  %7 = icmp ugt i64 %6, -4
-  br i1 %7, label %_ZN7meshoptL15kdtreeBuildLeafEmPNS_6KDNodeEmPjm.exit96, label %.lr.ph.i93
+  %9 = icmp ult i64 %i.ei, 3
+  br i1 %9, label %_ZN7meshoptL15kdtreeBuildLeafEmPNS_6KDNodeEmPjm.exit96, label %.lr.ph.i93
 
 .lr.ph.i93:                                       ; preds = %.lr.ph.i93.prol.loopexit, %.lr.ph.i93
   %.020.i94 = phi i64 [ %i.fh, %.lr.ph.i93 ], [ %.020.i94.unr, %.lr.ph.i93.prol.loopexit ] ; 6 uses
@@ -811,7 +818,7 @@ bb.c:                                             ; preds = %_ZN7meshoptL16bvhCo
   %i.bl = getelementptr inbounds nuw i8, ptr %7, i64 %.idx177 ; 2 uses
   %.not.i.i = icmp ugt i64 %i.bg, %12             ; 2 uses
   %.not87.i = icmp ult i64 %5, %i.bf
-  %i.bm = add i64 %5, -1                          ; 12 uses
+  %i.bm = add i64 %5, -1                          ; 13 uses
   %i.bn = sub i64 %12, %i.bf                      ; 3 uses
   %i.bo = sub i64 %5, %i.bf                       ; 5 uses
   %invariant.op.i = add i32 %i.bh, -1
@@ -1214,6 +1221,7 @@ bb.u:                                             ; preds = %bb.u, %.epil.prehea
   %i.my = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.mx
   %i.mz = load ptr, ptr %i.my, align 8, !tbaa !118 ; 5 uses
   %i.na = sub nuw i64 %5, %.1132
+  %14 = sub i64 %i.bm, %.1132
   %xtraiter254 = and i64 %i.na, 3                 ; 2 uses
   %lcmp.mod255.not = icmp eq i64 %xtraiter254, 0
   br i1 %lcmp.mod255.not, label %.prol.loopexit, label %.prol.preheader
@@ -1233,8 +1241,7 @@ bb.u:                                             ; preds = %bb.u, %.epil.prehea
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph193
   %.0126192.unr = phi i64 [ %.1132, %.lr.ph193 ], [ %i.nf, %.prol.preheader ]
-  %14 = sub i64 %.1132, %5
-  %15 = icmp ugt i64 %14, -4
+  %15 = icmp ult i64 %14, 3
   br i1 %15, label %.preheader.split.preheader, label %.lr.ph193.new
 
 bb.v:                                             ; preds = %bb.v, %.lr.ph.new

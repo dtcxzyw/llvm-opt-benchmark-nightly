@@ -205,8 +205,8 @@ define internal fastcc void @decSetCoeff(ptr nofree noundef captures(address) %0
 bb.a:
   %i.a = ptrtoaddr ptr %2 to i64
   %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.c = load i32, ptr %1, align 4, !tbaa !27     ; 5 uses
-  %i.d = sub nsw i32 %3, %i.c                     ; 5 uses
+  %i.c = load i32, ptr %1, align 4, !tbaa !27     ; 4 uses
+  %i.d = sub nsw i32 %3, %i.c                     ; 6 uses
   %i.e = icmp slt i32 %i.d, 1
   br i1 %i.e, label %bb.b, label %bb.e
 
@@ -362,14 +362,13 @@ bb.f:                                             ; preds = %bb.e
   %i.ay = udiv i32 %i.ax, 3
   %narrow = add nuw nsw i32 %i.ay, 1
   %i.az = zext nneg i32 %narrow to i64            ; 2 uses
-  %min.iters.check = icmp ult i32 %i.ax, 153
+  %min.iters.check = icmp ult i32 %i.ax, 141
   br i1 %min.iters.check, label %.lr.ph.preheader283, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %scevgep = getelementptr i8, ptr %4, i64 4
-  %i.ba = add i32 %3, -4
-  %6 = sub i32 %i.ba, %i.c
-  %i.bb = udiv i32 %6, 3
+  %i.ba = add nsw i32 %i.d, -4
+  %i.bb = udiv i32 %i.ba, 3
   %i.bc = shl nuw i32 %i.bb, 1
   %i.bd = zext i32 %i.bc to i64
   %i.be = getelementptr i8, ptr %2, i64 %i.bd
@@ -772,17 +771,22 @@ bb.au:                                            ; preds = %bb.at
   br i1 %.not554680, label %.preheader671, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.thread779, %bb.au
-  %i.ez = phi i32 [ %i.eu, %.thread779 ], [ %i.ey, %bb.au ]
+  %i.ez = phi i32 [ %i.eu, %.thread779 ], [ %i.ey, %bb.au ] ; 2 uses
+  %6 = shl nuw nsw i32 %i.ez, 1
+  %narrow = add nuw nsw i32 %6, 8
+  %.add555 = zext nneg i32 %narrow to i64
   %i.fa = shl nuw nsw i64 %i.ep, 1                ; 2 uses
   %i.fb = shl nuw nsw i32 %i.ez, 1
   %i.fc = zext nneg i32 %i.fb to i64              ; 3 uses
+  %7 = add nsw i64 %i.fc, -2                      ; 2 uses
   %i.fd = sub nsw i64 %i.fa, %i.fc
   %scevgep = getelementptr i8, ptr %.0485, i64 %i.fd
-  %scevgep743 = getelementptr i8, ptr %1, i64 10
+  %8 = sub nsw i64 %.add555, %7
+  %scevgep743 = getelementptr i8, ptr %1, i64 %8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, ptr noundef nonnull align 2 dereferenceable(1) %scevgep743, i64 %i.fc, i1 false), !tbaa !21
-  %6 = sub nsw i64 %i.fa, %i.fc
-  %7 = getelementptr i8, ptr %.0485, i64 %6
-  %scevgep745 = getelementptr i8, ptr %7, i64 -2
+  %9 = add nsw i64 %i.fa, -4
+  %10 = sub nsw i64 %9, %7
+  %scevgep745 = getelementptr i8, ptr %.0485, i64 %10
   br label %.preheader671
 
 .preheader671:                                    ; preds = %.lr.ph.preheader, %bb.au
