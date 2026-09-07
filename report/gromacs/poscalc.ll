@@ -204,7 +204,7 @@ _ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i.i:      ; preds = %bb.ad
   br label %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i
 
 _ZNSt6vectorIiSaIiEE6resizeEm.exit.i:             ; preds = %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i.i, %bb.ad, %bb.ac, %bb.ab
-  %.pre.i = phi ptr [ %.pre.pre.i, %bb.ab ], [ %i.sq, %bb.ac ], [ %i.sq, %bb.ad ], [ %i.sq, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i.i ] ; 10 uses
+  %.pre.i = phi ptr [ %.pre.pre.i, %bb.ab ], [ %i.sq, %bb.ac ], [ %i.sq, %bb.ad ], [ %i.sq, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i.i ] ; 12 uses
   %i.sz = icmp sgt i32 %i.sc, 0
   br i1 %i.sz, label %.lr.ph.i, label %._crit_edge.i
 
@@ -246,6 +246,10 @@ bb.ae:                                            ; preds = %bb.ae, %.epil.prehe
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit.unr-lcssa, %bb.ae, %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i
   %i.ti = load ptr, ptr %i.so, align 8, !tbaa !79
+  %5 = ptrtoint ptr %i.ti to i64
+  %6 = ptrtoint ptr %.pre.i to i64
+  %7 = sub i64 %5, %6
+  %8 = getelementptr inbounds nuw i8, ptr %.pre.i, i64 %7
   %.pre = load ptr, ptr %i.ry, align 8, !tbaa !45
   %.pre340 = load i32, ptr %i.l, align 4, !tbaa !53
   br label %_ZN3gmx29PositionCalculationCollection4Impl15getFrameIndicesEiPi.exit
@@ -324,9 +328,8 @@ bb.af:                                            ; preds = %bb.af, %.lr.ph.i.ne
 _ZN3gmx29PositionCalculationCollection4Impl15getFrameIndicesEiPi.exit: ; preds = %bb.z, %._crit_edge.i
   %i.vf = phi i32 [ %i.t, %bb.z ], [ %.pre340, %._crit_edge.i ]
   %i.vg = phi ptr [ %i.rz, %bb.z ], [ %.pre, %._crit_edge.i ]
-  %.sroa.3.0.i.in = phi ptr [ %spec.select.i.i, %bb.z ], [ %i.ti, %._crit_edge.i ]
+  %.sroa.3.0.i.in = phi ptr [ %spec.select.i.i, %bb.z ], [ %8, %._crit_edge.i ] ; 2 uses
   %.sroa.0.0.i = phi ptr [ %i.se, %bb.z ], [ %.pre.i, %._crit_edge.i ] ; 26 uses
-  %.sroa.3.0.i = ptrtoint ptr %.sroa.3.0.i.in to i64 ; 2 uses
   %i.vh = load ptr, ptr %i.vg, align 8, !tbaa !60 ; 9 uses
   %i.vi = trunc i32 %i.vf to i1                   ; 9 uses
   %i.vj = load i32, ptr %0, align 8, !tbaa !57
@@ -684,8 +687,9 @@ bb.am:                                            ; preds = %bb.am, %.lr.ph285.n
 bb.an:                                            ; preds = %_ZN3gmx29PositionCalculationCollection4Impl15getFrameIndicesEiPi.exit
   %i.acq = getelementptr inbounds nuw i8, ptr %3, i64 72
   %i.acr = load ptr, ptr %i.acq, align 8, !tbaa !165
+  %9 = ptrtoint ptr %.sroa.3.0.i.in to i64
   %i.acs = ptrtoint ptr %.sroa.0.0.i to i64
-  %i.act = sub i64 %.sroa.3.0.i, %i.acs
+  %i.act = sub i64 %9, %i.acs
   %i.acu = lshr exact i64 %i.act, 2
   %i.acv = trunc i64 %i.acu to i32                ; 3 uses
   %i.acw = load ptr, ptr %.0192, align 8, !tbaa !158
@@ -726,8 +730,9 @@ bb.as:                                            ; preds = %bb.ar
 bb.at:                                            ; preds = %_ZN3gmx29PositionCalculationCollection4Impl15getFrameIndicesEiPi.exit
   %i.adj = getelementptr inbounds nuw i8, ptr %3, i64 72
   %i.adk = load ptr, ptr %i.adj, align 8, !tbaa !165
+  %10 = ptrtoint ptr %.sroa.3.0.i.in to i64
   %i.adl = ptrtoint ptr %.sroa.0.0.i to i64
-  %i.adm = sub i64 %.sroa.3.0.i, %i.adl
+  %i.adm = sub i64 %10, %i.adl
   %i.adn = lshr exact i64 %i.adm, 2
   %i.ado = trunc i64 %i.adn to i32                ; 3 uses
   %i.adp = load ptr, ptr %.0192, align 8, !tbaa !158

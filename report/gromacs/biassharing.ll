@@ -204,9 +204,9 @@ bb.a:
   br i1 %i.j, label %bb.b, label %_ZN3gmx18sumOverSimulationsIiEEvNS_8ArrayRefIT_EEP10tmpi_comm_bRKNS_7MpiCommE.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = ptrtoint ptr %2 to i64
-  %i.l = ptrtoint ptr %1 to i64
-  %i.m = sub i64 %i.k, %i.l
+  %i.k = ptrtoint ptr %1 to i64
+  %i.l = ptrtoint ptr %2 to i64
+  %i.m = sub i64 %i.l, %i.k
   %i.n = ashr exact i64 %i.m, 2                   ; 2 uses
   %i.o = icmp ult i64 %i.n, 2147483647
   br i1 %i.o, label %bb.d, label %bb.c
@@ -243,9 +243,9 @@ bb.a:
   br i1 %i.j, label %bb.b, label %_ZN3gmx18sumOverSimulationsIlEEvNS_8ArrayRefIT_EEP10tmpi_comm_bRKNS_7MpiCommE.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = ptrtoint ptr %2 to i64
-  %i.l = ptrtoint ptr %1 to i64
-  %i.m = sub i64 %i.k, %i.l
+  %i.k = ptrtoint ptr %1 to i64
+  %i.l = ptrtoint ptr %2 to i64
+  %i.m = sub i64 %i.l, %i.k
   %i.n = ashr exact i64 %i.m, 3                   ; 2 uses
   %i.o = icmp ult i64 %i.n, 2147483647
   br i1 %i.o, label %bb.d, label %bb.c
@@ -280,9 +280,9 @@ bb.a:
   br i1 %i.j, label %bb.b, label %_ZN3gmx18sumOverSimulationsIdEEvNS_8ArrayRefIT_EEP10tmpi_comm_bRKNS_7MpiCommE.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = ptrtoint ptr %2 to i64
-  %i.l = ptrtoint ptr %1 to i64
-  %i.m = sub i64 %i.k, %i.l
+  %i.k = ptrtoint ptr %1 to i64
+  %i.l = ptrtoint ptr %2 to i64
+  %i.m = sub i64 %i.l, %i.k
   %i.n = ashr exact i64 %i.m, 3                   ; 2 uses
   %i.o = icmp ult i64 %i.n, 2147483647
   br i1 %i.o, label %bb.d, label %bb.c
@@ -304,9 +304,7 @@ _ZN3gmx18sumOverSimulationsIdEEvNS_8ArrayRefIT_EEP10tmpi_comm_bRKNS_7MpiCommE.ex
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK3gmx11BiasSharing25sumOverSharingSimulationsENS_8ArrayRefIiEEi(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(104) %0, ptr %1, ptr %2, i32 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = ptrtoint ptr %2 to i64
-  %i.a = ptrtoint ptr %1 to i64
-  %5 = sub i64 %4, %i.a                           ; 2 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.c = sext i32 %3 to i64
   %i.d = load ptr, ptr %i.b, align 8, !tbaa !62
@@ -320,6 +318,8 @@ bb.a:
   br i1 %i.k, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
+  %4 = ptrtoint ptr %2 to i64
+  %5 = sub i64 %4, %i.a
   %i.l = ashr exact i64 %5, 2                     ; 2 uses
   %i.m = icmp ult i64 %i.l, 2147483647
   br i1 %i.m, label %bb.d, label %bb.c
@@ -341,8 +341,10 @@ bb.e:                                             ; preds = %bb.d, %bb.a
   br i1 %i.s, label %bb.f, label %_ZN3gmx18sumOverSimulationsIiEEvNS_8ArrayRefIT_EEP10tmpi_comm_bRKNS_7MpiCommE.exit
 
 bb.f:                                             ; preds = %bb.e
+  %6 = ptrtoint ptr %2 to i64
+  %7 = sub i64 %6, %i.a
   %i.t = load ptr, ptr %i.h, align 8, !tbaa !64
-  tail call void @_Z9gmx_bcastmPvP10tmpi_comm_(i64 noundef %5, ptr noundef %1, ptr noundef %i.t)
+  tail call void @_Z9gmx_bcastmPvP10tmpi_comm_(i64 noundef %7, ptr noundef %1, ptr noundef %i.t)
   br label %_ZN3gmx18sumOverSimulationsIiEEvNS_8ArrayRefIT_EEP10tmpi_comm_bRKNS_7MpiCommE.exit
 
 _ZN3gmx18sumOverSimulationsIiEEvNS_8ArrayRefIT_EEP10tmpi_comm_bRKNS_7MpiCommE.exit: ; preds = %bb.e, %bb.f
@@ -352,9 +354,7 @@ _ZN3gmx18sumOverSimulationsIiEEvNS_8ArrayRefIT_EEP10tmpi_comm_bRKNS_7MpiCommE.ex
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK3gmx11BiasSharing25sumOverSharingSimulationsENS_8ArrayRefIdEEi(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(104) %0, ptr %1, ptr %2, i32 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = ptrtoint ptr %2 to i64
-  %i.a = ptrtoint ptr %1 to i64
-  %5 = sub i64 %4, %i.a                           ; 2 uses
+  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.c = sext i32 %3 to i64
   %i.d = load ptr, ptr %i.b, align 8, !tbaa !62
@@ -368,6 +368,8 @@ bb.a:
   br i1 %i.k, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
+  %4 = ptrtoint ptr %2 to i64
+  %5 = sub i64 %4, %i.a
   %i.l = ashr exact i64 %5, 3                     ; 2 uses
   %i.m = icmp ult i64 %i.l, 2147483647
   br i1 %i.m, label %bb.d, label %bb.c
@@ -389,8 +391,10 @@ bb.e:                                             ; preds = %bb.d, %bb.a
   br i1 %i.s, label %bb.f, label %_ZN3gmx18sumOverSimulationsIdEEvNS_8ArrayRefIT_EEP10tmpi_comm_bRKNS_7MpiCommE.exit
 
 bb.f:                                             ; preds = %bb.e
+  %6 = ptrtoint ptr %2 to i64
+  %7 = sub i64 %6, %i.a
   %i.t = load ptr, ptr %i.h, align 8, !tbaa !64
-  tail call void @_Z9gmx_bcastmPvP10tmpi_comm_(i64 noundef %5, ptr noundef %1, ptr noundef %i.t)
+  tail call void @_Z9gmx_bcastmPvP10tmpi_comm_(i64 noundef %7, ptr noundef %1, ptr noundef %i.t)
   br label %_ZN3gmx18sumOverSimulationsIdEEvNS_8ArrayRefIT_EEP10tmpi_comm_bRKNS_7MpiCommE.exit
 
 _ZN3gmx18sumOverSimulationsIdEEvNS_8ArrayRefIT_EEP10tmpi_comm_bRKNS_7MpiCommE.exit: ; preds = %bb.e, %bb.f
@@ -582,9 +586,9 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !14     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !13
-  %i.d = ptrtoint ptr %i.c to i64
-  %i.e = ptrtoint ptr %i.a to i64
-  %i.f = sub i64 %i.d, %i.e                       ; 2 uses
+  %i.d = ptrtoint ptr %i.a to i64
+  %i.e = ptrtoint ptr %i.c to i64
+  %i.f = sub i64 %i.e, %i.d                       ; 2 uses
   %i.g = icmp sgt i64 %i.f, 0
   br i1 %i.g, label %.lr.ph223, label %._crit_edge
 

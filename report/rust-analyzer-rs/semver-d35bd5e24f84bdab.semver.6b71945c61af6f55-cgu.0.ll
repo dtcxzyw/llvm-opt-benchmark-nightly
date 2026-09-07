@@ -202,7 +202,7 @@ _RNvMse_NtNtCshzWfHUSfYae_4core3num7nonzeroINtB5_7NonZerojE13new_uncheckedCs9dV2
   %i.l = zext nneg i8 %i.k to i64
   %i.m = add nuw nsw i64 %.sroa.0.0.copyload.i, %i.l ; 2 uses
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #31
-  %i.n = tail call noalias align 2 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 %i.m, i64 2) #31 ; 3 uses
+  %i.n = tail call noalias align 2 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 %i.m, i64 2) #31 ; 4 uses
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %bb.h, label %.preheader.i
 
@@ -216,8 +216,11 @@ bb.h:                                             ; preds = %_RNvMse_NtNtCshzWfH
 
 bb.i:                                             ; preds = %.preheader.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.u, ptr nonnull readonly align 1 %i.b, i64 %.sroa.0.0.copyload.i, i1 false)
-  %i.p = ptrtoint ptr %i.n to i64
+  %i.p = ptrtoint ptr %i.n to i64                 ; 2 uses
   %i.q = tail call i64 @llvm.fshl.i64(i64 1, i64 %i.p, i64 63)
+  %3 = sub i64 %i.q, %i.p
+  %4 = getelementptr i8, ptr %i.n, i64 %3
+  %5 = ptrtoint ptr %4 to i64
   br label %_RNvMNtCs9dV2ZPf2jOH_6semver10identifierNtB2_10Identifier13new_unchecked.exit
 
 .preheader.i:                                     ; preds = %_RNvMse_NtNtCshzWfHUSfYae_4core3num7nonzeroINtB5_7NonZerojE13new_uncheckedCs9dV2ZPf2jOH_6semver.exit.i, %.preheader.i
@@ -232,7 +235,7 @@ bb.i:                                             ; preds = %.preheader.i
   br i1 %.not.i, label %bb.i, label %.preheader.i
 
 _RNvMNtCs9dV2ZPf2jOH_6semver10identifierNtB2_10Identifier13new_unchecked.exit: ; preds = %bb.c, %bb.e, %bb.i
-  %.sroa.0.0.i = phi i64 [ %i.q, %bb.i ], [ %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.02.0.copyload.i, %bb.e ], [ -1, %bb.c ]
+  %.sroa.0.0.i = phi i64 [ %5, %bb.i ], [ %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.02.0.copyload.i, %bb.e ], [ -1, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   store i64 %.sroa.0.0.i, ptr %0, align 8
   %.sroa.27.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -461,7 +464,7 @@ _RNvMse_NtNtCshzWfHUSfYae_4core3num7nonzeroINtB5_7NonZerojE13new_uncheckedCs9dV2
   %i.l = zext nneg i8 %i.k to i64
   %i.m = add nuw nsw i64 %.sroa.0.0.copyload.i, %i.l ; 2 uses
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #31
-  %i.n = tail call noalias align 2 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 %i.m, i64 2) #31 ; 3 uses
+  %i.n = tail call noalias align 2 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 %i.m, i64 2) #31 ; 4 uses
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %bb.h, label %.preheader.i
 
@@ -475,8 +478,11 @@ bb.h:                                             ; preds = %_RNvMse_NtNtCshzWfH
 
 bb.i:                                             ; preds = %.preheader.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.u, ptr nonnull readonly align 1 %i.b, i64 %.sroa.0.0.copyload.i, i1 false)
-  %i.p = ptrtoint ptr %i.n to i64
+  %i.p = ptrtoint ptr %i.n to i64                 ; 2 uses
   %i.q = tail call i64 @llvm.fshl.i64(i64 1, i64 %i.p, i64 63)
+  %3 = sub i64 %i.q, %i.p
+  %4 = getelementptr i8, ptr %i.n, i64 %3
+  %5 = ptrtoint ptr %4 to i64
   br label %_RNvMNtCs9dV2ZPf2jOH_6semver10identifierNtB2_10Identifier13new_unchecked.exit
 
 .preheader.i:                                     ; preds = %_RNvMse_NtNtCshzWfHUSfYae_4core3num7nonzeroINtB5_7NonZerojE13new_uncheckedCs9dV2ZPf2jOH_6semver.exit.i, %.preheader.i
@@ -491,7 +497,7 @@ bb.i:                                             ; preds = %.preheader.i
   br i1 %.not.i, label %bb.i, label %.preheader.i
 
 _RNvMNtCs9dV2ZPf2jOH_6semver10identifierNtB2_10Identifier13new_unchecked.exit: ; preds = %bb.c, %bb.e, %bb.i
-  %.sroa.0.0.i = phi i64 [ %i.q, %bb.i ], [ %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.02.0.copyload.i, %bb.e ], [ -1, %bb.c ]
+  %.sroa.0.0.i = phi i64 [ %5, %bb.i ], [ %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.02.0.copyload.i, %bb.e ], [ -1, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   store i64 %.sroa.0.0.i, ptr %0, align 8
   %.sroa.27.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8

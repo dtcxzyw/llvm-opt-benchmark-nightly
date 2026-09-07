@@ -162,16 +162,16 @@ _ZN3gmx12_GLOBAL__N_124calcTargetUpdateIntervalERKNS_9AwhParamsERKNS_13AwhBiasPa
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.u = load ptr, ptr %9, align 8                ; 10 uses
   %i.v = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %i.w = load ptr, ptr %i.v, align 8, !tbaa !63   ; 2 uses
-  %14 = ptrtoint ptr %i.w to i64
-  %i.x = ptrtoint ptr %i.u to i64
-  %15 = sub i64 %14, %i.x                         ; 2 uses
+  %i.w = load ptr, ptr %i.v, align 8, !tbaa !63   ; 3 uses
+  %i.x = ptrtoint ptr %i.u to i64                 ; 2 uses
   %.val51 = load i32, ptr %i.e, align 4
   %.val52 = load i32, ptr %i.i, align 8           ; 3 uses
   %.not.i = icmp eq ptr %i.w, %i.u                ; 2 uses
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %_ZN3gmx12_GLOBAL__N_124calcTargetUpdateIntervalERKNS_9AwhParamsERKNS_13AwhBiasParamsE.exit
+  %14 = ptrtoint ptr %i.w to i64
+  %15 = sub i64 %14, %i.x
   %i.y = sdiv exact i64 %15, 48
   br label %.lr.ph.i
 
@@ -316,7 +316,9 @@ _ZN3gmx12_GLOBAL__N_118getNumSharedUpdateERKNS_13AwhBiasParamsEi.exit: ; preds =
   br i1 %.not.i, label %.noexc18.i, label %.lr.ph.preheader.i56
 
 .lr.ph.preheader.i56:                             ; preds = %_ZN3gmx12_GLOBAL__N_118getNumSharedUpdateERKNS_13AwhBiasParamsEi.exit
-  %i.cg = sdiv exact i64 %15, 48
+  %16 = ptrtoint ptr %i.w to i64
+  %17 = sub i64 %16, %i.x
+  %i.cg = sdiv exact i64 %17, 48
   br label %.lr.ph.i57
 
 ._crit_edge.i60:                                  ; preds = %bb.o
@@ -445,9 +447,9 @@ bb.u:                                             ; preds = %.sink.split, %bb.t
 bb.v:                                             ; preds = %_ZN3gmx12_GLOBAL__N_131getInitialHistogramSizeEstimateERKNS_13AwhBiasParamsENS_8ArrayRefIKNS_8GridAxisEEEdd.exit
   %i.dq = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !100 ; 2 uses
-  %i.ds = ptrtoint ptr %i.dr to i64
-  %i.dt = ptrtoint ptr %i.cf to i64
-  %i.du = sub i64 %i.ds, %i.dt                    ; 2 uses
+  %i.ds = ptrtoint ptr %i.cf to i64
+  %i.dt = ptrtoint ptr %i.dr to i64
+  %i.du = sub i64 %i.dt, %i.ds                    ; 2 uses
   %i.dv = ashr exact i64 %i.du, 6                 ; 9 uses
   %i.dw = icmp sgt i64 %i.dv, 0
   br i1 %i.dw, label %.lr.ph, label %._crit_edge

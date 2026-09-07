@@ -205,11 +205,11 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sroa.0.0 = phi i64 [ %i.l, %bb.c ], [ %i.k, %bb.b ] ; 2 uses
+  %.sroa.0.0 = phi i64 [ %i.l, %bb.c ], [ %i.k, %bb.b ]
   %i.m = load ptr, ptr %2, align 8, !tbaa !228    ; 2 uses
   %i.n = ptrtoint ptr %i.m to i64
   %i.o = sub i64 %.sroa.0.0, %i.n
-  %i.p = getelementptr inbounds i8, ptr %i.m, i64 %i.o ; 3 uses
+  %i.p = getelementptr inbounds i8, ptr %i.m, i64 %i.o ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 4 ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !228  ; 5 uses
@@ -253,7 +253,8 @@ _ZNSt6vectorIiSaIiEE5eraseEN9__gnu_cxx17__normal_iteratorIPKiS1_EE.exit: ; preds
   store i32 -89194371, ptr %i.ag, align 8, !tbaa !177
   store ptr null, ptr %i.af, align 8, !tbaa !143
   store i8 2, ptr %i.ah, align 4, !tbaa !178
-  store i64 %.sroa.0.0, ptr %i.ad, align 8, !tbaa !228
+  %4 = ptrtoint ptr %i.p to i64
+  store i64 %4, ptr %i.ad, align 8, !tbaa !228
   ret void
 }
 

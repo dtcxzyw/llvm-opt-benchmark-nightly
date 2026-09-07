@@ -205,7 +205,7 @@ bb.a:
   store ptr %i.g, ptr %i.f, align 8, !tbaa !136
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   store i16 0, ptr %4, align 8, !tbaa !43
-  %i.h = ptrtoint ptr %1 to i64                   ; 3 uses
+  %i.h = ptrtoint ptr %1 to i64                   ; 4 uses
   %.not13.i.i.i = icmp samesign eq i64 %i.b, 0
   br i1 %.not13.i.i.i, label %.loopexit15, label %.lr.ph.i.i.i.preheader
 
@@ -297,8 +297,8 @@ _ZN4llvm4json6isUTF8ENS_9StringRefEPm.exit.thread6.i: ; preds = %_ZN4llvm7isASCI
   br label %.loopexit15
 
 bb.d:                                             ; preds = %_ZN4llvm7isASCIIENS_9StringRefE.exit.i.i
-  %i.al = load ptr, ptr %i.a, align 8, !tbaa !35  ; 2 uses
-  %i.am = ptrtoint ptr %i.al to i64               ; 4 uses
+  %i.al = load ptr, ptr %i.a, align 8, !tbaa !35  ; 3 uses
+  %i.am = ptrtoint ptr %i.al to i64               ; 3 uses
   %i.an = sub i64 %i.am, %i.h                     ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 %i.an
@@ -348,8 +348,6 @@ bb.d:                                             ; preds = %_ZN4llvm7isASCIIENS
   %.112.i.i.lcssa = phi i32 [ %.112.i.i.3, %._crit_edge.i.i.loopexit.unr-lcssa ], [ %.112.i.i.epil, %.lr.ph.i.i.epil ]
   %.1.i2.i.lcssa = phi ptr [ %.1.i2.i.3, %._crit_edge.i.i.loopexit.unr-lcssa ], [ %.1.i2.i.epil, %.lr.ph.i.i.epil ]
   %.pre18 = ptrtoint ptr %.1.i2.i.lcssa to i64
-  %.pre19 = sub i64 %i.am, %.pre18
-  %5 = trunc i64 %.pre19 to i32
   br label %_ZN4llvm4json12_GLOBAL__N_16Parser9checkUTF8Ev.exit
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.i.preheader.new
@@ -386,9 +384,12 @@ bb.d:                                             ; preds = %_ZN4llvm7isASCIIENS
   br i1 %niter.ncmp.3, label %._crit_edge.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !6
 
 _ZN4llvm4json12_GLOBAL__N_16Parser9checkUTF8Ev.exit: ; preds = %bb.d, %._crit_edge.i.i.loopexit
-  %.pre-phi20 = phi i32 [ %5, %._crit_edge.i.i.loopexit ], [ 0, %bb.d ]
+  %.pre-phi = phi i64 [ %.pre18, %._crit_edge.i.i.loopexit ], [ %i.h, %bb.d ]
   %.011.lcssa.i.i = phi i32 [ %.112.i.i.lcssa, %._crit_edge.i.i.loopexit ], [ 1, %bb.d ]
+  %5 = ptrtoint ptr %i.al to i64
+  %6 = sub i64 %5, %.pre-phi
   %i.bm = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #27, !noalias !353 ; 6 uses
+  %7 = trunc i64 %6 to i32
   %i.bn = trunc i64 %i.an to i32
   store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN4llvm4json10ParseErrorE, i64 16), ptr %i.bm, align 8, !tbaa !101, !noalias !353
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
@@ -396,7 +397,7 @@ _ZN4llvm4json12_GLOBAL__N_16Parser9checkUTF8Ev.exit: ; preds = %bb.d, %._crit_ed
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bm, i64 16
   store i32 %.011.lcssa.i.i, ptr %i.bp, align 8, !tbaa !142, !noalias !353
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bm, i64 20
-  store i32 %.pre-phi20, ptr %i.bq, align 4, !tbaa !143, !noalias !353
+  store i32 %7, ptr %i.bq, align 4, !tbaa !143, !noalias !353
   %i.br = getelementptr inbounds nuw i8, ptr %i.bm, i64 24
   store i32 %i.bn, ptr %i.br, align 8, !tbaa !144, !noalias !353
   store i8 1, ptr %i.c, align 8, !tbaa !128

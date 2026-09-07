@@ -202,8 +202,8 @@ bb.k:                                             ; preds = %bb.j
   %.zext.i = zext nneg i8 %i.ae to i64
   %i.af = add nuw nsw i64 %i.x, %.zext.i          ; 2 uses
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #22, !noalias !214
-  %i.ag = tail call noundef align 2 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef %i.af, i64 noundef 2) #22, !noalias !214 ; 3 uses
-  %i.ah = ptrtoint ptr %i.ag to i64
+  %i.ag = tail call noundef align 2 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef %i.af, i64 noundef 2) #22, !noalias !214 ; 4 uses
+  %i.ah = ptrtoint ptr %i.ag to i64               ; 2 uses
   %i.ai = icmp eq ptr %i.ag, null
   br i1 %i.ai, label %bb.l, label %.preheader.i, !prof !10
 
@@ -214,6 +214,10 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %.preheader.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.an, ptr nonnull readonly align 1 %1, i64 %i.x, i1 false)
   %i.aj = tail call noundef i64 @llvm.fshl.i64(i64 1, i64 %i.ah, i64 63)
+  %3 = sub i64 %i.aj, %i.ah
+  %4 = getelementptr i8, ptr %i.ag, i64 %3        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
+  %5 = ptrtoint ptr %4 to i64
   br label %_RNvMNtCsfxDLtZq386g_6semver10identifierNtB2_10Identifier13new_unchecked.exit
 
 .preheader.i:                                     ; preds = %bb.k, %.preheader.i
@@ -230,7 +234,7 @@ bb.m:                                             ; preds = %.preheader.i
 _RNvMNtCsfxDLtZq386g_6semver10identifierNtB2_10Identifier13new_unchecked.exit: ; preds = %.split91.us.i, %bb.a, %.split91.us.i.thread, %.critedge56.i.thread, %.critedge56.i, %bb.h, %bb.m
   %.sroa.12.0.ph39 = phi ptr [ %i.y, %bb.m ], [ %i.y, %bb.h ], [ %1, %.critedge56.i ], [ %1, %.critedge56.i.thread ], [ %1, %.split91.us.i ], [ %1, %.split91.us.i.thread ], [ %1, %bb.a ]
   %.sroa.15.0.ph38 = phi i64 [ %i.z, %bb.m ], [ %i.z, %bb.h ], [ %2, %.critedge56.i ], [ %2, %.critedge56.i.thread ], [ %2, %.split91.us.i ], [ %2, %.split91.us.i.thread ], [ 0, %bb.a ]
-  %.sroa.0.0.i = phi i64 [ %i.aj, %bb.m ], [ %.sroa.01.i.0..sroa.01.i.0..sroa.01.i.0..sroa.01.0..sroa.01.0..sroa.01.0..sroa.01.0.copyload.i, %bb.h ], [ -1, %.critedge56.i ], [ -1, %.critedge56.i.thread ], [ -1, %.split91.us.i ], [ -1, %.split91.us.i.thread ], [ -1, %bb.a ]
+  %.sroa.0.0.i = phi i64 [ %5, %bb.m ], [ %.sroa.01.i.0..sroa.01.i.0..sroa.01.i.0..sroa.01.0..sroa.01.0..sroa.01.0..sroa.01.0.copyload.i, %bb.h ], [ -1, %.critedge56.i ], [ -1, %.critedge56.i.thread ], [ -1, %.split91.us.i ], [ -1, %.split91.us.i.thread ], [ -1, %bb.a ]
   store i64 %.sroa.0.0.i, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.12.0.ph39, ptr %.sroa.4.0..sroa_idx, align 8
@@ -465,8 +469,8 @@ bb.h:                                             ; preds = %bb.g
   %.zext.i = zext nneg i8 %i.k to i64
   %i.l = add nuw nsw i64 %.sroa.012.0.copyload, %.zext.i ; 2 uses
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #22, !noalias !222
-  %i.m = tail call noundef align 2 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef %i.l, i64 noundef 2) #22, !noalias !222 ; 3 uses
-  %i.n = ptrtoint ptr %i.m to i64
+  %i.m = tail call noundef align 2 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef %i.l, i64 noundef 2) #22, !noalias !222 ; 4 uses
+  %i.n = ptrtoint ptr %i.m to i64                 ; 2 uses
   %i.o = icmp eq ptr %i.m, null
   br i1 %i.o, label %bb.i, label %.preheader.i, !prof !10
 
@@ -477,6 +481,10 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %.preheader.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.t, ptr nonnull readonly align 1 %i.b, i64 %.sroa.012.0.copyload, i1 false)
   %i.p = tail call noundef i64 @llvm.fshl.i64(i64 1, i64 %i.n, i64 63)
+  %3 = sub i64 %i.p, %i.n
+  %4 = getelementptr i8, ptr %i.m, i64 %3         ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
+  %5 = ptrtoint ptr %4 to i64
   br label %_RNvMNtCsfxDLtZq386g_6semver10identifierNtB2_10Identifier13new_unchecked.exit
 
 .preheader.i:                                     ; preds = %bb.h, %.preheader.i
@@ -491,7 +499,7 @@ bb.j:                                             ; preds = %.preheader.i
   br i1 %.not.i, label %bb.j, label %.preheader.i
 
 _RNvMNtCsfxDLtZq386g_6semver10identifierNtB2_10Identifier13new_unchecked.exit: ; preds = %bb.c, %bb.e, %bb.j
-  %.sroa.0.0.i = phi i64 [ %i.p, %bb.j ], [ %.sroa.01.i.0..sroa.01.i.0..sroa.01.i.0..sroa.01.0..sroa.01.0..sroa.01.0..sroa.01.0.copyload.i, %bb.e ], [ -1, %bb.c ]
+  %.sroa.0.0.i = phi i64 [ %5, %bb.j ], [ %.sroa.01.i.0..sroa.01.i.0..sroa.01.i.0..sroa.01.0..sroa.01.0..sroa.01.0..sroa.01.0.copyload.i, %bb.e ], [ -1, %bb.c ]
   store i64 %.sroa.0.0.i, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.510.0.copyload, ptr %.sroa.4.0..sroa_idx, align 8
@@ -894,12 +902,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: nonlazybind uwtable
 define noundef i64 @_RNvXs_NtCsfxDLtZq386g_6semver10identifierNtB4_10IdentifierNtNtCshzWfHUSfYae_4core5clone5Clone5clone(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 3 uses
+  %i.a = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 4 uses
   %or.cond.not = icmp slt ptr %i.a, inttoptr (i64 -1 to ptr)
-  %1 = ptrtoint ptr %i.a to i64                   ; 2 uses
   br i1 %or.cond.not, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
+  %1 = ptrtoint ptr %i.a to i64
   %i.b = getelementptr i8, ptr %i.a, i64 %1       ; 4 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   %.sroa.4.0.copyload.i = load i8, ptr %.sroa.4.0..sroa_idx.i, align 1
@@ -927,14 +935,17 @@ _RNvNtCsfxDLtZq386g_6semver10identifier10decode_len.exit: ; preds = %bb.c, %bb.d
   %.zext = zext nneg i8 %i.j to i64
   %i.k = add i64 %.sroa.0.0.i, %.zext             ; 3 uses
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #22
-  %i.l = tail call noundef align 2 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef %i.k, i64 noundef 2) #22 ; 3 uses
+  %i.l = tail call noundef align 2 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef %i.k, i64 noundef 2) #22 ; 4 uses
   %i.m = icmp eq ptr %i.l, null
   br i1 %i.m, label %bb.f, label %bb.e, !prof !10
 
 bb.e:                                             ; preds = %_RNvNtCsfxDLtZq386g_6semver10identifier10decode_len.exit
-  %i.n = ptrtoint ptr %i.l to i64
+  %i.n = ptrtoint ptr %i.l to i64                 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 2 %i.l, ptr align 1 %i.b, i64 %i.k, i1 false)
   %i.o = tail call noundef i64 @llvm.fshl.i64(i64 1, i64 %i.n, i64 63)
+  %2 = sub i64 %i.o, %i.n
+  %3 = getelementptr i8, ptr %i.l, i64 %2         ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %3) ]
   br label %bb.g
 
 bb.f:                                             ; preds = %_RNvNtCsfxDLtZq386g_6semver10identifier10decode_len.exit
@@ -942,7 +953,8 @@ bb.f:                                             ; preds = %_RNvNtCsfxDLtZq386g
   unreachable
 
 bb.g:                                             ; preds = %bb.a, %bb.e
-  %.sroa.0.0 = phi i64 [ %i.o, %bb.e ], [ %1, %bb.a ]
+  %.sroa.0.0.in = phi ptr [ %3, %bb.e ], [ %i.a, %bb.a ]
+  %.sroa.0.0 = ptrtoint ptr %.sroa.0.0.in to i64
   ret i64 %.sroa.0.0
 }
 

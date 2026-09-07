@@ -205,14 +205,18 @@ declare i32 @llvm.cttz.i32(i32, i1 immarg) #21
 ; Function Attrs: mustprogress noinline uwtable
 define linkonce_odr void @_ZN5folly6detail23PlatformSimdSplitByCharINS_4simd6detail16SimdAvx2PlatformIhEELb0EE15simdSplitByCharISt6vectorINS_5RangeIPKcEESaISC_EEEEvcSC_RT_(i8 noundef signext %0, ptr %1, ptr %2, ptr noundef nonnull align 8 dereferenceable(24) %3) local_unnamed_addr #30 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = ptrtoint ptr %2 to i64                     ; 3 uses
   %i.a = icmp eq ptr %1, %2
-  br i1 %i.a, label %_ZN5folly4simd6detail19simdForEachAligningILi1EKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb0EE15ForEachDelegateISt6vectorINS_5RangeIPKcEESaISE_EEEEEEviPT0_SJ_RT1_.exit, label %bb.b
+  br i1 %i.a, label %._ZN5folly4simd6detail19simdForEachAligningILi1EKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb0EE15ForEachDelegateISt6vectorINS_5RangeIPKcEESaISE_EEEEEEviPT0_SJ_RT1_.exit_crit_edge, label %bb.b
+
+._ZN5folly4simd6detail19simdForEachAligningILi1EKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb0EE15ForEachDelegateISt6vectorINS_5RangeIPKcEESaISE_EEEEEEviPT0_SJ_RT1_.exit_crit_edge: ; preds = %bb.a
+  %.pre177 = ptrtoint ptr %2 to i64
+  br label %_ZN5folly4simd6detail19simdForEachAligningILi1EKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb0EE15ForEachDelegateISt6vectorINS_5RangeIPKcEESaISE_EEEEEEviPT0_SJ_RT1_.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.c = and i64 %i.b, -32                        ; 2 uses
   %i.d = inttoptr i64 %i.c to ptr                 ; 4 uses
+  %4 = ptrtoint ptr %2 to i64                     ; 5 uses
   %i.e = and i64 %4, -32                          ; 2 uses
   %i.f = inttoptr i64 %i.e to ptr                 ; 2 uses
   %i.g = and i64 %i.b, 31                         ; 2 uses
@@ -588,10 +592,11 @@ _ZNSt6vectorIN5folly5RangeIPKcEESaIS4_EE12emplace_backIJS3_lEEERS4_DpOT_.exit46:
   %.not.i16 = icmp eq i32 %i.dn, 0
   br i1 %.not.i16, label %_ZN5folly4simd6detail19simdForEachAligningILi1EKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb0EE15ForEachDelegateISt6vectorINS_5RangeIPKcEESaISE_EEEEEEviPT0_SJ_RT1_.exit, label %bb.o, !llvm.loop !2800
 
-_ZN5folly4simd6detail19simdForEachAligningILi1EKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb0EE15ForEachDelegateISt6vectorINS_5RangeIPKcEESaISE_EEEEEEviPT0_SJ_RT1_.exit: ; preds = %_ZNSt6vectorIN5folly5RangeIPKcEESaIS4_EE12emplace_backIJS3_lEEERS4_DpOT_.exit46, %bb.n, %_ZNK5folly4simd6detail19SimdForEachMainLoopclIKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb0EE15ForEachDelegateISt6vectorINS_5RangeIPKcEESaISF_EEEEEEbiRPT_SK_RT0_St17integral_constantImLm1EE.exit, %bb.a
-  %.2 = phi ptr [ %1, %bb.a ], [ %.3.lcssa, %_ZNK5folly4simd6detail19SimdForEachMainLoopclIKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb0EE15ForEachDelegateISt6vectorINS_5RangeIPKcEESaISF_EEEEEEbiRPT_SK_RT0_St17integral_constantImLm1EE.exit ], [ %.0129, %bb.n ], [ %i.dq, %_ZNSt6vectorIN5folly5RangeIPKcEESaIS4_EE12emplace_backIJS3_lEEERS4_DpOT_.exit46 ] ; 5 uses
+_ZN5folly4simd6detail19simdForEachAligningILi1EKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb0EE15ForEachDelegateISt6vectorINS_5RangeIPKcEESaISE_EEEEEEviPT0_SJ_RT1_.exit: ; preds = %_ZNSt6vectorIN5folly5RangeIPKcEESaIS4_EE12emplace_backIJS3_lEEERS4_DpOT_.exit46, %._ZN5folly4simd6detail19simdForEachAligningILi1EKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb0EE15ForEachDelegateISt6vectorINS_5RangeIPKcEESaISE_EEEEEEviPT0_SJ_RT1_.exit_crit_edge, %bb.n, %_ZNK5folly4simd6detail19SimdForEachMainLoopclIKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb0EE15ForEachDelegateISt6vectorINS_5RangeIPKcEESaISF_EEEEEEbiRPT_SK_RT0_St17integral_constantImLm1EE.exit
+  %.pre-phi = phi i64 [ %.pre177, %._ZN5folly4simd6detail19simdForEachAligningILi1EKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb0EE15ForEachDelegateISt6vectorINS_5RangeIPKcEESaISE_EEEEEEviPT0_SJ_RT1_.exit_crit_edge ], [ %4, %_ZNK5folly4simd6detail19SimdForEachMainLoopclIKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb0EE15ForEachDelegateISt6vectorINS_5RangeIPKcEESaISF_EEEEEEbiRPT_SK_RT0_St17integral_constantImLm1EE.exit ], [ %4, %bb.n ], [ %4, %_ZNSt6vectorIN5folly5RangeIPKcEESaIS4_EE12emplace_backIJS3_lEEERS4_DpOT_.exit46 ]
+  %.2 = phi ptr [ %1, %._ZN5folly4simd6detail19simdForEachAligningILi1EKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb0EE15ForEachDelegateISt6vectorINS_5RangeIPKcEESaISE_EEEEEEviPT0_SJ_RT1_.exit_crit_edge ], [ %.3.lcssa, %_ZNK5folly4simd6detail19SimdForEachMainLoopclIKhNS_6detail23PlatformSimdSplitByCharINS1_16SimdAvx2PlatformIhEELb0EE15ForEachDelegateISt6vectorINS_5RangeIPKcEESaISF_EEEEEEbiRPT_SK_RT0_St17integral_constantImLm1EE.exit ], [ %.0129, %bb.n ], [ %i.dq, %_ZNSt6vectorIN5folly5RangeIPKcEESaIS4_EE12emplace_backIJS3_lEEERS4_DpOT_.exit46 ] ; 5 uses
   %i.ev = ptrtoint ptr %.2 to i64
-  %i.ew = sub i64 %4, %i.ev                       ; 2 uses
+  %i.ew = sub i64 %.pre-phi, %i.ev                ; 2 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.ey = load ptr, ptr %i.ex, align 8, !tbaa !1770 ; 7 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses

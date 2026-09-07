@@ -205,7 +205,7 @@ bb.a:
   %i.i = load ptr, ptr %0, align 8, !tbaa !39     ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 11 uses
   %i.k = load i64, ptr %i.j, align 8, !tbaa !64   ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.k ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.k ; 3 uses
   %.not.i.i = icmp eq i64 %i.k, 0
   br i1 %.not.i.i, label %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i.i, label %bb.b
 
@@ -231,7 +231,7 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i: ; preds = %_ZN7rocksdb
 bb.c:                                             ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i
   %i.r = phi i32 [ %i.o, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i ], [ %.pre.i, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i ] ; 3 uses
   %i.s = phi ptr [ %i.p, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i ], [ %i.q, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i ] ; 4 uses
-  %i.t = ptrtoint ptr %i.l to i64                 ; 3 uses
+  %i.t = ptrtoint ptr %i.l to i64
   %i.u = ptrtoint ptr %i.s to i64
   %i.v = sub i64 %i.t, %i.u                       ; 2 uses
   store ptr %i.s, ptr %0, align 8, !tbaa !40
@@ -257,8 +257,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %.not104, label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  %14 = ptrtoint ptr %i.l to i64                  ; 2 uses
   %i.aa = ptrtoint ptr %i.z to i64
-  %i.ab = sub i64 %i.t, %i.aa                     ; 2 uses
+  %i.ab = sub i64 %14, %i.aa                      ; 2 uses
   store ptr %i.z, ptr %0, align 8, !tbaa !40
   store i64 %i.ab, ptr %i.j, align 8, !tbaa !41
   %i.ac = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.ab
@@ -268,7 +269,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.ae = ptrtoint ptr %i.ad to i64
-  %i.af = sub i64 %i.t, %i.ae
+  %i.af = sub i64 %14, %i.ae
   store ptr %i.ad, ptr %0, align 8, !tbaa !40
   store i64 %i.af, ptr %i.j, align 8, !tbaa !41
   %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 48
@@ -338,7 +339,7 @@ bb.k:                                             ; preds = %_ZN7rocksdb11GetVar
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
   store ptr @.str, ptr %6, align 8, !tbaa !39
   store i64 0, ptr %i.av, align 8, !tbaa !64
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 %i.bs ; 3 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 %i.bs ; 4 uses
   %.not.i = icmp eq i64 %i.bs, 0
   br i1 %.not.i, label %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i, label %bb.l
 
@@ -365,7 +366,7 @@ thread-pre-split:                                 ; preds = %_ZN7rocksdb14GetVar
 bb.m:                                             ; preds = %thread-pre-split, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i
   %i.ca = phi i32 [ %.pr, %thread-pre-split ], [ %i.bx, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ]
   %i.cb = phi ptr [ %i.bz, %thread-pre-split ], [ %i.by, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ] ; 7 uses
-  %i.cc = ptrtoint ptr %i.bu to i64               ; 2 uses
+  %i.cc = ptrtoint ptr %i.bu to i64
   %i.cd = ptrtoint ptr %i.cb to i64
   %i.ce = sub i64 %i.cc, %i.cd                    ; 2 uses
   store ptr %i.cb, ptr %0, align 8, !tbaa !40
@@ -402,8 +403,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i60: ; preds = %_ZN7rocks
 bb.p:                                             ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i60, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i63
   %i.cm = phi i32 [ %i.cj, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i63 ], [ %.pre.i61, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i60 ] ; 6 uses
   %i.cn = phi ptr [ %i.ck, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i63 ], [ %i.cl, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i60 ] ; 16 uses
+  %15 = ptrtoint ptr %i.bu to i64
   %i.co = ptrtoint ptr %i.cn to i64
-  %i.cp = sub i64 %i.cc, %i.co                    ; 3 uses
+  %i.cp = sub i64 %15, %i.co                      ; 3 uses
   store ptr %i.cn, ptr %0, align 8, !tbaa !40
   store i64 %i.cp, ptr %i.j, align 8, !tbaa !41
   %i.cq = zext i32 %i.cm to i64                   ; 5 uses
@@ -806,7 +808,7 @@ begin_hunk_1_@_ZN7rocksdb11VersionEdit10DecodeFromERKNS_5SliceE:bb.a
 bb.c:                                             ; preds = %_ZN7rocksdb11VersionEdit5ClearEv.exit, %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit
   %i.hm = load ptr, ptr %4, align 8, !tbaa !39    ; 4 uses
   %i.hn = load i64, ptr %i.cn, align 8, !tbaa !64 ; 2 uses
-  %i.ho = getelementptr inbounds nuw i8, ptr %i.hm, i64 %i.hn ; 21 uses
+  %i.ho = getelementptr inbounds nuw i8, ptr %i.hm, i64 %i.hn ; 48 uses
   %.not.i = icmp eq i64 %i.hn, 0
   br i1 %.not.i, label %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i, label %bb.d
 
@@ -836,7 +838,7 @@ thread-pre-split:                                 ; preds = %.noexc
 bb.e:                                             ; preds = %thread-pre-split, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i
   %i.hu = phi i32 [ %.pr, %thread-pre-split ], [ %i.hr, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ] ; 2 uses
   %i.hv = phi ptr [ %i.ht, %thread-pre-split ], [ %i.hs, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ] ; 102 uses
-  %i.hw = ptrtoint ptr %i.ho to i64               ; 32 uses
+  %i.hw = ptrtoint ptr %i.ho to i64
   %i.hx = ptrtoint ptr %i.hv to i64
   %i.hy = sub i64 %i.hw, %i.hx                    ; 24 uses
   store ptr %i.hv, ptr %4, align 8, !tbaa !40
@@ -911,8 +913,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i: ; preds = %.noexc155
 bb.i:                                             ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i
   %i.ig = phi i32 [ %i.id, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i ], [ %.pre.i, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i ]
   %i.ih = phi ptr [ %i.ie, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i ], [ %i.if, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i ] ; 4 uses
+  %31 = ptrtoint ptr %i.ho to i64
   %i.ii = ptrtoint ptr %i.ih to i64
-  %i.ij = sub i64 %i.hw, %i.ii                    ; 3 uses
+  %i.ij = sub i64 %31, %i.ii                      ; 3 uses
   store ptr %i.ih, ptr %4, align 8, !tbaa !40
   store i64 %i.ij, ptr %i.cn, align 8, !tbaa !41
   %i.ik = zext i32 %i.ig to i64                   ; 4 uses
@@ -1055,8 +1058,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i161: ; preds = %.noexc16
 bb.t:                                             ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i161, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i166
   %i.jm = phi i32 [ %i.jj, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i166 ], [ %.pre.i162, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i161 ]
   %i.jn = phi ptr [ %i.jk, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i166 ], [ %i.jl, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i161 ] ; 4 uses
+  %32 = ptrtoint ptr %i.ho to i64
   %i.jo = ptrtoint ptr %i.jn to i64
-  %i.jp = sub i64 %i.hw, %i.jo                    ; 3 uses
+  %i.jp = sub i64 %32, %i.jo                      ; 3 uses
   store ptr %i.jn, ptr %4, align 8, !tbaa !40
   store i64 %i.jp, ptr %i.cn, align 8, !tbaa !41
   %i.jq = zext i32 %i.jm to i64                   ; 4 uses
@@ -1177,8 +1181,9 @@ bb.ac:                                            ; preds = %bb.e
   br i1 %.not599, label %_ZN7rocksdb5SliceC2EPKc.exit, label %bb.ad
 
 bb.ad:                                            ; preds = %.noexc180
+  %33 = ptrtoint ptr %i.ho to i64
   %i.ko = ptrtoint ptr %i.kn to i64
-  %i.kp = sub i64 %i.hw, %i.ko
+  %i.kp = sub i64 %33, %i.ko
   store ptr %i.kn, ptr %4, align 8, !tbaa !40
   store i64 %i.kp, ptr %i.cn, align 8, !tbaa !41
   store i8 1, ptr %i.gz, align 2, !tbaa !154
@@ -1194,8 +1199,9 @@ bb.ae:                                            ; preds = %bb.e
   br i1 %.not598, label %_ZN7rocksdb5SliceC2EPKc.exit, label %bb.af
 
 bb.af:                                            ; preds = %.noexc181
+  %34 = ptrtoint ptr %i.ho to i64
   %i.ks = ptrtoint ptr %i.kr to i64
-  %i.kt = sub i64 %i.hw, %i.ks
+  %i.kt = sub i64 %34, %i.ks
   store ptr %i.kr, ptr %4, align 8, !tbaa !40
   store i64 %i.kt, ptr %i.cn, align 8, !tbaa !41
   store i8 1, ptr %i.gx, align 1, !tbaa !165
@@ -1211,8 +1217,9 @@ bb.ag:                                            ; preds = %bb.e
   br i1 %.not597, label %_ZN7rocksdb5SliceC2EPKc.exit, label %bb.ah
 
 bb.ah:                                            ; preds = %.noexc183
+  %35 = ptrtoint ptr %i.ho to i64
   %i.kw = ptrtoint ptr %i.kv to i64
-  %i.kx = sub i64 %i.hw, %i.kw
+  %i.kx = sub i64 %35, %i.kw
   store ptr %i.kv, ptr %4, align 8, !tbaa !40
   store i64 %i.kx, ptr %i.cn, align 8, !tbaa !41
   store i8 1, ptr %i.gv, align 4, !tbaa !167
@@ -1244,8 +1251,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i186:   ; preds = %bb.aj, %bb.ai
 
 bb.ak:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i189, %.noexc190
   %.1.i14.i188 = phi ptr [ %i.lc, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i189 ], [ %i.ld, %.noexc190 ] ; 2 uses
+  %36 = ptrtoint ptr %i.ho to i64
   %i.le = ptrtoint ptr %.1.i14.i188 to i64
-  %i.lf = sub i64 %i.hw, %i.le
+  %i.lf = sub i64 %36, %i.le
   store ptr %.1.i14.i188, ptr %4, align 8, !tbaa !40
   store i64 %i.lf, ptr %i.cn, align 8, !tbaa !41
   store i8 1, ptr %i.gt, align 1, !tbaa !169
@@ -1261,8 +1269,9 @@ bb.al:                                            ; preds = %bb.e
   br i1 %.not596, label %_ZN7rocksdb5SliceC2EPKc.exit, label %bb.am
 
 bb.am:                                            ; preds = %.noexc192
+  %37 = ptrtoint ptr %i.ho to i64
   %i.li = ptrtoint ptr %i.lh to i64
-  %i.lj = sub i64 %i.hw, %i.li
+  %i.lj = sub i64 %37, %i.li
   store ptr %i.lh, ptr %4, align 8, !tbaa !40
   store i64 %i.lj, ptr %i.cn, align 8, !tbaa !41
   store i8 1, ptr %i.ga, align 2, !tbaa !171
@@ -1278,8 +1287,9 @@ bb.an:                                            ; preds = %bb.e
   br i1 %.not595, label %_ZN7rocksdb5SliceC2EPKc.exit, label %bb.ao
 
 bb.ao:                                            ; preds = %.noexc194
+  %38 = ptrtoint ptr %i.ho to i64
   %i.lm = ptrtoint ptr %i.ll to i64
-  %i.ln = sub i64 %i.hw, %i.lm
+  %i.ln = sub i64 %38, %i.lm
   store ptr %i.ll, ptr %4, align 8, !tbaa !40
   store i64 %i.ln, ptr %i.cn, align 8, !tbaa !41
   store i8 1, ptr %i.gr, align 1, !tbaa !173
@@ -1317,8 +1327,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i199: ; preds = %.noexc20
 bb.ar:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i199, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i201
   %i.lu = phi i32 [ %i.lr, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i201 ], [ %.pre.i200, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i199 ] ; 3 uses
   %.1.i14.i.i = phi ptr [ %i.ls, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i201 ], [ %i.lt, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i199 ] ; 2 uses
+  %39 = ptrtoint ptr %i.ho to i64
   %i.lv = ptrtoint ptr %.1.i14.i.i to i64
-  %i.lw = sub i64 %i.hw, %i.lv
+  %i.lw = sub i64 %39, %i.lv
   store ptr %.1.i14.i.i, ptr %4, align 8, !tbaa !40
   store i64 %i.lw, ptr %i.cn, align 8, !tbaa !41
   %i.lx = load i32, ptr %1, align 8, !tbaa !207
@@ -1525,8 +1536,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i214: ; preds = %.noexc21
 bb.bi:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i214, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i217
   %i.nn = phi i32 [ %i.nk, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i217 ], [ %.pre.i215, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i214 ] ; 3 uses
   %i.no = phi ptr [ %i.nl, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i217 ], [ %i.nm, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i214 ] ; 4 uses
+  %40 = ptrtoint ptr %i.ho to i64
   %i.np = ptrtoint ptr %i.no to i64
-  %i.nq = sub i64 %i.hw, %i.np                    ; 2 uses
+  %i.nq = sub i64 %40, %i.np                      ; 2 uses
   store ptr %i.no, ptr %4, align 8, !tbaa !40
   store i64 %i.nq, ptr %i.cn, align 8, !tbaa !41
   %i.nr = load i32, ptr %1, align 8, !tbaa !207
@@ -1552,8 +1564,9 @@ bb.bl:                                            ; preds = %bb.bj, %bb.bi
   br i1 %.not594, label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit221, label %bb.bm
 
 bb.bm:                                            ; preds = %.noexc220
+  %41 = ptrtoint ptr %i.ho to i64
   %i.nv = ptrtoint ptr %i.nu to i64
-  %i.nw = sub i64 %i.hw, %i.nv
+  %i.nw = sub i64 %41, %i.nv
   store ptr %i.nu, ptr %4, align 8, !tbaa !40
   store i64 %i.nw, ptr %i.cn, align 8, !tbaa !41
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #30
@@ -1624,8 +1637,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i226: ; preds = %.noexc23
 bb.bs:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i226, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i229
   %i.oh = phi i32 [ %i.oe, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i229 ], [ %.pre.i227, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i226 ] ; 3 uses
   %i.oi = phi ptr [ %i.of, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i229 ], [ %i.og, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i226 ] ; 4 uses
+  %42 = ptrtoint ptr %i.ho to i64
   %i.oj = ptrtoint ptr %i.oi to i64
-  %i.ok = sub i64 %i.hw, %i.oj                    ; 2 uses
+  %i.ok = sub i64 %42, %i.oj                      ; 2 uses
   store ptr %i.oi, ptr %4, align 8, !tbaa !40
   store i64 %i.ok, ptr %i.cn, align 8, !tbaa !41
   %i.ol = load i32, ptr %1, align 8, !tbaa !207
@@ -1651,8 +1665,9 @@ bb.bv:                                            ; preds = %bb.bt, %bb.bs
   br i1 %.not592, label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit233, label %bb.bw
 
 bb.bw:                                            ; preds = %.noexc232
+  %43 = ptrtoint ptr %i.ho to i64                 ; 2 uses
   %i.op = ptrtoint ptr %i.oo to i64
-  %i.oq = sub i64 %i.hw, %i.op                    ; 2 uses
+  %i.oq = sub i64 %43, %i.op                      ; 2 uses
   store ptr %i.oo, ptr %4, align 8, !tbaa !40
   store i64 %i.oq, ptr %i.cn, align 8, !tbaa !41
   %i.or = getelementptr inbounds nuw i8, ptr %i.oo, i64 %i.oq
@@ -1665,7 +1680,7 @@ bb.bw:                                            ; preds = %.noexc232
 
 bb.bx:                                            ; preds = %.noexc234
   %i.ot = ptrtoint ptr %i.os to i64
-  %i.ou = sub i64 %i.hw, %i.ot
+  %i.ou = sub i64 %43, %i.ot
   store ptr %i.os, ptr %4, align 8, !tbaa !40
   store i64 %i.ou, ptr %i.cn, align 8, !tbaa !41
   %i.ov = invoke fastcc noundef zeroext i1 @_ZN7rocksdbL14GetInternalKeyEPNS_5SliceEPNS_11InternalKeyE(ptr noundef nonnull %4, ptr noundef %i.bk)
@@ -1776,8 +1791,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i241: ; preds = %.noexc24
 bb.cj:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i241, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i244
   %i.pk = phi i32 [ %i.ph, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i244 ], [ %.pre.i242, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i241 ] ; 3 uses
   %i.pl = phi ptr [ %i.pi, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i244 ], [ %i.pj, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i241 ] ; 4 uses
+  %44 = ptrtoint ptr %i.ho to i64
   %i.pm = ptrtoint ptr %i.pl to i64
-  %i.pn = sub i64 %i.hw, %i.pm                    ; 2 uses
+  %i.pn = sub i64 %44, %i.pm                      ; 2 uses
   store ptr %i.pl, ptr %4, align 8, !tbaa !40
   store i64 %i.pn, ptr %i.cn, align 8, !tbaa !41
   %i.po = load i32, ptr %1, align 8, !tbaa !207
@@ -1803,8 +1819,9 @@ bb.cm:                                            ; preds = %bb.ck, %bb.cj
   br i1 %.not588, label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit248, label %bb.cn
 
 bb.cn:                                            ; preds = %.noexc247
+  %45 = ptrtoint ptr %i.ho to i64                 ; 2 uses
   %i.ps = ptrtoint ptr %i.pr to i64
-  %i.pt = sub i64 %i.hw, %i.ps                    ; 2 uses
+  %i.pt = sub i64 %45, %i.ps                      ; 2 uses
   store ptr %i.pr, ptr %4, align 8, !tbaa !40
   store i64 %i.pt, ptr %i.cn, align 8, !tbaa !41
   %i.pu = getelementptr inbounds nuw i8, ptr %i.pr, i64 %i.pt
@@ -1817,7 +1834,7 @@ bb.cn:                                            ; preds = %.noexc247
 
 bb.co:                                            ; preds = %.noexc249
   %i.pw = ptrtoint ptr %i.pv to i64
-  %i.px = sub i64 %i.hw, %i.pw
+  %i.px = sub i64 %45, %i.pw
   store ptr %i.pv, ptr %4, align 8, !tbaa !40
   store i64 %i.px, ptr %i.cn, align 8, !tbaa !41
   %i.py = invoke fastcc noundef zeroext i1 @_ZN7rocksdbL14GetInternalKeyEPNS_5SliceEPNS_11InternalKeyE(ptr noundef nonnull %4, ptr noundef %i.bk)
@@ -1966,8 +1983,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i264: ; preds = %.noexc26
 bb.dc:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i264, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i267
   %i.qy = phi i32 [ %i.qv, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i267 ], [ %.pre.i265, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i264 ] ; 3 uses
   %i.qz = phi ptr [ %i.qw, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i267 ], [ %i.qx, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i264 ] ; 4 uses
+  %46 = ptrtoint ptr %i.ho to i64
   %i.ra = ptrtoint ptr %i.qz to i64
-  %i.rb = sub i64 %i.hw, %i.ra                    ; 2 uses
+  %i.rb = sub i64 %46, %i.ra                      ; 2 uses
   store ptr %i.qz, ptr %4, align 8, !tbaa !40
   store i64 %i.rb, ptr %i.cn, align 8, !tbaa !41
   %i.rc = load i32, ptr %1, align 8, !tbaa !207
@@ -1993,8 +2011,9 @@ bb.df:                                            ; preds = %bb.dd, %bb.dc
   br i1 %.not584, label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit271, label %bb.dg
 
 bb.dg:                                            ; preds = %.noexc270
+  %47 = ptrtoint ptr %i.ho to i64                 ; 3 uses
   %i.rg = ptrtoint ptr %i.rf to i64
-  %i.rh = sub i64 %i.hw, %i.rg                    ; 2 uses
+  %i.rh = sub i64 %47, %i.rg                      ; 2 uses
   store ptr %i.rf, ptr %4, align 8, !tbaa !40
   store i64 %i.rh, ptr %i.cn, align 8, !tbaa !41
   %i.ri = getelementptr inbounds nuw i8, ptr %i.rf, i64 %i.rh
@@ -2023,7 +2042,7 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i273:   ; preds = %bb.dh, %bb.dg
 bb.di:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i276, %.noexc277
   %.1.i14.i275 = phi ptr [ %i.rm, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i276 ], [ %i.rn, %.noexc277 ] ; 4 uses
   %i.ro = ptrtoint ptr %.1.i14.i275 to i64
-  %i.rp = sub i64 %i.hw, %i.ro                    ; 2 uses
+  %i.rp = sub i64 %47, %i.ro                      ; 2 uses
   store ptr %.1.i14.i275, ptr %4, align 8, !tbaa !40
   store i64 %i.rp, ptr %i.cn, align 8, !tbaa !41
   %i.rq = getelementptr inbounds nuw i8, ptr %.1.i14.i275, i64 %i.rp
@@ -2036,7 +2055,7 @@ bb.di:                                            ; preds = %_ZN7rocksdb14GetVar
 
 bb.dj:                                            ; preds = %.noexc279
   %i.rs = ptrtoint ptr %i.rr to i64
-  %i.rt = sub i64 %i.hw, %i.rs
+  %i.rt = sub i64 %47, %i.rs
   store ptr %i.rr, ptr %4, align 8, !tbaa !40
   store i64 %i.rt, ptr %i.cn, align 8, !tbaa !41
   %i.ru = invoke fastcc noundef zeroext i1 @_ZN7rocksdbL14GetInternalKeyEPNS_5SliceEPNS_11InternalKeyE(ptr noundef nonnull %4, ptr noundef %i.bk)
@@ -2439,8 +2458,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i323: ; preds = %.noexc32
 bb.fa:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i323, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i328
   %i.wq = phi i32 [ %i.wn, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i328 ], [ %.pre.i324, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i323 ]
   %i.wr = phi ptr [ %i.wo, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i328 ], [ %i.wp, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i323 ] ; 4 uses
+  %48 = ptrtoint ptr %i.ho to i64
   %i.ws = ptrtoint ptr %i.wr to i64
-  %i.wt = sub i64 %i.hw, %i.ws                    ; 3 uses
+  %i.wt = sub i64 %48, %i.ws                      ; 3 uses
   store ptr %i.wr, ptr %4, align 8, !tbaa !40
   store i64 %i.wt, ptr %i.cn, align 8, !tbaa !41
   %i.wu = zext i32 %i.wq to i64                   ; 4 uses
@@ -2673,8 +2693,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i362: ; preds = %.noexc36
 bb.fs:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i362, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i367
   %i.ym = phi i32 [ %i.yj, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i367 ], [ %.pre.i363, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i362 ]
   %i.yn = phi ptr [ %i.yk, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i367 ], [ %i.yl, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i362 ] ; 4 uses
+  %49 = ptrtoint ptr %i.ho to i64
   %i.yo = ptrtoint ptr %i.yn to i64
-  %i.yp = sub i64 %i.hw, %i.yo                    ; 3 uses
+  %i.yp = sub i64 %49, %i.yo                      ; 3 uses
   store ptr %i.yn, ptr %4, align 8, !tbaa !40
   store i64 %i.yp, ptr %i.cn, align 8, !tbaa !41
   %i.yq = zext i32 %i.ym to i64                   ; 4 uses
@@ -2767,8 +2788,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i377:   ; preds = %bb.gb, %bb.ga
 
 bb.gc:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i380, %.noexc381
   %.1.i14.i379 = phi ptr [ %i.zd, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i380 ], [ %i.ze, %.noexc381 ] ; 2 uses
+  %50 = ptrtoint ptr %i.ho to i64
   %i.zf = ptrtoint ptr %.1.i14.i379 to i64
-  %i.zg = sub i64 %i.hw, %i.zf
+  %i.zg = sub i64 %50, %i.zf
   store ptr %.1.i14.i379, ptr %4, align 8, !tbaa !40
   store i64 %i.zg, ptr %i.cn, align 8, !tbaa !41
   br label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit
@@ -2805,8 +2827,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i386: ; preds = %.noexc39
 bb.gf:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i386, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i391
   %i.zn = phi i32 [ %i.zk, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i391 ], [ %.pre.i387, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i386 ]
   %i.zo = phi ptr [ %i.zl, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i391 ], [ %i.zm, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i386 ] ; 4 uses
+  %51 = ptrtoint ptr %i.ho to i64
   %i.zp = ptrtoint ptr %i.zo to i64
-  %i.zq = sub i64 %i.hw, %i.zp                    ; 3 uses
+  %i.zq = sub i64 %51, %i.zp                      ; 3 uses
   store ptr %i.zo, ptr %4, align 8, !tbaa !40
   store i64 %i.zq, ptr %i.cn, align 8, !tbaa !41
   %i.zr = zext i32 %i.zn to i64                   ; 4 uses
@@ -2948,8 +2971,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i406:   ; preds = %bb.gq, %bb.gp
 
 bb.gr:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i409, %.noexc410
   %.1.i14.i408 = phi ptr [ %i.aar, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i409 ], [ %i.aas, %.noexc410 ] ; 2 uses
+  %52 = ptrtoint ptr %i.ho to i64
   %i.aat = ptrtoint ptr %.1.i14.i408 to i64
-  %i.aau = sub i64 %i.hw, %i.aat
+  %i.aau = sub i64 %52, %i.aat
   store ptr %.1.i14.i408, ptr %4, align 8, !tbaa !40
   store i64 %i.aau, ptr %i.cn, align 8, !tbaa !41
   br label %_ZN7rocksdb11GetVarint64EPNS_5SliceEPm.exit
@@ -2986,8 +3010,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i415: ; preds = %.noexc42
 bb.gu:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i415, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i420
   %i.abb = phi i32 [ %i.aay, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i420 ], [ %.pre.i416, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i415 ] ; 2 uses
   %i.abc = phi ptr [ %i.aaz, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i420 ], [ %i.aba, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i415 ] ; 5 uses
+  %53 = ptrtoint ptr %i.ho to i64
   %i.abd = ptrtoint ptr %i.abc to i64
-  %i.abe = sub i64 %i.hw, %i.abd                  ; 3 uses
+  %i.abe = sub i64 %53, %i.abd                    ; 3 uses
   store ptr %i.abc, ptr %4, align 8, !tbaa !40
   store i64 %i.abe, ptr %i.cn, align 8, !tbaa !41
   %i.abf = zext i32 %i.abb to i64                 ; 5 uses
@@ -3046,8 +3071,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i427: ; preds = %.noexc43
 bb.gz:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i427, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i432
   %i.abr = phi i32 [ %i.abo, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i432 ], [ %.pre.i428, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i427 ] ; 2 uses
   %i.abs = phi ptr [ %i.abp, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i432 ], [ %i.abq, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i427 ] ; 5 uses
+  %54 = ptrtoint ptr %i.ho to i64
   %i.abt = ptrtoint ptr %i.abs to i64
-  %i.abu = sub i64 %i.hw, %i.abt                  ; 3 uses
+  %i.abu = sub i64 %54, %i.abt                    ; 3 uses
   store ptr %i.abs, ptr %4, align 8, !tbaa !40
   store i64 %i.abu, ptr %i.cn, align 8, !tbaa !41
   %i.abv = zext i32 %i.abr to i64                 ; 4 uses
@@ -3110,8 +3136,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i438: ; preds = %.noexc44
 bb.he:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i438, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i443
   %i.ach = phi i32 [ %i.ace, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i443 ], [ %.pre.i439, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i438 ]
   %i.aci = phi ptr [ %i.acf, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i443 ], [ %i.acg, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i438 ] ; 4 uses
+  %55 = ptrtoint ptr %i.ho to i64
   %i.acj = ptrtoint ptr %i.aci to i64
-  %i.ack = sub i64 %i.hw, %i.acj                  ; 3 uses
+  %i.ack = sub i64 %55, %i.acj                    ; 3 uses
   store ptr %i.aci, ptr %4, align 8, !tbaa !40
   store i64 %i.ack, ptr %i.cn, align 8, !tbaa !41
   %i.acl = zext i32 %i.ach to i64                 ; 4 uses
@@ -3252,8 +3279,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i458: ; preds = %.noexc46
 bb.hq:                                            ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i458, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i463
   %i.adg = phi i32 [ %i.add, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i463 ], [ %.pre.i459, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i458 ]
   %i.adh = phi ptr [ %i.ade, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i463 ], [ %i.adf, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i458 ] ; 4 uses
+  %56 = ptrtoint ptr %i.ho to i64
   %i.adi = ptrtoint ptr %i.adh to i64
-  %i.adj = sub i64 %i.hw, %i.adi                  ; 3 uses
+  %i.adj = sub i64 %56, %i.adi                    ; 3 uses
   store ptr %i.adh, ptr %4, align 8, !tbaa !40
   store i64 %i.adj, ptr %i.cn, align 8, !tbaa !41
   %i.adk = zext i32 %i.adg to i64                 ; 3 uses
@@ -3322,8 +3350,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i469:   ; preds = %bb.hw, %bb.hv
 bb.hx:                                            ; preds = %.noexc473._crit_edge, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i472
   %i.adw = phi i32 [ %i.adt, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i472 ], [ %.pre751, %.noexc473._crit_edge ]
   %i.adx = phi ptr [ %i.adu, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i472 ], [ %i.adv, %.noexc473._crit_edge ] ; 3 uses
+  %57 = ptrtoint ptr %i.ho to i64
   %i.ady = ptrtoint ptr %i.adx to i64
-  %i.adz = sub i64 %i.hw, %i.ady                  ; 3 uses
+  %i.adz = sub i64 %57, %i.ady                    ; 3 uses
   store ptr %i.adx, ptr %4, align 8, !tbaa !40
   store i64 %i.adz, ptr %i.cn, align 8, !tbaa !41
   %i.aea = zext i32 %i.adw to i64                 ; 3 uses
@@ -3726,7 +3755,7 @@ bb.b:                                             ; preds = %.critedge, %bb.a
   store i32 0, ptr %i.b, align 4, !tbaa !207
   %i.m = load ptr, ptr %2, align 8, !tbaa !39     ; 4 uses
   %i.n = load i64, ptr %i.c, align 8, !tbaa !64   ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.n ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.n ; 4 uses
   %.not.i = icmp eq i64 %i.n, 0
   br i1 %.not.i, label %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i, label %bb.c
 
@@ -3768,7 +3797,7 @@ thread-pre-split:                                 ; preds = %_ZN7rocksdb14GetVar
 bb.d:                                             ; preds = %thread-pre-split, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i
   %i.w = phi i32 [ %.pr, %thread-pre-split ], [ %i.r, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ]
   %i.x = phi ptr [ %i.t, %thread-pre-split ], [ %i.s, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ] ; 7 uses
-  %i.y = ptrtoint ptr %i.o to i64                 ; 2 uses
+  %i.y = ptrtoint ptr %i.o to i64
   %i.z = ptrtoint ptr %i.x to i64
   %i.aa = sub i64 %i.y, %i.z                      ; 2 uses
   store ptr %i.x, ptr %2, align 8, !tbaa !40
@@ -3814,8 +3843,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i: ; preds = %_ZN7rocksdb
 bb.g:                                             ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i
   %i.ai = phi i32 [ %i.af, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i ], [ %.pre.i, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i ]
   %i.aj = phi ptr [ %i.ag, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i ], [ %i.ah, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i ] ; 5 uses
+  %13 = ptrtoint ptr %i.o to i64
   %i.ak = ptrtoint ptr %i.aj to i64
-  %i.al = sub i64 %i.y, %i.ak                     ; 3 uses
+  %i.al = sub i64 %13, %i.ak                      ; 3 uses
   store ptr %i.aj, ptr %2, align 8, !tbaa !40
   store i64 %i.al, ptr %i.c, align 8, !tbaa !41
   %i.am = zext i32 %i.ai to i64                   ; 4 uses
@@ -4218,7 +4248,7 @@ bb.c:                                             ; preds = %.critedge, %_ZN7roc
   store i32 0, ptr %i.b, align 4, !tbaa !207
   %i.t = load ptr, ptr %2, align 8, !tbaa !39     ; 4 uses
   %i.u = load i64, ptr %i.q, align 8, !tbaa !64   ; 2 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.u ; 3 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.u ; 4 uses
   %.not.i = icmp eq i64 %i.u, 0
   br i1 %.not.i, label %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i, label %bb.d
 
@@ -4260,7 +4290,7 @@ thread-pre-split:                                 ; preds = %_ZN7rocksdb14GetVar
 bb.e:                                             ; preds = %thread-pre-split, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i
   %i.ad = phi i32 [ %.pr, %thread-pre-split ], [ %i.y, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ]
   %i.ae = phi ptr [ %i.aa, %thread-pre-split ], [ %i.z, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ] ; 7 uses
-  %i.af = ptrtoint ptr %i.v to i64                ; 2 uses
+  %i.af = ptrtoint ptr %i.v to i64
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = sub i64 %i.af, %i.ag                    ; 2 uses
   store ptr %i.ae, ptr %2, align 8, !tbaa !40
@@ -4304,8 +4334,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i: ; preds = %_ZN7rocksdb
 bb.h:                                             ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i
   %i.ap = phi i32 [ %i.am, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i ], [ %.pre.i, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i ]
   %i.aq = phi ptr [ %i.an, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i.i ], [ %i.ao, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i._crit_edge.i ] ; 5 uses
+  %12 = ptrtoint ptr %i.v to i64
   %i.ar = ptrtoint ptr %i.aq to i64
-  %i.as = sub i64 %i.af, %i.ar                    ; 3 uses
+  %i.as = sub i64 %12, %i.ar                      ; 3 uses
   store ptr %i.aq, ptr %2, align 8, !tbaa !40
   store i64 %i.as, ptr %i.q, align 8, !tbaa !41
   %i.at = zext i32 %i.ap to i64                   ; 4 uses

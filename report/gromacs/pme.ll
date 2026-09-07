@@ -205,9 +205,13 @@ bb.bj:                                            ; preds = %bb.bi
 bb.bk:                                            ; preds = %bb.bj
   %i.pi = load ptr, ptr %i.a, align 8, !tbaa !307 ; 2 uses
   %i.pj = getelementptr inbounds nuw i8, ptr %i.pi, i64 592
-  %i.pk = load ptr, ptr %i.pj, align 8, !tbaa !271
+  %i.pk = load ptr, ptr %i.pj, align 8, !tbaa !271 ; 3 uses
   %i.pl = getelementptr inbounds nuw i8, ptr %i.pi, i64 600
   %i.pm = load ptr, ptr %i.pl, align 8, !tbaa !384
+  %31 = ptrtoint ptr %i.pm to i64
+  %32 = ptrtoint ptr %i.pk to i64                 ; 2 uses
+  %33 = sub i64 %31, %32
+  %34 = getelementptr inbounds nuw i8, ptr %i.pk, i64 %33
   br i1 %i.pa, label %bb.bm, label %bb.bn
 
 bb.bl:                                            ; preds = %_ZNSt6vectorIfSaIfEE6assignIN3gmx12ArrayRefIterIKfEEvEEvT_S7_.exit200.invoke, %bb.bx, %bb.bw, %bb.bv, %bb.bp, %bb.bn, %bb.bm, %bb.cv, %_ZNSt6vectorIfSaIfEE6assignIN9__gnu_cxx17__normal_iteratorIPfS_IfN3gmx30DefaultInitializationAllocatorIfS0_EEEEEvEEvT_SB_.exit._crit_edge, %bb.bu, %bb.bt, %bb.bs, %bb.bj
@@ -236,8 +240,12 @@ _ZNSt6vectorIfSaIfEE6assignIN3gmx12ArrayRefIterIKfEEvEEvT_S7_.exit200.invoke: ; 
           to label %_ZNSt6vectorIfSaIfEE6assignIN3gmx12ArrayRefIterIKfEEvEEvT_S7_.exit197 unwind label %bb.bl
 
 bb.bo:                                            ; preds = %bb.bi
-  %i.pq = load ptr, ptr %i.om, align 8, !tbaa !271 ; 4 uses
-  %i.pr = load ptr, ptr %i.on, align 8, !tbaa !384 ; 4 uses
+  %i.pq = load ptr, ptr %i.om, align 8, !tbaa !271 ; 6 uses
+  %i.pr = load ptr, ptr %i.on, align 8, !tbaa !384
+  %35 = ptrtoint ptr %i.pr to i64
+  %36 = ptrtoint ptr %i.pq to i64                 ; 5 uses
+  %37 = sub i64 %35, %36
+  %38 = getelementptr inbounds nuw i8, ptr %i.pq, i64 %37 ; 4 uses
   %.377 = select i1 %i.pa, ptr %9, ptr %10        ; 2 uses
   %.378 = select i1 %i.pa, ptr %7, ptr %8         ; 2 uses
   %.sroa.0322.0 = load ptr, ptr %.378, align 8    ; 3 uses
@@ -621,11 +629,12 @@ _ZNSt6vectorIfSaIfEE6assignIN9__gnu_cxx17__normal_iteratorIPfS_IfN3gmx30DefaultI
   br i1 %niter675.ncmp.7, label %_ZNSt6vectorIfSaIfEE6assignIN9__gnu_cxx17__normal_iteratorIPfS_IfN3gmx30DefaultInitializationAllocatorIfS0_EEEEEvEEvT_SB_.exit207._crit_edge.loopexit.unr-lcssa, label %_ZNSt6vectorIfSaIfEE6assignIN9__gnu_cxx17__normal_iteratorIPfS_IfN3gmx30DefaultInitializationAllocatorIfS0_EEEEEvEEvT_SB_.exit207, !llvm.loop !694
 
 _ZNSt6vectorIfSaIfEE6assignIN3gmx12ArrayRefIterIKfEEvEEvT_S7_.exit197: ; preds = %_ZNSt6vectorIfSaIfEE6assignIN3gmx12ArrayRefIterIKfEEvEEvT_S7_.exit200.invoke, %_ZNSt6vectorIfSaIfEE6assignIN9__gnu_cxx17__normal_iteratorIPfS_IfN3gmx30DefaultInitializationAllocatorIfS0_EEEEEvEEvT_SB_.exit207._crit_edge, %bb.cc, %bb.cb, %bb.ca
-  %.sroa.11.0.in = phi ptr [ %i.pm, %_ZNSt6vectorIfSaIfEE6assignIN3gmx12ArrayRefIterIKfEEvEEvT_S7_.exit200.invoke ], [ %i.pr, %_ZNSt6vectorIfSaIfEE6assignIN9__gnu_cxx17__normal_iteratorIPfS_IfN3gmx30DefaultInitializationAllocatorIfS0_EEEEEvEEvT_SB_.exit207._crit_edge ], [ %i.pr, %bb.ca ], [ %i.pr, %bb.cb ], [ %i.pr, %bb.cc ] ; 3 uses
-  %.sroa.0309.0 = phi ptr [ %i.pk, %_ZNSt6vectorIfSaIfEE6assignIN3gmx12ArrayRefIterIKfEEvEEvT_S7_.exit200.invoke ], [ %i.pq, %_ZNSt6vectorIfSaIfEE6assignIN9__gnu_cxx17__normal_iteratorIPfS_IfN3gmx30DefaultInitializationAllocatorIfS0_EEEEEvEEvT_SB_.exit207._crit_edge ], [ %i.pq, %bb.ca ], [ %i.pq, %bb.cb ], [ %i.pq, %bb.cc ] ; 41 uses
-  %.sroa.11.0 = ptrtoint ptr %.sroa.11.0.in to i64
-  %i.xa = ptrtoint ptr %.sroa.0309.0 to i64       ; 5 uses
-  %i.xb = sub i64 %.sroa.11.0, %i.xa              ; 8 uses
+  %.pre-phi = phi i64 [ %36, %_ZNSt6vectorIfSaIfEE6assignIN9__gnu_cxx17__normal_iteratorIPfS_IfN3gmx30DefaultInitializationAllocatorIfS0_EEEEEvEEvT_SB_.exit207._crit_edge ], [ %36, %bb.cc ], [ %36, %bb.cb ], [ %36, %bb.ca ], [ %32, %_ZNSt6vectorIfSaIfEE6assignIN3gmx12ArrayRefIterIKfEEvEEvT_S7_.exit200.invoke ]
+  %.sroa.11.0.in = phi ptr [ %38, %_ZNSt6vectorIfSaIfEE6assignIN9__gnu_cxx17__normal_iteratorIPfS_IfN3gmx30DefaultInitializationAllocatorIfS0_EEEEEvEEvT_SB_.exit207._crit_edge ], [ %38, %bb.cc ], [ %38, %bb.cb ], [ %38, %bb.ca ], [ %34, %_ZNSt6vectorIfSaIfEE6assignIN3gmx12ArrayRefIterIKfEEvEEvT_S7_.exit200.invoke ]
+  %.sroa.0309.0 = phi ptr [ %i.pq, %_ZNSt6vectorIfSaIfEE6assignIN9__gnu_cxx17__normal_iteratorIPfS_IfN3gmx30DefaultInitializationAllocatorIfS0_EEEEEvEEvT_SB_.exit207._crit_edge ], [ %i.pq, %bb.cc ], [ %i.pq, %bb.cb ], [ %i.pq, %bb.ca ], [ %i.pk, %_ZNSt6vectorIfSaIfEE6assignIN3gmx12ArrayRefIterIKfEEvEEvT_S7_.exit200.invoke ] ; 43 uses
+  %.sroa.0309.0557 = ptrtoaddr ptr %.sroa.0309.0 to i64 ; 4 uses
+  %i.xa = ptrtoint ptr %.sroa.11.0.in to i64
+  %i.xb = sub i64 %i.xa, %.pre-phi                ; 10 uses
   %i.xc = getelementptr inbounds nuw i8, ptr %.sroa.0309.0, i64 %i.xb
   store ptr %.sroa.0309.0, ptr %i.ot, align 8
   store ptr %i.xc, ptr %.sroa.4.0..sroa_idx, align 8
@@ -642,9 +651,9 @@ iter.check655:                                    ; preds = %_ZNSt6vectorIfSaIfE
   br i1 %min.iters.check636, label %.lr.ph.i.preheader, label %vector.memcheck631
 
 vector.memcheck631:                               ; preds = %iter.check655
-  %i.xj = sub i64 %i.xg, %i.xa
+  %i.xj = sub i64 %i.xg, %.sroa.0309.0557
   %diff.check632 = icmp ugt i64 %i.xj, -128
-  %i.xk = sub i64 %i.xe, %i.xa
+  %i.xk = sub i64 %i.xe, %.sroa.0309.0557
   %diff.check633 = icmp ugt i64 %i.xk, -128
   %conflict.rdx634 = or i1 %diff.check632, %diff.check633
   br i1 %conflict.rdx634, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check637
@@ -817,6 +826,7 @@ _ZL22calc_initial_lb_coeffsN3gmx8ArrayRefIfEENS0_IKfEES3_.exit: ; preds = %.lr.p
 
 .lr.ph401.preheader:                              ; preds = %_ZL22calc_initial_lb_coeffsN3gmx8ArrayRefIfEENS0_IKfEES3_.exit
   %i.aas = trunc nuw i8 %.1170410 to i1
+  %scevgep594 = getelementptr i8, ptr %.sroa.0309.0, i64 %i.xb
   %min.iters.check598 = icmp ult i64 %i.xh, 4
   %min.iters.check600 = icmp ult i64 %i.xh, 32
   %n.vec602 = and i64 %i.xh, 9223372036854775776  ; 4 uses
@@ -857,7 +867,7 @@ iter.check617:                                    ; preds = %.lr.ph401
 vector.memcheck591:                               ; preds = %iter.check617
   %scevgep593 = getelementptr i8, ptr %i.abb, i64 %i.xb
   %bound0594 = icmp ult ptr %.sroa.0309.0, %scevgep593
-  %bound1595 = icmp ult ptr %i.abb, %.sroa.11.0.in
+  %bound1595 = icmp ult ptr %i.abb, %scevgep594
   %found.conflict596 = and i1 %bound0594, %bound1595
   br i1 %found.conflict596, label %.lr.ph.i213.preheader, label %vector.main.loop.iter.check599
 
@@ -1234,9 +1244,9 @@ iter.check577:                                    ; preds = %bb.cw
   br i1 %min.iters.check558, label %.lr.ph.i226.preheader, label %vector.memcheck555
 
 vector.memcheck555:                               ; preds = %iter.check577
-  %i.aih = sub i64 %i.aig, %i.xa
+  %i.aih = sub i64 %i.aig, %.sroa.0309.0557
   %diff.check = icmp ugt i64 %i.aih, -128
-  %i.aii = sub i64 %i.aie, %i.xa
+  %i.aii = sub i64 %i.aie, %.sroa.0309.0557
   %diff.check556 = icmp ugt i64 %i.aii, -128
   %conflict.rdx = or i1 %diff.check, %diff.check556
   br i1 %conflict.rdx, label %.lr.ph.i226.preheader, label %vector.main.loop.iter.check559
@@ -1414,6 +1424,7 @@ _ZL22calc_initial_lb_coeffsN3gmx8ArrayRefIfEENS0_IKfEES3_.exit229: ; preds = %.l
   %i.alu = udiv exact i64 %i.als, 224
   %spec.select183 = select i1 %i.pa, float %i.ox, float %.0164
   %i.alv = icmp eq i8 %i.aic, 0
+  %scevgep = getelementptr i8, ptr %.sroa.0309.0, i64 %i.xb
   %min.iters.check532 = icmp ult i64 %i.xh, 4
   %min.iters.check533 = icmp ult i64 %i.xh, 32
   %n.vec535 = and i64 %i.xh, 9223372036854775776  ; 4 uses
@@ -1490,7 +1501,7 @@ iter.check:                                       ; preds = %bb.cz
 vector.memcheck:                                  ; preds = %iter.check
   %scevgep530 = getelementptr i8, ptr %i.amu, i64 %i.xb
   %bound0 = icmp ult ptr %.sroa.0309.0, %scevgep530
-  %bound1 = icmp ult ptr %i.amu, %.sroa.11.0.in
+  %bound1 = icmp ult ptr %i.amu, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i236.preheader, label %vector.main.loop.iter.check
 

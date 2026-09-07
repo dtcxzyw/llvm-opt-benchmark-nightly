@@ -205,11 +205,11 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sroa.0.0 = phi i64 [ %i.l, %bb.c ], [ %i.k, %bb.b ] ; 2 uses
+  %.sroa.0.0 = phi i64 [ %i.l, %bb.c ], [ %i.k, %bb.b ]
   %i.m = load ptr, ptr %2, align 8, !tbaa !104    ; 2 uses
   %i.n = ptrtoint ptr %i.m to i64
   %i.o = sub i64 %.sroa.0.0, %i.n
-  %i.p = getelementptr inbounds i8, ptr %i.m, i64 %i.o ; 3 uses
+  %i.p = getelementptr inbounds i8, ptr %i.m, i64 %i.o ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 4 ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !104  ; 5 uses
@@ -253,7 +253,8 @@ _ZNSt6vectorIiSaIiEE5eraseEN9__gnu_cxx17__normal_iteratorIPKiS1_EE.exit: ; preds
   store i32 -89194371, ptr %i.ag, align 8, !tbaa !109
   store ptr null, ptr %i.af, align 8, !tbaa !110
   store i8 2, ptr %i.ah, align 4, !tbaa !111
-  store i64 %.sroa.0.0, ptr %i.ad, align 8, !tbaa !104
+  %4 = ptrtoint ptr %i.p to i64
+  store i64 %4, ptr %i.ad, align 8, !tbaa !104
   ret void
 }
 
@@ -656,29 +657,52 @@ _ZN4entt9dense_mapIicSt4hashIiESt8equal_toIvESaISt4pairIKicEEE7reserveEm.exit: ;
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4entt39basic_meta_associative_container_traitsINS_9dense_mapIicSt4hashIiESt8equal_toIvESaISt4pairIKicEEEEE4iterERKNS_8meta_ctxEPvPKvb(ptr dead_on_unwind noalias writable sret(%"class.entt::meta_associative_container::meta_iterator") align 8 %0, ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef %2, ptr noundef %3, i1 noundef zeroext %4) #8 comdat align 2 personality ptr @__gxx_personality_v0 {
-bb.a:
-  %5 = icmp eq ptr %2, null                       ; 4 uses
-  %.sroa.01.0.in.in.v = select i1 %4, i64 32, i64 24
-  %. = select i1 %5, ptr %3, ptr %2
-  %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESD_E._ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESC_E = select i1 %5, ptr @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESD_E, ptr @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESC_E
-  %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SB_._ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SA_ = select i1 %5, ptr @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SB_, ptr @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SA_
-  %.10 = select i1 %5, i32 1133277029, i32 -1214504068
-  %.sroa.0.0.in.in = getelementptr inbounds nuw i8, ptr %., i64 %.sroa.01.0.in.in.v
-  %.sroa.0.0.sink.in = load ptr, ptr %.sroa.0.0.in.in, align 8, !tbaa !376
-  %.sroa.0.0.sink = ptrtoint ptr %.sroa.0.0.sink.in to i64
+  %6 = icmp eq ptr %2, null
+  br i1 %6, label %7, label %10
+
+7:                                                ; preds = %5
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %9 = load ptr, ptr %8, align 8, !tbaa !269      ; 2 uses
+  br i1 %4, label %.sink.split, label %bb.a
+
+10:                                               ; preds = %5
+  %11 = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %12 = load ptr, ptr %11, align 8, !tbaa !269    ; 2 uses
+  br i1 %4, label %.sink.split, label %bb.a
+
+.sink.split:                                      ; preds = %10, %7
+  %.sink20 = phi ptr [ %3, %7 ], [ %2, %10 ]
+  %.sink17 = phi ptr [ %9, %7 ], [ %12, %10 ]     ; 2 uses
+  %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESC_E.sink.ph = phi ptr [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESD_E, %7 ], [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESC_E, %10 ]
+  %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SA_.sink.ph = phi ptr [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SB_, %7 ], [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SA_, %10 ]
+  %.sink11.ph = phi i32 [ 1133277029, %7 ], [ -1214504068, %10 ]
+  %13 = getelementptr inbounds nuw i8, ptr %.sink20, i64 32
+  %14 = load ptr, ptr %13, align 8, !tbaa !372
+  %15 = ptrtoint ptr %14 to i64
+  %16 = ptrtoint ptr %.sink17 to i64
+  %17 = sub i64 %15, %16
+  %18 = getelementptr inbounds nuw i8, ptr %.sink17, i64 %17
+  br label %bb.a
+
+bb.a:                                             ; preds = %.sink.split, %10, %7
+  %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESC_E.sink = phi ptr [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESC_E, %10 ], [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESD_E, %7 ], [ %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESC_E.sink.ph, %.sink.split ]
+  %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SA_.sink = phi ptr [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SA_, %10 ], [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SB_, %7 ], [ %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SA_.sink.ph, %.sink.split ]
+  %.sink11 = phi i32 [ -1214504068, %10 ], [ 1133277029, %7 ], [ %.sink11.ph, %.sink.split ]
+  %.sroa.0.0.sink = phi ptr [ %12, %10 ], [ %9, %7 ], [ %18, %.sink.split ]
   store ptr %1, ptr %0, align 8, !tbaa !232
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESD_E._ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESC_E, ptr %i.a, align 8, !tbaa !233
+  %.sroa.0.0.in.in = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESC_E.sink, ptr %.sroa.0.0.in.in, align 8, !tbaa !233
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store ptr %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SB_._ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SA_, ptr %i.b, align 8, !tbaa !108
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i32 %.10, ptr %i.c, align 8, !tbaa !109
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store ptr null, ptr %6, align 8, !tbaa !110
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 52
-  store i8 2, ptr %7, align 4, !tbaa !111
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.0.0.sink, ptr %8, align 8, !tbaa !376
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 52
+  store ptr %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SA_.sink, ptr %i.b, align 8, !tbaa !108
+  store i32 %.sink11, ptr %i.c, align 8, !tbaa !109
+  store ptr null, ptr %19, align 8, !tbaa !110
+  store i8 2, ptr %20, align 4, !tbaa !111
+  %21 = ptrtoint ptr %.sroa.0.0.sink to i64
+  store i64 %21, ptr %i.a, align 8, !tbaa !376
   ret void
 }
 
@@ -797,7 +821,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = and i64 %i.j, %i.b
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.n = load ptr, ptr %i.m, align 8
+  %i.n = load ptr, ptr %i.m, align 8              ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %bb.b
@@ -825,7 +849,7 @@ bb.e:                                             ; preds = %bb.a
   %i.aa = and i64 %i.z, %i.b
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.aa
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.ad = load ptr, ptr %i.ac, align 8
+  %i.ad = load ptr, ptr %i.ac, align 8            ; 2 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.g, %bb.e
@@ -843,19 +867,23 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN4entt9dense_mapIicSt4hashIiESt8equal_toIvESaISt4pairIKicEEE4findERS6_.exit.sink.split: ; preds = %bb.c, %bb.f
   %.sink20 = phi ptr [ %3, %bb.f ], [ %2, %bb.c ]
+  %.sink23 = phi ptr [ %i.ad, %bb.f ], [ %i.n, %bb.c ] ; 2 uses
   %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESD_E.sink.ph = phi ptr [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESD_E, %bb.f ], [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESC_E, %bb.c ]
   %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SB_.sink.ph = phi ptr [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SB_, %bb.f ], [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SA_, %bb.c ]
   %.sink17.ph = phi i32 [ 1133277029, %bb.f ], [ -1214504068, %bb.c ]
   %i.ai = getelementptr inbounds nuw i8, ptr %.sink20, i64 32
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !372
+  %5 = ptrtoint ptr %i.aj to i64
+  %6 = ptrtoint ptr %.sink23 to i64
+  %7 = sub i64 %5, %6
+  %8 = getelementptr inbounds nuw i8, ptr %.sink23, i64 %7
   br label %_ZN4entt9dense_mapIicSt4hashIiESt8equal_toIvESaISt4pairIKicEEE4findERS6_.exit
 
 _ZN4entt9dense_mapIicSt4hashIiESt8equal_toIvESaISt4pairIKicEEE4findERS6_.exit: ; preds = %bb.d, %bb.g, %_ZN4entt9dense_mapIicSt4hashIiESt8equal_toIvESaISt4pairIKicEEE4findERS6_.exit.sink.split
-  %.sroa.0.1.i.i11.in.sink = phi ptr [ %i.ae, %bb.g ], [ %i.aj, %_ZN4entt9dense_mapIicSt4hashIiESt8equal_toIvESaISt4pairIKicEEE4findERS6_.exit.sink.split ], [ %i.o, %bb.d ]
-  %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESD_E.sink = phi ptr [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESD_E, %bb.g ], [ %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESD_E.sink.ph, %_ZN4entt9dense_mapIicSt4hashIiESt8equal_toIvESaISt4pairIKicEEE4findERS6_.exit.sink.split ], [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESC_E, %bb.d ]
-  %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SB_.sink = phi ptr [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SB_, %bb.g ], [ %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SB_.sink.ph, %_ZN4entt9dense_mapIicSt4hashIiESt8equal_toIvESaISt4pairIKicEEE4findERS6_.exit.sink.split ], [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SA_, %bb.d ]
-  %.sink17 = phi i32 [ 1133277029, %bb.g ], [ %.sink17.ph, %_ZN4entt9dense_mapIicSt4hashIiESt8equal_toIvESaISt4pairIKicEEE4findERS6_.exit.sink.split ], [ -1214504068, %bb.d ]
-  %.sroa.0.1.i.i11 = ptrtoint ptr %.sroa.0.1.i.i11.in.sink to i64
+  %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESD_E.sink = phi ptr [ %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESD_E.sink.ph, %_ZN4entt9dense_mapIicSt4hashIiESt8equal_toIvESaISt4pairIKicEEE4findERS6_.exit.sink.split ], [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESD_E, %bb.g ], [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESC_E, %bb.d ]
+  %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SB_.sink = phi ptr [ %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SB_.sink.ph, %_ZN4entt9dense_mapIicSt4hashIiESt8equal_toIvESaISt4pairIKicEEE4findERS6_.exit.sink.split ], [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SB_, %bb.g ], [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_map_iteratorIPNS3_14dense_map_nodeIicEEEEEEPKvNS3_11any_requestERKS1_SA_, %bb.d ]
+  %.sink17 = phi i32 [ %.sink17.ph, %_ZN4entt9dense_mapIicSt4hashIiESt8equal_toIvESaISt4pairIKicEEE4findERS6_.exit.sink.split ], [ 1133277029, %bb.g ], [ -1214504068, %bb.d ]
+  %.sroa.0.1.i.i11.sink = phi ptr [ %8, %_ZN4entt9dense_mapIicSt4hashIiESt8equal_toIvESaISt4pairIKicEEE4findERS6_.exit.sink.split ], [ %i.ae, %bb.g ], [ %i.o, %bb.d ]
   store ptr %1, ptr %0, align 8, !tbaa !232
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb0ENS_8internal18dense_map_iteratorIPKNS3_14dense_map_nodeIicEEEEEEvPKvPSt4pairINS_8meta_anyESD_E.sink, ptr %i.ak, align 8, !tbaa !233
@@ -868,7 +896,8 @@ _ZN4entt9dense_mapIicSt4hashIiESt8equal_toIvESaISt4pairIKicEEE4findERS6_.exit: ;
   store i32 %.sink17, ptr %i.ao, align 8, !tbaa !109
   store ptr null, ptr %i.an, align 8, !tbaa !110
   store i8 2, ptr %i.ap, align 4, !tbaa !111
-  store i64 %.sroa.0.1.i.i11, ptr %i.al, align 8, !tbaa !376
+  %9 = ptrtoint ptr %.sroa.0.1.i.i11.sink to i64
+  store i64 %9, ptr %i.al, align 8, !tbaa !376
   ret void
 }
 
@@ -1271,29 +1300,52 @@ _ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE7reserveEm.exit: ; preds = %bb
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4entt39basic_meta_associative_container_traitsINS_9dense_setIiSt4hashIiESt8equal_toIvESaIiEEEE4iterERKNS_8meta_ctxEPvPKvb(ptr dead_on_unwind noalias writable sret(%"class.entt::meta_associative_container::meta_iterator") align 8 %0, ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef %2, ptr noundef %3, i1 noundef zeroext %4) #8 comdat align 2 personality ptr @__gxx_personality_v0 {
-bb.a:
-  %5 = icmp eq ptr %2, null                       ; 4 uses
-  %.sroa.01.0.in.in.v = select i1 %4, i64 32, i64 24
-  %. = select i1 %5, ptr %3, ptr %2
-  %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESC_E._ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESB_E = select i1 %5, ptr @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESC_E, ptr @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESB_E
-  %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SB_._ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SA_ = select i1 %5, ptr @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SB_, ptr @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SA_
-  %.10 = select i1 %5, i32 -604416324, i32 1934432389
-  %.sroa.0.0.in.in = getelementptr inbounds nuw i8, ptr %., i64 %.sroa.01.0.in.in.v
-  %.sroa.0.0.sink.in = load ptr, ptr %.sroa.0.0.in.in, align 8, !tbaa !386
-  %.sroa.0.0.sink = ptrtoint ptr %.sroa.0.0.sink.in to i64
+  %6 = icmp eq ptr %2, null
+  br i1 %6, label %7, label %10
+
+7:                                                ; preds = %5
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %9 = load ptr, ptr %8, align 8, !tbaa !282      ; 2 uses
+  br i1 %4, label %.sink.split, label %bb.a
+
+10:                                               ; preds = %5
+  %11 = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %12 = load ptr, ptr %11, align 8, !tbaa !282    ; 2 uses
+  br i1 %4, label %.sink.split, label %bb.a
+
+.sink.split:                                      ; preds = %10, %7
+  %.sink20 = phi ptr [ %3, %7 ], [ %2, %10 ]
+  %.sink17 = phi ptr [ %9, %7 ], [ %12, %10 ]     ; 2 uses
+  %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESB_E.sink.ph = phi ptr [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESC_E, %7 ], [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESB_E, %10 ]
+  %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SA_.sink.ph = phi ptr [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SB_, %7 ], [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SA_, %10 ]
+  %.sink11.ph = phi i32 [ -604416324, %7 ], [ 1934432389, %10 ]
+  %13 = getelementptr inbounds nuw i8, ptr %.sink20, i64 32
+  %14 = load ptr, ptr %13, align 8, !tbaa !383
+  %15 = ptrtoint ptr %14 to i64
+  %16 = ptrtoint ptr %.sink17 to i64
+  %17 = sub i64 %15, %16
+  %18 = getelementptr inbounds nuw i8, ptr %.sink17, i64 %17
+  br label %bb.a
+
+bb.a:                                             ; preds = %.sink.split, %10, %7
+  %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESB_E.sink = phi ptr [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESB_E, %10 ], [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESC_E, %7 ], [ %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESB_E.sink.ph, %.sink.split ]
+  %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SA_.sink = phi ptr [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SA_, %10 ], [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SB_, %7 ], [ %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SA_.sink.ph, %.sink.split ]
+  %.sink11 = phi i32 [ 1934432389, %10 ], [ -604416324, %7 ], [ %.sink11.ph, %.sink.split ]
+  %.sroa.0.0.sink = phi ptr [ %12, %10 ], [ %9, %7 ], [ %18, %.sink.split ]
   store ptr %1, ptr %0, align 8, !tbaa !232
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESC_E._ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESB_E, ptr %i.a, align 8, !tbaa !233
+  %.sroa.0.0.in.in = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESB_E.sink, ptr %.sroa.0.0.in.in, align 8, !tbaa !233
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store ptr %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SB_._ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SA_, ptr %i.b, align 8, !tbaa !108
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i32 %.10, ptr %i.c, align 8, !tbaa !109
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store ptr null, ptr %6, align 8, !tbaa !110
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 52
-  store i8 2, ptr %7, align 4, !tbaa !111
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.0.0.sink, ptr %8, align 8, !tbaa !386
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 52
+  store ptr %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SA_.sink, ptr %i.b, align 8, !tbaa !108
+  store i32 %.sink11, ptr %i.c, align 8, !tbaa !109
+  store ptr null, ptr %19, align 8, !tbaa !110
+  store i8 2, ptr %20, align 4, !tbaa !111
+  %21 = ptrtoint ptr %.sroa.0.0.sink to i64
+  store i64 %21, ptr %i.a, align 8, !tbaa !386
   ret void
 }
 
@@ -1408,7 +1460,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = and i64 %i.j, %i.b
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.n = load ptr, ptr %i.m, align 8
+  %i.n = load ptr, ptr %i.m, align 8              ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %bb.b
@@ -1436,7 +1488,7 @@ bb.e:                                             ; preds = %bb.a
   %i.aa = and i64 %i.z, %i.b
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.aa
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.ad = load ptr, ptr %i.ac, align 8
+  %i.ad = load ptr, ptr %i.ac, align 8            ; 2 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.g, %bb.e
@@ -1454,19 +1506,23 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE4findERKi.exit.sink.split: ; preds = %bb.c, %bb.f
   %.sink20 = phi ptr [ %3, %bb.f ], [ %2, %bb.c ]
+  %.sink23 = phi ptr [ %i.ad, %bb.f ], [ %i.n, %bb.c ] ; 2 uses
   %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESC_E.sink.ph = phi ptr [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESC_E, %bb.f ], [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESB_E, %bb.c ]
   %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SB_.sink.ph = phi ptr [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SB_, %bb.f ], [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SA_, %bb.c ]
   %.sink17.ph = phi i32 [ -604416324, %bb.f ], [ 1934432389, %bb.c ]
   %i.ai = getelementptr inbounds nuw i8, ptr %.sink20, i64 32
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !383
+  %5 = ptrtoint ptr %i.aj to i64
+  %6 = ptrtoint ptr %.sink23 to i64
+  %7 = sub i64 %5, %6
+  %8 = getelementptr inbounds nuw i8, ptr %.sink23, i64 %7
   br label %_ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE4findERKi.exit
 
 _ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE4findERKi.exit: ; preds = %bb.d, %bb.g, %_ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE4findERKi.exit.sink.split
-  %.sroa.0.1.i.i11.in.sink = phi ptr [ %i.ae, %bb.g ], [ %i.aj, %_ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE4findERKi.exit.sink.split ], [ %i.o, %bb.d ]
-  %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESC_E.sink = phi ptr [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESC_E, %bb.g ], [ %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESC_E.sink.ph, %_ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE4findERKi.exit.sink.split ], [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESB_E, %bb.d ]
-  %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SB_.sink = phi ptr [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SB_, %bb.g ], [ %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SB_.sink.ph, %_ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE4findERKi.exit.sink.split ], [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SA_, %bb.d ]
-  %.sink17 = phi i32 [ -604416324, %bb.g ], [ %.sink17.ph, %_ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE4findERKi.exit.sink.split ], [ 1934432389, %bb.d ]
-  %.sroa.0.1.i.i11 = ptrtoint ptr %.sroa.0.1.i.i11.in.sink to i64
+  %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESC_E.sink = phi ptr [ %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESC_E.sink.ph, %_ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE4findERKi.exit.sink.split ], [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESC_E, %bb.g ], [ @_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESB_E, %bb.d ]
+  %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SB_.sink = phi ptr [ %_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SB_.sink.ph, %_ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE4findERKi.exit.sink.split ], [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SB_, %bb.g ], [ @_ZN4entt9basic_anyILm16ELm8EE12basic_vtableITkNS_17cvref_unqualifiedENS_8internal18dense_set_iteratorIPSt4pairImiEEEEEPKvNS3_11any_requestERKS1_SA_, %bb.d ]
+  %.sink17 = phi i32 [ %.sink17.ph, %_ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE4findERKi.exit.sink.split ], [ -604416324, %bb.g ], [ 1934432389, %bb.d ]
+  %.sroa.0.1.i.i11.sink = phi ptr [ %8, %_ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE4findERKi.exit.sink.split ], [ %i.ae, %bb.g ], [ %i.o, %bb.d ]
   store ptr %1, ptr %0, align 8, !tbaa !232
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %_ZN4entt26meta_associative_container13meta_iterator12basic_vtableILb1ENS_8internal18dense_set_iteratorIPKSt4pairImiEEEEEvPKvPS5_INS_8meta_anyESC_E.sink, ptr %i.ak, align 8, !tbaa !233
@@ -1479,7 +1535,8 @@ _ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE4findERKi.exit: ; preds = %bb.
   store i32 %.sink17, ptr %i.ao, align 8, !tbaa !109
   store ptr null, ptr %i.an, align 8, !tbaa !110
   store i8 2, ptr %i.ap, align 4, !tbaa !111
-  store i64 %.sroa.0.1.i.i11, ptr %i.al, align 8, !tbaa !386
+  %9 = ptrtoint ptr %.sroa.0.1.i.i11.sink to i64
+  store i64 %9, ptr %i.al, align 8, !tbaa !386
   ret void
 }
 

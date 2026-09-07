@@ -205,7 +205,7 @@ bb.a:
   %i.c = load ptr, ptr %4, align 8, !tbaa !22     ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !23   ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.e ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.e ; 4 uses
   %.not.i = icmp eq i64 %i.e, 0
   br i1 %.not.i, label %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i, label %bb.b
 
@@ -246,7 +246,6 @@ thread-pre-split:                                 ; preds = %_ZN7rocksdb14GetVar
 bb.c:                                             ; preds = %thread-pre-split, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i
   %i.n = phi i32 [ %.pr, %thread-pre-split ], [ %i.i, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ] ; 2 uses
   %i.o = phi ptr [ %i.k, %thread-pre-split ], [ %i.j, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ] ; 6 uses
-  %20 = ptrtoint ptr %i.f to i64                  ; 2 uses
   %i.p = icmp ugt i32 %i.n, 2
   br i1 %i.p, label %bb.d, label %bb.e
 
@@ -265,6 +264,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.ai
 
 bb.e:                                             ; preds = %bb.c
+  %20 = ptrtoint ptr %i.f to i64
   %i.s = ptrtoint ptr %i.o to i64
   %i.t = sub i64 %20, %i.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
@@ -310,8 +310,9 @@ _ZN7rocksdb11GetVarint32EPNS_5SliceEPj.exit49:    ; preds = %_ZN7rocksdb14GetVar
 bb.g:                                             ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i45._crit_edge, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i48
   %i.ac = phi i32 [ %i.n, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i48 ], [ %.pre, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i45._crit_edge ]
   %.1.i14.i47 = phi ptr [ %i.y, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i48 ], [ %i.z, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i45._crit_edge ] ; 2 uses
+  %21 = ptrtoint ptr %i.f to i64
   %i.ad = ptrtoint ptr %.1.i14.i47 to i64
-  %i.ae = sub i64 %20, %i.ad
+  %i.ae = sub i64 %21, %i.ad
   store ptr %.1.i14.i47, ptr %4, align 8, !tbaa !35
   store i64 %i.ae, ptr %i.d, align 8, !tbaa !90
   %i.af = icmp ult i32 %i.ac, 2
@@ -714,7 +715,7 @@ bb.a:
   %i.f = load ptr, ptr %3, align 8, !tbaa !22     ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !23   ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.h ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.h ; 6 uses
   %.not.i = icmp eq i64 %i.h, 0
   br i1 %.not.i, label %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i, label %bb.b
 
@@ -755,7 +756,7 @@ thread-pre-split:                                 ; preds = %_ZN7rocksdb14GetVar
 bb.c:                                             ; preds = %thread-pre-split, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i
   %i.q = phi i32 [ %.pr, %thread-pre-split ], [ %i.l, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ] ; 2 uses
   %i.r = phi ptr [ %i.n, %thread-pre-split ], [ %i.m, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ] ; 6 uses
-  %i.s = ptrtoint ptr %i.i to i64                 ; 3 uses
+  %i.s = ptrtoint ptr %i.i to i64
   %i.t = ptrtoint ptr %i.r to i64
   %i.u = sub i64 %i.s, %i.t
   %i.v = icmp ult i32 %i.q, 2
@@ -829,8 +830,9 @@ thread-pre-split23:                               ; preds = %_ZN7rocksdb14GetVar
 bb.i:                                             ; preds = %thread-pre-split23, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i14
   %i.ah = phi i32 [ %.pr24, %thread-pre-split23 ], [ %i.ac, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i14 ]
   %i.ai = phi ptr [ %i.ae, %thread-pre-split23 ], [ %i.ad, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i14 ] ; 7 uses
+  %16 = ptrtoint ptr %i.i to i64
   %i.aj = ptrtoint ptr %i.ai to i64
-  %i.ak = sub i64 %i.s, %i.aj                     ; 2 uses
+  %i.ak = sub i64 %16, %i.aj                      ; 2 uses
   store ptr %i.ai, ptr %3, align 8, !tbaa !35
   store i64 %i.ak, ptr %i.g, align 8, !tbaa !90
   %.not8 = icmp eq i32 %i.ah, 0
@@ -871,8 +873,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i17:    ; preds = %bb.l, %bb.k
 
 bb.m:                                             ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i20, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i17
   %.1.i14.i19 = phi ptr [ %i.aq, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i20 ], [ %i.ar, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i17 ] ; 2 uses
+  %17 = ptrtoint ptr %i.i to i64
   %i.as = ptrtoint ptr %.1.i14.i19 to i64
-  %i.at = sub i64 %i.s, %i.as
+  %i.at = sub i64 %17, %i.as
   store ptr %.1.i14.i19, ptr %3, align 8, !tbaa !35
   store i64 %i.at, ptr %i.g, align 8, !tbaa !90
   %i.au = call noundef zeroext i1 @_ZN7rocksdb11GetVarint32EPNS_5SliceEPj(ptr noundef nonnull %3, ptr noundef nonnull %i.d)
@@ -1030,7 +1033,7 @@ bb.a:
   %i.g = load ptr, ptr %3, align 8, !tbaa !22     ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 10 uses
   %i.i = load i64, ptr %i.h, align 8, !tbaa !23   ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.i ; 4 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.i ; 6 uses
   %.not.i = icmp eq i64 %i.i, 0
   br i1 %.not.i, label %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i, label %bb.b
 
@@ -1071,7 +1074,7 @@ thread-pre-split:                                 ; preds = %_ZN7rocksdb14GetVar
 bb.c:                                             ; preds = %thread-pre-split, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i
   %i.r = phi i32 [ %.pr, %thread-pre-split ], [ %i.m, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ] ; 2 uses
   %i.s = phi ptr [ %i.o, %thread-pre-split ], [ %i.n, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ] ; 7 uses
-  %i.t = ptrtoint ptr %i.j to i64                 ; 3 uses
+  %i.t = ptrtoint ptr %i.j to i64
   %i.u = ptrtoint ptr %i.s to i64
   %i.v = sub i64 %i.t, %i.u                       ; 2 uses
   store ptr %i.s, ptr %3, align 8, !tbaa !35
@@ -1147,8 +1150,9 @@ thread-pre-split80:                               ; preds = %_ZN7rocksdb14GetVar
 bb.i:                                             ; preds = %thread-pre-split80, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i60
   %i.ai = phi i32 [ %.pr81, %thread-pre-split80 ], [ %i.ad, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i60 ]
   %i.aj = phi ptr [ %i.af, %thread-pre-split80 ], [ %i.ae, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i60 ] ; 7 uses
+  %32 = ptrtoint ptr %i.j to i64
   %i.ak = ptrtoint ptr %i.aj to i64
-  %i.al = sub i64 %i.t, %i.ak                     ; 2 uses
+  %i.al = sub i64 %32, %i.ak                      ; 2 uses
   store ptr %i.aj, ptr %3, align 8, !tbaa !35
   store i64 %i.al, ptr %i.h, align 8, !tbaa !90
   %.not48 = icmp eq i32 %i.ai, 0
@@ -1189,8 +1193,9 @@ _ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i63:    ; preds = %bb.l, %bb.k
 
 bb.m:                                             ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i66, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i63
   %.1.i14.i65 = phi ptr [ %i.ar, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i66 ], [ %i.as, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i63 ] ; 2 uses
+  %33 = ptrtoint ptr %i.j to i64
   %i.at = ptrtoint ptr %.1.i14.i65 to i64
-  %i.au = sub i64 %i.t, %i.at
+  %i.au = sub i64 %33, %i.at
   store ptr %.1.i14.i65, ptr %3, align 8, !tbaa !35
   store i64 %i.au, ptr %i.h, align 8, !tbaa !90
   %i.av = call noundef zeroext i1 @_ZN7rocksdb11GetVarint32EPNS_5SliceEPj(ptr noundef nonnull %3, ptr noundef nonnull %i.d)
@@ -1593,7 +1598,7 @@ bb.a:
   %i.h = load ptr, ptr %4, align 8, !tbaa !22     ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 9 uses
   %i.j = load i64, ptr %i.i, align 8, !tbaa !23   ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.j ; 4 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.j ; 6 uses
   %.not.i = icmp eq i64 %i.j, 0
   br i1 %.not.i, label %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i, label %bb.b
 
@@ -1634,7 +1639,6 @@ thread-pre-split:                                 ; preds = %_ZN7rocksdb14GetVar
 bb.c:                                             ; preds = %thread-pre-split, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i
   %i.s = phi i32 [ %.pr, %thread-pre-split ], [ %i.n, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ]
   %i.t = phi ptr [ %i.p, %thread-pre-split ], [ %i.o, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i ] ; 7 uses
-  %36 = ptrtoint ptr %i.k to i64                  ; 3 uses
   store ptr %i.t, ptr %4, align 8, !tbaa !35
   %i.u = icmp ugt i32 %i.s, 2
   br i1 %i.u, label %bb.d, label %bb.e
@@ -1654,6 +1658,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.au
 
 bb.e:                                             ; preds = %bb.c
+  %36 = ptrtoint ptr %i.k to i64
   %i.x = ptrtoint ptr %i.t to i64
   %i.y = sub i64 %36, %i.x
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
@@ -1699,8 +1704,9 @@ thread-pre-split38:                               ; preds = %_ZN7rocksdb14GetVar
 bb.g:                                             ; preds = %thread-pre-split38, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i25
   %i.ah = phi i32 [ %.pr39, %thread-pre-split38 ], [ %i.ac, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i25 ]
   %i.ai = phi ptr [ %i.ae, %thread-pre-split38 ], [ %i.ad, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i25 ] ; 6 uses
+  %37 = ptrtoint ptr %i.k to i64
   %i.aj = ptrtoint ptr %i.ai to i64
-  %i.ak = sub i64 %36, %i.aj
+  %i.ak = sub i64 %37, %i.aj
   %.not = icmp eq i32 %i.ah, 0
   br i1 %.not, label %bb.h, label %bb.i
 
@@ -1761,8 +1767,9 @@ _ZN7rocksdb11GetVarint32EPNS_5SliceEPj.exit32:    ; preds = %_ZN7rocksdb14GetVar
 
 bb.l:                                             ; preds = %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i31, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i28
   %.1.i14.i30 = phi ptr [ %i.at, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.thread.i31 ], [ %i.au, %_ZN7rocksdb14GetVarint32PtrEPKcS1_Pj.exit.i28 ] ; 2 uses
+  %38 = ptrtoint ptr %i.k to i64
   %i.ax = ptrtoint ptr %.1.i14.i30 to i64
-  %i.ay = sub i64 %36, %i.ax
+  %i.ay = sub i64 %38, %i.ax
   store ptr %.1.i14.i30, ptr %4, align 8, !tbaa !35
   store i64 %i.ay, ptr %i.i, align 8, !tbaa !90
   %i.az = call noundef zeroext i1 @_ZN7rocksdb11GetVarint32EPNS_5SliceEPj(ptr noundef nonnull %4, ptr noundef nonnull %i.d)

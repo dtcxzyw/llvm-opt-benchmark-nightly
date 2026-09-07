@@ -204,11 +204,11 @@ _RNvMNtNtCs8Chj7Szqq0n_4core3ptr7mut_ptrOh12align_offsetCsej06kWhEKj7_21iceoryx2
   %i.e = add i64 %i.d, -1
   %i.f = add i64 %i.e, %i.a
   %i.g = sub i64 0, %i.a
-  %i.h = and i64 %i.f, %i.g                       ; 2 uses
+  %i.h = and i64 %i.f, %i.g
   %i.i = sub i64 %i.h, %i.d                       ; 2 uses
   %i.j = icmp ult i64 %i.i, %i.a
   tail call void @llvm.assume(i1 %i.j)
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %i.i ; 3 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 %i.i ; 4 uses
   store i64 1, ptr %i.k, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   store i8 1, ptr %.sroa.4.0..sroa_idx, align 8
@@ -216,7 +216,8 @@ _RNvMNtNtCs8Chj7Szqq0n_4core3ptr7mut_ptrOh12align_offsetCsej06kWhEKj7_21iceoryx2
   br i1 %i.l, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %_RNvMNtNtCs8Chj7Szqq0n_4core3ptr7mut_ptrOh12align_offsetCsej06kWhEKj7_21iceoryx2_bb_lock_free.exit
-  %i.m = add i64 %i.h, 16                         ; 3 uses
+  %2 = ptrtoint ptr %i.k to i64
+  %i.m = add i64 %2, 16                           ; 3 uses
   %i.n = urem i64 %i.m, %1                        ; 2 uses
   %i.o = icmp eq i64 %i.n, 0
   %i.p = add i64 %i.m, %1

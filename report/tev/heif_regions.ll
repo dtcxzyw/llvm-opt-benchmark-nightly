@@ -204,16 +204,17 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i.i.i.i
 
 _ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrI14RegionGeometryEEEEE9constructB8ne180100IS4_JRS4_EvvEEvRS5_PT_DpOT0_.exit.i.i.i.i.i.i: ; preds = %bb.e, %.lr.ph.i.i.i.i.i.i
   %i.u = getelementptr inbounds nuw i8, ptr %.010.i.i.i.i.i.i, i64 16 ; 2 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 16 ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 16 ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.u, %i.h
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt3__16vectorINS_10shared_ptrI14RegionGeometryEENS_9allocatorIS3_EEE18__construct_at_endIPS3_S8_EEvT_T0_m.exit.i.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !175
 
 _ZNSt3__16vectorINS_10shared_ptrI14RegionGeometryEENS_9allocatorIS3_EEE18__construct_at_endIPS3_S8_EEvT_T0_m.exit.i.i.i: ; preds = %_ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrI14RegionGeometryEEEEE9constructB8ne180100IS4_JRS4_EvvEEvRS5_PT_DpOT0_.exit.i.i.i.i.i.i
-  %i.w = ptrtoint ptr %i.v to i64                 ; 2 uses
+  %i.w = ptrtoint ptr %i.v to i64
   %i.x = ptrtoint ptr %i.n to i64
   %i.y = sub i64 %i.w, %i.x
   %i.z = getelementptr inbounds i8, ptr %i.n, i64 %i.y
   store ptr %i.z, ptr %i.d, align 8, !tbaa !69, !alias.scope !181
+  %5 = ptrtoint ptr %i.v to i64
   br label %._crit_edge30
 
 common.resume:                                    ; preds = %bb.t, %bb.f
@@ -229,7 +230,7 @@ bb.f:                                             ; preds = %_ZNSt3__119__alloca
 
 ._crit_edge30:                                    ; preds = %bb.a, %_ZNSt3__16vectorINS_10shared_ptrI14RegionGeometryEENS_9allocatorIS3_EEE18__construct_at_endIPS3_S8_EEvT_T0_m.exit.i.i.i
   %i.ab = phi ptr [ %i.n, %_ZNSt3__16vectorINS_10shared_ptrI14RegionGeometryEENS_9allocatorIS3_EEE18__construct_at_endIPS3_S8_EEvT_T0_m.exit.i.i.i ], [ null, %bb.a ] ; 2 uses
-  %i.ac = phi i64 [ %i.w, %_ZNSt3__16vectorINS_10shared_ptrI14RegionGeometryEENS_9allocatorIS3_EEE18__construct_at_endIPS3_S8_EEvT_T0_m.exit.i.i.i ], [ 0, %bb.a ]
+  %i.ac = phi i64 [ %5, %_ZNSt3__16vectorINS_10shared_ptrI14RegionGeometryEENS_9allocatorIS3_EEE18__construct_at_endIPS3_S8_EEvT_T0_m.exit.i.i.i ], [ 0, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20, !noalias !181
   %i.ad = ptrtoint ptr %i.ab to i64
   %i.ae = sub i64 %i.ac, %i.ad

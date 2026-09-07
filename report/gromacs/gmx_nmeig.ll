@@ -205,15 +205,15 @@ _ZL20allocateEigenvectorsiiib.exit:               ; preds = %bb.be
   %i.jw = load i8, ptr @_ZZ9gmx_nmeigiPPcE2bM, align 1, !tbaa !70, !range !71, !noundef !72
   %i.jx = trunc nuw i8 %i.jw to i1                ; 2 uses
   %i.jy = load ptr, ptr %11, align 8, !tbaa !91   ; 14 uses
-  %i.jz = load ptr, ptr %i.ei, align 8, !tbaa !90
-  %27 = ptrtoint ptr %i.jz to i64
-  %i.ka = ptrtoint ptr %i.jy to i64
-  %28 = sub i64 %27, %i.ka                        ; 7 uses
+  %i.jz = load ptr, ptr %i.ei, align 8, !tbaa !90 ; 2 uses
+  %i.ka = ptrtoint ptr %i.jy to i64               ; 2 uses
   %i.kb = load i32, ptr @_ZZ9gmx_nmeigiPPcE5begin, align 4, !tbaa !53 ; 4 uses
   %i.kc = load i32, ptr @_ZZ9gmx_nmeigiPPcE3end, align 4, !tbaa !53 ; 4 uses
   br i1 %i.jx, label %.preheader66.i, label %.loopexit67.i
 
 .preheader66.i:                                   ; preds = %_ZL20allocateEigenvectorsiiib.exit
+  %27 = ptrtoint ptr %i.jz to i64
+  %28 = sub i64 %27, %i.ka                        ; 4 uses
   %i.kd = ashr exact i64 %28, 2                   ; 9 uses
   %i.ke = icmp sgt i64 %i.kd, 0
   br i1 %i.ke, label %.lr.ph.i239, label %.loopexit67.i
@@ -515,7 +515,9 @@ _ZL20allocateEigenvectorsiiib.exit:               ; preds = %bb.be
   br i1 %or.cond96.not.i, label %.preheader.lr.ph.i, label %_ZL16nma_full_hessianPfibPK10t_topologyN3gmx8ArrayRefIKiEEiiS_S_.exit
 
 .preheader.lr.ph.i:                               ; preds = %.noexc240
-  %i.rf = ashr exact i64 %28, 2                   ; 3 uses
+  %29 = ptrtoint ptr %i.jz to i64
+  %30 = sub i64 %29, %i.ka                        ; 3 uses
+  %i.rf = ashr exact i64 %30, 2                   ; 3 uses
   %i.rg = icmp sgt i64 %i.rf, 0
   br i1 %i.rg, label %.preheader.lr.ph.split.i, label %_ZL16nma_full_hessianPfibPK10t_topologyN3gmx8ArrayRefIKiEEiiS_S_.exit
 
@@ -524,9 +526,9 @@ _ZL20allocateEigenvectorsiiib.exit:               ; preds = %bb.be
   %reass.sub = sub i32 %i.kc, %i.kb
   %i.ri = add i32 %reass.sub, 1
   %wide.trip.count.i = zext i32 %i.ri to i64
-  %i.rj = icmp eq i64 %28, 4
+  %i.rj = icmp eq i64 %30, 4
   %unroll_iter703 = and i64 %i.rf, 9223372036854775806
-  %i.rk = and i64 %28, 4
+  %i.rk = and i64 %30, 4
   %lcmp.mod701.not = icmp eq i64 %i.rk, 0
   %lcmp.mod702 = trunc i64 %i.rf to i1
   br label %.preheader.i
@@ -655,11 +657,11 @@ _ZL20allocateEigenvectorsiiib.exit246:            ; preds = %bb.bk
   %i.to = trunc nuw i8 %i.tn to i1                ; 2 uses
   %i.tp = load ptr, ptr %11, align 8, !tbaa !91   ; 8 uses
   %i.tq = load ptr, ptr %i.ei, align 8, !tbaa !90
-  %i.tr = ptrtoint ptr %i.tq to i64
-  %29 = ptrtoint ptr %i.tp to i64
-  %30 = sub i64 %i.tr, %29                        ; 3 uses
+  %i.tr = ptrtoint ptr %i.tp to i64
   %31 = load i32, ptr @_ZZ9gmx_nmeigiPPcE3end, align 4, !tbaa !53 ; 4 uses
-  %i.ts = ashr exact i64 %30, 2                   ; 5 uses
+  %32 = ptrtoint ptr %i.tq to i64
+  %33 = sub i64 %32, %i.tr                        ; 3 uses
+  %i.ts = ashr exact i64 %33, 2                   ; 5 uses
   %i.tt = mul nsw i64 %i.ts, 3
   %.not.i247 = icmp eq ptr %i.tm, null
   br i1 %.not.i247, label %bb.bl, label %bb.bm
@@ -829,9 +831,9 @@ bb.bq:                                            ; preds = %bb.bq, %.lr.ph.2.i
 
 .preheader.lr.ph.split.i248:                      ; preds = %.noexc264
   %wide.trip.count.i249 = zext nneg i32 %31 to i64
-  %i.xn = icmp eq i64 %30, 4
+  %i.xn = icmp eq i64 %33, 4
   %unroll_iter710 = and i64 %i.ts, 9223372036854775806
-  %i.xo = and i64 %30, 4
+  %i.xo = and i64 %33, 4
   %lcmp.mod708.not = icmp eq i64 %i.xo, 0
   %lcmp.mod709 = trunc i64 %i.ts to i1
   br label %.preheader.i250
@@ -1234,15 +1236,15 @@ bb.eg:                                            ; preds = %bb.ef
   %i.aoj = load ptr, ptr @stdout, align 8, !tbaa !95 ; 7 uses
   %i.aok = load ptr, ptr %11, align 8, !tbaa !91  ; 3 uses
   %i.aol = load ptr, ptr %i.ei, align 8, !tbaa !90 ; 2 uses
-  %32 = ptrtoint ptr %i.aol to i64
   %i.aom = ptrtoint ptr %i.aok to i64
-  %33 = sub i64 %32, %i.aom                       ; 5 uses
   %i.aon = load float, ptr @_ZZ9gmx_nmeigiPPcE1T, align 4, !tbaa !96 ; 6 uses
   %i.aoo = load float, ptr @_ZZ9gmx_nmeigiPPcE1P, align 4, !tbaa !96
   %i.aop = load i32, ptr @_ZZ9gmx_nmeigiPPcE7sigma_r, align 4, !tbaa !53
   %i.aoq = load float, ptr @_ZZ9gmx_nmeigiPPcE12scale_factor, align 4, !tbaa !96 ; 4 uses
   %i.aor = load float, ptr @_ZZ9gmx_nmeigiPPcE12linear_toler, align 4, !tbaa !96 ; 2 uses
-  %i.aos = icmp ugt i64 %33, 9223372036854775804
+  %34 = ptrtoint ptr %i.aol to i64
+  %35 = sub i64 %34, %i.aom                       ; 5 uses
+  %i.aos = icmp ugt i64 %35, 9223372036854775804
   br i1 %i.aos, label %.noexc.i.i, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i.i
 
 .noexc.i.i:                                       ; preds = %bb.eg
@@ -1257,16 +1259,16 @@ _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i.i: ; preds = %bb.eg
   br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.thread.i.i.i, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i
 
 _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.thread.i.i.i: ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i.i
-  %i.aot = getelementptr inbounds nuw i8, ptr null, i64 %33
+  %i.aot = getelementptr inbounds nuw i8, ptr null, i64 %35
   br label %_ZNSt6vectorIiSaIiEEC2IN3gmx12ArrayRefIterIKiEEvEET_S7_RKS0_.exit.i
 
 _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i: ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i.i
-  %i.aou = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %33) #21
+  %i.aou = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %35) #21
           to label %.noexc378 unwind label %bb.fo ; 3 uses
 
 .noexc378:                                        ; preds = %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i.i.i
-  %i.aov = getelementptr i8, ptr %i.aou, i64 %33  ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.aou, ptr align 4 %i.aok, i64 %33, i1 false), !tbaa !53
+  %i.aov = getelementptr i8, ptr %i.aou, i64 %35  ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.aou, ptr align 4 %i.aok, i64 %35, i1 false), !tbaa !53
   %i.aow = ptrtoint ptr %i.aov to i64
   br label %_ZNSt6vectorIiSaIiEEC2IN3gmx12ArrayRefIterIKiEEvEET_S7_RKS0_.exit.i
 

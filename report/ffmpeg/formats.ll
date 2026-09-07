@@ -205,19 +205,22 @@ bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store ptr %i.h, ptr %i.i, align 8, !tbaa !36
   %.not17.i = icmp eq ptr %i.h, null
-  br i1 %.not17.i, label %bb.d, label %.lr.ph.i.preheader
+  br i1 %.not17.i, label %.lr.ph.i.preheader, label %bb.d
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
-  %1 = shl i64 %indvars.iv.i, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.h, ptr nonnull align 4 %i.b, i64 %1, i1 false), !tbaa !28
-  br label %ff_make_format_list.exit
-
-bb.d:                                             ; preds = %bb.c
   call void @av_freep(ptr noundef nonnull %i.a) #9
   br label %ff_make_format_list.exit
 
-ff_make_format_list.exit:                         ; preds = %.lr.ph.i.preheader, %.loopexit.loopexit.i, %bb.b, %bb.d
-  %.011.i = phi ptr [ null, %.loopexit.loopexit.i ], [ null, %bb.d ], [ %i.f, %bb.b ], [ %i.f, %.lr.ph.i.preheader ]
+bb.d:                                             ; preds = %bb.c
+  %indvars.iv.next24.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
+  %1 = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv.next24.i
+  %2 = load i32, ptr %1, align 4, !tbaa !28
+  %3 = getelementptr inbounds [4 x i8], ptr %i.h, i64 %indvars.iv.next24.i
+  store i32 %2, ptr %3, align 4, !tbaa !28
+  br label %ff_make_format_list.exit
+
+ff_make_format_list.exit:                         ; preds = %bb.d, %.loopexit.loopexit.i, %bb.b, %.lr.ph.i.preheader
+  %.011.i = phi ptr [ null, %.loopexit.loopexit.i ], [ null, %.lr.ph.i.preheader ], [ %i.f, %bb.b ], [ %i.f, %bb.d ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   ret ptr %.011.i
@@ -620,19 +623,22 @@ bb.l:                                             ; preds = %bb.k
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
   store ptr %i.cw, ptr %i.cx, align 8, !tbaa !36
   %.not17.i.i = icmp eq ptr %i.cw, null
-  br i1 %.not17.i.i, label %bb.m, label %.lr.ph.i.preheader.i
+  br i1 %.not17.i.i, label %.lr.ph.i.preheader.i, label %bb.m
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.l
-  %1 = shl nuw nsw i64 %indvars.iv.i.i, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.cw, ptr nonnull align 4 %i.g, i64 %1, i1 false), !tbaa !28
-  br label %ff_make_formats_list_singleton.exit
-
-bb.m:                                             ; preds = %bb.l
   call void @av_freep(ptr noundef nonnull %i.f) #9
   br label %ff_make_formats_list_singleton.exit
 
+bb.m:                                             ; preds = %bb.l
+  %indvars.iv.next24.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 2 uses
+  %1 = getelementptr inbounds [4 x i8], ptr %i.g, i64 %indvars.iv.next24.i.i
+  %2 = load i32, ptr %1, align 4, !tbaa !28
+  %3 = getelementptr inbounds [4 x i8], ptr %i.cw, i64 %indvars.iv.next24.i.i
+  store i32 %2, ptr %3, align 4, !tbaa !28
+  br label %ff_make_formats_list_singleton.exit
+
 ff_make_formats_list_singleton.exit:              ; preds = %.loopexit.loopexit.i.i, %bb.k, %.lr.ph.i.preheader.i, %bb.m
-  %.011.i.i = phi ptr [ null, %.loopexit.loopexit.i.i ], [ null, %bb.m ], [ %i.cu, %bb.k ], [ %i.cu, %.lr.ph.i.preheader.i ]
+  %.011.i.i = phi ptr [ null, %.loopexit.loopexit.i.i ], [ null, %.lr.ph.i.preheader.i ], [ %i.cu, %bb.k ], [ %i.cu, %bb.m ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #9
   br label %bb.w
@@ -672,19 +678,22 @@ bb.p:                                             ; preds = %bb.o
   %i.dg = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
   store ptr %i.df, ptr %i.dg, align 8, !tbaa !36
   %.not17.i.i64 = icmp eq ptr %i.df, null
-  br i1 %.not17.i.i64, label %bb.q, label %.lr.ph.i.preheader.i65
+  br i1 %.not17.i.i64, label %.lr.ph.i.preheader.i65, label %bb.q
 
 .lr.ph.i.preheader.i65:                           ; preds = %bb.p
-  %2 = shl nuw nsw i64 %indvars.iv.i.i58, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.df, ptr nonnull align 4 %i.e, i64 %2, i1 false), !tbaa !28
-  br label %ff_make_formats_list_singleton.exit67
-
-bb.q:                                             ; preds = %bb.p
   call void @av_freep(ptr noundef nonnull %i.d) #9
   br label %ff_make_formats_list_singleton.exit67
 
+bb.q:                                             ; preds = %bb.p
+  %indvars.iv.next24.i.i66 = add nsw i64 %indvars.iv.i.i58, -1 ; 2 uses
+  %4 = getelementptr inbounds [4 x i8], ptr %i.e, i64 %indvars.iv.next24.i.i66
+  %5 = load i32, ptr %4, align 4, !tbaa !28
+  %6 = getelementptr inbounds [4 x i8], ptr %i.df, i64 %indvars.iv.next24.i.i66
+  store i32 %5, ptr %6, align 4, !tbaa !28
+  br label %ff_make_formats_list_singleton.exit67
+
 ff_make_formats_list_singleton.exit67:            ; preds = %.loopexit.loopexit.i.i61, %bb.o, %.lr.ph.i.preheader.i65, %bb.q
-  %.011.i.i66 = phi ptr [ null, %.loopexit.loopexit.i.i61 ], [ null, %bb.q ], [ %i.dd, %bb.o ], [ %i.dd, %.lr.ph.i.preheader.i65 ]
+  %.011.i.i66 = phi ptr [ null, %.loopexit.loopexit.i.i61 ], [ null, %.lr.ph.i.preheader.i65 ], [ %i.dd, %bb.o ], [ %i.dd, %bb.q ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #9
   br label %bb.w
@@ -1086,9 +1095,6 @@ bb.l:                                             ; preds = %.lr.ph78, %bb.l
 }
 
 declare void @av_bprintf(ptr noundef, ptr noundef, ...) local_unnamed_addr #4
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #3
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
