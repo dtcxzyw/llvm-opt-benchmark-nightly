@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sdl/original/SDL_test_fuzzer?download=true
 inline.NumInlined: 21
 inline.NumDeleted: 2
+loop-unroll.NumCompletelyUnrolled: 4
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumUnrolled: 5
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -192,11 +193,11 @@ declare i32 @SDL_rand_r(ptr noundef, i32 noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define dso_local zeroext i8 @SDLTest_RandomUint8BoundaryValue(i8 noundef zeroext %0, i8 noundef zeroext %1, i1 noundef zeroext %2) local_unnamed_addr #2 {
 bb.a:
-  %i.a = alloca [4 x i64], align 16               ; 10 uses
+  %i.a = alloca [4 x i64], align 16               ; 12 uses
   %i.b = zext i8 %0 to i64                        ; 2 uses
   %i.c = zext i8 %1 to i64                        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  %..i = tail call i64 @llvm.umin.i64(i64 %i.b, i64 %i.c) ; 7 uses
+  %..i = tail call i64 @llvm.umin.i64(i64 %i.b, i64 %i.c) ; 9 uses
   %.51.i = tail call i64 @llvm.umax.i64(i64 %i.b, i64 %i.c) ; 6 uses
   br i1 %2, label %bb.b, label %bb.e
 
@@ -205,24 +206,29 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %SDLTest_GenerateUnsignedBoundaryValues.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = sub nuw nsw i64 %.51.i, %..i             ; 2 uses
+  %i.e = sub nuw nsw i64 %.51.i, %..i             ; 4 uses
   %i.f = icmp samesign ult i64 %i.e, 4
   br i1 %i.f, label %.preheader.preheader.i, label %bb.d
 
 .preheader.preheader.i:                           ; preds = %bb.c
   %i.g = trunc nuw nsw i64 %i.e to i8
-  %umax = tail call i8 @llvm.umax.i8(i8 %i.g, i8 1) ; 2 uses
-  %wide.trip.count = zext nneg i8 %umax to i64
-  br label %.preheader.i
+  %umax = tail call i8 @llvm.umax.i8(i8 %i.g, i8 1) ; 3 uses
+  store i64 %..i, ptr %i.a, align 16
+  %exitcond.not = icmp samesign ult i64 %i.e, 2
+  br i1 %exitcond.not, label %.thread.i, label %.preheader.i
 
-.preheader.i:                                     ; preds = %.preheader.preheader.i, %.preheader.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader.i ], [ 0, %.preheader.preheader.i ] ; 3 uses
-  %i.h = add nuw nsw i64 %..i, %indvars.iv
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+.preheader.i:                                     ; preds = %.preheader.preheader.i
+  %i.h = add nuw nsw i64 %..i, 1
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %i.h, ptr %3, align 8
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not.a = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not.a, label %.thread.i, label %.preheader.i, !llvm.loop !9
+  %exitcond.not.a = icmp eq i64 %i.e, 2
+  br i1 %exitcond.not.a, label %.thread.i, label %.preheader.i.2
+
+.preheader.i.2:                                   ; preds = %.preheader.i
+  %4 = add nuw nsw i64 %..i, 2
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store i64 %4, ptr %5, align 16
+  br label %.thread.i
 
 bb.d:                                             ; preds = %bb.c
   store i64 %..i, ptr %i.a, align 16
@@ -263,8 +269,8 @@ bb.g:                                             ; preds = %.thread, %bb.f
   %i.s = tail call zeroext i1 (ptr, ...) @SDL_SetError(ptr noundef nonnull @.str.3) #7 ; 0 uses
   br label %SDLTest_GenerateUnsignedBoundaryValues.exit
 
-.thread.i:                                        ; preds = %.preheader.i, %.thread, %bb.g, %bb.d
-  %.253.i = phi i8 [ 1, %.thread ], [ %i.r, %bb.g ], [ 4, %bb.d ], [ %umax, %.preheader.i ]
+.thread.i:                                        ; preds = %.preheader.preheader.i, %.preheader.i, %.preheader.i.2, %.thread, %bb.g, %bb.d
+  %.253.i = phi i8 [ 1, %.thread ], [ %i.r, %bb.g ], [ 4, %bb.d ], [ %umax, %.preheader.i.2 ], [ %umax, %.preheader.i ], [ %umax, %.preheader.preheader.i ]
   %i.t = load i32, ptr @fuzzerInvocationCounter, align 4
   %i.u = add nsw i32 %i.t, 1
   store i32 %i.u, ptr @fuzzerInvocationCounter, align 4
@@ -287,11 +293,11 @@ SDLTest_GenerateUnsignedBoundaryValues.exit:      ; preds = %bb.b, %.loopexit.i,
 ; Function Attrs: nounwind uwtable
 define dso_local zeroext i16 @SDLTest_RandomUint16BoundaryValue(i16 noundef zeroext %0, i16 noundef zeroext %1, i1 noundef zeroext %2) local_unnamed_addr #2 {
 bb.a:
-  %i.a = alloca [4 x i64], align 16               ; 10 uses
+  %i.a = alloca [4 x i64], align 16               ; 12 uses
   %i.b = zext i16 %0 to i64                       ; 2 uses
   %i.c = zext i16 %1 to i64                       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  %..i = tail call i64 @llvm.umin.i64(i64 %i.b, i64 %i.c) ; 7 uses
+  %..i = tail call i64 @llvm.umin.i64(i64 %i.b, i64 %i.c) ; 9 uses
   %.51.i = tail call i64 @llvm.umax.i64(i64 %i.b, i64 %i.c) ; 6 uses
   br i1 %2, label %bb.b, label %bb.e
 
@@ -300,24 +306,29 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %SDLTest_GenerateUnsignedBoundaryValues.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = sub nuw nsw i64 %.51.i, %..i             ; 2 uses
+  %i.e = sub nuw nsw i64 %.51.i, %..i             ; 4 uses
   %i.f = icmp samesign ult i64 %i.e, 4
   br i1 %i.f, label %.preheader.preheader.i, label %bb.d
 
 .preheader.preheader.i:                           ; preds = %bb.c
   %i.g = trunc nuw nsw i64 %i.e to i8
-  %umax = tail call i8 @llvm.umax.i8(i8 %i.g, i8 1) ; 2 uses
-  %wide.trip.count = zext nneg i8 %umax to i64
-  br label %.preheader.i
+  %umax = tail call i8 @llvm.umax.i8(i8 %i.g, i8 1) ; 3 uses
+  store i64 %..i, ptr %i.a, align 16
+  %exitcond.not = icmp samesign ult i64 %i.e, 2
+  br i1 %exitcond.not, label %.thread.i, label %.preheader.i
 
-.preheader.i:                                     ; preds = %.preheader.preheader.i, %.preheader.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader.i ], [ 0, %.preheader.preheader.i ] ; 3 uses
-  %i.h = add nuw nsw i64 %..i, %indvars.iv
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+.preheader.i:                                     ; preds = %.preheader.preheader.i
+  %i.h = add nuw nsw i64 %..i, 1
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %i.h, ptr %3, align 8
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not.a = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not.a, label %.thread.i, label %.preheader.i, !llvm.loop !10
+  %exitcond.not.a = icmp eq i64 %i.e, 2
+  br i1 %exitcond.not.a, label %.thread.i, label %.preheader.i.2
+
+.preheader.i.2:                                   ; preds = %.preheader.i
+  %4 = add nuw nsw i64 %..i, 2
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store i64 %4, ptr %5, align 16
+  br label %.thread.i
 
 bb.d:                                             ; preds = %bb.c
   store i64 %..i, ptr %i.a, align 16
@@ -358,8 +369,8 @@ bb.g:                                             ; preds = %.thread, %bb.f
   %i.s = tail call zeroext i1 (ptr, ...) @SDL_SetError(ptr noundef nonnull @.str.3) #7 ; 0 uses
   br label %SDLTest_GenerateUnsignedBoundaryValues.exit
 
-.thread.i:                                        ; preds = %.preheader.i, %.thread, %bb.g, %bb.d
-  %.253.i = phi i8 [ 1, %.thread ], [ %i.r, %bb.g ], [ 4, %bb.d ], [ %umax, %.preheader.i ]
+.thread.i:                                        ; preds = %.preheader.preheader.i, %.preheader.i, %.preheader.i.2, %.thread, %bb.g, %bb.d
+  %.253.i = phi i8 [ 1, %.thread ], [ %i.r, %bb.g ], [ 4, %bb.d ], [ %umax, %.preheader.i.2 ], [ %umax, %.preheader.i ], [ %umax, %.preheader.preheader.i ]
   %i.t = load i32, ptr @fuzzerInvocationCounter, align 4
   %i.u = add nsw i32 %i.t, 1
   store i32 %i.u, ptr @fuzzerInvocationCounter, align 4
@@ -382,11 +393,11 @@ SDLTest_GenerateUnsignedBoundaryValues.exit:      ; preds = %bb.b, %.loopexit.i,
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @SDLTest_RandomUint32BoundaryValue(i32 noundef %0, i32 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #2 {
 bb.a:
-  %i.a = alloca [4 x i64], align 16               ; 10 uses
+  %i.a = alloca [4 x i64], align 16               ; 12 uses
   %i.b = zext i32 %0 to i64                       ; 2 uses
   %i.c = zext i32 %1 to i64                       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  %..i = tail call i64 @llvm.umin.i64(i64 %i.b, i64 %i.c) ; 7 uses
+  %..i = tail call i64 @llvm.umin.i64(i64 %i.b, i64 %i.c) ; 9 uses
   %.51.i = tail call i64 @llvm.umax.i64(i64 %i.b, i64 %i.c) ; 6 uses
   br i1 %2, label %bb.b, label %bb.e
 
@@ -395,24 +406,29 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %SDLTest_GenerateUnsignedBoundaryValues.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = sub nuw nsw i64 %.51.i, %..i             ; 2 uses
+  %i.e = sub nuw nsw i64 %.51.i, %..i             ; 4 uses
   %i.f = icmp samesign ult i64 %i.e, 4
   br i1 %i.f, label %.preheader.preheader.i, label %bb.d
 
 .preheader.preheader.i:                           ; preds = %bb.c
   %i.g = trunc nuw nsw i64 %i.e to i8
-  %umax = tail call i8 @llvm.umax.i8(i8 %i.g, i8 1) ; 2 uses
-  %wide.trip.count = zext nneg i8 %umax to i64
-  br label %.preheader.i
+  %umax = tail call i8 @llvm.umax.i8(i8 %i.g, i8 1) ; 3 uses
+  store i64 %..i, ptr %i.a, align 16
+  %exitcond.not = icmp samesign ult i64 %i.e, 2
+  br i1 %exitcond.not, label %.thread.i, label %.preheader.i
 
-.preheader.i:                                     ; preds = %.preheader.preheader.i, %.preheader.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader.i ], [ 0, %.preheader.preheader.i ] ; 3 uses
-  %i.h = add nuw nsw i64 %..i, %indvars.iv
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+.preheader.i:                                     ; preds = %.preheader.preheader.i
+  %i.h = add nuw nsw i64 %..i, 1
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %i.h, ptr %3, align 8
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not.a = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not.a, label %.thread.i, label %.preheader.i, !llvm.loop !11
+  %exitcond.not.a = icmp eq i64 %i.e, 2
+  br i1 %exitcond.not.a, label %.thread.i, label %.preheader.i.2
+
+.preheader.i.2:                                   ; preds = %.preheader.i
+  %4 = add nuw nsw i64 %..i, 2
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store i64 %4, ptr %5, align 16
+  br label %.thread.i
 
 bb.d:                                             ; preds = %bb.c
   store i64 %..i, ptr %i.a, align 16
@@ -453,8 +469,8 @@ bb.g:                                             ; preds = %.thread, %bb.f
   %i.s = tail call zeroext i1 (ptr, ...) @SDL_SetError(ptr noundef nonnull @.str.3) #7 ; 0 uses
   br label %SDLTest_GenerateUnsignedBoundaryValues.exit
 
-.thread.i:                                        ; preds = %.preheader.i, %.thread, %bb.g, %bb.d
-  %.253.i = phi i8 [ 1, %.thread ], [ %i.r, %bb.g ], [ 4, %bb.d ], [ %umax, %.preheader.i ]
+.thread.i:                                        ; preds = %.preheader.preheader.i, %.preheader.i, %.preheader.i.2, %.thread, %bb.g, %bb.d
+  %.253.i = phi i8 [ 1, %.thread ], [ %i.r, %bb.g ], [ 4, %bb.d ], [ %umax, %.preheader.i.2 ], [ %umax, %.preheader.i ], [ %umax, %.preheader.preheader.i ]
   %i.t = load i32, ptr @fuzzerInvocationCounter, align 4
   %i.u = add nsw i32 %i.t, 1
   store i32 %i.u, ptr @fuzzerInvocationCounter, align 4
@@ -477,9 +493,9 @@ SDLTest_GenerateUnsignedBoundaryValues.exit:      ; preds = %bb.b, %.loopexit.i,
 ; Function Attrs: nounwind uwtable
 define dso_local i64 @SDLTest_RandomUint64BoundaryValue(i64 noundef %0, i64 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #2 {
 bb.a:
-  %i.a = alloca [4 x i64], align 16               ; 10 uses
+  %i.a = alloca [4 x i64], align 16               ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  %..i = tail call i64 @llvm.umin.i64(i64 %0, i64 %1) ; 7 uses
+  %..i = tail call i64 @llvm.umin.i64(i64 %0, i64 %1) ; 9 uses
   %.51.i = tail call i64 @llvm.umax.i64(i64 %0, i64 %1) ; 6 uses
   br i1 %2, label %bb.b, label %bb.e
 
@@ -488,24 +504,29 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %SDLTest_GenerateUnsignedBoundaryValues.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = sub nuw i64 %.51.i, %..i                 ; 2 uses
+  %i.c = sub nuw i64 %.51.i, %..i                 ; 4 uses
   %i.d = icmp ult i64 %i.c, 4
   br i1 %i.d, label %.preheader.preheader.i, label %bb.d
 
 .preheader.preheader.i:                           ; preds = %bb.c
   %i.e = trunc nuw nsw i64 %i.c to i8
-  %umax = tail call i8 @llvm.umax.i8(i8 %i.e, i8 1) ; 2 uses
-  %wide.trip.count = zext nneg i8 %umax to i64
-  br label %.preheader.i
+  %umax = tail call i8 @llvm.umax.i8(i8 %i.e, i8 1) ; 3 uses
+  store i64 %..i, ptr %i.a, align 16
+  %exitcond.not = icmp ult i64 %i.c, 2
+  br i1 %exitcond.not, label %.thread.i, label %.preheader.i
 
-.preheader.i:                                     ; preds = %.preheader.preheader.i, %.preheader.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader.i ], [ 0, %.preheader.preheader.i ] ; 3 uses
-  %i.f = add i64 %..i, %indvars.iv
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
+.preheader.i:                                     ; preds = %.preheader.preheader.i
+  %i.f = add i64 %..i, 1
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %i.f, ptr %3, align 8
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not.a = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not.a, label %.thread.i, label %.preheader.i, !llvm.loop !12
+  %exitcond.not.a = icmp eq i64 %i.c, 2
+  br i1 %exitcond.not.a, label %.thread.i, label %.preheader.i.2
+
+.preheader.i.2:                                   ; preds = %.preheader.i
+  %4 = add i64 %..i, 2
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store i64 %4, ptr %5, align 16
+  br label %.thread.i
 
 bb.d:                                             ; preds = %bb.c
   store i64 %..i, ptr %i.a, align 16
@@ -546,8 +567,8 @@ bb.g:                                             ; preds = %.thread, %bb.f
   %i.q = tail call zeroext i1 (ptr, ...) @SDL_SetError(ptr noundef nonnull @.str.3) #7 ; 0 uses
   br label %SDLTest_GenerateUnsignedBoundaryValues.exit
 
-.thread.i:                                        ; preds = %.preheader.i, %.thread, %bb.g, %bb.d
-  %.253.i = phi i8 [ 1, %.thread ], [ %i.p, %bb.g ], [ 4, %bb.d ], [ %umax, %.preheader.i ]
+.thread.i:                                        ; preds = %.preheader.preheader.i, %.preheader.i, %.preheader.i.2, %.thread, %bb.g, %bb.d
+  %.253.i = phi i8 [ 1, %.thread ], [ %i.p, %bb.g ], [ 4, %bb.d ], [ %umax, %.preheader.i.2 ], [ %umax, %.preheader.i ], [ %umax, %.preheader.preheader.i ]
   %i.r = load i32, ptr @fuzzerInvocationCounter, align 4
   %i.s = add nsw i32 %i.r, 1
   store i32 %i.s, ptr @fuzzerInvocationCounter, align 4
@@ -644,7 +665,7 @@ bb.i:                                             ; preds = %.loopexit.i
   %i.w = add nuw i8 %.0.i.epil, 1                 ; 2 uses
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.thread.i, label %.preheader.i.epil, !llvm.loop !13
+  br i1 %epil.iter.cmp.not, label %.thread.i, label %.preheader.i.epil, !llvm.loop !7
 
 .thread.i:                                        ; preds = %.preheader.i.epil, %.loopexit.i, %bb.h, %bb.d
   %.255.i = phi i8 [ 1, %.loopexit.i ], [ %i.r, %bb.h ], [ 4, %bb.d ], [ %i.w, %.preheader.i.epil ]
@@ -979,7 +1000,7 @@ bb.b:                                             ; preds = %.critedge
   br i1 %.not3, label %bb.c, label %.critedge.backedge
 
 .critedge.backedge:                               ; preds = %bb.b, %.critedge
-  br label %.critedge, !llvm.loop !15
+  br label %.critedge, !llvm.loop !9
 
 bb.c:                                             ; preds = %bb.b
   ret float %i.d
@@ -1039,7 +1060,7 @@ bb.b:                                             ; preds = %.critedge
   br i1 %.not3, label %bb.c, label %.critedge.backedge
 
 .critedge.backedge:                               ; preds = %bb.b, %.critedge
-  br label %.critedge, !llvm.loop !16
+  br label %.critedge, !llvm.loop !10
 
 bb.c:                                             ; preds = %bb.b
   ret double %i.g
@@ -1247,14 +1268,8 @@ attributes #7 = { nounwind }
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{!"Ubuntu clang version 24.0.0 (++20260807082003+f3bd40ce6ba5-1~exp1~20260807082012.1771)"}
 !6 = !{!"llvm.loop.mustprogress"}
-!7 = !{!"llvm.loop.unroll.runtime.disable"}
-!8 = !{!"llvm.loop.isvectorized", i32 1}
-!9 = distinct !{!9, !6, !7, !8}
-!10 = distinct !{!10, !6, !7, !8}
-!11 = distinct !{!11, !6, !7, !8}
-!12 = distinct !{!12, !6, !7, !8}
-!13 = distinct !{!13, !14}
-!14 = !{!"llvm.loop.unroll.disable"}
-!15 = distinct !{!15, !6}
-!16 = distinct !{!16, !6}
+!7 = distinct !{!7, !8}
+!8 = !{!"llvm.loop.unroll.disable"}
+!9 = distinct !{!9, !6}
+!10 = distinct !{!10, !6}
 end_hunk_0
