@@ -205,9 +205,9 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   br label %bb.bf
 
 _ZNK4llvm18TargetLoweringBase11isTypeLegalENS_3EVTE.exit124: ; preds = %bb.t, %bb.bd
-  %indvars.iv377 = phi i64 [ 19, %bb.t ], [ %indvars.iv.next378, %bb.bd ] ; 29 uses
+  %indvars.iv377 = phi i64 [ 19, %bb.t ], [ %indvars.iv.next378, %bb.bd ] ; 31 uses
   %indvars.iv369 = phi i64 [ 20, %bb.t ], [ %indvars.iv.next370, %bb.bd ] ; 2 uses
-  %i.hi = trunc i64 %indvars.iv377 to i16         ; 6 uses
+  %i.hi = trunc i64 %indvars.iv377 to i16         ; 4 uses
   %i.hj = getelementptr inbounds nuw [8 x i8], ptr %i.cw, i64 %indvars.iv377
   %i.hk = load ptr, ptr %i.hj, align 8, !tbaa !190
   %.not306 = icmp eq ptr %i.hk, null
@@ -367,8 +367,7 @@ _ZN4llvm13isPowerOf2_32Ej.exit.thread:            ; preds = %.loopexit
   br i1 %.not.i.i139, label %_ZNK4llvm18TargetLoweringBase11isTypeLegalENS_3EVTE.exit142, label %bb.aa
 
 bb.aa:                                            ; preds = %_ZN4llvm13isPowerOf2_32Ej.exit.thread
-  %4 = add nsw i16 %i.hi, -216
-  %spec.select.i.i.i140 = icmp ult i16 %4, -53
+  %spec.select.i.i.i140 = icmp samesign ult i64 %indvars.iv377, 163
   %.sroa.0.0.extract.trunc.i = zext i16 %i.hq to i32
   %i.jr = add nsw i32 %.sroa.0.0.extract.trunc.i, -1
   %i.js = call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.jr, i1 false)
@@ -640,8 +639,7 @@ _ZL25getVectorTypeBreakdownMVTN4llvm3MVTERS0_RjS1_PNS_18TargetLoweringBaseE.exit
   br i1 %.not.i.i146, label %_ZNK4llvm3MVT17getPow2VectorTypeEv.exit151.thread, label %bb.at
 
 bb.at:                                            ; preds = %_ZL25getVectorTypeBreakdownMVTN4llvm3MVTERS0_RjS1_PNS_18TargetLoweringBaseE.exit
-  %5 = add nsw i16 %i.hi, -216
-  %spec.select.i.i.i147 = icmp ult i16 %5, -53
+  %spec.select.i.i.i147 = icmp samesign ult i64 %indvars.iv377, 163
   %i.mo = add nsw i32 %.sroa.052.0.extract.trunc68.i, -1
   %i.mp = call noundef range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.mo, i1 false)
   %i.mq = sub nuw nsw i32 32, %i.mp

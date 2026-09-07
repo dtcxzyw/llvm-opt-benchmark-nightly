@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.thread, %bb.g
   %i.bm = phi ptr [ %i.bk, %.thread ], [ %i.bl, %bb.g ] ; 4 uses
   %i.bn = load ptr, ptr %i.bi, align 8, !tbaa !72 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 2800 ; 2 uses
-  %i.bp = load i32, ptr %i.bo, align 8, !tbaa !75 ; 2 uses
+  %i.bp = load i32, ptr %i.bo, align 8, !tbaa !75
   %i.bq = tail call range(i32 1, 33) i32 @llvm.ctpop.i32(i32 %.sroa.520.0.copyload)
   %i.br = icmp eq i32 %i.bq, 1
   br i1 %i.br, label %.preheader.preheader.split.i, label %.loopexit37.i
@@ -218,6 +218,7 @@ bb.h:                                             ; preds = %.thread, %bb.g
 
 .loopexit37.i:                                    ; preds = %.preheader.preheader.split.i, %bb.h
   %i.bu = icmp ugt i64 %i.n, 16777215
+  %3 = zext i32 %i.bp to i64                      ; 2 uses
   br i1 %i.bu, label %.thread117, label %.split.i
 
 .split.i:                                         ; preds = %.loopexit37.i
@@ -256,15 +257,13 @@ bb.h:                                             ; preds = %.thread, %bb.g
   br i1 %.not35.i, label %bb.p, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.split.split.i, %bb.o
-  %i.cd = phi i64 [ %5, %bb.o ], [ 0, %.split.split.i ] ; 4 uses
+  %i.cd = phi i64 [ %i.dh, %bb.o ], [ 0, %.split.split.i ] ; 5 uses
   %.03845.i.i = phi i32 [ %i.dg, %bb.o ], [ 0, %.split.split.i ]
-  %indvars.i.i = trunc nuw i64 %i.cd to i32       ; 2 uses
-  %.not.i.i = icmp ugt i32 %i.bp, %indvars.i.i
+  %.not.i.i = icmp samesign ult i64 %i.cd, %3
   br i1 %.not.i.i, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph.i.i
-  %3 = sub nuw i32 %indvars.i.i, %i.bp
-  %4 = zext i32 %3 to i64                         ; 2 uses
+  %4 = sub nuw nsw i64 %i.cd, %3                  ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bm, i64 %4
   %i.cf = load i8, ptr %i.ce, align 1, !tbaa !51
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bn, i64 %4
@@ -329,10 +328,9 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l,
   %i.df = tail call i32 @llvm.abs.i32(i32 %i.de, i1 true)
   %reass.sub.i.i = add i32 %.03845.i.i, 128
   %i.dg = sub i32 %reass.sub.i.i, %i.df           ; 2 uses
-  %i.dh = add nuw nsw i64 %i.cd, 1
-  %5 = and i64 %i.dh, 4294967295                  ; 2 uses
-  %6 = icmp ugt i64 %i.n, %5
-  br i1 %6, label %.lr.ph.i.i, label %filter_sum.exit.loopexit.i, !llvm.loop !320
+  %i.dh = add nuw nsw i64 %i.cd, 1                ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %i.dh, %i.n
+  br i1 %exitcond.not.i.i, label %filter_sum.exit.loopexit.i, label %.lr.ph.i.i, !llvm.loop !320
 
 filter_sum.exit.loopexit.i:                       ; preds = %bb.o
   %i.di = tail call i32 @llvm.abs.i32(i32 %i.dg, i1 true) ; 2 uses

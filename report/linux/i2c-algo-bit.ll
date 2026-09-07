@@ -99,8 +99,8 @@ udelay.exit.i:                                    ; preds = %bb.a, %bb.b
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.af
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.af ] ; 4 uses
-  %i.v = getelementptr [16 x i8], ptr %1, i64 %indvars.iv ; 7 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.af ] ; 3 uses
+  %i.v = getelementptr [16 x i8], ptr %1, i64 %indvars.iv ; 8 uses
   %i.w = getelementptr i8, ptr %i.v, i64 2        ; 3 uses
   %i.x = load i16, ptr %i.w, align 2              ; 2 uses
   %i.y = and i16 %i.x, 4096
@@ -113,8 +113,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not54, label %i2c_start.exit59, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %3 = getelementptr [16 x i8], ptr %1, i64 %indvars.iv
-  %i.aa = getelementptr i8, ptr %3, i64 -14
+  %i.aa = getelementptr i8, ptr %i.v, i64 -14
   %i.ab = load i16, ptr %i.aa, align 2
   %.not55 = icmp sgt i16 %i.ab, -1
   br i1 %.not55, label %bb.f, label %udelay.exit.i58

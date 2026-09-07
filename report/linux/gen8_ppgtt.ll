@@ -195,7 +195,6 @@ bb.o:                                             ; preds = %bb.l
 
 i915_gem_object_put.exit.i:                       ; preds = %bb.o, %bb.n, %bb.m, %bb.j
   %.056.i = phi i32 [ %i.cc, %bb.j ], [ %i.cd, %bb.o ], [ %i.cd, %bb.m ], [ %i.cd, %bb.n ] ; 2 uses
-  %.18087.i = trunc nuw nsw i64 %indvars.iv91.i to i32
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.k
@@ -217,10 +216,9 @@ bb.p:                                             ; preds = %bb.k
   br i1 %.not66.not.i, label %.lr.ph.i, label %gen8_init_scratch.exit.thread, !llvm.loop !23
 
 bb.q:                                             ; preds = %i915_gem_object_put.exit69.i, %i915_gem_object_put.exit.i
-  %.281.i = phi i32 [ %.18087.i, %i915_gem_object_put.exit.i ], [ %2, %i915_gem_object_put.exit69.i ]
-  %2 = add i32 %.281.i, -1                        ; 3 uses
-  %3 = sext i32 %2 to i64
-  %i.cq = getelementptr [8 x i8], ptr %i.bk, i64 %3
+  %indvars.iv94.i = phi i64 [ %indvars.iv91.i, %i915_gem_object_put.exit.i ], [ %indvars.iv.next95.i, %i915_gem_object_put.exit69.i ]
+  %indvars.iv.next95.i = add nsw i64 %indvars.iv94.i, -1 ; 3 uses
+  %i.cq = getelementptr [8 x i8], ptr %i.bk, i64 %indvars.iv.next95.i
   %i.cr = load ptr, ptr %i.cq, align 8            ; 4 uses
   %i.cs = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.cr, i32 -1, ptr elementtype(i32) %i.cr) #7, !srcloc !11 ; 2 uses
   %i.ct = icmp eq i32 %i.cs, 1
@@ -240,7 +238,7 @@ bb.t:                                             ; preds = %bb.q
   br label %i915_gem_object_put.exit69.i
 
 i915_gem_object_put.exit69.i:                     ; preds = %bb.t, %bb.s, %bb.r
-  %.not68.i = icmp eq i32 %2, 0
+  %.not68.i = icmp eq i64 %indvars.iv.next95.i, 0
   br i1 %.not68.i, label %gen8_init_scratch.exit, label %bb.q, !llvm.loop !24
 
 gen8_init_scratch.exit:                           ; preds = %i915_gem_object_put.exit69.i

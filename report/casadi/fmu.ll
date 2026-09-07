@@ -205,16 +205,12 @@ bb.ai:                                            ; preds = %.invoke, %bb.gj, %_
   br label %bb.hu
 
 bb.aj:                                            ; preds = %.lr.ph764, %_ZNSt6vectorImSaImEE9push_backERKm.exit
-  %storemerge763 = phi i64 [ 0, %.lr.ph764 ], [ %i.kh, %_ZNSt6vectorImSaImEE9push_backERKm.exit ] ; 6 uses
-  %31 = sdiv i64 %storemerge763, 64
-  %i.hi = getelementptr inbounds [8 x i8], ptr %.sroa.0585.0, i64 %31
-  %32 = and i64 %storemerge763, -9223372036854775745
-  %33 = icmp ugt i64 %32, -9223372036854775808
-  %storemerge.idx.i.i.i.i.i239 = select i1 %33, i64 -8, i64 0
-  %storemerge.i.i.i.i.i240 = getelementptr inbounds i8, ptr %i.hi, i64 %storemerge.idx.i.i.i.i.i239
+  %storemerge763 = phi i64 [ 0, %.lr.ph764 ], [ %i.kh, %_ZNSt6vectorImSaImEE9push_backERKm.exit ] ; 5 uses
+  %31 = lshr i64 %storemerge763, 6
+  %i.hi = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0585.0, i64 %31
   %i.hj = and i64 %storemerge763, 63
   %i.hk = shl nuw i64 1, %i.hj
-  %i.hl = load i64, ptr %storemerge.i.i.i.i.i240, align 8, !tbaa !32
+  %i.hl = load i64, ptr %i.hi, align 8, !tbaa !32
   %i.hm = and i64 %i.hl, %i.hk
   %.not671 = icmp eq i64 %i.hm, 0
   br i1 %.not671, label %bb.av, label %bb.ak
@@ -464,7 +460,7 @@ _ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS
   br label %..thread_crit_edge
 
 _ZNSt6vectorImSaImEE9push_backERKm.exit:          ; preds = %bb.aw, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i253, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i, %bb.aq
-  %i.kh = add nuw i64 %storemerge763, 1           ; 2 uses
+  %i.kh = add nuw nsw i64 %storemerge763, 1       ; 2 uses
   %i.ki = icmp ult i64 %i.kh, %i.ge
   br i1 %i.ki, label %bb.aj, label %._crit_edge765, !llvm.loop !283
 
@@ -867,16 +863,12 @@ _ZNSt6vectorIS_ImSaImEESaIS1_EE6resizeEm.exit:    ; preds = %._ZNSt6vectorIS_ImS
   br label %bb.df
 
 bb.cj:                                            ; preds = %.lr.ph780, %_ZNSt6vectorImSaImEE9push_backERKm.exit335
-  %storemerge157779 = phi i64 [ 0, %.lr.ph780 ], [ %i.ua, %_ZNSt6vectorImSaImEE9push_backERKm.exit335 ] ; 6 uses
-  %34 = sdiv i64 %storemerge157779, 64
-  %i.rb = getelementptr inbounds [8 x i8], ptr %.sroa.0585.0, i64 %34
-  %35 = and i64 %storemerge157779, -9223372036854775745
-  %36 = icmp ugt i64 %35, -9223372036854775808
-  %storemerge.idx.i.i.i.i.i312 = select i1 %36, i64 -8, i64 0
-  %storemerge.i.i.i.i.i313 = getelementptr inbounds i8, ptr %i.rb, i64 %storemerge.idx.i.i.i.i.i312
+  %storemerge157779 = phi i64 [ 0, %.lr.ph780 ], [ %i.ua, %_ZNSt6vectorImSaImEE9push_backERKm.exit335 ] ; 5 uses
+  %32 = lshr i64 %storemerge157779, 6
+  %i.rb = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0585.0, i64 %32
   %i.rc = and i64 %storemerge157779, 63
   %i.rd = shl nuw i64 1, %i.rc
-  %i.re = load i64, ptr %storemerge.i.i.i.i.i313, align 8, !tbaa !32
+  %i.re = load i64, ptr %i.rb, align 8, !tbaa !32
   %i.rf = and i64 %i.re, %i.rd
   %.not668 = icmp eq i64 %i.rf, 0
   br i1 %.not668, label %bb.cv, label %bb.ck
@@ -1126,7 +1118,7 @@ _ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS
   br label %..thread_crit_edge
 
 _ZNSt6vectorImSaImEE9push_backERKm.exit335:       ; preds = %bb.cw, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i342, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i332, %bb.cq
-  %i.ua = add nuw i64 %storemerge157779, 1        ; 2 uses
+  %i.ua = add nuw nsw i64 %storemerge157779, 1    ; 2 uses
   %i.ub = icmp ult i64 %i.ua, %i.ge
   br i1 %i.ub, label %bb.cj, label %._crit_edge781, !llvm.loop !286
 

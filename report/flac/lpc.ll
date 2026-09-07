@@ -204,8 +204,7 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %.loopexit109
-  %indvars.iv.next76 = add i32 %indvars.iv7587, 1 ; 2 uses
-  %umax = tail call i32 @llvm.umax.i32(i32 %indvars.iv.next76, i32 1)
+  %indvars.iv.next76 = add i32 %indvars.iv7587, 1
   %i.d = trunc nuw i64 %indvars.iv.next80 to i32  ; 2 uses
   %i.e = lshr i32 %i.d, 1
   %exitcond83.not = icmp eq i64 %indvars.iv.next80, %wide.trip.count82
@@ -214,11 +213,10 @@ bb.b:                                             ; preds = %.loopexit109
 bb.c:                                             ; preds = %.lr.ph91, %bb.b
   %i.f = phi i32 [ 0, %.lr.ph91 ], [ %i.e, %bb.b ] ; 3 uses
   %i.g = phi i32 [ 0, %.lr.ph91 ], [ %i.d, %bb.b ]
-  %umax89 = phi i32 [ 1, %.lr.ph91 ], [ %umax, %bb.b ] ; 2 uses
   %.04988 = phi double [ %i.c, %.lr.ph91 ], [ %i.bm, %bb.b ] ; 2 uses
-  %indvars.iv7587 = phi i32 [ 1, %.lr.ph91 ], [ %indvars.iv.next76, %bb.b ]
-  %indvars.iv7986 = phi i64 [ 0, %.lr.ph91 ], [ %indvars.iv.next80, %bb.b ] ; 12 uses
-  %indvars.iv.next80 = add nuw nsw i64 %indvars.iv7986, 1 ; 5 uses
+  %indvars.iv7587 = phi i32 [ 1, %.lr.ph91 ], [ %indvars.iv.next76, %bb.b ] ; 2 uses
+  %indvars.iv7986 = phi i64 [ 0, %.lr.ph91 ], [ %indvars.iv.next80, %bb.b ] ; 13 uses
+  %indvars.iv.next80 = add nuw nsw i64 %indvars.iv7986, 1 ; 7 uses
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next80
   %i.i = load double, ptr %i.h, align 8, !tbaa !17
   %i.j = fneg reassoc nsz arcp double %i.i        ; 3 uses
@@ -332,12 +330,11 @@ bb.d:                                             ; preds = %._crit_edge59
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge59
   %i.av = getelementptr inbounds nuw [128 x i8], ptr %2, i64 %indvars.iv7986 ; 2 uses
-  %wide.trip.count77 = zext i32 %umax89 to i64    ; 3 uses
-  %min.iters.check = icmp ult i32 %umax89, 4
+  %min.iters.check = icmp samesign ult i64 %indvars.iv7986, 3
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.e
-  %n.vec = and i64 %wide.trip.count77, 4294967292 ; 3 uses
+  %n.vec = and i64 %indvars.iv.next80, 9223372036854775804 ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -359,7 +356,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.be, label %middle.block, label %vector.body, !llvm.loop !46
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count77
+  %cmp.n = icmp eq i64 %indvars.iv.next80, %n.vec
   br i1 %cmp.n, label %.loopexit109, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %bb.e, %middle.block
@@ -375,7 +372,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.av, i64 %indvars.iv72
   store float %i.bi, ptr %i.bj, align 4, !tbaa !10
   %indvars.iv.next73 = add nuw nsw i64 %indvars.iv72, 1 ; 2 uses
-  %exitcond78 = icmp eq i64 %indvars.iv.next73, %wide.trip.count77
+  %lftr.wideiv = trunc i64 %indvars.iv.next73 to i32
+  %exitcond78 = icmp eq i32 %indvars.iv7587, %lftr.wideiv
   br i1 %exitcond78, label %.loopexit109, label %scalar.ph, !llvm.loop !47
 
 .loopexit109:                                     ; preds = %scalar.ph, %middle.block

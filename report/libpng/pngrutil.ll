@@ -205,47 +205,41 @@ png_crc_read.exit:                                ; preds = %bb.f, %bb.g
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %indvars.iv.a = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1.a, %.lr.ph ] ; 3 uses
-  %.055 = phi i32 [ 0, %.lr.ph.preheader.new ], [ %14, %.lr.ph ] ; 7 uses
-  %niter.a = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
-  %4 = or disjoint i32 %.055, 1
-  %5 = zext i32 %.055 to i64
-  %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 %5
+  %niter.a = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %.lr.ph ] ; 5 uses
+  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
+  %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 %niter.a
   %i.ag = load i8, ptr %i.af, align 2, !tbaa !8
   %i.ah = getelementptr inbounds nuw [3 x i8], ptr %3, i64 %indvars.iv.a ; 3 uses
   store i8 %i.ag, ptr %i.ah, align 2, !tbaa !72
-  %6 = add i32 %.055, 2
-  %7 = zext i32 %4 to i64
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 %7
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 %niter.a
+  %i.ai = getelementptr inbounds nuw i8, ptr %4, i64 1
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !8
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 1
   store i8 %i.aj, ptr %i.ak, align 1, !tbaa !73
-  %8 = add i32 %.055, 3
-  %9 = zext i32 %6 to i64
-  %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 %9
+  %indvars.iv.next = add nuw nsw i64 %niter.a, 3  ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 %niter.a
+  %i.al = getelementptr inbounds nuw i8, ptr %5, i64 2
   %i.am = load i8, ptr %i.al, align 2, !tbaa !8
   %i.an = getelementptr inbounds nuw i8, ptr %i.ah, i64 2
   store i8 %i.am, ptr %i.an, align 2, !tbaa !74
-  %10 = add i32 %.055, 4
-  %11 = zext i32 %8 to i64
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 %11
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !8
   %i.aq = getelementptr inbounds nuw [3 x i8], ptr %3, i64 %indvars.iv.a ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 3
   store i8 %i.ap, ptr %i.ar, align 1, !tbaa !72
-  %12 = add i32 %.055, 5
-  %13 = zext i32 %10 to i64
-  %i.as = getelementptr inbounds nuw i8, ptr %i.a, i64 %13
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next
+  %i.as = getelementptr inbounds nuw i8, ptr %6, i64 1
   %i.at = load i8, ptr %i.as, align 2, !tbaa !8
   %i.au = getelementptr inbounds nuw i8, ptr %i.aq, i64 4
   store i8 %i.at, ptr %i.au, align 2, !tbaa !73
-  %14 = add i32 %.055, 6                          ; 2 uses
-  %15 = zext i32 %12 to i64
-  %i.av = getelementptr inbounds nuw i8, ptr %i.a, i64 %15
+  %indvars.iv.next.1 = add nuw nsw i64 %niter.a, 6 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next
+  %i.av = getelementptr inbounds nuw i8, ptr %7, i64 2
   %i.aw = load i8, ptr %i.av, align 1, !tbaa !8
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aq, i64 5
   store i8 %i.aw, ptr %i.ax, align 1, !tbaa !74
   %indvars.iv.next.1.a = add nuw nsw i64 %indvars.iv.a, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter.a, 2             ; 2 uses
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !182
 
@@ -255,23 +249,20 @@ png_crc_read.exit:                                ; preds = %bb.f, %bb.g
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init.a = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1.a, %._crit_edge.loopexit.unr-lcssa ]
-  %.055.epil.init = phi i32 [ 0, %.lr.ph.preheader ], [ %14, %._crit_edge.loopexit.unr-lcssa ] ; 3 uses
+  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ] ; 3 uses
   %lcmp.mod59 = trunc i32 %i.w to i1
   call void @llvm.assume(i1 %lcmp.mod59)
-  %16 = add i32 %.055.epil.init, 1
-  %17 = zext i32 %.055.epil.init to i64
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 %17
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.epil.init
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !8
   %i.ba = getelementptr inbounds nuw [3 x i8], ptr %3, i64 %indvars.iv.epil.init.a ; 3 uses
   store i8 %i.az, ptr %i.ba, align 1, !tbaa !72
-  %18 = add i32 %.055.epil.init, 2
-  %19 = zext i32 %16 to i64
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.a, i64 %19
+  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.epil.init
+  %i.bb = getelementptr inbounds nuw i8, ptr %8, i64 1
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !8
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ba, i64 1
   store i8 %i.bc, ptr %i.bd, align 1, !tbaa !73
-  %20 = zext i32 %18 to i64
-  %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 %20
+  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.epil.init
+  %i.be = getelementptr inbounds nuw i8, ptr %9, i64 2
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !8
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ba, i64 2
   store i8 %i.bf, ptr %i.bg, align 1, !tbaa !74
