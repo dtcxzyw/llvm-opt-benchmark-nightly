@@ -205,7 +205,8 @@ _ZN4core5arrayItEixEj.exit:                       ; preds = %_ZN4core5arrayIjE8s
   %i.gn = sub i64 %i.gl, %i.gm
   %i.go = ashr exact i64 %i.gn, 2                 ; 3 uses
   %i.gp = call i64 @llvm.usub.sat.i64(i64 %i.gi, i64 1)
-  %wide.trip.count664 = zext i32 %i.fe to i64
+  %umax664 = call i32 @llvm.umax.i32(i32 %i.fe, i32 1)
+  %wide.trip.count664 = zext i32 %umax664 to i64
   br label %_ZN4core5arrayIjEixEj.exit303
 
 bb.as:                                            ; preds = %bb.ao
