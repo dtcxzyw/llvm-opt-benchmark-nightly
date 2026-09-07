@@ -204,10 +204,10 @@ _RNCINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9map_whileINtB8_8MapWhileINtNt
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.l = load i32, ptr %i.k, align 8, !noalias !446, !noundef !4 ; 2 uses
   %i.m = load i64, ptr %i.j, align 8, !range !5, !noalias !447, !noundef !4
-  %1 = trunc nuw i64 %i.m to i1
-  %.not.i.i = icmp ne i32 %i.l, 0
-  %or.cond.not = and i1 %.not.i.i, %1
-  br i1 %or.cond.not, label %bb.e, label %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9map_whileINtB5_8MapWhileINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1P_NtB1P_5Nodes12ancestor_ids0ENCNvMs_NtB1R_5modelNtB3m_13SemanticModel19current_expressions0ENtNtNtB9_6traits8iterator8Iterator4nextB1R_.exit.thread
+  %.not.not = icmp eq i64 %i.m, 0
+  %.not.i.i = icmp eq i32 %i.l, 0
+  %or.cond = or i1 %.not.not, %.not.i.i
+  br i1 %or.cond, label %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9map_whileINtB5_8MapWhileINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1P_NtB1P_5Nodes12ancestor_ids0ENCNvMs_NtB1R_5modelNtB3m_13SemanticModel19current_expressions0ENtNtNtB9_6traits8iterator8Iterator4nextB1R_.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %_RNCINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9map_whileINtB8_8MapWhileINtNtNtBc_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1S_NtB1S_5Nodes12ancestor_ids0ENCNvMs_NtB1U_5modelNtB3p_13SemanticModel19current_expressions0ENtNtNtBc_6traits8iterator8Iterator8try_foldINtNtNtBe_3num7nonzero7NonZerojENCNvXs_NvB4j_10advance_byBV_NtB5D_13SpecAdvanceBy15spec_advance_by0INtNtBe_6option6OptionB50_EE0B1U_.exit.i.i
   %i.n = add i32 %i.l, -1
@@ -302,9 +302,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.d = load i64, ptr %i.c, align 8, !noalias !470, !noundef !4 ; 4 uses
-  %2 = load ptr, ptr %1, align 8, !nonnull !4     ; 2 uses
   %i.e = add i32 %i.b, -1
   %i.f = zext i32 %i.e to i64                     ; 3 uses
   %i.g = icmp ugt i64 %i.d, %i.f
@@ -315,6 +313,8 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _RNCINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9map_whileINtB8_8MapWhileINtNtNtBc_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1S_NtB1S_5Nodes12ancestor_ids0ENCNvMs_NtB1U_5modelNtB3p_13SemanticModel19current_expressions0ENtNtNtBc_6traits8iterator8Iterator8try_foldINtNtNtBe_3num7nonzero7NonZerojENCNvXs_NvB4j_10advance_byBV_NtB5D_13SpecAdvanceBy15spec_advance_by0INtNtBe_6option6OptionB50_EE0B1U_.exit.i.i: ; preds = %bb.c
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %2 = load ptr, ptr %1, align 8, !nonnull !4     ; 2 uses
   %i.h = getelementptr inbounds nuw [24 x i8], ptr %2, i64 %i.f ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.j = load i32, ptr %i.i, align 8, !noalias !470, !noundef !4 ; 2 uses
@@ -694,10 +694,10 @@ _RNCINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9map_whileINtB8_8MapWhileINtNt
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.l = load i32, ptr %i.k, align 8, !noalias !553, !noundef !4 ; 2 uses
   %i.m = load i64, ptr %i.j, align 8, !range !5, !noalias !554, !noundef !4
-  %1 = trunc nuw i64 %i.m to i1
-  %.not.i.i = icmp ne i32 %i.l, 0
-  %or.cond.not = and i1 %.not.i.i, %1
-  br i1 %or.cond.not, label %bb.e, label %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9map_whileINtB5_8MapWhileINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1P_NtB1P_5Nodes12ancestor_ids0ENCNvMs_NtB1R_5modelNtB3m_13SemanticModel19current_expressions0ENtNtNtB9_6traits8iterator8Iterator4nextB1R_.exit.thread
+  %.not.not = icmp eq i64 %i.m, 0
+  %.not.i.i = icmp eq i32 %i.l, 0
+  %or.cond = or i1 %.not.not, %.not.i.i
+  br i1 %or.cond, label %_RNvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9map_whileINtB5_8MapWhileINtNtNtB9_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1P_NtB1P_5Nodes12ancestor_ids0ENCNvMs_NtB1R_5modelNtB3m_13SemanticModel19current_expressions0ENtNtNtB9_6traits8iterator8Iterator4nextB1R_.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %_RNCINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9map_whileINtB8_8MapWhileINtNtNtBc_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1S_NtB1S_5Nodes12ancestor_ids0ENCNvMs_NtB1U_5modelNtB3p_13SemanticModel19current_expressions0ENtNtNtBc_6traits8iterator8Iterator8try_foldINtNtNtBe_3num7nonzero7NonZerojENCNvXs_NvB4j_10advance_byBV_NtB5D_13SpecAdvanceBy15spec_advance_by0INtNtBe_6option6OptionB50_EE0B1U_.exit.i.i
   %i.n = add i32 %i.l, -1
@@ -1100,9 +1100,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.d = load i64, ptr %i.c, align 8, !noalias !808, !noundef !4 ; 4 uses
-  %2 = load ptr, ptr %1, align 8, !nonnull !4     ; 2 uses
   %i.e = add i32 %i.b, -1
   %i.f = zext i32 %i.e to i64                     ; 3 uses
   %i.g = icmp ugt i64 %i.d, %i.f
@@ -1113,6 +1111,8 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _RNCINvXs0_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9map_whileINtB8_8MapWhileINtNtNtBc_7sources10successors10SuccessorsNtNtCs7bpTdHNYxeX_20ruff_python_semantic5nodes6NodeIdNCNvMB1S_NtB1S_5Nodes12ancestor_ids0ENCNvMs_NtB1U_5modelNtB3p_13SemanticModel19current_expressions0ENtNtNtBc_6traits8iterator8Iterator8try_foldINtNtNtBe_3num7nonzero7NonZerojENCNvXs_NvB4j_10advance_byBV_NtB5D_13SpecAdvanceBy15spec_advance_by0INtNtBe_6option6OptionB50_EE0B1U_.exit.i.i: ; preds = %bb.c
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %2 = load ptr, ptr %1, align 8, !nonnull !4     ; 2 uses
   %i.h = getelementptr inbounds nuw [24 x i8], ptr %2, i64 %i.f ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.j = load i32, ptr %i.i, align 8, !noalias !808, !noundef !4 ; 2 uses

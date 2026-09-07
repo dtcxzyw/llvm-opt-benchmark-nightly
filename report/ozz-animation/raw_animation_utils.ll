@@ -179,10 +179,7 @@ bb.a:
   %.val = load ptr, ptr %0, align 8, !tbaa !54    ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val18 = load ptr, ptr %i.a, align 8, !tbaa !55 ; 5 uses
-  %3 = ptrtoint ptr %.val18 to i64
   %i.b = ptrtoint ptr %.val to i64
-  %4 = sub i64 %3, %i.b
-  %5 = ashr exact i64 %4, 4                       ; 2 uses
   %i.c = icmp eq ptr %.val18, %.val
   br i1 %i.c, label %_ZN3ozz9animation7offline12_GLOBAL__N_115SampleComponentISt6vectorINS1_12RawAnimation14TranslationKeyENS_12StdAllocatorIS6_EEEFNS_4math6Float3ERKSB_SD_fEEENT_10value_type5ValueERKSF_RKT0_f.exit, label %bb.b
 
@@ -216,6 +213,9 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN3ozz9animation7offline12_GLOBAL__N_115SampleComponentISt6vectorINS1_12RawAnimation14TranslationKeyENS_12StdAllocatorIS6_EEEFNS_4math6Float3ERKSB_SD_fEEENT_10value_type5ValueERKSF_RKT0_f.exit
 
 bb.f:                                             ; preds = %bb.d
+  %3 = ptrtoint ptr %.val18 to i64
+  %4 = sub i64 %3, %i.b
+  %5 = ashr exact i64 %4, 4                       ; 2 uses
   %i.o = icmp sgt i64 %5, 0
   br i1 %i.o, label %_ZSt9__advanceIPKN3ozz9animation7offline12RawAnimation14TranslationKeyElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i, label %_ZSt11lower_boundIPKN3ozz9animation7offline12RawAnimation14TranslationKeyES4_PFbRS5_S7_EET_SA_SA_RKT0_T1_.exit.i
 
@@ -275,9 +275,7 @@ _ZN3ozz9animation7offline12_GLOBAL__N_115SampleComponentISt6vectorINS1_12RawAnim
   %.val19 = load ptr, ptr %i.ar, align 8, !tbaa !59 ; 7 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.val20 = load ptr, ptr %i.as, align 8, !tbaa !60 ; 5 uses
-  %6 = ptrtoint ptr %.val20 to i64
   %i.at = ptrtoint ptr %.val19 to i64
-  %7 = sub i64 %6, %i.at                          ; 2 uses
   %i.au = icmp eq ptr %.val20, %.val19
   br i1 %i.au, label %_ZN3ozz9animation7offline12_GLOBAL__N_115SampleComponentISt6vectorINS1_12RawAnimation11RotationKeyENS_12StdAllocatorIS6_EEEFNS_4math10QuaternionERKSB_SD_fEEENT_10value_type5ValueERKSF_RKT0_f.exit, label %bb.g
 
@@ -311,6 +309,8 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZN3ozz9animation7offline12_GLOBAL__N_115SampleComponentISt6vectorINS1_12RawAnimation11RotationKeyENS_12StdAllocatorIS6_EEEFNS_4math10QuaternionERKSB_SD_fEEENT_10value_type5ValueERKSF_RKT0_f.exit
 
 bb.k:                                             ; preds = %bb.i
+  %6 = ptrtoint ptr %.val20 to i64
+  %7 = sub i64 %6, %i.at                          ; 2 uses
   %i.bg = icmp sgt i64 %7, 0
   br i1 %i.bg, label %_ZSt9__advanceIPKN3ozz9animation7offline12RawAnimation11RotationKeyElEvRT_T0_St26random_access_iterator_tag.exit.preheader.i.i.i, label %_ZSt11lower_boundIPKN3ozz9animation7offline12RawAnimation11RotationKeyES4_PFbRS5_S7_EET_SA_SA_RKT0_T1_.exit.i
 
@@ -415,10 +415,7 @@ _ZN3ozz9animation7offline12_GLOBAL__N_115SampleComponentISt6vectorINS1_12RawAnim
   %.val21 = load ptr, ptr %i.dm, align 8, !tbaa !65 ; 7 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.val22 = load ptr, ptr %i.dn, align 8, !tbaa !66 ; 5 uses
-  %8 = ptrtoint ptr %.val22 to i64
   %i.do = ptrtoint ptr %.val21 to i64
-  %9 = sub i64 %8, %i.do
-  %10 = ashr exact i64 %9, 4                      ; 2 uses
   %i.dp = icmp eq ptr %.val22, %.val21
   br i1 %i.dp, label %_ZN3ozz9animation7offline12_GLOBAL__N_115SampleComponentISt6vectorINS1_12RawAnimation8ScaleKeyENS_12StdAllocatorIS6_EEEFNS_4math6Float3ERKSB_SD_fEEENT_10value_type5ValueERKSF_RKT0_f.exit, label %bb.n
 
@@ -452,6 +449,9 @@ bb.q:                                             ; preds = %bb.p
   br label %_ZN3ozz9animation7offline12_GLOBAL__N_115SampleComponentISt6vectorINS1_12RawAnimation8ScaleKeyENS_12StdAllocatorIS6_EEEFNS_4math6Float3ERKSB_SD_fEEENT_10value_type5ValueERKSF_RKT0_f.exit
 
 bb.r:                                             ; preds = %bb.p
+  %8 = ptrtoint ptr %.val22 to i64
+  %9 = sub i64 %8, %i.do
+  %10 = ashr exact i64 %9, 4                      ; 2 uses
   %i.eb = icmp sgt i64 %10, 0
   br i1 %i.eb, label %_ZSt9__advanceIPKN3ozz9animation7offline12RawAnimation8ScaleKeyElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i, label %_ZSt11lower_boundIPKN3ozz9animation7offline12RawAnimation8ScaleKeyES4_PFbRS5_S7_EET_SA_SA_RKT0_T1_.exit.i
 

@@ -205,7 +205,7 @@ bb.a:
 define dso_local void @_ZNK4absl12lts_2026052612crc_internal5CRC3210UnscrambleEPj(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree noundef captures(none) %1) unnamed_addr #9 align 2 {
 bb.a:
   %i.a = load i32, ptr %1, align 4, !tbaa !9      ; 2 uses
-  %i.b = tail call i32 @llvm.fshl.i32(i32 %i.a, i32 %i.a, i32 17)
+  %i.b = tail call noundef i32 @llvm.fshl.i32(i32 %i.a, i32 %i.a, i32 17)
   %i.c = add i32 %i.b, -779543579
   store i32 %i.c, ptr %1, align 4, !tbaa !9
   ret void

@@ -25,9 +25,7 @@ bb.b:                                             ; preds = %bb.a
   %.val = load ptr, ptr %0, align 8, !tbaa !17    ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val5 = load ptr, ptr %i.b, align 8, !tbaa !18 ; 4 uses
-  %3 = ptrtoint ptr %.val5 to i64
   %i.c = ptrtoint ptr %.val to i64
-  %4 = sub i64 %3, %i.c                           ; 2 uses
   %i.d = icmp eq ptr %.val5, %.val
   br i1 %i.d, label %_ZN3ozz9animation7offline12_GLOBAL__N_112_SampleTrackISt6vectorINS1_16RawTrackKeyframeIfEENS_12StdAllocatorIS6_EEEEENT_10value_type9ValueTypeERKSA_f.exit, label %bb.c
 
@@ -54,6 +52,8 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN3ozz9animation7offline12_GLOBAL__N_112_SampleTrackISt6vectorINS1_16RawTrackKeyframeIfEENS_12StdAllocatorIS6_EEEEENT_10value_type9ValueTypeERKSA_f.exit
 
 bb.g:                                             ; preds = %bb.e
+  %3 = ptrtoint ptr %.val5 to i64
+  %4 = sub i64 %3, %i.c                           ; 2 uses
   %i.o = icmp sgt i64 %4, 0
   br i1 %i.o, label %_ZSt9__advanceIPKN3ozz9animation7offline16RawTrackKeyframeIfEElEvRT_T0_St26random_access_iterator_tag.exit.preheader.i.i.i, label %_ZSt11lower_boundIPKN3ozz9animation7offline16RawTrackKeyframeIfEES4_PFbRS5_S7_EET_SA_SA_RKT0_T1_.exit.i
 
@@ -125,10 +125,7 @@ bb.b:                                             ; preds = %bb.a
   %.val = load ptr, ptr %0, align 8, !tbaa !26    ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val5 = load ptr, ptr %i.b, align 8, !tbaa !27 ; 4 uses
-  %3 = ptrtoint ptr %.val5 to i64
   %i.c = ptrtoint ptr %.val to i64
-  %4 = sub i64 %3, %i.c
-  %5 = ashr exact i64 %4, 4                       ; 2 uses
   %i.d = icmp eq ptr %.val5, %.val
   br i1 %i.d, label %_ZN3ozz9animation7offline12_GLOBAL__N_112_SampleTrackISt6vectorINS1_16RawTrackKeyframeINS_4math6Float2EEENS_12StdAllocatorIS8_EEEEENT_10value_type9ValueTypeERKSC_f.exit, label %bb.c
 
@@ -155,6 +152,9 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN3ozz9animation7offline12_GLOBAL__N_112_SampleTrackISt6vectorINS1_16RawTrackKeyframeINS_4math6Float2EEENS_12StdAllocatorIS8_EEEEENT_10value_type9ValueTypeERKSC_f.exit
 
 bb.g:                                             ; preds = %bb.e
+  %3 = ptrtoint ptr %.val5 to i64
+  %4 = sub i64 %3, %i.c
+  %5 = ashr exact i64 %4, 4                       ; 2 uses
   %i.m = icmp sgt i64 %5, 0
   br i1 %i.m, label %_ZSt9__advanceIPKN3ozz9animation7offline16RawTrackKeyframeINS0_4math6Float2EEElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i, label %_ZSt11lower_boundIPKN3ozz9animation7offline16RawTrackKeyframeINS0_4math6Float2EEES6_PFbRS7_S9_EET_SC_SC_RKT0_T1_.exit.i
 
@@ -230,9 +230,7 @@ bb.b:                                             ; preds = %bb.a
   %.val = load ptr, ptr %0, align 8, !tbaa !35    ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val6 = load ptr, ptr %i.b, align 8, !tbaa !36 ; 5 uses
-  %3 = ptrtoint ptr %.val6 to i64
   %i.c = ptrtoint ptr %.val to i64
-  %4 = sub i64 %3, %i.c                           ; 2 uses
   %i.d = icmp eq ptr %.val6, %.val
   br i1 %i.d, label %_ZN3ozz9animation7offline12_GLOBAL__N_112_SampleTrackISt6vectorINS1_16RawTrackKeyframeINS_4math6Float3EEENS_12StdAllocatorIS8_EEEEENT_10value_type9ValueTypeERKSC_f.exit, label %bb.c
 
@@ -267,6 +265,8 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN3ozz9animation7offline12_GLOBAL__N_112_SampleTrackISt6vectorINS1_16RawTrackKeyframeINS_4math6Float3EEENS_12StdAllocatorIS8_EEEEENT_10value_type9ValueTypeERKSC_f.exit
 
 bb.g:                                             ; preds = %bb.e
+  %3 = ptrtoint ptr %.val6 to i64
+  %4 = sub i64 %3, %i.c                           ; 2 uses
   %i.q = icmp sgt i64 %4, 0
   br i1 %i.q, label %_ZSt9__advanceIPKN3ozz9animation7offline16RawTrackKeyframeINS0_4math6Float3EEElEvRT_T0_St26random_access_iterator_tag.exit.preheader.i.i.i, label %_ZSt11lower_boundIPKN3ozz9animation7offline16RawTrackKeyframeINS0_4math6Float3EEES6_PFbRS7_S9_EET_SC_SC_RKT0_T1_.exit.i
 
@@ -365,9 +365,7 @@ bb.b:                                             ; preds = %bb.a
   %.val = load ptr, ptr %0, align 8, !tbaa !45    ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val5 = load ptr, ptr %i.b, align 8, !tbaa !46 ; 5 uses
-  %3 = ptrtoint ptr %.val5 to i64
   %i.c = ptrtoint ptr %.val to i64
-  %4 = sub i64 %3, %i.c                           ; 2 uses
   %i.d = icmp eq ptr %.val5, %.val
   br i1 %i.d, label %_ZN3ozz9animation7offline12_GLOBAL__N_112_SampleTrackISt6vectorINS1_16RawTrackKeyframeINS_4math6Float4EEENS_12StdAllocatorIS8_EEEEENT_10value_type9ValueTypeERKSC_f.exit, label %bb.c
 
@@ -402,6 +400,8 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN3ozz9animation7offline12_GLOBAL__N_112_SampleTrackISt6vectorINS1_16RawTrackKeyframeINS_4math6Float4EEENS_12StdAllocatorIS8_EEEEENT_10value_type9ValueTypeERKSC_f.exit
 
 bb.g:                                             ; preds = %bb.e
+  %3 = ptrtoint ptr %.val5 to i64
+  %4 = sub i64 %3, %i.c                           ; 2 uses
   %i.q = icmp sgt i64 %4, 0
   br i1 %i.q, label %_ZSt9__advanceIPKN3ozz9animation7offline16RawTrackKeyframeINS0_4math6Float4EEElEvRT_T0_St26random_access_iterator_tag.exit.preheader.i.i.i, label %_ZSt11lower_boundIPKN3ozz9animation7offline16RawTrackKeyframeINS0_4math6Float4EEES6_PFbRS7_S9_EET_SC_SC_RKT0_T1_.exit.i
 
@@ -500,9 +500,7 @@ bb.b:                                             ; preds = %bb.a
   %.val = load ptr, ptr %0, align 8, !tbaa !54    ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val5 = load ptr, ptr %i.b, align 8, !tbaa !55 ; 5 uses
-  %3 = ptrtoint ptr %.val5 to i64
   %i.c = ptrtoint ptr %.val to i64
-  %4 = sub i64 %3, %i.c                           ; 2 uses
   %i.d = icmp eq ptr %.val5, %.val
   br i1 %i.d, label %_ZN3ozz9animation7offline12_GLOBAL__N_112_SampleTrackISt6vectorINS1_16RawTrackKeyframeINS_4math10QuaternionEEENS_12StdAllocatorIS8_EEEEENT_10value_type9ValueTypeERKSC_f.exit, label %bb.c
 
@@ -537,6 +535,8 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN3ozz9animation7offline12_GLOBAL__N_112_SampleTrackISt6vectorINS1_16RawTrackKeyframeINS_4math10QuaternionEEENS_12StdAllocatorIS8_EEEEENT_10value_type9ValueTypeERKSC_f.exit
 
 bb.g:                                             ; preds = %bb.e
+  %3 = ptrtoint ptr %.val5 to i64
+  %4 = sub i64 %3, %i.c                           ; 2 uses
   %i.q = icmp sgt i64 %4, 0
   br i1 %i.q, label %_ZSt9__advanceIPKN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEElEvRT_T0_St26random_access_iterator_tag.exit.preheader.i.i.i, label %_ZSt11lower_boundIPKN3ozz9animation7offline16RawTrackKeyframeINS0_4math10QuaternionEEES6_PFbRS7_S9_EET_SC_SC_RKT0_T1_.exit.i
 

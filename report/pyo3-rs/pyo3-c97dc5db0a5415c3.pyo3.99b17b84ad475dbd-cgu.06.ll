@@ -204,6 +204,10 @@ bb.c:                                             ; preds = %bb.a
   %exitcond.not29.not = icmp ult i64 %3, %1
   br i1 %exitcond.not29.not, label %.lr.ph, label %._crit_edge
 
+.preheader.split:                                 ; preds = %.lr.ph
+  %exitcond.not = icmp eq i64 %i.g, %umax
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph
+
 .loopexit:                                        ; preds = %.lr.ph, %bb.c
   %.sroa.07.1 = phi i64 [ %3, %bb.c ], [ %i.g, %.lr.ph ]
   %.sroa.0.1 = phi i64 [ %2, %bb.c ], [ %i.f, %.lr.ph ]
@@ -211,13 +215,9 @@ bb.c:                                             ; preds = %bb.a
   %i.b = insertvalue { i64, i64 } %i.a, i64 %.sroa.07.1, 1
   ret { i64, i64 } %i.b
 
-4:                                                ; preds = %.lr.ph
-  %exitcond.not = icmp eq i64 %i.g, %umax
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.preheader.preheader, %4
-  %.sroa.0.031 = phi i64 [ %i.f, %4 ], [ %2, %.preheader.preheader ] ; 2 uses
-  %.sroa.07.030 = phi i64 [ %i.g, %4 ], [ %3, %.preheader.preheader ] ; 2 uses
+.lr.ph:                                           ; preds = %.preheader.preheader, %.preheader.split
+  %.sroa.0.031 = phi i64 [ %i.f, %.preheader.split ], [ %2, %.preheader.preheader ] ; 2 uses
+  %.sroa.07.030 = phi i64 [ %i.g, %.preheader.split ], [ %3, %.preheader.preheader ] ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.031
   %i.d = load i8, ptr %i.c, align 1, !noundef !4  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.07.030
@@ -227,9 +227,9 @@ bb.c:                                             ; preds = %bb.a
   %i.h = icmp ne i8 %i.d, 10
   %i.i = icmp ult i64 %i.f, %1
   %or.cond = select i1 %i.h, i1 %i.i, i1 false
-  br i1 %or.cond, label %4, label %.loopexit
+  br i1 %or.cond, label %.preheader.split, label %.loopexit
 
-._crit_edge:                                      ; preds = %4, %.preheader.preheader
+._crit_edge:                                      ; preds = %.preheader.split, %.preheader.preheader
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %umax, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #20
   unreachable
 }

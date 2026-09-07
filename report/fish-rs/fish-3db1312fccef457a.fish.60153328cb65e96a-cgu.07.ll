@@ -205,8 +205,8 @@ bb.av:                                            ; preds = %bb.au
   br i1 %i.jj, label %.invoke2654, label %_RNvNtNtCs8frGy5WneL6_4fish8builtins6printf32modify_allowed_format_specifiers.exit237.i
 
 _RNvNtNtCs8frGy5WneL6_4fish8builtins6printf32modify_allowed_format_specifiers.exit237.i: ; preds = %bb.av
-  store i8 0, ptr %i.ch, align 1, !alias.scope !2278, !noalias !2279
   %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.3.i, i64 4 ; 4 uses
+  store i8 0, ptr %i.ch, align 1, !alias.scope !2278, !noalias !2279
   %i.jk = invoke noundef i32 @_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %4, i64 noundef %i.jh, i64 noundef 0)
           to label %.noexc53 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
 
