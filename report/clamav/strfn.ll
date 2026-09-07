@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %.lr.ph35, %bb.b
   br i1 %i.b, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %._crit_edge36
-  %i.k = add i64 %.1, 1
+  %i.k = add nsw i64 %.1, 1
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 %.1
   store i8 45, ptr %i.l, align 1, !tbaa !11
   br label %bb.e
@@ -336,7 +336,7 @@ bb.c:                                             ; preds = %.lr.ph35, %bb.b
   br i1 %i.b, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %._crit_edge36
-  %i.k = add i64 %.1, 1
+  %i.k = add nsw i64 %.1, 1
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.1
   store i32 45, ptr %i.l, align 4, !tbaa !14
   br label %bb.e
@@ -403,7 +403,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 define void @_Z7fmtitoalPwm(i64 noundef %0, ptr nofree noundef writeonly captures(none) %1, i64 noundef %2) local_unnamed_addr #10 {
 bb.a:
   %i.a = alloca [50 x i32], align 16              ; 5 uses
-  %i.b = alloca [30 x i32], align 16              ; 8 uses
+  %i.b = alloca [30 x i32], align 16              ; 9 uses
   %i.c = tail call ptr @localeconv() #15
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !38
@@ -448,7 +448,7 @@ bb.c:                                             ; preds = %.lr.ph23, %bb.b
   br i1 %i.h, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %._crit_edge25
-  %i.p = add i64 %.1.i, 1
+  %i.p = add nsw i64 %.1.i, 1
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %.1.i
   store i32 45, ptr %i.q, align 4, !tbaa !14
   br label %bb.e
@@ -519,37 +519,39 @@ _Z4itoalPwm.exit:                                 ; preds = %scalar.ph, %middle.
   %i.ak = urem i64 %i.aj, 3
   %i.al = trunc nuw nsw i64 %i.ak to i32
   %i.am = xor i32 %i.al, 3
-  br label %bb.f
+  store i32 %i.af, ptr %1, align 4, !tbaa !14
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %4 = load i32, ptr %3, align 4, !tbaa !14       ; 2 uses
+  %5 = icmp ne i32 %4, 0
+  %6 = icmp ugt i64 %2, 2
+  %7 = and i1 %5, %6
+  br i1 %7, label %bb.f, label %._crit_edge
 
 bb.f:                                             ; preds = %.lr.ph, %bb.h
-  %i.an = phi i32 [ 1, %.lr.ph ], [ %i.ax, %bb.h ]
-  %i.ao = phi i32 [ %i.af, %.lr.ph ], [ %i.av, %bb.h ]
-  %.015 = phi i32 [ 0, %.lr.ph ], [ %i.ar, %bb.h ] ; 3 uses
-  %.01314 = phi i32 [ 0, %.lr.ph ], [ %7, %bb.h ] ; 3 uses
-  %.not = icmp eq i32 %.01314, 0
-  br i1 %.not, label %bb.h, label %3
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.h ], [ 1, %.lr.ph ] ; 2 uses
+  %i.an = phi i32 [ %i.ax, %bb.h ], [ 2, %.lr.ph ]
+  %i.ao = phi i32 [ %i.av, %bb.h ], [ %4, %.lr.ph ]
+  %.015 = phi i32 [ %i.ar, %bb.h ], [ 1, %.lr.ph ] ; 2 uses
+  %8 = trunc nuw i64 %indvars.iv to i32
+  %9 = add i32 %i.am, %8
+  %10 = urem i32 %9, 3
+  %.not = icmp eq i32 %10, 0
+  br i1 %.not, label %bb.g, label %bb.h
 
-3:                                                ; preds = %bb.f
-  %4 = add i32 %i.am, %.01314
-  %5 = urem i32 %4, 3
-  %6 = icmp eq i32 %5, 0
-  br i1 %6, label %bb.g, label %bb.h
-
-bb.g:                                             ; preds = %3
+bb.g:                                             ; preds = %bb.f
   %i.ap = zext i32 %.015 to i64
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.ap
   store i32 %spec.store.select, ptr %i.aq, align 4, !tbaa !14
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %3, %bb.f
-  %.1 = phi i32 [ %i.an, %bb.g ], [ %.015, %3 ], [ %.015, %bb.f ] ; 3 uses
-  %7 = add i32 %.01314, 1                         ; 2 uses
+bb.h:                                             ; preds = %bb.g, %bb.f
+  %.1 = phi i32 [ %i.an, %bb.g ], [ %.015, %bb.f ] ; 3 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
   %i.ar = add i32 %.1, 1                          ; 2 uses
   %i.as = zext i32 %.1 to i64
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.as
   store i32 %i.ao, ptr %i.at, align 4, !tbaa !14
-  %8 = zext i32 %7 to i64
-  %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %8
+  %i.au = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next
   %i.av = load i32, ptr %i.au, align 4, !tbaa !14 ; 2 uses
   %i.aw = icmp ne i32 %i.av, 0
   %i.ax = add i32 %.1, 2                          ; 2 uses
@@ -562,8 +564,8 @@ bb.h:                                             ; preds = %bb.g, %3, %bb.f
   %i.bb = zext i32 %i.ar to i64
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_Z4itoalPwm.exit
-  %.0.lcssa = phi i64 [ 0, %_Z4itoalPwm.exit ], [ %i.bb, %._crit_edge.loopexit ]
+._crit_edge:                                      ; preds = %.lr.ph, %._crit_edge.loopexit, %_Z4itoalPwm.exit
+  %.0.lcssa = phi i64 [ 0, %_Z4itoalPwm.exit ], [ 1, %.lr.ph ], [ %i.bb, %._crit_edge.loopexit ]
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.0.lcssa
   store i32 0, ptr %i.bc, align 4, !tbaa !14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
@@ -576,7 +578,7 @@ declare ptr @localeconv() local_unnamed_addr #11
 ; Function Attrs: mustprogress uwtable
 define noundef nonnull ptr @_Z7GetWidePKc(ptr noundef %0) local_unnamed_addr #2 {
 bb.a:
-  %i.a = load i32, ptr @_ZZ7GetWidePKcE6StrNum, align 4, !tbaa !39
+  %i.a = load i32, ptr @_ZZ7GetWidePKcE6StrNum, align 4, !tbaa !40
   %i.b = add i32 %i.a, 1                          ; 2 uses
   %i.c = icmp ugt i32 %i.b, 3
   %spec.store.select = select i1 %i.c, i32 0, i32 %i.b ; 2 uses
@@ -639,11 +641,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %.crit
   %i.h = getelementptr inbounds nuw i8, ptr %.233.us.us, i64 4 ; 3 uses
   %i.i = load i32, ptr %i.h, align 4, !tbaa !14   ; 2 uses
   %.not.us.us = icmp eq i32 %i.i, 0
-  br i1 %.not.us.us, label %.critedge, label %.lr.ph.split.us.split.us, !llvm.loop !40
+  br i1 %.not.us.us, label %.critedge, label %.lr.ph.split.us.split.us, !llvm.loop !41
 
 bb.f:                                             ; preds = %bb.b, %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %.031, i64 4
-  br label %bb.b, !llvm.loop !41
+  br label %bb.b, !llvm.loop !42
 
 .lr.ph.split.split:                               ; preds = %.lr.ph, %bb.n
   %i.k = phi i32 [ %i.x, %bb.n ], [ %i.a, %.lr.ph ] ; 3 uses
@@ -700,7 +702,7 @@ bb.n:                                             ; preds = %bb.i, %bb.j, %bb.l,
   %i.w = getelementptr inbounds nuw i8, ptr %.233, i64 4 ; 3 uses
   %i.x = load i32, ptr %i.w, align 4, !tbaa !14   ; 2 uses
   %.not = icmp eq i32 %i.x, 0
-  br i1 %.not, label %.critedge, label %.lr.ph.split.split, !llvm.loop !40
+  br i1 %.not, label %.critedge, label %.lr.ph.split.split, !llvm.loop !41
 
 .critedge:                                        ; preds = %bb.n, %bb.g, %bb.g, %bb.e, %bb.c, %bb.c
   %.132.lcssa = phi ptr [ %.13247.us.us, %bb.c ], [ %i.h, %bb.e ], [ %.13247.us.us, %bb.c ], [ %.13247, %bb.g ], [ %.13247, %bb.g ], [ %i.w, %bb.n ] ; 2 uses
@@ -779,12 +781,13 @@ attributes #15 = { nounwind }
 !31 = distinct !{!31, !12, !16, !15}
 !32 = distinct !{!32, !12, !15, !16}
 !33 = distinct !{!33, !12, !16, !15}
-!34 = distinct !{!34, !12}
+!34 = distinct !{!34, !12, !39}
 !35 = !{!"any pointer", !7, i64 0}
 !36 = !{!"p1 omnipotent char", !35, i64 0}
 !37 = !{!"_ZTS5lconv", !36, i64 0, !36, i64 8, !36, i64 16, !36, i64 24, !36, i64 32, !36, i64 40, !36, i64 48, !36, i64 56, !36, i64 64, !36, i64 72, !7, i64 80, !7, i64 81, !7, i64 82, !7, i64 83, !7, i64 84, !7, i64 85, !7, i64 86, !7, i64 87, !7, i64 88, !7, i64 89, !7, i64 90, !7, i64 91, !7, i64 92, !7, i64 93}
 !38 = !{!37, !36, i64 8}
-!39 = !{!8, !8, i64 0}
-!40 = distinct !{!40, !12}
+!39 = !{!"llvm.loop.peeled.count", i32 1}
+!40 = !{!8, !8, i64 0}
 !41 = distinct !{!41, !12}
+!42 = distinct !{!42, !12}
 end_hunk_0

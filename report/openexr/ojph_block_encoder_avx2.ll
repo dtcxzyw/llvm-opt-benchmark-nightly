@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 bb.n:                                             ; preds = %bb.m
   %i.kq = trunc i32 %i.kl to i8
-  %i.kr = add i32 %.sroa.9154.14.us, 1
+  %i.kr = add nuw i32 %.sroa.9154.14.us, 1
   %i.ks = zext i32 %.sroa.9154.14.us to i64
   %i.kt = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ks
   store i8 %i.kq, ptr %i.kt, align 1, !tbaa !23
@@ -276,7 +276,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 
 bb.s:                                             ; preds = %bb.r
   %i.lr = trunc i32 %i.lm to i8
-  %i.ls = add i32 %.sroa.9154.12.us, 1
+  %i.ls = add nuw i32 %.sroa.9154.12.us, 1
   %i.lt = zext i32 %.sroa.9154.12.us to i64
   %i.lu = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.lt
   store i8 %i.lr, ptr %i.lu, align 1, !tbaa !23
@@ -348,7 +348,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 
 bb.x:                                             ; preds = %bb.w
   %i.ms = trunc i32 %i.mn to i8
-  %i.mt = add i32 %.sroa.9154.10.us, 1
+  %i.mt = add nuw i32 %.sroa.9154.10.us, 1
   %i.mu = zext i32 %.sroa.9154.10.us to i64
   %i.mv = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.mu
   store i8 %i.ms, ptr %i.mv, align 1, !tbaa !23
@@ -420,7 +420,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
 
 bb.ac:                                            ; preds = %bb.ab
   %i.nt = trunc i32 %i.no to i8
-  %i.nu = add i32 %.sroa.9154.8.us, 1
+  %i.nu = add nuw i32 %.sroa.9154.8.us, 1
   %i.nv = zext i32 %.sroa.9154.8.us to i64
   %i.nw = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.nv
   store i8 %i.nt, ptr %i.nw, align 1, !tbaa !23
@@ -502,7 +502,7 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.ov = trunc i32 %i.or to i8
-  %i.ow = add i32 %.sroa.9154.7.us, 1
+  %i.ow = add nuw i32 %.sroa.9154.7.us, 1
   %i.ox = zext i32 %.sroa.9154.7.us to i64
   %i.oy = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ox
   store i8 %i.ov, ptr %i.oy, align 1, !tbaa !23
@@ -806,9 +806,13 @@ bb.a:
   %i.s = sext <8 x i1> %i.r to <8 x i32>
   store <8 x i32> %i.s, ptr %i.b, align 16, !tbaa !23
   %i.t = lshr i32 %4, 1                           ; 2 uses
-  %6 = sub nsw i32 8, %i.t                        ; 2 uses
   %.not30 = icmp eq i32 %i.t, 8
-  br i1 %.not30, label %._crit_edge, label %.lr.ph
+  br i1 %.not30, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %6 = sub nsw i32 8, %i.t
+  %7 = zext i32 %6 to i64                         ; 2 uses
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.h, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #13
@@ -817,56 +821,54 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   ret void
 
-.lr.ph:                                           ; preds = %bb.a, %bb.h
-  %.029 = phi i32 [ %10, %bb.h ], [ 0, %bb.a ]    ; 3 uses
-  %7 = zext i32 %.029 to i64                      ; 4 uses
-  %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %7
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.h
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.h ] ; 6 uses
+  %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv
   %i.v = load i32, ptr %i.u, align 8, !tbaa !9
   %.not = icmp eq i32 %i.v, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %7
+  %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv
   %i.x = load i32, ptr %i.w, align 8, !tbaa !9
   %i.y = icmp ne i32 %i.x, 0
   tail call fastcc void @_ZN4ojph5localL10mel_encodeEPNS0_10mel_structEb(ptr noundef %0, i1 noundef zeroext %i.y)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph
-  %8 = or disjoint i32 %.029, 1                   ; 2 uses
-  %i.z = icmp ult i32 %8, %6
+  %8 = or disjoint i64 %indvars.iv, 1             ; 3 uses
+  %i.z = icmp samesign ult i64 %8, %7
   br i1 %i.z, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  %9 = zext i32 %8 to i64                         ; 2 uses
-  %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %9
+  %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %8
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !9
   %.not26 = icmp eq i32 %i.ab, 0
   br i1 %.not26, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %9
+  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %8
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !9
   %i.ae = icmp ne i32 %i.ad, 0
   tail call fastcc void @_ZN4ojph5localL10mel_encodeEPNS0_10mel_structEb(ptr noundef %0, i1 noundef zeroext %i.ae)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
-  %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %7
+  %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv
   %i.ag = load i32, ptr %i.af, align 8, !tbaa !9
   %.not27 = icmp eq i32 %i.ag, 0
   br i1 %.not27, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %7
+  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !9
   %i.aj = icmp ne i32 %i.ai, 0
   tail call fastcc void @_ZN4ojph5localL10mel_encodeEPNS0_10mel_structEb(ptr noundef %0, i1 noundef zeroext %i.aj)
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g
-  %10 = add i32 %.029, 2                          ; 2 uses
-  %i.ak = icmp ult i32 %10, %6
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %i.ak = icmp samesign ult i64 %indvars.iv.next, %7
   br i1 %i.ak, label %.lr.ph, label %._crit_edge, !llvm.loop !66
 }
 
