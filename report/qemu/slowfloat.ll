@@ -204,7 +204,7 @@ bb.ac:                                            ; preds = %switch.lookup127, %
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_ui32_to_f64(i32 noundef %0) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_ui32_to_f64(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.floatX, align 8             ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
@@ -255,7 +255,7 @@ ui32ToFloatX.exit:                                ; preds = %._crit_edge.i, %bb.
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc i64 @floatXToF64(ptr nofree noundef nonnull readonly captures(none) %0) unnamed_addr #0 {
+define internal fastcc range(i64 -1, -4503599627370495) i64 @floatXToF64(ptr nofree noundef nonnull readonly captures(none) %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i8, ptr %0, align 8, !tbaa !16, !range !23, !noundef !24
   %i.b = trunc nuw i8 %i.a to i1
@@ -658,7 +658,7 @@ ui64ToFloatX.exit:                                ; preds = %._crit_edge.i, %bb.
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_ui64_to_f64(i64 noundef %0) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_ui64_to_f64(i64 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.floatX, align 8             ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
@@ -937,7 +937,7 @@ i32ToFloatX.exit:                                 ; preds = %._crit_edge.i, %bb.
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_i32_to_f64(i32 noundef %0) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_i32_to_f64(i32 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.floatX, align 8             ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
@@ -1219,7 +1219,7 @@ i64ToFloatX.exit:                                 ; preds = %._crit_edge.i, %bb.
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_i64_to_f64(i64 noundef %0) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_i64_to_f64(i64 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.floatX, align 8             ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
@@ -1622,7 +1622,7 @@ f16ToFloatX.exit:                                 ; preds = %bb.c, %bb.d, %bb.f,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_f16_to_f64(i16 %0) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_f16_to_f64(i16 %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.floatX, align 8             ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
@@ -2025,7 +2025,7 @@ f32ToFloatX.exit:                                 ; preds = %bb.c, %bb.d, %bb.f,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_f32_to_f64(i32 %0) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_f32_to_f64(i32 %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.floatX, align 8             ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
@@ -2428,7 +2428,7 @@ f64ToFloatX.exit:                                 ; preds = %bb.c, %bb.d, %bb.f,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_f64_roundToInt(i64 %0, i8 noundef zeroext %1, i1 noundef zeroext %2) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_f64_roundToInt(i64 %0, i8 noundef zeroext %1, i1 noundef zeroext %2) local_unnamed_addr #0 {
 bb.a:
   %3 = alloca %struct.floatX, align 8             ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
@@ -2503,7 +2503,7 @@ f64ToFloatX.exit:                                 ; preds = %bb.c, %bb.d, %bb.f,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_f64_add(i64 %0, i64 %1) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_f64_add(i64 %0, i64 %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.floatX, align 8             ; 13 uses
   %3 = alloca %struct.floatX, align 8             ; 12 uses
@@ -2645,7 +2645,7 @@ f64ToFloatX.exit10:                               ; preds = %bb.j, %bb.k, %bb.m,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_f64_sub(i64 %0, i64 %1) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_f64_sub(i64 %0, i64 %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.floatX, align 8             ; 13 uses
   %3 = alloca %struct.floatX, align 8             ; 12 uses
@@ -2788,7 +2788,7 @@ f64ToFloatX.exit10:                               ; preds = %bb.j, %bb.k, %bb.m,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_f64_mul(i64 %0, i64 %1) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_f64_mul(i64 %0, i64 %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.floatX, align 8             ; 13 uses
   %3 = alloca %struct.floatX, align 8             ; 12 uses
@@ -2930,7 +2930,7 @@ f64ToFloatX.exit10:                               ; preds = %bb.j, %bb.k, %bb.m,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_f64_mulAdd(i64 %0, i64 %1, i64 %2) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_f64_mulAdd(i64 %0, i64 %1, i64 %2) local_unnamed_addr #0 {
 bb.a:
   %3 = alloca %struct.floatX, align 8             ; 14 uses
   %4 = alloca %struct.floatX, align 8             ; 17 uses
@@ -3132,7 +3132,7 @@ f64ToFloatX.exit19:                               ; preds = %bb.q, %bb.r, %bb.t,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_f64_div(i64 %0, i64 %1) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_f64_div(i64 %0, i64 %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.floatX, align 8             ; 13 uses
   %3 = alloca %struct.floatX, align 8             ; 12 uses
@@ -3274,7 +3274,7 @@ f64ToFloatX.exit10:                               ; preds = %bb.j, %bb.k, %bb.m,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_f64_rem(i64 %0, i64 %1) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_f64_rem(i64 %0, i64 %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.floatX, align 8             ; 13 uses
   %3 = alloca %struct.floatX, align 8             ; 12 uses
@@ -3416,7 +3416,7 @@ f64ToFloatX.exit10:                               ; preds = %bb.j, %bb.k, %bb.m,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_f64_sqrt(i64 %0) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_f64_sqrt(i64 %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.floatX, align 8             ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
@@ -3819,7 +3819,7 @@ extF80MToFloatX.exit:                             ; preds = %bb.c, %bb.d, %.loop
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_extF80M_to_f64(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_extF80M_to_f64(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.floatX, align 8             ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
@@ -4222,7 +4222,7 @@ f128MToFloatX.exit:                               ; preds = %bb.c, %bb.d, %bb.f,
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @slow_f128M_to_f64(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local range(i64 -1, -4503599627370495) i64 @slow_f128M_to_f64(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.floatX, align 8             ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #10

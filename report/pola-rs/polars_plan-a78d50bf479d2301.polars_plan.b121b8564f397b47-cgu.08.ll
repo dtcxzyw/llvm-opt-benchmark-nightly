@@ -205,31 +205,31 @@ _RNvXs_NtCsk79RHlfmHDk_8foldhash7qualityNtB4_10FoldHasherNtNtCscgRAwXFJnXP_4core
   store i64 %storemerge.i.i.i60, ptr %i.tq, align 8, !dbg !90577, !alias.scope !90007, !noalias !90008
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90014), !dbg !90616
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90015), !dbg !90617
-  br i1 %i.th, label %2, label %.thread184.a, !dbg !90618
+  br i1 %i.th, label %.thread184, label %.thread184.a, !dbg !90618
+
+.thread184:                                       ; preds = %_RNvXs_NtCsk79RHlfmHDk_8foldhash7qualityNtB4_10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher5write.exit.i
+  %2 = or i128 %.sink.i57175, 4703919738795935662080, !dbg !90619 ; 2 uses
+  store i128 %2, ptr %1, align 16, !dbg !90620, !alias.scope !90016, !noalias !90002
+  store i8 %storemerge.i.i.i58176, ptr %i.b, align 16, !dbg !90620, !alias.scope !90016, !noalias !90002
+  br label %.thread182, !dbg !90621
 
 .thread184.a:                                     ; preds = %_RNvXs_NtCsk79RHlfmHDk_8foldhash7qualityNtB4_10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher5write.exit.i
-  %i.vf = trunc i128 %.sink.i57175 to i64, !dbg !90619
-  %i.vg = lshr i128 %.sink.i57175, 64, !dbg !90620
-  %i.vh = xor i64 %storemerge.i.i.i60, %i.vf, !dbg !90621
-  %i.vi = load i64, ptr %i.tv, align 8, !dbg !90622, !noalias !90016, !noundef !2277
-  %i.vj = zext i64 %i.vh to i128, !dbg !90623
-  %i.vk = zext i64 %i.vi to i128, !dbg !90624
-  %i.vl = xor i128 %i.vg, %i.vk, !dbg !90624
-  %i.vm = mul nuw i128 %i.vl, %i.vj, !dbg !90625  ; 2 uses
-  %i.vn = lshr i128 %i.vm, 64, !dbg !90626
-  %i.vo = xor i128 %i.vn, %i.vm, !dbg !90627
-  %i.vp = trunc i128 %i.vo to i64, !dbg !90627
-  store i64 %i.vp, ptr %i.tq, align 8, !dbg !90628, !alias.scope !90016, !noalias !90002
-  br label %.thread183, !dbg !90629
-
-2:                                                ; preds = %_RNvXs_NtCsk79RHlfmHDk_8foldhash7qualityNtB4_10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher5write.exit.i
-  %3 = or i128 %.sink.i57175, 4703919738795935662080, !dbg !90630 ; 2 uses
-  store i128 %3, ptr %1, align 16, !dbg !90631, !alias.scope !90016, !noalias !90002
-  store i8 %storemerge.i.i.i58176, ptr %i.b, align 16, !dbg !90631, !alias.scope !90016, !noalias !90002
+  %i.vf = trunc i128 %.sink.i57175 to i64, !dbg !90622
+  %i.vg = lshr i128 %.sink.i57175, 64, !dbg !90623
+  %i.vh = xor i64 %storemerge.i.i.i60, %i.vf, !dbg !90624
+  %i.vi = load i64, ptr %i.tv, align 8, !dbg !90625, !noalias !90016, !noundef !2277
+  %i.vj = zext i64 %i.vh to i128, !dbg !90626
+  %i.vk = zext i64 %i.vi to i128, !dbg !90627
+  %i.vl = xor i128 %i.vg, %i.vk, !dbg !90627
+  %i.vm = mul nuw i128 %i.vl, %i.vj, !dbg !90628  ; 2 uses
+  %i.vn = lshr i128 %i.vm, 64, !dbg !90629
+  %i.vo = xor i128 %i.vn, %i.vm, !dbg !90630
+  %i.vp = trunc i128 %i.vo to i64, !dbg !90630
+  store i64 %i.vp, ptr %i.tq, align 8, !dbg !90631, !alias.scope !90016, !noalias !90002
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90020), !dbg !90632
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90021), !dbg !90633
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90022), !dbg !90634
-  br label %.thread182, !dbg !90629
+  br label %.thread183, !dbg !90621
 
 .thread183:                                       ; preds = %.split172, %.thread184.a
   %i.vq = phi i8 [ 8, %.thread184.a ], [ 64, %.split172 ] ; 2 uses
@@ -243,8 +243,8 @@ _RNvXs_NtCsk79RHlfmHDk_8foldhash7qualityNtB4_10FoldHasherNtNtCscgRAwXFJnXP_4core
   %i.vx = add nuw i8 %i.vq, 64, !dbg !90639
   br label %.sink.split, !dbg !90640
 
-.thread182:                                       ; preds = %.thread168, %_RNvYNtNtCsk79RHlfmHDk_8foldhash7quality10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_isizeCsfcROwRM8ZtH_11polars_plan.exit59, %2
-  %i.vy = phi i128 [ %3, %2 ], [ %i.rn, %.thread168 ], [ %i.tg, %_RNvYNtNtCsk79RHlfmHDk_8foldhash7quality10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_isizeCsfcROwRM8ZtH_11polars_plan.exit59 ] ; 2 uses
+.thread182:                                       ; preds = %.thread168, %_RNvYNtNtCsk79RHlfmHDk_8foldhash7quality10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_isizeCsfcROwRM8ZtH_11polars_plan.exit59, %.thread184
+  %i.vy = phi i128 [ %2, %.thread184 ], [ %i.rn, %.thread168 ], [ %i.tg, %_RNvYNtNtCsk79RHlfmHDk_8foldhash7quality10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_isizeCsfcROwRM8ZtH_11polars_plan.exit59 ] ; 2 uses
   %.in225 = getelementptr inbounds nuw i8, ptr %0, i64 3, !dbg !90635
   %i.vz = load i8, ptr %.in225, align 1, !dbg !90635, !range !2508, !noundef !2277
   %i.wa = trunc i128 %i.vy to i64, !dbg !90641
@@ -548,31 +548,31 @@ _RNvXs_NtCsk79RHlfmHDk_8foldhash7qualityNtB4_10FoldHasherNtNtCscgRAwXFJnXP_4core
   store i64 %storemerge.i.i.i82, ptr %i.aav, align 8, !dbg !90752, !alias.scope !90071, !noalias !90072
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90078), !dbg !90791
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90079), !dbg !90792
-  br i1 %i.aam, label %4, label %.thread208.a, !dbg !90793
+  br i1 %i.aam, label %.thread208, label %.thread208.a, !dbg !90793
+
+.thread208:                                       ; preds = %_RNvXs_NtCsk79RHlfmHDk_8foldhash7qualityNtB4_10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher5write.exit.i81
+  %3 = or i128 %.sink.i74199, 4703919738795935662080, !dbg !90794 ; 2 uses
+  store i128 %3, ptr %1, align 16, !dbg !90795, !alias.scope !90080, !noalias !90066
+  store i8 %storemerge.i.i.i75200, ptr %i.b, align 16, !dbg !90795, !alias.scope !90080, !noalias !90066
+  br label %.thread206, !dbg !90796
 
 .thread208.a:                                     ; preds = %_RNvXs_NtCsk79RHlfmHDk_8foldhash7qualityNtB4_10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher5write.exit.i81
-  %i.ack = trunc i128 %.sink.i74199 to i64, !dbg !90794
-  %i.acl = lshr i128 %.sink.i74199, 64, !dbg !90795
-  %i.acm = xor i64 %storemerge.i.i.i82, %i.ack, !dbg !90796
-  %i.acn = load i64, ptr %i.aba, align 8, !dbg !90797, !noalias !90080, !noundef !2277
-  %i.aco = zext i64 %i.acm to i128, !dbg !90798
-  %i.acp = zext i64 %i.acn to i128, !dbg !90799
-  %i.acq = xor i128 %i.acl, %i.acp, !dbg !90799
-  %i.acr = mul nuw i128 %i.acq, %i.aco, !dbg !90800 ; 2 uses
-  %i.acs = lshr i128 %i.acr, 64, !dbg !90801
-  %i.act = xor i128 %i.acs, %i.acr, !dbg !90802
-  %i.acu = trunc i128 %i.act to i64, !dbg !90802
-  store i64 %i.acu, ptr %i.aav, align 8, !dbg !90803, !alias.scope !90080, !noalias !90066
-  br label %.thread207, !dbg !90804
-
-4:                                                ; preds = %_RNvXs_NtCsk79RHlfmHDk_8foldhash7qualityNtB4_10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher5write.exit.i81
-  %5 = or i128 %.sink.i74199, 4703919738795935662080, !dbg !90805 ; 2 uses
-  store i128 %5, ptr %1, align 16, !dbg !90806, !alias.scope !90080, !noalias !90066
-  store i8 %storemerge.i.i.i75200, ptr %i.b, align 16, !dbg !90806, !alias.scope !90080, !noalias !90066
+  %i.ack = trunc i128 %.sink.i74199 to i64, !dbg !90797
+  %i.acl = lshr i128 %.sink.i74199, 64, !dbg !90798
+  %i.acm = xor i64 %storemerge.i.i.i82, %i.ack, !dbg !90799
+  %i.acn = load i64, ptr %i.aba, align 8, !dbg !90800, !noalias !90080, !noundef !2277
+  %i.aco = zext i64 %i.acm to i128, !dbg !90801
+  %i.acp = zext i64 %i.acn to i128, !dbg !90802
+  %i.acq = xor i128 %i.acl, %i.acp, !dbg !90802
+  %i.acr = mul nuw i128 %i.acq, %i.aco, !dbg !90803 ; 2 uses
+  %i.acs = lshr i128 %i.acr, 64, !dbg !90804
+  %i.act = xor i128 %i.acs, %i.acr, !dbg !90805
+  %i.acu = trunc i128 %i.act to i64, !dbg !90805
+  store i64 %i.acu, ptr %i.aav, align 8, !dbg !90806, !alias.scope !90080, !noalias !90066
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90084), !dbg !90807
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90085), !dbg !90808
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90086), !dbg !90809
-  br label %.thread206, !dbg !90804
+  br label %.thread207, !dbg !90796
 
 .thread207:                                       ; preds = %.split196, %.thread208.a
   %i.acv = phi i8 [ 8, %.thread208.a ], [ 64, %.split196 ] ; 2 uses
@@ -586,8 +586,8 @@ _RNvXs_NtCsk79RHlfmHDk_8foldhash7qualityNtB4_10FoldHasherNtNtCscgRAwXFJnXP_4core
   %i.adc = add nuw i8 %i.acv, 64, !dbg !90814
   br label %.sink.split, !dbg !90815
 
-.thread206:                                       ; preds = %.thread192, %_RNvYNtNtCsk79RHlfmHDk_8foldhash7quality10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_isizeCsfcROwRM8ZtH_11polars_plan.exit76, %4
-  %i.add = phi i128 [ %5, %4 ], [ %i.ys, %.thread192 ], [ %i.aal, %_RNvYNtNtCsk79RHlfmHDk_8foldhash7quality10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_isizeCsfcROwRM8ZtH_11polars_plan.exit76 ] ; 2 uses
+.thread206:                                       ; preds = %.thread192, %_RNvYNtNtCsk79RHlfmHDk_8foldhash7quality10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_isizeCsfcROwRM8ZtH_11polars_plan.exit76, %.thread208
+  %i.add = phi i128 [ %3, %.thread208 ], [ %i.ys, %.thread192 ], [ %i.aal, %_RNvYNtNtCsk79RHlfmHDk_8foldhash7quality10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_isizeCsfcROwRM8ZtH_11polars_plan.exit76 ] ; 2 uses
   %.in217 = getelementptr inbounds nuw i8, ptr %0, i64 3, !dbg !90810
   %i.ade = load i8, ptr %.in217, align 1, !dbg !90810, !range !2508, !noundef !2277
   %i.adf = trunc i128 %i.add to i64, !dbg !90816
@@ -990,24 +990,24 @@ begin_hunk_1_@llvm.abs.i128
 !89685 = distinct !DILocation(line: 552, column: 14, scope: !889, inlinedAt: !89647)
 !89686 = distinct !DILocation(line: 38, column: 20, scope: !817, inlinedAt: !89685)
 !89687 = distinct !DILocation(line: 72, column: 14, scope: !816, inlinedAt: !89686)
-!89688 = distinct !DILocation(line: 40, column: 32, scope: !815, inlinedAt: !89687)
-!89689 = distinct !DILocation(line: 164, column: 32, scope: !818, inlinedAt: !89688)
-!89690 = distinct !DILexicalBlock(scope: !89505, file: !3496, line: 15, column: 45)
-!89691 = distinct !DILocation(line: 813, column: 27, scope: !89247, inlinedAt: !90019)
-!89692 = distinct !DILocation(line: 430, column: 14, scope: !801, inlinedAt: !89691)
-!89693 = distinct !DILocation(line: 63, column: 20, scope: !789, inlinedAt: !89692)
-!89694 = distinct !DILocation(line: 103, column: 14, scope: !788, inlinedAt: !89693)
+!89688 = distinct !DILexicalBlock(scope: !89505, file: !3496, line: 15, column: 45)
+!89689 = distinct !DILocation(line: 813, column: 27, scope: !89247, inlinedAt: !90019)
+!89690 = distinct !DILocation(line: 430, column: 14, scope: !801, inlinedAt: !89689)
+!89691 = distinct !DILocation(line: 63, column: 20, scope: !789, inlinedAt: !89690)
+!89692 = distinct !DILocation(line: 103, column: 14, scope: !788, inlinedAt: !89691)
+!89693 = distinct !DILocation(line: 40, column: 32, scope: !815, inlinedAt: !89687)
+!89694 = distinct !DILocation(line: 164, column: 32, scope: !818, inlinedAt: !89693)
 !89695 = distinct !{!89695, !"_RNvYNtNtCsk79RHlfmHDk_8foldhash7quality10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_isizeCsfcROwRM8ZtH_11polars_plan"}
 !89696 = distinct !{!89696, !89695, !"_RNvYNtNtCsk79RHlfmHDk_8foldhash7quality10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_isizeCsfcROwRM8ZtH_11polars_plan: argument 0"}
 !89697 = distinct !{!89697, !"_RNvXs_NtCsk79RHlfmHDk_8foldhash7qualityNtB4_10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_usize"}
 !89698 = distinct !{!89698, !89697, !"_RNvXs_NtCsk79RHlfmHDk_8foldhash7qualityNtB4_10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_usize: argument 0"}
 !89699 = distinct !{!89699, !"_RINvMNtCsk79RHlfmHDk_8foldhash4fastNtB3_10FoldHasher9write_numyECsfcROwRM8ZtH_11polars_plan"}
 !89700 = distinct !{!89700, !89699, !"_RINvMNtCsk79RHlfmHDk_8foldhash4fastNtB3_10FoldHasher9write_numyECsfcROwRM8ZtH_11polars_plan: argument 0"}
-!89701 = distinct !DILocation(line: 44, column: 30, scope: !791, inlinedAt: !89694)
+!89701 = distinct !DILocation(line: 44, column: 30, scope: !791, inlinedAt: !89692)
 !89702 = distinct !DILocation(line: 778, column: 9, scope: !800, inlinedAt: !89701)
-!89703 = distinct !DILocation(line: 40, column: 32, scope: !793, inlinedAt: !89694)
+!89703 = distinct !DILocation(line: 40, column: 32, scope: !793, inlinedAt: !89692)
 !89704 = distinct !DILocation(line: 164, column: 32, scope: !794, inlinedAt: !89703)
-!89705 = distinct !DILocation(line: 41, column: 29, scope: !793, inlinedAt: !89694)
+!89705 = distinct !DILocation(line: 41, column: 29, scope: !793, inlinedAt: !89692)
 !89706 = distinct !DILocation(line: 778, column: 9, scope: !800, inlinedAt: !89705)
 !89707 = distinct !DILexicalBlock(scope: !89424, file: !2273, line: 594, column: 23)
 !89708 = distinct !{!89708, !"_RNvYNtNtCsk79RHlfmHDk_8foldhash7quality10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_isizeCsfcROwRM8ZtH_11polars_plan"}
@@ -1128,24 +1128,24 @@ begin_hunk_1_@llvm.abs.i128
 !89823 = distinct !DILocation(line: 552, column: 14, scope: !889, inlinedAt: !89785)
 !89824 = distinct !DILocation(line: 38, column: 20, scope: !817, inlinedAt: !89823)
 !89825 = distinct !DILocation(line: 72, column: 14, scope: !816, inlinedAt: !89824)
-!89826 = distinct !DILocation(line: 40, column: 32, scope: !815, inlinedAt: !89825)
-!89827 = distinct !DILocation(line: 164, column: 32, scope: !818, inlinedAt: !89826)
-!89828 = distinct !DILexicalBlock(scope: !89505, file: !3496, line: 15, column: 45)
-!89829 = distinct !DILocation(line: 813, column: 27, scope: !89247, inlinedAt: !90083)
-!89830 = distinct !DILocation(line: 430, column: 14, scope: !801, inlinedAt: !89829)
-!89831 = distinct !DILocation(line: 63, column: 20, scope: !789, inlinedAt: !89830)
-!89832 = distinct !DILocation(line: 103, column: 14, scope: !788, inlinedAt: !89831)
+!89826 = distinct !DILexicalBlock(scope: !89505, file: !3496, line: 15, column: 45)
+!89827 = distinct !DILocation(line: 813, column: 27, scope: !89247, inlinedAt: !90083)
+!89828 = distinct !DILocation(line: 430, column: 14, scope: !801, inlinedAt: !89827)
+!89829 = distinct !DILocation(line: 63, column: 20, scope: !789, inlinedAt: !89828)
+!89830 = distinct !DILocation(line: 103, column: 14, scope: !788, inlinedAt: !89829)
+!89831 = distinct !DILocation(line: 40, column: 32, scope: !815, inlinedAt: !89825)
+!89832 = distinct !DILocation(line: 164, column: 32, scope: !818, inlinedAt: !89831)
 !89833 = distinct !{!89833, !"_RNvYNtNtCsk79RHlfmHDk_8foldhash7quality10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_isizeCsfcROwRM8ZtH_11polars_plan"}
 !89834 = distinct !{!89834, !89833, !"_RNvYNtNtCsk79RHlfmHDk_8foldhash7quality10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_isizeCsfcROwRM8ZtH_11polars_plan: argument 0"}
 !89835 = distinct !{!89835, !"_RNvXs_NtCsk79RHlfmHDk_8foldhash7qualityNtB4_10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_usize"}
 !89836 = distinct !{!89836, !89835, !"_RNvXs_NtCsk79RHlfmHDk_8foldhash7qualityNtB4_10FoldHasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_usize: argument 0"}
 !89837 = distinct !{!89837, !"_RINvMNtCsk79RHlfmHDk_8foldhash4fastNtB3_10FoldHasher9write_numyECsfcROwRM8ZtH_11polars_plan"}
 !89838 = distinct !{!89838, !89837, !"_RINvMNtCsk79RHlfmHDk_8foldhash4fastNtB3_10FoldHasher9write_numyECsfcROwRM8ZtH_11polars_plan: argument 0"}
-!89839 = distinct !DILocation(line: 44, column: 30, scope: !791, inlinedAt: !89832)
+!89839 = distinct !DILocation(line: 44, column: 30, scope: !791, inlinedAt: !89830)
 !89840 = distinct !DILocation(line: 778, column: 9, scope: !800, inlinedAt: !89839)
-!89841 = distinct !DILocation(line: 40, column: 32, scope: !793, inlinedAt: !89832)
+!89841 = distinct !DILocation(line: 40, column: 32, scope: !793, inlinedAt: !89830)
 !89842 = distinct !DILocation(line: 164, column: 32, scope: !794, inlinedAt: !89841)
-!89843 = distinct !DILocation(line: 41, column: 29, scope: !793, inlinedAt: !89832)
+!89843 = distinct !DILocation(line: 41, column: 29, scope: !793, inlinedAt: !89830)
 !89844 = distinct !DILocation(line: 778, column: 9, scope: !800, inlinedAt: !89843)
 !89845 = !{!89246}
 !89846 = !DILocation(line: 15, column: 39, scope: !89248)
@@ -1319,7 +1319,7 @@ begin_hunk_1_@llvm.abs.i128
 !90014 = !{!89682}
 !90015 = !{!89684}
 !90016 = !{!89684, !89682, !89642}
-!90017 = !DILexicalBlockFile(scope: !89690, file: !3496, discriminator: 4)
+!90017 = !DILexicalBlockFile(scope: !89688, file: !3496, discriminator: 4)
 !90018 = !DILocation(line: 49, column: 9, scope: !89405)
 !90019 = !DILocation(line: 15, column: 45, scope: !90017, inlinedAt: !90018)
 !90020 = !{!89696}
@@ -1383,7 +1383,7 @@ begin_hunk_1_@llvm.abs.i128
 !90078 = !{!89820}
 !90079 = !{!89822}
 !90080 = !{!89822, !89820, !89781}
-!90081 = !DILexicalBlockFile(scope: !89828, file: !3496, discriminator: 6)
+!90081 = !DILexicalBlockFile(scope: !89826, file: !3496, discriminator: 6)
 !90082 = !DILocation(line: 57, column: 9, scope: !89421)
 !90083 = !DILocation(line: 15, column: 45, scope: !90081, inlinedAt: !90082)
 !90084 = !{!89834}
@@ -1786,39 +1786,39 @@ begin_hunk_2_@llvm.abs.i128
 !90616 = !DILocation(line: 552, column: 14, scope: !889, inlinedAt: !89647)
 !90617 = !DILocation(line: 72, column: 14, scope: !816, inlinedAt: !89686)
 !90618 = !DILocation(line: 37, column: 12, scope: !813, inlinedAt: !89687)
-!90619 = !DILocation(line: 38, column: 22, scope: !813, inlinedAt: !89687)
-!90620 = !DILocation(line: 39, column: 22, scope: !814, inlinedAt: !89687)
-!90621 = !DILocation(line: 40, column: 48, scope: !815, inlinedAt: !89687)
-!90622 = !DILocation(line: 40, column: 76, scope: !815, inlinedAt: !89687)
-!90623 = !DILocation(line: 164, column: 20, scope: !818, inlinedAt: !89688)
-!90624 = !DILocation(line: 164, column: 45, scope: !818, inlinedAt: !89688)
-!90625 = !DILocation(line: 2587, column: 13, scope: !821, inlinedAt: !89689)
-!90626 = !DILocation(line: 166, column: 18, scope: !823, inlinedAt: !89688)
-!90627 = !DILocation(line: 172, column: 9, scope: !824, inlinedAt: !89688)
-!90628 = !DILocation(line: 40, column: 13, scope: !815, inlinedAt: !89687)
-!90629 = !DILocation(line: 37, column: 12, scope: !791, inlinedAt: !89694)
-!90630 = !DILocation(line: 44, column: 13, scope: !813, inlinedAt: !89687)
-!90631 = !DILocation(line: 0, scope: !813, inlinedAt: !89687)
+!90619 = !DILocation(line: 44, column: 13, scope: !813, inlinedAt: !89687)
+!90620 = !DILocation(line: 0, scope: !813, inlinedAt: !89687)
+!90621 = !DILocation(line: 37, column: 12, scope: !791, inlinedAt: !89692)
+!90622 = !DILocation(line: 38, column: 22, scope: !813, inlinedAt: !89687)
+!90623 = !DILocation(line: 39, column: 22, scope: !814, inlinedAt: !89687)
+!90624 = !DILocation(line: 40, column: 48, scope: !815, inlinedAt: !89687)
+!90625 = !DILocation(line: 40, column: 76, scope: !815, inlinedAt: !89687)
+!90626 = !DILocation(line: 164, column: 20, scope: !818, inlinedAt: !89693)
+!90627 = !DILocation(line: 164, column: 45, scope: !818, inlinedAt: !89693)
+!90628 = !DILocation(line: 2587, column: 13, scope: !821, inlinedAt: !89694)
+!90629 = !DILocation(line: 166, column: 18, scope: !823, inlinedAt: !89693)
+!90630 = !DILocation(line: 172, column: 9, scope: !824, inlinedAt: !89693)
+!90631 = !DILocation(line: 40, column: 13, scope: !815, inlinedAt: !89687)
 !90632 = !DILocation(line: 813, column: 27, scope: !89247, inlinedAt: !90019)
-!90633 = !DILocation(line: 430, column: 14, scope: !801, inlinedAt: !89691)
-!90634 = !DILocation(line: 103, column: 14, scope: !788, inlinedAt: !89693)
+!90633 = !DILocation(line: 430, column: 14, scope: !801, inlinedAt: !89689)
+!90634 = !DILocation(line: 103, column: 14, scope: !788, inlinedAt: !89691)
 !90635 = !DILocation(line: 15, column: 45, scope: !89505, inlinedAt: !90018)
 !90636 = !DILocation(line: 82, column: 17, scope: !799, inlinedAt: !89702)
-!90637 = !DILocation(line: 44, column: 28, scope: !791, inlinedAt: !89694)
-!90638 = !DILocation(line: 44, column: 13, scope: !791, inlinedAt: !89694)
-!90639 = !DILocation(line: 45, column: 13, scope: !791, inlinedAt: !89694)
-!90640 = !DILocation(line: 37, column: 9, scope: !791, inlinedAt: !89694)
-!90641 = !DILocation(line: 38, column: 22, scope: !791, inlinedAt: !89694)
-!90642 = !DILocation(line: 39, column: 22, scope: !792, inlinedAt: !89694)
-!90643 = !DILocation(line: 40, column: 53, scope: !793, inlinedAt: !89694)
-!90644 = !DILocation(line: 40, column: 48, scope: !793, inlinedAt: !89694)
-!90645 = !DILocation(line: 40, column: 76, scope: !793, inlinedAt: !89694)
+!90637 = !DILocation(line: 44, column: 28, scope: !791, inlinedAt: !89692)
+!90638 = !DILocation(line: 44, column: 13, scope: !791, inlinedAt: !89692)
+!90639 = !DILocation(line: 45, column: 13, scope: !791, inlinedAt: !89692)
+!90640 = !DILocation(line: 37, column: 9, scope: !791, inlinedAt: !89692)
+!90641 = !DILocation(line: 38, column: 22, scope: !791, inlinedAt: !89692)
+!90642 = !DILocation(line: 39, column: 22, scope: !792, inlinedAt: !89692)
+!90643 = !DILocation(line: 40, column: 53, scope: !793, inlinedAt: !89692)
+!90644 = !DILocation(line: 40, column: 48, scope: !793, inlinedAt: !89692)
+!90645 = !DILocation(line: 40, column: 76, scope: !793, inlinedAt: !89692)
 !90646 = !DILocation(line: 164, column: 20, scope: !794, inlinedAt: !89703)
 !90647 = !DILocation(line: 164, column: 45, scope: !794, inlinedAt: !89703)
 !90648 = !DILocation(line: 2587, column: 13, scope: !795, inlinedAt: !89704)
 !90649 = !DILocation(line: 166, column: 18, scope: !797, inlinedAt: !89703)
 !90650 = !DILocation(line: 172, column: 9, scope: !798, inlinedAt: !89703)
-!90651 = !DILocation(line: 40, column: 13, scope: !793, inlinedAt: !89694)
+!90651 = !DILocation(line: 40, column: 13, scope: !793, inlinedAt: !89692)
 !90652 = !DILocation(line: 82, column: 17, scope: !799, inlinedAt: !89706)
 !90653 = !DILocation(line: 594, column: 23, scope: !89707, inlinedAt: !89914)
 !90654 = !DILocation(line: 37, column: 12, scope: !791, inlinedAt: !89718)
@@ -1961,39 +1961,39 @@ begin_hunk_2_@llvm.abs.i128
 !90791 = !DILocation(line: 552, column: 14, scope: !889, inlinedAt: !89785)
 !90792 = !DILocation(line: 72, column: 14, scope: !816, inlinedAt: !89824)
 !90793 = !DILocation(line: 37, column: 12, scope: !813, inlinedAt: !89825)
-!90794 = !DILocation(line: 38, column: 22, scope: !813, inlinedAt: !89825)
-!90795 = !DILocation(line: 39, column: 22, scope: !814, inlinedAt: !89825)
-!90796 = !DILocation(line: 40, column: 48, scope: !815, inlinedAt: !89825)
-!90797 = !DILocation(line: 40, column: 76, scope: !815, inlinedAt: !89825)
-!90798 = !DILocation(line: 164, column: 20, scope: !818, inlinedAt: !89826)
-!90799 = !DILocation(line: 164, column: 45, scope: !818, inlinedAt: !89826)
-!90800 = !DILocation(line: 2587, column: 13, scope: !821, inlinedAt: !89827)
-!90801 = !DILocation(line: 166, column: 18, scope: !823, inlinedAt: !89826)
-!90802 = !DILocation(line: 172, column: 9, scope: !824, inlinedAt: !89826)
-!90803 = !DILocation(line: 40, column: 13, scope: !815, inlinedAt: !89825)
-!90804 = !DILocation(line: 37, column: 12, scope: !791, inlinedAt: !89832)
-!90805 = !DILocation(line: 44, column: 13, scope: !813, inlinedAt: !89825)
-!90806 = !DILocation(line: 0, scope: !813, inlinedAt: !89825)
+!90794 = !DILocation(line: 44, column: 13, scope: !813, inlinedAt: !89825)
+!90795 = !DILocation(line: 0, scope: !813, inlinedAt: !89825)
+!90796 = !DILocation(line: 37, column: 12, scope: !791, inlinedAt: !89830)
+!90797 = !DILocation(line: 38, column: 22, scope: !813, inlinedAt: !89825)
+!90798 = !DILocation(line: 39, column: 22, scope: !814, inlinedAt: !89825)
+!90799 = !DILocation(line: 40, column: 48, scope: !815, inlinedAt: !89825)
+!90800 = !DILocation(line: 40, column: 76, scope: !815, inlinedAt: !89825)
+!90801 = !DILocation(line: 164, column: 20, scope: !818, inlinedAt: !89831)
+!90802 = !DILocation(line: 164, column: 45, scope: !818, inlinedAt: !89831)
+!90803 = !DILocation(line: 2587, column: 13, scope: !821, inlinedAt: !89832)
+!90804 = !DILocation(line: 166, column: 18, scope: !823, inlinedAt: !89831)
+!90805 = !DILocation(line: 172, column: 9, scope: !824, inlinedAt: !89831)
+!90806 = !DILocation(line: 40, column: 13, scope: !815, inlinedAt: !89825)
 !90807 = !DILocation(line: 813, column: 27, scope: !89247, inlinedAt: !90083)
-!90808 = !DILocation(line: 430, column: 14, scope: !801, inlinedAt: !89829)
-!90809 = !DILocation(line: 103, column: 14, scope: !788, inlinedAt: !89831)
+!90808 = !DILocation(line: 430, column: 14, scope: !801, inlinedAt: !89827)
+!90809 = !DILocation(line: 103, column: 14, scope: !788, inlinedAt: !89829)
 !90810 = !DILocation(line: 15, column: 45, scope: !89505, inlinedAt: !90082)
 !90811 = !DILocation(line: 82, column: 17, scope: !799, inlinedAt: !89840)
-!90812 = !DILocation(line: 44, column: 28, scope: !791, inlinedAt: !89832)
-!90813 = !DILocation(line: 44, column: 13, scope: !791, inlinedAt: !89832)
-!90814 = !DILocation(line: 45, column: 13, scope: !791, inlinedAt: !89832)
-!90815 = !DILocation(line: 37, column: 9, scope: !791, inlinedAt: !89832)
-!90816 = !DILocation(line: 38, column: 22, scope: !791, inlinedAt: !89832)
-!90817 = !DILocation(line: 39, column: 22, scope: !792, inlinedAt: !89832)
-!90818 = !DILocation(line: 40, column: 53, scope: !793, inlinedAt: !89832)
-!90819 = !DILocation(line: 40, column: 48, scope: !793, inlinedAt: !89832)
-!90820 = !DILocation(line: 40, column: 76, scope: !793, inlinedAt: !89832)
+!90812 = !DILocation(line: 44, column: 28, scope: !791, inlinedAt: !89830)
+!90813 = !DILocation(line: 44, column: 13, scope: !791, inlinedAt: !89830)
+!90814 = !DILocation(line: 45, column: 13, scope: !791, inlinedAt: !89830)
+!90815 = !DILocation(line: 37, column: 9, scope: !791, inlinedAt: !89830)
+!90816 = !DILocation(line: 38, column: 22, scope: !791, inlinedAt: !89830)
+!90817 = !DILocation(line: 39, column: 22, scope: !792, inlinedAt: !89830)
+!90818 = !DILocation(line: 40, column: 53, scope: !793, inlinedAt: !89830)
+!90819 = !DILocation(line: 40, column: 48, scope: !793, inlinedAt: !89830)
+!90820 = !DILocation(line: 40, column: 76, scope: !793, inlinedAt: !89830)
 !90821 = !DILocation(line: 164, column: 20, scope: !794, inlinedAt: !89841)
 !90822 = !DILocation(line: 164, column: 45, scope: !794, inlinedAt: !89841)
 !90823 = !DILocation(line: 2587, column: 13, scope: !795, inlinedAt: !89842)
 !90824 = !DILocation(line: 166, column: 18, scope: !797, inlinedAt: !89841)
 !90825 = !DILocation(line: 172, column: 9, scope: !798, inlinedAt: !89841)
-!90826 = !DILocation(line: 40, column: 13, scope: !793, inlinedAt: !89832)
+!90826 = !DILocation(line: 40, column: 13, scope: !793, inlinedAt: !89830)
 !90827 = !DILocation(line: 82, column: 17, scope: !799, inlinedAt: !89844)
 !90828 = distinct !DISubprogram(name: "hash<polars_plan::plans::optimizer::cse::cspe::Blake3Hasher>", linkageName: "_RINvXs7_NtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans5aexpr13function_expr5rangeNtB6_15IRRangeFunctionNtNtCscgRAwXFJnXP_4core4hash4Hash4hashNtNtNtNtBc_9optimizer3cse4cspe12Blake3HasherEBe_", scope: !3495, file: !3493, line: 15, type: !2283, scopeLine: 15, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !0, templateParams: !2277)
 !90829 = distinct !{!90829, !"_RNvYNtNtNtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer3cse4cspe12Blake3HasherNtNtCscgRAwXFJnXP_4core4hash6Hasher11write_isizeBc_"}

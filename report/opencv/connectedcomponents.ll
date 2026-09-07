@@ -204,7 +204,7 @@ bb.st:                                            ; preds = %bb.sf
   %i.egy = trunc nuw nsw i64 %i.egd to i32        ; 4 uses
   %..i3164 = tail call i32 @llvm.smin.i32(i32 %..i3161, i32 %i.egy) ; 2 uses
   store i32 %..i3164, ptr %i.egf, align 4, !tbaa !58
-  %i.egz = tail call i32 @llvm.smax.i32(i32 %i.egk, i32 %i.egy) ; 2 uses
+  %i.egz = tail call i32 @llvm.umax.i32(i32 %i.egk, i32 %i.egy) ; 2 uses
   store i32 %i.egz, ptr %i.egi, align 4, !tbaa !58
   store i32 %i.egn, ptr %i.egl, align 4, !tbaa !58
   store i32 %i.egq, ptr %i.ego, align 4, !tbaa !58
@@ -231,7 +231,7 @@ bb.su:                                            ; preds = %bb.st
   %i.ehk = add i64 %i.ehb, %indvars.iv3700
   %..i3170 = tail call i32 @llvm.smin.i32(i32 %..i3167, i32 %i.egy)
   store i32 %..i3170, ptr %i.egf, align 4, !tbaa !58
-  %i.ehl = tail call i32 @llvm.smax.i32(i32 %i.ehh, i32 %i.egy)
+  %i.ehl = tail call i32 @llvm.umax.i32(i32 %i.ehh, i32 %i.egy)
   store i32 %i.ehl, ptr %i.egi, align 4, !tbaa !58
   store i32 %i.ehi, ptr %i.egl, align 4, !tbaa !58
   store i32 %i.ehj, ptr %i.ego, align 4, !tbaa !58
@@ -634,7 +634,7 @@ bb.ud:                                            ; preds = %bb.tq
   %i.fbg = load i64, ptr %i.fbf, align 8, !tbaa !117
   %i.fbh = trunc nuw nsw i64 %i.fak to i32        ; 4 uses
   %..i3236 = tail call i32 @llvm.smin.i32(i32 %..i3233, i32 %i.fbh)
-  %i.fbi = tail call i32 @llvm.smax.i32(i32 %i.fat, i32 %i.fbh)
+  %i.fbi = tail call i32 @llvm.umax.i32(i32 %i.fat, i32 %i.fbh)
   %i.fbj = add i64 %i.fbe, %i.fak
   %..i3239 = tail call i32 @llvm.smin.i32(i32 %..i3236, i32 %i.faq)
   %i.fbk = tail call i32 @llvm.umax.i32(i32 %i.fbi, i32 %i.faq)
@@ -643,7 +643,7 @@ bb.ud:                                            ; preds = %bb.tq
   %i.fbn = add i64 %i.fbj, %indvars.iv3712
   %..i3242 = tail call i32 @llvm.smin.i32(i32 %..i3239, i32 %i.fbh)
   store i32 %..i3242, ptr %i.fao, align 4, !tbaa !58
-  %i.fbo = tail call i32 @llvm.smax.i32(i32 %i.fbk, i32 %i.fbh)
+  %i.fbo = tail call i32 @llvm.umax.i32(i32 %i.fbk, i32 %i.fbh)
   store i32 %i.fbo, ptr %i.far, align 4, !tbaa !58
   store i32 %i.fbl, ptr %i.fau, align 4, !tbaa !58
   store i32 %i.fbm, ptr %i.fax, align 4, !tbaa !58
@@ -1046,7 +1046,7 @@ bb.st:                                            ; preds = %bb.sf
   %i.ehr = trunc nuw nsw i64 %i.egw to i32        ; 4 uses
   %..i3164 = tail call i32 @llvm.smin.i32(i32 %..i3161, i32 %i.ehr)
   store i32 %..i3164, ptr %i.egy, align 4, !tbaa !58
-  %i.ehs = tail call i32 @llvm.smax.i32(i32 %i.ehd, i32 %i.ehr)
+  %i.ehs = tail call i32 @llvm.umax.i32(i32 %i.ehd, i32 %i.ehr)
   store i32 %i.ehs, ptr %i.ehb, align 4, !tbaa !58
   store i32 %i.ehg, ptr %i.ehe, align 4, !tbaa !58
   store i32 %i.ehj, ptr %i.ehh, align 4, !tbaa !58
@@ -1078,7 +1078,7 @@ bb.su:                                            ; preds = %bb.st
   %i.eii = add i64 %i.ehu, %indvars.iv3702
   %..i3170 = tail call i32 @llvm.smin.i32(i32 %..i3167, i32 %i.ehr)
   store i32 %..i3170, ptr %i.egy, align 4, !tbaa !58
-  %i.eij = tail call i32 @llvm.smax.i32(i32 %i.eic, i32 %i.ehr)
+  %i.eij = tail call i32 @llvm.umax.i32(i32 %i.eic, i32 %i.ehr)
   store i32 %i.eij, ptr %i.ehb, align 4, !tbaa !58
   store i32 %i.eie, ptr %i.ehe, align 4, !tbaa !58
   store i32 %i.eig, ptr %i.ehh, align 4, !tbaa !58
@@ -1481,7 +1481,7 @@ bb.ud:                                            ; preds = %bb.tq
   %i.fcl = load i64, ptr %i.fck, align 8, !tbaa !117
   %i.fcm = trunc nuw nsw i64 %i.fbp to i32        ; 4 uses
   %..i3236 = tail call i32 @llvm.smin.i32(i32 %..i3233, i32 %i.fcm)
-  %i.fcn = tail call i32 @llvm.smax.i32(i32 %i.fby, i32 %i.fcm)
+  %i.fcn = tail call i32 @llvm.umax.i32(i32 %i.fby, i32 %i.fcm)
   %i.fco = add i64 %i.fcj, %i.fbp
   %..i3239 = tail call i32 @llvm.smin.i32(i32 %..i3236, i32 %i.fbv)
   %i.fcp = tail call i32 @llvm.umax.i32(i32 %i.fcn, i32 %i.fbv)
@@ -1490,7 +1490,7 @@ bb.ud:                                            ; preds = %bb.tq
   %i.fcs = add i64 %i.fco, %indvars.iv3714
   %..i3242 = tail call i32 @llvm.smin.i32(i32 %..i3239, i32 %i.fcm)
   store i32 %..i3242, ptr %i.fbt, align 4, !tbaa !58
-  %i.fct = tail call i32 @llvm.smax.i32(i32 %i.fcp, i32 %i.fcm)
+  %i.fct = tail call i32 @llvm.umax.i32(i32 %i.fcp, i32 %i.fcm)
   store i32 %i.fct, ptr %i.fbw, align 4, !tbaa !58
   store i32 %i.fcq, ptr %i.fbz, align 4, !tbaa !58
   store i32 %i.fcr, ptr %i.fcc, align 4, !tbaa !58
@@ -1893,7 +1893,7 @@ bb.as:                                            ; preds = %bb.ae
   %i.aak = trunc nuw nsw i64 %i.zp to i32         ; 4 uses
   %..i876 = tail call i32 @llvm.smin.i32(i32 %..i873, i32 %i.aak)
   store i32 %..i876, ptr %i.zr, align 4, !tbaa !58
-  %i.aal = tail call i32 @llvm.smax.i32(i32 %i.zw, i32 %i.aak)
+  %i.aal = tail call i32 @llvm.umax.i32(i32 %i.zw, i32 %i.aak)
   store i32 %i.aal, ptr %i.zu, align 4, !tbaa !58
   store i32 %i.zz, ptr %i.zx, align 4, !tbaa !58
   store i32 %i.aac, ptr %i.aaa, align 4, !tbaa !58
@@ -1924,7 +1924,7 @@ bb.at:                                            ; preds = %bb.as
   %i.aba = add i64 %i.aan, %indvars.iv1210
   %..i882 = tail call i32 @llvm.smin.i32(i32 %..i879, i32 %i.aak)
   store i32 %..i882, ptr %i.zr, align 4, !tbaa !58
-  %i.abb = tail call i32 @llvm.smax.i32(i32 %i.aau, i32 %i.aak)
+  %i.abb = tail call i32 @llvm.umax.i32(i32 %i.aau, i32 %i.aak)
   store i32 %i.abb, ptr %i.zu, align 4, !tbaa !58
   store i32 %i.aaw, ptr %i.zx, align 4, !tbaa !58
   store i32 %i.aay, ptr %i.aaa, align 4, !tbaa !58
@@ -2327,7 +2327,7 @@ bb.cb:                                            ; preds = %bb.bo
   %i.awu = load i64, ptr %i.awt, align 8, !tbaa !117
   %i.awv = trunc nuw nsw i64 %i.avy to i32        ; 4 uses
   %..i948 = tail call i32 @llvm.smin.i32(i32 %..i945, i32 %i.awv)
-  %i.aww = tail call i32 @llvm.smax.i32(i32 %i.awh, i32 %i.awv)
+  %i.aww = tail call i32 @llvm.umax.i32(i32 %i.awh, i32 %i.awv)
   %i.awx = add i64 %i.aws, %i.avy
   %..i951 = tail call i32 @llvm.smin.i32(i32 %..i948, i32 %i.awe)
   %i.awy = tail call i32 @llvm.umax.i32(i32 %i.aww, i32 %i.awe)
@@ -2336,7 +2336,7 @@ bb.cb:                                            ; preds = %bb.bo
   %i.axb = add i64 %i.awx, %indvars.iv1222
   %..i954 = tail call i32 @llvm.smin.i32(i32 %..i951, i32 %i.awv)
   store i32 %..i954, ptr %i.awc, align 4, !tbaa !58
-  %i.axc = tail call i32 @llvm.smax.i32(i32 %i.awy, i32 %i.awv)
+  %i.axc = tail call i32 @llvm.umax.i32(i32 %i.awy, i32 %i.awv)
   store i32 %i.axc, ptr %i.awf, align 4, !tbaa !58
   store i32 %i.awz, ptr %i.awi, align 4, !tbaa !58
   store i32 %i.axa, ptr %i.awl, align 4, !tbaa !58
@@ -2739,7 +2739,7 @@ bb.du:                                            ; preds = %bb.dg
   %i.bxx = trunc nuw nsw i64 %i.bxc to i32        ; 4 uses
   %..i1029 = tail call i32 @llvm.smin.i32(i32 %..i1026, i32 %i.bxx)
   store i32 %..i1029, ptr %i.bxe, align 4, !tbaa !58
-  %i.bxy = tail call i32 @llvm.smax.i32(i32 %i.bxj, i32 %i.bxx)
+  %i.bxy = tail call i32 @llvm.umax.i32(i32 %i.bxj, i32 %i.bxx)
   store i32 %i.bxy, ptr %i.bxh, align 4, !tbaa !58
   store i32 %i.bxm, ptr %i.bxk, align 4, !tbaa !58
   store i32 %i.bxp, ptr %i.bxn, align 4, !tbaa !58
@@ -2771,7 +2771,7 @@ bb.dv:                                            ; preds = %bb.du
   %i.byo = add i64 %i.bya, %indvars.iv1186
   %..i1035 = tail call i32 @llvm.smin.i32(i32 %..i1032, i32 %i.bxx)
   store i32 %..i1035, ptr %i.bxe, align 4, !tbaa !58
-  %i.byp = tail call i32 @llvm.smax.i32(i32 %i.byi, i32 %i.bxx)
+  %i.byp = tail call i32 @llvm.umax.i32(i32 %i.byi, i32 %i.bxx)
   store i32 %i.byp, ptr %i.bxh, align 4, !tbaa !58
   store i32 %i.byk, ptr %i.bxk, align 4, !tbaa !58
   store i32 %i.bym, ptr %i.bxn, align 4, !tbaa !58
@@ -3174,7 +3174,7 @@ bb.fe:                                            ; preds = %bb.er
   %i.cua = load i64, ptr %i.ctz, align 8, !tbaa !117
   %i.cub = trunc nuw nsw i64 %i.cte to i32        ; 4 uses
   %..i1101 = tail call i32 @llvm.smin.i32(i32 %..i1098, i32 %i.cub)
-  %i.cuc = tail call i32 @llvm.smax.i32(i32 %i.ctn, i32 %i.cub)
+  %i.cuc = tail call i32 @llvm.umax.i32(i32 %i.ctn, i32 %i.cub)
   %i.cud = add i64 %i.cty, %i.cte
   %..i1104 = tail call i32 @llvm.smin.i32(i32 %..i1101, i32 %i.ctk)
   %i.cue = tail call i32 @llvm.umax.i32(i32 %i.cuc, i32 %i.ctk)
@@ -3183,7 +3183,7 @@ bb.fe:                                            ; preds = %bb.er
   %i.cuh = add i64 %i.cud, %indvars.iv1198
   %..i1107 = tail call i32 @llvm.smin.i32(i32 %..i1104, i32 %i.cub)
   store i32 %..i1107, ptr %i.cti, align 4, !tbaa !58
-  %i.cui = tail call i32 @llvm.smax.i32(i32 %i.cue, i32 %i.cub)
+  %i.cui = tail call i32 @llvm.umax.i32(i32 %i.cue, i32 %i.cub)
   store i32 %i.cui, ptr %i.ctl, align 4, !tbaa !58
   store i32 %i.cuf, ptr %i.cto, align 4, !tbaa !58
   store i32 %i.cug, ptr %i.ctr, align 4, !tbaa !58
@@ -3586,7 +3586,7 @@ bb.as:                                            ; preds = %bb.ae
   %i.aak = trunc nuw nsw i64 %i.zp to i32         ; 4 uses
   %..i876 = tail call i32 @llvm.smin.i32(i32 %..i873, i32 %i.aak)
   store i32 %..i876, ptr %i.zr, align 4, !tbaa !58
-  %i.aal = tail call i32 @llvm.smax.i32(i32 %i.zw, i32 %i.aak)
+  %i.aal = tail call i32 @llvm.umax.i32(i32 %i.zw, i32 %i.aak)
   store i32 %i.aal, ptr %i.zu, align 4, !tbaa !58
   store i32 %i.zz, ptr %i.zx, align 4, !tbaa !58
   store i32 %i.aac, ptr %i.aaa, align 4, !tbaa !58
@@ -3617,7 +3617,7 @@ bb.at:                                            ; preds = %bb.as
   %i.aba = add i64 %i.aan, %indvars.iv1210
   %..i882 = tail call i32 @llvm.smin.i32(i32 %..i879, i32 %i.aak)
   store i32 %..i882, ptr %i.zr, align 4, !tbaa !58
-  %i.abb = tail call i32 @llvm.smax.i32(i32 %i.aau, i32 %i.aak)
+  %i.abb = tail call i32 @llvm.umax.i32(i32 %i.aau, i32 %i.aak)
   store i32 %i.abb, ptr %i.zu, align 4, !tbaa !58
   store i32 %i.aaw, ptr %i.zx, align 4, !tbaa !58
   store i32 %i.aay, ptr %i.aaa, align 4, !tbaa !58
@@ -4020,7 +4020,7 @@ bb.cb:                                            ; preds = %bb.bo
   %i.awu = load i64, ptr %i.awt, align 8, !tbaa !117
   %i.awv = trunc nuw nsw i64 %i.avy to i32        ; 4 uses
   %..i948 = tail call i32 @llvm.smin.i32(i32 %..i945, i32 %i.awv)
-  %i.aww = tail call i32 @llvm.smax.i32(i32 %i.awh, i32 %i.awv)
+  %i.aww = tail call i32 @llvm.umax.i32(i32 %i.awh, i32 %i.awv)
   %i.awx = add i64 %i.aws, %i.avy
   %..i951 = tail call i32 @llvm.smin.i32(i32 %..i948, i32 %i.awe)
   %i.awy = tail call i32 @llvm.umax.i32(i32 %i.aww, i32 %i.awe)
@@ -4029,7 +4029,7 @@ bb.cb:                                            ; preds = %bb.bo
   %i.axb = add i64 %i.awx, %indvars.iv1222
   %..i954 = tail call i32 @llvm.smin.i32(i32 %..i951, i32 %i.awv)
   store i32 %..i954, ptr %i.awc, align 4, !tbaa !58
-  %i.axc = tail call i32 @llvm.smax.i32(i32 %i.awy, i32 %i.awv)
+  %i.axc = tail call i32 @llvm.umax.i32(i32 %i.awy, i32 %i.awv)
   store i32 %i.axc, ptr %i.awf, align 4, !tbaa !58
   store i32 %i.awz, ptr %i.awi, align 4, !tbaa !58
   store i32 %i.axa, ptr %i.awl, align 4, !tbaa !58
@@ -4432,7 +4432,7 @@ bb.du:                                            ; preds = %bb.dg
   %i.bxx = trunc nuw nsw i64 %i.bxc to i32        ; 4 uses
   %..i1029 = tail call i32 @llvm.smin.i32(i32 %..i1026, i32 %i.bxx)
   store i32 %..i1029, ptr %i.bxe, align 4, !tbaa !58
-  %i.bxy = tail call i32 @llvm.smax.i32(i32 %i.bxj, i32 %i.bxx)
+  %i.bxy = tail call i32 @llvm.umax.i32(i32 %i.bxj, i32 %i.bxx)
   store i32 %i.bxy, ptr %i.bxh, align 4, !tbaa !58
   store i32 %i.bxm, ptr %i.bxk, align 4, !tbaa !58
   store i32 %i.bxp, ptr %i.bxn, align 4, !tbaa !58
@@ -4464,7 +4464,7 @@ bb.dv:                                            ; preds = %bb.du
   %i.byo = add i64 %i.bya, %indvars.iv1186
   %..i1035 = tail call i32 @llvm.smin.i32(i32 %..i1032, i32 %i.bxx)
   store i32 %..i1035, ptr %i.bxe, align 4, !tbaa !58
-  %i.byp = tail call i32 @llvm.smax.i32(i32 %i.byi, i32 %i.bxx)
+  %i.byp = tail call i32 @llvm.umax.i32(i32 %i.byi, i32 %i.bxx)
   store i32 %i.byp, ptr %i.bxh, align 4, !tbaa !58
   store i32 %i.byk, ptr %i.bxk, align 4, !tbaa !58
   store i32 %i.bym, ptr %i.bxn, align 4, !tbaa !58
@@ -4867,7 +4867,7 @@ bb.fe:                                            ; preds = %bb.er
   %i.cua = load i64, ptr %i.ctz, align 8, !tbaa !117
   %i.cub = trunc nuw nsw i64 %i.cte to i32        ; 4 uses
   %..i1101 = tail call i32 @llvm.smin.i32(i32 %..i1098, i32 %i.cub)
-  %i.cuc = tail call i32 @llvm.smax.i32(i32 %i.ctn, i32 %i.cub)
+  %i.cuc = tail call i32 @llvm.umax.i32(i32 %i.ctn, i32 %i.cub)
   %i.cud = add i64 %i.cty, %i.cte
   %..i1104 = tail call i32 @llvm.smin.i32(i32 %..i1101, i32 %i.ctk)
   %i.cue = tail call i32 @llvm.umax.i32(i32 %i.cuc, i32 %i.ctk)
@@ -4876,7 +4876,7 @@ bb.fe:                                            ; preds = %bb.er
   %i.cuh = add i64 %i.cud, %indvars.iv1198
   %..i1107 = tail call i32 @llvm.smin.i32(i32 %..i1104, i32 %i.cub)
   store i32 %..i1107, ptr %i.cti, align 4, !tbaa !58
-  %i.cui = tail call i32 @llvm.smax.i32(i32 %i.cue, i32 %i.cub)
+  %i.cui = tail call i32 @llvm.umax.i32(i32 %i.cue, i32 %i.cub)
   store i32 %i.cui, ptr %i.ctl, align 4, !tbaa !58
   store i32 %i.cuf, ptr %i.cto, align 4, !tbaa !58
   store i32 %i.cug, ptr %i.ctr, align 4, !tbaa !58

@@ -204,7 +204,7 @@ mb_buddy_adjust_border.exit35.i:                  ; preds = %bb.ag, %mb_clear_bi
   br label %bb.ah
 
 bb.ah:                                            ; preds = %mb_buddy_adjust_border.exit35.i, %bb.af
-  %.159.i = phi i32 [ %.3.i, %mb_buddy_adjust_border.exit35.i ], [ %.05879.i, %bb.af ] ; 4 uses
+  %.159.i = phi i32 [ %.3.i, %mb_buddy_adjust_border.exit35.i ], [ %.05879.i, %bb.af ] ; 6 uses
   %i.hw = icmp sgt i32 %.161.i, %.159.i
   br i1 %i.hw, label %mb_buddy_mark_free.exit, label %bb.ai
 
@@ -240,9 +240,9 @@ mb_find_buddy.exit38.i:                           ; preds = %bb.ak
   br i1 %.not23.i, label %mb_find_buddy.exit38.thread.i, label %.lr.ph.i134
 
 mb_find_buddy.exit38.thread.i:                    ; preds = %mb_find_buddy.exit38.i, %bb.ak
-  %i.il = add i32 %.159.i, 1                      ; 3 uses
-  %4 = icmp slt i32 %.161.i, %i.il
-  br i1 %4, label %.lr.ph.i.i, label %mb_clear_bits.exit.i
+  %i.il = add nsw i32 %.159.i, 1
+  %.not183 = icmp sgt i32 %.161.i, %.159.i
+  br i1 %.not183, label %mb_clear_bits.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %mb_find_buddy.exit38.thread.i
   %i.im = ptrtoint ptr %.01781.i to i64           ; 2 uses
@@ -272,8 +272,8 @@ bb.am:                                            ; preds = %bb.al
 .backedge.i.i:                                    ; preds = %bb.an, %bb.am
   %.sink.i.i = phi i32 [ 32, %bb.am ], [ 1, %bb.an ]
   %i.iy = add i32 %.sink.i.i, %.015.i.i           ; 2 uses
-  %5 = icmp slt i32 %i.iy, %i.il
-  br i1 %5, label %bb.al, label %mb_clear_bits.exit.i, !llvm.loop !3
+  %.not184 = icmp sgt i32 %i.iy, %.159.i
+  br i1 %.not184, label %mb_clear_bits.exit.i, label %bb.al, !llvm.loop !3
 
 bb.an:                                            ; preds = %bb.al
   %i.iz = add i32 %.015.i.i, %i.io

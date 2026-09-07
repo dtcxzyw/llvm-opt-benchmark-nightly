@@ -128,10 +128,9 @@ bb.m:                                             ; preds = %.split
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.f, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %.split
-  %.083 = phi i32 [ %.092146, %.split ], [ %i.al, %bb.m ], [ %i.af, %bb.g ], [ %i.ag, %bb.h ], [ %i.ah, %bb.i ], [ %i.ai, %bb.j ], [ %i.aj, %bb.k ], [ %i.ak, %bb.l ], [ %.092146, %bb.f ]
-  %.083.frozen = freeze i32 %.083                 ; 8 uses
-  %i.am = icmp ugt i32 %.083.frozen, 127          ; 3 uses
-  %or.cond = and i1 %i.g, %i.am
+  %.083 = phi i32 [ %.092146, %.split ], [ %i.al, %bb.m ], [ %i.af, %bb.g ], [ %i.ag, %bb.h ], [ %i.ah, %bb.i ], [ %i.ai, %bb.j ], [ %i.aj, %bb.k ], [ %i.ak, %bb.l ], [ %.092146, %bb.f ] ; 7 uses
+  %i.am = icmp samesign ugt i32 %.083, 127        ; 2 uses
+  %or.cond = select i1 %i.g, i1 %i.am, i1 false
   br i1 %or.cond, label %.thread127.loopexit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -145,24 +144,23 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   %i.ap = load ptr, ptr %i.x, align 8, !tbaa !23
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 256
-  %i.ar = zext nneg i32 %.083.frozen to i64
+  %i.ar = zext nneg i32 %.083 to i64
   %i.as = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.ar
   %i.at = load i8, ptr %i.as, align 1, !tbaa !22
   %i.au = zext i8 %i.at to i32                    ; 2 uses
   br i1 %or.cond6.not, label %bb.u, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.av = zext i1 %i.am to i64
+  %1 = lshr i32 %.083, 7
+  %i.av = zext nneg i32 %1 to i64
   %i.aw = getelementptr inbounds nuw [2 x i8], ptr @_pcre2_ucd_stage1_8, i64 %i.av
   %i.ax = load i16, ptr %i.aw, align 2, !tbaa !24
   %i.ay = zext i16 %i.ax to i32
   %i.az = shl nuw nsw i32 %i.ay, 7
-  %.urem = add i32 %.083.frozen, -128
-  %.cmp142 = icmp ult i32 %.083.frozen, 128
-  %1 = select i1 %.cmp142, i32 %.083.frozen, i32 %.urem
-  %2 = add nsw i32 %i.az, %1
-  %3 = sext i32 %2 to i64
-  %i.ba = getelementptr inbounds [2 x i8], ptr @_pcre2_ucd_stage2_8, i64 %3
+  %.zext143 = and i32 %.083, 127
+  %2 = or disjoint i32 %i.az, %.zext143
+  %3 = zext nneg i32 %2 to i64
+  %i.ba = getelementptr inbounds nuw [2 x i8], ptr @_pcre2_ucd_stage2_8, i64 %3
   %i.bb = load i16, ptr %i.ba, align 2, !tbaa !24
   %i.bc = zext i16 %i.bb to i64
   %i.bd = getelementptr inbounds nuw [12 x i8], ptr @_pcre2_ucd_records_8, i64 %i.bc ; 2 uses
@@ -177,7 +175,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bd, i64 4
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !26
-  %i.bi = add nsw i32 %i.bh, %.083.frozen
+  %i.bi = add nsw i32 %i.bh, %.083
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.q, %bb.t, %bb.s
@@ -187,8 +185,8 @@ bb.u:                                             ; preds = %bb.q, %bb.t, %bb.s
   br i1 %cond.fr, label %.thread121, label %.thread127.loopexit
 
 .thread121:                                       ; preds = %bb.u, %bb.o, %bb.d
-  %.5126 = phi i32 [ %.086149, %bb.d ], [ %.083.frozen, %bb.u ], [ %.086149, %bb.o ] ; 4 uses
-  %.491125 = phi i32 [ %.087148, %bb.d ], [ %.087148, %bb.u ], [ %.083.frozen, %bb.o ] ; 4 uses
+  %.5126 = phi i32 [ %.086149, %bb.d ], [ %.083, %bb.u ], [ %.086149, %bb.o ] ; 4 uses
+  %.491125 = phi i32 [ %.087148, %bb.d ], [ %.087148, %bb.u ], [ %.083, %bb.o ] ; 4 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.085150, i64 1
   %i.bk = add nuw nsw i32 %.092146, 8
   %i.bl = icmp samesign ult i32 %.092146, 248

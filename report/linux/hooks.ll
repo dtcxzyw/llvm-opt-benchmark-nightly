@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.g
 
 file_to_av.exit:                                  ; preds = %backing_inode_security.exit, %bb.h, %bb.i
   %.1.i = phi i32 [ %i.aq, %bb.h ], [ %i.ar, %bb.i ], [ %spec.select.i, %backing_inode_security.exit ]
-  %spec.store.select.i = call range(i32 1, 516) i32 @llvm.umax.i32(i32 %.1.i, i32 1)
+  %spec.store.select.i = call range(i32 1, 515) i32 @llvm.umax.i32(i32 %.1.i, i32 1)
   %i.as = call i32 @avc_has_perm(i32 noundef %i.f, i32 noundef %i.ag, i16 noundef zeroext %i.ai, i32 noundef %spec.store.select.i, ptr noundef nonnull %3) #25
   br label %bb.j
 
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %bb.b
 
 file_to_av.exit:                                  ; preds = %bb.a, %bb.c, %bb.d
   %.1.i = phi i32 [ %i.l, %bb.c ], [ %i.m, %bb.d ], [ %spec.select.i, %bb.a ]
-  %spec.store.select.i = tail call range(i32 1, 516) i32 @llvm.umax.i32(i32 %.1.i, i32 1)
+  %spec.store.select.i = tail call range(i32 1, 515) i32 @llvm.umax.i32(i32 %.1.i, i32 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %1, i8 0, i64 32, i1 false), !annotation !10
   %i.n = getelementptr i8, ptr %i.d, i64 128      ; 2 uses
@@ -740,7 +740,7 @@ bb.f:                                             ; preds = %bb.d
 
 file_to_av.exit.i:                                ; preds = %bb.f, %bb.e, %inode_security.exit
   %.1.i.i = phi i32 [ %i.ae, %bb.e ], [ %i.af, %bb.f ], [ %spec.select.i.i, %inode_security.exit ]
-  %spec.store.select.i.i = tail call range(i32 1, 516) i32 @llvm.umax.i32(i32 %.1.i.i, i32 1) ; 3 uses
+  %spec.store.select.i.i = tail call range(i32 1, 515) i32 @llvm.umax.i32(i32 %.1.i.i, i32 1) ; 3 uses
   %.val.i9 = load ptr, ptr %i.e, align 8          ; 3 uses
   %i.ag = load volatile i8, ptr getelementptr inbounds nuw (i8, ptr @selinux_state, i64 3), align 1, !range !13, !noundef !14
   %i.ah = trunc nuw i8 %i.ag to i1
@@ -1143,7 +1143,7 @@ bb.d:                                             ; preds = %bb.b
 
 file_to_av.exit:                                  ; preds = %bb.a, %bb.c, %bb.d
   %.1.i = phi i32 [ %i.h, %bb.c ], [ %i.i, %bb.d ], [ %spec.select.i, %bb.a ]
-  %spec.store.select.i = tail call range(i32 1, 516) i32 @llvm.umax.i32(i32 %.1.i, i32 1)
+  %spec.store.select.i = tail call range(i32 1, 515) i32 @llvm.umax.i32(i32 %.1.i, i32 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, i8 0, i64 32, i1 false), !annotation !10
   %i.j = getelementptr i8, ptr %0, i64 128        ; 2 uses

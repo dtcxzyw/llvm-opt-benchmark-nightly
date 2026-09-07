@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.j
 bb.m:                                             ; preds = %bb.l
   %i.ba = shl i8 %.0.i, 4
   %i.bb = or disjoint i8 %i.ba, 10
-  %i.bc = add i8 %i.bb, %i.az
+  %i.bc = add nuw i8 %i.bb, %i.az
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.l
@@ -216,7 +216,7 @@ bb.n:                                             ; preds = %bb.l
 bb.o:                                             ; preds = %bb.n
   %i.be = shl i8 %.0.i, 4
   %i.bf = or disjoint i8 %i.be, 10
-  %i.bg = add i8 %i.bf, %i.bd
+  %i.bg = add nuw i8 %i.bf, %i.bd
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.m, %bb.k

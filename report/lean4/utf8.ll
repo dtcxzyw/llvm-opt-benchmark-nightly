@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define noundef range(i32 0, 1114112) i32 @_ZN4lean9next_utf8EPKcmRm(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %2) local_unnamed_addr #7 {
+define noundef range(i32 0, 1118207) i32 @_ZN4lean9next_utf8EPKcmRm(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %2) local_unnamed_addr #7 {
 bb.a:
   %i.a = load i64, ptr %2, align 8, !tbaa !20     ; 5 uses
   %i.b = getelementptr i8, ptr %0, i64 %i.a       ; 4 uses
@@ -314,7 +314,7 @@ bb.k:                                             ; preds = %bb.j
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define noundef range(i32 0, 1114112) i32 @_ZN4lean9next_utf8ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERm(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %1) local_unnamed_addr #8 personality ptr @__gxx_personality_v0 {
+define noundef range(i32 0, 1118207) i32 @_ZN4lean9next_utf8ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERm(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) %1) local_unnamed_addr #8 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !17
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -346,7 +346,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.g = phi ptr [ %.pre4, %.lr.ph ], [ %i.af, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit ] ; 3 uses
   %i.h = phi ptr [ %.pre, %.lr.ph ], [ %i.ag, %_ZNSt6vectorIjSaIjEE9push_backEOj.exit ] ; 3 uses
   %i.i = load ptr, ptr %0, align 8, !tbaa !17
-  %i.j = call noundef range(i32 0, 1114112) i32 @_ZN4lean9next_utf8EPKcmRm(ptr noundef %i.i, i64 noundef %i.f, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 2 uses
+  %i.j = call noundef range(i32 0, 1118207) i32 @_ZN4lean9next_utf8EPKcmRm(ptr noundef %i.i, i64 noundef %i.f, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 2 uses
   %.not.i.i = icmp eq ptr %i.h, %i.g
   br i1 %.not.i.i, label %bb.d, label %bb.c
 

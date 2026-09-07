@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define i64 @_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBM_5posix11OffsetErrorE7map_errNtB1v_14ParseErrorKindNcNtB22_9OffsetDst0EBO_(i64 %0) unnamed_addr #0 {
+define range(i64 0, -254) i64 @_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBM_5posix11OffsetErrorE7map_errNtB1v_14ParseErrorKindNcNtB22_9OffsetDst0EBO_(i64 %0) unnamed_addr #0 {
 bb.a:
   %i.a = trunc i64 %0 to i1
   br i1 %i.a, label %bb.b, label %bb.c
@@ -234,7 +234,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define i64 @_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBM_5posix11OffsetErrorE7map_errNtB1v_14ParseErrorKindNcNtB22_9OffsetStd0EBO_(i64 %0) unnamed_addr #0 {
+define range(i64 0, -254) i64 @_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBM_5posix11OffsetErrorE7map_errNtB1v_14ParseErrorKindNcNtB22_9OffsetStd0EBO_(i64 %0) unnamed_addr #0 {
 bb.a:
   %i.a = trunc i64 %0 to i1
   br i1 %i.a, label %bb.b, label %bb.c
@@ -637,7 +637,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden range(i64 2, 16777216) i64 @_RNcNtNtNtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parser14ParseErrorKind8Header320Bb_(i8 %0, i8 %1) unnamed_addr #2 {
+define hidden range(i64 2, 16776963) i64 @_RNcNtNtNtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parser14ParseErrorKind8Header320Bb_(i8 %0, i8 %1) unnamed_addr #2 {
 bb.a:
   %.sroa.3.0.insert.ext = zext i8 %1 to i64
   %.sroa.3.0.insert.shift = shl nuw nsw i64 %.sroa.3.0.insert.ext, 16
@@ -649,7 +649,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden range(i64 3, 16777216) i64 @_RNcNtNtNtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parser14ParseErrorKind8Header640Bb_(i8 %0, i8 %1) unnamed_addr #2 {
+define hidden range(i64 3, 16776964) i64 @_RNcNtNtNtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parser14ParseErrorKind8Header640Bb_(i8 %0, i8 %1) unnamed_addr #2 {
 bb.a:
   %.sroa.3.0.insert.ext = zext i8 %1 to i64
   %.sroa.3.0.insert.shift = shl nuw nsw i64 %.sroa.3.0.insert.ext, 16
@@ -1052,7 +1052,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i64 1, 16777216) i64 @_RNvXs5_NtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parserNtB5_10ParseErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_11HeaderErrorE4from(i8 %0, i8 %1) unnamed_addr #6 {
+define range(i64 1, 16776962) i64 @_RNvXs5_NtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parserNtB5_10ParseErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_11HeaderErrorE4from(i8 %0, i8 %1) unnamed_addr #6 {
 bb.a:
   %.sroa.34.0.insert.ext = zext i8 %1 to i64
   %.sroa.34.0.insert.shift = shl nuw nsw i64 %.sroa.34.0.insert.ext, 16
@@ -1072,7 +1072,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i64 4, 65288) i64 @_RNvXs7_NtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parserNtB5_10ParseErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_30InconsistentPosixTimeZoneErrorE4from(i8 %0) unnamed_addr #6 {
+define range(i64 4, 65285) i64 @_RNvXs7_NtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parserNtB5_10ParseErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_30InconsistentPosixTimeZoneErrorE4from(i8 %0) unnamed_addr #6 {
 bb.a:
   %.sroa.23.0.insert.ext = zext i8 %0 to i64
   %.sroa.23.0.insert.shift = shl nuw nsw i64 %.sroa.23.0.insert.ext, 8
@@ -1081,7 +1081,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i64 5, 65288) i64 @_RNvXs8_NtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parserNtB5_10ParseErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_14IndicatorErrorE4from(i8 %0) unnamed_addr #6 {
+define range(i64 5, 65286) i64 @_RNvXs8_NtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parserNtB5_10ParseErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_14IndicatorErrorE4from(i8 %0) unnamed_addr #6 {
 bb.a:
   %.sroa.23.0.insert.ext = zext i8 %0 to i64
   %.sroa.23.0.insert.shift = shl nuw nsw i64 %.sroa.23.0.insert.ext, 8
@@ -1090,7 +1090,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i64 6, -4294967288) i64 @_RNvXs9_NtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parserNtB5_10ParseErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_18LocalTimeTypeErrorE4from(i32 %0) unnamed_addr #6 {
+define range(i64 6, -4294967289) i64 @_RNvXs9_NtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parserNtB5_10ParseErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_18LocalTimeTypeErrorE4from(i32 %0) unnamed_addr #6 {
 bb.a:
   %.sroa.3.0.insert.ext = zext i32 %0 to i64
   %.sroa.3.0.insert.shift = shl nuw i64 %.sroa.3.0.insert.ext, 32
@@ -1108,7 +1108,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i64 8, 65296) i64 @_RNvXsb_NtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parserNtB5_10ParseErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_23TimeZoneDesignatorErrorE4from(i8 %0) unnamed_addr #6 {
+define range(i64 8, 65289) i64 @_RNvXsb_NtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parserNtB5_10ParseErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_23TimeZoneDesignatorErrorE4from(i8 %0) unnamed_addr #6 {
 bb.a:
   %.sroa.23.0.insert.ext = zext i8 %0 to i64
   %.sroa.23.0.insert.shift = shl nuw nsw i64 %.sroa.23.0.insert.ext, 8
@@ -1117,7 +1117,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i64 9, 65296) i64 @_RNvXsc_NtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parserNtB5_10ParseErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_19TransitionTypeErrorE4from(i8 %0) unnamed_addr #6 {
+define range(i64 9, 65290) i64 @_RNvXsc_NtNtNtCsaR3IayqLkK5_9jiff_core2tz4tzif6parserNtB5_10ParseErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_19TransitionTypeErrorE4from(i8 %0) unnamed_addr #6 {
 bb.a:
   %.sroa.23.0.insert.ext = zext i8 %0 to i64
   %.sroa.23.0.insert.shift = shl nuw nsw i64 %.sroa.23.0.insert.ext, 8
@@ -1520,7 +1520,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define i64 @_RNvXsp_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBO_5posix14ParseErrorKindENtNtNtB7_3ops9try_trait3Try6branchBQ_(i64 %0) unnamed_addr #2 {
+define range(i64 0, -254) i64 @_RNvXsp_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBO_5posix14ParseErrorKindENtNtNtB7_3ops9try_trait3Try6branchBQ_(i64 %0) unnamed_addr #2 {
 bb.a:
   %i.a = trunc i64 %0 to i1
   %.sroa.04.014 = select i1 %i.a, i64 1099511627521, i64 -255
@@ -1923,7 +1923,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define range(i64 1, 16777216) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz5posix19TransitionCivilTimeNtBM_9TimeErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtBM_11MinuteErrorEE13from_residualBQ_(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define range(i64 1, 16776962) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz5posix19TransitionCivilTimeNtBM_9TimeErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtBM_11MinuteErrorEE13from_residualBQ_(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { i8, i8 } @_RNvXsy_NtNtCsaR3IayqLkK5_9jiff_core2tz5posixNtB5_9TimeErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_11MinuteErrorE4from(i8 %0) ; 2 uses
   %i.b = extractvalue { i8, i8 } %i.a, 0
@@ -1938,7 +1938,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define range(i64 1, 16777216) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz5posix19TransitionCivilTimeNtBM_9TimeErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtBM_11SecondErrorEE13from_residualBQ_(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define range(i64 1, 16776962) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz5posix19TransitionCivilTimeNtBM_9TimeErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtBM_11SecondErrorEE13from_residualBQ_(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { i8, i8 } @_RNvXsA_NtNtCsaR3IayqLkK5_9jiff_core2tz5posixNtB5_9TimeErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_11SecondErrorE4from(i8 %0) ; 2 uses
   %i.b = extractvalue { i8, i8 } %i.a, 0
@@ -1953,7 +1953,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define range(i64 1, 16777216) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz5posix19TransitionCivilTimeNtBM_9TimeErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtBM_13HourIanaErrorEE13from_residualBQ_(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define range(i64 1, 16776962) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz5posix19TransitionCivilTimeNtBM_9TimeErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtBM_13HourIanaErrorEE13from_residualBQ_(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { i8, i8 } @_RNvXsw_NtNtCsaR3IayqLkK5_9jiff_core2tz5posixNtB5_9TimeErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_13HourIanaErrorE4from(i8 %0) ; 2 uses
   %i.b = extractvalue { i8, i8 } %i.a, 0
@@ -1968,7 +1968,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define range(i64 1, 16777216) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz5posix19TransitionCivilTimeNtBM_9TimeErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtBM_14HourPosixErrorEE13from_residualBQ_(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define range(i64 1, 16776962) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz5posix19TransitionCivilTimeNtBM_9TimeErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtBM_14HourPosixErrorEE13from_residualBQ_(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { i8, i8 } @_RNvXsx_NtNtCsaR3IayqLkK5_9jiff_core2tz5posixNtB5_9TimeErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_14HourPosixErrorE4from(i8 %0) ; 2 uses
   %i.b = extractvalue { i8, i8 } %i.a, 0
@@ -1983,7 +1983,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define range(i64 1, 16777216) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz5posix19TransitionCivilTimeNtBM_9TimeErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtBM_17OptionalSignErrorEE13from_residualBQ_(i1 zeroext %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define range(i64 1, 16776962) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz5posix19TransitionCivilTimeNtBM_9TimeErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtBM_17OptionalSignErrorEE13from_residualBQ_(i1 zeroext %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { i8, i8 } @_RNvXsz_NtNtCsaR3IayqLkK5_9jiff_core2tz5posixNtB5_9TimeErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_17OptionalSignErrorE4from(i1 zeroext %0) ; 2 uses
   %i.b = extractvalue { i8, i8 } %i.a, 0
@@ -2086,7 +2086,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define range(i64 1, 16777216) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBO_5posix11OffsetErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtB1x_11MinuteErrorEE13from_residualBQ_(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define range(i64 1, 16776962) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBO_5posix11OffsetErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtB1x_11MinuteErrorEE13from_residualBQ_(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { i8, i8 } @_RNvXsb_NtNtCsaR3IayqLkK5_9jiff_core2tz5posixNtB5_11OffsetErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_11MinuteErrorE4from(i8 %0) ; 2 uses
   %i.b = extractvalue { i8, i8 } %i.a, 0
@@ -2101,7 +2101,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define range(i64 1, 16777216) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBO_5posix11OffsetErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtB1x_11SecondErrorEE13from_residualBQ_(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define range(i64 1, 16776962) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBO_5posix11OffsetErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtB1x_11SecondErrorEE13from_residualBQ_(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { i8, i8 } @_RNvXsd_NtNtCsaR3IayqLkK5_9jiff_core2tz5posixNtB5_11OffsetErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_11SecondErrorE4from(i8 %0) ; 2 uses
   %i.b = extractvalue { i8, i8 } %i.a, 0
@@ -2116,7 +2116,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define range(i64 1, 16777216) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBO_5posix11OffsetErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtB1x_14HourPosixErrorEE13from_residualBQ_(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define range(i64 1, 16776962) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBO_5posix11OffsetErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtB1x_14HourPosixErrorEE13from_residualBQ_(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { i8, i8 } @_RNvXsa_NtNtCsaR3IayqLkK5_9jiff_core2tz5posixNtB5_11OffsetErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_14HourPosixErrorE4from(i8 %0) ; 2 uses
   %i.b = extractvalue { i8, i8 } %i.a, 0
@@ -2131,7 +2131,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define range(i64 1, 16777216) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBO_5posix11OffsetErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtB1x_17OptionalSignErrorEE13from_residualBQ_(i1 zeroext %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
+define range(i64 1, 16776962) i64 @_RNvXsq_NtCs3oUPovFnLWP_4core6resultINtB5_6ResultNtNtNtCsaR3IayqLkK5_9jiff_core2tz6offset6OffsetNtNtBO_5posix11OffsetErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_zNtB1x_17OptionalSignErrorEE13from_residualBQ_(i1 zeroext %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = tail call { i8, i8 } @_RNvXsc_NtNtCsaR3IayqLkK5_9jiff_core2tz5posixNtB5_11OffsetErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_17OptionalSignErrorE4from(i1 zeroext %0) ; 2 uses
   %i.b = extractvalue { i8, i8 } %i.a, 0

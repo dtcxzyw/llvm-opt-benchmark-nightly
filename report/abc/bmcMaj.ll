@@ -206,8 +206,8 @@ bb.ad:                                            ; preds = %.lr.ph.i73.i
   %i.qd = trunc i64 %.424.i.i.i to i32
   %i.qe = and i32 %i.qd, 1
   %i.qf = xor i32 %i.qe, 1
-  %.5.i.i.i = add i32 %.4.i.i.i, %i.pi
-  %i.qg = add i32 %.5.i.i.i, %i.qf                ; 2 uses
+  %.5.i.i.i = add nuw i32 %.4.i.i.i, %i.pi
+  %i.qg = add nuw i32 %.5.i.i.i, %i.qf            ; 2 uses
   store i32 %i.qg, ptr %i.c, align 4, !tbaa !54
   %i.qh = add nuw nsw i32 %.043134, 1
   %.not47 = icmp eq i32 %i.qg, -1
@@ -610,8 +610,8 @@ Exa3_ManEval.exit:                                ; preds = %.lr.ph.i84.i
   %i.bbe = trunc i64 %.424.i.i.i to i32
   %i.bbf = and i32 %i.bbe, 1
   %i.bbg = xor i32 %i.bbf, 1
-  %.5.i.i.i = add i32 %.4.i.i.i, %i.baj
-  %i.bbh = add i32 %.5.i.i.i, %i.bbg              ; 2 uses
+  %.5.i.i.i = add nuw i32 %.4.i.i.i, %i.baj
+  %i.bbh = add nuw i32 %.5.i.i.i, %i.bbg          ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #41
   %i.bbi = add nuw nsw i32 %.087401, 1            ; 2 uses
   %.not100 = icmp eq i32 %i.bbh, -1

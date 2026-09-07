@@ -200,7 +200,7 @@ bb.b:                                             ; preds = %bb.a, %bb.d
   %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv17
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.c
+bb.c:                                             ; preds = %bb.c, %bb.b
   %indvars.iv = phi i64 [ 0, %bb.b ], [ %indvars.iv.next, %bb.c ] ; 2 uses
   %gep = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv
   %i.d = load i64, ptr %gep, align 8

@@ -204,8 +204,8 @@ bb.g:                                             ; preds = %.preheader
   %i.be = trunc i64 %.4 to i32
   %i.bf = and i32 %i.be, 1
   %i.bg = shl i32 %.059, 6
-  %.5 = add i32 %.458, %i.bg
-  %i.bh = add i32 %.5, %i.bf
+  %.5 = add nuw i32 %.458, %i.bg
+  %i.bh = add nuw i32 %.5, %i.bf
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
@@ -511,8 +511,8 @@ bb.p:                                             ; preds = %.preheader
   %i.bw = trunc i64 %.4 to i32
   %i.bx = and i32 %i.bw, 1
   %i.by = shl i32 %.073, 6
-  %.5 = add i32 %.472, %i.by
-  %i.bz = add i32 %.5, %i.bx
+  %.5 = add nuw i32 %.472, %i.by
+  %i.bz = add nuw i32 %.5, %i.bx
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
@@ -656,8 +656,8 @@ bb.i:                                             ; preds = %.preheader
   %i.bi = trunc i64 %.4 to i32
   %i.bj = and i32 %i.bi, 1
   %i.bk = shl i32 %.064, 6
-  %.5 = add i32 %.463, %i.bk
-  %i.bl = add i32 %.5, %i.bj
+  %.5 = add nuw i32 %.463, %i.bk
+  %i.bl = add nuw i32 %.5, %i.bj
   store i32 %i.bl, ptr %i.ah, align 8, !tbaa !26
   br label %bb.k
 

@@ -205,7 +205,7 @@ bb.fv:                                            ; preds = %bb.fs
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define noundef range(i64 0, 3298534883328) i64 @_RNvMNtCsf8MNnN4IDbl_8iced_x867encoderNtB2_7Encoder20get_constant_offsets(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(152) %0) unnamed_addr #11 {
+define noundef range(i64 0, 3294390847744) i64 @_RNvMNtCsf8MNnN4IDbl_8iced_x867encoderNtB2_7Encoder20get_constant_offsets(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(152) %0) unnamed_addr #11 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 148
   %i.b = load i8, ptr %i.a, align 4, !range !41, !noundef !21
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc range(i48 8589934592, 21196200476672) i48 @_RNvMNtNtCsf8MNnN4IDbl_8iced_x867decoder8table_deNtB2_17TableDeserializer10read_code3(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(80) %0) unnamed_addr #3 {
+define internal fastcc range(i48 8590000128, 21195986968576) i48 @_RNvMNtNtCsf8MNnN4IDbl_8iced_x867decoder8table_deNtB2_17TableDeserializer10read_code3(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(80) %0) unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56
