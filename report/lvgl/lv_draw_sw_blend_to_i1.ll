@@ -202,7 +202,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.hv = sub nsw i32 7, %i.hu                    ; 2 uses
   %i.hw = lshr i32 %i.ht, %i.hv
   %i.hx = trunc nuw i32 %i.hw to i8
-  %i.hy = and i8 %i.hx, 1
+  %i.hy = and i8 %i.hx, 1                         ; 2 uses
   %narrow.i.i = sub nsw i8 0, %i.hy               ; 6 uses
   switch i32 %i.hj, label %blend_non_normal_pixel.exit.i [
     i32 1, label %bb.q
@@ -212,7 +212,9 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   ]
 
 bb.q:                                             ; preds = %bb.p
-  %1 = tail call i8 @llvm.uadd.sat.i8(i8 %narrow.i.i, i8 %i.hn)
+  %uadd.i.i = sub i8 %i.hn, %i.hy                 ; 2 uses
+  %uadd.overflow.i.i = icmp ult i8 %uadd.i.i, %narrow.i.i
+  %narrow16.i.i = select i1 %uadd.overflow.i.i, i8 -1, i8 %uadd.i.i
   br label %bb.u
 
 bb.r:                                             ; preds = %bb.p
@@ -234,7 +236,7 @@ bb.t:                                             ; preds = %bb.p
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r, %bb.q
-  %.0.i.i = phi i8 [ %1, %bb.q ], [ %i.hz, %bb.r ], [ %i.id, %bb.s ], [ %i.ih, %bb.t ] ; 2 uses
+  %.0.i.i = phi i8 [ %narrow16.i.i, %bb.q ], [ %i.hz, %bb.r ], [ %i.id, %bb.s ], [ %i.ih, %bb.t ] ; 2 uses
   %i.ii = icmp eq i8 %.sroa.6.0.i, 0
   br i1 %i.ii, label %lv_color_8_8_mix.exit.i.i, label %bb.v
 
@@ -637,7 +639,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   %i.sb = sub nsw i32 7, %i.sa                    ; 2 uses
   %i.sc = lshr i32 %i.rz, %i.sb
   %i.sd = trunc nuw i32 %i.sc to i8
-  %i.se = and i8 %i.sd, 1
+  %i.se = and i8 %i.sd, 1                         ; 2 uses
   %narrow.i.i20 = sub nsw i8 0, %i.se             ; 6 uses
   switch i32 %i.rp, label %blend_non_normal_pixel.exit.i24 [
     i32 1, label %bb.am
@@ -647,7 +649,9 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   ]
 
 bb.am:                                            ; preds = %bb.al
-  %2 = tail call i8 @llvm.uadd.sat.i8(i8 %narrow.i.i20, i8 %i.rt)
+  %uadd.i.i28 = sub i8 %i.rt, %i.se               ; 2 uses
+  %uadd.overflow.i.i29 = icmp ult i8 %uadd.i.i28, %narrow.i.i20
+  %narrow16.i.i30 = select i1 %uadd.overflow.i.i29, i8 -1, i8 %uadd.i.i28
   br label %bb.aq
 
 bb.an:                                            ; preds = %bb.al
@@ -669,7 +673,7 @@ bb.ap:                                            ; preds = %bb.al
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao, %bb.an, %bb.am
-  %.0.i.i21 = phi i8 [ %2, %bb.am ], [ %i.sf, %bb.an ], [ %i.sj, %bb.ao ], [ %i.sn, %bb.ap ] ; 2 uses
+  %.0.i.i21 = phi i8 [ %narrow16.i.i30, %bb.am ], [ %i.sf, %bb.an ], [ %i.sj, %bb.ao ], [ %i.sn, %bb.ap ] ; 2 uses
   %i.so = icmp eq i8 %.sroa.6.0.i16, 0
   br i1 %i.so, label %lv_color_8_8_mix.exit.i.i22, label %bb.ar
 
@@ -1072,7 +1076,7 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm
   %i.aco = sub nsw i32 7, %i.acn                  ; 2 uses
   %i.acp = lshr i32 %i.acm, %i.aco
   %i.acq = trunc nuw i32 %i.acp to i8
-  %i.acr = and i8 %i.acq, 1
+  %i.acr = and i8 %i.acq, 1                       ; 2 uses
   %narrow.i.i63 = sub nsw i8 0, %i.acr            ; 6 uses
   switch i32 %i.acd, label %blend_non_normal_pixel.exit.i67 [
     i32 1, label %bb.bp
@@ -1082,7 +1086,9 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm
   ]
 
 bb.bp:                                            ; preds = %bb.bo
-  %3 = tail call i8 @llvm.uadd.sat.i8(i8 %narrow.i.i63, i8 %i.ace)
+  %uadd.i.i74 = sub i8 %i.ace, %i.acr             ; 2 uses
+  %uadd.overflow.i.i75 = icmp ult i8 %uadd.i.i74, %narrow.i.i63
+  %narrow16.i.i76 = select i1 %uadd.overflow.i.i75, i8 -1, i8 %uadd.i.i74
   br label %bb.bt
 
 bb.bq:                                            ; preds = %bb.bo
@@ -1104,7 +1110,7 @@ bb.bs:                                            ; preds = %bb.bo
   br label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs, %bb.br, %bb.bq, %bb.bp
-  %.0.i.i64 = phi i8 [ %3, %bb.bp ], [ %i.acs, %bb.bq ], [ %i.acw, %bb.br ], [ %i.ada, %bb.bs ] ; 2 uses
+  %.0.i.i64 = phi i8 [ %narrow16.i.i76, %bb.bp ], [ %i.acs, %bb.bq ], [ %i.acw, %bb.br ], [ %i.ada, %bb.bs ] ; 2 uses
   %i.adb = icmp eq i32 %.sroa.4.0.i, 0
   br i1 %i.adb, label %lv_color_8_8_mix.exit.i.i65, label %bb.bu
 
@@ -1507,7 +1513,7 @@ bb.ck:                                            ; preds = %bb.cj, %bb.ci
   %i.aly = sub nsw i32 7, %i.alx                  ; 2 uses
   %i.alz = lshr i32 %i.alw, %i.aly
   %i.ama = trunc nuw i32 %i.alz to i8
-  %i.amb = and i8 %i.ama, 1
+  %i.amb = and i8 %i.ama, 1                       ; 2 uses
   %narrow.i.i110 = sub nsw i8 0, %i.amb           ; 6 uses
   switch i32 %i.alm, label %blend_non_normal_pixel.exit.i114 [
     i32 1, label %bb.cl
@@ -1517,7 +1523,9 @@ bb.ck:                                            ; preds = %bb.cj, %bb.ci
   ]
 
 bb.cl:                                            ; preds = %bb.ck
-  %4 = tail call i8 @llvm.uadd.sat.i8(i8 %narrow.i.i110, i8 %i.alo)
+  %uadd.i.i124 = sub i8 %i.alo, %i.amb            ; 2 uses
+  %uadd.overflow.i.i125 = icmp ult i8 %uadd.i.i124, %narrow.i.i110
+  %narrow16.i.i126 = select i1 %uadd.overflow.i.i125, i8 -1, i8 %uadd.i.i124
   br label %bb.cp
 
 bb.cm:                                            ; preds = %bb.ck
@@ -1539,7 +1547,7 @@ bb.co:                                            ; preds = %bb.ck
   br label %bb.cp
 
 bb.cp:                                            ; preds = %bb.co, %bb.cn, %bb.cm, %bb.cl
-  %.0.i.i111 = phi i8 [ %4, %bb.cl ], [ %i.amc, %bb.cm ], [ %i.amg, %bb.cn ], [ %i.amk, %bb.co ] ; 2 uses
+  %.0.i.i111 = phi i8 [ %narrow16.i.i126, %bb.cl ], [ %i.amc, %bb.cm ], [ %i.amg, %bb.cn ], [ %i.amk, %bb.co ] ; 2 uses
   %i.aml = icmp eq i8 %.sroa.6.0.i103, 0
   br i1 %i.aml, label %lv_color_8_8_mix.exit.i.i112, label %bb.cq
 
@@ -1942,7 +1950,7 @@ bb.dm:                                            ; preds = %bb.dl, %bb.dk
   %i.awg = sub nsw i32 7, %i.awf                  ; 2 uses
   %i.awh = lshr i32 %i.awe, %i.awg
   %i.awi = trunc nuw i32 %i.awh to i8
-  %i.awj = and i8 %i.awi, 1
+  %i.awj = and i8 %i.awi, 1                       ; 2 uses
   %narrow.i.i153 = sub nsw i8 0, %i.awj           ; 6 uses
   switch i32 %i.avw, label %blend_non_normal_pixel.exit.i157 [
     i32 1, label %bb.dn
@@ -1952,7 +1960,9 @@ bb.dm:                                            ; preds = %bb.dl, %bb.dk
   ]
 
 bb.dn:                                            ; preds = %bb.dm
-  %5 = tail call i8 @llvm.uadd.sat.i8(i8 %narrow.i.i153, i8 %i.avy)
+  %uadd.i.i170 = sub i8 %i.avy, %i.awj            ; 2 uses
+  %uadd.overflow.i.i171 = icmp ult i8 %uadd.i.i170, %narrow.i.i153
+  %narrow16.i.i172 = select i1 %uadd.overflow.i.i171, i8 -1, i8 %uadd.i.i170
   br label %bb.dr
 
 bb.do:                                            ; preds = %bb.dm
@@ -1974,7 +1984,7 @@ bb.dq:                                            ; preds = %bb.dm
   br label %bb.dr
 
 bb.dr:                                            ; preds = %bb.dq, %bb.dp, %bb.do, %bb.dn
-  %.0.i.i154 = phi i8 [ %5, %bb.dn ], [ %i.awk, %bb.do ], [ %i.awo, %bb.dp ], [ %i.aws, %bb.dq ] ; 2 uses
+  %.0.i.i154 = phi i8 [ %narrow16.i.i172, %bb.dn ], [ %i.awk, %bb.do ], [ %i.awo, %bb.dp ], [ %i.aws, %bb.dq ] ; 2 uses
   %i.awt = icmp eq i32 %.sroa.6.0.i145, 0
   br i1 %i.awt, label %lv_color_8_8_mix.exit.i.i155, label %bb.ds
 
@@ -2377,7 +2387,7 @@ bb.eg:                                            ; preds = %bb.ef, %bb.ee
   %i.bfk = sub nsw i32 7, %i.bfj                  ; 2 uses
   %i.bfl = lshr i32 %i.bfi, %i.bfk
   %i.bfm = trunc nuw i32 %i.bfl to i8
-  %i.bfn = and i8 %i.bfm, 1
+  %i.bfn = and i8 %i.bfm, 1                       ; 2 uses
   %narrow.i.i189 = sub nsw i8 0, %i.bfn           ; 6 uses
   switch i32 %i.bew, label %blend_non_normal_pixel.exit.i193 [
     i32 1, label %bb.eh
@@ -2387,7 +2397,9 @@ bb.eg:                                            ; preds = %bb.ef, %bb.ee
   ]
 
 bb.eh:                                            ; preds = %bb.eg
-  %6 = tail call i8 @llvm.uadd.sat.i8(i8 %narrow.i.i189, i8 %i.bfb)
+  %uadd.i.i210 = sub i8 %i.bfb, %i.bfn            ; 2 uses
+  %uadd.overflow.i.i211 = icmp ult i8 %uadd.i.i210, %narrow.i.i189
+  %narrow16.i.i212 = select i1 %uadd.overflow.i.i211, i8 -1, i8 %uadd.i.i210
   br label %bb.el
 
 bb.ei:                                            ; preds = %bb.eg
@@ -2409,7 +2421,7 @@ bb.ek:                                            ; preds = %bb.eg
   br label %bb.el
 
 bb.el:                                            ; preds = %bb.ek, %bb.ej, %bb.ei, %bb.eh
-  %.0.i.i190 = phi i8 [ %6, %bb.eh ], [ %i.bfo, %bb.ei ], [ %i.bfs, %bb.ej ], [ %i.bfw, %bb.ek ] ; 2 uses
+  %.0.i.i190 = phi i8 [ %narrow16.i.i212, %bb.eh ], [ %i.bfo, %bb.ei ], [ %i.bfs, %bb.ej ], [ %i.bfw, %bb.ek ] ; 2 uses
   %i.bfx = icmp eq i8 %.sroa.8.0.i, 0
   br i1 %i.bfx, label %lv_color_8_8_mix.exit.i.i191, label %bb.em
 
@@ -2812,7 +2824,7 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   %i.hs = sub nsw i32 7, %i.hr                    ; 2 uses
   %i.ht = lshr i32 %i.hq, %i.hs
   %i.hu = trunc nuw i32 %i.ht to i8
-  %i.hv = and i8 %i.hu, 1
+  %i.hv = and i8 %i.hu, 1                         ; 2 uses
   %narrow.i = sub nsw i8 0, %i.hv                 ; 6 uses
   switch i32 %i.hh, label %blend_non_normal_pixel.exit [
     i32 1, label %bb.p
@@ -2822,7 +2834,9 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   ]
 
 bb.p:                                             ; preds = %bb.o
-  %2 = tail call i8 @llvm.uadd.sat.i8(i8 %narrow.i, i8 %i.hi)
+  %uadd.i = sub i8 %i.hi, %i.hv                   ; 2 uses
+  %uadd.overflow.i = icmp ult i8 %uadd.i, %narrow.i
+  %narrow16.i = select i1 %uadd.overflow.i, i8 -1, i8 %uadd.i
   br label %bb.t
 
 bb.q:                                             ; preds = %bb.o
@@ -2844,7 +2858,7 @@ bb.s:                                             ; preds = %bb.o
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q, %bb.p
-  %.0.i = phi i8 [ %2, %bb.p ], [ %i.hw, %bb.q ], [ %i.ia, %bb.r ], [ %i.ie, %bb.s ] ; 2 uses
+  %.0.i = phi i8 [ %narrow16.i, %bb.p ], [ %i.hw, %bb.q ], [ %i.ia, %bb.r ], [ %i.ie, %bb.s ] ; 2 uses
   %i.if = icmp eq i32 %.sroa.6.0, 0
   br i1 %i.if, label %lv_color_8_8_mix.exit.i, label %bb.u
 
@@ -2902,9 +2916,6 @@ declare zeroext i8 @lv_color16_luminance(i16) local_unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.usub.sat.i8(i8, i8) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.uadd.sat.i8(i8, i8) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.bswap.i16(i16) #2

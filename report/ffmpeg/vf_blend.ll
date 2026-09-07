@@ -204,15 +204,14 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 vector.body:                                      ; preds = %vector.main.loop.iter.check, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.main.loop.iter.check ] ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.03139, i64 %index
-  %wide.load = load <16 x i8>, ptr %i.t, align 1, !tbaa !47, !alias.scope !116 ; 2 uses
-  %i.u = zext <16 x i8> %wide.load to <16 x i32>  ; 2 uses
+  %wide.load = load <16 x i8>, ptr %i.t, align 1, !tbaa !47, !alias.scope !116 ; 3 uses
+  %i.u = zext <16 x i8> %wide.load to <16 x i32>
   %i.v = uitofp <16 x i8> %wide.load to <16 x float>
   %i.w = getelementptr inbounds nuw i8, ptr %.03238, i64 %index
   %wide.load57 = load <16 x i8>, ptr %i.w, align 1, !tbaa !47, !alias.scope !117
-  %10 = zext <16 x i8> %wide.load57 to <16 x i32>
-  %11 = add nuw nsw <16 x i32> %10, %i.u
-  %12 = tail call <16 x i32> @llvm.umin.v16i32(<16 x i32> %11, <16 x i32> splat (i32 255))
-  %i.x = sub nsw <16 x i32> %12, %i.u
+  %10 = tail call <16 x i8> @llvm.uadd.sat.v16i8(<16 x i8> %wide.load, <16 x i8> %wide.load57)
+  %11 = zext <16 x i8> %10 to <16 x i32>
+  %i.x = sub nsw <16 x i32> %11, %i.u
   %i.y = sitofp nsz <16 x i32> %i.x to <16 x float>
   %i.z = tail call nsz <16 x float> @llvm.fmuladd.v16f32(<16 x float> %i.y, <16 x float> %broadcast.splat, <16 x float> %i.v)
   %i.aa = fptoui <16 x float> %i.z to <16 x i8>
@@ -235,15 +234,14 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index61 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next64, %vec.epilog.vector.body ] ; 4 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.03139, i64 %index61
-  %wide.load62 = load <4 x i8>, ptr %i.ad, align 1, !tbaa !47, !alias.scope !116 ; 2 uses
-  %i.ae = zext <4 x i8> %wide.load62 to <4 x i32> ; 2 uses
+  %wide.load62 = load <4 x i8>, ptr %i.ad, align 1, !tbaa !47, !alias.scope !116 ; 3 uses
+  %i.ae = zext <4 x i8> %wide.load62 to <4 x i32>
   %i.af = uitofp <4 x i8> %wide.load62 to <4 x float>
   %i.ag = getelementptr inbounds nuw i8, ptr %.03238, i64 %index61
   %wide.load63 = load <4 x i8>, ptr %i.ag, align 1, !tbaa !47, !alias.scope !117
-  %13 = zext <4 x i8> %wide.load63 to <4 x i32>
-  %14 = add nuw nsw <4 x i32> %13, %i.ae
-  %15 = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %14, <4 x i32> splat (i32 255))
-  %i.ah = sub nsw <4 x i32> %15, %i.ae
+  %12 = tail call <4 x i8> @llvm.uadd.sat.v4i8(<4 x i8> %wide.load62, <4 x i8> %wide.load63)
+  %13 = zext <4 x i8> %12 to <4 x i32>
+  %i.ah = sub nsw <4 x i32> %13, %i.ae
   %i.ai = sitofp nsz <4 x i32> %i.ah to <4 x float>
   %i.aj = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ai, <4 x float> %broadcast.splat60, <4 x float> %i.af)
   %i.ak = fptoui <4 x float> %i.aj to <4 x i8>
@@ -274,14 +272,13 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %vec.epilog.scalar.ph ], [ %indvars.iv.ph, %vec.epilog.scalar.ph.preheader ] ; 4 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.03139, i64 %indvars.iv
-  %i.ar = load i8, ptr %i.aq, align 1, !tbaa !47  ; 2 uses
-  %i.as = zext i8 %i.ar to i32                    ; 2 uses
+  %i.ar = load i8, ptr %i.aq, align 1, !tbaa !47  ; 3 uses
+  %i.as = zext i8 %i.ar to i32
   %i.at = uitofp i8 %i.ar to float
   %i.au = getelementptr inbounds nuw i8, ptr %.03238, i64 %indvars.iv
   %i.av = load i8, ptr %i.au, align 1, !tbaa !47
-  %16 = zext i8 %i.av to i32
-  %17 = add nuw nsw i32 %16, %i.as
-  %spec.select = tail call i32 @llvm.umin.i32(i32 %17, i32 255)
+  %narrow = tail call i8 @llvm.uadd.sat.i8(i8 %i.ar, i8 %i.av)
+  %spec.select = zext i8 %narrow to i32
   %i.aw = sub nsw i32 %spec.select, %i.as
   %i.ax = sitofp nsz i32 %i.aw to float
   %i.ay = tail call nsz float @llvm.fmuladd.f32(float %i.ax, float %i.c, float %i.at)
@@ -684,15 +681,14 @@ bb.a:
 vector.body:                                      ; preds = %.preheader, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.preheader ] ; 4 uses
   %i.t = getelementptr inbounds nuw [2 x i8], ptr %.03139, i64 %index
-  %wide.load = load <8 x i16>, ptr %i.t, align 2, !tbaa !63, !alias.scope !1717 ; 2 uses
-  %i.u = zext <8 x i16> %wide.load to <8 x i32>   ; 2 uses
+  %wide.load = load <8 x i16>, ptr %i.t, align 2, !tbaa !63, !alias.scope !1717 ; 3 uses
+  %i.u = zext <8 x i16> %wide.load to <8 x i32>
   %i.v = uitofp <8 x i16> %wide.load to <8 x float>
   %i.w = getelementptr inbounds nuw [2 x i8], ptr %.03238, i64 %index
   %wide.load56 = load <8 x i16>, ptr %i.w, align 2, !tbaa !63, !alias.scope !1718
-  %10 = zext <8 x i16> %wide.load56 to <8 x i32>
-  %11 = add nuw nsw <8 x i32> %10, %i.u
-  %12 = tail call <8 x i32> @llvm.umin.v8i32(<8 x i32> %11, <8 x i32> splat (i32 65535))
-  %i.x = sub nsw <8 x i32> %12, %i.u
+  %10 = tail call <8 x i16> @llvm.uadd.sat.v8i16(<8 x i16> %wide.load, <8 x i16> %wide.load56)
+  %11 = zext <8 x i16> %10 to <8 x i32>
+  %i.x = sub nsw <8 x i32> %11, %i.u
   %i.y = sitofp nsz <8 x i32> %i.x to <8 x float>
   %i.z = tail call nsz <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.y, <8 x float> %broadcast.splat, <8 x float> %i.v)
   %i.aa = fptoui <8 x float> %i.z to <8 x i16>
@@ -723,14 +719,13 @@ scalar.ph.preheader:                              ; preds = %.preheader, %middle
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 4 uses
   %i.ag = getelementptr inbounds nuw [2 x i8], ptr %.03139, i64 %indvars.iv
-  %i.ah = load i16, ptr %i.ag, align 2, !tbaa !63 ; 2 uses
-  %i.ai = zext i16 %i.ah to i32                   ; 2 uses
+  %i.ah = load i16, ptr %i.ag, align 2, !tbaa !63 ; 3 uses
+  %i.ai = zext i16 %i.ah to i32
   %i.aj = uitofp i16 %i.ah to float
   %i.ak = getelementptr inbounds nuw [2 x i8], ptr %.03238, i64 %indvars.iv
   %i.al = load i16, ptr %i.ak, align 2, !tbaa !63
-  %13 = zext i16 %i.al to i32
-  %14 = add nuw nsw i32 %13, %i.ai
-  %spec.select = tail call i32 @llvm.umin.i32(i32 %14, i32 65535)
+  %narrow = tail call i16 @llvm.uadd.sat.i16(i16 %i.ah, i16 %i.al)
+  %spec.select = zext i16 %narrow to i32
   %i.am = sub nsw i32 %spec.select, %i.ai
   %i.an = sitofp nsz i32 %i.am to float
   %i.ao = tail call nsz float @llvm.fmuladd.f32(float %i.an, float %i.c, float %i.aj)
@@ -1133,22 +1128,28 @@ declare i8 @llvm.umax.i8(i8, i8) #7
 declare i32 @llvm.abs.i32(i32, i1 immarg) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.uadd.sat.i8(i8, i8) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umax.i16(i16, i16) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.uadd.sat.i16(i16, i16) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <16 x i32> @llvm.umin.v16i32(<16 x i32>, <16 x i32>) #7
+declare <16 x i8> @llvm.uadd.sat.v16i8(<16 x i8>, <16 x i8>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x float> @llvm.fmuladd.v16f32(<16 x float>, <16 x float>, <16 x float>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #7
+declare <4 x i8> @llvm.uadd.sat.v4i8(<4 x i8>, <4 x i8>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #7
@@ -1169,7 +1170,13 @@ declare <4 x i32> @llvm.abs.v4i32(<4 x i32>, i1 immarg) #11
 declare <16 x i32> @llvm.smax.v16i32(<16 x i32>, <16 x i32>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <16 x i32> @llvm.umin.v16i32(<16 x i32>, <16 x i32>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x i16> @llvm.umin.v16i16(<16 x i16>, <16 x i16>) #7
@@ -1242,6 +1249,9 @@ declare <8 x float> @llvm.sqrt.v8f32(<8 x float>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.cos.v8f32(<8 x float>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i16> @llvm.uadd.sat.v8i16(<8 x i16>, <8 x i16>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fabs.v4f32(<4 x float>) #7
