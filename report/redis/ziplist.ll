@@ -202,6 +202,7 @@ bb.d:                                             ; preds = %bb.c
   %i.o = load i16, ptr %i.n, align 4, !tbaa !18   ; 2 uses
   %i.p = add nsw i64 %i.i, -11
   %i.q = add nsw i64 %i.p, %i.m                   ; 3 uses
+  %narrow = tail call i16 @llvm.uadd.sat.i16(i16 %i.k, i16 %i.o)
   %i.r = icmp ult i64 %i.q, 4294967295
   br i1 %i.r, label %bb.f, label %bb.e, !prof !19
 
@@ -241,9 +242,8 @@ bb.h:                                             ; preds = %bb.f
   %. = phi ptr [ %0, %bb.h ], [ %1, %bb.g ]       ; 2 uses
   %i.ae = trunc nuw i64 %i.q to i32
   store i32 %i.ae, ptr %i.x, align 4, !tbaa !13
-  %2 = tail call i16 @llvm.uadd.sat.i16(i16 %i.k, i16 %i.o)
   %i.af = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  store i16 %2, ptr %i.af, align 4, !tbaa !18
+  store i16 %narrow, ptr %i.af, align 4, !tbaa !18
   %i.ag = add i32 %i.h, -11
   %i.ah = add i32 %i.ag, %i.w
   %i.ai = getelementptr inbounds nuw i8, ptr %i.x, i64 4
@@ -646,9 +646,6 @@ declare i32 @llvm.fshl.i32(i32, i32, i32) #15
 declare i8 @llvm.fshl.i8(i8, i8, i8) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #15
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.uadd.sat.i16(i16, i16) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
@@ -659,6 +656,9 @@ declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_add
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #15

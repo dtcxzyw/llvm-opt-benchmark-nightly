@@ -204,9 +204,9 @@ bb.ex:                                            ; preds = %bb.ew
   br label %bb.ey
 
 bb.ey:                                            ; preds = %bb.ex, %bb.ew
-  %.sroa.32.3.i = phi i8 [ %i.aok, %bb.ex ], [ %.sroa.32.0.copyload146.i, %bb.ew ]
-  %.sroa.22.3.i = phi i8 [ %i.aoo, %bb.ex ], [ %.sroa.22.0.copyload114.i, %bb.ew ]
-  %.sroa.066.3.i = phi i8 [ %i.aos, %bb.ex ], [ %.sroa.066.0.copyload87.i, %bb.ew ]
+  %.sroa.32.3.i = phi i8 [ %i.aok, %bb.ex ], [ %.sroa.32.0.copyload146.i, %bb.ew ] ; 2 uses
+  %.sroa.22.3.i = phi i8 [ %i.aoo, %bb.ex ], [ %.sroa.22.0.copyload114.i, %bb.ew ] ; 2 uses
+  %.sroa.066.3.i = phi i8 [ %i.aos, %bb.ex ], [ %.sroa.066.0.copyload87.i, %bb.ew ] ; 2 uses
   br i1 %i.aod, label %bb.ez, label %bb.fa
 
 bb.ez:                                            ; preds = %bb.ey
@@ -228,9 +228,9 @@ bb.fb:                                            ; preds = %bb.fa, %bb.ez
   %i.apb = getelementptr inbounds nuw [4 x i8], ptr %.4460.i, i64 %indvars.iv.i84 ; 14 uses
   %i.apc = load i32, ptr %i.ael, align 4, !tbaa !31
   %.sroa.42.0.insert.ext180.i = shl nuw i32 %.sroa.42.3.in.i, 24
-  %.sroa.32.0.insert.ext148.i = zext i8 %.sroa.32.3.i to i32 ; 4 uses
-  %.sroa.22.0.insert.ext116.i = zext i8 %.sroa.22.3.i to i32 ; 4 uses
-  %.sroa.066.0.insert.ext89.i = zext i8 %.sroa.066.3.i to i32 ; 4 uses
+  %.sroa.32.0.insert.ext148.i = zext i8 %.sroa.32.3.i to i32 ; 3 uses
+  %.sroa.22.0.insert.ext116.i = zext i8 %.sroa.22.3.i to i32 ; 3 uses
+  %.sroa.066.0.insert.ext89.i = zext i8 %.sroa.066.3.i to i32 ; 3 uses
   switch i32 %i.apc, label %blend_non_normal_pixel.exit.i93 [
     i32 1, label %bb.fc
     i32 2, label %bb.fd
@@ -241,18 +241,15 @@ bb.fb:                                            ; preds = %bb.fa, %bb.ez
 bb.fc:                                            ; preds = %bb.fb
   %i.apd = getelementptr inbounds nuw i8, ptr %i.apb, i64 2
   %i.ape = load i8, ptr %i.apd, align 1, !tbaa !32
-  %8 = zext i8 %i.ape to i32
-  %9 = add nuw nsw i32 %8, %.sroa.32.0.insert.ext148.i
-  %spec.select.i.i98 = call i32 @llvm.umin.i32(i32 %9, i32 255)
+  %narrow484.i = call i8 @llvm.uadd.sat.i8(i8 %i.ape, i8 %.sroa.32.3.i)
+  %spec.select.i.i98 = zext i8 %narrow484.i to i32
   %i.apf = getelementptr inbounds nuw i8, ptr %i.apb, i64 1
   %i.apg = load i8, ptr %i.apf, align 1, !tbaa !33
-  %10 = zext i8 %i.apg to i32
-  %11 = add nuw nsw i32 %10, %.sroa.22.0.insert.ext116.i
-  %12 = call i32 @llvm.umin.i32(i32 %11, i32 255)
+  %narrow485.i = call i8 @llvm.uadd.sat.i8(i8 %i.apg, i8 %.sroa.22.3.i)
+  %8 = zext i8 %narrow485.i to i32
   %i.aph = load i8, ptr %i.apb, align 1, !tbaa !34
-  %13 = zext i8 %i.aph to i32
-  %14 = add nuw nsw i32 %13, %.sroa.066.0.insert.ext89.i
-  %15 = call i32 @llvm.umin.i32(i32 %14, i32 255)
+  %narrow.i99 = call i8 @llvm.uadd.sat.i8(i8 %.sroa.066.3.i, i8 %i.aph)
+  %9 = zext i8 %narrow.i99 to i32
   br label %bb.fg
 
 bb.fd:                                            ; preds = %bb.fb
@@ -308,8 +305,8 @@ bb.ff:                                            ; preds = %bb.fb
 
 bb.fg:                                            ; preds = %bb.ff, %bb.fe, %bb.fd, %bb.fc
   %.sroa.11.0.i.i85 = phi i32 [ %spec.select.i.i98, %bb.fc ], [ %spec.select60.i.i97, %bb.fd ], [ %i.apz, %bb.fe ], [ %i.aqn, %bb.ff ]
-  %.sroa.7.0.i.i86 = phi i32 [ %12, %bb.fc ], [ %i.apq, %bb.fd ], [ %i.aqe, %bb.fe ], [ %i.aqs, %bb.ff ]
-  %.sroa.01.0.i.i87 = phi i32 [ %15, %bb.fc ], [ %i.apu, %bb.fd ], [ %i.aqi, %bb.fe ], [ %i.aqw, %bb.ff ]
+  %.sroa.7.0.i.i86 = phi i32 [ %8, %bb.fc ], [ %i.apq, %bb.fd ], [ %i.aqe, %bb.fe ], [ %i.aqs, %bb.ff ]
+  %.sroa.01.0.i.i87 = phi i32 [ %9, %bb.fc ], [ %i.apu, %bb.fd ], [ %i.aqi, %bb.fe ], [ %i.aqw, %bb.ff ]
   %.sroa.11.0.insert.ext.i.i88 = shl nuw nsw i32 %.sroa.11.0.i.i85, 16
   %.sroa.11.0.insert.shift.i.i89 = and i32 %.sroa.11.0.insert.ext.i.i88, 16711680
   %.sroa.11.0.insert.insert.i.i = or disjoint i32 %.sroa.11.0.insert.shift.i.i89, %.sroa.42.0.insert.ext180.i
@@ -712,7 +709,7 @@ bb.io:                                            ; preds = %bb.ib
 bb.ip:                                            ; preds = %blend_non_normal_pixel.exit.i211, %.preheader182.i
   %indvars.iv.i175 = phi i64 [ 0, %.preheader182.i ], [ %indvars.iv.next.i212, %blend_non_normal_pixel.exit.i211 ] ; 4 uses
   %i.bml = getelementptr inbounds nuw i8, ptr %.4154186.i, i64 %indvars.iv.i175
-  %i.bmm = load i8, ptr %i.bml, align 1, !tbaa !19
+  %i.bmm = load i8, ptr %i.bml, align 1, !tbaa !19 ; 4 uses
   br i1 %i.bmk, label %bb.ir, label %bb.iq
 
 bb.iq:                                            ; preds = %bb.ip
@@ -730,7 +727,7 @@ bb.ir:                                            ; preds = %bb.iq, %bb.ip
   %i.bmu = load i32, ptr %i.bfo, align 4, !tbaa !31
   %.sroa.6.0.insert.ext.i177 = zext i8 %.sroa.6.0.i176 to i32
   %.sroa.6.0.insert.shift.i178 = shl nuw i32 %.sroa.6.0.insert.ext.i177, 24
-  %.sroa.5.0.insert.ext.i179 = zext i8 %i.bmm to i32 ; 12 uses
+  %.sroa.5.0.insert.ext.i179 = zext i8 %i.bmm to i32 ; 9 uses
   switch i32 %i.bmu, label %blend_non_normal_pixel.exit.i211 [
     i32 1, label %bb.is
     i32 2, label %bb.it
@@ -741,18 +738,15 @@ bb.ir:                                            ; preds = %bb.iq, %bb.ip
 bb.is:                                            ; preds = %bb.ir
   %i.bmv = getelementptr inbounds nuw i8, ptr %i.bmt, i64 2
   %i.bmw = load i8, ptr %i.bmv, align 1, !tbaa !32
-  %16 = zext i8 %i.bmw to i32
-  %17 = add nuw nsw i32 %16, %.sroa.5.0.insert.ext.i179
-  %spec.select.i.i221 = call i32 @llvm.umin.i32(i32 %17, i32 255)
+  %narrow219.i = call i8 @llvm.uadd.sat.i8(i8 %i.bmw, i8 %i.bmm)
+  %spec.select.i.i222 = zext i8 %narrow219.i to i32
   %i.bmx = getelementptr inbounds nuw i8, ptr %i.bmt, i64 1
   %i.bmy = load i8, ptr %i.bmx, align 1, !tbaa !33
-  %18 = zext i8 %i.bmy to i32
-  %19 = add nuw nsw i32 %18, %.sroa.5.0.insert.ext.i179
-  %20 = call i32 @llvm.umin.i32(i32 %19, i32 255)
+  %narrow220.i = call i8 @llvm.uadd.sat.i8(i8 %i.bmy, i8 %i.bmm)
+  %10 = zext i8 %narrow220.i to i32
   %i.bmz = load i8, ptr %i.bmt, align 1, !tbaa !34
-  %21 = zext i8 %i.bmz to i32
-  %22 = add nuw nsw i32 %21, %.sroa.5.0.insert.ext.i179
-  %23 = call i32 @llvm.umin.i32(i32 %22, i32 255)
+  %narrow.i223 = call i8 @llvm.uadd.sat.i8(i8 %i.bmm, i8 %i.bmz)
+  %11 = zext i8 %narrow.i223 to i32
   br label %bb.iw
 
 bb.it:                                            ; preds = %bb.ir
@@ -807,9 +801,9 @@ bb.iv:                                            ; preds = %bb.ir
   br label %bb.iw
 
 bb.iw:                                            ; preds = %bb.iv, %bb.iu, %bb.it, %bb.is
-  %.sroa.11.0.i.i180 = phi i32 [ %spec.select.i.i221, %bb.is ], [ %spec.select60.i.i220, %bb.it ], [ %i.bnr, %bb.iu ], [ %i.bof, %bb.iv ]
-  %.sroa.7.0.i.i181 = phi i32 [ %20, %bb.is ], [ %i.bni, %bb.it ], [ %i.bnw, %bb.iu ], [ %i.bok, %bb.iv ]
-  %.sroa.01.0.i.i182 = phi i32 [ %23, %bb.is ], [ %i.bnm, %bb.it ], [ %i.boa, %bb.iu ], [ %i.boo, %bb.iv ]
+  %.sroa.11.0.i.i180 = phi i32 [ %spec.select.i.i222, %bb.is ], [ %spec.select60.i.i220, %bb.it ], [ %i.bnr, %bb.iu ], [ %i.bof, %bb.iv ]
+  %.sroa.7.0.i.i181 = phi i32 [ %10, %bb.is ], [ %i.bni, %bb.it ], [ %i.bnw, %bb.iu ], [ %i.bok, %bb.iv ]
+  %.sroa.01.0.i.i182 = phi i32 [ %11, %bb.is ], [ %i.bnm, %bb.it ], [ %i.boa, %bb.iu ], [ %i.boo, %bb.iv ]
   %.sroa.11.0.insert.ext.i.i183 = shl nuw nsw i32 %.sroa.11.0.i.i180, 16
   %.sroa.11.0.insert.shift.i.i184 = and i32 %.sroa.11.0.insert.ext.i.i183, 16711680
   %.sroa.11.0.insert.insert.i.i185 = or disjoint i32 %.sroa.11.0.insert.shift.i.i184, %.sroa.6.0.insert.shift.i178
@@ -1212,7 +1206,7 @@ bb.kb:                                            ; preds = %bb.jg
 bb.kc:                                            ; preds = %blend_non_normal_pixel.exit.i265, %.preheader188.i
   %indvars.iv.i230 = phi i64 [ 0, %.preheader188.i ], [ %indvars.iv.next.i266, %blend_non_normal_pixel.exit.i265 ] ; 4 uses
   %i.byk = getelementptr inbounds nuw [2 x i8], ptr %.4156192.i, i64 %indvars.iv.i230 ; 2 uses
-  %i.byl = load i8, ptr %i.byk, align 1, !tbaa !161
+  %i.byl = load i8, ptr %i.byk, align 1, !tbaa !161 ; 4 uses
   %i.bym = getelementptr inbounds nuw i8, ptr %i.byk, i64 1
   %i.byn = load i8, ptr %i.bym, align 1, !tbaa !162
   %i.byo = zext i8 %i.byn to i32                  ; 2 uses
@@ -1237,7 +1231,7 @@ bb.kf:                                            ; preds = %bb.ke, %bb.kd
   %i.byx = getelementptr inbounds nuw [4 x i8], ptr %.4161191.i, i64 %indvars.iv.i230 ; 14 uses
   %i.byy = load i32, ptr %i.bqm, align 4, !tbaa !31
   %.sroa.6.0.insert.shift.i232 = shl nuw i32 %.sroa.6.0.i231, 24
-  %.sroa.5.0.insert.ext.i233 = zext i8 %i.byl to i32 ; 12 uses
+  %.sroa.5.0.insert.ext.i233 = zext i8 %i.byl to i32 ; 9 uses
   switch i32 %i.byy, label %blend_non_normal_pixel.exit.i265 [
     i32 1, label %bb.kg
     i32 2, label %bb.kh
@@ -1248,18 +1242,15 @@ bb.kf:                                            ; preds = %bb.ke, %bb.kd
 bb.kg:                                            ; preds = %bb.kf
   %i.byz = getelementptr inbounds nuw i8, ptr %i.byx, i64 2
   %i.bza = load i8, ptr %i.byz, align 1, !tbaa !32
-  %24 = zext i8 %i.bza to i32
-  %25 = add nuw nsw i32 %24, %.sroa.5.0.insert.ext.i233
-  %spec.select.i.i275 = call i32 @llvm.umin.i32(i32 %25, i32 255)
+  %narrow223.i = call i8 @llvm.uadd.sat.i8(i8 %i.bza, i8 %i.byl)
+  %spec.select.i.i277 = zext i8 %narrow223.i to i32
   %i.bzb = getelementptr inbounds nuw i8, ptr %i.byx, i64 1
   %i.bzc = load i8, ptr %i.bzb, align 1, !tbaa !33
-  %26 = zext i8 %i.bzc to i32
-  %27 = add nuw nsw i32 %26, %.sroa.5.0.insert.ext.i233
-  %28 = call i32 @llvm.umin.i32(i32 %27, i32 255)
+  %narrow224.i = call i8 @llvm.uadd.sat.i8(i8 %i.bzc, i8 %i.byl)
+  %12 = zext i8 %narrow224.i to i32
   %i.bzd = load i8, ptr %i.byx, align 1, !tbaa !34
-  %29 = zext i8 %i.bzd to i32
-  %30 = add nuw nsw i32 %29, %.sroa.5.0.insert.ext.i233
-  %31 = call i32 @llvm.umin.i32(i32 %30, i32 255)
+  %narrow.i278 = call i8 @llvm.uadd.sat.i8(i8 %i.byl, i8 %i.bzd)
+  %13 = zext i8 %narrow.i278 to i32
   br label %bb.kk
 
 bb.kh:                                            ; preds = %bb.kf
@@ -1314,9 +1305,9 @@ bb.kj:                                            ; preds = %bb.kf
   br label %bb.kk
 
 bb.kk:                                            ; preds = %bb.kj, %bb.ki, %bb.kh, %bb.kg
-  %.sroa.11.0.i.i234 = phi i32 [ %spec.select.i.i275, %bb.kg ], [ %spec.select60.i.i274, %bb.kh ], [ %i.bzv, %bb.ki ], [ %i.caj, %bb.kj ]
-  %.sroa.7.0.i.i235 = phi i32 [ %28, %bb.kg ], [ %i.bzm, %bb.kh ], [ %i.caa, %bb.ki ], [ %i.cao, %bb.kj ]
-  %.sroa.01.0.i.i236 = phi i32 [ %31, %bb.kg ], [ %i.bzq, %bb.kh ], [ %i.cae, %bb.ki ], [ %i.cas, %bb.kj ]
+  %.sroa.11.0.i.i234 = phi i32 [ %spec.select.i.i277, %bb.kg ], [ %spec.select60.i.i274, %bb.kh ], [ %i.bzv, %bb.ki ], [ %i.caj, %bb.kj ]
+  %.sroa.7.0.i.i235 = phi i32 [ %12, %bb.kg ], [ %i.bzm, %bb.kh ], [ %i.caa, %bb.ki ], [ %i.cao, %bb.kj ]
+  %.sroa.01.0.i.i236 = phi i32 [ %13, %bb.kg ], [ %i.bzq, %bb.kh ], [ %i.cae, %bb.ki ], [ %i.cas, %bb.kj ]
   %.sroa.11.0.insert.ext.i.i237 = shl nuw nsw i32 %.sroa.11.0.i.i234, 16
   %.sroa.11.0.insert.shift.i.i238 = and i32 %.sroa.11.0.insert.ext.i.i237, 16711680
   %.sroa.11.0.insert.insert.i.i239 = or disjoint i32 %.sroa.11.0.insert.shift.i.i238, %.sroa.6.0.insert.shift.i232
@@ -1719,10 +1710,10 @@ bb.ai:                                            ; preds = %.preheader354, %ble
   %indvars.iv = phi i64 [ 0, %.preheader354 ], [ %indvars.iv.next, %blend_non_normal_pixel.exit ] ; 2 uses
   %i.ip = getelementptr inbounds nuw i8, ptr %.8360, i64 %indvars.iv ; 3 uses
   %i.iq = getelementptr inbounds nuw i8, ptr %i.ip, i64 2
-  %i.ir = load i8, ptr %i.iq, align 1, !tbaa !19
+  %i.ir = load i8, ptr %i.iq, align 1, !tbaa !19  ; 2 uses
   %i.is = getelementptr inbounds nuw i8, ptr %i.ip, i64 1
-  %i.it = load i8, ptr %i.is, align 1, !tbaa !19
-  %i.iu = load i8, ptr %i.ip, align 1, !tbaa !19
+  %i.it = load i8, ptr %i.is, align 1, !tbaa !19  ; 2 uses
+  %i.iu = load i8, ptr %i.ip, align 1, !tbaa !19  ; 2 uses
   br i1 %i.io, label %bb.ak, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
@@ -1740,9 +1731,9 @@ bb.ak:                                            ; preds = %bb.ai, %bb.aj
   %i.jc = load i32, ptr %i.v, align 4, !tbaa !31
   %.sroa.6.0.insert.ext = zext i8 %.sroa.6.0 to i32
   %.sroa.6.0.insert.shift = shl nuw i32 %.sroa.6.0.insert.ext, 24
-  %.sroa.5.0.insert.ext = zext i8 %i.ir to i32    ; 4 uses
-  %.sroa.4.0.insert.ext = zext i8 %i.it to i32    ; 4 uses
-  %.sroa.0.0.insert.ext = zext i8 %i.iu to i32    ; 4 uses
+  %.sroa.5.0.insert.ext = zext i8 %i.ir to i32    ; 3 uses
+  %.sroa.4.0.insert.ext = zext i8 %i.it to i32    ; 3 uses
+  %.sroa.0.0.insert.ext = zext i8 %i.iu to i32    ; 3 uses
   switch i32 %i.jc, label %blend_non_normal_pixel.exit [
     i32 1, label %bb.al
     i32 2, label %bb.am
@@ -1753,18 +1744,15 @@ bb.ak:                                            ; preds = %bb.ai, %bb.aj
 bb.al:                                            ; preds = %bb.ak
   %i.jd = getelementptr inbounds nuw i8, ptr %i.jb, i64 2
   %i.je = load i8, ptr %i.jd, align 1, !tbaa !32
-  %3 = zext i8 %i.je to i32
-  %4 = add nuw nsw i32 %3, %.sroa.5.0.insert.ext
-  %spec.select.i = call i32 @llvm.umin.i32(i32 %4, i32 255)
+  %narrow434 = call i8 @llvm.uadd.sat.i8(i8 %i.je, i8 %i.ir)
+  %spec.select.i = zext i8 %narrow434 to i32
   %i.jf = getelementptr inbounds nuw i8, ptr %i.jb, i64 1
   %i.jg = load i8, ptr %i.jf, align 1, !tbaa !33
-  %5 = zext i8 %i.jg to i32
-  %6 = add nuw nsw i32 %5, %.sroa.4.0.insert.ext
-  %7 = call i32 @llvm.umin.i32(i32 %6, i32 255)
+  %narrow435 = call i8 @llvm.uadd.sat.i8(i8 %i.jg, i8 %i.it)
+  %3 = zext i8 %narrow435 to i32
   %i.jh = load i8, ptr %i.jb, align 1, !tbaa !34
-  %8 = zext i8 %i.jh to i32
-  %9 = add nuw nsw i32 %8, %.sroa.0.0.insert.ext
-  %10 = call i32 @llvm.umin.i32(i32 %9, i32 255)
+  %narrow = call i8 @llvm.uadd.sat.i8(i8 %i.iu, i8 %i.jh)
+  %4 = zext i8 %narrow to i32
   br label %bb.ap
 
 bb.am:                                            ; preds = %bb.ak
@@ -1820,8 +1808,8 @@ bb.ao:                                            ; preds = %bb.ak
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an, %bb.am, %bb.al
   %.sroa.11.0.i = phi i32 [ %spec.select.i, %bb.al ], [ %spec.select60.i, %bb.am ], [ %i.jz, %bb.an ], [ %i.kn, %bb.ao ]
-  %.sroa.7.0.i = phi i32 [ %7, %bb.al ], [ %i.jq, %bb.am ], [ %i.ke, %bb.an ], [ %i.ks, %bb.ao ]
-  %.sroa.01.0.i = phi i32 [ %10, %bb.al ], [ %i.ju, %bb.am ], [ %i.ki, %bb.an ], [ %i.kw, %bb.ao ]
+  %.sroa.7.0.i = phi i32 [ %3, %bb.al ], [ %i.jq, %bb.am ], [ %i.ke, %bb.an ], [ %i.ks, %bb.ao ]
+  %.sroa.01.0.i = phi i32 [ %4, %bb.al ], [ %i.ju, %bb.am ], [ %i.ki, %bb.an ], [ %i.kw, %bb.ao ]
   %.sroa.11.0.insert.ext.i = shl nuw nsw i32 %.sroa.11.0.i, 16
   %.sroa.11.0.insert.shift.i = and i32 %.sroa.11.0.insert.ext.i, 16711680
   %.sroa.11.0.insert.insert.i = or disjoint i32 %.sroa.11.0.insert.shift.i, %.sroa.6.0.insert.shift
@@ -1963,6 +1951,9 @@ declare i32 @llvm.smax.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.uadd.sat.i8(i8, i8) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
