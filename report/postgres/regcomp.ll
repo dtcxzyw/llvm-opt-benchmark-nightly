@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %.lr.ph213, %bb.ar
   %.190211 = phi i32 [ %i.o, %.lr.ph213 ], [ %i.gx, %bb.ar ] ; 2 uses
   %.192210 = phi ptr [ %i.r, %.lr.ph213 ], [ %i.gw, %bb.ar ] ; 3 uses
-  %i.aa = load i32, ptr %.192210, align 4         ; 5 uses
+  %i.aa = load i32, ptr %.192210, align 4         ; 6 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.192210, i64 4
   %i.ac = load i32, ptr %i.ab, align 4            ; 13 uses
   %i.ad = icmp ult i32 %i.aa, 2048
@@ -219,11 +219,12 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph182.preheader:                              ; preds = %bb.e
   %i.ae = tail call i32 @llvm.umin.i32(i32 %i.ac, i32 2047)
   %i.af = zext nneg i32 %i.aa to i64
-  %4 = zext nneg i32 %i.ae to i64
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.aa, i32 %i.ae)
+  %4 = add nuw nsw i32 %umax, 1                   ; 2 uses
   br label %.lr.ph182
 
 .lr.ph182:                                        ; preds = %.lr.ph182.preheader, %bb.x
-  %indvars.iv = phi i64 [ %i.af, %.lr.ph182.preheader ], [ %indvars.iv.next, %bb.x ] ; 5 uses
+  %indvars.iv = phi i64 [ %i.af, %.lr.ph182.preheader ], [ %indvars.iv.next, %bb.x ] ; 4 uses
   %.0.i175178 = phi i16 [ %.promoted, %.lr.ph182.preheader ], [ %.0.i174, %bb.x ] ; 2 uses
   %i.ag = load ptr, ptr %i.s, align 8
   %i.ah = getelementptr inbounds nuw [2 x i8], ptr %i.ag, i64 %indvars.iv
@@ -288,7 +289,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bn, i64 24
-  %i.br = trunc nuw nsw i64 %indvars.iv to i32
+  %i.br = trunc nuw i64 %indvars.iv to i32
   store i32 %i.br, ptr %i.bq, align 8
   %.pre.i = load ptr, ptr %i.t, align 8           ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds [32 x i8], ptr %.pre.i, i64 %i.bm
@@ -402,16 +403,13 @@ newarc.exit:                                      ; preds = %bb.r, %bb.v, %.loop
 bb.x:                                             ; preds = %newarc.exit, %bb.m
   %.0.i174 = phi i16 [ %.0.i175178, %bb.m ], [ %.0.i, %newarc.exit ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %.not106.not = icmp samesign ult i64 %indvars.iv, %4
-  br i1 %.not106.not, label %.lr.ph182, label %.thread152.loopexit.loopexit, !llvm.loop !140
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond.not = icmp eq i32 %4, %lftr.wideiv
+  br i1 %exitcond.not, label %.thread152.loopexit, label %.lr.ph182, !llvm.loop !140
 
-.thread152.loopexit.loopexit:                     ; preds = %bb.x
-  %5 = trunc nuw nsw i64 %indvars.iv.next to i32
-  br label %.thread152.loopexit
-
-.thread152.loopexit:                              ; preds = %.thread152.loopexit.loopexit, %bb.e
-  %.0.i175.lcssa = phi i16 [ %.promoted, %bb.e ], [ %.0.i174, %.thread152.loopexit.loopexit ]
-  %.093.lcssa = phi i32 [ %i.aa, %bb.e ], [ %5, %.thread152.loopexit.loopexit ]
+.thread152.loopexit:                              ; preds = %bb.x, %bb.e
+  %.0.i175.lcssa = phi i16 [ %.promoted, %bb.e ], [ %.0.i174, %bb.x ]
+  %.093.lcssa = phi i32 [ %i.aa, %bb.e ], [ %4, %bb.x ]
   store i16 %.0.i175.lcssa, ptr %i.a, align 2
   br label %.thread152
 

@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.d
 
 ._crit_edge:                                      ; preds = %bb.af, %.outer
   %.sroa.027.2.lcssa = phi i64 [ %.sroa.027.2.ph, %.outer ], [ %i.cv, %bb.af ]
-  %.lcssa93 = phi i64 [ %i.ci, %.outer ], [ %i.cv, %bb.af ] ; 3 uses
+  %.lcssa93 = phi i64 [ %i.ci, %.outer ], [ %i.cv, %bb.af ] ; 4 uses
   %.lcssa90 = phi i64 [ %i.cj, %.outer ], [ %i.cy, %bb.af ] ; 3 uses
   %.lcssa = phi i1 [ %i.cl, %.outer ], [ %i.da, %bb.af ]
   br i1 %.lcssa, label %bb.h, label %bb.g
@@ -237,7 +237,7 @@ bb.h:                                             ; preds = %._crit_edge
 bb.i:                                             ; preds = %bb.h
   %i.ap = add nuw i64 %.lcssa93, 32
   %i.aq = shl nuw i64 %.lcssa90, 1
-  %..i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.ap, i64 range(i64 0, -1) %i.aq) ; 4 uses
+  %..i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.ap, i64 range(i64 0, -1) %i.aq) ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1061
   %.val13.i.i = load ptr, ptr %i.r, align 8, !alias.scope !1061
   call fastcc void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner11finish_growCs31YAwBA1AlL_19xet_core_structures(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.b, i64 %.lcssa90, ptr %.val13.i.i, i64 noundef %..i.i.i, i64 noundef range(i64 1, -9223372036854775807) 1, i64 noundef 1), !noalias !1061
@@ -256,6 +256,9 @@ bb.k:                                             ; preds = %bb.i
   %i.au = icmp sgt i64 %..i.i.i, -1
   call void @llvm.assume(i1 %i.au)
   store i64 %..i.i.i, ptr %1, align 8, !alias.scope !1061
+  %.pre12.i = sub nuw i64 %..i.i.i, %.lcssa93
+  %4 = icmp samesign ugt i64 %.pre12.i, 31
+  call void @llvm.assume(i1 %4)
   %i.av = load i64, ptr %i.d, align 8, !noundef !5 ; 3 uses
   %i.aw = icmp sgt i64 %i.av, -1
   call void @llvm.assume(i1 %i.aw)
@@ -552,7 +555,7 @@ bb.f:                                             ; preds = %bb.d
 
 ._crit_edge:                                      ; preds = %bb.af, %.outer
   %.sroa.027.2.lcssa = phi i64 [ %.sroa.027.2.ph, %.outer ], [ %i.cv, %bb.af ]
-  %.lcssa93 = phi i64 [ %i.ci, %.outer ], [ %i.cv, %bb.af ] ; 3 uses
+  %.lcssa93 = phi i64 [ %i.ci, %.outer ], [ %i.cv, %bb.af ] ; 4 uses
   %.lcssa90 = phi i64 [ %i.cj, %.outer ], [ %i.cy, %bb.af ] ; 3 uses
   %.lcssa = phi i1 [ %i.cl, %.outer ], [ %i.da, %bb.af ]
   br i1 %.lcssa, label %bb.h, label %bb.g
@@ -585,7 +588,7 @@ bb.h:                                             ; preds = %._crit_edge
 bb.i:                                             ; preds = %bb.h
   %i.ap = add nuw i64 %.lcssa93, 32
   %i.aq = shl nuw i64 %.lcssa90, 1
-  %..i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.ap, i64 range(i64 0, -1) %i.aq) ; 4 uses
+  %..i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.ap, i64 range(i64 0, -1) %i.aq) ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1071
   %.val13.i.i = load ptr, ptr %i.r, align 8, !alias.scope !1071
   call fastcc void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner11finish_growCs31YAwBA1AlL_19xet_core_structures(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.b, i64 %.lcssa90, ptr %.val13.i.i, i64 noundef %..i.i.i, i64 noundef range(i64 1, -9223372036854775807) 1, i64 noundef 1), !noalias !1071
@@ -604,6 +607,9 @@ bb.k:                                             ; preds = %bb.i
   %i.au = icmp sgt i64 %..i.i.i, -1
   call void @llvm.assume(i1 %i.au)
   store i64 %..i.i.i, ptr %1, align 8, !alias.scope !1071
+  %.pre12.i = sub nuw i64 %..i.i.i, %.lcssa93
+  %4 = icmp samesign ugt i64 %.pre12.i, 31
+  call void @llvm.assume(i1 %4)
   %i.av = load i64, ptr %i.d, align 8, !noundef !5 ; 3 uses
   %i.aw = icmp sgt i64 %i.av, -1
   call void @llvm.assume(i1 %i.aw)
@@ -1006,7 +1012,7 @@ bb.ba:                                            ; preds = %bb.az
   %i.fo = getelementptr inbounds nuw [40 x i8], ptr %i.fn, i64 %.sroa.0.0153.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.fo, ptr noundef nonnull align 8 dereferenceable(40) %i.e, i64 40, i1 false), !noalias !1513
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !1513
-  %i.fp = add nuw i64 %.sroa.0.0153.i, 1          ; 2 uses
+  %i.fp = add nuw nsw i64 %.sroa.0.0153.i, 1      ; 2 uses
   %i.fq = icmp ult i64 %i.fl, 230584300921369396
   call void @llvm.assume(i1 %i.fq)
   %.not.i38 = icmp eq i64 %i.ds, %i.fl

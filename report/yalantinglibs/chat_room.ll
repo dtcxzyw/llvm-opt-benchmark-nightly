@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %_ZNK6frozen4elsaINS
   br i1 %i.hu, label %.loopexit, label %.lr.ph.i
 
 bb.g:                                             ; preds = %.lr.ph.i
-  %i.hv = add nuw i64 %.079.i, 1                  ; 2 uses
+  %i.hv = add nuw nsw i64 %.079.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.hv, %i.fz
   br i1 %exitcond.not.i, label %.loopexit, label %.lr.ph.i, !llvm.loop !7430
 
@@ -224,7 +224,7 @@ _ZN6frozen4bits18all_different_fromImLm4EEEbRNS0_7cvectorIT_XT0_EEERS3_.exit: ; 
   br label %bb.h, !llvm.loop !7431
 
 .loopexit:                                        ; preds = %bb.g, %bb.f
-  %i.ib = add nuw i64 %i.fz, 1
+  %i.ib = add nuw nsw i64 %i.fz, 1
   store i64 %i.ib, ptr %i.fm, align 8, !tbaa !3115
   %i.ic = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.fz
   store i64 %i.hr, ptr %i.ic, align 8, !tbaa !285
@@ -271,7 +271,7 @@ bb.h:                                             ; preds = %.loopexit, %_ZN6fro
   %i.in = load i64, ptr %i.im, align 8, !tbaa !285
   %i.io = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.in
   store i64 %i.il, ptr %i.io, align 8, !tbaa !285
-  %i.ip = add nuw i64 %.02954.epil, 1
+  %i.ip = add nuw nsw i64 %.02954.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter105
   br i1 %epil.iter.cmp.not, label %._crit_edge57, label %.lr.ph56.epil, !llvm.loop !7432
@@ -310,7 +310,7 @@ bb.h:                                             ; preds = %.loopexit, %_ZN6fro
   %i.jl = load i64, ptr %i.jk, align 8, !tbaa !285
   %i.jm = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.jl
   store i64 %i.jj, ptr %i.jm, align 8, !tbaa !285
-  %i.jn = add nuw i64 %.02954, 4                  ; 2 uses
+  %i.jn = add nuw nsw i64 %.02954, 4              ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %._crit_edge57.unr-lcssa, label %.lr.ph56, !llvm.loop !7433

@@ -204,16 +204,12 @@ _ZNSt6vectorIN2cv3PtrINS0_3dnn14dnn5_v202606055LayerEEESaIS5_EE7reserveEm.exit: 
           to label %bb.ca unwind label %bb.cl
 
 bb.bs:                                            ; preds = %.lr.ph490, %_ZNSt6vectorIN2cv3PtrINS0_3dnn14dnn5_v202606055LayerEEESaIS5_EE9push_backERKS5_.exit
-  %.0489 = phi i64 [ 0, %.lr.ph490 ], [ %i.os, %_ZNSt6vectorIN2cv3PtrINS0_3dnn14dnn5_v202606055LayerEEESaIS5_EE9push_backERKS5_.exit ] ; 5 uses
-  %7 = sdiv i64 %.0489, 64
-  %i.nx = getelementptr inbounds [8 x i8], ptr %.sroa.0360.0587588606, i64 %7
-  %8 = and i64 %.0489, -9223372036854775745
-  %9 = icmp ugt i64 %8, -9223372036854775808
-  %storemerge.idx.i.i.i.i.i323 = select i1 %9, i64 -8, i64 0
-  %storemerge.i.i.i.i.i324 = getelementptr inbounds i8, ptr %i.nx, i64 %storemerge.idx.i.i.i.i.i323
+  %.0489 = phi i64 [ 0, %.lr.ph490 ], [ %i.os, %_ZNSt6vectorIN2cv3PtrINS0_3dnn14dnn5_v202606055LayerEEESaIS5_EE9push_backERKS5_.exit ] ; 4 uses
+  %7 = lshr i64 %.0489, 6
+  %i.nx = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0360.0587588606, i64 %7
   %i.ny = and i64 %.0489, 63
   %i.nz = shl nuw i64 1, %i.ny
-  %i.oa = load i64, ptr %storemerge.i.i.i.i.i324, align 8, !tbaa !80
+  %i.oa = load i64, ptr %i.nx, align 8, !tbaa !80
   %i.ob = and i64 %i.oa, %i.nz
   %.not426 = icmp eq i64 %i.ob, 0
   br i1 %.not426, label %bb.bt, label %_ZNSt6vectorIN2cv3PtrINS0_3dnn14dnn5_v202606055LayerEEESaIS5_EE9push_backERKS5_.exit

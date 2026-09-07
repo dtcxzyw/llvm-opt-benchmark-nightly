@@ -202,14 +202,17 @@ bb.b:                                             ; preds = %bb.a, %._crit_edge
   %i.c = getelementptr inbounds nuw [2 x i8], ptr @rv_sym_run_len, i64 %indvars.iv.a ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   %i.e = load i8, ptr %i.d, align 1, !tbaa !15
-  %i.f = zext i8 %i.e to i32
-  %4 = add i32 %.0284, %i.f                       ; 2 uses
-  %.not1 = icmp ugt i32 %.0284, %4
+  %i.f = zext i8 %i.e to i32                      ; 2 uses
+  %4 = xor i32 %.0284, -1
+  %.not1 = icmp ugt i32 %i.f, %4
   br i1 %.not1, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.g = load i8, ptr %i.c, align 2, !tbaa !15
   %i.h = zext i8 %i.g to i16
+  %5 = zext i32 %.0284 to i64
+  %6 = add i32 %.0284, 1
+  %7 = add i32 %6, %i.f                           ; 2 uses
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.b
@@ -219,16 +222,16 @@ bb.b:                                             ; preds = %bb.a, %._crit_edge
   br i1 %exitcond.not.a, label %.preheader, label %bb.b, !llvm.loop !129
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.0253 = phi i16 [ %i.i, %.lr.ph ], [ %i.h, %.lr.ph.preheader ] ; 2 uses
-  %.1292 = phi i32 [ %7, %.lr.ph ], [ %.0284, %.lr.ph.preheader ] ; 2 uses
+  %indvars.iv = phi i64 [ %5, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
+  %.0253 = phi i16 [ %i.h, %.lr.ph.preheader ], [ %i.i, %.lr.ph ] ; 2 uses
   %i.i = add i16 %.0253, -1
   %i.j = and i16 %.0253, 255
-  %5 = zext i32 %.1292 to i64
-  %6 = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %5
-  store i16 %i.j, ptr %6, align 2, !tbaa !65
-  %7 = add i32 %.1292, 1                          ; 3 uses
-  %.not = icmp ugt i32 %7, %4
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !130
+  %8 = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv
+  store i16 %i.j, ptr %8, align 2, !tbaa !65
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond.not = icmp eq i32 %7, %lftr.wideiv
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !130
 
 bb.c:                                             ; preds = %._crit_edge9
   call void @ff_vlc_init_table_from_lengths(ptr noundef %0, i32 noundef %1, i32 noundef 9, i32 noundef %.1.lcssa, ptr noundef nonnull %i.b, i32 noundef 1, ptr noundef nonnull %i.a, i32 noundef 2, i32 noundef 2, i32 noundef 0, i32 noundef 0) #8

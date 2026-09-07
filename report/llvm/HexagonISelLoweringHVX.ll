@@ -205,8 +205,8 @@ _ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit512: ; pre
   br i1 %.not, label %.loopexit, label %.lr.ph778
 
 .loopexit:                                        ; preds = %_ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit, %_ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit512, %.critedge502, %.critedge
-  %i.bc = load i32, ptr %i.w, align 8, !tbaa !190 ; 6 uses
-  %i.bd = zext i32 %i.bc to i64                   ; 2 uses
+  %i.bc = load i32, ptr %i.w, align 8, !tbaa !190 ; 5 uses
+  %i.bd = zext i32 %i.bc to i64                   ; 3 uses
   %i.be = load ptr, ptr %8, align 8, !tbaa !24    ; 3 uses
   %.not11.i = icmp eq i32 %i.bc, 0
   br i1 %.not11.i, label %._crit_edge.thread.i, label %.lr.ph.i
@@ -609,8 +609,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
 bb.bb:                                            ; preds = %._crit_edge, %bb.au
   %.1 = phi i32 [ %.0479783, %bb.au ], [ %spec.select, %._crit_edge ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond = icmp eq i32 %i.bc, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next, %i.bd
   br i1 %exitcond, label %bb.at, label %bb.au, !llvm.loop !638
 
 _ZN4llvm3MVT11getVectorVTES0_j.exit527:           ; preds = %bb.at

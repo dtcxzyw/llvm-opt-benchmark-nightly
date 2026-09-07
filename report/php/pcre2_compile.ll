@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 21
 inline.NumDeleted: 6
 loop-unroll.NumCompletelyUnrolled: 17
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 19
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 20
 begin_hunk_0_@get_grouplength:bb.a
   br label %bb.g
 
@@ -205,7 +205,7 @@ declare i32 @_pcre2_ckd_smul(ptr noundef, i32 noundef, i32 noundef) local_unname
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @add_to_class_internal(ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef %2, i32 noundef %3, ptr noundef nonnull %4, i32 noundef %5, i32 noundef %6) unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i32 @llvm.umin.i32(i32 %6, i32 255) ; 6 uses
+  %i.a = tail call i32 @llvm.umin.i32(i32 %6, i32 255) ; 8 uses
   %i.b = and i32 %2, 8
   %.not = icmp eq i32 %i.b, 0
   br i1 %.not, label %get_othercase_range.exit, label %bb.b
@@ -220,11 +220,33 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not96179, label %get_othercase_range.exit, label %.lr.ph182
 
 .lr.ph182:                                        ; preds = %.preheader
-  %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.e = zext nneg i32 %5 to i64
+  %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
+  %i.e = zext nneg i32 %5 to i64                  ; 3 uses
   %i.f = add nuw nsw i32 %i.a, 1                  ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.f to i64
-  br label %bb.v
+  %7 = add i32 %i.a, %5
+  %8 = and i32 %7, 1
+  %lcmp.mod.not.not = icmp eq i32 %8, 0
+  br i1 %lcmp.mod.not.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
+
+.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph182
+  %9 = load ptr, ptr %i.d, align 8, !tbaa !40
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 %i.e
+  %11 = load i8, ptr %10, align 1, !tbaa !29      ; 2 uses
+  %12 = lshr i8 %11, 3
+  %13 = zext nneg i8 %12 to i64
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 %13 ; 2 uses
+  %15 = load i8, ptr %14, align 1, !tbaa !29
+  %16 = and i8 %11, 7
+  %17 = shl nuw i8 1, %16
+  %18 = or i8 %17, %15
+  store i8 %18, ptr %14, align 1, !tbaa !29
+  %indvars.iv.next.prol = add nuw nsw i64 %i.e, 1
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph182
+  %indvars.iv.unr = phi i64 [ %i.e, %.lr.ph182 ], [ %indvars.iv.next.prol, %.prol.loopexit.unr-lcssa ]
+  %19 = icmp eq i32 %i.a, %5
+  br i1 %19, label %get_othercase_range.exit.loopexit, label %bb.v
 
 bb.c:                                             ; preds = %bb.b
   %i.g = and i32 %2, -9                           ; 5 uses
@@ -479,10 +501,22 @@ bb.u:                                             ; preds = %bb.r
   %.077.ph.be = add i32 %.pn, %.077.ph
   br label %.outer, !llvm.loop !238
 
-bb.v:                                             ; preds = %.lr.ph182, %bb.v
-  %indvars.iv = phi i64 [ %i.e, %.lr.ph182 ], [ %indvars.iv.next, %bb.v ] ; 2 uses
+bb.v:                                             ; preds = %.prol.loopexit, %bb.v
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.v ], [ %indvars.iv.unr, %.prol.loopexit ] ; 3 uses
+  %20 = load ptr, ptr %i.d, align 8, !tbaa !40
+  %21 = getelementptr inbounds nuw i8, ptr %20, i64 %indvars.iv
+  %22 = load i8, ptr %21, align 1, !tbaa !29      ; 2 uses
+  %23 = lshr i8 %22, 3
+  %24 = zext nneg i8 %23 to i64
+  %25 = getelementptr inbounds nuw i8, ptr %0, i64 %24 ; 2 uses
+  %26 = load i8, ptr %25, align 1, !tbaa !29
+  %27 = and i8 %22, 7
+  %28 = shl nuw i8 1, %27
+  %29 = or i8 %28, %26
+  store i8 %29, ptr %25, align 1, !tbaa !29
   %i.cs = load ptr, ptr %i.d, align 8, !tbaa !40
-  %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 %indvars.iv
+  %30 = getelementptr inbounds nuw i8, ptr %i.cs, i64 %indvars.iv
+  %i.ct = getelementptr inbounds nuw i8, ptr %30, i64 1
   %i.cu = load i8, ptr %i.ct, align 1, !tbaa !29  ; 2 uses
   %i.cv = lshr i8 %i.cu, 3
   %i.cw = zext nneg i8 %i.cv to i64
@@ -492,11 +526,12 @@ bb.v:                                             ; preds = %.lr.ph182, %bb.v
   %i.da = shl nuw i8 1, %i.cz
   %i.db = or i8 %i.da, %i.cy
   store i8 %i.db, ptr %i.cx, align 1, !tbaa !29
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %lftr.wideiv.1 = trunc i64 %indvars.iv.next to i32
+  %exitcond = icmp eq i32 %i.f, %lftr.wideiv.1
   br i1 %exitcond, label %get_othercase_range.exit.loopexit, label %bb.v, !llvm.loop !239
 
-get_othercase_range.exit.loopexit:                ; preds = %bb.v
+get_othercase_range.exit.loopexit:                ; preds = %bb.v, %.prol.loopexit
   %i.dc = sub nsw i32 %i.f, %5
   br label %get_othercase_range.exit
 

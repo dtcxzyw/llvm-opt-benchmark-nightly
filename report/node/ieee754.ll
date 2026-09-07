@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.t
 
 bb.w:                                             ; preds = %bb.w, %bb.v
   %indvar = phi i35 [ %indvar.next, %bb.w ], [ 0, %bb.v ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.w ], [ 3, %bb.v ] ; 31 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.w ], [ 3, %bb.v ] ; 35 uses
   %i.cy = getelementptr [8 x i8], ptr %i.e, i64 %indvars.iv
   %i.cz = getelementptr i8, ptr %i.cy, i64 -8
   %i.da = load double, ptr %i.cz, align 8
@@ -215,7 +215,7 @@ bb.w:                                             ; preds = %bb.w, %bb.v
   br i1 %i.db, label %bb.w, label %bb.x, !llvm.loop !5
 
 bb.x:                                             ; preds = %bb.w
-  %i.dc = trunc i64 %indvars.iv to i32            ; 2 uses
+  %i.dc = trunc nsw i64 %indvars.iv to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
@@ -232,17 +232,15 @@ bb.x:                                             ; preds = %bb.w
   br i1 %.not27.i, label %.preheader16.preheader.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.x
-  %2 = add i32 %i.dc, 3                           ; 5 uses
   %i.dh = sub nsw i32 %.sext.i, %i.dd             ; 2 uses
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %2, i32 0)
-  %3 = add nuw i32 %smax.i, 1                     ; 2 uses
-  %wide.trip.count.i = zext i32 %3 to i64         ; 2 uses
-  %xtraiter = and i64 %wide.trip.count.i, 1
-  %4 = icmp slt i32 %2, 1
-  br i1 %4, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
+  %2 = add i64 %indvars.iv, 4
+  %wide.trip.count.i = and i64 %2, 4294967295     ; 2 uses
+  %xtraiter = and i64 %indvars.iv, 1              ; 2 uses
+  %3 = icmp eq i64 %wide.trip.count.i, 1
+  br i1 %3, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %unroll_iter = and i64 %wide.trip.count.i, 4294967294
+  %unroll_iter = sub nsw i64 %wide.trip.count.i, %xtraiter
   br label %.lr.ph.i
 
 .preheader17.i.unr-lcssa:                         ; preds = %bb.ag
@@ -252,7 +250,7 @@ bb.x:                                             ; preds = %bb.w
 .lr.ph.i.epil.preheader:                          ; preds = %.preheader17.i.unr-lcssa, %.lr.ph.preheader.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i.1, %.preheader17.i.unr-lcssa ]
   %.023729.i.epil.init = phi i32 [ %i.dh, %.lr.ph.preheader.i ], [ %i.iq, %.preheader17.i.unr-lcssa ] ; 2 uses
-  %lcmp.mod271 = trunc i32 %3 to i1
+  %lcmp.mod271 = trunc i64 %indvars.iv to i1
   tail call void @llvm.assume(i1 %lcmp.mod271)
   %i.di = icmp slt i32 %.023729.i.epil.init, 0
   br i1 %i.di, label %.preheader17.i.epilog-lcssa, label %bb.y
@@ -271,6 +269,7 @@ bb.y:                                             ; preds = %.lr.ph.i.epil.prehe
   br label %.preheader17.i
 
 .preheader17.i:                                   ; preds = %.preheader17.i.unr-lcssa, %.preheader17.i.epilog-lcssa
+  %4 = add nuw i64 %indvars.iv, 3                 ; 3 uses
   %.not273.not30.i = icmp sgt i64 %indvars.iv, 0
   br i1 %.not273.not30.i, label %.preheader16.us.preheader.i, label %.preheader16.preheader.i
 
@@ -525,19 +524,17 @@ bb.ad:                                            ; preds = %bb.ad, %._crit_edge
   %niter305 = phi i64 [ 0, %._crit_edge.us.3.i.new ], [ %niter305.next.1, %bb.ad ]
   %i.hk = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv99.4.i
   %i.hl = load double, ptr %i.hk, align 16
-  %5 = trunc nuw nsw i64 %indvars.iv99.4.i to i32
-  %6 = sub i32 %2, %5
-  %7 = sext i32 %6 to i64
-  %i.hm = getelementptr inbounds [8 x i8], ptr %i.b, i64 %7
+  %5 = sub i64 %4, %indvars.iv99.4.i
+  %6 = and i64 %5, 4294967295
+  %i.hm = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %6
   %i.hn = load double, ptr %i.hm, align 8
   %i.ho = tail call double @llvm.fmuladd.f64(double %i.hl, double %i.hn, double %.032.us.4.i)
   %indvars.iv.next100.4.i = or disjoint i64 %indvars.iv99.4.i, 1 ; 2 uses
   %i.hp = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.next100.4.i
   %i.hq = load double, ptr %i.hp, align 8
-  %8 = trunc nuw nsw i64 %indvars.iv.next100.4.i to i32
-  %9 = sub i32 %2, %8
-  %10 = sext i32 %9 to i64
-  %i.hr = getelementptr inbounds [8 x i8], ptr %i.b, i64 %10
+  %7 = sub i64 %4, %indvars.iv.next100.4.i
+  %8 = and i64 %7, 4294967295
+  %i.hr = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %8
   %i.hs = load double, ptr %i.hr, align 8
   %i.ht = tail call double @llvm.fmuladd.f64(double %i.hq, double %i.hs, double %i.ho) ; 3 uses
   %indvars.iv.next100.4.i.1 = add nuw nsw i64 %indvars.iv99.4.i, 2 ; 2 uses
@@ -556,10 +553,9 @@ bb.ad:                                            ; preds = %bb.ad, %._crit_edge
   tail call void @llvm.assume(i1 %lcmp.mod303)
   %i.hu = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv99.4.i.epil.init
   %i.hv = load double, ptr %i.hu, align 8
-  %11 = trunc nuw nsw i64 %indvars.iv99.4.i.epil.init to i32
-  %12 = sub i32 %2, %11
-  %13 = sext i32 %12 to i64
-  %i.hw = getelementptr inbounds [8 x i8], ptr %i.b, i64 %13
+  %9 = sub i64 %4, %indvars.iv99.4.i.epil.init
+  %10 = and i64 %9, 4294967295
+  %i.hw = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %10
   %i.hx = load double, ptr %i.hw, align 8
   %i.hy = tail call double @llvm.fmuladd.f64(double %i.hv, double %i.hx, double %.032.us.4.i.epil.init)
   br label %._crit_edge.us.4.i
@@ -961,9 +957,6 @@ declare double @llvm.floor.f64(double) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #10

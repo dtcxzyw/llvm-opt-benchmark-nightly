@@ -202,8 +202,7 @@ bb.bx:                                            ; preds = %bb.bv
   br label %bb.by
 
 bb.by:                                            ; preds = %bb.bx, %bb.bw
-  %.1889 = phi i64 [ %i.nl, %bb.bw ], [ %i.nm, %bb.bx ]
-  %5 = freeze i64 %.1889                          ; 14 uses
+  %.1889 = phi i64 [ %i.nl, %bb.bw ], [ %i.nm, %bb.bx ] ; 14 uses
   %i.nn = add i32 %i.nf, %.0899                   ; 3 uses
   %i.no = load i32, ptr @hf_elf_sh_link, align 4
   %i.np = call ptr @proto_tree_add_item(ptr noundef %i.km, i32 noundef %i.no, ptr noundef %0, i32 noundef %i.nn, i32 noundef 4, i32 noundef %.0900) ; 0 uses
@@ -232,23 +231,23 @@ bb.ca:                                            ; preds = %bb.by
   br label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca, %bb.bz
-  %.0867 = phi i64 [ %i.oe, %bb.bz ], [ %i.of, %bb.ca ] ; 13 uses
+  %.0867 = phi i64 [ %i.oe, %bb.bz ], [ %i.of, %bb.ca ] ; 14 uses
   %i.og = add i32 %i.ny, %.0899
-  %i.oh = icmp ne i64 %5, 0
+  %i.oh = icmp ne i64 %.1889, 0
   %i.oi = icmp ne i32 %i.kq, 8
   %or.cond17 = and i1 %i.oi, %i.oh
   br i1 %or.cond17, label %bb.cc, label %.loopexit
 
 bb.cc:                                            ; preds = %bb.cb
-  %i.oj = add i64 %5, %.28841104                  ; 12 uses
+  %i.oj = add i64 %.1889, %.28841104              ; 14 uses
   %i.ok = zext i32 %.48791105 to i64
   %i.ol = getelementptr [24 x i8], ptr %i.eh, i64 %i.ok ; 3 uses
   store i64 %.1891, ptr %i.ol, align 8
   %i.om = getelementptr i8, ptr %i.ol, i64 8
-  store i64 %5, ptr %i.om, align 8
+  store i64 %.1889, ptr %i.om, align 8
   %i.on = getelementptr i8, ptr %i.ol, i64 16
   store ptr %i.lp, ptr %i.on, align 8
-  %i.oo = add i32 %.48791105, 1                   ; 12 uses
+  %i.oo = add i32 %.48791105, 1                   ; 14 uses
   %i.op = icmp ult i64 %.1891, 2147483648
   br i1 %i.op, label %value_guard.exit955, label %bb.cd
 
@@ -258,7 +257,7 @@ bb.cd:                                            ; preds = %bb.cc
 
 value_guard.exit955:                              ; preds = %bb.cc
   %i.oq = trunc nuw nsw i64 %.1891 to i32         ; 15 uses
-  %i.or = icmp ult i64 %5, 2147483648
+  %i.or = icmp ult i64 %.1889, 2147483648
   br i1 %i.or, label %value_guard.exit956, label %bb.ce
 
 bb.ce:                                            ; preds = %value_guard.exit955
@@ -266,7 +265,7 @@ bb.ce:                                            ; preds = %value_guard.exit955
   unreachable
 
 value_guard.exit956:                              ; preds = %value_guard.exit955
-  %i.os = trunc nuw nsw i64 %5 to i32             ; 4 uses
+  %i.os = trunc nuw nsw i64 %.1889 to i32         ; 4 uses
   %i.ot = load i32, ptr @ett_elf_segment, align 4
   %i.ou = call ptr @proto_tree_add_subtree(ptr noundef %i.km, ptr noundef %0, i32 noundef %i.oq, i32 noundef %i.os, i32 noundef %i.ot, ptr noundef nonnull %i.k, ptr noundef nonnull @.str.14) ; 13 uses
   %i.ov = call i32 @g_strcmp0(ptr noundef %i.lp, ptr noundef nonnull @.str.667)
@@ -544,7 +543,7 @@ dissect_eh_frame.exit:                            ; preds = %dissect_eh_frame.ex
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #5
-  %i.to = add nuw nsw i64 %5, %.1891
+  %i.to = add nuw nsw i64 %.1889, %.1891
   %i.tp = trunc nuw i64 %i.to to i32
   %.not938 = icmp eq i32 %.0154.i, %i.tp
   br i1 %.not938, label %.loopexit, label %.loopexit.sink.split
@@ -552,7 +551,7 @@ dissect_eh_frame.exit:                            ; preds = %dissect_eh_frame.ex
 bb.da:                                            ; preds = %value_guard.exit956
   %i.tq = call i32 @g_strcmp0(ptr noundef %i.lp, ptr noundef nonnull @.str.668)
   %i.tr = icmp eq i32 %i.tq, 0
-  br i1 %i.tr, label %value_guard.exit960, label %bb.ei
+  br i1 %i.tr, label %value_guard.exit960, label %5
 
 value_guard.exit960:                              ; preds = %bb.da
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #5
@@ -897,32 +896,34 @@ bb.eh:                                            ; preds = %bb.eh, %.lr.ph.i961
 dissect_eh_frame_hdr.exit:                        ; preds = %bb.eh, %value_guard.exit.i
   %.0.lcssa.i = phi i32 [ %i.wv, %value_guard.exit.i ], [ %i.xv, %bb.eh ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #5
-  %i.xz = add nuw nsw i64 %5, %.1891
+  %i.xz = add nuw nsw i64 %.1889, %.1891
   %i.ya = trunc nuw i64 %i.xz to i32
   %.not937 = icmp eq i32 %.0.lcssa.i, %i.ya
   br i1 %.not937, label %.loopexit, label %.loopexit.sink.split
 
-bb.ei:                                            ; preds = %bb.da
-  %i.yb = icmp eq i32 %i.kq, 6
-  br i1 %i.yb, label %bb.ej, label %bb.ez
+5:                                                ; preds = %bb.da
+  %6 = icmp eq i32 %i.kq, 6
+  br i1 %6, label %bb.ei, label %bb.ez
+
+bb.ei:                                            ; preds = %5
+  %i.yb = icmp eq i64 %.0867, 0
+  br i1 %i.yb, label %.loopexit, label %bb.ej
 
 bb.ej:                                            ; preds = %bb.ei
-  %6 = add i64 %.0867, -1
-  %or.cond1318.not = icmp ult i64 %6, %5
-  br i1 %or.cond1318.not, label %value_guard.exit969.preheader, label %.loopexit
+  %7 = udiv i64 %.1889, %.0867
+  %.not9891096 = icmp ugt i64 %.0867, %.1889
+  br i1 %.not9891096, label %.loopexit, label %value_guard.exit969.preheader
 
 value_guard.exit969.preheader:                    ; preds = %bb.ej
-  %7 = udiv i64 %5, %.0867
   %i.yc = trunc nuw nsw i64 %.0867 to i32
-  %8 = trunc nuw nsw i64 %7 to i32
   br label %value_guard.exit969
 
 value_guard.exit969:                              ; preds = %value_guard.exit969.preheader, %value_guard.exit968
-  %i.yd = phi i64 [ %11, %value_guard.exit968 ], [ 1, %value_guard.exit969.preheader ]
-  %.08681098 = phi i32 [ %.0.i, %value_guard.exit968 ], [ %i.oq, %value_guard.exit969.preheader ] ; 8 uses
-  %.08711097 = phi i32 [ %10, %value_guard.exit968 ], [ 1, %value_guard.exit969.preheader ] ; 2 uses
-  %9 = load i32, ptr @ett_symbol_table_entry, align 4
-  %i.ye = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.ou, ptr noundef %0, i32 noundef %.08681098, i32 noundef %i.yc, i32 noundef %9, ptr noundef nonnull %i.m, ptr noundef nonnull @.str.669, i32 noundef %.08711097) ; 4 uses
+  %i.yd = phi i64 [ 1, %value_guard.exit969.preheader ], [ %indvars.iv.next1161, %value_guard.exit968 ] ; 4 uses
+  %.08681098 = phi i32 [ %i.oq, %value_guard.exit969.preheader ], [ %.0.i, %value_guard.exit968 ] ; 8 uses
+  %8 = load i32, ptr @ett_symbol_table_entry, align 4
+  %9 = trunc nuw i64 %i.yd to i32
+  %i.ye = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.ou, ptr noundef %0, i32 noundef %.08681098, i32 noundef %i.yc, i32 noundef %8, ptr noundef nonnull %i.m, ptr noundef nonnull @.str.669, i32 noundef %9) ; 4 uses
   %i.yf = load ptr, ptr %i.m, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
   br i1 %i.bg, label %bb.ek, label %bb.ep
@@ -1026,7 +1027,7 @@ dissect_dynamic.exit:                             ; preds = %bb.ew
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.yf, ptr noundef nonnull @.str.666, ptr noundef %i.zm)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
   %i.zn = mul nuw nsw i64 %i.yd, %.0867
-  %i.zo = add nuw nsw i64 %i.zn, %.1891
+  %i.zo = add nuw i64 %i.zn, %.1891
   %i.zp = trunc i64 %i.zo to i32
   %.not936 = icmp eq i32 %.0.i, %i.zp
   br i1 %.not936, label %value_guard.exit968, label %bb.ey
@@ -1037,21 +1038,20 @@ bb.ey:                                            ; preds = %dissect_dynamic.exi
   br label %value_guard.exit968
 
 value_guard.exit968:                              ; preds = %dissect_dynamic.exit, %bb.ey
-  %10 = add i32 %.08711097, 1                     ; 3 uses
-  %11 = zext i32 %10 to i64
-  %.not989 = icmp ugt i32 %10, %8
-  br i1 %.not989, label %.loopexit, label %value_guard.exit969, !llvm.loop !11
+  %indvars.iv.next1161 = add nuw i64 %i.yd, 1
+  %.not989 = icmp ugt i64 %7, %i.yd
+  br i1 %.not989, label %value_guard.exit969, label %.loopexit, !llvm.loop !11
 
-bb.ez:                                            ; preds = %bb.ei
+bb.ez:                                            ; preds = %5
   %i.zs = icmp eq i32 %i.kq, 2
-  switch i32 %i.kq, label %bb.fv [
+  switch i32 %i.kq, label %12 [
     i32 11, label %bb.fa
     i32 2, label %bb.fa
     i32 3, label %value_guard.exit977.preheader
   ]
 
 value_guard.exit977.preheader:                    ; preds = %bb.ez
-  %i.zt = add nuw nsw i64 %5, %.1891
+  %i.zt = add nuw nsw i64 %.1889, %.1891
   %i.zu = trunc nuw i64 %i.zt to i32              ; 2 uses
   %i.zv = icmp slt i32 %i.oq, %i.zu
   br i1 %i.zv, label %value_guard.exit977, label %.loopexit
@@ -1061,8 +1061,8 @@ bb.fa:                                            ; preds = %bb.ez, %bb.ez
   br i1 %.not933, label %.loopexit, label %value_guard.exit972.preheader
 
 value_guard.exit972.preheader:                    ; preds = %bb.fa
-  %i.zw = udiv i64 %5, %.0867
-  %.not9881088 = icmp ugt i64 %.0867, %5
+  %i.zw = udiv i64 %.1889, %.0867
+  %.not9881088 = icmp ugt i64 %.0867, %.1889
   br i1 %.not9881088, label %.loopexit, label %value_guard.exit973.preheader
 
 value_guard.exit973.preheader:                    ; preds = %value_guard.exit972.preheader
@@ -1072,11 +1072,11 @@ value_guard.exit973.preheader:                    ; preds = %value_guard.exit972
   br label %value_guard.exit973
 
 value_guard.exit973:                              ; preds = %value_guard.exit973.preheader, %value_guard.exit972
-  %i.zz = phi i64 [ %14, %value_guard.exit972 ], [ 1, %value_guard.exit973.preheader ]
-  %.18691090 = phi i32 [ %i.ado, %value_guard.exit972 ], [ %i.oq, %value_guard.exit973.preheader ] ; 13 uses
-  %.18721089 = phi i32 [ %13, %value_guard.exit972 ], [ 1, %value_guard.exit973.preheader ] ; 2 uses
-  %12 = load i32, ptr @ett_symbol_table_entry, align 4
-  %i.aaa = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.ou, ptr noundef %0, i32 noundef %.18691090, i32 noundef %i.zx, i32 noundef %12, ptr noundef nonnull %i.m, ptr noundef nonnull @.str.669, i32 noundef %.18721089) ; 11 uses
+  %i.zz = phi i64 [ 1, %value_guard.exit973.preheader ], [ %indvars.iv.next1155, %value_guard.exit972 ] ; 4 uses
+  %.18691090 = phi i32 [ %i.oq, %value_guard.exit973.preheader ], [ %i.ado, %value_guard.exit972 ] ; 13 uses
+  %10 = load i32, ptr @ett_symbol_table_entry, align 4
+  %11 = trunc nuw i64 %i.zz to i32
+  %i.aaa = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.ou, ptr noundef %0, i32 noundef %.18691090, i32 noundef %i.zx, i32 noundef %10, ptr noundef nonnull %i.m, ptr noundef nonnull @.str.669, i32 noundef %11) ; 11 uses
   %i.aab = load ptr, ptr %i.m, align 8            ; 2 uses
   %i.aac = load i32, ptr %i.s, align 4
   %i.aad = trunc i32 %i.aac to i16                ; 2 uses
@@ -1290,10 +1290,9 @@ bb.fu:                                            ; preds = %dissect_symbol_tabl
   br label %value_guard.exit972
 
 value_guard.exit972:                              ; preds = %dissect_symbol_table.exit, %bb.fu
-  %13 = add i32 %.18721089, 1                     ; 2 uses
-  %14 = zext i32 %13 to i64                       ; 2 uses
-  %.not988 = icmp ult i64 %i.zw, %14
-  br i1 %.not988, label %.loopexit, label %value_guard.exit973, !llvm.loop !12
+  %indvars.iv.next1155 = add nuw i64 %i.zz, 1
+  %.not988.not = icmp ugt i64 %i.zw, %i.zz
+  br i1 %.not988.not, label %value_guard.exit973, label %.loopexit, !llvm.loop !12
 
 value_guard.exit977:                              ; preds = %value_guard.exit977.preheader, %value_guard.exit977
   %.21086 = phi i32 [ %i.aef, %value_guard.exit977 ], [ %i.oq, %value_guard.exit977.preheader ] ; 4 uses
@@ -1310,26 +1309,28 @@ value_guard.exit977:                              ; preds = %value_guard.exit977
   %i.aeh = icmp slt i32 %i.aef, %i.zu
   br i1 %i.aeh, label %value_guard.exit977, label %.loopexit, !llvm.loop !13
 
-bb.fv:                                            ; preds = %bb.ez
-  %15 = icmp ult i64 %.0867, 2
-  %.not9321092 = icmp ugt i64 %.0867, %5
-  %or.cond1319 = or i1 %15, %.not9321092
-  br i1 %or.cond1319, label %.loopexit, label %value_guard.exit980.preheader
+12:                                               ; preds = %bb.ez
+  %13 = icmp ugt i64 %.0867, 1
+  br i1 %13, label %bb.fv, label %.loopexit
+
+bb.fv:                                            ; preds = %12
+  %14 = udiv i64 %.1889, %.0867
+  %.not9321092 = icmp ugt i64 %.0867, %.1889
+  br i1 %.not9321092, label %.loopexit, label %value_guard.exit980.preheader
 
 value_guard.exit980.preheader:                    ; preds = %bb.fv
-  %16 = udiv i64 %5, %.0867
   %i.aei = trunc nuw nsw i64 %.0867 to i32        ; 2 uses
-  %17 = trunc nuw nsw i64 %16 to i32
   br label %value_guard.exit980
 
 value_guard.exit980:                              ; preds = %value_guard.exit980.preheader, %value_guard.exit980
-  %.31094 = phi i32 [ %i.ael, %value_guard.exit980 ], [ %i.oq, %value_guard.exit980.preheader ] ; 2 uses
-  %.38741093 = phi i32 [ %18, %value_guard.exit980 ], [ 1, %value_guard.exit980.preheader ] ; 3 uses
+  %indvars.iv1157 = phi i64 [ 1, %value_guard.exit980.preheader ], [ %indvars.iv.next1158, %value_guard.exit980 ] ; 3 uses
+  %.38741093 = phi i32 [ %i.oq, %value_guard.exit980.preheader ], [ %i.ael, %value_guard.exit980 ] ; 2 uses
   %i.aej = load i32, ptr @hf_elf_entry_bytes, align 4
-  %i.aek = call ptr (ptr, i32, ptr, i32, i32, ptr, ptr, ...) @proto_tree_add_bytes_format(ptr noundef %i.ou, i32 noundef %i.aej, ptr noundef %0, i32 noundef %.31094, i32 noundef %i.aei, ptr noundef null, ptr noundef nonnull @.str.671, i32 noundef %.38741093) ; 0 uses
-  %i.ael = add i32 %.31094, %i.aei
-  %18 = add nuw nsw i32 %.38741093, 1
-  %.not932.not = icmp samesign ult i32 %.38741093, %17
+  %15 = trunc nuw nsw i64 %indvars.iv1157 to i32
+  %i.aek = call ptr (ptr, i32, ptr, i32, i32, ptr, ptr, ...) @proto_tree_add_bytes_format(ptr noundef %i.ou, i32 noundef %i.aej, ptr noundef %0, i32 noundef %.38741093, i32 noundef %i.aei, ptr noundef null, ptr noundef nonnull @.str.671, i32 noundef %15) ; 0 uses
+  %i.ael = add i32 %.38741093, %i.aei
+  %indvars.iv.next1158 = add nuw nsw i64 %indvars.iv1157, 1
+  %.not932.not = icmp samesign ugt i64 %14, %indvars.iv1157
   br i1 %.not932.not, label %value_guard.exit980, label %.loopexit, !llvm.loop !14
 
 .loopexit.sink.split:                             ; preds = %dissect_eh_frame_hdr.exit, %dissect_eh_frame.exit
@@ -1337,9 +1338,9 @@ value_guard.exit980:                              ; preds = %value_guard.exit980
   %i.aen = call ptr @expert_add_info(ptr noundef %1, ptr noundef %i.aem, ptr noundef nonnull @ei_invalid_segment_size) ; 0 uses
   br label %.loopexit
 
-.loopexit:                                        ; preds = %value_guard.exit977, %value_guard.exit972, %value_guard.exit980, %value_guard.exit968, %.loopexit.sink.split, %value_guard.exit977.preheader, %value_guard.exit972.preheader, %dissect_eh_frame.exit, %bb.ej, %bb.fv, %bb.fa, %dissect_eh_frame_hdr.exit, %bb.cb
-  %.3885 = phi i64 [ %i.oj, %value_guard.exit980 ], [ %i.oj, %dissect_eh_frame.exit ], [ %i.oj, %value_guard.exit972 ], [ %i.oj, %dissect_eh_frame_hdr.exit ], [ %.28841104, %bb.cb ], [ %i.oj, %bb.ej ], [ %i.oj, %value_guard.exit968 ], [ %i.oj, %bb.fa ], [ %i.oj, %.loopexit.sink.split ], [ %i.oj, %value_guard.exit972.preheader ], [ %i.oj, %bb.fv ], [ %i.oj, %value_guard.exit977.preheader ], [ %i.oj, %value_guard.exit977 ] ; 2 uses
-  %.5880 = phi i32 [ %i.oo, %value_guard.exit980 ], [ %i.oo, %dissect_eh_frame.exit ], [ %i.oo, %value_guard.exit972 ], [ %i.oo, %dissect_eh_frame_hdr.exit ], [ %.48791105, %bb.cb ], [ %i.oo, %bb.ej ], [ %i.oo, %value_guard.exit968 ], [ %i.oo, %bb.fa ], [ %i.oo, %.loopexit.sink.split ], [ %i.oo, %value_guard.exit972.preheader ], [ %i.oo, %bb.fv ], [ %i.oo, %value_guard.exit977.preheader ], [ %i.oo, %value_guard.exit977 ] ; 2 uses
+.loopexit:                                        ; preds = %value_guard.exit977, %value_guard.exit972, %value_guard.exit980, %value_guard.exit968, %.loopexit.sink.split, %value_guard.exit977.preheader, %value_guard.exit972.preheader, %bb.fv, %bb.ej, %dissect_eh_frame.exit, %bb.ei, %12, %bb.fa, %dissect_eh_frame_hdr.exit, %bb.cb
+  %.3885 = phi i64 [ %i.oj, %value_guard.exit980 ], [ %i.oj, %dissect_eh_frame.exit ], [ %i.oj, %value_guard.exit972 ], [ %i.oj, %dissect_eh_frame_hdr.exit ], [ %.28841104, %bb.cb ], [ %i.oj, %bb.ei ], [ %i.oj, %bb.ej ], [ %i.oj, %bb.fa ], [ %i.oj, %bb.fv ], [ %i.oj, %value_guard.exit972.preheader ], [ %i.oj, %12 ], [ %i.oj, %value_guard.exit977.preheader ], [ %i.oj, %.loopexit.sink.split ], [ %i.oj, %value_guard.exit968 ], [ %i.oj, %value_guard.exit977 ] ; 2 uses
+  %.5880 = phi i32 [ %i.oo, %value_guard.exit980 ], [ %i.oo, %dissect_eh_frame.exit ], [ %i.oo, %value_guard.exit972 ], [ %i.oo, %dissect_eh_frame_hdr.exit ], [ %.48791105, %bb.cb ], [ %i.oo, %bb.ei ], [ %i.oo, %bb.ej ], [ %i.oo, %bb.fa ], [ %i.oo, %bb.fv ], [ %i.oo, %value_guard.exit972.preheader ], [ %i.oo, %12 ], [ %i.oo, %value_guard.exit977.preheader ], [ %i.oo, %.loopexit.sink.split ], [ %i.oo, %value_guard.exit968 ], [ %i.oo, %value_guard.exit977 ] ; 2 uses
   %.not927.wide = icmp eq i32 %i.ki, 0
   br i1 %.not927.wide, label %._crit_edge, label %bb.bd, !llvm.loop !15
 

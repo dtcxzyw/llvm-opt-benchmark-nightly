@@ -205,8 +205,8 @@ cvAltSum.exit28.i.i.i:                            ; preds = %cvAltSum.exit28.i.i
   %.lcssa1136 = phi double [ %i.akb, %cvAltSum.exit28.i.i.i.unr-lcssa ], [ %i.aki, %.preheader.i21.i.i.i.epil.preheader ]
   %i.akj = fdiv double 1.000000e+00, %.lcssa1135  ; 4 uses
   store double 1.000000e+00, ptr %i.qx, align 8, !tbaa !29
-  %i.akk = add nuw i32 %i.afv, 1
-  %wide.trip.count.i29.i.i.i = zext i32 %i.akk to i64
+  %i.akk = add nuw nsw i32 %i.afv, 1
+  %wide.trip.count.i29.i.i.i = zext nneg i32 %i.akk to i64
   %i.akl = zext nneg i32 %i.afv to i64            ; 3 uses
   %n.vec1013 = and i64 %i.akl, 2147483646         ; 2 uses
   %i.akm = or i64 %i.akl, 1

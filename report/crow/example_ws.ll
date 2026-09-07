@@ -205,7 +205,7 @@ bb.ca:                                            ; preds = %_ZN4sha14SHA111proc
   %.08.i.i = phi ptr [ %i.mf, %.lr.ph.i.i ], [ %i.ms, %_ZN4sha14SHA111processByteEh.exit.i.i ] ; 2 uses
   %i.mk = load i8, ptr %.08.i.i, align 1, !tbaa !165
   %i.ml = load i64, ptr %i.me, align 8, !tbaa !609 ; 2 uses
-  %i.mm = add i64 %i.ml, 1
+  %i.mm = add nsw i64 %i.ml, 1
   store i64 %i.mm, ptr %i.me, align 8, !tbaa !609
   %i.mn = getelementptr inbounds nuw i8, ptr %i.mi, i64 %i.ml
   store i8 %i.mk, ptr %i.mn, align 1, !tbaa !165
@@ -608,7 +608,7 @@ bb.ca:                                            ; preds = %_ZN4sha14SHA111proc
   %.08.i.i = phi ptr [ %i.mf, %.lr.ph.i.i ], [ %i.ms, %_ZN4sha14SHA111processByteEh.exit.i.i ] ; 2 uses
   %i.mk = load i8, ptr %.08.i.i, align 1, !tbaa !165
   %i.ml = load i64, ptr %i.me, align 8, !tbaa !609 ; 2 uses
-  %i.mm = add i64 %i.ml, 1
+  %i.mm = add nsw i64 %i.ml, 1
   store i64 %i.mm, ptr %i.me, align 8, !tbaa !609
   %i.mn = getelementptr inbounds nuw i8, ptr %i.mi, i64 %i.ml
   store i8 %i.mk, ptr %i.mn, align 1, !tbaa !165
