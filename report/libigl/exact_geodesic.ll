@@ -205,30 +205,26 @@ bb.q:                                             ; preds = %bb.l, %bb.k, %bb.n,
 
 ._crit_edge:                                      ; preds = %bb.v, %bb.s
   %.1.lcssa = phi i8 [ %.1, %bb.s ], [ %spec.select, %bb.v ] ; 2 uses
-  %3 = add i8 %.1.lcssa, 1                        ; 2 uses
-  %i.ea = zext i8 %.1.lcssa to i64
+  %i.ea = zext i8 %.1.lcssa to i64                ; 2 uses
   %i.eb = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ea
   store double %.sroa.speculated, ptr %i.eb, align 8, !tbaa !87
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #22
-  %4 = zext i8 %3 to i32
-  %5 = add nsw i32 %4, -1                         ; 2 uses
-  %6 = icmp ugt i8 %3, 1
-  br i1 %6, label %.lr.ph182, label %._crit_edge183
+  %.not205 = icmp eq i8 %.1.lcssa, 0
+  br i1 %.not205, label %._crit_edge183, label %.lr.ph182
 
 .lr.ph182:                                        ; preds = %._crit_edge.thread, %._crit_edge
-  %7 = phi i32 [ 1, %._crit_edge.thread ], [ %5, %._crit_edge ] ; 15 uses
+  %3 = phi i64 [ 1, %._crit_edge.thread ], [ %i.ea, %._crit_edge ] ; 28 uses
   %i.ec = fcmp oeq double %i.ao, 1.000000e+100
   %i.ed = fcmp oeq double %i.ay, 0.000000e+00     ; 2 uses
   %i.ee = fcmp oeq double %i.aq, 1.000000e+100    ; 2 uses
   %i.ef = fcmp oeq double %i.bb, 0.000000e+00     ; 2 uses
-  %8 = zext i32 %7 to i64                         ; 14 uses
   br i1 %i.ec, label %.lr.ph182.split.us, label %.lr.ph182.split
 
 .lr.ph182.split.us:                               ; preds = %.lr.ph182
   br i1 %i.ee, label %_ZN3igl8geodesic8Interval6signalEd.exit.us.us.preheader, label %.lr.ph182.split.us.split
 
 _ZN3igl8geodesic8Interval6signalEd.exit.us.us.preheader: ; preds = %.lr.ph182.split.us
-  %i.eg = shl nuw nsw i64 %8, 2
+  %i.eg = shl nuw nsw i64 %3, 2
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.b, i8 0, i64 %i.eg, i1 false), !tbaa !153
   br label %._crit_edge183
 
@@ -236,11 +232,11 @@ _ZN3igl8geodesic8Interval6signalEd.exit.us.us.preheader: ; preds = %.lr.ph182.sp
   br i1 %i.ef, label %_ZN3igl8geodesic8Interval6signalEd.exit.us.us193.preheader, label %_ZN3igl8geodesic8Interval6signalEd.exit.us.preheader
 
 _ZN3igl8geodesic8Interval6signalEd.exit.us.preheader: ; preds = %.lr.ph182.split.us.split
-  %min.iters.check287 = icmp ult i32 %7, 2
+  %min.iters.check287 = icmp samesign ult i64 %3, 2
   br i1 %min.iters.check287, label %_ZN3igl8geodesic8Interval6signalEd.exit.us.preheader334, label %vector.ph288
 
 vector.ph288:                                     ; preds = %_ZN3igl8geodesic8Interval6signalEd.exit.us.preheader
-  %n.vec289 = and i64 %8, 4294967294              ; 3 uses
+  %n.vec289 = and i64 %3, 254                     ; 3 uses
   %broadcast.splat291 = shufflevector <2 x double> %i.az, <2 x double> poison, <2 x i32> zeroinitializer
   %broadcast.splat293 = shufflevector <2 x double> %i.bd, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %broadcast.splatinsert294 = insertelement <2 x double> poison, double %i.aq, i64 0
@@ -268,7 +264,7 @@ vector.body296:                                   ; preds = %vector.body296, %ve
   br i1 %i.es, label %middle.block301, label %vector.body296, !llvm.loop !394
 
 middle.block301:                                  ; preds = %vector.body296
-  %cmp.n302 = icmp eq i64 %n.vec289, %8
+  %cmp.n302 = icmp eq i64 %3, %n.vec289
   br i1 %cmp.n302, label %._crit_edge183, label %_ZN3igl8geodesic8Interval6signalEd.exit.us.preheader334
 
 _ZN3igl8geodesic8Interval6signalEd.exit.us.preheader334: ; preds = %_ZN3igl8geodesic8Interval6signalEd.exit.us.preheader, %middle.block301
@@ -277,11 +273,11 @@ _ZN3igl8geodesic8Interval6signalEd.exit.us.preheader334: ; preds = %_ZN3igl8geod
   br label %_ZN3igl8geodesic8Interval6signalEd.exit.us
 
 _ZN3igl8geodesic8Interval6signalEd.exit.us.us193.preheader: ; preds = %.lr.ph182.split.us.split
-  %min.iters.check305 = icmp ult i32 %7, 4
+  %min.iters.check305 = icmp samesign ult i64 %3, 4
   br i1 %min.iters.check305, label %_ZN3igl8geodesic8Interval6signalEd.exit.us.us193.preheader333, label %vector.ph306
 
 vector.ph306:                                     ; preds = %_ZN3igl8geodesic8Interval6signalEd.exit.us.us193.preheader
-  %n.vec307 = and i64 %8, 4294967292              ; 3 uses
+  %n.vec307 = and i64 %3, 252                     ; 3 uses
   %broadcast.splat309 = shufflevector <2 x double> %i.az, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert310 = insertelement <2 x double> poison, double %i.aq, i64 0
   %broadcast.splat311 = shufflevector <2 x double> %broadcast.splatinsert310, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -320,7 +316,7 @@ vector.body312:                                   ; preds = %vector.body312, %ve
   br i1 %i.fo, label %middle.block319, label %vector.body312, !llvm.loop !395
 
 middle.block319:                                  ; preds = %vector.body312
-  %cmp.n320 = icmp eq i64 %n.vec307, %8
+  %cmp.n320 = icmp eq i64 %3, %n.vec307
   br i1 %cmp.n320, label %._crit_edge183, label %_ZN3igl8geodesic8Interval6signalEd.exit.us.us193.preheader333
 
 _ZN3igl8geodesic8Interval6signalEd.exit.us.us193.preheader333: ; preds = %_ZN3igl8geodesic8Interval6signalEd.exit.us.us193.preheader, %middle.block319
@@ -343,7 +339,7 @@ _ZN3igl8geodesic8Interval6signalEd.exit.us.us193: ; preds = %_ZN3igl8geodesic8In
   %i.fz = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv231
   store i32 %i.fy, ptr %i.fz, align 4, !tbaa !153
   %indvars.iv.next232 = add nuw nsw i64 %indvars.iv231, 1 ; 2 uses
-  %exitcond235.not = icmp eq i64 %indvars.iv.next232, %8
+  %exitcond235.not = icmp eq i64 %indvars.iv.next232, %3
   br i1 %exitcond235.not, label %._crit_edge183, label %_ZN3igl8geodesic8Interval6signalEd.exit.us.us193, !llvm.loop !396
 
 _ZN3igl8geodesic8Interval6signalEd.exit.us:       ; preds = %_ZN3igl8geodesic8Interval6signalEd.exit.us.preheader334, %_ZN3igl8geodesic8Interval6signalEd.exit.us
@@ -363,7 +359,7 @@ _ZN3igl8geodesic8Interval6signalEd.exit.us:       ; preds = %_ZN3igl8geodesic8In
   %i.gk = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv226
   store i32 %i.gj, ptr %i.gk, align 4, !tbaa !153
   %indvars.iv.next227 = add nuw nsw i64 %indvars.iv226, 1 ; 2 uses
-  %exitcond230.not = icmp eq i64 %indvars.iv.next227, %8
+  %exitcond230.not = icmp eq i64 %indvars.iv.next227, %3
   br i1 %exitcond230.not, label %._crit_edge183, label %_ZN3igl8geodesic8Interval6signalEd.exit.us, !llvm.loop !397
 
 .lr.ph182.split:                                  ; preds = %.lr.ph182
@@ -378,11 +374,11 @@ _ZN3igl8geodesic8Interval6signalEd.exit.us:       ; preds = %_ZN3igl8geodesic8In
   br i1 %i.ed, label %_ZN3igl8geodesic8Interval6signalEd.exit.us186.us.preheader, label %_ZN3igl8geodesic8Interval6signalEd.exit.us186.preheader
 
 _ZN3igl8geodesic8Interval6signalEd.exit.us186.preheader: ; preds = %.lr.ph182.split.split.us
-  %min.iters.check = icmp ult i32 %7, 2
+  %min.iters.check = icmp samesign ult i64 %3, 2
   br i1 %min.iters.check, label %_ZN3igl8geodesic8Interval6signalEd.exit.us186.preheader338, label %vector.ph
 
 vector.ph:                                        ; preds = %_ZN3igl8geodesic8Interval6signalEd.exit.us186.preheader
-  %n.vec = and i64 %8, 4294967294                 ; 3 uses
+  %n.vec = and i64 %3, 254                        ; 3 uses
   %broadcast.splat = shufflevector <2 x double> %i.aw, <2 x double> poison, <2 x i32> zeroinitializer
   %broadcast.splat264 = shufflevector <2 x double> %i.bd, <2 x double> poison, <2 x i32> zeroinitializer
   %broadcast.splatinsert265 = insertelement <2 x double> poison, double %i.ao, i64 0
@@ -410,7 +406,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.gy, label %middle.block, label %vector.body, !llvm.loop !398
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %8
+  %cmp.n = icmp eq i64 %3, %n.vec
   br i1 %cmp.n, label %._crit_edge183, label %_ZN3igl8geodesic8Interval6signalEd.exit.us186.preheader338
 
 _ZN3igl8geodesic8Interval6signalEd.exit.us186.preheader338: ; preds = %_ZN3igl8geodesic8Interval6signalEd.exit.us186.preheader, %middle.block
@@ -419,11 +415,11 @@ _ZN3igl8geodesic8Interval6signalEd.exit.us186.preheader338: ; preds = %_ZN3igl8g
   br label %_ZN3igl8geodesic8Interval6signalEd.exit.us186
 
 _ZN3igl8geodesic8Interval6signalEd.exit.us186.us.preheader: ; preds = %.lr.ph182.split.split.us
-  %min.iters.check269 = icmp ult i32 %7, 4
+  %min.iters.check269 = icmp samesign ult i64 %3, 4
   br i1 %min.iters.check269, label %_ZN3igl8geodesic8Interval6signalEd.exit.us186.us.preheader336, label %vector.ph270
 
 vector.ph270:                                     ; preds = %_ZN3igl8geodesic8Interval6signalEd.exit.us186.us.preheader
-  %n.vec271 = and i64 %8, 4294967292              ; 3 uses
+  %n.vec271 = and i64 %3, 252                     ; 3 uses
   %broadcast.splat273 = shufflevector <2 x double> %i.aw, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert274 = insertelement <2 x double> poison, double %i.ao, i64 0
   %broadcast.splat275 = shufflevector <2 x double> %broadcast.splatinsert274, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -462,7 +458,7 @@ vector.body276:                                   ; preds = %vector.body276, %ve
   br i1 %i.hu, label %middle.block283, label %vector.body276, !llvm.loop !399
 
 middle.block283:                                  ; preds = %vector.body276
-  %cmp.n284 = icmp eq i64 %n.vec271, %8
+  %cmp.n284 = icmp eq i64 %3, %n.vec271
   br i1 %cmp.n284, label %._crit_edge183, label %_ZN3igl8geodesic8Interval6signalEd.exit.us186.us.preheader336
 
 _ZN3igl8geodesic8Interval6signalEd.exit.us186.us.preheader336: ; preds = %_ZN3igl8geodesic8Interval6signalEd.exit.us186.us.preheader, %middle.block283
@@ -485,7 +481,7 @@ _ZN3igl8geodesic8Interval6signalEd.exit.us186.us: ; preds = %_ZN3igl8geodesic8In
   %i.if = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv221
   store i32 %i.ie, ptr %i.if, align 4, !tbaa !153
   %indvars.iv.next222 = add nuw nsw i64 %indvars.iv221, 1 ; 2 uses
-  %exitcond225.not = icmp eq i64 %indvars.iv.next222, %8
+  %exitcond225.not = icmp eq i64 %indvars.iv.next222, %3
   br i1 %exitcond225.not, label %._crit_edge183, label %_ZN3igl8geodesic8Interval6signalEd.exit.us186.us, !llvm.loop !400
 
 _ZN3igl8geodesic8Interval6signalEd.exit.us186:    ; preds = %_ZN3igl8geodesic8Interval6signalEd.exit.us186.preheader338, %_ZN3igl8geodesic8Interval6signalEd.exit.us186
@@ -505,7 +501,7 @@ _ZN3igl8geodesic8Interval6signalEd.exit.us186:    ; preds = %_ZN3igl8geodesic8In
   %i.iq = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv216
   store i32 %i.ip, ptr %i.iq, align 4, !tbaa !153
   %indvars.iv.next217 = add nuw nsw i64 %indvars.iv216, 1 ; 2 uses
-  %exitcond220.not = icmp eq i64 %indvars.iv.next217, %8
+  %exitcond220.not = icmp eq i64 %indvars.iv.next217, %3
   br i1 %exitcond220.not, label %._crit_edge183, label %_ZN3igl8geodesic8Interval6signalEd.exit.us186, !llvm.loop !401
 
 bb.r:                                             ; preds = %.lr.ph
@@ -539,8 +535,8 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   br label %._crit_edge
 
 ._crit_edge183:                                   ; preds = %_ZN3igl8geodesic8Interval6signalEd.exit174, %_ZN3igl8geodesic8Interval6signalEd.exit.us186, %_ZN3igl8geodesic8Interval6signalEd.exit.us186.us, %_ZN3igl8geodesic8Interval6signalEd.exit.us, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us193, %middle.block, %middle.block283, %middle.block301, %middle.block319, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us.preheader, %._crit_edge
-  %i.ix = phi i1 [ true, %middle.block ], [ true, %middle.block283 ], [ true, %middle.block301 ], [ true, %middle.block319 ], [ false, %._crit_edge ], [ true, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us.preheader ], [ true, %_ZN3igl8geodesic8Interval6signalEd.exit.us186.us ], [ true, %_ZN3igl8geodesic8Interval6signalEd.exit.us186 ], [ true, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us193 ], [ true, %_ZN3igl8geodesic8Interval6signalEd.exit.us ], [ true, %_ZN3igl8geodesic8Interval6signalEd.exit174 ]
-  %9 = phi i32 [ %7, %middle.block ], [ %7, %middle.block283 ], [ %7, %middle.block301 ], [ %7, %middle.block319 ], [ %5, %._crit_edge ], [ %7, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us.preheader ], [ %7, %_ZN3igl8geodesic8Interval6signalEd.exit.us186.us ], [ %7, %_ZN3igl8geodesic8Interval6signalEd.exit.us186 ], [ %7, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us193 ], [ %7, %_ZN3igl8geodesic8Interval6signalEd.exit.us ], [ %7, %_ZN3igl8geodesic8Interval6signalEd.exit174 ]
+  %i.ix = phi i1 [ false, %middle.block ], [ false, %middle.block283 ], [ false, %middle.block301 ], [ false, %middle.block319 ], [ true, %._crit_edge ], [ false, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us.preheader ], [ false, %_ZN3igl8geodesic8Interval6signalEd.exit.us186.us ], [ false, %_ZN3igl8geodesic8Interval6signalEd.exit.us186 ], [ false, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us193 ], [ false, %_ZN3igl8geodesic8Interval6signalEd.exit.us ], [ false, %_ZN3igl8geodesic8Interval6signalEd.exit174 ]
+  %4 = phi i64 [ %3, %middle.block ], [ %3, %middle.block283 ], [ %3, %middle.block301 ], [ %3, %middle.block319 ], [ 0, %._crit_edge ], [ %3, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us.preheader ], [ %3, %_ZN3igl8geodesic8Interval6signalEd.exit.us186.us ], [ %3, %_ZN3igl8geodesic8Interval6signalEd.exit.us186 ], [ %3, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us193 ], [ %3, %_ZN3igl8geodesic8Interval6signalEd.exit.us ], [ %3, %_ZN3igl8geodesic8Interval6signalEd.exit174 ]
   %i.iy = fsub double %i.dl, %i.g
   %i.iz = fcmp olt double %i.di, %i.iy
   br i1 %i.iz, label %bb.aa, label %bb.ad
@@ -588,7 +584,7 @@ _ZN3igl8geodesic8Interval6signalEd.exit174:       ; preds = %bb.z, %bb.y
   %i.jo = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv211
   store i32 %i.jn, ptr %i.jo, align 4, !tbaa !153
   %indvars.iv.next212 = add nuw nsw i64 %indvars.iv211, 1 ; 2 uses
-  %exitcond215.not = icmp eq i64 %indvars.iv.next212, %8
+  %exitcond215.not = icmp eq i64 %indvars.iv.next212, %3
   br i1 %exitcond215.not, label %._crit_edge183, label %.lr.ph182.split.split, !llvm.loop !402
 
 bb.aa:                                            ; preds = %._crit_edge183
@@ -609,8 +605,7 @@ bb.ac:                                            ; preds = %bb.aa
 
 bb.ad:                                            ; preds = %bb.ab, %bb.ac, %._crit_edge183
   %.2153 = phi i32 [ 0, %bb.ab ], [ 1, %bb.ac ], [ 0, %._crit_edge183 ] ; 2 uses
-  %10 = sext i32 %9 to i64
-  br i1 %i.ix, label %.lr.ph201, label %._crit_edge202
+  br i1 %i.ix, label %._crit_edge202, label %.lr.ph201
 
 .lr.ph201:                                        ; preds = %bb.ad
   %i.jt = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 2 uses
@@ -658,7 +653,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
 bb.ah:                                            ; preds = %bb.ag, %bb.af
   %.4 = phi i32 [ %i.km, %bb.ag ], [ %.3154198, %bb.af ] ; 2 uses
   %i.ko = add nuw nsw i64 %.0199, 1               ; 2 uses
-  %exitcond239.not = icmp eq i64 %i.ko, %10
+  %exitcond239.not = icmp eq i64 %i.ko, %4
   br i1 %exitcond239.not, label %._crit_edge202, label %bb.ae, !llvm.loop !403
 
 bb.ai:                                            ; preds = %._crit_edge202

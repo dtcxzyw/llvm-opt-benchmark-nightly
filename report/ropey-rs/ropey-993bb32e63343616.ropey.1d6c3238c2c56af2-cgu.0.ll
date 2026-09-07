@@ -204,8 +204,8 @@ bb.am:                                            ; preds = %bb.al
   br label %_RINvNtCsk17MtNlfUKQ_11str_indices5lines17count_breaks_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit
 
 bb.an:                                            ; preds = %bb.aj
-  %i.mv = add nuw i64 %.sroa.0.0.i8593, 2         ; 2 uses
-  %i.mw = icmp ult i64 %i.mv, %.sroa.15.1.i.lcssa
+  %i.mv = add nuw nsw i64 %.sroa.0.0.i8593, 2     ; 2 uses
+  %i.mw = icmp samesign ult i64 %i.mv, %.sroa.15.1.i.lcssa
   br i1 %i.mw, label %bb.ao, label %_RINvNtCsk17MtNlfUKQ_11str_indices5lines17count_breaks_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit
 
 bb.ao:                                            ; preds = %bb.an

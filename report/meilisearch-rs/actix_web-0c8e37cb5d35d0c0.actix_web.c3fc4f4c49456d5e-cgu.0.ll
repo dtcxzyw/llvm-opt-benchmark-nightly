@@ -205,7 +205,7 @@ bb.a:
   %i.w = add nsw i32 %i.i, -1
   %i.x = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.w, i1 false)
   %i.y = sub nuw nsw i32 32, %i.x
-  %.sroa.016.144.i = getelementptr inbounds nuw i8, ptr %6, i64 258 ; 2 uses
+  %.sroa.016.144.i = getelementptr inbounds nuw i8, ptr %6, i64 258
   %.pre = load i8, ptr %i.j, align 8, !range !56
   switch i8 %.pre, label %default.unreachable245 [
     i8 0, label %bb.f
@@ -301,13 +301,14 @@ bb.k:                                             ; preds = %bb.r, %.lr.ph41.i
   br i1 %i.ao, label %.loopexit63.loopexit, label %.lr.ph49.i.preheader
 
 .lr.ph49.i.preheader:                             ; preds = %._crit_edge42.i
-  %scevgep178 = getelementptr i8, ptr %.sroa.016.144.i, i64 %.idx.i
+  %9 = getelementptr i8, ptr %6, i64 %.idx.i
+  %scevgep178 = getelementptr i8, ptr %9, i64 258
   %i.ap = add nsw i64 %.idx.i, -2
   %i.aq = lshr exact i64 %i.ap, 1
   %i.ar = add nuw nsw i64 %.idx.i, 2
   br label %.lr.ph49.i
 
-.lr.ph49.i:                                       ; preds = %.lr.ph49.i.preheader, %._crit_edge
+.lr.ph49.i:                                       ; preds = %._crit_edge, %.lr.ph49.i.preheader
   %indvars.iv = phi i64 [ 0, %.lr.ph49.i.preheader ], [ %i.as, %._crit_edge ] ; 3 uses
   %.sroa.016.147.i = phi ptr [ %.sroa.016.144.i, %.lr.ph49.i.preheader ], [ %.sroa.016.1.i, %._crit_edge ] ; 3 uses
   %.sroa.016.045.i = phi ptr [ %i.s, %.lr.ph49.i.preheader ], [ %.sroa.016.147.i, %._crit_edge ]
@@ -710,7 +711,7 @@ bb.a:
           to label %"_ZN4core3ptr53drop_in_place$LT$http..header..value..HeaderValue$GT$17ha529d5e1c8086c3fE.exit.i.i" unwind label %bb.b, !inline_history !4
 
 "_ZN4core3ptr53drop_in_place$LT$http..header..value..HeaderValue$GT$17ha529d5e1c8086c3fE.exit7.i.i": ; preds = %.lr.ph8
-  %i.p = add i64 %.sroa.0.1.i.i7, 1               ; 2 uses
+  %i.p = add nuw nsw i64 %.sroa.0.1.i.i7, 1       ; 2 uses
   %i.q = icmp eq i64 %i.p, %i.b
   br i1 %i.q, label %common.resume.i, label %.lr.ph8
 
@@ -1113,7 +1114,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph12.i.i:                                     ; preds = %bb.d, %"_ZN4core3ptr76drop_in_place$LT$alloc..rc..Rc$LT$actix_http..extensions..Extensions$GT$$GT$17hc91fadaf8bf39315E.exit8.i.i"
   %.sroa.0.110.i.i = phi i64 [ %i.o, %"_ZN4core3ptr76drop_in_place$LT$alloc..rc..Rc$LT$actix_http..extensions..Extensions$GT$$GT$17hc91fadaf8bf39315E.exit8.i.i" ], [ %i.f, %bb.d ] ; 2 uses
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.110.i.i ; 2 uses
-  %i.o = add i64 %.sroa.0.110.i.i, 1              ; 2 uses
+  %i.o = add nuw nsw i64 %.sroa.0.110.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3875)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3876)
   %i.p = load ptr, ptr %i.n, align 8, !alias.scope !3877, !nonnull !25, !noundef !25 ; 2 uses
@@ -1516,7 +1517,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17hfc198c9c41949f21E.exit: ; pred
   br i1 %i.ef, label %bb.q, label %._crit_edge
 
 bb.z:                                             ; preds = %._crit_edge
-  %i.eg = add i64 %.sroa.02.1.lcssa, 1
+  %i.eg = add nsw i64 %.sroa.02.1.lcssa, 1
   %i.eh = lshr i64 %.sroa.023.0, 1
   %i.ei = add i64 %i.eh, %.sroa.09.0
   br label %bb.f
@@ -1919,7 +1920,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h6ec8190475693117E.exit: ; pred
   br i1 %i.ef, label %bb.q, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.eg = add i64 %.sroa.02.1.lcssa, 1
+  %i.eg = add nsw i64 %.sroa.02.1.lcssa, 1
   %i.eh = lshr i64 %.sroa.023.0, 1
   %i.ei = add i64 %i.eh, %.sroa.09.0
   br label %bb.f
@@ -2322,7 +2323,7 @@ _ZN4core5slice4sort6stable5drift13logical_merge17h63ab4663e45d3dfbE.exit: ; pred
   br i1 %i.gx, label %bb.af, label %._crit_edge
 
 bb.ay:                                            ; preds = %._crit_edge
-  %i.gy = add i64 %.sroa.02.1.lcssa, 1
+  %i.gy = add nsw i64 %.sroa.02.1.lcssa, 1
   %i.gz = lshr i64 %.sroa.023.0, 1
   %i.ha = add i64 %i.gz, %.sroa.09.0
   br label %bb.f

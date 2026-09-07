@@ -205,7 +205,7 @@ bb.ao:                                            ; preds = %bb.am
   %.sroa.045.0291.i.i.i = phi i32 [ %i.cu, %bb.aq ], [ 0, %.preheader.i.i.i ] ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr @10871, i64 %.sroa.16.3293.i.i.i
   %i.ch = load i8, ptr %i.cg, align 1, !noundef !21 ; 2 uses
-  %i.ci = add i64 %.sroa.16.3293.i.i.i, 1         ; 3 uses
+  %i.ci = add nuw nsw i64 %.sroa.16.3293.i.i.i, 1 ; 3 uses
   %i.cj = zext i8 %i.ch to i32                    ; 2 uses
   %i.ck = icmp sgt i8 %i.ch, -1
   br i1 %i.ck, label %bb.ap, label %bb.aq
@@ -608,7 +608,7 @@ bb.z:                                             ; preds = %bb.w
   %i.mm = phi i64 [ %i.mp, %bb.aa ], [ %.sroa.156.1, %bb.z ] ; 2 uses
   %i.mn = getelementptr inbounds nuw i8, ptr @10842, i64 %i.mm
   %i.mo = load i8, ptr %i.mn, align 1, !noalias !14342, !noundef !21 ; 2 uses
-  %i.mp = add i64 %i.mm, 1                        ; 4 uses
+  %i.mp = add nuw nsw i64 %i.mm, 1                ; 4 uses
   %i.mq = zext i8 %i.mo to i32                    ; 2 uses
   %i.mr = icmp sgt i8 %i.mo, -1
   br i1 %i.mr, label %bb.ad, label %bb.aa
@@ -1011,7 +1011,7 @@ bb.es:                                            ; preds = %bb.er
   %i.ya = phi i64 [ %i.yd, %bb.et ], [ %i.xz, %.lr.ph.i621.preheader ] ; 2 uses
   %i.yb = getelementptr inbounds nuw i8, ptr @10842, i64 %i.ya
   %i.yc = load i8, ptr %i.yb, align 1, !noalias !14399, !noundef !21 ; 2 uses
-  %i.yd = add i64 %i.ya, 1                        ; 3 uses
+  %i.yd = add nuw nsw i64 %i.ya, 1                ; 3 uses
   %i.ye = zext i8 %i.yc to i32                    ; 2 uses
   %i.yf = icmp sgt i8 %i.yc, -1
   br i1 %i.yf, label %bb.eu, label %bb.et
@@ -1196,7 +1196,7 @@ bb.fo:                                            ; preds = %bb.fn
   %i.zl = phi i64 [ %i.zo, %bb.fp ], [ %i.zk, %.lr.ph.i644.preheader ] ; 2 uses
   %i.zm = getelementptr inbounds nuw i8, ptr @10842, i64 %i.zl
   %i.zn = load i8, ptr %i.zm, align 1, !noalias !14410, !noundef !21 ; 2 uses
-  %i.zo = add i64 %i.zl, 1                        ; 3 uses
+  %i.zo = add nuw nsw i64 %i.zl, 1                ; 3 uses
   %i.zp = zext i8 %i.zn to i32                    ; 2 uses
   %i.zq = icmp sgt i8 %i.zn, -1
   br i1 %i.zq, label %bb.fq, label %bb.fp
@@ -1511,10 +1511,10 @@ bb.gz:                                            ; preds = %bb.gy
 .lr.ph.i695:                                      ; preds = %.lr.ph.i695.preheader, %bb.ha
   %.sroa.0.013.i696 = phi i32 [ %i.abq, %bb.ha ], [ 0, %.lr.ph.i695.preheader ] ; 2 uses
   %.sroa.02.012.i697 = phi i32 [ %i.abr, %bb.ha ], [ 0, %.lr.ph.i695.preheader ] ; 3 uses
-  %i.abh = phi i64 [ %i.abk, %bb.ha ], [ %i.abg, %.lr.ph.i695.preheader ] ; 2 uses
+  %i.abh = phi i64 [ %i.abk, %bb.ha ], [ %i.abg, %.lr.ph.i695.preheader ] ; 3 uses
   %i.abi = getelementptr inbounds nuw i8, ptr @10842, i64 %i.abh
   %i.abj = load i8, ptr %i.abi, align 1, !noalias !14449, !noundef !21 ; 2 uses
-  %i.abk = add i64 %i.abh, 1                      ; 5 uses
+  %i.abk = add nuw nsw i64 %i.abh, 1              ; 4 uses
   %i.abl = zext i8 %i.abj to i32                  ; 2 uses
   %i.abm = icmp sgt i8 %i.abj, -1
   br i1 %i.abm, label %bb.hb, label %bb.ha
@@ -1532,7 +1532,7 @@ bb.hb:                                            ; preds = %.lr.ph.i695
   %i.abs = and i32 %.sroa.02.012.i697, 31
   %i.abt = shl i32 %i.abl, %i.abs
   %i.abu = or i32 %i.abt, %.sroa.0.013.i696
-  %i.abv = icmp ult i64 %i.abk, 13463
+  %i.abv = icmp ult i64 %i.abh, 13462
   br i1 %i.abv, label %.lr.ph.i704, label %._crit_edge.i708.invoke
 
 .lr.ph.i704:                                      ; preds = %bb.hb, %bb.hc
@@ -1693,7 +1693,7 @@ bb.hr:                                            ; preds = %bb.hq
   %i.acz = phi i64 [ %i.adc, %bb.hs ], [ %i.acy, %.lr.ph.i736.preheader ] ; 2 uses
   %i.ada = getelementptr inbounds nuw i8, ptr @10842, i64 %i.acz
   %i.adb = load i8, ptr %i.ada, align 1, !noalias !14467, !noundef !21 ; 2 uses
-  %i.adc = add i64 %i.acz, 1                      ; 3 uses
+  %i.adc = add nuw nsw i64 %i.acz, 1              ; 3 uses
   %i.add = zext i8 %i.adb to i32                  ; 2 uses
   %i.ade = icmp sgt i8 %i.adb, -1
   br i1 %i.ade, label %bb.ht, label %bb.hs
@@ -1973,7 +1973,7 @@ bb.ix:                                            ; preds = %bb.iw
   %i.aeq = phi i64 [ %i.aet, %bb.iy ], [ %i.aep, %.lr.ph.i790.preheader ] ; 2 uses
   %i.aer = getelementptr inbounds nuw i8, ptr @10842, i64 %i.aeq
   %i.aes = load i8, ptr %i.aer, align 1, !noalias !14505, !noundef !21 ; 2 uses
-  %i.aet = add i64 %i.aeq, 1                      ; 3 uses
+  %i.aet = add nuw nsw i64 %i.aeq, 1              ; 3 uses
   %i.aeu = zext i8 %i.aes to i32                  ; 2 uses
   %i.aev = icmp sgt i8 %i.aes, -1
   br i1 %i.aev, label %bb.ja, label %bb.iy
@@ -2376,7 +2376,7 @@ bb.nx:                                            ; preds = %bb.nw
   %i.alc = phi i64 [ %i.alf, %bb.ny ], [ %i.alb, %.lr.ph.i972.preheader ] ; 2 uses
   %i.ald = getelementptr inbounds nuw i8, ptr @10842, i64 %i.alc
   %i.ale = load i8, ptr %i.ald, align 1, !noalias !14645, !noundef !21 ; 2 uses
-  %i.alf = add i64 %i.alc, 1                      ; 3 uses
+  %i.alf = add nuw nsw i64 %i.alc, 1              ; 3 uses
   %i.alg = zext i8 %i.ale to i32                  ; 2 uses
   %i.alh = icmp sgt i8 %i.ale, -1
   br i1 %i.alh, label %bb.nz, label %bb.ny
@@ -2722,7 +2722,7 @@ bb.pl:                                            ; preds = %bb.pk
   %i.any = phi i64 [ %i.aob, %bb.pm ], [ %i.anx, %.lr.ph.i1039.preheader ] ; 2 uses
   %i.anz = getelementptr inbounds nuw i8, ptr @10842, i64 %i.any
   %i.aoa = load i8, ptr %i.anz, align 1, !noalias !14680, !noundef !21 ; 2 uses
-  %i.aob = add i64 %i.any, 1                      ; 3 uses
+  %i.aob = add nuw nsw i64 %i.any, 1              ; 3 uses
   %i.aoc = zext i8 %i.aoa to i32                  ; 2 uses
   %i.aod = icmp sgt i8 %i.aoa, -1
   br i1 %i.aod, label %bb.pn, label %bb.pm
@@ -3125,13 +3125,14 @@ bb.uo:                                            ; preds = %bb.um
   %i.bap = phi i64 [ %i.bas, %bb.up ], [ %i.bam, %bb.uo ] ; 3 uses
   %i.baq = getelementptr inbounds nuw i8, ptr @10842, i64 %i.bap
   %i.bar = load i8, ptr %i.baq, align 1, !noalias !14739, !noundef !21 ; 2 uses
-  %i.bas = add nuw nsw i64 %i.bap, 1              ; 3 uses
+  %i.bas = add nuw nsw i64 %i.bap, 1              ; 4 uses
   %i.bat = zext i8 %i.bar to i32                  ; 2 uses
   %i.bau = icmp sgt i8 %i.bar, -1
   br i1 %i.bau, label %bb.uq, label %bb.up
 
 ._crit_edge.i1248.invoke:                         ; preds = %bb.uo, %bb.us, %bb.uq, %bb.up, %bb.ur, %bb.ut
-  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef 13463, i64 noundef 13463, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #47
+  %0 = phi i64 [ 13463, %bb.ut ], [ 13463, %bb.ur ], [ 13463, %bb.up ], [ 13463, %bb.uo ], [ 13463, %bb.us ], [ %i.bas, %bb.uq ]
+  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %0, i64 noundef 13463, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #47
           to label %._crit_edge.i1248.cont unwind label %.thread2652
 
 ._crit_edge.i1248.cont:                           ; preds = %._crit_edge.i1248.invoke
@@ -3377,10 +3378,10 @@ bb.vk:                                            ; preds = %bb.vj
 .lr.ph.i1289:                                     ; preds = %.lr.ph.i1289.preheader, %bb.vl
   %.sroa.0.013.i1290 = phi i32 [ %i.bdm, %bb.vl ], [ 0, %.lr.ph.i1289.preheader ] ; 2 uses
   %.sroa.02.012.i1291 = phi i32 [ %i.bdn, %bb.vl ], [ 0, %.lr.ph.i1289.preheader ] ; 3 uses
-  %i.bdc = phi i64 [ %i.bdf, %bb.vl ], [ %i.bdb, %.lr.ph.i1289.preheader ] ; 2 uses
+  %i.bdc = phi i64 [ %i.bdf, %bb.vl ], [ %i.bdb, %.lr.ph.i1289.preheader ] ; 3 uses
   %i.bdd = getelementptr inbounds nuw i8, ptr @10842, i64 %i.bdc
   %i.bde = load i8, ptr %i.bdd, align 1, !noalias !14752, !noundef !21 ; 2 uses
-  %i.bdf = add i64 %i.bdc, 1                      ; 5 uses
+  %i.bdf = add nuw nsw i64 %i.bdc, 1              ; 4 uses
   %i.bdg = zext i8 %i.bde to i32                  ; 2 uses
   %i.bdh = icmp sgt i8 %i.bde, -1
   br i1 %i.bdh, label %bb.vm, label %bb.vl
@@ -3411,7 +3412,7 @@ bb.vm:                                            ; preds = %.lr.ph.i1289
   %i.bdp = and i32 %.sroa.02.012.i1291, 31
   %i.bdq = shl i32 %i.bdg, %i.bdp
   %i.bdr = or i32 %i.bdq, %.sroa.0.013.i1290
-  %i.bds = icmp ult i64 %i.bdf, 13463
+  %i.bds = icmp ult i64 %i.bdc, 13462
   br i1 %i.bds, label %.lr.ph.i1298, label %._crit_edge.i1293.invoke
 
 .lr.ph.i1298:                                     ; preds = %bb.vm, %bb.vn
@@ -3578,7 +3579,7 @@ bb.wa:                                            ; preds = %bb.vz
   %i.bex = phi i64 [ %i.bfa, %bb.wb ], [ %i.bew, %.lr.ph.i1320.preheader ] ; 2 uses
   %i.bey = getelementptr inbounds nuw i8, ptr @10842, i64 %i.bex
   %i.bez = load i8, ptr %i.bey, align 1, !noalias !14762, !noundef !21 ; 2 uses
-  %i.bfa = add i64 %i.bex, 1                      ; 3 uses
+  %i.bfa = add nuw nsw i64 %i.bex, 1              ; 3 uses
   %i.bfb = zext i8 %i.bez to i32                  ; 2 uses
   %i.bfc = icmp sgt i8 %i.bez, -1
   br i1 %i.bfc, label %bb.wc, label %bb.wb
@@ -3819,7 +3820,7 @@ bb.xb:                                            ; preds = %bb.xa
   %i.bgh = phi i64 [ %i.bgk, %bb.xc ], [ %i.bgg, %.lr.ph.i1372.preheader ] ; 2 uses
   %i.bgi = getelementptr inbounds nuw i8, ptr @10842, i64 %i.bgh
   %i.bgj = load i8, ptr %i.bgi, align 1, !noalias !14797, !noundef !21 ; 2 uses
-  %i.bgk = add i64 %i.bgh, 1                      ; 3 uses
+  %i.bgk = add nuw nsw i64 %i.bgh, 1              ; 3 uses
   %i.bgl = zext i8 %i.bgj to i32                  ; 2 uses
   %i.bgm = icmp sgt i8 %i.bgj, -1
   br i1 %i.bgm, label %bb.xd, label %bb.xc
@@ -3965,10 +3966,10 @@ bb.xr:                                            ; preds = %bb.xq
 .lr.ph.i1404:                                     ; preds = %.lr.ph.i1404.preheader, %bb.xs
   %.sroa.0.013.i1405 = phi i32 [ %i.bht, %bb.xs ], [ 0, %.lr.ph.i1404.preheader ] ; 2 uses
   %.sroa.02.012.i1406 = phi i32 [ %i.bhu, %bb.xs ], [ 0, %.lr.ph.i1404.preheader ] ; 3 uses
-  %i.bhj = phi i64 [ %i.bhm, %bb.xs ], [ %i.bhi, %.lr.ph.i1404.preheader ] ; 3 uses
+  %i.bhj = phi i64 [ %i.bhm, %bb.xs ], [ %i.bhi, %.lr.ph.i1404.preheader ] ; 4 uses
   %i.bhk = getelementptr inbounds nuw i8, ptr @10842, i64 %i.bhj
   %i.bhl = load i8, ptr %i.bhk, align 1, !noalias !14814, !noundef !21 ; 2 uses
-  %i.bhm = add i64 %i.bhj, 1                      ; 5 uses
+  %i.bhm = add nuw nsw i64 %i.bhj, 1              ; 4 uses
   %i.bhn = zext i8 %i.bhl to i32                  ; 2 uses
   %i.bho = icmp sgt i8 %i.bhl, -1
   br i1 %i.bho, label %bb.xt, label %bb.xs
@@ -3996,7 +3997,7 @@ bb.xs:                                            ; preds = %.lr.ph.i1404
   br label %.body369
 
 bb.xt:                                            ; preds = %.lr.ph.i1404
-  %i.bhv = icmp ult i64 %i.bhm, 13463
+  %i.bhv = icmp ult i64 %i.bhj, 13462
   br i1 %i.bhv, label %bb.xu, label %._crit_edge.i1408.invoke
 
 bb.xu:                                            ; preds = %bb.xt
@@ -4005,7 +4006,7 @@ bb.xu:                                            ; preds = %bb.xt
   %i.bhy = or i32 %i.bhx, %.sroa.0.013.i1405
   %i.bhz = getelementptr inbounds nuw i8, ptr @10842, i64 %i.bhm
   %i.bia = load i8, ptr %i.bhz, align 1, !noalias !14815, !noundef !21
-  %i.bib = add nsw i64 %i.bhj, 2
+  %i.bib = add nuw nsw i64 %i.bhj, 2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dh)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dg)
   store i64 %.sroa.01732.0, ptr %i.dg, align 8
@@ -4072,10 +4073,10 @@ bb.yc:                                            ; preds = %bb.yb
 .lr.ph.i1420:                                     ; preds = %.lr.ph.i1420.preheader, %bb.yd
   %.sroa.0.013.i1421 = phi i32 [ %i.biw, %bb.yd ], [ 0, %.lr.ph.i1420.preheader ] ; 2 uses
   %.sroa.02.012.i1422 = phi i32 [ %i.bix, %bb.yd ], [ 0, %.lr.ph.i1420.preheader ] ; 3 uses
-  %i.bim = phi i64 [ %i.bip, %bb.yd ], [ %i.bil, %.lr.ph.i1420.preheader ] ; 4 uses
+  %i.bim = phi i64 [ %i.bip, %bb.yd ], [ %i.bil, %.lr.ph.i1420.preheader ] ; 5 uses
   %i.bin = getelementptr inbounds nuw i8, ptr @10842, i64 %i.bim
   %i.bio = load i8, ptr %i.bin, align 1, !noalias !14819, !noundef !21 ; 2 uses
-  %i.bip = add i64 %i.bim, 1                      ; 5 uses
+  %i.bip = add nuw nsw i64 %i.bim, 1              ; 4 uses
   %i.biq = zext i8 %i.bio to i32                  ; 2 uses
   %i.bir = icmp sgt i8 %i.bio, -1
   br i1 %i.bir, label %bb.ye, label %bb.yd
@@ -4106,17 +4107,17 @@ bb.ye:                                            ; preds = %.lr.ph.i1420
   %i.biy = and i32 %.sroa.02.012.i1422, 31
   %i.biz = shl i32 %i.biq, %i.biy
   %i.bja = or i32 %i.biz, %.sroa.0.013.i1421
-  %i.bjb = icmp ult i64 %i.bip, 13463
+  %i.bjb = icmp ult i64 %i.bim, 13462
   br i1 %i.bjb, label %bb.yf, label %._crit_edge.i1424.invoke
 
 bb.yf:                                            ; preds = %bb.ye
   %i.bjc = getelementptr inbounds nuw i8, ptr @10842, i64 %i.bip
   %i.bjd = load i8, ptr %i.bjc, align 1, !noalias !14820, !noundef !21
-  %0 = icmp slt i64 %i.bim, 13461
-  br i1 %0, label %.lr.ph.i1431.preheader, label %._crit_edge.i1424.invoke
+  %.not5723 = icmp eq i64 %i.bim, 13461
+  br i1 %.not5723, label %._crit_edge.i1424.invoke, label %.lr.ph.i1431.preheader
 
 .lr.ph.i1431.preheader:                           ; preds = %bb.yf
-  %i.bje = add nsw i64 %i.bim, 2
+  %i.bje = add nuw nsw i64 %i.bim, 2
   br label %.lr.ph.i1431
 
 .lr.ph.i1431:                                     ; preds = %.lr.ph.i1431.preheader, %bb.yg
@@ -4519,7 +4520,7 @@ bb.z:                                             ; preds = %bb.w
   %i.kk = phi i64 [ %i.kn, %bb.aa ], [ %.sroa.138.1, %bb.z ] ; 2 uses
   %i.kl = getelementptr inbounds nuw i8, ptr @10956, i64 %i.kk
   %i.km = load i8, ptr %i.kl, align 1, !noalias !15709, !noundef !21 ; 2 uses
-  %i.kn = add i64 %i.kk, 1                        ; 4 uses
+  %i.kn = add nuw nsw i64 %i.kk, 1                ; 4 uses
   %i.ko = zext i8 %i.km to i32                    ; 2 uses
   %i.kp = icmp sgt i8 %i.km, -1
   br i1 %i.kp, label %bb.ad, label %bb.aa
@@ -4922,7 +4923,7 @@ bb.ha:                                            ; preds = %bb.gz
   %i.aba = phi i64 [ %i.abd, %bb.hb ], [ %i.aaz, %.lr.ph.i763.preheader ] ; 2 uses
   %i.abb = getelementptr inbounds nuw i8, ptr @10956, i64 %i.aba
   %i.abc = load i8, ptr %i.abb, align 1, !noalias !15849, !noundef !21 ; 2 uses
-  %i.abd = add i64 %i.aba, 1                      ; 3 uses
+  %i.abd = add nuw nsw i64 %i.aba, 1              ; 3 uses
   %i.abe = zext i8 %i.abc to i32                  ; 2 uses
   %i.abf = icmp sgt i8 %i.abc, -1
   br i1 %i.abf, label %bb.hc, label %bb.hb
@@ -5325,7 +5326,7 @@ bb.nv:                                            ; preds = %_RNvMs5_NtCsexYYUdY
   %i.asf = phi i64 [ %i.asi, %bb.nw ], [ %i.ase, %.lr.ph.i1057.preheader ] ; 4 uses
   %i.asg = getelementptr inbounds nuw i8, ptr @10956, i64 %i.asf
   %i.ash = load i8, ptr %i.asg, align 1, !noalias !15939, !noundef !21 ; 2 uses
-  %i.asi = add nuw nsw i64 %i.asf, 1              ; 3 uses
+  %i.asi = add nuw nsw i64 %i.asf, 1              ; 4 uses
   %i.asj = zext i8 %i.ash to i32                  ; 2 uses
   %i.ask = icmp sgt i8 %i.ash, -1
   br i1 %i.ask, label %bb.nx, label %bb.nw
@@ -5370,7 +5371,7 @@ bb.oa:                                            ; preds = %bb.ny
   br i1 %i.asu, label %bb.oc, label %bb.ob
 
 bb.ob:                                            ; preds = %bb.oa
-  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef 10832, i64 noundef 10832, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #47
+  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.asi, i64 noundef 10832, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #47
           to label %.noexc1064 unwind label %.thread2526
 
 .noexc1064:                                       ; preds = %bb.ob
@@ -5773,7 +5774,7 @@ bb.vn:                                            ; preds = %bb.do
   %i.bdg = phi i64 [ %i.bdj, %bb.vo ], [ %i.bdf, %.lr.ph.i1296.preheader ] ; 2 uses
   %i.bdh = getelementptr inbounds nuw i8, ptr @10956, i64 %i.bdg
   %i.bdi = load i8, ptr %i.bdh, align 1, !noalias !16110, !noundef !21 ; 2 uses
-  %i.bdj = add i64 %i.bdg, 1                      ; 3 uses
+  %i.bdj = add nuw nsw i64 %i.bdg, 1              ; 3 uses
   %i.bdk = zext i8 %i.bdi to i32                  ; 2 uses
   %i.bdl = icmp sgt i8 %i.bdi, -1
   br i1 %i.bdl, label %bb.vp, label %bb.vo
@@ -6176,7 +6177,7 @@ bb.z:                                             ; preds = %bb.w
   %i.kc = phi i64 [ %i.kf, %bb.aa ], [ %.sroa.166.1, %bb.z ] ; 2 uses
   %i.kd = getelementptr inbounds nuw i8, ptr @11046, i64 %i.kc
   %i.ke = load i8, ptr %i.kd, align 1, !noalias !16986, !noundef !21 ; 2 uses
-  %i.kf = add i64 %i.kc, 1                        ; 4 uses
+  %i.kf = add nuw nsw i64 %i.kc, 1                ; 4 uses
   %i.kg = zext i8 %i.ke to i32                    ; 2 uses
   %i.kh = icmp sgt i8 %i.ke, -1
   br i1 %i.kh, label %bb.ad, label %bb.aa
@@ -6579,7 +6580,7 @@ bb.gu:                                            ; preds = %bb.gt
   %i.afd = phi i64 [ %i.afg, %bb.gv ], [ %i.afc, %.lr.ph.i829.preheader ] ; 2 uses
   %i.afe = getelementptr inbounds nuw i8, ptr @11046, i64 %i.afd
   %i.aff = load i8, ptr %i.afe, align 1, !noalias !17090, !noundef !21 ; 2 uses
-  %i.afg = add i64 %i.afd, 1                      ; 3 uses
+  %i.afg = add nuw nsw i64 %i.afd, 1              ; 3 uses
   %i.afh = zext i8 %i.aff to i32                  ; 2 uses
   %i.afi = icmp sgt i8 %i.aff, -1
   br i1 %i.afi, label %bb.gw, label %bb.gv
@@ -6982,7 +6983,7 @@ bb.ja:                                            ; preds = %bb.cg
   %i.ain = phi i64 [ %i.aiq, %bb.jb ], [ %i.aim, %.lr.ph.i901.preheader ] ; 2 uses
   %i.aio = getelementptr inbounds nuw i8, ptr @11046, i64 %i.ain
   %i.aip = load i8, ptr %i.aio, align 1, !noalias !17129, !noundef !21 ; 2 uses
-  %i.aiq = add i64 %i.ain, 1                      ; 3 uses
+  %i.aiq = add nuw nsw i64 %i.ain, 1              ; 3 uses
   %i.air = zext i8 %i.aip to i32                  ; 2 uses
   %i.ais = icmp sgt i8 %i.aip, -1
   br i1 %i.ais, label %bb.jc, label %bb.jb
@@ -7385,7 +7386,7 @@ bb.np:                                            ; preds = %bb.no
   %i.aoz = phi i64 [ %i.apc, %bb.nq ], [ %i.aoy, %.lr.ph.i1056.preheader ] ; 2 uses
   %i.apa = getelementptr inbounds nuw i8, ptr @11046, i64 %i.aoz
   %i.apb = load i8, ptr %i.apa, align 1, !noalias !17240, !noundef !21 ; 2 uses
-  %i.apc = add i64 %i.aoz, 1                      ; 3 uses
+  %i.apc = add nuw nsw i64 %i.aoz, 1              ; 3 uses
   %i.apd = zext i8 %i.apb to i32                  ; 2 uses
   %i.ape = icmp sgt i8 %i.apb, -1
   br i1 %i.ape, label %bb.nr, label %bb.nq
@@ -7788,7 +7789,7 @@ bb.z:                                             ; preds = %bb.w
   %i.hg = phi i64 [ %i.hj, %bb.aa ], [ %.sroa.120.1, %bb.z ] ; 2 uses
   %i.hh = getelementptr inbounds nuw i8, ptr @11098, i64 %i.hg
   %i.hi = load i8, ptr %i.hh, align 1, !noalias !17955, !noundef !21 ; 2 uses
-  %i.hj = add i64 %i.hg, 1                        ; 4 uses
+  %i.hj = add nuw nsw i64 %i.hg, 1                ; 4 uses
   %i.hk = zext i8 %i.hi to i32                    ; 2 uses
   %i.hl = icmp sgt i8 %i.hi, -1
   br i1 %i.hl, label %bb.ad, label %bb.aa

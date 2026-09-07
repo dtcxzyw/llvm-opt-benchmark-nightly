@@ -205,7 +205,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: inlinehint mustprogress uwtable
 define internal fastcc void @"_ZZNK8WasmEdge6Loader10Serializer20serializeInstructionERKNS_3AST11InstructionERSt6vectorIhSaIhEEENK3$_2clERKNS_9BlockTypeE"(ptr dead_on_unwind noalias nofree writable writeonly align 4 captures(none) %0, ptr %.0.val, ptr %.8.val, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %1) unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [5 x i8], align 1                 ; 6 uses
+  %i.a = alloca [5 x i8], align 1                 ; 5 uses
   %2 = alloca %"struct.spdlog::source_loc", align 8 ; 4 uses
   %3 = alloca %"struct.spdlog::source_loc", align 8 ; 4 uses
   %4 = alloca %"struct.spdlog::source_loc", align 8 ; 4 uses
@@ -408,16 +408,13 @@ bb.r:                                             ; preds = %_ZNK8WasmEdge9Confi
   br label %.lr.ph
 
 .thread.i.i:                                      ; preds = %.lr.ph, %bb.r
-  %.01520.i.i.lcssa = phi i32 [ 0, %bb.r ], [ %14, %.lr.ph ] ; 2 uses
+  %indvars.iv.i.i.lcssa = phi i64 [ 0, %bb.r ], [ %indvars.iv.next.i.i, %.lr.ph ]
   %.lcssa = phi i8 [ %i.as, %bb.r ], [ %i.bi, %.lr.ph ]
-  %10 = zext i32 %.01520.i.i.lcssa to i64
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 %10
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i.i.lcssa ; 2 uses
   store i8 %.lcssa, ptr %i.aw, align 1, !tbaa !28
-  %11 = add i32 %.01520.i.i.lcssa, 1
   %i.ax = getelementptr inbounds nuw i8, ptr %.8.val, i64 8
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !44
-  %12 = zext i32 %11 to i64
-  %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 %12
+  %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 1
   %i.ba = load ptr, ptr %.8.val, align 8, !tbaa !44 ; 2 uses
   %i.bb = ptrtoint ptr %i.ay to i64
   %i.bc = ptrtoint ptr %i.ba to i64
@@ -429,12 +426,11 @@ bb.r:                                             ; preds = %_ZNK8WasmEdge9Confi
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %i.bf = phi i64 [ %i.bj, %.lr.ph ], [ %i.av, %.lr.ph.preheader ] ; 3 uses
   %i.bg = phi i8 [ %i.bi, %.lr.ph ], [ %i.as, %.lr.ph.preheader ]
-  %.01520.i.i6 = phi i32 [ %14, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
+  %indvars.iv.i.i6 = phi i64 [ %indvars.iv.next.i.i, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %spec.select19.i.i = or i8 %i.bg, -128
-  %13 = zext i32 %.01520.i.i6 to i64
-  %i.bh = getelementptr inbounds nuw i8, ptr %i.a, i64 %13
+  %i.bh = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i.i6
   store i8 %spec.select19.i.i, ptr %i.bh, align 1, !tbaa !28
-  %14 = add i32 %.01520.i.i6, 1                   ; 2 uses
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i6, 1 ; 2 uses
   %i.bi = trunc i64 %i.bf to i8                   ; 2 uses
   %i.bj = lshr i64 %i.bf, 7                       ; 2 uses
   %i.bk = icmp eq i64 %i.bj, 0
@@ -837,42 +833,39 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
-  %.021.i = phi i32 [ %1, %bb.a ], [ %i.d, %bb.c ] ; 4 uses
-  %.01520.i = phi i32 [ 0, %bb.a ], [ %6, %bb.c ] ; 4 uses
-  %i.b = trunc i32 %.021.i to i8
+  %indvars.iv.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i, %bb.c ] ; 4 uses
+  %.01520.i = phi i32 [ %1, %bb.a ], [ %i.d, %bb.c ] ; 4 uses
+  %i.b = trunc i32 %.01520.i to i8
   %i.c = and i8 %i.b, 127                         ; 2 uses
-  %i.d = ashr i32 %.021.i, 7                      ; 3 uses
+  %i.d = ashr i32 %.01520.i, 7                    ; 3 uses
   %i.e = icmp eq i32 %i.d, 0
-  %.not.i = icmp ult i32 %.021.i, 64
+  %.not.i = icmp ult i32 %.01520.i, 64
   %or.cond.i = and i1 %.not.i, %i.e
   br i1 %or.cond.i, label %.thread.i, label %bb.c
 
 .thread.i:                                        ; preds = %bb.b
-  %3 = zext i32 %.01520.i to i64
-  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i
   store i8 %i.c, ptr %i.f, align 1, !tbaa !28
-  %4 = add i32 %.01520.i, 1
+  %indvars.iv.next25.i = add nuw nsw i64 %indvars.iv.i, 1
   br label %.loopexit.i
 
 bb.c:                                             ; preds = %bb.b
   %i.g = icmp ne i32 %i.d, -1
-  %i.h = and i32 %.021.i, 64
+  %i.h = and i32 %.01520.i, 64
   %.not16.i = icmp eq i32 %i.h, 0
   %or.cond17.i = or i1 %i.g, %.not16.i            ; 2 uses
   %masksel.i = select i1 %or.cond17.i, i8 -128, i8 0
   %spec.select19.i = or disjoint i8 %masksel.i, %i.c
-  %5 = zext i32 %.01520.i to i64
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %5
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i
   store i8 %spec.select19.i, ptr %i.i, align 1, !tbaa !28
-  %6 = add i32 %.01520.i, 1                       ; 2 uses
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   br i1 %or.cond17.i, label %bb.b, label %.loopexit.i, !llvm.loop !151
 
 .loopexit.i:                                      ; preds = %bb.c, %.thread.i
-  %7 = phi i32 [ %4, %.thread.i ], [ %6, %bb.c ]
+  %indvars.iv.next26.i = phi i64 [ %indvars.iv.next25.i, %.thread.i ], [ %indvars.iv.next.i, %bb.c ]
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !44
-  %8 = zext i32 %7 to i64
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 %8
+  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next26.i
   %i.m = load ptr, ptr %2, align 8, !tbaa !44     ; 2 uses
   %i.n = ptrtoint ptr %i.k to i64
   %i.o = ptrtoint ptr %i.m to i64
@@ -901,42 +894,39 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
-  %.021.i.a = phi i64 [ %1, %bb.a ], [ %i.d, %bb.c ] ; 4 uses
-  %.01520.i = phi i32 [ 0, %bb.a ], [ %6, %bb.c ] ; 4 uses
-  %i.b = trunc i64 %.021.i.a to i8
+  %.021.i.a = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i, %bb.c ] ; 4 uses
+  %.021.i = phi i64 [ %1, %bb.a ], [ %i.d, %bb.c ] ; 4 uses
+  %i.b = trunc i64 %.021.i to i8
   %i.c = and i8 %i.b, 127                         ; 2 uses
-  %i.d = ashr i64 %.021.i.a, 7                    ; 3 uses
+  %i.d = ashr i64 %.021.i, 7                      ; 3 uses
   %i.e = icmp eq i64 %i.d, 0
-  %.not.i = icmp ult i64 %.021.i.a, 64
+  %.not.i = icmp ult i64 %.021.i, 64
   %or.cond.i = and i1 %.not.i, %i.e
   br i1 %or.cond.i, label %.thread.i, label %bb.c
 
 .thread.i:                                        ; preds = %bb.b
-  %3 = zext i32 %.01520.i to i64
-  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 %.021.i.a
   store i8 %i.c, ptr %i.f, align 1, !tbaa !28
-  %4 = add i32 %.01520.i, 1
+  %indvars.iv.next25.i = add nuw nsw i64 %.021.i.a, 1
   br label %.loopexit.i
 
 bb.c:                                             ; preds = %bb.b
   %i.g = icmp ne i64 %i.d, -1
-  %i.h = and i64 %.021.i.a, 64
+  %i.h = and i64 %.021.i, 64
   %.not16.i = icmp eq i64 %i.h, 0
   %or.cond17.i = or i1 %i.g, %.not16.i            ; 2 uses
   %masksel.i = select i1 %or.cond17.i, i8 -128, i8 0
   %spec.select19.i = or disjoint i8 %masksel.i, %i.c
-  %5 = zext i32 %.01520.i to i64
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %5
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %.021.i.a
   store i8 %spec.select19.i, ptr %i.i, align 1, !tbaa !28
-  %6 = add i32 %.01520.i, 1                       ; 2 uses
+  %indvars.iv.next.i = add nuw nsw i64 %.021.i.a, 1 ; 2 uses
   br i1 %or.cond17.i, label %bb.b, label %.loopexit.i, !llvm.loop !152
 
 .loopexit.i:                                      ; preds = %bb.c, %.thread.i
-  %7 = phi i32 [ %4, %.thread.i ], [ %6, %bb.c ]
+  %indvars.iv.next26.i = phi i64 [ %indvars.iv.next25.i, %.thread.i ], [ %indvars.iv.next.i, %bb.c ]
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !44
-  %8 = zext i32 %7 to i64
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 %8
+  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next26.i
   %i.m = load ptr, ptr %2, align 8, !tbaa !44     ; 2 uses
   %i.n = ptrtoint ptr %i.k to i64
   %i.o = ptrtoint ptr %i.m to i64
@@ -1209,7 +1199,7 @@ _ZSt9__advanceIN8WasmEdge12SpareEnumMapILm160ENS0_7ErrCode5ValueESt17basic_strin
   %i.i = getelementptr inbounds nuw [24 x i8], ptr @_ZN8WasmEdgeL10ErrCodeStrE, i64 %.sroa.5.0.i.i.i.i
   %i.j = load i32, ptr %i.i, align 8, !tbaa !161
   %i.k = icmp ult i32 %i.j, %spec.select.i        ; 2 uses
-  %i.l = add i64 %.sroa.5.0.i.i.i.i, 1
+  %i.l = add nsw i64 %.sroa.5.0.i.i.i.i, 1
   %i.m = xor i64 %i.h, -1
   %i.n = add nsw i64 %.030.i.i.i.i, %i.m
   %.sroa.4.1.i.i.i.i = select i1 %i.k, i64 %i.l, i64 %.sroa.4.029.i.i.i.i ; 3 uses

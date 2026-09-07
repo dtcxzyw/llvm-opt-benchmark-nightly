@@ -205,8 +205,8 @@ bb.v:                                             ; preds = %.noexc56
 bb.w:                                             ; preds = %.noexc56
   %.val.i47 = load ptr, ptr %3, align 8, !noalias !5607, !nonnull !6, !noundef !6 ; 6 uses
   %.val60.i = load i64, ptr %i.bg, align 8, !noalias !5607, !noundef !6 ; 5 uses
-  %i.ej = zext i32 %spec.select.i45 to i64        ; 9 uses
-  %i.ek = zext i32 %i.dz to i64                   ; 10 uses
+  %i.ej = zext i32 %spec.select.i45 to i64        ; 7 uses
+  %i.ek = zext i32 %i.dz to i64                   ; 8 uses
   %i.el = icmp eq i32 %spec.select.i45, 0
   br i1 %i.el, label %bb.y, label %bb.x
 
@@ -346,9 +346,6 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.ai
 
 _RNvXs2K_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCsEhZmuQNqkz_11ruff_linter.exit19.i.i: ; preds = %_RNvXs2K_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCsEhZmuQNqkz_11ruff_linter.exit17.i.i
-  %5 = add nsw i64 %i.ek, -2
-  %6 = icmp ne i64 %5, %i.ej
-  call void @llvm.assume(i1 %6)
   %i.gu = getelementptr inbounds i8, ptr %i.gh, i64 -3 ; 2 uses
   %i.gv = load i8, ptr %i.gu, align 1, !noalias !5613, !noundef !6 ; 3 uses
   %i.gw = and i8 %i.gv, 15
@@ -366,9 +363,6 @@ bb.ag:                                            ; preds = %bb.ah, %_RNvXs2K_Nt
   br label %bb.ai
 
 _RNvXs2K_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCsEhZmuQNqkz_11ruff_linter.exit21.i.i: ; preds = %_RNvXs2K_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCsEhZmuQNqkz_11ruff_linter.exit19.i.i
-  %7 = add nsw i64 %i.ek, -3
-  %8 = icmp ne i64 %7, %i.ej
-  call void @llvm.assume(i1 %8)
   %i.hd = getelementptr inbounds i8, ptr %i.gh, i64 -4 ; 2 uses
   %i.he = load i8, ptr %i.hd, align 1, !noalias !5613, !noundef !6
   %i.hf = and i8 %i.he, 7

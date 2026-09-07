@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN6Assimp7OpenGEX15OpenGEXImporter19handleTransformNodeEPN10ODDLParser7DDLNodeEP7aiScene(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(776) %0, ptr noundef %1, ptr nofree readnone captures(none) %2) local_unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [16 x float], align 16            ; 11 uses
+  %i.a = alloca [16 x float], align 16            ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 416 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = icmp eq ptr %i.c, null
@@ -255,8 +255,7 @@ bb.j:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #32
   %i.m = getelementptr inbounds nuw i8, ptr %.val, i64 24
   %i.n = load ptr, ptr %i.m, align 8              ; 2 uses
-  %i.o = tail call noundef float @_ZNK10ODDLParser5Value8getFloatEv(ptr noundef nonnull align 8 dereferenceable(32) %.val) ; 2 uses
-  store float %i.o, ptr %i.a, align 16
+  %i.o = tail call noundef float @_ZNK10ODDLParser5Value8getFloatEv(ptr noundef nonnull align 8 dereferenceable(32) %.val)
   %.not1.i = icmp eq ptr %i.n, null
   br i1 %.not1.i, label %_ZN6Assimp7OpenGEXL9setMatrixEP6aiNodePN10ODDLParser13DataArrayListE.exit, label %.lr.ph.i
 
@@ -268,18 +267,13 @@ bb.j:                                             ; preds = %bb.f
   store float %i.p, ptr %i.q, align 4
   %i.r = getelementptr inbounds nuw i8, ptr %.03.i, i64 24
   %i.s = load ptr, ptr %i.r, align 8              ; 2 uses
-  %i.t = add i64 %.0222.i, 1
+  %i.t = add nuw nsw i64 %.0222.i, 1
   %.not.i = icmp eq ptr %i.s, null
-  br i1 %.not.i, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !53
+  br i1 %.not.i, label %_ZN6Assimp7OpenGEXL9setMatrixEP6aiNodePN10ODDLParser13DataArrayListE.exit, label %.lr.ph.i, !llvm.loop !53
 
-._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
-  %.pre.i = load float, ptr %i.a, align 16
-  br label %_ZN6Assimp7OpenGEXL9setMatrixEP6aiNodePN10ODDLParser13DataArrayListE.exit
-
-_ZN6Assimp7OpenGEXL9setMatrixEP6aiNodePN10ODDLParser13DataArrayListE.exit: ; preds = %bb.j, %._crit_edge.loopexit.i
-  %3 = phi float [ %.pre.i, %._crit_edge.loopexit.i ], [ %i.o, %bb.j ]
+_ZN6Assimp7OpenGEXL9setMatrixEP6aiNodePN10ODDLParser13DataArrayListE.exit: ; preds = %.lr.ph.i, %bb.j
   %i.u = getelementptr inbounds nuw i8, ptr %i.k, i64 1028
-  store float %3, ptr %i.u, align 4
+  store float %i.o, ptr %i.u, align 4
   %i.v = getelementptr inbounds nuw i8, ptr %i.k, i64 1032
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.x = load <12 x float>, ptr %i.w, align 4

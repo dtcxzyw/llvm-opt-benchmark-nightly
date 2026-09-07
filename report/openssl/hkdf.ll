@@ -202,27 +202,27 @@ bb.e:                                             ; preds = %bb.a, %bb.d, %bb.c
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @HKDF_Expand(ptr noundef nonnull %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4, ptr nofree noundef writeonly captures(address_is_null) %5, i64 noundef %6) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [64 x i8], align 16               ; 6 uses
-  %i.b = alloca i8, align 1                       ; 5 uses
+  %i.a = alloca [64 x i8], align 16               ; 8 uses
+  %i.b = alloca i8, align 1                       ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.c = tail call i32 @EVP_MD_get_size(ptr noundef nonnull %0) #7 ; 2 uses
   %i.d = icmp slt i32 %i.c, 1
   br i1 %i.d, label %bb.k, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = zext nneg i32 %i.c to i64                ; 4 uses
+  %i.e = zext nneg i32 %i.c to i64                ; 5 uses
   %i.f = udiv i64 %6, %i.e
   %i.g = urem i64 %6, %i.e
   %.not = icmp ne i64 %i.g, 0
   %i.h = zext i1 %.not to i64
-  %spec.select = add i64 %i.f, %i.h               ; 3 uses
+  %spec.select = add i64 %i.f, %i.h               ; 4 uses
   %i.i = icmp ugt i64 %spec.select, 255
   %i.j = icmp eq ptr %5, null
   %or.cond = or i1 %i.j, %i.i
   br i1 %or.cond, label %bb.k, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = tail call ptr @HMAC_CTX_new() #7         ; 8 uses
+  %i.k = tail call ptr @HMAC_CTX_new() #7         ; 11 uses
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %bb.k, label %bb.d
 
@@ -230,26 +230,42 @@ bb.d:                                             ; preds = %bb.c
   %i.m = trunc i64 %2 to i32
   %i.n = tail call i32 @HMAC_Init_ex(ptr noundef nonnull %i.k, ptr noundef %1, i32 noundef %i.m, ptr noundef nonnull %0, ptr noundef null) #7
   %.not50 = icmp eq i32 %i.n, 0
-  br i1 %.not50, label %.loopexit, label %.preheader.a
+  br i1 %.not50, label %.loopexit, label %.preheader
 
-.preheader.a:                                     ; preds = %bb.d
-  %.not5159.a = icmp eq i64 %spec.select, 0
-  br i1 %.not5159.a, label %.loopexit, label %.lr.ph.preheader
+.preheader:                                       ; preds = %bb.d
+  %.not5159 = icmp eq i64 %spec.select, 0
+  br i1 %.not5159, label %.loopexit, label %7
+
+7:                                                ; preds = %.preheader
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
+  store i8 1, ptr %i.b, align 1, !tbaa !31
+  %8 = tail call i32 @HMAC_Update(ptr noundef nonnull %i.k, ptr noundef %3, i64 noundef %4) #7
+  %.not54.peel = icmp eq i32 %8, 0
+  br i1 %.not54.peel, label %.thread, label %.preheader.a
+
+.preheader.a:                                     ; preds = %7
+  %9 = call i32 @HMAC_Update(ptr noundef nonnull %i.k, ptr noundef nonnull %i.b, i64 noundef 1) #7
+  %.not5159.a = icmp eq i32 %9, 0
+  br i1 %.not5159.a, label %.thread, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader.a
-  %7 = trunc nuw nsw i64 %spec.select to i32
-  br label %.lr.ph
+  %10 = call i32 @HMAC_Final(ptr noundef nonnull %i.k, ptr noundef nonnull %i.a, ptr noundef null) #7
+  %.not56.peel = icmp eq i32 %10, 0
+  br i1 %.not56.peel, label %.thread, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.j
-  %.04361 = phi i64 [ %i.w, %bb.j ], [ 0, %.lr.ph.preheader ] ; 3 uses
-  %.04460 = phi i32 [ %10, %bb.j ], [ 1, %.lr.ph.preheader ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader
+  %11 = call i64 @llvm.umin.i64(i64 %6, i64 %i.e) ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %5, ptr nonnull align 16 %i.a, i64 %11, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
+  %.not51.peel = icmp eq i64 %spec.select, 1
+  br i1 %.not51.peel, label %.loopexit, label %bb.e
+
+bb.e:                                             ; preds = %.lr.ph, %bb.j
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ 2, %.lr.ph ] ; 3 uses
+  %.04361 = phi i64 [ %i.w, %bb.j ], [ %11, %.lr.ph ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
-  %8 = trunc i32 %.04460 to i8
-  store i8 %8, ptr %i.b, align 1, !tbaa !31
-  %9 = icmp ugt i32 %.04460, 1
-  br i1 %9, label %bb.e, label %bb.g
-
-bb.e:                                             ; preds = %.lr.ph
+  %12 = trunc i64 %indvars.iv to i8
+  store i8 %12, ptr %i.b, align 1, !tbaa !31
   %i.o = call i32 @HMAC_Init_ex(ptr noundef nonnull %i.k, ptr noundef null, i32 noundef 0, ptr noundef null, ptr noundef null) #7
   %.not52 = icmp eq i32 %i.o, 0
   br i1 %.not52, label %.thread, label %bb.f
@@ -259,7 +275,7 @@ bb.f:                                             ; preds = %bb.e
   %.not53 = icmp eq i32 %i.p, 0
   br i1 %.not53, label %.thread, label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %.lr.ph
+bb.g:                                             ; preds = %bb.f
   %i.q = call i32 @HMAC_Update(ptr noundef nonnull %i.k, ptr noundef %3, i64 noundef %4) #7
   %.not54 = icmp eq i32 %i.q, 0
   br i1 %.not54, label %.thread, label %bb.h
@@ -274,7 +290,7 @@ bb.i:                                             ; preds = %bb.h
   %.not56 = icmp eq i32 %i.s, 0
   br i1 %.not56, label %.thread, label %bb.j
 
-.thread:                                          ; preds = %bb.h, %bb.g, %bb.f, %bb.e, %bb.i
+.thread:                                          ; preds = %bb.h, %bb.g, %bb.f, %bb.e, %bb.i, %.lr.ph.preheader, %.preheader.a, %7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   br label %.loopexit
 
@@ -285,12 +301,12 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.v, ptr nonnull align 16 %i.a, i64 %i.u, i1 false)
   %i.w = add i64 %i.u, %.04361
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
-  %10 = add i32 %.04460, 1                        ; 2 uses
-  %.not51 = icmp ugt i32 %10, %7
-  br i1 %.not51, label %.loopexit, label %.lr.ph, !llvm.loop !53
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1
+  %.not51 = icmp ugt i64 %spec.select, %indvars.iv
+  br i1 %.not51, label %bb.e, label %.loopexit, !llvm.loop !53
 
-.loopexit:                                        ; preds = %bb.j, %.preheader.a, %.thread, %bb.d
-  %.045 = phi i32 [ 0, %.thread ], [ 0, %bb.d ], [ 1, %.preheader.a ], [ 1, %bb.j ]
+.loopexit:                                        ; preds = %bb.j, %.lr.ph, %.preheader, %.thread, %bb.d
+  %.045 = phi i32 [ 0, %.thread ], [ 0, %bb.d ], [ 1, %.preheader ], [ 1, %.lr.ph ], [ 1, %bb.j ]
   call void @OPENSSL_cleanse(ptr noundef nonnull %i.a, i64 noundef 64) #7
   call void @HMAC_CTX_free(ptr noundef nonnull %i.k) #7
   br label %bb.k
@@ -364,7 +380,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !54
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !55
   %i.r = tail call i32 @OPENSSL_strcasecmp(ptr noundef %i.q, ptr noundef nonnull @.str.17) #7
   %i.s = icmp eq i32 %i.r, 0
   br i1 %i.s, label %.sink.split, label %bb.h
@@ -372,7 +388,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.t = load ptr, ptr %1, align 8, !tbaa !40
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 16
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !54
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !55
   %i.w = tail call i32 @OPENSSL_strcasecmp(ptr noundef %i.v, ptr noundef nonnull @.str.18) #7
   %i.x = icmp eq i32 %i.w, 0
   br i1 %i.x, label %.sink.split, label %bb.i
@@ -380,7 +396,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.y = load ptr, ptr %1, align 8, !tbaa !40
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 16
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !54
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !55
   %i.ab = tail call i32 @OPENSSL_strcasecmp(ptr noundef %i.aa, ptr noundef nonnull @.str.19) #7
   %i.ac = icmp eq i32 %i.ab, 0
   br i1 %i.ac, label %.sink.split, label %bb.j
@@ -397,7 +413,7 @@ bb.k:                                             ; preds = %bb.f
   br i1 %.not45, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ae = load i32, ptr %i.a, align 4, !tbaa !55  ; 2 uses
+  %i.ae = load i32, ptr %i.a, align 4, !tbaa !56  ; 2 uses
   %or.cond3 = icmp ugt i32 %i.ae, 2
   br i1 %or.cond3, label %bb.m, label %.sink.split
 
@@ -595,7 +611,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g,
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.i
-  %i.n = load i64, ptr %i.a, align 8, !tbaa !56
+  %i.n = load i64, ptr %i.a, align 8, !tbaa !57
   %i.o = call fastcc i32 @HKDF_Expand(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef nonnull %i.b, i64 noundef %i.n, ptr noundef %9, i64 noundef %10)
   br label %bb.l
 
@@ -703,8 +719,9 @@ attributes #8 = { nounwind willreturn memory(read) }
 !50 = !{!34, !33, i64 56}
 !51 = !{!34, !33, i64 48}
 !52 = !{!34, !33, i64 40}
-!53 = distinct !{!53, !43}
-!54 = !{!29, !8, i64 16}
-!55 = !{!5, !5, i64 0}
-!56 = !{!12, !12, i64 0}
+!53 = distinct !{!53, !43, !54}
+!54 = !{!"llvm.loop.peeled.count", i32 1}
+!55 = !{!29, !8, i64 16}
+!56 = !{!5, !5, i64 0}
+!57 = !{!12, !12, i64 0}
 end_hunk_0

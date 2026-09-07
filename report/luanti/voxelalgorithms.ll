@@ -204,7 +204,7 @@ bb.a:                                             ; preds = %.preheader118, %.lo
 .preheader116:                                    ; preds = %.preheader117, %bb.m
   %indvars.iv149 = phi i64 [ 0, %.preheader117 ], [ %indvars.iv.next150, %bb.m ] ; 3 uses
   %i.m = trunc nuw nsw i64 %indvars.iv149 to i48
-  %.sroa.11.0.insert.shift = shl nuw i48 %i.m, 32
+  %.sroa.11.0.insert.shift = shl nuw nsw i48 %i.m, 32
   %i.n = shl nuw nsw i64 %indvars.iv149, 8
   br label %.preheader115
 
@@ -607,7 +607,7 @@ bb.p:                                             ; preds = %.split354.us
   %indvars.iv429 = phi i64 [ 0, %bb.p ], [ %indvars.iv.next430, %bb.s ] ; 3 uses
   %i.ly = getelementptr inbounds nuw [16 x i8], ptr %i.a, i64 %indvars.iv429
   %i.lz = trunc nuw nsw i64 %indvars.iv429 to i32
-  %.sroa.6318.0.insert.shift = shl nuw i32 %i.lz, 16 ; 2 uses
+  %.sroa.6318.0.insert.shift = shl nuw nsw i32 %i.lz, 16 ; 2 uses
   br label %bb.t
 
 bb.q:                                             ; preds = %bb.i, %bb.g
@@ -1010,9 +1010,10 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.a, %bb.c
-  %indvars.iv43 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next44, %bb.c ] ; 3 uses
+  %indvars.iv43 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next44, %bb.c ] ; 4 uses
   %i.j = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv43
-  %i.k = shl nuw nsw i64 %indvars.iv43, 8
+  %3 = shl nuw nsw i64 %indvars.iv43, 8
+  %i.k = shl nuw nsw i64 %indvars.iv43, 10
   br label %bb.d
 
 bb.b:                                             ; preds = %bb.c
@@ -1024,10 +1025,10 @@ bb.c:                                             ; preds = %bb.e
   br i1 %exitcond46.not, label %bb.b, label %.preheader, !llvm.loop !290
 
 bb.d:                                             ; preds = %.preheader, %bb.e
-  %indvars.iv40 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next41, %bb.e ] ; 3 uses
+  %indvars.iv40 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next41, %bb.e ] ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 %indvars.iv40 ; 2 uses
   %i.m = load i8, ptr %i.l, align 1, !tbaa !123, !range !78, !noundef !79
-  %i.n = add nuw nsw i64 %i.k, %indvars.iv40
+  %i.n = add nuw nsw i64 %3, %indvars.iv40
   br label %_ZN8MapBlock14getNodeNoCheckEsss.exit
 
 bb.e:                                             ; preds = %_ZN8MapBlock14setNodeNoCheckEsss7MapNode.exit
@@ -1037,13 +1038,13 @@ bb.e:                                             ; preds = %_ZN8MapBlock14setNo
   br i1 %exitcond.not, label %bb.c, label %bb.d, !llvm.loop !291
 
 _ZN8MapBlock14getNodeNoCheckEsss.exit:            ; preds = %bb.d, %_ZN8MapBlock14setNodeNoCheckEsss7MapNode.exit
-  %indvars.iv = phi i64 [ 15, %bb.d ], [ %indvars.iv.next, %_ZN8MapBlock14setNodeNoCheckEsss7MapNode.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ 15, %bb.d ], [ %indvars.iv.next, %_ZN8MapBlock14setNodeNoCheckEsss7MapNode.exit ] ; 4 uses
   %.03036 = phi i8 [ %i.m, %bb.d ], [ %.2, %_ZN8MapBlock14setNodeNoCheckEsss7MapNode.exit ] ; 3 uses
   %i.o = load ptr, ptr %i.a, align 8, !tbaa !76
   %i.p = load i8, ptr %i.b, align 4, !tbaa !77, !range !78, !noundef !79
   %i.q = trunc nuw i8 %i.p to i1
   %i.r = shl nuw nsw i64 %indvars.iv, 4
-  %i.s = add nuw nsw i64 %i.n, %i.r               ; 2 uses
+  %i.s = add nuw nsw i64 %i.n, %i.r
   %i.t = select i1 %i.q, i64 0, i64 %i.s
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.t
   %.sroa.0.0.copyload.i = load i32, ptr %i.u, align 4 ; 3 uses
@@ -1070,8 +1071,11 @@ _ZN7MapNode8setLightE9LightBankh20ContentLightingFlags.exit32: ; preds = %_ZN8Ma
   %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.6.0.insert.ext, %i.af
   tail call void @_ZN8MapBlock19expandNodesIfNeededEv(ptr noundef nonnull align 8 dereferenceable(328) %0)
   %i.ag = load ptr, ptr %i.a, align 8, !tbaa !76
-  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %i.s
-  store i32 %.sroa.0.0.insert.insert, ptr %i.ah, align 4
+  %4 = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.k
+  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv40
+  %.idx40 = shl nuw nsw i64 %indvars.iv, 6
+  %5 = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.idx40
+  store i32 %.sroa.0.0.insert.insert, ptr %5, align 4
   %i.ai = load i16, ptr %i.d, align 2, !tbaa !81  ; 2 uses
   %i.aj = icmp ult i16 %i.ai, 4
   br i1 %i.aj, label %bb.f, label %bb.g
@@ -1474,7 +1478,7 @@ bb.s:                                             ; preds = %_ZN7voxalgo23is_sun
   %indvars.iv267 = phi i64 [ 0, %bb.s ], [ %indvars.iv.next268, %bb.t ] ; 3 uses
   %i.jh = getelementptr inbounds nuw [16 x i8], ptr %i.a, i64 %indvars.iv267
   %i.ji = trunc nuw nsw i64 %indvars.iv267 to i32
-  %.sroa.6214.0.insert.shift = shl nuw i32 %i.ji, 16 ; 2 uses
+  %.sroa.6214.0.insert.shift = shl nuw nsw i32 %i.ji, 16 ; 2 uses
   br label %bb.u
 
 .preheader227:                                    ; preds = %bb.t

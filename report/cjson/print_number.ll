@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.preheader, %.loopexit
   %i.k = phi i64 [ %i.af, %.loopexit ], [ 0, %.preheader ]
-  %.018 = phi i32 [ %i.ae, %.loopexit ], [ 0, %.preheader ] ; 8 uses
+  %.018 = phi i32 [ %i.ae, %.loopexit ], [ 0, %.preheader ] ; 7 uses
   %i.l = icmp samesign ugt i32 %.018, 3
   br i1 %i.l, label %bb.d, label %.loopexit
 
@@ -215,7 +215,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.o, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %bb.d
-  %i.p = zext nneg i32 %.018 to i64
+  %i.p = zext nneg i32 %.018 to i64               ; 2 uses
   %i.q = getelementptr i8, ptr %i.a, i64 %i.p     ; 5 uses
   %i.r = getelementptr i8, ptr %i.q, i64 -3
   %i.s = load i8, ptr %i.r, align 1, !tbaa !44
@@ -242,18 +242,21 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   br i1 %.not1516, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.g, %.lr.ph
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %i.p, %bb.g ]
   %4 = phi ptr [ %i.ac, %.lr.ph ], [ %i.q, %bb.g ]
-  %.117 = phi i32 [ %5, %.lr.ph ], [ %.018, %bb.g ]
-  %5 = add i32 %.117, 1                           ; 3 uses
-  %6 = zext i32 %5 to i64
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 %6 ; 2 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 3 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next ; 2 uses
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !44  ; 2 uses
   store i8 %i.ad, ptr %4, align 1, !tbaa !44
   %.not15 = icmp eq i8 %i.ad, 0
-  br i1 %.not15, label %.loopexit, label %.lr.ph
+  br i1 %.not15, label %.loopexit.loopexit, label %.lr.ph
 
-.loopexit:                                        ; preds = %.lr.ph, %bb.g, %bb.c, %bb.d, %bb.f, %._crit_edge
-  %.2 = phi i32 [ %.018, %bb.c ], [ %.018, %bb.f ], [ %.018, %._crit_edge ], [ %.018, %bb.d ], [ %.018, %bb.g ], [ %5, %.lr.ph ]
+.loopexit.loopexit:                               ; preds = %.lr.ph
+  %5 = trunc nuw i64 %indvars.iv.next to i32
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.g, %bb.c, %bb.d, %bb.f, %._crit_edge
+  %.2 = phi i32 [ %.018, %bb.c ], [ %.018, %bb.f ], [ %.018, %._crit_edge ], [ %.018, %bb.d ], [ %.018, %bb.g ], [ %5, %.loopexit.loopexit ]
   %i.ae = add i32 %.2, 1                          ; 3 uses
   %i.af = zext nneg i32 %i.ae to i64
   %i.ag = icmp ult i32 %i.ae, 26

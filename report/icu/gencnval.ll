@@ -202,7 +202,7 @@ allocString.exit.i:                               ; preds = %bb.ar
   %i.eu = lshr i64 %i.et, 1
   %i.ev = trunc i64 %i.eu to i16
   %i.ew = load i16, ptr @tagCount, align 2, !tbaa !18 ; 2 uses
-  %i.ex = add i16 %i.ew, 1
+  %i.ex = add nuw i16 %i.ew, 1
   store i16 %i.ex, ptr @tagCount, align 2, !tbaa !18
   %i.ey = zext i16 %i.ew to i64
   %i.ez = getelementptr inbounds nuw [65528 x i8], ptr @tags, i64 %i.ey
@@ -297,7 +297,7 @@ addConverter.exit.i.i:                            ; preds = %bb.ax, %.preheader.
   store i16 %i.gk, ptr %i.gm, align 4, !tbaa !27
   %i.gn = getelementptr inbounds nuw i8, ptr %i.gm, i64 2
   store i16 0, ptr %i.gn, align 2, !tbaa !28
-  %i.go = add i16 %.lcssa.i.i.i, 1
+  %i.go = add nuw i16 %.lcssa.i.i.i, 1
   store i16 %i.go, ptr @converterCount, align 2, !tbaa !18
   %i.gp = load i8, ptr %i.a, align 16, !tbaa !15  ; 2 uses
   %.not110139152.i.i = icmp eq i8 %i.gp, 0
@@ -310,14 +310,18 @@ addConverter.exit.i.i:                            ; preds = %bb.ax, %.preheader.
 .lr.ph141.i.i:                                    ; preds = %bb.br, %.lr.ph141.lr.ph.i.i
   %i.gr = phi i8 [ %i.gp, %.lr.ph141.lr.ph.i.i ], [ %i.kc, %bb.br ]
   %i.gs = phi i64 [ 0, %.lr.ph141.lr.ph.i.i ], [ %i.ka, %bb.br ]
-  %.1153.i.i = phi i16 [ 0, %.lr.ph141.lr.ph.i.i ], [ %.8.i.i, %bb.br ] ; 2 uses
+  %.1153.i.i = phi i16 [ 0, %.lr.ph141.lr.ph.i.i ], [ %.8.i.i, %bb.br ] ; 3 uses
   %i.gt = load ptr, ptr %i.cf, align 8, !tbaa !62 ; 3 uses
   %i.gu = sext i8 %i.gr to i64
   %i.gv = getelementptr inbounds [2 x i8], ptr %i.gt, i64 %i.gu
   %i.gw = load i16, ptr %i.gv, align 2, !tbaa !18
   %i.gx = and i16 %i.gw, 8192
   %.not111.i69.i = icmp eq i16 %i.gx, 0
-  br i1 %.not111.i69.i, label %.critedge2.preheader.i.i, label %.lr.ph.i
+  br i1 %.not111.i69.i, label %.lr.ph141.i..critedge2.preheader.i_crit_edge.i, label %.lr.ph.i
+
+.lr.ph141.i..critedge2.preheader.i_crit_edge.i:   ; preds = %.lr.ph141.i.i
+  %.pre.i = zext i16 %.1153.i.i to i64
+  br label %.critedge2.preheader.i.i
 
 bb.az:                                            ; preds = %.lr.ph.i
   %i.gy = sext i8 %i.hg to i64
@@ -327,25 +331,25 @@ bb.az:                                            ; preds = %.lr.ph.i
   %.not111.i.i = icmp eq i16 %i.hb, 0
   br i1 %.not111.i.i, label %.critedge2.preheader.i.i, label %.lr.ph.i, !llvm.loop !37
 
-.critedge2.preheader.i.i:                         ; preds = %bb.az, %.lr.ph141.i.i
-  %.lcssa47.i = phi i64 [ %i.gs, %.lr.ph141.i.i ], [ %i.he, %bb.az ]
-  %.2140.i.lcssa.i = phi i16 [ %.1153.i.i, %.lr.ph141.i.i ], [ %i.hd, %bb.az ] ; 3 uses
+.critedge2.preheader.i.i:                         ; preds = %bb.az, %.lr.ph141.i..critedge2.preheader.i_crit_edge.i
+  %.pre-phi.i = phi i64 [ %.pre.i, %.lr.ph141.i..critedge2.preheader.i_crit_edge.i ], [ %i.he, %bb.az ]
+  %.lcssa47.i = phi i64 [ %i.gs, %.lr.ph141.i..critedge2.preheader.i_crit_edge.i ], [ %i.he, %bb.az ]
+  %.2140.i.lcssa.i = phi i16 [ %.1153.i.i, %.lr.ph141.i..critedge2.preheader.i_crit_edge.i ], [ %i.hd, %bb.az ] ; 2 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %i.a, i64 %.lcssa47.i
   br label %.critedge2.i.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph141.i.i, %bb.az
   %.2140.i70.i = phi i16 [ %i.hd, %bb.az ], [ %.1153.i.i, %.lr.ph141.i.i ]
   %i.hd = add i16 %.2140.i70.i, 1                 ; 3 uses
-  %i.he = zext i16 %i.hd to i64                   ; 2 uses
+  %i.he = zext i16 %i.hd to i64                   ; 3 uses
   %i.hf = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.he
   %i.hg = load i8, ptr %i.hf, align 1, !tbaa !15  ; 2 uses
   %.not110.i.i = icmp eq i8 %i.hg, 0
   br i1 %.not110.i.i, label %parseLine.exit.i, label %bb.az, !llvm.loop !37
 
 .critedge2.i.i:                                   ; preds = %bb.bb, %.critedge2.preheader.i.i
-  %.3.i.i = phi i16 [ %3, %bb.bb ], [ %.2140.i.lcssa.i, %.critedge2.preheader.i.i ] ; 5 uses
-  %2 = zext i16 %.3.i.i to i64                    ; 2 uses
-  %i.hh = getelementptr inbounds nuw i8, ptr %i.a, i64 %2
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.bb ], [ %.pre-phi.i, %.critedge2.preheader.i.i ] ; 4 uses
+  %i.hh = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i
   %i.hi = load i8, ptr %i.hh, align 1, !tbaa !15  ; 2 uses
   switch i8 %i.hi, label %bb.ba [
     i8 0, label %.critedge4.i.i
@@ -361,11 +365,12 @@ bb.ba:                                            ; preds = %.critedge2.i.i
   br i1 %.not114.i.i, label %bb.bb, label %.critedge4.i.i
 
 bb.bb:                                            ; preds = %bb.ba
-  %3 = add i16 %.3.i.i, 1
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   br label %.critedge2.i.i, !llvm.loop !38
 
 .critedge4.i.i:                                   ; preds = %bb.ba, %.critedge2.i.i, %.critedge2.i.i
-  %i.hn = getelementptr inbounds nuw i8, ptr %i.a, i64 %2
+  %i.hn = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i
+  %2 = trunc nuw i64 %indvars.iv.i to i16         ; 3 uses
   %i.ho = icmp eq i16 %.2140.i.lcssa.i, 0
   br i1 %i.ho, label %bb.bc, label %bb.bd
 
@@ -374,7 +379,7 @@ bb.bc:                                            ; preds = %.critedge4.i.i
   br label %bb.be
 
 bb.bd:                                            ; preds = %.critedge4.i.i
-  %i.hp = sub i16 %.3.i.i, %.2140.i.lcssa.i
+  %i.hp = sub i16 %2, %.2140.i.lcssa.i
   %i.hq = zext i16 %i.hp to i32
   %i.hr = call fastcc ptr @allocString(ptr noundef nonnull @stringBlock, ptr noundef nonnull %i.hc, i32 noundef %i.hq) ; 2 uses
   call fastcc void @addAlias(ptr noundef %i.hr, i16 noundef zeroext 1, i16 noundef zeroext %.lcssa.i.i.i, i8 noundef signext 0)
@@ -414,7 +419,7 @@ addToKnownAliases.exit.i.i:                       ; preds = %bb.be
 
 bb.bg:                                            ; preds = %bb.bh, %.lr.ph145.i.i
   %i.ih = phi i8 [ %i.if, %.lr.ph145.i.i ], [ %i.ip, %bb.bh ] ; 2 uses
-  %.4144.i.i = phi i16 [ %.3.i.i, %.lr.ph145.i.i ], [ %i.im, %bb.bh ] ; 3 uses
+  %.4144.i.i = phi i16 [ %2, %.lr.ph145.i.i ], [ %i.im, %bb.bh ] ; 3 uses
   %i.ii = sext i8 %i.ih to i64
   %i.ij = getelementptr inbounds [2 x i8], ptr %i.ig, i64 %i.ii
   %i.ik = load i16, ptr %i.ij, align 2, !tbaa !18
@@ -440,13 +445,13 @@ bb.bi:                                            ; preds = %.critedge6.i.i
 
 bb.bj:                                            ; preds = %.critedge10.i.i, %bb.bi
   %i.is = phi ptr [ %i.ig, %bb.bi ], [ %i.ji, %.critedge10.i.i ]
-  %.5.i.i = phi i16 [ %i.ir, %bb.bi ], [ %.7149.i.i, %.critedge10.i.i ] ; 4 uses
+  %.5.i.i = phi i16 [ %i.ir, %bb.bi ], [ %.7149.i.i, %.critedge10.i.i ] ; 3 uses
+  %3 = zext i16 %.5.i.i to i64                    ; 2 uses
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bm, %bb.bj
-  %.6.i.i = phi i16 [ %.5.i.i, %bb.bj ], [ %5, %bb.bm ] ; 5 uses
-  %4 = zext i16 %.6.i.i to i64                    ; 2 uses
-  %i.it = getelementptr inbounds nuw i8, ptr %i.a, i64 %4
+  %indvars.iv108.i = phi i64 [ %indvars.iv.next109.i, %bb.bm ], [ %3, %bb.bj ] ; 4 uses
+  %i.it = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv108.i
   %i.iu = load i8, ptr %i.it, align 1, !tbaa !15  ; 3 uses
   switch i8 %i.iu, label %bb.bl [
     i8 0, label %.critedge8.i.i
@@ -462,18 +467,18 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %.not119.i.i, label %bb.bm, label %.critedge8.i.i
 
 bb.bm:                                            ; preds = %bb.bl
-  %5 = add i16 %.6.i.i, 1
+  %indvars.iv.next109.i = add nuw nsw i64 %indvars.iv108.i, 1
   br label %bb.bk, !llvm.loop !40
 
 .critedge8.i.i:                                   ; preds = %bb.bl, %bb.bk, %bb.bk
-  %.not120.i.i = icmp eq i16 %.5.i.i, %.6.i.i
+  %4 = trunc nuw i64 %indvars.iv108.i to i16      ; 3 uses
+  %.not120.i.i = icmp eq i16 %.5.i.i, %4
   br i1 %.not120.i.i, label %bb.bo, label %bb.bn
 
 bb.bn:                                            ; preds = %.critedge8.i.i
-  %i.iz = getelementptr inbounds nuw i8, ptr %i.a, i64 %4 ; 2 uses
-  %6 = zext i16 %.5.i.i to i64
-  %i.ja = getelementptr inbounds nuw i8, ptr %i.a, i64 %6
-  %i.jb = sub i16 %.6.i.i, %.5.i.i
+  %i.iz = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv108.i ; 2 uses
+  %i.ja = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
+  %i.jb = sub nuw i16 %4, %.5.i.i
   %i.jc = call fastcc zeroext i16 @getTagNumber(ptr noundef nonnull %i.ja, i16 noundef zeroext %i.jb)
   %i.jd = getelementptr i8, ptr %i.iz, i64 -1
   %i.je = load i8, ptr %i.jd, align 1, !tbaa !15
@@ -494,7 +499,7 @@ bb.bo:                                            ; preds = %bb.bn, %.critedge8.
 
 bb.bp:                                            ; preds = %bb.bq, %.lr.ph150.i.i
   %i.jj = phi i8 [ %i.jh, %.lr.ph150.i.i ], [ %i.jr, %bb.bq ] ; 2 uses
-  %.7149.i.i = phi i16 [ %.6.i.i, %.lr.ph150.i.i ], [ %i.jo, %bb.bq ] ; 3 uses
+  %.7149.i.i = phi i16 [ %4, %.lr.ph150.i.i ], [ %i.jo, %bb.bq ] ; 3 uses
   %i.jk = sext i8 %i.jj to i64
   %i.jl = getelementptr inbounds [2 x i8], ptr %i.ji, i64 %i.jk
   %i.jm = load i16, ptr %i.jl, align 2, !tbaa !18
@@ -527,7 +532,7 @@ bb.bq:                                            ; preds = %bb.bp
   unreachable
 
 .critedge6.thread.i.i:                            ; preds = %bb.bh, %.critedge6.i.i, %addToKnownAliases.exit.i.i
-  %.4129.i.i = phi i16 [ %.4144.i.i, %.critedge6.i.i ], [ %.3.i.i, %addToKnownAliases.exit.i.i ], [ %i.im, %bb.bh ]
+  %.4129.i.i = phi i16 [ %.4144.i.i, %.critedge6.i.i ], [ %2, %addToKnownAliases.exit.i.i ], [ %i.im, %bb.bh ]
   %i.jx = load i16, ptr %i.gq, align 8, !tbaa !30
   %i.jy = icmp eq i16 %i.jx, 0
   %i.jz = zext i1 %i.jy to i8
@@ -930,7 +935,7 @@ bb.n:                                             ; preds = %bb.k, %bb.l, %bb.m
   %i.at = zext i16 %i.as to i64
   %i.au = getelementptr inbounds nuw [65528 x i8], ptr @tags, i64 %i.at
   store i16 %i.ar, ptr %i.au, align 8, !tbaa !25
-  %i.av = add i16 %i.as, 1
+  %i.av = add nuw i16 %i.as, 1
   store i16 %i.av, ptr @tagCount, align 2, !tbaa !18
   br label %.loopexit
 

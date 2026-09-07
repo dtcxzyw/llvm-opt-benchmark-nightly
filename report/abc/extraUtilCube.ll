@@ -204,7 +204,7 @@ bb.a:
   %i.b = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #16 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   store i32 25165824, ptr %i.b, align 8, !tbaa !12
-  %calloc.i = tail call dereferenceable_or_null(100663296) ptr @calloc(i64 1, i64 100663296) ; 7 uses
+  %calloc.i = tail call dereferenceable_or_null(100663296) ptr @calloc(i64 1, i64 100663296) ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
   store ptr %calloc.i, ptr %i.d, align 8, !tbaa !13
   store i32 25165824, ptr %i.c, align 4, !tbaa !14
@@ -373,18 +373,18 @@ bb.c:                                             ; preds = %Abc_Clock.exit, %bb
   %i.du = load i8, ptr %i.dt, align 1, !tbaa !33
   store i8 %i.du, ptr %i.dn, align 1, !tbaa !33
   store i8 %i.do, ptr %i.dt, align 1, !tbaa !33
-  %5 = mul nuw nsw i64 %indvars.iv, 6             ; 3 uses
-  %6 = load i32, ptr %i.q, align 8                ; 3 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %calloc.i, i64 %5 ; 3 uses
-  store i32 %6, ptr %7, align 4, !tbaa !32
-  %i.dv = getelementptr i8, ptr %7, i64 4
+  %5 = load i32, ptr %i.q, align 8                ; 3 uses
+  %.idx = mul nuw nsw i64 %indvars.iv, 24
+  %6 = getelementptr inbounds nuw i8, ptr %calloc.i, i64 %.idx ; 9 uses
+  store i32 %5, ptr %6, align 4, !tbaa !32
+  %i.dv = getelementptr i8, ptr %6, i64 4
   %i.dw = load <4 x i32>, ptr %.sroa.10.0..sroa_idx, align 4 ; 3 uses
   %i.dx = load i32, ptr %.sroa.10.0..sroa_idx, align 4
   store <4 x i32> %i.dw, ptr %i.dv, align 4, !tbaa !32
   %i.dy = load i32, ptr %.sroa.34.0..sroa_idx, align 4 ; 2 uses
-  %i.dz = getelementptr i8, ptr %7, i64 20
+  %i.dz = getelementptr i8, ptr %6, i64 20
   store i32 %i.dy, ptr %i.dz, align 4, !tbaa !32
-  %i.ea = zext i32 %6 to i64
+  %i.ea = zext i32 %5 to i64
   %sext = shl i64 %i.ea, 56
   %i.eb = ashr exact i64 %sext, 56                ; 2 uses
   %i.ec = getelementptr inbounds [4 x i8], ptr @Abc_CubeGenerateSign.Var2Cor, i64 %i.eb
@@ -394,7 +394,7 @@ bb.c:                                             ; preds = %Abc_Clock.exit, %bb
   %i.eg = load i32, ptr %i.ef, align 4, !tbaa !32
   %i.eh = or i32 %i.ee, %i.eg
   %i.ei = sext i32 %i.eh to i64
-  %i.ej = lshr i32 %6, 24
+  %i.ej = lshr i32 %5, 24
   %i.ek = zext nneg i32 %i.ej to i64
   %sext253 = shl nuw i64 %i.ek, 56
   %i.el = ashr exact i64 %sext253, 56             ; 2 uses
@@ -591,17 +591,16 @@ bb.c:                                             ; preds = %Abc_Clock.exit, %bb
   store i8 %i.kw, ptr %i.kq, align 1, !tbaa !33
   store i8 %i.kr, ptr %i.kv, align 1, !tbaa !33
   %i.kx = load i32, ptr %i.hk, align 8            ; 3 uses
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %calloc.i, i64 %5 ; 3 uses
-  %i.ky = getelementptr inbounds nuw i8, ptr %8, i64 24
+  %i.ky = getelementptr inbounds nuw i8, ptr %6, i64 24
   store i32 %i.kx, ptr %i.ky, align 4, !tbaa !32
   %i.kz = getelementptr inbounds nuw i8, ptr %i.q, i64 76 ; 2 uses
-  %i.la = getelementptr i8, ptr %8, i64 28
+  %i.la = getelementptr i8, ptr %6, i64 28
   %i.lb = load <4 x i32>, ptr %i.kz, align 4      ; 3 uses
   %i.lc = load i32, ptr %i.kz, align 4
   store <4 x i32> %i.lb, ptr %i.la, align 4, !tbaa !32
   %i.ld = getelementptr inbounds nuw i8, ptr %i.q, i64 92
   %i.le = load i32, ptr %i.ld, align 4            ; 2 uses
-  %i.lf = getelementptr i8, ptr %8, i64 44
+  %i.lf = getelementptr i8, ptr %6, i64 44
   store i32 %i.le, ptr %i.lf, align 4, !tbaa !32
   %i.lg = zext i32 %i.kx to i64
   %sext259 = shl i64 %i.lg, 56
@@ -810,17 +809,16 @@ bb.c:                                             ; preds = %Abc_Clock.exit, %bb
   store i8 %i.sc, ptr %i.rw, align 1, !tbaa !33
   store i8 %i.rx, ptr %i.sb, align 1, !tbaa !33
   %i.sd = load i32, ptr %i.oq, align 8            ; 3 uses
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %calloc.i, i64 %5 ; 3 uses
-  %i.se = getelementptr inbounds nuw i8, ptr %9, i64 48
+  %i.se = getelementptr inbounds nuw i8, ptr %6, i64 48
   store i32 %i.sd, ptr %i.se, align 4, !tbaa !32
   %i.sf = getelementptr inbounds nuw i8, ptr %i.q, i64 148 ; 2 uses
-  %i.sg = getelementptr i8, ptr %9, i64 52
+  %i.sg = getelementptr i8, ptr %6, i64 52
   %i.sh = load <4 x i32>, ptr %i.sf, align 4      ; 3 uses
   %i.si = load i32, ptr %i.sf, align 4
   store <4 x i32> %i.sh, ptr %i.sg, align 4, !tbaa !32
   %i.sj = getelementptr inbounds nuw i8, ptr %i.q, i64 164
   %i.sk = load i32, ptr %i.sj, align 4            ; 2 uses
-  %i.sl = getelementptr i8, ptr %9, i64 68
+  %i.sl = getelementptr i8, ptr %6, i64 68
   store i32 %i.sk, ptr %i.sl, align 4, !tbaa !32
   %i.sm = zext i32 %i.sd to i64
   %sext266 = shl i64 %i.sm, 56

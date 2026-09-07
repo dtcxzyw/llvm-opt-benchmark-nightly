@@ -202,11 +202,10 @@ bb.s:                                             ; preds = %bb.n, %bb.r, %bb.q,
   br label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph, %bb.ac
-  %3 = phi i32 [ 0, %.lr.ph ], [ %6, %bb.ac ]     ; 3 uses
-  %.1195 = phi i16 [ 0, %.lr.ph ], [ %i.eg, %bb.ac ]
-  %.5194 = phi i16 [ 0, %.lr.ph ], [ %5, %bb.ac ] ; 2 uses
-  %4 = zext i16 %.5194 to i64
-  %i.cw = getelementptr inbounds nuw [112 x i8], ptr %2, i64 %4 ; 5 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.ac ] ; 2 uses
+  %3 = phi i32 [ 0, %.lr.ph ], [ %4, %bb.ac ]     ; 3 uses
+  %.5194 = phi i16 [ 0, %.lr.ph ], [ %i.eg, %bb.ac ]
+  %i.cw = getelementptr inbounds nuw [112 x i8], ptr %2, i64 %indvars.iv ; 5 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 104 ; 7 uses
   store i16 0, ptr %i.cx, align 8, !tbaa !35
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cw, i64 48 ; 3 uses
@@ -281,11 +280,11 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.z
   %i.ef = phi i16 [ %i.ee, %bb.ab ], [ %i.du, %bb.aa ], [ %i.du, %bb.z ]
-  %i.eg = add i16 %i.ef, %.1195                   ; 2 uses
-  %5 = add i16 %.5194, 1                          ; 2 uses
-  %6 = zext i16 %5 to i32                         ; 2 uses
+  %i.eg = add i16 %i.ef, %.5194                   ; 2 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %4 = trunc nuw i64 %indvars.iv.next to i32      ; 2 uses
   %i.eh = load i32, ptr @default_num_contexts, align 4, !tbaa !29
-  %i.ei = icmp ugt i32 %i.eh, %6
+  %i.ei = icmp ugt i32 %i.eh, %4
   br i1 %i.ei, label %bb.t, label %.thread, !llvm.loop !24
 
 .thread:                                          ; preds = %bb.ac, %bb.s, %bb.n
@@ -344,18 +343,17 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br i1 %or.cond205, label %.lr.ph197, label %.loopexit182
 
 .lr.ph197:                                        ; preds = %bb.ag, %.lr.ph197
-  %7 = phi i32 [ %10, %.lr.ph197 ], [ 0, %bb.ag ]
-  %.6196 = phi i16 [ %9, %.lr.ph197 ], [ 0, %bb.ag ] ; 2 uses
-  %8 = zext i16 %.6196 to i64
-  %i.fs = getelementptr inbounds nuw [112 x i8], ptr %2, i64 %8
+  %indvars.iv215 = phi i64 [ %indvars.iv.next216, %.lr.ph197 ], [ 0, %bb.ag ] ; 2 uses
+  %5 = phi i32 [ %6, %.lr.ph197 ], [ 0, %bb.ag ]
+  %i.fs = getelementptr inbounds nuw [112 x i8], ptr %2, i64 %indvars.iv215
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 98
   %i.fu = load i16, ptr %i.ft, align 2, !tbaa !19
   %i.fv = zext i16 %i.fu to i32
-  %i.fw = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.24, i32 noundef %7, i32 noundef %i.fv) ; 0 uses
-  %9 = add i16 %.6196, 1                          ; 2 uses
-  %10 = zext i16 %9 to i32                        ; 2 uses
+  %i.fw = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.24, i32 noundef %5, i32 noundef %i.fv) ; 0 uses
+  %indvars.iv.next216 = add nuw i64 %indvars.iv215, 1 ; 2 uses
+  %6 = trunc nuw i64 %indvars.iv.next216 to i32   ; 2 uses
   %i.fx = load i32, ptr @default_num_contexts, align 4, !tbaa !29 ; 2 uses
-  %i.fy = icmp ugt i32 %i.fx, %10
+  %i.fy = icmp ugt i32 %i.fx, %6
   br i1 %i.fy, label %.lr.ph197, label %.loopexit182.loopexit, !llvm.loop !25
 
 .loopexit182.loopexit:                            ; preds = %.lr.ph197
@@ -372,18 +370,17 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br i1 %or.cond207, label %.lr.ph199, label %.loopexit180
 
 .lr.ph199:                                        ; preds = %.loopexit182, %.lr.ph199
-  %11 = phi i32 [ %14, %.lr.ph199 ], [ 0, %.loopexit182 ]
-  %.7198 = phi i16 [ %13, %.lr.ph199 ], [ 0, %.loopexit182 ] ; 2 uses
-  %12 = zext i16 %.7198 to i64
-  %i.gd = getelementptr inbounds nuw [112 x i8], ptr %2, i64 %12
+  %indvars.iv217 = phi i64 [ %indvars.iv.next218, %.lr.ph199 ], [ 0, %.loopexit182 ] ; 2 uses
+  %7 = phi i32 [ %8, %.lr.ph199 ], [ 0, %.loopexit182 ]
+  %i.gd = getelementptr inbounds nuw [112 x i8], ptr %2, i64 %indvars.iv217
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gd, i64 100
   %i.gf = load i16, ptr %i.ge, align 4, !tbaa !39
   %i.gg = zext i16 %i.gf to i32
-  %i.gh = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.25, i32 noundef %11, i32 noundef %i.gg) ; 0 uses
-  %13 = add i16 %.7198, 1                         ; 2 uses
-  %14 = zext i16 %13 to i32                       ; 2 uses
+  %i.gh = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.25, i32 noundef %7, i32 noundef %i.gg) ; 0 uses
+  %indvars.iv.next218 = add nuw i64 %indvars.iv217, 1 ; 2 uses
+  %8 = trunc nuw i64 %indvars.iv.next218 to i32   ; 2 uses
   %i.gi = load i32, ptr @default_num_contexts, align 4, !tbaa !29 ; 2 uses
-  %i.gj = icmp ugt i32 %i.gi, %14
+  %i.gj = icmp ugt i32 %i.gi, %8
   br i1 %i.gj, label %.lr.ph199, label %.loopexit180.loopexit, !llvm.loop !26
 
 .loopexit180.loopexit:                            ; preds = %.lr.ph199
@@ -400,18 +397,17 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br i1 %or.cond209, label %.lr.ph201, label %.loopexit
 
 .lr.ph201:                                        ; preds = %.loopexit180, %.lr.ph201
-  %15 = phi i32 [ %18, %.lr.ph201 ], [ 0, %.loopexit180 ]
-  %.8200 = phi i16 [ %17, %.lr.ph201 ], [ 0, %.loopexit180 ] ; 2 uses
-  %16 = zext i16 %.8200 to i64
-  %i.go = getelementptr inbounds nuw [112 x i8], ptr %2, i64 %16
+  %indvars.iv219 = phi i64 [ %indvars.iv.next220, %.lr.ph201 ], [ 0, %.loopexit180 ] ; 2 uses
+  %9 = phi i32 [ %10, %.lr.ph201 ], [ 0, %.loopexit180 ]
+  %i.go = getelementptr inbounds nuw [112 x i8], ptr %2, i64 %indvars.iv219
   %i.gp = getelementptr inbounds nuw i8, ptr %i.go, i64 102
   %i.gq = load i16, ptr %i.gp, align 2, !tbaa !40
   %i.gr = zext i16 %i.gq to i32
-  %i.gs = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.26, i32 noundef %15, i32 noundef %i.gr) ; 0 uses
-  %17 = add i16 %.8200, 1                         ; 2 uses
-  %18 = zext i16 %17 to i32                       ; 2 uses
+  %i.gs = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.26, i32 noundef %9, i32 noundef %i.gr) ; 0 uses
+  %indvars.iv.next220 = add nuw i64 %indvars.iv219, 1 ; 2 uses
+  %10 = trunc nuw i64 %indvars.iv.next220 to i32  ; 2 uses
   %i.gt = load i32, ptr @default_num_contexts, align 4, !tbaa !29 ; 2 uses
-  %i.gu = icmp ugt i32 %i.gt, %18
+  %i.gu = icmp ugt i32 %i.gt, %10
   br i1 %i.gu, label %.lr.ph201, label %.loopexit, !llvm.loop !27
 
 .loopexit:                                        ; preds = %.lr.ph201, %.loopexit180
@@ -420,18 +416,17 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br i1 %.not211, label %._crit_edge, label %.lr.ph203
 
 .lr.ph203:                                        ; preds = %.loopexit, %.lr.ph203
-  %19 = phi i32 [ %22, %.lr.ph203 ], [ 0, %.loopexit ]
-  %.9202 = phi i16 [ %21, %.lr.ph203 ], [ 0, %.loopexit ] ; 2 uses
-  %20 = zext i16 %.9202 to i64
-  %i.gw = getelementptr inbounds nuw [112 x i8], ptr %2, i64 %20
+  %indvars.iv221 = phi i64 [ %indvars.iv.next222, %.lr.ph203 ], [ 0, %.loopexit ] ; 2 uses
+  %11 = phi i32 [ %12, %.lr.ph203 ], [ 0, %.loopexit ]
+  %i.gw = getelementptr inbounds nuw [112 x i8], ptr %2, i64 %indvars.iv221
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gw, i64 96
   %i.gy = load i16, ptr %i.gx, align 16, !tbaa !18
   %i.gz = zext i16 %i.gy to i32
-  %i.ha = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.27, i32 noundef %19, i32 noundef %i.gz) ; 0 uses
-  %21 = add i16 %.9202, 1                         ; 2 uses
-  %22 = zext i16 %21 to i32                       ; 2 uses
+  %i.ha = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.27, i32 noundef %11, i32 noundef %i.gz) ; 0 uses
+  %indvars.iv.next222 = add nuw i64 %indvars.iv221, 1 ; 2 uses
+  %12 = trunc nuw i64 %indvars.iv.next222 to i32  ; 2 uses
   %i.hb = load i32, ptr @default_num_contexts, align 4, !tbaa !29
-  %i.hc = icmp ugt i32 %i.hb, %22
+  %i.hc = icmp ugt i32 %i.hb, %12
   br i1 %i.hc, label %.lr.ph203, label %._crit_edge, !llvm.loop !28
 
 ._crit_edge:                                      ; preds = %.lr.ph203, %.loopexit
