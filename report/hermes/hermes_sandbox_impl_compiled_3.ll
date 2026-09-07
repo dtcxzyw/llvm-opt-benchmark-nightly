@@ -202,14 +202,14 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader:                                       ; preds = %._crit_edge, %.preheader
   %.0 = phi i32 [ %i.t, %.preheader ], [ %.0.copyload.i70, %._crit_edge ] ; 2 uses
-  %i.o = shl i32 %.0, 2                           ; 2 uses
-  %i.p = add i32 %i.o, 271472
+  %i.o = shl nuw nsw i32 %.0, 2                   ; 2 uses
+  %i.p = add nuw i32 %i.o, 271472
   %i.q = zext i32 %i.p to i64
   %.val = load ptr, ptr %i.b, align 8, !tbaa !12
   %i.r = getelementptr inbounds nuw i8, ptr %.val, i64 %i.q
   %.0.copyload.i71 = load i32, ptr %i.r, align 1  ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i71) #8, !srcloc !13
-  %i.s = add i32 %i.o, 20
+  %i.s = add nuw i32 %i.o, 20
   tail call void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AMetadata0x3A0x3ABuilder0x3A0x3AaddField0x28char0x20const0x2A0x2C0x20hermes0x3A0x3Avm0x3A0x3AGCHermesValueBase0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue320x3E0x20const0x2A0x29(ptr noundef nonnull %0, i32 noundef %1, i32 noundef %.0.copyload.i71, i32 noundef %i.s) #8
   %i.t = add i32 %.0, 1                           ; 2 uses
   %.not64 = icmp eq i32 %i.t, 5

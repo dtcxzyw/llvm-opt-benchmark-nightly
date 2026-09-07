@@ -204,12 +204,12 @@ bb.ax:                                            ; preds = %._crit_edge74.i.i
 _ZSt4nextISt23_Rb_tree_const_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEET_S8_NSt15iterator_traitsIS8_E15difference_typeE.exit.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit32.i.i, %.lr.ph73.i.i
   %.sroa.041.071.i.i = phi ptr [ %.pre75.i.i, %.lr.ph73.i.i ], [ %i.lj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit32.i.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25, !noalias !651
-  %50 = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.041.071.i.i) #28
-  %51 = getelementptr inbounds nuw i8, ptr %.sroa.041.071.i.i, i64 32
-  %i.ki = icmp ne ptr %50, %i.gx                  ; 2 uses
+  %50 = getelementptr inbounds nuw i8, ptr %.sroa.041.071.i.i, i64 32
+  %51 = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.041.071.i.i) #28
+  %i.ki = icmp ne ptr %51, %i.gx                  ; 2 uses
   %i.kj = select i1 %i.ki, ptr @.str.76, ptr @.str
   call void @llvm.experimental.noalias.scope.decl(metadata !652)
-  %i.kk = load ptr, ptr %51, align 8, !tbaa !33, !noalias !652
+  %i.kk = load ptr, ptr %50, align 8, !tbaa !33, !noalias !652
   %i.kl = getelementptr inbounds nuw i8, ptr %.sroa.041.071.i.i, i64 40
   %i.km = load i64, ptr %i.kl, align 8, !tbaa !153, !noalias !652 ; 3 uses
   %i.kn = zext i1 %i.ki to i64                    ; 3 uses

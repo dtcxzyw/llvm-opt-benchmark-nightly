@@ -204,13 +204,13 @@ bb.c:                                             ; preds = %.backedge
 _ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i: ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %i.q = load i8, ptr %i.p, align 1, !tbaa !29
-  %1 = load ptr, ptr %i.n, align 8, !tbaa !32
-  %2 = zext i8 %i.q to i32
-  store ptr %1, ptr %0, align 8, !tbaa !146
+  %1 = zext i8 %i.q to i32
+  %2 = load ptr, ptr %i.n, align 8, !tbaa !32
+  store ptr %2, ptr %0, align 8, !tbaa !146
   br label %_ZN8nlohmann16json_abi_v3_12_06detail22iterator_input_adapterISt14_List_iteratorIcEE13get_characterEv.exit.i
 
 _ZN8nlohmann16json_abi_v3_12_06detail22iterator_input_adapterISt14_List_iteratorIcEE13get_characterEv.exit.i: ; preds = %_ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i, %bb.c
-  %.0.i.i = phi i32 [ %2, %_ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i ], [ -1, %bb.c ] ; 2 uses
+  %.0.i.i = phi i32 [ %1, %_ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i ], [ -1, %bb.c ] ; 2 uses
   store i32 %.0.i.i, ptr %i.d, align 4, !tbaa !136
   br label %bb.d
 
@@ -439,13 +439,13 @@ bb.d:                                             ; preds = %bb.b
 _ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i: ; preds = %bb.d
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !29
-  %1 = load ptr, ptr %i.x, align 8, !tbaa !32
-  %2 = zext i8 %i.aa to i32
-  store ptr %1, ptr %0, align 8, !tbaa !146
+  %1 = zext i8 %i.aa to i32
+  %2 = load ptr, ptr %i.x, align 8, !tbaa !32
+  store ptr %2, ptr %0, align 8, !tbaa !146
   br label %_ZN8nlohmann16json_abi_v3_12_06detail22iterator_input_adapterISt14_List_iteratorIcEE13get_characterEv.exit.i
 
 _ZN8nlohmann16json_abi_v3_12_06detail22iterator_input_adapterISt14_List_iteratorIcEE13get_characterEv.exit.i: ; preds = %_ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i, %bb.d
-  %.0.i.i = phi i32 [ %2, %_ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i ], [ -1, %bb.d ] ; 2 uses
+  %.0.i.i = phi i32 [ %1, %_ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i ], [ -1, %bb.d ] ; 2 uses
   store i32 %.0.i.i, ptr %i.k, align 4, !tbaa !136
   br label %bb.e
 
@@ -848,13 +848,13 @@ bb.t:                                             ; preds = %bb.r
 _ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i: ; preds = %bb.t
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dp, i64 16
   %i.ds = load i8, ptr %i.dr, align 1, !tbaa !29
-  %1 = load ptr, ptr %i.dp, align 8, !tbaa !32
-  %2 = zext i8 %i.ds to i32
-  store ptr %1, ptr %0, align 8, !tbaa !146
+  %1 = zext i8 %i.ds to i32
+  %2 = load ptr, ptr %i.dp, align 8, !tbaa !32
+  store ptr %2, ptr %0, align 8, !tbaa !146
   br label %_ZN8nlohmann16json_abi_v3_12_06detail22iterator_input_adapterISt14_List_iteratorIcEE13get_characterEv.exit.i
 
 _ZN8nlohmann16json_abi_v3_12_06detail22iterator_input_adapterISt14_List_iteratorIcEE13get_characterEv.exit.i: ; preds = %_ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i, %bb.t
-  %.0.i.i = phi i32 [ %2, %_ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i ], [ -1, %bb.t ] ; 2 uses
+  %.0.i.i = phi i32 [ %1, %_ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i.i ], [ -1, %bb.t ] ; 2 uses
   store i32 %.0.i.i, ptr %i.b, align 4, !tbaa !136
   br label %bb.u
 
@@ -1257,13 +1257,13 @@ bb.c:                                             ; preds = %bb.a
 _ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i: ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.l = load i8, ptr %i.k, align 1, !tbaa !29
-  %1 = load ptr, ptr %i.i, align 8, !tbaa !32
-  %2 = zext i8 %i.l to i32
-  store ptr %1, ptr %0, align 8, !tbaa !146
+  %1 = zext i8 %i.l to i32
+  %2 = load ptr, ptr %i.i, align 8, !tbaa !32
+  store ptr %2, ptr %0, align 8, !tbaa !146
   br label %_ZN8nlohmann16json_abi_v3_12_06detail22iterator_input_adapterISt14_List_iteratorIcEE13get_characterEv.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail22iterator_input_adapterISt14_List_iteratorIcEE13get_characterEv.exit: ; preds = %bb.c, %_ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i
-  %.0.i = phi i32 [ %2, %_ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i ], [ -1, %bb.c ] ; 2 uses
+  %.0.i = phi i32 [ %1, %_ZSt9__advanceISt14_List_iteratorIcElEvRT_T0_St26bidirectional_iterator_tag.exit.i ], [ -1, %bb.c ] ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i32 %.0.i, ptr %i.m, align 4, !tbaa !136
   br label %bb.d

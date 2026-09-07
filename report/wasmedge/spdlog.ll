@@ -205,14 +205,15 @@ _ZN3fmt3v1110format_intC2Ei.exit.i:               ; preds = %bb.f, %_ZN3fmt3v111
   store ptr %.0.i.i.i, ptr %i.ar, align 8, !tbaa !279
   %i.as = ptrtoint ptr %10 to i64
   %i.at = ptrtoint ptr %.0.i.i.i to i64           ; 2 uses
-  %i.au = add i64 %i.as, 21                       ; 3 uses
+  %i.au = add i64 %i.as, 21                       ; 2 uses
   %i.av = sub i64 %i.au, %i.at
-  %i.aw = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.av
+  %i.aw = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.av ; 2 uses
   %.not24.i.i = icmp eq i64 %i.au, %i.at
   %.pre = load i64, ptr %i.f, align 8, !tbaa !67  ; 2 uses
   br i1 %.not24.i.i, label %_ZN6spdlog7details10fmt_helper10append_intIiEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Ei.exit.i
+  %11 = ptrtoint ptr %i.aw to i64
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 56
   br label %bb.g
 
@@ -220,7 +221,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i, %.
   %i.ay = phi i64 [ %.pre, %.lr.ph27.i.i ], [ %i.cd, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.0.i.i.i, %.lr.ph27.i.i ], [ %i.ce, %._crit_edge.i.i ] ; 9 uses
   %i.az = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.ba = sub i64 %i.au, %i.az                    ; 2 uses
+  %i.ba = sub i64 %11, %i.az                      ; 2 uses
   %i.bb = add i64 %i.ba, %i.ay                    ; 2 uses
   %i.bc = load i64, ptr %i.l, align 8, !tbaa !66  ; 2 uses
   %i.bd = icmp ugt i64 %i.bb, %i.bc
@@ -623,18 +624,22 @@ _ZN3fmt3v1110format_intC2Ei.exit.i226:            ; preds = %bb.bg, %_ZN3fmt3v11
   store ptr %.0.i.i.i227, ptr %i.wt, align 8, !tbaa !279
   %i.wu = ptrtoint ptr %4 to i64
   %i.wv = ptrtoint ptr %.0.i.i.i227 to i64        ; 2 uses
-  %i.ww = add i64 %i.wu, 21                       ; 3 uses
+  %i.ww = add i64 %i.wu, 21                       ; 2 uses
   %i.wx = sub i64 %i.ww, %i.wv
-  %i.wy = getelementptr inbounds nuw i8, ptr %.0.i.i.i227, i64 %i.wx
+  %i.wy = getelementptr inbounds nuw i8, ptr %.0.i.i.i227, i64 %i.wx ; 2 uses
   %.not24.i.i228 = icmp eq i64 %i.ww, %i.wv
   %.pre309 = load i64, ptr %i.lx, align 8, !tbaa !67 ; 2 uses
-  br i1 %.not24.i.i228, label %_ZN6spdlog7details10fmt_helper10append_intIiEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit247, label %.lr.ph27.i.i229.a
+  br i1 %.not24.i.i228, label %_ZN6spdlog7details10fmt_helper10append_intIiEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit247, label %.lr.ph27.i.i229
 
-.lr.ph27.i.i229.a:                                ; preds = %_ZN3fmt3v1110format_intC2Ei.exit.i226, %._crit_edge.i.i240
-  %i.wz = phi i64 [ %i.ye, %._crit_edge.i.i240 ], [ %.pre309, %_ZN3fmt3v1110format_intC2Ei.exit.i226 ] ; 2 uses
-  %.01925.i.i231 = phi ptr [ %i.yf, %._crit_edge.i.i240 ], [ %.0.i.i.i227, %_ZN3fmt3v1110format_intC2Ei.exit.i226 ] ; 9 uses
+.lr.ph27.i.i229:                                  ; preds = %_ZN3fmt3v1110format_intC2Ei.exit.i226
+  %12 = ptrtoint ptr %i.wy to i64
+  br label %.lr.ph27.i.i229.a
+
+.lr.ph27.i.i229.a:                                ; preds = %._crit_edge.i.i240, %.lr.ph27.i.i229
+  %i.wz = phi i64 [ %.pre309, %.lr.ph27.i.i229 ], [ %i.ye, %._crit_edge.i.i240 ] ; 2 uses
+  %.01925.i.i231 = phi ptr [ %.0.i.i.i227, %.lr.ph27.i.i229 ], [ %i.yf, %._crit_edge.i.i240 ] ; 9 uses
   %i.xa = ptrtoint ptr %.01925.i.i231 to i64      ; 2 uses
-  %i.xb = sub i64 %i.ww, %i.xa                    ; 2 uses
+  %i.xb = sub i64 %12, %i.xa                      ; 2 uses
   %i.xc = add i64 %i.xb, %i.wz                    ; 2 uses
   %i.xd = load i64, ptr %i.ma, align 8, !tbaa !66 ; 2 uses
   %i.xe = icmp ugt i64 %i.xc, %i.xd
@@ -1037,13 +1042,14 @@ _ZN3fmt3v1110format_intC2Ej.exit.i:               ; preds = %bb.h, %bb.g
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.be, align 8, !tbaa !279
   %i.bf = ptrtoint ptr %2 to i64
   %i.bg = ptrtoint ptr %.sroa.0.0.i.i.i.i to i64  ; 2 uses
-  %i.bh = add i64 %i.bf, 21                       ; 3 uses
+  %i.bh = add i64 %i.bf, 21                       ; 2 uses
   %i.bi = sub i64 %i.bh, %i.bg
-  %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.bi
+  %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.bi ; 2 uses
   %.not24.i.i = icmp eq i64 %i.bh, %i.bg
   br i1 %.not24.i.i, label %_ZN6spdlog7details10fmt_helper10append_intIjEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Ej.exit.i
+  %3 = ptrtoint ptr %i.bj to i64
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -1054,7 +1060,7 @@ bb.i:                                             ; preds = %._crit_edge.i.i, %.
   %i.bn = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.cs, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %.lr.ph27.i.i ], [ %i.ct, %._crit_edge.i.i ] ; 9 uses
   %i.bo = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.bp = sub i64 %i.bh, %i.bo                    ; 2 uses
+  %i.bp = sub i64 %3, %i.bo                       ; 2 uses
   %i.bq = add i64 %i.bp, %i.bn                    ; 2 uses
   %i.br = load i64, ptr %i.bl, align 8, !tbaa !66 ; 2 uses
   %i.bs = icmp ugt i64 %i.bq, %i.br
@@ -1457,13 +1463,14 @@ _ZN3fmt3v1110format_intC2Em.exit.i:               ; preds = %bb.c, %bb.b
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.ag, align 8, !tbaa !279
   %i.ah = ptrtoint ptr %4 to i64
   %i.ai = ptrtoint ptr %.sroa.0.0.i.i.i.i to i64  ; 2 uses
-  %i.aj = add i64 %i.ah, 21                       ; 3 uses
+  %i.aj = add i64 %i.ah, 21                       ; 2 uses
   %i.ak = sub i64 %i.aj, %i.ai
-  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.ak
+  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.ak ; 2 uses
   %.not24.i.i = icmp eq i64 %i.aj, %i.ai
   br i1 %.not24.i.i, label %.loopexit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Em.exit.i
+  %6 = ptrtoint ptr %i.al to i64
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -1474,7 +1481,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i, %.
   %i.ap = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bu, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %.lr.ph27.i.i ], [ %i.bv, %._crit_edge.i.i ] ; 9 uses
   %i.aq = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.ar = sub i64 %i.aj, %i.aq                    ; 2 uses
+  %i.ar = sub i64 %6, %i.aq                       ; 2 uses
   %i.as = add i64 %i.ar, %i.ap                    ; 2 uses
   %i.at = load i64, ptr %i.an, align 8, !tbaa !66 ; 2 uses
   %i.au = icmp ugt i64 %i.as, %i.at
@@ -1877,14 +1884,15 @@ _ZN3fmt3v1110format_intC2Ei.exit.i:               ; preds = %bb.l, %_ZN3fmt3v111
   store ptr %.0.i.i.i, ptr %i.fg, align 8, !tbaa !279
   %i.fh = ptrtoint ptr %8 to i64
   %i.fi = ptrtoint ptr %.0.i.i.i to i64           ; 2 uses
-  %i.fj = add i64 %i.fh, 21                       ; 3 uses
+  %i.fj = add i64 %i.fh, 21                       ; 2 uses
   %i.fk = sub i64 %i.fj, %i.fi
-  %i.fl = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.fk
+  %i.fl = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.fk ; 2 uses
   %.not24.i.i49 = icmp eq i64 %i.fj, %i.fi
   %.pre173 = load i64, ptr %i.bk, align 8, !tbaa !67 ; 2 uses
   br i1 %.not24.i.i49, label %.loopexit160, label %.lr.ph27.i.i50
 
 .lr.ph27.i.i50:                                   ; preds = %_ZN3fmt3v1110format_intC2Ei.exit.i
+  %10 = ptrtoint ptr %i.fl to i64
   %i.fm = getelementptr inbounds nuw i8, ptr %3, i64 24
   br label %bb.m
 
@@ -1892,7 +1900,7 @@ bb.m:                                             ; preds = %._crit_edge.i.i61, 
   %i.fn = phi i64 [ %.pre173, %.lr.ph27.i.i50 ], [ %i.gs, %._crit_edge.i.i61 ] ; 2 uses
   %.01925.i.i52 = phi ptr [ %.0.i.i.i, %.lr.ph27.i.i50 ], [ %i.gt, %._crit_edge.i.i61 ] ; 9 uses
   %i.fo = ptrtoint ptr %.01925.i.i52 to i64       ; 2 uses
-  %i.fp = sub i64 %i.fj, %i.fo                    ; 2 uses
+  %i.fp = sub i64 %10, %i.fo                      ; 2 uses
   %i.fq = add i64 %i.fp, %i.fn                    ; 2 uses
   %i.fr = load i64, ptr %i.bm, align 8, !tbaa !66 ; 2 uses
   %i.fs = icmp ugt i64 %i.fq, %i.fr
@@ -2295,13 +2303,14 @@ _ZN3fmt3v1110format_intC2Ei.exit.i126:            ; preds = %bb.ak, %_ZN3fmt3v11
   store ptr %.0.i.i.i127, ptr %i.ml, align 8, !tbaa !279
   %i.mm = ptrtoint ptr %4 to i64
   %i.mn = ptrtoint ptr %.0.i.i.i127 to i64        ; 2 uses
-  %i.mo = add i64 %i.mm, 21                       ; 3 uses
+  %i.mo = add i64 %i.mm, 21                       ; 2 uses
   %i.mp = sub i64 %i.mo, %i.mn
-  %i.mq = getelementptr inbounds nuw i8, ptr %.0.i.i.i127, i64 %i.mp
+  %i.mq = getelementptr inbounds nuw i8, ptr %.0.i.i.i127, i64 %i.mp ; 2 uses
   %.not24.i.i128 = icmp eq i64 %i.mo, %i.mn
   br i1 %.not24.i.i128, label %.loopexit156, label %.lr.ph27.i.i129
 
 .lr.ph27.i.i129:                                  ; preds = %_ZN3fmt3v1110format_intC2Ei.exit.i126
+  %11 = ptrtoint ptr %i.mq to i64
   %i.mr = getelementptr inbounds nuw i8, ptr %3, i64 24
   %.pre.i.i130 = load i64, ptr %i.bk, align 8, !tbaa !67
   br label %bb.al
@@ -2310,7 +2319,7 @@ bb.al:                                            ; preds = %._crit_edge.i.i140,
   %i.ms = phi i64 [ %.pre.i.i130, %.lr.ph27.i.i129 ], [ %i.nx, %._crit_edge.i.i140 ] ; 2 uses
   %.01925.i.i131 = phi ptr [ %.0.i.i.i127, %.lr.ph27.i.i129 ], [ %i.ny, %._crit_edge.i.i140 ] ; 9 uses
   %i.mt = ptrtoint ptr %.01925.i.i131 to i64      ; 2 uses
-  %i.mu = sub i64 %i.mo, %i.mt                    ; 2 uses
+  %i.mu = sub i64 %11, %i.mt                      ; 2 uses
   %i.mv = add i64 %i.mu, %i.ms                    ; 2 uses
   %i.mw = load i64, ptr %i.bm, align 8, !tbaa !66 ; 2 uses
   %i.mx = icmp ugt i64 %i.mv, %i.mw
@@ -2713,13 +2722,14 @@ _ZN3fmt3v1110format_intC2Ei.exit.i:               ; preds = %bb.d, %_ZN3fmt3v111
   store ptr %.0.i.i.i, ptr %i.z, align 8, !tbaa !279
   %i.aa = ptrtoint ptr %4 to i64
   %i.ab = ptrtoint ptr %.0.i.i.i to i64           ; 2 uses
-  %i.ac = add i64 %i.aa, 21                       ; 3 uses
+  %i.ac = add i64 %i.aa, 21                       ; 2 uses
   %i.ad = sub i64 %i.ac, %i.ab
-  %i.ae = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.ad
+  %i.ae = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.ad ; 2 uses
   %.not24.i.i = icmp eq i64 %i.ac, %i.ab
   br i1 %.not24.i.i, label %.loopexit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Ei.exit.i
+  %6 = ptrtoint ptr %i.ae to i64
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -2730,7 +2740,7 @@ bb.e:                                             ; preds = %._crit_edge.i.i, %.
   %i.ai = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bn, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.0.i.i.i, %.lr.ph27.i.i ], [ %i.bo, %._crit_edge.i.i ] ; 9 uses
   %i.aj = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.ak = sub i64 %i.ac, %i.aj                    ; 2 uses
+  %i.ak = sub i64 %6, %i.aj                       ; 2 uses
   %i.al = add i64 %i.ak, %i.ai                    ; 2 uses
   %i.am = load i64, ptr %i.ag, align 8, !tbaa !66 ; 2 uses
   %i.an = icmp ugt i64 %i.al, %i.am
@@ -3133,13 +3143,14 @@ _ZN3fmt3v1110format_intC2Em.exit.i:               ; preds = %bb.c, %bb.b
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.ag, align 8, !tbaa !279
   %i.ah = ptrtoint ptr %3 to i64
   %i.ai = ptrtoint ptr %.sroa.0.0.i.i.i.i to i64  ; 2 uses
-  %i.aj = add i64 %i.ah, 21                       ; 3 uses
+  %i.aj = add i64 %i.ah, 21                       ; 2 uses
   %i.ak = sub i64 %i.aj, %i.ai
-  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.ak
+  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.ak ; 2 uses
   %.not24.i.i = icmp eq i64 %i.aj, %i.ai
   br i1 %.not24.i.i, label %_ZN6spdlog7details10fmt_helper10append_intImEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Em.exit.i
+  %4 = ptrtoint ptr %i.al to i64
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -3150,7 +3161,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i, %.
   %i.ap = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bu, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %.lr.ph27.i.i ], [ %i.bv, %._crit_edge.i.i ] ; 9 uses
   %i.aq = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.ar = sub i64 %i.aj, %i.aq                    ; 2 uses
+  %i.ar = sub i64 %4, %i.aq                       ; 2 uses
   %i.as = add i64 %i.ar, %i.ap                    ; 2 uses
   %i.at = load i64, ptr %i.an, align 8, !tbaa !66 ; 2 uses
   %i.au = icmp ugt i64 %i.as, %i.at
@@ -3553,13 +3564,14 @@ _ZN3fmt3v1110format_intC2El.exit.i:               ; preds = %bb.d, %_ZN3fmt3v111
   store ptr %.0.i.i.i, ptr %i.w, align 8, !tbaa !279
   %i.x = ptrtoint ptr %4 to i64
   %i.y = ptrtoint ptr %.0.i.i.i to i64            ; 2 uses
-  %i.z = add i64 %i.x, 21                         ; 3 uses
+  %i.z = add i64 %i.x, 21                         ; 2 uses
   %i.aa = sub i64 %i.z, %i.y
-  %i.ab = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.aa
+  %i.ab = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.aa ; 2 uses
   %.not24.i.i = icmp eq i64 %i.z, %i.y
   br i1 %.not24.i.i, label %.loopexit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2El.exit.i
+  %6 = ptrtoint ptr %i.ab to i64
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -3570,7 +3582,7 @@ bb.e:                                             ; preds = %._crit_edge.i.i, %.
   %i.af = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bk, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.0.i.i.i, %.lr.ph27.i.i ], [ %i.bl, %._crit_edge.i.i ] ; 9 uses
   %i.ag = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.ah = sub i64 %i.z, %i.ag                     ; 2 uses
+  %i.ah = sub i64 %6, %i.ag                       ; 2 uses
   %i.ai = add i64 %i.ah, %i.af                    ; 2 uses
   %i.aj = load i64, ptr %i.ad, align 8, !tbaa !66 ; 2 uses
   %i.ak = icmp ugt i64 %i.ai, %i.aj
@@ -3973,13 +3985,14 @@ _ZN3fmt3v1110format_intC2Ej.exit.i:               ; preds = %bb.c, %bb.b
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.ae, align 8, !tbaa !279
   %i.af = ptrtoint ptr %4 to i64
   %i.ag = ptrtoint ptr %.sroa.0.0.i.i.i.i to i64  ; 2 uses
-  %i.ah = add i64 %i.af, 21                       ; 3 uses
+  %i.ah = add i64 %i.af, 21                       ; 2 uses
   %i.ai = sub i64 %i.ah, %i.ag
-  %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.ai
+  %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.ai ; 2 uses
   %.not24.i.i = icmp eq i64 %i.ah, %i.ag
   br i1 %.not24.i.i, label %.loopexit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Ej.exit.i
+  %6 = ptrtoint ptr %i.aj to i64
   %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -3990,7 +4003,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i, %.
   %i.an = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bs, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %.lr.ph27.i.i ], [ %i.bt, %._crit_edge.i.i ] ; 9 uses
   %i.ao = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.ap = sub i64 %i.ah, %i.ao                    ; 2 uses
+  %i.ap = sub i64 %6, %i.ao                       ; 2 uses
   %i.aq = add i64 %i.ap, %i.an                    ; 2 uses
   %i.ar = load i64, ptr %i.al, align 8, !tbaa !66 ; 2 uses
   %i.as = icmp ugt i64 %i.aq, %i.ar
@@ -4393,13 +4406,14 @@ _ZN3fmt3v1110format_intC2Ei.exit.i:               ; preds = %bb.s, %_ZN3fmt3v111
   store ptr %.0.i.i.i, ptr %i.gg, align 8, !tbaa !279
   %i.gh = ptrtoint ptr %4 to i64
   %i.gi = ptrtoint ptr %.0.i.i.i to i64           ; 2 uses
-  %i.gj = add i64 %i.gh, 21                       ; 3 uses
+  %i.gj = add i64 %i.gh, 21                       ; 2 uses
   %i.gk = sub i64 %i.gj, %i.gi
-  %i.gl = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.gk
+  %i.gl = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.gk ; 2 uses
   %.not24.i.i17 = icmp eq i64 %i.gj, %i.gi
   br i1 %.not24.i.i17, label %.loopexit61, label %.lr.ph27.i.i18
 
 .lr.ph27.i.i18:                                   ; preds = %_ZN3fmt3v1110format_intC2Ei.exit.i
+  %7 = ptrtoint ptr %i.gl to i64
   %i.gm = getelementptr inbounds nuw i8, ptr %3, i64 24
   %.pre.i.i19 = load i64, ptr %i.fa, align 8, !tbaa !67
   br label %bb.t
@@ -4408,7 +4422,7 @@ bb.t:                                             ; preds = %._crit_edge.i.i29, 
   %i.gn = phi i64 [ %.pre.i.i19, %.lr.ph27.i.i18 ], [ %i.hs, %._crit_edge.i.i29 ] ; 2 uses
   %.01925.i.i20 = phi ptr [ %.0.i.i.i, %.lr.ph27.i.i18 ], [ %i.ht, %._crit_edge.i.i29 ] ; 9 uses
   %i.go = ptrtoint ptr %.01925.i.i20 to i64       ; 2 uses
-  %i.gp = sub i64 %i.gj, %i.go                    ; 2 uses
+  %i.gp = sub i64 %7, %i.go                       ; 2 uses
   %i.gq = add i64 %i.gp, %i.gn                    ; 2 uses
   %i.gr = load i64, ptr %i.fc, align 8, !tbaa !66 ; 2 uses
   %i.gs = icmp ugt i64 %i.gq, %i.gr
@@ -4811,13 +4825,14 @@ _ZN3fmt3v1110format_intC2Ei.exit.i:               ; preds = %bb.m, %_ZN3fmt3v111
   store ptr %.0.i.i.i, ptr %i.dj, align 8, !tbaa !279
   %i.dk = ptrtoint ptr %4 to i64
   %i.dl = ptrtoint ptr %.0.i.i.i to i64           ; 2 uses
-  %i.dm = add i64 %i.dk, 21                       ; 3 uses
+  %i.dm = add i64 %i.dk, 21                       ; 2 uses
   %i.dn = sub i64 %i.dm, %i.dl
-  %i.do = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.dn
+  %i.do = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.dn ; 2 uses
   %.not24.i.i = icmp eq i64 %i.dm, %i.dl
   br i1 %.not24.i.i, label %.loopexit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Ei.exit.i
+  %7 = ptrtoint ptr %i.do to i64
   %i.dp = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -4828,7 +4843,7 @@ bb.n:                                             ; preds = %._crit_edge.i.i, %.
   %i.ds = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.ex, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.0.i.i.i, %.lr.ph27.i.i ], [ %i.ey, %._crit_edge.i.i ] ; 9 uses
   %i.dt = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.du = sub i64 %i.dm, %i.dt                    ; 2 uses
+  %i.du = sub i64 %7, %i.dt                       ; 2 uses
   %i.dv = add i64 %i.du, %i.ds                    ; 2 uses
   %i.dw = load i64, ptr %i.dq, align 8, !tbaa !66 ; 2 uses
   %i.dx = icmp ugt i64 %i.dv, %i.dw
@@ -5231,13 +5246,14 @@ _ZN3fmt3v1110format_intC2Em.exit.i:               ; preds = %bb.c, %bb.b
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.ag, align 8, !tbaa !279
   %i.ah = ptrtoint ptr %4 to i64
   %i.ai = ptrtoint ptr %.sroa.0.0.i.i.i.i to i64  ; 2 uses
-  %i.aj = add i64 %i.ah, 21                       ; 3 uses
+  %i.aj = add i64 %i.ah, 21                       ; 2 uses
   %i.ak = sub i64 %i.aj, %i.ai
-  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.ak
+  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.ak ; 2 uses
   %.not24.i.i = icmp eq i64 %i.aj, %i.ai
   br i1 %.not24.i.i, label %.loopexit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Em.exit.i
+  %6 = ptrtoint ptr %i.al to i64
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -5248,7 +5264,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i, %.
   %i.ap = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bu, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %.lr.ph27.i.i ], [ %i.bv, %._crit_edge.i.i ] ; 9 uses
   %i.aq = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.ar = sub i64 %i.aj, %i.aq                    ; 2 uses
+  %i.ar = sub i64 %6, %i.aq                       ; 2 uses
   %i.as = add i64 %i.ar, %i.ap                    ; 2 uses
   %i.at = load i64, ptr %i.an, align 8, !tbaa !66 ; 2 uses
   %i.au = icmp ugt i64 %i.as, %i.at
@@ -5651,13 +5667,14 @@ _ZN3fmt3v1110format_intC2Em.exit.i:               ; preds = %bb.c, %bb.b
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.ah, align 8, !tbaa !279
   %i.ai = ptrtoint ptr %4 to i64
   %i.aj = ptrtoint ptr %.sroa.0.0.i.i.i.i to i64  ; 2 uses
-  %i.ak = add i64 %i.ai, 21                       ; 3 uses
+  %i.ak = add i64 %i.ai, 21                       ; 2 uses
   %i.al = sub i64 %i.ak, %i.aj
-  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.al
+  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.al ; 2 uses
   %.not24.i.i = icmp eq i64 %i.ak, %i.aj
   br i1 %.not24.i.i, label %.loopexit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Em.exit.i
+  %6 = ptrtoint ptr %i.am to i64
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -5668,7 +5685,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i, %.
   %i.aq = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bv, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %.lr.ph27.i.i ], [ %i.bw, %._crit_edge.i.i ] ; 9 uses
   %i.ar = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.as = sub i64 %i.ak, %i.ar                    ; 2 uses
+  %i.as = sub i64 %6, %i.ar                       ; 2 uses
   %i.at = add i64 %i.as, %i.aq                    ; 2 uses
   %i.au = load i64, ptr %i.ao, align 8, !tbaa !66 ; 2 uses
   %i.av = icmp ugt i64 %i.at, %i.au
@@ -6071,13 +6088,14 @@ _ZN3fmt3v1110format_intC2Em.exit.i:               ; preds = %bb.c, %bb.b
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.ah, align 8, !tbaa !279
   %i.ai = ptrtoint ptr %4 to i64
   %i.aj = ptrtoint ptr %.sroa.0.0.i.i.i.i to i64  ; 2 uses
-  %i.ak = add i64 %i.ai, 21                       ; 3 uses
+  %i.ak = add i64 %i.ai, 21                       ; 2 uses
   %i.al = sub i64 %i.ak, %i.aj
-  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.al
+  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.al ; 2 uses
   %.not24.i.i = icmp eq i64 %i.ak, %i.aj
   br i1 %.not24.i.i, label %.loopexit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Em.exit.i
+  %6 = ptrtoint ptr %i.am to i64
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -6088,7 +6106,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i, %.
   %i.aq = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bv, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %.lr.ph27.i.i ], [ %i.bw, %._crit_edge.i.i ] ; 9 uses
   %i.ar = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.as = sub i64 %i.ak, %i.ar                    ; 2 uses
+  %i.as = sub i64 %6, %i.ar                       ; 2 uses
   %i.at = add i64 %i.as, %i.aq                    ; 2 uses
   %i.au = load i64, ptr %i.ao, align 8, !tbaa !66 ; 2 uses
   %i.av = icmp ugt i64 %i.at, %i.au
@@ -6491,13 +6509,14 @@ _ZN3fmt3v1110format_intC2Em.exit.i:               ; preds = %bb.c, %bb.b
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.ah, align 8, !tbaa !279
   %i.ai = ptrtoint ptr %4 to i64
   %i.aj = ptrtoint ptr %.sroa.0.0.i.i.i.i to i64  ; 2 uses
-  %i.ak = add i64 %i.ai, 21                       ; 3 uses
+  %i.ak = add i64 %i.ai, 21                       ; 2 uses
   %i.al = sub i64 %i.ak, %i.aj
-  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.al
+  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.al ; 2 uses
   %.not24.i.i = icmp eq i64 %i.ak, %i.aj
   br i1 %.not24.i.i, label %.loopexit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Em.exit.i
+  %6 = ptrtoint ptr %i.am to i64
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -6508,7 +6527,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i, %.
   %i.aq = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bv, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %.lr.ph27.i.i ], [ %i.bw, %._crit_edge.i.i ] ; 9 uses
   %i.ar = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.as = sub i64 %i.ak, %i.ar                    ; 2 uses
+  %i.as = sub i64 %6, %i.ar                       ; 2 uses
   %i.at = add i64 %i.as, %i.aq                    ; 2 uses
   %i.au = load i64, ptr %i.ao, align 8, !tbaa !66 ; 2 uses
   %i.av = icmp ugt i64 %i.at, %i.au
@@ -6911,13 +6930,14 @@ _ZN3fmt3v1110format_intC2Em.exit.i:               ; preds = %bb.c, %bb.b
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.t, align 8, !tbaa !279
   %i.u = ptrtoint ptr %4 to i64
   %i.v = ptrtoint ptr %.sroa.0.0.i.i.i.i to i64   ; 2 uses
-  %i.w = add i64 %i.u, 21                         ; 3 uses
+  %i.w = add i64 %i.u, 21                         ; 2 uses
   %i.x = sub i64 %i.w, %i.v
-  %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.x
+  %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.x ; 2 uses
   %.not24.i.i = icmp eq i64 %i.w, %i.v
   br i1 %.not24.i.i, label %_ZN6spdlog7details10fmt_helper10append_intImEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Em.exit.i
+  %5 = ptrtoint ptr %i.y to i64
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -6928,7 +6948,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i, %.
   %i.ac = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bh, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %.lr.ph27.i.i ], [ %i.bi, %._crit_edge.i.i ] ; 9 uses
   %i.ad = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.ae = sub i64 %i.w, %i.ad                     ; 2 uses
+  %i.ae = sub i64 %5, %i.ad                       ; 2 uses
   %i.af = add i64 %i.ae, %i.ac                    ; 2 uses
   %i.ag = load i64, ptr %i.aa, align 8, !tbaa !66 ; 2 uses
   %i.ah = icmp ugt i64 %i.af, %i.ag
@@ -7331,14 +7351,15 @@ _ZN3fmt3v1110format_intC2Ei.exit.i:               ; preds = %bb.j, %_ZN3fmt3v111
   store ptr %.0.i.i.i, ptr %i.ff, align 8, !tbaa !279
   %i.fg = ptrtoint ptr %8 to i64
   %i.fh = ptrtoint ptr %.0.i.i.i to i64           ; 2 uses
-  %i.fi = add i64 %i.fg, 21                       ; 3 uses
+  %i.fi = add i64 %i.fg, 21                       ; 2 uses
   %i.fj = sub i64 %i.fi, %i.fh
-  %i.fk = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.fj
+  %i.fk = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.fj ; 2 uses
   %.not24.i.i43 = icmp eq i64 %i.fi, %i.fh
   %.pre143 = load i64, ptr %i.bj, align 8, !tbaa !67 ; 2 uses
   br i1 %.not24.i.i43, label %_ZN6spdlog7details10fmt_helper10append_intIiEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit, label %.lr.ph27.i.i44
 
 .lr.ph27.i.i44:                                   ; preds = %_ZN3fmt3v1110format_intC2Ei.exit.i
+  %9 = ptrtoint ptr %i.fk to i64
   %i.fl = getelementptr inbounds nuw i8, ptr %3, i64 24
   br label %bb.k
 
@@ -7346,7 +7367,7 @@ bb.k:                                             ; preds = %._crit_edge.i.i55, 
   %i.fm = phi i64 [ %.pre143, %.lr.ph27.i.i44 ], [ %i.gr, %._crit_edge.i.i55 ] ; 2 uses
   %.01925.i.i46 = phi ptr [ %.0.i.i.i, %.lr.ph27.i.i44 ], [ %i.gs, %._crit_edge.i.i55 ] ; 9 uses
   %i.fn = ptrtoint ptr %.01925.i.i46 to i64       ; 2 uses
-  %i.fo = sub i64 %i.fi, %i.fn                    ; 2 uses
+  %i.fo = sub i64 %9, %i.fn                       ; 2 uses
   %i.fp = add i64 %i.fo, %i.fm                    ; 2 uses
   %i.fq = load i64, ptr %i.bl, align 8, !tbaa !66 ; 2 uses
   %i.fr = icmp ugt i64 %i.fp, %i.fq
@@ -7749,13 +7770,14 @@ _ZN3fmt3v1110format_intC2Ei.exit.i106:            ; preds = %bb.ae, %_ZN3fmt3v11
   store ptr %.0.i.i.i107, ptr %i.mk, align 8, !tbaa !279
   %i.ml = ptrtoint ptr %4 to i64
   %i.mm = ptrtoint ptr %.0.i.i.i107 to i64        ; 2 uses
-  %i.mn = add i64 %i.ml, 21                       ; 3 uses
+  %i.mn = add i64 %i.ml, 21                       ; 2 uses
   %i.mo = sub i64 %i.mn, %i.mm
-  %i.mp = getelementptr inbounds nuw i8, ptr %.0.i.i.i107, i64 %i.mo
+  %i.mp = getelementptr inbounds nuw i8, ptr %.0.i.i.i107, i64 %i.mo ; 2 uses
   %.not24.i.i108 = icmp eq i64 %i.mn, %i.mm
   br i1 %.not24.i.i108, label %_ZN6spdlog7details10fmt_helper10append_intIiEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit127, label %.lr.ph27.i.i109
 
 .lr.ph27.i.i109:                                  ; preds = %_ZN3fmt3v1110format_intC2Ei.exit.i106
+  %10 = ptrtoint ptr %i.mp to i64
   %i.mq = getelementptr inbounds nuw i8, ptr %3, i64 24
   %.pre.i.i110 = load i64, ptr %i.bj, align 8, !tbaa !67
   br label %bb.af
@@ -7764,7 +7786,7 @@ bb.af:                                            ; preds = %._crit_edge.i.i120,
   %i.mr = phi i64 [ %.pre.i.i110, %.lr.ph27.i.i109 ], [ %i.nw, %._crit_edge.i.i120 ] ; 2 uses
   %.01925.i.i111 = phi ptr [ %.0.i.i.i107, %.lr.ph27.i.i109 ], [ %i.nx, %._crit_edge.i.i120 ] ; 9 uses
   %i.ms = ptrtoint ptr %.01925.i.i111 to i64      ; 2 uses
-  %i.mt = sub i64 %i.mn, %i.ms                    ; 2 uses
+  %i.mt = sub i64 %10, %i.ms                      ; 2 uses
   %i.mu = add i64 %i.mt, %i.mr                    ; 2 uses
   %i.mv = load i64, ptr %i.bl, align 8, !tbaa !66 ; 2 uses
   %i.mw = icmp ugt i64 %i.mu, %i.mv
@@ -8067,13 +8089,14 @@ _ZN3fmt3v1110format_intC2Ei.exit.i:               ; preds = %bb.d, %_ZN3fmt3v111
   store ptr %.0.i.i.i, ptr %i.y, align 8, !tbaa !279
   %i.z = ptrtoint ptr %4 to i64
   %i.aa = ptrtoint ptr %.0.i.i.i to i64           ; 2 uses
-  %i.ab = add i64 %i.z, 21                        ; 3 uses
+  %i.ab = add i64 %i.z, 21                        ; 2 uses
   %i.ac = sub i64 %i.ab, %i.aa
-  %i.ad = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.ac
+  %i.ad = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.ac ; 2 uses
   %.not24.i.i = icmp eq i64 %i.ab, %i.aa
   br i1 %.not24.i.i, label %_ZN6spdlog7details10fmt_helper10append_intIiEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Ei.exit.i
+  %5 = ptrtoint ptr %i.ad to i64
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -8084,7 +8107,7 @@ bb.e:                                             ; preds = %._crit_edge.i.i, %.
   %i.ah = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bm, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.0.i.i.i, %.lr.ph27.i.i ], [ %i.bn, %._crit_edge.i.i ] ; 9 uses
   %i.ai = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.aj = sub i64 %i.ab, %i.ai                    ; 2 uses
+  %i.aj = sub i64 %5, %i.ai                       ; 2 uses
   %i.ak = add i64 %i.aj, %i.ah                    ; 2 uses
   %i.al = load i64, ptr %i.af, align 8, !tbaa !66 ; 2 uses
   %i.am = icmp ugt i64 %i.ak, %i.al
@@ -8487,13 +8510,14 @@ _ZN3fmt3v1110format_intC2El.exit.i:               ; preds = %bb.d, %_ZN3fmt3v111
   store ptr %.0.i.i.i, ptr %i.v, align 8, !tbaa !279
   %i.w = ptrtoint ptr %4 to i64
   %i.x = ptrtoint ptr %.0.i.i.i to i64            ; 2 uses
-  %i.y = add i64 %i.w, 21                         ; 3 uses
+  %i.y = add i64 %i.w, 21                         ; 2 uses
   %i.z = sub i64 %i.y, %i.x
-  %i.aa = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.z
+  %i.aa = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.z ; 2 uses
   %.not24.i.i = icmp eq i64 %i.y, %i.x
   br i1 %.not24.i.i, label %_ZN6spdlog7details10fmt_helper10append_intIlEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2El.exit.i
+  %5 = ptrtoint ptr %i.aa to i64
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -8504,7 +8528,7 @@ bb.e:                                             ; preds = %._crit_edge.i.i, %.
   %i.ae = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bj, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.0.i.i.i, %.lr.ph27.i.i ], [ %i.bk, %._crit_edge.i.i ] ; 9 uses
   %i.af = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.ag = sub i64 %i.y, %i.af                     ; 2 uses
+  %i.ag = sub i64 %5, %i.af                       ; 2 uses
   %i.ah = add i64 %i.ag, %i.ae                    ; 2 uses
   %i.ai = load i64, ptr %i.ac, align 8, !tbaa !66 ; 2 uses
   %i.aj = icmp ugt i64 %i.ah, %i.ai
@@ -8907,13 +8931,14 @@ _ZN3fmt3v1110format_intC2Ej.exit.i:               ; preds = %bb.c, %bb.b
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.u, align 8, !tbaa !279
   %i.v = ptrtoint ptr %4 to i64
   %i.w = ptrtoint ptr %.sroa.0.0.i.i.i.i to i64   ; 2 uses
-  %i.x = add i64 %i.v, 21                         ; 3 uses
+  %i.x = add i64 %i.v, 21                         ; 2 uses
   %i.y = sub i64 %i.x, %i.w
-  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.y
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.y ; 2 uses
   %.not24.i.i = icmp eq i64 %i.x, %i.w
   br i1 %.not24.i.i, label %_ZN6spdlog7details10fmt_helper10append_intIjEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Ej.exit.i
+  %5 = ptrtoint ptr %i.z to i64
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -8924,7 +8949,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i, %.
   %i.ad = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bi, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %.lr.ph27.i.i ], [ %i.bj, %._crit_edge.i.i ] ; 9 uses
   %i.ae = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.af = sub i64 %i.x, %i.ae                     ; 2 uses
+  %i.af = sub i64 %5, %i.ae                       ; 2 uses
   %i.ag = add i64 %i.af, %i.ad                    ; 2 uses
   %i.ah = load i64, ptr %i.ab, align 8, !tbaa !66 ; 2 uses
   %i.ai = icmp ugt i64 %i.ag, %i.ah
@@ -9327,13 +9352,14 @@ _ZN3fmt3v1110format_intC2Ei.exit.i:               ; preds = %bb.h, %_ZN3fmt3v111
   store ptr %.0.i.i.i, ptr %i.cp, align 8, !tbaa !279
   %i.cq = ptrtoint ptr %4 to i64
   %i.cr = ptrtoint ptr %.0.i.i.i to i64           ; 2 uses
-  %i.cs = add i64 %i.cq, 21                       ; 3 uses
+  %i.cs = add i64 %i.cq, 21                       ; 2 uses
   %i.ct = sub i64 %i.cs, %i.cr
-  %i.cu = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.ct
+  %i.cu = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.ct ; 2 uses
   %.not24.i.i11 = icmp eq i64 %i.cs, %i.cr
   br i1 %.not24.i.i11, label %_ZN6spdlog7details10fmt_helper10append_intIiEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit, label %.lr.ph27.i.i12
 
 .lr.ph27.i.i12:                                   ; preds = %_ZN3fmt3v1110format_intC2Ei.exit.i
+  %5 = ptrtoint ptr %i.cu to i64
   %i.cv = getelementptr inbounds nuw i8, ptr %3, i64 24
   %.pre.i.i13 = load i64, ptr %i.bj, align 8, !tbaa !67
   br label %bb.i
@@ -9342,7 +9368,7 @@ bb.i:                                             ; preds = %._crit_edge.i.i23, 
   %i.cw = phi i64 [ %.pre.i.i13, %.lr.ph27.i.i12 ], [ %i.eb, %._crit_edge.i.i23 ] ; 2 uses
   %.01925.i.i14 = phi ptr [ %.0.i.i.i, %.lr.ph27.i.i12 ], [ %i.ec, %._crit_edge.i.i23 ] ; 9 uses
   %i.cx = ptrtoint ptr %.01925.i.i14 to i64       ; 2 uses
-  %i.cy = sub i64 %i.cs, %i.cx                    ; 2 uses
+  %i.cy = sub i64 %5, %i.cx                       ; 2 uses
   %i.cz = add i64 %i.cy, %i.cw                    ; 2 uses
   %i.da = load i64, ptr %i.bl, align 8, !tbaa !66 ; 2 uses
   %i.db = icmp ugt i64 %i.cz, %i.da
@@ -9745,13 +9771,14 @@ _ZN3fmt3v1110format_intC2Ei.exit.i:               ; preds = %bb.e, %_ZN3fmt3v111
   store ptr %.0.i.i.i, ptr %i.y, align 8, !tbaa !279
   %i.z = ptrtoint ptr %4 to i64
   %i.aa = ptrtoint ptr %.0.i.i.i to i64           ; 2 uses
-  %i.ab = add i64 %i.z, 21                        ; 3 uses
+  %i.ab = add i64 %i.z, 21                        ; 2 uses
   %i.ac = sub i64 %i.ab, %i.aa
-  %i.ad = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.ac
+  %i.ad = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 %i.ac ; 2 uses
   %.not24.i.i = icmp eq i64 %i.ab, %i.aa
   br i1 %.not24.i.i, label %_ZN6spdlog7details10fmt_helper10append_intIiEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Ei.exit.i
+  %5 = ptrtoint ptr %i.ad to i64
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -9762,7 +9789,7 @@ bb.f:                                             ; preds = %._crit_edge.i.i, %.
   %i.ah = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bm, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.0.i.i.i, %.lr.ph27.i.i ], [ %i.bn, %._crit_edge.i.i ] ; 9 uses
   %i.ai = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.aj = sub i64 %i.ab, %i.ai                    ; 2 uses
+  %i.aj = sub i64 %5, %i.ai                       ; 2 uses
   %i.ak = add i64 %i.aj, %i.ah                    ; 2 uses
   %i.al = load i64, ptr %i.af, align 8, !tbaa !66 ; 2 uses
   %i.am = icmp ugt i64 %i.ak, %i.al
@@ -10162,13 +10189,14 @@ _ZN3fmt3v1110format_intC2Em.exit.i:               ; preds = %bb.c, %bb.b
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.u, align 8, !tbaa !279
   %i.v = ptrtoint ptr %4 to i64
   %i.w = ptrtoint ptr %.sroa.0.0.i.i.i.i to i64   ; 2 uses
-  %i.x = add i64 %i.v, 21                         ; 3 uses
+  %i.x = add i64 %i.v, 21                         ; 2 uses
   %i.y = sub i64 %i.x, %i.w
-  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.y
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.y ; 2 uses
   %.not24.i.i = icmp eq i64 %i.x, %i.w
   br i1 %.not24.i.i, label %_ZN6spdlog7details10fmt_helper10append_intImEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Em.exit.i
+  %5 = ptrtoint ptr %i.z to i64
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -10179,7 +10207,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i, %.
   %i.ad = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bi, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %.lr.ph27.i.i ], [ %i.bj, %._crit_edge.i.i ] ; 9 uses
   %i.ae = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.af = sub i64 %i.x, %i.ae                     ; 2 uses
+  %i.af = sub i64 %5, %i.ae                       ; 2 uses
   %i.ag = add i64 %i.af, %i.ad                    ; 2 uses
   %i.ah = load i64, ptr %i.ab, align 8, !tbaa !66 ; 2 uses
   %i.ai = icmp ugt i64 %i.ag, %i.ah
@@ -10393,13 +10421,14 @@ _ZN3fmt3v1110format_intC2Em.exit.i:               ; preds = %bb.c, %bb.b
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.v, align 8, !tbaa !279
   %i.w = ptrtoint ptr %4 to i64
   %i.x = ptrtoint ptr %.sroa.0.0.i.i.i.i to i64   ; 2 uses
-  %i.y = add i64 %i.w, 21                         ; 3 uses
+  %i.y = add i64 %i.w, 21                         ; 2 uses
   %i.z = sub i64 %i.y, %i.x
-  %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.z
+  %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.z ; 2 uses
   %.not24.i.i = icmp eq i64 %i.y, %i.x
   br i1 %.not24.i.i, label %_ZN6spdlog7details10fmt_helper10append_intImEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Em.exit.i
+  %5 = ptrtoint ptr %i.aa to i64
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -10410,7 +10439,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i, %.
   %i.ae = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bj, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %.lr.ph27.i.i ], [ %i.bk, %._crit_edge.i.i ] ; 9 uses
   %i.af = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.ag = sub i64 %i.y, %i.af                     ; 2 uses
+  %i.ag = sub i64 %5, %i.af                       ; 2 uses
   %i.ah = add i64 %i.ag, %i.ae                    ; 2 uses
   %i.ai = load i64, ptr %i.ac, align 8, !tbaa !66 ; 2 uses
   %i.aj = icmp ugt i64 %i.ah, %i.ai
@@ -10624,13 +10653,14 @@ _ZN3fmt3v1110format_intC2Em.exit.i:               ; preds = %bb.c, %bb.b
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.v, align 8, !tbaa !279
   %i.w = ptrtoint ptr %4 to i64
   %i.x = ptrtoint ptr %.sroa.0.0.i.i.i.i to i64   ; 2 uses
-  %i.y = add i64 %i.w, 21                         ; 3 uses
+  %i.y = add i64 %i.w, 21                         ; 2 uses
   %i.z = sub i64 %i.y, %i.x
-  %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.z
+  %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.z ; 2 uses
   %.not24.i.i = icmp eq i64 %i.y, %i.x
   br i1 %.not24.i.i, label %_ZN6spdlog7details10fmt_helper10append_intImEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Em.exit.i
+  %5 = ptrtoint ptr %i.aa to i64
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -10641,7 +10671,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i, %.
   %i.ae = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bj, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %.lr.ph27.i.i ], [ %i.bk, %._crit_edge.i.i ] ; 9 uses
   %i.af = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.ag = sub i64 %i.y, %i.af                     ; 2 uses
+  %i.ag = sub i64 %5, %i.af                       ; 2 uses
   %i.ah = add i64 %i.ag, %i.ae                    ; 2 uses
   %i.ai = load i64, ptr %i.ac, align 8, !tbaa !66 ; 2 uses
   %i.aj = icmp ugt i64 %i.ah, %i.ai
@@ -10861,13 +10891,14 @@ _ZN3fmt3v1110format_intC2Em.exit.i:               ; preds = %bb.c, %bb.b
   store ptr %.sroa.0.0.i.i.i.i, ptr %i.v, align 8, !tbaa !279
   %i.w = ptrtoint ptr %4 to i64
   %i.x = ptrtoint ptr %.sroa.0.0.i.i.i.i to i64   ; 2 uses
-  %i.y = add i64 %i.w, 21                         ; 3 uses
+  %i.y = add i64 %i.w, 21                         ; 2 uses
   %i.z = sub i64 %i.y, %i.x
-  %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.z
+  %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 %i.z ; 2 uses
   %.not24.i.i = icmp eq i64 %i.y, %i.x
   br i1 %.not24.i.i, label %_ZN6spdlog7details10fmt_helper10append_intImEEvT_RN3fmt3v1119basic_memory_bufferIcLm250ESaIcEEE.exit, label %.lr.ph27.i.i
 
 .lr.ph27.i.i:                                     ; preds = %_ZN3fmt3v1110format_intC2Em.exit.i
+  %5 = ptrtoint ptr %i.aa to i64
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -10878,7 +10909,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i, %.
   %i.ae = phi i64 [ %.pre.i.i, %.lr.ph27.i.i ], [ %i.bj, %._crit_edge.i.i ] ; 2 uses
   %.01925.i.i = phi ptr [ %.sroa.0.0.i.i.i.i, %.lr.ph27.i.i ], [ %i.bk, %._crit_edge.i.i ] ; 9 uses
   %i.af = ptrtoint ptr %.01925.i.i to i64         ; 2 uses
-  %i.ag = sub i64 %i.y, %i.af                     ; 2 uses
+  %i.ag = sub i64 %5, %i.af                       ; 2 uses
   %i.ah = add i64 %i.ag, %i.ae                    ; 2 uses
   %i.ai = load i64, ptr %i.ac, align 8, !tbaa !66 ; 2 uses
   %i.aj = icmp ugt i64 %i.ah, %i.ai

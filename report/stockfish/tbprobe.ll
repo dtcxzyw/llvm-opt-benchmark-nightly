@@ -205,10 +205,10 @@ _ZN9Stockfish6Search8RootMoveaSEOS1_.exit.i.i.i.i.i.i37: ; preds = %bb.o, %.lr.p
 
 _ZSt4moveIPN9Stockfish6Search8RootMoveEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i: ; preds = %_ZN9Stockfish6Search8RootMoveaSEOS1_.exit.i.i.i.i.i.i37, %._crit_edge.i
   %.08.lcssa.i.i.i.i.i.i30 = phi ptr [ %i.dl, %._crit_edge.i ], [ %i.eg, %_ZN9Stockfish6Search8RootMoveaSEOS1_.exit.i.i.i.i.i.i37 ]
-  %i.ej = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i30 to i64 ; 3 uses
+  %i.ej = ptrtoint ptr %.08.lcssa.i.i.i.i.i.i30 to i64 ; 2 uses
   %i.ek = ptrtoint ptr %i.dl to i64
   %i.el = sub i64 %i.ej, %i.ek
-  %i.em = getelementptr inbounds i8, ptr %i.dl, i64 %i.el ; 2 uses
+  %i.em = getelementptr inbounds i8, ptr %i.dl, i64 %i.el ; 3 uses
   %i.en = ptrtoint ptr %i.cl to i64               ; 2 uses
   %i.eo = ptrtoint ptr %.117.i to i64
   %i.ep = sub i64 %i.en, %i.eo                    ; 2 uses
@@ -250,15 +250,12 @@ _ZN9Stockfish6Search8RootMoveaSEOS1_.exit.i.i.i.i.i27.i: ; preds = %bb.p, %.lr.p
   %i.fe = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i24.i, i64 72 ; 2 uses
   %i.ff = add nsw i64 %.012.i.i.i.i.i23.i, -1
   %i.fg = icmp sgt i64 %.012.i.i.i.i.i23.i, 1
-  br i1 %i.fg, label %.lr.ph.i.i.i.i.i22.i, label %_ZSt4moveIPN9Stockfish6Search8RootMoveEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28.loopexit.i, !llvm.loop !23
+  br i1 %i.fg, label %.lr.ph.i.i.i.i.i22.i, label %"_ZSt12__move_mergeIPN9Stockfish6Search8RootMoveEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNS0_10Tablebases15rank_root_movesERKNS0_10OptionsMapERNS0_8PositionERS8_bRKSt8functionIFbvEEE3$_0EEET0_T_SR_SR_SR_SQ_T1_.exit", !llvm.loop !23
 
-_ZSt4moveIPN9Stockfish6Search8RootMoveEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28.loopexit.i: ; preds = %_ZN9Stockfish6Search8RootMoveaSEOS1_.exit.i.i.i.i.i27.i
-  %3 = ptrtoint ptr %i.fe to i64
-  br label %"_ZSt12__move_mergeIPN9Stockfish6Search8RootMoveEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNS0_10Tablebases15rank_root_movesERKNS0_10OptionsMapERNS0_8PositionERS8_bRKSt8functionIFbvEEE3$_0EEET0_T_SR_SR_SR_SQ_T1_.exit"
-
-"_ZSt12__move_mergeIPN9Stockfish6Search8RootMoveEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNS0_10Tablebases15rank_root_movesERKNS0_10OptionsMapERNS0_8PositionERS8_bRKSt8functionIFbvEEE3$_0EEET0_T_SR_SR_SR_SQ_T1_.exit": ; preds = %_ZSt4moveIPN9Stockfish6Search8RootMoveEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i, %_ZSt4moveIPN9Stockfish6Search8RootMoveEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28.loopexit.i
-  %.08.lcssa.i.i.i.i.i20.i = phi i64 [ %i.ej, %_ZSt4moveIPN9Stockfish6Search8RootMoveEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i ], [ %3, %_ZSt4moveIPN9Stockfish6Search8RootMoveEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit28.loopexit.i ]
-  %i.fh = sub i64 %.08.lcssa.i.i.i.i.i20.i, %i.ej
+"_ZSt12__move_mergeIPN9Stockfish6Search8RootMoveEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEENS4_5__ops15_Iter_comp_iterIZNS0_10Tablebases15rank_root_movesERKNS0_10OptionsMapERNS0_8PositionERS8_bRKSt8functionIFbvEEE3$_0EEET0_T_SR_SR_SR_SQ_T1_.exit": ; preds = %_ZN9Stockfish6Search8RootMoveaSEOS1_.exit.i.i.i.i.i27.i, %_ZSt4moveIPN9Stockfish6Search8RootMoveEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i
+  %.08.lcssa.i.i.i.i.i20.i = phi ptr [ %i.em, %_ZSt4moveIPN9Stockfish6Search8RootMoveEN9__gnu_cxx17__normal_iteratorIS3_St6vectorIS2_SaIS2_EEEEET0_T_SB_SA_.exit.i ], [ %i.fe, %_ZN9Stockfish6Search8RootMoveaSEOS1_.exit.i.i.i.i.i27.i ]
+  %3 = ptrtoint ptr %.08.lcssa.i.i.i.i.i20.i to i64
+  %i.fh = sub i64 %3, %i.ej
   %i.fi = getelementptr inbounds i8, ptr %i.em, i64 %i.fh ; 2 uses
   %i.fj = sub i64 %i.l, %i.en
   %i.fk = sdiv exact i64 %i.fj, 72                ; 2 uses

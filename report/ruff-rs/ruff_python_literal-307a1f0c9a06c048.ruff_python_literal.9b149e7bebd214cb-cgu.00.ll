@@ -202,19 +202,15 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   br label %bb.bc
 
 bb.bc:                                            ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit16.i.i, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit14.i.i172, %bb.bb, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit12.i.i168
-  %.sroa.0.07.ph.i = phi ptr [ %i.gw, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit12.i.i168 ], [ %i.hf, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit14.i.i172 ], [ %i.hp, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit16.i.i ], [ %i.gq, %bb.bb ] ; 4 uses
+  %.sroa.0.07.ph.i = phi ptr [ %i.gw, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit12.i.i168 ], [ %i.hf, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit14.i.i172 ], [ %i.hp, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit16.i.i ], [ %i.gq, %bb.bb ] ; 5 uses
   %.sroa.4.0.i.ph.i = phi i32 [ %i.hb, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit12.i.i168 ], [ %i.hm, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit14.i.i172 ], [ %i.hx, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit16.i.i ], [ %i.hd, %bb.bb ] ; 2 uses
   %i.hy = icmp samesign ult i32 %.sroa.4.0.i.ph.i, 1114112
   call void @llvm.assume(i1 %i.hy)
-  switch i32 %.sroa.4.0.i.ph.i, label %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit.thread293 [
+  switch i32 %.sroa.4.0.i.ph.i, label %bb.bf [
     i32 45, label %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit
     i32 43, label %bb.bd
     i32 32, label %bb.be
   ]
-
-_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit.thread293: ; preds = %bb.bc
-  %3 = ptrtoint ptr %i.go to i64
-  br label %bb.bf
 
 bb.bd:                                            ; preds = %bb.bc
   br label %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit
@@ -224,22 +220,23 @@ bb.be:                                            ; preds = %bb.bc
 
 _RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit: ; preds = %bb.bc, %bb.bd, %bb.be
   %.sroa.0.0.i169 = phi i8 [ 2, %bb.be ], [ 0, %bb.bd ], [ 1, %bb.bc ] ; 2 uses
-  %i.hz = ptrtoint ptr %i.go to i64               ; 2 uses
+  %i.hz = ptrtoint ptr %i.go to i64
   %i.ia = ptrtoint ptr %.sroa.0.07.ph.i to i64
-  %i.ib = sub nuw i64 %i.hz, %i.ia                ; 2 uses
+  %i.ib = sub nuw i64 %i.hz, %i.ia                ; 3 uses
   %i.ic = icmp samesign eq i64 %i.ib, 0
   br i1 %i.ic, label %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format10parse_zero.exit, label %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit._crit_edge
 
 _RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit._crit_edge: ; preds = %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0.07.ph.i, i64 %i.ib
   %.pre = load i8, ptr %.sroa.0.07.ph.i, align 1, !alias.scope !108, !noalias !109
   br label %bb.bf
 
-bb.bf:                                            ; preds = %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit._crit_edge, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit.thread293
-  %i.id = phi i8 [ %i.gr, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit.thread293 ], [ %.pre, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit._crit_edge ] ; 6 uses
-  %4 = phi i64 [ %3, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit.thread293 ], [ %i.hz, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit._crit_edge ] ; 2 uses
-  %.sink.i171299 = phi i64 [ %.sink.i163, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit.thread293 ], [ %i.ib, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit._crit_edge ] ; 5 uses
-  %.sroa.0.07.ph.sink.i298 = phi ptr [ %.sink17.i, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit.thread293 ], [ %.sroa.0.07.ph.i, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit._crit_edge ] ; 6 uses
-  %.sroa.0.0.sink.i297 = phi i8 [ -1, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit.thread293 ], [ %.sroa.0.0.i169, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit._crit_edge ] ; 3 uses
+bb.bf:                                            ; preds = %bb.bc, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit._crit_edge
+  %i.id = phi i8 [ %.pre, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit._crit_edge ], [ %i.gr, %bb.bc ] ; 6 uses
+  %4 = phi ptr [ %3, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit._crit_edge ], [ %i.go, %bb.bc ]
+  %.sink.i171299 = phi i64 [ %i.ib, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit._crit_edge ], [ %.sink.i163, %bb.bc ] ; 5 uses
+  %.sroa.0.07.ph.sink.i298 = phi ptr [ %.sroa.0.07.ph.i, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit._crit_edge ], [ %.sink17.i, %bb.bc ] ; 6 uses
+  %.sroa.0.0.sink.i297 = phi i8 [ %.sroa.0.0.i169, %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit._crit_edge ], [ -1, %bb.bc ] ; 3 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %.sroa.0.07.ph.sink.i298, i64 1 ; 2 uses
   %i.if = icmp sgt i8 %i.id, -1
   br i1 %i.if, label %bb.bg, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit12.i.i173
@@ -291,7 +288,7 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   br label %bb.bh
 
 bb.bh:                                            ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit16.i.i178, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit14.i.i177, %bb.bg, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit12.i.i173
-  %.sroa.0.0.ph.i = phi ptr [ %i.ij, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit12.i.i173 ], [ %i.is, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit14.i.i177 ], [ %i.jc, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit16.i.i178 ], [ %i.ie, %bb.bg ] ; 4 uses
+  %.sroa.0.0.ph.i = phi ptr [ %i.ij, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit12.i.i173 ], [ %i.is, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit14.i.i177 ], [ %i.jc, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit16.i.i178 ], [ %i.ie, %bb.bg ] ; 5 uses
   %.sroa.4.0.i.ph.i174 = phi i32 [ %i.io, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit12.i.i173 ], [ %i.iz, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit14.i.i177 ], [ %i.jk, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsdjunURa2XPj_19ruff_python_literal.exit16.i.i178 ], [ %i.iq, %bb.bg ] ; 2 uses
   %i.jl = icmp samesign ult i32 %.sroa.4.0.i.ph.i174, 1114112
   call void @llvm.assume(i1 %i.jl)
@@ -300,22 +297,23 @@ bb.bh:                                            ; preds = %_RNvXs2J_NtNtCs4NRV
 
 _RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit.thread306: ; preds = %bb.bh
   %i.jn = getelementptr inbounds nuw i8, ptr %.sroa.0.07.ph.sink.i298, i64 %.sink.i171299
-  %5 = ptrtoint ptr %i.jn to i64
   br label %bb.bi
 
 _RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit: ; preds = %bb.bh
+  %5 = ptrtoint ptr %4 to i64
   %i.jo = ptrtoint ptr %.sroa.0.0.ph.i to i64
-  %i.jp = sub nuw i64 %4, %i.jo                   ; 2 uses
+  %i.jp = sub nuw i64 %5, %i.jo                   ; 3 uses
   %i.jq = icmp samesign eq i64 %i.jp, 0
   br i1 %i.jq, label %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format10parse_zero.exit, label %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit._crit_edge
 
 _RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit._crit_edge: ; preds = %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph.i, i64 %i.jp
   %.pre419 = load i8, ptr %.sroa.0.0.ph.i, align 1, !alias.scope !110, !noalias !111
   br label %bb.bi
 
 bb.bi:                                            ; preds = %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit._crit_edge, %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit.thread306
   %i.jr = phi i8 [ %i.id, %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit.thread306 ], [ %.pre419, %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit._crit_edge ] ; 5 uses
-  %6 = phi i64 [ %5, %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit.thread306 ], [ %4, %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit._crit_edge ]
+  %7 = phi ptr [ %i.jn, %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit.thread306 ], [ %6, %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit._crit_edge ]
   %.sink.i176314 = phi i64 [ %.sink.i171299, %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit.thread306 ], [ %i.jp, %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit._crit_edge ] ; 4 uses
   %.sroa.0.0.ph.sink.i313 = phi ptr [ %.sroa.0.07.ph.sink.i298, %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit.thread306 ], [ %.sroa.0.0.ph.i, %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit._crit_edge ] ; 5 uses
   %.sink14.i312 = phi i8 [ 0, %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit.thread306 ], [ 1, %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit._crit_edge ] ; 2 uses
@@ -378,8 +376,9 @@ bb.bk:                                            ; preds = %_RNvXs2J_NtNtCs4NRV
   br i1 %i.la, label %bb.bl, label %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format10parse_zero.exit
 
 bb.bl:                                            ; preds = %bb.bk
+  %8 = ptrtoint ptr %7 to i64
   %i.lb = ptrtoint ptr %.sroa.0.0.ph.i180 to i64
-  %i.lc = sub nuw i64 %6, %i.lb
+  %i.lc = sub nuw i64 %8, %i.lb
   br label %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format10parse_zero.exit
 
 _RNvNtCsdjunURa2XPj_19ruff_python_literal6format10parse_zero.exit: ; preds = %_RNvMs2_NtCsdjunURa2XPj_19ruff_python_literal6formatNtB5_10FormatSign5parse.exit, %bb.az, %bb.bl, %bb.bk, %_RNvNtCsdjunURa2XPj_19ruff_python_literal6format20parse_alternate_form.exit

@@ -204,14 +204,14 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   %.0 = phi i1 [ false, %bb.c ], [ %i.p, %bb.d ], [ true, %bb.e ]
-  %i.q = tail call i32 @llvm.fshr.i32(i32 %i.g, i32 %i.g, i32 %i.i) ; 15 uses
+  %i.q = tail call noundef i32 @llvm.fshr.i32(i32 %i.g, i32 %i.g, i32 %i.i) ; 14 uses
   %i.r = icmp ult i32 %i.q, 256
   br i1 %i.r, label %_ZN4llvm6ARM_AM11getSOImmValEj.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.s = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.q, i1 true)
   %i.t = and i32 %i.s, 30                         ; 3 uses
-  %i.u = tail call i32 @llvm.fshr.i32(i32 %i.q, i32 %i.q, i32 %i.t)
+  %i.u = tail call noundef i32 @llvm.fshr.i32(i32 %i.q, i32 %i.q, i32 %i.t)
   %i.v = icmp ult i32 %i.u, 256
   br i1 %i.v, label %_ZN4llvm6ARM_AM17getSOImmValRotateEj.exit.i, label %bb.h
 
@@ -224,7 +224,7 @@ bb.i:                                             ; preds = %bb.h
   %i.x = and i32 %i.q, -64
   %i.y = tail call noundef range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.x, i1 false)
   %i.z = and i32 %i.y, 62                         ; 2 uses
-  %i.aa = tail call i32 @llvm.fshr.i32(i32 %i.q, i32 %i.q, i32 %i.z)
+  %i.aa = tail call noundef i32 @llvm.fshr.i32(i32 %i.q, i32 %i.q, i32 %i.z)
   %i.ab = icmp ugt i32 %i.aa, 255
   br i1 %i.ab, label %bb.j, label %_ZN4llvm6ARM_AM17getSOImmValRotateEj.exit.i
 
@@ -233,20 +233,16 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 _ZN4llvm6ARM_AM17getSOImmValRotateEj.exit.i:      ; preds = %bb.j, %bb.i, %bb.g
   %.pn.i = phi i32 [ %i.z, %bb.i ], [ %i.t, %bb.j ], [ %i.t, %bb.g ] ; 3 uses
-  %.2.i.in.i = sub nsw i32 0, %.pn.i
-  %.2.i.i = and i32 %.2.i.in.i, 30                ; 2 uses
-  %9 = icmp eq i32 %.2.i.i, 0                     ; 2 uses
   %i.ac = tail call i32 @llvm.fshl.i32(i32 -256, i32 -256, i32 %.pn.i)
-  %.0.i.i = select i1 %9, i32 -256, i32 %i.ac
-  %i.ad = and i32 %.0.i.i, %i.q
+  %i.ad = and i32 %i.ac, %i.q
   %.not.i = icmp eq i32 %i.ad, 0
   br i1 %.not.i, label %bb.k, label %_ZN4llvm6ARM_AM11getSOImmValEj.exit
 
 bb.k:                                             ; preds = %_ZN4llvm6ARM_AM17getSOImmValRotateEj.exit.i
   %i.ae = tail call i32 @llvm.fshr.i32(i32 %i.q, i32 %i.q, i32 %.pn.i)
-  %.0.i9.i = select i1 %9, i32 %i.q, i32 %i.ae
-  %10 = shl nuw nsw i32 %.2.i.i, 7
-  %i.af = or i32 %.0.i9.i, %10
+  %.neg.i = mul nuw nsw i32 %.pn.i, 3968
+  %9 = and i32 %.neg.i, 3840
+  %i.af = or i32 %9, %i.ae
   br label %_ZN4llvm6ARM_AM11getSOImmValEj.exit
 
 _ZN4llvm6ARM_AM11getSOImmValEj.exit:              ; preds = %bb.f, %_ZN4llvm6ARM_AM17getSOImmValRotateEj.exit.i, %bb.k

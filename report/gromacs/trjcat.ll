@@ -205,8 +205,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit317: ; preds = %bb
 
 bb.cw:                                            ; preds = %bb.cb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.jk = phi ptr [ %i.gd, %bb.cb ], [ %.pre680, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
-  %51 = ptrtoint ptr %i.ed to i64
-  %52 = sub i64 %51, %.pre-phi
   %i.jl = load i32, ptr %i.q, align 4, !tbaa !61  ; 4 uses
   %i.jm = load ptr, ptr %i.o, align 8, !tbaa !65  ; 3 uses
   %i.jn = load float, ptr %i.p, align 4, !tbaa !86
@@ -214,6 +212,8 @@ bb.cw:                                            ; preds = %bb.cb, %_ZNSt7__cxx
   %i.jp = load ptr, ptr %i.m, align 8, !tbaa !63  ; 2 uses
   %i.jq = load float, ptr @_ZZ10gmx_trjcatiPPcE2dt, align 4, !tbaa !86 ; 2 uses
   %i.jr = load ptr, ptr %i.s, align 8, !tbaa !77  ; 2 uses
+  %51 = ptrtoint ptr %i.ed to i64
+  %52 = sub i64 %51, %.pre-phi
   %i.js = ashr exact i64 %52, 5                   ; 14 uses
   %i.jt = invoke noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.87, ptr noundef nonnull @.str.53, i32 noundef 342, i64 noundef %i.js, i64 noundef 8)
           to label %.noexc321 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
@@ -616,7 +616,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.tn = getelementptr inbounds nuw i8, ptr %32, i64 16 ; 2 uses
   store ptr %i.tm, ptr %i.tn, align 8, !tbaa !24, !alias.scope !104
   %i.to = invoke noundef ptr @_ZSt16__do_uninit_copyIN3gmx12ArrayRefIterIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPS7_ET0_T_SC_SB_(ptr nonnull %i.ec, ptr %i.ed, ptr noundef nonnull %i.tl)
-          to label %bb.fw unwind label %.body.i386, !noalias !104 ; 2 uses
+          to label %bb.fw unwind label %.body.i386, !noalias !104 ; 4 uses
 
 .body.i386:                                       ; preds = %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i.i.i383
   %lpad.thr_comm.split-lp.i384 = landingpad { ptr, i32 }
@@ -628,9 +628,7 @@ bb.fw:                                            ; preds = %_ZNSt12_Vector_base
   %i.tp = getelementptr inbounds nuw i8, ptr %32, i64 8 ; 7 uses
   store ptr %i.to, ptr %i.tp, align 8, !tbaa !25, !alias.scope !104
   %i.tq = load ptr, ptr %32, align 8, !tbaa !23   ; 10 uses
-  %53 = ptrtoint ptr %i.to to i64
-  %i.tr = ptrtoint ptr %i.tq to i64
-  %54 = sub i64 %53, %i.tr                        ; 4 uses
+  %i.tr = ptrtoint ptr %i.tq to i64               ; 3 uses
   %i.ts = load i8, ptr @_ZZ10gmx_trjcatiPPcE8bSetTime, align 1, !tbaa !79, !range !80, !noundef !81
   %i.tt = load i8, ptr @_ZZ10gmx_trjcatiPPcE5bSort, align 1, !tbaa !79, !range !80, !noundef !81
   %i.tu = trunc nuw i8 %i.tt to i1                ; 7 uses
@@ -646,6 +644,8 @@ bb.fw:                                            ; preds = %_ZNSt12_Vector_base
   br i1 %i.tw, label %bb.fx, label %.preheader.i393
 
 .preheader.i393:                                  ; preds = %.noexc409
+  %53 = ptrtoint ptr %i.to to i64
+  %54 = sub i64 %53, %i.tr                        ; 2 uses
   %i.tx = ashr exact i64 %54, 5                   ; 10 uses
   %i.ty = icmp sgt i64 %i.tx, 0
   br i1 %i.ty, label %iter.check973, label %.loopexit102.i
@@ -747,7 +747,9 @@ bb.fx:                                            ; preds = %.noexc409
   %i.ux = load ptr, ptr @stderr, align 8, !tbaa !75
   %i.uy = load ptr, ptr %2, align 8, !tbaa !21    ; 2 uses
   %i.uz = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ux, ptr noundef nonnull @.str.104, ptr noundef %i.uy, ptr noundef %i.uy) #24 ; 0 uses
-  %i.va = ashr exact i64 %54, 5                   ; 4 uses
+  %55 = ptrtoint ptr %i.to to i64
+  %56 = sub i64 %55, %i.tr
+  %i.va = ashr exact i64 %56, 5                   ; 4 uses
   %i.vb = icmp sgt i64 %i.va, 0
   br i1 %i.vb, label %.lr.ph113.i, label %._crit_edge114.i
 
@@ -928,7 +930,9 @@ bb.gl:                                            ; preds = %bb.gj, %bb.gg, %bb.
 
 .loopexit102.i:                                   ; preds = %.lr.ph.i400.prol.loopexit, %.lr.ph.i400, %middle.block970, %vec.epilog.middle.block983, %._crit_edge114.i, %.preheader.i393
   %.3.i = phi i1 [ %i.tu, %.preheader.i393 ], [ %.072.lcssa.i, %._crit_edge114.i ], [ %i.tu, %middle.block970 ], [ %i.tu, %vec.epilog.middle.block983 ], [ %i.tu, %.lr.ph.i400 ], [ %i.tu, %.lr.ph.i400.prol.loopexit ]
-  %.pre687.a = ashr exact i64 %54, 5              ; 2 uses
+  %.pre687 = ptrtoint ptr %i.to to i64
+  %.pre689 = sub i64 %.pre687, %i.tr
+  %.pre687.a = ashr exact i64 %.pre689, 5         ; 2 uses
   br i1 %.3.i, label %.loopexit102.i._crit_edge684, label %.loopexit102.i._crit_edge
 
 .loopexit102.i._crit_edge:                        ; preds = %.loopexit102.i, %.split.i

@@ -205,10 +205,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 _ZSt4moveIP11common_jsonN9__gnu_cxx17__normal_iteratorIS1_St6vectorIS0_SaIS0_EEEEET0_T_S9_S8_.exit: ; preds = %.lr.ph.i.i.i.i.i, %._crit_edge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.024.0.lcssa, %._crit_edge ], [ %i.v, %.lr.ph.i.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
-  %i.y = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.y = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.z = ptrtoint ptr %.sroa.024.0.lcssa to i64
   %i.aa = sub i64 %i.y, %i.z
-  %i.ab = getelementptr inbounds i8, ptr %.sroa.024.0.lcssa, i64 %i.aa ; 2 uses
+  %i.ab = getelementptr inbounds i8, ptr %.sroa.024.0.lcssa, i64 %i.aa ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   %i.ac = ptrtoint ptr %3 to i64
   %i.ad = ptrtoint ptr %.016.lcssa to i64
@@ -228,16 +228,13 @@ _ZSt4moveIP11common_jsonN9__gnu_cxx17__normal_iteratorIS1_St6vectorIS0_SaIS0_EEE
   %i.aj = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i21, i64 32 ; 2 uses
   %i.ak = add nsw i64 %.012.i.i.i.i.i20, -1
   %i.al = icmp samesign ugt i64 %.012.i.i.i.i.i20, 1
-  br i1 %i.al, label %.lr.ph.i.i.i.i.i19, label %_ZSt4moveIP11common_jsonN9__gnu_cxx17__normal_iteratorIS1_St6vectorIS0_SaIS0_EEEEET0_T_S9_S8_.exit23.loopexit, !llvm.loop !37
+  br i1 %i.al, label %.lr.ph.i.i.i.i.i19, label %_ZSt4moveIP11common_jsonN9__gnu_cxx17__normal_iteratorIS1_St6vectorIS0_SaIS0_EEEEET0_T_S9_S8_.exit23, !llvm.loop !37
 
-_ZSt4moveIP11common_jsonN9__gnu_cxx17__normal_iteratorIS1_St6vectorIS0_SaIS0_EEEEET0_T_S9_S8_.exit23.loopexit: ; preds = %.lr.ph.i.i.i.i.i19
-  %10 = ptrtoint ptr %i.aj to i64
-  br label %_ZSt4moveIP11common_jsonN9__gnu_cxx17__normal_iteratorIS1_St6vectorIS0_SaIS0_EEEEET0_T_S9_S8_.exit23
-
-_ZSt4moveIP11common_jsonN9__gnu_cxx17__normal_iteratorIS1_St6vectorIS0_SaIS0_EEEEET0_T_S9_S8_.exit23: ; preds = %_ZSt4moveIP11common_jsonN9__gnu_cxx17__normal_iteratorIS1_St6vectorIS0_SaIS0_EEEEET0_T_S9_S8_.exit23.loopexit, %_ZSt4moveIP11common_jsonN9__gnu_cxx17__normal_iteratorIS1_St6vectorIS0_SaIS0_EEEEET0_T_S9_S8_.exit
-  %.08.lcssa.i.i.i.i.i18 = phi i64 [ %i.y, %_ZSt4moveIP11common_jsonN9__gnu_cxx17__normal_iteratorIS1_St6vectorIS0_SaIS0_EEEEET0_T_S9_S8_.exit ], [ %10, %_ZSt4moveIP11common_jsonN9__gnu_cxx17__normal_iteratorIS1_St6vectorIS0_SaIS0_EEEEET0_T_S9_S8_.exit23.loopexit ]
+_ZSt4moveIP11common_jsonN9__gnu_cxx17__normal_iteratorIS1_St6vectorIS0_SaIS0_EEEEET0_T_S9_S8_.exit23: ; preds = %.lr.ph.i.i.i.i.i19, %_ZSt4moveIP11common_jsonN9__gnu_cxx17__normal_iteratorIS1_St6vectorIS0_SaIS0_EEEEET0_T_S9_S8_.exit
+  %.08.lcssa.i.i.i.i.i18 = phi ptr [ %i.ab, %_ZSt4moveIP11common_jsonN9__gnu_cxx17__normal_iteratorIS1_St6vectorIS0_SaIS0_EEEEET0_T_S9_S8_.exit ], [ %i.aj, %.lr.ph.i.i.i.i.i19 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  %i.am = sub i64 %.08.lcssa.i.i.i.i.i18, %i.y
+  %10 = ptrtoint ptr %.08.lcssa.i.i.i.i.i18 to i64
+  %i.am = sub i64 %10, %i.y
   %i.an = getelementptr inbounds i8, ptr %i.ab, i64 %i.am
   ret ptr %i.an
 }

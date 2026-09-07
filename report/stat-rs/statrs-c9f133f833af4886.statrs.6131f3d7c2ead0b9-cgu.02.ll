@@ -204,7 +204,7 @@ bb.ad:                                            ; preds = %_RNvXsh_NtNtCsbADZB
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.4.0..sroa_idx4.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.4.0..sroa_idx.i.i10, i64 32, i1 false), !noalias !159
   call void @llvm.experimental.noalias.scope.decl(metadata !161)
   %i.ci = getelementptr inbounds nuw i8, ptr %i.v, i64 24 ; 3 uses
-  %.val6.i = load i64, ptr %i.ci, align 8, !alias.scope !161, !noalias !156, !noundef !5 ; 43 uses
+  %.val6.i = load i64, ptr %i.ci, align 8, !alias.scope !161, !noalias !156, !noundef !5 ; 38 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.v, i64 32
   %.val7.i = load i64, ptr %i.cj, align 8, !alias.scope !161, !noalias !156, !noundef !5
   %i.ck = icmp eq i64 %.val6.i, %.val7.i
@@ -242,30 +242,26 @@ bb.ae:                                            ; preds = %bb.ad
   %.sroa.04.014.i.i.i = phi i64 [ 1, %.lr.ph.i.i.i.preheader.new ], [ %i.db, %.lr.ph.i.i.i ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph.i.i.i.preheader.new ], [ %niter.next.3, %.lr.ph.i.i.i ]
   %i.cp = add nuw nsw i64 %.sroa.04.014.i.i.i, 1  ; 2 uses
-  %umin.i.i.i = call i64 @llvm.umin.i64(i64 %.val6.i, i64 %.sroa.04.014.i.i.i)
-  %i.cq = shl nuw i64 %umin.i.i.i, 3
+  %i.cq = shl nuw i64 %.sroa.04.014.i.i.i, 3
   %i.cr = mul i64 %.sroa.04.014.i.i.i, %.val6.i
   %i.cs = getelementptr [8 x i8], ptr %.sroa.4.0.copyload.i.i, i64 %i.cr
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cs, i8 0, i64 %i.cq, i1 false), !noalias !165
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.cs, i8 0, i64 %i.cq, i1 false), !noalias !165
   %i.ct = add nuw nsw i64 %.sroa.04.014.i.i.i, 2  ; 2 uses
-  %umin.i.i.i.1 = call i64 @llvm.umin.i64(i64 %.val6.i, i64 %i.cp)
-  %i.cu = shl nuw i64 %umin.i.i.i.1, 3
+  %i.cu = shl nuw i64 %i.cp, 3
   %i.cv = mul i64 %i.cp, %.val6.i
   %i.cw = getelementptr [8 x i8], ptr %.sroa.4.0.copyload.i.i, i64 %i.cv
-  call void @llvm.memset.p0.i64(ptr align 8 %i.cw, i8 0, i64 %i.cu, i1 false), !noalias !165
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.cw, i8 0, i64 %i.cu, i1 false), !noalias !165
   %i.cx = add nuw i64 %.sroa.04.014.i.i.i, 3      ; 2 uses
-  %umin.i.i.i.2 = call i64 @llvm.umin.i64(i64 %.val6.i, i64 %i.ct)
-  %i.cy = shl nuw i64 %umin.i.i.i.2, 3
+  %i.cy = shl nuw i64 %i.ct, 3
   %i.cz = mul i64 %i.ct, %.val6.i
   %i.da = getelementptr [8 x i8], ptr %.sroa.4.0.copyload.i.i, i64 %i.cz
-  call void @llvm.memset.p0.i64(ptr align 8 %i.da, i8 0, i64 %i.cy, i1 false), !noalias !165
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.da, i8 0, i64 %i.cy, i1 false), !noalias !165
   %i.db = add nuw i64 %.sroa.04.014.i.i.i, 4      ; 2 uses
-  %umin.i.i.i.3 = call i64 @llvm.umin.i64(i64 %.val6.i, i64 %i.cx)
-  %i.dc = shl nuw i64 %umin.i.i.i.3, 3
+  %i.dc = shl nuw i64 %i.cx, 3
   %i.dd = mul i64 %i.cx, %.val6.i
   %i.de = getelementptr [8 x i8], ptr %.sroa.4.0.copyload.i.i, i64 %i.dd
-  call void @llvm.memset.p0.i64(ptr align 8 %i.de, i8 0, i64 %i.dc, i1 false), !noalias !165
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.de, i8 0, i64 %i.dc, i1 false), !noalias !165
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_RNvMNtNtCsbADZB03g5jP_8nalgebra4base7editionINtNtB4_6matrix6MatrixdNtNtB4_9dimension3DynB13_INtNtB4_11vec_storage10VecStoragedB13_B13_EE14lower_triangleCs8lmMd0ZksV9_6statrs.exit.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i
 
@@ -283,11 +279,10 @@ _RNvMNtNtCsbADZB03g5jP_8nalgebra4base7editionINtNtB4_6matrix6MatrixdNtNtB4_9dime
   %.sroa.04.014.i.i.i.epil = phi i64 [ %i.df, %.lr.ph.i.i.i.epil ], [ %.sroa.04.014.i.i.i.epil.init, %.lr.ph.i.i.i.epil.preheader ] ; 3 uses
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.i.i.i.epil ], [ 0, %.lr.ph.i.i.i.epil.preheader ]
   %i.df = add nuw i64 %.sroa.04.014.i.i.i.epil, 1
-  %umin.i.i.i.epil = call i64 @llvm.umin.i64(i64 %.val6.i, i64 %.sroa.04.014.i.i.i.epil)
-  %i.dg = shl nuw i64 %umin.i.i.i.epil, 3
+  %i.dg = shl nuw i64 %.sroa.04.014.i.i.i.epil, 3
   %i.dh = mul i64 %.sroa.04.014.i.i.i.epil, %.val6.i
   %i.di = getelementptr [8 x i8], ptr %.sroa.4.0.copyload.i.i, i64 %i.dh
-  call void @llvm.memset.p0.i64(ptr align 8 %i.di, i8 0, i64 %i.dg, i1 false), !noalias !165
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.di, i8 0, i64 %i.dg, i1 false), !noalias !165
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %_RNvMNtNtCsbADZB03g5jP_8nalgebra4base7editionINtNtB4_6matrix6MatrixdNtNtB4_9dimension3DynB13_INtNtB4_11vec_storage10VecStoragedB13_B13_EE14lower_triangleCs8lmMd0ZksV9_6statrs.exit.i, label %.lr.ph.i.i.i.epil, !llvm.loop !57
@@ -689,9 +684,6 @@ declare hidden void @_RNvXsb_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecdENtNtCs3oUPovF
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8

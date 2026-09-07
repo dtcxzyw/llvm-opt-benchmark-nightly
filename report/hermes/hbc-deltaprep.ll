@@ -204,9 +204,9 @@ bb.k:                                             ; preds = %bb.a
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !81 ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bh, i64 16
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !82 ; 2 uses
-  %i.bm = ptrtoint ptr %i.bl to i64
-  %i.bn = ptrtoint ptr %i.bj to i64
-  %i.bo = sub i64 %i.bm, %i.bn                    ; 4 uses
+  %i.bm = ptrtoint ptr %i.bj to i64
+  %i.bn = ptrtoint ptr %i.bl to i64
+  %i.bo = sub i64 %i.bn, %i.bm                    ; 4 uses
   %i.bp = icmp slt i64 %i.bo, 0
   br i1 %i.bp, label %bb.l, label %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i
 

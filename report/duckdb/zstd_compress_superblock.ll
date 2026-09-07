@@ -204,9 +204,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define internal fastcc noundef range(i64 5, 1) i64 @_ZN11duckdb_zstdL21ZSTD_compressSubBlockEPKNS_21ZSTD_entropyCTables_tEPKNS_29ZSTD_entropyCTablesMetadata_tEPKNS_8seqDef_sEmPKhmSA_SA_SA_PKNS_18ZSTD_CCtx_params_sEPvmiiiPiSF_j(ptr noundef %0, ptr nofree noundef nonnull readonly captures(none) %1, ptr noundef %2, i64 noundef %3, ptr noundef %4, i64 noundef %5, ptr noundef %6, ptr noundef %7, ptr noundef %8, ptr nofree noundef readonly captures(none) %9, ptr noundef %10, i64 noundef %11, i32 noundef %12, i32 noundef range(i32 0, 2) %13, i32 noundef range(i32 0, 2) %14, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 4)) %15, ptr nofree noundef nonnull writeonly captures(none) %16, i32 noundef %17) unnamed_addr #0 {
 bb.a:
-  %18 = getelementptr i8, ptr %10, i64 %11
   %i.a = getelementptr inbounds nuw i8, ptr %10, i64 3 ; 10 uses
-  %19 = ptrtoint ptr %18 to i64                   ; 3 uses
   %gepdiff = add i64 %11, -3                      ; 5 uses
   %.not.i = icmp ne i32 %13, 0                    ; 4 uses
   %i.b = select i1 %.not.i, i64 200, i64 0        ; 2 uses
@@ -217,6 +215,7 @@ bb.a:
   %i.f = icmp uge i64 %5, %i.e
   %i.g = zext i1 %i.f to i64
   %i.h = add nuw nsw i64 %i.d, %i.g               ; 4 uses
+  %18 = getelementptr i8, ptr %10, i64 %11        ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.h ; 3 uses
   %.not103.i = icmp eq i64 %i.h, 3
   br i1 %.not.i, label %bb.b, label %bb.c
@@ -265,6 +264,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %.094.i = phi i64 [ %i.t, %bb.h ], [ 0, %bb.g ]
   %.not100.i = icmp ne i32 %12, 0
   %i.v = zext i1 %.not100.i to i32                ; 2 uses
+  %19 = ptrtoint ptr %18 to i64
   %i.w = ptrtoint ptr %.095.i to i64
   %i.x = sub i64 %19, %i.w                        ; 2 uses
   br i1 %.not103.i, label %bb.j, label %bb.k
@@ -381,6 +381,7 @@ bb.w:                                             ; preds = %bb.v
   %i.bt = icmp ugt i32 %.val, 57
   %i.bu = zext i1 %i.bt to i32                    ; 2 uses
   store i32 0, ptr %16, align 4, !tbaa !6
+  %20 = ptrtoint ptr %18 to i64                   ; 2 uses
   %i.bv = icmp slt i64 %gepdiff95, 4
   br i1 %i.bv, label %.thread69, label %bb.x
 
@@ -428,7 +429,7 @@ bb.ab:                                            ; preds = %bb.x
 bb.ac:                                            ; preds = %.thread.i
   store i8 -4, ptr %.0712.i, align 1, !tbaa !24
   %i.cm = ptrtoint ptr %i.cl to i64
-  %i.cn = sub i64 %19, %i.cm
+  %i.cn = sub i64 %20, %i.cm
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 2836
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 4288
   %i.cq = tail call noundef i64 @_ZN11duckdb_zstd20ZSTD_encodeSequencesEPvmPKjPKhS2_S4_S2_S4_PKNS_8seqDef_sEmii(ptr noundef nonnull %i.cl, i64 noundef %i.cn, ptr noundef nonnull %i.co, ptr noundef %7, ptr noundef nonnull %i.bp, ptr noundef %8, ptr noundef nonnull %i.cp, ptr noundef %6, ptr noundef %2, i64 noundef %3, i32 noundef %i.bu, i32 noundef %12) ; 3 uses
@@ -455,7 +456,7 @@ bb.ac:                                            ; preds = %.thread.i
   %i.dg = load i64, ptr %i.de, align 8, !tbaa !27
   %i.dh = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.dg ; 3 uses
   %i.di = ptrtoint ptr %i.dh to i64
-  %i.dj = sub i64 %19, %i.di
+  %i.dj = sub i64 %20, %i.di
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 2836
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 4288
   %i.dm = tail call noundef i64 @_ZN11duckdb_zstd20ZSTD_encodeSequencesEPvmPKjPKhS2_S4_S2_S4_PKNS_8seqDef_sEmii(ptr noundef nonnull %i.dh, i64 noundef %i.dj, ptr noundef nonnull %i.dk, ptr noundef %7, ptr noundef nonnull %i.bp, ptr noundef %8, ptr noundef nonnull %i.dl, ptr noundef %6, ptr noundef %2, i64 noundef %3, i32 noundef %i.bu, i32 noundef %12) ; 4 uses

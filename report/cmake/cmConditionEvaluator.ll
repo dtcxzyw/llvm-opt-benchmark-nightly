@@ -204,7 +204,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i: ; preds = %bb.d
   %i.q = icmp eq i32 %bcmp.i.i, 0
   br i1 %i.q, label %_ZNK20cmConditionEvaluator9IsKeywordEN2cm18static_string_viewERK25cmExpandedCommandArgument.exit, label %_ZNK20cmConditionEvaluator9IsKeywordEN2cm18static_string_viewERK25cmExpandedCommandArgument.exit.thread
 
-_ZNK20cmConditionEvaluator9IsKeywordEN2cm18static_string_viewERK25cmExpandedCommandArgument.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i, %bb.d
+_ZNK20cmConditionEvaluator9IsKeywordEN2cm18static_string_viewERK25cmExpandedCommandArgument.exit: ; preds = %bb.d, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i
   %i.r = load ptr, ptr %.sroa.0101.0139, align 8, !tbaa !40 ; 2 uses
   %.not143 = icmp eq ptr %i.r, %1
   br i1 %.not143, label %.critedge, label %.lr.ph
@@ -278,6 +278,12 @@ _ZNK20cmConditionEvaluator9IsKeywordEN2cm18static_string_viewERK25cmExpandedComm
 _ZSt9__advanceISt14_List_iteratorI25cmExpandedCommandArgumentElEvRT_T0_St26bidirectional_iterator_tag.exit._crit_edge: ; preds = %_ZNK20cmConditionEvaluator9IsKeywordEN2cm18static_string_viewERK25cmExpandedCommandArgument.exit58
   br i1 %i.an, label %.critedge, label %.preheader.preheader
 
+.critedge:                                        ; preds = %_ZNK20cmConditionEvaluator9IsKeywordEN2cm18static_string_viewERK25cmExpandedCommandArgument.exit, %_ZSt9__advanceISt14_List_iteratorI25cmExpandedCommandArgumentElEvRT_T0_St26bidirectional_iterator_tag.exit._crit_edge
+  %7 = load i64, ptr %i.c, align 8, !tbaa !34
+  %8 = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef %7, ptr noundef nonnull @.str.76, i64 noundef 35) ; 0 uses
+  store i32 1, ptr %3, align 4, !tbaa !47
+  br label %.loopexit
+
 .preheader.preheader:                             ; preds = %_ZSt9__advanceISt14_List_iteratorI25cmExpandedCommandArgumentElEvRT_T0_St26bidirectional_iterator_tag.exit._crit_edge
   %i.ap = load ptr, ptr %.sroa.0101.0139, align 8, !tbaa !40 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
@@ -285,12 +291,6 @@ _ZSt9__advanceISt14_List_iteratorI25cmExpandedCommandArgumentElEvRT_T0_St26bidir
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !39 ; 3 uses
   %.not13.i.i.i.i = icmp eq ptr %i.ap, %i.ar
   br i1 %.not13.i.i.i.i, label %_ZNSt12_Vector_baseI25cmExpandedCommandArgumentSaIS0_EE11_M_allocateEm.exit.i.i, label %.lr.ph.i.i.i.i
-
-.critedge:                                        ; preds = %_ZNK20cmConditionEvaluator9IsKeywordEN2cm18static_string_viewERK25cmExpandedCommandArgument.exit, %_ZSt9__advanceISt14_List_iteratorI25cmExpandedCommandArgumentElEvRT_T0_St26bidirectional_iterator_tag.exit._crit_edge
-  %7 = load i64, ptr %i.c, align 8, !tbaa !34
-  %8 = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef %7, ptr noundef nonnull @.str.76, i64 noundef 35) ; 0 uses
-  store i32 1, ptr %3, align 4, !tbaa !47
-  br label %.loopexit
 
 .lr.ph.i.i.i.i:                                   ; preds = %.preheader.preheader, %.lr.ph.i.i.i.i
   %.015.i.i.i.i = phi i64 [ %i.at, %.lr.ph.i.i.i.i ], [ 0, %.preheader.preheader ] ; 2 uses

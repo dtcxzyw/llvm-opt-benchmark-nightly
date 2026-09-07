@@ -204,10 +204,10 @@ _ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit.i.i.i.i.i: ; preds = %bb.ad, 
 
 _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit: ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit.i.i.i.i.i, %.critedge
   %.08.lcssa.i.i.i.i.i = phi ptr [ %.sroa.0.0.lcssa, %.critedge ], [ %i.dd, %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit.i.i.i.i.i ]
-  %i.dg = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 3 uses
+  %i.dg = ptrtoint ptr %.08.lcssa.i.i.i.i.i to i64 ; 2 uses
   %i.dh = ptrtoint ptr %.sroa.0.0.lcssa to i64
   %i.di = sub i64 %i.dg, %i.dh
-  %i.dj = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.di ; 2 uses
+  %i.dj = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa, i64 %i.di ; 3 uses
   %i.dk = ptrtoint ptr %3 to i64
   %i.dl = ptrtoint ptr %.sroa.033.0.lcssa to i64
   %i.dm = sub i64 %i.dk, %i.dl
@@ -277,15 +277,12 @@ _ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit.i.i.i.i.i27: ; preds = %bb.aj
   %i.em = getelementptr inbounds nuw i8, ptr %.0811.i.i.i.i.i22, i64 8 ; 2 uses
   %i.en = add nsw i64 %.012.i.i.i.i.i21, -1
   %i.eo = icmp sgt i64 %.012.i.i.i.i.i21, 1
-  br i1 %i.eo, label %.lr.ph.i.i.i.i.i20, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit28.loopexit, !llvm.loop !1012
+  br i1 %i.eo, label %.lr.ph.i.i.i.i.i20, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit28, !llvm.loop !1012
 
-_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit28.loopexit: ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit.i.i.i.i.i27
-  %5 = ptrtoint ptr %i.em to i64
-  br label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit28
-
-_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit28: ; preds = %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit28.loopexit, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit
-  %.08.lcssa.i.i.i.i.i19 = phi i64 [ %i.dg, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit ], [ %5, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit28.loopexit ]
-  %i.ep = sub i64 %.08.lcssa.i.i.i.i.i19, %i.dg
+_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit28: ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit.i.i.i.i.i27, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit
+  %.08.lcssa.i.i.i.i.i19 = phi ptr [ %i.dj, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit ], [ %i.em, %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit.i.i.i.i.i27 ]
+  %5 = ptrtoint ptr %.08.lcssa.i.i.i.i.i19 to i64
+  %i.ep = sub i64 %5, %i.dg
   %i.eq = getelementptr inbounds i8, ptr %i.dj, i64 %i.ep
   ret ptr %i.eq
 }

@@ -205,7 +205,7 @@ SetAlgoIDImpl.exit.thread:                        ; preds = %bb.p, %bb.b
   br label %bb.bd
 
 SetAlgoIDImpl.exit:                               ; preds = %.thread352, %bb.p
-  %i.k = phi i32 [ %i.i, %.thread352 ], [ %i.j, %bb.p ] ; 14 uses
+  %i.k = phi i32 [ %i.i, %.thread352 ], [ %i.j, %bb.p ] ; 13 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   %i.l = icmp eq i32 %i.k, 0
   br i1 %i.l, label %bb.bd, label %bb.q
@@ -519,23 +519,19 @@ vec.epilog.vector.body416:                        ; preds = %iter.check406
   %i.cx = zext i32 %i.cw to i64
   %i.cy = getelementptr inbounds nuw i8, ptr %2, i64 %i.cx ; 3 uses
   store i8 -96, ptr %i.cy, align 1, !tbaa !15
-  %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 1 ; 2 uses
-  br i1 %i.m, label %5, label %.split.i.i.i.i222
-
-5:                                                ; preds = %.thread.i.i218
-  %6 = trunc nuw nsw i32 %i.k to i8
-  store i8 %6, ptr %i.cz, align 1, !tbaa !15
-  br label %SetExplicit.exit233
+  %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 1
+  %5 = trunc nuw i32 %i.k to i8                   ; 2 uses
+  br i1 %i.m, label %SetExplicit.exit233, label %.split.i.i.i.i222
 
 .split.i.i.i.i222:                                ; preds = %.thread.i.i218
-  store i8 -127, ptr %i.cz, align 1, !tbaa !15
-  %7 = trunc nuw i32 %i.k to i8
   %i.da = getelementptr inbounds nuw i8, ptr %i.cy, i64 2
-  store i8 %7, ptr %i.da, align 1, !tbaa !15
+  store i8 %5, ptr %i.da, align 1, !tbaa !15
   br label %SetExplicit.exit233
 
-SetExplicit.exit233:                              ; preds = %5, %.split.i.i.i.i222
-  %.0.i.i.i228 = phi i32 [ 3, %.split.i.i.i.i222 ], [ 2, %5 ]
+SetExplicit.exit233:                              ; preds = %.thread.i.i218, %.split.i.i.i.i222
+  %.sink = phi i8 [ -127, %.split.i.i.i.i222 ], [ %5, %.thread.i.i218 ]
+  %.0.i.i.i228 = phi i32 [ 3, %.split.i.i.i.i222 ], [ 2, %.thread.i.i218 ]
+  store i8 %.sink, ptr %i.cz, align 1, !tbaa !15
   %i.db = add i32 %.0.i.i.i228, %i.cw             ; 2 uses
   %i.dc = zext i32 %i.db to i64
   %i.dd = getelementptr inbounds nuw i8, ptr %2, i64 %i.dc

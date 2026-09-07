@@ -205,16 +205,16 @@ bb.d:                                             ; preds = %.thread, %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.ad = phi i64 [ %i.r, %bb.c ], [ %i.y, %bb.d ] ; 9 uses
+  %i.ad = phi i64 [ %i.r, %bb.c ], [ %i.y, %bb.d ] ; 3 uses
   %i.ae = phi i32 [ %i.x, %bb.c ], [ %i.z, %bb.d ] ; 10 uses
   %i.af = phi ptr [ %i.w, %bb.c ], [ %i.ab, %bb.d ]
   %i.ag = load i64, ptr %i.af, align 8            ; 24 uses
   %i.ah = call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 51 uses
-  %i.ai = load ptr, ptr %i.ah, align 8
+  %i.ai = load ptr, ptr %i.ah, align 8            ; 11 uses
   %i.aj = ptrtoint ptr %i.ai to i64               ; 6 uses
-  %i.ak = sub i64 %3, %i.aj                       ; 5 uses
+  %i.ak = sub i64 %3, %i.aj                       ; 10 uses
   %i.al = inttoptr i64 %i.ak to ptr               ; 21 uses
-  %i.am = sub i64 %i.ad, %i.aj                    ; 6 uses
+  %i.am = sub i64 %i.ad, %i.aj                    ; 11 uses
   %i.an = inttoptr i64 %i.am to ptr               ; 15 uses
   switch i32 %0, label %expand_vec_shi.exit [
     i32 108, label %bb.f
@@ -240,9 +240,13 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr @expand_vec_shi.gf2_shi, i64 %i.ag
   %i.as = load i64, ptr %i.ar, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ak
+  %6 = ptrtoint ptr %5 to i64
+  %7 = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.am
+  %8 = ptrtoint ptr %7 to i64
   %i.at = call ptr @tcg_constant_internal(i32 noundef %1, i64 noundef %i.as)
   %i.au = ptrtoint ptr %i.at to i64
-  call void @vec_gen_4(i32 noundef 136, i32 noundef %1, i32 noundef 0, i64 noundef %3, i64 noundef %i.ad, i64 noundef %i.au, i64 noundef 0) #26
+  call void @vec_gen_4(i32 noundef 136, i32 noundef %1, i32 noundef 0, i64 noundef %6, i64 noundef %8, i64 noundef %i.au, i64 noundef 0) #26
   br label %expand_vec_shi.exit
 
 bb.h:                                             ; preds = %bb.f
@@ -272,9 +276,13 @@ bb.i:                                             ; preds = %bb.e
 bb.j:                                             ; preds = %bb.i
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @expand_vec_shi.gf2_shi, i64 64), i64 %i.ag
   %i.bk = load i64, ptr %i.bj, align 8
+  %9 = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ak
+  %10 = ptrtoint ptr %9 to i64
+  %11 = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.am
+  %12 = ptrtoint ptr %11 to i64
   %i.bl = call ptr @tcg_constant_internal(i32 noundef %1, i64 noundef %i.bk)
   %i.bm = ptrtoint ptr %i.bl to i64
-  call void @vec_gen_4(i32 noundef 136, i32 noundef %1, i32 noundef 0, i64 noundef %3, i64 noundef %i.ad, i64 noundef %i.bm, i64 noundef 0) #26
+  call void @vec_gen_4(i32 noundef 136, i32 noundef %1, i32 noundef 0, i64 noundef %10, i64 noundef %12, i64 noundef %i.bm, i64 noundef 0) #26
   br label %expand_vec_shi.exit
 
 bb.k:                                             ; preds = %bb.i
@@ -324,9 +332,13 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o
   %i.ci = getelementptr inbounds nuw [8 x i8], ptr @expand_vec_sari.gf2_sar, i64 %i.ag
   %i.cj = load i64, ptr %i.ci, align 8
+  %13 = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ak
+  %14 = ptrtoint ptr %13 to i64
+  %15 = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.am
+  %16 = ptrtoint ptr %15 to i64
   %i.ck = call ptr @tcg_constant_internal(i32 noundef %1, i64 noundef %i.cj)
   %i.cl = ptrtoint ptr %i.ck to i64
-  call void @vec_gen_4(i32 noundef 136, i32 noundef %1, i32 noundef 0, i64 noundef %3, i64 noundef %i.ad, i64 noundef %i.cl, i64 noundef 0) #26
+  call void @vec_gen_4(i32 noundef 136, i32 noundef %1, i32 noundef 0, i64 noundef %14, i64 noundef %16, i64 noundef %i.cl, i64 noundef 0) #26
   br label %expand_vec_shi.exit
 
 bb.q:                                             ; preds = %bb.o
@@ -543,9 +555,13 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %bb.ad
   %i.hj = getelementptr inbounds nuw [8 x i8], ptr @expand_vec_rotli.gf2_rol, i64 %i.ag
   %i.hk = load i64, ptr %i.hj, align 8
+  %17 = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ak
+  %18 = ptrtoint ptr %17 to i64
+  %19 = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.am
+  %20 = ptrtoint ptr %19 to i64
   %i.hl = call ptr @tcg_constant_internal(i32 noundef %1, i64 noundef %i.hk)
   %i.hm = ptrtoint ptr %i.hl to i64
-  call void @vec_gen_4(i32 noundef 136, i32 noundef %1, i32 noundef 0, i64 noundef %3, i64 noundef %i.ad, i64 noundef %i.hm, i64 noundef 0) #26
+  call void @vec_gen_4(i32 noundef 136, i32 noundef %1, i32 noundef 0, i64 noundef %18, i64 noundef %20, i64 noundef %i.hm, i64 noundef 0) #26
   br label %expand_vec_shi.exit
 
 bb.af:                                            ; preds = %bb.ac
@@ -554,7 +570,11 @@ bb.af:                                            ; preds = %bb.ac
   br i1 %or.cond28.not.i, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
-  call void @vec_gen_4(i32 noundef 133, i32 noundef %1, i32 noundef %2, i64 noundef %3, i64 noundef %i.ad, i64 noundef %i.ad, i64 noundef %i.ag) #26
+  %21 = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ak
+  %22 = ptrtoint ptr %21 to i64
+  %23 = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.am
+  %24 = ptrtoint ptr %23 to i64                   ; 2 uses
+  call void @vec_gen_4(i32 noundef 133, i32 noundef %1, i32 noundef %2, i64 noundef %22, i64 noundef %24, i64 noundef %24, i64 noundef %i.ag) #26
   br label %expand_vec_shi.exit
 
 bb.ah:                                            ; preds = %bb.af, %bb.ad

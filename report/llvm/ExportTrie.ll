@@ -204,13 +204,15 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !61
-  %i.h = ptrtoint ptr %1 to i64                   ; 3 uses
+  %i.h = ptrtoint ptr %1 to i64                   ; 4 uses
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = sub i64 %i.h, %i.i
   store i64 %i.j, ptr %i.a, align 8, !tbaa !31
   %i.k = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapImNS_6detail13DenseSetEmptyENS_12DenseMapInfoImvEENS2_12DenseSetPairImEEEEmS3_S5_S7_E24lookupOrInsertIntoBucketIRKmJEEESt4pairIPS7_bEOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(8) %i.a), !noalias !180 ; 0 uses
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 2 uses
+  %10 = sub i64 0, %i.h
+  %scevgep.i = getelementptr i8, ptr %1, i64 %10
   %i.n = icmp eq ptr %1, null
   br i1 %i.n, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.thread, label %.lr.ph108, !prof !181
 
@@ -233,7 +235,7 @@ bb.e:                                             ; preds = %.lr.ph108
   %.not.i = icmp samesign ugt i8 %i.q, 1
   %i.t = icmp ne i8 %i.q, 0
   %or.cond43.i = select i1 %.not44.i, i1 %.not.i, i1 %i.t
-  br i1 %or.cond43.i, label %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.thread_crit_edge109, label %bb.f
+  br i1 %or.cond43.i, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %.lr.ph108
   %i.u = icmp ult i32 %.028.i106, 64
@@ -245,13 +247,10 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph108
   %i.z = icmp slt i8 %i.p, 0
   br i1 %i.z, label %bb.d, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit, !llvm.loop !155
 
-._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.thread_crit_edge109: ; preds = %bb.e
-  %10 = ptrtoint ptr %.031.i104 to i64
-  br label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.thread
-
-_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.thread: ; preds = %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.thread_crit_edge109, %bb.c
-  %.132.i.ph = phi i64 [ %10, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.thread_crit_edge109 ], [ 0, %bb.c ]
-  %i.aa = sub i64 %.132.i.ph, %i.h
+_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.thread: ; preds = %bb.e, %bb.c
+  %.132.i.ph = phi ptr [ %scevgep.i, %bb.c ], [ %.031.i104, %bb.e ]
+  %11 = ptrtoint ptr %.132.i.ph to i64
+  %i.aa = sub i64 %11, %i.h
   %i.ab = and i64 %i.aa, 4294967295
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 %i.ab
   br label %bb.i

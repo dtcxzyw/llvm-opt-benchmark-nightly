@@ -204,7 +204,6 @@ bb.d:                                             ; preds = %.noexc10, %.prehead
 bb.e:                                             ; preds = %bb.d
   %i.bb = load ptr, ptr %i.o, align 8, !tbaa !111 ; 6 uses
   %i.bc = load ptr, ptr %i.p, align 8, !tbaa !109 ; 4 uses
-  %2 = ptrtoint ptr %i.az to i64                  ; 2 uses
   %i.bd = icmp ne ptr %i.bb, null
   %i.be = icmp ne ptr %i.bc, null
   %or.cond.i = and i1 %i.bd, %i.be
@@ -213,6 +212,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond3.i, label %bb.f, label %.noexc10
 
 bb.f:                                             ; preds = %bb.e
+  %2 = ptrtoint ptr %i.az to i64                  ; 2 uses
   %i.bg = ptrtoint ptr %i.bb to i64               ; 2 uses
   %i.bh = sub i64 %2, %i.bg                       ; 3 uses
   %i.bi = urem i64 %i.bh, 3                       ; 2 uses

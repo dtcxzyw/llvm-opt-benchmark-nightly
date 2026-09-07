@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %i.l = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %indvars.iv ; 5 uses
+  %i.l = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %indvars.iv ; 6 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !102
   %i.n = icmp eq ptr %i.m, %i.k
   br i1 %i.n, label %bb.d, label %bb.b
@@ -243,7 +243,7 @@ bb.f:                                             ; preds = %bb.e
 
 _ZNSt3__110shared_ptrI3BoxEaSB8ne180100EOS2_.exit.i.i.i.i.i.i: ; preds = %bb.f, %bb.e, %.lr.ph.i.i.i.i.i.i
   %i.z = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 16 ; 2 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 16 ; 2 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i.i, i64 16 ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.z, %i.c
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrI3BoxEES4_EET0_T_S6_S5_.exit.loopexit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !1550
 
@@ -253,11 +253,12 @@ _ZNSt3__14moveB8ne180100IPNS_10shared_ptrI3BoxEES4_EET0_T_S6_S5_.exit.loopexit.i
   br label %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrI3BoxEES4_EET0_T_S6_S5_.exit.i
 
 _ZNSt3__14moveB8ne180100IPNS_10shared_ptrI3BoxEES4_EET0_T_S6_S5_.exit.i: ; preds = %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrI3BoxEES4_EET0_T_S6_S5_.exit.loopexit.i, %bb.d
-  %i.ac = phi ptr [ %i.c, %bb.d ], [ %.pre.i, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrI3BoxEES4_EET0_T_S6_S5_.exit.loopexit.i ] ; 2 uses
-  %storemerge.lcssa.i.i.i.i.i.i = phi i64 [ %i.o, %bb.d ], [ %i.ab, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrI3BoxEES4_EET0_T_S6_S5_.exit.loopexit.i ]
-  %i.ad = sub i64 %storemerge.lcssa.i.i.i.i.i.i, %i.o
-  %i.ae = getelementptr inbounds i8, ptr %i.l, i64 %i.ad ; 3 uses
-  %.not6.i.i.i = icmp eq ptr %i.ae, %i.ac
+  %.pre-phi = phi i64 [ %i.ab, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrI3BoxEES4_EET0_T_S6_S5_.exit.loopexit.i ], [ %i.o, %bb.d ]
+  %i.ac = phi ptr [ %.pre.i, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrI3BoxEES4_EET0_T_S6_S5_.exit.loopexit.i ], [ %i.c, %bb.d ] ; 2 uses
+  %storemerge.lcssa.i.i.i.i.i.i = phi ptr [ %i.aa, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrI3BoxEES4_EET0_T_S6_S5_.exit.loopexit.i ], [ %i.l, %bb.d ] ; 2 uses
+  %i.ad = sub i64 %.pre-phi, %i.o
+  %i.ae = getelementptr inbounds i8, ptr %i.l, i64 %i.ad
+  %.not6.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.ac
   br i1 %.not6.i.i.i, label %.loopexit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrI3BoxEES4_EET0_T_S6_S5_.exit.i, %_ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrI3BoxEEEEE7destroyB8ne180100IS4_vvEEvRS5_PT_.exit.i.i.i
@@ -283,7 +284,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrI3BoxEEEEE7destroyB8ne180100IS4_vvEEvRS5_PT_.exit.i.i.i
 
 _ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrI3BoxEEEEE7destroyB8ne180100IS4_vvEEvRS5_PT_.exit.i.i.i: ; preds = %bb.h, %bb.g, %.lr.ph.i.i.i
-  %.not.i.i.i = icmp eq ptr %i.ae, %i.af
+  %.not.i.i.i = icmp eq ptr %storemerge.lcssa.i.i.i.i.i.i, %i.af
   br i1 %.not.i.i.i, label %.loopexit, label %.lr.ph.i.i.i
 
 .loopexit:                                        ; preds = %_ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrI3BoxEEEEE7destroyB8ne180100IS4_vvEEvRS5_PT_.exit.i.i.i, %_ZNSt3__14moveB8ne180100IPNS_10shared_ptrI3BoxEES4_EET0_T_S6_S5_.exit.i

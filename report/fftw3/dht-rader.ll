@@ -204,7 +204,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bf = getelementptr inbounds i8, ptr %i.bd, i64 -24
   %wide.load = load <2 x double>, ptr %i.be, align 8, !tbaa !30
   %wide.load27 = load <2 x double>, ptr %i.bf, align 8, !tbaa !30
-  %i.bg = sub nsw i64 %i.u, %i.bb
+  %i.bg = sub nuw nsw i64 %i.u, %i.bb
   %i.bh = getelementptr inbounds [8 x i8], ptr %i.z, i64 %i.bg ; 2 uses
   %i.bi = getelementptr inbounds i8, ptr %i.bh, i64 -8
   %i.bj = getelementptr inbounds i8, ptr %i.bh, i64 -24
@@ -234,7 +234,7 @@ middle.block:                                     ; preds = %vector.body
   %i.bp = sub nuw nsw i64 %i.ac, %.266.i.prol
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.bp
   %i.br = load double, ptr %i.bq, align 8, !tbaa !30
-  %i.bs = sub nsw i64 %i.u, %.266.i.prol
+  %i.bs = sub nuw nsw i64 %i.u, %.266.i.prol
   %i.bt = getelementptr inbounds [8 x i8], ptr %i.z, i64 %i.bs
   store double %i.br, ptr %i.bt, align 8, !tbaa !30
   %i.bu = add nuw nsw i64 %.266.i.prol, 1         ; 2 uses
@@ -252,56 +252,56 @@ middle.block:                                     ; preds = %vector.body
   %i.bw = sub nuw nsw i64 %i.ac, %.266.i
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.bw
   %i.by = load double, ptr %i.bx, align 8, !tbaa !30
-  %i.bz = sub nsw i64 %i.u, %.266.i
+  %i.bz = sub nuw nsw i64 %i.u, %.266.i
   %i.ca = getelementptr inbounds [8 x i8], ptr %i.z, i64 %i.bz
   store double %i.by, ptr %i.ca, align 8, !tbaa !30
   %i.cb = add nuw nsw i64 %.266.i, 1              ; 2 uses
   %i.cc = sub nuw nsw i64 %i.ac, %i.cb
   %i.cd = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.cc
   %i.ce = load double, ptr %i.cd, align 8, !tbaa !30
-  %i.cf = sub nsw i64 %i.u, %i.cb
+  %i.cf = sub nuw nsw i64 %i.u, %i.cb
   %i.cg = getelementptr inbounds [8 x i8], ptr %i.z, i64 %i.cf
   store double %i.ce, ptr %i.cg, align 8, !tbaa !30
   %i.ch = add nuw nsw i64 %.266.i, 2              ; 2 uses
   %i.ci = sub nuw nsw i64 %i.ac, %i.ch
   %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.ci
   %i.ck = load double, ptr %i.cj, align 8, !tbaa !30
-  %i.cl = sub nsw i64 %i.u, %i.ch
+  %i.cl = sub nuw nsw i64 %i.u, %i.ch
   %i.cm = getelementptr inbounds [8 x i8], ptr %i.z, i64 %i.cl
   store double %i.ck, ptr %i.cm, align 8, !tbaa !30
   %i.cn = add nuw nsw i64 %.266.i, 3              ; 2 uses
   %i.co = sub nuw nsw i64 %i.ac, %i.cn
   %i.cp = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.co
   %i.cq = load double, ptr %i.cp, align 8, !tbaa !30
-  %i.cr = sub nsw i64 %i.u, %i.cn
+  %i.cr = sub nuw nsw i64 %i.u, %i.cn
   %i.cs = getelementptr inbounds [8 x i8], ptr %i.z, i64 %i.cr
   store double %i.cq, ptr %i.cs, align 8, !tbaa !30
   %i.ct = add nuw nsw i64 %.266.i, 4              ; 2 uses
   %i.cu = sub nuw nsw i64 %i.ac, %i.ct
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.cu
   %i.cw = load double, ptr %i.cv, align 8, !tbaa !30
-  %i.cx = sub nsw i64 %i.u, %i.ct
+  %i.cx = sub nuw nsw i64 %i.u, %i.ct
   %i.cy = getelementptr inbounds [8 x i8], ptr %i.z, i64 %i.cx
   store double %i.cw, ptr %i.cy, align 8, !tbaa !30
   %i.cz = add nuw nsw i64 %.266.i, 5              ; 2 uses
   %i.da = sub nuw nsw i64 %i.ac, %i.cz
   %i.db = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.da
   %i.dc = load double, ptr %i.db, align 8, !tbaa !30
-  %i.dd = sub nsw i64 %i.u, %i.cz
+  %i.dd = sub nuw nsw i64 %i.u, %i.cz
   %i.de = getelementptr inbounds [8 x i8], ptr %i.z, i64 %i.dd
   store double %i.dc, ptr %i.de, align 8, !tbaa !30
   %i.df = add nuw nsw i64 %.266.i, 6              ; 2 uses
   %i.dg = sub nuw nsw i64 %i.ac, %i.df
   %i.dh = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.dg
   %i.di = load double, ptr %i.dh, align 8, !tbaa !30
-  %i.dj = sub nsw i64 %i.u, %i.df
+  %i.dj = sub nuw nsw i64 %i.u, %i.df
   %i.dk = getelementptr inbounds [8 x i8], ptr %i.z, i64 %i.dj
   store double %i.di, ptr %i.dk, align 8, !tbaa !30
   %i.dl = add nuw nsw i64 %.266.i, 7              ; 2 uses
   %i.dm = sub nuw nsw i64 %i.ac, %i.dl
   %i.dn = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.dm
   %i.do = load double, ptr %i.dn, align 8, !tbaa !30
-  %i.dp = sub nsw i64 %i.u, %i.dl
+  %i.dp = sub nuw nsw i64 %i.u, %i.dl
   %i.dq = getelementptr inbounds [8 x i8], ptr %i.z, i64 %i.dp
   store double %i.do, ptr %i.dq, align 8, !tbaa !30
   %i.dr = add nuw nsw i64 %.266.i, 8              ; 2 uses

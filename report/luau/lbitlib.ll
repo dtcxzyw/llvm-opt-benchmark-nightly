@@ -204,13 +204,10 @@ _ZL9fieldargsP9lua_StateiPi.exit:                 ; preds = %bb.e
 ; Function Attrs: mustprogress uwtable
 define internal noundef i32 @_ZL6b_lrotP9lua_State(ptr noundef %0) #0 {
 bb.a:
-  %i.a = tail call noundef i32 @_Z17luaL_checkintegerP9lua_Statei(ptr noundef %0, i32 noundef 2) ; 2 uses
-  %i.b = tail call noundef i32 @_Z18luaL_checkunsignedP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 3 uses
-  %1 = and i32 %i.a, 31
-  %.not.i = icmp eq i32 %1, 0
+  %i.a = tail call noundef i32 @_Z17luaL_checkintegerP9lua_Statei(ptr noundef %0, i32 noundef 2)
+  %i.b = tail call noundef i32 @_Z18luaL_checkunsignedP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 2 uses
   %i.c = tail call i32 @llvm.fshl.i32(i32 %i.b, i32 %i.b, i32 %i.a)
-  %.0.i = select i1 %.not.i, i32 %i.b, i32 %i.c
-  tail call void @_Z16lua_pushunsignedP9lua_Statej(ptr noundef %0, i32 noundef %.0.i)
+  tail call void @_Z16lua_pushunsignedP9lua_Statej(ptr noundef %0, i32 noundef %i.c)
   ret i32 1
 }
 
@@ -291,14 +288,10 @@ _ZL9fieldargsP9lua_StateiPi.exit:                 ; preds = %bb.e
 ; Function Attrs: mustprogress uwtable
 define internal noundef i32 @_ZL6b_rrotP9lua_State(ptr noundef %0) #0 {
 bb.a:
-  %i.a = tail call noundef i32 @_Z17luaL_checkintegerP9lua_Statei(ptr noundef %0, i32 noundef 2) ; 2 uses
-  %1 = sub nsw i32 0, %i.a
-  %i.b = tail call noundef i32 @_Z18luaL_checkunsignedP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 3 uses
-  %2 = and i32 %1, 31
-  %.not.i = icmp eq i32 %2, 0
+  %i.a = tail call noundef i32 @_Z17luaL_checkintegerP9lua_Statei(ptr noundef %0, i32 noundef 2)
+  %i.b = tail call noundef i32 @_Z18luaL_checkunsignedP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 2 uses
   %i.c = tail call i32 @llvm.fshr.i32(i32 %i.b, i32 %i.b, i32 %i.a)
-  %.0.i = select i1 %.not.i, i32 %i.b, i32 %i.c
-  tail call void @_Z16lua_pushunsignedP9lua_Statej(ptr noundef %0, i32 noundef %.0.i)
+  tail call void @_Z16lua_pushunsignedP9lua_Statej(ptr noundef %0, i32 noundef %i.c)
   ret i32 1
 }
 

@@ -204,19 +204,19 @@ bb.f:                                             ; preds = %bb.e
   %i.aj = load ptr, ptr %i.j, align 8, !tbaa !166 ; 2 uses
   %i.ak = getelementptr inbounds i8, ptr %i.aj, i64 %i.ab
   %i.al = getelementptr inbounds i8, ptr %i.aj, i64 %i.ai
-  %6 = ptrtoint ptr %i.al to i64
-  %7 = load ptr, ptr %i.k, align 8, !tbaa !166    ; 2 uses
-  %i.am = ptrtoint ptr %7 to i64                  ; 2 uses
-  %i.an = sub i64 %i.am, %6
+  %6 = load ptr, ptr %i.k, align 8, !tbaa !166    ; 2 uses
+  %7 = ptrtoint ptr %6 to i64                     ; 2 uses
+  %i.am = ptrtoint ptr %i.al to i64
+  %i.an = sub i64 %7, %i.am
   %i.ao = getelementptr inbounds i8, ptr %i.ak, i64 %i.an ; 3 uses
-  %.not.i.i.i.i = icmp eq ptr %7, %i.ao
+  %.not.i.i.i.i = icmp eq ptr %6, %i.ao
   br i1 %.not.i.i.i.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %_ZN3Cnt5aliveE.promoted.i.i.i.i.i.i = load i32, ptr @_ZN3Cnt5aliveE, align 4
   %i.ap = ptrtoaddr ptr %i.ao to i64
   %i.aq = trunc i64 %i.ap to i32
-  %i.ar = trunc i64 %i.am to i32
+  %i.ar = trunc i64 %7 to i32
   %i.as = sub i32 %i.aq, %i.ar
   %i.at = add i32 %i.as, %_ZN3Cnt5aliveE.promoted.i.i.i.i.i.i
   store i32 %i.at, ptr @_ZN3Cnt5aliveE, align 4, !tbaa !33

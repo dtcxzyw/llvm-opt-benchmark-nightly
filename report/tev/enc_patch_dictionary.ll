@@ -205,17 +205,21 @@ _ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wr
   br label %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit
 
 _ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit: ; preds = %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit.loopexit, %bb.d
-  %.pre-phi = phi i64 [ %.pre55, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit.loopexit ], [ %i.m, %bb.d ] ; 2 uses
+  %.pre-phi = phi i64 [ %.pre55, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit.loopexit ], [ %i.m, %bb.d ]
   %i.x = sub i64 %.pre-phi, %i.m
-  %i.y = getelementptr inbounds i8, ptr %i.k, i64 %i.x ; 2 uses
+  %i.y = getelementptr inbounds i8, ptr %i.k, i64 %i.x ; 3 uses
   store ptr %i.y, ptr %i.j, align 8, !tbaa !216
   %i.z = icmp sgt i64 %i.r, 0
-  br i1 %i.z, label %.critedge, label %_ZNSt3__114__split_bufferINS_4pairIjjEERNS_9allocatorIS2_EEED2Ev.exit
+  br i1 %i.z, label %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit..critedge_crit_edge, label %_ZNSt3__114__split_bufferINS_4pairIjjEERNS_9allocatorIS2_EEED2Ev.exit
 
-.critedge:                                        ; preds = %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit, %bb.c
-  %.pre-phi57 = phi i64 [ %i.m, %bb.c ], [ %.pre-phi, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit ]
-  %i.aa = phi ptr [ %i.k, %bb.c ], [ %i.y, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit ] ; 4 uses
-  %.sroa.045.0 = phi ptr [ %i.p, %bb.c ], [ %i.t, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit ] ; 3 uses
+_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit..critedge_crit_edge: ; preds = %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit
+  %.pre56 = ptrtoint ptr %i.y to i64
+  br label %.critedge
+
+.critedge:                                        ; preds = %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit..critedge_crit_edge, %bb.c
+  %.pre-phi57 = phi i64 [ %.pre56, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.m, %bb.c ]
+  %i.aa = phi ptr [ %i.y, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.k, %bb.c ] ; 4 uses
+  %.sroa.045.0 = phi ptr [ %i.t, %_ZNSt3__16vectorINS_4pairIjjEENS_9allocatorIS2_EEE18__construct_at_endINS_11__wrap_iterIPS2_EES9_EEvT_T0_m.exit..critedge_crit_edge ], [ %i.p, %bb.c ] ; 3 uses
   %.sroa.045.074 = ptrtoaddr ptr %.sroa.045.0 to i64 ; 2 uses
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %4 ; 2 uses
   %i.ac = ptrtoint ptr %i.ab to i64

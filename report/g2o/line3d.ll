@@ -205,7 +205,7 @@ _ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_5Block
   %.02126.i.i.i.i = phi i64 [ 1, %.lr.ph.i.i.i.i.preheader.new ], [ %i.al, %.lr.ph.i.i.i.i ] ; 4 uses
   %i.z = phi double [ %i.x, %.lr.ph.i.i.i.i.preheader.new ], [ %i.ak, %.lr.ph.i.i.i.i ] ; 2 uses
   %niter = phi i64 [ 0, %.lr.ph.i.i.i.i.preheader.new ], [ %niter.next.1, %.lr.ph.i.i.i.i ]
-  %.idx.i.i.i.i.i.i.i = shl i64 %.02126.i.i.i.i, 5
+  %.idx.i.i.i.i.i.i.i = shl nuw nsw i64 %.02126.i.i.i.i, 5
   %i.aa = getelementptr i8, ptr %i.u, i64 %.idx.i.i.i.i.i.i.i
   %i.ab = load double, ptr %i.aa, align 8, !tbaa !10
   %i.ac = call noundef double @llvm.fabs.f64(double %i.ab) ; 2 uses
@@ -213,7 +213,7 @@ _ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_5Block
   %.sroa.0.1.i.i = select i1 %i.ad, i64 %.02126.i.i.i.i, i64 %.sroa.0.0.i.i
   %i.ae = select i1 %i.ad, double %i.ac, double %i.z ; 2 uses
   %i.af = add nuw nsw i64 %.02126.i.i.i.i, 1      ; 2 uses
-  %.idx.i.i.i.i.i.i.i.1 = shl i64 %i.af, 5
+  %.idx.i.i.i.i.i.i.i.1 = shl nuw nsw i64 %i.af, 5
   %i.ag = getelementptr i8, ptr %i.u, i64 %.idx.i.i.i.i.i.i.i.1
   %i.ah = load double, ptr %i.ag, align 8, !tbaa !10
   %i.ai = call noundef double @llvm.fabs.f64(double %i.ah) ; 2 uses
@@ -235,7 +235,7 @@ _ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_5Block
   %.epil.init = phi double [ %i.x, %.lr.ph.i.i.i.i.preheader ], [ %i.ak, %_ZNK5Eigen9DenseBaseINS_12CwiseUnaryOpINS_8internal13scalar_abs_opIdEEKNS_5BlockINS_8DiagonalINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi0EEELin1ELi1ELb0EEEEEE8maxCoeffIlEEdPT_.exit.unr-lcssa ]
   %lcmp.mod497 = trunc i64 %i.p to i1
   call void @llvm.assume(i1 %lcmp.mod497)
-  %.idx.i.i.i.i.i.i.i.epil = shl i64 %.02126.i.i.i.i.epil.init, 5
+  %.idx.i.i.i.i.i.i.i.epil = shl nuw nsw i64 %.02126.i.i.i.i.epil.init, 5
   %i.am = getelementptr i8, ptr %i.u, i64 %.idx.i.i.i.i.i.i.i.epil
   %i.an = load double, ptr %i.am, align 8, !tbaa !10
   %i.ao = call noundef double @llvm.fabs.f64(double %i.an)

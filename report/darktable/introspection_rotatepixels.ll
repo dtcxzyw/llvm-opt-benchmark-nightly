@@ -146,7 +146,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x float> %interleaved.vec, ptr %i.v, align 4, !tbaa !33
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ae = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ae, label %middle.block, label %vector.body, !llvm.loop !45
+  br i1 %i.ae, label %middle.block, label %vector.body, !llvm.loop !46
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.t, %n.vec
@@ -171,7 +171,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store <2 x float> %i.al, ptr %i.af, align 4, !tbaa !33
   %i.am = add nuw i64 %.018, 2                    ; 2 uses
   %i.an = icmp ult i64 %i.am, %i.a
-  br i1 %i.an, label %scalar.ph, label %._crit_edge, !llvm.loop !46
+  br i1 %i.an, label %scalar.ph, label %._crit_edge, !llvm.loop !47
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
@@ -235,7 +235,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <16 x float> %interleaved.vec, ptr %i.v, align 4, !tbaa !33
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ae = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ae, label %middle.block, label %vector.body, !llvm.loop !47
+  br i1 %i.ae, label %middle.block, label %vector.body, !llvm.loop !48
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.t, %n.vec
@@ -260,7 +260,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store <2 x float> %i.al, ptr %i.af, align 4, !tbaa !33
   %i.am = add nuw i64 %.019, 2                    ; 2 uses
   %i.an = icmp ult i64 %i.am, %i.a
-  br i1 %i.an, label %scalar.ph, label %._crit_edge, !llvm.loop !48
+  br i1 %i.an, label %scalar.ph, label %._crit_edge, !llvm.loop !49
 }
 
 ; Function Attrs: nounwind uwtable
@@ -352,7 +352,7 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 144
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.s = load i32, ptr %i.f, align 4, !tbaa !49
+  %i.s = load i32, ptr %i.f, align 4, !tbaa !50
   %i.t = load <2 x i32>, ptr %2, align 4, !tbaa !32 ; 2 uses
   %i.u = sitofp reassoc nsz arcp contract afn i32 %i.s to float
   %i.v = load <2 x i32>, ptr %i.g, align 4, !tbaa !32
@@ -423,9 +423,9 @@ bb.a:
   %i.ci = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.by, <2 x i32> zeroinitializer)
   %i.cj = select <2 x i1> %i.ch, <2 x i32> %i.cg, <2 x i32> %i.ci ; 3 uses
   %i.ck = extractelement <2 x i32> %i.cj, i64 0
-  store i32 %i.ck, ptr %3, align 4, !tbaa !50
+  store i32 %i.ck, ptr %3, align 4, !tbaa !51
   %i.cl = extractelement <2 x i32> %i.cj, i64 1
-  store i32 %i.cl, ptr %i.q, align 4, !tbaa !49
+  store i32 %i.cl, ptr %i.q, align 4, !tbaa !50
   %i.cm = tail call reassoc nsz arcp contract afn <2 x float> @llvm.ceil.v2f32(<2 x float> %i.bt)
   %i.cn = fptosi <2 x float> %i.cm to <2 x i32>
   %i.co = sub nsw <2 x i32> %i.cn, %i.cj          ; 2 uses
@@ -440,7 +440,7 @@ bb.a:
 define void @process(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5) local_unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 132
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !52   ; 2 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !53   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !36
   %i.e = mul nsw i32 %i.d, %i.b
@@ -448,7 +448,7 @@ bb.a:
   %i.g = load float, ptr %i.f, align 4, !tbaa !39
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.i = load float, ptr %i.h, align 8, !tbaa !30
-  %i.j = fdiv reassoc nsz arcp contract afn float %i.g, %i.i
+  %i.j = fdiv reassoc nsz arcp contract afn float %i.g, %i.i ; 2 uses
   %i.k = tail call ptr @dt_interpolation_new(i32 noundef 2) #19
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 2 uses
   %i.m = load i32, ptr %i.l, align 4, !tbaa !37   ; 2 uses
@@ -462,20 +462,15 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 12
   %i.s = load i32, ptr %i.p, align 4, !tbaa !36   ; 2 uses
   %i.t = icmp sgt i32 %i.s, 0
-  br i1 %i.t, label %.lr.ph45.split.preheader, label %._crit_edge46
-
-.lr.ph45.split.preheader:                         ; preds = %.lr.ph45
-  %6 = insertelement <2 x float> poison, float %i.j, i64 0
-  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
-  br label %.lr.ph45.split
+  br i1 %i.t, label %.lr.ph45.split, label %._crit_edge46
 
 ._crit_edge46:                                    ; preds = %._crit_edge, %.lr.ph45, %bb.a
   ret void
 
-.lr.ph45.split:                                   ; preds = %.lr.ph45.split.preheader, %._crit_edge
-  %i.u = phi i32 [ %i.ad, %._crit_edge ], [ %i.m, %.lr.ph45.split.preheader ]
-  %i.v = phi i32 [ %i.ae, %._crit_edge ], [ %i.s, %.lr.ph45.split.preheader ] ; 3 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %.lr.ph45.split.preheader ] ; 3 uses
+.lr.ph45.split:                                   ; preds = %.lr.ph45, %._crit_edge
+  %i.u = phi i32 [ %i.ad, %._crit_edge ], [ %i.m, %.lr.ph45 ]
+  %i.v = phi i32 [ %i.ae, %._crit_edge ], [ %i.s, %.lr.ph45 ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %.lr.ph45 ] ; 3 uses
   %i.w = icmp sgt i32 %i.v, 0
   br i1 %i.w, label %.lr.ph.preheader, label %._crit_edge
 
@@ -498,34 +493,40 @@ bb.a:
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.af = sext i32 %i.ad to i64
   %i.ag = icmp slt i64 %indvars.iv.next, %i.af
-  br i1 %i.ag, label %.lr.ph45.split, label %._crit_edge46, !llvm.loop !51
+  br i1 %i.ag, label %.lr.ph45.split, label %._crit_edge46, !llvm.loop !52
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %.042 = phi i32 [ %i.ba, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %.03041 = phi ptr [ %i.bb, %.lr.ph ], [ %i.aa, %.lr.ph.preheader ] ; 2 uses
-  %.val = load ptr, ptr %i.q, align 16, !tbaa !31 ; 3 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %.val, i64 8
-  %i.ai = getelementptr inbounds nuw i8, ptr %.val, i64 16
-  %8 = load <2 x i32>, ptr %.val, align 4, !tbaa !32
-  %9 = uitofp <2 x i32> %8 to <2 x float>
-  %10 = fmul reassoc nsz arcp contract afn <2 x float> %7, %9 ; 2 uses
+  %.val = load ptr, ptr %i.q, align 16, !tbaa !31 ; 4 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.val, i64 8
+  %i.ah = getelementptr inbounds nuw i8, ptr %.val, i64 16
+  %7 = load i32, ptr %.val, align 4, !tbaa !45
+  %8 = uitofp reassoc nsz arcp contract afn i32 %7 to float
+  %9 = fmul reassoc nsz arcp contract afn float %i.j, %8
+  %i.ai = getelementptr inbounds nuw i8, ptr %.val, i64 4
+  %10 = load i32, ptr %i.ai, align 4, !tbaa !41
+  %11 = uitofp reassoc nsz arcp contract afn i32 %10 to float
+  %12 = fmul reassoc nsz arcp contract afn float %i.j, %11
   %i.aj = load <2 x i32>, ptr %5, align 4, !tbaa !32
   %i.ak = insertelement <2 x i32> %i.ac, i32 %.042, i64 0
   %i.al = add nsw <2 x i32> %i.aj, %i.ak
   %i.am = sitofp <2 x i32> %i.al to <2 x float>   ; 2 uses
-  %i.an = load <2 x float>, ptr %i.ah, align 4, !tbaa !33
+  %i.an = load <2 x float>, ptr %6, align 4, !tbaa !33
   %i.ao = fmul reassoc nsz arcp contract afn <2 x float> %i.an, %i.am
+  %13 = insertelement <2 x float> poison, float %9, i64 0
   %i.ap = load <2 x i32>, ptr %4, align 4, !tbaa !32
   %i.aq = sitofp <2 x i32> %i.ap to <2 x float>   ; 2 uses
-  %i.ar = shufflevector <2 x float> %10, <2 x float> %i.aq, <2 x i32> <i32 0, i32 2>
+  %i.ar = shufflevector <2 x float> %13, <2 x float> %i.aq, <2 x i32> <i32 0, i32 2>
   %i.as = fadd reassoc nsz arcp contract afn <2 x float> %i.ao, %i.ar ; 2 uses
   %shift = shufflevector <2 x float> %i.as, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fsub reassoc nsz arcp contract afn <2 x float> %i.as, %shift
   %i.at = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %i.au = load <2 x float>, ptr %i.ai, align 4, !tbaa !33
+  %i.au = load <2 x float>, ptr %i.ah, align 4, !tbaa !33
   %i.av = fmul reassoc nsz arcp contract afn <2 x float> %i.au, %i.am
-  %11 = shufflevector <2 x float> %i.aq, <2 x float> %10, <2 x i32> <i32 1, i32 3>
-  %i.aw = fadd reassoc nsz arcp contract afn <2 x float> %i.av, %11 ; 2 uses
+  %14 = shufflevector <2 x float> %i.aq, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %15 = insertelement <2 x float> %14, float %12, i64 1
+  %i.aw = fadd reassoc nsz arcp contract afn <2 x float> %i.av, %15 ; 2 uses
   %shift53 = shufflevector <2 x float> %i.aw, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop54 = fsub reassoc nsz arcp contract afn <2 x float> %shift53, %i.aw
   %i.ax = extractelement <2 x float> %foldExtExtBinop54, i64 0
@@ -546,8 +547,8 @@ define void @commit_params(ptr nofree noundef readnone captures(none) %0, ptr no
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.b = load ptr, ptr %i.a, align 16, !tbaa !31  ; 6 uses
-  %i.c = load i32, ptr %1, align 4, !tbaa !55     ; 2 uses
-  store i32 %i.c, ptr %i.b, align 4, !tbaa !56
+  %i.c = load i32, ptr %1, align 4, !tbaa !56     ; 2 uses
+  store i32 %i.c, ptr %i.b, align 4, !tbaa !45
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.e = load i32, ptr %i.d, align 4, !tbaa !57   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 4
@@ -833,20 +834,20 @@ attributes #21 = { nounwind willreturn memory(read) }
 !42 = !{!"p1 omnipotent char", !11, i64 0}
 !43 = !{!"dt_interpolation_t", !8, i64 0, !42, i64 8, !17, i64 16, !11, i64 24}
 !44 = !{!43, !17, i64 16}
-!45 = distinct !{!45, !34, !35}
-!46 = distinct !{!46, !35, !34}
-!47 = distinct !{!47, !34, !35}
-!48 = distinct !{!48, !35, !34}
-!49 = !{!20, !8, i64 4}
-!50 = !{!20, !8, i64 0}
-!51 = distinct !{!51, !53}
-!52 = !{!28, !8, i64 132}
-!53 = !{!"llvm.loop.unswitch.partial.disable"}
-!54 = !{!"dt_iop_rotatepixels_params_t", !8, i64 0, !8, i64 4, !19, i64 8}
-!55 = !{!54, !8, i64 0}
-!56 = !{!40, !8, i64 0}
-!57 = !{!54, !8, i64 4}
-!58 = !{!54, !19, i64 8}
+!45 = !{!40, !8, i64 0}
+!46 = distinct !{!46, !34, !35}
+!47 = distinct !{!47, !35, !34}
+!48 = distinct !{!48, !34, !35}
+!49 = distinct !{!49, !35, !34}
+!50 = !{!20, !8, i64 4}
+!51 = !{!20, !8, i64 0}
+!52 = distinct !{!52, !54}
+!53 = !{!28, !8, i64 132}
+!54 = !{!"llvm.loop.unswitch.partial.disable"}
+!55 = !{!"dt_iop_rotatepixels_params_t", !8, i64 0, !8, i64 4, !19, i64 8}
+!56 = !{!55, !8, i64 0}
+!57 = !{!55, !8, i64 4}
+!58 = !{!55, !19, i64 8}
 !59 = !{!28, !8, i64 32}
 !60 = !{!"p1 _ZTS8_GModule", !11, i64 0}
 !61 = !{!"p1 _ZTS12dt_develop_t", !11, i64 0}

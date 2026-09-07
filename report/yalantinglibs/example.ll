@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %.preheader
 bb.k:                                             ; preds = %bb.j
   %.0127.ptr.le = getelementptr inbounds i8, ptr %.2110, i64 %.0127.idx
   %i.ba = getelementptr inbounds i8, ptr %.2110, i64 %.0127.idx.in
-  %gepdiff = sub nsw i64 %.3111.idx, %.0127.idx.in
+  %gepdiff = sub nuw nsw i64 %.3111.idx, %.0127.idx.in
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i64 %gepdiff, ptr %i.bb, align 8, !tbaa !502
   %.sroa.4191.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56

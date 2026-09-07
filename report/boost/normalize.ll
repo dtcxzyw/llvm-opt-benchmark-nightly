@@ -205,11 +205,14 @@ bb.ag:                                            ; preds = %_ZN5boost4urls6deta
   br label %_ZNK5boost4urls6detail8path_ref4dataEv.exit29
 
 _ZNK5boost4urls6detail8path_ref4dataEv.exit29:    ; preds = %bb.af, %bb.ag
-  %.0.i28 = phi ptr [ %i.dj, %bb.af ], [ %i.dl, %bb.ag ]
+  %.0.i28 = phi ptr [ %i.dj, %bb.af ], [ %i.dl, %bb.ag ] ; 3 uses
+  %.0.i2859 = ptrtoaddr ptr %.0.i28 to i64
   %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.dn = load i64, ptr %i.dm, align 8, !tbaa !39
   %i.do = getelementptr inbounds nuw i8, ptr %.0.i28, i64 %i.dn ; 2 uses
-  %i.dp = add i64 %.0.i.i24, %.0.i5358            ; 2 uses
+  %i.dp = add i64 %.0.i.i24, %.0.i5358
+  %1 = sub i64 %i.dp, %.0.i2859
+  %scevgep = getelementptr i8, ptr %.0.i28, i64 %1 ; 2 uses
   %.not1169 = icmp eq ptr %i.do, %i.de
   br i1 %.not1169, label %._crit_edge71, label %.lr.ph
 
@@ -225,11 +228,10 @@ bb.ah:                                            ; preds = %.lr.ph
   br i1 %i.ds, label %._crit_edge, label %bb.ah, !llvm.loop !137
 
 ._crit_edge:                                      ; preds = %.lr.ph
-  %1 = ptrtoint ptr %i.dq to i64
   br label %._crit_edge71, !llvm.loop !137
 
 ._crit_edge71:                                    ; preds = %bb.ah, %._crit_edge, %_ZNK5boost4urls6detail8path_ref4dataEv.exit29
-  %.1 = phi i64 [ %1, %._crit_edge ], [ %i.dp, %_ZNK5boost4urls6detail8path_ref4dataEv.exit29 ], [ %i.dp, %bb.ah ]
+  %.1 = phi ptr [ %i.dq, %._crit_edge ], [ %scevgep, %_ZNK5boost4urls6detail8path_ref4dataEv.exit29 ], [ %scevgep, %bb.ah ] ; 2 uses
   br i1 %.not.i, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %._crit_edge71
@@ -237,7 +239,10 @@ bb.ai:                                            ; preds = %._crit_edge71
   %i.du = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %i.dv = load i32, ptr %i.du, align 8, !tbaa !33
   %i.dw = zext i32 %i.dv to i64
-  %i.dx = getelementptr inbounds nuw i8, ptr %i.dt, i64 %i.dw
+  %i.dx = getelementptr inbounds nuw i8, ptr %i.dt, i64 %i.dw ; 2 uses
+  %2 = ptrtoint ptr %.1 to i64
+  %3 = ptrtoint ptr %i.dx to i64
+  %4 = sub i64 %2, %3
   %i.dy = getelementptr inbounds nuw i8, ptr %i.l, i64 28
   %i.dz = load i32, ptr %i.dy, align 4, !tbaa !33
   %i.ea = zext i32 %i.dz to i64
@@ -246,17 +251,19 @@ bb.ai:                                            ; preds = %._crit_edge71
 
 bb.aj:                                            ; preds = %._crit_edge71
   %i.ec = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !34 ; 2 uses
+  %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !34 ; 3 uses
+  %5 = ptrtoint ptr %.1 to i64
+  %6 = ptrtoint ptr %i.ed to i64
+  %7 = sub i64 %5, %6
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ef = load i64, ptr %i.ee, align 8, !tbaa !35
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ed, i64 %i.ef
   br label %_ZNK5boost4urls6detail8path_ref4dataEv.exit.i34
 
 _ZNK5boost4urls6detail8path_ref4dataEv.exit.i34:  ; preds = %bb.aj, %bb.ai
+  %.sink.in = phi i64 [ %7, %bb.aj ], [ %4, %bb.ai ] ; 2 uses
   %.0.i22.i35 = phi ptr [ %i.eg, %bb.aj ], [ %i.eb, %bb.ai ] ; 4 uses
-  %.0.i17.i36 = phi ptr [ %i.ed, %bb.aj ], [ %i.dx, %bb.ai ] ; 2 uses
-  %.pn = ptrtoint ptr %.0.i17.i36 to i64
-  %.sink.in = sub i64 %.1, %.pn                   ; 2 uses
+  %.0.i17.i36 = phi ptr [ %i.ed, %bb.aj ], [ %i.dx, %bb.ai ]
   %.sink = add nsw i64 %.sink.in, 1               ; 2 uses
   store i64 %.sink, ptr %i.dm, align 8, !tbaa !39
   %i.eh = getelementptr inbounds nuw i8, ptr %.0.i17.i36, i64 %.sink ; 4 uses

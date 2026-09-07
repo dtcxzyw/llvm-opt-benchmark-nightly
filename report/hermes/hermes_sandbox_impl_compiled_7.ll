@@ -204,11 +204,11 @@ bb.n:                                             ; preds = %bb.m
   %.val34.i = load ptr, ptr %i.z, align 8, !tbaa !13
   %i.cc = getelementptr inbounds nuw i8, ptr %.val34.i, i64 %i.cb
   store i8 0, ptr %i.cc, align 1
-  %4 = zext i32 %i.bx to i64
   %.val.i219 = load ptr, ptr %i.z, align 8, !tbaa !13
   %i.cd = getelementptr inbounds nuw i8, ptr %.val.i219, i64 %i.cb
   %.0.copyload.i.i220 = load i8, ptr %i.cd, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i.i220) #13, !srcloc !31
+  %4 = zext i32 %i.bx to i64
   %.val33.i = load ptr, ptr %i.z, align 8, !tbaa !13
   %i.ce = getelementptr inbounds nuw i8, ptr %.val33.i, i64 %4
   store i8 %.0.copyload.i.i220, ptr %i.ce, align 1

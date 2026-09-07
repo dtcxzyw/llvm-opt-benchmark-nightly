@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i
 
 _ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrI9ImageItemEEEEE9constructB8ne180100IS4_JRS4_EvvEEvRS5_PT_DpOT0_.exit.i.i.i.i.i: ; preds = %bb.f, %.lr.ph.i.i.i.i.i
   %i.u = getelementptr inbounds nuw i8, ptr %.010.i.i.i.i.i, i64 16 ; 2 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i, i64 16 ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %storemerge9.i.i.i.i.i, i64 16 ; 3 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.u, %i.h
   br i1 %.not.i.i.i.i.i, label %._crit_edge20, label %.lr.ph.i.i.i.i.i, !llvm.loop !2
 
@@ -216,14 +216,15 @@ bb.g:                                             ; preds = %_ZNSt3__119__alloca
   resume { ptr, i32 } %i.w
 
 ._crit_edge20:                                    ; preds = %_ZNSt3__116allocator_traitsINS_9allocatorINS_10shared_ptrI9ImageItemEEEEE9constructB8ne180100IS4_JRS4_EvvEEvRS5_PT_DpOT0_.exit.i.i.i.i.i
-  %i.x = ptrtoint ptr %i.v to i64                 ; 2 uses
+  %i.x = ptrtoint ptr %i.v to i64
   %i.y = ptrtoint ptr %i.n to i64
   %i.z = sub i64 %i.x, %i.y
   %i.aa = getelementptr inbounds i8, ptr %i.n, i64 %i.z ; 2 uses
   store ptr %i.aa, ptr %i.d, align 8, !tbaa !134
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23
+  %5 = ptrtoint ptr %i.v to i64
   %i.ab = ptrtoint ptr %i.n to i64
-  %i.ac = sub i64 %i.x, %i.ab
+  %i.ac = sub i64 %5, %i.ab
   %i.ad = lshr exact i64 %i.ac, 4
   %i.ae = trunc i64 %i.ad to i32
   %.sroa.speculated = call i32 @llvm.smin.i32(i32 %2, i32 %i.ae) ; 3 uses

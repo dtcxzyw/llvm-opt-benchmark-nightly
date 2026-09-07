@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.l
   %.053225 = phi i64 [ 0, %.lr.ph.i98.lr.ph ], [ %.154, %_ZNK11colvar_gridImE16wrap_detect_edgeERSt6vectorIiSaIiEE.exit ] ; 3 uses
   %.056224 = phi i64 [ 0, %.lr.ph.i98.lr.ph ], [ %.157, %_ZNK11colvar_gridImE16wrap_detect_edgeERSt6vectorIiSaIiEE.exit ] ; 3 uses
   %i.eg = load i32, ptr %i.dy, align 4, !tbaa !83
-  %i.eh = add nsw i32 %i.eg, %.051226
+  %i.eh = add nsw i32 %i.eg, %.051226             ; 2 uses
   store i32 %i.eh, ptr %i.dz, align 4, !tbaa !83
   %i.ei = load ptr, ptr %3, align 8               ; 2 uses
   %i.ej = load ptr, ptr %i.ec, align 8            ; 2 uses
@@ -217,6 +217,7 @@ bb.o:                                             ; preds = %.lr.ph.i98
   %i.em = add nsw i32 %i.el, %i.ek
   %i.en = srem i32 %i.em, %i.el
   store i32 %i.en, ptr %i.ei, align 4, !tbaa !83
+  %.pre244 = load i32, ptr %i.dz, align 4, !tbaa !83
   br label %.thread164.loopexit
 
 bb.p:                                             ; preds = %.lr.ph.i98
@@ -229,12 +230,12 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not.i102, label %.thread164.loopexit, label %_ZNK11colvar_gridImE16wrap_detect_edgeERSt6vectorIiSaIiEE.exit
 
 .thread164.loopexit:                              ; preds = %bb.q, %bb.o
-  %5 = load ptr, ptr %i.ed, align 8, !tbaa !60
-  %6 = load i32, ptr %5, align 4, !tbaa !83
-  %i.eq = sext i32 %6 to i64
-  %i.er = load i32, ptr %i.dz, align 4, !tbaa !83
+  %5 = phi i32 [ %i.eh, %bb.q ], [ %.pre244, %bb.o ]
+  %6 = load ptr, ptr %i.ed, align 8, !tbaa !60
+  %i.eq = sext i32 %5 to i64
+  %i.er = load i32, ptr %6, align 4, !tbaa !83
   %i.es = sext i32 %i.er to i64
-  %i.et = mul nsw i64 %i.eq, %i.es
+  %i.et = mul nsw i64 %i.es, %i.eq
   %i.eu = load ptr, ptr %i.ee, align 8, !tbaa !201
   %i.ev = getelementptr [8 x i8], ptr %i.eu, i64 %i.et
   %i.ew = add i64 %.053225, 1

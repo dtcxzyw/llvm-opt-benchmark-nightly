@@ -205,20 +205,20 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.m = icmp eq i32 %i.g, 0
-  br i1 %i.m, label %xdr_stream_decode_uint32_array.exit.i.thread, label %.lr.ph.i.i.preheader
+  br i1 %i.m, label %.lr.ph.i.i.preheader, label %xdr_stream_decode_uint32_array.exit.i.thread
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.f
-  %3 = load i32, ptr %i.k, align 4
-  %4 = tail call i32 @llvm.bswap.i32(i32 %3)
-  store i32 %4, ptr %2, align 4
+  %3 = getelementptr [4 x i8], ptr %2, i64 %i.i
+  store i32 0, ptr %3, align 4
   br label %select.unfold
 
 xdr_stream_decode_uint32_array.exit.i.thread:     ; preds = %bb.f
-  %5 = getelementptr [4 x i8], ptr %2, i64 %i.i
-  store i32 0, ptr %5, align 4
+  %4 = load i32, ptr %i.k, align 4
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)
+  store i32 %5, ptr %2, align 4
   br label %select.unfold
 
-select.unfold:                                    ; preds = %.lr.ph.i.i.preheader, %bb.e, %xdr_stream_decode_uint32_array.exit.i.thread
+select.unfold:                                    ; preds = %xdr_stream_decode_uint32_array.exit.i.thread, %bb.e, %.lr.ph.i.i.preheader
   %i.n = getelementptr i8, ptr %2, i64 4          ; 3 uses
   %i.o = tail call ptr @xdr_inline_decode(ptr noundef %0, i64 noundef 4) #11 ; 2 uses
   %.not.i.i.i15 = icmp eq ptr %i.o, null
@@ -239,20 +239,20 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.v = icmp eq i32 %i.p, 0
-  br i1 %i.v, label %xdr_stream_decode_uint32_array.exit.i27.thread, label %.lr.ph.i.i22.preheader
+  br i1 %i.v, label %.lr.ph.i.i22.preheader, label %xdr_stream_decode_uint32_array.exit.i27.thread
 
 .lr.ph.i.i22.preheader:                           ; preds = %bb.i
-  %6 = load i32, ptr %i.t, align 4
-  %7 = tail call i32 @llvm.bswap.i32(i32 %6)
-  store i32 %7, ptr %i.n, align 4
+  %6 = getelementptr [4 x i8], ptr %i.n, i64 %i.r
+  store i32 0, ptr %6, align 4
   br label %select.unfold97
 
 xdr_stream_decode_uint32_array.exit.i27.thread:   ; preds = %bb.i
-  %8 = getelementptr [4 x i8], ptr %i.n, i64 %i.r
-  store i32 0, ptr %8, align 4
+  %7 = load i32, ptr %i.t, align 4
+  %8 = tail call i32 @llvm.bswap.i32(i32 %7)
+  store i32 %8, ptr %i.n, align 4
   br label %select.unfold97
 
-select.unfold97:                                  ; preds = %.lr.ph.i.i22.preheader, %bb.h, %xdr_stream_decode_uint32_array.exit.i27.thread
+select.unfold97:                                  ; preds = %xdr_stream_decode_uint32_array.exit.i27.thread, %bb.h, %.lr.ph.i.i22.preheader
   %i.w = getelementptr i8, ptr %2, i64 8          ; 3 uses
   %i.x = tail call ptr @xdr_inline_decode(ptr noundef %0, i64 noundef 4) #11 ; 2 uses
   %.not.i.i.i32 = icmp eq ptr %i.x, null
@@ -273,20 +273,20 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.ae = icmp eq i32 %i.y, 0
-  br i1 %i.ae, label %xdr_stream_decode_uint32_array.exit.i44.thread, label %.lr.ph.i.i39.preheader
+  br i1 %i.ae, label %.lr.ph.i.i39.preheader, label %xdr_stream_decode_uint32_array.exit.i44.thread
 
 .lr.ph.i.i39.preheader:                           ; preds = %bb.l
-  %9 = load i32, ptr %i.ac, align 4
-  %10 = tail call i32 @llvm.bswap.i32(i32 %9)
-  store i32 %10, ptr %i.w, align 4
+  %9 = getelementptr [4 x i8], ptr %i.w, i64 %i.aa
+  store i32 0, ptr %9, align 4
   br label %select.unfold106
 
 xdr_stream_decode_uint32_array.exit.i44.thread:   ; preds = %bb.l
-  %11 = getelementptr [4 x i8], ptr %i.w, i64 %i.aa
-  store i32 0, ptr %11, align 4
+  %10 = load i32, ptr %i.ac, align 4
+  %11 = tail call i32 @llvm.bswap.i32(i32 %10)
+  store i32 %11, ptr %i.w, align 4
   br label %select.unfold106
 
-select.unfold106:                                 ; preds = %.lr.ph.i.i39.preheader, %bb.k, %xdr_stream_decode_uint32_array.exit.i44.thread
+select.unfold106:                                 ; preds = %xdr_stream_decode_uint32_array.exit.i44.thread, %bb.k, %.lr.ph.i.i39.preheader
   %i.af = getelementptr i8, ptr %2, i64 12        ; 3 uses
   %i.ag = tail call ptr @xdr_inline_decode(ptr noundef %0, i64 noundef 4) #11 ; 2 uses
   %.not.i.i.i49 = icmp eq ptr %i.ag, null
@@ -307,20 +307,20 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.an = icmp eq i32 %i.ah, 0
-  br i1 %i.an, label %xdr_stream_decode_uint32_array.exit.i61.thread, label %.lr.ph.i.i56.preheader
+  br i1 %i.an, label %.lr.ph.i.i56.preheader, label %xdr_stream_decode_uint32_array.exit.i61.thread
 
 .lr.ph.i.i56.preheader:                           ; preds = %bb.o
-  %12 = load i32, ptr %i.al, align 4
-  %13 = tail call i32 @llvm.bswap.i32(i32 %12)
-  store i32 %13, ptr %i.af, align 4
+  %12 = getelementptr [4 x i8], ptr %i.af, i64 %i.aj
+  store i32 0, ptr %12, align 4
   br label %select.unfold115
 
 xdr_stream_decode_uint32_array.exit.i61.thread:   ; preds = %bb.o
-  %14 = getelementptr [4 x i8], ptr %i.af, i64 %i.aj
-  store i32 0, ptr %14, align 4
+  %13 = load i32, ptr %i.al, align 4
+  %14 = tail call i32 @llvm.bswap.i32(i32 %13)
+  store i32 %14, ptr %i.af, align 4
   br label %select.unfold115
 
-select.unfold115:                                 ; preds = %.lr.ph.i.i56.preheader, %bb.n, %xdr_stream_decode_uint32_array.exit.i61.thread
+select.unfold115:                                 ; preds = %xdr_stream_decode_uint32_array.exit.i61.thread, %bb.n, %.lr.ph.i.i56.preheader
   %i.ao = getelementptr i8, ptr %2, i64 16        ; 3 uses
   %i.ap = tail call ptr @xdr_inline_decode(ptr noundef %0, i64 noundef 4) #11 ; 2 uses
   %.not.i.i.i66 = icmp eq ptr %i.ap, null
@@ -341,20 +341,20 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.aw = icmp eq i32 %i.aq, 0
-  br i1 %i.aw, label %xdr_stream_decode_uint32_array.exit.i78.thread, label %.lr.ph.i.i73.preheader
+  br i1 %i.aw, label %.lr.ph.i.i73.preheader, label %xdr_stream_decode_uint32_array.exit.i78.thread
 
 .lr.ph.i.i73.preheader:                           ; preds = %bb.r
-  %15 = load i32, ptr %i.au, align 4
-  %16 = tail call i32 @llvm.bswap.i32(i32 %15)
-  store i32 %16, ptr %i.ao, align 4
+  %15 = getelementptr [4 x i8], ptr %i.ao, i64 %i.as
+  store i32 0, ptr %15, align 4
   br label %select.unfold124
 
 xdr_stream_decode_uint32_array.exit.i78.thread:   ; preds = %bb.r
-  %17 = getelementptr [4 x i8], ptr %i.ao, i64 %i.as
-  store i32 0, ptr %17, align 4
+  %16 = load i32, ptr %i.au, align 4
+  %17 = tail call i32 @llvm.bswap.i32(i32 %16)
+  store i32 %17, ptr %i.ao, align 4
   br label %select.unfold124
 
-select.unfold124:                                 ; preds = %.lr.ph.i.i73.preheader, %bb.q, %xdr_stream_decode_uint32_array.exit.i78.thread
+select.unfold124:                                 ; preds = %xdr_stream_decode_uint32_array.exit.i78.thread, %bb.q, %.lr.ph.i.i73.preheader
   %i.ax = load i32, ptr %i.a, align 4
   %i.ay = and i32 %i.ax, -4194305
   store i32 %i.ay, ptr %i.a, align 4

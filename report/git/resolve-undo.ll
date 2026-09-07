@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not62.us, label %bb.f, label %.loopexit67
 
 bb.f:                                             ; preds = %bb.e
-  %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 1 ; 2 uses
-  %i.x = ptrtoint ptr %i.w to i64                 ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 1 ; 3 uses
+  %i.x = ptrtoint ptr %i.w to i64
   %i.y = ptrtoint ptr %i.q to i64
   %i.z = sub i64 %i.x, %i.y                       ; 3 uses
   %.not63.us = icmp ugt i64 %i.p, %i.z
@@ -231,8 +231,9 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 1
-  %i.aj = ptrtoint ptr %i.ai to i64
-  %i.ak = sub i64 %i.aj, %i.x                     ; 3 uses
+  %3 = ptrtoint ptr %i.ai to i64
+  %i.aj = ptrtoint ptr %i.w to i64
+  %i.ak = sub i64 %3, %i.aj                       ; 3 uses
   %.not63.us.1 = icmp ugt i64 %i.aa, %i.ak
   br i1 %.not63.us.1, label %bb.j, label %.loopexit67
 
@@ -402,8 +403,8 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %.not62, label %bb.ab, label %.loopexit67
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.ct = getelementptr inbounds nuw i8, ptr %i.cq, i64 1 ; 2 uses
-  %i.cu = ptrtoint ptr %i.ct to i64               ; 2 uses
+  %i.ct = getelementptr inbounds nuw i8, ptr %i.cq, i64 1 ; 3 uses
+  %i.cu = ptrtoint ptr %i.ct to i64
   %i.cv = ptrtoint ptr %i.cn to i64
   %i.cw = sub i64 %i.cu, %i.cv                    ; 3 uses
   %.not63 = icmp ugt i64 %i.cm, %i.cw
@@ -429,8 +430,9 @@ bb.ad:                                            ; preds = %bb.ac
 
 bb.ae:                                            ; preds = %bb.ad
   %i.df = getelementptr inbounds nuw i8, ptr %i.dc, i64 1
-  %i.dg = ptrtoint ptr %i.df to i64
-  %i.dh = sub i64 %i.dg, %i.cu                    ; 3 uses
+  %4 = ptrtoint ptr %i.df to i64
+  %i.dg = ptrtoint ptr %i.ct to i64
+  %i.dh = sub i64 %4, %i.dg                       ; 3 uses
   %.not63.1 = icmp ugt i64 %i.cx, %i.dh
   br i1 %.not63.1, label %bb.af, label %.loopexit67
 

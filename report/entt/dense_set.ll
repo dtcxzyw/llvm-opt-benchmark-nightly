@@ -205,15 +205,15 @@ _ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEEC2Ev.exit: ; preds = %bb.a
 _ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE7emplaceIJiEEESt4pairINS_8internal18dense_set_iteratorIPS8_ImiEEEbEDpOT_.exit: ; preds = %_ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEEC2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
-  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 17 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 20 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !75, !noalias !469
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 11 uses
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !102, !noalias !469
-  %i.y = ptrtoint ptr %i.x to i64
-  %96 = ptrtoint ptr %i.v to i64
+  %i.y = ptrtoint ptr %i.v to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
-  store i64 %i.y, ptr %3, align 8
-  store i64 %96, ptr %2, align 8
+  %.cast = ptrtoint ptr %i.x to i64
+  store i64 %.cast, ptr %3, align 8
+  store i64 %i.y, ptr %2, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   invoke void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %4)
           to label %_ZN7testing8internal8EqHelper7CompareISt16reverse_iteratorIN4entt8internal18dense_set_iteratorIPSt4pairImiEEEESB_TnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSL_RKSD_RKSE_.exit unwind label %bb.f
@@ -616,8 +616,13 @@ bb.ia:                                            ; preds = %bb.ho
   %i.ua = load i64, ptr %3, align 8, !tbaa !88, !noalias !506
   %i.ub = inttoptr i64 %i.ua to ptr
   %i.uc = getelementptr inbounds i8, ptr %i.ub, i64 -8
+  %96 = load ptr, ptr %i.u, align 8, !tbaa !75, !noalias !507 ; 2 uses
   %i.ud = load ptr, ptr %i.w, align 8, !tbaa !102, !noalias !507
-  %i.ue = getelementptr inbounds i8, ptr %i.ud, i64 -8
+  %97 = ptrtoint ptr %i.ud to i64
+  %98 = ptrtoint ptr %96 to i64
+  %99 = sub i64 %97, %98
+  %100 = getelementptr inbounds nuw i8, ptr %96, i64 %99
+  %i.ue = getelementptr inbounds i8, ptr %100, i64 -8
   invoke void @_ZN7testing8internal8EqHelper7CompareIiiTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %70, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.127, ptr noundef nonnull align 4 dereferenceable(4) %i.uc, ptr noundef nonnull align 4 dereferenceable(4) %i.ue)
           to label %bb.ib unwind label %bb.id
 
@@ -724,8 +729,13 @@ bb.in:                                            ; preds = %bb.ib
   %i.ux = load i64, ptr %3, align 8, !tbaa !88, !noalias !508
   %i.uy = inttoptr i64 %i.ux to ptr
   %i.uz = getelementptr inbounds i8, ptr %i.uy, i64 -8
+  %101 = load ptr, ptr %i.u, align 8, !tbaa !75, !noalias !509 ; 2 uses
   %i.va = load ptr, ptr %i.w, align 8, !tbaa !102, !noalias !509
-  %i.vb = getelementptr inbounds i8, ptr %i.va, i64 -8
+  %102 = ptrtoint ptr %i.va to i64
+  %103 = ptrtoint ptr %101 to i64
+  %104 = sub i64 %102, %103
+  %105 = getelementptr inbounds nuw i8, ptr %101, i64 %104
+  %i.vb = getelementptr inbounds i8, ptr %105, i64 -8
   invoke void @_ZN7testing8internal8EqHelper7CompareIiiTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %73, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.128, ptr noundef nonnull align 4 dereferenceable(4) %i.uz, ptr noundef nonnull align 4 dereferenceable(4) %i.vb)
           to label %bb.io unwind label %bb.iq
 
@@ -1128,11 +1138,15 @@ bb.la:                                            ; preds = %bb.ko
 
 bb.lb:                                            ; preds = %bb.la
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26
-  %i.yw = load ptr, ptr %i.w, align 8, !tbaa !102, !noalias !514 ; 2 uses
-  %i.yx = ptrtoint ptr %i.yw to i64
-  store i64 %i.yx, ptr %3, align 8
+  %106 = load ptr, ptr %i.u, align 8, !tbaa !75, !noalias !514 ; 2 uses
+  %i.yw = load ptr, ptr %i.w, align 8, !tbaa !102, !noalias !514
+  %107 = ptrtoint ptr %i.yw to i64                ; 2 uses
+  %i.yx = ptrtoint ptr %106 to i64
+  %108 = sub i64 %107, %i.yx
+  %109 = getelementptr inbounds nuw i8, ptr %106, i64 %108
+  store i64 %107, ptr %3, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %90) #26
-  %i.yy = getelementptr inbounds i8, ptr %i.yw, i64 -8
+  %i.yy = getelementptr inbounds i8, ptr %109, i64 -8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #26
   store i32 1, ptr %i.c, align 4, !tbaa !107
   invoke void @_ZN7testing8internal8EqHelper7CompareIiiTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %90, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.102, ptr noundef nonnull align 4 dereferenceable(4) %i.yy, ptr noundef nonnull align 4 dereferenceable(4) %i.c)
@@ -1535,15 +1549,15 @@ _ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEEC2Ev.exit: ; preds = %bb.a
 _ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEE7emplaceIJiEEESt4pairINS_8internal18dense_set_iteratorIPS8_ImiEEEbEDpOT_.exit: ; preds = %_ZN4entt9dense_setIiSt4hashIiESt8equal_toIvESaIiEEC2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
-  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 17 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 20 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !75, !noalias !615
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 11 uses
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !102, !noalias !615
-  %i.y = ptrtoint ptr %i.x to i64
-  %96 = ptrtoint ptr %i.v to i64
+  %i.y = ptrtoint ptr %i.v to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
-  store i64 %i.y, ptr %3, align 8
-  store i64 %96, ptr %2, align 8
+  %.cast = ptrtoint ptr %i.x to i64
+  store i64 %.cast, ptr %3, align 8
+  store i64 %i.y, ptr %2, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   invoke void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %4)
           to label %_ZN7testing8internal8EqHelper7CompareISt16reverse_iteratorIN4entt8internal18dense_set_iteratorIPKSt4pairImiEEEESC_TnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSM_RKSE_RKSF_.exit unwind label %bb.f
@@ -1946,8 +1960,13 @@ bb.ia:                                            ; preds = %bb.ho
   %i.ua = load i64, ptr %3, align 8, !tbaa !88, !noalias !652
   %i.ub = inttoptr i64 %i.ua to ptr
   %i.uc = getelementptr inbounds i8, ptr %i.ub, i64 -8
+  %96 = load ptr, ptr %i.u, align 8, !tbaa !75, !noalias !653 ; 2 uses
   %i.ud = load ptr, ptr %i.w, align 8, !tbaa !102, !noalias !653
-  %i.ue = getelementptr inbounds i8, ptr %i.ud, i64 -8
+  %97 = ptrtoint ptr %i.ud to i64
+  %98 = ptrtoint ptr %96 to i64
+  %99 = sub i64 %97, %98
+  %100 = getelementptr inbounds nuw i8, ptr %96, i64 %99
+  %i.ue = getelementptr inbounds i8, ptr %100, i64 -8
   invoke void @_ZN7testing8internal8EqHelper7CompareIiiTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %70, ptr noundef nonnull @.str.119, ptr noundef nonnull @.str.133, ptr noundef nonnull align 4 dereferenceable(4) %i.uc, ptr noundef nonnull align 4 dereferenceable(4) %i.ue)
           to label %bb.ib unwind label %bb.id
 
@@ -2054,8 +2073,13 @@ bb.in:                                            ; preds = %bb.ib
   %i.ux = load i64, ptr %3, align 8, !tbaa !88, !noalias !654
   %i.uy = inttoptr i64 %i.ux to ptr
   %i.uz = getelementptr inbounds i8, ptr %i.uy, i64 -8
+  %101 = load ptr, ptr %i.u, align 8, !tbaa !75, !noalias !655 ; 2 uses
   %i.va = load ptr, ptr %i.w, align 8, !tbaa !102, !noalias !655
-  %i.vb = getelementptr inbounds i8, ptr %i.va, i64 -8
+  %102 = ptrtoint ptr %i.va to i64
+  %103 = ptrtoint ptr %101 to i64
+  %104 = sub i64 %102, %103
+  %105 = getelementptr inbounds nuw i8, ptr %101, i64 %104
+  %i.vb = getelementptr inbounds i8, ptr %105, i64 -8
   invoke void @_ZN7testing8internal8EqHelper7CompareIiiTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %73, ptr noundef nonnull @.str.119, ptr noundef nonnull @.str.134, ptr noundef nonnull align 4 dereferenceable(4) %i.uz, ptr noundef nonnull align 4 dereferenceable(4) %i.vb)
           to label %bb.io unwind label %bb.iq
 
@@ -2458,11 +2482,15 @@ bb.la:                                            ; preds = %bb.ko
 
 bb.lb:                                            ; preds = %bb.la
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26
-  %i.yw = load ptr, ptr %i.w, align 8, !tbaa !102, !noalias !660 ; 2 uses
-  %i.yx = ptrtoint ptr %i.yw to i64
-  store i64 %i.yx, ptr %3, align 8
+  %106 = load ptr, ptr %i.u, align 8, !tbaa !75, !noalias !660 ; 2 uses
+  %i.yw = load ptr, ptr %i.w, align 8, !tbaa !102, !noalias !660
+  %107 = ptrtoint ptr %i.yw to i64                ; 2 uses
+  %i.yx = ptrtoint ptr %106 to i64
+  %108 = sub i64 %107, %i.yx
+  %109 = getelementptr inbounds nuw i8, ptr %106, i64 %108
+  store i64 %107, ptr %3, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %90) #26
-  %i.yy = getelementptr inbounds i8, ptr %i.yw, i64 -8
+  %i.yy = getelementptr inbounds i8, ptr %109, i64 -8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #26
   store i32 1, ptr %i.c, align 4, !tbaa !107
   invoke void @_ZN7testing8internal8EqHelper7CompareIiiTnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSC_RKS4_RKS5_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %90, ptr noundef nonnull @.str.119, ptr noundef nonnull @.str.102, ptr noundef nonnull align 4 dereferenceable(4) %i.yy, ptr noundef nonnull align 4 dereferenceable(4) %i.c)
@@ -2865,39 +2893,33 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   call void @_ZdlPvm(ptr noundef nonnull %i.ra, i64 noundef 32) #27
   br label %bb.fi
 
-bb.fi:                                            ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i933, %.critedge640
+bb.fi:                                            ; preds = %.critedge640, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i933
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #26
   %i.rg = load ptr, ptr %i.dp, align 8, !tbaa !137 ; 2 uses
-  %i.rh = load ptr, ptr %i.dq, align 8, !tbaa !139 ; 3 uses
+  %i.rh = load ptr, ptr %i.dq, align 8, !tbaa !139 ; 2 uses
   %i.ri = ptrtoint ptr %i.rh to i64
-  %i.rj = ptrtoint ptr %i.rg to i64               ; 2 uses
-  %i.rk = sub i64 %i.ri, %i.rj
-  %172 = getelementptr inbounds i8, ptr %i.rh, i64 -48
-  %173 = ptrtoint ptr %172 to i64
-  %174 = sub i64 %173, %i.rj
-  %i.rl = ashr exact i64 %174, 4                  ; 2 uses
-  %i.rm = ashr exact i64 %i.rk, 4                 ; 2 uses
-  %.not15.i = icmp eq i64 %i.rm, %i.rl
+  %i.rj = ptrtoint ptr %i.rg to i64
+  %i.rk = sub i64 %i.ri, %i.rj                    ; 2 uses
+  %172 = add i64 %i.rk, -48
+  %i.rl = ashr exact i64 %172, 4
+  %i.rm = ashr exact i64 %i.rk, 4
   %.pre = load ptr, ptr %i.cc, align 8, !tbaa !103
   %.pre1820 = load ptr, ptr %1, align 8, !tbaa !77 ; 3 uses
-  %.pre1821 = ptrtoint ptr %.pre to i64
-  %.pre1822 = ptrtoint ptr %.pre1820 to i64
-  %.pre1824 = sub i64 %.pre1821, %.pre1822        ; 2 uses
-  %.pre1826 = ashr exact i64 %.pre1824, 3         ; 2 uses
-  br i1 %.not15.i, label %_ZN4entt9dense_setImSt8identitySt8equal_toIvESaImEE5eraseENS_8internal18dense_set_iteratorIPKSt4pairImmEEESC_.exit, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %bb.fi
-  %175 = add nsw i64 %.pre1826, -1                ; 2 uses
+  %.pre1821 = ptrtoint ptr %.pre to i64           ; 2 uses
+  %.pre1822 = ptrtoint ptr %.pre1820 to i64       ; 2 uses
+  %.pre1824 = sub i64 %.pre1821, %.pre1822
+  %.pre1826 = ashr exact i64 %.pre1824, 3
+  %173 = add nsw i64 %.pre1826, -1                ; 2 uses
   br label %bb.fj
 
-bb.fj:                                            ; preds = %_ZN4entt9dense_setImSt8identitySt8equal_toIvESaImEE5eraseERKm.exit.i, %.lr.ph.i
-  %i.rn = phi ptr [ %i.rh, %.lr.ph.i ], [ %i.st, %_ZN4entt9dense_setImSt8identitySt8equal_toIvESaImEE5eraseERKm.exit.i ] ; 5 uses
-  %.016.i = phi i64 [ %i.rm, %.lr.ph.i ], [ %i.ro, %_ZN4entt9dense_setImSt8identitySt8equal_toIvESaImEE5eraseERKm.exit.i ]
+bb.fj:                                            ; preds = %_ZN4entt9dense_setImSt8identitySt8equal_toIvESaImEE5eraseERKm.exit.i, %bb.fi
+  %i.rn = phi ptr [ %i.rh, %bb.fi ], [ %i.st, %_ZN4entt9dense_setImSt8identitySt8equal_toIvESaImEE5eraseERKm.exit.i ] ; 5 uses
+  %.016.i = phi i64 [ %i.rm, %bb.fi ], [ %i.ro, %_ZN4entt9dense_setImSt8identitySt8equal_toIvESaImEE5eraseERKm.exit.i ]
   %i.ro = add i64 %.016.i, -1                     ; 3 uses
   %i.rp = getelementptr inbounds nuw [16 x i8], ptr %i.rg, i64 %i.ro
   %i.rq = getelementptr inbounds nuw i8, ptr %i.rp, i64 8
   %i.rr = load i64, ptr %i.rq, align 8, !tbaa !106 ; 2 uses
-  %i.rs = and i64 %i.rr, %175
+  %i.rs = and i64 %i.rr, %173
   %i.rt = getelementptr inbounds nuw [8 x i8], ptr %.pre1820, i64 %i.rs
   %i.ru = load ptr, ptr %i.dp, align 8            ; 3 uses
   br label %bb.fk
@@ -2931,7 +2953,7 @@ bb.fn:                                            ; preds = %bb.fm
   %i.sh = getelementptr inbounds i8, ptr %i.rn, i64 -16
   %i.si = getelementptr inbounds i8, ptr %i.rn, i64 -8 ; 2 uses
   %i.sj = load i64, ptr %i.si, align 8, !tbaa !106
-  %i.sk = and i64 %i.sj, %175
+  %i.sk = and i64 %i.sj, %173
   %i.sl = getelementptr inbounds nuw [8 x i8], ptr %.pre1820, i64 %i.sk ; 2 uses
   %i.sm = load i64, ptr %i.sh, align 8, !tbaa !106
   store i64 %i.sm, ptr %i.rw, align 8, !tbaa !141
@@ -2963,13 +2985,15 @@ _ZN4entt9dense_setImSt8identitySt8equal_toIvESaImEE5eraseERKm.exit.i: ; preds = 
   %.not.i = icmp eq i64 %i.ro, %i.rl
   br i1 %.not.i, label %_ZN4entt9dense_setImSt8identitySt8equal_toIvESaImEE5eraseENS_8internal18dense_set_iteratorIPKSt4pairImmEEESC_.exit, label %bb.fj, !llvm.loop !16
 
-_ZN4entt9dense_setImSt8identitySt8equal_toIvESaImEE5eraseENS_8internal18dense_set_iteratorIPKSt4pairImmEEESC_.exit: ; preds = %_ZN4entt9dense_setImSt8identitySt8equal_toIvESaImEE5eraseERKm.exit.i, %bb.fi
+_ZN4entt9dense_setImSt8identitySt8equal_toIvESaImEE5eraseENS_8internal18dense_set_iteratorIPKSt4pairImmEEESC_.exit: ; preds = %_ZN4entt9dense_setImSt8identitySt8equal_toIvESaImEE5eraseERKm.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r) #26
-  store i64 %.pre1826, ptr %i.r, align 8, !tbaa !106
+  %174 = sub i64 %.pre1821, %.pre1822             ; 2 uses
+  %175 = ashr exact i64 %174, 3
+  store i64 %175, ptr %i.r, align 8, !tbaa !106
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s) #26
   store i64 16, ptr %i.s, align 8, !tbaa !106
-  %i.su = icmp eq i64 %.pre1824, 128
+  %i.su = icmp eq i64 %174, 128
   br i1 %i.su, label %bb.fp, label %bb.fq
 
 bb.fp:                                            ; preds = %_ZN4entt9dense_setImSt8identitySt8equal_toIvESaImEE5eraseENS_8internal18dense_set_iteratorIPKSt4pairImmEEESC_.exit
