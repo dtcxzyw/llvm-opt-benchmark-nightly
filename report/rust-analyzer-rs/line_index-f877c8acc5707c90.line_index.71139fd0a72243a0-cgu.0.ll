@@ -204,8 +204,8 @@ _RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5ra
   %i.as = invoke fastcc noundef i64 @_RNvCs9HU4uknhSfY_10line_index27analyze_source_file_generic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ap, i64 noundef %i.ao, i64 noundef %i.aq, i32 noundef %i.ar, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.g, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.f)
           to label %.backedge.i.i.i unwind label %.loopexit.split-lp.loopexit.i, !noalias !240
 
-.backedge.i.i.i:                                  ; preds = %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i, %bb.l, %bb.j, %_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs9HU4uknhSfY_10line_index.exit19.i.i.i
-  %.sroa.04.0.be.i.i.i = phi i64 [ %i.as, %_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs9HU4uknhSfY_10line_index.exit19.i.i.i ], [ 0, %bb.l ], [ 0, %bb.j ], [ 0, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i ] ; 2 uses
+.backedge.i.i.i:                                  ; preds = %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i, %bb.j, %_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs9HU4uknhSfY_10line_index.exit19.i.i.i
+  %.sroa.04.0.be.i.i.i = phi i64 [ %i.as, %_RNvXs2_NtNtCshzWfHUSfYae_4core3str6traitseINtNtNtB9_3ops5index5IndexINtNtBJ_5range9RangeFromjEE5indexCs9HU4uknhSfY_10line_index.exit19.i.i.i ], [ 0, %bb.j ], [ 0, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i ] ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.o, %i.n
   br i1 %exitcond.not.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph52.i.i.i
 
@@ -228,18 +228,14 @@ bb.l:                                             ; preds = %bb.j
   %.tr.i.i.i = trunc i64 %.sroa.0.050.i.i.i to i32
   %i.ay = shl i32 %.tr.i.i.i, 4
   %i.az = or disjoint i32 %i.ay, 1
-  %i.ba = call noundef range(i32 0, 17) i32 @llvm.cttz.i32(i32 range(i32 -65536, 0) %i.ax, i1 true) ; 2 uses
-  %3 = icmp samesign ugt i32 %i.ba, 15
-  br i1 %3, label %.backedge.i.i.i, label %.lr.ph.preheader.i.i.i
-
-.lr.ph.preheader.i.i.i:                           ; preds = %bb.l
+  %i.ba = call noundef range(i32 0, 17) i32 @llvm.cttz.i32(i32 range(i32 -65536, 0) %i.ax, i1 true)
   %.pre.i.i.i = load i64, ptr %i.m, align 8, !alias.scope !252, !noalias !253
   br label %.lr.ph.i.i.i
 
-.lr.ph.i.i.i:                                     ; preds = %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i, %.lr.ph.preheader.i.i.i
-  %i.bb = phi i64 [ %i.bi, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i ], [ %.pre.i.i.i, %.lr.ph.preheader.i.i.i ] ; 3 uses
-  %i.bc = phi i32 [ %i.bl, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i ], [ %i.ba, %.lr.ph.preheader.i.i.i ] ; 2 uses
-  %.sroa.02.049.i.i.i = phi i32 [ %i.bk, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i ], [ %i.ax, %.lr.ph.preheader.i.i.i ]
+.lr.ph.i.i.i:                                     ; preds = %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i, %bb.l
+  %i.bb = phi i64 [ %i.bi, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i ], [ %.pre.i.i.i, %bb.l ] ; 3 uses
+  %i.bc = phi i32 [ %i.bl, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i ], [ %i.ba, %bb.l ] ; 2 uses
+  %.sroa.02.049.i.i.i = phi i32 [ %i.bk, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i ], [ %i.ax, %bb.l ]
   %i.bd = add i32 %i.az, %i.bc
   %i.be = load i64, ptr %i.g, align 8, !range !10, !alias.scope !252, !noalias !253, !noundef !4
   %i.bf = icmp eq i64 %i.bb, %i.be

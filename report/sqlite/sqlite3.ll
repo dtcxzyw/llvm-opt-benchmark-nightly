@@ -206,7 +206,7 @@ bb.n:                                             ; preds = %sqlite3_realloc64.e
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %.critedge4
-  %.2110 = phi ptr [ %i.cu, %bb.n ], [ %.0108, %.critedge4 ] ; 12 uses
+  %.2110 = phi ptr [ %i.cu, %bb.n ], [ %.0108, %.critedge4 ] ; 10 uses
   %i.cx = load i32, ptr %i.cf, align 8, !tbaa !2586 ; 2 uses
   %i.cy = icmp slt i32 %.4117, 128
   br i1 %i.cy, label %bb.p, label %bb.q
@@ -215,11 +215,12 @@ bb.p:                                             ; preds = %bb.o
   %i.cz = add i32 %.4117, -65
   %or.cond.i = icmp ult i32 %i.cz, 26
   %i.da = or disjoint i32 %.4117, 32
-  br i1 %or.cond.i, label %sqlite3FtsUnicodeFold.exit.thread, label %sqlite3FtsUnicodeFold.exit
+  %spec.select.i = select i1 %or.cond.i, i32 %i.da, i32 %.4117
+  br label %sqlite3FtsUnicodeFold.exit
 
 bb.q:                                             ; preds = %bb.o
   %i.db = icmp samesign ult i32 %.4117, 65536
-  br i1 %i.db, label %.preheader.i, label %.thread242
+  br i1 %i.db, label %.preheader.i, label %bb.ad
 
 .preheader.i:                                     ; preds = %bb.q, %.preheader.i
   %.048.i = phi i32 [ %.1.i, %.preheader.i ], [ -1, %bb.q ]
@@ -329,90 +330,80 @@ bb.z:                                             ; preds = %._crit_edge.i.i
   %i.fc = zext nneg i8 %i.fb to i32
   br label %sqlite3FtsUnicodeFold.exit
 
-.thread242:                                       ; preds = %bb.q
-  %6 = add nsw i32 %.4117, -66560
-  %or.cond3.i = icmp ult i32 %6, 40
-  %7 = add nuw nsw i32 %.4117, 40
-  %spec.select44.i = select i1 %or.cond3.i, i32 %7, i32 %.4117
-  br label %bb.ae
-
 sqlite3FtsUnicodeFold.exit:                       ; preds = %bb.p, %bb.u, %bb.y, %bb.z
-  %.2.i = phi i32 [ %.038.i, %bb.u ], [ %i.fc, %bb.z ], [ %.4117, %bb.p ], [ %.038.i, %bb.y ] ; 2 uses
+  %.2.i = phi i32 [ %.038.i, %bb.u ], [ %i.fc, %bb.z ], [ %spec.select.i, %bb.p ], [ %.038.i, %bb.y ] ; 2 uses
   %.not137 = icmp eq i32 %.2.i, 0
   br i1 %.not137, label %bb.af, label %sqlite3FtsUnicodeFold.exit.thread
 
-sqlite3FtsUnicodeFold.exit.thread:                ; preds = %bb.p, %._crit_edge.i.i, %sqlite3FtsUnicodeFold.exit
-  %.2.i201 = phi i32 [ %.2.i, %sqlite3FtsUnicodeFold.exit ], [ %i.da, %bb.p ], [ %.038.i, %._crit_edge.i.i ] ; 10 uses
-  %i.fd = icmp slt i32 %.2.i201, 128
+sqlite3FtsUnicodeFold.exit.thread:                ; preds = %._crit_edge.i.i, %sqlite3FtsUnicodeFold.exit
+  %.2.i200 = phi i32 [ %.2.i, %sqlite3FtsUnicodeFold.exit ], [ %.038.i, %._crit_edge.i.i ] ; 8 uses
+  %i.fd = icmp slt i32 %.2.i200, 128
+  %6 = getelementptr inbounds nuw i8, ptr %.2110, i64 1 ; 3 uses
   br i1 %i.fd, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %sqlite3FtsUnicodeFold.exit.thread
-  %i.fe = trunc i32 %.2.i201 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %.2110, i64 1
+  %i.fe = trunc i32 %.2.i200 to i8
   store i8 %i.fe, ptr %.2110, align 1, !tbaa !733
   br label %bb.af
 
 bb.ab:                                            ; preds = %sqlite3FtsUnicodeFold.exit.thread
-  %i.ff = icmp samesign ult i32 %.2.i201, 2048
-  br i1 %i.ff, label %bb.ac, label %10
+  %i.ff = icmp samesign ult i32 %.2.i200, 2048
+  br i1 %i.ff, label %bb.ac, label %bb.ae
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.fg = lshr i32 %.2.i201, 6
+  %i.fg = lshr i32 %.2.i200, 6
   %i.fh = trunc nuw nsw i32 %i.fg to i8
   %i.fi = or disjoint i8 %i.fh, -64
-  %9 = getelementptr inbounds nuw i8, ptr %.2110, i64 1
   store i8 %i.fi, ptr %.2110, align 1, !tbaa !733
-  %i.fj = trunc i32 %.2.i201 to i8
+  %i.fj = trunc i32 %.2.i200 to i8
   %i.fk = and i8 %i.fj, 63
   %i.fl = or disjoint i8 %i.fk, -128
   %i.fm = getelementptr inbounds nuw i8, ptr %.2110, i64 2
-  store i8 %i.fl, ptr %9, align 1, !tbaa !733
+  store i8 %i.fl, ptr %6, align 1, !tbaa !733
   br label %bb.af
 
-10:                                               ; preds = %bb.ab
-  %11 = icmp samesign ult i32 %.2.i201, 65536
-  br i1 %11, label %bb.ad, label %bb.ae
-
-bb.ad:                                            ; preds = %10
-  %12 = lshr i32 %.2.i201, 12
-  %13 = trunc nuw nsw i32 %12 to i8
-  %14 = or disjoint i8 %13, -32
-  %i.fn = getelementptr inbounds nuw i8, ptr %.2110, i64 1
-  store i8 %14, ptr %.2110, align 1, !tbaa !733
-  %i.fo = lshr i32 %.2.i201, 6
-  %i.fp = trunc i32 %i.fo to i8
-  %15 = and i8 %i.fp, 63
-  %16 = or disjoint i8 %15, -128
-  %17 = getelementptr inbounds nuw i8, ptr %.2110, i64 2
-  store i8 %16, ptr %i.fn, align 1, !tbaa !733
-  %18 = trunc i32 %.2.i201 to i8
-  %19 = and i8 %18, 63
-  %20 = or disjoint i8 %19, -128
-  %21 = getelementptr inbounds nuw i8, ptr %.2110, i64 3
-  store i8 %20, ptr %17, align 1, !tbaa !733
+bb.ad:                                            ; preds = %bb.q
+  %7 = add nsw i32 %.4117, -66560
+  %or.cond3.i = icmp ult i32 %7, 40
+  %8 = add nuw nsw i32 %.4117, 40
+  %i.fn = getelementptr inbounds nuw i8, ptr %.2110, i64 4
+  %spec.select44.i = select i1 %or.cond3.i, i32 %8, i32 %.4117 ; 4 uses
+  %9 = lshr i32 %spec.select44.i, 6
+  %10 = lshr i32 %spec.select44.i, 12
+  %i.fo = lshr i32 %spec.select44.i, 18
+  %11 = trunc i32 %spec.select44.i to i8
+  %i.fp = trunc i32 %9 to i8
+  %12 = trunc i32 %10 to i8
+  %13 = trunc i32 %i.fo to i8
+  %14 = insertelement <4 x i8> poison, i8 %13, i64 0
+  %15 = insertelement <4 x i8> %14, i8 %12, i64 1
+  %16 = insertelement <4 x i8> %15, i8 %i.fp, i64 2
+  %17 = insertelement <4 x i8> %16, i8 %11, i64 3
+  %18 = and <4 x i8> %17, <i8 7, i8 63, i8 63, i8 63>
+  %19 = or disjoint <4 x i8> %18, <i8 -16, i8 -128, i8 -128, i8 -128>
+  store <4 x i8> %19, ptr %.2110, align 1, !tbaa !733
   br label %bb.af
 
-bb.ae:                                            ; preds = %.thread242, %10
-  %.2.i201238241244 = phi i32 [ %spec.select44.i, %.thread242 ], [ %.2.i201, %10 ] ; 4 uses
-  %22 = getelementptr inbounds nuw i8, ptr %.2110, i64 4
-  %23 = lshr i32 %.2.i201238241244, 6
-  %24 = lshr i32 %.2.i201238241244, 12
-  %i.fq = lshr i32 %.2.i201238241244, 18
-  %25 = trunc i32 %.2.i201238241244 to i8
-  %i.fr = trunc i32 %23 to i8
-  %26 = trunc i32 %24 to i8
-  %27 = trunc i32 %i.fq to i8
-  %28 = insertelement <4 x i8> poison, i8 %27, i64 0
-  %29 = insertelement <4 x i8> %28, i8 %26, i64 1
-  %30 = insertelement <4 x i8> %29, i8 %i.fr, i64 2
-  %31 = insertelement <4 x i8> %30, i8 %25, i64 3
-  %32 = and <4 x i8> %31, <i8 7, i8 63, i8 63, i8 63>
-  %33 = or disjoint <4 x i8> %32, <i8 -16, i8 -128, i8 -128, i8 -128>
-  store <4 x i8> %33, ptr %.2110, align 1, !tbaa !733
+bb.ae:                                            ; preds = %bb.ab
+  %20 = lshr i32 %.2.i200, 12
+  %21 = trunc nuw nsw i32 %20 to i8
+  %22 = or disjoint i8 %21, -32
+  store i8 %22, ptr %.2110, align 1, !tbaa !733
+  %i.fq = lshr i32 %.2.i200, 6
+  %i.fr = trunc i32 %i.fq to i8
+  %23 = and i8 %i.fr, 63
+  %24 = or disjoint i8 %23, -128
+  %25 = getelementptr inbounds nuw i8, ptr %.2110, i64 2
+  store i8 %24, ptr %6, align 1, !tbaa !733
+  %26 = trunc i32 %.2.i200 to i8
+  %27 = and i8 %26, 63
+  %28 = or disjoint i8 %27, -128
+  %29 = getelementptr inbounds nuw i8, ptr %.2110, i64 3
+  store i8 %28, ptr %25, align 1, !tbaa !733
   br label %bb.af
 
-bb.af:                                            ; preds = %bb.aa, %bb.ad, %bb.ae, %bb.ac, %sqlite3FtsUnicodeFold.exit
-  %.3111 = phi ptr [ %8, %bb.aa ], [ %i.fm, %bb.ac ], [ %21, %bb.ad ], [ %22, %bb.ae ], [ %.2110, %sqlite3FtsUnicodeFold.exit ] ; 2 uses
+bb.af:                                            ; preds = %bb.aa, %bb.ae, %bb.ad, %bb.ac, %sqlite3FtsUnicodeFold.exit
+  %.3111 = phi ptr [ %6, %bb.aa ], [ %i.fm, %bb.ac ], [ %29, %bb.ae ], [ %i.fn, %bb.ad ], [ %.2110, %sqlite3FtsUnicodeFold.exit ] ; 2 uses
   %.not138 = icmp ult ptr %.4, %i.l
   br i1 %.not138, label %bb.ag, label %sqlite3FtsUnicodeIsdiacritic.exit.thread
 

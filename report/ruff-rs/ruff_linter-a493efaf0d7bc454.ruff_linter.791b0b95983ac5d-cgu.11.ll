@@ -205,15 +205,13 @@ bb.p:                                             ; preds = %switch.lookup
 
 bb.q:                                             ; preds = %switch.lookup
   %i.ak = getelementptr inbounds nuw i8, ptr %i.y, i64 8
-  %i.al = load i64, ptr %i.ak, align 8, !range !15, !noundef !3
+  %i.al = load i64, ptr %i.ak, align 8, !range !15, !noundef !3 ; 2 uses
   %switch.idx.cast.i60 = trunc nuw nsw i64 %i.al to i8
-  %switch.offset.i61 = or disjoint i8 %switch.idx.cast.i60, 4 ; 2 uses
+  %switch.offset.i61 = or disjoint i8 %switch.idx.cast.i60, 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
   store i8 %switch.offset.i61, ptr %i.r, align 1
-  switch i8 %switch.offset.i61, label %bb.au [
-    i8 4, label %bb.ag
-    i8 7, label %bb.ag
-  ]
+  %cond = icmp eq i64 %i.al, 0
+  br i1 %cond, label %bb.ag, label %bb.au
 
 .lr.ph:                                           ; preds = %bb.p, %.split.preheader.i.backedge
   %i.am = phi i64 [ 0, %bb.p ], [ %i.ao, %.split.preheader.i.backedge ]
@@ -302,7 +300,7 @@ bb.af:                                            ; preds = %_RNvXsI_NtNtNtCs4NR
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
   br label %bb.ag
 
-bb.ag:                                            ; preds = %.thread108, %switch.lookup163, %bb.q, %bb.q, %.split.preheader.i._crit_edge
+bb.ag:                                            ; preds = %bb.q, %.thread108, %switch.lookup163, %.split.preheader.i._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
   br label %_RNvMs0_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules4ruff5rules18invalid_index_typeNtB5_17CheckableExprType8try_from.exit.sink.split
 
@@ -318,17 +316,15 @@ bb.ag:                                            ; preds = %.thread108, %switch
 
 bb.ah:                                            ; preds = %_RNvXsI_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtNtBb_5array4iter8IntoIterRINtNtBb_6option6OptionINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtCskLngH8kgpZI_15ruff_python_ast9generated4ExprEEKj3_EINtB1J_4IterB22_EENtNtNtB9_6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit
   %i.at = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
-  %i.au = load i64, ptr %i.at, align 8, !range !15, !noundef !3
+  %i.au = load i64, ptr %i.at, align 8, !range !15, !noundef !3 ; 2 uses
   %switch.idx.cast.i65 = trunc nuw nsw i64 %i.au to i8
-  %switch.offset.i66 = or disjoint i8 %switch.idx.cast.i65, 4 ; 2 uses
+  %switch.offset.i66 = or disjoint i8 %switch.idx.cast.i65, 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   store i8 %switch.offset.i66, ptr %i.p, align 1
-  switch i8 %switch.offset.i66, label %bb.ai [
-    i8 4, label %bb.an
-    i8 7, label %bb.an
-  ]
+  %cond122 = icmp eq i64 %i.au, 0
+  br i1 %cond122, label %bb.an, label %bb.ai
 
-bb.ai:                                            ; preds = %.thread116, %bb.ah
+bb.ai:                                            ; preds = %bb.ah, %.thread116
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
@@ -376,7 +372,7 @@ bb.am:                                            ; preds = %bb.aj
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #27, !noalias !1579
   unreachable
 
-bb.an:                                            ; preds = %.thread120, %bb.ah, %bb.ah, %switch.lookup157
+bb.an:                                            ; preds = %bb.ah, %.thread120, %switch.lookup157
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
   br label %.split.preheader.i.backedge
 
@@ -473,7 +469,7 @@ common.resume:                                    ; preds = %bb.av, %.body88, %.
   %common.resume.op = phi { ptr, i32 } [ %i.bj, %bb.av ], [ %i.bo, %.body88 ], [ %lpad.phi, %bb.aj ], [ %lpad.phi126, %.body73 ]
   resume { ptr, i32 } %common.resume.op
 
-bb.au:                                            ; preds = %.thread106, %bb.q
+bb.au:                                            ; preds = %bb.q, %.thread106
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)

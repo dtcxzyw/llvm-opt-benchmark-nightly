@@ -202,36 +202,18 @@ bb.d:                                             ; preds = %_ZNK7AstNode8widthM
 
 bb.e:                                             ; preds = %_ZNK7AstNode8widthMinEv.exit
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !158  ; 4 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !158  ; 3 uses
   %.not.i223 = icmp eq ptr %i.v, null
   br i1 %.not.i223, label %_ZN7AstNode2isI13AstNodeAssignS_EEbPKT0_.exit.thread, label %_ZN7AstNode2isI13AstNodeAssignS_EEbPKT0_.exit
 
 _ZN7AstNode2isI13AstNodeAssignS_EEbPKT0_.exit:    ; preds = %bb.e
-  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 64 ; 2 uses
-  %.sroa.0.0.copyload.i.i.i = load i16, ptr %i.w, align 8, !tbaa !143 ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 64
+  %.sroa.0.0.copyload.i.i.i = load i16, ptr %i.w, align 8, !tbaa !143
   %i.x = add i16 %.sroa.0.0.copyload.i.i.i, -466
   %spec.select.i.i = icmp ult i16 %i.x, 6
-  br i1 %spec.select.i.i, label %13, label %_ZN7AstNode2isI13AstNodeAssignS_EEbPKT0_.exit.thread
+  br i1 %spec.select.i.i, label %_ZN7AstNode2asI13AstNodeAssignS_EEPT_PT0_.exit, label %_ZN7AstNode2isI13AstNodeAssignS_EEbPKT0_.exit.thread
 
-13:                                               ; preds = %_ZN7AstNode2isI13AstNodeAssignS_EEbPKT0_.exit
-  %14 = or disjoint i16 %.sroa.0.0.copyload.i.i.i, -472
-  %spec.select.i.i226 = icmp samesign ult i16 %14, -6
-  br i1 %spec.select.i.i226, label %15, label %_ZN7AstNode2asI13AstNodeAssignS_EEPT_PT0_.exit, !prof !11
-
-15:                                               ; preds = %13
-  %16 = tail call noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error19v3errorPrepFileLineB5cxx11E11V3ErrorCodePKci(i8 4, ptr noundef nonnull @.str.6, i32 noundef 1063) ; 0 uses
-  %17 = tail call noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error10v3errorStrB5cxx11Ev()
-  %18 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(ptr noundef nonnull align 8 dereferenceable(8) %17, ptr noundef nonnull @.str.47)
-  %.sroa.0.0.copyload.i.i5.i = load i16, ptr %i.w, align 8, !tbaa !143
-  %19 = zext i16 %.sroa.0.0.copyload.i.i5.i to i64
-  %20 = getelementptr inbounds nuw [8 x i8], ptr @_ZZNK6VNType5asciiEvE5names, i64 %19
-  %21 = load ptr, ptr %20, align 8, !tbaa !153
-  %22 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(ptr noundef nonnull align 8 dereferenceable(8) %18, ptr noundef %21)
-  %23 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc(ptr noundef nonnull align 8 dereferenceable(8) %22, ptr noundef nonnull @.str.48)
-  tail call void @_ZNK7AstNode15v3errorEndFatalERKNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(152) %i.v, ptr noundef nonnull align 8 dereferenceable(112) %23) #25
-  unreachable
-
-_ZN7AstNode2asI13AstNodeAssignS_EEPT_PT0_.exit:   ; preds = %13
+_ZN7AstNode2asI13AstNodeAssignS_EEPT_PT0_.exit:   ; preds = %_ZN7AstNode2isI13AstNodeAssignS_EEbPKT0_.exit
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 32
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !125
   %i.aa = icmp eq ptr %1, %i.z

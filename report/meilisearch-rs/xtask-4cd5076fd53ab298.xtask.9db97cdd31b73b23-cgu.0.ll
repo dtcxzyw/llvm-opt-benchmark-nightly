@@ -205,7 +205,7 @@ switch.lookup:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read, inaccessiblemem: write) uwtable
-define internal fastcc noundef range(i64 -66245516071199, 66121194247203) i64 @"_ZN114_$LT$time..offset_date_time..OffsetDateTime$u20$as$u20$time..formatting..component_provider..ComponentProvider$GT$22unix_timestamp_seconds17h8568d98cf1aa9827E"(ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(16) %0) unnamed_addr #9 {
+define internal fastcc noundef range(i64 -66245516071199, 66121194247199) i64 @"_ZN114_$LT$time..offset_date_time..OffsetDateTime$u20$as$u20$time..formatting..component_provider..ComponentProvider$GT$22unix_timestamp_seconds17h8568d98cf1aa9827E"(ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(16) %0) unnamed_addr #9 {
 bb.a:
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   %.sroa.3.0.copyload = load i8, ptr %.sroa.3.0..sroa_idx, align 4 ; 2 uses
@@ -276,7 +276,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read, inaccessiblemem: write) uwtable
-define internal fastcc noundef range(i128 -66245516071199000000000, 66121194247203000000000) i128 @"_ZN114_$LT$time..offset_date_time..OffsetDateTime$u20$as$u20$time..formatting..component_provider..ComponentProvider$GT$26unix_timestamp_nanoseconds17h69dbc1d2695dba51E"(ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(16) %0) unnamed_addr #9 {
+define internal fastcc noundef range(i128 -66245516071199000000000, 66121194247199000000000) i128 @"_ZN114_$LT$time..offset_date_time..OffsetDateTime$u20$as$u20$time..formatting..component_provider..ComponentProvider$GT$26unix_timestamp_nanoseconds17h69dbc1d2695dba51E"(ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(16) %0) unnamed_addr #9 {
 bb.a:
   %.sroa.0.0.copyload = load i32, ptr %0, align 4 ; 2 uses
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -354,7 +354,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read, inaccessiblemem: write) uwtable
-define internal fastcc noundef range(i128 -66245516071199000000, 66121194247203000000) i128 @"_ZN114_$LT$time..offset_date_time..OffsetDateTime$u20$as$u20$time..formatting..component_provider..ComponentProvider$GT$27unix_timestamp_microseconds17h2028fbd112cadd72E"(ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(16) %0) unnamed_addr #9 {
+define internal fastcc noundef range(i128 -66245516071199000000, 66121194247199000000) i128 @"_ZN114_$LT$time..offset_date_time..OffsetDateTime$u20$as$u20$time..formatting..component_provider..ComponentProvider$GT$27unix_timestamp_microseconds17h2028fbd112cadd72E"(ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(16) %0) unnamed_addr #9 {
 bb.a:
   %.sroa.0.0.copyload = load i32, ptr %0, align 4 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -433,7 +433,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read, inaccessiblemem: write) uwtable
-define internal fastcc noundef range(i64 -66245516071199000, 66121194247203000) i64 @"_ZN114_$LT$time..offset_date_time..OffsetDateTime$u20$as$u20$time..formatting..component_provider..ComponentProvider$GT$27unix_timestamp_milliseconds17h4fac17dc882169cdE"(ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(16) %0) unnamed_addr #9 {
+define internal fastcc noundef range(i64 -66245516071199000, 66121194247199000) i64 @"_ZN114_$LT$time..offset_date_time..OffsetDateTime$u20$as$u20$time..formatting..component_provider..ComponentProvider$GT$27unix_timestamp_milliseconds17h4fac17dc882169cdE"(ptr noalias noundef nonnull readonly align 4 captures(none) dereferenceable(16) %0) unnamed_addr #9 {
 bb.a:
   %.sroa.0.0.copyload = load i32, ptr %0, align 4 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -836,8 +836,8 @@ bb.fr:                                            ; preds = %"_ZN63_$LT$serde_js
   %i.rd = xor i64 %.val.i.i135.i, 7816392313619706465 ; 2 uses
   %i.re = xor i64 %.val8.i.i.i, 8387220255154660723 ; 2 uses
   %.val.i.i36 = load ptr, ptr %i.ov, align 8, !alias.scope !34580, !noalias !34581, !nonnull !24, !noundef !24 ; 7 uses
-  %.val1.i.i = load i64, ptr %i.ou, align 8, !alias.scope !34580, !noalias !34581, !noundef !24 ; 8 uses
-  %i.rf = and i64 %.val1.i.i, 7                   ; 6 uses
+  %.val1.i.i = load i64, ptr %i.ou, align 8, !alias.scope !34580, !noalias !34581, !noundef !24 ; 7 uses
+  %i.rf = and i64 %.val1.i.i, 7                   ; 7 uses
   %i.rg = and i64 %.val1.i.i, -8                  ; 2 uses
   %.not = icmp eq i64 %i.rg, 0
   br i1 %.not, label %._crit_edge.i62, label %.lr.ph.i55
@@ -847,10 +847,10 @@ bb.fr:                                            ; preds = %"_ZN63_$LT$serde_js
   br label %._crit_edge.i62
 
 ._crit_edge.i62:                                  ; preds = %._crit_edge.i62.loopexit, %bb.fr
-  %.sroa.0110.4 = phi i64 [ %i.rb, %bb.fr ], [ %i.sp, %._crit_edge.i62.loopexit ] ; 3 uses
-  %.sroa.12115.4 = phi i64 [ %i.rd, %bb.fr ], [ %i.so, %._crit_edge.i62.loopexit ] ; 3 uses
-  %.sroa.22.4 = phi i64 [ %i.rc, %bb.fr ], [ %i.sl, %._crit_edge.i62.loopexit ] ; 5 uses
-  %.sroa.32.4 = phi i64 [ %i.re, %bb.fr ], [ %i.sn, %._crit_edge.i62.loopexit ] ; 3 uses
+  %.sroa.0110.4 = phi i64 [ %i.rb, %bb.fr ], [ %i.sp, %._crit_edge.i62.loopexit ] ; 4 uses
+  %.sroa.12115.4 = phi i64 [ %i.rd, %bb.fr ], [ %i.so, %._crit_edge.i62.loopexit ] ; 4 uses
+  %.sroa.22.4 = phi i64 [ %i.rc, %bb.fr ], [ %i.sl, %._crit_edge.i62.loopexit ] ; 6 uses
+  %.sroa.32.4 = phi i64 [ %i.re, %bb.fr ], [ %i.sn, %._crit_edge.i62.loopexit ] ; 4 uses
   %.sroa.04.0.lcssa.i45 = phi i64 [ 0, %bb.fr ], [ %i.rh, %._crit_edge.i62.loopexit ] ; 3 uses
   %i.ri = icmp samesign ugt i64 %i.rf, 3
   br i1 %i.ri, label %bb.fs, label %bb.ft
@@ -883,20 +883,7 @@ bb.fv:                                            ; preds = %bb.fu, %bb.ft
   %.sroa.011.1.i14.i48 = phi i64 [ %i.rs, %bb.fu ], [ %.sroa.011.0.i12.i46, %bb.ft ] ; 2 uses
   %.sroa.0.1.i15.i49 = phi i64 [ %i.rt, %bb.fu ], [ %.sroa.0.0.i13.i47, %bb.ft ] ; 3 uses
   %i.ru = icmp samesign ult i64 %.sroa.0.1.i15.i49, %i.rf
-  br i1 %i.ru, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.thread", label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a"
-
-"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.thread": ; preds = %bb.fv
-  %3 = add i64 %.sroa.0.1.i15.i49, %.sroa.04.0.lcssa.i45 ; 2 uses
-  %4 = icmp ult i64 %3, %.val1.i.i
-  call void @llvm.assume(i1 %4), !noalias !34584
-  %5 = getelementptr inbounds nuw i8, ptr %.val.i.i36, i64 %3
-  %6 = load i8, ptr %5, align 1, !alias.scope !34582, !noalias !34583, !noundef !24
-  %7 = zext i8 %6 to i64
-  %8 = shl nuw nsw i64 %.sroa.0.1.i15.i49, 3
-  %9 = shl nuw nsw i64 %7, %8
-  %10 = or i64 %9, %.sroa.011.1.i14.i48
-  %11 = add i64 %.val1.i.i, 1
-  br label %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i
+  br i1 %i.ru, label %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64"
 
 .lr.ph.i55:                                       ; preds = %bb.fr, %.lr.ph.i55
   %i.rv = phi i64 [ %i.so, %.lr.ph.i55 ], [ %i.rd, %bb.fr ]
@@ -905,7 +892,7 @@ bb.fv:                                            ; preds = %bb.fu, %bb.ft
   %.sroa.04.020.i60 = phi i64 [ %i.sq, %.lr.ph.i55 ], [ 0, %bb.fr ] ; 2 uses
   %i.ry = phi i64 [ %i.sp, %.lr.ph.i55 ], [ %i.rb, %bb.fr ]
   %i.rz = getelementptr inbounds nuw i8, ptr %.val.i.i36, i64 %.sroa.04.020.i60
-  %.sroa.08.0.copyload.i61 = load i64, ptr %i.rz, align 1, !alias.scope !34585, !noalias !34583 ; 2 uses
+  %.sroa.08.0.copyload.i61 = load i64, ptr %i.rz, align 1, !alias.scope !34584, !noalias !34583 ; 2 uses
   %i.sa = xor i64 %.sroa.08.0.copyload.i61, %i.rx ; 3 uses
   %i.sb = add i64 %i.ry, %i.rw                    ; 3 uses
   %i.sc = add i64 %i.sa, %i.rv                    ; 2 uses
@@ -926,17 +913,29 @@ bb.fv:                                            ; preds = %bb.fu, %bb.ft
   %i.sr = icmp ult i64 %i.sq, %i.rg
   br i1 %i.sr, label %.lr.ph.i55, label %._crit_edge.i62.loopexit
 
-"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a": ; preds = %bb.fv
-  %12 = add i64 %.val1.i.i, 1                     ; 2 uses
-  %13 = icmp eq i64 %i.rf, 0
-  br i1 %13, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit", label %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i
+"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64": ; preds = %bb.fv
+  %3 = icmp eq i64 %i.rf, 0
+  br i1 %3, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit", label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a"
 
-_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i: ; preds = %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a", %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.thread"
-  %14 = phi i64 [ %11, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.thread" ], [ %12, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a" ] ; 2 uses
-  %.sroa.011.2.i16.i51141 = phi i64 [ %10, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.thread" ], [ %.sroa.011.1.i14.i48, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a" ]
+"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a": ; preds = %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64"
+  %4 = shl nuw nsw i64 %i.rf, 3
+  %5 = shl nuw nsw i64 255, %4
+  %6 = or i64 %5, %.sroa.011.1.i14.i48
+  br label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit"
+
+_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i: ; preds = %bb.fv
+  %7 = add i64 %.sroa.0.1.i15.i49, %.sroa.04.0.lcssa.i45 ; 2 uses
+  %8 = icmp ult i64 %7, %.val1.i.i
+  call void @llvm.assume(i1 %8), !noalias !34585
+  %9 = getelementptr inbounds nuw i8, ptr %.val.i.i36, i64 %7
+  %10 = load i8, ptr %9, align 1, !alias.scope !34582, !noalias !34583, !noundef !24
+  %11 = zext i8 %10 to i64
+  %12 = shl nuw nsw i64 %.sroa.0.1.i15.i49, 3
+  %13 = shl nuw nsw i64 %11, %12
   %i.ss = shl nuw nsw i64 %i.rf, 3
   %i.st = shl nuw i64 255, %i.ss
-  %i.su = or i64 %i.st, %.sroa.011.2.i16.i51141   ; 3 uses
+  %14 = or i64 %13, %i.st
+  %i.su = or i64 %14, %.sroa.011.1.i14.i48        ; 3 uses
   %.not165 = icmp eq i64 %i.rf, 7
   br i1 %.not165, label %.thread391, label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit"
 
@@ -959,14 +958,14 @@ _ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i: ; preds = %"_ZN71_$LT$co
   %i.tk = xor i64 %i.te, %i.su
   br label %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit"
 
-"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit": ; preds = %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a", %.thread391, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i
-  %15 = phi i64 [ %14, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i ], [ %14, %.thread391 ], [ %12, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a" ]
-  %.sroa.0110.2 = phi i64 [ %.sroa.0110.4, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i ], [ %i.tk, %.thread391 ], [ %.sroa.0110.4, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a" ]
-  %.sroa.12115.2 = phi i64 [ %.sroa.12115.4, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i ], [ %i.tj, %.thread391 ], [ %.sroa.12115.4, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a" ]
-  %.sroa.22.2 = phi i64 [ %.sroa.22.4, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i ], [ %i.tg, %.thread391 ], [ %.sroa.22.4, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a" ] ; 3 uses
-  %.sroa.32.2 = phi i64 [ %.sroa.32.4, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i ], [ %i.ti, %.thread391 ], [ %.sroa.32.4, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a" ]
-  %.sroa.50.0 = phi i64 [ %i.su, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i ], [ 0, %.thread391 ], [ 255, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a" ]
-  %16 = shl i64 %15, 56
+"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit": ; preds = %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64", %.thread391, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a", %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i
+  %.sroa.0110.2 = phi i64 [ %.sroa.0110.4, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i ], [ %.sroa.0110.4, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a" ], [ %i.tk, %.thread391 ], [ %.sroa.0110.4, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64" ]
+  %.sroa.12115.2 = phi i64 [ %.sroa.12115.4, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i ], [ %.sroa.12115.4, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a" ], [ %i.tj, %.thread391 ], [ %.sroa.12115.4, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64" ]
+  %.sroa.22.2 = phi i64 [ %.sroa.22.4, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i ], [ %.sroa.22.4, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a" ], [ %i.tg, %.thread391 ], [ %.sroa.22.4, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64" ] ; 3 uses
+  %.sroa.32.2 = phi i64 [ %.sroa.32.4, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i ], [ %.sroa.32.4, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a" ], [ %i.ti, %.thread391 ], [ %.sroa.32.4, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64" ]
+  %.sroa.50.0 = phi i64 [ %i.su, %_ZN4core4hash3sip9u8to64_le17ha3e2b77f3cbdfbd9E.exit.i ], [ %6, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64.a" ], [ 0, %.thread391 ], [ 255, %"_ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h3937b020d1255dd4E.exit64" ]
+  %15 = shl i64 %.val1.i.i, 56
+  %16 = add i64 %15, 72057594037927936
   %i.tl = or i64 %.sroa.50.0, %16                 ; 2 uses
   %i.tm = xor i64 %i.tl, %.sroa.32.2              ; 3 uses
   %i.tn = add i64 %.sroa.22.2, %.sroa.0110.2      ; 3 uses
@@ -1369,8 +1368,8 @@ begin_hunk_2_@llvm.bswap.v4i32
 !34581 = !{!34348, !34344, !34339, !34343, !34342, !34336, !34341, !34156}
 !34582 = !{!34352, !34350}
 !34583 = !{!34353, !34346, !34344, !34339, !34343, !34342, !34336, !34341, !34156}
-!34584 = !{!34346, !34344, !34339, !34343, !34342, !34336, !34341, !34156}
-!34585 = !{!34350}
+!34584 = !{!34350}
+!34585 = !{!34346, !34344, !34339, !34343, !34342, !34336, !34341, !34156}
 !34586 = !{!34357, !34355, !34339, !34336}
 !34587 = !{!34360, !34359, !34358, !34344, !34340, !34343, !34342, !34337, !34341, !34156}
 !34588 = !{!34355, !34339, !34336}
