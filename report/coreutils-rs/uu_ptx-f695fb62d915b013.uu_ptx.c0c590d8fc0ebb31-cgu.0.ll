@@ -205,7 +205,7 @@ _RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit.thread354: ; preds = %b
   unreachable
 
 _RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit.thread: ; preds = %bb.ay, %bb.aw, %_RNvNtNtCs6JMX4GRUq9U_4core3str6traits11check_range.exit
-  %i.kh = sub nuw i64 %.sroa.419.i.sink.i.sroa.speculated, %.sroa.051.0 ; 26 uses
+  %i.kh = sub nuw i64 %.sroa.419.i.sink.i.sroa.speculated, %.sroa.051.0 ; 24 uses
   %i.ki = getelementptr inbounds nuw i8, ptr %i.js, i64 %.sroa.051.0
   %.not.i81 = icmp slt i64 %i.kh, 0
   br i1 %.not.i81, label %bb.bc, label %bb.bb, !prof !13
@@ -240,7 +240,7 @@ bb.be:                                            ; preds = %_RNvMs5_NtCs7tKScEo
   br i1 %i.bi, label %_RINvMs1_NtCs7GWc7oqutCf_9hashbrown3mapINtB6_7HashMapNtNtCs7tKScEop1B6_5alloc6string6StringuNtNtNtCs2vKOLqTMYjT_3std4hash6random11RandomStateE12contains_keyBO_ECsgy7pbN39oAf_6uu_ptx.exit104, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
-  %i.kn = and i64 %i.kh, 7                        ; 6 uses
+  %i.kn = and i64 %i.kh, 7                        ; 7 uses
   %i.ko = and i64 %i.kh, 9223372036854775800      ; 2 uses
   %.not373 = icmp eq i64 %i.ko, 0
   br i1 %.not373, label %._crit_edge.i164, label %.lr.ph.i157
@@ -250,10 +250,10 @@ bb.bf:                                            ; preds = %bb.be
   br label %._crit_edge.i164
 
 ._crit_edge.i164:                                 ; preds = %._crit_edge.i164.loopexit, %bb.bf
-  %.sroa.32294.4 = phi i64 [ %i.bo, %bb.bf ], [ %i.lv, %._crit_edge.i164.loopexit ] ; 3 uses
-  %.sroa.22289.4 = phi i64 [ %i.bm, %bb.bf ], [ %i.lt, %._crit_edge.i164.loopexit ] ; 5 uses
-  %.sroa.12.4 = phi i64 [ %i.bn, %bb.bf ], [ %i.lw, %._crit_edge.i164.loopexit ] ; 3 uses
-  %.sroa.0280.4 = phi i64 [ %i.bl, %bb.bf ], [ %i.lx, %._crit_edge.i164.loopexit ] ; 3 uses
+  %.sroa.32294.4 = phi i64 [ %i.bo, %bb.bf ], [ %i.lv, %._crit_edge.i164.loopexit ] ; 4 uses
+  %.sroa.22289.4 = phi i64 [ %i.bm, %bb.bf ], [ %i.lt, %._crit_edge.i164.loopexit ] ; 6 uses
+  %.sroa.12.4 = phi i64 [ %i.bn, %bb.bf ], [ %i.lw, %._crit_edge.i164.loopexit ] ; 4 uses
+  %.sroa.0280.4 = phi i64 [ %i.bl, %bb.bf ], [ %i.lx, %._crit_edge.i164.loopexit ] ; 4 uses
   %.sroa.0.1.lcssa.i147 = phi i64 [ 0, %bb.bf ], [ %i.kp, %._crit_edge.i164.loopexit ] ; 3 uses
   %i.kq = icmp samesign ugt i64 %i.kn, 3
   br i1 %i.kq, label %bb.bg, label %bb.bh
@@ -286,20 +286,7 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bh
   %.sroa.03.1.i12.i150 = phi i64 [ %i.lb, %bb.bi ], [ %.sroa.03.0.i10.i148, %bb.bh ] ; 3 uses
   %.sroa.0.1.i13.i151 = phi i64 [ %i.la, %bb.bi ], [ %.sroa.0.0.i11.i149, %bb.bh ] ; 2 uses
   %i.lc = icmp samesign ult i64 %.sroa.03.1.i12.i150, %i.kn
-  br i1 %i.lc, label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.thread, label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a
-
-_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.thread: ; preds = %bb.bj
-  %4 = add nuw nsw i64 %.sroa.03.1.i12.i150, %.sroa.0.1.lcssa.i147 ; 2 uses
-  %5 = icmp samesign ult i64 %4, %i.kh
-  call void @llvm.assume(i1 %5), !noalias !1826
-  %6 = getelementptr inbounds nuw i8, ptr %i.km, i64 %4
-  %7 = load i8, ptr %6, align 1, !alias.scope !1824, !noalias !1825, !noundef !7
-  %8 = zext i8 %7 to i64
-  %9 = shl nuw nsw i64 %.sroa.03.1.i12.i150, 3
-  %10 = shl nuw nsw i64 %8, %9
-  %11 = or i64 %10, %.sroa.0.1.i13.i151
-  %12 = add nuw i64 %i.kh, 1
-  br label %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i
+  br i1 %i.lc, label %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i, label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166
 
 .lr.ph.i157:                                      ; preds = %bb.bf, %.lr.ph.i157
   %i.ld = phi i64 [ %i.lw, %.lr.ph.i157 ], [ %i.bn, %bb.bf ]
@@ -308,7 +295,7 @@ _RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Ha
   %.sroa.0.118.i162 = phi i64 [ %i.ly, %.lr.ph.i157 ], [ 0, %bb.bf ] ; 2 uses
   %i.lg = phi i64 [ %i.lx, %.lr.ph.i157 ], [ %i.bl, %bb.bf ]
   %i.lh = getelementptr inbounds nuw i8, ptr %i.km, i64 %.sroa.0.118.i162
-  %.sroa.07.0.copyload.i163 = load i64, ptr %i.lh, align 1, !alias.scope !1827, !noalias !1825 ; 2 uses
+  %.sroa.07.0.copyload.i163 = load i64, ptr %i.lh, align 1, !alias.scope !1826, !noalias !1825 ; 2 uses
   %i.li = xor i64 %.sroa.07.0.copyload.i163, %i.lf ; 3 uses
   %i.lj = add i64 %i.lg, %i.le                    ; 3 uses
   %i.lk = add i64 %i.li, %i.ld                    ; 2 uses
@@ -329,17 +316,29 @@ _RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Ha
   %i.lz = icmp samesign ult i64 %i.ly, %i.ko
   br i1 %i.lz, label %.lr.ph.i157, label %._crit_edge.i164.loopexit
 
-_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a: ; preds = %bb.bj
-  %13 = add nuw i64 %i.kh, 1                      ; 2 uses
-  %14 = icmp eq i64 %i.kn, 0
-  br i1 %14, label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit, label %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i
+_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166: ; preds = %bb.bj
+  %4 = icmp eq i64 %i.kn, 0
+  br i1 %4, label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit, label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a
 
-_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i: ; preds = %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.thread
-  %15 = phi i64 [ %12, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.thread ], [ %13, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a ] ; 2 uses
-  %.sroa.0.2.i14.i153368 = phi i64 [ %11, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.thread ], [ %.sroa.0.1.i13.i151, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a ]
+_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a: ; preds = %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166
+  %5 = shl nuw nsw i64 %i.kn, 3
+  %6 = shl nuw nsw i64 255, %5
+  %7 = or i64 %6, %.sroa.0.1.i13.i151
+  br label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit
+
+_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i: ; preds = %bb.bj
+  %8 = add nuw nsw i64 %.sroa.03.1.i12.i150, %.sroa.0.1.lcssa.i147 ; 2 uses
+  %9 = icmp samesign ult i64 %8, %i.kh
+  call void @llvm.assume(i1 %9), !noalias !1827
+  %10 = getelementptr inbounds nuw i8, ptr %i.km, i64 %8
+  %11 = load i8, ptr %10, align 1, !alias.scope !1824, !noalias !1825, !noundef !7
+  %12 = zext i8 %11 to i64
+  %13 = shl nuw nsw i64 %.sroa.03.1.i12.i150, 3
+  %14 = shl nuw nsw i64 %12, %13
   %i.ma = shl nuw nsw i64 %i.kn, 3
   %i.mb = shl nuw i64 255, %i.ma
-  %i.mc = or i64 %i.mb, %.sroa.0.2.i14.i153368    ; 3 uses
+  %15 = or i64 %14, %i.mb
+  %i.mc = or i64 %15, %.sroa.0.1.i13.i151         ; 3 uses
   %.not374 = icmp eq i64 %i.kn, 7
   br i1 %.not374, label %.thread, label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit
 
@@ -362,14 +361,14 @@ _RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i: ; preds = %_RNvXs3_NtNtCs
   %i.ms = xor i64 %i.mm, %i.mc
   br label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit
 
-_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit: ; preds = %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a, %.thread, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i
-  %16 = phi i64 [ %15, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i ], [ %15, %.thread ], [ %13, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a ]
-  %.sroa.50.0 = phi i64 [ %i.mc, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i ], [ 0, %.thread ], [ 255, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a ]
-  %.sroa.32294.2 = phi i64 [ %.sroa.32294.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i ], [ %i.mq, %.thread ], [ %.sroa.32294.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a ]
-  %.sroa.22289.2 = phi i64 [ %.sroa.22289.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i ], [ %i.mo, %.thread ], [ %.sroa.22289.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a ] ; 3 uses
-  %.sroa.12.2 = phi i64 [ %.sroa.12.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i ], [ %i.mr, %.thread ], [ %.sroa.12.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a ]
-  %.sroa.0280.2 = phi i64 [ %.sroa.0280.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i ], [ %i.ms, %.thread ], [ %.sroa.0280.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a ]
-  %17 = shl i64 %16, 56
+_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit: ; preds = %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166, %.thread, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i
+  %.sroa.50.0 = phi i64 [ %i.mc, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i ], [ %7, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a ], [ 0, %.thread ], [ 255, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166 ]
+  %.sroa.32294.2 = phi i64 [ %.sroa.32294.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i ], [ %.sroa.32294.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a ], [ %i.mq, %.thread ], [ %.sroa.32294.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166 ]
+  %.sroa.22289.2 = phi i64 [ %.sroa.22289.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i ], [ %.sroa.22289.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a ], [ %i.mo, %.thread ], [ %.sroa.22289.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166 ] ; 3 uses
+  %.sroa.12.2 = phi i64 [ %.sroa.12.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i ], [ %.sroa.12.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a ], [ %i.mr, %.thread ], [ %.sroa.12.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166 ]
+  %.sroa.0280.2 = phi i64 [ %.sroa.0280.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i ], [ %.sroa.0280.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166.a ], [ %i.ms, %.thread ], [ %.sroa.0280.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit166 ]
+  %16 = shl i64 %i.kh, 56
+  %17 = add i64 %16, 72057594037927936
   %i.mt = or i64 %17, %.sroa.50.0                 ; 2 uses
   %i.mu = xor i64 %i.mt, %.sroa.32294.2           ; 3 uses
   %i.mv = add i64 %.sroa.0280.2, %.sroa.22289.2   ; 3 uses
@@ -494,7 +493,7 @@ _RINvMs1_NtCs7GWc7oqutCf_9hashbrown3mapINtB6_7HashMapNtNtCs7tKScEop1B6_5alloc6st
   br i1 %i.ck, label %bb.dp, label %bb.bu
 
 bb.bn:                                            ; preds = %_RINvMs1_NtCs7GWc7oqutCf_9hashbrown3mapINtB6_7HashMapNtNtCs7tKScEop1B6_5alloc6string6StringuNtNtNtCs2vKOLqTMYjT_3std4hash6random11RandomStateE12contains_keyBO_ECsgy7pbN39oAf_6uu_ptx.exit
-  %i.py = and i64 %i.kh, 7                        ; 6 uses
+  %i.py = and i64 %i.kh, 7                        ; 7 uses
   %i.pz = and i64 %i.kh, 9223372036854775800      ; 2 uses
   %.not376 = icmp eq i64 %i.pz, 0
   br i1 %.not376, label %._crit_edge.i221, label %.lr.ph.i214
@@ -504,10 +503,10 @@ bb.bn:                                            ; preds = %_RINvMs1_NtCs7GWc7o
   br label %._crit_edge.i221
 
 ._crit_edge.i221:                                 ; preds = %._crit_edge.i221.loopexit, %bb.bn
-  %.sroa.32323.4 = phi i64 [ %i.ce, %bb.bn ], [ %i.rg, %._crit_edge.i221.loopexit ] ; 3 uses
-  %.sroa.22318.4 = phi i64 [ %i.cc, %bb.bn ], [ %i.re, %._crit_edge.i221.loopexit ] ; 5 uses
-  %.sroa.12313.4 = phi i64 [ %i.cd, %bb.bn ], [ %i.rh, %._crit_edge.i221.loopexit ] ; 3 uses
-  %.sroa.0308.4 = phi i64 [ %i.cb, %bb.bn ], [ %i.ri, %._crit_edge.i221.loopexit ] ; 3 uses
+  %.sroa.32323.4 = phi i64 [ %i.ce, %bb.bn ], [ %i.rg, %._crit_edge.i221.loopexit ] ; 4 uses
+  %.sroa.22318.4 = phi i64 [ %i.cc, %bb.bn ], [ %i.re, %._crit_edge.i221.loopexit ] ; 6 uses
+  %.sroa.12313.4 = phi i64 [ %i.cd, %bb.bn ], [ %i.rh, %._crit_edge.i221.loopexit ] ; 4 uses
+  %.sroa.0308.4 = phi i64 [ %i.cb, %bb.bn ], [ %i.ri, %._crit_edge.i221.loopexit ] ; 4 uses
   %.sroa.0.1.lcssa.i204 = phi i64 [ 0, %bb.bn ], [ %i.qa, %._crit_edge.i221.loopexit ] ; 3 uses
   %i.qb = icmp samesign ugt i64 %i.py, 3
   br i1 %i.qb, label %bb.bo, label %bb.bp
@@ -540,20 +539,7 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp
   %.sroa.03.1.i12.i207 = phi i64 [ %i.qm, %bb.bq ], [ %.sroa.03.0.i10.i205, %bb.bp ] ; 3 uses
   %.sroa.0.1.i13.i208 = phi i64 [ %i.ql, %bb.bq ], [ %.sroa.0.0.i11.i206, %bb.bp ] ; 2 uses
   %i.qn = icmp samesign ult i64 %.sroa.03.1.i12.i207, %i.py
-  br i1 %i.qn, label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.thread, label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a
-
-_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.thread: ; preds = %bb.br
-  %18 = add nuw nsw i64 %.sroa.03.1.i12.i207, %.sroa.0.1.lcssa.i204 ; 2 uses
-  %19 = icmp ult i64 %18, %i.kh
-  call void @llvm.assume(i1 %19), !noalias !1833
-  %20 = getelementptr inbounds nuw i8, ptr %i.km, i64 %18
-  %21 = load i8, ptr %20, align 1, !alias.scope !1831, !noalias !1832, !noundef !7
-  %22 = zext i8 %21 to i64
-  %23 = shl nuw nsw i64 %.sroa.03.1.i12.i207, 3
-  %24 = shl nuw nsw i64 %22, %23
-  %25 = or i64 %24, %.sroa.0.1.i13.i208
-  %26 = add nuw i64 %i.kh, 1
-  br label %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172
+  br i1 %i.qn, label %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172, label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224
 
 .lr.ph.i214:                                      ; preds = %bb.bn, %.lr.ph.i214
   %i.qo = phi i64 [ %i.rh, %.lr.ph.i214 ], [ %i.cd, %bb.bn ]
@@ -562,7 +548,7 @@ _RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Ha
   %.sroa.0.118.i219 = phi i64 [ %i.rj, %.lr.ph.i214 ], [ 0, %bb.bn ] ; 2 uses
   %i.qr = phi i64 [ %i.ri, %.lr.ph.i214 ], [ %i.cb, %bb.bn ]
   %i.qs = getelementptr inbounds nuw i8, ptr %i.km, i64 %.sroa.0.118.i219
-  %.sroa.07.0.copyload.i220 = load i64, ptr %i.qs, align 1, !alias.scope !1834, !noalias !1832 ; 2 uses
+  %.sroa.07.0.copyload.i220 = load i64, ptr %i.qs, align 1, !alias.scope !1833, !noalias !1832 ; 2 uses
   %i.qt = xor i64 %.sroa.07.0.copyload.i220, %i.qq ; 3 uses
   %i.qu = add i64 %i.qr, %i.qp                    ; 3 uses
   %i.qv = add i64 %i.qt, %i.qo                    ; 2 uses
@@ -583,17 +569,29 @@ _RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Ha
   %i.rk = icmp samesign ult i64 %i.rj, %i.pz
   br i1 %i.rk, label %.lr.ph.i214, label %._crit_edge.i221.loopexit
 
-_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a: ; preds = %bb.br
-  %27 = add nuw i64 %i.kh, 1                      ; 2 uses
-  %28 = icmp eq i64 %i.py, 0
-  br i1 %28, label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit195, label %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172
+_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224: ; preds = %bb.br
+  %18 = icmp eq i64 %i.py, 0
+  br i1 %18, label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit195, label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a
 
-_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172: ; preds = %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.thread
-  %29 = phi i64 [ %26, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.thread ], [ %27, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a ] ; 2 uses
-  %.sroa.0.2.i14.i210371 = phi i64 [ %25, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.thread ], [ %.sroa.0.1.i13.i208, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a ]
+_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a: ; preds = %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224
+  %19 = shl nuw nsw i64 %i.py, 3
+  %20 = shl nuw nsw i64 255, %19
+  %21 = or i64 %20, %.sroa.0.1.i13.i208
+  br label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit195
+
+_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172: ; preds = %bb.br
+  %22 = add nuw nsw i64 %.sroa.03.1.i12.i207, %.sroa.0.1.lcssa.i204 ; 2 uses
+  %23 = icmp ult i64 %22, %i.kh
+  call void @llvm.assume(i1 %23), !noalias !1834
+  %24 = getelementptr inbounds nuw i8, ptr %i.km, i64 %22
+  %25 = load i8, ptr %24, align 1, !alias.scope !1831, !noalias !1832, !noundef !7
+  %26 = zext i8 %25 to i64
+  %27 = shl nuw nsw i64 %.sroa.03.1.i12.i207, 3
+  %28 = shl nuw nsw i64 %26, %27
   %i.rl = shl nuw nsw i64 %i.py, 3
   %i.rm = shl nuw i64 255, %i.rl
-  %i.rn = or i64 %i.rm, %.sroa.0.2.i14.i210371    ; 3 uses
+  %29 = or i64 %28, %i.rm
+  %i.rn = or i64 %29, %.sroa.0.1.i13.i208         ; 3 uses
   %.not377 = icmp eq i64 %i.py, 7
   br i1 %.not377, label %.thread1024, label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit195
 
@@ -616,14 +614,14 @@ _RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172: ; preds = %_RNvXs3_NtN
   %i.sd = xor i64 %i.rx, %i.rn
   br label %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit195
 
-_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit195: ; preds = %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a, %.thread1024, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172
-  %30 = phi i64 [ %29, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172 ], [ %29, %.thread1024 ], [ %27, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a ]
-  %.sroa.32323.2 = phi i64 [ %.sroa.32323.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172 ], [ %i.sb, %.thread1024 ], [ %.sroa.32323.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a ]
-  %.sroa.22318.2 = phi i64 [ %.sroa.22318.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172 ], [ %i.rz, %.thread1024 ], [ %.sroa.22318.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a ] ; 3 uses
-  %.sroa.12313.2 = phi i64 [ %.sroa.12313.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172 ], [ %i.sc, %.thread1024 ], [ %.sroa.12313.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a ]
-  %.sroa.0308.2 = phi i64 [ %.sroa.0308.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172 ], [ %i.sd, %.thread1024 ], [ %.sroa.0308.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a ]
-  %.sroa.50333.0 = phi i64 [ %i.rn, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172 ], [ 0, %.thread1024 ], [ 255, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a ]
-  %31 = shl i64 %30, 56
+_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit195: ; preds = %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224, %.thread1024, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172
+  %.sroa.32323.2 = phi i64 [ %.sroa.32323.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172 ], [ %.sroa.32323.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a ], [ %i.sb, %.thread1024 ], [ %.sroa.32323.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224 ]
+  %.sroa.22318.2 = phi i64 [ %.sroa.22318.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172 ], [ %.sroa.22318.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a ], [ %i.rz, %.thread1024 ], [ %.sroa.22318.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224 ] ; 3 uses
+  %.sroa.12313.2 = phi i64 [ %.sroa.12313.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172 ], [ %.sroa.12313.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a ], [ %i.sc, %.thread1024 ], [ %.sroa.12313.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224 ]
+  %.sroa.0308.2 = phi i64 [ %.sroa.0308.4, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172 ], [ %.sroa.0308.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a ], [ %i.sd, %.thread1024 ], [ %.sroa.0308.4, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224 ]
+  %.sroa.50333.0 = phi i64 [ %i.rn, %_RNvNtNtCs6JMX4GRUq9U_4core4hash3sip9u8to64_le.exit.i172 ], [ %21, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224.a ], [ 0, %.thread1024 ], [ 255, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsgy7pbN39oAf_6uu_ptx.exit224 ]
+  %30 = shl i64 %i.kh, 56
+  %31 = add i64 %30, 72057594037927936
   %i.se = or i64 %.sroa.50333.0, %31              ; 2 uses
   %i.sf = xor i64 %i.se, %.sroa.32323.2           ; 3 uses
   %i.sg = add i64 %.sroa.0308.2, %.sroa.22318.2   ; 3 uses
@@ -1026,15 +1024,15 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !1823 = !{!1604}
 !1824 = !{!1608, !1606}
 !1825 = !{!1613, !1612, !1610}
-!1826 = !{!1612, !1610}
-!1827 = !{!1606}
+!1826 = !{!1606}
+!1827 = !{!1612, !1610}
 !1828 = !{!1621, !1619, !1617, !1616, !1610, !1614}
 !1829 = !{!1623, !1619, !1617, !1616, !1610, !1614}
 !1830 = !{!1625}
 !1831 = !{!1629, !1627}
 !1832 = !{!1634, !1633, !1631}
-!1833 = !{!1633, !1631}
-!1834 = !{!1627}
+!1833 = !{!1627}
+!1834 = !{!1633, !1631}
 !1835 = !{!1642, !1640, !1638, !1637, !1631, !1635}
 !1836 = !{!1644, !1640, !1638, !1637, !1631, !1635}
 !1837 = !{!1651, !1649, !1648, !1646}
