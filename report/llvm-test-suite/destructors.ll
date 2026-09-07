@@ -200,7 +200,7 @@ begin_hunk_0_@__local_laplacian:entry
   %i.ajj = mul i32 %i.afg, %i.aji
   %i.ajk = sub i32 %i.ajj, %f75.v3.min_realized
   %i.ajl = or disjoint i32 %i.bd, 1
-  %i.ajm = sub i32 %i.ajl, %f75.v4.min_realized
+  %i.ajm = sub nsw i32 %i.ajl, %f75.v4.min_realized
   %i.ajn = mul i32 %i.afg, %i.ajm
   %i.ajo = sub i32 %i.ajn, %f75.v3.min_realized
   %i.ajp = add nsw i32 %i.bd, 2

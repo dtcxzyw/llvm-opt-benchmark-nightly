@@ -205,8 +205,8 @@ Abc_Tt6FirstBit.exit228:                          ; preds = %bb.n
   %i.vh = trunc i64 %.424.i211 to i32
   %i.vi = and i32 %i.vh, 1
   %i.vj = xor i32 %i.vi, 1
-  %.5.i213 = add i32 %.4.i212, %i.un
-  %i.vk = add i32 %.5.i213, %i.vj
+  %.5.i213 = add nuw i32 %.4.i212, %i.un
+  %i.vk = add nuw i32 %.5.i213, %i.vj
   store i32 %i.vk, ptr %5, align 4, !tbaa !11
   %i.vl = shl nuw nsw i32 %i.qz, 6
   %i.vm = and i64 %i.um, 4294967295
@@ -241,8 +241,8 @@ Abc_Tt6FirstBit.exit228:                          ; preds = %bb.n
   %i.wf = trunc i64 %.424.i224 to i32
   %i.wg = and i32 %i.wf, 1
   %i.wh = xor i32 %i.wg, 1
-  %.5.i226 = add i32 %.4.i225, %i.vl
-  %i.wi = add i32 %.5.i226, %i.wh
+  %.5.i226 = add nuw i32 %.4.i225, %i.vl
+  %i.wi = add nuw i32 %.5.i226, %i.wh
   br label %.loopexit.sink.split
 
 bb.o:                                             ; preds = %bb.n, %Rsb_DecCofactor.exit202
@@ -645,8 +645,8 @@ Abc_Tt6FirstBit.exit.i:                           ; preds = %.lr.ph.i
   %i.ak = trunc i64 %.424.i.i to i32
   %i.al = and i32 %i.ak, 1
   %i.am = xor i32 %i.al, 1
-  %.5.i.i = add i32 %.4.i.i, %i.q
-  %i.an = add i32 %.5.i.i, %i.am
+  %.5.i.i = add nuw i32 %.4.i.i, %i.q
+  %i.an = add nuw i32 %.5.i.i, %i.am
   br label %Abc_TtFindFirstBit.exit
 
 bb.c:                                             ; preds = %.lr.ph.i
@@ -709,7 +709,7 @@ bb.f:                                             ; preds = %bb.e
   %i.bl = icmp sgt i64 %.424.i.i53, -1
   %.neg28.i.i = sext i1 %i.bl to i32
   %reass.sub.i.i = or disjoint i32 %i.aw, 63
-  %i.bm = sub i32 %reass.sub.i.i, %.4.i.i54
+  %i.bm = sub nuw i32 %reass.sub.i.i, %.4.i.i54
   %i.bn = add i32 %i.bm, %.neg28.i.i
   br label %Abc_TtFindLastBit.exit
 
@@ -768,8 +768,8 @@ Abc_Tt6FirstBit.exit.i61:                         ; preds = %.lr.ph.i58
   %i.co = trunc i64 %.424.i.i70 to i32
   %i.cp = and i32 %i.co, 1
   %i.cq = xor i32 %i.cp, 1
-  %.5.i.i72 = add i32 %.4.i.i71, %i.bu
-  %i.cr = add i32 %.5.i.i72, %i.cq
+  %.5.i.i72 = add nuw i32 %.4.i.i71, %i.bu
+  %i.cr = add nuw i32 %.5.i.i72, %i.cq
   br label %Abc_TtFindFirstZero.exit
 
 bb.h:                                             ; preds = %.lr.ph.i58
@@ -832,7 +832,7 @@ bb.k:                                             ; preds = %bb.j
   %i.dq = icmp sgt i64 %.424.i.i88, -1
   %.neg28.i.i90 = sext i1 %i.dq to i32
   %reass.sub.i.i91 = or disjoint i32 %i.db, 63
-  %i.dr = sub i32 %reass.sub.i.i91, %.4.i.i89
+  %i.dr = sub nuw i32 %reass.sub.i.i91, %.4.i.i89
   %i.ds = add i32 %i.dr, %.neg28.i.i90
   br label %Abc_TtFindLastZero.exit
 

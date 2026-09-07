@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.f
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXNtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB3_9SeqAccessNtNtCs6nZeqdiIoCH_10serde_core2de9SeqAccess17next_element_seedINtNtCs4NRVxsYgnAr_4core6marker11PhantomDataNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6pylint8settings12ConstantTypeEECslT7UmUwa3wv_9ruff_wasm(ptr noalias noundef align 4 dereferenceable(8) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXNtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB3_9SeqAccessNtNtCs6nZeqdiIoCH_10serde_core2de9SeqAccess17next_element_seedINtNtCs4NRVxsYgnAr_4core6marker11PhantomDataNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules6pylint8settings12ConstantTypeEECslT7UmUwa3wv_9ruff_wasm(ptr noalias noundef align 4 dereferenceable(8) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = tail call { i32, i32 } @_RINvMs16_CsdjJ41tfNHOz_6js_sysNtB7_9IterState4nextNtCsXBDNnD8Soy_12wasm_bindgen7JsValueECslT7UmUwa3wv_9ruff_wasm(ptr noalias noundef nonnull dereferenceable(1) %i.a, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(4) %0) ; 2 uses
@@ -605,7 +605,7 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294966784) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtCs7Ma6rQP8bRy_14ruff_formatter11IndentStyleEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294967038) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtCs7Ma6rQP8bRy_14ruff_formatter11IndentStyleEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -1008,7 +1008,7 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace7options16PyUpgradeOptionsEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace7options16PyUpgradeOptionsEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -1054,7 +1054,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace7options16PydoclintOptionsEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace7options16PydoclintOptionsEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -1286,7 +1286,7 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace7options18PycodestyleOptionsEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -65534) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace7options18PycodestyleOptionsEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -1458,7 +1458,7 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace7options19Flake8QuotesOptionsEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -254) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace7options19Flake8QuotesOptionsEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -1861,7 +1861,7 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace7options27Flake8ComprehensionsOptionsEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace7options27Flake8ComprehensionsOptionsEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -1907,7 +1907,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace7options28Flake8UnusedArgumentsOptionsEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace7options28Flake8UnusedArgumentsOptionsEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -1953,7 +1953,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace7options30Flake8ImplicitStrConcatOptionsEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace7options30Flake8ImplicitStrConcatOptionsEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -2064,7 +2064,7 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace8settings10LineEndingEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs3ZkgueCtkyH_14ruff_workspace8settings10LineEndingEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -2110,7 +2110,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs8CpBcHC8tKo_21ruff_python_formatter7options10QuoteStyleEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs8CpBcHC8tKo_21ruff_python_formatter7options10QuoteStyleEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -2156,7 +2156,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294836224) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs8CpBcHC8tKo_21ruff_python_formatter7options22DocstringCodeLineWidthEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294901758) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs8CpBcHC8tKo_21ruff_python_formatter7options22DocstringCodeLineWidthEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -2209,7 +2209,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294966784) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs8CpBcHC8tKo_21ruff_python_formatter7options22NestedStringQuoteStyleEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294967038) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs8CpBcHC8tKo_21ruff_python_formatter7options22NestedStringQuoteStyleEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -2255,7 +2255,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294966784) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs8yaccCKGz54_10ruff_graph8settings9DirectionEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294967038) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCs8yaccCKGz54_10ruff_graph8settings9DirectionEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -2301,7 +2301,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCsEhZmuQNqkz_11ruff_linter10line_width10LineLengthEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -65534) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCsEhZmuQNqkz_11ruff_linter10line_width10LineLengthEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -2347,7 +2347,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCsEhZmuQNqkz_11ruff_linter10line_width11IndentWidthEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtCsEhZmuQNqkz_11ruff_linter10line_width11IndentWidthEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -2455,7 +2455,7 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtCsEhZmuQNqkz_11ruff_linter8settings5types12OutputFormatEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtCsEhZmuQNqkz_11ruff_linter8settings5types12OutputFormatEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -2501,7 +2501,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtCsEhZmuQNqkz_11ruff_linter8settings5types13PythonVersionEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtCsEhZmuQNqkz_11ruff_linter8settings5types13PythonVersionEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -2609,7 +2609,7 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules10pydocstyle8settings10ConventionEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules10pydocstyle8settings10ConventionEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -2655,7 +2655,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294966784) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules13flake8_quotes8settings5QuoteEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294967038) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules13flake8_quotes8settings5QuoteEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -2701,7 +2701,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294901760) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_pytest_style5types19ParametrizeNameTypeEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294902014) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_pytest_style5types19ParametrizeNameTypeEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -2747,7 +2747,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294966784) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_pytest_style5types21ParametrizeValuesTypeEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294967038) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_pytest_style5types21ParametrizeValuesTypeEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -2793,7 +2793,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294966784) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_pytest_style5types24ParametrizeValuesRowTypeEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294967038) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_pytest_style5types24ParametrizeValuesRowTypeEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -2839,7 +2839,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294966784) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports8settings10StrictnessEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294967038) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules19flake8_tidy_imports8settings10StrictnessEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -3009,7 +3009,7 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294966784) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort8settings20RelativeImportsOrderEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294967038) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort8settings20RelativeImportsOrderEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4
@@ -3055,7 +3055,7 @@ bb.f:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden range(i64 0, -4294966784) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorbEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden range(i64 0, -4294967038) i64 @_RINvXs8_NtCsioq3h7D9pfI_18serde_wasm_bindgen2deNtB6_12DeserializerNtNtCs6nZeqdiIoCH_10serde_core2de12Deserializer18deserialize_optionINtNtB14_5impls13OptionVisitorbEECslT7UmUwa3wv_9ruff_wasm(i32 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 2 uses
   store i32 %0, ptr %i.a, align 4

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph
 }
 
 ; Function Attrs: nonlazybind uwtable
-define range(i32 0, 16777220) i32 @"_ZN104_$LT$regex_automata..util..alphabet..ByteClassIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hf6d5658801b330a5E"(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define range(i32 0, 16777219) i32 @"_ZN104_$LT$regex_automata..util..alphabet..ByteClassIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hf6d5658801b330a5E"(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -251,7 +251,7 @@ bb.e:                                             ; preds = %bb.b, %"_ZN4core6re
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define i24 @"_ZN107_$LT$regex_automata..util..alphabet..ByteSetRangeIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hbfac22314004b0a8E"(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define range(i24 0, -254) i24 @"_ZN107_$LT$regex_automata..util..alphabet..ByteSetRangeIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hbfac22314004b0a8E"(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %.promoted = load i64, ptr %i.a, align 8        ; 3 uses
@@ -338,7 +338,7 @@ thread-pre-split:                                 ; preds = %.lr.ph31
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define range(i32 0, 16777220) i32 @"_ZN108_$LT$regex_automata..util..alphabet..ByteClassElements$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hf7e38fe575aa09f1E"(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define range(i32 0, 16777219) i32 @"_ZN108_$LT$regex_automata..util..alphabet..ByteClassElements$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hf7e38fe575aa09f1E"(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %.promoted = load i64, ptr %i.a, align 8        ; 5 uses
@@ -540,7 +540,7 @@ bb.f:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: nonlazybind uwtable
-define range(i32 0, 16777220) i32 @"_ZN115_$LT$regex_automata..util..alphabet..ByteClassRepresentatives$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h36fa6e7393f7296dE"(ptr noalias nofree noundef align 8 captures(none) dereferenceable(40) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define range(i32 0, 16777219) i32 @"_ZN115_$LT$regex_automata..util..alphabet..ByteClassRepresentatives$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h36fa6e7393f7296dE"(ptr noalias nofree noundef align 8 captures(none) dereferenceable(40) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
@@ -943,7 +943,7 @@ bb.bq:                                            ; preds = %bb.c
 }
 
 ; Function Attrs: cold noinline nonlazybind uwtable
-define range(i64 2, -4294967288) i64 @_ZN14regex_automata6hybrid3dfa4Lazy17cache_start_group17hf1db2c9e9fafa034E(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0, i32 noundef range(i32 0, 3) %1, i32 %2, i8 noundef range(i8 0, 6) %3) unnamed_addr #3 personality ptr @rust_eh_personality {
+define range(i64 2, -4294967290) i64 @_ZN14regex_automata6hybrid3dfa4Lazy17cache_start_group17hf1db2c9e9fafa034E(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0, i32 noundef range(i32 0, 3) %1, i32 %2, i8 noundef range(i8 0, 6) %3) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 7 uses
   %i.b = alloca [8 x i8], align 8                 ; 3 uses

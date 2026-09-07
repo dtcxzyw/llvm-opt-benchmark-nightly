@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @rb_file_s_utime(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
+define internal range(i64 -4294967295, 4294967296) i64 @rb_file_s_utime(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
 bb.a:
   %3 = alloca %struct.utime_args, align 8         ; 7 uses
   %4 = alloca [2 x %struct.timespec], align 16    ; 9 uses
@@ -259,14 +259,14 @@ utime_internal_i.exit:                            ; preds = %rb_check_arity.exit
   %i.r = getelementptr i8, ptr %1, i64 16
   %i.s = add nsw i32 %0, -2
   store ptr %.0.i, ptr %3, align 8, !tbaa !104
-  %i.t = call fastcc range(i64 1, 0) i64 @apply2files(ptr noundef nonnull @utime_internal, i32 noundef %i.s, ptr noundef readonly %i.r, ptr noundef nonnull %3)
+  %i.t = call fastcc range(i64 -4294967295, 4294967296) i64 @apply2files(ptr noundef nonnull @utime_internal, i32 noundef %i.s, ptr noundef readonly %i.r, ptr noundef nonnull %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
   ret i64 %i.t
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @rb_file_s_chmod(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
+define internal range(i64 -4294967295, 4294967296) i64 @rb_file_s_chmod(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
@@ -290,7 +290,7 @@ rb_check_arity.exit:                              ; preds = %bb.a
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @rb_file_s_chown(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
+define internal range(i64 -4294967295, 4294967296) i64 @rb_file_s_chown(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
 bb.a:
   %3 = alloca %struct.chown_args, align 4         ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
@@ -336,7 +336,7 @@ to_gid.exit:                                      ; preds = %to_uid.exit, %bb.d
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @rb_file_s_lchmod(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
+define internal range(i64 -4294967295, 4294967296) i64 @rb_file_s_lchmod(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
@@ -360,7 +360,7 @@ rb_check_arity.exit:                              ; preds = %bb.a
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @rb_file_s_lchown(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
+define internal range(i64 -4294967295, 4294967296) i64 @rb_file_s_lchown(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
 bb.a:
   %3 = alloca %struct.chown_args, align 4         ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
@@ -406,7 +406,7 @@ to_gid.exit:                                      ; preds = %to_uid.exit, %bb.d
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @rb_file_s_lutime(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
+define internal range(i64 -4294967295, 4294967296) i64 @rb_file_s_lutime(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
 bb.a:
   %3 = alloca %struct.utime_args, align 8         ; 7 uses
   %4 = alloca [2 x %struct.timespec], align 16    ; 9 uses
@@ -463,7 +463,7 @@ utime_internal_i.exit:                            ; preds = %rb_check_arity.exit
   %i.r = getelementptr i8, ptr %1, i64 16
   %i.s = add nsw i32 %0, -2
   store ptr %.0.i, ptr %3, align 8, !tbaa !104
-  %i.t = call fastcc range(i64 1, 0) i64 @apply2files(ptr noundef nonnull @utime_internal, i32 noundef %i.s, ptr noundef readonly %i.r, ptr noundef nonnull %3)
+  %i.t = call fastcc range(i64 -4294967295, 4294967296) i64 @apply2files(ptr noundef nonnull @utime_internal, i32 noundef %i.s, ptr noundef readonly %i.r, ptr noundef nonnull %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
   ret i64 %i.t
@@ -710,7 +710,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @rb_file_s_unlink(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
+define internal range(i64 -4294967295, 4294967296) i64 @rb_file_s_unlink(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
 bb.a:
   %i.a = tail call fastcc i64 @apply2files(ptr noundef nonnull @unlink_internal, i32 noundef %0, ptr noundef %1, ptr noundef null)
   ret i64 %i.a
@@ -1113,7 +1113,7 @@ declare i64 @rb_usascii_str_new_cstr(ptr noundef) local_unnamed_addr #2
 declare { i64, i64 } @rb_time_timespec(i64 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc range(i64 1, 0) i64 @apply2files(ptr noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3) unnamed_addr #0 {
+define internal fastcc range(i64 -4294967295, 4294967296) i64 @apply2files(ptr noundef %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 6 uses

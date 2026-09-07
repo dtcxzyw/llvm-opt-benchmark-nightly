@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN24Storage_SortOrdered_TestIiE8TestBodyEvEUlT_T0_E_EEEvSF_SG_SG_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dt = sub i64 0, %.09.lcssa.i
+  %i.dt = sub nsw i64 0, %.09.lcssa.i
   %i.du = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.dt
   %i.dv = getelementptr inbounds i8, ptr %i.du, i64 -4
   store i32 %3, ptr %i.dv, align 4, !tbaa !198
@@ -608,7 +608,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN24Storage_SortOrdered_TestIN4test8internal20pointer_stable_mixinINSF_10value_typeIiEEEEE8TestBodyEvEUlT_T0_E_EEEvSL_SM_SM_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dt = sub i64 0, %.09.lcssa.i
+  %i.dt = sub nsw i64 0, %.09.lcssa.i
   %i.du = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.dt
   %i.dv = getelementptr inbounds i8, ptr %i.du, i64 -4
   store i32 %3, ptr %i.dv, align 4, !tbaa !198
@@ -1011,7 +1011,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN24Storage_SortOrdered_TestIN4test8internal32non_trivially_destructible_mixinINSF_10value_typeIiEEEEE8TestBodyEvEUlT_T0_E_EEEvSL_SM_SM_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dx = sub i64 0, %.09.lcssa.i
+  %i.dx = sub nsw i64 0, %.09.lcssa.i
   %i.dy = getelementptr inbounds [4 x i8], ptr %i.ca, i64 %i.dx
   %i.dz = getelementptr inbounds i8, ptr %i.dy, i64 -4
   store i32 %3, ptr %i.dz, align 4, !tbaa !198
@@ -1414,7 +1414,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN24Storage_SortOrdered_TestIN4test8internal20pointer_stable_mixinINSF_32non_trivially_destructible_mixinINSF_10value_typeIiEEEEEEE8TestBodyEvEUlT_T0_E_EEEvSN_SO_SO_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dx = sub i64 0, %.09.lcssa.i
+  %i.dx = sub nsw i64 0, %.09.lcssa.i
   %i.dy = getelementptr inbounds [4 x i8], ptr %i.ca, i64 %i.dx
   %i.dz = getelementptr inbounds i8, ptr %i.dy, i64 -4
   store i32 %3, ptr %i.dz, align 4, !tbaa !198
@@ -1817,7 +1817,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN24Storage_SortReverse_TestIiE8TestBodyEvEUlT_T0_E_EEEvSF_SG_SG_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dt = sub i64 0, %.09.lcssa.i
+  %i.dt = sub nsw i64 0, %.09.lcssa.i
   %i.du = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.dt
   %i.dv = getelementptr inbounds i8, ptr %i.du, i64 -4
   store i32 %3, ptr %i.dv, align 4, !tbaa !198
@@ -2220,7 +2220,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN24Storage_SortReverse_TestIN4test8internal20pointer_stable_mixinINSF_10value_typeIiEEEEE8TestBodyEvEUlT_T0_E_EEEvSL_SM_SM_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dt = sub i64 0, %.09.lcssa.i
+  %i.dt = sub nsw i64 0, %.09.lcssa.i
   %i.du = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.dt
   %i.dv = getelementptr inbounds i8, ptr %i.du, i64 -4
   store i32 %3, ptr %i.dv, align 4, !tbaa !198
@@ -2623,7 +2623,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN24Storage_SortReverse_TestIN4test8internal32non_trivially_destructible_mixinINSF_10value_typeIiEEEEE8TestBodyEvEUlT_T0_E_EEEvSL_SM_SM_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dx = sub i64 0, %.09.lcssa.i
+  %i.dx = sub nsw i64 0, %.09.lcssa.i
   %i.dy = getelementptr inbounds [4 x i8], ptr %i.ca, i64 %i.dx
   %i.dz = getelementptr inbounds i8, ptr %i.dy, i64 -4
   store i32 %3, ptr %i.dz, align 4, !tbaa !198
@@ -3026,7 +3026,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN24Storage_SortReverse_TestIN4test8internal20pointer_stable_mixinINSF_32non_trivially_destructible_mixinINSF_10value_typeIiEEEEEEE8TestBodyEvEUlT_T0_E_EEEvSN_SO_SO_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dx = sub i64 0, %.09.lcssa.i
+  %i.dx = sub nsw i64 0, %.09.lcssa.i
   %i.dy = getelementptr inbounds [4 x i8], ptr %i.ca, i64 %i.dx
   %i.dz = getelementptr inbounds i8, ptr %i.dy, i64 -4
   store i32 %3, ptr %i.dz, align 4, !tbaa !198
@@ -3429,7 +3429,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN26Storage_SortUnordered_TestIiE8TestBodyEvEUlT_T0_E_EEEvSF_SG_SG_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dt = sub i64 0, %.09.lcssa.i
+  %i.dt = sub nsw i64 0, %.09.lcssa.i
   %i.du = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.dt
   %i.dv = getelementptr inbounds i8, ptr %i.du, i64 -4
   store i32 %3, ptr %i.dv, align 4, !tbaa !198
@@ -3832,7 +3832,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN26Storage_SortUnordered_TestIN4test8internal20pointer_stable_mixinINSF_10value_typeIiEEEEE8TestBodyEvEUlT_T0_E_EEEvSL_SM_SM_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dt = sub i64 0, %.09.lcssa.i
+  %i.dt = sub nsw i64 0, %.09.lcssa.i
   %i.du = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.dt
   %i.dv = getelementptr inbounds i8, ptr %i.du, i64 -4
   store i32 %3, ptr %i.dv, align 4, !tbaa !198
@@ -4235,7 +4235,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN26Storage_SortUnordered_TestIN4test8internal32non_trivially_destructible_mixinINSF_10value_typeIiEEEEE8TestBodyEvEUlT_T0_E_EEEvSL_SM_SM_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dx = sub i64 0, %.09.lcssa.i
+  %i.dx = sub nsw i64 0, %.09.lcssa.i
   %i.dy = getelementptr inbounds [4 x i8], ptr %i.ca, i64 %i.dx
   %i.dz = getelementptr inbounds i8, ptr %i.dy, i64 -4
   store i32 %3, ptr %i.dz, align 4, !tbaa !198
@@ -4638,7 +4638,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN26Storage_SortUnordered_TestIN4test8internal20pointer_stable_mixinINSF_32non_trivially_destructible_mixinINSF_10value_typeIiEEEEEEE8TestBodyEvEUlT_T0_E_EEEvSN_SO_SO_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dx = sub i64 0, %.09.lcssa.i
+  %i.dx = sub nsw i64 0, %.09.lcssa.i
   %i.dy = getelementptr inbounds [4 x i8], ptr %i.ca, i64 %i.dx
   %i.dz = getelementptr inbounds i8, ptr %i.dy, i64 -4
   store i32 %3, ptr %i.dz, align 4, !tbaa !198
@@ -5041,7 +5041,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN18Storage_SortN_TestIiE8TestBodyEvEUlT_T0_E0_EEEvSF_SG_SG_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dt = sub i64 0, %.09.lcssa.i
+  %i.dt = sub nsw i64 0, %.09.lcssa.i
   %i.du = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.dt
   %i.dv = getelementptr inbounds i8, ptr %i.du, i64 -4
   store i32 %3, ptr %i.dv, align 4, !tbaa !198
@@ -5444,7 +5444,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN18Storage_SortN_TestIiE8TestBodyEvEUlT_T0_E1_EEEvSF_SG_SG_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dt = sub i64 0, %.09.lcssa.i
+  %i.dt = sub nsw i64 0, %.09.lcssa.i
   %i.du = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.dt
   %i.dv = getelementptr inbounds i8, ptr %i.du, i64 -4
   store i32 %3, ptr %i.dv, align 4, !tbaa !198
@@ -5847,7 +5847,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN18Storage_SortN_TestIN4test8internal20pointer_stable_mixinINSF_10value_typeIiEEEEE8TestBodyEvEUlT_T0_E0_EEEvSL_SM_SM_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dt = sub i64 0, %.09.lcssa.i
+  %i.dt = sub nsw i64 0, %.09.lcssa.i
   %i.du = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.dt
   %i.dv = getelementptr inbounds i8, ptr %i.du, i64 -4
   store i32 %3, ptr %i.dv, align 4, !tbaa !198
@@ -6250,7 +6250,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN18Storage_SortN_TestIN4test8internal20pointer_stable_mixinINSF_10value_typeIiEEEEE8TestBodyEvEUlT_T0_E1_EEEvSL_SM_SM_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dt = sub i64 0, %.09.lcssa.i
+  %i.dt = sub nsw i64 0, %.09.lcssa.i
   %i.du = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.dt
   %i.dv = getelementptr inbounds i8, ptr %i.du, i64 -4
   store i32 %3, ptr %i.dv, align 4, !tbaa !198
@@ -6653,7 +6653,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN18Storage_SortN_TestIN4test8internal32non_trivially_destructible_mixinINSF_10value_typeIiEEEEE8TestBodyEvEUlT_T0_E0_EEEvSL_SM_SM_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dx = sub i64 0, %.09.lcssa.i
+  %i.dx = sub nsw i64 0, %.09.lcssa.i
   %i.dy = getelementptr inbounds [4 x i8], ptr %i.ca, i64 %i.dx
   %i.dz = getelementptr inbounds i8, ptr %i.dy, i64 -4
   store i32 %3, ptr %i.dz, align 4, !tbaa !198
@@ -7056,7 +7056,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN18Storage_SortN_TestIN4test8internal32non_trivially_destructible_mixinINSF_10value_typeIiEEEEE8TestBodyEvEUlT_T0_E1_EEEvSL_SM_SM_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dx = sub i64 0, %.09.lcssa.i
+  %i.dx = sub nsw i64 0, %.09.lcssa.i
   %i.dy = getelementptr inbounds [4 x i8], ptr %i.ca, i64 %i.dx
   %i.dz = getelementptr inbounds i8, ptr %i.dy, i64 -4
   store i32 %3, ptr %i.dz, align 4, !tbaa !198
@@ -7459,7 +7459,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN18Storage_SortN_TestIN4test8internal20pointer_stable_mixinINSF_32non_trivially_destructible_mixinINSF_10value_typeIiEEEEEEE8TestBodyEvEUlT_T0_E0_EEEvSN_SO_SO_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dx = sub i64 0, %.09.lcssa.i
+  %i.dx = sub nsw i64 0, %.09.lcssa.i
   %i.dy = getelementptr inbounds [4 x i8], ptr %i.ca, i64 %i.dx
   %i.dz = getelementptr inbounds i8, ptr %i.dy, i64 -4
   store i32 %3, ptr %i.dz, align 4, !tbaa !198
@@ -7862,7 +7862,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZSt11__push_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN11StorageBase9my_entityESt6vectorIS4_SaIS4_EEEEElS4_NS1_5__ops14_Iter_comp_valIZN18Storage_SortN_TestIN4test8internal20pointer_stable_mixinINSF_32non_trivially_destructible_mixinINSF_10value_typeIiEEEEEEE8TestBodyEvEUlT_T0_E1_EEEvSN_SO_SO_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.09.lcssa.i = phi i64 [ %.122, %bb.e ], [ %.0916.i, %bb.f ], [ %.017.i, %bb.g ]
-  %i.dx = sub i64 0, %.09.lcssa.i
+  %i.dx = sub nsw i64 0, %.09.lcssa.i
   %i.dy = getelementptr inbounds [4 x i8], ptr %i.ca, i64 %i.dx
   %i.dz = getelementptr inbounds i8, ptr %i.dy, i64 -4
   store i32 %3, ptr %i.dz, align 4, !tbaa !198

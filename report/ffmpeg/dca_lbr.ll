@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.w
   br i1 %i.bl, label %.preheader57.preheader.i, label %random_ts.exit.filter_ts.exit_crit_edge
 
 .preheader57.preheader.i:                         ; preds = %.preheader57.lr.ph.i
-  %i.bm = add i32 %i.bj, 1
+  %i.bm = add nuw i32 %i.bj, 1
   br label %.preheader57.i
 
 .preheader57.i:                                   ; preds = %._crit_edge.i, %.preheader57.preheader.i

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %Kit_TruthCopy.exit
   %i.cd = and i32 %i.cc, 1
   %i.ce = shl nsw i32 %i.cb, 1
   %i.cf = or disjoint i32 %i.cd, %i.ce
-  %i.cg = trunc i32 %i.cf to i16
+  %i.cg = trunc nsw i32 %i.cf to i16
   store i16 %i.cg, ptr %i.bo, align 4, !tbaa !56
   br label %bb.f
 

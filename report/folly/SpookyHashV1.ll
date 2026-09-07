@@ -171,7 +171,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.db = load i8, ptr %i.da, align 1, !tbaa !15
   %i.dc = zext i8 %i.db to i64
   %i.dd = shl nuw nsw i64 %i.dc, 40
-  %i.de = add i64 %i.dd, %.1169
+  %i.de = add nuw i64 %i.dd, %.1169
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.d
@@ -180,7 +180,7 @@ bb.g:                                             ; preds = %bb.f, %bb.d
   %i.dg = load i8, ptr %i.df, align 1, !tbaa !15
   %i.dh = zext i8 %i.dg to i64
   %i.di = shl nuw nsw i64 %i.dh, 32
-  %i.dj = add i64 %i.di, %.2
+  %i.dj = add nuw i64 %i.di, %.2
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.d
@@ -188,7 +188,7 @@ bb.h:                                             ; preds = %bb.g, %bb.d
   %i.dk = getelementptr inbounds nuw i8, ptr %.sroa.0.2, i64 8
   %i.dl = load i32, ptr %i.dk, align 4, !tbaa !20
   %i.dm = zext i32 %i.dl to i64
-  %i.dn = add i64 %.3, %i.dm
+  %i.dn = add nuw i64 %.3, %i.dm
   %i.do = load i64, ptr %.sroa.0.2, align 8, !tbaa !13
   %i.dp = add i64 %i.do, %.1171
   br label %bb.u
