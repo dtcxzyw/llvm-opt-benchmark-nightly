@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   ret void, !dbg !10160
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.c = add i64 %.sroa.0.18, 1, !dbg !10160      ; 2 uses
+  %i.c = add nuw nsw i64 %.sroa.0.18, 1, !dbg !10160 ; 2 uses
   %i.d = icmp eq i64 %i.c, 3, !dbg !10160
   br i1 %i.d, label %._crit_edge, label %.lr.ph, !dbg !10160
 

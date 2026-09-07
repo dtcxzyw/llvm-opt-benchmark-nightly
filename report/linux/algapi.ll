@@ -204,24 +204,23 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.c ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.c ] ; 4 uses
   %i.b = getelementptr [392 x i8], ptr %0, i64 %indvars.iv
   %i.c = tail call i32 @crypto_register_alg(ptr noundef %i.b) #18 ; 3 uses
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %2 = trunc nuw nsw i64 %indvars.iv to i32
-  %.04.i = add i32 %2, -1                         ; 2 uses
-  %3 = icmp sgt i32 %.04.i, -1
-  br i1 %3, label %.lr.ph.preheader.i, label %crypto_unregister_algs.exit
+  %.not20 = icmp eq i64 %indvars.iv, 0
+  br i1 %.not20, label %crypto_unregister_algs.exit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.b
-  %4 = zext nneg i32 %.04.i to i64
+  %.04.i = add nuw i64 %indvars.iv, 4294967295
+  %2 = and i64 %.04.i, 4294967295
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ %4, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %2, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph.i ] ; 3 uses
   %i.d = getelementptr [392 x i8], ptr %0, i64 %indvars.iv.i
   tail call void @crypto_unregister_alg(ptr noundef %i.d) #18
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1

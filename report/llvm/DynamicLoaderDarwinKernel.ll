@@ -205,7 +205,7 @@ _ZL9is_kernelPN12lldb_private6ModuleE.exit.thread: ; preds = %_ZN12lldb_private1
 define dso_local noundef i64 @_ZN25DynamicLoaderDarwinKernel29SearchForKernelWithDebugHintsEPN12lldb_private7ProcessE(ptr noundef %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %1 = alloca %"class.lldb_private::Status", align 8 ; 7 uses
-  %i.a = alloca [6 x i64], align 16               ; 9 uses
+  %i.a = alloca [6 x i64], align 16               ; 8 uses
   %i.b = alloca [8 x i8], align 1                 ; 8 uses
   %2 = alloca %"class.lldb_private::DataExtractor", align 8 ; 5 uses
   %i.c = alloca i64, align 8                      ; 4 uses
@@ -257,7 +257,6 @@ _ZNK35DynamicLoaderDarwinKernelProperties11GetScanTypeEv.exit.thread: ; preds = 
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #23
   call void @_ZN12lldb_private6StatusC1Ev(ptr noundef nonnull align 8 dereferenceable(40) %1) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
-  store i64 -68719468528, ptr %i.a, align 16
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 -2199023239152, ptr %i.w, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -313,7 +312,7 @@ _ZN12lldb_private4UUIDD2Ev.exit:                  ; preds = %bb.f, %bb.g
   br i1 %.not.i.i36.not, label %bb.h, label %.thread44
 
 bb.h:                                             ; preds = %bb.e, %_ZN12lldb_private4UUIDD2Ev.exit
-  %i.ao = add i64 %.02849, 1                      ; 2 uses
+  %i.ao = add nuw nsw i64 %.02849, 1              ; 2 uses
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ao
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !143 ; 2 uses
   %.not = icmp eq i64 %i.aq, -1

@@ -202,30 +202,38 @@ bb.c:                                             ; preds = %bb.b
   %i.j = load i32, ptr %i.i, align 1              ; 3 uses
   %i.k = add i16 %.val, -8                        ; 2 uses
   %.not7692 = icmp sgt i32 %i.j, -1
-  br i1 %.not7692, label %._crit_edge, label %.lr.ph
+  br i1 %.not7692, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.c, %bb.d
-  %.06294 = phi i16 [ %i.q, %bb.d ], [ %i.k, %bb.c ] ; 2 uses
-  %.06393 = phi i32 [ %7, %bb.d ], [ %i.a, %bb.c ] ; 4 uses
-  %5 = zext i16 %.06294 to i32
-  %i.l = add i32 %.06393, %5                      ; 2 uses
-  %i.m = icmp ugt i32 %i.l, %.06393
+.lr.ph.preheader:                                 ; preds = %bb.c
+  %5 = sext i32 %i.a to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
+  %indvars.iv = phi i64 [ %5, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.d ] ; 3 uses
+  %.06294 = phi i16 [ %i.k, %.lr.ph.preheader ], [ %i.q, %bb.d ] ; 2 uses
+  %6 = zext i16 %.06294 to i32
+  %7 = trunc nsw i64 %indvars.iv to i32           ; 2 uses
+  %i.l = add i32 %7, %6                           ; 2 uses
+  %i.m = icmp ugt i32 %i.l, %7
   %i.n = icmp ult i32 %i.l, 5
   %or.cond84 = and i1 %i.m, %i.n
   br i1 %or.cond84, label %bb.d, label %.loopexit
 
 bb.d:                                             ; preds = %.lr.ph
-  %6 = sext i32 %.06393 to i64
-  %i.o = getelementptr i8, ptr %0, i64 %6
+  %i.o = getelementptr i8, ptr %0, i64 %indvars.iv
   %i.p = load i32, ptr %i.o, align 1
-  %7 = add i32 %.06393, 4                         ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %i.q = add i16 %.06294, -4                      ; 2 uses
   %.not76 = icmp sgt i32 %i.p, -1
-  br i1 %.not76, label %._crit_edge, label %.lr.ph, !llvm.loop !13
+  br i1 %.not76, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !13
 
-._crit_edge:                                      ; preds = %bb.d, %bb.c
-  %.063.lcssa = phi i32 [ %i.a, %bb.c ], [ %7, %bb.d ] ; 3 uses
-  %.062.lcssa = phi i16 [ %i.k, %bb.c ], [ %i.q, %bb.d ] ; 2 uses
+._crit_edge.loopexit:                             ; preds = %bb.d
+  %8 = trunc nsw i64 %indvars.iv.next to i32
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
+  %.063.lcssa = phi i32 [ %i.a, %bb.c ], [ %8, %._crit_edge.loopexit ] ; 3 uses
+  %.062.lcssa = phi i16 [ %i.k, %bb.c ], [ %i.q, %._crit_edge.loopexit ] ; 2 uses
   %i.r = and i32 %i.j, 1
   %.not77 = icmp eq i32 %i.r, 0
   br i1 %.not77, label %bb.g, label %bb.e

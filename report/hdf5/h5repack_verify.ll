@@ -204,14 +204,12 @@ bb.q:                                             ; preds = %bb.g, %bb.g
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.s
-  %4 = add i32 %.178, 1                           ; 2 uses
-  %5 = zext i32 %4 to i64                         ; 2 uses
-  %i.ap = icmp ugt i64 %i.al, %5
+  %indvars.iv.next = add nuw i64 %i.aq, 1         ; 2 uses
+  %i.ap = icmp ugt i64 %i.al, %indvars.iv.next
   br i1 %i.ap, label %bb.s, label %.loopexit, !llvm.loop !57
 
 bb.s:                                             ; preds = %.lr.ph, %bb.r
-  %i.aq = phi i64 [ 0, %.lr.ph ], [ %5, %bb.r ]   ; 2 uses
-  %.178 = phi i32 [ 0, %.lr.ph ], [ %4, %bb.r ]
+  %i.aq = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.r ] ; 3 uses
   %i.ar = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.aq
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !12
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %i.aq
@@ -235,14 +233,12 @@ bb.t:                                             ; preds = %bb.g
   br label %bb.v
 
 bb.u:                                             ; preds = %bb.v
-  %6 = add i32 %.280, 1                           ; 2 uses
-  %7 = zext i32 %6 to i64                         ; 2 uses
-  %i.az = icmp ugt i64 %i.av, %7
+  %indvars.iv.next117 = add nuw i64 %i.ba, 1      ; 2 uses
+  %i.az = icmp ugt i64 %i.av, %indvars.iv.next117
   br i1 %i.az, label %bb.v, label %.loopexit, !llvm.loop !58
 
 bb.v:                                             ; preds = %.lr.ph81, %bb.u
-  %i.ba = phi i64 [ 0, %.lr.ph81 ], [ %7, %bb.u ] ; 2 uses
-  %.280 = phi i32 [ 0, %.lr.ph81 ], [ %6, %bb.u ]
+  %i.ba = phi i64 [ 0, %.lr.ph81 ], [ %indvars.iv.next117, %bb.u ] ; 3 uses
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.ba
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !12
   %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %i.ba

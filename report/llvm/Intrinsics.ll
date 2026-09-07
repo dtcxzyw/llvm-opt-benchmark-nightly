@@ -204,13 +204,12 @@ bb.b:                                             ; preds = %bb.a
   br label %.loopexit
 
 .preheader:                                       ; preds = %bb.a, %.preheader
-  %3 = phi i32 [ %4, %.preheader ], [ 0, %bb.a ]  ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader ], [ 0, %bb.a ] ; 2 uses
   %.0 = phi i16 [ %i.l, %.preheader ], [ %i.f, %bb.a ] ; 2 uses
   %i.i = trunc i16 %.0 to i8
   %i.j = and i8 %i.i, 15
-  %4 = add i32 %3, 1
-  %5 = zext i32 %3 to i64
-  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 %5
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   store i8 %i.j, ptr %i.k, align 1, !tbaa !22
   %i.l = lshr i16 %.0, 4                          ; 2 uses
   %.not10 = icmp eq i16 %i.l, 0
@@ -613,7 +612,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.hu = and i16 %i.ht, -2
   store i16 %i.hu, ptr %i.hs, align 2
   %i.hv = load i16, ptr %i.hp, align 2, !tbaa !198 ; 2 uses
-  %i.hw = add i16 %i.hv, 1
+  %i.hw = add nuw i16 %i.hv, 1
   store i16 %i.hw, ptr %i.hp, align 2, !tbaa !198
   %i.hx = zext i16 %i.hv to i64
   %i.hy = getelementptr inbounds nuw [2 x i8], ptr %i.ho, i64 %i.hx ; 2 uses
@@ -761,7 +760,7 @@ bb.as:                                            ; preds = %.lr.ph, %bb.at
   %i.jx = or i16 %i.jw, 1
   store i16 %i.jx, ptr %i.jv, align 2
   %i.jy = load i16, ptr %i.js, align 2, !tbaa !198 ; 2 uses
-  %i.jz = add i16 %i.jy, 1
+  %i.jz = add nuw i16 %i.jy, 1
   store i16 %i.jz, ptr %i.js, align 2, !tbaa !198
   %i.ka = zext i16 %i.jy to i64
   %i.kb = getelementptr inbounds nuw [2 x i8], ptr %i.jr, i64 %i.ka ; 2 uses
@@ -1164,7 +1163,7 @@ bb.cn:                                            ; preds = %bb.cm
   %i.sx = and i16 %i.sw, -2
   store i16 %i.sx, ptr %i.sv, align 2
   %i.sy = load i16, ptr %i.su, align 2, !tbaa !198 ; 2 uses
-  %i.sz = add i16 %i.sy, 1
+  %i.sz = add nuw i16 %i.sy, 1
   store i16 %i.sz, ptr %i.su, align 2, !tbaa !198
   %i.ta = zext i16 %i.sy to i64
   %i.tb = getelementptr inbounds nuw [2 x i8], ptr %i.st, i64 %i.ta ; 2 uses

@@ -204,10 +204,9 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.a, %bb.r
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.r ] ; 11 uses
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next30, %bb.r ] ; 11 uses
   %.01528 = phi i32 [ 0, %bb.a ], [ %i.cp, %bb.r ] ; 2 uses
   %i.f = uitofp nsz nneg i32 %.01528 to float     ; 10 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 10
   %i.g = call nsz noundef float @_Z14NoiseFractal2DPK11NoiseParamsffi(ptr noundef nonnull %1, float noundef 0.000000e+00, float noundef %i.f, i32 noundef 1337)
   %i.h = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_2d_resultsE, i64 %indvars.iv
   %i.i = load float, ptr %i.h, align 8, !tbaa !24
@@ -371,6 +370,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.co, label %bb.c, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
+  %indvars.iv.next30 = add nuw nsw i64 %indvars.iv, 10
   %i.cp = add nuw nsw i32 %.01528, 1              ; 2 uses
   %.not = icmp eq i32 %i.cp, 10
   br i1 %.not, label %bb.b, label %.preheader, !llvm.loop !46
@@ -739,6 +739,7 @@ bb.a:
   %.02037 = phi i32 [ 0, %bb.a ], [ %i.h, %bb.c ] ; 2 uses
   %i.g = uitofp nsz nneg i32 %.01938 to float     ; 10 uses
   %i.h = add nuw nsw i32 %.02037, 100
+  %3 = zext nneg i32 %.02037 to i64
   br label %.preheader
 
 bb.b:                                             ; preds = %bb.c
@@ -747,12 +748,11 @@ bb.b:                                             ; preds = %bb.c
 
 .preheader:                                       ; preds = %.preheader30, %bb.q
   %.01836 = phi i32 [ 0, %.preheader30 ], [ %i.cf, %bb.q ] ; 2 uses
-  %.12135 = phi i32 [ %.02037, %.preheader30 ], [ %3, %bb.q ] ; 11 uses
+  %.12135 = phi i64 [ %3, %.preheader30 ], [ %4, %bb.q ] ; 11 uses
   %i.i = uitofp nsz nneg i32 %.01836 to float     ; 10 uses
-  %3 = add i32 %.12135, 10
+  %4 = add nuw nsw i64 %.12135, 10
   %i.j = call nsz noundef float @_Z14NoiseFractal3DPK11NoiseParamsfffi(ptr noundef nonnull %1, float noundef 0.000000e+00, float noundef %i.i, float noundef %i.g, i32 noundef 1337)
-  %4 = zext i32 %.12135 to i64
-  %i.k = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %4
+  %i.k = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %.12135
   %i.l = load float, ptr %i.k, align 8, !tbaa !24
   %i.m = fsub nsz float %i.j, %i.l
   %i.n = call nsz noundef float @llvm.fabs.f32(float %i.m)
@@ -824,11 +824,10 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   resume { ptr, i32 } %.pn28
 
 bb.h:                                             ; preds = %.preheader
-  %5 = or disjoint i32 %.12135, 1
   %i.ad = call nsz noundef float @_Z14NoiseFractal3DPK11NoiseParamsfffi(ptr noundef nonnull %1, float noundef 1.000000e+00, float noundef %i.i, float noundef %i.g, i32 noundef 1337)
-  %6 = zext i32 %5 to i64
-  %7 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %6
-  %i.ae = load float, ptr %7, align 4, !tbaa !24
+  %5 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %.12135
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %i.ae = load float, ptr %6, align 4, !tbaa !24
   %i.af = fsub nsz float %i.ad, %i.ae
   %i.ag = call nsz noundef float @llvm.fabs.f32(float %i.af)
   %i.ah = fpext nsz float %i.ag to double
@@ -836,11 +835,10 @@ bb.h:                                             ; preds = %.preheader
   br i1 %i.ai, label %.noexc.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %8 = add i32 %.12135, 2
   %i.aj = call nsz noundef float @_Z14NoiseFractal3DPK11NoiseParamsfffi(ptr noundef nonnull %1, float noundef 2.000000e+00, float noundef %i.i, float noundef %i.g, i32 noundef 1337)
-  %9 = zext i32 %8 to i64
-  %10 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %9
-  %i.ak = load float, ptr %10, align 8, !tbaa !24
+  %7 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %.12135
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.ak = load float, ptr %8, align 8, !tbaa !24
   %i.al = fsub nsz float %i.aj, %i.ak
   %i.am = call nsz noundef float @llvm.fabs.f32(float %i.al)
   %i.an = fpext nsz float %i.am to double
@@ -848,11 +846,10 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ao, label %.noexc.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %11 = add i32 %.12135, 3
   %i.ap = call nsz noundef float @_Z14NoiseFractal3DPK11NoiseParamsfffi(ptr noundef nonnull %1, float noundef 3.000000e+00, float noundef %i.i, float noundef %i.g, i32 noundef 1337)
-  %12 = zext i32 %11 to i64
-  %13 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %12
-  %i.aq = load float, ptr %13, align 4, !tbaa !24
+  %9 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %.12135
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 12
+  %i.aq = load float, ptr %10, align 4, !tbaa !24
   %i.ar = fsub nsz float %i.ap, %i.aq
   %i.as = call nsz noundef float @llvm.fabs.f32(float %i.ar)
   %i.at = fpext nsz float %i.as to double
@@ -860,11 +857,10 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.au, label %.noexc.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %14 = add i32 %.12135, 4
   %i.av = call nsz noundef float @_Z14NoiseFractal3DPK11NoiseParamsfffi(ptr noundef nonnull %1, float noundef 4.000000e+00, float noundef %i.i, float noundef %i.g, i32 noundef 1337)
-  %15 = zext i32 %14 to i64
-  %16 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %15
-  %i.aw = load float, ptr %16, align 8, !tbaa !24
+  %11 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %.12135
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 16
+  %i.aw = load float, ptr %12, align 8, !tbaa !24
   %i.ax = fsub nsz float %i.av, %i.aw
   %i.ay = call nsz noundef float @llvm.fabs.f32(float %i.ax)
   %i.az = fpext nsz float %i.ay to double
@@ -872,11 +868,10 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ba, label %.noexc.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %17 = add i32 %.12135, 5
   %i.bb = call nsz noundef float @_Z14NoiseFractal3DPK11NoiseParamsfffi(ptr noundef nonnull %1, float noundef 5.000000e+00, float noundef %i.i, float noundef %i.g, i32 noundef 1337)
-  %18 = zext i32 %17 to i64
-  %19 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %18
-  %i.bc = load float, ptr %19, align 4, !tbaa !24
+  %13 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %.12135
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 20
+  %i.bc = load float, ptr %14, align 4, !tbaa !24
   %i.bd = fsub nsz float %i.bb, %i.bc
   %i.be = call nsz noundef float @llvm.fabs.f32(float %i.bd)
   %i.bf = fpext nsz float %i.be to double
@@ -884,11 +879,10 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bg, label %.noexc.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %20 = add i32 %.12135, 6
   %i.bh = call nsz noundef float @_Z14NoiseFractal3DPK11NoiseParamsfffi(ptr noundef nonnull %1, float noundef 6.000000e+00, float noundef %i.i, float noundef %i.g, i32 noundef 1337)
-  %21 = zext i32 %20 to i64
-  %22 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %21
-  %i.bi = load float, ptr %22, align 8, !tbaa !24
+  %15 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %.12135
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 24
+  %i.bi = load float, ptr %16, align 8, !tbaa !24
   %i.bj = fsub nsz float %i.bh, %i.bi
   %i.bk = call nsz noundef float @llvm.fabs.f32(float %i.bj)
   %i.bl = fpext nsz float %i.bk to double
@@ -896,11 +890,10 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.bm, label %.noexc.i, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %23 = add i32 %.12135, 7
   %i.bn = call nsz noundef float @_Z14NoiseFractal3DPK11NoiseParamsfffi(ptr noundef nonnull %1, float noundef 7.000000e+00, float noundef %i.i, float noundef %i.g, i32 noundef 1337)
-  %24 = zext i32 %23 to i64
-  %25 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %24
-  %i.bo = load float, ptr %25, align 4, !tbaa !24
+  %17 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %.12135
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 28
+  %i.bo = load float, ptr %18, align 4, !tbaa !24
   %i.bp = fsub nsz float %i.bn, %i.bo
   %i.bq = call nsz noundef float @llvm.fabs.f32(float %i.bp)
   %i.br = fpext nsz float %i.bq to double
@@ -908,11 +901,10 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.bs, label %.noexc.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %26 = add i32 %.12135, 8
   %i.bt = call nsz noundef float @_Z14NoiseFractal3DPK11NoiseParamsfffi(ptr noundef nonnull %1, float noundef 8.000000e+00, float noundef %i.i, float noundef %i.g, i32 noundef 1337)
-  %27 = zext i32 %26 to i64
-  %28 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %27
-  %i.bu = load float, ptr %28, align 8, !tbaa !24
+  %19 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %.12135
+  %20 = getelementptr inbounds nuw i8, ptr %19, i64 32
+  %i.bu = load float, ptr %20, align 8, !tbaa !24
   %i.bv = fsub nsz float %i.bt, %i.bu
   %i.bw = call nsz noundef float @llvm.fabs.f32(float %i.bv)
   %i.bx = fpext nsz float %i.bw to double
@@ -920,11 +912,10 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.by, label %.noexc.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %29 = add i32 %.12135, 9
   %i.bz = call nsz noundef float @_Z14NoiseFractal3DPK11NoiseParamsfffi(ptr noundef nonnull %1, float noundef 9.000000e+00, float noundef %i.i, float noundef %i.g, i32 noundef 1337)
-  %30 = zext i32 %29 to i64
-  %31 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %30
-  %i.ca = load float, ptr %31, align 4, !tbaa !24
+  %21 = getelementptr inbounds nuw [4 x i8], ptr @_ZN9TestNoise19expected_3d_resultsE, i64 %.12135
+  %22 = getelementptr inbounds nuw i8, ptr %21, i64 36
+  %i.ca = load float, ptr %22, align 4, !tbaa !24
   %i.cb = fsub nsz float %i.bz, %i.ca
   %i.cc = call nsz noundef float @llvm.fabs.f32(float %i.cb)
   %i.cd = fpext nsz float %i.cc to double

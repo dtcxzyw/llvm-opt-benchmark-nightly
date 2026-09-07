@@ -80,7 +80,7 @@ bb.a:
   %i.c = alloca i64, align 8                      ; 6 uses
   %i.d = alloca i64, align 8                      ; 6 uses
   %i.e = alloca i64, align 8                      ; 6 uses
-  %i.f = alloca [515 x i8], align 16              ; 8 uses
+  %i.f = alloca [515 x i8], align 16              ; 6 uses
   %4 = alloca %struct.DmgHeaderState, align 8     ; 8 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.h = load ptr, ptr %i.g, align 8              ; 13 uses
@@ -158,7 +158,7 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.ai, label %bb.l, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.k
-  %i.aj = add nsw i64 %i.ag, -3
+  %i.aj = add nsw i64 %i.ag, -4
   br label %.lr.ph.i
 
 bb.l:                                             ; preds = %bb.k
@@ -168,38 +168,34 @@ bb.l:                                             ; preds = %bb.k
   br label %dmg_find_koly_offset.exit.thread
 
 .lr.ph.i:                                         ; preds = %.lr.ph._crit_edge.i, %.lr.ph.preheader.i
-  %i.am = phi i64 [ %6, %.lr.ph._crit_edge.i ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
-  %.035.i = phi i32 [ %5, %.lr.ph._crit_edge.i ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
-  %i.an = getelementptr inbounds i8, ptr %i.f, i64 %i.am
+  %i.am = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %.lr.ph._crit_edge.i ] ; 4 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.am ; 4 uses
   %i.ao = load i8, ptr %i.an, align 1
   %i.ap = icmp eq i8 %i.ao, 107
-  %5 = add i32 %.035.i, 1                         ; 2 uses
-  %6 = sext i32 %5 to i64                         ; 3 uses
   br i1 %i.ap, label %bb.m, label %.lr.ph._crit_edge.i
 
 bb.m:                                             ; preds = %.lr.ph.i
-  %i.aq = getelementptr inbounds i8, ptr %i.f, i64 %6
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 1
   %i.ar = load i8, ptr %i.aq, align 1
   %i.as = icmp eq i8 %i.ar, 111
   br i1 %i.as, label %bb.n, label %.lr.ph._crit_edge.i
 
 bb.n:                                             ; preds = %bb.m
-  %7 = sext i32 %.035.i to i64
-  %8 = getelementptr i8, ptr %i.f, i64 %7         ; 2 uses
-  %i.at = getelementptr i8, ptr %8, i64 2
+  %i.at = getelementptr inbounds nuw i8, ptr %i.an, i64 2
   %i.au = load i8, ptr %i.at, align 1
   %i.av = icmp eq i8 %i.au, 108
   br i1 %i.av, label %bb.o, label %.lr.ph._crit_edge.i
 
 bb.o:                                             ; preds = %bb.n
-  %i.aw = getelementptr i8, ptr %8, i64 3
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.an, i64 3
   %i.ax = load i8, ptr %i.aw, align 1
   %i.ay = icmp eq i8 %i.ax, 121
   br i1 %i.ay, label %dmg_find_koly_offset.exit, label %.lr.ph._crit_edge.i
 
 .lr.ph._crit_edge.i:                              ; preds = %bb.o, %bb.n, %bb.m, %.lr.ph.i
-  %9 = icmp sgt i64 %i.aj, %6
-  br i1 %9, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !9
+  %indvars.iv.next.i = add nuw nsw i64 %i.am, 1
+  %exitcond.not.i = icmp eq i64 %i.am, %i.aj
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !9
 
 ._crit_edge.i:                                    ; preds = %.lr.ph._crit_edge.i
   call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %3, ptr noundef nonnull @.str.3, i32 noundef 186, ptr noundef nonnull @__func__.dmg_find_koly_offset, ptr noundef nonnull @.str.12) #11
@@ -211,7 +207,7 @@ dmg_find_koly_offset.exit.thread:                 ; preds = %bb.h, %bb.j, %bb.l,
   br label %bb.p
 
 dmg_find_koly_offset.exit:                        ; preds = %bb.o
-  %i.az = add i64 %i.am, %spec.select.i           ; 13 uses
+  %i.az = add nuw i64 %i.am, %spec.select.i       ; 13 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #11
   %i.ba = icmp slt i64 %i.az, 0
   br i1 %i.ba, label %bb.p, label %bb.q

@@ -204,10 +204,9 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.aj, label %_ZL14SafeCharToWidePKcPwm.exit.thread.i, label %.preheader30.i.i
 
 .preheader30.i.i:                                 ; preds = %bb.g, %bb.i
-  %.024.i.i = phi i32 [ %.125.i.i, %bb.i ], [ 0, %bb.g ] ; 3 uses
-  %.022.i.i = phi i32 [ %6, %bb.i ], [ 0, %bb.g ] ; 2 uses
-  %5 = zext i32 %.022.i.i to i64
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.c, i64 %5
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.i ], [ 0, %bb.g ] ; 2 uses
+  %.022.i.i = phi i32 [ %.125.i.i, %bb.i ], [ 0, %bb.g ] ; 3 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.i
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !81
   switch i8 %i.al, label %bb.i [
     i8 0, label %.preheader.i.i
@@ -216,12 +215,12 @@ bb.g:                                             ; preds = %bb.f
   ]
 
 bb.h:                                             ; preds = %.preheader30.i.i, %.preheader30.i.i
-  %i.am = add i32 %.024.i.i, 1
+  %i.am = add i32 %.022.i.i, 1
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %.preheader30.i.i
-  %.125.i.i = phi i32 [ %i.am, %bb.h ], [ %.024.i.i, %.preheader30.i.i ]
-  %6 = add i32 %.022.i.i, 1
+  %.125.i.i = phi i32 [ %i.am, %bb.h ], [ %.022.i.i, %.preheader30.i.i ]
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
   br label %.preheader30.i.i, !llvm.loop !102
 
 .preheader.i.i:                                   ; preds = %.preheader30.i.i, %bb.k
@@ -247,7 +246,7 @@ bb.k:                                             ; preds = %bb.j, %.preheader.i
   br label %.preheader.i.i, !llvm.loop !103
 
 _ZL14SafeCharToWidePKcPwm.exit.i:                 ; preds = %.preheader.i.i
-  %i.aq = icmp eq i32 %.024.i.i, %.023.i.i
+  %i.aq = icmp eq i32 %.022.i.i, %.023.i.i
   br i1 %i.aq, label %bb.l, label %_ZL14SafeCharToWidePKcPwm.exit.thread.i
 
 bb.l:                                             ; preds = %_ZL14SafeCharToWidePKcPwm.exit.i
@@ -309,10 +308,9 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.bg, label %_ZL14SafeCharToWidePKcPwm.exit.thread.i16, label %.preheader30.i.i18
 
 .preheader30.i.i18:                               ; preds = %bb.s, %bb.u
-  %.024.i.i19 = phi i32 [ %.125.i.i21, %bb.u ], [ 0, %bb.s ] ; 3 uses
-  %.022.i.i20 = phi i32 [ %8, %bb.u ], [ 0, %bb.s ] ; 2 uses
-  %7 = zext i32 %.022.i.i20 to i64
-  %i.bh = getelementptr inbounds nuw i8, ptr %i.a, i64 %7
+  %indvars.iv.i19 = phi i64 [ %indvars.iv.next.i22, %bb.u ], [ 0, %bb.s ] ; 2 uses
+  %.022.i.i20 = phi i32 [ %.125.i.i21, %bb.u ], [ 0, %bb.s ] ; 3 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i19
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !81
   switch i8 %i.bi, label %bb.u [
     i8 0, label %.preheader.i.i23
@@ -321,12 +319,12 @@ bb.s:                                             ; preds = %bb.r
   ]
 
 bb.t:                                             ; preds = %.preheader30.i.i18, %.preheader30.i.i18
-  %i.bj = add i32 %.024.i.i19, 1
+  %i.bj = add i32 %.022.i.i20, 1
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %.preheader30.i.i18
-  %.125.i.i21 = phi i32 [ %i.bj, %bb.t ], [ %.024.i.i19, %.preheader30.i.i18 ]
-  %8 = add i32 %.022.i.i20, 1
+  %.125.i.i21 = phi i32 [ %i.bj, %bb.t ], [ %.022.i.i20, %.preheader30.i.i18 ]
+  %indvars.iv.next.i22 = add nuw nsw i64 %indvars.iv.i19, 1
   br label %.preheader30.i.i18, !llvm.loop !102
 
 .preheader.i.i23:                                 ; preds = %.preheader30.i.i18, %bb.w
@@ -352,7 +350,7 @@ bb.w:                                             ; preds = %bb.v, %.preheader.i
   br label %.preheader.i.i23, !llvm.loop !103
 
 _ZL14SafeCharToWidePKcPwm.exit.i30:               ; preds = %.preheader.i.i23
-  %i.bn = icmp eq i32 %.024.i.i19, %.023.i.i24
+  %i.bn = icmp eq i32 %.022.i.i20, %.023.i.i24
   br i1 %i.bn, label %bb.x, label %_ZL14SafeCharToWidePKcPwm.exit.thread.i16
 
 bb.x:                                             ; preds = %_ZL14SafeCharToWidePKcPwm.exit.i30

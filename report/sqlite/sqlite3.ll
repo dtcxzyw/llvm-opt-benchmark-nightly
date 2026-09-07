@@ -206,8 +206,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.lr.ph67.i.i.i
 
 .preheader.i.i.i:                                 ; preds = %._crit_edge.i.i.i
-  %i.hy = add i32 %.1.lcssa.i.i.i, 1              ; 2 uses
-  %i.hz = icmp ult i32 %i.hy, 13
+  %i.hy = add nuw nsw i32 %.1.lcssa.i.i.i, 1
+  %i.hz = icmp ult i32 %.1.lcssa.i.i.i, 12
   br i1 %i.hz, label %.lr.ph75.preheader.i.i.i, label %.loopexit.i.i
 
 .lr.ph75.preheader.i.i.i:                         ; preds = %.preheader.i.i.i, %._crit_edge.i.i
@@ -226,11 +226,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %.not2859.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph67.i.i.i, %walMerge.exit.i.i.i
-  %.162.i.i.i = phi i32 [ %13, %walMerge.exit.i.i.i ], [ 0, %.lr.ph67.i.i.i ] ; 2 uses
+  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %walMerge.exit.i.i.i ], [ 0, %.lr.ph67.i.i.i ] ; 3 uses
   %.15361.i.i.i = phi ptr [ %i.ig, %walMerge.exit.i.i.i ], [ %i.ib, %.lr.ph67.i.i.i ] ; 2 uses
   %.15660.i.i.i = phi i32 [ %.038.lcssa.i.i.i.i, %walMerge.exit.i.i.i ], [ 1, %.lr.ph67.i.i.i ] ; 2 uses
-  %12 = zext i32 %.162.i.i.i to i64
-  %i.ie = getelementptr inbounds nuw [16 x i8], ptr %10, i64 %12 ; 2 uses
+  %i.ie = getelementptr inbounds nuw [16 x i8], ptr %10, i64 %indvars.iv.i.i.i ; 2 uses
   %i.if = getelementptr inbounds nuw i8, ptr %i.ie, i64 8
   %i.ig = load ptr, ptr %i.if, align 8, !tbaa !3904 ; 6 uses
   %i.ih = load i32, ptr %i.ie, align 16, !tbaa !3905 ; 3 uses
@@ -323,16 +322,21 @@ walMerge.exit.i.i.i:                              ; preds = %._crit_edge.loopexi
   %i.jv = shl nuw i32 %.038.lcssa.i.i.i.i, 1
   %i.jw = zext i32 %i.jv to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 2 %i.ig, ptr nonnull align 2 %i.ga, i64 %i.jw, i1 false)
-  %13 = add i32 %.162.i.i.i, 1                    ; 3 uses
-  %i.jx = shl nuw i32 1, %13
+  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
+  %12 = trunc nuw i64 %indvars.iv.i.i.i to i32
+  %i.jx = shl nuw i32 2, %12
   %i.jy = and i32 %i.jx, %i.ic
   %.not28.i.i.i = icmp eq i32 %i.jy, 0
-  br i1 %.not28.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i, !llvm.loop !3880
+  br i1 %.not28.i.i.i, label %._crit_edge.loopexit.i.i.i, label %.lr.ph.i.i.i, !llvm.loop !3880
 
-._crit_edge.i.i.i:                                ; preds = %walMerge.exit.i.i.i, %.lr.ph67.i.i.i
-  %.156.lcssa.i.i.i = phi i32 [ 1, %.lr.ph67.i.i.i ], [ %.038.lcssa.i.i.i.i, %walMerge.exit.i.i.i ] ; 3 uses
-  %.153.lcssa.i.i.i = phi ptr [ %i.ib, %.lr.ph67.i.i.i ], [ %i.ig, %walMerge.exit.i.i.i ] ; 2 uses
-  %.1.lcssa.i.i.i = phi i32 [ 0, %.lr.ph67.i.i.i ], [ %13, %walMerge.exit.i.i.i ] ; 2 uses
+._crit_edge.loopexit.i.i.i:                       ; preds = %walMerge.exit.i.i.i
+  %13 = trunc nuw i64 %indvars.iv.next.i.i.i to i32
+  br label %._crit_edge.i.i.i
+
+._crit_edge.i.i.i:                                ; preds = %._crit_edge.loopexit.i.i.i, %.lr.ph67.i.i.i
+  %.156.lcssa.i.i.i = phi i32 [ 1, %.lr.ph67.i.i.i ], [ %.038.lcssa.i.i.i.i, %._crit_edge.loopexit.i.i.i ] ; 3 uses
+  %.153.lcssa.i.i.i = phi ptr [ %i.ib, %.lr.ph67.i.i.i ], [ %i.ig, %._crit_edge.loopexit.i.i.i ] ; 2 uses
+  %.1.lcssa.i.i.i = phi i32 [ 0, %.lr.ph67.i.i.i ], [ %13, %._crit_edge.loopexit.i.i.i ] ; 3 uses
   %i.jz = zext i32 %.1.lcssa.i.i.i to i64
   %i.ka = getelementptr inbounds nuw [16 x i8], ptr %10, i64 %i.jz ; 2 uses
   %i.kb = getelementptr inbounds nuw i8, ptr %i.ka, i64 8
@@ -735,7 +739,7 @@ bb.gr:                                            ; preds = %bb.gq, %bb.go
   br label %bb.gs
 
 bb.gs:                                            ; preds = %.thread708.i, %bb.gn, %bb.gl
-  %i.bcu = add i32 %.11854.i, 1                   ; 2 uses
+  %i.bcu = add nsw i32 %.11854.i, 1               ; 2 uses
   %exitcond1022.not.i = icmp eq i32 %i.bcu, %.0496.lcssa11251127.i
   br i1 %exitcond1022.not.i, label %._crit_edge859.i, label %bb.gl, !llvm.loop !4318
 
@@ -1138,7 +1142,7 @@ define internal fastcc ptr @rowSetEntrySort(ptr noundef %0) unnamed_addr #16 {
 bb.a:
   %1 = alloca %struct.RowSetEntry, align 8        ; 4 uses
   %2 = alloca %struct.RowSetEntry, align 8        ; 4 uses
-  %i.a = alloca [40 x ptr], align 16              ; 8 uses
+  %i.a = alloca [40 x ptr], align 16              ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #58
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(320) %i.a, i8 0, i64 320, i1 false)
   %.not40 = icmp eq ptr %0, null
@@ -1158,15 +1162,15 @@ thread-pre-split:                                 ; preds = %._crit_edge, %.lr.p
   br i1 %.not2436, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %thread-pre-split, %rowSetEntryMerge.exit
-  %3 = phi ptr [ %i.u, %rowSetEntryMerge.exit ], [ %i.c, %thread-pre-split ]
-  %i.f = phi ptr [ %i.t, %rowSetEntryMerge.exit ], [ %i.a, %thread-pre-split ]
-  %.038 = phi i32 [ %4, %rowSetEntryMerge.exit ], [ 0, %thread-pre-split ]
+  %indvars.iv = phi i64 [ %indvars.iv.next, %rowSetEntryMerge.exit ], [ 0, %thread-pre-split ] ; 2 uses
+  %i.f = phi ptr [ %i.u, %rowSetEntryMerge.exit ], [ %i.c, %thread-pre-split ]
   %.11937 = phi ptr [ %i.s, %rowSetEntryMerge.exit ], [ %.01841, %thread-pre-split ]
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #58
   br label %.outer74
 
 .outer74:                                         ; preds = %bb.e, %.lr.ph
-  %.018.i.ph = phi ptr [ %i.l, %bb.e ], [ %3, %.lr.ph ] ; 5 uses
+  %.018.i.ph = phi ptr [ %i.l, %bb.e ], [ %i.f, %.lr.ph ] ; 5 uses
   %.016.i.ph = phi ptr [ %.016.i, %bb.e ], [ %.11937, %.lr.ph ]
   %.0.i.ph = phi ptr [ %.1.i, %bb.e ], [ %2, %.lr.ph ]
   %i.g = load i64, ptr %.018.i.ph, align 8, !tbaa !1819 ; 2 uses
@@ -1210,17 +1214,20 @@ rowSetEntryMerge.exit:                            ; preds = %bb.e, %bb.f
   store ptr %.018.lcssa34.sink.i, ptr %i.r, align 8, !tbaa !1820
   %i.s = load ptr, ptr %i.b, align 8, !tbaa !1820 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #58
-  store ptr null, ptr %i.f, align 8, !tbaa !1822
-  %4 = add i32 %.038, 1                           ; 2 uses
-  %5 = zext i32 %4 to i64
-  %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %5 ; 3 uses
+  store ptr null, ptr %3, align 8, !tbaa !1822
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 3 uses
+  %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !1822 ; 2 uses
   %.not24 = icmp eq ptr %i.u, null
-  br i1 %.not24, label %._crit_edge, label %.lr.ph, !llvm.loop !4431
+  br i1 %.not24, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !4431
 
-._crit_edge:                                      ; preds = %rowSetEntryMerge.exit, %thread-pre-split
-  %.119.lcssa = phi ptr [ %.01841, %thread-pre-split ], [ %i.s, %rowSetEntryMerge.exit ]
-  %.lcssa = phi ptr [ %i.a, %thread-pre-split ], [ %i.t, %rowSetEntryMerge.exit ]
+._crit_edge.loopexit:                             ; preds = %rowSetEntryMerge.exit
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %thread-pre-split
+  %.119.lcssa = phi ptr [ %.01841, %thread-pre-split ], [ %i.s, %._crit_edge.loopexit ]
+  %.lcssa = phi ptr [ %i.a, %thread-pre-split ], [ %4, %._crit_edge.loopexit ]
   store ptr %.119.lcssa, ptr %.lcssa, align 8, !tbaa !1822
   %.not = icmp eq ptr %i.e, null
   %.pre = load ptr, ptr %i.a, align 16, !tbaa !1822 ; 2 uses
@@ -1623,7 +1630,7 @@ bb.h:                                             ; preds = %bb.g, %bb.e
   %i.bb = getelementptr inbounds i8, ptr %i.d, i64 %indvars.iv.lcssa ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #58
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #58
-  %i.bc = add i32 %i.as, -21
+  %i.bc = add nsw i32 %i.as, -21
   %or.cond.i = icmp ult i32 %i.bc, -18
   %wide.trip.count.i.i = zext i32 %i.as to i64    ; 15 uses
   br i1 %or.cond.i, label %.lr.ph.i.i.preheader, label %.lr.ph.i

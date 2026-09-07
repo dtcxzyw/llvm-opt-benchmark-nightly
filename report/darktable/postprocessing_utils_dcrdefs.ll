@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j, %bb.h, %bb.f
   br i1 %i.cf, label %.preheader211.split.us.us, label %.preheader211.split.us232.peel
 
 .preheader211.split.us232.peel:                   ; preds = %.preheader211.us230
-  %i.cg = tail call noundef i32 @_ZN6LibRaw4fcolEii(ptr noundef nonnull align 8 dereferenceable(768512) %0, i32 noundef %.0150220.us, i32 noundef %.0151217.us231) ; 3 uses
+  %i.cg = tail call noundef i32 @_ZN6LibRaw4fcolEii(ptr noundef nonnull align 8 dereferenceable(768512) %0, i32 noundef %.0150220.us, i32 noundef %.0151217.us231) ; 4 uses
   %i.ch = load ptr, ptr %i.i, align 8, !tbaa !93
   %i.ci = load i16, ptr %i.ar, align 4, !tbaa !142
   %i.cj = zext i16 %i.ci to i32                   ; 2 uses
@@ -237,7 +237,7 @@ bb.l:                                             ; preds = %.preheader211.split
   %i.dd = load i32, ptr %i.dc, align 4, !tbaa !80
   %i.de = add i32 %spec.store.select.us236.peel, %i.dd
   store i32 %i.de, ptr %i.dc, align 4, !tbaa !80
-  %i.df = add i32 %i.cg, 4
+  %i.df = add nuw i32 %i.cg, 4
   %i.dg = zext i32 %i.df to i64
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.dg ; 2 uses
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !80
@@ -245,8 +245,7 @@ bb.l:                                             ; preds = %.preheader211.split
   store i32 %i.dj, ptr %i.dh, align 4, !tbaa !80
   %i.dk = load i32, ptr %i.aq, align 8, !tbaa !92 ; 3 uses
   %.not190.us237.peel = icmp eq i32 %i.dk, 0
-  %1 = add i32 %i.cg, 1                           ; 2 uses
-  %i.dl = icmp ult i32 %1, 4
+  %i.dl = icmp ult i32 %i.cg, 3
   %or.cond269.peel = select i1 %.not190.us237.peel, i1 %i.dl, i1 false
   br i1 %or.cond269.peel, label %.preheader211.split.us232.preheader.peel.newph, label %.split.us238
 
@@ -256,7 +255,8 @@ bb.l:                                             ; preds = %.preheader211.split
   br label %.preheader211.split.us232
 
 .preheader211.split.us232:                        ; preds = %.preheader211.split.us232.preheader.peel.newph, %bb.m
-  %.0147216.us233.a = phi i32 [ %2, %bb.m ], [ %1, %.preheader211.split.us232.preheader.peel.newph ] ; 4 uses
+  %.0147216.us233.a = phi i32 [ %.0147216.us233, %bb.m ], [ %i.cg, %.preheader211.split.us232.preheader.peel.newph ]
+  %.0147216.us233 = add nuw nsw i32 %.0147216.us233.a, 1 ; 5 uses
   %i.do = load ptr, ptr %i.i, align 8, !tbaa !93
   %i.dp = load i16, ptr %i.al, align 2, !tbaa !91
   %i.dq = zext i16 %i.dp to i32
@@ -264,7 +264,7 @@ bb.l:                                             ; preds = %.preheader211.split
   %i.ds = add nuw i32 %i.dr, %.0151217.us231
   %i.dt = zext i32 %i.ds to i64
   %i.du = getelementptr inbounds nuw [8 x i8], ptr %i.do, i64 %i.dt
-  %i.dv = zext nneg i32 %.0147216.us233.a to i64
+  %i.dv = zext nneg i32 %.0147216.us233 to i64
   %i.dw = getelementptr inbounds nuw [2 x i8], ptr %i.du, i64 %i.dv
   %.0146.in.us234 = load i16, ptr %i.dw, align 2, !tbaa !94
   %.0146.us235 = zext i16 %.0146.in.us234 to i32  ; 2 uses
@@ -272,7 +272,7 @@ bb.l:                                             ; preds = %.preheader211.split
   br i1 %i.dx, label %.loopexit215.us, label %bb.m
 
 bb.m:                                             ; preds = %.preheader211.split.us232
-  %i.dy = zext i32 %.0147216.us233.a to i64       ; 2 uses
+  %i.dy = zext i32 %.0147216.us233 to i64         ; 2 uses
   %i.dz = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %i.dy
   %i.ea = load i32, ptr %i.dz, align 4, !tbaa !80
   %i.eb = sub i32 %.0146.us235, %i.ea
@@ -281,7 +281,7 @@ bb.m:                                             ; preds = %.preheader211.split
   %i.ed = load i32, ptr %i.ec, align 4, !tbaa !80
   %i.ee = add i32 %spec.store.select.us236, %i.ed
   store i32 %i.ee, ptr %i.ec, align 4, !tbaa !80
-  %i.ef = add i32 %.0147216.us233.a, 4
+  %i.ef = add nuw i32 %.0147216.us233, 4
   %i.eg = zext i32 %i.ef to i64
   %i.eh = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.eg ; 2 uses
   %i.ei = load i32, ptr %i.eh, align 4, !tbaa !80
@@ -289,8 +289,7 @@ bb.m:                                             ; preds = %.preheader211.split
   store i32 %i.ej, ptr %i.eh, align 4, !tbaa !80
   %i.ek = load i32, ptr %i.aq, align 8, !tbaa !92 ; 3 uses
   %.not190.us237 = icmp eq i32 %i.ek, 0
-  %2 = add i32 %.0147216.us233.a, 1               ; 2 uses
-  %i.el = icmp ult i32 %2, 4
+  %i.el = icmp ult i32 %.0147216.us233, 3
   %or.cond269 = select i1 %.not190.us237, i1 %i.el, i1 false
   br i1 %or.cond269, label %.preheader211.split.us232, label %.split.us238, !llvm.loop !116
 

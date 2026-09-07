@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.g, %.preheader23
 .preheader.i:                                     ; preds = %bb.k, %bb.b, %bb.d, %bb.e, %bb.f
   %.sroa.0.0.i.lcssa = phi i64 [ %.sroa.7.026.i.2, %bb.f ], [ %.sroa.0.0.i, %bb.b ], [ %.sroa.7.026.i, %bb.d ], [ %.sroa.7.026.i.1, %bb.e ], [ %.sroa.0.0.i.epil, %bb.k ] ; 5 uses
   %.sroa.7.026.i.lcssa = phi i64 [ %.sroa.7.026.i.3, %bb.f ], [ %.sroa.7.026.i, %bb.b ], [ %.sroa.7.026.i.1, %bb.d ], [ %.sroa.7.026.i.2, %bb.e ], [ %.sroa.7.026.i.epil, %bb.k ] ; 6 uses
-  %i.j = icmp ult i64 %.sroa.7.026.i.lcssa, %i.b
+  %i.j = icmp samesign ult i64 %.sroa.7.026.i.lcssa, %i.b
   br i1 %i.j, label %.lr.ph.i.preheader, label %._crit_edge.i
 
 .lr.ph.i.preheader:                               ; preds = %.preheader.i
@@ -327,7 +327,7 @@ bb.k:                                             ; preds = %bb.l, %.epil.prehea
   %i.ag = getelementptr i8, ptr %i.af, i64 16
   %.val.i.epil = load i64, ptr %i.ag, align 8, !noalias !34, !noundef !6
   %.not.i.epil = icmp eq i64 %.val.i.epil, 0
-  %.sroa.7.026.i.epil = add nuw i64 %.sroa.0.0.i.epil, 1 ; 2 uses
+  %.sroa.7.026.i.epil = add nuw nsw i64 %.sroa.0.0.i.epil, 1 ; 2 uses
   br i1 %.not.i.epil, label %.preheader.i, label %bb.l, !prof !7
 
 bb.l:                                             ; preds = %bb.k
