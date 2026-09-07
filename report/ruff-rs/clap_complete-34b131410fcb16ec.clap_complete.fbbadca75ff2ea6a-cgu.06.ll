@@ -149,7 +149,7 @@ bb.k:                                             ; preds = %.loopexit75
   %.sroa.7.0.insert.ext.i = zext i8 %.sroa.7.0.i to i32
   %.sroa.7.0.insert.shift.i = shl nuw nsw i32 %.sroa.7.0.insert.ext.i, 8
   %.sroa.7.0.insert.insert.i = or disjoint i32 %.sroa.7.0.insert.shift.i, %.sroa.9.0.i
-  %.sroa.0.0.insert.insert.i = add nuw nsw i32 %.sroa.7.0.insert.insert.i, %.sroa.0.0.i
+  %.sroa.0.0.insert.insert.i = or disjoint i32 %.sroa.7.0.insert.insert.i, %.sroa.0.0.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %.sroa.454.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store i64 %2, ptr %.sroa.454.0..sroa_idx, align 8

@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.r
   %i.io = lshr i64 %i.in, 15
   %i.ip = trunc i64 %i.io to i32
   %i.iq = load i32, ptr %i.ba, align 8, !tbaa !243
-  %i.ir = add i64 %.0191, 2
+  %i.ir = add nsw i64 %.0191, 2
   %i.is = zext i32 %i.gt to i64
   %i.it = shl nuw nsw i64 %i.is, 1
   %i.iu = or disjoint i64 %i.it, 1
@@ -518,7 +518,7 @@ bb.am:                                            ; preds = %bb.ad
   %i.pn = lshr i64 %i.pm, 15
   %i.po = trunc i64 %i.pn to i32
   %i.pp = load i32, ptr %i.ba, align 8, !tbaa !243
-  %i.pq = add i64 %.0191, 2
+  %i.pq = add nsw i64 %.0191, 2
   %i.pr = zext i32 %i.lu to i64
   %i.ps = shl nuw nsw i64 %i.pr, 1
   %i.pt = or disjoint i64 %i.ps, 1
@@ -921,7 +921,7 @@ bb.l:                                             ; preds = %APPEND_LIST.exit83
   %i.cs = lshr i64 %i.cr, 15
   %i.ct = trunc i64 %i.cs to i32
   %i.cu = load i32, ptr %i.aw, align 8, !tbaa !243
-  %i.cv = add i64 %i.k, 4
+  %i.cv = add nsw i64 %i.k, 4
   %i.cw = call ptr (ptr, i32, i32, i32, i32, ...) @new_insn_body(ptr noundef %0, i32 noundef %i.ct, i32 noundef %i.cu, i32 noundef 45, i32 noundef 1, i64 noundef %i.cv) ; 3 uses
   %i.cx = load ptr, ptr %i.az, align 8, !tbaa !42 ; 2 uses
   %i.cy = getelementptr i8, ptr %i.cw, i64 16
@@ -943,7 +943,7 @@ bb.l:                                             ; preds = %APPEND_LIST.exit83
   br label %APPEND_LIST.exit99
 
 bb.m:                                             ; preds = %APPEND_LIST.exit83
-  %i.di = add i64 %i.k, 2
+  %i.di = add nsw i64 %i.k, 2
   %i.dj = call ptr (ptr, i32, i32, i32, i32, ...) @new_insn_body(ptr noundef %0, i32 noundef %i.bs, i32 noundef %i.bt, i32 noundef 45, i32 noundef 1, i64 noundef %i.di) ; 3 uses
   %i.dk = load ptr, ptr %i.az, align 8, !tbaa !42 ; 2 uses
   %i.dl = getelementptr i8, ptr %i.dj, i64 16
@@ -1346,7 +1346,7 @@ declare i64 @rb_ary_join(i64 noundef, i64 noundef) local_unnamed_addr #4
 declare i64 @rb_ary_reverse(i64 noundef) local_unnamed_addr #4
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc range(i64 1, 0) i64 @setup_args(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %3, ptr nofree noundef writeonly captures(none) %4) unnamed_addr #1 {
+define internal fastcc range(i64 -4294967295, 4294967296) i64 @setup_args(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %3, ptr nofree noundef writeonly captures(none) %4) unnamed_addr #1 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 11 uses
   %5 = alloca [1 x %struct.iseq_link_anchor], align 16 ; 8 uses

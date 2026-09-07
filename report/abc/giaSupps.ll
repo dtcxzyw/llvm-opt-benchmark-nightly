@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
   %i.cb = icmp sgt i64 %.424.i.i51, -1
   %.neg28.i.i = sext i1 %i.cb to i32
   %reass.sub.i.i = or disjoint i32 %i.bm, 63
-  %i.cc = sub i32 %reass.sub.i.i, %.4.i.i52
+  %i.cc = sub nuw i32 %reass.sub.i.i, %.4.i.i52
   %i.cd = add i32 %i.cc, %.neg28.i.i
   br label %Abc_TtFindFirstBit2.exit
 
@@ -323,7 +323,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ed = icmp sgt i64 %.424.i.i84, -1
   %.neg28.i.i86 = sext i1 %i.ed to i32
   %reass.sub.i.i87 = or disjoint i32 %i.do, 63
-  %i.ee = sub i32 %reass.sub.i.i87, %.4.i.i85
+  %i.ee = sub nuw i32 %reass.sub.i.i87, %.4.i.i85
   %i.ef = add i32 %i.ee, %.neg28.i.i86
   br label %Abc_TtFindFirstBit2.exit72
 
@@ -507,7 +507,7 @@ bb.h:                                             ; preds = %bb.g
   %i.cb = icmp sgt i64 %.424.i.i61, -1
   %.neg28.i.i = sext i1 %i.cb to i32
   %reass.sub.i.i = or disjoint i32 %i.bm, 63
-  %i.cc = sub i32 %reass.sub.i.i, %.4.i.i62
+  %i.cc = sub nuw i32 %reass.sub.i.i, %.4.i.i62
   %i.cd = add i32 %i.cc, %.neg28.i.i
   br label %Abc_TtFindFirstBit2.exit
 
@@ -625,7 +625,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ed = icmp sgt i64 %.424.i.i94, -1
   %.neg28.i.i96 = sext i1 %i.ed to i32
   %reass.sub.i.i97 = or disjoint i32 %i.do, 63
-  %i.ee = sub i32 %reass.sub.i.i97, %.4.i.i95
+  %i.ee = sub nuw i32 %reass.sub.i.i97, %.4.i.i95
   %i.ef = add i32 %i.ee, %.neg28.i.i96
   br label %Abc_TtFindFirstBit2.exit82
 

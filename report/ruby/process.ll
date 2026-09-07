@@ -204,7 +204,7 @@ declare i32 @rb_method_basic_definition_p(i64 noundef, i64 noundef) local_unname
 declare i64 @rb_funcall(i64 noundef, i64 noundef, i32 noundef, ...) local_unnamed_addr #3
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden range(i64 1, 0) i64 @rb_proc__fork(i64 %0) #1 {
+define hidden range(i64 -4294967295, 4294967296) i64 @rb_proc__fork(i64 %0) #1 {
 bb.a:
   %i.a = tail call i32 @rb_fork_ruby(ptr noundef null) ; 2 uses
   %i.b = icmp eq i32 %i.a, -1
@@ -607,7 +607,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @get_PROCESS_ID(i64 %0, ptr nofree readnone captures(none) %1) #1 {
+define internal range(i64 -4294967295, 4294967296) i64 @get_PROCESS_ID(i64 %0, ptr nofree readnone captures(none) %1) #1 {
 bb.a:
   %i.a = load i32, ptr @cached_pid, align 4, !tbaa !13 ; 2 uses
   %.not.i = icmp eq i32 %i.a, 0
@@ -638,7 +638,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @rb_f_fork(i64 %0) #1 {
+define internal range(i64 -4294967295, 4294967296) i64 @rb_f_fork(i64 %0) #1 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 3 uses
   %i.b = tail call i32 @rb_call_proc__fork()      ; 2 uses
@@ -878,7 +878,7 @@ bb.l:                                             ; preds = %bb.j, %bb.d, %bb.f,
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @rb_f_spawn(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #1 {
+define internal range(i64 -4294967295, 4294967296) i64 @rb_f_spawn(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #1 {
 bb.a:
   %i.a = alloca [80 x i8], align 16               ; 5 uses
   %i.b = alloca i64, align 8                      ; 4 uses
@@ -1092,7 +1092,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 2, 4294967296) i64 @proc_m_wait(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #1 {
+define internal range(i64 3, 4294967296) i64 @proc_m_wait(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #1 {
 bb.a:
   %i.a = tail call fastcc i64 @proc_wait(i32 noundef %0, ptr noundef %1)
   ret i64 %i.a
@@ -1495,7 +1495,7 @@ bb.f:                                             ; preds = %bb.a, %pst_to_i.exi
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @pst_to_i(i64 noundef %0) #1 {
+define internal range(i64 -4294967295, 4294967296) i64 @pst_to_i(i64 noundef %0) #1 {
 bb.a:
   %i.a = icmp eq i64 %0, 0
   %i.b = and i64 %0, 7
@@ -1885,7 +1885,7 @@ bb.u:                                             ; preds = %rb_class_of.exit23,
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @pst_pid_m(i64 noundef %0) #1 {
+define internal range(i64 -4294967295, 4294967296) i64 @pst_pid_m(i64 noundef %0) #1 {
 bb.a:
   %i.a = icmp eq i64 %0, 0
   %i.b = and i64 %0, 7
@@ -2288,7 +2288,7 @@ pst_status.exit:                                  ; preds = %bb.d, %RTYPEDDATA_G
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @proc_get_pid(i64 %0) #1 {
+define internal range(i64 -4294967295, 4294967296) i64 @proc_get_pid(i64 %0) #1 {
 bb.a:
   %i.a = load i32, ptr @cached_pid, align 4, !tbaa !13 ; 2 uses
   %.not.i = icmp eq i32 %i.a, 0
@@ -2308,7 +2308,7 @@ get_pid.exit:                                     ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @proc_get_ppid(i64 %0) #1 {
+define internal range(i64 -4294967295, 4294967296) i64 @proc_get_ppid(i64 %0) #1 {
 bb.a:
   %i.a = tail call i32 @getppid() #26
   %i.b = sext i32 %i.a to i64
@@ -2509,7 +2509,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @proc_getpriority(i64 %0, i64 noundef %1, i64 noundef %2) #1 {
+define internal range(i64 -4294967295, 4294967296) i64 @proc_getpriority(i64 %0, i64 noundef %1, i64 noundef %2) #1 {
 bb.a:
   %i.a = trunc i64 %1 to i1
   br i1 %i.a, label %bb.b, label %bb.c
@@ -2912,7 +2912,7 @@ bb.p:                                             ; preds = %._crit_edge.thread
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal range(i64 1, 0) i64 @proc_getmaxgroups(i64 %0) #1 {
+define internal range(i64 -4294967295, 4294967296) i64 @proc_getmaxgroups(i64 %0) #1 {
 bb.a:
   %i.a = load i32, ptr @_maxgroups, align 4, !tbaa !13 ; 2 uses
   %i.b = icmp slt i32 %i.a, 0
@@ -3315,7 +3315,7 @@ declare { i64, i64 } @rb_time_interval(i64 noundef) local_unnamed_addr #3
 declare i64 @rb_f_kill(i32 noundef, ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc range(i64 2, 4294967296) i64 @proc_wait(i32 noundef %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #1 {
+define internal fastcc range(i64 3, 4294967296) i64 @proc_wait(i32 noundef %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #1 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses

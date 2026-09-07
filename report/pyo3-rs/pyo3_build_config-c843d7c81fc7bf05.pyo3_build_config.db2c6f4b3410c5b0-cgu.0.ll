@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden range(i24 769, -64512) i24 @_RNCNvNtCsiOEEQt9hBE2_17pyo3_build_config5impl_16get_abi3_versions_0B5_(i8 %0) unnamed_addr #2 {
+define hidden range(i24 769, -64766) i24 @_RNCNvNtCsiOEEQt9hBE2_17pyo3_build_config5impl_16get_abi3_versions_0B5_(i8 %0) unnamed_addr #2 {
 bb.a:
   %.sroa.3.0.insert.ext = zext i8 %0 to i24
   %.sroa.3.0.insert.shift = shl nuw i24 %.sroa.3.0.insert.ext, 16
@@ -282,7 +282,7 @@ bb.j:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden range(i24 769, -64512) i24 @_RNCNvNtCsiOEEQt9hBE2_17pyo3_build_config5impl_17get_abi3t_versions_0B5_(i8 %0) unnamed_addr #2 {
+define hidden range(i24 769, -64766) i24 @_RNCNvNtCsiOEEQt9hBE2_17pyo3_build_config5impl_17get_abi3t_versions_0B5_(i8 %0) unnamed_addr #2 {
 bb.a:
   %.sroa.3.0.insert.ext = zext i8 %0 to i24
   %.sroa.3.0.insert.shift = shl nuw i24 %.sroa.3.0.insert.ext, 16
@@ -367,7 +367,7 @@ bb.m:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden range(i24 1, 0) i24 @_RNCNvNtCsiOEEQt9hBE2_17pyo3_build_config5impl_21applicable_stable_abis0_0B5_(ptr nofree readonly align 8 captures(none) %0, i24 %1) unnamed_addr #3 {
+define hidden range(i24 1, -254) i24 @_RNCNvNtCsiOEEQt9hBE2_17pyo3_build_config5impl_21applicable_stable_abis0_0B5_(ptr nofree readonly align 8 captures(none) %0, i24 %1) unnamed_addr #3 {
 bb.a:
   %i.a = trunc i24 %1 to i1
   br i1 %i.a, label %bb.b, label %bb.c
@@ -410,7 +410,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden i24 @_RNCNvNtCsiOEEQt9hBE2_17pyo3_build_config5impl_21applicable_stable_abis_0B5_(ptr nofree readonly align 8 captures(none) %0, i24 %1) unnamed_addr #3 {
+define hidden range(i24 0, -255) i24 @_RNCNvNtCsiOEEQt9hBE2_17pyo3_build_config5impl_21applicable_stable_abis_0B5_(ptr nofree readonly align 8 captures(none) %0, i24 %1) unnamed_addr #3 {
 bb.a:
   %i.a = trunc i24 %1 to i1
   br i1 %i.a, label %bb.b, label %bb.c
@@ -813,7 +813,7 @@ bb.at:                                            ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define range(i40 0, 68719476736) i40 @_RNvMs_NtCsiOEEQt9hBE2_17pyo3_build_config5impl_NtB4_16PythonAbiBuilder10stable_abi(i40 %0, i1 zeroext %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define range(i40 0, 68719476481) i40 @_RNvMs_NtCsiOEEQt9hBE2_17pyo3_build_config5impl_NtB4_16PythonAbiBuilder10stable_abi(i40 %0, i1 zeroext %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 2 uses
   %i.b = alloca [16 x i8], align 8                ; 2 uses
@@ -889,7 +889,7 @@ bb.i:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i40 257, -65024) i40 @_RNvMs_NtCsiOEEQt9hBE2_17pyo3_build_config5impl_NtB4_16PythonAbiBuilder13free_threaded(i40 %0) unnamed_addr #6 {
+define range(i40 257, -65278) i40 @_RNvMs_NtCsiOEEQt9hBE2_17pyo3_build_config5impl_NtB4_16PythonAbiBuilder13free_threaded(i40 %0) unnamed_addr #6 {
 bb.a:
   %.sroa.36.0.insert.insert = and i40 %0, -65536
   %.sroa.04.0.insert.insert = or disjoint i40 %.sroa.36.0.insert.insert, 257
@@ -897,7 +897,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i40 2, 0) i40 @_RNvMs_NtCsiOEEQt9hBE2_17pyo3_build_config5impl_NtB4_16PythonAbiBuilder3new(i8 %0, i8 %1, i8 %2) unnamed_addr #6 {
+define range(i40 2, -65533) i40 @_RNvMs_NtCsiOEEQt9hBE2_17pyo3_build_config5impl_NtB4_16PythonAbiBuilder3new(i8 %0, i8 %1, i8 %2) unnamed_addr #6 {
 bb.a:
   %.sroa.5.0.insert.ext = zext i8 %2 to i40
   %.sroa.5.0.insert.shift = shl nuw i40 %.sroa.5.0.insert.ext, 32

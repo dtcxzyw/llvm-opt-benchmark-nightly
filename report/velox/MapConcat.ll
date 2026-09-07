@@ -205,7 +205,7 @@ _ZZNK8facebook5velox9functions12_GLOBAL__N_117MapConcatFunctionILb0ELb0EE5applyE
   %i.lp = load i32, ptr %i.lo, align 4, !tbaa !66
   %i.lq = or disjoint i64 %i.jo, 1
   %umax = call i64 @llvm.umax.i64(i64 %i.lq, i64 %i.jq)
-  %i.lr = trunc i64 %umax to i32
+  %i.lr = trunc nsw i64 %umax to i32
   %i.ls = sub i32 %i.lr, %i.jn
   %i.lt = mul i32 %i.lp, %i.ls
   %i.lu = add i32 %.2413, %i.lt
@@ -608,7 +608,7 @@ _ZZNK8facebook5velox9functions12_GLOBAL__N_117MapConcatFunctionILb0ELb1EE5applyE
   %i.lh = load i32, ptr %i.lg, align 4, !tbaa !66
   %i.li = or disjoint i64 %i.jg, 1
   %umax = call i64 @llvm.umax.i64(i64 %i.li, i64 %i.ji)
-  %i.lj = trunc i64 %umax to i32
+  %i.lj = trunc nsw i64 %umax to i32
   %i.lk = sub i32 %i.lj, %i.jf
   %i.ll = mul i32 %i.lh, %i.lk
   %i.lm = add i32 %.2403, %i.ll
