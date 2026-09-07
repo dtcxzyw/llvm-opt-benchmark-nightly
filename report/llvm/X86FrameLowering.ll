@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.d = load i32, ptr %i.c, align 8, !tbaa !320  ; 2 uses
   %i.e = urem i32 %4, %i.d
-  %i.f = udiv i32 %4, %i.d                        ; 7 uses
+  %i.f = udiv i32 %4, %i.d                        ; 6 uses
   %.not = icmp eq i32 %i.e, 0
   br i1 %.not, label %bb.c, label %bb.m
 
@@ -434,31 +434,30 @@ _ZN4llvm18MCSuperRegIteratorppEv.exit.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i
   br i1 %.not71, label %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit, label %bb.i
 
 _ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit: ; preds = %.loopexit105, %bb.h
-  %i.du = add i32 %.056112, 1                     ; 2 uses
+  %i.du = add nuw i32 %.056112, 1                 ; 2 uses
   %i.dv = zext i32 %.056112 to i64
   %i.dw = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.dv
   store i32 %i.be, ptr %i.dw, align 4, !tbaa !325
   %i.dx = icmp eq i32 %i.du, %i.f
-  br i1 %i.dx, label %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit._crit_edge, label %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit.thread91
+  br i1 %i.dx, label %.preheader, label %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit.thread91
 
 _ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit.thread91: ; preds = %bb.j, %.lr.ph.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i, %bb.f, %bb.g, %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit
-  %.258.ph = phi i32 [ %.056112, %bb.f ], [ %i.du, %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit ], [ %.056112, %.lr.ph.i.i.i.i.i.i.i.i ], [ %.056112, %bb.g ], [ %.056112, %.lr.ph.i.i.i.i.i.i ], [ %.056112, %bb.j ] ; 2 uses
+  %.258.ph = phi i32 [ %.056112, %bb.f ], [ %i.du, %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit ], [ %.056112, %.lr.ph.i.i.i.i.i.i.i.i ], [ %.056112, %bb.g ], [ %.056112, %.lr.ph.i.i.i.i.i.i ], [ %.056112, %bb.j ] ; 4 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %.065111, i64 2 ; 2 uses
   %.not70 = icmp eq ptr %i.dy, %i.au
   br i1 %.not70, label %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit._crit_edge, label %bb.f
 
-_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit._crit_edge: ; preds = %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit.thread91, %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit
-  %.359 = phi i32 [ %i.f, %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit ], [ %.258.ph, %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit.thread91 ] ; 3 uses
-  %.not140 = icmp eq i32 %.359, 0
+_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit._crit_edge: ; preds = %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit.thread91
+  %.not140 = icmp eq i32 %.258.ph, 0
   br i1 %.not140, label %.loopexit, label %.preheader104
 
 .preheader104:                                    ; preds = %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit._crit_edge
-  %i.dz = icmp ult i32 %.359, %i.f
+  %i.dz = icmp ult i32 %.258.ph, %i.f
   br i1 %i.dz, label %.lr.ph116, label %.preheader
 
 .lr.ph116:                                        ; preds = %.preheader104
   %i.ea = load i32, ptr %i.a, align 4, !tbaa !325 ; 2 uses
-  %i.eb = zext i32 %.359 to i64                   ; 4 uses
+  %i.eb = zext i32 %.258.ph to i64                ; 4 uses
   %i.ec = zext nneg i32 %i.f to i64               ; 2 uses
   %i.ed = sub nsw i64 %i.ec, %i.eb                ; 3 uses
   %min.iters.check = icmp ult i64 %i.ed, 8
@@ -490,7 +489,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph116, %middle.
   %indvars.iv.ph = phi i64 [ %i.eb, %.lr.ph116 ], [ %i.ee, %middle.block ]
   br label %scalar.ph
 
-.preheader:                                       ; preds = %scalar.ph, %middle.block, %.preheader104
+.preheader:                                       ; preds = %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit, %scalar.ph, %middle.block, %.preheader104
   %i.eh = icmp sgt i32 %i.f, 0
   br i1 %i.eh, label %.lr.ph118, label %.loopexit
 
@@ -533,7 +532,7 @@ bb.l:                                             ; preds = %.lr.ph118, %bb.l
   br i1 %i.ez, label %bb.l, label %.loopexit, !llvm.loop !2188
 
 .loopexit:                                        ; preds = %bb.l, %bb.e, %.preheader, %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit._crit_edge
-  %i.fa = phi i1 [ false, %bb.e ], [ false, %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit._crit_edge ], [ true, %.preheader ], [ true, %bb.l ]
+  %i.fa = phi i1 [ false, %bb.e ], [ true, %.preheader ], [ false, %_ZNK4llvm14MCRegisterInfo22isSuperOrSubRegisterEqENS_10MCRegisterES1_.exit._crit_edge ], [ true, %bb.l ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   br label %bb.m
 
