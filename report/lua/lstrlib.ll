@@ -152,7 +152,7 @@ bb.c:                                             ; preds = %bb.b
   br label %posrelatI.exit
 
 posrelatI.exit:                                   ; preds = %bb.a, %bb.b, %bb.c
-  %.0.i = phi i64 [ %i.j, %bb.c ], [ %i.c, %bb.a ], [ 1, %bb.b ] ; 3 uses
+  %.0.i = phi i64 [ %i.j, %bb.c ], [ %i.c, %bb.a ], [ 1, %bb.b ] ; 4 uses
   %i.k = call i64 @luaL_optinteger(ptr noundef %0, i32 noundef 3, i64 noundef %i.c) #12 ; 5 uses
   %i.l = icmp sgt i64 %i.k, %i.d
   br i1 %i.l, label %getendpos.exit, label %bb.d
@@ -172,12 +172,12 @@ bb.f:                                             ; preds = %bb.e
   br label %getendpos.exit
 
 getendpos.exit:                                   ; preds = %posrelatI.exit, %bb.d, %bb.e, %bb.f
-  %.0.i27 = phi i64 [ %i.q, %bb.f ], [ %i.d, %posrelatI.exit ], [ %i.k, %bb.d ], [ 0, %bb.e ] ; 2 uses
+  %.0.i27 = phi i64 [ %i.q, %bb.f ], [ %i.d, %posrelatI.exit ], [ %i.k, %bb.d ], [ 0, %bb.e ] ; 3 uses
   %i.r = icmp ugt i64 %.0.i, %.0.i27
   br i1 %i.r, label %.loopexit, label %bb.g
 
 bb.g:                                             ; preds = %getendpos.exit
-  %i.s = sub nuw i64 %.0.i27, %.0.i               ; 3 uses
+  %i.s = sub nuw i64 %.0.i27, %.0.i               ; 2 uses
   %i.t = icmp ugt i64 %i.s, 2147483646
   br i1 %i.t, label %bb.h, label %.lr.ph, !prof !12
 
@@ -190,17 +190,20 @@ bb.h:                                             ; preds = %bb.g
   %i.w = add nuw nsw i32 %i.v, 1                  ; 2 uses
   call void @luaL_checkstack(ptr noundef %0, i32 noundef %i.w, ptr noundef nonnull @.str.17) #12
   %i.x = getelementptr i8, ptr %i.b, i64 %.0.i
+  %1 = add i64 %.0.i27, 1
+  %2 = sub i64 %1, %.0.i
+  %wide.trip.count = and i64 %2, 4294967295
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %bb.i
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 2 uses
   %i.y = getelementptr i8, ptr %i.x, i64 %indvars.iv
   %i.z = getelementptr i8, ptr %i.y, i64 -1
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !13
   %i.ab = zext i8 %i.aa to i64
   call void @lua_pushinteger(ptr noundef %0, i64 noundef %i.ab) #12
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %exitcond.not = icmp eq i64 %indvars.iv, %i.s
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %bb.i
 
 .loopexit:                                        ; preds = %bb.i, %getendpos.exit, %bb.h
