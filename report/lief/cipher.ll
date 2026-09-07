@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g, %bb.e,
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: write) uwtable
 define internal void @add_pkcs_padding(ptr nofree noundef writeonly captures(none) %0, i64 noundef %1, i64 noundef %2) #13 {
 bb.a:
-  %i.a = sub i64 %1, %2                           ; 9 uses
+  %i.a = sub i64 %1, %2                           ; 10 uses
   %.not = icmp eq i64 %1, %2
   br i1 %.not, label %._crit_edge, label %iter.check
 
@@ -213,8 +213,7 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
-  %3 = xor i64 %2, -1
-  %i.d = add i64 %1, %3                           ; 2 uses
+  %i.d = add i64 %i.a, -1                         ; 2 uses
   %i.e = and i64 %i.d, 255
   %i.f = icmp eq i64 %i.e, 255
   %i.g = icmp ugt i64 %i.d, 255
@@ -227,7 +226,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.scevcheck
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.i = and i64 %i.a, 28
-  %n.vec = and i64 %i.a, -32                      ; 4 uses
+  %n.vec = and i64 %i.a, 480                      ; 4 uses
   %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %i.b, i64 0
   %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -252,7 +251,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec13 = and i64 %i.a, -4                     ; 3 uses
+  %n.vec13 = and i64 %i.a, 508                    ; 3 uses
   %broadcast.splatinsert14 = insertelement <4 x i8> poison, i8 %i.b, i64 0
   %broadcast.splat15 = shufflevector <4 x i8> %broadcast.splatinsert14, <4 x i8> poison, <4 x i32> zeroinitializer
   br label %vec.epilog.vector.body

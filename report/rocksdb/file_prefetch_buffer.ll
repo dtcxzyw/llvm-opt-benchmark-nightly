@@ -204,21 +204,21 @@ bb.s:                                             ; preds = %_ZNSt5dequeIPN7rock
   %i.dn = icmp ne ptr %i.dh, null
   %.neg.i.i = sext i1 %i.dn to i64
   %i.do = add nsw i64 %i.dm, %.neg.i.i
-  %i.dp = shl nsw i64 %i.do, 6                    ; 2 uses
+  %i.dp = shl nsw i64 %i.do, 6
   %i.dq = load ptr, ptr %i.b, align 8, !tbaa !101
   %i.dr = load ptr, ptr %i.bj, align 8, !tbaa !108
   %i.ds = ptrtoint ptr %i.dq to i64
   %i.dt = ptrtoint ptr %i.dr to i64
   %i.du = sub i64 %i.ds, %i.dt
-  %i.dv = ashr exact i64 %i.du, 3                 ; 2 uses
+  %i.dv = ashr exact i64 %i.du, 3
   %i.dw = add nsw i64 %i.dp, %i.dv
   %i.dx = load ptr, ptr %i.bq, align 8, !tbaa !109
   %i.dy = load ptr, ptr %i.c, align 8, !tbaa !101 ; 4 uses
   %i.dz = ptrtoint ptr %i.dx to i64
   %i.ea = ptrtoint ptr %i.dy to i64               ; 2 uses
   %i.eb = sub i64 %i.dz, %i.ea
-  %i.ec = ashr exact i64 %i.eb, 3                 ; 2 uses
-  %i.ed = add nsw i64 %i.dw, %i.ec
+  %i.ec = ashr exact i64 %i.eb, 3
+  %i.ed = add nsw i64 %i.dw, %i.ec                ; 3 uses
   %i.ee = icmp ugt i64 %i.ed, 1
   br i1 %i.ee, label %.lr.ph38, label %.thread.thread.sink.split
 
@@ -228,11 +228,9 @@ bb.s:                                             ; preds = %_ZNSt5dequeIPN7rock
   %i.eh = ptrtoint ptr %i.eg to i64
   %i.ei = sub i64 %i.ea, %i.eh
   %i.ej = ashr exact i64 %i.ei, 3                 ; 3 uses
-  %3 = add nsw i64 %i.dv, %i.ec
-  %4 = add i64 %3, %i.dp                          ; 2 uses
-  %i.ek = add i64 %4, -1                          ; 3 uses
+  %i.ek = add i64 %i.ed, -1                       ; 3 uses
   %xtraiter = and i64 %i.ek, 1
-  %i.el = icmp eq i64 %4, 2
+  %i.el = icmp eq i64 %i.ed, 2
   br i1 %i.el, label %.epil.preheader, label %.lr.ph38.new
 
 .lr.ph38.new:                                     ; preds = %.lr.ph38

@@ -203,10 +203,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %.loopexit
 
 .preheader:                                       ; preds = %bb.b, %.preheader
-  %.02534 = phi i64 [ %i.h, %.preheader ], [ 0, %bb.b ] ; 3 uses
+  %.02534 = phi i64 [ %i.h, %.preheader ], [ 0, %bb.b ] ; 2 uses
   %.02733 = phi ptr [ %i.i, %.preheader ], [ %0, %bb.b ]
   %i.e = phi ptr [ %.pr, %.preheader ], [ %i.b, %bb.b ]
-  %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.e) #18 ; 3 uses
+  %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.e) #18 ; 2 uses
   %i.g = add i64 %.02534, 1
   %i.h = add i64 %i.g, %i.f                       ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.02733, i64 8 ; 2 uses
@@ -220,7 +220,7 @@ bb.d:                                             ; preds = %.preheader
   br i1 %i.k, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.l = add i64 %.02534, %i.f                    ; 5 uses
+  %i.l = add i64 %.02534, %i.f                    ; 6 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.l
   store i8 0, ptr %i.m, align 1, !tbaa !18
   %.not38 = icmp eq i64 %i.l, 0
@@ -228,10 +228,8 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.e
   %i.n = trunc i32 %1 to i8                       ; 3 uses
-  %2 = add i64 %i.f, -1
   %xtraiter = and i64 %i.l, 1
-  %3 = sub i64 0, %.02534
-  %i.o = icmp eq i64 %2, %3
+  %i.o = icmp eq i64 %i.l, 1
   br i1 %i.o, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
@@ -356,9 +354,9 @@ bb.c:                                             ; preds = %opal_argv_count.exi
 .lr.ph:                                           ; preds = %bb.c, %.lr.ph
   %i.m = phi ptr [ %i.s, %.lr.ph ], [ %i.i, %bb.c ]
   %.045 = phi i64 [ %i.r, %.lr.ph ], [ %1, %bb.c ]
-  %.03444 = phi i64 [ %i.p, %.lr.ph ], [ 0, %bb.c ] ; 3 uses
+  %.03444 = phi i64 [ %i.p, %.lr.ph ], [ 0, %bb.c ] ; 2 uses
   %.03743 = phi ptr [ %i.q, %.lr.ph ], [ %i.h, %bb.c ]
-  %i.n = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.m) #18 ; 3 uses
+  %i.n = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.m) #18 ; 2 uses
   %i.o = add i64 %.03444, 1
   %i.p = add i64 %i.o, %i.n                       ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.03743, i64 8 ; 2 uses
@@ -379,7 +377,7 @@ bb.d:                                             ; preds = %._crit_edge
   br i1 %i.y, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.z = add i64 %.03444, %i.n                    ; 5 uses
+  %i.z = add i64 %.03444, %i.n                    ; 6 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.z
   store i8 0, ptr %i.aa, align 1, !tbaa !18
   %.not = icmp eq i64 %i.z, 0
@@ -387,10 +385,8 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph50:                                         ; preds = %bb.e
   %i.ab = trunc i32 %3 to i8                      ; 3 uses
-  %4 = add i64 %i.n, -1
   %xtraiter = and i64 %i.z, 1
-  %5 = sub i64 0, %.03444
-  %i.ac = icmp eq i64 %4, %5
+  %i.ac = icmp eq i64 %i.z, 1
   br i1 %i.ac, label %.epil.preheader, label %.lr.ph50.new
 
 .lr.ph50.new:                                     ; preds = %.lr.ph50

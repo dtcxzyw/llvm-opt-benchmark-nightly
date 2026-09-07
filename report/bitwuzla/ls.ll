@@ -205,15 +205,13 @@ bb.by:                                            ; preds = %bb.bx, %bb.bw
 
 .noexc:                                           ; preds = %bb.by
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #22
-  %i.ek = zext i32 %i.ej to i64                   ; 2 uses
-  %i.el = load i64, ptr %i.dj, align 8, !tbaa !160 ; 2 uses
-  %i.em = urem i64 %i.ek, %i.el                   ; 4 uses
+  %i.ek = zext i32 %i.ej to i64
+  %i.el = load i64, ptr %i.dj, align 8, !tbaa !160
+  %i.em = urem i64 %i.ek, %i.el                   ; 5 uses
   %.not1.i.i = icmp eq i64 %i.em, 0
   br i1 %.not1.i.i, label %.loopexit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %.noexc
-  %25 = urem i64 %i.ek, %i.el
-  %26 = add nsw i64 %25, -1
   %xtraiter = and i64 %i.em, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.prol.loopexit, label %.lr.ph.i.i.prol
@@ -232,7 +230,7 @@ bb.by:                                            ; preds = %bb.bx, %bb.bw
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.i.i.preheader ], [ %i.ep, %.lr.ph.i.i.prol ]
   %.02.i.i.unr = phi i64 [ %i.em, %.lr.ph.i.i.preheader ], [ %i.eo, %.lr.ph.i.i.prol ]
   %.unr = phi ptr [ %i.eh, %.lr.ph.i.i.preheader ], [ %i.ep, %.lr.ph.i.i.prol ]
-  %i.eq = icmp ult i64 %26, 7
+  %i.eq = icmp samesign ult i64 %i.em, 8
   br i1 %i.eq, label %.loopexit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i

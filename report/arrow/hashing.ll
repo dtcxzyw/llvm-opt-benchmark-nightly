@@ -205,8 +205,8 @@ bb.a:
   %i.c = srem i64 %2, 8                           ; 7 uses
   %i.d = sdiv i64 %2, 8
   %i.e = getelementptr inbounds i8, ptr %0, i64 %i.d ; 6 uses
-  %i.f = lshr i64 %3, 6                           ; 3 uses
-  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %i.f, i64 1) ; 4 uses
+  %i.f = lshr i64 %3, 6
+  %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %i.f, i64 1) ; 5 uses
   %i.g = shl nuw i64 %spec.select.i.i, 6
   %i.h = sub i64 %3, %i.g                         ; 2 uses
   %i.i = trunc i64 %i.h to i32                    ; 2 uses
@@ -231,9 +231,6 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
   %i.q = load i64, ptr %i.e, align 1              ; 2 uses
-  %4 = add nsw i64 %i.f, -1
-  %5 = icmp ne i64 %i.f, 0
-  %umin.neg.neg = zext i1 %5 to i64
   %xtraiter = and i64 %spec.select.i.i, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
@@ -260,7 +257,7 @@ bb.c:                                             ; preds = %bb.b
   %.02746.i.unr = phi i64 [ %i.b, %.lr.ph.preheader.i ], [ %i.aa, %.lr.ph.i.prol ]
   %.sroa.6.045.i.unr = phi ptr [ %i.e, %.lr.ph.preheader.i ], [ %i.s, %.lr.ph.i.prol ]
   %.sroa.23.044.i.unr = phi i64 [ %i.q, %.lr.ph.preheader.i ], [ %i.u, %.lr.ph.i.prol ]
-  %i.ab = icmp eq i64 %4, %umin.neg.neg
+  %i.ab = icmp eq i64 %spec.select.i.i, 1
   br i1 %i.ab, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i

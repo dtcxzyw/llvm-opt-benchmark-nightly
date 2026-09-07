@@ -205,8 +205,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 376 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !289
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 628
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !298  ; 3 uses
-  %i.e = add nsw i32 %i.d, 6                      ; 12 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !298
+  %i.e = add nsw i32 %i.d, 6                      ; 14 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.g = load i32, ptr %i.f, align 4, !tbaa !259  ; 3 uses
   %i.h = icmp sgt i32 %i.e, %i.g
@@ -347,11 +347,10 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i: ; preds = %bb.e, %_ZNK20btA
 .lr.ph.i:                                         ; preds = %..lr.ph.i_crit_edge, %_ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i
   %i.au = phi ptr [ %.pre, %..lr.ph.i_crit_edge ], [ %.0.i.i.i, %_ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i ]
   %i.av = sext i32 %i.g to i64                    ; 2 uses
+  %wide.trip.count.i = sext i32 %i.e to i64
   %5 = shl nsw i64 %i.av, 2
   %scevgep = getelementptr i8, ptr %i.au, i64 %5
-  %6 = sext i32 %i.d to i64
-  %7 = add nsw i64 %6, 6
-  %i.aw = sub nsw i64 %7, %i.av
+  %i.aw = sub nsw i64 %wide.trip.count.i, %i.av
   %i.ax = shl nuw nsw i64 %i.aw, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep, i8 0, i64 %i.ax, i1 false), !tbaa !62
   br label %_ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit
@@ -498,11 +497,10 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i31: ; preds = %bb.i, %_ZNK20b
 .lr.ph.i18:                                       ; preds = %..lr.ph.i18_crit_edge, %_ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i31
   %i.cn = phi ptr [ %.pre40, %..lr.ph.i18_crit_edge ], [ %.0.i.i.i27, %_ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i31 ]
   %i.co = sext i32 %i.az to i64                   ; 2 uses
-  %8 = shl nsw i64 %i.co, 2
-  %scevgep38 = getelementptr i8, ptr %i.cn, i64 %8
-  %9 = sext i32 %i.d to i64
-  %10 = add nsw i64 %9, 6
-  %i.cp = sub nsw i64 %10, %i.co
+  %wide.trip.count.i19 = sext i32 %i.e to i64
+  %6 = shl nsw i64 %i.co, 2
+  %scevgep38 = getelementptr i8, ptr %i.cn, i64 %6
+  %i.cp = sub nsw i64 %wide.trip.count.i19, %i.co
   %i.cq = shl nuw nsw i64 %i.cp, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep38, i8 0, i64 %i.cq, i1 false), !tbaa !62
   br label %_ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit37

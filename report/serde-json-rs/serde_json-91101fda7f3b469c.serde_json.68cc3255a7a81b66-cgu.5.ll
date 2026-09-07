@@ -204,12 +204,11 @@ bb.a:
   br i1 %i.h, label %_RINvXs2J_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCsbqH9stoieM8_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsk_NtB2l_3vecINtB3x_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs8ZPNfZ0ciAA_10serde_json.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = ptrtoint ptr %i.c to i64                 ; 2 uses
-  %i.j = ptrtoint ptr %i.a to i64                 ; 2 uses
-  %i.k = sub i64 %i.i, %i.j                       ; 3 uses
+  %i.i = ptrtoint ptr %i.c to i64
+  %i.j = ptrtoint ptr %i.a to i64
+  %i.k = sub i64 %i.i, %i.j                       ; 4 uses
   %xtraiter = and i64 %i.k, 1
-  %2 = add i64 %i.i, -1
-  %i.l = icmp eq i64 %2, %i.j
+  %i.l = icmp eq i64 %i.k, 1
   br i1 %i.l, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.b
@@ -302,12 +301,11 @@ bb.a:
   br i1 %i.a, label %_RINvXs2J_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhNtNtCs8ZPNfZ0ciAA_10serde_json5value5ValueuNCNvXs_NtB2f_3serNtB31_10SerializerNtNtCsdnjrqM8ey3e_10serde_core3ser10Serializer15serialize_bytes0NCINvNvBS_8for_each4callB2d_NCINvMsk_NtCsbqH9stoieM8_5alloc3vecINtB56_3VecB2d_E14extend_trustedINtB1I_3MapBF_B2U_EE0E0E0EB2h_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.c = ptrtoint ptr %0 to i64                   ; 2 uses
-  %i.d = sub nuw i64 %i.b, %i.c                   ; 3 uses
+  %i.b = ptrtoint ptr %1 to i64
+  %i.c = ptrtoint ptr %0 to i64
+  %i.d = sub nuw i64 %i.b, %i.c                   ; 4 uses
   %xtraiter = and i64 %i.d, 1
-  %3 = add i64 %i.b, -1
-  %i.e = icmp eq i64 %3, %i.c
+  %i.e = icmp eq i64 %i.d, 1
   br i1 %i.e, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.b

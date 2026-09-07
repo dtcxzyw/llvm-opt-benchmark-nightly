@@ -205,9 +205,9 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.o = load ptr, ptr %i.i, align 8, !tbaa !91   ; 10 uses
-  %i.p = ptrtoint ptr %i.k to i64                 ; 3 uses
-  %i.q = ptrtoint ptr %i.o to i64                 ; 4 uses
-  %i.r = sub i64 %i.p, %i.q                       ; 3 uses
+  %i.p = ptrtoint ptr %i.k to i64                 ; 2 uses
+  %i.q = ptrtoint ptr %i.o to i64                 ; 3 uses
+  %i.r = sub i64 %i.p, %i.q                       ; 4 uses
   %i.s = icmp eq i64 %i.r, 9223372036854775800
   br i1 %i.s, label %bb.f, label %_ZNKSt6vectorISt10unique_ptrIN4lean7lthreadESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -242,16 +242,13 @@ _ZNKSt6vectorISt10unique_ptrIN4lean7lthreadESt14default_deleteIS2_EESaIS5_EE12_M
   %i.ac = sub i64 %i.ab, %i.q                     ; 2 uses
   %i.ad = lshr i64 %i.ac, 3
   %i.ae = add nuw nsw i64 %i.ad, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ac, 136
+  %min.iters.check = icmp ult i64 %i.ac, 120
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader17, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
-  %2 = add i64 %i.p, -8
-  %3 = sub i64 %2, %i.q
-  %i.af = and i64 %3, -8
-  %4 = add i64 %i.af, 8                           ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.z, i64 %4
-  %scevgep13 = getelementptr i8, ptr %i.o, i64 %4
+  %i.af = and i64 %i.r, -8                        ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.z, i64 %i.af
+  %scevgep13 = getelementptr i8, ptr %i.o, i64 %i.af
   %bound0 = icmp ult ptr %i.z, %scevgep13
   %bound1 = icmp ult ptr %i.o, %scevgep
   %found.conflict = and i1 %bound0, %bound1

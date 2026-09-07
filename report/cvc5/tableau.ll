@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %.noexc66, %.lr.ph.i
 
 bb.m:                                             ; preds = %bb.l
   %i.bs = add i32 %i.bk, 1
-  %i.bt = zext i32 %i.bs to i64                   ; 10 uses
+  %i.bt = zext i32 %i.bs to i64                   ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   store i32 -1, ptr %i.a, align 4, !tbaa !18
   %i.bu = icmp samesign ult i64 %i.br, %i.bt
@@ -235,12 +235,12 @@ _ZNSt6vectorIjSaIjEE6resizeEmRKj.exit.i.i:        ; preds = %bb.n, %_ZSt8_Destro
   %i.ca = ptrtoint ptr %i.by to i64               ; 2 uses
   %i.cb = ptrtoint ptr %i.bz to i64               ; 2 uses
   %i.cc = sub i64 %i.ca, %i.cb                    ; 2 uses
-  %i.cd = ashr exact i64 %i.cc, 3                 ; 8 uses
+  %i.cd = ashr exact i64 %i.cc, 3                 ; 6 uses
   %i.ce = icmp ult i64 %i.cd, %i.bt
   br i1 %i.ce, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %_ZNSt6vectorIjSaIjEE6resizeEmRKj.exit.i.i
-  %i.cf = sub nuw nsw i64 %i.bt, %i.cd            ; 9 uses
+  %i.cf = sub nuw nsw i64 %i.bt, %i.cd            ; 11 uses
   %i.cg = load ptr, ptr %i.ag, align 8, !tbaa !90
   %i.ch = ptrtoint ptr %i.cg to i64
   %i.ci = sub i64 %i.ch, %i.ca
@@ -252,6 +252,7 @@ bb.q:                                             ; preds = %_ZNSt6vectorIjSaIjE
   br i1 %.not28.i, label %_ZNKSt6vectorISt4pairIjbESaIS1_EE12_M_check_lenEmPKc.exit.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %bb.q
+  %7 = add nsw i64 %i.cf, -1
   %xtraiter = and i64 %i.cf, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.prol
@@ -273,8 +274,7 @@ bb.q:                                             ; preds = %_ZNSt6vectorIjSaIjE
   %.lcssa.unr = phi ptr [ poison, %.lr.ph.i.i.i.i.preheader ], [ %i.co, %.lr.ph.i.i.i.i.prol ]
   %.013.i.i.i.i.unr = phi ptr [ %i.by, %.lr.ph.i.i.i.i.preheader ], [ %i.co, %.lr.ph.i.i.i.i.prol ]
   %.01012.i.i.i.i.unr = phi i64 [ %i.cf, %.lr.ph.i.i.i.i.preheader ], [ %i.cn, %.lr.ph.i.i.i.i.prol ]
-  %7 = sub nsw i64 %i.cd, %i.bt
-  %8 = icmp ugt i64 %7, -8
+  %8 = icmp ult i64 %7, 7
   br i1 %8, label %_ZSt27__uninitialized_default_n_aIPSt4pairIjbEmS1_ET_S3_T0_RSaIT1_E.exit.i, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i
@@ -350,9 +350,8 @@ _ZNKSt6vectorISt4pairIjbESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.q
 .lr.ph.i.i.i30.i.prol.loopexit:                   ; preds = %.lr.ph.i.i.i30.i.prol, %.noexc96
   %.013.i.i.i31.i.unr = phi ptr [ %i.dj, %.noexc96 ], [ %i.dm, %.lr.ph.i.i.i30.i.prol ]
   %.01012.i.i.i32.i.unr = phi i64 [ %i.cf, %.noexc96 ], [ %i.dl, %.lr.ph.i.i.i30.i.prol ]
-  %9 = sub nsw i64 %i.cd, %i.bt
-  %10 = icmp ugt i64 %9, -8
-  br i1 %10, label %_ZSt27__uninitialized_default_n_aIPSt4pairIjbEmS1_ET_S3_T0_RSaIT1_E.exit35.i, label %.lr.ph.i.i.i30.i
+  %9 = icmp samesign ult i64 %i.cf, 8
+  br i1 %9, label %_ZSt27__uninitialized_default_n_aIPSt4pairIjbEmS1_ET_S3_T0_RSaIT1_E.exit35.i, label %.lr.ph.i.i.i30.i
 
 .lr.ph.i.i.i30.i:                                 ; preds = %.lr.ph.i.i.i30.i.prol.loopexit, %.lr.ph.i.i.i30.i
   %.013.i.i.i31.i = phi ptr [ %i.ed, %.lr.ph.i.i.i30.i ], [ %.013.i.i.i31.i.unr, %.lr.ph.i.i.i30.i.prol.loopexit ] ; 17 uses

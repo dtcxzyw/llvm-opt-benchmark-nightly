@@ -25,8 +25,8 @@ bb.a:
   %i.j = insertelement <16 x float> poison, float %i.i, i64 0
   %i.k = shufflevector <16 x float> %i.j, <16 x float> poison, <16 x i32> zeroinitializer ; 4 uses
   %i.l = sdiv i32 %4, 16
-  %i.m = shl nsw i32 %i.l, 4                      ; 4 uses
-  %i.n = sub i32 %4, %i.m                         ; 2 uses
+  %i.m = shl nsw i32 %i.l, 4                      ; 3 uses
+  %i.n = sub i32 %4, %i.m                         ; 4 uses
   %i.o = icmp sgt i32 %4, 15
   br i1 %i.o, label %.lr.ph.i, label %._crit_edge.i
 
@@ -42,14 +42,12 @@ bb.a:
   br i1 %.not.i, label %_ZN16OpenColorIO_v2_512_GLOBAL__N_126applyTetrahedralAVX512FuncILNS_8BitDepthE8ELS2_8EEEvPKfiPKvPvi.exit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %._crit_edge.i
-  %5 = xor i32 %i.m, -1
-  %6 = add i32 %4, %5                             ; 2 uses
   %xtraiter = and i32 %4, 7                       ; 4 uses
-  %i.r = icmp ult i32 %6, 7
+  %i.r = icmp ult i32 %i.n, 8
   br i1 %i.r, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
-  %unroll_iter = sub i32 %i.n, %xtraiter
+  %unroll_iter = sub nuw i32 %i.n, %xtraiter
   br label %.lr.ph.i.i
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i
@@ -311,11 +309,11 @@ _ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6
   %i.id = tail call <16 x float> @llvm.x86.avx512.mask.gather.dps.512(<16 x float> zeroinitializer, ptr nonnull %i.hs, <16 x i32> %i.hq, <16 x i1> splat (i1 true), i32 4), !noalias !21
   %i.ie = tail call <16 x float> @llvm.x86.avx512.mask.gather.dps.512(<16 x float> zeroinitializer, ptr nonnull %i.hu, <16 x i32> %i.hq, <16 x i1> splat (i1 true), i32 4), !noalias !21
   %xtraiter32 = and i32 %4, 7                     ; 4 uses
-  %i.if = icmp ult i32 %6, 7
+  %i.if = icmp ult i32 %i.n, 8
   br i1 %i.if, label %.lr.ph.i57.i.epil.preheader, label %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.i.new
 
 _ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.i.new: ; preds = %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.i
-  %unroll_iter38 = sub i32 %i.n, %xtraiter32
+  %unroll_iter38 = sub nuw i32 %i.n, %xtraiter32
   br label %.lr.ph.i57.i
 
 .lr.ph.i57.i:                                     ; preds = %.lr.ph.i57.i, %_ZN16OpenColorIO_v2_514AVX512RGBAPackILNS_8BitDepthE8EE10LoadMaskedEPKfRDv16_fS6_S6_S6_j.exit.i.new

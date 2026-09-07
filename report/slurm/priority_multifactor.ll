@@ -202,6 +202,7 @@ bb.b:                                             ; preds = %bb.a
 
 .loopexit.loopexit:                               ; preds = %bb.b
   %i.g = call i64 @slurm_mktime(ptr noundef nonnull %2) #12 ; 4 uses
+  %3 = add i64 %i.g, 86400
   %i.h = add i64 %i.g, 172800
   %smax19 = call i64 @llvm.smax.i64(i64 %i.b, i64 %i.h)
   %i.i = add i64 %smax19, -172800                 ; 2 uses
@@ -212,18 +213,17 @@ bb.b:                                             ; preds = %bb.a
   %i.m = udiv i64 %i.l, 86400
   %i.n = add nuw nsw i64 %i.m, %umin20
   %i.o = mul i64 %i.n, 86400
-  %3 = add i64 %i.g, %i.o
-  %i.p = add i64 %3, 86400
+  %i.p = add i64 %3, %i.o
   br label %.loopexit
 
 .loopexit.loopexit18:                             ; preds = %bb.b
-  %i.q = call i64 @slurm_mktime(ptr noundef nonnull %2) #12 ; 3 uses
+  %i.q = call i64 @slurm_mktime(ptr noundef nonnull %2) #12 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.s = load i32, ptr %i.r, align 8
   %i.t = sub i32 7, %i.s
   %i.u = mul i32 %i.t, 86400
-  %i.v = sext i32 %i.u to i64                     ; 4 uses
-  %i.w = add i64 %i.q, %i.v
+  %i.v = sext i32 %i.u to i64                     ; 3 uses
+  %i.w = add i64 %i.q, %i.v                       ; 2 uses
   %i.x = add i64 %i.w, 604800
   %smax = call i64 @llvm.smax.i64(i64 %i.b, i64 %i.x)
   %i.y = add i64 %smax, -604800
@@ -235,8 +235,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ad = udiv i64 %i.ac, 604800
   %i.ae = add nuw nsw i64 %i.ad, %umin
   %i.af = mul i64 %i.ae, 604800
-  %4 = add i64 %i.q, %i.af
-  %i.ag = add i64 %4, %i.v
+  %i.ag = add i64 %i.w, %i.af
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.b

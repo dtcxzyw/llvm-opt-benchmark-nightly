@@ -205,7 +205,7 @@ _ZN2cv3Mat3ptrIfEEPT_ii.exit:                     ; preds = %.lr.ph, %middle.blo
 
 .preheader145.lr.ph.split:                        ; preds = %.preheader145.lr.ph
   %i.hl = getelementptr inbounds nuw i8, ptr %0, i64 368
-  %i.hm = load i64, ptr %i.hl, align 8, !tbaa !69 ; 9 uses
+  %i.hm = load i64, ptr %i.hl, align 8, !tbaa !69 ; 8 uses
   %.not215 = icmp eq i64 %i.hm, 0
   br i1 %.not215, label %.loopexit, label %.preheader145.us.preheader
 
@@ -213,7 +213,7 @@ _ZN2cv3Mat3ptrIfEEPT_ii.exit:                     ; preds = %.lr.ph, %middle.blo
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hf, i64 4 ; 4 uses
   %i.ho = getelementptr inbounds nuw i8, ptr %i.hf, i64 8 ; 4 uses
   %i.hp = getelementptr inbounds nuw i8, ptr %i.hf, i64 12 ; 4 uses
-  %i.hq = add i64 %i.hm, -1                       ; 2 uses
+  %i.hq = add i64 %i.hm, -1                       ; 3 uses
   %i.hr = getelementptr i8, ptr %i.au, i64 %.pn143
   %scevgep368 = getelementptr i8, ptr %i.hr, i64 4
   %i.hs = getelementptr i8, ptr %i.au, i64 %.pn143
@@ -304,7 +304,6 @@ middle.block400:                                  ; preds = %vector.body387
 .preheader.us.us.preheader:                       ; preds = %vector.memcheck374, %vector.scevcheck, %.preheader144.us.us, %middle.block400
   %.055197.us.us.ph = phi i64 [ 0, %vector.memcheck374 ], [ 0, %vector.scevcheck ], [ 0, %.preheader144.us.us ], [ %n.vec386, %middle.block400 ] ; 3 uses
   %.2196.us.us.ph = phi i64 [ %.1199.us.us, %vector.memcheck374 ], [ %.1199.us.us, %vector.scevcheck ], [ %.1199.us.us, %.preheader144.us.us ], [ %i.ii, %middle.block400 ] ; 6 uses
-  %.neg = or disjoint i64 %.055197.us.us.ph, 1
   br i1 %lcmp.mod.not, label %.preheader.us.us.prol.loopexit, label %.preheader.us.us.prol
 
 .preheader.us.us.prol:                            ; preds = %.preheader.us.us.preheader
@@ -331,7 +330,7 @@ middle.block400:                                  ; preds = %vector.body387
   %indvars.iv.next242.3.lcssa404.unr = phi i64 [ poison, %.preheader.us.us.preheader ], [ %indvars.iv.next242.3.prol, %.preheader.us.us.prol ]
   %.055197.us.us.unr = phi i64 [ %.055197.us.us.ph, %.preheader.us.us.preheader ], [ %i.jg, %.preheader.us.us.prol ]
   %.2196.us.us.unr = phi i64 [ %.2196.us.us.ph, %.preheader.us.us.preheader ], [ %indvars.iv.next242.3.prol, %.preheader.us.us.prol ]
-  %i.jh = icmp eq i64 %i.hm, %.neg
+  %i.jh = icmp eq i64 %i.hq, %.055197.us.us.ph
   br i1 %i.jh, label %._crit_edge.us.us, label %.preheader.us.us
 
 .preheader.us.us:                                 ; preds = %.preheader.us.us.prol.loopexit, %.preheader.us.us

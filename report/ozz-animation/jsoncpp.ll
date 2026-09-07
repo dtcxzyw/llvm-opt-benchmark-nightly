@@ -204,9 +204,9 @@ bb.k:                                             ; preds = %.lr.ph
   br label %_ZNSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE9push_backERKS7_.exit
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.r = ptrtoint ptr %.sroa.10.094 to i64        ; 2 uses
-  %i.s = ptrtoint ptr %.sroa.050.095 to i64       ; 3 uses
-  %i.t = sub i64 %i.r, %i.s                       ; 4 uses
+  %i.r = ptrtoint ptr %.sroa.10.094 to i64
+  %i.s = ptrtoint ptr %.sroa.050.095 to i64       ; 2 uses
+  %i.t = sub i64 %i.r, %i.s                       ; 5 uses
   %i.u = icmp eq i64 %i.t, 9223372036854775800
   br i1 %i.u, label %bb.m, label %_ZNKSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESaIS7_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -239,18 +239,17 @@ _ZNKSt6vectorISt23_Rb_tree_const_iteratorISt4pairIKN4Json5Value8CZStringES3_EESa
 
 iter.check:                                       ; preds = %.noexc19
   %i.ae = ptrtoaddr ptr %i.ab to i64
-  %i.af = add i64 %i.r, -8
-  %5 = sub i64 %i.af, %i.s                        ; 3 uses
-  %i.ag = lshr i64 %5, 3
+  %i.af = add i64 %i.t, -8                        ; 3 uses
+  %i.ag = lshr i64 %i.af, 3
   %i.ah = add nuw nsw i64 %i.ag, 1                ; 5 uses
-  %min.iters.check = icmp ult i64 %5, 24
+  %min.iters.check = icmp ult i64 %i.af, 24
   %i.ai = sub i64 %i.s, %i.ae
   %diff.check = icmp ugt i64 %i.ai, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check148 = icmp ult i64 %5, 120
+  %min.iters.check148 = icmp ult i64 %i.af, 120
   br i1 %min.iters.check148, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check

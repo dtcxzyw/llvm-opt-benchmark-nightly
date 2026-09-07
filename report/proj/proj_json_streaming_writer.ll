@@ -202,9 +202,9 @@ bb.f:                                             ; preds = %_ZN5osgeo4proj22CPL
 
 bb.g:                                             ; preds = %_ZN5osgeo4proj22CPLJSonStreamingWriter9IncIndentEv.exit
   %i.am = load ptr, ptr %i.af, align 8, !tbaa !28 ; 9 uses
-  %i.an = ptrtoint ptr %i.ah to i64               ; 2 uses
-  %i.ao = ptrtoint ptr %i.am to i64               ; 4 uses
-  %i.ap = sub i64 %i.an, %i.ao                    ; 3 uses
+  %i.an = ptrtoint ptr %i.ah to i64
+  %i.ao = ptrtoint ptr %i.am to i64               ; 3 uses
+  %i.ap = sub i64 %i.an, %i.ao                    ; 4 uses
   %i.aq = icmp eq i64 %i.ap, 9223372036854775806
   br i1 %i.aq, label %bb.h, label %_ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -230,18 +230,17 @@ _ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenE
 
 iter.check:                                       ; preds = %_ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.az = ptrtoaddr ptr %i.ax to i64
-  %i.ba = add i64 %i.an, -2
-  %2 = sub i64 %i.ba, %i.ao                       ; 3 uses
-  %i.bb = lshr i64 %2, 1
+  %i.ba = add i64 %i.ap, -2                       ; 3 uses
+  %i.bb = lshr i64 %i.ba, 1
   %i.bc = add nuw i64 %i.bb, 1                    ; 5 uses
-  %min.iters.check = icmp ult i64 %2, 6
+  %min.iters.check = icmp ult i64 %i.ba, 6
   %i.bd = sub i64 %i.ao, %i.az
   %diff.check = icmp ugt i64 %i.bd, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check30 = icmp ult i64 %2, 30
+  %min.iters.check30 = icmp ult i64 %i.ba, 30
   br i1 %min.iters.check30, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -644,9 +643,9 @@ bb.f:                                             ; preds = %_ZN5osgeo4proj22CPL
 
 bb.g:                                             ; preds = %_ZN5osgeo4proj22CPLJSonStreamingWriter9IncIndentEv.exit
   %i.am = load ptr, ptr %i.af, align 8, !tbaa !28 ; 9 uses
-  %i.an = ptrtoint ptr %i.ah to i64               ; 2 uses
-  %i.ao = ptrtoint ptr %i.am to i64               ; 4 uses
-  %i.ap = sub i64 %i.an, %i.ao                    ; 3 uses
+  %i.an = ptrtoint ptr %i.ah to i64
+  %i.ao = ptrtoint ptr %i.am to i64               ; 3 uses
+  %i.ap = sub i64 %i.an, %i.ao                    ; 4 uses
   %i.aq = icmp eq i64 %i.ap, 9223372036854775806
   br i1 %i.aq, label %bb.h, label %_ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -672,18 +671,17 @@ _ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenE
 
 iter.check:                                       ; preds = %_ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %i.az = ptrtoaddr ptr %i.ax to i64
-  %i.ba = add i64 %i.an, -2
-  %2 = sub i64 %i.ba, %i.ao                       ; 3 uses
-  %i.bb = lshr i64 %2, 1
+  %i.ba = add i64 %i.ap, -2                       ; 3 uses
+  %i.bb = lshr i64 %i.ba, 1
   %i.bc = add nuw i64 %i.bb, 1                    ; 5 uses
-  %min.iters.check = icmp ult i64 %2, 6
+  %min.iters.check = icmp ult i64 %i.ba, 6
   %i.bd = sub i64 %i.ao, %i.az
   %diff.check = icmp ugt i64 %i.bd, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check30 = icmp ult i64 %2, 30
+  %min.iters.check30 = icmp ult i64 %i.ba, 30
   br i1 %min.iters.check30, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check

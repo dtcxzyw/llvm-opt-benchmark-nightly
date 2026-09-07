@@ -205,13 +205,12 @@ bb.l:                                             ; preds = %_ZN12_GLOBAL__N_125
   br i1 %i.ae, label %bb.m, label %.preheader284
 
 .preheader284:                                    ; preds = %.critedge233.thread
-  %i.af = ptrtoint ptr %1 to i64                  ; 3 uses
+  %i.af = ptrtoint ptr %1 to i64                  ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %11, i64 13 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.ai = getelementptr inbounds nuw i8, ptr %11, i64 12 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %11, i64 56 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %9, i64 56 ; 3 uses
-  %invariant.op = sub i64 1, %i.af
   br label %bb.v
 
 bb.m:                                             ; preds = %.critedge233.thread
@@ -304,8 +303,8 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.w
   br i1 %.not.i234, label %.thread.thread, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
-  %i.bs = ptrtoint ptr %i.br to i64               ; 2 uses
-  %i.bt = sub i64 %i.bs, %i.af                    ; 8 uses
+  %i.bs = ptrtoint ptr %i.br to i64
+  %i.bt = sub i64 %i.bs, %i.af                    ; 9 uses
   %i.bu = icmp eq i64 %i.bt, -1
   br i1 %i.bu, label %.thread.thread, label %.lr.ph296
 
@@ -422,7 +421,7 @@ bb.ah:                                            ; preds = %_ZNSt11char_traitsI
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit240: ; preds = %bb.ag, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i238, %bb.ah
   %.1.i237 = phi i64 [ -1, %bb.ag ], [ %i.cy, %bb.ah ], [ -1, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i238 ] ; 3 uses
-  %indvars.iv356.reass = add i64 %i.bs, %invariant.op ; 2 uses
+  %indvars.iv356.reass = add i64 %i.bt, 1         ; 2 uses
   %.0157357 = add nuw i64 %i.bt, 1                ; 3 uses
   %i.cz = icmp ult i64 %.0157357, %0
   br i1 %i.cz, label %.lr.ph360, label %.critedge9

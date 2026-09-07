@@ -204,10 +204,10 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8, !tbaa !29   ; 3 uses
   %i.k = mul nsw i64 %i.f, %i.d                   ; 10 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
-  %i.m = load i64, ptr %i.l, align 8, !tbaa !31   ; 13 uses
+  %i.m = load i64, ptr %i.l, align 8, !tbaa !31   ; 12 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !32   ; 13 uses
-  %i.p = add i64 %i.o, %i.m                       ; 3 uses
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !32   ; 12 uses
+  %i.p = add i64 %i.o, %i.m                       ; 4 uses
   %i.q = icmp sgt i64 %i.h, 0
   br i1 %i.q, label %.lr.ph82.i, label %reorder_dif.exit
 
@@ -260,7 +260,6 @@ bb.a:
   %i.bd = mul i64 %i.d, %i.bc
   %i.be = add i64 %i.bd, 8
   %i.bf = sub i64 %i.be, %i.aa
-  %2 = add i64 %i.o, %i.m
   %i.bg = add i64 %i.o, %i.m
   %i.bh = getelementptr i8, ptr %1, i64 %i.aa
   %i.bi = getelementptr i8, ptr %i.bh, i64 %i.ab
@@ -485,7 +484,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.us.us.us.i, %middle.block
   %.07375.us.us.us.i.ph = phi i64 [ %i.cd, %middle.block ], [ %i.m, %.lr.ph.us.us.us.i ] ; 5 uses
-  %i.ex = sub i64 %2, %.07375.us.us.us.i.ph
+  %i.ex = sub i64 %i.p, %.07375.us.us.us.i.ph
   %.neg = add i64 %.07375.us.us.us.i.ph, 1
   %xtraiter81 = and i64 %i.ex, 1
   %lcmp.mod82.not = icmp eq i64 %xtraiter81, 0

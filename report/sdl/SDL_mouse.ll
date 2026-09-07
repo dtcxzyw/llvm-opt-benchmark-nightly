@@ -204,14 +204,14 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.bj, label %bb.q, label %GetMouseClickState.exit.thread
 
 bb.q:                                             ; preds = %bb.p
-  %i.bk = zext i8 %3 to i32                       ; 5 uses
+  %i.bk = zext i8 %3 to i32                       ; 4 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.036.i.ph, i64 8 ; 3 uses
   %i.bm = load i32, ptr %i.bl, align 8
   %.not.i = icmp sgt i32 %i.bm, %i.bk
   br i1 %.not.i, label %GetMouseClickState.exit, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.bn = add nuw nsw i32 %i.bk, 1                ; 3 uses
+  %i.bn = add nuw nsw i32 %i.bk, 1                ; 4 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.036.i.ph, i64 16 ; 7 uses
   %i.bp = load ptr, ptr %i.bo, align 8
   %i.bq = shl nuw nsw i32 %i.bn, 5
@@ -228,8 +228,7 @@ bb.s:                                             ; preds = %bb.r
 
 .lr.ph.preheader.i:                               ; preds = %bb.s
   %i.bu = sext i32 %i.bt to i64                   ; 2 uses
-  %7 = add nuw nsw i32 %i.bk, 1
-  %i.bv = sub i32 %7, %i.bt
+  %i.bv = sub i32 %i.bn, %i.bt
   %i.bw = sub i32 %i.bk, %i.bt
   %xtraiter = and i32 %i.bv, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0

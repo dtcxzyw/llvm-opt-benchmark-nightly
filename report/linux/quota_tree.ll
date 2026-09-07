@@ -204,22 +204,21 @@ _kmalloc_noprof.exit:
 
 .preheader:                                       ; preds = %_kmalloc_noprof.exit
   %i.g = getelementptr i8, ptr %0, i64 36         ; 3 uses
-  %i.h = load i32, ptr %i.g, align 4              ; 3 uses
-  %i.i = add i32 %i.h, -1
+  %i.h = load i32, ptr %i.g, align 4              ; 2 uses
+  %i.i = add i32 %i.h, -1                         ; 2 uses
   %i.j = icmp ult i32 %3, %i.i
   br i1 %i.j, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %4 = xor i32 %3, -1
-  %5 = add i32 %i.h, %4                           ; 2 uses
+  %4 = sub nuw i32 %i.i, %3                       ; 2 uses
   %i.k = add i32 %i.h, -2
   %i.l = sub i32 %i.k, %3
-  %xtraiter = and i32 %5, 7                       ; 3 uses
+  %xtraiter = and i32 %4, 7                       ; 3 uses
   %i.m = icmp ult i32 %i.l, 7
   br i1 %i.m, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i32 %5, -8
+  %unroll_iter = and i32 %4, -8
   %factor.op.mul = mul i32 %i.f, %i.f
   %factor.op.mul174 = mul i32 %factor.op.mul, %i.f
   %factor.op.mul175 = mul i32 %factor.op.mul174, %i.f

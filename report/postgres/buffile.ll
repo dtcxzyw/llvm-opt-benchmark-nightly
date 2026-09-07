@@ -204,13 +204,13 @@ BufFileFlush.exit:                                ; preds = %bb.k, %bb.l
   %i.bi = icmp eq i64 %.1.lcssa, 0
   %or.cond = and i1 %i.bi, %i.bh                  ; 2 uses
   %i.bj = sext i1 %or.cond to i32                 ; 2 uses
-  %spec.select = add i32 %.148.lcssa, %i.bj       ; 3 uses
+  %spec.select = add i32 %.148.lcssa, %i.bj       ; 2 uses
   %spec.select61 = select i1 %or.cond, i64 1073741824, i64 %.1.lcssa ; 4 uses
   %i.bk = icmp sgt i64 %spec.select61, 1073741824
   br i1 %i.bk, label %.lr.ph72.preheader, label %select.unfold._crit_edge
 
 .lr.ph72.preheader:                               ; preds = %BufFileFlush.exit
-  %i.bl = add i32 %spec.select, 1
+  %i.bl = add i32 %spec.select, 1                 ; 2 uses
   %smax80 = tail call i32 @llvm.smax.i32(i32 %i.bg, i32 %i.bl)
   %i.bm = xor i32 %.148.lcssa, -1
   %i.bn = add i32 %smax80, %i.bm
@@ -227,8 +227,7 @@ BufFileFlush.exit:                                ; preds = %bb.k, %bb.l
   %i.bu = and i64 %i.bq, -1073741824
   %i.bv = sub nsw i64 %i.bt, %i.bu
   %i.bw = trunc nuw i64 %i.br to i32
-  %4 = add i32 %spec.select, %i.bw
-  %i.bx = add i32 %4, 1
+  %i.bx = add i32 %i.bl, %i.bw
   br label %select.unfold._crit_edge
 
 select.unfold._crit_edge:                         ; preds = %.lr.ph72.preheader.split, %BufFileFlush.exit

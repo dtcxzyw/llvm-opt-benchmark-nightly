@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %bb.e
 iter.check:                                       ; preds = %.lr.ph22.i
   %i.v = zext i8 %i.t to i32
   %i.w = add nuw nsw i32 %i.v, 1                  ; 5 uses
-  %wide.trip.count.i = zext nneg i32 %i.w to i64
-  %i.x = zext i8 %i.t to i64                      ; 7 uses
+  %wide.trip.count.i = zext nneg i32 %i.w to i64  ; 2 uses
+  %i.x = zext i8 %i.t to i64                      ; 6 uses
   %min.iters.check = icmp ult i8 %i.t, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.scevcheck
 
@@ -277,8 +277,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.i.preheader:                               ; preds = %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv.i.ph = phi i64 [ 1, %iter.check ], [ 1, %vector.scevcheck ], [ %i.ah, %vec.epilog.iter.check ], [ %i.ap, %vec.epilog.middle.block ] ; 4 uses
-  %1 = add nuw nsw i64 %i.x, 1
-  %i.aw = sub nsw i64 %1, %indvars.iv.i.ph
+  %i.aw = sub nsw i64 %wide.trip.count.i, %indvars.iv.i.ph
   %i.ax = sub nsw i64 %i.x, %indvars.iv.i.ph
   %xtraiter = and i64 %i.aw, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0

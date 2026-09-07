@@ -205,8 +205,8 @@ declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @SetInitialProfile(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) unnamed_addr #0 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !15     ; 30 uses
-  %i.b = add nsw i64 %i.a, -1                     ; 3 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !15     ; 28 uses
+  %i.b = add i64 %i.a, -1                         ; 5 uses
   %i.c = tail call ptr @N_VGetArrayPointer(ptr noundef %1) #9 ; 14 uses
   %i.d = ptrtoaddr ptr %i.c to i64                ; 2 uses
   %i.e = tail call ptr @N_VGetArrayPointer(ptr noundef %2) #9 ; 11 uses
@@ -542,7 +542,6 @@ middle.block70:                                   ; preds = %vector.body67
 
 .lr.ph69.split.us.preheader89:                    ; preds = %.lr.ph69.split.us.preheader, %middle.block70
   %.15666.us.ph = phi i64 [ %n.vec66, %middle.block70 ], [ 0, %.lr.ph69.split.us.preheader ] ; 6 uses
-  %.neg99 = or disjoint i64 %.15666.us.ph, 1
   br i1 %lcmp.mod97.not, label %.lr.ph69.split.us.prol.loopexit, label %.lr.ph69.split.us.prol
 
 .lr.ph69.split.us.prol:                           ; preds = %.lr.ph69.split.us.preheader89
@@ -557,7 +556,7 @@ middle.block70:                                   ; preds = %vector.body67
 
 .lr.ph69.split.us.prol.loopexit:                  ; preds = %.lr.ph69.split.us.prol, %.lr.ph69.split.us.preheader89
   %.15666.us.unr = phi i64 [ %.15666.us.ph, %.lr.ph69.split.us.preheader89 ], [ %i.er, %.lr.ph69.split.us.prol ]
-  %i.es = icmp eq i64 %i.a, %.neg99
+  %i.es = icmp eq i64 %i.b, %.15666.us.ph
   br i1 %i.es, label %._crit_edge70, label %.lr.ph69.split.us
 
 .lr.ph69.split.us:                                ; preds = %.lr.ph69.split.us.prol.loopexit, %.lr.ph69.split.us
@@ -612,7 +611,6 @@ middle.block86:                                   ; preds = %vector.body83
 
 .lr.ph69.split.split.us.preheader90:              ; preds = %.lr.ph69.split.split.us.preheader, %middle.block86
   %.15666.us71.ph = phi i64 [ %n.vec82, %middle.block86 ], [ 0, %.lr.ph69.split.split.us.preheader ] ; 4 uses
-  %.neg98 = or disjoint i64 %.15666.us71.ph, 1
   br i1 %lcmp.mod95.not, label %.lr.ph69.split.split.us.prol.loopexit, label %.lr.ph69.split.split.us.prol
 
 .lr.ph69.split.split.us.prol:                     ; preds = %.lr.ph69.split.split.us.preheader90
@@ -628,7 +626,7 @@ middle.block86:                                   ; preds = %vector.body83
 
 .lr.ph69.split.split.us.prol.loopexit:            ; preds = %.lr.ph69.split.split.us.prol, %.lr.ph69.split.split.us.preheader90
   %.15666.us71.unr = phi i64 [ %.15666.us71.ph, %.lr.ph69.split.split.us.preheader90 ], [ %i.fo, %.lr.ph69.split.split.us.prol ]
-  %i.fp = icmp eq i64 %i.a, %.neg98
+  %i.fp = icmp eq i64 %i.b, %.15666.us71.ph
   br i1 %i.fp, label %._crit_edge70, label %.lr.ph69.split.split.us.preheader90.new
 
 .lr.ph69.split.split.us.preheader90.new:          ; preds = %.lr.ph69.split.split.us.prol.loopexit

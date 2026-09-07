@@ -16,7 +16,7 @@ target triple = "x86_64-unknown-linux-gnu"
 define hidden void @_RINvMs_NtCscdodAO9FK5_5alloc3vecINtB5_3VecIBv_NtNtCsC8CapfvpQ1_5salsa5zalsa15IngredientIndexEE11resize_withNvMB5_BE_3newEBM_(ptr noalias noundef align 8 dereferenceable(24) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 9 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 8 uses
   %i.c = icmp ult i64 %i.b, 384307168202282326
   tail call void @llvm.assume(i1 %i.c)
   %i.d = icmp ugt i64 %1, %i.b
@@ -70,7 +70,7 @@ bb.d:                                             ; preds = %.lr.ph13
   unreachable
 
 bb.e:                                             ; preds = %bb.a
-  %i.s = sub nuw i64 %1, %i.b                     ; 5 uses
+  %i.s = sub nuw i64 %1, %i.b                     ; 6 uses
   %i.t = load i64, ptr %0, align 8, !range !6, !alias.scope !30, !noundef !5
   %i.u = sub nsw i64 %i.t, %i.b
   %i.v = icmp ugt i64 %i.s, %i.u
@@ -85,7 +85,6 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecIBu_NtNtCsC8CapfvpQ1_5salsa5zalsa15Ing
   %i.x = phi i64 [ %i.w, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecIBu_NtNtCsC8CapfvpQ1_5salsa5zalsa15IngredientIndexEE7reserveBL_.exit.thread.i ], [ %i.b, %bb.e ] ; 3 uses
   %.in.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.y = load ptr, ptr %.in.i, align 8, !alias.scope !31, !nonnull !5, !noundef !5 ; 3 uses
-  %.neg = add nuw nsw i64 %i.b, 1
   %xtraiter = and i64 %i.s, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
@@ -105,7 +104,7 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecIBu_NtNtCsC8CapfvpQ1_5salsa5zalsa15Ing
   %.lcssa.unr = phi i64 [ poison, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecIBu_NtNtCsC8CapfvpQ1_5salsa5zalsa15IngredientIndexEE7reserveBL_.exit.i ], [ %i.aa, %.prol.loopexit.unr-lcssa ]
   %.unr = phi i64 [ %i.x, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecIBu_NtNtCsC8CapfvpQ1_5salsa5zalsa15IngredientIndexEE7reserveBL_.exit.i ], [ %i.aa, %.prol.loopexit.unr-lcssa ]
   %.sroa.0.0.i.in.i.i.i.unr = phi i64 [ %i.s, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecIBu_NtNtCsC8CapfvpQ1_5salsa5zalsa15IngredientIndexEE7reserveBL_.exit.i ], [ %.sroa.0.0.i.i.i.i.prol, %.prol.loopexit.unr-lcssa ]
-  %i.ab = icmp eq i64 %1, %.neg
+  %i.ab = icmp eq i64 %i.s, 1
   br i1 %i.ab, label %_RINvMsj_NtCscdodAO9FK5_5alloc3vecINtB6_3VecIBw_NtNtCsC8CapfvpQ1_5salsa5zalsa15IngredientIndexEE14extend_trustedINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters4take4TakeINtNtNtB1S_7sources11repeat_with10RepeatWithNvMB6_BF_3newEEEBN_.exit, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecIBu_NtNtCsC8CapfvpQ1_5salsa5zalsa15IngredientIndexEE7reserveBL_.exit.i.new
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecIBu_NtNtCsC8CapfvpQ1_5salsa5zalsa15IngredientIndexEE7reserveBL_.exit.i.new: ; preds = %.prol.loopexit, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecIBu_NtNtCsC8CapfvpQ1_5salsa5zalsa15IngredientIndexEE7reserveBL_.exit.i.new
@@ -170,7 +169,7 @@ bb.a:
 define hidden void @_RINvMs_NtCscdodAO9FK5_5alloc3vecINtB5_3VecINtNtNtCs36qfJazsBC0_6boxcar3vec3raw5EntryNtNtCsC8CapfvpQ1_5salsa5views10ViewCasterEE11resize_withNvYBE_NtNtCs4NRVxsYgnAr_4core7default7Default7defaultEB1o_(ptr noalias noundef align 8 dereferenceable(24) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 9 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 8 uses
   %i.c = icmp ult i64 %i.b, 192153584101141163
   tail call void @llvm.assume(i1 %i.c)
   %i.d = icmp ugt i64 %1, %i.b
@@ -224,7 +223,7 @@ bb.d:                                             ; preds = %.lr.ph13
   unreachable
 
 bb.e:                                             ; preds = %bb.a
-  %i.s = sub nuw i64 %1, %i.b                     ; 5 uses
+  %i.s = sub nuw i64 %1, %i.b                     ; 6 uses
   %i.t = load i64, ptr %0, align 8, !range !6, !alias.scope !52, !noundef !5
   %i.u = sub nsw i64 %i.t, %i.b
   %i.v = icmp ugt i64 %i.s, %i.u
@@ -239,6 +238,7 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecINtNtNtCs36qfJazsBC0_6boxcar3vec3raw5E
   %i.x = phi i64 [ %i.w, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecINtNtNtCs36qfJazsBC0_6boxcar3vec3raw5EntryNtNtCsC8CapfvpQ1_5salsa5views10ViewCasterEE7reserveB1n_.exit.thread.i ], [ %i.b, %bb.e ] ; 2 uses
   %.in.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.y = load ptr, ptr %.in.i, align 8, !alias.scope !53, !nonnull !5, !noundef !5 ; 5 uses
+  %2 = add i64 %i.s, -1
   %xtraiter = and i64 %i.s, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
@@ -260,8 +260,7 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecINtNtNtCs36qfJazsBC0_6boxcar3vec3raw5E
   %.lcssa.unr = phi i64 [ poison, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecINtNtNtCs36qfJazsBC0_6boxcar3vec3raw5EntryNtNtCsC8CapfvpQ1_5salsa5views10ViewCasterEE7reserveB1n_.exit.i ], [ %i.ab, %.prol.preheader ]
   %.unr = phi i64 [ %i.x, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecINtNtNtCs36qfJazsBC0_6boxcar3vec3raw5EntryNtNtCsC8CapfvpQ1_5salsa5views10ViewCasterEE7reserveB1n_.exit.i ], [ %i.ab, %.prol.preheader ]
   %.sroa.0.0.i.in.i.i.i.unr = phi i64 [ %i.s, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecINtNtNtCs36qfJazsBC0_6boxcar3vec3raw5EntryNtNtCsC8CapfvpQ1_5salsa5views10ViewCasterEE7reserveB1n_.exit.i ], [ %.sroa.0.0.i.i.i.i.prol, %.prol.preheader ]
-  %2 = sub i64 %i.b, %1
-  %3 = icmp ugt i64 %2, -4
+  %3 = icmp ult i64 %2, 3
   br i1 %3, label %_RINvMsj_NtCscdodAO9FK5_5alloc3vecINtB6_3VecINtNtNtCs36qfJazsBC0_6boxcar3vec3raw5EntryNtNtCsC8CapfvpQ1_5salsa5views10ViewCasterEE14extend_trustedINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters4take4TakeINtNtNtB2p_7sources11repeat_with10RepeatWithNvYBF_NtNtB2r_7default7Default7defaultEEEB1p_.exit, label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecINtNtNtCs36qfJazsBC0_6boxcar3vec3raw5EntryNtNtCsC8CapfvpQ1_5salsa5views10ViewCasterEE7reserveB1n_.exit.i.new
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecINtNtNtCs36qfJazsBC0_6boxcar3vec3raw5EntryNtNtCsC8CapfvpQ1_5salsa5views10ViewCasterEE7reserveB1n_.exit.i.new: ; preds = %.prol.loopexit, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecINtNtNtCs36qfJazsBC0_6boxcar3vec3raw5EntryNtNtCsC8CapfvpQ1_5salsa5views10ViewCasterEE7reserveB1n_.exit.i.new

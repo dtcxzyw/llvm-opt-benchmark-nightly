@@ -204,10 +204,10 @@ _ZN2v88internal15GDBJITInterface6Writer12WriteULEB128Em.exit482.preheader: ; pre
   br label %_ZN2v88internal15GDBJITInterface6Writer12WriteULEB128Em.exit482
 
 .preheader518:                                    ; preds = %_ZN2v88internal15GDBJITInterface6Writer12WriteULEB128Em.exit482, %_ZN2v88internal15GDBJITInterface6Writer5WriteIhEEvRKT_.exit.i478
-  %.063.lcssa = phi i32 [ 4, %_ZN2v88internal15GDBJITInterface6Writer5WriteIhEEvRKT_.exit.i478 ], [ %i.rz, %_ZN2v88internal15GDBJITInterface6Writer12WriteULEB128Em.exit482 ] ; 4 uses
+  %.063.lcssa = phi i32 [ 4, %_ZN2v88internal15GDBJITInterface6Writer5WriteIhEEvRKT_.exit.i478 ], [ %i.rz, %_ZN2v88internal15GDBJITInterface6Writer12WriteULEB128Em.exit482 ] ; 3 uses
   %i.sa = add nuw nsw i32 %.063.lcssa, 1
   tail call void @_ZN2v88internal15GDBJITInterface18DebugAbbrevSection25WriteVariableAbbreviationEPNS1_6WriterEibb(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %1, i32 noundef %.063.lcssa, i1 noundef zeroext false, i1 noundef zeroext false)
-  %i.sb = add nuw nsw i32 %.063.lcssa, 2          ; 2 uses
+  %i.sb = add nuw i32 %.063.lcssa, 2              ; 3 uses
   tail call void @_ZN2v88internal15GDBJITInterface18DebugAbbrevSection25WriteVariableAbbreviationEPNS1_6WriterEibb(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %1, i32 noundef %i.sa, i1 noundef zeroext false, i1 noundef zeroext false)
   %i.sc = icmp sgt i32 %i.gx, 0
   br i1 %i.sc, label %.lr.ph561.preheader, label %._crit_edge
@@ -220,8 +220,7 @@ _ZN2v88internal15GDBJITInterface6Writer12WriteULEB128Em.exit482: ; preds = %_ZN2
   br i1 %exitcond.not, label %.preheader518, label %_ZN2v88internal15GDBJITInterface6Writer12WriteULEB128Em.exit482, !llvm.loop !55
 
 .lr.ph561.preheader:                              ; preds = %.preheader518
-  %2 = add i32 %.063.lcssa, %i.gx
-  %i.se = add i32 %2, 2                           ; 2 uses
+  %i.se = add i32 %i.sb, %i.gx                    ; 2 uses
   br label %.lr.ph561
 
 ._crit_edge:                                      ; preds = %.lr.ph561, %.preheader518

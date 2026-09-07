@@ -205,8 +205,8 @@ _ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit:    ; preds = %.lr.ph.i37, %_ZNK10
 .lr.ph:                                           ; preds = %_ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 832
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !109 ; 3 uses
-  %wide.trip.count = zext nneg i32 %i.cc to i64   ; 11 uses
-  %i.cg = add nsw i64 %wide.trip.count, -1        ; 2 uses
+  %wide.trip.count = zext nneg i32 %i.cc to i64   ; 10 uses
+  %i.cg = add nsw i64 %wide.trip.count, -1        ; 3 uses
   %xtraiter222 = and i64 %wide.trip.count, 1
   %i.ch = icmp eq i64 %i.cg, 0
   br i1 %i.ch, label %.epil.preheader221, label %.lr.ph.new
@@ -316,8 +316,7 @@ scalar.ph191.prol:                                ; preds = %scalar.ph191.prehea
 
 scalar.ph191.prol.loopexit:                       ; preds = %scalar.ph191.prol, %scalar.ph191.preheader
   %indvars.iv120.unr = phi i64 [ %indvars.iv120.ph, %scalar.ph191.preheader ], [ %indvars.iv.next121.prol, %scalar.ph191.prol ]
-  %3 = add nsw i64 %wide.trip.count, -1
-  %i.dz = icmp eq i64 %indvars.iv120.ph, %3
+  %i.dz = icmp eq i64 %i.cg, %indvars.iv120.ph
   br i1 %i.dz, label %._crit_edge, label %scalar.ph191
 
 bb.g:                                             ; preds = %bb.g, %.lr.ph.new

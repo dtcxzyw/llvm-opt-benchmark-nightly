@@ -202,12 +202,12 @@ begin_hunk_0_@chorba_small_nondestructive_sse2:bb.a
   br i1 %i.qa, label %.lr.ph633, label %._crit_edge, !llvm.loop !9
 
 ._crit_edge:                                      ; preds = %.lr.ph633, %.preheader621
-  %.1598.lcssa = phi i64 [ %.0597.lcssa, %.preheader621 ], [ %i.py, %.lr.ph633 ] ; 3 uses
+  %.1598.lcssa = phi i64 [ %.0597.lcssa, %.preheader621 ], [ %i.py, %.lr.ph633 ] ; 2 uses
   %.1596.lcssa = phi <2 x i64> [ %.0595.lcssa, %.preheader621 ], [ %i.px, %.lr.ph633 ]
   %.1594.lcssa = phi <2 x i64> [ %.0593.lcssa, %.preheader621 ], [ %i.pw, %.lr.ph633 ]
   %.1592.lcssa = phi <2 x i64> [ %.0591.lcssa, %.preheader621 ], [ %i.pu, %.lr.ph633 ]
   %i.qb = extractelement <2 x i64> %.1596.lcssa, i64 0
-  %i.qc = sub i64 %2, %.1598.lcssa                ; 7 uses
+  %i.qc = sub i64 %2, %.1598.lcssa                ; 8 uses
   %i.qd = getelementptr inbounds nuw i8, ptr %1, i64 %.1598.lcssa ; 2 uses
   %i.qe = icmp ugt i64 %i.qc, 63
   br i1 %i.qe, label %.lr.ph642, label %.preheader620
@@ -404,9 +404,8 @@ begin_hunk_0_@chorba_small_nondestructive_sse2:bb.a
   br i1 %.not600659, label %._crit_edge665, label %.lr.ph664.preheader
 
 .lr.ph664.preheader:                              ; preds = %._crit_edge658
-  %.neg = add i64 %.1598.lcssa, 1
   %xtraiter730 = and i64 %i.qc, 1
-  %i.to = icmp eq i64 %2, %.neg
+  %i.to = icmp eq i64 %i.qc, 1
   br i1 %i.to, label %.lr.ph664.epil.preheader, label %.lr.ph664.preheader.new
 
 .lr.ph664.preheader.new:                          ; preds = %.lr.ph664.preheader

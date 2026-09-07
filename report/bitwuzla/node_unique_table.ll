@@ -205,8 +205,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !18   ; 2 uses
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !17   ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
-  %i.f = ptrtoint ptr %i.d to i64                 ; 2 uses
+  %i.e = ptrtoint ptr %i.c to i64
+  %i.f = ptrtoint ptr %i.d to i64
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = ashr exact i64 %i.g, 2                   ; 3 uses
   %i.i = icmp ugt i64 %i.h, 1152921504606846975
@@ -221,15 +221,10 @@ _ZNSt6vectorIPN4bzla4node8NodeDataESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i: ; 
   br i1 %.not.i.i.i.i, label %_ZNSt6vectorIPN4bzla4node8NodeDataESaIS3_EEC2EmRKS3_RKS4_.exit, label %.noexc18
 
 .noexc18:                                         ; preds = %_ZNSt6vectorIPN4bzla4node8NodeDataESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i
-  %i.j = shl nuw nsw i64 %i.g, 1                  ; 2 uses
+  %i.j = shl nuw nsw i64 %i.g, 1                  ; 3 uses
   %i.k = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.j) #15 ; 4 uses
-  %1 = shl i64 %i.e, 1
-  %2 = add i64 %1, -8
-  %3 = shl i64 %i.f, 1
-  %4 = sub i64 %2, %3
-  %i.l = and i64 %4, -8
-  %5 = add i64 %i.l, 8
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.k, i8 0, i64 %5, i1 false), !tbaa !13
+  %i.l = and i64 %i.j, 9223372036854775800
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.k, i8 0, i64 %i.l, i1 false), !tbaa !13
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.h
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.j
   %.pre = load ptr, ptr %i.a, align 8, !tbaa !56

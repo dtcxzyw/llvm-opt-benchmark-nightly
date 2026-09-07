@@ -205,7 +205,7 @@ bb.aa:                                            ; preds = %is_jcc32.exit.threa
   br label %_static_cpu_has.exit.i
 
 _static_cpu_has.exit.i:                           ; preds = %bb.aa, %is_jcc32.exit.thread.i
-  %.1.i = phi i32 [ %i.ck, %bb.aa ], [ %.053.i, %is_jcc32.exit.thread.i ] ; 4 uses
+  %.1.i = phi i32 [ %i.ck, %bb.aa ], [ %.053.i, %is_jcc32.exit.thread.i ] ; 3 uses
   %i.cm = zext nneg i32 %.1.i to i64              ; 2 uses
   callbr void asm sideeffect "# ALT: oldinstr\0A771:\0A\09# ALT: oldinstr\0A771:\0A\09jmp 6f\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ( 3*32+21)\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09jmp ${4:l}\0A775:\0A.popsection\0A\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ${0:c}\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09\0A775:\0A.popsection\0A.pushsection .altinstr_aux,\22ax\22\0A6:\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A testb $1, ${2:a}\0A jnz ${3:l}\0A jmp ${4:l}\0A.popsection\0A", "i,i,i,!i,!i,~{dirflag},~{fpsr},~{flags}"(i16 682, i32 4, ptr nonnull getelementptr inbounds nuw (i8, ptr @boot_cpu_data, i64 133)) #24
           to label %cpu_wants_indirect_its_thunk_at.exit.i [label %cpu_wants_indirect_its_thunk_at.exit.i, label %cpu_wants_indirect_its_thunk_at.exit.thread.i], !srcloc !13
@@ -412,11 +412,11 @@ bb.ar:                                            ; preds = %bb.aq
 cpu_wants_indirect_its_thunk_at.exit.thread.i:    ; preds = %cpu_wants_indirect_its_thunk_at.exit.i, %_static_cpu_has.exit.i
   %i.fl = getelementptr i8, ptr %i.a, i64 %i.cm   ; 12 uses
   %i.fm = load i8, ptr %i.e, align 2
-  %i.fn = zext i8 %i.fm to i32                    ; 2 uses
+  %i.fn = zext i8 %i.fm to i32
   %i.fo = sub nsw i32 %i.fn, %.1.i
   %i.fp = icmp samesign ugt i32 %i.at, 7          ; 2 uses
-  %.neg.i.i = select i1 %i.fp, i32 -3, i32 -2     ; 2 uses
-  %i.fq = add nsw i32 %i.fo, %.neg.i.i            ; 8 uses
+  %.neg.i.i = select i1 %i.fp, i32 -3, i32 -2
+  %i.fq = add nsw i32 %i.fo, %.neg.i.i            ; 9 uses
   %i.fr = icmp slt i32 %i.fq, 0
   br i1 %i.fr, label %bb.as, label %bb.at, !prof !17
 
@@ -439,11 +439,9 @@ bb.au:                                            ; preds = %bb.at
   br i1 %or.cond.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.au
-  %3 = add nsw i32 %.neg.i.i, -1
-  %i.ft = add nsw i32 %3, %i.fn
-  %4 = sub nsw i32 %i.ft, %.1.i
+  %i.ft = add nsw i32 %i.fq, -1
   %xtraiter = and i32 %i.fq, 3                    ; 3 uses
-  %i.fu = icmp ult i32 %4, 3
+  %i.fu = icmp ult i32 %i.ft, 3
   br i1 %i.fu, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader

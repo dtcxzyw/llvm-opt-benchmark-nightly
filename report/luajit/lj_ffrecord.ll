@@ -204,16 +204,16 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 172
   %i.o = load i32, ptr %i.n, align 4, !tbaa !39
-  %i.p = zext i32 %i.o to i64                     ; 5 uses
+  %i.p = zext i32 %i.o to i64                     ; 4 uses
   %i.q = icmp slt i32 %i.e, 0
   %i.r = add nsw i64 %i.p, %i.f
   %spec.select = tail call i64 @llvm.smin.i64(i64 %i.f, i64 %i.p)
-  %.033 = select i1 %i.q, i64 %i.r, i64 %spec.select ; 6 uses
+  %.033 = select i1 %i.q, i64 %i.r, i64 %spec.select ; 5 uses
   %i.s = icmp sgt i64 %.033, 0
   br i1 %i.s, label %bb.f, label %.loopexit
 
 bb.f:                                             ; preds = %bb.e
-  %i.t = sub nsw i64 %i.p, %.033                  ; 6 uses
+  %i.t = sub nsw i64 %i.p, %.033                  ; 7 uses
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 %i.t, ptr %i.u, align 8, !tbaa !33
   %i.v = icmp sgt i64 %i.t, 0
@@ -252,8 +252,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
   %.03238.ph = phi i64 [ 0, %.lr.ph ], [ %n.vec, %middle.block ] ; 3 uses
-  %2 = sub nsw i64 %i.p, %.033
-  %xtraiter = and i64 %2, 3                       ; 2 uses
+  %xtraiter = and i64 %i.t, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 

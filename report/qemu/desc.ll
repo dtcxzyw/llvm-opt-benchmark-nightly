@@ -205,8 +205,8 @@ bb.r:                                             ; preds = %usb_desc_get_string
 iter.check:                                       ; preds = %bb.r
   %i.dr = add nsw i32 %i.dp, -4                   ; 5 uses
   %i.ds = lshr exact i32 %i.dr, 1
-  %i.dt = add nuw nsw i32 %i.ds, 1
-  %wide.trip.count = zext nneg i32 %i.dt to i64   ; 7 uses
+  %i.dt = add nuw i32 %i.ds, 1
+  %wide.trip.count = zext i32 %i.dt to i64        ; 8 uses
   %min.iters.check = icmp ult i32 %i.dr, 6
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
@@ -361,10 +361,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %indvars.iv109.ph = phi i64 [ 2, %iter.check ], [ 2, %vector.memcheck ], [ %i.dy, %vec.epilog.iter.check ], [ %i.fh, %vec.epilog.middle.block ] ; 2 uses
   %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec127, %vec.epilog.middle.block ] ; 3 uses
   %i.fn = lshr exact i32 %i.dr, 1
-  %i.fo = zext nneg i32 %i.fn to i64              ; 2 uses
-  %5 = add nuw nsw i64 %i.fo, 1
+  %i.fo = zext nneg i32 %i.fn to i64
   %i.fp = sub nsw i64 %i.fo, %indvars.iv.ph
-  %xtraiter = and i64 %5, 3                       ; 2 uses
+  %xtraiter = and i64 %wide.trip.count, 3         ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 

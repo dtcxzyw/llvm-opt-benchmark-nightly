@@ -205,12 +205,11 @@ bb.a:
   br i1 %i.h, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCs6Po7BT7Nknu_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsj_NtB2l_3vecINtB3x_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs7p2uQeJxui2_9deltalake.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = ptrtoint ptr %i.c to i64                 ; 2 uses
-  %i.j = ptrtoint ptr %i.a to i64                 ; 2 uses
-  %i.k = sub i64 %i.i, %i.j                       ; 3 uses
+  %i.i = ptrtoint ptr %i.c to i64
+  %i.j = ptrtoint ptr %i.a to i64
+  %i.k = sub i64 %i.i, %i.j                       ; 4 uses
   %xtraiter = and i64 %i.k, 1
-  %2 = add i64 %i.i, -1
-  %i.l = icmp eq i64 %2, %i.j
+  %i.l = icmp eq i64 %i.k, 1
   br i1 %i.l, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.b

@@ -205,7 +205,7 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailINtNtCs
 
 .lr.ph253:                                        ; preds = %.lr.ph, %bb.b
   %.sroa.025.099252 = phi i32 [ %i.fe, %bb.b ], [ %.sroa.025.0.ph105, %.lr.ph ]
-  %.sroa.16.0100251 = phi i64 [ %.sroa.11.1.lcssa.i, %bb.b ], [ %.sroa.16.0.ph106, %.lr.ph ] ; 21 uses
+  %.sroa.16.0100251 = phi i64 [ %.sroa.11.1.lcssa.i, %bb.b ], [ %.sroa.16.0.ph106, %.lr.ph ] ; 19 uses
   %i.fe = add nsw i32 %.sroa.025.099252, -1       ; 4 uses
   %i.ff = lshr i64 %.sroa.16.0100251, 3           ; 3 uses
   %.idx.i = mul nuw nsw i64 %i.ff, 160
@@ -287,7 +287,7 @@ bb.s:                                             ; preds = %bb.t, %bb.q
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i41, %bb.s
   %.sroa.19.1.lcssa.i = phi ptr [ %.sroa.19.0.i, %bb.s ], [ %i.gi, %.lr.ph.i41 ]
-  %.sroa.11.1.lcssa.i = phi i64 [ %.sroa.11.0.i, %bb.s ], [ %i.gl, %.lr.ph.i41 ] ; 14 uses
+  %.sroa.11.1.lcssa.i = phi i64 [ %.sroa.11.0.i, %bb.s ], [ %i.gl, %.lr.ph.i41 ] ; 13 uses
   %.sroa.5.1.lcssa.i = phi ptr [ %.sroa.5.0.i, %bb.s ], [ %i.gm, %.lr.ph.i41 ] ; 2 uses
   %i.ge = icmp eq i64 %.sroa.0.0.i39, %.sroa.16.0100251
   br i1 %i.ge, label %bb.u, label %bb.t
@@ -322,15 +322,14 @@ bb.t:                                             ; preds = %._crit_edge.i
 bb.u:                                             ; preds = %._crit_edge.i
   %i.gr = mul nuw nsw i64 %.sroa.11.1.lcssa.i, 40
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.0.ph107, ptr nonnull align 8 %2, i64 %i.gr, i1 false), !alias.scope !1032
-  %i.gs = sub i64 %.sroa.16.0100251, %.sroa.11.1.lcssa.i ; 4 uses
+  %i.gs = sub i64 %.sroa.16.0100251, %.sroa.11.1.lcssa.i ; 5 uses
   %.not18.i = icmp eq i64 %.sroa.16.0100251, %.sroa.11.1.lcssa.i
   br i1 %.not18.i, label %.loopexit, label %.lr.ph16.i
 
 .lr.ph16.i:                                       ; preds = %bb.u
   %i.gt = getelementptr [40 x i8], ptr %.sroa.0.0.ph107, i64 %.sroa.11.1.lcssa.i ; 3 uses
-  %.neg = add i64 %.sroa.11.1.lcssa.i, 1
   %xtraiter = and i64 %i.gs, 1
-  %i.gu = icmp eq i64 %.sroa.16.0100251, %.neg
+  %i.gu = icmp eq i64 %i.gs, 1
   br i1 %i.gu, label %.epil.preheader, label %.lr.ph16.i.new
 
 .lr.ph16.i.new:                                   ; preds = %.lr.ph16.i
@@ -413,7 +412,7 @@ bb.aa:                                            ; preds = %bb.ab, %bb.y
 
 ._crit_edge.i50:                                  ; preds = %.lr.ph.i58, %bb.aa
   %.sroa.19.1.lcssa.i51 = phi ptr [ %.sroa.19.0.i46, %bb.aa ], [ %i.hq, %.lr.ph.i58 ]
-  %.sroa.11.1.lcssa.i52 = phi i64 [ %.sroa.11.0.i47, %bb.aa ], [ %i.ht, %.lr.ph.i58 ] ; 10 uses
+  %.sroa.11.1.lcssa.i52 = phi i64 [ %.sroa.11.0.i47, %bb.aa ], [ %i.ht, %.lr.ph.i58 ] ; 9 uses
   %.sroa.5.1.lcssa.i53 = phi ptr [ %.sroa.5.0.i48, %bb.aa ], [ %i.hu, %.lr.ph.i58 ] ; 2 uses
   %i.hn = icmp eq i64 %.sroa.0.0.i49, %.sroa.16.0100251
   br i1 %i.hn, label %bb.ac, label %bb.ab
@@ -449,15 +448,14 @@ bb.ab:                                            ; preds = %._crit_edge.i50
 bb.ac:                                            ; preds = %._crit_edge.i50
   %i.ia = mul nuw nsw i64 %.sroa.11.1.lcssa.i52, 40
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.0.ph107, ptr nonnull align 8 %2, i64 %i.ia, i1 false), !alias.scope !1038
-  %i.ib = sub i64 %.sroa.16.0100251, %.sroa.11.1.lcssa.i52 ; 6 uses
+  %i.ib = sub i64 %.sroa.16.0100251, %.sroa.11.1.lcssa.i52 ; 7 uses
   %.not18.i54 = icmp eq i64 %.sroa.16.0100251, %.sroa.11.1.lcssa.i52
   br i1 %.not18.i54, label %.outer._crit_edge.thread, label %.lr.ph16.i55
 
 .lr.ph16.i55:                                     ; preds = %bb.ac
   %i.ic = getelementptr [40 x i8], ptr %.sroa.0.0.ph107, i64 %.sroa.11.1.lcssa.i52 ; 3 uses
-  %.neg346 = add i64 %.sroa.11.1.lcssa.i52, 1
   %xtraiter341 = and i64 %i.ib, 1
-  %i.id = icmp eq i64 %.sroa.16.0100251, %.neg346
+  %i.id = icmp eq i64 %i.ib, 1
   br i1 %i.id, label %.epil.preheader334, label %.lr.ph16.i55.new
 
 .lr.ph16.i55.new:                                 ; preds = %.lr.ph16.i55

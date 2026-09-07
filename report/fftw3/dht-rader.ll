@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 112
   store i64 %i.p, ptr %i.q, align 8, !tbaa !29
   %i.r = load ptr, ptr %i.f, align 8, !tbaa !24   ; 2 uses
-  %i.s = load i64, ptr %i.j, align 8, !tbaa !26   ; 13 uses
+  %i.s = load i64, ptr %i.j, align 8, !tbaa !26   ; 11 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.u = load i64, ptr %i.t, align 8, !tbaa !27   ; 16 uses
   %i.v = add nsw i64 %i.u, 1                      ; 2 uses
@@ -218,7 +218,7 @@ bb.d:                                             ; preds = %bb.c
   %i.z = tail call ptr @fftw_malloc_plain(i64 noundef %i.y) #6 ; 26 uses
   %i.aa = sitofp i64 %i.u to double
   %i.ab = tail call ptr @fftw_mktriggen(i32 noundef range(i32 1, 0) %1, i64 noundef %i.s) #6 ; 3 uses
-  %i.ac = add i64 %i.s, -1                        ; 13 uses
+  %i.ac = add i64 %i.s, -1                        ; 14 uses
   %i.ad = icmp sgt i64 %i.s, 1
   br i1 %i.ad, label %.lr.ph.i, label %._crit_edge.i
 
@@ -279,7 +279,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %or.cond.i, label %.lr.ph67.i.preheader, label %.loopexit.i
 
 .lr.ph67.i.preheader:                             ; preds = %._crit_edge65.i
-  %i.aw = add nsw i64 %i.s, -2                    ; 3 uses
+  %i.aw = add nsw i64 %i.s, -2                    ; 4 uses
   %min.iters.check = icmp ult i64 %i.aw, 10
   br i1 %min.iters.check, label %.lr.ph67.i.preheader28, label %vector.memcheck
 
@@ -320,11 +320,9 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph67.i.preheader28:                           ; preds = %vector.memcheck, %.lr.ph67.i.preheader, %middle.block
   %.266.i.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph67.i.preheader ], [ %i.ba, %middle.block ] ; 4 uses
-  %2 = xor i64 %.266.i.ph, -1
-  %3 = add i64 %i.s, %2
-  %4 = add nsw i64 %i.s, -2
-  %i.bl = sub i64 %4, %.266.i.ph
-  %xtraiter = and i64 %3, 7                       ; 2 uses
+  %2 = sub i64 %i.ac, %.266.i.ph
+  %i.bl = sub i64 %i.aw, %.266.i.ph
+  %xtraiter = and i64 %2, 7                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph67.i.prol.loopexit, label %.lr.ph67.i.prol
 

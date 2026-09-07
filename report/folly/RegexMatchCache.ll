@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = load i8, ptr %i.i, align 8, !tbaa !20227, !range !20060, !noundef !1339 ; 15 uses
   %i.k = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.l = sub i64 %i.f, %i.k                       ; 3 uses
-  %i.m = sdiv exact i64 %i.l, 24                  ; 3 uses
+  %i.m = sdiv exact i64 %i.l, 24                  ; 2 uses
   %i.n = icmp ugt i64 %i.m, %2
   br i1 %i.n, label %bb.d, label %bb.e
 
@@ -343,7 +343,7 @@ _ZSt13move_backwardIPN5boost9sub_matchIPKcEES5_ET0_T_S7_S6_.exit: ; preds = %.lr
   br i1 %.not.i.i.i.7, label %_ZSt4fillIPN5boost9sub_matchIPKcEES4_EvT_S6_RKT0_.exit, label %.lr.ph.i.i.i, !llvm.loop !754
 
 bb.e:                                             ; preds = %bb.c
-  %i.bq = sub nuw i64 %2, %i.m                    ; 4 uses
+  %i.bq = sub nuw i64 %2, %i.m                    ; 5 uses
   %.not12.i.i.i.i = icmp eq i64 %i.bq, 0
   br i1 %.not12.i.i.i.i, label %_ZSt24__uninitialized_fill_n_aIPN5boost9sub_matchIPKcEEmS4_S4_ET_S6_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i.preheader
 
@@ -371,9 +371,8 @@ bb.e:                                             ; preds = %bb.c
   %.lcssa138.unr = phi ptr [ poison, %.lr.ph.i.i.i.i.preheader ], [ %i.bt, %.lr.ph.i.i.i.i.prol ]
   %.014.i.i.i.i.unr = phi ptr [ %i.d, %.lr.ph.i.i.i.i.preheader ], [ %i.bt, %.lr.ph.i.i.i.i.prol ]
   %.01113.i.i.i.i.unr = phi i64 [ %i.bq, %.lr.ph.i.i.i.i.preheader ], [ %i.bs, %.lr.ph.i.i.i.i.prol ]
-  %4 = sub i64 %i.m, %2
-  %5 = icmp ugt i64 %4, -4
-  br i1 %5, label %_ZSt24__uninitialized_fill_n_aIPN5boost9sub_matchIPKcEEmS4_S4_ET_S6_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i
+  %4 = icmp ult i64 %i.bq, 4
+  br i1 %4, label %_ZSt24__uninitialized_fill_n_aIPN5boost9sub_matchIPKcEEmS4_S4_ET_S6_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i
   %.014.i.i.i.i = phi ptr [ %i.cc, %.lr.ph.i.i.i.i ], [ %.014.i.i.i.i.unr, %.lr.ph.i.i.i.i.prol.loopexit ] ; 13 uses

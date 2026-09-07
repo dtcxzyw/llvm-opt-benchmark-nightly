@@ -204,8 +204,8 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j, %bb.k
   %i.ak = sext i32 %i.b to i64                    ; 2 uses
-  %i.al = mul nsw i64 %i.ak, 104                  ; 2 uses
-  %i.am = add nsw i64 %i.al, 16                   ; 3 uses
+  %i.al = mul nsw i64 %i.ak, 104
+  %i.am = add nsw i64 %i.al, 16                   ; 4 uses
   %i.an = ptrtoint ptr %.094 to i64               ; 3 uses
   %i.ao = icmp ult i64 %i.am, 1025
   br i1 %i.ao, label %bb.m, label %bb.n
@@ -215,8 +215,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not111, label %.loopexit105, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.m
-  %8 = add i64 %i.al, %i.an
-  %i.ap = add i64 %8, 16
+  %i.ap = add i64 %i.am, %i.an
   %i.aq = add i64 %i.an, 8
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ap, i64 %i.aq)
   %i.ar = xor i64 %i.an, -1

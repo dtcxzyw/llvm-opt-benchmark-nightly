@@ -205,8 +205,8 @@ args_reduce.exit:                                 ; preds = %bb.ey, %bb.ex, %arg
 
 bb.ez:                                            ; preds = %args_reduce.exit
   %i.vs = getelementptr i8, ptr %i.vo, i64 24
-  %i.vt = load i32, ptr %i.vs, align 8, !tbaa !198 ; 8 uses
-  %i.vu = load i32, ptr %i.as, align 8, !tbaa !478 ; 8 uses
+  %i.vt = load i32, ptr %i.vs, align 8, !tbaa !198 ; 5 uses
+  %i.vu = load i32, ptr %i.as, align 8, !tbaa !478 ; 5 uses
   %.not.i572 = icmp slt i32 %i.vu, %i.vt
   br i1 %.not.i572, label %bb.fb, label %bb.fa
 
@@ -244,14 +244,14 @@ bb.fd:                                            ; preds = %bb.fb
   %i.wj = sext i32 %i.wi to i64                   ; 2 uses
   %i.wk = getelementptr [8 x i8], ptr %.0.i.i.i575, i64 %i.wj ; 6 uses
   %i.wl = sext i32 %i.vu to i64                   ; 5 uses
-  %i.wm = sub i32 %i.vt, %i.vu                    ; 2 uses
+  %i.wm = sub i32 %i.vt, %i.vu                    ; 4 uses
   %i.wn = xor i32 %i.vu, -1
-  %i.wo = add i32 %i.vt, %i.wn                    ; 2 uses
+  %i.wo = add i32 %i.vt, %i.wn                    ; 3 uses
   %i.wp = zext i32 %i.wo to i64
   %i.wq = add nuw nsw i64 %i.wp, 1                ; 2 uses
-  %min.iters.check902 = icmp ult i32 %i.wo, 17
-  %7 = sub i32 %i.vu, %i.vt
-  %8 = icmp sgt i32 %7, -1
+  %min.iters.check902 = icmp ult i32 %i.wo, 15
+  %7 = add i32 %i.wm, -1
+  %8 = icmp slt i32 %7, 0
   %or.cond941 = or i1 %min.iters.check902, %8
   br i1 %or.cond941, label %.lr.ph.i576.preheader, label %vector.memcheck898
 
@@ -295,9 +295,9 @@ middle.block910:                                  ; preds = %vector.body905
 .lr.ph.i576.preheader:                            ; preds = %vector.memcheck898, %.lr.ph.preheader.i574, %middle.block910
   %indvars.iv.i577.ph = phi i64 [ %i.wl, %vector.memcheck898 ], [ %i.wl, %.lr.ph.preheader.i574 ], [ %i.ww, %middle.block910 ] ; 2 uses
   %.023.i.ph = phi i32 [ 0, %vector.memcheck898 ], [ 0, %.lr.ph.preheader.i574 ], [ %i.wx, %middle.block910 ] ; 4 uses
-  %9 = add i32 %.023.i.ph, %i.vu
-  %i.xd = sub i32 %i.vt, %9
-  %xtraiter946 = and i32 %i.xd, 3                 ; 2 uses
+  %9 = sub i32 %i.wm, %.023.i.ph
+  %i.xd = sub i32 %i.wo, %.023.i.ph
+  %xtraiter946 = and i32 %9, 3                    ; 2 uses
   %lcmp.mod947.not = icmp eq i32 %xtraiter946, 0
   br i1 %lcmp.mod947.not, label %.lr.ph.i576.prol.loopexit, label %.lr.ph.i576.prol
 
@@ -319,10 +319,8 @@ middle.block910:                                  ; preds = %vector.body905
 .lr.ph.i576.prol.loopexit:                        ; preds = %.lr.ph.i576.prol, %.lr.ph.i576.preheader
   %indvars.iv.i577.unr = phi i64 [ %indvars.iv.i577.ph, %.lr.ph.i576.preheader ], [ %indvars.iv.next.i578.prol, %.lr.ph.i576.prol ]
   %.023.i.unr = phi i32 [ %.023.i.ph, %.lr.ph.i576.preheader ], [ %i.xi, %.lr.ph.i576.prol ]
-  %10 = sub i32 %.023.i.ph, %i.vt
-  %11 = add i32 %10, %i.vu
-  %12 = icmp ugt i32 %11, -4
-  br i1 %12, label %._crit_edge.i, label %.lr.ph.i576
+  %10 = icmp ult i32 %i.xd, 3
+  br i1 %10, label %._crit_edge.i, label %.lr.ph.i576
 
 .lr.ph.i576:                                      ; preds = %.lr.ph.i576.prol.loopexit, %.lr.ph.i576
   %indvars.iv.i577 = phi i64 [ %indvars.iv.next.i578.3, %.lr.ph.i576 ], [ %indvars.iv.i577.unr, %.lr.ph.i576.prol.loopexit ] ; 5 uses

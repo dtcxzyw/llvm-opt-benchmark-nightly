@@ -204,9 +204,9 @@ bb.a:
   br i1 %i.c, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call noundef i32 @_ZN9CGOptions20max_exhaustive_depthEv() ; 5 uses
-  %i.e = load i32, ptr %i.a, align 4, !tbaa !40   ; 6 uses
-  %i.f = sub nsw i32 %i.d, %i.e
+  %i.d = tail call noundef i32 @_ZN9CGOptions20max_exhaustive_depthEv() ; 3 uses
+  %i.e = load i32, ptr %i.a, align 4, !tbaa !40   ; 4 uses
+  %i.f = sub nsw i32 %i.d, %i.e                   ; 3 uses
   %.not = icmp slt i32 %i.f, %1
   br i1 %.not, label %bb.c, label %bb.e
 
@@ -226,10 +226,8 @@ bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !44   ; 9 uses
   %i.m = sext i32 %.010 to i64                    ; 2 uses
-  %2 = xor i32 %i.e, -1
-  %i.n = add i32 %i.d, %2
-  %i.o = add i32 %i.d, -2
-  %3 = sub i32 %i.o, %i.e
+  %i.n = add i32 %i.f, 7
+  %i.o = add i32 %i.f, -2
   %xtraiter = and i32 %i.n, 7                     ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
@@ -247,7 +245,7 @@ bb.d:                                             ; preds = %bb.c
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph
   %indvars.iv.unr = phi i64 [ %i.m, %.lr.ph ], [ %indvars.iv.next.prol, %.prol.preheader ]
-  %i.r = icmp ult i32 %3, 7
+  %i.r = icmp ult i32 %i.o, 7
   br i1 %i.r, label %.sink.split, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit, %.lr.ph.new

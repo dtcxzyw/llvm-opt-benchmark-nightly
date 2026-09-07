@@ -205,8 +205,8 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !nonnull !4, !noundef !4 ; 10 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 186 ; 2 uses
   %i.i = load i16, ptr %i.h, align 2, !noundef !4
-  %i.j = zext i16 %i.i to i64                     ; 3 uses
-  %i.k = add nuw nsw i64 %1, %i.j                 ; 3 uses
+  %i.j = zext i16 %i.i to i64                     ; 2 uses
+  %i.k = add nuw nsw i64 %1, %i.j                 ; 4 uses
   %i.l = icmp samesign ult i64 %i.k, 12
   br i1 %i.l, label %bb.c, label %bb.b, !prof !7
 
@@ -328,14 +328,13 @@ bb.k:                                             ; preds = %bb.h
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %i.u
   %i.bg = shl nuw nsw i64 %1, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.bb, ptr noundef nonnull readonly align 8 dereferenceable(1) %i.bf, i64 %i.bg, i1 false), !alias.scope !314
-  %2 = add nuw nsw i64 %1, %i.j
-  %i.bh = add nuw nsw i64 %2, 1                   ; 2 uses
+  %i.bh = add nuw nsw i64 %i.k, 1                 ; 2 uses
   %xtraiter = and i64 %i.bh, 3                    ; 3 uses
   %i.bi = icmp samesign ult i64 %i.k, 3
   br i1 %i.bi, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.k
-  %unroll_iter = and i64 %i.bh, 60
+  %unroll_iter = and i64 %i.bh, 28
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.new
@@ -386,7 +385,7 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !nonnull !4, !noundef !4 ; 10 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 186 ; 2 uses
   %i.i = load i16, ptr %i.h, align 2, !noundef !4
-  %i.j = zext i16 %i.i to i64                     ; 3 uses
+  %i.j = zext i16 %i.i to i64                     ; 2 uses
   %i.k = add nuw nsw i64 %1, %i.e                 ; 2 uses
   %i.l = icmp samesign ult i64 %i.k, 12
   br i1 %i.l, label %bb.c, label %bb.b, !prof !7
@@ -404,7 +403,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 bb.e:                                             ; preds = %bb.c
-  %i.m = sub nuw nsw i64 %i.j, %1                 ; 3 uses
+  %i.m = sub nuw nsw i64 %i.j, %1                 ; 4 uses
   %i.n = trunc nuw nsw i64 %i.k to i16
   store i16 %i.n, ptr %i.c, align 2
   %i.o = trunc nuw i64 %i.m to i16
@@ -563,14 +562,13 @@ bb.m:                                             ; preds = %bb.l
   br label %_RINvMsp_NtNtNtCs1xwejQucwHj_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCs3oUPovFnLWP_4core3ops5range5RangejEEB1z_.exit.preheader
 
 _RINvMsp_NtNtNtCs1xwejQucwHj_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCs3oUPovFnLWP_4core3ops5range5RangejEEB1z_.exit.preheader: ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i
-  %i.cj = add nuw nsw i64 %i.j, 1
-  %2 = sub nsw i64 %i.cj, %1                      ; 2 uses
-  %xtraiter = and i64 %2, 3                       ; 3 uses
+  %i.cj = add nuw nsw i64 %i.m, 1                 ; 2 uses
+  %xtraiter = and i64 %i.cj, 3                    ; 3 uses
   %i.ck = icmp samesign ult i64 %i.m, 3
   br i1 %i.ck, label %_RINvMsp_NtNtNtCs1xwejQucwHj_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCs3oUPovFnLWP_4core3ops5range5RangejEEB1z_.exit.epil.preheader, label %_RINvMsp_NtNtNtCs1xwejQucwHj_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCs3oUPovFnLWP_4core3ops5range5RangejEEB1z_.exit.preheader.new
 
 _RINvMsp_NtNtNtCs1xwejQucwHj_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCs3oUPovFnLWP_4core3ops5range5RangejEEB1z_.exit.preheader.new: ; preds = %_RINvMsp_NtNtNtCs1xwejQucwHj_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCs3oUPovFnLWP_4core3ops5range5RangejEEB1z_.exit.preheader
-  %unroll_iter = and i64 %2, -4
+  %unroll_iter = and i64 %i.cj, 131068
   br label %_RINvMsp_NtNtNtCs1xwejQucwHj_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCs3oUPovFnLWP_4core3ops5range5RangejEEB1z_.exit
 
 _RINvMsp_NtNtNtCs1xwejQucwHj_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCs3oUPovFnLWP_4core3ops5range5RangejEEB1z_.exit: ; preds = %_RINvMsp_NtNtNtCs1xwejQucwHj_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCs3oUPovFnLWP_4core3ops5range5RangejEEB1z_.exit, %_RINvMsp_NtNtNtCs1xwejQucwHj_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCs3oUPovFnLWP_4core3ops5range5RangejEEB1z_.exit.preheader.new

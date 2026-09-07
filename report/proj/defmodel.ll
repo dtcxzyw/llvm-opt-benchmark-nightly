@@ -204,9 +204,9 @@ _ZNSt6vectorISt10unique_ptrIN16DeformationModel11ComponentExIN12_GLOBAL__N_14Gri
 
 bb.bb:                                            ; preds = %bb.ba
   %.val.i.i.i = load ptr, ptr %i.dn, align 8, !tbaa !165 ; 10 uses
-  %i.gv = ptrtoint ptr %i.gr to i64               ; 3 uses
-  %i.gw = ptrtoint ptr %.val.i.i.i to i64         ; 4 uses
-  %i.gx = sub i64 %i.gv, %i.gw                    ; 3 uses
+  %i.gv = ptrtoint ptr %i.gr to i64               ; 2 uses
+  %i.gw = ptrtoint ptr %.val.i.i.i to i64         ; 3 uses
+  %i.gx = sub i64 %i.gv, %i.gw                    ; 4 uses
   %i.gy = icmp eq i64 %i.gx, 9223372036854775800
   br i1 %i.gy, label %bb.bc, label %_ZNKSt6vectorISt10unique_ptrIN16DeformationModel11ComponentExIN12_GLOBAL__N_14GridENS3_7GridSetEEESt14default_deleteIS6_EESaIS9_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -241,19 +241,15 @@ _ZNKSt6vectorISt10unique_ptrIN16DeformationModel11ComponentExIN12_GLOBAL__N_14Gr
   %i.hj = sub i64 %i.hi, %i.gw                    ; 2 uses
   %i.hk = lshr i64 %i.hj, 3
   %i.hl = add nuw nsw i64 %i.hk, 1                ; 2 uses
-  %min.iters.check132 = icmp ult i64 %i.hj, 56
+  %min.iters.check132 = icmp ult i64 %i.hj, 40
   br i1 %min.iters.check132, label %.lr.ph.i.i.i.i.i.i.preheader146, label %vector.memcheck123
 
 vector.memcheck123:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %scevgep124 = getelementptr i8, ptr %i.hg, i64 8
-  %11 = add i64 %i.gv, -8
-  %12 = sub i64 %11, %i.gw
-  %i.hm = and i64 %12, -8                         ; 2 uses
-  %scevgep125 = getelementptr i8, ptr %scevgep124, i64 %i.hm
-  %scevgep126 = getelementptr i8, ptr %.val.i.i.i, i64 8
-  %scevgep127 = getelementptr i8, ptr %scevgep126, i64 %i.hm
+  %i.hm = and i64 %i.gx, -8                       ; 2 uses
+  %scevgep126 = getelementptr i8, ptr %i.hg, i64 %i.hm
+  %scevgep127 = getelementptr i8, ptr %.val.i.i.i, i64 %i.hm
   %bound0128 = icmp ult ptr %i.hg, %scevgep127
-  %bound1129 = icmp ult ptr %.val.i.i.i, %scevgep125
+  %bound1129 = icmp ult ptr %.val.i.i.i, %scevgep126
   %found.conflict130 = and i1 %bound0128, %bound1129
   br i1 %found.conflict130, label %.lr.ph.i.i.i.i.i.i.preheader146, label %vector.ph133
 

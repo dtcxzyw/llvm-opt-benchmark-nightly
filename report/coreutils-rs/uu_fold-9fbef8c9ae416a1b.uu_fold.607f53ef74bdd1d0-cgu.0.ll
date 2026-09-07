@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sroa.01.0 = phi i64 [ %i.h, %bb.b ], [ %i.l, %bb.c ] ; 14 uses
+  %.sroa.01.0 = phi i64 [ %i.h, %bb.b ], [ %i.l, %bb.c ] ; 12 uses
   %.not = icmp eq i64 %.sroa.01.0, 0              ; 2 uses
   br i1 %.not, label %._crit_edge, label %bb.e
 
@@ -286,7 +286,7 @@ bb.i:                                             ; preds = %_RNvXs4_NtNtNtCs7tK
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.aw = load ptr, ptr %i.av, align 8, !nonnull !4, !align !5, !noundef !4 ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 16 ; 3 uses
-  %i.ay = load i64, ptr %i.ax, align 8, !noundef !4 ; 4 uses
+  %i.ay = load i64, ptr %i.ax, align 8, !noundef !4 ; 3 uses
   %i.az = icmp sgt i64 %i.ay, -1
   tail call void @llvm.assume(i1 %i.az)
   %i.ba = icmp ult i64 %.sroa.01.0, %i.ay
@@ -309,7 +309,7 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtNtCs7tKScEop1B6_5alloc3vec5drain5Dr
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtNtCs7tKScEop1B6_5alloc3vec5drain5DrainhEECs8hEv8bFEvN4_7uu_fold.exit
 
 _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtNtCs7tKScEop1B6_5alloc3vec5drain5DrainhEECs8hEv8bFEvN4_7uu_fold.exit: ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtNtCs7tKScEop1B6_5alloc3vec5drain5DrainhEECs8hEv8bFEvN4_7uu_fold.exit.sink.split, %bb.i
-  %i.bf = phi i64 [ 0, %bb.i ], [ %i.bb, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtNtCs7tKScEop1B6_5alloc3vec5drain5DrainhEECs8hEv8bFEvN4_7uu_fold.exit.sink.split ] ; 5 uses
+  %i.bf = phi i64 [ 0, %bb.i ], [ %i.bb, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtNtCs7tKScEop1B6_5alloc3vec5drain5DrainhEECs8hEv8bFEvN4_7uu_fold.exit.sink.split ] ; 6 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %i.bh = load ptr, ptr %i.bg, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 41
@@ -328,10 +328,8 @@ bb.k:                                             ; preds = %_RINvNtCs6JMX4GRUq9
   br i1 %i.bn, label %_RNvCs8hEv8bFEvN4_7uu_fold17compute_col_count.exit, label %.lr.ph28.i.preheader
 
 .lr.ph28.i.preheader:                             ; preds = %bb.k
-  %umax = tail call i64 @llvm.umax.i64(i64 %.sroa.01.0, i64 %i.ay)
-  %.neg = add i64 %.sroa.01.0, 1
   %xtraiter = and i64 %i.bf, 1
-  %i.bo = icmp eq i64 %umax, %.neg
+  %i.bo = icmp eq i64 %i.bf, 1
   br i1 %i.bo, label %.lr.ph28.i.epil.preheader, label %.lr.ph28.i.preheader.new
 
 .lr.ph28.i.preheader.new:                         ; preds = %.lr.ph28.i.preheader

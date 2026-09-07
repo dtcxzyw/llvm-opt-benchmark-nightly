@@ -205,9 +205,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 .lr.ph2140.i:                                     ; preds = %.preheader1970.i
   %i.aqt = getelementptr inbounds [1032 x i8], ptr %i.oy, i64 %i.aqn ; 5 uses
   %i.aqu = sext i32 %.114702144.i to i64          ; 2 uses
-  %smax2394.i = call i32 @llvm.smax.i32(i32 %.114702144.i, i32 %spec.select.i127) ; 3 uses
-  %2 = add nsw i32 %smax2394.i, 1
-  %i.aqv = add i32 %smax2394.i, 1
+  %smax2394.i = call i32 @llvm.smax.i32(i32 %.114702144.i, i32 %spec.select.i127) ; 2 uses
+  %i.aqv = add nsw i32 %smax2394.i, 1             ; 2 uses
   %i.aqw = sub i32 %i.aqv, %.114702144.i
   %i.aqx = sub i32 %smax2394.i, %.114702144.i
   %xtraiter1385 = and i32 %i.aqw, 3               ; 2 uses
@@ -610,7 +609,7 @@ begin_hunk_1_@BZ2_compressBlock:bb.a
   store i32 %i.bdv, ptr %i.bdt, align 4, !tbaa !74
   %indvars.iv.next2392.i.3 = add nsw i64 %indvars.iv2391.i, 4 ; 2 uses
   %lftr.wideiv2395.i.3 = trunc i64 %indvars.iv.next2392.i.3 to i32
-  %exitcond2396.not.i.3 = icmp eq i32 %2, %lftr.wideiv2395.i.3
+  %exitcond2396.not.i.3 = icmp eq i32 %i.aqv, %lftr.wideiv2395.i.3
   br i1 %exitcond2396.not.i.3, label %.loopexit1971.i, label %.lr.ph2140.i.new, !llvm.loop !39
 
 .loopexit1971.i:                                  ; preds = %.prol.loopexit, %.lr.ph2140.i.new, %bb.bb, %.preheader1970.i

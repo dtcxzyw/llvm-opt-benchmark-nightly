@@ -205,9 +205,9 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !82   ; 3 uses
   %i.f = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #32 ; 7 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, i8 0, i64 24, i1 false)
-  %i.g = ptrtoint ptr %i.e to i64                 ; 2 uses
-  %i.h = ptrtoint ptr %i.c to i64                 ; 2 uses
-  %i.i = sub i64 %i.g, %i.h                       ; 5 uses
+  %i.g = ptrtoint ptr %i.e to i64
+  %i.h = ptrtoint ptr %i.c to i64
+  %i.i = sub i64 %i.g, %i.h                       ; 6 uses
   %i.j = icmp ugt i64 %i.i, 576460752303423487
   br i1 %i.j, label %bb.b, label %_ZNSt6vectorIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapS_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS1_14adl_serializerES_IhSaIhEEvEESaISD_EE17_S_check_init_lenEmRKSE_.exit.i.i.i
 
@@ -261,9 +261,8 @@ _ZNSt12_Vector_baseIN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7
   %.lcssa.unr = phi ptr [ poison, %.noexc5.i.i ], [ %i.u, %.lr.ph.i.i.i.i.i.i.i.prol ]
   %.09.i.i.i.i.i.i.i.unr = phi ptr [ %i.n, %.noexc5.i.i ], [ %i.u, %.lr.ph.i.i.i.i.i.i.i.prol ]
   %.sroa.04.08.i.i.i.i.i.i.i.unr = phi ptr [ %i.c, %.noexc5.i.i ], [ %i.t, %.lr.ph.i.i.i.i.i.i.i.prol ]
-  %2 = sub i64 %i.h, %i.g
-  %3 = icmp ugt i64 %2, -8
-  br i1 %3, label %_ZN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE6createIS3_ISD_SaISD_EEJN9__gnu_cxx17__normal_iteratorIPKhSC_EESL_EEEPT_DpOT0_.exit, label %.lr.ph.i.i.i.i.i.i.i
+  %2 = icmp ult i64 %i.i, 8
+  br i1 %2, label %_ZN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE6createIS3_ISD_SaISD_EEJN9__gnu_cxx17__normal_iteratorIPKhSC_EESL_EEEPT_DpOT0_.exit, label %.lr.ph.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i
   %.09.i.i.i.i.i.i.i = phi ptr [ %i.bi, %.lr.ph.i.i.i.i.i.i.i ], [ %.09.i.i.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 17 uses

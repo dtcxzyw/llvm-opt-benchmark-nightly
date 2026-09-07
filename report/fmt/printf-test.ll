@@ -205,13 +205,13 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !227  ; 5 uses
   %i.c = trunc i64 %i.b to i32                    ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 4 uses
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !226  ; 4 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !226  ; 3 uses
   %i.f = add nsw i32 %i.e, %i.c                   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !227  ; 3 uses
   %i.i = trunc i64 %i.h to i32                    ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 168 ; 3 uses
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !226  ; 3 uses
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !226  ; 2 uses
   %i.l = add nsw i32 %i.k, %i.i                   ; 2 uses
   %.not.i = icmp eq i32 %i.f, %i.l
   br i1 %.not.i, label %bb.c, label %bb.b
@@ -260,7 +260,7 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %i.x, label %select.unfold, label %_ZN3fmt3v126detail7compareERKNS1_6bigintES4_.exit
 
 select.unfold:                                    ; preds = %.loopexit.i, %bb.b, %._crit_edge
-  %i.y = sub nsw i32 %i.e, %i.k                   ; 4 uses
+  %i.y = sub nsw i32 %i.e, %i.k                   ; 5 uses
   %i.z = icmp slt i32 %i.y, 1
   br i1 %i.z, label %_ZN3fmt3v126detail6bigint5alignERKS2_.exit, label %bb.e
 
@@ -360,9 +360,8 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.bh, label %.lr.ph.preheader.i.i, label %scalar.ph
 
 .lr.ph.preheader.i.i:                             ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i
-  %2 = xor i32 %i.k, -1
-  %i.bi = add i32 %i.e, %2
-  %i.bj = zext i32 %i.bi to i64
+  %i.bi = add nsw i32 %i.y, -1
+  %i.bj = zext nneg i32 %i.bi to i64
   %i.bk = shl nuw nsw i64 %i.bj, 2
   %i.bl = add nuw nsw i64 %i.bk, 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %.pre.i, i8 0, i64 %i.bl, i1 false), !tbaa !121

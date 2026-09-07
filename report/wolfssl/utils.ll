@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %.not101 = icmp slt i32 %3, %.094
   %or.cond106 = select i1 %i.b, i1 %.not101, i1 false
   %i.c = add nsw i32 %.094, -1
-  %.095 = select i1 %or.cond106, i32 %3, i32 %i.c ; 6 uses
+  %.095 = select i1 %or.cond106, i32 %3, i32 %i.c ; 5 uses
   %i.d = icmp eq i32 %2, %.095
   br i1 %i.d, label %bb.f, label %bb.c
 
@@ -305,20 +305,16 @@ middle.block:                                     ; preds = %vector.body
 
 .preheader:                                       ; preds = %.preheader.loopexit.unr-lcssa, %.lr.ph116.epil, %.preheader111
   %.188.lcssa = phi ptr [ %.086, %.preheader111 ], [ %i.bp, %.preheader.loopexit.unr-lcssa ], [ %i.x, %.lr.ph116.epil ] ; 2 uses
-  %i.y = icmp sgt i32 %.095, %2                   ; 3 uses
+  %i.y = icmp sgt i32 %.095, %2                   ; 2 uses
   %i.z = zext i1 %i.y to i32
-  %i.aa = add nuw nsw i32 %.095, %i.z             ; 2 uses
+  %i.aa = add nuw nsw i32 %.095, %i.z             ; 3 uses
   %i.ab = icmp sgt i32 %i.aa, 0
   br i1 %i.ab, label %.lr.ph120.preheader, label %._crit_edge121
 
 .lr.ph120.preheader:                              ; preds = %.preheader
   %wide.trip.count135 = zext nneg i32 %i.aa to i64 ; 2 uses
-  %4 = zext i32 %.095 to i64
-  %5 = zext i1 %i.y to i64
-  %6 = add nuw nsw i64 %4, %5
-  %7 = add nsw i64 %6, -1
   %xtraiter153 = and i64 %wide.trip.count135, 7   ; 3 uses
-  %i.ac = icmp ult i64 %7, 7
+  %i.ac = icmp ult i32 %i.aa, 8
   br i1 %i.ac, label %.lr.ph120.epil.preheader, label %.lr.ph120.preheader.new
 
 .lr.ph120.preheader.new:                          ; preds = %.lr.ph120.preheader

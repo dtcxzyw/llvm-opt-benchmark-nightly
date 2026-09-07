@@ -205,19 +205,18 @@ AvifInfoInternalReadBigEndian.exit.i110.i.i:      ; preds = %bb.cm, %AvifInfoInt
   %i.qn = getelementptr inbounds nuw i8, ptr %i.pk, i64 %wide.trip.count.i.i108.i.i ; 2 uses
   %i.qo = load i8, ptr %i.qn, align 1, !tbaa !29
   %i.qp = zext i8 %i.qo to i32
-  %i.qq = shl nuw nsw i32 %i.qp, 8                ; 2 uses
+  %i.qq = shl nuw nsw i32 %i.qp, 8
   %i.qr = getelementptr inbounds nuw i8, ptr %i.qn, i64 1
   %i.qs = load i8, ptr %i.qr, align 1, !tbaa !29
-  %i.qt = zext i8 %i.qs to i32                    ; 2 uses
-  %i.qu = or disjoint i32 %i.qq, %i.qt            ; 2 uses
+  %i.qt = zext i8 %i.qs to i32
+  %i.qu = or disjoint i32 %i.qq, %i.qt            ; 3 uses
   %.not178.i.i.i = icmp eq i32 %i.qu, 0
   br i1 %.not178.i.i.i, label %.loopexit.i114.i.i, label %.lr.ph.i111.i.i
 
 .lr.ph.i111.i.i:                                  ; preds = %AvifInfoInternalReadBigEndian.exit.i110.i.i
   %i.qv = icmp eq i32 %.lcssa839, 0
   %i.qw = select i1 %i.pd, i32 36, i32 70
-  %12 = or disjoint i32 %i.qq, 1
-  %i.qx = add nuw nsw i32 %12, %i.qt
+  %i.qx = add nuw nsw i32 %i.qu, 1
   %i.qy = select i1 %i.pd, i32 1, i32 2
   %i.qz = shl nuw nsw i32 %i.qx, %i.qy
   %i.ra = add nuw nsw i32 %i.qz, 2

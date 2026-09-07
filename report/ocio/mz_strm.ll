@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %.lr.ph144, %bb.x
   %.not83142 = phi i1 [ false, %.lr.ph144 ], [ true, %bb.x ] ; 2 uses
   %.068141 = phi i64 [ 0, %.lr.ph144 ], [ %i.co, %bb.x ] ; 2 uses
   %.069140 = phi i32 [ 1024, %.lr.ph144 ], [ %.2, %bb.x ] ; 2 uses
-  %.071139 = phi i32 [ 0, %.lr.ph144 ], [ %.172, %bb.x ] ; 5 uses
+  %.071139 = phi i32 [ 0, %.lr.ph144 ], [ %.172, %bb.x ] ; 4 uses
   %i.s = sub nsw i64 %3, %.068141                 ; 2 uses
   %i.t = trunc i64 %i.s to i32
   %i.u = icmp slt i64 %i.s, 1024
@@ -270,12 +270,12 @@ mz_stream_read.exit:                              ; preds = %mz_stream_is_open.e
   %i.ap = load ptr, ptr %0, align 8, !tbaa !19
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !22
-  %i.as = call i32 %i.ar(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i32 noundef %.170) #12, !inline_history !35 ; 6 uses
+  %i.as = call i32 %i.ar(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i32 noundef %.170) #12, !inline_history !35 ; 5 uses
   %i.at = icmp slt i32 %i.as, 1
   br i1 %i.at, label %mz_stream_seek.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %mz_stream_read.exit
-  %i.au = add nuw nsw i32 %i.as, %.071139         ; 3 uses
+  %i.au = add nuw nsw i32 %i.as, %.071139         ; 4 uses
   %i.av = icmp slt i32 %i.au, %2
   br i1 %i.av, label %mz_stream_seek.exit.thread, label %bb.m
 
@@ -292,8 +292,7 @@ bb.n:                                             ; preds = %bb.m
   br label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.m, %bb.n
-  %5 = add nuw i32 %i.as, 1
-  %i.bb = add nuw i32 %5, %.071139
+  %i.bb = add nuw i32 %i.au, 1
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.w

@@ -205,7 +205,7 @@ declare i64 @FSE_compress_usingCTable(ptr noundef, i64 noundef, ptr noundef, i64
 ; Function Attrs: nofree nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @HUF_simpleQuickSort(ptr noundef %0, i32 noundef range(i32 -2147483646, -2147483648) %1, i32 noundef range(i32 -2147483648, 2147483647) %2) unnamed_addr #9 {
 bb.a:
-  %i.a = sub nsw i32 %2, %1                       ; 2 uses
+  %i.a = sub nsw i32 %2, %1                       ; 3 uses
   %i.b = icmp slt i32 %i.a, 8
   br i1 %i.b, label %bb.b, label %.preheader
 
@@ -220,8 +220,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i29, label %HUF_insertionSort.exit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.b
-  %i.f = add nsw i32 %2, 1
-  %3 = sub i32 %i.f, %1                           ; 6 uses
+  %i.f = add nuw nsw i32 %i.a, 1                  ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
   %i.h = load <2 x i32>, ptr %i.g, align 4
   %.sroa.0.0.copyload.i = load i32, ptr %i.g, align 4, !tbaa !17
@@ -239,7 +238,7 @@ bb.c:                                             ; preds = %.lr.ph.preheader
   %.0.in.i.lcssa = phi i64 [ 1, %.lr.ph.preheader ], [ 0, %bb.c ]
   %i.m = getelementptr inbounds [8 x i8], ptr %i.e, i64 %.0.in.i.lcssa
   store <2 x i32> %i.h, ptr %i.m, align 4
-  %exitcond.not = icmp eq i32 %3, 2
+  %exitcond.not = icmp eq i32 %i.f, 2
   br i1 %exitcond.not, label %HUF_insertionSort.exit, label %.lr.ph.1
 
 .lr.ph.1:                                         ; preds = %.critedge.i
@@ -269,7 +268,7 @@ bb.e:                                             ; preds = %bb.d
   %.0.in.i.lcssa.1 = phi i64 [ 2, %.lr.ph.1 ], [ 0, %bb.e ], [ 1, %bb.d ]
   %i.y = getelementptr inbounds [8 x i8], ptr %i.e, i64 %.0.in.i.lcssa.1
   store <2 x i32> %i.o, ptr %i.y, align 4
-  %exitcond.not.1 = icmp eq i32 %3, 3
+  %exitcond.not.1 = icmp eq i32 %i.f, 3
   br i1 %exitcond.not.1, label %HUF_insertionSort.exit, label %.lr.ph.2
 
 .lr.ph.2:                                         ; preds = %.critedge.i.1
@@ -308,7 +307,7 @@ bb.h:                                             ; preds = %bb.g
   %.0.in.i.lcssa.2 = phi i64 [ 3, %.lr.ph.2 ], [ 1, %bb.g ], [ 2, %bb.f ], [ 0, %bb.h ]
   %i.ap = getelementptr inbounds [8 x i8], ptr %i.e, i64 %.0.in.i.lcssa.2
   store <2 x i32> %i.aa, ptr %i.ap, align 4
-  %exitcond.not.2 = icmp eq i32 %3, 4
+  %exitcond.not.2 = icmp eq i32 %i.f, 4
   br i1 %exitcond.not.2, label %HUF_insertionSort.exit, label %.lr.ph.3
 
 .lr.ph.3:                                         ; preds = %.critedge.i.2
@@ -356,7 +355,7 @@ bb.l:                                             ; preds = %bb.k
   %.0.in.i.lcssa.3 = phi i64 [ 4, %.lr.ph.3 ], [ 0, %bb.l ], [ 3, %bb.i ], [ 1, %bb.k ], [ 2, %bb.j ]
   %i.bl = getelementptr inbounds [8 x i8], ptr %i.e, i64 %.0.in.i.lcssa.3
   store <2 x i32> %i.ar, ptr %i.bl, align 4
-  %exitcond.not.3 = icmp eq i32 %3, 5
+  %exitcond.not.3 = icmp eq i32 %i.f, 5
   br i1 %exitcond.not.3, label %HUF_insertionSort.exit, label %.lr.ph.4
 
 .lr.ph.4:                                         ; preds = %.critedge.i.3
@@ -413,7 +412,7 @@ bb.q:                                             ; preds = %bb.p
   %.0.in.i.lcssa.4 = phi i64 [ 5, %.lr.ph.4 ], [ 2, %bb.o ], [ 4, %bb.m ], [ 0, %bb.q ], [ 3, %bb.n ], [ 1, %bb.p ]
   %i.cm = getelementptr inbounds [8 x i8], ptr %i.e, i64 %.0.in.i.lcssa.4
   store <2 x i32> %i.bn, ptr %i.cm, align 4
-  %exitcond.not.4 = icmp eq i32 %3, 6
+  %exitcond.not.4 = icmp eq i32 %i.f, 6
   br i1 %exitcond.not.4, label %HUF_insertionSort.exit, label %.lr.ph.5
 
 .lr.ph.5:                                         ; preds = %.critedge.i.4
@@ -479,7 +478,7 @@ bb.w:                                             ; preds = %bb.v
   %.0.in.i.lcssa.5 = phi i64 [ 6, %.lr.ph.5 ], [ 1, %bb.v ], [ 5, %bb.r ], [ 2, %bb.u ], [ 4, %bb.s ], [ 0, %bb.w ], [ 3, %bb.t ]
   %i.ds = getelementptr inbounds [8 x i8], ptr %i.e, i64 %.0.in.i.lcssa.5
   store <2 x i32> %i.co, ptr %i.ds, align 4
-  %exitcond.not.5 = icmp eq i32 %3, 7
+  %exitcond.not.5 = icmp eq i32 %i.f, 7
   br i1 %exitcond.not.5, label %HUF_insertionSort.exit, label %.lr.ph.6
 
 .lr.ph.6:                                         ; preds = %.critedge.i.5

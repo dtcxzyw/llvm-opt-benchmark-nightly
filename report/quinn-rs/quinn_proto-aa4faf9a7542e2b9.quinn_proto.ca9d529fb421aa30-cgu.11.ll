@@ -205,9 +205,9 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !dbg !20769, !nonnull !982, !noundef !982 ; 12 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 1154, !dbg !20770 ; 2 uses
   %i.k = load i16, ptr %i.j, align 2, !dbg !20770, !noundef !982
-  %i.l = zext i16 %i.k to i64, !dbg !20771        ; 4 uses
+  %i.l = zext i16 %i.k to i64, !dbg !20771        ; 3 uses
     #dbg_value(i64 %i.l, !20296, !DIExpression(), !20570)
-  %i.m = add nuw nsw i64 %1, %i.l, !dbg !20772    ; 3 uses
+  %i.m = add nuw nsw i64 %1, %i.l, !dbg !20772    ; 4 uses
     #dbg_value(i64 %i.m, !20298, !DIExpression(), !20571)
     #dbg_value(i64 %i.m, !20366, !DIExpression(), !20572)
     #dbg_value(i64 %i.m, !20354, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !20364)
@@ -583,14 +583,13 @@ bb.k:                                             ; preds = %bb.h
     #dbg_value(ptr undef, !2278, !DIExpression(), !20740)
     #dbg_value(ptr undef, !2283, !DIExpression(), !20741)
     #dbg_value(ptr undef, !2288, !DIExpression(), !20741)
-  %2 = add nuw nsw i64 %1, %i.l, !dbg !20819
-  %i.bh = add nuw nsw i64 %2, 1, !dbg !20819      ; 2 uses
+  %i.bh = add nuw nsw i64 %i.m, 1, !dbg !20819    ; 2 uses
   %xtraiter = and i64 %i.bh, 3, !dbg !20819       ; 3 uses
   %i.bi = icmp samesign ult i64 %i.m, 3, !dbg !20819
   br i1 %i.bi, label %.epil.preheader, label %.new, !dbg !20819
 
 .new:                                             ; preds = %bb.k
-  %unroll_iter = and i64 %i.bh, 60, !dbg !20819
+  %unroll_iter = and i64 %i.bh, 28, !dbg !20819
   br label %bb.l, !dbg !20819
 
 bb.l:                                             ; preds = %bb.l, %.new
@@ -803,7 +802,7 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !dbg !21470, !nonnull !982, !noundef !982 ; 12 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 1154, !dbg !21471 ; 2 uses
   %i.k = load i16, ptr %i.j, align 2, !dbg !21471, !noundef !982
-  %i.l = zext i16 %i.k to i64, !dbg !21472        ; 3 uses
+  %i.l = zext i16 %i.k to i64, !dbg !21472        ; 2 uses
     #dbg_value(i64 %i.l, !20983, !DIExpression(), !21267)
     #dbg_value(i64 %i.l, !21045, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !21112)
     #dbg_value(i64 %i.l, !21069, !DIExpression(), !21115)
@@ -833,7 +832,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable, !dbg !21476
 
 bb.e:                                             ; preds = %bb.c
-  %i.o = sub nuw nsw i64 %i.l, %1, !dbg !21477    ; 4 uses
+  %i.o = sub nuw nsw i64 %i.l, %1, !dbg !21477    ; 5 uses
     #dbg_value(i64 %i.o, !20985, !DIExpression(), !21287)
   %i.p = trunc nuw nsw i64 %i.m to i16, !dbg !21478
   store i16 %i.p, ptr %i.e, align 2, !dbg !21478
@@ -1236,14 +1235,13 @@ bb.m:                                             ; preds = %bb.l
   br label %_RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyNtNtNtCshovLROGBtMy_11quinn_proto10connection6spaces10SentPacketNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEEB1x_.exit.preheader, !dbg !21541
 
 _RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyNtNtNtCshovLROGBtMy_11quinn_proto10connection6spaces10SentPacketNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEEB1x_.exit.preheader: ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i
-  %i.co = add nuw nsw i64 %i.l, 1, !dbg !21516
-  %2 = sub nsw i64 %i.co, %1, !dbg !21516         ; 2 uses
-  %xtraiter = and i64 %2, 3, !dbg !21516          ; 3 uses
+  %i.co = add nuw nsw i64 %i.o, 1, !dbg !21516    ; 2 uses
+  %xtraiter = and i64 %i.co, 3, !dbg !21516       ; 3 uses
   %i.cp = icmp samesign ult i64 %i.o, 3, !dbg !21516
   br i1 %i.cp, label %_RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyNtNtNtCshovLROGBtMy_11quinn_proto10connection6spaces10SentPacketNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEEB1x_.exit.epil.preheader, label %_RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyNtNtNtCshovLROGBtMy_11quinn_proto10connection6spaces10SentPacketNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEEB1x_.exit.preheader.new, !dbg !21516
 
 _RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyNtNtNtCshovLROGBtMy_11quinn_proto10connection6spaces10SentPacketNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEEB1x_.exit.preheader.new: ; preds = %_RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyNtNtNtCshovLROGBtMy_11quinn_proto10connection6spaces10SentPacketNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEEB1x_.exit.preheader
-  %unroll_iter = and i64 %2, -4, !dbg !21516
+  %unroll_iter = and i64 %i.co, 131068, !dbg !21516
   br label %_RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyNtNtNtCshovLROGBtMy_11quinn_proto10connection6spaces10SentPacketNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEEB1x_.exit, !dbg !21516
 
 _RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyNtNtNtCshovLROGBtMy_11quinn_proto10connection6spaces10SentPacketNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEEB1x_.exit: ; preds = %_RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyNtNtNtCshovLROGBtMy_11quinn_proto10connection6spaces10SentPacketNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEEB1x_.exit, %_RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyNtNtNtCshovLROGBtMy_11quinn_proto10connection6spaces10SentPacketNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEEB1x_.exit.preheader.new
@@ -1455,9 +1453,9 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !dbg !22081, !nonnull !982, !noundef !982 ; 10 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 186, !dbg !22082 ; 2 uses
   %i.i = load i16, ptr %i.h, align 2, !dbg !22082, !noundef !982
-  %i.j = zext i16 %i.i to i64, !dbg !22083        ; 3 uses
+  %i.j = zext i16 %i.i to i64, !dbg !22083        ; 2 uses
     #dbg_value(i64 %i.j, !21658, !DIExpression(), !21905)
-  %i.k = add nuw nsw i64 %1, %i.j, !dbg !22084    ; 3 uses
+  %i.k = add nuw nsw i64 %1, %i.j, !dbg !22084    ; 4 uses
     #dbg_value(i64 %i.k, !21660, !DIExpression(), !21906)
     #dbg_value(i64 %i.k, !21719, !DIExpression(), !21907)
     #dbg_value(i64 %i.k, !21704, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !21717)
@@ -1834,14 +1832,13 @@ bb.k:                                             ; preds = %bb.h
     #dbg_value(ptr undef, !2278, !DIExpression(), !22052)
     #dbg_value(ptr undef, !2283, !DIExpression(), !22053)
     #dbg_value(ptr undef, !2288, !DIExpression(), !22053)
-  %2 = add nuw nsw i64 %1, %i.j, !dbg !22130
-  %i.bh = add nuw nsw i64 %2, 1, !dbg !22130      ; 2 uses
+  %i.bh = add nuw nsw i64 %i.k, 1, !dbg !22130    ; 2 uses
   %xtraiter = and i64 %i.bh, 3, !dbg !22130       ; 3 uses
   %i.bi = icmp samesign ult i64 %i.k, 3, !dbg !22130
   br i1 %i.bi, label %.epil.preheader, label %.new, !dbg !22130
 
 .new:                                             ; preds = %bb.k
-  %unroll_iter = and i64 %i.bh, 60, !dbg !22130
+  %unroll_iter = and i64 %i.bh, 28, !dbg !22130
   br label %bb.l, !dbg !22130
 
 bb.l:                                             ; preds = %bb.l, %.new
@@ -2046,7 +2043,7 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !dbg !22712, !nonnull !982, !noundef !982 ; 10 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 186, !dbg !22713 ; 2 uses
   %i.i = load i16, ptr %i.h, align 2, !dbg !22713, !noundef !982
-  %i.j = zext i16 %i.i to i64, !dbg !22714        ; 3 uses
+  %i.j = zext i16 %i.i to i64, !dbg !22714        ; 2 uses
     #dbg_value(i64 %i.j, !22275, !DIExpression(), !22529)
     #dbg_value(i64 %i.j, !22342, !DIExpression(), !22530)
     #dbg_value(i64 %i.j, !22325, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !22378)
@@ -2077,7 +2074,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable, !dbg !22718
 
 bb.e:                                             ; preds = %bb.c
-  %i.m = sub nuw nsw i64 %i.j, %1, !dbg !22719    ; 3 uses
+  %i.m = sub nuw nsw i64 %i.j, %1, !dbg !22719    ; 4 uses
     #dbg_value(i64 %i.m, !22277, !DIExpression(), !22547)
   %i.n = trunc nuw nsw i64 %i.k to i16, !dbg !22720
   store i16 %i.n, ptr %i.c, align 2, !dbg !22720
@@ -2480,14 +2477,13 @@ bb.m:                                             ; preds = %bb.l
   br label %_RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEECshovLROGBtMy_11quinn_proto.exit.preheader, !dbg !22782
 
 _RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEECshovLROGBtMy_11quinn_proto.exit.preheader: ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i
-  %i.cj = add nuw nsw i64 %i.j, 1, !dbg !22757
-  %2 = sub nsw i64 %i.cj, %1, !dbg !22757         ; 2 uses
-  %xtraiter = and i64 %2, 3, !dbg !22757          ; 3 uses
+  %i.cj = add nuw nsw i64 %i.m, 1, !dbg !22757    ; 2 uses
+  %xtraiter = and i64 %i.cj, 3, !dbg !22757       ; 3 uses
   %i.ck = icmp samesign ult i64 %i.m, 3, !dbg !22757
   br i1 %i.ck, label %_RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEECshovLROGBtMy_11quinn_proto.exit.epil.preheader, label %_RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEECshovLROGBtMy_11quinn_proto.exit.preheader.new, !dbg !22757
 
 _RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEECshovLROGBtMy_11quinn_proto.exit.preheader.new: ; preds = %_RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEECshovLROGBtMy_11quinn_proto.exit.preheader
-  %unroll_iter = and i64 %2, -4, !dbg !22757
+  %unroll_iter = and i64 %i.cj, 131068, !dbg !22757
   br label %_RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEECshovLROGBtMy_11quinn_proto.exit, !dbg !22757
 
 _RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEECshovLROGBtMy_11quinn_proto.exit: ; preds = %_RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEECshovLROGBtMy_11quinn_proto.exit, %_RINvMsp_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree4nodeINtB6_7NodeRefNtNtB6_6marker3MutyyNtB1a_8InternalE30correct_childrens_parent_linksINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEECshovLROGBtMy_11quinn_proto.exit.preheader.new

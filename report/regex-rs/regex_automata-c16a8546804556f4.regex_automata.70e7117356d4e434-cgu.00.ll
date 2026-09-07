@@ -204,11 +204,11 @@ bb.a:
     #dbg_declare(ptr %1, !13001, !DIExpression(), !13008)
     #dbg_declare(ptr poison, !13009, !DIExpression(), !13012)
     #dbg_declare(ptr poison, !13015, !DIExpression(), !13018)
-  %.val.i = load i64, ptr %1, align 8, !dbg !13197, !alias.scope !13007, !noalias !13019, !noundef !1180 ; 7 uses
+  %.val.i = load i64, ptr %1, align 8, !dbg !13197, !alias.scope !13007, !noalias !13019, !noundef !1180 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !13197
-  %.val5.i = load i64, ptr %i.b, align 8, !dbg !13197, !alias.scope !13007, !noalias !13019, !noundef !1180 ; 4 uses
+  %.val5.i = load i64, ptr %i.b, align 8, !dbg !13197, !alias.scope !13007, !noalias !13019, !noundef !1180 ; 3 uses
     #dbg_value(ptr poison, !13021, !DIExpression(), !13025)
-  %i.c = sub nuw i64 %.val5.i, %.val.i, !dbg !13198 ; 5 uses
+  %i.c = sub nuw i64 %.val5.i, %.val.i, !dbg !13198 ; 6 uses
     #dbg_value(i64 %i.c, !13003, !DIExpression(), !13026)
     #dbg_value(i64 %i.c, !13013, !DIExpression(), !13027)
     #dbg_value(i64 %i.c, !13010, !DIExpression(), !13028)
@@ -305,9 +305,8 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir1
   br i1 %.not9.i.i.i.i.i.i, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeEINtB4_18SpecFromIterNestedB13_INtNtNtCsj6eKBz9Db1c_4core5array4iter8IntoIterB13_Kj2_EE9from_iterCs9GYDdpCSJ4S_14regex_automata.exit, label %.lr.ph.i.i.i.i.i.i.preheader, !dbg !13214
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeE7reserveCs9GYDdpCSJ4S_14regex_automata.exit.i.i.i
-  %.neg = add i64 %.val.i, 1, !dbg !13214
   %xtraiter = and i64 %i.c, 1, !dbg !13214
-  %i.n = icmp eq i64 %.val5.i, %.neg, !dbg !13214
+  %i.n = icmp eq i64 %i.c, 1, !dbg !13214
   br i1 %i.n, label %.lr.ph.i.i.i.i.i.i.epil.preheader, label %.lr.ph.i.i.i.i.i.i.preheader.new, !dbg !13214
 
 .lr.ph.i.i.i.i.i.i.preheader.new:                 ; preds = %.lr.ph.i.i.i.i.i.i.preheader
@@ -477,11 +476,11 @@ bb.a:
     #dbg_declare(ptr %1, !13392, !DIExpression(), !13399)
     #dbg_declare(ptr poison, !13400, !DIExpression(), !13403)
     #dbg_declare(ptr poison, !13406, !DIExpression(), !13409)
-  %.val.i = load i64, ptr %1, align 8, !dbg !13588, !alias.scope !13398, !noalias !13410, !noundef !1180 ; 7 uses
+  %.val.i = load i64, ptr %1, align 8, !dbg !13588, !alias.scope !13398, !noalias !13410, !noundef !1180 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !13588
-  %.val5.i = load i64, ptr %i.b, align 8, !dbg !13588, !alias.scope !13398, !noalias !13410, !noundef !1180 ; 4 uses
+  %.val5.i = load i64, ptr %i.b, align 8, !dbg !13588, !alias.scope !13398, !noalias !13410, !noundef !1180 ; 3 uses
     #dbg_value(ptr poison, !13412, !DIExpression(), !13416)
-  %i.c = sub nuw i64 %.val5.i, %.val.i, !dbg !13589 ; 5 uses
+  %i.c = sub nuw i64 %.val5.i, %.val.i, !dbg !13589 ; 6 uses
     #dbg_value(i64 %i.c, !13394, !DIExpression(), !13417)
     #dbg_value(i64 %i.c, !13404, !DIExpression(), !13418)
     #dbg_value(i64 %i.c, !13401, !DIExpression(), !13419)
@@ -578,9 +577,8 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir1
   br i1 %.not9.i.i.i.i.i.i, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeEINtB4_18SpecFromIterNestedB13_INtNtNtCsj6eKBz9Db1c_4core5array4iter8IntoIterB13_Kj3_EE9from_iterCs9GYDdpCSJ4S_14regex_automata.exit, label %.lr.ph.i.i.i.i.i.i.preheader, !dbg !13605
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeE7reserveCs9GYDdpCSJ4S_14regex_automata.exit.i.i.i
-  %.neg = add i64 %.val.i, 1, !dbg !13605
   %xtraiter = and i64 %i.c, 1, !dbg !13605
-  %i.n = icmp eq i64 %.val5.i, %.neg, !dbg !13605
+  %i.n = icmp eq i64 %i.c, 1, !dbg !13605
   br i1 %i.n, label %.lr.ph.i.i.i.i.i.i.epil.preheader, label %.lr.ph.i.i.i.i.i.i.preheader.new, !dbg !13605
 
 .lr.ph.i.i.i.i.i.i.preheader.new:                 ; preds = %.lr.ph.i.i.i.i.i.i.preheader

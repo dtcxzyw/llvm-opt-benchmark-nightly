@@ -204,7 +204,7 @@ bb.dn:                                            ; preds = %bb.dk
 
 bb.do:                                            ; preds = %bb.dl, %bb.dm, %bb.dn
   %i.or = phi i32 [ %i.og, %bb.dl ], [ %i.oq, %bb.dm ], [ %i.og, %bb.dn ] ; 22 uses
-  %i.os = phi i32 [ %i.on, %bb.dl ], [ %storemerge, %bb.dm ], [ %i.oi, %bb.dn ] ; 8 uses
+  %i.os = phi i32 [ %i.on, %bb.dl ], [ %storemerge, %bb.dm ], [ %i.oi, %bb.dn ] ; 7 uses
   %i.ot = and i32 %i.or, 65536
   %.not57 = icmp eq i32 %i.ot, 0
   br i1 %.not57, label %bb.dq, label %bb.dp
@@ -298,8 +298,8 @@ bb.ec:                                            ; preds = %bb.eb, %bb.ea, %bb.
   %.042.i = phi i32 [ %i.or, %bb.dz ], [ %i.or, %bb.dw ], [ %i.or, %bb.eb ], [ %i.pq, %bb.dx ], [ %i.or, %bb.ea ] ; 2 uses
   %.0.i = phi i64 [ %i.pr, %bb.dz ], [ 0, %bb.dw ], [ %i.pu, %bb.eb ], [ 5, %bb.dx ], [ 0, %bb.ea ] ; 4 uses
   %i.pv = call i64 @llvm.umin.i64(i64 %.0.i, i64 2147483647)
-  %i.pw = trunc nuw nsw i64 %i.pv to i32          ; 2 uses
-  %i.px = sub nsw i32 %i.os, %i.pw                ; 3 uses
+  %i.pw = trunc nuw nsw i64 %i.pv to i32
+  %i.px = sub i32 %i.os, %i.pw                    ; 4 uses
   %i.py = and i32 %.042.i, 8
   %.not49.i = icmp eq i32 %i.py, 0                ; 2 uses
   br i1 %.not49.i, label %bb.ef, label %bb.ed
@@ -327,8 +327,7 @@ bb.ef:                                            ; preds = %bb.ee, %bb.ec
 
 .lr.ph.i73.preheader:                             ; preds = %.preheader60.i
   %.promoted363 = load i32, ptr %i.l, align 4     ; 2 uses
-  %i.qf = add i32 %i.os, %.promoted363
-  %7 = sub i32 %i.qf, %i.pw
+  %i.qf = add i32 %i.px, %.promoted363
   br label %.lr.ph.i73
 
 .lr.ph.i73:                                       ; preds = %.lr.ph.i73.preheader, %bb.eg
@@ -345,7 +344,7 @@ bb.eg:                                            ; preds = %.lr.ph.i73
   br i1 %i.ql, label %.lr.ph.i73, label %.loopexit61.i.loopexit, !llvm.loop !34
 
 .loopexit61.i.loopexit:                           ; preds = %bb.eg
-  store i32 %7, ptr %i.l, align 4
+  store i32 %i.qf, ptr %i.l, align 4
   br label %.loopexit61.i
 
 .loopexit61.i:                                    ; preds = %.loopexit61.i.loopexit, %.preheader60.i, %bb.ef

@@ -202,8 +202,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: nounwind uwtable
 define internal noundef i32 @tmove(ptr noundef %0) #0 {
 bb.a:
-  %i.a = tail call i64 @luaL_checkinteger(ptr noundef %0, i32 noundef 2) #3 ; 8 uses
-  %i.b = tail call i64 @luaL_checkinteger(ptr noundef %0, i32 noundef 3) #3 ; 5 uses
+  %i.a = tail call i64 @luaL_checkinteger(ptr noundef %0, i32 noundef 2) #3 ; 7 uses
+  %i.b = tail call i64 @luaL_checkinteger(ptr noundef %0, i32 noundef 3) #3 ; 4 uses
   %i.c = tail call i64 @luaL_checkinteger(ptr noundef %0, i32 noundef 4) #3 ; 5 uses
   %i.d = tail call i32 @lua_type(ptr noundef %0, i32 noundef 5) #3
   %i.e = icmp sgt i32 %i.d, 0                     ; 2 uses
@@ -271,7 +271,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %i.t = sub nsw i64 %i.b, %i.a                   ; 4 uses
+  %i.t = sub nsw i64 %i.b, %i.a                   ; 5 uses
   %i.u = sub i64 9223372036854775807, %i.t
   %.not49 = icmp sgt i64 %i.c, %i.u
   br i1 %.not49, label %bb.m, label %bb.n, !prof !10
@@ -296,21 +296,16 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.n
   %.not5258 = icmp slt i64 %i.t, 0
-  br i1 %.not5258, label %.loopexit, label %.lr.ph60.preheader
+  br i1 %.not5258, label %.loopexit, label %.lr.ph60
 
-.lr.ph60.preheader:                               ; preds = %bb.q
-  %1 = add i64 %i.b, 1
-  %2 = sub i64 %1, %i.a
-  br label %.lr.ph60
-
-.lr.ph60:                                         ; preds = %.lr.ph60.preheader, %.lr.ph60
-  %.059 = phi i64 [ %i.ab, %.lr.ph60 ], [ 0, %.lr.ph60.preheader ] ; 3 uses
+.lr.ph60:                                         ; preds = %bb.q, %.lr.ph60
+  %.059 = phi i64 [ %i.ab, %.lr.ph60 ], [ 0, %bb.q ] ; 4 uses
   %i.y = add nsw i64 %.059, %i.a
   %i.z = tail call i32 @lua_geti(ptr noundef %0, i32 noundef 1, i64 noundef %i.y) #3 ; 0 uses
   %i.aa = add nsw i64 %.059, %i.c
   tail call void @lua_seti(ptr noundef %0, i32 noundef %i.f, i64 noundef %i.aa) #3
-  %i.ab = add nuw i64 %.059, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ab, %2
+  %i.ab = add nuw i64 %.059, 1
+  %exitcond.not = icmp eq i64 %.059, %i.t
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph60
 
 bb.r:                                             ; preds = %bb.p, %bb.o

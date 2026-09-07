@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.c
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !18
   %i.e = tail call i32 @BN_num_bits(ptr noundef %i.d) #3
   %i.f = add nsw i32 %i.e, 7
-  %i.g = sdiv i32 %i.f, 8                         ; 6 uses
+  %i.g = sdiv i32 %i.f, 8                         ; 5 uses
   %i.h = sext i32 %i.g to i64                     ; 3 uses
   %i.i = icmp eq i32 %2, 2
   %i.j = add nsw i64 %i.h, 1                      ; 6 uses
@@ -266,7 +266,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   store i8 %storemerge, ptr %3, align 1, !tbaa !19
   %i.z = tail call i32 @BN_num_bits(ptr noundef %i.t) #3
   %i.aa = add nsw i32 %i.z, 7
-  %.neg = sdiv i32 %i.aa, -8                      ; 2 uses
+  %.neg = sdiv i32 %i.aa, -8
   %narrow = add nsw i32 %.neg, %i.g               ; 3 uses
   %i.ab = icmp ugt i32 %narrow, %i.g
   br i1 %i.ab, label %.sink.split, label %.preheader122
@@ -276,12 +276,10 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   br i1 %.not103123, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader122
-  %i.ac = sext i32 %narrow to i64
+  %i.ac = sext i32 %narrow to i64                 ; 2 uses
   %scevgep = getelementptr i8, ptr %3, i64 1
   tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 %i.ac, i1 false), !tbaa !19
-  %narrow140 = add nsw i32 %i.g, %.neg
-  %6 = sext i32 %narrow140 to i64
-  %i.ad = add nsw i64 %6, 1
+  %i.ad = add nsw i64 %i.ac, 1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %.preheader122

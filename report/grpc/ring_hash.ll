@@ -205,7 +205,7 @@ bb.db:                                            ; preds = %bb.da
   %i.nl = load i64, ptr %i.kf, align 8, !noalias !395
   %.sink2.i.i.i.i = select i1 %i.nk, ptr %.pre356.i.i, ptr %i.kg ; 12 uses
   %.sink.i.i.i.i = select i1 %i.nk, i64 %i.nl, i64 196 ; 2 uses
-  %.sink1.i.i.i.i = lshr i64 %.pre354.i.i, 1      ; 7 uses
+  %.sink1.i.i.i.i = lshr i64 %.pre354.i.i, 1      ; 6 uses
   %i.nm = ptrtoint ptr %.sink2.i.i.i.i to i64     ; 5 uses
   %i.nn = sub i64 %i.mr, %i.nm                    ; 13 uses
   %i.no = add i64 %i.nn, %i.nj                    ; 5 uses
@@ -419,14 +419,14 @@ _ZN4absl12lts_2025051223inlined_vector_internal21AllocationTransactionISaIcEED2E
   br label %.noexc134.i.i
 
 bb.de:                                            ; preds = %bb.db
-  %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.no, i64 %.sink1.i.i.i.i) ; 11 uses
+  %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.no, i64 %.sink1.i.i.i.i) ; 10 uses
   %i.pj = getelementptr i8, ptr %.sink2.i.i.i.i, i64 %.sroa.speculated.i.i.i ; 4 uses
   %i.pk = sub i64 %i.np, %.sroa.speculated.i.i.i  ; 19 uses
   %i.pl = getelementptr inbounds nuw i8, ptr %.sink2.i.i.i.i, i64 %i.nn ; 5 uses
   %i.pm = getelementptr inbounds nuw i8, ptr %.sink2.i.i.i.i, i64 %i.no
   %i.pn = sub nuw i64 %.sroa.speculated.i.i.i, %i.no
   %i.po = getelementptr inbounds nuw i8, ptr %i.pl, i64 %i.pk ; 7 uses
-  %i.pp = sub i64 %i.nj, %i.pk                    ; 8 uses
+  %i.pp = sub i64 %i.nj, %i.pk                    ; 9 uses
   %.not.i.i61.i.i.i = icmp eq i64 %i.np, %.sroa.speculated.i.i.i ; 2 uses
   br i1 %.not.i.i61.i.i.i, label %_ZN4absl12lts_2025051223inlined_vector_internal23ConstructionTransactionISaIcEE9ConstructINS1_20IteratorValueAdapterIS3_St13move_iteratorIPcEEEEEvS8_RT_m.exit67.i.i.i, label %iter.check751
 
@@ -754,8 +754,7 @@ vec.epilog.middle.block666:                       ; preds = %vec.epilog.vector.b
 .lr.ph.i76.i.i.i.preheader:                       ; preds = %vector.memcheck638, %iter.check655, %vec.epilog.iter.check657, %vec.epilog.middle.block666
   %.sroa.0122.3.i.i.i.ph = phi ptr [ %.sroa.0122.2.i.i.i, %iter.check655 ], [ %.sroa.0122.2.i.i.i, %vector.memcheck638 ], [ %i.sc, %vec.epilog.iter.check657 ], [ %i.sh, %vec.epilog.middle.block666 ] ; 2 uses
   %.06.i.i.i.i.ph = phi i64 [ 0, %iter.check655 ], [ 0, %vector.memcheck638 ], [ %n.vec645, %vec.epilog.iter.check657 ], [ %n.vec660, %vec.epilog.middle.block666 ] ; 3 uses
-  %40 = sub i64 %.sroa.speculated.i.i.i, %.sink1.i.i.i.i
-  %xtraiter828 = and i64 %40, 3                   ; 2 uses
+  %xtraiter828 = and i64 %i.pp, 3                 ; 2 uses
   %lcmp.mod829.not = icmp eq i64 %xtraiter828, 0
   br i1 %lcmp.mod829.not, label %.lr.ph.i76.i.i.i.prol.loopexit, label %.lr.ph.i76.i.i.i.prol
 

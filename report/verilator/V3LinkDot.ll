@@ -205,10 +205,10 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.backedge, %bb.d
-  %.056 = phi i64 [ %i.f, %bb.d ], [ %.056.be, %.backedge ] ; 5 uses
-  %.0 = phi i64 [ %i.i, %bb.d ], [ %.0.be, %.backedge ] ; 11 uses
+  %.056 = phi i64 [ %i.f, %bb.d ], [ %.056.be, %.backedge ] ; 4 uses
+  %.0 = phi i64 [ %i.i, %bb.d ], [ %.0.be, %.backedge ] ; 10 uses
   %.sroa.026.0 = phi ptr [ %0, %bb.d ], [ %.sroa.026.0.be, %.backedge ] ; 7 uses
-  %i.r = sub nsw i64 %.056, %.0                   ; 7 uses
+  %i.r = sub nsw i64 %.056, %.0                   ; 8 uses
   %i.s = icmp slt i64 %.0, %i.r
   br i1 %i.s, label %bb.f, label %bb.h
 
@@ -219,9 +219,8 @@ bb.f:                                             ; preds = %bb.e
 .lr.ph66.preheader:                               ; preds = %bb.f
   %i.u = getelementptr inbounds [16 x i8], ptr %.sroa.026.0, i64 %.0 ; 2 uses
   %xtraiter83 = and i64 %i.r, 3                   ; 3 uses
-  %3 = sub i64 %.0, %.056
-  %4 = icmp ugt i64 %3, -4
-  br i1 %4, label %.lr.ph66.epil.preheader, label %.lr.ph66.preheader.new
+  %3 = icmp ult i64 %i.r, 4
+  br i1 %3, label %.lr.ph66.epil.preheader, label %.lr.ph66.preheader.new
 
 .lr.ph66.preheader.new:                           ; preds = %.lr.ph66.preheader
   %unroll_iter88 = and i64 %i.r, 9223372036854775804

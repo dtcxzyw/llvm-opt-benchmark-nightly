@@ -205,8 +205,8 @@ bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull readonly align 1 dereferenceable(1) %.tr14, i64 %i.c, i1 false)
   %i.d = add i32 %.tr1215, -1                     ; 4 uses
   %i.e = lshr i32 %i.d, 1
-  %i.f = add nuw nsw i32 %i.e, 1
-  %wide.trip.count.i = zext nneg i32 %i.f to i64  ; 7 uses
+  %i.f = add nuw i32 %i.e, 1
+  %wide.trip.count.i = zext i32 %i.f to i64       ; 8 uses
   %min.iters.check35 = icmp ult i32 %.tr1215, 17
   br i1 %min.iters.check35, label %.lr.ph.i.preheader, label %vector.memcheck26
 
@@ -252,12 +252,11 @@ vector.body38:                                    ; preds = %vector.body38, %vec
 .lr.ph.i.preheader:                               ; preds = %vector.body38, %vector.memcheck26, %.lr.ph.preheader.i
   %indvars.iv24.i.ph = phi i64 [ 0, %vector.memcheck26 ], [ 0, %.lr.ph.preheader.i ], [ %i.n, %vector.body38 ] ; 2 uses
   %indvars.iv.i.ph = phi i64 [ 0, %vector.memcheck26 ], [ 0, %.lr.ph.preheader.i ], [ %n.vec37, %vector.body38 ] ; 4 uses
+  %3 = sub nsw i64 %wide.trip.count.i, %indvars.iv.i.ph
   %i.v = lshr i32 %i.d, 1
-  %i.w = zext nneg i32 %i.v to i64                ; 2 uses
-  %3 = add nuw nsw i64 %i.w, 1
-  %4 = sub nsw i64 %3, %indvars.iv.i.ph
+  %i.w = zext nneg i32 %i.v to i64
   %i.x = sub nsw i64 %i.w, %indvars.iv.i.ph
-  %xtraiter = and i64 %4, 3                       ; 2 uses
+  %xtraiter = and i64 %3, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
@@ -452,8 +451,8 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %2, ptr nonnull readonly align 1 %i.i, i64 %i.m, i1 false)
   %i.n = add nsw i32 %i.j, -2                     ; 5 uses
   %i.o = lshr exact i32 %i.n, 1
-  %i.p = add nuw nsw i32 %i.o, 1
-  %wide.trip.count.i = zext nneg i32 %i.p to i64  ; 7 uses
+  %i.p = add nuw i32 %i.o, 1
+  %wide.trip.count.i = zext i32 %i.p to i64       ; 8 uses
   %min.iters.check54 = icmp ult i32 %i.n, 32
   br i1 %min.iters.check54, label %.lr.ph.i.preheader, label %vector.memcheck44
 
@@ -505,10 +504,9 @@ vector.body57:                                    ; preds = %vector.body57, %vec
 .lr.ph.i.preheader:                               ; preds = %vector.body57, %vector.memcheck44, %.lr.ph.preheader.i
   %indvars.iv24.i.ph = phi i64 [ 0, %vector.memcheck44 ], [ 0, %.lr.ph.preheader.i ], [ %i.ac, %vector.body57 ] ; 2 uses
   %indvars.iv.i.ph = phi i64 [ 0, %vector.memcheck44 ], [ 0, %.lr.ph.preheader.i ], [ %n.vec56, %vector.body57 ] ; 4 uses
+  %3 = sub nsw i64 %wide.trip.count.i, %indvars.iv.i.ph
   %i.ak = lshr exact i32 %i.n, 1
-  %i.al = zext nneg i32 %i.ak to i64              ; 2 uses
-  %reass.sub = sub nsw i64 %i.al, %indvars.iv.i.ph
-  %3 = add nsw i64 %reass.sub, 1
+  %i.al = zext nneg i32 %i.ak to i64
   %i.am = sub nsw i64 %i.al, %indvars.iv.i.ph
   %xtraiter = and i64 %3, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0

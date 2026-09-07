@@ -204,14 +204,14 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE8truncateCsdsTQD3x2eOp_3exr.exit: ;
 define hidden void @_RNvMs1_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VectE6resizeCsdsTQD3x2eOp_3exr(ptr noalias nofree noundef align 8 dereferenceable(24) %0, i64 noundef %1, i16 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %i.b = load i64, ptr %i.a, align 8, !noundef !4 ; 7 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !4 ; 6 uses
   %i.c = icmp ult i64 %i.b, 4611686018427387904
   tail call void @llvm.assume(i1 %i.c)
   %i.d = icmp ugt i64 %1, %i.b
   br i1 %i.d, label %bb.b, label %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VectE8truncateCsdsTQD3x2eOp_3exr.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = sub nuw i64 %1, %i.b                     ; 5 uses
+  %i.e = sub nuw i64 %1, %i.b                     ; 8 uses
   %i.f = load i64, ptr %0, align 8, !range !5, !alias.scope !122, !noundef !4
   %i.g = sub nsw i64 %i.f, %i.b
   %i.h = icmp ugt i64 %i.e, %i.g
@@ -233,13 +233,12 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VectE7reserveCsdsTQD3x2eOp_3exr.exit.i: 
   br i1 %i.n, label %iter.check, label %._crit_edge.i
 
 iter.check:                                       ; preds = %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VectE7reserveCsdsTQD3x2eOp_3exr.exit.i
-  %3 = xor i64 %i.b, -1
-  %i.o = add i64 %1, %3                           ; 7 uses
-  %min.iters.check = icmp ult i64 %i.o, 4
+  %i.o = add i64 %i.e, -1                         ; 5 uses
+  %min.iters.check = icmp ult i64 %i.e, 5
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check5 = icmp ult i64 %i.o, 16
+  %min.iters.check5 = icmp ult i64 %i.e, 17
   br i1 %min.iters.check5, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check

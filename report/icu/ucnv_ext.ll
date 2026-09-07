@@ -204,7 +204,7 @@ bb.a:
   %i.x = load i8, ptr %i.w, align 1, !tbaa !39
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.z = load i8, ptr %i.y, align 2, !tbaa !83
-  %i.aa = call fastcc noundef i32 @_ZL18ucnv_extMatchFromUPKiiPKDsiS2_iPjaa(ptr noundef %i.g, i32 noundef %i.i, ptr noundef nonnull %i.j, i32 noundef %i.m, ptr noundef %i.o, i32 noundef %i.v, ptr noundef %i.c, i8 noundef signext %i.x, i8 noundef signext %i.z) ; 6 uses
+  %i.aa = call fastcc noundef i32 @_ZL18ucnv_extMatchFromUPKiiPKDsiS2_iPjaa(ptr noundef %i.g, i32 noundef %i.i, ptr noundef nonnull %i.j, i32 noundef %i.m, ptr noundef %i.o, i32 noundef %i.v, ptr noundef %i.c, i8 noundef signext %i.x, i8 noundef signext %i.z) ; 5 uses
   %i.ab = icmp sgt i32 %i.aa, 1
   br i1 %i.ab, label %bb.b, label %bb.q
 
@@ -342,10 +342,8 @@ bb.r:                                             ; preds = %bb.q
 
 iter.check:                                       ; preds = %bb.r
   %i.bw = sext i8 %i.l to i64                     ; 8 uses
-  %wide.trip.count = sext i32 %i.bu to i64
-  %narrow = sub nsw i32 -2, %i.aa
-  %4 = sext i32 %narrow to i64
-  %i.bx = sub nsw i64 %4, %i.bw                   ; 7 uses
+  %wide.trip.count = sext i32 %i.bu to i64        ; 2 uses
+  %i.bx = sub nsw i64 %wide.trip.count, %i.bw     ; 7 uses
   %min.iters.check = icmp ult i64 %i.bx, 4
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 

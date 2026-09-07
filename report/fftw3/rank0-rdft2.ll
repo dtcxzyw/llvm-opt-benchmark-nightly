@@ -204,7 +204,7 @@ declare ptr @fftw_mkplan_rdft2(i64 noundef, ptr noundef, ptr noundef) local_unna
 define internal void @apply_r2hc_inplace(ptr nofree noundef readonly captures(none) %0, ptr nofree readnone captures(none) %1, ptr nofree readnone captures(none) %2, ptr nofree readnone captures(none) %3, ptr nofree noundef writeonly captures(none) %4) #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !18   ; 6 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !18   ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.d = load i64, ptr %i.c, align 8, !tbaa !20   ; 29 uses
   %.not25 = icmp slt i64 %i.b, 4
@@ -256,13 +256,12 @@ bb.a:
 .preheader:                                       ; preds = %.preheader.loopexit, %bb.a
   %.023.lcssa = phi ptr [ %4, %bb.a ], [ %.lcssa, %.preheader.loopexit ] ; 2 uses
   %.0.lcssa = phi i64 [ 4, %bb.a ], [ %i.n, %.preheader.loopexit ] ; 5 uses
-  %i.o = add nsw i64 %i.b, 4                      ; 2 uses
+  %i.o = add nsw i64 %i.b, 4                      ; 3 uses
   %i.p = icmp slt i64 %.0.lcssa, %i.o
   br i1 %i.p, label %.lr.ph31.preheader, label %._crit_edge
 
 .lr.ph31.preheader:                               ; preds = %.preheader
-  %5 = xor i64 %i.b, 4
-  %i.q = sub i64 %5, %.0.lcssa
+  %i.q = sub i64 %i.o, %.0.lcssa
   %i.r = add i64 %i.b, 3
   %i.s = sub i64 %i.r, %.0.lcssa
   %xtraiter36 = and i64 %i.q, 7                   ; 2 uses
@@ -356,7 +355,7 @@ bb.a:
 define internal void @apply_r2hc(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree readnone captures(none) %2, ptr nofree noundef writeonly captures(none) %3, ptr nofree noundef writeonly captures(none) %4) #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !18   ; 6 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !18   ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.d = load i64, ptr %i.c, align 8, !tbaa !43   ; 21 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80
@@ -425,13 +424,12 @@ bb.a:
   %.061.lcssa = phi ptr [ %4, %bb.a ], [ %.lcssa, %.preheader.loopexit ] ; 2 uses
   %.059.lcssa = phi ptr [ %3, %bb.a ], [ %.lcssa86, %.preheader.loopexit ] ; 2 uses
   %.0.lcssa = phi ptr [ %1, %bb.a ], [ %.lcssa87, %.preheader.loopexit ] ; 2 uses
-  %i.ad = add nsw i64 %i.b, 4                     ; 2 uses
+  %i.ad = add nsw i64 %i.b, 4                     ; 3 uses
   %i.ae = icmp slt i64 %.063.lcssa, %i.ad
   br i1 %i.ae, label %.lr.ph77.preheader, label %._crit_edge
 
 .lr.ph77.preheader:                               ; preds = %.preheader
-  %5 = xor i64 %i.b, 4
-  %i.af = sub i64 %5, %.063.lcssa
+  %i.af = sub i64 %i.ad, %.063.lcssa
   %i.ag = add i64 %i.b, 3
   %i.ah = sub i64 %i.ag, %.063.lcssa
   %xtraiter92 = and i64 %i.af, 7                  ; 2 uses

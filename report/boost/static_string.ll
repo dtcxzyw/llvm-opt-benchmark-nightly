@@ -206,10 +206,10 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.backedge, %bb.d
-  %.086 = phi i64 [ %i.e, %bb.d ], [ %.086.be, %.backedge ] ; 11 uses
-  %.082 = phi i64 [ %i.g, %bb.d ], [ %.082.be, %.backedge ] ; 20 uses
+  %.086 = phi i64 [ %i.e, %bb.d ], [ %.086.be, %.backedge ] ; 10 uses
+  %.082 = phi i64 [ %i.g, %bb.d ], [ %.082.be, %.backedge ] ; 19 uses
   %.058 = phi ptr [ %0, %bb.d ], [ %.058.be, %.backedge ] ; 26 uses
-  %i.ar = sub nsw i64 %.086, %.082                ; 16 uses
+  %i.ar = sub nsw i64 %.086, %.082                ; 17 uses
   %i.as = icmp slt i64 %.082, %i.ar
   br i1 %i.as, label %bb.f, label %bb.i
 
@@ -308,8 +308,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.054107.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec142, %vec.epilog.middle.block ] ; 3 uses
   %.055106.ph = phi ptr [ %i.az, %iter.check ], [ %i.az, %vector.memcheck ], [ %i.bb, %vec.epilog.iter.check ], [ %i.bg, %vec.epilog.middle.block ] ; 2 uses
   %.159105.ph = phi ptr [ %.058, %iter.check ], [ %.058, %vector.memcheck ], [ %i.bc, %vec.epilog.iter.check ], [ %i.bh, %vec.epilog.middle.block ] ; 2 uses
-  %3 = sub i64 %.086, %.082
-  %xtraiter241 = and i64 %3, 3                    ; 2 uses
+  %xtraiter241 = and i64 %i.ar, 3                 ; 2 uses
   %lcmp.mod242.not = icmp eq i64 %xtraiter241, 0
   br i1 %lcmp.mod242.not, label %.lr.ph109.prol.loopexit, label %.lr.ph109.prol
 

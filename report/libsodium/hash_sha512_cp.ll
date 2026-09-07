@@ -38,7 +38,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 64         ; 2 uses
   %i.f = getelementptr i8, ptr %0, i64 72         ; 2 uses
   %i.g = load i64, ptr %i.f, align 8              ; 2 uses
-  %i.h = lshr i64 %i.g, 3                         ; 2 uses
+  %i.h = lshr i64 %i.g, 3
   %i.i = and i64 %i.h, 127                        ; 7 uses
   %i.j = shl i64 %2, 3                            ; 2 uses
   %i.k = lshr i64 %2, 61
@@ -50,7 +50,7 @@ bb.b:                                             ; preds = %bb.a
   %spec.select = add i64 %.pre, %i.n
   %i.o = add i64 %spec.select, %i.k
   store i64 %i.o, ptr %i.e, align 8
-  %i.p = sub nuw nsw i64 128, %i.i                ; 9 uses
+  %i.p = sub nuw nsw i64 128, %i.i                ; 10 uses
   %i.q = icmp ult i64 %2, %i.p
   %i.r = getelementptr i8, ptr %0, i64 80         ; 9 uses
   %i.s = getelementptr i8, ptr %i.r, i64 %i.i     ; 34 uses
@@ -147,9 +147,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .preheader51.preheader:                           ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.152.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec69, %vec.epilog.middle.block ] ; 3 uses
-  %3 = sub nsw i64 0, %i.h
   %i.ar = add nuw nsw i64 %.152.ph, %i.i
-  %xtraiter = and i64 %3, 3                       ; 2 uses
+  %xtraiter = and i64 %i.p, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.preheader51.prol.loopexit, label %.preheader51.prol
 

@@ -205,10 +205,10 @@ bb.f:                                             ; preds = %.thread
 
 bb.g:                                             ; preds = %bb.f
   %i.v = trunc i64 %i.s to i32                    ; 6 uses
-  %i.w = ptrtoint ptr %i.t to i64                 ; 2 uses
-  %i.x = ptrtoint ptr %i.q to i64                 ; 2 uses
+  %i.w = ptrtoint ptr %i.t to i64
+  %i.x = ptrtoint ptr %i.q to i64
   %i.y = sub i64 %i.w, %i.x
-  %i.z = trunc i64 %i.y to i32                    ; 6 uses
+  %i.z = trunc i64 %i.y to i32                    ; 7 uses
   %i.aa = getelementptr i8, ptr %i.n, i64 2
   %i.ab = call ptr @ws_strptime_p(ptr noundef %i.t, ptr noundef %i.aa, ptr noundef nonnull %3)
   %i.ac = icmp eq ptr %i.ab, null
@@ -224,9 +224,6 @@ bb.i:                                             ; preds = %bb.h
 
 .lr.ph12.preheader:                               ; preds = %bb.i
   %i.af = add nsw i32 %i.z, -9                    ; 2 uses
-  %5 = trunc i64 %i.w to i32
-  %6 = add i32 %5, -10
-  %7 = trunc i64 %i.x to i32
   %xtraiter = and i32 %i.af, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph12.prol.loopexit, label %.lr.ph12.prol
@@ -240,7 +237,7 @@ bb.i:                                             ; preds = %bb.h
   %.lcssa.unr = phi i32 [ poison, %.lr.ph12.preheader ], [ %i.ag, %.lr.ph12.prol ]
   %.03511.unr = phi i32 [ %i.af, %.lr.ph12.preheader ], [ %i.ah, %.lr.ph12.prol ]
   %.13810.unr = phi i32 [ %i.v, %.lr.ph12.preheader ], [ %i.ag, %.lr.ph12.prol ]
-  %i.ai = icmp eq i32 %6, %7
+  %i.ai = icmp eq i32 %i.z, 10
   br i1 %i.ai, label %.thread2, label %.lr.ph12
 
 .lr.ph12:                                         ; preds = %.lr.ph12.prol.loopexit, %.lr.ph12

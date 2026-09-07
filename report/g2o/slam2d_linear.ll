@@ -205,11 +205,11 @@ bb.d:                                             ; preds = %.critedge.i.us, %bb
 _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i: ; preds = %.preheader.preheader.i.split
   %i.cb = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.01941.i
   %i.cc = load i32, ptr %i.cb, align 4, !tbaa !48
-  %i.cd = sext i32 %i.cc to i64                   ; 5 uses
+  %i.cd = sext i32 %i.cc to i64                   ; 4 uses
   %i.ce = getelementptr inbounds nuw [4 x i8], ptr %.fr5, i64 %.01941.i
   %i.cf = load i32, ptr %i.ce, align 4, !tbaa !48 ; 2 uses
-  %i.cg = sext i32 %i.cf to i64                   ; 3 uses
-  %i.ch = add nsw i64 %i.cg, %i.cd                ; 4 uses
+  %i.cg = sext i32 %i.cf to i64                   ; 2 uses
+  %i.ch = add nsw i64 %i.cg, %i.cd                ; 5 uses
   %i.ci = icmp sgt i32 %i.cf, 0
   br i1 %i.ci, label %.lr.ph.i, label %.critedge.i
 
@@ -250,8 +250,7 @@ bb.g:                                             ; preds = %bb.f, %.critedge.i
   br i1 %i.cw, label %.lr.ph40.i.preheader, label %.loopexit.i
 
 .lr.ph40.i.preheader:                             ; preds = %bb.g
-  %2 = add nsw i64 %i.cg, %i.cd
-  %i.cx = sub i64 %2, %.sroa.11.1.i
+  %i.cx = sub i64 %i.ch, %.sroa.11.1.i
   %i.cy = add nsw i64 %i.cg, -1
   %i.cz = add nsw i64 %i.cy, %i.cd
   %xtraiter = and i64 %i.cx, 1

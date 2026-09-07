@@ -205,14 +205,14 @@ bb.az:                                            ; preds = %bb.aw
   %i.hp = ptrtoint ptr %i.ho to i64
   %i.hq = ptrtoint ptr %i.hn to i64
   %i.hr = sub i64 %i.hp, %i.hq                    ; 2 uses
-  %i.hs = ashr exact i64 %i.hr, 3                 ; 5 uses
+  %i.hs = ashr exact i64 %i.hr, 3                 ; 4 uses
   %i.ht = icmp ugt i64 %i.hs, 1
   br i1 %i.ht, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.loopexit
   %i.hu = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 6 uses
   %.promoted = load i64, ptr %i.hu, align 8, !tbaa !739 ; 3 uses
-  %i.hv = add nsw i64 %i.hs, -1                   ; 2 uses
+  %i.hv = add nsw i64 %i.hs, -1                   ; 3 uses
   %min.iters.check = icmp ult i64 %i.hs, 5
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -265,7 +265,6 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
   %.ph = phi i64 [ %.promoted, %vector.memcheck ], [ %.promoted, %.lr.ph ], [ %i.im, %middle.block ] ; 2 uses
   %.092.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph ], [ %i.hw, %middle.block ] ; 4 uses
   %.08.in91.ph = phi ptr [ %i.hn, %vector.memcheck ], [ %i.hn, %.lr.ph ], [ %i.hy, %middle.block ] ; 2 uses
-  %.neg = add nsw i64 %.092.ph, 1
   %i.in = and i64 %i.hr, 8
   %lcmp.mod.not.not = icmp eq i64 %i.in, 0
   br i1 %lcmp.mod.not.not, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
@@ -285,7 +284,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   %.unr = phi i64 [ %.ph, %scalar.ph.preheader ], [ %i.is, %scalar.ph.prol ]
   %.092.unr = phi i64 [ %.092.ph, %scalar.ph.preheader ], [ %i.it, %scalar.ph.prol ]
   %.08.in91.unr = phi ptr [ %.08.in91.ph, %scalar.ph.preheader ], [ %i.io, %scalar.ph.prol ]
-  %i.iu = icmp eq i64 %i.hs, %.neg
+  %i.iu = icmp eq i64 %i.hv, %.092.ph
   br i1 %i.iu, label %._crit_edge, label %scalar.ph
 
 ._crit_edge:                                      ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %.loopexit

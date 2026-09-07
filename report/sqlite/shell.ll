@@ -206,11 +206,11 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %.thread, %bb.k, %bb.j
-  %i.q = phi i32 [ %.pre, %bb.k ], [ %i.l, %bb.j ], [ %i.l, %.thread ] ; 2 uses
+  %i.q = phi i32 [ %.pre, %bb.k ], [ %i.l, %bb.j ], [ %i.l, %.thread ]
   %.047 = phi i32 [ 1, %bb.k ], [ 0, %bb.j ], [ 0, %.thread ] ; 5 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.s = load i32, ptr %i.r, align 8, !tbaa !143  ; 2 uses
-  %i.t = sub nsw i32 %i.q, %i.s                   ; 3 uses
+  %i.s = load i32, ptr %i.r, align 8, !tbaa !143
+  %i.t = sub nsw i32 %i.q, %i.s                   ; 4 uses
   %i.u = icmp slt i32 %i.t, 1
   br i1 %i.u, label %.critedge.thread99, label %bb.m
 
@@ -228,9 +228,8 @@ bb.m:                                             ; preds = %bb.l
 .lr.ph:                                           ; preds = %bb.m
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !139
-  %2 = xor i32 %i.s, -1
-  %i.aa = add i32 %i.q, %2                        ; 2 uses
-  %wide.trip.count = zext i32 %i.aa to i64
+  %i.aa = add nsw i32 %i.t, -1                    ; 2 uses
+  %wide.trip.count = zext nneg i32 %i.aa to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph, %bb.o

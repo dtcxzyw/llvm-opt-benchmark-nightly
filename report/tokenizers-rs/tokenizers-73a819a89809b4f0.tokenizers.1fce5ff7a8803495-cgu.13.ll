@@ -204,12 +204,11 @@ bb.a:
   br i1 %i.h, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCscdodAO9FK5_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsj_NtB2l_3vecINtB3w_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs2JiOgHzbbc7_10tokenizers.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = ptrtoint ptr %i.c to i64                 ; 2 uses
-  %i.j = ptrtoint ptr %i.a to i64                 ; 2 uses
-  %i.k = sub i64 %i.i, %i.j                       ; 3 uses
+  %i.i = ptrtoint ptr %i.c to i64
+  %i.j = ptrtoint ptr %i.a to i64
+  %i.k = sub i64 %i.i, %i.j                       ; 4 uses
   %xtraiter = and i64 %i.k, 1
-  %2 = add i64 %i.i, -1
-  %i.l = icmp eq i64 %2, %i.j
+  %i.l = icmp eq i64 %i.k, 1
   br i1 %i.l, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.b
@@ -302,9 +301,9 @@ bb.a:
   br i1 %i.a, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhmuNCNvNtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers10byte_level10bytes_char0NCINvNvBS_8for_each4callmNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB40_3VecmE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0EB2n_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = ptrtoint ptr %1 to i64                   ; 4 uses
-  %i.c = ptrtoint ptr %0 to i64                   ; 4 uses
-  %i.d = sub nuw i64 %i.b, %i.c                   ; 4 uses
+  %i.b = ptrtoint ptr %1 to i64                   ; 3 uses
+  %i.c = ptrtoint ptr %0 to i64                   ; 3 uses
+  %i.d = sub nuw i64 %i.b, %i.c                   ; 5 uses
   %min.iters.check = icmp ult i64 %i.d, 16
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -349,8 +348,7 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.b, %middle.block
   %.ph = phi i64 [ %.sroa.5.0.copyload, %vector.memcheck ], [ %.sroa.5.0.copyload, %bb.b ], [ %i.i, %middle.block ] ; 2 uses
   %.sroa.01.0.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.b ], [ %n.vec, %middle.block ] ; 3 uses
-  %3 = sub i64 %i.b, %i.c
-  %xtraiter = and i64 %3, 3                       ; 2 uses
+  %xtraiter = and i64 %i.d, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 

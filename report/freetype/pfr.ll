@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.g = load i8, ptr %0, align 1, !tbaa !53
   %i.h = zext i8 %i.g to i32                      ; 2 uses
-  %i.i = and i32 %i.h, 15                         ; 3 uses
-  %i.j = lshr i32 %i.h, 4                         ; 2 uses
-  %i.k = add nuw nsw i32 %i.i, %i.j               ; 6 uses
+  %i.i = and i32 %i.h, 15                         ; 2 uses
+  %i.j = lshr i32 %i.h, 4
+  %i.k = add nuw nsw i32 %i.i, %i.j               ; 7 uses
   %i.l = shl nuw nsw i32 %i.k, 1
   %i.m = zext nneg i32 %i.l to i64
   %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.m
@@ -231,7 +231,6 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not3132, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.e
-  %3 = add nuw nsw i32 %i.j, %i.i
   %xtraiter = and i32 %i.k, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -255,7 +254,7 @@ bb.e:                                             ; preds = %bb.d
   %.035.unr = phi ptr [ %i.q, %.lr.ph.preheader ], [ %i.af, %.lr.ph.prol ]
   %.02634.unr = phi i32 [ %i.k, %.lr.ph.preheader ], [ %i.ae, %.lr.ph.prol ]
   %.02733.unr = phi ptr [ %i.e, %.lr.ph.preheader ], [ %i.v, %.lr.ph.prol ]
-  %i.ag = icmp eq i32 %3, 1
+  %i.ag = icmp eq i32 %i.k, 1
   br i1 %i.ag, label %.loopexit.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph

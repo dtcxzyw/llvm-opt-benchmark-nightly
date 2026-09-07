@@ -204,7 +204,6 @@ bb.j:                                             ; preds = %OPENSSL_memcpy.exit
   %i.aj = getelementptr inbounds nuw i8, ptr %i.d, i64 28 ; 4 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.d, i64 84 ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.d, i64 4 ; 3 uses
-  %scevgep = getelementptr i8, ptr %i.d, i64 1587
   br label %.lr.ph262
 
 .lr.ph262:                                        ; preds = %.lr.ph262.lr.ph, %.outer
@@ -244,10 +243,10 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ay, label %.loopexit224, label %bb.m
 
 bb.m:                                             ; preds = %._crit_edge309, %bb.l
-  %i.az = phi i32 [ %.pre310, %._crit_edge309 ], [ %i.ax, %bb.l ] ; 2 uses
-  %.1177 = phi i32 [ %i.at, %._crit_edge309 ], [ 0, %bb.l ] ; 2 uses
+  %i.az = phi i32 [ %.pre310, %._crit_edge309 ], [ %i.ax, %bb.l ]
+  %.1177 = phi i32 [ %i.at, %._crit_edge309 ], [ 0, %bb.l ]
   %.1172 = phi i32 [ %.0171261370, %._crit_edge309 ], [ %i.at, %bb.l ] ; 4 uses
-  %i.ba = add i32 %i.az, %.1177                   ; 13 uses
+  %i.ba = add i32 %i.az, %.1177                   ; 14 uses
   store i32 %i.ba, ptr %i.ag, align 4, !tbaa !23
   %i.bb = load i32, ptr %i.ah, align 4, !tbaa !27
   %.not205 = icmp eq i32 %i.bb, 0
@@ -269,10 +268,9 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.bd, label %.lr.ph.preheader, label %.loopexit223.thread
 
 .lr.ph.preheader:                                 ; preds = %bb.p
-  %3 = add nsw i32 %.1177, -1
-  %4 = add i32 %3, %i.az
-  %5 = zext i32 %4 to i64
-  %scevgep298 = getelementptr i8, ptr %scevgep, i64 %5
+  %3 = zext nneg i32 %i.ba to i64
+  %4 = getelementptr i8, ptr %i.d, i64 %3
+  %scevgep298 = getelementptr i8, ptr %4, i64 1586
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.x

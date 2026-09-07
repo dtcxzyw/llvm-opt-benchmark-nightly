@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.i, align 8, !tbaa !18   ; 10 uses
-  %i.q = ptrtoint ptr %i.k to i64                 ; 3 uses
-  %i.r = ptrtoint ptr %i.p to i64                 ; 3 uses
-  %i.s = sub i64 %i.q, %i.r                       ; 3 uses
+  %i.q = ptrtoint ptr %i.k to i64                 ; 2 uses
+  %i.r = ptrtoint ptr %i.p to i64                 ; 2 uses
+  %i.s = sub i64 %i.q, %i.r                       ; 4 uses
   %i.t = icmp eq i64 %i.s, 9223372036854775800
   br i1 %i.t, label %bb.d, label %_ZNKSt6vectorISt10unique_ptrIN4YAML7Scanner12IndentMarkerESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -242,16 +242,13 @@ _ZNKSt6vectorISt10unique_ptrIN4YAML7Scanner12IndentMarkerESt14default_deleteIS3_
   %i.ae = sub i64 %i.ad, %i.r                     ; 2 uses
   %i.af = lshr i64 %i.ae, 3
   %i.ag = add nuw nsw i64 %i.af, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ae, 136
+  %min.iters.check = icmp ult i64 %i.ae, 120
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.preheader23, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
-  %1 = add i64 %i.q, -8
-  %2 = sub i64 %1, %i.r
-  %i.ah = and i64 %2, -8
-  %3 = add i64 %i.ah, 8                           ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.aa, i64 %3
-  %scevgep19 = getelementptr i8, ptr %i.p, i64 %3
+  %i.ah = and i64 %i.s, -8                        ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.aa, i64 %i.ah
+  %scevgep19 = getelementptr i8, ptr %i.p, i64 %i.ah
   %bound0 = icmp ult ptr %i.aa, %scevgep19
   %bound1 = icmp ult ptr %i.p, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -654,9 +651,9 @@ bb.p:                                             ; preds = %_ZNSt5stackIPN4YAML
 
 bb.q:                                             ; preds = %_ZNSt5stackIPN4YAML7Scanner12IndentMarkerESt5dequeIS3_SaIS3_EEE4pushEOS3_.exit
   %i.au = load ptr, ptr %i.an, align 8, !tbaa !18 ; 10 uses
-  %i.av = ptrtoint ptr %i.ap to i64               ; 3 uses
-  %i.aw = ptrtoint ptr %i.au to i64               ; 3 uses
-  %i.ax = sub i64 %i.av, %i.aw                    ; 3 uses
+  %i.av = ptrtoint ptr %i.ap to i64               ; 2 uses
+  %i.aw = ptrtoint ptr %i.au to i64               ; 2 uses
+  %i.ax = sub i64 %i.av, %i.aw                    ; 4 uses
   %i.ay = icmp eq i64 %i.ax, 9223372036854775800
   br i1 %i.ay, label %bb.r, label %_ZNKSt6vectorISt10unique_ptrIN4YAML7Scanner12IndentMarkerESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -692,16 +689,13 @@ _ZNKSt6vectorISt10unique_ptrIN4YAML7Scanner12IndentMarkerESt14default_deleteIS3_
   %i.bj = sub i64 %i.bi, %i.aw                    ; 2 uses
   %i.bk = lshr i64 %i.bj, 3
   %i.bl = add nuw nsw i64 %i.bk, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bj, 136
+  %min.iters.check = icmp ult i64 %i.bj, 120
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.preheader47, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
-  %3 = add i64 %i.av, -8
-  %4 = sub i64 %3, %i.aw
-  %i.bm = and i64 %4, -8
-  %5 = add i64 %i.bm, 8                           ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.bf, i64 %5
-  %scevgep43 = getelementptr i8, ptr %i.au, i64 %5
+  %i.bm = and i64 %i.ax, -8                       ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.bf, i64 %i.bm
+  %scevgep43 = getelementptr i8, ptr %i.au, i64 %i.bm
   %bound0 = icmp ult ptr %i.bf, %scevgep43
   %bound1 = icmp ult ptr %i.au, %scevgep
   %found.conflict = and i1 %bound0, %bound1

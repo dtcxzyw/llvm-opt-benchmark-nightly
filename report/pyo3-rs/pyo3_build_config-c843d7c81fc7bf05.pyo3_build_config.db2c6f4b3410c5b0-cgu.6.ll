@@ -203,22 +203,21 @@ _RNvMNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksortINtB2_14PartitionSta
 
 .split32.us:                                      ; preds = %._crit_edge, %._crit_edge.us
   %.us-phi = phi ptr [ %.sroa.05.0.us, %._crit_edge.us ], [ %.sroa.05.0, %._crit_edge ]
-  %.us-phi33 = phi i64 [ %.sroa.11.1.lcssa.us, %._crit_edge.us ], [ %.sroa.11.1.lcssa, %._crit_edge ] ; 6 uses
+  %.us-phi33 = phi i64 [ %.sroa.11.1.lcssa.us, %._crit_edge.us ], [ %.sroa.11.1.lcssa, %._crit_edge ] ; 5 uses
   %i.ak = tail call zeroext i1 @_RNvXs0_NtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksortNtNtCsG258MDvU3F_3std4path7PathBufNtB5_8IsFreeze9is_freezeCsiOEEQt9hBE2_17pyo3_build_config()
   br i1 %i.ak, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.e, %.split32.us
   %i.al = mul nuw nsw i64 %.us-phi33, 24
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr align 8 %2, i64 %i.al, i1 false)
-  %i.am = sub i64 %1, %.us-phi33                  ; 3 uses
+  %i.am = sub i64 %1, %.us-phi33                  ; 4 uses
   %.not37 = icmp eq i64 %1, %.us-phi33
   br i1 %.not37, label %._crit_edge36, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d
   %i.an = getelementptr [24 x i8], ptr %0, i64 %.us-phi33 ; 3 uses
-  %.neg = add i64 %.us-phi33, 1
   %xtraiter = and i64 %i.am, 1
-  %i.ao = icmp eq i64 %1, %.neg
+  %i.ao = icmp eq i64 %i.am, 1
   br i1 %i.ao, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
@@ -365,22 +364,21 @@ _RNvMNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksortINtB2_14PartitionSta
 
 .split32.us:                                      ; preds = %._crit_edge, %._crit_edge.us
   %.us-phi = phi ptr [ %.sroa.05.0.us, %._crit_edge.us ], [ %.sroa.05.0, %._crit_edge ]
-  %.us-phi33 = phi i64 [ %.sroa.11.1.lcssa.us, %._crit_edge.us ], [ %.sroa.11.1.lcssa, %._crit_edge ] ; 6 uses
+  %.us-phi33 = phi i64 [ %.sroa.11.1.lcssa.us, %._crit_edge.us ], [ %.sroa.11.1.lcssa, %._crit_edge ] ; 5 uses
   %i.ag = tail call zeroext i1 @_RNvXs0_NtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksortNtNtCsG258MDvU3F_3std4path7PathBufNtB5_8IsFreeze9is_freezeCsiOEEQt9hBE2_17pyo3_build_config()
   br i1 %i.ag, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.e, %.split32.us
   %i.ah = mul nuw nsw i64 %.us-phi33, 24
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr align 8 %2, i64 %i.ah, i1 false)
-  %i.ai = sub i64 %1, %.us-phi33                  ; 3 uses
+  %i.ai = sub i64 %1, %.us-phi33                  ; 4 uses
   %.not37 = icmp eq i64 %1, %.us-phi33
   br i1 %.not37, label %._crit_edge36, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d
   %i.aj = getelementptr [24 x i8], ptr %0, i64 %.us-phi33 ; 3 uses
-  %.neg = add i64 %.us-phi33, 1
   %xtraiter = and i64 %i.ai, 1
-  %i.ak = icmp eq i64 %1, %.neg
+  %i.ak = icmp eq i64 %i.ai, 1
   br i1 %i.ak, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph

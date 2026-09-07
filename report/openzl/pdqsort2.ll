@@ -204,7 +204,7 @@ bb.ae:                                            ; preds = %.critedge.i150
 
 .loopexit254.i:                                   ; preds = %.lr.ph.i151.epil.preheader, %.loopexit254.i.loopexit72.unr-lcssa, %.preheader253.i, %.preheader255.i
   %.4234.i = phi ptr [ %i.gr, %.preheader253.i ], [ %.1231279.i, %.preheader255.i ], [ %i.hi, %.loopexit254.i.loopexit72.unr-lcssa ], [ %i.hp, %.lr.ph.i151.epil.preheader ] ; 4 uses
-  %.3219.i = phi i64 [ %i.gq, %.preheader253.i ], [ %.0216285.i, %.preheader255.i ], [ %i.hh, %.loopexit254.i.loopexit72.unr-lcssa ], [ %i.ho, %.lr.ph.i151.epil.preheader ] ; 6 uses
+  %.3219.i = phi i64 [ %i.gq, %.preheader253.i ], [ %.0216285.i, %.preheader255.i ], [ %i.hh, %.loopexit254.i.loopexit72.unr-lcssa ], [ %i.ho, %.lr.ph.i151.epil.preheader ] ; 3 uses
   %i.hq = icmp ugt i64 %i.ek, 63
   br i1 %i.hq, label %.preheader.i152, label %.preheader251.i
 
@@ -344,7 +344,7 @@ bb.ae:                                            ; preds = %.critedge.i150
 
 .loopexit250.i:                                   ; preds = %.lr.ph273.i.epil.preheader, %.loopexit250.i.loopexit71.unr-lcssa, %.preheader.i152, %.preheader251.i
   %.6.i = phi ptr [ %i.jt, %.preheader.i152 ], [ %.3228280.i, %.preheader251.i ], [ %i.kk, %.loopexit250.i.loopexit71.unr-lcssa ], [ %i.ks, %.lr.ph273.i.epil.preheader ] ; 5 uses
-  %.3.i = phi i64 [ %i.jx, %.preheader.i152 ], [ %.0214286.i, %.preheader251.i ], [ %i.ko, %.loopexit250.i.loopexit71.unr-lcssa ], [ %i.kw, %.lr.ph273.i.epil.preheader ] ; 6 uses
+  %.3.i = phi i64 [ %i.jx, %.preheader.i152 ], [ %.0214286.i, %.preheader251.i ], [ %i.ko, %.loopexit250.i.loopexit71.unr-lcssa ], [ %i.kw, %.lr.ph273.i.epil.preheader ] ; 3 uses
   %i.kx = call i64 @llvm.umin.i64(i64 %.3219.i, i64 %.3.i) ; 12 uses
   %i.ky = getelementptr inbounds nuw i8, ptr %i.n, i64 %.0212287.i ; 7 uses
   %i.kz = getelementptr inbounds nuw i8, ptr %i.r, i64 %.0211288.i ; 7 uses
@@ -515,8 +515,8 @@ swap_offsets.exit.i.loopexit.unr-lcssa:           ; preds = %.lr.ph38.i.i
   br label %swap_offsets.exit.i
 
 swap_offsets.exit.i:                              ; preds = %.lr.ph38.i.i.epil.preheader, %swap_offsets.exit.i.loopexit.unr-lcssa, %._crit_edge.i.i, %bb.af, %.preheader.i.i
-  %i.of = sub i64 %.3219.i, %i.kx                 ; 5 uses
-  %i.og = sub i64 %.3.i, %i.kx                    ; 5 uses
+  %i.of = sub i64 %.3219.i, %i.kx                 ; 6 uses
+  %i.og = sub i64 %.3.i, %i.kx                    ; 6 uses
   %i.oh = add i64 %i.kx, %.0212287.i              ; 2 uses
   %i.oi = add i64 %i.kx, %.0211288.i              ; 2 uses
   %i.oj = icmp eq i64 %i.of, 0                    ; 3 uses
@@ -533,8 +533,6 @@ swap_offsets.exit.i:                              ; preds = %.lr.ph38.i.i.epil.p
 
 bb.ah:                                            ; preds = %._crit_edge.i
   %i.om = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.oh ; 3 uses
-  %umin = call i64 @llvm.umin.i64(i64 %.3.i, i64 %.3219.i)
-  %.neg = add i64 %umin, 1
   %xtraiter147 = and i64 %i.of, 1
   %lcmp.mod148.not = icmp eq i64 %xtraiter147, 0
   br i1 %lcmp.mod148.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
@@ -556,7 +554,7 @@ bb.ah:                                            ; preds = %._crit_edge.i
   %.lcssa109.unr = phi ptr [ poison, %bb.ah ], [ %i.os, %.prol.loopexit.unr-lcssa ]
   %.4220299.i.unr = phi i64 [ %i.of, %bb.ah ], [ %i.on, %.prol.loopexit.unr-lcssa ]
   %.7298.i.unr = phi ptr [ %.6.i, %bb.ah ], [ %i.os, %.prol.loopexit.unr-lcssa ]
-  %i.ov = icmp eq i64 %.3219.i, %.neg
+  %i.ov = icmp eq i64 %i.of, 1
   br i1 %i.ov, label %.loopexit249.i, label %.new
 
 .new:                                             ; preds = %.prol.loopexit, %.new
@@ -591,8 +589,6 @@ bb.ah:                                            ; preds = %._crit_edge.i
 
 bb.ai:                                            ; preds = %.loopexit249.i
   %i.pm = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.oi ; 3 uses
-  %umin154 = call i64 @llvm.umin.i64(i64 %.3.i, i64 %.3219.i)
-  %.neg157 = add i64 %umin154, 1
   %xtraiter155 = and i64 %i.og, 1
   %lcmp.mod156.not = icmp eq i64 %xtraiter155, 0
   br i1 %lcmp.mod156.not, label %.prol.loopexit150, label %.prol.loopexit150.unr-lcssa
@@ -615,7 +611,7 @@ bb.ai:                                            ; preds = %.loopexit249.i
   %.lcssa110.unr = phi ptr [ poison, %bb.ai ], [ %i.pv, %.prol.loopexit150.unr-lcssa ]
   %.4301.i.unr = phi i64 [ %i.og, %bb.ai ], [ %i.pn, %.prol.loopexit150.unr-lcssa ]
   %.6236300.i.unr = phi ptr [ %.5235.i, %bb.ai ], [ %i.pv, %.prol.loopexit150.unr-lcssa ]
-  %i.pw = icmp eq i64 %.3.i, %.neg157
+  %i.pw = icmp eq i64 %i.og, 1
   br i1 %i.pw, label %.loopexit.i, label %.new151
 
 .new151:                                          ; preds = %.prol.loopexit150, %.new151

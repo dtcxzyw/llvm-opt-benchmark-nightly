@@ -205,27 +205,26 @@ bb.v:                                             ; preds = %bb.s, %bb.u, %_ZN9I
 ._crit_edge158:                                   ; preds = %._crit_edge158.loopexit, %.preheader
   %i.fy = phi ptr [ %.pre223, %._crit_edge158.loopexit ], [ %i.ak, %.preheader ] ; 5 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 96
-  %i.ga = load i32, ptr %i.fz, align 8, !tbaa !137 ; 3 uses
+  %i.ga = load i32, ptr %i.fz, align 8, !tbaa !137 ; 2 uses
   %.not101 = icmp slt i32 %.092, %i.ga
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.fy, i64 100
-  %.pre224 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !138 ; 3 uses
+  %.pre224 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !138 ; 2 uses
   %.not102 = icmp sgt i32 %.092, %.pre224
   %or.cond = select i1 %.not101, i1 true, i1 %.not102
   br i1 %or.cond, label %._crit_edge158._crit_edge, label %bb.bl
 
 ._crit_edge158._crit_edge:                        ; preds = %._crit_edge158
-  %.not103159 = icmp slt i32 %.pre224, %i.ga
+  %1 = sub nsw i32 %.pre224, %i.ga                ; 3 uses
+  %.not103159 = icmp slt i32 %1, 0
   br i1 %.not103159, label %._crit_edge165, label %.lr.ph164
 
 .lr.ph164:                                        ; preds = %._crit_edge158._crit_edge
   %i.gb = getelementptr inbounds nuw i8, ptr %i.fy, i64 8
   %i.gc = load ptr, ptr %i.gb, align 8, !tbaa !83 ; 5 uses
-  %i.gd = add i32 %.pre224, 1
-  %1 = sub i32 %i.gd, %i.ga                       ; 2 uses
-  %wide.trip.count = zext i32 %1 to i64           ; 2 uses
+  %i.gd = add nuw i32 %1, 1
+  %wide.trip.count = zext i32 %i.gd to i64        ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
-  %2 = add i32 %1, -1
-  %i.ge = icmp ult i32 %2, 3
+  %i.ge = icmp ult i32 %1, 3
   br i1 %i.ge, label %.epil.preheader, label %.lr.ph164.new
 
 .lr.ph164.new:                                    ; preds = %.lr.ph164

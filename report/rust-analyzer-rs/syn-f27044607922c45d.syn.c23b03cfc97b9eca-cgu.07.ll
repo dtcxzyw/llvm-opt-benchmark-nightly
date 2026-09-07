@@ -202,7 +202,7 @@ define void @_RNvMs1_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechE6resizeCsgFSQ9XOTBNe_
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %i.c = load i64, ptr %i.b, align 8              ; 4 uses
+  %i.c = load i64, ptr %i.b, align 8              ; 3 uses
   %i.d = icmp ugt i64 %1, %i.c
   br i1 %i.d, label %bb.b, label %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE8truncateCsgFSQ9XOTBNe_3syn.exit
 
@@ -211,7 +211,7 @@ _RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE8truncateCsgFSQ9XOTBNe_3syn.exit: ;
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = sub nuw i64 %1, %i.c                     ; 2 uses
+  %i.e = sub nuw i64 %1, %i.c                     ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   tail call void @_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VechE7reserveCseVpsqJvcPM7_9addr2line(ptr nonnull align 8 %0, i64 %i.e)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -224,8 +224,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.lr.ph.i.preheader, label %._crit_edge.thread.i
 
 .lr.ph.i.preheader:                               ; preds = %bb.b
-  %3 = xor i64 %i.c, -1
-  %i.l = add i64 %1, %3
+  %i.l = add i64 %i.e, -1
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.i, i8 %2, i64 %i.l, i1 false)
   %i.m = add i64 %i.h, %1
   %i.n = xor i64 %i.c, -1

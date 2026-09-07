@@ -204,7 +204,7 @@ bb.a:
   %i.r = load ptr, ptr %i.a, align 8, !tbaa !121
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 32
   %i.t = load i64, ptr %i.s, align 8, !tbaa !93
-  %.fr23 = freeze i64 %i.t                        ; 8 uses
+  %.fr23 = freeze i64 %i.t                        ; 7 uses
   %i.u = tail call noundef i64 @_ZNK3gmx20AbstractAnalysisData12dataSetCountEv(ptr noundef nonnull align 8 dereferenceable(16) %0)
   %.not = icmp eq i64 %i.u, 0
   br i1 %.not, label %._crit_edge22, label %.lr.ph21
@@ -217,7 +217,7 @@ bb.a:
   br i1 %.not24, label %.lr.ph21.split, label %.lr.ph.us.preheader
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph21
-  %i.y = add i64 %.fr23, -1                       ; 2 uses
+  %i.y = add i64 %.fr23, -1                       ; 3 uses
   %min.iters.check = icmp ult i64 %.fr23, 17
   %i.z = trunc i64 %i.y to i32
   %i.aa = icmp ugt i64 %i.y, 2147483647
@@ -279,7 +279,6 @@ vector.body:                                      ; preds = %vector.body, %vecto
 scalar.ph.preheader:                              ; preds = %vector.body, %vector.scevcheck, %.lr.ph.us
   %.018.us.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.lr.ph.us ], [ %n.vec, %vector.body ] ; 6 uses
   %i.az = sub i64 %.fr23, %.018.us.ph
-  %.neg = add nsw i64 %.018.us.ph, 1
   %xtraiter = and i64 %i.az, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
@@ -304,7 +303,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
 
 scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
   %.018.us.unr = phi i64 [ %.018.us.ph, %scalar.ph.preheader ], [ %i.bl, %scalar.ph.prol ]
-  %i.bm = icmp eq i64 %.fr23, %.neg
+  %i.bm = icmp eq i64 %i.y, %.018.us.ph
   br i1 %i.bm, label %._crit_edge.us, label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph

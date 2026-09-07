@@ -203,7 +203,7 @@ bb.a:
 
 .preheader.lr.ph:                                 ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !41   ; 11 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !41   ; 10 uses
   %.not = icmp eq i32 %i.f, 0
   br i1 %.not, label %._crit_edge, label %.preheader.us.preheader
 
@@ -212,6 +212,7 @@ bb.a:
   %i.h = lshr i32 %i.g, 1
   %i.i = add nuw nsw i32 %i.h, 1
   %wide.trip.count = zext nneg i32 %i.i to i64
+  %4 = add i32 %i.f, -1                           ; 2 uses
   %i.j = zext i32 %i.f to i64                     ; 2 uses
   %min.iters.check63 = icmp ult i32 %i.f, 8
   %n.vec65 = and i64 %i.j, 4294967288             ; 4 uses
@@ -283,7 +284,6 @@ scalar.ph62.preheader:                            ; preds = %vector.memcheck57, 
   %.12831.us.us.ph = phi ptr [ %.027.us.us, %vector.memcheck57 ], [ %.027.us.us, %.preheader.us ], [ %i.y, %middle.block74 ] ; 3 uses
   %.02930.us.us.ph = phi ptr [ %i.q, %vector.memcheck57 ], [ %i.q, %.preheader.us ], [ %i.z, %middle.block74 ] ; 3 uses
   %i.aj = sub i32 %i.f, %.02433.us.us.ph
-  %.neg = add i32 %.02433.us.us.ph, 1
   %xtraiter = and i32 %i.aj, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph62.prol.loopexit, label %scalar.ph62.prol
@@ -310,7 +310,7 @@ scalar.ph62.prol.loopexit:                        ; preds = %scalar.ph62.prol, %
   %.02632.us.us.unr = phi ptr [ %.02632.us.us.ph, %scalar.ph62.preheader ], [ %i.av, %scalar.ph62.prol ]
   %.12831.us.us.unr = phi ptr [ %.12831.us.us.ph, %scalar.ph62.preheader ], [ %i.ao, %scalar.ph62.prol ]
   %.02930.us.us.unr = phi ptr [ %.02930.us.us.ph, %scalar.ph62.preheader ], [ %i.ak, %scalar.ph62.prol ]
-  %i.ax = icmp eq i32 %i.f, %.neg
+  %i.ax = icmp eq i32 %4, %.02433.us.us.ph
   br i1 %i.ax, label %._crit_edge.us.us, label %scalar.ph62
 
 scalar.ph62:                                      ; preds = %scalar.ph62.prol.loopexit, %scalar.ph62
@@ -401,7 +401,6 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
   %.12831.us.us.1.ph = phi ptr [ %.027.us.us.1, %vector.memcheck ], [ %.027.us.us.1, %._crit_edge.us.us ], [ %i.ce, %middle.block ] ; 3 uses
   %.02930.us.us.1.ph = phi ptr [ %i.q, %vector.memcheck ], [ %i.q, %._crit_edge.us.us ], [ %i.cf, %middle.block ] ; 3 uses
   %i.cp = sub i32 %i.f, %.02433.us.us.1.ph
-  %.neg86 = add i32 %.02433.us.us.1.ph, 1
   %xtraiter84 = and i32 %i.cp, 1
   %lcmp.mod85.not = icmp eq i32 %xtraiter84, 0
   br i1 %lcmp.mod85.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
@@ -428,7 +427,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   %.02632.us.us.1.unr = phi ptr [ %.02632.us.us.1.ph, %scalar.ph.preheader ], [ %i.db, %scalar.ph.prol ]
   %.12831.us.us.1.unr = phi ptr [ %.12831.us.us.1.ph, %scalar.ph.preheader ], [ %i.cu, %scalar.ph.prol ]
   %.02930.us.us.1.unr = phi ptr [ %.02930.us.us.1.ph, %scalar.ph.preheader ], [ %i.cq, %scalar.ph.prol ]
-  %i.dd = icmp eq i32 %i.f, %.neg86
+  %i.dd = icmp eq i32 %4, %.02433.us.us.1.ph
   br i1 %i.dd, label %._crit_edge.us.us.1, label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph

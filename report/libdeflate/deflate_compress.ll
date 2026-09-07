@@ -205,7 +205,7 @@ deflate_near_optimal_merge_stats.exit.outer:      ; preds = %scalar.ph466, %bb.m
   %.1176.ph = phi ptr [ %.5180, %scalar.ph466 ], [ %.0175, %bb.m ]
   %.1170.ph = phi ptr [ %.5174, %scalar.ph466 ], [ %.0169, %bb.m ]
   %.1166.idx.ph = phi i64 [ %.4.idx, %scalar.ph466 ], [ %.0165.idx, %bb.m ]
-  %.0163.ph = phi ptr [ %.3, %scalar.ph466 ], [ null, %bb.m ] ; 4 uses
+  %.0163.ph = phi ptr [ %.3, %scalar.ph466 ], [ null, %bb.m ] ; 3 uses
   %.0159.ph = phi ptr [ %.1160, %scalar.ph466 ], [ %.0, %bb.m ]
   %.1.ph = phi ptr [ %.3, %scalar.ph466 ], [ %.0, %bb.m ]
   br label %deflate_near_optimal_merge_stats.exit
@@ -608,7 +608,7 @@ bt_matchfinder_advance_one_byte.exit:             ; preds = %bb.bm, %lz_extend.e
   %.5180 = phi ptr [ %.2177, %bb.ar ], [ %.4179, %bt_matchfinder_advance_one_byte.exit ] ; 3 uses
   %.5174 = phi ptr [ %.2171, %bb.ar ], [ %.4173, %bt_matchfinder_advance_one_byte.exit ] ; 3 uses
   %.4.idx = phi i64 [ %.2167.add, %bb.ar ], [ %.3168.add, %bt_matchfinder_advance_one_byte.exit ] ; 5 uses
-  %.3 = phi ptr [ %i.rr, %bb.ar ], [ %i.wy, %bt_matchfinder_advance_one_byte.exit ] ; 12 uses
+  %.3 = phi ptr [ %i.rr, %bb.ar ], [ %i.wy, %bt_matchfinder_advance_one_byte.exit ] ; 11 uses
   %.not190 = icmp ult ptr %.3, %.0.i
   %.not191 = icmp slt i64 %.4.idx, 6530368
   %or.cond195 = select i1 %.not190, i1 %.not191, i1 false
@@ -723,21 +723,18 @@ bb.bq:                                            ; preds = %bb.bp
   br i1 %.not420, label %vector.ph, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
-  %.3.lcssa537.lcssa538 = ptrtoaddr ptr %.3 to i64
-  %.0163.ph.lcssa534535 = ptrtoaddr ptr %.0163.ph to i64
   %i.yr = ptrtoint ptr %.0163.ph to i64           ; 2 uses
   %i.ys = ptrtoint ptr %.3 to i64
   %i.yt = sub i64 %i.ys, %i.yr
-  %4 = trunc i64 %i.yt to i32                     ; 3 uses
-  %i.yu = trunc i64 %.0163.ph.lcssa534535 to i32
-  %5 = trunc i64 %.3.lcssa537.lcssa538 to i32
-  %xtraiter539 = and i32 %4, 7                    ; 2 uses
+  %i.yu = trunc i64 %i.yt to i32                  ; 4 uses
+  %4 = add i32 %i.yu, -1
+  %xtraiter539 = and i32 %i.yu, 7                 ; 2 uses
   %lcmp.mod540.not = icmp eq i32 %xtraiter539, 0
   br i1 %lcmp.mod540.not, label %.prol.loopexit, label %.prol.preheader
 
 .prol.preheader:                                  ; preds = %bb.br, %.prol.preheader
   %.5.prol = phi ptr [ %i.yz, %.prol.preheader ], [ %.4.ptr.le, %bb.br ]
-  %.0154.prol = phi i32 [ %i.za, %.prol.preheader ], [ %4, %bb.br ]
+  %.0154.prol = phi i32 [ %i.za, %.prol.preheader ], [ %i.yu, %bb.br ]
   %prol.iter = phi i32 [ %prol.iter.next, %.prol.preheader ], [ 0, %bb.br ]
   %i.yv = getelementptr inbounds i8, ptr %.5.prol, i64 -4 ; 2 uses
   %i.yw = load i16, ptr %i.yv, align 2, !tbaa !53
@@ -752,10 +749,9 @@ bb.br:                                            ; preds = %bb.bq
 .prol.loopexit:                                   ; preds = %.prol.preheader, %bb.br
   %.lcssa531.unr = phi ptr [ poison, %bb.br ], [ %i.yz, %.prol.preheader ]
   %.5.unr = phi ptr [ %.4.ptr.le, %bb.br ], [ %i.yz, %.prol.preheader ]
-  %.0154.unr = phi i32 [ %4, %bb.br ], [ %i.za, %.prol.preheader ]
-  %6 = sub i32 %i.yu, %5
-  %7 = icmp ugt i32 %6, -8
-  br i1 %7, label %.unr-lcssa, label %.new533
+  %.0154.unr = phi i32 [ %i.yu, %bb.br ], [ %i.za, %.prol.preheader ]
+  %5 = icmp ult i32 %4, 7
+  br i1 %5, label %.unr-lcssa, label %.new533
 
 .new533:                                          ; preds = %.prol.loopexit, %.new533
   %.5 = phi ptr [ %i.aao, %.new533 ], [ %.5.unr, %.prol.loopexit ]
@@ -1158,7 +1154,7 @@ bb.q:                                             ; preds = %deflate_compute_ful
   br label %bb.r
 
 bb.r:                                             ; preds = %.loopexit596, %bb.q
-  %.11543 = phi i32 [ %.10542, %bb.q ], [ %.15547, %.loopexit596 ] ; 5 uses
+  %.11543 = phi i32 [ %.10542, %bb.q ], [ %.15547, %.loopexit596 ] ; 4 uses
   %.11515 = phi ptr [ %.10514, %bb.q ], [ %.15519, %.loopexit596 ] ; 9 uses
   %.11 = phi i64 [ %.10, %bb.q ], [ %.15, %.loopexit596 ] ; 2 uses
   %.0476 = phi ptr [ %i.yw, %bb.q ], [ %i.acy, %.loopexit596 ] ; 2 uses
@@ -1179,8 +1175,8 @@ bb.s:                                             ; preds = %bb.r
   %i.zm = or i64 %i.zl, %.11                      ; 4 uses
   %i.zn = getelementptr inbounds nuw i8, ptr %i.xw, i64 %i.zg
   %i.zo = load i8, ptr %i.zn, align 1, !tbaa !30
-  %i.zp = zext i8 %i.zo to i32                    ; 2 uses
-  %i.zq = add nuw nsw i32 %.11543, %i.zp          ; 5 uses
+  %i.zp = zext i8 %i.zo to i32
+  %i.zq = add i32 %.11543, %i.zp                  ; 6 uses
   %i.zr = icmp ult ptr %.11515, %i.bm
   br i1 %i.zr, label %.loopexit596.sink.split, label %.preheader595, !prof !41
 
@@ -1189,8 +1185,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.zs, label %.lr.ph709.preheader, label %.loopexit596
 
 .lr.ph709.preheader:                              ; preds = %.preheader595
-  %6 = add i32 %.11543, -8
-  %i.zt = add i32 %6, %i.zp                       ; 2 uses
+  %i.zt = add i32 %i.zq, -8                       ; 2 uses
   %i.zu = lshr i32 %i.zt, 3
   %i.zv = add nuw nsw i32 %i.zu, 1
   %xtraiter1069 = and i32 %i.zv, 7                ; 2 uses
@@ -1593,7 +1588,7 @@ bb.ac:                                            ; preds = %bb.ab
   br label %bb.u
 
 .loopexit599:                                     ; preds = %.loopexit605, %.loopexit596
-  %.26558 = phi i32 [ %.15547, %.loopexit596 ], [ %.22554, %.loopexit605 ] ; 3 uses
+  %.26558 = phi i32 [ %.15547, %.loopexit596 ], [ %.22554, %.loopexit605 ] ; 2 uses
   %.25529 = phi ptr [ %.15519, %.loopexit596 ], [ %.21525, %.loopexit605 ] ; 6 uses
   %.26 = phi i64 [ %.15, %.loopexit596 ], [ %.22, %.loopexit605 ]
   %i.ala = getelementptr inbounds nuw i8, ptr %.0494, i64 1024
@@ -1604,8 +1599,8 @@ bb.ac:                                            ; preds = %bb.ab
   %i.alf = or i64 %i.ale, %.26                    ; 5 uses
   %i.alg = getelementptr inbounds nuw i8, ptr %.0494, i64 1536
   %i.alh = load i8, ptr %i.alg, align 4, !tbaa !30
-  %i.ali = zext i8 %i.alh to i32                  ; 2 uses
-  %i.alj = add nuw nsw i32 %.26558, %i.ali        ; 7 uses
+  %i.ali = zext i8 %i.alh to i32
+  %i.alj = add i32 %.26558, %i.ali                ; 8 uses
   %i.alk = icmp ult ptr %.25529, %i.bm
   br i1 %i.alk, label %bb.ad, label %.preheader593, !prof !41
 
@@ -1614,8 +1609,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.all, label %.lr.ph716.preheader, label %.loopexit
 
 .lr.ph716.preheader:                              ; preds = %.preheader593
-  %7 = add i32 %.26558, %i.ali
-  %i.alm = add i32 %7, -8                         ; 2 uses
+  %i.alm = add i32 %i.alj, -8                     ; 2 uses
   %i.aln = lshr i32 %i.alm, 3
   %i.alo = add nuw nsw i32 %i.aln, 1
   %xtraiter1072 = and i32 %i.alo, 7               ; 2 uses
@@ -2018,15 +2012,14 @@ deflate_choose_all_literals.exit:                 ; preds = %deflate_choose_all_
   %i.ar = tail call fastcc i32 @deflate_compute_true_cost(ptr noundef nonnull %0) ; 2 uses
   %i.as = add i32 %3, 257                         ; 2 uses
   %i.at = icmp ult i32 %i.as, 305000
-  %narrow = select i1 %i.at, i32 %i.as, i32 304999 ; 4 uses
+  %narrow = select i1 %i.at, i32 %i.as, i32 304999 ; 3 uses
   %.not182 = icmp ugt i32 %3, %narrow
   br i1 %.not182, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %deflate_choose_all_literals.exit
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 6532420 ; 9 uses
   %i.av = zext nneg i32 %3 to i64                 ; 2 uses
-  %9 = add nuw nsw i32 %narrow, 1
-  %i.aw = add nuw nsw i32 %narrow, 1
+  %i.aw = add nuw nsw i32 %narrow, 1              ; 2 uses
   %i.ax = sub nuw i32 %i.aw, %3
   %i.ay = sub nuw i32 %narrow, %3
   %xtraiter456 = and i32 %i.ax, 7                 ; 2 uses
@@ -2075,7 +2068,7 @@ deflate_choose_all_literals.exit:                 ; preds = %deflate_choose_all_
   store i32 -2147483648, ptr %i.bp, align 4, !tbaa !30
   %indvars.iv.next.7 = add nuw nsw i64 %indvars.iv, 8 ; 2 uses
   %lftr.wideiv.7 = trunc i64 %indvars.iv.next.7 to i32
-  %exitcond.not.7 = icmp eq i32 %9, %lftr.wideiv.7
+  %exitcond.not.7 = icmp eq i32 %i.aw, %lftr.wideiv.7
   br i1 %exitcond.not.7, label %._crit_edge, label %.lr.ph.new, !llvm.loop !156
 
 ._crit_edge:                                      ; preds = %.prol.loopexit, %.lr.ph.new, %deflate_choose_all_literals.exit

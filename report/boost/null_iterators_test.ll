@@ -204,13 +204,13 @@ _ZNK5boost9container13stable_vectorIivE6cbeginEv.exit: ; preds = %bb.b, %bb.c
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64                 ; 2 uses
   %i.l = sub i64 %i.j, %i.k                       ; 3 uses
-  %i.m = ashr exact i64 %i.l, 3                   ; 2 uses
+  %i.m = ashr exact i64 %i.l, 3
   %i.n = load ptr, ptr %3, align 8, !tbaa !25     ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !94
   %i.p = ptrtoint ptr %i.o to i64
   %i.q = sub i64 %i.p, %i.k
-  %i.r = ashr exact i64 %i.q, 3                   ; 2 uses
-  %i.s = sub nsw i64 %i.r, %i.m                   ; 7 uses
+  %i.r = ashr exact i64 %i.q, 3
+  %i.s = sub nsw i64 %i.r, %i.m                   ; 8 uses
   %.not = icmp eq i64 %i.s, 0
   br i1 %.not, label %bb.g, label %bb.d
 
@@ -244,9 +244,8 @@ bb.d:                                             ; preds = %_ZNK5boost9containe
   %.031.unr = phi i64 [ %i.s, %bb.d ], [ %i.x, %.prol.preheader ]
   %.sroa.016.030.unr = phi ptr [ %i.v, %bb.d ], [ %i.y, %.prol.preheader ]
   %.unr = phi ptr [ %.sroa.3, %bb.d ], [ %i.z, %.prol.preheader ]
-  %4 = sub nsw i64 %i.m, %i.r
-  %5 = icmp ugt i64 %4, -4
-  br i1 %5, label %.unr-lcssa, label %.new
+  %4 = icmp ult i64 %i.s, 4
+  br i1 %4, label %.unr-lcssa, label %.new
 
 .new:                                             ; preds = %.prol.loopexit, %.new
   %.031 = phi i64 [ %i.al, %.new ], [ %.031.unr, %.prol.loopexit ]

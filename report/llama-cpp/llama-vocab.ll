@@ -205,7 +205,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearE
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !133
   %i.s = load ptr, ptr %i.p, align 8, !tbaa !132  ; 7 uses
   %i.t = ptrtoint ptr %i.r to i64
-  %i.u = ptrtoint ptr %i.s to i64                 ; 4 uses
+  %i.u = ptrtoint ptr %i.s to i64                 ; 3 uses
   %i.v = sub i64 %i.t, %i.u                       ; 2 uses
   %i.w = icmp ult i64 %i.v, 1024
   br i1 %i.w, label %_ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit.i, label %bb.c
@@ -228,8 +228,8 @@ bb.b:                                             ; preds = %_ZNSt6vectorIiSaIiE
 bb.c:                                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !136 ; 5 uses
-  %i.ac = ptrtoint ptr %i.ab to i64               ; 3 uses
-  %i.ad = sub i64 %i.ac, %i.u                     ; 2 uses
+  %i.ac = ptrtoint ptr %i.ab to i64               ; 2 uses
+  %i.ad = sub i64 %i.ac, %i.u                     ; 3 uses
   %i.ae = icmp ult i64 %i.ad, 1024
   br i1 %i.ae, label %bb.d, label %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.i
 
@@ -238,11 +238,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not5.i.i.i.i.i, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiEvT_S7_RKT0_.exit.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %bb.d
-  %26 = add i64 %i.ac, -4
-  %27 = sub i64 %26, %i.u
-  %i.af = and i64 %27, -4
-  %28 = add i64 %i.af, 4
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.s, i8 0, i64 %28, i1 false), !tbaa !97
+  %i.af = and i64 %i.ad, 1020
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.s, i8 0, i64 %i.af, i1 false), !tbaa !97
   br label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiEvT_S7_RKT0_.exit.i
 
 _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEiEvT_S7_RKT0_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.preheader, %bb.d

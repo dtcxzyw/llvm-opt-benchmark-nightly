@@ -204,8 +204,7 @@ bb.ac:                                            ; preds = %_ZNK9VoxelArea8cont
   %i.ft = getelementptr inbounds [4 x i8], ptr %i.ez, i64 %i.fs
   store i32 %.sroa.0389.0.insert.ext399, ptr %i.ft, align 4
   %i.fu = load i32, ptr %8, align 4, !tbaa !79
-  %.fr = freeze i32 %i.fu
-  %i.fv = mul i32 %.fr, 1103515245
+  %i.fv = mul i32 %i.fu, 1103515245
   %i.fw = add i32 %i.fv, 12345                    ; 2 uses
   store i32 %i.fw, ptr %8, align 4, !tbaa !79
   %i.fx = sdiv i32 %i.fw, 65536

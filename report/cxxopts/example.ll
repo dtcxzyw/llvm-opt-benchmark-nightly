@@ -205,9 +205,9 @@ _ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEENS0_5__
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %0, ptr %1) local_unnamed_addr #1 comdat {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 3 uses
-  %i.b = ptrtoint ptr %0 to i64                   ; 4 uses
-  %i.c = sub i64 %i.a, %i.b
+  %i.a = ptrtoint ptr %1 to i64
+  %i.b = ptrtoint ptr %0 to i64                   ; 2 uses
+  %i.c = sub i64 %i.a, %i.b                       ; 3 uses
   %i.d = icmp sgt i64 %i.c, 16
   br i1 %i.d, label %.lr.ph.i, label %bb.g
 
@@ -265,9 +265,7 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEENS0_5
   br i1 %.not4.i, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_.exit, label %.lr.ph.i6.preheader
 
 .lr.ph.i6.preheader:                              ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_.exit
-  %2 = sub i64 %i.a, %i.b
-  %3 = add i64 %i.a, -17
-  %xtraiter = and i64 %2, 1
+  %xtraiter = and i64 %i.c, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i6.prol.loopexit, label %.lr.ph.i6.prol
 
@@ -296,7 +294,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIc
 
 .lr.ph.i6.prol.loopexit:                          ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i.prol, %.lr.ph.i6.preheader
   %.sroa.0.05.i.unr = phi ptr [ %i.o, %.lr.ph.i6.preheader ], [ %i.v, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i.prol ]
-  %i.w = icmp eq i64 %3, %i.b
+  %i.w = icmp eq i64 %i.c, 17
   br i1 %i.w, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_.exit, label %.lr.ph.i6
 
 .lr.ph.i6:                                        ; preds = %.lr.ph.i6.prol.loopexit, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i.1
@@ -699,9 +697,9 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.i = load ptr, ptr %i.b, align 8, !tbaa !425  ; 9 uses
-  %i.j = ptrtoint ptr %i.d to i64                 ; 2 uses
-  %i.k = ptrtoint ptr %i.i to i64                 ; 4 uses
-  %i.l = sub i64 %i.j, %i.k                       ; 3 uses
+  %i.j = ptrtoint ptr %i.d to i64
+  %i.k = ptrtoint ptr %i.i to i64                 ; 3 uses
+  %i.l = sub i64 %i.j, %i.k                       ; 4 uses
   %i.m = icmp eq i64 %i.l, 9223372036854775806
   br i1 %i.m, label %bb.f, label %_ZNKSt6vectorISt4pairIccESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -727,18 +725,17 @@ _ZNKSt6vectorISt4pairIccESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.e
 
 iter.check:                                       ; preds = %_ZNKSt6vectorISt4pairIccESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.v = ptrtoaddr ptr %i.t to i64
-  %i.w = add i64 %i.j, -2
-  %3 = sub i64 %i.w, %i.k                         ; 3 uses
-  %i.x = lshr i64 %3, 1
+  %i.w = add i64 %i.l, -2                         ; 3 uses
+  %i.x = lshr i64 %i.w, 1
   %i.y = add nuw i64 %i.x, 1                      ; 5 uses
-  %min.iters.check = icmp ult i64 %3, 6
+  %min.iters.check = icmp ult i64 %i.w, 6
   %i.z = sub i64 %i.k, %i.v
   %diff.check = icmp ugt i64 %i.z, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check10 = icmp ult i64 %3, 30
+  %min.iters.check10 = icmp ult i64 %i.w, 30
   br i1 %min.iters.check10, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -1141,9 +1138,9 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.i = load ptr, ptr %i.b, align 8, !tbaa !425  ; 9 uses
-  %i.j = ptrtoint ptr %i.d to i64                 ; 2 uses
-  %i.k = ptrtoint ptr %i.i to i64                 ; 4 uses
-  %i.l = sub i64 %i.j, %i.k                       ; 3 uses
+  %i.j = ptrtoint ptr %i.d to i64
+  %i.k = ptrtoint ptr %i.i to i64                 ; 3 uses
+  %i.l = sub i64 %i.j, %i.k                       ; 4 uses
   %i.m = icmp eq i64 %i.l, 9223372036854775806
   br i1 %i.m, label %bb.f, label %_ZNKSt6vectorISt4pairIccESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
 
@@ -1169,18 +1166,17 @@ _ZNKSt6vectorISt4pairIccESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.e
 
 iter.check:                                       ; preds = %_ZNKSt6vectorISt4pairIccESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.v = ptrtoaddr ptr %i.t to i64
-  %i.w = add i64 %i.j, -2
-  %3 = sub i64 %i.w, %i.k                         ; 3 uses
-  %i.x = lshr i64 %3, 1
+  %i.w = add i64 %i.l, -2                         ; 3 uses
+  %i.x = lshr i64 %i.w, 1
   %i.y = add nuw i64 %i.x, 1                      ; 5 uses
-  %min.iters.check = icmp ult i64 %3, 6
+  %min.iters.check = icmp ult i64 %i.w, 6
   %i.z = sub i64 %i.k, %i.v
   %diff.check = icmp ugt i64 %i.z, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check10 = icmp ult i64 %3, 30
+  %min.iters.check10 = icmp ult i64 %i.w, 30
   br i1 %min.iters.check10, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -1583,7 +1579,7 @@ bb.e:                                             ; preds = %bb.a
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !546 ; 6 uses
   %i.ac = ptrtoint ptr %i.ab to i64
   %i.ad = sub i64 %i.ac, %i.e
-  %i.ae = sdiv exact i64 %i.ad, 24                ; 3 uses
+  %i.ae = sdiv exact i64 %i.ad, 24                ; 2 uses
   %i.af = icmp ugt i64 %1, %i.ae
   br i1 %i.af, label %bb.f, label %bb.h
 
@@ -1607,7 +1603,8 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i.i.i
   br i1 %.not.i.i.i.i11, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit, label %bb.g, !llvm.loop !1262
 
 _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit: ; preds = %bb.g, %bb.f
-  %i.ak = sub i64 %1, %i.ae                       ; 3 uses
+  %i.ak = sub i64 %1, %i.ae                       ; 4 uses
+  %3 = add i64 %i.ak, -1
   %xtraiter32 = and i64 %i.ak, 3                  ; 2 uses
   %lcmp.mod33.not = icmp eq i64 %xtraiter32, 0
   br i1 %lcmp.mod33.not, label %.lr.ph.i.i.i.i12.prol.loopexit, label %.lr.ph.i.i.i.i12.prol
@@ -1627,8 +1624,7 @@ _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchIPKcEESt6vectorIS
   %.lcssa31.unr = phi ptr [ poison, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit ], [ %i.am, %.lr.ph.i.i.i.i12.prol ]
   %.09.i.i.i.i.unr = phi ptr [ %i.ab, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit ], [ %i.am, %.lr.ph.i.i.i.i12.prol ]
   %.068.i.i.i.i.unr = phi i64 [ %i.ak, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchIPKcEESt6vectorIS6_SaIS6_EEEES6_EvT_SC_RKT0_.exit ], [ %i.al, %.lr.ph.i.i.i.i12.prol ]
-  %3 = sub i64 %i.ae, %1
-  %4 = icmp ugt i64 %3, -4
+  %4 = icmp ult i64 %3, 3
   br i1 %4, label %_ZSt24__uninitialized_fill_n_aIPNSt7__cxx119sub_matchIPKcEEmS4_S4_ET_S6_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i12
 
 .lr.ph.i.i.i.i12:                                 ; preds = %.lr.ph.i.i.i.i12.prol.loopexit, %.lr.ph.i.i.i.i12
@@ -2031,7 +2027,7 @@ bb.e:                                             ; preds = %bb.a
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !282 ; 6 uses
   %i.ac = ptrtoint ptr %i.ab to i64
   %i.ad = sub i64 %i.ac, %i.e
-  %i.ae = sdiv exact i64 %i.ad, 24                ; 3 uses
+  %i.ae = sdiv exact i64 %i.ad, 24                ; 2 uses
   %i.af = icmp ugt i64 %1, %i.ae
   br i1 %i.af, label %bb.f, label %bb.h
 
@@ -2059,7 +2055,8 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i.i.i
   br i1 %.not.i.i.i.i11, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchINS1_IPKcNS2_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESt6vectorISC_SaISC_EEEESC_EvT_SI_RKT0_.exit, label %bb.g, !llvm.loop !1318
 
 _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchINS1_IPKcNS2_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESt6vectorISC_SaISC_EEEESC_EvT_SI_RKT0_.exit: ; preds = %bb.g, %bb.f
-  %i.an = sub i64 %1, %i.ae                       ; 3 uses
+  %i.an = sub i64 %1, %i.ae                       ; 4 uses
+  %3 = add i64 %i.an, -1
   %xtraiter30 = and i64 %i.an, 3                  ; 2 uses
   %lcmp.mod31.not = icmp eq i64 %xtraiter30, 0
   br i1 %lcmp.mod31.not, label %.lr.ph.i.i.i.i12.prol.loopexit, label %.lr.ph.i.i.i.i12.prol
@@ -2079,8 +2076,7 @@ _ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchINS1_IPKcNS2_12ba
   %.lcssa29.unr = phi ptr [ poison, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchINS1_IPKcNS2_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESt6vectorISC_SaISC_EEEESC_EvT_SI_RKT0_.exit ], [ %i.ap, %.lr.ph.i.i.i.i12.prol ]
   %.09.i.i.i.i.unr = phi ptr [ %i.ab, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchINS1_IPKcNS2_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESt6vectorISC_SaISC_EEEESC_EvT_SI_RKT0_.exit ], [ %i.ap, %.lr.ph.i.i.i.i12.prol ]
   %.068.i.i.i.i.unr = phi i64 [ %i.an, %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx119sub_matchINS1_IPKcNS2_12basic_stringIcSt11char_traitsIcESaIcEEEEEEESt6vectorISC_SaISC_EEEESC_EvT_SI_RKT0_.exit ], [ %i.ao, %.lr.ph.i.i.i.i12.prol ]
-  %3 = sub i64 %i.ae, %1
-  %4 = icmp ugt i64 %3, -4
+  %4 = icmp ult i64 %3, 3
   br i1 %4, label %_ZSt24__uninitialized_fill_n_aIPNSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEmSC_SC_ET_SE_T0_RKT1_RSaIT2_E.exit, label %.lr.ph.i.i.i.i12
 
 .lr.ph.i.i.i.i12:                                 ; preds = %.lr.ph.i.i.i.i12.prol.loopexit, %.lr.ph.i.i.i.i12

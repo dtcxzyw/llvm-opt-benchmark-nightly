@@ -194,7 +194,7 @@ bb.q:                                             ; preds = %.lr.ph665, %._crit_
   %i.bs = getelementptr [8 x i8], ptr %i.p, i64 %i.br
   %i.bt = getelementptr i8, ptr %i.bs, i64 8
   call void @daxpy_(ptr noundef nonnull %3, ptr noundef nonnull @c_b19, ptr noundef %i.bp, ptr noundef nonnull @c__1, ptr noundef %i.bt, ptr noundef nonnull @c__1) #7
-  %i.bu = load i32, ptr %3, align 4, !tbaa !68    ; 34 uses
+  %i.bu = load i32, ptr %3, align 4, !tbaa !68    ; 33 uses
   %.not519569 = icmp slt i32 %i.bu, 1             ; 10 uses
   br i1 %.not519569, label %._crit_edge, label %iter.check1178
 
@@ -597,12 +597,11 @@ bb.t:                                             ; preds = %bb.r
   br i1 %.not519569, label %._crit_edge639.thread, label %.lr.ph600
 
 .lr.ph600:                                        ; preds = %.preheader560
-  %i.lp = add nuw i32 %i.bu, 1                    ; 3 uses
+  %i.lp = add nuw i32 %i.bu, 1                    ; 4 uses
   %i.lq = zext nneg i32 %i.bu to i64
   %wide.trip.count730 = zext i32 %i.lp to i64
   %invariant.gep851 = getelementptr [8 x i8], ptr %i.m, i64 %i.bd
   %i.lr = add nsw i32 %i.bu, -2                   ; 3 uses
-  %15 = add nuw i32 %i.bu, 1
   br label %bb.u
 
 iter.check1046:                                   ; preds = %.lr.ph590, %.loopexit1191
@@ -993,7 +992,7 @@ vec.epilog.middle.block1006:                      ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph994.preheader:                ; preds = %vector.memcheck, %iter.check993, %vec.epilog.iter.check995, %vec.epilog.middle.block1006
   %indvars.iv722.ph = phi i64 [ %i.rb, %iter.check993 ], [ %i.rb, %vector.memcheck ], [ %i.rg, %vec.epilog.iter.check995 ], [ %i.sk, %vec.epilog.middle.block1006 ] ; 3 uses
   %i.sw = trunc i64 %indvars.iv722.ph to i32      ; 2 uses
-  %i.sx = sub i32 %15, %i.sw
+  %i.sx = sub i32 %i.lp, %i.sw
   %i.sy = sub i32 %i.bu, %i.sw
   %xtraiter1217 = and i32 %i.sx, 3                ; 2 uses
   %lcmp.mod1218.not = icmp eq i32 %xtraiter1217, 0

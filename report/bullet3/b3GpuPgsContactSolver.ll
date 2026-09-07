@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %bb.d, %.noexc129, %
   br label %_ZN13b3ProfileZoneD2Ev.exit
 
 bb.g:                                             ; preds = %bb.e, %.loopexit212
-  %i.au = sdiv i32 %5, 32                         ; 4 uses
-  %i.av = add nsw i32 %i.au, 1                    ; 8 uses
+  %i.au = sdiv i32 %5, 32                         ; 3 uses
+  %i.av = add nsw i32 %i.au, 1                    ; 9 uses
   %i.aw = load i32, ptr getelementptr inbounds nuw (i8, ptr @bodyUsed, i64 4), align 4, !tbaa !58 ; 2 uses
   %.not206 = icmp slt i32 %i.au, %i.aw
   br i1 %.not206, label %.loopexit211, label %bb.h
@@ -356,11 +356,10 @@ _ZN20b3AlignedObjectArrayIiE10deallocateEv.exit.i.i145: ; preds = %bb.j, %_ZNK20
 .lr.ph.i132:                                      ; preds = %..lr.ph.i132_crit_edge, %_ZN20b3AlignedObjectArrayIiE10deallocateEv.exit.i.i145
   %i.cf = phi ptr [ %.pre265, %..lr.ph.i132_crit_edge ], [ %.0.i12.i.i142, %_ZN20b3AlignedObjectArrayIiE10deallocateEv.exit.i.i145 ]
   %i.cg = sext i32 %i.aw to i64                   ; 2 uses
+  %wide.trip.count.i133 = sext i32 %i.av to i64
   %7 = shl nsw i64 %i.cg, 2
   %scevgep243 = getelementptr i8, ptr %i.cf, i64 %7
-  %narrow = add nsw i32 %i.au, 1
-  %8 = sext i32 %narrow to i64
-  %i.ch = sub nsw i64 %8, %i.cg
+  %i.ch = sub nsw i64 %wide.trip.count.i133, %i.cg
   %i.ci = shl nuw nsw i64 %i.ch, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep243, i8 0, i64 %i.ci, i1 false), !tbaa !129
   br label %.loopexit211

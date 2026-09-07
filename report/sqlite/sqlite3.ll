@@ -206,23 +206,19 @@ bb.d:                                             ; preds = %.critedge3.split
 
 .critedge:                                        ; preds = %.lr.ph.split, %.critedge3.thread, %.lr.ph.split.us, %.critedge3.split.us.us, %bb.a
   %i.am = load ptr, ptr %1, align 8, !tbaa !2639  ; 3 uses
-  %spec.select.i39 = add i32 %i.b, -1             ; 3 uses
-  %i.an = icmp sgt i32 %spec.select.i39, 0
+  %spec.select.i39 = add nsw i32 %i.b, -1         ; 2 uses
+  %i.an = icmp sgt i32 %i.b, 1
   br i1 %i.an, label %.preheader.lr.ph.i, label %.critedge38
 
 .preheader.lr.ph.i:                               ; preds = %.critedge
-  %i.ao = add i32 %i.b, -2
+  %i.ao = add nsw i32 %i.b, -2
   %i.ap = zext nneg i32 %i.ao to i64
-  br label %.preheader.i
+  br label %.lr.ph.preheader.i
 
-.preheader.i:                                     ; preds = %.thread.i, %.preheader.lr.ph.i
+.lr.ph.preheader.i:                               ; preds = %.thread.i, %.preheader.lr.ph.i
   %indvars.iv.i = phi i64 [ %i.ap, %.preheader.lr.ph.i ], [ %indvars.iv.next.i, %.thread.i ] ; 3 uses
-  %.02532.in.i = phi i32 [ %spec.select.i39, %.preheader.lr.ph.i ], [ %.02532.i, %.thread.i ] ; 3 uses
+  %.02532.in.i = phi i32 [ %spec.select.i39, %.preheader.lr.ph.i ], [ %.02532.i, %.thread.i ] ; 2 uses
   %.02532.i = add nsw i32 %.02532.in.i, -1
-  %4 = icmp slt i32 %.02532.in.i, %i.b
-  br i1 %4, label %.lr.ph.preheader.i, label %.thread.i
-
-.lr.ph.preheader.i:                               ; preds = %.preheader.i
   %.phi.trans.insert.i = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %indvars.iv.i
   %.pre.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !2641 ; 5 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre.i, i64 40
@@ -295,10 +291,10 @@ bb.j:                                             ; preds = %fts3SegReaderCmp.ex
   %i.bq = icmp sgt i32 %spec.select.i39, %i.bp
   br i1 %i.bq, label %.lr.ph.i, label %.thread.i, !llvm.loop !479
 
-.thread.i:                                        ; preds = %bb.j, %fts3SegReaderCmp.exit, %.preheader.i
+.thread.i:                                        ; preds = %fts3SegReaderCmp.exit, %bb.j
   %i.br = icmp sgt i32 %.02532.in.i, 1
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
-  br i1 %i.br, label %.preheader.i, label %.critedge38, !llvm.loop !480
+  br i1 %i.br, label %.lr.ph.preheader.i, label %.critedge38, !llvm.loop !480
 
 .critedge38:                                      ; preds = %bb.b, %.split.us.us, %.thread.i, %.critedge
   %.3 = phi i32 [ 0, %.thread.i ], [ 0, %.critedge ], [ %i.l, %.split.us.us ], [ %i.x, %bb.b ]
@@ -701,7 +697,7 @@ bb.d:                                             ; preds = %.thread, %bb.c
   %.lcssa = phi i32 [ %i.ak, %bb.b ], [ %i.ar, %bb.d ] ; 2 uses
   %i.au = icmp eq i32 %.lcssa, %i.k
   %i.av = sext i1 %i.au to i32
-  %spec.select.i = add i32 %.lcssa, %i.av         ; 3 uses
+  %spec.select.i = add nsw i32 %.lcssa, %i.av     ; 3 uses
   %i.aw = icmp sgt i32 %spec.select.i, 0
   br i1 %i.aw, label %.preheader.lr.ph.i, label %fts3SegReaderSort.exit
 
@@ -1104,7 +1100,7 @@ fts3GrowSegReaderBuffer.exit:                     ; preds = %sqlite3Fts3PutVarin
   %.4 = phi i64 [ %.0174410, %bb.ba ], [ %spec.select235, %sqlite3Fts3FirstFilter.exit ], [ %i.fg, %bb.bu ], [ %i.fg, %sqlite3Fts3PutVarint.exit ]
   %i.oq = icmp eq i32 %.0173.lcssa, %.0183.lcssa
   %i.or = sext i1 %i.oq to i32
-  %spec.select.i280 = add i32 %.0173.lcssa, %i.or ; 3 uses
+  %spec.select.i280 = add nsw i32 %.0173.lcssa, %i.or ; 3 uses
   %i.os = icmp sgt i32 %spec.select.i280, 0
   br i1 %i.os, label %.preheader.lr.ph.i282, label %fts3SegReaderSort.exit295
 
@@ -1507,7 +1503,7 @@ fts3SegReaderNextDocid.exit:                      ; preds = %bb.g, %.critedge.i,
   %i.cv = load ptr, ptr %1, align 8, !tbaa !2639  ; 3 uses
   %i.cw = icmp eq i32 %.089, %i.g
   %i.cx = sext i1 %i.cw to i32
-  %spec.select.i = add i32 %.089, %i.cx           ; 3 uses
+  %spec.select.i = add nsw i32 %.089, %i.cx       ; 3 uses
   %i.cy = icmp sgt i32 %spec.select.i, 0
   br i1 %i.cy, label %.preheader.lr.ph.i, label %fts3SegReaderSort.exit
 

@@ -202,7 +202,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %.thread.thread297
 
 .thread.thread297:                                ; preds = %.thread.thread297.loopexit, %bb.b
-  %.4217319.pre-phi = phi i64 [ %.pre, %.thread.thread297.loopexit ], [ %i.a, %bb.b ] ; 2 uses
+  %.4217319.pre-phi = phi i64 [ %.pre, %.thread.thread297.loopexit ], [ %i.a, %bb.b ]
   %.4217 = phi ptr [ %.4217.ph, %.thread.thread297.loopexit ], [ %0, %bb.b ] ; 5 uses
   %.5211 = phi ptr [ %.5211.ph, %.thread.thread297.loopexit ], [ %i.g, %bb.b ] ; 7 uses
   %.4 = phi i32 [ %.4.ph, %.thread.thread297.loopexit ], [ 0, %bb.b ] ; 4 uses
@@ -215,10 +215,9 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %i.gm, label %.lr.ph316.preheader, label %._crit_edge
 
 .lr.ph316.preheader:                              ; preds = %.preheader
-  %i.gn = add i64 %1, %i.a                        ; 2 uses
-  %i.go = sub i64 %i.gn, %.4217319.pre-phi        ; 2 uses
+  %i.gn = add i64 %1, %i.a
+  %i.go = sub i64 %i.gn, %.4217319.pre-phi        ; 3 uses
   %scevgep = getelementptr i8, ptr %.4217, i64 %i.go
-  %.neg343 = add i64 %.4217319.pre-phi, 1
   %xtraiter = and i64 %i.go, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph316.prol.loopexit, label %.lr.ph316.prol
@@ -245,7 +244,7 @@ bb.ag:                                            ; preds = %.lr.ph316.prol
   %.5315.unr = phi i32 [ %.4, %.lr.ph316.preheader ], [ 0, %bb.ag ], [ %i.gp, %.lr.ph316.prol ]
   %.6212314.unr = phi ptr [ %.5211, %.lr.ph316.preheader ], [ %i.gw, %bb.ag ], [ %i.gs, %.lr.ph316.prol ]
   %.5218313.unr = phi ptr [ %.4217, %.lr.ph316.preheader ], [ %i.gq, %bb.ag ], [ %i.gq, %.lr.ph316.prol ]
-  %i.gx = icmp eq i64 %i.gn, %.neg343
+  %i.gx = icmp eq i64 %i.go, 1
   br i1 %i.gx, label %._crit_edge, label %.lr.ph316
 
 .lr.ph316:                                        ; preds = %.lr.ph316.prol.loopexit, %bb.aj

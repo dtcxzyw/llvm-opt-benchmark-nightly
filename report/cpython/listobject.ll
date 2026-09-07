@@ -204,7 +204,7 @@ declare i64 @PySlice_AdjustIndices(i64 noundef, ptr noundef, ptr noundef, i64 no
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @list_slice_lock_held(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #0 {
 bb.a:
-  %i.a = sub i64 %2, %1                           ; 8 uses
+  %i.a = sub i64 %2, %1                           ; 9 uses
   %i.b = icmp slt i64 %i.a, 1
   %i.c = tail call ptr @PyList_New(i64 noundef 0) ; 9 uses
   br i1 %i.b, label %list_new_prealloc.exit.thread, label %bb.b
@@ -266,9 +266,8 @@ list_new_prealloc.exit._crit_edge:                ; preds = %list_new_prealloc.e
   %i.r = getelementptr i8, ptr %0, i64 24
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !31
   %i.t = getelementptr [8 x i8], ptr %i.s, i64 %1 ; 3 uses
-  %.neg = add i64 %1, 1
   %xtraiter = and i64 %i.a, 1
-  %i.u = icmp eq i64 %2, %.neg
+  %i.u = icmp eq i64 %i.a, 1
   br i1 %i.u, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader

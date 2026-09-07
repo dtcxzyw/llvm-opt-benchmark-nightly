@@ -205,7 +205,7 @@ bb.cb:                                            ; preds = %_ZL13polyMinExtentP
   br label %bb.cc
 
 bb.cc:                                            ; preds = %.loopexit.i346, %bb.cb
-  %.4 = phi i32 [ %.0254.lcssa, %bb.cb ], [ %.5, %.loopexit.i346 ] ; 7 uses
+  %.4 = phi i32 [ %.0254.lcssa, %bb.cb ], [ %.5, %.loopexit.i346 ] ; 6 uses
   %indvars.iv588.i = phi i64 [ 0, %bb.cb ], [ %indvars.iv.next589.i, %.loopexit.i346 ] ; 3 uses
   %.0238483.i = phi i32 [ 0, %bb.cb ], [ %.3241.i, %.loopexit.i346 ] ; 2 uses
   %.0247482.i = phi i32 [ %i.aed, %bb.cb ], [ %i.ans, %.loopexit.i346 ] ; 2 uses
@@ -266,19 +266,17 @@ bb.cg:                                            ; preds = %bb.cf, %bb.ce, %bb.
   %i.afu = fptosi float %i.aft to i32
   %i.afv = call i32 @llvm.smin.i32(i32 %i.afu, i32 30)
   %spec.store.select.i = add nsw i32 %i.afv, 1    ; 2 uses
-  %i.afw = add nsw i32 %spec.store.select.i, %.4  ; 2 uses
+  %i.afw = add nsw i32 %spec.store.select.i, %.4
   %i.afx = icmp sgt i32 %i.afw, 126
   %i.afy = sub nsw i32 126, %.4
-  %spec.select.i = select i1 %i.afx, i32 %i.afy, i32 %spec.store.select.i ; 3 uses
+  %spec.select.i = select i1 %i.afx, i32 %i.afy, i32 %spec.store.select.i ; 4 uses
   %.not260451.i = icmp slt i32 %spec.select.i, 0
   br i1 %.not260451.i, label %._crit_edge455.i, label %.lr.ph454.i
 
 .lr.ph454.i:                                      ; preds = %bb.cg
   %i.afz = uitofp nneg i32 %spec.select.i to float
   %i.aga = load float, ptr %i.et, align 8, !tbaa !144 ; 2 uses
-  %smin.i = call i32 @llvm.smin.i32(i32 %i.afw, i32 126)
-  %reass.sub = sub i32 %smin.i, %.4
-  %i.agb = add i32 %reass.sub, 1
+  %i.agb = add nuw i32 %spec.select.i, 1
   %wide.trip.count553.i = zext i32 %i.agb to i64
   br label %bb.ch
 
@@ -681,7 +679,7 @@ bb.eo:                                            ; preds = %bb.en
   br i1 %exitcond599.not.i, label %._crit_edge508.split.i, label %.preheader440.i
 
 bb.ep:                                            ; preds = %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit317.i, %.preheader440.i
-  %.sroa.0450.1 = phi i64 [ %.sroa.0450.0, %.preheader440.i ], [ %.sroa.0450.5, %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit317.i ] ; 26 uses
+  %.sroa.0450.1 = phi i64 [ %.sroa.0450.0, %.preheader440.i ], [ %.sroa.0450.5, %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit317.i ] ; 21 uses
   %.sroa.23.4 = phi i64 [ %.sroa.23.3, %.preheader440.i ], [ %.sroa.23.8, %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit317.i ] ; 6 uses
   %.sroa.32.7 = phi ptr [ %.sroa.32.6, %.preheader440.i ], [ %.sroa.32.11, %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit317.i ] ; 11 uses
   %storemerge259503.i = phi i32 [ %i.bes, %.preheader440.i ], [ %i.bqi, %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit317.i ] ; 4 uses
@@ -892,7 +890,7 @@ _ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit.i: ; preds = %_ZN12rcVec
   %.sroa.23.5 = phi i64 [ %.sroa.23.4, %bb.ev ], [ %.0.i.i279.i, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit.i ] ; 5 uses
   %.sroa.32.8 = phi ptr [ %.sroa.32.7, %bb.ev ], [ %i.biz, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit.i ] ; 10 uses
   %.sroa.32.81040 = ptrtoaddr ptr %.sroa.32.8 to i64
-  %.sroa.0450.2 = add i64 %.sroa.0450.1, 1        ; 6 uses
+  %.sroa.0450.2 = add i64 %.sroa.0450.1, 1        ; 8 uses
   %i.bkf = load float, ptr %i.et, align 8, !tbaa !144
   %i.bkg = call float @llvm.fmuladd.f32(float %i.bgs, float %i.apr, float f0x3C23D70A)
   %i.bkh = call float @llvm.floor.f32(float %i.bkg)
@@ -1051,9 +1049,8 @@ middle.block1051:                                 ; preds = %vector.body1046
 
 .lr.ph.i.i383.i.preheader1127:                    ; preds = %.lr.ph.i.i383.i.preheader, %middle.block1051
   %.07.i.i384.i.ph = phi i64 [ 0, %.lr.ph.i.i383.i.preheader ], [ %n.vec1045, %middle.block1051 ] ; 3 uses
-  %8 = add nuw i64 %.sroa.0450.1, 1
   %i.bmk = sub i64 %.sroa.0450.1, %.07.i.i384.i.ph
-  %xtraiter1191 = and i64 %8, 3                   ; 2 uses
+  %xtraiter1191 = and i64 %.sroa.0450.2, 3        ; 2 uses
   %lcmp.mod1192.not = icmp eq i64 %xtraiter1191, 0
   br i1 %lcmp.mod1192.not, label %.lr.ph.i.i383.i.prol.loopexit, label %.lr.ph.i.i383.i.prol
 
@@ -1109,7 +1106,7 @@ _ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit311.i: ; preds = %_ZN12rc
   %.sroa.23.6 = phi i64 [ %.sroa.23.5, %bb.fh ], [ %.0.i.i310.i, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit386.i ] ; 5 uses
   %.sroa.32.9 = phi ptr [ %.sroa.32.8, %bb.fh ], [ %i.bmb, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit386.i ] ; 10 uses
   %.sroa.32.91025 = ptrtoaddr ptr %.sroa.32.9 to i64
-  %.sroa.0450.3 = add nsw i64 %.sroa.0450.1, 2    ; 7 uses
+  %.sroa.0450.3 = add nsw i64 %.sroa.0450.1, 2    ; 9 uses
   %i.bnh = icmp slt i64 %.sroa.0450.3, %.sroa.23.6
   br i1 %i.bnh, label %bb.fj, label %bb.fk, !prof !142
 
@@ -1163,10 +1160,9 @@ middle.block1036:                                 ; preds = %vector.body1031
 
 .lr.ph.i.i388.i.preheader1126:                    ; preds = %.lr.ph.i.i388.i.preheader, %middle.block1036
   %.07.i.i389.i.ph = phi i64 [ 0, %.lr.ph.i.i388.i.preheader ], [ %n.vec1030, %middle.block1036 ] ; 3 uses
-  %9 = add i64 %.sroa.0450.1, 1
-  %i.bnw = sub i64 %9, %.07.i.i389.i.ph
-  %i.bnx = and i64 %.sroa.0450.1, 3               ; 2 uses
-  %lcmp.mod1195.not = icmp eq i64 %i.bnx, 2
+  %i.bnw = sub i64 %.sroa.0450.2, %.07.i.i389.i.ph
+  %i.bnx = and i64 %.sroa.0450.3, 3               ; 2 uses
+  %lcmp.mod1195.not = icmp eq i64 %i.bnx, 0
   br i1 %lcmp.mod1195.not, label %.lr.ph.i.i388.i.prol.loopexit, label %.lr.ph.i.i388.i.prol
 
 .lr.ph.i.i388.i.prol:                             ; preds = %.lr.ph.i.i388.i.preheader1126, %.lr.ph.i.i388.i.prol
@@ -1178,8 +1174,7 @@ middle.block1036:                                 ; preds = %vector.body1031
   store i32 %i.boa, ptr %i.bny, align 4, !tbaa !68
   %i.bob = add nuw nsw i64 %.07.i.i389.i.prol, 1  ; 2 uses
   %prol.iter1196.next = add i64 %prol.iter1196, 1 ; 2 uses
-  %10 = xor i64 %i.bnx, %prol.iter1196.next
-  %prol.iter1196.cmp.not = icmp eq i64 %10, 2
+  %prol.iter1196.cmp.not = icmp eq i64 %prol.iter1196.next, %i.bnx
   br i1 %prol.iter1196.cmp.not, label %.lr.ph.i.i388.i.prol.loopexit, label %.lr.ph.i.i388.i.prol, !llvm.loop !97
 
 .lr.ph.i.i388.i.prol.loopexit:                    ; preds = %.lr.ph.i.i388.i.prol, %.lr.ph.i.i388.i.preheader1126
@@ -1222,7 +1217,7 @@ _ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit314.i: ; preds = %_ZN12rc
   %.sroa.23.7 = phi i64 [ %.sroa.23.6, %bb.fj ], [ %.0.i.i313.i, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit391.i ] ; 5 uses
   %.sroa.32.10 = phi ptr [ %.sroa.32.9, %bb.fj ], [ %i.bnn, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit391.i ] ; 10 uses
   %.sroa.32.101010 = ptrtoaddr ptr %.sroa.32.10 to i64
-  %.sroa.0450.4 = add nsw i64 %.sroa.0450.1, 3    ; 7 uses
+  %.sroa.0450.4 = add nsw i64 %.sroa.0450.1, 3    ; 8 uses
   %i.bou = icmp slt i64 %.sroa.0450.4, %.sroa.23.7
   br i1 %i.bou, label %bb.fl, label %bb.fm, !prof !142
 
@@ -1277,10 +1272,8 @@ middle.block1021:                                 ; preds = %vector.body1016
 
 .lr.ph.i.i393.i.preheader1125:                    ; preds = %.lr.ph.i.i393.i.preheader, %middle.block1021
   %.07.i.i394.i.ph = phi i64 [ 0, %.lr.ph.i.i393.i.preheader ], [ %n.vec1015, %middle.block1021 ] ; 3 uses
-  %11 = add i64 %.sroa.0450.1, 3
-  %12 = add i64 %.sroa.0450.1, 2
-  %i.bpk = sub i64 %12, %.07.i.i394.i.ph
-  %xtraiter1197 = and i64 %11, 3                  ; 2 uses
+  %i.bpk = sub i64 %.sroa.0450.3, %.07.i.i394.i.ph
+  %xtraiter1197 = and i64 %.sroa.0450.4, 3        ; 2 uses
   %lcmp.mod1198.not = icmp eq i64 %xtraiter1197, 0
   br i1 %lcmp.mod1198.not, label %.lr.ph.i.i393.i.prol.loopexit, label %.lr.ph.i.i393.i.prol
 

@@ -205,8 +205,8 @@ stream_write_bit.exit.i35:                        ; preds = %bb.ae, %bb.ad
 bb.af:                                            ; preds = %stream_write_bit.exit.i35
   %i.bbm = load ptr, ptr %i.bba, align 8, !tbaa !29 ; 4 uses
   %i.bbn = add i32 %i.bbk, -1
-  %i.bbo = zext i32 %i.bbn to i64                 ; 2 uses
-  %i.bbp = load i64, ptr %i.bbm, align 8, !tbaa !31 ; 2 uses
+  %i.bbo = zext i32 %i.bbn to i64
+  %i.bbp = load i64, ptr %i.bbm, align 8, !tbaa !31
   %i.bbq = add i64 %i.bbp, %i.bbo                 ; 4 uses
   %i.bbr = icmp ugt i64 %i.bbq, 63
   br i1 %i.bbr, label %.lr.ph.i.i, label %stream_pad.exit.i
@@ -224,15 +224,13 @@ bb.af:                                            ; preds = %stream_write_bit.ex
   br i1 %i.bbw, label %.peel.next.i.preheader, label %._crit_edge.i.i
 
 .peel.next.i.preheader:                           ; preds = %.lr.ph.i.i
-  %i.bbx = add i64 %i.bbq, -128
+  %i.bbx = add i64 %i.bbq, -128                   ; 3 uses
   %i.bby = lshr i64 %i.bbx, 3
   %i.bbz = and i64 %i.bby, 2305843009213693944
   %i.bca = add nuw nsw i64 %i.bbz, 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.bbu, i8 0, i64 %i.bca, i1 false), !tbaa !13
   store i64 0, ptr %i.bbs, align 8, !tbaa !32
-  %2 = add i64 %i.bbp, %i.bbo
-  %3 = add i64 %2, -128                           ; 2 uses
-  %i.bcb = lshr i64 %3, 6
+  %i.bcb = lshr i64 %i.bbx, 6
   %i.bcc = add nuw nsw i64 %i.bcb, 1
   %xtraiter = and i64 %i.bcc, 7                   ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -253,7 +251,7 @@ bb.af:                                            ; preds = %stream_write_bit.ex
   %.09.i.i.unr = phi i64 [ %i.bbv, %.peel.next.i.preheader ], [ %i.bcf, %.peel.next.i.prol ]
   %.lcssa517.unr = phi ptr [ poison, %.peel.next.i.preheader ], [ %i.bce, %.peel.next.i.prol ]
   %.lcssa516.unr = phi i64 [ poison, %.peel.next.i.preheader ], [ %i.bcf, %.peel.next.i.prol ]
-  %i.bcg = icmp ult i64 %3, 448
+  %i.bcg = icmp ult i64 %i.bbx, 448
   br i1 %i.bcg, label %._crit_edge.i.i, label %.peel.next.i
 
 .peel.next.i:                                     ; preds = %.peel.next.i.prol.loopexit, %.peel.next.i

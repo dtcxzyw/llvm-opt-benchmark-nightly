@@ -205,10 +205,10 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(60) %.sroa.5.0..sroa_idx, i8 0, i64 60, i1 false)
   %i.g = load ptr, ptr %i.b, align 8, !tbaa !70   ; 4 uses
   %i.h = getelementptr i8, ptr %i.g, i64 20
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !232  ; 3 uses
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !232
   %i.j = getelementptr i8, ptr %i.g, i64 24
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !181  ; 4 uses
-  %i.l = sub i32 %i.i, %i.k                       ; 3 uses
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !181  ; 2 uses
+  %i.l = sub i32 %i.i, %i.k                       ; 5 uses
   %i.m = getelementptr i8, ptr %i.g, i64 240
   %i.n = load i32, ptr %i.m, align 8, !tbaa !170
   %i.o = sub i32 %i.n, %i.l                       ; 3 uses
@@ -313,17 +313,16 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   %i.au = getelementptr i8, ptr %i.x, i64 8       ; 2 uses
   %i.av = zext nneg i32 %.0.lcssa to i64          ; 8 uses
   %i.aw = sub nsw i64 %i.p, %i.av                 ; 3 uses
-  %min.iters.check5 = icmp ult i64 %i.aw, 32
+  %min.iters.check5 = icmp ult i64 %i.aw, 30
   br i1 %min.iters.check5, label %scalar.ph4.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph44
   %i.ax = xor i64 %i.av, -1
   %i.ay = add nsw i64 %i.ax, %i.p                 ; 2 uses
-  %i.az = add i32 %i.i, %.0.lcssa
-  %5 = sub i32 %i.az, %i.k                        ; 2 uses
+  %i.az = add i32 %i.l, %.0.lcssa                 ; 2 uses
   %i.ba = trunc i64 %i.ay to i32
-  %i.bb = add i32 %5, %i.ba
-  %i.bc = icmp slt i32 %i.bb, %5
+  %i.bb = add i32 %i.az, %i.ba
+  %i.bc = icmp slt i32 %i.bb, %i.az
   %i.bd = icmp ugt i64 %i.ay, 4294967295
   %i.be = or i1 %i.bc, %i.bd
   br i1 %i.be, label %scalar.ph4.preheader, label %vector.memcheck2
@@ -331,9 +330,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph44
 vector.memcheck2:                                 ; preds = %vector.scevcheck
   %i.bf = shl nuw nsw i64 %i.av, 3
   %i.bg = add i64 %i.bf, %i.y
-  %i.bh = add i32 %i.i, %.0.lcssa
-  %6 = sub i32 %i.bh, %i.k
-  %i.bi = sext i32 %6 to i64
+  %i.bh = add i32 %i.l, %.0.lcssa
+  %i.bi = sext i32 %i.bh to i64
   %i.bj = shl nsw i64 %i.bi, 3
   %i.bk = add i64 %i.bj, %i.at
   %i.bl = sub i64 %i.bg, %i.bk

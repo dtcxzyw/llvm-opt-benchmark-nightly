@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %bb.au, %bb.p
   %.083.i.us1097 = phi i32 [ %i.ed, %bb.p ], [ %.285.i.us, %bb.au ] ; 2 uses
   %.sroa.39.8.us1096 = phi ptr [ %.sroa.39.2821.us, %bb.p ], [ %.sroa.39.13.us, %bb.au ] ; 12 uses
   %.sroa.30.7.us1095 = phi i64 [ %.sroa.30.2820.us, %bb.p ], [ %.sroa.30.12.us, %bb.au ] ; 7 uses
-  %.sroa.0614.0.us1093 = phi i64 [ 0, %bb.p ], [ %.sroa.0614.5.us, %bb.au ] ; 26 uses
+  %.sroa.0614.0.us1093 = phi i64 [ 0, %bb.p ], [ %.sroa.0614.5.us, %bb.au ] ; 21 uses
   %.sroa.39.8.us10961224 = ptrtoaddr ptr %.sroa.39.8.us1096 to i64
   %i.ef = sext i32 %.083.i.us1097 to i64          ; 3 uses
   %i.eg = getelementptr inbounds i8, ptr %i.bj, i64 %i.ef ; 3 uses
@@ -608,7 +608,7 @@ _ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit.i.us: ; preds = %bb.al, 
   %.sroa.30.8.us = phi i64 [ %.sroa.30.7.us1095, %bb.al ], [ %.0.i.i.i.us, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit411.us ] ; 5 uses
   %.sroa.39.9.us = phi ptr [ %.sroa.39.8.us1096, %bb.al ], [ %i.mt, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit411.us ] ; 10 uses
   %.sroa.39.9.us1209 = ptrtoaddr ptr %.sroa.39.9.us to i64
-  %.sroa.0614.1.us = add nsw i64 %.sroa.0614.0.us1093, 1 ; 6 uses
+  %.sroa.0614.1.us = add nsw i64 %.sroa.0614.0.us1093, 1 ; 8 uses
   %i.oa = icmp slt i64 %.sroa.0614.1.us, %.sroa.30.8.us
   br i1 %i.oa, label %bb.an, label %bb.am, !prof !127
 
@@ -657,9 +657,8 @@ middle.block1220:                                 ; preds = %vector.body1215
 
 .lr.ph.i.i403.us.preheader1264:                   ; preds = %.lr.ph.i.i403.us.preheader, %middle.block1220
   %.07.i.i404.us.ph = phi i64 [ 0, %.lr.ph.i.i403.us.preheader ], [ %n.vec1214, %middle.block1220 ] ; 3 uses
-  %6 = add nuw i64 %.sroa.0614.0.us1093, 1
   %i.oo = sub nsw i64 %.sroa.0614.0.us1093, %.07.i.i404.us.ph
-  %xtraiter1275 = and i64 %6, 3                   ; 2 uses
+  %xtraiter1275 = and i64 %.sroa.0614.1.us, 3     ; 2 uses
   %lcmp.mod1276.not = icmp eq i64 %xtraiter1275, 0
   br i1 %lcmp.mod1276.not, label %.lr.ph.i.i403.us.prol.loopexit, label %.lr.ph.i.i403.us.prol
 
@@ -720,7 +719,7 @@ _ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit93.i.us: ; preds = %bb.an
   %.sroa.30.9.us = phi i64 [ %.sroa.30.8.us, %bb.an ], [ %.0.i.i92.i.us, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit406.us ] ; 5 uses
   %.sroa.39.10.us = phi ptr [ %.sroa.39.9.us, %bb.an ], [ %i.of, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit406.us ] ; 10 uses
   %.sroa.39.10.us1194 = ptrtoaddr ptr %.sroa.39.10.us to i64
-  %.sroa.0614.2.us = add nsw i64 %.sroa.0614.0.us1093, 2 ; 7 uses
+  %.sroa.0614.2.us = add nsw i64 %.sroa.0614.0.us1093, 2 ; 9 uses
   %i.pm = icmp slt i64 %.sroa.0614.2.us, %.sroa.30.9.us
   br i1 %i.pm, label %bb.ap, label %bb.ao, !prof !127
 
@@ -769,10 +768,9 @@ middle.block1205:                                 ; preds = %vector.body1200
 
 .lr.ph.i.i398.us.preheader1263:                   ; preds = %.lr.ph.i.i398.us.preheader, %middle.block1205
   %.07.i.i399.us.ph = phi i64 [ 0, %.lr.ph.i.i398.us.preheader ], [ %n.vec1199, %middle.block1205 ] ; 3 uses
-  %7 = add i64 %.sroa.0614.0.us1093, 1
-  %i.qa = sub i64 %7, %.07.i.i399.us.ph
-  %i.qb = and i64 %.sroa.0614.0.us1093, 3         ; 2 uses
-  %lcmp.mod1279.not = icmp eq i64 %i.qb, 2
+  %i.qa = sub i64 %.sroa.0614.1.us, %.07.i.i399.us.ph
+  %i.qb = and i64 %.sroa.0614.2.us, 3             ; 2 uses
+  %lcmp.mod1279.not = icmp eq i64 %i.qb, 0
   br i1 %lcmp.mod1279.not, label %.lr.ph.i.i398.us.prol.loopexit, label %.lr.ph.i.i398.us.prol
 
 .lr.ph.i.i398.us.prol:                            ; preds = %.lr.ph.i.i398.us.preheader1263, %.lr.ph.i.i398.us.prol
@@ -784,8 +782,7 @@ middle.block1205:                                 ; preds = %vector.body1200
   store i32 %i.qe, ptr %i.qc, align 4, !tbaa !12
   %i.qf = add nuw nsw i64 %.07.i.i399.us.prol, 1  ; 2 uses
   %prol.iter1280.next = add i64 %prol.iter1280, 1 ; 2 uses
-  %8 = xor i64 %i.qb, %prol.iter1280.next
-  %prol.iter1280.cmp.not = icmp eq i64 %8, 2
+  %prol.iter1280.cmp.not = icmp eq i64 %prol.iter1280.next, %i.qb
   br i1 %prol.iter1280.cmp.not, label %.lr.ph.i.i398.us.prol.loopexit, label %.lr.ph.i.i398.us.prol, !llvm.loop !29
 
 .lr.ph.i.i398.us.prol.loopexit:                   ; preds = %.lr.ph.i.i398.us.prol, %.lr.ph.i.i398.us.preheader1263
@@ -833,7 +830,7 @@ _ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit96.i.us: ; preds = %bb.ap
   %.sroa.30.10.us = phi i64 [ %.sroa.30.9.us, %bb.ap ], [ %.0.i.i95.i.us, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit401.us ] ; 5 uses
   %.sroa.39.11.us = phi ptr [ %.sroa.39.10.us, %bb.ap ], [ %i.pr, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit401.us ] ; 10 uses
   %.sroa.39.11.us1179 = ptrtoaddr ptr %.sroa.39.11.us to i64
-  %.sroa.0614.3.us = add nsw i64 %.sroa.0614.0.us1093, 3 ; 7 uses
+  %.sroa.0614.3.us = add nsw i64 %.sroa.0614.0.us1093, 3 ; 8 uses
   %i.qz = icmp slt i64 %.sroa.0614.3.us, %.sroa.30.10.us
   br i1 %i.qz, label %bb.ar, label %bb.aq, !prof !127
 
@@ -882,10 +879,8 @@ middle.block1190:                                 ; preds = %vector.body1185
 
 .lr.ph.i.i396.us.preheader1262:                   ; preds = %.lr.ph.i.i396.us.preheader, %middle.block1190
   %.07.i.i.us.ph = phi i64 [ 0, %.lr.ph.i.i396.us.preheader ], [ %n.vec1184, %middle.block1190 ] ; 3 uses
-  %9 = add i64 %.sroa.0614.0.us1093, 3
-  %10 = add i64 %.sroa.0614.0.us1093, 2
-  %i.rn = sub i64 %10, %.07.i.i.us.ph
-  %xtraiter1281 = and i64 %9, 3                   ; 2 uses
+  %i.rn = sub i64 %.sroa.0614.2.us, %.07.i.i.us.ph
+  %xtraiter1281 = and i64 %.sroa.0614.3.us, 3     ; 2 uses
   %lcmp.mod1282.not = icmp eq i64 %xtraiter1281, 0
   br i1 %lcmp.mod1282.not, label %.lr.ph.i.i396.us.prol.loopexit, label %.lr.ph.i.i396.us.prol
 
@@ -1063,7 +1058,7 @@ bb.ax:                                            ; preds = %.lr.ph.i.us
   br label %bb.ay
 
 bb.ay:                                            ; preds = %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit325.i.us, %.lr.ph438.i.us
-  %.sroa.0495.15.us = phi i64 [ 0, %.lr.ph438.i.us ], [ %.sroa.0495.19.us, %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit325.i.us ] ; 26 uses
+  %.sroa.0495.15.us = phi i64 [ 0, %.lr.ph438.i.us ], [ %.sroa.0495.19.us, %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit325.i.us ] ; 21 uses
   %.sroa.75.24.us = phi i64 [ %.sroa.75.2822.us, %.lr.ph438.i.us ], [ %.sroa.75.28.us, %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit325.i.us ] ; 6 uses
   %.sroa.104.25.us = phi ptr [ %.sroa.104.2823.us, %.lr.ph438.i.us ], [ %.sroa.104.29.us, %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit325.i.us ] ; 11 uses
   %indvars.iv487.i.us = phi i64 [ 0, %.lr.ph438.i.us ], [ %indvars.iv.next488.i.us, %_ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit325.i.us ] ; 4 uses
@@ -1198,7 +1193,7 @@ _ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit.i361.us: ; preds = %bb.b
   %.sroa.75.25.us = phi i64 [ %.sroa.75.24.us, %bb.bb ], [ %.0.i.i.i359.us, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit471.us ] ; 5 uses
   %.sroa.104.26.us = phi ptr [ %.sroa.104.25.us, %bb.bb ], [ %i.vf, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit471.us ] ; 10 uses
   %.sroa.104.26.us1149 = ptrtoaddr ptr %.sroa.104.26.us to i64
-  %.sroa.0495.16.us = add nsw i64 %.sroa.0495.15.us, 1 ; 6 uses
+  %.sroa.0495.16.us = add nsw i64 %.sroa.0495.15.us, 1 ; 8 uses
   %i.wo = getelementptr inbounds nuw i8, ptr %i.uq, i64 4 ; 2 uses
   %i.wp = icmp slt i64 %.sroa.0495.16.us, %.sroa.75.25.us
   br i1 %i.wp, label %bb.bd, label %bb.bc, !prof !127
@@ -1248,9 +1243,8 @@ middle.block1160:                                 ; preds = %vector.body1155
 
 .lr.ph.i.i463.us.preheader1260:                   ; preds = %.lr.ph.i.i463.us.preheader, %middle.block1160
   %.07.i.i464.us.ph = phi i64 [ 0, %.lr.ph.i.i463.us.preheader ], [ %n.vec1154, %middle.block1160 ] ; 3 uses
-  %11 = add nuw i64 %.sroa.0495.15.us, 1
   %i.xd = sub nsw i64 %.sroa.0495.15.us, %.07.i.i464.us.ph
-  %xtraiter1287 = and i64 %11, 3                  ; 2 uses
+  %xtraiter1287 = and i64 %.sroa.0495.16.us, 3    ; 2 uses
   %lcmp.mod1288.not = icmp eq i64 %xtraiter1287, 0
   br i1 %lcmp.mod1288.not, label %.lr.ph.i.i463.us.prol.loopexit, label %.lr.ph.i.i463.us.prol
 
@@ -1313,7 +1307,7 @@ _ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit319.i.us: ; preds = %bb.b
   %.sroa.75.26.us = phi i64 [ %.sroa.75.25.us, %bb.bd ], [ %.0.i.i318.i.us, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit466.us ] ; 5 uses
   %.sroa.104.27.us = phi ptr [ %.sroa.104.26.us, %bb.bd ], [ %i.wu, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit466.us ] ; 10 uses
   %.sroa.104.27.us1134 = ptrtoaddr ptr %.sroa.104.27.us to i64
-  %.sroa.0495.17.us = add nsw i64 %.sroa.0495.15.us, 2 ; 7 uses
+  %.sroa.0495.17.us = add nsw i64 %.sroa.0495.15.us, 2 ; 9 uses
   %i.yd = getelementptr inbounds nuw i8, ptr %i.uq, i64 8 ; 2 uses
   %i.ye = icmp slt i64 %.sroa.0495.17.us, %.sroa.75.26.us
   br i1 %i.ye, label %bb.bf, label %bb.be, !prof !127
@@ -1363,10 +1357,9 @@ middle.block1145:                                 ; preds = %vector.body1140
 
 .lr.ph.i.i458.us.preheader1259:                   ; preds = %.lr.ph.i.i458.us.preheader, %middle.block1145
   %.07.i.i459.us.ph = phi i64 [ 0, %.lr.ph.i.i458.us.preheader ], [ %n.vec1139, %middle.block1145 ] ; 3 uses
-  %12 = add i64 %.sroa.0495.15.us, 1
-  %i.ys = sub i64 %12, %.07.i.i459.us.ph
-  %i.yt = and i64 %.sroa.0495.15.us, 3            ; 2 uses
-  %lcmp.mod1291.not = icmp eq i64 %i.yt, 2
+  %i.ys = sub i64 %.sroa.0495.16.us, %.07.i.i459.us.ph
+  %i.yt = and i64 %.sroa.0495.17.us, 3            ; 2 uses
+  %lcmp.mod1291.not = icmp eq i64 %i.yt, 0
   br i1 %lcmp.mod1291.not, label %.lr.ph.i.i458.us.prol.loopexit, label %.lr.ph.i.i458.us.prol
 
 .lr.ph.i.i458.us.prol:                            ; preds = %.lr.ph.i.i458.us.preheader1259, %.lr.ph.i.i458.us.prol
@@ -1378,8 +1371,7 @@ middle.block1145:                                 ; preds = %vector.body1140
   store i32 %i.yw, ptr %i.yu, align 4, !tbaa !12
   %i.yx = add nuw nsw i64 %.07.i.i459.us.prol, 1  ; 2 uses
   %prol.iter1292.next = add i64 %prol.iter1292, 1 ; 2 uses
-  %13 = xor i64 %i.yt, %prol.iter1292.next
-  %prol.iter1292.cmp.not = icmp eq i64 %13, 2
+  %prol.iter1292.cmp.not = icmp eq i64 %prol.iter1292.next, %i.yt
   br i1 %prol.iter1292.cmp.not, label %.lr.ph.i.i458.us.prol.loopexit, label %.lr.ph.i.i458.us.prol, !llvm.loop !41
 
 .lr.ph.i.i458.us.prol.loopexit:                   ; preds = %.lr.ph.i.i458.us.prol, %.lr.ph.i.i458.us.preheader1259
@@ -1429,7 +1421,7 @@ _ZN12rcVectorBaseIiL11rcAllocHint1EE9push_backERKi.exit322.i.us: ; preds = %bb.b
   %.sroa.75.27.us = phi i64 [ %.sroa.75.26.us, %bb.bf ], [ %.0.i.i321.i.us, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit461.us ] ; 5 uses
   %.sroa.104.28.us = phi ptr [ %.sroa.104.27.us, %bb.bf ], [ %i.yj, %_ZN12rcVectorBaseIiL11rcAllocHint1EE17allocate_and_copyEl.exit461.us ] ; 10 uses
   %.sroa.104.28.us1119 = ptrtoaddr ptr %.sroa.104.28.us to i64
-  %.sroa.0495.18.us = add nsw i64 %.sroa.0495.15.us, 3 ; 7 uses
+  %.sroa.0495.18.us = add nsw i64 %.sroa.0495.15.us, 3 ; 8 uses
   %i.zt = icmp slt i64 %.sroa.0495.18.us, %.sroa.75.27.us
   br i1 %i.zt, label %bb.bh, label %bb.bg, !prof !127
 
@@ -1478,10 +1470,8 @@ middle.block1130:                                 ; preds = %vector.body1125
 
 .lr.ph.i.i453.us.preheader1258:                   ; preds = %.lr.ph.i.i453.us.preheader, %middle.block1130
   %.07.i.i454.us.ph = phi i64 [ 0, %.lr.ph.i.i453.us.preheader ], [ %n.vec1124, %middle.block1130 ] ; 3 uses
-  %14 = add i64 %.sroa.0495.15.us, 3
-  %15 = add i64 %.sroa.0495.15.us, 2
-  %i.aah = sub i64 %15, %.07.i.i454.us.ph
-  %xtraiter1293 = and i64 %14, 3                  ; 2 uses
+  %i.aah = sub i64 %.sroa.0495.17.us, %.07.i.i454.us.ph
+  %xtraiter1293 = and i64 %.sroa.0495.18.us, 3    ; 2 uses
   %lcmp.mod1294.not = icmp eq i64 %xtraiter1293, 0
   br i1 %lcmp.mod1294.not, label %.lr.ph.i.i453.us.prol.loopexit, label %.lr.ph.i.i453.us.prol
 

@@ -205,12 +205,12 @@ bb.ao:                                            ; preds = %._crit_edge.i59.i
   %i.ej = trunc i64 %i.ei to i32
   %i.ek = getelementptr inbounds nuw [4 x i8], ptr @26, i64 %i.da
   %i.el = load i32, ptr %i.ek, align 4, !noalias !504, !noundef !7
-  %i.em = and i32 %i.el, %i.ej                    ; 3 uses
+  %i.em = and i32 %i.el, %i.ej                    ; 2 uses
   %i.en = add i32 %.lcssa7.i60.i, %i.cx
   store i32 %i.en, ptr %i.x, align 8, !alias.scope !500, !noalias !501
   %i.eo = and i32 %i.cx, 31
-  %i.ep = shl nuw i32 1, %i.eo                    ; 3 uses
-  %i.eq = add i32 %i.em, %i.ep                    ; 4 uses
+  %i.ep = shl nuw i32 1, %i.eo                    ; 2 uses
+  %i.eq = add i32 %i.em, %i.ep                    ; 5 uses
   %i.er = add i32 %i.eq, %.sroa.04.0168.i
   %i.es = icmp ugt i32 %i.er, %i.p
   br i1 %i.es, label %.loopexit85.i, label %.preheader.i.preheader
@@ -230,8 +230,7 @@ bb.ao:                                            ; preds = %._crit_edge.i59.i
 vector.scevcheck:                                 ; preds = %.preheader.i.preheader
   %i.fb = zext i32 %.sroa.04.0168.i to i64
   %i.fc = call i64 @llvm.usub.sat.i64(i64 %.sroa.12.2.ph, i64 %i.fb)
-  %5 = add i32 %i.em, -1
-  %i.fd = add i32 %5, %i.ep
+  %i.fd = add i32 %i.eq, -1
   %i.fe = zext i32 %i.fd to i64
   %umin = call i64 @llvm.umin.i64(i64 %i.fc, i64 %i.fe)
   %i.ff = trunc nuw i64 %umin to i32

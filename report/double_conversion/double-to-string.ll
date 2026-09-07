@@ -204,15 +204,13 @@ _ZN17double_conversion13StringBuilder10AddPaddingEci.exit: ; preds = %.lr.ph.i.e
   %i.ak = add nsw i32 %i.aj, %2
   store i32 %i.ak, ptr %i.b, align 8, !tbaa !17
   %i.al = sub i32 %3, %2
-  %i.am = add i32 %i.al, %4                       ; 4 uses
+  %i.am = add i32 %i.al, %4                       ; 5 uses
   %i.an = icmp sgt i32 %i.am, 0
   br i1 %i.an, label %.lr.ph.i49.preheader, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit52.thread
 
 .lr.ph.i49.preheader:                             ; preds = %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit
-  %6 = add i32 %4, %3
-  %.neg100 = add i32 %2, 1
   %xtraiter94 = and i32 %i.am, 1
-  %i.ao = icmp eq i32 %6, %.neg100
+  %i.ao = icmp eq i32 %i.am, 1
   br i1 %i.ao, label %.lr.ph.i49.epil.preheader, label %.lr.ph.i49.preheader.new
 
 .lr.ph.i49.preheader.new:                         ; preds = %.lr.ph.i49.preheader
@@ -254,14 +252,13 @@ bb.e:                                             ; preds = %bb.d
   %i.bf = load i32, ptr %i.az, align 8, !tbaa !17
   %i.bg = add nsw i32 %i.bf, %2
   store i32 %i.bg, ptr %i.az, align 8, !tbaa !17
-  %i.bh = sub nsw i32 %3, %2                      ; 4 uses
+  %i.bh = sub nsw i32 %3, %2                      ; 5 uses
   %i.bi = icmp sgt i32 %i.bh, 0
   br i1 %i.bi, label %.lr.ph.i53.preheader, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit56
 
 .lr.ph.i53.preheader:                             ; preds = %bb.e
-  %.neg = add i32 %2, 1
   %xtraiter = and i32 %i.bh, 1
-  %i.bj = icmp eq i32 %3, %.neg
+  %i.bj = icmp eq i32 %i.bh, 1
   br i1 %i.bj, label %.lr.ph.i53.epil.preheader, label %.lr.ph.i53.preheader.new
 
 .lr.ph.i53.preheader.new:                         ; preds = %.lr.ph.i53.preheader
@@ -366,15 +363,13 @@ bb.g:                                             ; preds = %bb.d
   %i.de = load i32, ptr %i.az, align 8, !tbaa !17
   %i.df = add nsw i32 %i.de, %i.cy
   store i32 %i.df, ptr %i.az, align 8, !tbaa !17
-  %i.dg = sub nsw i32 %4, %i.cy                   ; 4 uses
+  %i.dg = sub nsw i32 %4, %i.cy                   ; 5 uses
   %i.dh = icmp sgt i32 %i.dg, 0
   br i1 %i.dh, label %.lr.ph.i61.preheader, label %_ZN17double_conversion13StringBuilder10AddPaddingEci.exit52
 
 .lr.ph.i61.preheader:                             ; preds = %bb.g
-  %7 = add i32 %4, %3
-  %.neg99 = add i32 %2, 1
   %xtraiter84 = and i32 %i.dg, 1
-  %i.di = icmp eq i32 %7, %.neg99
+  %i.di = icmp eq i32 %i.dg, 1
   br i1 %i.di, label %.lr.ph.i61.epil.preheader, label %.lr.ph.i61.preheader.new
 
 .lr.ph.i61.preheader.new:                         ; preds = %.lr.ph.i61.preheader

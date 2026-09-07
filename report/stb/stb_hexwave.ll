@@ -204,36 +204,33 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n,
   %i.ek = sitofp i32 %i.ej to float               ; 8 uses
   %i.el = add i32 %i.ej, -1                       ; 4 uses
   %i.em = icmp sgt i32 %i.ei, 0                   ; 4 uses
-  %wide.trip.count.i.i150 = zext i32 %i.ei to i64 ; 21 uses
+  %wide.trip.count.i.i150 = zext i32 %i.ei to i64 ; 18 uses
   %sext = sext i32 %..mux to i64
   %invariant.gep = getelementptr [4 x i8], ptr %.mux, i64 %i.dh
   %i.en = shl nuw nsw i64 %wide.trip.count.i.i150, 2 ; 9 uses
   %scevgep364 = getelementptr i8, ptr %.mux, i64 %i.en
   %scevgep396 = getelementptr i8, ptr %.mux, i64 %i.en
+  %5 = add nsw i64 %wide.trip.count.i.i150, -1    ; 4 uses
   %min.iters.check409 = icmp ult i32 %i.ei, 8
   %n.vec411 = and i64 %wide.trip.count.i.i150, 2147483640 ; 3 uses
   %cmp.n426 = icmp eq i64 %n.vec411, %wide.trip.count.i.i150
   %xtraiter452 = and i64 %wide.trip.count.i.i150, 1
   %lcmp.mod453.not = icmp eq i64 %xtraiter452, 0
-  %5 = add nsw i64 %wide.trip.count.i.i150, -1
   %min.iters.check376 = icmp ult i32 %i.ei, 8
   %n.vec378 = and i64 %wide.trip.count.i.i150, 4294967288 ; 3 uses
   %cmp.n393 = icmp eq i64 %n.vec378, %wide.trip.count.i.i150
   %xtraiter454 = and i64 %wide.trip.count.i.i150, 1
   %lcmp.mod455.not = icmp eq i64 %xtraiter454, 0
-  %6 = add nsw i64 %wide.trip.count.i.i150, -1
   %min.iters.check343 = icmp ult i32 %i.ei, 8
   %n.vec345 = and i64 %wide.trip.count.i.i150, 2147483640 ; 3 uses
   %cmp.n360 = icmp eq i64 %n.vec345, %wide.trip.count.i.i150
   %xtraiter456 = and i64 %wide.trip.count.i.i150, 1
   %lcmp.mod457.not = icmp eq i64 %xtraiter456, 0
-  %7 = add nsw i64 %wide.trip.count.i.i150, -1
   %min.iters.check311 = icmp ult i32 %i.ei, 8
   %n.vec313 = and i64 %wide.trip.count.i.i150, 2147483640 ; 3 uses
   %cmp.n328 = icmp eq i64 %n.vec313, %wide.trip.count.i.i150
   %xtraiter458 = and i64 %wide.trip.count.i.i150, 1
   %lcmp.mod459.not = icmp eq i64 %xtraiter458, 0
-  %8 = add nsw i64 %wide.trip.count.i.i150, -1
   br label %hex_blamp.exit178
 
 hex_blamp.exit178:                                ; preds = %hex_blamp.exit178.backedge, %bb.q
@@ -398,7 +395,7 @@ middle.block425:                                  ; preds = %vector.body416
 
 .lr.ph.i.i151.prol.loopexit:                      ; preds = %.lr.ph.i.i151.prol, %.lr.ph.i.i151.preheader445
   %indvars.iv.i.i152.unr = phi i64 [ %indvars.iv.i.i152.ph, %.lr.ph.i.i151.preheader445 ], [ %indvars.iv.next.i.i153.prol, %.lr.ph.i.i151.prol ]
-  %i.hi = icmp eq i64 %indvars.iv.i.i152.ph, %5
+  %i.hi = icmp eq i64 %5, %indvars.iv.i.i152.ph
   br i1 %i.hi, label %hex_blep.exit.thread, label %.lr.ph.i.i151
 
 hex_blep.exit.thread267:                          ; preds = %bb.t
@@ -551,7 +548,7 @@ middle.block392:                                  ; preds = %vector.body383
 
 .lr.ph.i.i158.prol.loopexit:                      ; preds = %.lr.ph.i.i158.prol, %.lr.ph.i.i158.preheader444
   %indvars.iv.i.i159.unr = phi i64 [ %indvars.iv.i.i159.ph, %.lr.ph.i.i158.preheader444 ], [ %indvars.iv.next.i.i160.prol, %.lr.ph.i.i158.prol ]
-  %i.jx = icmp eq i64 %indvars.iv.i.i159.ph, %6
+  %i.jx = icmp eq i64 %5, %indvars.iv.i.i159.ph
   br i1 %i.jx, label %hex_blamp.exit162, label %.lr.ph.i.i158.preheader444.new
 
 .lr.ph.i.i158.preheader444.new:                   ; preds = %.lr.ph.i.i158.prol.loopexit
@@ -701,7 +698,7 @@ middle.block359:                                  ; preds = %vector.body350
 
 .lr.ph.i.i166.prol.loopexit:                      ; preds = %.lr.ph.i.i166.prol, %.lr.ph.i.i166.preheader443
   %indvars.iv.i.i167.unr = phi i64 [ %indvars.iv.i.i167.ph, %.lr.ph.i.i166.preheader443 ], [ %indvars.iv.next.i.i168.prol, %.lr.ph.i.i166.prol ]
-  %i.mn = icmp eq i64 %indvars.iv.i.i167.ph, %7
+  %i.mn = icmp eq i64 %5, %indvars.iv.i.i167.ph
   br i1 %i.mn, label %hex_blep.exit170, label %.lr.ph.i.i166
 
 .lr.ph.i.i166:                                    ; preds = %.lr.ph.i.i166.prol.loopexit, %.lr.ph.i.i166
@@ -836,7 +833,7 @@ hex_blamp.exit178.backedge:                       ; preds = %.lr.ph.i.i174.prol.
 
 .lr.ph.i.i174.prol.loopexit:                      ; preds = %.lr.ph.i.i174.prol, %.lr.ph.i.i174.preheader442
   %indvars.iv.i.i175.unr = phi i64 [ %indvars.iv.i.i175.ph, %.lr.ph.i.i174.preheader442 ], [ %indvars.iv.next.i.i176.prol, %.lr.ph.i.i174.prol ]
-  %i.ow = icmp eq i64 %indvars.iv.i.i175.ph, %8
+  %i.ow = icmp eq i64 %5, %indvars.iv.i.i175.ph
   br i1 %i.ow, label %hex_blamp.exit178.backedge, label %.lr.ph.i.i174
 
 .lr.ph.i.i174:                                    ; preds = %.lr.ph.i.i174.prol.loopexit, %.lr.ph.i.i174

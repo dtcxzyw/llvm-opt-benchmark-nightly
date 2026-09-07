@@ -205,10 +205,10 @@ bb.a:
   %5 = alloca %"class.tbb::detail::d1::range_vector.486", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.b = load i64, ptr %i.a, align 8, !tbaa !415
-  %i.c = load i64, ptr %2, align 8, !tbaa !416    ; 4 uses
+  %i.c = load i64, ptr %2, align 8, !tbaa !416    ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !417  ; 5 uses
-  %i.f = sub i64 %i.c, %i.e                       ; 2 uses
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !417  ; 4 uses
+  %i.f = sub i64 %i.c, %i.e                       ; 3 uses
   %i.g = icmp ult i64 %i.b, %i.f
   br i1 %i.g, label %bb.b, label %bb.c
 
@@ -251,9 +251,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 .prol.loopexit60:                                 ; preds = %.prol.preheader59, %.lr.ph.i.i.i.i.i.i
   %.04.i.i.i.i.i.i.unr = phi i64 [ %i.e, %.lr.ph.i.i.i.i.i.i ], [ %i.w, %.prol.preheader59 ]
-  %6 = sub i64 %i.e, %i.c
-  %7 = icmp ugt i64 %6, -4
-  br i1 %7, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEENS0_2d225parallel_for_body_wrapperIN9__gnu_cxx17__normal_iteratorIPPN4mold13ConcurrentMapINS9_8MapValueEE5EntryESt6vectorISE_SaISE_EEEEZNS9_21read_gdb_index_inputsINS9_6X86_64EEEvRNS9_7ContextIT_EEEUlSE_E_SE_EEKNS1_16auto_partitionerEE8run_bodyERS4_.exit, label %.lr.ph.i.i.i.i.i.i.new
+  %6 = icmp ult i64 %i.f, 4
+  br i1 %6, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEENS0_2d225parallel_for_body_wrapperIN9__gnu_cxx17__normal_iteratorIPPN4mold13ConcurrentMapINS9_8MapValueEE5EntryESt6vectorISE_SaISE_EEEEZNS9_21read_gdb_index_inputsINS9_6X86_64EEEvRNS9_7ContextIT_EEEUlSE_E_SE_EEKNS1_16auto_partitionerEE8run_bodyERS4_.exit, label %.lr.ph.i.i.i.i.i.i.new
 
 .lr.ph.i.i.i.i.i.i.new:                           ; preds = %.prol.loopexit60, %.lr.ph.i.i.i.i.i.i.new
   %.04.i.i.i.i.i.i = phi i64 [ %i.au, %.lr.ph.i.i.i.i.i.i.new ], [ %.04.i.i.i.i.i.i.unr, %.prol.loopexit60 ] ; 5 uses

@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.u, %bb.r
   %.sroa.43.0.i = phi ptr [ %i.ez, %bb.r ], [ %i.hb, %bb.u ] ; 2 uses
   %.sroa.27.0.i = phi i64 [ 0, %bb.r ], [ %.sroa.27.2.lcssa.i, %bb.u ] ; 2 uses
   %.sroa.9.0.i = phi ptr [ %.sroa.0.0.ph126, %bb.r ], [ %i.he, %bb.u ] ; 3 uses
-  %.sroa.02.0.i = phi i64 [ %i.ev, %bb.r ], [ %.sroa.15.0119278, %bb.u ] ; 6 uses
+  %.sroa.02.0.i = phi i64 [ %i.ev, %bb.r ], [ %.sroa.15.0119278, %bb.u ] ; 5 uses
   %i.fa = call i64 @llvm.usub.sat.i64(i64 %.sroa.02.0.i, i64 3)
   %i.fb = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph126, i64 %i.fa ; 2 uses
   %i.fc = icmp ult ptr %.sroa.9.0.i, %i.fb
@@ -263,14 +263,13 @@ bb.t:                                             ; preds = %bb.u, %bb.r
   br i1 %i.gd, label %.lr.ph38.preheader.i, label %._crit_edge39.i
 
 .lr.ph38.preheader.i:                             ; preds = %._crit_edge.i
-  %.sroa.9.1.lcssa53.i = ptrtoaddr ptr %.sroa.9.1.lcssa.i to i64 ; 3 uses
+  %.sroa.9.1.lcssa53.i = ptrtoaddr ptr %.sroa.9.1.lcssa.i to i64 ; 2 uses
   %scevgep.i = getelementptr i8, ptr %.sroa.9.1.lcssa.i, i64 %i.d
-  %i.ge = sub i64 %.sroa.02.0.i, %.sroa.9.1.lcssa53.i
+  %i.ge = sub i64 %.sroa.02.0.i, %.sroa.9.1.lcssa53.i ; 2 uses
   %scevgep54.i = getelementptr i8, ptr %scevgep.i, i64 %i.ge ; 3 uses
-  %i.gf = add i64 %.sroa.02.0.i, %i.d
-  %7 = sub i64 %i.gf, %.sroa.9.1.lcssa53.i
+  %i.gf = add i64 %i.ge, %i.d
   %i.gg = add i64 %i.f, %.sroa.02.0.i
-  %xtraiter = and i64 %7, 1
+  %xtraiter = and i64 %i.gf, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph38.i.prol.loopexit, label %.lr.ph38.i.prol
 
@@ -446,7 +445,7 @@ bb.z:                                             ; preds = %bb.ab, %bb.x
   %.sroa.43.0.i39 = phi ptr [ %i.ib, %bb.x ], [ %i.ke, %bb.ab ] ; 2 uses
   %.sroa.27.0.i40 = phi i64 [ 0, %bb.x ], [ %i.kh, %bb.ab ] ; 2 uses
   %.sroa.9.0.i41 = phi ptr [ %.sroa.0.0.ph126, %bb.x ], [ %i.ki, %bb.ab ] ; 3 uses
-  %.sroa.02.0.i42 = phi i64 [ %i.ev, %bb.x ], [ %.sroa.15.0119278, %bb.ab ] ; 6 uses
+  %.sroa.02.0.i42 = phi i64 [ %i.ev, %bb.x ], [ %.sroa.15.0119278, %bb.ab ] ; 5 uses
   %i.id = call i64 @llvm.usub.sat.i64(i64 %.sroa.02.0.i42, i64 3)
   %i.ie = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph126, i64 %i.id ; 2 uses
   %i.if = icmp ult ptr %.sroa.9.0.i41, %i.ie
@@ -508,15 +507,14 @@ bb.aa:                                            ; preds = %bb.aa, %.lr.ph.i67
   br i1 %i.jg, label %.lr.ph38.preheader.i55, label %._crit_edge39.i47
 
 .lr.ph38.preheader.i55:                           ; preds = %._crit_edge.i43
-  %.sroa.9.1.lcssa53.i56 = ptrtoaddr ptr %.sroa.9.1.lcssa.i46 to i64 ; 3 uses
+  %.sroa.9.1.lcssa53.i56 = ptrtoaddr ptr %.sroa.9.1.lcssa.i46 to i64 ; 2 uses
   %scevgep.i57 = getelementptr i8, ptr %.sroa.9.1.lcssa.i46, i64 %i.d
-  %i.jh = sub i64 %.sroa.02.0.i42, %.sroa.9.1.lcssa53.i56
+  %i.jh = sub i64 %.sroa.02.0.i42, %.sroa.9.1.lcssa53.i56 ; 2 uses
   %scevgep54.i58 = getelementptr i8, ptr %scevgep.i57, i64 %i.jh ; 3 uses
   %.val27.i64 = load i8, ptr %i.ia, align 1, !range !28, !alias.scope !11218, !noalias !11219, !noundef !6 ; 3 uses
-  %i.ji = add i64 %.sroa.02.0.i42, %i.d
-  %8 = sub i64 %i.ji, %.sroa.9.1.lcssa53.i56
+  %i.ji = add i64 %i.jh, %i.d
   %i.jj = add i64 %i.ic, %.sroa.02.0.i42
-  %xtraiter390 = and i64 %8, 1
+  %xtraiter390 = and i64 %i.ji, 1
   %lcmp.mod391.not = icmp eq i64 %xtraiter390, 0
   br i1 %lcmp.mod391.not, label %.lr.ph38.i59.prol.loopexit, label %.lr.ph38.i59.prol
 

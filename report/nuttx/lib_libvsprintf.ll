@@ -73,7 +73,7 @@ bb.c:                                             ; preds = %.backedge, %bb.b
 .preheader65:                                     ; preds = %bb.b, %bb.ag
   %.1488 = phi i8 [ %i.bn, %bb.ag ], [ %i.l, %bb.b ] ; 7 uses
   %.0468 = phi i16 [ %.4472, %bb.ag ], [ 0, %bb.b ] ; 27 uses
-  %.0455 = phi i32 [ %.1456, %bb.ag ], [ 0, %bb.b ] ; 21 uses
+  %.0455 = phi i32 [ %.1456, %bb.ag ], [ 0, %bb.b ] ; 19 uses
   %.0447 = phi i32 [ %.1448, %bb.ag ], [ 0, %bb.b ] ; 17 uses
   %.3433 = phi ptr [ %i.bm, %bb.ag ], [ %i.k, %bb.b ] ; 12 uses
   %i.p = zext i16 %.0468 to i32                   ; 2 uses
@@ -352,20 +352,19 @@ bb.au:                                            ; preds = %bb.at
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.at, %bb.as
-  %.not572 = phi i1 [ %.not568, %bb.au ], [ false, %bb.as ], [ false, %bb.at ] ; 5 uses
+  %.not572 = phi i1 [ %.not568, %bb.au ], [ false, %bb.as ], [ false, %bb.at ] ; 4 uses
   %.0424 = phi i32 [ %i.cy, %bb.au ], [ 45, %bb.as ], [ 43, %bb.at ] ; 2 uses
   %i.cz = and i8 %i.ct, 12
   %.not569 = icmp eq i8 %i.cz, 0
   br i1 %.not569, label %bb.bb, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %.neg212 = select i1 %.not572, i32 -3, i32 -4
   %i.da = select i1 %.not572, i32 3, i32 4        ; 2 uses
   %i.db = icmp sgt i32 %.0455, %i.da
   br i1 %i.db, label %bb.ax, label %.loopexit62
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.dc = sub nuw nsw i32 %.0455, %i.da           ; 2 uses
+  %i.dc = sub nuw nsw i32 %.0455, %i.da           ; 3 uses
   %i.dd = and i16 %.8476, 8
   %i.de = icmp eq i16 %i.dd, 0
   br i1 %i.de, label %.preheader61, label %.loopexit62
@@ -379,8 +378,7 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %.not584, label %.loopexit62.loopexit, label %.preheader61, !llvm.loop !8
 
 .loopexit62.loopexit:                             ; preds = %.preheader61
-  %4 = add i32 %.neg212, %.1436
-  %i.dh = add i32 %4, %.0455
+  %i.dh = add i32 %i.dc, %.1436
   br label %.loopexit62
 
 .loopexit62:                                      ; preds = %.loopexit62.loopexit, %bb.aw, %bb.ax
@@ -489,9 +487,9 @@ bb.bh:                                            ; preds = %bb.be, %bb.bg, %bb.
   %i.eq = lshr i32 %i.el, 4
   %i.er = and i32 %i.eq, 1
   %spec.select263 = select i1 %.not573, i32 %i.er, i32 %i.ep
-  %.2427 = add i32 %.1426, %spec.select263        ; 3 uses
+  %.2427 = add i32 %.1426, %spec.select263        ; 2 uses
   %i.es = icmp sgt i32 %.0455, %.2427
-  %i.et = sub nsw i32 %.0455, %.2427              ; 2 uses
+  %i.et = sub i32 %.0455, %.2427                  ; 3 uses
   %i.eu = select i1 %i.es, i32 %i.et, i32 0       ; 2 uses
   %i.ev = and i32 %i.el, 9
   %i.ew = icmp eq i32 %i.ev, 0
@@ -508,8 +506,7 @@ bb.bh:                                            ; preds = %bb.be, %bb.bg, %bb.
   br i1 %.old35.not, label %.loopexit59.loopexit, label %.preheader58
 
 .loopexit59.loopexit:                             ; preds = %.preheader58
-  %5 = sub i32 %.1436, %.2427
-  %i.fa = add i32 %5, %.0455
+  %i.fa = add i32 %i.et, %.1436
   br label %.loopexit59
 
 .loopexit59:                                      ; preds = %.loopexit59.loopexit, %bb.bh

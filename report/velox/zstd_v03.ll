@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.preheader82.i
 
 .preheader82.i:                                   ; preds = %.preheader82.loopexit.i, %.preheader83.i
-  %.071.lcssa.i = phi i32 [ %i.n, %.preheader83.i ], [ %i.t, %.preheader82.loopexit.i ] ; 10 uses
+  %.071.lcssa.i = phi i32 [ %i.n, %.preheader83.i ], [ %i.t, %.preheader82.loopexit.i ] ; 9 uses
   %.not7786.i = icmp eq i32 %.071.lcssa.i, 0      ; 2 uses
   br i1 %.not7786.i, label %._crit_edge.i, label %.lr.ph89.preheader.i
 
@@ -372,7 +372,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph99.preheader.i:                             ; preds = %._crit_edge94.i
   %i.cc = add nuw nsw i32 %.071.lcssa.i, 1        ; 2 uses
   %wide.trip.count122.i = zext nneg i32 %i.cc to i64 ; 2 uses
-  %i.cd = zext i32 %.071.lcssa.i to i64           ; 2 uses
+  %i.cd = zext i32 %.071.lcssa.i to i64           ; 3 uses
   %xtraiter177 = and i64 %i.cd, 1
   %i.ce = icmp eq i32 %i.cc, 2
   br i1 %i.ce, label %.lr.ph99.i.epil.preheader, label %.lr.ph99.preheader.i.new
@@ -402,7 +402,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not79105.i, label %._crit_edge108.split.i, label %.lr.ph103.i.preheader
 
 .lr.ph103.i.preheader:                            ; preds = %.preheader.i
-  %9 = zext i32 %.071.lcssa.i to i64
   %i.ch = zext i32 %.071.lcssa.i to i64           ; 2 uses
   %min.iters.check = icmp ult i32 %.071.lcssa.i, 8
   %n.vec = and i64 %i.ch, 4294967288              ; 3 uses
@@ -477,7 +476,7 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph103.i, %middle.block
   %indvars.iv124.i.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph103.i ], [ %i.ci, %middle.block ] ; 4 uses
   %i.di = sub nsw i64 %wide.trip.count122.i, %indvars.iv124.i.ph
-  %i.dj = sub nsw i64 %9, %indvars.iv124.i.ph
+  %i.dj = sub nsw i64 %i.cd, %indvars.iv124.i.ph
   %xtraiter183 = and i64 %i.di, 3                 ; 2 uses
   %lcmp.mod184.not = icmp eq i64 %xtraiter183, 0
   br i1 %lcmp.mod184.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol

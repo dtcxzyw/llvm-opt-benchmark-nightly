@@ -205,9 +205,9 @@ mi_outs.exit:                                     ; preds = %.lr.ph.i, %bb.dj, %
   %.7 = phi i64 [ %.3, %.loopexit.i304 ], [ %.3, %bb.di ], [ %.3, %mi_outc.exit318 ], [ %.6, %.loopexit.i ], [ %.3, %mi_outc.exit286 ], [ %.3, %bb.ag ], [ %.3, %bb.ah ], [ %.6, %bb.bn ], [ %.6, %mi_outc.exit.i ], [ %.3, %bb.cx ], [ %.3, %mi_outc.exit.i314 ], [ %.3, %bb.dj ], [ %.3, %.lr.ph.i ] ; 7 uses
   %.1212 = phi ptr [ %.0342378, %.loopexit.i304 ], [ %.0342378, %bb.di ], [ %.0342378, %mi_outc.exit318 ], [ %.1343, %.loopexit.i ], [ %.0342378, %mi_outc.exit286 ], [ %.0342378, %bb.ag ], [ %.0342378, %bb.ah ], [ %.1343, %bb.bn ], [ %.1343, %mi_outc.exit.i ], [ %.0342378, %bb.cx ], [ %.0342378, %mi_outc.exit.i314 ], [ %.0342378, %bb.dj ], [ %.0342378, %.lr.ph.i ] ; 10 uses
   %.fr.i = freeze ptr %.2344                      ; 7 uses
-  %i.jz = ptrtoint ptr %.fr.i to i64              ; 3 uses
-  %i.ka = ptrtoint ptr %.1212 to i64              ; 2 uses
-  %i.kb = sub i64 %i.jz, %i.ka                    ; 13 uses
+  %i.jz = ptrtoint ptr %.fr.i to i64              ; 2 uses
+  %i.ka = ptrtoint ptr %.1212 to i64
+  %i.kb = sub i64 %i.jz, %i.ka                    ; 14 uses
   %i.kc = icmp ult i64 %i.kb, %.7
   br i1 %i.kc, label %bb.dk, label %mi_out_alignright.exit
 
@@ -237,17 +237,14 @@ bb.dl:                                            ; preds = %mi_out_fill.exit
   %i.kk = getelementptr inbounds nuw i8, ptr %.1212, i64 %.7
   %.not.i322 = icmp ult ptr %i.kk, %i.g
   %or.cond27.i = select i1 %i.kj, i1 %.not.i322, i1 false
-  br i1 %or.cond27.i, label %iter.check, label %mi_out_alignright.exit
+  br i1 %or.cond27.i, label %vector.memcheck, label %mi_out_alignright.exit
 
-iter.check:                                       ; preds = %bb.dl
+vector.memcheck:                                  ; preds = %bb.dl
   %min.iters.check = icmp ult i64 %i.kb, 8
-  br i1 %min.iters.check, label %.preheader31.i.preheader, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %iter.check
-  %4 = add i64 %.7, %i.ka
-  %i.kl = sub i64 %4, %i.jz
+  %i.kl = sub i64 %.7, %i.kb
   %diff.check = icmp ugt i64 %i.kl, -32
-  br i1 %diff.check, label %.preheader31.i.preheader, label %vector.main.loop.iter.check
+  %or.cond461 = or i1 %min.iters.check, %diff.check
+  br i1 %or.cond461, label %.preheader31.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   %min.iters.check453 = icmp ult i64 %i.kb, 32
@@ -311,8 +308,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n459 = icmp eq i64 %i.kb, %n.vec455
   br i1 %cmp.n459, label %.preheader.preheader.i, label %.preheader31.i.preheader
 
-.preheader31.i.preheader:                         ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.02232.i.ph = phi i64 [ 1, %iter.check ], [ 1, %vector.memcheck ], [ %i.kn, %vec.epilog.iter.check ], [ %i.ky, %vec.epilog.middle.block ]
+.preheader31.i.preheader:                         ; preds = %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %.02232.i.ph = phi i64 [ 1, %vector.memcheck ], [ %i.kn, %vec.epilog.iter.check ], [ %i.ky, %vec.epilog.middle.block ]
   br label %.preheader31.i
 
 .preheader31.i:                                   ; preds = %.preheader31.i.preheader, %.preheader31.i
