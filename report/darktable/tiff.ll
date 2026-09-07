@@ -204,13 +204,12 @@ bb.y:                                             ; preds = %bb.w, %bb.x, %bb.t
 
 .preheader741.preheader:                          ; preds = %bb.s
   %i.cl = add nsw i32 %i.bd, -1
-  %i.cm = add nsw i32 %.fr1179, -1                ; 2 uses
+  %i.cm = add nsw i32 %.fr1179, -1
   %i.cn = zext nneg i32 %.fr1179 to i64
   %wide.trip.count890 = zext nneg i32 %i.cl to i64
   %wide.trip.count = zext i32 %i.cm to i64
   %i.co = add nsw i64 %wide.trip.count, -1        ; 3 uses
   %xtraiter = and i64 %i.co, 1
-  %13 = icmp eq i32 %i.cm, 2
   %unroll_iter = and i64 %i.co, -2
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod1132 = trunc i64 %i.co to i1
@@ -219,24 +218,20 @@ bb.y:                                             ; preds = %bb.w, %bb.x, %bb.t
 .preheader741:                                    ; preds = %.preheader741.preheader, %._crit_edge756
   %indvars.iv887 = phi i64 [ 1, %.preheader741.preheader ], [ %indvars.iv.next888, %._crit_edge756 ] ; 2 uses
   %i.cp = mul nuw nsw i64 %indvars.iv887, %i.cn   ; 3 uses
-  br i1 %13, label %.epil.preheader, label %.preheader741.new
-
-.preheader741.new:                                ; preds = %.preheader741
   %invariant.op = add nuw nsw i64 1, %i.cp
   br label %bb.ad
 
 ._crit_edge756.unr-lcssa:                         ; preds = %bb.an
   br i1 %lcmp.mod.not, label %._crit_edge756, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %._crit_edge756.unr-lcssa, %.preheader741
-  %indvars.iv.epil.init = phi i64 [ 1, %.preheader741 ], [ %indvars.iv.next.1, %._crit_edge756.unr-lcssa ]
+.epil.preheader:                                  ; preds = %._crit_edge756.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod1132)
   %.0..0..0..0.220.epil = load volatile i16, ptr %i.c, align 2, !tbaa !103
   %i.cq = icmp eq i16 %.0..0..0..0.220.epil, 3
   br i1 %i.cq, label %._crit_edge756, label %bb.z
 
 bb.z:                                             ; preds = %.epil.preheader
-  %i.cr = add nuw nsw i64 %indvars.iv.epil.init, %i.cp
+  %i.cr = add nuw nsw i64 %indvars.iv.next.1, %i.cp
   %i.cs = shl i64 %i.cr, 2
   %i.ct = and i64 %i.cs, 4294967292
   %i.cu = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.ct ; 3 uses
@@ -273,9 +268,9 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.
   %exitcond891.not = icmp eq i64 %indvars.iv.next888, %wide.trip.count890
   br i1 %exitcond891.not, label %.thread633, label %.preheader741
 
-bb.ad:                                            ; preds = %bb.an, %.preheader741.new
-  %indvars.iv = phi i64 [ 1, %.preheader741.new ], [ %indvars.iv.next.1, %bb.an ] ; 3 uses
-  %niter = phi i64 [ 0, %.preheader741.new ], [ %niter.next.1, %bb.an ]
+bb.ad:                                            ; preds = %bb.an, %.preheader741
+  %indvars.iv = phi i64 [ 1, %.preheader741 ], [ %indvars.iv.next.1, %bb.an ] ; 3 uses
+  %niter = phi i64 [ 0, %.preheader741 ], [ %niter.next.1, %bb.an ]
   %.0..0..0..0.220 = load volatile i16, ptr %i.c, align 2, !tbaa !103
   %i.dl = icmp eq i16 %.0..0..0..0.220, 3
   br i1 %i.dl, label %bb.ai, label %bb.ae
@@ -358,14 +353,13 @@ bb.an:                                            ; preds = %bb.am, %bb.al, %bb.
   br i1 %niter.ncmp.1, label %._crit_edge756.unr-lcssa, label %bb.ad
 
 .preheader738.preheader:                          ; preds = %bb.r
-  %smax906 = add nsw i32 %.fr1179, -1             ; 2 uses
+  %smax906 = add nsw i32 %.fr1179, -1
   %i.fa = zext nneg i32 %.fr1179 to i64
   %smax912 = add nsw i32 %i.bd, -1
   %wide.trip.count913 = zext nneg i32 %smax912 to i64
   %wide.trip.count907 = zext i32 %smax906 to i64
   %i.fb = add nsw i64 %wide.trip.count907, -1     ; 3 uses
   %xtraiter1134 = and i64 %i.fb, 1
-  %14 = icmp eq i32 %smax906, 2
   %unroll_iter1137 = and i64 %i.fb, -2
   %lcmp.mod1135.not = icmp eq i64 %xtraiter1134, 0
   %lcmp.mod1136 = trunc i64 %i.fb to i1
@@ -374,24 +368,20 @@ bb.an:                                            ; preds = %bb.am, %bb.al, %bb.
 .preheader738:                                    ; preds = %.preheader738.preheader, %._crit_edge764
   %indvars.iv909 = phi i64 [ 1, %.preheader738.preheader ], [ %indvars.iv.next910, %._crit_edge764 ] ; 2 uses
   %i.fc = mul nuw nsw i64 %indvars.iv909, %i.fa   ; 3 uses
-  br i1 %14, label %.epil.preheader1133, label %.preheader738.new
-
-.preheader738.new:                                ; preds = %.preheader738
   %invariant.op1202 = add nuw nsw i64 1, %i.fc
   br label %bb.as
 
 ._crit_edge764.unr-lcssa:                         ; preds = %bb.bc
   br i1 %lcmp.mod1135.not, label %._crit_edge764, label %.epil.preheader1133
 
-.epil.preheader1133:                              ; preds = %._crit_edge764.unr-lcssa, %.preheader738
-  %indvars.iv903.epil.init = phi i64 [ 1, %.preheader738 ], [ %indvars.iv.next904.1, %._crit_edge764.unr-lcssa ]
+.epil.preheader1133:                              ; preds = %._crit_edge764.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod1136)
   %.0..0..0..0.221.epil = load volatile i16, ptr %i.c, align 2, !tbaa !103
   %i.fd = icmp eq i16 %.0..0..0..0.221.epil, 3
   br i1 %i.fd, label %._crit_edge764, label %bb.ao
 
 bb.ao:                                            ; preds = %.epil.preheader1133
-  %i.fe = add nuw nsw i64 %indvars.iv903.epil.init, %i.fc
+  %i.fe = add nuw nsw i64 %indvars.iv.next904.1, %i.fc
   %i.ff = shl i64 %i.fe, 2
   %i.fg = and i64 %i.ff, 4294967292
   %i.fh = getelementptr inbounds nuw i8, ptr %2, i64 %i.fg ; 3 uses
@@ -428,9 +418,9 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap, %bb.
   %exitcond914.not = icmp eq i64 %indvars.iv.next910, %wide.trip.count913
   br i1 %exitcond914.not, label %.thread633, label %.preheader738
 
-bb.as:                                            ; preds = %bb.bc, %.preheader738.new
-  %indvars.iv903 = phi i64 [ 1, %.preheader738.new ], [ %indvars.iv.next904.1, %bb.bc ] ; 3 uses
-  %niter1138 = phi i64 [ 0, %.preheader738.new ], [ %niter1138.next.1, %bb.bc ]
+bb.as:                                            ; preds = %bb.bc, %.preheader738
+  %indvars.iv903 = phi i64 [ 1, %.preheader738 ], [ %indvars.iv.next904.1, %bb.bc ] ; 3 uses
+  %niter1138 = phi i64 [ 0, %.preheader738 ], [ %niter1138.next.1, %bb.bc ]
   %.0..0..0..0.221 = load volatile i16, ptr %i.c, align 2, !tbaa !103
   %i.fy = icmp eq i16 %.0..0..0..0.221, 3
   br i1 %i.fy, label %bb.ax, label %bb.at

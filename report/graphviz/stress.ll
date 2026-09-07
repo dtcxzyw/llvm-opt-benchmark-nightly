@@ -205,7 +205,7 @@ gv_calloc.exit554.i:                              ; preds = %gv_calloc.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
-  %i.ce = zext nneg i32 %1 to i64                 ; 70 uses
+  %i.ce = zext nneg i32 %1 to i64                 ; 69 uses
   %xtraiter = and i64 %i.br, 3                    ; 3 uses
   %i.cf = add nsw i32 %i.bq, -1
   %i.cg = icmp ult i32 %i.cf, 3
@@ -523,9 +523,9 @@ bb.al:                                            ; preds = %gv_calloc.exit565.p
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.dl, ptr noundef nonnull align 4 dereferenceable(1) %i.dv, i64 %i.df, i1 false), !tbaa !46
-  %8 = add nsw i64 %i.ce, -1                      ; 2 uses
   %xtraiter969 = and i64 %i.ce, 3                 ; 3 uses
-  %i.hi = icmp ult i64 %8, 3
+  %8 = add nsw i32 %1, -1
+  %i.hi = icmp ult i32 %8, 3
   br i1 %i.hi, label %.epil.preheader968, label %.new
 
 .new:                                             ; preds = %bb.am
@@ -928,7 +928,6 @@ sparse_stress_subspace_majorization_kD.exit:      ; preds = %bb.cn, %bb.co
 
 .lr.ph.preheader:                                 ; preds = %.preheader490
   %xtraiter1016 = and i64 %i.ce, 1
-  %9 = icmp eq i64 %8, 0
   %unroll_iter1021 = and i64 %i.ce, 2147483646
   %lcmp.mod1018.not = icmp eq i64 %xtraiter1016, 0
   %lcmp.mod1020 = trunc i32 %1 to i1
@@ -941,20 +940,18 @@ sparse_stress_subspace_majorization_kD.exit:      ; preds = %bb.cn, %bb.co
   %indvars.iv617 = phi i64 [ %indvars.iv.next618, %._crit_edge ], [ 0, %.lr.ph.preheader ] ; 4 uses
   %i.zo = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv617
   %i.zp = load ptr, ptr %i.zo, align 8, !tbaa !12 ; 3 uses
-  br i1 %9, label %.epil.preheader1015, label %.lr.ph.new
+  br label %.lr.ph.new
 
 .lr.ph499.unr-lcssa:                              ; preds = %.lr.ph.new
   br i1 %lcmp.mod1018.not, label %.lr.ph499, label %.epil.preheader1015
 
-.epil.preheader1015:                              ; preds = %.lr.ph499.unr-lcssa, %.lr.ph
-  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %.lr.ph499.unr-lcssa ]
-  %.0343497.epil.init = phi double [ 1.000000e+00, %.lr.ph ], [ %.1344.1, %.lr.ph499.unr-lcssa ] ; 2 uses
+.epil.preheader1015:                              ; preds = %.lr.ph499.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod1020)
-  %i.zq = getelementptr inbounds nuw [8 x i8], ptr %i.zp, i64 %indvars.iv.epil.init
+  %i.zq = getelementptr inbounds nuw [8 x i8], ptr %i.zp, i64 %indvars.iv.next.1
   %i.zr = load double, ptr %i.zq, align 8, !tbaa !35
   %i.zs = call double @llvm.fabs.f64(double %i.zr) ; 2 uses
-  %i.zt = fcmp ogt double %i.zs, %.0343497.epil.init
-  %.1344.epil = select i1 %i.zt, double %i.zs, double %.0343497.epil.init
+  %i.zt = fcmp ogt double %i.zs, %.1344.1
+  %.1344.epil = select i1 %i.zt, double %i.zs, double %.1344.1
   br label %.lr.ph499
 
 .lr.ph499:                                        ; preds = %.lr.ph499.unr-lcssa, %.epil.preheader1015
@@ -985,10 +982,10 @@ scalar.ph864.preheader:                           ; preds = %.lr.ph499, %middle.
   %indvars.iv607.ph = phi i64 [ 0, %.lr.ph499 ], [ %n.vec867, %middle.block874 ]
   br label %scalar.ph864
 
-.lr.ph.new:                                       ; preds = %.lr.ph, %.lr.ph.new
-  %indvars.iv = phi i64 [ %indvars.iv.next.1, %.lr.ph.new ], [ 0, %.lr.ph ] ; 3 uses
-  %.0343497 = phi double [ %.1344.1, %.lr.ph.new ], [ 1.000000e+00, %.lr.ph ] ; 2 uses
-  %niter1022 = phi i64 [ %niter1022.next.1, %.lr.ph.new ], [ 0, %.lr.ph ]
+.lr.ph.new:                                       ; preds = %.lr.ph.new, %.lr.ph
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %.lr.ph.new ] ; 3 uses
+  %.0343497 = phi double [ 1.000000e+00, %.lr.ph ], [ %.1344.1, %.lr.ph.new ] ; 2 uses
+  %niter1022 = phi i64 [ 0, %.lr.ph ], [ %niter1022.next.1, %.lr.ph.new ]
   %i.zz = getelementptr inbounds nuw [8 x i8], ptr %i.zp, i64 %indvars.iv
   %i.aaa = load double, ptr %i.zz, align 8, !tbaa !35
   %i.aab = call double @llvm.fabs.f64(double %i.aaa) ; 2 uses
@@ -999,7 +996,7 @@ scalar.ph864.preheader:                           ; preds = %.lr.ph499, %middle.
   %i.aaf = load double, ptr %i.aae, align 8, !tbaa !35
   %i.aag = call double @llvm.fabs.f64(double %i.aaf) ; 2 uses
   %i.aah = fcmp ogt double %i.aag, %.1344
-  %.1344.1 = select i1 %i.aah, double %i.aag, double %.1344 ; 3 uses
+  %.1344.1 = select i1 %i.aah, double %i.aag, double %.1344 ; 4 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter1022.next.1 = add i64 %niter1022, 2       ; 2 uses
   %niter1022.ncmp.1 = icmp eq i64 %niter1022.next.1, %unroll_iter1021
@@ -1402,21 +1399,18 @@ bb.ec:                                            ; preds = %gv_calloc.exit466
   %i.aif = add nsw i32 %1, -2
   %wide.trip.count702 = zext i32 %i.acv to i64
   %wide.trip.count668 = zext nneg i32 %4 to i64
-  %wide.trip.count711 = zext i32 %1 to i64        ; 7 uses
+  %wide.trip.count711 = zext i32 %1 to i64        ; 6 uses
   %i.aig = fadd double %i.aie, 0.000000e+00
   %wide.trip.count716 = zext nneg i32 %4 to i64
   %wide.trip.count721 = zext nneg i32 %4 to i64
   %wide.trip.count726 = zext nneg i32 %4 to i64
   %wide.trip.count736 = zext nneg i32 %4 to i64
   %wide.trip.count741 = zext nneg i32 %4 to i64
-  %10 = add nsw i64 %wide.trip.count711, -1       ; 2 uses
   %xtraiter1061 = and i64 %wide.trip.count711, 1
-  %11 = icmp eq i64 %10, 0
   %unroll_iter1065 = and i64 %wide.trip.count711, 4294967294
   %lcmp.mod1063.not = icmp eq i64 %xtraiter1061, 0
   %lcmp.mod1064 = trunc i32 %1 to i1
   %xtraiter1067 = and i64 %wide.trip.count711, 1
-  %12 = icmp eq i64 %10, 0
   %unroll_iter1071 = and i64 %wide.trip.count711, 4294967294
   %lcmp.mod1069.not = icmp eq i64 %xtraiter1067, 0
   %lcmp.mod1070 = trunc i32 %1 to i1
@@ -1426,26 +1420,23 @@ bb.ed:                                            ; preds = %.lr.ph579, %bb.eo
   %.0341577 = phi i32 [ 0, %.lr.ph579 ], [ %i.asc, %bb.eo ] ; 3 uses
   %.0354576 = phi double [ f0x7FEFFFFFFFFFFFFF, %.lr.ph579 ], [ %.1353.lcssa, %bb.eo ] ; 2 uses
   call void @llvm.memset.p0.i64(ptr align 16 %i.afk, i8 0, i64 %i.aid, i1 false)
-  br i1 %i.adc, label %bb.ee, label %13
+  br i1 %i.adc, label %bb.ee, label %.preheader484.a
 
 bb.ee:                                            ; preds = %bb.ed
   call void @sqrt_vecf(i32 noundef %i.adb, ptr noundef %.1364, ptr noundef %i.ahw) #15
-  br label %13
+  br label %.preheader484.a
 
-13:                                               ; preds = %bb.ee, %bb.ed
-  br i1 %i.bo, label %.lr.ph552, label %.preheader484.a
+.preheader484.a:                                  ; preds = %bb.ee, %bb.ed
+  br i1 %i.bo, label %.lr.ph552, label %.lr.ph556.preheader
 
-.preheader484.a:                                  ; preds = %.loopexit478, %13
-  br i1 %.not.i437, label %.lr.ph556.preheader, label %.preheader483
+.lr.ph556.preheader:                              ; preds = %.loopexit478, %.preheader484.a
+  br i1 %.not.i437, label %.lr.ph556, label %.preheader483
 
-.lr.ph556.preheader:                              ; preds = %.preheader484.a
-  br i1 %11, label %.lr.ph556.epil.preheader, label %.lr.ph556
-
-.lr.ph552:                                        ; preds = %13, %.loopexit478
-  %indvars.iv697 = phi i64 [ %indvars.iv.next698, %.loopexit478 ], [ 0, %13 ] ; 10 uses
-  %indvars.iv681 = phi i32 [ %indvars.iv.next682, %.loopexit478 ], [ %i.aif, %13 ] ; 2 uses
-  %indvars.iv662.in = phi i64 [ %indvars.iv662, %.loopexit478 ], [ %i.add, %13 ]
-  %.3368550 = phi i32 [ %.6, %.loopexit478 ], [ 0, %13 ] ; 3 uses
+.lr.ph552:                                        ; preds = %.preheader484.a, %.loopexit478
+  %indvars.iv697 = phi i64 [ %indvars.iv.next698, %.loopexit478 ], [ 0, %.preheader484.a ] ; 10 uses
+  %indvars.iv681 = phi i32 [ %indvars.iv.next682, %.loopexit478 ], [ %i.aif, %.preheader484.a ] ; 2 uses
+  %indvars.iv662.in = phi i64 [ %indvars.iv662, %.loopexit478 ], [ %i.add, %.preheader484.a ]
+  %.3368550 = phi i32 [ %.6, %.loopexit478 ], [ 0, %.preheader484.a ] ; 3 uses
   %i.aih = trunc i64 %indvars.iv697 to i32
   %i.aii = sub i32 %i.acv, %i.aih                 ; 2 uses
   %i.aij = zext i32 %i.aii to i64                 ; 3 uses
@@ -1848,24 +1839,22 @@ bb.eg:                                            ; preds = %.lr.ph535, %bb.ef
   %indvars.iv.next698 = add nuw nsw i64 %indvars.iv697, 1 ; 2 uses
   %indvars.iv.next682 = add i32 %indvars.iv681, -1
   %exitcond703.not = icmp eq i64 %indvars.iv.next698, %wide.trip.count702
-  br i1 %exitcond703.not, label %.preheader484.a, label %.lr.ph552, !llvm.loop !133
+  br i1 %exitcond703.not, label %.lr.ph556.preheader, label %.lr.ph552, !llvm.loop !133
 
 .preheader483.loopexit.unr-lcssa:                 ; preds = %.lr.ph556
   br i1 %lcmp.mod1063.not, label %.preheader483, label %.lr.ph556.epil.preheader
 
-.lr.ph556.epil.preheader:                         ; preds = %.preheader483.loopexit.unr-lcssa, %.lr.ph556.preheader
-  %indvars.iv706.epil.init = phi i64 [ 0, %.lr.ph556.preheader ], [ %indvars.iv.next707.1, %.preheader483.loopexit.unr-lcssa ]
-  %.7554.epil.init = phi i32 [ 0, %.lr.ph556.preheader ], [ %i.apc, %.preheader483.loopexit.unr-lcssa ]
+.lr.ph556.epil.preheader:                         ; preds = %.preheader483.loopexit.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod1064)
-  %i.aoi = getelementptr inbounds nuw [16 x i8], ptr %i.afk, i64 %indvars.iv706.epil.init
+  %i.aoi = getelementptr inbounds nuw [16 x i8], ptr %i.afk, i64 %indvars.iv.next707.1
   %i.aoj = load x86_fp80, ptr %i.aoi, align 16, !tbaa !153
   %i.aok = fptrunc x86_fp80 %i.aoj to float
-  %i.aol = sext i32 %.7554.epil.init to i64
+  %i.aol = sext i32 %i.apc to i64
   %i.aom = getelementptr inbounds [4 x i8], ptr %i.ahw, i64 %i.aol
   store float %i.aok, ptr %i.aom, align 4, !tbaa !48
   br label %.preheader483
 
-.preheader483:                                    ; preds = %.lr.ph556.epil.preheader, %.preheader483.loopexit.unr-lcssa, %.preheader484.a
+.preheader483:                                    ; preds = %.lr.ph556.epil.preheader, %.preheader483.loopexit.unr-lcssa, %.lr.ph556.preheader
   br i1 %i.acb, label %.lr.ph558, label %._crit_edge568
 
 .lr.ph556:                                        ; preds = %.lr.ph556.preheader, %.lr.ph556
@@ -1976,13 +1965,10 @@ bb.eh:                                            ; preds = %.lr.ph574.split.us
   %i.aqj = load ptr, ptr %i.aqi, align 8, !tbaa !56
   %i.aqk = call i32 @conjugate_gradient_mkernel(ptr noundef %.1364, ptr noundef %i.ahl, ptr noundef %i.aqj, i32 noundef %1, double noundef 1.000000e-03, i32 noundef %1) #15
   %i.aql = icmp slt i32 %i.aqk, 0
-  br i1 %i.aql, label %.thread, label %.preheader476
+  br i1 %i.aql, label %.thread, label %.lr.ph571.preheader
 
-.preheader476:                                    ; preds = %.lr.ph574.split
-  br i1 %.not.i437, label %.lr.ph571.preheader, label %.loopexit
-
-.lr.ph571.preheader:                              ; preds = %.preheader476
-  br i1 %12, label %.lr.ph571.epil.preheader, label %.lr.ph571
+.lr.ph571.preheader:                              ; preds = %.lr.ph574.split
+  br i1 %.not.i437, label %.lr.ph571, label %.loopexit
 
 .lr.ph571:                                        ; preds = %.lr.ph571.preheader, %bb.ek
   %indvars.iv728 = phi i64 [ %indvars.iv.next729.1, %bb.ek ], [ 0, %.lr.ph571.preheader ] ; 5 uses
@@ -2024,7 +2010,7 @@ bb.ej:                                            ; preds = %.lr.ph571.1
   br label %bb.ek
 
 bb.ek:                                            ; preds = %bb.ej, %.lr.ph571.1
-  %indvars.iv.next729.1 = add nuw nsw i64 %indvars.iv728, 2 ; 2 uses
+  %indvars.iv.next729.1 = add nuw nsw i64 %indvars.iv728, 2 ; 4 uses
   %niter1072.next.1 = add i64 %niter1072, 2       ; 2 uses
   %niter1072.ncmp.1 = icmp eq i64 %niter1072.next.1, %unroll_iter1071
   br i1 %niter1072.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph571, !llvm.loop !139
@@ -2032,10 +2018,9 @@ bb.ek:                                            ; preds = %bb.ej, %.lr.ph571.1
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.ek
   br i1 %lcmp.mod1069.not, label %.loopexit, label %.lr.ph571.epil.preheader
 
-.lr.ph571.epil.preheader:                         ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph571.preheader
-  %indvars.iv728.epil.init = phi i64 [ 0, %.lr.ph571.preheader ], [ %indvars.iv.next729.1, %.loopexit.loopexit.unr-lcssa ] ; 3 uses
+.lr.ph571.epil.preheader:                         ; preds = %.loopexit.loopexit.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod1070)
-  %i.ari = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv728.epil.init
+  %i.ari = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.next729.1
   %i.arj = load ptr, ptr %i.ari, align 8, !tbaa !14
   %i.ark = getelementptr inbounds nuw i8, ptr %i.arj, i64 16
   %i.arl = load ptr, ptr %i.ark, align 8, !tbaa !19
@@ -2045,14 +2030,14 @@ bb.ek:                                            ; preds = %bb.ej, %.lr.ph571.1
   br i1 %i.aro, label %.loopexit, label %bb.el
 
 bb.el:                                            ; preds = %.lr.ph571.epil.preheader
-  %i.arp = getelementptr inbounds nuw [4 x i8], ptr %i.ahl, i64 %indvars.iv728.epil.init
+  %i.arp = getelementptr inbounds nuw [4 x i8], ptr %i.ahl, i64 %indvars.iv.next729.1
   %i.arq = load float, ptr %i.arp, align 4, !tbaa !48
   %i.arr = load ptr, ptr %i.aqg, align 8, !tbaa !56
-  %i.ars = getelementptr inbounds nuw [4 x i8], ptr %i.arr, i64 %indvars.iv728.epil.init
+  %i.ars = getelementptr inbounds nuw [4 x i8], ptr %i.arr, i64 %indvars.iv.next729.1
   store float %i.arq, ptr %i.ars, align 4, !tbaa !48
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit.unr-lcssa, %bb.el, %.lr.ph571.epil.preheader, %.preheader476
+.loopexit:                                        ; preds = %.loopexit.loopexit.unr-lcssa, %bb.el, %.lr.ph571.epil.preheader, %.lr.ph571.preheader
   %indvars.iv.next734 = add nuw nsw i64 %indvars.iv733, 1 ; 2 uses
   %exitcond737.not = icmp eq i64 %indvars.iv.next734, %wide.trip.count736
   br i1 %exitcond737.not, label %._crit_edge575, label %.lr.ph574.split, !llvm.loop !138

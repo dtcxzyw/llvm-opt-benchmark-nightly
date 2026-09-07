@@ -206,7 +206,7 @@ sqlite3DequoteToken.exit:                         ; preds = %.lr.ph.i, %._crit_e
   br i1 %i.ab, label %bb.g, label %.critedge2
 
 bb.g:                                             ; preds = %sqlite3DequoteToken.exit
-  %i.ac = add i32 %4, -6                          ; 2 uses
+  %i.ac = add i32 %4, -6
   %i.ad = zext i32 %i.ac to i64                   ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 %i.ad ; 6 uses
   %i.af = icmp eq ptr %3, null
@@ -287,7 +287,7 @@ bb.m:                                             ; preds = %.lr.ph.i86.5
   %i.bm = getelementptr inbounds nuw i8, ptr @sqlite3UpperToLower, i64 %i.bl
   %i.bn = and i8 %i.bk, -33
   %i.bo = icmp eq i8 %i.bn, 83
-  br i1 %i.bo, label %sqlite3_strnicmp.exit.thread, label %split.i
+  br i1 %i.bo, label %.lr.ph, label %split.i
 
 split.i:                                          ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
   %.lcssa244.in = phi ptr [ %i.ai, %bb.h ], [ %i.ao, %bb.i ], [ %i.au, %bb.j ], [ %i.ba, %bb.k ], [ %i.bg, %bb.l ], [ %i.bm, %bb.m ]
@@ -305,13 +305,9 @@ sqlite3_strnicmp.exit:                            ; preds = %.lr.ph.i86.preheade
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !733
   %i.bv = zext i8 %i.bu to i32
   %i.bw = icmp eq i32 %i.bq, %i.bv
-  br i1 %i.bw, label %sqlite3_strnicmp.exit.thread, label %.critedge2.thread
+  br i1 %i.bw, label %.lr.ph, label %.critedge2.thread
 
-sqlite3_strnicmp.exit.thread:                     ; preds = %bb.m, %sqlite3_strnicmp.exit
-  %.not79482 = icmp eq i32 %i.ac, 0
-  br i1 %.not79482, label %.critedge2.thread178, label %.lr.ph
-
-.lr.ph:                                           ; preds = %sqlite3_strnicmp.exit.thread
+.lr.ph:                                           ; preds = %sqlite3_strnicmp.exit, %bb.m
   %i.bx = add i32 %4, -15
   br label %bb.o
 
@@ -714,12 +710,12 @@ bb.bb:                                            ; preds = %.lr.ph.i111.5.3
   %i.rv = icmp eq i32 %i.rt, %i.ru
   br i1 %i.rv, label %sqlite3_strnicmp.exit118.thread, label %.critedge2.thread178
 
-.critedge2.thread178:                             ; preds = %bb.n, %bb.y, %sqlite3_strnicmp.exit.thread, %sqlite3_strnicmp.exit97.thread, %sqlite3_strnicmp.exit118.thread181.3, %sqlite3_strnicmp.exit118.thread181.2.thread, %sqlite3_strnicmp.exit118.thread181.4.thread384, %.lr.ph._crit_edge.i117.5, %sqlite3_strnicmp.exit118.thread, %.critedge2
-  %.sroa.9.1 = phi i32 [ 0, %sqlite3_strnicmp.exit118.thread ], [ 0, %sqlite3_strnicmp.exit97.thread ], [ %.sroa.9.0, %.critedge2 ], [ %.sroa.9.2, %sqlite3_strnicmp.exit118.thread181.3 ], [ 3, %sqlite3_strnicmp.exit118.thread181.2.thread ], [ %.sroa.9.2, %.lr.ph._crit_edge.i117.5 ], [ %.sroa.9.2, %sqlite3_strnicmp.exit118.thread181.4.thread384 ], [ 0, %sqlite3_strnicmp.exit.thread ], [ 0, %bb.y ], [ 0, %bb.n ] ; 3 uses
-  %.sroa.0.0 = phi ptr [ %.sroa.0.1, %sqlite3_strnicmp.exit118.thread ], [ %3, %sqlite3_strnicmp.exit97.thread ], [ %3, %.critedge2 ], [ %.sroa.0.1, %sqlite3_strnicmp.exit118.thread181.3 ], [ %.sroa.0.1, %sqlite3_strnicmp.exit118.thread181.2.thread ], [ %.sroa.0.1, %.lr.ph._crit_edge.i117.5 ], [ %.sroa.0.1, %sqlite3_strnicmp.exit118.thread181.4.thread384 ], [ %3, %sqlite3_strnicmp.exit.thread ], [ %3, %bb.y ], [ %3, %bb.n ]
-  %.069 = phi i8 [ %i.hk, %sqlite3_strnicmp.exit118.thread ], [ 0, %sqlite3_strnicmp.exit97.thread ], [ 0, %.critedge2 ], [ 0, %sqlite3_strnicmp.exit118.thread181.3 ], [ 0, %sqlite3_strnicmp.exit118.thread181.2.thread ], [ 0, %.lr.ph._crit_edge.i117.5 ], [ 0, %sqlite3_strnicmp.exit118.thread181.4.thread384 ], [ 0, %sqlite3_strnicmp.exit.thread ], [ 0, %bb.y ], [ 0, %bb.n ]
-  %.068 = phi i8 [ %spec.select, %sqlite3_strnicmp.exit118.thread ], [ 1, %sqlite3_strnicmp.exit97.thread ], [ 1, %.critedge2 ], [ 1, %sqlite3_strnicmp.exit118.thread181.3 ], [ 1, %sqlite3_strnicmp.exit118.thread181.2.thread ], [ 1, %.lr.ph._crit_edge.i117.5 ], [ 1, %sqlite3_strnicmp.exit118.thread181.4.thread384 ], [ 1, %sqlite3_strnicmp.exit.thread ], [ 1, %bb.y ], [ 1, %bb.n ]
-  %.0 = phi i8 [ %i.hg, %sqlite3_strnicmp.exit118.thread ], [ 65, %sqlite3_strnicmp.exit97.thread ], [ 65, %.critedge2 ], [ 65, %sqlite3_strnicmp.exit118.thread181.3 ], [ 65, %sqlite3_strnicmp.exit118.thread181.2.thread ], [ 65, %.lr.ph._crit_edge.i117.5 ], [ 65, %sqlite3_strnicmp.exit118.thread181.4.thread384 ], [ 65, %sqlite3_strnicmp.exit.thread ], [ 65, %bb.y ], [ 65, %bb.n ]
+.critedge2.thread178:                             ; preds = %bb.n, %bb.y, %sqlite3_strnicmp.exit97.thread, %sqlite3_strnicmp.exit118.thread181.3, %sqlite3_strnicmp.exit118.thread181.2.thread, %sqlite3_strnicmp.exit118.thread181.4.thread384, %.lr.ph._crit_edge.i117.5, %sqlite3_strnicmp.exit118.thread, %.critedge2
+  %.sroa.9.1 = phi i32 [ 0, %sqlite3_strnicmp.exit118.thread ], [ 0, %sqlite3_strnicmp.exit97.thread ], [ %.sroa.9.0, %.critedge2 ], [ %.sroa.9.2, %sqlite3_strnicmp.exit118.thread181.3 ], [ 3, %sqlite3_strnicmp.exit118.thread181.2.thread ], [ %.sroa.9.2, %.lr.ph._crit_edge.i117.5 ], [ %.sroa.9.2, %sqlite3_strnicmp.exit118.thread181.4.thread384 ], [ 0, %bb.y ], [ 0, %bb.n ] ; 3 uses
+  %.sroa.0.0 = phi ptr [ %.sroa.0.1, %sqlite3_strnicmp.exit118.thread ], [ %3, %sqlite3_strnicmp.exit97.thread ], [ %3, %.critedge2 ], [ %.sroa.0.1, %sqlite3_strnicmp.exit118.thread181.3 ], [ %.sroa.0.1, %sqlite3_strnicmp.exit118.thread181.2.thread ], [ %.sroa.0.1, %.lr.ph._crit_edge.i117.5 ], [ %.sroa.0.1, %sqlite3_strnicmp.exit118.thread181.4.thread384 ], [ %3, %bb.y ], [ %3, %bb.n ]
+  %.069 = phi i8 [ %i.hk, %sqlite3_strnicmp.exit118.thread ], [ 0, %sqlite3_strnicmp.exit97.thread ], [ 0, %.critedge2 ], [ 0, %sqlite3_strnicmp.exit118.thread181.3 ], [ 0, %sqlite3_strnicmp.exit118.thread181.2.thread ], [ 0, %.lr.ph._crit_edge.i117.5 ], [ 0, %sqlite3_strnicmp.exit118.thread181.4.thread384 ], [ 0, %bb.y ], [ 0, %bb.n ]
+  %.068 = phi i8 [ %spec.select, %sqlite3_strnicmp.exit118.thread ], [ 1, %sqlite3_strnicmp.exit97.thread ], [ 1, %.critedge2 ], [ 1, %sqlite3_strnicmp.exit118.thread181.3 ], [ 1, %sqlite3_strnicmp.exit118.thread181.2.thread ], [ 1, %.lr.ph._crit_edge.i117.5 ], [ 1, %sqlite3_strnicmp.exit118.thread181.4.thread384 ], [ 1, %bb.y ], [ 1, %bb.n ]
+  %.0 = phi i8 [ %i.hg, %sqlite3_strnicmp.exit118.thread ], [ 65, %sqlite3_strnicmp.exit97.thread ], [ 65, %.critedge2 ], [ 65, %sqlite3_strnicmp.exit118.thread181.3 ], [ 65, %sqlite3_strnicmp.exit118.thread181.2.thread ], [ 65, %.lr.ph._crit_edge.i117.5 ], [ 65, %sqlite3_strnicmp.exit118.thread181.4.thread384 ], [ 65, %bb.y ], [ 65, %bb.n ]
   %i.rw = zext i32 %.sroa.5.0 to i64              ; 3 uses
   %i.rx = add nuw nsw i64 %i.rw, 1
   %i.ry = zext i32 %.sroa.9.1 to i64              ; 3 uses

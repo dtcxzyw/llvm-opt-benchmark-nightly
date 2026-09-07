@@ -206,7 +206,7 @@ bb.a:
   %2 = alloca %"class.boost::static_strings::basic_static_string.10", align 1 ; 11 uses
   %3 = alloca %"class.boost::static_strings::basic_static_string.10", align 1 ; 9 uses
   %4 = alloca %"class.boost::static_strings::basic_static_string.10", align 1 ; 8 uses
-  %5 = alloca %"class.boost::static_strings::basic_static_string.10", align 1 ; 8 uses
+  %5 = alloca %"class.boost::static_strings::basic_static_string.10", align 1 ; 9 uses
   %6 = alloca %"class.boost::static_strings::basic_static_string.10", align 1 ; 10 uses
   %7 = alloca %"class.boost::static_strings::basic_static_string.10", align 1 ; 11 uses
   %8 = alloca %"class.boost::static_strings::basic_static_string.10", align 1 ; 11 uses
@@ -582,8 +582,8 @@ _ZN5boost14static_stringseqILm20EcSt11char_traitsIcEEEbRKNS0_19basic_static_stri
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(22) %5, i8 0, i64 22, i1 false)
   %i.ek = call noundef nonnull align 1 dereferenceable(22) ptr @_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE6assignIPKcEENSt9enable_ifIXsr6detail17is_input_iteratorIT_EE5valueERS4_E4typeES9_S9_(ptr noundef nonnull align 1 dereferenceable(22) %5, ptr noundef nonnull @.str.3951, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str.3951, i64 10)) ; 0 uses
-  %i.el = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 7 uses
-  %.ptr640 = getelementptr inbounds nuw i8, ptr %5, i64 6 ; 4 uses
+  %i.el = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 5 uses
+  %.ptr640 = getelementptr inbounds nuw i8, ptr %5, i64 6 ; 3 uses
   %i.em = load i8, ptr %5, align 1, !tbaa !84     ; 3 uses
   %i.en = zext i8 %i.em to i64                    ; 2 uses
   %.sroa.speculated.i.i64 = call noundef i64 @llvm.umin.i64(i64 %i.en, i64 5) ; 5 uses
@@ -608,27 +608,19 @@ _ZNSt11char_traitsIcE4moveEPcPKcm.exit.i436:      ; preds = %bb.o
 
 _ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i446:    ; preds = %bb.o
   %i.es = add nsw i64 %.sroa.speculated.i.i64, -5 ; 2 uses
-  %.sroa.speculated.i445 = call i64 @llvm.umin.i64(i64 %i.es, i64 5) ; 4 uses
   %i.et = add nuw nsw i64 %i.ep, 1
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.ptr640, ptr noundef nonnull align 1 dereferenceable(1) %i.eo, i64 %i.et, i1 false)
-  %45 = icmp eq i64 %i.es, 0
-  br i1 %45, label %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447, label %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447.thread
-
-_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447.thread: ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i446
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.el, ptr nonnull align 1 %.ptr640, i64 %.sroa.speculated.i445, i1 false)
-  br label %_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit449
+  %45 = icmp ugt i64 %i.es, 4
+  br i1 %45, label %_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit449, label %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447
 
 _ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447:    ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i446
-  %46 = sub nuw nsw i64 5, %.sroa.speculated.i445
-  %i.eu = sub nuw nsw i64 5, %.sroa.speculated.i.i64
-  %47 = getelementptr i8, ptr %i.el, i64 %i.eu
-  %48 = getelementptr i8, ptr %47, i64 5
-  %i.ev = getelementptr i8, ptr %48, i64 %.sroa.speculated.i445
-  %i.ew = getelementptr i8, ptr %i.el, i64 %.sroa.speculated.i445
-  call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.ew, ptr align 1 %i.ev, i64 %46, i1 false)
+  %i.eu = sub nuw nsw i64 10, %.sroa.speculated.i.i64
+  %i.ev = getelementptr inbounds nuw i8, ptr %5, i64 6
+  %i.ew = getelementptr i8, ptr %i.el, i64 %i.es
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ew, ptr noundef nonnull align 1 dereferenceable(1) %i.ev, i64 %i.eu, i1 false)
   br label %_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit449
 
-_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit449: ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447.thread, %_ZNSt11char_traitsIcE4moveEPcPKcm.exit.i436, %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447
+_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit449: ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit.i436, %_ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i446, %_ZNSt11char_traitsIcE4moveEPcPKcm.exit77.i447
   %i.ex = trunc nuw nsw i64 %.sroa.speculated.i.i64 to i8
   %reass.sub641 = sub nuw i8 %i.em, %i.ex
   %i.ey = add i8 %reass.sub641, 5                 ; 2 uses
@@ -853,8 +845,8 @@ _ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i506:    ; preds = %bb.y
   %i.io = add nsw i64 %.sroa.speculated.i.i81, -1 ; 4 uses
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.in, ptr noundef nonnull align 1 dereferenceable(1) %i.ie, i64 %i.im, i1 false)
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.ic, ptr nonnull align 1 %.ptr644, i64 %i.io, i1 false)
-  %.not667 = icmp eq i64 %i.io, 1
-  br i1 %.not667, label %bb.z, label %_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit509
+  %46 = icmp ugt i64 %i.io, 1
+  br i1 %46, label %_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit509, label %bb.z
 
 bb.z:                                             ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i506
   %i.ip = sub nuw nsw i64 3, %.sroa.speculated.i.i81

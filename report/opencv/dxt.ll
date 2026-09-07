@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   store i32 0, ptr %3, align 4, !tbaa !42
-  %i.e = add nsw i32 %0, -1                       ; 4 uses
+  %i.e = add nsw i32 %0, -1                       ; 3 uses
   %i.f = sext i32 %i.e to i64
   %i.g = getelementptr inbounds [4 x i8], ptr %3, i64 %i.f
   store i32 %i.e, ptr %i.g, align 4, !tbaa !42
@@ -225,10 +225,6 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph306.1:                                      ; preds = %.lr.ph306
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 2, ptr %i.j, align 4, !tbaa !42
-  %exitcond355.not.1 = icmp eq i32 %i.e, 3
-  br i1 %exitcond355.not.1, label %._crit_edge307, label %.lr.ph306.2
-
-.lr.ph306.2:                                      ; preds = %.lr.ph306.1
   %11 = getelementptr inbounds nuw i8, ptr %3, i64 12
   store i32 3, ptr %11, align 4, !tbaa !42
   br label %._crit_edge307
@@ -240,7 +236,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 1, ptr %i.l, align 4, !tbaa !42
   br label %.loopexit
 
-._crit_edge307:                                   ; preds = %.lr.ph306.2, %.lr.ph306.1, %.lr.ph306
+._crit_edge307:                                   ; preds = %.lr.ph306.1, %.lr.ph306
   %i.m = icmp eq i32 %0, 5
   br i1 %i.m, label %bb.c, label %.thread264
 

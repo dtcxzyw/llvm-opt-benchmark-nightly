@@ -204,8 +204,7 @@ bb.p:                                             ; preds = %bb.o, %bb.j
   br i1 %i.k, label %.split.us.preheader, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.p
-  %i.y = add nsw i32 %4, -1                       ; 2 uses
-  %.not.i238 = icmp eq i32 %i.y, 0
+  %i.y = add nsw i32 %4, -1
   br label %.split
 
 .split.us.preheader:                              ; preds = %bb.p
@@ -347,20 +346,17 @@ mpihelp_add_1.exit.us:                            ; preds = %.preheader30.i.us, 
   %i.bv = getelementptr i8, ptr %i.bp, i64 8      ; 2 uses
   store i64 %i.bu, ptr %i.bp, align 8
   %i.bw = icmp ult i64 %i.bu, %i.bt
-  br i1 %i.bw, label %.preheader30.i.preheader, label %.loopexit32.i
-
-.preheader30.i.preheader:                         ; preds = %.split
-  br i1 %.not.i238, label %mpihelp_add_1.exit, label %.lr.ph
+  br i1 %i.bw, label %.lr.ph, label %.loopexit32.i
 
 .preheader30.i:                                   ; preds = %.lr.ph
   %i.bx = add i32 %i.by, -1                       ; 2 uses
   %.not.i = icmp eq i32 %i.bx, 0
   br i1 %.not.i, label %mpihelp_add_1.exit, label %.lr.ph, !llvm.loop !0
 
-.lr.ph:                                           ; preds = %.preheader30.i.preheader, %.preheader30.i
-  %i.by = phi i32 [ %i.bx, %.preheader30.i ], [ %i.y, %.preheader30.i.preheader ] ; 2 uses
-  %.023.i240 = phi ptr [ %i.bz, %.preheader30.i ], [ %i.bs, %.preheader30.i.preheader ] ; 2 uses
-  %.025.i239 = phi ptr [ %i.cc, %.preheader30.i ], [ %i.bv, %.preheader30.i.preheader ] ; 2 uses
+.lr.ph:                                           ; preds = %.split, %.preheader30.i
+  %i.by = phi i32 [ %i.bx, %.preheader30.i ], [ %i.y, %.split ] ; 2 uses
+  %.023.i240 = phi ptr [ %i.bz, %.preheader30.i ], [ %i.bs, %.split ] ; 2 uses
+  %.025.i239 = phi ptr [ %i.cc, %.preheader30.i ], [ %i.bv, %.split ] ; 2 uses
   %i.bz = getelementptr i8, ptr %.023.i240, i64 8 ; 2 uses
   %i.ca = load i64, ptr %.023.i240, align 8
   %i.cb = add i64 %i.ca, 1                        ; 2 uses
@@ -440,7 +436,7 @@ mpihelp_add_1.exit.loopexit.unr-lcssa:            ; preds = %.lr.ph.i
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %mpihelp_add_1.exit, label %.lr.ph.i.epil, !llvm.loop !24
 
-mpihelp_add_1.exit:                               ; preds = %.preheader30.i, %mpihelp_add_1.exit.loopexit.unr-lcssa, %.lr.ph.i.epil, %.preheader30.i.preheader, %.loopexit32.i, %.preheader.i
+mpihelp_add_1.exit:                               ; preds = %.preheader30.i, %mpihelp_add_1.exit.loopexit.unr-lcssa, %.lr.ph.i.epil, %.loopexit32.i, %.preheader.i
   %i.cv = getelementptr [8 x i8], ptr %.0105, i64 %i.l ; 2 uses
   %i.cw = sub i32 %.0107, %4                      ; 3 uses
   %.not125 = icmp slt i32 %i.cw, %4

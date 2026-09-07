@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %bb.a
   %i.w = add nuw nsw i32 %i.n, 1
   %i.x = lshr i32 %i.v, %i.w                      ; 3 uses
   %i.y = and i32 %3, 32768
-  %.not298 = icmp eq i32 %i.y, 0                  ; 3 uses
+  %.not298 = icmp eq i32 %i.y, 0                  ; 2 uses
   %.not29.i = icmp eq i32 %i.n, 2
   br i1 %.not29.i, label %decode_counter.exit.thread281, label %bb.c, !prof !54
 
 bb.c:                                             ; preds = %bb.b
   %i.z = icmp samesign ult i32 %i.n, 2
-  br i1 %i.z, label %bb.d, label %decode_counter.exit
+  br i1 %i.z, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
   %i.aa = sub nuw nsw i32 2, %i.n
@@ -223,20 +223,11 @@ bb.d:                                             ; preds = %bb.c
   br label %decode_counter.exit.thread281
 
 decode_counter.exit.thread281:                    ; preds = %bb.d, %bb.b
-  %.sroa.020.sroa.0.0.i.ph = phi i32 [ %i.x, %bb.b ], [ %i.af, %bb.d ] ; 2 uses
+  %.sroa.020.sroa.0.0.i.ph = phi i32 [ %i.x, %bb.b ], [ %i.af, %bb.d ] ; 4 uses
   br i1 %.not298, label %.preheader181, label %.preheader176
 
-decode_counter.exit:                              ; preds = %bb.c
-  %5 = add nsw i32 %i.n, -2                       ; 2 uses
-  %6 = shl i32 %i.x, %5                           ; 5 uses
-  %7 = icmp eq i32 %5, 0
-  br i1 %7, label %decode_counter.exit.thread, label %bb.g
-
-decode_counter.exit.thread:                       ; preds = %decode_counter.exit
-  br i1 %.not298, label %.preheader181, label %.preheader176
-
-.preheader181:                                    ; preds = %bb.a, %decode_counter.exit.thread281, %decode_counter.exit.thread
-  %.sroa.0107.sroa.0.0.extract.trunc174286 = phi i32 [ %.sroa.020.sroa.0.0.i.ph, %decode_counter.exit.thread281 ], [ %6, %decode_counter.exit.thread ], [ 0, %bb.a ] ; 3 uses
+.preheader181:                                    ; preds = %bb.a, %decode_counter.exit.thread281
+  %.sroa.0107.sroa.0.0.extract.trunc174286 = phi i32 [ %.sroa.020.sroa.0.0.i.ph, %decode_counter.exit.thread281 ], [ 0, %bb.a ] ; 3 uses
   %i.ag = icmp sgt i32 %i.k, 0
   br i1 %i.ag, label %.lr.ph208.preheader, label %.loopexit177
 
@@ -251,14 +242,13 @@ decode_counter.exit.thread:                       ; preds = %decode_counter.exit
   %diff.check405 = icmp ugt i64 %i.al, -32
   br label %.lr.ph208
 
-.preheader176:                                    ; preds = %decode_counter.exit.thread281, %decode_counter.exit.thread
-  %.sroa.0107.sroa.0.0.extract.trunc174287 = phi i32 [ %.sroa.020.sroa.0.0.i.ph, %decode_counter.exit.thread281 ], [ %6, %decode_counter.exit.thread ] ; 3 uses
+.preheader176:                                    ; preds = %decode_counter.exit.thread281
   %i.am = icmp sgt i32 %i.k, 0
   br i1 %i.am, label %.lr.ph214.preheader, label %.loopexit177
 
 .lr.ph214.preheader:                              ; preds = %.preheader176
   %wide.trip.count274 = zext nneg i32 %i.k to i64
-  %i.an = xor i32 %.sroa.0107.sroa.0.0.extract.trunc174287, -1
+  %i.an = xor i32 %.sroa.020.sroa.0.0.i.ph, -1
   %i.ao = add i32 %i.l, %i.an
   %i.ap = lshr exact i64 %i.j, 2
   %i.aq = sub i64 %i.b, %i.c
@@ -269,7 +259,7 @@ decode_counter.exit.thread:                       ; preds = %decode_counter.exit
 
 .lr.ph214:                                        ; preds = %.lr.ph214.preheader, %.loopexit
   %indvars.iv271 = phi i64 [ 0, %.lr.ph214.preheader ], [ %indvars.iv.next272, %.loopexit ] ; 4 uses
-  %indvars.iv261 = phi i32 [ %.sroa.0107.sroa.0.0.extract.trunc174287, %.lr.ph214.preheader ], [ %indvars.iv.next262, %.loopexit ] ; 3 uses
+  %indvars.iv261 = phi i32 [ %.sroa.020.sroa.0.0.i.ph, %.lr.ph214.preheader ], [ %indvars.iv.next262, %.loopexit ] ; 3 uses
   %i.as = mul i64 %i.ap, %indvars.iv271
   %i.at = trunc i64 %i.as to i32
   %i.au = add i32 %i.ao, %i.at                    ; 2 uses
@@ -280,7 +270,7 @@ decode_counter.exit.thread:                       ; preds = %decode_counter.exit
   %i.az = getelementptr inbounds nuw i8, ptr %2, i64 %i.aw ; 7 uses
   %i.ba = trunc i64 %indvars.iv271 to i32
   %i.bb = mul i32 %i.l, %i.ba
-  %i.bc = sub i32 %.sroa.0107.sroa.0.0.extract.trunc174287, %i.bb ; 2 uses
+  %i.bc = sub i32 %.sroa.020.sroa.0.0.i.ph, %i.bb ; 2 uses
   %i.bd = icmp slt i32 %i.bc, 1
   br i1 %i.bd, label %.loopexit.sink.split, label %bb.e
 
@@ -575,7 +565,9 @@ middle.block415:                                  ; preds = %vector.body410
   %exitcond257.not = icmp eq i64 %indvars.iv.next254, %wide.trip.count256
   br i1 %exitcond257.not, label %.loopexit177, label %.lr.ph208, !llvm.loop !1042
 
-bb.g:                                             ; preds = %decode_counter.exit
+bb.g:                                             ; preds = %bb.c
+  %5 = add nsw i32 %i.n, -2
+  %6 = shl i32 %i.x, %5                           ; 3 uses
   %i.ek = icmp sgt i32 %i.k, 0                    ; 2 uses
   br i1 %.not298, label %.preheader187, label %.preheader184
 

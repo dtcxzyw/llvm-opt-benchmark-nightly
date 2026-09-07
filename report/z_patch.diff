@@ -1,0 +1,111 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 270d3596ad679..0ec592ff4b9e2 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -3766,8 +3766,14 @@ Instruction *InstCombinerImpl::foldICmpBinOpEqualityWithConstant(
+     // (A + C2) != C --> A != (C - C2)
+     // TODO: Remove the one-use limitation? See discussion in D58633.
+     if (Constant *C2 = dyn_cast<Constant>(BOp1)) {
++      Constant *NewRHS = ConstantExpr::getSub(RHS, C2);
++      // If the add has other uses it stays live either way, so the rewrite only
++      // pays off when the new compare folds away.
++      if (Value *V =
++              simplifyICmpInst(Pred, BOp0, NewRHS, SQ.getWithInstruction(&Cmp)))
++        return replaceInstUsesWith(Cmp, V);
+       if (BO->hasOneUse())
+-        return new ICmpInst(Pred, BOp0, ConstantExpr::getSub(RHS, C2));
++        return new ICmpInst(Pred, BOp0, NewRHS);
+     } else if (C.isZero()) {
+       // Replace ((add A, B) != 0) with (A != -B) if A or B is
+       // efficiently invertible, or if the add has just this one use.
+diff --git a/llvm/test/Transforms/InstCombine/icmp-add.ll b/llvm/test/Transforms/InstCombine/icmp-add.ll
+index 1b66a50c26e59..03a0a6594460c 100644
+--- a/llvm/test/Transforms/InstCombine/icmp-add.ll
++++ b/llvm/test/Transforms/InstCombine/icmp-add.ll
+@@ -3602,3 +3602,86 @@ entry:
+   %result = select i1 %eq, i1 %v1_lt_v3, i1 %less_than
+   ret i1 %result
+ }
++
++; (A + C2) == C --> A == (C - C2) is normally limited to one-use adds, because
++; otherwise the add stays live and the rewrite just moves the compare off it.
++; When the new compare simplifies away, do it even with multiple uses.
++
++define i1 @multiuse_add_eq_implied_false(i64 %n, ptr %p) {
++; CHECK-LABEL: @multiuse_add_eq_implied_false(
++; CHECK-NEXT:    [[C:%.*]] = icmp ugt i64 [[N:%.*]], 10
++; CHECK-NEXT:    br i1 [[C]], label [[IF:%.*]], label [[EXIT:%.*]]
++; CHECK:       if:
++; CHECK-NEXT:    [[ADD:%.*]] = add i64 [[N]], -1
++; CHECK-NEXT:    store i64 [[ADD]], ptr [[P:%.*]], align 8
++; CHECK-NEXT:    ret i1 false
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++  %c = icmp ugt i64 %n, 10
++  br i1 %c, label %if, label %exit
++
++if:
++  %add = add i64 %n, -1
++  store i64 %add, ptr %p, align 8
++  %cmp = icmp eq i64 %add, 0
++  ret i1 %cmp
++
++exit:
++  ret i1 false
++}
++
++define i1 @multiuse_add_eq_implied_true(i64 %n, ptr %p) {
++; CHECK-LABEL: @multiuse_add_eq_implied_true(
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[N:%.*]], 7
++; CHECK-NEXT:    br i1 [[C]], label [[IF:%.*]], label [[EXIT:%.*]]
++; CHECK:       if:
++; CHECK-NEXT:    [[ADD:%.*]] = add nsw i64 [[N]], -1
++; CHECK-NEXT:    store i64 [[ADD]], ptr [[P:%.*]], align 8
++; CHECK-NEXT:    ret i1 true
++; CHECK:       exit:
++; CHECK-NEXT:    ret i1 false
++;
++  %c = icmp eq i64 %n, 7
++  br i1 %c, label %if, label %exit
++
++if:
++  %add = add i64 %n, -1
++  store i64 %add, ptr %p, align 8
++  %cmp = icmp eq i64 %add, 6
++  ret i1 %cmp
++
++exit:
++  ret i1 false
++}
++
++define i1 @multiuse_add_ne_implied_by_assume(i64 %n, ptr %p) {
++; CHECK-LABEL: @multiuse_add_ne_implied_by_assume(
++; CHECK-NEXT:    [[C:%.*]] = icmp ugt i64 [[N:%.*]], 10
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C]])
++; CHECK-NEXT:    [[ADD:%.*]] = add i64 [[N]], -1
++; CHECK-NEXT:    store i64 [[ADD]], ptr [[P:%.*]], align 8
++; CHECK-NEXT:    ret i1 true
++;
++  %c = icmp ugt i64 %n, 10
++  call void @llvm.assume(i1 %c)
++  %add = add i64 %n, -1
++  store i64 %add, ptr %p, align 8
++  %cmp = icmp ne i64 %add, 0
++  ret i1 %cmp
++}
++
++; Negative test: the add has multiple uses and the new compare does not
++; simplify, so the compare must stay on the add.
++define i1 @multiuse_add_eq_not_implied(i64 %n, ptr %p) {
++; CHECK-LABEL: @multiuse_add_eq_not_implied(
++; CHECK-NEXT:    [[ADD:%.*]] = add i64 [[N:%.*]], -1
++; CHECK-NEXT:    store i64 [[ADD]], ptr [[P:%.*]], align 8
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i64 [[ADD]], 0
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %add = add i64 %n, -1
++  store i64 %add, ptr %p, align 8
++  %cmp = icmp eq i64 %add, 0
++  ret i1 %cmp
++}

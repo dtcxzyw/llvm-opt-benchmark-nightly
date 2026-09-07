@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.k
   %.not85 = icmp eq i64 %i.ad, -1
   br i1 %.not85, label %bb.n, label %bb.ae
 
-bb.m:                                             ; preds = %bb.p, %bb.t, %bb.aj
+bb.m:                                             ; preds = %bb.aj, %bb.t, %bb.p
   %i.ae = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc6borrow3CoweEECsfsJAUsNanlj_23all_about_inserts_mysql(ptr noalias noundef align 8 dereferenceable(24) %i.h) #18

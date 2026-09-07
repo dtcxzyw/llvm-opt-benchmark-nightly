@@ -204,7 +204,7 @@ _ZNSt3setIhSt4lessIhESaIhEE5clearEv.exit455.i:    ; preds = %_ZNSt3setIhSt4lessI
   br i1 %.not3.i.1.i464.i, label %.preheader.i.2.i465.i, label %.lr.ph883.i.preheader
 
 .lr.ph883.i.preheader:                            ; preds = %.preheader.i.7.i475.i, %.preheader.i.6.i473.i, %.preheader.i.5.i471.i, %.preheader.i.2.i465.i, %.preheader.i.1.i463.i
-  %.sroa.0711.0882.i.ph = phi i64 [ 1, %.preheader.i.1.i463.i ], [ 2, %.preheader.i.2.i465.i ], [ 5, %.preheader.i.5.i471.i ], [ 6, %.preheader.i.6.i473.i ], [ 7, %.preheader.i.7.i475.i ]
+  %.sroa.0711.0882.i.ph = phi i64 [ 2, %.preheader.i.2.i465.i ], [ 5, %.preheader.i.5.i471.i ], [ 6, %.preheader.i.6.i473.i ], [ 7, %.preheader.i.7.i475.i ], [ 1, %.preheader.i.1.i463.i ]
   br label %.lr.ph883.i
 
 .preheader.i.2.i465.i:                            ; preds = %.preheader.i.1.i463.i
@@ -227,8 +227,8 @@ _ZNSt3setIhSt4lessIhESaIhEE5clearEv.exit455.i:    ; preds = %_ZNSt3setIhSt4lessI
   %.not3.i.7.i476.i = icmp eq i64 %i.ol, 0
   br i1 %.not3.i.7.i476.i, label %._crit_edge884.i, label %.lr.ph883.i.preheader
 
-._crit_edge884.i:                                 ; preds = %_ZN2cm17enum_set_iteratorINS_8enum_setIN12_GLOBAL__N_14TestELm8ELi0EEEEppEv.exit518.i, %bb.bw, %bb.bx, %.preheader.i.7.i475.i, %_ZNSt3setIhSt4lessIhESaIhEE5clearEv.exit455.i
-  %18 = phi i64 [ 0, %.preheader.i.7.i475.i ], [ 0, %_ZNSt3setIhSt4lessIhESaIhEE5clearEv.exit455.i ], [ %i.pt, %bb.bx ], [ %i.pt, %bb.bw ], [ %i.pt, %_ZN2cm17enum_set_iteratorINS_8enum_setIN12_GLOBAL__N_14TestELm8ELi0EEEEppEv.exit518.i ]
+._crit_edge884.i:                                 ; preds = %bb.bw, %bb.bx, %.preheader.i.7.i475.i, %_ZNSt3setIhSt4lessIhESaIhEE5clearEv.exit455.i
+  %18 = phi i64 [ 0, %.preheader.i.7.i475.i ], [ 0, %_ZNSt3setIhSt4lessIhESaIhEE5clearEv.exit455.i ], [ %i.pt, %bb.bx ], [ %i.pt, %bb.bw ]
   %i.om = load i64, ptr %i.mk, align 8, !tbaa !21
   %i.on = icmp eq i64 %18, %i.om
   br i1 %i.on, label %bb.bo, label %.loopexit786.i
@@ -277,9 +277,9 @@ bb.bs:                                            ; preds = %_ZNSt3setIhSt4lessI
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #14
   br label %bb.cb
 
-.lr.ph883.i:                                      ; preds = %.lr.ph883.i.preheader, %_ZN2cm17enum_set_iteratorINS_8enum_setIN12_GLOBAL__N_14TestELm8ELi0EEEEppEv.exit518.i
-  %i.pa = phi i64 [ %i.pt, %_ZN2cm17enum_set_iteratorINS_8enum_setIN12_GLOBAL__N_14TestELm8ELi0EEEEppEv.exit518.i ], [ 0, %.lr.ph883.i.preheader ]
-  %.sroa.0711.0882.i = phi i64 [ %i.pv, %_ZN2cm17enum_set_iteratorINS_8enum_setIN12_GLOBAL__N_14TestELm8ELi0EEEEppEv.exit518.i ], [ %.sroa.0711.0882.i.ph, %.lr.ph883.i.preheader ] ; 3 uses
+.lr.ph883.i:                                      ; preds = %_ZNK2cm8enum_setIN12_GLOBAL__N_14TestELm8ELi0EE4testEh.exit.i515.i, %.lr.ph883.i.preheader
+  %i.pa = phi i64 [ 0, %.lr.ph883.i.preheader ], [ %i.pt, %_ZNK2cm8enum_setIN12_GLOBAL__N_14TestELm8ELi0EE4testEh.exit.i515.i ]
+  %.sroa.0711.0882.i = phi i64 [ %.sroa.0711.0882.i.ph, %.lr.ph883.i.preheader ], [ %i.pv, %_ZNK2cm8enum_setIN12_GLOBAL__N_14TestELm8ELi0EE4testEh.exit.i515.i ] ; 3 uses
   %i.pb = trunc nuw nsw i64 %.sroa.0711.0882.i to i8 ; 4 uses
   %.02022.i.i.i489.i = load ptr, ptr %i.lx, align 8, !tbaa !23 ; 2 uses
   %.not23.i.i.i490.i = icmp eq ptr %.02022.i.i.i489.i, null
@@ -343,7 +343,7 @@ _ZNSt8_Rb_treeIhhSt9_IdentityIhESt4lessIhESaIhEE10_M_insert_IhNS5_11_Alloc_nodeE
   br label %bb.bw
 
 bb.bw:                                            ; preds = %.noexc512.i, %bb.bu
-  %i.pt = phi i64 [ %i.ps, %.noexc512.i ], [ %i.pa, %bb.bu ] ; 4 uses
+  %i.pt = phi i64 [ %i.ps, %.noexc512.i ], [ %i.pa, %bb.bu ] ; 3 uses
   %exitcond961.not.i258 = icmp eq i64 %.sroa.0711.0882.i, 7
   br i1 %exitcond961.not.i258, label %._crit_edge884.i, label %_ZNK2cm8enum_setIN12_GLOBAL__N_14TestELm8ELi0EE4testEh.exit.i515.i
 
@@ -353,15 +353,11 @@ bb.bx:                                            ; preds = %_ZNK2cm8enum_setIN1
 
 _ZNK2cm8enum_setIN12_GLOBAL__N_14TestELm8ELi0EE4testEh.exit.i515.i: ; preds = %bb.bw, %bb.bx
   %i.pu = phi i64 [ %i.pv, %bb.bx ], [ %.sroa.0711.0882.i, %bb.bw ] ; 2 uses
-  %i.pv = add nuw nsw i64 %i.pu, 1                ; 4 uses
+  %i.pv = add nuw nsw i64 %i.pu, 1                ; 3 uses
   %i.pw = shl nuw nsw i64 2, %i.pu
   %i.px = and i64 %i.pw, %i.oa
   %.not.i517.i = icmp eq i64 %i.px, 0
-  br i1 %.not.i517.i, label %bb.bx, label %_ZN2cm17enum_set_iteratorINS_8enum_setIN12_GLOBAL__N_14TestELm8ELi0EEEEppEv.exit518.i, !llvm.loop !40
-
-_ZN2cm17enum_set_iteratorINS_8enum_setIN12_GLOBAL__N_14TestELm8ELi0EEEEppEv.exit518.i: ; preds = %_ZNK2cm8enum_setIN12_GLOBAL__N_14TestELm8ELi0EE4testEh.exit.i515.i
-  %.not771.i = icmp eq i64 %i.pv, 8
-  br i1 %.not771.i, label %._crit_edge884.i, label %.lr.ph883.i
+  br i1 %.not.i517.i, label %bb.bx, label %.lr.ph883.i, !llvm.loop !40
 
 bb.by:                                            ; preds = %_ZNSt8_Rb_treeIhhSt9_IdentityIhESt4lessIhESaIhEE10_M_insert_IhNS5_11_Alloc_nodeEEESt17_Rb_tree_iteratorIhEPSt18_Rb_tree_node_baseSB_OT_RT0_.exit.i.i506.i
   %i.py = landingpad { ptr, i32 }

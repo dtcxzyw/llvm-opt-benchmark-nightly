@@ -204,8 +204,8 @@ bb.a:                                             ; preds = %.lr.ph180
   %i.af = icmp ult i32 %i.x, 2
   br i1 %i.af, label %.critedge, label %bb.b, !prof !46
 
-.critedge:                                        ; preds = %bb.a, %.lr.ph.preheader, %.lr.ph
-  %2 = phi ptr [ %i.bc, %.lr.ph ], [ %i.ak, %.lr.ph.preheader ], [ %i.u, %bb.a ]
+.critedge:                                        ; preds = %bb.a, %.lr.ph
+  %2 = phi ptr [ %i.bc, %.lr.ph ], [ %i.u, %bb.a ]
   call void @_efree(ptr noundef %2) #17
   store ptr null, ptr %1, align 8, !tbaa !58
   store i32 0, ptr %i.g, align 8, !tbaa !59
@@ -228,31 +228,27 @@ bb.c:                                             ; preds = %bb.b
 
 ir_array_set.exit:                                ; preds = %bb.b, %bb.c
   %i.aj = phi ptr [ %i.t, %bb.b ], [ %.pre, %bb.c ] ; 2 uses
-  %i.ak = phi ptr [ %i.u, %bb.b ], [ %.pre, %bb.c ] ; 3 uses
+  %i.ak = phi ptr [ %i.u, %bb.b ], [ %.pre, %bb.c ] ; 2 uses
   %i.al = phi ptr [ %i.v, %bb.b ], [ %.pre, %bb.c ] ; 2 uses
   %i.am = zext i32 %i.ag to i64
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.al, i64 %i.am
   store i32 %i.ac, ptr %i.an, align 4, !tbaa !39
-  %i.ao = add i32 %i.x, -1                        ; 3 uses
+  %i.ao = add i32 %i.x, -1                        ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ab, i64 4 ; 3 uses
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !39 ; 3 uses
   %i.ar = icmp ult i32 %i.aq, %.0110177
-  br i1 %i.ar, label %.loopexit145, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %ir_array_set.exit
-  %3 = icmp eq i32 %i.ao, 0
-  br i1 %3, label %.critedge, label %.lr.ph276, !prof !129
+  br i1 %i.ar, label %.loopexit145, label %.lr.ph276
 
 .lr.ph:                                           ; preds = %ir_array_set.exit138
   %i.as = icmp eq i32 %i.bf, 0
-  br i1 %i.as, label %.critedge, label %.lr.ph276, !prof !130
+  br i1 %i.as, label %.critedge, label %.lr.ph276, !prof !129
 
-.lr.ph276:                                        ; preds = %.lr.ph.preheader, %.lr.ph
-  %i.at = phi i32 [ %i.bf, %.lr.ph ], [ %i.ao, %.lr.ph.preheader ]
-  %i.au = phi ptr [ %i.bg, %.lr.ph ], [ %i.ap, %.lr.ph.preheader ]
-  %i.av = phi i32 [ %i.bh, %.lr.ph ], [ %i.aq, %.lr.ph.preheader ]
-  %i.aw = phi ptr [ %i.bc, %.lr.ph ], [ %i.ak, %.lr.ph.preheader ]
-  %i.ax = phi ptr [ %i.bb, %.lr.ph ], [ %i.aj, %.lr.ph.preheader ]
+.lr.ph276:                                        ; preds = %ir_array_set.exit, %.lr.ph
+  %i.at = phi i32 [ %i.bf, %.lr.ph ], [ %i.ao, %ir_array_set.exit ]
+  %i.au = phi ptr [ %i.bg, %.lr.ph ], [ %i.ap, %ir_array_set.exit ]
+  %i.av = phi i32 [ %i.bh, %.lr.ph ], [ %i.aq, %ir_array_set.exit ]
+  %i.aw = phi ptr [ %i.bc, %.lr.ph ], [ %i.ak, %ir_array_set.exit ]
+  %i.ax = phi ptr [ %i.bb, %.lr.ph ], [ %i.aj, %ir_array_set.exit ]
   %i.ay = load i32, ptr %i.h, align 8, !tbaa !61  ; 3 uses
   %i.az = add i32 %i.ay, 1                        ; 2 uses
   store i32 %i.az, ptr %i.h, align 8, !tbaa !61
@@ -572,12 +568,12 @@ bb.n:                                             ; preds = %bb.n, %.epil.prehea
 .preheader106.i.preheader:                        ; preds = %.lr.ph131.i
   %i.ga = add i32 %i.fp, -1                       ; 2 uses
   %i.gb = icmp eq i32 %i.ga, 0
-  br i1 %i.gb, label %.thread.i, label %.lr.ph279, !prof !129
+  br i1 %i.gb, label %.thread.i, label %.lr.ph279, !prof !130
 
 .preheader106.i:                                  ; preds = %.lr.ph279
   %i.gc = add i32 %i.ge, -1                       ; 2 uses
   %i.gd = icmp eq i32 %i.gc, 0
-  br i1 %i.gd, label %.thread.i, label %.lr.ph279, !prof !130
+  br i1 %i.gd, label %.thread.i, label %.lr.ph279, !prof !129
 
 .lr.ph279:                                        ; preds = %.preheader106.i.preheader, %.preheader106.i
   %i.ge = phi i32 [ %i.gc, %.preheader106.i ], [ %i.ga, %.preheader106.i.preheader ] ; 2 uses
@@ -980,8 +976,8 @@ attributes #19 = { nounwind allocsize(0) }
 !126 = distinct !{!126, !63}
 !127 = distinct !{!127, !40}
 !128 = distinct !{!128, !40}
-!129 = !{!"branch_weights", i32 1, i32 127}
-!130 = !{!"branch_weights", i32 127, i32 255873}
+!129 = !{!"branch_weights", i32 127, i32 255873}
+!130 = !{!"branch_weights", i32 1, i32 127}
 !131 = distinct !{!131, !40}
 !132 = distinct !{!132, !40}
 !133 = distinct !{!133, !40}

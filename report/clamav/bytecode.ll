@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 49 uses
   %.sroa.38.i = alloca [3 x i8], align 1          ; 5 uses
   %.sroa.88.i = alloca [5 x i8], align 1          ; 5 uses
-  %i.c = alloca i8, align 1                       ; 11 uses
+  %i.c = alloca i8, align 1                       ; 10 uses
   %i.d = alloca i32, align 4                      ; 7 uses
   %i.e = alloca i32, align 4                      ; 8 uses
   %i.f = alloca i8, align 1                       ; 6 uses
@@ -401,7 +401,7 @@ bb.p:                                             ; preds = %bb.n
   %i.bw = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.ar
   %i.bx = load i8, ptr %i.bw, align 1, !tbaa !101 ; 2 uses
   %i.by = zext i8 %i.bx to i32                    ; 2 uses
-  %i.bz = add nsw i32 %i.by, -96                  ; 3 uses
+  %i.bz = add nsw i32 %i.by, -96                  ; 2 uses
   %i.ca = icmp ugt i32 %i.bz, 16
   br i1 %i.ca, label %bb.q, label %bb.r
 
@@ -414,20 +414,16 @@ bb.r:                                             ; preds = %bb.p
   %i.cb = add nsw i32 %i.al, -88                  ; 2 uses
   %i.cc = add nuw nsw i32 %i.bz, %i.cb            ; 4 uses
   %i.cd = icmp ugt i32 %i.cc, %i.ai
-  br i1 %i.cd, label %bb.s, label %5
+  br i1 %i.cd, label %bb.s, label %.preheader.i93.i.a
 
 bb.s:                                             ; preds = %bb.r
   call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.281) #24
   store i8 0, ptr %i.o, align 1, !tbaa !108
   br label %readNumber.exit105.i
 
-5:                                                ; preds = %bb.r
-  %6 = icmp eq i8 %i.bx, 96
-  br i1 %6, label %bb.t, label %.preheader.i93.i.a
-
-.preheader.i93.i.a:                               ; preds = %5
-  %.not377.i = icmp eq i32 %i.bz, 0
-  br i1 %.not377.i, label %._crit_edge.i94.i, label %.lr.ph.i97.preheader.i
+.preheader.i93.i.a:                               ; preds = %bb.r
+  %.not377.i = icmp eq i8 %i.bx, 96
+  br i1 %.not377.i, label %bb.t, label %.lr.ph.i97.preheader.i
 
 .lr.ph.i97.preheader.i:                           ; preds = %.preheader.i93.i.a
   %i.ce = zext i32 %i.cb to i64                   ; 3 uses
@@ -442,7 +438,7 @@ bb.s:                                             ; preds = %bb.r
   %unroll_iter3970 = and i64 %i.ch, -2
   br label %.lr.ph.i97.i
 
-bb.t:                                             ; preds = %5
+bb.t:                                             ; preds = %.preheader.i93.i.a
   store i32 %i.cc, ptr %i.p, align 4, !tbaa !95
   br label %readNumber.exit105.i
 
@@ -511,13 +507,13 @@ bb.u:                                             ; preds = %.lr.ph.i97.i.1
   %i.df = or i64 %i.de, %.03545.i100.i.epil.init
   br label %._crit_edge.i94.i
 
-._crit_edge.i94.i:                                ; preds = %._crit_edge.i94.i.loopexit.epilog-lcssa, %._crit_edge.i94.i.loopexit.unr-lcssa, %.preheader.i93.i.a
-  %.035.lcssa.i95.i = phi i64 [ 0, %.preheader.i93.i.a ], [ %i.cy, %._crit_edge.i94.i.loopexit.unr-lcssa ], [ %i.df, %._crit_edge.i94.i.loopexit.epilog-lcssa ]
+._crit_edge.i94.i:                                ; preds = %._crit_edge.i94.i.loopexit.unr-lcssa, %._crit_edge.i94.i.loopexit.epilog-lcssa
+  %.lcssa3959 = phi i64 [ %i.cy, %._crit_edge.i94.i.loopexit.unr-lcssa ], [ %i.df, %._crit_edge.i94.i.loopexit.epilog-lcssa ]
   store i32 %i.cc, ptr %i.p, align 4, !tbaa !95
   br label %readNumber.exit105.i
 
 readNumber.exit105.i:                             ; preds = %._crit_edge.i94.i, %.thread.i102.i, %bb.t, %bb.s, %bb.q
-  %.2.i96.i = phi i64 [ 0, %bb.q ], [ 0, %bb.s ], [ 0, %bb.t ], [ 0, %.thread.i102.i ], [ %.035.lcssa.i95.i, %._crit_edge.i94.i ]
+  %.2.i96.i = phi i64 [ 0, %bb.q ], [ 0, %bb.s ], [ 0, %bb.t ], [ 0, %.thread.i102.i ], [ %.lcssa3959, %._crit_edge.i94.i ]
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.2.i96.i, ptr %i.dg, align 8, !tbaa !111
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #24
@@ -920,12 +916,10 @@ bb.io:                                            ; preds = %bb.im
 
 bb.ip:                                            ; preds = %bb.io
   call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.288) #24
-  store i8 0, ptr %i.c, align 1, !tbaa !108
   br label %readFixedNumber.exit.i238
 
 bb.iq:                                            ; preds = %.lr.ph.i.preheader.i236
   call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.282, i32 noundef %i.ayq) #24
-  store i8 0, ptr %i.c, align 1, !tbaa !108
   br label %readFixedNumber.exit.i238
 
 ._crit_edge.i.i269:                               ; preds = %.lr.ph.i.preheader.i236
@@ -940,9 +934,9 @@ readFixedNumber.exit.i238:                        ; preds = %._crit_edge.i.i269,
   store i8 %.2.i.i239, ptr %i.ayk, align 8, !tbaa !89
   %i.ayv = zext nneg i32 %i.ayu to i64            ; 2 uses
   %i.ayw = getelementptr inbounds nuw i8, ptr %i.qu, i64 %i.ayv
-  %i.ayx = load i8, ptr %i.ayw, align 1, !tbaa !101
+  %i.ayx = load i8, ptr %i.ayw, align 1, !tbaa !101 ; 2 uses
   %i.ayy = zext i8 %i.ayx to i32                  ; 2 uses
-  %i.ayz = add nsw i32 %i.ayy, -96                ; 3 uses
+  %i.ayz = add nsw i32 %i.ayy, -96                ; 2 uses
   %i.aza = icmp ugt i32 %i.ayz, 16
   br i1 %i.aza, label %bb.ir, label %bb.is
 
@@ -961,7 +955,7 @@ bb.it:                                            ; preds = %bb.is
   br label %readNumber.exit.i.i246
 
 bb.iu:                                            ; preds = %bb.is
-  %.not183.i = icmp eq i32 %i.ayz, 0
+  %.not183.i = icmp eq i8 %i.ayx, 96
   br i1 %.not183.i, label %readNumber.exit.i.i246, label %.lr.ph.i.preheader.i.i240
 
 .lr.ph.i.preheader.i.i240:                        ; preds = %bb.iu
@@ -994,6 +988,7 @@ bb.iu:                                            ; preds = %bb.is
   %.lcssa = phi i8 [ %i.bab, %.lr.ph.i.i.i241.epil.preheader ], [ %i.azl, %.lr.ph.i.i.i241 ], [ %i.azr, %.lr.ph.i.i.i241.1 ]
   %i.azo = sext i8 %.lcssa to i32
   call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.282, i32 noundef %i.azo) #24
+  store i8 0, ptr %i.c, align 1, !tbaa !108
   br label %readNumber.exit.i.i246
 
 .lr.ph.i.i.i241.1:                                ; preds = %.lr.ph.i.i.i241
@@ -1084,7 +1079,7 @@ bb.iz:                                            ; preds = %readTypeID.exit.i24
   %i.bax = getelementptr inbounds nuw i8, ptr %i.baw, i64 1
   %i.bay = load i8, ptr %i.bax, align 1, !tbaa !101 ; 2 uses
   %i.baz = zext i8 %i.bay to i32                  ; 2 uses
-  %i.bba = add nsw i32 %i.baz, -96                ; 3 uses
+  %i.bba = add nsw i32 %i.baz, -96                ; 2 uses
   %i.bbb = icmp ugt i32 %i.bba, 16
   br i1 %i.bbb, label %bb.ja, label %bb.jb
 
@@ -1096,19 +1091,15 @@ bb.jb:                                            ; preds = %bb.iz
   %i.bbc = add nuw nsw i32 %i.bai, 2              ; 2 uses
   %i.bbd = add nuw nsw i32 %i.bba, %i.bbc         ; 4 uses
   %i.bbe = icmp ugt i32 %i.bbd, %i.aym
-  br i1 %i.bbe, label %bb.jc, label %7
+  br i1 %i.bbe, label %bb.jc, label %.preheader.i76.i
 
 bb.jc:                                            ; preds = %bb.jb
   call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.281) #24
   br label %readNumber.exit.thread.i254
 
-7:                                                ; preds = %bb.jb
-  %8 = icmp eq i8 %i.bay, 96
-  br i1 %8, label %.split.i, label %.preheader.i76.i
-
-.preheader.i76.i:                                 ; preds = %7
-  %.not184.i = icmp eq i32 %i.bba, 0
-  br i1 %.not184.i, label %readNumber.exit.i256, label %.lr.ph.i79.preheader.i
+.preheader.i76.i:                                 ; preds = %bb.jb
+  %.not184.i = icmp eq i8 %i.bay, 96
+  br i1 %.not184.i, label %.split.i, label %.lr.ph.i79.preheader.i
 
 .lr.ph.i79.preheader.i:                           ; preds = %.preheader.i76.i
   %i.bbf = zext i32 %i.bbc to i64                 ; 3 uses
@@ -1123,7 +1114,7 @@ bb.jc:                                            ; preds = %bb.jb
   %unroll_iter4141 = and i64 %i.bbi, -2
   br label %.lr.ph.i79.i
 
-.split.i:                                         ; preds = %7
+.split.i:                                         ; preds = %.preheader.i76.i
   %i.bbk = getelementptr inbounds nuw i8, ptr %i.ayk, i64 2 ; 2 uses
   store i16 0, ptr %i.bbk, align 2, !tbaa !142
   br i1 %i.bap, label %bb.je, label %.loopexit365
@@ -1197,9 +1188,9 @@ readNumber.exit.i256.loopexit.epilog-lcssa:       ; preds = %.lr.ph.i79.i.epil.p
   %i.bci = or i64 %i.bch, %.03545.i.i252.epil.init
   br label %readNumber.exit.i256
 
-readNumber.exit.i256:                             ; preds = %readNumber.exit.i256.loopexit.epilog-lcssa, %readNumber.exit.i256.loopexit.unr-lcssa, %.preheader.i76.i
-  %.035.lcssa.i.i = phi i64 [ 0, %.preheader.i76.i ], [ %i.bca, %readNumber.exit.i256.loopexit.unr-lcssa ], [ %i.bci, %readNumber.exit.i256.loopexit.epilog-lcssa ] ; 2 uses
-  %i.bcj = trunc i64 %.035.lcssa.i.i to i16
+readNumber.exit.i256:                             ; preds = %readNumber.exit.i256.loopexit.unr-lcssa, %readNumber.exit.i256.loopexit.epilog-lcssa
+  %.lcssa3179 = phi i64 [ %i.bca, %readNumber.exit.i256.loopexit.unr-lcssa ], [ %i.bci, %readNumber.exit.i256.loopexit.epilog-lcssa ] ; 2 uses
+  %i.bcj = trunc i64 %.lcssa3179 to i16
   %i.bck = getelementptr inbounds nuw i8, ptr %i.ayk, i64 2 ; 2 uses
   store i16 %i.bcj, ptr %i.bck, align 2, !tbaa !142
   br i1 %i.bap, label %bb.je, label %.loopexit365
@@ -1210,7 +1201,7 @@ readNumber.exit.i256:                             ; preds = %readNumber.exit.i25
 
 bb.je:                                            ; preds = %readNumber.exit.i256, %.split.i
   %i.bcl = phi ptr [ %i.bbk, %.split.i ], [ %i.bck, %readNumber.exit.i256 ]
-  %.2.i78189.i = phi i64 [ 0, %.split.i ], [ %.035.lcssa.i.i, %readNumber.exit.i256 ]
+  %.2.i78189.i = phi i64 [ 0, %.split.i ], [ %.lcssa3179, %readNumber.exit.i256 ]
   %i.bcm = load i8, ptr %i.ayk, align 8, !tbaa !89
   %i.bcn = zext i8 %i.bcm to i32
   %i.bco = trunc i64 %.2.i78189.i to i32

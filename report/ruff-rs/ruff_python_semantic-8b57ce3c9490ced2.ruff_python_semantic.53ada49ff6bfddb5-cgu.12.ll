@@ -205,8 +205,9 @@ _RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10Pyth
   br i1 %i.y, label %.backedge.i, label %.split5._crit_edge.i
 
 _RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit15.i: ; preds = %.lr.ph.split.i
-  %4 = icmp samesign ugt i8 %.val8.i, 6
-  br i1 %4, label %.backedge.i, label %.split5._crit_edge.i
+  %4 = add nsw i8 %.val8.i, -7
+  %5 = icmp ult i8 %4, -3
+  br i1 %5, label %.backedge.i, label %.split5._crit_edge.i
 
 .backedge.i:                                      ; preds = %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit15.i, %.split5.i
   store i8 %.val8.i, ptr %.sroa.0.06.i, align 1
@@ -609,8 +610,9 @@ _RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10Pyth
   br i1 %i.amv, label %.backedge.i.i.i, label %.split5._crit_edge.i.i.i
 
 _RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit15.i.i.i: ; preds = %.lr.ph.split.i.i.i
-  %5 = icmp samesign ugt i8 %.val8.i.i.i, 6
-  br i1 %5, label %.backedge.i.i.i, label %.split5._crit_edge.i.i.i
+  %5 = add nsw i8 %.val8.i.i.i, -7
+  %6 = icmp ult i8 %5, -3
+  br i1 %6, label %.backedge.i.i.i, label %.split5._crit_edge.i.i.i
 
 .backedge.i.i.i:                                  ; preds = %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit15.i.i.i, %.split5.i.i.i
   store i8 %.val8.i.i.i, ptr %.sroa.0.06.i.i.i, align 1, !alias.scope !144

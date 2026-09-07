@@ -205,9 +205,8 @@ bb.o:                                             ; preds = %bb.n
   %i.bf = add i64 %i.be, %i.ba
   %i.bg = inttoptr i64 %i.bf to ptr
   store ptr %i.aw, ptr %i.bg, align 8
-  %i.bh = add nsw i32 %.1.i.i.1, 1                ; 2 uses
-  %1 = icmp eq i32 %i.bh, 10
-  br i1 %1, label %acpi_processor_setup_cpuidle_dev.exit, label %bb.p
+  %i.bh = add nsw i32 %.1.i.i.1, 1
+  br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   %.1.i.i.2 = phi i32 [ %i.bh, %bb.o ], [ %.1.i.i.1, %bb.n ] ; 3 uses
@@ -311,7 +310,7 @@ bb.aa:                                            ; preds = %bb.z
   store ptr %i.cv, ptr %i.df, align 8
   br label %acpi_processor_setup_cpuidle_dev.exit
 
-acpi_processor_setup_cpuidle_dev.exit:            ; preds = %bb.aa, %bb.j, %bb.m, %bb.o, %bb.p, %bb.r, %bb.s, %bb.u, %bb.v, %bb.x, %bb.y, %bb.z, %bb.e, %bb.f
+acpi_processor_setup_cpuidle_dev.exit:            ; preds = %bb.aa, %bb.j, %bb.m, %bb.p, %bb.r, %bb.s, %bb.u, %bb.v, %bb.x, %bb.y, %bb.z, %bb.e, %bb.f
   %i.dg = tail call i32 @cpuidle_enable_device(ptr noundef nonnull %i.h) #15
   br label %bb.ab
 
@@ -714,9 +713,8 @@ bb.p:                                             ; preds = %bb.o
   %i.bg = add i64 %i.bf, %i.bb
   %i.bh = inttoptr i64 %i.bg to ptr
   store ptr %i.ax, ptr %i.bh, align 8
-  %i.bi = add nsw i32 %.1.i.i.1, 1                ; 2 uses
-  %1 = icmp eq i32 %i.bi, 10
-  br i1 %1, label %acpi_processor_setup_cpuidle_dev.exit, label %bb.q
+  %i.bi = add nsw i32 %.1.i.i.1, 1
+  br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
   %.1.i.i.2 = phi i32 [ %i.bi, %bb.p ], [ %.1.i.i.1, %bb.o ] ; 3 uses
@@ -820,7 +818,7 @@ bb.ab:                                            ; preds = %bb.aa
   store ptr %i.cw, ptr %i.dg, align 8
   br label %acpi_processor_setup_cpuidle_dev.exit
 
-acpi_processor_setup_cpuidle_dev.exit:            ; preds = %bb.ab, %bb.k, %bb.n, %bb.p, %bb.q, %bb.s, %bb.t, %bb.v, %bb.w, %bb.y, %bb.z, %bb.aa, %bb.f, %bb.g
+acpi_processor_setup_cpuidle_dev.exit:            ; preds = %bb.ab, %bb.k, %bb.n, %bb.q, %bb.s, %bb.t, %bb.v, %bb.w, %bb.y, %bb.z, %bb.aa, %bb.f, %bb.g
   %i.dh = tail call i32 @cpuidle_register_device(ptr noundef nonnull %i.l) #15
   %.not23 = icmp eq i32 %i.dh, 0
   br i1 %.not23, label %bb.ad, label %bb.ac

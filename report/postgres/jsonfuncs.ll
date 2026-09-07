@@ -204,16 +204,12 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j, %bb.k
   %i.ak = sext i32 %i.b to i64                    ; 2 uses
   %i.al = mul nsw i64 %i.ak, 104                  ; 2 uses
-  %i.am = add nsw i64 %i.al, 16                   ; 3 uses
-  %8 = ptrtoint ptr %.094 to i64                  ; 3 uses
+  %i.am = add nsw i64 %i.al, 16                   ; 2 uses
   %i.an = icmp ult i64 %i.am, 1025
-  br i1 %i.an, label %9, label %bb.m
+  br i1 %i.an, label %.lr.ph.preheader, label %bb.m
 
-9:                                                ; preds = %bb.l
-  %.not111 = icmp eq i64 %i.am, 0
-  br i1 %.not111, label %.loopexit105, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %9
+.lr.ph.preheader:                                 ; preds = %bb.l
+  %8 = ptrtoint ptr %.094 to i64                  ; 3 uses
   %i.ao = add i64 %i.al, %8
   %i.ap = add i64 %i.ao, 16
   %i.aq = add i64 %8, 8
@@ -229,7 +225,7 @@ bb.m:                                             ; preds = %bb.l
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %.094, i8 0, i64 %i.am, i1 false)
   br label %.loopexit105
 
-.loopexit105:                                     ; preds = %.lr.ph.preheader, %9, %bb.m
+.loopexit105:                                     ; preds = %.lr.ph.preheader, %bb.m
   %i.av = load i32, ptr %i.ae, align 4
   store i32 %i.av, ptr %.094, align 8
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 8

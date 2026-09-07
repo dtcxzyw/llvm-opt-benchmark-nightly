@@ -205,23 +205,21 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN5Eigen10QuaternionIdLi0EEC2INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEEERKNS_10MatrixBaseIT_EE.exit
 
 bb.f:                                             ; preds = %bb.d
-  %i.gv = fcmp ogt double %i.ga, %i.gb            ; 3 uses
+  %i.gv = fcmp ogt double %i.ga, %i.gb            ; 4 uses
   %spec.select.i.i.i = zext i1 %i.gv to i64
   %spec.select.i.i.i.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx = select i1 %i.gv, i64 8, i64 0
   %spec.select.i.i.i.sroa.sel.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %2, i64 %spec.select.i.i.i.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx
   %.idx.i.i.i.i = select i1 %i.gv, i64 24, i64 0
   %i.gw = getelementptr i8, ptr %spec.select.i.i.i.sroa.sel.idx.sroa.sel.idx.sroa.sel, i64 %.idx.i.i.i.i
   %i.gx = load double, ptr %i.gw, align 8, !tbaa !15
-  %i.gy = fcmp ogt double %.sink, %i.gx
-  %.1.i.i.i = select i1 %i.gy, i64 2, i64 %spec.select.i.i.i ; 4 uses
-  %4 = add nuw nsw i64 %.1.i.i.i, 1               ; 2 uses
-  %5 = icmp eq i64 %4, 3
-  %i.gz = select i1 %5, i64 0, i64 %4
+  %i.gy = fcmp ogt double %.sink, %i.gx           ; 2 uses
+  %.1.i.i.i = select i1 %i.gy, i64 2, i64 %spec.select.i.i.i ; 3 uses
+  %4 = select i1 %i.gv, i64 2, i64 1
+  %i.gz = select i1 %i.gy, i64 0, i64 %4
   %.fr.i.i.i = freeze i64 %i.gz                   ; 5 uses
-  %6 = add i64 %.fr.i.i.i, 1                      ; 2 uses
-  %.urem.i.i.i = add i64 %.fr.i.i.i, -2
-  %.cmp.i.i.i = icmp ult i64 %6, 3
-  %7 = select i1 %.cmp.i.i.i, i64 %6, i64 %.urem.i.i.i ; 3 uses
+  %.cmp.inv.i.i.i = icmp samesign ugt i64 %.fr.i.i.i, 1
+  %.v.i.i.i = select i1 %.cmp.inv.i.i.i, i64 -2, i64 1
+  %5 = add nsw i64 %.v.i.i.i, %.fr.i.i.i          ; 3 uses
   %i.ha = getelementptr [8 x i8], ptr %2, i64 %.1.i.i.i ; 3 uses
   %.idx.i66.i.i.i = mul nuw nsw i64 %.1.i.i.i, 24 ; 3 uses
   %i.hb = getelementptr i8, ptr %i.ha, i64 %.idx.i66.i.i.i
@@ -231,8 +229,8 @@ bb.f:                                             ; preds = %bb.d
   %i.he = getelementptr i8, ptr %i.hd, i64 %.idx.i67.i.i.i
   %i.hf = load double, ptr %i.he, align 8, !tbaa !15
   %i.hg = fsub double %i.hc, %i.hf
-  %i.hh = getelementptr [8 x i8], ptr %2, i64 %7  ; 3 uses
-  %.idx.i68.i.i.i = mul i64 %7, 24                ; 3 uses
+  %i.hh = getelementptr [8 x i8], ptr %2, i64 %5  ; 3 uses
+  %.idx.i68.i.i.i = mul nsw i64 %5, 24            ; 3 uses
   %i.hi = getelementptr i8, ptr %i.hh, i64 %.idx.i68.i.i.i
   %i.hj = load double, ptr %i.hi, align 8, !tbaa !15
   %i.hk = fsub double %i.hg, %i.hj
@@ -256,7 +254,7 @@ bb.f:                                             ; preds = %bb.d
   %i.ia = load double, ptr %i.hz, align 8, !tbaa !15
   %i.ib = fadd double %i.hy, %i.ia
   %i.ic = fmul double %i.hp, %i.ib
-  %i.id = getelementptr inbounds [8 x i8], ptr %3, i64 %.fr.i.i.i
+  %i.id = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.fr.i.i.i
   store double %i.ic, ptr %i.id, align 8, !tbaa !15
   %i.ie = getelementptr i8, ptr %i.hh, i64 %.idx.i66.i.i.i
   %i.if = load double, ptr %i.ie, align 8, !tbaa !15
@@ -264,7 +262,7 @@ bb.f:                                             ; preds = %bb.d
   %i.ih = load double, ptr %i.ig, align 8, !tbaa !15
   %i.ii = fadd double %i.if, %i.ih
   %i.ij = fmul double %i.hp, %i.ii
-  %i.ik = getelementptr inbounds [8 x i8], ptr %3, i64 %7
+  %i.ik = getelementptr inbounds [8 x i8], ptr %3, i64 %5
   store double %i.ij, ptr %i.ik, align 8, !tbaa !15
   br label %_ZN5Eigen10QuaternionIdLi0EEC2INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEEERKNS_10MatrixBaseIT_EE.exit
 

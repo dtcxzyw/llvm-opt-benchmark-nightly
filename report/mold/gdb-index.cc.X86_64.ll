@@ -205,7 +205,7 @@ bb.a:
   store i32 %i.k, ptr %i.i, align 1
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 4 ; 21 uses
   %i.m = load atomic i32, ptr %i.j monotonic, align 4 ; 11 uses
-  %i.n = zext i32 %i.m to i64                     ; 23 uses
+  %i.n = zext i32 %i.m to i64                     ; 22 uses
   %i.o = icmp ult i32 %i.m, 256
   br i1 %i.o, label %bb.b, label %bb.d
 
@@ -269,18 +269,13 @@ bb.g:                                             ; preds = %bb.f
   %i.ai = phi ptr [ %.pre.i, %_ZNSt6vectorIN4mold7IntegerIjLb1ELi4EEESaIS2_EE6resizeEm.exit.thread.i ], [ %i.z, %bb.g ], [ %i.z, %bb.f ], [ %i.z, %bb.e ] ; 18 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %i.a, i8 0, i64 1024, i1 false)
-  %4 = add nsw i64 %i.n, -1                       ; 8 uses
   %xtraiter = and i64 %i.n, 1
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %.epil.preheader, label %.lr.ph.us.us.preheader.i.new
-
-.lr.ph.us.us.preheader.i.new:                     ; preds = %.lr.ph.us.us.preheader.i
   %unroll_iter = and i64 %i.n, 4294967294
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.h, %.lr.ph.us.us.preheader.i.new
-  %.02030.us.us.i = phi i64 [ 0, %.lr.ph.us.us.preheader.i.new ], [ %i.aw, %bb.h ] ; 3 uses
-  %niter = phi i64 [ 0, %.lr.ph.us.us.preheader.i.new ], [ %niter.next.1, %bb.h ]
+bb.h:                                             ; preds = %bb.h, %.lr.ph.us.us.preheader.i
+  %.02030.us.us.i = phi i64 [ 0, %.lr.ph.us.us.preheader.i ], [ %i.aw, %bb.h ] ; 3 uses
+  %niter = phi i64 [ 0, %.lr.ph.us.us.preheader.i ], [ %niter.next.1, %bb.h ]
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.02030.us.us.i
   %.0.copyload.i.us.us.i = load i32, ptr %i.aj, align 1
   %i.ak = and i32 %.0.copyload.i.us.us.i, 255
@@ -307,11 +302,10 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.us.us
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge.us.us.i, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %._crit_edge.us.us.i.unr-lcssa, %.lr.ph.us.us.preheader.i
-  %.02030.us.us.i.epil.init = phi i64 [ 0, %.lr.ph.us.us.preheader.i ], [ %i.aw, %._crit_edge.us.us.i.unr-lcssa ]
+.epil.preheader:                                  ; preds = %._crit_edge.us.us.i.unr-lcssa
   %lcmp.mod19 = trunc i32 %i.m to i1
   call void @llvm.assume(i1 %lcmp.mod19)
-  %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.02030.us.us.i.epil.init
+  %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.aw
   %.0.copyload.i.us.us.i.epil = load i32, ptr %i.ax, align 1
   %i.ay = and i32 %.0.copyload.i.us.us.i.epil, 255
   %i.az = zext nneg i32 %i.ay to i64
@@ -369,16 +363,12 @@ bb.i:                                             ; preds = %bb.i, %._crit_edge.
 
 .preheader.us.us.i.preheader:                     ; preds = %bb.i
   %xtraiter20 = and i64 %i.n, 1
-  %6 = icmp eq i64 %4, 0
-  br i1 %6, label %.preheader.us.us.i.epil.preheader, label %.preheader.us.us.i.preheader.new
-
-.preheader.us.us.i.preheader.new:                 ; preds = %.preheader.us.us.i.preheader
   %unroll_iter23 = and i64 %i.n, 4294967294
   br label %.preheader.us.us.i
 
-.preheader.us.us.i:                               ; preds = %.preheader.us.us.i, %.preheader.us.us.i.preheader.new
-  %.01832.us.us.i = phi i64 [ 0, %.preheader.us.us.i.preheader.new ], [ %i.cz, %.preheader.us.us.i ] ; 3 uses
-  %niter24 = phi i64 [ 0, %.preheader.us.us.i.preheader.new ], [ %niter24.next.1, %.preheader.us.us.i ]
+.preheader.us.us.i:                               ; preds = %.preheader.us.us.i, %.preheader.us.us.i.preheader
+  %.01832.us.us.i = phi i64 [ 0, %.preheader.us.us.i.preheader ], [ %i.cz, %.preheader.us.us.i ] ; 3 uses
+  %niter24 = phi i64 [ 0, %.preheader.us.us.i.preheader ], [ %niter24.next.1, %.preheader.us.us.i ]
   %i.ci = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.01832.us.us.i
   %.0.copyload.i21.us.us.i = load i32, ptr %i.ci, align 1 ; 2 uses
   %i.cj = and i32 %.0.copyload.i21.us.us.i, 255
@@ -411,11 +401,10 @@ bb.i:                                             ; preds = %bb.i, %._crit_edge.
   %lcmp.mod21.not = icmp eq i64 %xtraiter20, 0
   br i1 %lcmp.mod21.not, label %._crit_edge34.us.us.i, label %.preheader.us.us.i.epil.preheader
 
-.preheader.us.us.i.epil.preheader:                ; preds = %._crit_edge34.us.us.i.unr-lcssa, %.preheader.us.us.i.preheader
-  %.01832.us.us.i.epil.init = phi i64 [ 0, %.preheader.us.us.i.preheader ], [ %i.cz, %._crit_edge34.us.us.i.unr-lcssa ]
+.preheader.us.us.i.epil.preheader:                ; preds = %._crit_edge34.us.us.i.unr-lcssa
   %lcmp.mod22 = trunc i32 %i.m to i1
   call void @llvm.assume(i1 %lcmp.mod22)
-  %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.01832.us.us.i.epil.init
+  %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.cz
   %.0.copyload.i21.us.us.i.epil = load i32, ptr %i.da, align 1 ; 2 uses
   %i.db = and i32 %.0.copyload.i21.us.us.i.epil, 255
   %i.dc = zext nneg i32 %i.db to i64
@@ -434,16 +423,12 @@ bb.i:                                             ; preds = %bb.i, %._crit_edge.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %i.a, i8 0, i64 1024, i1 false)
   %xtraiter26 = and i64 %i.n, 1
-  %7 = icmp eq i64 %4, 0
-  br i1 %7, label %.epil.preheader25, label %._crit_edge34.us.us.i.new
-
-._crit_edge34.us.us.i.new:                        ; preds = %._crit_edge34.us.us.i
   %unroll_iter29 = and i64 %i.n, 4294967294
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.j, %._crit_edge34.us.us.i.new
-  %.02030.us.us.1.i = phi i64 [ 0, %._crit_edge34.us.us.i.new ], [ %i.dx, %bb.j ] ; 3 uses
-  %niter30 = phi i64 [ 0, %._crit_edge34.us.us.i.new ], [ %niter30.next.1, %bb.j ]
+bb.j:                                             ; preds = %bb.j, %._crit_edge34.us.us.i
+  %.02030.us.us.1.i = phi i64 [ 0, %._crit_edge34.us.us.i ], [ %i.dx, %bb.j ] ; 3 uses
+  %niter30 = phi i64 [ 0, %._crit_edge34.us.us.i ], [ %niter30.next.1, %bb.j ]
   %i.di = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %.02030.us.us.1.i
   %.0.copyload.i.us.us.1.i = load i32, ptr %i.di, align 1
   %i.dj = lshr i32 %.0.copyload.i.us.us.1.i, 8
@@ -472,11 +457,10 @@ bb.j:                                             ; preds = %bb.j, %._crit_edge3
   %lcmp.mod27.not = icmp eq i64 %xtraiter26, 0
   br i1 %lcmp.mod27.not, label %._crit_edge.us.us.1.i, label %.epil.preheader25
 
-.epil.preheader25:                                ; preds = %._crit_edge.us.us.1.i.unr-lcssa, %._crit_edge34.us.us.i
-  %.02030.us.us.1.i.epil.init = phi i64 [ 0, %._crit_edge34.us.us.i ], [ %i.dx, %._crit_edge.us.us.1.i.unr-lcssa ]
+.epil.preheader25:                                ; preds = %._crit_edge.us.us.1.i.unr-lcssa
   %lcmp.mod28 = trunc i32 %i.m to i1
   call void @llvm.assume(i1 %lcmp.mod28)
-  %i.dy = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %.02030.us.us.1.i.epil.init
+  %i.dy = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %i.dx
   %.0.copyload.i.us.us.1.i.epil = load i32, ptr %i.dy, align 1
   %i.dz = lshr i32 %.0.copyload.i.us.us.1.i.epil, 8
   %i.ea = and i32 %i.dz, 255
@@ -535,16 +519,12 @@ bb.k:                                             ; preds = %bb.k, %._crit_edge.
 
 .preheader.us.us.1.i.preheader:                   ; preds = %bb.k
   %xtraiter31 = and i64 %i.n, 1
-  %8 = icmp eq i64 %4, 0
-  br i1 %8, label %.preheader.us.us.1.i.epil.preheader, label %.preheader.us.us.1.i.preheader.new
-
-.preheader.us.us.1.i.preheader.new:               ; preds = %.preheader.us.us.1.i.preheader
   %unroll_iter34 = and i64 %i.n, 4294967294
   br label %.preheader.us.us.1.i
 
-.preheader.us.us.1.i:                             ; preds = %.preheader.us.us.1.i, %.preheader.us.us.1.i.preheader.new
-  %.01832.us.us.1.i = phi i64 [ 0, %.preheader.us.us.1.i.preheader.new ], [ %i.gd, %.preheader.us.us.1.i ] ; 3 uses
-  %niter35 = phi i64 [ 0, %.preheader.us.us.1.i.preheader.new ], [ %niter35.next.1, %.preheader.us.us.1.i ]
+.preheader.us.us.1.i:                             ; preds = %.preheader.us.us.1.i, %.preheader.us.us.1.i.preheader
+  %.01832.us.us.1.i = phi i64 [ 0, %.preheader.us.us.1.i.preheader ], [ %i.gd, %.preheader.us.us.1.i ] ; 3 uses
+  %niter35 = phi i64 [ 0, %.preheader.us.us.1.i.preheader ], [ %niter35.next.1, %.preheader.us.us.1.i ]
   %i.fk = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %.01832.us.us.1.i
   %.0.copyload.i21.us.us.1.i = load i32, ptr %i.fk, align 1 ; 2 uses
   %i.fl = lshr i32 %.0.copyload.i21.us.us.1.i, 8
@@ -579,11 +559,10 @@ bb.k:                                             ; preds = %bb.k, %._crit_edge.
   %lcmp.mod32.not = icmp eq i64 %xtraiter31, 0
   br i1 %lcmp.mod32.not, label %._crit_edge34.us.us.1.i, label %.preheader.us.us.1.i.epil.preheader
 
-.preheader.us.us.1.i.epil.preheader:              ; preds = %._crit_edge34.us.us.1.i.unr-lcssa, %.preheader.us.us.1.i.preheader
-  %.01832.us.us.1.i.epil.init = phi i64 [ 0, %.preheader.us.us.1.i.preheader ], [ %i.gd, %._crit_edge34.us.us.1.i.unr-lcssa ]
+.preheader.us.us.1.i.epil.preheader:              ; preds = %._crit_edge34.us.us.1.i.unr-lcssa
   %lcmp.mod33 = trunc i32 %i.m to i1
   call void @llvm.assume(i1 %lcmp.mod33)
-  %i.ge = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %.01832.us.us.1.i.epil.init
+  %i.ge = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %i.gd
   %.0.copyload.i21.us.us.1.i.epil = load i32, ptr %i.ge, align 1 ; 2 uses
   %i.gf = lshr i32 %.0.copyload.i21.us.us.1.i.epil, 8
   %i.gg = and i32 %i.gf, 255
@@ -603,16 +582,12 @@ bb.k:                                             ; preds = %bb.k, %._crit_edge.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %i.a, i8 0, i64 1024, i1 false)
   %xtraiter37 = and i64 %i.n, 1
-  %9 = icmp eq i64 %4, 0
-  br i1 %9, label %.epil.preheader36, label %._crit_edge34.us.us.1.i.new
-
-._crit_edge34.us.us.1.i.new:                      ; preds = %._crit_edge34.us.us.1.i
   %unroll_iter40 = and i64 %i.n, 4294967294
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.l, %._crit_edge34.us.us.1.i.new
-  %.02030.us.us.2.i = phi i64 [ 0, %._crit_edge34.us.us.1.i.new ], [ %i.hc, %bb.l ] ; 3 uses
-  %niter41 = phi i64 [ 0, %._crit_edge34.us.us.1.i.new ], [ %niter41.next.1, %bb.l ]
+bb.l:                                             ; preds = %bb.l, %._crit_edge34.us.us.1.i
+  %.02030.us.us.2.i = phi i64 [ 0, %._crit_edge34.us.us.1.i ], [ %i.hc, %bb.l ] ; 3 uses
+  %niter41 = phi i64 [ 0, %._crit_edge34.us.us.1.i ], [ %niter41.next.1, %bb.l ]
   %i.gn = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.02030.us.us.2.i
   %.0.copyload.i.us.us.2.i = load i32, ptr %i.gn, align 1
   %i.go = lshr i32 %.0.copyload.i.us.us.2.i, 16
@@ -641,11 +616,10 @@ bb.l:                                             ; preds = %bb.l, %._crit_edge3
   %lcmp.mod38.not = icmp eq i64 %xtraiter37, 0
   br i1 %lcmp.mod38.not, label %._crit_edge.us.us.2.i, label %.epil.preheader36
 
-.epil.preheader36:                                ; preds = %._crit_edge.us.us.2.i.unr-lcssa, %._crit_edge34.us.us.1.i
-  %.02030.us.us.2.i.epil.init = phi i64 [ 0, %._crit_edge34.us.us.1.i ], [ %i.hc, %._crit_edge.us.us.2.i.unr-lcssa ]
+.epil.preheader36:                                ; preds = %._crit_edge.us.us.2.i.unr-lcssa
   %lcmp.mod39 = trunc i32 %i.m to i1
   call void @llvm.assume(i1 %lcmp.mod39)
-  %i.hd = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.02030.us.us.2.i.epil.init
+  %i.hd = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.hc
   %.0.copyload.i.us.us.2.i.epil = load i32, ptr %i.hd, align 1
   %i.he = lshr i32 %.0.copyload.i.us.us.2.i.epil, 16
   %i.hf = and i32 %i.he, 255
@@ -704,16 +678,12 @@ bb.m:                                             ; preds = %bb.m, %._crit_edge.
 
 .preheader.us.us.2.i.preheader:                   ; preds = %bb.m
   %xtraiter42 = and i64 %i.n, 1
-  %10 = icmp eq i64 %4, 0
-  br i1 %10, label %.preheader.us.us.2.i.epil.preheader, label %.preheader.us.us.2.i.preheader.new
-
-.preheader.us.us.2.i.preheader.new:               ; preds = %.preheader.us.us.2.i.preheader
   %unroll_iter45 = and i64 %i.n, 4294967294
   br label %.preheader.us.us.2.i
 
-.preheader.us.us.2.i:                             ; preds = %.preheader.us.us.2.i, %.preheader.us.us.2.i.preheader.new
-  %.01832.us.us.2.i = phi i64 [ 0, %.preheader.us.us.2.i.preheader.new ], [ %i.ji, %.preheader.us.us.2.i ] ; 3 uses
-  %niter46 = phi i64 [ 0, %.preheader.us.us.2.i.preheader.new ], [ %niter46.next.1, %.preheader.us.us.2.i ]
+.preheader.us.us.2.i:                             ; preds = %.preheader.us.us.2.i, %.preheader.us.us.2.i.preheader
+  %.01832.us.us.2.i = phi i64 [ 0, %.preheader.us.us.2.i.preheader ], [ %i.ji, %.preheader.us.us.2.i ] ; 3 uses
+  %niter46 = phi i64 [ 0, %.preheader.us.us.2.i.preheader ], [ %niter46.next.1, %.preheader.us.us.2.i ]
   %i.ip = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.01832.us.us.2.i
   %.0.copyload.i21.us.us.2.i = load i32, ptr %i.ip, align 1 ; 2 uses
   %i.iq = lshr i32 %.0.copyload.i21.us.us.2.i, 16
@@ -748,11 +718,10 @@ bb.m:                                             ; preds = %bb.m, %._crit_edge.
   %lcmp.mod43.not = icmp eq i64 %xtraiter42, 0
   br i1 %lcmp.mod43.not, label %._crit_edge34.us.us.2.i, label %.preheader.us.us.2.i.epil.preheader
 
-.preheader.us.us.2.i.epil.preheader:              ; preds = %._crit_edge34.us.us.2.i.unr-lcssa, %.preheader.us.us.2.i.preheader
-  %.01832.us.us.2.i.epil.init = phi i64 [ 0, %.preheader.us.us.2.i.preheader ], [ %i.ji, %._crit_edge34.us.us.2.i.unr-lcssa ]
+.preheader.us.us.2.i.epil.preheader:              ; preds = %._crit_edge34.us.us.2.i.unr-lcssa
   %lcmp.mod44 = trunc i32 %i.m to i1
   call void @llvm.assume(i1 %lcmp.mod44)
-  %i.jj = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %.01832.us.us.2.i.epil.init
+  %i.jj = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.ji
   %.0.copyload.i21.us.us.2.i.epil = load i32, ptr %i.jj, align 1 ; 2 uses
   %i.jk = lshr i32 %.0.copyload.i21.us.us.2.i.epil, 16
   %i.jl = and i32 %i.jk, 255
@@ -772,16 +741,12 @@ bb.m:                                             ; preds = %bb.m, %._crit_edge.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %i.a, i8 0, i64 1024, i1 false)
   %xtraiter48 = and i64 %i.n, 1
-  %11 = icmp eq i64 %4, 0
-  br i1 %11, label %.epil.preheader47, label %._crit_edge34.us.us.2.i.new
-
-._crit_edge34.us.us.2.i.new:                      ; preds = %._crit_edge34.us.us.2.i
   %unroll_iter51 = and i64 %i.n, 4294967294
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.n, %._crit_edge34.us.us.2.i.new
-  %.02030.us.us.3.i = phi i64 [ 0, %._crit_edge34.us.us.2.i.new ], [ %i.kf, %bb.n ] ; 3 uses
-  %niter52 = phi i64 [ 0, %._crit_edge34.us.us.2.i.new ], [ %niter52.next.1, %bb.n ]
+bb.n:                                             ; preds = %bb.n, %._crit_edge34.us.us.2.i
+  %.02030.us.us.3.i = phi i64 [ 0, %._crit_edge34.us.us.2.i ], [ %i.kf, %bb.n ] ; 3 uses
+  %niter52 = phi i64 [ 0, %._crit_edge34.us.us.2.i ], [ %niter52.next.1, %bb.n ]
   %i.js = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %.02030.us.us.3.i
   %.0.copyload.i.us.us.3.i = load i32, ptr %i.js, align 1
   %i.jt = lshr i32 %.0.copyload.i.us.us.3.i, 24
@@ -808,11 +773,10 @@ bb.n:                                             ; preds = %bb.n, %._crit_edge3
   %lcmp.mod49.not = icmp eq i64 %xtraiter48, 0
   br i1 %lcmp.mod49.not, label %._crit_edge.us.us.3.i, label %.epil.preheader47
 
-.epil.preheader47:                                ; preds = %._crit_edge.us.us.3.i.unr-lcssa, %._crit_edge34.us.us.2.i
-  %.02030.us.us.3.i.epil.init = phi i64 [ 0, %._crit_edge34.us.us.2.i ], [ %i.kf, %._crit_edge.us.us.3.i.unr-lcssa ]
+.epil.preheader47:                                ; preds = %._crit_edge.us.us.3.i.unr-lcssa
   %lcmp.mod50 = trunc i32 %i.m to i1
   call void @llvm.assume(i1 %lcmp.mod50)
-  %i.kg = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %.02030.us.us.3.i.epil.init
+  %i.kg = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %i.kf
   %.0.copyload.i.us.us.3.i.epil = load i32, ptr %i.kg, align 1
   %i.kh = lshr i32 %.0.copyload.i.us.us.3.i.epil, 24
   %i.ki = zext nneg i32 %i.kh to i64
@@ -870,16 +834,12 @@ bb.o:                                             ; preds = %bb.o, %._crit_edge.
 
 .preheader.us.us.3.i.preheader:                   ; preds = %bb.o
   %xtraiter53 = and i64 %i.n, 1
-  %12 = icmp eq i64 %4, 0
-  br i1 %12, label %.preheader.us.us.3.i.epil.preheader, label %.preheader.us.us.3.i.preheader.new
-
-.preheader.us.us.3.i.preheader.new:               ; preds = %.preheader.us.us.3.i.preheader
   %unroll_iter56 = and i64 %i.n, 4294967294
   br label %.preheader.us.us.3.i
 
-.preheader.us.us.3.i:                             ; preds = %.preheader.us.us.3.i, %.preheader.us.us.3.i.preheader.new
-  %.01832.us.us.3.i = phi i64 [ 0, %.preheader.us.us.3.i.preheader.new ], [ %i.mi, %.preheader.us.us.3.i ] ; 3 uses
-  %niter57 = phi i64 [ 0, %.preheader.us.us.3.i.preheader.new ], [ %niter57.next.1, %.preheader.us.us.3.i ]
+.preheader.us.us.3.i:                             ; preds = %.preheader.us.us.3.i, %.preheader.us.us.3.i.preheader
+  %.01832.us.us.3.i = phi i64 [ 0, %.preheader.us.us.3.i.preheader ], [ %i.mi, %.preheader.us.us.3.i ] ; 3 uses
+  %niter57 = phi i64 [ 0, %.preheader.us.us.3.i.preheader ], [ %niter57.next.1, %.preheader.us.us.3.i ]
   %i.lr = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %.01832.us.us.3.i
   %.0.copyload.i21.us.us.3.i = load i32, ptr %i.lr, align 1 ; 2 uses
   %i.ls = lshr i32 %.0.copyload.i21.us.us.3.i, 24
@@ -912,11 +872,10 @@ _ZN4moldL10radix_sortESt4spanINS_7IntegerIjLb1ELi4EEELm18446744073709551615EERSt
   %lcmp.mod54.not = icmp eq i64 %xtraiter53, 0
   br i1 %lcmp.mod54.not, label %_ZN4moldL10radix_sortESt4spanINS_7IntegerIjLb1ELi4EEELm18446744073709551615EERSt6vectorIS2_SaIS2_EE.exit, label %.preheader.us.us.3.i.epil.preheader
 
-.preheader.us.us.3.i.epil.preheader:              ; preds = %_ZN4moldL10radix_sortESt4spanINS_7IntegerIjLb1ELi4EEELm18446744073709551615EERSt6vectorIS2_SaIS2_EE.exit.unr-lcssa, %.preheader.us.us.3.i.preheader
-  %.01832.us.us.3.i.epil.init = phi i64 [ 0, %.preheader.us.us.3.i.preheader ], [ %i.mi, %_ZN4moldL10radix_sortESt4spanINS_7IntegerIjLb1ELi4EEELm18446744073709551615EERSt6vectorIS2_SaIS2_EE.exit.unr-lcssa ]
+.preheader.us.us.3.i.epil.preheader:              ; preds = %_ZN4moldL10radix_sortESt4spanINS_7IntegerIjLb1ELi4EEELm18446744073709551615EERSt6vectorIS2_SaIS2_EE.exit.unr-lcssa
   %lcmp.mod55 = trunc i32 %i.m to i1
   call void @llvm.assume(i1 %lcmp.mod55)
-  %i.mj = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %.01832.us.us.3.i.epil.init
+  %i.mj = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %i.mi
   %.0.copyload.i21.us.us.3.i.epil = load i32, ptr %i.mj, align 1 ; 2 uses
   %i.mk = lshr i32 %.0.copyload.i21.us.us.3.i.epil, 24
   %i.ml = zext nneg i32 %i.mk to i64

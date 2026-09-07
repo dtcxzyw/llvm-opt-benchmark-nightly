@@ -205,17 +205,16 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN12_GLOBAL__N_114ARMELFStreamer8emitInstEjc.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.u = icmp eq i8 %2, 110
+  %i.u = icmp eq i8 %2, 110                       ; 3 uses
   %i.v = select i1 %i.u, i32 2, i32 4             ; 9 uses
   tail call fastcc void @_ZN12_GLOBAL__N_114ARMELFStreamer22EmitThumbMappingSymbolEv(ptr noundef nonnull align 8 dereferenceable(6928) %.val)
   br i1 %i.i, label %.split.us.i.preheader, label %.split.i.preheader
 
 .split.i.preheader:                               ; preds = %bb.c
-  %i.w = add nsw i32 %i.v, -2                     ; 3 uses
+  %i.w = add nsw i32 %i.v, -2                     ; 2 uses
   %i.x = lshr exact i32 %i.w, 1
   %i.y = add nuw i32 %i.x, 1                      ; 2 uses
-  %3 = icmp eq i32 %i.w, 0
-  br i1 %3, label %.split.i.epil.preheader, label %.split.i.preheader.new
+  br i1 %i.u, label %.split.i.epil.preheader, label %.split.i.preheader.new
 
 .split.i.preheader.new:                           ; preds = %.split.i.preheader
   %unroll_iter = and i32 %i.y, -2
@@ -223,11 +222,10 @@ bb.c:                                             ; preds = %bb.a
   br label %.split.i
 
 .split.us.i.preheader:                            ; preds = %bb.c
-  %i.aa = add nsw i32 %i.v, -2                    ; 3 uses
+  %i.aa = add nsw i32 %i.v, -2                    ; 2 uses
   %i.ab = lshr exact i32 %i.aa, 1
   %i.ac = add nuw i32 %i.ab, 1                    ; 2 uses
-  %4 = icmp eq i32 %i.aa, 0
-  br i1 %4, label %.split.us.i.epil.preheader, label %.split.us.i.preheader.new
+  br i1 %i.u, label %.split.us.i.epil.preheader, label %.split.us.i.preheader.new
 
 .split.us.i.preheader.new:                        ; preds = %.split.us.i.preheader
   %unroll_iter33 = and i32 %i.ac, -2

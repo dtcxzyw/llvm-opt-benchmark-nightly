@@ -204,12 +204,10 @@ bb.v:                                             ; preds = %bb.t
   %i.ed = or i32 %i.ec, %i.bs
   %i.ee = load i8, ptr %i.bz, align 4             ; 3 uses
   %i.ef = zext i8 %i.ee to i32
-  %i.eg = add nsw i32 %i.eb, -1                   ; 5 uses
+  %i.eg = add nsw i32 %i.eb, -1                   ; 4 uses
   %i.eh = add nsw i32 %i.eg, %i.ef                ; 3 uses
-  %.not.i160 = icmp eq i32 %i.eg, 0
   %i.ei = icmp ugt i32 %i.eh, 32
-  %1 = or i1 %.not.i160, %i.ei
-  br i1 %1, label %bb.w, label %bb.x, !prof !20
+  br i1 %i.ei, label %bb.w, label %bb.x, !prof !20
 
 bb.w:                                             ; preds = %bb.v
   tail call void asm sideeffect "1239: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1239b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 1239) #14, !srcloc !21
@@ -258,10 +256,10 @@ bb.ad:                                            ; preds = %bb.ab
 
 tnode_new.exit169:                                ; preds = %bb.ac, %bb.ad
   %i.ev = getelementptr i8, ptr %.0.i.i162, i64 32 ; 3 uses
-  %2 = icmp samesign ult i32 %i.eh, 32
+  %.not304 = icmp eq i32 %i.eh, 32
   %i.ew = shl nsw i32 -1, %i.eh
   %i.ex = and i32 %i.ew, %i.ed
-  %i.ey = select i1 %2, i32 %i.ex, i32 0
+  %i.ey = select i1 %.not304, i32 0, i32 %i.ex
   store i32 %i.ey, ptr %i.ev, align 8
   %i.ez = getelementptr i8, ptr %.0.i.i162, i64 36 ; 6 uses
   store i8 %i.ee, ptr %i.ez, align 4

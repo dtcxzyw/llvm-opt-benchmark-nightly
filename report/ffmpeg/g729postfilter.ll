@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %i.yg = ashr exact i32 %sext.i66, 16
   %i.yh = select i1 %i.ye, i32 32767, i32 %i.yg
   %i.yi = sdiv i32 %i.yc, %i.yh                   ; 3 uses
-  %i.yj = add nsw i32 %9, -1                      ; 4 uses
+  %i.yj = add nsw i32 %9, -1                      ; 2 uses
   %i.yk = sext i32 %i.yj to i64
   %i.yl = getelementptr inbounds [2 x i8], ptr %i.xr, i64 %i.yk
   %i.ym = load i16, ptr %i.yl, align 2, !tbaa !10
@@ -214,26 +214,21 @@ bb.x:                                             ; preds = %bb.w, %bb.v
 .lr.ph.i68:                                       ; preds = %bb.x
   %i.yo = and i32 %.037.i, -2                     ; 2 uses
   %i.yp = zext i32 %i.yj to i64                   ; 5 uses
-  %10 = icmp ne i32 %i.yj, 0
-  %.neg = sext i1 %10 to i64
   %i.yq = zext nneg i32 %9 to i64
-  %i.yr = add nsw i64 %.neg, %i.yq                ; 3 uses
-  %min.iters.check286 = icmp ult i64 %i.yr, 8
+  %i.yr = add nsw i64 %i.yq, -1                   ; 2 uses
+  %min.iters.check286 = icmp ult i32 %9, 9
   br i1 %min.iters.check286, label %scalar.ph285.preheader, label %vector.memcheck277
 
 vector.memcheck277:                               ; preds = %.lr.ph.i68
-  %.not = icmp eq i32 %i.yj, 0
-  %11 = select i1 %.not, i64 0, i64 2             ; 2 uses
-  %scevgep278 = getelementptr i8, ptr %8, i64 %11
+  %scevgep278 = getelementptr i8, ptr %8, i64 2
   %i.ys = shl nuw nsw i64 %i.yp, 1                ; 2 uses
-  %12 = getelementptr i8, ptr %8, i64 %i.ys
-  %scevgep279.a = getelementptr i8, ptr %12, i64 2
-  %i.yt = getelementptr i8, ptr %7, i64 %11
-  %scevgep280 = getelementptr i8, ptr %i.yt, i64 18
+  %scevgep279.a = getelementptr i8, ptr %8, i64 %i.ys
+  %i.yt = getelementptr i8, ptr %scevgep279.a, i64 2
+  %scevgep280 = getelementptr i8, ptr %7, i64 20
   %i.yu = getelementptr i8, ptr %7, i64 %i.ys
   %scevgep281 = getelementptr i8, ptr %i.yu, i64 22
   %bound0282 = icmp ult ptr %scevgep278, %scevgep281
-  %bound1283 = icmp ult ptr %scevgep280, %scevgep279.a
+  %bound1283 = icmp ult ptr %scevgep280, %i.yt
   %found.conflict284 = and i1 %bound0282, %bound1283
   br i1 %found.conflict284, label %scalar.ph285.preheader, label %vector.ph287
 

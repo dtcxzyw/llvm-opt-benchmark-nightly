@@ -205,7 +205,7 @@ bb.a:
   %i.m = sub nsw i64 8, %i.e
   %i.n = lshr i64 %i.m, 1
   %i.o = select i1 %i.l, i64 %i.n, i64 0          ; 6 uses
-  %.sroa.speculated97 = tail call i64 @llvm.umax.i64(i64 %i.b, i64 8) ; 12 uses
+  %.sroa.speculated97 = tail call i64 @llvm.umax.i64(i64 %i.b, i64 8) ; 11 uses
   %.sroa.speculated93 = tail call i64 @llvm.umax.i64(i64 %i.e, i64 8) ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #46
   call void @_ZN3jxl6Image3IfE6CreateEP22JxlMemoryManagerStructmm(ptr dead_on_unwind nonnull writable sret(%"class.jxl::StatusOr.1") align 8 %5, ptr noundef %i.g, i64 noundef %.sroa.speculated97, i64 noundef %.sroa.speculated93) #49
@@ -307,9 +307,7 @@ bb.b:                                             ; preds = %bb.a
   %i.cd = getelementptr inbounds nuw i8, ptr %8, i64 40
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !68 ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ce, i64 64) ]
-  %12 = add nsw i64 %.sroa.speculated97, -1       ; 3 uses
   %xtraiter = and i64 %.sroa.speculated97, 1
-  %13 = icmp eq i64 %12, 0
   %unroll_iter = and i64 %.sroa.speculated97, 4294967294
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod148 = trunc i64 %.sroa.speculated97 to i1
@@ -355,7 +353,7 @@ _ZN3jxl5PlaneIfE6CreateEP22JxlMemoryManagerStructmmm.exit: ; preds = %bb.c, %.cr
   %i.cu = mul i64 %i.bw, %.067126
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ce, i64 %i.cu ; 4 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.cv, i64 64) ]
-  br i1 %13, label %.epil.preheader, label %.preheader123.new
+  br label %.preheader123.new
 
 .preheader124.1:                                  ; preds = %bb.g
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 96
@@ -371,7 +369,6 @@ _ZN3jxl5PlaneIfE6CreateEP22JxlMemoryManagerStructmmm.exit: ; preds = %bb.c, %.cr
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !68 ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.dd, i64 64) ]
   %xtraiter153 = and i64 %.sroa.speculated97, 1
-  %14 = icmp eq i64 %12, 0
   %unroll_iter157 = and i64 %.sroa.speculated97, 4294967294
   %lcmp.mod154.not = icmp eq i64 %xtraiter153, 0
   %lcmp.mod156 = trunc i64 %.sroa.speculated97 to i1
@@ -393,11 +390,11 @@ _ZN3jxl5PlaneIfE6CreateEP22JxlMemoryManagerStructmmm.exit: ; preds = %bb.c, %.cr
   %i.dl = mul i64 %i.bw, %.067126.1
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dd, i64 %i.dl ; 4 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.dm, i64 64) ]
-  br i1 %14, label %.epil.preheader152, label %.preheader123.1.new
+  br label %.preheader123.1.new
 
-.preheader123.1.new:                              ; preds = %.preheader123.1, %.preheader123.1.new
-  %.066125.1 = phi i64 [ %i.ec, %.preheader123.1.new ], [ 0, %.preheader123.1 ] ; 5 uses
-  %niter158 = phi i64 [ %niter158.next.1, %.preheader123.1.new ], [ 0, %.preheader123.1 ]
+.preheader123.1.new:                              ; preds = %.preheader123.1.new, %.preheader123.1
+  %.066125.1 = phi i64 [ 0, %.preheader123.1 ], [ %i.ec, %.preheader123.1.new ] ; 5 uses
+  %niter158 = phi i64 [ 0, %.preheader123.1 ], [ %niter158.next.1, %.preheader123.1.new ]
   %i.dn = call i64 @llvm.usub.sat.i64(i64 %.066125.1, i64 %i.k)
   %.sroa.speculated80.1 = call i64 @llvm.umin.i64(i64 %i.dn, i64 %i.bn) ; 2 uses
   %i.do = getelementptr inbounds nuw [4 x i8], ptr %i.dg, i64 %.sroa.speculated80.1
@@ -419,7 +416,7 @@ _ZN3jxl5PlaneIfE6CreateEP22JxlMemoryManagerStructmmm.exit: ; preds = %bb.c, %.cr
   %i.ea = load float, ptr %i.dz, align 4, !tbaa !58
   %i.eb = getelementptr inbounds nuw [4 x i8], ptr %i.dm, i64 %i.du
   store float %i.ea, ptr %i.eb, align 4, !tbaa !58
-  %i.ec = add nuw nsw i64 %.066125.1, 2           ; 2 uses
+  %i.ec = add nuw nsw i64 %.066125.1, 2           ; 4 uses
   %niter158.next.1 = add nuw nsw i64 %niter158, 2 ; 2 uses
   %niter158.ncmp.1 = icmp eq i64 %niter158.next.1, %unroll_iter157
   br i1 %niter158.ncmp.1, label %.unr-lcssa151, label %.preheader123.1.new, !llvm.loop !1497
@@ -427,18 +424,17 @@ _ZN3jxl5PlaneIfE6CreateEP22JxlMemoryManagerStructmmm.exit: ; preds = %bb.c, %.cr
 .unr-lcssa151:                                    ; preds = %.preheader123.1.new
   br i1 %lcmp.mod154.not, label %bb.d, label %.epil.preheader152
 
-.epil.preheader152:                               ; preds = %.unr-lcssa151, %.preheader123.1
-  %.066125.1.epil.init = phi i64 [ 0, %.preheader123.1 ], [ %i.ec, %.unr-lcssa151 ] ; 3 uses
+.epil.preheader152:                               ; preds = %.unr-lcssa151
   call void @llvm.assume(i1 %lcmp.mod156)
-  %i.ed = call i64 @llvm.usub.sat.i64(i64 %.066125.1.epil.init, i64 %i.k)
+  %i.ed = call i64 @llvm.usub.sat.i64(i64 %i.ec, i64 %i.k)
   %.sroa.speculated80.1.epil = call i64 @llvm.umin.i64(i64 %i.ed, i64 %i.bn) ; 2 uses
   %i.ee = getelementptr inbounds nuw [4 x i8], ptr %i.dg, i64 %.sroa.speculated80.1.epil
   %i.ef = load float, ptr %i.ee, align 4, !tbaa !58
-  %i.eg = getelementptr inbounds nuw [4 x i8], ptr %i.di, i64 %.066125.1.epil.init
+  %i.eg = getelementptr inbounds nuw [4 x i8], ptr %i.di, i64 %i.ec
   store float %i.ef, ptr %i.eg, align 4, !tbaa !58
   %i.eh = getelementptr inbounds nuw [4 x i8], ptr %i.dk, i64 %.sroa.speculated80.1.epil
   %i.ei = load float, ptr %i.eh, align 4, !tbaa !58
-  %i.ej = getelementptr inbounds nuw [4 x i8], ptr %i.dm, i64 %.066125.1.epil.init
+  %i.ej = getelementptr inbounds nuw [4 x i8], ptr %i.dm, i64 %i.ec
   store float %i.ei, ptr %i.ej, align 4, !tbaa !58
   br label %bb.d
 
@@ -461,7 +457,6 @@ bb.d:                                             ; preds = %.unr-lcssa151, %.ep
   %i.es = load ptr, ptr %i.er, align 8, !tbaa !68 ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.es, i64 64) ]
   %xtraiter161 = and i64 %.sroa.speculated97, 1
-  %15 = icmp eq i64 %12, 0
   %unroll_iter165 = and i64 %.sroa.speculated97, 4294967294
   %lcmp.mod162.not = icmp eq i64 %xtraiter161, 0
   %lcmp.mod164 = trunc i64 %.sroa.speculated97 to i1
@@ -483,11 +478,11 @@ bb.d:                                             ; preds = %.unr-lcssa151, %.ep
   %i.fa = mul i64 %i.bw, %.067126.2
   %i.fb = getelementptr inbounds nuw i8, ptr %i.es, i64 %i.fa ; 4 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.fb, i64 64) ]
-  br i1 %15, label %.epil.preheader160, label %.preheader123.2.new
+  br label %.preheader123.2.new
 
-.preheader123.2.new:                              ; preds = %.preheader123.2, %.preheader123.2.new
-  %.066125.2 = phi i64 [ %i.fr, %.preheader123.2.new ], [ 0, %.preheader123.2 ] ; 5 uses
-  %niter166 = phi i64 [ %niter166.next.1, %.preheader123.2.new ], [ 0, %.preheader123.2 ]
+.preheader123.2.new:                              ; preds = %.preheader123.2.new, %.preheader123.2
+  %.066125.2 = phi i64 [ 0, %.preheader123.2 ], [ %i.fr, %.preheader123.2.new ] ; 5 uses
+  %niter166 = phi i64 [ 0, %.preheader123.2 ], [ %niter166.next.1, %.preheader123.2.new ]
   %i.fc = call i64 @llvm.usub.sat.i64(i64 %.066125.2, i64 %i.k)
   %.sroa.speculated80.2 = call i64 @llvm.umin.i64(i64 %i.fc, i64 %i.bn) ; 2 uses
   %i.fd = getelementptr inbounds nuw [4 x i8], ptr %i.ev, i64 %.sroa.speculated80.2
@@ -509,7 +504,7 @@ bb.d:                                             ; preds = %.unr-lcssa151, %.ep
   %i.fp = load float, ptr %i.fo, align 4, !tbaa !58
   %i.fq = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %i.fj
   store float %i.fp, ptr %i.fq, align 4, !tbaa !58
-  %i.fr = add nuw nsw i64 %.066125.2, 2           ; 2 uses
+  %i.fr = add nuw nsw i64 %.066125.2, 2           ; 4 uses
   %niter166.next.1 = add nuw nsw i64 %niter166, 2 ; 2 uses
   %niter166.ncmp.1 = icmp eq i64 %niter166.next.1, %unroll_iter165
   br i1 %niter166.ncmp.1, label %.unr-lcssa159, label %.preheader123.2.new, !llvm.loop !1497
@@ -517,18 +512,17 @@ bb.d:                                             ; preds = %.unr-lcssa151, %.ep
 .unr-lcssa159:                                    ; preds = %.preheader123.2.new
   br i1 %lcmp.mod162.not, label %bb.e, label %.epil.preheader160
 
-.epil.preheader160:                               ; preds = %.unr-lcssa159, %.preheader123.2
-  %.066125.2.epil.init = phi i64 [ 0, %.preheader123.2 ], [ %i.fr, %.unr-lcssa159 ] ; 3 uses
+.epil.preheader160:                               ; preds = %.unr-lcssa159
   call void @llvm.assume(i1 %lcmp.mod164)
-  %i.fs = call i64 @llvm.usub.sat.i64(i64 %.066125.2.epil.init, i64 %i.k)
+  %i.fs = call i64 @llvm.usub.sat.i64(i64 %i.fr, i64 %i.k)
   %.sroa.speculated80.2.epil = call i64 @llvm.umin.i64(i64 %i.fs, i64 %i.bn) ; 2 uses
   %i.ft = getelementptr inbounds nuw [4 x i8], ptr %i.ev, i64 %.sroa.speculated80.2.epil
   %i.fu = load float, ptr %i.ft, align 4, !tbaa !58
-  %i.fv = getelementptr inbounds nuw [4 x i8], ptr %i.ex, i64 %.066125.2.epil.init
+  %i.fv = getelementptr inbounds nuw [4 x i8], ptr %i.ex, i64 %i.fr
   store float %i.fu, ptr %i.fv, align 4, !tbaa !58
   %i.fw = getelementptr inbounds nuw [4 x i8], ptr %i.ez, i64 %.sroa.speculated80.2.epil
   %i.fx = load float, ptr %i.fw, align 4, !tbaa !58
-  %i.fy = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %.066125.2.epil.init
+  %i.fy = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %i.fr
   store float %i.fx, ptr %i.fy, align 4, !tbaa !58
   br label %bb.e
 
@@ -554,18 +548,17 @@ bb.f:                                             ; preds = %bb.e
 .unr-lcssa:                                       ; preds = %.preheader123.new
   br i1 %lcmp.mod.not, label %bb.g, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %.unr-lcssa, %.preheader123
-  %.066125.epil.init = phi i64 [ 0, %.preheader123 ], [ %i.hc, %.unr-lcssa ] ; 3 uses
+.epil.preheader:                                  ; preds = %.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod148)
-  %i.gf = call i64 @llvm.usub.sat.i64(i64 %.066125.epil.init, i64 %i.k)
+  %i.gf = call i64 @llvm.usub.sat.i64(i64 %i.hc, i64 %i.k)
   %.sroa.speculated80.epil = call i64 @llvm.umin.i64(i64 %i.gf, i64 %i.bn) ; 2 uses
   %i.gg = getelementptr inbounds nuw [4 x i8], ptr %i.cp, i64 %.sroa.speculated80.epil
   %i.gh = load float, ptr %i.gg, align 4, !tbaa !58
-  %i.gi = getelementptr inbounds nuw [4 x i8], ptr %i.cr, i64 %.066125.epil.init
+  %i.gi = getelementptr inbounds nuw [4 x i8], ptr %i.cr, i64 %i.hc
   store float %i.gh, ptr %i.gi, align 4, !tbaa !58
   %i.gj = getelementptr inbounds nuw [4 x i8], ptr %i.ct, i64 %.sroa.speculated80.epil
   %i.gk = load float, ptr %i.gj, align 4, !tbaa !58
-  %i.gl = getelementptr inbounds nuw [4 x i8], ptr %i.cv, i64 %.066125.epil.init
+  %i.gl = getelementptr inbounds nuw [4 x i8], ptr %i.cv, i64 %i.hc
   store float %i.gk, ptr %i.gl, align 4, !tbaa !58
   br label %bb.g
 
@@ -574,9 +567,9 @@ bb.g:                                             ; preds = %.unr-lcssa, %.epil.
   %exitcond132.not = icmp eq i64 %i.gm, %.sroa.speculated93
   br i1 %exitcond132.not, label %.preheader124.1, label %.preheader123, !llvm.loop !1498
 
-.preheader123.new:                                ; preds = %.preheader123, %.preheader123.new
-  %.066125 = phi i64 [ %i.hc, %.preheader123.new ], [ 0, %.preheader123 ] ; 5 uses
-  %niter = phi i64 [ %niter.next.1, %.preheader123.new ], [ 0, %.preheader123 ]
+.preheader123.new:                                ; preds = %.preheader123.new, %.preheader123
+  %.066125 = phi i64 [ 0, %.preheader123 ], [ %i.hc, %.preheader123.new ] ; 5 uses
+  %niter = phi i64 [ 0, %.preheader123 ], [ %niter.next.1, %.preheader123.new ]
   %i.gn = call i64 @llvm.usub.sat.i64(i64 %.066125, i64 %i.k)
   %.sroa.speculated80 = call i64 @llvm.umin.i64(i64 %i.gn, i64 %i.bn) ; 2 uses
   %i.go = getelementptr inbounds nuw [4 x i8], ptr %i.cp, i64 %.sroa.speculated80
@@ -598,7 +591,7 @@ bb.g:                                             ; preds = %.unr-lcssa, %.epil.
   %i.ha = load float, ptr %i.gz, align 4, !tbaa !58
   %i.hb = getelementptr inbounds nuw [4 x i8], ptr %i.cv, i64 %i.gu
   store float %i.ha, ptr %i.hb, align 4, !tbaa !58
-  %i.hc = add nuw nsw i64 %.066125, 2             ; 2 uses
+  %i.hc = add nuw nsw i64 %.066125, 2             ; 4 uses
   %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %.preheader123.new, !llvm.loop !1497

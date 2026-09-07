@@ -205,8 +205,8 @@ bb.j:                                             ; preds = %_ZNK6vectorI3mpzLb0
 
 _ZN6vectorI3mpzLb0EjE7reserveEj.exit:             ; preds = %.lr.ph.i.i118, %bb.j, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.thread.i, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i120, %bb.h
   %.095 = phi i32 [ 0, %bb.h ], [ 0, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.i120 ], [ %i.as, %_ZNK6vectorI3mpzLb0EjE4sizeEv.exit.thread.i ], [ %i.as, %bb.j ], [ %i.as, %.lr.ph.i.i118 ] ; 6 uses
-  %i.bn = add i32 %3, -1
-  %i.bo = zext i32 %i.bn to i64                   ; 3 uses
+  %i.bn = add i32 %3, -1                          ; 2 uses
+  %i.bo = zext i32 %i.bn to i64
   %i.bp = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %i.bo ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #23
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 20 uses
@@ -222,7 +222,10 @@ _ZN6vectorI3mpzLb0EjE7reserveEj.exit:             ; preds = %.lr.ph.i.i118, %bb.
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 8 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 72
   %.not203 = icmp eq i32 %.095, 0                 ; 2 uses
-  %wide.trip.count221.a = zext i32 %.095 to i64
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.bn, i32 1) ; 2 uses
+  %wide.trip.count221 = zext i32 %.095 to i64
+  %wide.trip.count226 = zext i32 %umax to i64
+  %wide.trip.count221.a = zext i32 %umax to i64
   br label %_ZN11upolynomial12core_manager8set_sizeEjR7svectorI3mpzjE.exit172
 
 _ZN11upolynomial12core_manager8set_sizeEjR7svectorI3mpzjE.exit172: ; preds = %_ZN11upolynomial12core_manager8set_sizeEjR7svectorI3mpzjE.exit172.backedge, %_ZN6vectorI3mpzLb0EjE7reserveEj.exit
@@ -461,7 +464,7 @@ bb.y:                                             ; preds = %.noexc135
 
 _ZN13mpzzp_manager6submulERK3mpzS2_S2_RS0_.exit:  ; preds = %.noexc135, %bb.y
   %indvars.iv.next229 = add nuw nsw i64 %indvars.iv228, 1 ; 2 uses
-  %exitcond232.not = icmp eq i64 %indvars.iv.next229, %i.bo
+  %exitcond232.not = icmp eq i64 %indvars.iv.next229, %wide.trip.count221.a
   br i1 %exitcond232.not, label %.loopexit183, label %.lr.ph202, !llvm.loop !148
 
 bb.z:                                             ; preds = %bb.y, %.lr.ph202
@@ -581,7 +584,7 @@ bb.ah:                                            ; preds = %.noexc144
 
 _ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit146:     ; preds = %.noexc144, %bb.ah
   %indvars.iv.next219 = add nuw nsw i64 %indvars.iv218, 1 ; 2 uses
-  %exitcond222.not = icmp eq i64 %indvars.iv.next219, %wide.trip.count221.a
+  %exitcond222.not = icmp eq i64 %indvars.iv.next219, %wide.trip.count221
   br i1 %exitcond222.not, label %._crit_edge, label %.lr.ph198, !llvm.loop !150
 
 bb.ai:                                            ; preds = %bb.ah, %.lr.ph198
@@ -612,7 +615,7 @@ bb.aj:                                            ; preds = %.noexc147
 
 _ZN13mpzzp_manager6submulERK3mpzS2_S2_RS0_.exit149: ; preds = %.noexc147, %bb.aj
   %indvars.iv.next224 = add nuw nsw i64 %indvars.iv223, 1 ; 2 uses
-  %exitcond227.not = icmp eq i64 %indvars.iv.next224, %i.bo
+  %exitcond227.not = icmp eq i64 %indvars.iv.next224, %wide.trip.count226
   br i1 %exitcond227.not, label %.loopexit183, label %.lr.ph200, !llvm.loop !151
 
 bb.ak:                                            ; preds = %bb.aj, %.lr.ph200
@@ -1015,12 +1018,12 @@ bb.e:                                             ; preds = %_ZN11mpz_managerILb
           to label %.lr.ph.preheader unwind label %.loopexit.split-lp
 
 .lr.ph.preheader:                                 ; preds = %_ZN11mpz_managerILb0EE3setER3mpzRKS1_.exit.i, %bb.e
-  %5 = zext i32 %i.b to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit20
-  %indvars.iv = phi i64 [ %5, %.lr.ph.preheader ], [ %6, %_ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit20 ]
-  %6 = add nsw i64 %indvars.iv, -1                ; 3 uses
+  %.022 = phi i32 [ %5, %_ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit20 ], [ %i.b, %.lr.ph.preheader ]
+  %5 = add i32 %.022, -1                          ; 3 uses
+  %6 = zext i32 %5 to i64
   %i.r = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %6 ; 4 uses
   %i.s = load i32, ptr %i.r, align 8, !tbaa !35
   %i.t = icmp eq i32 %i.s, 0
@@ -1071,7 +1074,7 @@ bb.i:                                             ; preds = %.noexc18
           to label %_ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit20 unwind label %.loopexit
 
 _ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit20:      ; preds = %bb.i, %.noexc18
-  %.not.wide = icmp eq i64 %6, 0
+  %.not.wide = icmp eq i32 %5, 0
   br i1 %.not.wide, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit20
