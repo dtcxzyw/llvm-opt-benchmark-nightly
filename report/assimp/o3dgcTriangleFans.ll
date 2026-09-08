@@ -204,7 +204,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %.loopexit50, %bb.w
   %.026 = phi i64 [ %i.gu, %.loopexit50 ], [ %i.gg, %bb.w ]
-  %i.gv = add i64 %i.fi, %.026
+  %i.gv = add nsw i64 %i.fi, %.026
   %i.gw = load i64, ptr %i.ga, align 8            ; 3 uses
   %i.gx = load i64, ptr %i.fl, align 8
   %i.gy = icmp eq i64 %i.gw, %i.gx

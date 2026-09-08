@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %tailrecurse
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 0, -4294967292) i64 @_ZN4llvm8coverage24CounterExpressionBuilder8simplifyENS0_7CounterE(ptr noundef nonnull align 8 dereferenceable(48) %0, i64 %1) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 0, -4294967293) i64 @_ZN4llvm8coverage24CounterExpressionBuilder8simplifyENS0_7CounterE(ptr noundef nonnull align 8 dereferenceable(48) %0, i64 %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %2 = alloca %"struct.std::array.703", align 4   ; 8 uses
   %3 = alloca %"struct.std::array.703", align 4   ; 8 uses
@@ -608,7 +608,7 @@ _ZN4llvm11SmallVectorINS_8coverage24CounterExpressionBuilder4TermELj32EED2Ev.exi
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 0, -4294967292) i64 @_ZN4llvm8coverage24CounterExpressionBuilder3addENS0_7CounterES2_b(ptr noundef nonnull align 8 dereferenceable(48) %0, i64 %1, i64 %2, i1 noundef zeroext %3) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 0, -4294967293) i64 @_ZN4llvm8coverage24CounterExpressionBuilder3addENS0_7CounterES2_b(ptr noundef nonnull align 8 dereferenceable(48) %0, i64 %1, i64 %2, i1 noundef zeroext %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %4 = alloca %"struct.llvm::coverage::CounterExpression", align 4 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
@@ -631,7 +631,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local range(i64 0, -4294967292) i64 @_ZN4llvm8coverage24CounterExpressionBuilder8subtractENS0_7CounterES2_b(ptr noundef nonnull align 8 dereferenceable(48) %0, i64 %1, i64 %2, i1 noundef zeroext %3) local_unnamed_addr #0 align 2 {
+define dso_local range(i64 0, -4294967293) i64 @_ZN4llvm8coverage24CounterExpressionBuilder8subtractENS0_7CounterES2_b(ptr noundef nonnull align 8 dereferenceable(48) %0, i64 %1, i64 %2, i1 noundef zeroext %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %4 = alloca %"struct.llvm::coverage::CounterExpression", align 4 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31

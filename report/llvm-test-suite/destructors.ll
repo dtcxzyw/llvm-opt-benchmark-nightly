@@ -200,7 +200,7 @@ begin_hunk_0_@__local_laplacian:entry
   %i.ase = mul i32 %i.arx, %i.asd
   %i.asf = sub i32 %i.ase, %b737
   %i.asg = or disjoint i32 %i.at, 1
-  %i.ash = sub i32 %i.asg, %b733
+  %i.ash = sub nsw i32 %i.asg, %b733
   %i.asi = mul i32 %i.arx, %i.ash
   %i.asj = sub i32 %i.asi, %b737
   %i.ask = add nsw i32 %i.at, 2
@@ -494,7 +494,7 @@ middle.block1426:                                 ; preds = %vector.body1398
   %i.ayu = mul i32 %i.aym, %i.ayt
   %i.ayv = sub i32 %i.ayu, %b751
   %i.ayw = or disjoint i32 %i.ab, 1
-  %i.ayx = sub i32 %i.ayw, %b748
+  %i.ayx = sub nsw i32 %i.ayw, %b748
   %i.ayy = mul i32 %i.aym, %i.ayx
   %i.ayz = sub i32 %i.ayy, %b751
   %i.aza = add nsw i32 %i.ab, 2

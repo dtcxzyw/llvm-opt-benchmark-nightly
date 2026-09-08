@@ -204,7 +204,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc range(i24 0, 66048) i24 @_ZN6duckdbL16CheckConstraintsERNS_17TableCatalogEntryERKNS_16ColumnDefinitionE(ptr noundef nonnull align 8 dereferenceable(448) %0, ptr noundef nonnull align 8 dereferenceable(216) %1) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define internal fastcc range(i24 0, 65794) i24 @_ZN6duckdbL16CheckConstraintsERNS_17TableCatalogEntryERKNS_16ColumnDefinitionE(ptr noundef nonnull align 8 dereferenceable(448) %0, ptr noundef nonnull align 8 dereferenceable(216) %1) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %i.a = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK6duckdb17TableCatalogEntry14GetConstraintsEv(ptr noundef nonnull align 8 dereferenceable(448) %0) ; 2 uses

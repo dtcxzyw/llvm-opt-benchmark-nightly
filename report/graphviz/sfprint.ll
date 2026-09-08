@@ -204,14 +204,14 @@ bb.q:                                             ; preds = %.backedge
   br label %.backedge.backedge
 
 bb.r:                                             ; preds = %.backedge
-  %i.bf = shl nuw nsw i32 %.0825, 3
+  %i.bf = shl i32 %.0825, 3
   %i.bg = and i32 %i.bf, 512
   %i.bh = xor i32 %i.bg, 512
   %spec.select = or i32 %i.bh, %.0825
   br label %.backedge.backedge
 
 bb.s:                                             ; preds = %.backedge
-  %i.bi = shl nuw nsw i32 %.0825, 1
+  %i.bi = shl i32 %.0825, 1
   %i.bj = and i32 %i.bi, 256
   %i.bk = xor i32 %i.bj, 256
   %spec.select1023 = or i32 %i.bk, %.0825
