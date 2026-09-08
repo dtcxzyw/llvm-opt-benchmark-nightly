@@ -205,7 +205,7 @@ bb.cn:                                            ; preds = %_ZN6embree4sse217BV
 
 bb.co:                                            ; preds = %_ZN6embree4sse217BVHBuilderMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_18RecalculatePrimRefINS_12TriangleMeshEEENS_13FastAllocator15CachedAllocatorENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSE_3SetENS0_17CreateMSMBlurLeafILi4ES6_NS_10TriangleMiILi4EEEEENS_5Scene29BuildProgressMonitorInterfaceEE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERSS_SV_.exit
   %i.aej = load i64, ptr %i.pp, align 8           ; 2 uses
-  %i.aek = add nsw i64 %i.aej, 1
+  %i.aek = add nuw nsw i64 %i.aej, 1
   store i64 %i.aek, ptr %i.pp, align 8
   %i.ael = getelementptr inbounds nuw [16 x i8], ptr %i.po, i64 %i.aej ; 3 uses
   store ptr %i.aed, ptr %i.ael, align 8
@@ -233,7 +233,7 @@ bb.cq:                                            ; preds = %bb.cp
 
 bb.cr:                                            ; preds = %bb.cp
   %i.aev = load i64, ptr %i.pp, align 8           ; 2 uses
-  %i.aew = add nsw i64 %i.aev, 1
+  %i.aew = add nuw nsw i64 %i.aev, 1
   store i64 %i.aew, ptr %i.pp, align 8
   %i.aex = getelementptr inbounds nuw [16 x i8], ptr %i.po, i64 %i.aev ; 3 uses
   store ptr %i.aeo, ptr %i.aex, align 8
@@ -636,7 +636,7 @@ bb.cj:                                            ; preds = %bb.ci
 
 bb.ck:                                            ; preds = %bb.ci
   %i.akv = load i64, ptr %i.yy, align 8           ; 2 uses
-  %i.akw = add nsw i64 %i.akv, 1
+  %i.akw = add nuw nsw i64 %i.akv, 1
   store i64 %i.akw, ptr %i.yy, align 8
   %i.akx = getelementptr inbounds nuw [16 x i8], ptr %i.yx, i64 %i.akv ; 3 uses
   store ptr %i.akp, ptr %i.akx, align 8
@@ -664,7 +664,7 @@ bb.cm:                                            ; preds = %bb.cl
 
 bb.cn:                                            ; preds = %bb.cl
   %i.alh = load i64, ptr %i.yy, align 8           ; 2 uses
-  %i.ali = add nsw i64 %i.alh, 1
+  %i.ali = add nuw nsw i64 %i.alh, 1
   store i64 %i.ali, ptr %i.yy, align 8
   %i.alj = getelementptr inbounds nuw [16 x i8], ptr %i.yx, i64 %i.alh ; 3 uses
   store ptr %i.ala, ptr %i.alj, align 8
@@ -1067,7 +1067,7 @@ bb.cm:                                            ; preds = %_ZN6embree4sse217BV
 
 bb.cn:                                            ; preds = %_ZN6embree4sse217BVHBuilderMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_18RecalculatePrimRefINS_12TriangleMeshEEENS_13FastAllocator15CachedAllocatorENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSE_3SetENS0_17CreateMSMBlurLeafILi4ES6_NS_12TriangleMvMBILi4EEEEENS_5Scene29BuildProgressMonitorInterfaceEE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERSS_SV_.exit
   %i.aej = load i64, ptr %i.pp, align 8           ; 2 uses
-  %i.aek = add nsw i64 %i.aej, 1
+  %i.aek = add nuw nsw i64 %i.aej, 1
   store i64 %i.aek, ptr %i.pp, align 8
   %i.ael = getelementptr inbounds nuw [16 x i8], ptr %i.po, i64 %i.aej ; 3 uses
   store ptr %i.aed, ptr %i.ael, align 8
@@ -1095,7 +1095,7 @@ bb.cp:                                            ; preds = %bb.co
 
 bb.cq:                                            ; preds = %bb.co
   %i.aev = load i64, ptr %i.pp, align 8           ; 2 uses
-  %i.aew = add nsw i64 %i.aev, 1
+  %i.aew = add nuw nsw i64 %i.aev, 1
   store i64 %i.aew, ptr %i.pp, align 8
   %i.aex = getelementptr inbounds nuw [16 x i8], ptr %i.po, i64 %i.aev ; 3 uses
   store ptr %i.aeo, ptr %i.aex, align 8
@@ -1498,7 +1498,7 @@ bb.bx:                                            ; preds = %bb.bw
 
 bb.by:                                            ; preds = %bb.bw
   %i.amq = load i64, ptr %i.aat, align 8          ; 2 uses
-  %i.amr = add nsw i64 %i.amq, 1
+  %i.amr = add nuw nsw i64 %i.amq, 1
   store i64 %i.amr, ptr %i.aat, align 8
   %i.ams = getelementptr inbounds nuw [16 x i8], ptr %i.aas, i64 %i.amq ; 3 uses
   store ptr %i.amk, ptr %i.ams, align 8
@@ -1526,7 +1526,7 @@ bb.ca:                                            ; preds = %bb.bz
 
 bb.cb:                                            ; preds = %bb.bz
   %i.anc = load i64, ptr %i.aat, align 8          ; 2 uses
-  %i.and = add nsw i64 %i.anc, 1
+  %i.and = add nuw nsw i64 %i.anc, 1
   store i64 %i.and, ptr %i.aat, align 8
   %i.ane = getelementptr inbounds nuw [16 x i8], ptr %i.aas, i64 %i.anc ; 3 uses
   store ptr %i.amv, ptr %i.ane, align 8
@@ -1929,7 +1929,7 @@ bb.cm:                                            ; preds = %_ZN6embree4sse217BV
 
 bb.cn:                                            ; preds = %_ZN6embree4sse217BVHBuilderMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_18RecalculatePrimRefINS_8QuadMeshEEENS_13FastAllocator15CachedAllocatorENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSE_3SetENS0_17CreateMSMBlurLeafILi4ES6_NS_6QuadMiILi4EEEEENS_5Scene29BuildProgressMonitorInterfaceEE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERSS_SV_.exit
   %i.aej = load i64, ptr %i.pp, align 8           ; 2 uses
-  %i.aek = add nsw i64 %i.aej, 1
+  %i.aek = add nuw nsw i64 %i.aej, 1
   store i64 %i.aek, ptr %i.pp, align 8
   %i.ael = getelementptr inbounds nuw [16 x i8], ptr %i.po, i64 %i.aej ; 3 uses
   store ptr %i.aed, ptr %i.ael, align 8
@@ -1957,7 +1957,7 @@ bb.cp:                                            ; preds = %bb.co
 
 bb.cq:                                            ; preds = %bb.co
   %i.aev = load i64, ptr %i.pp, align 8           ; 2 uses
-  %i.aew = add nsw i64 %i.aev, 1
+  %i.aew = add nuw nsw i64 %i.aev, 1
   store i64 %i.aew, ptr %i.pp, align 8
   %i.aex = getelementptr inbounds nuw [16 x i8], ptr %i.po, i64 %i.aev ; 3 uses
   store ptr %i.aeo, ptr %i.aex, align 8
@@ -2360,7 +2360,7 @@ bb.ci:                                            ; preds = %bb.ch
 
 bb.cj:                                            ; preds = %bb.ch
   %i.amk = load i64, ptr %i.aan, align 8          ; 2 uses
-  %i.aml = add nsw i64 %i.amk, 1
+  %i.aml = add nuw nsw i64 %i.amk, 1
   store i64 %i.aml, ptr %i.aan, align 8
   %i.amm = getelementptr inbounds nuw [16 x i8], ptr %i.aam, i64 %i.amk ; 3 uses
   store ptr %i.ame, ptr %i.amm, align 8
@@ -2388,7 +2388,7 @@ bb.cl:                                            ; preds = %bb.ck
 
 bb.cm:                                            ; preds = %bb.ck
   %i.amw = load i64, ptr %i.aan, align 8          ; 2 uses
-  %i.amx = add nsw i64 %i.amw, 1
+  %i.amx = add nuw nsw i64 %i.amw, 1
   store i64 %i.amx, ptr %i.aan, align 8
   %i.amy = getelementptr inbounds nuw [16 x i8], ptr %i.aam, i64 %i.amw ; 3 uses
   store ptr %i.amp, ptr %i.amy, align 8
@@ -2791,7 +2791,7 @@ bb.cm:                                            ; preds = %_ZN6embree4sse217BV
 
 bb.cn:                                            ; preds = %_ZN6embree4sse217BVHBuilderMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_18RecalculatePrimRefINS_12UserGeometryEEENS_13FastAllocator15CachedAllocatorENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSE_3SetENS0_17CreateMSMBlurLeafILi4ES6_NS_6ObjectEEENS_5Scene29BuildProgressMonitorInterfaceEE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERSR_SU_.exit
   %i.aej = load i64, ptr %i.pp, align 8           ; 2 uses
-  %i.aek = add nsw i64 %i.aej, 1
+  %i.aek = add nuw nsw i64 %i.aej, 1
   store i64 %i.aek, ptr %i.pp, align 8
   %i.ael = getelementptr inbounds nuw [16 x i8], ptr %i.po, i64 %i.aej ; 3 uses
   store ptr %i.aed, ptr %i.ael, align 8
@@ -2819,7 +2819,7 @@ bb.cp:                                            ; preds = %bb.co
 
 bb.cq:                                            ; preds = %bb.co
   %i.aev = load i64, ptr %i.pp, align 8           ; 2 uses
-  %i.aew = add nsw i64 %i.aev, 1
+  %i.aew = add nuw nsw i64 %i.aev, 1
   store i64 %i.aew, ptr %i.pp, align 8
   %i.aex = getelementptr inbounds nuw [16 x i8], ptr %i.po, i64 %i.aev ; 3 uses
   store ptr %i.aeo, ptr %i.aex, align 8
@@ -3222,7 +3222,7 @@ bb.bw:                                            ; preds = %bb.bv
 
 bb.bx:                                            ; preds = %bb.bv
   %i.ado = load i64, ptr %i.rr, align 8           ; 2 uses
-  %i.adp = add nsw i64 %i.ado, 1
+  %i.adp = add nuw nsw i64 %i.ado, 1
   store i64 %i.adp, ptr %i.rr, align 8
   %i.adq = getelementptr inbounds nuw [16 x i8], ptr %i.rq, i64 %i.ado ; 3 uses
   store ptr %i.adi, ptr %i.adq, align 8
@@ -3250,7 +3250,7 @@ bb.bz:                                            ; preds = %bb.by
 
 bb.ca:                                            ; preds = %bb.by
   %i.aea = load i64, ptr %i.rr, align 8           ; 2 uses
-  %i.aeb = add nsw i64 %i.aea, 1
+  %i.aeb = add nuw nsw i64 %i.aea, 1
   store i64 %i.aeb, ptr %i.rr, align 8
   %i.aec = getelementptr inbounds nuw [16 x i8], ptr %i.rq, i64 %i.aea ; 3 uses
   store ptr %i.adt, ptr %i.aec, align 8
@@ -3653,7 +3653,7 @@ bb.cm:                                            ; preds = %_ZN6embree4sse217BV
 
 bb.cn:                                            ; preds = %_ZN6embree4sse217BVHBuilderMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_18RecalculatePrimRefINS_8InstanceEEENS_13FastAllocator15CachedAllocatorENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSE_3SetENS0_17CreateMSMBlurLeafILi4ES6_NS_17InstancePrimitiveEEENS_5Scene29BuildProgressMonitorInterfaceEE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERSR_SU_.exit
   %i.aej = load i64, ptr %i.pp, align 8           ; 2 uses
-  %i.aek = add nsw i64 %i.aej, 1
+  %i.aek = add nuw nsw i64 %i.aej, 1
   store i64 %i.aek, ptr %i.pp, align 8
   %i.ael = getelementptr inbounds nuw [16 x i8], ptr %i.po, i64 %i.aej ; 3 uses
   store ptr %i.aed, ptr %i.ael, align 8
@@ -3681,7 +3681,7 @@ bb.cp:                                            ; preds = %bb.co
 
 bb.cq:                                            ; preds = %bb.co
   %i.aev = load i64, ptr %i.pp, align 8           ; 2 uses
-  %i.aew = add nsw i64 %i.aev, 1
+  %i.aew = add nuw nsw i64 %i.aev, 1
   store i64 %i.aew, ptr %i.pp, align 8
   %i.aex = getelementptr inbounds nuw [16 x i8], ptr %i.po, i64 %i.aev ; 3 uses
   store ptr %i.aeo, ptr %i.aex, align 8
@@ -4084,7 +4084,7 @@ bb.bt:                                            ; preds = %bb.bs
 
 bb.bu:                                            ; preds = %bb.bs
   %i.xy = load i64, ptr %i.mb, align 8            ; 2 uses
-  %i.xz = add nsw i64 %i.xy, 1
+  %i.xz = add nuw nsw i64 %i.xy, 1
   store i64 %i.xz, ptr %i.mb, align 8
   %i.ya = getelementptr inbounds nuw [16 x i8], ptr %i.ma, i64 %i.xy ; 3 uses
   store ptr %i.xs, ptr %i.ya, align 8
@@ -4112,7 +4112,7 @@ bb.bw:                                            ; preds = %bb.bv
 
 bb.bx:                                            ; preds = %bb.bv
   %i.yk = load i64, ptr %i.mb, align 8            ; 2 uses
-  %i.yl = add nsw i64 %i.yk, 1
+  %i.yl = add nuw nsw i64 %i.yk, 1
   store i64 %i.yl, ptr %i.mb, align 8
   %i.ym = getelementptr inbounds nuw [16 x i8], ptr %i.ma, i64 %i.yk ; 3 uses
   store ptr %i.yd, ptr %i.ym, align 8
@@ -4515,7 +4515,7 @@ bb.cm:                                            ; preds = %_ZN6embree4sse217BV
 
 bb.cn:                                            ; preds = %_ZN6embree4sse217BVHBuilderMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_18RecalculatePrimRefINS_13InstanceArrayEEENS_13FastAllocator15CachedAllocatorENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSE_3SetENS0_17CreateMSMBlurLeafILi4ES6_NS_22InstanceArrayPrimitiveEEENS_5Scene29BuildProgressMonitorInterfaceEE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERSR_SU_.exit
   %i.aej = load i64, ptr %i.pp, align 8           ; 2 uses
-  %i.aek = add nsw i64 %i.aej, 1
+  %i.aek = add nuw nsw i64 %i.aej, 1
   store i64 %i.aek, ptr %i.pp, align 8
   %i.ael = getelementptr inbounds nuw [16 x i8], ptr %i.po, i64 %i.aej ; 3 uses
   store ptr %i.aed, ptr %i.ael, align 8
@@ -4543,7 +4543,7 @@ bb.cp:                                            ; preds = %bb.co
 
 bb.cq:                                            ; preds = %bb.co
   %i.aev = load i64, ptr %i.pp, align 8           ; 2 uses
-  %i.aew = add nsw i64 %i.aev, 1
+  %i.aew = add nuw nsw i64 %i.aev, 1
   store i64 %i.aew, ptr %i.pp, align 8
   %i.aex = getelementptr inbounds nuw [16 x i8], ptr %i.po, i64 %i.aev ; 3 uses
   store ptr %i.aeo, ptr %i.aex, align 8
@@ -4946,7 +4946,7 @@ bb.bt:                                            ; preds = %bb.bs
 
 bb.bu:                                            ; preds = %bb.bs
   %i.yk = load i64, ptr %i.mn, align 8            ; 2 uses
-  %i.yl = add nsw i64 %i.yk, 1
+  %i.yl = add nuw nsw i64 %i.yk, 1
   store i64 %i.yl, ptr %i.mn, align 8
   %i.ym = getelementptr inbounds nuw [16 x i8], ptr %i.mm, i64 %i.yk ; 3 uses
   store ptr %i.ye, ptr %i.ym, align 8
@@ -4974,7 +4974,7 @@ bb.bw:                                            ; preds = %bb.bv
 
 bb.bx:                                            ; preds = %bb.bv
   %i.yw = load i64, ptr %i.mn, align 8            ; 2 uses
-  %i.yx = add nsw i64 %i.yw, 1
+  %i.yx = add nuw nsw i64 %i.yw, 1
   store i64 %i.yx, ptr %i.mn, align 8
   %i.yy = getelementptr inbounds nuw [16 x i8], ptr %i.mm, i64 %i.yw ; 3 uses
   store ptr %i.yp, ptr %i.yy, align 8
@@ -5377,7 +5377,7 @@ bb.cm:                                            ; preds = %_ZN6embree4sse217BV
 
 bb.cn:                                            ; preds = %_ZN6embree4sse217BVHBuilderMSMBlur8BuilderTINS_10NodeRefPtrILi4EEENS0_22GridRecalculatePrimRefENS_13FastAllocator15CachedAllocatorENS_4BVHNILi4EE11CreateAllocENS_14AABBNodeMB4D_tIS4_Li4EE6CreateENSC_3SetENS0_21CreateMSMBlurLeafGridILi4EEENS_5Scene29BuildProgressMonitorInterfaceEE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERSO_SR_.exit
   %i.aej = load i64, ptr %i.pp, align 8           ; 2 uses
-  %i.aek = add nsw i64 %i.aej, 1
+  %i.aek = add nuw nsw i64 %i.aej, 1
   store i64 %i.aek, ptr %i.pp, align 8
   %i.ael = getelementptr inbounds nuw [16 x i8], ptr %i.po, i64 %i.aej ; 3 uses
   store ptr %i.aed, ptr %i.ael, align 8
@@ -5405,7 +5405,7 @@ bb.cp:                                            ; preds = %bb.co
 
 bb.cq:                                            ; preds = %bb.co
   %i.aev = load i64, ptr %i.pp, align 8           ; 2 uses
-  %i.aew = add nsw i64 %i.aev, 1
+  %i.aew = add nuw nsw i64 %i.aev, 1
   store i64 %i.aew, ptr %i.pp, align 8
   %i.aex = getelementptr inbounds nuw [16 x i8], ptr %i.po, i64 %i.aev ; 3 uses
   store ptr %i.aeo, ptr %i.aex, align 8
@@ -5808,7 +5808,7 @@ bb.cn:                                            ; preds = %bb.cm
 
 bb.co:                                            ; preds = %bb.cm
   %i.bly = load i64, ptr %i.bab, align 8          ; 2 uses
-  %i.blz = add nsw i64 %i.bly, 1
+  %i.blz = add nuw nsw i64 %i.bly, 1
   store i64 %i.blz, ptr %i.bab, align 8
   %i.bma = getelementptr inbounds nuw [16 x i8], ptr %i.baa, i64 %i.bly ; 3 uses
   store ptr %i.bls, ptr %i.bma, align 8
@@ -5836,7 +5836,7 @@ bb.cq:                                            ; preds = %bb.cp
 
 bb.cr:                                            ; preds = %bb.cp
   %i.bmk = load i64, ptr %i.bab, align 8          ; 2 uses
-  %i.bml = add nsw i64 %i.bmk, 1
+  %i.bml = add nuw nsw i64 %i.bmk, 1
   store i64 %i.bml, ptr %i.bab, align 8
   %i.bmm = getelementptr inbounds nuw [16 x i8], ptr %i.baa, i64 %i.bmk ; 3 uses
   store ptr %i.bmd, ptr %i.bmm, align 8

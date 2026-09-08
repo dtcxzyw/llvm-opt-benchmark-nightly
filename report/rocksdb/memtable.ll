@@ -205,10 +205,6 @@ _ZNK7rocksdb15MultiGetContext5Range5beginEv.exit206: ; preds = %scalar.ph1008, %
   %invariant.op1301 = or i64 %.sroa.41.2, %i.bo
   br label %bb.ao
 
-._crit_edge686:                                   ; preds = %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit233
-  %.not153 = icmp eq i64 %i.mc, 0
-  br i1 %.not153, label %._crit_edge686.thread, label %bb.bb
-
 bb.ao:                                            ; preds = %.lr.ph685, %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit233
   %.0105684 = phi i64 [ 0, %.lr.ph685 ], [ %i.mc, %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit233 ] ; 6 uses
   %.sroa.23.0683 = phi i64 [ %storemerge.lcssa.i.i201, %.lr.ph685 ], [ %.lcssa.i231, %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit233 ] ; 5 uses
@@ -410,7 +406,7 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
   store ptr %i.lz, ptr %i.ma, align 8, !tbaa !383
   %i.mb = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %.0105684
   store ptr %i.kh, ptr %i.mb, align 8, !tbaa !409
-  %i.mc = add i64 %.0105684, 1                    ; 3 uses
+  %i.mc = add nuw i64 %.0105684, 1                ; 2 uses
   %i.md = add i64 %.sroa.23.0683, 1
   %umax.i230 = call i64 @llvm.umax.i64(i64 %.sroa.2.0.copyload.sink.i, i64 %i.md) ; 3 uses
   %i.me = add i64 %umax.i230, -1                  ; 2 uses
@@ -440,9 +436,9 @@ bb.ba:                                            ; preds = %.lr.ph887
 _ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit233: ; preds = %bb.ba, %._ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit233_crit_edge889, %bb.az
   %.lcssa.i231 = phi i64 [ %umax.i230, %bb.az ], [ %i.mh, %._ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit233_crit_edge889 ], [ %umax.i230, %bb.ba ] ; 2 uses
   %.not648 = icmp eq i64 %.lcssa.i231, %.sroa.2.0.copyload.sink.i
-  br i1 %.not648, label %._crit_edge686, label %bb.ao, !llvm.loop !838
+  br i1 %.not648, label %bb.bb, label %bb.ao, !llvm.loop !838
 
-bb.bb:                                            ; preds = %._crit_edge686
+bb.bb:                                            ; preds = %_ZN7rocksdb15MultiGetContext5Range8IteratorppEv.exit233
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #36
   %i.mk = getelementptr inbounds nuw i8, ptr %0, i64 10192
   %i.ml = load ptr, ptr %i.mk, align 16, !tbaa !320 ; 2 uses
@@ -761,7 +757,7 @@ _ZN7rocksdb6StatusD2Ev.exit260:                   ; preds = %.critedge, %_ZNKSt1
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #36
   br label %._crit_edge686.thread
 
-._crit_edge686.thread:                            ; preds = %bb.an, %middle.block1023, %_ZNK7rocksdb15MultiGetContext5Range5beginEv.exit206, %_ZN7rocksdb6StatusD2Ev.exit260, %._crit_edge686
+._crit_edge686.thread:                            ; preds = %bb.an, %middle.block1023, %_ZNK7rocksdb15MultiGetContext5Range5beginEv.exit206, %_ZN7rocksdb6StatusD2Ev.exit260
   br i1 %i.gq, label %.lr.ph.i.i262, label %_ZNK7rocksdb15MultiGetContext5Range5beginEv.exit266
 
 .lr.ph.i.i262:                                    ; preds = %._crit_edge686.thread

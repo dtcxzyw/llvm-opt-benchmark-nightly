@@ -205,7 +205,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeINtNtCscd
   br i1 %i.ek, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.el = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.el = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.em = lshr i64 %.sroa.018.0, 1
   %i.en = add nuw i64 %i.em, %.sroa.09.0
   br label %bb.f
@@ -608,7 +608,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeNtNtCs56a
   br i1 %i.fi, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.fj = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.fj = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.fk = lshr i64 %.sroa.018.0, 1
   %i.fl = add nuw i64 %i.fk, %.sroa.09.0
   br label %bb.f
@@ -1011,7 +1011,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeNtNtCs5MA
   br i1 %i.ez, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.fa = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.fa = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.fb = lshr i64 %.sroa.018.0, 1
   %i.fc = add nuw i64 %i.fb, %.sroa.09.0
   br label %bb.f
@@ -1414,7 +1414,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeNtNtCs5MA
   br i1 %i.ez, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.fa = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.fa = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.fb = lshr i64 %.sroa.018.0, 1
   %i.fc = add nuw i64 %i.fb, %.sroa.09.0
   br label %bb.f
@@ -1802,7 +1802,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeNtNtCsoTR
   br i1 %i.dw, label %bb.r, label %._crit_edge
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.dx = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dx = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dy = lshr i64 %.sroa.018.0, 1
   %i.dz = add nuw i64 %i.dy, %.sroa.09.0
   br label %bb.f
@@ -2147,7 +2147,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeNtNtNtCso
   br i1 %i.dl, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.dm = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dm = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dn = lshr i64 %.sroa.018.0, 1
   %i.do = add nuw i64 %i.dn, %.sroa.09.0
   br label %bb.f
@@ -2550,7 +2550,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeNtNtNtCso
   br i1 %i.fi, label %bb.x, label %._crit_edge
 
 bb.ag:                                            ; preds = %._crit_edge
-  %i.fj = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.fj = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.fk = lshr i64 %.sroa.018.0, 1
   %i.fl = add nuw i64 %i.fk, %.sroa.09.0
   br label %bb.f
@@ -2953,7 +2953,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeNtNtNtCso
   br i1 %i.iv, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.iw = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.iw = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ix = lshr i64 %.sroa.018.0, 1
   %i.iy = add nuw i64 %i.ix, %.sroa.09.0
   br label %bb.f
@@ -3356,7 +3356,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeRNtNtCskL
   br i1 %i.ix, label %bb.r, label %._crit_edge
 
 bb.ae:                                            ; preds = %._crit_edge
-  %i.iy = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.iy = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.iz = lshr i64 %.sroa.018.0, 1
   %i.ja = add nuw i64 %i.iz, %.sroa.09.0
   br label %bb.f
@@ -3759,7 +3759,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeReNvYB16_
   br i1 %i.ey, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.ez = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.ez = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.fa = lshr i64 %.sroa.018.0, 1
   %i.fb = add nuw i64 %i.fa, %.sroa.09.0
   br label %bb.f
@@ -4162,7 +4162,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCs2O
   br i1 %i.ew, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.ex = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.ex = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ey = lshr i64 %.sroa.018.0, 1
   %i.ez = add nuw i64 %i.ey, %.sroa.09.0
   br label %bb.f
@@ -4565,7 +4565,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -4968,7 +4968,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -5371,7 +5371,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -5774,7 +5774,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -6177,7 +6177,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -6580,7 +6580,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -6983,7 +6983,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -7386,7 +7386,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -7789,7 +7789,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -8192,7 +8192,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -8595,7 +8595,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -8998,7 +8998,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -9401,7 +9401,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -9804,7 +9804,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -10207,7 +10207,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -10610,7 +10610,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -11013,7 +11013,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -11416,7 +11416,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtCskL
   br i1 %i.im, label %bb.s, label %._crit_edge
 
 bb.af:                                            ; preds = %._crit_edge
-  %i.in = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.in = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.io = lshr i64 %.sroa.018.0, 1
   %i.ip = add nuw i64 %i.io, %.sroa.09.0
   br label %bb.f
@@ -11819,7 +11819,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtNtCs
   br i1 %i.eh, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.ei = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.ei = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.ej = lshr i64 %.sroa.018.0, 1
   %i.ek = add nuw i64 %i.ej, %.sroa.09.0
   br label %bb.f
@@ -12183,7 +12183,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTNtNtNtCs
   br i1 %i.do, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.dp = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.dp = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.dq = lshr i64 %.sroa.018.0, 1
   %i.dr = add nuw i64 %i.dq, %.sroa.09.0
   br label %bb.f
@@ -12586,7 +12586,7 @@ _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable5drift13logical_mergeTRNtNtCso
   br i1 %i.fz, label %bb.r, label %._crit_edge
 
 bb.aa:                                            ; preds = %._crit_edge
-  %i.ga = add nsw i64 %.sroa.02.1.lcssa, 1
+  %i.ga = add nuw nsw i64 %.sroa.02.1.lcssa, 1
   %i.gb = lshr i64 %.sroa.018.0, 1
   %i.gc = add nuw i64 %i.gb, %.sroa.09.0
   br label %bb.f

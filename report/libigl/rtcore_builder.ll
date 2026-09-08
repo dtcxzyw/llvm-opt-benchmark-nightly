@@ -205,7 +205,7 @@ _ZN6embree13bitInterleaveINS_9vint_implILi4EEEEET_RKS3_S5_S5_.exit103.i.i: ; pre
   store <2 x i64> %i.bl, ptr %1, align 16
   %i.bm = sub i64 %i.dm, %i.dl
   %i.bn = getelementptr [8 x i8], ptr %i.n, i64 %i.bm ; 9 uses
-  %min.iters.check = icmp ult i64 %i.ed, 18
+  %min.iters.check = icmp ult i64 %i.dl, 17
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %_ZN6embree13bitInterleaveINS_9vint_implILi4EEEEET_RKS3_S5_S5_.exit103.i.i
@@ -321,7 +321,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 .noexc12.i.i:                                     ; preds = %.noexc12.i.i.backedge, %.noexc12.lr.ph.i.i
   %.0250.i.i = phi i64 [ %i.d, %.noexc12.lr.ph.i.i ], [ %.0250.i.i.be, %.noexc12.i.i.backedge ] ; 4 uses
-  %i.dl = phi i64 [ 0, %.noexc12.lr.ph.i.i ], [ %.be, %.noexc12.i.i.backedge ] ; 11 uses
+  %i.dl = phi i64 [ 0, %.noexc12.lr.ph.i.i ], [ %.be, %.noexc12.i.i.backedge ] ; 12 uses
   %i.dm = phi i64 [ 0, %.noexc12.lr.ph.i.i ], [ %i.ee, %.noexc12.i.i.backedge ] ; 2 uses
   %i.dn = load ptr, ptr %i.w, align 8, !nonnull !50, !align !54
   %i.do = load ptr, ptr %i.dn, align 8
@@ -345,7 +345,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store i32 %.sroa.07.8.vec.extract.i.i, ptr %i.eb, align 4
   %i.ec = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %i.dl
   store i32 %i.dt, ptr %i.ec, align 4
-  %i.ed = add nsw i64 %i.dl, 1                    ; 5 uses
+  %i.ed = add nuw nsw i64 %i.dl, 1                ; 4 uses
   %i.ee = add i64 %i.dm, 1                        ; 2 uses
   %i.ef = icmp eq i64 %i.ed, 4
   br i1 %i.ef, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit.i.thread.i, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit.i.i
@@ -748,7 +748,7 @@ bb.d:                                             ; preds = %.preheader
   br label %.lr.ph106
 
 .lr.ph106:                                        ; preds = %.lr.ph106.preheader, %bb.e
-  %.0.i104 = phi i64 [ %i.dh, %bb.e ], [ %.015.i110, %.lr.ph106.preheader ] ; 3 uses
+  %.0.i104 = phi i64 [ %.015.i110, %.lr.ph106.preheader ], [ %i.dh, %bb.e ] ; 3 uses
   %i.dc = getelementptr [8 x i8], ptr %i.cz, i64 %.0.i104 ; 2 uses
   %i.dd = getelementptr i8, ptr %i.dc, i64 -8     ; 2 uses
   %i.de = load i32, ptr %i.dd, align 8, !alias.scope !382
@@ -762,8 +762,8 @@ bb.e:                                             ; preds = %.lr.ph106
   %.not.i = icmp eq i64 %i.dh, 0
   br i1 %.not.i, label %.critedge.i, label %.lr.ph106, !llvm.loop !379
 
-.critedge.i:                                      ; preds = %bb.e, %.lr.ph106
-  %.0.i.lcssa.ph = phi i64 [ 0, %bb.e ], [ %.0.i104, %.lr.ph106 ]
+.critedge.i:                                      ; preds = %.lr.ph106, %bb.e
+  %.0.i.lcssa.ph = phi i64 [ %.0.i104, %.lr.ph106 ], [ 0, %bb.e ]
   %i.di = getelementptr inbounds nuw [8 x i8], ptr %i.cz, i64 %.0.i.lcssa.ph
   store i64 %i.db, ptr %i.di, align 8, !alias.scope !382
   %i.dj = add nuw nsw i64 %.015.i110, 1           ; 2 uses

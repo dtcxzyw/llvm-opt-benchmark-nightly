@@ -59,7 +59,7 @@ bb.d:                                             ; preds = %bb.c
 .noexc:                                           ; preds = %bb.d
   %i.j = getelementptr inbounds nuw i8, ptr %16, i64 192 ; 8 uses
   %i.k = load i64, ptr %i.j, align 8, !tbaa !26   ; 2 uses
-  %i.l = add nsw i64 %i.k, 1
+  %i.l = add nuw nsw i64 %i.k, 1
   store i64 %i.l, ptr %i.j, align 8, !tbaa !26
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.k
   store ptr %i.i, ptr %i.m, align 8, !tbaa !27
@@ -188,7 +188,7 @@ bb.d:                                             ; preds = %bb.c
 
 .noexc434:                                        ; preds = %._crit_edge.thread.i
   %i.bo = load i64, ptr %i.j, align 8, !tbaa !26  ; 2 uses
-  %i.bp = add nsw i64 %i.bo, 1
+  %i.bp = add nuw nsw i64 %i.bo, 1
   store i64 %i.bp, ptr %i.j, align 8, !tbaa !26
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.bo
   store ptr %i.bn, ptr %i.bq, align 8, !tbaa !27
@@ -212,7 +212,7 @@ _ZN7meshoptL12hashBuckets2Em.exit.i:              ; preds = %bb.e
 
 .noexc435:                                        ; preds = %_ZN7meshoptL12hashBuckets2Em.exit.i
   %i.ca = load i64, ptr %i.j, align 8, !tbaa !26  ; 2 uses
-  %i.cb = add nsw i64 %i.ca, 1
+  %i.cb = add nuw nsw i64 %i.ca, 1
   store i64 %i.cb, ptr %i.j, align 8, !tbaa !26
   %i.cc = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.ca
   store ptr %i.bz, ptr %i.cc, align 8, !tbaa !27
@@ -350,7 +350,7 @@ bb.i:                                             ; preds = %_ZN7meshoptL16build
 .noexc437:                                        ; preds = %bb.i
   %i.es = getelementptr inbounds nuw i8, ptr %16, i64 192 ; 39 uses
   %i.et = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.eu = add nsw i64 %i.et, 1
+  %i.eu = add nuw nsw i64 %i.et, 1
   store i64 %i.eu, ptr %i.es, align 8, !tbaa !26
   %i.ev = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.et
   store ptr %i.er, ptr %i.ev, align 8, !tbaa !27
@@ -364,7 +364,7 @@ bb.i:                                             ; preds = %_ZN7meshoptL16build
 
 bb.j:                                             ; preds = %.noexc437
   %i.fb = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.fc = add nsw i64 %i.fb, 1
+  %i.fc = add nuw nsw i64 %i.fb, 1
   store i64 %i.fc, ptr %i.es, align 8, !tbaa !26
   %i.fd = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.fb
   store ptr %i.fa, ptr %i.fd, align 8, !tbaa !27
@@ -586,7 +586,7 @@ _ZN7meshoptL19updateEdgeAdjacencyERNS_13EdgeAdjacencyEPKjmmS3_.exit: ; preds = %
 
 bb.k:                                             ; preds = %_ZN7meshoptL19updateEdgeAdjacencyERNS_13EdgeAdjacencyEPKjmmS3_.exit
   %i.jh = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.ji = add nsw i64 %i.jh, 1
+  %i.ji = add nuw nsw i64 %i.jh, 1
   store i64 %i.ji, ptr %i.es, align 8, !tbaa !26
   %i.jj = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.jh
   store ptr %i.jg, ptr %i.jj, align 8, !tbaa !27
@@ -596,7 +596,7 @@ bb.k:                                             ; preds = %_ZN7meshoptL19updat
 
 bb.l:                                             ; preds = %bb.k
   %i.jm = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.jn = add nsw i64 %i.jm, 1
+  %i.jn = add nuw nsw i64 %i.jm, 1
   store i64 %i.jn, ptr %i.es, align 8, !tbaa !26
   %i.jo = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.jm
   store ptr %i.jl, ptr %i.jo, align 8, !tbaa !27
@@ -610,7 +610,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.jr = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.js = add nsw i64 %i.jr, 1
+  %i.js = add nuw nsw i64 %i.jr, 1
   store i64 %i.js, ptr %i.es, align 8, !tbaa !26
   %i.jt = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.jr
   store ptr %i.jq, ptr %i.jt, align 8, !tbaa !27
@@ -620,7 +620,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.jw = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.jx = add nsw i64 %i.jw, 1
+  %i.jx = add nuw nsw i64 %i.jw, 1
   store i64 %i.jx, ptr %i.es, align 8, !tbaa !26
   %i.jy = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.jw
   store ptr %i.jv, ptr %i.jy, align 8, !tbaa !27
@@ -630,7 +630,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.kb = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.kc = add nsw i64 %i.kb, 1
+  %i.kc = add nuw nsw i64 %i.kb, 1
   store i64 %i.kc, ptr %i.es, align 8, !tbaa !26
   %i.kd = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.kb
   store ptr %i.ka, ptr %i.kd, align 8, !tbaa !27
@@ -1033,7 +1033,7 @@ _ZN7meshoptL16classifyVerticesEPhPjS1_mRKNS_13EdgeAdjacencyEPKjS6_PKhS6_j.exit: 
 
 bb.bo:                                            ; preds = %_ZN7meshoptL16classifyVerticesEPhPjS1_mRKNS_13EdgeAdjacencyEPKjS6_PKhS6_j.exit
   %i.zu = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.zv = add nsw i64 %i.zu, 1
+  %i.zv = add nuw nsw i64 %i.zu, 1
   store i64 %i.zv, ptr %i.es, align 8, !tbaa !26
   %i.zw = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.zu
   store ptr %i.zt, ptr %i.zw, align 8, !tbaa !27
@@ -1069,7 +1069,7 @@ bb.bo:                                            ; preds = %_ZN7meshoptL16class
 
 bb.bp:                                            ; preds = %.preheader729.epil.preheader
   %i.aac = trunc i64 %.0349774.epil.init to i32
-  %i.aad = add nsw i64 %.0350773.epil.init, 1
+  %i.aad = add nuw nsw i64 %.0350773.epil.init, 1
   %i.aae = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.0350773.epil.init
   store i32 %i.aac, ptr %i.aae, align 4, !tbaa !28
   br label %.epilog-lcssa
@@ -1130,7 +1130,7 @@ bb.bw:                                            ; preds = %_ZN7meshoptL16class
 
 bb.bx:                                            ; preds = %.preheader729
   %i.aav = trunc i64 %.0349774 to i32
-  %i.aaw = add nsw i64 %.0350773, 1
+  %i.aaw = add nuw nsw i64 %.0350773, 1
   %i.aax = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.0350773
   store i32 %i.aav, ptr %i.aax, align 4, !tbaa !28
   br label %.preheader729.1
@@ -1145,7 +1145,7 @@ bb.bx:                                            ; preds = %.preheader729
 
 bb.by:                                            ; preds = %.preheader729.1
   %i.abc = trunc i64 %i.aay to i32
-  %i.abd = add nsw i64 %.1351, 1
+  %i.abd = add nuw nsw i64 %.1351, 1
   %i.abe = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.1351
   store i32 %i.abc, ptr %i.abe, align 4, !tbaa !28
   br label %bb.bz
@@ -1159,7 +1159,7 @@ bb.bz:                                            ; preds = %bb.by, %.preheader7
 
 bb.ca:                                            ; preds = %.epilog-lcssa
   %i.abg = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.abh = add nsw i64 %i.abg, 1
+  %i.abh = add nuw nsw i64 %i.abg, 1
   store i64 %i.abh, ptr %i.es, align 8, !tbaa !26
   %i.abi = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.abg
   store ptr %i.aak, ptr %i.abi, align 8, !tbaa !27
@@ -1331,7 +1331,7 @@ _ZN7meshoptL17rescaleAttributesEPfPKfmmS2_mPKjS4_.exit: ; preds = %._crit_edge.u
 
 bb.cc:                                            ; preds = %_ZN7meshoptL17rescaleAttributesEPfPKfmmS2_mPKjS4_.exit
   %i.aem = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.aen = add nsw i64 %i.aem, 1
+  %i.aen = add nuw nsw i64 %i.aem, 1
   store i64 %i.aen, ptr %i.es, align 8, !tbaa !26
   %i.aeo = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.aem
   store ptr %i.ael, ptr %i.aeo, align 8, !tbaa !27
@@ -1346,7 +1346,7 @@ bb.cd:                                            ; preds = %bb.cc
 
 bb.ce:                                            ; preds = %bb.cd
   %i.aer = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.aes = add nsw i64 %i.aer, 1
+  %i.aes = add nuw nsw i64 %i.aer, 1
   store i64 %i.aes, ptr %i.es, align 8, !tbaa !26
   %i.aet = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.aer
   store ptr %i.aeq, ptr %i.aet, align 8, !tbaa !27
@@ -1361,7 +1361,7 @@ bb.ce:                                            ; preds = %bb.cd
 
 bb.cf:                                            ; preds = %bb.ce
   %i.afa = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.afb = add nsw i64 %i.afa, 1
+  %i.afb = add nuw nsw i64 %i.afa, 1
   store i64 %i.afb, ptr %i.es, align 8, !tbaa !26
   %i.afc = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.afa
   store ptr %i.aez, ptr %i.afc, align 8, !tbaa !27
@@ -1380,7 +1380,7 @@ bb.cg:                                            ; preds = %bb.cf
 
 bb.ch:                                            ; preds = %bb.cg
   %i.afj = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.afk = add nsw i64 %i.afj, 1
+  %i.afk = add nuw nsw i64 %i.afj, 1
   store i64 %i.afk, ptr %i.es, align 8, !tbaa !26
   %i.afl = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.afj
   store ptr %i.afi, ptr %i.afl, align 8, !tbaa !27
@@ -1783,7 +1783,7 @@ bb.dg:                                            ; preds = %_ZN7meshoptL21fillA
 
 bb.dh:                                            ; preds = %bb.dg
   %i.bcg = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.bch = add nsw i64 %i.bcg, 1
+  %i.bch = add nuw nsw i64 %i.bcg, 1
   store i64 %i.bch, ptr %i.es, align 8, !tbaa !26
   %i.bci = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.bcg
   store ptr %i.bcf, ptr %i.bci, align 8, !tbaa !27
@@ -1795,7 +1795,7 @@ bb.dh:                                            ; preds = %bb.dg
 
 bb.di:                                            ; preds = %bb.dh
   %i.bcn = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.bco = add nsw i64 %i.bcn, 1
+  %i.bco = add nuw nsw i64 %i.bcn, 1
   store i64 %i.bco, ptr %i.es, align 8, !tbaa !26
   %i.bcp = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.bcn
   store ptr %i.bcm, ptr %i.bcp, align 8, !tbaa !27
@@ -1970,7 +1970,7 @@ _ZN7meshoptL18boundEdgeCollapsesERKNS_13EdgeAdjacencyEmmPh.exit: ; preds = %.loo
 
 bb.dk:                                            ; preds = %_ZN7meshoptL18boundEdgeCollapsesERKNS_13EdgeAdjacencyEmmPh.exit
   %i.bfc = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.bfd = add nsw i64 %i.bfc, 1
+  %i.bfd = add nuw nsw i64 %i.bfc, 1
   store i64 %i.bfd, ptr %i.es, align 8, !tbaa !26
   %i.bfe = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.bfc
   store ptr %i.bfb, ptr %i.bfe, align 8, !tbaa !27
@@ -1983,7 +1983,7 @@ bb.dk:                                            ; preds = %_ZN7meshoptL18bound
 
 bb.dl:                                            ; preds = %bb.dk
   %i.bfk = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.bfl = add nsw i64 %i.bfk, 1
+  %i.bfl = add nuw nsw i64 %i.bfk, 1
   store i64 %i.bfl, ptr %i.es, align 8, !tbaa !26
   %i.bfm = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.bfk
   store ptr %i.bfj, ptr %i.bfm, align 8, !tbaa !27
@@ -1993,7 +1993,7 @@ bb.dl:                                            ; preds = %bb.dk
 
 bb.dm:                                            ; preds = %bb.dl
   %i.bfp = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.bfq = add nsw i64 %i.bfp, 1
+  %i.bfq = add nuw nsw i64 %i.bfp, 1
   store i64 %i.bfq, ptr %i.es, align 8, !tbaa !26
   %i.bfr = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.bfp
   store ptr %i.bfo, ptr %i.bfr, align 8, !tbaa !27
@@ -2003,7 +2003,7 @@ bb.dm:                                            ; preds = %bb.dl
 
 bb.dn:                                            ; preds = %bb.dm
   %i.bfu = load i64, ptr %i.es, align 8, !tbaa !26 ; 2 uses
-  %i.bfv = add nsw i64 %i.bfu, 1
+  %i.bfv = add nuw nsw i64 %i.bfu, 1
   store i64 %i.bfv, ptr %i.es, align 8, !tbaa !26
   %i.bfw = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %i.bfu
   store ptr %i.bft, ptr %i.bfw, align 8, !tbaa !27
@@ -2406,11 +2406,7 @@ bb.u:                                             ; preds = %bb.j, %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %.not162 = icmp eq ptr %9, null
-  br i1 %.not162, label %.lr.ph.i218.preheader, label %11
-
-11:                                               ; preds = %bb.v
-  store float 1.000000e+00, ptr %9, align 4, !tbaa !44
-  br label %.lr.ph.i218.preheader
+  br i1 %.not162, label %.lr.ph.i218.preheader, label %bb.be
 
 bb.w:                                             ; preds = %bb.u
   %i.kl = lshr i64 %4, 2
@@ -2813,7 +2809,7 @@ _ZN7meshoptL16fillCellQuadricsEPNS_7QuadricEPKjmPKNS_7Vector3ES3_.exit: ; preds 
 
 bb.ak:                                            ; preds = %_ZN7meshoptL16fillCellQuadricsEPNS_7QuadricEPKjmPKNS_7Vector3ES3_.exit
   %i.um = load i64, ptr %i.g, align 8, !tbaa !26  ; 4 uses
-  %i.un = add nsw i64 %i.um, 1                    ; 2 uses
+  %i.un = add nuw nsw i64 %i.um, 1                ; 2 uses
   store i64 %i.un, ptr %i.g, align 8, !tbaa !26
   %i.uo = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.um
   store ptr %i.ul, ptr %i.uo, align 8, !tbaa !27
@@ -2822,7 +2818,7 @@ bb.ak:                                            ; preds = %_ZN7meshoptL16fillC
           to label %bb.al unwind label %bb.au, !inline_history !6 ; 8 uses
 
 bb.al:                                            ; preds = %bb.ak
-  %i.ur = add nsw i64 %i.um, 2                    ; 2 uses
+  %i.ur = add nuw nsw i64 %i.um, 2                ; 2 uses
   store i64 %i.ur, ptr %i.g, align 8, !tbaa !26
   %i.us = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.un
   store ptr %i.uq, ptr %i.us, align 8, !tbaa !27
@@ -3012,7 +3008,7 @@ bb.au:                                            ; preds = %bb.ak
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !176
 
 bb.av:                                            ; preds = %_ZN7meshoptL12hashBuckets2Em.exit211
-  %i.yg = add nsw i64 %i.um, 3                    ; 2 uses
+  %i.yg = add nuw nsw i64 %i.um, 3                ; 2 uses
   %i.yh = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.ur
   store ptr %i.xk, ptr %i.yh, align 8, !tbaa !27
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.xk, i8 -1, i64 %i.xi, i1 false)
@@ -3157,11 +3153,10 @@ _ZN7meshoptL11hashLookup2IjNS_14TriangleHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.i: ; 
 _ZN7meshoptL15filterTrianglesEPjS0_mPKjmS2_S2_.exit: ; preds = %._crit_edge.loopexit.i, %bb.av
   %.0.lcssa.i217 = phi i64 [ 0, %bb.av ], [ %i.yj, %._crit_edge.loopexit.i ] ; 2 uses
   %.not161 = icmp eq ptr %9, null
-  br i1 %.not161, label %bb.be, label %bb.bc
+  br i1 %.not161, label %.lr.ph.i218.preheader, label %bb.bc
 
 bb.bc:                                            ; preds = %_ZN7meshoptL15filterTrianglesEPjS0_mPKjmS2_S2_.exit
   %i.abe = tail call float @sqrtf(float noundef %.0119.lcssa) #14
-  store float %i.abe, ptr %9, align 4, !tbaa !44
   br label %bb.be
 
 bb.bd:                                            ; preds = %_ZN7meshoptL12hashBuckets2Em.exit211
@@ -3169,17 +3164,20 @@ bb.bd:                                            ; preds = %_ZN7meshoptL12hashB
           cleanup
   br label %bb.bh
 
-bb.be:                                            ; preds = %_ZN7meshoptL15filterTrianglesEPjS0_mPKjmS2_S2_.exit, %bb.bc
-  %.not3.i = icmp eq i64 %i.yg, 0
-  br i1 %.not3.i, label %_ZN17meshopt_AllocatorD2Ev.exit, label %.lr.ph.i218.preheader
+bb.be:                                            ; preds = %bb.v, %bb.bc
+  %.sink = phi float [ %i.abe, %bb.bc ], [ 1.000000e+00, %bb.v ]
+  %.ph = phi i64 [ %i.yg, %bb.bc ], [ 2, %bb.v ]
+  %.0141.ph = phi i64 [ %.0.lcssa.i217, %bb.bc ], [ 0, %bb.v ]
+  store float %.sink, ptr %9, align 4, !tbaa !44
+  br label %.lr.ph.i218.preheader
 
-.lr.ph.i218.preheader:                            ; preds = %11, %bb.v, %bb.be
-  %.0141284 = phi i64 [ %.0.lcssa.i217, %bb.be ], [ 0, %bb.v ], [ 0, %11 ]
-  %i.abg = phi i64 [ %i.yg, %bb.be ], [ 2, %bb.v ], [ 2, %11 ]
+.lr.ph.i218.preheader:                            ; preds = %bb.be, %bb.v, %_ZN7meshoptL15filterTrianglesEPjS0_mPKjmS2_S2_.exit
+  %.0141284 = phi i64 [ 2, %bb.v ], [ %i.yg, %_ZN7meshoptL15filterTrianglesEPjS0_mPKjmS2_S2_.exit ], [ %.ph, %bb.be ]
+  %i.abg = phi i64 [ 0, %bb.v ], [ %.0.lcssa.i217, %_ZN7meshoptL15filterTrianglesEPjS0_mPKjmS2_S2_.exit ], [ %.0141.ph, %bb.be ]
   br label %.lr.ph.i218
 
 .lr.ph.i218:                                      ; preds = %.lr.ph.i218.preheader, %bb.bf
-  %.04.i = phi i64 [ %i.abl, %bb.bf ], [ %i.abg, %.lr.ph.i218.preheader ] ; 2 uses
+  %.04.i = phi i64 [ %i.abl, %bb.bf ], [ %.0141284, %.lr.ph.i218.preheader ] ; 2 uses
   %i.abh = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN17meshopt_Allocator7storageEvE1s, i64 8), align 8, !tbaa !32
   %i.abi = getelementptr [8 x i8], ptr %10, i64 %.04.i
   %i.abj = getelementptr i8, ptr %i.abi, i64 -8
@@ -3199,10 +3197,9 @@ bb.bg:                                            ; preds = %.lr.ph.i218
   tail call void @__clang_call_terminate(ptr %i.abn) #15
   unreachable
 
-_ZN17meshopt_AllocatorD2Ev.exit:                  ; preds = %bb.bf, %bb.be
-  %.0141285 = phi i64 [ %.0.lcssa.i217, %bb.be ], [ %.0141284, %bb.bf ]
+_ZN17meshopt_AllocatorD2Ev.exit:                  ; preds = %bb.bf
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #14
-  ret i64 %.0141285
+  ret i64 %i.abg
 
 bb.bh:                                            ; preds = %bb.i, %bb.ar, %bb.as, %bb.au, %bb.bd, %bb.at, %bb.aq, %bb.h
   %.pn.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.eh, %bb.h ], [ %i.ei, %bb.i ], [ %i.xl, %bb.aq ], [ %i.xm, %bb.ar ], [ %i.abf, %bb.bd ], [ %i.xn, %bb.as ], [ %i.xo, %bb.at ], [ %i.xp, %bb.au ]
@@ -3250,7 +3247,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.m = load i64, ptr %i.g, align 8, !tbaa !26   ; 4 uses
-  %i.n = add nsw i64 %i.m, 1                      ; 2 uses
+  %i.n = add nuw nsw i64 %i.m, 1                  ; 2 uses
   store i64 %i.n, ptr %i.g, align 8, !tbaa !26
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.m
   store ptr %i.l, ptr %i.o, align 8, !tbaa !27
@@ -3260,7 +3257,7 @@ bb.f:                                             ; preds = %bb.e
           to label %bb.g unwind label %bb.o, !inline_history !4 ; 4 uses
 
 bb.g:                                             ; preds = %bb.f
-  %i.s = add nsw i64 %i.m, 2                      ; 2 uses
+  %i.s = add nuw nsw i64 %i.m, 2                  ; 2 uses
   store i64 %i.s, ptr %i.g, align 8, !tbaa !26
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.n
   store ptr %i.r, ptr %i.t, align 8, !tbaa !27
@@ -3271,7 +3268,7 @@ bb.g:                                             ; preds = %bb.f
           to label %bb.h unwind label %bb.p, !inline_history !6 ; 3 uses
 
 bb.h:                                             ; preds = %bb.g
-  %i.y = add nsw i64 %i.m, 3                      ; 2 uses
+  %i.y = add nuw nsw i64 %i.m, 3
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.s
   store ptr %i.x, ptr %i.z, align 8, !tbaa !27
   tail call fastcc void @_ZN7meshoptL17measureComponentsEPfmPKjPKNS_7Vector3Em(ptr noundef %i.x, i64 noundef %i.u, ptr noundef %i.r, ptr noundef %i.l, i64 noundef %4)
@@ -3311,8 +3308,7 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.i
 
 _ZN7meshoptL15pruneComponentsEPjmPKjPKfmfRf.exit: ; preds = %bb.j, %bb.h
   %.033.lcssa.i = phi i64 [ 0, %bb.h ], [ %.134.i, %bb.j ]
-  %.not3.i = icmp eq i64 %i.y, 0
-  br i1 %.not3.i, label %_ZN17meshopt_AllocatorD2Ev.exit, label %.lr.ph.i48
+  br label %.lr.ph.i48
 
 .lr.ph.i48:                                       ; preds = %_ZN7meshoptL15pruneComponentsEPjmPKjPKfmfRf.exit, %bb.k
   %.04.i = phi i64 [ %i.av, %bb.k ], [ %i.y, %_ZN7meshoptL15pruneComponentsEPjmPKjPKfmfRf.exit ] ; 2 uses
@@ -3335,7 +3331,7 @@ bb.l:                                             ; preds = %.lr.ph.i48
   tail call void @__clang_call_terminate(ptr %i.ax) #15
   unreachable
 
-_ZN17meshopt_AllocatorD2Ev.exit:                  ; preds = %bb.k, %_ZN7meshoptL15pruneComponentsEPjmPKjPKfmfRf.exit
+_ZN17meshopt_AllocatorD2Ev.exit:                  ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #14
   ret i64 %.033.lcssa.i
 

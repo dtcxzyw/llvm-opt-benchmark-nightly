@@ -77,7 +77,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 192 ; 3 uses
   %i.q = load i64, ptr %i.p, align 8, !tbaa !17   ; 4 uses
-  %i.r = add nsw i64 %i.q, 1                      ; 2 uses
+  %i.r = add nuw nsw i64 %i.q, 1                  ; 2 uses
   store i64 %i.r, ptr %i.p, align 8, !tbaa !17
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.q
   store ptr %i.o, ptr %i.s, align 8, !tbaa !18
@@ -90,7 +90,7 @@ bb.h:                                             ; preds = %bb.g
           to label %.lr.ph unwind label %bb.k, !inline_history !28 ; 14 uses
 
 .lr.ph:                                           ; preds = %bb.h
-  %i.y = add nsw i64 %i.q, 2                      ; 2 uses
+  %i.y = add nuw nsw i64 %i.q, 2                  ; 2 uses
   store i64 %i.y, ptr %i.p, align 8, !tbaa !17
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.r
   store ptr %i.x, ptr %i.z, align 8, !tbaa !18
@@ -132,7 +132,7 @@ bb.h:                                             ; preds = %bb.g
           to label %_ZN17meshopt_Allocator8allocateIfEEPT_m.exit200 unwind label %bb.m, !inline_history !28 ; 8 uses
 
 _ZN17meshopt_Allocator8allocateIfEEPT_m.exit200:  ; preds = %._crit_edge
-  %i.aq = add nsw i64 %i.q, 3                     ; 2 uses
+  %i.aq = add nuw nsw i64 %i.q, 3
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.y
   store ptr %i.ap, ptr %i.ar, align 8, !tbaa !18
   %.not241 = icmp ult i64 %2, 3
@@ -535,8 +535,7 @@ _ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit: ; preds = %.lr.ph.i, %._crit_e
 _ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit.thread: ; preds = %._crit_edge232.thread, %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit, %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  %.not3.i = icmp eq i64 %i.aq, 0
-  br i1 %.not3.i, label %_ZN17meshopt_AllocatorD2Ev.exit, label %.lr.ph.i201
+  br label %.lr.ph.i201
 
 .lr.ph.i201:                                      ; preds = %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit.thread, %bb.t
   %.04.i = phi i64 [ %i.lg, %bb.t ], [ %i.aq, %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit.thread ] ; 2 uses
@@ -559,7 +558,7 @@ bb.u:                                             ; preds = %.lr.ph.i201
   tail call void @__clang_call_terminate(ptr %i.li) #11
   unreachable
 
-_ZN17meshopt_AllocatorD2Ev.exit:                  ; preds = %bb.t, %bb.a, %_ZN7meshoptL22getNextTriangleDeadEndERjPKhm.exit.thread
+_ZN17meshopt_AllocatorD2Ev.exit:                  ; preds = %bb.t, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
   ret void
 
@@ -962,7 +961,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 192 ; 4 uses
   %i.r = load i64, ptr %i.q, align 8, !tbaa !17   ; 5 uses
-  %i.s = add nsw i64 %i.r, 1                      ; 2 uses
+  %i.s = add nuw nsw i64 %i.r, 1                  ; 2 uses
   store i64 %i.s, ptr %i.q, align 8, !tbaa !17
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.r
   store ptr %i.p, ptr %i.t, align 8, !tbaa !18
@@ -973,7 +972,7 @@ bb.h:                                             ; preds = %bb.g
           to label %bb.i unwind label %bb.q, !inline_history !0 ; 6 uses
 
 bb.i:                                             ; preds = %bb.h
-  %i.x = add nsw i64 %i.r, 2                      ; 2 uses
+  %i.x = add nuw nsw i64 %i.r, 2                  ; 2 uses
   store i64 %i.x, ptr %i.q, align 8, !tbaa !17
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.s
   store ptr %i.w, ptr %i.y, align 8, !tbaa !18
@@ -986,7 +985,7 @@ bb.i:                                             ; preds = %bb.h
           to label %bb.j unwind label %bb.r, !inline_history !0 ; 7 uses
 
 bb.j:                                             ; preds = %bb.i
-  %i.ae = add nsw i64 %i.r, 3                     ; 2 uses
+  %i.ae = add nuw nsw i64 %i.r, 3                 ; 2 uses
   store i64 %i.ae, ptr %i.q, align 8, !tbaa !17
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.x
   store ptr %i.ad, ptr %i.af, align 8, !tbaa !18
@@ -995,7 +994,7 @@ bb.j:                                             ; preds = %bb.i
           to label %bb.k unwind label %bb.s, !inline_history !1 ; 3 uses
 
 bb.k:                                             ; preds = %bb.j
-  %i.ai = add nsw i64 %i.r, 4                     ; 2 uses
+  %i.ai = add nuw nsw i64 %i.r, 4
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %i.ae
   store ptr %i.ah, ptr %i.aj, align 8, !tbaa !18
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.ah, i8 0, i64 %i.k, i1 false)
@@ -1267,8 +1266,7 @@ _ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit: ; preds = %.lr.ph.i134, %_
 
 _ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit.thread: ; preds = %.preheader.i, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit, %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  %.not3.i = icmp eq i64 %i.ai, 0
-  br i1 %.not3.i, label %_ZN17meshopt_AllocatorD2Ev.exit, label %.lr.ph.i135
+  br label %.lr.ph.i135
 
 .lr.ph.i135:                                      ; preds = %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit.thread, %bb.ad
   %.04.i = phi i64 [ %i.ev, %bb.ad ], [ %i.ai, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit.thread ] ; 2 uses
@@ -1291,7 +1289,7 @@ bb.ae:                                            ; preds = %.lr.ph.i135
   tail call void @__clang_call_terminate(ptr %i.ex) #11
   unreachable
 
-_ZN17meshopt_AllocatorD2Ev.exit:                  ; preds = %bb.ad, %bb.a, %_ZN7meshoptL20getNextVertexDeadEndEPKjRjS2_S1_m.exit.thread
+_ZN17meshopt_AllocatorD2Ev.exit:                  ; preds = %bb.ad, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
   ret void
 

@@ -205,7 +205,7 @@ _ZN6embree13bitInterleaveINS_9vint_implILi4EEEEET_RKS3_S5_S5_.exit106.i: ; preds
   store <2 x i64> %i.bq, ptr %1, align 16
   %i.br = sub i64 %i.dr, %i.dq
   %i.bs = getelementptr [8 x i8], ptr %i.m, i64 %i.br ; 9 uses
-  %min.iters.check = icmp ult i64 %i.fj, 18
+  %min.iters.check = icmp ult i64 %i.dq, 17
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %_ZN6embree13bitInterleaveINS_9vint_implILi4EEEEET_RKS3_S5_S5_.exit106.i
@@ -321,7 +321,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 .noexc15.i:                                       ; preds = %.noexc15.i.backedge, %.noexc15.lr.ph.i
   %.0479.i = phi i64 [ %i.c, %.noexc15.lr.ph.i ], [ %.0479.i.be, %.noexc15.i.backedge ] ; 4 uses
-  %i.dq = phi i64 [ 0, %.noexc15.lr.ph.i ], [ %.be, %.noexc15.i.backedge ] ; 11 uses
+  %i.dq = phi i64 [ 0, %.noexc15.lr.ph.i ], [ %.be, %.noexc15.i.backedge ] ; 12 uses
   %i.dr = phi i64 [ 0, %.noexc15.lr.ph.i ], [ %i.fk, %.noexc15.i.backedge ] ; 2 uses
   %i.ds = load ptr, ptr %i.v, align 8, !nonnull !28, !align !29
   %i.dt = load ptr, ptr %i.ds, align 8            ; 4 uses
@@ -372,7 +372,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store i32 %.sroa.0236.8.vec.extract.i, ptr %i.fh, align 4
   %i.fi = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %i.dq
   store i32 %i.ez, ptr %i.fi, align 4
-  %i.fj = add nsw i64 %i.dq, 1                    ; 5 uses
+  %i.fj = add nuw nsw i64 %i.dq, 1                ; 4 uses
   %i.fk = add i64 %i.dr, 1                        ; 2 uses
   %i.fl = icmp eq i64 %i.fj, 4
   br i1 %i.fl, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit.i.thread, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit.i
@@ -775,7 +775,7 @@ bb.f:                                             ; preds = %bb.e
   store i32 %.sroa.0273.8.vec.extract, ptr %i.hi, align 4
   %i.hj = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.ef
   store i32 %i.ha, ptr %i.hj, align 4
-  %i.hk = add nsw i64 %i.ef, 1                    ; 2 uses
+  %i.hk = add nuw nsw i64 %i.ef, 1                ; 2 uses
   %i.hl = add i64 %i.eg, 1                        ; 2 uses
   %i.hm = icmp eq i64 %i.hk, 4
   br i1 %i.hm, label %.noexc30, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit
@@ -1178,7 +1178,7 @@ bb.f:                                             ; preds = %bb.e
   store i32 %.sroa.0273.8.vec.extract, ptr %i.hi, align 4
   %i.hj = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.ef
   store i32 %i.ha, ptr %i.hj, align 4
-  %i.hk = add nsw i64 %i.ef, 1                    ; 2 uses
+  %i.hk = add nuw nsw i64 %i.ef, 1                ; 2 uses
   %i.hl = add i64 %i.eg, 1                        ; 2 uses
   %i.hm = icmp eq i64 %i.hk, 4
   br i1 %i.hm, label %.noexc30, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit
@@ -1581,7 +1581,7 @@ _ZN6embree13bitInterleaveINS_9vint_implILi4EEEEET_RKS3_S5_S5_.exit101.i: ; preds
   store <2 x i64> %i.bq, ptr %1, align 16
   %i.br = sub i64 %i.dr, %i.dq
   %i.bs = getelementptr [8 x i8], ptr %i.m, i64 %i.br ; 9 uses
-  %min.iters.check = icmp ult i64 %i.fr, 18
+  %min.iters.check = icmp ult i64 %i.dq, 17
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %_ZN6embree13bitInterleaveINS_9vint_implILi4EEEEET_RKS3_S5_S5_.exit101.i
@@ -1697,7 +1697,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 .noexc10.i:                                       ; preds = %.noexc10.i.backedge, %.noexc10.lr.ph.i
   %.0485.i = phi i64 [ %i.c, %.noexc10.lr.ph.i ], [ %.0485.i.be, %.noexc10.i.backedge ] ; 4 uses
-  %i.dq = phi i64 [ 0, %.noexc10.lr.ph.i ], [ %.be, %.noexc10.i.backedge ] ; 11 uses
+  %i.dq = phi i64 [ 0, %.noexc10.lr.ph.i ], [ %.be, %.noexc10.i.backedge ] ; 12 uses
   %i.dr = phi i64 [ 0, %.noexc10.lr.ph.i ], [ %i.fs, %.noexc10.i.backedge ] ; 2 uses
   %i.ds = load ptr, ptr %i.v, align 8, !nonnull !28, !align !29
   %i.dt = load ptr, ptr %i.ds, align 8            ; 4 uses
@@ -1756,7 +1756,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store i32 %.sroa.0224.8.vec.extract.i, ptr %i.fp, align 4
   %i.fq = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %i.dq
   store i32 %i.fh, ptr %i.fq, align 4
-  %i.fr = add nsw i64 %i.dq, 1                    ; 5 uses
+  %i.fr = add nuw nsw i64 %i.dq, 1                ; 4 uses
   %i.fs = add i64 %i.dr, 1                        ; 2 uses
   %i.ft = icmp eq i64 %i.fr, 4
   br i1 %i.ft, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit.i.thread, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit.i
@@ -2159,7 +2159,7 @@ bb.h:                                             ; preds = %bb.g
   store i32 %.sroa.0237.8.vec.extract, ptr %i.hz, align 4
   %i.ia = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.ef
   store i32 %i.hr, ptr %i.ia, align 4
-  %i.ib = add nsw i64 %i.ef, 1                    ; 2 uses
+  %i.ib = add nuw nsw i64 %i.ef, 1                ; 2 uses
   %i.ic = add i64 %i.eg, 1                        ; 2 uses
   %i.id = icmp eq i64 %i.ib, 4
   br i1 %i.id, label %.noexc20, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit
@@ -2562,7 +2562,7 @@ bb.h:                                             ; preds = %bb.g
   store i32 %.sroa.0237.8.vec.extract, ptr %i.hz, align 4
   %i.ia = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.ef
   store i32 %i.hr, ptr %i.ia, align 4
-  %i.ib = add nsw i64 %i.ef, 1                    ; 2 uses
+  %i.ib = add nuw nsw i64 %i.ef, 1                ; 2 uses
   %i.ic = add i64 %i.eg, 1                        ; 2 uses
   %i.id = icmp eq i64 %i.ib, 4
   br i1 %i.id, label %.noexc20, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit
@@ -2965,7 +2965,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN6embree
   store i32 %.sroa.0218.8.vec.extract, ptr %i.fa, align 4
   %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.ei
   store i32 %i.eo, ptr %i.fb, align 4
-  %i.fc = add nsw i64 %i.ei, 1                    ; 2 uses
+  %i.fc = add nuw nsw i64 %i.ei, 1                ; 2 uses
   %i.fd = add i64 %i.ej, 1                        ; 3 uses
   %i.fe = icmp eq i64 %i.fc, 4
   br i1 %i.fe, label %.noexc15, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit
@@ -3368,7 +3368,7 @@ _ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorD2Ev.exit23: ; preds = %bb
   store i32 %.sroa.0228.8.vec.extract, ptr %i.jv, align 4
   %i.jw = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.ei
   store i32 %i.eo, ptr %i.jw, align 4
-  %i.jx = add nsw i64 %i.ei, 1                    ; 2 uses
+  %i.jx = add nuw nsw i64 %i.ei, 1                ; 2 uses
   %i.jy = add i64 %i.ej, 1                        ; 2 uses
   %i.jz = icmp eq i64 %i.jx, 4
   br i1 %i.jz, label %.noexc20, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit
@@ -3771,7 +3771,7 @@ _ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorD2Ev.exit23: ; preds = %bb
   store i32 %.sroa.0228.8.vec.extract, ptr %i.jv, align 4
   %i.jw = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.ei
   store i32 %i.eo, ptr %i.jw, align 4
-  %i.jx = add nsw i64 %i.ei, 1                    ; 2 uses
+  %i.jx = add nuw nsw i64 %i.ei, 1                ; 2 uses
   %i.jy = add i64 %i.ej, 1                        ; 2 uses
   %i.jz = icmp eq i64 %i.jx, 4
   br i1 %i.jz, label %.noexc20, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit
@@ -4174,7 +4174,7 @@ begin_hunk_9_@_ZZN6embree4sse221createMortonCodeArrayINS_8InstanceEEEmPT_RNS_8ve
   store i32 %.sroa.0479.8.vec.extract, ptr %i.np, align 4
   %i.nq = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.ee
   store i32 %i.nh, ptr %i.nq, align 4
-  %i.nr = add nsw i64 %i.ee, 1                    ; 2 uses
+  %i.nr = add nuw nsw i64 %i.ee, 1                ; 2 uses
   %i.ns = add i64 %i.ef, 1                        ; 3 uses
   %i.nt = icmp eq i64 %i.nr, 4
   br i1 %i.nt, label %.noexc15, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit
@@ -4577,7 +4577,7 @@ bb.b:                                             ; preds = %.noexc227, %.noexc2
   store i32 %.sroa.0455.8.vec.extract, ptr %i.nv, align 4
   %i.nw = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.ee
   store i32 %i.nn, ptr %i.nw, align 4
-  %i.nx = add nsw i64 %i.ee, 1                    ; 2 uses
+  %i.nx = add nuw nsw i64 %i.ee, 1                ; 2 uses
   %i.ny = add i64 %i.ef, 1                        ; 2 uses
   %i.nz = icmp eq i64 %i.nx, 4
   br i1 %i.nz, label %.noexc20, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit
@@ -4980,7 +4980,7 @@ bb.b:                                             ; preds = %.noexc227, %.noexc2
   store i32 %.sroa.0455.8.vec.extract, ptr %i.nv, align 4
   %i.nw = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.ee
   store i32 %i.nn, ptr %i.nw, align 4
-  %i.nx = add nsw i64 %i.ee, 1                    ; 2 uses
+  %i.nx = add nuw nsw i64 %i.ee, 1                ; 2 uses
   %i.ny = add i64 %i.ef, 1                        ; 2 uses
   %i.nz = icmp eq i64 %i.nx, 4
   br i1 %i.nz, label %.noexc20, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit
@@ -5383,7 +5383,7 @@ begin_hunk_12_@_ZZN6embree4sse221createMortonCodeArrayINS_13InstanceArrayEEEmPT_
   store i32 %.sroa.0297.8.vec.extract, ptr %i.vu, align 4
   %i.vv = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.eh
   store i32 %i.vn, ptr %i.vv, align 4
-  %i.vw = add nsw i64 %i.eh, 1                    ; 2 uses
+  %i.vw = add nuw nsw i64 %i.eh, 1                ; 2 uses
   %i.vx = add i64 %i.ei, 1                        ; 3 uses
   %i.vy = icmp eq i64 %i.vw, 4
   br i1 %i.vy, label %.noexc15, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit
@@ -5786,7 +5786,7 @@ _ZNK6embree13InstanceArray11buildBoundsEmPNS_4BBoxINS_6Vec3faEEE.exit: ; preds =
   store i32 %.sroa.0276.8.vec.extract, ptr %i.vz, align 4
   %i.wa = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.eh
   store i32 %i.vr, ptr %i.wa, align 4
-  %i.wb = add nsw i64 %i.eh, 1                    ; 2 uses
+  %i.wb = add nuw nsw i64 %i.eh, 1                ; 2 uses
   %i.wc = add i64 %i.ei, 1                        ; 2 uses
   %i.wd = icmp eq i64 %i.wb, 4
   br i1 %i.wd, label %.noexc20, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit
@@ -6189,7 +6189,7 @@ _ZNK6embree13InstanceArray11buildBoundsEmPNS_4BBoxINS_6Vec3faEEE.exit: ; preds =
   store i32 %.sroa.0276.8.vec.extract, ptr %i.vz, align 4
   %i.wa = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %i.eh
   store i32 %i.vr, ptr %i.wa, align 4
-  %i.wb = add nsw i64 %i.eh, 1                    ; 2 uses
+  %i.wb = add nuw nsw i64 %i.eh, 1                ; 2 uses
   %i.wc = add i64 %i.ei, 1                        ; 2 uses
   %i.wd = icmp eq i64 %i.wb, 4
   br i1 %i.wd, label %.noexc20, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit
