@@ -205,7 +205,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %.noexc.i.i
 AfterCoroSuspend:                                 ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %i.a, align 8
   %index.addr162 = getelementptr inbounds nuw i8, ptr %i.a, i64 140
-  store i1 false, ptr %index.addr162, align 4
+  store i8 0, ptr %index.addr162, align 4
   %i.gj = load ptr, ptr %i.gi, align 8
   call void %i.gj(ptr nonnull %i.gi)
   br label %AfterCoroEnd

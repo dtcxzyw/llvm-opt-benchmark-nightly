@@ -205,7 +205,7 @@ bb.ao:                                            ; preds = %.from..loopexit.spl
   unreachable
 
 AfterCoroSave:                                    ; preds = %bb.ak
-  store i3 0, ptr %index.addr1339, align 8
+  store i8 0, ptr %index.addr1339, align 8
   %i.kx = call noundef zeroext i1 @_ZN3tev4TaskINSt3__16vectorINS_9ImageDataENS1_9allocatorIS3_EEEEE13await_suspendENS1_16coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr1298, ptr nonnull %i.f) #34
   br i1 %i.kx, label %AfterCoroEnd, label %bb.ap
 
@@ -581,7 +581,7 @@ bb.bo:                                            ; preds = %.from..loopexit.spl
   unreachable
 
 AfterCoroSave834:                                 ; preds = %bb.bk
-  store i3 1, ptr %index.addr1339, align 8
+  store i8 1, ptr %index.addr1339, align 8
   %i.pd = call noundef zeroext i1 @_ZN3tev4TaskINSt3__16vectorINS_9ImageDataENS1_9allocatorIS3_EEEEE13await_suspendENS1_16coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr1298, ptr nonnull %i.f) #34
   br i1 %i.pd, label %AfterCoroEnd, label %bb.bp
 
@@ -984,7 +984,7 @@ bb.db:                                            ; preds = %.from..loopexit.spl
   unreachable
 
 AfterCoroSave838:                                 ; preds = %bb.cx
-  store i3 2, ptr %index.addr1339, align 8
+  store i8 2, ptr %index.addr1339, align 8
   %i.xf = call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr1298, ptr nonnull %i.f) #34
   br i1 %i.xf, label %AfterCoroEnd, label %bb.dc
 
@@ -1345,7 +1345,7 @@ bb.dr:                                            ; preds = %.from..loopexit.spl
   unreachable
 
 AfterCoroSave842:                                 ; preds = %bb.dn
-  store i3 3, ptr %index.addr1339, align 8
+  store i8 3, ptr %index.addr1339, align 8
   %i.abj = call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr1298, ptr nonnull %i.f) #34
   br i1 %i.abj, label %AfterCoroEnd, label %bb.ds
 
@@ -1748,7 +1748,7 @@ _ZN3tev11TaskPromiseINS_4TaskINSt3__16vectorINS_9ImageDataENS2_9allocatorIS4_EEE
 AfterCoroSuspend848:                              ; preds = %_ZN3tev11TaskPromiseINS_4TaskINSt3__16vectorINS_9ImageDataENS2_9allocatorIS4_EEEEEES7_E13final_suspendEv.exit
   store ptr null, ptr %i.f, align 8
   %index.addr1343 = getelementptr inbounds nuw i8, ptr %i.f, i64 1048
-  store i3 -4, ptr %index.addr1343, align 8
+  store i8 4, ptr %index.addr1343, align 8
   %i.aim = load ptr, ptr %i.ail, align 8
   call void %i.aim(ptr nonnull %i.ail)
   br label %AfterCoroEnd
@@ -2151,7 +2151,7 @@ bb.j:                                             ; preds = %.from..loopexit.spl
 
 AfterCoroSave:                                    ; preds = %bb.f
   %index.addr79 = getelementptr inbounds nuw i8, ptr %i.a, i64 96
-  store i1 false, ptr %index.addr79, align 8
+  store i8 0, ptr %index.addr79, align 8
   %i.ba = call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr, ptr nonnull %i.a) #34
   br i1 %i.ba, label %AfterCoroEnd, label %bb.k
 
@@ -2294,7 +2294,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %.noexc.i.i
 AfterCoroSuspend53:                               ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %i.a, align 8
   %index.addr80 = getelementptr inbounds nuw i8, ptr %i.a, i64 96
-  store i1 true, ptr %index.addr80, align 8
+  store i8 1, ptr %index.addr80, align 8
   %i.cq = load ptr, ptr %i.cp, align 8
   call void %i.cq(ptr nonnull %i.cp)
   br label %AfterCoroEnd
@@ -2697,7 +2697,7 @@ bb.j:                                             ; preds = %.from..loopexit.spl
 
 AfterCoroSave:                                    ; preds = %bb.f
   %index.addr79 = getelementptr inbounds nuw i8, ptr %i.a, i64 112
-  store i1 false, ptr %index.addr79, align 8
+  store i8 0, ptr %index.addr79, align 8
   %i.ba = call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr76, ptr nonnull %i.a) #34
   br i1 %i.ba, label %AfterCoroEnd, label %bb.k
 
@@ -2840,7 +2840,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %.noexc.i.i
 AfterCoroSuspend53:                               ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %i.a, align 8
   %index.addr80 = getelementptr inbounds nuw i8, ptr %i.a, i64 112
-  store i1 true, ptr %index.addr80, align 8
+  store i8 1, ptr %index.addr80, align 8
   %i.cq = load ptr, ptr %i.cp, align 8
   call void %i.cq(ptr nonnull %i.cp)
   br label %AfterCoroEnd
@@ -3243,7 +3243,7 @@ bb.p:                                             ; preds = %.from..loopexit.spl
 
 AfterCoroSave:                                    ; preds = %bb.l
   %index.addr183 = getelementptr inbounds nuw i8, ptr %i.a, i64 136
-  store i1 false, ptr %index.addr183, align 8
+  store i8 0, ptr %index.addr183, align 8
   %i.de = call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr, ptr nonnull %i.a) #34
   br i1 %i.de, label %AfterCoroEnd, label %bb.q
 
@@ -3420,7 +3420,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %.noexc.i.i
 AfterCoroSuspend110:                              ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %i.a, align 8
   %index.addr184 = getelementptr inbounds nuw i8, ptr %i.a, i64 136
-  store i1 true, ptr %index.addr184, align 8
+  store i8 1, ptr %index.addr184, align 8
   %i.fe = load ptr, ptr %i.fd, align 8
   call void %i.fe(ptr nonnull %i.fd)
   br label %AfterCoroEnd
@@ -3698,7 +3698,7 @@ bb.j:                                             ; preds = %.from..loopexit.spl
 
 AfterCoroSave:                                    ; preds = %bb.f
   %index.addr75 = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  store i1 false, ptr %index.addr75, align 8
+  store i8 0, ptr %index.addr75, align 8
   %i.ba = call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr, ptr nonnull %i.a) #34
   br i1 %i.ba, label %AfterCoroEnd, label %bb.k
 
@@ -3841,7 +3841,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %.noexc.i.i
 AfterCoroSuspend49:                               ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %i.a, align 8
   %index.addr76 = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  store i1 true, ptr %index.addr76, align 8
+  store i8 1, ptr %index.addr76, align 8
   %i.cq = load ptr, ptr %i.cp, align 8
   call void %i.cq(ptr nonnull %i.cp)
   br label %AfterCoroEnd
@@ -4075,7 +4075,7 @@ bb.i:                                             ; preds = %.from..loopexit.spl
   unreachable
 
 AfterCoroSave:                                    ; preds = %.lr.ph
-  store i1 false, ptr %index.addr143, align 8
+  store i8 0, ptr %index.addr143, align 8
   %.sroa.041.064.reload = load ptr, ptr %.sroa.041.064.spill.addr, align 8, !tbaa !385
   %i.bd = call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.041.064.reload, ptr nonnull %i.a) #34
   br i1 %i.bd, label %AfterCoroEnd, label %bb.j
@@ -4350,7 +4350,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %.noexc.i.i
 AfterCoroSuspend91:                               ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %i.a, align 8
   %index.addr144 = getelementptr inbounds nuw i8, ptr %i.a, i64 96
-  store i1 true, ptr %index.addr144, align 8
+  store i8 1, ptr %index.addr144, align 8
   %i.ef = load ptr, ptr %i.ee, align 8
   call void %i.ef(ptr nonnull %i.ee)
   br label %AfterCoroEnd
@@ -4668,7 +4668,7 @@ AfterCoroSave:                                    ; preds = %bb.b, %bb.c
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   store i32 %4, ptr %.sroa.2.0..sroa_idx, align 8
   %index.addr80 = getelementptr inbounds nuw i8, ptr %i.a, i64 96
-  store i2 0, ptr %index.addr80, align 8
+  store i8 0, ptr %index.addr80, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   store ptr %i.a, ptr %5, align 8
@@ -4857,7 +4857,7 @@ bb.j:                                             ; preds = %.from..loopexit.spl
 
 AfterCoroSave:                                    ; preds = %bb.f
   %index.addr70 = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  store i1 false, ptr %index.addr70, align 8
+  store i8 0, ptr %index.addr70, align 8
   %i.bf = call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr, ptr nonnull %i.a) #34
   br i1 %i.bf, label %AfterCoroEnd, label %bb.k
 
@@ -5000,7 +5000,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %.noexc.i.i
 AfterCoroSuspend45:                               ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %i.a, align 8
   %index.addr71 = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  store i1 true, ptr %index.addr71, align 8
+  store i8 1, ptr %index.addr71, align 8
   %i.cv = load ptr, ptr %i.cu, align 8
   call void %i.cv(ptr nonnull %i.cu)
   br label %AfterCoroEnd
@@ -5403,7 +5403,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %.noexc.i.i
 AfterCoroSuspend:                                 ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %i.a, align 8
   %index.addr50 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  store i1 false, ptr %index.addr50, align 8
+  store i8 0, ptr %index.addr50, align 8
   %i.cc = load ptr, ptr %i.cb, align 8
   call void %i.cc(ptr nonnull %i.cb)
   br label %AfterCoroEnd
@@ -5806,7 +5806,7 @@ bb.p:                                             ; preds = %.from..loopexit.spl
 
 AfterCoroSave:                                    ; preds = %bb.l
   %index.addr182 = getelementptr inbounds nuw i8, ptr %i.a, i64 136
-  store i1 false, ptr %index.addr182, align 8
+  store i8 0, ptr %index.addr182, align 8
   %i.dg = call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr, ptr nonnull %i.a) #34
   br i1 %i.dg, label %AfterCoroEnd, label %bb.q
 
@@ -5983,7 +5983,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %.noexc.i.i
 AfterCoroSuspend109:                              ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %i.a, align 8
   %index.addr183 = getelementptr inbounds nuw i8, ptr %i.a, i64 136
-  store i1 true, ptr %index.addr183, align 8
+  store i8 1, ptr %index.addr183, align 8
   %i.fg = load ptr, ptr %i.ff, align 8
   call void %i.fg(ptr nonnull %i.ff)
   br label %AfterCoroEnd
@@ -6209,7 +6209,7 @@ bb.j:                                             ; preds = %.from..loopexit.spl
 
 AfterCoroSave:                                    ; preds = %bb.f
   %index.addr75 = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  store i1 false, ptr %index.addr75, align 8
+  store i8 0, ptr %index.addr75, align 8
   %i.ba = call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr, ptr nonnull %i.a) #34
   br i1 %i.ba, label %AfterCoroEnd, label %bb.k
 
@@ -6352,7 +6352,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %.noexc.i.i
 AfterCoroSuspend49:                               ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %i.a, align 8
   %index.addr76 = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  store i1 true, ptr %index.addr76, align 8
+  store i8 1, ptr %index.addr76, align 8
   %i.cq = load ptr, ptr %i.cp, align 8
   call void %i.cq(ptr nonnull %i.cp)
   br label %AfterCoroEnd
@@ -6499,7 +6499,7 @@ AfterCoroSave:                                    ; preds = %bb.b, %bb.c
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   store i32 %5, ptr %.sroa.2.0..sroa_idx, align 8
   %index.addr82 = getelementptr inbounds nuw i8, ptr %i.a, i64 88
-  store i2 0, ptr %index.addr82, align 8
+  store i8 0, ptr %index.addr82, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
   store ptr %i.a, ptr %6, align 8
@@ -6688,7 +6688,7 @@ bb.j:                                             ; preds = %.from..loopexit.spl
 
 AfterCoroSave:                                    ; preds = %bb.f
   %index.addr70 = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  store i1 false, ptr %index.addr70, align 8
+  store i8 0, ptr %index.addr70, align 8
   %i.bf = call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr, ptr nonnull %i.a) #34
   br i1 %i.bf, label %AfterCoroEnd, label %bb.k
 
@@ -6831,7 +6831,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %.noexc.i.i
 AfterCoroSuspend45:                               ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %i.a, align 8
   %index.addr71 = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  store i1 true, ptr %index.addr71, align 8
+  store i8 1, ptr %index.addr71, align 8
   %i.cv = load ptr, ptr %i.cu, align 8
   call void %i.cv(ptr nonnull %i.cu)
   br label %AfterCoroEnd
@@ -7215,7 +7215,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %.noexc.i.i
 AfterCoroSuspend:                                 ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %i.a, align 8
   %index.addr63 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  store i1 false, ptr %index.addr63, align 8
+  store i8 0, ptr %index.addr63, align 8
   %i.dz = load ptr, ptr %i.dy, align 8
   call void %i.dz(ptr nonnull %i.dy)
   br label %AfterCoroEnd
@@ -7471,7 +7471,7 @@ bb.d:                                             ; preds = %.from..loopexit.spl
   unreachable
 
 AfterCoroSave:                                    ; preds = %.lr.ph
-  store i1 false, ptr %index.addr143, align 8
+  store i8 0, ptr %index.addr143, align 8
   %.sroa.041.064.reload = load ptr, ptr %.sroa.041.064.reload.addr136, align 8, !tbaa !385
   %i.ai = tail call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.041.064.reload, ptr nonnull %0) #34
   br i1 %i.ai, label %CoroEnd, label %bb.e
@@ -7740,7 +7740,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %_ZN3tev5La
 
 bb.x:                                             ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %0, align 8
-  store i1 true, ptr %index.addr143, align 8
+  store i8 1, ptr %index.addr143, align 8
   %i.di = load ptr, ptr %i.dh, align 8
   musttail call void %i.di(ptr nonnull %i.dh)
   ret void
@@ -7787,7 +7787,7 @@ CoroEnd:                                          ; preds = %AfterCoroSave, %_ZN
 bb.ab:                                            ; preds = %bb.y, %.from.124
   %.pn18 = phi { ptr, i32 } [ %i.dk, %.from.124 ], [ %i.dj, %bb.y ]
   store ptr null, ptr %0, align 8
-  store i1 true, ptr %index.addr143, align 8
+  store i8 1, ptr %index.addr143, align 8
   resume { ptr, i32 } %.pn18
 
 bb.ac:                                            ; preds = %bb.y, %bb.k
@@ -7806,8 +7806,9 @@ define internal void @_ZN3tev8awaitAllITkNS_14range_of_tasksERNSt3__16vectorINS_
 resume.entry:
   %.reload.addr138 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %index = load i1, ptr %index.addr, align 8
-  br i1 %index, label %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit.thread, label %_ZN3tev4TaskIvE12await_resumeEv.exit, !prof !1483
+  %index = load i8, ptr %index.addr, align 8
+  %1 = icmp eq i8 %index, 0
+  br i1 %1, label %_ZN3tev4TaskIvE12await_resumeEv.exit, label %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit.thread, !prof !1483
 
 _ZN3tev4TaskIvE12await_resumeEv.exit:             ; preds = %resume.entry
   %i.a = load ptr, ptr %.reload.addr138, align 8, !tbaa !391 ; 5 uses
@@ -8039,7 +8040,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %_ZN3tev5La
 bb.j:                                             ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %0, align 8
   %index.addr71 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i1 true, ptr %index.addr71, align 8
+  store i8 1, ptr %index.addr71, align 8
   %i.ap = load ptr, ptr %i.ao, align 8
   musttail call void %i.ap(ptr nonnull %i.ao)
   ret void
@@ -8084,7 +8085,7 @@ bb.n:                                             ; preds = %bb.k, %.from.62
   %.pn9 = phi { ptr, i32 } [ %i.ar, %.from.62 ], [ %i.aq, %bb.k ]
   store ptr null, ptr %0, align 8
   %index.addr1 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i1 true, ptr %index.addr1, align 8
+  store i8 1, ptr %index.addr1, align 8
   resume { ptr, i32 } %.pn9
 
 bb.o:                                             ; preds = %bb.k
@@ -8099,8 +8100,9 @@ bb.o:                                             ; preds = %bb.k
 define internal void @"_ZZN3tev10ThreadPool11parallelForITkNSt3__18integralEmTkNS2_9invocableIT_S4_EEZNS0_11parallelForITkNS2_8integralEmTkNS3_IS4_EEZNKS_14IcoImageLoader4loadERNS2_19basic_istringstreamIcNS2_11char_traitsIcEENS2_9allocatorIcEEEERKNS2_4__fs10filesystem4pathENS2_17basic_string_viewIcS9_EERKNS_19ImageLoaderSettingsEiE3$_1EENS_4TaskIvEES4_S4_mT0_iEUlmmE_EESQ_S4_S4_mSR_iENKUlvE_clEv.destroy"(ptr noundef nonnull align 8 dereferenceable(80) %0) #13 align 2 personality ptr @__gxx_personality_v0 {
 resume.entry:
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %index = load i1, ptr %index.addr, align 8
-  br i1 %index, label %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit.thread, label %_ZN3tev4TaskIvE12await_resumeEv.exit, !prof !421
+  %index = load i8, ptr %index.addr, align 8
+  %1 = icmp eq i8 %index, 0
+  br i1 %1, label %_ZN3tev4TaskIvE12await_resumeEv.exit, label %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit.thread, !prof !421
 
 _ZN3tev4TaskIvE12await_resumeEv.exit:             ; preds = %resume.entry
   %.reload.addr = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -8140,8 +8142,8 @@ resume.entry:
   %.reload.addr76 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 7 uses
   %.reload.addr79 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 4 uses
-  %index = load i2, ptr %index.addr, align 8
-  %i.a = icmp eq i2 %index, 0
+  %index = load i8, ptr %index.addr, align 8
+  %i.a = icmp eq i8 %index, 0
   br i1 %i.a, label %AfterCoroSuspend, label %AfterCoroSuspend49, !prof !422
 
 AfterCoroSuspend:                                 ; preds = %resume.entry
@@ -8228,7 +8230,7 @@ bb.e:                                             ; preds = %.from..loopexit.spl
   unreachable
 
 AfterCoroSave47:                                  ; preds = %bb.a
-  store i2 1, ptr %index.addr, align 8
+  store i8 1, ptr %index.addr, align 8
   %i.aj = tail call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr76, ptr nonnull %0) #34
   br i1 %i.aj, label %CoroEnd, label %AfterCoroSuspend49
 
@@ -8371,7 +8373,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %_ZN3tev5La
 
 bb.n:                                             ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %0, align 8
-  store i2 -2, ptr %index.addr, align 8
+  store i8 2, ptr %index.addr, align 8
   %i.ca = load ptr, ptr %i.bz, align 8
   musttail call void %i.ca(ptr nonnull %i.bz)
   ret void
@@ -8418,7 +8420,7 @@ CoroEnd:                                          ; preds = %_ZN3tev11TaskPromis
 bb.r:                                             ; preds = %bb.o, %.from.70
   %.pn12 = phi { ptr, i32 } [ %i.cc, %.from.70 ], [ %i.cb, %bb.o ]
   store ptr null, ptr %0, align 8
-  store i2 -2, ptr %index.addr, align 8
+  store i8 2, ptr %index.addr, align 8
   resume { ptr, i32 } %.pn12
 
 bb.s:                                             ; preds = %bb.o
@@ -8433,8 +8435,8 @@ bb.s:                                             ; preds = %bb.o
 define internal void @"_ZZN3tev10ThreadPool16enqueueCoroutineITkNS_13TaskCoroutineEZNS0_11parallelForITkNSt3__18integralEmTkNS3_9invocableIT_S5_EEZNS0_11parallelForITkNS3_8integralEmTkNS4_IS5_EEZNKS_14IcoImageLoader4loadERNS3_19basic_istringstreamIcNS3_11char_traitsIcEENS3_9allocatorIcEEEERKNS3_4__fs10filesystem4pathENS3_17basic_string_viewIcSA_EERKNS_19ImageLoaderSettingsEiE3$_1EENS_4TaskIvEES5_S5_mT0_iEUlmmE_EESR_S5_S5_mSS_iEUlvE_EENS3_13invoke_resultIS5_JEE4typeEOS5_iENKUlSU_PS0_iE_clESU_SZ_i.destroy"(ptr noundef nonnull align 8 dereferenceable(104) %0) #13 align 2 personality ptr @__gxx_personality_v0 {
 resume.entry:
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %index = load i2, ptr %index.addr, align 8
-  %i.a = icmp eq i2 %index, 1
+  %index = load i8, ptr %index.addr, align 8
+  %i.a = icmp eq i8 %index, 1
   br i1 %i.a, label %_ZN3tev4TaskIvE12await_resumeEv.exit, label %AfterCoroSuspend, !prof !423
 
 _ZN3tev4TaskIvE12await_resumeEv.exit:             ; preds = %resume.entry
@@ -8604,7 +8606,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %_ZN3tev5La
 bb.j:                                             ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %0, align 8
   %index.addr76 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i1 true, ptr %index.addr76, align 8
+  store i8 1, ptr %index.addr76, align 8
   %i.ap = load ptr, ptr %i.ao, align 8
   musttail call void %i.ap(ptr nonnull %i.ao)
   ret void
@@ -8649,7 +8651,7 @@ bb.n:                                             ; preds = %bb.k, %.from.66
   %.pn13 = phi { ptr, i32 } [ %i.ar, %.from.66 ], [ %i.aq, %bb.k ]
   store ptr null, ptr %0, align 8
   %index.addr1 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i1 true, ptr %index.addr1, align 8
+  store i8 1, ptr %index.addr1, align 8
   resume { ptr, i32 } %.pn13
 
 bb.o:                                             ; preds = %bb.k
@@ -8664,8 +8666,9 @@ bb.o:                                             ; preds = %bb.k
 define internal void @"_ZN3tev10ThreadPool16enqueueCoroutineITkNS_13TaskCoroutineEZNS0_11parallelForITkNSt3__18integralEmTkNS3_9invocableIT_S5_EEZNS0_11parallelForITkNS3_8integralEmTkNS4_IS5_EEZNKS_14IcoImageLoader4loadERNS3_19basic_istringstreamIcNS3_11char_traitsIcEENS3_9allocatorIcEEEERKNS3_4__fs10filesystem4pathENS3_17basic_string_viewIcSA_EERKNS_19ImageLoaderSettingsEiE3$_1EENS_4TaskIvEES5_S5_mT0_iEUlmmE_EESR_S5_S5_mSS_iEUlvE_EENS3_13invoke_resultIS5_JEE4typeEOS5_i.destroy"(ptr noundef nonnull align 8 dereferenceable(80) %0) #5 align 2 personality ptr @__gxx_personality_v0 {
 resume.entry:
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %index = load i1, ptr %index.addr, align 8
-  br i1 %index, label %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit.thread, label %_ZN3tev4TaskIvE12await_resumeEv.exit, !prof !421
+  %index = load i8, ptr %index.addr, align 8
+  %1 = icmp eq i8 %index, 0
+  br i1 %1, label %_ZN3tev4TaskIvE12await_resumeEv.exit, label %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit.thread, !prof !421
 
 _ZN3tev4TaskIvE12await_resumeEv.exit:             ; preds = %resume.entry
   %.reload.addr = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -8869,7 +8872,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %_ZN3tev5La
 bb.j:                                             ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %0, align 16
   %index.addr184 = getelementptr inbounds nuw i8, ptr %0, i64 136
-  store i1 true, ptr %index.addr184, align 8
+  store i8 1, ptr %index.addr184, align 8
   %i.az = load ptr, ptr %i.ay, align 8
   musttail call void %i.az(ptr nonnull %i.ay)
   ret void
@@ -8914,7 +8917,7 @@ bb.n:                                             ; preds = %bb.k, %.from.168
   %.pn44 = phi { ptr, i32 } [ %i.bb, %.from.168 ], [ %i.ba, %bb.k ]
   store ptr null, ptr %0, align 16
   %index.addr1 = getelementptr inbounds nuw i8, ptr %0, i64 136
-  store i1 true, ptr %index.addr1, align 8
+  store i8 1, ptr %index.addr1, align 8
   resume { ptr, i32 } %.pn44
 
 bb.o:                                             ; preds = %bb.k
@@ -8930,8 +8933,9 @@ define internal void @"_ZN3tev10ThreadPool11parallelForITkNSt3__18integralEmTkNS
 resume.entry:
   %.reload.addr179 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %index = load i1, ptr %index.addr, align 8
-  br i1 %index, label %_ZNSt3__16vectorIN3tev4TaskIvEENS_9allocatorIS3_EEED2B8ne180100Ev.exit, label %_ZN3tev4TaskIvE12await_resumeEv.exit, !prof !424
+  %index = load i8, ptr %index.addr, align 8
+  %1 = icmp eq i8 %index, 0
+  br i1 %1, label %_ZN3tev4TaskIvE12await_resumeEv.exit, label %_ZNSt3__16vectorIN3tev4TaskIvEENS_9allocatorIS3_EEED2B8ne180100Ev.exit, !prof !424
 
 _ZN3tev4TaskIvE12await_resumeEv.exit:             ; preds = %resume.entry
   %.reload.addr178 = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -9130,7 +9134,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %_ZN3tev5La
 bb.j:                                             ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %0, align 8
   %index.addr80 = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store i1 true, ptr %index.addr80, align 8
+  store i8 1, ptr %index.addr80, align 8
   %i.ap = load ptr, ptr %i.ao, align 8
   musttail call void %i.ap(ptr nonnull %i.ao)
   ret void
@@ -9175,7 +9179,7 @@ bb.n:                                             ; preds = %bb.k, %.from.70
   %.pn17 = phi { ptr, i32 } [ %i.ar, %.from.70 ], [ %i.aq, %bb.k ]
   store ptr null, ptr %0, align 8
   %index.addr1 = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store i1 true, ptr %index.addr1, align 8
+  store i8 1, ptr %index.addr1, align 8
   resume { ptr, i32 } %.pn17
 
 bb.o:                                             ; preds = %bb.k
@@ -9190,8 +9194,9 @@ bb.o:                                             ; preds = %bb.k
 define internal void @"_ZN3tev10ThreadPool11parallelForITkNSt3__18integralEmTkNS2_9invocableIT_EEZNKS_14IcoImageLoader4loadERNS2_19basic_istringstreamIcNS2_11char_traitsIcEENS2_9allocatorIcEEEERKNS2_4__fs10filesystem4pathENS2_17basic_string_viewIcS8_EERKNS_19ImageLoaderSettingsEiE3$_1EENS_4TaskIvEES4_S4_mT0_i.destroy"(ptr noundef nonnull align 8 dereferenceable(104) %0) #5 align 2 personality ptr @__gxx_personality_v0 {
 resume.entry:
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %index = load i1, ptr %index.addr, align 8
-  br i1 %index, label %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit.thread, label %_ZN3tev4TaskIvE12await_resumeEv.exit, !prof !421
+  %index = load i8, ptr %index.addr, align 8
+  %1 = icmp eq i8 %index, 0
+  br i1 %1, label %_ZN3tev4TaskIvE12await_resumeEv.exit, label %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit.thread, !prof !421
 
 _ZN3tev4TaskIvE12await_resumeEv.exit:             ; preds = %resume.entry
   %.reload.addr = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -9395,7 +9400,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %_ZN3tev5La
 bb.j:                                             ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %0, align 8
   %index.addr71 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i1 true, ptr %index.addr71, align 8
+  store i8 1, ptr %index.addr71, align 8
   %i.ap = load ptr, ptr %i.ao, align 8
   musttail call void %i.ap(ptr nonnull %i.ao)
   ret void
@@ -9440,7 +9445,7 @@ bb.n:                                             ; preds = %bb.k, %.from.62
   %.pn9 = phi { ptr, i32 } [ %i.ar, %.from.62 ], [ %i.aq, %bb.k ]
   store ptr null, ptr %0, align 8
   %index.addr1 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i1 true, ptr %index.addr1, align 8
+  store i8 1, ptr %index.addr1, align 8
   resume { ptr, i32 } %.pn9
 
 bb.o:                                             ; preds = %bb.k
@@ -9455,8 +9460,9 @@ bb.o:                                             ; preds = %bb.k
 define internal void @"_ZZN3tev10ThreadPool11parallelForITkNSt3__18integralEiTkNS2_9invocableIT_S4_EEZNS0_11parallelForITkNS2_8integralEiTkNS3_IS4_EEZNKS_14IcoImageLoader4loadERNS2_19basic_istringstreamIcNS2_11char_traitsIcEENS2_9allocatorIcEEEERKNS2_4__fs10filesystem4pathENS2_17basic_string_viewIcS9_EERKNS_19ImageLoaderSettingsEiE3$_2EENS_4TaskIvEES4_S4_mT0_iEUliiE_EESQ_S4_S4_mSR_iENKUlvE_clEv.destroy"(ptr noundef nonnull align 8 dereferenceable(80) %0) #13 align 2 personality ptr @__gxx_personality_v0 {
 resume.entry:
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %index = load i1, ptr %index.addr, align 8
-  br i1 %index, label %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit.thread, label %_ZN3tev4TaskIvE12await_resumeEv.exit, !prof !421
+  %index = load i8, ptr %index.addr, align 8
+  %1 = icmp eq i8 %index, 0
+  br i1 %1, label %_ZN3tev4TaskIvE12await_resumeEv.exit, label %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit.thread, !prof !421
 
 _ZN3tev4TaskIvE12await_resumeEv.exit:             ; preds = %resume.entry
   %.reload.addr = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -9496,8 +9502,8 @@ resume.entry:
   %.reload.addr = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 7 uses
   %.reload.addr81 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 4 uses
-  %index = load i2, ptr %index.addr, align 8
-  %i.a = icmp eq i2 %index, 0
+  %index = load i8, ptr %index.addr, align 8
+  %i.a = icmp eq i8 %index, 0
   br i1 %i.a, label %AfterCoroSuspend, label %AfterCoroSuspend51, !prof !422
 
 AfterCoroSuspend:                                 ; preds = %resume.entry
@@ -9584,7 +9590,7 @@ bb.e:                                             ; preds = %.from..loopexit.spl
   unreachable
 
 AfterCoroSave49:                                  ; preds = %bb.a
-  store i2 1, ptr %index.addr, align 8
+  store i8 1, ptr %index.addr, align 8
   %i.aj = tail call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr, ptr nonnull %0) #34
   br i1 %i.aj, label %CoroEnd, label %AfterCoroSuspend51
 
@@ -9727,7 +9733,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %_ZN3tev5La
 
 bb.n:                                             ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %0, align 8
-  store i2 -2, ptr %index.addr, align 8
+  store i8 2, ptr %index.addr, align 8
   %i.ca = load ptr, ptr %i.bz, align 8
   musttail call void %i.ca(ptr nonnull %i.bz)
   ret void
@@ -9774,7 +9780,7 @@ CoroEnd:                                          ; preds = %_ZN3tev11TaskPromis
 bb.r:                                             ; preds = %bb.o, %.from.72
   %.pn14 = phi { ptr, i32 } [ %i.cc, %.from.72 ], [ %i.cb, %bb.o ]
   store ptr null, ptr %0, align 8
-  store i2 -2, ptr %index.addr, align 8
+  store i8 2, ptr %index.addr, align 8
   resume { ptr, i32 } %.pn14
 
 bb.s:                                             ; preds = %bb.o
@@ -9789,8 +9795,8 @@ bb.s:                                             ; preds = %bb.o
 define internal void @"_ZZN3tev10ThreadPool16enqueueCoroutineITkNS_13TaskCoroutineEZNS0_11parallelForITkNSt3__18integralEiTkNS3_9invocableIT_S5_EEZNS0_11parallelForITkNS3_8integralEiTkNS4_IS5_EEZNKS_14IcoImageLoader4loadERNS3_19basic_istringstreamIcNS3_11char_traitsIcEENS3_9allocatorIcEEEERKNS3_4__fs10filesystem4pathENS3_17basic_string_viewIcSA_EERKNS_19ImageLoaderSettingsEiE3$_2EENS_4TaskIvEES5_S5_mT0_iEUliiE_EESR_S5_S5_mSS_iEUlvE_EENS3_13invoke_resultIS5_JEE4typeEOS5_iENKUlSU_PS0_iE_clESU_SZ_i.destroy"(ptr noundef nonnull align 8 dereferenceable(96) %0) #13 align 2 personality ptr @__gxx_personality_v0 {
 resume.entry:
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %index = load i2, ptr %index.addr, align 8
-  %i.a = icmp eq i2 %index, 1
+  %index = load i8, ptr %index.addr, align 8
+  %i.a = icmp eq i8 %index, 1
   br i1 %i.a, label %_ZN3tev4TaskIvE12await_resumeEv.exit, label %AfterCoroSuspend, !prof !423
 
 _ZN3tev4TaskIvE12await_resumeEv.exit:             ; preds = %resume.entry
@@ -9960,7 +9966,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %_ZN3tev5La
 bb.j:                                             ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %0, align 8
   %index.addr76 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i1 true, ptr %index.addr76, align 8
+  store i8 1, ptr %index.addr76, align 8
   %i.ap = load ptr, ptr %i.ao, align 8
   musttail call void %i.ap(ptr nonnull %i.ao)
   ret void
@@ -10005,7 +10011,7 @@ bb.n:                                             ; preds = %bb.k, %.from.66
   %.pn13 = phi { ptr, i32 } [ %i.ar, %.from.66 ], [ %i.aq, %bb.k ]
   store ptr null, ptr %0, align 8
   %index.addr1 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store i1 true, ptr %index.addr1, align 8
+  store i8 1, ptr %index.addr1, align 8
   resume { ptr, i32 } %.pn13
 
 bb.o:                                             ; preds = %bb.k
@@ -10020,8 +10026,9 @@ bb.o:                                             ; preds = %bb.k
 define internal void @"_ZN3tev10ThreadPool16enqueueCoroutineITkNS_13TaskCoroutineEZNS0_11parallelForITkNSt3__18integralEiTkNS3_9invocableIT_S5_EEZNS0_11parallelForITkNS3_8integralEiTkNS4_IS5_EEZNKS_14IcoImageLoader4loadERNS3_19basic_istringstreamIcNS3_11char_traitsIcEENS3_9allocatorIcEEEERKNS3_4__fs10filesystem4pathENS3_17basic_string_viewIcSA_EERKNS_19ImageLoaderSettingsEiE3$_2EENS_4TaskIvEES5_S5_mT0_iEUliiE_EESR_S5_S5_mSS_iEUlvE_EENS3_13invoke_resultIS5_JEE4typeEOS5_i.destroy"(ptr noundef nonnull align 8 dereferenceable(80) %0) #5 align 2 personality ptr @__gxx_personality_v0 {
 resume.entry:
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %index = load i1, ptr %index.addr, align 8
-  br i1 %index, label %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit.thread, label %_ZN3tev4TaskIvE12await_resumeEv.exit, !prof !421
+  %index = load i8, ptr %index.addr, align 8
+  %1 = icmp eq i8 %index, 0
+  br i1 %1, label %_ZN3tev4TaskIvE12await_resumeEv.exit, label %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit.thread, !prof !421
 
 _ZN3tev4TaskIvE12await_resumeEv.exit:             ; preds = %resume.entry
   %.reload.addr = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -10225,7 +10232,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %_ZN3tev5La
 bb.j:                                             ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %0, align 16
   %index.addr183 = getelementptr inbounds nuw i8, ptr %0, i64 136
-  store i1 true, ptr %index.addr183, align 8
+  store i8 1, ptr %index.addr183, align 8
   %i.az = load ptr, ptr %i.ay, align 8
   musttail call void %i.az(ptr nonnull %i.ay)
   ret void
@@ -10270,7 +10277,7 @@ bb.n:                                             ; preds = %bb.k, %.from.167
   %.pn44 = phi { ptr, i32 } [ %i.bb, %.from.167 ], [ %i.ba, %bb.k ]
   store ptr null, ptr %0, align 16
   %index.addr1 = getelementptr inbounds nuw i8, ptr %0, i64 136
-  store i1 true, ptr %index.addr1, align 8
+  store i8 1, ptr %index.addr1, align 8
   resume { ptr, i32 } %.pn44
 
 bb.o:                                             ; preds = %bb.k
@@ -10286,8 +10293,9 @@ define internal void @"_ZN3tev10ThreadPool11parallelForITkNSt3__18integralEiTkNS
 resume.entry:
   %.reload.addr178 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %index = load i1, ptr %index.addr, align 8
-  br i1 %index, label %_ZNSt3__16vectorIN3tev4TaskIvEENS_9allocatorIS3_EEED2B8ne180100Ev.exit, label %_ZN3tev4TaskIvE12await_resumeEv.exit, !prof !424
+  %index = load i8, ptr %index.addr, align 8
+  %1 = icmp eq i8 %index, 0
+  br i1 %1, label %_ZN3tev4TaskIvE12await_resumeEv.exit, label %_ZNSt3__16vectorIN3tev4TaskIvEENS_9allocatorIS3_EEED2B8ne180100Ev.exit, !prof !424
 
 _ZN3tev4TaskIvE12await_resumeEv.exit:             ; preds = %resume.entry
   %.reload.addr177 = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -10486,7 +10494,7 @@ _ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit: ; preds = %_ZN3tev5La
 bb.j:                                             ; preds = %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit
   store ptr null, ptr %0, align 8
   %index.addr80 = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store i1 true, ptr %index.addr80, align 8
+  store i8 1, ptr %index.addr80, align 8
   %i.ap = load ptr, ptr %i.ao, align 8
   musttail call void %i.ap(ptr nonnull %i.ao)
   ret void
@@ -10531,7 +10539,7 @@ bb.n:                                             ; preds = %bb.k, %.from.70
   %.pn17 = phi { ptr, i32 } [ %i.ar, %.from.70 ], [ %i.aq, %bb.k ]
   store ptr null, ptr %0, align 8
   %index.addr1 = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store i1 true, ptr %index.addr1, align 8
+  store i8 1, ptr %index.addr1, align 8
   resume { ptr, i32 } %.pn17
 
 bb.o:                                             ; preds = %bb.k
@@ -10546,8 +10554,9 @@ bb.o:                                             ; preds = %bb.k
 define internal void @"_ZN3tev10ThreadPool11parallelForITkNSt3__18integralEiTkNS2_9invocableIT_EEZNKS_14IcoImageLoader4loadERNS2_19basic_istringstreamIcNS2_11char_traitsIcEENS2_9allocatorIcEEEERKNS2_4__fs10filesystem4pathENS2_17basic_string_viewIcS8_EERKNS_19ImageLoaderSettingsEiE3$_2EENS_4TaskIvEES4_S4_mT0_i.destroy"(ptr noundef nonnull align 8 dereferenceable(120) %0) #5 align 2 personality ptr @__gxx_personality_v0 {
 resume.entry:
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %index = load i1, ptr %index.addr, align 8
-  br i1 %index, label %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit.thread, label %_ZN3tev4TaskIvE12await_resumeEv.exit, !prof !421
+  %index = load i8, ptr %index.addr, align 8
+  %1 = icmp eq i8 %index, 0
+  br i1 %1, label %_ZN3tev4TaskIvE12await_resumeEv.exit, label %_ZN3tev11TaskPromiseINS_4TaskIvEEvE13final_suspendEv.exit.thread, !prof !421
 
 _ZN3tev4TaskIvE12await_resumeEv.exit:             ; preds = %resume.entry
   %.reload.addr76 = getelementptr inbounds nuw i8, ptr %0, i64 80
@@ -10603,12 +10612,12 @@ resume.entry:
   %.reload.addr1336 = getelementptr inbounds nuw i8, ptr %0, i64 1036 ; 9 uses
   %.reload.addr1338 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 1048 ; 7 uses
-  %index = load i3, ptr %index.addr, align 8
-  switch i3 %index, label %unreachable [
-    i3 0, label %AfterCoroSuspend
-    i3 1, label %AfterCoroSuspend836
-    i3 2, label %AfterCoroSuspend840
-    i3 3, label %AfterCoroSuspend844
+  %index = load i8, ptr %index.addr, align 8
+  switch i8 %index, label %unreachable [
+    i8 0, label %AfterCoroSuspend
+    i8 1, label %AfterCoroSuspend836
+    i8 2, label %AfterCoroSuspend840
+    i8 3, label %AfterCoroSuspend844
   ], !prof !1518
 
 bb.a:                                             ; preds = %_ZNSt3__16vectorIN3tev9ImageDataENS_9allocatorIS2_EEED2B8ne180100Ev.exit462.jt12
@@ -10830,7 +10839,7 @@ bb.l:                                             ; preds = %.from..loopexit.spl
   unreachable
 
 AfterCoroSave:                                    ; preds = %bb.h
-  store i3 0, ptr %index.addr, align 8
+  store i8 0, ptr %index.addr, align 8
   %i.bt = tail call noundef zeroext i1 @_ZN3tev4TaskINSt3__16vectorINS_9ImageDataENS1_9allocatorIS3_EEEEE13await_suspendENS1_16coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr1298, ptr nonnull %0) #34
   br i1 %i.bt, label %CoroEnd, label %AfterCoroSuspend
 
@@ -11224,7 +11233,7 @@ bb.ak:                                            ; preds = %.from..loopexit.spl
   unreachable
 
 AfterCoroSave834:                                 ; preds = %bb.ag
-  store i3 1, ptr %index.addr, align 8
+  store i8 1, ptr %index.addr, align 8
   %i.gi = tail call noundef zeroext i1 @_ZN3tev4TaskINSt3__16vectorINS_9ImageDataENS1_9allocatorIS3_EEEEE13await_suspendENS1_16coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr1298, ptr nonnull %0) #34
   br i1 %i.gi, label %CoroEnd, label %AfterCoroSuspend836
 
@@ -11627,7 +11636,7 @@ bb.bw:                                            ; preds = %.from..loopexit.spl
   unreachable
 
 AfterCoroSave838:                                 ; preds = %bb.bs
-  store i3 2, ptr %index.addr, align 8
+  store i8 2, ptr %index.addr, align 8
   %i.pb = tail call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr1298, ptr nonnull %0) #34
   br i1 %i.pb, label %CoroEnd, label %AfterCoroSuspend840
 
@@ -12004,7 +12013,7 @@ bb.cl:                                            ; preds = %.from..loopexit.spl
   unreachable
 
 AfterCoroSave842:                                 ; preds = %bb.ch
-  store i3 3, ptr %index.addr, align 8
+  store i8 3, ptr %index.addr, align 8
   %i.tp = tail call noundef zeroext i1 @_ZN3tev4TaskIvE13await_suspendENSt3__116coroutine_handleIvEE(ptr noundef nonnull align 8 dereferenceable(32) %.reload.addr1298, ptr nonnull %0) #34
   br i1 %i.tp, label %CoroEnd, label %AfterCoroSuspend844
 
@@ -12407,7 +12416,7 @@ _ZN3tev11TaskPromiseINS_4TaskINSt3__16vectorINS_9ImageDataENS2_9allocatorIS4_EEE
 
 bb.du:                                            ; preds = %_ZN3tev11TaskPromiseINS_4TaskINSt3__16vectorINS_9ImageDataENS2_9allocatorIS4_EEEEEES7_E13final_suspendEv.exit
   store ptr null, ptr %0, align 16
-  store i3 -4, ptr %index.addr, align 8
+  store i8 4, ptr %index.addr, align 8
   %i.abu = load ptr, ptr %i.abt, align 8
   musttail call void %i.abu(ptr nonnull %i.abt)
   ret void
@@ -12454,7 +12463,7 @@ CoroEnd:                                          ; preds = %AfterCoroSave, %_ZN
 bb.dy:                                            ; preds = %bb.dv, %.from.1173
   %.pn255 = phi { ptr, i32 } [ %i.abw, %.from.1173 ], [ %i.abv, %bb.dv ]
   store ptr null, ptr %0, align 16
-  store i3 -4, ptr %index.addr, align 8
+  store i8 4, ptr %index.addr, align 8
   resume { ptr, i32 } %.pn255
 
 bb.dz:                                            ; preds = %bb.dv, %bb.cv, %bb.cu, %bb.ad, %bb.ac
@@ -12487,13 +12496,13 @@ resume.entry:
   %.reload.addr1317 = getelementptr inbounds nuw i8, ptr %0, i64 856 ; 2 uses
   %.reload.addr1318 = getelementptr inbounds nuw i8, ptr %0, i64 880 ; 2 uses
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 1048
-  %index = load i3, ptr %index.addr, align 8
-  switch i3 %index, label %unreachable [
-    i3 0, label %AfterCoroSuspend
-    i3 1, label %AfterCoroSuspend836
-    i3 2, label %AfterCoroSuspend840
-    i3 3, label %AfterCoroSuspend840
-    i3 -4, label %_ZN3tev11TaskPromiseINS_4TaskINSt3__16vectorINS_9ImageDataENS2_9allocatorIS4_EEEEEES7_E13final_suspendEv.exit.thread
+  %index = load i8, ptr %index.addr, align 8
+  switch i8 %index, label %unreachable [
+    i8 0, label %AfterCoroSuspend
+    i8 1, label %AfterCoroSuspend836
+    i8 2, label %AfterCoroSuspend840
+    i8 3, label %AfterCoroSuspend840
+    i8 4, label %_ZN3tev11TaskPromiseINS_4TaskINSt3__16vectorINS_9ImageDataENS2_9allocatorIS4_EEEEEES7_E13final_suspendEv.exit.thread
   ], !prof !1532
 
 AfterCoroSuspend:                                 ; preds = %resume.entry
@@ -12896,10 +12905,10 @@ begin_hunk_10_@_ZNK3tev14IcoImageLoader4loadERNSt3__119basic_istringstreamIcNS1_
 !418 = !{!"_ZTSZN3tev10ThreadPool11parallelForITkNSt3__18integralEiTkNS2_9invocableIT_S4_EEZNS0_11parallelForITkNS2_8integralEiTkNS3_IS4_EEZNKS_14IcoImageLoader4loadERNS2_19basic_istringstreamIcNS2_11char_traitsIcEENS2_9allocatorIcEEEERKNS2_4__fs10filesystem4pathENS2_17basic_string_viewIcS9_EERKNS_19ImageLoaderSettingsEiE3$_2EENS_4TaskIvEES4_S4_mT0_iEUliiE_EESQ_S4_S4_mSR_iEUlvE_", !57, i64 0, !57, i64 4, !64, i64 8}
 !419 = !{!418, !57, i64 0}
 !420 = !{!418, !57, i64 4}
-!421 = !{!"branch_weights", i32 -693363755, i32 -1546098377}
+!421 = !{!"branch_weights", i32 -1546098377, i32 -693363755}
 !422 = !{!"branch_weights", i32 -171659984, i32 343608614}
 !423 = !{!"branch_weights", i32 171804307, i32 -2008213419}
-!424 = !{!"branch_weights", i32 -1751137347, i32 -840054308}
+!424 = !{!"branch_weights", i32 -840054308, i32 -1751137347}
 !425 = distinct !{!425, !"_ZNSt3__111make_sharedB8ne180100IN3tev15TaskSharedStateEJEvEENS_10shared_ptrIT_EEDpOT0_"}
 !426 = distinct !{!426, !425, !"_ZNSt3__111make_sharedB8ne180100IN3tev15TaskSharedStateEJEvEENS_10shared_ptrIT_EEDpOT0_: argument 0"}
 !427 = distinct !{!427, !"_ZNSt3__115allocate_sharedB8ne180100IN3tev15TaskSharedStateENS_9allocatorIS2_EEJEvEENS_10shared_ptrIT_EERKT0_DpOT1_"}
@@ -13302,7 +13311,7 @@ begin_hunk_11_@_ZNK3tev14IcoImageLoader4loadERNSt3__119basic_istringstreamIcNS1_
 !1480 = !{!"_ZTSNSt3__14spanIKhLm18446744073709551615EEE", !89, i64 0, !75, i64 8}
 !1481 = !{!1480, !89, i64 0}
 !1482 = !{!1475, !195, i64 32}
-!1483 = !{!"branch_weights", i32 118691432, i32 -2004248167}
+!1483 = !{!"branch_weights", i32 -2004248167, i32 118691432}
 !1484 = distinct !{!1484, !"_ZN3tev4TaskINSt3__16vectorINS_9ImageDataENS1_9allocatorIS3_EEEEE12await_resumeEv"}
 !1485 = distinct !{!1485, !1484, !"_ZN3tev4TaskINSt3__16vectorINS_9ImageDataENS1_9allocatorIS3_EEEEE12await_resumeEv: argument 0"}
 !1486 = distinct !{!1486, !"_ZNSt3__16futureINS_6vectorIN3tev9ImageDataENS_9allocatorIS3_EEEEE3getEv"}
