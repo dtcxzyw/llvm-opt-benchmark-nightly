@@ -205,7 +205,7 @@ png_crc_read.exit:                                ; preds = %bb.f, %bb.g
   %i.t = mul i32 %i.s, 3
   %i.u = icmp ugt i32 %2, %i.t
   %.lhs.trunc = trunc nuw nsw i32 %2 to i16
-  %i.v = udiv i16 %.lhs.trunc, 3
+  %i.v = udiv exact i16 %.lhs.trunc, 3
   %.zext = zext nneg i16 %i.v to i32
   %i.w = select i1 %i.u, i32 %i.s, i32 %.zext     ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
@@ -608,12 +608,12 @@ bb.n:                                             ; preds = %bb.l
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i8 %i.ad, ptr %i.ae, align 8, !tbaa !230
   %i.af = icmp eq i8 %i.ad, 8                     ; 2 uses
-  %i.ag = select i1 %i.af, i32 6, i32 10          ; 3 uses
+  %i.ag = select i1 %i.af, i32 6, i32 10          ; 2 uses
   %i.ah = trunc i64 %strlen to i32
   %reass.sub = sub i32 %2, %i.ah
   %i.ai = add i32 %reass.sub, -2                  ; 3 uses
   %i.aj = urem i32 %i.ai, %i.ag
-  %i.ak = udiv i32 %i.ai, %i.ag                   ; 2 uses
+  %i.ak = udiv exact i32 %i.ai, %i.ag             ; 2 uses
   %.not90 = icmp eq i32 %i.aj, 0
   br i1 %.not90, label %bb.p, label %bb.o
 
@@ -633,7 +633,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %i.aq, label %bb.q, label %.preheader
 
 .preheader:                                       ; preds = %bb.p
-  %.not = icmp ugt i32 %i.ag, %i.ai
+  %.not = icmp eq i32 %i.ai, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader

@@ -205,11 +205,11 @@ bb.jm:                                            ; preds = %bb.jl
   %i.aug = load i32, ptr %i.as, align 8, !tbaa !55 ; 2 uses
   %i.auh = load i32, ptr %i.at, align 4, !tbaa !56 ; 2 uses
   %i.aui = urem i32 %i.aug, %i.auh
-  %i.auj = udiv i32 %i.aug, %i.auh                ; 2 uses
+  %i.auj = udiv exact i32 %i.aug, %i.auh          ; 2 uses
   %.not781 = icmp ne i32 %i.aui, 0
   %i.auk = add i32 %i.auj, -33
   %or.cond6 = icmp ult i32 %i.auk, -25
-  %or.cond3973 = or i1 %.not781, %or.cond6
+  %or.cond3973 = select i1 %.not781, i1 true, i1 %or.cond6
   br i1 %or.cond3973, label %.thread885, label %bb.jn
 
 bb.jn:                                            ; preds = %.loopexit954

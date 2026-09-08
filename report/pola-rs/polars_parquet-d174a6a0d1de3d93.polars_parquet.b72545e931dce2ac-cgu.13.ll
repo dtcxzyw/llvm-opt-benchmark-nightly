@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.b
   %i.av = and i32 %.sroa.02.010.i371, 63, !dbg !17666
   %i.aw = zext nneg i32 %i.av to i64, !dbg !17666
   %i.ax = shl i64 %i.au, %i.aw, !dbg !17666
-  %i.ay = or i64 %i.ax, %.sroa.0.011.i370, !dbg !17667 ; 9 uses
+  %i.ay = or i64 %i.ax, %.sroa.0.011.i370, !dbg !17667 ; 8 uses
   %i.az = icmp sgt i8 %i.as, -1, !dbg !17668
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.06.08.i373, i64 1 ; 2 uses
   %i.bb = add i32 %.sroa.02.010.i371, 7
@@ -401,7 +401,7 @@ _RNvYNCNvMs_NtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpa
 
 bb.m:                                             ; preds = %_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding13zigzag_leb1286decode.exit.thread
   %i.dz = urem i64 %i.w, %i.ay, !dbg !17729       ; 2 uses
-  %i.ea = udiv i64 %i.w, %i.ay, !dbg !17744       ; 8 uses
+  %i.ea = udiv exact i64 %i.w, %i.ay, !dbg !17744 ; 8 uses
   store i64 %i.dz, ptr %i.l, align 8, !dbg !17729
   %i.eb = icmp eq i64 %i.dz, 0, !dbg !17745
   br i1 %i.eb, label %bb.n, label %bb.o, !dbg !17745, !prof !1003
@@ -434,7 +434,7 @@ bb.q:                                             ; preds = %bb.n
   br i1 %.not365, label %bb.r, label %.thread443, !dbg !17751, !prof !17559
 
 .lr.ph:                                           ; preds = %bb.p
-  %3 = icmp ugt i64 %i.ay, %i.w
+  %3 = icmp eq i64 %i.w, 0
   br i1 %3, label %bb.v, label %.lr.ph.split.preheader, !dbg !17752
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph

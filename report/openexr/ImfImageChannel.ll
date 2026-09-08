@@ -168,19 +168,19 @@ bb.k:                                             ; preds = %bb.g
   %i.s = getelementptr inbounds nuw i8, ptr %i.j, i64 32
   %i.t = load i32, ptr %i.s, align 8, !tbaa !28
   %i.u = sub nsw i32 %i.t, %i.l
-  %i.v = add nsw i32 %i.u, 1                      ; 2 uses
+  %i.v = add nsw i32 %i.u, 1                      ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.j, i64 36
   %i.x = load i32, ptr %i.w, align 4, !tbaa !29
   %i.y = sub nsw i32 %i.x, %i.o
   %i.z = add nsw i32 %i.y, 1                      ; 2 uses
   %i.aa = srem i32 %i.v, %i.b
-  %i.ab = sdiv i32 %i.v, %i.b                     ; 3 uses
+  %i.ab = sdiv exact i32 %i.v, %i.b               ; 2 uses
   %.not22 = icmp eq i32 %i.aa, 0
   br i1 %.not22, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   %i.ac = srem i32 %i.z, %i.e
-  %i.ad = sdiv i32 %i.z, %i.e                     ; 2 uses
+  %i.ad = sdiv exact i32 %i.z, %i.e               ; 2 uses
   %.not23 = icmp eq i32 %i.ac, 0
   br i1 %.not23, label %bb.p, label %bb.m
 
@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.l
   store i32 %i.ad, ptr %i.ah, align 8, !tbaa !19
   %i.ai = sext i32 %i.ab to i64                   ; 2 uses
   %i.aj = sext i32 %i.ad to i64                   ; 2 uses
-  %.not24 = icmp eq i32 %i.ab, 0
+  %.not24 = icmp eq i32 %i.v, 0
   br i1 %.not24, label %bb.u, label %bb.q
 
 bb.q:                                             ; preds = %bb.p

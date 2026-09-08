@@ -204,7 +204,7 @@ bb.at:                                            ; preds = %bb.as
 bb.au:                                            ; preds = %bb.as
   %i.ey = zext i32 %4 to i64                      ; 5 uses
   %i.ez = urem i64 %i.ey, %5
-  %i.fa = udiv i64 %i.ey, %5
+  %i.fa = udiv exact i64 %i.ey, %5
   %i.fb = icmp eq i64 %i.ez, 0
   br i1 %i.fb, label %bb.aw, label %bb.av
 
@@ -607,7 +607,7 @@ bb.g:                                             ; preds = %.noexc
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !35
   %i.aj = zext i32 %i.ai to i64                   ; 2 uses
   %i.ak = urem i64 %i.aj, %i.s
-  %i.al = udiv i64 %i.aj, %i.s
+  %i.al = udiv exact i64 %i.aj, %i.s
   %i.am = icmp eq i64 %i.ak, 0
   br i1 %i.am, label %bb.h, label %.invoke
 
@@ -1010,7 +1010,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit534: ; preds = %_Z
 
 bb.cy:                                            ; preds = %bb.bs
   %i.abw = srem i64 %i.wa, %5
-  %i.abx = sdiv i64 %i.wa, %5
+  %i.abx = sdiv exact i64 %i.wa, %5
   %i.aby = icmp eq i64 %i.abw, 0
   br i1 %i.aby, label %._crit_edge.i.i535, label %bb.cz
 

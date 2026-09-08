@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %.noexc15
 
 bb.r:                                             ; preds = %bb.q
   %i.co = urem i32 %storemerge.i, 1000000
-  %i.cp = udiv i32 %storemerge.i, 1000000
+  %i.cp = udiv exact i32 %storemerge.i, 1000000
   %i.cq = icmp eq i32 %i.co, 0
   br i1 %i.cq, label %bb.s, label %bb.t
 
@@ -226,7 +226,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.r
   %i.cs = urem i32 %storemerge.i, 1000
-  %i.ct = udiv i32 %storemerge.i, 1000
+  %i.ct = udiv exact i32 %storemerge.i, 1000
   %i.cu = icmp eq i32 %i.cs, 0
   br i1 %i.cu, label %bb.u, label %bb.v
 

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_ZL6lookupjjN4llvm8
 
 bb.c:                                             ; preds = %bb.b
   %i.bq = select i1 %2, i8 3, i8 2
-  %i.br = lshr i8 %.lhs.trunc.i, %i.bq
+  %i.br = lshr exact i8 %.lhs.trunc.i, %i.bq
   %.zext55.i = zext nneg i8 %i.br to i32          ; 3 uses
   %notmask48.i = shl nsw i32 -1, %.zext55.i
   %i.bs = xor i32 %notmask48.i, -1                ; 4 uses
@@ -287,7 +287,7 @@ bb.h:                                             ; preds = %_ZL6lookupjjN4llvm8
 
 bb.i:                                             ; preds = %bb.h
   %i.cz = select i1 %2, i8 2, i8 1
-  %i.da = lshr i8 %.lhs.trunc.i29, %i.cz
+  %i.da = lshr exact i8 %.lhs.trunc.i29, %i.cz
   %.zext55.i41 = zext nneg i8 %i.da to i32        ; 3 uses
   %notmask48.i42 = shl nsw i32 -1, %.zext55.i41
   %i.db = xor i32 %notmask48.i42, -1              ; 4 uses
@@ -413,7 +413,7 @@ _ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit54:        ; preds = %.lr.ph.i50.3, %.lr.
 
 bb.p:                                             ; preds = %_ZL6lookupjjN4llvm8ArrayRefIA3_tEE.exit54
   %i.fc = select i1 %2, i8 3, i8 2
-  %i.fd = lshr i8 %.lhs.trunc.i55, %i.fc
+  %i.fd = lshr exact i8 %.lhs.trunc.i55, %i.fc
   %.zext55.i67 = zext nneg i8 %i.fd to i32        ; 3 uses
   %notmask48.i68 = shl nsw i32 -1, %.zext55.i67
   %i.fe = xor i32 %notmask48.i68, -1              ; 4 uses

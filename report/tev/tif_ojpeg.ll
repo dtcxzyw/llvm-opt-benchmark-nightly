@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %bb.o, %bb.o, %bb.o
   %i.bb = zext nneg i8 %i.ba to i32
   %i.bc = shl nuw nsw i32 %i.bb, 3                ; 2 uses
   %i.bd = urem i32 %i.ae, %i.bc
-  %i.be = udiv i32 %i.ae, %i.bc
+  %i.be = udiv exact i32 %i.ae, %i.bc
   %.not81.i = icmp eq i32 %i.bd, 0
   br i1 %.not81.i, label %bb.s, label %bb.r
 
@@ -608,7 +608,7 @@ bb.cp:                                            ; preds = %._crit_edge12.i.i11
   %i.ks = add i16 %i.ko, -1                       ; 3 uses
   store i16 %i.ks, ptr %i.jy, align 8, !tbaa !73
   %i.kt = zext i8 %i.kq to i16
-  %i.ku = or disjoint i16 %i.kk, %i.kt            ; 3 uses
+  %i.ku = or disjoint i16 %i.kk, %i.kt            ; 2 uses
   %i.kv = icmp ult i16 %i.ku, 11
   br i1 %i.kv, label %bb.cq, label %bb.cr
 
@@ -618,9 +618,9 @@ bb.cq:                                            ; preds = %bb.cp
   br i1 %i.kx, label %OJPEGReadHeaderInfoSecStreamSof.exit.thread.sink.split, label %OJPEGReadHeaderInfoSecStreamSof.exit.thread
 
 bb.cr:                                            ; preds = %bb.cp
-  %i.ky = add i16 %i.ku, -8                       ; 2 uses
+  %i.ky = add i16 %i.ku, -8                       ; 3 uses
   %i.kz = urem i16 %i.ky, 3
-  %i.la = udiv i16 %i.ky, 3                       ; 3 uses
+  %i.la = udiv exact i16 %i.ky, 3                 ; 3 uses
   %.not79.i = icmp eq i16 %i.kz, 0
   br i1 %.not79.i, label %bb.ct, label %bb.cs
 
@@ -826,7 +826,7 @@ bb.du:                                            ; preds = %bb.dt
   br label %bb.dv
 
 bb.dv:                                            ; preds = %bb.du, %bb.dt
-  %i.nx = icmp ult i16 %i.ku, 14
+  %i.nx = icmp ult i16 %i.ky, 6
   br i1 %i.nx, label %._crit_edge.i112, label %.peel.next.i
 
 bb.dw:                                            ; preds = %bb.di

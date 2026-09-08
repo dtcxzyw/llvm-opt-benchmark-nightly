@@ -205,7 +205,7 @@ bb.cz:                                            ; preds = %.split1531, %_ZNK4l
   %i.qy = getelementptr inbounds nuw i8, ptr %66, i64 8
   store ptr %.sroa.21.0.copyload.i.i1174, ptr %i.qy, align 8
   %i.qz = call noundef i64 @_ZNK4llvm3EVT19getScalarSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(16) %66)
-  %i.ra = trunc i64 %i.qz to i32                  ; 7 uses
+  %i.ra = trunc i64 %i.qz to i32                  ; 6 uses
   %i.rb = call noundef zeroext i1 @_ZNK4llvm3EVT9isIntegerEv(ptr noundef nonnull align 8 dereferenceable(16) %66)
   br i1 %i.rb, label %bb.db, label %bb.da
 
@@ -233,7 +233,7 @@ bb.dd:                                            ; preds = %bb.db
   %i.rj = load i8, ptr %i.ri, align 8, !tbaa !660, !range !59, !noundef !60
   %i.rk = trunc nuw i8 %i.rj to i1                ; 2 uses
   %i.rl = urem i32 %i.y, %i.ra
-  %i.rm = udiv i32 %i.y, %i.ra                    ; 5 uses
+  %i.rm = udiv exact i32 %i.y, %i.ra              ; 5 uses
   %i.rn = icmp eq i32 %i.rl, 0
   br i1 %i.rn, label %bb.de, label %bb.dp
 
@@ -301,7 +301,7 @@ _ZN4llvm5APInt6setBitEj.exit.us:                  ; preds = %bb.di, %bb.dh
   br i1 %.not1065.us, label %.preheader, label %bb.dh, !llvm.loop !1164
 
 .preheader:                                       ; preds = %_ZN4llvm5APInt6setBitEj.exit, %_ZN4llvm5APInt6setBitEj.exit.us, %_ZN4llvm5APIntC2Ejmbb.exit1177
-  %.not10661612 = icmp ugt i32 %i.ra, %i.y
+  %.not10661612 = icmp eq i32 %i.y, 0
   br i1 %.not10661612, label %._crit_edge, label %.lr.ph1614
 
 .lr.ph1614:                                       ; preds = %.preheader
@@ -390,13 +390,13 @@ _ZN4llvm5APIntD2Ev.exit1180:                      ; preds = %bb.dm, %bb.dn, %bb.
   %i.tt = select i1 %i.rk, i32 %i.ts, i32 %.010131613
   %i.tu = mul i32 %i.tt, %i.ra
   call void @_ZN4llvm9KnownBits10insertBitsERKS0_j(ptr noundef nonnull align 8 dereferenceable(32) %10, ptr noundef nonnull align 8 dereferenceable(32) %12, i32 noundef %i.tu)
-  %i.tv = add nuw i32 %.010131613, 1              ; 2 uses
+  %i.tv = add i32 %.010131613, 1                  ; 2 uses
   %.not1066 = icmp eq i32 %i.tv, %i.rm
   br i1 %.not1066, label %._crit_edge, label %bb.dm, !llvm.loop !1165
 
 bb.dp:                                            ; preds = %_ZN4llvm5APIntD2Ev.exit1179, %bb.dd
   %i.tw = urem i32 %i.ra, %i.y
-  %i.tx = udiv i32 %i.ra, %i.y                    ; 2 uses
+  %i.tx = udiv exact i32 %i.ra, %i.y              ; 2 uses
   %i.ty = icmp eq i32 %i.tw, 0
   br i1 %i.ty, label %bb.dq, label %bb.dv
 
@@ -799,7 +799,7 @@ bb.cq:                                            ; preds = %_ZN4llvm5APIntD2Ev.
   %i.lw = getelementptr inbounds nuw i8, ptr %30, i64 8
   store ptr %.sroa.21.0.copyload.i.i229, ptr %i.lw, align 8
   %i.lx = call noundef i64 @_ZNK4llvm3EVT19getScalarSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(16) %30)
-  %i.ly = trunc i64 %i.lx to i32                  ; 3 uses
+  %i.ly = trunc i64 %i.lx to i32                  ; 2 uses
   %i.lz = call noundef i64 @_ZNK4llvm3EVT19getScalarSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(16) %6)
   %i.ma = trunc i64 %i.lz to i32                  ; 3 uses
   %i.mb = load i16, ptr %30, align 8, !tbaa !108  ; 2 uses
@@ -825,7 +825,7 @@ bb.cs:                                            ; preds = %bb.cr
 
 bb.ct:                                            ; preds = %bb.cs
   %i.mg = urem i32 %i.ma, %i.ly
-  %i.mh = udiv i32 %i.ma, %i.ly                   ; 2 uses
+  %i.mh = udiv exact i32 %i.ma, %i.ly             ; 2 uses
   %i.mi = icmp eq i32 %i.mg, 0
   br i1 %i.mi, label %bb.cu, label %.thread325
 
@@ -833,7 +833,7 @@ bb.cu:                                            ; preds = %bb.ct
   %i.mj = call noundef i32 @_ZNK4llvm3EVT20getVectorNumElementsEv(ptr noundef nonnull align 8 dereferenceable(16) %30) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #32
   call void @_ZN4llvm8APIntOps12ScaleBitMaskERKNS_5APIntEjb(ptr dead_on_unwind nonnull writable sret(%"class.llvm::APInt") align 8 %31, ptr noundef nonnull align 8 dereferenceable(12) %3, i32 noundef %i.mj, i1 noundef zeroext false) #32
-  %.not336 = icmp ugt i32 %i.ly, %i.ma
+  %.not336 = icmp eq i32 %i.ma, 0
   br i1 %.not336, label %.critedge154, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.cu
@@ -933,7 +933,7 @@ bb.dg:                                            ; preds = %bb.df
 
 _ZN4llvm5APIntD2Ev.exit238:                       ; preds = %_ZN4llvm5APIntD2Ev.exit237, %bb.df, %bb.dg
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #32
-  %i.nm = add nuw i32 %.0129337, 1                ; 2 uses
+  %i.nm = add i32 %.0129337, 1                    ; 2 uses
   %.not = icmp ne i32 %i.nm, %i.mh
   %or.cond409.not = select i1 %.0.i234, i1 %.not, i1 false
   br i1 %or.cond409.not, label %bb.cv, label %.critedge154, !llvm.loop !1195
@@ -1336,7 +1336,7 @@ bb.be:                                            ; preds = %bb.bc
   %i.hw = load i8, ptr %i.hv, align 8, !tbaa !660, !range !59, !noundef !60
   %i.hx = trunc nuw i8 %i.hw to i1
   %i.hy = urem i32 %i.hn, %i.x
-  %i.hz = udiv i32 %i.hn, %i.x                    ; 3 uses
+  %i.hz = udiv exact i32 %i.hn, %i.x              ; 3 uses
   %.not1398 = icmp eq i32 %i.hy, 0
   br i1 %.not1398, label %bb.bf, label %.thread1226
 

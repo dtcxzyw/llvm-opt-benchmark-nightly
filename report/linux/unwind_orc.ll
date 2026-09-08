@@ -108,9 +108,9 @@ bb.a:
   %i.d = or i64 %i.c, %i.b
   %or.cond = icmp eq i64 %i.d, 0
   %i.e = and i64 %i.a, 4294967295                 ; 2 uses
-  %i.f = udiv i64 %4, 6
+  %i.f = udiv exact i64 %4, 6
   %.not = icmp eq i64 %i.e, %i.f
-  %or.cond21 = and i1 %or.cond, %.not
+  %or.cond21 = select i1 %or.cond, i1 %.not, i1 false, !prof !14
   br i1 %or.cond21, label %bb.b, label %.critedge, !prof !14
 
 .critedge:                                        ; preds = %bb.a

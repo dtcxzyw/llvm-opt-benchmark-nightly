@@ -204,8 +204,8 @@ define dso_local void @_ZN4llvm19DWARFDebugAddrTable16extractAddressesERKNS_18DW
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
-  %i.b = load i64, ptr %3, align 8, !tbaa !12
-  %i.c = sub i64 %4, %i.b                         ; 4 uses
+  %i.b = load i64, ptr %3, align 8, !tbaa !12     ; 2 uses
+  %i.c = sub i64 %4, %i.b                         ; 3 uses
   store i64 %i.c, ptr %i.a, align 8, !tbaa !12
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 26 ; 4 uses
   %i.e = load i8, ptr %i.d, align 2, !tbaa !22
@@ -219,9 +219,9 @@ bb.a:
 
 _ZN4llvm5ErrorD2Ev.exit:                          ; preds = %bb.a
   %i.j = load i8, ptr %i.d, align 2, !tbaa !22
-  %i.k = zext i8 %i.j to i64                      ; 3 uses
+  %i.k = zext i8 %i.j to i64                      ; 2 uses
   %i.l = urem i64 %i.c, %i.k
-  %i.m = udiv i64 %i.c, %i.k                      ; 5 uses
+  %i.m = udiv exact i64 %i.c, %i.k                ; 5 uses
   %.not = icmp eq i64 %i.l, 0
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -295,7 +295,7 @@ _ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i: ; preds = %bb.h, %_ZNSt6v
   br label %_ZNSt6vectorImSaImEE7reserveEm.exit
 
 _ZNSt6vectorImSaImEE7reserveEm.exit:              ; preds = %bb.f, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i
-  %.not1020 = icmp ult i64 %i.c, %i.k
+  %.not1020 = icmp eq i64 %4, %i.b
   br i1 %.not1020, label %_ZN4llvm5ErrorD2Ev.exit13, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorImSaImEE7reserveEm.exit, %_ZNSt6vectorImSaImEE9push_backEOm.exit

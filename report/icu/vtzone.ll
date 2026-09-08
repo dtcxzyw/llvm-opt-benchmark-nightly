@@ -205,9 +205,9 @@ bb.l:                                             ; preds = %bb.i, %bb.j, %bb.k,
 bb.m:                                             ; preds = %bb.l
   %i.z = srem i32 %i.h, 7
   %i.aa = icmp eq i32 %i.z, 0
-  %i.ab = sdiv i32 %i.h, 7
+  %i.ab = sdiv exact i32 %i.h, 7
   %i.ac = icmp eq i32 %i.ab, %1
-  %or.cond = and i1 %i.aa, %i.ac
+  %or.cond = select i1 %i.aa, i1 %i.ac, i1 false
   br i1 %or.cond, label %bb.r, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -224,7 +224,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.ai, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %.neg34 = sdiv i32 %i.ag, -7
+  %.neg34 = sdiv exact i32 %i.ag, -7
   %i.aj = add nsw i32 %.neg34, -1
   %i.ak = icmp eq i32 %1, %i.aj
   br i1 %i.ak, label %bb.r, label %bb.q
@@ -627,7 +627,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = srem i32 %7, 7
-  %i.d = sdiv i32 %7, 7
+  %i.d = sdiv exact i32 %7, 7
   %i.e = icmp eq i32 %i.c, 0
   br i1 %i.e, label %bb.c, label %bb.d
 
@@ -649,7 +649,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.k, label %bb.f, label %.thread
 
 bb.f:                                             ; preds = %bb.e
-  %.neg = sdiv i32 %i.i, -7
+  %.neg = sdiv exact i32 %i.i, -7
   %i.l = add nsw i32 %.neg, -1
   tail call void @_ZNK6icu_789VTimeZone19writeZonePropsByDOWERNS_9VTZWriterEaRKNS_13UnicodeStringEiiiiiddR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, i8 noundef signext %2, ptr noundef nonnull align 8 dereferenceable(64) %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 noundef %i.l, i32 noundef %8, double noundef %9, double noundef %10, ptr noundef nonnull align 4 dereferenceable(4) %11)
   br label %bb.i

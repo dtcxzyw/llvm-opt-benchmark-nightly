@@ -206,13 +206,13 @@ bb.s:                                             ; preds = %_RNvXsZ_NtCsgZ49sUH
 bb.t:                                             ; preds = %bb.r
   %.lhs.trunc = trunc nsw i64 %.sroa.012.0 to i32, !dbg !19184 ; 4 uses
   %i.bi = srem i32 %.lhs.trunc, 1000, !dbg !19184
-  %i.bj = sdiv i32 %.lhs.trunc, 1000, !dbg !19185
+  %i.bj = sdiv exact i32 %.lhs.trunc, 1000, !dbg !19185
   %i.bk = icmp eq i32 %i.bi, 0, !dbg !19184
   br i1 %i.bk, label %bb.u, label %bb.x, !dbg !19184
 
 bb.u:                                             ; preds = %bb.t
   %i.bl = srem i32 %.lhs.trunc, 1000000, !dbg !19186
-  %i.bm = sdiv i32 %.lhs.trunc, 1000000, !dbg !19187
+  %i.bm = sdiv exact i32 %.lhs.trunc, 1000000, !dbg !19187
   %i.bn = icmp eq i32 %i.bl, 0, !dbg !19186
   br i1 %i.bn, label %bb.v, label %bb.w, !dbg !19186
 
@@ -615,13 +615,13 @@ bb.qy:                                            ; preds = %bb.rh, %bb.qx
 bb.qz:                                            ; preds = %bb.qx
   %.lhs.trunc.i = trunc nsw i64 %.sroa.012.0.i to i32, !dbg !242260 ; 4 uses
   %i.arv = srem i32 %.lhs.trunc.i, 1000, !dbg !242260
-  %i.arw = sdiv i32 %.lhs.trunc.i, 1000, !dbg !242261
+  %i.arw = sdiv exact i32 %.lhs.trunc.i, 1000, !dbg !242261
   %i.arx = icmp eq i32 %i.arv, 0, !dbg !242260
   br i1 %i.arx, label %bb.ra, label %bb.rd, !dbg !242260
 
 bb.ra:                                            ; preds = %bb.qz
   %i.ary = srem i32 %.lhs.trunc.i, 1000000, !dbg !242262
-  %i.arz = sdiv i32 %.lhs.trunc.i, 1000000, !dbg !242263
+  %i.arz = sdiv exact i32 %.lhs.trunc.i, 1000000, !dbg !242263
   %i.asa = icmp eq i32 %i.ary, 0, !dbg !242262
   br i1 %i.asa, label %bb.rb, label %bb.rc, !dbg !242262
 
@@ -1024,9 +1024,9 @@ bb.a:
   %i.bw = urem i32 %i.bo, 1000
   %i.bx = icmp eq i32 %i.bw, 0
   %.sroa.494.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
-  %i.by = udiv i32 %i.bo, 1000
+  %i.by = udiv exact i32 %i.bo, 1000
   %.sroa.490.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
-  %i.bz = udiv i32 %i.bo, 1000000
+  %i.bz = udiv exact i32 %i.bo, 1000000
   %.sroa.486.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   %i.ca = icmp ugt i32 %.sroa.10.0.copyload.i.i, 43199 ; 3 uses
   %.146.i.i = select i1 %i.ca, ptr @82, ptr @81
@@ -1429,7 +1429,7 @@ _RINvNtNtCs9o5SvTbM2BP_6chrono6format10formatting14write_hundredsNtNtCsgZ49sUHp3
 
 bb.fi:                                            ; preds = %.noexc145.i
   %i.apx = urem i32 %i.apu, 1000000, !dbg !256910
-  %i.apy = udiv i32 %i.apu, 1000000, !dbg !256911
+  %i.apy = udiv exact i32 %i.apu, 1000000, !dbg !256911
   %i.apz = icmp eq i32 %i.apx, 0, !dbg !256910
   br i1 %i.apz, label %bb.fj, label %bb.fk, !dbg !256910
 
@@ -1449,7 +1449,7 @@ bb.fj:                                            ; preds = %bb.fi
 
 bb.fk:                                            ; preds = %bb.fi
   %i.aqb = urem i32 %i.apu, 1000, !dbg !256916
-  %i.aqc = udiv i32 %i.apu, 1000, !dbg !256917
+  %i.aqc = udiv exact i32 %i.apu, 1000, !dbg !256917
   %i.aqd = icmp eq i32 %i.aqb, 0, !dbg !256916
   br i1 %i.aqd, label %bb.fl, label %bb.fm, !dbg !256916
 
