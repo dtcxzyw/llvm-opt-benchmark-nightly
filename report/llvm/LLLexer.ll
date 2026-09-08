@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.d, %.lr.ph
   %.idx = phi i64 [ %.add, %.lr.ph ], [ %.promoted.idx, %bb.d ]
-  %.add = add nuw nsw i64 %.idx, 1                ; 9 uses
+  %.add = add nuw nsw i64 %.idx, 1                ; 10 uses
   %.ptr85 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.add ; 2 uses
   store ptr %.ptr85, ptr %0, align 8, !tbaa !67
   %i.l = load i8, ptr %.ptr85, align 1, !tbaa !42 ; 2 uses
@@ -229,7 +229,8 @@ bb.g:                                             ; preds = %._crit_edge
 .critedge.i.preheader:                            ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
-  br label %.critedge.i
+  %.not17.i = icmp samesign eq i64 %.add, 2
+  br i1 %.not17.i, label %_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit, label %.critedge.i
 
 bb.h:                                             ; preds = %.critedge.i
   %i.r = getelementptr inbounds nuw i8, ptr %.01418.i, i64 1 ; 2 uses
@@ -261,8 +262,8 @@ bb.i:                                             ; preds = %.critedge.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   br label %_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit
 
-_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit:        ; preds = %bb.h, %bb.i
-  %.2.i = phi i64 [ 0, %bb.i ], [ %i.z, %bb.h ]
+_ZN4llvm7LLLexer11HexIntToValEPKcS2_.exit:        ; preds = %bb.h, %.critedge.i.preheader, %bb.i
+  %.2.i = phi i64 [ 0, %bb.i ], [ 0, %.critedge.i.preheader ], [ %i.z, %bb.h ]
   %i.ac = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   store i32 64, ptr %i.ac, align 8, !tbaa !63
   store i64 %.2.i, ptr %6, align 8, !tbaa !42

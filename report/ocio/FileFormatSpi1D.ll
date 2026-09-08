@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %._cri
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25
   store float 1.000000e+00, ptr %i.c, align 4, !tbaa !48
   %i.av = mul nsw i32 %spec.store.select, 3
-  %i.aw = sext i32 %i.av to i64                   ; 2 uses
+  %i.aw = sext i32 %i.av to i64                   ; 3 uses
   %.not133 = icmp eq i32 %spec.store.select, 0
   br i1 %.not133, label %_ZNSt6vectorIfSaIfEE6resizeEm.exit, label %bb.p
 
@@ -220,21 +220,29 @@ bb.q:                                             ; preds = %bb.p
   unreachable
 
 _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i:  ; preds = %bb.p
-  %i.ay = shl nuw nsw i64 %i.aw, 2                ; 2 uses
+  %i.ay = shl nuw nsw i64 %i.aw, 2
   %i.az = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ay) #26
-          to label %.noexc114.a unwind label %bb.v ; 4 uses
+          to label %.noexc114 unwind label %bb.v  ; 4 uses
 
-.noexc114.a:                                      ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i
+.noexc114:                                        ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i
   store float 0.000000e+00, ptr %i.az, align 4, !tbaa !48
+  %10 = add nsw i64 %i.aw, -1                     ; 2 uses
+  %11 = icmp eq i64 %10, 0
+  br i1 %11, label %.noexc54, label %.noexc114.a
+
+.noexc114.a:                                      ; preds = %.noexc114
   %i.ba = getelementptr i8, ptr %i.az, i64 4
-  %.idx.i.i.i.i.i31.i = add nsw i64 %i.ay, -4
+  %.idx.i.i.i.i.i31.i = shl nuw nsw i64 %10, 2
   call void @llvm.memset.p0.i64(ptr align 4 %i.ba, i8 0, i64 %.idx.i.i.i.i.i31.i, i1 false), !tbaa !48
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.az, i64 %i.aw
+  br label %.noexc54
+
+.noexc54:                                         ; preds = %.noexc114.a, %.noexc114
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.az, i64 %i.aw
   br label %_ZNSt6vectorIfSaIfEE6resizeEm.exit
 
-_ZNSt6vectorIfSaIfEE6resizeEm.exit:               ; preds = %.noexc114.a, %bb.o
-  %.sroa.0.2 = phi ptr [ %i.az, %.noexc114.a ], [ null, %bb.o ] ; 10 uses
-  %.sroa.20.2 = phi ptr [ %10, %.noexc114.a ], [ null, %bb.o ] ; 5 uses
+_ZNSt6vectorIfSaIfEE6resizeEm.exit:               ; preds = %.noexc54, %bb.o
+  %.sroa.0.2 = phi ptr [ %i.az, %.noexc54 ], [ null, %bb.o ] ; 10 uses
+  %.sroa.20.2 = phi ptr [ %12, %.noexc54 ], [ null, %bb.o ] ; 5 uses
   %i.bb = load i64, ptr %i.as, align 8, !tbaa !21
   %i.bc = icmp eq i64 %i.bb, 0
   br i1 %i.bc, label %bb.w, label %bb.r

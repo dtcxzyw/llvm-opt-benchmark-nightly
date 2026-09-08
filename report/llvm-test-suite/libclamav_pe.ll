@@ -204,10 +204,10 @@ bb.yn:                                            ; preds = %bb.ym, %bb.xs, %bb.
 
 bb.yo:                                            ; preds = %bb.yn
   %i.bhb = add nsw i32 %i.ak, -1                  ; 3 uses
-  %i.bhc = zext nneg i32 %i.bhb to i64            ; 3 uses
+  %i.bhc = zext i32 %i.bhb to i64                 ; 4 uses
   %i.bhd = getelementptr inbounds nuw [36 x i8], ptr %i.em, i64 %i.bhc ; 5 uses
   %i.bhe = getelementptr inbounds nuw i8, ptr %i.bhd, i64 8
-  %i.bhf = load i32, ptr %i.bhe, align 4, !tbaa !29 ; 3 uses
+  %i.bhf = load i32, ptr %i.bhe, align 4, !tbaa !29 ; 4 uses
   %i.bhg = icmp ugt i32 %i.bhf, 689
   br i1 %i.bhg, label %bb.yp, label %.thread3845
 
@@ -246,16 +246,19 @@ bb.ys:                                            ; preds = %bb.yr
   %i.bid = icmp ne i128 %i.bic, 0
   %i.bie = zext i1 %i.bid to i32
   %i.bif = icmp eq i32 %i.bie, 0
-  br i1 %i.bif, label %.lr.ph3464.preheader, label %.thread3845
+  br i1 %i.bif, label %.preheader3341, label %.thread3845
 
-.lr.ph3464.preheader:                             ; preds = %bb.ys
+.preheader3341:                                   ; preds = %bb.ys
+  %.not3497 = icmp eq i32 %i.bhb, 0               ; 2 uses
+  br i1 %.not3497, label %._crit_edge3465, label %.lr.ph3464.preheader
+
+.lr.ph3464.preheader:                             ; preds = %.preheader3341
   %xtraiter3982 = and i64 %i.bhc, 3               ; 3 uses
-  %5 = add nsw i16 %i.aj, -2
-  %i.big = icmp ult i16 %5, 3
+  %i.big = icmp ult i16 %i.aj, 5
   br i1 %i.big, label %.lr.ph3464.epil.preheader, label %.lr.ph3464.preheader.new
 
 .lr.ph3464.preheader.new:                         ; preds = %.lr.ph3464.preheader
-  %unroll_iter = and i64 %i.bhc, 2147483644
+  %unroll_iter = and i64 %i.bhc, 4294967292
   br label %.lr.ph3464
 
 .lr.ph3464:                                       ; preds = %.lr.ph3464, %.lr.ph3464.preheader.new
@@ -307,11 +310,11 @@ bb.ys:                                            ; preds = %bb.yr
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter3982
   br i1 %epil.iter.cmp.not, label %._crit_edge3465, label %.lr.ph3464.epil, !llvm.loop !49
 
-._crit_edge3465:                                  ; preds = %.lr.ph3464.epil, %._crit_edge3465.unr-lcssa
-  %spec.select3053.lcssa = phi i32 [ %spec.select3053.3, %._crit_edge3465.unr-lcssa ], [ %spec.select3053.epil, %.lr.ph3464.epil ] ; 5 uses
+._crit_edge3465:                                  ; preds = %._crit_edge3465.unr-lcssa, %.lr.ph3464.epil, %.preheader3341
+  %.02274.lcssa = phi i32 [ %i.bhf, %.preheader3341 ], [ %spec.select3053.3, %._crit_edge3465.unr-lcssa ], [ %spec.select3053.epil, %.lr.ph3464.epil ] ; 5 uses
   %i.biw = add i32 %.02378.lcssa, %i.bhk
   %i.bix = sub i32 %.02376.lcssa, %i.biw
-  %i.biy = add i32 %i.bix, %spec.select3053.lcssa ; 4 uses
+  %i.biy = add i32 %i.bix, %.02274.lcssa          ; 4 uses
   store i32 %i.biy, ptr %i.h, align 4, !tbaa !7
   %i.biz = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.bja = load ptr, ptr %i.biz, align 8, !tbaa !89 ; 2 uses
@@ -358,22 +361,24 @@ bb.yx:                                            ; preds = %bb.yw
 
 bb.yy:                                            ; preds = %bb.yw
   %i.bjl = call i64 @lseek(i32 noundef %0, i64 noundef 0, i32 noundef 0) #13 ; 0 uses
-  %i.bjm = call i32 @cli_readn(i32 noundef %0, ptr noundef nonnull %i.bji, i32 noundef %spec.select3053.lcssa) #13
+  %i.bjm = call i32 @cli_readn(i32 noundef %0, ptr noundef nonnull %i.bji, i32 noundef %.02274.lcssa) #13
   %i.bjn = sext i32 %i.bjm to i64                 ; 2 uses
-  %i.bjo = zext i32 %spec.select3053.lcssa to i64
+  %i.bjo = zext i32 %.02274.lcssa to i64
   %.not2891 = icmp eq i64 %i.bjn, %i.bjo
-  br i1 %.not2891, label %.lr.ph3468, label %bb.yz
+  br i1 %.not2891, label %.preheader3340, label %bb.yz
 
-.lr.ph3468:                                       ; preds = %bb.yy
+.preheader3340:                                   ; preds = %bb.yy
+  br i1 %.not3497, label %._crit_edge3469, label %.lr.ph3468
+
+.lr.ph3468:                                       ; preds = %.preheader3340
   %i.bjp = getelementptr inbounds nuw i8, ptr %i.bji, i64 %i.bjn
   %i.bjq = zext i32 %.02378.lcssa to i64
   %i.bjr = sub nsw i64 0, %i.bjq
   %invariant.gep3470 = getelementptr i8, ptr %i.bjp, i64 %i.bjr
-  %wide.trip.count3583 = zext nneg i32 %i.bhb to i64
   br label %bb.za
 
 bb.yz:                                            ; preds = %bb.yy
-  call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.229, i32 noundef %spec.select3053.lcssa) #13
+  call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.229, i32 noundef %.02274.lcssa) #13
   call void @free(ptr noundef nonnull %i.bji) #13
   call void @free(ptr noundef nonnull %i.em) #13
   br label %.critedge3020
@@ -408,10 +413,10 @@ bb.zd:                                            ; preds = %bb.zc, %bb.zb
 
 bb.ze:                                            ; preds = %bb.za, %bb.zc
   %indvars.iv.next3580 = add nuw nsw i64 %indvars.iv3579, 1 ; 2 uses
-  %exitcond3584.not = icmp eq i64 %indvars.iv.next3580, %wide.trip.count3583
+  %exitcond3584.not = icmp eq i64 %indvars.iv.next3580, %i.bhc
   br i1 %exitcond3584.not, label %._crit_edge3469, label %bb.za, !llvm.loop !50
 
-._crit_edge3469:                                  ; preds = %bb.ze
+._crit_edge3469:                                  ; preds = %bb.ze, %.preheader3340
   %i.bkb = load i32, ptr %i.bhj, align 4, !tbaa !30
   %i.bkc = zext i32 %i.bkb to i64
   %i.bkd = call ptr @cli_calloc(i64 noundef %i.bkc, i64 noundef 1) #13 ; 5 uses
@@ -452,7 +457,7 @@ bb.zj:                                            ; preds = %bb.zh
   %i.bkn = load i32, ptr %i.bhd, align 4, !tbaa !26
   %i.bko = load i32, ptr %i.b, align 4, !tbaa !7
   %i.bkp = trunc nuw nsw i32 %i.bhb to i16
-  %i.bkq = call i32 @wwunpack(ptr noundef nonnull %i.bji, i32 noundef %i.bkm, i32 noundef %spec.select3053.lcssa, i32 noundef %.02378.lcssa, i32 noundef %i.bkn, i32 noundef %i.bko, ptr noundef nonnull %i.bkd, i32 noundef %i.bkj, i16 noundef zeroext %i.bkp) #13
+  %i.bkq = call i32 @wwunpack(ptr noundef nonnull %i.bji, i32 noundef %i.bkm, i32 noundef %.02274.lcssa, i32 noundef %.02378.lcssa, i32 noundef %i.bkn, i32 noundef %i.bko, ptr noundef nonnull %i.bkd, i32 noundef %i.bkj, i16 noundef zeroext %i.bkp) #13
   %.not2894 = icmp eq i32 %i.bkq, 0
   call void @free(ptr noundef nonnull %i.bkd) #13
   br i1 %.not2894, label %bb.zk, label %bb.aaa

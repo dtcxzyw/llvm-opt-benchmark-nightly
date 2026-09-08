@@ -13,7 +13,7 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local noundef ptr @pg_inet_cidr_ntop(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 15 uses
-  %i.b = alloca [50 x i8], align 16               ; 23 uses
+  %i.b = alloca [50 x i8], align 16               ; 25 uses
   switch i32 %0, label %bb.bi [
     i32 2, label %bb.b
     i32 3, label %bb.m
@@ -362,11 +362,15 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af, %bb.
 
 .lr.ph149.split.split.preheader.split.i:          ; preds = %bb.z, %bb.y, %bb.x
   %i.do = icmp sgt i32 %2, 120                    ; 2 uses
-  %i.dp = add nsw i32 %spec.store.select.i, -1    ; 4 uses
+  %i.dp = add nsw i32 %spec.store.select.i, -1    ; 5 uses
+  %.not251.i = icmp eq i32 %i.dp, 0
+  br i1 %.not251.i, label %6, label %.lr.ph149.split.split.i.peel
+
+.lr.ph149.split.split.i.peel:                     ; preds = %.lr.ph149.split.split.preheader.split.i
   %5 = icmp sgt i32 %.2108.fr.i, 0
   br i1 %5, label %bb.aj, label %bb.ai
 
-bb.ai:                                            ; preds = %.lr.ph149.split.split.preheader.split.i
+bb.ai:                                            ; preds = %.lr.ph149.split.split.i.peel
   %i.dq = load i8, ptr %i.a, align 16
   %i.dr = zext i8 %i.dq to i32
   %i.ds = shl nuw nsw i32 %i.dr, 8
@@ -380,7 +384,7 @@ bb.ai:                                            ; preds = %.lr.ph149.split.spl
   %i.ea = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   br label %bb.ak
 
-bb.aj:                                            ; preds = %.lr.ph149.split.split.preheader.split.i
+bb.aj:                                            ; preds = %.lr.ph149.split.split.i.peel
   %i.eb = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 58, ptr %i.b, align 16
   %i.ec = getelementptr inbounds nuw i8, ptr %i.a, i64 2
@@ -465,7 +469,7 @@ bb.as:                                            ; preds = %bb.ar, %bb.ao, %bb.
   br i1 %exitcond173.not.i, label %.loopexit.loopexit166.peel.begin.i, label %.lr.ph149.split.split.i, !llvm.loop !7
 
 .loopexit.loopexit166.peel.begin.i:               ; preds = %bb.as, %bb.ak
-  %.4.i15.lcssa = phi ptr [ %.4.i15.peel, %bb.ak ], [ %.4.i15, %bb.as ] ; 7 uses
+  %.4.i15.lcssa = phi ptr [ %.4.i15.peel, %bb.ak ], [ %.4.i15, %bb.as ] ; 6 uses
   %.1.i.lcssa = phi ptr [ %.1.i.peel, %bb.ak ], [ %.1.i, %bb.as ] ; 4 uses
   %.not = icmp sgt i32 %spec.store.select.i, %.2108.fr.i
   br i1 %.not, label %bb.at, label %bb.az
@@ -522,9 +526,15 @@ bb.ay:                                            ; preds = %bb.ax
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gg, i64 %i.gk
   br label %.loopexit.i13
 
-bb.az:                                            ; preds = %.loopexit.loopexit166.peel.begin.i
-  %i.gm = getelementptr inbounds nuw i8, ptr %.4.i15.lcssa, i64 1
-  store i8 58, ptr %.4.i15.lcssa, align 1
+6:                                                ; preds = %.lr.ph149.split.split.preheader.split.i
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
+  store i8 58, ptr %i.b, align 16
+  br label %bb.az
+
+bb.az:                                            ; preds = %.loopexit.loopexit166.peel.begin.i, %6
+  %.198.peel.i = phi ptr [ %7, %6 ], [ %.4.i15.lcssa, %.loopexit.loopexit166.peel.begin.i ] ; 2 uses
+  %i.gm = getelementptr inbounds nuw i8, ptr %.198.peel.i, i64 1
+  store i8 58, ptr %.198.peel.i, align 1
   br label %.loopexit.i13
 
 .loopexit.loopexit168.peel.begin.i:               ; preds = %bb.ah
@@ -566,14 +576,14 @@ bb.be:                                            ; preds = %bb.bd
   store i8 58, ptr %.4.us.i, align 1
   br label %bb.bf
 
-bb.bf:                                            ; preds = %bb.bd, %bb.be
+bb.bf:                                            ; preds = %bb.be, %bb.bd
   %.198.us.peel.i = phi ptr [ %i.hc, %bb.be ], [ %.4.us.i, %bb.bd ] ; 2 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %.198.us.peel.i, i64 1
   store i8 58, ptr %.198.us.peel.i, align 1
   br label %.loopexit.i13
 
 .loopexit.i13:                                    ; preds = %bb.ab, %bb.bf, %bb.bc, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.p
-  %.5.i = phi ptr [ %i.at, %bb.p ], [ %i.hd, %bb.bf ], [ %i.gz, %bb.bc ], [ %i.fv, %bb.aw ], [ %i.gl, %bb.ay ], [ %i.gd, %bb.ax ], [ %i.gm, %bb.az ], [ %i.cv, %bb.ab ]
+  %.5.i = phi ptr [ %i.at, %bb.p ], [ %i.gz, %bb.bc ], [ %i.hd, %bb.bf ], [ %i.fv, %bb.aw ], [ %i.gl, %bb.ay ], [ %i.gd, %bb.ax ], [ %i.gm, %bb.az ], [ %i.cv, %bb.ab ]
   %i.he = call i32 (ptr, ptr, ...) @pg_sprintf(ptr noundef nonnull %.5.i, ptr noundef nonnull @.str.1, i32 noundef %2) #8 ; 0 uses
   %i.hf = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.b) #9
   %i.hg = add i64 %i.hf, 1

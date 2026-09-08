@@ -205,9 +205,9 @@ bb.a:
   %10 = alloca %"class.v8::internal::Operand", align 8 ; 8 uses
   %11 = alloca %"class.v8::internal::wasm::(anonymous namespace)::LiftoffCompiler::MostlySmallValueKindSig", align 8 ; 8 uses
   %12 = alloca %"class.v8::internal::wasm::LiftoffRegList", align 4 ; 8 uses
-  %13 = alloca %"class.v8::internal::wasm::(anonymous namespace)::TempRegisterScope", align 4 ; 10 uses
+  %13 = alloca %"class.v8::internal::wasm::(anonymous namespace)::TempRegisterScope", align 4 ; 11 uses
   %14 = alloca %"class.v8::internal::Label", align 4 ; 6 uses
-  %15 = alloca %"class.v8::internal::Register", align 1 ; 8 uses
+  %15 = alloca %"class.v8::internal::Register", align 1 ; 9 uses
   %16 = alloca %"class.v8::internal::FixedSizeSignature.822", align 8 ; 8 uses
   %17 = alloca %"class.v8::internal::FixedSizeSignature.824", align 8 ; 6 uses
   %18 = alloca [4 x %"class.v8::internal::wasm::LiftoffVarState"], align 4 ; 19 uses
@@ -500,7 +500,7 @@ _ZN2v88internal4wasm12_GLOBAL__N_117TempRegisterScope16AddTempRegistersEiNS1_8Re
   %i.df = icmp ne i32 %i.de, 0
   call void @llvm.assume(i1 %i.df)
   %i.dg = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.de, i1 true) ; 2 uses
-  %i.dh = trunc nuw nsw i32 %i.dg to i8           ; 22 uses
+  %i.dh = trunc nuw nsw i32 %i.dg to i8           ; 27 uses
   %i.di = shl nuw nsw i32 1, %i.dg                ; 3 uses
   %i.dj = xor i32 %i.di, -1
   %i.dk = and i32 %i.dc, %i.dj                    ; 6 uses
@@ -903,20 +903,20 @@ _ZN2v88internal4wasm12_GLOBAL__N_118ScopedTempRegisterD2Ev.exit303: ; preds = %b
   %i.oq = icmp ne i32 %i.op, 0
   call void @llvm.assume(i1 %i.oq)
   %i.or = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.op, i1 true) ; 2 uses
-  %i.os = trunc nuw nsw i32 %i.or to i8           ; 2 uses
+  %i.os = trunc nuw nsw i32 %i.or to i8
   %i.ot = shl nuw nsw i32 1, %i.or
   %i.ou = xor i32 %i.ot, -1
-  %i.ov = and i32 %i.oo, %i.ou                    ; 2 uses
+  %i.ov = and i32 %i.oo, %i.ou
   store i32 %i.ov, ptr %13, align 4
   store i8 %i.os, ptr %15, align 1
-  %i.ow = add i32 %.0182, 8                       ; 3 uses
+  %i.ow = add i32 %.0182, 8                       ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  %i.ox = getelementptr inbounds nuw i8, ptr %6, i64 1
-  %i.oy = getelementptr inbounds nuw i8, ptr %6, i64 2 ; 4 uses
+  %i.ox = getelementptr inbounds nuw i8, ptr %6, i64 1 ; 3 uses
+  %i.oy = getelementptr inbounds nuw i8, ptr %6, i64 2 ; 5 uses
   %i.oz = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   store i64 0, ptr %6, align 8
   store i64 1, ptr %i.oz, align 8
-  switch i8 %i.dh, label %bb.bt [
+  switch i8 %i.dh, label %19 [
     i8 4, label %bb.bs
     i8 12, label %bb.bs
   ]
@@ -928,49 +928,76 @@ bb.bs:                                            ; preds = %_ZN2v88internal4was
   store i8 %i.pb, ptr %scevgep.i310, align 1
   %i.pc = lshr i8 %i.dh, 3
   store i64 2, ptr %i.oz, align 8
-  br label %bb.bt
+  br label %19
 
-bb.bt:                                            ; preds = %_ZN2v88internal4wasm12_GLOBAL__N_118ScopedTempRegisterD2Ev.exit303, %bb.bs
-  %19 = phi i64 [ 1, %_ZN2v88internal4wasm12_GLOBAL__N_118ScopedTempRegisterD2Ev.exit303 ], [ 2, %bb.bs ] ; 3 uses
-  %20 = phi i8 [ 0, %_ZN2v88internal4wasm12_GLOBAL__N_118ScopedTempRegisterD2Ev.exit303 ], [ %i.pc, %bb.bs ]
+19:                                               ; preds = %bb.bs, %_ZN2v88internal4wasm12_GLOBAL__N_118ScopedTempRegisterD2Ev.exit303
+  %20 = phi ptr [ inttoptr (i64 1 to ptr), %_ZN2v88internal4wasm12_GLOBAL__N_118ScopedTempRegisterD2Ev.exit303 ], [ inttoptr (i64 2 to ptr), %bb.bs ]
+  %21 = phi i64 [ 1, %_ZN2v88internal4wasm12_GLOBAL__N_118ScopedTempRegisterD2Ev.exit303 ], [ 2, %bb.bs ] ; 3 uses
+  %22 = phi i8 [ 0, %_ZN2v88internal4wasm12_GLOBAL__N_118ScopedTempRegisterD2Ev.exit303 ], [ %i.pc, %bb.bs ] ; 3 uses
+  %23 = icmp eq i32 %i.ow, 0
+  br i1 %23, label %24, label %bb.bt
+
+24:                                               ; preds = %19
+  switch i8 %i.dh, label %25 [
+    i8 5, label %.thread.i311
+    i8 13, label %.thread.i311
+  ]
+
+25:                                               ; preds = %24
+  %26 = and i8 %i.dh, 7
+  store i8 %26, ptr %i.oy, align 2
+  %27 = lshr i8 %i.dh, 3
+  %28 = or i8 %22, %27
+  store i8 %28, ptr %i.ox, align 1
+  br label %_ZN2v88internal4wasm16LiftoffAssembler20LoadProtectedPointerENS0_8RegisterES3_i.exit312
+
+bb.bt:                                            ; preds = %19
   %i.pd = sext i32 %i.ow to i64
   %i.pe = add nsw i64 %i.pd, 128
   %i.pf = icmp ult i64 %i.pe, 256
-  %21 = and i8 %i.dh, 7                           ; 2 uses
   br i1 %i.pf, label %.thread.i311, label %bb.bu
 
-.thread.i311:                                     ; preds = %bb.bt
-  %i.pg = or disjoint i8 %21, 64
-  store i8 %i.pg, ptr %i.oy, align 2
+.thread.i311:                                     ; preds = %bb.bt, %24, %24
+  %29 = and i8 %i.dh, 7
+  %30 = or disjoint i8 %29, 64
+  store i8 %30, ptr %i.oy, align 2
+  %31 = lshr i8 %i.dh, 3
+  %i.pg = or i8 %22, %31
+  store i8 %i.pg, ptr %i.ox, align 1
   %i.ph = trunc i32 %i.ow to i8
-  %i.pi = getelementptr inbounds nuw i8, ptr %i.oy, i64 %19
+  %i.pi = getelementptr inbounds nuw i8, ptr %i.oy, i64 %21
   store i8 %i.ph, ptr %i.pi, align 1
-  %i.pj = add nuw nsw i64 %19, 1
+  %i.pj = add nuw nsw i64 %21, 1
+  %32 = inttoptr i64 %i.pj to ptr
   br label %_ZN2v88internal4wasm16LiftoffAssembler20LoadProtectedPointerENS0_8RegisterES3_i.exit312
 
 bb.bu:                                            ; preds = %bb.bt
-  %i.pk = or disjoint i8 %21, -128
-  store i8 %i.pk, ptr %i.oy, align 2
-  %i.pl = getelementptr inbounds nuw i8, ptr %i.oy, i64 %19
+  %33 = and i8 %i.dh, 7
+  %34 = or disjoint i8 %33, -128
+  store i8 %34, ptr %i.oy, align 2
+  %35 = lshr i8 %i.dh, 3
+  %i.pk = or i8 %22, %35
+  store i8 %i.pk, ptr %i.ox, align 1
+  %i.pl = getelementptr inbounds nuw i8, ptr %i.oy, i64 %21
   store i32 %i.ow, ptr %i.pl, align 1
   %i.pm = load i64, ptr %i.oz, align 8
   %i.pn = add i64 %i.pm, 4
+  %36 = inttoptr i64 %i.pn to ptr
   br label %_ZN2v88internal4wasm16LiftoffAssembler20LoadProtectedPointerENS0_8RegisterES3_i.exit312
 
-_ZN2v88internal4wasm16LiftoffAssembler20LoadProtectedPointerENS0_8RegisterES3_i.exit312: ; preds = %.thread.i311, %bb.bu
-  %.in505 = phi i64 [ %i.pn, %bb.bu ], [ %i.pj, %.thread.i311 ]
-  %.pn533 = lshr i8 %i.dh, 3
-  %.sink506 = or i8 %20, %.pn533
-  store i8 %.sink506, ptr %i.ox, align 1
-  %22 = inttoptr i64 %.in505 to ptr
-  %23 = load i64, ptr %6, align 8
-  call void @_ZN2v88internal14MacroAssembler25LoadProtectedPointerFieldENS0_8RegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(824) %0, i8 %i.ol, i64 %23, ptr %22) #24
+_ZN2v88internal4wasm16LiftoffAssembler20LoadProtectedPointerENS0_8RegisterES3_i.exit312: ; preds = %25, %.thread.i311, %bb.bu
+  %37 = phi ptr [ %20, %25 ], [ %32, %.thread.i311 ], [ %36, %bb.bu ]
+  %38 = load i64, ptr %6, align 8
+  call void @_ZN2v88internal14MacroAssembler25LoadProtectedPointerFieldENS0_8RegisterENS0_7OperandE(ptr noundef nonnull align 8 dereferenceable(824) %0, i8 %i.ol, i64 %38, ptr %37) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
+  %.sroa.018.0.copyload = load i8, ptr %15, align 1 ; 2 uses
+  %39 = icmp samesign ult i8 %.sroa.018.0.copyload, 16
+  call void @llvm.assume(i1 %39)
   %i.po = sext i32 %.0182 to i64
   %i.pp = call { i64, ptr } @_ZN2v88internal4wasm7liftoff8GetMemOpEPNS1_16LiftoffAssemblerENS0_8RegisterES5_mNS0_11ScaleFactorE(ptr noundef nonnull align 8 dereferenceable(824) %0, i8 %i.dh, i8 -1, i64 noundef %i.po, i8 noundef signext 0) ; 2 uses
   %i.pq = extractvalue { i64, ptr } %i.pp, 0
   %i.pr = extractvalue { i64, ptr } %i.pp, 1
-  call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(824) %0, i8 %i.os, i64 %i.pq, ptr %i.pr, i32 noundef 4) #24
+  call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(824) %0, i8 %.sroa.018.0.copyload, i64 %i.pq, ptr %i.pr, i32 noundef 4) #24
   %i.ps = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 899), align 1, !range !23, !noundef !24
   %i.pt = trunc nuw i8 %i.ps to i1
   br i1 %i.pt, label %bb.bv, label %bb.cb
@@ -1110,7 +1137,8 @@ _ZN2v88internal4wasm12_GLOBAL__N_118ScopedTempRegisterD2Ev.exit317: ; preds = %b
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #24
   store i8 0, ptr %15, align 1
-  %i.rl = or i32 %i.ov, %i.di
+  %40 = load i32, ptr %13, align 4
+  %i.rl = or i32 %40, %i.di
   store i32 %i.rl, ptr %13, align 4
   br label %bb.cb
 

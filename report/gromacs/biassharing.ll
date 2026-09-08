@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %_ZNSt6vectorIiSaIiE
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i, %bb.e
   %i.av = load i32, ptr %i.ae, align 4, !tbaa !26
-  %i.aw = zext nneg i32 %i.v to i64               ; 5 uses
+  %i.aw = zext nneg i32 %i.v to i64               ; 6 uses
   %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %i.aw
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %i.aw
   br label %bb.g
@@ -215,27 +215,9 @@ bb.f:                                             ; preds = %bb.n
   br i1 %exitcond.not, label %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i, label %bb.g, !llvm.loop !168
 
 _ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.f
-  %i.ay = shl nuw nsw i64 %i.aw, 3                ; 5 uses
+  %i.ay = shl nuw nsw i64 %i.aw, 3                ; 4 uses
   %i.az = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ay) #24
-          to label %.noexc91 unwind label %bb.y   ; 9 uses
-
-.noexc91:                                         ; preds = %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
-  store i64 0, ptr %i.az, align 8, !tbaa !71
-  %14 = getelementptr i8, ptr %i.az, i64 8
-  %.idx.i.i.i.i.i.i.i88 = add nsw i64 %i.ay, -8
-  tail call void @llvm.memset.p0.i64(ptr align 8 %14, i8 0, i64 %.idx.i.i.i.i.i.i.i88, i1 false), !tbaa !71
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv266
-  %16 = load i64, ptr %15, align 8, !tbaa !71
-  %17 = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.ah
-  store i64 %16, ptr %17, align 8, !tbaa !71
-  %18 = load ptr, ptr %i.l, align 8, !tbaa !62
-  %19 = getelementptr inbounds nuw [8 x i8], ptr %18, i64 %indvars.iv266
-  %20 = load ptr, ptr %19, align 8, !tbaa !16
-  %21 = load ptr, ptr %i.m, align 8, !tbaa !86, !nonnull !87, !align !88
-  %22 = getelementptr inbounds nuw i8, ptr %21, i64 12
-  %23 = load i32, ptr %22, align 4, !tbaa !25
-  %24 = icmp eq i32 %23, 0
-  br i1 %24, label %bb.u, label %.lr.ph220
+          to label %_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit unwind label %bb.y ; 9 uses
 
 .loopexit:                                        ; preds = %bb.e
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -374,7 +356,26 @@ bb.t:                                             ; preds = %.sink.split304, %bb
   call void @__cxa_free_exception(ptr %i.bj) #22
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit103
 
-bb.u:                                             ; preds = %.noexc91
+_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit:               ; preds = %_ZNSt6vectorIlSaIlEE17_S_check_init_lenEmRKS0_.exit.i
+  store i64 0, ptr %i.az, align 8, !tbaa !71
+  %14 = getelementptr i8, ptr %i.az, i64 8
+  %15 = shl nuw nsw i64 %i.aw, 3
+  %.idx.i.i.i.i.i.i.i88 = add nsw i64 %15, -8
+  tail call void @llvm.memset.p0.i64(ptr align 8 %14, i8 0, i64 %.idx.i.i.i.i.i.i.i88, i1 false), !tbaa !71
+  %16 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv266
+  %17 = load i64, ptr %16, align 8, !tbaa !71
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.ah
+  store i64 %17, ptr %18, align 8, !tbaa !71
+  %19 = load ptr, ptr %i.l, align 8, !tbaa !62
+  %20 = getelementptr inbounds nuw [8 x i8], ptr %19, i64 %indvars.iv266
+  %21 = load ptr, ptr %20, align 8, !tbaa !16
+  %22 = load ptr, ptr %i.m, align 8, !tbaa !86, !nonnull !87, !align !88
+  %23 = getelementptr inbounds nuw i8, ptr %22, i64 12
+  %24 = load i32, ptr %23, align 4, !tbaa !25
+  %25 = icmp eq i32 %24, 0
+  br i1 %25, label %bb.u, label %.lr.ph220
+
+bb.u:                                             ; preds = %_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit
   %.not224 = icmp eq i32 %i.v, 2147483647
   br i1 %.not224, label %bb.v, label %bb.w
 
@@ -386,10 +387,10 @@ bb.v:                                             ; preds = %bb.u
   unreachable
 
 bb.w:                                             ; preds = %bb.u
-  %i.bo = invoke noundef i32 @_Z14tMPI_AllreducePKvPviP14tmpi_datatype_7tMPI_OpP10tmpi_comm_(ptr noundef null, ptr noundef nonnull %i.az, i32 noundef %i.v, ptr noundef %i.o, i32 noundef 2, ptr noundef %20)
+  %i.bo = invoke noundef i32 @_Z14tMPI_AllreducePKvPviP14tmpi_datatype_7tMPI_OpP10tmpi_comm_(ptr noundef null, ptr noundef nonnull %i.az, i32 noundef %i.v, ptr noundef %i.o, i32 noundef 2, ptr noundef %21)
           to label %.lr.ph220 unwind label %.thread169.loopexit ; 0 uses
 
-.lr.ph220:                                        ; preds = %.noexc91, %bb.w
+.lr.ph220:                                        ; preds = %_ZNSt6vectorIlSaIlEEC2EmRKS0_.exit, %bb.w
   %i.bp = load i64, ptr %i.az, align 8, !tbaa !71
   br label %bb.z
 

@@ -206,7 +206,7 @@ bb.at:                                            ; preds = %Exa4_ManAddClause.e
   %i.jh = trunc nsw i64 %indvars.iv861 to i32     ; 2 uses
   %i.ji = sub nsw i32 %i.jh, %i.dl                ; 2 uses
   %i.jj = mul nsw i32 %i.ji, 5                    ; 3 uses
-  %i.jk = add nsw i32 %i.jj, 1                    ; 4 uses
+  %i.jk = add nsw i32 %i.jj, 1                    ; 7 uses
   %.pre924 = load i32, ptr %i.bt, align 8, !tbaa !129 ; 4 uses
   br i1 %.not301, label %.loopexit663, label %bb.au
 
@@ -609,11 +609,8 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.ok, ptr %i.cu, align 4, !tbaa !54
   store i32 %i.ol, ptr %i.cv, align 8, !tbaa !54
   store i32 0, ptr %i.cw, align 4, !tbaa !54
-  %7 = load i32, ptr %i.cc, align 8, !tbaa !135
-  %.not31.i.i505 = icmp slt i32 %i.jj, %7         ; 3 uses
-  %spec.select.i506 = zext i1 %.not31.i.i505 to i32 ; 2 uses
-  %cond1077.a = icmp eq i32 %i.ok, 0
-  br i1 %cond1077.a, label %bb.ck, label %bb.ci
+  %cond1077.a = icmp eq i32 %i.jk, 0
+  br i1 %cond1077.a, label %9, label %7
 
 .lr.ph714:                                        ; preds = %.lr.ph714.preheader1102, %.lr.ph714
   %indvars.iv841 = phi i64 [ %indvars.iv.next842, %.lr.ph714 ], [ %indvars.iv841.ph, %.lr.ph714.preheader1102 ] ; 3 uses
@@ -818,21 +815,32 @@ Exa4_ManAddClause4.exit482:                       ; preds = %bb.cb, %bb.cd, %bb.
   %exitcond854.not = icmp eq i64 %indvars.iv.next851, %i.cy
   br i1 %exitcond854.not, label %.loopexit653, label %bb.cb, !llvm.loop !493
 
-bb.ci:                                            ; preds = %.preheader660
+7:                                                ; preds = %.preheader660
+  %8 = load i32, ptr %i.cc, align 8, !tbaa !135
+  %.not31.i.i505 = icmp slt i32 %i.jj, %8
+  %spec.select.i506 = zext i1 %.not31.i.i505 to i32
+  br label %9
+
+9:                                                ; preds = %.preheader660, %7
+  %.1.i.i483 = phi i32 [ 0, %.preheader660 ], [ %spec.select.i506, %7 ] ; 4 uses
+  %cond1077 = icmp eq i32 %i.ok, 0
+  br i1 %cond1077, label %bb.ck, label %bb.ci
+
+bb.ci:                                            ; preds = %9
   %i.qm = load i32, ptr %i.cc, align 8, !tbaa !135
   %i.qn = shl nsw i32 %i.qm, 1
   %.not31.i.1.i504 = icmp sgt i32 %i.ok, %i.qn
   br i1 %.not31.i.1.i504, label %bb.ck, label %bb.cj
 
 bb.cj:                                            ; preds = %bb.ci
-  %8 = select i1 %.not31.i.i505, i32 2, i32 1
-  %.sroa.sel1134.idx = select i1 %.not31.i.i505, i64 4, i64 0
-  %.sroa.sel1134 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.sroa.sel1134.idx
-  store i32 %i.ok, ptr %.sroa.sel1134, align 4, !tbaa !54
+  %10 = add nuw nsw i32 %.1.i.i483, 1
+  %11 = zext nneg i32 %.1.i.i483 to i64
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %11
+  store i32 %i.ok, ptr %12, align 4, !tbaa !54
   br label %bb.ck
 
-bb.ck:                                            ; preds = %.preheader660, %bb.cj, %bb.ci
-  %.1.i.1.i484 = phi i32 [ %spec.select.i506, %.preheader660 ], [ %8, %bb.cj ], [ %spec.select.i506, %bb.ci ] ; 5 uses
+bb.ck:                                            ; preds = %9, %bb.cj, %bb.ci
+  %.1.i.1.i484 = phi i32 [ %.1.i.i483, %9 ], [ %10, %bb.cj ], [ %.1.i.i483, %bb.ci ] ; 5 uses
   %cond1078 = icmp eq i32 %i.ol, 0
   br i1 %cond1078, label %._crit_edge.i.i486, label %bb.cl
 
@@ -906,20 +914,24 @@ bb.cp:                                            ; preds = %._crit_edge.i.i486
 
 Exa4_ManAddClause4.exit507:                       ; preds = %bb.cm, %._crit_edge.i.i486, %._crit_edge38.i.i499
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #41
-  %i.ri = or disjoint i32 %i.oi, 1                ; 2 uses
-  %i.rj = or disjoint i32 %i.ol, 1                ; 5 uses
+  %i.ri = or disjoint i32 %i.oi, 1                ; 5 uses
+  %i.rj = or disjoint i32 %i.ol, 1                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #41
   store i32 %i.ri, ptr %i.c, align 16, !tbaa !54
   store i32 %i.ok, ptr %i.cu, align 4, !tbaa !54
   store i32 %i.rj, ptr %i.cv, align 8, !tbaa !54
   store i32 0, ptr %i.cw, align 4, !tbaa !54
-  %9 = load i32, ptr %i.cc, align 8, !tbaa !135
-  %.not31.i.i505.1 = icmp slt i32 %i.jk, %9       ; 3 uses
-  %spec.select.i506.1 = zext i1 %.not31.i.i505.1 to i32 ; 2 uses
-  %cond1079.a = icmp eq i32 %i.ok, 0
-  br i1 %cond1079.a, label %bb.cs, label %bb.cq
+  %cond1079.a = icmp eq i32 %i.jk, 0
+  br i1 %cond1079.a, label %Exa4_ManAddClause4.exit507.1, label %13
 
-bb.cq:                                            ; preds = %Exa4_ManAddClause4.exit507
+13:                                               ; preds = %Exa4_ManAddClause4.exit507
+  %14 = load i32, ptr %i.cc, align 8, !tbaa !135
+  %.not31.i.i505.1 = icmp slt i32 %i.jk, %14      ; 3 uses
+  %spec.select.i506.1 = zext i1 %.not31.i.i505.1 to i32 ; 2 uses
+  %cond1079 = icmp eq i32 %i.ok, 0
+  br i1 %cond1079, label %bb.cs, label %bb.cq
+
+bb.cq:                                            ; preds = %13
   %i.rk = load i32, ptr %i.cc, align 8, !tbaa !135
   %i.rl = shl nsw i32 %i.rk, 1
   %.not31.i.1.i504.1 = icmp sgt i32 %i.ok, %i.rl
@@ -932,8 +944,8 @@ bb.cr:                                            ; preds = %bb.cq
   store i32 %i.ok, ptr %.sroa.sel1137, align 4, !tbaa !54
   br label %bb.cs
 
-bb.cs:                                            ; preds = %Exa4_ManAddClause4.exit507, %bb.cr, %bb.cq
-  %.1.i.1.i484.1 = phi i32 [ %spec.select.i506.1, %Exa4_ManAddClause4.exit507 ], [ %i.rm, %bb.cr ], [ %spec.select.i506.1, %bb.cq ] ; 4 uses
+bb.cs:                                            ; preds = %13, %bb.cr, %bb.cq
+  %.1.i.1.i484.1 = phi i32 [ %spec.select.i506.1, %13 ], [ %i.rm, %bb.cr ], [ %spec.select.i506.1, %bb.cq ] ; 4 uses
   %cond1069 = icmp eq i32 %i.ol, 0
   br i1 %cond1069, label %Exa4_ManAddClause4.exit507.1, label %bb.ct
 
@@ -1005,37 +1017,46 @@ bb.cx:                                            ; preds = %._crit_edge.i.i486.
   %i.sg = tail call i64 @fwrite(ptr nonnull @.str.144, i64 2, i64 1, ptr %i.sf) ; 0 uses
   br label %Exa4_ManAddClause4.exit507.1
 
-Exa4_ManAddClause4.exit507.1:                     ; preds = %bb.cs, %._crit_edge38.i.i499.1, %._crit_edge.i.i486.1, %bb.cu
-  %10 = phi i32 [ 1, %bb.cs ], [ %i.rj, %._crit_edge38.i.i499.1 ], [ %i.rj, %._crit_edge.i.i486.1 ], [ %i.rj, %bb.cu ] ; 3 uses
+Exa4_ManAddClause4.exit507.1:                     ; preds = %bb.cs, %Exa4_ManAddClause4.exit507, %._crit_edge38.i.i499.1, %._crit_edge.i.i486.1, %bb.cu
+  %15 = phi i32 [ %i.rj, %Exa4_ManAddClause4.exit507 ], [ %i.rj, %._crit_edge38.i.i499.1 ], [ %i.rj, %._crit_edge.i.i486.1 ], [ %i.rj, %bb.cu ], [ 1, %bb.cs ] ; 3 uses
+  %16 = phi i32 [ 1, %Exa4_ManAddClause4.exit507 ], [ %i.ri, %._crit_edge38.i.i499.1 ], [ %i.ri, %._crit_edge.i.i486.1 ], [ %i.ri, %bb.cu ], [ %i.ri, %bb.cs ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #41
   %i.sh = or disjoint i32 %i.ok, 1                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #41
   store i32 %i.oi, ptr %i.c, align 16, !tbaa !54
   store i32 %i.sh, ptr %i.cu, align 4, !tbaa !54
-  store i32 %10, ptr %i.cv, align 8, !tbaa !54
+  store i32 %15, ptr %i.cv, align 8, !tbaa !54
   store i32 0, ptr %i.cw, align 4, !tbaa !54
-  %11 = load i32, ptr %i.cc, align 8, !tbaa !135
-  %.not31.i.i505.2 = icmp slt i32 %i.jj, %11      ; 3 uses
-  %cond1070.a = icmp eq i32 %i.ok, 0
-  br i1 %cond1070.a, label %Exa4_ManAddClause4.exit507.2, label %bb.cy
+  %cond1070.a = icmp eq i32 %i.jk, 0
+  br i1 %cond1070.a, label %19, label %17
 
-bb.cy:                                            ; preds = %Exa4_ManAddClause4.exit507.1
+17:                                               ; preds = %Exa4_ManAddClause4.exit507.1
+  %18 = load i32, ptr %i.cc, align 8, !tbaa !135
+  %.not31.i.i505.2 = icmp slt i32 %i.jj, %18
   %spec.select.i506.2 = zext i1 %.not31.i.i505.2 to i32
+  br label %19
+
+19:                                               ; preds = %Exa4_ManAddClause4.exit507.1, %17
+  %.1.i.i483.2 = phi i32 [ 0, %Exa4_ManAddClause4.exit507.1 ], [ %spec.select.i506.2, %17 ] ; 3 uses
+  %cond1070 = icmp eq i32 %i.ok, 0
+  br i1 %cond1070, label %Exa4_ManAddClause4.exit507.2, label %bb.cy
+
+bb.cy:                                            ; preds = %19
   %i.si = load i32, ptr %i.cc, align 8, !tbaa !135
   %i.sj = shl nsw i32 %i.si, 1
   %.not31.i.1.i504.2.not = icmp slt i32 %i.ok, %i.sj
   br i1 %.not31.i.1.i504.2.not, label %bb.cz, label %bb.da
 
 bb.cz:                                            ; preds = %bb.cy
-  %12 = select i1 %.not31.i.i505.2, i32 2, i32 1
-  %.sroa.sel1140.idx = select i1 %.not31.i.i505.2, i64 4, i64 0
-  %.sroa.sel1140 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.sroa.sel1140.idx
-  store i32 %i.sh, ptr %.sroa.sel1140, align 4, !tbaa !54
+  %20 = add nuw nsw i32 %.1.i.i483.2, 1
+  %21 = zext nneg i32 %.1.i.i483.2 to i64
+  %22 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %21
+  store i32 %i.sh, ptr %22, align 4, !tbaa !54
   br label %bb.da
 
 bb.da:                                            ; preds = %bb.cz, %bb.cy
-  %.1.i.1.i484.2 = phi i32 [ %spec.select.i506.2, %bb.cy ], [ %12, %bb.cz ] ; 4 uses
-  %cond1071 = icmp eq i32 %10, 1
+  %.1.i.1.i484.2 = phi i32 [ %.1.i.i483.2, %bb.cy ], [ %20, %bb.cz ] ; 4 uses
+  %cond1071 = icmp eq i32 %15, 1
   br i1 %cond1071, label %Exa4_ManAddClause4.exit507.2, label %bb.db
 
 bb.db:                                            ; preds = %bb.da
@@ -1048,7 +1069,7 @@ bb.dc:                                            ; preds = %bb.db
   %i.sm = add nuw nsw i32 %.1.i.1.i484.2, 1       ; 3 uses
   %i.sn = zext nneg i32 %.1.i.1.i484.2 to i64
   %i.so = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.sn
-  store i32 %10, ptr %i.so, align 4, !tbaa !54
+  store i32 %15, ptr %i.so, align 4, !tbaa !54
   %.pre.i503.2 = load i32, ptr %i.cw, align 4, !tbaa !54 ; 3 uses
   switch i32 %.pre.i503.2, label %bb.dd [
     i32 1, label %Exa4_ManAddClause4.exit507.2
@@ -1106,13 +1127,13 @@ bb.df:                                            ; preds = %._crit_edge.i.i486.
   %i.td = tail call i64 @fwrite(ptr nonnull @.str.144, i64 2, i64 1, ptr %i.tc) ; 0 uses
   br label %Exa4_ManAddClause4.exit507.2
 
-Exa4_ManAddClause4.exit507.2:                     ; preds = %bb.da, %Exa4_ManAddClause4.exit507.1, %._crit_edge38.i.i499.2, %._crit_edge.i.i486.2, %bb.dc
+Exa4_ManAddClause4.exit507.2:                     ; preds = %bb.da, %19, %._crit_edge38.i.i499.2, %._crit_edge.i.i486.2, %bb.dc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #41
   br i1 %.not303, label %.loopexit661, label %bb.dg
 
 bb.dg:                                            ; preds = %Exa4_ManAddClause4.exit507.2
   %i.te = add i32 %i.oj, 5
-  tail call fastcc void @Exa4_ManAddClause4(ptr noundef nonnull %0, i32 noundef %i.ri, i32 noundef %i.te, i32 noundef %i.ol, i32 noundef 0)
+  tail call fastcc void @Exa4_ManAddClause4(ptr noundef nonnull %0, i32 noundef %16, i32 noundef %i.te, i32 noundef %i.ol, i32 noundef 0)
   br label %.loopexit661
 
 .loopexit661:                                     ; preds = %.loopexit653, %._crit_edge.thread.i435, %Exa4_ManAddClause.exit459, %Exa4_ManAddClause4.exit507.2, %bb.dg
@@ -1515,7 +1536,7 @@ bb.ak:                                            ; preds = %._crit_edge500
   %i.hr = trunc nsw i64 %indvars.iv650 to i32     ; 2 uses
   %i.hs = sub nsw i32 %i.hr, %i.cx                ; 2 uses
   %i.ht = mul nsw i32 %i.hs, 3                    ; 3 uses
-  %i.hu = add nsw i32 %i.ht, 1                    ; 4 uses
+  %i.hu = add nsw i32 %i.ht, 1                    ; 7 uses
   %.pre724 = load i32, ptr %i.j, align 8, !tbaa !174 ; 4 uses
   br i1 %.not241, label %.loopexit489, label %bb.al
 
@@ -1918,13 +1939,8 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.na, ptr %i.al, align 4, !tbaa !54
   store i32 %i.nb, ptr %i.am, align 8, !tbaa !54
   store i32 0, ptr %i.an, align 4, !tbaa !54
-  %5 = load i32, ptr %i.s, align 8, !tbaa !180
-  %6 = load i32, ptr %i.t, align 4, !tbaa !181
-  %7 = add nsw i32 %6, %5
-  %.not32.i.i380 = icmp slt i32 %i.ht, %7         ; 3 uses
-  %spec.select.i381 = zext i1 %.not32.i.i380 to i32 ; 2 uses
-  %cond864.a = icmp eq i32 %i.na, 0
-  br i1 %cond864.a, label %bb.cb, label %bb.bz
+  %cond864.a = icmp eq i32 %i.hu, 0
+  br i1 %cond864.a, label %9, label %5
 
 .lr.ph524:                                        ; preds = %.lr.ph524.preheader878, %.lr.ph524
   %indvars.iv630 = phi i64 [ %indvars.iv.next631, %.lr.ph524 ], [ %indvars.iv630.ph, %.lr.ph524.preheader878 ] ; 3 uses
@@ -2135,7 +2151,20 @@ Exa6_ManAddClause4.exit357:                       ; preds = %bb.bs, %bb.bu, %bb.
   %exitcond643.not = icmp eq i64 %indvars.iv.next640, %i.ap
   br i1 %exitcond643.not, label %.loopexit481, label %bb.bs, !llvm.loop !639
 
-bb.bz:                                            ; preds = %.preheader486
+5:                                                ; preds = %.preheader486
+  %6 = load i32, ptr %i.s, align 8, !tbaa !180
+  %7 = load i32, ptr %i.t, align 4, !tbaa !181
+  %8 = add nsw i32 %7, %6
+  %.not32.i.i380 = icmp slt i32 %i.ht, %8
+  %spec.select.i381 = zext i1 %.not32.i.i380 to i32
+  br label %9
+
+9:                                                ; preds = %.preheader486, %5
+  %.1.i.i358 = phi i32 [ 0, %.preheader486 ], [ %spec.select.i381, %5 ] ; 4 uses
+  %cond864 = icmp eq i32 %i.na, 0
+  br i1 %cond864, label %bb.cb, label %bb.bz
+
+bb.bz:                                            ; preds = %9
   %i.pi = load i32, ptr %i.s, align 8, !tbaa !180
   %i.pj = load i32, ptr %i.t, align 4, !tbaa !181
   %i.pk = add nsw i32 %i.pj, %i.pi
@@ -2144,14 +2173,14 @@ bb.bz:                                            ; preds = %.preheader486
   br i1 %.not32.i.1.i379, label %bb.cb, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
-  %8 = select i1 %.not32.i.i380, i32 2, i32 1
-  %.sroa.sel930.idx = select i1 %.not32.i.i380, i64 4, i64 0
-  %.sroa.sel930 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.sroa.sel930.idx
-  store i32 %i.na, ptr %.sroa.sel930, align 4, !tbaa !54
+  %10 = add nuw nsw i32 %.1.i.i358, 1
+  %11 = zext nneg i32 %.1.i.i358 to i64
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %11
+  store i32 %i.na, ptr %12, align 4, !tbaa !54
   br label %bb.cb
 
-bb.cb:                                            ; preds = %.preheader486, %bb.ca, %bb.bz
-  %.1.i.1.i359 = phi i32 [ %spec.select.i381, %.preheader486 ], [ %8, %bb.ca ], [ %spec.select.i381, %bb.bz ] ; 5 uses
+bb.cb:                                            ; preds = %9, %bb.ca, %bb.bz
+  %.1.i.1.i359 = phi i32 [ %.1.i.i358, %9 ], [ %10, %bb.ca ], [ %.1.i.i358, %bb.bz ] ; 5 uses
   %cond865 = icmp eq i32 %i.nb, 0
   br i1 %cond865, label %._crit_edge.i.i361, label %bb.cc
 
@@ -2227,22 +2256,26 @@ bb.cg:                                            ; preds = %._crit_edge.i.i361
 
 Exa6_ManAddClause4.exit382:                       ; preds = %bb.cd, %._crit_edge.i.i361, %._crit_edge39.i.i374
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #41
-  %i.qi = or disjoint i32 %i.my, 1                ; 2 uses
-  %i.qj = or disjoint i32 %i.nb, 1                ; 5 uses
+  %i.qi = or disjoint i32 %i.my, 1                ; 5 uses
+  %i.qj = or disjoint i32 %i.nb, 1                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #41
   store i32 %i.qi, ptr %i.c, align 16, !tbaa !54
   store i32 %i.na, ptr %i.al, align 4, !tbaa !54
   store i32 %i.qj, ptr %i.am, align 8, !tbaa !54
   store i32 0, ptr %i.an, align 4, !tbaa !54
-  %9 = load i32, ptr %i.s, align 8, !tbaa !180
-  %10 = load i32, ptr %i.t, align 4, !tbaa !181
-  %11 = add nsw i32 %10, %9
-  %.not32.i.i380.1 = icmp slt i32 %i.hu, %11      ; 3 uses
-  %spec.select.i381.1 = zext i1 %.not32.i.i380.1 to i32 ; 2 uses
-  %cond866.a = icmp eq i32 %i.na, 0
-  br i1 %cond866.a, label %bb.cj, label %bb.ch
+  %cond866.a = icmp eq i32 %i.hu, 0
+  br i1 %cond866.a, label %Exa6_ManAddClause4.exit382.1, label %13
 
-bb.ch:                                            ; preds = %Exa6_ManAddClause4.exit382
+13:                                               ; preds = %Exa6_ManAddClause4.exit382
+  %14 = load i32, ptr %i.s, align 8, !tbaa !180
+  %15 = load i32, ptr %i.t, align 4, !tbaa !181
+  %16 = add nsw i32 %15, %14
+  %.not32.i.i380.1 = icmp slt i32 %i.hu, %16      ; 3 uses
+  %spec.select.i381.1 = zext i1 %.not32.i.i380.1 to i32 ; 2 uses
+  %cond866 = icmp eq i32 %i.na, 0
+  br i1 %cond866, label %bb.cj, label %bb.ch
+
+bb.ch:                                            ; preds = %13
   %i.qk = load i32, ptr %i.s, align 8, !tbaa !180
   %i.ql = load i32, ptr %i.t, align 4, !tbaa !181
   %i.qm = add nsw i32 %i.ql, %i.qk
@@ -2257,8 +2290,8 @@ bb.ci:                                            ; preds = %bb.ch
   store i32 %i.na, ptr %.sroa.sel933, align 4, !tbaa !54
   br label %bb.cj
 
-bb.cj:                                            ; preds = %Exa6_ManAddClause4.exit382, %bb.ci, %bb.ch
-  %.1.i.1.i359.1 = phi i32 [ %spec.select.i381.1, %Exa6_ManAddClause4.exit382 ], [ %i.qo, %bb.ci ], [ %spec.select.i381.1, %bb.ch ] ; 4 uses
+bb.cj:                                            ; preds = %13, %bb.ci, %bb.ch
+  %.1.i.1.i359.1 = phi i32 [ %spec.select.i381.1, %13 ], [ %i.qo, %bb.ci ], [ %spec.select.i381.1, %bb.ch ] ; 4 uses
   %cond857 = icmp eq i32 %i.nb, 0
   br i1 %cond857, label %Exa6_ManAddClause4.exit382.1, label %bb.ck
 
@@ -2332,24 +2365,33 @@ bb.co:                                            ; preds = %._crit_edge.i.i361.
   %i.rk = tail call i64 @fwrite(ptr nonnull @.str.144, i64 2, i64 1, ptr %i.rj) ; 0 uses
   br label %Exa6_ManAddClause4.exit382.1
 
-Exa6_ManAddClause4.exit382.1:                     ; preds = %bb.cj, %._crit_edge39.i.i374.1, %._crit_edge.i.i361.1, %bb.cl
-  %12 = phi i32 [ 1, %bb.cj ], [ %i.qj, %._crit_edge39.i.i374.1 ], [ %i.qj, %._crit_edge.i.i361.1 ], [ %i.qj, %bb.cl ] ; 3 uses
+Exa6_ManAddClause4.exit382.1:                     ; preds = %bb.cj, %Exa6_ManAddClause4.exit382, %._crit_edge39.i.i374.1, %._crit_edge.i.i361.1, %bb.cl
+  %17 = phi i32 [ %i.qj, %Exa6_ManAddClause4.exit382 ], [ %i.qj, %._crit_edge39.i.i374.1 ], [ %i.qj, %._crit_edge.i.i361.1 ], [ %i.qj, %bb.cl ], [ 1, %bb.cj ] ; 3 uses
+  %18 = phi i32 [ 1, %Exa6_ManAddClause4.exit382 ], [ %i.qi, %._crit_edge39.i.i374.1 ], [ %i.qi, %._crit_edge.i.i361.1 ], [ %i.qi, %bb.cl ], [ %i.qi, %bb.cj ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #41
   %i.rl = or disjoint i32 %i.na, 1                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #41
   store i32 %i.my, ptr %i.c, align 16, !tbaa !54
   store i32 %i.rl, ptr %i.al, align 4, !tbaa !54
-  store i32 %12, ptr %i.am, align 8, !tbaa !54
+  store i32 %17, ptr %i.am, align 8, !tbaa !54
   store i32 0, ptr %i.an, align 4, !tbaa !54
-  %13 = load i32, ptr %i.s, align 8, !tbaa !180
-  %14 = load i32, ptr %i.t, align 4, !tbaa !181
-  %15 = add nsw i32 %14, %13
-  %.not32.i.i380.2 = icmp slt i32 %i.ht, %15      ; 3 uses
-  %cond858.a = icmp eq i32 %i.na, 0
-  br i1 %cond858.a, label %Exa6_ManAddClause4.exit382.2, label %bb.cp
+  %cond858.a = icmp eq i32 %i.hu, 0
+  br i1 %cond858.a, label %23, label %19
 
-bb.cp:                                            ; preds = %Exa6_ManAddClause4.exit382.1
+19:                                               ; preds = %Exa6_ManAddClause4.exit382.1
+  %20 = load i32, ptr %i.s, align 8, !tbaa !180
+  %21 = load i32, ptr %i.t, align 4, !tbaa !181
+  %22 = add nsw i32 %21, %20
+  %.not32.i.i380.2 = icmp slt i32 %i.ht, %22
   %spec.select.i381.2 = zext i1 %.not32.i.i380.2 to i32
+  br label %23
+
+23:                                               ; preds = %Exa6_ManAddClause4.exit382.1, %19
+  %.1.i.i358.2 = phi i32 [ 0, %Exa6_ManAddClause4.exit382.1 ], [ %spec.select.i381.2, %19 ] ; 3 uses
+  %cond858 = icmp eq i32 %i.na, 0
+  br i1 %cond858, label %Exa6_ManAddClause4.exit382.2, label %bb.cp
+
+bb.cp:                                            ; preds = %23
   %i.rm = load i32, ptr %i.s, align 8, !tbaa !180
   %i.rn = load i32, ptr %i.t, align 4, !tbaa !181
   %i.ro = add nsw i32 %i.rn, %i.rm
@@ -2358,15 +2400,15 @@ bb.cp:                                            ; preds = %Exa6_ManAddClause4.
   br i1 %.not32.i.1.i379.2.not, label %bb.cq, label %bb.cr
 
 bb.cq:                                            ; preds = %bb.cp
-  %16 = select i1 %.not32.i.i380.2, i32 2, i32 1
-  %.sroa.sel936.idx = select i1 %.not32.i.i380.2, i64 4, i64 0
-  %.sroa.sel936 = getelementptr inbounds nuw i8, ptr %i.c, i64 %.sroa.sel936.idx
-  store i32 %i.rl, ptr %.sroa.sel936, align 4, !tbaa !54
+  %24 = add nuw nsw i32 %.1.i.i358.2, 1
+  %25 = zext nneg i32 %.1.i.i358.2 to i64
+  %26 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %25
+  store i32 %i.rl, ptr %26, align 4, !tbaa !54
   br label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq, %bb.cp
-  %.1.i.1.i359.2 = phi i32 [ %spec.select.i381.2, %bb.cp ], [ %16, %bb.cq ] ; 4 uses
-  %cond859 = icmp eq i32 %12, 1
+  %.1.i.1.i359.2 = phi i32 [ %.1.i.i358.2, %bb.cp ], [ %24, %bb.cq ] ; 4 uses
+  %cond859 = icmp eq i32 %17, 1
   br i1 %cond859, label %Exa6_ManAddClause4.exit382.2, label %bb.cs
 
 bb.cs:                                            ; preds = %bb.cr
@@ -2381,7 +2423,7 @@ bb.ct:                                            ; preds = %bb.cs
   %i.ru = add nuw nsw i32 %.1.i.1.i359.2, 1       ; 3 uses
   %i.rv = zext nneg i32 %.1.i.1.i359.2 to i64
   %i.rw = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.rv
-  store i32 %12, ptr %i.rw, align 4, !tbaa !54
+  store i32 %17, ptr %i.rw, align 4, !tbaa !54
   %.pre.i378.2 = load i32, ptr %i.an, align 4, !tbaa !54 ; 3 uses
   switch i32 %.pre.i378.2, label %bb.cu [
     i32 1, label %Exa6_ManAddClause4.exit382.2
@@ -2439,13 +2481,13 @@ bb.cw:                                            ; preds = %._crit_edge.i.i361.
   %i.sl = tail call i64 @fwrite(ptr nonnull @.str.144, i64 2, i64 1, ptr %i.sk) ; 0 uses
   br label %Exa6_ManAddClause4.exit382.2
 
-Exa6_ManAddClause4.exit382.2:                     ; preds = %bb.cr, %Exa6_ManAddClause4.exit382.1, %._crit_edge39.i.i374.2, %._crit_edge.i.i361.2, %bb.ct
+Exa6_ManAddClause4.exit382.2:                     ; preds = %bb.cr, %23, %._crit_edge39.i.i374.2, %._crit_edge.i.i361.2, %bb.ct
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #41
   br i1 %.not243, label %.loopexit487, label %bb.cx
 
 bb.cx:                                            ; preds = %Exa6_ManAddClause4.exit382.2
   %i.sm = add i32 %i.mz, 5
-  tail call fastcc void @Exa6_ManAddClause4(ptr noundef nonnull %0, i32 noundef %i.qi, i32 noundef %i.sm, i32 noundef %i.nb, i32 noundef 0)
+  tail call fastcc void @Exa6_ManAddClause4(ptr noundef nonnull %0, i32 noundef %18, i32 noundef %i.sm, i32 noundef %i.nb, i32 noundef 0)
   br label %.loopexit487
 
 .loopexit487:                                     ; preds = %.loopexit481, %._crit_edge.thread.i310, %Exa6_ManAddClause.exit334, %Exa6_ManAddClause4.exit382.2, %bb.cx
