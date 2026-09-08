@@ -182,10 +182,11 @@ _ZN8rawspeed19roundUpDivisionSafeEmm.exit:        ; preds = %bb.m
   %i.ad = zext nneg i32 %i.w to i64
   %i.ae = mul nuw nsw i64 %i.ad, %i.ac            ; 2 uses
   %i.af = sext i32 %i.aa to i64                   ; 2 uses
-  %4 = udiv i64 %i.ae, %i.af
-  %5 = icmp uge i64 %i.ae, %i.af
+  %4 = urem i64 %i.ae, %i.af
+  %5 = icmp eq i64 %4, 0
   tail call void @llvm.assume(i1 %5)
-  %i.ag = add nsw i64 %4, -1
+  %6 = udiv exact i64 %i.ae, %i.af
+  %i.ag = add nsw i64 %6, -1
   %i.ah = lshr i64 %i.ag, 10                      ; 2 uses
   %i.ai = add nuw nsw i64 %i.ah, 1                ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -588,10 +589,16 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.026 = phi i32 [ %i.am, %bb.g ], [ 0, %bb.f ]  ; 2 uses
+  %.026 = phi i32 [ %i.am, %bb.g ], [ 0, %bb.f ]  ; 3 uses
   %i.an = icmp eq i32 %i.t, %.02752
   %spec.select = select i1 %i.an, ptr %i.r, ptr %i.v
-  %.0 = load i32, ptr %spec.select, align 8, !tbaa !126 ; 2 uses
+  %.0 = load i32, ptr %spec.select, align 8, !tbaa !126 ; 3 uses
+  %3 = srem i32 %.026, 10
+  %4 = icmp eq i32 %3, 0
+  call void @llvm.assume(i1 %4)
+  %5 = srem i32 %.0, 10
+  %6 = icmp eq i32 %5, 0
+  call void @llvm.assume(i1 %6)
   %i.ao = icmp slt i32 %.026, %.0
   br i1 %i.ao, label %.lr.ph, label %._crit_edge
 
@@ -994,10 +1001,16 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.026 = phi i32 [ %i.am, %bb.g ], [ 0, %bb.f ]  ; 2 uses
+  %.026 = phi i32 [ %i.am, %bb.g ], [ 0, %bb.f ]  ; 3 uses
   %i.an = icmp eq i32 %i.t, %.02752
   %spec.select = select i1 %i.an, ptr %i.r, ptr %i.v
-  %.0 = load i32, ptr %spec.select, align 8, !tbaa !126 ; 2 uses
+  %.0 = load i32, ptr %spec.select, align 8, !tbaa !126 ; 3 uses
+  %3 = srem i32 %.026, 9
+  %4 = icmp eq i32 %3, 0
+  call void @llvm.assume(i1 %4)
+  %5 = srem i32 %.0, 9
+  %6 = icmp eq i32 %5, 0
+  call void @llvm.assume(i1 %6)
   %i.ao = icmp slt i32 %.026, %.0
   br i1 %i.ao, label %.lr.ph, label %._crit_edge
 
