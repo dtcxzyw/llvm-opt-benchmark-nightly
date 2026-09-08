@@ -202,13 +202,14 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ad
   %i.ku = getelementptr inbounds nuw i8, ptr %i.ko, i64 120
   %i.kv = load i32, ptr %i.ku, align 8, !tbaa !375 ; 2 uses
-  %i.kw = call fastcc ptr @b3GetHullPoints(ptr noundef nonnull %i.ko) ; 5 uses
+  %i.kw = call fastcc ptr @b3GetHullPoints(ptr noundef nonnull %i.ko)
+  %.fr1559 = freeze ptr %i.kw                     ; 5 uses
   %i.kx = load ptr, ptr %i.kn, align 8, !tbaa !88
   %i.ky = call fastcc ptr @b3GetHullFaces(ptr noundef %i.kx)
-  %.fr1516 = freeze ptr %i.ky                     ; 4 uses
+  %.fr1516 = freeze ptr %i.ky                     ; 5 uses
   %i.kz = load ptr, ptr %i.kn, align 8, !tbaa !88
   %i.la = call fastcc ptr @b3GetHullEdges(ptr noundef %i.kz)
-  %.fr = freeze ptr %i.la                         ; 5 uses
+  %.fr = freeze ptr %i.la                         ; 7 uses
   %i.lb = load ptr, ptr %i.kn, align 8, !tbaa !88
   %i.lc = call fastcc ptr @b3GetHullPlanes(ptr noundef %i.lb) ; 3 uses
   %i.ld = icmp ne ptr %i.bt, null, !nosanitize !9
@@ -240,20 +241,30 @@ bb.ah:                                            ; preds = %bb.af
   %.sroa.0272.0.copyload = load <2 x float>, ptr %i.lk, align 4
   %i.ll = ptrtoint ptr %.fr1516 to i64, !nosanitize !9 ; 3 uses
   %.not1517 = icmp eq ptr %.fr1516, null, !nosanitize !9
-  %i.lm = ptrtoint ptr %.fr to i64                ; 12 uses
-  %i.ln = ptrtoint ptr %i.kw to i64               ; 9 uses
-  %8 = icmp ne ptr %i.kw, null                    ; 2 uses
+  %i.lm = ptrtoint ptr %.fr to i64                ; 18 uses
+  %i.ln = ptrtoint ptr %.fr1559 to i64            ; 10 uses
+  %.not1560 = icmp eq ptr %.fr1559, null
   %i.lo = ptrtoint ptr %i.lc to i64               ; 3 uses
   %i.lp = icmp ne ptr %i.lc, null                 ; 2 uses
   %.sroa.09.0.vec.extract.i874 = extractelement <2 x float> %.sroa.0274.0.copyload, i64 0
   %i.lq = fmul float %i.cc, 5.000000e-01
-  br i1 %.not1517, label %.split1495.us, label %.lr.ph.split.a, !prof !86
+  br i1 %.not1517, label %.split1495.us, label %.lr.ph.split, !prof !86
 
-.lr.ph.split.a:                                   ; preds = %.lr.ph
-  %.not1518 = icmp eq ptr %.fr, null
-  br i1 %.not1518, label %.lr.ph.split.split.us, label %.lr.ph.split.split.preheader, !prof !86
+.lr.ph.split:                                     ; preds = %.lr.ph
+  %.not1557 = icmp eq ptr %.fr, null
+  br i1 %.not1557, label %.lr.ph.split.a, label %.lr.ph.split.split, !prof !86
 
-.lr.ph.split.split.preheader:                     ; preds = %.lr.ph.split.a
+.lr.ph.split.a:                                   ; preds = %.lr.ph.split
+  %8 = load i8, ptr %.fr1516, align 1, !tbaa !377 ; 2 uses
+  %9 = zext i8 %8 to i64
+  %10 = shl nuw nsw i64 %9, 2
+  %.not1518 = icmp eq i8 %8, 0
+  br i1 %.not1518, label %.split1513.us, label %.split1509.us, !prof !10, !nosanitize !9
+
+.lr.ph.split.split:                               ; preds = %.lr.ph.split
+  br i1 %.not1560, label %.lr.ph.split.split.split.us, label %.lr.ph.split.split.preheader, !prof !86
+
+.lr.ph.split.split.preheader:                     ; preds = %.lr.ph.split.split
   %wide.trip.count = zext nneg i32 %i.kv to i64
   %i.lr = insertelement <2 x float> poison, float %i.kj, i64 0
   %i.ls = shufflevector <2 x float> %i.kd, <2 x float> %i.ka, <2 x i32> <i32 1, i32 2> ; 2 uses
@@ -281,12 +292,41 @@ bb.ah:                                            ; preds = %bb.af
   %shift2196 = shufflevector <2 x float> %.sroa.0274.0.copyload, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   br label %.lr.ph.split.split.a
 
-.lr.ph.split.split.us:                            ; preds = %.lr.ph.split.a
-  %i.mm = load i8, ptr %.fr1516, align 1, !tbaa !377 ; 2 uses
+.lr.ph.split.split.split.us:                      ; preds = %.lr.ph.split.split
+  %11 = load i8, ptr %.fr1516, align 1, !tbaa !377
+  %12 = zext i8 %11 to i64                        ; 2 uses
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %.fr, i64 %12 ; 2 uses
+  %14 = shl nuw nsw i64 %12, 2
+  %15 = add i64 %14, %i.lm, !nosanitize !9        ; 2 uses
+  %.not1562 = icmp ult i64 %15, %i.lm, !nosanitize !9
+  br i1 %.not1562, label %.split1509.us, label %16, !prof !86, !nosanitize !9
+
+16:                                               ; preds = %.lr.ph.split.split.split.us
+  %17 = load i8, ptr %13, align 1, !tbaa !379
+  %18 = zext i8 %17 to i64                        ; 2 uses
+  %19 = shl nuw nsw i64 %18, 2
+  %20 = add i64 %19, %i.lm, !nosanitize !9        ; 2 uses
+  %.not1079.us = icmp ult i64 %20, %i.lm, !nosanitize !9
+  br i1 %.not1079.us, label %bb.ak, label %21, !prof !86, !nosanitize !9
+
+21:                                               ; preds = %16
+  %22 = getelementptr inbounds nuw [4 x i8], ptr %.fr, i64 %18
+  %23 = load i8, ptr %22, align 1, !tbaa !379
+  %24 = zext i8 %23 to i64
+  %25 = shl nuw nsw i64 %24, 2
+  %26 = add i64 %25, %i.lm, !nosanitize !9        ; 2 uses
+  %.not1080.us = icmp ult i64 %26, %i.lm, !nosanitize !9
+  br i1 %.not1080.us, label %bb.am, label %.lr.ph.split.split.us, !prof !86, !nosanitize !9
+
+.lr.ph.split.split.us:                            ; preds = %21
+  %27 = getelementptr inbounds nuw i8, ptr %13, i64 2
+  %i.mm = load i8, ptr %27, align 1, !tbaa !380   ; 2 uses
   %i.mn = zext i8 %i.mm to i64
-  %9 = shl nuw nsw i64 %i.mn, 2
+  %28 = mul nuw nsw i64 %i.mn, 12                 ; 2 uses
   %i.mo = icmp eq i8 %i.mm, 0
-  br i1 %i.mo, label %.split1513.us, label %.split1509.us, !prof !10, !nosanitize !9
+  %29 = icmp uge i64 %28, %i.ln, !nosanitize !9
+  %30 = and i1 %29, %i.mo, !nosanitize !9
+  br i1 %30, label %bb.aq, label %bb.ao, !prof !10, !nosanitize !9
 
 .lr.ph.split.split.a:                             ; preds = %.lr.ph.split.split.preheader, %bb.bk
   %indvars.iv = phi i64 [ 0, %.lr.ph.split.split.preheader ], [ %indvars.iv.next, %bb.bk ] ; 5 uses
@@ -315,12 +355,12 @@ bb.ai:                                            ; preds = %.lr.ph.split.split.
   %.not1521 = icmp ult i64 %i.mw, %i.lm, !nosanitize !9
   br i1 %.not1521, label %.split1509.us, label %bb.aj, !prof !86, !nosanitize !9
 
-.split1509.us:                                    ; preds = %bb.ai, %.lr.ph.split.split.us
-  %.us-phi1511 = phi i64 [ %9, %.lr.ph.split.split.us ], [ %i.mw, %bb.ai ]
+.split1509.us:                                    ; preds = %bb.ai, %.lr.ph.split.split.split.us, %.lr.ph.split.a
+  %.us-phi1511 = phi i64 [ %10, %.lr.ph.split.a ], [ %15, %.lr.ph.split.split.split.us ], [ %i.mw, %bb.ai ]
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @200, i64 %i.lm, i64 %.us-phi1511) #13, !nosanitize !9
   unreachable, !nosanitize !9
 
-.split1513.us:                                    ; preds = %.lr.ph.split.split.us
+.split1513.us:                                    ; preds = %.lr.ph.split.a
   call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @202, i64 0) #13, !nosanitize !9
   unreachable, !nosanitize !9
 
@@ -333,8 +373,9 @@ bb.aj:                                            ; preds = %bb.ai
   %.not1079 = icmp ult i64 %i.nb, %i.lm, !nosanitize !9
   br i1 %.not1079, label %bb.ak, label %bb.al, !prof !86, !nosanitize !9
 
-bb.ak:                                            ; preds = %bb.aj
-  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @203, i64 %i.lm, i64 %i.nb) #13, !nosanitize !9
+bb.ak:                                            ; preds = %bb.aj, %16
+  %.us-phi1535 = phi i64 [ %20, %16 ], [ %i.nb, %bb.aj ]
+  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @203, i64 %i.lm, i64 %.us-phi1535) #13, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.al:                                            ; preds = %bb.aj
@@ -345,36 +386,35 @@ bb.al:                                            ; preds = %bb.aj
   %.not1080 = icmp ult i64 %i.nf, %i.lm, !nosanitize !9
   br i1 %.not1080, label %bb.am, label %bb.an, !prof !86, !nosanitize !9
 
-bb.am:                                            ; preds = %bb.al
-  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @204, i64 %i.lm, i64 %i.nf) #13, !nosanitize !9
+bb.am:                                            ; preds = %bb.al, %21
+  %.us-phi1542 = phi i64 [ %26, %21 ], [ %i.nf, %bb.al ]
+  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @204, i64 %i.lm, i64 %.us-phi1542) #13, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.an:                                            ; preds = %bb.al
   %i.ng = getelementptr inbounds nuw i8, ptr %i.mu, i64 2
   %i.nh = load i8, ptr %i.ng, align 1, !tbaa !380
   %i.ni = zext i8 %i.nh to i64                    ; 2 uses
-  %i.nj = getelementptr inbounds nuw [12 x i8], ptr %i.kw, i64 %i.ni ; 3 uses
+  %i.nj = getelementptr inbounds nuw [12 x i8], ptr %.fr1559, i64 %i.ni ; 3 uses
   %i.nk = mul nuw nsw i64 %i.ni, 12
-  %i.nl = add i64 %i.nk, %i.ln, !nosanitize !9    ; 3 uses
-  %10 = icmp eq i64 %i.nl, 0
-  %11 = xor i1 %8, %10
-  %12 = icmp uge i64 %i.nl, %i.ln, !nosanitize !9
-  %13 = and i1 %12, %11, !nosanitize !9
-  br i1 %13, label %bb.ap, label %bb.ao, !prof !10, !nosanitize !9
+  %i.nl = add i64 %i.nk, %i.ln, !nosanitize !9    ; 2 uses
+  %.not1566 = icmp ult i64 %i.nl, %i.ln, !nosanitize !9
+  br i1 %.not1566, label %bb.ao, label %bb.ap, !prof !86, !nosanitize !9
 
-bb.ao:                                            ; preds = %bb.an
-  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @205, i64 %i.ln, i64 %i.nl) #13, !nosanitize !9
+bb.ao:                                            ; preds = %bb.an, %.lr.ph.split.split.us
+  %.us-phi1550 = phi i64 [ %28, %.lr.ph.split.split.us ], [ %i.nl, %bb.an ]
+  call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @205, i64 %i.ln, i64 %.us-phi1550) #13, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ap:                                            ; preds = %bb.an
   %i.nm = ptrtoint ptr %i.nj to i64, !nosanitize !9 ; 2 uses
   %i.nn = and i64 %i.nm, 3, !nosanitize !9
   %i.no = icmp eq i64 %i.nn, 0, !nosanitize !9
-  %14 = and i1 %8, %i.no
-  br i1 %14, label %bb.ar, label %bb.aq, !prof !10, !nosanitize !9
+  br i1 %i.no, label %bb.ar, label %bb.aq, !prof !10, !nosanitize !9
 
-bb.aq:                                            ; preds = %bb.ap
-  call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @206, i64 %i.nm) #13, !nosanitize !9
+bb.aq:                                            ; preds = %bb.ap, %.lr.ph.split.split.us
+  %.us-phi1553 = phi i64 [ 0, %.lr.ph.split.split.us ], [ %i.nm, %bb.ap ]
+  call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @206, i64 %.us-phi1553) #13, !nosanitize !9
   unreachable, !nosanitize !9
 
 bb.ar:                                            ; preds = %bb.ap
@@ -384,7 +424,7 @@ bb.ar:                                            ; preds = %bb.ap
   %i.np = getelementptr inbounds nuw i8, ptr %i.mz, i64 2
   %i.nq = load i8, ptr %i.np, align 1, !tbaa !380
   %i.nr = zext i8 %i.nq to i64                    ; 2 uses
-  %i.ns = getelementptr inbounds nuw [12 x i8], ptr %i.kw, i64 %i.nr ; 3 uses
+  %i.ns = getelementptr inbounds nuw [12 x i8], ptr %.fr1559, i64 %i.nr ; 3 uses
   %i.nt = mul nuw nsw i64 %i.nr, 12
   %i.nu = add i64 %i.nt, %i.ln, !nosanitize !9    ; 2 uses
   %.not1081 = icmp ult i64 %i.nu, %i.ln, !nosanitize !9
@@ -499,7 +539,7 @@ bb.ba:                                            ; preds = %bb.bj, %bb.az
   %i.py = getelementptr inbounds nuw i8, ptr %.0639, i64 2
   %i.pz = load i8, ptr %i.py, align 1, !tbaa !380
   %i.qa = zext i8 %i.pz to i64                    ; 2 uses
-  %i.qb = getelementptr inbounds nuw [12 x i8], ptr %i.kw, i64 %i.qa ; 3 uses
+  %i.qb = getelementptr inbounds nuw [12 x i8], ptr %.fr1559, i64 %i.qa ; 3 uses
   %i.qc = mul nuw nsw i64 %i.qa, 12
   %i.qd = add i64 %i.qc, %i.ln, !nosanitize !9    ; 2 uses
   %.not1082 = icmp ult i64 %i.qd, %i.ln, !nosanitize !9

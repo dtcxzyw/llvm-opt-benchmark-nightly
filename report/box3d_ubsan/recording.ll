@@ -2,7 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 947
 inline.NumDeleted: 38
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@b3RecQueryBegin:bb.a
 bb.b:                                             ; preds = %bb.a
   tail call void @__ubsan_handle_type_mismatch_v1_abort(ptr nonnull @68, i64 %i.b) #12, !nosanitize !10
@@ -204,47 +204,60 @@ bb.a:
   br i1 %.not, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %i.ae = ptrtoint ptr %1 to i64, !nosanitize !10 ; 3 uses
+  %i.ae = ptrtoint ptr %1 to i64, !nosanitize !10 ; 5 uses
   br label %bb.c
 
-bb.b:                                             ; preds = %bb.f
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @820, i64 %i.ae, i64 %i.an) #12, !nosanitize !10
+bb.b:                                             ; preds = %bb.f, %3
+  %.lcssa = phi i64 [ %9, %3 ], [ %i.an, %bb.f ]
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @820, i64 %i.ae, i64 %.lcssa) #12, !nosanitize !10
   unreachable, !nosanitize !10
 
 bb.c:                                             ; preds = %bb.f, %.preheader
   %i.af = phi ptr [ %1, %.preheader ], [ %i.am, %bb.f ]
-  %.040 = phi i32 [ 0, %.preheader ], [ %i.ah, %bb.f ]
+  %.040 = phi i32 [ 0, %.preheader ], [ %i.ah, %bb.f ] ; 2 uses
   %.139 = phi i64 [ %i.ad, %.preheader ], [ %i.ak, %bb.f ] ; 2 uses
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !20  ; 2 uses
   %.not18 = icmp eq i8 %i.ag, 0
-  br i1 %.not18, label %.loopexit, label %bb.d
+  br i1 %.not18, label %.loopexit, label %3
 
-bb.d:                                             ; preds = %bb.c
-  %2 = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.040, i32 1), !nosanitize !10 ; 2 uses
-  %3 = extractvalue { i32, i1 } %2, 1, !nosanitize !10
-  br i1 %3, label %bb.e, label %bb.f, !prof !17, !nosanitize !10
-
-bb.e:                                             ; preds = %bb.d
+2:                                                ; preds = %bb.e
   tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @821, i64 2147483647, i64 1) #12, !nosanitize !10
   unreachable, !nosanitize !10
 
-bb.f:                                             ; preds = %bb.d
-  %i.ah = extractvalue { i32, i1 } %2, 0, !nosanitize !10 ; 3 uses
-  %i.ai = zext i8 %i.ag to i64
-  %i.aj = xor i64 %.139, %i.ai
+3:                                                ; preds = %bb.c
+  %4 = add nuw nsw i32 %.040, 1
+  %5 = zext i8 %i.ag to i64
+  %6 = xor i64 %.139, %5
+  %7 = mul i64 %6, 1099511628211                  ; 2 uses
+  %8 = sext i32 %4 to i64                         ; 2 uses
+  %9 = add i64 %8, %i.ae, !nosanitize !10         ; 2 uses
+  %.not41 = icmp ult i64 %9, %i.ae, !nosanitize !10
+  br i1 %.not41, label %bb.b, label %bb.d, !prof !34, !nosanitize !10
+
+bb.d:                                             ; preds = %3
+  %10 = getelementptr inbounds i8, ptr %1, i64 %8
+  %11 = load i8, ptr %10, align 1, !tbaa !20      ; 2 uses
+  %.not18.1 = icmp eq i8 %11, 0
+  br i1 %.not18.1, label %.loopexit, label %bb.e
+
+bb.e:                                             ; preds = %bb.d
+  %12 = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %.040, i32 2) ; 2 uses
+  %13 = extractvalue { i32, i1 } %12, 1, !nosanitize !10
+  br i1 %13, label %2, label %bb.f, !prof !17, !nosanitize !10
+
+bb.f:                                             ; preds = %bb.e
+  %i.ah = extractvalue { i32, i1 } %12, 0, !nosanitize !10 ; 2 uses
+  %i.ai = zext i8 %11 to i64
+  %i.aj = xor i64 %7, %i.ai
   %i.ak = mul i64 %i.aj, 1099511628211
   %i.al = sext i32 %i.ah to i64                   ; 2 uses
   %i.am = getelementptr inbounds i8, ptr %1, i64 %i.al
-  %i.an = add i64 %i.al, %i.ae, !nosanitize !10   ; 3 uses
-  %4 = icmp ne i64 %i.an, 0, !nosanitize !10
-  %5 = icmp uge i64 %i.an, %i.ae, !nosanitize !10
-  %6 = icmp slt i32 %i.ah, 0
-  %7 = xor i1 %6, %5
-  %8 = and i1 %4, %7, !nosanitize !10
-  br i1 %8, label %bb.c, label %bb.b, !prof !557, !llvm.loop !555, !nosanitize !10
+  %i.an = add i64 %i.al, %i.ae, !nosanitize !10   ; 2 uses
+  %.not41.1 = icmp ult i64 %i.an, %i.ae, !nosanitize !10
+  br i1 %.not41.1, label %bb.b, label %bb.c, !prof !34, !llvm.loop !555, !nosanitize !10
 
-.loopexit:                                        ; preds = %bb.c, %bb.a
-  %.2 = phi i64 [ %i.ad, %bb.a ], [ %.139, %bb.c ]
+.loopexit:                                        ; preds = %bb.c, %bb.d, %bb.a
+  %.2 = phi i64 [ %i.ad, %bb.a ], [ %.139, %bb.c ], [ %7, %bb.d ]
   %i.ao = tail call i64 @llvm.umax.i64(i64 %.2, i64 1)
   ret i64 %i.ao
 }
@@ -647,9 +660,9 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !552 = !{i32 -1056584962, i32 672735472}
 !553 = !{!58, !13, i64 16}
 !554 = !{!58, !7, i64 28}
-!555 = distinct !{!555, !25}
+!555 = distinct !{!555, !25, !557}
 !556 = !{i32 -1056584962, i32 -1586468262}
-!557 = !{!"branch_weights", i32 1048574, i32 1}
+!557 = !{!"llvm.loop.estimated_trip_count", i32 524288}
 !558 = distinct !{!558, !"b3RecTagMap_get"}
 !559 = distinct !{!559, !558, !"b3RecTagMap_get: argument 0"}
 !560 = distinct !{!560, !"b3RecTagMap_insert"}

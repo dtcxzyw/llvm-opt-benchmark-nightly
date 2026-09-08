@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %bb.y
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.aa
-  %.0207.lcssa = phi i32 [ 0, %bb.aa ], [ %i.dg, %._crit_edge.loopexit ] ; 9 uses
+  %.0207.lcssa = phi i32 [ 0, %bb.aa ], [ %i.dg, %._crit_edge.loopexit ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #14
   %i.dh = load ptr, ptr %i.az, align 8, !tbaa !57 ; 2 uses
@@ -417,7 +417,7 @@ bb.bg:                                            ; preds = %bb.bf
   br label %._crit_edge1342
 
 ._crit_edge1342:                                  ; preds = %._crit_edge1342.loopexit, %._crit_edge
-  %.0205.lcssa = phi i32 [ 0, %._crit_edge ], [ %i.fs, %._crit_edge1342.loopexit ] ; 13 uses
+  %.0205.lcssa = phi i32 [ 0, %._crit_edge ], [ %i.fs, %._crit_edge1342.loopexit ] ; 12 uses
   %.0204.lcssa = phi i32 [ 0, %._crit_edge ], [ %.2, %._crit_edge1342.loopexit ] ; 6 uses
   %i.ft = add i32 %.0207.lcssa, 3
   %i.fu = and i32 %i.ft, -4                       ; 4 uses
@@ -428,7 +428,7 @@ bb.bg:                                            ; preds = %bb.bf
   %narrow294 = add i32 %i.fx, 144                 ; 4 uses
   %i.fy = mul i32 %.0207.lcssa, 12
   %narrow295 = add i32 %i.fy, 4
-  %i.fz = and i32 %narrow295, -8
+  %i.fz = and i32 %narrow295, 2147483640
   %narrow296 = add i32 %narrow294, %i.fz          ; 3 uses
   %i.ga = add i32 %.0204.lcssa, 536870912
   %i.gb = icmp ult i32 %i.ga, 1073741824
@@ -457,12 +457,12 @@ bb.bj:                                            ; preds = %bb.bi
   unreachable, !nosanitize !12
 
 bb.bk:                                            ; preds = %bb.bi
-  %i.gn = shl nsw i32 %.0205.lcssa, 4
-  %4 = sext i32 %i.gn to i64
+  %i.gn = shl nuw nsw i32 %.0205.lcssa, 4
+  %4 = zext nneg i32 %i.gn to i64
   %i.go = add nsw i64 %i.gi, %4
   %.fr1510 = freeze i64 %i.go                     ; 3 uses
   %i.gp = trunc i64 %.fr1510 to i32
-  %narrow297 = add nsw i32 %.0205.lcssa, 7
+  %narrow297 = add nuw nsw i32 %.0205.lcssa, 7
   %i.gq = and i32 %narrow297, -8
   %i.gr = sext i32 %i.gq to i64
   %i.gs = add nsw i64 %.fr1510, %i.gr             ; 3 uses
@@ -667,10 +667,8 @@ b3GetHullSoaNormalsWrite.exit:                    ; preds = %b3GetHullSoaVertice
   %i.jo = icmp ne ptr %.0.i283, null, !nosanitize !12 ; 5 uses
   %i.jp = icmp eq i64 %i.jn, 0
   %i.jq = xor i1 %i.jo, %i.jp
-  %5 = icmp sgt i32 %.0207.lcssa, -4              ; 2 uses
-  %6 = icmp ult i64 %i.jn, %i.jm, !nosanitize !12
-  %7 = xor i1 %5, %6
-  %i.jr = and i1 %i.jq, %7, !nosanitize !12
+  %5 = icmp uge i64 %i.jn, %i.jm, !nosanitize !12
+  %i.jr = and i1 %i.jq, %5, !nosanitize !12
   br i1 %i.jr, label %bb.cl, label %bb.ck, !prof !13, !nosanitize !12
 
 bb.ck:                                            ; preds = %b3GetHullSoaNormalsWrite.exit
@@ -683,9 +681,8 @@ bb.cl:                                            ; preds = %b3GetHullSoaNormals
   %i.ju = add i64 %i.jl, %i.jt, !nosanitize !12   ; 3 uses
   %i.jv = icmp eq i64 %i.ju, 0
   %i.jw = xor i1 %i.jo, %i.jv
-  %8 = icmp ult i64 %i.ju, %i.jt, !nosanitize !12
-  %9 = xor i1 %5, %8
-  %i.jx = and i1 %i.jw, %9, !nosanitize !12
+  %6 = icmp uge i64 %i.ju, %i.jt, !nosanitize !12
+  %i.jx = and i1 %i.jw, %6, !nosanitize !12
   br i1 %i.jx, label %.preheader306, label %bb.cm, !prof !13, !nosanitize !12
 
 .preheader306:                                    ; preds = %bb.cl
@@ -737,37 +734,27 @@ bb.cm:                                            ; preds = %bb.cl
   br label %.lr.ph1380.split.split.us.split.us
 
 .lr.ph1380.split.split.us.split.us:               ; preds = %.lr.ph1380.split.split.us.split.us.preheader, %bb.cp
-  %indvars.iv2514 = phi i64 [ %i.kn, %.lr.ph1380.split.split.us.split.us.preheader ], [ %indvars.iv.next2515, %bb.cp ] ; 6 uses
-  %i.ko = shl nsw i64 %indvars.iv2514, 2          ; 3 uses
-  %i.kp = add i64 %i.ko, %i.jm, !nosanitize !12   ; 3 uses
-  %10 = icmp ne i64 %i.kp, 0, !nosanitize !12
-  %11 = icmp sgt i64 %indvars.iv2514, -1          ; 3 uses
+  %indvars.iv2514 = phi i64 [ %i.kn, %.lr.ph1380.split.split.us.split.us.preheader ], [ %indvars.iv.next2515, %bb.cp ] ; 5 uses
+  %i.ko = shl nuw nsw i64 %indvars.iv2514, 2      ; 3 uses
+  %i.kp = add i64 %i.ko, %i.jm, !nosanitize !12   ; 2 uses
   %i.kq = icmp ult i64 %i.kp, %i.jm, !nosanitize !12
-  %12 = xor i1 %11, %i.kq
-  %13 = and i1 %10, %12, !nosanitize !12
-  br i1 %13, label %bb.cn, label %.split1382.us, !prof !13, !nosanitize !12
+  br i1 %i.kq, label %.split1382.us, label %bb.cn, !prof !22, !nosanitize !12
 
 bb.cn:                                            ; preds = %.lr.ph1380.split.split.us.split.us
   %i.kr = getelementptr inbounds [4 x i8], ptr %.0.i283, i64 %indvars.iv2514
   %i.ks = load float, ptr %.0.i283, align 4, !tbaa !28
   store float %i.ks, ptr %i.kr, align 4, !tbaa !28
-  %i.kt = add i64 %i.ko, %i.jt, !nosanitize !12   ; 3 uses
-  %14 = icmp ne i64 %i.kt, 0, !nosanitize !12
+  %i.kt = add i64 %i.ko, %i.jt, !nosanitize !12   ; 2 uses
   %i.ku = icmp ult i64 %i.kt, %i.jt, !nosanitize !12
-  %15 = xor i1 %11, %i.ku
-  %16 = and i1 %14, %15, !nosanitize !12
-  br i1 %16, label %bb.co, label %.split1388.us, !prof !13, !nosanitize !12
+  br i1 %i.ku, label %.split1388.us, label %bb.co, !prof !22, !nosanitize !12
 
 bb.co:                                            ; preds = %bb.cn
   %i.kv = getelementptr inbounds [4 x i8], ptr %i.jk, i64 %indvars.iv2514
   %i.kw = load float, ptr %i.jk, align 4, !tbaa !28
   store float %i.kw, ptr %i.kv, align 4, !tbaa !28
-  %i.kx = add i64 %i.ko, %i.km, !nosanitize !12   ; 3 uses
-  %17 = icmp ne i64 %i.kx, 0, !nosanitize !12
+  %i.kx = add i64 %i.ko, %i.km, !nosanitize !12   ; 2 uses
   %i.ky = icmp ult i64 %i.kx, %i.km, !nosanitize !12
-  %18 = xor i1 %11, %i.ky
-  %19 = and i1 %17, %18, !nosanitize !12
-  br i1 %19, label %bb.cp, label %.split1397.us, !prof !13, !nosanitize !12
+  br i1 %i.ky, label %.split1397.us, label %bb.cp, !prof !22, !nosanitize !12
 
 bb.cp:                                            ; preds = %bb.co
   %i.kz = getelementptr inbounds [4 x i8], ptr %i.js, i64 %indvars.iv2514
@@ -989,10 +976,8 @@ bb.dj:                                            ; preds = %.lr.ph1380
   %i.nn = icmp ne ptr %.0.i284, null, !nosanitize !12 ; 5 uses
   %i.no = icmp eq i64 %i.nm, 0
   %i.np = xor i1 %i.nn, %i.no
-  %20 = icmp sgt i32 %.0205.lcssa, -4             ; 2 uses
-  %21 = icmp ult i64 %i.nm, %i.nl, !nosanitize !12
-  %22 = xor i1 %20, %21
-  %i.nq = and i1 %i.np, %22, !nosanitize !12
+  %7 = icmp uge i64 %i.nm, %i.nl, !nosanitize !12
+  %i.nq = and i1 %i.np, %7, !nosanitize !12
   br i1 %i.nq, label %bb.ea, label %bb.dz, !prof !13, !nosanitize !12
 
 .lr.ph1413.split:                                 ; preds = %.lr.ph1413.split.preheader, %bb.dy
@@ -1161,9 +1146,8 @@ bb.ea:                                            ; preds = %._crit_edge1414
   %i.qh = add i64 %i.nk, %i.qg, !nosanitize !12   ; 3 uses
   %i.qi = icmp eq i64 %i.qh, 0
   %i.qj = xor i1 %i.nn, %i.qi
-  %23 = icmp ult i64 %i.qh, %i.qg, !nosanitize !12
-  %24 = xor i1 %20, %23
-  %i.qk = and i1 %i.qj, %24, !nosanitize !12
+  %8 = icmp uge i64 %i.qh, %i.qg, !nosanitize !12
+  %i.qk = and i1 %i.qj, %8, !nosanitize !12
   br i1 %i.qk, label %.preheader303, label %bb.ec, !prof !13, !nosanitize !12
 
 .preheader303:                                    ; preds = %bb.ea
@@ -1220,7 +1204,7 @@ bb.ec:                                            ; preds = %bb.ea
 
 .lr.ph1477.split.us:                              ; preds = %.lr.ph1477
   %i.rg = sext i32 %.0205.lcssa to i64
-  %i.rh = shl nsw i64 %i.rg, 2
+  %i.rh = shl nuw nsw i64 %i.rg, 2
   %i.ri = icmp eq i32 %.0205.lcssa, 0
   br i1 %i.ri, label %.split1483, label %.split1480.us, !prof !13, !nosanitize !12
 
