@@ -204,20 +204,19 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %bb.aq, %bb.ap
   %indvars.iv.i107.i = phi i64 [ 0, %bb.ap ], [ %indvars.iv.next.i109.i, %bb.aq ] ; 3 uses
-  %i.ie = phi i32 [ %.pre.i.i, %bb.ap ], [ %spec.select.i108.i, %bb.aq ] ; 2 uses
+  %i.ie = phi i32 [ %.pre.i.i, %bb.ap ], [ %spec.select.i108.i, %bb.aq ] ; 3 uses
   %i.if = getelementptr [4 x i8], ptr @hf_iuup_init_ipti, i64 %indvars.iv.i107.i
   %i.ig = load i32, ptr %i.if, align 4
   %i.ih = tail call ptr @proto_tree_add_item(ptr noundef %i.ic, i32 noundef %i.ig, ptr noundef %.040, i32 noundef %i.ie, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.ii = trunc nuw nsw i64 %indvars.iv.i107.i to i32
-  %i.ij = and i32 %i.ii, 1                        ; 2 uses
-  %spec.select.i108.i = add i32 %i.ij, %i.ie      ; 2 uses
+  %i.ij = and i32 %i.ii, 1
+  %spec.select.i108.i = add i32 %i.ij, %i.ie
   %indvars.iv.next.i109.i = add nuw nsw i64 %indvars.iv.i107.i, 1 ; 2 uses
   %exitcond.not.i110.i = icmp eq i64 %indvars.iv.next.i109.i, %wide.trip.count.i106.i
   br i1 %exitcond.not.i110.i, label %bb.ar, label %bb.aq, !llvm.loop !13
 
 bb.ar:                                            ; preds = %bb.aq
-  %4 = xor i32 %i.ij, 1
-  %spec.select80.i.i = add i32 %spec.select.i108.i, %4
+  %spec.select80.i.i = add i32 %i.ie, 1
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %bb.ao
