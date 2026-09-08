@@ -204,11 +204,16 @@ bb.g:                                             ; preds = %bb.f
 
 _RNCNvXsc_NtCs8frGy5WneL6_4fish9tokenizerNtB7_11PipeOrRedirINtNtCs3oUPovFnLWP_4core7convert7TryFromRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8try_froms0_0B9_.exit: ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !3442
-  %i.ad = add nuw i64 %.sroa.0.1.i.i69, 1         ; 3 uses
+  %i.ad = add nuw i64 %.sroa.0.1.i.i69, 1         ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
-  %i.ae = tail call noundef i32 @_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %i.ad)
-  %.not22.a = icmp eq i32 %i.ae, 62
-  br i1 %.not22.a, label %3, label %8
+  %3 = tail call noundef i32 @_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %i.ad)
+  %.not22 = icmp eq i32 %3, 62                    ; 2 uses
+  %4 = add nuw i64 %.sroa.0.1.i.i69, 2
+  %spec.select = select i1 %.not22, i64 %4, i64 %i.ad ; 10 uses
+  %spec.select78 = zext i1 %.not22 to i8          ; 3 uses
+  %i.ae = tail call noundef i32 @_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %spec.select)
+  %.not22.a = icmp eq i32 %i.ae, 124
+  br i1 %.not22.a, label %bb.q, label %bb.r
 
 bb.h:                                             ; preds = %_RINvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtB6_9TakeWhileNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32NCNvXsc_NtCs8frGy5WneL6_4fish9tokenizerNtB2d_11PipeOrRedirINtNtBc_7convert7TryFromRNtB1f_8Utf32StrE8try_from0ENtNtNtBa_6traits8iterator8Iterator4foldjNCNvYBV_B3R_5count0EB2f_.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
@@ -291,36 +296,17 @@ bb.p:                                             ; preds = %_RNCNvXsc_NtCs8frGy
   %spec.select71 = zext i1 %i.av to i8
   br label %bb.bd
 
-3:                                                ; preds = %_RNCNvXsc_NtCs8frGy5WneL6_4fish9tokenizerNtB7_11PipeOrRedirINtNtCs3oUPovFnLWP_4core7convert7TryFromRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8try_froms0_0B9_.exit
-  %4 = icmp eq i64 %i.ad, -1
-  br i1 %4, label %7, label %5
-
-5:                                                ; preds = %3
-  %6 = add nuw i64 %.sroa.0.1.i.i69, 2
-  br label %8
-
-7:                                                ; preds = %3
-  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1035) #28
-  unreachable
-
-8:                                                ; preds = %_RNCNvXsc_NtCs8frGy5WneL6_4fish9tokenizerNtB7_11PipeOrRedirINtNtCs3oUPovFnLWP_4core7convert7TryFromRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8try_froms0_0B9_.exit, %5
-  %.sroa.0.1 = phi i64 [ %6, %5 ], [ %i.ad, %_RNCNvXsc_NtCs8frGy5WneL6_4fish9tokenizerNtB7_11PipeOrRedirINtNtCs3oUPovFnLWP_4core7convert7TryFromRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8try_froms0_0B9_.exit ] ; 10 uses
-  %.sroa.11.1 = phi i8 [ 1, %5 ], [ 0, %_RNCNvXsc_NtCs8frGy5WneL6_4fish9tokenizerNtB7_11PipeOrRedirINtNtCs3oUPovFnLWP_4core7convert7TryFromRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8try_froms0_0B9_.exit ] ; 3 uses
-  %9 = tail call noundef i32 @_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %.sroa.0.1)
-  %10 = icmp eq i32 %9, 124
-  br i1 %10, label %bb.q, label %bb.r
-
-bb.q:                                             ; preds = %8
-  %i.aw = icmp eq i64 %.sroa.0.1, -1
+bb.q:                                             ; preds = %_RNCNvXsc_NtCs8frGy5WneL6_4fish9tokenizerNtB7_11PipeOrRedirINtNtCs3oUPovFnLWP_4core7convert7TryFromRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8try_froms0_0B9_.exit
+  %i.aw = icmp eq i64 %spec.select, -1
   br i1 %i.aw, label %bb.t, label %bb.s
 
-bb.r:                                             ; preds = %8
-  %i.ax = tail call noundef i32 @_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %.sroa.0.1)
+bb.r:                                             ; preds = %_RNCNvXsc_NtCs8frGy5WneL6_4fish9tokenizerNtB7_11PipeOrRedirINtNtCs3oUPovFnLWP_4core7convert7TryFromRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrE8try_froms0_0B9_.exit
+  %i.ax = tail call noundef i32 @_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %spec.select)
   %i.ay = icmp eq i32 %i.ax, 38
   br i1 %i.ay, label %bb.v, label %bb.w
 
 bb.s:                                             ; preds = %bb.q
-  %i.az = add nuw i64 %.sroa.0.1, 1               ; 2 uses
+  %i.az = add nuw i64 %spec.select, 1             ; 2 uses
   br i1 %.not20, label %bb.bd, label %bb.u
 
 bb.t:                                             ; preds = %bb.q
@@ -332,14 +318,14 @@ bb.u:                                             ; preds = %bb.s
   br label %bb.bd
 
 bb.v:                                             ; preds = %bb.r
-  %i.bb = icmp eq i64 %.sroa.0.1, -1
+  %i.bb = icmp eq i64 %spec.select, -1
   br i1 %i.bb, label %bb.y, label %bb.x
 
 bb.w:                                             ; preds = %bb.r
   br i1 %.not20, label %bb.ab, label %bb.aa
 
 bb.x:                                             ; preds = %bb.v
-  %i.bc = add nuw i64 %.sroa.0.1, 1               ; 2 uses
+  %i.bc = add nuw i64 %spec.select, 1             ; 2 uses
   br i1 %.not20, label %bb.bd, label %bb.z
 
 bb.y:                                             ; preds = %bb.v
@@ -356,16 +342,16 @@ bb.aa:                                            ; preds = %bb.w
 
 bb.ab:                                            ; preds = %bb.w, %bb.aa
   %.sroa.04.0 = phi i32 [ %i.be, %bb.aa ], [ 1, %bb.w ] ; 2 uses
-  %i.bf = tail call noundef i32 @_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %.sroa.0.1)
+  %i.bf = tail call noundef i32 @_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt7char_atCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %spec.select)
   %i.bg = icmp eq i32 %i.bf, 63
   br i1 %i.bg, label %bb.ac, label %bb.bd
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.bh = icmp eq i64 %.sroa.0.1, -1
+  %i.bh = icmp eq i64 %spec.select, -1
   br i1 %i.bh, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.bi = add nuw i64 %.sroa.0.1, 1
+  %i.bi = add nuw i64 %spec.select, 1
   br label %bb.bd
 
 bb.ae:                                            ; preds = %bb.ac
@@ -478,10 +464,10 @@ bb.bc:                                            ; preds = %bb.ba
   unreachable
 
 bb.bd:                                            ; preds = %bb.p, %bb.ab, %bb.ad, %bb.aq, %bb.az, %bb.bb, %bb.s, %bb.u, %bb.x, %bb.z, %bb.aj, %bb.an
-  %.sroa.0.0 = phi i64 [ %.sroa.0.3, %bb.az ], [ %spec.select70, %bb.p ], [ %i.az, %bb.s ], [ %i.az, %bb.u ], [ %i.bc, %bb.x ], [ %i.bc, %bb.z ], [ %i.bi, %bb.ad ], [ %.sroa.0.1, %bb.ab ], [ %.sroa.0.2, %bb.aj ], [ %.sroa.0.2, %bb.an ], [ %i.bt, %bb.aq ], [ %i.ce, %bb.bb ]
+  %.sroa.0.0 = phi i64 [ %.sroa.0.3, %bb.az ], [ %spec.select70, %bb.p ], [ %i.az, %bb.s ], [ %i.az, %bb.u ], [ %i.bc, %bb.x ], [ %i.bc, %bb.z ], [ %i.bi, %bb.ad ], [ %spec.select, %bb.ab ], [ %.sroa.0.2, %bb.aj ], [ %.sroa.0.2, %bb.an ], [ %i.bt, %bb.aq ], [ %i.ce, %bb.bb ]
   %.sroa.25.0 = phi i8 [ 1, %bb.az ], [ %spec.select71, %bb.p ], [ 0, %bb.s ], [ 0, %bb.u ], [ 0, %bb.x ], [ 0, %bb.z ], [ 0, %bb.ad ], [ 0, %bb.ab ], [ 0, %bb.aj ], [ 0, %bb.an ], [ 1, %bb.aq ], [ 1, %bb.bb ]
   %.sroa.22.0 = phi i8 [ 0, %bb.az ], [ 1, %bb.p ], [ 1, %bb.s ], [ 1, %bb.u ], [ 0, %bb.x ], [ 0, %bb.z ], [ 0, %bb.ad ], [ 0, %bb.ab ], [ 0, %bb.aj ], [ 0, %bb.an ], [ 1, %bb.aq ], [ 0, %bb.bb ]
-  %.sroa.11.0 = phi i8 [ %.sroa.11.4, %bb.az ], [ 0, %bb.p ], [ %.sroa.11.1, %bb.s ], [ %.sroa.11.1, %bb.u ], [ 4, %bb.x ], [ 4, %bb.z ], [ 5, %bb.ad ], [ %.sroa.11.1, %bb.ab ], [ %.sroa.11.3, %bb.aj ], [ %.sroa.11.3, %bb.an ], [ 0, %bb.aq ], [ 5, %bb.bb ]
+  %.sroa.11.0 = phi i8 [ %.sroa.11.4, %bb.az ], [ 0, %bb.p ], [ %spec.select78, %bb.s ], [ %spec.select78, %bb.u ], [ 4, %bb.x ], [ 4, %bb.z ], [ 5, %bb.ad ], [ %spec.select78, %bb.ab ], [ %.sroa.11.3, %bb.aj ], [ %.sroa.11.3, %bb.an ], [ 0, %bb.aq ], [ 5, %bb.bb ]
   %.sroa.4.0 = phi i32 [ 1, %bb.az ], [ 1, %bb.p ], [ 1, %bb.s ], [ %i.ba, %bb.u ], [ 1, %bb.x ], [ %i.bd, %bb.z ], [ %.sroa.04.0, %bb.ad ], [ %.sroa.04.0, %bb.ab ], [ 0, %bb.aj ], [ %i.bp, %bb.an ], [ 1, %bb.aq ], [ 1, %bb.bb ]
   store i64 %.sroa.0.0, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8

@@ -204,7 +204,7 @@ _ZNK2cv8MatShapeixEm.exit:                        ; preds = %bb.o
   br i1 %i.ck, label %_ZNK2cv8MatShapeixEm.exit60.lr.ph, label %_ZNK2cv8MatShapeixEm.exit54
 
 _ZNK2cv8MatShapeixEm.exit60.lr.ph:                ; preds = %_ZNK2cv8MatShapeixEm.exit
-  %i.cl = add nsw i32 %i.p, -2                    ; 2 uses
+  %i.cl = add nsw i32 %i.p, -2
   %i.cm = zext i32 %i.cl to i64                   ; 5 uses
   %i.cn = and i64 %i.cm, 1
   %lcmp.mod.not.not = icmp eq i64 %i.cn, 0
@@ -214,7 +214,7 @@ _ZNK2cv8MatShapeixEm.exit60.prol:                 ; preds = %_ZNK2cv8MatShapeixE
   %i.co = getelementptr inbounds nuw [4 x i8], ptr %i.bu, i64 %i.cm
   %i.cp = load i32, ptr %i.co, align 4, !tbaa !38
   %i.cq = sext i32 %i.cp to i64                   ; 3 uses
-  %i.cr = sdiv i64 %i.by, %i.cq                   ; 3 uses
+  %i.cr = sdiv i64 %i.by, %i.cq                   ; 2 uses
   %i.cs = mul nsw i64 %i.cr, %i.cq                ; 0 uses
   %.recomposed98 = srem i64 %i.by, %i.cq
   %sext47.prol = shl i64 %.recomposed98, 32
@@ -222,28 +222,23 @@ _ZNK2cv8MatShapeixEm.exit60.prol:                 ; preds = %_ZNK2cv8MatShapeixE
   %i.cu = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %i.cm
   %i.cv = load i64, ptr %i.cu, align 8, !tbaa !40
   %i.cw = mul i64 %i.ct, %i.cv
-  %i.cx = getelementptr inbounds nuw i8, ptr %i.cb, i64 %i.cw ; 2 uses
+  %i.cx = getelementptr inbounds nuw i8, ptr %i.cb, i64 %i.cw
   %indvars.iv.next.prol = add nsw i64 %i.cm, -1
   br label %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit
 
-_ZNK2cv8MatShapeixEm.exit60.prol.loopexit:        ; preds = %_ZNK2cv8MatShapeixEm.exit60.prol, %_ZNK2cv8MatShapeixEm.exit60.lr.ph
-  %.lcssa93.unr = phi i64 [ poison, %_ZNK2cv8MatShapeixEm.exit60.lr.ph ], [ %i.cr, %_ZNK2cv8MatShapeixEm.exit60.prol ]
-  %.lcssa.unr = phi ptr [ poison, %_ZNK2cv8MatShapeixEm.exit60.lr.ph ], [ %i.cx, %_ZNK2cv8MatShapeixEm.exit60.prol ]
+_ZNK2cv8MatShapeixEm.exit60.prol.loopexit:        ; preds = %_ZNK2cv8MatShapeixEm.exit60.lr.ph, %_ZNK2cv8MatShapeixEm.exit60.prol
   %indvars.iv.unr = phi i64 [ %i.cm, %_ZNK2cv8MatShapeixEm.exit60.lr.ph ], [ %indvars.iv.next.prol, %_ZNK2cv8MatShapeixEm.exit60.prol ]
   %.unr = phi ptr [ %i.cb, %_ZNK2cv8MatShapeixEm.exit60.lr.ph ], [ %i.cx, %_ZNK2cv8MatShapeixEm.exit60.prol ]
   %.272.unr = phi i64 [ %i.by, %_ZNK2cv8MatShapeixEm.exit60.lr.ph ], [ %i.cr, %_ZNK2cv8MatShapeixEm.exit60.prol ]
-  %5 = icmp eq i32 %i.cl, 0
-  br i1 %5, label %._ZNK2cv8MatShapeixEm.exit54_crit_edge, label %_ZNK2cv8MatShapeixEm.exit60
+  br label %_ZNK2cv8MatShapeixEm.exit60
 
-._ZNK2cv8MatShapeixEm.exit54_crit_edge:           ; preds = %_ZNK2cv8MatShapeixEm.exit60, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit
-  %.lcssa93 = phi i64 [ %.lcssa93.unr, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit ], [ %i.ds, %_ZNK2cv8MatShapeixEm.exit60 ]
-  %.lcssa = phi ptr [ %.lcssa.unr, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit ], [ %i.dy, %_ZNK2cv8MatShapeixEm.exit60 ] ; 2 uses
-  store ptr %.lcssa, ptr %i.cj, align 8, !tbaa !46
+._ZNK2cv8MatShapeixEm.exit54_crit_edge:           ; preds = %_ZNK2cv8MatShapeixEm.exit60
+  store ptr %i.dy, ptr %i.cj, align 8, !tbaa !46
   br label %_ZNK2cv8MatShapeixEm.exit54
 
 _ZNK2cv8MatShapeixEm.exit54:                      ; preds = %._ZNK2cv8MatShapeixEm.exit54_crit_edge, %_ZNK2cv8MatShapeixEm.exit
-  %i.cy = phi ptr [ %.lcssa, %._ZNK2cv8MatShapeixEm.exit54_crit_edge ], [ %i.cb, %_ZNK2cv8MatShapeixEm.exit ] ; 2 uses
-  %.2.lcssa = phi i64 [ %.lcssa93, %._ZNK2cv8MatShapeixEm.exit54_crit_edge ], [ %i.by, %_ZNK2cv8MatShapeixEm.exit ]
+  %i.cy = phi ptr [ %i.dy, %._ZNK2cv8MatShapeixEm.exit54_crit_edge ], [ %i.cb, %_ZNK2cv8MatShapeixEm.exit ] ; 2 uses
+  %.2.lcssa = phi i64 [ %i.ds, %._ZNK2cv8MatShapeixEm.exit54_crit_edge ], [ %i.by, %_ZNK2cv8MatShapeixEm.exit ]
   %i.cz = mul i64 %i.cf, %i.bx
   %i.da = getelementptr inbounds nuw i8, ptr %i.cy, i64 %i.cz ; 2 uses
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -254,10 +249,10 @@ _ZNK2cv8MatShapeixEm.exit54:                      ; preds = %._ZNK2cv8MatShapeix
   store ptr %storemerge, ptr %i.ci, align 8, !tbaa !44
   br label %bb.s
 
-_ZNK2cv8MatShapeixEm.exit60:                      ; preds = %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit, %_ZNK2cv8MatShapeixEm.exit60
-  %indvars.iv = phi i64 [ %indvars.iv.next.1, %_ZNK2cv8MatShapeixEm.exit60 ], [ %indvars.iv.unr, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit ] ; 4 uses
-  %i.de = phi ptr [ %i.dy, %_ZNK2cv8MatShapeixEm.exit60 ], [ %.unr, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit ]
-  %.272 = phi i64 [ %i.ds, %_ZNK2cv8MatShapeixEm.exit60 ], [ %.272.unr, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit ] ; 2 uses
+_ZNK2cv8MatShapeixEm.exit60:                      ; preds = %_ZNK2cv8MatShapeixEm.exit60, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit
+  %indvars.iv = phi i64 [ %indvars.iv.unr, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit ], [ %indvars.iv.next.1, %_ZNK2cv8MatShapeixEm.exit60 ] ; 4 uses
+  %i.de = phi ptr [ %.unr, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit ], [ %i.dy, %_ZNK2cv8MatShapeixEm.exit60 ]
+  %.272 = phi i64 [ %.272.unr, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit ], [ %i.ds, %_ZNK2cv8MatShapeixEm.exit60 ] ; 2 uses
   %i.df = getelementptr inbounds nuw [4 x i8], ptr %i.bu, i64 %indvars.iv
   %i.dg = load i32, ptr %i.df, align 4, !tbaa !38
   %i.dh = sext i32 %i.dg to i64                   ; 3 uses
@@ -282,7 +277,7 @@ _ZNK2cv8MatShapeixEm.exit60:                      ; preds = %_ZNK2cv8MatShapeixE
   %i.dv = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %indvars.iv.next
   %i.dw = load i64, ptr %i.dv, align 8, !tbaa !40
   %i.dx = mul i64 %i.du, %i.dw
-  %i.dy = getelementptr inbounds nuw i8, ptr %i.do, i64 %i.dx ; 2 uses
+  %i.dy = getelementptr inbounds nuw i8, ptr %i.do, i64 %i.dx ; 3 uses
   %indvars.iv.next.1 = add nsw i64 %indvars.iv, -2
   %.not91.1 = icmp eq i64 %indvars.iv.next, 0
   br i1 %.not91.1, label %._ZNK2cv8MatShapeixEm.exit54_crit_edge, label %_ZNK2cv8MatShapeixEm.exit60, !llvm.loop !89

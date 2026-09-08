@@ -204,25 +204,22 @@ bb.u:                                             ; preds = %bb.t
   %i.ar = load i8, ptr %i.aq, align 8, !range !61, !noundef !5 ; 3 uses
   %i.as = icmp ne i8 %i.ar, 3
   call void @llvm.assume(i1 %i.as)
-  %11 = add nsw i8 %i.ar, -2                      ; 2 uses
   %i.at = icmp samesign ult i8 %i.ar, 2
-  %12 = icmp eq i8 %11, 1
-  %13 = select i1 %i.at, i1 true, i1 %12
-  br i1 %13, label %bb.v, label %bb.w
+  br i1 %i.at, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
   %i.au = invoke noundef nonnull align 8 ptr @_RINvMsi_NtCscAsMj0W7j8b_3std7processNtB6_7Command3argReECs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(200) %i.v, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @871, i64 noundef 5)
           to label %bb.x unwind label %bb.p       ; 0 uses
 
 bb.w:                                             ; preds = %bb.u
-  switch i8 %11, label %bb.y [
-    i8 0, label %bb.ad
-    i8 1, label %14
-    i8 2, label %bb.z
-    i8 3, label %bb.aa
-    i8 4, label %bb.ab
-    i8 5, label %bb.ac
-    i8 6, label %bb.ag
+  switch i8 %i.ar, label %bb.y [
+    i8 2, label %bb.ad
+    i8 3, label %11
+    i8 4, label %bb.z
+    i8 5, label %bb.aa
+    i8 6, label %bb.ab
+    i8 7, label %bb.ac
+    i8 8, label %bb.ag
   ]
 
 bb.x:                                             ; preds = %bb.ak, %bb.ah, %bb.ag, %bb.al, %bb.an, %bb.v, %bb.af
@@ -231,9 +228,6 @@ bb.x:                                             ; preds = %bb.ak, %bb.ah, %bb.
 
 bb.y:                                             ; preds = %bb.w
   unreachable
-
-14:                                               ; preds = %bb.w
-  br label %bb.ad
 
 bb.z:                                             ; preds = %bb.w
   br label %bb.ad
@@ -247,9 +241,9 @@ bb.ab:                                            ; preds = %bb.w
 bb.ac:                                            ; preds = %bb.w
   br label %bb.ad
 
-bb.ad:                                            ; preds = %14, %bb.w, %bb.ac, %bb.ab, %bb.aa, %bb.z
-  %.sroa.11.0 = phi i64 [ 12, %bb.ac ], [ 3, %bb.w ], [ 10, %14 ], [ 7, %bb.z ], [ 4, %bb.aa ], [ 5, %bb.ab ]
-  %.sroa.03.0 = phi ptr [ @876, %bb.ac ], [ @872, %bb.w ], [ @873, %14 ], [ @874, %bb.z ], [ @803, %bb.aa ], [ @875, %bb.ab ]
+bb.ad:                                            ; preds = %bb.w, %11, %bb.ac, %bb.ab, %bb.aa, %bb.z
+  %.sroa.11.0 = phi i64 [ 5, %bb.ab ], [ 10, %11 ], [ 12, %bb.ac ], [ 7, %bb.z ], [ 4, %bb.aa ], [ 3, %bb.w ]
+  %.sroa.03.0 = phi ptr [ @875, %bb.ab ], [ @873, %11 ], [ @876, %bb.ac ], [ @874, %bb.z ], [ @803, %bb.aa ], [ @872, %bb.w ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)
   store ptr %.sroa.03.0, ptr %i.t, align 8, !captures !6667
   %i.aw = getelementptr inbounds nuw i8, ptr %i.t, i64 8
@@ -260,6 +254,9 @@ bb.ad:                                            ; preds = %14, %bb.w, %bb.ac, 
   store ptr @_RNvXs1i_NtCshzWfHUSfYae_4core3fmtReNtB6_7Display3fmtCs6u1mgJOKDyY_13rust_analyzer, ptr %.sroa.435.0..sroa_idx, align 8
   invoke void @_RNvNvNtCsbSS6DM8SDEO_5alloc3fmt6format12format_inner(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.s, ptr noundef nonnull @877, ptr noundef nonnull %i.r)
           to label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsbSS6DM8SDEO_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs6u1mgJOKDyY_13rust_analyzer.exit unwind label %bb.p
+
+11:                                               ; preds = %bb.w
+  br label %bb.ad
 
 _RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsbSS6DM8SDEO_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs6u1mgJOKDyY_13rust_analyzer.exit: ; preds = %bb.ad
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r)

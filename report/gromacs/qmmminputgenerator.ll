@@ -204,21 +204,16 @@ bb.c:                                             ; preds = %bb.a
   store <2 x float> zeroinitializer, ptr %4, align 8, !tbaa !52
   %i.av = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   store float 0.000000e+00, ptr %i.av, align 8, !tbaa !52
-  %5 = add nsw i64 %i.i, -1                       ; 2 uses
-  %.not = icmp eq i64 %5, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph304
-
-.lr.ph304:                                        ; preds = %bb.c
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 176
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 176
+  %6 = add nsw i64 %i.i, -2
   br label %.lr.ph.preheader
 
 .loopexit:                                        ; preds = %.lr.ph
-  %exitcond309.not = icmp eq i64 %i.gw, %5
+  %exitcond309.not = icmp eq i64 %.094302, %6
   br i1 %exitcond309.not, label %._crit_edge, label %.lr.ph.preheader, !llvm.loop !88
 
-._crit_edge:                                      ; preds = %.loopexit, %bb.c
-  %.0.lcssa = phi float [ 0.000000e+00, %bb.c ], [ %spec.select, %.loopexit ]
-  %i.aw = fmul float %1, %.0.lcssa                ; 3 uses
+._crit_edge:                                      ; preds = %.loopexit
+  %i.aw = fmul float %1, %spec.select             ; 3 uses
   %i.ax = load float, ptr %i.at, align 4, !tbaa !52 ; 8 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.az = load float, ptr %i.ay, align 8, !tbaa !52 ; 8 uses
@@ -445,10 +440,10 @@ bb.f:                                             ; preds = %_ZN3gmx15computeQMB
   %umax = call i64 @llvm.umax.i64(i64 %i.i, i64 2)
   br label %bb.g
 
-.lr.ph.preheader:                                 ; preds = %.loopexit, %.lr.ph304
-  %.0303 = phi float [ 0.000000e+00, %.lr.ph304 ], [ %spec.select, %.loopexit ]
-  %.094302 = phi i64 [ 0, %.lr.ph304 ], [ %i.gw, %.loopexit ] ; 2 uses
-  %i.gw = add nuw i64 %.094302, 1                 ; 3 uses
+.lr.ph.preheader:                                 ; preds = %.loopexit, %bb.c
+  %.0303 = phi float [ 0.000000e+00, %bb.c ], [ %spec.select, %.loopexit ]
+  %.094302 = phi i64 [ 0, %bb.c ], [ %i.gw, %.loopexit ] ; 3 uses
+  %i.gw = add nuw i64 %.094302, 1                 ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -459,7 +454,7 @@ bb.f:                                             ; preds = %_ZN3gmx15computeQMB
   %i.gz = load ptr, ptr %i.gy, align 8, !tbaa !59 ; 2 uses
   %i.ha = getelementptr inbounds nuw [8 x i8], ptr %i.gz, i64 %.094302
   %i.hb = load i64, ptr %i.ha, align 8, !tbaa !26
-  %i.hc = load i64, ptr %6, align 8
+  %i.hc = load i64, ptr %5, align 8
   %i.hd = inttoptr i64 %i.hc to ptr               ; 2 uses
   %i.he = getelementptr inbounds [12 x i8], ptr %i.hd, i64 %i.hb
   %i.hf = getelementptr inbounds nuw [8 x i8], ptr %i.gz, i64 %.095300

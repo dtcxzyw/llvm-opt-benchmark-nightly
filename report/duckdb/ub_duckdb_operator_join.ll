@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZN6duckdb10unique_ptrINS_11IEJoinUnionESt14default_deleteIS1_ELb1EE5resetEPS1_.exit, %bb.a
   %i.bv = call noundef ptr @_ZNK6duckdb10unique_ptrINS_11IEJoinUnionESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.ap)
-  %i.bw = call noundef i64 @_ZN6duckdb11IEJoinUnion17JoinComplexBlocksERNS_6vectorImLb0ESaImEEES4_(ptr noundef nonnull align 8 dereferenceable(200) %i.bv, ptr noundef nonnull align 8 dereferenceable(24) %i.aq, ptr noundef nonnull align 8 dereferenceable(24) %i.ar) ; 7 uses
+  %i.bw = call noundef i64 @_ZN6duckdb11IEJoinUnion17JoinComplexBlocksERNS_6vectorImLb0ESaImEEES4_(ptr noundef nonnull align 8 dereferenceable(200) %i.bv, ptr noundef nonnull align 8 dereferenceable(24) %i.aq, ptr noundef nonnull align 8 dereferenceable(24) %i.ar) ; 6 uses
   %.not = icmp eq i64 %i.bw, 0
   br i1 %.not, label %bb.c, label %bb.d
 
@@ -243,7 +243,7 @@ bb.d:                                             ; preds = %bb.b
   %i.cg = load i64, ptr %i.ba, align 8, !tbaa !1266
   %i.ch = call noundef nonnull align 8 dereferenceable(808) ptr @_ZNK6duckdb10unique_ptrINS_18SortedRunScanStateESt14default_deleteIS1_ELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.bb)
   call void @_ZN6duckdb17PhysicalRangeJoin18SliceSortedPayloadERNS_9DataChunkERNS0_17GlobalSortedTableERNS_18BlockIteratorStateILNS_22BlockIteratorStateTypeE1EEERNS_19TupleDataChunkStateEmRKNS_6vectorImLb0ESaImEEERNS_18SortedRunScanStateE(ptr noundef nonnull align 8 dereferenceable(72) %i.ay, ptr noundef nonnull align 8 dereferenceable(72) %i.ao, ptr noundef nonnull align 8 dereferenceable(1192) %i.cf, ptr noundef nonnull align 8 dereferenceable(488) %i.az, i64 noundef %i.cg, ptr noundef nonnull align 8 dereferenceable(24) %i.ar, ptr noundef nonnull align 8 dereferenceable(808) %i.ch)
-  %i.ci = call noundef ptr @_ZN6duckdb10FlatVector26IncrementalSelectionVectorEv() ; 3 uses
+  %i.ci = call noundef ptr @_ZN6duckdb10FlatVector26IncrementalSelectionVectorEv() ; 2 uses
   %i.cj = load ptr, ptr %i.bc, align 8, !tbaa !233
   %i.ck = load ptr, ptr %i.x, align 8, !tbaa !232
   %i.cl = ptrtoint ptr %i.cj to i64
@@ -251,16 +251,12 @@ bb.d:                                             ; preds = %bb.b
   %i.cn = sub i64 %i.cl, %i.cm
   %i.co = sdiv exact i64 %i.cn, 24                ; 2 uses
   %i.cp = icmp ugt i64 %i.co, 2
-  br i1 %i.cp, label %8, label %._crit_edge.thread
+  br i1 %i.cp, label %.lr.ph.preheader, label %._crit_edge.thread
 
-8:                                                ; preds = %bb.d
-  %9 = add nsw i64 %i.co, -2                      ; 3 uses
+.lr.ph.preheader:                                 ; preds = %bb.d
+  %8 = add nsw i64 %i.co, -2                      ; 2 uses
   store ptr %i.au, ptr %i.be, align 8, !tbaa !1269
   store ptr %i.ay, ptr %i.bg, align 8, !tbaa !1269
-  %.not196 = icmp eq i64 %9, 0
-  br i1 %.not196, label %._crit_edge.thread, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %8
   %i.cq = load ptr, ptr %i.bj, align 8, !tbaa !164 ; 2 uses
   %i.cr = load ptr, ptr %i.bi, align 8, !tbaa !165 ; 4 uses
   %i.cs = ptrtoint ptr %i.cq to i64
@@ -313,7 +309,7 @@ _ZNK6duckdb6vectorINS_13JoinConditionELb1ESaIS1_EEixEm.exit.peel: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   %i.dg = getelementptr inbounds nuw i8, ptr %.pre208, i64 64
   %i.dh = call noundef i64 @_ZN6duckdb17PhysicalRangeJoin14SelectJoinTailERKNS_14ExpressionTypeERNS_6VectorES5_PKNS_15SelectionVectorEmPS6_(ptr noundef nonnull align 1 dereferenceable(1) %i.dg, ptr noundef nonnull align 8 dereferenceable(104) %i.cr, ptr noundef nonnull align 8 dereferenceable(104) %i.cx, ptr noundef %i.ci, i64 noundef %i.bw, ptr noundef nonnull %i.bh) ; 2 uses
-  %exitcond.peel.not = icmp eq i64 %9, 1
+  %exitcond.peel.not = icmp eq i64 %8, 1
   br i1 %exitcond.peel.not, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNK6duckdb6vectorINS_13JoinConditionELb1ESaIS1_EEixEm.exit, %_ZNK6duckdb6vectorINS_13JoinConditionELb1ESaIS1_EEixEm.exit.peel
@@ -559,7 +555,7 @@ _ZNK6duckdb6vectorINS_13JoinConditionELb1ESaIS1_EEixEm.exit: ; preds = %bb.m
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 16
   %i.fl = call noundef i64 @_ZN6duckdb17PhysicalRangeJoin14SelectJoinTailERKNS_14ExpressionTypeERNS_6VectorES5_PKNS_15SelectionVectorEmPS6_(ptr noundef nonnull align 1 dereferenceable(1) %i.fk, ptr noundef nonnull align 8 dereferenceable(104) %i.dz, ptr noundef nonnull align 8 dereferenceable(104) %i.eq, ptr noundef nonnull %i.bh, i64 noundef %.081184, ptr noundef nonnull %i.bh) ; 2 uses
   %i.fm = add nuw i64 %.080185, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.fm, %9
+  %exitcond.not = icmp eq i64 %i.fm, %8
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !2176
 
 bb.q:                                             ; preds = %._crit_edge
@@ -567,9 +563,9 @@ bb.q:                                             ; preds = %._crit_edge
   call void @_ZN6duckdb9DataChunk5SliceERKNS_15SelectionVectorEm(ptr noundef nonnull align 8 dereferenceable(72) %i.ay, ptr noundef nonnull align 8 dereferenceable(24) %i.bh, i64 noundef %.081.lcssa)
   br label %._crit_edge.thread
 
-._crit_edge.thread:                               ; preds = %8, %._crit_edge, %bb.q, %bb.d
-  %.185 = phi i64 [ %i.bw, %bb.d ], [ %.081.lcssa, %bb.q ], [ %i.bw, %._crit_edge ], [ %i.bw, %8 ] ; 14 uses
-  %.1 = phi ptr [ %i.ci, %bb.d ], [ %i.bh, %bb.q ], [ %i.bh, %._crit_edge ], [ %i.ci, %8 ] ; 2 uses
+._crit_edge.thread:                               ; preds = %._crit_edge, %bb.q, %bb.d
+  %.185 = phi i64 [ %i.bw, %bb.d ], [ %.081.lcssa, %bb.q ], [ %i.bw, %._crit_edge ] ; 14 uses
+  %.1 = phi ptr [ %i.ci, %bb.d ], [ %i.bh, %bb.q ], [ %i.bh, %._crit_edge ] ; 2 uses
   call void @_ZN6duckdb9DataChunk5ResetEv(ptr noundef nonnull align 8 dereferenceable(72) %i.y)
   %i.fn = load ptr, ptr %i.bm, align 8, !tbaa !164
   %i.fo = load ptr, ptr %i.y, align 8, !tbaa !165 ; 2 uses

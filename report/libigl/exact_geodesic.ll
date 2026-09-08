@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !303  ; 3 uses
-  %i.c = mul nsw i64 %i.b, 3                      ; 3 uses
+  %i.c = mul nsw i64 %i.b, 3                      ; 2 uses
   %i.d = icmp ugt i64 %i.c, 1152921504606846975
   br i1 %i.d, label %.noexc, label %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -222,26 +222,21 @@ _ZNSt12_Vector_baseIdSaIdEEC2EmRKS0_.exit.thread.i: ; preds = %_ZNSt6vectorIdSaI
   br label %bb.b
 
 .noexc107:                                        ; preds = %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i
-  %i.e = mul nuw nsw i64 %i.b, 24
-  %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #25 ; 4 uses
+  %i.e = mul nuw nsw i64 %i.b, 24                 ; 3 uses
+  %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #25 ; 5 uses
   store ptr %i.f, ptr %7, align 8, !tbaa !171
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.c
   %i.h = getelementptr inbounds nuw i8, ptr %7, i64 16
   store ptr %i.g, ptr %i.h, align 8, !tbaa !304
   store double 0.000000e+00, ptr %i.f, align 8, !tbaa !87
-  %i.i = getelementptr i8, ptr %i.f, i64 8        ; 3 uses
-  %i.j = add nsw i64 %i.c, -1                     ; 2 uses
-  %13 = icmp eq i64 %i.j, 0
-  br i1 %13, label %bb.b, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i
-
-_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc107
-  %.idx.i.i.i.i.i.i.i = shl nuw nsw i64 %i.j, 3   ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.i, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !87
-  %14 = getelementptr inbounds nuw i8, ptr %i.i, i64 %.idx.i.i.i.i.i.i.i
+  %i.i = getelementptr i8, ptr %i.f, i64 8
+  %i.j = add nsw i64 %i.e, -8
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.i, i8 0, i64 %i.j, i1 false), !tbaa !87
+  %13 = getelementptr i8, ptr %i.f, i64 %i.e
   br label %bb.b
 
-bb.b:                                             ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc107, %_ZNSt12_Vector_baseIdSaIdEEC2EmRKS0_.exit.thread.i
-  %.0.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIdSaIdEEC2EmRKS0_.exit.thread.i ], [ %i.i, %.noexc107 ], [ %14, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ]
+bb.b:                                             ; preds = %.noexc107, %_ZNSt12_Vector_baseIdSaIdEEC2EmRKS0_.exit.thread.i
+  %.0.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIdSaIdEEC2EmRKS0_.exit.thread.i ], [ %13, %.noexc107 ]
   %i.k = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   store ptr %.0.i.i.i.i.i, ptr %i.k, align 8, !tbaa !305
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #22

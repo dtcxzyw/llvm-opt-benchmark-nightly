@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.r = load i64, ptr %i.q, align 8, !tbaa !168  ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #19
-  %i.s = add nsw i64 %i.c, -1                     ; 7 uses
+  %i.s = add nsw i64 %i.c, -1                     ; 6 uses
   %i.t = load ptr, ptr %0, align 8, !tbaa !167    ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 12 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
@@ -290,13 +290,9 @@ _ZN5Eigen9DenseBaseINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideIL
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   store double 1.000000e+00, ptr %i.a, align 8, !tbaa !39
   %i.bf = icmp eq i64 %i.r, 1
-  br i1 %i.bf, label %15, label %_ZN5Eigen7NoAliasINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEENS_10MatrixBaseEEaSINS_7ProductINS_9TransposeIKNS_5BlockINSC_INS2_IdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEENSC_INSC_ISD_Lin1ELin1ELb0EEELin1ELin1ELb0EEELi0EEEEERS6_RKNS7_IT_EE.exit
+  br i1 %i.bf, label %bb.f, label %_ZN5Eigen7NoAliasINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEENS_10MatrixBaseEEaSINS_7ProductINS_9TransposeIKNS_5BlockINSC_INS2_IdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEENSC_INSC_ISD_Lin1ELin1ELb0EEELin1ELin1ELb0EEELi0EEEEERS6_RKNS7_IT_EE.exit
 
-15:                                               ; preds = %_ZN5Eigen9DenseBaseINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEEE7setZeroEv.exit.i.i.i.i
-  %16 = icmp eq i64 %i.s, 0
-  br i1 %16, label %_ZN5Eigen7NoAliasINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEENS_10MatrixBaseEEaSINS_7ProductINS_9TransposeIKNS_5BlockINSC_INS2_IdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEENSC_INSC_ISD_Lin1ELin1ELb0EEELin1ELin1ELb0EEELi0EEEEERS6_RKNS7_IT_EE.exit.thread, label %bb.f
-
-bb.f:                                             ; preds = %15
+bb.f:                                             ; preds = %_ZN5Eigen9DenseBaseINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEEE7setZeroEv.exit.i.i.i.i
   %i.bg = sdiv i64 %i.s, 4
   %i.bh = shl nsw i64 %i.bg, 2                    ; 4 uses
   %i.bi = sdiv i64 %i.s, 2
@@ -437,8 +433,8 @@ bb.k:                                             ; preds = %bb.f
   %i.ei = fmul double %i.eg, %i.eh
   br label %_ZN5Eigen7NoAliasINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEENS_10MatrixBaseEEaSINS_7ProductINS_9TransposeIKNS_5BlockINSC_INS2_IdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEENSC_INSC_ISD_Lin1ELin1ELb0EEELin1ELin1ELb0EEELi0EEEEERS6_RKNS7_IT_EE.exit.thread
 
-_ZN5Eigen7NoAliasINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEENS_10MatrixBaseEEaSINS_7ProductINS_9TransposeIKNS_5BlockINSC_INS2_IdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEENSC_INSC_ISD_Lin1ELin1ELb0EEELin1ELin1ELb0EEELi0EEEEERS6_RKNS7_IT_EE.exit.thread: ; preds = %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i, %15, %bb.j, %bb.k
-  %.0.i.i.i.i.i.i.i.i.i = phi double [ 0.000000e+00, %15 ], [ %i.cq, %bb.j ], [ %i.ei, %bb.k ], [ %.lcssa.unr, %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i.prol.loopexit ], [ %i.ee, %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i ]
+_ZN5Eigen7NoAliasINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEENS_10MatrixBaseEEaSINS_7ProductINS_9TransposeIKNS_5BlockINSC_INS2_IdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEEEENSC_INSC_ISD_Lin1ELin1ELb0EEELin1ELin1ELb0EEELi0EEEEERS6_RKNS7_IT_EE.exit.thread: ; preds = %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i, %bb.j, %bb.k
+  %.0.i.i.i.i.i.i.i.i.i = phi double [ %i.ei, %bb.k ], [ %i.cq, %bb.j ], [ %.lcssa.unr, %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i.prol.loopexit ], [ %i.ee, %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i ]
   %i.ej = load double, ptr %3, align 8, !tbaa !39
   %i.ek = fadd double %.0.i.i.i.i.i.i.i.i.i, %i.ej
   store double %i.ek, ptr %3, align 8, !tbaa !39
@@ -841,7 +837,7 @@ bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.r = load i64, ptr %i.q, align 8, !tbaa !168  ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #19
-  %i.s = add nsw i64 %i.c, -1                     ; 7 uses
+  %i.s = add nsw i64 %i.c, -1                     ; 6 uses
   %i.t = load ptr, ptr %0, align 8, !tbaa !167    ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 12 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
@@ -926,13 +922,9 @@ _ZN5Eigen9DenseBaseINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideIL
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   store double 1.000000e+00, ptr %i.a, align 8, !tbaa !39
   %i.bf = icmp eq i64 %i.r, 1
-  br i1 %i.bf, label %15, label %_ZN5Eigen7NoAliasINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEENS_10MatrixBaseEEaSINS_7ProductINS_9TransposeIKNS_5BlockIKNS2_IdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb0EEEEENSC_INSC_ISD_Lin1ELin1ELb0EEELin1ELin1ELb0EEELi0EEEEERS6_RKNS7_IT_EE.exit
+  br i1 %i.bf, label %bb.f, label %_ZN5Eigen7NoAliasINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEENS_10MatrixBaseEEaSINS_7ProductINS_9TransposeIKNS_5BlockIKNS2_IdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb0EEEEENSC_INSC_ISD_Lin1ELin1ELb0EEELin1ELin1ELb0EEELi0EEEEERS6_RKNS7_IT_EE.exit
 
-15:                                               ; preds = %_ZN5Eigen9DenseBaseINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEEE7setZeroEv.exit.i.i.i.i
-  %16 = icmp eq i64 %i.s, 0
-  br i1 %16, label %_ZN5Eigen7NoAliasINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEENS_10MatrixBaseEEaSINS_7ProductINS_9TransposeIKNS_5BlockIKNS2_IdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb0EEEEENSC_INSC_ISD_Lin1ELin1ELb0EEELin1ELin1ELb0EEELi0EEEEERS6_RKNS7_IT_EE.exit.thread, label %bb.f
-
-bb.f:                                             ; preds = %15
+bb.f:                                             ; preds = %_ZN5Eigen9DenseBaseINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEEE7setZeroEv.exit.i.i.i.i
   %i.bg = sdiv i64 %i.s, 4
   %i.bh = shl nsw i64 %i.bg, 2                    ; 4 uses
   %i.bi = sdiv i64 %i.s, 2
@@ -1073,8 +1065,8 @@ bb.k:                                             ; preds = %bb.f
   %i.ei = fmul double %i.eg, %i.eh
   br label %_ZN5Eigen7NoAliasINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEENS_10MatrixBaseEEaSINS_7ProductINS_9TransposeIKNS_5BlockIKNS2_IdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb0EEEEENSC_INSC_ISD_Lin1ELin1ELb0EEELin1ELin1ELb0EEELi0EEEEERS6_RKNS7_IT_EE.exit.thread
 
-_ZN5Eigen7NoAliasINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEENS_10MatrixBaseEEaSINS_7ProductINS_9TransposeIKNS_5BlockIKNS2_IdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb0EEEEENSC_INSC_ISD_Lin1ELin1ELb0EEELin1ELin1ELb0EEELi0EEEEERS6_RKNS7_IT_EE.exit.thread: ; preds = %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i, %15, %bb.j, %bb.k
-  %.0.i.i.i.i.i.i.i.i.i = phi double [ 0.000000e+00, %15 ], [ %i.cq, %bb.j ], [ %i.ei, %bb.k ], [ %.lcssa.unr, %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i.prol.loopexit ], [ %i.ee, %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i ]
+_ZN5Eigen7NoAliasINS_3MapINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEELi0ENS_6StrideILi0ELi0EEEEENS_10MatrixBaseEEaSINS_7ProductINS_9TransposeIKNS_5BlockIKNS2_IdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb0EEEEENSC_INSC_ISD_Lin1ELin1ELb0EEELin1ELin1ELb0EEELi0EEEEERS6_RKNS7_IT_EE.exit.thread: ; preds = %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i, %bb.j, %bb.k
+  %.0.i.i.i.i.i.i.i.i.i = phi double [ %i.ei, %bb.k ], [ %i.cq, %bb.j ], [ %.lcssa.unr, %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i.prol.loopexit ], [ %i.ee, %.lr.ph85.i.i.i.i.i.i.i.i.i.i.i ]
   %i.ej = load double, ptr %3, align 8, !tbaa !39
   %i.ek = fadd double %.0.i.i.i.i.i.i.i.i.i, %i.ej
   store double %i.ek, ptr %3, align 8, !tbaa !39

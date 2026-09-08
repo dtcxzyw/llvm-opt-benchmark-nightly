@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %._cri
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.012.018.i.i.i.i.i.i, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bk, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.bl, i64 16, i1 false), !tbaa.struct !277
   %.val.i.i.i.i.i.i.i.i = load ptr, ptr %.sroa.012.018.i.i.i.i.i.i, align 8, !tbaa !143 ; 2 uses
-  %.019.i.i.i.i.i.i.add = add nuw nsw i64 %.019.i.i.i.i.i.i.idx, 48 ; 4 uses
+  %.019.i.i.i.i.i.i.add = add nuw nsw i64 %.019.i.i.i.i.i.i.idx, 48 ; 3 uses
   %i.bm = icmp eq ptr %.val.i.i.i.i.i.i.i.i, null
   br i1 %i.bm, label %.loopexit, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !828
 
@@ -597,8 +597,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75: ; preds = %bb.
 bb.an:                                            ; preds = %.loopexit
   %i.fc = getelementptr inbounds nuw i8, ptr %i.at, i64 768 ; 2 uses
   call fastcc void @"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZNK8facebook5velox6memory14MemoryPoolImpl20dumpRecordsDbgLockedEvE15AllocationStatsESt6vectorISE_SaISE_EEEENS0_5__ops15_Iter_comp_iterIZNKSC_20dumpRecordsDbgLockedEvE3$_0EEEvT_SO_T0_"(ptr nonnull %i.at, ptr nonnull %i.fc)
-  %12 = icmp eq i64 %.019.i.i.i.i.i.i.add, 768
-  br i1 %12, label %.lr.ph140, label %.lr.ph.i.i.i.i
+  br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.an, %.lr.ph.i.i.i.i
   %.sroa.0.06.i.i.i.i = phi ptr [ %i.fd, %.lr.ph.i.i.i.i ], [ %i.fc, %bb.an ] ; 2 uses
@@ -611,7 +610,7 @@ bb.ao:                                            ; preds = %.loopexit
   call fastcc void @"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEZNK8facebook5velox6memory14MemoryPoolImpl20dumpRecordsDbgLockedEvE15AllocationStatsESt6vectorISE_SaISE_EEEENS0_5__ops15_Iter_comp_iterIZNKSC_20dumpRecordsDbgLockedEvE3$_0EEEvT_SO_T0_"(ptr nonnull %i.at, ptr nonnull %.ptr.le)
   br label %.lr.ph140
 
-.lr.ph140:                                        ; preds = %.lr.ph.i.i.i.i, %bb.ao, %bb.an
+.lr.ph140:                                        ; preds = %.lr.ph.i.i.i.i, %bb.ao
   %i.ff = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.fg = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.fh = getelementptr inbounds nuw i8, ptr %2, i64 24

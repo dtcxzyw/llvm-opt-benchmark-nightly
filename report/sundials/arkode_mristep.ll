@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !155  ; 4 uses
   %.not66 = icmp eq ptr %i.r, null                ; 2 uses
-  %i.s = add i32 %i.c, -1                         ; 6 uses
+  %i.s = add i32 %i.c, -1                         ; 5 uses
   %i.t = tail call i32 @llvm.umin.i32(i32 %1, i32 %i.s) ; 4 uses
   br i1 %.not, label %.lr.ph82.split.us, label %.lr.ph82.split
 
@@ -424,7 +424,6 @@ bb.l:                                             ; preds = %.epil.preheader186
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod179 = trunc i32 %i.db to i1
   %xtraiter181 = and i64 %wide.trip.count117, 1
-  %5 = icmp eq i32 %i.s, 0
   %unroll_iter184 = and i64 %wide.trip.count117, 4294967294
   %lcmp.mod182.not = icmp eq i64 %xtraiter181, 0
   %lcmp.mod183 = trunc i32 %i.dc to i1
@@ -512,11 +511,11 @@ bb.q:                                             ; preds = %.epil.preheader
 
 ..loopexit70_crit_edge.us88:                      ; preds = %.epil.preheader, %bb.q, %..loopexit70_crit_edge.us88.unr-lcssa
   %i.et = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv119 ; 3 uses
-  br i1 %5, label %.epil.preheader180, label %..loopexit70_crit_edge.us88.new
+  br label %..loopexit70_crit_edge.us88.new
 
-..loopexit70_crit_edge.us88.new:                  ; preds = %..loopexit70_crit_edge.us88, %bb.u
-  %indvars.iv113 = phi i64 [ %indvars.iv.next114.1, %bb.u ], [ 0, %..loopexit70_crit_edge.us88 ] ; 4 uses
-  %niter185 = phi i64 [ %niter185.next.1, %bb.u ], [ 0, %..loopexit70_crit_edge.us88 ]
+..loopexit70_crit_edge.us88.new:                  ; preds = %bb.u, %..loopexit70_crit_edge.us88
+  %indvars.iv113 = phi i64 [ 0, %..loopexit70_crit_edge.us88 ], [ %indvars.iv.next114.1, %bb.u ] ; 4 uses
+  %niter185 = phi i64 [ 0, %..loopexit70_crit_edge.us88 ], [ %niter185.next.1, %bb.u ]
   %i.eu = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv113
   %i.ev = load i32, ptr %i.eu, align 4, !tbaa !35 ; 2 uses
   %i.ew = icmp sgt i32 %i.ev, -1
@@ -556,7 +555,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  %indvars.iv.next114.1 = add nuw nsw i64 %indvars.iv113, 2 ; 2 uses
+  %indvars.iv.next114.1 = add nuw nsw i64 %indvars.iv113, 2 ; 3 uses
   %niter185.next.1 = add i64 %niter185, 2         ; 2 uses
   %niter185.ncmp.1 = icmp eq i64 %niter185.next.1, %unroll_iter184
   br i1 %niter185.ncmp.1, label %..loopexit_crit_edge.us93.unr-lcssa, label %..loopexit70_crit_edge.us88.new
@@ -564,10 +563,9 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 ..loopexit_crit_edge.us93.unr-lcssa:              ; preds = %bb.u
   br i1 %lcmp.mod182.not, label %..loopexit_crit_edge.us93, label %.epil.preheader180
 
-.epil.preheader180:                               ; preds = %..loopexit_crit_edge.us93.unr-lcssa, %..loopexit70_crit_edge.us88
-  %indvars.iv113.epil.init = phi i64 [ 0, %..loopexit70_crit_edge.us88 ], [ %indvars.iv.next114.1, %..loopexit_crit_edge.us93.unr-lcssa ] ; 2 uses
+.epil.preheader180:                               ; preds = %..loopexit_crit_edge.us93.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod183)
-  %i.fs = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv113.epil.init
+  %i.fs = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.next114.1
   %i.ft = load i32, ptr %i.fs, align 4, !tbaa !35 ; 2 uses
   %i.fu = icmp sgt i32 %i.ft, -1
   br i1 %i.fu, label %bb.v, label %..loopexit_crit_edge.us93
@@ -576,7 +574,7 @@ bb.v:                                             ; preds = %.epil.preheader180
   %i.fv = load ptr, ptr %i.et, align 8, !tbaa !157
   %i.fw = getelementptr inbounds nuw [8 x i8], ptr %i.fv, i64 %i.p
   %i.fx = load ptr, ptr %i.fw, align 8, !tbaa !158
-  %i.fy = getelementptr inbounds nuw [8 x i8], ptr %i.fx, i64 %indvars.iv113.epil.init
+  %i.fy = getelementptr inbounds nuw [8 x i8], ptr %i.fx, i64 %indvars.iv.next114.1
   %i.fz = load double, ptr %i.fy, align 8, !tbaa !47
   %i.ga = zext nneg i32 %i.ft to i64
   %i.gb = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.ga ; 2 uses

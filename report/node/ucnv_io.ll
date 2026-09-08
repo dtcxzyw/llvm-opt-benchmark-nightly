@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local i32 @ucnv_swapAliases_78(ptr noundef %0, ptr noundef %1, i32 noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #3 {
 bb.a:
-  %i.a = alloca [10 x i32], align 16              ; 19 uses
+  %i.a = alloca [10 x i32], align 16              ; 18 uses
   %5 = alloca [500 x %struct.TempRow], align 16   ; 5 uses
   %i.b = alloca [500 x i16], align 16             ; 3 uses
   %6 = alloca %struct.TempAliasTable, align 8     ; 12 uses
@@ -215,7 +215,6 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
   %i.c = tail call i32 @udata_swapDataHeader_78(ptr noundef %0, ptr noundef %1, i32 noundef %2, ptr noundef %3, ptr noundef %4) #14 ; 4 uses
   %i.d = icmp eq ptr %4, null
-  %indvars.iv223.lcssa.sroa.gep282 = getelementptr inbounds nuw i8, ptr %i.a, i64 28
   %indvars.iv223.lcssa.sroa.gep283 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %indvars.iv223.lcssa.sroa.gep284 = getelementptr inbounds nuw i8, ptr %i.a, i64 36
   br i1 %i.d, label %.critedge, label %bb.b
@@ -298,7 +297,7 @@ bb.j:                                             ; preds = %bb.h, %bb.g
   br i1 %or.cond, label %bb.k, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.j
-  %i.ar = add nuw nsw i32 %i.ap, 1                ; 5 uses
+  %i.ar = add nuw nsw i32 %i.ap, 1                ; 4 uses
   %wide.trip.count = zext nneg i32 %i.ar to i64
   br label %.lr.ph
 
@@ -333,41 +332,30 @@ bb.k:                                             ; preds = %bb.j
   %i.bh = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.bi = load i32, ptr %i.bh, align 16
   %i.bj = add i32 %i.bi, %i.bg                    ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
+  %8 = load i32, ptr %7, align 8
   %i.bk = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   %i.bl = load i32, ptr %i.bk, align 4
-  %i.bm = add i32 %i.bl, %i.bj
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %i.bo = load i32, ptr %i.bn, align 8
-  %i.bp = add i32 %i.bo, %i.bm                    ; 2 uses
-  %exitcond227.not.5 = icmp eq i32 %i.ar, 8
-  br i1 %exitcond227.not.5, label %._crit_edge204, label %.lr.ph203.6
-
-.lr.ph203.6:                                      ; preds = %.lr.ph203.preheader
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 28
-  %8 = load i32, ptr %7, align 4
-  %9 = add i32 %8, %i.bp                          ; 4 uses
-  %exitcond227.not.6 = icmp eq i32 %i.ar, 9
-  br i1 %exitcond227.not.6, label %._crit_edge204, label %.lr.ph203.7
-
-.lr.ph203.7:                                      ; preds = %.lr.ph203.6
+  %9 = add i32 %i.bl, %i.bj
+  %i.bm = add i32 %8, %9
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 28
+  %i.bo = load i32, ptr %i.bn, align 4
+  %i.bp = add i32 %i.bo, %i.bm                    ; 5 uses
+  %exitcond227.not.5 = icmp eq i32 %i.ar, 9       ; 2 uses
   %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %11 = load i32, ptr %10, align 16
-  %12 = add i32 %11, %9
-  br label %._crit_edge204
-
-._crit_edge204:                                   ; preds = %.lr.ph203.7, %.lr.ph203.6, %.lr.ph203.preheader
-  %.sroa.15.0 = phi i32 [ %9, %.lr.ph203.7 ], [ %9, %.lr.ph203.6 ], [ 0, %.lr.ph203.preheader ] ; 3 uses
-  %indvars.iv223.lcssa.sroa.phi = phi ptr [ %indvars.iv223.lcssa.sroa.gep284, %.lr.ph203.7 ], [ %indvars.iv223.lcssa.sroa.gep283, %.lr.ph203.6 ], [ %indvars.iv223.lcssa.sroa.gep282, %.lr.ph203.preheader ]
-  %.lcssa275 = phi i32 [ %12, %.lr.ph203.7 ], [ %9, %.lr.ph203.6 ], [ %i.bp, %.lr.ph203.preheader ]
+  %12 = add i32 %11, %i.bp
+  %indvars.iv223.lcssa.sroa.phi = select i1 %exitcond227.not.5, ptr %indvars.iv223.lcssa.sroa.gep283, ptr %indvars.iv223.lcssa.sroa.gep284
+  %.lcssa275 = select i1 %exitcond227.not.5, i32 %i.bp, i32 %12
   %13 = load i32, ptr %indvars.iv223.lcssa.sroa.phi, align 4
   %14 = add i32 %13, %.lcssa275                   ; 2 uses
   br i1 %i.ah, label %bb.l, label %._crit_edge204._crit_edge
 
-._crit_edge204._crit_edge:                        ; preds = %._crit_edge204
+._crit_edge204._crit_edge:                        ; preds = %.lr.ph203.preheader
   %.pre255 = shl nsw i32 %14, 1
   br label %bb.ah
 
-bb.l:                                             ; preds = %._crit_edge204
+bb.l:                                             ; preds = %.lr.ph203.preheader
   %i.bq = sub nsw i32 %2, %i.c                    ; 2 uses
   %i.br = shl nsw i32 %14, 1                      ; 3 uses
   %i.bs = icmp slt i32 %i.bq, %i.br
@@ -386,7 +374,7 @@ bb.n:                                             ; preds = %bb.l
   %i.bx = tail call noundef i32 %i.bv(ptr noundef nonnull %0, ptr noundef nonnull %i.al, i32 noundef %i.bw, ptr noundef %i.bt, ptr noundef nonnull %4) #14 ; 0 uses
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.bz = load ptr, ptr %i.by, align 8
-  %i.ca = zext i32 %.sroa.15.0 to i64             ; 2 uses
+  %i.ca = zext i32 %i.bp to i64                   ; 2 uses
   %i.cb = getelementptr inbounds nuw [2 x i8], ptr %i.al, i64 %i.ca
   %i.cc = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.cd = load i32, ptr %i.cc, align 16
@@ -417,7 +405,7 @@ bb.q:                                             ; preds = %bb.p
   %i.cs = load ptr, ptr %i.cr, align 8
   %i.ct = zext nneg i32 %i.ax to i64              ; 2 uses
   %i.cu = getelementptr inbounds nuw [2 x i8], ptr %i.al, i64 %i.ct
-  %i.cv = sub i32 %.sroa.15.0, %i.ax
+  %i.cv = sub i32 %i.bp, %i.ax
   %i.cw = shl nsw i32 %i.cv, 1
   %i.cx = getelementptr inbounds nuw [2 x i8], ptr %i.bt, i64 %i.ct
   %i.cy = tail call noundef i32 %i.cs(ptr noundef nonnull %0, ptr noundef nonnull %i.cu, i32 noundef %i.cw, ptr noundef nonnull %i.cx, ptr noundef nonnull %4) #14 ; 0 uses
@@ -621,7 +609,7 @@ bb.ag:                                            ; preds = %bb.ae
   %i.gl = load ptr, ptr %i.gd, align 8
   %i.gm = zext i32 %i.bj to i64                   ; 2 uses
   %i.gn = getelementptr inbounds nuw [2 x i8], ptr %i.al, i64 %i.gm
-  %i.go = sub i32 %.sroa.15.0, %i.bj
+  %i.go = sub i32 %i.bp, %i.bj
   %i.gp = shl nsw i32 %i.go, 1
   %i.gq = getelementptr inbounds nuw [2 x i8], ptr %i.bt, i64 %i.gm
   %i.gr = call noundef i32 %i.gl(ptr noundef nonnull %0, ptr noundef nonnull %i.gn, i32 noundef %i.gp, ptr noundef %i.gq, ptr noundef nonnull %4) #14 ; 0 uses

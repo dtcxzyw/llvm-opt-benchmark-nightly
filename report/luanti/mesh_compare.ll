@@ -205,7 +205,7 @@ _ZL10expandMeshRKSt6vectorIN5video9S3DVertexESaIS1_EERKS_ItSaItEE.exit.thread: ;
 .lr.ph.i:                                         ; preds = %.lr.ph.i.unr-lcssa, %.lr.ph.i.i.i.i.i.i.epil.preheader
   %.013.i.i.i.i.i.i.idx.lcssa = phi i64 [ %.013.i.i.i.i.i.i.add, %.lr.ph.i.unr-lcssa ], [ %.013.i.i.i.i.i.i.idx.epil.init, %.lr.ph.i.i.i.i.i.i.epil.preheader ]
   %.013.i.i.i.i.i.i.ptr.lcssa = phi ptr [ %.013.i.i.i.i.i.i.ptr.1, %.lr.ph.i.unr-lcssa ], [ %.013.i.i.i.i.i.i.ptr.epil, %.lr.ph.i.i.i.i.i.i.epil.preheader ]
-  %.013.i.i.i.i.i.i.add.lcssa = phi i64 [ %.013.i.i.i.i.i.i.add.1, %.lr.ph.i.unr-lcssa ], [ %.013.i.i.i.i.i.i.add.epil, %.lr.ph.i.i.i.i.i.i.epil.preheader ] ; 4 uses
+  %.013.i.i.i.i.i.i.add.lcssa = phi i64 [ %.013.i.i.i.i.i.i.add.1, %.lr.ph.i.unr-lcssa ], [ %.013.i.i.i.i.i.i.add.epil, %.lr.ph.i.i.i.i.i.i.epil.preheader ] ; 3 uses
   %.ptr.lcssa = getelementptr inbounds nuw i8, ptr %i.q, i64 %.013.i.i.i.i.i.i.add.lcssa ; 4 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.ptr.lcssa, ptr %i.ae, align 8, !tbaa !12, !alias.scope !48
@@ -319,14 +319,10 @@ common.resume:                                    ; preds = %bb.s, %bb.d, %bb.n
 bb.o:                                             ; preds = %.noexc
   %i.br = getelementptr inbounds nuw i8, ptr %i.q, i64 1920 ; 2 uses
   invoke void @_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt5arrayIN5video9S3DVertexELm3EESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_T0_(ptr nonnull %i.q, ptr nonnull %i.br)
-          to label %.noexc11 unwind label %.loopexit.split-lp
+          to label %.lr.ph.i.i.i.i unwind label %.loopexit.split-lp
 
-.noexc11:                                         ; preds = %bb.o
-  %.not4.i.i.i.i = icmp eq i64 %.013.i.i.i.i.i.i.add.lcssa, 1920
-  br i1 %.not4.i.i.i.i, label %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt5arrayIN5video9S3DVertexELm3EESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit, label %.lr.ph.i.i.i.i
-
-.lr.ph.i.i.i.i:                                   ; preds = %.noexc11, %.noexc12
-  %.sroa.0.05.i.i.i.i = phi ptr [ %i.bs, %.noexc12 ], [ %i.br, %.noexc11 ] ; 2 uses
+.lr.ph.i.i.i.i:                                   ; preds = %bb.o, %.noexc12
+  %.sroa.0.05.i.i.i.i = phi ptr [ %i.bs, %.noexc12 ], [ %i.br, %bb.o ] ; 2 uses
   invoke void @_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt5arrayIN5video9S3DVertexELm3EESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_less_iterEEvT_T0_(ptr nonnull %.sroa.0.05.i.i.i.i)
           to label %.noexc12 unwind label %.loopexit
 
@@ -369,7 +365,7 @@ bb.r:                                             ; preds = %.lr.ph
           cleanup
   br label %bb.s
 
-_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt5arrayIN5video9S3DVertexELm3EESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit: ; preds = %.noexc12, %_ZL10expandMeshRKSt6vectorIN5video9S3DVertexESaIS1_EERKS_ItSaItEE.exit.thread, %.noexc11, %bb.p
+_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt5arrayIN5video9S3DVertexELm3EESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit: ; preds = %.noexc12, %_ZL10expandMeshRKSt6vectorIN5video9S3DVertexESaIS1_EERKS_ItSaItEE.exit.thread, %bb.p
   ret void
 
 bb.s:                                             ; preds = %bb.r, %.loopexit.split-lp, %.loopexit

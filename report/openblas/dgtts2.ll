@@ -45,7 +45,7 @@ bb.d:                                             ; preds = %bb.c
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.s
   %i.v = add i32 %i.i, -2                         ; 6 uses
   %i.w = icmp samesign ugt i32 %i.i, 2
-  %i.x = sext i32 %i.v to i64                     ; 8 uses
+  %i.x = sext i32 %i.v to i64                     ; 9 uses
   %i.y = sext i32 %i.f to i64                     ; 5 uses
   %i.z = zext nneg i32 %i.r to i64
   %i.aa = add nuw i32 %i.k, 1
@@ -146,11 +146,7 @@ bb.d:                                             ; preds = %bb.c
   %n.vec601 = and i64 %i.cd, -4                   ; 3 uses
   %i.ch = or disjoint i64 %n.vec601, 1
   %cmp.n612 = icmp eq i64 %i.cd, %n.vec601
-  %10 = icmp ne i32 %i.v, 0
-  %.neg = sext i1 %10 to i64
-  %11 = add nsw i64 %i.x, 1
-  %12 = add nsw i64 %11, %.neg                    ; 3 uses
-  %min.iters.check = icmp ult i64 %12, 16
+  %min.iters.check = icmp ult i32 %i.v, 16
   %i.ci = trunc nsw i64 %i.ac to i35
   %mul.result = shl i35 %i.ci, 3                  ; 2 uses
   %mul.overflow = icmp ugt i64 %i.ac, 4294967295
@@ -166,13 +162,13 @@ bb.d:                                             ; preds = %bb.c
   %bound0518 = icmp ult ptr %scevgep, %scevgep503
   %bound1519 = icmp ult ptr %scevgep502, %scevgep489
   %found.conflict520 = and i1 %bound0518, %bound1519
-  %n.vec = and i64 %12, -4                        ; 3 uses
-  %13 = sub nsw i64 %i.x, %n.vec
-  %cmp.n = icmp eq i64 %12, %n.vec
+  %n.vec = and i64 %i.x, -4                       ; 2 uses
+  %10 = and i64 %i.x, 3
+  %cmp.n = icmp eq i64 %n.vec, %i.x
   br label %.preheader354
 
 .preheader:                                       ; preds = %bb.d
-  %i.cj = add i32 %i.i, -2                        ; 4 uses
+  %i.cj = add i32 %i.i, -2                        ; 2 uses
   %i.ck = icmp samesign ugt i32 %i.i, 2
   %i.cl = add nsw i32 %i.i, -1                    ; 2 uses
   %i.cm = zext nneg i32 %i.cl to i64              ; 2 uses
@@ -313,20 +309,14 @@ bb.f:                                             ; preds = %.unr-lcssa, %.epil.
 .lr.ph393:                                        ; preds = %bb.f
   %i.fp = add i32 %i.f, 1                         ; 2 uses
   %i.fq = add i32 %i.f, 2                         ; 2 uses
-  %i.fr = zext i32 %i.cj to i64                   ; 9 uses
+  %i.fr = zext i32 %i.cj to i64                   ; 10 uses
   %i.fs = sext i32 %i.f to i64
   %invariant.gep483 = getelementptr [8 x i8], ptr %i.h, i64 %i.fs ; 2 uses
-  %14 = icmp ne i32 %i.cj, 0
-  %.neg679 = sext i1 %14 to i64
-  %15 = add nuw nsw i64 %i.fr, 1
-  %16 = add nsw i64 %15, %.neg679                 ; 3 uses
-  %min.iters.check651 = icmp ult i64 %16, 32
+  %min.iters.check651 = icmp ult i32 %i.cj, 32
   br i1 %min.iters.check651, label %scalar.ph650.preheader, label %vector.scevcheck614
 
 vector.scevcheck614:                              ; preds = %.lr.ph393
-  %17 = icmp ne i32 %i.cj, 0
-  %umin615.neg = sext i1 %17 to i64
-  %i.ft = add nsw i64 %umin615.neg, %i.fr         ; 2 uses
+  %i.ft = add nsw i64 %i.fr, -1                   ; 2 uses
   %i.fu = add i32 %i.f, %i.i
   %i.fv = add i32 %i.fu, -1                       ; 2 uses
   %i.fw = trunc i64 %i.ft to i32                  ; 2 uses
@@ -341,9 +331,7 @@ vector.scevcheck614:                              ; preds = %.lr.ph393
   br i1 %i.ge, label %scalar.ph650.preheader, label %vector.memcheck617
 
 vector.memcheck617:                               ; preds = %vector.scevcheck614
-  %18 = icmp ne i32 %i.cj, 0                      ; 2 uses
-  %umin618 = zext i1 %18 to i64
-  %i.gf = add nsw i64 %umin618, %i.cp
+  %i.gf = add nsw i64 %i.cp, 1
   %i.gg = add nsw i64 %i.gf, %i.g
   %i.gh = shl nsw i64 %i.gg, 3
   %scevgep619 = getelementptr i8, ptr %8, i64 %i.gh ; 5 uses
@@ -352,61 +340,56 @@ vector.memcheck617:                               ; preds = %vector.scevcheck614
   %i.gk = shl nuw nsw i64 %i.fr, 3                ; 5 uses
   %i.gl = add nsw i64 %i.gj, %i.fr
   %i.gm = shl nsw i64 %i.gl, 3
-  %19 = getelementptr i8, ptr %8, i64 %i.gm
-  %scevgep620.a = getelementptr i8, ptr %19, i64 8 ; 5 uses
-  %20 = select i1 %18, i64 8, i64 0               ; 3 uses
-  %21 = add nsw i64 %20, -8                       ; 3 uses
-  %scevgep621 = getelementptr i8, ptr %5, i64 %21
+  %scevgep620.a = getelementptr i8, ptr %8, i64 %i.gm
+  %scevgep621 = getelementptr i8, ptr %scevgep620.a, i64 8 ; 5 uses
   %scevgep622 = getelementptr i8, ptr %5, i64 %i.gk
   %i.gn = add i32 %i.f, %i.i
   %i.go = add i32 %i.gn, -1
   %i.gp = sext i32 %i.go to i64
   %i.gq = shl nsw i64 %i.gp, 3                    ; 2 uses
-  %i.gr = add nsw i64 %20, %i.gq
+  %i.gr = add nsw i64 %i.gq, 8
   %i.gs = add nsw i64 %i.gr, %i.gi
   %i.gt = sub nsw i64 %i.gs, %i.gk
-  %scevgep623 = getelementptr i8, ptr %8, i64 %i.gt
-  %i.gu = getelementptr i8, ptr %8, i64 %i.gq
-  %i.gv = getelementptr i8, ptr %i.gu, i64 %i.gi
-  %scevgep624.a = getelementptr i8, ptr %i.gv, i64 8
-  %scevgep625 = getelementptr i8, ptr %6, i64 %21
+  %i.gu = getelementptr i8, ptr %8, i64 %i.gt
+  %i.gv = getelementptr i8, ptr %8, i64 %i.gq
+  %scevgep624.a = getelementptr i8, ptr %i.gv, i64 %i.gi
+  %scevgep625 = getelementptr i8, ptr %scevgep624.a, i64 8
   %scevgep626 = getelementptr i8, ptr %6, i64 %i.gk
   %i.gw = add i32 %i.f, %i.i
   %i.gx = sext i32 %i.gw to i64
   %i.gy = shl nsw i64 %i.gx, 3                    ; 2 uses
-  %i.gz = add nsw i64 %20, %i.gy
+  %i.gz = add nsw i64 %i.gy, 8
   %i.ha = add nsw i64 %i.gz, %i.gi
   %i.hb = sub nsw i64 %i.ha, %i.gk
-  %scevgep627 = getelementptr i8, ptr %8, i64 %i.hb
-  %i.hc = getelementptr i8, ptr %8, i64 %i.gy
-  %i.hd = getelementptr i8, ptr %i.hc, i64 %i.gi
-  %scevgep628.a = getelementptr i8, ptr %i.hd, i64 8
-  %scevgep629 = getelementptr i8, ptr %4, i64 %21
+  %i.hc = getelementptr i8, ptr %8, i64 %i.hb
+  %i.hd = getelementptr i8, ptr %8, i64 %i.gy
+  %scevgep628.a = getelementptr i8, ptr %i.hd, i64 %i.gi
+  %scevgep629 = getelementptr i8, ptr %scevgep628.a, i64 8
   %scevgep630 = getelementptr i8, ptr %4, i64 %i.gk
   %bound0631 = icmp ult ptr %scevgep619, %scevgep622
-  %bound1632 = icmp ult ptr %scevgep621, %scevgep620.a
+  %bound1632 = icmp ult ptr %5, %scevgep621
   %found.conflict633 = and i1 %bound0631, %bound1632
-  %bound0634 = icmp ult ptr %scevgep619, %scevgep624.a
-  %bound1635 = icmp ult ptr %scevgep623, %scevgep620.a
+  %bound0634 = icmp ult ptr %scevgep619, %scevgep625
+  %bound1635 = icmp ult ptr %i.gu, %scevgep621
   %found.conflict636 = and i1 %bound0634, %bound1635
   %conflict.rdx637 = or i1 %found.conflict633, %found.conflict636
   %bound0638 = icmp ult ptr %scevgep619, %scevgep626
-  %bound1639 = icmp ult ptr %scevgep625, %scevgep620.a
+  %bound1639 = icmp ult ptr %6, %scevgep621
   %found.conflict640 = and i1 %bound0638, %bound1639
   %conflict.rdx641 = or i1 %conflict.rdx637, %found.conflict640
-  %bound0642 = icmp ult ptr %scevgep619, %scevgep628.a
-  %bound1643 = icmp ult ptr %scevgep627, %scevgep620.a
+  %bound0642 = icmp ult ptr %scevgep619, %scevgep629
+  %bound1643 = icmp ult ptr %i.hc, %scevgep621
   %found.conflict644 = and i1 %bound0642, %bound1643
   %conflict.rdx645 = or i1 %conflict.rdx641, %found.conflict644
   %bound0646 = icmp ult ptr %scevgep619, %scevgep630
-  %bound1647 = icmp ult ptr %scevgep629, %scevgep620.a
+  %bound1647 = icmp ult ptr %4, %scevgep621
   %found.conflict648 = and i1 %bound0646, %bound1647
   %conflict.rdx649 = or i1 %conflict.rdx645, %found.conflict648
   br i1 %conflict.rdx649, label %scalar.ph650.preheader, label %vector.ph652
 
 vector.ph652:                                     ; preds = %vector.memcheck617
-  %n.vec653 = and i64 %16, -4                     ; 3 uses
-  %22 = sub nsw i64 %i.fr, %n.vec653
+  %n.vec653 = and i64 %i.fr, 4294967292           ; 2 uses
+  %11 = and i64 %i.fr, 3
   br label %vector.body654
 
 vector.body654:                                   ; preds = %vector.body654, %vector.ph652
@@ -446,11 +429,11 @@ vector.body654:                                   ; preds = %vector.body654, %ve
   br i1 %i.ib, label %middle.block670, label %vector.body654, !llvm.loop !16
 
 middle.block670:                                  ; preds = %vector.body654
-  %cmp.n671 = icmp eq i64 %16, %n.vec653
+  %cmp.n671 = icmp eq i64 %n.vec653, %i.fr
   br i1 %cmp.n671, label %.loopexit356, label %scalar.ph650.preheader
 
 scalar.ph650.preheader:                           ; preds = %vector.memcheck617, %vector.scevcheck614, %.lr.ph393, %middle.block670
-  %indvars.iv431.ph = phi i64 [ %i.fr, %vector.memcheck617 ], [ %i.fr, %vector.scevcheck614 ], [ %i.fr, %.lr.ph393 ], [ %22, %middle.block670 ]
+  %indvars.iv431.ph = phi i64 [ %i.fr, %vector.memcheck617 ], [ %i.fr, %vector.scevcheck614 ], [ %i.fr, %.lr.ph393 ], [ %11, %middle.block670 ]
   br label %scalar.ph650
 
 scalar.ph650:                                     ; preds = %scalar.ph650.preheader, %scalar.ph650
@@ -721,7 +704,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge384, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph383, %middle.block
-  %indvars.iv418.ph = phi i64 [ %i.x, %vector.memcheck ], [ %i.x, %vector.scevcheck ], [ %i.x, %.lr.ph383 ], [ %13, %middle.block ]
+  %indvars.iv418.ph = phi i64 [ %i.x, %vector.memcheck ], [ %i.x, %vector.scevcheck ], [ %i.x, %.lr.ph383 ], [ %10, %middle.block ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph

@@ -204,66 +204,54 @@ bb.d:                                             ; preds = %bb.c
   store volatile i8 %i.fj, ptr %0, align 1, !tbaa !10
   %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
-  %i.fm = add i64 %2, -1                          ; 2 uses
-  %3 = icmp ne i64 %i.ag, 7
-  %4 = icmp ne i64 %i.fm, 0
-  %5 = and i1 %3, %4
-  br i1 %5, label %bb.e, label %.loopexit232
+  %i.fm = add i64 %2, -1
+  %.not323 = icmp eq i64 %i.ag, 7
+  br i1 %.not323, label %.loopexit232, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.fn = load i8, ptr %i.fl, align 1, !tbaa !10
   store volatile i8 %i.fn, ptr %i.fk, align 1, !tbaa !10
   %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 2 uses
-  %i.fq = add i64 %2, -2                          ; 2 uses
-  %6 = icmp ne i64 %i.ag, 6
-  %7 = icmp ne i64 %i.fq, 0
-  %8 = and i1 %6, %7
-  br i1 %8, label %bb.f, label %.loopexit232
+  %i.fq = add i64 %2, -2
+  %.not324 = icmp eq i64 %i.ag, 6
+  br i1 %.not324, label %.loopexit232, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.fr = load i8, ptr %i.fp, align 1, !tbaa !10
   store volatile i8 %i.fr, ptr %i.fo, align 1, !tbaa !10
   %i.fs = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 2 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %1, i64 3 ; 2 uses
-  %i.fu = add i64 %2, -3                          ; 2 uses
-  %9 = icmp ne i64 %i.ag, 5
-  %10 = icmp ne i64 %i.fu, 0
-  %11 = and i1 %9, %10
-  br i1 %11, label %bb.g, label %.loopexit232
+  %i.fu = add i64 %2, -3
+  %.not325 = icmp eq i64 %i.ag, 5
+  br i1 %.not325, label %.loopexit232, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.fv = load i8, ptr %i.ft, align 1, !tbaa !10
   store volatile i8 %i.fv, ptr %i.fs, align 1, !tbaa !10
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
-  %i.fy = add i64 %2, -4                          ; 2 uses
-  %12 = icmp ne i64 %i.ag, 4
-  %13 = icmp ne i64 %i.fy, 0
-  %14 = and i1 %12, %13
-  br i1 %14, label %bb.h, label %.loopexit232
+  %i.fy = add i64 %2, -4
+  %.not326 = icmp eq i64 %i.ag, 4
+  br i1 %.not326, label %.loopexit232, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.fz = load i8, ptr %i.fx, align 1, !tbaa !10
   store volatile i8 %i.fz, ptr %i.fw, align 1, !tbaa !10
   %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 5 ; 2 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %1, i64 5 ; 2 uses
-  %i.gc = add i64 %2, -5                          ; 2 uses
-  %15 = icmp ne i64 %i.ag, 3
-  %16 = icmp ne i64 %i.gc, 0
-  %17 = and i1 %15, %16
-  br i1 %17, label %bb.i, label %.loopexit232
+  %i.gc = add i64 %2, -5
+  %.not327 = icmp eq i64 %i.ag, 3
+  br i1 %.not327, label %.loopexit232, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.gd = load i8, ptr %i.gb, align 1, !tbaa !10
   store volatile i8 %i.gd, ptr %i.ga, align 1, !tbaa !10
   %i.ge = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 2 uses
   %i.gf = getelementptr inbounds nuw i8, ptr %1, i64 6 ; 2 uses
-  %i.gg = add i64 %2, -6                          ; 2 uses
-  %18 = icmp ne i64 %i.ag, 2
-  %19 = icmp ne i64 %i.gg, 0
-  %20 = and i1 %18, %19
-  br i1 %20, label %bb.j, label %.loopexit232
+  %i.gg = add i64 %2, -6
+  %.not328 = icmp eq i64 %i.ag, 2
+  br i1 %.not328, label %.loopexit232, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.gh = load i8, ptr %i.gf, align 1, !tbaa !10

@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.dm = add i64 %i.ci, %i.ax
   %i.dn = sub i64 %i.ch, %i.dm
   %i.do = add nsw i64 %i.ab, -1                   ; 25 uses
-  %i.dp = add nsw i64 %i.ab, -2                   ; 10 uses
+  %i.dp = add nsw i64 %i.ab, -2                   ; 5 uses
   %i.dq = zext nneg i32 %15 to i64
   %min.iters.check1289 = icmp ult i32 %15, 25
   %i.dr = sub nsw i64 %i.cj, %i.ci
@@ -259,7 +259,6 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod1639 = icmp ne i64 %xtraiter, 0
   %xtraiter1641 = and i64 %i.do, 1
-  %17 = icmp eq i64 %i.dp, 0
   %unroll_iter1646 = and i64 %i.do, -2
   %lcmp.mod1643.not = icmp eq i64 %xtraiter1641, 0
   %lcmp.mod1645 = trunc i64 %i.do to i1
@@ -269,7 +268,6 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %lcmp.mod1651.not = icmp eq i64 %xtraiter1649, 0
   %lcmp.mod1653 = icmp ne i64 %xtraiter1649, 0
   %xtraiter1657 = and i64 %i.do, 1
-  %18 = icmp eq i64 %i.dp, 0
   %unroll_iter1662 = and i64 %i.do, -2
   %lcmp.mod1659.not = icmp eq i64 %xtraiter1657, 0
   %lcmp.mod1661 = trunc i64 %i.do to i1
@@ -279,12 +277,10 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %lcmp.mod1667.not = icmp eq i64 %xtraiter1665, 0
   %lcmp.mod1669 = icmp ne i64 %xtraiter1665, 0
   %xtraiter1673 = and i64 %i.do, 1
-  %19 = icmp eq i64 %i.dp, 0
   %unroll_iter1678 = and i64 %i.do, -2
   %lcmp.mod1675.not = icmp eq i64 %xtraiter1673, 0
   %lcmp.mod1677 = trunc i64 %i.do to i1
   %xtraiter1682 = and i64 %i.do, 1
-  %20 = icmp eq i64 %i.dp, 0
   %unroll_iter1687 = and i64 %i.do, -2
   %lcmp.mod1684.not = icmp eq i64 %xtraiter1682, 0
   %lcmp.mod1686 = trunc i64 %i.do to i1
@@ -299,7 +295,6 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %lcmp.mod1702.not = icmp eq i64 %xtraiter1700, 0
   %lcmp.mod1704 = icmp ne i64 %xtraiter1700, 0
   %xtraiter1708 = and i64 %i.do, 1
-  %21 = icmp eq i64 %i.dp, 0
   %unroll_iter1713 = and i64 %i.do, -2
   %lcmp.mod1710.not = icmp eq i64 %xtraiter1708, 0
   %lcmp.mod1712 = trunc i64 %i.do to i1
@@ -702,9 +697,9 @@ middle.block1573:                                 ; preds = %vector.body1567
   br i1 %exitcond1123.not, label %._crit_edge1049, label %.lr.ph1048, !llvm.loop !67
 
 bb.an:                                            ; preds = %._crit_edge1049
-  %i.ob = load double, ptr %i.ad, align 8, !tbaa !14 ; 4 uses
+  %i.ob = load double, ptr %i.ad, align 8, !tbaa !14 ; 3 uses
   %i.oc = add nsw i64 %i.ab, -1                   ; 15 uses
-  %i.od = add nsw i64 %i.ab, -2                   ; 6 uses
+  %i.od = add nsw i64 %i.ab, -2                   ; 3 uses
   %xtraiter1719 = and i64 %i.oc, 3                ; 3 uses
   %i.oe = icmp ult i64 %i.od, 3
   br i1 %i.oe, label %.epil.preheader1718, label %.new1717
@@ -771,7 +766,7 @@ _ZL10simple_minPKdi.exit:                         ; preds = %bb.ap, %_ZL10simple
   %i.oy = fcmp olt double %.1.i.lcssa, %i.ox
   %.sroa.speculated775 = select i1 %i.oy, double %.1.i.lcssa, double %i.ox
   store double %.sroa.speculated775, ptr %9, align 8, !tbaa !14
-  %i.oz = load double, ptr %i.ag, align 8, !tbaa !14 ; 4 uses
+  %i.oz = load double, ptr %i.ag, align 8, !tbaa !14 ; 3 uses
   %xtraiter1727 = and i64 %i.oc, 3                ; 3 uses
   %i.pa = icmp ult i64 %i.od, 3
   br i1 %i.pa, label %.epil.preheader1726, label %_ZL10simple_minPKdi.exit.new
@@ -838,7 +833,7 @@ _ZL10simple_minPKdi.exit508:                      ; preds = %bb.ar, %_ZL10simple
   %i.pu = fcmp olt double %.1.i505.lcssa, %i.pt
   %.sroa.speculated771 = select i1 %i.pu, double %.1.i505.lcssa, double %i.pt
   store double %.sroa.speculated771, ptr %10, align 8, !tbaa !14
-  %i.pv = load double, ptr %i.aj, align 8, !tbaa !14 ; 4 uses
+  %i.pv = load double, ptr %i.aj, align 8, !tbaa !14 ; 3 uses
   %xtraiter1735 = and i64 %i.oc, 3                ; 3 uses
   %i.pw = icmp ult i64 %i.od, 3
   br i1 %i.pw, label %.epil.preheader1734, label %_ZL10simple_minPKdi.exit508.new
@@ -906,17 +901,13 @@ _ZL10simple_minPKdi.exit516:                      ; preds = %bb.at, %_ZL10simple
   %.sroa.speculated767 = select i1 %i.qq, double %.1.i513.lcssa, double %i.qp
   store double %.sroa.speculated767, ptr %11, align 8, !tbaa !14
   %xtraiter1743 = and i64 %i.oc, 1
-  %22 = icmp eq i64 %i.od, 0
-  br i1 %22, label %.epil.preheader1742, label %_ZL10simple_minPKdi.exit516.new
-
-_ZL10simple_minPKdi.exit516.new:                  ; preds = %_ZL10simple_minPKdi.exit516
   %unroll_iter1748 = and i64 %i.oc, -2
   br label %bb.au
 
-bb.au:                                            ; preds = %bb.au, %_ZL10simple_minPKdi.exit516.new
-  %indvars.iv.i519 = phi i64 [ 1, %_ZL10simple_minPKdi.exit516.new ], [ %indvars.iv.next.i521.1, %bb.au ] ; 3 uses
-  %.01316.i = phi double [ %i.ob, %_ZL10simple_minPKdi.exit516.new ], [ %.1.i520.1, %bb.au ] ; 3 uses
-  %niter1749 = phi i64 [ 0, %_ZL10simple_minPKdi.exit516.new ], [ %niter1749.next.1, %bb.au ]
+bb.au:                                            ; preds = %bb.au, %_ZL10simple_minPKdi.exit516
+  %indvars.iv.i519 = phi i64 [ 1, %_ZL10simple_minPKdi.exit516 ], [ %indvars.iv.next.i521.1, %bb.au ] ; 3 uses
+  %.01316.i = phi double [ %i.ob, %_ZL10simple_minPKdi.exit516 ], [ %.1.i520.1, %bb.au ] ; 3 uses
+  %niter1749 = phi i64 [ 0, %_ZL10simple_minPKdi.exit516 ], [ %niter1749.next.1, %bb.au ]
   %i.qr = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %indvars.iv.i519
   %i.qs = load double, ptr %i.qr, align 8, !tbaa !14 ; 3 uses
   %i.qt = fcmp ogt double %i.qs, %.01316.i
@@ -933,7 +924,7 @@ bb.au:                                            ; preds = %bb.au, %_ZL10simple
   %or.cond.i.1 = or i1 %i.ra, %i.qz
   %i.rb = fcmp une double %i.qy, +inf
   %or.cond15.i.1 = and i1 %i.rb, %or.cond.i.1
-  %.1.i520.1 = select i1 %or.cond15.i.1, double %i.qy, double %.1.i520 ; 3 uses
+  %.1.i520.1 = select i1 %or.cond15.i.1, double %i.qy, double %.1.i520 ; 5 uses
   %indvars.iv.next.i521.1 = add nuw nsw i64 %indvars.iv.i519, 2 ; 2 uses
   %niter1749.next.1 = add nuw i64 %niter1749, 2   ; 2 uses
   %niter1749.ncmp.1 = icmp eq i64 %niter1749.next.1, %unroll_iter1748
@@ -943,19 +934,17 @@ _ZL10simple_maxPKdi.exit.unr-lcssa:               ; preds = %bb.au
   %lcmp.mod1745.not = icmp eq i64 %xtraiter1743, 0
   br i1 %lcmp.mod1745.not, label %_ZL10simple_maxPKdi.exit, label %.epil.preheader1742
 
-.epil.preheader1742:                              ; preds = %_ZL10simple_maxPKdi.exit.unr-lcssa, %_ZL10simple_minPKdi.exit516
-  %indvars.iv.i519.epil.init = phi i64 [ 1, %_ZL10simple_minPKdi.exit516 ], [ %indvars.iv.next.i521.1, %_ZL10simple_maxPKdi.exit.unr-lcssa ]
-  %.01316.i.epil.init = phi double [ %i.ob, %_ZL10simple_minPKdi.exit516 ], [ %.1.i520.1, %_ZL10simple_maxPKdi.exit.unr-lcssa ] ; 3 uses
+.epil.preheader1742:                              ; preds = %_ZL10simple_maxPKdi.exit.unr-lcssa
   %lcmp.mod1747 = trunc i64 %i.oc to i1
   call void @llvm.assume(i1 %lcmp.mod1747)
-  %i.rc = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %indvars.iv.i519.epil.init
+  %i.rc = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %indvars.iv.next.i521.1
   %i.rd = load double, ptr %i.rc, align 8, !tbaa !14 ; 3 uses
-  %i.re = fcmp ogt double %i.rd, %.01316.i.epil.init
-  %i.rf = fcmp oeq double %.01316.i.epil.init, +inf
+  %i.re = fcmp ogt double %i.rd, %.1.i520.1
+  %i.rf = fcmp oeq double %.1.i520.1, +inf
   %or.cond.i.epil = or i1 %i.rf, %i.re
   %i.rg = fcmp une double %i.rd, +inf
   %or.cond15.i.epil = and i1 %i.rg, %or.cond.i.epil
-  %.1.i520.epil = select i1 %or.cond15.i.epil, double %i.rd, double %.01316.i.epil.init
+  %.1.i520.epil = select i1 %or.cond15.i.epil, double %i.rd, double %.1.i520.1
   br label %_ZL10simple_maxPKdi.exit
 
 _ZL10simple_maxPKdi.exit:                         ; preds = %_ZL10simple_maxPKdi.exit.unr-lcssa, %.epil.preheader1742
@@ -965,17 +954,13 @@ _ZL10simple_maxPKdi.exit:                         ; preds = %_ZL10simple_maxPKdi
   %.sroa.speculated763 = select i1 %i.ri, double %.1.i520.lcssa, double %i.rh
   store double %.sroa.speculated763, ptr %12, align 8, !tbaa !14
   %xtraiter1751 = and i64 %i.oc, 1
-  %23 = icmp eq i64 %i.od, 0
-  br i1 %23, label %.epil.preheader1750, label %_ZL10simple_maxPKdi.exit.new
-
-_ZL10simple_maxPKdi.exit.new:                     ; preds = %_ZL10simple_maxPKdi.exit
   %unroll_iter1756 = and i64 %i.oc, -2
   br label %bb.av
 
-bb.av:                                            ; preds = %bb.av, %_ZL10simple_maxPKdi.exit.new
-  %indvars.iv.i525 = phi i64 [ 1, %_ZL10simple_maxPKdi.exit.new ], [ %indvars.iv.next.i530.1, %bb.av ] ; 3 uses
-  %.01316.i526 = phi double [ %i.oz, %_ZL10simple_maxPKdi.exit.new ], [ %.1.i529.1, %bb.av ] ; 3 uses
-  %niter1757 = phi i64 [ 0, %_ZL10simple_maxPKdi.exit.new ], [ %niter1757.next.1, %bb.av ]
+bb.av:                                            ; preds = %bb.av, %_ZL10simple_maxPKdi.exit
+  %indvars.iv.i525 = phi i64 [ 1, %_ZL10simple_maxPKdi.exit ], [ %indvars.iv.next.i530.1, %bb.av ] ; 3 uses
+  %.01316.i526 = phi double [ %i.oz, %_ZL10simple_maxPKdi.exit ], [ %.1.i529.1, %bb.av ] ; 3 uses
+  %niter1757 = phi i64 [ 0, %_ZL10simple_maxPKdi.exit ], [ %niter1757.next.1, %bb.av ]
   %i.rj = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %indvars.iv.i525
   %i.rk = load double, ptr %i.rj, align 8, !tbaa !14 ; 3 uses
   %i.rl = fcmp ogt double %i.rk, %.01316.i526
@@ -992,7 +977,7 @@ bb.av:                                            ; preds = %bb.av, %_ZL10simple
   %or.cond.i527.1 = or i1 %i.rs, %i.rr
   %i.rt = fcmp une double %i.rq, +inf
   %or.cond15.i528.1 = and i1 %i.rt, %or.cond.i527.1
-  %.1.i529.1 = select i1 %or.cond15.i528.1, double %i.rq, double %.1.i529 ; 3 uses
+  %.1.i529.1 = select i1 %or.cond15.i528.1, double %i.rq, double %.1.i529 ; 5 uses
   %indvars.iv.next.i530.1 = add nuw nsw i64 %indvars.iv.i525, 2 ; 2 uses
   %niter1757.next.1 = add nuw i64 %niter1757, 2   ; 2 uses
   %niter1757.ncmp.1 = icmp eq i64 %niter1757.next.1, %unroll_iter1756
@@ -1002,19 +987,17 @@ _ZL10simple_maxPKdi.exit532.unr-lcssa:            ; preds = %bb.av
   %lcmp.mod1753.not = icmp eq i64 %xtraiter1751, 0
   br i1 %lcmp.mod1753.not, label %_ZL10simple_maxPKdi.exit532, label %.epil.preheader1750
 
-.epil.preheader1750:                              ; preds = %_ZL10simple_maxPKdi.exit532.unr-lcssa, %_ZL10simple_maxPKdi.exit
-  %indvars.iv.i525.epil.init = phi i64 [ 1, %_ZL10simple_maxPKdi.exit ], [ %indvars.iv.next.i530.1, %_ZL10simple_maxPKdi.exit532.unr-lcssa ]
-  %.01316.i526.epil.init = phi double [ %i.oz, %_ZL10simple_maxPKdi.exit ], [ %.1.i529.1, %_ZL10simple_maxPKdi.exit532.unr-lcssa ] ; 3 uses
+.epil.preheader1750:                              ; preds = %_ZL10simple_maxPKdi.exit532.unr-lcssa
   %lcmp.mod1755 = trunc i64 %i.oc to i1
   call void @llvm.assume(i1 %lcmp.mod1755)
-  %i.ru = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %indvars.iv.i525.epil.init
+  %i.ru = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %indvars.iv.next.i530.1
   %i.rv = load double, ptr %i.ru, align 8, !tbaa !14 ; 3 uses
-  %i.rw = fcmp ogt double %i.rv, %.01316.i526.epil.init
-  %i.rx = fcmp oeq double %.01316.i526.epil.init, +inf
+  %i.rw = fcmp ogt double %i.rv, %.1.i529.1
+  %i.rx = fcmp oeq double %.1.i529.1, +inf
   %or.cond.i527.epil = or i1 %i.rx, %i.rw
   %i.ry = fcmp une double %i.rv, +inf
   %or.cond15.i528.epil = and i1 %i.ry, %or.cond.i527.epil
-  %.1.i529.epil = select i1 %or.cond15.i528.epil, double %i.rv, double %.01316.i526.epil.init
+  %.1.i529.epil = select i1 %or.cond15.i528.epil, double %i.rv, double %.1.i529.1
   br label %_ZL10simple_maxPKdi.exit532
 
 _ZL10simple_maxPKdi.exit532:                      ; preds = %_ZL10simple_maxPKdi.exit532.unr-lcssa, %.epil.preheader1750
@@ -1024,17 +1007,13 @@ _ZL10simple_maxPKdi.exit532:                      ; preds = %_ZL10simple_maxPKdi
   %.sroa.speculated759 = select i1 %i.sa, double %.1.i529.lcssa, double %i.rz
   store double %.sroa.speculated759, ptr %13, align 8, !tbaa !14
   %xtraiter1759 = and i64 %i.oc, 1
-  %24 = icmp eq i64 %i.od, 0
-  br i1 %24, label %.epil.preheader1758, label %_ZL10simple_maxPKdi.exit532.new
-
-_ZL10simple_maxPKdi.exit532.new:                  ; preds = %_ZL10simple_maxPKdi.exit532
   %unroll_iter1764 = and i64 %i.oc, -2
   br label %bb.aw
 
-bb.aw:                                            ; preds = %bb.aw, %_ZL10simple_maxPKdi.exit532.new
-  %indvars.iv.i535 = phi i64 [ 1, %_ZL10simple_maxPKdi.exit532.new ], [ %indvars.iv.next.i540.1, %bb.aw ] ; 3 uses
-  %.01316.i536 = phi double [ %i.pv, %_ZL10simple_maxPKdi.exit532.new ], [ %.1.i539.1, %bb.aw ] ; 3 uses
-  %niter1765 = phi i64 [ 0, %_ZL10simple_maxPKdi.exit532.new ], [ %niter1765.next.1, %bb.aw ]
+bb.aw:                                            ; preds = %bb.aw, %_ZL10simple_maxPKdi.exit532
+  %indvars.iv.i535 = phi i64 [ 1, %_ZL10simple_maxPKdi.exit532 ], [ %indvars.iv.next.i540.1, %bb.aw ] ; 3 uses
+  %.01316.i536 = phi double [ %i.pv, %_ZL10simple_maxPKdi.exit532 ], [ %.1.i539.1, %bb.aw ] ; 3 uses
+  %niter1765 = phi i64 [ 0, %_ZL10simple_maxPKdi.exit532 ], [ %niter1765.next.1, %bb.aw ]
   %i.sb = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv.i535
   %i.sc = load double, ptr %i.sb, align 8, !tbaa !14 ; 3 uses
   %i.sd = fcmp ogt double %i.sc, %.01316.i536
@@ -1051,7 +1030,7 @@ bb.aw:                                            ; preds = %bb.aw, %_ZL10simple
   %or.cond.i537.1 = or i1 %i.sk, %i.sj
   %i.sl = fcmp une double %i.si, +inf
   %or.cond15.i538.1 = and i1 %i.sl, %or.cond.i537.1
-  %.1.i539.1 = select i1 %or.cond15.i538.1, double %i.si, double %.1.i539 ; 3 uses
+  %.1.i539.1 = select i1 %or.cond15.i538.1, double %i.si, double %.1.i539 ; 5 uses
   %indvars.iv.next.i540.1 = add nuw nsw i64 %indvars.iv.i535, 2 ; 2 uses
   %niter1765.next.1 = add nuw i64 %niter1765, 2   ; 2 uses
   %niter1765.ncmp.1 = icmp eq i64 %niter1765.next.1, %unroll_iter1764
@@ -1061,19 +1040,17 @@ _ZL10simple_maxPKdi.exit542.unr-lcssa:            ; preds = %bb.aw
   %lcmp.mod1761.not = icmp eq i64 %xtraiter1759, 0
   br i1 %lcmp.mod1761.not, label %_ZL10simple_maxPKdi.exit542, label %.epil.preheader1758
 
-.epil.preheader1758:                              ; preds = %_ZL10simple_maxPKdi.exit542.unr-lcssa, %_ZL10simple_maxPKdi.exit532
-  %indvars.iv.i535.epil.init = phi i64 [ 1, %_ZL10simple_maxPKdi.exit532 ], [ %indvars.iv.next.i540.1, %_ZL10simple_maxPKdi.exit542.unr-lcssa ]
-  %.01316.i536.epil.init = phi double [ %i.pv, %_ZL10simple_maxPKdi.exit532 ], [ %.1.i539.1, %_ZL10simple_maxPKdi.exit542.unr-lcssa ] ; 3 uses
+.epil.preheader1758:                              ; preds = %_ZL10simple_maxPKdi.exit542.unr-lcssa
   %lcmp.mod1763 = trunc i64 %i.oc to i1
   call void @llvm.assume(i1 %lcmp.mod1763)
-  %i.sm = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv.i535.epil.init
+  %i.sm = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv.next.i540.1
   %i.sn = load double, ptr %i.sm, align 8, !tbaa !14 ; 3 uses
-  %i.so = fcmp ogt double %i.sn, %.01316.i536.epil.init
-  %i.sp = fcmp oeq double %.01316.i536.epil.init, +inf
+  %i.so = fcmp ogt double %i.sn, %.1.i539.1
+  %i.sp = fcmp oeq double %.1.i539.1, +inf
   %or.cond.i537.epil = or i1 %i.sp, %i.so
   %i.sq = fcmp une double %i.sn, +inf
   %or.cond15.i538.epil = and i1 %i.sq, %or.cond.i537.epil
-  %.1.i539.epil = select i1 %or.cond15.i538.epil, double %i.sn, double %.01316.i536.epil.init
+  %.1.i539.epil = select i1 %or.cond15.i538.epil, double %i.sn, double %.1.i539.1
   br label %_ZL10simple_maxPKdi.exit542
 
 _ZL10simple_maxPKdi.exit542:                      ; preds = %_ZL10simple_maxPKdi.exit542.unr-lcssa, %.epil.preheader1758
@@ -1417,13 +1394,13 @@ _ZL10simple_minPKdi.exit550:                      ; preds = %bb.bc, %_ZL10simple
   %i.xv = fcmp olt double %.1.i547.lcssa, %i.xu
   %.sroa.speculated751 = select i1 %i.xv, double %.1.i547.lcssa, double %i.xu
   store double %.sroa.speculated751, ptr %9, align 8, !tbaa !14
-  %i.xw = load double, ptr %.sroa.0845.11001, align 8, !tbaa !14 ; 2 uses
-  br i1 %17, label %.epil.preheader1640, label %_ZL10simple_minPKdi.exit550.new
+  %i.xw = load double, ptr %.sroa.0845.11001, align 8, !tbaa !14
+  br label %_ZL10simple_minPKdi.exit550.new
 
-_ZL10simple_minPKdi.exit550.new:                  ; preds = %_ZL10simple_minPKdi.exit550, %_ZL10simple_minPKdi.exit550.new
-  %indvars.iv.i553 = phi i64 [ %indvars.iv.next.i558.1, %_ZL10simple_minPKdi.exit550.new ], [ 1, %_ZL10simple_minPKdi.exit550 ] ; 3 uses
-  %.01316.i554 = phi double [ %.1.i557.1, %_ZL10simple_minPKdi.exit550.new ], [ %i.xw, %_ZL10simple_minPKdi.exit550 ] ; 3 uses
-  %niter1647 = phi i64 [ %niter1647.next.1, %_ZL10simple_minPKdi.exit550.new ], [ 0, %_ZL10simple_minPKdi.exit550 ]
+_ZL10simple_minPKdi.exit550.new:                  ; preds = %_ZL10simple_minPKdi.exit550.new, %_ZL10simple_minPKdi.exit550
+  %indvars.iv.i553 = phi i64 [ 1, %_ZL10simple_minPKdi.exit550 ], [ %indvars.iv.next.i558.1, %_ZL10simple_minPKdi.exit550.new ] ; 3 uses
+  %.01316.i554 = phi double [ %i.xw, %_ZL10simple_minPKdi.exit550 ], [ %.1.i557.1, %_ZL10simple_minPKdi.exit550.new ] ; 3 uses
+  %niter1647 = phi i64 [ 0, %_ZL10simple_minPKdi.exit550 ], [ %niter1647.next.1, %_ZL10simple_minPKdi.exit550.new ]
   %i.xx = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0845.11001, i64 %indvars.iv.i553
   %i.xy = load double, ptr %i.xx, align 8, !tbaa !14 ; 3 uses
   %i.xz = fcmp ogt double %i.xy, %.01316.i554
@@ -1440,7 +1417,7 @@ _ZL10simple_minPKdi.exit550.new:                  ; preds = %_ZL10simple_minPKdi
   %or.cond.i555.1 = or i1 %i.yg, %i.yf
   %i.yh = fcmp une double %i.ye, +inf
   %or.cond15.i556.1 = and i1 %i.yh, %or.cond.i555.1
-  %.1.i557.1 = select i1 %or.cond15.i556.1, double %i.ye, double %.1.i557 ; 3 uses
+  %.1.i557.1 = select i1 %or.cond15.i556.1, double %i.ye, double %.1.i557 ; 5 uses
   %indvars.iv.next.i558.1 = add nuw nsw i64 %indvars.iv.i553, 2 ; 2 uses
   %niter1647.next.1 = add nuw i64 %niter1647, 2   ; 2 uses
   %niter1647.ncmp.1 = icmp eq i64 %niter1647.next.1, %unroll_iter1646
@@ -1449,18 +1426,16 @@ _ZL10simple_minPKdi.exit550.new:                  ; preds = %_ZL10simple_minPKdi
 _ZL10simple_maxPKdi.exit560.unr-lcssa:            ; preds = %_ZL10simple_minPKdi.exit550.new
   br i1 %lcmp.mod1643.not, label %_ZL10simple_maxPKdi.exit560, label %.epil.preheader1640
 
-.epil.preheader1640:                              ; preds = %_ZL10simple_maxPKdi.exit560.unr-lcssa, %_ZL10simple_minPKdi.exit550
-  %indvars.iv.i553.epil.init = phi i64 [ 1, %_ZL10simple_minPKdi.exit550 ], [ %indvars.iv.next.i558.1, %_ZL10simple_maxPKdi.exit560.unr-lcssa ]
-  %.01316.i554.epil.init = phi double [ %i.xw, %_ZL10simple_minPKdi.exit550 ], [ %.1.i557.1, %_ZL10simple_maxPKdi.exit560.unr-lcssa ] ; 3 uses
+.epil.preheader1640:                              ; preds = %_ZL10simple_maxPKdi.exit560.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod1645)
-  %i.yi = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0845.11001, i64 %indvars.iv.i553.epil.init
+  %i.yi = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0845.11001, i64 %indvars.iv.next.i558.1
   %i.yj = load double, ptr %i.yi, align 8, !tbaa !14 ; 3 uses
-  %i.yk = fcmp ogt double %i.yj, %.01316.i554.epil.init
-  %i.yl = fcmp oeq double %.01316.i554.epil.init, +inf
+  %i.yk = fcmp ogt double %i.yj, %.1.i557.1
+  %i.yl = fcmp oeq double %.1.i557.1, +inf
   %or.cond.i555.epil = or i1 %i.yl, %i.yk
   %i.ym = fcmp une double %i.yj, +inf
   %or.cond15.i556.epil = and i1 %i.ym, %or.cond.i555.epil
-  %.1.i557.epil = select i1 %or.cond15.i556.epil, double %i.yj, double %.01316.i554.epil.init
+  %.1.i557.epil = select i1 %or.cond15.i556.epil, double %i.yj, double %.1.i557.1
   br label %_ZL10simple_maxPKdi.exit560
 
 _ZL10simple_maxPKdi.exit560:                      ; preds = %_ZL10simple_maxPKdi.exit560.unr-lcssa, %.epil.preheader1640
@@ -1528,13 +1503,13 @@ _ZL10simple_minPKdi.exit568:                      ; preds = %bb.bd, %_ZL10simple
   %i.zj = fcmp olt double %.1.i565.lcssa, %i.zi
   %.sroa.speculated743 = select i1 %i.zj, double %.1.i565.lcssa, double %i.zi
   store double %.sroa.speculated743, ptr %10, align 8, !tbaa !14
-  %i.zk = load double, ptr %.sroa.0807.11003, align 8, !tbaa !14 ; 2 uses
-  br i1 %18, label %.epil.preheader1656, label %_ZL10simple_minPKdi.exit568.new
+  %i.zk = load double, ptr %.sroa.0807.11003, align 8, !tbaa !14
+  br label %_ZL10simple_minPKdi.exit568.new
 
-_ZL10simple_minPKdi.exit568.new:                  ; preds = %_ZL10simple_minPKdi.exit568, %_ZL10simple_minPKdi.exit568.new
-  %indvars.iv.i571 = phi i64 [ %indvars.iv.next.i576.1, %_ZL10simple_minPKdi.exit568.new ], [ 1, %_ZL10simple_minPKdi.exit568 ] ; 3 uses
-  %.01316.i572 = phi double [ %.1.i575.1, %_ZL10simple_minPKdi.exit568.new ], [ %i.zk, %_ZL10simple_minPKdi.exit568 ] ; 3 uses
-  %niter1663 = phi i64 [ %niter1663.next.1, %_ZL10simple_minPKdi.exit568.new ], [ 0, %_ZL10simple_minPKdi.exit568 ]
+_ZL10simple_minPKdi.exit568.new:                  ; preds = %_ZL10simple_minPKdi.exit568.new, %_ZL10simple_minPKdi.exit568
+  %indvars.iv.i571 = phi i64 [ 1, %_ZL10simple_minPKdi.exit568 ], [ %indvars.iv.next.i576.1, %_ZL10simple_minPKdi.exit568.new ] ; 3 uses
+  %.01316.i572 = phi double [ %i.zk, %_ZL10simple_minPKdi.exit568 ], [ %.1.i575.1, %_ZL10simple_minPKdi.exit568.new ] ; 3 uses
+  %niter1663 = phi i64 [ 0, %_ZL10simple_minPKdi.exit568 ], [ %niter1663.next.1, %_ZL10simple_minPKdi.exit568.new ]
   %i.zl = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0807.11003, i64 %indvars.iv.i571
   %i.zm = load double, ptr %i.zl, align 8, !tbaa !14 ; 3 uses
   %i.zn = fcmp ogt double %i.zm, %.01316.i572
@@ -1551,7 +1526,7 @@ _ZL10simple_minPKdi.exit568.new:                  ; preds = %_ZL10simple_minPKdi
   %or.cond.i573.1 = or i1 %i.zu, %i.zt
   %i.zv = fcmp une double %i.zs, +inf
   %or.cond15.i574.1 = and i1 %i.zv, %or.cond.i573.1
-  %.1.i575.1 = select i1 %or.cond15.i574.1, double %i.zs, double %.1.i575 ; 3 uses
+  %.1.i575.1 = select i1 %or.cond15.i574.1, double %i.zs, double %.1.i575 ; 5 uses
   %indvars.iv.next.i576.1 = add nuw nsw i64 %indvars.iv.i571, 2 ; 2 uses
   %niter1663.next.1 = add nuw i64 %niter1663, 2   ; 2 uses
   %niter1663.ncmp.1 = icmp eq i64 %niter1663.next.1, %unroll_iter1662
@@ -1560,18 +1535,16 @@ _ZL10simple_minPKdi.exit568.new:                  ; preds = %_ZL10simple_minPKdi
 _ZL10simple_maxPKdi.exit578.unr-lcssa:            ; preds = %_ZL10simple_minPKdi.exit568.new
   br i1 %lcmp.mod1659.not, label %_ZL10simple_maxPKdi.exit578, label %.epil.preheader1656
 
-.epil.preheader1656:                              ; preds = %_ZL10simple_maxPKdi.exit578.unr-lcssa, %_ZL10simple_minPKdi.exit568
-  %indvars.iv.i571.epil.init = phi i64 [ 1, %_ZL10simple_minPKdi.exit568 ], [ %indvars.iv.next.i576.1, %_ZL10simple_maxPKdi.exit578.unr-lcssa ]
-  %.01316.i572.epil.init = phi double [ %i.zk, %_ZL10simple_minPKdi.exit568 ], [ %.1.i575.1, %_ZL10simple_maxPKdi.exit578.unr-lcssa ] ; 3 uses
+.epil.preheader1656:                              ; preds = %_ZL10simple_maxPKdi.exit578.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod1661)
-  %i.zw = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0807.11003, i64 %indvars.iv.i571.epil.init
+  %i.zw = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0807.11003, i64 %indvars.iv.next.i576.1
   %i.zx = load double, ptr %i.zw, align 8, !tbaa !14 ; 3 uses
-  %i.zy = fcmp ogt double %i.zx, %.01316.i572.epil.init
-  %i.zz = fcmp oeq double %.01316.i572.epil.init, +inf
+  %i.zy = fcmp ogt double %i.zx, %.1.i575.1
+  %i.zz = fcmp oeq double %.1.i575.1, +inf
   %or.cond.i573.epil = or i1 %i.zz, %i.zy
   %i.aaa = fcmp une double %i.zx, +inf
   %or.cond15.i574.epil = and i1 %i.aaa, %or.cond.i573.epil
-  %.1.i575.epil = select i1 %or.cond15.i574.epil, double %i.zx, double %.01316.i572.epil.init
+  %.1.i575.epil = select i1 %or.cond15.i574.epil, double %i.zx, double %.1.i575.1
   br label %_ZL10simple_maxPKdi.exit578
 
 _ZL10simple_maxPKdi.exit578:                      ; preds = %_ZL10simple_maxPKdi.exit578.unr-lcssa, %.epil.preheader1656
@@ -1661,13 +1634,13 @@ bb.bh:                                            ; preds = %bb.bg
   store double -1.800000e+02, ptr %9, align 8, !tbaa !14
   store double 1.800000e+02, ptr %12, align 8, !tbaa !14
   store double -9.000000e+01, ptr %10, align 8, !tbaa !14
-  %i.aay = load double, ptr %.sroa.0807.2896, align 8, !tbaa !14 ; 2 uses
-  br i1 %20, label %.epil.preheader1681, label %.new1680
+  %i.aay = load double, ptr %.sroa.0807.2896, align 8, !tbaa !14
+  br label %.new1680
 
-.new1680:                                         ; preds = %bb.bh, %.new1680
-  %indvars.iv.i589 = phi i64 [ %indvars.iv.next.i594.1, %.new1680 ], [ 1, %bb.bh ] ; 3 uses
-  %.01316.i590 = phi double [ %.1.i593.1, %.new1680 ], [ %i.aay, %bb.bh ] ; 3 uses
-  %niter1688 = phi i64 [ %niter1688.next.1, %.new1680 ], [ 0, %bb.bh ]
+.new1680:                                         ; preds = %.new1680, %bb.bh
+  %indvars.iv.i589 = phi i64 [ 1, %bb.bh ], [ %indvars.iv.next.i594.1, %.new1680 ] ; 3 uses
+  %.01316.i590 = phi double [ %i.aay, %bb.bh ], [ %.1.i593.1, %.new1680 ] ; 3 uses
+  %niter1688 = phi i64 [ 0, %bb.bh ], [ %niter1688.next.1, %.new1680 ]
   %i.aaz = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0807.2896, i64 %indvars.iv.i589
   %i.aba = load double, ptr %i.aaz, align 8, !tbaa !14 ; 3 uses
   %i.abb = fcmp ogt double %i.aba, %.01316.i590
@@ -1684,7 +1657,7 @@ bb.bh:                                            ; preds = %bb.bg
   %or.cond.i591.1 = or i1 %i.abi, %i.abh
   %i.abj = fcmp une double %i.abg, +inf
   %or.cond15.i592.1 = and i1 %i.abj, %or.cond.i591.1
-  %.1.i593.1 = select i1 %or.cond15.i592.1, double %i.abg, double %.1.i593 ; 3 uses
+  %.1.i593.1 = select i1 %or.cond15.i592.1, double %i.abg, double %.1.i593 ; 5 uses
   %indvars.iv.next.i594.1 = add nuw nsw i64 %indvars.iv.i589, 2 ; 2 uses
   %niter1688.next.1 = add nuw i64 %niter1688, 2   ; 2 uses
   %niter1688.ncmp.1 = icmp eq i64 %niter1688.next.1, %unroll_iter1687
@@ -1693,18 +1666,16 @@ bb.bh:                                            ; preds = %bb.bg
 _ZL10simple_maxPKdi.exit596.unr-lcssa:            ; preds = %.new1680
   br i1 %lcmp.mod1684.not, label %_ZL10simple_maxPKdi.exit596, label %.epil.preheader1681
 
-.epil.preheader1681:                              ; preds = %_ZL10simple_maxPKdi.exit596.unr-lcssa, %bb.bh
-  %indvars.iv.i589.epil.init = phi i64 [ 1, %bb.bh ], [ %indvars.iv.next.i594.1, %_ZL10simple_maxPKdi.exit596.unr-lcssa ]
-  %.01316.i590.epil.init = phi double [ %i.aay, %bb.bh ], [ %.1.i593.1, %_ZL10simple_maxPKdi.exit596.unr-lcssa ] ; 3 uses
+.epil.preheader1681:                              ; preds = %_ZL10simple_maxPKdi.exit596.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod1686)
-  %i.abk = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0807.2896, i64 %indvars.iv.i589.epil.init
+  %i.abk = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0807.2896, i64 %indvars.iv.next.i594.1
   %i.abl = load double, ptr %i.abk, align 8, !tbaa !14 ; 3 uses
-  %i.abm = fcmp ogt double %i.abl, %.01316.i590.epil.init
-  %i.abn = fcmp oeq double %.01316.i590.epil.init, +inf
+  %i.abm = fcmp ogt double %i.abl, %.1.i593.1
+  %i.abn = fcmp oeq double %.1.i593.1, +inf
   %or.cond.i591.epil = or i1 %i.abn, %i.abm
   %i.abo = fcmp une double %i.abl, +inf
   %or.cond15.i592.epil = and i1 %i.abo, %or.cond.i591.epil
-  %.1.i593.epil = select i1 %or.cond15.i592.epil, double %i.abl, double %.01316.i590.epil.init
+  %.1.i593.epil = select i1 %or.cond15.i592.epil, double %i.abl, double %.1.i593.1
   br label %_ZL10simple_maxPKdi.exit596
 
 _ZL10simple_maxPKdi.exit596:                      ; preds = %_ZL10simple_maxPKdi.exit596.unr-lcssa, %.epil.preheader1681
@@ -2003,13 +1974,13 @@ _ZL10simple_minPKdi.exit628:                      ; preds = %bb.cd, %_ZL10simple
   %i.afc = fcmp olt double %.1.i625.lcssa, %i.afb
   %.sroa.speculated719 = select i1 %i.afc, double %.1.i625.lcssa, double %i.afb
   store double %.sroa.speculated719, ptr %10, align 8, !tbaa !14
-  %i.afd = load double, ptr %.sroa.0807.2896, align 8, !tbaa !14 ; 2 uses
-  br i1 %19, label %.epil.preheader1672, label %_ZL10simple_minPKdi.exit628.new
+  %i.afd = load double, ptr %.sroa.0807.2896, align 8, !tbaa !14
+  br label %_ZL10simple_minPKdi.exit628.new
 
-_ZL10simple_minPKdi.exit628.new:                  ; preds = %_ZL10simple_minPKdi.exit628, %_ZL10simple_minPKdi.exit628.new
-  %indvars.iv.i631 = phi i64 [ %indvars.iv.next.i636.1, %_ZL10simple_minPKdi.exit628.new ], [ 1, %_ZL10simple_minPKdi.exit628 ] ; 3 uses
-  %.01316.i632 = phi double [ %.1.i635.1, %_ZL10simple_minPKdi.exit628.new ], [ %i.afd, %_ZL10simple_minPKdi.exit628 ] ; 3 uses
-  %niter1679 = phi i64 [ %niter1679.next.1, %_ZL10simple_minPKdi.exit628.new ], [ 0, %_ZL10simple_minPKdi.exit628 ]
+_ZL10simple_minPKdi.exit628.new:                  ; preds = %_ZL10simple_minPKdi.exit628.new, %_ZL10simple_minPKdi.exit628
+  %indvars.iv.i631 = phi i64 [ 1, %_ZL10simple_minPKdi.exit628 ], [ %indvars.iv.next.i636.1, %_ZL10simple_minPKdi.exit628.new ] ; 3 uses
+  %.01316.i632 = phi double [ %i.afd, %_ZL10simple_minPKdi.exit628 ], [ %.1.i635.1, %_ZL10simple_minPKdi.exit628.new ] ; 3 uses
+  %niter1679 = phi i64 [ 0, %_ZL10simple_minPKdi.exit628 ], [ %niter1679.next.1, %_ZL10simple_minPKdi.exit628.new ]
   %i.afe = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0807.2896, i64 %indvars.iv.i631
   %i.aff = load double, ptr %i.afe, align 8, !tbaa !14 ; 3 uses
   %i.afg = fcmp ogt double %i.aff, %.01316.i632
@@ -2026,7 +1997,7 @@ _ZL10simple_minPKdi.exit628.new:                  ; preds = %_ZL10simple_minPKdi
   %or.cond.i633.1 = or i1 %i.afn, %i.afm
   %i.afo = fcmp une double %i.afl, +inf
   %or.cond15.i634.1 = and i1 %i.afo, %or.cond.i633.1
-  %.1.i635.1 = select i1 %or.cond15.i634.1, double %i.afl, double %.1.i635 ; 3 uses
+  %.1.i635.1 = select i1 %or.cond15.i634.1, double %i.afl, double %.1.i635 ; 5 uses
   %indvars.iv.next.i636.1 = add nuw nsw i64 %indvars.iv.i631, 2 ; 2 uses
   %niter1679.next.1 = add nuw i64 %niter1679, 2   ; 2 uses
   %niter1679.ncmp.1 = icmp eq i64 %niter1679.next.1, %unroll_iter1678
@@ -2035,18 +2006,16 @@ _ZL10simple_minPKdi.exit628.new:                  ; preds = %_ZL10simple_minPKdi
 _ZL10simple_maxPKdi.exit638.unr-lcssa:            ; preds = %_ZL10simple_minPKdi.exit628.new
   br i1 %lcmp.mod1675.not, label %_ZL10simple_maxPKdi.exit638, label %.epil.preheader1672
 
-.epil.preheader1672:                              ; preds = %_ZL10simple_maxPKdi.exit638.unr-lcssa, %_ZL10simple_minPKdi.exit628
-  %indvars.iv.i631.epil.init = phi i64 [ 1, %_ZL10simple_minPKdi.exit628 ], [ %indvars.iv.next.i636.1, %_ZL10simple_maxPKdi.exit638.unr-lcssa ]
-  %.01316.i632.epil.init = phi double [ %i.afd, %_ZL10simple_minPKdi.exit628 ], [ %.1.i635.1, %_ZL10simple_maxPKdi.exit638.unr-lcssa ] ; 3 uses
+.epil.preheader1672:                              ; preds = %_ZL10simple_maxPKdi.exit638.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod1677)
-  %i.afp = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0807.2896, i64 %indvars.iv.i631.epil.init
+  %i.afp = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0807.2896, i64 %indvars.iv.next.i636.1
   %i.afq = load double, ptr %i.afp, align 8, !tbaa !14 ; 3 uses
-  %i.afr = fcmp ogt double %i.afq, %.01316.i632.epil.init
-  %i.afs = fcmp oeq double %.01316.i632.epil.init, +inf
+  %i.afr = fcmp ogt double %i.afq, %.1.i635.1
+  %i.afs = fcmp oeq double %.1.i635.1, +inf
   %or.cond.i633.epil = or i1 %i.afs, %i.afr
   %i.aft = fcmp une double %i.afq, +inf
   %or.cond15.i634.epil = and i1 %i.aft, %or.cond.i633.epil
-  %.1.i635.epil = select i1 %or.cond15.i634.epil, double %i.afq, double %.01316.i632.epil.init
+  %.1.i635.epil = select i1 %or.cond15.i634.epil, double %i.afq, double %.1.i635.1
   br label %_ZL10simple_maxPKdi.exit638
 
 _ZL10simple_maxPKdi.exit638:                      ; preds = %_ZL10simple_maxPKdi.exit638.unr-lcssa, %.epil.preheader1672
@@ -2067,7 +2036,7 @@ bb.ce:                                            ; preds = %_ZL10simple_minPKdi
   %.0410 = phi i1 [ %i.cb, %_ZL10simple_minPKdi.exit586 ], [ %i.cb, %_ZL10simple_maxPKdi.exit596 ], [ %i.afx, %_ZL10simple_maxPKdi.exit638 ], [ %i.cb, %_ZL10simple_maxPKdi.exit578 ]
   %.sroa.0807.28971185 = ptrtoaddr ptr %.sroa.0807.2897 to i64 ; 2 uses
   %.sroa.0845.28901186 = ptrtoaddr ptr %.sroa.0845.2890 to i64 ; 2 uses
-  %i.afy = load double, ptr %i.aj, align 8, !tbaa !14 ; 4 uses
+  %i.afy = load double, ptr %i.aj, align 8, !tbaa !14 ; 3 uses
   br i1 %i.ef, label %.epil.preheader1699, label %.new1698
 
 .new1698:                                         ; preds = %bb.ce, %.new1698
@@ -2126,12 +2095,12 @@ _ZL10simple_minPKdi.exit646:                      ; preds = %bb.cf, %_ZL10simple
   %i.ags = fcmp olt double %.1.i643.lcssa, %i.agr
   %.sroa.speculated711 = select i1 %i.ags, double %.1.i643.lcssa, double %i.agr
   store double %.sroa.speculated711, ptr %11, align 8, !tbaa !14
-  br i1 %21, label %.epil.preheader1707, label %_ZL10simple_minPKdi.exit646.new
+  br label %_ZL10simple_minPKdi.exit646.new
 
-_ZL10simple_minPKdi.exit646.new:                  ; preds = %_ZL10simple_minPKdi.exit646, %_ZL10simple_minPKdi.exit646.new
-  %indvars.iv.i649 = phi i64 [ %indvars.iv.next.i654.1, %_ZL10simple_minPKdi.exit646.new ], [ 1, %_ZL10simple_minPKdi.exit646 ] ; 3 uses
-  %.01316.i650 = phi double [ %.1.i653.1, %_ZL10simple_minPKdi.exit646.new ], [ %i.afy, %_ZL10simple_minPKdi.exit646 ] ; 3 uses
-  %niter1714 = phi i64 [ %niter1714.next.1, %_ZL10simple_minPKdi.exit646.new ], [ 0, %_ZL10simple_minPKdi.exit646 ]
+_ZL10simple_minPKdi.exit646.new:                  ; preds = %_ZL10simple_minPKdi.exit646.new, %_ZL10simple_minPKdi.exit646
+  %indvars.iv.i649 = phi i64 [ 1, %_ZL10simple_minPKdi.exit646 ], [ %indvars.iv.next.i654.1, %_ZL10simple_minPKdi.exit646.new ] ; 3 uses
+  %.01316.i650 = phi double [ %i.afy, %_ZL10simple_minPKdi.exit646 ], [ %.1.i653.1, %_ZL10simple_minPKdi.exit646.new ] ; 3 uses
+  %niter1714 = phi i64 [ 0, %_ZL10simple_minPKdi.exit646 ], [ %niter1714.next.1, %_ZL10simple_minPKdi.exit646.new ]
   %i.agt = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv.i649
   %i.agu = load double, ptr %i.agt, align 8, !tbaa !14 ; 3 uses
   %i.agv = fcmp ogt double %i.agu, %.01316.i650
@@ -2148,7 +2117,7 @@ _ZL10simple_minPKdi.exit646.new:                  ; preds = %_ZL10simple_minPKdi
   %or.cond.i651.1 = or i1 %i.ahc, %i.ahb
   %i.ahd = fcmp une double %i.aha, +inf
   %or.cond15.i652.1 = and i1 %i.ahd, %or.cond.i651.1
-  %.1.i653.1 = select i1 %or.cond15.i652.1, double %i.aha, double %.1.i653 ; 3 uses
+  %.1.i653.1 = select i1 %or.cond15.i652.1, double %i.aha, double %.1.i653 ; 5 uses
   %indvars.iv.next.i654.1 = add nuw nsw i64 %indvars.iv.i649, 2 ; 2 uses
   %niter1714.next.1 = add nuw i64 %niter1714, 2   ; 2 uses
   %niter1714.ncmp.1 = icmp eq i64 %niter1714.next.1, %unroll_iter1713
@@ -2157,18 +2126,16 @@ _ZL10simple_minPKdi.exit646.new:                  ; preds = %_ZL10simple_minPKdi
 _ZL10simple_maxPKdi.exit656.unr-lcssa:            ; preds = %_ZL10simple_minPKdi.exit646.new
   br i1 %lcmp.mod1710.not, label %_ZL10simple_maxPKdi.exit656, label %.epil.preheader1707
 
-.epil.preheader1707:                              ; preds = %_ZL10simple_maxPKdi.exit656.unr-lcssa, %_ZL10simple_minPKdi.exit646
-  %indvars.iv.i649.epil.init = phi i64 [ 1, %_ZL10simple_minPKdi.exit646 ], [ %indvars.iv.next.i654.1, %_ZL10simple_maxPKdi.exit656.unr-lcssa ]
-  %.01316.i650.epil.init = phi double [ %i.afy, %_ZL10simple_minPKdi.exit646 ], [ %.1.i653.1, %_ZL10simple_maxPKdi.exit656.unr-lcssa ] ; 3 uses
+.epil.preheader1707:                              ; preds = %_ZL10simple_maxPKdi.exit656.unr-lcssa
   call void @llvm.assume(i1 %lcmp.mod1712)
-  %i.ahe = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv.i649.epil.init
+  %i.ahe = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv.next.i654.1
   %i.ahf = load double, ptr %i.ahe, align 8, !tbaa !14 ; 3 uses
-  %i.ahg = fcmp ogt double %i.ahf, %.01316.i650.epil.init
-  %i.ahh = fcmp oeq double %.01316.i650.epil.init, +inf
+  %i.ahg = fcmp ogt double %i.ahf, %.1.i653.1
+  %i.ahh = fcmp oeq double %.1.i653.1, +inf
   %or.cond.i651.epil = or i1 %i.ahh, %i.ahg
   %i.ahi = fcmp une double %i.ahf, +inf
   %or.cond15.i652.epil = and i1 %i.ahi, %or.cond.i651.epil
-  %.1.i653.epil = select i1 %or.cond15.i652.epil, double %i.ahf, double %.01316.i650.epil.init
+  %.1.i653.epil = select i1 %or.cond15.i652.epil, double %i.ahf, double %.1.i653.1
   br label %_ZL10simple_maxPKdi.exit656
 
 _ZL10simple_maxPKdi.exit656:                      ; preds = %_ZL10simple_maxPKdi.exit656.unr-lcssa, %.epil.preheader1707

@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %Py_INCREF.exit.i
   br label %_PyTuple_Recycle.exit.i
 
 _PyTuple_Recycle.exit.i:                          ; preds = %_PyTuple_Recycle.exit.i.backedge, %.preheader.i
-  %.033.i = phi ptr [ %i.aa, %.preheader.i ], [ %.134.i, %_PyTuple_Recycle.exit.i.backedge ] ; 4 uses
+  %.033.i = phi ptr [ %i.aa, %.preheader.i ], [ %.134.i, %_PyTuple_Recycle.exit.i.backedge ] ; 3 uses
   %.032.i = phi ptr [ %.038, %.preheader.i ], [ %.032.i.be, %_PyTuple_Recycle.exit.i.backedge ] ; 8 uses
   %.033.val.i = load i32, ptr %.033.i, align 8, !tbaa !29 ; 3 uses
   %.not20.i = icmp eq i32 %.033.val.i, 1
@@ -215,16 +215,11 @@ bb.m:                                             ; preds = %_PyTuple_Recycle.ex
   br i1 %.not.i54.i, label %bb.n, label %Py_DECREF.exit55.i
 
 bb.n:                                             ; preds = %bb.m
-  %i.ad = add nsw i32 %.033.val.i, -1             ; 2 uses
+  %i.ad = add nsw i32 %.033.val.i, -1
   store i32 %i.ad, ptr %.033.i, align 8, !tbaa !29
-  %4 = icmp eq i32 %i.ad, 0
-  br i1 %4, label %5, label %Py_DECREF.exit55.i
-
-5:                                                ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull %.033.i) #8
   br label %Py_DECREF.exit55.i
 
-Py_DECREF.exit55.i:                               ; preds = %5, %bb.n, %bb.m
+Py_DECREF.exit55.i:                               ; preds = %bb.n, %bb.m
   %i.ae = call ptr @PyTuple_New(i64 noundef 2) #8 ; 2 uses
   %i.af = icmp eq ptr %i.ae, null
   br i1 %i.af, label %Py_XDECREF.exit68.i, label %bb.o

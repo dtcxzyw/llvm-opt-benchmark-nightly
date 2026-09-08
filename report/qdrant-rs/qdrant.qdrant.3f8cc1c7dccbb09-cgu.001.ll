@@ -204,11 +204,9 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCs3WWrd2JY12C_5hyper5proto2h14co
   %i.bt = load i64, ptr %i.bs, align 8, !range !98, !alias.scope !35409, !noundef !40 ; 3 uses
   %i.bu = icmp ne i64 %i.bt, -9223372036854775805
   tail call void @llvm.assume(i1 %i.bu)
-  %i.bv = add i64 %i.bt, 9223372036854775806      ; 2 uses
-  %1 = icmp ugt i64 %i.bv, 3
-  %2 = icmp eq i64 %i.bv, 1
-  %3 = or i1 %1, %2
-  br i1 %3, label %bb.ad, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCs3WWrd2JY12C_5hyper5proto2h14conn7WritingECsl8OoimOLbh_6qdrant.exit
+  %i.bv = add i64 %i.bt, 9223372036854775802
+  %1 = icmp ult i64 %i.bv, -4
+  br i1 %1, label %bb.ad, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCs3WWrd2JY12C_5hyper5proto2h14conn7WritingECsl8OoimOLbh_6qdrant.exit
 
 bb.ad:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCs3WWrd2JY12C_5hyper5proto2h14conn7ReadingECsl8OoimOLbh_6qdrant.exit
   switch i64 %i.bt, label %bb.ae [
@@ -361,11 +359,9 @@ bb.a:
   %i.a = load i64, ptr %0, align 8, !range !98, !noundef !40 ; 3 uses
   %i.b = icmp ne i64 %i.a, -9223372036854775805
   tail call void @llvm.assume(i1 %i.b)
-  %i.c = add i64 %i.a, 9223372036854775806        ; 2 uses
-  %1 = icmp ugt i64 %i.c, 3
-  %2 = icmp eq i64 %i.c, 1
-  %3 = or i1 %1, %2
-  br i1 %3, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCs3WWrd2JY12C_5hyper5proto2h16encode7EncoderECsl8OoimOLbh_6qdrant.exit
+  %i.c = add i64 %i.a, 9223372036854775802
+  %1 = icmp ult i64 %i.c, -4
+  br i1 %1, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCs3WWrd2JY12C_5hyper5proto2h16encode7EncoderECsl8OoimOLbh_6qdrant.exit
 
 bb.b:                                             ; preds = %bb.a
   switch i64 %i.a, label %bb.c [
