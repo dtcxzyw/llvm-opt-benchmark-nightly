@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %i.z = add i32 %i.y, 127
   %i.aa = and i32 %i.z, -128                      ; 2 uses
   %i.ab = icmp eq i32 %i.aa, 128
-  %spec.select = select i1 %i.ab, i32 256, i32 %i.aa ; 11 uses
+  %spec.select = select i1 %i.ab, i32 256, i32 %i.aa ; 10 uses
   %.not54 = icmp eq i32 %spec.select, 0
   br i1 %.not54, label %.thread49, label %.lr.ph
 
@@ -287,9 +287,8 @@ select.unfold.us:                                 ; preds = %_ZN7rocksdb6ribbon3
   br i1 %.not34, label %.split.us, label %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.preheader
 
 _ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.preheader: ; preds = %.lr.ph.split
-  %2 = add i32 %spec.select, -128
-  %.not = icmp ult i32 %2, 256
-  br i1 %.not, label %.thread49, label %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.1
+  %2 = icmp eq i32 %spec.select, 256
+  br i1 %2, label %.thread49, label %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.1
 
 .thread49:                                        ; preds = %select.unfold.us, %select.unfold.us.us, %select.unfold.us.us.1, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.preheader, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.1, %bb.e
   %i.bj = tail call noundef i32 @_ZN7rocksdb6ribbon6detail34BandingConfigHelper1MaybeSupportedILNS0_25ConstructionFailureChanceE1ELm128ELb0ELb0ELb1EE11GetNumToAddEj(i32 noundef 0)
@@ -297,12 +296,13 @@ _ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapte
 
 _ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.1: ; preds = %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.preheader
   %i.bk = add i32 %spec.select, -256              ; 2 uses
-  %3 = and i32 %spec.select, 128
-  %.not.1 = icmp eq i32 %3, %i.bk
+  %3 = icmp eq i32 %i.bk, 128
+  %spec.select52.1 = select i1 %3, i32 0, i32 %i.bk ; 2 uses
+  %.not.1 = icmp eq i32 %spec.select52.1, 0
   br i1 %.not.1, label %.thread49, label %.split.us
 
 .split.us:                                        ; preds = %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.us, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.us.us, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.us.us.1, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.us.us.2, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.1, %.lr.ph.split
-  %.us-phi = phi i32 [ %i.ar, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.us.us.2 ], [ %i.bk, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.1 ], [ %spec.select, %.lr.ph.split ], [ %spec.select, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.us.us ], [ %i.an, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.us.us.1 ], [ %.02455.us, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.us ] ; 2 uses
+  %.us-phi = phi i32 [ %i.ar, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.us.us.2 ], [ %spec.select52.1, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.1 ], [ %spec.select, %.lr.ph.split ], [ %spec.select, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.us.us ], [ %i.an, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.us.us.1 ], [ %.02455.us, %_ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE22GetBytesForOneInFpRateEjdj.exit.us ] ; 2 uses
   %i.bl = tail call noundef i32 @_ZN7rocksdb6ribbon6detail34BandingConfigHelper1MaybeSupportedILNS0_25ConstructionFailureChanceE1ELm128ELb0ELb0ELb1EE11GetNumToAddEj(i32 noundef %.us-phi) ; 2 uses
   %i.bm = icmp ult i32 %.us-phi, 1024
   br i1 %i.bm, label %bb.f, label %bb.h

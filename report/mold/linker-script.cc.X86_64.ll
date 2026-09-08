@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
   %i.aq = ptrtoint ptr %i.ao to i64
   br label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i42
 
-_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i42:   ; preds = %bb.i, %.lr.ph.i.i37
+_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i42:   ; preds = %.lr.ph.i.i37, %bb.i
   %.033.i.i38 = phi i64 [ %i.an, %.lr.ph.i.i37 ], [ %i.av, %bb.i ]
   %.02032.i.i39 = phi ptr [ %i.ap, %.lr.ph.i.i37 ], [ %i.at, %bb.i ]
   %i.ar = tail call ptr @memchr(ptr noundef nonnull %.02032.i.i39, i32 noundef 10, i64 noundef %.033.i.i38) #16 ; 4 uses
