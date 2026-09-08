@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %.noexc17, %.prehead
   %i.ce = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.012.i.i.i.i.i, i1 true)
   %i.cf = trunc nuw nsw i64 %i.ce to i32
   %i.cg = or disjoint i32 %i.bm, %i.cf            ; 2 uses
-  %i.ch = add nsw i32 %i.cg, 1
+  %i.ch = add nuw nsw i32 %i.cg, 1
   invoke void @_ZNK8facebook5velox4exec7EvalCtx22ensureErrorsVectorSizeERSt10shared_ptrINS1_10EvalErrorsEEi(ptr noundef nonnull readonly align 8 dereferenceable(104) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.cd, i32 noundef %i.ch)
           to label %.noexc16 unwind label %.loopexit.split-lp.loopexit
 
@@ -449,7 +449,7 @@ bb.aj:                                            ; preds = %.noexc26, %.prehead
   %i.fm = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.012.i48.i.i.i.i, i1 true)
   %i.fn = trunc nuw nsw i64 %i.fm to i32
   %i.fo = or disjoint i32 %i.bm, %i.fn            ; 2 uses
-  %i.fp = add nsw i32 %i.fo, 1
+  %i.fp = add nuw nsw i32 %i.fo, 1
   invoke void @_ZNK8facebook5velox4exec7EvalCtx22ensureErrorsVectorSizeERSt10shared_ptrINS1_10EvalErrorsEEi(ptr noundef nonnull readonly align 8 dereferenceable(104) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.fl, i32 noundef %i.fp)
           to label %.noexc25 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
@@ -680,7 +680,7 @@ bb.ay:                                            ; preds = %bb.ay, %.preheader.
   %i.iq = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i, i1 true) ; 2 uses
   %i.ir = trunc nuw nsw i64 %i.iq to i32
   %i.is = or disjoint i32 %i.hy, %i.ir            ; 2 uses
-  %i.it = add nsw i32 %i.is, 1                    ; 2 uses
+  %i.it = add nuw nsw i32 %i.is, 1                ; 2 uses
   tail call void @_ZNK8facebook5velox4exec7EvalCtx22ensureErrorsVectorSizeERSt10shared_ptrINS1_10EvalErrorsEEi(ptr noundef nonnull readonly align 8 dereferenceable(104) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.ip, i32 noundef %i.it)
   %i.iu = load ptr, ptr %i.ip, align 8, !tbaa !100 ; 2 uses
   tail call void @_ZN8facebook5velox4exec10EvalErrors14ensureCapacityEi(ptr noundef nonnull align 8 dereferenceable(40) %i.iu, i32 noundef %i.it)
@@ -949,7 +949,7 @@ bb.bo:                                            ; preds = %bb.bo, %.preheader.
   %i.nm = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i47.i.i.i.i, i1 true) ; 2 uses
   %i.nn = trunc nuw nsw i64 %i.nm to i32
   %i.no = or disjoint i32 %i.hy, %i.nn            ; 2 uses
-  %i.np = add nsw i32 %i.no, 1                    ; 2 uses
+  %i.np = add nuw nsw i32 %i.no, 1                ; 2 uses
   tail call void @_ZNK8facebook5velox4exec7EvalCtx22ensureErrorsVectorSizeERSt10shared_ptrINS1_10EvalErrorsEEi(ptr noundef nonnull readonly align 8 dereferenceable(104) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.nl, i32 noundef %i.np)
   %i.nq = load ptr, ptr %i.nl, align 8, !tbaa !100 ; 2 uses
   tail call void @_ZN8facebook5velox4exec10EvalErrors14ensureCapacityEi(ptr noundef nonnull align 8 dereferenceable(40) %i.nq, i32 noundef %i.np)
@@ -1352,7 +1352,7 @@ bb.s:                                             ; preds = %.noexc9, %.preheade
   %i.bt = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.012.i.i.i.i.i, i1 true)
   %i.bu = trunc nuw nsw i64 %i.bt to i32
   %i.bv = or disjoint i32 %i.bb, %i.bu            ; 2 uses
-  %i.bw = add nsw i32 %i.bv, 1
+  %i.bw = add nuw nsw i32 %i.bv, 1
   invoke void @_ZNK8facebook5velox4exec7EvalCtx22ensureErrorsVectorSizeERSt10shared_ptrINS1_10EvalErrorsEEi(ptr noundef nonnull readonly align 8 dereferenceable(104) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.bs, i32 noundef %i.bw)
           to label %.noexc8 unwind label %.loopexit.split-lp.loopexit
 
@@ -1596,7 +1596,7 @@ bb.ai:                                            ; preds = %.noexc18, %.prehead
   %i.fb = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.012.i48.i.i.i.i, i1 true)
   %i.fc = trunc nuw nsw i64 %i.fb to i32
   %i.fd = or disjoint i32 %i.bb, %i.fc            ; 2 uses
-  %i.fe = add nsw i32 %i.fd, 1
+  %i.fe = add nuw nsw i32 %i.fd, 1
   invoke void @_ZNK8facebook5velox4exec7EvalCtx22ensureErrorsVectorSizeERSt10shared_ptrINS1_10EvalErrorsEEi(ptr noundef nonnull readonly align 8 dereferenceable(104) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.fa, i32 noundef %i.fe)
           to label %.noexc17 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
@@ -1827,7 +1827,7 @@ bb.ax:                                            ; preds = %bb.ax, %.preheader.
   %i.if = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i.i.i.i.i, i1 true) ; 2 uses
   %i.ig = trunc nuw nsw i64 %i.if to i32
   %i.ih = or disjoint i32 %i.hn, %i.ig            ; 2 uses
-  %i.ii = add nsw i32 %i.ih, 1                    ; 2 uses
+  %i.ii = add nuw nsw i32 %i.ih, 1                ; 2 uses
   tail call void @_ZNK8facebook5velox4exec7EvalCtx22ensureErrorsVectorSizeERSt10shared_ptrINS1_10EvalErrorsEEi(ptr noundef nonnull readonly align 8 dereferenceable(104) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.ie, i32 noundef %i.ii)
   %i.ij = load ptr, ptr %i.ie, align 8, !tbaa !100 ; 2 uses
   tail call void @_ZN8facebook5velox4exec10EvalErrors14ensureCapacityEi(ptr noundef nonnull align 8 dereferenceable(40) %i.ij, i32 noundef %i.ii)
@@ -2092,7 +2092,7 @@ bb.bn:                                            ; preds = %bb.bn, %.preheader.
   %i.nb = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.011.i47.i.i.i.i, i1 true) ; 2 uses
   %i.nc = trunc nuw nsw i64 %i.nb to i32
   %i.nd = or disjoint i32 %i.hn, %i.nc            ; 2 uses
-  %i.ne = add nsw i32 %i.nd, 1                    ; 2 uses
+  %i.ne = add nuw nsw i32 %i.nd, 1                ; 2 uses
   tail call void @_ZNK8facebook5velox4exec7EvalCtx22ensureErrorsVectorSizeERSt10shared_ptrINS1_10EvalErrorsEEi(ptr noundef nonnull readonly align 8 dereferenceable(104) %0, ptr noundef nonnull align 8 dereferenceable(16) %i.na, i32 noundef %i.ne)
   %i.nf = load ptr, ptr %i.na, align 8, !tbaa !100 ; 2 uses
   tail call void @_ZN8facebook5velox4exec10EvalErrors14ensureCapacityEi(ptr noundef nonnull align 8 dereferenceable(40) %i.nf, i32 noundef %i.ne)

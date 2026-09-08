@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %_ZN8facebook5velox1
   %i.do = sext i32 %i.cb to i64
   %i.dp = getelementptr inbounds [16 x i8], ptr %i.aw, i64 %i.do
   store i128 %.0.i.i68.i.i.i, ptr %i.dp, align 16, !tbaa !268
-  %i.dq = add nsw i32 %i.cb, 1
+  %i.dq = add nuw nsw i32 %i.cb, 1
   %i.dr = add nsw i64 %.011.i.i.i.i.i, -1
   %i.ds = and i64 %i.dr, %.011.i.i.i.i.i          ; 2 uses
   %.not10.i.i.i.i.i = icmp eq i64 %i.ds, 0
@@ -608,7 +608,7 @@ bb.aw:                                            ; preds = %_ZN8facebook5velox1
   %i.ly = sext i32 %i.kl to i64
   %i.lz = getelementptr inbounds [16 x i8], ptr %i.aw, i64 %i.ly
   store i128 %.0.i.i.i.i.i, ptr %i.lz, align 16, !tbaa !268
-  %i.ma = add nsw i32 %i.kl, 1
+  %i.ma = add nuw nsw i32 %i.kl, 1
   %i.mb = add nsw i64 %.011.i45.i.i.i.i, -1
   %i.mc = and i64 %i.mb, %.011.i45.i.i.i.i        ; 2 uses
   %.not10.i46.i.i.i.i = icmp eq i64 %i.mc, 0
@@ -1011,7 +1011,7 @@ bb.k:                                             ; preds = %_ZN8facebook5velox1
   store i64 %.0.i.i.i.i39.i.i.i, ptr %i.dq, align 8, !tbaa !211
   %.sroa.4.0..sroa_idx.i.i44.i.i.i = getelementptr inbounds nuw i8, ptr %i.dq, i64 8
   store i64 %.0.i5.i.i.i43.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i44.i.i.i, align 8, !tbaa !211
-  %i.dr = add nsw i32 %i.ci, 1
+  %i.dr = add nuw nsw i32 %i.ci, 1
   %i.ds = add nsw i64 %.011.i34.i.i.i, -1
   %i.dt = and i64 %i.ds, %.011.i34.i.i.i          ; 2 uses
   %.not10.i45.i.i.i = icmp eq i64 %i.dt, 0
@@ -1414,7 +1414,7 @@ bb.ah:                                            ; preds = %_ZN8facebook5velox1
   store i64 %.0.i.i.i.i.i.i.i, ptr %i.ky, align 8, !tbaa !211
   %.sroa.4.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ky, i64 8
   store i64 %.0.i5.i.i.i.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !211
-  %i.kz = add nsw i32 %i.jq, 1
+  %i.kz = add nuw nsw i32 %i.jq, 1
   %i.la = add nsw i64 %.011.i.i.i.i, -1
   %i.lb = and i64 %i.la, %.011.i.i.i.i            ; 2 uses
   %.not10.i.i.i.i = icmp eq i64 %i.lb, 0
@@ -1749,7 +1749,7 @@ bb.au:                                            ; preds = %_ZN8facebook5velox1
   store i64 %.sroa.0.0.i.i.i.i43.i.i.i, ptr %i.ot, align 8, !tbaa !211
   %.sroa.4.0..sroa_idx.i.i45.i.i.i = getelementptr inbounds nuw i8, ptr %i.ot, i64 8
   store i64 %.sroa.3.0.i.i.i.i44.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i45.i.i.i, align 8, !tbaa !211
-  %i.ou = add nsw i32 %i.no, 1
+  %i.ou = add nuw nsw i32 %i.no, 1
   %i.ov = add nsw i64 %.011.i32.i.i.i, -1
   %i.ow = and i64 %i.ov, %.011.i32.i.i.i          ; 2 uses
   %.not10.i46.i.i.i = icmp eq i64 %i.ow, 0
@@ -2152,7 +2152,7 @@ bb.bn:                                            ; preds = %_ZN8facebook5velox1
   store i64 %.sroa.0.0.i.i.i.i.i.i.i, ptr %i.vp, align 8, !tbaa !211
   %.sroa.4.0..sroa_idx.i.i.i.i.i108 = getelementptr inbounds nuw i8, ptr %i.vp, i64 8
   store i64 %.sroa.3.0.i.i.i.i.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i108, align 8, !tbaa !211
-  %i.vq = add nsw i32 %i.uk, 1
+  %i.vq = add nuw nsw i32 %i.uk, 1
   %i.vr = add nsw i64 %.011.i.i.i.i102, -1
   %i.vs = and i64 %i.vr, %.011.i.i.i.i102         ; 2 uses
   %.not10.i.i.i.i109 = icmp eq i64 %i.vs, 0
@@ -2391,7 +2391,7 @@ bb.cb:                                            ; preds = %_ZN8facebook5velox1
   store i64 %.sroa.0.0.i.i.i.i43.i.i.i265, ptr %i.zh, align 8, !tbaa !211
   %.sroa.4.0..sroa_idx.i.i45.i.i.i267 = getelementptr inbounds nuw i8, ptr %i.zh, i64 8
   store i64 %.sroa.3.0.i.i.i.i44.i.i.i266, ptr %.sroa.4.0..sroa_idx.i.i45.i.i.i267, align 8, !tbaa !211
-  %i.zi = add nsw i32 %i.yc, 1
+  %i.zi = add nuw nsw i32 %i.yc, 1
   %i.zj = add nsw i64 %.011.i32.i.i.i255, -1
   %i.zk = and i64 %i.zj, %.011.i32.i.i.i255       ; 2 uses
   %.not10.i46.i.i.i268 = icmp eq i64 %i.zk, 0
@@ -2794,7 +2794,7 @@ bb.cu:                                            ; preds = %_ZN8facebook5velox1
   store i64 %.sroa.0.0.i.i.i.i.i.i.i204, ptr %i.agd, align 8, !tbaa !211
   %.sroa.4.0..sroa_idx.i.i.i.i.i206 = getelementptr inbounds nuw i8, ptr %i.agd, i64 8
   store i64 %.sroa.3.0.i.i.i.i.i.i.i205, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i206, align 8, !tbaa !211
-  %i.age = add nsw i32 %i.aey, 1
+  %i.age = add nuw nsw i32 %i.aey, 1
   %i.agf = add nsw i64 %.011.i.i.i.i194, -1
   %i.agg = and i64 %i.agf, %.011.i.i.i.i194       ; 2 uses
   %.not10.i.i.i.i207 = icmp eq i64 %i.agg, 0
@@ -3197,7 +3197,7 @@ bb.e:                                             ; preds = %bb.d
   %i.bd = call noundef i128 @llvm.bswap.i128(i128 %i.bc)
   %i.be = getelementptr inbounds [16 x i8], ptr %i.k, i64 %.pre-phi.i.i.i.i.i
   store i128 %i.bd, ptr %i.be, align 16, !tbaa !268
-  %i.bf = add nsw i32 %i.aq, 1
+  %i.bf = add nuw nsw i32 %i.aq, 1
   %i.bg = add nsw i64 %.011.i.i.i.i, -1
   %i.bh = and i64 %i.bg, %.011.i.i.i.i            ; 2 uses
   %.not10.i.i.i.i = icmp eq i64 %i.bh, 0
@@ -3434,7 +3434,7 @@ bb.l:                                             ; preds = %._crit_edge.i.i.i
   %i.fo = call noundef i128 @llvm.bswap.i128(i128 %i.fn)
   %i.fp = getelementptr inbounds [16 x i8], ptr %i.k, i64 %.pre-phi.i.i59.i.i.i
   store i128 %i.fo, ptr %i.fp, align 16, !tbaa !268
-  %i.fq = add nsw i32 %i.fb, 1
+  %i.fq = add nuw nsw i32 %i.fb, 1
   %i.fr = add nsw i64 %.011.i57.i.i.i, -1
   %i.fs = and i64 %i.fr, %.011.i57.i.i.i          ; 2 uses
   %.not10.i60.i.i.i = icmp eq i64 %i.fs, 0

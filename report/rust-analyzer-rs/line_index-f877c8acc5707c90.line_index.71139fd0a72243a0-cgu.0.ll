@@ -204,20 +204,20 @@ bb.k:                                             ; preds = %bb.f
   unreachable
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.j
-  %3 = zext i16 %i.au to i32
-  %4 = or disjoint i32 %3, -65536                 ; 2 uses
   %.tr.i.i.i = trunc i64 %.sroa.0.050.i.i.i to i32
-  %5 = shl i32 %.tr.i.i.i, 4
-  %i.aw = or disjoint i32 %5, 1
-  %i.ax = call noundef range(i32 0, 17) i32 @llvm.cttz.i32(i32 range(i32 -65536, 0) %4, i1 true)
+  %3 = shl i32 %.tr.i.i.i, 4
+  %4 = or disjoint i32 %3, 1
+  %5 = zext i16 %i.au to i32
+  %i.aw = or disjoint i32 %5, -65536              ; 2 uses
+  %i.ax = call noundef range(i32 0, 17) i32 @llvm.cttz.i32(i32 range(i32 -65536, 0) %i.aw, i1 true)
   %.pre.i.i.i = load i64, ptr %i.m, align 8, !alias.scope !252, !noalias !253
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i, %.lr.ph.preheader.i.i.i
   %i.ay = phi i64 [ %i.bf, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i ], [ %.pre.i.i.i, %.lr.ph.preheader.i.i.i ] ; 3 uses
   %i.az = phi i32 [ %i.bi, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i ], [ %i.ax, %.lr.ph.preheader.i.i.i ] ; 2 uses
-  %.sroa.02.049.i.i.i = phi i32 [ %i.bh, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i ], [ %4, %.lr.ph.preheader.i.i.i ]
-  %i.ba = add i32 %i.aw, %i.az
+  %.sroa.02.049.i.i.i = phi i32 [ %i.bh, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i ], [ %i.aw, %.lr.ph.preheader.i.i.i ]
+  %i.ba = add i32 %4, %i.az
   %i.bb = load i64, ptr %i.g, align 8, !range !10, !alias.scope !252, !noalias !253, !noundef !4
   %i.bc = icmp eq i64 %i.ay, %i.bb
   br i1 %i.bc, label %bb.l, label %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE4pushCs9HU4uknhSfY_10line_index.exit.i.i.i
