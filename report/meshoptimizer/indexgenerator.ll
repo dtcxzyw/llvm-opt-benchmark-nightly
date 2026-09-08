@@ -205,7 +205,7 @@ _ZN7meshoptL11hashBucketsEm.exit:                 ; preds = %bb.d
 
 bb.e:                                             ; preds = %_ZN7meshoptL11hashBucketsEm.exit
   %i.p = load i64, ptr %i.f, align 8, !tbaa !25   ; 3 uses
-  %i.q = add nsw i64 %i.p, 1                      ; 2 uses
+  %i.q = add nuw nsw i64 %i.p, 1                  ; 2 uses
   store i64 %i.q, ptr %i.f, align 8, !tbaa !25
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.p
   store ptr %i.o, ptr %i.r, align 8, !tbaa !28
@@ -217,13 +217,16 @@ bb.e:                                             ; preds = %_ZN7meshoptL11hashB
           to label %bb.f unwind label %bb.i, !inline_history !2 ; 8 uses
 
 bb.f:                                             ; preds = %bb.e
-  %i.x = add nsw i64 %i.p, 2                      ; 2 uses
+  %i.x = add nuw nsw i64 %i.p, 2
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.q
   store ptr %i.w, ptr %i.y, align 8, !tbaa !28
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.o, i8 -1, i64 %i.m, i1 false)
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.w, i8 -1, i64 %i.u, i1 false)
   %.not = icmp eq i64 %2, 0
-  br i1 %.not, label %._crit_edge, label %.preheader98.lr.ph
+  br i1 %.not, label %.lr.ph.i.preheader, label %.preheader98.lr.ph
+
+.lr.ph.i.preheader:                               ; preds = %_ZN7meshoptL10hashLookupIyNS_10EdgeHasherEEEPT_S3_mRKT0_RKS2_S8_.exit89.thread.2, %bb.f
+  br label %.lr.ph.i
 
 .preheader98.lr.ph:                               ; preds = %bb.f
   %i.z = add i64 %.0.i, -1                        ; 9 uses
@@ -470,12 +473,8 @@ _ZN7meshoptL10hashLookupIyNS_10EdgeHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.2: ; preds
   %i.fi = icmp ult i64 %i.fh, %2
   br i1 %i.fi, label %.preheader98, label %.lr.ph116, !llvm.loop !68
 
-._crit_edge:                                      ; preds = %_ZN7meshoptL10hashLookupIyNS_10EdgeHasherEEEPT_S3_mRKT0_RKS2_S8_.exit89.thread.2, %bb.f
-  %.not3.i = icmp eq i64 %i.x, 0
-  br i1 %.not3.i, label %_ZN17meshopt_AllocatorD2Ev.exit, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %._crit_edge, %bb.j
-  %.04.i = phi i64 [ %i.fn, %bb.j ], [ %i.x, %._crit_edge ] ; 2 uses
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.j
+  %.04.i = phi i64 [ %i.fn, %bb.j ], [ %i.x, %.lr.ph.i.preheader ] ; 2 uses
   %i.fj = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN17meshopt_Allocator7storageEvE1s, i64 8), align 8, !tbaa !27
   %i.fk = getelementptr [8 x i8], ptr %6, i64 %.04.i
   %i.fl = getelementptr i8, ptr %i.fk, i64 -8
@@ -495,7 +494,7 @@ bb.k:                                             ; preds = %.lr.ph.i
   tail call void @__clang_call_terminate(ptr %i.fp) #12
   unreachable
 
-_ZN17meshopt_AllocatorD2Ev.exit:                  ; preds = %bb.j, %._crit_edge
+_ZN17meshopt_AllocatorD2Ev.exit:                  ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #11
   ret void
 
@@ -696,7 +695,7 @@ _ZN7meshoptL10hashLookupIyNS_10EdgeHasherEEEPT_S3_mRKT0_RKS2_S8_.exit89.thread.2
   store i32 %i.kf, ptr %.sroa.11.0..sroa_idx, align 4
   %i.kh = add i64 %.063115, 3                     ; 2 uses
   %i.ki = icmp ult i64 %i.kh, %2
-  br i1 %i.ki, label %bb.l, label %._crit_edge, !llvm.loop !69
+  br i1 %i.ki, label %bb.l, label %.lr.ph.i.preheader, !llvm.loop !69
 
 bb.m:                                             ; preds = %bb.h, %bb.i, %bb.g
   %.pn.pn.pn = phi { ptr, i32 } [ %i.bg, %bb.g ], [ %i.bh, %bb.h ], [ %i.bi, %bb.i ]
@@ -869,12 +868,15 @@ _ZN7meshoptL11hashBucketsEm.exit:                 ; preds = %bb.d
 
 bb.e:                                             ; preds = %_ZN7meshoptL11hashBucketsEm.exit
   %i.p = load i64, ptr %i.f, align 8, !tbaa !25   ; 2 uses
-  %i.q = add nsw i64 %i.p, 1                      ; 2 uses
+  %i.q = add nuw nsw i64 %i.p, 1
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.p
   store ptr %i.o, ptr %i.r, align 8, !tbaa !28
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.o, i8 -1, i64 %i.m, i1 false)
   %.not = icmp eq i64 %2, 0
-  br i1 %.not, label %._crit_edge, label %.preheader85.lr.ph
+  br i1 %.not, label %.lr.ph.i.preheader, label %.preheader85.lr.ph
+
+.lr.ph.i.preheader:                               ; preds = %_ZN7meshoptL10hashLookupIyNS_10EdgeHasherEEEPT_S3_mRKT0_RKS2_S8_.exit79.2, %bb.e
+  br label %.lr.ph.i
 
 .preheader85.lr.ph:                               ; preds = %bb.e
   %i.s = add i64 %.0.i, -1                        ; 9 uses
@@ -1083,12 +1085,8 @@ _ZN7meshoptL10hashLookupIyNS_10EdgeHasherEEEPT_S3_mRKT0_RKS2_S8_.exit.2: ; preds
   %i.ek = icmp ult i64 %i.ej, %2
   br i1 %i.ek, label %.preheader85, label %.lr.ph100, !llvm.loop !72
 
-._crit_edge:                                      ; preds = %_ZN7meshoptL10hashLookupIyNS_10EdgeHasherEEEPT_S3_mRKT0_RKS2_S8_.exit79.2, %bb.e
-  %.not3.i = icmp eq i64 %i.q, 0
-  br i1 %.not3.i, label %_ZN17meshopt_AllocatorD2Ev.exit, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %._crit_edge, %bb.h
-  %.04.i = phi i64 [ %i.ep, %bb.h ], [ %i.q, %._crit_edge ] ; 2 uses
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.h
+  %.04.i = phi i64 [ %i.ep, %bb.h ], [ %i.q, %.lr.ph.i.preheader ] ; 2 uses
   %i.el = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZN17meshopt_Allocator7storageEvE1s, i64 8), align 8, !tbaa !27
   %i.em = getelementptr [8 x i8], ptr %6, i64 %.04.i
   %i.en = getelementptr i8, ptr %i.em, i64 -8
@@ -1108,7 +1106,7 @@ bb.i:                                             ; preds = %.lr.ph.i
   tail call void @__clang_call_terminate(ptr %i.er) #12
   unreachable
 
-_ZN17meshopt_AllocatorD2Ev.exit:                  ; preds = %bb.h, %._crit_edge
+_ZN17meshopt_AllocatorD2Ev.exit:                  ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #11
   ret void
 
@@ -1314,7 +1312,7 @@ _ZN7meshoptL10hashLookupIyNS_10EdgeHasherEEEPT_S3_mRKT0_RKS2_S8_.exit79.2: ; pre
   store i32 %i.gt, ptr %.sroa.12.0..sroa_idx, align 4
   %i.jp = add i64 %.05699, 3                      ; 2 uses
   %i.jq = icmp ult i64 %i.jp, %2
-  br i1 %i.jq, label %bb.j, label %._crit_edge, !llvm.loop !73
+  br i1 %i.jq, label %bb.j, label %.lr.ph.i.preheader, !llvm.loop !73
 
 bb.k:                                             ; preds = %bb.g, %bb.f
   %.pn.pn = phi { ptr, i32 } [ %i.ax, %bb.f ], [ %i.ay, %bb.g ]
