@@ -58,7 +58,7 @@ _ZNSt12_Vector_baseIN4node12CleanupQueue19CleanupHookCallbackESaIS2_EE11_M_alloc
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.04.07.i.i.i.i.i.i, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.08.i.i.i.i.i.i.ptr, ptr noundef nonnull align 8 dereferenceable(24) %i.l, i64 24, i1 false)
   %i.m = load ptr, ptr %.sroa.04.07.i.i.i.i.i.i, align 8 ; 2 uses
-  %.08.i.i.i.i.i.i.add = add nuw nsw i64 %.08.i.i.i.i.i.i.idx, 24 ; 4 uses
+  %.08.i.i.i.i.i.i.add = add nuw nsw i64 %.08.i.i.i.i.i.i.idx, 24 ; 3 uses
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %bb.c, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !8
 
@@ -136,13 +136,9 @@ bb.h:                                             ; preds = %bb.d
 bb.i:                                             ; preds = %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4node12CleanupQueue19CleanupHookCallbackESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIZNSt6ranges8__detail16__make_comp_projIZNKS3_10GetOrderedEvE3$_0St8identityEEDaRT_RT0_EUlOSH_OSJ_E_EEEvSH_SJ_.exit.i.i.i.i.i.i", %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4node12CleanupQueue19CleanupHookCallbackESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i.i.i.i.i.i
   %.sroa.0.021.i.add.i.i.i.i.i = add nuw nsw i64 %.sroa.0.021.i.idx.i.i.i.i.i, 24 ; 2 uses
   %i.ae = icmp eq i64 %.sroa.0.021.i.add.i.i.i.i.i, 384
-  br i1 %i.ae, label %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4node12CleanupQueue19CleanupHookCallbackESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNSt6ranges8__detail16__make_comp_projIZNKS3_10GetOrderedEvE3$_0St8identityEEDaRT_RT0_EUlOSH_OSJ_E_EEEvSH_SH_SJ_.exit.i.i.i.i.i", label %bb.d, !llvm.loop !10
+  br i1 %i.ae, label %.lr.ph.i13.i.i.i.i.i.preheader, label %bb.d, !llvm.loop !10
 
-"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4node12CleanupQueue19CleanupHookCallbackESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNSt6ranges8__detail16__make_comp_projIZNKS3_10GetOrderedEvE3$_0St8identityEEDaRT_RT0_EUlOSH_OSJ_E_EEEvSH_SH_SJ_.exit.i.i.i.i.i": ; preds = %bb.i
-  %4 = icmp eq i64 %.08.i.i.i.i.i.i.add, 384
-  br i1 %4, label %"_ZNKSt6ranges9__sort_fnclITkNS_19random_access_rangeERSt6vectorIN4node12CleanupQueue19CleanupHookCallbackESaIS5_EEZNKS4_10GetOrderedEvE3$_0St8identityQ8sortableIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET0_T1_EEENSt13__conditionalIX14borrowed_rangeISB_EEE4typeISD_NS_8danglingEEEOSB_SE_SF_.exit", label %.lr.ph.i13.i.i.i.i.i.preheader
-
-.lr.ph.i13.i.i.i.i.i.preheader:                   ; preds = %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4node12CleanupQueue19CleanupHookCallbackESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNSt6ranges8__detail16__make_comp_projIZNKS3_10GetOrderedEvE3$_0St8identityEEDaRT_RT0_EUlOSH_OSJ_E_EEEvSH_SH_SJ_.exit.i.i.i.i.i"
+.lr.ph.i13.i.i.i.i.i.preheader:                   ; preds = %bb.i
   %i.af = getelementptr inbounds nuw i8, ptr %i.i, i64 384
   br label %.lr.ph.i13.i.i.i.i.i
 
@@ -248,7 +244,7 @@ bb.p:                                             ; preds = %"_ZSt25__unguarded_
   %i.bb = icmp eq ptr %.sroa.0.021.i26.i.i.i.i.i, %.08.i.i.i.i.i.i.ptr
   br i1 %i.bb, label %"_ZNKSt6ranges9__sort_fnclITkNS_19random_access_rangeERSt6vectorIN4node12CleanupQueue19CleanupHookCallbackESaIS5_EEZNKS4_10GetOrderedEvE3$_0St8identityQ8sortableIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET0_T1_EEENSt13__conditionalIX14borrowed_rangeISB_EEE4typeISD_NS_8danglingEEEOSB_SE_SF_.exit", label %bb.j, !llvm.loop !10
 
-"_ZNKSt6ranges9__sort_fnclITkNS_19random_access_rangeERSt6vectorIN4node12CleanupQueue19CleanupHookCallbackESaIS5_EEZNKS4_10GetOrderedEvE3$_0St8identityQ8sortableIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET0_T1_EEENSt13__conditionalIX14borrowed_rangeISB_EEE4typeISD_NS_8danglingEEEOSB_SE_SF_.exit": ; preds = %bb.p, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4node12CleanupQueue19CleanupHookCallbackESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIZNSt6ranges8__detail16__make_comp_projIZNKS3_10GetOrderedEvE3$_0St8identityEEDaRT_RT0_EUlOSH_OSJ_E_EEEvSH_SJ_.exit.i15.i.i.i.i.i", %bb.a, %"_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4node12CleanupQueue19CleanupHookCallbackESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNSt6ranges8__detail16__make_comp_projIZNKS3_10GetOrderedEvE3$_0St8identityEEDaRT_RT0_EUlOSH_OSJ_E_EEEvSH_SH_SJ_.exit.i.i.i.i.i", %.preheader.i23.i.i.i.i.i
+"_ZNKSt6ranges9__sort_fnclITkNS_19random_access_rangeERSt6vectorIN4node12CleanupQueue19CleanupHookCallbackESaIS5_EEZNKS4_10GetOrderedEvE3$_0St8identityQ8sortableIDTclsr6ranges13__cust_accessE7__beginclsr3stdE7declvalIRT_EEEET0_T1_EEENSt13__conditionalIX14borrowed_rangeISB_EEE4typeISD_NS_8danglingEEEOSB_SE_SF_.exit": ; preds = %bb.p, %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4node12CleanupQueue19CleanupHookCallbackESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_comp_iterIZNSt6ranges8__detail16__make_comp_projIZNKS3_10GetOrderedEvE3$_0St8identityEEDaRT_RT0_EUlOSH_OSJ_E_EEEvSH_SJ_.exit.i15.i.i.i.i.i", %bb.a, %.preheader.i23.i.i.i.i.i
   ret void
 }
 

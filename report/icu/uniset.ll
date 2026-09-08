@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZNK6icu_7810UnicodeSet8containsEii.exit.thread
 
 _ZNK6icu_7810UnicodeSet8containsEii.exit.thread:  ; preds = %.lr.ph.split.split, %_ZNK6icu_7810UnicodeSet13findCodePointEi.exit.i, %_ZNK6icu_7810UnicodeSet8containsEii.exit, %_ZNK6icu_7810UnicodeSet13findCodePointEi.exit.i.us26, %.lr.ph.split.split.us.split, %.lr.ph.split.us.split, %_ZNK6icu_7810UnicodeSet13findCodePointEi.exit.i.us, %.lr.ph.split.us, %.critedge, %_ZNK6icu_7810UnicodeSet10hasStringsEv.exit, %bb.g, %bb.f
-  %.1 = phi i8 [ %i.bi, %bb.g ], [ 1, %_ZNK6icu_7810UnicodeSet10hasStringsEv.exit ], [ 0, %bb.f ], [ 1, %.critedge ], [ 0, %.lr.ph.split.us.split ], [ 0, %_ZNK6icu_7810UnicodeSet13findCodePointEi.exit.i.us26 ], [ 0, %.lr.ph.split.us ], [ 0, %_ZNK6icu_7810UnicodeSet13findCodePointEi.exit.i.us ], [ 0, %.lr.ph.split.split.us.split ], [ 0, %_ZNK6icu_7810UnicodeSet8containsEii.exit ], [ 0, %_ZNK6icu_7810UnicodeSet13findCodePointEi.exit.i ], [ 0, %.lr.ph.split.split ]
+  %.1 = phi i8 [ %i.bi, %bb.g ], [ 1, %_ZNK6icu_7810UnicodeSet10hasStringsEv.exit ], [ 0, %bb.f ], [ 1, %.critedge ], [ 0, %.lr.ph.split.us.split ], [ 0, %.lr.ph.split.us ], [ 0, %_ZNK6icu_7810UnicodeSet13findCodePointEi.exit.i.us26 ], [ 0, %_ZNK6icu_7810UnicodeSet13findCodePointEi.exit.i.us ], [ 0, %.lr.ph.split.split.us.split ], [ 0, %_ZNK6icu_7810UnicodeSet8containsEii.exit ], [ 0, %_ZNK6icu_7810UnicodeSet13findCodePointEi.exit.i ], [ 0, %.lr.ph.split.split ]
   ret i8 %.1
 }
 
@@ -607,7 +607,7 @@ bb.h:                                             ; preds = %_ZNK6icu_7810Unicod
   br label %_ZNK6icu_7810UnicodeSet12containsNoneEii.exit.thread
 
 _ZNK6icu_7810UnicodeSet12containsNoneEii.exit.thread: ; preds = %_ZNK6icu_7810UnicodeSet13findCodePointEi.exit.i, %_ZNK6icu_7810UnicodeSet12containsNoneEii.exit, %_ZNK6icu_7810UnicodeSet12containsNoneEii.exit.us29, %.lr.ph.split.split.us.split, %.lr.ph.split.us.split, %_ZNK6icu_7810UnicodeSet12containsNoneEii.exit.us, %_ZNK6icu_7810UnicodeSet12containsNoneEii.exit.us.us, %bb.g, %.critedge, %_ZNK6icu_7810UnicodeSet10hasStringsEv.exit, %bb.h
-  %.1 = phi i8 [ %i.bj, %bb.h ], [ 1, %_ZNK6icu_7810UnicodeSet10hasStringsEv.exit ], [ 1, %.critedge ], [ 1, %bb.g ], [ 0, %_ZNK6icu_7810UnicodeSet12containsNoneEii.exit.us.us ], [ 0, %_ZNK6icu_7810UnicodeSet12containsNoneEii.exit.us29 ], [ 0, %.lr.ph.split.us.split ], [ 0, %_ZNK6icu_7810UnicodeSet12containsNoneEii.exit.us ], [ 0, %.lr.ph.split.split.us.split ], [ 0, %_ZNK6icu_7810UnicodeSet12containsNoneEii.exit ], [ 0, %_ZNK6icu_7810UnicodeSet13findCodePointEi.exit.i ]
+  %.1 = phi i8 [ %i.bj, %bb.h ], [ 1, %_ZNK6icu_7810UnicodeSet10hasStringsEv.exit ], [ 1, %.critedge ], [ 1, %bb.g ], [ 0, %_ZNK6icu_7810UnicodeSet12containsNoneEii.exit.us29 ], [ 0, %_ZNK6icu_7810UnicodeSet12containsNoneEii.exit.us.us ], [ 0, %.lr.ph.split.us.split ], [ 0, %_ZNK6icu_7810UnicodeSet12containsNoneEii.exit.us ], [ 0, %.lr.ph.split.split.us.split ], [ 0, %_ZNK6icu_7810UnicodeSet12containsNoneEii.exit ], [ 0, %_ZNK6icu_7810UnicodeSet13findCodePointEi.exit.i ]
   ret i8 %.1
 }
 

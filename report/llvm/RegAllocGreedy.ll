@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %bb.bf, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = add i32 %i.j, -1                         ; 8 uses
+  %i.l = add i32 %i.j, -1                         ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.m, ptr %4, align 8, !tbaa !40
@@ -279,17 +279,15 @@ _ZN4llvm11lower_boundIRNS_8ArrayRefINS_9SlotIndexEEES2_EEDaOT_OT0_.exit: ; preds
   %i.bc = lshr exact i64 %i.bb, 3
   %i.bd = trunc i64 %i.bc to i32                  ; 2 uses
   %.not357 = icmp eq i32 %.sroa.4.0.copyload.i, %i.bd
-  br i1 %.not357, label %.loopexit265, label %.lr.ph273.preheader
+  br i1 %.not357, label %.loopexit265, label %.lr.ph273
 
-.lr.ph273.preheader:                              ; preds = %_ZN4llvm11lower_boundIRNS_8ArrayRefINS_9SlotIndexEEES2_EEDaOT_OT0_.exit
-  %8 = zext i32 %i.l to i64                       ; 2 uses
-  br label %.lr.ph273
-
-.lr.ph273:                                        ; preds = %.lr.ph273.preheader, %.critedge
-  %indvars.iv = phi i64 [ 0, %.lr.ph273.preheader ], [ %indvars.iv.next, %.critedge ] ; 3 uses
-  %.0125272 = phi i32 [ %i.bd, %.lr.ph273.preheader ], [ %.2, %.critedge ] ; 4 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
-  %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv.next ; 2 uses
+.lr.ph273:                                        ; preds = %_ZN4llvm11lower_boundIRNS_8ArrayRefINS_9SlotIndexEEES2_EEDaOT_OT0_.exit, %.critedge
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.critedge ], [ 0, %_ZN4llvm11lower_boundIRNS_8ArrayRefINS_9SlotIndexEEES2_EEDaOT_OT0_.exit ] ; 3 uses
+  %.0125272 = phi i32 [ %.2, %.critedge ], [ %i.bd, %_ZN4llvm11lower_boundIRNS_8ArrayRefINS_9SlotIndexEEES2_EEDaOT_OT0_.exit ] ; 4 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %8 = and i64 %indvars.iv.next, 4294967295
+  %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %8 ; 2 uses
   %.sroa.084.0.copyload = load i64, ptr %i.be, align 8, !tbaa !254 ; 2 uses
   %i.bf = zext i32 %.0125272 to i64
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %i.bf
@@ -308,7 +306,7 @@ _ZN4llvm11lower_boundIRNS_8ArrayRefINS_9SlotIndexEEES2_EEDaOT_OT0_.exit: ; preds
 bb.e:                                             ; preds = %.lr.ph273
   %i.bq = xor i64 %.sroa.083.0.copyload, %.sroa.084.0.copyload
   %i.br = icmp ult i64 %i.bq, 8
-  %i.bs = icmp eq i64 %indvars.iv.next, %8
+  %i.bs = icmp eq i32 %i.l, %indvars
   %or.cond171 = and i1 %i.bs, %i.br
   br i1 %or.cond171, label %.loopexit265.loopexit, label %bb.f
 
@@ -365,7 +363,7 @@ bb.j:                                             ; preds = %bb.i
 
 .critedge:                                        ; preds = %bb.i, %.lr.ph273
   %.2 = phi i32 [ %.0125272, %.lr.ph273 ], [ %.1126268, %bb.i ] ; 2 uses
-  %i.co = icmp ne i64 %indvars.iv.next, %8
+  %i.co = icmp ne i32 %i.l, %indvars
   %i.cp = icmp ne i32 %.2, %.sroa.4.0.copyload.i
   %i.cq = and i1 %i.co, %i.cp
   br i1 %i.cq, label %.lr.ph273, label %.loopexit265.loopexit, !llvm.loop !1106

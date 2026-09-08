@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %.lr.ph140.i
   br i1 %exitcond.not.i, label %text_position_next_internal.exit.thread, label %.lr.ph140.i, !llvm.loop !38
 
 bb.q:                                             ; preds = %bb.n
-  %i.bo = add i32 %i.v, -1                        ; 2 uses
+  %i.bo = add i32 %i.v, -1
   %i.bp = sext i32 %i.bo to i64                   ; 2 uses
   %i.bq = getelementptr inbounds i8, ptr %i.ab, i64 %i.bp ; 2 uses
   %i.br = sext i32 %i.v to i64
@@ -217,25 +217,21 @@ bb.q:                                             ; preds = %bb.n
 .preheader.lr.ph.i:                               ; preds = %bb.q
   %i.bu = load i8, ptr %i.bq, align 1
   %i.bv = sub nsw i64 0, %i.bp
-  %1 = icmp eq i32 %i.bo, 0
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge.i, %.preheader.lr.ph.i
   %.389136.i = phi ptr [ %i.bt, %.preheader.lr.ph.i ], [ %i.ci, %._crit_edge.i ] ; 4 uses
   %i.bw = load i8, ptr %.389136.i, align 1        ; 2 uses
   %.not102131.i = icmp eq i8 %i.bu, %i.bw
-  br i1 %.not102131.i, label %.lr.ph134.i.preheader, label %._crit_edge.i
-
-.lr.ph134.i.preheader:                            ; preds = %.preheader.i
-  br i1 %1, label %.thread.loopexit160.i, label %.lr.ph
+  br i1 %.not102131.i, label %.lr.ph, label %._crit_edge.i
 
 .lr.ph134.i:                                      ; preds = %.lr.ph
   %i.bx = icmp eq ptr %i.by, %i.ab
   br i1 %i.bx, label %.thread.loopexit160.i, label %.lr.ph, !llvm.loop !39
 
-.lr.ph:                                           ; preds = %.lr.ph134.i.preheader, %.lr.ph134.i
-  %.079132.i113 = phi ptr [ %i.by, %.lr.ph134.i ], [ %i.bq, %.lr.ph134.i.preheader ]
-  %.0133.i112 = phi ptr [ %i.bz, %.lr.ph134.i ], [ %.389136.i, %.lr.ph134.i.preheader ]
+.lr.ph:                                           ; preds = %.preheader.i, %.lr.ph134.i
+  %.079132.i113 = phi ptr [ %i.by, %.lr.ph134.i ], [ %i.bq, %.preheader.i ]
+  %.0133.i112 = phi ptr [ %i.bz, %.lr.ph134.i ], [ %.389136.i, %.preheader.i ]
   %i.by = getelementptr inbounds i8, ptr %.079132.i113, i64 -1 ; 3 uses
   %i.bz = getelementptr inbounds i8, ptr %.0133.i112, i64 -1 ; 2 uses
   %i.ca = load i8, ptr %i.by, align 1
@@ -254,7 +250,7 @@ bb.q:                                             ; preds = %bb.n
   %.not103.i = icmp ult ptr %i.ci, %i.ad
   br i1 %.not103.i, label %.preheader.i, label %text_position_next_internal.exit.thread
 
-.thread.loopexit160.i:                            ; preds = %.lr.ph134.i.preheader, %.lr.ph134.i
+.thread.loopexit160.i:                            ; preds = %.lr.ph134.i
   %scevgep.le.i = getelementptr i8, ptr %.389136.i, i64 %i.bv
   br label %text_position_next_internal.exit
 

@@ -204,12 +204,8 @@ bb.eb:                                            ; preds = %bb.ea
 bb.ec:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit220
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
-  %i.ou = add nsw i64 %i.on, -1                   ; 2 uses
+  %i.ou = add nsw i64 %i.on, -1
   store i64 0, ptr %i.b, align 8, !tbaa !196
-  %.not453 = icmp eq i64 %i.ou, 0
-  br i1 %.not453, label %._crit_edge452, label %.lr.ph451
-
-.lr.ph451:                                        ; preds = %bb.ec
   %55 = getelementptr inbounds nuw i8, ptr %2, i64 8
   %56 = getelementptr inbounds nuw i8, ptr %46, i64 8 ; 5 uses
   %57 = getelementptr inbounds nuw i8, ptr %46, i64 16 ; 2 uses
@@ -459,7 +455,7 @@ bb.ff:                                            ; preds = %bb.fa, %bb.ex, %.cr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
   br label %bb.ib
 
-._crit_edge452:                                   ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit, %bb.ec
+._crit_edge452:                                   ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #25
   %i.rg = load ptr, ptr %i.oq, align 8, !tbaa !175
   invoke void @_ZNSt8_Rb_treeImSt4pairIKmN4cvc58internal12NodeTemplateILb1EEEESt10_Select1stIS6_ESt4lessImESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E(ptr noundef nonnull align 8 dereferenceable(48) %44, ptr noundef %i.rg)
@@ -476,8 +472,8 @@ _ZNSt3mapImN4cvc58internal12NodeTemplateILb1EEESt4lessImESaISt4pairIKmS3_EEED2Ev
   call void @llvm.lifetime.end.p0(ptr nonnull %44) #25
   br label %bb.ic
 
-bb.fh:                                            ; preds = %.lr.ph451, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit
-  %storemerge62.in444 = phi i64 [ 0, %.lr.ph451 ], [ %i.yq, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit ]
+bb.fh:                                            ; preds = %bb.ec, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit
+  %storemerge62.in444 = phi i64 [ 0, %bb.ec ], [ %i.yq, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %46) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %46, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25

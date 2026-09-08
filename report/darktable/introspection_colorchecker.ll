@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not, label %bb.f, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %i.e = add nsw i32 %2, -1                       ; 3 uses
+  %i.e = add nsw i32 %2, -1                       ; 2 uses
   %i.f = zext nneg i32 %2 to i64                  ; 15 uses
   %wide.trip.count65.i = zext nneg i32 %i.e to i64 ; 5 uses
   %i.g = add nuw nsw i64 %i.f, 3
@@ -309,8 +309,6 @@ bb.a:
   %i.bh = fdiv reassoc nsz arcp contract afn double %i.bg, %i.be ; 2 uses
   store double %i.bh, ptr %i.bf, align 8, !tbaa !47
   %invariant.gep75.i = getelementptr [8 x i8], ptr %0, i64 %wide.trip.count65.i
-  %lcmp.mod16 = icmp ne i32 %i.e, 0
-  tail call void @llvm.assume(i1 %lcmp.mod16)
   br label %bb.b
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.preheader.i, %.lr.ph.i.prol

@@ -205,7 +205,7 @@ _ZNK4llvm6SDNode12getGluedUserEv.exit:            ; preds = %bb.ab, %bb.aa, %bb.
   %.idx = mul nuw nsw i64 %i.ix, 40               ; 2 uses
   %i.iy = add nsw i64 %.idx, -40                  ; 2 uses
   %i.iz = getelementptr inbounds i8, ptr %i.iu, i64 %i.iy
-  %i.ja = add nsw i64 %i.ix, -1                   ; 8 uses
+  %i.ja = add nsw i64 %i.ix, -1                   ; 7 uses
   %i.jb = icmp ugt i64 %i.ja, 576460752303423487
   br i1 %i.jb, label %bb.ad, label %_ZNSt6vectorIN4llvm7SDValueESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i.i
 
@@ -270,7 +270,7 @@ _ZNSt6vectorIN4llvm7SDValueESaIS1_EEC2IPNS0_5SDUseEvEET_S7_RKS2_.exit: ; preds =
   %i.js = getelementptr inbounds nuw i8, ptr %.sink, i64 %.idx708 ; 3 uses
   %.fca.0.extract69 = extractvalue { ptr, i32 } %i.is, 0 ; 2 uses
   %.not.i.i = icmp eq ptr %.0.lcssa.i.i.i.i.i.i, %i.js
-  br i1 %.not.i.i, label %29, label %bb.ae
+  br i1 %.not.i.i, label %_ZNKSt6vectorIN4llvm7SDValueESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i, label %bb.ae
 
 bb.ae:                                            ; preds = %_ZNSt6vectorIN4llvm7SDValueESaIS1_EEC2IPNS0_5SDUseEvEET_S7_RKS2_.exit
   store ptr %.fca.0.extract69, ptr %.0.lcssa.i.i.i.i.i.i, align 8, !tbaa !329
@@ -278,18 +278,8 @@ bb.ae:                                            ; preds = %_ZNSt6vectorIN4llvm
   store i32 1, ptr %.sroa.5380.0..sroa_idx, align 8, !tbaa !330
   br label %_ZNSt6vectorIN4llvm7SDValueESaIS1_EE9push_backEOS1_.exit
 
-29:                                               ; preds = %_ZNSt6vectorIN4llvm7SDValueESaIS1_EEC2IPNS0_5SDUseEvEET_S7_RKS2_.exit
-  %30 = ptrtoint ptr %i.js to i64
-  %31 = ptrtoint ptr %.sink to i64
+_ZNKSt6vectorIN4llvm7SDValueESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %_ZNSt6vectorIN4llvm7SDValueESaIS1_EEC2IPNS0_5SDUseEvEET_S7_RKS2_.exit
   %.idx707 = shl nuw nsw i64 %i.ja, 4             ; 2 uses
-  %32 = icmp eq i64 %i.ja, 576460752303423487
-  br i1 %32, label %33, label %_ZNKSt6vectorIN4llvm7SDValueESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
-
-33:                                               ; preds = %29
-  call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.17) #25
-  unreachable
-
-_ZNKSt6vectorIN4llvm7SDValueESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %29
   %.sroa.speculated.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ja, i64 1)
   %i.jt = add nuw nsw i64 %.sroa.speculated.i.i.i.i, %i.ja
   %i.ju = call i64 @llvm.umin.i64(i64 %i.jt, i64 576460752303423487) ; 2 uses
@@ -303,8 +293,10 @@ _ZNKSt6vectorIN4llvm7SDValueESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN4llvm7SDValueESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i266.preheader
 
 .lr.ph.i.i.i.i.i.i266.preheader:                  ; preds = %_ZNKSt6vectorIN4llvm7SDValueESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
+  %29 = ptrtoint ptr %.sink to i64
+  %30 = ptrtoint ptr %i.js to i64
   %i.jy = add i64 %30, -16
-  %i.jz = sub i64 %i.jy, %31
+  %i.jz = sub i64 %i.jy, %29
   %i.ka = and i64 %i.jz, -16                      ; 2 uses
   %i.kb = add i64 %i.ka, 16
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.jw, ptr align 8 %.sink, i64 %i.kb, i1 false), !alias.scope !792

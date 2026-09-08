@@ -204,16 +204,12 @@ bb.e:                                             ; preds = %thread-pre-split
 
 bb.f:                                             ; preds = %thread-pre-split
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
-  %i.f = add nsw i64 %2, -1                       ; 3 uses
+  %i.f = add nsw i64 %2, -1                       ; 2 uses
   %i.g = icmp samesign ult i64 %2, 17
-  br i1 %i.g, label %.preheader113, label %.lr.ph
+  br i1 %i.g, label %.lr.ph140, label %.lr.ph
 
-.preheader113:                                    ; preds = %bb.f
-  %.not102136 = icmp eq i64 %i.f, 0
-  br i1 %.not102136, label %.loopexit, label %.lr.ph140
-
-.loopexit:                                        ; preds = %bb.j, %bb.m, %bb.s, %bb.v, %.preheader113, %.preheader
-  %.sroa.084.1 = phi i64 [ %i.ai, %bb.m ], [ %i.bl, %bb.v ], [ %i.ba, %bb.s ], [ 0, %.preheader ], [ 0, %.preheader113 ], [ %i.x, %bb.j ]
+.loopexit:                                        ; preds = %bb.j, %bb.m, %bb.s, %bb.v, %.preheader
+  %.sroa.084.1 = phi i64 [ %i.ai, %bb.m ], [ %i.bl, %bb.v ], [ %i.ba, %bb.s ], [ 0, %.preheader ], [ %i.x, %bb.j ]
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.084.1, ptr %i.h, align 8
   br label %bb.b
@@ -267,10 +263,10 @@ bb.l:                                             ; preds = %bb.h
   store i8 3, ptr %i.z, align 1
   br label %bb.b
 
-.lr.ph140:                                        ; preds = %.preheader113, %bb.m
-  %.sroa.0.2139 = phi ptr [ %i.ag, %bb.m ], [ %i.e, %.preheader113 ] ; 2 uses
-  %.sroa.26.2138 = phi i64 [ %i.af, %bb.m ], [ %i.f, %.preheader113 ]
-  %.sroa.084.2137 = phi i64 [ %i.ai, %bb.m ], [ 0, %.preheader113 ]
+.lr.ph140:                                        ; preds = %bb.f, %bb.m
+  %.sroa.0.2139 = phi ptr [ %i.ag, %bb.m ], [ %i.e, %bb.f ] ; 2 uses
+  %.sroa.26.2138 = phi i64 [ %i.af, %bb.m ], [ %i.f, %bb.f ]
+  %.sroa.084.2137 = phi i64 [ %i.ai, %bb.m ], [ 0, %bb.f ]
   %i.aa = load i8, ptr %.sroa.0.2139, align 1, !noundef !4
   %i.ab = zext i8 %i.aa to i32
   %i.ac = add nsw i32 %i.ab, -48                  ; 2 uses

@@ -205,7 +205,7 @@ _ZN2cv3RNG7uniformEii.exit152:                    ; preds = %_ZN2cv3RNG7uniformE
   %exitcond259.not = icmp eq i32 %i.ew, %2
   br i1 %exitcond259.not, label %.preheader164, label %_ZN2cv3RNG7uniformEii.exit152, !llvm.loop !329
 
-.preheader163:                                    ; preds = %.preheader164, %._crit_edge211
+.preheader163:                                    ; preds = %._crit_edge211, %.preheader164
   %.0223 = phi i32 [ 0, %.preheader164 ], [ %i.jz, %._crit_edge211 ] ; 2 uses
   %.0129222 = phi i1 [ true, %.preheader164 ], [ %.1130.lcssa, %._crit_edge211 ]
   br i1 %brmerge, label %.preheader162, label %.preheader.preheader
@@ -581,11 +581,10 @@ middle.block337:                                  ; preds = %vector.body332
 
 ._crit_edge211:                                   ; preds = %.lr.ph210.split, %._crit_edge205.us, %middle.block337, %.preheader160.thread, %.preheader160
   %.1130.lcssa = phi i1 [ false, %.preheader160 ], [ false, %.preheader160.thread ], [ %spec.select.us, %._crit_edge205.us ], [ %i.gw, %middle.block337 ], [ %spec.select, %.lr.ph210.split ]
-  %i.jz = add nuw nsw i32 %.0223, 1               ; 2 uses
-  %exitcond303.not = icmp eq i32 %i.jz, 101
-  br i1 %exitcond303.not, label %bb.e, label %.preheader163, !llvm.loop !346
+  %i.jz = add nuw nsw i32 %.0223, 1
+  br label %.preheader163, !llvm.loop !346
 
-bb.e:                                             ; preds = %._crit_edge185.split, %._crit_edge211
+bb.e:                                             ; preds = %._crit_edge185.split
   %.not.i.i153 = icmp eq ptr %i.i, %i.c
   br i1 %.not.i.i153, label %_ZN2cv10AutoBufferIdLm136EED2Ev.exit, label %bb.f
 

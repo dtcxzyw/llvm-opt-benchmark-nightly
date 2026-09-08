@@ -204,23 +204,16 @@ bb.h:                                             ; preds = %.thread
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.bk = load float, ptr %i.bj, align 8          ; 5 uses
   %i.bl = fcmp ueq float %i.bk, 0.000000e+00
-  %i.bm = add i32 %i.bf, -1                       ; 2 uses
+  %i.bm = add i32 %i.bf, -1
   %wide.trip.count37.i34 = zext i32 %i.bm to i64  ; 2 uses
-  %exitcond38.not.i4299 = icmp eq i32 %i.bm, 0    ; 2 uses
-  br i1 %i.bl, label %.preheader.i40.preheader, label %.preheader28.i35.preheader
-
-.preheader28.i35.preheader:                       ; preds = %bb.h
-  br i1 %exitcond38.not.i4299, label %_Z12AllIdenticalI9aiQuatKeyEbPT_jf.exit, label %.lr.ph98
-
-.preheader.i40.preheader:                         ; preds = %bb.h
-  br i1 %exitcond38.not.i4299, label %_Z12AllIdenticalI9aiQuatKeyEbPT_jf.exit, label %.lr.ph101
+  br i1 %i.bl, label %.lr.ph101, label %.lr.ph98
 
 .preheader28.i35:                                 ; preds = %_Z14EpsilonCompareI9aiQuatKeyEbRKT_S3_f.exit.i
   %exitcond.not.i37 = icmp eq i64 %indvars.iv.next.i38, %wide.trip.count37.i34
   br i1 %exitcond.not.i37, label %_Z12AllIdenticalI9aiQuatKeyEbPT_jf.exit, label %.lr.ph98, !llvm.loop !21
 
-.lr.ph98:                                         ; preds = %.preheader28.i35.preheader, %.preheader28.i35
-  %indvars.iv.i3697 = phi i64 [ %indvars.iv.next.i38, %.preheader28.i35 ], [ 0, %.preheader28.i35.preheader ] ; 2 uses
+.lr.ph98:                                         ; preds = %bb.h, %.preheader28.i35
+  %indvars.iv.i3697 = phi i64 [ %indvars.iv.next.i38, %.preheader28.i35 ], [ 0, %bb.h ] ; 2 uses
   %i.bn = getelementptr inbounds nuw [32 x i8], ptr %i.bi, i64 %indvars.iv.i3697 ; 4 uses
   %indvars.iv.next.i38 = add nuw nsw i64 %indvars.iv.i3697, 1 ; 3 uses
   %i.bo = getelementptr inbounds nuw [32 x i8], ptr %i.bi, i64 %indvars.iv.next.i38 ; 4 uses
@@ -267,8 +260,8 @@ _Z14EpsilonCompareI9aiQuatKeyEbRKT_S3_f.exit.i:   ; preds = %bb.j
   %exitcond38.not.i42 = icmp eq i64 %indvars.iv.next35.i43, %wide.trip.count37.i34
   br i1 %exitcond38.not.i42, label %_Z12AllIdenticalI9aiQuatKeyEbPT_jf.exit, label %.lr.ph101, !llvm.loop !22
 
-.lr.ph101:                                        ; preds = %.preheader.i40.preheader, %.preheader.i40
-  %indvars.iv34.i41100 = phi i64 [ %indvars.iv.next35.i43, %.preheader.i40 ], [ 0, %.preheader.i40.preheader ] ; 2 uses
+.lr.ph101:                                        ; preds = %bb.h, %.preheader.i40
+  %indvars.iv34.i41100 = phi i64 [ %indvars.iv.next35.i43, %.preheader.i40 ], [ 0, %bb.h ] ; 2 uses
   %i.cr = getelementptr inbounds nuw [32 x i8], ptr %i.bi, i64 %indvars.iv34.i41100 ; 4 uses
   %indvars.iv.next35.i43 = add nuw nsw i64 %indvars.iv34.i41100, 1 ; 3 uses
   %i.cs = getelementptr inbounds nuw [32 x i8], ptr %i.bi, i64 %indvars.iv.next35.i43 ; 4 uses
@@ -303,7 +296,7 @@ _ZNK9aiQuatKeyneERKS_.exit.i:                     ; preds = %bb.l
   %i.dm = fcmp une float %i.dk, %i.dl
   br i1 %i.dm, label %_Z12AllIdenticalI9aiQuatKeyEbPT_jf.exit.thread, label %.preheader.i40, !llvm.loop !22
 
-_Z12AllIdenticalI9aiQuatKeyEbPT_jf.exit:          ; preds = %.preheader28.i35, %.preheader.i40, %.preheader28.i35.preheader, %.preheader.i40.preheader
+_Z12AllIdenticalI9aiQuatKeyEbPT_jf.exit:          ; preds = %.preheader28.i35, %.preheader.i40
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(32) %i.bi, i64 32, i1 false)
   tail call void @_ZdaPv(ptr noundef %i.bi) #22
@@ -327,23 +320,16 @@ bb.m:                                             ; preds = %_Z12AllIdenticalI9a
   %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.du = load float, ptr %i.dt, align 8          ; 4 uses
   %i.dv = fcmp ueq float %i.du, 0.000000e+00
-  %i.dw = add i32 %i.dp, -1                       ; 2 uses
+  %i.dw = add i32 %i.dp, -1
   %wide.trip.count37.i44 = zext i32 %i.dw to i64  ; 2 uses
-  %exitcond38.not.i53105 = icmp eq i32 %i.dw, 0   ; 2 uses
-  br i1 %i.dv, label %.preheader.i51.preheader, label %.preheader28.i45.preheader
-
-.preheader28.i45.preheader:                       ; preds = %bb.m
-  br i1 %exitcond38.not.i53105, label %_Z12AllIdenticalI11aiVectorKeyEbPT_jf.exit56, label %.lr.ph104
-
-.preheader.i51.preheader:                         ; preds = %bb.m
-  br i1 %exitcond38.not.i53105, label %_Z12AllIdenticalI11aiVectorKeyEbPT_jf.exit56, label %.lr.ph107
+  br i1 %i.dv, label %.lr.ph107, label %.lr.ph104
 
 .preheader28.i45:                                 ; preds = %_Z14EpsilonCompareI11aiVectorKeyEbRKT_S3_f.exit.i50
   %exitcond.not.i47 = icmp eq i64 %indvars.iv.next.i48, %wide.trip.count37.i44
   br i1 %exitcond.not.i47, label %_Z12AllIdenticalI11aiVectorKeyEbPT_jf.exit56, label %.lr.ph104, !llvm.loop !19
 
-.lr.ph104:                                        ; preds = %.preheader28.i45.preheader, %.preheader28.i45
-  %indvars.iv.i46103 = phi i64 [ %indvars.iv.next.i48, %.preheader28.i45 ], [ 0, %.preheader28.i45.preheader ] ; 2 uses
+.lr.ph104:                                        ; preds = %bb.m, %.preheader28.i45
+  %indvars.iv.i46103 = phi i64 [ %indvars.iv.next.i48, %.preheader28.i45 ], [ 0, %bb.m ] ; 2 uses
   %i.dx = getelementptr inbounds nuw [24 x i8], ptr %i.ds, i64 %indvars.iv.i46103 ; 3 uses
   %indvars.iv.next.i48 = add nuw nsw i64 %indvars.iv.i46103, 1 ; 3 uses
   %i.dy = getelementptr inbounds nuw [24 x i8], ptr %i.ds, i64 %indvars.iv.next.i48 ; 3 uses
@@ -380,8 +366,8 @@ _Z14EpsilonCompareI11aiVectorKeyEbRKT_S3_f.exit.i50: ; preds = %bb.n
   %exitcond38.not.i53 = icmp eq i64 %indvars.iv.next35.i54, %wide.trip.count37.i44
   br i1 %exitcond38.not.i53, label %_Z12AllIdenticalI11aiVectorKeyEbPT_jf.exit56, label %.lr.ph107, !llvm.loop !20
 
-.lr.ph107:                                        ; preds = %.preheader.i51.preheader, %.preheader.i51
-  %indvars.iv34.i52106 = phi i64 [ %indvars.iv.next35.i54, %.preheader.i51 ], [ 0, %.preheader.i51.preheader ] ; 2 uses
+.lr.ph107:                                        ; preds = %bb.m, %.preheader.i51
+  %indvars.iv34.i52106 = phi i64 [ %indvars.iv.next35.i54, %.preheader.i51 ], [ 0, %bb.m ] ; 2 uses
   %i.eu = getelementptr inbounds nuw [24 x i8], ptr %i.ds, i64 %indvars.iv34.i52106 ; 3 uses
   %indvars.iv.next35.i54 = add nuw nsw i64 %indvars.iv34.i52106, 1 ; 3 uses
   %i.ev = getelementptr inbounds nuw [24 x i8], ptr %i.ds, i64 %indvars.iv.next35.i54 ; 3 uses
@@ -408,7 +394,7 @@ _ZNK11aiVectorKeyneERKS_.exit.i55:                ; preds = %bb.o
   %i.fk = fcmp une float %i.fh, %i.fj
   br i1 %i.fk, label %_Z12AllIdenticalI11aiVectorKeyEbPT_jf.exit56.thread, label %.preheader.i51, !llvm.loop !20
 
-_Z12AllIdenticalI11aiVectorKeyEbPT_jf.exit56:     ; preds = %.preheader28.i45, %.preheader.i51, %.preheader28.i45.preheader, %.preheader.i51.preheader
+_Z12AllIdenticalI11aiVectorKeyEbPT_jf.exit56:     ; preds = %.preheader28.i45, %.preheader.i51
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.ds, i64 24, i1 false)
   tail call void @_ZdaPv(ptr noundef %i.ds) #22

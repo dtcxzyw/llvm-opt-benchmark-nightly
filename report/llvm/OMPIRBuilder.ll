@@ -206,6 +206,7 @@ bb.s:                                             ; preds = %_ZNK4llvm17Canonica
   %i.fh = getelementptr inbounds i8, ptr %i.fg, i64 -88
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !527
   %i.fj = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.fc, i64 1)
   br label %bb.z
 
 bb.t:                                             ; preds = %.lr.ph252, %_ZN4llvm13IRBuilderBase10CreateUDivEPNS_5ValueES2_RKNS_5TwineEb.exit
@@ -520,7 +521,7 @@ _ZL10redirectToPN4llvm10BasicBlockES1_NS_8DebugLocE.exit: ; preds = %_ZN4llvm3Us
   br i1 %.not.i.i135, label %"_ZZN4llvm15OpenMPIRBuilder13collapseLoopsENS_8DebugLocENS_8ArrayRefIPNS_17CanonicalLoopInfoEEENS_13IRBuilderBase11InsertPointEENK3$_0clEPNS_10BasicBlockESA_.exit136", label %.lr.ph.i.i133
 
 "_ZZN4llvm15OpenMPIRBuilder13collapseLoopsENS_8DebugLocENS_8ArrayRefIPNS_17CanonicalLoopInfoEEENS_13IRBuilderBase11InsertPointEENK3$_0clEPNS_10BasicBlockESA_.exit136": ; preds = %_ZL10redirectToPN4llvm10BasicBlockES1_NS_8DebugLocE.exit, %_ZL10redirectToPN4llvm10BasicBlockES1_NS_8DebugLocE.exit.us, %bb.aa, %bb.ab
-  %exitcond.not = icmp eq i64 %i.hy, %i.fc
+  %exitcond.not = icmp eq i64 %i.hy, %umax
   br i1 %exitcond.not, label %bb.y, label %bb.z, !llvm.loop !2538
 
 ._crit_edge267:                                   ; preds = %"_ZZN4llvm15OpenMPIRBuilder13collapseLoopsENS_8DebugLocENS_8ArrayRefIPNS_17CanonicalLoopInfoEEENS_13IRBuilderBase11InsertPointEENK3$_0clEPNS_10BasicBlockESA_.exit162"

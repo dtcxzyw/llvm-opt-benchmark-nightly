@@ -205,17 +205,16 @@ _RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typ
   br i1 %i.m, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.thread.i
-  %i.n = add i64 %i.f, -1                         ; 4 uses
+  %i.n = add i64 %i.f, -1                         ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 88 ; 2 uses
-  %1 = icmp eq i64 %i.n, 0
-  br i1 %1, label %.loopexit, label %.lr.ph
+  br label %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph
   %i.p = icmp eq i64 %i.r, %i.n
   br i1 %i.p, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %bb.d
-  %.sroa.0.0.i.i.i.i.i.i.i4.i5 = phi i64 [ %i.r, %bb.d ], [ 0, %bb.c ] ; 2 uses
+  %.sroa.0.0.i.i.i.i.i.i.i4.i5 = phi i64 [ 0, %bb.c ], [ %i.r, %bb.d ] ; 2 uses
   %i.q = getelementptr inbounds nuw [72 x i8], ptr %i.o, i64 %.sroa.0.0.i.i.i.i.i.i.i4.i5
   %i.r = add nuw nsw i64 %.sroa.0.0.i.i.i.i.i.i.i4.i5, 1 ; 4 uses
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticECs9gmjTwvRRSu_10typst_html(ptr noalias nofree noundef readonly align 8 dereferenceable(72) %i.q)
@@ -263,7 +262,7 @@ bb.i:                                             ; preds = %bb.a
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticEECs9gmjTwvRRSu_10typst_html(ptr nonnull %.val, i64 %.val3) #49
           to label %bb.k unwind label %bb.j
 
-.loopexit:                                        ; preds = %bb.d, %bb.c, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.thread.i, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.lr.ph.split.i, %bb.b
+.loopexit:                                        ; preds = %bb.d, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.thread.i, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.lr.ph.split.i, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !22937
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !22937
   %i.aa = load ptr, ptr %i.c, align 8, !nonnull !57, !noundef !57
@@ -311,7 +310,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load i64, ptr %i.a, align 8, !alias.scope !22970, !noalias !22971, !noundef !57 ; 2 uses
   %.not.i.i23.i = icmp eq i64 %i.f, %i.g
   %.pre = load ptr, ptr %i.c, align 8             ; 4 uses
-  %.pre6 = load i64, ptr %i.d, align 8            ; 8 uses
+  %.pre6 = load i64, ptr %i.d, align 8            ; 7 uses
   br i1 %.not.i.i23.i, label %.loopexit, label %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.lr.ph.i
 
 _RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.lr.ph.i: ; preds = %bb.b
@@ -339,17 +338,16 @@ _RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13t
   br i1 %.not.i.i.i, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.thread.i
-  %i.m = add i64 %i.f, -1                         ; 4 uses
+  %i.m = add i64 %i.f, -1                         ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 2 uses
-  %1 = icmp eq i64 %i.m, 0
-  br i1 %1, label %.loopexit, label %.lr.ph
+  br label %.lr.ph
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentECs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i4.i: ; preds = %.lr.ph
   %i.o = icmp eq i64 %i.q, %i.m
   br i1 %i.o, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentECs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i4.i
-  %.sroa.0.0.i.i.i.i.i.i.i5.i9 = phi i64 [ %i.q, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentECs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i4.i ], [ 0, %bb.c ] ; 2 uses
+  %.sroa.0.0.i.i.i.i.i.i.i5.i9 = phi i64 [ 0, %bb.c ], [ %i.q, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentECs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i4.i ] ; 2 uses
   %i.p = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %.sroa.0.0.i.i.i.i.i.i.i5.i9
   %i.q = add nuw nsw i64 %.sroa.0.0.i.i.i.i.i.i.i5.i9, 1 ; 4 uses
   invoke void @_RNvXs2_NtNtNtCsdaEETE4DqmE_13typst_library11foundations7content3rawNtB5_10RawContentNtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.p)
@@ -402,13 +400,13 @@ bb.g:                                             ; preds = %bb.a
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentEECs9gmjTwvRRSu_10typst_html(ptr nonnull %.val, i64 %.val3) #49
           to label %bb.i unwind label %bb.h
 
-.loopexit:                                        ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentECs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i4.i, %bb.c, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.thread.i, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.thread.thread.loopexit.i, %bb.b
-  %2 = phi i64 [ %.pre6, %bb.b ], [ %.pre6, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.thread.i ], [ %i.l, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.thread.thread.loopexit.i ], [ %.pre6, %bb.c ], [ %.pre6, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentECs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i4.i ]
+.loopexit:                                        ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentECs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i4.i, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.thread.i, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.thread.thread.loopexit.i, %bb.b
+  %1 = phi i64 [ %.pre6, %bb.b ], [ %.pre6, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.thread.i ], [ %i.l, %_RNvXs3_NtNtCs3oUPovFnLWP_4core5array4iterINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentKj1_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9gmjTwvRRSu_10typst_html.exit.thread.thread.loopexit.i ], [ %.pre6, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentECs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i4.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !22963
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !22963
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %i.z = insertvalue { ptr, i64 } poison, ptr %.pre, 0
-  %i.aa = insertvalue { ptr, i64 } %i.z, i64 %2, 1
+  %i.aa = insertvalue { ptr, i64 } %i.z, i64 %1, 1
   ret { ptr, i64 } %i.aa
 
 bb.h:                                             ; preds = %.body

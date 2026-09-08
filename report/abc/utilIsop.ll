@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.a, label %Abc_TtStretch6.exit.sink.split, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %i.b = add nsw i32 %3, -6                       ; 4 uses
+  %i.b = add nsw i32 %3, -6                       ; 3 uses
   %i.c = shl nuw i32 1, %i.b                      ; 6 uses
   %i.d = sext i32 %i.c to i64
   %.idx.i = shl nsw i64 %i.d, 3                   ; 2 uses
@@ -289,18 +289,12 @@ Abc_TtHasVar.exit:                                ; preds = %bb.c, %bb.e
 .split:                                           ; preds = %.thread, %Abc_TtHasVar.exit
   %i.y = load i64, ptr %0, align 8, !tbaa !13
   %i.z = load i64, ptr %1, align 8, !tbaa !13
-  %i.aa = tail call i64 @Abc_Isop6Cover(i64 noundef %i.y, i64 noundef %i.z, ptr noundef %2, i32 noundef 6, i64 noundef %4, ptr noundef %5) ; 6 uses
-  switch i32 %i.b, label %.preheader.i.preheader [
-    i32 31, label %Abc_TtStretch6.exit
-    i32 0, label %Abc_TtStretch6.exit
-  ]
-
-.preheader.i.preheader:                           ; preds = %.split
+  %i.aa = tail call i64 @Abc_Isop6Cover(i64 noundef %i.y, i64 noundef %i.z, ptr noundef %2, i32 noundef 6, i64 noundef %4, ptr noundef %5) ; 4 uses
   %.pre = load i64, ptr %2, align 8, !tbaa !13    ; 4 uses
   %min.iters.check116 = icmp slt i32 %i.c, 4
   br i1 %min.iters.check116, label %.preheader.i, label %vector.ph117
 
-vector.ph117:                                     ; preds = %.preheader.i.preheader
+vector.ph117:                                     ; preds = %.split
   %i.ab = and i32 %i.c, 2147483644
   %n.vec118 = zext nneg i32 %i.ab to i64
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %.pre, i64 0
@@ -317,7 +311,7 @@ vector.body119:                                   ; preds = %vector.body119, %ve
   %i.ae = icmp eq i64 %index.next121, %n.vec118
   br i1 %i.ae, label %Abc_TtStretch6.exit, label %vector.body119, !llvm.loop !33
 
-.preheader.i:                                     ; preds = %.preheader.i.preheader
+.preheader.i:                                     ; preds = %.split
   store i64 %.pre, ptr %2, align 8, !tbaa !13
   %exitcond.not = icmp slt i32 %i.c, 2
   br i1 %exitcond.not, label %Abc_TtStretch6.exit, label %.preheader.i.1
@@ -455,8 +449,8 @@ Abc_TtStretch6.exit.sink.split:                   ; preds = %bb.a, %.preheader
   %i.bq = tail call i64 @Abc_Isop6Cover(i64 noundef %i.bo, i64 noundef %i.bp, ptr noundef %2, i32 noundef %.sink108, i64 noundef %4, ptr noundef %5)
   br label %Abc_TtStretch6.exit
 
-Abc_TtStretch6.exit:                              ; preds = %._crit_edge.i71, %vector.body119, %.preheader.i, %.preheader.i.1, %.preheader.i.2, %Abc_TtStretch6.exit.sink.split, %.split, %.split, %bb.f, %.split36
-  %.034 = phi i64 [ %i.bq, %Abc_TtStretch6.exit.sink.split ], [ %i.aa, %.split ], [ %i.aa, %vector.body119 ], [ %i.aa, %.split ], [ %i.ai, %.split36 ], [ %i.ai, %bb.f ], [ %i.aa, %.preheader.i ], [ %i.aa, %.preheader.i.2 ], [ %i.aa, %.preheader.i.1 ], [ %i.ai, %._crit_edge.i71 ]
+Abc_TtStretch6.exit:                              ; preds = %._crit_edge.i71, %vector.body119, %.preheader.i, %.preheader.i.1, %.preheader.i.2, %Abc_TtStretch6.exit.sink.split, %bb.f, %.split36
+  %.034 = phi i64 [ %i.ai, %.split36 ], [ %i.ai, %bb.f ], [ %i.aa, %vector.body119 ], [ %i.bq, %Abc_TtStretch6.exit.sink.split ], [ %i.aa, %.preheader.i ], [ %i.aa, %.preheader.i.2 ], [ %i.aa, %.preheader.i.1 ], [ %i.ai, %._crit_edge.i71 ]
   ret i64 %.034
 }
 

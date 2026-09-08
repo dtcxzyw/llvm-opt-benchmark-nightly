@@ -205,8 +205,8 @@ bb.j:                                             ; preds = %_ZNK9parameter7get_
   br i1 %exitcond.not, label %bb.k, label %.preheader, !llvm.loop !281
 
 bb.k:                                             ; preds = %bb.j
-  %i.u = add i32 %2, -1
-  %i.v = zext i32 %i.u to i64                     ; 2 uses
+  %i.u = add i32 %2, -1                           ; 2 uses
+  %i.v = zext i32 %i.u to i64
   %i.w = getelementptr inbounds nuw [40 x i8], ptr %3, i64 %i.v ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 32
   %i.y = load i8, ptr %i.x, align 8, !tbaa !110
@@ -609,6 +609,8 @@ bb.ae:                                            ; preds = %bb.ac, %bb.ab
   %i.et = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 4 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %13, i64 20 ; 4 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %13, i64 24
+  %umax223 = call i32 @llvm.umax.i32(i32 %i.u, i32 1)
+  %wide.trip.count224 = zext i32 %umax223 to i64
   br label %bb.af
 
 ._crit_edge:                                      ; preds = %_ZN8rationalD2Ev.exit
@@ -744,7 +746,7 @@ bb.am:                                            ; preds = %.noexc.i, %_ZN8rati
 _ZN8rationalD2Ev.exit:                            ; preds = %.noexc.i
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #25
   %indvars.iv.next221 = add nuw nsw i64 %indvars.iv220, 1 ; 2 uses
-  %exitcond224.not = icmp eq i64 %indvars.iv.next221, %i.v
+  %exitcond224.not = icmp eq i64 %indvars.iv.next221, %wide.trip.count224
   br i1 %exitcond224.not, label %._crit_edge, label %bb.af, !llvm.loop !283
 
 .loopexit203:                                     ; preds = %bb.ai, %_ZN11mpq_managerILb1EE3setER3mpqm.exit.i
@@ -1146,6 +1148,9 @@ declare i64 @llvm.abs.i64(i64, i1 immarg) #18
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i128 @llvm.abs.i128(i128, i1 immarg) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #19
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

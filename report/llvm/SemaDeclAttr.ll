@@ -204,20 +204,19 @@ bb.b:                                             ; preds = %_ZL13normalizeNameR
   br i1 %i.ad, label %.preheader.preheader, label %_ZN4llvm5APIntaSEm.exit
 
 .preheader.preheader:                             ; preds = %bb.b
-  %i.ae = add nsw i64 %.sroa.10.0, -1             ; 4 uses
-  %exitcond.not302 = icmp eq i64 %i.ae, 0
-  br i1 %exitcond.not302, label %.critedge.thread, label %.lr.ph304
+  %i.ae = add nsw i64 %.sroa.10.0, -1             ; 3 uses
+  br label %.lr.ph304
 
 .preheader:                                       ; preds = %.lr.ph304
   %exitcond.not = icmp eq i64 %i.af, %i.ae
   br i1 %exitcond.not, label %.critedge.thread, label %.lr.ph304, !llvm.loop !1730
 
-.critedge.thread:                                 ; preds = %.preheader, %.preheader.preheader
+.critedge.thread:                                 ; preds = %.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23
   br label %bb.c
 
 .lr.ph304:                                        ; preds = %.preheader.preheader, %.preheader
-  %.0303 = phi i64 [ %i.af, %.preheader ], [ 0, %.preheader.preheader ] ; 3 uses
+  %.0303 = phi i64 [ 0, %.preheader.preheader ], [ %i.af, %.preheader ] ; 3 uses
   %i.af = add nuw i64 %.0303, 1                   ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.0170.0, i64 %i.af
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !69

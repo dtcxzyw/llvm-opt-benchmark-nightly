@@ -205,10 +205,9 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not, label %Vec_IntPush.exit94, label %.preheader98
 
 .preheader98:                                     ; preds = %bb.a, %._crit_edge
-  %i.o = add nsw i32 %0, -1                       ; 3 uses
+  %i.o = add nsw i32 %0, -1                       ; 2 uses
   %i.p = zext i32 %i.o to i64
   %wide.trip.count121 = zext i32 %0 to i64        ; 3 uses
-  %.not83.peel = icmp eq i32 %i.o, 0
   %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   %xtraiter = and i64 %wide.trip.count121, 1
   %i.r = icmp eq i32 %0, 1
@@ -316,8 +315,7 @@ bb.k:                                             ; preds = %.lr.ph101.epil.preh
 .preheader:                                       ; preds = %.lr.ph101.epil.preheader, %bb.k, %.preheader.unr-lcssa
   %i.ax = load i32, ptr %i.h, align 4, !tbaa !42
   %i.ay = icmp eq i32 %i.ax, 0
-  %or.cond85.peel = select i1 %i.ay, i1 true, i1 %.not83.peel
-  br i1 %or.cond85.peel, label %.lr.ph104.preheader, label %bb.l
+  br i1 %i.ay, label %.lr.ph104.preheader, label %bb.l
 
 .lr.ph104.preheader:                              ; preds = %bb.l, %.preheader
   %.1103.ph = phi i32 [ %0, %.preheader ], [ %spec.select139, %bb.l ]

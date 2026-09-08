@@ -205,10 +205,9 @@ bb.ae:                                            ; preds = %bb.ad, %RefineEntro
   %i.hv = load i32, ptr %i.hu, align 4, !tbaa !193
   %.inv.i = icmp sgt i32 %i.hv, 10
   %i.hw = select i1 %.inv.i, i64 10, i64 3
-  %i.hx = add i64 %.lcssa881, -1                  ; 8 uses
+  %i.hx = add i64 %.lcssa881, -1                  ; 6 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %i.hi, i64 %i.hx
   %xtraiter899 = and i64 %.lcssa881, 1
-  %10 = icmp eq i64 %i.hx, 0
   %unroll_iter904 = and i64 %.lcssa881, -2
   %lcmp.mod901.not = icmp eq i64 %xtraiter899, 0
   %lcmp.mod903 = trunc i64 %.lcssa881 to i1
@@ -217,7 +216,6 @@ bb.ae:                                            ; preds = %bb.ad, %RefineEntro
   %lcmp.mod908.not = icmp eq i64 %xtraiter906, 0
   %lcmp.mod909 = icmp ne i64 %xtraiter906, 0
   %xtraiter918 = and i64 %.lcssa881, 1
-  %11 = icmp eq i64 %i.hx, 0
   %unroll_iter922 = and i64 %.lcssa881, -2
   %lcmp.mod920.not = icmp eq i64 %xtraiter918, 0
   %lcmp.mod921 = trunc i64 %.lcssa881 to i1
@@ -540,13 +538,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %exitcond.not.i162.i = icmp eq i64 %i.ma, %.1179.i
   br i1 %exitcond.not.i162.i, label %.preheader26.i.i.preheader, label %.lr.ph.i161.i, !llvm.loop !39
 
-.preheader26.i.i.preheader:                       ; preds = %.lr.ph.i161.i, %middle.block718, %vec.epilog.middle.block, %FindBlocksLiteral.exit.i
-  br i1 %10, label %.preheader26.i.i.epil.preheader, label %.preheader26.i.i
+.preheader26.i.i.preheader:                       ; preds = %FindBlocksLiteral.exit.i, %vec.epilog.middle.block, %middle.block718, %.lr.ph.i161.i
+  br label %.preheader26.i.i
 
-.preheader26.i.i:                                 ; preds = %.preheader26.i.i.preheader, %bb.bd
-  %.129.i.i = phi i64 [ %i.mq, %bb.bd ], [ 0, %.preheader26.i.i.preheader ] ; 3 uses
-  %.02328.i.i = phi i16 [ %.124.i.i.1, %bb.bd ], [ 0, %.preheader26.i.i.preheader ] ; 3 uses
-  %niter905 = phi i64 [ %niter905.next.1, %bb.bd ], [ 0, %.preheader26.i.i.preheader ]
+.preheader26.i.i:                                 ; preds = %bb.bd, %.preheader26.i.i.preheader
+  %.129.i.i = phi i64 [ 0, %.preheader26.i.i.preheader ], [ %i.mq, %bb.bd ] ; 3 uses
+  %.02328.i.i = phi i16 [ 0, %.preheader26.i.i.preheader ], [ %.124.i.i.1, %bb.bd ] ; 3 uses
+  %niter905 = phi i64 [ 0, %.preheader26.i.i.preheader ], [ %niter905.next.1, %bb.bd ]
   %i.mb = getelementptr inbounds nuw i8, ptr %i.hi, i64 %.129.i.i
   %i.mc = load i8, ptr %i.mb, align 1, !tbaa !168
   %i.md = zext i8 %i.mc to i64
@@ -577,7 +575,7 @@ bb.bc:                                            ; preds = %.preheader26.i.i.1
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc, %.preheader26.i.i.1
-  %.124.i.i.1 = phi i16 [ %i.mp, %bb.bc ], [ %.124.i.i, %.preheader26.i.i.1 ] ; 3 uses
+  %.124.i.i.1 = phi i16 [ %i.mp, %bb.bc ], [ %.124.i.i, %.preheader26.i.i.1 ] ; 5 uses
   %i.mq = add nuw i64 %.129.i.i, 2                ; 2 uses
   %niter905.next.1 = add i64 %niter905, 2         ; 2 uses
   %niter905.ncmp.1 = icmp eq i64 %niter905.next.1, %unroll_iter904
@@ -586,11 +584,9 @@ bb.bd:                                            ; preds = %bb.bc, %.preheader2
 .preheader.i.i.preheader.unr-lcssa:               ; preds = %bb.bd
   br i1 %lcmp.mod901.not, label %.preheader.i.i.preheader.new, label %.preheader26.i.i.epil.preheader
 
-.preheader26.i.i.epil.preheader:                  ; preds = %.preheader.i.i.preheader.unr-lcssa, %.preheader26.i.i.preheader
-  %.129.i.i.epil.init = phi i64 [ 0, %.preheader26.i.i.preheader ], [ %i.mq, %.preheader.i.i.preheader.unr-lcssa ]
-  %.02328.i.i.epil.init = phi i16 [ 0, %.preheader26.i.i.preheader ], [ %.124.i.i.1, %.preheader.i.i.preheader.unr-lcssa ] ; 3 uses
+.preheader26.i.i.epil.preheader:                  ; preds = %.preheader.i.i.preheader.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod903)
-  %i.mr = getelementptr inbounds nuw i8, ptr %i.hi, i64 %.129.i.i.epil.init
+  %i.mr = getelementptr inbounds nuw i8, ptr %i.hi, i64 %i.mq
   %i.ms = load i8, ptr %i.mr, align 1, !tbaa !168
   %i.mt = zext i8 %i.ms to i64
   %i.mu = getelementptr inbounds nuw [2 x i8], ptr %i.ht, i64 %i.mt ; 2 uses
@@ -599,12 +595,12 @@ bb.bd:                                            ; preds = %bb.bc, %.preheader2
   br i1 %i.mw, label %bb.be, label %.preheader.i.i.preheader.new
 
 bb.be:                                            ; preds = %.preheader26.i.i.epil.preheader
-  %i.mx = add i16 %.02328.i.i.epil.init, 1
-  store i16 %.02328.i.i.epil.init, ptr %i.mu, align 2, !tbaa !195
+  %i.mx = add i16 %.124.i.i.1, 1
+  store i16 %.124.i.i.1, ptr %i.mu, align 2, !tbaa !195
   br label %.preheader.i.i.preheader.new
 
 .preheader.i.i.preheader.new:                     ; preds = %.preheader.i.i.preheader.unr-lcssa, %bb.be, %.preheader26.i.i.epil.preheader
-  %.124.i.i.lcssa = phi i16 [ %.124.i.i.1, %.preheader.i.i.preheader.unr-lcssa ], [ %i.mx, %bb.be ], [ %.02328.i.i.epil.init, %.preheader26.i.i.epil.preheader ] ; 3 uses
+  %.124.i.i.lcssa = phi i16 [ %.124.i.i.1, %.preheader.i.i.preheader.unr-lcssa ], [ %i.mx, %bb.be ], [ %.124.i.i.1, %.preheader26.i.i.epil.preheader ] ; 3 uses
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i, %.preheader.i.i.preheader.new
@@ -731,12 +727,12 @@ ClearHistogramsLiteral.exit.i.i.preheader.loopexit.unr-lcssa: ; preds = %.lr.ph.
   %epil.iter913.cmp.not = icmp eq i64 %epil.iter913.next, %xtraiter912
   br i1 %epil.iter913.cmp.not, label %ClearHistogramsLiteral.exit.i.i.preheader, label %.lr.ph.i165.i.epil, !llvm.loop !43
 
-ClearHistogramsLiteral.exit.i.i.preheader:        ; preds = %ClearHistogramsLiteral.exit.i.i.preheader.loopexit.unr-lcssa, %.lr.ph.i165.i.epil, %RemapBlockIdsLiteral.exit.i
-  br i1 %11, label %ClearHistogramsLiteral.exit.i.i.epil.preheader, label %ClearHistogramsLiteral.exit.i.i
+ClearHistogramsLiteral.exit.i.i.preheader:        ; preds = %RemapBlockIdsLiteral.exit.i, %.lr.ph.i165.i.epil, %ClearHistogramsLiteral.exit.i.i.preheader.loopexit.unr-lcssa
+  br label %ClearHistogramsLiteral.exit.i.i
 
-ClearHistogramsLiteral.exit.i.i:                  ; preds = %ClearHistogramsLiteral.exit.i.i.preheader, %ClearHistogramsLiteral.exit.i.i
-  %.010.i.i = phi i64 [ %i.pz, %ClearHistogramsLiteral.exit.i.i ], [ 0, %ClearHistogramsLiteral.exit.i.i.preheader ] ; 4 uses
-  %niter923 = phi i64 [ %niter923.next.1, %ClearHistogramsLiteral.exit.i.i ], [ 0, %ClearHistogramsLiteral.exit.i.i.preheader ]
+ClearHistogramsLiteral.exit.i.i:                  ; preds = %ClearHistogramsLiteral.exit.i.i, %ClearHistogramsLiteral.exit.i.i.preheader
+  %.010.i.i = phi i64 [ 0, %ClearHistogramsLiteral.exit.i.i.preheader ], [ %i.pz, %ClearHistogramsLiteral.exit.i.i ] ; 4 uses
+  %niter923 = phi i64 [ 0, %ClearHistogramsLiteral.exit.i.i.preheader ], [ %niter923.next.1, %ClearHistogramsLiteral.exit.i.i ]
   %i.oy = getelementptr inbounds nuw i8, ptr %i.hi, i64 %.010.i.i
   %i.oz = load i8, ptr %i.oy, align 1, !tbaa !168
   %i.pa = zext i8 %i.oz to i64
@@ -768,7 +764,7 @@ ClearHistogramsLiteral.exit.i.i:                  ; preds = %ClearHistogramsLite
   %i.px = load i64, ptr %i.pw, align 8, !tbaa !173
   %i.py = add i64 %i.px, 1
   store i64 %i.py, ptr %i.pw, align 8, !tbaa !173
-  %i.pz = add nuw i64 %.010.i.i, 2                ; 2 uses
+  %i.pz = add nuw i64 %.010.i.i, 2                ; 3 uses
   %niter923.next.1 = add i64 %niter923, 2         ; 2 uses
   %niter923.ncmp.1 = icmp eq i64 %niter923.next.1, %unroll_iter922
   br i1 %niter923.ncmp.1, label %BuildBlockHistogramsLiteral.exit.i.unr-lcssa, label %ClearHistogramsLiteral.exit.i.i, !llvm.loop !44
@@ -776,14 +772,13 @@ ClearHistogramsLiteral.exit.i.i:                  ; preds = %ClearHistogramsLite
 BuildBlockHistogramsLiteral.exit.i.unr-lcssa:     ; preds = %ClearHistogramsLiteral.exit.i.i
   br i1 %lcmp.mod920.not, label %BuildBlockHistogramsLiteral.exit.i, label %ClearHistogramsLiteral.exit.i.i.epil.preheader
 
-ClearHistogramsLiteral.exit.i.i.epil.preheader:   ; preds = %BuildBlockHistogramsLiteral.exit.i.unr-lcssa, %ClearHistogramsLiteral.exit.i.i.preheader
-  %.010.i.i.epil.init = phi i64 [ 0, %ClearHistogramsLiteral.exit.i.i.preheader ], [ %i.pz, %BuildBlockHistogramsLiteral.exit.i.unr-lcssa ] ; 2 uses
+ClearHistogramsLiteral.exit.i.i.epil.preheader:   ; preds = %BuildBlockHistogramsLiteral.exit.i.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod921)
-  %i.qa = getelementptr inbounds nuw i8, ptr %i.hi, i64 %.010.i.i.epil.init
+  %i.qa = getelementptr inbounds nuw i8, ptr %i.hi, i64 %i.pz
   %i.qb = load i8, ptr %i.qa, align 1, !tbaa !168
   %i.qc = zext i8 %i.qb to i64
   %i.qd = getelementptr inbounds nuw [1040 x i8], ptr %i.cs, i64 %i.qc ; 2 uses
-  %i.qe = getelementptr inbounds nuw i8, ptr %.ph, i64 %.010.i.i.epil.init
+  %i.qe = getelementptr inbounds nuw i8, ptr %.ph, i64 %i.pz
   %i.qf = load i8, ptr %i.qe, align 1, !tbaa !168
   %i.qg = zext i8 %i.qf to i64
   %i.qh = getelementptr inbounds nuw [4 x i8], ptr %i.qd, i64 %i.qg ; 2 uses
@@ -1186,7 +1181,7 @@ vector.body744:                                   ; preds = %vector.body744, %ve
 .lr.ph.preheader873:                              ; preds = %vector.body744, %vector.memcheck733, %.lr.ph.preheader
   %.055499.ph = phi i64 [ 0, %vector.memcheck733 ], [ 0, %.lr.ph.preheader ], [ %n.vec743, %vector.body744 ] ; 4 uses
   %i.aeh = sub i64 %2, %.055499.ph
-  %i.aei = add i64 %2, -1                         ; 7 uses
+  %i.aei = add i64 %2, -1                         ; 5 uses
   %i.aej = sub i64 %i.aei, %.055499.ph
   %xtraiter947 = and i64 %i.aeh, 3                ; 2 uses
   %lcmp.mod948.not = icmp eq i64 %xtraiter947, 0
@@ -1589,7 +1584,6 @@ bb.dl:                                            ; preds = %bb.dk, %RefineEntro
   %i.bds = add i64 %2, -1                         ; 3 uses
   %i.bdt = getelementptr inbounds nuw i8, ptr %i.bdd, i64 %i.bds
   %xtraiter969 = and i64 %2, 1
-  %12 = icmp eq i64 %i.aei, 0
   %unroll_iter974 = and i64 %2, -2
   %lcmp.mod971.not = icmp eq i64 %xtraiter969, 0
   %lcmp.mod973 = trunc i64 %2 to i1
@@ -1599,7 +1593,6 @@ bb.dl:                                            ; preds = %bb.dk, %RefineEntro
   %lcmp.mod978.not = icmp eq i64 %xtraiter976, 0
   %lcmp.mod979 = icmp ne i64 %xtraiter976, 0
   %xtraiter988 = and i64 %2, 1
-  %13 = icmp eq i64 %i.aei, 0
   %unroll_iter992 = and i64 %2, -2
   %lcmp.mod990.not = icmp eq i64 %xtraiter988, 0
   %lcmp.mod991 = trunc i64 %2 to i1
@@ -1922,13 +1915,13 @@ vec.epilog.middle.block785:                       ; preds = %vec.epilog.vector.b
   %exitcond.not.i162.i124 = icmp eq i64 %i.bhw, %.1180.i
   br i1 %exitcond.not.i162.i124, label %.preheader26.i.i125.preheader, label %.lr.ph.i161.i122, !llvm.loop !89
 
-.preheader26.i.i125.preheader:                    ; preds = %.lr.ph.i161.i122, %middle.block773, %vec.epilog.middle.block785, %FindBlocksCommand.exit.i
-  br i1 %12, label %.preheader26.i.i125.epil.preheader, label %.preheader26.i.i125
+.preheader26.i.i125.preheader:                    ; preds = %FindBlocksCommand.exit.i, %vec.epilog.middle.block785, %middle.block773, %.lr.ph.i161.i122
+  br label %.preheader26.i.i125
 
-.preheader26.i.i125:                              ; preds = %.preheader26.i.i125.preheader, %bb.ek
-  %.129.i.i126 = phi i64 [ %i.bim, %bb.ek ], [ 0, %.preheader26.i.i125.preheader ] ; 3 uses
-  %.02328.i.i127 = phi i16 [ %.124.i.i128.1, %bb.ek ], [ 0, %.preheader26.i.i125.preheader ] ; 3 uses
-  %niter975 = phi i64 [ %niter975.next.1, %bb.ek ], [ 0, %.preheader26.i.i125.preheader ]
+.preheader26.i.i125:                              ; preds = %bb.ek, %.preheader26.i.i125.preheader
+  %.129.i.i126 = phi i64 [ 0, %.preheader26.i.i125.preheader ], [ %i.bim, %bb.ek ] ; 3 uses
+  %.02328.i.i127 = phi i16 [ 0, %.preheader26.i.i125.preheader ], [ %.124.i.i128.1, %bb.ek ] ; 3 uses
+  %niter975 = phi i64 [ 0, %.preheader26.i.i125.preheader ], [ %niter975.next.1, %bb.ek ]
   %i.bhx = getelementptr inbounds nuw i8, ptr %i.bdd, i64 %.129.i.i126
   %i.bhy = load i8, ptr %i.bhx, align 1, !tbaa !168
   %i.bhz = zext i8 %i.bhy to i64
@@ -1959,7 +1952,7 @@ bb.ej:                                            ; preds = %.preheader26.i.i125
   br label %bb.ek
 
 bb.ek:                                            ; preds = %bb.ej, %.preheader26.i.i125.1
-  %.124.i.i128.1 = phi i16 [ %i.bil, %bb.ej ], [ %.124.i.i128, %.preheader26.i.i125.1 ] ; 3 uses
+  %.124.i.i128.1 = phi i16 [ %i.bil, %bb.ej ], [ %.124.i.i128, %.preheader26.i.i125.1 ] ; 5 uses
   %i.bim = add nuw i64 %.129.i.i126, 2            ; 2 uses
   %niter975.next.1 = add i64 %niter975, 2         ; 2 uses
   %niter975.ncmp.1 = icmp eq i64 %niter975.next.1, %unroll_iter974
@@ -1968,11 +1961,9 @@ bb.ek:                                            ; preds = %bb.ej, %.preheader2
 .preheader.i.i131.preheader.unr-lcssa:            ; preds = %bb.ek
   br i1 %lcmp.mod971.not, label %.preheader.i.i131.preheader, label %.preheader26.i.i125.epil.preheader
 
-.preheader26.i.i125.epil.preheader:               ; preds = %.preheader.i.i131.preheader.unr-lcssa, %.preheader26.i.i125.preheader
-  %.129.i.i126.epil.init = phi i64 [ 0, %.preheader26.i.i125.preheader ], [ %i.bim, %.preheader.i.i131.preheader.unr-lcssa ]
-  %.02328.i.i127.epil.init = phi i16 [ 0, %.preheader26.i.i125.preheader ], [ %.124.i.i128.1, %.preheader.i.i131.preheader.unr-lcssa ] ; 3 uses
+.preheader26.i.i125.epil.preheader:               ; preds = %.preheader.i.i131.preheader.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod973)
-  %i.bin = getelementptr inbounds nuw i8, ptr %i.bdd, i64 %.129.i.i126.epil.init
+  %i.bin = getelementptr inbounds nuw i8, ptr %i.bdd, i64 %i.bim
   %i.bio = load i8, ptr %i.bin, align 1, !tbaa !168
   %i.bip = zext i8 %i.bio to i64
   %i.biq = getelementptr inbounds nuw [2 x i8], ptr %i.bdo, i64 %i.bip ; 2 uses
@@ -1981,12 +1972,12 @@ bb.ek:                                            ; preds = %bb.ej, %.preheader2
   br i1 %i.bis, label %bb.el, label %.preheader.i.i131.preheader
 
 bb.el:                                            ; preds = %.preheader26.i.i125.epil.preheader
-  %i.bit = add i16 %.02328.i.i127.epil.init, 1
-  store i16 %.02328.i.i127.epil.init, ptr %i.biq, align 2, !tbaa !195
+  %i.bit = add i16 %.124.i.i128.1, 1
+  store i16 %.124.i.i128.1, ptr %i.biq, align 2, !tbaa !195
   br label %.preheader.i.i131.preheader
 
 .preheader.i.i131.preheader:                      ; preds = %.preheader26.i.i125.epil.preheader, %bb.el, %.preheader.i.i131.preheader.unr-lcssa
-  %.124.i.i128.lcssa = phi i16 [ %.124.i.i128.1, %.preheader.i.i131.preheader.unr-lcssa ], [ %i.bit, %bb.el ], [ %.02328.i.i127.epil.init, %.preheader26.i.i125.epil.preheader ] ; 3 uses
+  %.124.i.i128.lcssa = phi i16 [ %.124.i.i128.1, %.preheader.i.i131.preheader.unr-lcssa ], [ %i.bit, %bb.el ], [ %.124.i.i128.1, %.preheader26.i.i125.epil.preheader ] ; 3 uses
   br i1 %i.bdu, label %.preheader.i.i131.epil.preheader, label %.preheader.i.i131
 
 .preheader.i.i131:                                ; preds = %.preheader.i.i131.preheader, %.preheader.i.i131
@@ -2114,12 +2105,12 @@ ClearHistogramsCommand.exit.i.i.preheader.loopexit.unr-lcssa: ; preds = %.lr.ph.
   %epil.iter983.cmp.not = icmp eq i64 %epil.iter983.next, %xtraiter982
   br i1 %epil.iter983.cmp.not, label %ClearHistogramsCommand.exit.i.i.preheader, label %.lr.ph.i165.i135.epil, !llvm.loop !93
 
-ClearHistogramsCommand.exit.i.i.preheader:        ; preds = %ClearHistogramsCommand.exit.i.i.preheader.loopexit.unr-lcssa, %.lr.ph.i165.i135.epil, %RemapBlockIdsCommand.exit.i
-  br i1 %13, label %ClearHistogramsCommand.exit.i.i.epil.preheader, label %ClearHistogramsCommand.exit.i.i
+ClearHistogramsCommand.exit.i.i.preheader:        ; preds = %RemapBlockIdsCommand.exit.i, %.lr.ph.i165.i135.epil, %ClearHistogramsCommand.exit.i.i.preheader.loopexit.unr-lcssa
+  br label %ClearHistogramsCommand.exit.i.i
 
-ClearHistogramsCommand.exit.i.i:                  ; preds = %ClearHistogramsCommand.exit.i.i.preheader, %ClearHistogramsCommand.exit.i.i
-  %.010.i.i138 = phi i64 [ %i.blv, %ClearHistogramsCommand.exit.i.i ], [ 0, %ClearHistogramsCommand.exit.i.i.preheader ] ; 4 uses
-  %niter993 = phi i64 [ %niter993.next.1, %ClearHistogramsCommand.exit.i.i ], [ 0, %ClearHistogramsCommand.exit.i.i.preheader ]
+ClearHistogramsCommand.exit.i.i:                  ; preds = %ClearHistogramsCommand.exit.i.i, %ClearHistogramsCommand.exit.i.i.preheader
+  %.010.i.i138 = phi i64 [ 0, %ClearHistogramsCommand.exit.i.i.preheader ], [ %i.blv, %ClearHistogramsCommand.exit.i.i ] ; 4 uses
+  %niter993 = phi i64 [ 0, %ClearHistogramsCommand.exit.i.i.preheader ], [ %niter993.next.1, %ClearHistogramsCommand.exit.i.i ]
   %i.bku = getelementptr inbounds nuw i8, ptr %i.bdd, i64 %.010.i.i138
   %i.bkv = load i8, ptr %i.bku, align 1, !tbaa !168
   %i.bkw = zext i8 %i.bkv to i64
@@ -2151,7 +2142,7 @@ ClearHistogramsCommand.exit.i.i:                  ; preds = %ClearHistogramsComm
   %i.blt = load i64, ptr %i.bls, align 8, !tbaa !205
   %i.blu = add i64 %i.blt, 1
   store i64 %i.blu, ptr %i.bls, align 8, !tbaa !205
-  %i.blv = add nuw i64 %.010.i.i138, 2            ; 2 uses
+  %i.blv = add nuw i64 %.010.i.i138, 2            ; 3 uses
   %niter993.next.1 = add i64 %niter993, 2         ; 2 uses
   %niter993.ncmp.1 = icmp eq i64 %niter993.next.1, %unroll_iter992
   br i1 %niter993.ncmp.1, label %BuildBlockHistogramsCommand.exit.i.unr-lcssa, label %ClearHistogramsCommand.exit.i.i, !llvm.loop !94
@@ -2159,14 +2150,13 @@ ClearHistogramsCommand.exit.i.i:                  ; preds = %ClearHistogramsComm
 BuildBlockHistogramsCommand.exit.i.unr-lcssa:     ; preds = %ClearHistogramsCommand.exit.i.i
   br i1 %lcmp.mod990.not, label %BuildBlockHistogramsCommand.exit.i, label %ClearHistogramsCommand.exit.i.i.epil.preheader
 
-ClearHistogramsCommand.exit.i.i.epil.preheader:   ; preds = %BuildBlockHistogramsCommand.exit.i.unr-lcssa, %ClearHistogramsCommand.exit.i.i.preheader
-  %.010.i.i138.epil.init = phi i64 [ 0, %ClearHistogramsCommand.exit.i.i.preheader ], [ %i.blv, %BuildBlockHistogramsCommand.exit.i.unr-lcssa ] ; 2 uses
+ClearHistogramsCommand.exit.i.i.epil.preheader:   ; preds = %BuildBlockHistogramsCommand.exit.i.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod991)
-  %i.blw = getelementptr inbounds nuw i8, ptr %i.bdd, i64 %.010.i.i138.epil.init
+  %i.blw = getelementptr inbounds nuw i8, ptr %i.bdd, i64 %i.blv
   %i.blx = load i8, ptr %i.blw, align 1, !tbaa !168
   %i.bly = zext i8 %i.blx to i64
   %i.blz = getelementptr inbounds nuw [2832 x i8], ptr %i.ahf, i64 %i.bly ; 2 uses
-  %i.bma = getelementptr inbounds nuw [2 x i8], ptr %i.act, i64 %.010.i.i138.epil.init
+  %i.bma = getelementptr inbounds nuw [2 x i8], ptr %i.act, i64 %i.blv
   %i.bmb = load i16, ptr %i.bma, align 2, !tbaa !195
   %i.bmc = zext i16 %i.bmb to i64
   %i.bmd = getelementptr inbounds nuw [4 x i8], ptr %i.blz, i64 %i.bmc ; 2 uses
@@ -2569,10 +2559,9 @@ bb.ha:                                            ; preds = %bb.gz, %RefineEntro
   %i.cxf = load i32, ptr %i.cxe, align 4, !tbaa !193
   %.inv.i258 = icmp sgt i32 %i.cxf, 10
   %i.cxg = select i1 %.inv.i258, i64 10, i64 3
-  %i.cxh = add i64 %.1, -1                        ; 8 uses
+  %i.cxh = add i64 %.1, -1                        ; 6 uses
   %i.cxi = getelementptr inbounds nuw i8, ptr %i.cws, i64 %i.cxh
   %xtraiter1039 = and i64 %.1, 1
-  %14 = icmp eq i64 %i.cxh, 0
   %unroll_iter1044 = and i64 %.1, -2
   %lcmp.mod1041.not = icmp eq i64 %xtraiter1039, 0
   %lcmp.mod1043 = trunc i64 %.1 to i1
@@ -2581,7 +2570,6 @@ bb.ha:                                            ; preds = %bb.gz, %RefineEntro
   %lcmp.mod1049.not = icmp eq i64 %xtraiter1047, 0
   %lcmp.mod1050 = icmp ne i64 %xtraiter1047, 0
   %xtraiter1060 = and i64 %.1, 1
-  %15 = icmp eq i64 %i.cxh, 0
   %unroll_iter1064 = and i64 %.1, -2
   %lcmp.mod1062.not = icmp eq i64 %xtraiter1060, 0
   %lcmp.mod1063 = trunc i64 %.1 to i1
@@ -2904,13 +2892,13 @@ vec.epilog.middle.block837:                       ; preds = %vec.epilog.vector.b
   %exitcond.not.i162.i299 = icmp eq i64 %i.dbk, %.1180.i260
   br i1 %exitcond.not.i162.i299, label %.preheader26.i.i300.preheader, label %.lr.ph.i161.i297, !llvm.loop !134
 
-.preheader26.i.i300.preheader:                    ; preds = %.lr.ph.i161.i297, %middle.block825, %vec.epilog.middle.block837, %FindBlocksDistance.exit.i
-  br i1 %14, label %.preheader26.i.i300.epil.preheader, label %.preheader26.i.i300
+.preheader26.i.i300.preheader:                    ; preds = %FindBlocksDistance.exit.i, %vec.epilog.middle.block837, %middle.block825, %.lr.ph.i161.i297
+  br label %.preheader26.i.i300
 
-.preheader26.i.i300:                              ; preds = %.preheader26.i.i300.preheader, %bb.hz
-  %.129.i.i301 = phi i64 [ %i.dca, %bb.hz ], [ 0, %.preheader26.i.i300.preheader ] ; 3 uses
-  %.02328.i.i302 = phi i16 [ %.124.i.i303.1, %bb.hz ], [ 0, %.preheader26.i.i300.preheader ] ; 3 uses
-  %niter1045 = phi i64 [ %niter1045.next.1, %bb.hz ], [ 0, %.preheader26.i.i300.preheader ]
+.preheader26.i.i300:                              ; preds = %bb.hz, %.preheader26.i.i300.preheader
+  %.129.i.i301 = phi i64 [ 0, %.preheader26.i.i300.preheader ], [ %i.dca, %bb.hz ] ; 3 uses
+  %.02328.i.i302 = phi i16 [ 0, %.preheader26.i.i300.preheader ], [ %.124.i.i303.1, %bb.hz ] ; 3 uses
+  %niter1045 = phi i64 [ 0, %.preheader26.i.i300.preheader ], [ %niter1045.next.1, %bb.hz ]
   %i.dbl = getelementptr inbounds nuw i8, ptr %i.cws, i64 %.129.i.i301
   %i.dbm = load i8, ptr %i.dbl, align 1, !tbaa !168
   %i.dbn = zext i8 %i.dbm to i64
@@ -2941,7 +2929,7 @@ bb.hy:                                            ; preds = %.preheader26.i.i300
   br label %bb.hz
 
 bb.hz:                                            ; preds = %bb.hy, %.preheader26.i.i300.1
-  %.124.i.i303.1 = phi i16 [ %i.dbz, %bb.hy ], [ %.124.i.i303, %.preheader26.i.i300.1 ] ; 3 uses
+  %.124.i.i303.1 = phi i16 [ %i.dbz, %bb.hy ], [ %.124.i.i303, %.preheader26.i.i300.1 ] ; 5 uses
   %i.dca = add nuw i64 %.129.i.i301, 2            ; 2 uses
   %niter1045.next.1 = add i64 %niter1045, 2       ; 2 uses
   %niter1045.ncmp.1 = icmp eq i64 %niter1045.next.1, %unroll_iter1044
@@ -2950,11 +2938,9 @@ bb.hz:                                            ; preds = %bb.hy, %.preheader2
 .preheader.i.i306.preheader.unr-lcssa:            ; preds = %bb.hz
   br i1 %lcmp.mod1041.not, label %.preheader.i.i306.preheader.new, label %.preheader26.i.i300.epil.preheader
 
-.preheader26.i.i300.epil.preheader:               ; preds = %.preheader.i.i306.preheader.unr-lcssa, %.preheader26.i.i300.preheader
-  %.129.i.i301.epil.init = phi i64 [ 0, %.preheader26.i.i300.preheader ], [ %i.dca, %.preheader.i.i306.preheader.unr-lcssa ]
-  %.02328.i.i302.epil.init = phi i16 [ 0, %.preheader26.i.i300.preheader ], [ %.124.i.i303.1, %.preheader.i.i306.preheader.unr-lcssa ] ; 3 uses
+.preheader26.i.i300.epil.preheader:               ; preds = %.preheader.i.i306.preheader.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod1043)
-  %i.dcb = getelementptr inbounds nuw i8, ptr %i.cws, i64 %.129.i.i301.epil.init
+  %i.dcb = getelementptr inbounds nuw i8, ptr %i.cws, i64 %i.dca
   %i.dcc = load i8, ptr %i.dcb, align 1, !tbaa !168
   %i.dcd = zext i8 %i.dcc to i64
   %i.dce = getelementptr inbounds nuw [2 x i8], ptr %i.cxd, i64 %i.dcd ; 2 uses
@@ -2963,12 +2949,12 @@ bb.hz:                                            ; preds = %bb.hy, %.preheader2
   br i1 %i.dcg, label %bb.ia, label %.preheader.i.i306.preheader.new
 
 bb.ia:                                            ; preds = %.preheader26.i.i300.epil.preheader
-  %i.dch = add i16 %.02328.i.i302.epil.init, 1
-  store i16 %.02328.i.i302.epil.init, ptr %i.dce, align 2, !tbaa !195
+  %i.dch = add i16 %.124.i.i303.1, 1
+  store i16 %.124.i.i303.1, ptr %i.dce, align 2, !tbaa !195
   br label %.preheader.i.i306.preheader.new
 
 .preheader.i.i306.preheader.new:                  ; preds = %.preheader.i.i306.preheader.unr-lcssa, %bb.ia, %.preheader26.i.i300.epil.preheader
-  %.124.i.i303.lcssa = phi i16 [ %.124.i.i303.1, %.preheader.i.i306.preheader.unr-lcssa ], [ %i.dch, %bb.ia ], [ %.02328.i.i302.epil.init, %.preheader26.i.i300.epil.preheader ] ; 3 uses
+  %.124.i.i303.lcssa = phi i16 [ %.124.i.i303.1, %.preheader.i.i306.preheader.unr-lcssa ], [ %i.dch, %bb.ia ], [ %.124.i.i303.1, %.preheader26.i.i300.epil.preheader ] ; 3 uses
   br label %.preheader.i.i306
 
 .preheader.i.i306:                                ; preds = %.preheader.i.i306, %.preheader.i.i306.preheader.new
@@ -3095,12 +3081,12 @@ ClearHistogramsDistance.exit.i.i.preheader.loopexit.unr-lcssa: ; preds = %.lr.ph
   %epil.iter1054.cmp.not = icmp eq i64 %epil.iter1054.next, %xtraiter1053
   br i1 %epil.iter1054.cmp.not, label %ClearHistogramsDistance.exit.i.i.preheader, label %.lr.ph.i165.i310.epil, !llvm.loop !138
 
-ClearHistogramsDistance.exit.i.i.preheader:       ; preds = %ClearHistogramsDistance.exit.i.i.preheader.loopexit.unr-lcssa, %.lr.ph.i165.i310.epil, %RemapBlockIdsDistance.exit.i
-  br i1 %15, label %ClearHistogramsDistance.exit.i.i.epil.preheader, label %ClearHistogramsDistance.exit.i.i
+ClearHistogramsDistance.exit.i.i.preheader:       ; preds = %RemapBlockIdsDistance.exit.i, %.lr.ph.i165.i310.epil, %ClearHistogramsDistance.exit.i.i.preheader.loopexit.unr-lcssa
+  br label %ClearHistogramsDistance.exit.i.i
 
-ClearHistogramsDistance.exit.i.i:                 ; preds = %ClearHistogramsDistance.exit.i.i.preheader, %ClearHistogramsDistance.exit.i.i
-  %.010.i.i313 = phi i64 [ %i.dfj, %ClearHistogramsDistance.exit.i.i ], [ 0, %ClearHistogramsDistance.exit.i.i.preheader ] ; 4 uses
-  %niter1065 = phi i64 [ %niter1065.next.1, %ClearHistogramsDistance.exit.i.i ], [ 0, %ClearHistogramsDistance.exit.i.i.preheader ]
+ClearHistogramsDistance.exit.i.i:                 ; preds = %ClearHistogramsDistance.exit.i.i, %ClearHistogramsDistance.exit.i.i.preheader
+  %.010.i.i313 = phi i64 [ 0, %ClearHistogramsDistance.exit.i.i.preheader ], [ %i.dfj, %ClearHistogramsDistance.exit.i.i ] ; 4 uses
+  %niter1065 = phi i64 [ 0, %ClearHistogramsDistance.exit.i.i.preheader ], [ %niter1065.next.1, %ClearHistogramsDistance.exit.i.i ]
   %i.dei = getelementptr inbounds nuw i8, ptr %i.cws, i64 %.010.i.i313
   %i.dej = load i8, ptr %i.dei, align 1, !tbaa !168
   %i.dek = zext i8 %i.dej to i64
@@ -3132,7 +3118,7 @@ ClearHistogramsDistance.exit.i.i:                 ; preds = %ClearHistogramsDist
   %i.dfh = load i64, ptr %i.dfg, align 8, !tbaa !212
   %i.dfi = add i64 %i.dfh, 1
   store i64 %i.dfi, ptr %i.dfg, align 8, !tbaa !212
-  %i.dfj = add nuw i64 %.010.i.i313, 2            ; 2 uses
+  %i.dfj = add nuw i64 %.010.i.i313, 2            ; 3 uses
   %niter1065.next.1 = add i64 %niter1065, 2       ; 2 uses
   %niter1065.ncmp.1 = icmp eq i64 %niter1065.next.1, %unroll_iter1064
   br i1 %niter1065.ncmp.1, label %BuildBlockHistogramsDistance.exit.i.unr-lcssa, label %ClearHistogramsDistance.exit.i.i, !llvm.loop !139
@@ -3140,14 +3126,13 @@ ClearHistogramsDistance.exit.i.i:                 ; preds = %ClearHistogramsDist
 BuildBlockHistogramsDistance.exit.i.unr-lcssa:    ; preds = %ClearHistogramsDistance.exit.i.i
   br i1 %lcmp.mod1062.not, label %BuildBlockHistogramsDistance.exit.i, label %ClearHistogramsDistance.exit.i.i.epil.preheader
 
-ClearHistogramsDistance.exit.i.i.epil.preheader:  ; preds = %BuildBlockHistogramsDistance.exit.i.unr-lcssa, %ClearHistogramsDistance.exit.i.i.preheader
-  %.010.i.i313.epil.init = phi i64 [ 0, %ClearHistogramsDistance.exit.i.i.preheader ], [ %i.dfj, %BuildBlockHistogramsDistance.exit.i.unr-lcssa ] ; 2 uses
+ClearHistogramsDistance.exit.i.i.epil.preheader:  ; preds = %BuildBlockHistogramsDistance.exit.i.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod1063)
-  %i.dfk = getelementptr inbounds nuw i8, ptr %i.cws, i64 %.010.i.i313.epil.init
+  %i.dfk = getelementptr inbounds nuw i8, ptr %i.cws, i64 %i.dfj
   %i.dfl = load i8, ptr %i.dfk, align 1, !tbaa !168
   %i.dfm = zext i8 %i.dfl to i64
   %i.dfn = getelementptr inbounds nuw [2192 x i8], ptr %i.cau, i64 %i.dfm ; 2 uses
-  %i.dfo = getelementptr inbounds nuw [2 x i8], ptr %i.byk, i64 %.010.i.i313.epil.init
+  %i.dfo = getelementptr inbounds nuw [2 x i8], ptr %i.byk, i64 %i.dfj
   %i.dfp = load i16, ptr %i.dfo, align 2, !tbaa !195
   %i.dfq = zext i16 %i.dfp to i64
   %i.dfr = getelementptr inbounds nuw [4 x i8], ptr %i.dfn, i64 %i.dfq ; 2 uses

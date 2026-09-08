@@ -204,7 +204,7 @@ Py_DECREF.exit:                                   ; preds = %bb.h, %bb.g, %bb.f,
   br i1 %.not15.i, label %teedataobject_safe_decref.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %._crit_edge, %Py_DECREF.exit.i
-  %.016.i = phi ptr [ %i.v, %Py_DECREF.exit.i ], [ %i.s, %._crit_edge ] ; 6 uses
+  %.016.i = phi ptr [ %i.v, %Py_DECREF.exit.i ], [ %i.s, %._crit_edge ] ; 5 uses
   %.0.val.i = load i32, ptr %.016.i, align 8, !tbaa !43 ; 3 uses
   %.not13.i = icmp eq i32 %.0.val.i, 1
   br i1 %.not13.i, label %Py_DECREF.exit.i, label %.split.i
@@ -214,13 +214,8 @@ Py_DECREF.exit:                                   ; preds = %bb.h, %bb.g, %bb.f,
   br i1 %.not.i.i.i, label %bb.i, label %teedataobject_safe_decref.exit
 
 bb.i:                                             ; preds = %.split.i
-  %i.t = add nsw i32 %.0.val.i, -1                ; 2 uses
+  %i.t = add nsw i32 %.0.val.i, -1
   store i32 %i.t, ptr %.016.i, align 8, !tbaa !43
-  %1 = icmp eq i32 %i.t, 0
-  br i1 %1, label %2, label %teedataobject_safe_decref.exit
-
-2:                                                ; preds = %bb.i
-  tail call void @_Py_Dealloc(ptr noundef nonnull %.016.i) #8
   br label %teedataobject_safe_decref.exit
 
 Py_DECREF.exit.i:                                 ; preds = %.lr.ph.i
@@ -232,7 +227,7 @@ Py_DECREF.exit.i:                                 ; preds = %.lr.ph.i
   %.not.i23 = icmp eq ptr %i.v, null
   br i1 %.not.i23, label %teedataobject_safe_decref.exit, label %.lr.ph.i, !llvm.loop !219
 
-teedataobject_safe_decref.exit:                   ; preds = %Py_DECREF.exit.i, %._crit_edge, %.split.i, %bb.i, %2
+teedataobject_safe_decref.exit:                   ; preds = %Py_DECREF.exit.i, %._crit_edge, %.split.i, %bb.i
   ret i32 0
 }
 

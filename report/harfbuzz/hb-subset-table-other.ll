@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %_ZN11hb_vector_tIhLb0EED2Ev.exit115
 
 _ZN11hb_vector_tIhLb0EE14realloc_vectorIhTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPhj11hb_priorityILj0EE.exit.i.i: ; preds = %bb.b
-  %i.g = add i32 %i.e, -4                         ; 2 uses
-  %i.h = zext i32 %i.g to i64                     ; 2 uses
+  %i.g = add i32 %i.e, -4                         ; 3 uses
+  %i.h = zext i32 %i.g to i64
   %i.i = tail call ptr @hb_realloc(ptr noundef null, i64 noundef %i.h) #15 ; 5 uses
   %.not22.i.i = icmp eq ptr %i.i, null
   br i1 %.not22.i.i, label %_ZN11hb_vector_tIhLb0EED2Ev.exit115, label %bb.d, !prof !133
@@ -231,6 +231,7 @@ _ZN11hb_vector_tIhLb0EE14realloc_vectorIhTnPN12hb_enable_ifIXsr3std28is_triviall
   %.sroa.19.2.ph226.ph = phi ptr [ null, %bb.d ], [ %i.l, %_ZN11hb_vector_tIhLb0EE14realloc_vectorIhTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPhj11hb_priorityILj0EE.exit.i.i87 ] ; 5 uses
   %.sroa.18.2.ph = phi ptr [ null, %bb.d ], [ %i.m, %_ZN11hb_vector_tIhLb0EE14realloc_vectorIhTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPhj11hb_priorityILj0EE.exit.i.i87 ] ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %wide.trip.count = zext i32 %i.g to i64
   br label %bb.f
 
 ._crit_edge:                                      ; preds = %_ZN2OT9glyf_impl11SimpleGlyph11encode_flagEjRjjR11hb_vector_tIhLb0EE.exit
@@ -418,7 +419,7 @@ _ZN2OT9glyf_impl11SimpleGlyph11encode_flagEjRjjR11hb_vector_tIhLb0EE.exit: ; pre
   %i.cz = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.cy
   store i8 %.sink.i, ptr %i.cz, align 1, !tbaa !239
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.h
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !1018
 
 bb.s:                                             ; preds = %_ZNK2OT9glyf_impl11SimpleGlyph19instructions_lengthEv.exit

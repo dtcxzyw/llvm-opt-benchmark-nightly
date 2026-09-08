@@ -204,9 +204,8 @@ bb.a:
   %.not = icmp eq i8 %3, 0
   %spec.store.select = select i1 %.not, i8 2, i8 %3
   %i.b = zext i8 %spec.store.select to i64        ; 4 uses
-  %.051 = add i64 %2, -1                          ; 2 uses
-  %.not2752 = icmp eq i64 %.051, 0
-  br i1 %.not2752, label %.loopexit, label %.lr.ph55
+  %.051 = add i64 %2, -1
+  br label %.lr.ph55
 
 bb.b:                                             ; preds = %.lr.ph55
   %.0 = add i64 %.054, -1                         ; 2 uses
@@ -215,9 +214,9 @@ bb.b:                                             ; preds = %.lr.ph55
   br i1 %.not27, label %.loopexit, label %.lr.ph55, !llvm.loop !1
 
 .lr.ph55:                                         ; preds = %.preheader, %bb.b
-  %indvar = phi i64 [ %indvar.next, %bb.b ], [ 0, %.preheader ] ; 2 uses
-  %.054 = phi i64 [ %.0, %bb.b ], [ %.051, %.preheader ] ; 8 uses
-  %.0.in53 = phi i64 [ %.054, %bb.b ], [ %2, %.preheader ] ; 2 uses
+  %indvar = phi i64 [ 0, %.preheader ], [ %indvar.next, %bb.b ] ; 2 uses
+  %.054 = phi i64 [ %.051, %.preheader ], [ %.0, %bb.b ] ; 8 uses
+  %.0.in53 = phi i64 [ %2, %.preheader ], [ %.054, %bb.b ] ; 2 uses
   %i.c = getelementptr [8 x i8], ptr %1, i64 %.0.in53
   %i.d = getelementptr i8, ptr %i.c, i64 -16
   %i.e = load i64, ptr %i.d, align 8, !tbaa !43
@@ -293,8 +292,8 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   store i64 %spec.select.lcssa, ptr %i.k, align 8
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.b, %.preheader, %..loopexit_crit_edge
-  %.lcssa33 = phi i64 [ %spec.select39.lcssa, %..loopexit_crit_edge ], [ 0, %.preheader ], [ 0, %bb.b ]
+.loopexit:                                        ; preds = %bb.b, %..loopexit_crit_edge
+  %.lcssa33 = phi i64 [ %spec.select39.lcssa, %..loopexit_crit_edge ], [ 0, %bb.b ]
   store i64 %.lcssa33, ptr %0, align 8
   br label %bb.d
 
@@ -361,9 +360,8 @@ bb.b:                                             ; preds = %bb.a
   %.not.i.i = icmp eq i8 %i.x, 0
   %spec.store.select.i.i = select i1 %.not.i.i, i8 2, i8 %i.x
   %i.y = zext i8 %spec.store.select.i.i to i64    ; 4 uses
-  %.0.i.i33 = add i64 %i.bd, -1                   ; 2 uses
-  %.not27.i.i34 = icmp eq i64 %.0.i.i33, 0
-  br i1 %.not27.i.i34, label %.loopexit, label %.lr.ph
+  %.0.i.i33 = add i64 %i.bd, -1
+  br label %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph
   %.0.i.i = add i64 %.0.i.i36, -1                 ; 2 uses
@@ -372,9 +370,9 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %.not27.i.i, label %.loopexit, label %.lr.ph, !llvm.loop !1
 
 .lr.ph:                                           ; preds = %.preheader.i.i, %bb.c
-  %indvar = phi i64 [ %indvar.next, %bb.c ], [ 0, %.preheader.i.i ] ; 2 uses
-  %.0.i.i36 = phi i64 [ %.0.i.i, %bb.c ], [ %.0.i.i33, %.preheader.i.i ] ; 8 uses
-  %.0.in.i.i35 = phi i64 [ %.0.i.i36, %bb.c ], [ %i.bd, %.preheader.i.i ] ; 3 uses
+  %indvar = phi i64 [ 0, %.preheader.i.i ], [ %indvar.next, %bb.c ] ; 2 uses
+  %.0.i.i36 = phi i64 [ %.0.i.i33, %.preheader.i.i ], [ %.0.i.i, %bb.c ] ; 8 uses
+  %.0.in.i.i35 = phi i64 [ %i.bd, %.preheader.i.i ], [ %.0.i.i36, %bb.c ] ; 3 uses
   %i.z = getelementptr [8 x i8], ptr %i.n, i64 %.0.in.i.i35
   %i.aa = getelementptr i8, ptr %i.z, i64 -16
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !43, !noalias !146
@@ -455,10 +453,10 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i
   %spec.select39.i.i.epil = select i1 %i.bk, i64 %i.bf, i64 %.epil.init45
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.c, %.lr.ph.i.i.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.preheader.i.i, %.preheader.i, %._crit_edge.i
-  %.sroa.0.0.i = phi i64 [ 0, %._crit_edge.i ], [ 0, %.preheader.i.i ], [ 0, %.preheader.i ], [ %spec.select39.i.i.epil, %.lr.ph.i.i.epil.preheader ], [ %spec.select39.i.i.1, %.loopexit.loopexit.unr-lcssa ], [ 0, %bb.c ]
-  %.sroa.5.1.i = phi i64 [ 0, %._crit_edge.i ], [ 0, %.preheader.i.i ], [ 0, %.preheader.i ], [ %.0.in.i.i35, %.lr.ph.i.i.epil.preheader ], [ %.0.in.i.i35, %.loopexit.loopexit.unr-lcssa ], [ 0, %bb.c ]
-  %.sroa.6.1.i = phi i64 [ 0, %._crit_edge.i ], [ 0, %.preheader.i.i ], [ 0, %.preheader.i ], [ %spec.select.i.i.epil, %.lr.ph.i.i.epil.preheader ], [ %spec.select.i.i.1, %.loopexit.loopexit.unr-lcssa ], [ 0, %bb.c ]
+.loopexit:                                        ; preds = %bb.c, %.lr.ph.i.i.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.preheader.i, %._crit_edge.i
+  %.sroa.0.0.i = phi i64 [ 0, %._crit_edge.i ], [ %spec.select39.i.i.epil, %.lr.ph.i.i.epil.preheader ], [ 0, %.preheader.i ], [ %spec.select39.i.i.1, %.loopexit.loopexit.unr-lcssa ], [ 0, %bb.c ]
+  %.sroa.5.1.i = phi i64 [ 0, %._crit_edge.i ], [ %.0.in.i.i35, %.lr.ph.i.i.epil.preheader ], [ 0, %.preheader.i ], [ %.0.in.i.i35, %.loopexit.loopexit.unr-lcssa ], [ 0, %bb.c ]
+  %.sroa.6.1.i = phi i64 [ 0, %._crit_edge.i ], [ %spec.select.i.i.epil, %.lr.ph.i.i.epil.preheader ], [ 0, %.preheader.i ], [ %spec.select.i.i.1, %.loopexit.loopexit.unr-lcssa ], [ 0, %bb.c ]
   store i64 %.sroa.0.0.i, ptr %1, align 8, !tbaa !43
   %.sroa.5.0..sroa_idx.i = getelementptr i8, ptr %1, i64 8 ; 2 uses
   store i64 %.sroa.5.1.i, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !43

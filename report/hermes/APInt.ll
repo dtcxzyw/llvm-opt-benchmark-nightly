@@ -205,8 +205,8 @@ bb.t:                                             ; preds = %._crit_edge195
   br label %_ZL8KnuthDivPjS_S_S_jj.exit
 
 bb.u:                                             ; preds = %.critedge2
-  %i.fu = add i32 %.0142.lcssa, -1                ; 4 uses
-  %i.fv = zext i32 %i.fu to i64                   ; 9 uses
+  %i.fu = add i32 %.0142.lcssa, -1                ; 3 uses
+  %i.fv = zext i32 %i.fu to i64                   ; 8 uses
   %i.fw = getelementptr inbounds nuw [4 x i8], ptr %.0149, i64 %i.fv ; 2 uses
   %i.fx = load i32, ptr %i.fw, align 4, !tbaa !19
   %i.fy = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.fx, i1 false) ; 11 uses
@@ -522,10 +522,6 @@ bb.ag:                                            ; preds = %bb.af
 .lr.ph195.i:                                      ; preds = %.preheader173.i
   %i.kx = sub nuw nsw i32 32, %i.fy               ; 2 uses
   %i.ky = add nuw nsw i64 %i.fv, 1                ; 2 uses
-  %6 = icmp eq i32 %i.fu, 0
-  br i1 %6, label %.epil.preheader, label %.lr.ph195.i.new
-
-.lr.ph195.i.new:                                  ; preds = %.lr.ph195.i
   %unroll_iter = and i64 %i.ky, 4294967294
   br label %bb.ah
 
@@ -590,10 +586,10 @@ middle.block329:                                  ; preds = %vector.body324
   %i.lo = icmp ult i64 %indvars.iv226.i.ph, 3
   br i1 %i.lo, label %_ZL8KnuthDivPjS_S_S_jj.exit, label %.lr.ph197.i
 
-bb.ah:                                            ; preds = %bb.ah, %.lr.ph195.i.new
-  %indvars.iv223.i = phi i64 [ %i.fv, %.lr.ph195.i.new ], [ %indvars.iv.next224.i.1, %bb.ah ] ; 4 uses
-  %.0149193.i = phi i32 [ 0, %.lr.ph195.i.new ], [ %i.ma, %bb.ah ]
-  %niter = phi i64 [ 0, %.lr.ph195.i.new ], [ %niter.next.1, %bb.ah ]
+bb.ah:                                            ; preds = %bb.ah, %.lr.ph195.i
+  %indvars.iv223.i = phi i64 [ %i.fv, %.lr.ph195.i ], [ %indvars.iv.next224.i.1, %bb.ah ] ; 4 uses
+  %.0149193.i = phi i32 [ 0, %.lr.ph195.i ], [ %i.ma, %bb.ah ]
+  %niter = phi i64 [ 0, %.lr.ph195.i ], [ %niter.next.1, %bb.ah ]
   %i.lp = getelementptr inbounds nuw [4 x i8], ptr %.0150, i64 %indvars.iv223.i
   %i.lq = load i32, ptr %i.lp, align 4, !tbaa !19 ; 2 uses
   %i.lr = lshr i32 %i.lq, %i.fy
@@ -609,7 +605,7 @@ bb.ah:                                            ; preds = %bb.ah, %.lr.ph195.i
   %i.lz = getelementptr inbounds nuw [4 x i8], ptr %.0147, i64 %indvars.iv.next224.i
   store i32 %i.ly, ptr %i.lz, align 4, !tbaa !19
   %i.ma = shl i32 %i.lw, %i.kx                    ; 2 uses
-  %indvars.iv.next224.i.1 = add nsw i64 %indvars.iv223.i, -2 ; 2 uses
+  %indvars.iv.next224.i.1 = add nsw i64 %indvars.iv223.i, -2 ; 3 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZL8KnuthDivPjS_S_S_jj.exit.loopexit380.unr-lcssa, label %bb.ah, !llvm.loop !476
@@ -644,16 +640,14 @@ _ZL8KnuthDivPjS_S_S_jj.exit.loopexit380.unr-lcssa: ; preds = %bb.ah
   %lcmp.mod393.not.not = icmp eq i64 %i.mn, 0
   br i1 %lcmp.mod393.not.not, label %.epil.preheader, label %_ZL8KnuthDivPjS_S_S_jj.exit
 
-.epil.preheader:                                  ; preds = %_ZL8KnuthDivPjS_S_S_jj.exit.loopexit380.unr-lcssa, %.lr.ph195.i
-  %indvars.iv223.i.epil.init = phi i64 [ %i.fv, %.lr.ph195.i ], [ %indvars.iv.next224.i.1, %_ZL8KnuthDivPjS_S_S_jj.exit.loopexit380.unr-lcssa ] ; 2 uses
-  %.0149193.i.epil.init = phi i32 [ 0, %.lr.ph195.i ], [ %i.ma, %_ZL8KnuthDivPjS_S_S_jj.exit.loopexit380.unr-lcssa ]
+.epil.preheader:                                  ; preds = %_ZL8KnuthDivPjS_S_S_jj.exit.loopexit380.unr-lcssa
   %lcmp.mod394 = trunc i64 %i.ky to i1
   call void @llvm.assume(i1 %lcmp.mod394)
-  %i.mo = getelementptr inbounds nuw [4 x i8], ptr %.0150, i64 %indvars.iv223.i.epil.init
+  %i.mo = getelementptr inbounds nuw [4 x i8], ptr %.0150, i64 %indvars.iv.next224.i.1
   %i.mp = load i32, ptr %i.mo, align 4, !tbaa !19
   %i.mq = lshr i32 %i.mp, %i.fy
-  %i.mr = or i32 %i.mq, %.0149193.i.epil.init
-  %i.ms = getelementptr inbounds nuw [4 x i8], ptr %.0147, i64 %indvars.iv223.i.epil.init
+  %i.mr = or i32 %i.mq, %i.ma
+  %i.ms = getelementptr inbounds nuw [4 x i8], ptr %.0147, i64 %indvars.iv.next224.i.1
   store i32 %i.mr, ptr %i.ms, align 4, !tbaa !19
   br label %_ZL8KnuthDivPjS_S_S_jj.exit
 

@@ -202,13 +202,22 @@ bb.e:                                             ; preds = %bb.d
 
 .preheader:                                       ; preds = %_ZL9down_heapP8stack_stPFiPFiPKPKvS4_ES2_S2_Emm.exit, %bb.e
   %.lcssa = phi i64 [ %i.g, %bb.e ], [ %i.au, %_ZL9down_heapP8stack_stPFiPFiPKPKvS4_ES2_S2_Emm.exit ]
-  %.02539 = add i64 %.lcssa, -1                   ; 2 uses
+  %.02539 = add i64 %.lcssa, -1                   ; 5 uses
   %.not2940 = icmp eq i64 %.02539, 0
   br i1 %.not2940, label %.loopexit, label %.lr.ph43
 
 .lr.ph43:                                         ; preds = %.preheader
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
-  br label %bb.j
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
+  %2 = load ptr, ptr %i.m, align 8, !tbaa !16     ; 3 uses
+  %3 = load ptr, ptr %2, align 8, !tbaa !21
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.02539
+  %5 = load ptr, ptr %4, align 8, !tbaa !21
+  store ptr %5, ptr %2, align 8, !tbaa !21
+  %6 = load ptr, ptr %i.m, align 8, !tbaa !16
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.02539
+  store ptr %3, ptr %7, align 8, !tbaa !21
+  %.not43.i30.not60 = icmp eq i64 %.02539, 1
+  br i1 %.not43.i30.not60, label %.loopexit, label %bb.j
 
 bb.f:                                             ; preds = %.lr.ph, %_ZL9down_heapP8stack_stPFiPFiPKPKvS4_ES2_S2_Emm.exit
   %i.n = phi i64 [ %i.g, %.lr.ph ], [ %i.au, %_ZL9down_heapP8stack_stPFiPFiPKPKvS4_ES2_S2_Emm.exit ] ; 4 uses
@@ -278,17 +287,8 @@ _ZL9down_heapP8stack_stPFiPFiPKPKvS4_ES2_S2_Emm.exit: ; preds = %_ZL9down_heapP8
   br i1 %i.aw, label %bb.f, label %.preheader, !llvm.loop !31
 
 bb.j:                                             ; preds = %.lr.ph43, %_ZL9down_heapP8stack_stPFiPFiPKPKvS4_ES2_S2_Emm.exit37
-  %.02541 = phi i64 [ %.02539, %.lr.ph43 ], [ %.025, %_ZL9down_heapP8stack_stPFiPFiPKPKvS4_ES2_S2_Emm.exit37 ] ; 6 uses
-  %2 = load ptr, ptr %i.m, align 8, !tbaa !16     ; 3 uses
-  %3 = load ptr, ptr %2, align 8, !tbaa !21
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.02541
-  %5 = load ptr, ptr %4, align 8, !tbaa !21
-  store ptr %5, ptr %2, align 8, !tbaa !21
-  %6 = load ptr, ptr %i.m, align 8, !tbaa !16
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.02541
-  store ptr %3, ptr %7, align 8, !tbaa !21
-  %.not43.i30.not = icmp eq i64 %.02541, 1
-  br i1 %.not43.i30.not, label %.loopexit, label %.lr.ph.i31
+  %.02541 = phi i64 [ %.025, %_ZL9down_heapP8stack_stPFiPFiPKPKvS4_ES2_S2_Emm.exit37 ], [ %.02539, %.lr.ph43 ] ; 3 uses
+  br label %.lr.ph.i31
 
 .lr.ph.i31:                                       ; preds = %bb.j, %bb.m
   %i.ax = phi i64 [ %i.ca, %bb.m ], [ 1, %bb.j ]  ; 2 uses
@@ -340,11 +340,19 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not.i35, label %.lr.ph.i31, label %_ZL9down_heapP8stack_stPFiPFiPKPKvS4_ES2_S2_Emm.exit37
 
 _ZL9down_heapP8stack_stPFiPFiPKPKvS4_ES2_S2_Emm.exit37: ; preds = %bb.l, %bb.m
-  %.025 = add i64 %.02541, -1                     ; 2 uses
-  %.not29 = icmp eq i64 %.025, 0
+  %.025 = add i64 %.02541, -1                     ; 4 uses
+  %8 = load ptr, ptr %i.m, align 8, !tbaa !16     ; 3 uses
+  %9 = load ptr, ptr %8, align 8, !tbaa !21
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.025
+  %11 = load ptr, ptr %10, align 8, !tbaa !21
+  store ptr %11, ptr %8, align 8, !tbaa !21
+  %12 = load ptr, ptr %i.m, align 8, !tbaa !16
+  %13 = getelementptr inbounds nuw [8 x i8], ptr %12, i64 %.025
+  store ptr %9, ptr %13, align 8, !tbaa !21
+  %.not29 = icmp eq i64 %.025, 1
   br i1 %.not29, label %.loopexit, label %bb.j, !llvm.loop !32
 
-.loopexit:                                        ; preds = %bb.j, %_ZL9down_heapP8stack_stPFiPFiPKPKvS4_ES2_S2_Emm.exit37, %.preheader, %bb.d
+.loopexit:                                        ; preds = %_ZL9down_heapP8stack_stPFiPFiPKPKvS4_ES2_S2_Emm.exit37, %.lr.ph43, %.preheader, %bb.d
   store i32 1, ptr %i.e, align 8, !tbaa !20
   br label %bb.n
 

@@ -204,9 +204,9 @@ bb.g:                                             ; preds = %._crit_edge
   br i1 %i.aa, label %.loopexit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ab = add nsw i64 %i.z, -1                    ; 3 uses
+  %i.ab = add nsw i64 %i.z, -1                    ; 2 uses
   %i.ac = icmp ult i64 %i.z, 12
-  br i1 %i.ac, label %.thread, label %.preheader518
+  br i1 %i.ac, label %.lr.ph553, label %.preheader518
 
 .preheader518:                                    ; preds = %bb.h
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 904 ; 3 uses
@@ -590,7 +590,7 @@ bb.an:                                            ; preds = %bb.am
   %i.fx = load ptr, ptr %i.ad, align 8, !tbaa !129
   %i.fy = load ptr, ptr %i.ag, align 8, !tbaa !126 ; 3 uses
   %i.fz = icmp eq ptr %i.fx, %i.fy
-  br i1 %i.fz, label %.thread, label %bb.ao
+  br i1 %i.fz, label %.lr.ph553, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
   %i.ga = getelementptr inbounds i8, ptr %i.fy, i64 -8
@@ -600,16 +600,12 @@ bb.ao:                                            ; preds = %bb.an
   %i.gd = load i64, ptr %i.gc, align 8, !tbaa !128
   br label %.backedge690
 
-.thread:                                          ; preds = %bb.an, %bb.h
-  %.not422551 = icmp eq i64 %i.ab, 0
-  br i1 %.not422551, label %.preheader, label %.lr.ph553
-
-.lr.ph553:                                        ; preds = %.thread
+.lr.ph553:                                        ; preds = %bb.an, %bb.h
   %i.ge = getelementptr inbounds nuw i8, ptr %0, i64 316
   %i.gf = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
   br label %bb.ap
 
-.preheader:                                       ; preds = %less_stable_order.exit453.thread487, %.thread
+.preheader:                                       ; preds = %less_stable_order.exit453.thread487
   %.not423554 = icmp eq i64 %i.y, 8
   br i1 %.not423554, label %.loopexit, label %.lr.ph556
 
@@ -760,9 +756,12 @@ bb.ba:                                            ; preds = %._crit_edge
   br i1 %i.is, label %.loopexit, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.it = add nsw i64 %i.ir, -1                   ; 3 uses
+  %i.it = add nsw i64 %i.ir, -1                   ; 2 uses
   %i.iu = icmp ult i64 %i.ir, 12
-  br i1 %i.iu, label %.thread505, label %.preheader521
+  br i1 %i.iu, label %.lr.ph545.preheader, label %.preheader521
+
+.lr.ph545.preheader:                              ; preds = %bb.bs, %bb.bb
+  br label %.lr.ph545
 
 .preheader521:                                    ; preds = %bb.bb
   %i.iv = getelementptr inbounds nuw i8, ptr %0, i64 904 ; 3 uses
@@ -1026,7 +1025,7 @@ bb.bs:                                            ; preds = %bb.br
   %i.nb = load ptr, ptr %i.iv, align 8, !tbaa !129
   %i.nc = load ptr, ptr %i.iw, align 8, !tbaa !126 ; 3 uses
   %i.nd = icmp eq ptr %i.nb, %i.nc
-  br i1 %i.nd, label %.thread505, label %bb.bt
+  br i1 %i.nd, label %.lr.ph545.preheader, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
   %i.ne = getelementptr inbounds i8, ptr %i.nc, i64 -8
@@ -1036,11 +1035,7 @@ bb.bt:                                            ; preds = %bb.bs
   %i.nh = load i64, ptr %i.ng, align 8, !tbaa !128
   br label %.backedge698
 
-.thread505:                                       ; preds = %bb.bs, %bb.bb
-  %.not419543 = icmp eq i64 %i.it, 0
-  br i1 %.not419543, label %.preheader519, label %.lr.ph545
-
-.preheader519:                                    ; preds = %less_focused_order.exit468.thread510, %.thread505
+.preheader519:                                    ; preds = %less_focused_order.exit468.thread510
   %.not420546 = icmp eq i64 %i.iq, 8
   br i1 %.not420546, label %.loopexit, label %.lr.ph548.preheader
 
@@ -1048,8 +1043,8 @@ bb.bt:                                            ; preds = %bb.bs
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ir, i64 3)
   br label %.lr.ph548
 
-.lr.ph545:                                        ; preds = %.thread505, %less_focused_order.exit468.thread510
-  %.0373544 = phi i64 [ %i.ob, %less_focused_order.exit468.thread510 ], [ %i.it, %.thread505 ] ; 2 uses
+.lr.ph545:                                        ; preds = %.lr.ph545.preheader, %less_focused_order.exit468.thread510
+  %.0373544 = phi i64 [ %i.ob, %less_focused_order.exit468.thread510 ], [ %i.it, %.lr.ph545.preheader ] ; 2 uses
   %i.ni = getelementptr inbounds nuw [4 x i8], ptr %i.io, i64 %.0373544 ; 3 uses
   %i.nj = load i32, ptr %i.ni, align 4, !tbaa !64 ; 2 uses
   %i.nk = getelementptr i8, ptr %i.ni, i64 -4     ; 2 uses

@@ -205,13 +205,9 @@ bb.q:                                             ; preds = %thread-pre-split.i
 
 bb.r:                                             ; preds = %thread-pre-split.i
   %i.dm = getelementptr inbounds nuw i8, ptr %i.cq, i64 1 ; 2 uses
-  %i.dn = add nsw i64 %4, -1                      ; 3 uses
+  %i.dn = add nsw i64 %4, -1                      ; 2 uses
   %i.do = icmp samesign ult i64 %4, 17
-  br i1 %i.do, label %.preheader114.i, label %.lr.ph.i97
-
-.preheader114.i:                                  ; preds = %bb.r
-  %.not103137.i = icmp eq i64 %i.dn, 0
-  br i1 %.not103137.i, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE10insert_mutCshmuvWokFoRg_12uu_dircolors.exit.i, label %.lr.ph141.i
+  br i1 %i.do, label %.lr.ph141.i, label %.lr.ph.i97
 
 .lr.ph.i97:                                       ; preds = %bb.r, %bb.u
   %.sroa.0.1136.i = phi ptr [ %i.dp, %bb.u ], [ %i.dm, %bb.r ] ; 2 uses
@@ -242,10 +238,10 @@ bb.u:                                             ; preds = %bb.t
   %.not102.i = icmp eq i64 %i.dq, 0
   br i1 %.not102.i, label %_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE10insert_mutCshmuvWokFoRg_12uu_dircolors.exit.i, label %.lr.ph.i97
 
-.lr.ph141.i:                                      ; preds = %.preheader114.i, %bb.v
-  %.sroa.0.2140.i = phi ptr [ %i.ei, %bb.v ], [ %i.dm, %.preheader114.i ] ; 2 uses
-  %.sroa.26.2139.i = phi i64 [ %i.eh, %bb.v ], [ %i.dn, %.preheader114.i ]
-  %.sroa.084.2138.i = phi i64 [ %i.ek, %bb.v ], [ 0, %.preheader114.i ]
+.lr.ph141.i:                                      ; preds = %bb.r, %bb.v
+  %.sroa.0.2140.i = phi ptr [ %i.ei, %bb.v ], [ %i.dm, %bb.r ] ; 2 uses
+  %.sroa.26.2139.i = phi i64 [ %i.eh, %bb.v ], [ %i.dn, %bb.r ]
+  %.sroa.084.2138.i = phi i64 [ %i.ek, %bb.v ], [ 0, %bb.r ]
   %i.ec = load i8, ptr %.sroa.0.2140.i, align 1, !alias.scope !234, !noalias !235, !noundef !5
   %i.ed = zext i8 %i.ec to i32
   %i.ee = add nsw i32 %i.ed, -48                  ; 2 uses
@@ -327,8 +323,8 @@ bb.aa:                                            ; preds = %.lr.ph150.i
   %i.fj = trunc nuw i8 %i.fi to i1
   br i1 %i.fj, label %bb.ac, label %bb.al
 
-_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE10insert_mutCshmuvWokFoRg_12uu_dircolors.exit.i: ; preds = %bb.u, %bb.v, %bb.z, %bb.aa, %.preheader.i, %.preheader114.i
-  %.sroa.15209.0 = phi i64 [ %i.ek, %bb.v ], [ 0, %.preheader114.i ], [ %i.fh, %bb.aa ], [ 0, %.preheader.i ], [ %i.ey, %bb.z ], [ %i.eb, %bb.u ]
+_RNvMs_NtCs7tKScEop1B6_5alloc3vecINtB4_3VecTINtNtB6_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE10insert_mutCshmuvWokFoRg_12uu_dircolors.exit.i: ; preds = %bb.u, %bb.v, %bb.z, %bb.aa, %.preheader.i
+  %.sroa.15209.0 = phi i64 [ %i.ey, %bb.z ], [ %i.ek, %bb.v ], [ %i.fh, %bb.aa ], [ 0, %.preheader.i ], [ %i.eb, %bb.u ]
   %i.fk = sitofp i64 %.sroa.15209.0 to double
   call void @_RNvMs4_NtCs7tKScEop1B6_5alloc7raw_vecINtB5_6RawVecTINtNtB7_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE8grow_oneCsh036I4OHgIr_6uucore(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c) #23, !noalias !237
   %.pre.i = load ptr, ptr %.sroa.453.0..sroa_idx, align 8, !alias.scope !238, !noalias !237 ; 11 uses

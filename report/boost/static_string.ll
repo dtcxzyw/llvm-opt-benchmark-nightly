@@ -206,8 +206,8 @@ _ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i506:    ; preds = %bb.y
   %i.is = add nsw i64 %.sroa.speculated.i.i81, -1 ; 4 uses
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ir, ptr noundef nonnull align 1 dereferenceable(1) %i.ii, i64 %i.iq, i1 false)
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.ig, ptr nonnull align 1 %.ptr644, i64 %i.is, i1 false)
-  %.not667 = icmp eq i64 %i.is, 1
-  br i1 %.not667, label %bb.z, label %_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit509
+  %45 = icmp ugt i64 %i.is, 1
+  br i1 %45, label %_ZN5boost14static_strings19basic_static_stringILm20EcSt11char_traitsIcEE7replaceIPKcEENSt9enable_ifIXsr6detail19is_forward_iteratorIT_EE5valueERS4_E4typeES7_S7_S9_S9_.exit509, label %bb.z
 
 bb.z:                                             ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit76.i506
   %i.it = sub nuw nsw i64 3, %.sroa.speculated.i.i81

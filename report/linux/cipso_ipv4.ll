@@ -204,18 +204,17 @@ bb.an:                                            ; preds = %bb.am
   br i1 %or.cond.i100, label %.preheader.preheader.i101, label %.loopexit114
 
 .preheader.preheader.i101:                        ; preds = %bb.an
-  %i.dc = add nsw i32 %i.al, -4                   ; 2 uses
+  %i.dc = add nsw i32 %i.al, -4
   %i.dd = zext nneg i32 %i.dc to i64              ; 2 uses
-  %.not284 = icmp eq i32 %i.dc, 0
-  br i1 %.not284, label %cipso_v4_map_cat_enum_valid.exit, label %.lr.ph
+  br label %.lr.ph
 
 .preheader.i102:                                  ; preds = %bb.ap
   %i.de = icmp samesign ult i64 %indvars.iv.next.i104, %i.dd
   br i1 %i.de, label %.lr.ph, label %cipso_v4_map_cat_enum_valid.exit, !llvm.loop !29
 
 .lr.ph:                                           ; preds = %.preheader.preheader.i101, %.preheader.i102
-  %.014.i283 = phi i32 [ %.015.i, %.preheader.i102 ], [ 65535, %.preheader.preheader.i101 ]
-  %indvars.iv.i103282 = phi i64 [ %indvars.iv.next.i104, %.preheader.i102 ], [ 0, %.preheader.preheader.i101 ] ; 2 uses
+  %.014.i283 = phi i32 [ 65535, %.preheader.preheader.i101 ], [ %.015.i, %.preheader.i102 ]
+  %indvars.iv.i103282 = phi i64 [ 0, %.preheader.preheader.i101 ], [ %indvars.iv.next.i104, %.preheader.i102 ] ; 2 uses
   %i.df = getelementptr i8, ptr %i.da, i64 %indvars.iv.i103282 ; 2 uses
   %.val20.i = load i16, ptr %i.df, align 1
   %i.dg = tail call i16 @llvm.bswap.i16(i16 %.val20.i)
@@ -259,7 +258,7 @@ bb.at:                                            ; preds = %bb.as
   %i.dr = trunc nuw i32 %i.ah to i8
   br label %cipso_v4_doi_search.exit.thread
 
-cipso_v4_map_cat_enum_valid.exit:                 ; preds = %.preheader.i102, %bb.ag, %.preheader.preheader.i101, %bb.as, %bb.am, %bb.ae, %bb.s, %bb.x, %bb.w
+cipso_v4_map_cat_enum_valid.exit:                 ; preds = %.preheader.i102, %bb.ag, %bb.as, %bb.am, %bb.ae, %bb.s, %bb.x, %bb.w
   %i.ds = zext i8 %i.ak to i64
   %i.dt = getelementptr i8, ptr %.071152, i64 %i.ds
   %i.du = add i8 %i.ak, %.070153                  ; 3 uses
