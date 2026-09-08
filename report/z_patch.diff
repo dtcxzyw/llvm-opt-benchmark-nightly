@@ -1,0 +1,658 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index aef5fca40f7d1..d86a44757070f 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -991,14 +991,25 @@ getStartAndBackedgeValue(const PHINode &PN, const BasicBlock *LoopPred) {
+   return {PN.getIncomingValue(StartIdx), PN.getIncomingValue(1 - StartIdx)};
+ }
+ 
++/// Matches an increment of \p PhiM by a constant offset, captured in \p Off.
++/// The increment must be a plain IR add or uadd.with.overflow.
++template <typename PhiMatchTy>
++static auto m_IncrementOf(const PhiMatchTy &PhiM, const APInt *&Off) {
++  return m_CombineOr(
++      m_c_Add(PhiM, m_APInt(Off)),
++      m_ExtractValue<0>(
++          m_c_Intrinsic<Intrinsic::uadd_with_overflow>(PhiM, m_APInt(Off))));
++}
++
+ MonotonicInfo State::getMonotonicityInfo(PHINode &PN, Value *Step) {
+   MonotonicInfo Info;
+   const APInt *StepOffset = nullptr;
+-  if (match(Step, m_c_Add(m_Specific(&PN), m_APInt(StepOffset)))) {
++  if (match(Step, m_IncrementOf(m_Specific(&PN), StepOffset))) {
+     Info.Decreasing = StepOffset->isNegative();
+-    const auto *Add = cast<OverflowingBinaryOperator>(Step);
+-    Info.Unsigned = !Info.Decreasing && Add->hasNoUnsignedWrap();
+-    Info.Signed = Add->hasNoSignedWrap();
++    if (const auto *Add = dyn_cast<OverflowingBinaryOperator>(Step)) {
++      Info.Unsigned = !Info.Decreasing && Add->hasNoUnsignedWrap();
++      Info.Signed = Add->hasNoSignedWrap();
++    }
+   } else if (const auto *GEP = dyn_cast<GEPOperator>(Step)) {
+     // TODO: Handle the non-increasing direction, which needs a nusw GEP with a
+     // negative constant offset.
+@@ -1084,7 +1095,7 @@ void State::addInfoForInductions(BasicBlock &BB) {
+   const APInt *IncStep = nullptr;
+   CmpPredicate Pred;
+   auto IndValue =
+-      m_Value(A, m_CombineOr(m_Phi(PN), m_c_Add(m_Phi(PN), m_APInt(IncStep))));
++      m_Value(A, m_CombineOr(m_Phi(PN), m_IncrementOf(m_Phi(PN), IncStep)));
+ 
+   auto *Br = dyn_cast<CondBrInst>(BB.getTerminator());
+   if (!Br)
+diff --git a/llvm/test/Transforms/ConstraintElimination/header-induction-start-bounds.ll b/llvm/test/Transforms/ConstraintElimination/header-induction-start-bounds.ll
+index f80af575fd5c6..5830e6224a6e9 100644
+--- a/llvm/test/Transforms/ConstraintElimination/header-induction-start-bounds.ll
++++ b/llvm/test/Transforms/ConstraintElimination/header-induction-start-bounds.ll
+@@ -38,6 +38,168 @@ exit:
+   ret void
+ }
+ 
++; Variant of @relational_exit_cond but with uadd.with.overflow.
++define void @checked_add(i32 %n) {
++; CHECK-LABEL: define void @checked_add(
++; CHECK-SAME: i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 5, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    [[T_2:%.*]] = icmp sge i32 [[IV]], 5
++; CHECK-NEXT:    call void @use(i1 [[T_2]])
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    [[S:%.*]] = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 [[IV]], i32 1)
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i32, i1 } [[S]], 0
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i32, i1 } [[S]], 1
++; CHECK-NEXT:    br i1 [[OV]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[EC:%.*]] = icmp ne i32 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i32 [ 5, %entry ], [ %iv.next, %loop.latch ]
++  %t.1 = icmp uge i32 %iv, 5
++  call void @use(i1 %t.1)
++  %t.2 = icmp sge i32 %iv, 5
++  call void @use(i1 %t.2)
++  %f.1 = icmp ult i32 %iv, 5
++  call void @use(i1 %f.1)
++  %s = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %iv, i32 1)
++  %iv.next = extractvalue { i32, i1 } %s, 0
++  %ov = extractvalue { i32, i1 } %s, 1
++  br i1 %ov, label %exit, label %loop.latch
++
++loop.latch:
++  %ec = icmp ne i32 %iv.next, %n
++  br i1 %ec, label %loop.header, label %exit
++
++exit:
++  ret void
++}
++
++define void @checked_add_step_2(i32 %n) {
++; CHECK-LABEL: define void @checked_add_step_2(
++; CHECK-SAME: i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 5, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    [[S:%.*]] = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 [[IV]], i32 2)
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i32, i1 } [[S]], 0
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i32, i1 } [[S]], 1
++; CHECK-NEXT:    br i1 [[OV]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[EC:%.*]] = icmp ne i32 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i32 [ 5, %entry ], [ %iv.next, %loop.latch ]
++  %t.1 = icmp uge i32 %iv, 5
++  call void @use(i1 %t.1)
++  %s = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %iv, i32 2)
++  %iv.next = extractvalue { i32, i1 } %s, 0
++  %ov = extractvalue { i32, i1 } %s, 1
++  br i1 %ov, label %exit, label %loop.latch
++
++loop.latch:
++  %ec = icmp ne i32 %iv.next, %n
++  br i1 %ec, label %loop.header, label %exit
++
++exit:
++  ret void
++}
++
++; The phi may be either operand of the checked add.
++define void @checked_add_commuted(i32 %n) {
++; CHECK-LABEL: define void @checked_add_commuted(
++; CHECK-SAME: i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 5, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    [[S:%.*]] = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 1, i32 [[IV]])
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i32, i1 } [[S]], 0
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i32, i1 } [[S]], 1
++; CHECK-NEXT:    br i1 [[OV]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[EC:%.*]] = icmp ne i32 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i32 [ 5, %entry ], [ %iv.next, %loop.latch ]
++  %t.1 = icmp uge i32 %iv, 5
++  call void @use(i1 %t.1)
++  %s = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 1, i32 %iv)
++  %iv.next = extractvalue { i32, i1 } %s, 0
++  %ov = extractvalue { i32, i1 } %s, 1
++  br i1 %ov, label %exit, label %loop.latch
++
++loop.latch:
++  %ec = icmp ne i32 %iv.next, %n
++  br i1 %ec, label %loop.header, label %exit
++
++exit:
++  ret void
++}
++
++define void @checked_sadd(i32 %n) {
++; CHECK-LABEL: define void @checked_sadd(
++; CHECK-SAME: i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 5, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[MUST_NOT_FOLD:%.*]] = icmp uge i32 [[IV]], 5
++; CHECK-NEXT:    call void @use(i1 [[MUST_NOT_FOLD]])
++; CHECK-NEXT:    [[S:%.*]] = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 [[IV]], i32 1)
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i32, i1 } [[S]], 0
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i32, i1 } [[S]], 1
++; CHECK-NEXT:    br i1 [[OV]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[EC:%.*]] = icmp ne i32 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i32 [ 5, %entry ], [ %iv.next, %loop.latch ]
++  %must.not.fold = icmp uge i32 %iv, 5
++  call void @use(i1 %must.not.fold)
++  %s = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %iv, i32 1)
++  %iv.next = extractvalue { i32, i1 } %s, 0
++  %ov = extractvalue { i32, i1 } %s, 1
++  br i1 %ov, label %exit, label %loop.latch
++
++loop.latch:
++  %ec = icmp ne i32 %iv.next, %n
++  br i1 %ec, label %loop.header, label %exit
++
++exit:
++  ret void
++}
++
+ define void @second_induction(i32 %n, i32 %s) {
+ ; CHECK-LABEL: define void @second_induction(
+ ; CHECK-SAME: i32 [[N:%.*]], i32 [[S:%.*]]) {
+@@ -437,6 +599,48 @@ exit:
+   ret void
+ }
+ 
++; SCEV gives the checked recurrence nsw but not nuw, so only the signed bound.
++define void @checked_add_signed_bound_only(i8 %n) {
++; CHECK-LABEL: define void @checked_add_signed_bound_only(
++; CHECK-SAME: i8 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ -5, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    [[S:%.*]] = call { i8, i1 } @llvm.uadd.with.overflow.i8(i8 [[IV]], i8 1)
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i8, i1 } [[S]], 0
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i8, i1 } [[S]], 1
++; CHECK-NEXT:    br i1 [[OV]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[EC:%.*]] = icmp ne i8 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i8 [ -5, %entry ], [ %iv.next, %loop.latch ]
++  %t.1 = icmp sge i8 %iv, -5
++  call void @use(i1 %t.1)
++  %must.not.fold = icmp uge i8 %iv, -5
++  call void @use(i1 %must.not.fold)
++  %s = call { i8, i1 } @llvm.uadd.with.overflow.i8(i8 %iv, i8 1)
++  %iv.next = extractvalue { i8, i1 } %s, 0
++  %ov = extractvalue { i8, i1 } %s, 1
++  br i1 %ov, label %exit, label %loop.latch
++
++loop.latch:
++  %ec = icmp ne i8 %iv.next, %n
++  br i1 %ec, label %loop.header, label %exit
++
++exit:
++  ret void
++}
++
+ ; A negative step must give no lower bound in either sense.
+ define void @negative_step_must_not_fold() {
+ ; CHECK-LABEL: define void @negative_step_must_not_fold() {
+@@ -471,6 +675,91 @@ exit:
+   ret void
+ }
+ 
++; Without the overflow branch the checked add may wrap; neither bound holds.
++define void @checked_add_overflow_unused_must_not_fold(i8 %n) {
++; CHECK-LABEL: define void @checked_add_overflow_unused_must_not_fold(
++; CHECK-SAME: i8 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i8 [ 3, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[MUST_NOT_FOLD_U:%.*]] = icmp uge i8 [[IV]], 3
++; CHECK-NEXT:    call void @use(i1 [[MUST_NOT_FOLD_U]])
++; CHECK-NEXT:    [[MUST_NOT_FOLD_S:%.*]] = icmp sge i8 [[IV]], 3
++; CHECK-NEXT:    call void @use(i1 [[MUST_NOT_FOLD_S]])
++; CHECK-NEXT:    [[S:%.*]] = call { i8, i1 } @llvm.uadd.with.overflow.i8(i8 [[IV]], i8 1)
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i8, i1 } [[S]], 0
++; CHECK-NEXT:    br label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[EC:%.*]] = icmp ne i8 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i8 [ 3, %entry ], [ %iv.next, %loop.latch ]
++  %must.not.fold.u = icmp uge i8 %iv, 3
++  call void @use(i1 %must.not.fold.u)
++  %must.not.fold.s = icmp sge i8 %iv, 3
++  call void @use(i1 %must.not.fold.s)
++  %s = call { i8, i1 } @llvm.uadd.with.overflow.i8(i8 %iv, i8 1)
++  %iv.next = extractvalue { i8, i1 } %s, 0
++  br label %loop.latch
++
++loop.latch:
++  %ec = icmp ne i8 %iv.next, %n
++  br i1 %ec, label %loop.header, label %exit
++
++exit:
++  ret void
++}
++
++; A negative-step checked add bounds its start from above, not below.
++define void @checked_add_negative_step_must_not_fold(i32 %n) {
++; CHECK-LABEL: define void @checked_add_negative_step_must_not_fold(
++; CHECK-SAME: i32 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 100, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    [[MUST_NOT_FOLD:%.*]] = icmp sge i32 [[IV]], 100
++; CHECK-NEXT:    call void @use(i1 [[MUST_NOT_FOLD]])
++; CHECK-NEXT:    [[S:%.*]] = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 [[IV]], i32 -1)
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i32, i1 } [[S]], 0
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i32, i1 } [[S]], 1
++; CHECK-NEXT:    br i1 [[OV]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[EC:%.*]] = icmp ne i32 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[LOOP_HEADER]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i32 [ 100, %entry ], [ %iv.next, %loop.latch ]
++  %t.1 = icmp sle i32 %iv, 100
++  call void @use(i1 %t.1)
++  %must.not.fold = icmp sge i32 %iv, 100
++  call void @use(i1 %must.not.fold)
++  %s = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %iv, i32 -1)
++  %iv.next = extractvalue { i32, i1 } %s, 0
++  %ov = extractvalue { i32, i1 } %s, 1
++  br i1 %ov, label %exit, label %loop.latch
++
++loop.latch:
++  %ec = icmp ne i32 %iv.next, %n
++  br i1 %ec, label %loop.header, label %exit
++
++exit:
++  ret void
++}
++
+ ; A gep nuw adds its offset as an unsigned number without wrapping, so the
+ ; address does not decrease even though the offset is negative.
+ define void @gep_nuw_negative_offset(ptr %p) {
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+index 71215d91b4a2a..fcf9f2ba81f37 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-postinc.ll
+@@ -119,6 +119,125 @@ exit:
+   ret i1 false
+ }
+ 
++; Variant of @postinc_header_ne_unsigned_body_fact with uadd.with.overflow.
++define i1 @postinc_checked_add_header_ne(i1 %c) {
++; CHECK-LABEL: define i1 @postinc_checked_add_header_ne(
++; CHECK-SAME: i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[S:%.*]] = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 [[IV]], i64 1)
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i64, i1 } [[S]], 0
++; CHECK-NEXT:    [[DONE:%.*]] = icmp ne i64 [[IV_NEXT]], 100
++; CHECK-NEXT:    br i1 [[DONE]], label %[[LOOP_LATCH]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT_0:.*]], label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT_0]]:
++; CHECK-NEXT:    ret i1 true
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop.latch ]
++  %s = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %iv, i64 1)
++  %iv.next = extractvalue { i64, i1 } %s, 0
++  %done = icmp ne i64 %iv.next, 100
++  br i1 %done, label %loop.latch, label %exit
++
++loop.latch:
++  %res = icmp ult i64 %iv, 100
++  br i1 %c, label %exit.0, label %loop.header
++
++exit.0:
++  ret i1 %res
++
++exit:
++  ret i1 false
++}
++
++; Variant of @postinc_header_eq_unsigned_exit_fact with uadd.with.overflow.
++define i1 @postinc_checked_add_header_eq_exit_fact(i1 %c) {
++; CHECK-LABEL: define i1 @postinc_checked_add_header_eq_exit_fact(
++; CHECK-SAME: i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[S:%.*]] = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 [[IV]], i64 1)
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i64, i1 } [[S]], 0
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV_NEXT]], 100
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT_0:.*]], label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT_0]]:
++; CHECK-NEXT:    ret i1 false
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop.latch ]
++  %s = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %iv, i64 1)
++  %iv.next = extractvalue { i64, i1 } %s, 0
++  %done = icmp eq i64 %iv.next, 100
++  br i1 %done, label %exit, label %loop.latch
++
++loop.latch:
++  br i1 %c, label %exit.0, label %loop.header
++
++exit.0:
++  %res = icmp ugt i64 %iv.next, 100
++  ret i1 %res
++
++exit:
++  ret i1 false
++}
++
++define i1 @postinc_checked_add_step_2(i1 %c) {
++; CHECK-LABEL: define i1 @postinc_checked_add_step_2(
++; CHECK-SAME: i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[S:%.*]] = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 [[IV]], i64 2)
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i64, i1 } [[S]], 0
++; CHECK-NEXT:    [[DONE:%.*]] = icmp ne i64 [[IV_NEXT]], 100
++; CHECK-NEXT:    br i1 [[DONE]], label %[[LOOP_LATCH]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT_0:.*]], label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT_0]]:
++; CHECK-NEXT:    ret i1 true
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop.latch ]
++  %s = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %iv, i64 2)
++  %iv.next = extractvalue { i64, i1 } %s, 0
++  %done = icmp ne i64 %iv.next, 100
++  br i1 %done, label %loop.latch, label %exit
++
++loop.latch:
++  %res = icmp ult i64 %iv, 100
++  br i1 %c, label %exit.0, label %loop.header
++
++exit.0:
++  ret i1 %res
++
++exit:
++  ret i1 false
++}
++
+ ; The compared post-increment `iv + 2` does not match the induction step of 1.
+ define i1 @postinc_incstep_ne_step_not_folded(i1 %c) {
+ ; CHECK-LABEL: define i1 @postinc_incstep_ne_step_not_folded(
+@@ -165,6 +284,54 @@ exit:
+   ret i1 false
+ }
+ 
++; Variant of @postinc_incstep_ne_step_not_folded with uadd.with.overflow.
++define i1 @postinc_checked_add_incstep_ne_step_not_folded(i1 %c) {
++; CHECK-LABEL: define i1 @postinc_checked_add_incstep_ne_step_not_folded(
++; CHECK-SAME: i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[S:%.*]] = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 [[IV]], i64 2)
++; CHECK-NEXT:    [[IV_PLUS2:%.*]] = extractvalue { i64, i1 } [[S]], 0
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV_PLUS2]], 100
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT:.*]], label %[[BODY:.*]]
++; CHECK:       [[BODY]]:
++; CHECK-NEXT:    [[RES:%.*]] = icmp ult i64 [[IV_PLUS2]], 100
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT_0:.*]], label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    br label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT_0]]:
++; CHECK-NEXT:    ret i1 [[RES]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop.latch ]
++  %s = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %iv, i64 2)
++  %iv.plus2 = extractvalue { i64, i1 } %s, 0
++  %done = icmp eq i64 %iv.plus2, 100
++  br i1 %done, label %exit, label %body
++
++body:
++  %res = icmp ult i64 %iv.plus2, 100
++  br i1 %c, label %exit.0, label %loop.latch
++
++loop.latch:
++  %iv.next = add i64 %iv, 1
++  br label %loop.header
++
++exit.0:
++  ret i1 %res
++
++exit:
++  ret i1 false
++}
++
+ ; Post-increment with negative step.
+ define i1 @postinc_negative_step(i1 %c) {
+ ; CHECK-LABEL: define i1 @postinc_negative_step(
+@@ -203,6 +370,46 @@ exit:
+   ret i1 false
+ }
+ 
++; Variant of @postinc_negative_step with uadd.with.overflow.
++define i1 @postdec_checked_add_negative_step(i1 %c) {
++; CHECK-LABEL: define i1 @postdec_checked_add_negative_step(
++; CHECK-SAME: i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 100, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[S:%.*]] = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 [[IV]], i64 -1)
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i64, i1 } [[S]], 0
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV_NEXT]], 0
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT:.*]], label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT_0:.*]], label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT_0]]:
++; CHECK-NEXT:    ret i1 true
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i64 [ 100, %entry ], [ %iv.next, %loop.latch ]
++  %s = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %iv, i64 -1)
++  %iv.next = extractvalue { i64, i1 } %s, 0
++  %done = icmp eq i64 %iv.next, 0
++  br i1 %done, label %exit, label %loop.latch
++
++loop.latch:
++  %res = icmp ugt i64 %iv, 0
++  br i1 %c, label %exit.0, label %loop.header
++
++exit.0:
++  ret i1 %res
++
++exit:
++  ret i1 false
++}
++
+ ; Induction start value is not constant.
+ define i1 @postinc_non_constant_start_not_folded(i64 %start, i1 %c) {
+ ; CHECK-LABEL: define i1 @postinc_non_constant_start_not_folded(
+diff --git a/llvm/test/Transforms/PhaseOrdering/constraint-eliminiation-interactions.ll b/llvm/test/Transforms/PhaseOrdering/constraint-eliminiation-interactions.ll
+index 766903a604ec0..9cc9a5b279a09 100644
+--- a/llvm/test/Transforms/PhaseOrdering/constraint-eliminiation-interactions.ll
++++ b/llvm/test/Transforms/PhaseOrdering/constraint-eliminiation-interactions.ll
+@@ -213,3 +213,64 @@ exit:
+ }
+ 
+ declare i32 @load(i64)
++
++; Reduced from Swift `for i in stride(from: 0, to: count, by: 2)`, which uses
++; checked increments.
++define i64 @even_index_sum(ptr %p, i64 %count) {
++; CHECK-LABEL: define i64 @even_index_sum(
++; CHECK-SAME: ptr nofree readonly captures(none) [[P:%.*]], i64 [[COUNT:%.*]]) local_unnamed_addr #[[ATTR2:[0-9]+]] {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[NN:%.*]] = icmp sgt i64 [[COUNT]], -1
++; CHECK-NEXT:    tail call void @llvm.assume(i1 [[NN]])
++; CHECK-NEXT:    [[EZ:%.*]] = icmp eq i64 [[COUNT]], 0
++; CHECK-NEXT:    br i1 [[EZ]], label %[[EXIT:.*]], label %[[BODY:.*]]
++; CHECK:       [[BODY]]:
++; CHECK-NEXT:    [[ACC:%.*]] = phi i64 [ [[ACC_NEXT:%.*]], %[[BODY]] ], [ 0, %[[ENTRY]] ]
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[IV_NEXT:%.*]], %[[BODY]] ], [ 0, %[[ENTRY]] ]
++; CHECK-NEXT:    [[A:%.*]] = getelementptr inbounds nuw [8 x i8], ptr [[P]], i64 [[IV]]
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[A]], align 8
++; CHECK-NEXT:    [[ACC_NEXT]] = add i64 [[V]], [[ACC]]
++; CHECK-NEXT:    [[S:%.*]] = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 [[IV]], i64 2)
++; CHECK-NEXT:    [[IV_NEXT]] = extractvalue { i64, i1 } [[S]], 0
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i64, i1 } [[S]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp sge i64 [[IV_NEXT]], [[COUNT]]
++; CHECK-NEXT:    [[COND:%.*]] = or i1 [[OV]], [[EC]]
++; CHECK-NEXT:    br i1 [[COND]], label %[[EXIT]], label %[[BODY]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[R:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[ACC_NEXT]], %[[BODY]] ]
++; CHECK-NEXT:    ret i64 [[R]]
++;
++entry:
++  %nn = icmp sge i64 %count, 0
++  call void @llvm.assume(i1 %nn)
++  %ez = icmp eq i64 %count, 0
++  br i1 %ez, label %exit, label %loop.header
++
++loop.header:
++  %acc = phi i64 [ 0, %entry ], [ %acc.next, %loop.latch ]
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop.latch ]
++  %oob = icmp ult i64 %iv, %count
++  br i1 %oob, label %body, label %trap
++
++body:
++  %a = getelementptr inbounds i64, ptr %p, i64 %iv
++  %v = load i64, ptr %a
++  %acc.next = add i64 %acc, %v
++  br label %loop.latch
++
++loop.latch:
++  %s = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %iv, i64 2)
++  %iv.next = extractvalue { i64, i1 } %s, 0
++  %ov = extractvalue { i64, i1 } %s, 1
++  %ec = icmp sge i64 %iv.next, %count
++  %cond = or i1 %ov, %ec
++  br i1 %cond, label %exit, label %loop.header
++
++exit:
++  %r = phi i64 [ 0, %entry ], [ %acc.next, %loop.latch ]
++  ret i64 %r
++
++trap:
++  tail call void @llvm.trap()
++  unreachable
++}
