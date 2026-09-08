@@ -205,7 +205,7 @@ bb.ap:                                            ; preds = %_ZN9Stockfish12_GLO
   %i.iy = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 56 ; 13 uses
   %i.iz = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 48 ; 2 uses
   %i.ja = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 53 ; 2 uses
-  %i.jb = add nuw nsw i8 %i.it, 1
+  %i.jb = add nuw nsw i8 %i.it, 1                 ; 5 uses
   %wide.trip.count187.i.i.i = zext nneg i8 %i.jb to i64
   %i.jc = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 256
   %i.jd = add i64 %.0.val.i.i281, 184
@@ -608,7 +608,7 @@ bb.bo:                                            ; preds = %.split41.split.us.i
   %i.ags = zext i8 %i.agr to i32                  ; 2 uses
   %i.agt = and i32 %i.ags, 2
   %.not28.us55.i.i.i.i.1 = icmp eq i32 %i.agt, 0
-  br i1 %.not28.us55.i.i.i.i.1, label %.split41.split.us.i.i.i.i.2, label %bb.bp
+  br i1 %.not28.us55.i.i.i.i.1, label %.loopexit34.split.us.i.i.i.i.1, label %bb.bp
 
 bb.bp:                                            ; preds = %.split41.split.us.i.i.i.i.1
   %i.agu = and i32 %i.ags, 16
@@ -667,7 +667,7 @@ bb.bp:                                            ; preds = %.split41.split.us.i
   %i.aij = shl nuw nsw i64 %i.aii, 1
   %i.aik = getelementptr inbounds nuw i8, ptr %i.aib, i64 %i.aij
   %i.ail = getelementptr inbounds nuw i8, ptr %i.aik, i64 2
-  br label %.split41.split.us.i.i.i.i.2
+  br label %.loopexit34.split.us.i.i.i.i.1
 
 .preheader.us48.i.i.i.i.1:                        ; preds = %bb.bp
   %i.aim = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 528
@@ -710,16 +710,20 @@ bb.bp:                                            ; preds = %.split41.split.us.i
   %i.ajt = zext i8 %i.ajs to i64
   %i.aju = getelementptr inbounds nuw i8, ptr %i.ajm, i64 %i.ajt
   %i.ajv = getelementptr inbounds nuw i8, ptr %i.aju, i64 1
-  br label %.split41.split.us.i.i.i.i.2
+  br label %.loopexit34.split.us.i.i.i.i.1
 
-.split41.split.us.i.i.i.i.2:                      ; preds = %.split41.split.us.i.i.i.i.1, %.split.us.i.i.i.i.1, %.preheader.us48.i.i.i.i.1
-  %.3.us53.i.i.i.i.1 = phi ptr [ %.3.us53.i.i.i.i, %.split41.split.us.i.i.i.i.1 ], [ %i.ajv, %.preheader.us48.i.i.i.i.1 ], [ %i.ail, %.split.us.i.i.i.i.1 ] ; 6 uses
+.loopexit34.split.us.i.i.i.i.1:                   ; preds = %.preheader.us48.i.i.i.i.1, %.split.us.i.i.i.i.1, %.split41.split.us.i.i.i.i.1
+  %.3.us53.i.i.i.i.1 = phi ptr [ %.3.us53.i.i.i.i, %.split41.split.us.i.i.i.i.1 ], [ %i.ajv, %.preheader.us48.i.i.i.i.1 ], [ %i.ail, %.split.us.i.i.i.i.1 ] ; 7 uses
+  %exitcond95.i.i.i.i.1 = icmp eq i8 %i.jb, 2
+  br i1 %exitcond95.i.i.i.i.1, label %_ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4FileE.exit.i.i.i, label %.split41.split.us.i.i.i.i.2
+
+.split41.split.us.i.i.i.i.2:                      ; preds = %.loopexit34.split.us.i.i.i.i.1
   %i.ajw = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 536
   %i.ajx = load i8, ptr %i.ajw, align 8, !tbaa !198
   %i.ajy = zext i8 %i.ajx to i32                  ; 2 uses
   %i.ajz = and i32 %i.ajy, 2
   %.not28.us55.i.i.i.i.2 = icmp eq i32 %i.ajz, 0
-  br i1 %.not28.us55.i.i.i.i.2, label %.split41.split.us.i.i.i.i.3, label %bb.bq
+  br i1 %.not28.us55.i.i.i.i.2, label %.loopexit34.split.us.i.i.i.i.2, label %bb.bq
 
 bb.bq:                                            ; preds = %.split41.split.us.i.i.i.i.2
   %i.aka = and i32 %i.ajy, 16
@@ -778,7 +782,7 @@ bb.bq:                                            ; preds = %.split41.split.us.i
   %i.alp = shl nuw nsw i64 %i.alo, 1
   %i.alq = getelementptr inbounds nuw i8, ptr %i.alh, i64 %i.alp
   %i.alr = getelementptr inbounds nuw i8, ptr %i.alq, i64 2
-  br label %.split41.split.us.i.i.i.i.3
+  br label %.loopexit34.split.us.i.i.i.i.2
 
 .preheader.us48.i.i.i.i.2:                        ; preds = %bb.bq
   %i.als = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 768
@@ -821,10 +825,14 @@ bb.bq:                                            ; preds = %.split41.split.us.i
   %i.amz = zext i8 %i.amy to i64
   %i.ana = getelementptr inbounds nuw i8, ptr %i.ams, i64 %i.amz
   %i.anb = getelementptr inbounds nuw i8, ptr %i.ana, i64 1
-  br label %.split41.split.us.i.i.i.i.3
+  br label %.loopexit34.split.us.i.i.i.i.2
 
-.split41.split.us.i.i.i.i.3:                      ; preds = %.split41.split.us.i.i.i.i.2, %.split.us.i.i.i.i.2, %.preheader.us48.i.i.i.i.2
-  %.3.us53.i.i.i.i.2 = phi ptr [ %.3.us53.i.i.i.i.1, %.split41.split.us.i.i.i.i.2 ], [ %i.anb, %.preheader.us48.i.i.i.i.2 ], [ %i.alr, %.split.us.i.i.i.i.2 ] ; 6 uses
+.loopexit34.split.us.i.i.i.i.2:                   ; preds = %.preheader.us48.i.i.i.i.2, %.split.us.i.i.i.i.2, %.split41.split.us.i.i.i.i.2
+  %.3.us53.i.i.i.i.2 = phi ptr [ %.3.us53.i.i.i.i.1, %.split41.split.us.i.i.i.i.2 ], [ %i.anb, %.preheader.us48.i.i.i.i.2 ], [ %i.alr, %.split.us.i.i.i.i.2 ] ; 7 uses
+  %exitcond95.i.i.i.i.2 = icmp eq i8 %i.jb, 3
+  br i1 %exitcond95.i.i.i.i.2, label %_ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4FileE.exit.i.i.i, label %.split41.split.us.i.i.i.i.3
+
+.split41.split.us.i.i.i.i.3:                      ; preds = %.loopexit34.split.us.i.i.i.i.2
   %i.anc = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 776
   %i.and = load i8, ptr %i.anc, align 8, !tbaa !198
   %i.ane = zext i8 %i.and to i32                  ; 2 uses
@@ -1227,8 +1235,8 @@ _ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4Fi
   %i.baz = and i64 %i.bay, 1
   br label %.preheader128.i.split.i.i
 
-_ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4FileE.exit.i.i.i: ; preds = %.loopexit34.split.us.i.i.i.i, %.preheader.us48.i.i.i.i.3, %.split.us.i.i.i.i.3, %.split41.split.us.i.i.i.i.3, %.loopexit34.split.us.us.i.i.i.i, %.preheader.us.i.i.i.i.3, %.split.us.us.i.i.i.i.3, %.split41.us.i.i.i.i.3
-  %.us-phi44.i.i.i.i = phi ptr [ %i.acq, %.split.us.us.i.i.i.i.3 ], [ %.3.us.i.i.i.i, %.loopexit34.split.us.us.i.i.i.i ], [ %.3.us.i.i.i.i.2, %.split41.us.i.i.i.i.3 ], [ %i.aea, %.preheader.us.i.i.i.i.3 ], [ %.3.us53.i.i.i.i, %.loopexit34.split.us.i.i.i.i ], [ %.3.us53.i.i.i.i.2, %.split41.split.us.i.i.i.i.3 ], [ %i.aqh, %.preheader.us48.i.i.i.i.3 ], [ %i.aox, %.split.us.i.i.i.i.3 ] ; 3 uses
+_ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4FileE.exit.i.i.i: ; preds = %.loopexit34.split.us.i.i.i.i, %.loopexit34.split.us.i.i.i.i.1, %.loopexit34.split.us.i.i.i.i.2, %.preheader.us48.i.i.i.i.3, %.split.us.i.i.i.i.3, %.split41.split.us.i.i.i.i.3, %.loopexit34.split.us.us.i.i.i.i, %.preheader.us.i.i.i.i.3, %.split.us.us.i.i.i.i.3, %.split41.us.i.i.i.i.3
+  %.us-phi44.i.i.i.i = phi ptr [ %i.acq, %.split.us.us.i.i.i.i.3 ], [ %.3.us.i.i.i.i, %.loopexit34.split.us.us.i.i.i.i ], [ %.3.us.i.i.i.i.2, %.split41.us.i.i.i.i.3 ], [ %i.aea, %.preheader.us.i.i.i.i.3 ], [ %.3.us53.i.i.i.i, %.loopexit34.split.us.i.i.i.i ], [ %.3.us53.i.i.i.i.1, %.loopexit34.split.us.i.i.i.i.1 ], [ %.3.us53.i.i.i.i.2, %.loopexit34.split.us.i.i.i.i.2 ], [ %.3.us53.i.i.i.i.2, %.split41.split.us.i.i.i.i.3 ], [ %i.aqh, %.preheader.us48.i.i.i.i.3 ], [ %i.aox, %.split.us.i.i.i.i.3 ] ; 3 uses
   %i.bba = ptrtoint ptr %.us-phi44.i.i.i.i to i64
   %i.bbb = and i64 %i.bba, 1                      ; 2 uses
   br i1 %i.rp, label %.preheader129.us.i.i.i, label %.preheader128.i.split.i.i
@@ -1241,31 +1249,39 @@ _ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4Fi
   %i.bbg = mul i64 %i.bbf, 6
   %i.bbh = getelementptr inbounds nuw i8, ptr %i.bbc, i64 %i.bbg ; 3 uses
   store ptr %i.bbc, ptr %i.bbd, align 8, !tbaa !200
-  br i1 %i.is, label %.preheader129.us.i.i.i.1.a, label %.preheader127.i.us.i.i
+  br i1 %i.is, label %.preheader129.us.i.i.i.1, label %.preheader127.i.us.i.i
 
-.preheader129.us.i.i.i.1.a:                       ; preds = %.preheader129.us.i.i.i
+.preheader129.us.i.i.i.1:                         ; preds = %.preheader129.us.i.i.i
   %17 = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 352
   %18 = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 360
   %19 = load i64, ptr %18, align 8, !tbaa !199
-  store ptr %i.bbh, ptr %17, align 8, !tbaa !200
   %20 = mul i64 %19, 6
-  %21 = getelementptr inbounds nuw i8, ptr %i.bbh, i64 %20 ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %i.bbh, i64 %20 ; 3 uses
+  store ptr %i.bbh, ptr %17, align 8, !tbaa !200
+  %exitcond195.i.i.i.1 = icmp eq i8 %i.jb, 2
+  br i1 %exitcond195.i.i.i.1, label %.preheader127.i.us.i.i, label %.preheader129.us.i.i.i.1.a
+
+.preheader129.us.i.i.i.1.a:                       ; preds = %.preheader129.us.i.i.i.1
   %i.bbi = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 592
   %i.bbj = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 600
   %i.bbk = load i64, ptr %i.bbj, align 8, !tbaa !199
-  store ptr %21, ptr %i.bbi, align 8, !tbaa !200
   %i.bbl = mul i64 %i.bbk, 6
-  %22 = getelementptr inbounds nuw i8, ptr %21, i64 %i.bbl ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 832
-  %i.bbm = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 840
-  %24 = load i64, ptr %i.bbm, align 8, !tbaa !199
+  %i.bbm = getelementptr inbounds nuw i8, ptr %21, i64 %i.bbl ; 3 uses
+  store ptr %21, ptr %i.bbi, align 8, !tbaa !200
+  %exitcond195.i.i.i.2 = icmp eq i8 %i.jb, 3
+  br i1 %exitcond195.i.i.i.2, label %.preheader127.i.us.i.i, label %.preheader129.us.i.i.i.3
+
+.preheader129.us.i.i.i.3:                         ; preds = %.preheader129.us.i.i.i.1.a
+  %22 = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 832
+  %23 = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 840
+  %24 = load i64, ptr %23, align 8, !tbaa !199
   %25 = mul i64 %24, 6
-  %26 = getelementptr inbounds nuw i8, ptr %22, i64 %25
-  store ptr %22, ptr %23, align 8, !tbaa !200
+  %26 = getelementptr inbounds nuw i8, ptr %i.bbm, i64 %25
+  store ptr %i.bbm, ptr %22, align 8, !tbaa !200
   br label %.preheader127.i.us.i.i
 
-.preheader127.i.us.i.i:                           ; preds = %.preheader129.us.i.i.i, %.preheader129.us.i.i.i.1.a
-  %.lcssa496 = phi ptr [ %i.bbh, %.preheader129.us.i.i.i ], [ %26, %.preheader129.us.i.i.i.1.a ] ; 2 uses
+.preheader127.i.us.i.i:                           ; preds = %.preheader129.us.i.i.i, %.preheader129.us.i.i.i.1, %.preheader129.us.i.i.i.1.a, %.preheader129.us.i.i.i.3
+  %.lcssa496 = phi ptr [ %i.bbh, %.preheader129.us.i.i.i ], [ %21, %.preheader129.us.i.i.i.1 ], [ %i.bbm, %.preheader129.us.i.i.i.1.a ], [ %26, %.preheader129.us.i.i.i.3 ] ; 2 uses
   %i.bbn = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 96
   %i.bbo = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 104
   %i.bbp = load i32, ptr %i.bbo, align 8, !tbaa !201

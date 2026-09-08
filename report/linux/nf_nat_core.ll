@@ -204,12 +204,13 @@ bb.p:                                             ; preds = %bb.n
   %i.bd = getelementptr i8, ptr %0, i64 50
   %.val51.i.i = load i16, ptr %i.bd, align 2
   %i.be = icmp eq i16 %.val51.i.i, 2              ; 3 uses
+  %..i.i = select i1 %i.be, i32 0, i32 3          ; 2 uses
   %i.bf = and i32 %i.au, 8
   %.not44.i.i = icmp eq i32 %i.bf, 0              ; 2 uses
   br i1 %.not44.i.i, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  %10 = select i1 %i.be, i64 0, i64 3
+  %10 = zext nneg i32 %..i.i to i64
   %i.bg = getelementptr [4 x i8], ptr %i.aw, i64 %10
   %i.bh = load i32, ptr %i.bg, align 4
   %i.bi = load i16, ptr @nf_ct_zone_dflt, align 2
@@ -275,6 +276,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %i.dn = call noundef i32 @llvm.fshl.i32(i32 %i.dm, i32 %i.dm, i32 24)
   %i.do = xor i32 %i.dm, %i.dg
   %i.dp = sub i32 %i.do, %i.dn                    ; 3 uses
+  %11 = add nuw nsw i32 %..i.i, 1                 ; 4 uses
   br i1 %.not44.i.i, label %.split.us, label %.split
 
 .split.us:                                        ; preds = %bb.r
@@ -335,9 +337,13 @@ bb.s:                                             ; preds = %.split.us.1
   %i.et = getelementptr inbounds nuw i8, ptr %8, i64 24
   %i.eu = load i32, ptr %i.et, align 4
   %i.ev = xor i32 %i.eu, %i.ed                    ; 2 uses
+  %exitcond.not.i.i.us.1 = icmp eq i32 %11, 2
+  br i1 %exitcond.not.i.i.us.1, label %find_best_ips_proto.exit.i, label %.split.us.2
+
+.split.us.2:                                      ; preds = %.split.us.2.a
   br i1 %spec.select.i.i.us.1, label %.split.us._crit_edge.2, label %bb.t
 
-bb.t:                                             ; preds = %.split.us.2.a
+bb.t:                                             ; preds = %.split.us.2
   %i.ew = getelementptr i8, ptr %1, i64 12
   %i.ex = load i32, ptr %i.ew, align 4
   %i.ey = call i32 @llvm.bswap.i32(i32 %i.ex)     ; 2 uses
@@ -349,7 +355,7 @@ bb.t:                                             ; preds = %.split.us.2.a
   %i.fd = zext i32 %i.fc to i64
   br label %.split.us.3.a
 
-.split.us._crit_edge.2:                           ; preds = %.split.us.2.a
+.split.us._crit_edge.2:                           ; preds = %.split.us.2
   %.phi.trans.insert76.2 = getelementptr i8, ptr %1, i64 28
   %.pre77.2 = load i32, ptr %.phi.trans.insert76.2, align 4
   br label %.split.us.3.a
@@ -370,11 +376,15 @@ bb.t:                                             ; preds = %.split.us.2.a
   %i.fl = getelementptr inbounds nuw i8, ptr %8, i64 28
   %i.fm = load i32, ptr %i.fl, align 4
   %i.fn = xor i32 %i.fm, %i.ev
+  %exitcond.not.i.i.us.2 = icmp eq i32 %11, 3
+  br i1 %exitcond.not.i.i.us.2, label %find_best_ips_proto.exit.i, label %.split.us.3
+
+.split.us.3:                                      ; preds = %.split.us.3.a
   %.not46.i.i.us.2 = icmp ne i32 %i.fk, %i.fe
   %spec.select.i.i.us.2 = or i1 %spec.select.i.i.us.1, %.not46.i.i.us.2
   br i1 %spec.select.i.i.us.2, label %.split.us._crit_edge.3, label %bb.u
 
-bb.u:                                             ; preds = %.split.us.3.a
+bb.u:                                             ; preds = %.split.us.3
   %i.fo = getelementptr i8, ptr %1, i64 16
   %i.fp = load i32, ptr %i.fo, align 4
   %i.fq = call i32 @llvm.bswap.i32(i32 %i.fp)     ; 2 uses
@@ -386,9 +396,9 @@ bb.u:                                             ; preds = %.split.us.3.a
   %i.fv = zext i32 %i.fu to i64
   br label %.split.us._crit_edge.3
 
-.split.us._crit_edge.3:                           ; preds = %.split.us.3.a, %bb.u
-  %.039.i.i.us.3 = phi i32 [ %i.fq, %bb.u ], [ 0, %.split.us.3.a ]
-  %.036.i.i.us.3 = phi i64 [ %i.fv, %bb.u ], [ 4294967295, %.split.us.3.a ]
+.split.us._crit_edge.3:                           ; preds = %.split.us.3, %bb.u
+  %.039.i.i.us.3 = phi i32 [ %i.fq, %bb.u ], [ 0, %.split.us.3 ]
+  %.036.i.i.us.3 = phi i64 [ %i.fv, %bb.u ], [ 4294967295, %.split.us.3 ]
   %i.fw = zext i32 %i.fn to i64
   %i.fx = mul nuw i64 %.036.i.i.us.3, %i.fw
   %i.fy = lshr i64 %i.fx, 32
@@ -452,9 +462,13 @@ bb.x:                                             ; preds = %._crit_edge.1, %bb.
   store i32 %i.hc, ptr %.042.i.i.sroa.sel, align 4
   %.not46.i.i.1 = icmp ne i32 %i.hc, %i.gx
   %spec.select.i.i.1 = or i1 %i.go, %.not46.i.i.1 ; 2 uses
+  %exitcond.not.i.i.1 = icmp eq i32 %11, 2
+  br i1 %exitcond.not.i.i.1, label %find_best_ips_proto.exit.i, label %12
+
+12:                                               ; preds = %bb.x
   br i1 %spec.select.i.i.1, label %._crit_edge.2, label %bb.y
 
-bb.y:                                             ; preds = %bb.x
+bb.y:                                             ; preds = %12
   %i.hd = getelementptr i8, ptr %1, i64 12
   %i.he = load i32, ptr %i.hd, align 4
   %i.hf = call i32 @llvm.bswap.i32(i32 %i.he)     ; 2 uses
@@ -466,7 +480,7 @@ bb.y:                                             ; preds = %bb.x
   %i.hk = zext i32 %i.hj to i64
   br label %bb.z
 
-._crit_edge.2:                                    ; preds = %bb.x
+._crit_edge.2:                                    ; preds = %12
   %.phi.trans.insert.2 = getelementptr i8, ptr %1, i64 28
   %.pre75.2 = load i32, ptr %.phi.trans.insert.2, align 4
   br label %bb.z
@@ -483,11 +497,15 @@ bb.z:                                             ; preds = %._crit_edge.2, %bb.
   %.042.i.i.sroa.sel99.v = select i1 %i.g, i64 8, i64 28
   %.042.i.i.sroa.sel99 = getelementptr inbounds nuw i8, ptr %8, i64 %.042.i.i.sroa.sel99.v
   store i32 %i.hq, ptr %.042.i.i.sroa.sel99, align 4
+  %exitcond.not.i.i.2 = icmp eq i32 %11, 3
+  br i1 %exitcond.not.i.i.2, label %find_best_ips_proto.exit.i, label %13
+
+13:                                               ; preds = %bb.z
   %.not46.i.i.2 = icmp ne i32 %i.hq, %i.hl
   %spec.select.i.i.2 = or i1 %spec.select.i.i.1, %.not46.i.i.2
   br i1 %spec.select.i.i.2, label %._crit_edge.3, label %bb.aa
 
-bb.aa:                                            ; preds = %bb.z
+bb.aa:                                            ; preds = %13
   %i.hr = getelementptr i8, ptr %1, i64 16
   %i.hs = load i32, ptr %i.hr, align 4
   %i.ht = call i32 @llvm.bswap.i32(i32 %i.hs)     ; 2 uses
@@ -499,9 +517,9 @@ bb.aa:                                            ; preds = %bb.z
   %i.hy = zext i32 %i.hx to i64
   br label %._crit_edge.3
 
-._crit_edge.3:                                    ; preds = %bb.z, %bb.aa
-  %.039.i.i.3 = phi i32 [ %i.ht, %bb.aa ], [ 0, %bb.z ]
-  %.036.i.i.3 = phi i64 [ %i.hy, %bb.aa ], [ 4294967295, %bb.z ]
+._crit_edge.3:                                    ; preds = %13, %bb.aa
+  %.039.i.i.3 = phi i32 [ %i.ht, %bb.aa ], [ 0, %13 ]
+  %.036.i.i.3 = phi i64 [ %i.hy, %bb.aa ], [ 4294967295, %13 ]
   %i.hz = mul nuw i64 %.036.i.i.3, %i.gc
   %i.ia = lshr i64 %i.hz, 32
   %i.ib = trunc nuw i64 %i.ia to i32
@@ -512,7 +530,7 @@ bb.aa:                                            ; preds = %bb.z
   store i32 %i.id, ptr %.042.i.i.sroa.sel102, align 4
   br label %find_best_ips_proto.exit.i
 
-find_best_ips_proto.exit.i:                       ; preds = %.split, %._crit_edge.3, %.split.us, %.split.us._crit_edge.3, %bb.o, %find_appropriate_src.exit.thread.i
+find_best_ips_proto.exit.i:                       ; preds = %.split, %bb.x, %bb.z, %._crit_edge.3, %.split.us, %.split.us.2.a, %.split.us.3.a, %.split.us._crit_edge.3, %bb.o, %find_appropriate_src.exit.thread.i
   %i.ie = and i32 %i.au, 20
   %.not43.i = icmp eq i32 %i.ie, 0
   br i1 %.not43.i, label %bb.ab, label %l4proto_in_range.exit.thread.i

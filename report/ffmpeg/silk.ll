@@ -205,7 +205,7 @@ bb.ar:                                            ; preds = %bb.aq
   br label %.lr.ph206.preheader.i.i
 
 .lr.ph206.preheader.i.i:                          ; preds = %bb.ar, %bb.aq
-  %i.nk = add nsw i32 %i.ej, -2
+  %i.nk = add nsw i32 %i.ej, -2                   ; 2 uses
   %i.nl = zext i32 %i.nk to i64                   ; 3 uses
   %i.nm = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %i.nl ; 2 uses
   %i.nn = load i16, ptr %i.nm, align 4, !tbaa !28
@@ -228,10 +228,11 @@ bb.as:                                            ; preds = %.lr.ph206.preheader
 
 .lr.ph206.i.i.prol.loopexit.unr-lcssa:            ; preds = %bb.as, %.lr.ph206.preheader.i.i
   %indvars.iv.next234.i.i.prol = add nsw i64 %i.nl, -1
-  br label %.lr.ph206.i.i
+  %9 = icmp eq i32 %i.nk, 0
+  br i1 %9, label %silk_stabilize_lsf.exit.i, label %.lr.ph206.i.i
 
-.lr.ph206.i.i:                                    ; preds = %bb.av, %.lr.ph206.i.i.prol.loopexit.unr-lcssa
-  %indvars.iv233.i.i = phi i64 [ %indvars.iv.next234.i.i.prol, %.lr.ph206.i.i.prol.loopexit.unr-lcssa ], [ %indvars.iv.next234.i.i.1, %bb.av ] ; 7 uses
+.lr.ph206.i.i:                                    ; preds = %.lr.ph206.i.i.prol.loopexit.unr-lcssa, %bb.av
+  %indvars.iv233.i.i = phi i64 [ %indvars.iv.next234.i.i.1, %bb.av ], [ %indvars.iv.next234.i.i.prol, %.lr.ph206.i.i.prol.loopexit.unr-lcssa ] ; 7 uses
   %i.nz = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %indvars.iv233.i.i ; 2 uses
   %i.oa = load i16, ptr %i.nz, align 2, !tbaa !28
   %i.ob = sext i16 %i.oa to i32
@@ -276,7 +277,7 @@ bb.av:                                            ; preds = %bb.au, %.lr.ph206.i
   %i.oz = icmp sgt i64 %indvars.iv233.i.i, 1
   br i1 %i.oz, label %.lr.ph206.i.i, label %silk_stabilize_lsf.exit.i, !llvm.loop !74
 
-silk_stabilize_lsf.exit.i:                        ; preds = %.loopexit.i.peel.next.i.epilog-lcssa, %bb.av
+silk_stabilize_lsf.exit.i:                        ; preds = %.loopexit.i.peel.next.i.epilog-lcssa, %.lr.ph206.i.i.prol.loopexit.unr-lcssa, %bb.av
   %i.pa = load i32, ptr %i.bq, align 8, !tbaa !12
   %i.pb = icmp eq i32 %i.pa, 4
   br i1 %i.pb, label %bb.aw, label %silk_decode_lpc.exit
@@ -679,11 +680,11 @@ scalar.ph223:                                     ; preds = %middle.block232, %s
   br i1 %i.uy, label %.lr.ph90.i.silk_is_lpc_stable.exit_crit_edge, label %.lr.ph.i124
 
 .lr.ph.i124:                                      ; preds = %.lr.ph.i124.lr.ph, %.lr.ph90.i
-  %i.uz = phi i32 [ %i.uk, %.lr.ph.i124.lr.ph ], [ %i.ux, %.lr.ph90.i ]
-  %i.va = phi i32 [ %i.uj, %.lr.ph.i124.lr.ph ], [ %i.ut, %.lr.ph90.i ] ; 5 uses
-  %i.vb = phi i64 [ %i.uf, %.lr.ph.i124.lr.ph ], [ %i.up, %.lr.ph90.i ]
-  %.06088.i211 = phi ptr [ %i.a, %.lr.ph.i124.lr.ph ], [ %i.vd, %.lr.ph90.i ] ; 2 uses
-  %indvars.iv101.i210 = phi i64 [ %i.tc, %.lr.ph.i124.lr.ph ], [ %indvars.iv.next102.i, %.lr.ph90.i ] ; 4 uses
+  %i.uz = phi i32 [ %i.ux, %.lr.ph90.i ], [ %i.uk, %.lr.ph.i124.lr.ph ]
+  %i.va = phi i32 [ %i.ut, %.lr.ph90.i ], [ %i.uj, %.lr.ph.i124.lr.ph ] ; 5 uses
+  %i.vb = phi i64 [ %i.up, %.lr.ph90.i ], [ %i.uf, %.lr.ph.i124.lr.ph ]
+  %.06088.i211 = phi ptr [ %i.vd, %.lr.ph90.i ], [ %i.a, %.lr.ph.i124.lr.ph ] ; 2 uses
+  %indvars.iv101.i210 = phi i64 [ %indvars.iv.next102.i, %.lr.ph90.i ], [ %i.tc, %.lr.ph.i124.lr.ph ] ; 4 uses
   %i.vc = and i64 %indvars.iv101.i210, 1
   %i.vd = getelementptr inbounds nuw [64 x i8], ptr %i.a, i64 %i.vc ; 3 uses
   %i.ve = icmp samesign ugt i32 %i.va, 65535      ; 2 uses

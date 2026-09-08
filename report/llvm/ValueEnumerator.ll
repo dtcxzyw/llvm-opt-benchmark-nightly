@@ -204,19 +204,27 @@ _ZNSt6vectorIjSaIjEE17_S_check_init_lenEmRKS0_.exit.i.i.i: ; preds = %_ZN4llvm9i
   %i.fx = getelementptr inbounds nuw i8, ptr %i.ft, i64 16 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fx, i8 0, i64 24, i1 false)
   %i.fy = shl nuw nsw i64 %i.fl, 2
-  %i.fz = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fy) #26 ; 5 uses
+  %i.fz = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fy) #26 ; 4 uses
   store ptr %i.fz, ptr %i.fx, align 8, !tbaa !216
   %i.ga = getelementptr inbounds nuw [4 x i8], ptr %i.fz, i64 %i.fl
   %i.gb = getelementptr inbounds nuw i8, ptr %i.ft, i64 32
   store ptr %i.ga, ptr %i.gb, align 8, !tbaa !217
   store i32 0, ptr %i.fz, align 4, !tbaa !244
-  %i.gc = getelementptr i8, ptr %i.fz, i64 4
-  %8 = shl nuw nsw i64 %i.fl, 2                   ; 2 uses
-  %.idx.i.i.i.i.i.i.i.i.i.a = add nsw i64 %8, -4
-  call void @llvm.memset.p0.i64(ptr align 4 %i.gc, i8 0, i64 %.idx.i.i.i.i.i.i.i.i.i.a, i1 false), !tbaa !244
-  %9 = getelementptr i8, ptr %i.fz, i64 %8
+  %i.gc = getelementptr i8, ptr %i.fz, i64 4      ; 3 uses
+  %.idx.i.i.i.i.i.i.i.i.i.a = add nsw i64 %i.fl, -1 ; 2 uses
+  %8 = icmp eq i64 %.idx.i.i.i.i.i.i.i.i.i.a, 0
+  br i1 %8, label %_ZN4llvm12UseListOrderC2EPKNS_5ValueEPKNS_8FunctionEm.exit.i, label %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i.i
+
+_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i.i: ; preds = %_ZNSt6vectorIjSaIjEE17_S_check_init_lenEmRKS0_.exit.i.i.i
+  %.idx.i.i.i.i.i.i.i.i.i = shl nuw nsw i64 %.idx.i.i.i.i.i.i.i.i.i.a, 2 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr align 4 %i.gc, i8 0, i64 %.idx.i.i.i.i.i.i.i.i.i, i1 false), !tbaa !244
+  %9 = getelementptr inbounds nuw i8, ptr %i.gc, i64 %.idx.i.i.i.i.i.i.i.i.i
+  br label %_ZN4llvm12UseListOrderC2EPKNS_5ValueEPKNS_8FunctionEm.exit.i
+
+_ZN4llvm12UseListOrderC2EPKNS_5ValueEPKNS_8FunctionEm.exit.i: ; preds = %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i.i, %_ZNSt6vectorIjSaIjEE17_S_check_init_lenEmRKS0_.exit.i.i.i
+  %.0.i.i.i.i.i.i.i21 = phi ptr [ %9, %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i.i ], [ %i.gc, %_ZNSt6vectorIjSaIjEE17_S_check_init_lenEmRKS0_.exit.i.i.i ]
   %10 = getelementptr inbounds nuw i8, ptr %i.ft, i64 24
-  store ptr %9, ptr %10, align 8, !tbaa !319
+  store ptr %.0.i.i.i.i.i.i.i21, ptr %10, align 8, !tbaa !319
   %11 = load ptr, ptr %i.fs, align 8, !tbaa !212
   %12 = getelementptr inbounds nuw i8, ptr %11, i64 40
   store ptr %12, ptr %i.fs, align 8, !tbaa !212
@@ -226,7 +234,7 @@ bb.t:                                             ; preds = %_ZN4llvm9is_sortedI
   call void @_ZNSt6vectorIN4llvm12UseListOrderESaIS1_EE17_M_realloc_insertIJRPKNS0_5ValueERPKNS0_8FunctionEmEEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr %i.ft, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(8) %i.e)
   br label %_ZNSt6vectorIN4llvm12UseListOrderESaIS1_EE12emplace_backIJRPKNS0_5ValueERPKNS0_8FunctionEmEEERS1_DpOT_.exit
 
-_ZNSt6vectorIN4llvm12UseListOrderESaIS1_EE12emplace_backIJRPKNS0_5ValueERPKNS0_8FunctionEmEEERS1_DpOT_.exit: ; preds = %_ZNSt6vectorIjSaIjEE17_S_check_init_lenEmRKS0_.exit.i.i.i, %bb.t
+_ZNSt6vectorIN4llvm12UseListOrderESaIS1_EE12emplace_backIJRPKNS0_5ValueERPKNS0_8FunctionEmEEERS1_DpOT_.exit: ; preds = %_ZN4llvm12UseListOrderC2EPKNS_5ValueEPKNS_8FunctionEm.exit.i, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #23
   %i.gd = load i32, ptr %i.g, align 8, !tbaa !180 ; 3 uses
   %i.ge = zext i32 %i.gd to i64                   ; 7 uses

@@ -205,7 +205,7 @@ bb.as:                                            ; preds = %bb.ar
 
 .lr.ph591:                                        ; preds = %bb.ad, %bb.aa, %bb.ai, %bb.al, %bb.ag, %bb.ac
   %.0195516 = phi i32 [ 1, %bb.ag ], [ 0, %bb.ac ], [ 0, %bb.aa ], [ 1, %bb.ai ], [ 1, %bb.al ], [ 0, %bb.ad ] ; 4 uses
-  %i.iz = add nuw nsw i32 %.0195516, 1
+  %i.iz = add nuw nsw i32 %.0195516, 1            ; 2 uses
   %i.ja = zext nneg i32 %.0195516 to i64          ; 2 uses
   %i.jb = add nuw nsw i64 %i.ja, 1
   br label %bb.at
@@ -484,7 +484,9 @@ bb.bl:                                            ; preds = %bb.bk
 
 _ZNSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEE4findERS5_.exit308.thread.loopexit894: ; preds = %.loopexit
   %i.ng = zext nneg i32 %.0195516 to i64
-  %i.nh = zext nneg i32 %i.iz to i64
+  %13 = icmp eq i32 %i.iz, 3
+  %14 = select i1 %13, i32 0, i32 %i.iz
+  %i.nh = zext nneg i32 %14 to i64
   br label %_ZNSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEE4findERS5_.exit308.thread
 
 _ZNSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEE4findERS5_.exit308.thread: ; preds = %bb.ap, %bb.as, %_ZNSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEE4findERS5_.exit308.thread.loopexit894, %bb.an

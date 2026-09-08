@@ -204,16 +204,20 @@ bb.b:                                             ; preds = %bb.a
   %i.d = phi ptr [ %i.g, %.lr.ph.peel.next ], [ %i.c, %bb.b ]
   %.01118 = phi i32 [ %i.f, %.lr.ph.peel.next ], [ 3, %bb.b ]
   %i.e = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %1, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.d) #25 ; 0 uses
-  %i.f = add nuw nsw i32 %.01118, 1               ; 2 uses
+  %i.f = add nuw nsw i32 %.01118, 1               ; 3 uses
   %i.g = tail call ptr @u_getPropertyName_78(i32 noundef %0, i32 noundef %i.f) ; 2 uses
   %.not = icmp eq ptr %i.g, null
-  br i1 %.not, label %.loopexit, label %.lr.ph.peel.next, !llvm.loop !113
+  br i1 %.not, label %._crit_edge, label %.lr.ph.peel.next, !llvm.loop !113
 
-.loopexit:                                        ; preds = %.lr.ph.peel.next, %bb.b
+._crit_edge:                                      ; preds = %.lr.ph.peel.next
+  %2 = icmp eq i32 %i.f, 2
+  br i1 %2, label %._crit_edge.a, label %.loopexit
+
+.loopexit:                                        ; preds = %bb.b, %._crit_edge
   %i.h = tail call i64 @fwrite(ptr nonnull @.str.6, i64 2, i64 1, ptr %1) ; 0 uses
   br label %._crit_edge.a
 
-._crit_edge.a:                                    ; preds = %bb.a, %.loopexit
+._crit_edge.a:                                    ; preds = %bb.a, %.loopexit, %._crit_edge
   ret void
 }
 
@@ -342,16 +346,20 @@ bb.e:                                             ; preds = %bb.d
   %i.i = phi ptr [ %i.l, %.lr.ph.peel.next ], [ %i.h, %bb.e ]
   %.039 = phi i32 [ %i.k, %.lr.ph.peel.next ], [ 3, %bb.e ]
   %i.j = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %3, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.i) #25 ; 0 uses
-  %i.k = add nuw nsw i32 %.039, 1                 ; 2 uses
+  %i.k = add nuw nsw i32 %.039, 1                 ; 3 uses
   %i.l = tail call ptr @u_getPropertyValueName_78(i32 noundef %0, i32 noundef %1, i32 noundef %i.k) ; 2 uses
   %.not33 = icmp eq ptr %i.l, null
-  br i1 %.not33, label %.loopexit, label %.lr.ph.peel.next, !llvm.loop !114
+  br i1 %.not33, label %._crit_edge, label %.lr.ph.peel.next, !llvm.loop !114
 
-.loopexit:                                        ; preds = %.lr.ph.peel.next, %bb.e
+._crit_edge:                                      ; preds = %.lr.ph.peel.next
+  %4 = icmp eq i32 %i.k, 2
+  br i1 %4, label %._crit_edge.a, label %.loopexit
+
+.loopexit:                                        ; preds = %bb.e, %._crit_edge
   %fputc = tail call i32 @fputc(i32 93, ptr %3)   ; 0 uses
   br label %._crit_edge.a
 
-._crit_edge.a:                                    ; preds = %bb.d, %.loopexit
+._crit_edge.a:                                    ; preds = %bb.d, %.loopexit, %._crit_edge
   %i.m = tail call i64 @fwrite(ptr nonnull @.str.18, i64 3, i64 1, ptr %3) ; 0 uses
   br label %bb.f
 

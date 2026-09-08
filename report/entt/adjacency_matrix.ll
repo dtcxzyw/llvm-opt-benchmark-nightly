@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/entt/original/adjacency_matrix?download=true
 inline.NumInlined: 3282
 inline.NumDeleted: 744
-loop-unroll.NumCompletelyUnrolled: 51
+loop-unroll.NumCompletelyUnrolled: 52
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 52
+loop-unroll.NumUnrolled: 53
 begin_hunk_0_@_ZN29AdjacencyMatrix_Vertices_Test8TestBodyEv:bb.a
   %i.gy = icmp eq ptr %i.gw, %i.gx
   br i1 %i.gy, label %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i218, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i217
@@ -205,7 +205,7 @@ _ZN4entt16adjacency_matrixINS_12directed_tagESaImEE6insertEmm.exit: ; preds = %_
   %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store i64 1, ptr %i.ag, align 8, !tbaa !33, !noalias !249
   %i.ah = load i64, ptr %i.a, align 8, !tbaa !33, !noalias !250
-  %.not1.i.i.i92 = icmp eq i64 %i.ah, 0           ; 5 uses
+  %.not1.i.i.i92 = icmp eq i64 %i.ah, 0           ; 4 uses
   %spec.select = zext i1 %.not1.i.i.i92 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   invoke void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %4)
@@ -394,27 +394,36 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %i.ca = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.bz
   %i.cb = load i64, ptr %i.ca, align 8, !tbaa !33, !noalias !251
   %.not1.i.i.i126.3 = icmp eq i64 %i.cb, 0
-  br i1 %.not1.i.i.i126.3, label %.lr.ph.i.i.i125.4, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
+  br i1 %.not1.i.i.i126.3, label %.lr.ph.3, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
 
-.lr.ph.i.i.i125.4:                                ; preds = %.lr.ph.i.i.i125.3
-  %22 = add nuw nsw i64 %i.bn, 5                  ; 2 uses
+.lr.ph.3:                                         ; preds = %.lr.ph.i.i.i125.3
+  %22 = add nuw nsw i64 %i.bn, 5                  ; 3 uses
+  %.not.i.i.i127.3 = icmp eq i64 %22, 9
+  br i1 %.not.i.i.i127.3, label %._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge, label %.lr.ph.i.i.i125.4
+
+.lr.ph.i.i.i125.4:                                ; preds = %.lr.ph.3
   %i.cc = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %22
   %i.cd = load i64, ptr %i.cc, align 8, !tbaa !33, !noalias !251
   %.not1.i.i.i126.4 = icmp eq i64 %i.cd, 0
-  br i1 %.not1.i.i.i126.4, label %.lr.ph.i.i.i125.5, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
+  br i1 %.not1.i.i.i126.4, label %.lr.ph.4, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
 
-.lr.ph.i.i.i125.5:                                ; preds = %.lr.ph.i.i.i125.4
-  %23 = add nuw nsw i64 %i.bn, 6                  ; 2 uses
+.lr.ph.4:                                         ; preds = %.lr.ph.i.i.i125.4
+  %23 = add nuw nsw i64 %i.bn, 6                  ; 3 uses
+  %.not.i.i.i127.4 = icmp eq i64 %23, 9
+  br i1 %.not.i.i.i127.4, label %._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge, label %.lr.ph.i.i.i125.5
+
+.lr.ph.i.i.i125.5:                                ; preds = %.lr.ph.4
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %23
   %i.cf = load i64, ptr %i.ce, align 8, !tbaa !33, !noalias !251
   %.not1.i.i.i126.5 = icmp eq i64 %i.cf, 0
   br i1 %.not1.i.i.i126.5, label %.lr.ph.5, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
 
 .lr.ph.5:                                         ; preds = %.lr.ph.i.i.i125.5
-  br i1 %.not1.i.i.i92, label %._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge, label %.lr.ph.i.i.i125.6
+  %24 = add nuw nsw i64 %i.bn, 7                  ; 3 uses
+  %.not.i.i.i127.5 = icmp eq i64 %24, 9
+  br i1 %.not.i.i.i127.5, label %._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge, label %.lr.ph.i.i.i125.6
 
 .lr.ph.i.i.i125.6:                                ; preds = %.lr.ph.5
-  %24 = add nuw nsw i64 %i.bn, 7                  ; 2 uses
   %i.cg = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %24
   %i.ch = load i64, ptr %i.cg, align 8, !tbaa !33, !noalias !251
   %.not1.i.i.i126.6 = icmp eq i64 %i.ch, 0
@@ -430,7 +439,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %.not1.i.i.i126.7 = icmp eq i64 %i.ck, 0
   br i1 %.not1.i.i.i126.7, label %._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
 
-._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge: ; preds = %.lr.ph.i.i.i125.7, %.lr.ph.6, %.lr.ph.5
+._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge: ; preds = %.lr.ph.i.i.i125.7, %.lr.ph.6, %.lr.ph.5, %.lr.ph.4, %.lr.ph.3
   br label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
 
 _ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit: ; preds = %.lr.ph.i.i.i125, %.lr.ph.i.i.i125.1, %.lr.ph.i.i.i125.2, %.lr.ph.i.i.i125.3, %.lr.ph.i.i.i125.4, %.lr.ph.i.i.i125.5, %.lr.ph.i.i.i125.6, %.lr.ph.i.i.i125.7, %.lr.ph.i.i.i125.preheader, %._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge
@@ -833,7 +842,7 @@ _ZN4entt16adjacency_matrixINS_14undirected_tagESaImEE6insertEmm.exit: ; preds = 
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store i64 1, ptr %i.ai, align 8, !tbaa !33, !noalias !270
   %i.aj = load i64, ptr %i.a, align 8, !tbaa !33, !noalias !271
-  %.not1.i.i.i116 = icmp eq i64 %i.aj, 0          ; 5 uses
+  %.not1.i.i.i116 = icmp eq i64 %i.aj, 0          ; 4 uses
   %spec.select = zext i1 %.not1.i.i.i116 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   invoke void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %4)
@@ -1022,27 +1031,36 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %i.cc = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.cb
   %i.cd = load i64, ptr %i.cc, align 8, !tbaa !33, !noalias !272
   %.not1.i.i.i150.3 = icmp eq i64 %i.cd, 0
-  br i1 %.not1.i.i.i150.3, label %.lr.ph.i.i.i149.4, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
+  br i1 %.not1.i.i.i150.3, label %.lr.ph.3, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
 
-.lr.ph.i.i.i149.4:                                ; preds = %.lr.ph.i.i.i149.3
-  %32 = add nuw nsw i64 %i.bp, 5                  ; 2 uses
+.lr.ph.3:                                         ; preds = %.lr.ph.i.i.i149.3
+  %32 = add nuw nsw i64 %i.bp, 5                  ; 3 uses
+  %.not.i.i.i151.3 = icmp eq i64 %32, 9
+  br i1 %.not.i.i.i151.3, label %._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge, label %.lr.ph.i.i.i149.4
+
+.lr.ph.i.i.i149.4:                                ; preds = %.lr.ph.3
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %32
   %i.cf = load i64, ptr %i.ce, align 8, !tbaa !33, !noalias !272
   %.not1.i.i.i150.4 = icmp eq i64 %i.cf, 0
-  br i1 %.not1.i.i.i150.4, label %.lr.ph.i.i.i149.5, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
+  br i1 %.not1.i.i.i150.4, label %.lr.ph.4, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
 
-.lr.ph.i.i.i149.5:                                ; preds = %.lr.ph.i.i.i149.4
-  %33 = add nuw nsw i64 %i.bp, 6                  ; 2 uses
+.lr.ph.4:                                         ; preds = %.lr.ph.i.i.i149.4
+  %33 = add nuw nsw i64 %i.bp, 6                  ; 3 uses
+  %.not.i.i.i151.4 = icmp eq i64 %33, 9
+  br i1 %.not.i.i.i151.4, label %._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge, label %.lr.ph.i.i.i149.5
+
+.lr.ph.i.i.i149.5:                                ; preds = %.lr.ph.4
   %i.cg = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %33
   %i.ch = load i64, ptr %i.cg, align 8, !tbaa !33, !noalias !272
   %.not1.i.i.i150.5 = icmp eq i64 %i.ch, 0
   br i1 %.not1.i.i.i150.5, label %.lr.ph.5, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
 
 .lr.ph.5:                                         ; preds = %.lr.ph.i.i.i149.5
-  br i1 %.not1.i.i.i116, label %._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge, label %.lr.ph.i.i.i149.6
+  %34 = add nuw nsw i64 %i.bp, 7                  ; 3 uses
+  %.not.i.i.i151.5 = icmp eq i64 %34, 9
+  br i1 %.not.i.i.i151.5, label %._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge, label %.lr.ph.i.i.i149.6
 
 .lr.ph.i.i.i149.6:                                ; preds = %.lr.ph.5
-  %34 = add nuw nsw i64 %i.bp, 7                  ; 2 uses
   %i.ci = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %34
   %i.cj = load i64, ptr %i.ci, align 8, !tbaa !33, !noalias !272
   %.not1.i.i.i150.6 = icmp eq i64 %i.cj, 0
@@ -1058,7 +1076,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %.not1.i.i.i150.7 = icmp eq i64 %i.cm, 0
   br i1 %.not1.i.i.i150.7, label %._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
 
-._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge: ; preds = %.lr.ph.i.i.i149.7, %.lr.ph.6, %.lr.ph.5
+._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge: ; preds = %.lr.ph.i.i.i149.7, %.lr.ph.6, %.lr.ph.5, %.lr.ph.4, %.lr.ph.3
   br label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
 
 _ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit: ; preds = %.lr.ph.i.i.i149, %.lr.ph.i.i.i149.1, %.lr.ph.i.i.i149.2, %.lr.ph.i.i.i149.3, %.lr.ph.i.i.i149.4, %.lr.ph.i.i.i149.5, %.lr.ph.i.i.i149.6, %.lr.ph.i.i.i149.7, %.lr.ph.i.i.i149.preheader, %._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge
@@ -1461,7 +1479,7 @@ bb.a:
   %19 = alloca %"class.entt::internal::edge_iterator", align 8 ; 9 uses
   %20 = alloca %"class.testing::Message", align 8 ; 7 uses
   %21 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
-  %i.a = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #27 ; 12 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #27 ; 14 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
@@ -1764,34 +1782,54 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   store i64 1, ptr %.sroa.14.0..sroa_idx221, align 8, !tbaa !33
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #26
-  %i.bn = select i1 %.not1.i.i.i80, i64 2, i64 1  ; 4 uses
+  %i.bn = select i1 %.not1.i.i.i80, i64 2, i64 1  ; 6 uses
   store i64 %i.bn, ptr %.sroa.10209.0..sroa_idx212, align 8, !tbaa !70, !noalias !283
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.bn
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !33, !noalias !283
   %.not1.i.i.i114263 = icmp eq i64 %i.bp, 0
-  br i1 %.not1.i.i.i114263, label %.lr.ph.i.i.i113.lr.ph.a, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit
+  br i1 %.not1.i.i.i114263, label %.lr.ph.preheader, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit
 
-.lr.ph.i.i.i113.lr.ph.a:                          ; preds = %.lr.ph.i.i.i113.preheader
-  %i.bq = add nuw nsw i64 %i.bn, 1
-  br label %.lr.ph.i.i.i113, !llvm.loop !1
+.lr.ph.preheader:                                 ; preds = %.lr.ph.i.i.i113.preheader
+  %22 = add nuw nsw i64 %i.bn, 1                  ; 3 uses
+  %.not.i.i.i115315 = icmp eq i64 %22, 4
+  br i1 %.not.i.i.i115315, label %.lr.ph.._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge_crit_edge.a, label %.lr.ph.i.i.i113.lr.ph, !llvm.loop !1
 
-.lr.ph.i.i.i113:                                  ; preds = %.lr.ph.i.i.i113.lr.ph.a, %.lr.ph
-  %22 = phi i64 [ %i.bq, %.lr.ph.i.i.i113.lr.ph.a ], [ %i.bt, %.lr.ph ] ; 3 uses
-  %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %22
+.lr.ph.i.i.i113.lr.ph:                            ; preds = %.lr.ph.preheader
+  %23 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %22
+  %24 = load i64, ptr %23, align 8, !tbaa !33, !noalias !283
+  %.not1.i.i.i114 = icmp eq i64 %24, 0
+  br i1 %.not1.i.i.i114, label %.lr.ph.i.i.i113.lr.ph.a, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
+
+.lr.ph.i.i.i113.lr.ph.a:                          ; preds = %.lr.ph.i.i.i113.lr.ph
+  %i.bq = add nuw nsw i64 %i.bn, 2                ; 3 uses
+  %.not.i.i.i115 = icmp eq i64 %i.bq, 4
+  br i1 %.not.i.i.i115, label %.lr.ph.._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge_crit_edge, label %.lr.ph.i.i.i113
+
+.lr.ph.i.i.i113:                                  ; preds = %.lr.ph.i.i.i113.lr.ph.a
+  %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.bq
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !33, !noalias !283
   %.not1.i.i.i114.a = icmp eq i64 %i.bs, 0
   br i1 %.not1.i.i.i114.a, label %.lr.ph, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
 
 .lr.ph:                                           ; preds = %.lr.ph.i.i.i113
-  %i.bt = add nuw nsw i64 %22, 1                  ; 2 uses
+  %i.bt = add nuw nsw i64 %i.bn, 3                ; 3 uses
   %.not.i.i.i115.a = icmp eq i64 %i.bt, 4
-  br i1 %.not.i.i.i115.a, label %.lr.ph.._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge_crit_edge.a, label %.lr.ph.i.i.i113, !llvm.loop !1
+  br i1 %.not.i.i.i115.a, label %.lr.ph.._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge_crit_edge, label %.lr.ph.i.i.i113.2
 
-.lr.ph.._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge_crit_edge.a: ; preds = %.lr.ph
+.lr.ph.i.i.i113.2:                                ; preds = %.lr.ph
+  %25 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.bt
+  %26 = load i64, ptr %25, align 8, !tbaa !33, !noalias !283
+  %.not1.i.i.i114.2 = icmp eq i64 %26, 0
+  br i1 %.not1.i.i.i114.2, label %.lr.ph.._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge_crit_edge, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
+
+.lr.ph.._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge_crit_edge: ; preds = %.lr.ph.i.i.i113.2, %.lr.ph, %.lr.ph.i.i.i113.lr.ph.a
+  br label %.lr.ph.._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge_crit_edge.a, !llvm.loop !1
+
+.lr.ph.._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge_crit_edge.a: ; preds = %.lr.ph.._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge_crit_edge, %.lr.ph.preheader
   br label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !1
 
-_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit: ; preds = %.lr.ph.i.i.i113, %.lr.ph.i.i.i113.preheader, %.lr.ph.._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge_crit_edge.a
-  %23 = phi i64 [ 4, %.lr.ph.._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge_crit_edge.a ], [ %i.bn, %.lr.ph.i.i.i113.preheader ], [ %22, %.lr.ph.i.i.i113 ] ; 3 uses
+_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit: ; preds = %.lr.ph.i.i.i113.lr.ph, %.lr.ph.i.i.i113, %.lr.ph.i.i.i113.2, %.lr.ph.i.i.i113.preheader, %.lr.ph.._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge_crit_edge.a
+  %27 = phi i64 [ 4, %.lr.ph.._ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit.loopexit_crit_edge_crit_edge.a ], [ %i.bn, %.lr.ph.i.i.i113.preheader ], [ %22, %.lr.ph.i.i.i113.lr.ph ], [ %i.bq, %.lr.ph.i.i.i113 ], [ %i.bt, %.lr.ph.i.i.i113.2 ] ; 3 uses
   store i64 0, ptr %9, align 8
   %i.bu = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i64 %spec.select, ptr %i.bu, align 8
@@ -1955,7 +1993,7 @@ bb.ap:                                            ; preds = %_ZNKSt14default_del
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #26
-  %i.db = add i64 %23, 1                          ; 4 uses
+  %i.db = add nsw i64 %27, 1                      ; 4 uses
   store i64 %i.db, ptr %.sroa.10209.0..sroa_idx212, align 8, !tbaa !70, !noalias !284
   %.not2.i.i.i136 = icmp eq i64 %i.db, 4
   br i1 %.not2.i.i.i136, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit140, label %.lr.ph.i.i.i137
@@ -1990,8 +2028,8 @@ _ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSa
 
 _ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit140: ; preds = %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit140.loopexit, %bb.ap
   %i.dk = phi i1 [ %i.dj, %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit140.loopexit ], [ true, %bb.ap ]
-  %i.dl = lshr i64 %23, 1                         ; 2 uses
-  %i.dm = and i64 %23, 1                          ; 2 uses
+  %i.dl = lshr i64 %27, 1                         ; 2 uses
+  %i.dm = and i64 %27, 1                          ; 2 uses
   store i64 %i.dl, ptr %14, align 8
   %i.dn = getelementptr inbounds nuw i8, ptr %14, i64 8
   store i64 %i.dm, ptr %i.dn, align 8
@@ -2334,8 +2372,8 @@ bb.a:
   %6 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %7 = alloca %"class.entt::internal::edge_iterator", align 8 ; 11 uses
   %8 = alloca %"class.testing::AssertionResult", align 8 ; 10 uses
-  %9 = alloca %"struct.std::pair.21", align 8     ; 8 uses
-  %10 = alloca %"struct.std::pair.21", align 8    ; 9 uses
+  %9 = alloca %"struct.std::pair.21", align 8     ; 6 uses
+  %10 = alloca %"struct.std::pair.21", align 8    ; 6 uses
   %11 = alloca %"class.testing::Message", align 8 ; 7 uses
   %12 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %13 = alloca %"class.testing::AssertionResult", align 8 ; 10 uses
@@ -2492,8 +2530,8 @@ _ZN4entt16adjacency_matrixINS_12directed_tagESaImEE6insertEmm.exit: ; preds = %_
   %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store i64 1, ptr %i.ag, align 8, !tbaa !33, !noalias !301
   %i.ah = load i64, ptr %i.a, align 8, !tbaa !33, !noalias !302
-  %.not1.i.i.i92 = icmp eq i64 %i.ah, 0           ; 4 uses
-  %spec.select = zext i1 %.not1.i.i.i92 to i64    ; 2 uses
+  %.not1.i.i.i92 = icmp eq i64 %i.ah, 0           ; 3 uses
+  %spec.select = zext i1 %.not1.i.i.i92 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   invoke void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %4)
           to label %_ZN7testing8internal11CmpHelperNEIN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEESD_EENS_15AssertionResultEPKcSG_RKT_RKT0_.exit unwind label %bb.o
@@ -2657,9 +2695,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   br i1 %.not1.i.i.i126.peel, label %bb.aa, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit
 
 bb.aa:                                            ; preds = %.lr.ph.i.i.i125.preheader
-  %i.bq = add nuw nsw i64 %i.bn, 1
+  %i.bq = add nuw nsw i64 %i.bn, 1                ; 2 uses
   store i64 %i.bq, ptr %.sroa.13.0..sroa_idx243, align 8, !tbaa !70, !noalias !303
-  br i1 %.not1.i.i.i92, label %.critedge360, label %.lr.ph.i.i.i125.preheader.peel.newph
+  %.not.i.i.i127.peel = icmp eq i64 %i.bq, 3
+  br i1 %.not.i.i.i127.peel, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, label %.lr.ph.i.i.i125.preheader.peel.newph
 
 .lr.ph.i.i.i125.preheader.peel.newph:             ; preds = %bb.aa
   %i.br = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -2671,7 +2710,7 @@ bb.ab:                                            ; preds = %.lr.ph.i.i.i125.pre
   store i64 3, ptr %.sroa.13.0..sroa_idx243, align 8, !tbaa !70, !noalias !303
   br label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !293
 
-_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit: ; preds = %.lr.ph.i.i.i125.preheader.peel.newph, %bb.ab, %.lr.ph.i.i.i125.preheader
+_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit: ; preds = %.lr.ph.i.i.i125.preheader.peel.newph, %bb.ab, %bb.aa, %.lr.ph.i.i.i125.preheader
   store i64 0, ptr %9, align 8
   %i.bt = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i64 %spec.select, ptr %i.bt, align 8
@@ -2681,17 +2720,7 @@ _ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSa
   store i64 1, ptr %i.bu, align 8
   br i1 %.not1.i.i.i92, label %bb.ac, label %bb.ad
 
-.critedge360:                                     ; preds = %bb.aa
-  store i64 0, ptr %9, align 8
-  %21 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  store i64 %spec.select, ptr %21, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #26
-  store i64 0, ptr %10, align 8
-  %22 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  store i64 1, ptr %22, align 8
-  br label %bb.ac
-
-bb.ac:                                            ; preds = %.critedge360, %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit
+bb.ac:                                            ; preds = %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit
   invoke void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %8)
           to label %_ZN7testing8internal8EqHelper7CompareISt4pairImmES4_TnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSE_RKS6_RKS7_.exit unwind label %bb.af
 
@@ -3094,8 +3123,8 @@ bb.a:
   %6 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %7 = alloca %"class.entt::internal::edge_iterator", align 8 ; 13 uses
   %8 = alloca %"class.testing::AssertionResult", align 8 ; 10 uses
-  %9 = alloca %"struct.std::pair.21", align 8     ; 8 uses
-  %10 = alloca %"struct.std::pair.21", align 8    ; 9 uses
+  %9 = alloca %"struct.std::pair.21", align 8     ; 6 uses
+  %10 = alloca %"struct.std::pair.21", align 8    ; 6 uses
   %11 = alloca %"class.testing::Message", align 8 ; 7 uses
   %12 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %13 = alloca %"class.testing::AssertionResult", align 8 ; 10 uses
@@ -3265,8 +3294,8 @@ _ZN4entt16adjacency_matrixINS_14undirected_tagESaImEE6insertEmm.exit: ; preds = 
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store i64 1, ptr %i.ai, align 8, !tbaa !33, !noalias !342
   %i.aj = load i64, ptr %i.a, align 8, !tbaa !33, !noalias !343
-  %.not1.i.i.i116 = icmp eq i64 %i.aj, 0          ; 4 uses
-  %spec.select = zext i1 %.not1.i.i.i116 to i64   ; 2 uses
+  %.not1.i.i.i116 = icmp eq i64 %i.aj, 0          ; 3 uses
+  %spec.select = zext i1 %.not1.i.i.i116 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   invoke void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %4)
           to label %_ZN7testing8internal11CmpHelperNEIN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEESD_EENS_15AssertionResultEPKcSG_RKT_RKT0_.exit unwind label %bb.o
@@ -3430,9 +3459,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   br i1 %.not1.i.i.i150.peel, label %bb.aa, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit
 
 bb.aa:                                            ; preds = %.lr.ph.i.i.i149.preheader
-  %i.bs = add nuw nsw i64 %i.bp, 1
+  %i.bs = add nuw nsw i64 %i.bp, 1                ; 2 uses
   store i64 %i.bs, ptr %.sroa.13.0..sroa_idx324, align 8, !tbaa !70, !noalias !344
-  br i1 %.not1.i.i.i116, label %.critedge475, label %.lr.ph.i.i.i149.preheader.peel.newph
+  %.not.i.i.i151.peel = icmp eq i64 %i.bs, 3
+  br i1 %.not.i.i.i151.peel, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, label %.lr.ph.i.i.i149.preheader.peel.newph
 
 .lr.ph.i.i.i149.preheader.peel.newph:             ; preds = %bb.aa
   %i.bt = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -3444,7 +3474,7 @@ bb.ab:                                            ; preds = %.lr.ph.i.i.i149.pre
   store i64 3, ptr %.sroa.13.0..sroa_idx324, align 8, !tbaa !70, !noalias !344
   br label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, !llvm.loop !328
 
-_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit: ; preds = %.lr.ph.i.i.i149.preheader.peel.newph, %bb.ab, %.lr.ph.i.i.i149.preheader
+_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit: ; preds = %.lr.ph.i.i.i149.preheader.peel.newph, %bb.ab, %bb.aa, %.lr.ph.i.i.i149.preheader
   store i64 0, ptr %9, align 8
   %i.bv = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i64 %spec.select, ptr %i.bv, align 8
@@ -3454,17 +3484,7 @@ _ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSa
   store i64 1, ptr %i.bw, align 8
   br i1 %.not1.i.i.i116, label %bb.ac, label %bb.ad
 
-.critedge475:                                     ; preds = %bb.aa
-  store i64 0, ptr %9, align 8
-  %30 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  store i64 %spec.select, ptr %30, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #26
-  store i64 0, ptr %10, align 8
-  %31 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  store i64 1, ptr %31, align 8
-  br label %bb.ac
-
-bb.ac:                                            ; preds = %.critedge475, %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit
+bb.ac:                                            ; preds = %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit
   invoke void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %8)
           to label %_ZN7testing8internal8EqHelper7CompareISt4pairImmES4_TnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSE_RKS6_RKS7_.exit unwind label %bb.af
 
@@ -3867,8 +3887,8 @@ bb.a:
   %6 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %7 = alloca %"class.entt::internal::edge_iterator", align 8 ; 11 uses
   %8 = alloca %"class.testing::AssertionResult", align 8 ; 10 uses
-  %9 = alloca %"struct.std::pair.21", align 8     ; 8 uses
-  %10 = alloca %"struct.std::pair.21", align 8    ; 9 uses
+  %9 = alloca %"struct.std::pair.21", align 8     ; 6 uses
+  %10 = alloca %"struct.std::pair.21", align 8    ; 6 uses
   %11 = alloca %"class.testing::Message", align 8 ; 7 uses
   %12 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %13 = alloca %"class.testing::AssertionResult", align 8 ; 10 uses
@@ -4025,7 +4045,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   store i64 1, ptr %i.ag, align 8, !tbaa !33, !noalias !400
   %i.ah = load i64, ptr %i.a, align 8, !tbaa !33, !noalias !401
   %.not1.i.i.i80 = icmp eq i64 %i.ah, 0           ; 2 uses
-  %spec.select = select i1 %.not1.i.i.i80, i64 2, i64 0 ; 3 uses
+  %spec.select = select i1 %.not1.i.i.i80, i64 2, i64 0 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   invoke void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %4)
           to label %_ZN7testing8internal11CmpHelperNEIN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEESD_EENS_15AssertionResultEPKcSG_RKT_RKT0_.exit unwind label %bb.o
@@ -4181,9 +4201,10 @@ bb.aa:                                            ; preds = %_ZNKSt14default_del
   store i64 2, ptr %.sroa.19.0..sroa_idx236, align 8, !tbaa !33
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #26
-  %i.bn = add nuw nsw i64 %spec.select, 2         ; 2 uses
+  %i.bn = add nuw nsw i64 %spec.select, 2         ; 3 uses
   store i64 %i.bn, ptr %.sroa.13.0..sroa_idx224, align 8, !tbaa !70, !noalias !402
-  br i1 %.not1.i.i.i80, label %.critedge337, label %.lr.ph.i.i.i113
+  %.not2.i.i.i112 = icmp eq i64 %i.bn, 4
+  br i1 %.not2.i.i.i112, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, label %.lr.ph.i.i.i113
 
 .lr.ph.i.i.i113:                                  ; preds = %bb.aa, %bb.ab
   %i.bo = phi i64 [ %i.br, %bb.ab ], [ %i.bn, %bb.aa ] ; 2 uses
@@ -4198,7 +4219,7 @@ bb.ab:                                            ; preds = %.lr.ph.i.i.i113
   %.not.i.i.i115 = icmp eq i64 %i.br, 4
   br i1 %.not.i.i.i115, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, label %.lr.ph.i.i.i113, !llvm.loop !1
 
-_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit: ; preds = %.lr.ph.i.i.i113, %bb.ab
+_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit: ; preds = %.lr.ph.i.i.i113, %bb.ab, %bb.aa
   %i.bs = lshr exact i64 %spec.select, 1
   store i64 %i.bs, ptr %9, align 8
   %i.bt = getelementptr inbounds nuw i8, ptr %9, i64 8
@@ -4207,22 +4228,17 @@ _ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSa
   store i64 1, ptr %10, align 8
   %i.bu = getelementptr inbounds nuw i8, ptr %10, i64 8
   store i64 0, ptr %i.bu, align 8
-  invoke void @_ZN7testing8internal18CmpHelperEQFailureISt4pairImmES3_EENS_15AssertionResultEPKcS6_RKT_RKT0_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %8, ptr noundef nonnull @.str.64, ptr noundef nonnull @.str.73, ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 8 dereferenceable(16) %10)
-          to label %_ZN7testing8internal8EqHelper7CompareISt4pairImmES4_TnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSE_RKS6_RKS7_.exit unwind label %bb.ad
+  br i1 %.not1.i.i.i80, label %.critedge337, label %21
 
-.critedge337:                                     ; preds = %bb.aa
-  %21 = lshr exact i64 %spec.select, 1
-  store i64 %21, ptr %9, align 8
-  %22 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  store i64 0, ptr %22, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #26
-  store i64 1, ptr %10, align 8
-  %23 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  store i64 0, ptr %23, align 8
+.critedge337:                                     ; preds = %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit
   invoke void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %8)
           to label %_ZN7testing8internal8EqHelper7CompareISt4pairImmES4_TnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSE_RKS6_RKS7_.exit unwind label %bb.ad
 
-_ZN7testing8internal8EqHelper7CompareISt4pairImmES4_TnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSE_RKS6_RKS7_.exit: ; preds = %.critedge337, %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit
+21:                                               ; preds = %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit
+  invoke void @_ZN7testing8internal18CmpHelperEQFailureISt4pairImmES3_EENS_15AssertionResultEPKcS6_RKT_RKT0_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %8, ptr noundef nonnull @.str.64, ptr noundef nonnull @.str.73, ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 8 dereferenceable(16) %10)
+          to label %_ZN7testing8internal8EqHelper7CompareISt4pairImmES4_TnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSE_RKS6_RKS7_.exit unwind label %bb.ad
+
+_ZN7testing8internal8EqHelper7CompareISt4pairImmES4_TnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSE_RKS6_RKS7_.exit: ; preds = %.critedge337, %21
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #26
   %i.bv = load i8, ptr %8, align 8, !tbaa !43, !range !44, !noundef !45
@@ -4234,7 +4250,7 @@ bb.ac:                                            ; preds = %_ZN7testing7Message
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
   br label %_ZN4entt16adjacency_matrixINS_12directed_tagESaImEED2Ev.exit189
 
-bb.ad:                                            ; preds = %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, %.critedge337
+bb.ad:                                            ; preds = %21, %.critedge337
   %i.bx = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #26
@@ -4637,8 +4653,8 @@ bb.a:
   %6 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %7 = alloca %"class.entt::internal::edge_iterator", align 8 ; 13 uses
   %8 = alloca %"class.testing::AssertionResult", align 8 ; 10 uses
-  %9 = alloca %"struct.std::pair.21", align 8     ; 8 uses
-  %10 = alloca %"struct.std::pair.21", align 8    ; 9 uses
+  %9 = alloca %"struct.std::pair.21", align 8     ; 6 uses
+  %10 = alloca %"struct.std::pair.21", align 8    ; 6 uses
   %11 = alloca %"class.testing::Message", align 8 ; 7 uses
   %12 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %13 = alloca %"class.testing::AssertionResult", align 8 ; 10 uses
@@ -4805,7 +4821,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   store i64 1, ptr %i.ag, align 8, !tbaa !33, !noalias !451
   %i.ah = load i64, ptr %i.a, align 8, !tbaa !33, !noalias !452
   %.not1.i.i.i104 = icmp eq i64 %i.ah, 0          ; 2 uses
-  %spec.select = select i1 %.not1.i.i.i104, i64 2, i64 0 ; 3 uses
+  %spec.select = select i1 %.not1.i.i.i104, i64 2, i64 0 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   invoke void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %4)
           to label %_ZN7testing8internal11CmpHelperNEIN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEESD_EENS_15AssertionResultEPKcSG_RKT_RKT0_.exit unwind label %bb.o
@@ -4961,9 +4977,10 @@ bb.aa:                                            ; preds = %_ZNKSt14default_del
   store i64 2, ptr %.sroa.19.0..sroa_idx317, align 8, !tbaa !33
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #26
-  %i.bn = add nuw nsw i64 %spec.select, 2         ; 2 uses
+  %i.bn = add nuw nsw i64 %spec.select, 2         ; 3 uses
   store i64 %i.bn, ptr %.sroa.13.0..sroa_idx305, align 8, !tbaa !70, !noalias !453
-  br i1 %.not1.i.i.i104, label %.critedge452, label %.lr.ph.i.i.i137
+  %.not2.i.i.i136 = icmp eq i64 %i.bn, 4
+  br i1 %.not2.i.i.i136, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, label %.lr.ph.i.i.i137
 
 .lr.ph.i.i.i137:                                  ; preds = %bb.aa, %bb.ab
   %i.bo = phi i64 [ %i.br, %bb.ab ], [ %i.bn, %bb.aa ] ; 2 uses
@@ -4978,7 +4995,7 @@ bb.ab:                                            ; preds = %.lr.ph.i.i.i137
   %.not.i.i.i139 = icmp eq i64 %i.br, 4
   br i1 %.not.i.i.i139, label %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, label %.lr.ph.i.i.i137, !llvm.loop !1
 
-_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit: ; preds = %.lr.ph.i.i.i137, %bb.ab
+_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit: ; preds = %.lr.ph.i.i.i137, %bb.ab, %bb.aa
   %i.bs = lshr exact i64 %spec.select, 1
   store i64 %i.bs, ptr %9, align 8
   %i.bt = getelementptr inbounds nuw i8, ptr %9, i64 8
@@ -4987,22 +5004,17 @@ _ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSa
   store i64 1, ptr %10, align 8
   %i.bu = getelementptr inbounds nuw i8, ptr %10, i64 8
   store i64 0, ptr %i.bu, align 8
-  invoke void @_ZN7testing8internal18CmpHelperEQFailureISt4pairImmES3_EENS_15AssertionResultEPKcS6_RKT_RKT0_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %8, ptr noundef nonnull @.str.64, ptr noundef nonnull @.str.73, ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 8 dereferenceable(16) %10)
-          to label %_ZN7testing8internal8EqHelper7CompareISt4pairImmES4_TnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSE_RKS6_RKS7_.exit unwind label %bb.ad
+  br i1 %.not1.i.i.i104, label %.critedge452, label %30
 
-.critedge452:                                     ; preds = %bb.aa
-  %30 = lshr exact i64 %spec.select, 1
-  store i64 %30, ptr %9, align 8
-  %31 = getelementptr inbounds nuw i8, ptr %9, i64 8
-  store i64 0, ptr %31, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #26
-  store i64 1, ptr %10, align 8
-  %32 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  store i64 0, ptr %32, align 8
+.critedge452:                                     ; preds = %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit
   invoke void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %8)
           to label %_ZN7testing8internal8EqHelper7CompareISt4pairImmES4_TnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSE_RKS6_RKS7_.exit unwind label %bb.ad
 
-_ZN7testing8internal8EqHelper7CompareISt4pairImmES4_TnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSE_RKS6_RKS7_.exit: ; preds = %.critedge452, %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit
+30:                                               ; preds = %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit
+  invoke void @_ZN7testing8internal18CmpHelperEQFailureISt4pairImmES3_EENS_15AssertionResultEPKcS6_RKT_RKT0_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %8, ptr noundef nonnull @.str.64, ptr noundef nonnull @.str.73, ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 8 dereferenceable(16) %10)
+          to label %_ZN7testing8internal8EqHelper7CompareISt4pairImmES4_TnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSE_RKS6_RKS7_.exit unwind label %bb.ad
+
+_ZN7testing8internal8EqHelper7CompareISt4pairImmES4_TnPNSt9enable_ifIXoontsr3std11is_integralIT_EE5valuentsr3std10is_pointerIT0_EE5valueEvE4typeELPv0EEENS_15AssertionResultEPKcSE_RKS6_RKS7_.exit: ; preds = %.critedge452, %30
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #26
   %i.bv = load i8, ptr %8, align 8, !tbaa !43, !range !44, !noundef !45
@@ -5014,7 +5026,7 @@ bb.ac:                                            ; preds = %_ZN7testing7Message
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
   br label %_ZN4entt16adjacency_matrixINS_14undirected_tagESaImEED2Ev.exit264
 
-bb.ad:                                            ; preds = %_ZN4entt8internal13edge_iteratorIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEEEppEi.exit, %.critedge452
+bb.ad:                                            ; preds = %30, %.critedge452
   %i.bx = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #26

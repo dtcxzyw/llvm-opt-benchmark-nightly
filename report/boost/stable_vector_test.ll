@@ -205,7 +205,7 @@ _ZN5boost9container4test20CheckEqualContainersINS0_13stable_vectorIiSaIiEEESt6ve
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #24
   store i32 3, ptr %i.g, align 4, !tbaa !126
   %i.es = mul nsw i64 %i.du, 3
-  %i.et = add nsw i64 %i.es, -1                   ; 3 uses
+  %i.et = add nsw i64 %i.es, -1                   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17)
   call void @llvm.lifetime.start.p0(ptr nonnull %18)
   call void @llvm.lifetime.start.p0(ptr nonnull %20)
@@ -216,8 +216,10 @@ _ZN5boost9container13stable_vectorIiSaIiEE5beginEv.exit.i.i223: ; preds = %.loop
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !263, !noalias !1923
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !110, !noalias !1923 ; 3 uses
-  %.not = icmp eq ptr %i.ew, %i.af
-  br i1 %.not, label %._crit_edge.i.i225, label %.lr.ph.i.i230
+  %82 = icmp ne ptr %i.ew, %i.af
+  %83 = icmp ne i64 %i.et, 0
+  %or.cond18.i.i224 = and i1 %83, %82
+  br i1 %or.cond18.i.i224, label %.lr.ph.i.i230, label %._crit_edge.i.i225
 
 .lr.ph.i.i230:                                    ; preds = %_ZN5boost9container13stable_vectorIiSaIiEE5beginEv.exit.i.i223, %.lr.ph.i.i230
   %.sroa.06.020.i.i231 = phi ptr [ %i.fa, %.lr.ph.i.i230 ], [ %i.ew, %_ZN5boost9container13stable_vectorIiSaIiEE5beginEv.exit.i.i223 ] ; 2 uses
@@ -620,7 +622,7 @@ _ZN5boost9container4test20CheckEqualContainersINS0_13stable_vectorINS1_24movable
   store i32 3, ptr %38, align 4, !tbaa !287
   store i32 %i.fd, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !126
   %i.fe = mul nsw i64 %i.dz, 3
-  %i.ff = add nsw i64 %i.fe, -1                   ; 3 uses
+  %i.ff = add nsw i64 %i.fe, -1                   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17)
   call void @llvm.lifetime.start.p0(ptr nonnull %18)
   call void @llvm.lifetime.start.p0(ptr nonnull %20)
@@ -631,8 +633,10 @@ _ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intESaIS3_EE5
   %i.fg = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.fh = load ptr, ptr %i.fg, align 8, !tbaa !263, !noalias !4283
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !110, !noalias !4283 ; 3 uses
-  %.not = icmp eq ptr %i.fi, %i.w
-  br i1 %.not, label %._crit_edge.i.i240, label %.lr.ph.i.i245
+  %91 = icmp ne ptr %i.fi, %i.w
+  %92 = icmp ne i64 %i.ff, 0
+  %or.cond18.i.i239 = and i1 %92, %91
+  br i1 %or.cond18.i.i239, label %.lr.ph.i.i245, label %._crit_edge.i.i240
 
 .lr.ph.i.i245:                                    ; preds = %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intESaIS3_EE5beginEv.exit.i.i238, %.lr.ph.i.i245
   %.sroa.06.020.i.i246 = phi ptr [ %i.fm, %.lr.ph.i.i245 ], [ %i.fi, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intESaIS3_EE5beginEv.exit.i.i238 ] ; 2 uses
@@ -1035,7 +1039,7 @@ _ZN5boost9container4test20CheckEqualContainersINS0_13stable_vectorINS1_12copyabl
   store i32 3, ptr %38, align 4, !tbaa !297
   store i32 %i.fd, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !126
   %i.fe = mul nsw i64 %i.dz, 3
-  %i.ff = add nsw i64 %i.fe, -1                   ; 3 uses
+  %i.ff = add nsw i64 %i.fe, -1                   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17)
   call void @llvm.lifetime.start.p0(ptr nonnull %18)
   call void @llvm.lifetime.start.p0(ptr nonnull %20)
@@ -1046,8 +1050,10 @@ _ZN5boost9container13stable_vectorINS0_4test12copyable_intESaIS3_EE5beginEv.exit
   %i.fg = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.fh = load ptr, ptr %i.fg, align 8, !tbaa !263, !noalias !5488
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !110, !noalias !5488 ; 3 uses
-  %.not = icmp eq ptr %i.fi, %i.w
-  br i1 %.not, label %._crit_edge.i.i240, label %.lr.ph.i.i245
+  %91 = icmp ne ptr %i.fi, %i.w
+  %92 = icmp ne i64 %i.ff, 0
+  %or.cond18.i.i239 = and i1 %92, %91
+  br i1 %or.cond18.i.i239, label %.lr.ph.i.i245, label %._crit_edge.i.i240
 
 .lr.ph.i.i245:                                    ; preds = %_ZN5boost9container13stable_vectorINS0_4test12copyable_intESaIS3_EE5beginEv.exit.i.i238, %.lr.ph.i.i245
   %.sroa.06.020.i.i246 = phi ptr [ %i.fm, %.lr.ph.i.i245 ], [ %i.fi, %_ZN5boost9container13stable_vectorINS0_4test12copyable_intESaIS3_EE5beginEv.exit.i.i238 ] ; 2 uses
@@ -1450,7 +1456,7 @@ _ZN5boost9container4test20CheckEqualContainersINS0_13stable_vectorIiNS0_14node_a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #24
   store i32 3, ptr %i.g, align 4, !tbaa !126
   %i.es = mul nsw i64 %i.du, 3
-  %i.et = add nsw i64 %i.es, -1                   ; 3 uses
+  %i.et = add nsw i64 %i.es, -1                   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17)
   call void @llvm.lifetime.start.p0(ptr nonnull %18)
   call void @llvm.lifetime.start.p0(ptr nonnull %20)
@@ -1461,8 +1467,10 @@ _ZN5boost9container13stable_vectorIiNS0_14node_allocatorIiLm256ELm2EEEE5beginEv.
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !416, !noalias !7237
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !110, !noalias !7237 ; 3 uses
-  %.not = icmp eq ptr %i.ew, %i.af
-  br i1 %.not, label %._crit_edge.i.i225, label %.lr.ph.i.i230
+  %82 = icmp ne ptr %i.ew, %i.af
+  %83 = icmp ne i64 %i.et, 0
+  %or.cond18.i.i224 = and i1 %83, %82
+  br i1 %or.cond18.i.i224, label %.lr.ph.i.i230, label %._crit_edge.i.i225
 
 .lr.ph.i.i230:                                    ; preds = %_ZN5boost9container13stable_vectorIiNS0_14node_allocatorIiLm256ELm2EEEE5beginEv.exit.i.i223, %.lr.ph.i.i230
   %.sroa.06.020.i.i231 = phi ptr [ %i.fa, %.lr.ph.i.i230 ], [ %i.ew, %_ZN5boost9container13stable_vectorIiNS0_14node_allocatorIiLm256ELm2EEEE5beginEv.exit.i.i223 ] ; 2 uses
@@ -1865,7 +1873,7 @@ _ZN5boost9container4test20CheckEqualContainersINS0_13stable_vectorINS1_24movable
   store i32 3, ptr %38, align 4, !tbaa !287
   store i32 %i.fd, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !126
   %i.fe = mul nsw i64 %i.dz, 3
-  %i.ff = add nsw i64 %i.fe, -1                   ; 3 uses
+  %i.ff = add nsw i64 %i.fe, -1                   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17)
   call void @llvm.lifetime.start.p0(ptr nonnull %18)
   call void @llvm.lifetime.start.p0(ptr nonnull %20)
@@ -1876,8 +1884,10 @@ _ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14nod
   %i.fg = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.fh = load ptr, ptr %i.fg, align 8, !tbaa !416, !noalias !9348
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !110, !noalias !9348 ; 3 uses
-  %.not = icmp eq ptr %i.fi, %i.w
-  br i1 %.not, label %._crit_edge.i.i240, label %.lr.ph.i.i245
+  %91 = icmp ne ptr %i.fi, %i.w
+  %92 = icmp ne i64 %i.ff, 0
+  %or.cond18.i.i239 = and i1 %92, %91
+  br i1 %or.cond18.i.i239, label %.lr.ph.i.i245, label %._crit_edge.i.i240
 
 .lr.ph.i.i245:                                    ; preds = %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i.i238, %.lr.ph.i.i245
   %.sroa.06.020.i.i246 = phi ptr [ %i.fm, %.lr.ph.i.i245 ], [ %i.fi, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i.i238 ] ; 2 uses
@@ -2280,7 +2290,7 @@ _ZN5boost9container4test20CheckEqualContainersINS0_13stable_vectorINS1_12copyabl
   store i32 3, ptr %38, align 4, !tbaa !297
   store i32 %i.fd, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !126
   %i.fe = mul nsw i64 %i.dz, 3
-  %i.ff = add nsw i64 %i.fe, -1                   ; 3 uses
+  %i.ff = add nsw i64 %i.fe, -1                   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17)
   call void @llvm.lifetime.start.p0(ptr nonnull %18)
   call void @llvm.lifetime.start.p0(ptr nonnull %20)
@@ -2291,8 +2301,10 @@ _ZN5boost9container13stable_vectorINS0_4test12copyable_intENS0_14node_allocatorI
   %i.fg = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.fh = load ptr, ptr %i.fg, align 8, !tbaa !416, !noalias !10589
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !110, !noalias !10589 ; 3 uses
-  %.not = icmp eq ptr %i.fi, %i.w
-  br i1 %.not, label %._crit_edge.i.i240, label %.lr.ph.i.i245
+  %91 = icmp ne ptr %i.fi, %i.w
+  %92 = icmp ne i64 %i.ff, 0
+  %or.cond18.i.i239 = and i1 %92, %91
+  br i1 %or.cond18.i.i239, label %.lr.ph.i.i245, label %._crit_edge.i.i240
 
 .lr.ph.i.i245:                                    ; preds = %_ZN5boost9container13stable_vectorINS0_4test12copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i.i238, %.lr.ph.i.i245
   %.sroa.06.020.i.i246 = phi ptr [ %i.fm, %.lr.ph.i.i245 ], [ %i.fi, %_ZN5boost9container13stable_vectorINS0_4test12copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i.i238 ] ; 2 uses

@@ -205,14 +205,14 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i88: ; preds = %_ZNSt24unifo
           to label %.noexc95 unwind label %bb.d   ; 5 uses
 
 .noexc95:                                         ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i88
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %i.v
   store float 0.000000e+00, ptr %i.x, align 4, !tbaa !20
   %i.y = getelementptr i8, ptr %i.x, i64 4
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %i.v
   %.idx.i.i.i.i.i.i.i91 = add nsw i64 %i.w, -4
   call void @llvm.memset.p0.i64(ptr align 4 %i.y, i8 0, i64 %.idx.i.i.i.i.i.i.i91, i1 false), !tbaa !20
   %i.z = getelementptr i8, ptr %i.x, i64 %i.w
-  %i.aa = ptrtoint ptr %8 to i64
-  %i.ab = ptrtoint ptr %i.z to i64
+  %i.aa = ptrtoint ptr %i.z to i64
+  %i.ab = ptrtoint ptr %8 to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKS0_.exit96
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt24uniform_int_distributionIiEclISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEEEiRT_.exit
@@ -241,8 +241,8 @@ _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit96:             ; preds = %_ZNSt6vectorIfSaIfE
   %.sroa.0160.0564594 = phi ptr [ %i.k, %.noexc95 ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 60 uses
   %i.ai = phi i64 [ %i.q, %.noexc95 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
   %.sroa.0150.0 = phi ptr [ %i.x, %.noexc95 ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 73 uses
-  %.sroa.16.0 = phi i64 [ %i.aa, %.noexc95 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
-  %.0.i.i.i.i.i92 = phi i64 [ %i.ab, %.noexc95 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
+  %.sroa.16.0 = phi i64 [ %i.ab, %.noexc95 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
+  %.0.i.i.i.i.i92 = phi i64 [ %i.aa, %.noexc95 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
   %i.aj = invoke noalias noundef nonnull dereferenceable(44) ptr @_Znwm(i64 noundef 44) #19
           to label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader unwind label %bb.e ; 30 uses
 
@@ -645,14 +645,14 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i98: ; preds = %_ZNSt24unifo
           to label %.noexc105 unwind label %bb.d  ; 5 uses
 
 .noexc105:                                        ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i98
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.t
   store float 0.000000e+00, ptr %i.v, align 4, !tbaa !20
   %i.w = getelementptr i8, ptr %i.v, i64 4
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.t
   %.idx.i.i.i.i.i.i.i101 = add nsw i64 %i.u, -4
   call void @llvm.memset.p0.i64(ptr align 4 %i.w, i8 0, i64 %.idx.i.i.i.i.i.i.i101, i1 false), !tbaa !20
   %i.x = getelementptr i8, ptr %i.v, i64 %i.u
-  %i.y = ptrtoint ptr %6 to i64
-  %i.z = ptrtoint ptr %i.x to i64
+  %i.y = ptrtoint ptr %i.x to i64
+  %i.z = ptrtoint ptr %6 to i64
   br label %_ZNSt6vectorIfSaIfEEC2EmRKS0_.exit106
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt24uniform_int_distributionIiEclISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEEEiRT_.exit
@@ -681,8 +681,8 @@ _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit106:            ; preds = %_ZNSt6vectorIfSaIfE
   %.sroa.0182.0610639 = phi ptr [ %i.i, %.noexc105 ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 60 uses
   %i.ag = phi i64 [ %i.o, %.noexc105 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
   %.sroa.0172.0 = phi ptr [ %i.v, %.noexc105 ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 73 uses
-  %.sroa.16.0 = phi i64 [ %i.y, %.noexc105 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
-  %.0.i.i.i.i.i102 = phi i64 [ %i.z, %.noexc105 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
+  %.sroa.16.0 = phi i64 [ %i.z, %.noexc105 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
+  %.0.i.i.i.i.i102 = phi i64 [ %i.y, %.noexc105 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
   %i.ah = invoke noalias noundef nonnull dereferenceable(44) ptr @_Znwm(i64 noundef 44) #19
           to label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader unwind label %bb.e ; 30 uses
 

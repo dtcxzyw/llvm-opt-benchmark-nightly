@@ -204,41 +204,45 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ew = load i32, ptr %i.ed, align 4, !tbaa !6
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %i.ee
   store i32 %i.ew, ptr %i.ex, align 4, !tbaa !6
-  %indvars.iv.next197 = add nuw nsw i64 %i.ee, 1  ; 10 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.next197
-  store i32 %.pre201, ptr %3, align 4, !tbaa !6
-  %4 = load i32, ptr %i.dv, align 4, !tbaa !6
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %indvars.iv.next197
-  store i32 %4, ptr %5, align 4, !tbaa !6
-  %6 = load i32, ptr %i.dw, align 4, !tbaa !6
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.dw, i64 %indvars.iv.next197
-  store i32 %6, ptr %7, align 4, !tbaa !6
-  %8 = load i32, ptr %i.dx, align 4, !tbaa !6
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.dx, i64 %indvars.iv.next197
-  store i32 %8, ptr %9, align 4, !tbaa !6
-  %10 = load i32, ptr %i.dy, align 4, !tbaa !6
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.dy, i64 %indvars.iv.next197
-  store i32 %10, ptr %11, align 4, !tbaa !6
-  %12 = load i32, ptr %i.dz, align 4, !tbaa !6
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.dz, i64 %indvars.iv.next197
-  store i32 %12, ptr %13, align 4, !tbaa !6
-  %14 = load i32, ptr %i.ea, align 4, !tbaa !6
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.ea, i64 %indvars.iv.next197
-  store i32 %14, ptr %15, align 4, !tbaa !6
-  %16 = load i32, ptr %i.eb, align 4, !tbaa !6
-  %17 = getelementptr inbounds nuw [4 x i8], ptr %i.eb, i64 %indvars.iv.next197
-  store i32 %16, ptr %17, align 4, !tbaa !6
-  %18 = load i32, ptr %i.ec, align 4, !tbaa !6
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.ec, i64 %indvars.iv.next197
-  store i32 %18, ptr %19, align 4, !tbaa !6
-  %20 = load i32, ptr %i.ed, align 4, !tbaa !6
-  %21 = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %indvars.iv.next197
-  store i32 %20, ptr %21, align 4, !tbaa !6
-  br label %._crit_edge
+  %indvars.iv.next197 = add nuw nsw i64 %i.ee, 1  ; 11 uses
+  %exitcond199.not = icmp eq i64 %indvars.iv.next197, 3
+  br i1 %exitcond199.not, label %._crit_edge, label %3
 
-._crit_edge:                                      ; preds = %.lr.ph, %.critedge162
+._crit_edge:                                      ; preds = %.lr.ph, %3, %.critedge162
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(264) %0, i8 0, i64 264, i1 false)
   br label %.loopexit
+
+3:                                                ; preds = %.lr.ph
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.next197
+  store i32 %.pre201, ptr %4, align 4, !tbaa !6
+  %5 = load i32, ptr %i.dv, align 4, !tbaa !6
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %indvars.iv.next197
+  store i32 %5, ptr %6, align 4, !tbaa !6
+  %7 = load i32, ptr %i.dw, align 4, !tbaa !6
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.dw, i64 %indvars.iv.next197
+  store i32 %7, ptr %8, align 4, !tbaa !6
+  %9 = load i32, ptr %i.dx, align 4, !tbaa !6
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.dx, i64 %indvars.iv.next197
+  store i32 %9, ptr %10, align 4, !tbaa !6
+  %11 = load i32, ptr %i.dy, align 4, !tbaa !6
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.dy, i64 %indvars.iv.next197
+  store i32 %11, ptr %12, align 4, !tbaa !6
+  %13 = load i32, ptr %i.dz, align 4, !tbaa !6
+  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.dz, i64 %indvars.iv.next197
+  store i32 %13, ptr %14, align 4, !tbaa !6
+  %15 = load i32, ptr %i.ea, align 4, !tbaa !6
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.ea, i64 %indvars.iv.next197
+  store i32 %15, ptr %16, align 4, !tbaa !6
+  %17 = load i32, ptr %i.eb, align 4, !tbaa !6
+  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.eb, i64 %indvars.iv.next197
+  store i32 %17, ptr %18, align 4, !tbaa !6
+  %19 = load i32, ptr %i.ec, align 4, !tbaa !6
+  %20 = getelementptr inbounds nuw [4 x i8], ptr %i.ec, i64 %indvars.iv.next197
+  store i32 %19, ptr %20, align 4, !tbaa !6
+  %21 = load i32, ptr %i.ed, align 4, !tbaa !6
+  %22 = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %indvars.iv.next197
+  store i32 %21, ptr %22, align 4, !tbaa !6
+  br label %._crit_edge
 
 .critedge:                                        ; preds = %bb.j, %bb.i, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17

@@ -205,6 +205,7 @@ bb.g:                                             ; preds = %.lr.ph100.1
 
 bb.h:                                             ; preds = %bb.g
   %i.bs = getelementptr inbounds nuw i8, ptr %.16198.1, i64 1
+  %4 = add nsw i32 %i.x, -126                     ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.16198.1, i64 2 ; 3 uses
   %i.bu = load i8, ptr %i.bs, align 1, !tbaa !12
   %i.bv = zext i8 %i.bu to i32
@@ -214,7 +215,6 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.by, label %.lr.ph95.preheader.1, label %.critedge.1
 
 .lr.ph95.preheader.1:                             ; preds = %bb.h
-  %4 = add nsw i32 %i.x, -126                     ; 2 uses
   %i.bz = xor i64 %.06497.1, -1
   %i.ca = add i64 %i.f, %i.bz
   %i.cb = add nsw i32 %i.x, -127
@@ -420,6 +420,7 @@ bb.j:                                             ; preds = %.lr.ph100.2
 
 bb.k:                                             ; preds = %bb.j
   %i.ew = getelementptr inbounds nuw i8, ptr %.16198.2, i64 1
+  %5 = add nsw i32 %i.db, -126                    ; 2 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %.16198.2, i64 2 ; 3 uses
   %i.ey = load i8, ptr %i.ew, align 1, !tbaa !12
   %i.ez = zext i8 %i.ey to i32
@@ -429,7 +430,6 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.fc, label %.lr.ph95.preheader.2, label %.critedge.2
 
 .lr.ph95.preheader.2:                             ; preds = %bb.k
-  %5 = add nsw i32 %i.db, -126                    ; 2 uses
   %i.fd = xor i64 %.06497.2, -1
   %i.fe = add i64 %i.f, %i.fd
   %i.ff = add nsw i32 %i.db, -127
@@ -632,6 +632,7 @@ bb.m:                                             ; preds = %.lr.ph100.3
 
 bb.n:                                             ; preds = %bb.m
   %i.hx = getelementptr inbounds nuw i8, ptr %.16198.3, i64 1
+  %6 = add nsw i32 %i.gf, -126                    ; 2 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %.16198.3, i64 2 ; 3 uses
   %i.hz = load i8, ptr %i.hx, align 1, !tbaa !12
   %i.ia = zext i8 %i.hz to i32                    ; 2 uses
@@ -640,7 +641,6 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.ic, label %.lr.ph95.preheader.3, label %.critedge.3
 
 .lr.ph95.preheader.3:                             ; preds = %bb.n
-  %6 = add nsw i32 %i.gf, -126                    ; 2 uses
   %i.id = xor i64 %.06497.3, -1
   %i.ie = add i64 %i.f, %i.id
   %i.if = add nsw i32 %i.gf, -127
@@ -807,6 +807,7 @@ bb.o:                                             ; preds = %.lr.ph100
 
 bb.p:                                             ; preds = %bb.o
   %i.ko = getelementptr inbounds nuw i8, ptr %.16198, i64 1
+  %7 = add nsw i32 %i.je, -126                    ; 2 uses
   %i.kp = getelementptr inbounds nuw i8, ptr %.16198, i64 2 ; 3 uses
   %i.kq = load i8, ptr %i.ko, align 1, !tbaa !12
   %i.kr = zext i8 %i.kq to i32
@@ -816,7 +817,6 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.ku, label %.lr.ph95.preheader, label %.critedge
 
 .lr.ph95.preheader:                               ; preds = %bb.p
-  %7 = add nsw i32 %i.je, -126                    ; 2 uses
   %i.kv = xor i64 %.06497, -1
   %i.kw = add i64 %i.f, %i.kv
   %i.kx = add nsw i32 %i.je, -127

@@ -30,7 +30,7 @@ bb.a:
   %i.f = alloca i32, align 4                      ; 11 uses
   %i.g = alloca i32, align 4                      ; 11 uses
   %i.h = alloca i32, align 4                      ; 6 uses
-  %i.i = alloca i32, align 4                      ; 9 uses
+  %i.i = alloca i32, align 4                      ; 11 uses
   %i.j = alloca i32, align 4                      ; 9 uses
   %i.k = alloca i32, align 4                      ; 11 uses
   %i.l = alloca i32, align 4                      ; 6 uses
@@ -433,16 +433,20 @@ bb.ad:                                            ; preds = %.thread323, %bb.ab
   %.2353.1 = phi i32 [ %spec.select458.1, %.loopexit327.1 ], [ %spec.select458, %._crit_edge354 ]
   %i.mc = sub nsw i32 %.5358, %i.mb
   %i.md = mul nsw i32 %i.mc, 3                    ; 2 uses
-  %14 = add i32 %i.md, 2                          ; 2 uses
-  %15 = srem i32 %14, 2                           ; 2 uses
-  %16 = sdiv i32 %14, 2
-  %i.me = add nsw i32 %15, 2
-  store i32 %i.me, ptr %i.i, align 4, !tbaa !39
-  %i.mf = icmp eq i32 %15, 0
-  %.pre426.1 = load i32, ptr %4, align 4, !tbaa !39 ; 4 uses
-  br i1 %i.mf, label %bb.ae, label %bb.af
+  %i.me = add i32 %i.md, 2                        ; 3 uses
+  %i.mf = icmp eq i32 %i.me, 1
+  br i1 %i.mf, label %.thread323.1, label %14
 
-bb.ae:                                            ; preds = %.preheader.1
+14:                                               ; preds = %.preheader.1
+  %15 = srem i32 %i.me, 2                         ; 2 uses
+  %16 = sdiv i32 %i.me, 2
+  %17 = add nsw i32 %15, 2
+  store i32 %17, ptr %i.i, align 4, !tbaa !39
+  %18 = icmp eq i32 %15, 0
+  %.pre426.1 = load i32, ptr %4, align 4, !tbaa !39 ; 3 uses
+  br i1 %18, label %bb.ae, label %bb.af
+
+bb.ae:                                            ; preds = %14
   %i.mg = mul nsw i32 %.pre426.1, %16
   %i.mh = add nsw i32 %i.mg, %i.mb                ; 3 uses
   %reass.sub.1 = sub i32 %i.mh, %.pre426.1
@@ -452,12 +456,18 @@ bb.ae:                                            ; preds = %.preheader.1
   store i32 %..1, ptr %i.f, align 4, !tbaa !39
   br label %.loopexit327.1
 
-bb.af:                                            ; preds = %.preheader.1
+.thread323.1:                                     ; preds = %.preheader.1
+  store i32 1, ptr %i.i, align 4, !tbaa !39
+  %.pre425.1 = load i32, ptr %4, align 4, !tbaa !39
+  br label %bb.af
+
+bb.af:                                            ; preds = %.thread323.1, %14
+  %19 = phi i32 [ %.pre425.1, %.thread323.1 ], [ %.pre426.1, %14 ] ; 2 uses
   %i.mj = add i32 %i.md, 3
   %i.mk = sdiv i32 %i.mj, 2
-  %i.ml = mul nsw i32 %.pre426.1, %i.mk
+  %i.ml = mul nsw i32 %19, %i.mk
   %i.mm = add nsw i32 %i.ml, %i.mb                ; 3 uses
-  %i.mn = sub nsw i32 %i.mm, %.pre426.1
+  %i.mn = sub nsw i32 %i.mm, %19
   %i.mo = add nsw i32 %i.mn, 1                    ; 2 uses
   store i32 %i.mo, ptr %i.g, align 4, !tbaa !39
   %.318.1 = call i32 @llvm.smin.i32(i32 %i.mm, i32 %.pre.1) ; 2 uses
@@ -496,17 +506,21 @@ bb.af:                                            ; preds = %.preheader.1
   %.2353.2 = phi i32 [ %spec.select458.2, %.loopexit327.2 ], [ %.2.lcssa.1, %._crit_edge354.1 ]
   %i.my = sub nsw i32 %.5358, %i.mx
   %i.mz = mul nsw i32 %i.my, 3                    ; 2 uses
-  %17 = add i32 %i.mz, 3                          ; 2 uses
-  %18 = srem i32 %17, 2                           ; 2 uses
-  %19 = sdiv i32 %17, 2
-  %i.na = add nsw i32 %18, 2
-  store i32 %i.na, ptr %i.i, align 4, !tbaa !39
-  %i.nb = icmp eq i32 %18, 0
-  %.pre426.2 = load i32, ptr %4, align 4, !tbaa !39 ; 4 uses
-  br i1 %i.nb, label %bb.ag, label %bb.ah
+  %i.na = add i32 %i.mz, 3                        ; 3 uses
+  %i.nb = icmp eq i32 %i.na, 1
+  br i1 %i.nb, label %.thread323.2, label %20
 
-bb.ag:                                            ; preds = %.preheader.2
-  %i.nc = mul nsw i32 %.pre426.2, %19
+20:                                               ; preds = %.preheader.2
+  %21 = srem i32 %i.na, 2                         ; 2 uses
+  %22 = sdiv i32 %i.na, 2
+  %23 = add nsw i32 %21, 2
+  store i32 %23, ptr %i.i, align 4, !tbaa !39
+  %24 = icmp eq i32 %21, 0
+  %.pre426.2 = load i32, ptr %4, align 4, !tbaa !39 ; 3 uses
+  br i1 %24, label %bb.ag, label %bb.ah
+
+bb.ag:                                            ; preds = %20
+  %i.nc = mul nsw i32 %.pre426.2, %22
   %i.nd = add nsw i32 %i.nc, %i.mx                ; 3 uses
   %reass.sub.2 = sub i32 %i.nd, %.pre426.2
   %i.ne = add i32 %reass.sub.2, 1
@@ -515,12 +529,18 @@ bb.ag:                                            ; preds = %.preheader.2
   store i32 %..2, ptr %i.f, align 4, !tbaa !39
   br label %.loopexit327.2
 
-bb.ah:                                            ; preds = %.preheader.2
+.thread323.2:                                     ; preds = %.preheader.2
+  store i32 1, ptr %i.i, align 4, !tbaa !39
+  %.pre425.2 = load i32, ptr %4, align 4, !tbaa !39
+  br label %bb.ah
+
+bb.ah:                                            ; preds = %.thread323.2, %20
+  %25 = phi i32 [ %.pre425.2, %.thread323.2 ], [ %.pre426.2, %20 ] ; 2 uses
   %i.nf = add i32 %i.mz, 4
   %i.ng = sdiv i32 %i.nf, 2
-  %i.nh = mul nsw i32 %.pre426.2, %i.ng
+  %i.nh = mul nsw i32 %25, %i.ng
   %i.ni = add nsw i32 %i.nh, %i.mx                ; 3 uses
-  %i.nj = sub nsw i32 %i.ni, %.pre426.2
+  %i.nj = sub nsw i32 %i.ni, %25
   %i.nk = add nsw i32 %i.nj, 1                    ; 2 uses
   store i32 %i.nk, ptr %i.g, align 4, !tbaa !39
   %.318.2 = call i32 @llvm.smin.i32(i32 %i.ni, i32 %.pre.2) ; 2 uses

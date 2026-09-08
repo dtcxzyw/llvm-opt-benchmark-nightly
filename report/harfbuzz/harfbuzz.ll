@@ -205,13 +205,17 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.n = trunc i32 %i.e to i8
   %i.o = getelementptr inbounds nuw i8, ptr %.0.sroa.phi, i64 3
   store i8 %i.n, ptr %i.o, align 1, !tbaa !280
-  %i.p = add nsw i64 %.0, -1                      ; 2 uses
+  %i.p = add nsw i64 %.0, -1                      ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.p
   %i.r = load i8, ptr %i.q, align 1, !tbaa !280
   %i.s = icmp eq i8 %i.r, 32
-  br i1 %i.s, label %bb.e, label %.critedge.split.loop.exit70, !llvm.loop !2355
+  br i1 %i.s, label %3, label %.critedge.split.loop.exit70, !llvm.loop !2355
 
-bb.e:                                             ; preds = %bb.d
+3:                                                ; preds = %bb.d
+  %.not15 = icmp eq i64 %i.p, 0
+  br i1 %.not15, label %.critedge, label %bb.e
+
+bb.e:                                             ; preds = %3
   %i.t = add nsw i64 %.0, -2                      ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.t
   %i.v = load i8, ptr %i.u, align 1, !tbaa !280
@@ -219,13 +223,17 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.w, label %bb.f, label %.critedge.split.loop.exit70, !llvm.loop !2355
 
 bb.f:                                             ; preds = %bb.e
-  %i.x = add nsw i64 %.0, -3                      ; 2 uses
+  %i.x = add nsw i64 %.0, -3                      ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.x
   %i.z = load i8, ptr %i.y, align 1, !tbaa !280
   %i.aa = icmp eq i8 %i.z, 32
-  br i1 %i.aa, label %bb.g, label %.critedge.split.loop.exit70, !llvm.loop !2355
+  br i1 %i.aa, label %4, label %.critedge.split.loop.exit70, !llvm.loop !2355
 
-bb.g:                                             ; preds = %bb.f
+4:                                                ; preds = %bb.f
+  %.not15.2 = icmp eq i64 %i.x, 0
+  br i1 %.not15.2, label %.critedge, label %bb.g
+
+bb.g:                                             ; preds = %4
   %i.ab = add nsw i64 %.0, -4                     ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ab
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !280
@@ -248,8 +256,8 @@ bb.i:                                             ; preds = %bb.h
   %i.aj = trunc nuw i64 %indvars.iv73.lcssa to i32
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.h, %bb.i, %.critedge.split.loop.exit70
-  %storemerge.lcssa = phi i32 [ %i.aj, %.critedge.split.loop.exit70 ], [ 0, %bb.i ], [ 0, %bb.h ] ; 6 uses
+.critedge:                                        ; preds = %3, %4, %bb.h, %bb.i, %.critedge.split.loop.exit70
+  %storemerge.lcssa = phi i32 [ %i.aj, %.critedge.split.loop.exit70 ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %4 ], [ 0, %3 ] ; 6 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !709 ; 2 uses
   %.not16 = icmp eq i32 %i.al, 0

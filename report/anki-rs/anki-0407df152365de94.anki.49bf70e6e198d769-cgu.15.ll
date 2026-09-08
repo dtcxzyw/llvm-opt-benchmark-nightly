@@ -205,20 +205,28 @@ bb.f:                                             ; preds = %_ZN4core4char7metho
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14618)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14619)
   %i.ae = add nsw i64 %.sroa.0.05.i, -1
-  %i.af = add nsw i64 %.sroa.0.05.i, -1           ; 2 uses
+  %i.af = add nsw i64 %.sroa.0.05.i, -1           ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.af
   %i.ah = load i8, ptr %i.ag, align 1, !alias.scope !14620, !noalias !14621, !noundef !6 ; 2 uses
   %.not.i.not.i.i.i = icmp eq i8 %i.ah, %i.x
-  br i1 %.not.i.not.i.i.i, label %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i.1", label %bb.g
+  br i1 %.not.i.not.i.i.i, label %.preheader110.split.i.i, label %bb.g
 
-"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i.1": ; preds = %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i"
-  %i.ai = add nsw i64 %.sroa.0.05.i, -2           ; 2 uses
+.preheader110.split.i.i:                          ; preds = %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i"
+  %.not.i6.i = icmp eq i64 %i.af, 0
+  br i1 %.not.i6.i, label %_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit.i, label %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i.1"
+
+"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i.1": ; preds = %.preheader110.split.i.i
+  %i.ai = add nsw i64 %.sroa.0.05.i, -2           ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.ai
   %i.ak = load i8, ptr %i.aj, align 1, !alias.scope !14620, !noalias !14621, !noundef !6 ; 2 uses
   %.not.i.not.i.i.i.1 = icmp eq i8 %i.ak, %i.x
-  br i1 %.not.i.not.i.i.i.1, label %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i.2", label %bb.g
+  br i1 %.not.i.not.i.i.i.1, label %.preheader110.split.i.i.1, label %bb.g
 
-"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i.2": ; preds = %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i.1"
+.preheader110.split.i.i.1:                        ; preds = %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i.1"
+  %.not.i6.i.1 = icmp eq i64 %i.ai, 0
+  br i1 %.not.i6.i.1, label %_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit.i, label %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i.2"
+
+"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i.2": ; preds = %.preheader110.split.i.i.1
   %i.al = add nsw i64 %.sroa.0.05.i, -3           ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.al
   %i.an = load i8, ptr %i.am, align 1, !alias.scope !14620, !noalias !14621, !noundef !6 ; 2 uses
@@ -452,7 +460,7 @@ bb.q:                                             ; preds = %._crit_edge.i8.i
   %i.ef = or i8 %.sroa.015.3.lcssa.i.i, %i.ee
   br label %bb.p
 
-_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit.i: ; preds = %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i.3", %.preheader110.split.i.i.2
+_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit.i: ; preds = %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i.i.3", %.preheader110.split.i.i.2, %.preheader110.split.i.i.1, %.preheader110.split.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !14628
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !14628
   call void @_ZN4core3str7pattern11StrSearcher3new17h06c723456276c09fE(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(address) dereferenceable(104) %i.b, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %1, i64 noundef %2, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.d, i64 noundef range(i64 1, 5) %.sroa.0.05.i)

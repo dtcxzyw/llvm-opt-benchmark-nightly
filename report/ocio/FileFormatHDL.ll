@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %i.bp = mul nsw i32 %spec.store.select5, 3
-  %i.bq = sext i32 %i.bp to i64                   ; 2 uses
+  %i.bq = sext i32 %i.bp to i64                   ; 3 uses
   %.not466 = icmp eq i32 %spec.store.select5, 0
   br i1 %.not466, label %_ZNSt6vectorIfSaIfEE6resizeEm.exit, label %bb.u
 
@@ -220,21 +220,29 @@ bb.v:                                             ; preds = %bb.u
   unreachable
 
 _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i:  ; preds = %bb.u
-  %i.bs = shl nuw nsw i64 %i.bq, 2                ; 2 uses
+  %i.bs = shl nuw nsw i64 %i.bq, 2
   %i.bt = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bs) #27
-          to label %.noexc335.a unwind label %bb.ag ; 4 uses
+          to label %.noexc335 unwind label %bb.ag ; 4 uses
 
-.noexc335.a:                                      ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i
+.noexc335:                                        ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i
   store float 0.000000e+00, ptr %i.bt, align 4, !tbaa !42
+  %14 = add nsw i64 %i.bq, -1                     ; 2 uses
+  %15 = icmp eq i64 %14, 0
+  br i1 %15, label %.noexc162, label %.noexc335.a
+
+.noexc335.a:                                      ; preds = %.noexc335
   %i.bu = getelementptr i8, ptr %i.bt, i64 4
-  %.idx.i.i.i.i.i31.i = add nsw i64 %i.bs, -4
+  %.idx.i.i.i.i.i31.i = shl nuw nsw i64 %14, 2
   call void @llvm.memset.p0.i64(ptr align 4 %i.bu, i8 0, i64 %.idx.i.i.i.i.i31.i, i1 false), !tbaa !42
-  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.bt, i64 %i.bq
+  br label %.noexc162
+
+.noexc162:                                        ; preds = %.noexc335.a, %.noexc335
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.bt, i64 %i.bq
   br label %_ZNSt6vectorIfSaIfEE6resizeEm.exit
 
-_ZNSt6vectorIfSaIfEE6resizeEm.exit:               ; preds = %.noexc335.a, %bb.t
-  %.sroa.0396.3 = phi ptr [ %i.bt, %.noexc335.a ], [ null, %bb.t ] ; 5 uses
-  %.sroa.17.3 = phi ptr [ %14, %.noexc335.a ], [ null, %bb.t ] ; 3 uses
+_ZNSt6vectorIfSaIfEE6resizeEm.exit:               ; preds = %.noexc162, %bb.t
+  %.sroa.0396.3 = phi ptr [ %i.bt, %.noexc162 ], [ null, %bb.t ] ; 5 uses
+  %.sroa.17.3 = phi ptr [ %16, %.noexc162 ], [ null, %bb.t ] ; 3 uses
   %i.bv = load float, ptr %i.b, align 4, !tbaa !42
   %i.bw = load float, ptr %i.c, align 4, !tbaa !42
   invoke void @_ZN16OpenColorIO_v2_524GenerateLinearScaleLut1DEPfiiff(ptr noundef %.sroa.0396.3, i32 noundef %spec.store.select5, i32 noundef 3, float noundef %i.bv, float noundef %i.bw)
@@ -586,7 +594,7 @@ bb.bj:                                            ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #26
   store float 1.000000e+00, ptr %i.c, align 4, !tbaa !42
   %i.fd = mul nsw i32 %spec.store.select1, 3
-  %i.fe = sext i32 %i.fd to i64                   ; 2 uses
+  %i.fe = sext i32 %i.fd to i64                   ; 3 uses
   %.not467 = icmp eq i32 %spec.store.select1, 0
   br i1 %.not467, label %_ZNSt6vectorIfSaIfEE6resizeEm.exit183, label %bb.bk
 
@@ -602,21 +610,29 @@ bb.bl:                                            ; preds = %bb.bk
   unreachable
 
 _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i359: ; preds = %bb.bk
-  %i.fg = shl nuw nsw i64 %i.fe, 2                ; 2 uses
+  %i.fg = shl nuw nsw i64 %i.fe, 2
   %i.fh = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fg) #27
-          to label %.noexc368.a unwind label %bb.bo ; 4 uses
+          to label %.noexc368 unwind label %bb.bo ; 4 uses
 
-.noexc368.a:                                      ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i359
+.noexc368:                                        ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i359
   store float 0.000000e+00, ptr %i.fh, align 4, !tbaa !42
+  %17 = add nsw i64 %i.fe, -1                     ; 2 uses
+  %18 = icmp eq i64 %17, 0
+  br i1 %18, label %.noexc182, label %.noexc368.a
+
+.noexc368.a:                                      ; preds = %.noexc368
   %i.fi = getelementptr i8, ptr %i.fh, i64 4
-  %.idx.i.i.i.i.i31.i362 = add nsw i64 %i.fg, -4
+  %.idx.i.i.i.i.i31.i362 = shl nuw nsw i64 %17, 2
   call void @llvm.memset.p0.i64(ptr align 4 %i.fi, i8 0, i64 %.idx.i.i.i.i.i31.i362, i1 false), !tbaa !42
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.fh, i64 %i.fe
+  br label %.noexc182
+
+.noexc182:                                        ; preds = %.noexc368.a, %.noexc368
+  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.fh, i64 %i.fe
   br label %_ZNSt6vectorIfSaIfEE6resizeEm.exit183
 
-_ZNSt6vectorIfSaIfEE6resizeEm.exit183:            ; preds = %.noexc368.a, %bb.bj
-  %.sroa.0.3 = phi ptr [ %i.fh, %.noexc368.a ], [ null, %bb.bj ] ; 8 uses
-  %.sroa.20.3 = phi ptr [ %15, %.noexc368.a ], [ null, %bb.bj ] ; 5 uses
+_ZNSt6vectorIfSaIfEE6resizeEm.exit183:            ; preds = %.noexc182, %bb.bj
+  %.sroa.0.3 = phi ptr [ %i.fh, %.noexc182 ], [ null, %bb.bj ] ; 8 uses
+  %.sroa.20.3 = phi ptr [ %19, %.noexc182 ], [ null, %bb.bj ] ; 5 uses
   %i.fj = load i64, ptr %i.bf, align 8, !tbaa !25
   %i.fk = icmp eq i64 %i.fj, 0
   br i1 %i.fk, label %bb.bp, label %bb.bm

@@ -204,10 +204,10 @@ _ZNKSt6vectorIPvSaIS0_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.a
   %i.h = add nsw i64 %i.g, -1
   %i.i = inttoptr i64 %i.h to ptr                 ; 2 uses
   %i.j = invoke noalias noundef nonnull dereferenceable(400) ptr @_Znwm(i64 noundef 400) #24
-          to label %bb.b unwind label %bb.ak      ; 9 uses
+          to label %bb.b unwind label %bb.ak      ; 10 uses
 
 bb.b:                                             ; preds = %_ZNKSt6vectorIPvSaIS0_EE12_M_check_lenEmPKc.exit.i
-  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 400 ; 4 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 400 ; 6 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(400) %i.j, i8 0, i64 400, i1 false)
   %i.l = invoke noundef i32 @_ZN4absl12lts_2026052613GetStackTraceEPPvii(ptr noundef nonnull %i.j, i32 noundef 50, i32 noundef 1)
           to label %bb.c unwind label %.thread101 ; 3 uses
@@ -218,18 +218,22 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.n, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = add nsw i64 %i.m, -50                    ; 2 uses
-  %9 = icmp ugt i64 %i.o, 1152921504606846925
-  br i1 %9, label %bb.e, label %_ZNKSt6vectorIPvSaIS0_EE12_M_check_lenEmPKc.exit.i65
+  %i.o = add nsw i64 %i.m, -50                    ; 3 uses
+  %.not.i59 = icmp eq i64 %i.o, 0
+  br i1 %.not.i59, label %_ZNSt6vectorIPvSaIS0_EE6resizeEm.exit30, label %9
 
-bb.e:                                             ; preds = %bb.d
+9:                                                ; preds = %bb.d
+  %10 = icmp ugt i64 %i.o, 1152921504606846925
+  br i1 %10, label %bb.e, label %_ZNKSt6vectorIPvSaIS0_EE12_M_check_lenEmPKc.exit.i65
+
+bb.e:                                             ; preds = %9
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.111) #26
           to label %.noexc73 unwind label %.thread101
 
 .noexc73:                                         ; preds = %bb.e
   unreachable
 
-_ZNKSt6vectorIPvSaIS0_EE12_M_check_lenEmPKc.exit.i65: ; preds = %bb.d
+_ZNKSt6vectorIPvSaIS0_EE12_M_check_lenEmPKc.exit.i65: ; preds = %9
   %.sroa.speculated.i.i66 = call i64 @llvm.umax.i64(i64 %i.o, i64 50)
   %i.p = add nuw nsw i64 %.sroa.speculated.i.i66, 50 ; 2 uses
   %i.q = shl nuw nsw i64 %i.p, 3
@@ -265,10 +269,10 @@ bb.g:                                             ; preds = %bb.f
   %i.y = getelementptr inbounds nuw i8, ptr %i.j, i64 %.idx
   br label %_ZNSt6vectorIPvSaIS0_EE6resizeEm.exit30
 
-_ZNSt6vectorIPvSaIS0_EE6resizeEm.exit30:          ; preds = %bb.g, %bb.f, %_ZSt27__uninitialized_default_n_aIPPvmS0_ET_S2_T0_RSaIT1_E.exit33.i69
-  %.sroa.25.3 = phi ptr [ %i.k, %bb.f ], [ %i.k, %bb.g ], [ %i.x, %_ZSt27__uninitialized_default_n_aIPPvmS0_ET_S2_T0_RSaIT1_E.exit33.i69 ] ; 2 uses
-  %.sroa.14.1 = phi ptr [ %i.k, %bb.f ], [ %i.y, %bb.g ], [ %i.w, %_ZSt27__uninitialized_default_n_aIPPvmS0_ET_S2_T0_RSaIT1_E.exit33.i69 ]
-  %.sroa.076.3 = phi ptr [ %i.j, %bb.f ], [ %i.j, %bb.g ], [ %i.r, %_ZSt27__uninitialized_default_n_aIPPvmS0_ET_S2_T0_RSaIT1_E.exit33.i69 ] ; 4 uses
+_ZNSt6vectorIPvSaIS0_EE6resizeEm.exit30:          ; preds = %bb.g, %bb.f, %_ZSt27__uninitialized_default_n_aIPPvmS0_ET_S2_T0_RSaIT1_E.exit33.i69, %bb.d
+  %.sroa.25.3 = phi ptr [ %i.k, %bb.f ], [ %i.k, %bb.g ], [ %i.x, %_ZSt27__uninitialized_default_n_aIPPvmS0_ET_S2_T0_RSaIT1_E.exit33.i69 ], [ %i.k, %bb.d ] ; 2 uses
+  %.sroa.14.1 = phi ptr [ %i.k, %bb.f ], [ %i.y, %bb.g ], [ %i.w, %_ZSt27__uninitialized_default_n_aIPPvmS0_ET_S2_T0_RSaIT1_E.exit33.i69 ], [ %i.k, %bb.d ]
+  %.sroa.076.3 = phi ptr [ %i.j, %bb.f ], [ %i.j, %bb.g ], [ %i.r, %_ZSt27__uninitialized_default_n_aIPPvmS0_ET_S2_T0_RSaIT1_E.exit33.i69 ], [ %i.j, %bb.d ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   %i.z = invoke { ptr, i64 } @_ZNK4absl12lts_2026052613cord_internal9CordzInfo8GetStackEv(ptr noundef nonnull align 8 dereferenceable(1344) %i.i)
           to label %bb.h unwind label %bb.o       ; 2 uses

@@ -205,7 +205,7 @@ _ZNSt6vectorIN3gmx11BoundingBoxENS0_9AllocatorIS1_NS0_23AlignedAllocationPolicyE
   store ptr %i.d, ptr %i.f, align 8, !tbaa !374
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.h = mul nsw i32 %1, 3
-  %i.i = sext i32 %i.h to i64                     ; 2 uses
+  %i.i = sext i32 %i.h to i64                     ; 3 uses
   %i.j = icmp slt i32 %1, 0
   br i1 %i.j, label %bb.c, label %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -222,26 +222,35 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %_ZNSt6vectorIN
   br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIfN3gmx9AllocatorIfNS0_23AlignedAllocationPolicyEEEEC2EmRKS3_.exit.thread.i, label %bb.d
 
 bb.d:                                             ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
-  %i.k = shl nuw nsw i64 %i.i, 2                  ; 3 uses
+  %i.k = shl nuw nsw i64 %i.i, 2
   %i.l = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.k) #31
-          to label %bb.e unwind label %bb.h       ; 5 uses
+          to label %.noexc6 unwind label %bb.h    ; 4 uses
 
-_ZNSt12_Vector_baseIfN3gmx9AllocatorIfNS0_23AlignedAllocationPolicyEEEEC2EmRKS3_.exit.thread.i: ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.g, i8 0, i64 48, i1 false)
-  br label %bb.g
-
-bb.e:                                             ; preds = %bb.d
+.noexc6:                                          ; preds = %bb.d
   store ptr %i.l, ptr %i.g, align 8, !tbaa !55
   %2 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.i
   %3 = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %2, ptr %3, align 8, !tbaa !56
   store float 0.000000e+00, ptr %i.l, align 4, !tbaa !57
-  %4 = getelementptr i8, ptr %i.l, i64 4
-  %.idx.i.i.i.i.i.i.i = add nsw i64 %i.k, -4
+  %4 = getelementptr i8, ptr %i.l, i64 4          ; 3 uses
+  %5 = add nsw i64 %i.i, -1                       ; 2 uses
+  %6 = icmp eq i64 %5, 0
+  br i1 %6, label %bb.e, label %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i
+
+_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc6
+  %.idx.i.i.i.i.i.i.i = shl nuw nsw i64 %5, 2     ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr align 4 %4, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !57
-  %5 = getelementptr i8, ptr %i.l, i64 %i.k
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 %.idx.i.i.i.i.i.i.i
+  br label %bb.e
+
+_ZNSt12_Vector_baseIfN3gmx9AllocatorIfNS0_23AlignedAllocationPolicyEEEEC2EmRKS3_.exit.thread.i: ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.g, i8 0, i64 48, i1 false)
+  br label %bb.g
+
+bb.e:                                             ; preds = %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc6
+  %.0.i.i.i.i.i.ph = phi ptr [ %7, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %4, %.noexc6 ]
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store ptr %5, ptr %i.m, align 8, !tbaa !375
+  store ptr %.0.i.i.i.i.i.ph, ptr %i.m, align 8, !tbaa !375
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.o = mul nuw nsw i32 %1, 48
   %i.p = zext nneg i32 %i.o to i64                ; 2 uses

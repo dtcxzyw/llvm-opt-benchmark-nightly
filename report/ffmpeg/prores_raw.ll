@@ -148,7 +148,7 @@ bb.h:                                             ; preds = %bytestream2_init.ex
 
 bytestream2_get_be32.exit317:                     ; preds = %bytestream2_init.exit307, %bb.h
   %.pre-phi = phi i64 [ %i.w, %bytestream2_init.exit307 ], [ %.pre567, %bb.h ]
-  %.sroa.0402.6 = phi ptr [ %i.v, %bytestream2_init.exit307 ], [ %i.z, %bb.h ] ; 8 uses
+  %.sroa.0402.6 = phi ptr [ %i.v, %bytestream2_init.exit307 ], [ %i.z, %bb.h ] ; 7 uses
   %.0.i316 = phi i32 [ 0, %bytestream2_init.exit307 ], [ %i.ab, %bb.h ]
   %.not = icmp ne i32 %.0.i316, %i.r
   %i.ac = sub i64 %i.w, %.pre-phi
@@ -184,34 +184,43 @@ bb.i:                                             ; preds = %bytestream2_get_be1
 
 bytestream2_init.exit305:                         ; preds = %bb.i
   %i.at = zext nneg i32 %i.ar to i64              ; 2 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.at ; 27 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.at ; 28 uses
   %..i336 = tail call i64 @llvm.smin.i64(i64 %i.ap, i64 %i.at)
   %i.av = getelementptr inbounds i8, ptr %i.aj, i64 %..i336 ; 2 uses
-  %i.aw = ptrtoint ptr %i.au to i64               ; 54 uses
+  %i.aw = ptrtoint ptr %i.au to i64               ; 55 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.0402.6, i64 7
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !37  ; 2 uses
   %i.az = zext i8 %i.ay to i32                    ; 2 uses
   store i32 %i.az, ptr %i.e, align 8, !tbaa !35
   %i.ba = icmp ugt i8 %i.ay, 1
-  br i1 %i.ba, label %bb.j, label %bytestream2_get_be16.exit330
+  br i1 %i.ba, label %bb.j, label %bytestream2_get_byte.exit345._crit_edge
 
 bb.j:                                             ; preds = %bytestream2_init.exit305
   tail call void (ptr, ptr, ...) @avpriv_request_sample(ptr noundef nonnull %0, ptr noundef nonnull @.str.3, i32 noundef %i.az) #10
   br label %bytestream2_get_be32.exit315.thread
 
-bytestream2_get_be16.exit330:                     ; preds = %bytestream2_init.exit305
+bytestream2_get_byte.exit345._crit_edge:          ; preds = %bytestream2_init.exit305
   %4 = getelementptr i8, ptr %.sroa.0402.6, i64 12
-  %5 = getelementptr i8, ptr %.sroa.0402.6, i64 14
-  %6 = load i16, ptr %4, align 1, !tbaa !37
-  %7 = tail call i16 @llvm.bswap.i16(i16 %6)
-  %8 = zext i16 %7 to i32                         ; 5 uses
-  %9 = getelementptr i8, ptr %.sroa.0402.6, i64 16
-  %10 = load i16, ptr %5, align 1, !tbaa !37
-  %11 = tail call i16 @llvm.bswap.i16(i16 %10)
-  %12 = zext i16 %11 to i32                       ; 5 uses
-  %i.bb = and i32 %8, 1
+  %5 = load i16, ptr %4, align 1, !tbaa !37
+  %6 = tail call i16 @llvm.bswap.i16(i16 %5)
+  %7 = zext i16 %6 to i32                         ; 5 uses
+  %8 = icmp ult i32 %i.ar, 10
+  br i1 %8, label %bytestream2_get_be16.exit330, label %9
+
+9:                                                ; preds = %bytestream2_get_byte.exit345._crit_edge
+  %10 = getelementptr i8, ptr %.sroa.0402.6, i64 14
+  %11 = getelementptr i8, ptr %.sroa.0402.6, i64 16
+  %12 = load i16, ptr %10, align 1, !tbaa !37
+  %13 = tail call i16 @llvm.bswap.i16(i16 %12)
+  %14 = zext i16 %13 to i32
+  br label %bytestream2_get_be16.exit330
+
+bytestream2_get_be16.exit330:                     ; preds = %bytestream2_get_byte.exit345._crit_edge, %9
+  %.sroa.0.13 = phi ptr [ %11, %9 ], [ %i.au, %bytestream2_get_byte.exit345._crit_edge ] ; 3 uses
+  %.0.i329 = phi i32 [ %14, %9 ], [ 0, %bytestream2_get_byte.exit345._crit_edge ] ; 5 uses
+  %i.bb = and i32 %7, 1
   %.not285 = icmp eq i32 %i.bb, 0
-  %i.bc = and i32 %12, 1
+  %i.bc = and i32 %.0.i329, 1
   %.not286 = icmp eq i32 %i.bc, 0
   %or.cond301 = select i1 %.not285, i1 %.not286, i1 false
   br i1 %or.cond301, label %bb.k, label %bytestream2_get_be32.exit315.thread
@@ -219,25 +228,25 @@ bytestream2_get_be16.exit330:                     ; preds = %bytestream2_init.ex
 bb.k:                                             ; preds = %bytestream2_get_be16.exit330
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.be = load i32, ptr %i.bd, align 8, !tbaa !38 ; 2 uses
-  %.not287 = icmp ne i32 %i.be, %8
+  %.not287 = icmp ne i32 %i.be, %7
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 116
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !68 ; 2 uses
-  %.not288 = icmp ne i32 %i.bg, %12
+  %.not288 = icmp ne i32 %.0.i329, %i.bg
   %or.cond657.not = select i1 %.not287, i1 true, i1 %.not288 ; 2 uses
   br i1 %or.cond657.not, label %._crit_edge566, label %bb.l
 
 ._crit_edge566:                                   ; preds = %bb.k
-  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 24, ptr noundef nonnull @.str.4, i32 noundef %i.be, i32 noundef %i.bg, i32 noundef %8, i32 noundef %12) #10
-  %i.bh = tail call i32 @ff_set_dimensions(ptr noundef nonnull %0, i32 noundef %8, i32 noundef %12) #10 ; 2 uses
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 24, ptr noundef nonnull @.str.4, i32 noundef %i.be, i32 noundef %i.bg, i32 noundef %7, i32 noundef %.0.i329) #10
+  %i.bh = tail call i32 @ff_set_dimensions(ptr noundef nonnull %0, i32 noundef %7, i32 noundef %.0.i329) #10 ; 2 uses
   %i.bi = icmp slt i32 %i.bh, 0
   br i1 %i.bi, label %bytestream2_get_be32.exit315.thread, label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %._crit_edge566
-  %i.bj = add nuw nsw i32 %8, 14                  ; 2 uses
+  %i.bj = add nuw nsw i32 %7, 14                  ; 2 uses
   %i.bk = and i32 %i.bj, 131056
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 120
   store i32 %i.bk, ptr %i.bl, align 8, !tbaa !69
-  %i.bm = add nuw nsw i32 %12, 14                 ; 2 uses
+  %i.bm = add nuw nsw i32 %.0.i329, 14            ; 2 uses
   %i.bn = and i32 %i.bm, 131056
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 124
   store i32 %i.bn, ptr %i.bo, align 4, !tbaa !70
@@ -269,12 +278,14 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.m
-  %13 = icmp ult i32 %i.ar, 11
-  br i1 %13, label %bytestream2_get_byte.exit343, label %bb.q
+  %15 = ptrtoint ptr %.sroa.0.13 to i64
+  %16 = sub i64 %i.aw, %15
+  %17 = icmp slt i64 %16, 1
+  br i1 %17, label %bytestream2_get_byte.exit343, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.bx = getelementptr i8, ptr %.sroa.0402.6, i64 17 ; 2 uses
-  %i.by = load i8, ptr %9, align 1, !tbaa !37
+  %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.0.13, i64 1 ; 2 uses
+  %i.by = load i8, ptr %.sroa.0.13, align 1, !tbaa !37
   %i.bz = zext i8 %i.by to i64
   %.pre570 = ptrtoint ptr %i.bx to i64
   br label %bytestream2_get_byte.exit343

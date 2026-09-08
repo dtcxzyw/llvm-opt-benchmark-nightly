@@ -205,7 +205,7 @@ bb.a:
   store i32 %i.i, ptr %i.g, align 8, !tbaa !45
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
   %i.k = mul nsw i32 %i.i, 95
-  %i.l = sext i32 %i.k to i64                     ; 2 uses
+  %i.l = sext i32 %i.k to i64                     ; 3 uses
   %i.m = icmp slt i32 %i.h, -1
   br i1 %i.m, label %.noexc.i, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
 
@@ -222,9 +222,9 @@ _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %bb.a
   br i1 %.not.i.i.i.i.i, label %bb.b, label %.noexc3.i
 
 .noexc3.i:                                        ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
-  %i.n = shl nuw nsw i64 %i.l, 2                  ; 3 uses
+  %i.n = shl nuw nsw i64 %i.l, 2
   %i.o = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #26
-          to label %.noexc13 unwind label %bb.f   ; 5 uses
+          to label %.noexc13 unwind label %bb.f   ; 4 uses
 
 .noexc13:                                         ; preds = %.noexc3.i
   store ptr %i.o, ptr %i.j, align 8, !tbaa !44
@@ -232,14 +232,19 @@ _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 120
   store ptr %i.p, ptr %i.q, align 8, !tbaa !68
   store i32 0, ptr %i.o, align 4, !tbaa !13
-  %i.r = getelementptr i8, ptr %i.o, i64 4
-  %.idx.i.i.i.i.i.i.i.i.a = add nsw i64 %i.n, -4
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.r, i8 0, i64 %.idx.i.i.i.i.i.i.i.i.a, i1 false), !tbaa !13
-  %5 = getelementptr i8, ptr %i.o, i64 %i.n
+  %i.r = getelementptr i8, ptr %i.o, i64 4        ; 3 uses
+  %.idx.i.i.i.i.i.i.i.i.a = add nsw i64 %i.l, -1  ; 2 uses
+  %5 = icmp eq i64 %.idx.i.i.i.i.i.i.i.i.a, 0
+  br i1 %5, label %bb.b, label %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i
+
+_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i: ; preds = %.noexc13
+  %.idx.i.i.i.i.i.i.i.i = shl nuw nsw i64 %.idx.i.i.i.i.i.i.i.i.a, 2 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.r, i8 0, i64 %.idx.i.i.i.i.i.i.i.i, i1 false), !tbaa !13
+  %6 = getelementptr inbounds nuw i8, ptr %i.r, i64 %.idx.i.i.i.i.i.i.i.i
   br label %bb.b
 
-bb.b:                                             ; preds = %.noexc13, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
-  %.0.i.i.i.i.i.i = phi ptr [ %5, %.noexc13 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ]
+bb.b:                                             ; preds = %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i, %.noexc13, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i
+  %.0.i.i.i.i.i.i = phi ptr [ %6, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ], [ %i.r, %.noexc13 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i ]
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 112
   store ptr %.0.i.i.i.i.i.i, ptr %i.s, align 8, !tbaa !43
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 128
